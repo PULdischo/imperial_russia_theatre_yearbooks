@@ -1,0 +1,24 @@
+You are transcribing a page from the "Ежегодникъ Императорскихъ театровъ" (Yearbook of the Imperial Theatres), a Russian administrative yearbook printed in pre-1918 orthography. The hard sign ъ at word endings, ѣ ("yat"), і ("decimal i"), and ѳ ("fita") are all correct as printed -- preserve them exactly, do not modernize or normalize the spelling.
+
+The page is a personnel roster: a nested list of institution -> department -> role headings, under which named individuals appear, each with a start-of-service date and sometimes a rank, honorific title, instrument (for orchestra pages), subject taught (for school-staff pages), an end-of-service note (resignation or death, marked with "†"), and -- for ballet/orchestra artist pages -- a performance-tally sentence.
+
+Headings on these pages are hierarchical and are NOT repeated for every person: a heading (e.g. "Хозяйственное отдѣленіе") is often printed once and applies to every person listed below it until a DIFFERENT heading of the same level appears -- carry it forward onto each of those entries rather than leaving it blank just because it wasn't reprinted immediately above that specific person.
+
+Transcribe every person entry visible on the page. For each entry:
+- institution: the top-level heading for the whole page/section (often a "Списокъ ..." title or the name of the institution), verbatim.
+- heading_path: EVERY heading BELOW the institution and down to this person's own entry, in top-to-bottom order, joined with " / " (e.g. "Хозяйственное отдѣленіе / Полицiймейстеры / Маріинскій театръ"). Include all levels -- don't try to decide which one is the "real" department versus the person's specific role; just give the full verbatim breadcrumb from just below the institution down to (and including) the most specific heading attached to this person. Carry forward headings that weren't reprinted for this specific entry, per the paragraph above. Leave empty only if there is truly no heading between the institution and this person.
+  Never repeat the institution name itself as the first segment of heading_path -- it's already captured in the separate `institution` field. Correct: institution="Императорское С.-Петербургское Театральное Училище", heading_path="Управляющій Училищемъ". Wrong: heading_path="Императорское С.-Петербургское Театральное Училище / Управляющій Училищемъ" (institution duplicated).
+- list_number: the printed enumeration if present (e.g. "1.", "52."), otherwise omit.
+- family_name / first_name / patronymic: split exactly as printed. Keep ordinal suffixes like "1-я" attached to the family name. Leave first_name/patronymic empty if the source doesn't print them.
+- rank_or_title: civil rank (e.g. "колл. сов.") or honorific (e.g. "Солистъ Его Императорскаго Величества"), verbatim.
+- service_class: the Table-of-Ranks class number if printed (e.g. "VII кл."). This token is frequently printed AT THE END of a heading line, attached to the heading text itself (e.g. a line reading "Чиновники особыхъ порученій, при дирекціи, VII кл.:") -- in that case, still pull "VII кл." out into service_class, and do NOT leave it as part of heading_path. Correct: heading_path="Чиновники особыхъ порученій, при дирекціи", service_class="VII кл." Wrong: heading_path="Чиновники особыхъ порученій, при дирекціи, VII кл.", service_class="" (class left stranded in the heading). Omit service_class entirely if no class is printed anywhere near this entry's heading.
+- instrument: only for orchestra/Musicians pages, e.g. "Первая скрипка".
+- subject_taught: only for TheaterSchoolStaff pages.
+- tenure_note_text: the FULL parenthetical/trailing tenure note verbatim, uncleaned -- e.g. "съ 1 мая 1882 г." or "съ 27 декабря 1853 г.). † 19 ноября 1899 г." Do not paraphrase.
+- service_periods: parse tenure_note_text into one or more (start_date_text, end_date_text, end_type) periods. A person can have more than one non-contiguous period if the note describes leaving and rejoining. end_type is "died" for a † marker, "resigned" for "Оставилъ службу", otherwise null if still active as of this volume.
+- credit_summary_text: only for BalletArtists/Musicians artist entries -- the full performance-tally sentence verbatim, e.g. "Въ 11 балетахъ—33; въ 8 операхъ—43. Всего—76 разъ. Въ томъ числѣ: Спящая красавица (красавица)—5."
+- credits: parse credit_summary_text into structured rows -- one "category_total" row per category (балетахъ/операхъ/драмѣ/Всего) with its count, and one "named_work" row per named-role breakdown item (work title, role name in parens if present, count).
+
+If a field genuinely is not printed for a given entry, omit it or use null -- never invent a value. Numbers must be integers, not strings.
+
+Return ONLY a single JSON object matching the schema you are given. No prose, no markdown code fences.

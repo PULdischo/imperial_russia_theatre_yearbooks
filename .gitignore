@@ -1,2 +1,7 @@
 pdfs/
 Glodo_images_to_Structured_data.ipynb
+.env
+outputs/
+*.duckdb
+__pycache__/
+*.pyc

@@ -18,11 +18,15 @@ def add_entry(page_id, entity_type, institution, department, position, list_numb
               service_class="", instrument="", subject_taught="",
               tenure_note_text="", credit_summary_text="",
               periods_list=None, credits_list=None):
+    # department/position collapsed into one verbatim heading_path column
+    # (see docs/schema.md) -- kept as two call-site args here purely so the
+    # ~140 hand-transcribed add_entry(...) calls below didn't need editing.
+    heading_path = " / ".join(p for p in (department, position) if p)
     _entry_n[page_id] = _entry_n.get(page_id, 0) + 1
     entry_id = f"{page_id}__e{_entry_n[page_id]:03d}"
     entries.append(dict(
         entry_id=entry_id, page_id=page_id, entity_type=entity_type,
-        institution=institution, department=department, position=position,
+        institution=institution, heading_path=heading_path,
         list_number=list_number, family_name=family_name, first_name=first_name,
         patronymic=patronymic, rank_or_title=rank_or_title, service_class=service_class,
         instrument=instrument, subject_taught=subject_taught,
@@ -566,7 +570,7 @@ add_entry(PID, "TheaterSchoolStaff", SINST, "", "Воспитатели", "3.",
 # ===========================================================================
 # write out
 # ===========================================================================
-entry_fields = ["entry_id", "page_id", "entity_type", "institution", "department", "position",
+entry_fields = ["entry_id", "page_id", "entity_type", "institution", "heading_path",
                 "list_number", "family_name", "first_name", "patronymic", "rank_or_title",
                 "service_class", "instrument", "subject_taught", "tenure_note_text", "credit_summary_text"]
 with open(OUT / "roster_entry.csv", "w", newline="", encoding="utf-8") as f:

@@ -49,8 +49,7 @@ One row per person per printed appearance.
 | `page_id` | FK → source_pages | |
 | `entity_type` | enum | same set as above, restricted to the Spiski types |
 | `institution` | string | top-level heading, verbatim, e.g. `Императорское С.-Петербургское Театральное Училище` |
-| `department` | string, nullable | mid-level heading(s), verbatim. When the print nests more than one level deep (survey found up to 4 levels, e.g. Institution → "Причтъ церкви Училища" → "Священникъ"), join levels with ` / ` rather than inventing more columns — nesting depth is not fixed across types or years. |
-| `position` | string, nullable | the role/title heading attached to this entry, verbatim, e.g. `Дѣлопроизводитель`, `Первый балетмейстеръ`, `Артистки` |
+| `heading_path` | string, nullable | every heading between the institution and this person's own entry, verbatim, top-to-bottom, joined with ` / ` (e.g. `Хозяйственное отдѣленіе / Полицiймейстеры / Маріинскій театръ`). Nesting depth is not fixed across types or years (survey found up to 4 levels). **Originally split into separate `department`/`position` columns; collapsed after the first extraction smoke test showed the boundary between "standing department heading" and "this person's specific role" is a visual/typographic judgment call (indentation, bold weight) that a model can't reliably reproduce from text alone.** If a clean single "role" value is needed for analysis, derive it downstream (e.g. last segment of `heading_path`) in the analysis layer rather than forcing the split at capture time. |
 | `list_number` | string, nullable | the printed enumeration (`1.`, `52.`) — many entries are unnumbered (e.g. named officers before a numbered artist list) |
 | `family_name` | string | verbatim, including printed ordinal suffixes (`Алексѣева 1-я`) |
 | `first_name` | string, nullable | verbatim — some foreign-staff entries print family name only |
