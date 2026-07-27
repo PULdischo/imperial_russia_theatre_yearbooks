@@ -1,0 +1,146 @@
+work_id,session_id,work_order,work_title,genre
+repertoire_1890-91_p000__s005__w1,repertoire_1890-91_p000__s005,1,Горе отъ ума,ком.
+repertoire_1890-91_p000__s005__w2,repertoire_1890-91_p000__s005,2,Слабая струна,вод.
+repertoire_1890-91_p000__s010__w1,repertoire_1890-91_p000__s010,1,Послѣдняя воля,ком.
+repertoire_1890-91_p000__s010__w2,repertoire_1890-91_p000__s010,2,Фотографъ-любитель,ш.
+repertoire_1890-91_p000__s015__w1,repertoire_1890-91_p000__s015,1,Ревизоръ,ком.
+repertoire_1890-91_p000__s020__w1,repertoire_1890-91_p000__s020,1,Урiэль Акоста,тр.
+repertoire_1890-91_p000__s020__w2,repertoire_1890-91_p000__s020,2,Бабье дѣло,ш.
+repertoire_1890-91_p000__s025__w1,repertoire_1890-91_p000__s025,1,Разладъ,др.
+repertoire_1890-91_p000__s025__w2,repertoire_1890-91_p000__s025,2,Ловушка,ком.
+repertoire_1890-91_p000__s030__w1,repertoire_1890-91_p000__s030,1,Въ селѣ Знаменскомъ,ком.
+repertoire_1890-91_p000__s030__w2,repertoire_1890-91_p000__s030,2,Перепутала,сц.
+repertoire_1890-91_p000__s035__w1,repertoire_1890-91_p000__s035,1,Хрущевскіе помѣщики,ком.
+repertoire_1890-91_p000__s035__w2,repertoire_1890-91_p000__s035,2,Бѣдовая вдовушка,ком.
+repertoire_1890-91_p000__s040__w1,repertoire_1890-91_p000__s040,1,Друзья дѣтства,др.
+repertoire_1890-91_p000__s040__w2,repertoire_1890-91_p000__s040,2,Вспышка у домашняго очага,вод.
+repertoire_1890-91_p000__s045__w1,repertoire_1890-91_p000__s045,1,Воевода,сц.
+repertoire_1898-99_MSK_p019__s001__w1,repertoire_1898-99_MSK_p019__s001,1,Ночь передъ Рождествомъ,оп.
+repertoire_1898-99_MSK_p019__s002__w1,repertoire_1898-99_MSK_p019__s002,1,Ядро,ком.
+repertoire_1898-99_MSK_p019__s002__w2,repertoire_1898-99_MSK_p019__s002,2,Утро съ сюрпризами,сц.
+repertoire_1898-99_MSK_p019__s003__w1,repertoire_1898-99_MSK_p019__s003,1,Вій,др. сказка
+repertoire_1898-99_MSK_p019__s004__w1,repertoire_1898-99_MSK_p019__s004,1,Карменъ,оп.
+repertoire_1898-99_MSK_p019__s005__w1,repertoire_1898-99_MSK_p019__s005,1,Двѣ судьбы,пьеса
+repertoire_1898-99_MSK_p019__s005__w2,repertoire_1898-99_MSK_p019__s005,2,Треволненія,шут.
+repertoire_1898-99_MSK_p019__s006__w1,repertoire_1898-99_MSK_p019__s006,1,Василиса Мелентьева,др.
+repertoire_1898-99_MSK_p019__s010__w1,repertoire_1898-99_MSK_p019__s010,1,Коппелія,бал.
+repertoire_1898-99_MSK_p019__s010__w2,repertoire_1898-99_MSK_p019__s010,2,Приваль кавалеріи,бал.
+repertoire_1898-99_MSK_p019__s011__w1,repertoire_1898-99_MSK_p019__s011,1,Счастье въ уголкѣ,ком.
+repertoire_1898-99_MSK_p019__s011__w2,repertoire_1898-99_MSK_p019__s011,2,Тяжелые дни,сц.
+repertoire_1898-99_MSK_p019__s012__w1,repertoire_1898-99_MSK_p019__s012,1,Гроза,др.
+repertoire_1898-99_MSK_p019__s013__w1,repertoire_1898-99_MSK_p019__s013,1,Евгеній Онѣгинъ,оп.
+repertoire_1898-99_MSK_p019__s014__w1,repertoire_1898-99_MSK_p019__s014,1,Гугеноты,оп.
+repertoire_1898-99_MSK_p019__s015__w1,repertoire_1898-99_MSK_p019__s015,1,Ядро,ком.
+repertoire_1898-99_MSK_p019__s015__w2,repertoire_1898-99_MSK_p019__s015,2,Тайна женщины,вод.
+repertoire_1898-99_MSK_p019__s016__w1,repertoire_1898-99_MSK_p019__s016,1,Идеальная жена,ком.
+repertoire_1898-99_MSK_p019__s016__w2,repertoire_1898-99_MSK_p019__s016,2,Женская чепуха,шут.
+repertoire_1898-99_MSK_p019__s017__w1,repertoire_1898-99_MSK_p019__s017,1,Демонъ,оп.
+repertoire_1898-99_MSK_p019__s018__w1,repertoire_1898-99_MSK_p019__s018,1,Двѣ судьбы,пьеса
+repertoire_1898-99_MSK_p019__s018__w2,repertoire_1898-99_MSK_p019__s018,2,Шашки,шут.
+repertoire_1898-99_MSK_p019__s019__w1,repertoire_1898-99_MSK_p019__s019,1,Пучина,сц.
+repertoire_1898-99_MSK_p019__s019__w2,repertoire_1898-99_MSK_p019__s019,2,Ночное,сц.
+repertoire_1898-99_MSK_p019__s023__w1,repertoire_1898-99_MSK_p019__s023,1,Звѣзды,бал.
+repertoire_1898-99_MSK_p019__s024__w1,repertoire_1898-99_MSK_p019__s024,1,Ядро,ком.
+repertoire_1898-99_MSK_p019__s025__w1,repertoire_1898-99_MSK_p019__s025,1,Разгромъ,
+repertoire_1898-99_MSK_p019__s025__w2,repertoire_1898-99_MSK_p019__s025,2,Шашки,шут.
+repertoire_1898-99_MSK_p019__s026__w1,repertoire_1898-99_MSK_p019__s026,1,Севильскій цирюльникъ,ком.
+repertoire_1898-99_MSK_p019__s026__w2,repertoire_1898-99_MSK_p019__s026,2,Счастливый день,сц.
+repertoire_1898-99_MSK_p019__s027__w1,repertoire_1898-99_MSK_p019__s027,1,Риголетто,оп.
+repertoire_1898-99_MSK_p019__s028__w1,repertoire_1898-99_MSK_p019__s028,1,Русланъ и Людмила,оп.
+repertoire_1898-99_MSK_p019__s029__w1,repertoire_1898-99_MSK_p019__s029,1,Конекъ-Горбунокъ,бал.
+repertoire_1898-99_MSK_p019__s030__w1,repertoire_1898-99_MSK_p019__s030,1,Двѣ судьбы,пьеса
+repertoire_1898-99_MSK_p019__s031__w1,repertoire_1898-99_MSK_p019__s031,1,Волки и овцы,ком.
+repertoire_1898-99_MSK_p019__s031__w2,repertoire_1898-99_MSK_p019__s031,2,"Если женщина рѣшила, такъ поставить на своемъ",ком.
+repertoire_1898-99_MSK_p019__s032__w1,repertoire_1898-99_MSK_p019__s032,1,Вій,др. сказка
+repertoire_1898-99_MSK_p019__s033__w1,repertoire_1898-99_MSK_p019__s033,1,Золушка,бал.
+repertoire_1898-99_MSK_p019__s034__w1,repertoire_1898-99_MSK_p019__s034,1,Іоаннъ Лейденскій,оп.
+repertoire_1898-99_MSK_p019__s035__w1,repertoire_1898-99_MSK_p019__s035,1,Разгромъ,
+repertoire_1898-99_MSK_p019__s036__w1,repertoire_1898-99_MSK_p019__s036,1,Бѣшеныя деньги,ком.
+repertoire_1898-99_MSK_p019__s036__w2,repertoire_1898-99_MSK_p019__s036,2,Треволненія,шут.
+repertoire_1898-99_MSK_p019__s038__w1,repertoire_1898-99_MSK_p019__s038,1,Дитя,др.
+repertoire_1898-99_MSK_p019__s039__w1,repertoire_1898-99_MSK_p019__s039,1,Наяда и рыбакъ,бал.
+repertoire_1898-99_MSK_p019__s039__w2,repertoire_1898-99_MSK_p019__s039,2,Волшебная флейта,бал.
+repertoire_1898-99_MSK_p019__s039__w3,repertoire_1898-99_MSK_p019__s039,3,Приваль кавалеріи,бал.
+repertoire_1898-99_MSK_p019__s040__w1,repertoire_1898-99_MSK_p019__s040,1,Марія Стюартъ,траг.
+repertoire_1898-99_MSK_p019__s041__w1,repertoire_1898-99_MSK_p019__s041,1,Ядро,ком.
+repertoire_1898-99_MSK_p019__s041__w2,repertoire_1898-99_MSK_p019__s041,2,Тайна женщины,вод.
+repertoire_1898-99_MSK_p019__s042__w1,repertoire_1898-99_MSK_p019__s042,1,Вій,др. сказка
+repertoire_1898-99_MSK_p019__s043__w1,repertoire_1898-99_MSK_p019__s043,1,Трубадуръ,оп.
+repertoire_1898-99_SP_p020__s002__w1,repertoire_1898-99_SP_p020__s002,1,Фра-Дiаволо,оп.
+repertoire_1898-99_SP_p020__s003__w1,repertoire_1898-99_SP_p020__s003,1,Двѣ судьбы,пьеса
+repertoire_1898-99_SP_p020__s004__w1,repertoire_1898-99_SP_p020__s004,1,Волки и овцы,ком.
+repertoire_1898-99_SP_p020__s005__w1,repertoire_1898-99_SP_p020__s005,1,Célimare le bien-aimé,com.-vaud.
+repertoire_1898-99_SP_p020__s005__w2,repertoire_1898-99_SP_p020__s005,2,Le Capitaine Bitterlin,com.
+repertoire_1898-99_SP_p020__s006__w1,repertoire_1898-99_SP_p020__s006,1,Евгеній Онѣгинъ,оп.
+repertoire_1898-99_SP_p020__s007__w1,repertoire_1898-99_SP_p020__s007,1,Царь Борисъ,траг.
+repertoire_1898-99_SP_p020__s008__w1,repertoire_1898-99_SP_p020__s008,1,La Culotte,vaud.
+repertoire_1898-99_SP_p020__s008__w2,repertoire_1898-99_SP_p020__s008,2,Le Bonhomme Jadis,com.
+repertoire_1898-99_SP_p020__s009__w1,repertoire_1898-99_SP_p020__s009,1,Конекъ-Горбунокъ,бал.
+repertoire_1898-99_SP_p020__s010__w1,repertoire_1898-99_SP_p020__s010,1,Волшебная сказка,пьеса
+repertoire_1898-99_SP_p020__s011__w1,repertoire_1898-99_SP_p020__s011,1,Bénéfice de M-elle Fériel,
+repertoire_1898-99_SP_p020__s011__w2,repertoire_1898-99_SP_p020__s011,2,Zaza,com.
+repertoire_1898-99_SP_p020__s011__w3,repertoire_1898-99_SP_p020__s011,3,Le Trait du Parthe,com.
+repertoire_1898-99_SP_p020__s012__w1,repertoire_1898-99_SP_p020__s012,1,Травiата,оп.
+repertoire_1898-99_SP_p020__s013__w1,repertoire_1898-99_SP_p020__s013,1,Дочь фараона,бал.
+repertoire_1898-99_SP_p020__s014__w1,repertoire_1898-99_SP_p020__s014,1,Недоросль,ком.
+repertoire_1898-99_SP_p020__s014__w2,repertoire_1898-99_SP_p020__s014,2,Воздушные замки,ком.
+repertoire_1898-99_SP_p020__s015__w1,repertoire_1898-99_SP_p020__s015,1,Zaza,com.
+repertoire_1898-99_SP_p020__s015__w2,repertoire_1898-99_SP_p020__s015,2,Le Trait du Parthe,com.
+repertoire_1898-99_SP_p020__s016__w1,repertoire_1898-99_SP_p020__s016,1,Корделія,оп.
+repertoire_1898-99_SP_p020__s017__w1,repertoire_1898-99_SP_p020__s017,1,Царь Борисъ,траг.
+repertoire_1898-99_SP_p020__s018__w1,repertoire_1898-99_SP_p020__s018,1,Zaza,com.
+repertoire_1898-99_SP_p020__s018__w2,repertoire_1898-99_SP_p020__s018,2,Le Trait du Parthe,com.
+repertoire_1898-99_SP_p020__s019__w1,repertoire_1898-99_SP_p020__s019,1,Раймонда,бал.
+repertoire_1898-99_SP_p020__s020__w1,repertoire_1898-99_SP_p020__s020,1,Исторія одного увлеченія,пьеса
+repertoire_1898-99_SP_p020__s020__w2,repertoire_1898-99_SP_p020__s020,2,Акростихъ,пьеса
+repertoire_1898-99_SP_p020__s020__w3,repertoire_1898-99_SP_p020__s020,3,Гувернантка,ком.-шут.
+repertoire_1898-99_SP_p020__s021__w1,repertoire_1898-99_SP_p020__s021,1,Тартюфъ,ком.
+repertoire_1898-99_SP_p020__s021__w2,repertoire_1898-99_SP_p020__s021,2,Бабушкины грѣшки,ком.
+repertoire_1898-99_SP_p020__s022__w1,repertoire_1898-99_SP_p020__s022,1,Снѣгурочка,оп.
+repertoire_1898-99_SP_p020__s023__w1,repertoire_1898-99_SP_p020__s023,1,Волшебная сказка,пьеса
+repertoire_1898-99_SP_p020__s024__w1,repertoire_1898-99_SP_p020__s024,1,Zaza,com.
+repertoire_1898-99_SP_p020__s024__w2,repertoire_1898-99_SP_p020__s024,2,Le Trait du Parthe,com.
+repertoire_1898-99_SP_p020__s025__w1,repertoire_1898-99_SP_p020__s025,1,Русланъ и Людмила,оп.
+repertoire_1898-99_SP_p020__s026__w1,repertoire_1898-99_SP_p020__s026,1,Царь Борисъ,траг.
+repertoire_1898-99_SP_p020__s027__w1,repertoire_1898-99_SP_p020__s027,1,Zaza,com.
+repertoire_1898-99_SP_p020__s027__w2,repertoire_1898-99_SP_p020__s027,2,Le Trait du Parthe,com.
+repertoire_1898-99_SP_p020__s030__w1,repertoire_1898-99_SP_p020__s030,1,Bénéfice de M-r Rousselle,
+repertoire_1898-99_SP_p020__s030__w2,repertoire_1898-99_SP_p020__s030,2,Nos Intimes,com.
+repertoire_1898-99_SP_p020__s030__w3,repertoire_1898-99_SP_p020__s030,3,Le Voyage en Suède,com.
+repertoire_1898-99_SP_p020__s031__w1,repertoire_1898-99_SP_p020__s031,1,Опричникъ,оп.
+repertoire_1898-99_SP_p020__s032__w1,repertoire_1898-99_SP_p020__s032,1,Дочь фараона,бал.
+repertoire_1898-99_SP_p020__s033__w1,repertoire_1898-99_SP_p020__s033,1,Недоросль,ком.
+repertoire_1898-99_SP_p020__s033__w2,repertoire_1898-99_SP_p020__s033,2,Воздушные замки,ком.
+repertoire_1898-99_SP_p020__s034__w1,repertoire_1898-99_SP_p020__s034,1,Двѣ судьбы,пьеса
+repertoire_1898-99_SP_p020__s035__w1,repertoire_1898-99_SP_p020__s035,1,Блестящая карьера,ком.
+repertoire_1898-99_SP_p020__s035__w2,repertoire_1898-99_SP_p020__s035,2,Щекотливое порученіе,ком.
+repertoire_1898-99_SP_p020__s036__w1,repertoire_1898-99_SP_p020__s036,1,Снѣгурочка,оп.
+repertoire_1898-99_SP_p020__s037__w1,repertoire_1898-99_SP_p020__s037,1,Царь Борисъ,траг.
+repertoire_1898-99_SP_p020__s038__w1,repertoire_1898-99_SP_p020__s038,1,Nos Intimes,com.
+repertoire_1898-99_SP_p020__s038__w2,repertoire_1898-99_SP_p020__s038,2,Le Voyage en Suède,com.
+repertoire_1907-08_SP_p000__s001__w1,repertoire_1907-08_SP_p000__s001,1,Жизнь за царя,оп.
+repertoire_1907-08_SP_p000__s002__w1,repertoire_1907-08_SP_p000__s002,1,55-ти лѣтіе литературной дѣятельности графа Л. Н. Толстого,
+repertoire_1907-08_SP_p000__s002__w2,repertoire_1907-08_SP_p000__s002,2,Плоды просвѣщенія,ком.
+repertoire_1907-08_SP_p000__s004__w1,repertoire_1907-08_SP_p000__s004,1,Сказаніе о невидимомъ градѣ Китежѣ и дѣвѣ Февроніи,
+repertoire_1907-08_SP_p000__s005__w1,repertoire_1907-08_SP_p000__s005,1,Гроза,др.
+repertoire_1907-08_SP_p000__s005__w2,repertoire_1907-08_SP_p000__s005,2,Провинціалка,ком.
+repertoire_1907-08_SP_p000__s008__w1,repertoire_1907-08_SP_p000__s008,1,Свадьба Кречинскаго,ком.
+repertoire_1907-08_SP_p000__s010__w1,repertoire_1907-08_SP_p000__s010,1,"1, 2, 3 и 4 д. оп. Гугеноты",
+repertoire_1907-08_SP_p000__s011__w1,repertoire_1907-08_SP_p000__s011,1,Донъ-Кихотъ,бал.
+repertoire_1907-08_SP_p000__s012__w1,repertoire_1907-08_SP_p000__s012,1,Вечерняя заря,др.
+repertoire_1907-08_SP_p000__s014__w1,repertoire_1907-08_SP_p000__s014,1,Дубровскій,оп.
+repertoire_1907-08_SP_p000__s015__w1,repertoire_1907-08_SP_p000__s015,1,Гроза,др.
+repertoire_1907-08_SP_p000__s015__w2,repertoire_1907-08_SP_p000__s015,2,Стёпикъ и Манюрочка,ком.
+repertoire_1907-08_SP_p000__s017__w1,repertoire_1907-08_SP_p000__s017,1,Сказаніе о невидимомъ градѣ Китежѣ и дѣвѣ Февроніи,
+repertoire_1907-08_SP_p000__s018__w1,repertoire_1907-08_SP_p000__s018,1,Плоды просвѣщенія,ком.
+repertoire_1907-08_SP_p000__s020__w1,repertoire_1907-08_SP_p000__s020,1,Лакмэ,оп.
+repertoire_1907-08_SP_p000__s021__w1,repertoire_1907-08_SP_p000__s021,1,25-ти лѣтіе постановки,
+repertoire_1907-08_SP_p000__s021__w2,repertoire_1907-08_SP_p000__s021,2,Дѣло,др.
+repertoire_1907-08_SP_p000__s023__w1,repertoire_1907-08_SP_p000__s023,1,Русланъ и Людмила,оп.
+repertoire_1907-08_SP_p000__s024__w1,repertoire_1907-08_SP_p000__s024,1,Сердце — не камень,ком.
+repertoire_1907-08_SP_p000__s029__w1,repertoire_1907-08_SP_p000__s029,1,Фаустъ,оп.
+repertoire_1907-08_SP_p000__s030__w1,repertoire_1907-08_SP_p000__s030,1,Гроза,др.
+repertoire_1907-08_SP_p000__s030__w2,repertoire_1907-08_SP_p000__s030,2,Жеманницы,ком.
+repertoire_1907-08_SP_p000__s032__w1,repertoire_1907-08_SP_p000__s032,1,Жизнь за царя,оп.
+repertoire_1907-08_SP_p000__s033__w1,repertoire_1907-08_SP_p000__s033,1,Спящая красавица,бал.
+repertoire_1907-08_SP_p000__s034__w1,repertoire_1907-08_SP_p000__s034,1,Ришелье,ком.
