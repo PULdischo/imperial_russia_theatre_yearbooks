@@ -1,32 +1,22 @@
 # Imperial Theater Yearbooks
 
-Turning scanned volumes of the **Ежегодникъ Императорскихъ театровъ**
-("Yearbook of the Imperial Theatres") into structured, queryable data —
-who worked at the Imperial Theatres, what was performed, when, and for how
-much — spanning 18 consecutive seasons, 1890/91 through 1907/08.
+How 144 scanned volumes of the **Ежегодникъ Императорскихъ театровъ**
+("Yearbook of the Imperial Theatres") become a diplomatic transcription
+and a linked research dataset — who worked at the Imperial Theatres, what
+was performed, when, and for how much — spanning 18 consecutive seasons,
+1890/91 through 1907/08.
 
-## What this is
+## The source
 
-The Ежегодникъ was an official annual publication of the Imperial Theatres
-administration in late Tsarist Russia, covering the state-run opera, ballet,
-and drama companies in St. Petersburg and Moscow. Each yearbook bundled
-several distinct kinds of tables and lists — a day-by-day performance
-calendar with box-office receipts, and personnel rosters for every part of
-the operation, from dancers and musicians to administrators, decorators,
-and stagehands. The volumes are scanned as PDFs (one PDF per season per
-entity type), and the text is in **pre-1918 Russian orthography** — the
-hard sign (ъ) at word endings, "yat" (ѣ), decimal-i (і), and "fita" (ѳ) are
-all original spelling, not OCR noise, and this project preserves them
-verbatim rather than modernizing them.
-
-The goal is to transcribe every page faithfully into structured spreadsheets
-(CSVs, and a queryable database), so the material becomes usable for
-research — repertoire and programming history, institutional/organizational
-history, and prosopography of the dancers, musicians, and administrative
-staff of the Imperial Theatres. See `docs/research_questions.md` for the
-fuller research framing.
-
-## The materials
+The *Ежегодникъ Императорскихъ театровъ* ran annually from 1890 to 1908,
+covering the state opera, ballet, and drama companies in St. Petersburg
+and Moscow. Each year's volume is a scanned PDF containing two distinct
+table families: a day-by-day performance calendar (work, venue,
+box-office receipts) and staff rosters (dancers, musicians,
+administrators, rank, tenure). ~1,300 pages total, set in pre-1918
+orthography — ъ, ѣ, і, ѳ are original spelling, not scanning artifacts,
+and are preserved rather than modernized, for the same reason a
+diplomatic edition doesn't silently regularize its source.
 
 `pdfs/` holds the source scans, one folder per entity/table type:
 
@@ -43,106 +33,258 @@ fuller research framing.
 144 PDFs, 1,299 scanned pages as of the last inventory (`docs/overview.md`
 has the full breakdown and per-season page counts — worth reading before
 assuming page count scales evenly with season, it doesn't: the Repertoire
-table format changes partway through the run and roughly quadruples in page
-count, documented in `docs/structural_survey.md`).
+table format changes partway through the run and roughly quadruples in
+page count, documented in `docs/structural_survey.md`). See
+`docs/research_questions.md` for the fuller research framing.
 
-## How it's modeled
+## Two layers, decided up front
 
-Full field-by-field spec: **`docs/schema.md`**. The short version:
+The project commits early to a two-layer output, and the whole pipeline
+exists to fill both honestly rather than conflating them:
 
-- **Two layers, one source of truth.** A `raw` layer holds exactly what was
-  transcribed — one row per printed appearance, verbatim text, provenance
-  linked back to the source page. A `analysis` layer sits on top of it,
-  built entirely by SQL transforms (never hand-edited), for the
-  normalization, controlled vocabulary, and eventual person-deduplication
-  work that real research questions need. The raw layer is the
-  reproducibility guarantee; the analysis layer is what most queries
-  actually touch. See `docs/research_questions.md` for why this split
-  matters and what it does/doesn't solve (e.g. it does not by itself
-  resolve the same person appearing across multiple years' volumes — that's
-  a deliberately separate, later task).
-- **Long/tidy, not wide.** The Repertoire calendar is modeled as one row per
-  (date, session, theater) rather than one column per theater, because the
-  actual set of theaters printed side-by-side changes partway through the
-  18-year run (a third Moscow venue gets added, and the whole table
-  reformats). Personnel rosters use a single free-text `heading_path` field
-  for the institution → department → role hierarchy rather than fixed
-  department/position columns, because that hierarchy visibly deepens
-  season over season and isn't the same shape twice.
-- **Dates stay as printed.** Pre-1918 Russia used the Julian ("Old Style")
-  calendar; dates are kept exactly as printed rather than converted to the
-  Gregorian calendar, alongside a best-effort parsed value for sorting.
-- Chosen conventions were revised at least once already based on real
-  extraction results — e.g., person roster entries originally split
-  "department" and "position" into separate columns, and that split was
-  abandoned in favor of one verbatim `heading_path` field once testing
-  showed the boundary between the two is a visual/typographic judgment call
-  a model can't reliably reproduce from text alone.
+- **A diplomatic transcription** (`docs/schema.md`) — one row per printed
+  appearance, verbatim, no silent normalization, no deduplication of the
+  same person across years. This is the layer that answers "what does the
+  source actually say," and it's the one everything else is checked
+  against.
+- **A linked research dataset** (`docs/research_dataset.md`), built on
+  top, where record linkage has actually been done: the same real person,
+  work, or venue recognized across its many separate printed appearances.
+  This is the layer that answers repertoire- and prosopography-shaped
+  questions — how often was a work revived, what was a given dancer's
+  full attested career — which the diplomatic layer deliberately doesn't
+  attempt on its own.
 
-## How the text gets extracted
+Every stage below is in service of one or the other.
 
-Each page image is sent to a vision-language model (Qwen VL, via Alibaba's
-DashScope API) with a system prompt tailored to that page's table family
-(one prompt for the Repertoire calendar shape, one for the personnel-roster
-shape), asking for a JSON object matching the target schema. The full
-pipeline, in order:
+## Stage 1 — Rendering
 
-1. **Render** — PDF pages → PNG images (300dpi; lower resolutions produced
-   noticeably more character-level misreads in testing).
-2. **Extract** — call the model on each page image, save the raw JSON
-   response untouched.
-3. **Parse & validate** — validate raw responses against the schema, flatten
-   into the flat CSV tables, log anything that fails to parse rather than
-   silently dropping it.
-4. **Quality-check** — gold-free structural self-consistency checks (does a
-   heading repeat where it shouldn't, do credit totals sum correctly, does a
-   multi-week performance page suspiciously have zero dark/blank cells,
-   etc.) that scale to pages with no hand-transcribed ground truth to
-   compare against.
-5. **Eval against gold** — score against a 12-page hand-transcribed ground
-   truth set (`docs/eval/gold/`) covering all entity types and a range of
-   seasons, chosen deliberately to include the structurally hardest cases
-   found in the source, not just easy pages.
-5. **Build** — load everything into a single portable DuckDB file (`raw` +
-   `analysis` schemas).
-6. **Browse** — (planned) a small read-only Streamlit/Gradio app over the
-   DuckDB file.
+Each PDF is rasterized to one image per page. Resolution turned out to
+matter more than expected: an early pass at 150dpi produced recurring
+character-level misreads (digit transpositions, confusable Cyrillic
+letterforms); re-rendering at 300dpi eliminated nearly all of them. Worth
+noting because it's the first of several points where "just run the OCR"
+undersells how much the capture step itself affects downstream accuracy.
 
-Full stage-by-stage detail, script names, and CLI usage: `docs/pipeline.md`.
+## Stage 2 — Transcription by a vision-language model
 
-## Extraction quality and how it improves run to run
+Each page image goes to a vision-language model (Qwen VL, via Alibaba's
+DashScope API) — a system trained jointly on images and text — prompted
+per table family to return a transcription in a fixed structured shape
+(the fields in `docs/schema.md`) rather than free text. This is closer to
+structured OCR with a schema constraint than to captioning: the model is
+asked for `family_name`, `rank_or_title`, `tenure_note_text`, and so on,
+not a paragraph description of the page.
 
-Vision-language extraction from a 100+ year old scanned table is not
-one-shot-perfect, and several of the failure modes are inherent to how
-these models work (sampling variance, occasional field-boundary confusion)
-rather than one-time bugs to stamp out. Rather than chase a perfect single
-run, the project tracks this explicitly:
+Treat this stage the way you'd treat any single-pass transcription by a
+fast, tireless, occasionally-wrong reader: useful, necessary, and not
+trustworthy on its own. Its known failure modes are catalogued rather than
+assumed away — sampling non-determinism on dense tables (the same page
+transcribed twice can yield different completeness), and field-boundary
+confusion on ambiguous visual hierarchy (deciding where a heading ends and
+a person's specific role begins is a typographic judgment call the model
+doesn't reproduce reliably). Both are documented in
+`docs/eval/known_issues.md` rather than silently patched over.
 
-- **`docs/eval/known_issues.md`** — a living ledger of what's gone wrong,
-  why, whether it turned out to be a real model error vs. a
-  gold-transcription inconsistency vs. an inherent recall/non-determinism
-  issue, and what fixed it (or didn't — including at least one documented
-  case where a prompt fix was tried, tested, and confirmed *not* to help,
-  so the fix moved to deterministic post-processing instead).
-- **`docs/eval/run_history.csv`** — the accuracy score and page count for
-  every extraction run, so a prompt or schema change can be judged by
-  whether it actually moved the number.
+## Stage 3 — Validation and normalization into tables
 
-## Project status
+Each page's transcription is validated against the schema and flattened
+into corpus-wide tables — a roster family and a repertoire family, since
+their information shapes differ. Anything that fails validation is logged
+to its own record rather than dropped, so a schema mismatch on one page
+never silently loses data or takes down the batch.
 
-- Schema, structural survey, and a 12-page hand-transcribed gold set: done.
-- Pipeline (all 6 stages) built and validated on the 12-page gold set, then
-  on a full 78-page entity type (Administration) with zero pipeline
-  failures.
-- A full-corpus extraction run (~1,300 pages, all entity types) is the
-  current in-progress milestone.
+## Stage 4 — Quality assessment, two registers
+
+No single-pass transcription is assessed as correct by assumption. Two
+complementary checks run:
+
+- **Gold-standard evaluation.** A 12-page hand-transcribed ground truth
+  set (`docs/eval/gold/`) — deliberately including the structurally
+  hardest cases in the corpus, not a convenience sample of easy pages —
+  gives a real accuracy score per run (currently 86.7% field-level match
+  on the full corpus, with the gap concentrated in recall on the
+  performance calendar, not content accuracy on what's transcribed).
+- **Gold-free structural self-consistency checks**, which scale past the
+  12 pages an answer key exists for: does a heading recur where the schema
+  says it shouldn't, do tallied credit counts sum correctly, does a
+  multi-week calendar page implausibly show zero closed dates (real
+  theaters had dark nights; a page with none is a completeness flag, not
+  a fact).
+
+Findings from both are kept in a running ledger
+(`docs/eval/known_issues.md`) triaged by cause — genuine model error,
+inherent model non-determinism, or a gold-transcription inconsistency —
+so a fix can be judged by whether it moved the aggregate score
+(`docs/eval/run_history.csv`), not by whether it resolved the one example
+that prompted it.
+
+## Stage 5 — The diplomatic transcription, packaged
+
+Once validated, everything assembles into the verbatim dataset proper —
+one row per printed appearance, citable back to its source page and image
+— in a single portable DuckDB file (`raw` + `analysis` schemas). It's also
+shipped in parallel formats rather than one: a workbook for
+pivot-table-style exploration, and a one-note-per-page reading vault
+(Obsidian) for close reading and annotation (`docs/verbatim_deliverables.md`).
+Same underlying rows throughout; the choice of format tracks the tool a
+given collaborator already works in, not a difference in the data.
+
+## Stage 6 — Record linkage into the research dataset
+
+The diplomatic layer treats every printed appearance as its own row on
+purpose — collapsing them prematurely would mean guessing at identity
+before the transcription was even verified. Record linkage happens as a
+separate, later pass (`docs/research_dataset.md`), staged by confidence
+rather than run as one undifferentiated matching pass:
+
+- **Exact, normalized matches auto-resolve.** Orthographic variants are
+  folded (ѣ→е, і→и) and matched as one unit *together with* the source's
+  own homonym-disambiguating ordinal ("Ивановъ 2-й") — preserved rather
+  than normalized away, specifically so two different attested people
+  sharing a surname are never collapsed into one just because a later
+  appearance dropped the ordinal.
+- **Near matches go to human adjudication, never auto-merged.** A
+  Levenshtein-bounded candidate pool (spelling drift the exact-fold pass
+  wouldn't catch) is exported as a reviewable pairlist with a similarity
+  score and the two source contexts side by side — the actual review
+  happens in an ordinary spreadsheet, not a bespoke interface, and nothing
+  merges without an explicit yes. A confirmed merge is recorded
+  non-destructively: both identifiers remain valid, one is marked
+  superseded rather than deleted, so nothing that already cited a given
+  identifier breaks.
+
+Repertoire works and venues go through an analogous resolution: a revived
+work correctly collapses to one canonical identity across seasons (that's
+a feature of the record-linkage design, not a bug — a researcher studying
+repertoire wants revivals recognized as the same work), while genre
+metadata is deliberately *not* folded across languages, since the
+Mikhailovsky's French-language troupe genuinely printed French genre
+abbreviations, and collapsing those into their Russian equivalents would
+erase a real distinction, not just noise.
+
+## Where this stands
+
+The diplomatic transcription is complete across the full corpus. Record
+linkage is live for venues (essentially solved, six known venues) and
+works (canonicalization-based, low ambiguity); the person-linkage
+candidate pool has been generated and is awaiting the human adjudication
+pass described above. `docs/research_dataset.md` has the full
+entity-resolution design; `docs/entity_centric_model.md` sketches a
+proposed next iteration of the research dataset's table structure, not
+yet built.
+
+Nothing here is being treated as a closed, one-shot process — the
+known-issues ledger and the run-history log both exist specifically so
+accuracy is tracked and improved across iterations, not asserted once and
+left unexamined.
+
+## Data model
+
+The tables in `raw` and `entities`, and how they relate (`analysis` isn't
+shown separately — it only adds derived columns onto `raw.roster_entry`
+and `raw.performance_session`, no new tables). `theater` is intentionally
+disconnected: sessions join to it by matching `theater_canonical` text,
+not a physical foreign key, since printed venue names have too many
+spelling variants to key on directly.
+
+```mermaid
+erDiagram
+    source_pages {
+        string page_id PK
+        string entity_type
+        string season
+        string city
+    }
+    roster_entry {
+        string entry_id PK
+        string page_id FK
+        string family_name
+        string heading_path
+    }
+    service_period {
+        string period_id PK
+        string entry_id FK
+        string start_date_text
+        string end_type
+    }
+    roster_entry_credit {
+        string credit_id PK
+        string entry_id FK
+        string credit_type
+        float count
+    }
+    performance_session {
+        string session_id PK
+        string page_id FK
+        string date_text
+        string theater
+        string session_status
+    }
+    performance_work {
+        string work_id PK
+        string session_id FK
+        string work_title
+        string genre
+    }
+    person {
+        uuid person_id PK
+        string display_name
+        string ordinal_suffix
+        uuid superseded_by_person_id FK
+    }
+    person_link {
+        string entry_id PK
+        uuid person_id FK
+        string match_method
+    }
+    person_candidate {
+        uuid candidate_id PK
+        uuid person_id_1 FK
+        uuid person_id_2 FK
+        float similarity_score
+        string status
+    }
+    work {
+        uuid work_id PK
+        string canonical_title
+        string canonical_genre
+    }
+    work_link {
+        string raw_work_id PK
+        uuid work_id FK
+    }
+    theater {
+        uuid theater_id PK
+        string canonical_name
+        string city
+    }
+
+    source_pages ||--o{ roster_entry : "page has"
+    source_pages ||--o{ performance_session : "page has"
+    roster_entry ||--o{ service_period : "entry has"
+    roster_entry ||--o{ roster_entry_credit : "entry has"
+    performance_session ||--o{ performance_work : "session has"
+    roster_entry ||--|| person_link : "resolved via"
+    person ||--|{ person_link : "person appears as"
+    person ||--o{ person_candidate : "candidate A"
+    person ||--o{ person_candidate : "candidate B"
+    person |o--o| person : "may supersede"
+    performance_work ||--|| work_link : "resolved via"
+    work ||--|{ work_link : "work performed as"
+```
+
+An interactive, annotated version of this diagram (with a table reference
+and notes on the two 1:1 links' known exceptions) is published at
+https://claude.ai/code/artifact/87ccf198-6459-46f5-ba95-10c9e48c1f70 — the
+version above renders inline wherever GitHub/an editor supports Mermaid,
+which the linked page doesn't depend on.
 
 ## Repo layout
 
 ```
 pdfs/               source PDF scans (see table above)
 docs/
-  introduction.md         non-technical, step-by-step walkthrough of the whole process
   schema.md              field-by-field data model
   structural_survey.md   how the printed table formats vary across the run
   overview.md             corpus inventory stats
