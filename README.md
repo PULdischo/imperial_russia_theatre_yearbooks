@@ -142,11 +142,15 @@ run, the project tracks this explicitly:
 ```
 pdfs/               source PDF scans (see table above)
 docs/
+  introduction.md         non-technical, step-by-step walkthrough of the whole process
   schema.md              field-by-field data model
   structural_survey.md   how the printed table formats vary across the run
   overview.md             corpus inventory stats
   research_questions.md   what this data can answer, and modeling tradeoffs
   pipeline.md             pipeline stages, scripts, usage
+  verbatim_deliverables.md   output-format comparison for the verbatim layer
+  research_dataset.md       entity-resolution plan for the research layer
+  entity_centric_model.md   plan for a Person/Performance/Work/Theater-centric v2 (not yet built)
   eval/
     gold/                 12-page hand-transcribed ground truth + builder scripts
     known_issues.md        extraction issue ledger
