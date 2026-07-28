@@ -105,7 +105,7 @@ def check_repertoire(parsed_dir: Path) -> list[dict]:
     KNOWN_THEATERS = ["Маріинскій", "Александринскій", "Михайловскій", "Большой", "Малый", "Новый"]
 
     for page_id, rows in sessions.items():
-        dark_count = sum(1 for r in rows if r.get("is_dark", "").strip().lower() == "true")
+        dark_count = sum(1 for r in rows if r.get("session_status", "").strip() == "no_performance")
         days = {r["date_text"].split()[0] for r in rows if r.get("date_text")}
         if dark_count == 0 and len(days) >= 6:
             flags.append(dict(page_id=page_id, table="performance_session", row_id="",

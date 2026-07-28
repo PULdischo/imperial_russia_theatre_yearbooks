@@ -161,6 +161,10 @@ pipeline/
   quality_checks.py      stage 3.5 (gold-free structural checks)
   eval_against_gold.py   stage 4
   build_duckdb.py        stage 5
+  build_excel_workbook.py   stage 5b -- verbatim layer as one .xlsx (docs/verbatim_deliverables.md)
+  build_obsidian_vault.py   stage 5c -- verbatim layer as one-note-per-page Obsidian vault
+  build_entities.py         stage 5d -- entity resolution (entities schema: theater/work/person, docs/research_dataset.md)
+  build_datasette.py        stage 5e -- entities schema as a browsable Datasette SQLite site
 outputs/            generated (gitignored) -- images, raw model output, parsed
                     CSVs, and the final .duckdb file, per run
 .env                DASHSCOPE_API_KEY (gitignored)

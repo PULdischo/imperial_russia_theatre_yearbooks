@@ -26,7 +26,9 @@ class CreditLLM(BaseModel):
     credit_type: CreditType
     label: str
     role_name: Optional[str] = None
-    count: Optional[int] = None
+    # float, not int: the printed ledger genuinely uses fractional credits
+    # (e.g. "—.5") for a role split between two artists -- not an OCR error.
+    count: Optional[float] = None
 
 
 class RosterEntryLLM(BaseModel):
@@ -77,9 +79,15 @@ def flatten_roster_page(page_id: str, entity_type: str, page: RosterPage) -> dic
                 "end_type": p.end_type or "",
             })
         for k, c in enumerate(e.credits, start=1):
+            if c.count is None:
+                count_out = ""
+            elif c.count == int(c.count):
+                count_out = str(int(c.count))
+            else:
+                count_out = str(c.count)
             credits.append({
                 "credit_id": f"{entry_id}__cr{k}", "entry_id": entry_id,
                 "credit_type": c.credit_type, "label": c.label,
-                "role_name": c.role_name or "", "count": c.count if c.count is not None else "",
+                "role_name": c.role_name or "", "count": count_out,
             })
     return {"roster_entry": entries, "service_period": periods, "roster_entry_credit": credits}

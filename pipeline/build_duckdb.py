@@ -102,15 +102,122 @@ def build_analysis_schema(con: duckdb.DuckDBPyConnection) -> None:
         """)
         print("analysis.roster_entry built (+ heading_path_clean, service_class_clean, role_normalized)")
 
-    if "performance_session" in tables:
-        con.execute("""
+    if "performance_session" in tables and "source_pages" in tables:
+        # Completeness reconciliation (docs/schema.md's session_status note).
+        # A model recall failure produces no row at all for a (date, theater)
+        # cell, which is indistinguishable from "nothing happened here" if
+        # you only look at raw.performance_session -- this makes that gap
+        # queryable instead of invisible, by comparing what was captured
+        # against an expected date x theater grid and inserting a
+        # session_status='not_captured' placeholder for anything missing.
+        # Two real data-quality bugs were found and fixed getting here (both
+        # upstream of this query, not worked around inside it): parse_russian_date
+        # was assigning the wrong calendar year for season-spanning printed
+        # ranges like "1896-1897 гг." (schemas/dates.py), and theater names
+        # need prefix/alias normalization -- post-1898-99 pages consistently
+        # append "театръ"/"театр", and "Маріинскій" is sometimes spelled without
+        # its pre-reform "і" ("Мариинскій") -- both handled by theater_canonical
+        # below rather than by touching the verbatim raw.theater column.
+        con.execute(r"""
             CREATE OR REPLACE TABLE analysis.performance_session AS
-            SELECT *,
-                   TRY_CAST(receipts_rubles AS INTEGER) * 100
-                       + TRY_CAST(receipts_kopecks AS INTEGER) AS receipts_total_kopecks
-            FROM raw.performance_session
+            WITH base AS (
+                SELECT *,
+                       TRY_CAST(receipts_rubles AS INTEGER) * 100
+                           + TRY_CAST(receipts_kopecks AS INTEGER) AS receipts_total_kopecks,
+                       TRY_CAST(date_undate AS DATE) AS date_parsed,
+                       CASE
+                           WHEN starts_with(theater, 'Маріинскій') OR starts_with(theater, 'Мариинскій')
+                               THEN 'Маріинскій'
+                           WHEN starts_with(theater, 'Александринскій') THEN 'Александринскій'
+                           WHEN starts_with(theater, 'Михайловскій') THEN 'Михайловскій'
+                           WHEN starts_with(theater, 'Большой') THEN 'Большой'
+                           WHEN starts_with(theater, 'Малый') THEN 'Малый'
+                           WHEN starts_with(theater, 'Новый') THEN 'Новый'
+                           ELSE NULL
+                       END AS theater_canonical
+                FROM raw.performance_session
+            ),
+            -- Which of the 6 known theaters existed for a given season --
+            -- SP's 3 theaters run the whole 1890/91-1907/08 span; Moscow's
+            -- third venue (Новый театръ) only from 1898-99 on, per
+            -- docs/structural_survey.md.
+            season_years AS (
+                SELECT DISTINCT season, TRY_CAST(left(season, 4) AS INTEGER) AS start_year
+                FROM raw.source_pages WHERE entity_type = 'Repertoire'
+            ),
+            theater_roster AS (
+                SELECT season, theater, city FROM season_years, (VALUES
+                    ('Маріинскій', 'SP'), ('Александринскій', 'SP'), ('Михайловскій', 'SP'),
+                    ('Большой', 'Moscow'), ('Малый', 'Moscow')
+                ) AS t(theater, city)
+                UNION ALL
+                SELECT season, 'Новый', 'Moscow' FROM season_years WHERE start_year >= 1898
+            ),
+            -- Expected city set per page: pre-1898-99 pages combine both
+            -- cities' theaters (hardcoded -- true regardless of what
+            -- survived extraction); 1898-99-on pages are single-city blocks,
+            -- so the expected city is whichever city's sessions actually
+            -- appear for that page. Known limit: if a post-split page lost
+            -- 100% of its sessions, there's no surviving evidence of which
+            -- city it was, so no gaps can be synthesized for it.
+            page_cities AS (
+                SELECT sp.page_id, sp.season,
+                    CASE WHEN sy.start_year < 1898 THEN ['SP', 'Moscow']
+                         ELSE (SELECT list(DISTINCT b.city) FROM base b WHERE b.page_id = sp.page_id)
+                    END AS expected_cities
+                FROM raw.source_pages sp
+                JOIN season_years sy USING (season)
+                WHERE sp.entity_type = 'Repertoire'
+            ),
+            -- Expected date range per page: min/max of its own captured
+            -- dates, assuming (per docs/schema.md) the source prints one
+            -- row per calendar day with no skipped days in between.
+            page_dates AS (
+                SELECT page_id, min(date_parsed) AS min_date, max(date_parsed) AS max_date
+                FROM base WHERE date_parsed IS NOT NULL
+                GROUP BY page_id
+            ),
+            expected_grid AS (
+                SELECT pc.page_id, pc.season, CAST(gs.d AS DATE) AS date_parsed,
+                       tr.theater, tr.city
+                FROM page_cities pc
+                JOIN page_dates pd USING (page_id)
+                JOIN theater_roster tr
+                    ON tr.season = pc.season AND list_contains(pc.expected_cities, tr.city)
+                , LATERAL (SELECT unnest(generate_series(pd.min_date, pd.max_date, INTERVAL 1 DAY)) AS d) AS gs
+            ),
+            covered AS (
+                SELECT DISTINCT page_id, date_parsed, theater_canonical AS theater
+                FROM base
+                WHERE date_parsed IS NOT NULL AND theater_canonical IS NOT NULL
+            ),
+            gap_rows AS (
+                SELECT
+                    eg.page_id || '__gap_' || strftime(eg.date_parsed, '%Y%m%d') || '_' || eg.theater
+                        AS session_id,
+                    eg.page_id, eg.season, eg.city,
+                    '' AS date_text, '' AS month_text, '' AS year_text,
+                    strftime(eg.date_parsed, '%Y-%m-%d') AS date_undate,
+                    'day' AS session, eg.theater,
+                    'not_captured' AS session_status,
+                    '' AS receipts_text, NULL::INTEGER AS receipts_rubles,
+                    NULL::INTEGER AS receipts_kopecks, '' AS annotation,
+                    NULL::INTEGER AS receipts_total_kopecks, eg.date_parsed,
+                    eg.theater AS theater_canonical
+                FROM expected_grid eg
+                LEFT JOIN covered c
+                    ON c.page_id = eg.page_id AND c.date_parsed = eg.date_parsed AND c.theater = eg.theater
+                WHERE c.page_id IS NULL
+            )
+            SELECT * EXCLUDE (date_parsed) FROM base
+            UNION ALL BY NAME
+            SELECT * EXCLUDE (date_parsed) FROM gap_rows
         """)
-        print("analysis.performance_session built (+ receipts_total_kopecks)")
+        n_gaps = con.execute(
+            "SELECT count(*) FROM analysis.performance_session WHERE session_status = 'not_captured'"
+        ).fetchone()[0]
+        print(f"analysis.performance_session built (+ receipts_total_kopecks, theater_canonical, "
+              f"{n_gaps} not_captured completeness gaps)")
 
 
 def main():

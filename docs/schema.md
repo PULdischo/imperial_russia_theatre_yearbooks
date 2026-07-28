@@ -93,7 +93,7 @@ rather than as wide columns.
 | `credit_type` | enum | `category_total` \| `named_work` |
 | `label` | string | for `category_total`: `балетахъ`/`операхъ`/`драмѣ`/`Всего`; for `named_work`: the work title |
 | `role_name` | string, nullable | only for `named_work` — the character name in parens |
-| `count` | int | |
+| `count` | number | usually an integer, but the printed ledger occasionally uses a fractional value (e.g. `.5`) for a role split between two artists — kept as printed, not rounded |
 
 ---
 
@@ -120,11 +120,50 @@ receipts are actually printed at, even when multiple works share the bill.
 | `date_undate` | string | Undate-serialized calendar date (Julian, as printed) |
 | `session` | enum | `day` (single performance) \| `morning` (`УТРО`) \| `evening` (`ВЕЧЕРЪ`) |
 | `theater` | string | verbatim theater name — value, not column: `Маріинскій`, `Александринскій`, `Михайловскій`, `Большой`, `Малый`, `Новый`, or others as they appear |
-| `is_dark` | bool | true when the cell is a printed dash (no performance that session) |
+| `session_status` | enum | `performed` \| `no_performance` — see below |
 | `receipts_text` | string, nullable | verbatim, e.g. `3462 р. 15 к.` |
 | `receipts_rubles` | int, nullable | parsed |
 | `receipts_kopecks` | int, nullable | parsed |
 | `annotation` | string, nullable | benefit-performance / anniversary notes printed in the cell, verbatim |
+
+**`session_status` and the completeness problem it doesn't solve on its own.**
+`no_performance` (formerly named `is_dark` — renamed because "dark cell" is
+theater jargon, not intuitive to a researcher) means the model read an
+explicit printed dash: the theater really was closed that date, and that's
+a fact about the source, not a gap in our data. But a *third*, more common
+situation isn't representable by any value of this column at all: the
+model's recall on this table is non-deterministically incomplete (see
+`docs/eval/known_issues.md` #1) and simply omits some (date, theater)
+cells from its output entirely. A missing row and a row that was never
+expected look identical from inside this table — you cannot tell "the
+theater was open every day this month" from "we don't know what happened
+on the 14th" by querying `raw.performance_session` alone.
+
+That third state — **`not_captured`** — is deliberately *not* added as a
+third literal value here, because it isn't something transcribed from the
+page; it's an inference from "here's the date/theater grid this page
+should cover, here's what we actually got, here's the gap." It belongs in
+`analysis.performance_session` instead, built by `build_duckdb.py`: for
+each Repertoire page, the expected theater roster (era- and city-aware —
+see below) is crossed with the page's observed date range, left-joined
+against what was actually captured, and any missing combination is
+inserted as a synthesized row with `session_status = 'not_captured'` and
+no work/receipts data. This makes completeness directly queryable (e.g.
+"what fraction of expected cells are `not_captured`, by season") instead
+of invisible.
+
+Two assumptions this reconciliation rests on, both worth stating rather
+than leaving implicit: (1) the source prints one row per calendar day with
+no skipped days within a page's date range, so a page's min/max captured
+date defines its full expected range; (2) the "expected" theater roster
+per page is inferred from which cities actually appear among that page's
+*captured* sessions (for post-1898-99 single-city-block pages) or assumed
+to be both cities (for pre-1898-99 combined pages, keyed on season) — see
+`docs/structural_survey.md` for the era boundary and the Новый театръ
+introduction date this depends on. If a page loses *every* session for an
+entire city block to a recall failure, this method can't detect that gap
+(there's no surviving evidence of which city was expected), which is a
+known limit, not a silent error.
 
 ### `performance_work.csv`
 

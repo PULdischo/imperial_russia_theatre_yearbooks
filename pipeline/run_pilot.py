@@ -99,10 +99,16 @@ async def process_page(client: AsyncOpenAI, sem: asyncio.Semaphore, row: dict,
         log_row["status"] = "skipped_existing"
         return log_row
 
+    # extension-agnostic: render_pages.py normally writes .png, but oversized
+    # pages (some early-season Repertoire pages exceed DashScope's ~20MB
+    # data-uri limit as PNG) get manually converted to .jpg -- same page_id,
+    # different extension, so check both rather than hardcoding one.
     image_path = images_dir / f"{page_id}.png"
     if not image_path.exists():
+        image_path = images_dir / f"{page_id}.jpg"
+    if not image_path.exists():
         log_row["status"] = "missing_image"
-        log_row["error"] = str(image_path)
+        log_row["error"] = str(images_dir / f"{page_id}.(png|jpg)")
         return log_row
 
     kind = "roster" if row["entity_type"] in ROSTER_KINDS else "repertoire"
@@ -150,12 +156,18 @@ async def main_async(args):
         print(f"[{i}/{len(tasks)}] {result['page_id']}: {result['status']}"
               + (f" ({result['error']})" if result["error"] else ""))
 
+    # Append, not overwrite: a re-run only retries previously-failed pages
+    # (everything else is skipped_existing), so overwriting would discard the
+    # token/usage history for every page succeeded by an earlier invocation.
     usage_path = args.out_dir / "usage_log.csv"
-    with open(usage_path, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=list(log_rows[0].keys()) if log_rows else
-                            ["page_id", "status", "attempts", "elapsed_seconds",
-                             "prompt_tokens", "completion_tokens", "total_tokens", "error"])
-        w.writeheader()
+    fieldnames = list(log_rows[0].keys()) if log_rows else \
+        ["page_id", "status", "attempts", "elapsed_seconds",
+         "prompt_tokens", "completion_tokens", "total_tokens", "error"]
+    write_header = not usage_path.exists()
+    with open(usage_path, "a", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=fieldnames)
+        if write_header:
+            w.writeheader()
         w.writerows(log_rows)
 
     ok = sum(1 for r in log_rows if r["status"] == "ok")

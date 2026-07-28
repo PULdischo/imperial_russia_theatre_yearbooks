@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -21,6 +22,47 @@ from schemas import RosterPage, RepertoirePage, flatten_roster_page, flatten_rep
 
 ROSTER_KINDS = {"Administration", "BalletArtists", "Musicians", "ProductionTeam",
                 "TheaterSchoolStaff", "Graduates"}
+
+# The model occasionally writes the printed Russian session label instead of
+# the normalized English enum value the schema expects (rare: ~80/23000
+# repertoire sessions). This is a categorical field, not verbatim text, so
+# normalizing here is correct rather than a verbatim-preservation violation.
+SESSION_LABEL_FIX = {"утро": "morning", "вечеръ": "evening", "день": "day"}
+
+# Rare (~4/20000 roster entries) recurring model failure: when a row has no
+# heading of its own to repeat, the model sometimes puts the person's full
+# name ("Surname, First Patronymic") into heading_path and leaves
+# family_name/first_name/patronymic empty, using the row's actual heading
+# text as `institution` instead. Recoverable deterministically since the
+# "Surname, First [Patronymic]" shape doesn't occur in real heading_path
+# values (those are always institution/department/role segments).
+NAME_IN_HEADING_RE = re.compile(
+    r"^([А-ЯЁІѢѲѴ][а-яёіѣѳѵ\-]+(?:\s+\d+-(?:й|я|е))?),\s+"
+    r"([А-ЯЁІѢѲѴ][а-яёіѣѳѵ]+)(?:\s+([А-ЯЁІѢѲѴ][а-яёіѣѳѵ]+))?$"
+)
+
+
+def _repair_repertoire(parsed: dict) -> dict:
+    for s in parsed.get("sessions", []):
+        val = s.get("session")
+        if val in SESSION_LABEL_FIX:
+            s["session"] = SESSION_LABEL_FIX[val]
+    return parsed
+
+
+def _repair_roster(parsed: dict) -> dict:
+    for e in parsed.get("entries", []):
+        if e.get("family_name"):
+            continue
+        heading = e.get("heading_path") or ""
+        m = NAME_IN_HEADING_RE.match(heading.strip())
+        if not m:
+            continue
+        e["family_name"] = m.group(1)
+        e["first_name"] = m.group(2)
+        e["patronymic"] = m.group(3)
+        e["heading_path"] = None
+    return parsed
 
 
 def _strip_code_fence(text: str) -> str:
@@ -73,9 +115,11 @@ def main():
             parsed_json = json.loads(_strip_code_fence(raw_text))
 
             if kind == "roster":
+                parsed_json = _repair_roster(parsed_json)
                 page = RosterPage.model_validate(parsed_json)
                 tables = flatten_roster_page(page_id, row["entity_type"], page)
             else:
+                parsed_json = _repair_repertoire(parsed_json)
                 page = RepertoirePage.model_validate(parsed_json)
                 tables = flatten_repertoire_page(page_id, row["season"], row["city"], page)
 

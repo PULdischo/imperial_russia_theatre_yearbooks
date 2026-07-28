@@ -85,7 +85,8 @@ def flatten_repertoire_page(page_id: str, season: str, city: str, page: Repertoi
             "date_text": s.date_text, "month_text": s.month_text or "",
             "year_text": s.year_text or "",
             "date_undate": parse_russian_date(date_input) or "",
-            "session": s.session, "theater": theater, "is_dark": s.is_dark,
+            "session": s.session, "theater": theater,
+            "session_status": "no_performance" if s.is_dark else "performed",
             "receipts_text": s.receipts_text or "", "receipts_rubles": rub,
             "receipts_kopecks": kop, "annotation": s.annotation or "",
         })

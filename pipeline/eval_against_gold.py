@@ -25,7 +25,7 @@ import csv
 
 ROSTER_FIELDS = ["family_name", "first_name", "patronymic", "heading_path", "rank_or_title",
                   "tenure_note_text", "instrument", "service_class", "subject_taught"]
-SESSION_FIELDS = ["city", "is_dark", "session"]
+SESSION_FIELDS = ["city", "session_status", "session"]
 KNOWN_THEATERS = ["Маріинскій", "Александринскій", "Михайловскій", "Большой", "Малый", "Новый"]
 
 

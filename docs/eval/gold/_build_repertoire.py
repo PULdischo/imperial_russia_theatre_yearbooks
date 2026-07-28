@@ -28,7 +28,11 @@ def add_session(session_id, page_id, season, city, date_text, month_text, year_t
         session_id=session_id, page_id=page_id, season=season, city=city,
         date_text=date_text, month_text=month_text, year_text=year_text,
         date_undate=date_undate, session=session, theater=theater,
-        is_dark=is_dark, receipts_text=receipts_text,
+        # is_dark stays the authoring-time bool param (easy to write by hand);
+        # session_status is what actually gets written out, matching the
+        # pipeline's renamed field (docs/schema.md: "is_dark" -> "session_status").
+        session_status=("no_performance" if is_dark else "performed"),
+        receipts_text=receipts_text,
         receipts_rubles=rub, receipts_kopecks=kop, annotation=annotation,
     ))
     if work_list:
@@ -101,7 +105,7 @@ for day, weekday, theaters in rows_1890:
 # ---------------------------------------------------------------------------
 # Page 2: repertoire_1898-99_MSK_p019 -- Moscow-only block, Dec 17-30 1898
 # ---------------------------------------------------------------------------
-PID2 = "repertoire_1898-99_MSK_p019"
+PID2 = "repertoire_1898-99_p019"
 # (day, weekday, [ (theater, session, is_dark, receipts_text, work_list) ... ])
 rows_msk = [
     ("17", "Четвергъ", [
@@ -178,7 +182,7 @@ for day, weekday, entries in rows_msk:
 # ---------------------------------------------------------------------------
 # Page 3: repertoire_1898-99_SP_p020 -- SP-only block, Dec 31 1898 - Jan 11 1899
 # ---------------------------------------------------------------------------
-PID3 = "repertoire_1898-99_SP_p020"
+PID3 = "repertoire_1898-99_p020"
 rows_sp = [
     ("31", "Четвергъ", "1898-12-31", [
         ("Маріинскій", "morning", True, "", None),
@@ -252,7 +256,7 @@ for day, weekday, date_undate, entries in rows_sp:
 # ---------------------------------------------------------------------------
 # Page 4: repertoire_1907-08_SP_p000 -- SP-only, Aug 30 - Sep 9 1907
 # ---------------------------------------------------------------------------
-PID4 = "repertoire_1907-08_SP_p000"
+PID4 = "repertoire_1907-08_p000"
 rows_1907 = [
     ("30", "Четвергъ", "1907-08-30", [
         ("Маріинскій", "day", False, "2635 р. 10 к.", [("Жизнь за царя", "оп.")]),
@@ -324,7 +328,7 @@ for day, weekday, date_undate, entries in rows_1907:
 # write out
 # ---------------------------------------------------------------------------
 session_fields = ["session_id", "page_id", "season", "city", "date_text", "month_text",
-                   "year_text", "date_undate", "session", "theater", "is_dark",
+                   "year_text", "date_undate", "session", "theater", "session_status",
                    "receipts_text", "receipts_rubles", "receipts_kopecks", "annotation"]
 with open(OUT / "performance_session.csv", "w", newline="", encoding="utf-8") as f:
     w = csv.DictWriter(f, fieldnames=session_fields)
