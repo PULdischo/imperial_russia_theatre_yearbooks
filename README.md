@@ -35,7 +35,7 @@ has the full breakdown and per-season page counts — worth reading before
 assuming page count scales evenly with season, it doesn't: the Repertoire
 table format changes partway through the run and roughly quadruples in
 page count, documented in `docs/structural_survey.md`). See
-`docs/research_questions.md` for the fuller research framing.
+`docs/research_questions.md` for the fuller research framing..
 
 ## Two layers, decided up front
 
