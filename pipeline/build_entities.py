@@ -455,10 +455,14 @@ def build_person_tier2_candidates(
             display_2 VARCHAR,
             similarity_score DOUBLE,
             match_reason VARCHAR,
-            status VARCHAR
+            status VARCHAR,
+            tenure_signal VARCHAR,
+            tenure_evidence VARCHAR
         )
     """)
-    con.executemany("INSERT INTO entities.person_candidate VALUES (?, ?, ?, ?, ?, ?, ?, ?)", rows)
+    con.executemany(
+        "INSERT INTO entities.person_candidate VALUES (?, ?, ?, ?, ?, ?, ?, ?, NULL, NULL)", rows
+    )
 
     n_preserved = sum(1 for r in rows if r[7] != "pending")
     print(f"entities.person_candidate: {len(rows)} candidate pairs "
@@ -468,15 +472,239 @@ def build_person_tier2_candidates(
         print(f"  {n_preserved} already-reviewed decisions preserved from a previous run")
 
 
+def _annotate_tenure_signal(con: duckdb.DuckDBPyConnection) -> None:
+    """Attaches an independent corroborating/contradicting signal to every
+    Tier 2 candidate pair, run every time (not just for pending pairs) so
+    the evidence behind a decision -- auto or human -- stays visible in the
+    exported data: raw.service_period.start_date_undate is a real historical
+    fact ("in service since 3 September 1881") that gets reprinted
+    identically in every later yearbook the same person appears in, so two
+    near-identical names that also share an exact start date is much
+    stronger evidence than name similarity alone -- confirmed against the
+    real data: 800/851 pending Tier 2 pairs (94%) shared at least one exact
+    start date. tenure_signal is one of:
+      - 'shared_start_date'  -- at least one exact match, strong corroboration
+      - 'conflicting_dates'  -- both sides have dates, none match
+      - 'no_date_data'       -- one or both sides have no service_period row
+    """
+    con.execute("""
+        CREATE OR REPLACE TEMP TABLE _pc_dates AS
+        WITH person_dates AS (
+            SELECT pl.person_id, sp.start_date_undate
+            FROM entities.person_link pl
+            JOIN raw.service_period sp ON sp.entry_id = pl.entry_id
+            WHERE sp.start_date_undate IS NOT NULL
+        ),
+        d1 AS (
+            SELECT pc.candidate_id, list(DISTINCT pd.start_date_undate) AS dates_1
+            FROM entities.person_candidate pc
+            JOIN person_dates pd ON pd.person_id = pc.person_id_1
+            GROUP BY 1
+        ),
+        d2 AS (
+            SELECT pc.candidate_id, list(DISTINCT pd.start_date_undate) AS dates_2
+            FROM entities.person_candidate pc
+            JOIN person_dates pd ON pd.person_id = pc.person_id_2
+            GROUP BY 1
+        )
+        SELECT pc.candidate_id,
+               coalesce(len(d1.dates_1), 0) AS n1,
+               coalesce(len(d2.dates_2), 0) AS n2,
+               list_intersect(d1.dates_1, d2.dates_2) AS shared_dates
+        FROM entities.person_candidate pc
+        LEFT JOIN d1 ON d1.candidate_id = pc.candidate_id
+        LEFT JOIN d2 ON d2.candidate_id = pc.candidate_id
+    """)
+    con.execute("""
+        UPDATE entities.person_candidate pc
+        SET tenure_signal = CASE
+                WHEN t.n1 = 0 OR t.n2 = 0 THEN 'no_date_data'
+                WHEN len(t.shared_dates) > 0 THEN 'shared_start_date'
+                ELSE 'conflicting_dates'
+            END,
+            tenure_evidence = CASE
+                WHEN t.shared_dates IS NOT NULL AND len(t.shared_dates) > 0
+                    THEN array_to_string(t.shared_dates, ', ')
+                ELSE NULL
+            END
+        FROM _pc_dates t
+        WHERE pc.candidate_id = t.candidate_id
+    """)
+    con.execute("DROP TABLE _pc_dates")
+
+
+def apply_tenure_corroboration(con: duckdb.DuckDBPyConnection) -> None:
+    """Auto-confirms (without individual human sign-off) any still-pending
+    pair whose tenure_signal is 'shared_start_date' -- an explicit,
+    deliberate exception to this pipeline's usual never-auto-merge rule for
+    Tier 2, made because the shared-start-date signal is strong enough that
+    the researcher chose to trust it directly. Kept as its own status value
+    ('confirmed_tenure') rather than reusing 'confirmed' so the audit trail
+    always shows whether a merge came from this rule or an explicit human
+    Yes (docs/research_dataset.md)."""
+    con.execute("""
+        UPDATE entities.person_candidate
+        SET status = 'confirmed_tenure'
+        WHERE status = 'pending' AND tenure_signal = 'shared_start_date'
+    """)
+    n_confirmed = con.execute(
+        "SELECT count(*) FROM entities.person_candidate WHERE status = 'confirmed_tenure'"
+    ).fetchone()[0]
+    n_pending = con.execute(
+        "SELECT count(*) FROM entities.person_candidate WHERE status = 'pending'"
+    ).fetchone()[0]
+    print(f"entities.person_candidate: {n_confirmed} pairs auto-confirmed via shared service-start "
+          f"date (tenure corroboration); {n_pending} remain pending for human review")
+
+
+def reconcile_person_merges(con: duckdb.DuckDBPyConnection) -> int:
+    """Turns a confirmed/confirmed_tenure/confirmed_wikidata decision into
+    an actual merge -- not just a status flag. Repoints
+    entities.person_link.person_id for
+    every appearance that belonged to the absorbed person onto the
+    survivor, so the survivor's own appearance record is the real,
+    consolidated one. Runs on every pipeline execution, unconditionally
+    (not only when a merge is first confirmed): build_person_tier1 rebuilds
+    person_link from raw data fresh every run and would otherwise silently
+    undo the repoint on the very next rebuild.
+
+    Uses union-find rather than resolving each pair in isolation: a person
+    can appear in more than one confirmed pair (e.g. three printed spelling
+    variants of one patronymic cross-match pairwise -- A-B, A-C, B-C -- all
+    three seen in the real data) and naive pairwise merging would pick a
+    different, inconsistent survivor depending on row order. The survivor
+    of each connected component is always its lexicographically smallest
+    person_id -- arbitrary, like the old single-pair rule, but now actually
+    stable across reruns regardless of which id a given row lists first.
+
+    Returns the number of person records absorbed this call. main() calls
+    this in a loop to a fixed point (0 returned): once a person is absorbed
+    they drop out of build_person_tier2_candidates's blocking pool entirely
+    (WHERE superseded_by_person_id IS NULL), so any OTHER still-pending pair
+    that happened to involve them would otherwise be silently lost instead
+    of being regenerated against their new survivor on the next pass.
+    """
+    pairs = con.execute("""
+        SELECT person_id_1, person_id_2 FROM entities.person_candidate
+        WHERE status IN ('confirmed', 'confirmed_tenure', 'confirmed_wikidata')
+    """).fetchall()
+    if not pairs:
+        return 0
+
+    parent: dict[str, str] = {}
+
+    def find(x: str) -> str:
+        parent.setdefault(x, x)
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(a: str, b: str) -> None:
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            root, child = (ra, rb) if ra < rb else (rb, ra)
+            parent[child] = root
+
+    for id1, id2 in pairs:
+        union(str(id1), str(id2))
+
+    absorbed = {node: find(node) for node in parent if find(node) != node}
+    if not absorbed:
+        return 0
+
+    con.executemany(
+        "UPDATE entities.person_link SET person_id = ? WHERE person_id = ?",
+        [(root, absorbed_id) for absorbed_id, root in absorbed.items()],
+    )
+    con.executemany("""
+        UPDATE entities.person SET superseded_by_person_id = ?
+        WHERE person_id = ? AND superseded_by_person_id IS NULL
+    """, [(root, absorbed_id) for absorbed_id, root in absorbed.items()])
+
+    # The survivor's attested season range must reflect the union of both
+    # clusters' real appearances now that person_link has been repointed --
+    # otherwise a merge could silently misstate a career span Tier 1 only
+    # ever computed from its own, now-incomplete, cluster.
+    con.execute("""
+        UPDATE entities.person p
+        SET first_attested_season = seasons.first_season,
+            last_attested_season = seasons.last_season
+        FROM (
+            SELECT pl.person_id, min(sp.season) AS first_season, max(sp.season) AS last_season
+            FROM entities.person_link pl
+            JOIN raw.roster_entry r ON r.entry_id = pl.entry_id
+            JOIN raw.source_pages sp ON sp.page_id = r.page_id
+            WHERE sp.season IS NOT NULL
+            GROUP BY pl.person_id
+        ) AS seasons
+        WHERE p.person_id = seasons.person_id
+    """)
+
+    print(f"entities.person: {len(absorbed)} person record(s) merged into "
+          f"{len(set(absorbed.values()))} surviving record(s) "
+          f"(entities.person_link repointed, attested season ranges recomputed)")
+    return len(absorbed)
+
+
+def _ensure_person_merge_log(con: duckdb.DuckDBPyConnection) -> None:
+    """A permanent, append-only decision ledger -- deliberately separate
+    from entities.person_candidate, which is a LIVE working set of
+    comparisons among currently-active (non-superseded) people and gets
+    rebuilt from scratch every Tier 2 iteration/rerun. The moment a person
+    is absorbed by a merge they drop out of that live set entirely (correct
+    -- they're resolved), which means the exact evidence a merge was based
+    on (similarity score, matched tenure date) would become unrecoverable
+    the instant a later iteration or rerun regenerates the table, unless
+    it's copied somewhere that never gets dropped. CREATE TABLE IF NOT
+    EXISTS (not OR REPLACE) and no FK into entities.person -- person gets
+    recreated every Tier 1 run, and this ledger must survive that."""
+    con.execute("""
+        CREATE TABLE IF NOT EXISTS entities.person_merge_log (
+            candidate_id UUID PRIMARY KEY,
+            person_id_1 UUID,
+            person_id_2 UUID,
+            display_1 VARCHAR,
+            display_2 VARCHAR,
+            similarity_score DOUBLE,
+            match_reason VARCHAR,
+            status VARCHAR,
+            tenure_signal VARCHAR,
+            tenure_evidence VARCHAR
+        )
+    """)
+
+
+def _log_decided_candidates(con: duckdb.DuckDBPyConnection) -> None:
+    """Copies any newly-decided (non-pending) row from the live
+    person_candidate table into the permanent log, skipping candidate_ids
+    already logged. candidate_id is deterministic (uuid5 of the sorted
+    person_id pair, see build_person_tier2_candidates), so this is safe to
+    call repeatedly across iterations and reruns without ever duplicating
+    a log entry."""
+    con.execute("""
+        INSERT INTO entities.person_merge_log
+        SELECT candidate_id, person_id_1, person_id_2, display_1, display_2,
+               similarity_score, match_reason, status, tenure_signal, tenure_evidence
+        FROM entities.person_candidate
+        WHERE status != 'pending'
+          AND candidate_id NOT IN (SELECT candidate_id FROM entities.person_merge_log)
+    """)
+
+
 def export_person_review_queue(con: duckdb.DuckDBPyConnection, out_path: Path) -> None:
     """Sheets-ready review queue (docs/research_dataset.md's non-coder
     interface): one row per pending candidate pair, a blank decision column
     the researcher fills in with Yes/No/Unsure. Re-import with
-    apply_person_merges() after review."""
+    apply_person_merges() after review. Includes the tenure_signal/evidence
+    columns so the researcher can see why a pair landed in the hard
+    (non-auto-confirmable) bucket -- conflicting dates vs. no date data at
+    all are very different situations to review."""
     import csv as csv_module
 
     rows = con.execute("""
-        SELECT candidate_id, display_1, display_2, similarity_score, match_reason
+        SELECT candidate_id, display_1, display_2, similarity_score, match_reason,
+               tenure_signal, tenure_evidence
         FROM entities.person_candidate WHERE status = 'pending'
         ORDER BY match_reason, similarity_score DESC
     """).fetchall()
@@ -485,17 +713,45 @@ def export_person_review_queue(con: duckdb.DuckDBPyConnection, out_path: Path) -
     with open(out_path, "w", newline="", encoding="utf-8-sig") as f:
         w = csv_module.writer(f)
         w.writerow(["candidate_id", "person_1", "person_2", "similarity", "reason",
-                    "decision (Yes/No/Unsure)"])
-        for candidate_id, d1, d2, score, reason in rows:
-            w.writerow([candidate_id, d1, d2, f"{score:.2f}", reason, ""])
+                    "tenure_signal", "tenure_evidence", "decision (Yes/No/Unsure)"])
+        for candidate_id, d1, d2, score, reason, tsig, tev in rows:
+            w.writerow([candidate_id, d1, d2, f"{score:.2f}", reason, tsig, tev or "", ""])
     print(f"{len(rows)} pending candidates -> {out_path} (utf-8-sig, ready for Sheets/Excel import)")
+
+
+def export_tenure_audit(con: duckdb.DuckDBPyConnection, out_path: Path) -> None:
+    """Full list of every pair auto-confirmed by apply_tenure_corroboration,
+    for the researcher to spot-check the rule itself -- not to collect a
+    decision (these are already applied/merged). Reads from the permanent
+    person_merge_log, not the live person_candidate table: by the time this
+    runs, later Tier 2 iterations may already have rebuilt person_candidate
+    without these rows (their people are no longer in the active blocking
+    pool once absorbed) -- the log is the only place this history survives."""
+    import csv as csv_module
+
+    rows = con.execute("""
+        SELECT candidate_id, display_1, display_2, similarity_score, match_reason, tenure_evidence
+        FROM entities.person_merge_log WHERE status = 'confirmed_tenure'
+        ORDER BY match_reason, similarity_score DESC
+    """).fetchall()
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w", newline="", encoding="utf-8-sig") as f:
+        w = csv_module.writer(f)
+        w.writerow(["candidate_id", "person_1", "person_2", "similarity", "name_match_reason",
+                    "shared_service_start_date", "auto_accept_reason"])
+        for candidate_id, d1, d2, score, reason, evidence in rows:
+            w.writerow([candidate_id, d1, d2, f"{score:.2f}", reason, evidence,
+                        "shared exact printed service-start date"])
+    print(f"{len(rows)} tenure-auto-confirmed pairs -> {out_path} (utf-8-sig, for spot-check review)")
 
 
 def apply_person_merges(con: duckdb.DuckDBPyConnection, decisions_path: Path) -> None:
     """Reads a reviewed copy of the export above (decision column filled in)
-    and applies confirmed merges: the later-registered person_id is marked
-    superseded_by the earlier one. Non-destructive -- both UUIDs keep
-    working as citation-stable references (docs/research_dataset.md)."""
+    and records confirmed/rejected decisions on entities.person_candidate.
+    Does not itself apply the merge -- reconcile_person_merges() does that
+    for every confirmed pair (this function's and apply_tenure_corroboration's
+    alike) right after, unconditionally, every pipeline run."""
     import csv as csv_module
 
     decisions = list(csv_module.DictReader(open(decisions_path, encoding="utf-8-sig")))
@@ -514,19 +770,7 @@ def apply_person_merges(con: duckdb.DuckDBPyConnection, decisions_path: Path) ->
         else:
             n_rejected += 1
 
-    to_merge = con.execute("""
-        SELECT person_id_1, person_id_2 FROM entities.person_candidate WHERE status = 'confirmed'
-    """).fetchall()
-    for id1, id2 in to_merge:
-        # person_id_1 is arbitrarily kept as the survivor -- doesn't matter
-        # which side wins, since both UUIDs remain valid, working references
-        # afterward via superseded_by_person_id (never deleted, never reused).
-        con.execute("""
-            UPDATE entities.person SET superseded_by_person_id = ?
-            WHERE person_id = ? AND superseded_by_person_id IS NULL
-        """, [id1, id2])
-
-    print(f"applied {n_confirmed} confirmed merges, {n_rejected} rejected, "
+    print(f"recorded {n_confirmed} confirmed, {n_rejected} rejected, "
           f"from {len(decisions)} reviewed rows")
 
 
@@ -537,20 +781,51 @@ def main():
                      help="write the pending Tier 2 candidate review queue to this CSV path")
     ap.add_argument("--apply-decisions", type=Path, default=None,
                      help="apply a reviewed copy of the review queue CSV (decision column filled in)")
+    ap.add_argument("--export-tenure-audit", type=Path, default=None,
+                     help="write the tenure-auto-confirmed pairs to this CSV for spot-check review")
     args = ap.parse_args()
 
     con = duckdb.connect(str(args.db))
     con.execute("CREATE SCHEMA IF NOT EXISTS entities")
+    _ensure_person_merge_log(con)
 
     build_theater(con)
     build_work(con)
     candidate_status = _snapshot_person_candidate_status(con)
     build_person_tier1(con)
-    build_person_tier2_candidates(con, candidate_status)
-    if args.apply_decisions:
-        apply_person_merges(con, args.apply_decisions)
+
+    # Looped to a fixed point rather than run once: reconcile_person_merges
+    # absorbs people out of the active pool, and build_person_tier2_candidates
+    # only ever compares currently-active people. Without looping, a still-
+    # pending pair whose OTHER member gets absorbed by an unrelated merge
+    # this same run would silently vanish instead of being regenerated
+    # against its new survivor -- confirmed against the real data (11 of the
+    # first pass's 51 pending pairs pointed at an already-superseded person).
+    # Monotonic (absorbed people never come back), so this always terminates;
+    # the cap is just a sanity backstop against a future logic bug looping.
+    MAX_TIER2_ITERATIONS = 10
+    decisions_applied = False
+    for iteration in range(1, MAX_TIER2_ITERATIONS + 1):
+        build_person_tier2_candidates(con, candidate_status)
+        _annotate_tenure_signal(con)
+        apply_tenure_corroboration(con)
+        if args.apply_decisions and not decisions_applied:
+            apply_person_merges(con, args.apply_decisions)
+            decisions_applied = True
+        _log_decided_candidates(con)
+        n_merged = reconcile_person_merges(con)
+        candidate_status = _snapshot_person_candidate_status(con)
+        if not n_merged:
+            break
+    else:
+        print(f"  WARNING: person-merge reconciliation did not reach a fixed point "
+              f"after {MAX_TIER2_ITERATIONS} iterations -- investigate before trusting "
+              f"entities.person_candidate")
+
     if args.export_review_queue:
         export_person_review_queue(con, args.export_review_queue)
+    if args.export_tenure_audit:
+        export_tenure_audit(con, args.export_tenure_audit)
 
     con.close()
     print(f"\nentities schema updated in {args.db}")

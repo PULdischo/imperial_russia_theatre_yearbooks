@@ -36,7 +36,8 @@ def _stringify_uuids(df):
             df[col] = df[col].apply(lambda v: str(v) if isinstance(v, uuid.UUID) else v)
     return df
 
-TABLES = ["theater", "work", "person", "person_link", "work_link", "person_candidate"]
+TABLES = ["theater", "work", "person", "person_link", "work_link", "person_candidate",
+          "person_merge_log", "person_wikidata_link"]
 
 PERSON_APPEARANCES_SQL = """
     SELECT
@@ -54,7 +55,8 @@ WORK_PERFORMANCES_SQL = """
     SELECT
         pw.work_id AS raw_work_id, wl.work_id, w.canonical_title, w.canonical_genre,
         ps.session_id, ps.page_id, ps.season, ps.city,
-        ps.theater, ps.date_text, ps.session_status, ps.receipts_text
+        ps.theater, ps.date_text, ps.month_text, ps.year_text, ps.date_undate,
+        ps.session_status, ps.receipts_text
     FROM entities.work_link wl
     JOIN entities.work w ON w.work_id = wl.work_id
     JOIN raw.performance_work pw ON pw.work_id = wl.raw_work_id
@@ -100,7 +102,22 @@ SCHEMAS = {
             person_id_1 TEXT REFERENCES person(person_id),
             person_id_2 TEXT REFERENCES person(person_id),
             display_1 TEXT, display_2 TEXT, similarity_score REAL,
-            match_reason TEXT, status TEXT
+            match_reason TEXT, status TEXT,
+            tenure_signal TEXT, tenure_evidence TEXT
+        )""",
+    "person_merge_log": """
+        CREATE TABLE person_merge_log (
+            candidate_id TEXT PRIMARY KEY,
+            person_id_1 TEXT, person_id_2 TEXT,
+            display_1 TEXT, display_2 TEXT, similarity_score REAL,
+            match_reason TEXT, status TEXT,
+            tenure_signal TEXT, tenure_evidence TEXT
+        )""",
+    "person_wikidata_link": """
+        CREATE TABLE person_wikidata_link (
+            person_id TEXT PRIMARY KEY REFERENCES person(person_id),
+            wikidata_qid TEXT, wikidata_label TEXT, wikidata_description TEXT,
+            match_evidence TEXT
         )""",
     "person_appearances": """
         CREATE TABLE person_appearances (
@@ -113,8 +130,8 @@ SCHEMAS = {
         CREATE TABLE work_performances (
             raw_work_id TEXT PRIMARY KEY, work_id TEXT REFERENCES work(work_id),
             canonical_title TEXT, canonical_genre TEXT, session_id TEXT, page_id TEXT,
-            season TEXT, city TEXT, theater TEXT, date_text TEXT, session_status TEXT,
-            receipts_text TEXT
+            season TEXT, city TEXT, theater TEXT, date_text TEXT, month_text TEXT,
+            year_text TEXT, date_undate TEXT, session_status TEXT, receipts_text TEXT
         )""",
 }
 
@@ -139,6 +156,17 @@ def main():
         sqlite_con.execute(SCHEMAS[table])
 
     for table in TABLES:
+        exists = con.execute(
+            "SELECT 1 FROM information_schema.tables WHERE table_schema = 'entities' AND table_name = ?",
+            [table],
+        ).fetchone()
+        if not exists:
+            # person_wikidata_link (and, on an older db, person_merge_log) are
+            # created by their own separate scripts, not build_entities.py's
+            # core rebuild -- an empty sqlite table still gets created above
+            # so the schema/relationships stay stable either way.
+            print(f"{table}: 0 rows (entities.{table} doesn't exist in the source db yet)")
+            continue
         df = _stringify_uuids(con.execute(f"SELECT * FROM entities.{table}").fetch_df())
         df.to_sql(table, sqlite_con, index=False, if_exists="append")
         print(f"{table}: {len(df)} rows")
