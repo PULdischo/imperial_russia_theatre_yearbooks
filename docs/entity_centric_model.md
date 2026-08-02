@@ -1,18 +1,24 @@
-# Plan: an entity-centric model (v2) — not yet built
+# The entity-centric model (v2) — implemented
 
 `docs/schema.md` (verbatim/`raw`) and `docs/research_dataset.md` (`entities`)
-describe the model as it exists today. This doc is a plan for a proposed
-**next evolution**, prompted by looking at the schema diagram and noticing
-its hub is `source_pages` — correct for how the data was *captured*, wrong
-for how a researcher actually wants to *query* it. Every interesting
-question ("this person's whole career," "how often was this work revived")
-currently means traversing a crosswalk table back through a page-centric
-table. This plan proposes to invert that: **Person, Performance, Work, and
-Theater become the primary, directly-queryable entities**; the verbatim
-page-centric tables stay exactly as they are today, underneath, as the
-immutable citation layer everything else points back to.
+describe the model as it existed before this plan. Prompted by looking at
+the schema diagram and noticing its hub was `source_pages` — correct for
+how the data was *captured*, wrong for how a researcher actually wants to
+*query* it. Every interesting question ("this person's whole career," "how
+often was this work revived") meant traversing a crosswalk table back
+through a page-centric table. This plan inverted that: **Person,
+Performance, Session, Work, and Theater are now the primary,
+directly-queryable entities**, in a new `research` schema
+(`pipeline/build_research_model.py`); the verbatim page-centric tables
+stay exactly as they were, underneath, as the immutable citation layer
+everything else points back to.
 
-Not implementing this yet — this is the design to react to first.
+**Implemented** — real results in the Implementation section below. The
+two open questions this doc originally left unresolved (fold roster data
+into `person` or keep it separate; accept the receipts double-counting
+risk or keep `session` distinct) were both settled in favor of the more
+conservative option: `person_appearance` stayed its own table, and
+`session` stayed distinct from `performance`.
 
 ## The core move: bake foreign keys in, stop crosswalking at query time
 
@@ -91,46 +97,88 @@ minting new synthetic keys:
   `work_id` for backward compatibility, or get renamed too — open
   question below).
 
-## What this makes redundant
+## What this made redundant
 
-`build_datasette.py`'s `person_appearances` and `work_performances`
+`build_datasette.py`'s old `person_appearances` and `work_performances`
 tables — built as SQL joins purely for Datasette's browsing/faceting UI —
-turn out to have already been a preview of this exact shape. Under this
-plan they stop being query-time joins and just *are*
-`entities.appearance` and `entities.performance` (joined to `session` and
-`work`) directly. The Datasette export script gets simpler, not more
-complex, once this lands.
+turned out to already be a preview of this exact shape. `build_datasette.py`
+is now a straight per-table copy of `research.*` with no joins at all,
+exactly as predicted: it got simpler, not more complex.
 
-## Open questions — worth deciding before building, not during
+## Implementation
 
-1. **Scope of `service_period`/`roster_entry_credit`: per-appearance or
-   per-person?** They're printed per listing today (a person's tenure note
-   gets reprinted, sometimes identically, every season they appear), so
-   this plan defaults to keeping them scoped to `appearance` (faithful to
-   what's actually printed) rather than consolidating into one
-   career-spanning record per `person` — but a consolidated "this person's
-   full service history" table is a reasonable thing to want later, and
-   would be a separate, further-derived table on top of this one, not a
-   replacement for it.
-2. **Does `raw.performance_work.work_id` get renamed**, or does the
-   rename only happen in the new layer? Renaming raw's own column is a
-   breaking change to an otherwise-immutable table; not renaming it keeps
-   the `raw_work_id`-style alias trick alive in a second place.
-3. **Versioning the deliverables.** The HF dataset and the running
-   Datasette site both currently reflect the v1 shape. Does v2 replace
-   them in place, or ship as a clearly-labeled second version so anything
-   already citing today's `person_id`/`work_id` values keeps working?
-   (Those specific UUIDs don't change under this plan — only the tables
-   built on top of them do — but worth being explicit about which URLs/
-   files represent which version.)
+`pipeline/build_research_model.py` builds a new `research` schema
+(`entities`, `raw`, and `analysis` are all untouched underneath). Real
+row counts against the full corpus:
 
-## Rough shape of the build, when it happens
+| Table | Rows | Grain |
+|---|---|---|
+| `research.theater` | 6 | one venue |
+| `research.work` | 4,509 | one resolved work — post `docs/work_normalization.md` |
+| `research.person` | 3,271 | one *currently-active* resolved person — the 676 superseded/merged records from `docs/person_normalization.md` are excluded, not shown as rows with a dead-end pointer |
+| `research.session` | 27,497 | one printed box-office record (date, theater, receipts), including the 3,771 `not_captured` completeness placeholders, now labeled `date_confidence = 'synthesized_gap'` rather than lumped in with genuine date-parsing failures |
+| `research.performance` | 25,013 | one work performed within one session |
+| `research.person_appearance` | 20,715 | one roster listing, resolved to its person |
 
-Not scheduling this, just sketching where the work would land: `person`
-and `work`'s Tier 1/Tier 2 resolution logic in `build_entities.py` is
-unaffected (the matching algorithm doesn't change) — what changes is the
-output shape, writing an enriched `appearance`/`session`/`performance`
-directly instead of a thin crosswalk table beside the untouched raw ones.
-`build_datasette.py` gets simpler. `docs/schema.md` and
-`docs/research_dataset.md` both need a "v2" companion section once this is
-real, not a rewrite — the raw layer's documentation doesn't change at all.
+**Person**: no `superseded_by_person_id`, no `tier1_key`, no separate
+`person_merge_log`/`person_wikidata_link` tables — `wikidata_qid`,
+`wikidata_label`, and `wikidata_description` are inlined directly onto
+`person` (a clean 1:1 today). The merge decisions themselves stay fully
+recorded in `entities.person_merge_log`, just not in the published table —
+a researcher wanting that audit trail queries the DuckDB file directly,
+same as `docs/eval`'s per-run history is available but not bundled into
+the browsable dataset.
+
+**Session vs. performance**: kept distinct, resolving Open Question
+(receipts). Receipts live *only* on `session` — `research.performance` has
+no receipts column at all — so `SUM(receipts_total_kopecks)` over
+`research.session` is always safe and summing `research.performance` can
+never even be attempted. Verified directly: a real multi-work session
+(`repertoire_1890-91_p000__s005`, 2 works) produces exactly 2
+`performance` rows and exactly 1 `session` row.
+
+**`session.date`** is the best-available date: the run-corroborated
+correction from `docs/performance_normalization.md` when there is one,
+otherwise the original computed date, with `date_confidence` always
+alongside it — never silently hidden.
+
+**`person_appearance`** stayed a separate table rather than folding into
+`person` or `performance` (resolving Open Question 1 differently than a
+nested-column alternative that was also considered): a roster listing is
+a season-level employment fact with no tie to a specific work performance,
+and a many-to-many relationship (one person, many listings) is what a
+real table is for.
+
+One real bug found and fixed while building this: `entities.person_link`
+was found still pointing 3,024 rows at already-superseded people, from an
+*earlier, unrelated* rerun of `build_entities.py` (for Work
+normalization) silently resetting repointing that a previous run had
+already applied correctly. `build_person_tier1` rebuilds `person_link`
+from scratch every run using only each row's own exact-match cluster, with
+no knowledge of any later Tier 2/tenure/Wikidata merge — and once a person
+is absorbed, they drop out of Tier 2's candidate pool entirely, so the
+specific pair that ever justified merging them can never be regenerated to
+re-trigger a per-decision repoint on a later run. Fixed with
+`_repoint_all_superseded()`: a full-chain resolution over the *entire*
+current `superseded_by_person_id` state in `entities.person`, run once at
+the end of every `build_entities.py` invocation, independent of which
+candidate pairs happen to still be regenerable. Caught only because
+`research.person_appearance`'s foreign key into `research.person` (which
+excludes superseded rows) failed loudly at build time — a real,
+concrete case for keeping real FK constraints even in a project that
+mostly works in plain DuckDB/SQL.
+
+## Resolved decisions (open questions from the original plan)
+
+1. **Scope of `service_period`/`roster_entry_credit`**: kept scoped to
+   `raw`, joined via `entry_id` = `person_appearance.appearance_id` when
+   needed, not flattened into `person_appearance` itself — a person can
+   have more than one service period per listing, and flattening would
+   have meant guessing which one "belongs" on the row.
+2. **`raw.performance_work.work_id` was not renamed** — `raw` stays
+   completely untouched, per this project's standing rule. The new layer
+   uses its own name (`performance_id`) instead.
+3. **Versioning**: not yet decided which HF/Datasette artifacts get
+   replaced in place versus versioned — still open, now that the schema
+   itself is real and this becomes an actual publishing decision rather
+   than a hypothetical one.

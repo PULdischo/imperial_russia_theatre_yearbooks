@@ -1,4 +1,4 @@
-# Performance normalization: strategy
+# Performance normalization: strategy and date validation
 
 Continuing from `docs/work_normalization.md` (title/genre cleanup) and
 `docs/entity_centric_model.md` (the proposed `entities.performance` fact
@@ -6,7 +6,11 @@ table), this covers three things for the performance-level data
 specifically: keeping the verbatim title/genre while relating each
 performance to the *normalized* work identity once `work_normalization.md`
 is built, the same question for genre, and a real standardized date
-column. This is a plan only — nothing here is implemented.
+column. The title/genre-linking section below is still a plan (it depends
+on `work_normalization.md`, not yet implemented). **The date-validation
+section is implemented** — `pipeline/validate_performance_dates.py`,
+writing `analysis.performance_session_date_check` — with real results
+included below.
 
 ## Title and genre: verbatim stays, plus a link to the normalized identity
 
@@ -231,6 +235,51 @@ looking for elsewhere, but it should be expected to catch errors in the
 *specific* field(s) that redundantly encode the same fact, not treated as
 a stand-in for a general quality score across unrelated columns — confirmed
 here rather than assumed.
+
+## Implementation
+
+`pipeline/validate_performance_dates.py` implements the revised strategy
+above: groups `raw.performance_session` into date-blocks (the theaters
+sharing one printed date label), flags intra-block disagreement directly,
+finds maximal runs of consecutive calendar-mismatched blocks, and
+auto-corrects a run only when **2 or more** of its blocks independently
+agree on the same day-shift (searched within ±7 days, using Julian Day
+Number arithmetic throughout so a correction can never land on an invalid
+calendar date and never needs to construct a Gregorian-invalid
+intermediate like Julian's 29 February 1900). An isolated single-block
+mismatch — the exact case that produced a confident wrong answer with a
+naive month-shift heuristic — is left `unresolved` rather than guessed at,
+by design.
+
+Verified against the hand-checked page before trusting it on the rest of
+the corpus: it reproduced the manual result exactly — the six-row +1 run
+(days 16–21) auto-corrected, and the isolated day "13" (needing +2, no
+run corroboration) correctly left `unresolved` rather than guessed.
+
+Writes an additive `analysis.performance_session_date_check` table
+(`session_id`, `date_confidence`, `corrected_date_undate`, `drift_days`,
+`note`) — `raw.performance_session` and the existing
+`analysis.performance_session` are both untouched. Results across the
+full corpus:
+
+| `date_confidence` | Count | Share |
+|---|---|---|
+| `verified` | 20,583 | 86.8% |
+| `corrected` | 1,802 | 7.6% |
+| `unparseable` (no day-of-week text to check against) | 1,055 | 4.4% |
+| `unresolved` (mismatch, no run corroboration) | 155 | 0.7% |
+| `intra_block_disagreement` | 72 | 0.3% |
+| `no_date` | 56 | 0.2% |
+| `invalid_date` (e.g. `1902-11-31` — November has 30 days) | 3 | 0.0% |
+
+7.6% of all rows got a real, run-corroborated correction — noticeably
+more than the 155 left `unresolved`, meaning most of the original 2,002
+mismatches turned out to have the multi-row corroboration needed to trust
+a fix, once evaluated as runs rather than single rows. `corrected_date_undate`
+and `drift_days` are exposed in the Datasette export (`work_performances`
+and the standalone `performance_session_date_check` table) alongside the
+original `date_undate`, non-destructively — a researcher can facet on
+`date_confidence` and decide per-query whether to trust the correction.
 
 ## Open questions
 

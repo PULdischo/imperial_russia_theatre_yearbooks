@@ -166,13 +166,15 @@ erase a real distinction, not just noise.
 ## Where this stands
 
 The diplomatic transcription is complete across the full corpus. Record
-linkage is live for venues (essentially solved, six known venues) and
-works (canonicalization-based, low ambiguity); the person-linkage
-candidate pool has been generated and is awaiting the human adjudication
-pass described above. `docs/research_dataset.md` has the full
-entity-resolution design; `docs/entity_centric_model.md` sketches a
-proposed next iteration of the research dataset's table structure, not
-yet built.
+linkage is live for venues (essentially solved, six known venues), works
+(canonicalization-based, further cleaned up per `docs/work_normalization.md`),
+and people (most of the fuzzy-match pool auto-confirmed against
+independent corroborating evidence — shared tenure dates, shared Wikidata
+identity — per `docs/person_normalization.md`; a small remainder is still
+genuinely open and awaiting human review). All three feed the
+`research` schema — Person, Work, Theater, Session, Performance as
+primary, directly-queryable entities — described in the Data model
+section above and `docs/entity_centric_model.md`.
 
 Nothing here is being treated as a closed, one-shot process — the
 known-issues ledger and the run-history log both exist specifically so
@@ -181,12 +183,21 @@ left unexamined.
 
 ## Data model
 
-The tables in `raw` and `entities`, and how they relate (`analysis` isn't
-shown separately — it only adds derived columns onto `raw.roster_entry`
-and `raw.performance_session`, no new tables). `theater` is intentionally
-disconnected: sessions join to it by matching `theater_canonical` text,
-not a physical foreign key, since printed venue names have too many
-spelling variants to key on directly.
+Two schemas, two different jobs. `raw` (+ `analysis`, which only adds
+derived columns onto `roster_entry`/`performance_session` — no new
+tables) is the diplomatic transcription: one row per printed appearance,
+page-centric, nothing resolved. `research` is built on top of it
+(`entities.person`/`entities.work`'s Tier 1/Tier 2 resolution, then
+`pipeline/build_research_model.py`): Person, Work, Theater, Session, and
+Performance as primary, directly-queryable entities with real foreign
+keys baked in, no crosswalk table to traverse at query time
+(`docs/entity_centric_model.md`). `raw` never changes once either is
+built on top of it.
+
+### The verbatim transcription (`raw`)
+
+One row per printed appearance — the hub is `source_pages`, correct for
+how the data was captured.
 
 ```mermaid
 erDiagram
@@ -201,6 +212,7 @@ erDiagram
         string page_id FK
         string family_name
         string heading_path
+        string rank_or_title
     }
     service_period {
         string period_id PK
@@ -220,6 +232,7 @@ erDiagram
         string date_text
         string theater
         string session_status
+        string receipts_text
     }
     performance_work {
         string work_id PK
@@ -227,58 +240,80 @@ erDiagram
         string work_title
         string genre
     }
-    person {
-        uuid person_id PK
-        string display_name
-        string ordinal_suffix
-        uuid superseded_by_person_id FK
-    }
-    person_link {
-        string entry_id PK
-        uuid person_id FK
-        string match_method
-    }
-    person_candidate {
-        uuid candidate_id PK
-        uuid person_id_1 FK
-        uuid person_id_2 FK
-        float similarity_score
-        string status
-    }
-    work {
-        uuid work_id PK
-        string canonical_title
-        string canonical_genre
-    }
-    work_link {
-        string raw_work_id PK
-        uuid work_id FK
-    }
-    theater {
-        uuid theater_id PK
-        string canonical_name
-        string city
-    }
 
     source_pages ||--o{ roster_entry : "page has"
     source_pages ||--o{ performance_session : "page has"
     roster_entry ||--o{ service_period : "entry has"
     roster_entry ||--o{ roster_entry_credit : "entry has"
     performance_session ||--o{ performance_work : "session has"
-    roster_entry ||--|| person_link : "resolved via"
-    person ||--|{ person_link : "person appears as"
-    person ||--o{ person_candidate : "candidate A"
-    person ||--o{ person_candidate : "candidate B"
-    person |o--o| person : "may supersede"
-    performance_work ||--|| work_link : "resolved via"
-    work ||--|{ work_link : "work performed as"
 ```
 
-An interactive, annotated version of this diagram (with a table reference
-and notes on the two 1:1 links' known exceptions) is published at
-https://claude.ai/code/artifact/87ccf198-6459-46f5-ba95-10c9e48c1f70 — the
-version above renders inline wherever GitHub/an editor supports Mermaid,
-which the linked page doesn't depend on.
+### The research dataset (`research`)
+
+One row per resolved real person/work/venue/box-office record — the hub
+is whichever entity the question is actually about. `session` and
+`performance` stay distinct on purpose: 35% of sessions list more than
+one work, and receipts are printed once per session, not once per work —
+flattening them into one row would silently double-count receipts on
+every multi-work night. `person` holds only currently-active (merged)
+people; a Wikidata match, where confident, is inlined directly rather than
+kept in a separate link table (`docs/person_normalization.md`,
+`docs/work_normalization.md`, `docs/performance_normalization.md`).
+
+```mermaid
+erDiagram
+    theater {
+        uuid theater_id PK
+        string canonical_name
+        string city
+        string active_from_season
+    }
+    work {
+        uuid work_id PK
+        string canonical_title
+        string canonical_genre
+        int appearance_count
+        uuid excerpt_of_work_id FK
+        string excerpt_note
+    }
+    person {
+        uuid person_id PK
+        string display_name
+        string ordinal_suffix
+        string first_attested_season
+        string last_attested_season
+        string wikidata_qid
+    }
+    session {
+        string session_id PK
+        uuid theater_id FK
+        string season
+        string date
+        string date_confidence
+        string session_status
+        int receipts_total_kopecks
+    }
+    performance {
+        string performance_id PK
+        string session_id FK
+        uuid work_id FK
+        string verbatim_title
+        string verbatim_genre
+    }
+    person_appearance {
+        string appearance_id PK
+        uuid person_id FK
+        string season
+        string entity_type
+        string rank_or_title
+    }
+
+    theater ||--o{ session : "hosted at"
+    session ||--o{ performance : "session has"
+    work ||--o{ performance : "work performed as"
+    work |o--o| work : "excerpt of"
+    person ||--o{ person_appearance : "person appears as"
+```
 
 ## Repo layout
 
@@ -292,7 +327,10 @@ docs/
   pipeline.md             pipeline stages, scripts, usage
   verbatim_deliverables.md   output-format comparison for the verbatim layer
   research_dataset.md       entity-resolution plan for the research layer
-  entity_centric_model.md   plan for a Person/Performance/Work/Theater-centric v2 (not yet built)
+  entity_centric_model.md   Person/Performance/Work/Theater-centric research schema (built -- see Data model above)
+  person_normalization.md   tenure- and Wikidata-based person merging
+  work_normalization.md     work/genre cleanup and excerpt linking
+  performance_normalization.md   calendar-validated performance dates
   eval/
     gold/                 12-page hand-transcribed ground truth + builder scripts
     known_issues.md        extraction issue ledger
@@ -310,7 +348,10 @@ pipeline/
   build_excel_workbook.py   stage 5b -- verbatim layer as one .xlsx (docs/verbatim_deliverables.md)
   build_obsidian_vault.py   stage 5c -- verbatim layer as one-note-per-page Obsidian vault
   build_entities.py         stage 5d -- entity resolution (entities schema: theater/work/person, docs/research_dataset.md)
-  build_datasette.py        stage 5e -- entities schema as a browsable Datasette SQLite site
+  link_wikidata.py          stage 5f -- links resolved people to Wikidata (docs/person_normalization.md)
+  validate_performance_dates.py   stage 5g -- calendar cross-check + correction (docs/performance_normalization.md)
+  build_research_model.py   stage 6a -- final research schema: person/work/theater/session/performance/person_appearance
+  build_datasette.py        stage 6 -- research schema as a browsable Datasette SQLite site
 outputs/            generated (gitignored) -- images, raw model output, parsed
                     CSVs, and the final .duckdb file, per run
 .env                DASHSCOPE_API_KEY (gitignored)

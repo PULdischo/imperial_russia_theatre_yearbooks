@@ -89,15 +89,67 @@ def _title_key(title: str) -> str:
     return t
 
 
-def _genre_key(genre: str | None) -> str:
-    # Genre is NOT lowercased or vowel-folded: it's frequently a different
-    # language entirely (French/German works keep French/German genre
-    # abbreviations, e.g. "com."/"Lustsp."), not just an orthography
-    # variant of the same word -- collapsing case here would blur real
-    # language-of-performance distinctions, not fix noise.
-    if genre is None:
-        return ""
-    return re.sub(r"\s+", " ", genre.strip())
+# docs/work_normalization.md Problem #1, confirmed against the real data:
+# 787 of 5,248 work rows had the genre abbreviation printed a second time,
+# comma-appended to the title itself ("Жизнь за Царя, оп."), splitting a
+# clean title from its own genre-suffixed printing into two "different"
+# works. Stripped for the MATCHING key only -- canonical_title still
+# displays the most common real printed variant, suffix or not.
+_GENRE_SUFFIX_RE = re.compile(r",\s*[а-яА-Я\-]{1,10}\.?\s*$")
+
+
+def _strip_genre_suffix(title: str) -> str:
+    return _GENRE_SUFFIX_RE.sub("", title).strip()
+
+
+def _fold_genre(genre: str | None) -> str | None:
+    # docs/work_normalization.md Problem #5: case + trailing-period only --
+    # deliberately never folds across language (com./ком. stay apart, a
+    # real language-of-performance fact, not noise). Returns None for
+    # blank, so blank-vs-filled is handled as "no signal" rather than as
+    # its own distinct genre value.
+    if not genre:
+        return None
+    g = re.sub(r"\s+", " ", genre.strip()).rstrip(".")
+    return g.lower() or None
+
+
+# docs/work_normalization.md Problem #3: on a multi-work bill, the
+# extraction sometimes puts a *different* work's title from the same bill
+# into the `genre` column of an adjacent row, rather than a real genre --
+# worst (and, checked against several other high-variance titles, by far
+# the dominant) case is "Гимнъ" (the anthem, a curtain-raiser), whose
+# "genre" is one of these real work titles from the same bill 118 times.
+# Hand-curated per the doc's own conclusion ("worth its own hand-curated
+# fix rather than a general rule") -- a general "genre value that happens
+# to also be a real title elsewhere" rule would risk flagging genuinely
+# short, legitimate genre words too aggressively.
+_GIMN_TITLE_KEY = "гимнъ"
+_GIMN_CONTAMINATED_GENRE_FOLDS = {
+    "новое дѣло", "евгеній онѣгинъ", "паяцы", "сверхъ комплекта",
+    "ревизоръ", "старый закалъ", "жизнь за царя",
+}
+
+# docs/work_normalization.md Problem #4: an ordinal act/scene marker at
+# the very START of the title means "this is an excerpt of a larger
+# work," not a different work -- confirmed against the real data (178
+# rows, 246 appearances) and deliberately anchored to the *start* of the
+# string, since "карт." (a legitimate standalone genre, "tableau") appears
+# throughout many genuinely-unrelated titles and a bare substring match
+# produced false positives in an earlier pass. One "ordinal + marker" unit
+# repeats up to twice, un-joined -- covers both "1-е и 2-е д." (one marker,
+# two ordinals joined by "и") and "1-я карт. 4-го д." (two independent
+# ordinal+marker pairs, scene-of-an-act, no "и" between them -- missed by
+# an earlier version of this regex, confirmed via a real example that
+# stayed unlinked because of it).
+_ORDINAL_MARKER_UNIT = (
+    r"\d+-(?:й|е|я|го)\.?\s+(?:и\s+\d+-(?:й|е|я|го)\.?\s+)?(?:д\.|дѣйств\w*|актъ|карт\.)\.?"
+)
+_EXCERPT_PREFIX_RE = re.compile(
+    r"^(?P<note>" + _ORDINAL_MARKER_UNIT + r"(?:\s+" + _ORDINAL_MARKER_UNIT + r")?)\s*"
+    r"(?:(?P<genre>[а-яА-ЯёЁ\-]{1,10}\.)\s+)?"
+    r"(?P<base>.+)$"
+)
 
 
 def build_work(con: duckdb.DuckDBPyConnection) -> None:
@@ -106,40 +158,129 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
         WHERE work_title IS NOT NULL AND trim(work_title) <> ''
     """).fetchall()
 
-    groups: dict[tuple[str, str], list[tuple[str, str, str]]] = {}
+    # Group on title alone first (suffix-stripped, folded) -- genre is
+    # decided per-title-group below, not baked into the grouping key from
+    # the start, per docs/work_normalization.md Problem #2: a title
+    # shouldn't split into "different works" just because genre was
+    # blank one printing and filled the next.
+    by_title: dict[str, list[tuple[str, str, str, str | None]]] = defaultdict(list)
     for work_id, title, genre in rows:
-        key = (_title_key(title), _genre_key(genre))
-        groups.setdefault(key, []).append((work_id, title, genre))
+        title_key = _title_key(_strip_genre_suffix(title))
+        genre_fold = _fold_genre(genre)
+        if title_key == _GIMN_TITLE_KEY and genre_fold in _GIMN_CONTAMINATED_GENRE_FOLDS:
+            genre_fold = None  # Problem #3: another bill item's title, not a real genre
+        by_title[title_key].append((work_id, title, genre, genre_fold))
 
-    work_rows, link_rows = [], []
-    n_multi_variant = 0
-    for (title_key, genre_key), members in groups.items():
-        work_uuid = str(uuid.uuid5(NAMESPACE, f"work:{title_key}|{genre_key}"))
+    def _pick_variant(members: list[tuple[str, str, str, str | None]]) -> tuple[str, str]:
         # Canonical display form = most common verbatim (title, genre) pair
         # actually printed in this group, not a normalized/modernized one.
-        variant_counts: dict[tuple[str, str], int] = {}
-        for _, title, genre in members:
-            variant_counts[(title, genre)] = variant_counts.get((title, genre), 0) + 1
-        if len(variant_counts) > 1:
-            n_multi_variant += 1
-        (canonical_title, canonical_genre), _ = max(variant_counts.items(), key=lambda kv: kv[1])
-        work_rows.append((work_uuid, canonical_title, canonical_genre, len(members)))
-        for work_id, _, _ in members:
-            link_rows.append((work_id, work_uuid))
+        counts: dict[tuple[str, str], int] = {}
+        for _, title, genre, _ in members:
+            counts[(title, genre)] = counts.get((title, genre), 0) + 1
+        (title, genre), _ = max(counts.items(), key=lambda kv: kv[1])
+        return title, genre
+
+    work_rows, link_rows, genre_candidate_rows = [], [], []
+    title_key_to_work_ids: dict[str, list[str]] = defaultdict(list)
+    n_multi_variant = n_genre_merged = 0
+
+    for title_key, members in by_title.items():
+        distinct_folds = {g for *_, g in members if g}
+
+        if len(distinct_folds) <= 1:
+            # Safe: at most one real genre in this title group (rest, if
+            # any, just missing) -- merge everything into one work.
+            fold = next(iter(distinct_folds), None)
+            work_uuid = str(uuid.uuid5(NAMESPACE, f"work:{title_key}|{fold or ''}"))
+            canonical_title, canonical_genre = _pick_variant(members)
+            if len({(t, g) for _, t, g, _ in members}) > 1:
+                n_multi_variant += 1
+            if any(g is None for *_, g in members) and fold is not None:
+                n_genre_merged += 1
+            work_rows.append((work_uuid, canonical_title, canonical_genre, len(members), title_key))
+            title_key_to_work_ids[title_key].append(work_uuid)
+            for work_id, _, _, _ in members:
+                link_rows.append((work_id, work_uuid))
+        else:
+            # docs/work_normalization.md Open Questions: genuinely
+            # different genres under one title are real (Карменъ: оп./
+            # бал.), not noise -- never silently merged. Split one work
+            # row per distinct genre fold (blank-genre members get their
+            # own row too, rather than guessing which real genre they
+            # belong to), and record the split for human review.
+            sub_groups: dict[str | None, list] = defaultdict(list)
+            for m in members:
+                sub_groups[m[3]].append(m)
+            for fold, sub_members in sub_groups.items():
+                work_uuid = str(uuid.uuid5(NAMESPACE, f"work:{title_key}|{fold or ''}"))
+                canonical_title, canonical_genre = _pick_variant(sub_members)
+                work_rows.append((work_uuid, canonical_title, canonical_genre, len(sub_members), title_key))
+                title_key_to_work_ids[title_key].append(work_uuid)
+                for work_id, _, _, _ in sub_members:
+                    link_rows.append((work_id, work_uuid))
+            genre_candidate_rows.append((title_key, sub_groups))
+
+    # Problem #4: excerpt/partial-performance titles. Resolved as a second
+    # pass over the now-deduplicated work rows, matching the excerpt's
+    # extracted base title (folded the same way) against a real work --
+    # preferring one whose own genre agrees with the excerpt's extracted
+    # genre when the base title is ambiguous (split across >1 work by the
+    # step above), never guessing when it isn't resolvable.
+    excerpt_links: dict[str, tuple[str, str]] = {}  # work_uuid -> (parent_work_id, note)
+    n_excerpt_matched = n_excerpt_unmatched = 0
+    for work_uuid, canonical_title, _, _, title_key in work_rows:
+        m = _EXCERPT_PREFIX_RE.match(canonical_title)
+        if not m:
+            continue
+        base_key = _title_key(m.group("base"))
+        if base_key == title_key or not base_key:
+            continue  # guards against a degenerate/self match
+        candidates = title_key_to_work_ids.get(base_key, [])
+        parent = None
+        if len(candidates) == 1:
+            parent = candidates[0]
+        elif len(candidates) > 1 and m.group("genre"):
+            excerpt_genre_fold = _fold_genre(m.group("genre"))
+            same_genre = [c for c in candidates
+                          if _fold_genre(next(g for u, _, g, _, _ in work_rows if u == c)) == excerpt_genre_fold]
+            if len(same_genre) == 1:
+                parent = same_genre[0]
+        if parent:
+            excerpt_links[work_uuid] = (parent, m.group("note").strip())
+            n_excerpt_matched += 1
+        else:
+            n_excerpt_unmatched += 1
 
     # Drop the dependent table first -- entities.work_link's FK reference
     # blocks CREATE OR REPLACE on entities.work otherwise, which would
     # silently break re-running this script a second time.
     con.execute("DROP TABLE IF EXISTS entities.work_link")
+    con.execute("DROP TABLE IF EXISTS entities.work_genre_candidate")
     con.execute("""
         CREATE OR REPLACE TABLE entities.work (
             work_id UUID PRIMARY KEY,
             canonical_title VARCHAR,
             canonical_genre VARCHAR,
-            appearance_count INTEGER
+            appearance_count INTEGER,
+            excerpt_of_work_id UUID,
+            excerpt_note VARCHAR
         )
     """)
-    con.executemany("INSERT INTO entities.work VALUES (?, ?, ?, ?)", work_rows)
+    # excerpt_of_work_id deliberately has no REFERENCES constraint -- it's
+    # self-referential (an excerpt's parent is itself another work row),
+    # and DuckDB's FK enforcement rejects a later UPDATE on a table whose
+    # own primary key has *any* incoming FK, self-referential or not (same
+    # reason entities.person_merge_log's docstring gives for skipping a
+    # real FK into entities.person). Python already guarantees every
+    # excerpt_links value is a work_id that exists in work_rows.
+    con.executemany(
+        "INSERT INTO entities.work VALUES (?, ?, ?, ?, NULL, NULL)",
+        [(uid, t, g, n) for uid, t, g, n, _ in work_rows],
+    )
+    con.executemany(
+        "UPDATE entities.work SET excerpt_of_work_id = ?, excerpt_note = ? WHERE work_id = ?",
+        [(parent, note, uid) for uid, (parent, note) in excerpt_links.items()],
+    )
 
     con.execute("""
         CREATE TABLE entities.work_link (
@@ -149,6 +290,34 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     """)
     con.executemany("INSERT INTO entities.work_link VALUES (?, ?)", link_rows)
 
+    # entities.work_genre_candidate: every title split across >1 real
+    # genre, for human review (docs/work_normalization.md's Open
+    # Questions -- some splits are genuine adaptations, e.g. Карменъ
+    # оп./бал., others are OCR noise on one genre word, e.g. Фаустъ's
+    # "драм. поэма" variants -- never auto-decided here).
+    con.execute("""
+        CREATE TABLE entities.work_genre_candidate (
+            candidate_id UUID PRIMARY KEY,
+            title_key VARCHAR,
+            work_id UUID REFERENCES entities.work(work_id),
+            canonical_title VARCHAR,
+            canonical_genre VARCHAR,
+            appearance_count INTEGER
+        )
+    """)
+    genre_candidate_insert_rows = []
+    work_lookup = {uid: (t, g, n) for uid, t, g, n, _ in work_rows}
+    for title_key, sub_groups in genre_candidate_rows:
+        for fold, sub_members in sub_groups.items():
+            work_uuid = str(uuid.uuid5(NAMESPACE, f"work:{title_key}|{fold or ''}"))
+            t, g, n = work_lookup[work_uuid]
+            candidate_id = str(uuid.uuid5(NAMESPACE, f"work_genre_candidate:{work_uuid}"))
+            genre_candidate_insert_rows.append((candidate_id, title_key, work_uuid, t, g, n))
+    con.executemany(
+        "INSERT INTO entities.work_genre_candidate VALUES (?, ?, ?, ?, ?, ?)",
+        genre_candidate_insert_rows,
+    )
+
     n_excluded = con.execute(
         "SELECT count(*) FROM raw.performance_work WHERE work_title IS NULL OR trim(work_title) = ''"
     ).fetchone()[0]
@@ -156,6 +325,41 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
           f"({n_excluded} excluded: blank work_title, see known_issues.md)")
     print(f"  {n_multi_variant} works were printed under more than one raw spelling variant "
           f"and collapsed into one entity by canonicalization")
+    print(f"  {n_genre_merged} title groups merged a blank-genre printing into an existing "
+          f"non-blank-genre work (Problem #2)")
+    print(f"  {len(genre_candidate_rows)} title(s) split across >1 real genre, flagged in "
+          f"entities.work_genre_candidate for human review ({len(genre_candidate_insert_rows)} rows)")
+    print(f"  {n_excerpt_matched} excerpt/partial-performance titles linked to a parent work "
+          f"({n_excerpt_unmatched} excerpt-shaped titles left unlinked -- ambiguous or garbled, "
+          f"see docs/work_normalization.md)")
+
+
+def export_work_genre_review_queue(con: duckdb.DuckDBPyConnection, out_path: Path) -> None:
+    """Every title split across >1 real genre (entities.work_genre_candidate),
+    grouped so a reviewer sees all the competing genre variants for one
+    title together -- not a Yes/No queue like Person's, since there's no
+    single pairwise decision: for each title, the researcher decides which
+    (if any) of the listed work_ids are actually the same work and should
+    be merged by hand, versus genuinely distinct adaptations to leave
+    alone (docs/work_normalization.md's Карменъ оп./бал. example)."""
+    import csv as csv_module
+
+    rows = con.execute("""
+        SELECT title_key, work_id, canonical_title, canonical_genre, appearance_count
+        FROM entities.work_genre_candidate
+        ORDER BY title_key, appearance_count DESC
+    """).fetchall()
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w", newline="", encoding="utf-8-sig") as f:
+        w = csv_module.writer(f)
+        w.writerow(["title_key", "work_id", "canonical_title", "canonical_genre",
+                    "appearance_count", "same_work_as (list work_ids to merge, or leave blank)"])
+        for title_key, work_id, title, genre, n in rows:
+            w.writerow([title_key, work_id, title, genre, n, ""])
+    n_titles = len({r[0] for r in rows})
+    print(f"{n_titles} titles ({len(rows)} work rows) needing genre review -> {out_path} "
+          f"(utf-8-sig, ready for Sheets/Excel import)")
 
 
 # Matches the printed homonym-disambiguating suffix ("Петровъ 2-й",
@@ -559,14 +763,11 @@ def apply_tenure_corroboration(con: duckdb.DuckDBPyConnection) -> None:
 
 def reconcile_person_merges(con: duckdb.DuckDBPyConnection) -> int:
     """Turns a confirmed/confirmed_tenure/confirmed_wikidata decision into
-    an actual merge -- not just a status flag. Repoints
-    entities.person_link.person_id for
-    every appearance that belonged to the absorbed person onto the
-    survivor, so the survivor's own appearance record is the real,
-    consolidated one. Runs on every pipeline execution, unconditionally
-    (not only when a merge is first confirmed): build_person_tier1 rebuilds
-    person_link from raw data fresh every run and would otherwise silently
-    undo the repoint on the very next rebuild.
+    an actual merge -- not just a status flag -- by setting
+    entities.person.superseded_by_person_id. Does NOT itself repoint
+    entities.person_link (see _repoint_all_superseded, called once at the
+    very end of main(), for why that has to be a separate, full-chain
+    pass rather than done per-decision here).
 
     Uses union-find rather than resolving each pair in isolation: a person
     can appear in more than one confirmed pair (e.g. three printed spelling
@@ -613,19 +814,51 @@ def reconcile_person_merges(con: duckdb.DuckDBPyConnection) -> int:
     if not absorbed:
         return 0
 
-    con.executemany(
-        "UPDATE entities.person_link SET person_id = ? WHERE person_id = ?",
-        [(root, absorbed_id) for absorbed_id, root in absorbed.items()],
-    )
     con.executemany("""
         UPDATE entities.person SET superseded_by_person_id = ?
         WHERE person_id = ? AND superseded_by_person_id IS NULL
     """, [(root, absorbed_id) for absorbed_id, root in absorbed.items()])
 
-    # The survivor's attested season range must reflect the union of both
-    # clusters' real appearances now that person_link has been repointed --
-    # otherwise a merge could silently misstate a career span Tier 1 only
-    # ever computed from its own, now-incomplete, cluster.
+    print(f"entities.person: {len(absorbed)} person record(s) merged into "
+          f"{len(set(absorbed.values()))} surviving record(s)")
+    return len(absorbed)
+
+
+def _repoint_all_superseded(con: duckdb.DuckDBPyConnection) -> None:
+    """Repoints entities.person_link -- and recomputes attested season
+    ranges -- from the FULL superseded_by_person_id chain currently in
+    entities.person, not just the pairs reconcile_person_merges saw during
+    this run's own Tier 2 loop. Necessary because build_person_tier1
+    rebuilds person_link from scratch every run purely from each row's own
+    tier1 cluster, with no knowledge of any later Tier 2/tenure/Wikidata
+    merge -- and once a person is absorbed, they drop out of Tier 2's
+    blocking pool entirely, so a merge decided in an EARLIER run can never
+    be rediscovered as a candidate pair again to re-trigger a per-decision
+    repoint. Confirmed as a real, not theoretical, bug: building
+    research.person_appearance's FK against research.person (only
+    non-superseded rows) failed with 3,024 person_link rows still pointing
+    at an already-superseded person, entirely because of an unrelated
+    rerun of this script for Work normalization silently resetting their
+    repointing. Idempotent -- safe to call every run whether or not
+    anything changed this time.
+    """
+    con.execute("""
+        CREATE OR REPLACE TEMP TABLE _final_survivor AS
+        WITH RECURSIVE chain(person_id, final_id) AS (
+            SELECT person_id, person_id FROM entities.person WHERE superseded_by_person_id IS NULL
+            UNION ALL
+            SELECT p.person_id, c.final_id
+            FROM entities.person p
+            JOIN chain c ON p.superseded_by_person_id = c.person_id
+        )
+        SELECT * FROM chain
+    """)
+    con.execute("""
+        UPDATE entities.person_link pl
+        SET person_id = fs.final_id
+        FROM _final_survivor fs
+        WHERE pl.person_id = fs.person_id AND pl.person_id != fs.final_id
+    """)
     con.execute("""
         UPDATE entities.person p
         SET first_attested_season = seasons.first_season,
@@ -640,11 +873,15 @@ def reconcile_person_merges(con: duckdb.DuckDBPyConnection) -> int:
         ) AS seasons
         WHERE p.person_id = seasons.person_id
     """)
+    con.execute("DROP TABLE _final_survivor")
 
-    print(f"entities.person: {len(absorbed)} person record(s) merged into "
-          f"{len(set(absorbed.values()))} surviving record(s) "
-          f"(entities.person_link repointed, attested season ranges recomputed)")
-    return len(absorbed)
+    n_stale = con.execute("""
+        SELECT count(*) FROM entities.person_link pl
+        JOIN entities.person p ON p.person_id = pl.person_id
+        WHERE p.superseded_by_person_id IS NOT NULL
+    """).fetchone()[0]
+    print(f"entities.person_link: full-chain repoint complete "
+          f"({n_stale} rows still pointing at a superseded person -- should always be 0)")
 
 
 def _ensure_person_merge_log(con: duckdb.DuckDBPyConnection) -> None:
@@ -783,6 +1020,8 @@ def main():
                      help="apply a reviewed copy of the review queue CSV (decision column filled in)")
     ap.add_argument("--export-tenure-audit", type=Path, default=None,
                      help="write the tenure-auto-confirmed pairs to this CSV for spot-check review")
+    ap.add_argument("--export-work-genre-review", type=Path, default=None,
+                     help="write titles split across >1 real genre to this CSV for human review")
     args = ap.parse_args()
 
     con = duckdb.connect(str(args.db))
@@ -822,10 +1061,14 @@ def main():
               f"after {MAX_TIER2_ITERATIONS} iterations -- investigate before trusting "
               f"entities.person_candidate")
 
+    _repoint_all_superseded(con)
+
     if args.export_review_queue:
         export_person_review_queue(con, args.export_review_queue)
     if args.export_tenure_audit:
         export_tenure_audit(con, args.export_tenure_audit)
+    if args.export_work_genre_review:
+        export_work_genre_review_queue(con, args.export_work_genre_review)
 
     con.close()
     print(f"\nentities schema updated in {args.db}")

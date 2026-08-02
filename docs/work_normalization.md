@@ -1,4 +1,4 @@
-# Work normalization: strategy
+# Work normalization: strategy and implementation
 
 `entities.work` groups `raw.performance_work` rows by canonicalized
 `(title, genre)` text (`docs/research_dataset.md`), on the premise that a
@@ -8,7 +8,8 @@ example: **"Жизнь за Царя" (A Life for the Tsar) currently exists as 
 separate `entities.work` rows**, not one, with 195/39/4/2/1 appearances
 respectively. That split is real data noise, not 5 different pieces — and
 it turns out to be one instance of four distinct, quantifiable problems
-across the whole corpus. This is a plan only, nothing here is implemented.
+across the whole corpus. **Implemented** in `build_work()`
+(`pipeline/build_entities.py`) — real results below the strategy section.
 
 ## The five "Жизнь за Царя" rows, and what's actually wrong with each
 
@@ -205,21 +206,68 @@ than guess.
    (`Гимнъ` ×4 and two others) against their source page images — cheap to
    verify, and not something a general rule should guess at.
 
+## Implementation
+
+`build_work()` (`pipeline/build_entities.py`) now implements strategy
+items #1, #2 (safe portion only), #3, #4, and #5 together. Real results
+against the full corpus:
+
+| | Before | After |
+|---|---|---|
+| `entities.work` rows | 5,248 | **4,509** (-739) |
+
+- **593 works** now collapse more than one raw spelling variant into a
+  single canonical row (strategy #1 + #5 combined — the genre-suffix
+  strip and case/period fold both feed the same title-grouping step).
+- **137 title groups** merged a blank-genre printing into an existing
+  non-blank-genre work — the safe portion of strategy #2, applied whenever
+  a title has at most one distinct real genre after folding.
+- **355 titles (898 work rows) flagged in the new
+  `entities.work_genre_candidate` table**, exported to
+  `outputs/full_run/work_genre_review_queue.csv` — every title where 2+
+  genuinely distinct genre folds remain (Карменъ's `оп.`/`бал.` and
+  Фаустъ's OCR-noise cluster both land here). **Resolves the Open Question
+  below**: rather than build an edit-distance heuristic to guess which
+  splits are real adaptations versus noise, the implementation never
+  auto-decides this case at all — every one of the 898 rows stays a
+  separate, valid `entities.work` row exactly as before, just now flagged
+  for a human to actually merge by hand if they choose to (no apply-side
+  tooling built yet, since no review has happened; see Person's
+  `apply_person_merges`/`reconcile_person_merges` for the pattern to reuse
+  once this queue has been through review).
+- **`Гимнъ`'s cross-contamination genres** (strategy #3) are now excluded
+  via the small, hand-curated set found during investigation (`Новое
+  дѣло`, `Евгеній Онѣгинъ`, `Паяцы`, `Сверхъ комплекта`, `Ревизоръ`,
+  `Старый закалъ`, `Жизнь за Царя`) — treated as missing genre data for
+  `Гимнъ` specifically, not folded into any general rule.
+- **96 excerpt/partial-performance titles linked** to their parent work via
+  `excerpt_of_work_id`/`excerpt_note` (strategy #4); **49 left unlinked**
+  (ambiguous base title, multiple same-title candidates with no genre to
+  disambiguate, or a genuinely garbled title/genre split with no coherent
+  base at all). The regex needed one real fix beyond the design in this
+  doc: a first version only handled a single ordinal+marker or an
+  "и"-joined pair ("1-е и 2-е д."), missing the equally common
+  "scene-of-an-act" shape with two independent markers back to back
+  ("1-я карт. 4-го д.", "Scene 1 of Act 4") — caught by checking the
+  motivating example end-to-end (all 3 remaining "Жизнь за Царя" rows,
+  including both excerpts) rather than trusting the regex from the design
+  alone.
+
+The motivating example now resolves cleanly: **1 main work (238
+appearances, correctly summing the 195+39+4 safely-merged rows) + 2
+properly-linked excerpts**, down from 5 disconnected rows.
+
 ## Open questions
 
-- **Does demoting genre out of the identity key ever lose something real?**
-  A few of the split clusters found above aren't spelling variance at all
-  — `Карменъ` splits `оп.` vs `бал.` (opera vs. ballet — Bizet's opera did
-  have a ballet adaptation performed at these theaters), and `Конекъ-
-  горбунокъ` splits `бал.` / `траг.` / `оп.` similarly. Folding genre out
-  of the key entirely would silently merge a work with a *different
-  adaptation's* genre into one row. Needs a rule for telling "OCR noise on
-  one genre word" apart from "this title genuinely has more than one
-  adaptation" before proposal #2 can be automated safely — likely: only
-  auto-merge when the genre variants are within a small edit distance of
-  each other or one is blank, same conservative posture as Person Tier 2's
-  Levenshtein bound, and route larger genre disagreements to a review
-  queue instead of silently picking "most common."
+- ~~Does demoting genre out of the identity key ever lose something
+  real?~~ **Resolved by not automating it**: `Карменъ` (`оп.`/`бал.`) and
+  `Конекъ-горбунокъ` (`бал.`/`траг.`/`оп.`) are exactly the kind of case
+  this was worried about, and both now sit in
+  `entities.work_genre_candidate` for human review rather than being
+  merged (or not) by an edit-distance guess. Revisit only if the review
+  queue turns out too large to work through by hand and a corroborating
+  signal (mirroring Person's tenure/Wikidata approach) becomes worth
+  building.
 - **Should `excerpt_of_work_id` count toward `appearance_count`?** If a
   researcher asks "how many times was Swan Lake performed," should that
   include the excerpt-only nights? Probably yes for a combined count, but
