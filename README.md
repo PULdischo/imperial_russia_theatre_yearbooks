@@ -331,6 +331,7 @@ docs/
   person_normalization.md   tenure- and Wikidata-based person merging
   work_normalization.md     work/genre cleanup and excerpt linking
   performance_normalization.md   calendar-validated performance dates
+  person_performance_linking.md   plan: linking person_appearance to performance via ballet credit tallies (not yet built)
   eval/
     gold/                 12-page hand-transcribed ground truth + builder scripts
     known_issues.md        extraction issue ledger
