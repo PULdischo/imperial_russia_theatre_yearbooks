@@ -90,10 +90,11 @@ rather than as wide columns.
 |---|---|---|
 | `credit_id` | string (PK) | |
 | `entry_id` | FK → roster_entry | |
-| `credit_type` | enum | `category_total` \| `named_work` |
-| `label` | string | for `category_total`: `балетахъ`/`операхъ`/`драмѣ`/`Всего`; for `named_work`: the work title |
+| `credit_type` | enum | `category_totals` \| `named_work` |
+| `label` | string | for `category_totals`: `балетахъ`/`операхъ`/`драмѣ`/`Всего`; for `named_work`: the work title |
 | `role_name` | string, nullable | only for `named_work` — the character name in parens |
-| `count` | number | usually an integer, but the printed ledger occasionally uses a fractional value (e.g. `.5`) for a role split between two artists — kept as printed, not rounded |
+| `category_production_count` | number | only for for `category_total`, 'e.g. ' Въ 10 балетахъ'|
+| `category_credit_count` | number | usually an integer, but the printed ledger occasionally uses a fractional value (e.g. `.5`) for a role split between two artists — kept as printed, not rounded |
 
 ---
 
