@@ -93,7 +93,7 @@ rather than as wide columns.
 | `credit_type` | enum | `category_totals` \| `named_work` |
 | `label` | string | for `category_totals`: `балетахъ`/`операхъ`/`драмѣ`/`Всего`; for `named_work`: the work title |
 | `role_name` | string, nullable | only for `named_work` — the character name in parens |
-| `category_production_count` | number | only for for `category_total`, 'e.g. ' Въ 10 балетахъ'|
+| `category_production_count` | number | only for `category_totals': `балетахъ`/`операхъ`/`драмѣ`; e.g. ' Въ 10 балетахъ'|
 | `category_credit_count` | number | usually an integer, but the printed ledger occasionally uses a fractional value (e.g. `.5`) for a role split between two artists — kept as printed, not rounded |
 
 ---
