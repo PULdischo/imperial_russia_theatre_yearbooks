@@ -39,7 +39,7 @@ One row per digitized page. Every other table's `page_id` joins here.
 ## Spiski family (Administration, BalletArtists, Musicians, ProductionTeam,
 ## TheaterSchoolStaff, Graduates once sourced)
 
-### `roster_entry.csv`
+### `person_entry.csv`
 
 One row per person per printed appearance.
 
