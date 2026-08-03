@@ -122,7 +122,7 @@ receipts are actually printed at, even when multiple works share the bill.
 | `time_of_day` | enum | `unspecified` (single performance) \| `morning` (`УТРО`) \| `evening` (`ВЕЧЕРЪ`) |
 | `theater` | string | verbatim theater name — value, not column: `Маріинскій`, `Александринскій`, `Михайловскій`, `Большой`, `Малый`, `Новый`, or others as they appear |
 | `event_status` | enum | `performed` \| `no_performance` — see below |
-| `bill` | string, nullable | work titles and genres, verbatim |
+| `bill` | string, nullable | work titles and genres verbatim, e.g. `Коппелія, бал. Танцы и группы изъ балета Талисманъ` |
 | `receipts_text` | string, nullable | verbatim, e.g. `3462 р. 15 к.` |
 | `receipts_rubles` | int, nullable | parsed |
 | `receipts_kopecks` | int, nullable | parsed |
