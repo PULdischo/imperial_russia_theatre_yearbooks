@@ -77,7 +77,7 @@ pair on the parent row can't represent that faithfully.
 | `start_date_undate` | string, nullable | Undate-serialized |
 | `end_date_text` | string, nullable | verbatim; null = still active as of this volume |
 | `end_date_undate` | string, nullable | Undate-serialized |
-| `end_type` | enum, nullable | `died` (†) \| `resigned` (`Оставилъ службу`) \| `other` \| null (still active) |
+| `end_type` | enum, nullable | `died` (†) \| `left service` (`Оставилъ службу`) \| `other` \| null (still active) |
 
 ### `roster_entry_credit.csv`
 
