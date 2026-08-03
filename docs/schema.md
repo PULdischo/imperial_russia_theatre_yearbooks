@@ -104,7 +104,7 @@ Long/tidy by design — per the survey, the theater roster itself changed twice
 in this 18-year run (5 combined columns → 3+2/3 separate blocks, with a third
 Moscow venue added), so theater cannot be a fixed column set.
 
-### `performance_event.csv`
+### `event_entry.csv`
 
 One row per (date, session, theater) box-office record — this is the grain
 receipts are actually printed at, even when multiple works share the bill.
@@ -128,7 +128,7 @@ receipts are actually printed at, even when multiple works share the bill.
 | `receipts_kopecks` | int, nullable | parsed |
 | `annotation` | string, nullable | benefit-performance / anniversary notes printed in the cell, verbatim |
 
-**`session_status` and the completeness problem it doesn't solve on its own.**
+**`event_status` and the completeness problem it doesn't solve on its own.**
 `no_performance` (formerly named `is_dark` — renamed because "dark cell" is
 theater jargon, not intuitive to a researcher) means the model read an
 explicit printed dash: the theater really was closed that date, and that's
@@ -169,13 +169,13 @@ known limit, not a silent error.
 
 ### `performance_work.csv`
 
-Child of `performance_session` — a bill can list more than one work under a
+Child of `performance_event` — a bill can list more than one work under a
 single receipts figure (e.g. two one-act comedies).
 
 | column | type | notes |
 |---|---|---|
 | `work_id` | string (PK) | |
-| `session_id` | FK → performance_session | |
+| `event_id` | FK → performance_event | |
 | `work_order` | int | 1-based, order printed in the cell |
 | `work_title` | string | verbatim |
 | `genre` | string, nullable | verbatim abbreviation (`оп.`, `бал.`, `ком.`, `др.`, `сц.`, `вод.`, `траг.`, `пьеса`, `карт.`, etc.) |
