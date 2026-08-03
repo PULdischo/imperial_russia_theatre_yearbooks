@@ -63,7 +63,7 @@ One row per person per printed appearance.
 
 ### `person_entry_service.csv`
 
-Child of `roster_entry`. Exists because tenure notes can describe **more than
+Child of `person_entry`. Exists because tenure notes can describe **more than
 one period** for the same person (survey found e.g. "съ 14 іюня 1879 г. по 1
 іюля 1899 г. и съ 1 декабря ... г." — left and rejoined) — a single start/end
 pair on the parent row can't represent that faithfully.
