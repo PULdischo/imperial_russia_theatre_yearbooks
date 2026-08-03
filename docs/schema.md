@@ -27,7 +27,7 @@ One row per digitized page. Every other table's `page_id` joins here.
 | column | type | notes |
 |---|---|---|
 | `page_id` | string (PK) | synthetic, e.g. `RepertoireTables_1898-99_p019` |
-| `entity_type` | enum | `Repertoire`, `Administrator`, `BalletArtist`, `Musician`, `ProductionTeam`, `TheaterSchoolStaff`, `Graduate`, `ProductionStats` |
+| `entity_type` | enum | `Repertoire`, `Administrators`, `BalletArtists`, `Musicians`, `ProductionTeam`, `TheaterSchoolStaff`, `Graduates`, `ProductionStats` |
 | `season` | string | academic year as printed in the filename, e.g. `1898-99` |
 | `city` | enum, nullable | `SP` \| `Moscow` — only meaningful for BalletArtists/Musicians, which are split at the file level |
 | `source_file` | string | original PDF filename |
@@ -169,13 +169,13 @@ known limit, not a silent error.
 
 ### `performance_work.csv`
 
-Child of `performance_event` — a bill can list more than one work under a
+Child of `event_entry` — a bill can list more than one work under a
 single receipts figure (e.g. two one-act comedies).
 
 | column | type | notes |
 |---|---|---|
 | `work_id` | string (PK) | |
-| `event_id` | FK → performance_event | |
+| `event_id` | FK → event_entry | |
 | `work_order` | int | 1-based, order printed in the cell |
 | `work_title` | string | verbatim |
 | `genre` | string, nullable | verbatim abbreviation (`оп.`, `бал.`, `ком.`, `др.`, `сц.`, `вод.`, `траг.`, `пьеса`, `карт.`, etc.) |
