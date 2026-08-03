@@ -167,17 +167,17 @@ entire city block to a recall failure, this method can't detect that gap
 (there's no surviving evidence of which city was expected), which is a
 known limit, not a silent error.
 
-### `performance_work.csv`
+### `event_entry_performance.csv`
 
-Child of `event_entry` — a bill can list more than one work under a
+Child of `event_entry` — a bill can list more than one performance under a
 single receipts figure (e.g. two one-act comedies).
 
 | column | type | notes |
 |---|---|---|
-| `work_id` | string (PK) | |
+| `performance_id` | string (PK) | |
 | `event_id` | FK → event_entry | |
-| `work_order` | int | 1-based, order printed in the cell |
-| `work_title` | string | verbatim |
+| `performance_order` | int | 1-based, order printed in the cell |
+| `performance_title` | string | verbatim |
 | `genre` | string, nullable | verbatim abbreviation (`оп.`, `бал.`, `ком.`, `др.`, `сц.`, `вод.`, `траг.`, `пьеса`, `карт.`, etc.) |
 
 ---
