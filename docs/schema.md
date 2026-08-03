@@ -59,7 +59,7 @@ One row per person per printed appearance.
 | `instrument` | string, nullable | Musicians only |
 | `subject_taught` | string, nullable | TheaterSchoolStaff only |
 | `tenure_note_text` | string, nullable | the full parenthetical/trailing tenure note, verbatim, uncleaned — the source of truth `service_period` rows are parsed from |
-| `credit_summary_text` | string, nullable | the full performance-tally sentence for BalletArtists/Musicians (e.g. `Въ 11 балетахъ—33; въ 8 операхъ—43. Всего—76 разъ`), verbatim — source of truth for `roster_entry_credit` rows |
+| `credit_summary_text` | string, nullable | the full performance-tally sentence for BalletArtists (e.g. `Въ 11 балетахъ—33; въ 8 операхъ—43. Всего—76 разъ`), verbatim — source of truth for `roster_entry_credit` rows |
 
 ### `service_period.csv`
 
@@ -81,7 +81,7 @@ pair on the parent row can't represent that faithfully.
 
 ### `roster_entry_credit.csv`
 
-Child of `roster_entry`. BalletArtists/Musicians performance tallies — both the
+Child of `person_entry`. BalletArtists performance tallies — both the
 category totals and the optional named-role breakdown ("Въ томъ числѣ:
 Спящая красавица (красавица)—5") are unbounded in count, so both go here
 rather than as wide columns.
