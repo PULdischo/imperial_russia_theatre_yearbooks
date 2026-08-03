@@ -6,7 +6,7 @@ theater rosters, multi-period tenures) is *data*, not schema — we don't want a
 model that needs a migration every time the printed source adds a role.
 
 Transcription unit for the Spiski tables is **one row per printed appearance in
-one volume** (a "roster entry"), not a deduplicated master person record.
+one volume** (a "person entry"), not a deduplicated master person record.
 Linking the same person across years/volumes is a separate, later task (name +
 patronymic + overlapping dates) — attempting it during transcription would mean
 guessing at identity while we're still trying to get the printed page faithfully
@@ -27,7 +27,7 @@ One row per digitized page. Every other table's `page_id` joins here.
 | column | type | notes |
 |---|---|---|
 | `page_id` | string (PK) | synthetic, e.g. `RepertoireTables_1898-99_p019` |
-| `entity_type` | enum | `Repertoire`, `Administration`, `BalletArtists`, `Musicians`, `ProductionTeam`, `TheaterSchoolStaff`, `Graduates`, `ProductionStats` |
+| `entity_type` | enum | `Repertoire`, `Administrator`, `BalletArtist`, `Musician`, `ProductionTeam`, `TheaterSchoolStaff`, `Graduate`, `ProductionStats` |
 | `season` | string | academic year as printed in the filename, e.g. `1898-99` |
 | `city` | enum, nullable | `SP` \| `Moscow` — only meaningful for BalletArtists/Musicians, which are split at the file level |
 | `source_file` | string | original PDF filename |
@@ -36,7 +36,7 @@ One row per digitized page. Every other table's `page_id` joins here.
 
 ---
 
-## Spiski family (Administration, BalletArtists, Musicians, ProductionTeam,
+## Spiski family (Administrators, BalletArtists, Musicians, ProductionStaff,
 ## TheaterSchoolStaff, Graduates once sourced)
 
 ### `person_entry.csv`
@@ -58,10 +58,10 @@ One row per person per printed appearance.
 | `service_class` | string, nullable | Table-of-Ranks class where printed (`VII кл.`) — survey found this starts appearing by 1907, absent in 1890-91 |
 | `instrument` | string, nullable | Musicians only |
 | `subject_taught` | string, nullable | TheaterSchoolStaff only |
-| `tenure_note_text` | string, nullable | the full parenthetical/trailing tenure note, verbatim, uncleaned — the source of truth `service_period` rows are parsed from |
-| `credit_summary_text` | string, nullable | the full performance-tally sentence for BalletArtists (e.g. `Въ 11 балетахъ—33; въ 8 операхъ—43. Всего—76 разъ`), verbatim — source of truth for `roster_entry_credit` rows |
+| `tenure_note_text` | string, nullable | the full parenthetical/trailing tenure note, verbatim, uncleaned — the source of truth `person_entry_service` rows are parsed from |
+| `credit_summary_text` | string, nullable | the full performance-tally text for BalletArtists (e.g. `Въ 11 балетахъ—33; въ 8 операхъ—43. Всего—76 разъ`), verbatim — source of truth for `person_entry_credit` rows |
 
-### `service_period.csv`
+### `person_entry_service.csv`
 
 Child of `roster_entry`. Exists because tenure notes can describe **more than
 one period** for the same person (survey found e.g. "съ 14 іюня 1879 г. по 1
@@ -79,7 +79,7 @@ pair on the parent row can't represent that faithfully.
 | `end_date_undate` | string, nullable | Undate-serialized |
 | `end_type` | enum, nullable | `died` (†) \| `left service` (`Оставилъ службу`) \| `other` \| null (still active) |
 
-### `roster_entry_credit.csv`
+### `person_entry_credit.csv`
 
 Child of `person_entry`. BalletArtists performance tallies — both the
 category totals and the optional named-role breakdown ("Въ томъ числѣ:
