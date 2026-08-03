@@ -104,14 +104,14 @@ Long/tidy by design — per the survey, the theater roster itself changed twice
 in this 18-year run (5 combined columns → 3+2/3 separate blocks, with a third
 Moscow venue added), so theater cannot be a fixed column set.
 
-### `performance_session.csv`
+### `performance_event.csv`
 
 One row per (date, session, theater) box-office record — this is the grain
 receipts are actually printed at, even when multiple works share the bill.
 
 | column | type | notes |
 |---|---|---|
-| `session_id` | string (PK) | |
+| `event_id` | string (PK) | |
 | `page_id` | FK → source_pages | |
 | `season` | string | |
 | `city` | enum | `SP` \| `Moscow` |
@@ -119,9 +119,10 @@ receipts are actually printed at, even when multiple works share the bill.
 | `month_text` | string | verbatim month header this row falls under |
 | `year_text` | string | verbatim year(s) as printed at the top of the block, e.g. `1898 г.` or `1898—1899 гг.` |
 | `date_undate` | string | Undate-serialized calendar date (Julian, as printed) |
-| `session` | enum | `day` (single performance) \| `morning` (`УТРО`) \| `evening` (`ВЕЧЕРЪ`) |
+| `time_of_day` | enum | `unspecified` (single performance) \| `morning` (`УТРО`) \| `evening` (`ВЕЧЕРЪ`) |
 | `theater` | string | verbatim theater name — value, not column: `Маріинскій`, `Александринскій`, `Михайловскій`, `Большой`, `Малый`, `Новый`, or others as they appear |
-| `session_status` | enum | `performed` \| `no_performance` — see below |
+| `event_status` | enum | `performed` \| `no_performance` — see below |
+| `bill` | string, nullable | work titles and genres, verbatim |
 | `receipts_text` | string, nullable | verbatim, e.g. `3462 р. 15 к.` |
 | `receipts_rubles` | int, nullable | parsed |
 | `receipts_kopecks` | int, nullable | parsed |
