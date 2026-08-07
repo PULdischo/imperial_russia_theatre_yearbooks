@@ -10,12 +10,12 @@ asking directly whether the *data* has anything in it that could bridge
 them anyway, rather than assuming the split is absolute. Checked before
 writing anything down. This is a plan only — nothing here is implemented.
 
-## The source of a possible link: `roster_entry_credit`
+## The source of a possible link: `person_entry_credit`
 
-`raw.roster_entry_credit` (31,781 rows, "performance-count tallies for
+`raw.person_entry_credit` (31,781 rows, "performance-count tallies for
 Ballet/Musicians entries") has two shapes:
 
-- `category_total` (22,833 rows) — "danced in 32 ballets, 15 operas, 47
+- `category_totals` (22,833 rows) — "danced in 32 ballets, 15 operas, 47
   total" — a season-wide count, no specific work named.
 - `named_work` (8,948 rows) — "Кипрская статуя (Амуръ — 5)": a specific
   work title, the role danced, and how many times that season. **This is
@@ -23,9 +23,9 @@ Ballet/Musicians entries") has two shapes:
 
 **Scope limit, checked directly**: `named_work` credits exist only for
 `BalletArtists` roster entries. `Musicians` only ever get
-`category_total`; `Administration`, `ProductionTeam`, and
+`category_totals`; `Administrators`, `ProductionTeam`, and
 `TheaterSchoolStaff` roster entries have no credit rows naming a specific
-work at all (`ProductionTeam` has 5 stray `category_total` rows and
+work at all (`ProductionTeam` has 5 stray `category_totals` rows and
 nothing else). Whatever this doc proposes can only ever link **ballet
 dancers**, never administrators, musicians, or teachers, to a specific
 performance — the source material simply doesn't record that level of
@@ -66,7 +66,7 @@ The 25% "contradiction" bucket is interesting beyond the linking question
 itself. A dancer's own printed season credit being *higher* than the
 number of performances this pipeline actually extracted is an
 independent, corpus-wide check on the exact same completeness problem
-`analysis.performance_session.session_status = 'not_captured'` already
+`analysis.event_entry.event_status = 'not_captured'` already
 tracks (3,771 synthesized placeholder cells, per `docs/performance_normalization.md`).
 Worth checking directly whether the contradiction cases cluster on the
 same seasons/pages the `not_captured` gaps already cluster on — if they
@@ -109,6 +109,6 @@ where extraction is silently missing sessions.
 - Is `role_name`-based genre disambiguation (option 2) reliable enough to
   automate, or does it need its own review queue the way
   `work_genre_candidate` does?
-- Worth extending `category_total` (Musicians' season-wide counts, no
+- Worth extending `category_totals` (Musicians' season-wide counts, no
   named work) into a coarser completeness cross-check too, even though it
   can never produce a person↔performance link the way `named_work` can?

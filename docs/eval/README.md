@@ -12,10 +12,10 @@ periods with a death/resignation, rank-class annotations).
   re-rendered at 300dpi and cropped to resolve a dense matinee/evening block —
   see `source_pages.csv` notes for `repertoire_1898-99_MSK_p019`)
 - `source_pages.csv` — manifest of the 12 pages (which PDF/page, season, city)
-- `roster_entry.csv`, `service_period.csv`, `roster_entry_credit.csv` — gold
+- `person_entry.csv`, `person_entry_service.csv`, `person_entry_credit.csv` — gold
   transcription for the 8 Spiski pages (138 person-entries, 125 service
   periods, 70 credit rows)
-- `performance_session.csv`, `performance_work.csv` — gold transcription for
+- `event_entry.csv`, `event_entry_performance.csv` — gold transcription for
   the 4 Repertoire pages (161 sessions, 145 works)
 - `_build_roster.py`, `_build_repertoire.py` — the scripts that emit the CSVs
   from hand-transcribed Python data structures. Not part of the extraction
@@ -31,8 +31,8 @@ periods with a death/resignation, rank-class annotations).
 | repertoire_1898-99_MSK_p019 | Repertoire | 1898-99 | post-split Moscow block, 3-venue, dense matinee/evening splits |
 | repertoire_1898-99_SP_p020 | Repertoire | 1898-99 | post-split SP block, New Year boundary, French titles at Mikhailovsky |
 | repertoire_1907-08_SP_p000 | Repertoire | 1907-08 | late SP-only format, dark cells, anniversary annotation, one apparent source misprint |
-| administration_1890-91_p000 | Administration | 1890-91 | earliest roster shape |
-| administration_1907-08_p000 | Administration | 1907-08 | rank-class annotations appear |
+| administration_1890-91_p000 | Administrators | 1890-91 | earliest roster shape |
+| administration_1907-08_p000 | Administrators | 1907-08 | rank-class annotations appear |
 | balletartists_1890-91_SP_p000 | BalletArtists | 1890-91 | baseline role hierarchy + performance-tally shape |
 | balletartists_1907-08_SP_p000 | BalletArtists | 1907-08 | expanded role hierarchy, honorific title, named-role credit |
 | musicians_1890-91_SP_p000 | Musicians | 1890-91 | instrument field, pre-split orchestra organization |
@@ -49,8 +49,8 @@ partial-precision path actually gets used somewhere.
 ## How this gets used once an OCR/extraction backend is chosen
 
 1. Run the same 12 page images through the candidate model(s) with a prompt
-   asking for output in the `roster_entry`/`service_period`/`roster_entry_credit`
-   or `performance_session`/`performance_work` shape from `docs/schema.md`.
+   asking for output in the `person_entry`/`person_entry_service`/`person_entry_credit`
+   or `event_entry`/`event_entry_performance` shape from `docs/schema.md`.
 2. Score field-by-field against this gold set:
    - **Name fields** (family/first/patronymic): exact-match rate, plus a
      look at near-misses to catch systematic OCR failure modes (ѣ/е,
@@ -61,10 +61,10 @@ partial-precision path actually gets used somewhere.
    - **Receipts**: numeric match on rubles/kopecks separately — money is
      where digit-transposition errors are costliest.
    - **Structural fidelity for Repertoire**: does the model correctly split
-     multi-receipt cells into separate `performance_session` rows instead of
+     multi-receipt cells into separate `event_entry` rows instead of
      flattening them into one multi-work session? (See the `p019` notes —
      this is a real, non-obvious parsing decision, not just an OCR problem.)
-   - **Recall on child rows**: `roster_entry_credit` and `service_period`
+   - **Recall on child rows**: `person_entry_credit` and `person_entry_service`
      counts per entry — these are the fields most likely to get silently
      dropped since they're secondary/nested in the source layout.
 3. Because this set already includes the known-hard structural cases (not

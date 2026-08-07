@@ -1,6 +1,6 @@
 """Stage 6a: builds a `research` schema -- the final, simplified,
 directly-queryable layer docs/entity_centric_model.md proposed: Person,
-Work, Theater, Session, Performance, Person_appearance, with foreign keys
+Work, Theater, Event, Performance, Person_appearance, with foreign keys
 baked in directly rather than crosswalked at query time. This is the
 layer meant to be published/browsed. The working `entities` schema
 (person_link, work_link, person_candidate, person_merge_log,
@@ -21,28 +21,31 @@ that resolved its two open questions):
 - `work`: unchanged from entities.work -- already the clean output of
   docs/work_normalization.md.
 - `theater`: unchanged from entities.theater.
-- `session` kept distinct from `performance` deliberately: 6,158 of
-  17,345 sessions (35%) list more than one work, and receipts are printed
-  once per session, not once per work -- flattening them into one row per
-  (work, session) would silently duplicate receipts on every multi-work
-  night. Receipts live ONLY on `session`, so `SUM(receipts_total_kopecks)`
-  over `session` is always safe; `performance` never carries receipts at
-  all, precisely so summing it can't overcount.
-- `session.date` is the best-available date: the run-corroborated
+- `event` kept distinct from `performance` deliberately: 6,158 of
+  17,345 events (35%) list more than one work, and receipts are printed
+  once per event, not once per work -- flattening them into one row per
+  (work, event) would silently duplicate receipts on every multi-work
+  night. Receipts live ONLY on `event`, so `SUM(receipts_total_kopecks)`
+  over `event` is always safe; `performance` never carries receipts at
+  all, precisely so summing it can't overcount. (Renamed from `session`/
+  `performance_session` per RG's docs/schema.md revision -- "session" was
+  ambiguous with a login/browser session, "event" matches the
+  raw.event_entry naming this now derives from.)
+- `event.date` is the best-available date: the run-corroborated
   correction from docs/performance_normalization.md when there is one,
   otherwise the original computed date. `date_confidence` always travels
   alongside it (never silently hidden), including a distinct
   'synthesized_gap' value for the not_captured completeness placeholders
-  analysis.performance_session already synthesizes -- those never went
+  analysis.event_entry already synthesizes -- those never went
   through date validation (they have no real printed date_text to
   validate against) and calling them 'unparseable' would misrepresent a
   deliberate completeness signal as a data-quality failure.
-- `performance`'s own PK is `performance_id`, not `work_id` --
-  raw.performance_work's own PK is also (confusingly) named `work_id`,
-  and reusing it here would collide with entities.work.work_id's
+- `performance`'s own PK is `performance_id`, distinct from `work_id` --
+  raw.event_entry_performance's own PK is also named `performance_id`,
+  and reusing `work_id` here would collide with entities.work.work_id's
   different meaning (the exact collision docs/entity_centric_model.md
   flagged and this project already worked around once by aliasing to
-  `raw_work_id` in build_datasette.py's joined views).
+  `raw_performance_id` on entities.work_link).
 - `person_appearance` kept as its own table (not folded into `person` as
   a nested column, not merged into `performance`): a roster appearance is
   a season-level employment fact, not tied to a specific work performance
@@ -64,7 +67,7 @@ import duckdb
 def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     con.execute("CREATE SCHEMA IF NOT EXISTS research")
 
-    # Drop in FK-dependency order (performance/person_appearance/session
+    # Drop in FK-dependency order (performance/person_appearance/event
     # depend on person/work/theater) so CREATE OR REPLACE below never
     # trips the same "blocked by a dependent table" issue build_entities.py
     # already documents for entities.person/entities.work. DuckDB has no
@@ -73,7 +76,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # declared inline on CREATE TABLE, so each table is CREATEd with its
     # full schema first and populated via a separate INSERT INTO ... SELECT,
     # same two-step pattern build_entities.py already uses.
-    for t in ["performance", "session", "person_appearance", "person", "work", "theater"]:
+    for t in ["performance", "event", "person_appearance", "person", "work", "theater"]:
         con.execute(f"DROP TABLE IF EXISTS research.{t}")
 
     con.execute("""
@@ -132,8 +135,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     """)
 
     con.execute("""
-        CREATE TABLE research.session (
-            session_id VARCHAR PRIMARY KEY,
+        CREATE TABLE research.event (
+            event_id VARCHAR PRIMARY KEY,
             theater_id UUID REFERENCES research.theater(theater_id),
             season VARCHAR,
             city VARCHAR,
@@ -141,37 +144,37 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             date_undate VARCHAR,
             date VARCHAR,
             date_confidence VARCHAR,
-            session_status VARCHAR,
+            event_status VARCHAR,
             receipts_total_kopecks INTEGER
         )
     """)
     con.execute("""
-        INSERT INTO research.session
+        INSERT INTO research.event
         SELECT
-            aps.session_id,
+            ae.event_id,
             t.theater_id,
-            aps.season, aps.city,
-            aps.date_text AS date_verbatim,
-            aps.date_undate,
-            coalesce(dc.corrected_date_undate, aps.date_undate) AS date,
+            ae.season, ae.city,
+            ae.date_text AS date_verbatim,
+            ae.date_undate,
+            coalesce(dc.corrected_date_undate, ae.date_undate) AS date,
             coalesce(
                 dc.date_confidence,
-                CASE WHEN aps.session_status = 'not_captured' THEN 'synthesized_gap'
+                CASE WHEN ae.event_status = 'not_captured' THEN 'synthesized_gap'
                      ELSE 'unparseable' END
             ) AS date_confidence,
-            aps.session_status,
-            aps.receipts_total_kopecks
-        FROM analysis.performance_session aps
-        LEFT JOIN analysis.performance_session_date_check dc ON dc.session_id = aps.session_id
-        LEFT JOIN entities.theater t ON t.canonical_name = aps.theater_canonical
+            ae.event_status,
+            ae.receipts_total_kopecks
+        FROM analysis.event_entry ae
+        LEFT JOIN analysis.event_entry_date_check dc ON dc.event_id = ae.event_id
+        LEFT JOIN entities.theater t ON t.canonical_name = ae.theater_canonical
     """)
 
     con.execute("""
         CREATE TABLE research.performance (
             performance_id VARCHAR PRIMARY KEY,
-            session_id VARCHAR REFERENCES research.session(session_id),
+            event_id VARCHAR REFERENCES research.event(event_id),
             work_id UUID REFERENCES research.work(work_id),
-            work_order VARCHAR,
+            performance_order VARCHAR,
             verbatim_title VARCHAR,
             verbatim_genre VARCHAR
         )
@@ -179,14 +182,14 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     con.execute("""
         INSERT INTO research.performance
         SELECT
-            pw.work_id AS performance_id,
-            pw.session_id,
+            eep.performance_id,
+            eep.event_id,
             wl.work_id,
-            pw.work_order,
-            pw.work_title AS verbatim_title,
-            pw.genre AS verbatim_genre
-        FROM raw.performance_work pw
-        JOIN entities.work_link wl ON wl.raw_work_id = pw.work_id
+            eep.performance_order,
+            eep.performance_title AS verbatim_title,
+            eep.genre AS verbatim_genre
+        FROM raw.event_entry_performance eep
+        JOIN entities.work_link wl ON wl.raw_performance_id = eep.performance_id
     """)
 
     con.execute("""
@@ -214,24 +217,24 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             r.entity_type, r.institution, r.heading_path,
             r.rank_or_title, r.service_class, r.instrument,
             r.subject_taught, r.tenure_note_text
-        FROM raw.roster_entry r
+        FROM raw.person_entry r
         JOIN entities.person_link pl ON pl.entry_id = r.entry_id
         JOIN raw.source_pages sp ON sp.page_id = r.page_id
     """)
 
     counts = {
         t: con.execute(f"SELECT count(*) FROM research.{t}").fetchone()[0]
-        for t in ["theater", "work", "person", "session", "performance", "person_appearance"]
+        for t in ["theater", "work", "person", "event", "performance", "person_appearance"]
     }
     print("research schema built:")
     for t, n in counts.items():
         print(f"  research.{t}: {n} rows")
 
-    # Sanity check: receipts must live only on session, never on
+    # Sanity check: receipts must live only on event, never on
     # performance -- the entire point of keeping them distinct.
     perf_cols = {c[0] for c in con.execute("DESCRIBE research.performance").fetchall()}
     assert not any("receipt" in c for c in perf_cols), \
-        "receipts leaked onto research.performance -- multi-work sessions would double-count"
+        "receipts leaked onto research.performance -- multi-work events would double-count"
 
 
 def main():

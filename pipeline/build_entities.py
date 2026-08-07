@@ -4,7 +4,7 @@ alongside `raw` and `analysis`, additive only, never touching either.
 
 Entities are built incrementally, one function per entity type, in
 increasing order of difficulty (see docs/research_dataset.md): theater
-(hand-seeded, ~solved already by analysis.performance_session's
+(hand-seeded, ~solved already by analysis.event_entry's
 theater_canonical), work (canonicalized title+genre), person (staged,
 confidence-scored matching -- the hard one, built last and separately).
 
@@ -56,14 +56,14 @@ def build_theater(con: duckdb.DuckDBPyConnection) -> None:
     con.executemany("INSERT INTO entities.theater VALUES (?, ?, ?, ?)", rows)
     print(f"entities.theater: {len(rows)} rows (hand-seeded)")
 
-    # Sanity check: every theater_canonical value in analysis.performance_session
+    # Sanity check: every theater_canonical value in analysis.event_entry
     # should resolve to exactly one entities.theater row. If this ever prints
     # a mismatch, the corpus has introduced a venue THEATERS doesn't know
     # about yet (e.g. a 7th theater in a later season) and this table needs
     # a manual update, not a code fix.
     unmatched = con.execute("""
         SELECT DISTINCT a.theater_canonical
-        FROM analysis.performance_session a
+        FROM analysis.event_entry a
         LEFT JOIN entities.theater t ON t.canonical_name = a.theater_canonical
         WHERE a.theater_canonical IS NOT NULL AND t.theater_id IS NULL
     """).fetchall()
@@ -170,8 +170,8 @@ _EXCERPT_PREFIX_RE = re.compile(
 
 def build_work(con: duckdb.DuckDBPyConnection) -> None:
     rows = con.execute("""
-        SELECT work_id, work_title, genre FROM raw.performance_work
-        WHERE work_title IS NOT NULL AND trim(work_title) <> ''
+        SELECT performance_id, performance_title, genre FROM raw.event_entry_performance
+        WHERE performance_title IS NOT NULL AND trim(performance_title) <> ''
     """).fetchall()
 
     # Group on title alone first (suffix-stripped, folded) -- genre is
@@ -300,7 +300,7 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
 
     con.execute("""
         CREATE TABLE entities.work_link (
-            raw_work_id VARCHAR PRIMARY KEY,
+            raw_performance_id VARCHAR PRIMARY KEY,
             work_id UUID REFERENCES entities.work(work_id)
         )
     """)
@@ -358,10 +358,10 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     )
 
     n_excluded = con.execute(
-        "SELECT count(*) FROM raw.performance_work WHERE work_title IS NULL OR trim(work_title) = ''"
+        "SELECT count(*) FROM raw.event_entry_performance WHERE performance_title IS NULL OR trim(performance_title) = ''"
     ).fetchone()[0]
     print(f"entities.work: {len(work_rows)} resolved works from {len(rows)} raw appearances "
-          f"({n_excluded} excluded: blank work_title, see known_issues.md)")
+          f"({n_excluded} excluded: blank performance_title, see known_issues.md)")
     print(f"  {n_multi_variant} works were printed under more than one raw spelling variant "
           f"and collapsed into one entity by canonicalization")
     print(f"  {n_genre_merged} title groups merged a blank-genre printing into an existing "
@@ -504,7 +504,7 @@ def _snapshot_person_candidate_status(con: duckdb.DuckDBPyConnection) -> dict[tu
 def build_person_tier1(con: duckdb.DuckDBPyConnection) -> None:
     rows = con.execute("""
         SELECT r.entry_id, r.family_name, r.first_name, r.patronymic, p.season
-        FROM raw.roster_entry r
+        FROM raw.person_entry r
         JOIN raw.source_pages p ON p.page_id = r.page_id
         WHERE r.family_name IS NOT NULL AND trim(r.family_name) <> ''
     """).fetchall()
@@ -609,7 +609,7 @@ def build_person_tier1(con: duckdb.DuckDBPyConnection) -> None:
     con.executemany("INSERT INTO entities.person_link VALUES (?, ?, ?, ?)", link_rows)
 
     n_excluded = con.execute(
-        "SELECT count(*) FROM raw.roster_entry WHERE family_name IS NULL OR trim(family_name) = ''"
+        "SELECT count(*) FROM raw.person_entry WHERE family_name IS NULL OR trim(family_name) = ''"
     ).fetchone()[0]
     print(f"entities.person (Tier 1): {len(person_rows)} resolved people from {len(rows)} roster appearances "
           f"({n_excluded} excluded: blank family_name)")
@@ -727,8 +727,8 @@ def _annotate_tenure_signal(con: duckdb.DuckDBPyConnection) -> None:
     """Attaches an independent corroborating/contradicting signal to every
     Tier 2 candidate pair, run every time (not just for pending pairs) so
     the evidence behind a decision -- auto or human -- stays visible in the
-    exported data: raw.service_period.start_date_undate is a real historical
-    fact ("in service since 3 September 1881") that gets reprinted
+    exported data: raw.person_entry_service.start_date_undate is a real
+    historical fact ("in service since 3 September 1881") that gets reprinted
     identically in every later yearbook the same person appears in, so two
     near-identical names that also share an exact start date is much
     stronger evidence than name similarity alone -- confirmed against the
@@ -736,14 +736,14 @@ def _annotate_tenure_signal(con: duckdb.DuckDBPyConnection) -> None:
     start date. tenure_signal is one of:
       - 'shared_start_date'  -- at least one exact match, strong corroboration
       - 'conflicting_dates'  -- both sides have dates, none match
-      - 'no_date_data'       -- one or both sides have no service_period row
+      - 'no_date_data'       -- one or both sides have no person_entry_service row
     """
     con.execute("""
         CREATE OR REPLACE TEMP TABLE _pc_dates AS
         WITH person_dates AS (
             SELECT pl.person_id, sp.start_date_undate
             FROM entities.person_link pl
-            JOIN raw.service_period sp ON sp.entry_id = pl.entry_id
+            JOIN raw.person_entry_service sp ON sp.entry_id = pl.entry_id
             WHERE sp.start_date_undate IS NOT NULL
         ),
         d1 AS (
@@ -913,7 +913,7 @@ def _repoint_all_superseded(con: duckdb.DuckDBPyConnection) -> None:
         FROM (
             SELECT pl.person_id, min(sp.season) AS first_season, max(sp.season) AS last_season
             FROM entities.person_link pl
-            JOIN raw.roster_entry r ON r.entry_id = pl.entry_id
+            JOIN raw.person_entry r ON r.entry_id = pl.entry_id
             JOIN raw.source_pages sp ON sp.page_id = r.page_id
             WHERE sp.season IS NOT NULL
             GROUP BY pl.person_id

@@ -245,14 +245,14 @@ real, useful text — just mislabeled) rather than guessing a swap; the lost
 information is the row's *actual* institution/category heading, which the
 model dropped and can't be recovered without the source image.
 
-## 13. Completeness reconciliation: `session_status='not_captured'` (implemented)
+## 13. Completeness reconciliation: `event_status='not_captured'` (implemented)
 
-**Status: implemented, in `analysis.performance_session`.** Renamed
-`is_dark` to `session_status` (`performed` / `no_performance`) — "dark
+**Status: implemented, in `analysis.event_entry`.** Renamed
+`is_dark` to `event_status` (`performed` / `no_performance`) — "dark
 cell" is theater jargon, not intuitive — and added a third,
 analysis-layer-only value, `not_captured`, for (date, theater) cells the
 page should have but extraction didn't return at all. Full rationale and
-the two assumptions it rests on: `docs/schema.md`'s `session_status`
+the two assumptions it rests on: `docs/schema.md`'s `event_status`
 section. 3,771 gaps found across the full corpus (~13.7% of the full
 expected grid), heavily concentrated on a few bad seasons/pages rather
 than spread evenly — consistent with issue #1 being a page-level
@@ -280,7 +280,7 @@ test run produced an obviously-wrong 365-day span on one page:
   the stem-matching only checked `word.startswith(stem)`, which fails when
   the abbreviation is *shorter* than its stem. Fixed by also checking
   `stem.startswith(word)`. This alone took `date_undate` fill rate on
-  `performance_session` from 89.0% to 99.8%.
+  `event_entry` from 89.0% to 99.8%.
 - **Season-spanning year ranges resolved to the wrong year.** Repertoire
   `year_text` is often printed as `"1896—1897 гг."` (the table covers
   August of the first year through summer of the second), but the parser

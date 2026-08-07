@@ -1,6 +1,8 @@
 """Pydantic models for the LLM-facing (nested) JSON contract for Spiski
 (roster) pages, plus a flattener that produces rows matching the flat
-roster_entry / service_period / roster_entry_credit tables in docs/schema.md.
+person_entry / person_entry_service / person_entry_credit tables in
+docs/schema.md (renamed from roster_entry / service_period /
+roster_entry_credit per RG's schema.md revision).
 
 The nested shape here is what we *ask the model for* -- easier for it to
 produce one JSON object per person than to invent its own row-keying scheme.
@@ -8,12 +10,30 @@ Flattening to the relational shape (with our own generated IDs) happens
 after parsing, same as docs/eval/gold/_build_roster.py did for the gold set.
 """
 from typing import Optional, Literal
+import re
+
 from pydantic import BaseModel, Field
 
 from .dates import parse_russian_date
 
-EndType = Optional[Literal["died", "resigned", "other"]]
-CreditType = Literal["category_total", "named_work"]
+EndType = Optional[Literal["died", "left service", "other"]]
+CreditType = Literal["category_totals", "named_work"]
+
+# Backfills category_production_count from credit_summary_text -- the
+# production count ("11" in "Въ 11 балетахъ—33") was never asked of the
+# model as a structured field (only the credit count after the dash was),
+# but it's sitting right there in the verbatim summary sentence, present in
+# ~79% of BalletArtists credit_summary_text values (checked directly against
+# the full corpus). Deriving it here means no re-extraction is needed --
+# every already-captured raw JSON file already has everything this needs.
+_PRODUCTION_COUNT_RE = re.compile(r"[Вв]ъ\s+(\d+)\s+([^\s,;.]+)\s*[—-]\s*([\d.]+)")
+
+
+def _parse_production_counts(credit_summary_text: Optional[str]) -> dict[str, int]:
+    counts = {}
+    for prod, label, _cnt in _PRODUCTION_COUNT_RE.findall(credit_summary_text or ""):
+        counts[label] = int(prod)
+    return counts
 
 
 class ServicePeriodLLM(BaseModel):
@@ -53,7 +73,7 @@ class RosterPage(BaseModel):
 
 
 def flatten_roster_page(page_id: str, entity_type: str, page: RosterPage) -> dict:
-    """Returns {"roster_entry": [...], "service_period": [...], "roster_entry_credit": [...]}
+    """Returns {"person_entry": [...], "person_entry_service": [...], "person_entry_credit": [...]}
     as lists of flat dicts, ID-linked, matching docs/schema.md exactly."""
     entries, periods, credits = [], [], []
     for i, e in enumerate(page.entries, start=1):
@@ -78,6 +98,7 @@ def flatten_roster_page(page_id: str, entity_type: str, page: RosterPage) -> dic
                 "end_date_undate": parse_russian_date(p.end_date_text) or "",
                 "end_type": p.end_type or "",
             })
+        production_counts = _parse_production_counts(e.credit_summary_text)
         for k, c in enumerate(e.credits, start=1):
             if c.count is None:
                 count_out = ""
@@ -85,9 +106,12 @@ def flatten_roster_page(page_id: str, entity_type: str, page: RosterPage) -> dic
                 count_out = str(int(c.count))
             else:
                 count_out = str(c.count)
+            production_count = production_counts.get(c.label)
             credits.append({
                 "credit_id": f"{entry_id}__cr{k}", "entry_id": entry_id,
                 "credit_type": c.credit_type, "label": c.label,
-                "role_name": c.role_name or "", "count": count_out,
+                "role_name": c.role_name or "",
+                "category_production_count": "" if production_count is None else str(production_count),
+                "category_credit_count": count_out,
             })
-    return {"roster_entry": entries, "service_period": periods, "roster_entry_credit": credits}
+    return {"person_entry": entries, "person_entry_service": periods, "person_entry_credit": credits}

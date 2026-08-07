@@ -24,7 +24,7 @@ Snapshot as of 2026-07-27, computed from `pdfs/_inventory.csv`.
 | Spiski_Graduates | 0 | 0 | — | not yet sourced |
 | Spiski_ProductionStats | 0 | 0 | — | not yet sourced |
 
-Roster-type folders (Administration/BalletArtists/Musicians/ProductionTeam/
+Roster-type folders (Administrators/BalletArtists/Musicians/ProductionTeam/
 TheaterSchoolStaff) stay roughly flat in page count across the 18 years —
 growing headcount was absorbed by denser typesetting, not more pages.
 RepertoireTables did not:

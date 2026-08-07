@@ -94,7 +94,7 @@ data, not schema, and survives every reshuffle above without a migration.
 1. Every Spiski type needs a **position/role field as free text with implied
    hierarchy** (institution → department → sub-department → role), not a fixed
    set of columns — the hierarchy itself grows over time.
-2. **Service span** (start date, end type [active/resigned/died], end date) is
+2. **Service span** (start date, end type [active/left service/died], end date) is
    a shared shape across every Spiski type.
 3. **Performance credit breakdowns** (ballet/opera/drama counts, named-role
    detail) belong in a child table keyed to the person + season, not inlined

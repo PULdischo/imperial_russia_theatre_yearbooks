@@ -22,14 +22,14 @@ difficulty ranking rather than guess at it:
 
 | Entity | Distinct raw values | Rows referencing it | Difficulty |
 |---|---|---|---|
-| Theater | 22 raw strings | 23,726 `performance_session` rows | **Easy** — already 90% solved |
-| Work | 5,395 distinct (title, genre) pairs | 25,051 `performance_work` rows | **Medium** |
-| Person | 4,163 distinct (family, first, patronymic) triples | 20,716 `roster_entry` rows | **Hard** — the centerpiece |
-| Institution | 178 distinct `institution` strings | 20,716 `roster_entry` rows | **Hard, and probably out of v1 scope** — see below |
+| Theater | 22 raw strings | 23,726 `event_entry` rows | **Easy** — already 90% solved |
+| Work | 5,395 distinct (title, genre) pairs | 25,051 `event_entry_performance` rows | **Medium** |
+| Person | 4,163 distinct (family, first, patronymic) triples | 20,716 `person_entry` rows | **Hard** — the centerpiece |
+| Institution | 178 distinct `institution` strings | 20,716 `person_entry` rows | **Hard, and probably out of v1 scope** — see below |
 
 ### Theater — already effectively resolved
 
-`analysis.performance_session.theater_canonical` (built in `build_duckdb.py`
+`analysis.event_entry.theater_canonical` (built in `build_duckdb.py`
 for the completeness-reconciliation work) already collapses the 22 raw
 spelling/suffix variants down to the real 6 venues. `entities.theater`
 just needs to be the small, hand-seeded reference table this already joins
@@ -97,8 +97,8 @@ entities.person           person_id (UUID, uuid4, persisted) | display_name | ca
                           | canonical_first_name | canonical_patronymic | ordinal_suffix
                           | first_attested_season | last_attested_season | superseded_by_person_id
 
-entities.person_link      entry_id (FK -> raw.roster_entry) | person_id (FK) | match_method | match_confidence
-entities.work_link        work_id (FK -> raw.performance_work) | entity_work_id (FK) | match_confidence
+entities.person_link      entry_id (FK -> raw.person_entry) | person_id (FK) | match_method | match_confidence
+entities.work_link        raw_performance_id (FK -> raw.event_entry_performance) | work_id (FK -> entities.work) | match_confidence
 ```
 
 `theater` and `work` need no link table — `theater_canonical` /
@@ -161,7 +161,7 @@ Two distinct jobs, two different tools — reusing what this researcher
 already uses rather than introducing something new for its own sake:
 
 **Reviewing Tier 2 candidate merges — Google Sheets, not a custom app.**
-Export candidate pairs (two roster_entry rows side by side, similarity
+Export candidate pairs (two person_entry rows side by side, similarity
 score, a blank decision column) as a Sheet; the researcher fills in
 Yes/No/Unsure per row using ordinary Sheets filtering, no new tool to
 learn. A small script reads confirmed rows back and applies them to

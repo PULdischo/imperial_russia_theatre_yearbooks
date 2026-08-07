@@ -27,7 +27,7 @@ from pathlib import Path
 
 from PIL import Image
 
-ROSTER_KINDS = {"Administration", "BalletArtists", "Musicians", "ProductionTeam",
+ROSTER_KINDS = {"Administrators", "BalletArtists", "Musicians", "ProductionTeam",
                 "TheaterSchoolStaff", "Graduates"}
 
 VIEW_MAX_EDGE = 1600
@@ -40,9 +40,9 @@ ROSTER_COLUMNS = [
     ("instrument", "Instrument"), ("subject_taught", "Subject"),
     ("tenure_note_text", "Tenure"), ("credit_summary_text", "Credits"),
 ]
-SESSION_COLUMNS = [
-    ("date_text", "Date"), ("theater", "Theater"), ("session", "Session"),
-    ("session_status", "Status"), ("_works", "Works"),
+EVENT_COLUMNS = [
+    ("date_text", "Date"), ("theater", "Theater"), ("time_of_day", "Time of day"),
+    ("event_status", "Status"), ("_works", "Works"),
     ("receipts_text", "Receipts"), ("annotation", "Annotation"),
 ]
 
@@ -88,8 +88,8 @@ def make_viewing_image(src: Path, dst: Path) -> None:
         im.save(dst, "JPEG", quality=VIEW_JPEG_QUALITY)
 
 
-def page_note(row: dict, roster_rows: list[dict], session_rows: list[dict],
-              works_by_session: dict[str, list[dict]], prev_id: str | None,
+def page_note(row: dict, roster_rows: list[dict], event_rows: list[dict],
+              performances_by_event: dict[str, list[dict]], prev_id: str | None,
               next_id: str | None) -> str:
     page_id = row["page_id"]
     fm = [
@@ -109,14 +109,14 @@ def page_note(row: dict, roster_rows: list[dict], session_rows: list[dict],
         body.append(md_table(roster_rows, ROSTER_COLUMNS))
     else:
         expanded = []
-        for s in session_rows:
-            works = works_by_session.get(s["session_id"], [])
+        for s in event_rows:
+            performances = performances_by_event.get(s["event_id"], [])
             work_text = "; ".join(
-                f"{w['work_title']} ({w['genre']})" if w.get("genre") else w["work_title"]
-                for w in works
+                f"{w['performance_title']} ({w['genre']})" if w.get("genre") else w["performance_title"]
+                for w in performances
             )
             expanded.append({**s, "_works": work_text})
-        body.append(md_table(expanded, SESSION_COLUMNS))
+        body.append(md_table(expanded, EVENT_COLUMNS))
 
     nav = []
     if prev_id:
@@ -144,9 +144,9 @@ def main():
     images_dir.mkdir(parents=True, exist_ok=True)
 
     manifest = load_csv(args.manifest)
-    roster_by_page = by_key(load_csv(args.parsed_dir / "roster_entry.csv"), "page_id")
-    sessions_by_page = by_key(load_csv(args.parsed_dir / "performance_session.csv"), "page_id")
-    works_by_session = by_key(load_csv(args.parsed_dir / "performance_work.csv"), "session_id")
+    roster_by_page = by_key(load_csv(args.parsed_dir / "person_entry.csv"), "page_id")
+    events_by_page = by_key(load_csv(args.parsed_dir / "event_entry.csv"), "page_id")
+    performances_by_event = by_key(load_csv(args.parsed_dir / "event_entry_performance.csv"), "event_id")
 
     # prev/next within each source PDF, in page order
     by_file = defaultdict(list)
@@ -172,7 +172,7 @@ def main():
             prev_id = rows[i - 1]["page_id"] if i > 0 else None
             next_id = rows[i + 1]["page_id"] if i < len(rows) - 1 else None
             note = page_note(row, roster_by_page.get(page_id, []),
-                              sessions_by_page.get(page_id, []), works_by_session,
+                              events_by_page.get(page_id, []), performances_by_event,
                               prev_id, next_id)
             (pages_dir / f"{page_id}.md").write_text(note, encoding="utf-8")
             n_notes += 1

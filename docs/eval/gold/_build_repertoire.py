@@ -25,20 +25,22 @@ def add_session(session_id, page_id, season, city, date_text, month_text, year_t
         except Exception:
             pass
     sessions.append(dict(
-        session_id=session_id, page_id=page_id, season=season, city=city,
+        event_id=session_id, page_id=page_id, season=season, city=city,
         date_text=date_text, month_text=month_text, year_text=year_text,
-        date_undate=date_undate, session=session, theater=theater,
-        # is_dark stays the authoring-time bool param (easy to write by hand);
-        # session_status is what actually gets written out, matching the
-        # pipeline's renamed field (docs/schema.md: "is_dark" -> "session_status").
-        session_status=("no_performance" if is_dark else "performed"),
+        date_undate=date_undate,
+        # is_dark/session stay the authoring-time params (easy to write by
+        # hand); time_of_day/event_status are what actually get written out,
+        # matching the pipeline's renamed fields (docs/schema.md: "is_dark"
+        # -> "event_status", "session" -> "time_of_day", "day" -> "unspecified").
+        time_of_day=("unspecified" if session == "day" else session), theater=theater,
+        event_status=("no_performance" if is_dark else "performed"),
         receipts_text=receipts_text,
         receipts_rubles=rub, receipts_kopecks=kop, annotation=annotation,
     ))
     if work_list:
         for i, (title, genre) in enumerate(work_list, start=1):
-            works.append(dict(work_id=f"{session_id}__w{i}", session_id=session_id,
-                               work_order=i, work_title=title, genre=genre))
+            works.append(dict(performance_id=f"{session_id}__w{i}", event_id=session_id,
+                               performance_order=i, performance_title=title, genre=genre))
 
 
 # ---------------------------------------------------------------------------
@@ -327,17 +329,17 @@ for day, weekday, date_undate, entries in rows_1907:
 # ---------------------------------------------------------------------------
 # write out
 # ---------------------------------------------------------------------------
-session_fields = ["session_id", "page_id", "season", "city", "date_text", "month_text",
-                   "year_text", "date_undate", "session", "theater", "session_status",
-                   "receipts_text", "receipts_rubles", "receipts_kopecks", "annotation"]
-with open(OUT / "performance_session.csv", "w", newline="", encoding="utf-8") as f:
-    w = csv.DictWriter(f, fieldnames=session_fields)
+event_fields = ["event_id", "page_id", "season", "city", "date_text", "month_text",
+                 "year_text", "date_undate", "time_of_day", "theater", "event_status",
+                 "receipts_text", "receipts_rubles", "receipts_kopecks", "annotation"]
+with open(OUT / "event_entry.csv", "w", newline="", encoding="utf-8") as f:
+    w = csv.DictWriter(f, fieldnames=event_fields)
     w.writeheader()
     w.writerows(sessions)
 
-work_fields = ["work_id", "session_id", "work_order", "work_title", "genre"]
-with open(OUT / "performance_work.csv", "w", newline="", encoding="utf-8") as f:
-    w = csv.DictWriter(f, fieldnames=work_fields)
+performance_fields = ["performance_id", "event_id", "performance_order", "performance_title", "genre"]
+with open(OUT / "event_entry_performance.csv", "w", newline="", encoding="utf-8") as f:
+    w = csv.DictWriter(f, fieldnames=performance_fields)
     w.writeheader()
     w.writerows(works)
 

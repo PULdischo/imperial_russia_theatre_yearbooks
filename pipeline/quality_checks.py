@@ -51,8 +51,8 @@ def by_page(rows: list[dict]) -> dict[str, list[dict]]:
 
 def check_roster(parsed_dir: Path) -> list[dict]:
     flags = []
-    entries = load(parsed_dir / "roster_entry.csv")
-    credits = load(parsed_dir / "roster_entry_credit.csv")
+    entries = load(parsed_dir / "person_entry.csv")
+    credits = load(parsed_dir / "person_entry_credit.csv")
     credits_by_entry = defaultdict(list)
     for c in credits:
         credits_by_entry[c["entry_id"]].append(c)
@@ -64,32 +64,32 @@ def check_roster(parsed_dir: Path) -> list[dict]:
         family, first, patr = e.get("family_name", ""), e.get("first_name", ""), e.get("patronymic", "")
 
         if institution and heading_path and institution.strip() in heading_path:
-            flags.append(dict(page_id=page_id, table="roster_entry", row_id=entry_id,
+            flags.append(dict(page_id=page_id, table="person_entry", row_id=entry_id,
                                flag="institution_duplicated_in_heading_path",
                                detail=f"institution={institution!r} heading_path={heading_path!r}"))
 
         if RANK_CLASS_RE.search(heading_path or "") and not e.get("service_class", "").strip():
-            flags.append(dict(page_id=page_id, table="roster_entry", row_id=entry_id,
+            flags.append(dict(page_id=page_id, table="person_entry", row_id=entry_id,
                                flag="rank_class_left_in_heading_path",
                                detail=f"heading_path={heading_path!r}"))
 
         key = (family.strip(), first.strip(), patr.strip())
         if family.strip() and key in seen_in_page[page_id]:
-            flags.append(dict(page_id=page_id, table="roster_entry", row_id=entry_id,
+            flags.append(dict(page_id=page_id, table="person_entry", row_id=entry_id,
                                flag="duplicate_person_on_page", detail=str(key)))
         seen_in_page[page_id].add(key)
 
     for entry_id, rows in credits_by_entry.items():
-        totals = {r["label"]: r for r in rows if r["credit_type"] == "category_total"}
+        totals = {r["label"]: r for r in rows if r["credit_type"] == "category_totals"}
         stated_total = totals.get("Всего")
         components = [r for label, r in totals.items() if label != "Всего"]
         if stated_total and components:
             try:
-                component_sum = sum(int(r["count"]) for r in components if r["count"])
-                stated = int(stated_total["count"])
+                component_sum = sum(int(r["category_credit_count"]) for r in components if r["category_credit_count"])
+                stated = int(stated_total["category_credit_count"])
                 if component_sum != stated:
                     page_id = rows[0]["entry_id"].split("__e")[0]
-                    flags.append(dict(page_id=page_id, table="roster_entry_credit", row_id=entry_id,
+                    flags.append(dict(page_id=page_id, table="person_entry_credit", row_id=entry_id,
                                        flag="credit_sum_mismatch",
                                        detail=f"components sum to {component_sum}, stated Всего={stated}"))
             except (ValueError, KeyError):
@@ -100,30 +100,30 @@ def check_roster(parsed_dir: Path) -> list[dict]:
 
 def check_repertoire(parsed_dir: Path) -> list[dict]:
     flags = []
-    sessions = by_page(load(parsed_dir / "performance_session.csv"))
+    events = by_page(load(parsed_dir / "event_entry.csv"))
 
     KNOWN_THEATERS = ["Маріинскій", "Александринскій", "Михайловскій", "Большой", "Малый", "Новый"]
 
-    for page_id, rows in sessions.items():
-        dark_count = sum(1 for r in rows if r.get("session_status", "").strip() == "no_performance")
+    for page_id, rows in events.items():
+        dark_count = sum(1 for r in rows if r.get("event_status", "").strip() == "no_performance")
         days = {r["date_text"].split()[0] for r in rows if r.get("date_text")}
         if dark_count == 0 and len(days) >= 6:
-            flags.append(dict(page_id=page_id, table="performance_session", row_id="",
+            flags.append(dict(page_id=page_id, table="event_entry", row_id="",
                                flag="zero_dark_cells_on_multiweek_page",
-                               detail=f"{len(rows)} sessions across {len(days)} distinct days, none dark -- "
+                               detail=f"{len(rows)} events across {len(days)} distinct days, none dark -- "
                                       f"real tables almost always have at least one dark day (e.g. Saturdays); "
                                       f"suspect the model silently dropped blank cells this run"))
 
         seen_keys = set()
         for r in rows:
-            key = (r["date_text"].strip(), r["theater"].strip(), r["session"])
+            key = (r["date_text"].strip(), r["theater"].strip(), r["time_of_day"])
             if key in seen_keys:
-                flags.append(dict(page_id=page_id, table="performance_session", row_id=r["session_id"],
-                                   flag="duplicate_session_key", detail=str(key)))
+                flags.append(dict(page_id=page_id, table="event_entry", row_id=r["event_id"],
+                                   flag="duplicate_event_key", detail=str(key)))
             seen_keys.add(key)
 
             if r.get("receipts_text", "").strip() and not r.get("receipts_rubles", "").strip():
-                flags.append(dict(page_id=page_id, table="performance_session", row_id=r["session_id"],
+                flags.append(dict(page_id=page_id, table="event_entry", row_id=r["event_id"],
                                    flag="receipts_parse_failed",
                                    detail=f"receipts_text={r['receipts_text']!r} but receipts_rubles is empty"))
 
@@ -135,7 +135,7 @@ def check_repertoire(parsed_dir: Path) -> list[dict]:
                     theater_variants[name].add(t)
         for name, variants in theater_variants.items():
             if len(variants) > 1:
-                flags.append(dict(page_id=page_id, table="performance_session", row_id="",
+                flags.append(dict(page_id=page_id, table="event_entry", row_id="",
                                    flag="inconsistent_theater_spelling_on_page",
                                    detail=f"{name}: saw {sorted(variants)} within the same page"))
 

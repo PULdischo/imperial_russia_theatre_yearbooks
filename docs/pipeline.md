@@ -98,8 +98,8 @@ for the same span.
 
 `pipeline/parse_and_validate.py`. Reads raw JSON + the manifest, validates
 each page against the pydantic models in `pipeline/schemas/`, and writes
-**merged, corpus-level** CSVs (`roster_entry.csv`, `service_period.csv`,
-`roster_entry_credit.csv`, `performance_session.csv`, `performance_work.csv`)
+**merged, corpus-level** CSVs (`person_entry.csv`, `person_entry_service.csv`,
+`person_entry_credit.csv`, `event_entry.csv`, `event_entry_performance.csv`)
 plus `validation_errors.csv` for anything that failed to parse — a bad page
 never takes down the rest of the run.
 

@@ -53,7 +53,7 @@ USER_AGENT = "ImperialTheaterYearbooksResearch/1.0 (research project; contact: a
 WD_API = "https://www.wikidata.org/w/api.php"
 REQUEST_DELAY_SECONDS = 0.4  # polite pacing against a free public API, not a rate-limit requirement
 
-# Notable-role keywords, matched against raw.roster_entry.heading_path /
+# Notable-role keywords, matched against raw.person_entry.heading_path /
 # rank_or_title -- confirmed against the real data (964 distinct active
 # people match at least one of these, out of ~3,275 total) rather than
 # assumed. This is a recall-oriented filter for --pilot, not a precision
@@ -129,7 +129,7 @@ def select_pilot_persons(con: duckdb.DuckDBPyConnection) -> list[tuple]:
         SELECT DISTINCT p.person_id, p.display_name, p.canonical_family_name,
                p.canonical_first_name, p.canonical_patronymic,
                p.first_attested_season, p.last_attested_season
-        FROM raw.roster_entry r
+        FROM raw.person_entry r
         JOIN entities.person_link pl ON pl.entry_id = r.entry_id
         JOIN entities.person p ON p.person_id = pl.person_id
         WHERE p.superseded_by_person_id IS NULL AND ({cond})

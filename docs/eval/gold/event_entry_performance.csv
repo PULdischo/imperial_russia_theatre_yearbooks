@@ -1,4 +1,4 @@
-work_id,session_id,work_order,work_title,genre
+performance_id,event_id,performance_order,performance_title,genre
 repertoire_1890-91_p000__s005__w1,repertoire_1890-91_p000__s005,1,Горе отъ ума,ком.
 repertoire_1890-91_p000__s005__w2,repertoire_1890-91_p000__s005,2,Слабая струна,вод.
 repertoire_1890-91_p000__s010__w1,repertoire_1890-91_p000__s010,1,Послѣдняя воля,ком.

@@ -1,14 +1,15 @@
 """Pydantic models for the LLM-facing (nested) JSON contract for Repertoire
-pages, plus a flattener producing rows matching performance_session /
-performance_work in docs/schema.md. Long/tidy per the structural survey --
-theater is a value on each session, not a fixed column."""
+pages, plus a flattener producing rows matching event_entry /
+event_entry_performance in docs/schema.md (renamed from performance_session /
+performance_work per RG's schema.md revision). Long/tidy per the structural
+survey -- theater is a value on each session, not a fixed column."""
 import re
 from typing import Optional, Literal
 from pydantic import BaseModel, Field
 
 from .dates import parse_russian_date
 
-SessionType = Literal["day", "morning", "evening"]
+SessionType = Literal["unspecified", "morning", "evening"]
 
 # Pre-1898 RepertoireTables pages combine both cities' theaters on one page
 # (see docs/structural_survey.md) -- city is derivable from the theater name
@@ -49,7 +50,7 @@ class SessionLLM(BaseModel):
     date_text: str
     month_text: Optional[str] = None
     year_text: Optional[str] = None
-    session: SessionType = "day"
+    session: SessionType = "unspecified"
     theater: str
     is_dark: bool = False
     receipts_text: Optional[str] = None
@@ -73,26 +74,26 @@ def _parse_receipts(text: Optional[str]) -> tuple[str, str]:
 
 
 def flatten_repertoire_page(page_id: str, season: str, city: str, page: RepertoirePage) -> dict:
-    sessions, works = [], []
+    events, performances = [], []
     for i, s in enumerate(page.sessions, start=1):
-        session_id = f"{page_id}__s{i:03d}"
+        event_id = f"{page_id}__s{i:03d}"
         rub, kop = _parse_receipts(s.receipts_text)
         theater = s.theater.strip().rstrip(".")  # strip table-header punctuation, keep the name
-        session_city = _city_for_theater(theater, city)
+        event_city = _city_for_theater(theater, city)
         date_input = f"{_day_number(s.date_text)} {s.month_text or ''} {s.year_text or ''}".strip()
-        sessions.append({
-            "session_id": session_id, "page_id": page_id, "season": season, "city": session_city,
+        events.append({
+            "event_id": event_id, "page_id": page_id, "season": season, "city": event_city,
             "date_text": s.date_text, "month_text": s.month_text or "",
             "year_text": s.year_text or "",
             "date_undate": parse_russian_date(date_input) or "",
-            "session": s.session, "theater": theater,
-            "session_status": "no_performance" if s.is_dark else "performed",
+            "time_of_day": s.session, "theater": theater,
+            "event_status": "no_performance" if s.is_dark else "performed",
             "receipts_text": s.receipts_text or "", "receipts_rubles": rub,
             "receipts_kopecks": kop, "annotation": s.annotation or "",
         })
         for j, w in enumerate(s.works, start=1):
-            works.append({
-                "work_id": f"{session_id}__w{j}", "session_id": session_id, "work_order": j,
-                "work_title": w.work_title, "genre": w.genre or "",
+            performances.append({
+                "performance_id": f"{event_id}__w{j}", "event_id": event_id, "performance_order": j,
+                "performance_title": w.work_title, "genre": w.genre or "",
             })
-    return {"performance_session": sessions, "performance_work": works}
+    return {"event_entry": events, "event_entry_performance": performances}

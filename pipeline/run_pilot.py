@@ -34,7 +34,7 @@ from schemas import RosterPage, RepertoirePage
 PROMPTS_DIR = Path(__file__).parent / "prompts"
 BASE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
 DEFAULT_MODEL = "qwen3-vl-plus"
-ROSTER_KINDS = {"Administration", "BalletArtists", "Musicians", "ProductionTeam",
+ROSTER_KINDS = {"Administrators", "BalletArtists", "Musicians", "ProductionTeam",
                 "TheaterSchoolStaff", "Graduates"}
 
 RETRYABLE = (APIError, APITimeoutError, RateLimitError, ConnectionError, TimeoutError)

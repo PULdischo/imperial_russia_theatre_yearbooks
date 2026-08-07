@@ -10,7 +10,7 @@ in the pipeline (build_excel_workbook.py).
 This got simpler, not more complex, once the `research` schema landed
 (exactly as docs/entity_centric_model.md predicted it would): every table
 here is a straight copy, no query-time joins needed at all, because
-`research.session`/`research.performance` already have their foreign keys
+`research.event`/`research.performance` already have their foreign keys
 baked in. The working `entities` schema (crosswalks, review queues,
 merge logs) is deliberately NOT exported here -- it's the pipeline's own
 internal/audit layer, not the published research artifact. Anyone who
@@ -42,7 +42,7 @@ def _stringify_uuids(df):
     return df
 
 
-TABLES = ["theater", "work", "person", "session", "performance", "person_appearance"]
+TABLES = ["theater", "work", "person", "event", "performance", "person_appearance"]
 
 # Explicit CREATE TABLE per table, PRIMARY KEY + FOREIGN KEY declared --
 # pandas' to_sql(if_exists="replace") would otherwise create schema-less
@@ -69,17 +69,17 @@ SCHEMAS = {
             first_attested_season TEXT, last_attested_season TEXT,
             wikidata_qid TEXT, wikidata_label TEXT, wikidata_description TEXT
         )""",
-    "session": """
-        CREATE TABLE session (
-            session_id TEXT PRIMARY KEY, theater_id TEXT REFERENCES theater(theater_id),
+    "event": """
+        CREATE TABLE event (
+            event_id TEXT PRIMARY KEY, theater_id TEXT REFERENCES theater(theater_id),
             season TEXT, city TEXT, date_verbatim TEXT, date_undate TEXT,
-            date TEXT, date_confidence TEXT, session_status TEXT,
+            date TEXT, date_confidence TEXT, event_status TEXT,
             receipts_total_kopecks INTEGER
         )""",
     "performance": """
         CREATE TABLE performance (
-            performance_id TEXT PRIMARY KEY, session_id TEXT REFERENCES session(session_id),
-            work_id TEXT REFERENCES work(work_id), work_order TEXT,
+            performance_id TEXT PRIMARY KEY, event_id TEXT REFERENCES event(event_id),
+            work_id TEXT REFERENCES work(work_id), performance_order TEXT,
             verbatim_title TEXT, verbatim_genre TEXT
         )""",
     "person_appearance": """
@@ -104,7 +104,7 @@ def main():
     sqlite_con = sqlite3.connect(str(args.out))
     sqlite_con.execute("PRAGMA foreign_keys = OFF")  # load order isn't dependency-safe; enforce later if ever needed
 
-    # theater/work/person first -- session/performance/person_appearance's
+    # theater/work/person first -- event/performance/person_appearance's
     # FK declarations reference them, and sqlite3 (even with foreign_keys
     # off) still validates the referenced table exists at CREATE TABLE time.
     ordered = ["theater", "work", "person"] + [t for t in TABLES if t not in ("theater", "work", "person")]

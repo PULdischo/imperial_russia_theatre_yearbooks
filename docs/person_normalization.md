@@ -9,7 +9,7 @@ everything else in this schema.
 
 ## Tenure-based auto-merging
 
-**The insight:** `raw.service_period.start_date_undate` is a real
+**The insight:** `raw.person_entry_service.start_date_undate` is a real
 historical fact ("in service since 3 September 1881") that gets reprinted
 identically in every later yearbook the same person appears in. Two
 near-identical spelling variants that *also* share an exact printed service
@@ -21,14 +21,14 @@ identical start date is highly unlikely.
 
 - Every Tier 2 candidate pair gets a `tenure_signal` (`shared_start_date`,
   `conflicting_dates`, or `no_date_data`) and `tenure_evidence` column,
-  computed from `entities.person_link` joined to `raw.service_period`.
+  computed from `entities.person_link` joined to `raw.person_entry_service`.
 - `apply_tenure_corroboration()` auto-confirms — without individual human
   sign-off — any pending pair whose `tenure_signal` is `shared_start_date`.
   This is a deliberate, explicit exception to the "never auto-merge Tier 2"
   rule in `docs/research_dataset.md`, made because the researcher judged
   this specific signal strong enough to trust directly.
 - `reconcile_person_merges()` turns a confirmed decision into an actual
-  merge: every `raw.roster_entry` appearance that belonged to the absorbed
+  merge: every `raw.person_entry` appearance that belonged to the absorbed
   person is repointed (`entities.person_link.person_id`) onto the survivor,
   and the survivor's attested season range is recomputed from the union of
   both clusters' real appearances. Previously, a "merge" only set

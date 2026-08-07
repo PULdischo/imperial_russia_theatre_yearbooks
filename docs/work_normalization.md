@@ -1,6 +1,6 @@
 # Work normalization: strategy and implementation
 
-`entities.work` groups `raw.performance_work` rows by canonicalized
+`entities.work` groups `raw.event_entry_performance` rows by canonicalized
 `(title, genre)` text (`docs/research_dataset.md`), on the premise that a
 revival across seasons should correctly collapse to one row. Checked
 against the real data before writing anything down, prompted by a concrete

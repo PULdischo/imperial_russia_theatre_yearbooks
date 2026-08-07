@@ -9,7 +9,7 @@ is built, the same question for genre, and a real standardized date
 column. The title/genre-linking section below is still a plan (it depends
 on `work_normalization.md`, not yet implemented). **The date-validation
 section is implemented** — `pipeline/validate_performance_dates.py`,
-writing `analysis.performance_session_date_check` — with real results
+writing `analysis.event_entry_date_check` — with real results
 included below.
 
 ## Title and genre: verbatim stays, plus a link to the normalized identity
@@ -24,8 +24,8 @@ own field, never overwritten, and add a separate FK to the resolved
 identity** —
 
 ```
-raw.performance_work.work_title    -- printed text, untouched (already exists)
-raw.performance_work.genre         -- printed text, untouched (already exists)
+raw.event_entry_performance.performance_title -- printed text, untouched (already exists)
+raw.event_entry_performance.genre         -- printed text, untouched (already exists)
 entities.work_link.work_id         -- FK to the corrected entities.work row (already exists,
                                        just needs work_normalization.md's fixes applied to
                                        what it resolves to)
@@ -45,7 +45,7 @@ spirit as `entities.theater`.
 
 ## A standardized date column
 
-`raw.performance_session` already has more than `date_text` suggests at
+`raw.event_entry` already has more than `date_text` suggests at
 first glance — `month_text`, `year_text`, and a combined `date_undate`
 (ISO `YYYY-MM-DD`, e.g. `1890-08-16`) all exist and are populated for
 23,670 of 23,726 rows (99.76%). **The "missing month" impression came from
@@ -239,7 +239,7 @@ here rather than assumed.
 ## Implementation
 
 `pipeline/validate_performance_dates.py` implements the revised strategy
-above: groups `raw.performance_session` into date-blocks (the theaters
+above: groups `raw.event_entry` into date-blocks (the theaters
 sharing one printed date label), flags intra-block disagreement directly,
 finds maximal runs of consecutive calendar-mismatched blocks, and
 auto-corrects a run only when **2 or more** of its blocks independently
@@ -256,10 +256,10 @@ the corpus: it reproduced the manual result exactly — the six-row +1 run
 (days 16–21) auto-corrected, and the isolated day "13" (needing +2, no
 run corroboration) correctly left `unresolved` rather than guessed.
 
-Writes an additive `analysis.performance_session_date_check` table
-(`session_id`, `date_confidence`, `corrected_date_undate`, `drift_days`,
-`note`) — `raw.performance_session` and the existing
-`analysis.performance_session` are both untouched. Results across the
+Writes an additive `analysis.event_entry_date_check` table
+(`event_id`, `date_confidence`, `corrected_date_undate`, `drift_days`,
+`note`) — `raw.event_entry` and the existing
+`analysis.event_entry` are both untouched. Results across the
 full corpus:
 
 | `date_confidence` | Count | Share |
@@ -277,7 +277,7 @@ more than the 155 left `unresolved`, meaning most of the original 2,002
 mismatches turned out to have the multi-row corroboration needed to trust
 a fix, once evaluated as runs rather than single rows. `corrected_date_undate`
 and `drift_days` are exposed in the Datasette export (`work_performances`
-and the standalone `performance_session_date_check` table) alongside the
+and the standalone `event_entry_date_check` table) alongside the
 original `date_undate`, non-destructively — a researcher can facet on
 `date_confidence` and decide per-query whether to trust the correction.
 

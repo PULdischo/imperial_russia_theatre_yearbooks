@@ -1,4 +1,4 @@
-"""Stage 5g (additive): validates raw.performance_session's date_undate
+"""Stage 5g (additive): validates raw.event_entry's date_undate
 against the day-of-week printed alongside it in date_text, and corrects
 the (surprisingly common) cases where it's wrong. See
 docs/performance_normalization.md for the full investigation this
@@ -25,9 +25,9 @@ isolated single-row mismatch is exactly the case that produced a
 confident wrong answer during the investigation, so it's never
 auto-corrected here, only flagged.
 
-Additive only: writes a new analysis.performance_session_date_check
-table, does not touch raw.performance_session or the existing
-analysis.performance_session (its completeness-reconciliation logic is a
+Additive only: writes a new analysis.event_entry_date_check
+table, does not touch raw.event_entry or the existing
+analysis.event_entry (its completeness-reconciliation logic is a
 separate, more complex piece of working code -- open question in the docs
 about migrating it to corrected dates, not done here).
 
@@ -106,23 +106,23 @@ def _shift_date(y: int, m: int, d: int, k: int) -> tuple[int, int, int]:
 
 def validate_and_correct(con: duckdb.DuckDBPyConnection) -> dict:
     rows = con.execute("""
-        SELECT session_id, page_id, date_text, date_undate
-        FROM raw.performance_session
-        ORDER BY page_id, session_id
+        SELECT event_id, page_id, date_text, date_undate
+        FROM raw.event_entry
+        ORDER BY page_id, event_id
     """).fetchall()
 
     # Group into date-blocks: the 5(-6) theaters sharing one printed date
     # label. First-seen order preserved per page, matching the printed
-    # row order (session_id increments in printed order within a page).
+    # row order (event_id increments in printed order within a page).
     blocks: dict[tuple, list] = defaultdict(list)
     block_order: dict[str, list] = defaultdict(list)
-    for session_id, page_id, date_text, date_undate in rows:
+    for event_id, page_id, date_text, date_undate in rows:
         if date_undate is None:
             continue
         key = (page_id, date_undate)
         if key not in blocks:
             block_order[page_id].append(key)
-        blocks[key].append((session_id, date_text))
+        blocks[key].append((event_id, date_text))
 
     results: dict[str, tuple] = {}
 
@@ -198,28 +198,28 @@ def validate_and_correct(con: duckdb.DuckDBPyConnection) -> dict:
             i = j
 
         for bi in block_infos:
-            for session_id, _ in bi['members']:
+            for event_id, _ in bi['members']:
                 if bi['status'] == 'corrected':
                     ny, nm, nd = bi['corrected']
-                    results[session_id] = (
+                    results[event_id] = (
                         'corrected', f'{ny:04d}-{nm:02d}-{nd:02d}', bi['drift'], None,
                     )
                 elif bi['status'] == 'intra_block_disagreement':
-                    results[session_id] = (
+                    results[event_id] = (
                         'intra_block_disagreement', None, None, ' | '.join(sorted(bi['texts'])),
                     )
                 else:
-                    results[session_id] = (bi['status'], None, None, None)
+                    results[event_id] = (bi['status'], None, None, None)
 
     # Sessions with no date_undate at all weren't in `blocks` above.
-    all_ids = con.execute("SELECT session_id, date_undate FROM raw.performance_session").fetchall()
-    for session_id, date_undate in all_ids:
-        if session_id not in results:
-            results[session_id] = ('no_date', None, None, None)
+    all_ids = con.execute("SELECT event_id, date_undate FROM raw.event_entry").fetchall()
+    for event_id, date_undate in all_ids:
+        if event_id not in results:
+            results[event_id] = ('no_date', None, None, None)
 
     con.execute("""
-        CREATE OR REPLACE TABLE analysis.performance_session_date_check (
-            session_id VARCHAR PRIMARY KEY,
+        CREATE OR REPLACE TABLE analysis.event_entry_date_check (
+            event_id VARCHAR PRIMARY KEY,
             date_confidence VARCHAR,
             corrected_date_undate VARCHAR,
             drift_days INTEGER,
@@ -227,7 +227,7 @@ def validate_and_correct(con: duckdb.DuckDBPyConnection) -> dict:
         )
     """)
     con.executemany(
-        "INSERT INTO analysis.performance_session_date_check VALUES (?, ?, ?, ?, ?)",
+        "INSERT INTO analysis.event_entry_date_check VALUES (?, ?, ?, ?, ?)",
         [(sid, *vals) for sid, vals in results.items()],
     )
     return Counter(v[0] for v in results.values())
@@ -243,7 +243,7 @@ def main():
     counts = validate_and_correct(con)
 
     total = sum(counts.values())
-    print(f"analysis.performance_session_date_check: {total} rows")
+    print(f"analysis.event_entry_date_check: {total} rows")
     for status, n in counts.most_common():
         print(f"  {status}: {n} ({n/total:.1%})")
     con.close()

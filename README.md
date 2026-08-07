@@ -184,11 +184,11 @@ left unexamined.
 ## Data model
 
 Two schemas, two different jobs. `raw` (+ `analysis`, which only adds
-derived columns onto `roster_entry`/`performance_session` — no new
+derived columns onto `person_entry`/`event_entry` — no new
 tables) is the diplomatic transcription: one row per printed appearance,
 page-centric, nothing resolved. `research` is built on top of it
 (`entities.person`/`entities.work`'s Tier 1/Tier 2 resolution, then
-`pipeline/build_research_model.py`): Person, Work, Theater, Session, and
+`pipeline/build_research_model.py`): Person, Work, Theater, Event, and
 Performance as primary, directly-queryable entities with real foreign
 keys baked in, no crosswalk table to traverse at query time
 (`docs/entity_centric_model.md`). `raw` never changes once either is
@@ -207,53 +207,53 @@ erDiagram
         string season
         string city
     }
-    roster_entry {
+    person_entry {
         string entry_id PK
         string page_id FK
         string family_name
         string heading_path
         string rank_or_title
     }
-    service_period {
+    person_entry_service {
         string period_id PK
         string entry_id FK
         string start_date_text
         string end_type
     }
-    roster_entry_credit {
+    person_entry_credit {
         string credit_id PK
         string entry_id FK
         string credit_type
-        float count
+        float category_credit_count
     }
-    performance_session {
-        string session_id PK
+    event_entry {
+        string event_id PK
         string page_id FK
         string date_text
         string theater
-        string session_status
+        string event_status
         string receipts_text
     }
-    performance_work {
-        string work_id PK
-        string session_id FK
-        string work_title
+    event_entry_performance {
+        string performance_id PK
+        string event_id FK
+        string performance_title
         string genre
     }
 
-    source_pages ||--o{ roster_entry : "page has"
-    source_pages ||--o{ performance_session : "page has"
-    roster_entry ||--o{ service_period : "entry has"
-    roster_entry ||--o{ roster_entry_credit : "entry has"
-    performance_session ||--o{ performance_work : "session has"
+    source_pages ||--o{ person_entry : "page has"
+    source_pages ||--o{ event_entry : "page has"
+    person_entry ||--o{ person_entry_service : "entry has"
+    person_entry ||--o{ person_entry_credit : "entry has"
+    event_entry ||--o{ event_entry_performance : "event has"
 ```
 
 ### The research dataset (`research`)
 
 One row per resolved real person/work/venue/box-office record — the hub
-is whichever entity the question is actually about. `session` and
-`performance` stay distinct on purpose: 35% of sessions list more than
-one work, and receipts are printed once per session, not once per work —
+is whichever entity the question is actually about. `event` and
+`performance` stay distinct on purpose: 35% of events list more than
+one work, and receipts are printed once per event, not once per work —
 flattening them into one row would silently double-count receipts on
 every multi-work night. `person` holds only currently-active (merged)
 people; a Wikidata match, where confident, is inlined directly rather than
@@ -284,18 +284,18 @@ erDiagram
         string last_attested_season
         string wikidata_qid
     }
-    session {
-        string session_id PK
+    event {
+        string event_id PK
         uuid theater_id FK
         string season
         string date
         string date_confidence
-        string session_status
+        string event_status
         int receipts_total_kopecks
     }
     performance {
         string performance_id PK
-        string session_id FK
+        string event_id FK
         uuid work_id FK
         string verbatim_title
         string verbatim_genre
@@ -308,8 +308,8 @@ erDiagram
         string rank_or_title
     }
 
-    theater ||--o{ session : "hosted at"
-    session ||--o{ performance : "session has"
+    theater ||--o{ event : "hosted at"
+    event ||--o{ performance : "event has"
     work ||--o{ performance : "work performed as"
     work |o--o| work : "excerpt of"
     person ||--o{ person_appearance : "person appears as"

@@ -36,7 +36,7 @@ One row per digitized page. Every other table's `page_id` joins here.
 
 ---
 
-## Spiski family (Administrators, BalletArtists, Musicians, ProductionStaff,
+## Spiski family (Administrators, BalletArtists, Musicians, ProductionTeam,
 ## TheaterSchoolStaff, Graduates once sourced)
 
 ### `person_entry.csv`
@@ -71,7 +71,7 @@ pair on the parent row can't represent that faithfully.
 | column | type | notes |
 |---|---|---|
 | `period_id` | string (PK) | |
-| `entry_id` | FK → roster_entry | |
+| `entry_id` | FK → person_entry | |
 | `period_order` | int | 1-based, order as printed |
 | `start_date_text` | string, nullable | verbatim, e.g. `съ 1 мая 1882 г.` |
 | `start_date_undate` | string, nullable | Undate-serialized |
@@ -89,12 +89,12 @@ rather than as wide columns.
 | column | type | notes |
 |---|---|---|
 | `credit_id` | string (PK) | |
-| `entry_id` | FK → roster_entry | |
+| `entry_id` | FK → person_entry | |
 | `credit_type` | enum | `category_totals` \| `named_work` |
 | `label` | string | for `category_totals`: `балетахъ`/`операхъ`/`драмѣ`/`Всего`; for `named_work`: the work title |
 | `role_name` | string, nullable | only for `named_work` — the character name in parens |
-| `category_production_count` | number | only for `category_totals`: `балетахъ`/`операхъ`/`драмѣ`; e.g. 'Въ 10 балетахъ'|
-| `category_credit_count` | number | usually an integer, but the printed ledger occasionally uses a fractional value (e.g. `.5`) for a role split between two artists — kept as printed, not rounded |
+| `category_production_count` | number, nullable | only for `category_totals` rows other than `Всего`: the count of distinct productions in that category (the "10" in "Въ 10 балетахъ—45"), parsed from `credit_summary_text`. Null when the sentence doesn't print this figure (checked against the real corpus: present for 5,711/7,255 credit_summary_text values, 79%) |
+| `category_credit_count` | number | the count after the dash (the "45" in "Въ 10 балетахъ—45"); usually an integer, but the printed ledger occasionally uses a fractional value (e.g. `.5`) for a role split between two artists — kept as printed, not rounded |
 
 ---
 
@@ -139,17 +139,17 @@ model's recall on this table is non-deterministically incomplete (see
 cells from its output entirely. A missing row and a row that was never
 expected look identical from inside this table — you cannot tell "the
 theater was open every day this month" from "we don't know what happened
-on the 14th" by querying `raw.performance_session` alone.
+on the 14th" by querying `raw.event_entry` alone.
 
 That third state — **`not_captured`** — is deliberately *not* added as a
 third literal value here, because it isn't something transcribed from the
 page; it's an inference from "here's the date/theater grid this page
 should cover, here's what we actually got, here's the gap." It belongs in
-`analysis.performance_session` instead, built by `build_duckdb.py`: for
+`analysis.event_entry` instead, built by `build_duckdb.py`: for
 each Repertoire page, the expected theater roster (era- and city-aware —
 see below) is crossed with the page's observed date range, left-joined
 against what was actually captured, and any missing combination is
-inserted as a synthesized row with `session_status = 'not_captured'` and
+inserted as a synthesized row with `event_status = 'not_captured'` and
 no work/receipts data. This makes completeness directly queryable (e.g.
 "what fraction of expected cells are `not_captured`, by season") instead
 of invisible.
@@ -189,4 +189,4 @@ single receipts figure (e.g. two one-act comedies).
   date instead of a tenure start).
 - ProductionStats structure is still unconfirmed — likely closer to the
   Repertoire family (work × season aggregate) but needs a real sample page
-  before committing to `performance_work`-shaped columns vs. something new.
+  before committing to `event_entry_performance`-shaped columns vs. something new.

@@ -25,7 +25,7 @@ import csv
 
 ROSTER_FIELDS = ["family_name", "first_name", "patronymic", "heading_path", "rank_or_title",
                   "tenure_note_text", "instrument", "service_class", "subject_taught"]
-SESSION_FIELDS = ["city", "session_status", "session"]
+EVENT_FIELDS = ["city", "event_status", "time_of_day"]
 KNOWN_THEATERS = ["Маріинскій", "Александринскій", "Михайловскій", "Большой", "Малый", "Новый"]
 
 
@@ -51,8 +51,8 @@ def theater_key(t: str) -> str:
 
 
 def eval_roster(gold_dir: Path, parsed_dir: Path) -> tuple[int, int, list[str]]:
-    gold = by_page(load(gold_dir / "roster_entry.csv"))
-    pred = by_page(load(parsed_dir / "roster_entry.csv"))
+    gold = by_page(load(gold_dir / "person_entry.csv"))
+    pred = by_page(load(parsed_dir / "person_entry.csv"))
     total, matched, lines = 0, 0, []
 
     for page_id, g_rows in gold.items():
@@ -79,21 +79,21 @@ def eval_roster(gold_dir: Path, parsed_dir: Path) -> tuple[int, int, list[str]]:
 
 
 def eval_repertoire(gold_dir: Path, parsed_dir: Path) -> tuple[int, int, list[str]]:
-    gold_sess = by_page(load(gold_dir / "performance_session.csv"))
-    pred_sess = by_page(load(parsed_dir / "performance_session.csv"))
-    gold_work, pred_work = load(gold_dir / "performance_work.csv"), load(parsed_dir / "performance_work.csv")
-    gw_by_session, pw_by_session = defaultdict(list), defaultdict(list)
-    for w in gold_work:
-        gw_by_session[w["session_id"]].append((w["work_title"], w["genre"]))
-    for w in pred_work:
-        pw_by_session[w["session_id"]].append((w["work_title"], w["genre"]))
+    gold_events = by_page(load(gold_dir / "event_entry.csv"))
+    pred_events = by_page(load(parsed_dir / "event_entry.csv"))
+    gold_perf, pred_perf = load(gold_dir / "event_entry_performance.csv"), load(parsed_dir / "event_entry_performance.csv")
+    gw_by_event, pw_by_event = defaultdict(list), defaultdict(list)
+    for w in gold_perf:
+        gw_by_event[w["event_id"]].append((w["performance_title"], w["genre"]))
+    for w in pred_perf:
+        pw_by_event[w["event_id"]].append((w["performance_title"], w["genre"]))
 
     total, matched, lines = 0, 0, []
-    for page_id, g_rows in gold_sess.items():
-        p_rows = pred_sess.get(page_id, [])
+    for page_id, g_rows in gold_events.items():
+        p_rows = pred_events.get(page_id, [])
 
         def key(r):
-            return (r["date_text"].split()[0], theater_key(r["theater"]), r["session"])
+            return (r["date_text"].split()[0], theater_key(r["theater"]), r["time_of_day"])
 
         g_by_key = {key(r): r for r in g_rows}
         p_by_key = {key(r): r for r in p_rows}
@@ -103,19 +103,19 @@ def eval_repertoire(gold_dir: Path, parsed_dir: Path) -> tuple[int, int, list[st
             if p is None:
                 continue
             key_overlap += 1
-            for f in SESSION_FIELDS:
+            for f in EVENT_FIELDS:
                 page_total += 1
                 if g[f].strip() == p[f].strip():
                     page_matched += 1
                 else:
                     lines.append(f"    [{page_id}/{k}] {f}: gold={g[f]!r} pred={p[f]!r}")
-            gw, pw = gw_by_session.get(g["session_id"], []), pw_by_session.get(p["session_id"], [])
+            gw, pw = gw_by_event.get(g["event_id"], []), pw_by_event.get(p["event_id"], [])
             page_total += 1
             if gw == pw:
                 page_matched += 1
             else:
                 lines.append(f"    [{page_id}/{k}] works: gold={gw} pred={pw}")
-        lines.append(f"  {page_id}: gold_sessions={len(g_rows)} pred_sessions={len(p_rows)} "
+        lines.append(f"  {page_id}: gold_events={len(g_rows)} pred_events={len(p_rows)} "
                       f"key_overlap={key_overlap}/{len(g_by_key)} -> {page_matched}/{page_total} fields match")
         total += page_total
         matched += page_matched

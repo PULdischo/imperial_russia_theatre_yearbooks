@@ -22,8 +22,8 @@ from pathlib import Path
 import pandas as pd
 
 TABLES = [
-    "roster_entry", "service_period", "roster_entry_credit",
-    "performance_session", "performance_work",
+    "person_entry", "person_entry_service", "person_entry_credit",
+    "event_entry", "event_entry_performance",
 ]
 
 

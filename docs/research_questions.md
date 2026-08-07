@@ -7,7 +7,7 @@ organize it so it's actually usable for research rather than just faithfully
 transcribed.
 
 **Working assumption for everything below**: we keep a verbatim/raw layer for
-reproducibility and transparency (the `roster_entry`/`performance_session`
+reproducibility and transparency (the `person_entry`/`event_entry`
 tables as specified in `schema.md`, provenance-linked to source pages), but
 the **derived analysis layer is the primary thing researchers touch day to
 day**. The raw layer exists so any derived number can be traced back to the
@@ -17,7 +17,7 @@ printed page it came from — not as the main interface.
 
 ## What questions this data can answer
 
-**Programming/repertoire analysis** (from `performance_session`/`performance_work`):
+**Programming/repertoire analysis** (from `event_entry`/`event_entry_performance`):
 - Which works dominated the repertoire, and how did the genre mix shift over
   18 years (canonization of specific operas/ballets, decline of one-act
   vaudeville)?
@@ -30,7 +30,7 @@ printed page it came from — not as the main interface.
 - Calendar patterns: dark days, holiday and benefit-performance programming,
   matinee/evening double-bill usage.
 
-**Institutional/organizational history** (Administration, ProductionTeam,
+**Institutional/organizational history** (Administrators, ProductionTeam,
 TheaterSchoolStaff):
 - Bureaucratic growth — headcount and rank-class distribution over time (the
   survey already shows role hierarchies deepening 1890→1907).

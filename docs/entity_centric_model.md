@@ -23,7 +23,7 @@ conservative option: `person_appearance` stayed its own table, and
 ## The core move: bake foreign keys in, stop crosswalking at query time
 
 Today, getting from a resolved `person` to their actual career facts means:
-`person` → `person_link` (crosswalk) → `roster_entry` (the facts, on the
+`person` → `person_link` (crosswalk) → `person_entry` (the facts, on the
 raw/page-centric table). Two hops, and the crosswalk table exists purely
 to hold a `person_id` column that — in this proposal — just lives directly
 on the fact row instead.
@@ -39,10 +39,10 @@ runs, not re-joined at every query.
 | Table | Grain | Replaces / absorbs |
 |---|---|---|
 | `entities.person` | one resolved real person | unchanged |
-| `entities.appearance` | one person's presence in one printed roster listing | `raw.roster_entry` + `entities.person_link`, merged |
+| `entities.appearance` | one person's presence in one printed roster listing | `raw.person_entry` + `entities.person_link`, merged |
 | `entities.theater` | one venue | unchanged |
-| `entities.session` | one printed box-office record (date, theater, receipts) | `raw.performance_session`, with `theater_id` resolved and inlined instead of joined by `theater_canonical` text at query time |
-| `entities.performance` | one work performed within one session | `raw.performance_work` + `entities.work_link`, merged |
+| `entities.session` | one printed box-office record (date, theater, receipts) | `raw.event_entry`, with `theater_id` resolved and inlined instead of joined by `theater_canonical` text at query time |
+| `entities.performance` | one work performed within one session | `raw.event_entry_performance` + `entities.work_link`, merged |
 | `entities.work` | one resolved work (title + genre) | unchanged |
 
 A query for "everything this person did" becomes one join
@@ -71,7 +71,7 @@ silently, with no error to catch it.
 Keeping `session` (the box-office fact: date, theater, receipts, one row)
 and `performance` (the bill-item fact: which work, within which session)
 as two separate tables is what avoids this. It also happens to be the same
-shape `raw.performance_session`/`raw.performance_work` already have —
+shape `raw.event_entry`/`raw.event_entry_performance` already have —
 this plan doesn't invent a new shape, it resolves real foreign keys onto
 the existing one and promotes it to primary.
 
@@ -80,19 +80,19 @@ the existing one and promotes it to primary.
 Both new tables can reuse identifiers that already exist today rather than
 minting new synthetic keys:
 
-- `entities.appearance.appearance_id` = `raw.roster_entry.entry_id`
+- `entities.appearance.appearance_id` = `raw.person_entry.entry_id`
   (same value, reused as the PK). This is a genuine simplification, not
-  just a rename: `raw.service_period` and `raw.roster_entry_credit` already
+  just a rename: `raw.person_entry_service` and `raw.person_entry_credit` already
   key on `entry_id`, so they become valid children of `entities.appearance`
   with **zero changes to either table** — the join just already works.
-- `entities.session.session_id` = `raw.performance_session.session_id`,
+- `entities.session.event_id` = `raw.event_entry.event_id`,
   reused directly.
 - `entities.performance` needs a fresh PK, though — reusing
-  `raw.performance_work.work_id` directly would collide with
+  `raw.event_entry_performance.work_id` directly would collide with
   `entities.work.work_id`'s different meaning (a name collision this
   project already had to work around once, aliasing it to `raw_work_id` in
   `build_datasette.py`'s joined views). Worth fixing properly here instead
-  of aliasing around it again: rename `raw.performance_work`'s own PK to
+  of aliasing around it again: rename `raw.event_entry_performance`'s own PK to
   `work_appearance_id` in this new layer (raw's actual column can stay
   `work_id` for backward compatibility, or get renamed too — open
   question below).
@@ -170,12 +170,12 @@ mostly works in plain DuckDB/SQL.
 
 ## Resolved decisions (open questions from the original plan)
 
-1. **Scope of `service_period`/`roster_entry_credit`**: kept scoped to
+1. **Scope of `person_entry_service`/`person_entry_credit`**: kept scoped to
    `raw`, joined via `entry_id` = `person_appearance.appearance_id` when
    needed, not flattened into `person_appearance` itself — a person can
    have more than one service period per listing, and flattening would
    have meant guessing which one "belongs" on the row.
-2. **`raw.performance_work.work_id` was not renamed** — `raw` stays
+2. **`raw.event_entry_performance.work_id` was not renamed** — `raw` stays
    completely untouched, per this project's standing rule. The new layer
    uses its own name (`performance_id`) instead.
 3. **Versioning**: not yet decided which HF/Datasette artifacts get

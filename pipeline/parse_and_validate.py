@@ -20,14 +20,14 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from schemas import RosterPage, RepertoirePage, flatten_roster_page, flatten_repertoire_page
 
-ROSTER_KINDS = {"Administration", "BalletArtists", "Musicians", "ProductionTeam",
+ROSTER_KINDS = {"Administrators", "BalletArtists", "Musicians", "ProductionTeam",
                 "TheaterSchoolStaff", "Graduates"}
 
 # The model occasionally writes the printed Russian session label instead of
 # the normalized English enum value the schema expects (rare: ~80/23000
 # repertoire sessions). This is a categorical field, not verbatim text, so
 # normalizing here is correct rather than a verbatim-preservation violation.
-SESSION_LABEL_FIX = {"утро": "morning", "вечеръ": "evening", "день": "day"}
+SESSION_LABEL_FIX = {"утро": "morning", "вечеръ": "evening", "день": "unspecified"}
 
 # Rare (~4/20000 roster entries) recurring model failure: when a row has no
 # heading of its own to repeat, the model sometimes puts the person's full
@@ -96,8 +96,8 @@ def main():
     rows = list(csv.DictReader(open(args.manifest, encoding="utf-8")))
 
     merged = {
-        "roster_entry": [], "service_period": [], "roster_entry_credit": [],
-        "performance_session": [], "performance_work": [],
+        "person_entry": [], "person_entry_service": [], "person_entry_credit": [],
+        "event_entry": [], "event_entry_performance": [],
     }
     errors = []
 

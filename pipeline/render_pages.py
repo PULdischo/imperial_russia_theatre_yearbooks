@@ -22,7 +22,7 @@ import pymupdf
 # folder name -> (entity_type as used in docs/schema.md, page_id slug)
 FOLDER_MAP = {
     "RepertoireTables": ("Repertoire", "repertoire"),
-    "Spiski_Administration": ("Administration", "administration"),
+    "Spiski_Administration": ("Administrators", "administration"),
     "Spiski_BalletArtists": ("BalletArtists", "balletartists"),
     "Spiski_Musicians": ("Musicians", "musicians"),
     "Spiski_ProductionTeam": ("ProductionTeam", "productionteam"),

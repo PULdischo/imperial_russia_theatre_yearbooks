@@ -9,9 +9,9 @@ person/theater/work entity layer, built on top of this one) is a separate
 follow-up doc — some formats considered here (especially OpenRefine) are
 really about *getting to* that next layer, and are noted as such below.
 
-Six tables feed every format below: `source_pages`, `roster_entry`,
-`service_period`, `roster_entry_credit`, `performance_session`,
-`performance_work` — field-by-field detail in `docs/schema.md`.
+Six tables feed every format below: `source_pages`, `person_entry`,
+`person_entry_service`, `person_entry_credit`, `event_entry`,
+`event_entry_performance` — field-by-field detail in `docs/schema.md`.
 
 ## The three axes
 
@@ -63,14 +63,14 @@ pre-split rather than requiring six separate imports into Sheets.
   need one extra "import as UTF-8" step in Sheets (see the encoding note
   below).
 - **Performance**: fine at this scale — the largest table
-  (`roster_entry_credit`, ~32k rows × 6 columns) is nowhere near either
+  (`person_entry_credit`, ~32k rows × 6 columns) is nowhere near either
   tool's row/cell limits.
 - **Utility**: good for exactly what pivot tables and filters are for —
   slicing one table at a time (e.g. all `BalletArtists` entries in a given
-  season, or summing receipts by theater/year in `performance_session`).
+  season, or summing receipts by theater/year in `event_entry`).
   Cross-table questions (e.g. "this person's credits AND their service
   periods") require the researcher to do their own lookup/join, since
-  neither tool enforces or auto-follows the `entry_id`/`session_id` foreign
+  neither tool enforces or auto-follows the `entry_id`/`event_id` foreign
   keys the way SQL does.
 
 **Encoding gotcha worth flagging now, since we hit this class of bug
@@ -119,7 +119,7 @@ page** (1,299 notes, one per `source_pages` row), because that's the
 natural unit for "verbatim, exactly as it appears in the scans" — it
 mirrors how the researcher already thinks about the material (a page in a
 given year's yearbook), rather than one note per transcribed row (~44k
-notes across `roster_entry` + `performance_session`, which would turn the
+notes across `person_entry` + `event_entry`, which would turn the
 vault into a flat data dump rather than something meant to be read).
 
 Actual note shape (e.g. for `administration_1907-08_p000`):
@@ -127,7 +127,7 @@ Actual note shape (e.g. for `administration_1907-08_p000`):
 ```markdown
 ---
 page_id: administration_1907-08_p000
-entity_type: Administration
+entity_type: Administrators
 season: 1907-08
 city:
 source_file: ForUpload_1907-08_Spisok_Administration.pdf
