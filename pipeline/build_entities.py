@@ -114,6 +114,22 @@ def _fold_genre(genre: str | None) -> str | None:
     return g.lower() or None
 
 
+_CYRILLIC_RE = re.compile(r"[а-яёіѣѳ]")
+_LATIN_RE = re.compile(r"[a-z]")
+
+
+def _genre_script(genre_fold: str) -> str:
+    # Used only to flag work_genre_candidate rows that are ALREADY
+    # correctly resolved (different script = different language = never
+    # merged, by design) -- not a merging decision itself.
+    has_cyr, has_lat = bool(_CYRILLIC_RE.search(genre_fold)), bool(_LATIN_RE.search(genre_fold))
+    if has_cyr and not has_lat:
+        return "cyrillic"
+    if has_lat and not has_cyr:
+        return "latin"
+    return "mixed"
+
+
 # docs/work_normalization.md Problem #3: on a multi-work bill, the
 # extraction sometimes puts a *different* work's title from the same bill
 # into the `genre` column of an adjacent row, rather than a real genre --
@@ -295,6 +311,23 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     # Questions -- some splits are genuine adaptations, e.g. Карменъ
     # оп./бал., others are OCR noise on one genre word, e.g. Фаустъ's
     # "драм. поэма" variants -- never auto-decided here).
+    #
+    # likely_cross_language flags the subset that needs NO review at all:
+    # checked whether genre-abbreviation edit distance could safely
+    # auto-resolve any of this (mirroring Person's tenure/Wikidata
+    # corroboration) and confirmed it can't -- "оп." vs "бал." (a real
+    # Карменъ-style distinct adaptation) sits at the same small edit
+    # distance as genuine OCR noise, because genre abbreviations are too
+    # short for distance to distinguish "typo" from "different word".
+    # Script IS a safe, deterministic signal though: Cyrillic vs Latin
+    # genre abbreviations are always genuinely different languages
+    # (never folded, by design -- see _fold_genre), so a title whose
+    # variants span more than one script is already correctly resolved,
+    # not actually ambiguous. Confirmed against the real data: 49 of 355
+    # titles (14%) are cross-language and need no action. (An earlier
+    # throwaway analysis script put this at 98 by miscounting a blank/
+    # missing genre as its own "script" -- this in-pipeline version
+    # excludes blanks and is the correct number.)
     con.execute("""
         CREATE TABLE entities.work_genre_candidate (
             candidate_id UUID PRIMARY KEY,
@@ -302,19 +335,25 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
             work_id UUID REFERENCES entities.work(work_id),
             canonical_title VARCHAR,
             canonical_genre VARCHAR,
-            appearance_count INTEGER
+            appearance_count INTEGER,
+            likely_cross_language BOOLEAN
         )
     """)
     genre_candidate_insert_rows = []
     work_lookup = {uid: (t, g, n) for uid, t, g, n, _ in work_rows}
+    n_cross_language = 0
     for title_key, sub_groups in genre_candidate_rows:
+        scripts = {_genre_script(fold) for fold in sub_groups if fold}
+        cross_lang = len(scripts) > 1
+        if cross_lang:
+            n_cross_language += 1
         for fold, sub_members in sub_groups.items():
             work_uuid = str(uuid.uuid5(NAMESPACE, f"work:{title_key}|{fold or ''}"))
             t, g, n = work_lookup[work_uuid]
             candidate_id = str(uuid.uuid5(NAMESPACE, f"work_genre_candidate:{work_uuid}"))
-            genre_candidate_insert_rows.append((candidate_id, title_key, work_uuid, t, g, n))
+            genre_candidate_insert_rows.append((candidate_id, title_key, work_uuid, t, g, n, cross_lang))
     con.executemany(
-        "INSERT INTO entities.work_genre_candidate VALUES (?, ?, ?, ?, ?, ?)",
+        "INSERT INTO entities.work_genre_candidate VALUES (?, ?, ?, ?, ?, ?, ?)",
         genre_candidate_insert_rows,
     )
 
@@ -328,26 +367,33 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     print(f"  {n_genre_merged} title groups merged a blank-genre printing into an existing "
           f"non-blank-genre work (Problem #2)")
     print(f"  {len(genre_candidate_rows)} title(s) split across >1 real genre, flagged in "
-          f"entities.work_genre_candidate for human review ({len(genre_candidate_insert_rows)} rows)")
+          f"entities.work_genre_candidate ({len(genre_candidate_insert_rows)} rows) -- "
+          f"{n_cross_language} are cross-language (already correctly resolved, no action needed), "
+          f"{len(genre_candidate_rows) - n_cross_language} genuinely need a human review decision")
     print(f"  {n_excerpt_matched} excerpt/partial-performance titles linked to a parent work "
           f"({n_excerpt_unmatched} excerpt-shaped titles left unlinked -- ambiguous or garbled, "
           f"see docs/work_normalization.md)")
 
 
 def export_work_genre_review_queue(con: duckdb.DuckDBPyConnection, out_path: Path) -> None:
-    """Every title split across >1 real genre (entities.work_genre_candidate),
-    grouped so a reviewer sees all the competing genre variants for one
-    title together -- not a Yes/No queue like Person's, since there's no
-    single pairwise decision: for each title, the researcher decides which
-    (if any) of the listed work_ids are actually the same work and should
-    be merged by hand, versus genuinely distinct adaptations to leave
-    alone (docs/work_normalization.md's Карменъ оп./бал. example)."""
+    """Every title split across >1 real genre that ISN'T already resolved
+    by the cross-language check (entities.work_genre_candidate.
+    likely_cross_language), grouped so a reviewer sees all the competing
+    genre variants for one title together -- not a Yes/No queue like
+    Person's, since there's no single pairwise decision: for each title,
+    the researcher decides which (if any) of the listed work_ids are
+    actually the same work and should be merged by hand, versus genuinely
+    distinct adaptations to leave alone (docs/work_normalization.md's
+    Карменъ оп./бал. example). Cross-language titles are deliberately
+    excluded -- they're already correctly separate (different genre
+    language = different genre, by design), not an open question."""
     import csv as csv_module
 
     rows = con.execute("""
         SELECT title_key, work_id, canonical_title, canonical_genre, appearance_count
         FROM entities.work_genre_candidate
-        ORDER BY title_key, appearance_count DESC
+        WHERE NOT likely_cross_language
+        ORDER BY appearance_count DESC, title_key
     """).fetchall()
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -359,7 +405,8 @@ def export_work_genre_review_queue(con: duckdb.DuckDBPyConnection, out_path: Pat
             w.writerow([title_key, work_id, title, genre, n, ""])
     n_titles = len({r[0] for r in rows})
     print(f"{n_titles} titles ({len(rows)} work rows) needing genre review -> {out_path} "
-          f"(utf-8-sig, ready for Sheets/Excel import)")
+          f"(utf-8-sig, ready for Sheets/Excel import; sorted by appearance_count so the "
+          f"highest-impact titles come first)")
 
 
 # Matches the printed homonym-disambiguating suffix ("Петровъ 2-й",

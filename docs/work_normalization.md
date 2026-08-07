@@ -223,18 +223,32 @@ against the full corpus:
   non-blank-genre work — the safe portion of strategy #2, applied whenever
   a title has at most one distinct real genre after folding.
 - **355 titles (898 work rows) flagged in the new
-  `entities.work_genre_candidate` table**, exported to
-  `outputs/full_run/work_genre_review_queue.csv` — every title where 2+
+  `entities.work_genre_candidate` table** — every title where 2+
   genuinely distinct genre folds remain (Карменъ's `оп.`/`бал.` and
   Фаустъ's OCR-noise cluster both land here). **Resolves the Open Question
   below**: rather than build an edit-distance heuristic to guess which
-  splits are real adaptations versus noise, the implementation never
-  auto-decides this case at all — every one of the 898 rows stays a
-  separate, valid `entities.work` row exactly as before, just now flagged
-  for a human to actually merge by hand if they choose to (no apply-side
-  tooling built yet, since no review has happened; see Person's
+  splits are real adaptations versus noise (tested directly on
+  `оп.`/`бал.` and `com.`/`ком.` — both sit at the same small edit
+  distance as genuine OCR noise, so distance alone can't tell adaptation
+  from typo), the implementation never auto-decides this case at all —
+  every one of the 898 rows stays a separate, valid `entities.work` row
+  exactly as before, just now flagged for a human to actually merge by
+  hand if they choose to (no apply-side tooling built yet, since no
+  review has happened; see Person's
   `apply_person_merges`/`reconcile_person_merges` for the pattern to reuse
   once this queue has been through review).
+- **Of those 355, 49 are `likely_cross_language`** — every distinct genre
+  fold on the title is written in a different script (Cyrillic vs. Latin),
+  which means the title was already correctly split by language and
+  needs no human decision at all; excluded from the exported review
+  queue. That leaves **306 titles (775 work rows)** in
+  `outputs/full_run/work_genre_review_queue.csv` genuinely needing a
+  human call. (An earlier, throwaway analysis script put this at 98
+  cross-language / 257 needing review — it was counting a blank/missing
+  genre as its own "script," which wrongly flagged same-script titles
+  like a bare `com.`/`pièce` pairing plus a blank member as
+  cross-language. The in-pipeline `_genre_script()` classification
+  excludes blanks and is the correct number.)
 - **`Гимнъ`'s cross-contamination genres** (strategy #3) are now excluded
   via the small, hand-curated set found during investigation (`Новое
   дѣло`, `Евгеній Онѣгинъ`, `Паяцы`, `Сверхъ комплекта`, `Ревизоръ`,
