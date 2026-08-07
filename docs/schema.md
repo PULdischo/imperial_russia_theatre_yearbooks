@@ -6,7 +6,7 @@ theater rosters, multi-period tenures) is *data*, not schema — we don't want a
 model that needs a migration every time the printed source adds a role.
 
 Transcription unit for the Spiski tables is **one row per printed appearance in
-one volume** (a "roster entry"), not a deduplicated master person record.
+one volume** (a "person entry"), not a deduplicated master person record.
 Linking the same person across years/volumes is a separate, later task (name +
 patronymic + overlapping dates) — attempting it during transcription would mean
 guessing at identity while we're still trying to get the printed page faithfully
@@ -27,7 +27,7 @@ One row per digitized page. Every other table's `page_id` joins here.
 | column | type | notes |
 |---|---|---|
 | `page_id` | string (PK) | synthetic, e.g. `RepertoireTables_1898-99_p019` |
-| `entity_type` | enum | `Repertoire`, `Administration`, `BalletArtists`, `Musicians`, `ProductionTeam`, `TheaterSchoolStaff`, `Graduates`, `ProductionStats` |
+| `entity_type` | enum | `Repertoire`, `Administrators`, `BalletArtists`, `Musicians`, `ProductionTeam`, `TheaterSchoolStaff`, `Graduates`, `ProductionStats` |
 | `season` | string | academic year as printed in the filename, e.g. `1898-99` |
 | `city` | enum, nullable | `SP` \| `Moscow` — only meaningful for BalletArtists/Musicians, which are split at the file level |
 | `source_file` | string | original PDF filename |
@@ -36,10 +36,10 @@ One row per digitized page. Every other table's `page_id` joins here.
 
 ---
 
-## Spiski family (Administration, BalletArtists, Musicians, ProductionTeam,
+## Spiski family (Administrators, BalletArtists, Musicians, ProductionStaff,
 ## TheaterSchoolStaff, Graduates once sourced)
 
-### `roster_entry.csv`
+### `person_entry.csv`
 
 One row per person per printed appearance.
 
@@ -58,12 +58,12 @@ One row per person per printed appearance.
 | `service_class` | string, nullable | Table-of-Ranks class where printed (`VII кл.`) — survey found this starts appearing by 1907, absent in 1890-91 |
 | `instrument` | string, nullable | Musicians only |
 | `subject_taught` | string, nullable | TheaterSchoolStaff only |
-| `tenure_note_text` | string, nullable | the full parenthetical/trailing tenure note, verbatim, uncleaned — the source of truth `service_period` rows are parsed from |
-| `credit_summary_text` | string, nullable | the full performance-tally sentence for BalletArtists/Musicians (e.g. `Въ 11 балетахъ—33; въ 8 операхъ—43. Всего—76 разъ`), verbatim — source of truth for `roster_entry_credit` rows |
+| `tenure_note_text` | string, nullable | the full parenthetical/trailing tenure note, verbatim, uncleaned — the source of truth `person_entry_service` rows are parsed from |
+| `credit_summary_text` | string, nullable | the full performance-tally text for BalletArtists (e.g. `Въ 11 балетахъ—33; въ 8 операхъ—43. Всего—76 разъ`), verbatim — source of truth for `person_entry_credit` rows |
 
-### `service_period.csv`
+### `person_entry_service.csv`
 
-Child of `roster_entry`. Exists because tenure notes can describe **more than
+Child of `person_entry`. Exists because tenure notes can describe **more than
 one period** for the same person (survey found e.g. "съ 14 іюня 1879 г. по 1
 іюля 1899 г. и съ 1 декабря ... г." — left and rejoined) — a single start/end
 pair on the parent row can't represent that faithfully.
@@ -77,11 +77,11 @@ pair on the parent row can't represent that faithfully.
 | `start_date_undate` | string, nullable | Undate-serialized |
 | `end_date_text` | string, nullable | verbatim; null = still active as of this volume |
 | `end_date_undate` | string, nullable | Undate-serialized |
-| `end_type` | enum, nullable | `died` (†) \| `resigned` (`Оставилъ службу`) \| `other` \| null (still active) |
+| `end_type` | enum, nullable | `died` (†) \| `left service` (`Оставилъ службу`) \| `other` \| null (still active) |
 
-### `roster_entry_credit.csv`
+### `person_entry_credit.csv`
 
-Child of `roster_entry`. BalletArtists/Musicians performance tallies — both the
+Child of `person_entry`. BalletArtists performance tallies — both the
 category totals and the optional named-role breakdown ("Въ томъ числѣ:
 Спящая красавица (красавица)—5") are unbounded in count, so both go here
 rather than as wide columns.
@@ -90,10 +90,11 @@ rather than as wide columns.
 |---|---|---|
 | `credit_id` | string (PK) | |
 | `entry_id` | FK → roster_entry | |
-| `credit_type` | enum | `category_total` \| `named_work` |
-| `label` | string | for `category_total`: `балетахъ`/`операхъ`/`драмѣ`/`Всего`; for `named_work`: the work title |
+| `credit_type` | enum | `category_totals` \| `named_work` |
+| `label` | string | for `category_totals`: `балетахъ`/`операхъ`/`драмѣ`/`Всего`; for `named_work`: the work title |
 | `role_name` | string, nullable | only for `named_work` — the character name in parens |
-| `count` | number | usually an integer, but the printed ledger occasionally uses a fractional value (e.g. `.5`) for a role split between two artists — kept as printed, not rounded |
+| `category_production_count` | number | only for `category_totals`: `балетахъ`/`операхъ`/`драмѣ`; e.g. 'Въ 10 балетахъ'|
+| `category_credit_count` | number | usually an integer, but the printed ledger occasionally uses a fractional value (e.g. `.5`) for a role split between two artists — kept as printed, not rounded |
 
 ---
 
@@ -103,14 +104,14 @@ Long/tidy by design — per the survey, the theater roster itself changed twice
 in this 18-year run (5 combined columns → 3+2/3 separate blocks, with a third
 Moscow venue added), so theater cannot be a fixed column set.
 
-### `performance_session.csv`
+### `event_entry.csv`
 
 One row per (date, session, theater) box-office record — this is the grain
 receipts are actually printed at, even when multiple works share the bill.
 
 | column | type | notes |
 |---|---|---|
-| `session_id` | string (PK) | |
+| `event_id` | string (PK) | |
 | `page_id` | FK → source_pages | |
 | `season` | string | |
 | `city` | enum | `SP` \| `Moscow` |
@@ -118,15 +119,16 @@ receipts are actually printed at, even when multiple works share the bill.
 | `month_text` | string | verbatim month header this row falls under |
 | `year_text` | string | verbatim year(s) as printed at the top of the block, e.g. `1898 г.` or `1898—1899 гг.` |
 | `date_undate` | string | Undate-serialized calendar date (Julian, as printed) |
-| `session` | enum | `day` (single performance) \| `morning` (`УТРО`) \| `evening` (`ВЕЧЕРЪ`) |
+| `time_of_day` | enum | `unspecified` (single performance) \| `morning` (`УТРО`) \| `evening` (`ВЕЧЕРЪ`) |
 | `theater` | string | verbatim theater name — value, not column: `Маріинскій`, `Александринскій`, `Михайловскій`, `Большой`, `Малый`, `Новый`, or others as they appear |
-| `session_status` | enum | `performed` \| `no_performance` — see below |
+| `event_status` | enum | `performed` \| `no_performance` — see below |
+| `bill` | string, nullable | work titles and genres verbatim, e.g. `Коппелія, бал. Танцы и группы изъ балета Талисманъ` |
 | `receipts_text` | string, nullable | verbatim, e.g. `3462 р. 15 к.` |
 | `receipts_rubles` | int, nullable | parsed |
 | `receipts_kopecks` | int, nullable | parsed |
 | `annotation` | string, nullable | benefit-performance / anniversary notes printed in the cell, verbatim |
 
-**`session_status` and the completeness problem it doesn't solve on its own.**
+**`event_status` and the completeness problem it doesn't solve on its own.**
 `no_performance` (formerly named `is_dark` — renamed because "dark cell" is
 theater jargon, not intuitive to a researcher) means the model read an
 explicit printed dash: the theater really was closed that date, and that's
@@ -165,17 +167,17 @@ entire city block to a recall failure, this method can't detect that gap
 (there's no surviving evidence of which city was expected), which is a
 known limit, not a silent error.
 
-### `performance_work.csv`
+### `event_entry_performance.csv`
 
-Child of `performance_session` — a bill can list more than one work under a
+Child of `event_entry` — a bill can list more than one performance under a
 single receipts figure (e.g. two one-act comedies).
 
 | column | type | notes |
 |---|---|---|
-| `work_id` | string (PK) | |
-| `session_id` | FK → performance_session | |
-| `work_order` | int | 1-based, order printed in the cell |
-| `work_title` | string | verbatim |
+| `performance_id` | string (PK) | |
+| `event_id` | FK → event_entry | |
+| `performance_order` | int | 1-based, order printed in the cell |
+| `performance_title` | string | verbatim |
 | `genre` | string, nullable | verbatim abbreviation (`оп.`, `бал.`, `ком.`, `др.`, `сц.`, `вод.`, `траг.`, `пьеса`, `карт.`, etc.) |
 
 ---
