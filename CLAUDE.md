@@ -12,6 +12,11 @@ never modernize it. See `README.md` for the full narrative and the two
 Mermaid ER diagrams; `docs/pipeline.md` and `docs/schema.md` for stage-by-
 stage and field-by-field detail. This file is the operational summary.
 
+**This is a research dataset — any answer about what the data contains must
+be grounded in an actual query, not memory or a prior turn's cached number,
+and every such query gets logged to `docs/query_log.md`.** Full protocol:
+`.claude/skills/imperial-theater-db/SKILL.md`.
+
 ## Setup
 
 ```
@@ -147,3 +152,106 @@ these the hard way:**
   `*.raw.json` responses (re-parsing them is free) and the final `.duckdb`
   file (the actual deliverable) are worth keeping — everything else
   regenerates from those plus the pipeline scripts.
+
+## Publishing: HF dataset repo + Cloud Run (`spiski`)
+
+`research_dataset.sqlite` (`build_datasette.py`'s output) is what gets
+served — a Datasette instance with `datasette-auth-passwords` (basic auth),
+`datasette-llm` + `datasette-agent` (chat/explore assistant, model
+`qwen-plus` via DashScope's OpenAI-compatible endpoint), and
+`datasette-secrets` installed. Both publish targets are configured with
+files under `outputs/full_run/` — which is gitignored, so **none of this
+config persists in git**; if it's missing, recreate it from what's below
+before publishing.
+
+**HF dataset repo** (`apjanco/imperial-russian-theater-yearbooks`, private):
+push `imperial_theaters.duckdb` + `docs/` + `README.md` via
+`huggingface_hub.HfApi().upload_file(...)`. The `xet` upload backend is
+unreliable in this environment (`ConnectError`/`RuntimeError: client has been
+closed`, reproducibile even with retries) — set `HF_HUB_DISABLE_XET=1` before
+calling it; that consistently works when plain `xet` doesn't.
+
+**Cloud Run** (`spiski`, project `prozhito-234812`, region `us-east1`) is
+built via `datasette publish cloudrun`, which has **no `--config` flag** —
+only `--metadata`. In this installed Datasette version (1.0a37), `--metadata`
+no longer feeds `datasette.allowed()` permission checks (confirmed by direct
+testing) — a `permissions` block placed there is silently ignored, so
+`datasette-agent`'s UI links never render even though the plugin loads fine.
+Split the permissions out into their own file and inject it with a real
+`--config` flag via `--extra-options` (the one publish-time hook that lets
+you append arbitrary flags to the generated `datasette serve` command):
+
+`outputs/full_run/llm_plugins/datasette_permissions.json` (create if missing):
+```json
+{
+  "permissions": {
+    "datasette-agent": true,
+    "datasette-agent-explore": true,
+    "datasette-agent-background": true,
+    "execute-sql": true
+  }
+}
+```
+
+`outputs/full_run/datasette_metadata_cloudrun.json` keeps `title`,
+`description`, `databases.research_dataset.tables.*` (per-table
+descriptions/facets/sort), and `plugins` (`datasette-auth-passwords`'s
+password hash, `datasette-llm`'s `default_model`) — **no `permissions` key**,
+that plugin config genuinely does still work via `--metadata`, only
+`permissions` doesn't.
+
+Before publishing, write the DashScope key into the plugins dir (never typed
+literally — always via `.env` indirection) so `llm`'s
+`extra-openai-models.yaml` (`api_key_name: dashscope`) can resolve it:
+```
+python -c "
+import os, json
+from dotenv import load_dotenv
+load_dotenv()
+json.dump({'dashscope': os.environ['DASHSCOPE_API_KEY']},
+          open('outputs/full_run/llm_plugins/keys.json', 'w'))
+"
+```
+
+Then, **on Windows, in Git Bash specifically**: MSYS silently rewrites any
+command-line argument that looks like a Unix absolute path (anything
+starting with `/`) into a Windows path before the program ever sees it — so
+`--plugin-secret llm user-path /app/plugins` was actually shipping
+`LLM_USER_PATH=C:/Program Files/Git/app/plugins` inside the container
+(confirmed by pulling the built image via a throwaway Cloud Build step and
+inspecting `env`/`llm models list` directly — `Unknown model: qwen-plus` at
+runtime was the visible symptom). Prefix the whole publish command with
+`MSYS_NO_PATHCONV=1` to stop that:
+
+```
+MSYS_NO_PATHCONV=1 python -m datasette publish cloudrun \
+  --service spiski \
+  --metadata outputs/full_run/datasette_metadata_cloudrun.json \
+  --plugins-dir outputs/full_run/llm_plugins \
+  --install datasette-auth-passwords \
+  --install datasette-llm \
+  --install datasette-agent \
+  --install datasette-secrets \
+  --plugin-secret llm user-path /app/plugins \
+  --extra-options "--config plugins/datasette_permissions.json" \
+  outputs/full_run/research_dataset.sqlite
+```
+
+This build+push **always** crashes on Windows at the very end with a
+`PermissionError` during `tempfile`'s cleanup (`datasette/utils.py`'s
+`temporary_docker_directory`, a `with` block whose `finally: tmp.cleanup()`
+runs after the image is already built and pushed — confirmed by reading that
+source directly). That crash is harmless noise, not a failed build; check
+`gcloud builds list --limit=1` to confirm `SUCCESS`, then finish the deploy
+manually (the crash means `publish cloudrun`'s own trailing `gcloud run
+deploy` call never runs):
+
+```
+gcloud run deploy spiski \
+  --image us-docker.pkg.dev/prozhito-234812/datasette/datasette-spiski:latest \
+  --platform=managed --region us-east1 --allow-unauthenticated \
+  --project prozhito-234812
+```
+
+Delete `outputs/full_run/llm_plugins/keys.json` again once deployed — it's
+never meant to persist on disk between publishes.
