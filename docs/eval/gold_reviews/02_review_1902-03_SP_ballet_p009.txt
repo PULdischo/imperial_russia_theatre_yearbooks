@@ -1,0 +1,68 @@
+# GOLD TRANSCRIPTION  —  review_1902-03_SP_ballet_p009
+#
+# source_file : 1902-03_SeasonReview_BalletSP.pdf
+# page_index  : 9
+# season      : 1902-03      city : SP      genre : ballet
+# image       : images/review_1902-03_SP_ballet_p009.png
+#
+# WHY THIS PAGE IS IN THE GOLD SET:
+#   The corpus's hardest enumeration: ~33 numbered items, nested a)/b)/c)
+#   sub-items, French AND Italian interleaved, titles in plain roman.
+#
+# ===================================================================
+# HOW TO TRANSCRIBE          (full rules: docs/season_reviews.md §7)
+#
+#   Type EXACTLY what is printed. Do not correct, expand, modernise or
+#   tidy ANYTHING — including mistakes made by the original typesetter.
+#
+#   * Keep line breaks as printed, and keep end-of-line hyphens
+#       возобновле-
+#       ніемъ
+#   * Keep « » and „ " exactly as each appears. Do not unify them.
+#   * Keep em dash — , en dash – and hyphen - distinct.
+#   * Keep abbreviations closed up: г-жа, г., всп-ца — never expand.
+#   * Keep pre-reform letters: ъ ѣ і ѳ ѵ
+#   * If the printer got it wrong, keep it wrong.
+#
+#   Inline markup — use only where the printing actually shows it:
+#     <r>...</r>   разрядка (l e t t e r - s p a c e d)
+#     <b>...</b>   bold
+#     <i>...</i>   italic
+#     <l fr>...</l>  non-Russian span; also: de, it, la
+#     [?...]       your best reading, but you are unsure
+#     [gap]        cannot be read at all — do not guess
+#
+#   Blocks — start each with a header line, then its text beneath:
+#     [heading] [paragraph] [verse] [cast_list] [personnel_news]
+#     [enumerated_list] [figure] [footnote] [byline] [other]
+#
+#   Three headers take one extra word:
+#     [enumerated_list 1)]   the enumerator EXACTLY as printed — "1)", "б)",
+#                            or just [enumerated_list] if there is none
+#     [figure plate]         plate | photograph | notated_music | ornament
+#     [footnote *]           the printed marker
+#
+#   A figure's caption goes on its own line beneath it:
+#     [figure plate]
+#     caption: Станъ царя Кандавла—декорація художника В. В. Васильева.
+#
+#   [verse] keeps its line breaks AND its indentation. Do not reflow.
+#
+#   Language markup: <l fr>Pas de deux</l>  (fr, de, it, la)
+#
+#   Transcribe blocks in READING ORDER, top to bottom as a reader would
+#   follow them — not in the order they happen to sit on the page.
+#
+#   Do NOT transcribe library stamps or pencilled numbers. Note them in
+#   copy_artifacts below instead.
+# ===================================================================
+
+[FIELDS]
+printed_folio:
+tailpiece_present:
+no_text:
+copy_artifacts:
+notes:
+
+[BLOCKS]
+
