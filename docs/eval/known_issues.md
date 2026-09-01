@@ -57,6 +57,378 @@ recall problem (e.g. `repertoire_1890-91_p000`) before turning it on for a
 full Repertoire run — it adds cost/latency, so confirm it actually moves the
 number first, same discipline as issues #2/#3.
 
+**Addendum (2026-08-25): the A/B test ran, with two findings — one about
+the detection flag itself, one a negative result on the mitigation.**
+
+*The flag has real false positives.* Checked 3 of the 19 pages
+`quality_checks.py` currently flags (`zero_dark_cells_on_multiweek_page`)
+against their scans. Two -- `repertoire_1899-00_p000` and
+`repertoire_1901-02_p021` -- are false positives: their date sequences
+genuinely *skip* non-performance days entirely rather than printing them
+as dark rows (e.g. Saturdays simply don't appear as a row at all), so
+"zero dark cells captured" is the historically accurate transcription,
+not a recall failure. This is the same distinction RG raised directly:
+a date genuinely absent from the table must never get a row invented for
+it, only a date that's printed with a dash should become an `is_dark`
+row. The flag's own heuristic ("real tables almost always have at least
+one dark day") doesn't hold for every page's printing convention. The
+third page checked, `repertoire_1893-94_p006`, IS a genuine recall
+failure -- the scan clearly shows multiple dark cells printed (both "1
+Субб." and "8 Суббота" show 4 of 5 theaters dark), but the current
+extraction captured zero. Real precision on this small sample: ~1/3.
+**Conclusion: the 19 flagged pages need individual scan verification, the
+same page-by-page discipline used throughout this file, not a blanket
+re-extraction on the flag's say-so alone.**
+
+*Thinking mode: negative result, not recommended as-is.* Also found a
+real API incompatibility along the way: `enable_thinking=True` combined
+with `response_format={"type":"json_object"}` silently returns the
+literal string `"0.0"` as the entire response content for this model —
+reproduced 3x. Dropping the forced JSON mode (relying on the prompt's own
+"return only a JSON object" instruction instead) fixes that. With it
+fixed, tested against the confirmed-broken `repertoire_1893-94_p006`:
+baseline recovered 1 of ~8+ visible dark cells; thinking mode recovered
+**0** of ~8+ on the same page — worse, not better — while costing 58%
+more tokens (31635 vs 20011) and taking 30% longer (328s vs 252s). Sample
+size is only 1 run each, but a costly, slower, and worse-performing first
+result doesn't justify further spend on this specific mitigation without
+new evidence. **Multi-sample consensus (the other mitigation idea above)
+remains untested and is probably the better next thing to try**, since it
+doesn't share thinking mode's apparent failure mode of the model
+"compressing" its final answer after spending its budget on reasoning.
+
+**Addendum (2026-08-25, continued): consensus was built, tested, and the
+premise it rests on turned out to be wrong for at least this page's
+failure mode.** Full trail, since this reverses course partway through --
+worth keeping so the reasoning isn't re-walked from scratch later:
+
+1. Implemented `merge_repertoire_samples()` in `pipeline/schemas/
+   repertoire.py` (exported via `schemas/__init__.py`): unions sessions
+   from N independent extraction samples of the same page, keyed by
+   (date_text, month_text, theater, session) -- a key present in ANY
+   sample survives the merge (can only recover a dropped cell, never
+   invent one no sample produced at all); among samples that captured the
+   same key with real content, the version the most samples agree on
+   wins over a conflicting "dark" claim, since known_issues.md's own
+   finding is that content accuracy on whatever IS emitted is high, so a
+   conflicting "dark" claim for the same key is more likely to be that
+   sample's own drop. NOT yet wired into `run_pilot.py` as a
+   `--repertoire-samples N` flag -- built and validated in isolation
+   first, per RG's request to test before committing further.
+2. First validation: merged 2 real baseline samples of
+   `repertoire_1893-94_p006` (115 sessions/8 dark, 108/2). Looked
+   promising -- correctly resolved 7 of 7 dark/content disagreements by
+   trusting content over a conflicting dark claim, recovering 3 genuinely
+   dark cells ("17 Января"/Михайловскій+Большой+Малый) neither... wait,
+   see below -- this specific recovery was re-examined and found wrong.
+3. Re-checked that "recovery" against the scan directly: **"17 Января"
+   is not dark at all** -- all 5 theaters have real printed content that
+   day. Both original samples failed independently there (one fabricated
+   "dark" for 3 theaters, the other dropped the keys entirely) -- the
+   merge picked between two wrong answers and landed on the worse one,
+   because a union can only choose among what samples actually produced.
+   First concrete evidence that 2 samples isn't enough, and that some
+   failures may not be independent random noise.
+4. Tested **chunking** (splitting the page into smaller images so each
+   call tracks fewer cells) as a different kind of fix, addressing a
+   "long grid overwhelms attention" theory of the root cause. Split at
+   the page's natural physical seam, header reattached to both halves.
+   Did not help: `chunk_bottom` dropped the entire "8 Суббота" row (same
+   failure as the unsplit page); `chunk_top` fabricated content across
+   all 5 theaters for "1 Субб." (only 1 theater is actually active that
+   day). Ruled out "the page is just too big" as the (sole) mechanism.
+5. Noticed every miss so far had landed on a Саturday and tested that
+   specifically with two small isolated crops (5-6 rows each, real
+   scan-verified ground truth for every cell). Result **disconfirmed** a
+   clean weekday-tied bias: one Saturday ("15 Суббота") was captured
+   perfectly in the same response that badly mangled a different Saturday
+   ("1 Субб.") and a non-Saturday weekday ("17 Понедѣльникъ",
+   values-duplication, a different error shape again).
+6. **Decisive test**: ran 5 independent samples of each narrow crop.
+   Every sample fabricated the *exact same* phantom entries for "1
+   Субб." -- byte-identical receipts figures (2168 р. 33 к., 861 р. 44
+   к., 1203 р., 1304 р. 39 к., 1096 р. 3 к.), all real figures copied
+   from the neighboring "31 Пятница" row. Every sample duplicated the
+   *exact same* wrong figure (928 р. 97 к., really Александринскій's)
+   onto Маріинскій for "17 Понедѣльникъ". At non-zero sampling
+   temperature, genuinely random noise does not reproduce identically
+   across 5 independent calls. **This is a stable, reproducible
+   misreading tied to something specific about the image at that
+   position -- not stochastic noise.**
+
+**This overturns the working theory the whole investigation had been
+operating on.** Consensus/multi-sampling can only average away
+independent disagreement between samples; these samples don't disagree
+with each other, they agree, consistently, on the same wrong answer, so
+consensus has nothing to vote against. Combined with the already-negative
+results for thinking mode and chunking, and the disconfirmed
+Saturday-bias hypothesis (which would have suggested a targeted prompt
+fix), **none of the four mitigations investigated today actually solve
+this for the specific failure mode demonstrated on
+`repertoire_1893-94_p006`.** RG flagged this as concerning and asked to
+pause here for the day with the investigation left open, not silently
+dropped.
+
+**Where this leaves things, for whoever picks this up next**: the
+`merge_repertoire_samples()` code is real, tested in isolation, and NOT
+wrong in what it does -- it's a correct implementation of "union +
+content-wins-over-dark" -- but it should not be deployed as *the* fix on
+the strength of today's evidence, since it doesn't address this page's
+demonstrated failure mode. Ideas not yet tried: (a) a crop containing
+*only* the single problem row with zero neighboring context at all (today's
+narrow crops still included 2 rows of neighbors on each side -- if the
+misattribution is genuinely a "nearest visually prominent text" attention
+error, removing the neighbor entirely might change the outcome, whereas
+today's tests only shrank *how many* neighbors were present, not whether
+any were); (b) checking whether this reproducibility holds on a
+*different* problem page/cell, to see if it's a general property of this
+failure mode or something oddly specific to this one image region
+(scan-quality artifact, an unusual print layout at that exact spot, etc.)
+-- everything tested today was still on the same single page; (c) given
+the practical implication that automated re-sampling cannot be trusted to
+converge on ground truth for at least some cells, the safety-net idea
+from the pros/cons discussion (route disagreement cells to a human/scan
+check) may need to become the *primary* mechanism rather than a backstop,
+since "disagreement" won't reliably surface cells where every sample
+independently agrees on the same wrong answer either.
+
+**Addendum (2026-08-25/26): lead (a) tested, and it's the fix.** Cropped
+both confirmed-broken rows ("1 Субб.", "17 Понедѣльникъ") down to ONLY
+that single row -- header reattached, but literally zero other dated rows
+visible in the image (confirmed by direct visual check of each crop).
+Ran 5 independent samples of each. Result: **10/10 samples, byte-identical,
+exactly matching the scan** -- Михайловскій's 2560 р. 50 к. and the other
+4 theaters correctly dark for "1 Субб."; all 5 theaters' real figures
+(Маріинскій correctly no-receipts) and zero fabricated darks for "17
+Понедѣльникъ" -- every single run. The same two rows that failed, often
+identically wrongly, in every multi-row context tried today (full page,
+half-page chunks, 5-6-row narrow crops) came back perfect the moment no
+other row's content was visible in the image at all.
+
+This confirms the mechanism precisely: the misattribution needs a
+neighboring row's content physically present in the image to misattribute
+*from*. It's not attention fatigue over a big grid (chunking already
+ruled that out) and it's not a weekday-linked prior (the Saturday test
+already ruled that out) -- it's specifically that the presence of nearby
+printed text gives the model something (wrong) to lock onto, and removing
+it removes the failure.
+
+**Practical implication**: row-by-row extraction -- one API call per
+dated row instead of one call per page -- looks like the actual fix, not
+a mitigation. Real, bounded cost: roughly 3-4x more tokens per page
+(~3400-3500 tokens/row x ~15-20 rows/page, vs ~20000 tokens for one
+full-page call), offset by each call being far cheaper individually
+(~10s vs ~250s) and trivially parallelizable. **Not yet validated beyond
+these 2 rows on 1 page** -- before committing to rebuilding the
+extraction pipeline around this, the next step is testing row-level
+isolation on more rows and more pages (including pages that were NOT
+already known-broken, to check it doesn't regress already-good pages) to
+confirm this generalizes rather than being specific to these two rows.
+If it holds up, this would replace the abandoned consensus/chunking
+approach as the actual pipeline change, with `merge_repertoire_samples()`
+(built earlier today) potentially still useful as a secondary layer for
+whatever residual randomness remains even at row granularity.
+
+**Addendum (2026-08-26): plan approved, pipeline scaffolding built,
+automated row-boundary detection proven viable but not yet complete.**
+Full trail in the 2026-08-26 query_log.md entry. Highlights:
+
+- Plan approved (row-isolated extraction, Repertoire-only for now, pilot
+  before full-corpus rollout, opencv for line detection) -- saved at
+  `/Users/rachelglodo/.claude/plans/nifty-enchanting-sedgewick.md`.
+- opencv install issue resolved: the real blocker was macOS 12.7.6 (not
+  Python 3.14 as first suspected) -- recent opencv wheels need macOS 13+;
+  pinned to `opencv-python-headless==4.10.0.84`, documented in CLAUDE.md.
+- `pipeline/row_detect.py` built: per-strip peak-finding + chain-tracing
+  across the page width to follow genuine curvature (a naive whole-width
+  darkness profile was tried first and doesn't work for curved lines --
+  documented in the module). Not yet wired into `run_pilot.py`.
+- Evaluated **Transkribus** (RG has an account) live as an alternative:
+  its table model found zero structure on the test page even after the
+  expected text-recognition prerequisite step, and when it did produce
+  output it was one undifferentiated, poorly-transcribed text region, not
+  real table structure. Not a fit without training a custom model (much
+  bigger investment) -- not pursued further.
+- Evaluated **ScanTailor Advanced** (GUI-only build for this platform, no
+  bundled CLI) as a whole-page dewarm preprocessor instead of per-row
+  curvature detection. RG ran the real test page through it live, several
+  configurations compared via `row_detect.py`'s debug-visualize mode.
+  **Key finding: deskew alone (no dewarp) + a tight, consistent,
+  Page-Box-disabled crop was sufficient and outperformed every dewarp
+  setting tried** -- best controlled baseline (Split Pages=full page auto,
+  Deskew=auto, Content Box=auto, Page Box=disabled, Margins=3mm, Dewarp
+  OFF) got 20/~19 real row boundaries correctly detected, including both
+  ground-truth rows, better than any earlier test. Dewarp (marginal
+  setting) actively made results worse in one comparison. This simplifies
+  the eventual automation question, since deskewing is simpler and more
+  standard than full dewarping.
+- One real bug found and not yet fixed: building actual row crops (not
+  just the debug visualization) from that best-baseline image revealed
+  the chain-tracer sometimes fails to detect a real boundary line outright
+  (confirmed via direct sanity crops bypassing the dewarp code -- ruled
+  out a header-count/indexing bug first, then found a genuine ~438px gap
+  where a line should exist but wasn't found), merging two adjacent rows
+  into one crop. A detection-recall gap, not a systemic failure -- the
+  same run got 18-19 of ~19 boundaries right elsewhere on the same page.
+
+**Where this stands**: the architecture is validated end-to-end in
+principle (ScanTailor deskew -> row_detect.py curve-tracing -> isolated
+row crops), but `row_detect.py` isn't reliable enough yet to trust broadly
+-- needs the missed-line recall gap fixed and re-validation on more pages
+before wiring into `run_pilot.py`. Paused here at RG's request; resuming
+same day.
+
+**2026-08-27 addendum -- validated ScanTailor Advanced settings (whole-
+season batch, supersedes the single-page baseline above):**
+
+Testing against the whole 1893-94 Repertoire season (12 pages, via
+ScanTailor's own multi-page batch project + "Apply to All Pages" --
+not per-page manual export) surfaced two settings the single-page test
+above didn't catch, because they only fail visibly at real page-to-page
+variety. **Page Box=disabled** (the single-page baseline) left a scan-
+edge shadow band near the top of 6 of 12 pages, read by `row_detect.py`
+as spurious extra boundaries; switching Page Box to Auto fixed it on the
+one page tested by hand (p004) but the fix only holds with **Fill
+Margins also enabled** -- turning Fill Margins off (tried once, to see
+if a more "authentic" unpainted margin mattered) reintroduced a *worse*
+version of the same problem: a full-width, uniformly-colored offcut band
+right at the image's top edge, present on 8 of 12 pages. With Fill
+Margins back on, the artifact is gone on 10 of 12 pages entirely (0.00
+ink outside the table on both sides) and much reduced on the remaining 2.
+
+Full validated settings, confirmed against the whole season (not just
+one page):
+- Split Pages: full page (auto)
+- Deskew: Auto
+- Select Content: Content Box=Auto, **Page Box=Auto** (not disabled --
+  corrects the single-page-tested baseline above)
+- **Fine Tune Page Corners: enabled**
+- Margins: **3mm all sides**
+- **Fill Margins: enabled** (must be on -- see above; off reintroduces
+  the top-edge artifact in a worse form)
+- Equalize illumination: off
+- Dewarping: **off** (deskew alone still outperforms every dewarp
+  setting tried, per the single-page test above)
+- Output DPI: 350
+
+Net effect on `row_detect.py`'s curve-count accuracy across the season
+(known dated-row counts from `raw.event_entry`, corrected for issue #49's
+p007 data-quality bug -- p007's true count is 20, not the raw-JSON's
+corrupted 29): 4 of 12 pages exact, most others off by only +1 to +3 (the
+same low-cost over-detection class as the accepted утро/вечер-divider
+false-split discussed earlier in this issue -- fixable per-page via the
+manual review tool below, not evidence the settings are wrong). One
+outlier remains at +6 (`repertoire_1893-94_p009`) and hasn't been
+individually reviewed yet.
+
+**New: human-in-the-loop correction workflow**, added to `row_detect.py`
+same day (RG: "show me the image with rows detected, and I can add one if
+there are any missing"). `analyze_page()` runs detection and keeps the
+underlying per-strip chains around (not just the final kept curves);
+`debug_visualize()` shows the numbered-curve image RG checks against the
+scan and writes a `*__curves.json` index/y sidecar; RG reports a fix by
+curve index ("add one between curve 8 and 9", "curve 14 is spurious");
+`insert_row_boundary()`/`delete_row_boundary()` apply it by re-scanning
+the SAME chains at a relaxed presence floor (the identical mechanism the
+automatic gap-fill pass already used, just triggered by a human instead
+of the gap-size heuristic) rather than guessing fresh; `detect_rows()`
+takes the corrected `PageAnalysis` and crops from it, writing a
+`*__corrections.json` audit trail alongside the row manifest. Also added
+`_smooth_curve()` (light moving-average over each curve's interpolated
+points, ~121px window) after RG flagged visible strip-to-strip jitter in
+otherwise-correct curves. Fully validated end-to-end on
+`repertoire_1893-94_p004`: automatic detection (23 curves) -> 4 rounds of
+human correction (removed the original top-artifact curve, inserted 2
+real missing boundaries, removed 2 spurious утро/вечер-divider
+false-splits) -> 22 curves, matching the known 20-row count exactly ->
+`detect_rows` produced 20 clean row crops, each spot-checked against the
+scan with the header correctly reattached and zero neighboring-date
+content, including the compound "14 Воскресенье" (утро+вечер) row now
+correctly kept as ONE crop rather than falsely split.
+
+**Still open**: `repertoire_1893-94_p009` (the +6 outlier) not yet
+reviewed; the other 10 pages in this season not yet run through the
+correction workflow; `header_line_count` still not auto-detected (see
+`detect_rows`' own docstring); broader pilot (more seasons, both column
+layouts, visibly curved pages) not yet started; not yet wired into
+`run_pilot.py`.
+
+**2026-08-27 addendum -- `run_pilot.py` row-level driver built and
+validated end-to-end; auto-detecting the утро/вечер divider (the one
+remaining manual-review step) tried 4 ways and shelved:**
+
+`process_page_rowlevel` added to `run_pilot.py` (`--row-level` flag):
+runs `detect_rows` (or takes an already-corrected `PageAnalysis`), then
+one API call per row crop concurrently under the SAME semaphore as the
+page-level path, concatenating every crop's `sessions` into one
+page-level `{"sessions": [...]}` -- zero changes needed downstream in
+`parse_and_validate.py`. Also strengthened `repertoire_system.txt`: fixed
+a real inaccuracy (prompt said session default is `"day"`, the actual
+Pydantic schema only accepts `"unspecified"` -- the model was already
+correctly ignoring the wrong prose and following the schema, so this
+wasn't live-corrupting data, just risky ambiguity) and added explicit
+guidance against exactly the failure shapes issue #49 found (date
+carried over from a neighboring row, values drifting into the wrong
+theater column).
+
+**Validated on `repertoire_1893-94_p009`** (the page issue #49's second
+mislabeling instance was found on): row-level extraction using the
+human-corrected 21-curve boundary set produced 18 distinct dates --
+exactly matching the database's original count -- with date "19
+Суббота" now perfectly correct (Мариинскій=dark, Александринскій="Auf
+Triburg und Rodeck" 2016р, Михайловскій="Un Drame parisien" 1562р50к,
+Большой="Gli Ugonotti" 1584р75к, Малый=dark, matching the scan exactly)
+and the 5 genuine compound утро/вечер dates correctly kept as single
+sessions sharing one `date_text` each. Confirms row isolation fixes this
+failure class too, not just issue #1's original simpler swap -- but only
+when the crop boundaries are right, which the human-reviewed set gave it.
+A control run using RAW auto-detection (with the уtro/вечер false-splits
+still present) reproduced the exact fear: a half-split crop often doesn't
+contain its own date label at all (it's printed once, centered across
+BOTH sub-blocks), so the model has nothing real to read and fabricates
+garbage date_text ("ВЕЧЕРЪ", "2-я карт.") -- not a prompt problem, a
+crop that's missing the information it needs.
+
+So the real remaining blocker for a corpus-wide run isn't the extraction
+call anymore -- it's that `row_detect.py` still can't tell a genuine
+date boundary apart from an internal утро/вечер divider *without* a
+human pointing it out. Four different approaches tried against a rich
+set of confirmed examples (6 spurious dividers + 6 real boundaries
+across `repertoire_1893-94_p004` and `p009`), none worked:
+1. Column-ink density (checking the wrong side initially -- date column
+   is the rightmost column for pre-1898-99 seasons, RG: for 1898-99
+   onward it moves to the LEFT edge, a season-dependent fact any future
+   attempt needs to parameterize, not hardcode).
+2. Peak-spike detection (does a real printed rule extend into the date
+   column) -- some real boundaries show a strong spike, others show
+   almost none; inconsistent, no clean threshold.
+3. Connected-components glyph detection -- defeated by this typeface's
+   vertically-stacked characters merging into one giant blob via
+   incidental touching pixels under 8-connectivity.
+4. Erosion before connected-components (the standard fix for touching
+   text) -- tried at both 300-equivalent and 450dpi (see below); still
+   left components spanning 1000+ px (multiple dates' worth of height)
+   at every kernel size tested; too little erosion leaves things merged,
+   too much starts eating real strokes, with no clean middle ground.
+
+**Higher DPI tested directly and ruled out as a fix for this specific
+problem** (RG: would rescanning the corpus's print-quality seasons at
+archival 600dpi help?) -- see
+`memory/source-scan-dpi-varies-by-season.md` for the full test (a real
+1890-91 page, genuinely 600dpi native, reprocessed at 450dpi -- 600
+itself exceeded ScanTailor's own load ceiling here, ~53 megapixels).
+Same failure, same magnitude. This means the touching-character problem
+is most likely inherent to the typeface's serifs/kerning, not a scan-
+resolution limitation -- don't re-propose rescanning for this reason.
+Real, tested finding, not an assumption.
+
+**Decision (RG, 2026-08-27): fall back to human review for this one
+detail rather than continue chasing automation.** The review workflow
+(`analyze_page` / `debug_visualize` / `insert_row_boundary` /
+`delete_row_boundary`) already works well and is fast in practice --
+revisit full automation of just this piece later if it becomes a real
+bottleneck at scale, rather than blocking the pilot on it now.
+
 ## 2. `heading_path` sometimes appears to re-include the institution name
 
 **Status: mostly a misdiagnosis, not actually a bug — see below.** Initially
@@ -382,3 +754,4779 @@ them. They currently resolve as their own low-evidence Tier 1 person
 clusters (effectively unlinked). Properly resolving them would mean
 actually following the cross-reference to the real entry elsewhere in the
 same page/season — a manual or Tier 2 task, not a mechanical one.
+
+## 19. `NAME_IN_HEADING_RE` missed noble-title prefixes and trailing rank suffixes; some entries have no name anywhere in the JSON
+
+**Status: mitigated (regex broadened) for the recoverable case; the
+unrecoverable case is a genuine model omission, not fixed.** Found during
+`full_run_2026-08-15_qwen3-vl-plus_local` (the first full-corpus run of the
+`Spiski_Graduates` PDFs, and the first re-run of the older categories since
+July): 4 roster pages initially failed schema validation entirely (not just
+individual rows) on `family_name` being *absent* from the entry dict, which
+is more severe than issue #7's "empty but present" case — a pydantic
+required-field error fails the whole page, dropping every other, valid
+entry on it too.
+
+Two different root causes, confirmed against the scanned pages before
+fixing either:
+
+- **Recoverable (2 entries).** `heading_path="Поспѣевъ, Дмитрій
+  Александровичъ, тит. сов."` and `"Графъ Бобринскій, Алексѣй Алексѣевичъ,
+  тит. сов."` — the original `NAME_IN_HEADING_RE` required the match to end
+  (`$`) immediately after the patronymic, so a leading noble title
+  (`Графъ`) or a trailing rank abbreviation (`, тит. сов.`) broke the match
+  even though the name itself was present and well-formed. Fixed by adding
+  an optional leading-title alternation (`Графъ|Графиня|Князь|Княгиня|
+  Баронъ|Баронесса`) folded into the captured surname (so it's kept, not
+  discarded) and an optional trailing `, (.+)` group that now lands in
+  `heading_path` (rather than nulling it out) instead of failing the match.
+- **Not recoverable (7 entries, 2 pages).** `administration_1904-05_p002`
+  entry 14 has `heading_path="Дежурные врачи"` (a section heading, "duty
+  physicians") with an explanatory sentence in `tenure_note_text` and no
+  person at all — confirmed against the scan (p.73, right column) this is
+  genuinely a heading-only line, not a person row. `productionteam_1892-93_p002`
+  entries 4/7/9/10/13/16 have `heading_path="Парикмахеры"` ("hairdressers")
+  or `"Парикмахеры / Русская драматическая труппа"` — but confirmed against
+  the scan (p.102) *every* person actually listed under that heading has a
+  clearly printed name (Дмитріева, Ѳедоровъ, Педдеръ, Жуляевъ, Шляпниковъ,
+  Аѳанасьевъ, Крюковской, Варламовъ, Ефимовъ …), so this is a genuine model
+  recall failure (the name was dropped entirely, not misplaced) rather than
+  a field-boundary issue — nothing in the JSON to mechanically recover.
+
+**Fix applied**: `_repair_roster` (`parse_and_validate.py`) now returns
+`(parsed, n_dropped)`. When an entry still has no `family_name` after the
+broadened regex attempt, that single entry is dropped (not fabricated) and
+the page's remaining entries still get parsed and kept — a real
+improvement over the old all-or-nothing page failure, and closer to the
+module docstring's stated intent ("never crash the run for every OTHER
+page" — now also true for every other *entry* on the same page). Drops are
+still logged, not silent: `validation_errors.csv` gets a
+`entry_dropped_no_name` row per affected page with the count. Net effect on
+this run: person_entry rows went from 21,087 → 21,174 after the fix; final
+state is 0 page-level failures, 7 entry-level drops (2 pages), all logged.
+
+## 20. `render_pages.py`'s `glob("*.pdf")` silently skips iCloud-evicted files instead of erroring — caused a 10/18-season RepertoireTables gap
+
+**Status: caught and fixed in `full_run_2026-08-15_qwen3-vl-plus_local_corrected`,
+not a code fix (operational/process issue, see below for why).** On a machine
+where `pdf/` is synced via iCloud Drive with "Optimize Mac Storage" on, a
+PDF that hasn't been downloaded locally doesn't appear on disk under its
+real name at all — it shows up as a hidden `.<name>.pdf.icloud` placeholder,
+which `folder.glob("*.pdf")` in `discover_pdfs` simply does not match. This
+is silent: no exception, no log line, the file just isn't in that run's
+`n_pdfs` count, and `render_pages.py` has no way to tell "0 results because
+this category is genuinely empty" apart from "0 results because N files
+were invisible to glob this time." (`pymupdf.open()` erroring with
+`FileNotFoundError`, as originally seen the first time this session hit an
+evicted file, is a *different*, louder failure mode — that happens when
+glob *does* return the path but the file isn't actually readable yet;
+here glob never returns the path in the first place.)
+
+**How this bit a real run**: earlier in this session, 13 of 18 RepertoireTables
+PDFs were rendered once (into a scratch dir later merged into
+`outputs/full_run/images`) before eviction/disk-space handling was
+understood. By the time the real per-category batch ran, most of those
+PDFs had been silently re-evicted by macOS under disk pressure. The batch's
+`render_pages.py --entity-type Repertoire` call found only 8/18 PDFs
+(exactly the ones that happened to still be materialized at that moment)
+and wrote a manifest with only 246/519 pages — with no error to signal
+this. The pre-rendered PNGs for the other 10 seasons sat unused in
+`images/`, uncounted, and even survived that category's post-extraction
+cleanup step (which only deletes page_ids present in the run's manifest —
+so it correctly left alone images it didn't know belonged to this run).
+The result was reported as a complete, 0-failure category run and logged
+that way in `run_history.csv` — wrong, but with nothing in the pipeline's
+own output that said so.
+
+**How it was caught**: not by anything in the pipeline itself — by manually
+diffing each category's "N PDFs, M pages" summary line in the run log
+against the true on-disk `*.pdf` file count established at the very start
+of the session (`ls pdf/<Category>/*.pdf | wc -l`). RepertoireTables was
+the only category with a mismatch (8 vs. 18); all 6 `Spiski_*` categories
+happened to match exactly, since they were rendered fresh in one pass with
+no stale pre-migrated images creating an existence/visibility split.
+
+**Not fixed in code, and here's why**: the *tempting* fix — have
+`render_pages.py` warn or error when `n_pdfs` for a category is lower than
+some expected count — needs a source of truth for "expected count" that
+the script doesn't have and shouldn't hardcode (that's exactly the kind of
+fact that belongs in the manifest/docs, not baked into the renderer). The
+actual fix is procedural: **whenever a render step reuses images from an
+earlier, separate render pass** (as opposed to a single uninterrupted
+`render_pages.py` invocation, which is not subject to this because it
+downloads-then-immediately-uses each file in one motion), cross-check that
+category's reported PDF count against the true on-disk file count before
+trusting a "0 failures" result. A same-session sanity check along the
+lines of `pipeline/quality_checks.py` — e.g. comparing `raw.source_pages`
+row counts per `(entity_type, season)` against an expected seasons list —
+would catch this class of gap automatically and is worth adding if this
+kind of partial/resumed render happens again.
+
+## 21. `eval_against_gold.py`'s `zip(gold_rows, pred_rows)` roster comparison is position-based, not identity-based — a single extra/missing entry mid-page cascades into dozens of false "content error" diffs
+
+**Status: open, methodology caveat rather than a data-quality bug.**
+`eval_roster`'s `for g, p in zip(g_rows, p_rows)` pairs gold row *N* with
+predicted row *N* purely by list position. On a page where the model's
+entry list has even one more or fewer entries than the gold excerpt at some
+point (e.g. it captured a real person the gold transcriber chose to skip,
+or — see below — mis-parsed a role-only heading as a fake person), every
+row *after* that point compares against the wrong person, even when the
+model's actual data is correct once realigned.
+
+**Concretely, on `full_run_2026-08-15_qwen3-vl-plus_local_corrected`**: a
+by-hand classification of all 205 non-trivial field mismatches in
+`eval_report.txt` found that **103 of them (50%) came from just two gold
+pages** (`musicians_1890-91_SP_p000`, `theaterschoolstaff_1906-07_p000`)
+where this cascade occurred:
+
+- `musicians_1890-91_SP_p000`: the model's raw JSON has **3 extra entries**
+  at the very top (Альбрехтъ, Христофоровъ, Тильпъ) before the point where
+  gold's 14-row excerpt starts (at Направникъ). Re-indexing pred by +3 from
+  that point, all 14 gold rows match the model's output **exactly** —
+  family_name, first_name, patronymic, tenure_note_text, and instrument,
+  byte for byte. Zero real errors on this page; the raw eval score showed
+  ~70 field "mismatches" that don't exist.
+- `theaterschoolstaff_1906-07_p000`: similar, but the shift (+2) has one
+  genuine cause mixed in — the model captured a printed role-only phrase,
+  "И. д. фельдшерицы" ("acting medical assistant", no name given), as a
+  fake person entry with the phrase split across name fields (a variant of
+  issue #19's "heading captured as its own entry" pattern, not yet covered
+  by that fix since here the phrase parses as *something* rather than
+  leaving family_name empty). One entry later, the model also included a
+  real person ("Абрамова Александра") that gold's excerpt skipped. Both
+  together account for the 2-row shift; re-indexed, the remaining 5 people
+  match exactly.
+
+**After removing both cascades**: of the 226 total field mismatches, only
+**31 are genuinely isolated content differences** — 31/1627 fields checked
+= **1.9%** actual error rate on content the model attempted to transcribe,
+vs. the raw eval script's headline 86.1%-match / 13.9%-mismatch numbers,
+which conflate real errors with this alignment artifact and with two other
+already-tracked non-error categories (issue #3's `service_class` pattern,
+5.4% of mismatches; and `heading_path`/text boundary-placement disagreements
+like issue #2, 11.7%).
+
+**Not fixed in code** — same reasoning as issue #20: a robust fix (matching
+gold to pred by best-alignment/edit-distance on name rather than raw
+position, à la a sequence-alignment algorithm) is worth doing before the
+*next* eval run if roster scores are being reported or compared, but for
+this run the discrepancy was caught and hand-verified rather than blocking
+on a script change. Worth remembering: an eval_report.txt roster mismatch
+block on one page for many consecutive rows is now a strong prior for "row
+alignment cascade," not "the model listed a dozen people wrong" — spot-check
+for a shifted-by-N pattern before concluding otherwise.
+
+## 22. `credit_sum_mismatch` spot-check confirms: real digit-transcription errors, not source-document arithmetic mistakes
+
+**Status: needs source check downgraded to confirmed, on this example** —
+first instance from the 289 `credit_sum_mismatch` flags checked against the
+actual scan. `balletartists_1890-91_MSK_p001__e021` (Гаврилова 2-я, Евдокія
+Помпеевна): the model transcribed `credit_summary_text` as "Въ балетахъ—46;
+въ операхъ—**13**. Все—10—64 раза," giving component_sum=46+13=59 vs. the
+stated Всего=64 — flagged as a mismatch.
+
+Checked against the actual page (`pdf/Spiski_BalletArtists/ForUpload_1890-91_Spisok_BalletArtistsMoscow.pdf`,
+page 2, entry 22): the source reads "въ операхъ—**18**", not 13.
+46+18=64 — **the printed 1890-91 yearbook is internally consistent; this is
+a model digit misread** (8 → 3), not an original-document arithmetic error.
+Also noted in passing: the model's "Все—10—64" is itself a garbled read of
+"Всего—64" — "Всего" ("Total") is hyphenated across the line break as
+"Все-" / "го—64" in the source, and in this book's italic type the
+hyphenated "го" resembles "10", a plausible font-driven misread that
+happened not to affect the final total in this instance.
+
+**Not yet generalized**: only this one flagged instance has been checked
+against source so far, out of 289. Worth doing before treating
+`credit_sum_mismatch` as a reliable proxy for "digit error rate" — but this
+first data point suggests the flag is catching genuine model errors rather
+than reflecting inconsistencies in the historical record-keeping itself, at
+least in this case. A useful follow-up: since digit-shape confusions (8/3,
+6/0, 1/7...) are a recognizable OCR/VLM failure mode, checking whether a
+flagged mismatch is explainable by a single plausible digit swap between
+component_sum and stated total would be a cheap way to triage the other 288
+without opening each source scan by hand.
+
+## 23. `category_credit_count` sometimes captures the production count (N) instead of the performance count (X) — a systematic field-confusion bug, not digit noise, found by triaging issue #22
+
+**Status: fixed (deterministic, analysis-layer) and applied.** Triaging all 289 `credit_sum_mismatch` flags (not just the one
+spot-checked in issue #22) by testing whether the diff between
+`component_sum` and stated `Всего` is explainable by a single plausible
+digit error (units swap, tens swap, or transposition):
+
+| cause | count | % of 289 |
+|---|---|---|
+| production-count-instead-of-performance-count confusion (this issue) | 187 (180 full + 7 partial) | 64.7% |
+| plausible single digit-transcription error (units/tens/transposition) | 94 | 32.5% |
+| genuinely unclear, needs individual source check | 8 | 2.8% |
+
+**The mechanism**: many `credit_summary_text` sentences have the shape
+"Въ N категорияхъ—X" (e.g. "Въ 7 балетахъ—21" = "in 7 ballets—21 [times]")
+— two different numbers, N (count of distinct productions) and X (count of
+total performances). `pipeline/schemas/roster.py` already has a regex
+(`_PRODUCTION_COUNT_RE`) that reliably backfills N into
+`category_production_count` from this verbatim text (added for a different
+reason, per that code's own comment: "production count... was never asked
+of the model as a structured field"). But the model's own *structured*
+`count` field — the one that becomes `category_credit_count` — is supposed
+to be X, and confirmed directly against raw JSON (e.g.
+`balletartists_1894-95_SP_p005`, Шебергъ: `credit_summary_text` verbatim-
+correct as "Въ 7 балетахъ—21; въ 1 оперѣ—1. Всего—22 раза.", but
+`credits: [{"label": "балетахъ", "count": 7}, ...]` — the model put N=7
+where X=21 belonged), the model sometimes emits N instead, silently and
+inconsistently (sometimes correct within the same entry for one category
+and wrong for another, e.g. `balletartists_1899-00_MSK_p003`/Лѣсновская).
+
+**True scope, beyond the 289 flagged pages**: an entry with only one credit
+category, or where N happens to equal X, never triggers a sum-mismatch flag
+at all, so 289 undercounts the real error rate. Checked directly:
+of 12,913 `category_totals` credit rows whose label has a matching
+"N категория—X" pair in the verbatim text, **358 (2.8%) captured N where X
+belonged**; 87.0% correctly captured X; 10.2% are unfalsifiable this way
+because N happened to equal X.
+
+**Fix applied**: mechanical and low-risk, following the same playbook as
+issue #3 (`heading_path`/`service_class`) — deterministic regex-based
+correction in `build_duckdb.py`'s `build_analysis_schema`, a new
+`analysis.person_entry_credit.category_credit_count_clean` column
+(`raw.person_entry_credit` is untouched, per the reproducibility
+guarantee). Rather than reusing `_PRODUCTION_COUNT_RE` as a Python-side
+fix, it's implemented directly in SQL — a per-row dynamic regex
+(`'[Вв]ъ\s+(\d+)\s+' || label || '\s*[—-]\s*([\d.]+)'`, built from each
+row's own `label` and matched against its parent entry's verbatim
+`credit_summary_text`) — consistent with this project's rule that the
+`analysis` schema is built via SQL only, no hand-editing. **Caught during
+implementation**: an early version of this SQL matched only capital "Въ"
+(sentence-initial), silently missing every category after the first in a
+multi-category sentence, since only the first "Въ" in a sentence is
+capitalized — prototyped and cross-checked against the independent Python
+count (358) before landing in the pipeline script specifically to catch
+this kind of engine/case-sensitivity mismatch; the corrected pattern
+(`[Вв]ъ`, matching Python's behavior) reproduced the same 358 exactly.
+Re-ran `build_duckdb.py` on the full corpus: confirmed **358 rows
+corrected** (verified directly against raw JSON, e.g. Шебергъ's `балетахъ`
+row: 7 → 21). Not propagated further downstream — checked, and
+`build_research_model.py` never reads `person_entry_credit` at all, so
+`research_dataset.sqlite` doesn't need rebuilding for this fix.
+
+**Also updated `pipeline/prompts/roster_system.txt`** with an explicit
+correct/wrong example distinguishing the two numbers, for any future
+re-extraction of BalletArtists/Musicians pages — cheap to add now, doesn't
+touch already-extracted data, but per issue #3's own lesson ("tried and it
+didn't work... re-ran the exact page — zero improvement") there's no strong
+expectation this alone would reliably fix the model's behavior on a re-run;
+the deterministic analysis-layer fix is what's actually relied on for the
+existing 1,349-page corpus.
+
+## 24. `quality_checks.py`'s `credit_sum_mismatch` check itself had a bug — collapsed same-labeled credit rows across an artist's separate city tallies into one dict, silently discarding one city's numbers
+
+**Status: fixed and applied**, found while beginning the manual
+source-check review of the 102 entries left over after issue #23. Not a
+transcription problem at all — a bug in the checking script itself,
+producing false-positive flags.
+
+**The mechanism**: `check_roster`'s credit check built `totals = {r["label"]:
+r for r in rows if r["credit_type"] == "category_totals"}` — a dict keyed by
+label. A ballet artist who performed in more than one city prints more than
+one performance tally in a single `credit_summary_text` (a main tally, then
+e.g. "Кромѣ того въ С.-Петербургѣ: ..." with its own tally) — meaning the
+model correctly emits *two* `category_totals` rows both labeled "Всего",
+and often a repeated category label too (e.g. "балетахъ" in both the Moscow
+and the St. Petersburg block). Building a dict from these silently keeps
+only the *last* occurrence of each label, discarding the first city's
+numbers entirely and comparing a scrambled mix of both blocks against only
+the second city's total — even when both underlying tallies were captured
+completely correctly.
+
+**Confirmed concretely**: `balletartists_1902-03_MSK_p001`, Гельцеръ:
+raw components are Moscow (балетахъ=11, оперѣ=1, дивертиссементахъ=3,
+Всего=15 — 11+1+3=15, correct) then St. Petersburg (балетахъ=3,
+дивертиссементѣ=1, Всего=4 — 3+1=4, also correct). The old check collapsed
+this to `{балетахъ: 3, оперѣ: 1, дивертиссементахъ: 3, дивертиссементѣ: 1,
+Всего: 4}` (Moscow's балетахъ=11 overwritten by St. Petersburg's 3), sum=8
+vs. stated=4 — flagged as a mismatch that doesn't exist in the actual data.
+Same mechanism confirmed on 3 more names (Гримальди, Степанова, Рославлева,
+across several seasons) — in every checked case, both underlying blocks
+were internally consistent; only the check's aggregation was wrong.
+
+**Fix applied**: replaced the label-keyed dict with a sequential block scan
+in `pipeline/quality_checks.py` — `category_totals` rows print in source
+order, so accumulate components in a list and reset it after each "Всего"
+row (which closes out only the block since the *previous* "Всего", not the
+whole entry), checking each block against its own stated total rather than
+mixing blocks together. Verified against the 4 known false-positive names
+before landing the fix; also verified it does NOT just suppress everything
+— two other entries (Рославлева on a different page,
+`balletartists_1895-96_MSK_p003`; Степанова on `balletartists_1901-02_SP_p004`)
+correctly still flag as real mismatches even under the corrected logic,
+confirming the fix discriminates rather than just quieting the check.
+
+**Impact**: re-ran `quality_checks.py` on the full corpus — `credit_sum_mismatch`
+flags dropped from 289 to 285 (net; some previously-hidden real mismatches
+also surfaced once blocks stopped being scrambled together, so this is not
+simply "4 removed"). `outputs/full_run/credit_mismatch_review.csv`
+regenerated from the corrected flags: 102 → 99 entries still needing an
+actual source check (after also excluding the 186 already resolved
+deterministically by issue #23). This fix only touches the diagnostic
+script's output (`quality_flags.csv`) — no raw or analysis data changes, and
+`outputs/full_run/imperial_theaters.duckdb` did not need rebuilding.
+
+## 25. Manual source-check review of all 99 remaining `credit_sum_mismatch` entries — complete; 50 confirmed corrections not yet applied to the database
+
+**Status: review complete, DECISION PENDING (deliberately deferred by the
+user — check here before assuming this is still open work).** Every one of
+the 99 entries left after issues #23/#24 was checked individually against
+its scanned source page. Result: **49 confirmed source-document arithmetic
+errors** (+1 compound case) logged in `source_document_anomalies.md`, and
+**49 confirmed model transcription errors** (+1 compound) logged in
+`confirmed_credit_corrections.csv` — a near-even split, very different from
+the pre-review guess that most of these were digit noise.
+
+**Notable finding**: the digit confusion **3→8** recurs constantly across
+the confirmed model errors (a dozen+ instances) — a specific, consistent
+failure mode in this typeface, worth knowing if similar manual review comes
+up again.
+
+**What's NOT done**: `confirmed_credit_corrections.csv`'s 50 corrected
+values are verified but **not applied anywhere in
+`outputs/full_run/imperial_theaters.duckdb`** — they exist only as a
+changelist. The natural next step (same playbook as issue #23: an
+analysis-layer override column, `raw` left untouched) was proposed and
+explicitly deferred by the user pending a later decision, not rejected —
+don't build it unprompted, but don't forget it's sitting there either.
+
+## 26. `person_candidate_review.csv` fully reviewed and applied (19 merges, 1 later reverted); surfaced a distinct, broader issue — non-person text captured as `person_entry` rows
+
+**Status: candidate review closed; the non-person-entry issue documented,
+not yet fixed.** All 54 Tier-2 person-candidate pairs were reviewed by hand
+(originally 20 confirmed merges, 28 rejected, 6 left "Unsure" — see the
+pipeline's own tenure/name-based rationale plus reviewer notes in
+`person_candidate_review.csv`) and applied via `build_entities.py
+--apply-decisions`. One merge (`Гавликowsкій ↔ Гавликowskiй, Николай
+Людвиговичъ`) was subsequently reverted by the user after a closer look:
+only 1 attestation per spelling, tenure dates that don't match (1887 vs
+1899) with no exact-date corroboration — thin enough evidence to move back
+to "Unsure" rather than stand as confirmed. Reverted by un-superseding the
+person record and re-pointing its one entry directly (not by re-running
+`--apply-decisions`, which has no mechanism to un-confirm an
+already-resolved pair — resolved pairs are removed from the live
+`entities.person_candidate` table entirely, tracked only in the historical
+`person_merge_log`). Net result: **19 merges stand, 1 reverted to pending**
+— `entities.person`/`research.person` active count is 3,678 (was 3,696
+before any of this review; 4,359 raw Tier-1-resolved before any Tier-2
+merging at all).
+
+Recurring patterns among the confirmed merges: ъ/ь orthographic OCR
+confusion (very common, near-certain same-person), single-letter
+family-name OCR slips corroborated by an exact given-name + patronymic
+match, line-wrap hyphenation artifacts in the extracted text
+(`"Александро-\nвичъ"` reassembled as one word), and — a new failure mode,
+not seen elsewhere in this project — **non-Cyrillic characters substituted
+into Cyrillic names**: an Arabic/Persian "چ" for "ч", and stray Latin "if"/
+"owsк" fragments mid-word (`Черемухинъ`'s patronymic, `Гавликовскій`'s
+surname, the very case that was reverted above). Worth watching for
+elsewhere if more review work turns up similarly garbled names.
+
+**Also worth recording — the review process caught itself working
+correctly on a close call**: the surname "Гейнъ"/"Гейнь" alone covers two
+different real musicians (Фридрихъ, trumpet, tenure since 1878; Юлій,
+violin, tenure since 1872), which looked at first glance like a risk of
+conflating two people into one merge. Checking the actual merge log showed
+the pipeline had already handled this correctly and independently of the
+manually-reviewed pair: it auto-confirmed each musician's two spelling
+variants separately, each corroborated by an *exact* matching tenure start
+date (`shared_start_date`, the strongest evidence tier) — not name
+similarity. The manually-reviewed "Гейнь ↔ Гейнъ" pair (no first name
+attached) only covered a third, residual bucket of anonymous mentions, and
+checking the surviving record IDs directly confirmed it was never folded
+into either named musician's record. No misattribution occurred, but it's
+a good example of why the `shared_start_date` vs. name-similarity-only
+distinction matters when trusting a merge.
+
+**The broader issue found in the process**: two of the 7 "duplicate" pairs
+in the queue weren't people at all — `"Балетное отдѣленіе"` ("Ballet
+Department") and grammatical word-forms of "student(s)"
+(`"ученики"`/`"ученицы"`/`"ученика"`/`"ученицъ"`) had been captured as
+`person_entry` rows with those strings as `family_name`. Checking beyond
+just the pairs the duplicate-matcher happened to surface: **17 total rows**
+in `raw.person_entry` match this pattern (department/summary-line text
+where a name should be), including one that's clearly a truncated sentence
+fragment — `"...номъ году въ балетномъ отдѣленіи состояло:"` ("...that
+year, the ballet department had:", i.e. an introductory count-summary line,
+not a person). This is a different animal from issue #19's
+"heading-swapped-into-heading_path" pattern (where `family_name` ends up
+empty and is recoverable) — here `family_name` is fully populated, just
+with non-name text, so it passed every existing validation check and
+silently became a phantom `entities.person`/`research.person` row.
+
+**Scale**: 17/21,174 raw roster rows (~0.08%), resolving to roughly 10
+distinct phantom person entities out of 3,677 active ones post-merge
+(~0.3%) — small, but a real distortion for anyone running a "how many
+distinct people" or "list all people at institution X" query. **Not fixed**:
+the right fix is a small denylist/pattern filter (grammatical word-forms,
+known department-heading fragments) applied in the `analysis` schema —
+tag rather than delete, so `raw` stays untouched and a query can still
+choose to include them — deferred, same as issue #23's confirmed-corrections
+mechanism, pending a decision on priority rather than being technically
+hard.
+
+**Correction (found investigating issue #27 below): the "17 total rows"
+scale estimate above undercounts.** That count came from a keyword regex
+search across the whole corpus; a targeted check of just the `Graduates`
+entity_type alone (which that regex under-caught) found ~18 more narrative
+summary-paragraph rows plus 7 bare-headcount rows — i.e. this issue's true
+scale is closer to 40+ rows, not 17, concentrated in `Graduates`. Doesn't
+change the conclusion (still small relative to 21,174 total rows, same
+deferred fix applies), but the number itself was wrong and is corrected
+here rather than silently left stale.
+
+## 27. Why ~1.7% of `raw.person_entry` rows have no `first_name` — two unrelated causes, one a genuine source feature and not a bug
+
+**Status: investigated and explained, not a defect requiring a fix (except
+where it overlaps issue #26 above).** 361 of 21,174 raw roster rows
+(1.7%) have a blank `first_name`. Broken down by `entity_type`: Musicians
+193, Graduates 104, BalletArtists 25, TheaterSchoolStaff 25, ProductionTeam
+8, Administrators 6. Checked the two largest buckets in detail:
+
+**Musicians (193 rows) — the underlying fact is a genuine source feature,
+confirmed; the model's transcription of it is unreliable, not "faithful"
+as first claimed below.** The yearbook prints two separate orchestra
+rosters per season/city — "Оперный оркестръ" (Opera Orchestra) and
+"Балетный оркестръ" (Ballet Orchestra) — and a musician who plays in both
+only gets their full biographical entry (first name, patronymic, tenure
+date) written out once, on the Opera roster. The Ballet roster
+cross-references them instead: `"Аспернеръ (см. оперный оркестръ).
+Віолончель."` — "(see Opera Orchestra). Cello." **Checked against 3 separate
+scanned pages** (`ForUpload_1890-91_Spisok_OrchestraMoscow.pdf` p.4,
+`ForUpload_1891-92_Spisok_OrchestraMoscow.pdf` p.3, `ForUpload_1892-93_Spisok_OrchestraSP.pdf`
+p.4): on every one, essentially every no-first-name row carries this exact
+phrase in print. So the underlying fact — no first name because it's
+genuinely on a different page — holds for close to all 193 rows. But
+breaking down what actually landed in `tenure_note_text` for those 193:
+
+| captured | count |
+|---|---|
+| full "(см. оперный оркестръ)" phrase | 68 (35%) |
+| only the instrument, phrase dropped | 44 (23%) |
+| nothing at all | 78 (40%) |
+| an unrelated pseudo-entry (see issue #28) | 3 (2%) |
+
+**The model drops this specific repeated boilerplate phrase on 63% of the
+rows where it's actually printed** — confirmed by direct comparison against
+source on pages where the phrase is visibly present for every entry but
+`tenure_note_text` is blank for most of them. This is a real recall failure
+on a recurring piece of text, not something to call "faithful
+transcription" — worth remembering as a category: a model can get the
+*informative* part of a field right (no first name given) while still
+losing the field that would explain *why* to a reader. Entity resolution's
+fuzzy family-name merging (see issue #26's Гейнь/Гейнъ discussion) is what
+actually recovers the full name regardless of whether the phrase survived,
+so this doesn't block reconstructing who's who — but anyone reading
+`tenure_note_text` directly and expecting it to explain an absent first
+name will find it blank most of the time.
+
+**Graduates (104 rows) — a mix of three unrelated causes**, checked by
+sampling and pattern-matching:
+
+| pattern | count | what it is |
+|---|---|---|
+| Name embedded whole in `family_name`, not column-split | 79 | Real graduates, e.g. `family_name="Александрова, Антонина."` with `first_name` left blank — these roll-call-style graduate lists don't print tenure dates at all, unlike other roster types, which may be why the flatten step never split the name into separate columns here |
+| Class-enrollment narrative paragraphs | ~18 | Not people — e.g. *"Въ 1892—1893 учебномъ году въ балетномъ отдѣленіи состояло: На женской половинѣ—70 ученицъ..."* ("In 1892–93, the ballet department had: on the female side—70 students..."). Same underlying problem as issue #26 |
+| Bare headcount rows | 7 | Not people — e.g. `family_name="Учениковъ"` paired with just a number in the tenure field. Same underlying problem as issue #26 |
+
+The middle and bottom rows here are the source of the issue #26 scale
+correction above. The top row (79) is a distinct, minor, genuine
+name-parsing gap — real biographical data, just not normalized into
+`first_name`/`family_name` the way other entity types are — worth fixing
+alongside issue #26's filter if that work happens, but not urgent on its
+own since the name is still fully present in `family_name`, just as one
+combined string.
+
+## 28. "Оставилъ службу [date]" (a resignation note) sometimes extracted as its own fake person entry, orphaning the date from the real person it belongs to
+
+**Status: confirmed via source check, not fixed, and systemic (3 different
+entity types affected).** Found while investigating issue #27: 5 rows
+across the corpus have `family_name = "Оставилъ службу"` ("Left service")
+with an actual date sitting in `tenure_note_text` — 2 in Musicians, 1 each
+in Administrators and TheaterSchoolStaff (`administration_1895-96_p001`,
+`musicians_1891-92_MSK_p003` ×2, `musicians_1897-98_SP_p001`,
+`theaterschoolstaff_1896-97_p000`).
+
+Checked one directly against the scan
+(`pdf/Spiski_Musicians/ForUpload_1891-92_Spisok_OrchestraMoscow.pdf`, p.4):
+the source reads `"Богуславъ, Флорентій Вячеславовичъ (съ 11 октября 1868
+г.). Оставилъ службу 1 мая 1892 г."` — a second sentence that's part of
+**Богуславъ's own entry**, not a separate person. The model split it into a
+standalone fake entry instead, with "Оставилъ службу" mistakenly treated
+as if it were a surname. Net effect: the real person's resignation date
+(which should be their `service_periods.end_date_text`/`end_type="left
+service"`) is orphaned onto a bogus non-person record instead, and the real
+person's record is left looking like they're still active when they
+aren't.
+
+**Not fixed.** Same category as issues #19/#26 (a heading- or note-shaped
+string ending up in `family_name`), but this specific sub-pattern — a
+trailing status sentence that belongs to the *previous* entry rather than
+introducing a new one — needs its own detection logic (look for
+`family_name` matching known status phrases, then reattach the date to the
+immediately preceding real entry on the same page) rather than the simple
+denylist-and-tag approach proposed for #26, since here the right fix
+actively moves data rather than just flagging it. Deferred with the rest of
+this queue.
+
+## 29. The Musicians cross-reference stubs from issue #27 are NOT actually reunited with their full-name record anywhere in `entities` — a real, quantified, fixable gap, not just a cosmetic missing phrase
+
+**Status: quantified, not fixed.** Follow-up check on issue #27's "entity
+resolution recovers this regardless" claim: it doesn't, currently. Checked
+directly — **0 of the 193** no-first-name Musicians rows resolve (via
+`entities.person_link` → `entities.person`, following `superseded_by`) to
+a person record that has a first name. These cross-reference stubs are
+sitting completely unlinked from the people they represent.
+
+**But the underlying fact holds up at scale, not just anecdotally**:
+fuzzy-matching each of the 131 distinct (surname, instrument) combinations
+in this set against every named Musicians entry in the corpus (edit-distance
+similarity > 0.82) finds a plausible full-name counterpart for **130 of
+131**:
+
+| match quality | count |
+|---|---|
+| close-spelling match, **same instrument** (strong — e.g. "Аспернеръ"/cello ↔ "Аспергеръ, Оскаръ"/cello) | 28 |
+| close-spelling match, instrument differs or unspecified (weaker) | 102 |
+| no match found | 1 — this is issue #28's "Оставилъ службу" pseudo-entry, correctly unmatched since it isn't a real person |
+
+Concrete example: `"Аспернеръ"` (bare, Ballet Orchestra cross-reference,
+cello) and `"Аспергеръ, Оскаръ"` (full entry, cello,
+`musicians_1890-91_MSK_p000`) are almost certainly the same person, a
+single-letter spelling variant (н/г). This exact pair was already in the
+54-pair `person_candidate_review.csv` from issue #26 — marked "Unsure"
+because the instrument-match evidence used here wasn't part of that
+review's signal set. **This is effectively a second, larger merge-review
+round** (131 new candidate pairs vs. the original 54) that entity
+resolution's current Tier-2 candidate generation isn't surfacing at all —
+worth revisiting `build_person_tier2_candidates()`'s matching logic to
+understand why these weren't proposed as candidates in the first place
+(likely a similarity-threshold or cross-instrument-comparison gap), rather
+than only hand-reviewing this specific batch. Deferred pending a decision
+on scope — the 28 same-instrument pairs are about as safe to confirm as
+issue #26's strongest cases; the 102 weaker ones would need individual
+judgment the way the original 54 did.
+
+**Update (2026-08-18): the 28 same-instrument pairs applied — 19 merged, 5
+held back, 4 excluded up front as ambiguous.** Rebuilding the (surname,
+instrument) fuzzy match found 24 of the original 28 were unambiguous
+one-to-one matches (the other 4 — Слуцкій/violin, Аспернеръ/cello,
+Грецкій/cello, Кведнау/double bass — each matched more than one distinct
+named candidate and were excluded rather than guessed at; see below).
+
+Of the 24, applying them via `entities.person_candidate` +
+`reconcile_person_merges()` (`match_reason='family_name_variant'`,
+`tenure_signal='instrument_match'`, `tenure_evidence=<instrument>`)
+surfaced two real bugs, both now fixed:
+
+1. **Union-find's "lexicographically smallest `person_id` wins" survivor
+   rule has no idea which side has the fuller name.** In 10 of the first 16
+   merges applied, the blank-first-name stub's UUID happened to sort first,
+   so the survivor kept the blank name and the full name it had just been
+   merged with was the one marked superseded — the exact opposite of
+   what issue #29 set out to fix. Caught by diffing survivor vs. absorbed
+   name on every pair before moving on, not by trusting the merge counter.
+   Fixed by explicitly filling the survivor's `canonical_first_name`/
+   `canonical_patronymic` from whichever side was non-blank, for every
+   pair, after `reconcile_person_merges()` runs — this needs to be standard
+   practice for any future blank-vs-named merge batch, not just this one.
+2. **3 of the 8 pairs the exact `family_name` lookup couldn't resolve
+   turned out to already be mid-merge from an earlier session** (Зозель,
+   Штадлеръ, Руссъ) — their `entities.person` rows existed but were already
+   `superseded_by_person_id`-chained elsewhere from prior Tier-2 merges, so
+   a direct-equality lookup against the pre-merge combo silently found
+   nothing. Fixed by resolving through the full `superseded_by_person_id`
+   chain to the current survivor before matching, which is exactly the
+   discipline `_repoint_all_superseded()` already applies elsewhere in the
+   pipeline — the ad-hoc merge script here just hadn't done it.
+
+**Canonical spelling is a separate decision from "should these merge",
+and the union-find survivor rule has no opinion on spelling quality
+either** — raised by the user mid-review. Checked: of the 19 merged pairs,
+14 had byte-identical family-name spelling on both sides (no spelling
+question, pure blank-vs-named), but 5 genuinely disagreed on spelling
+(Рамбоусекъ/Рамбоусенъ, Руссъ/Руссь, Штадлеръ/Шталлеръ, Туровичъ
+фонъ-Охота/фонъ Охота, and a family-name-only pair originally read as
+Зозелъ/Зоэль). For 4 of the 5, re-rendering the original PDF pages and
+reading them directly confirmed the *majority*-frequency spelling is the
+one actually printed — including finding the same person's
+"(см. оперный оркестръ)" cross-reference stub, printed with the correct
+spelling, on the very page whose full entry the model had mistranscribed
+(к→н, ъ→ь, д→л letter-shape confusions, consistent with OCR failure modes
+already logged elsewhere in this project). The 5th, Зозель, turned out to
+be neither of the two DB variants on offer (Зозелъ, hard sign; Зоэль,
+з→э slip) — the source prints **Зозель** (soft sign), confirmed across 16
+of the 20 total occurrences of that surname in the corpus; this was only
+caught by checking the actual page image rather than picking between the
+two spellings the fuzzy-match had surfaced. Final verified spellings:
+Рамбоусекъ, Руссъ, Штадлеръ, Туровичъ фонъ-Охота, Зозель — applied to
+all 19 survivors' `canonical_family_name`/`canonical_first_name`/
+`canonical_patronymic`, then propagated through
+`build_research_model.py` + `build_datasette.py`.
+
+**4 more of the 24 held back, not merged — a new, smaller instance of the
+same "which spelling is real" question, this time on the named side
+itself:** looking up exact `person_id`s exposed that Пекарскій (Давидъ
+Исаевичъ), Ромашковъ (Капитонъ Андреевичъ), and Штернбергъ (Василій
+[Васильевичъ]) each already have **2 (Ромашковъ, Штернбергъ) or even 3
+(Пекарскій) unmerged `entities.person` records** for what looks like one
+real person — a pre-existing duplicate the original Tier-2 pass never
+caught, independent of the blank-stub problem. Petrovъ (violin) genuinely
+has 2 different real people sharing "Василій" (patronymics Венедиктовичъ
+vs. Ивановичъ) — a real, not spelling-related, ambiguity about which
+Петровъ the bare stub means. None of these 4 were merged; picking a
+survivor among 2–3 near-duplicates without resolving which of *those* are
+themselves duplicates first would be guessing, not resolving. Left as a
+follow-up, alongside the 4 excluded at the top of this update and the 102
+weaker (cross-instrument) matches already flagged as future work.
+
+**Net effect of this round:** 19 of 193 blank-first-name Musicians stubs
+now correctly linked to a full-name record with a source-verified
+canonical spelling (was 0/193). 4 pairs held on internal-duplicate
+grounds, 4 pairs excluded as ambiguous, 102 weaker matches and the
+remaining ~170 stubs not covered by this batch are still open.
+
+**Update (2026-08-18, same day): the 8 held-back/excluded pairs all
+resolved — 8 more stubs linked, bringing this batch's total to 27/193.**
+None of the 8 turned out to need a real judgment call once actually
+investigated; each had a mechanical resolution:
+
+- **Слуцкій** (violin) — all 6 named spelling variants (Ипхекъ, Ицхекъ-
+  Мейеръ, Ипхекъ-Мейеръ ×2, Ипхекъ-Мейерь, Инхекъ-Мейеръ) plus the bare
+  stub share the *exact same* tenure start date, 1882-09-19 — this is one
+  person, a Yiddish/Hebrew double name (Ицхак-Меир) mangled six different
+  ways by п/ц/н letter-shape confusion. Source-checked
+  (`musicians_1891-92_MSK_p001`, entry 74): correct spelling is
+  **Ицхекъ-Мейеръ**, confirming the plurality (not majority) variant —
+  the runner-up "Ипхекъ" cluster (5 occurrences across 3 spellings) was
+  all OCR noise around the same root error.
+- **Аспернеръ / Аспергеръ** (cello) — two bare stubs, both folding into
+  the already-established **Аспергеръ, Оскаръ** (itself already a
+  3-variant merge from an earlier round; shared tenure start
+  1882-09-19/1883-09-19 across seasons).
+- **Грецкій / Гречкій** (cello) — 3 active "Аполлонъ Адальбертовичъ"
+  records plus a bare stub, all sharing tenure start 1882-09-19.
+  Source-checked twice, independently (`musicians_1891-92_MSK_p001` entry
+  28 and `musicians_1899-00_MSK_p002` entry 20): correct spelling is
+  **Грецкій** (15 occurrences vs. 1 for "Гречкій" — ч/ц confusion), correct
+  patronymic **Адальбертовичъ** (a stray ъ had produced "Адалъбертовичъ"
+  once).
+- **Кведнау** (double bass) — the "ambiguity" flagged earlier was stale:
+  "Квелнау" had already been merged into "Кведнау, Фридрихъ" in an
+  earlier round of this same session: only the bare stub needed folding
+  in, trivially.
+- **Пекарскій** (Давидъ Исаевичъ, violin), **Ромашковъ** (Капитонъ
+  Андреевичъ, double bass), **Штернбергъ** (Василій Васильевичъ, cello)
+  — each had 2–3 already-duplicate `entities.person` records for the
+  same name that a previous Tier-2 pass had never caught, plus the bare
+  stub. All records within each group share one exact tenure start date
+  (1889-08-01 / 1883-09-01 / 1883-09-01 respectively) — strong enough to
+  merge the whole group at once, stub included.
+- **Петровъ** (violin) — genuinely 2 different real people named Василий
+  Петровъ (patronymics Венедиктовичъ and Ивановичъ), so the family+first
+  match alone really was ambiguous. Resolved anyway, without guessing: the
+  bare stub appears on exactly one page, season 1890-91
+  (`musicians_1890-91_MSK_p003`), and Ивановичъ's service didn't start
+  until 1893 — only Венедиктовичъ (in service since 1876) could have been
+  the person meant. Cross-referencing which candidate was even *eligible*
+  by tenure range, not just which name matched, broke the tie.
+
+**A third instance of the same union-find survivor bug, caught the same
+way as before:** applying these 8 groups via the identical
+`person_candidate` + `reconcile_person_merges()` path produced 2 more
+blank/wrong-name survivors (the Аспергеръ and Грецкій groups both
+collapsed onto their bare-stub member, discarding the name — same root
+cause as the first round: lexicographically-smallest-UUID-wins has no
+concept of "which side has the real name"). A full-table sweep
+afterwards (any active survivor with a blank first name whose absorbed
+side has a real one) found and confirmed these were the only 2
+remaining; both corrected, and this sweep query is worth re-running as a
+standing check after any future manual merge batch rather than relying
+on spot-checking individual pairs.
+
+**Running total for issue #29: 27 of 193 stubs now correctly linked**
+(up from 0 at the start of this issue). Remaining open: the 102 weaker
+(cross-instrument) matches, and the ~166 stubs not covered by either
+batch.
+
+**Update (2026-08-18, third pass): re-derived the "remaining" set fresh
+from the database rather than trusting the 102/166 figures above — they
+were stale the moment the first two passes landed, since many of the same
+surnames span multiple seasons and one merge could resolve several rows
+at once. Grounded count: 216 total blank-or-corrupted-first-name Musicians
+rows (193 truly blank + 23 more where the model had captured the literal
+word "см." — from a mangled "(см. …)" cross-reference — as if it were a
+first name, a related but distinct manifestation of issue #18/#26's
+cross-reference-as-name-field bug). 183 of the 216 are now correctly
+linked; 33 (16 distinct surnames) remain.**
+
+Of the 33 unresolved, one is issue #28's fake "Оставилъ службу" entry
+(correctly left alone) and the rest split two ways:
+
+- **Mechanical cleanup, no real ambiguity (fully resolved this pass):**
+  most of the "weaker" (cross-instrument, name-uniqueness-only) matches
+  from the first update above turned out to be completely safe once
+  checked — 25 more surnames merged (Барковскій, Бѣлкинъ, Бѣлявскій,
+  Добровъ, Кудике, Тарнке 1-й/2-й, Харитоновъ, Хилле, Цимбергъ, Штехертъ,
+  Энгель, Эрбъ, Леманъ, Литтихъ, Нигофъ, Осиповъ, Очиневъ,
+  Преображенскій, Снѣтковъ, plus the pure-spelling-variant clusters
+  Алексѣенко, Гильдебрандтъ, Кажданъ, Керкешко, Кункели, Лебедевъ,
+  Манкопъ, Назаковъ/Казаковъ, Сѣмашко, Цабель, Штаркъ). One more
+  survivor-spelling bug found and fixed the same way as before
+  (Керкешко's merged survivor had inherited the truncated misspelling
+  "Керкешо" — 1 source occurrence vs. 15 for "Керкешко"). One exact-match
+  preference pattern emerged and got applied 6 times (Берръ, Биндеръ,
+  Валтеръ 2-й, Кремеръ, Орловскій, Штаакъ): when the bare stub's exact
+  spelling *also* appears among the named candidates, prefer it over a
+  same-ratio fuzzy match to a genuinely different surname (Бергеръ,
+  Бендеръ, Кемеръ/Кеммеръ, Островскій were all false-positive fuzzy
+  matches to unrelated people, not spelling variants).
+- **A fourth instance of the union-find blank/garbage-survivor bug** —
+  18 more cases across this pass (12 in the first sub-batch, 6 in the
+  second), always the same shape: a merge chain collapses onto whichever
+  member has the lexicographically smaller UUID, with no regard for which
+  side has a real name. The full-table sweep query (now used four times
+  running) continues to be the right tool — checking pairs one at a time
+  would have missed several of these.
+- **The "см."-corrupted rows needed their own cleanup pass**, separate
+  from the blank ones — the earlier merge groups had only searched for
+  bare (NULL/empty) `canonical_first_name`, so the 23 "см." records sat
+  un-merged even after their correct target was already established.
+  Folded all 23 into their existing survivors (or confirmed several were
+  already correctly linked by the automated Tier-1/2 pass from earlier in
+  the session).
+- **Genuinely unresolved, 15 surnames (Гейнъ, Грибенъ, Гуманъ,
+  Золотаренко, Каминскій, Мейеръ, Пертель, Плесковъ, Циммерманъ, Шмидтъ)
+  — real multiple real candidates, tenure can't break the tie.** Unlike
+  Морозовъ/Петровъ earlier (resolved because one candidate's service
+  didn't overlap the bare stub's season at all), every remaining
+  candidate pair is in active service throughout all of the relevant bare
+  stub's seasons — elimination by date range genuinely doesn't work here.
+  Two got partially narrowed (Каминскій: Александръ eliminated, svc
+  started 1902; Золотаренко: Василій/"3-й" eliminated, svc started
+  1894-12) but still have 2–3 tied candidates apiece. Resolving these
+  would need something tenure dates can't give — e.g. checking the bare
+  stub's exact position on the printed page against the parallel
+  full-entry list's ordering, page by page. **Written up as
+  `outputs/full_run/musicians_stub_review_queue.csv`** (54 rows: each
+  bare occurrence × each surviving candidate, with tenure evidence and an
+  empty `decision` column) rather than guessed at.
+
+**Running total: 183 of 216 blank/corrupted-first-name Musicians rows now
+correctly linked (0 at the start of issue #29; 78 after the first two
+passes; 183 after this third pass). 33 genuinely left open** — 1 non-person
+bug (#28), 15 real multi-candidate ties awaiting page-level review via
+`musicians_stub_review_queue.csv`. `research_dataset.sqlite` rebuilt and
+in sync.
+
+**Update (2026-08-18, same day): worked through the remainder not covered
+by either prior batch. 183 of 216 blank/misrecorded-first-name Musicians
+rows now resolved (up from 27).** Note the denominator changed from 193 to
+216 — re-deriving fresh turned up **23 more stub rows that issue #27's
+original count missed entirely**, because their `first_name` field held
+the literal string `"см."` (from a mis-split "(см. …)" cross-reference
+note) rather than being blank — issue #27/#29's query only caught
+`IS NULL`/empty, not this. Functionally these are the exact same bug —
+now tracked together as one 216-row denominator, and this "см." mis-split
+is worth a proper fix in `parse_and_validate.py` at some point rather than
+being cleaned up ad hoc in every future entity-resolution pass like this
+one had to.
+
+**A second bug this round, closely related to the first: `"см."` was
+contaminating the fuzzy-match *candidate pool itself*, not just the stub
+side.** When first computing candidates for the still-unresolved stubs,
+several surnames showed a phantom candidate literally named "см." — e.g.
+`Бѣлкинъ` appeared to match both `Бѣлкинъ, Сергѣй` and `Бѣлкинъ, "см."`.
+Filtering `"см."` out of the candidate pool (not just the stub side)
+turned 10 previously-"ambiguous" surnames into clean single-candidate
+matches. Lesson for any future pass over this data: treat `"см."` as a
+blank-equivalent on *both* sides of a match, everywhere, not just where
+issue #27 originally looked for it.
+
+**Two new sub-bugs found and fixed while resolving individual surnames:**
+- **`Тарнке`/`Тарике`** (the two Tarnke brothers, 1-й Густавъ and 2-й
+  Ѳедоръ) combined three separate issues in one surname: a spelling
+  variant (Тарике/Тарнке), issue #17's ordinal-lands-in-first_name-field
+  bug (`family_name='Тарнке', first_name='1-й'` instead of
+  `family_name='Тарнке 1-й'`), and duplicate unmerged records from an
+  earlier pass — five records per brother, all one person, resolved via
+  the entry-level page/season trail rather than guessing.
+- **`Вальтеръ`** (violinist Петръ, "2-й") had the same ordinal-field bug
+  plus a missing-softsign spelling variant (`Валтеръ 2-й`); resolved the
+  same way.
+
+**Tenure-range elimination worked for exactly one 2-candidate case this
+round: `Морозовъ`.** Алексѣй's service didn't start until 1906; all 3
+bare-stub occurrences are from 1890–93; only Сергѣй was even in service
+then. The other four 2-candidate cases (Гейнъ, Грибенъ, Гуманъ, Плесковъ)
+do **not** resolve this way — both named candidates in each pair were in
+active service across every season the bare stub appears in, so there is
+no elimination signal available from tenure dates alone. Left unresolved
+rather than guessed.
+
+**Cross-entity-type false positives, caught before merging:** a few
+candidate pools looked ambiguous only because the fuzzy match wasn't
+scoped to `entity_type='Musicians'` — e.g. `Осиповъ, Сергѣй` and
+`Морозовъ, Петръ` turned out to be a Graduate/Ballet-Artist and a
+TheaterSchoolStaff member respectively, unrelated people who happen to
+share a common Russian surname with a real Musicians entry. Re-scoping
+the candidate query to the same `entity_type` as the stub resolved these
+cleanly (`Осиповъ`→Александръ, already Musicians-scoped) rather than
+leaving them stuck as false 3-way ambiguities.
+
+**Same union-find survivor bug, two more rounds, ~23 total instances now
+across every batch in this issue.** The mandatory post-merge sweep (any
+active survivor with a blank/`"1-й"/"2-й"`/`"см."` first name whose
+absorbed side has a real one) caught and fixed 2 + 6 + 5 = 13 more cases
+this round on top of the 2 from the previous round. This check needs to
+be standard practice, run after *every* batch, not a one-time cleanup —
+it has found a real instance every single time it's been run so far.
+
+**Remaining unresolved: 33 rows / 13 surnames, all genuine multi-candidate
+ambiguity or too complex to safely automate** — `Гейнъ`/`Гейнь` (2
+real people, already known from an earlier session investigation to be
+unresolvable this way), `Грибенъ`, `Гуманъ`, `Плесковъ` (2 real
+candidates each, tenure doesn't discriminate), `Золотаренко` (3 brothers,
+ordinal-suffixed, needs per-occurrence page checking),
+`Каминскій` (4 real candidates), `Мейеръ` (3 real candidates),
+`Пертелъ`/`Пертель` (2 real candidates, plus its own spelling variants),
+`Циммерманъ` (2–3 real candidates), `Шмидтъ` (6+ real candidates,
+likely including more ordinal-field-bug entries) — and `Оставилъ службу`,
+which is issue #28's fake-entry bug and is correctly *not* matched to
+anyone. Exported to
+`outputs/full_run/musicians_stub_review_queue.csv` (candidate + tenure
+evidence per bare occurrence, `decision` column blank) for human review
+rather than guessing at any of these.
+
+**Update (2026-08-19, fourth pass): the printed page itself resolved
+most of the review queue — tenure dates weren't the only evidence
+available, just the only evidence already sitting in the database.**
+Re-rendered the actual "(см. оперный оркестръ)" cross-reference lines
+from the source and found they usually print the instrument directly on
+the line (`"Берръ (см. оперный оркестръ). Віолончель."`), even in cases
+where the model hadn't captured that instrument into the row's own
+`instrument` field. Cross-checking that printed instrument against each
+candidate's own recorded instrument elsewhere resolved 7 of the 9
+surnames in the queue, two of them by direct instrument confirmation
+and the rest by eliminating a candidate whose recorded instrument
+flatly didn't match:
+
+- **Гейнъ → Юлій** (stub instrument: Скрипка, matches Юлій exactly;
+  Фридрихъ plays Труба, eliminated).
+- **Гуманъ → Вильгельмъ** (stub: Альтъ, matches Вильгельмъ exactly;
+  Василій has no recorded instrument anywhere).
+- **Пертель → Эдуардъ**, not Петръ — the *opposite* of what tenure
+  alone would have suggested picking first: stub instrument is
+  Контрабасъ, but Петръ's own record shows Вальдгорнъ (French horn),
+  ruling him out; Эдуардъ has no conflicting record.
+- **Плесковъ → Александръ**, not Николай — same pattern: stub is Альтъ,
+  but Николай is recorded playing Первая скрипка elsewhere, ruling him
+  out.
+- **Циммерманъ → Василій**, not Рейнгардъ — stub is Контрабасъ,
+  Рейнгардъ is recorded on Труба (trumpet) elsewhere, ruling him out.
+- **Грибенъ → Августъ** (stub: Ударные инструменты; Августъ's own
+  record shows Литавры, i.e. timpani, a specific percussion instrument
+  — read as a plausible match rather than a certainty, since neither
+  candidate contradicts and Ѳедоръ has no instrument recorded at all).
+- **Мейеръ → Валентинъ**, resolved differently: the printed page shows
+  `Мейеръ, Іоганъ-Фридрихъ` isn't a violinist candidate at all but
+  holds a separate, directly-listed role as *répétiteur* (rehearsal
+  coach) for the Ballet Orchestra — eliminating him by role, not
+  instrument, leaves Валентинъ as the only remaining candidate for the
+  "Вторая скрипка" cross-reference.
+
+**Золотаренко narrowed but not resolved**: the same page-check
+confirmed the stub's instrument is Скрипка (violin) and, more usefully,
+showed that `Золотаренко, Иванъ Петровичъ` already has his own
+*separate, direct* Ballet Orchestra listing as a trombonist — meaning
+he can't also be the person behind an Opera Orchestra violin
+cross-reference. That eliminates him (was previously a 3-way tie, now
+correctly excluded), leaving a genuine 2-way tie between the other two
+brothers, Павелъ and Петръ, neither of whom has an instrument recorded
+anywhere to break it.
+
+**Каминскій remains fully unresolved**: confirmed the stub's
+instrument (Первая скрипка) but neither remaining candidate (Робертъ,
+Ѳедоръ) has an instrument recorded on any appearance to compare
+against — this one genuinely needs something beyond what's in the
+database, e.g. checking whether either candidate's other career
+details (recorded elsewhere in the yearbook, outside this dataset) fit
+a first-violin chair.
+
+**Шмидтъ, not in the original queue export** (it had too many
+candidates — 6+ — to fit the same triage cleanly), was checked the
+same way once the pattern above suggested it was worth a direct look:
+the stub prints `Віолончель`, matching `Шмидтъ, Иванъ Михайловичъ`
+(directly recorded as a cellist) exactly. Resolved. Also found and
+fixed two ordinary duplicate-record pairs for other Шмидтъ family
+members while on that page (Францъ and a separately-spelled Фридрихъ),
+unrelated to the cross-reference question but sitting right next to it.
+
+**Running total for issue #29: 207 of 216 rows now correctly linked**
+(0 → 78 → 183 → 207 across four passes). **9 rows genuinely remain
+open**: `Оставилъ службу` (3 rows, issue #28's fake-entry bug, correctly
+left unmatched — not a gap), `Золотаренко` (3 rows, real 2-way tie
+between brothers, no instrument evidence either way), `Каминскій` (3
+rows, real 2-way tie, no instrument evidence either way).
+`musicians_stub_review_queue.csv` trimmed down to just these last two
+surnames. `research_dataset.sqlite` rebuilt and in sync.
+
+**Update (2026-08-19, fifth pass): Золотаренко resolved, Каминскій
+confirmed genuinely unresolvable from this dataset alone.**
+
+Pulling every raw appearance of both surnames (not just the two
+candidates already narrowed to) turned up a decisive fact for
+Золотаренко: `Петръ Петровичъ` — one of the two remaining tied
+candidates — has his own separate, direct listing as **Капельмейстеръ**
+(conductor) of the Ballet Orchestra starting in 1891-92, the same
+seasons two of the three bare cross-reference occurrences are from. A
+rank-and-file violinist cross-reference can't be the orchestra's own
+conductor that same season — same elimination logic as Иванъ earlier
+(a person with their own direct listing isn't the one behind a "see
+also" pointing elsewhere). That leaves `Павелъ Петровичъ` for those two
+seasons; the third (1890-91, before Pyotr's promotion, so not
+automatically excluded that year) was resolved the same way for
+consistency — the cross-reference plausibly names the same person each
+year — corroborated by Pavel being directly confirmed a violinist
+(Первая скрипка) in a later season (1904-05). All 3 bare occurrences
+plus 2 unmerged Pavel duplicates (shared start date, 1882-09-19) merged
+into one record.
+
+Каминскій got the same full-history check and came up empty-handed —
+not for lack of trying. Both `Робертъ Николаевичъ` and `Ѳедоръ
+Николаевичъ` are independently confirmed playing **Первая скрипка**
+(first violin) themselves, on different seasons — the earlier "neither
+has an instrument recorded" note was wrong; the instrument was there,
+just sometimes sitting in `rank_or_title` instead of `instrument` (a
+field-boundary mixup, same shape as issue #16). Both matching the stub's
+own instrument doesn't break the tie, it just confirms both remain
+equally plausible. They also share a patronymic (Николаевичъ) — very
+likely brothers, alongside a third, `Александръ Николаевичъ`, who joined
+the Moscow orchestra later (1902-03 on, second violin) — a nice
+confirmation that this is a real musical family, but no help
+distinguishing which brother a specific 1890s cross-reference meant.
+Genuinely nothing left in this dataset to break the tie; resolving it
+would need something outside it entirely — secondary biographical
+sources on the Kaminsky family, or the original bound volume's physical
+layout in a way page images alone haven't surfaced.
+
+**Running total for issue #29: 210 of 216 rows now correctly linked**
+(0 → 78 → 183 → 207 → 210 across five passes). **6 rows remain open**:
+`Оставилъ службу` (3 rows, issue #28's fake-entry bug, correctly left
+unmatched) and `Каминскій` (3 rows, genuine tie, confirmed
+unresolvable from this dataset). `musicians_stub_review_queue.csv`
+trimmed to just Каминскій. `research_dataset.sqlite` rebuilt and in
+sync.
+
+## 30. Full audit of `research.person`'s `canonical_family_name`/`canonical_first_name`/`canonical_patronymic` for non-name text — two small confirmed-and-fixed bugs, one new structural finding still open
+
+Ran a heuristic scan (bracket/paren contents, pure numbers, bare ordinal
+suffixes, single non-letter characters, stopword function-words, stray
+Latin-only tokens) across all three canonical name fields in the published
+`research.person` table, not just `raw` — the point was to check what
+actually ships, not what the extraction step produced before
+Tier-1/Tier-2 cleanup. Findings, by severity:
+
+**Fixed immediately (small, unambiguous, same pattern as issues #17/#18
+already established this session):**
+- `Марквардтъ, Августъ` (Musicians, 8 raw appearances across 1894–1902)
+  had `canonical_patronymic = "(онъ же и капельмейстеръ военной музыки)"`
+  — "(he is also the kapellmeister of the military band)" — a genuine
+  printed role annotation that landed in the patronymic slot every single
+  time. He appears to have no real patronymic in the source (common for
+  the German-surnamed musicians in this corpus); cleared to `NULL`.
+- `Пигулевскій, Василій Фавстовичъ` (TheaterSchoolStaff, priest) had one
+  of 47 appearances (`theaterschoolstaff_1899-90_p002__e025`) with
+  `patronymic = "Фавстовичъ (священникъ церкви Училища)"` — the role
+  annotation appended onto an otherwise-correct patronymic — while every
+  other appearance splits it correctly into `patronymic="Фавстовичъ"` +
+  a separate rank/role field. Corrected to match. Fixing this also
+  surfaced that this same person was split across 3 unmerged
+  `entities.person` records (one of them with `first_name="Василій
+  Фавстовичъ"` un-split) — merged, corroborated by an exact shared
+  service-start date (1886-12-20) across all three.
+- Two more confirmed instances of issue #26's "non-person text captured
+  as a `person_entry` row" pattern, found by this scan rather than the
+  original keyword search: `family_name='†'`
+  (`theaterschoolstaff_1902-03_p002__e027`, `first_name='1902 г.'`) — a
+  death-marker footnote that split off from its actual owner into its own
+  fake row, the death-notice equivalent of issue #28's "Оставилъ службу"
+  bug; and `family_name='И.', first_name='д.', patronymic='фельдшерицы'`
+  (`theaterschoolstaff_1906-07_p000__e014`) — almost certainly a mangled
+  "и.д. фельдшерицы" ("acting medical assistant") subsection heading that
+  got extracted as if it were the person it introduces, with the real
+  person (`Абрамова, Александра Дмитріевна`) captured separately right
+  after, missing its role label. Left as-is in `raw`/`entities` per issue
+  #26's existing "tag rather than delete, pending a priority decision"
+  policy — not deleted unilaterally, just added to that issue's count and
+  flagged here for visibility. Issue #26's scale estimate should be read
+  as "40+, and we keep finding more via unrelated checks" rather than a
+  final number.
+- Confirmed as **expected, not new**: the residual bare-ordinal values in
+  `first_name`/`patronymic` (3 + 5 rows) are exactly issue #17's
+  documented 6 exceptions that don't pass the "patronymic looks like a
+  real name" guard and were deliberately left alone; the 6 residual "см."
+  rows in `first_name` are the still-open cases from issue #29's review
+  queue, not a new problem.
+
+**New finding, not yet resolved — real names bundled with a stage-name/
+alias/maiden-name annotation, causing genuine entity fragmentation, not
+just messy display text:** 14 `research.person` rows have
+`canonical_family_name` containing a parenthetical — `"Билибина (по
+театру Корнева)"`, `"Гаврилова (Воскресенская)"`, `"Эльпе
+(Петропавловская)"`, `"Холоповъ (онъ-же Хлоповъ)"`, etc. — almost all
+BalletArtists, plus a few ProductionTeam/Graduates. These aren't
+non-names; the source genuinely prints "stage name" or "aka" or "née"
+annotations for performers who used more than one professional name. The
+schema has nowhere to put that information except inline, so the model
+folds it into `family_name` — inconsistently: on other appearances of the
+*same* person, the annotation instead leaks alone into `first_name`
+(`family_name="Гаврилова", first_name="(Воскресенская)"`), and on others
+it's dropped and the row is just the bare name (`family_name="Гаврилова",
+first_name="Евдокія"`). Checked two of the fourteen people directly:
+**"Гаврилова, Евдокія" is currently split across 8 different unmerged
+`research.person` records** (4 clean duplicates, 1 compound, 1 with the
+annotation leaked into `first_name`, 2 OCR-spelling variants of the given
+name), and **"Петропавловская"/"Эльпе" — the same dancer's two alternating
+stage names — is split across 4**, with one record per direction
+(`"Петропавловская (Эльпе)"` and `"Эльпе (Петропавловская)"` both exist as
+separate rows, alongside a bare `"Петропавловская"` and a bare
+`"Эльпе"`). Not checked yet: whether the other 12 of the 14 people show
+the same fragmentation pattern, or how many of the 21,174 raw rows this
+touches in total.
+
+**Update (2026-08-19): all 14 people resolved.** Went through each by
+hand the same way as the Musicians batches — tenure-date corroboration
+per group, never assumed same-surname automatically meant same-person.
+That caution paid off immediately: the very first check
+(`"Гаврилова (Воскресенская)"`) turned out to be **two different real
+dancers who happen to share both surname and given name** —
+`"Гаврилова 1-я, Евдокія Ивановна"` (service since 1872) and
+`"Гаврилова 2-я (Воскресенская), Евдокія Помпеевна"` (service since
+1884) — distinguished in the source by the standard homonym-ordinal
+convention (`1-я`/`2-я`) and by patronymic, with the stage-name
+annotation belonging to only the second woman. Had I merged on
+surname+given-name alone, this would have wrongly fused two people. Every
+subsequent group was checked patronymic-first before merging.
+
+Final breakdown of the 14:
+- **7 needed real fragment-consolidation** (2–6 duplicate records each,
+  now 1): Гаврилова 1-я / 2-я (Воскресенская) (2 distinct people, 2+6
+  records → 2), Никифорова (Стравинская) (2→1), Горская (Струкова) (5→1),
+  Эльпе (Петропавловская) (4→1, "Эльпе" chosen as the primary spelling —
+  8 occurrences vs. 2 for "Петропавловская"), Висковская (Калинникова)
+  (2→1), Кучинскій (Бурманъ) (3→1), Дмитріева (Ѳедорова) (5→1, including
+  one more orphaned `first_name="(Федорова)"` fragment turned up only by
+  re-running the full scan after the first pass — worth doing every time,
+  not assuming one pass catches everything).
+- **5 were already single, isolated appearances with nothing to
+  merge** — confirmed by checking the actual printed page rather than
+  assuming: `Рыкъ (по театру Борисовъ)`, `Билибина (по театру Корнева)`,
+  `Щернваль (по театру Таирова)`, `Холоповъ (онъ-же Хлоповъ)`,
+  `Нольте (фонъ)`. All five transcribed verbatim-accurately from the
+  source; there was simply no separate bare-name appearance anywhere else
+  in the corpus to fragment against. `"по театру X"` reads as a stage-name
+  annotation (confirmed against the source: `Рыкъ (по театру Борисовъ),
+  Иванъ Генриховичъ` prints exactly that way in a graduation-list entry),
+  not a "prior company" note as first guessed — corrected before acting
+  on the wrong reading. `Нольте (фонъ)` is genuinely printed that way in
+  the source (the `von` prefix trailing in parens rather than leading) —
+  left as printed rather than restructured, since restructuring an
+  unverified guess about prefix placement isn't something to do without
+  more than one occurrence to check it against.
+- **2 more instances of the union-find blank/wrong-name survivor bug**
+  surfaced during this batch (Горская's survivor briefly became the bare
+  `"Струкова"` stub with no first name at all; Гаврилова 2-я's survivor
+  briefly inherited the OCR-garbled `"Евлогія"` instead of `"Евдокія"`) —
+  caught and fixed by the same post-merge verification used throughout
+  this session, not by trusting the merge counter.
+
+`research.person` is down to 1 row per person for all 14 (was up to 8 for
+one of them). Remaining flagged rows in the full non-name scan (30 total)
+are all already-tracked, expected residuals: issue #17's 9 documented
+ordinal-alone exceptions, issue #29's 6 open "см." rows, and the 13
+family_name strings that legitimately still contain a parenthetical —
+that's not a bug anymore, just a data-modeling note (no dedicated
+alias/stage-name field exists in the schema) now that each represents
+exactly one correctly-consolidated person rather than a fragmented one.
+
+## 31. `display_name` went stale on every manual entity-merge fix made this session — found while answering an ordinary question about ordinal tracking
+
+**Status: found and fixed.** Every manual merge/correction earlier in
+this session (Musicians cross-reference stubs, the alias/stage-name
+fragmentation work, the instrument-based review-queue resolutions) wrote
+directly to `entities.person.canonical_family_name`/
+`canonical_first_name`/`canonical_patronymic`/`ordinal_suffix` via `UPDATE`,
+but never touched `display_name` — a separately-stored, pre-composed
+string set once by `build_person_tier1()` and never recomputed after.
+`research.person` copies `display_name` straight through from
+`entities.person` (see `build_research_model.py`), so the stale value
+shipped all the way to the published layer. Found by accident: answering
+a user question about how ordinal suffixes are tracked, grounding the
+answer with a query on the two previously-merged Gavrilova records,
+turned up `display_name = 'Гаврилова, Евлогія Помпеевна'` (the
+OCR-garbled first name, no ordinal, no alias) sitting right next to a
+*correct* `canonical_first_name = 'Евдокія'` on the same row.
+
+**Scale**: 48 of 3,526 active `research.person` rows — every survivor
+this session had manually corrected, no others. Fixed by recomputing
+`display_name` for every active survivor from its own canonical fields
+(same formula `build_person_tier1` uses: family + ordinal, then
+`", " + first + patronymic` if either is present), verified 0 mismatches
+remain, and rebuilt `research.person` / `research_dataset.sqlite`.
+
+**Lesson for any future manual `entities.person` fix**: `display_name`
+is not derived at query time — it must be explicitly recomputed after
+any UPDATE to the fields it's composed from, the same way
+`_repoint_all_superseded()` must be re-run after any merge. Worth adding
+a small helper function for this rather than relying on remembering it.
+
+## 32. `raw.person_entry.instrument` (and the published `research.person_appearance.instrument`) sometimes held non-instrument text — fixed via a new analysis-layer `instrument_clean`
+
+**Status: found and fixed.** A full audit of `instrument` (33 distinct
+values across 1200 non-null rows, all Musicians) found 23 that weren't
+instruments at all:
+
+- **21 rows**: the literal cross-reference note `"см. оперный оркестръ"`
+  ("see Opera Orchestra") — the same convention behind issue #29's
+  Musicians cross-reference stubs, but here landing in the `instrument`
+  field of that specific appearance rather than (or in addition to)
+  causing a blank `first_name`. Issue #29's work resolved *who the
+  person is* for most of these; it never touched *this specific
+  appearance's* `instrument` value, which was still literally the
+  cross-reference sentence.
+- **2 rows**: a resignation note (`"Оставилъ службу 1 октября 1903 г."`,
+  Барсукъ-Самборскій) and a transfer note (`"Переведенъ съ 1 октября
+  1902 г. въ Малый театръ."`, Гейслеръ) — both on real, correctly-named
+  people, both genuinely useful information that belongs with
+  `tenure_note_text`, just captured into the wrong field on that one
+  appearance.
+
+Worse: none of this was caught before shipping, because
+`research.person_appearance.instrument` turned out to be a **straight,
+uncleaned passthrough from `raw.person_entry`** — every other roster
+field with a known quirk (`service_class`, `heading_path`) already gets
+cleaned in the `analysis` layer before reaching `research`, but
+`instrument` had no such step and this went unnoticed until an explicit
+audit.
+
+**Fix**: added `instrument_clean` and `tenure_note_text_clean` to
+`analysis.person_entry` (`build_duckdb.py`), pure SQL derivations over
+`raw`, non-destructive as always. `instrument_clean` is NULL wherever
+the value is the cross-reference note or a resignation/transfer
+sentence; `tenure_note_text_clean` appends the resignation/transfer text
+onto the real tenure note for those 2 rows instead of discarding it.
+Repointed `build_research_model.py`'s `research.person_appearance`
+insert from `raw.person_entry` to `analysis.person_entry`, using the two
+`_clean` columns. Verified 0 contaminated rows remain in the published
+table (1177 non-null `instrument` values now, all genuine instruments,
+down from 1200).
+
+**A real DuckDB gotcha hit while building the fix, worth flagging for
+next time**: the first draft used `instrument ~ '^(Оставилъ
+службу|Переведенъ)'` (the `~` regex-match operator) and it silently
+matched nothing — not just the anchored alternation, but a bare
+`instrument ~ 'Оставилъ'` with no anchor at all, confirmed by direct
+side-by-side testing (`starts_with()` on the identical string returned
+`true`; `~` returned `false`). `regexp_matches()` with the byte-for-byte
+identical pattern worked correctly. Root cause not fully chased down
+(DuckDB v1.5.5), but the practical lesson holds: **prefer
+`regexp_matches()`/`regexp_extract()` over the bare `~`/`!~` operators
+when matching Cyrillic (and presumably other non-ASCII) text in this
+codebase** — `~` cannot be trusted here even for a plain literal prefix
+with no special regex syntax involved.
+
+**Not done, and worth a decision later, same as issue #23/#25's
+deferred-corrections pattern**: `instrument_clean` still has legitimate
+spelling variants that a strict count-only cleanup didn't touch —
+`Вальдгорнъ`/`Вальторнъ`/`Вальдгорнь`/`Вальдгорнт` (French horn, 4
+spellings), `Віолончель`/`Виолончель`/`Віолончелъ` (cello, 3 spellings,
+partly the documented і/и pre-reform variant), and
+`Фортепіано`/`Піанистъ` (piano vs. "pianist," an instrument-vs-role
+distinction rather than a misspelling). These are all genuinely
+instruments, just inconsistently spelled/labeled — a different, smaller
+problem than what this issue fixed, deferred pending a decision on
+whether it's worth normalizing.
+
+## 33. TheaterSchoolStaff: a real duplicate merged, two role-heading phantom people, and the pipeline's first actual non-person denylist
+
+**Status: found and fixed**, prompted by a direct ask to follow up on
+three specific findings surfaced while surveying non-Musicians people
+issues.
+
+- **Сенкусь/Сенкусъ merged** (ь/ъ spelling variant, all 5 appearances
+  share tenure start 1903-09-01, plus one appearance where the model had
+  duplicated the surname into `first_name` too — `family_name="Сенкусъ",
+  first_name="Сенкусъ"` — cleared as part of the same merge). Canonical
+  spelling `Сенкусъ` (3 occurrences vs. 2).
+- **"Священникъ" (Priest) and "Дьяконъ" (Deacon) confirmed as role
+  headings, not people** — checked against the source
+  (`ForUpload_1896-97_Spisok_Teachers.pdf` p.1): under the section
+  "Причтъ церкви Училища" (Clergy of the school's church), the printed
+  structure is a bold role label ("Священникъ.") immediately followed by
+  the real named person holding it (Пигулевскій, already resolved this
+  session in issue #30). Both role labels were being captured as their
+  own phantom `person_entry` rows across every season they appear —
+  exactly issue #26's "department/role heading captured as a person"
+  pattern, now with a confirmed, hand-verified example.
+- **Флоринскій's orphaned resignation note recovered**: the same page
+  confirmed the standalone fake entry (`family_name="Оставилъ службу"`,
+  issue #28's bug) sitting between Флоринскій's entry and his successor
+  Сперанскій's is Флоринскій's own resignation date (1 февраля 1897 г.,
+  the same day Сперанскій's tenure starts) — recovered into his
+  `tenure_note_text_clean` via a single hand-verified case in
+  `build_duckdb.py`, not a general rule (a general LAG-based "borrow the
+  previous row's tenure note" rule was considered and rejected — see
+  below).
+
+**This is also the first time issue #26's long-deferred "tag rather than
+delete" plan was actually built**, rather than re-deferred again: a
+`NON_PERSON_IDS` list in `build_research_model.py`, excluding confirmed
+phantom `entities.person` records from the *published* `research.person`
+and `research.person_appearance` tables only — `entities.person`/
+`entities.person_link` are left completely untouched, so the phantom
+records are still there for anyone querying the working layer directly,
+exactly as issue #26 always intended. Seeded with 5 hand-verified
+person_ids: Священникъ, Дьяконъ, the TheaterSchoolStaff "Оставилъ
+службу" phantom, and the two issue #30 finds ("†", "И.") that had been
+found and left in place pending exactly this mechanism. Each of these 5
+phantom person_ids turned out to have *more* linked appearances than the
+single row each was originally confirmed from (15 total, not 5) — Tier-1
+collapses every appearance with byte-identical text onto the same
+person_id regardless of season, so fixing one instance fixes every
+season it recurs in for free. `research.person`: 3524 → 3518.
+`research.person_appearance`: 21174 → 21159.
+
+**Deliberately not attempted: a general rule for recovering *every*
+issue #28 resignation-note orphan via `LAG()` (previous row on the same
+page).** Worth recording why, since it's an obvious next step someone
+might reach for: the pattern (note belongs to the immediately preceding
+row) held for this one confirmed case, but hasn't been checked against
+enough other instances to trust as a blanket rule — e.g. this session
+also found a *garbled* variant in ProductionTeam (`family_name="Оствайлъ"`,
+not even a clean copy of the phrase) that a simple text-match rule
+wouldn't catch, and there's no guarantee every resignation-note orphan
+sits directly after its owner rather than, say, after a page break. Safer
+to keep confirming instances by hand (as this issue and #28 both did) and
+add each to `NON_PERSON_IDS`/a future recovery case individually than to
+generalize from a sample of one and risk silently attaching someone's
+resignation date to the wrong neighbor.
+
+**Still open**: the broader issue #26 backlog (~40+ rows, mostly
+Graduates narrative/headcount rows, never individually confirmed against
+a specific person_id the way these 5 were) and the ProductionTeam
+"Оствайлъ" garbled instance flagged in the same non-Musicians survey —
+neither addressed here, both straightforward to add to `NON_PERSON_IDS`
+once each is individually verified the same way.
+
+## 34. Graduates name-parsing gap fixed, plus a real bug in the shared date parser affecting 4 entity types, plus a full ballet-graduates tenure-date extraction
+
+**Status: fixed/built**, prompted by the user's specific research need:
+names and confirmed service-start dates for ballet school graduates,
+sourced from the Theater School Reports' own text, cross-checked against
+(not replaced by) the BalletArtists rosters.
+
+**Part 1 — the original name-parsing gap (issue #27's "79 rows" finding),
+fixed.** All 79 rows print `family_name="Surname, Firstname."` as one
+string instead of splitting into `family_name`/`first_name` the way
+every other entity_type does. Confirmed uniform (no patronymic ever
+printed here, no ordinals, exactly one comma) — safe to split by regex.
+Added `family_name_clean`/`first_name_clean` to `analysis.person_entry`
+(`build_duckdb.py`, scoped to `entity_type='Graduates'` only, so an
+incidental comma elsewhere is never touched) and applied the same split
+directly to the 79 corresponding `entities.person` records. **Explicitly
+did not attempt to merge these with the fuller-form duplicates already
+in `entities.person`**: 63/79 have at least one existing match by exact
+name, but most common names have 2-7 candidates (e.g. "Смирнова, Марія"
+has 7) — exactly the kind of ambiguity this project has consistently
+refused to guess through elsewhere (see the Гаврилова case in issue
+#30). Name field is now clean; identity-merging is deliberately left
+undone.
+
+**Part 2 — a real bug in the shared `parse_russian_date()` utility,
+affecting 4 entity types, not just Graduates.** The date regex in
+`pipeline/schemas/dates.py` required whitespace directly after the day
+number, so a hyphenated ordinal ("1-го сентября 1892 г.", vs. the more
+common "1 сентября 1892 г." printed elsewhere) silently failed to parse
+— confirmed this affected 188 rows across BalletArtists, Musicians,
+TheaterSchoolStaff, *and* Graduates, not a Graduates-only quirk. Fixed
+by making the ordinal suffix optional in the regex; verified against
+both the previously-broken and previously-working cases with no
+regression.
+
+**Part 3 — full ballet-graduate tenure-start-date extraction, sourced
+from the Report text as primary (per explicit instruction), cross-checked
+against BalletArtists rather than inferred from it.** Built
+`outputs/full_run/ballet_graduates_tenure.csv` (417 ballet-department
+graduate rows — drama-department graduates, identified by heading_path
+`Со свидѣтельствами / Ученицы` / `Съ аттестатами / Ученицы` and
+confirmed against the Билибина/Рыкъ page found earlier this session, are
+correctly excluded):
+
+| source | count | meaning |
+|---|---|---|
+| `report_per_row` | 197 | date parsed directly from this row's own `tenure_note_text` |
+| `report_hand_verified` | 25 | this row's own text had no date; the assignment paragraph exists on the source page but was dropped by the original extraction entirely (confirmed by direct page check, not recoverable by re-parsing existing data) — 2 cohorts hand-verified (13 people incl. Карсавина/Karsavina, 1902; 12 people, 1899) |
+| `balletartists_crossref` | 149 | no usable Report text; date instead taken from a single, plausible (graduation-year-adjacent) BalletArtists record |
+| `no_service_record` | 36 | no BalletArtists record at all — did not enter Imperial service, or entered somewhere this dataset doesn't capture (per explicit instruction: not everyone enters service, don't assume a date exists) |
+| `ambiguous_crossref` | 8 | multiple plausible BalletArtists candidates, genuinely can't pick one (common-name collision) |
+| `no_plausible_crossref` | 2 | a same-name BalletArtists record exists but with a date implausibly far from graduation (likely a different, unrelated person) |
+
+**A genuine cross-document discrepancy found and documented, not
+"fixed"**: cross-checking all 222 Report-sourced dates against
+BalletArtists found 26 disagreements, of which 21 form a clean pattern —
+two entire graduating cohorts (1896-97, 7 people incl. Ваганова/Vaganova;
+1897-98, 14 people) show the Report stating "мая" (May) where
+BalletArtists consistently states "іюня" (June), identically, across
+every season on record (11 and 10 seasons respectively). Verified this
+is not a transcription error on either side (direct page check for the
+1896-97 cohort: the Report genuinely prints "мая"). Full writeup in
+`docs/eval/source_document_anomalies.md`. Kept the Report's own date as
+the CSV's primary value (per instruction) with the disagreement flagged
+in the `note` column, rather than silently preferring one source.
+
+**Not attempted**: extending `report_hand_verified` beyond the 2
+confirmed cohorts — there are likely more pages where the assignment
+paragraph was dropped by extraction (the `no_service_record`/
+`ambiguous_crossref` buckets almost certainly contain some), but finding
+them requires the same page-by-page check done for these 2, not a
+mechanical rule. The Moscow 1901-02 cohort (3 people) was checked and the
+assignment paragraph, if printed, falls outside this particular scan's
+2-page range — left as `no_service_record`/unconfirmed rather than
+guessed.
+
+**Addendum to #34 (same day): checked whether missing patronymics in
+`ballet_graduates_tenure.csv` were a real gap.** Verified per-page: 43 of
+47 Graduates pages are uniformly one way (every row has a patronymic, or
+none do) — confirmed genuine against several already-viewed scanned
+pages, not something the extraction dropped. Exactly one page was mixed
+(`graduates_1890-91_p002`, 19/21 rows), and both exceptions turned out to
+be a real, different, narrow bug: `first_name` and `patronymic` printed
+correctly on the page but run together with **no separator at all**
+during extraction (`"АннаПетровна"` for what the page prints as "Анна
+Петровна"). A corpus-wide check for this exact shape (capital-letter
+boundary, no hyphen, no space) found only 3 instances total, confirming
+it's rare and distinguishing it clearly from the far more common
+*legitimate* hyphenated-compound-first-name pattern ("Іоганъ-Фридрихъ",
+"Карлъ-Вильгельмъ" — genuinely one name, correctly left alone). Fixed the
+2 Graduates instances (added `patronymic_clean` to `analysis.person_entry`
+alongside the existing `first_name_clean`); left the 1 BalletArtists
+instance (`Пуни, ЛеонтинаКонстанція`) unfixed since "Констанція" doesn't
+have a typical patronymic suffix and is more likely a second first name
+than a patronymic — needs individual verification, not assumed.
+
+**Correction to #34 (same day): `ballet_graduates_tenure.csv` had been
+writing BalletArtists-sourced dates into `tenure_start_date`, not just
+using them as a cross-check.** Caught by explicit instruction that the
+field must be blank unless the Theater School Report itself states a
+date. The original `balletartists_crossref` source (149 rows) was a
+name-plus-plausible-date match against a *different* roster, not
+something the Report said — writing it into the same column as the
+Report-sourced dates blurred a real distinction between "the source
+document states this" and "a same-named person elsewhere has this date."
+Regenerated: `tenure_start_date` is now populated only for
+`report_per_row` / `report_per_row_exception` / `report_hand_verified`
+(222/417 rows); the remaining 195 are blank
+(`source='not_stated_in_report'`), with any BalletArtists reference date
+moved to the `note` column and explicitly marked "not used." The 26
+Report-vs-BalletArtists disagreements (see above) are unaffected by this
+correction — those were always Report-sourced rows with the
+disagreement flagged, not the other way around.
+
+**Second addendum to #34 (same day): added a `school` column
+(St. Petersburg / Moscow), and in the process found and fixed a
+drama-department leak plus a third `report_hand_verified` cohort.**
+
+The exact-match drama filter used to build the CSV (`heading_path IN
+('Со свидѣтельствами / Ученицы', 'Съ аттестатами / Ученицы')`) only
+caught 10 of the 20 rows on `graduates_1890-91_p005` — the same drama
+page, but 10 more rows on it carry different heading_path variants
+("Ученики", "Ученикъ", "Въ Москвѣ / Съ аттестатами / Ученицы") that the
+exact-match filter didn't cover. Confirmed by direct query that this is
+the *only* page corpus-wide with any drama-department heading, so the
+correct fix is excluding the whole `page_id`, not pattern-matching
+`heading_path` strings. **10 drama-department individuals had been
+incorrectly included in `ballet_graduates_tenure.csv` all along**
+(Кравотынскій, Рыкъ, Усачевъ, Дубынинъ, Бергманъ, Караулова, Любимова,
+Лютецкая, Нечаева, Ртищева) — removed. Corrected row count: 407.
+
+`school` was built from `institution`/`heading_path` text
+(`heading_path` wins when both are present, since one page's
+`institution` field is contaminated by the earlier-documented "Всѣ 15
+человѣкъ..." cohort-paragraph misattachment — see `family_name_clean`
+note above). The first classifier pass used the substring `"москв"` and
+found 0 rows for it — a real bug: "Московское"/"Московская" contain
+"моск" but not "москв" (the fifth letter is "о", not "в"). Fixed to
+`"моск"`, which correctly classified all but 13 rows (0 remaining
+ambiguous "both mentioned" cases once the drama page was also
+excluded). Final: 268 St. Petersburg, 139 Moscow.
+
+The 13 unresolved rows (`graduates_1895-96_p003`) turned out to be
+another dropped-assignment-paragraph case like the two already in
+`report_hand_verified` — confirmed by rendering and reading the actual
+page images (`ForUpload_1895-96_TheaterSchoolReport.pdf`, PDF page
+indices 2–3). Page 2 is headed "Московское Театральное Училище. /
+Балетное отдѣленіе." and states the cohort size ("Окончили курсъ весною
+1896 года 13 человѣкъ — 7 ученицъ и 6 учениковъ"); page 3 lists the 13
+names under bare "Ученицы:"/"Ученики:" (no institution restated) and
+closes with "Всѣ перечисленные окончившіе курсъ ученицы и ученики
+опредѣлены на службу, съ 1-го сентября 1896 года, въ Московскую
+балетную труппу" — a date the original extraction missed entirely, the
+same failure mode as the 1899/1902 cases. Moved these 13 from
+`not_stated_in_report` to `report_hand_verified` (now 38 total: 13 from
+1902, 12 from 1899, 13 from 1896) with `tenure_start_date='1896-09-01'`,
+`troupe_city='Moscow'`, `school='Moscow'`.
+
+Final counts: 407 rows (268 St. Petersburg / 139 Moscow); `source`:
+`report_per_row` 187, `report_hand_verified` 38, `not_stated_in_report`
+182.
+
+**Third addendum to #34 (same day): completed a full hand-check of
+every remaining `not_stated_in_report` page — found a second drama-page
+leak and 10 more dropped-assignment-paragraph cohorts.**
+
+Grouped the 182 `not_stated_in_report` rows by page: 12 pages where
+*every* row on the page was blank (strong candidates for the same
+dropped-paragraph bug already fixed twice), plus 1 page with a mix of
+dated and blank rows. Rendered and read all 13 pages directly (plus
+neighboring pages where needed) rather than inferring from the pattern.
+Two of the PDFs (`ForUpload_1891-92_...`, `ForUpload_1892-93_...`,
+`ForUpload_1899-00_...`, `ForUpload_1900-01_...`,
+`ForUpload_1905-06_...`) were iCloud-evicted stub files and had to be
+downloaded (`brctl download`) before rendering.
+
+While rendering, hit a real methodological snag: several of these PDFs
+are pages RG had manually cropped (via each page's PDF crop box) to cut
+out drama-department content that shared a page with the ballet list —
+the first pass rendered using `page.get_pixmap()`'s default crop box and
+so silently reproduced RG's intentional cut, which is correct behavior,
+but a few pages genuinely needed the full mediabox checked (with RG's
+explicit go-ahead) to confirm whether a ballet-relevant assignment
+paragraph sat right at/past that boundary. Re-rendered with
+`page.set_cropbox(page.mediabox)` for the affected pages before
+re-checking.
+
+Findings:
+
+- **`graduates_1890-91_p006` (8 rows) is a second drama-department page**,
+  a direct continuation of `graduates_1890-91_p005`'s numbered "Ученицы"
+  list (items 7–9 continue p005's 1–6) plus its own "Ученики" list — its
+  own closing paragraph names the Moscow and St. Petersburg *drama*
+  troupes, not ballet, and even names several people already known to be
+  drama (Бергманъ, Караулова, Любимова, Нечаева) from p005. Excluded
+  entirely, same as p005.
+- **10 more pages had a genuine dropped assignment paragraph**, all on
+  the *same page* as the list (not a following page), confirmed by
+  reading the paragraph directly: `graduates_1890-91_p002` (21 rows —
+  15 St. Petersburg at 1891-06-01 except Легатъ, individually stated at
+  1891-10-01; 6 Moscow at 1891-09-01, consistent with the men's half of
+  this same cohort on `p003`, which the extraction *had* parsed
+  correctly), `graduates_1891-92_p000` (18 St. Petersburg rows at
+  1892-06-01, except Бекъ individually assigned to the Moscow troupe on
+  the same date), `graduates_1892-93_p001` (13 more St. Petersburg rows
+  at 1893-06-01 — the sentence existed in the data but had only been
+  attached to Тихомировъ's own row as its exception clause, never to the
+  other 13 rows on the page), `graduates_1898-99_p000` (14 rows,
+  1899-06-01), `graduates_1902-03_p000` (14 rows, 1903-06-01),
+  `graduates_1905-06_p000` (15 rows, 1906-06-01), `graduates_1906-07_p000`
+  (15 rows, 1907-06-01). All moved from `not_stated_in_report` to
+  `report_hand_verified`.
+- **The remaining 5 pages (64 rows, all Moscow) were confirmed to
+  genuinely have no assignment date to recover** — `graduates_1899-00_p001`,
+  `graduates_1901-02_p001`, `graduates_1904-05_p001`, and
+  `graduates_1905-06_p001` are each immediately followed by a new
+  "Драматическіе курсы" section heading with nothing about ballet
+  assignment in between; `graduates_1900-01_p001`'s source PDF excerpt
+  is only 2 pages long and the list runs to the literal bottom of the
+  last page, so if an assignment paragraph exists at all it isn't in
+  this particular scan. Left as `not_stated_in_report`, not guessed.
+
+This means the earlier "only 2 of these pages were ever recovered"
+caveat in `docs/ballet_graduates.md` is resolved — every remaining
+`not_stated_in_report` page has now actually been opened and read, not
+inferred from having found some already.
+
+Final counts after this pass: **399 rows** (10 dropped for the second
+drama-department page fix; 260 St. Petersburg / 139 Moscow); `source`:
+`report_per_row` 187, `report_hand_verified` 148, `not_stated_in_report`
+64.
+
+**Fourth addendum to #34 (same day): RG asked directly whether any
+drama students remain in the file — verified rather than asserted, and
+found one more real bug in the process (not a drama leak).**
+
+Two checks, both logged:
+
+1. Corpus-wide keyword sweep of `raw.person_entry` for
+   `entity_type='Graduates'` against `институт`/`heading_path`/
+   `tenure_note_text` for "драмат", "аттестат", "свидѣтельств" — the
+   only hits anywhere in the corpus are the 17 rows already excluded on
+   `p005`/`p006`. Zero hits remain in the final 399-row CSV.
+2. Cross-checked which of the 399 rows lack even the word "балет"
+   anywhere in their own heading_path/institution/tenure_note_text (95
+   rows, on top of pages already hand-verified above) — not proof of a
+   problem by itself (a truncated date clause like "съ 1 сентября 1893
+   г." legitimately drops "балетную" if that word appeared earlier in
+   the sentence than the part the extraction kept), but a worthwhile
+   place to look. Read all 4 remaining pages directly
+   (`graduates_1892-93_p003`, `graduates_1894-95_p001`,
+   `graduates_1895-96_p001`, `graduates_1897-98_p001`). Three were
+   confirmed correct, ordinary St. Petersburg ballet pages with a
+   truncated date clause. **`graduates_1892-93_p003` (12 rows) had a
+   real, separate bug**: its `institution` field reads "Императорское
+   С.-Петербургское Театральное Училище" (stale/mislabeled, not this
+   page's own heading), but the page itself is headed "Московское
+   Театральное Училище / Балетное отдѣленіе" and its closing paragraph
+   states "...опредѣлены на службу съ 1-го сентября 1893 г. въ
+   Московскую балетную труппу." These 12 rows are genuinely Moscow
+   ballet graduates — not drama, but mis-classified by city because the
+   `school` classifier trusted a wrong `institution` field with no
+   heading_path city signal to override it. Fixed: `school`→`Moscow`,
+   `troupe_city`→`Moscow` (the row already had the correct
+   `tenure_start_date`, `1893-09-01`, from `report_per_row`).
+
+Net effect on counts: 399 rows unchanged (no rows added/removed this
+time), school split corrected to **248 St. Petersburg / 151 Moscow**.
+Answer to RG's question: no drama-department rows remain in the file,
+confirmed by a corpus-wide keyword sweep plus direct reading of every
+page that lacked an explicit ballet-troupe keyword — not just checked
+for the original two drama pages.
+
+**Fifth addendum to #34 (same day): RG then asked directly whether
+`school` is correct for *every* graduate, not just whether drama leaked
+in — found 2 more instances of the same institution-mislabeling bug by
+checking exhaustively rather than spot-checking.**
+
+Identified every row where `school` was derived **entirely** from the
+`institution` field (i.e. `heading_path` gave no city signal to
+cross-check it against) — exactly the failure mode behind the
+1892-93_p003 bug above. That was 334 rows across 27 distinct pages.
+Read all 27 directly against the scanned PDF (downloading/rendering a
+few more season PDFs as needed: 1893-94, 1896-97, 1897-98, 1899-00,
+1903-04, 1904-05). 24 of 27 were already correct. Two more had the
+identical bug:
+
+- `graduates_1896-97_p003` (12 rows) — `institution` says St.
+  Petersburg, but this row's own `tenure_note_text` explicitly says
+  "...опредѣлены на службу... въ Московскую балетную труппу." The
+  school classifier simply wasn't consulting `tenure_note_text` at all,
+  even where it directly states the city.
+- `graduates_1898-99_p002` (12 rows) — identical pattern, confirmed
+  against the scanned page; this is the same cohort already in
+  `report_hand_verified` (`troupe_city`/`tenure_start_date` were already
+  correct there, only `school` was wrong).
+
+Both fixed to `school`→Moscow. Rebuilt the classifier's precedence to
+`heading_path` → `tenure_note_text` → `institution` (institution is now
+truly last-resort) and re-ran the contradiction check corpus-wide: zero
+remain (aside from Тихомировъ's one legitimate individual exception,
+where `school` genuinely differs from his individually-assigned
+`troupe_city` by design — an SPB graduate sent to the Moscow troupe).
+
+Final: 399 rows, `school` split corrected again to **224 St. Petersburg
+/ 175 Moscow**.
+
+**Sixth addendum to #34 (same day): cross-checked the 148
+`report_hand_verified` rows against BalletArtists** — the original
+disagreement cross-check (issue text above) only ever covered the 187
+`report_per_row` rows; this extends it to the hand-verified cohorts
+added later in the same session. Same method: for each row, look up
+same-named BalletArtists records and compare their `start_date_undate`.
+
+122/148 agree exactly, 23 have no BalletArtists record at all (expected
+— not every graduate entered service or entered under a form this
+dataset captures), 0 genuinely ambiguous (no case with multiple
+same-named BalletArtists candidates), and 3 disagree:
+
+- **Бекъ, Константинъ** — Report says 1892-06-01 (assigned to the
+  Moscow troupe as an individual exception within an otherwise-SPB
+  cohort); BalletArtists says 1892-09-01, identically across all 15
+  seasons he appears in that roster. This is the same shape as the
+  already-documented Vaganova/1897-98 May-vs-June pattern — a
+  consistently-repeated, well-attested gap between two independent
+  sources, not a transcription slip on either side. Added as a third
+  example to `docs/eval/source_document_anomalies.md`.
+- **Тихомировъ, Владиміръ** and **Ивановъ, Александръ** — 6-year and
+  10-year gaps respectively, each on only 1-2 BalletArtists seasons, on
+  names common enough that a same-named-but-different-person match is
+  far likelier than a genuine discrepancy. Flagged as such in the `note`
+  column rather than treated as a same-person disagreement.
+
+All three keep the Report's own `tenure_start_date` (per the standing
+rule); only `note` was appended. No row counts changed.
+
+**Seventh addendum to #34 (same day): identity-linked all 399 graduates
+to their fuller BalletArtists career records**, per RG's explicit
+request to do this "carefully, not matching false positives" — the task
+this whole session's cross-checking work had deliberately deferred (see
+"What's still open" in `docs/ballet_graduates.md`, pre-existing).
+
+Built an independent conservative linker (not `entities.person_link`'s
+existing tier1-key auto-merge, which already produced one confirmed
+false merge — issue #30). For each graduate, found same-named
+BalletArtists rows and clustered them by date proximity (≤65 days apart
+treated as print-run noise, same person) with an extra merge pass for
+same-`entry_id` multi-period records (discovered mid-build: a single
+`entry_id` can carry two separate service periods — a real departure and
+re-enrollment, not two people; found via Легатъ, Иванъ). For the 335
+graduates with a Report-stated date, that date is the primary
+disambiguation anchor (a candidate within 130 days = linked; none in
+range = `unlikely_match`; more than one in range = `ambiguous`); the 64
+without one fall back to requiring a single dominant, city-consistent
+candidate.
+
+Two early design mistakes, caught and fixed before finalizing rather
+than shipped:
+
+1. First pass used a flat "any distinct date = different person" rule,
+   which wrongly flagged confirmed-same-person cases like Мосолова
+   (11 seasons say "1 сентября 1893", 2 say "5 сентября 1893") as
+   ambiguous. Checked both source pages directly — both print exactly
+   what they show, a genuine cross-edition inconsistency in the
+   historical record, not an OCR error (RG asked this directly; verified
+   rather than assumed). Fixed with proximity clustering.
+2. A looser "majority vote wins" version of that fix then over-merged:
+   some clusters had a majority date years away from a lone outlier
+   (e.g. one stray record off by 6–16 years), which isn't the same
+   "print variant" phenomenon as Мосолова's 4-day wobble at all. Fixed
+   by anchoring against each graduate's own independently-established
+   Report date wherever one exists, rather than trusting BalletArtists'
+   internal vote alone.
+
+Final: **342 linked, 46 no BalletArtists record, 9 ambiguous (2+
+same-named people with no way to tell which, if any, is this graduate —
+not linked), 2 unlikely_match** (same two individual cases already
+flagged in the sixth addendum). New columns:
+`balletartists_link_status`, `balletartists_seasons_attested`,
+`balletartists_link_note`. No existing columns or row count changed.
+
+## 35. BalletArtists/Musicians ordinal-suffix ("1-й"/"2-я") sometimes landed as the entire `first_name`, corrupting `first_name`/`patronymic` for 115 rows corpus-wide
+
+**Status: fixed.** Found while investigating why RG's "how many
+newly-employed dancers didn't graduate from either Theater School"
+question was producing an implausibly high, RG-flagged-as-suspicious
+figure (see `docs/ballet_graduates.md`'s identity-linking section, #34,
+for the graduate-side half of this same investigation).
+
+The normal convention throughout this corpus, confirmed everywhere else,
+is that a positional ordinal distinguishing two same-surname people (most
+often siblings) is appended to `family_name` as a trailing token — e.g.
+"Крылова 2-я", "Бурмистрова 1-я". On 115 rows (77 BalletArtists, 38
+Musicians; zero in any other entity_type, confirmed by direct query),
+the ordinal instead landed as the *entire* `first_name` value, and the
+real first name got shoved into `patronymic` — sometimes alone ("Дмитрій"),
+sometimes fused with the real patronymic as one run-together string
+("Дмитрій Спиридоновичъ", both shapes confirmed).
+
+Quantified the real cost via one concrete case: "Литавкинъ" (2-3 real
+siblings, "1-й"/"2-й"/an unnumbered third) fragments into **9 distinct
+raw `(family_name, first_name, patronymic)` triples** across different
+season pages purely from this bug — directly inflating any distinct-
+person count taken from the raw fields, which is exactly what surfaced
+it (RG's skepticism about a "910 newly-employed dancers" figure that
+turned out to be significantly duplicate-inflated).
+
+Fixed in `pipeline/build_duckdb.py`'s `build_analysis_schema()`,
+extending the same `family_name_clean`/`first_name_clean`/
+`patronymic_clean` CASE expressions already built for the unrelated
+Graduates comma-format bug (issue #27/#34) with a new branch: detects
+`first_name` matching `^[0-9IVXІ]+-(й|я|е)$`, reassembles
+`family_name_clean` (append the ordinal), `first_name_clean` (patronymic's
+first word), and `patronymic_clean` (whatever follows that word, `NULL`
+when nothing did — not invented). Verified: Литавкинъ's 9 triples
+collapse to the correct 3 identities. `raw.person_entry` is untouched,
+per the schema's standing rule.
+
+**Effect on the "newly-employed, non-graduate dancers" question**:
+distinct BalletArtists identities in the 1890-91–1906-07 report-coverage
+window: 910 → 869 (dedup effect, modest — most affected people were
+still duplicated under the same broken format across many seasons, not
+scattered as true singletons). Distinct-identities matched to a
+Graduates name: 320 → 396 (+76 — the fix also repairs the actual
+strings being compared, a bigger effect than dedup alone). Unmatched:
+590/910 (65%) → 473/869 (54%). A real, meaningful improvement, but most
+of the original gap is still unexplained by this bug specifically —
+remaining causes already confirmed distinctly (cross-edition spelling
+variance; at least one genuine source misprint, Nijinsky's own graduation
+listing prints "Наусинскій" instead of "Нижинскій" in the 1906-07
+Theater School Report) would need the same page-by-page verification
+already done for the 399 curated ballet graduates, at roughly 2x the
+scale (869 candidates) and in the opposite direction. Not attempted in
+this pass — see `docs/query_log.md` for the exact before/after queries.
+
+## 36. Full BalletArtists name-field audit: three more ordinal-misplacement shapes, a dropped surname, and Latin-homoglyph corruption — all fixed
+
+**Status: fixed.** RG paused the broader "how many newly-employed dancers
+didn't graduate" question after issue #35 and asked instead for a
+complete audit: "make sure there are only real names in the first name,
+patronymic, and surname fields" for `entity_type='BalletArtists'`.
+
+Systematic sweep of `raw.person_entry` where `entity_type='BalletArtists'`
+(7,674 rows) for non-name content in `family_name`/`first_name`/
+`patronymic`: keyword scan (role headings, resignation notes, cross-
+references — all zero hits, unlike TheaterSchoolStaff's #26/#28/#33), then
+structural checks (digits, Latin letters, blank fields, unusually long
+values). Found and fixed, all in `pipeline/build_duckdb.py`'s
+`build_analysis_schema()` (extending the existing `_clean` columns),
+scoped to `entity_type='BalletArtists'` only (the only entity_type
+individually verified this pass — the identical-shaped bugs are confirmed
+present in Musicians/TheaterSchoolStaff/Administrators too by query, not
+fixed here):
+
+- **Pattern B** (20 rows): `first_name` holds `"ordinal, RealFirstName"`
+  run together (e.g. `"1-я, Анна"`), `patronymic` intact. Same underlying
+  bug as issue #35's Pattern A, a different manifestation shape.
+- **Pattern C** (54 rows, on exactly 2 pages —
+  `balletartists_1893-94_SP_p002`, `balletartists_1905-06_SP_p002`):
+  `first_name` holds `"FirstName Patronymic"` run together as two words,
+  `patronymic` blank. Detected by requiring the second word to end in a
+  real patronymic suffix (-на/-вна/-ична/-вичъ/-евичъ/-ичъ), avoiding any
+  false split of a genuine two-word entry.
+- **Pattern D** (9 rows): the ordinal landed in `patronymic` instead of
+  `family_name` (e.g. the Мендесъ sisters, "Анжелика"/"Джульетта", each
+  `patronymic="1-я"`/`"2-я"`).
+- **A dropped surname** (1 row): `balletartists_1901-02_SP_p001__e018`
+  had `family_name="Карлотта"` (a first name, not a surname),
+  `first_name`/`patronymic` both blank. Confirmed against the scanned
+  page (`ForUpload_1901-02_Spisok_BalletArtistsSP.pdf`, p.73, an
+  unnumbered guest-artist entry between #33 and #34): "**Замбелли,
+  Карлотта** (съ 1 октября по 1 декабря 1901 г.)" — Carlotta Zambelli, a
+  real guest ballerina engaged briefly Oct–Dec 1901. Hand-fixed as a
+  single instance.
+- **Latin-homoglyph corruption** (24 rows: 17 family_name, 2 first_name,
+  5 patronymic): a stray Latin lookalike character substituted into an
+  otherwise-Cyrillic word (e.g. "Милютинa" for "Милютина", "Iосифъ" for
+  "Іосифъ", "Никifoровна" for "Никифоровна"). Fixed via a `translate()`
+  single-character swap (a/c/e/o/p/x/y/i/v/f and uppercase, mapped to
+  their Cyrillic lookalikes), confirmed safe by testing it resolves every
+  case to a form independently attested elsewhere in the corpus. Three
+  rows had multi-character garbling `translate()` can't fix
+  character-by-character ("Гавликowsкій", "Спрышиńskaя", "Гrekова 1-я/2-я")
+  — each individually confirmed against a correctly-spelled match for the
+  same person elsewhere in BalletArtists (matching first_name+patronymic,
+  or for Грекова, matching ordinal+first_name+patronymic across 8 other
+  seasons) and hand-fixed. A fourth case initially left unresolved
+  (`balletartists_1893-94_SP_p005__e002`, "Тииstrова" after the safe
+  single-character swaps) turned out, once the actual page was checked,
+  to have no complexity at all: `ForUpload_1893-94_Spisok_BalletArtistsSP.pdf`
+  p.62, entry #135 plainly prints "**Тистрова**, Марія Ѳедоровна (съ 10
+  декабря 1873 г.)" — an entirely ordinary Cyrillic surname; the
+  extraction had simply inserted spurious Latin letters into it for no
+  apparent reason. Hand-fixed. **Zero remaining Latin-letter-contaminated
+  rows in `analysis.person_entry` for `entity_type='BalletArtists'`**,
+  verified directly after the rebuild.
+
+**Confirmed not bugs, left as-is**: ~63 genuinely blank patronymics
+(mostly foreign guest artists with no Russian-style patronymic —
+Bréanza, Zambelli, Legnani, etc. — a real source feature, same
+conclusion already reached for Graduates in issue #34); several
+`entity_type='BalletArtists'` rows on `graduates_1901-02_MSK_*` pages
+with first_name/patronymic entirely blank — confirmed against the
+scanned page (`ForUpload_1901-02_Spisok_BalletArtistsMoscow.pdf` p.112)
+that several entries genuinely print as bare "Surname." with nothing
+else before the performance stats that specific year — a real, if
+inconsistent, editorial choice in that one edition, not an extraction
+gap.
+
+**One confirmed non-person phantom entry — now excluded from
+`research.person`**: `balletartists_1899-00_SP_p000__e008` has
+`family_name` = "Прикомандированъ къ Монтіровочной части для исполненія
+обязанностей помощника машиниста Маріинскаго театра" (a job-duty
+description, not a name at all). Same category as the five IDs already
+in `build_research_model.py`'s `NON_PERSON_IDS` list (issues #26/#28/#30).
+Looked up its `entities.person` UUID via `entities.person_link`
+(read-only — did NOT re-run `build_entities.py`'s tier1 matching, which
+this session's earlier work flagged as unsafe without first checking for
+stale manual corrections): `37dd8b11-7b83-4cb0-9d86-f5f34e611859`, a
+clean, isolated record with exactly this one entry_id linked to it (not
+merged with any real person's data). Added to `NON_PERSON_IDS` and
+rebuilt `research.person`/`research.person_appearance` (safe, both are
+pure derivations, no other changes). Confirmed absent from both tables
+after the rebuild.
+
+**Not attempted this pass** (flagged for later, per RG's explicit scope
+of "just Ballet Artist entities" for now): the identical Pattern-C shape
+confirmed present in Musicians (149 rows), TheaterSchoolStaff (84 rows),
+and Administrators (11 rows).
+
+**Addendum to #36 (same day): the two "genuine spelling-variance" cases
+above were wrong — both turned out to be the same ъ/ь OCR misread, not
+real variance, and are now fixed.** RG asked directly whether "Джулъетта"/
+"Мендесь" were OCR or source. Checked three of the five instances against
+their scanned pages (`ForUpload_1906-07_Spisok_BalletArtistsMoscow.pdf`
+p.52 #52; `ForUpload_1897-98_Spisok_BalletArtistsMoscow.pdf` p.94 #60;
+`ForUpload_1903-04_Spisok_BalletArtistsMoscow.pdf` p.106 #53) — all three
+unambiguously print the standard spelling ("Мендесъ" with ъ, "Джульетта"
+with ь). A hard-sign/soft-sign confusion, a well-known visually-similar
+Cyrillic pair, not a real inconsistency. Fixed all 5 rows (2 family_name,
+3 first_name) via hardcoded overrides in `build_duckdb.py`, rebuilt,
+confirmed zero remaining.
+
+**Second addendum to #36 (same day): `Пуни, ЛеонтинаКонстанція` resolved.**
+RG supplied the key context — this dancer's brother is on the same
+rosters as "Пуни, Николай **Цезаревичъ**" ("son of Cesare"), confirming
+the family is composer Cesare Pugni's. Checked the scanned page
+(`ForUpload_1905-06_Spisok_BalletArtistsSP.pdf` p.18 #80): prints "Пуни,
+**Леонтина - Констанція**" — a genuine hyphenated compound first name
+(the same convention as "Іоганъ-Фридрихъ" elsewhere in the corpus), not
+first_name+patronymic, and no patronymic at all (consistent with every
+other foreign-origin artist already confirmed in this corpus). The
+hyphen was mangled three different ways across her 5 attested seasons.
+Fixed all 5 rows: `first_name_clean` = "Леонтина-Констанція",
+`patronymic_clean` = NULL.
+
+With both addenda applied, **every item flagged as open in #36's
+original writeup is now resolved** except the cross-entity-type
+Pattern-C extension (Musicians/TheaterSchoolStaff/Administrators),
+which remains explicitly out of scope.
+
+## 37. Follow-up BalletArtists sweep beyond the three name fields: a fourth ordinal-misplacement shape, and a real shared date-parser gap
+
+**Status: fixed (name/date fixes); entity-linking audit paused mid-execution, not yet applied.**
+
+While answering RG's question "is there any further issues in the raw
+ballet artists data I need to address," swept fields beyond
+family_name/first_name/patronymic (already fully audited in #36):
+
+- **`rank_or_title` ordinal misplacement (24 rows)**: same underlying
+  bug as #36's Patterns A/B/D, a fourth manifestation — the ordinal
+  suffix landed in `rank_or_title` instead of `family_name`, with
+  family_name/first_name/patronymic otherwise complete and correct
+  (e.g. "Грачевская"/"Марія"/"Ивановна", rank_or_title="1-я" instead of
+  family_name="Грачевская 1-я"). Fixed in `build_duckdb.py`
+  (`family_name_clean` gains a new WHEN branch), rebuilt, verified.
+- **Shared date-parser gap, `pipeline/schemas/dates.py`**: 49
+  BalletArtists rows had a `start_date_text` sentence that failed to
+  parse despite being otherwise legible. Two real, fixable causes,
+  confirmed corpus-wide (not BalletArtists-specific — the parser is a
+  shared utility already fixed once this project for the hyphenated-
+  ordinal-day bug):
+  - **"юня" for "іюня"** (June missing its leading "і") — the dominant
+    cause (~38 of 49 rows here; 54 instances of the text pattern
+    corpus-wide). Added "юн" as an explicit alternate month stem (can't
+    collide with any other month, none start with ю).
+  - **A stray combining accent mark** ("дека́бря" for "декабря") — now
+    stripped via NFD-decompose + drop Unicode category Mn before
+    matching, safe because pre-reform Russian running text never
+    legitimately carries a combining accent.
+  Re-ran `parse_and_validate.py` against the JSON already on disk (per
+  CLAUDE.md — this is the intended way to propagate a `dates.py` fix,
+  not a hand-edit of `raw.*`) and reloaded `raw.*`. Result: 49 → 7
+  remaining unparseable BalletArtists rows, all genuinely different
+  residual causes checked and left alone on purpose — 4 have no day
+  number in the source at all (parser correctly returns None by design,
+  nothing to invent), plus one each of a day-corrupted-to-a-letter
+  ("і февраля" for probably "1 февраля"), a differently-garbled month
+  ("ікня"), and the already-day-less "октрября" typo. None revisited
+  this pass — each is a single instance, lower value than the two fixed
+  patterns.
+
+**Also investigated, confirmed NOT bugs — informational fields, not name
+fields**: `institution` for BalletArtists doesn't reliably indicate city
+at all (both St. Petersburg and Moscow pages carry the same generic
+document-title strings like "Ежегодникъ Императорскихъ театровъ" —
+unlike Graduates, where `institution` occasionally *almost* worked as a
+city signal before failing; here it never was one). `heading_path`
+sometimes reads "Управляющій Училищемъ" ("Director of the School") on
+rows that are clearly real dancers (e.g. the already-known Литавкинъ
+brothers) — a stale/non-structural breadcrumb, not a phantom-person
+issue (the actual name fields are correct on every one of these rows).
+Neither affects name-field cleanliness; `raw.source_pages.city` remains
+the reliable field for city, already used throughout this project.
+
+**Paused, not yet applied**: a systematic audit of whether
+`entities.person`'s automatic tier1-key matching correctly merges each
+real BalletArtists dancer's season-by-season raw rows into one
+`person_id` (as opposed to the field-content question #36/#37 above,
+which is now resolved). Found 89 surname+ordinal+first_name clusters
+where 2+ `person_id`s exist for what might be the same real person
+(182 person_id records total, out of 1,291 active BalletArtists-only
+person records) — 46 of those clusters (92 person_ids) differ only by a
+blank vs. one non-blank patronymic (safe to merge — a blank patronymic
+never contradicts a specific one), of which 44 have no season-overlap
+risk and 1 more (Пономаревъ) was confirmed safe via direct raw-entry
+comparison; 1 (Павлова 2-я, Анна) was excluded from the safe set because
+the two candidate records are in *different cities* the same season,
+and the ordinal ("2-я") looks to be assigned independently per city —
+likely two different women, not one. The other 43 clusters (90
+person_ids) have 2+ genuinely different patronymics and need individual
+judgment — some are probably the same already-established
+misread/homoglyph patterns from #36/#37 (e.g. one instance,
+"Никifoровна"/"Никифоровна", is literally the exact homoglyph pattern
+already fixed there), others show season-overlap between the differing-
+patronymic variants (a real red flag for two different people, e.g.
+Поливановъ, Чудиновъ), and at least one (Новикова, Екатерина,
+"Александровна" vs "Дмитріевна") is already independently confirmed
+via the earlier Graduates-linking work to be two genuinely different
+real women. A merge-execution script was written (repointing
+`entities.person_link`, tombstoning losers via
+`superseded_by_person_id`, recomputing survivors'
+`first_attested_season`/`last_attested_season` — the same mechanism this
+project already uses for its existing 836 superseded records) but
+**was not run** — paused before execution at RG's request. Resume point:
+`/private/tmp/claude-502/.../scratchpad/execute_safe_merges.py` has the
+44-cluster safe-merge logic ready to run (needs Павлова/Пономаревъ
+handling reconciled per the notes above); the 43 ambiguous clusters
+still need triage (some resolvable immediately via the already-confirmed
+misread patterns, the rest need individual page checks or a documented
+decision to leave separate).
+
+## 38. `entities.person` identity-linking audit for BalletArtists — 287 fragmented identities merged
+
+**Status: applied.** Follow-up to #37's paused audit: whether the
+existing automatic tier1-key matcher correctly merges each real
+BalletArtists dancer's season-by-season raw rows into one `person_id`.
+RG: "We need to chase it, so let's fix it now."
+
+Two systematic, targeted merge passes over the 1,291 active BalletArtists-
+only `entities.person` records (not a rebuild — `entities.person`/
+`entities.person_link` were updated in place via the project's existing
+merge mechanism: repoint `person_link` rows to the survivor, recompute
+its `first_attested_season`/`last_attested_season`, tombstone the loser
+via `superseded_by_person_id`, same as the 836 pre-existing superseded
+records):
+
+**Pass 1 — blank vs. one real patronymic (family+ordinal+first_name
+match, patronymic blank on one side).** 89 candidate clusters (182
+person_ids). 46 clusters (92 person_ids) had no season+city overlap
+between fragments — safe by construction, since a blank patronymic never
+contradicts a specific one. Two borderline cases checked individually
+against raw data before deciding: **Пономаревъ, Сергѣй** (blank fragment
+fully contained within the dated one's own season, same city — merged)
+and **Павлова 2-я, Анна** (blank fragment in a *different city*, same
+season, as the established St. Petersburg dancer — **left separate**;
+the "2-я" ordinal is very likely assigned independently per city, so
+this is probably two different women, not one). **45 merges applied.**
+
+**Pass 2 — same family+first_name+patronymic, only the ordinal_suffix
+differs.** RG confirmed the key fact that made this pass possible:
+*"Ordinals can change over the seasons because it depends on how many
+people of the same name were employed"* — i.e. "1-я"/"2-я" is a
+per-season positional label among currently-listed same-surname
+colleagues, not a stable personal identifier, so a person legitimately
+gaining, losing, or changing their own ordinal across seasons is
+expected, not suspicious. 201 candidate clusters. 199 had no
+season+city overlap. The 2 that did (**Ивановъ, Иванъ Николаевичъ**,
+3-way; **Пономаревъ, Сергѣй Ивановичъ**, revisited from Pass 1) were
+re-examined in light of RG's confirmation and merged too — the
+"overlap" is exactly the expected signature of a positional label, not
+evidence of two people, once the patronymic itself is confirmed
+identical throughout. **229 merges applied.**
+
+**10 more merges applied individually**, each checked against raw
+season/city data (and in a few cases the actual scanned page) before
+deciding, not defaulted to either merge or separate:
+
+- **Феоктистова/Ѳедорова, [Анна/Екатерина]**: "Никifoровна"/"Никіфоровна"
+  — the exact homoglyph corruption pattern already confirmed in #36/#37
+  (i/f → и/ф). Merged.
+- **Нарышкина, Александра**: "Нико- норовна" — a mid-word line-break
+  artifact reconstructing "Никаноровна". Merged.
+- **Алексѣевъ, Александръ**: one fragment's `patronymic` was literally
+  "2-й" — the ordinal-misplacement bug (#36 Pattern D) landing in a
+  *different* record than the one it got fixed on at the analysis layer;
+  treated as non-informative noise, not a real conflicting patronymic,
+  and merged with the "Алексѣевичъ" (line-break-mangled as
+  "Але-ксѣевичъ") record.
+- **Мендесъ, Джульетта**: patronymic "2-я" (same ordinal-bug-in-
+  patronymic pattern) and a blank fragment, both merged into the
+  "Іосифовна" record — independently confirmed correct by directly
+  reading the scanned page during #36's work.
+- **Медалинскій, Александръ**: "Ульяновичъ" appears in exactly 1 of 11
+  seasons (1904-05), bracketed on both sides by "Юліановичъ" — the same
+  overwhelming-majority-with-bracketed-outlier pattern already confirmed
+  safe multiple times this session (Мосолова, Печатниковъ, Орловъ).
+  Merged.
+- **Петипа, Надежда**: "Васильевна" appears in exactly 1 of 13 seasons
+  (1904-05), bracketed by "Маріусовна" on both sides — same pattern.
+  Merged. (Marius Petipa's real daughter, per the corpus's own internal
+  consistency — not an external genealogy claim.)
+- **Кякштъ, Лидія**: "Юрьевна" only in her first attested season
+  (1902-03), then "Георгіевна" consistently for the next 4 seasons with
+  no gap. Merged.
+- **Ивановъ 2-й, Константинъ**: a blank-patronymic fragment fully
+  contained within the "Ефремовичъ" (Moscow) record's own season range
+  — merged into it. The cluster's third variant, "Константиновичъ", is
+  a *St. Petersburg*-only, fully parallel and overlapping career — see
+  below, correctly left separate.
+
+**Left separate — checked directly and confirmed (or strongly
+indicated) to be genuinely different real people, not merged:**
+
+- **Ивановъ, Константинъ** (no ordinal) / **Симонова, Антонина** /
+  **Ѳедорова, Марія**: in all three cases, checking the raw data by
+  city revealed two *fully parallel, simultaneously-overlapping
+  careers in different cities* — e.g. Ивановъ "Ефремовичъ" only ever
+  appears in Moscow (1890-1905), "Константиновичъ" only ever in St.
+  Petersburg (1899-1907), overlapping for 6 years. Two different men
+  who happen to share a common surname+first name, not one man's
+  patronymic wobbling.
+- **Михайлова, Александра**: checking the raw data showed "Карповна"
+  and "Михайловна" both attested as *separate simultaneous entries in
+  the same city, the same season*, for at least 4 consecutive years
+  (1890-91–1893-94) — definitively two different women, the shared
+  patronymic-matches-surname-root ("Михайловна"/"Михайлова") a
+  coincidence.
+- **Новикова, Екатерина** (both the no-ordinal and "2-я" clusters):
+  already independently confirmed via the earlier Graduates-linking
+  work (docs/ballet_graduates.md) — "Александровна" matches the
+  1891-92 graduate's own Report-stated date, "Дмитріевна" matches the
+  1899-00 graduate's — two different real women.
+- **16 remaining clusters** (Калишевская, Тимофѣева, another Ѳедорова
+  Марія variant, Поливановъ, Чудиновъ, Голубина, Александровъ,
+  Петрова, Васильева, Поспѣхинъ, Трефилова, Аѳанасьева, a third
+  Ѳедорова Екатерина variant, Чичелева, and both Левинсонъ sisters):
+  genuinely different-root patronymics (not homoglyphs, not line-break
+  artifacts, not the confirmed ordinal-noise patterns above), most with
+  real season-overlap between the variants. Left separate by default,
+  per the project's standing rule against guessing through name-
+  collision ambiguity — resolving these with confidence would need
+  individual scanned-page checks, not attempted this pass.
+
+**Result**: 287 merges total (836 → 1,123 superseded records
+corpus-wide). Active BalletArtists-only `entities.person` records:
+1,291 → 1,004 (a 22% reduction in spurious fragmentation).
+`entities.person_link` row count unchanged throughout (21,174) —
+confirms no appearance data was lost, only correctly regrouped.
+Rebuilt `research.person`/`research.person_appearance` (pure
+derivations, safe to rebuild): `research.person` 3,517 → 3,230 rows
+(exactly the 287-row reduction), `research.person_appearance` unchanged
+at 21,158 rows.
+
+## 39. `entities.person.canonical_family_name` sometimes picked a minority/garbled raw spelling instead of the dominant one — 64 BalletArtists records relabeled
+
+**Status: fixed.** Found while verifying #38's merges: spot-checking
+"Мосолова, Вѣра Владиміровна" (the exact person independently
+page-verified twice earlier this session, #36's "1 сентября"/"5
+сентября" print-variance case) showed her `entities.person` record's
+`canonical_family_name` as **"Молодова"** — a spelling I never once saw
+printed. Checking her 15 linked raw entries: 13 say "Мосолова", 1 says
+"Мосалова" (a single-letter vowel slip), 1 says "Молодова" (the more
+garbled one) — the canonicalization had picked the *minority, more
+corrupted* spelling to display, not the dominant, page-verified one.
+This also explains why she wasn't already caught by #38's Pass 1: her
+one remaining un-merged fragment (a lone 1892-93 blank-patronymic
+entry, `2b048dbf...`) genuinely has `family_name='Мосолова'`, which
+doesn't match "Молодова" — the wrong canonical label was silently
+hiding a real, findable merge.
+
+Checked how widespread this is: **64 active BalletArtists-only
+`entities.person` records** (of ~1,000) have a `canonical_family_name`
+that differs from the ≥60%-majority raw spelling among their own linked
+entries — e.g. "Цармань" shown where 14/18 entries say "Царманъ",
+"Лошилинъ" shown where 6/8 say "Лащилинъ". Fixed all 64 via the same
+majority-vote logic already used elsewhere this session:
+`canonical_family_name`/`display_name` reset to whichever raw spelling
+appears most often among that person's own entries. Мосолова's own
+fragment (`2b048dbf`) merged in by hand once the label was corrected.
+
+Re-ran the #38 cluster audit after this fix (to check whether correcting
+labels revealed more mergeable fragments, the same way it did for
+Мосолова): 2 new candidate clusters surfaced (Кандауровъ, Павелъ;
+Смирнова, Марія) — both checked and left separate, same reasoning as
+#38's other "different roots, no external corroboration" cases.
+
+Rebuilt `research.person` after this pass: 3,230 → 3,229 (the one
+additional Мосолова merge). `canonical_family_name` label corrections
+alone don't change row counts, only display quality.
+
+**Not systematically checked**: whether the same canonical-label
+mismatch affects `canonical_first_name`/`canonical_patronymic` (only
+`family_name` was audited this pass), or whether it affects entity
+types beyond BalletArtists.
+
+## 40. Post-#38 over-merge risk audit: date-gap check across all 287 merged identities
+
+**Status: in progress.** After #38/#39's merges, ran a systematic
+skepticism pass rather than trusting the merge logic: for every
+same-(family, first, patronymic) merged survivor, pulled all distinct
+`start_date_undate` values from linked "regular roster" entries (excluding
+staff-role headings like "Помощники режиссера"/"Балетмейстеры" — see #38's
+Ивановъ/Пономаревъ addendum) and looked for internal disagreement.
+
+Of 391 reconstructed merged pairs: 339 (87%) agree exactly. **51 have 2+
+distinct dates; 25 of those have a gap exceeding 3 years** — the highest
+over-merge-risk subset. Two have been individually checked against the
+actual scanned pages so far:
+
+- **Симонова, Марія Петровна** (50.0y gap: "1837" vs "1887," 21 other
+  entries across 17 editions all say 1887) — checked
+  `ForUpload_1890-91_Spisok_BalletArtistsMoscow.pdf` p.102 #92: the page
+  genuinely prints "1837." Not an OCR error — a one-digit (3/8) printer's
+  error in this single 1890-91 edition only, silently corrected in every
+  subsequent edition. A ~70-year active tenure isn't physically plausible,
+  so this is one person, not two; the merge is correct. The raw verbatim
+  "1837" is left as-is (per the project's verbatim-preservation principle)
+  — this is a source error, not a transcription error, so nothing to fix
+  in `raw`.
+- **Тихоміровъ, Владиміръ Михайловичъ** (6.3y gap: "1892-06-01" vs
+  "1898-09-01") — checked `ForUpload_1904-05_Spisok_BalletArtistsSP.pdf`
+  p.25 #80-81: confirms two brothers, Тихоміровъ 1-й Сергѣй Михайловичъ
+  and Тихоміровъ 2-й Владиміръ Михайловичъ, both "съ 1 іюня 1892 г." Pulling
+  every raw `Тихом*` entry (60 rows) shows both brothers appearing together
+  every SP season 1892-93 through 1907-08 (with the "1-й"/"2-й" ordinal
+  swapping which brother holds it partway through — another confirmed
+  instance of the ordinal-is-positional pattern), both promoted from plain
+  ballet artist to "Управляющій Училищемъ" together starting exactly
+  1898-09-01. This is one person's two career milestones (dancer 1892,
+  promoted co-administrator 1898) — the same dual dancer+staff-role
+  pattern as Ивановъ/Пономаревъ. The merge is correct.
+
+  This corrects a separate finding from this session's earlier
+  graduates-linking work (`docs/query_log.md`, 2026-08-20), which flagged
+  this same person as `unlikely_match` on a Report-stated tenure date. That
+  check matched on exact raw `family_name` string equality, which silently
+  excludes every entry printed with the "1-й"/"2-й" ordinal attached to the
+  family name — roughly half this person's actual career (1892-93 through
+  1902-03) — so it only ever saw the post-1898 years and flagged a gap that
+  doesn't exist once the full record is visible. That `unlikely_match` flag
+  is now known to be a false negative of its own matching method, not
+  independent evidence against this merge.
+
+**Update (continued same day):** the original gap-check that produced "25
+of 391 pairs with gap>3y" had a bug — it counted a single raw `entry_id`'s
+multiple legitimate `person_entry_service` periods (a documented
+departure+re-enrollment, same convention as Легатъ) as if they were
+disagreement between two merged records. Rebuilt the check to group by
+`entry_id` first (MIN date per entry_id), compare only ACROSS distinct
+entry_ids. Corrected pool: **90 survivors with genuinely disagreeing dates
+across distinct entry_ids, 37 with a gap exceeding 3 years** (not 25).
+
+Went through ~20 of the highest-risk names directly against scanned pages
+(zoomed crops, not just raw text — necessary after Старостина showed a
+digit misread is possible in either direction, see below):
+
+- **Confirmed genuine one-edition print anomalies** (page-verified, not two
+  people): Симонова Марія Петровна (1837/1887), Сапожникова Анна Іосифовна
+  (1835/1885), Анкудинова Ольга Евгеніевна (1837/1887, different edition
+  than Симонова — this is a recurring defect across multiple print runs,
+  not one bad batch), Рахмановъ Сергѣй Павловичъ (the 1905-06 and 1907-08
+  editions both print his brother Викторъ's "1903" date onto his own line —
+  confirmed on both pages, not an extraction issue), Козловъ 1-й Федоръ
+  Михайловичъ (1904-05 edition alone prints "1905" against 9 other
+  editions' "1900"/"1901" — confirmed on the page; NOT his brother
+  Алексѣй's date bleeding over as first suspected, Федоръ's own line
+  genuinely reads 1905 that one year).
+- **Confirmed genuine multi-period service**, this time via explicit
+  "по ... и съ ..." phrasing directly on the page (not inferred from
+  structure): Евлановъ Николай Павловичъ ("съ 23 августа 1884 г. по 3
+  декабря 1887 г. и съ 1 ноября 1890 г." — left service, rejoined), Ивановъ
+  3-й Василій Еремѣевичъ, Тихоміровъ 2-й Алексѣй Дмитріевичъ — all
+  page-confirmed on `ForUpload_1904-05_Spisok_BalletArtistsMoscow.pdf` p.58
+  and `ForUpload_1906-07_Spisok_BalletArtistsMoscow.pdf` p.57.
+- **Confirmed genuine pipeline extraction bug, fixed**: Старостина Анна
+  Ильинична (`balletartists_1890-91_SP_p005__e020`) — raw extraction read
+  "1830"; the actual page (`ForUpload_1890-91_Spisok_BalletArtistsSP.pdf`
+  p.63, checked at 800dpi zoom) prints "1880," matching every other
+  edition. This is the opposite failure direction from the print-anomaly
+  cases above — here the SOURCE was right and OUR extraction was wrong.
+  Corrected in the raw `.raw.json` (`tenure_note_text` and
+  `service_periods[0].start_date_text`), re-ran `parse_and_validate.py`,
+  reloaded `raw`/`analysis`. This is why every case in this list was
+  checked against an actual zoomed page rather than trusted either way —
+  the raw extraction and the "what does the page actually say" question
+  are independent failure modes, confirmed to go wrong in both directions
+  within this same batch.
+- **Confirmed structurally safe via same-entry_id dual-date pairing** (the
+  source itself prints an early and a later date together on the identical
+  entry_id across multiple editions — the same signature as the
+  page-confirmed multi-period cases just above, so treated as reliable
+  without an individual page check): Тихоміровъ Владиміръ Михайловичъ
+  (also independently page-confirmed above), Голубинъ Николай Ивановичъ,
+  Бершадскій Николай Александровичъ, Бѣлоусовъ Филиппъ Ивановичъ, Брыкинъ
+  Дмитрій Константиновичъ, Ѳедоровъ Павелъ Викторовичъ, Цалиссонъ Полина
+  Викторовна, Пановъ Александръ Викторовичъ.
+- **Still genuinely open:** Поливановъ Василій Егоровичъ — the 1907-08
+  edition prints "1 сентября 1889 г." in full (not a digit slip — an
+  entirely different day/month/year) against 15 other editions' "23
+  декабря 1868 г." Page-confirmed as printed; no multi-period phrasing on
+  the page. This is the highest remaining risk in the whole pool. Савицкій
+  Михаилъ Ивановичъ — only 2 data points total, both confirmed accurately
+  transcribed on their pages (1906-07: 1900; 1907-08: 1906), no third data
+  point or multi-period phrasing to resolve the conflict either way.
+- **Not yet individually page-checked**, pattern-consistent with the
+  "single-edition outlier against a clear majority" shape confirmed six
+  times above but NOT treated as resolved per this session's no-guessing
+  standard: Дорина, Барышистовъ, Черниковъ, Пахомова, Бекефъ, Кустереръ,
+  Кузнецовъ (Владиміръ variant), Сампелевъ, Барашъ, Солнцевъ, Петипа Марія,
+  Тивольская (a genuine 4-vs-3-edition split, not a single outlier),
+  Леонтьевъ (oscillating across editions), Иванова Надежда (only 1 raw
+  entry found under this exact name so far; the paired record producing
+  the flagged gap not yet located).
+
+**Update (continued same day): all remaining names in the 37-name pool now
+page-checked.** The earlier "single-edition outlier against a clear
+majority, likely a print anomaly" framing turned out to be wrong roughly
+half the time — checking each individually (rather than extrapolating from
+the pattern) surfaced genuine pipeline bugs at a rate too high to have
+safely assumed away.
+
+**Six more extraction bugs found and fixed** (raw data said one year, the
+actual scanned page reads another): Барышистовъ Александръ Ивановичъ (raw
+"1890" -> page "1899"), Пахомова Ольга Сергѣевна (raw "1883" -> page
+"1893"), Кустереръ Альбертина Альбертовна (raw "1883" -> page "1888"),
+Кузнецовъ Владиміръ Николаевичъ (raw "1893" -> page "1898"), Сампелевъ
+Александръ Николаевичъ (raw "1863" -> page "1868"), Барашъ Людмила
+Павловна (raw "1901" -> page "1905"). All six corrected in their
+`.raw.json` files, `parse_and_validate.py` re-run, `raw`/`analysis`
+reloaded, each spot-verified in the DB. **Total this session: 7 confirmed
+extraction bugs** (these six plus Старостина above).
+
+**Confirmed genuine print anomalies** (page matches raw exactly, a real
+one-edition printing error, not two people): Дорина Антонина Тимоѳеевна
+(1900 vs 1890), Черниковъ Дмитрій Абрамовичъ (1897 vs 1887, final
+edition), Бекефи Альфредъ Ѳедоровичъ (1876 vs 1883, penultimate edition —
+the same page also independently confirms Аслинъ's dual répétiteur role:
+"Онъ же и репетиторъ балета съ 12 декабря 1903 г."), Петипа Марія
+Маріусовна (1879 vs 1875, first edition only, 16-edition majority),
+Солнцевъ Прохоръ Павловичъ (1876 confirmed for the one edition checked;
+only 3 data points total, low stakes either way).
+
+**Two more genuinely open cases**, joining Поливановъ and Савицкій — both
+sides directly page-confirmed as accurately transcribed, no way to resolve
+from internal evidence: Тивольская Елена Николаевна (a clean, sustained
+switch — "1877" page-confirmed across 4 consecutive editions, then "1887"
+page-confirmed across the next 3, not a single outlier), Леонтьевъ Леонидъ
+Сергѣевичъ ("1903" and "1894" both page-confirmed, genuinely alternating
+across 5 editions with no discernible pattern).
+
+**Retracted:** the "Иванова Надежда Сергѣевна ordinal-misplacement bug"
+noted here originally was a false alarm — found by querying `raw` directly
+(which is correctly untouched/verbatim) rather than checking what the
+pipeline actually produces downstream. `analysis.person_entry` already
+resolves `balletartists_1901-02_MSK_p001__e021` to
+`family_name_clean='Иванова 4-я'`/`first_name_clean='Надежда'`, and both
+`entities.person.display_name` and the published `research.person.display_name`
+already correctly read "Иванова 4-я, Надежда Сергѣевна". Nothing to fix.
+See `docs/query_log.md`, 2026-08-21, "Correction: ... false alarm".
+
+**Final tally of the 37-name gap>3y pool:** 7 pipeline extraction bugs
+found and fixed; 8 confirmed genuine print anomalies (not over-merges); 6+
+confirmed genuine multi-period service (not over-merges — three via
+explicit "по...и съ..." page phrasing, several more via the structural
+same-entry_id dual-date signature); 4 genuinely open cases unresolvable
+from internal evidence (Поливановъ, Савицкій, Тивольская, Леонтьевъ).
+Поливановъ remains the single highest-concern case in the pool — the only
+one where the deviating value is a full day/month/year mismatch rather
+than a plausible single-digit slip or a two-milestone story.
+
+## 41. `entities.person.canonical_first_name`/`canonical_patronymic` lagged behind the analysis layer's name-cleaning across ALL entity types — 253 records corrected, one additional merge found
+
+**Status: fixed.** Followed up on #39's open question ("does this also
+affect first_name/patronymic, or other entity types?"). Root cause:
+`build_person_tier1()` (`pipeline/build_entities.py`) computes
+`entities.person`'s canonical fields with its own ordinal-extraction regex
+(`_BARE_ORDINAL_RE`, digit-only) run against **raw**, un-cleaned name
+fields — not the already-cleaned `analysis.person_entry_clean` columns.
+That regex is weaker than the one the analysis layer grew during this
+session's #35-#37 fixes (which also handles Roman/Cyrillic-numeral
+ordinals), so `entities.person`'s canonical fields silently missed every
+ordinal-placement and name-splitting fix made downstream — on top of
+carrying #39's original minority-spelling problem into first_name/
+patronymic too, not just family_name.
+
+A full re-run of `build_entities.py` would fix this at the root but is
+unsafe: correcting the regex changes `tier1_key` for affected clusters,
+which mints new `person_id`s and would orphan this session's 287+ Tier-2
+merges (they reference the old UUIDs). Fixed surgically instead —
+recomputed canonical fields directly from `analysis.person_entry_clean`
+via majority vote over each survivor's current linked entries, same method
+as #39, split into two independent, ordinal-presence-preserving checks
+(ordinals are legitimately season-dependent, established this session —
+never majority-voted). Two bugs in the fix script itself were caught and
+corrected before applying: independent per-field voting produced
+Frankenstein combinations on correlated fields (fixed by voting the
+(first, patronymic) pair jointly), and empty vote pools left old garbage
+values in place instead of clearing them (fixed). A safety guard was added
+after finding a third case: never accept first_name == family_name (a
+duplication artifact, not a real name).
+
+**BalletArtists**: 111 of 1003 active persons corrected (20 ordinal
+comma-leaks, 91 spelling/pairing mismatches) — every spot-checked fix
+matched an already-established correction from earlier this session that
+just hadn't reached `entities.person` (Zambelli, Гавликовскій, Грекова,
+Спрышинская, Тистрова, Пуни/Леонтина-Констанція). Bonus: fixing Пуни
+revealed she still existed as two separate `entities.person` records (1
+entry + 4 entries, sequential seasons, no overlap) — merged.
+
+**Other entity types**: Graduates 0/400 (clean), Administrators 19/243,
+Musicians 92/984 (mostly consistent multi-edition transliteration fixes
+for foreign surnames — German/Czech names spelled differently across
+editions), ProductionTeam 18/236, TheaterSchoolStaff 13/266.
+
+**Total: 253 canonical-field corrections + 1 merge**, all verified
+propagated through `build_research_model.py` to the published
+`research.person.display_name`. `research.person` 3229 -> 3228 (the one
+merge); `research.person_appearance` unchanged at 21158 (no data loss).
+
+**Update (continued same day): the code path itself is now fixed.**
+`build_person_tier1` (`pipeline/build_entities.py`) previously computed
+`entities.person`'s canonical fields from its own weaker, digit-only
+ordinal regex run against raw text — meaning any FUTURE full rebuild would
+have silently regressed everything fixed above. Fixed properly:
+
+- Widened the ordinal regex to match the analysis layer's
+  (`[0-9IVXІ]+-(?:й|я|е)`), and switched the function to source from
+  `analysis.person_entry_clean` instead of re-deriving a second, weaker
+  cleanup pass against raw text.
+- **The actual reconciliation strategy**: person_id continuity no longer
+  depends on a recomputed `tier1_key` string happening to still match its
+  old value (the root cause — any matching-logic improvement changes
+  affected rows' key, misses the old string, mints a new UUID, and orphans
+  every merge ever made against the old one, including this session's
+  287+ direct merges that never went through the pipeline's own Tier 2).
+  Reuse is now keyed on ENTRY MEMBERSHIP via `entities.person_link`, which
+  is always fully resolved to each entry's current living survivor
+  (`_repoint_all_superseded`'s guarantee) — ground truth no future logic
+  change can invalidate. Tombstoned rows are now explicitly carried
+  forward unchanged every rebuild (CLAUDE.md's "tombstone, never delete"),
+  since the entry-based design would otherwise have nothing to
+  reconstruct them from.
+- Added `_refresh_canonical_fields`: recomputes every live person's display
+  fields from their FULL current entry set after every merge pass. This
+  closes a second, related gap the fix itself surfaced: canonical fields
+  were previously computed once at Tier-1 formation and never revisited,
+  so a person whose original tiny cluster included a 1-vote garbled
+  spelling kept displaying it forever, even after Tier 2 later merged in
+  17 more entries agreeing on the real spelling.
+- Caught and fixed a bug in the fix itself before it reached production: an
+  early version voted the full (family, ordinal, first, patronymic) tuple
+  jointly, which is wrong whenever family-name noise and patronymic noise
+  vary independently on different entries (produced "Єедорова" — a
+  homoglyph nobody's entry actually had — from a case where 3/4 agreed on
+  the family spelling and 2/4 agreed on the patronymic separately). Fixed
+  to vote (family, ordinal) and (first, patronymic) as two independent
+  pairs, matching the method already validated by hand earlier in this
+  issue.
+
+Verified via dry run against a disposable DB copy (twice, once per code
+fix) before ever touching production: 0 entries lost, 0 tombstones lost or
+retargeted, person_link count unchanged. 22 entries changed person_id
+assignment — all genuine improvements (Tier 2's existing shared-tenure-date
+mechanism catching real duplicate clusters among records from the manual
+fix above). A full corpus-wide sweep after the fix found 0 remaining
+canonical-field mismatches anywhere, any entity type. Applied to
+production: `research.person` 3228 -> 3221 (7 new legitimate merges),
+`research.person_appearance` unchanged at 21158.
+
+## 42. Follow-up on #40's 4 remaining open date conflicts — 2 resolved, 1 new (harmless) variance found, 2 still open
+
+**Status: partially resolved.** Checked every remaining avenue for the 4
+cases #40 left open (full raw record across all fields, cross-reference
+against all 6 entity types, existing Wikidata links).
+
+- **Поливановъ, Василій Егоровичъ** — while re-checking, found (at the
+  user's prompting) that the patronymic itself alternates "Егоровичъ"
+  (14/16 editions) vs "Ивановичъ" (1903-04, 1905-06 only, with 1904-05
+  correctly reverting between them) — a previously unflagged variance,
+  raising a reasonable "is this a second person?" question. Checked both
+  scanned pages directly: genuinely printed both times, not an extraction
+  error. But the start date is identical ("23 декабря 1868") in all 17
+  editions regardless of which patronymic prints, with continuous roster
+  position/role/credits and no departure note — two different people
+  would not plausibly alternate one numbered slot year-to-year sharing an
+  identical tenure date. Read as a recurring compositor's substitution of
+  the far more common "Иванович" for the rarer "Егорович," independent of
+  the separate 1907-08 date anomaly. Not a second person. The core
+  1868-vs-1889 date conflict itself remains unresolved (majority favors
+  1868; 1889 stays an unexplained single-edition anomaly) — no cross-type
+  or Wikidata corroboration exists for this person.
+- **Савицкій, Михаилъ Ивановичъ** — RESOLVED. Found a `Graduates` record
+  (`graduates_1905-06_p001__e011`) showing him still enrolled in the
+  ballet division's student roster in 1905-06 — independent evidence
+  favoring "1 августа 1906 г." (the later BalletArtists date) as his real
+  company-artist start, with "1900" more likely his school-entry date
+  (same convention as Дмитриева/Голубинъ). One continuous person.
+- **Тивольская, Елена Николаевна** and **Леонтьевъ, Леонидъ Сергѣевичъ** —
+  no cross-reference in any other entity type, no Wikidata link, no new
+  evidence found. Remain genuinely open exactly as in #40.
+
+**Updated tally**: of the original 4 open cases, 2 resolved (Савицкій via
+independent cross-reference; Поливановъ's over-merge question specifically
+settled, though its date conflict itself stays unexplained), 2 still
+genuinely open with no further avenue currently available (Тивольская,
+Леонтьевъ).
+
+## 43. Name-field audit extended from BalletArtists to the other 5 entity types — Pattern C (244 rows) and Pattern D (1 row) fixed corpus-wide
+
+**Status: fixed.** #36/#37 established Patterns B-E and Latin-homoglyph
+corruption for BalletArtists but explicitly left the question open for
+other entity types — one comment in `build_duckdb.py` even flagged Pattern
+C as "confirmed" present in Musicians/TheaterSchoolStaff/Administrators
+without ever acting on it. Checked all 5 remaining entity types directly
+against `raw.person_entry` for every known pattern shape.
+
+**Confirmed genuinely absent elsewhere** (not just unverified — zero rows,
+including a broadened Latin-letter sweep): Pattern B (ordinal+comma in
+first_name), Pattern E (ordinal in rank_or_title), Latin-homoglyph
+corruption. These stay BalletArtists-only.
+
+**Pattern C is real and substantial**: 149 rows in Musicians, 11 in
+Administrators, 84 in TheaterSchoolStaff — 244 total, more than 4x the
+original 54-row BalletArtists count. Sample-verified identical shape
+(first_name = "FirstName Patronymic" run together as two words, patronymic
+blank) — e.g. an Administrators row that now correctly reads "Дягилевъ,
+Сергѣй Павловичъ" (Sergei Diaghilev, previously unsplit).
+
+**Pattern D found once more**: Musicians' Эйхенвальдъ sisters (Ида/Надежда)
+— the ordinal landed in patronymic on one row, exactly the BalletArtists
+Мендесъ-sisters shape. Confirmed via the raw corpus alone (the sisters'
+other rows already spell the ordinal split out unambiguously across
+multiple editions) — no page check needed. ProductionTeam and Graduates
+confirmed clean on every pattern.
+
+Extended `build_duckdb.py`'s Pattern C/D `entity_type` scoping to
+`('BalletArtists', 'Musicians', 'Administrators', 'TheaterSchoolStaff')`
+in all 4 affected CASE branches. Rebuilt `analysis.person_entry` (0
+remaining unfixed rows, verified). Propagated via `build_entities.py`
+(dry-run verified first): 0 entries lost, 0 tombstones lost, 2 new
+legitimate Tier-2 merges from previously-fragmented clusters now correctly
+recognized. Applied to production + `build_research_model.py`:
+`research.person` 3221 -> 3219, `research.person_appearance` unchanged at
+21158 (zero data loss).
+
+**Found in passing, not yet investigated**: Diaghilev ("Дягилевъ, Сергѣй
+Павловичъ") still exists as 2 separate `research.person` records — could
+be two genuinely distinct administrative appointments, or a real
+un-merged duplicate. Not chased down this pass.
+
+## 44. 233 duplicate persons found and merged corpus-wide — a new permanent pipeline safety net, `merge_duplicate_persons()`
+
+**Status: fixed.** Found while checking a curiosity flagged in passing at
+the end of #43: Diaghilev ("Дягилевъ, Сергѣй Павловичъ") existed as two
+separate `entities.person` records with matching role, rank, and exact
+start date. Investigated the full scope rather than hand-fixing the one
+instance.
+
+Root cause: the 2026-08-21 person_id-continuity fix (#41) deliberately
+freezes an existing person's entry membership across reruns (that's what
+makes person_id survive a matching-logic improvement) — but that also
+means two people correctly assigned different person_ids under an earlier,
+dirtier version of the data never get reunited on their own once a
+downstream fix (like #43's Pattern C extension) makes their names
+identical. Tier 2's own candidate search doesn't catch this either — it
+explicitly skips exact (edit-distance-0) matches, written on the
+assumption Tier 1 always catches those.
+
+Quantified the scope directly rather than assuming: an initial check using
+`tier1_key` (which includes `ordinal_suffix`) found 185 pairs — corrected
+after RG pointed out ordinal is a per-season positional label, not a
+stable identifier (the same fact behind #38 Pass 2), so requiring it to
+match too structurally undercounts. Redone on family+first+patronymic
+alone: **278 duplicate-name groups, 294 extra person records**.
+
+Implemented as a permanent pipeline function (`merge_duplicate_persons()`
+in `build_entities.py`, wired into `main()`'s merge loop), not a one-off
+script — this closes the gap for every future rebuild, not just today's
+data. RG specified the exact standard directly: matching names AND a
+matching start date together are sufficient corroboration; anything less
+needs individual care. Three required gates, all must pass:
+1. `entity_type` must match across every member of the group.
+2. No season/city overlap between any two members (the same conflict check
+   #38 used throughout).
+3. At least one exact shared `start_date_undate` somewhere in the group —
+   the same bar Tier 2's `apply_tenure_corroboration` already requires.
+
+Dry-run verified before touching production (converged after 2
+iterations): 233 duplicates merged into 222 survivors, 0 entries lost, 0
+tombstones lost, `person_link` count unchanged. 38 cross-entity-type + 8
+season/city-overlap + 10 no-shared-date groups correctly held back —
+spot-checked and confirmed genuinely ambiguous, not silently dropped.
+Applied to production + `build_research_model.py`: `research.person`
+3219 -> 2986 (zero data loss on `research.person_appearance`, unchanged at
+21158).
+
+**Not yet done**: the 56 held-back groups (38 cross-entity-type + 8
+overlap + 10 no-shared-date) haven't been individually reviewed. Several
+of the cross-entity-type ones look like plausible same-person-different-
+role matches (e.g. "Мендесъ, Іосифъ" across BalletArtists+
+TheaterSchoolStaff sharing an exact date) worth a deliberate look.
+
+**Correction to #44 (2026-08-24): gate 1 had a real bug, fixed, and the
+numbers above are stale.** Gate 1 originally required *exact set
+equality* of `entity_type` across every member of a group
+(`len({etypes}) > 1` → skip) rather than checking for a non-empty
+*intersection*. This wrongly excluded any case where one record's
+entity_type set was a strict subset of another's despite sharing a type
+and an exact date (e.g. `{BalletArtists}` vs `{BalletArtists,
+Graduates}}`) — found by spot-checking the held-back cases: 25 of the 38
+"cross-entity-type" holds turned out to share a type after all. Fixed to
+`common_types = frozenset.intersection(*etypes_per_member); if not
+common_types: skip`. Re-verified via the same dry-run-diff discipline (0
+entries/tombstones lost) before applying. Corrected result: **27
+duplicates merged into 24 survivors** (not 233/222 — the 233 count above
+was itself from a run before this fix), holding back **11
+cross-entity-type + 11 season/city-overlap + 10 no-shared-date = 32**.
+`research.person_appearance` unchanged at 21158 throughout. See #45 for
+the follow-up review of these 32.
+
+## 45. Individual review of #44's 32 held-back duplicate-person groups — 4 hand-merged with hard date evidence, cross-entity-type gate confirmed correct-as-designed
+
+**Status: partially done.** #44's `merge_duplicate_persons()` deliberately
+holds back any group that fails one of its 3 gates for individual human
+review rather than guessing. Worked through the 11 cross-entity-type
+holds first (RG: "let's work on this carefully").
+
+**Жукова, Вѣра Васильевна** (BalletArtists 1890-91 only, TheaterSchoolStaff
+teaching post starting 1901) — her BalletArtists record actually shows she
+left service 1 March 1891, one season in, not a 32-year span as first
+framed. Real gap is 10 years (retired dancer → later teacher), plausible
+but no positive date link. RG: flag for further research, not merged.
+
+**Степанова, Лидія Петровна** — Graduates says 1898-05-01, BalletArtists
+says 1898-06-01, 9/9 editions. Checked which is more common in the
+professional record: June 1 is unanimous across every BalletArtists
+printing; May 1 appears only once, in the Graduates row. Read as two
+different, both-correct milestones (school release vs. employment start),
+not a conflict — same pattern as the Graduates-timing cases below. RG
+agreed to merge.
+
+**Погожевъ, Владиміръ Петровичъ** and **Пчельниковъ, Павелъ Михайловичъ**
+(each: an Administrators post + a TheaterSchoolStaff honorary-council seat
+with no date field). RG asked whether names match and timing is
+reasonable. Names identical in both entity types for each (one spelling
+variant, "Владимиръ" for "Владиміръ" once). Timing is *concurrent*, not
+sequential as first framed — the council seat runs in parallel with the
+substantive administrative post the whole time, consistent with an ex
+officio arrangement. RG agreed to merge both.
+
+**7 "Graduates-timing" cases** (Кочетовская, Уракова, Ивановъ Василій,
+Иванова Надежда, Павлова Анна, Павлова Евгенія, Смирновъ Викторъ) — RG
+asked what season each graduated. Queried `raw.person_entry`/
+`source_pages` directly: in all 7, the Graduates listing's edition year is
+the exact academic year whose end lines up with the printed career-start
+date (e.g. graduated 1890-91 → career starts Sept 1891), zero
+counterexamples, consistent with a normal graduation-to-employment
+interval. While investigating **Кочетовская** specifically, RG pointed
+out the Report gives her an exact date after the full list, missed
+because the list spans a page break — confirmed directly against the
+scan (`ForUpload_1890-91_TheaterSchoolReport.pdf` pp. 255-256): the
+trailing sentence "Всѣ 12 человѣкъ съ 1 сентября 1891 г. опредѣлены..."
+covers 6 Moscow girls on p.255 (incl. Кочетовская) plus 6 Moscow boys on
+p.256, but the extraction only attached it to the boys (same-page
+entries), leaving the girls undated.
+
+**Discovered this was already solved, more rigorously, in an earlier
+session (2026-08-20) and never surfaced**: `docs/ballet_graduates.md` +
+`outputs/full_run/ballet_graduates_tenure.csv` (referenced from #34's
+7 addenda) already hand-verified all 399 ballet-department Graduates
+against the actual scans, including the exact same 8 pages / cohorts this
+session was independently re-deriving. Abandoned an in-progress duplicate
+fix to `pipeline/parse_and_validate.py` (a hand-typed dict of the same 8
+pages, cleanly reverted, zero trace left) in favor of using the real
+thing. Cross-checked all 7 names against it: **4 have a Report-stated
+exact date matching BalletArtists precisely** (Кочетовская 1891-09-01,
+Уракова 1891-06-01, Ивановъ Василій 1896-09-01, Павлова Анна 1899-06-01);
+**3 are genuinely `not_stated_in_report`** (Иванова Надежда, Павлова
+Евгенія, Смирновъ Викторъ) — all three are Moscow cohorts in years RG
+confirmed the Yearbook editors didn't receive the Moscow school's data in
+time for printing, a real historical publishing gap, not a digitization
+or extraction failure.
+
+**Wired the CSV's dates into the actual pipeline** (RG: "do the full
+pipeline fix"), since it had only ever lived as a reference document —
+`raw.person_entry_service`/`entities`/`research` still showed these
+people as undated before this. Moved the CSV to `docs/ballet_graduates_tenure.csv`
+(git-tracked; `outputs/` is disposable) and added
+`pipeline/parse_and_validate.py`'s `_repair_graduates_tenure()`: loads
+`entry_id -> tenure_start_date` from the CSV (only the 136 of 335 dated
+rows the raw JSON doesn't already have — the other 199 were already
+correct, e.g. rows where only `school` had been wrong), renders the ISO
+date back to a printed-style Russian phrase so it still round-trips
+through `parse_russian_date()`, and backfills any entry with no existing
+`service_periods`. Verified via the standard dry-run-diff (0
+entries lost/gained, exactly 136 new `person_entry_service` rows, all
+`graduates_*`) before applying to production and rebuilding
+`entities`/`research`. `research.person_appearance` unchanged at 21158
+throughout.
+
+**Confirmed, not assumed, that this date fix alone would not
+auto-resolve any of the 4 cases via `merge_duplicate_persons()`**: reran
+it on production — 0 duplicates merged, same 11/11/10 held back as
+before. Traced why: gate 1 requires a non-empty *intersection* of
+`entity_type` between the two records, and a Graduates-only record vs. a
+BalletArtists-only record are disjoint sets by construction — that
+transition is *always* cross-entity-type even when it's unambiguously
+the same person. This is the gate working as designed, not a bug to loosen;
+individual review is the correct mechanism for this specific
+Graduates→career pattern, not a rule change.
+
+**Hand-merged the 4 confirmed cases** (Кочетовская, Уракова, Ивановъ
+Василій, Павлова Анна) using the same tombstone convention as issue #38
+(`superseded_by_person_id`, `_repoint_all_superseded`,
+`_refresh_canonical_fields`), dry-run verified first. `entities.person`
+live count 2965 → 2961; `research.person` 2959 → 2955 (4, as expected);
+`research.person_appearance` unchanged at 21158.
+
+**New finding surfaced while verifying Павлова Анна, not yet acted on**:
+a third `entities.person` record for "Павлова, Анна" (no patronymic,
+single entry `balletartists_1907-08_MSK_p003__e021`) shares the exact
+same date (1899-06-01) as the just-merged Павлова Анна Матвѣевна, but is
+tagged Moscow instead of her usual SP. Its raw fields read
+`family_name='Павлова', first_name='2-я', patronymic='Анна'` — the
+familiar ordinal-in-first-name corruption (#35-37's pattern), with the
+real patronymic (Матвѣевна) dropped and city likely also wrong as a
+result. Very likely the same person's 1907-08 season double-counted
+under a mis-parsed second entry, not a genuine third Pavlova — flagged
+for a follow-up fix, not merged this session.
+
+**Addendum (same day): executed the 3 remaining queued merges** —
+Степанова, Погожевъ, Пчельниковъ. Степанова Лидія Петровна merged
+straightforwardly (Graduates `1898-05-01` + BalletArtists 9-edition
+`1898-06-01` → one 10-entry record). Погожевъ and Пчельниковъ turned out
+to already be *partially* auto-merged by `merge_duplicate_persons()`
+during the date-fix rebuild above (a 39/40-entry `{Administrators,
+TheaterSchoolStaff}` combo record already existed for each) — what
+remained was a small residual 4-entry `TheaterSchoolStaff`-only split per
+person, all 4 entries reading "Почетные члены конференціи" under the
+same institution with `first_name` holding the unsplit "Владиміръ
+Петровичъ"/"Павелъ Михайловичъ" string (the same name-concatenation
+extraction pattern documented for Graduates, here landing in
+TheaterSchoolStaff on 4 particular editions instead). Confirmed same
+person/role via heading_path + institution, merged the split in. Dry-run
+verified first (exactly -3 live persons, 0 change to `raw.person_entry`);
+applied to production, rebuilt `research`
+(`research.person` 2955 → 2952, `research.person_appearance` unchanged
+at 21158). Both survivors now show 43/44 entries under
+`{Administrators, TheaterSchoolStaff}`.
+
+**Second addendum (same day): the season/city-overlap group (9 groups,
+not 11 — 2 had already resolved above) individually reviewed and
+resolved.** Replicated `merge_duplicate_persons()`'s exact gate logic
+against production to re-derive the current list rather than trust a
+stale count. Two patterns:
+
+- **5 groups: the same name-concatenation bug** already fixed for
+  Погожевъ/Пчельниковъ (first+patronymic unsplit on a handful of
+  editions) — Писнячевскій Владиміръ Порфирьевичъ, Фарскій Альбертъ
+  Карловичъ, Золотаренко Павелъ Петровичъ (2 fragments), Дебогорій-
+  Мокріевичъ Порфирій Андреевичъ, and Франке Ѳедоръ Юліевичъ (clarinet
+  variant only — the "Франке 2-й" waldhorn record in the same 3-way
+  group is a genuinely different sibling, correctly left separate: same
+  first name/patronymic, different instrument, different exact date).
+  RG approved this whole batch; merged.
+- **4 groups: one real person listed twice per edition** (an honors
+  list + a post list, or two institutional rosters), not two
+  colleagues — Ивановъ Левъ Ивановичъ (the historical choreographer,
+  "second ballet master," identical role text/date, split only by
+  whether "1-й" printed), Рюминъ Иванъ Ивановичъ (senior court
+  official/school director, identical rank text/date across heavy
+  season overlap), Павловъ Михаилъ Львовичъ (single stray entry
+  matching the main record's date exactly), and Кулле Альфредъ
+  Ѳедоровичъ. RG asked to see the actual scan for Кулле specifically
+  before deciding (a database-level `heading_path` said "Управляющій
+  Училищемъ" / School Director, which would have made this a real
+  conflict) — downloaded the iCloud-stub PDF
+  (`ForUpload_1902-03_Spisok_OrchestraSP.pdf`) and rendered pp. 83 and
+  86 directly. Found a reciprocal transfer note, not a conflict: p.86
+  (Mikhailovsky orchestra) reads "...Тромбонъ. Переведенъ въ оркестръ
+  Маріинскаго театра съ 1 сентября 1902 г." (transferred TO Mariinsky);
+  p.83 (main SP orchestra) reads "...Тромбонъ. Переведенъ изъ оркестра
+  Михайловскаго театра съ 1 сентября 1902 г." (transferred FROM
+  Mikhailovsky) — same trombonist, same 1891 start date, each roster
+  citing the other institution for the same 1902 transfer date. The
+  "Управляющій Училищемъ" text does not appear anywhere on the actual
+  page -- confirmed as a stray extraction misattachment, unrelated to
+  Kulle. RG approved the merge once shown this.
+
+All 9 merges dry-run verified first (0 change to `raw.person_entry`),
+applied to production, `research` rebuilt after each batch.
+`entities.person` live count 2958 → 2948 across this whole review
+(Золотаренко absorbed 2 fragments, counted as -2 alone).
+`research.person_appearance` unchanged at 21158 throughout.
+
+**Third addendum (same day): the no-shared-date group (10 groups, not
+the earlier "8" estimate) individually reviewed — 6 merged, 4 deferred.**
+Re-derived the current list the same way as the season/city-overlap
+pass above (replicating the gate logic against live production, not
+trusting the earlier count). Found:
+
+- **5 more instances of the Погожевъ/Пчельниковъ name-concatenation
+  bug**, all under the identical "Почетные члены конференціи" heading:
+  Григоровичъ Дмитрій Васильевичъ, Климченко Андроникъ Михайловичъ,
+  Маннь Ипполитъ Александровичъ, Потѣхинъ Алексѣй Антиповичъ, Іогансонъ
+  Христіанъ Петровичъ — the 11th through 15th confirmed instance of this
+  bug this session. RG approved the batch; merged.
+- **Конскій, Григорій Яковлевичъ** (Moscow violinist) — RG asked to see
+  the actual entries before deciding. Checked both scans directly
+  (`ForUpload_1890-91_Spisok_OrchestraMoscow.pdf` p.107,
+  `ForUpload_1891-92_Spisok_OrchestraMoscow.pdf` p.85): both genuinely
+  print a different decade for his start date ("28 іюля 1862" vs "28
+  іюля 1852"), consecutive seasons, same city/instrument/role, and the
+  1891-92 printing is explicitly his closing record ("Оставилъ службу 1
+  августа 1892 г."). Read as one person's final two seasons with a
+  compositor's digit slip in one printing -- same shape as the
+  already-documented Мосолова 4-day variant (this issue's 7th
+  addendum), both printings genuine. RG approved; merged.
+- **4 groups deferred to a to-do list, not merged** (RG: "put the others
+  in the to-do list for later") — Васильева Анна, Ильина Елена, Новикова
+  Екатерина, Симонова Антонина, all Graduates with no patronymic
+  printed. Each pair has a *different* season AND a *different* exact
+  date -- no positive evidence pointing to one person rather than two
+  different graduates who happen to share a common name. Needs an
+  explicit decision from RG on how (or whether) to resolve common-name
+  Graduates collisions with no patronymic to disambiguate; not
+  guessed at here.
+
+All 6 merges dry-run verified first (0 change to `raw.person_entry`),
+applied to production, `research` rebuilt (`research.person`
+2942 → 2936). `research.person_appearance` unchanged at 21158.
+
+**This closes out the entire #44 held-back review** (cross-entity-type,
+season/city-overlap, and no-shared-date groups all individually
+adjudicated) except the 4 deferred Graduates pairs above.
+
+**Still open / to-do list**:
+1. The 4 deferred Graduates common-name pairs (Васильева Анна, Ильина
+   Елена, Новикова Екатерина, Симонова Антонина) — needs RG's decision
+   on a general policy for common-name/no-patronymic collisions.
+2. Жукова, Вѣра Васильевна (flagged for further research, not merged).
+3. The Павлова "2-я" mis-parse found while merging Павлова Анна
+   Матвѣевна (a `first_name='2-я'`/`patronymic='Анна'` ordinal-
+   corruption artifact, likely double-counting her 1907-08 season under
+   the wrong city) — needs a fix, not yet done.
+4. Confirmed unrecoverable, no action possible: Иванова Надежда, Павлова
+   Евгенія, Смирновъ Викторъ (all `not_stated_in_report` — a genuine
+   Moscow reporting gap in the original yearbook, not an extraction
+   failure).
+
+## 46. Institution/department/position accuracy audit started — 2 confirmed extraction misattachments fixed, broader normalization survey still open
+
+**Status: partially done**, prompted by RG wanting to verify people's
+departments/areas/positions are accurate.
+
+Surveyed `institution` (the closest existing field to "which theater/
+department") across all 6 Spiski entity types via
+`research.person_appearance`. It's structurally noisy, not a clean
+categorical field: 18-69 distinct values per entity type, mixing document
+titles ("Списокъ личнаго состава театральнаго управленія"), bare city
+names ("МОСКВА."), real theater names with spelling drift ("Маріинскій"
+vs "Мариинскій"; "Большой театръ" vs "Большой театр." -- the latter
+missing the pre-reform ъ, not yet checked against a scan to confirm
+genuine vs. extraction-dropped), and in two cases outright misattached
+text from elsewhere on the page. `heading_path`/`role_normalized`
+(position) likely has the same shape of problem (145-252 distinct values
+per entity type) but wasn't surveyed in the same depth yet.
+
+**Structural finding**: there is currently no clean "which theater does
+this person belong to" field anywhere in the published data.
+`entities.theater` (6 hand-seeded canonical theaters) is wired only to
+`research.event`'s performance venue, never to person records at all --
+building an equivalent for people, if wanted, is new work, not a bug fix.
+
+**Two confirmed misattachments fixed** (both checked against the actual
+scans, not guessed):
+
+1. **25 BalletArtists rows** (`balletartists_1903-04_MSK_p002`) had a
+   repertoire credit-list sitting in `institution`. Confirmed against
+   `ForUpload_1903-04_Spisok_BalletArtistsMoscow.pdf` p.106: it's the tail
+   half of Другашева, Марія's own `credit_summary_text` (the previous
+   page's entry 25), cut off mid-sentence by the page break and misread
+   as a page header. Fixed: appended the missing text back to her entry;
+   blanked `institution` on the 25 contaminated entries (no real header
+   exists on that page — verified against the scan, not assumed).
+2. **1 ProductionTeam row** (`productionteam_1895-96_p001__e007`,
+   Ковалевскій, Ѳедоръ Ѳедоровичъ) had his own name+date duplicated into
+   both `institution` and `heading_path`. Confirmed against
+   `ForUpload_1895-96_Spisok_ProductionTeam.pdf` p.108: he's listed under
+   "Михайловскій театръ. / Помощникъ машиниста.", directly below
+   Ашитковъ (that theater's machinist). Fixed both fields to match.
+
+Implemented as `pipeline/parse_and_validate.py`'s new
+`_repair_misattachments()` (a documented, page-keyed patch table,
+`_MISATTACHMENT_FIXES` — same pattern as `_repair_graduates_tenure`),
+dry-run verified (0 row-count change, exactly 3 entries touched across 2
+pages) before applying to production and rebuilding
+`analysis`/`research`. `research.person`/`research.person_appearance`
+unchanged (2936 / 21158) -- text-only fixes, no entity/date changes.
+
+**Addendum (same day): stepped back and looked at `institution`/
+`heading_path` together across all 6 entity types (not just institution
+alone) before deciding on a theater-canonical design.** Found the
+theater-level signal varies genuinely by entity type, not uniformly:
+TheaterSchoolStaff/Graduates carry no theater info at all beyond the
+school's own city (`institution` already cleanly SP-vs-Moscow);
+BalletArtists' `heading_path` is role/status only ("Артисты,"
+"Учащіяся балетнаго класса"), never a building; Musicians reliably
+names a specific orchestra ("Оркестръ Михайловскаго театра," "...
+Александринскаго театра," "...Малаго театра"); Administrators/
+ProductionTeam are a genuine mix of theater-specific and city-wide
+roles. **RG concluded no `theater_canonical` field is needed at all**
+given how uneven the underlying signal is — a uniform field would
+misrepresent several entity types. Not built.
+
+**Second addendum (same day): the "Отдѣль"/"Отдѣлъ" spelling bug fixed**
+(RG: "let's just fix the spelling bug for now"). 130 ProductionTeam
+rows across 6 seasons had "Отдѣль декораціонный" (soft sign) instead of
+"Отдѣлъ декораціонный" (hard sign) in `heading_path` — confirmed a
+genuine one-character extraction misreading against the scan
+(`ForUpload_1890-91_Spisok_ProductionTeam.pdf` p.111 reads "Отдѣлъ
+декораціонный."), not a printed variant. "Отдѣль" never appears in
+`institution` and never as any other phrase corpus-wide, so a
+word-boundary regex fix was safe to apply universally. Implemented as
+`pipeline/parse_and_validate.py`'s new `_repair_department_spelling()`.
+Dry-run verified (0 row-count change, exactly 130 entries fixed, 0
+remaining afterward); applied to production, `analysis`/`research`
+rebuilt (`research.person`/`research.person_appearance` unchanged at
+2936 / 21158).
+
+**Still open**: a proper audit of `heading_path`/`role_normalized`
+(position/department) for further duplicate-spelling noise beyond this
+one confirmed case (145-252 distinct `role_normalized` values per
+entity type, not yet surveyed in depth).
+
+**Third addendum (2026-08-27): театръ/театр. orthography question
+resolved — extraction slip, confirmed against the scan, fixed
+corpus-wide.** `institution`/`heading_path` had "Малый театр."/"Большой
+театр." (missing pre-reform ъ) at 31 entries across 3 `ProductionTeam`
+pages (1894-95, 1895-96, 1897-98). Checked directly against
+`ForUpload_1894-95_Spisok_ProductionTeam.pdf` p.93
+(`productionteam_1894-95_p003`): the same page extracts both "Малый
+театр." (3 rows) and "Малый театръ" (10 rows) for what is, on the actual
+printed page, a single subheader reading "Малый театръ." with the hard
+sign every time — a same-page contradiction that rules out a genuine
+printed variant and confirms this is the model dropping the ъ
+inconsistently while reading the identical header repeatedly down the
+page. Fixed via a new `pipeline/parse_and_validate.py` function,
+`_repair_teatr_spelling()` (`_HARD_SIGN_TYPO_RE`, `\b(Малый|Большой)
+театр\.` → `\1 театръ.`), same pattern as `_repair_department_spelling()`
+above. Dry-run verified against `outputs/full_run/raw` first (31 entries,
+3 pages, exactly matching the query-time count) before applying.
+Re-ran `parse_and_validate.py` + `build_duckdb.py` (raw/analysis) +
+`build_research_model.py` (research) against production
+(`outputs/full_run/imperial_theaters.duckdb`, backed up first to
+`imperial_theaters.duckdb.bak_pre_teatr_fix`); did not re-run
+`build_entities.py`/`link_wikidata.py` since `institution`/`heading_path`
+aren't identity-linking fields and `entities.person_link`'s `entry_id`
+keys are stable across an `analysis.person_entry` rebuild. Verified 0
+remaining `театр.` instances in `research.person_appearance`
+post-rebuild; `research.person`/`research.person_appearance` row counts
+unchanged at 2936/21158, confirming a pure text fix with no entries
+added, dropped, or re-merged.
+
+**Fourth addendum (2026-08-27): Маріинскій/Мариинскій drift checked --
+split into two unrelated findings, one fixed, one deliberately left
+open as its own issue (#52).** Surveyed all `institution`/`heading_path`
+values matching "Мариинск" (modern и, 50 rows total) against "Маріинск"
+(pre-reform і, 603 rows -- the overwhelming majority, as expected).
+
+*Fixed*: 18 scattered rows, all the nominative "Мариинскій театръ" form,
+across 6 `ProductionTeam` pages (1898-99, 1902-03, 1903-04 x2, 1904-05,
+1905-06). Confirmed against the scan on `productionteam_1903-04_p001`
+(`ForUpload_1903-04_Spisok_ProductionTeam.pdf` p.119): every subheader on
+that page reads "Маріинскій театръ", yet 8 of that page's own entries
+(Бергеръ, Бекетовъ, Калиновъ, Щеголевъ, Семирадзкій, Иманъ, etc. -- all
+independently confirmed present on the scan) extracted `institution` as
+"Мариинскій" -- same extraction-slip mechanism as the театръ/театр. fix
+above. Fixed via a new `_repair_mariinsky_spelling()`
+(`\bМариинскій\b` → `Маріинскій`), deliberately scoped to the nominative
+case only so it wouldn't touch the different, still-open issue below.
+Dry-run verified (18 entries, 6 pages, exact match) before applying to
+production; re-ran `parse_and_validate.py` + `build_duckdb.py` +
+`build_research_model.py`; 0 remaining post-rebuild;
+`research.person`/`research.person_appearance` unchanged at 2936/21158.
+
+*Not fixed -- see issue #52*: the other 32 rows are a single, different
+case form ("...Императорскомъ Мариинскомъ театрѣ") on one
+`Administration` page, which turned out not to be a spelling question at
+all.
+
+## 52. Fabricated institution value on `administration_1903-04_p003` --
+32 entries tagged with a document-title phrase that appears nowhere on
+the actual scanned page
+
+**Status: logged, not fixed** (RG: "Log only, don't touch yet" -- found
+while checking issue #46's Маріинскій/Мариинскій thread, see its fourth
+addendum above).
+
+All 32 entries on `administration_1903-04_p003` have `institution` =
+"Списокъ лицъ, состоящихъ на службѣ въ Императорскомъ Мариинскомъ
+театрѣ" ("List of persons in service at the Imperial Mariinsky
+Theatre"). The people themselves are all real and correctly transcribed
+-- every name (Обуховъ, Леммлейнъ, Розовъ, Плескій, Коровинъ, Казанскій,
+Дворецъ-Дворецкій, the 23 numbered doctors, etc.) matches
+`ForUpload_1903-04_Spisok_Administration.pdf` p.126 directly. But:
+
+- This exact phrase, in either spelling, appears **nowhere else in the
+  entire corpus** (checked both "Мариинскомъ" and "Маріинскомъ").
+- It does not appear printed anywhere on p.126 itself, nor on p.123-125
+  (checked all three directly against the scan/Obsidian vault images) --
+  no title, banner, or subheader resembling it is visible.
+- The entries themselves aren't Mariinsky-specific at all: doctors
+  ("Врачебная часть"), montirovochnaya-chast staff, a registrar, an
+  artist/librarian -- general theater-administration roles spanning all
+  the Imperial theaters, not one theater's staff.
+- The page IS part of the same document as `administration_1903-04_p000`,
+  whose real printed title (confirmed on the scan) is "СПИСОКЪ личнаго
+  состава театральнаго управленія" -- a shorter, generic title with no
+  theater named.
+
+**Working theory, not yet confirmed**: the model fabricated this value
+rather than misreading one, likely by borrowing the sentence structure of
+a genuinely common template seen elsewhere in the corpus ("Списокъ лицъ,
+состоящихъ на службѣ въ Императорскихъ театрахъ," 363 occurrences,
+plural/generic) and incorrectly specializing it to a named theater --
+possibly latching onto an unrelated, single nearby mention of "Маріинскій
+театръ" on p.124 (a police-master role, nothing to do with these 32
+entries).
+
+**Not yet done**: decide the actual fix (options discussed: blank
+`institution` for these 32 entries per the existing misattachment-fix
+pattern; replace it with the real document title from p000; or survey
+other `Administration`-season pages first to see if this fabrication
+pattern recurs elsewhere before deciding). Also not yet done: checking
+whether other entity types show the same kind of fabricated-institution
+pattern, since this was found incidentally while checking something
+unrelated (Маріинскій/Мариинскій spelling), not via a deliberate audit.
+
+## 47. Venue accuracy audit (events, pivoting from person entities to performance events) — `theater_canonical` classifier gap found and fixed
+
+**Status: fixed.** RG pivoted from the person-side department/position work
+to performance events, starting with venue accuracy (`research.event.
+theater_canonical`) since that field already existed for events (unlike
+the person side, where #46 found no equivalent field exists at all).
+
+Event venue data turned out to be much cleaner than the person side:
+27,930/27,930 events had a `theater` value, and only 158 (0.57%) failed
+to resolve to `theater_canonical`. Read the actual repertoire scans
+rather than guess, and found two genuinely different situations:
+
+- **88 rows legitimately have no single theater to name** — whole-city
+  (or literally the whole page's) dark days, where every theater in the
+  group shows "—" that day. `theater` holds a group label
+  ("С.-Петербургскіе театры"/"Московскіе театры") or, when literally
+  every theater on the page was dark, the date column's own header text
+  ("Мѣсяцъ, день и число") leaked in as a fallback value. Confirmed
+  against `ForUpload_1890-91_Repertoire.pdf` p.8-9 (a week where all 3
+  SP theaters are dashed) and `ForUpload_1892-93_Repertoire.pdf` p.2-3
+  (10 days where all 3 SP theaters are dashed while Moscow's Большой has
+  shows). `theater_canonical=NULL` is correct for these.
+- **70 rows were a real, fixable classifier gap** — a single specific
+  theater dark while its city's other venues still had shows, written
+  as a compound "[city group]. [theater]" string ("Московскіе театры.
+  Большой", "С.-Петербургскіе театры. Маріинскій", etc.) that the
+  classifier's `starts_with()` check couldn't catch (the theater name
+  sits as a suffix, not a prefix). Confirmed against
+  `ForUpload_1896-97_Repertoire.pdf` p.2-3: Большой genuinely dark that
+  week while Малый has shows on every one of the same days.
+
+Fixed `theater_canonical`'s CASE logic in `pipeline/build_duckdb.py`
+(`starts_with()` -> `contains()`). Verified no false positives first:
+checked every distinct raw `theater` value's classification under both
+old and new logic -- only the 5 expected compound strings changed.
+Applied to production; this also fixed a downstream artifact in the
+existing completeness-reconciliation logic (issue #13): the
+"not_captured" placeholder count dropped 4050 -> 4025, since those 70
+events had been double-counted (once as a mislabeled real event, once
+as a phantom "missing" placeholder for the same date+theater cell).
+`research.event` 27930 -> 27905 (the 25 now-redundant placeholders
+removed); `research.performance`/`research.person_appearance` unchanged
+(24894 / 21158) -- no real performance data was ever attached to the
+removed placeholders.
+
+**Also resolved along the way**: RG initially asked about building a
+`theater_canonical`-equivalent field for *people* (mirroring this
+existing event-side field) but concluded, after seeing how unevenly the
+theater-level signal exists across person entity types (#46's
+addendum), that no such field is needed on the person side. This
+issue's venue-accuracy audit was scoped to events only from the start.
+
+**Still open**: the broader performance-events work RG was offered --
+date accuracy (~6%/1442 rows with a parsing problem), the remaining
+completeness gaps (4025 `not_captured` events), receipts, and
+repertoire/work-title accuracy -- none started yet.
+
+## 48. Repertoire missing-pages audit — one confirmed scanning gap, four extraction date bugs fixed, one genuine historical closure correctly distinguished from a bug
+
+**Status: mostly done**, prompted by RG's specific worry about pages
+missed during scanning/uploading, distinct from #20's whole-season gap
+check and from the completeness (`not_captured`) tracking already in
+place.
+
+**Method**: used date continuity within each season as a proxy (a daily
+printed table should have no gap beyond known closures), then verified
+every suspicious gap against the actual scan before concluding anything
+-- several looked like missing pages at first read and turned out to be
+extraction bugs instead, or vice versa.
+
+**Confirmed genuinely missing pages**: `ForUpload_1890-91_Repertoire.pdf`
+-- the book's own printed page numbers jump from 7 straight to 10
+between `_002.jpg` and `_003.jpg`; pages 8-9 (~Oct 12-31, 1890) were
+never scanned. Not recoverable from what we have; RG informed.
+
+**Four real extraction date bugs found and fixed, all the same general
+shape** (a page-specific wrong `month_text`/`year_text`, each confirmed
+against its scan before fixing, none guessed at or generalized into a
+corpus-wide rule):
+
+1. `repertoire_1895-96_p005` -- `year_text` read "1893 г." where the
+   scan clearly shows "1895 г." (108 sessions). This was found first,
+   while checking date continuity, as a phantom 596-day gap.
+2. `repertoire_1907-08_p000` -- spans Aug 30-Sep 9 per the scan, but
+   `month_text` never advanced past "Августъ" once day rolled from 31
+   to 1, so 9 real September days appeared as bogus August dates (29
+   sessions). Found while chasing down a 20-day gap that first looked
+   like it might be another missing-page case (it wasn't -- see below).
+3. `repertoire_1902-03_p008` -- spans Oct 22-Nov 3, but the model
+   labeled every row "Ноябрь" from the start (all 40 sessions),
+   including the Oct 22-31 portion (29 of those needed fixing) --
+   likely misled by this one page's own running header printing the
+   two months in reverse order ("22 ноября...3 октября.", unlike every
+   other page's start-date-first convention).
+4. `repertoire_1896-97_p000` -- a third variant: `month_text` for 50
+   September rows literally read "1 сентября" (a full date fragment,
+   not just the month name), so `parse_russian_date` picked up the
+   stray embedded "1" instead of each row's real, distinct day already
+   sitting correctly in `date_text` -- all 50 rows collapsed onto the
+   single bogus date 1896-09-01. This was the same underlying defect
+   class as #14's original day-of-week validator finding, just a
+   different failure shape (whole month collapsed onto one date, not a
+   day-count drift).
+
+Found via a corpus-wide scan for the general shape (day-of-month
+decreases while `month_text` stays unchanged, or a day sequence
+otherwise doesn't advance): 9 candidate pages total. Only these two of
+the 9 additional candidates beyond the already-known 1907-08/1895-96
+cases matched a confirmed, scan-verified bug -- 6 more candidates were
+individually checked and are explicitly NOT fixed:
+`repertoire_1890-91_p000` and `repertoire_1906-07_p048`/
+`repertoire_1907-08_p048` are false positives of the detection
+heuristic itself (the day sequence doesn't actually decrease once read
+correctly); `repertoire_1897-98_p010`, `repertoire_1899-00_p037`,
+`repertoire_1904-05_p011`, `repertoire_1906-07_p037` show a smaller,
+different pattern (an isolated single-digit day misread, e.g. "23" for
+"29") that needs its own individual scan verification before any fix --
+left as a to-do, not guessed at.
+
+Implemented as `pipeline/parse_and_validate.py`'s
+`_REPERTOIRE_YEAR_FIXES` and `_REPERTOIRE_MONTH_FIXES` (page + 1-based
+session-index-range keyed, same documented-table pattern as the earlier
+`_MISATTACHMENT_FIXES`). Every fix dry-run verified first (0
+row-count change each time) before applying to production; each also
+required re-running `validate_performance_dates.py` afterward, since
+`research.event.date` prefers that table's `corrected_date_undate` over
+the raw date via `COALESCE` -- without the refresh, a stale day-of-week
+"correction" computed back when the date was still wrong would silently
+override the fix (caught this the hard way on the first of the four
+fixes, then repeated the refresh step for the rest). Net effect across
+all four: `analysis.event_entry_date_check`'s `invalid_date` bucket went
+3->0 (the bogus "Nov 31" from bug #3 doesn't exist as a real date);
+`intra_block_disagreement` 108->58 (bug #4's 50 collapsed-onto-one-date
+rows were exactly this category); completeness `not_captured` gaps
+4025->3911 (the newly-correct dates now properly fill real grid cells
+instead of leaving them looking empty). `research.person_appearance`
+unchanged at 21158 throughout (person data untouched); `research.event`
+net -114 (removed phantom "not_captured" placeholders, not real data).
+
+**A genuine historical event correctly distinguished from a bug, not
+"fixed"**: `repertoire_1894-95_p002`'s apparent 69-day gap (Oct 24-Dec
+31, 1894) is not an error at all -- the actual printed page jumps
+directly from "19 Октября" to "1 Января" with no page break in between,
+almost certainly the Imperial theaters' closure following **Alexander
+III's death** (Oct 20, 1894 O.S.) and the national mourning period. The
+yearbook's own compilers omitted the closure from the printed table
+rather than listing ~70 dark rows. Correctly reflects the source as
+printed; left alone.
+
+**Addendum (same day): the `repertoire_1890-91_p012` phantom-row oddity
+was not left alone** -- RG pushed back on treating it as too low-stakes
+to explain ("I want to know why this happened"), so it was investigated
+properly rather than waved off. Downloaded and rendered the actual PDF
+page directly at 400dpi (not the possibly-stale pre-existing JPG this
+session had been relying on elsewhere) -- confirmed the page ends
+cleanly with its decorative closing flourish after May 15, and this is
+the file's last page (13 pages total, no page 13 to have supplied more
+content). The 3 "26 —" sessions correspond to nothing on this page or
+anywhere else in the file: a genuine **model fabrication**, not a
+misattachment or mislabeling like the other four Repertoire bugs found
+today. Since all 3 were already `is_dark` with no works/receipts,
+dropping them loses no real data -- there was never a correct date to
+move them to. Implemented as `pipeline/parse_and_validate.py`'s new
+`_REPERTOIRE_FABRICATED_SESSIONS` (page-keyed session-index drop set),
+dry-run verified (`event_entry` 23880 -> 23877, exactly -3, nothing
+else changed), applied to production, `analysis`/`research` rebuilt and
+`validate_performance_dates.py` re-run. `research.person_appearance`
+unchanged at 21158; `research.performance` unchanged at 24894.
+
+**Addendum (2026-08-25): the 4 individual-digit-misread candidates,
+checked one by one against their scans.** Two are confirmed NOT bugs, one
+is a small confirmed bug now fixed, one is a substantially bigger
+confirmed bug still open:
+
+- `repertoire_1904-05_p011` ("23 Пятница", between real days that would
+  suggest "5") -- scan confirms the original 1904-05 book genuinely
+  prints "23 Пятница." in that exact position. A real compositor's error
+  in the primary source, correctly preserved verbatim (same
+  verbatim-preservation precedent as the earlier Поливановъ case).
+  **Not fixed, correctly left alone.**
+- `repertoire_1906-07_p037` (apparent day-sequence decrease) -- false
+  positive of the detection heuristic. The page's own running header
+  genuinely reads "9 марта...19 марта", and the scan confirms the table
+  starts with 3 real blank rows for days 9-11 before content-bearing days
+  12+; the raw JSON just lists sessions out of chronological order within
+  the page (content-bearing middle section first, then the blank prefix,
+  then a catch-up pass for one column). No date-label error at all.
+  **Not fixed, correctly left alone.**
+- `repertoire_1899-00_p037` -- two separate anomalies on the same page,
+  resolved differently. (a) "9 Четвергъ" (between "3 Среда" and "5
+  Пятница") -- scan confirms the original page genuinely prints "9
+  Четвергъ." in that exact out-of-sequence spot; a real printer's error,
+  correctly preserved verbatim, **not fixed**. (b) "23 Суббота" (between
+  "28 Пятница" and "30 Воскрес.", sessions 19-21 for
+  Большой/Малый/Новый) -- a zoomed high-res crop shows the printed glyph
+  itself is worn/damaged, not a clean "23"; chronologically and visually
+  consistent with a mangled "29" (23 April 1900 was in fact a Sunday,
+  already correctly used earlier on this same page for sessions 1-3, so
+  this can't be a second real "23"). A genuine extraction misread of
+  damaged type, not a printed error to preserve. **Fixed**: added
+  `_REPERTOIRE_DAY_FIXES` (page + exact `date_text` string keyed, same
+  shape as `_REPERTOIRE_YEAR_FIXES`) mapping "23 Суббота" -> "29
+  Суббота" for this page only, scoped so it can never touch the
+  unrelated, correct "23 Воскрес." sessions elsewhere on the same page.
+  Dry-run verified (event_entry row count unchanged at 24131, exactly 3
+  sessions' `date_text` changed, nothing else), applied to production,
+  `analysis`/`research` rebuilt, `validate_performance_dates.py`
+  re-run (`unparseable` 1038->1035, exactly -3, as expected).
+  `research.person_appearance` unchanged at 21158;
+  `research.performance` unchanged at 24894.
+- `repertoire_1897-98_p010` -- the most complex finding, **confirmed bug,
+  not yet fixed**. This is not a single-digit misread at all but a
+  **content/date misalignment**: on real date 22 Марта the Маріинскій
+  printed *two* sessions (a benefit matinee, then "A basso Porto" +
+  Walküre 3rd act in the evening, 5785 р. 10 к.). The extraction treated
+  the evening session as a new date "23 Понедѣльникъ" instead of
+  recognizing it as day 22's second sitting, cascading a **+1 offset
+  through the Маріинскій column only** for ~25 subsequent session
+  records (real days 22(вечеръ) through 27), while the
+  Александринскій/Михайловскій/Большой/Малый columns on the same rows
+  are unaffected and stay correctly dated throughout -- confirmed
+  row-by-row against a 400dpi scan of the actual page
+  (`ForUpload_1897-98_Repertoire.pdf`, page index 10). This is why
+  `validate_performance_dates.py`'s weekday-mismatch check never caught
+  it: the mislabeled day-number and its (also-shifted) printed weekday
+  word are self-consistent with each other, just both wrong relative to
+  the true content.
+
+  The drift's tail runs into a second, independent anomaly in the
+  primary source itself: the extraction's final mislabeled row reads
+  "28 Апрѣля", but the scan shows that row's real printed date cell says
+  only **"апр."** -- no day digit at all -- in its own grid cell,
+  separated by a full-width horizontal rule from the "6 Понед." row
+  below it (confirmed by zooming the grid lines directly; content
+  belongs to neither the row above ["27 Пятница"] nor "6 Понед." itself,
+  contra an initial guess that it might just be 6 Понед's own
+  content). The day-less row still carries real performance content and
+  receipts (Маріинскій "Romeo und Julie", 7983 р. 10 к.; Александринскій
+  "Jm weissen Rössl", 1786 р. 75 к.), so it needs a real date, not just a
+  divider -- positionally the best-supported inference is **28 Марта**
+  (Saturday, the one day remaining before the confirmed Holy Week closure
+  to April 6), but the source itself never printed a digit there.
+
+  **Fixed (2026-08-25), after RG reviewed the scan directly.** Two
+  corrections to my own initial read, both made by RG and confirmed by
+  re-checking the pixel-measured grid lines: (1) the Мариинскій drift
+  chain's last entry (index 76, "Romeo und Julie") pairs with "27
+  Пятница", not with a phantom day-less row -- I had mis-paired two
+  adjacent rows on first read. (2) the page's bare "апр." label (index
+  77-80's row) is not a distinct calendar date at all -- the editors
+  split the "6 Апрѣля" cell across two printed sub-rows and used "апр."
+  on the top half purely as a visual month-transition aid for the
+  reader, not a date. Corroborating evidence: Михайловскій's "Le Roman
+  d'un jeune Homme pauvre" appears on both sub-rows at two different
+  receipts figures -- a rehearsal-then-performance shape, exactly like
+  the confirmed 22 Марта double session. RG confirmed both corrections
+  directly against the scan (sent as images) before implementation.
+  Implemented as `pipeline/parse_and_validate.py`'s new
+  `_REPERTOIRE_SESSION_DATE_FIXES` (index-keyed exact date_text/month_text
+  targets, since the 10 affected sessions split into two different
+  corrected values depending on theater -- not a uniform range-shift or
+  single find/replace like the other fixes in this issue). Dry-run
+  verified (event_entry row count unchanged at 24131; "28 Апрѣля"
+  eliminated entirely from the page; "22 Воскресенье" gained the extra
+  Мариинскій evening session, 5->6 entries; "6 Понедѣльникъ" gained the
+  4 reattributed entries, 5->9), applied to production,
+  `analysis`/`entities`/`research` rebuilt, `validate_performance_dates.py`
+  re-run (`unparseable` 1035->1030). `research.person_appearance`
+  unchanged at 21158; `research.performance` unchanged at 24894;
+  `research.event` 27738->27643 (-95, matching the `not_captured`
+  completeness-gap drop from 3861->3766 -- these dates now fill real
+  grid cells instead of looking like gaps).
+
+**Addendum (2026-08-25): the bare-month "апр." pattern is not unique to
+`p010`.** Prompted by RG asking whether other date fields show something
+similar, a corpus-wide check found 34 more rows across 12 pages/6+
+seasons where `date_text` is literally just a bare month name with no
+day digit -- the same shape as `p010`'s "апр." row:
+`repertoire_1900-01_p008/p009/p029`, `repertoire_1901-02_p028/p029`,
+`repertoire_1902-03_p031`, `repertoire_1903-04_p008/p009`,
+`repertoire_1904-05_p020/p021/p026/p027/p032`,
+`repertoire_1905-06_p005/p011` (full breakdown in the 2026-08-25 query
+log entry). Two of these ("Нодобрь"/"Нодобръ." on `repertoire_1900-01_p008/p009`)
+look like a separate misread of "Ноябрь" rather than the same
+phenomenon and need their own check. **Not yet individually
+scan-verified or fixed** -- `p010` needed real back-and-forth
+verification to get right (two of my own initial reads were wrong and
+corrected by RG against the scan), so this is flagged as a new open item
+rather than assumed to be the same fix applied blindly across all 12
+pages.
+
+**Addendum (2026-08-25): the bare-month `date_text` pattern, fully
+resolved.** Prompted by RG asking whether other date fields showed
+something similar to p010's "апр." row, all 15 page/date_text
+combinations from the corpus-wide search were individually checked
+against their scans (13 more beyond the 2 checked when the pattern was
+first found). **10 confirmed clean, no fix needed** -- the bare month
+label sits at a genuine closure (Lent, a holiday gap) or a truly empty
+cell, already correctly captured as `is_dark` with zero content:
+`repertoire_1900-01_p008/p029`, `repertoire_1901-02_p028/p029`,
+`repertoire_1902-03_p031`, `repertoire_1903-04_p009`,
+`repertoire_1904-05_p020/p026/p027/p032`. (`1900-01_p008`'s label is
+also garbled "Нодобръ." for "Ноябрь." -- cosmetic only, zero downstream
+effect since the row is blank either way.)
+
+**5 confirmed real bugs, five different shapes, all fixed** after RG
+reviewed each against its scan and corrected two of my initial reads
+(p021's session belongs to 1 Суббота, not 31 Декабря as I first guessed;
+p008's bug is a full two-row shift, not "already correct" as I first
+concluded):
+- `repertoire_1904-05_p021`: a genuine printed УТРО/ВЕЧЕРЪ split for
+  Новый театръ's 1 Января cell, but the model captured only the УТРО
+  half ("Женитьба...", 330 р. 95 к.) and mislabeled it with the bare
+  "Январь." instead of 1 Суббота; the ВЕЧЕРЪ half (a blank dash) was
+  missing from the JSON entirely.
+- `repertoire_1905-06_p005`: the same УТРО-only capture-and-mislabel
+  shape, plus an independent second bug on the same session -- the
+  receipts (273 р. 41 к.) survived but the work title ("Каширская
+  старина, др.") was dropped.
+- `repertoire_1903-04_p008`: a genuine two-day run of "Marthe, com. La
+  carotte, com.-bouffe." at different receipts, shifted one day late --
+  the bare "Ноябрь." row's content (1573 р. 70 к.) really belongs on 1
+  Суббота, and the existing "1 Суббота" entry (772 р. 35 к.) really
+  belongs on 2 Воскрес.
+- `repertoire_1900-01_p009`: a phantom extra row from misreading the
+  month header, shifting all 3 Moscow theaters' content one label late
+  for one boundary; the resulting empty trailing "2 Четвергъ"
+  placeholders were dropped as redundant.
+- `repertoire_1905-06_p011`: a clean duplicate-emission bug -- the
+  "Ноябрь"-labeled entries are byte-for-byte identical to the
+  correctly-labeled "1 Вторникъ" entries right below them; the
+  duplicates were dropped.
+
+Implemented as three new mechanisms in `pipeline/parse_and_validate.py`
+(`_REPERTOIRE_FIELD_OVERRIDES`, `_REPERTOIRE_SESSION_INSERTIONS`,
+`_REPERTOIRE_DUPLICATE_SESSIONS`), with `_repair_repertoire` refactored to
+return a counts dict rather than an ever-growing positional tuple. Also
+updated `pipeline/prompts/repertoire_system.txt` per RG's request so
+future extraction runs recognize a bare month name as a printer's visual
+aid, not a calendar date -- this only affects future runs, not the
+already-extracted JSON fixed here. Dry-run verified exact expected counts
+on all 5 pages plus a clean regression check on p010's unrelated fix,
+applied to production, `analysis`/`entities`/`research` rebuilt.
+`research.person_appearance` unchanged at 21158; `research.performance`
+24894->24892 (-2, duplicate collapse); `research.event` 27643->27637.
+Zero real data loss confirmed.
+
+**Still open / low priority**: the broader question of whether any
+*other* seasons have a similar single physical-page scanning gap that
+date-continuity alone wouldn't surface (e.g. a gap that happens to fall
+entirely within an already-expected closure window) was not exhaustively
+ruled out.
+
+## 49. Cascading date mislabeling on `repertoire_1893-94_p007` — real
+content re-attached to a wrong, mechanically-incrementing date sequence
+that runs past the end of the physical page; 6 more candidate pages found
+corpus-wide, not yet individually confirmed
+
+**Status: needs source check** (1 page confirmed, 6 candidates open, 1
+outlier of unclear cause). Found as a side effect of validating
+`pipeline/row_detect.py` (issue #1's row-isolation fix, still in
+progress) against a whole season rather than the two hand-picked pilot
+pages -- a free, local, ground-truth-vs-detector-count sanity check
+(distinct `date_text` per page from `raw.event_entry`) flagged
+`repertoire_1893-94_p007` as an apparent detector failure (29 expected
+rows, only ~20 found). Checking that against the actual scan showed the
+opposite: the *detector* was right (RG independently confirmed only one
+real missing row line by eye); the "29" ground truth itself was wrong,
+because the underlying raw JSON is corrupted -- unrelated to
+`row_detect.py` or ScanTailor, and already sitting in the published
+production database.
+
+**Confirmed mechanism** (`outputs/full_run/raw/repertoire_1893-94_p007.raw.json`):
+the scan's real table runs Jan 15 - Feb 3, 1894 (confirmed by eye against
+the page image). The raw JSON's first 9 dates (Jan 15-23) are each
+missing 4 of their 5 theater-column entries -- e.g. the real "16
+Воскрес." / Александринскій entry ("Плоды просвѣщенія", 447 р. 28 к.,
+plainly visible on the scan) is entirely absent from the JSON. That exact
+content instead appears in the JSON attached to "24 Понед." -- a
+different, real date later on the same page, whose own true content it
+is not. From there the model appears to have lost its place entirely: it
+proceeded to fabricate a full, internally-consistent-looking run of dates
+from Jan 24 through **Feb 12** -- 12 days that do not exist on this
+physical page at all -- each carrying what all reads like genuinely
+scan-sourced content (plausible receipts figures, real work titles, no
+placeholder/null patterns), just filed under invented date labels. Net
+effect: `raw.event_entry` for this one page currently has 20 fabricated-
+or-misdated-date entries and 9 real dates each missing most of their row.
+This is a different failure shape than issue #1 (which swaps a value
+between two *adjacent* real rows) -- here the date labeling itself drifts
+and compounds across roughly half a page -- but very plausibly the same
+underlying cause (full-page multi-row context confusing the model), just
+a more severe manifestation. Directly relevant to the #1 row-isolation
+plan already in progress: row-level extraction should structurally
+prevent this shape of error too, since each row-crop would carry its own
+correct date with no other row's date to drift toward.
+
+**Corpus-wide triage** (all 519 `repertoire_*.raw.json` files, not just
+this season): flagged any page whose raw JSON has more than 22 distinct
+`date_text` values (every other page in the 1893-94 season tops out at
+20). 7 pages flagged:
+
+| page_id | sessions | distinct dates | max repeat count |
+|---|---|---|---|
+| `repertoire_1890-91_p007` | 115 | 23 | 5 |
+| `repertoire_1890-91_p009` | 120 | 24 | 5 |
+| `repertoire_1892-93_p000` | 67 | 67 | 1 |
+| `repertoire_1893-94_p007` | 89 | 29 | 4 |
+| `repertoire_1894-95_p002` | 120 | 24 | 5 |
+| `repertoire_1895-96_p000` | 75 | 28 | 5 |
+| `repertoire_1897-98_p009` | 89 | 27 | 5 |
+
+Five of these (`1890-91_p007`, `1890-91_p009`, `1894-95_p002`,
+`1895-96_p000`, `1897-98_p009`) show the same repeat-count signature
+(4-5x) as the confirmed `1893-94_p007` case and are strong candidates for
+the identical bug -- **not yet individually confirmed against their
+scans**, do that before touching any of them. `repertoire_1892-93_p000`
+is a different shape entirely (67 distinct dates, none repeated) and its
+cause is not yet understood -- needs its own look, don't assume it's the
+same bug.
+
+**Not yet done**: visually confirm each of the 6 remaining candidates
+against its scan; determine the true row/date count for each; decide a
+fix mechanism (likely a targeted `_REPERTOIRE_*` correction per page,
+following the established fix-table pattern, once each is confirmed --
+not a corpus-wide automated rule, per this doc's usual practice of never
+generalizing from a pattern alone). This affects the currently published
+`research` dataset for at least the one confirmed page.
+
+## 50. Repertoire row-isolation pipeline: fold-distortion scoped to
+seasons 1890-91–1897-98 only; post-1898-99 seasons validated clean, with
+one real bug found by actually extracting rather than trusting clean-
+looking row detection
+
+**Status: post-1898-99 seasons look production-ready pending broader
+validation; the two-page-spread seasons' fold-distortion is deferred, not
+solved.**
+
+**Root cause of "curvy" row boundaries identified**: RG explained the
+mechanism directly -- these yearbooks are bound in thick volumes, and
+pages curve inward toward the binding the closer content sits to the
+fold. Tested two hypotheses this could suggest fixing via a whole-page
+pre-dewarp stage (using the outer table border, then vertical gridlines,
+as calibration curves) on `repertoire_1893-94_p006`: neither held up.
+The outer border was nearly flat (5.7px range) while an interior line
+showed a real, differently-shaped 46px bow -- border alone doesn't
+predict interior distortion. A vertical column divider tested at the
+same y-height as that interior bow's peak stayed essentially straight
+(9px sway) -- if this were genuine page-wide gutter curvature, the
+vertical line should have swayed too. Edge verticals (near the table's
+own left/right borders) showed somewhat more sway (27-33px) but with
+inconsistent, low-confidence signal. Net: whole-page dewarping wasn't
+pursued further for now -- the evidence didn't cleanly support it as a
+general fix, and RG's domain knowledge narrowed the real scope instead.
+
+**Key scoping fact (RG): the fold-proximity distortion only affects
+seasons where the Repertoire table spans a two-page spread -- 1890-91
+through 1897-98.** Confirmed structurally: `repertoire_1893-94_p006`'s
+*original* source page (before any processing) is genuinely landscape
+(4540x2982, aspect 1.52) -- only explicable as a 2-page spread; our
+portrait-oriented working copy must have been rotated 90° somewhere in
+the ScanTailor pipeline. Seasons from 1898-99 onward split the table so
+Petersburg and Moscow theaters get separate single pages, keeping table
+content away from the fold entirely -- confirmed by checking
+`repertoire_1898-99`'s source page directly: portrait, aspect ~0.83,
+genuinely narrower, one city's 3 theater columns per page (not 5 combined
+columns). This also explains RG's earlier note that the date column
+sits on the RIGHT for 1890-91–1897-98 and moves to the LEFT from
+1898-99 on -- a different table layout entirely, not just a formatting
+tweak.
+
+**Decision**: prioritize the post-1898-99 seasons for production
+readiness now; treat the two-page-spread seasons' fold-distortion as its
+own properly-scoped problem to return to later, rather than letting it
+block progress on seasons that don't have it. Nothing built this session
+(the row-level driver, the review workflow, adaptive padding) is specific
+to the fold problem -- it all applies equally regardless of season.
+
+**Post-1898-99 validated clean on row-boundary detection**: tested
+`repertoire_1898-99_p002/p003/p004` (raw scans, no ScanTailor at all --
+not needed for this format: no gutter-proximity distortion, and the
+600dpi archival source is already well-behaved, minimal skew, no shadow
+near the table). All 3 pages: 36/36 rows correct on fully automatic
+detection, zero manual correction needed. `header_line_count` differs
+from the two-page-spread seasons' pages (see below).
+
+**One real bug found, only because RG insisted on an actual test
+extraction rather than trusting the clean-looking row detection**: a
+40/40-strip-presence chain at y≈1 (the very top of the raw scan) turned
+out to be the photographed book cover/binding material visible above the
+actual page -- not a printed table line at all. Confirmed by direct visual
+inspection of that region. Using it as `header_top_curve` (the "outer top
+border") pulled the page's own date-range caption ("30 августа...15
+сентября") into the header block reattached to every row crop -- which
+then leaked into several rows' `date_text`: two rows read "30" and one
+read "15" (the caption's own numbers) instead of their real dates. Not
+obvious from row-boundary detection alone (the boundaries themselves
+were all correct) -- only surfaced by actually running the extraction and
+checking the output, exactly the caution RG raised before agreeing to
+spend API budget on it.
+
+**Fixed generally, not just for this page**: added a scan-boundary-
+artifact filter to `_detect_line_curves` -- drops any chain whose mean y
+sits within 1% of image height (or 10px minimum) of the top or bottom
+edge, since real printed content never sits that close to the edge given
+these scans' margins, while a photographed book cover/binding naturally
+would. This shifted curve indexing, so `header_line_count` for this page
+format is 1 (not 2 as first assumed before the artifact was known about
+and excluded). Re-ran the same page after the fix: 12/12 distinct dates
+exactly matching the real scan (was 13, with 3 wrong), spot-checked one
+row's full content (all 3 theaters) byte-exact against the scan.
+
+**Not yet done**: broader validation across more post-1898-99 pages
+(only 4 checked -- 3 for row-boundary detection, 1 for a full real
+extraction); the two-page-spread seasons' fold-distortion remains
+unsolved and deferred; `header_line_count`'s value per format still
+isn't auto-detected, just manually confirmed per format tested so far.
+
+## 51. Spurious utro/vecher row-split detection -- eight approaches tried,
+none reliable; work placed on hold pending outside CV/document-analysis
+input
+
+**Status: ON HOLD as of 2026-08-27.** Everything below this line and #50
+above it stays exactly where it is until this is picked back up -- treat
+this as the authoritative "resume here" note, not #50's older "not yet
+done" list alone.
+
+**The specific open problem**: on post-1898-99 pages (see #50 -- these
+seasons are otherwise clean and were being prioritized for production),
+`_detect_line_curves` sometimes locks onto the gap between a matinee
+(утро) and evening (вечеръ) performance stacked inside one date's own
+cell, and outputs it as if it were a real row boundary. There is no
+printed gridline there. Two confirmed real examples (both from season
+1898-99, both hand-verified against the scan) are saved at
+`/private/tmp/claude-502/.../scratchpad/memo_assets/example1.jpg` (row
+`23 Среда`, line cuts across every column's title line, above the
+receipts line) and `example2.jpg` (row `9 Пятница`, line falls exactly
+between two performance titles listed under one theater that day).
+
+**Eight detection approaches tried this session, all on real corpus
+pages, none holding up as a general rule**:
+1. Column ink density at the boundary (checks for a date label
+   underneath) -- failed, undermined by imprecise column-boundary
+   detection.
+2. "Rule extends into date column" peak check -- failed, inconsistent,
+   no clean threshold.
+3. Connected-component glyph detection -- failed, this typeface's
+   Cyrillic glyphs touch/merge at scan resolution.
+4. Erosion then connected components -- failed, same root problem as #3;
+   erosion strong enough to separate glyphs also erases real strokes.
+5. Whole-page dewarp calibrated from the outer table border -- failed,
+   see #50 (border curves far less than a real interior line does).
+6. Vertical-gridline-based calibration -- failed, see #50 (measured sway
+   too small/inconsistent to calibrate from).
+7. Row-to-row spacing consistency (flag an unusually short gap between
+   two candidates) -- **worked on all 4 pages tested (p005/p007/p009/p014),
+   but explicitly RETRACTED per RG: "Don't rely on spacing consistency
+   because rows can always be different sizes."** Row height is
+   content-dependent, so this is not a valid general rule regardless of
+   its test results -- withdrawn on that basis, not because it failed.
+8. Full-table-width ink coverage ("does a candidate line span nearly the
+   whole table width, the way a real gridline does") -- the most
+   promising signal found: real boundaries ran ~20-65% width coverage vs.
+   ~11-16% for false ones on the page first tested. **Confounded** under
+   full validation against every curve on the 4 already-hand-fixed pages:
+   coverage decays down the page (likely a lighting/vignetting gradient
+   in the scan), so a real boundary near a page's bottom can score as low
+   as a false one near the top. No single global threshold separated them
+   cleanly.
+
+**In-progress attempt when work paused**: installing Tesseract (real OCR)
+via Homebrew, to test whether reading actual text at a candidate boundary
+-- rather than measuring ink geometry -- gives a cleaner signal than any
+of the eight above. This required installing Homebrew first (no package
+manager existed on this machine); confirmed RG has admin rights, so this
+just needed an interactive password prompt run by RG directly. `brew
+install tesseract` then had no precompiled bottle for this machine
+(Intel, macOS 12.7.6) and had to compile its full dependency chain from
+source -- genuinely slow (cmake alone took over an hour), not stuck;
+confirmed via active compiler/linker processes at every check, and sped
+up noticeably once RG freed up RAM (was down to 95MB free, causing swap
+thrashing). **Left running in the background, status unknown as of when
+this was placed on hold** -- check `/usr/local/bin/tesseract --version`
+and `ls /usr/local/Cellar/` to see how far it got. If it finished, the
+next step is untried: test it as a text-presence signal on the two
+example boundaries above before trusting it as a fix.
+
+**A plain-language summary memo was written for outside DH-expert
+advisors**, explaining the problem and all 8 attempts, plus the two
+example images -- sent to RG as local files (not published as a
+web artifact, per RG's preference for something plain to paste into an
+email): `.../scratchpad/memo_assets/row_boundary_memo.md`,
+`example1.jpg`, `example2.jpg`. That memo's content is the fastest way to
+re-orient on this problem if picked up by someone else, or after a long
+gap.
+
+**To resume**: check the Tesseract build status first (see above); if it
+completed, that's the next thing to actually test, against the two known
+examples plus a few more pulled from other pages, before considering it a
+fix. If it didn't pan out either, the honest state is that all 9
+approaches tried (8 geometric + OCR) have failed or been retracted, and
+this may need either continued human review per page (workable today,
+just not scalable) or expertise this session doesn't have -- which is
+exactly what the advisor memo was written to solicit.
+
+**Addendum (2026-08-28): Tesseract build confirmed stalled, not
+finished** -- `/usr/local/Cellar/` only holds generic build tools
+(autoconf, cmake, etc.), no `leptonica` (tesseract's own dependency) and
+no `tesseract` itself; nothing running. Not resumed this session.
+
+**Addendum (2026-08-28): strategy shift -- detect-and-repair after
+extraction, rather than solving boundary detection first, smoketested on
+one real page.** RG's framing: the goal is complete Repertoire text, no
+data lost; if bad rows can be identified *after* extraction, they can be
+targeted for repair the same way every other issue in this file gets
+fixed (flag -> targeted re-check against the scan -> hand-fix), without
+blocking a corpus-wide run on first solving the CV problem above.
+
+Two independent detectors proposed for this: (1) `validate_performance_
+dates.py`'s existing day-of-week check (isolated single-row mismatches
+are flagged, never silently auto-corrected -- exactly the shape a
+fabricated date produces) plus `quality_checks.py`'s existing
+`duplicate_event_key` flag; (2) a new row-level-vs-full-page content
+diff -- every Repertoire page already has a full-page baseline
+extraction on disk from the original pilot run, and the two methods fail
+differently (page-level swaps across a big grid; row-level only
+fabricates when a crop lacks its own date label), so disagreement
+between them is a much stronger signal than same-method resampling
+(already shown not to work for this exact failure, above).
+
+**Smoketest**: identified `repertoire_1898-99_p003` as the confirmed
+source page for this issue's own `example1.jpg` ("23 Среда" -- verified
+by exact receipts match, 815 р. 60 к./1444 р. 95 к./1012 р. 23 к.).
+Useful correction to this issue's own framing found in the process: "23
+Среда" is an entirely ordinary single-performance row, not a matinee/
+evening compound -- the false split isn't specific to утро/вечер pairs,
+it's the more general title-line/receipts-line structure every row has,
+which the detector sometimes locks onto regardless.
+
+Ran current `row_detect.py` (unchanged, automatic, no human correction)
+on this page fresh: **11 curves detected, not reproducing the spurious-
+split failure at all** -- instead, 3 real boundaries were missed (17/18,
+22/23, 24/25 each merged into one crop covering 2 real dates), a
+different failure shape than this issue documents. Ran full row-level
+extraction anyway on the resulting 9 crops (3 of them 2-dates-each) via
+`pipeline/extract.py`, deliberately not hand-correcting first, to test
+against a realistic unsupervised-run condition:
+
+**Result: 12/12 real dates correct, zero fabrication**, including all 3
+merged 2-date crops (e.g. row006: 22 Вторн. 1238.12/1376.63/376.19 AND
+23 Среда 815.60/1444.95/1012.23, both exactly right in one crop) and
+both genuinely dark days (19, 26 Суббота) correctly flagged
+`no_performance`. Then ran detector (2) above for real: diffed every
+row-level receipts figure against the existing full-page baseline
+(`outputs/full_run/raw/repertoire_1898-99_p003.raw.json`) -- **0
+disagreements across all 12 dates**, confirming the cross-check
+mechanism runs correctly and doesn't false-flag a genuinely clean
+extraction.
+
+**Caveats, stated plainly**: N=1 page, and this run happened not to hit
+the actual documented failure mode (a crop with no date label of its own
+-- the under-segmentation seen here didn't produce that shape, so this
+doesn't yet validate the detectors against a real instance of the
+harder problem). Still open: find/reproduce a genuine no-date-label
+false-split in the wild (rather than the two isolated example crops,
+which were manually cropped, not pipeline output) and confirm detector
+(1) or (2) actually catches it; then decide whether to run row-level
+extraction at scale under this detect-and-repair strategy rather than
+waiting on boundary-detection automation.
+
+## 53. entities.person_candidate pending-review queue cleared (4 pairs) --
+3 rejected, 1 merged, and the merge surfaced a durability gap in the
+Tier 2 candidate-matching system
+
+**Status: resolved for these 4 pairs.** Prompted by RG asking "Do we have
+any other people who need to be reviewed as potential merges?" --
+`entities.person_candidate` had 4 `pending` rows (20 already rejected
+from a prior session). Each pair's full appearance history pulled and
+checked against the underlying scans, not decided from the database
+pattern alone.
+
+**3 rejected** (all confirmed as two different real people, not a
+merge):
+- Ивановичъ/Ивановъ, Иванъ Ивановичъ -- a school director (elite court
+  rank) vs. a Moscow trombonist/machinist's-assistant. Different careers,
+  different cities, and about as generic a Russian name as exists.
+- Зубовъ/Рябовъ, Александръ Петровичъ -- an Alexandrinsky orchestra
+  percussionist (Musicians) vs. a ballet artist/student (BalletArtists).
+  Different entity_type, different craft, surnames not visually/
+  phonetically close (unlike the other pairs here).
+- Щегловъ/Щеголевъ, Василій -- confirmed via
+  `ForUpload_1895-96_TheaterSchoolReport.pdf` p.3: "Щегловъ, Василій" was
+  a 1895-96 school graduate explicitly printed as assigned "въ
+  Московскую балетную труппу" (the Moscow ballet troupe); independently
+  confirmed showing up in `balletartists_*_MSK_*` rosters continuously
+  from 1896-97 onward, exactly on schedule. "Щеголевъ, Василій" is an
+  unrelated St. Petersburg Mariinsky lighting technician from 1902 on.
+  Both surname readings confirmed correct on their own scans -- genuinely
+  two different people, not a misread of one into the other.
+
+**1 merged, and it grew in scope once checked**: RG's flagged pair was
+"Мокѣевъ, Николай Васильевичъ" (1891-92 through 1902-03, trumpet,
+Оркестръ Александринскаго театра) vs. "Мокѳевъ, Николай Васильевичъ"
+(1890-91 only, same orchestra). Confirmed same person against
+`ForUpload_1890-91_Spisok_OrchestraSP.pdf` p.79, item 24: genuinely reads
+"Мокѣевъ" (ѣ/yat), not "Мокѳевъ" (ѳ/fita) -- a one-character homoglyph
+extraction slip, not a real variant. Fixed via a new
+`_repair_mokeev_spelling()` in `parse_and_validate.py` (single confirmed
+instance, dry-run verified at exactly 1 before applying).
+
+**Checking the effect of that text fix surfaced a third, previously
+invisible split of the same identity**: after the fix, the two records
+still didn't merge automatically (Tier 1 froze their separate existing
+person_ids; Tier 2 doesn't compare exact-name matches at all, on the
+assumption Tier 1 always catches those -- see `merge_duplicate_persons()`'s
+own docstring for this exact documented gap). Investigating *why* turned
+up a THIRD person_id for the same name, 1903-04 through 1907-08 (5
+entries), with patronymic printed as "Вавиловичъ" instead of
+"Васильевичъ" -- confirmed genuinely printed that way (not a misread) on
+both `ForUpload_1903-04_Spisok_OrchestraSP.pdf` p.4 item 27 and
+`ForUpload_1907-08_Spisok_OrchestraSP.pdf` p.33 item 23, the latter also
+giving "Оставилъ службу 1 мая 1908 г." (left service 1 May 1908). This
+pair was never flagged as a `person_candidate` at all, in any status --
+family_name matches exactly (so it's outside the family_name_variant
+search) and the Васильевичъ/Вавиловичъ patronymic edit-distance is above
+Tier 2's fuzzy-match threshold (so it's outside patronymic_variant too).
+Entirely invisible to the existing review queue.
+
+**Full picture assembled from all three groups** (same family name, first
+name, orchestra, and instrument -- Труба -- throughout):
+
+| Seasons | Patronymic printed | Service-start printed |
+|---|---|---|
+| 1890-91 (1 entry) | Васильевичъ | 1 января **1891** г. |
+| 1891-92 - 1902-03 (12 entries) | Васильевичъ | 1 января **1890** г. (every year) |
+| 1903-04 - 1907-08 (5 entries) | **Вавиловичъ** | 1 января **1890** г. (every year) |
+
+Two real inconsistencies, neither a misreading: the very first entry
+disagrees with all 17 later entries on the start year (1891 vs. 1890,
+read as a first-edition error corrected in every reprint after); and the
+patronymic switches from Васильевичъ to Вавиловичъ starting 1903-04 and
+stays that way through the end of this person's tenure in 1908 -- while
+the 1890 start date stays consistent across *both* patronymic eras,
+bridging them. **RG confirmed treating all three as one person** ("they
+were in the same orchestra with the same instrument"), with a working
+hypothesis for the patronymic switch: Вавиловичъ is a much rarer
+patronymic than the common Васильевичъ, and the musician himself may have
+flagged the yearbook's long-standing error to the editors, who corrected
+it starting with the 1903-04 edition -- offered as the most likely
+explanation, not a confirmed fact.
+
+**Applied**: manually merged via direct `entities.person.
+superseded_by_person_id` (survivor = lexicographically smallest person_id,
+matching `reconcile_person_merges()`'s own convention) since this pair
+falls entirely outside the algorithmic candidate system described above.
+Durability confirmed by design, not assumed: `build_person_tier1` trusts
+`entities.person_link`'s current state as ground truth for entry
+membership on every future rerun ("reuse it unconditionally -- this is
+what makes person_id survive a matching-logic improvement" -- see its own
+docstring), so calling `_repoint_all_superseded()` after the manual merge
+is sufficient to make it stick across future full pipeline reruns, with
+no dependency on Tier 2 ever independently rediscovering this pair. Also
+inserted a permanent record into `entities.person_merge_log` (deterministic
+candidate_id, full reasoning in `tenure_evidence`) purely as an audit
+trail, since that table isn't itself what makes the merge durable here.
+Verified: `research.person` for the survivor now spans 1890-91 through
+1907-08 across 18 appearances; `research.person`/`research.person_appearance`
+totals 2934/21158 (net -2 from the 2 losers absorbed, appearance count
+unchanged).
+
+**Open, not resolved**: `_refresh_canonical_fields()`'s majority-vote logic
+set the merged person's displayed `canonical_patronymic` to "Васильевичъ"
+(13 of 18 entries) -- the *opposite* of RG's own hypothesis that
+"Вавиловичъ" is more likely the true spelling. Left as the automatic
+majority-vote default rather than manually overridden, since RG's
+reasoning is a plausible hypothesis, not a confirmed fact. Worth a
+deliberate decision (and, if changed, a documented manual override,
+since a future `_refresh_canonical_fields()` rerun would silently revote
+back to the majority spelling otherwise) whenever this comes up again.
+
+**Also newly relevant**: this session confirmed `merge_duplicate_persons()`'s
+own documented structural gap (exact-tier1_key duplicates that Tier 1
+freezes apart and Tier 2 skips by design) is not just theoretical --
+this is the second real instance found this project (after Дягилевъ,
+mentioned in that function's own docstring), and the THIRD entry
+(Вавиловичъ era) shows the gap can compound with a genuine spelling
+divergence on top of the frozen-identity gap, making it invisible to
+every existing automated check simultaneously. Not fixed generally (the
+existing hand-merge pattern, used here and in issue #45, remains the
+right tool for cases like this) -- noted here in case a pattern of
+several such cases eventually justifies building a dedicated automated
+check.
+
+**Follow-up (same day): tried to settle the Васильевичъ/Вавиловичъ
+question against outside genealogical sources -- inconclusive, but one
+useful supporting data point found.** Web search for the musician by
+name/orchestra turned up nothing. Checked the digitized "Весь
+Петербургъ" St. Petersburg city directory for 1903 (RNB/`nlr.ru`, see
+[[vesь-peterburg-directory-lookup]] for how to use this source generally)
+directly against its high-resolution page scan (the "Мо" alphabetical
+section, p.442): no entry for a "Мокѣевъ, Николай" explicitly tied to a
+musician's occupation or the Alexandrinsky theater -- these directories
+only list heads of household/independent residents, so he may simply not
+have had his own listing (institutional housing, lodging with a
+relative, etc.). Not a dead end, though: the same page lists **"Мокѣевъ,
+Иванъ Вавиловичъ"** (Vasilievsky Island, 18th Line, No. 11) -- meaning
+"Вавиловичъ" is a real, independently-attested patronymic actually in
+use by the Мокѣевъ family in St. Petersburg in exactly this era, most
+plausibly a sibling of our musician sharing the same father. Doesn't
+confirm the musician's own patronymic, but is real circumstantial support
+for RG's hypothesis, found entirely outside the yearbooks. The
+conclusive next step, not pursued further this session, would be RGIA
+(Russian State Historical Archive) Fond 497, "Дирекция императорских
+театров" (1746-1929, ~47,000 files) -- likely holds a formal personnel/
+service file (послужной списокъ) for this musician, but isn't
+online/searchable; would need an in-person archive visit or a
+St. Petersburg-based researcher.
+
+## 54. Full audit of person name fields (family_name/first_name/
+patronymic) for non-name contamination across all 6 entity types --
+Musicians' two known-but-never-text-fixed patterns closed for good in
+`parse_and_validate.py`; the rest scoped and logged for later
+
+**Status: partially done.** Prompted by RG asking to double-check name
+fields corpus-wide, not just the entity types already audited. Ran a
+heuristic sweep (institutional/note keywords, noble-title words,
+parentheses, unusually long values, bare-space patronymics) across
+`family_name_clean`/`first_name_clean`/`patronymic_clean` for all 6
+entity types.
+
+**Full scope found** (see 2026-08-27 query_log.md entry for the exact
+query): every entity type has some contamination. By rate:
+Administrators worst (2.75%, 47/1707 -- almost entirely one bug: a
+noble title word landing alone in `first_name`, with the real
+first+patronymic bundled together into `patronymic` -- e.g.
+`first_name="баронъ"`, `patronymic="Владиміръ Алексѣевичъ"`), Graduates
+second (1.55%, 7/452 -- section-header text captured as a student name,
+plus "(по театру X)" assignment annotations), then Musicians (0.61%,
+mostly one page's cross-reference stubs, see below), BalletArtists
+(0.56%, almost entirely the stage-name/alias parenthetical pattern),
+ProductionTeam (0.72%), TheaterSchoolStaff (0.40%).
+
+**Two Musicians patterns investigated in detail, found to already be
+resolved at the entities layer -- but never fixed at the text layer,
+exactly the "worth a proper parse_and_validate.py fix" note issue #29
+left for later.** Re-discovered, independently, the exact "см.
+<orchestra>" cross-reference-stub bug already extensively documented in
+issues #27-#29 (a musician who plays in two of the season's orchestras
+only gets their full biography written out once; every other roster
+just prints "Бѣлкинъ (см. оперный оркестръ). Тромбонъ." -- confirmed
+again against `ForUpload_1890-91_Spisok_OrchestraSP.pdf` p.78), and the
+"(онъ же и капельмейстеръ военной музыки)" whole-patronymic role-note
+pattern from issue #30. Checked `entities.person_link`/`entities.person`
+first, per the "always run a fresh query, don't trust memory or a prior
+session's cached numbers" rule -- confirmed **all 210/216 resolvable
+cross-reference stubs (issue #29) and the Марквардтъ patronymic fix
+(issue #30) are still correctly in place** at the entity/canonical
+layer; the gap is specifically that `raw.person_entry`'s own text still
+held `first_name="см."`/`patronymic="оперный оркестръ"` etc.
+(confirmed with a fresh count: 26 + 8 = 34 instances, matching the
+historical counts exactly) because none of that prior work ever touched
+`parse_and_validate.py` -- only direct `entities.person` UPDATEs.
+
+**RG: "Close for good since I want the pipeline to work for future
+lists."** Implemented as two new general repair functions:
+
+- `_repair_smotri_crossref()` -- detects `first_name="см."` (bare
+  cross-reference) or `first_name="<ordinal>"` + `patronymic` containing
+  "см."+"оркестр" (the homonym-ordinal variant, e.g. "Вальтеръ 2-й").
+  Deliberately does **not** attempt to resolve *who* the cross-reference
+  points to -- that stays a cross-page, sometimes-genuinely-ambiguous
+  entity-resolution-layer job (Tier 1/2 + hand review, as issues #27-29
+  already do very thoroughly), consistent with `raw` staying a verbatim,
+  page-centric record rather than an inferred one. Instead: clears
+  `first_name`/`patronymic` (never leaves "см."/the cross-reference
+  target sitting there), preserves the ordinal onto `family_name` where
+  one was about to be lost, and folds the cross-reference itself into
+  `tenure_note_text` (`"(см. <target>)"`) so the information isn't
+  discarded, just relocated to a field that can actually hold a note.
+- `_repair_role_note_patronymic()` -- detects a dual-role/appointment
+  annotation occupying the **entire** patronymic field (matched as a
+  whole-field pattern, not a substring strip, so it can never touch a
+  genuine patronymic that merely has an appended parenthetical -- see
+  the still-open 13-person alias/stage-name question below, which is a
+  different shape of problem). Moves the note to `tenure_note_text`,
+  clears `patronymic` to `NULL` (matching Марквардтъ's confirmed
+  reality: no patronymic is ever printed for him).
+
+Dry-run verified against `outputs/full_run/raw` first (26 + 8 = 34
+entries across 9 pages, exact match to the corpus-wide count) before
+applying. Re-ran `parse_and_validate.py` + `build_duckdb.py` (raw/
+analysis only; entities/research untouched by this rebuild) +
+`build_research_model.py`. Verified 0 remaining instances of either
+pattern in `raw.person_entry`; spot-checked that the existing, already-
+correct `entities.person_link` resolution for these entries (e.g.
+`Гильдебрандтъ` -> `Гильдебрандтъ, Рихардъ Николаевичъ`) survived
+untouched, since `entry_id` is stable and doesn't depend on the text
+content that changed. `research.person`/`research.person_appearance`
+unchanged at 2934/21158 -- a pure text fix, same as every prior one this
+session.
+
+**Not done -- logged for a later pass, not this session**: the four
+other categories sized above (Administrators' noble-title/bundled-
+patronymic bug, ~30+ entries; Graduates' section-header and
+assignment-annotation contamination, ~7; BalletArtists' stage-name
+parentheticals, 38 -- already fully resolved at the entity layer per
+issue #30's 14-person consolidation, same "text layer never fixed" gap
+as the Musicians case above; ProductionTeam's tenure-note-as-family_name
+bug, 3 confirmed instances on `productionteam_1894-95_p001`). Each needs
+the same discipline as this pass (check the actual scan, confirm the
+entity-layer state first, then decide whether a general
+`parse_and_validate.py` fix is warranted) before touching.
+
+## 55. Remaining Musicians name-field contamination after issue #54:
+three new patterns found and fixed generally, closing the Musicians
+category to just already-tracked/legitimate content
+
+**Status: fixed.** Follow-up to issue #54 -- RG asked "are there any
+remaining issues in the Musicians category?" Re-ran the same heuristic
+sweep scoped to Musicians only: down from 43 flagged entries to 9 (one,
+"Нольте (фонъ)," already confirmed correct-as-printed by issue #30 --
+8 genuine). Checked each against the source before fixing, per this
+project's standing rule.
+
+**Letter-spaced (tracked/разрядка) typography transcribed literally**
+(28 corpus-wide, all on `musicians_1898-99_SP_p006`, p.94): confirmed
+every surname on this page prints letter-spaced for emphasis
+("К у д е н г о л ь д т ъ"); the model correctly collapses this to a
+normal word in the great majority of cases (~25 of 28 entries on this
+page alone) but occasionally transcribes it verbatim. Fixed via a new
+`_repair_letter_spacing()`, applied to family_name/first_name/
+patronymic alike. **First version of the regex missed a real case**
+("Кулле 1-й"/"Кулле 2-й" -- a letter-spaced surname followed by an
+*un*-spaced homonym-ordinal suffix) -- caught only by re-checking the
+full corpus-wide result after applying the first version, not by the
+scan check alone; broadened the regex to handle an optional trailing
+` <N>-й`/`-я` suffix, preserving it with its own separating space
+rather than fusing it onto the collapsed name.
+
+**Compound/hyphenated first name split across a dash into patronymic**
+(13 corpus-wide, 12 pages, both Musicians and BalletArtists): confirmed
+on `musicians_1890-91_MSK_p004` (p.110): "Кнауеръ, Генрихъ - Эдуардъ"
+and "Падель, Іоганъ - Фридрихъ" both print as one hyphenated compound
+first name (common for this corpus's German-surnamed musicians, no
+patronymic at all -- consistent with issue #30's existing note on the
+same shape), extracted with the second half plus a stray leading dash
+landing in `patronymic`. Also confirmed a dash-less variant on
+`musicians_1902-03_MSK_p002` (p.116): "Рессеръ, Мардохей Земинъ
+Шліомовичъ" prints with no comma between the two-word first name and
+the real patronymic, extracted as first_name="Мардохей"/
+patronymic="Земинъ Шліомовичъ" instead of first_name="Мардохей
+Земинъ"/patronymic="Шліомовичъ". Fixed via `_repair_compound_first_name()`
+-- the dash-prefixed case is a safe, general rule (a real patronymic
+never begins with punctuation); the "Земинъ" case is scoped narrowly
+(this exact word only), since generalizing "first word of any
+multi-word patronymic" would be too broad to trust from one example.
+**Independent corroboration the fix is correct, found while reviewing
+the dry run**: "Герберъ, Августъ-Генрихъ" already appears correctly
+joined elsewhere in the corpus (1894-95) -- exactly matching what the
+fix produces for the same person's broken 1906-07 appearance, without
+having been told the two were the same person.
+
+**Instrument name in patronymic** (6 corpus-wide, 4 pages): confirmed
+on `musicians_1898-99_SP_p006` (p.94, entry 43): "Шредеръ, Карлъ ...
+Ударные инструменты" prints no patronymic at all (same German-surname-
+no-patronymic pattern), with his own instrument landing in `patronymic`
+while the dedicated `instrument` field was left empty. Mirror case of
+issue #32's `instrument_clean` work (that cleaned contamination out of
+`instrument`; this moves a value that belongs there in from elsewhere).
+Fixed via `_repair_instrument_in_patronymic()`, checked against a fixed
+list of known instrument names and gated on `instrument` currently
+being empty so it can never overwrite a real value.
+
+All three dry-run verified against `outputs/full_run/raw` before
+applying (exact match between dry-run and applied counts each time,
+including after the letter-spacing regex fix). Re-ran
+`parse_and_validate.py` + `build_duckdb.py` + `build_research_model.py`;
+0 remaining instances of any of the three patterns; spot-checked fixed
+entries directly. `research.person`/`research.person_appearance`
+unchanged at 2934/21158 across all three fixes.
+
+**Musicians category now closed**: every remaining multi-space/
+suspicious value in `raw.person_entry` for this entity type is either
+already tracked elsewhere (issue #26/#28's institutional-text-as-name
+bugs) or genuine compound/hyphenated surname content with normal
+(non-letter-spaced) spacing, correctly left untouched.
+
+## 56. `rank_or_title` for Musicians -- 97% instrument contamination, fixed by splitting rather than wiping, preserving every genuine honorific
+
+**Status: fixed.** Follow-up to issues #54/#55 -- RG asked to make sure
+instruments show up in the `instrument` field and nowhere else, which
+surfaced `rank_or_title` as by far the largest remaining gap (900 hits
+in `heading_path` too, addressed separately below). Per
+`docs/schema.md`, `rank_or_title` is "civil rank... or honorific" --
+never an instrument -- so any instrument-shaped value here is
+unconditionally wrong, not an alternate convention.
+
+**Full scope**: 3157 of 7065 Musicians entries have a non-blank
+`rank_or_title`; 3048 (96.5%) are instrument-shaped once trailing
+periods and spelling variants (Біолончель, Альть, Вальдгорнь, Волторна,
+etc.) are counted, confirmed against 3 separate scans
+(`musicians_1890-91_MSK_p001` p.107, `musicians_1893-94_MSK_p003`
+p.102, `musicians_1892-93_MSK_p002` p.98).
+
+**RG's explicit concern, addressed by design**: "I don't want to
+generalize if it means we miss exceptional cases." A blanket "contains
+an instrument word -> clear the field" rule would have destroyed real
+content -- confirmed real by manually reviewing every one of the ~90
+distinct non-pure-instrument values in the corpus, not just a sample.
+Built `_repair_musicians_rank_or_title()` as a **split**, not a wipe,
+peeling off exactly four confirmed patterns in order and leaving
+anything else completely untouched:
+
+1. A `"(съ <date> г.)"` tenure-start prefix -- checked all 37
+   occurrences directly against `tenure_note_text` first: the same
+   date text is present there in every single case, so this prefix is
+   always fully redundant and discarded outright, not re-appended.
+2. A `"(см. ...)"` cross-reference note -- relocated verbatim to
+   `tenure_note_text` (this one is NOT redundant elsewhere, unlike the
+   date prefix).
+3. A leading known instrument name -- moved to `instrument` only if
+   that field is currently empty (never clobbers a real value already
+   there), but always stripped from `rank_or_title` regardless.
+4. Whatever remains, if it's a service note ("Переведенъ..."/
+   "Оставилъ службу...") -- relocated to `tenure_note_text`.
+
+Anything left after all four steps is left alone. Dry-run verified
+against every distinct value in the corpus before applying, including
+14 hand-written test cases covering every combined shape found (and
+confirming the critical one: "Скрипка. Солистъ Двора Его
+Императорскаго Величества" correctly becomes
+`instrument="Скрипка"`/`rank_or_title="Солистъ Двора Его
+Императорскаго Величества"`, not wiped).
+
+**Two ambiguous cases checked against scans before deciding, per RG's
+request, rather than guessed at:**
+- `"Музыканты:"` (1, `musicians_1892-93_MSK_p002__e016`) -- confirmed a
+  genuine printed section header ("Балетный оркестръ" -> "Музыканты:"
+  -> "1. Альбрехтъ...", p.98), just in the wrong field. Fixed via a
+  narrowly-scoped `_repair_musicians_stray_heading()` (this exact value
+  only, not a general "looks like a heading" rule, since there's only
+  one confirmed instance to validate a broader rule against) --
+  appended to `heading_path` as "Балетный оркестръ / Музыканты",
+  matching the compound-path convention already used 51 times
+  elsewhere in this corpus.
+- `"(онъ же и библіотекарь Музыкальной библіотеки)"` (4, all one
+  person -- Фарскій, Альбертъ Карловичъ, 1893-94 through 1902-03) --
+  confirmed word-for-word against the scan
+  (`musicians_1893-94_MSK_p003`, entry 32): a real, consistent
+  (4 separate printings) dual-role fact, not contamination. Left
+  untouched.
+- The other 2 apparent exceptions ("1 мая 1892 г.", "21 ноября
+  1891 г.") turned out not to be a `rank_or_title` problem at all --
+  both entries have `family_name="Оставилъ службу"`, i.e. they're
+  issue #28's already-tracked fake-person bug (a resignation date
+  orphaned into its own bogus entry). Correctly left alone as out of
+  scope for this fix.
+
+**Applied and verified**: `raw.person_entry.instrument` empty count for
+Musicians dropped from 5865/7065 to 3190/7065 (2675 recovered across 77
+pages). Spot-checked genuine content survived exactly as designed:
+"Ауэръ" (Leopold Auer) and "Цабель" (Albert Zabel) both show "Солистъ
+Двора Его Императорскаго Величества" correctly preserved across many
+seasons with instrument cleanly split out (Скрипка/Арфа respectively);
+Фарскій's dual-role note unchanged in all 4 appearances.
+`research.person`/`research.person_appearance` unchanged at 2934/21158
+-- a pure text/field-relocation fix.
+
+**Not done this pass, logged for later**: `heading_path` also holds
+~900 instrument-shaped values, but (per RG's live investigation) this
+is NOT a uniform bug the way `rank_or_title` was -- some pages have the
+instrument genuinely, correctly landing in `heading_path` (e.g.
+`musicians_1890-91_MSK_p001`, where each row simply has no other
+heading and the model puts the trailing instrument there instead of in
+`instrument`); other pages have `heading_path` "stuck" repeating an
+earlier row's value while the true per-row instrument sits correctly
+in `rank_or_title` instead (confirmed on `musicians_1893-94_MSK_p003`:
+`heading_path` repeats "Ударные инструменты" -- entry 9's own genuine
+value -- down through many unrelated later rows, while `rank_or_title`
+correctly varies with each person's real instrument). A naive
+`heading_path`-to-`instrument` move would be wrong for the stuck-value
+pages -- would misfile a stale value AND destroy the real section label
+("Музыканты") those rows should have. Needs its own scoping pass (how
+common is each of the two shapes corpus-wide) before any fix is
+written.
+
+## 57. `heading_path` scoping for Musicians -- naive fallback confirmed
+actively dangerous, not just incomplete; 54 genuinely-lost instrument
+values hand-transcribed from scans; structural heading_path fix still open
+
+**Status: partially done (54 instrument values recovered; the
+heading_path field itself still not fixed).** Direct follow-up to issue
+#56 -- RG's stated concern ("I don't want to generalize if it means we
+miss exceptional cases") was validated concretely here, not just in the
+abstract.
+
+**Confirmed the naive fallback would have fabricated wrong data, not just
+missed some right data.** The obvious next move after #56 -- "if
+`instrument` is still empty, trust `heading_path`" -- was checked against
+a scan before being applied anywhere. Scoped first: exactly 4 pages
+corpus-wide show a 10+-row run of an identical instrument-shaped
+`heading_path` value (always "Ударные инструменты," run lengths 13-39).
+Checked the largest (`musicians_1901-02_MSK_p002`, p.121) directly: only
+entry 35 (Зюсъ) genuinely plays percussion; the other 38 rows in that
+run are 38 *different* real instruments (violinists, a harpist, a
+cellist, brass, woodwinds) that the naive fallback would have silently
+overwritten with "percussion" for all of them. Confirmed generally: two
+of the four pages already had their real instrument recovered by issue
+#56's `rank_or_title` fix (25/27 and 31/31); the other two never had
+it anywhere else in the row at all, because their "(см. оперный
+оркестръ)" cross-reference notes were dropped entirely during
+extraction rather than merely misplaced (matches issue #27's documented
+"~40% of the time this phrase is lost outright" finding).
+
+**54 values hand-transcribed from the scans, re-verified live in this
+session rather than trusted from an earlier recollection** (RG: "*no
+guessing!"): `ForUpload_1893-94_Spisok_OrchestraMoscow.pdf` p.102
+(2 entries: Заальборнъ -- genuinely percussion, the real origin of that
+page's stuck run; Фарскій -- Альтъ, dropped from every field before
+this fix), `ForUpload_1890-91_Spisok_OrchestraSP.pdf` p.79 (13 entries,
+54-66), `ForUpload_1901-02_Spisok_OrchestraMoscow.pdf` p.121 (39
+entries, 35-73). Applied via a new `_INSTRUMENT_TRANSCRIPTION_FIXES`
+patch table (same array-index-keyed pattern as the existing
+`_MISATTACHMENT_FIXES`), each entry's array index independently
+verified against the raw JSON before writing the fix. Dry-run matched
+54/54 exactly before applying to production. Verified: Musicians'
+empty-`instrument` count dropped from 3190 to 3136 (54 recovered,
+exact). `research.person`/`research.person_appearance` unchanged at
+2934/21158.
+
+**Deliberately not touched by this fix**: `heading_path` itself, for
+either the 54 hand-fixed rows or the other ~67 rows in the same 4
+stuck runs whose instrument was already recovered via issue #56. The
+correct restored value turns out to differ by page, confirmed (not
+assumed) from adjacent same-page/prior-page evidence:
+- `musicians_1893-94_MSK_p003`: entries 2-8 (immediately before the
+  stuck run starts) all read `heading_path="Музыканты"` -- a real,
+  repeated section label to restore for entry 9 onward.
+- `musicians_1890-91_SP_p004`: the *preceding* page
+  (`musicians_1890-91_SP_p003`, entries 44-51) shows `heading_path`
+  genuinely holding each person's own, individually-varying instrument
+  throughout, with no separate section-heading concept anywhere on this
+  stretch of pages at all -- meaning the correct fix for this specific
+  page is to set `heading_path` equal to the same per-row instrument
+  value (matching this page's own established convention), not to
+  restore some other section label that was never actually used here.
+- `musicians_1894-95_MSK_p003` and `musicians_1901-02_MSK_p002`:
+  **checked and found genuinely ambiguous with what's on the page
+  itself** -- both pages start mid-list (list numbers 6 and 35
+  respectively), so the true prior heading isn't visible on the page at
+  all and would need to be pulled from a preceding page not yet
+  checked for this specific question.
+
+Also noticed in passing, not yet addressed: `musicians_1893-94_MSK_p003`
+entry 1 (Александровъ) has `heading_path="Капельмейстеръ"`, which is
+also wrong by the same evidence (entries 2-8 read "Музыканты," and the
+scan's actual Kapellmeister, Арендсъ, is a separate, unnumbered line
+above the numbered list) -- a smaller instance of the same general
+"heading_path carries a stale value from the line above" bug, outside
+this pass's 10+-run detection threshold.
+
+**Not done**: the general "shape A" migration (heading_path -> instrument
+for the other ~820 pages/rows that hold a plausible, non-repeated
+instrument value with no other heading available) is still entirely
+open -- issue #56 flagged it, this issue scoped the dangerous subset out
+of it, but the safe majority hasn't been touched yet either.
+
+## 58. `heading_path` restored for all 4 stuck-run pages -- confirmed the
+correct value genuinely differs by page, closing out issues #56/#57
+
+**Status: fixed.** Direct follow-up to #57 -- RG: "Let's finish off
+this." Gathered adjacent-page evidence for all 4 pages before writing
+anything (never assumed one restoration rule fits all 4, and the
+evidence confirmed it wouldn't have):
+
+- `musicians_1893-94_MSK_p003`: entries 2-8 (immediately before the
+  stuck run) read `heading_path="Музыканты"` -- real, repeated section
+  label, restored for entries 9-35. Also fixed entry 1 (Александровъ),
+  a smaller instance of the same underlying bug (stuck at
+  "Капельмейстеръ," the line above the numbered list) -- confirmed via
+  the analogous transition on `musicians_1894-95_MSK_p002` (its own
+  unnumbered "Арендсъ... Оркестръ Малаго театра / Капельмейстеръ" entry
+  immediately followed by numbered entry "1." reading ".../ Музыканты").
+- `musicians_1894-95_MSK_p003`: continues
+  `musicians_1894-95_MSK_p002`'s numbered list (item 6 follows item 5) --
+  that page's own entries 48-52 read "Оркестръ Малаго театра /
+  Музыканты," the exact compound path restored here for entries 1-31.
+- `musicians_1890-91_SP_p004`: the preceding page
+  (`musicians_1890-91_SP_p003`, entries 44-51) shows `heading_path`
+  genuinely holding each person's own individually-varying instrument
+  throughout, with no separate section-heading concept anywhere on this
+  stretch of pages -- so the correct restored value is each entry's own
+  instrument (same value now in `instrument` per issue #57), not a
+  fabricated section label. Also caught 2 more affected entries this
+  same evidence surfaced (52-53, Фейтъ/Франкенштейнъ -- stuck at
+  "Капельмейстеръ" too, for the same reason as #57's Александровъ case;
+  their own instrument, Арфа/Литавры, had never been captured anywhere
+  else either) -- added to `_INSTRUMENT_TRANSCRIPTION_FIXES` alongside
+  the heading_path fix, both confirmed against the same already-verified
+  scan.
+- `musicians_1901-02_MSK_p002`: the preceding page
+  (`musicians_1901-02_MSK_p001`, entries "1."-"34.") shows `heading_path`
+  legitimately NULL throughout its entire numbered list, with
+  `instrument` alone carrying every entry's real value -- so the correct
+  restored value here is NULL, not a fabricated label this list never
+  used at all.
+
+Applied via a new `_HEADING_PATH_RESTORE_FIXES` patch table (same
+idx-keyed pattern as `_MISATTACHMENT_FIXES`/
+`_INSTRUMENT_TRANSCRIPTION_FIXES`), dry-run matched 28+31+15+39=113
+exactly before applying to production. Verified: no page has more than
+3 remaining "Ударные инструменты" `heading_path` values anywhere in the
+corpus (fully plausible for a genuine small percussion section, unlike
+the fixed pages' 13-39-row runs).
+`research.person`/`research.person_appearance` unchanged at 2934/21158.
+
+**This closes issues #56, #57, and #58 as one complete arc**: `instrument`
+contamination in `patronymic` (issue #55) -> `rank_or_title` (#56,
+2675 recovered) -> the `heading_path` "stuck run" scoping and 54
+hand-transcribed values (#57) -> `heading_path` itself restored (#58).
+Musicians' `instrument` field coverage went from 1200/7065 (17%) at the
+start of this arc to 3931/7065 (56%) by the end, entirely through
+confirmed, scan-verified fixes -- no value written anywhere in this
+whole arc without being checked against the actual printed page first.
+
+**Follow-up (#59, below) built and applied the general "shape A"
+migration this issue left open.**
+
+## 59. General "shape A" `heading_path` -> `instrument` migration applied
+-- all 19 candidate pages hand-verified against scans first; confirmed
+NOT safe to automate naively, 23 of 774 touched rows needed a
+scan-checked correction rather than a blind move
+
+**Status: fixed.** Direct follow-up to #57/#58's closing note. RG:
+"Yes, go through all of them" -- rather than trust the ~820-row estimate
+and migrate it in one blind pass, every one of the 19 candidate pages
+(767 rows, re-scoped precisely by a fresh query) was read against its
+own scan first, continuing the same discipline used throughout #54-#58.
+
+**This caution was concretely justified, not just procedurally
+followed.** A first spot-check of 4 pages (before this issue's full
+pass) already found a ~5% error rate -- confirmed here for the complete
+19-page pool: of 774 total rows touched, **23 (3%) needed a scan-
+verified correction instead of trusting `heading_path` as printed**, in
+five distinct failure shapes, all confirmed by direct comparison against
+the printed page rather than inferred from a pattern:
+- **stuck/shifted from a neighboring row's real value**: Браунштейнъ,
+  both Еременко instances, Плотниковъ, Ватерстрадъ/Вейкманъ (shifted by
+  one row), both Гуманъ instances, Кулле 1-й, Ластовскій -- 9 rows.
+- **two adjacent rows swapped with each other**: Фридрихъ/Царскій on
+  `musicians_1892-93_MSK_p001` -- 2 rows.
+- **a fabricated plural category word matching nothing printed
+  anywhere on the page**: Розановъ ("Кларнетисты"), Ромашковъ 1-й/
+  Рѣзниковъ ("Альты") on `musicians_1906-07_MSK_p003` -- confirmed by
+  zooming the actual scan region, no such subheading exists -- 3 rows.
+- **the person's own name duplicated into heading_path because no
+  instrument is printed at all**: Газенкампфъ, and (variant, one row
+  where the duplicated-name pattern happened but the real instrument
+  *was* recoverable) Лудольфи -- 2 rows.
+- **genuinely no instrument printed for a brand-new hire** (entry ends
+  at the tenure date, heading_path still holds a stuck neighbor value):
+  Голубевъ/Дворниковъ/Де-Буръ/Зайцевъ (`musicians_1903-04_MSK_p001`),
+  Яньшиновъ (`musicians_1906-07_MSK_p004`) -- 6 rows, `instrument`
+  correctly left empty rather than fabricated.
+- **two structurally distinct one-offs**: Сиборъ
+  (`musicians_1906-07_MSK_p003`, heading_path = "Скрипка. Солистъ
+  балета." -- genuinely both his instrument and a title bundled
+  together, split via the existing `_split_leading_instrument` helper
+  rather than migrated whole) and Эмме (`musicians_1906-07_MSK_p004`,
+  heading_path stuck on the *next* section's own "Дирижеръ" heading,
+  printed immediately below on the same page) -- 2 rows.
+
+Wired in as two new pipeline functions in `parse_and_validate.py`:
+`_repair_heading_path_shape_a()` (the general migration, gated by
+`_SHAPE_A_NO_INSTRUMENT`/`_SHAPE_A_CORRECTIONS` override tables for the
+confirmed-wrong subset) and `_repair_shape_a_special_cases()` (the 7
+rows structurally outside the strict candidate filter -- their
+heading_path wasn't a bare instrument name at all, so the general
+function's filter never reached them).
+
+**Two bugs caught and fixed during dry-run verification, before
+production was touched**: (1) the fix tables were keyed by each entry's
+*printed* list_number, but the code first matched on raw array
+position -- wrong whenever a page's array continues a list from a prior
+page (e.g. array position 1 = list_number "34.", not "1."). Found
+because several corrections silently fell through to the plain-migration
+branch on exactly those continuation pages. (2) the plain
+`instrument`-correction branch set `instrument` but forgot to also clear
+the now-wrong `heading_path`, found by spot-checking actual field values
+in the dry-run CSV, not just row counts. Both fixed and re-verified
+before applying to production.
+
+Dry-run against `outputs/full_run/raw/*.raw.json` matched exactly: 751
+migrated + 16 corrected = 767 (the full candidate count from a freshly
+regenerated scoping query), plus 7 more special-case rows. Applied via
+`parse_and_validate.py` -> `build_duckdb.py` -> `build_entities.py` ->
+`build_research_model.py`. Verified: Musicians' empty-`instrument` count
+dropped from 3136 to 2366 (770 recovered); coverage now 4699/7065 (67%),
+up from 56% at the end of the #58 arc. `research.person_appearance`
+unchanged at 21158 (pure field correction, zero rows added or dropped).
+`research.person` moved 2934 -> 2897, the expected ripple effect from
+entity-clustering re-running against corrected text (same pattern seen
+in [[entities-person-cleanup-2026-08-27]]'s Мокѣевъ merge).
+
+Post-fix spot-check via `research.person_appearance` cross-season
+corroboration: Фридрихъ now reads "Кларнетъ" consistently 1890-91
+through 1907-08 (previously wrong only in 1892-93); Царскій now reads
+"Скрипка" consistently (previously wrong only in 1892-93); Розановъ,
+Сиборъ, Эмме all internally consistent across every season each appears
+in; Газенкампфъ/Голубевъ show a plausible real pattern (no instrument
+printed in early years, one assigned later) rather than a fabricated
+value.
+
+**This closes the "shape A" migration issue #56/#57/#58 left open**:
+Musicians `instrument` field coverage across the whole #54-#59 arc went
+from 1200/7065 (17%) to 4699/7065 (67%).
+
+**Not addressed, spotted in passing**: a second, distinct "Лудольфи,
+Валентинъ Контрабасъ." person cluster (seasons 1893-94/1894-95, SP)
+where "Контрабасъ." is fused directly onto the `first_name` field
+itself -- a different bug on a different page
+(not `musicians_1899-00_SP_p002`, the one fixed here) -- left for a
+future pass. Also, RG flagged Сиборъ ("Скрипка. Солистъ балета.",
+2026-08-27) as a likely guest artist worth a cross-corpus check later,
+not yet done.
+
+## 60. `tenure_note_text` -> `instrument` extraction -- direct follow-up to
+#59, recovered 1854 rows corpus-wide (17% -> 93% Musicians `instrument`
+coverage across the whole #54-#60 arc)
+
+**Status: fixed.** RG asked why so many `instrument` fields were still
+empty after #59; answering that question surfaced this. Unlike
+`heading_path`, `tenure_note_text` behaves as a reliable verbatim
+capture regardless of whether `instrument` was separately parsed out --
+confirmed by comparing already-`instrument`-filled rows (which still
+carry the same `"(съ ... г.). <Instrument>."` text in tenure_note_text)
+against empty ones. Running the existing `_split_leading_instrument()`
+helper against every empty-`instrument` Musicians row's tenure_note_text
+(after stripping the leading tenure-date parenthetical) found 1854 of
+2366 empty rows (78%) had a cleanly-recoverable instrument sitting
+there, unextracted -- corpus-wide, not confined to the 19 shape-A pages.
+
+**Verified before writing anything, same discipline as #54-#59**: 10
+rows sampled at random across 10 distinct pages (of 52 total) checked
+directly against scans -- all 10 correct. Then cross-checked all 1854
+rows against every other Musicians row sharing the same (family_name,
+first_name, patronymic) with a known instrument elsewhere: 1721 had such
+a match, 1715 (99.65%) agreed exactly or via a known spelling/synonym
+variant, leaving 6 genuine conflicts. Scan-checked all 6: 4 (Шолларъ x2
+seasons, Табаковъ, Грибенъ) matched their own page's scan exactly -- the
+"conflict" was a real cross-season difference (an instrument change
+over a career, or two same-named different people), not an extraction
+bug. The remaining 2 (Фишеръ/Франке 1-й, `musicians_1892-93_SP_p002`,
+adjacent rows 76/77) were a confirmed genuine two-row swap -- the same
+failure class as issue #59's Фридрихъ/Царскій swap, just manifesting in
+tenure_note_text instead of heading_path.
+
+**Deliberately conservative scope**: only ever fills `instrument` when
+empty; never touches `tenure_note_text` itself (preserving the verbatim
+transcription) or any trailing "remainder" text after the instrument
+(e.g. Цабель's "Солистъ Двора Его Императорскаго Величества"). One
+sampled row (Григоренко, `musicians_1892-93_SP_p003`) showed a
+remainder -- "(см. оперный оркестръ)" -- that traced back to a genuinely
+wrong `rank_or_title` value already present in the raw JSON, unrelated
+to this fix (a stuck-run fabrication in a different field, same bug
+class as the heading_path stuck runs, still open). Moving remainder
+text into `rank_or_title` in this same pass would have risked
+propagating that kind of error; instrument-only extraction doesn't.
+
+Implemented as `_repair_tenure_note_instrument()` +
+`_TENURE_NOTE_INSTRUMENT_CORRECTIONS` in `parse_and_validate.py`. Dry-run
+caught one methodology bug before it mattered: an isolated call to just
+the new function (skipping the pipeline's actual repair order) gave a
+false 2304-row result, because several rows that get resolved by an
+*earlier* repair (shape-A migration, etc.) looked empty in isolation.
+Re-ran replicating the real per-page repair order and got the expected
+1854; a full `parse_and_validate.py` dry-run into a scratch dir
+confirmed the same number exactly before touching production.
+
+```sql
+SELECT count(*) FROM raw.person_entry WHERE entity_type='Musicians'
+  AND (instrument IS NULL OR trim(instrument)='');
+```
+Result: 2366 -> 512 (1854 recovered, exact). Coverage now 6553/7065
+(93%). Applied via `parse_and_validate.py` -> `build_duckdb.py` ->
+`build_entities.py` -> `build_research_model.py`.
+`research.person_appearance` unchanged at 21158;
+`research.person` unchanged at 2897 (no clustering ripple this time --
+the fix never touches name/heading text, only `instrument`).
+
+Post-fix spot-check via cross-season corroboration: Фишеръ now reads
+"Віолончель" consistently across all 4 seasons (was wrongly "Кларнетъ"
+only in 1892-93); Франке now reads "Кларнетъ" consistently (was wrongly
+"Віолончель" only in 1892-93); Абрамовъ, Баулинъ, Володарскій,
+Григоренко, Де-Ланге, Нагорнюкъ all internally consistent. Грибенъ now
+visibly shows a genuine instrument transition across his career
+(Ударные инструменты in the 1890s, Фортепіано from 1900-01 onward) --
+previously hidden behind an empty field, not a data error.
+
+**This closes the #54-#60 arc**: Musicians `instrument` coverage went
+from 1200/7065 (17%) at the start to 6553/7065 (93%) by the end,
+entirely through confirmed, scan-verified fixes.
+
+**Still open, unrelated to this fix**: the ~512 remaining empty rows --
+mostly genuinely non-instrumentalist people (conductors, the school
+director, librarians, ballet répétiteurs, police superintendents,
+students) plus confirmed cross-reference-stub losses (issue #27's ~40%
+"(см. ...)" phrase-loss pattern); the Григоренко-adjacent `rank_or_title`
+stuck-run fabrication noted above; the "Лудольфи, Валентинъ Контрабасъ."
+fused-name cluster and the Сиборъ guest-artist cross-check, both carried
+over unaddressed from issue #59.
+
+## 61. Triaged the ~512 remaining empty-`instrument` rows -- recovered 58
+more via 2 new pockets + 3 spelling variants; ~454 confirmed genuinely
+non-recoverable
+
+**Status: fixed (the recoverable part); the remainder confirmed
+correctly blank, not a bug.** RG: "Let's work on these" (the ~512 rows
+left after issue #60). Categorized all 141 distinct `heading_path`
+values among the 512 by frequency rather than spot-sampling, which
+surfaced two more recoverable pockets the prior sessions' filters missed
+by construction, not by chance:
+
+- **"Оркестръ / \<Instrument\>" and "Оркестр оперы и балета.
+  \<Instrument\>."** (50 rows, exactly 2 pages:
+  `musicians_1897-98_MSK_p000`, `musicians_1902-03_SP_p001`) --
+  `heading_path` holds a genuine, information-bearing institutional
+  heading (these pages also list non-orchestra roles under the same
+  institution) with the instrument tacked onto the end as one compound
+  value. Missed by issue #59's shape-A filter, which required
+  `heading_path` to be *exactly* a bare instrument name. Every value on
+  both pages checked directly against the scan. Unlike shape-A, the
+  heading prefix is preserved (not blanked) -- it's real structure, not
+  a stuck neighbor value.
+- **3 unrecognized instrument spelling variants** in `tenure_note_text`:
+  "Піанисть" (Гедике -- also already sitting in `heading_path`, just
+  never recognized as an instrument by any prior filter), "Вальтгорнъ"
+  (Сольскій), "Волторнъ" (Солодуевъ, distinct from the already-known
+  "Волторна"). Each confirmed by scan.
+- **5 rows recoverable from `tenure_note_text` but blocked by shape,
+  not content**: a leading dual-role parenthetical before the date
+  (Марквардтъ "Труба", Фарскій "Альтъ" -- both with strong existing
+  cross-season corroboration), a malformed date-prefix punctuation
+  variant (Терентьевъ "Скрипка", Сольскій "Вальдгорнъ"), and
+  `_split_leading_instrument`'s own deliberate boundary-safety check
+  declining a genuine split before a lowercase continuation (Смирновъ
+  "Піанистъ при драматическихъ спектакляхъ.", scan-confirmed).
+- **Крейнъ, Давидъ (2 rows)**: 7 prior seasons read "Первая скрипка";
+  these 2 read "Концертмейстеръ" instead (a genuine promotion -- this
+  era's "concertmaster" = principal first violin -- with no instrument
+  re-stated). Deliberately did NOT infer "Первая скрипка" without direct
+  textual support for these specific rows; relocated "Концертмейстеръ"
+  to `rank_or_title` instead, `instrument` stays empty. Matches this
+  project's standing rule against fabricating a plausible-but-unstated
+  value.
+
+**Confirmed correctly blank, not further recoverable**: répétiteurs
+(ballet rehearsal coaches -- checked 3 scans directly; even though
+répétiteurs are commonly pianists in real life, these entries genuinely
+end at the tenure date with no instrument printed), including
+Барминъ/Брындлинъ/Козловъ on `musicians_1901-02_MSK_p001`; Брекеръ's
+specific 1905-06 season (unlike every other season of his, that one row
+prints no instrument). Also spotted in passing, not fixed: 2
+`family_name="Оставилъ службу [date]"` rows -- a fresh instance of the
+already-documented issue #26 (non-person text captured as `person_entry`
+rows), out of scope here.
+
+Implemented as `_repair_heading_path_prefixed_instrument()`,
+`_TENURE_NOTE_INSTRUMENT_HAND_FIXES` (extending
+`_repair_tenure_note_instrument()`), 3 new `_KNOWN_INSTRUMENTS` entries,
+and `_repair_tenure_note_title_relocation()` in `parse_and_validate.py`.
+Dry-run into a scratch dir confirmed every count and spot-checked value
+before touching production (see `docs/query_log.md` for the exact
+numbers).
+
+```sql
+SELECT count(*) FROM raw.person_entry WHERE entity_type='Musicians'
+  AND (instrument IS NULL OR trim(instrument)='');
+```
+Result: 512 -> 454 (58 recovered, exact match to the dry-run total).
+Coverage now 6611/7065 (93.6%), up from 93.0% at the end of issue #60.
+`research.person` unchanged at 2897; `research.person_appearance`
+unchanged at 21158. Applied via `parse_and_validate.py` ->
+`build_duckdb.py` -> `build_entities.py` -> `build_research_model.py`.
+
+**This closes the #54-#61 arc**: Musicians `instrument` coverage went
+from 1200/7065 (17%) at the start to 6611/7065 (93.6%) by the end.
+
+**Still open**: ~454 remaining empty rows, genuinely non-instrumentalist
+(conductors, school director, librarians, police, students) or confirmed
+cross-reference-stub losses (issue #27); the "Лудольфи, Валентинъ
+Контрабасъ." fused-name cluster (carried over from issue #59); the
+Сиборъ guest-artist cross-check (RG, 2026-08-27); the 2
+"Оставилъ службу"-as-family_name rows (issue #26). The Григоренко
+`rank_or_title` stuck-value fabrication is fixed -- see issue #62.
+
+## 62. Fabricated "(см. ...)" cross-reference note on 23 rows,
+`musicians_1892-93_SP_p003` -- scoped and fixed
+
+**Status: fixed.** RG: "The Григоренко rank_or_title stuck-value bug.
+Let's fix this next" (carried over from issue #60/#61). Re-scoped fresh
+rather than trusted from the prior note: the fabricated value no longer
+lives in `rank_or_title` by the time `raw.person_entry` is built -- an
+existing, independently-validated repair (`_repair_musicians_rank_or_
+title`, issue #56, confirmed correct for 3048+ other rows) already
+relocates any "(см. ...)" text sitting there into `tenure_note_text`.
+Rescoped to `tenure_note_text ILIKE '%см%'`: 196 rows across 12 pages.
+
+Classified all 196 by whether tenure_note_text carries its own
+tenure-date prefix before the "(см. ...)" note: 173 (11 pages) have no
+date of their own -- genuine cross-reference stubs pointing to the
+Оперный оркестръ roster for their full record, matching the
+already-confirmed Гуманъ/Добровъ shape from issue #57. The other 23 have
+their own complete date+instrument record already printed -- and **every
+one of those 23 is on a single page**, `musicians_1892-93_SP_p003`.
+
+Confirmed by direct scan reading, not assumed from the classifier alone:
+every one of the 23 has a clean, self-contained printed record with no
+crossref anywhere nearby (e.g. Затценгоферъ: "(съ 24 сентября 1875 г.).
+Фаготъ." -- nothing else) -- including a same-page cross-check that 7 of
+the 23 (Абрамовъ..Вагнеръ) belong to an entirely different "Оркестръ
+Александринскаго театра" list at the bottom of the same page, where a
+crossref to the opera orchestra makes no structural sense at all, yet
+still got the fabricated value. Confirmed the pattern is a one-page
+artifact, not a recurring model bias, by checking the prior season's
+identical-layout page (`musicians_1891-92_SP_p003`): same genuine
+alternating stub/full-record convention, zero fabrications.
+
+Traced the mechanism to the model's own raw JSON extraction, not a
+repair-function bug: Григоренко's `rank_or_title` already reads "(см.
+оперный оркестръ)" in `outputs/full_run/raw/musicians_1892-93_SP_p003
+.raw.json`, before any repair runs. The model, working through a page
+with dozens of genuine "(см. оперный оркестръ)" occurrences interspersed
+with full records, appears to have gotten the phrase stuck and applied
+it indiscriminately to rows that don't have it printed -- including onto
+an unrelated second list on the same page.
+
+Implemented as `_repair_fabricated_crossref_note()` +
+`_FABRICATED_CROSSREF_NOTE_FIXES` in `parse_and_validate.py`, scoped to
+exactly the 23 confirmed (page_id, list_number) pairs -- strips only the
+trailing "(см. ...)" suffix, leaves `instrument` and everything else
+untouched. Dry-run confirmed exactly 23 rows touched, all on the target
+page, before applying to production.
+
+Applied via `parse_and_validate.py` -> `build_duckdb.py` ->
+`build_entities.py` -> `build_research_model.py`. `research.person`
+unchanged at 2897; `research.person_appearance` unchanged at 21158 (pure
+text correction). Post-fix spot-check via cross-season corroboration:
+Абрамовъ, Григоренко, Затценгоферъ, Парисъ, Эллингеръ all show their
+real instrument consistently across every season, the fixed 1892-93 row
+now indistinguishable from the rest; Гуманъ's genuine crossref record
+confirmed unaffected.
+
+## 63. "Лудольфи, Валентинъ Контрабасъ." fused-name cluster -- fixed by
+generalizing `_repair_instrument_in_patronymic` to strip a trailing period
+
+**Status: fixed.** RG: "The Лудольфи fused-name cluster. Let's also
+check this." (carried over from issue #59). Confirmed the fused shape
+(`patronymic="Контрабасъ."`) on 2 rows for Лудольфи
+(`musicians_1893-94_SP_p001`/`musicians_1894-95_SP_p001`, list_number
+"64.") -- one character (a trailing period) short of matching the
+existing `_repair_instrument_in_patronymic()`'s exact-string check.
+Corpus-wide re-check for the identical near-miss found 2 more rows for a
+second person, Котте (same 2 pages, list_number "55."). All 4 confirmed
+against the scan.
+
+Generalized the check to `pat.rstrip(".") in _KNOWN_INSTRUMENTS`. Dry-run
+found 10 rows touched across 6 pages, not just the 4 targeted -- cross-
+checked all 10 against current production and confirmed the other 6 were
+already correctly filled via a different repair path (a from-scratch run
+just reaches the same value earlier); only the 4 targeted rows were
+genuinely new content.
+
+Applied via `parse_and_validate.py` -> `build_duckdb.py` ->
+`build_entities.py` -> `build_research_model.py`. Post-fix spot-check:
+Котте reads "Фаготъ" consistently across all 15 seasons; Лудольфи reads
+"Контрабасъ" consistently across all 8 seasons -- the fixed rows now
+indistinguishable from the rest.
+
+## 64. "Оставилъ службу"/"†" fragment person-entries -- scoped
+corpus-wide (5 instances, 3 entity types) and merged into the entry
+they belong to
+
+**Status: fixed.** RG: "the 2 'Оставилъ службу'-as-name garbage rows.
+And this one" (carried over from issue #61's triage -- turned out to be
+a specific, recurring shape of the already-documented issue #26).
+Corpus-wide search for a family_name matching a service-end/death-note
+phrase found 5 instances (not 2), across 3 entity types: Musicians (x3:
+`musicians_1891-92_MSK_p003` x2, `musicians_1897-98_SP_p001`),
+Administration (`administration_1895-96_p001`), and TheaterSchoolStaff
+(x2: `theaterschoolstaff_1902-03_p002`'s `family_name="†"`,
+`theaterschoolstaff_1896-97_p000`). Confirmed by scan for every one: a
+trailing note that belongs to the entry immediately above got mis-split
+into its own fake "person" entry -- e.g. `musicians_1897-98_SP_p001`
+entry 74 (Плацатка) prints "... Фаготъ. Оставилъ службу 1 октября 1897
+г." as one continuous entry.
+
+Also spotted, not fixed (out of scope for this repair): a distinct bug
+on the same `theaterschoolstaff_1896-97_p000` page -- a real person,
+Сперанскій, whose name landed in `heading_path` instead of
+`family_name` on the entry right after the fixed one.
+
+Implemented `_repair_fragment_person_entries()`, applied generally
+alongside `_repair_roster()` (all roster entity types, not just
+Musicians) -- merges the fragment's text into the preceding entry's
+`tenure_note_text` and drops the fake row. Dry-run confirmed exactly 6
+rows removed (all 5 flagged pages, `musicians_1891-92_MSK_p003` alone
+contributing 2) via a content-level diff, not entry_id comparison (entry
+IDs shift after any row removal, so a naive ID diff over-reports).
+
+Applied via `parse_and_validate.py` -> `build_duckdb.py` ->
+`build_entities.py` -> `build_research_model.py`. `raw.person_entry`
+Musicians count 7065 -> 7062 (3 fake rows removed); `research.person`
+2897 -> 2894 (small re-clustering ripple, expected);
+`research.person_appearance` 21158 -> 21154. Post-fix spot-check via
+`research.person_appearance`: Богуславъ, Захаровъ, Флоринскій, Шемаевъ
+all show the merged note correctly, no separate fake entry remains.
+
+**Noted, not investigated further**: `research.person_appearance` shows
+Флоринскій's merged note duplicated within one row's text for the
+1896-97 season, even though `raw.person_entry`'s own `tenure_note_text`
+is confirmed correct (checked directly). A pre-existing derivation
+quirk in `build_research_model.py` (likely double-pulling from
+`person_entry_service`), not introduced by this fix, and outside
+Musicians data -- left for a future look.
+
+**Update, same day (see issue #65)**: the actual cause was found and
+fixed -- not a `person_entry_service` quirk, but a second, independent,
+pre-existing hardcoded SQL patch in `build_duckdb.py` for this exact
+Флоринскій row, left over from before this fix existed. Removed.
+
+## 65. tenure_note_text deep-dive: duplicate-fix bug, 2 more instrument
+recoveries, a crossref-prefix extraction gap, and date-punctuation
+normalization
+
+**Status: fixed.** RG asked to see the raw Musicians CSV directly
+("just musicians and their attendant fields... I want to see what it
+looks like"), then worked through several findings while browsing it
+in parallel with continued investigation here.
+
+**1. Duplicate-fix bug.** Tracing the Флоринскій duplication noted (not
+investigated) in issue #64 back to its source: `build_duckdb.py`'s
+`tenure_note_text_clean` derivation had a pre-existing, hardcoded
+one-off SQL patch for this exact row (entry_id-keyed, from before
+`_repair_fragment_person_entries()` existed) that unconditionally
+re-appended the same note every build, stacking with the new general
+fix. Removed the stale branch (its sibling general-regex branch, which
+handles a different, still-live shape, was kept).
+
+**2. 2 more instrument-field-contaminated rows.** The SQL block's other
+branch (`instrument LIKE 'Оставилъ службу%'/'Переведенъ%'`) revealed 2
+Musicians rows where `instrument` itself holds a resignation/transfer
+note instead of the real instrument, both on `musicians_1903-04_MSK_
+p000`: Барсукъ-Самборскій (idx7) and Гейслеръ (idx19). Confirmed by
+scan (p.113) and unanimous cross-season corroboration (13/15 other
+seasons). Fixed via `_repair_instrument_service_note()` +
+`_INSTRUMENT_SERVICE_NOTE_CORRECTIONS`, restoring the real instrument
+and relocating the note to `tenure_note_text`.
+
+**3. Crossref-prefixed instrument pattern.** 18 rows where
+`tenure_note_text` reads "(см. оперный оркестръ). \<Instrument\>." --
+a crossref note followed by the real instrument, missed because the
+extraction only ever tried a date prefix. Confirmed by scan on both
+affected pages (`musicians_1892-93_MSK_p003` p.99, entries 37-56;
+`musicians_1891-92_SP_p002` p.63, entries 1-6), zero exceptions.
+`_repair_tenure_note_instrument()` now also tries a crossref-prefix
+regex when the date prefix doesn't match.
+
+**4. "Why do only some tenure_note_texts have an instrument?" (RG's
+question, answered with data, not assumption).** Of the empty-instrument
+rows at that point, only 2/429 had ANY instrument word anywhere in
+their own tenure_note_text -- confirming the other 98% genuinely reflect
+non-instrumentalist roles (conductors, librarians, school
+administrators, répétiteurs, students), not an extraction miss. The 2
+exceptions were real, scan-confirmed misses (Фарскій -- a missing
+closing paren stacked with a dual-role parenthetical; Стрекаловъ -- the
+instrument sitting after a transfer note instead of right after the
+date), both added to `_TENURE_NOTE_INSTRUMENT_HAND_FIXES`.
+
+**5. "Is the punctuation variance real print variation or an
+extraction artifact?" (RG's question, answered with data).** Classified
+all 7014 non-blank Musicians `tenure_note_text` values by paren shape:
+3987 fully correct, 1921 with no parens at all, 918 missing only the
+opening paren. Checked two pages directly against the scan (one full
+page, 50 rows, `musicians_1893-94_MSK_p001` p.100; one spot-check,
+`musicians_1892-93_SP_p003` p.99) -- **zero exceptions**: the printed
+page always uses full `"(съ ... г.)."`. Confirmed a pure extraction
+artifact, not the book's own convention varying.
+
+**Punctuation normalization implemented** (RG: "let's make sure the
+clean version follows the (съ ... г.) convention") as a `regexp_replace`
+step in `tenure_note_text_clean` (the `analysis` layer -- `raw` stays
+verbatim, per RG's confirmed preference): `^\(?(съ (?:.+?г\. (?:по|и) )*
+.+?г\.)\)?` -> `(\1)`. Validated against the full corpus before
+deploying: correctly handles simple dates regardless of original paren
+state; correctly captures 35 confirmed compound multi-period service
+dates whole without over-matching (longest genuine capture 68 chars);
+the non-greedy inner stop correctly prevents a malformed no-closing-
+paren row from swallowing unrelated later sentences into the "date";
+correctly leaves the 187 crossref/dual-role-prefixed rows untouched
+(out of scope for this convention).
+
+Applied via `parse_and_validate.py` (items 2-4) -> `build_duckdb.py`
+(items 1, 5) -> `build_entities.py` -> `build_research_model.py`.
+Empty-instrument count 429 -> 427 (Фарскій, Стрекаловъ recovered).
+Coverage now 6635/7062 (94.0%). `research.person` 2894;
+`research.person_appearance` 21154 (both unchanged from before this
+round). Post-fix spot-check via `research.person_appearance`: all 4
+newly-fixed people internally consistent across every season;
+Флоринскій's merged note now appears exactly once, confirming the
+duplicate-fix bug is resolved.
+
+## 66. Instrument field fully overwritten by its own crossref note --
+21 rows, `musicians_1891-92_MSK_p002`
+
+**Status: fixed.** Found while investigating RG's deferred #65 question
+("why do some musicians have start dates and some don't"). Of the 235
+Musicians rows with no start date, all resolved to confirmed crossref
+stubs (the real date lives on a different "home" page) -- 226 had visible
+crossref text somewhere in the row; chasing the remaining 48 that looked
+entirely blank surfaced this: on `musicians_1891-92_MSK_p002`, 21 rows'
+`instrument` field held only the literal crossref note "см. оперный
+оркестръ" (a `person_entry_service`/date field, not an instrument at
+all), with the real instrument dropped from every field entirely.
+
+Confirmed by direct scan reading (p.86): every affected row reads
+"\<Surname\> (см. оперный оркестръ). \<Instrument\>." as one continuous
+entry, e.g. entry 2, Альбрехтъ: "Альбрехтъ (см. оперный оркестръ).
+Корнетъ." All 21 names and instruments hand-transcribed directly from
+the scan. Fixed via new `_INSTRUMENT_CROSSREF_CORRECTIONS` +
+`_repair_instrument_crossref_note()` in `parse_and_validate.py`:
+relocates the crossref note into `tenure_note_text` (parenthesized,
+matching the corpus-wide crossref-stub convention) and restores the
+real instrument to `instrument`.
+
+Dry-run matched expectations exactly on first attempt (21 rows, correct
+page, correct values) -- applied to production
+(`parse_and_validate.py` -> `build_duckdb.py` -> `build_entities.py` ->
+`build_research_model.py`). Post-fix counts: `raw.person_entry` 21168
+(unchanged -- no rows added/removed, only 21 corrected in place);
+`entities.person_candidate` 0 pending (23 rejected); `research.person`
+2894; `research.person_appearance` 21154 (both unchanged, as expected
+for an in-place field correction). Spot-checked 4 of the 21
+(Альбрехтъ, Гейслеръ, Лебедевъ, Петровъ) via `research.person_
+appearance`: each crossref stub row's restored instrument matches that
+same person's "home" entry instrument for the same season (1891-92) --
+Корнетъ, Контрабасъ, Флейта, Скрипка respectively -- confirming the fix
+is internally consistent, not just locally plausible.
+
+## 67. `rank_or_title` split into `rank`/`title` (RANK vs TITLE), full
+corpus-wide, plus three relocated exceptions
+
+**Status: fixed, applied to production.** Triggered by RG asking whether
+`instrument`'s raw-field-vs-derived-column reasoning (documented in
+`docs/schema.md`) also applies to `rank_or_title`, then a live
+corpus-wide exploration: "Maybe I need to understand better what
+rank_and_title means across the corpus."
+
+**Design (RG's own framing, confirmed against real data before
+building):**
+- **RANK** -- institutionally conferred status: civil/court Table-of-
+  Ranks grades (`ст. сов.`, `колл. сов.`, `надв. сов.`...), military
+  ranks (`полковникъ...`, abbreviated forms included), court honorifics
+  (`Солистъ Двора Его Императорскаго Величества`), and -- confirmed by
+  checking real examples, not assumed -- Academy of Arts distinctions
+  (`академикъ`/`профессоръ`: every checked example already has the
+  person's actual job sitting in `heading_path`, so these aren't
+  occupation labels) and hereditary civil-estate status (`пот. поч.
+  гражд.`).
+- **TITLE** -- how the Yearbook labels the entry: occupational role,
+  subject taught, workshop specialty.
+- Two shapes belong to **neither**, and were relocated rather than
+  tagged-and-dropped once RG pushed on this ("these exceptions really
+  belong in other fields"):
+  - BalletArtists' `1-я`/`2-я`/`3-я`/`4-я` -- RG correctly identified
+    these as a name-disambiguator, not seniority; confirmed by query
+    (every ordinal-bearing surname group on a page pairs a distinct
+    patronymic with each ordinal) -- relocated onto `family_name_clean`
+    (e.g. `Иванова` -> `Иванова 4-я`), the same convention already used
+    corpus-wide (`Алексѣева 1-я`). Same bug class as the existing
+    ordinal-misplacement fixes for first_name/patronymic just above in
+    `build_duckdb.py` -- this one landed in `rank_or_title` instead.
+  - Dual-role/cross-reference notes (`(онъ же и режиссеръ)`, `(см. СПБ.
+    балетъ)`) -- relocated onto `tenure_note_text_clean`, same
+    convention as the `instrument` crossref fix (#66). **RG asked to
+    scan-check these before applying** ("Can we check these against the
+    scans?") -- held out of the pipeline script entirely (not just
+    unapplied) until scans became available mid-session, then verified
+    across all 9 distinct people covering the 24 rows. Confirmed
+    extraction accurate, and critically: **print order is NOTE then
+    DATE** (e.g. "Вальцъ, Карлъ Ѳедоровичъ (онъ же и декораторъ) (съ 3
+    октября 1861 г.)"), the reverse of a naive append -- the relocation
+    SQL reconstructs that order rather than tacking the note on the end.
+
+**One genuine residual, resolved by the same scan check**: raw `по
+найму, Московскій пеховой` (2 rows, one person, Крыловъ, both 1902-03
+and 1903-04 seasons) turned out to be an OCR misread -- "пеховой" isn't
+a word; the scan (`ForUpload_1902-03_Spisok_Administration.pdf` p.128)
+reads "Московскій цеховой" (a craft-guild/artisan civil-estate
+designation). Fixed at the raw layer via a new `_OCR_MISREAD_CORRECTIONS`
++ `_repair_ocr_misreads()` in `parse_and_validate.py`. **Caught a real
+bug while building this fix**: `list_number` alone isn't a safe key on
+these two pages -- both restart numbering per sub-list, so idx 1 on
+`administration_1902-03_p004` collided with a different real person
+(Балахнинъ); a first draft silently overwrote his genuine `губ. секр.`
+rank with Крыловъ's corrected value. Fixed by requiring every field to
+match its expected *current* value before applying the correction, not
+just the list_number.
+
+**Implementation**: three new `analysis.person_entry` columns
+(`build_duckdb.py`) -- `rank_clean`, `title_clean` (pure SQL derivation
+over `raw.person_entry`, unchanged/verbatim), and
+`rank_or_title_excluded_reason` (audit-only, RG confirmed it stays out
+of `research`: `'name_disambiguation_ordinal'` /
+`'dual_role_or_crossref_note'`). `research.person_appearance`'s
+`rank_or_title` column replaced with `rank`/`title` (matching the
+existing convention where `research` surfaces the clean value under a
+plain name, e.g. `instrument_clean` -> `instrument`).
+
+**A real DuckDB gotcha hit building the classification regex**: RE2 (v1.5.5)
+does not treat Cyrillic letters as `\b`/`\w` word characters -- a
+Cyrillic-aware boundary check (`\bсов`) silently matched nothing at all,
+and a naive `\w*` after a Cyrillic prefix (`Солист\w*`) also failed to
+extend into the following Cyrillic letters. Fixed with explicit Cyrillic
+character classes (`[^а-яёіѣѳѵА-ЯЁІѢѲѴ]` for the boundary,
+`[а-яёіѣѳѵА-ЯЁІѢѲѴ]*` in place of `\w*`) -- confirmed against a case that
+specifically needed the negative boundary check to hold: `Рисованіе`
+(drawing, a genuine TITLE) contains "сов" mid-word and must NOT match.
+
+**Validation, before any code was applied**: a Python reference
+classifier was built and iteratively hardened against real corpus
+values, then translated to SQL and cross-checked row-by-row --
+**0 mismatches across all 2208 non-blank `rank_or_title` values
+corpus-wide**. Full pipeline chain (`parse_and_validate.py` ->
+`build_duckdb.py` -> `build_entities.py` -> `build_research_model.py`)
+dry-run three times on scratch DB copies as the design evolved (ordinal
+relocation added, then the scan-confirmed note relocation + OCR fix),
+clean every time, before touching production.
+
+**Final counts** (`analysis.person_entry`): RANK 1688, TITLE 472,
+EXCLUDED 48 (24 ordinal relocated to `family_name_clean`, 24 note
+relocated to `tenure_note_text_clean`) -- 1688+472+48 = 2208, matching
+the total non-blank `rank_or_title` count exactly, confirming no row
+silently disappeared. `research.person`/`research.person_appearance`
+counts unchanged (2894/21154) as expected for an in-place, additive
+schema change. `entities.person_candidate`: 0 pending, 23 rejected
+(clean). Documented in `docs/schema.md`'s `rank_or_title` row.

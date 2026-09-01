@@ -72,3 +72,32 @@ partial-precision path actually gets used somewhere.
    reasonably to the rest of the run — but re-check against a second sample
    once real volume processing starts, since 12 pages out of ~1,300+ is not
    a statistically large sample, just a deliberately adversarial one.
+
+## Reading the headline match percentage: read the diffs, not just the number
+
+`eval_against_gold.py`'s roster scoring (`eval_roster`) pairs gold row *N*
+with predicted row *N* by list position (`zip(g_rows, p_rows)`), not by
+matching each row to the person it actually represents. This works fine
+when both lists have the same people in the same order — but if the
+model's entry list has even one extra or missing row partway down a page
+(e.g. it captured a real person the gold excerpt happened to skip), every
+row after that point compares against the wrong person, and a page that's
+actually transcribed correctly can score as almost entirely wrong.
+
+This is not a hypothetical: on the `full_run_2026-08-15` eval, a full
+half of all 226 flagged field mismatches came from just 2 of the 12 gold
+pages, and were entirely this artifact — re-indexing the model's output by
+the actual row offset showed every field matching gold exactly. After
+removing this and two other non-error patterns (a harmless punctuation
+convention, and a rank/class-token boundary issue already auto-corrected
+downstream in `analysis.person_entry`), the genuinely-wrong field rate for
+that run was **~1.9%** of fields checked, not the ~14% the raw match
+percentage implies. Full writeup, including how it was verified:
+`docs/eval/known_issues.md` issue #21.
+
+**Practical takeaway**: treat a cluster of consecutive-row mismatches on one
+page as a strong prior for "alignment cascade" and check for a shifted-by-N
+pattern before concluding the model got a string of people wrong. A future
+improvement worth making before trusting this script's raw percentage
+again: match gold rows to predicted rows by name/identity (or edit-distance
+alignment) instead of raw list position.

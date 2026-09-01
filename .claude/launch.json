@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "datasette",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "datasette", "outputs/full_run/research_dataset.sqlite", "--port", "8001"],
+      "port": 8001
+    }
+  ]
+}
