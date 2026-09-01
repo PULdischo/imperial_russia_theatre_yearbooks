@@ -63,6 +63,28 @@ from pathlib import Path
 
 import duckdb
 
+# docs/eval/known_issues.md #26/#28/#30/#33: confirmed non-person
+# entities.person records -- role/department headings, footnote
+# fragments, and resignation-note text that the extraction captured as
+# if each were its own person. entities.person/entities.person_link are
+# left exactly as-is (same "tag rather than delete, raw/entities stay
+# untouched" policy as issue #26 always intended) -- these five UUIDs are
+# excluded only here, at the point where the *published* research layer
+# is built, so a future query against entities can still find them if
+# ever useful. This is a deliberately small, hand-verified seed list, not
+# the full backlog issue #26 originally estimated at 40+ raw rows (most
+# of those, in Graduates, were never individually confirmed against a
+# person_id the way these five were) -- extend it here as more are
+# confirmed, rather than re-solving this from scratch each time.
+NON_PERSON_IDS = [
+    "5d9f7500-2be2-408e-a983-a01183626b09",  # "Священникъ" (Priest) -- a role heading, TheaterSchoolStaff, not a person
+    "785816e3-1a1d-4df7-81b4-fcddc4b2d7d2",  # "Дьяконъ" (Deacon) -- a role heading, TheaterSchoolStaff, not a person
+    "d4eaea08-f4d3-4413-8ff8-0d381a8395d5",  # "Оставилъ службу" -- issue #28's orphaned resignation note, TheaterSchoolStaff
+    "23bf557c-76fe-497b-9fab-ebf1fdd7eab3",  # "†" -- an orphaned death-marker footnote, TheaterSchoolStaff (issue #30)
+    "2e495ee0-94af-4350-9a7a-b9471f4de613",  # "И." -- a mangled "и.д. фельдшерицы" role heading, TheaterSchoolStaff (issue #30)
+    "37dd8b11-7b83-4cb0-9d86-f5f34e611859",  # "Прикомандированъ къ Монтіровочной части..." -- a job-duty description captured as if it were a name, BalletArtists (issue #36); a single isolated entry_id (balletartists_1899-00_SP_p000__e008), confirmed via entities.person_link before excluding
+]
+
 
 def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     con.execute("CREATE SCHEMA IF NOT EXISTS research")
@@ -122,7 +144,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             wikidata_description VARCHAR
         )
     """)
-    con.execute("""
+    non_person_list = ", ".join(f"'{pid}'" for pid in NON_PERSON_IDS)
+    con.execute(f"""
         INSERT INTO research.person
         SELECT
             p.person_id, p.display_name, p.canonical_family_name,
@@ -132,6 +155,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         FROM entities.person p
         LEFT JOIN entities.person_wikidata_link wd ON wd.person_id = p.person_id
         WHERE p.superseded_by_person_id IS NULL
+          AND p.person_id NOT IN ({non_person_list})
     """)
 
     con.execute("""
@@ -201,25 +225,27 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             entity_type VARCHAR,
             institution VARCHAR,
             heading_path VARCHAR,
-            rank_or_title VARCHAR,
+            rank VARCHAR,
+            title VARCHAR,
             service_class VARCHAR,
             instrument VARCHAR,
             subject_taught VARCHAR,
             tenure_note_text VARCHAR
         )
     """)
-    con.execute("""
+    con.execute(f"""
         INSERT INTO research.person_appearance
         SELECT
             r.entry_id AS appearance_id,
             pl.person_id,
             sp.season, sp.city,
             r.entity_type, r.institution, r.heading_path,
-            r.rank_or_title, r.service_class, r.instrument,
-            r.subject_taught, r.tenure_note_text
-        FROM raw.person_entry r
+            r.rank_clean, r.title_clean, r.service_class, r.instrument_clean,
+            r.subject_taught, r.tenure_note_text_clean
+        FROM analysis.person_entry r
         JOIN entities.person_link pl ON pl.entry_id = r.entry_id
         JOIN raw.source_pages sp ON sp.page_id = r.page_id
+        WHERE pl.person_id NOT IN ({non_person_list})
     """)
 
     counts = {

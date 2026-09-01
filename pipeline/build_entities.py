@@ -415,7 +415,18 @@ def export_work_genre_review_queue(con: duckdb.DuckDBPyConnection, out_path: Pat
 # "й" or "я"). Kept as its own field rather than folded into the name key,
 # specifically so two different real people sharing a surname are never
 # merged just because one appearance happened to drop the suffix.
-_ORDINAL_RE = re.compile(r"^(.*?)\s+(\d+-(?:й|я))\.?\s*$")
+#
+# Character class matches build_duckdb.py's analysis-layer ordinal regex
+# exactly ([0-9IVXІ]+-(?:й|я|е)) -- this one used to be digit-only
+# (\d+-(?:й|я)), which silently missed every Roman/Cyrillic-numeral ordinal
+# ("І-я") and every "е" suffix ("1-е"). Because entities.person's canonical
+# fields were computed from THIS regex against raw (uncleaned) text rather
+# than analysis.person_entry_clean, every row the narrower regex missed fell
+# through to canonical fields visibly out of sync with the pipeline's own
+# corrected data -- confirmed as a real, published-data bug affecting 253
+# records across all 6 entity types (docs/eval/known_issues.md #41), not a
+# theoretical one.
+_ORDINAL_RE = re.compile(r"^(.*?)\s+([0-9IVXІ]+-(?:й|я|е))\.?\s*$")
 
 
 def _split_ordinal(family_name: str) -> tuple[str, str | None]:
@@ -425,41 +436,14 @@ def _split_ordinal(family_name: str) -> tuple[str, str | None]:
     return family_name.strip(), None
 
 
-# The ordinal usually trails family_name ("Вальтеръ 2-й"), but the model
-# sometimes puts it ALONE in first_name instead -- confirmed against real
-# data: 101/20,528 first_name values are exactly this shape and nothing
-# else, which shifts the real first name (and patronymic, if printed) one
-# field over into what's stored as `patronymic`
-# ("family=Вальтеръ, first=1-й, patronymic=Викторъ Григорьевичъ"). But not
-# every such row is safely recoverable this way: some really are a
-# cross-reference note instead of a name at all
-# ("family=Тарнке, first=1-й, patronymic=(см. оперный оркестръ)" -- "see
-# the orchestra listing") -- attempting to split that into first/patronymic
-# would fabricate a name from a "see also" pointer. _NAME_SHAPE guards
-# against exactly that: only reinterpret patronymic as the shifted name
-# when it actually looks like one (1-2 capitalized Cyrillic words, no
-# parentheses/abbreviation punctuation) -- anything else is left alone,
-# same "don't guess" discipline as everywhere else in this pipeline.
-_BARE_ORDINAL_RE = re.compile(r"^\d+-(?:й|я)\.?$")
-_NAME_SHAPE_RE = re.compile(
-    r"^[А-ЯЁІѢѲѴ][а-яёіѣѳѵ\-]+(?:\s+[А-ЯЁІѢѲѴ][а-яёіѣѳѵ\-]+)?$"
-)
-
-
-def _extract_ordinal(
-    family_name: str, first_name: str | None, patronymic: str | None
-) -> tuple[str, str | None, str | None, str | None]:
-    base, ordinal = _split_ordinal(family_name)
-    clean_first, clean_patronymic = first_name, patronymic
-    if not ordinal and first_name and _BARE_ORDINAL_RE.match(first_name.strip()):
-        if patronymic and _NAME_SHAPE_RE.match(patronymic.strip()):
-            ordinal = first_name.strip().rstrip(".")
-            parts = patronymic.strip().split()
-            clean_first, clean_patronymic = parts[0], (parts[1] if len(parts) > 1 else None)
-        # else: patronymic doesn't look like a name (a cross-reference note,
-        # e.g. "(см. ...)") -- leave the row exactly as printed, unresolved
-        # ordinal and all, rather than fabricate a split from a non-name value.
-    return base, ordinal, clean_first, clean_patronymic
+# The ordinal-in-first_name / concatenated-first+patronymic shapes this
+# function used to recover here directly from raw text (101/20,528 rows,
+# plus several more shapes found later) are now resolved upstream by
+# analysis.person_entry_clean before build_person_tier1 ever sees the row
+# (docs/eval/known_issues.md #35-#37) -- no separate recovery step is needed
+# here any more; _split_ordinal below is the only piece of that logic this
+# module still needs, applied to family_name_clean (which analysis already
+# appends the ordinal onto, e.g. "Иванова 4-я").
 
 
 def _name_key(text: str | None) -> str:
@@ -501,81 +485,150 @@ def _snapshot_person_candidate_status(con: duckdb.DuckDBPyConnection) -> dict[tu
     }
 
 
+def _canonicalize_person(person_id: str, members: list[tuple]) -> tuple:
+    """Computes a person's canonical display fields from a list of
+    (entry_id, base_family, ordinal, first, patronymic, season) member
+    tuples.
+
+    Votes (base, ordinal) and (first, patronymic) as two INDEPENDENT pairs,
+    not one fully joint 4-way tuple. That distinction matters and was
+    confirmed both ways against real data this session: independent
+    per-FIELD votes can Frankenstein a first_name from one variant with a
+    patronymic fragment from another that never co-occurred on any single
+    printed entry (the Пуни case -- "Леонтина-Констанція" paired with a
+    stray leftover "-Констанція"). But a single fully joint 4-way vote is
+    too strict whenever family-name noise and patronymic noise vary for
+    UNRELATED reasons on different entries (the Ѳедорова/Екатерина case --
+    3 of 4 entries agree on the family spelling, 2 of 4 agree on the
+    patronymic spelling, but because the noisy entries aren't the same
+    ones, all 4 full tuples end up distinct and a real majority on each
+    half individually gets discarded in favor of an arbitrary tie-break).
+    Two independent pair-votes is the version actually validated by hand
+    against the real data before being folded into this function.
+
+    Shared by build_person_tier1 (a person's first canonicalization, from
+    whatever entries it starts with) and _refresh_canonical_fields (every
+    later re-canonicalization, from whatever entries it ends with after
+    Tier 2/tenure/Wikidata merging changes membership) -- deliberately the
+    SAME function, so a survivor's display fields can never again go stale
+    relative to its actual current entry set the way #41 found them to
+    (both the original raw-vs-clean-input bug, and the narrower but
+    structurally identical gap this same fix uncovered: a Tier-2 merge
+    absorbing entries into a survivor never recomputed anything from them,
+    so the survivor kept whatever fields its own original, sometimes much
+    smaller, pre-merge cluster happened to produce)."""
+    (base, ordinal), _ = Counter((m[1], m[2]) for m in members).most_common(1)[0]
+    (first_name, patronymic), _ = Counter((m[3], m[4]) for m in members).most_common(1)[0]
+    seasons = sorted({m[5] for m in members if m[5]})
+    tier1_key = "|".join(
+        [_name_key(base), ordinal or "", _name_key(first_name), _name_key(patronymic)]
+    )
+    display_name = base + (f" {ordinal}" if ordinal else "")
+    name_parts = [p for p in (first_name, patronymic) if p]
+    if name_parts:
+        display_name += ", " + " ".join(name_parts)
+    return (
+        person_id, display_name, base, first_name, patronymic, ordinal,
+        seasons[0] if seasons else None, seasons[-1] if seasons else None,
+        tier1_key, None,
+    )
+
+
 def build_person_tier1(con: duckdb.DuckDBPyConnection) -> None:
+    # Source from analysis.person_entry's already-cleaned columns, not raw
+    # text -- raw still carries every ordinal-misplacement/homoglyph/
+    # concatenation shape the analysis layer exists specifically to resolve
+    # (docs/eval/known_issues.md #35-#37), and re-deriving a second, weaker
+    # version of that same cleanup here (the old behavior) is exactly what
+    # let entities.person's canonical fields drift out of sync with it (#41).
     rows = con.execute("""
-        SELECT r.entry_id, r.family_name, r.first_name, r.patronymic, p.season
+        SELECT r.entry_id, ae.family_name_clean, ae.first_name_clean, ae.patronymic_clean, p.season
         FROM raw.person_entry r
+        JOIN analysis.person_entry ae ON ae.entry_id = r.entry_id
         JOIN raw.source_pages p ON p.page_id = r.page_id
-        WHERE r.family_name IS NOT NULL AND trim(r.family_name) <> ''
+        WHERE ae.family_name_clean IS NOT NULL AND trim(ae.family_name_clean) <> ''
     """).fetchall()
 
-    # Incremental registry: a person's UUID must survive across re-runs
-    # (docs/research_dataset.md's "person can't be uuid5'd from name text"
-    # rationale) -- reuse an existing tier1_key -> person_id mapping if the
-    # registry already exists, only minting new UUIDs for genuinely new keys.
-    existing: dict[str, str] = {}
-    # A confirmed Tier 2 merge (apply_person_merges) sets superseded_by on a
-    # specific person_id -- CREATE OR REPLACE would otherwise wipe that back
-    # to NULL on every re-run, silently un-doing every past merge decision.
-    existing_superseded: dict[str, str] = {}
+    # Person UUIDs must survive across re-runs (docs/research_dataset.md's
+    # "person can't be uuid5'd from name text" rationale) -- but reuse is now
+    # keyed on ENTRY MEMBERSHIP via entities.person_link, not on a recomputed
+    # tier1_key string happening to match its old value. This is the fix for
+    # #41's root cause: the previous string-keyed reuse meant any future
+    # improvement to the name-cleaning logic below (exactly what this same
+    # commit just made) would silently change affected rows' tier1_key,
+    # miss the old string in `existing`, mint a brand-new UUID, and orphan
+    # every merge decision ever made against the old one -- both this
+    # pipeline's own Tier 2 AND the 287+ merges applied directly against
+    # entities.person this session (#38, #40) that never went through Tier 2
+    # at all. entities.person_link is always fully resolved to each entry's
+    # current living survivor as of the end of the previous run
+    # (_repoint_all_superseded's guarantee), so "what person_id is this exact
+    # entry_id linked to right now" is ground truth that no amount of
+    # improving the matching logic can ever invalidate.
+    entry_to_current_person: dict[str, str] = {}
+    if _table_exists(con, "entities", "person_link"):
+        entry_to_current_person = {
+            entry_id: str(person_id) for entry_id, person_id in con.execute(
+                "SELECT entry_id, person_id FROM entities.person_link"
+            ).fetchall()
+        }
+
+    # Tombstoned rows are carried forward completely unchanged -- CLAUDE.md's
+    # explicit "repoint person_link to the survivor, tombstone the loser,
+    # never delete" convention. A superseded person_id has, by definition, no
+    # entries in person_link any more (they were all repointed to the
+    # survivor), so it would never appear in entry_to_current_person and
+    # would simply vanish from entities.person on a CREATE OR REPLACE if not
+    # explicitly preserved here.
+    tombstone_rows: list[tuple] = []
     if _table_exists(con, "entities", "person"):
-        # str() the person_id explicitly -- DuckDB returns UUID columns as
-        # uuid.UUID objects, and every other lookup keyed on person_id in
-        # this module (existing_superseded, person_candidate, etc.) uses
-        # str() consistently. A UUID-vs-str mismatch here means
-        # existing_superseded.get(person_id) below silently misses on every
-        # lookup -- exactly the bug that just wiped every past merge.
-        existing = {
-            tier1_key: str(person_id) for tier1_key, person_id in con.execute(
-                "SELECT tier1_key, person_id FROM entities.person WHERE tier1_key IS NOT NULL"
-            ).fetchall()
-        }
-        existing_superseded = {
-            str(person_id): str(superseded_by) for person_id, superseded_by in con.execute(
-                "SELECT person_id, superseded_by_person_id FROM entities.person "
-                "WHERE superseded_by_person_id IS NOT NULL"
-            ).fetchall()
-        }
+        tombstone_rows = con.execute("""
+            SELECT person_id, display_name, canonical_family_name, canonical_first_name,
+                   canonical_patronymic, ordinal_suffix, first_attested_season,
+                   last_attested_season, tier1_key, superseded_by_person_id
+            FROM entities.person WHERE superseded_by_person_id IS NOT NULL
+        """).fetchall()
 
-    clusters: dict[str, list[tuple[str, str, str, str, str]]] = defaultdict(list)
-    n_ordinal_recovered = 0
-    for entry_id, family_name, first_name, patronymic, season in rows:
-        base, ordinal, clean_first, clean_patronymic = _extract_ordinal(family_name, first_name, patronymic)
-        if clean_first != first_name or clean_patronymic != patronymic:
-            n_ordinal_recovered += 1
-        tier1_key = "|".join(
-            [_name_key(base), ordinal or "", _name_key(clean_first), _name_key(clean_patronymic)]
-        )
-        clusters[tier1_key].append((entry_id, family_name, first_name, patronymic, season))
+    # Split into entries that already have a resolved identity (reuse it
+    # unconditionally -- this is what makes continuity airtight) and entries
+    # never linked before (genuinely new raw data), which still need fresh
+    # tier1-key clustering among themselves the same way this function
+    # always worked.
+    existing_members: dict[str, list[tuple]] = defaultdict(list)
+    new_clusters: dict[str, list[tuple]] = defaultdict(list)
+    for entry_id, family_clean, first_clean, patronymic_clean, season in rows:
+        base, ordinal = _split_ordinal(family_clean)
+        member = (entry_id, base, ordinal, first_clean, patronymic_clean, season)
+        current_pid = entry_to_current_person.get(entry_id)
+        if current_pid:
+            existing_members[current_pid].append(member)
+        else:
+            tier1_key = "|".join(
+                [_name_key(base), ordinal or "", _name_key(first_clean), _name_key(patronymic_clean)]
+            )
+            new_clusters[tier1_key].append(member)
 
-    person_rows, link_rows = [], []
+    person_rows, link_rows = list(tombstone_rows), []
     n_multi = 0
-    for tier1_key, members in clusters.items():
-        person_id = existing.get(tier1_key) or str(uuid.uuid4())
+    for person_id, members in existing_members.items():
         if len(members) > 1:
             n_multi += 1
-        # Canonical display uses the corrected (base, ordinal, clean_first)
-        # triple consistently -- so the canonical family/first name is
-        # always the same shape regardless of which raw appearance the
-        # ordinal happened to land on.
-        corrected_variants = []
-        for _, family_name, first_name, patronymic, _ in members:
-            base, ordinal, clean_first, clean_patronymic = _extract_ordinal(family_name, first_name, patronymic)
-            corrected_variants.append((base, ordinal, clean_first, clean_patronymic))
-        variant_counts = Counter(corrected_variants)
-        (base, ordinal, first_name, patronymic), _ = variant_counts.most_common(1)[0]
-        seasons = sorted({m[4] for m in members if m[4]})
-        display_name = base + (f" {ordinal}" if ordinal else "")
-        name_parts = [p for p in (first_name, patronymic) if p]
-        if name_parts:
-            display_name += ", " + " ".join(name_parts)
-        person_rows.append((
-            person_id, display_name, base, first_name, patronymic, ordinal,
-            seasons[0] if seasons else None, seasons[-1] if seasons else None,
-            tier1_key, existing_superseded.get(person_id),
-        ))
+        person_rows.append(_canonicalize_person(person_id, members))
         for entry_id, *_ in members:
             link_rows.append((entry_id, person_id, "exact_normalized", 1.0))
+    for tier1_key, members in new_clusters.items():
+        person_id = str(uuid.uuid4())
+        if len(members) > 1:
+            n_multi += 1
+        person_rows.append(_canonicalize_person(person_id, members))
+        for entry_id, *_ in members:
+            link_rows.append((entry_id, person_id, "exact_normalized", 1.0))
+
+    if new_clusters:
+        print(f"  {sum(len(m) for m in new_clusters.values())} entry(s) never seen before "
+              f"in {len(new_clusters)} freshly-clustered person(s)")
+    if tombstone_rows:
+        print(f"  {len(tombstone_rows)} previously-tombstoned person(s) carried forward unchanged")
 
     # Same drop-dependent-first fix as build_work -- any table with an FK
     # into person (person_link, and person_candidate once Tier 2 has run)
@@ -611,11 +664,10 @@ def build_person_tier1(con: duckdb.DuckDBPyConnection) -> None:
     n_excluded = con.execute(
         "SELECT count(*) FROM raw.person_entry WHERE family_name IS NULL OR trim(family_name) = ''"
     ).fetchone()[0]
-    print(f"entities.person (Tier 1): {len(person_rows)} resolved people from {len(rows)} roster appearances "
-          f"({n_excluded} excluded: blank family_name)")
+    n_live = len(existing_members) + len(new_clusters)
+    print(f"entities.person (Tier 1): {n_live} live people ({len(tombstone_rows)} tombstoned, carried "
+          f"forward unchanged) from {len(rows)} roster appearances ({n_excluded} excluded: blank family_name)")
     print(f"  {n_multi} people matched by exact normalized name across more than one appearance")
-    print(f"  {n_ordinal_recovered} appearances had their ordinal suffix recovered from first_name "
-          f"instead of family_name")
 
 
 def _levenshtein(a: str, b: str) -> int:
@@ -931,6 +983,196 @@ def _repoint_all_superseded(con: duckdb.DuckDBPyConnection) -> None:
           f"({n_stale} rows still pointing at a superseded person -- should always be 0)")
 
 
+def _refresh_canonical_fields(con: duckdb.DuckDBPyConnection) -> None:
+    """Recomputes every LIVE person's display_name/canonical_*/ordinal_suffix/
+    tier1_key from their full CURRENT entry set, via _canonicalize_person --
+    the same majority-vote logic build_person_tier1 uses when a person is
+    first formed. Must run after _repoint_all_superseded (needs the fully
+    resolved person_link) and covers every live person, not just ones this
+    run touched: a survivor's canonical fields are only ever computed once,
+    at whatever moment build_person_tier1 first forms its cluster, and nothing
+    previously recomputed them afterward when Tier 2/tenure/Wikidata merging
+    later absorbed more entries into that same survivor -- confirmed as a
+    real, not theoretical, gap: a person whose original 2-entry cluster
+    happened to include a garbled 1-vote spelling ended up permanently
+    displaying it, even after this same run's Tier 2 pass correctly merged
+    in the 17 entries agreeing on the real spelling, because nothing had ever
+    told entities.person to look again. Idempotent and cheap enough to run
+    unconditionally every time: querying and grouping ~20k rows plus one
+    UPDATE per live person, not the O(n^2) cost Tier 2 has to worry about.
+    """
+    rows = con.execute("""
+        SELECT pl.person_id, ae.family_name_clean, ae.first_name_clean, ae.patronymic_clean, sp.season
+        FROM entities.person_link pl
+        JOIN raw.person_entry r ON r.entry_id = pl.entry_id
+        JOIN analysis.person_entry ae ON ae.entry_id = pl.entry_id
+        JOIN raw.source_pages sp ON sp.page_id = r.page_id
+        WHERE ae.family_name_clean IS NOT NULL AND trim(ae.family_name_clean) <> ''
+    """).fetchall()
+
+    by_person: dict[str, list[tuple]] = defaultdict(list)
+    for person_id, family_clean, first_clean, patronymic_clean, season in rows:
+        base, ordinal = _split_ordinal(family_clean)
+        by_person[str(person_id)].append((None, base, ordinal, first_clean, patronymic_clean, season))
+
+    updated = 0
+    for person_id, members in by_person.items():
+        (_, display_name, base, first_name, patronymic, ordinal,
+         first_season, last_season, tier1_key, _) = _canonicalize_person(person_id, members)
+        con.execute("""
+            UPDATE entities.person
+            SET display_name = ?, canonical_family_name = ?, canonical_first_name = ?,
+                canonical_patronymic = ?, ordinal_suffix = ?, tier1_key = ?
+            WHERE person_id = ?
+              AND (display_name, canonical_family_name, canonical_first_name,
+                   canonical_patronymic, ordinal_suffix, tier1_key)
+                  IS DISTINCT FROM (?, ?, ?, ?, ?, ?)
+        """, [display_name, base, first_name, patronymic, ordinal, tier1_key, person_id,
+              display_name, base, first_name, patronymic, ordinal, tier1_key])
+        updated += 1
+
+    print(f"entities.person: canonical fields refreshed for {updated} live person(s) "
+          f"from their current full entry set")
+
+
+def merge_duplicate_persons(con: duckdb.DuckDBPyConnection) -> int:
+    """Merges any group of currently-LIVE persons that share the same
+    normalized (family, first, patronymic) -- deliberately NOT including
+    ordinal_suffix, unlike Tier 1's own tier1_key: RG confirmed this
+    session that a bare positional ordinal ("1-я"/"2-й") is a per-season
+    label reflecting how many same-named colleagues were on that season's
+    roster, not a stable personal identifier, so two records for the same
+    person can legitimately show different ordinals in different years
+    (already the basis of this session's #38 Pass 2, 229 BalletArtists
+    merges). tier1_key-exact matching alone therefore structurally cannot
+    catch this whole class of duplicate.
+
+    Exists because of a structural gap the 2026-08-21 person_id-continuity
+    fix (#41) introduced: build_person_tier1 now freezes an existing
+    person's entry membership across reruns rather than re-clustering by
+    name every time (the whole point -- it's what makes person_id survive a
+    matching-logic improvement). But that means two people correctly
+    assigned DIFFERENT person_ids under an earlier, dirtier version of the
+    data can end up with the identical clean name after a downstream fix
+    (e.g. #43's Pattern C extension) and never get reunited on their own --
+    Tier 2's own candidate search also explicitly skips exact
+    (edit-distance-0) matches, on the assumption Tier 1 always catches
+    those. Confirmed as a real, not theoretical, gap: "Дягилевъ, Сергѣй
+    Павловичъ" (Sergei Diaghilev) sitting as two separate records with
+    matching role, rank, and exact start date.
+
+    Three safety gates, all required before auto-merging a group:
+    1. every member must share at least one entity_type in common with
+       every other member (the group's full intersection is non-empty) --
+       NOT that each member's own type set is identical, which turned out
+       to wrongly exclude 25 of an initial 38 flagged cases: a person whose
+       linked entries already span two types (e.g. a school Graduates
+       record plus a BalletArtists career, already combined into one
+       person_id by an earlier Tier 1 pass) is exactly as strong a match as
+       a person recorded under one type alone, once corroborated by gate 3
+       below. A shared name across FULLY disjoint roles (no type in common
+       at all -- e.g. Musicians vs. ProductionTeam with no overlap) is
+       still much weaker evidence, since a real person legitimately holding
+       two roles is a confirmed, recurring pattern this session (#38, #40)
+       but so is a common name coincidentally appearing in two unrelated
+       rosters. Left for human review, not silently merged or dropped.
+    2. no season+city overlap among any pair of members -- the same safety
+       check #38's Pass 2 used throughout: two people simultaneously active
+       under the same name in the same season/city are a real conflict
+       (two different same-named colleagues), not an ordinal variant of one
+       person, and must never be auto-merged.
+    3. at least one exact shared service start_date_undate somewhere across
+       the group (RG, 2026-08-21) -- the same positive-corroboration bar
+       Tier 2's own apply_tenure_corroboration already requires before
+       auto-confirming a candidate pair ('shared_start_date', not just
+       'no_date_data'/'conflicting_dates'). Matching name plus no
+       season/city conflict rules out the most obvious failure mode, but
+       isn't by itself positive evidence these ARE the same person --a
+       real historical fact repeated verbatim in every edition (an exact
+       service-start date) is.
+    """
+    rows = con.execute("""
+        SELECT p.person_id, p.canonical_family_name, p.canonical_first_name, p.canonical_patronymic,
+               list(DISTINCT pe.entity_type) AS entity_types,
+               list(DISTINCT [sp.season, sp.city]) AS season_cities,
+               list(DISTINCT pes.start_date_undate) FILTER (pes.start_date_undate IS NOT NULL) AS start_dates
+        FROM entities.person p
+        JOIN entities.person_link pl ON pl.person_id = p.person_id
+        JOIN raw.person_entry pe ON pe.entry_id = pl.entry_id
+        JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+        LEFT JOIN raw.person_entry_service pes ON pes.entry_id = pe.entry_id
+        WHERE p.superseded_by_person_id IS NULL
+        GROUP BY p.person_id, p.canonical_family_name, p.canonical_first_name, p.canonical_patronymic
+    """).fetchall()
+
+    by_key: dict[tuple, list[tuple]] = defaultdict(list)
+    for person_id, family, first, patronymic, entity_types, season_cities, start_dates in rows:
+        # A key with no first_name at all (bare family_name only) is far
+        # weaker evidence than one with a real first_name present --
+        # excluded rather than risk merging two different people who share
+        # only a common surname.
+        if not first or not first.strip():
+            continue
+        key = (_name_key(family), _name_key(first), _name_key(patronymic))
+        by_key[key].append((
+            str(person_id), frozenset(entity_types),
+            frozenset(tuple(sc) for sc in season_cities),
+            frozenset(start_dates or []),
+        ))
+
+    absorbed: dict[str, str] = {}
+    n_cross_type_skipped = 0
+    n_overlap_skipped = 0
+    n_no_shared_date_skipped = 0
+    for key, members in by_key.items():
+        if len(members) < 2:
+            continue
+        # Gate 1: every member must share at least one entity_type with
+        # every other member (the group's full intersection is non-empty) --
+        # NOT that every member's type SET is identical. A person whose
+        # linked entries already span two types (e.g. a school Graduates
+        # record plus a BalletArtists career, already combined into one
+        # person by an earlier Tier 1 pass) is still the same kind of
+        # match as a person recorded under BalletArtists alone -- requiring
+        # the full sets to match exactly (the original version of this
+        # check) wrongly excluded exactly the cases this gate exists to
+        # allow, confirmed against 25 real examples this session.
+        common_types = frozenset.intersection(*(etypes for _, etypes, _, _ in members))
+        if not common_types:
+            n_cross_type_skipped += 1
+            continue
+        overlap = False
+        shared_date = False
+        for i in range(len(members)):
+            for j in range(i + 1, len(members)):
+                if members[i][2] & members[j][2]:
+                    overlap = True
+                if members[i][3] & members[j][3]:
+                    shared_date = True
+        if overlap:
+            n_overlap_skipped += 1
+            continue
+        if not shared_date:
+            n_no_shared_date_skipped += 1
+            continue
+        ids = sorted(pid for pid, _, _, _ in members)
+        survivor = ids[0]
+        for loser in ids[1:]:
+            absorbed[loser] = survivor
+
+    if absorbed:
+        con.executemany(
+            "UPDATE entities.person SET superseded_by_person_id = ? WHERE person_id = ?",
+            [(root, loser) for loser, root in absorbed.items()],
+        )
+    print(f"entities.person: {len(absorbed)} duplicate record(s) merged into "
+          f"{len(set(absorbed.values()))} surviving record(s) "
+          f"({n_cross_type_skipped} cross-entity-type, {n_overlap_skipped} "
+          f"season/city-overlap, and {n_no_shared_date_skipped} no-shared-date "
+          f"matches left for human review)")
+    return len(absorbed)
+
+
 def _ensure_person_merge_log(con: duckdb.DuckDBPyConnection) -> None:
     """A permanent, append-only decision ledger -- deliberately separate
     from entities.person_candidate, which is a LIVE working set of
@@ -1109,6 +1351,24 @@ def main():
               f"entities.person_candidate")
 
     _repoint_all_superseded(con)
+    _refresh_canonical_fields(con)
+
+    # Looped to a fixed point for the same reason Tier 2 is above: merging
+    # one group can occasionally make another group's members newly
+    # eligible (a season/city overlap involving an absorbed loser
+    # disappears once that loser's entries move to the survivor). Bounded
+    # the same way -- monotonic, so it always terminates; the cap is a
+    # sanity backstop, not an expected ceiling.
+    for iteration in range(1, MAX_TIER2_ITERATIONS + 1):
+        n_dup_merged = merge_duplicate_persons(con)
+        if not n_dup_merged:
+            break
+        _repoint_all_superseded(con)
+        _refresh_canonical_fields(con)
+    else:
+        print(f"  WARNING: duplicate-person merging did not reach a fixed point "
+              f"after {MAX_TIER2_ITERATIONS} iterations -- investigate before trusting "
+              f"entities.person")
 
     if args.export_review_queue:
         export_person_review_queue(con, args.export_review_queue)
