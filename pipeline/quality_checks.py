@@ -80,20 +80,36 @@ def check_roster(parsed_dir: Path) -> list[dict]:
         seen_in_page[page_id].add(key)
 
     for entry_id, rows in credits_by_entry.items():
-        totals = {r["label"]: r for r in rows if r["credit_type"] == "category_totals"}
-        stated_total = totals.get("Всего")
-        components = [r for label, r in totals.items() if label != "Всего"]
-        if stated_total and components:
+        # Sequential block-scan, not a label->row dict (docs/eval/known_issues.md
+        # #24): category_totals rows print in order, and a "Всего" row closes
+        # out only the components seen since the *previous* "Всего" (or the
+        # start of the entry) -- not the whole entry. An artist who performed
+        # in more than one city prints more than one "Всего" in the same
+        # credit_summary_text (e.g. a Moscow tally, then "Кромѣ того въ
+        # С.-Петербургѣ: ..." with its own tally) -- collapsing same-labeled
+        # rows across those blocks into a dict silently discards one block's
+        # number entirely rather than checking each block against its own
+        # total, which is what produced most of the originally-flagged
+        # false-positive credit_sum_mismatch entries.
+        block_components: list[dict] = []
+        for r in rows:
+            if r["credit_type"] != "category_totals":
+                continue
+            if r["label"] != "Всего":
+                block_components.append(r)
+                continue
             try:
-                component_sum = sum(int(r["category_credit_count"]) for r in components if r["category_credit_count"])
-                stated = int(stated_total["category_credit_count"])
-                if component_sum != stated:
+                component_sum = sum(int(c["category_credit_count"]) for c in block_components
+                                     if c["category_credit_count"])
+                stated = int(r["category_credit_count"])
+                if block_components and component_sum != stated:
                     page_id = rows[0]["entry_id"].split("__e")[0]
                     flags.append(dict(page_id=page_id, table="person_entry_credit", row_id=entry_id,
                                        flag="credit_sum_mismatch",
                                        detail=f"components sum to {component_sum}, stated Всего={stated}"))
             except (ValueError, KeyError):
                 pass  # non-numeric count -- a different problem, not this check's job
+            block_components = []
 
     return flags
 

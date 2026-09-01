@@ -30,6 +30,7 @@ from openai import AsyncOpenAI, APIError, APITimeoutError, RateLimitError
 
 sys.path.insert(0, str(Path(__file__).parent))
 from schemas import RosterPage, RepertoirePage
+from row_detect import detect_rows
 
 PROMPTS_DIR = Path(__file__).parent / "prompts"
 BASE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
@@ -127,6 +128,110 @@ async def process_page(client: AsyncOpenAI, sem: asyncio.Semaphore, row: dict,
         return log_row
 
 
+async def call_one_row(client: AsyncOpenAI, sem: asyncio.Semaphore, model: str,
+                        repertoire_prompt: str, repertoire_schema: dict,
+                        image_path: Path) -> tuple[list[dict], dict]:
+    """One row-crop's API call, guarded by the SAME semaphore every other
+    call (page-level or row-level) shares -- this is what keeps N rows/page
+    from multiplying concurrency past --max-concurrent, per the plan's
+    section 3. Returns (sessions, usage) for this one row; raises on
+    failure after retries (caller decides how to handle a partial page)."""
+    async with sem:
+        image_data_uri = encode_image(image_path)
+        raw_text, usage = await call_with_retry(
+            client, model, repertoire_prompt, repertoire_schema, image_data_uri)
+    parsed = json.loads(raw_text)
+    return parsed.get("sessions", []), usage
+
+
+async def process_page_rowlevel(client: AsyncOpenAI, sem: asyncio.Semaphore, row: dict,
+                                 images_dir: Path, out_dir: Path, row_crops_dir: Path,
+                                 model: str, repertoire_prompt: str, repertoire_schema: dict,
+                                 header_line_count: int, corrected_analysis_dir: Path | None = None
+                                 ) -> dict:
+    """Row-isolated Repertoire extraction (known_issues.md #1/#49): detect
+    each dated row locally (free, no API cost), crop it with the header
+    reattached and zero neighboring-row content, then issue one API call
+    per row instead of one call for the whole page. Concatenates every
+    row's `sessions` into ONE page-level {"sessions": [...]} matching the
+    existing single-call raw JSON shape exactly, so parse_and_validate.py
+    needs zero changes downstream. Only writes the output file if EVERY
+    row succeeded -- a partial write would look like `skipped_existing` on
+    a re-run and silently keep missing rows forever; better to fail the
+    whole page and let a re-run retry it in full, same as the single-call
+    path already does on any failure.
+
+    If `corrected_analysis_dir/{page_id}.pkl` exists (a `PageAnalysis`
+    pickled after a human review pass -- see `analyze_page`/
+    `insert_row_boundary`/`delete_row_boundary`), crops from THAT
+    human-confirmed boundary set instead of running fresh automatic
+    detection -- the practical bridge between the review workflow and
+    this driver until the утро/вечер-divider auto-detection problem
+    (known_issues.md #1, 2026-08-27 addendum) is solved, if ever."""
+    page_id = row["page_id"]
+    out_path = out_dir / f"{page_id}.raw.json"
+    log_row = {"page_id": page_id, "status": "", "n_rows": "", "elapsed_seconds": "",
+               "prompt_tokens": "", "completion_tokens": "", "total_tokens": "", "error": ""}
+
+    if out_path.exists():
+        log_row["status"] = "skipped_existing"
+        return log_row
+
+    image_path = images_dir / f"{page_id}.png"
+    if not image_path.exists():
+        image_path = images_dir / f"{page_id}.jpg"
+    if not image_path.exists():
+        log_row["status"] = "missing_image"
+        log_row["error"] = str(images_dir / f"{page_id}.(png|jpg)")
+        return log_row
+
+    t0 = time.monotonic()
+    analysis = None
+    corrected_pkl = (corrected_analysis_dir / f"{page_id}.pkl") if corrected_analysis_dir else None
+    if corrected_pkl and corrected_pkl.exists():
+        import pickle
+        with open(corrected_pkl, "rb") as f:
+            analysis = pickle.load(f)
+    try:
+        row_crops = detect_rows(image_path, row_crops_dir / page_id,
+                                 header_line_count=header_line_count, analysis=analysis)
+    except Exception as e:
+        log_row.update(status="row_detect_failed", elapsed_seconds=f"{time.monotonic() - t0:.1f}",
+                        error=str(e))
+        return log_row
+
+    results = await asyncio.gather(
+        *[call_one_row(client, sem, model, repertoire_prompt, repertoire_schema,
+                        Path(c.image_path)) for c in row_crops],
+        return_exceptions=True,
+    )
+
+    all_sessions: list[dict] = []
+    usage_totals = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+    failures = [(i, r) for i, r in enumerate(results) if isinstance(r, Exception)]
+    if failures:
+        log_row.update(
+            status="failed", n_rows=len(row_crops),
+            elapsed_seconds=f"{time.monotonic() - t0:.1f}",
+            error=f"{len(failures)}/{len(row_crops)} row call(s) failed, e.g. row "
+                  f"{failures[0][0] + 1}: {failures[0][1]!r}",
+        )
+        return log_row
+
+    for sessions, usage in results:
+        all_sessions.extend(sessions)
+        for k in usage_totals:
+            v = usage.get(k)
+            if v:
+                usage_totals[k] += int(v)
+
+    out_path.write_text(json.dumps({"sessions": all_sessions}, ensure_ascii=False),
+                         encoding="utf-8")
+    log_row.update(status="ok", n_rows=len(row_crops),
+                    elapsed_seconds=f"{time.monotonic() - t0:.1f}", **usage_totals)
+    return log_row
+
+
 async def main_async(args):
     load_dotenv()
     api_key = os.environ.get("DASHSCOPE_API_KEY")
@@ -143,11 +248,26 @@ async def main_async(args):
     repertoire_schema = RepertoirePage.model_json_schema()
 
     sem = asyncio.Semaphore(args.max_concurrent)
-    tasks = [
-        process_page(client, sem, row, args.images_dir, args.out_dir, args.model,
-                     roster_prompt, repertoire_prompt, roster_schema, repertoire_schema)
-        for row in rows
-    ]
+    if args.row_level:
+        # Row-isolated path (known_issues.md #1/#49) -- assumes every row in
+        # this manifest is Repertoire; doesn't yet branch per-row for a
+        # mixed manifest containing Roster pages too (not needed for the
+        # pilot this was built to test; add that branching before pointing
+        # this at a real mixed-entity-type manifest).
+        args.row_crops_dir.mkdir(parents=True, exist_ok=True)
+        tasks = [
+            process_page_rowlevel(client, sem, row, args.images_dir, args.out_dir,
+                                   args.row_crops_dir, args.model, repertoire_prompt,
+                                   repertoire_schema, args.header_line_count,
+                                   args.corrected_analysis_dir)
+            for row in rows
+        ]
+    else:
+        tasks = [
+            process_page(client, sem, row, args.images_dir, args.out_dir, args.model,
+                         roster_prompt, repertoire_prompt, roster_schema, repertoire_schema)
+            for row in rows
+        ]
 
     log_rows = []
     for i, coro in enumerate(asyncio.as_completed(tasks), start=1):
@@ -159,10 +279,16 @@ async def main_async(args):
     # Append, not overwrite: a re-run only retries previously-failed pages
     # (everything else is skipped_existing), so overwriting would discard the
     # token/usage history for every page succeeded by an earlier invocation.
-    usage_path = args.out_dir / "usage_log.csv"
-    fieldnames = list(log_rows[0].keys()) if log_rows else \
+    # Row-level runs log to a separate file -- its log_row shape (n_rows
+    # instead of attempts) differs from the single-call path's, and this
+    # file is appended to over time, so mixing shapes into one CSV risks a
+    # DictWriter error on a later run with the other shape.
+    usage_path = args.out_dir / ("usage_log_rowlevel.csv" if args.row_level else "usage_log.csv")
+    fieldnames = list(log_rows[0].keys()) if log_rows else (
+        ["page_id", "status", "n_rows", "elapsed_seconds",
+         "prompt_tokens", "completion_tokens", "total_tokens", "error"] if args.row_level else
         ["page_id", "status", "attempts", "elapsed_seconds",
-         "prompt_tokens", "completion_tokens", "total_tokens", "error"]
+         "prompt_tokens", "completion_tokens", "total_tokens", "error"])
     write_header = not usage_path.exists()
     with open(usage_path, "a", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=fieldnames)
@@ -190,7 +316,24 @@ def main():
     ap.add_argument("--out-dir", required=True, type=Path)
     ap.add_argument("--model", default=DEFAULT_MODEL)
     ap.add_argument("--max-concurrent", type=int, default=5)
+    ap.add_argument("--row-level", action="store_true",
+                     help="row-isolated Repertoire extraction (known_issues.md #1/#49) -- "
+                          "one API call per detected row instead of one per page. Assumes "
+                          "every row in --manifest is Repertoire.")
+    ap.add_argument("--row-crops-dir", type=Path, default=None,
+                     help="where row_detect.py writes cropped row images; defaults to "
+                          "<out-dir>/row_crops")
+    ap.add_argument("--header-line-count", type=int, default=1,
+                     help="passed through to row_detect.detect_rows -- see its docstring "
+                          "for why this isn't universal across pages yet")
+    ap.add_argument("--corrected-analysis-dir", type=Path, default=None,
+                     help="directory of {page_id}.pkl PageAnalysis files saved after a human "
+                          "review pass (analyze_page + insert_row_boundary/delete_row_boundary) "
+                          "-- if a page's pkl exists here, crop from that confirmed boundary set "
+                          "instead of running fresh automatic detection")
     args = ap.parse_args()
+    if args.row_crops_dir is None:
+        args.row_crops_dir = args.out_dir / "row_crops"
     asyncio.run(main_async(args))
 
 

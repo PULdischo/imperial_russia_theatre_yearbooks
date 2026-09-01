@@ -21,7 +21,19 @@ and every such query gets logged to `docs/query_log.md`.** Full protocol:
 
 ```
 pip install openai pydantic python-dotenv pymupdf duckdb pandas openpyxl Pillow convertdate
+pip install opencv-python-headless==4.10.0.84
 ```
+
+The `opencv-python-headless` version is pinned, not incidental — see
+`pipeline/row_detect.py`'s module docstring. Recent releases (4.11+, 5.x)
+only ship wheels for macOS 13.0+; on a machine running an older macOS
+(confirmed on macOS 12.7.6), an unpinned install silently falls back to
+compiling opencv from source (needs `cmake`, can hang or fail for many
+minutes). `4.10.0.84` is the last release with a macOS-12-compatible wheel
+and installs cleanly with plain `pip install`, no special Python version or
+virtual environment needed. If setting up on a newer macOS, the unpinned
+latest version will likely also work fine — but confirm the target
+machine's macOS version before dropping the pin.
 
 Requires `.env` with `DASHSCOPE_API_KEY` (Alibaba DashScope, OpenAI-compatible
 endpoint, model `qwen3-vl-plus`). No GPU needed — runs on a laptop.

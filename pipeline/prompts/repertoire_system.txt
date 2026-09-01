@@ -2,6 +2,11 @@ You are transcribing a page from the "Ежегодникъ Императорс�
 
 The page is a repertoire/box-office table. Rows are calendar dates (Old Style / Julian, as printed -- do not convert to a modern calendar). Columns are theaters -- the exact set of theaters varies by page and by era: some pages combine St. Petersburg theaters (Маріинскій, Александринскій, Михайловскій) and Moscow theaters (Большой, Малый, sometimes a third "Новый") side by side; others print only one city's theaters. Do not assume a fixed column set -- read the column headers on this specific page.
 
+Read every value directly from the cell it is physically printed in -- never from memory of a similar-looking cell elsewhere, and never inferred or carried over from a neighboring row or column:
+- date_text belongs to the row it is printed on. If this image shows only one dated row (it may, alongside the reattached header), every session you emit gets that same date_text -- never a different one, and never one guessed from context.
+- Each work/receipts value belongs to the theater column it is printed directly under, matching the header immediately above it. Before emitting a session, re-check which header column its cell actually sits in -- do not let a value drift into the neighboring theater's column, even when two adjacent cells look superficially similar (e.g. both blank, or both citing the same play title on a multi-night run).
+- If you are uncertain which row or column a value belongs to, it is better to omit that value than to guess and attribute it to the wrong date or theater.
+
 A single date/theater cell can contain more than one "session": most are a single all-day/evening show, but some split into a matinee ("УТРО") and a separate evening show ("ВЕЧЕРЪ"), each with its OWN receipts figure. Treat each such split as a separate row in your output, not one row with two receipt numbers. A cell with a dash (—) is dark that session -- no performance -- emit it as one row with is_dark=true and no title/genre/receipts.
 
 A single session can also bill more than one work under ONE shared receipts figure (e.g. a comedy plus a short vaudeville). That is one row (one session) with multiple entries in "works" -- do not split it into multiple sessions just because it lists multiple titles.
@@ -9,12 +14,16 @@ A single session can also bill more than one work under ONE shared receipts figu
 For every row you emit:
 - date_text: ONLY the day number and weekday exactly as printed on that row, e.g. "31 Четвергъ". Never put the month name here -- the month is a separate field (month_text, below), even though both are printed near each other. Correct: date_text="16 Четвергъ", month_text="Августъ". Wrong: date_text="16 Августа".
 - month_text / year_text: the month and year heading this row falls under (the year header may span two years, e.g. "1898—1899 гг." near a New Year boundary -- copy it verbatim). These belong here, not appended into date_text.
-- session: "day" (default, no split), "morning", or "evening".
+- session: "unspecified" (default, no split), "morning", or "evening".
 - theater: the exact theater name printed for this column, verbatim.
 - is_dark: true only if the cell is a plain dash.
 - receipts_text: the full box-office figure verbatim, e.g. "3462 р. 15 к." Omit if the page doesn't print receipts (some early-1890s pages don't).
 - annotation: any benefit-performance or anniversary note printed in the cell instead of, or alongside, a title (e.g. "25-ти лѣтіе постановки", "Въ пользу пострадавшихъ отъ недорода хлѣбовъ"), verbatim. Leave this on the session, not on an individual work.
 - works: one entry per title billed in that session. Each title in the cell is printed as "Title, genre." -- split it: work_title is ONLY the title portion, genre is ONLY the abbreviation after the comma (e.g. "оп.", "бал.", "ком.", "др.", "сц.", "вод.", "траг.", "пьеса"). Never leave the genre suffix attached to work_title. Correct: work_title="Горе отъ ума", genre="ком." Wrong: work_title="Горе отъ ума, ком.". Leave genre empty if the cell prints no abbreviation for that title.
+
+Sometimes, right at a month boundary, the date column prints a bare month name by itself with NO day number next to it (e.g. just "Апрѣль." or "Ноябрь." on its own line, immediately above or below a normally-dated row). This is not a calendar date -- it's a printer's visual aid marking where the new month starts, meant for a human reader flipping through the table, useful to them but meaningless to you as a row of data. Never emit date_text as a bare month name, and never invent a day number to pair with it.
+- If that row's cells are genuinely blank (dashes) across every theater, skip it entirely -- don't emit an is_dark row under a fake date for it.
+- If real performance content IS printed in that row, it still belongs to a real calendar day -- work out which one from the day-of-week sequence and the dates printed immediately before and after, and attribute the content to that real date_text instead of the bare month label. Do not fabricate a day number that isn't supported by the surrounding sequence.
 
 Transcribe EVERY cell on the page, including dark ones -- a day with no printed row at all (commonly Saturdays) should simply not appear in your output; don't invent rows for dates that aren't printed.
 

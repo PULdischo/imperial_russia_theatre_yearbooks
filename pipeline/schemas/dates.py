@@ -10,9 +10,17 @@ day/month/year pattern -- callers should treat that as "needs a human or a
 smarter parser," not a failure.
 """
 import re
+import unicodedata
 
 _MONTHS = {
     "янв": 1, "феврал": 2, "март": 3, "апрел": 4, "ма": 5, "июн": 6, "іюн": 6,
+    # docs/eval/known_issues.md #37: "іюня" (June) missing its leading "і"
+    # ("юня") turned out to be a real, common extraction artifact, not a rare
+    # typo -- confirmed 54 instances corpus-wide (mostly BalletArtists tenure
+    # sentences), every one previously returning None here despite the rest
+    # of the date being perfectly legible. "юн" can't collide with any other
+    # month (none of the other 11 stems start with ю).
+    "юн": 6,
     "июл": 7, "іюл": 7, "август": 8, "сентябр": 9, "октябр": 10,
     "ноябр": 11, "декабр": 12,
 }
@@ -23,7 +31,12 @@ _DATE_RE = re.compile(
     # through summer of the second) rather than a single year -- the second
     # group is optional so single-year text (the common roster tenure-date
     # case, e.g. "1 мая 1882 г.") still matches exactly as before.
-    r"(\d{1,2})\s+([а-яіѣ]+)\.?\s+(\d{4})(?:\s*[—\-–]\s*(\d{4}))?",
+    # The day may carry a hyphenated ordinal suffix ("1-го сентября") --
+    # confirmed in narrative-style tenure text (docs/eval/known_issues.md
+    # #34) across 188 rows in 4 entity types (Graduates, BalletArtists,
+    # Musicians, TheaterSchoolStaff), not just the Graduates report this was
+    # found in -- every one of those was previously returning None here.
+    r"(\d{1,2})(?:-(?:го|й|е|я|му))?\s+([а-яіѣ]+)\.?\s+(\d{4})(?:\s*[—\-–]\s*(\d{4}))?",
     re.IGNORECASE,
 )
 
@@ -51,6 +64,15 @@ def parse_russian_date(text: str) -> str | None:
     January-July is the second. A single printed year is used as-is."""
     if not text:
         return None
+    # docs/eval/known_issues.md #37: a stray combining accent mark
+    # ("дека́бря" for "декабря") occasionally lands mid-word and breaks the
+    # month match even though every actual letter is present and correct --
+    # NFD-decompose and drop Unicode combining marks (category Mn) before
+    # matching. Pre-reform Russian never legitimately carries a combining
+    # accent in running text, so this is always safe to strip, never a
+    # meaningful character to preserve.
+    text = "".join(c for c in unicodedata.normalize("NFD", text)
+                   if unicodedata.category(c) != "Mn")
     m = _DATE_RE.search(text)
     if not m:
         return None

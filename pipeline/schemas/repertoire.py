@@ -3,7 +3,9 @@ pages, plus a flattener producing rows matching event_entry /
 event_entry_performance in docs/schema.md (renamed from performance_session /
 performance_work per RG's schema.md revision). Long/tidy per the structural
 survey -- theater is a value on each session, not a fixed column."""
+import json
 import re
+from collections import Counter
 from typing import Optional, Literal
 from pydantic import BaseModel, Field
 
@@ -60,6 +62,86 @@ class SessionLLM(BaseModel):
 
 class RepertoirePage(BaseModel):
     sessions: list[SessionLLM] = Field(default_factory=list)
+
+
+def _session_key(s: dict) -> tuple:
+    return (s.get("date_text"), s.get("month_text"), s.get("theater"), s.get("session"))
+
+
+def merge_repertoire_samples(sample_dicts: list[dict]) -> tuple[dict, dict]:
+    """Union-merges N independent extraction samples of the SAME Repertoire
+    page into one, to counter the model's non-deterministic dark-cell recall
+    (known_issues.md #1 -- on repeat runs of the same page, the model
+    sometimes emits every dark/blank cell and sometimes silently drops most
+    of them; content accuracy on whatever IS emitted is fine, the gap is
+    completeness). Confirmed via a live A/B test (2026-08-25, RG's request)
+    that this really is run-to-run noise on at least one page with a known
+    recall problem -- 3 baseline samples of the same page found 1, 8, and 2
+    dark cells respectively -- so a union genuinely recovers more than any
+    single sample does.
+
+    A session (keyed by date_text+month_text+theater+session, i.e. one
+    printed cell) is included in the merged output if ANY sample produced
+    it at all. This can only ADD sessions a run silently dropped -- it can
+    never invent a key that not one of the N samples ever produced, so a
+    date genuinely absent from the printed table (and thus absent from
+    every sample) stays absent from the merge too. This is the same
+    guarantee the single-sample prompt already promises ("a day with no
+    printed row at all ... should simply not appear in your output"); the
+    merge just extends it across N tries instead of trusting one.
+
+    Among samples that agree the key is dark, it stays dark. Among samples
+    that captured real content for the same key, the version that the
+    largest number of samples agree on (by receipts/annotation/works) wins,
+    ties broken by first-seen order -- this does NOT try to reconcile
+    disagreeing content field-by-field, only pick the most-corroborated
+    whole session, so it never fabricates a hybrid that no sample actually
+    produced.
+
+    Returns (merged_dict, stats) -- stats is for visibility/logging, not
+    used downstream.
+    """
+    if len(sample_dicts) == 1:
+        return sample_dicts[0], {"samples": 1, "keys_recovered_by_union": 0,
+                                  "keys_with_dark_vs_content_disagreement": 0}
+
+    by_key: dict[tuple, list[dict]] = {}
+    key_order: list[tuple] = []
+    for sample in sample_dicts:
+        for s in sample.get("sessions", []):
+            k = _session_key(s)
+            if k not in by_key:
+                by_key[k] = []
+                key_order.append(k)
+            by_key[k].append(s)
+
+    def content_signature(v: dict) -> str:
+        return json.dumps({f: v.get(f) for f in ("receipts_text", "annotation", "works")},
+                           sort_keys=True, ensure_ascii=False)
+
+    merged_sessions = []
+    n_recovered = 0
+    n_dark_disagreement = 0
+    for k in key_order:
+        variants = by_key[k]
+        if len(variants) < len(sample_dicts):
+            n_recovered += 1  # at least one sample never produced this key at all
+        dark_variants = [v for v in variants if v.get("is_dark")]
+        content_variants = [v for v in variants if not v.get("is_dark")]
+        if content_variants:
+            if dark_variants:
+                n_dark_disagreement += 1
+            sig_counts = Counter(content_signature(v) for v in content_variants)
+            best_sig = sig_counts.most_common(1)[0][0]
+            merged_sessions.append(next(v for v in content_variants if content_signature(v) == best_sig))
+        else:
+            merged_sessions.append(dark_variants[0])
+
+    merged = dict(sample_dicts[0])
+    merged["sessions"] = merged_sessions
+    stats = {"samples": len(sample_dicts), "keys_recovered_by_union": n_recovered,
+              "keys_with_dark_vs_content_disagreement": n_dark_disagreement}
+    return merged, stats
 
 
 def _parse_receipts(text: Optional[str]) -> tuple[str, str]:
