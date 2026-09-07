@@ -29,8 +29,10 @@ from dotenv import load_dotenv
 from openai import AsyncOpenAI, APIError, APITimeoutError, RateLimitError
 
 sys.path.insert(0, str(Path(__file__).parent))
-from schemas import RosterPage, RepertoirePage
-from row_detect import detect_rows
+from schemas import (
+    RosterPage, RepertoirePage, DateOnlyPage, TheaterOnlyPage, merge_columnwise_page,
+)
+from row_detect import detect_rows, detect_columns
 
 PROMPTS_DIR = Path(__file__).parent / "prompts"
 BASE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
@@ -232,6 +234,124 @@ async def process_page_rowlevel(client: AsyncOpenAI, sem: asyncio.Semaphore, row
     return log_row
 
 
+async def call_dateonly(client: AsyncOpenAI, sem: asyncio.Semaphore, model: str,
+                         prompt: str, schema: dict, image_path: Path) -> tuple[list[dict], dict]:
+    """The date-only crop's API call, same semaphore discipline as
+    `call_one_row`. Returns (rows, usage); raises on failure after retries."""
+    async with sem:
+        image_data_uri = encode_image(image_path)
+        raw_text, usage = await call_with_retry(client, model, prompt, schema, image_data_uri)
+    parsed = json.loads(raw_text)
+    return parsed.get("rows", []), usage
+
+
+async def call_theateronly(client: AsyncOpenAI, sem: asyncio.Semaphore, model: str,
+                            prompt: str, schema: dict, image_path: Path
+                            ) -> tuple[str, list[dict], dict]:
+    """One theater-only crop's API call. Returns (theater_name, rows,
+    usage) -- the theater name is read by the model from the crop's own
+    header, not supplied by the caller (see TheaterOnlyPage's docstring:
+    manifest.csv has no per-page theater-name list). Raises on failure
+    after retries."""
+    async with sem:
+        image_data_uri = encode_image(image_path)
+        raw_text, usage = await call_with_retry(client, model, prompt, schema, image_data_uri)
+    parsed = json.loads(raw_text)
+    return parsed.get("theater", ""), parsed.get("rows", []), usage
+
+
+async def process_page_columnwise(client: AsyncOpenAI, sem: asyncio.Semaphore, row: dict,
+                                   images_dir: Path, out_dir: Path, column_crops_dir: Path,
+                                   model: str, dateonly_prompt: str, theateronly_prompt: str,
+                                   dateonly_schema: dict, theateronly_schema: dict) -> dict:
+    """Column-wise Repertoire extraction (known_issues.md #68): reads the
+    date column once and each theater column once, independently -- no
+    row-boundary detection involved at all, so this is structurally
+    immune to the row-boundary problem row-level extraction still
+    depends on. Not a replacement for row-level or full-page extraction;
+    written to `out_dir` (a SEPARATE directory from either, e.g.
+    outputs/<run>/raw_columnwise/) specifically as a second, independent
+    read for the row-vs-column-vs-page cross-check in quality_checks.py
+    to compare against -- three genuinely different failure modes, not
+    three attempts at the same thing.
+
+    A theater whose row count doesn't match the date column's own row
+    count is dropped from the output entirely for this page (see
+    `merge_columnwise_page`'s docstring) rather than guessed at -- this
+    is a real, if incomplete, page-level result: the flag comes from
+    `write_page_flag=True` staying absent, not from a missing file, so a
+    caller can tell "no data" from "some theaters unreadable this way"
+    by checking which theaters are present in the output."""
+    page_id = row["page_id"]
+    out_path = out_dir / f"{page_id}.raw.json"
+    log_row = {"page_id": page_id, "status": "", "n_theaters_ok": "", "n_theaters_total": "",
+               "elapsed_seconds": "", "prompt_tokens": "", "completion_tokens": "",
+               "total_tokens": "", "error": ""}
+
+    if out_path.exists():
+        log_row["status"] = "skipped_existing"
+        return log_row
+
+    image_path = images_dir / f"{page_id}.png"
+    if not image_path.exists():
+        image_path = images_dir / f"{page_id}.jpg"
+    if not image_path.exists():
+        log_row["status"] = "missing_image"
+        log_row["error"] = str(images_dir / f"{page_id}.(png|jpg)")
+        return log_row
+
+    t0 = time.monotonic()
+    try:
+        columns = detect_columns(image_path, column_crops_dir / page_id)
+    except Exception as e:
+        log_row.update(status="column_detect_failed", elapsed_seconds=f"{time.monotonic() - t0:.1f}",
+                        error=str(e))
+        return log_row
+
+    usage_totals = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+
+    def _accumulate(usage: dict):
+        for k in usage_totals:
+            v = usage.get(k)
+            if v:
+                usage_totals[k] += int(v)
+
+    try:
+        date_rows, date_usage = await call_dateonly(
+            client, sem, model, dateonly_prompt, dateonly_schema, Path(columns[0].date_image_path))
+    except Exception as e:
+        log_row.update(status="failed", elapsed_seconds=f"{time.monotonic() - t0:.1f}",
+                        error=f"date-only call failed: {e!r}")
+        return log_row
+    _accumulate(date_usage)
+
+    results = await asyncio.gather(
+        *[call_theateronly(client, sem, model, theateronly_prompt, theateronly_schema,
+                            Path(c.theater_image_path))
+          for c in columns],
+        return_exceptions=True,
+    )
+
+    all_sessions: list[dict] = []
+    n_ok = 0
+    for result in results:
+        if isinstance(result, Exception):
+            continue
+        theater_name, theater_rows, usage = result
+        _accumulate(usage)
+        sessions = merge_columnwise_page(date_rows, theater_name, theater_rows)
+        if sessions is None:
+            continue  # length mismatch -- real signal, not guessed at, see docstring
+        all_sessions.extend(sessions)
+        n_ok += 1
+
+    out_path.write_text(json.dumps({"sessions": all_sessions}, ensure_ascii=False), encoding="utf-8")
+    log_row.update(status="ok" if n_ok == len(columns) else "partial",
+                    n_theaters_ok=n_ok, n_theaters_total=len(columns),
+                    elapsed_seconds=f"{time.monotonic() - t0:.1f}", **usage_totals)
+    return log_row
+
+
 async def main_async(args):
     load_dotenv()
     api_key = os.environ.get("DASHSCOPE_API_KEY")
@@ -248,7 +368,22 @@ async def main_async(args):
     repertoire_schema = RepertoirePage.model_json_schema()
 
     sem = asyncio.Semaphore(args.max_concurrent)
-    if args.row_level:
+    if args.column_level:
+        # Column-wise path (known_issues.md #68) -- same single-entity-type
+        # assumption as --row-level, same reason (not needed for what this
+        # was built to test yet).
+        dateonly_prompt = (PROMPTS_DIR / "repertoire_dateonly_system.txt").read_text(encoding="utf-8")
+        theateronly_prompt = (PROMPTS_DIR / "repertoire_theateronly_system.txt").read_text(encoding="utf-8")
+        dateonly_schema = DateOnlyPage.model_json_schema()
+        theateronly_schema = TheaterOnlyPage.model_json_schema()
+        args.column_crops_dir.mkdir(parents=True, exist_ok=True)
+        tasks = [
+            process_page_columnwise(client, sem, row, args.images_dir, args.out_dir,
+                                     args.column_crops_dir, args.model, dateonly_prompt,
+                                     theateronly_prompt, dateonly_schema, theateronly_schema)
+            for row in rows
+        ]
+    elif args.row_level:
         # Row-isolated path (known_issues.md #1/#49) -- assumes every row in
         # this manifest is Repertoire; doesn't yet branch per-row for a
         # mixed manifest containing Roster pages too (not needed for the
@@ -279,16 +414,25 @@ async def main_async(args):
     # Append, not overwrite: a re-run only retries previously-failed pages
     # (everything else is skipped_existing), so overwriting would discard the
     # token/usage history for every page succeeded by an earlier invocation.
-    # Row-level runs log to a separate file -- its log_row shape (n_rows
-    # instead of attempts) differs from the single-call path's, and this
-    # file is appended to over time, so mixing shapes into one CSV risks a
-    # DictWriter error on a later run with the other shape.
-    usage_path = args.out_dir / ("usage_log_rowlevel.csv" if args.row_level else "usage_log.csv")
-    fieldnames = list(log_rows[0].keys()) if log_rows else (
-        ["page_id", "status", "n_rows", "elapsed_seconds",
-         "prompt_tokens", "completion_tokens", "total_tokens", "error"] if args.row_level else
-        ["page_id", "status", "attempts", "elapsed_seconds",
-         "prompt_tokens", "completion_tokens", "total_tokens", "error"])
+    # Each path logs to its own file -- their log_row shapes differ
+    # (n_rows vs n_theaters_ok/n_theaters_total vs attempts), and each file
+    # is appended to over time, so mixing shapes into one CSV risks a
+    # DictWriter error on a later run with a different shape.
+    if args.column_level:
+        usage_filename = "usage_log_columnwise.csv"
+        default_fieldnames = ["page_id", "status", "n_theaters_ok", "n_theaters_total",
+                               "elapsed_seconds", "prompt_tokens", "completion_tokens",
+                               "total_tokens", "error"]
+    elif args.row_level:
+        usage_filename = "usage_log_rowlevel.csv"
+        default_fieldnames = ["page_id", "status", "n_rows", "elapsed_seconds",
+                               "prompt_tokens", "completion_tokens", "total_tokens", "error"]
+    else:
+        usage_filename = "usage_log.csv"
+        default_fieldnames = ["page_id", "status", "attempts", "elapsed_seconds",
+                               "prompt_tokens", "completion_tokens", "total_tokens", "error"]
+    usage_path = args.out_dir / usage_filename
+    fieldnames = list(log_rows[0].keys()) if log_rows else default_fieldnames
     write_header = not usage_path.exists()
     with open(usage_path, "a", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=fieldnames)
@@ -331,9 +475,21 @@ def main():
                           "review pass (analyze_page + insert_row_boundary/delete_row_boundary) "
                           "-- if a page's pkl exists here, crop from that confirmed boundary set "
                           "instead of running fresh automatic detection")
+    ap.add_argument("--column-level", action="store_true",
+                     help="column-wise Repertoire extraction (known_issues.md #68) -- reads the "
+                          "date column and each theater column independently, no row-boundary "
+                          "detection at all. Meant as a SECOND, independent read for the row-vs-"
+                          "column-vs-page cross-check, not a replacement for --row-level -- "
+                          "write --out-dir to a separate directory from any other pass over the "
+                          "same manifest. Assumes every row in --manifest is Repertoire.")
+    ap.add_argument("--column-crops-dir", type=Path, default=None,
+                     help="where row_detect.py writes cropped date/theater column images; "
+                          "defaults to <out-dir>/column_crops")
     args = ap.parse_args()
     if args.row_crops_dir is None:
         args.row_crops_dir = args.out_dir / "row_crops"
+    if args.column_crops_dir is None:
+        args.column_crops_dir = args.out_dir / "column_crops"
     asyncio.run(main_async(args))
 
 
