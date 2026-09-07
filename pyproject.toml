@@ -50,5 +50,20 @@ dependencies = [
 # DashScope path does not. Install with: uv sync --extra anthropic
 anthropic = ["anthropic>=0.40.0"]
 
+# Publishing only (CLAUDE.md's "Publishing" section) -- not needed to run the
+# pipeline itself. Install with: uv sync --extra publish
+#
+# datasette is pinned to an exact version on purpose. CLAUDE.md documents a
+# workaround specific to 1.0a37: `datasette publish cloudrun` has no --config
+# flag, and in that version --metadata no longer feeds datasette.allowed(), so
+# permissions must be injected via --extra-options "--config ...". That
+# behavior was confirmed by direct testing against 1.0a37 -- do not float this
+# to a newer alpha without re-testing that the workaround still applies.
+publish = [
+    "datasette==1.0a37",
+    "huggingface-hub>=1.30.0",  # HF dataset repo upload (set HF_HUB_DISABLE_XET=1)
+    "llm>=0.34",                # resolves extra-openai-models.yaml / api_key_name: dashscope
+]
+
 [tool.uv]
 package = false
