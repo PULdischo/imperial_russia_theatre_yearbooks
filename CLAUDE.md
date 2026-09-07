@@ -51,6 +51,35 @@ python pipeline/run_pilot.py --manifest outputs/<run>/manifest.csv \
 python pipeline/parse_and_validate.py --manifest outputs/<run>/manifest.csv \
     --raw-dir outputs/<run>/raw --out-dir outputs/<run>/parsed
 python pipeline/quality_checks.py --parsed-dir outputs/<run>/parsed --out outputs/<run>/quality_flags.csv
+```
+
+**Repertoire pages specifically get two additional passes, routinely, on
+every page — not gated behind a screening heuristic (RG, 2026-09-01:
+cost isn't the constraint here, accuracy is).** `run_pilot.py`'s default
+single-call-per-page path is prone to real, confirmed cross-date
+content bleed from row-boundary misdetection (`docs/eval/known_issues.md`
+#1/#68); row-level and column-wise extraction fail in different ways
+from each other and from the baseline, so running all three and cross-
+checking is the actual mitigation, not any one method alone:
+
+```
+python pipeline/run_pilot.py --manifest outputs/<run>/manifest.csv \
+    --images-dir outputs/<run>/images --out-dir outputs/<run>/raw_rowlevel \
+    --row-level --max-concurrent 8
+python pipeline/run_pilot.py --manifest outputs/<run>/manifest.csv \
+    --images-dir outputs/<run>/images --out-dir outputs/<run>/raw_columnwise \
+    --column-level --max-concurrent 8
+python pipeline/quality_checks.py --parsed-dir outputs/<run>/parsed \
+    --out outputs/<run>/quality_flags.csv \
+    --page-raw-dir outputs/<run>/raw --row-raw-dir outputs/<run>/raw_rowlevel \
+    --column-raw-dir outputs/<run>/raw_columnwise
+```
+
+Then the normal sequence continues as above (`eval_against_gold.py`,
+`build_duckdb.py`) — the two extra passes and the cross-check are an
+addition to the standard flow, not a fork of it.
+
+```
 python pipeline/eval_against_gold.py --parsed-dir outputs/<run>/parsed \
     --gold-dir docs/eval/gold --out outputs/<run>/eval_report.txt --run-id <label>
 python pipeline/build_duckdb.py --parsed-dir outputs/<run>/parsed \
