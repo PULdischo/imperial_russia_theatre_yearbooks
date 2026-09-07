@@ -803,7 +803,8 @@ def _adaptive_pads(row_boundaries: list[np.ndarray], row_pad: int,
 
 
 def detect_rows(image_path: Path, out_dir: Path, header_line_count: int = 1,
-                 row_pad: int = 25, analysis: PageAnalysis | None = None) -> list[RowCrop]:
+                 row_pad: int = 25, analysis: PageAnalysis | None = None,
+                 presence_frac: float = 0.5) -> list[RowCrop]:
     """Main entry point. Detects grid lines on the page (or uses an
     already-reviewed/corrected `analysis` from `analyze_page` +
     `insert_row_boundary`/`delete_row_boundary` -- pass one in to crop
@@ -839,7 +840,27 @@ def detect_rows(image_path: Path, out_dir: Path, header_line_count: int = 1,
     extend this function to auto-detect the header boundary (e.g. by
     locating the title-line/theater-name divider directly when it IS
     detected), if a future pilot page finds 1 doesn't hold.
-    """
+
+    `presence_frac=0.5` is deliberately lower than `_detect_line_curves`'s
+    own 0.7 default (2026-09-01, docs/eval/known_issues.md #68 addendum)
+    -- the same class of bug already found and fixed for
+    `_detect_vertical_dividers` this session, on the other axis. Confirmed
+    directly: on `repertoire_1898-99_p012`, real row boundaries at 42.5%,
+    52.5%, and 57.5% strip presence were all being dropped at 0.7, leaving
+    only 2 detected row crops for the whole page -- one spanning 1,245px,
+    covering roughly ten real dated rows in a single crop. That's the
+    EXACT failure mode row isolation exists to prevent (see this module's
+    own top-of-file docstring): a fresh whole-season row-level extraction
+    run against that oversized crop reproduced the original misattribution
+    bug, with several dates' receipts duplicated and shifted one row
+    against the page baseline, caught via `quality_checks.py`'s
+    cross-extraction check. Confirmed noise stays under ~22.5% presence on
+    every page checked (`repertoire_1898-99_p012`, `p014`, `p029`, `p037`),
+    so 0.5 leaves a comfortable margin on both sides. Re-verified directly
+    against the two already-validated pages, `p029` and `p037`: both
+    detect the EXACT SAME curves at 0.5 as at 0.7 -- this lowers the floor
+    only where it was already too strict, it doesn't loosen anything on
+    pages that were already working."""
     out_dir.mkdir(parents=True, exist_ok=True)
     img = cv2.imread(str(image_path))
     if img is None:
@@ -848,7 +869,7 @@ def detect_rows(image_path: Path, out_dir: Path, header_line_count: int = 1,
         curves = analysis.curves
     else:
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        curves = _detect_line_curves(gray)
+        curves = _detect_line_curves(gray, presence_frac=presence_frac)
     if len(curves) < header_line_count + 2:
         raise ValueError(
             f"{image_path.name}: only found {len(curves)} grid line(s), "
