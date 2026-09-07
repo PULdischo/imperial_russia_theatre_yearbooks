@@ -221,7 +221,8 @@ def _chain_to_curve(chain: dict[int, int], strip_centers: list[int], W: int) -> 
 
 def _detect_line_curves(gray: np.ndarray, peak_height: float = 0.35,
                          min_row_gap: int = 100, n_strips: int = 40,
-                         step_window: int = 30, presence_frac: float = 0.7
+                         step_window: int = 30, presence_frac: float = 0.7,
+                         drop_edge_artifacts: bool = True
                          ) -> list[np.ndarray]:
     """Detects the page's horizontal table rules as curves (one y-value per
     x-column across the full width), tolerant of genuine bowing/skew, not
@@ -389,11 +390,287 @@ def _detect_line_curves(gray: np.ndarray, peak_height: float = 0.35,
     # this tight (near-zero, not just "small") is never real printed
     # content given these scans' generous margins, so it's safe to drop
     # outright rather than trying to relax/adjust it.
-    H = gray.shape[0]
-    edge_margin = max(10, int(H * 0.01))
-    curves = [c for c in curves if edge_margin <= c.mean() <= H - edge_margin]
+    # `drop_edge_artifacts=False` (2026-09-01, docs/eval/known_issues.md
+    # #68 addendum) -- `_detect_vertical_dividers` reuses this function on
+    # a transposed image, where "near y=0/H" means "near the crop's own
+    # left/right pixel edge", not "near the photographed book's top/bottom
+    # edge". Those are NOT the same kind of artifact: a horizontal row
+    # line photographed right at the top/bottom of a scan really is almost
+    # always book-cover material (confirmed 2026-08-27, see above), but a
+    # vertical table's own left/right border can legitimately sit within a
+    # few pixels of the crop's edge on a tightly-cropped page -- confirmed
+    # directly on repertoire_1898-99_p012: the real left border chained
+    # with 33/40 strip presence (stronger than either divider the page DID
+    # keep) at x=1, and dropping it here is what caused
+    # `_detect_vertical_dividers` to fall one short of the 3-divider
+    # minimum. `_detect_vertical_dividers` has its own, separate margin
+    # filter (via `_table_x_bounds`) for the vertical case, so it opts out
+    # of this block entirely rather than needing a second edge-margin
+    # constant tuned for a different axis.
+    if drop_edge_artifacts:
+        H = gray.shape[0]
+        edge_margin = max(10, int(H * 0.01))
+        curves = [c for c in curves if edge_margin <= c.mean() <= H - edge_margin]
 
     return curves
+
+
+#: Every genuine date column measured directly across the whole test set
+#: (2026-09-01, docs/eval/known_issues.md #68 addendum) came out 175-185px
+#: wide -- repertoire_1898-99_p029: 182px, p008: 176px, p014: 176px, p024:
+#: 176px -- while every genuine theater column measured 508-598px, a clean,
+#: non-overlapping split. Density (ink-fraction) turned out NOT to separate
+#: reliably here: a margin segment contaminated by a photographed fingertip
+#: or the book's own dark spine can read as dense as, or denser than, real
+#: text (p008's true-margin segment measured 16.45% ink, well inside the
+#: range real date/theater columns occupy on other pages), so no single
+#: density ratio -- tried from 1.2 to 2.5 -- separated every confirmed case
+#: without also misclassifying another one. Column width doesn't have this
+#: problem: it's what the table's own typesetting fixes, not a function of
+#: what a camera or thumb happened to catch.
+_DATE_COLUMN_WIDTH_RANGE = (100, 300)
+
+
+def _prune_edge_artifact_dividers(binary: np.ndarray, dividers: list[np.ndarray],
+                                   W: int, density_ratio: float = 1.8
+                                   ) -> list[np.ndarray]:
+    """Drops a leading divider that's actually the table's own outer-left
+    border (not a real date/theater-1 boundary), and a trailing divider
+    whose adjacent edge segment is a density outlier -- two different
+    tests for two different failure shapes, confirmed directly on real
+    pages (2026-09-01, docs/eval/known_issues.md #68 addendum).
+
+    LEFT: if the segment right after the first divider is a plausible
+    date-column width (`_DATE_COLUMN_WIDTH_RANGE`), the first divider is
+    almost certainly the true outer-left border rather than the
+    date/theater-1 boundary -- a real date column only ever appears
+    immediately after the true left border, never after an internal
+    divider (which is always followed by a full theater column instead).
+    Density was tried first here and rejected: it can't tell a
+    contaminated-but-blank margin from real text (see
+    `_DATE_COLUMN_WIDTH_RANGE`'s docstring), but a date column's width is
+    fixed by the table's own typesetting and isn't affected by a
+    fingertip or spine shadow landing in the margin next to it.
+
+    RIGHT: no analogous "next segment looks like X" test applies -- past
+    the table's real right border there's just margin or the photographed
+    book spine, not a second predictably-sized column -- so this side
+    keeps the density-outlier test: repertoire_1898-99_p029's and
+    repertoire_1898-99_p037's rightmost segment, independently, both read
+    ~31-33% ink (photographed spine), far above the ~4-9% band every
+    genuine column segment on those pages sits in; compared against the
+    MEDIAN of the page's own middle segments, not a fixed global
+    percentage, since ink density varies with how text-dense a given
+    season's typesetting is.
+
+    Drops at most one divider per side, both decided from state computed
+    up front rather than a loop that re-merges a pruned edge into its
+    neighbor and re-tests the growing segment -- an earlier version did
+    exactly that re-merge-and-recheck on the right side, and it cascaded
+    on both p029 and p037: once the true binding-artifact segment got
+    merged into its neighbor after one prune, the merged segment's
+    average was still pulled high enough to re-trigger "outlier" on the
+    next pass too, eating a second, genuinely real divider along with it
+    (confirmed by tracing both pages by hand)."""
+    xs = sorted(float(d.mean()) for d in dividers)
+    bounds = [0.0] + xs + [float(W)]
+    n_seg = len(bounds) - 1
+    if n_seg <= 2:
+        return dividers
+
+    if _DATE_COLUMN_WIDTH_RANGE[0] <= (bounds[2] - bounds[1]) <= _DATE_COLUMN_WIDTH_RANGE[1]:
+        xs = xs[1:]
+        bounds = [0.0] + xs + [float(W)]
+        n_seg = len(bounds) - 1
+        if n_seg <= 2:
+            return [d for d in dividers if float(d.mean()) in set(xs)]
+
+    def _density(a: float, b: float) -> float:
+        return binary[:, int(a):int(b)].mean() / 255.0
+
+    mid_densities = [_density(bounds[i], bounds[i + 1]) for i in range(1, n_seg - 1)]
+    median_mid = float(np.median(mid_densities))
+    lo, hi = median_mid / density_ratio, median_mid * density_ratio
+
+    if not (lo <= _density(bounds[-2], bounds[-1]) <= hi) and xs:
+        xs = xs[:-1]
+
+    kept = set(xs)
+    return [d for d in dividers if float(d.mean()) in kept]
+
+
+def _detect_vertical_dividers(gray: np.ndarray, presence_frac: float = 0.45,
+                               **detect_kwargs) -> list[np.ndarray]:
+    """Detects the table's vertical column-divider rules (date column |
+    theater 1 | theater 2 | ...), as curves in y rather than fixed
+    x-positions -- these scans have the same fold-proximity sway
+    vertical lines as horizontal ones, confirmed directly (2026-09-01):
+    a naive fixed-x column-darkness sum tops out around 45% coverage
+    even for the strongest real divider, far short of a continuous
+    line, because the line's x-position drifts as y varies and a single
+    x-column only catches part of it.
+
+    Reuses `_detect_line_curves` on a *transposed* image rather than a
+    separate implementation -- a vertical line's x-sway as a function of
+    y becomes a horizontal line's y-sway as a function of x once
+    transposed, exactly the shape that function already handles. The
+    caller is responsible for transposing back (a curve's index i here
+    is the divider's x-position at original-image row i).
+
+    `presence_frac=0.45` is deliberately lower than `_detect_line_curves`'s
+    own 0.7 default (passed only for the vertical case, row detection is
+    untouched) -- confirmed directly (2026-09-01) that a genuine internal
+    divider can chain as low as 19/40 (47.5%) strip presence
+    (repertoire_1898-99_p024's date/theater-1 boundary, missed entirely
+    at the first value tried, 0.55/28-of-40, and only found by directly
+    inspecting the raw chain list under `_build_chains` when p024's
+    resulting date crop turned out to silently contain a whole extra
+    theater's content -- docs/eval/known_issues.md #68 addendum), while
+    every noise candidate measured across the pages checked tops out at
+    11/40 (27.5%) -- still a comfortable gap below 0.45. 0.7 was tuned for
+    HORIZONTAL row lines, which run through mostly-open table cells;
+    vertical dividers cut through print-dense columns instead, so more
+    strips get their peak-finding thrown off by nearby text and a lower
+    floor is needed for the same underlying confidence level.
+
+    2026-09-01 redesign (docs/eval/known_issues.md #68 addendum): only
+    INTERNAL column dividers (date|theater-1, theater-1|theater-2, ...)
+    are wanted here -- deliberately NOT the table's own outer left/right
+    border. Detecting the true outer border reliably turned out to be
+    the fragile part, not a detail to tune around: on
+    repertoire_1898-99_p012/p008/p014 (whole-season test) the real left
+    border was undetectable under any fixed-fraction-of-width tolerance,
+    because its crop margin is essentially zero (~1px) versus ~200px on
+    repertoire_1898-99_p029/p037 -- column margins vary across pages the
+    same way row heights do (RG, 2026-09-01), so no single tolerance
+    constant covers both regimes. On repertoire_1898-99_p024, the same
+    fragility went further than a raised-ValueError failure: the wrong
+    divider pair got treated as the outer border, and `detect_columns`
+    silently produced a THEATER column (visually confirmed:
+    "Александринскій театръ." full of works/receipts) where the
+    date-only crop was supposed to be -- a wrong-but-plausible-looking
+    result, worse than an honest failure.
+
+    Internal dividers don't have this fragility: each sits between two
+    printed columns with strong contrast on both sides, and every page
+    checked so far (including all three "column_detect_failed" pages)
+    detects them with high confidence. `detect_columns` no longer needs
+    the outer border precisely located at all -- like its existing
+    date_pad/theater_pad padding, it now just crops out to the image's
+    own left/right edge for the outermost boundary, which is harmless
+    slack rather than a precision requirement.
+
+    Two filtering passes, in order: (1) `_table_x_bounds`'s plain [x0,
+    x1] estimate drops gross margin/binding-edge noise (confirmed 2026-
+    09-01: raw detection on a 3-theater page finds spurious candidates
+    just past x1, ~100px apart vs. ~500px+ between real dividers --
+    consistent with a single physical feature, not genuine columns); (2)
+    `_prune_edge_artifact_dividers` catches what survives pass 1 anyway
+    -- on repertoire_1898-99_p029/p037, BOTH the true outer-left border
+    (a real, strongly-detected line, just not one this function wants)
+    and a binding-shadow artifact on the right land comfortably inside
+    [x0, x1] and need the density-outlier check, not a position cutoff,
+    to be told apart from real columns."""
+    gray_t = gray.T.copy()
+    curves_t = _detect_line_curves(gray_t, drop_edge_artifacts=False,
+                                    presence_frac=presence_frac, **detect_kwargs)
+    binary = _binarize(gray)
+    x0, x1 = _table_x_bounds(binary)
+    bounded = [c for c in curves_t if x0 <= c.mean() <= x1]
+    return _prune_edge_artifact_dividers(binary, bounded, gray.shape[1])
+
+
+@dataclass
+class ColumnCrop:
+    """One theater's isolated column, paired with the date column (no gap
+    between them -- RG's fix, 2026-09-01, for the off-by-one date-
+    boundary shift a composite crop with an intervening theater skipped
+    over was found to cause: date_crop and theater_crop are written
+    SEPARATELY here rather than composited, specifically so a caller can
+    read them as two independent extractions and match rows by list
+    position rather than asking the model to re-attribute a date to
+    theater content that's visually far from its own date label."""
+    theater_index: int  # 0-based, left to right
+    date_image_path: str
+    theater_image_path: str
+
+
+def detect_columns(image_path: Path, out_dir: Path,
+                    date_pad: int = 120, theater_pad: int = 15) -> list[ColumnCrop]:
+    """Detects the table's vertical column dividers and writes one
+    (date_column_image, theater_column_image) pair per theater column --
+    see `ColumnCrop`'s docstring for why these are separate files, not
+    one composited image. The SAME date-column crop is reused for every
+    theater (real vertical dividers only need detecting once per page).
+
+    `date_pad` is generous by default and asymmetric from `theater_pad`
+    on purpose: the date column's own right edge needs enough padding to
+    fully include the sideways-printed УТРО/ВЕЧ session-label sub-column
+    sitting just inside it. A first attempt at date_pad=15 (matching
+    theater_pad) clipped that label almost entirely, and a date-only
+    extraction silently undercounted every compound row as a result
+    (found and fixed 2026-09-01, docs/eval/known_issues.md #68 addendum)
+    -- this default carries that fix forward rather than reintroducing
+    the same bug at the next page tested.
+
+    Does not itself call the model -- pairs with a caller (RG's
+    date/theater-split extraction design) that reads `date_image_path`
+    once for the date sequence and `theater_image_path` once per theater
+    for that theater's content, then matches the two by list position.
+
+    2026-09-01 redesign (docs/eval/known_issues.md #68 addendum): only
+    the INTERNAL dividers (date|theater-1, theater-1|theater-2, ...) are
+    detected now -- the table's own outer left/right border is no longer
+    needed at all. The date crop's left edge and the last theater crop's
+    right edge simply extend to the image's own edge instead, exactly
+    the same generous-padding tolerance already used for date_pad/
+    theater_pad on every other boundary here. See
+    `_detect_vertical_dividers`'s docstring for why: detecting the true
+    outer border reliably was the fragile part (column margins vary
+    across pages the same way row heights do -- RG, 2026-09-01), and on
+    one page (repertoire_1898-99_p024) that fragility didn't just fail
+    loudly, it silently produced a THEATER column where the date crop
+    should have been."""
+    out_dir.mkdir(parents=True, exist_ok=True)
+    img = cv2.imread(str(image_path))
+    if img is None:
+        raise FileNotFoundError(f"could not read image: {image_path}")
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    dividers = _detect_vertical_dividers(gray)
+    if len(dividers) < 2:
+        raise ValueError(
+            f"{image_path.name}: only found {len(dividers)} internal column "
+            f"divider(s), need at least 2 (date/theater-1 boundary plus at "
+            f"least one theater/theater boundary) -- detection likely failed "
+            f"on this page, inspect before trusting output"
+        )
+
+    W = img.shape[1]
+    x1_date = int(dividers[0].max()) + date_pad
+    date_crop = img[:, 0:x1_date]
+    date_path = out_dir / f"{image_path.stem}__dateonly.png"
+    cv2.imwrite(str(date_path), date_crop)
+
+    results = []
+    n_theaters = len(dividers)
+    for i in range(n_theaters):
+        x0_th = max(0, int(dividers[i].min()) - theater_pad)
+        x1_th = (int(dividers[i + 1].max()) + theater_pad) if i + 1 < n_theaters else W
+        theater_crop = img[:, x0_th:x1_th]
+        theater_path = out_dir / f"{image_path.stem}__theateronly_{i}.png"
+        cv2.imwrite(str(theater_path), theater_crop)
+        results.append(ColumnCrop(
+            theater_index=i,
+            date_image_path=str(date_path),
+            theater_image_path=str(theater_path),
+        ))
+
+    manifest_path = out_dir / f"{image_path.stem}__columns_manifest.json"
+    manifest_path.write_text(
+        json.dumps([asdict(r) for r in results], ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    return results
 
 
 def analyze_page(image_path: Path, **detect_kwargs) -> PageAnalysis:
