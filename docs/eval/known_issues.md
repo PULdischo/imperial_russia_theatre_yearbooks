@@ -5530,3 +5530,725 @@ silently disappeared. `research.person`/`research.person_appearance`
 counts unchanged (2894/21154) as expected for an in-place, additive
 schema change. `entities.person_candidate`: 0 pending, 23 rejected
 (clean). Documented in `docs/schema.md`'s `rank_or_title` row.
+
+## 68. Repertoire spurious-curve smoketest: multi-modal cross-check
+tested for real, one confirmed-spurious page corrected to
+confirmed-real after tighter re-verification
+
+**Status: mixed result -- detect-and-repair strategy shows real
+promise but has a real gap; one item in issue #51's 7-page confirmed-
+spurious list was wrong and is now corrected.**
+
+Direct follow-up to #51/#1's smoketest: tested the row-level-vs-
+baseline cross-check against `repertoire_1898-99_p029`, a page believed
+(from #51's 7-page survey) to have a genuinely spurious curve at "26
+Пятница." Ran row-level extraction on the page's raw (uncorrected)
+automatic boundaries and diffed every date/theater/receipts cell
+against the existing full-page baseline.
+
+**Real damage confirmed, not a clean pass**: the spurious split caused
+cross-date content bleed, not just local corruption -- "25 Четвергъ"'s
+morning receipts (Конекъ-Горбунокъ 1260.33/Усмиреніе строптивой
+1093.90/Каширская старина 378.89) got mislabeled as "24 Среда," leaving
+the real "25 Четвергъ" row incomplete. The cross-check caught this: 9
+of 15 date/theater comparisons flagged DISAGREE, correctly surfacing
+every wrong cell. Day-of-week validation, by contrast, would NOT have
+caught this -- "24 Среда" is still an internally valid date/weekday
+pair; only the *content* attached to it is wrong.
+
+**RG proposed a third, orthogonal check: column-wise extraction** (read
+one theater straight down the whole page instead of one date across a
+row) -- structurally immune to the row-boundary problem, since it never
+needs a row crop at all. Built real vertical-divider detection for this
+(`_table_x_bounds` alone isn't enough, per its own docstring -- reused
+`_detect_line_curves` on a *transposed* image, since a vertical line's
+x-sway becomes a horizontal line's y-sway once transposed, exactly the
+shape the existing curve-tracer already handles). Found 5 real
+dividers + 2 margin/binding artifacts, visually confirmed.
+
+**Column-wise extraction is not a silver bullet either.** Большой
+театръ came back 100% correct in the first (composite date+theater
+crop) attempt; Малый/Новый showed a *different* real error: an
+off-by-one date-boundary shift. Initially attributed this to Большой
+sitting immediately adjacent to a single shared date/УТРО-ВЕЧ label
+column, with Малый/Новый further from it -- **RG corrected this**:
+УТРО/ВЕЧ is not one shared label tied to the date column. It's a
+per-cell subdivision marker that can occur independently inside *any*
+theater's own column, since each theater's printed content for a date
+can independently split into morning/evening -- there's no single
+"the" label for a row. That reframes what actually needs fixing: the
+composite crop's visual-gap artifact (diagnosed at the time and still
+real -- the date-label-to-content relationship gets visually unnatural
+once an intervening theater column is cropped out) is confirmed as
+*a* cause, but "distance from a shared label" is not the right
+mechanism and shouldn't be repeated as the explanation. RG is treating
+per-cell УТРО/ВЕЧ subdivision as **its own separate, deferred issue**,
+not something resolved by the fix below.
+
+RG's fix for the composite-gap problem: separate crops for the date
+column and each theater column (no composite gap), matched by list
+position afterward rather than by asking the model to re-attribute a
+date per theater.
+
+**Honest limitation found in the row-vs-column cross-check itself**:
+at "24 Среда," row-level AND column-level made the *identical* wrong
+attribution (both borrowed 25 Четвергъ's morning receipts). Two
+methods agreeing is not proof of correctness when both share the same
+underlying visual ambiguity. A 3rd leg (the full-page baseline, or the
+date-only/theater-only split above) is needed to close this specific
+gap -- 2-way agreement alone isn't sufficient.
+
+**Correction to #51's 7-page list, caught by this same investigation**:
+building the date-only column extraction for `p029` surfaced a
+discrepancy -- it should have found 4 compound (УТРО/ВЕЧ) dates among
+the 10, and found 0. Cross-checking led to re-examining the original
+"curve 12 is spurious" claim for this page directly against the clean
+scan: **there IS a real printed rule there** -- "26 Пятница" genuinely
+is compound (Жизнь за Царя/Марія Стюартъ/Вій УТРО, Бенефисъ
+кордебалета+... ВЕЧЕРЪ), confirmed by direct visual inspection. The
+original claim (made during #51's fast visual-triage pass, "cutting
+through a plain non-compound row") was a real misreading, not a
+detector error at all. **`p029` is removed from the confirmed-spurious
+list.**
+
+Re-verified the remaining 6 pages from #51's list with a stricter
+method this time (the *exact* detected curve drawn as an overlay on a
+tight crop, not just an eyeballed wide zoom) specifically to check for
+this same class of error. All 6 held up: `p019` (real for Малый's own
+УТРО/ВЕЧ split, spurious for Большой/Новый's un-split single-session
+listings), `p028`/`p030` (real for 2 of 3 theaters, spurious for
+Михайловскій's continuous un-split column), `p036`/`p037`/`p039` (fully
+spurious, cutting through dense Pushkin-jubilee multi-line commemorative
+programs with no internal structure at all). **Corrected confirmed
+list: 6 pages, not 7** -- `p019`, `p028`, `p030`, `p036`, `p037`,
+`p039`.
+
+**Lesson for future verification passes on this issue**: a wide
+eyeballed zoom is not precise enough to confidently call a curve
+"spurious" -- draw the actual detected curve coordinates on the crop
+and check pixel-level alignment against any printed rule, every time,
+not just for a first pass.
+
+**Addendum: separate date-only/theater-only crops, position-matched --
+tested, and it fixes Малый/Новый's off-by-one shift completely.** RG's
+proposed refinement (keep the date column, since row boundaries aren't
+always available to lean on -- but crop it separately from each theater
+rather than compositing them with a gap, and match by list position
+instead of asking the model to re-attribute a date per theater).
+
+First attempt at the date-only crop undercounted (10 rows instead of
+14) -- the crop's right edge clipped the sideways УТРО/ВЕЧ labels
+almost entirely. Widened the crop and it immediately found all 14 real
+rows correctly, labeled with the right session (morning/evening).
+Theater-only crops for Малый/Новый (no date column at all) also
+correctly found 14 rows each. Zipped all three by list position and
+checked against the known-correct scan values for the problem region
+(24-26): **all 14 rows matched exactly** for both theaters -- the
+off-by-one shift from the composite-crop version (known_issues.md #68)
+is gone. One apparent mismatch during comparison turned out to be a bug
+in the comparison script's own truth table (an evening value
+mis-indexed as morning), not an extraction error -- corrected, and the
+result is a clean match once fixed.
+
+**Practical implication**: for column-wise extraction to work
+reliably, the date column and each theater column should be extracted
+as separate images and matched by position, not composited side by
+side with a theater skipped over in between. Not yet tested on other
+pages -- next step if this generalizes.
+
+**New, separate, deferred issue surfaced along the way (not fixed
+here)**: УТРО/ВЕЧ is a per-cell subdivision, not a single label shared
+across a row -- any one theater's cell can independently split into
+morning/evening while its neighbors on the same date don't (or split
+differently), confirmed by RG directly (corrects an assumption made
+earlier in this same investigation, see the addendum above). Detecting
+this per-cell, per-theater, rather than assuming one shared row-level
+session structure, is its own open problem -- not addressed by the
+date-only/theater-only split fix, which only fixes the composite-crop
+visual-gap artifact. RG: "happy to deal with them as a separate
+issue" -- explicitly deferred, not blocking.
+
+**Addendum: generalization test on a second confirmed-spurious page
+(`repertoire_1898-99_p037`), same date-only/theater-only split
+approach.** Deliberately different failure shape than `p029` (no
+УТРО/ВЕЧ anywhere on this page -- isolates the dense-Pushkin-program
+failure cleanly from the deferred per-cell subdivision issue above).
+Ground truth re-established directly from the scan (11 dates, 5 dark,
+including the tricky "20 Вторн" benefit-performance row: a 2-line
+heading+title block with no receipt number at all).
+
+**Большой and Малый: 100% correct across all 11 rows**, including the
+exact dense Pushkin-jubilee program that caused this page's original
+spurious-curve problem, and the 2-line benefit-performance entry
+(correctly recognized as one row, not split). Confirms the approach
+generalizes past the single page it was built on.
+
+**Новый: one new, different error** -- split "20 Вторн"'s 2-line
+benefit heading+title (no receipt) into two separate output rows
+instead of one, shifting its own position-count by one for every row
+after that point. Not a recurrence of the original spurious-curve
+problem (this is a column-wise extraction issue, not a row-boundary
+one) -- a real, separate failure mode: a title block with no receipts
+number is apparently more likely to get mis-split than one with a
+receipts line anchoring it as clearly "one row." Worth a targeted
+prompt fix (state explicitly that a shared-heading multi-line block
+with no receipts is still one row) if this pattern recurs elsewhere.
+
+**Addendum: attempted prompt fix for Новый's no-receipts-row split on
+`p037`, paused as too narrow to chase further.** Tried a broader
+"multi-line content is still one row" prompt rewrite -- made it worse,
+not better (6 rows instead of the correct 11, plus a fabricated
+duplicate receipts figure), while leaving Большой/Малый's already-
+correct output unchanged. Resampled both prompt versions 2-3x each:
+both are fully reproducible (12 rows every time / 6 rows every time),
+ruling out random sampling noise -- this is a real, stable
+misreading, just one that shifts depending on exact wording, on an
+image that's visually unambiguous when checked directly (11 rows and
+1 clean boundary each, confirmed by eye). Working hypothesis, untested:
+Новый's crop has a notably more extreme aspect ratio (~1:5.4) than
+Большой/Малый's, which stayed correct under both prompts -- crop shape,
+not wording, may be the actual variable. **Paused here at RG's
+request** -- too narrow a rabbit hole for one page's one theater
+column relative to the value of chasing it further right now.
+
+**Addendum (2026-09-01): the row-vs-column-vs-page cross-check built into
+real pipeline code and validated end to end, not just scratch scripts.**
+
+- `pipeline/row_detect.py`: `_detect_vertical_dividers()` (transposed-
+  image reuse of `_detect_line_curves`, same technique as the addendum
+  above) + `detect_columns()`, writing a date-only crop and one theater-
+  only crop per theater (separate files, matching the composite-gap fix
+  validated earlier). Bug caught and fixed while building this: an
+  x-bounds tolerance that worked on `p029` gave 4 theater columns
+  instead of 3 on `p037` (a real divider sitting just outside the naive
+  margin estimate on one side, artifacts sitting just inside it on the
+  other) -- fixed with an asymmetric tolerance (small on the left, none
+  on the right), re-verified 3/3 on both pages.
+- `pipeline/schemas/repertoire_columnwise.py` (new): `DateOnlyPage`/
+  `TheaterOnlyPage` schemas + `merge_columnwise_page()`, which returns
+  `None` (not a best-effort partial zip) on a length mismatch between a
+  theater's row count and the date column's own -- a real signal, not
+  guessed at.
+- `pipeline/prompts/repertoire_dateonly_system.txt` /
+  `repertoire_theateronly_system.txt` (new): the theater-only prompt
+  deliberately does NOT include the "don't split multi-line content"
+  framing tried as a fix earlier -- that version regressed WORSE on the
+  one known edge case (a benefit-performance row with no receipts) than
+  the original, simpler prompt, confirmed reproducible on both versions
+  across multiple samples. The known gap is documented directly in the
+  prompt file instead of chased further.
+- `pipeline/run_pilot.py`: `process_page_columnwise()` + `--column-level`
+  CLI flag, mirroring `process_page_rowlevel()`'s conventions (own usage
+  log file, own crops directory, same semaphore discipline).
+- `pipeline/quality_checks.py`: `check_repertoire_cross_extraction()`,
+  comparing whatever subset of {page, row, column} raw JSON exists per
+  page, recording every source's actual value in `detail` rather than
+  collapsing to a flag (RG: "we'll take careful note of any
+  disagreements, whether it's between 2 or 3 of the reads").
+
+**Validated end to end on `repertoire_1898-99_p029`** via the real CLI
+(not scratch scripts): generated a fresh baseline copy, a fresh row-
+level extraction, and a fresh column-wise extraction, then ran the
+cross-check against all three. Result: 36 disagreements flagged, 100%
+of them in the compound-date region (21/24/25/26 Feb) where real
+problems were already known to exist; 0 disagreements among the 6
+simple dates -- confirmed by spot-checking specific flags against the
+raw row-level JSON directly, not assumed: the fresh row-level run (using
+automatic, uncorrected boundaries) genuinely produced duplicate blank
+"unspecified" session rows AND separately mislabeled its real values as
+"unspecified" instead of "morning"/"evening" for several compound
+dates, while column-wise correctly split and labeled the same dates
+throughout. The check discriminates real agreement from real
+disagreement rather than firing indiscriminately.
+
+**Not yet done**: run at any larger scale than one page; decide the
+production wiring (does `--column-level` become a routine second pass,
+or only run on pages a cheap screening signal flags first); decide what
+happens automatically when a page IS flagged (currently: nothing, it's
+a QC signal for human review same as every other flag in this file, not
+an auto-repair).
+
+**Decided (RG, 2026-09-01): `--column-level` runs as a routine second
+pass on every Repertoire page, not gated behind a screening signal.**
+Cost isn't the constraint here (RG, same session: "Cost is not an issue
+for this problem. But I do want to make sure I have as accurate data as
+possible") -- with that tradeoff settled, running the full row+column
+(+page baseline where available) cross-check on every page maximizes
+the signal rather than only sampling pages a cheap, imperfect heuristic
+happens to flag. See CLAUDE.md's pipeline section for the concrete
+per-run command sequence this implies.
+
+### Addendum (2026-09-01): whole-season test surfaced a real
+`detect_columns` bug at scale, fixed; 78% of pages now split cleanly, a
+smaller residual gap documented rather than chased further
+
+Ran `--column-level` across the whole 1898-99 season (40 pages) for the
+first time, per RG: "Can we test it on a whole season first?" Row-level
+extraction succeeded cleanly on all 40/40 pages. Column-wise extraction
+did not: only 5/40 pages came back fully `"ok"`, 32 came back
+`"partial"` (at least one theater dropped by `merge_columnwise_page`'s
+length-mismatch guard), and 3 (`p008`, `p012`, `p014`) failed outright
+with `"column_detect_failed"`. Investigated both failure modes.
+
+**`column_detect_failed` (3 pages) -- root cause and fix.** Direct
+inspection of `_detect_vertical_dividers`'s raw candidates on all 3
+pages found only 2 candidates each, both clustered on the right side,
+zero anywhere across the left ~65% of the table. Read the actual scan
+for `p012` directly (a normal, cleanly-printed "С.-Петербургскіе
+театры" page, Маріинскій/Александринскій/Михайловскій, visually
+identical in structure to already-working pages) -- ruling out scan
+damage as the cause and pointing at the detection code itself.
+
+Traced it to `_detect_line_curves`'s edge-artifact drop (added 2026-08-
+27 to reject a photographed book-cover chain sitting right at a scanned
+page's top/bottom edge) being reused, via `_detect_vertical_dividers`'s
+transpose trick, on an axis where that assumption doesn't hold: a
+vertical table's own left/right border can legitimately sit within a
+few pixels of the crop's own edge on a tightly-cropped page, unlike a
+horizontal row line photographed at y≈0. Confirmed directly:
+`p012`'s real left border chained at 33/40 strip presence -- stronger
+than either divider the page's old code DID keep -- and was being
+silently dropped by exactly this filter.
+
+Fixing the direct symptom exposed a bigger design question: was
+detecting the table's own true outer border ever the right thing to
+need? Redesigned around "no": `detect_columns` now only needs the
+INTERNAL column dividers (date|theater-1, theater-1|theater-2, ...) --
+the date crop's left edge and the last theater crop's right edge simply
+extend to the image's own edge, exactly the same generous-padding
+tolerance already used for `date_pad`/`theater_pad` elsewhere in that
+function. This also explains a second, worse bug found on `p024` in the
+same investigation: the same outer-border fragility had caused the
+wrong divider pair to be picked, and `detect_columns` had silently
+produced a full THEATER column ("Александринскій театръ.", complete
+with works/receipts) where the date-only crop was supposed to be --
+confirmed by reading the mis-cropped image directly. A
+wrong-but-plausible result is worse than an honest failure; not needing
+the outer border at all removes the whole class of bug, not just this
+instance of it.
+
+Getting the internal-only redesign correct took three more rounds of
+direct measurement, not assumption:
+
+1. **A lower `presence_frac` for the vertical case specifically**
+   (0.55, later 0.45 -- see below): a genuine internal divider on `p012`
+   chains at only 25/40 (62.5%) strip presence, well below
+   `_detect_line_curves`'s row-detection default of 0.7 (tuned for
+   horizontal lines running through mostly-open cells, not vertical
+   ones cutting through print-dense columns). Every noise candidate
+   measured stayed under ~28%, so there's a comfortable gap to lower
+   into.
+2. **A width-based test to drop a leading divider that's actually the
+   outer-left border**, not density-based. Density was tried first and
+   rejected: a margin segment contaminated by a photographed fingertip
+   or the book's own spine (both confirmed directly, on `p008` and
+   `p029` respectively) can read as dense as, or denser than, real
+   text, so no single density ratio (1.2 through 2.5 all tried)
+   separated every confirmed case without misclassifying another one on
+   a different page. Column width doesn't have this problem: every
+   genuine date column measured across the test set came out 175-185px,
+   every genuine theater column 508-598px -- a clean, non-overlapping
+   split, since it's fixed by the table's own typesetting rather than
+   by what a camera or thumb happened to catch that day. If the segment
+   right after the first divider falls in that date-column width range,
+   the first divider is the outer border and gets dropped.
+3. **A density-based test for the trailing divider** (ratio 1.8, tuned
+   down from 2.5 once the width fix was in place): the analogous
+   "predictably-sized next segment" test doesn't apply on the right --
+   past the true right border there's just margin or, on `p029` and
+   `p037` independently, the photographed book spine (~31-33% ink, far
+   above the ~4-9% band every real column sits in on those same pages)
+   -- so this side keeps density, compared against the median of the
+   page's own middle segments rather than a fixed global percentage.
+
+One implementation bug caught and fixed along the way: an early version
+of the pruning function looped, re-merging a dropped edge divider's
+segment into its neighbor and re-testing the larger merged segment. It
+cascaded on both `p029` and `p037` -- once the binding-artifact segment
+got absorbed into its neighbor, the merged segment's average was still
+pulled high enough to trip "outlier" again on the next pass, eating a
+second, genuinely real divider along with it. Fixed by deciding both
+edges once each, from a single reference computed up front.
+
+**Re-verified against all 6 pages involved in this investigation**
+(`p012`, `p008`, `p014`, `p024`, plus the two originally-validated pages
+`p029`/`p037`, to check for regressions): all 6 now detect exactly the
+correct 3 theaters, confirmed both by divider count and by directly
+viewing the resulting date-only crop for `p024` (previously showing
+wrong theater content, now correctly showing "Мѣсяцъ, день и число").
+
+**Re-ran `detect_columns` (the free, local step -- no API calls) across
+all 40 pages of the season** to check how well this generalizes past
+the 6 pages used to build it: 0 outright failures (down from 3), 31/40
+pages detect exactly 3 theaters. The remaining 9 show a 4th (8 pages)
+or only 2 (1 page) -- a genuinely different, harder failure mode than
+what got fixed: on `p020` (checked directly), the missing date/theater-1
+divider doesn't chain at low presence, it doesn't chain AT ALL -- no
+candidate appears anywhere near that position in the raw strip data,
+apparently because dense printed text right at that column boundary
+washes out the vertical line signal across most of the page's height,
+not merely weakens it. This isn't a threshold-tuning problem the way
+the fixed bugs were; there's no presence floor to lower into when the
+line was never detected as a candidate in the first place. Left
+undiagnosed further and documented here as a bounded, known gap, matching
+how this file already handles the Новый no-receipts-row bug earlier in
+this same addendum -- not chased to zero in one session. The row/column/
+page cross-check (`check_repertoire_cross_extraction`) remains the
+downstream safety net for whichever of these 9 pages get run: a wrong
+divider split still produces a row-count mismatch against the date
+column, which `merge_columnwise_page` already refuses to guess through.
+
+**Not yet done**: re-run the full (paid) column-level extraction on the
+whole season with the fixed `detect_columns` to get real
+extraction-quality numbers (the original 45.9%-theater-success figure
+was measured against the buggy version and is now stale); characterize
+whether the 32 originally-`"partial"` pages' row-count mismatches are
+the already-known Новый-style bug recurring at scale or something else
+-- not yet investigated this session.
+
+### Addendum (2026-09-01): ran the cross-check across the full season
+on the pre-fix columnwise data anyway (as a baseline/row-level
+comparison), and it surfaced a genuine NEW bug -- a row-level off-by-one
+shift on `p012`
+
+The whole-season `--column-level` background run (`raw_columnwise/`)
+had already finished before the `detect_columns` fix above was written,
+so its data reflects the OLD buggy divider detection, not the fix --
+re-running it is still outstanding (see previous addendum). Ran
+`check_repertoire_cross_extraction` across all 40 pages anyway
+(`raw_baseline`, `raw_rowlevel`, `raw_columnwise`) to get what signal
+was available now rather than wait, and to validate the check's
+reliability at scale before re-running the paid column-level step.
+
+**1,200 flags across 37/40 pages -- but the raw count is misleading
+without breaking it down.** Categorized every flag by which of the
+three sources actually disagreed:
+
+- 729/1200 (61%) are `column: '<missing>'` with page and row AGREEING
+  with each other -- purely the already-diagnosed, already-fixed-in-code
+  columnwise divider bug (a theater dropped by
+  `merge_columnwise_page`'s length-mismatch guard), not new information.
+  Re-running column-level with the fix should collapse most of this
+  category.
+- 390/1200 (32.5%) are one of {page, row} missing a cell the other has
+  -- plausibly related to the same stale columnwise run or to row-level's
+  own known row-boundary issues; not individually triaged this session.
+- 39/1200 (3.25%) are genuine PAGE-vs-ROW disagreements where BOTH
+  sources have a value and they differ -- the most informative category,
+  and the one spot-checked directly against a scan.
+- 42/1200 (3.5%) other/mixed patterns, not triaged.
+
+**Spot-check confirmed a real, new bug**: on `repertoire_1898-99_p012`,
+three consecutive page-vs-row disagreements in the Александринскій
+column --
+`{page: '1651 р. 60 к.', row: '1653 р. 60 к.'}` (16 Понед.),
+`{page: '1658 р. 55 к.', row: '1651 р. 60 к.'}` (17 Вторн.),
+`{page: '1262 р. 75 к.', row: '1658 р. 55 к.'}` (18 Среда) --
+verified directly against the scan: PAGE is correct at all three
+positions (1651.60 / 1658.55 / 1262.75, matching the printed table
+exactly), and ROW-level is reporting each row's value one row LATE --
+i.e. row N's row-level read is actually row N-1's true value. This is a
+different mechanism than the divider-detection bug fixed above (it's
+`row_detect.py`'s horizontal row-boundary curves, not
+`_detect_vertical_dividers`) and a different page than any previously
+confirmed row-shift case -- a genuinely new finding, exactly the kind of
+signal this cross-check exists to surface, not an artifact of the stale
+columnwise data. Not yet root-caused or scoped beyond this one page.
+
+**Reliability read on the cross-check itself, now tested at 40-page
+scale rather than 1**: the check does NOT produce a flood of
+undifferentiated noise -- the categorization above shows the "real"
+signal (page-vs-row disagreement) is a small, distinct slice (3.25%)
+separable from the mechanical columnwise-bug noise (61%) by simply
+checking whether the two non-missing sources agree. That's a good sign
+for using this at production scale, though it also means a naive
+"1,200 flags" headline number would have been actively misleading
+without this breakdown.
+
+**Not yet done**: root-cause the `p012` row-level shift and check
+whether it recurs on other pages; triage the 390 "one source missing"
+flags; re-run column-level with the `detect_columns` fix and redo this
+whole categorization on fresh data, since the 61% "known bug" bucket
+should mostly disappear and change the real proportions.
+
+### Addendum (2026-09-01): root-caused the `p012` row-level shift --
+same underlying weakness as the vertical-divider bug, confined to 2/40
+pages in this season, cheaply detectable without any new API calls
+
+RG: "I want to know the root cause, but only so far as it might apply
+to other pages." Checked `p012`'s row-crop manifest
+(`raw_rowlevel/row_crops/repertoire_1898-99_p012/`, already on disk
+from the earlier run -- no new API cost needed) and found only 2 row
+crops for the whole page, one spanning 1,245px (versus ~180-220px for a
+normal single row and ~600-690px for the tallest confirmed-genuine
+compound row on the two already-validated pages, `p029` and `p037`).
+That one oversized crop covers roughly ten real dated rows (15 through
+24) crammed into a single model call.
+
+That's the exact failure mode `row_detect.py`'s row isolation was built
+to eliminate in the first place (see this file's original `#1`
+investigation and this module's own top-of-file docstring: isolating
+one row with zero neighboring dated content eliminated a confirmed,
+reproducible misattribution bug; anything less than full isolation
+reopens the door to it). Confirmed directly in `p012`'s raw JSON: dates
+15-18 appear TWICE, the second pass's receipts values shifted one row
+from the first -- the exact mechanism behind the page-vs-row
+disagreements the cross-check flagged.
+
+Root cause: `_detect_line_curves`'s `presence_frac=0.7` default -- the
+SAME default already found too strict for vertical-divider detection on
+dense pages (see the earlier addendum this session) -- also drops
+genuine HORIZONTAL row boundaries on this page. Direct measurement:
+three real-looking, evenly-spaced candidates in the missing region
+(y=1991 at 52.5% presence, y=2175 at 42.5%, y=2357 at 57.5%) all sit
+below 0.7 and get dropped, while the page's row detection was never
+touched by this session's vertical-divider fix (that fix only lowered
+`_detect_vertical_dividers`'s own presence_frac, calling
+`_detect_line_curves` with a separate value -- row-level detection
+still uses the 0.7 default everywhere).
+
+**Scope, checked cheaply across all 40 pages using data already on
+disk** (row-crop counts and heights from the existing
+`raw_rowlevel/row_crops/*/​*__rows_manifest.json` files -- no new API
+calls): every page normally gets 9-13 row crops with a max single-crop
+height at or under ~730px (matching the two independently-validated
+good pages, `p029`: 607px max, `p037`: 689px max). Exactly two pages
+break that pattern: `p012` (2 crops, 1,245px max) and `p014` (6 crops,
+878px max) -- confirmed `p014` shows the identical signature directly
+in its raw JSON (one date, "26 Четвергъ", duplicated 6x across all 3
+theaters). Two other pages with a below-typical crop count (`p018`,
+`p020`, 7 each) were checked and are NOT the same bug -- their max
+crop height (703px, 682px) sits inside the normal range; their lower
+count is plausibly just a shorter date range printed on those specific
+pages, not a detection failure.
+
+**Bottom line for applicability**: this is not a pervasive problem --
+2/40 pages (5%) in this season show it, both cheaply identifiable in
+advance (anomalous row-crop count/height, no extraction cost) rather
+than only discoverable after the fact via the cross-check. Not fixed
+this session (would mean lowering `presence_frac` for
+`_detect_line_curves`'s row-detection call sites too, mirroring the
+vertical-divider fix, and re-validating against `p029`/`p037` the same
+way to avoid a regression there) -- documented here as a scoped,
+bounded, cheaply-detectable gap rather than fixed on request, since RG
+asked specifically for root cause and scope, not a fix.
+
+### Addendum (2026-09-01): fixed -- `detect_rows` gets its own lower
+`presence_frac`, mirroring the vertical-divider fix
+
+RG: "Okay, let's fix it now." Added `presence_frac: float = 0.5` to
+`detect_rows` (was hardcoded to `_detect_line_curves`'s 0.7 default,
+untouched by the earlier vertical-divider fix, which only lowered
+`_detect_vertical_dividers`'s own call). 0.5 was chosen empirically, not
+guessed: it's the smallest tested value that recovers all three real
+missing boundaries on `p012` (42.5%/52.5%/57.5% presence) while leaving
+`p029` and `p037` detecting the EXACT SAME curves as before (verified
+directly, not assumed) -- confirmed noise on every page checked topped
+out under ~22.5%, so there's a comfortable margin on both sides at 0.5.
+
+**Re-scanned all 40 pages locally** (the free `detect_rows` step, no API
+calls) to confirm the fix generalizes past the 2 pages used to find it:
+0 failures, and the worst max single-crop height across the WHOLE
+season is now 729px -- no page exceeds the ~730px ceiling already
+established as normal from the two independently-validated pages
+(`p029`: 611px here, `p037`: 681px here, both structurally unchanged
+from before the fix). `p012` went from 2 crops/1,245px max to 11
+crops/712px max; `p014` went from 6 crops/878px max to 10 crops/676px
+max -- both now squarely inside the normal range.
+
+**Not yet done**: re-run the actual (paid) row-level extraction on
+`p012`/`p014` (or the whole season) with the fixed `detect_rows` to
+confirm the duplicate/shifted-receipts symptom is actually gone, not
+just the oversized crop that caused it -- the local re-scan above only
+confirms the boundaries are now reasonable, not that a fresh model call
+against the new crops reads correctly end to end.
+
+### Addendum (2026-09-01): ran the real (paid) row-level extraction on
+`p012` and `p014` -- `p012` fully fixed, `p014` reveals a subtler,
+different problem than the one that was fixed
+
+**`p012`: clean.** Fresh row-level extraction, verified directly against
+the scan: all three previously-shifted Александринскій values now
+correct (1651 р. 60 к./16 Понед., 1658 р. 55 к./17 Вторн., 1262 р. 75
+к./18 Среда), no duplicated dates anywhere in the output. The
+`presence_frac` fix resolved this page completely.
+
+**`p014`: the row-boundary fix only partially closed the gap, and what
+remains is a different failure mode than the one diagnosed and fixed.**
+9 crops now bound single real rows correctly (185-230px, matching
+normal), but ONE crop (`row010`, y=[2361,3037], 676px -- the same height
+that looked "normal" in the free/local re-scan and was wrongly judged
+fine on height alone) still spans SEVEN real calendar dates (26
+Ноября through 4 Декабря) plus the two dates that bookend it (25
+Ноября, 5 Декабря) in one image. Confirmed directly in the raw chain
+data: unlike the boundaries the `presence_frac=0.5` fix recovered, this
+region has NO candidates at all across most of its span (a handful
+under 25% presence near the top of the gap, then literally nothing from
+y≈2537 to y≈2992) -- the same "genuinely invisible in the raw signal"
+limitation class already documented for `_detect_vertical_dividers`'s
+remaining 9 pages, not a threshold that could be lowered further.
+
+The SURPRISING part, confirmed by checking all nine "missing" dates'
+values directly against the scan: every single receipts figure and work
+title extracted for this stretch is CORRECT (one plausible minor OCR
+slip: 29 Воскрес. morning read as "265 р. 15 к." against a smudged
+scan print that likely reads "2165 р. 15 к." -- not evidence of
+fabrication). Zoomed into the crop image directly and found why: the
+oversized crop isn't blank where it looks blank at a glance -- the real
+content for all 7 in-between dates is genuinely present, just
+compressed into a visually tiny band by `_dewarp_band`'s remap (a
+diagonal warp line and partial digit fragments are visible on close
+zoom). The model evidently CAN still read the compressed
+receipts/title text accurately, but appears to lose the ability to read
+each entry's own (equally compressed) DATE LABEL reliably, and instead
+repeats "25 Среда" -- the one date label rendered at full, legible
+scale near the top of the crop -- for every entry in the compressed
+region. Result: 10 duplicate `("25 Среда.", theater)` keys in the raw
+JSON instead of the correct 10 distinct dates, even though the
+underlying financial/title data for those 9 "duplicate" entries is
+actually the REAL data for 9 different real dates, just mislabeled.
+
+This is a genuinely different, arguably more dangerous failure mode
+than the one this session's fix targeted: the original bug produced
+wrong VALUES attributed to the correct date (an off-by-one shift); this
+one produces CORRECT values attributed to the wrong (repeated) date. A
+naive downstream merge keyed on (date, theater, session) would either
+silently drop 8 of these 9 real dates' data (last-write-wins) or
+corrupt "25 Среда"'s own true record with the wrong entries. Sequence
+position happens to preserve the real chronological order in this one
+instance, but relying on that would be fragile and isn't validated
+elsewhere. Not fixed this session -- flagging for RG's decision on
+approach (e.g., detecting a duplicate-date-key result as its own QC
+signal in `quality_checks.py`, since it's a cheap, page-local check
+that doesn't need a second extraction to catch; or a different
+row-boundary strategy specifically for oversized-gap regions, distinct
+from lowering `presence_frac` further, which this data shows won't
+help).
+
+### Addendum (2026-09-01): built the QC check instead of a second
+extraction pass -- `check_repertoire_rowlevel_duplicates`
+
+RG chose the first of the two options above: "Add a cheap QC check to
+quality_checks.py flagging duplicate (date, theater) keys within one
+row-level page result -- catches it without a second extraction pass.
+Let's try this." Added `check_repertoire_rowlevel_duplicates` to
+`pipeline/quality_checks.py`, wired into `main()` under the existing
+`--row-raw-dir` flag (no new CLI argument needed -- it already pointed
+at the right directory for `check_repertoire_cross_extraction`, this
+just uses it a second way).
+
+Keyed on (date, theater, session), not just (date, theater), on
+purpose: a genuine compound УТРО/ВЕЧ row legitimately produces two
+session dicts sharing the same date and theater (one `"morning"`, one
+`"evening"`) -- that's real content, not the bug. The confirmed p014
+instance repeated the same session value (`"unspecified"`) across every
+duplicate, so this key still catches it.
+
+**Verified against the two pages already in hand**: 0 flags on `p012`
+(37 sessions, clean, matching the earlier scan-verified result) and 4
+flags on `p014` -- the 3 expected ones (25 Среда x10 across all three
+theaters, matching the confirmed compression bug exactly, receipts
+value included verbatim in `detail` each time) plus one more the check
+caught as a side effect: `29 Воскрес. / Александринскій / unspecified`
+appearing 2x with two DIFFERENT receipts values. Checked against the
+scan: this is NOT the same compression bug -- 29 Воскрес really is a
+compound УТРО/ВЕЧ row for Александринскій on this page too, and the
+model got both entries' actual receipts correct, it just never
+assigned them `session="morning"`/`"evening"` (both came back
+`"unspecified"`, colliding on the key). That's the already-documented,
+already-deferred УТРО/ВЕЧ-subdivision-detection gap from earlier this
+session ("I'm happy to deal with them as a separate issue"), not a new
+bug -- but it's still a real, useful catch: this check can't
+distinguish "duplicate from a compressed-crop mislabel" from "collision
+from a missing session label" by design (both look identical from the
+key alone), and doesn't need to -- either way, the page is exactly the
+kind quality_checks.py's own stated philosophy already covers: worth a
+human glance, not worth guessing through automatically.
+
+RG, on how the resulting flagged pages get handled: "I'm okay
+subjecting some pages to handreading after the main extraction
+pipeline. I can't do that for a large number, but it's okay if we have,
+say, 20 pages that end up needing special treatment." This check is
+sized for exactly that -- a small, bounded, page-local signal meant to
+route a manageable minority of pages to hand review, not to drive an
+automatic repair.
+
+**Not yet done**: run this check across the full season's row-level
+output -- the existing `raw_rowlevel/` directory predates the
+`presence_frac` fix and is now stale for this purpose (same staleness
+already noted for `raw_columnwise/` in an earlier addendum); would need
+a fresh whole-season row-level re-run first to get a real count of how
+many of the 40 pages this actually flags.
+
+### Addendum (2026-09-01): fresh whole-season row-level re-run with the
+`presence_frac` fix, then triaged all 15 flagged pages by cause -- one
+hypothesis from the previous addendum turned out wrong on closer check
+
+Re-ran `--row-level` across all 40 pages against the fixed
+`detect_rows` (1,485,489 tokens, 40/40 `ok`), then
+`check_repertoire_rowlevel_duplicates` against the fresh output.
+
+**15/40 pages flagged, 50 flags total** -- within RG's stated hand-
+review budget ("I'm okay subjecting some pages to handreading... it's
+okay if we have, say, 20 pages that end up needing special treatment").
+RG: "triage the flagged pages by cause." Categorized every flag, then
+verified the categories against the actual scan rather than trusting
+the pattern-matching alone -- which caught a real mistake in the first
+pass (see below).
+
+**A. Spurious mid-row split -- 12/15 pages, dominant cause.** Initial
+pass over the data pattern-matched this as "a missing session label on
+a genuine compound УТРО/ВЕЧ row" (two entries, same date/theater, one
+`None` receipts + one real value, both `session="unspecified"`).
+Checked directly against the scan for `repertoire_1898-99_p037`'s "26
+Понед." flag -- and that row is NOT compound at all: it's one single
+row per theater with one real receipts figure each, matching a
+"Спектакль въ память А. С. Пушкина" (Pushkin memorial) heading with
+several works listed for Малый театръ specifically. Reading the raw
+JSON directly explained the real mechanism: this one tall row got
+detected as TWO separate row boundaries, producing two crops that each
+captured a different PARTIAL slice of the same row -- one crop got the
+annotation heading and the earlier work title(s) but no receipts, the
+other got the receipts and a slightly different/overlapping work list
+but no annotation. Confirmed the identical pattern on
+`repertoire_1898-99_p009`'s "1 Воскрес." flag too (one shared work
+title, "Наяда и рыбакъ", appears in BOTH partial crops -- direct
+evidence of one row split across two reads, not two genuinely separate
+sessions). This is the SAME failure class as issue #50/#51 earlier in
+this file (a spurious extra row-boundary line detected mid-row) --
+previously investigated specifically in the УТРО/ВЕЧ context and paused
+at RG's request ("I think we're getting too much into the weeds for
+this specific page") -- now confirmed to recur in a DIFFERENT trigger
+context too (an unusually tall multi-work/annotation row, no
+compound-session labels involved at all). `p023`'s single flag (a dark
+row's `[None, None]` pair, both is_dark=True, identical in every field)
+is very likely the same row-boundary-overlap family, just producing an
+exact duplicate instead of a partial split -- folded into this category
+rather than kept separate.
+
+**B. Multi-row merge (the bug this session's `presence_frac` fix
+targeted) -- 3/15 pages** (`p008`, `p010`, `p014`) -- confirmed by 3+
+distinct real values under one repeated date/theater key, not just a
+2-way split. `p014` is the page the fix was built and validated
+against; `p008`/`p010` show the identical signature at smaller scale
+(3-4x instead of 10x). Consistent with this addendum's and the
+previous one's finding that this fix closed the gap for MOST but not
+all cases -- some pages still have a stretch where `detect_rows` finds
+literally no boundary candidates at all, and no presence threshold can
+recover a candidate that was never chained in the first place.
+
+**C. Column-shift -- 1/15 pages** (`p016`). A genuinely new, distinct
+bug, not seen before this session: the `theater` field for several
+sessions contains a WORK TITLE ("Евгеній Онѣгинъ, оп.") instead of an
+actual theater name, while the real work title for that row went into
+the `works` list under a *different* label. Not root-caused this
+session -- flagged for awareness, not investigated further, per RG's
+explicit "make it work for most of the pages, then address the
+outliers" framing rather than chasing every distinct cause to ground
+immediately.
+
+**Lesson carried forward**: the pattern-match-first, verify-against-
+scan-second discipline this file has used throughout caught a real
+mischaracterization here (category A was first read as a session-
+labeling gap, actually a row-boundary split) -- worth remembering next
+time a flag pattern looks self-explanatory from the data alone.

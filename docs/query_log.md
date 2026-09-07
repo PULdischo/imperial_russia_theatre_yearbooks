@@ -3762,3 +3762,21 @@ correct against direct scan reading, zero fabrication, both dark days
 (19, 26 Суббота) correctly flagged. Cross-check against the existing
 full-page baseline: 0 disagreements across all 12 dates. Full write-up
 in known_issues.md #51's 2026-08-28 addendum.
+
+## 2026-09-01 — Repertoire spurious-curve investigation: multi-modal cross-check test + correction to #51's confirmed-page list
+
+Not a database query -- pipeline/extraction testing, logged here per
+the same "don't trust memory, verify" discipline. Full write-up in
+known_issues.md #68. Summary: row-level-vs-full-page-baseline cross-
+check on `repertoire_1898-99_p029` caught 9/15 real cell errors caused
+by a spurious row-boundary curve, but missed 1 case where row-level and
+column-level extraction independently made the identical wrong
+attribution. Built new vertical-divider detection (transposed-image
+reuse of `_detect_line_curves`) for column-wise extraction as a third
+cross-check leg. Re-verifying the claim that triggered this test
+surfaced a real error in the original #51 finding: `p029`'s "curve 12"
+is actually a genuine printed rule (26 Пятница is compound), not
+spurious -- removed from the confirmed list. Re-checked the other 6
+pages with exact-curve-overlay-on-tight-crop precision (not wide
+eyeball zoom); all 6 held up. Corrected confirmed-spurious list: 6
+pages (p019, p028, p030, p036, p037, p039), not 7.
