@@ -19,21 +19,46 @@ and every such query gets logged to `docs/query_log.md`.** Full protocol:
 
 ## Setup
 
+Dependencies live in `pyproject.toml`, pinned to exact versions in
+`uv.lock`. One command, on any machine:
+
 ```
-pip install openai pydantic python-dotenv pymupdf duckdb pandas openpyxl Pillow convertdate
-pip install opencv-python-headless==4.10.0.84
+uv sync
 ```
 
-The `opencv-python-headless` version is pinned, not incidental — see
-`pipeline/row_detect.py`'s module docstring. Recent releases (4.11+, 5.x)
-only ship wheels for macOS 13.0+; on a machine running an older macOS
-(confirmed on macOS 12.7.6), an unpinned install silently falls back to
-compiling opencv from source (needs `cmake`, can hang or fail for many
-minutes). `4.10.0.84` is the last release with a macOS-12-compatible wheel
-and installs cleanly with plain `pip install`, no special Python version or
-virtual environment needed. If setting up on a newer macOS, the unpinned
-latest version will likely also work fine — but confirm the target
-machine's macOS version before dropping the pin.
+That provisions the right Python (3.13, per `.python-version` — uv
+downloads it if missing; don't rely on a system Python) and installs the
+locked versions. Run pipeline scripts through it:
+
+```
+uv run python pipeline/<script>.py ...
+```
+
+`uv run` uses the project venv whether or not you've activated it; plain
+`python` will not unless you `source .venv/bin/activate` first. Add the
+optional Anthropic SDK — only `run_reviews.py --provider anthropic` needs
+it — with `uv sync --extra anthropic`.
+
+The code's actual floor is Python 3.10 (the pydantic models evaluate PEP
+604 `X | None` annotations at runtime); 3.13 is what the lockfile is
+resolved and validated against.
+
+**On the historical `opencv-python-headless==4.10.0.84` pin (dropped
+2026-09-07):** opencv is now unpinned and the project runs 5.x. The pin
+existed for one reason — recent releases (4.11+, 5.x) ship wheels for
+macOS 13.0+ only, and on the previous dev machine (macOS 12.7.6) an
+unpinned install silently fell back to compiling from source, needing
+`cmake` and hanging or failing for many minutes. `4.10.0.84` was the last
+release with a macOS-12-compatible wheel. That constraint was always about
+the OS version, never the Python version. It no longer applies on macOS
+13+, and 5.0.0.93 was verified equivalent before dropping the pin: every
+cv2-dependent intermediate in `row_detect.py` (decode, `_binarize`,
+`_table_x_bounds`, `_row_darkness_profile`, `_detect_line_curves`,
+`_detect_vertical_dividers`) hashed byte-identical under 4.10.0.84 and
+5.0.0.93 across all four gold Repertoire pages. Caveat: those pages are
+raw renders, so detection bails before the dewarp/crop path — that half is
+unverified across versions, worth a look on the first real ScanTailor
+batch. If you ever set up on macOS 12 again, restore the pin.
 
 Requires `.env` with `DASHSCOPE_API_KEY` (Alibaba DashScope, OpenAI-compatible
 endpoint, model `qwen3-vl-plus`). No GPU needed — runs on a laptop.
@@ -45,7 +70,11 @@ Run against a scratch dir first (e.g. `outputs/pilot`), not `outputs/full_run`
 (the production artifacts already published to HF/Cloud Run).
 
 ```
-python pipeline/render_pages.py --pdf-dir pdfs --out-dir outputs/<run> --dpi 300
+python pipeline/render_pages.py --pdf-dir pdf --out-dir outputs/<run> --dpi 300
+#   NB: --pdf-dir must be given explicitly. The script's own default is
+#   `pdfs` (no such directory here -- the scans live in `pdf/`), and
+#   discover_pdfs() silently yields nothing for a missing/empty dir
+#   rather than erroring, so the wrong path looks like a clean no-op run.
 python pipeline/run_pilot.py --manifest outputs/<run>/manifest.csv \
     --images-dir outputs/<run>/images --out-dir outputs/<run>/raw --max-concurrent 8
 python pipeline/parse_and_validate.py --manifest outputs/<run>/manifest.csv \

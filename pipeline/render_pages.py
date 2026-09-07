@@ -77,7 +77,7 @@ def main():
     ap.add_argument("--limit", type=int, default=None,
                      help="stop after this many PDFs (for a quick dry run)")
     ap.add_argument("--entity-type", default=None,
-                     help="restrict to one entity_type (e.g. Administration) for a staged batch")
+                     help="restrict to one entity_type (e.g. Administrators) for a staged batch")
     args = ap.parse_args()
 
     images_dir = args.out_dir / "images"
