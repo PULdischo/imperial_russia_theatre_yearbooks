@@ -1,0 +1,54 @@
+# Dependency manifest for the Ежегодникъ Императорскихъ театровъ pipeline.
+#
+# This project is a set of scripts, not an installable library -- see
+# `[tool.uv] package = false` below. The point of this file is reproducibility:
+# `uv sync` recreates the exact environment recorded in uv.lock, so a new
+# machine gets the versions this pipeline was actually validated against
+# rather than whatever happens to be current that day.
+#
+# To set up on a new machine:  uv sync
+# To run anything:             uv run python pipeline/<script>.py ...
+
+[project]
+name = "imperial-theater-yearbooks"
+version = "0.1.0"
+description = "Transcription + research-dataset pipeline for the Imperial Theater Yearbooks (1890/91-1907/08)"
+readme = "README.md"
+
+# The code's true floor is Python 3.10 (PEP 604 `X | None` annotations are
+# used at runtime by the pydantic models; nothing needs anything newer).
+# Pinned to 3.13 here because that is what uv.lock is resolved and validated
+# against -- widen it if you deliberately want to support an older interpreter.
+requires-python = ">=3.13"
+
+dependencies = [
+    # LLM extraction (DashScope via its OpenAI-compatible endpoint)
+    "openai>=3.8.0",
+    "pydantic>=2.13.5",
+    "python-dotenv>=1.2.3",
+    # page rendering
+    "pymupdf>=1.28.2",
+    "pillow>=12.3.0",
+    # repertoire row/column detection
+    #
+    # The >=4.10.0.84 floor is the version CLAUDE.md pinned for a macOS 12
+    # constraint on the previous dev machine (recent releases ship wheels for
+    # macOS 13.0+ only). That constraint does not apply on macOS 13+, so this
+    # is a floor rather than an equality pin; uv.lock records the exact
+    # version actually in use.
+    "opencv-python-headless>=4.10.0.84",
+    "numpy>=2.5.3",
+    # database + tabular exports
+    "duckdb>=1.5.5",
+    "pandas>=3.0.5",
+    "openpyxl>=3.1.5",
+    "convertdate>=2.4.1",
+]
+
+[project.optional-dependencies]
+# Only pipeline/run_reviews.py --provider anthropic needs this; the default
+# DashScope path does not. Install with: uv sync --extra anthropic
+anthropic = ["anthropic>=0.40.0"]
+
+[tool.uv]
+package = false
