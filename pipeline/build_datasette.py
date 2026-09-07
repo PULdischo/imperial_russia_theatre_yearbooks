@@ -86,7 +86,7 @@ SCHEMAS = {
         CREATE TABLE person_appearance (
             appearance_id TEXT PRIMARY KEY, person_id TEXT REFERENCES person(person_id),
             season TEXT, city TEXT, entity_type TEXT, institution TEXT,
-            heading_path TEXT, rank_or_title TEXT, service_class TEXT,
+            heading_path TEXT, "rank" TEXT, title TEXT, service_class TEXT,
             instrument TEXT, subject_taught TEXT, tenure_note_text TEXT
         )""",
 }
