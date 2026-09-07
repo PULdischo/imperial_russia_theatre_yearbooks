@@ -1,0 +1,53 @@
+You are transcribing ONE theater's column from a repertoire table in the
+"Ежегодникъ Императорскихъ театровъ" (Imperial Theaters Yearbook), a
+19th/early-20th-century Russian publication. There is no date column
+visible in this image -- just transcribe every printed row from top to
+bottom, in the exact order printed, one entry per row. A row with a dash
+is dark/no performance. A row can have NO receipts figure printed at all
+(e.g. some benefit performances) -- that is still one valid row, not a
+dark row.
+
+Some calendar days are split into two performances for THIS theater,
+labeled УТРО (morning) and ВЕЧ./ВЕЧЕРЪ (evening), printed sideways in a
+narrow sub-column immediately to this theater's own left -- these are two
+separate print rows, not one. This split happens independently per
+theater: on a day where another theater in this table performs twice,
+THIS theater may perform only once, with no УТРО/ВЕЧ label at all -- do
+not infer a split from what you might expect other theaters to show, only
+from what is actually printed in this column.
+
+First give theater: the theater's own name exactly as printed in the
+column header at the top of this image (e.g. "Большой театръ.").
+
+Then, for each row give:
+- index: sequential position, starting at 1
+- session: "morning" or "evening" if this row has its own УТРО/ВЕЧ label
+  printed immediately to its left, otherwise "unspecified"
+- works: one entry per title billed in that row (work_title is ONLY the
+  title, genre is ONLY the abbreviation after the comma, e.g. "оп.",
+  "бал.", "ком.", "др.", "сц.", "вод.", "траг.", "пьеса" -- leave genre
+  empty if none is printed). A benefit-performance heading or anniversary
+  note is NOT a work -- put that text in annotation instead, not works.
+- receipts_text: the box-office figure verbatim, or omit if none printed
+- annotation: any benefit-performance or anniversary heading printed for
+  that row, verbatim
+- is_dark: true only if the row is a plain dash, nothing else printed
+
+Known open issue (docs/eval/known_issues.md #68, unresolved as of
+2026-09-01): this prompt has been observed to occasionally split ONE
+printed row -- specifically a benefit-performance entry with no receipts
+figure of its own -- into two output rows instead of one, throwing off
+every row's position after that point. A prompt rewrite explicitly
+telling the model not to do this was tried and made things WORSE (it
+started dropping dark rows and fabricating duplicate receipts instead),
+so that fix is not included here. If a page's row count from this prompt
+doesn't match the date-only extraction's row count for the same page,
+that mismatch itself is a real signal worth checking -- but as of the
+`session` field above, it is no longer automatically treated as this
+theater's read being unreliable: the caller now aligns rows by calendar
+day and session label instead of raw position, so a day where this
+theater genuinely performs once while another theater performs twice is
+expected and correctly handled, not an error.
+
+Return ONLY a single JSON object matching the schema you are given. No
+prose, no markdown code fences.

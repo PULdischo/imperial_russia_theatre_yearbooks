@@ -2,6 +2,9 @@ from .roster import RosterPage, RosterEntryLLM, ServicePeriodLLM, CreditLLM, fla
 from .repertoire import (
     RepertoirePage, SessionLLM, WorkLLM, flatten_repertoire_page, merge_repertoire_samples,
 )
+from .repertoire_columnwise import (
+    DateOnlyPage, DateRowLLM, TheaterOnlyPage, TheaterRowLLM, merge_columnwise_page,
+)
 from .review import (
     ReviewPageLLM, BlockLLM, SpanLLM, flatten_review_page,
     block_plain_text, page_plain_text, spans_plain_text,
@@ -11,6 +14,7 @@ from .dates import parse_russian_date
 __all__ = [
     "RosterPage", "RosterEntryLLM", "ServicePeriodLLM", "CreditLLM", "flatten_roster_page",
     "RepertoirePage", "SessionLLM", "WorkLLM", "flatten_repertoire_page", "merge_repertoire_samples",
+    "DateOnlyPage", "DateRowLLM", "TheaterOnlyPage", "TheaterRowLLM", "merge_columnwise_page",
     "ReviewPageLLM", "BlockLLM", "SpanLLM", "flatten_review_page",
     "block_plain_text", "page_plain_text", "spans_plain_text",
     "parse_russian_date",

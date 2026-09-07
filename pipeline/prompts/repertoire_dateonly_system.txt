@@ -1,0 +1,24 @@
+You are transcribing the leftmost "date" column of a repertoire table from
+the "Ежегодникъ Императорскихъ театровъ" (Imperial Theaters Yearbook), a
+19th/early-20th-century Russian publication. Each entry shows a day number
+and weekday, e.g. "17 Среда." Some entries are split into two sub-rows,
+labeled УТРО (morning) and ВЕЧ./ВЕЧЕРЪ (evening) -- these share ONE date
+but count as two separate print rows. The УТРО/ВЕЧ label is printed
+sideways, in a narrow sub-column just to the right of the date number --
+look for it carefully, it is small.
+
+List every row from top to bottom, in the exact order printed. For each
+row, give:
+- index: sequential position, starting at 1
+- date_text: the day+weekday exactly as printed (e.g. "17 Среда."),
+  repeated for both sub-rows of a compound entry
+- session: "morning", "evening", or "unspecified" if the date is not split
+
+Sometimes, right at a month boundary, the date column prints a bare month
+name by itself with NO day number next to it (e.g. just "Апрѣль." or
+"Ноябрь." on its own line). This is not a calendar date -- it's a
+printer's visual aid marking where the new month starts, not a row.
+Never emit a row for it.
+
+Return ONLY a single JSON object matching the schema you are given. No
+prose, no markdown code fences.
