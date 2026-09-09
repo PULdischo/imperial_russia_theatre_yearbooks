@@ -69,6 +69,14 @@ class SpanLLM(BaseModel):
     lang: Optional[Lang] = None
     # Partially legible: a reading is offered but is not certain.
     uncertain: bool = False
+    # Poorly printed but confidently read -- faint, smudged, or broken type.
+    # A statement about the PRINTING, not about the reading: deliberately
+    # separate from `uncertain`, which is a statement about our confidence.
+    # Gold-only: the extraction prompt never asks the model for this, so it is
+    # never scored (docs/season_reviews.md §11). Its purpose is diagnostic --
+    # it lets us ask afterwards whether the model's errors cluster on badly
+    # printed passages, which a raw error rate cannot reveal.
+    damaged: bool = False
     # Wholly illegible: no reading offered. `text` MUST be empty.
     gap: bool = False
     gap_extent: Optional[str] = None  # free text, e.g. "about two words"
@@ -229,6 +237,7 @@ def flatten_review_page(page_id: str, season: str, city: str, genre: str,
                 "italic": s.italic,
                 "lang": s.lang or "",
                 "uncertain": s.uncertain,
+                "damaged": s.damaged,
                 "gap": s.gap,
                 "gap_extent": s.gap_extent or "",
             })

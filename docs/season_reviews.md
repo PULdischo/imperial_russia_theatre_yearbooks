@@ -230,6 +230,21 @@ Span attributes, all **captured always, rendered conditionally**:
 - `bold`
 - `italic`
 - `lang` ∈ {`ru`, `fr`, `de`, `it`, `la`}
+- `damaged` — **gold-only** (see below)
+
+### `damaged` is not uncertainty
+
+`damaged` marks type that is poorly printed — faint, smudged or broken — but
+confidently read. `uncertain` marks a reading we are not sure of. These are different claims — one about
+the page, one about our confidence — and conflating them would corrupt the
+uncertainty metric, since the eval compares gold's uncertainty flags against
+the model's.
+
+The extraction prompt never asks the model for `damaged`, so **it is never
+scored**. It exists to be diagnostic: with badly printed type labelled in gold,
+we can ask afterwards whether the model's character errors cluster on poorly
+inked passages, which is exactly the kind of question a raw error rate cannot
+answer. Renders as TEI `<damage agent="inking">`.
 
 **Span text is always the normal unspaced word.** Styling is metadata on top
 of it, never expressed as literal spacing. A model emitting

@@ -25,8 +25,9 @@ Lines beginning '#' are comments. Two sections:
     [enumerated_list 1)]
     <i><l fr>Pas de deux</l></i>—г-жа Кшесинская 2-я.
 
-    [figure plate]
-    caption: Станъ царя Кандавла—декорація художника В. В. Васильева.
+    [figure plate vertical]
+    caption: Станъ царя Кандавла—декорація художника В. В. Васильева
+    («Царь Кандавлъ», балетъ Сенъ-Жоржа, дѣйствіе 1-е. картина 2-я).
 
     [footnote *]
     *) Смотри Ежегодникъ Императорскихъ театровъ, 1899 и 1900 г.
@@ -39,6 +40,7 @@ Inline markup:
     <r>...</r>     разрядка
     <b>...</b>     bold
     <i>...</i>     italic
+    <d>...</d>     damaged printing -- faint, smudged or broken, but legible
     <l xx>...</l>  language (fr, de, it, la)
     [?text]        uncertain reading
     [gap]          illegible, no reading
@@ -57,7 +59,7 @@ BLOCK_TYPES = {"heading", "paragraph", "verse", "cast_list", "personnel_news",
 
 HEADER_RE = re.compile(r"^\[([a-z_]+)(?:\s+(.*?))?\]\s*$")
 TOKEN_RE = re.compile(
-    r"(</?[rbi]>|<l\s+([a-z]{2})>|</l>|\[gap\]|\[\?)"
+    r"(</?[rbid]>|<l\s+([a-z]{2})>|</l>|\[gap\]|\[\?)"
 )
 TRUTHY = {"yes", "true", "y", "1"}
 
@@ -69,7 +71,8 @@ class GoldParseError(Exception):
 def parse_inline(text: str) -> list[SpanLLM]:
     """Turn marked-up text into spans whose concatenation is the plain text."""
     spans: list[SpanLLM] = []
-    state = {"razryadka": False, "bold": False, "italic": False}
+    state = {"razryadka": False, "bold": False, "italic": False,
+             "damaged": False}
     lang: str | None = None
     uncertain_depth = 0
     buf: list[str] = []
@@ -88,10 +91,11 @@ def parse_inline(text: str) -> list[SpanLLM]:
             break
         buf.append(text[i:m.start()])
         tok = m.group(1)
-        if tok in ("<r>", "<b>", "<i>"):
-            flush(); state[{"r": "razryadka", "b": "bold", "i": "italic"}[tok[1]]] = True
-        elif tok in ("</r>", "</b>", "</i>"):
-            flush(); state[{"r": "razryadka", "b": "bold", "i": "italic"}[tok[2]]] = False
+        TAGMAP = {"r": "razryadka", "b": "bold", "i": "italic", "d": "damaged"}
+        if tok in ("<r>", "<b>", "<i>", "<d>"):
+            flush(); state[TAGMAP[tok[1]]] = True
+        elif tok in ("</r>", "</b>", "</i>", "</d>"):
+            flush(); state[TAGMAP[tok[2]]] = False
         elif tok.startswith("<l"):
             flush(); lang = m.group(2)
         elif tok == "</l>":
@@ -121,9 +125,10 @@ def parse_gold_file(path: Path) -> ReviewPageLLM:
     cur: BlockLLM | None = None
     cur_lines: list[str] = []
     cur_caption: list[str] = []
+    in_caption = False
 
     def close_block():
-        nonlocal cur, cur_lines, cur_caption
+        nonlocal cur, cur_lines, cur_caption, in_caption
         if cur is None:
             return
         body = "\n".join(cur_lines).strip("\n")
@@ -132,6 +137,7 @@ def parse_gold_file(path: Path) -> ReviewPageLLM:
         cur.caption = parse_inline(cap) if cap else []
         blocks.append(cur)
         cur, cur_lines, cur_caption = None, [], []
+        in_caption = False
 
     for raw in path.read_text(encoding="utf-8").splitlines():
         if raw.lstrip().startswith("#"):
@@ -158,7 +164,12 @@ def parse_gold_file(path: Path) -> ReviewPageLLM:
                 if btype == "enumerated_list":
                     cur.enumerator = arg
                 elif btype == "figure" and arg:
-                    cur.figure_subtype = arg
+                    parts = arg.split()
+                    if "vertical" in parts:
+                        cur.caption_vertical = True
+                        parts = [x for x in parts if x != "vertical"]
+                    if parts:
+                        cur.figure_subtype = parts[0]
                 elif btype == "footnote" and arg:
                     cur.footnote_marker = arg
                 continue
@@ -169,6 +180,15 @@ def parse_gold_file(path: Path) -> ReviewPageLLM:
                 continue
             if stripped.lower().startswith("caption:"):
                 cur_caption.append(line.split(":", 1)[1].strip())
+                in_caption = True
+            elif in_caption:
+                # A caption may run to several printed lines. It continues
+                # until a blank line -- otherwise the continuation silently
+                # lands in the figure's body instead.
+                if not stripped:
+                    in_caption = False
+                else:
+                    cur_caption.append(line)
             else:
                 cur_lines.append(line)
 

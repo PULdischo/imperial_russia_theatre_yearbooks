@@ -64,6 +64,10 @@ def tei_spans(spans: list[SpanLLM]) -> str:
                 t = f'<hi rend="{rend}">{t}</hi>'
         if s.lang and s.lang != "ru":
             t = f'<foreign xml:lang="{s.lang}">{t}</foreign>'
+        if s.damaged:
+            # TEI <damage>: a physical defect affecting the reading. Distinct
+            # from <unclear>, which is about our confidence.
+            t = f'<damage agent="inking">{t}</damage>'
         if s.uncertain:
             t = f"<unclear>{t}</unclear>"
         out.append(t)
@@ -140,6 +144,8 @@ def md_spans(spans: list[SpanLLM]) -> str:
             t = f"**{t}**"
         if s.italic:
             t = f"*{t}*"
+        if s.damaged:
+            t = f"<d>{t}</d>"
         if s.uncertain:
             t = f"[?{t}]"
         out.append(t)

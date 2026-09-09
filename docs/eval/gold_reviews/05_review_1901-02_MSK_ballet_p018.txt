@@ -27,6 +27,9 @@
 #     <r>...</r>   разрядка (l e t t e r - s p a c e d)
 #     <b>...</b>   bold
 #     <i>...</i>   italic
+#     <d>...</d>   damaged printing: faint, smudged or broken type that you
+#                  CAN still read. Use this, not [?...], when you are sure of
+#                  the reading — [?] means you are unsure what it says.
 #     <l fr>...</l>  non-Russian span; also: de, it, la
 #     [?...]       your best reading, but you are unsure
 #     [gap]        cannot be read at all — do not guess
@@ -39,11 +42,15 @@
 #     [enumerated_list 1)]   the enumerator EXACTLY as printed — "1)", "б)",
 #                            or just [enumerated_list] if there is none
 #     [figure plate]         plate | photograph | notated_music | ornament
+#                            add 'vertical' if the caption is set sideways:
+#                            [figure plate vertical]
 #     [footnote *]           the printed marker
 #
-#   A figure's caption goes on its own line beneath it:
-#     [figure plate]
-#     caption: Станъ царя Кандавла—декорація художника В. В. Васильева.
+#   A figure's caption goes beneath it. If it runs to several printed lines,
+#   just keep typing — the caption continues until a BLANK line:
+#     [figure plate vertical]
+#     caption: Станъ царя Кандавла—декорація художника В. В. Васильева
+#     («Царь Кандавлъ», балетъ Сенъ-Жоржа, дѣйствіе 1-е. картина 2-я).
 #
 #   [verse] keeps its line breaks AND its indentation. Do not reflow.
 #
