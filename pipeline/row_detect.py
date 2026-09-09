@@ -580,6 +580,83 @@ def _detect_vertical_dividers(gray: np.ndarray, presence_frac: float = 0.45,
     return _prune_edge_artifact_dividers(binary, bounded, gray.shape[1])
 
 
+def _refine_dividers(gray: np.ndarray, template: list[float],
+                      anchor_tolerance: float = 0.12,
+                      gap_tolerance: float = 0.03) -> list[float]:
+    """Detects the full divider set fresh per page, validated against the
+    season-level TEMPLATE's shape (`template`, from
+    docs/repertoire_column_bounds.json) rather than trusted blind,
+    searched for unconstrained, or anchored on absolute position alone.
+    2026-09-09 (docs/eval/known_issues.md #69 addendum):
+
+    Absolute position is NOT reliable enough to anchor on with a tight
+    tolerance -- confirmed directly on `1903-04:0`, where divider[0]
+    ranges 0.27-0.38 (a 0.11 spread) across pages of the SAME parity,
+    while every other season checked stayed within 0.01-0.03. An earlier
+    version of this function anchored divider[0] alone within a tight
+    tolerance (0.04) and derived the rest from the template's gaps
+    unconditionally -- this worked for 1902-03:1 and 1907-08 (where
+    position genuinely is that stable) but silently locked onto a
+    spurious candidate on 1903-04:0, because the true divider sat outside
+    that tolerance. Widening the tolerance instead would have reopened
+    the door to the failure the anchor exists to prevent: on
+    repertoire_1907-08_p011, faint paper staining produced five evenly-
+    spaced 100%-confidence false candidates 0.04-0.15 from the true
+    divider -- a wide-enough anchor tolerance to catch 1903-04's real
+    position swings would also catch those.
+
+    What IS stable even where absolute position is not: the GAPS between
+    dividers (season-level column widths). Confirmed directly on
+    1903-04:0's own wide-swinging pages -- divider[0] ranges 0.27-0.38,
+    but the gap to divider[1] stays 0.21-0.22 throughout. So this
+    function searches for a set of candidates whose PAIRWISE GAPS match
+    the template's gaps tightly (`gap_tolerance`), using only a loose
+    anchor tolerance on the first candidate's absolute position
+    (`anchor_tolerance`) to bound the search space, not to decide the
+    answer by itself. A candidate set passing the gap check is strong
+    evidence of a real, internally-consistent divider structure in a way
+    a single isolated candidate's position never can be -- three unrelated
+    margin artifacts landing at exactly the right relative spacing to
+    fake a real table is far less plausible than one artifact landing
+    near an expected absolute position.
+
+    Falls back to the template's own gaps applied to its own first
+    position if no gap-consistent set is found -- a known-good season
+    prior is safer than guessing further, matching this module's
+    standing discipline."""
+    template = sorted(template)
+    gaps = [template[i + 1] - template[i] for i in range(len(template) - 1)]
+
+    gray_t = gray.T.copy()
+    curves_t = _detect_line_curves(gray_t, drop_edge_artifacts=False, presence_frac=0.45)
+    W = gray.shape[1]
+    candidates = sorted(c.mean() / W for c in curves_t)
+
+    starts = [c for c in candidates if abs(c - template[0]) <= anchor_tolerance]
+
+    def _try_from(start: float) -> list[float] | None:
+        chosen = [start]
+        for gap in gaps:
+            expected_next = chosen[-1] + gap
+            matches = [c for c in candidates if abs(c - expected_next) <= gap_tolerance]
+            if not matches:
+                return None
+            chosen.append(min(matches, key=lambda c: abs(c - expected_next)))
+        return chosen
+
+    found = []
+    for start in starts:
+        result = _try_from(start)
+        if result is not None:
+            found.append(result)
+    if not found:
+        return [template[0]] + [template[0] + sum(gaps[:i + 1]) for i in range(len(gaps))]
+    # Prefer the set whose start is closest to the season prior -- among
+    # gap-consistent sets (already validated as internally coherent),
+    # this is just a tie-breaker, not the primary filter.
+    return min(found, key=lambda s: abs(s[0] - template[0]))
+
+
 @dataclass
 class ColumnCrop:
     """One theater's isolated column, paired with the date column (no gap
@@ -634,13 +711,29 @@ def detect_columns(image_path: Path, out_dir: Path,
     loudly, it silently produced a THEATER column where the date crop
     should have been.
 
-    2026-09-08: `dividers_frac` supplies divider positions directly, as
-    fractions of image width, instead of detecting them per page -- see
-    docs/repertoire_column_bounds.json. Within a season (and, for
-    single-page seasons, a page parity) positions vary by only 1-2% of
-    width against columns 17-25% wide, so a measured per-group constant
-    is steadier than per-page detection, which finds the right divider
-    count on only 31/40 pages of a season. Detection stays the default.
+    2026-09-08: `dividers_frac` supplies divider positions from a measured
+    season-level template instead of detecting them all per page -- see
+    docs/repertoire_column_bounds.json. Column WIDTHS (the gaps between
+    dividers) hold to within 1-2% of table width across a whole season:
+    parity group, far steadier than per-page detection, which finds the
+    right divider count on only 31/40 pages of a season.
+
+    2026-09-09: what does NOT hold that steady is the template's absolute
+    POSITION -- the table wanders within a crop by up to 0.11 of width
+    within one group (the Gate 3 defect: kopecks truncated on 23-82% of
+    even pages in several seasons, because a purely blind template clips
+    real content on pages where the table sits off-template). Trusting
+    `dividers_frac` blindly was itself the bug. `_refine_dividers` detects
+    the full set fresh per page instead, validated against the template's
+    GAPS (season-level column widths, confirmed stable even where
+    absolute position swings by 0.11) rather than the template's absolute
+    positions, which are only used as a loose search-space bound, not the
+    answer itself -- see that function's docstring for why an even
+    earlier version (anchor divider[0] on absolute position with a tight
+    tolerance) failed on `1903-04:0` specifically, where that tolerance
+    was too tight for the real swing but widening it would have reopened
+    the door to `1907-08_p011`'s spurious high-confidence margin
+    artifacts.
 
     `date_side` exists because the two formats put the date column on
     opposite sides: RIGHT on the two-page-spread seasons (1890-91..
@@ -660,7 +753,9 @@ def detect_columns(image_path: Path, out_dir: Path,
             raise ValueError(
                 f"{image_path.name}: dividers_frac needs at least 2 positions, "
                 f"got {len(dividers_frac)}")
-        xs = [int(round(f * W)) for f in sorted(dividers_frac)]
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        refined = _refine_dividers(gray, dividers_frac)
+        xs = [int(round(f * W)) for f in refined]
         lo = hi = xs                  # a constant divider has no min/max spread
     else:
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)

@@ -7007,3 +7007,162 @@ Coverage does not catch these: the column reported `ok`. Any future
 scorecard for this method needs all three numbers -- coverage, row
 completeness, and receipts agreement -- because each is blind to a
 different failure.
+
+### Addendum (2026-09-09): table-anchored divider rebuild -- anchor the
+FIRST divider per page, keep the rest as stable season-level gaps; solves
+Gate 3 without needing the two previously-stuck groups solved separately
+
+Picked back up from the machine-migration pause at commit `dd195ed`
+(memory note `columnwise-paused-table-anchored-dividers`). RG: "check the
+two resistant seasons first" (1902-03 parity 1, 1907-08, where an earlier
+pass's automatic table-edge detection wouldn't converge), then "proceed
+on [rebuilding table-anchored]."
+
+**Diagnosis, done on freshly-rendered pages (nothing from the paused
+session survived the environment migration -- scratchpad state is not
+persistent across machines).** Ran `_detect_vertical_dividers` directly
+on 6 pages of `1902-03:1` and 13 of `1907-08` (both parities): divider
+COUNT is genuinely unstable page to page (2 to 5 candidates on
+1902-03:1 alone), for two distinct, confirmed reasons, not one:
+
+1. **The season-wide crop clips real content on some pages.**
+   `repertoire_1907-08_p004`'s crop visibly truncates the Михайловскій
+   column on the right -- confirmed by eye, and it alone explains that
+   page's 8 spurious candidates.
+2. **Even on cleanly-cropped pages, table position varies more than a
+   per-page reading can average out.** `1907-08_p000` and `p008` are
+   both parity 0 (same recto/verso side) and both crop cleanly, yet
+   their first divider lands at 0.096 vs 0.363 of crop width -- too
+   large a gap to be gutter-side mirroring alone.
+
+**The key measurement that unlocked a fix**: while divider POSITIONS are
+unstable, the GAPS between them (season-level column widths) are not --
+computed from the already-existing `docs/repertoire_column_bounds.json`,
+every group's two gaps cluster within about 0.02 of each other, including
+`1902-03:1` (0.204, 0.219) and `1907-08:1` (0.205, 0.21) sitting right in
+line with every other group's ~0.20-0.25. And critically, reading
+`pipeline/row_detect.detect_columns`'s existing `dividers_frac` handling
+showed it does ZERO per-page adaptation when a config is supplied --
+`xs = [round(f * W) for f in dividers_frac]`, a pure blind lookup. That
+is the Gate 3 defect's actual mechanism, and it affects every group that
+uses a config, not only the two that resisted full automatic detection.
+
+**Design**: only the FIRST divider in a group's template is now an
+anchor, refined per page by a new `_refine_divider0` -- search fresh
+candidates near the season-level prior (within a small tolerance) rather
+than trusting the prior blind OR searching unconstrained. Unconstrained
+search has its own failure, confirmed directly: on
+`repertoire_1907-08_p011`, an unusually wide margin (paper
+staining/texture, visually confirmed, no real print in it) produced
+FIVE evenly-spaced candidates at 100% strip presence -- indistinguishable
+from a real divider on presence alone -- all ahead of the real one. The
+anchor is what lets the search reject them (all sit 0.04-0.15 from the
+prior; the real divider sits within 0.002 of it). The remaining
+positions are reconstructed from the refined anchor plus the season's
+own stable gaps -- not read from the template directly at all anymore.
+
+**Validated on 26 pages, 0 failures**: `1902-03:1` (6 pages) and
+`1907-08:0`/`1907-08:1` (10 pages, including `p011` itself) -- every
+page now produces the correct theater count with consistent widths
+across the group. Regression-checked against `1898-99` and `1906-07`
+(20 pages, both parities each) -- unchanged, correct, matching the
+already-validated state. Also checked `1893-94` (spread format, 6
+pages) since the anchor logic is format-agnostic (`date_side` doesn't
+change which end gets anchored) -- 5 theaters each, consistent widths,
+confirming the fix generalizes rather than being single-format-specific.
+
+**What this means for the open decision**: does NOT need the two
+previously-stuck groups solved as a special case before the corpus-wide
+rebuild can proceed -- the same anchor mechanism handles them using the
+values ALREADY on record (their hand-corrected entries from 2026-09-08),
+now used as anchors-with-refinement instead of blind constants. No
+season needed re-measuring; only `detect_columns`'s consumption of the
+existing config changed. `docs/repertoire_column_bounds.json`'s `_note`
+carries the updated semantics.
+
+**Not yet done**: re-running Gate 3 itself (the 332-page scale-up that
+was stopped) against the fixed code, to get a real kopecks-completeness
+number in place of the 23-82%-truncated figures that triggered the
+stop.
+
+### Addendum (2026-09-09): Gate 3 re-run, 332/332 pages -- kopecks
+completeness fixed from 23-82% to 89.6-100%; a second, deeper divider
+bug found and fixed along the way on `1903-04`
+
+RG: "yes, run Gate 3." Rendered, cropped, and column-extracted all 8
+remaining single-page seasons (1899-00, 1900-01, 1901-02, 1902-03,
+1903-04, 1904-05, 1905-06, 1907-08 -- 332 pages, 0 failures, 4.4M
+tokens).
+
+| season  | even pages    | odd pages     |
+|---------|--------------:|--------------:|
+| 1899-00 | 100.0%        |  99.5%        |
+| 1900-01 |  99.8%        |  99.7%        |
+| 1901-02 |  99.8%        |  99.5%        |
+| 1902-03 |  99.8%        |  99.5%        |
+| 1903-04 |  97.0%        | 100.0%        |
+| 1904-05 |  89.6%        |  98.8%        |
+| 1905-06 |  96.1%        |  94.0%        |
+| 1907-08 |  93.6%        |  91.2%        |
+
+Every season now sits at 89.6-100%, replacing the 23-82%-truncated
+figures that stopped Gate 3 originally. Two corrections along the way,
+both real, both caught by checking actual output rather than trusting
+the aggregate number:
+
+**Measurement bug in the scorecard itself, not the data.** The first
+kopecks-completeness pass (checked digit-after-`р.`) flagged "2710 р. —
+к." as truncated -- but a dash IS the printed zero-kopecks convention
+throughout this corpus, not missing data. Fixing the regex to accept a
+dash alongside a digit moved several seasons' numbers substantially
+(1903-04 even: 63% -> 97%). Re-checked the residual failures after the
+fix and they're genuinely different: isolated to 1-2 specific pages per
+season (e.g. `1904-05_p000`/`p008`, `1903-04_p030`), where the model
+dropped the "р."/"к." units entirely rather than any crop or divider
+issue -- a small, bounded, page-specific quirk, not investigated
+further this session.
+
+**A second, deeper divider bug, found because 1903-04's first re-run
+still only reached 63%.** Widening `1903-04`'s crop (see the previous
+addendum's `1902-03` pattern) fixed the visible header-truncation, but
+the RESCALED season-level divider template that came with it was
+wrong -- not because the rescale math was wrong, but because the
+ORIGINAL pre-migration measurement it rescaled was itself apparently
+taken from pages affected by the same clipping bug, so rescaling it
+faithfully reproduced a bad number. Confirmed directly: fresh
+`_detect_vertical_dividers` readings on the corrected crop put
+`1903-04:0`'s true first divider at 0.27-0.38 depending on page -- a
+0.11 spread, three times the ±0.04 tolerance `_refine_divider0` (the
+previous addendum's anchor-only design) searched within, so it was
+locking onto a spurious nearby candidate instead of the real one.
+
+Widening that function's tolerance would not have been safe: the same
+±0.11-scale search radius needed for `1903-04:0` would also have caught
+`1907-08_p011`'s faint-paper-staining false candidates, which the
+tighter tolerance was specifically built to reject. What DOES stay
+stable on `1903-04:0` even though absolute position swings 0.11: the
+GAPS between dividers (0.21-0.22 throughout, matching every other
+season's ~0.20-0.25). Replaced `_refine_divider0` with
+`_refine_dividers`, which validates a candidate SET by whether its
+internal gaps match the season template (tight tolerance on the
+relative structure) rather than anchoring on any one candidate's
+absolute position (now a loose bound on the search space only, not the
+decision itself). Three unrelated margin artifacts landing at exactly
+the right relative spacing to fake a real table is far less likely than
+one artifact landing near an expected absolute position, so this is a
+strictly stronger check, not just a looser one.
+
+Re-validated against everything already validated before this change
+(1902-03:1, 1907-08 both parities including `p011`, 1898-99 and 1906-07
+both parities, 1893-94 spread) -- zero regressions, identical results
+-- before re-running `1903-04` end to end: even pages went 52% -> 63%
+(crop fix alone) -> 90% (divider fix, first regex) -> 97% (corrected
+regex).
+
+**Not yet done**: the 1-2 pages per season with units-dropped receipts
+(a distinct, apparently rare model-formatting issue, not a crop/divider
+one); row completeness and receipts-VALUE agreement against baseline at
+this same 332-page scale (this addendum only re-measured kopecks
+completeness, the specific metric that stopped Gate 3 -- the full
+three-number scorecard this file's own methodology calls for is still
+outstanding for the newly-fixed seasons).

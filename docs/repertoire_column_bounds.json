@@ -1,5 +1,5 @@
 {
-  "_note": "Column divider positions for Repertoire tables, as fractions of the CROPPED table width (apply docs/repertoire_crop_bounds.json first). Derived 2026-09-08 by taking the median of pipeline/row_detect._detect_vertical_dividers across every page of a group -- steadier than one visual reading, and within a group the positions vary by only 1-2% of width against columns 17-25% wide. Spread seasons (1890-91..1897-98) are keyed by season, put the DATE column at the table's RIGHT edge, and have 5 theaters. Single-page seasons (1898-99 onward) are keyed 'season:parity' because the recto/verso gutter offset shifts the table within a season crop (splitting by parity drops sigma from 0.056 to ~0.020); they put the DATE column at the LEFT and have 3 theaters. Groups are gated on even spacing, since theaters are equal-width -- check 'evenly_spaced' and 'source' before trusting one. NOTE on the final divider of spread seasons: it bounds the DATE column, which is NARROWER than a theater, so extrapolating it by one theater width overshoots. 1890-91 (0.966) and 1891-92 (0.982) overshot into the date column itself and were corrected against the page to 0.900 and 0.945; the rest landed in a consistent 0.918-0.943 band. Spread seasons therefore fail the even-spacing check by design. IMPORTANT: these fractions are relative to the CROPPED width, so any change to docs/repertoire_crop_bounds.json invalidates them and they must be rescaled or re-derived. 1891-92, 1898-99 and 1902-03 were rescaled on 2026-09-08 for exactly this reason.",
+  "_note": "Column divider positions for Repertoire tables, as fractions of the CROPPED table width (apply docs/repertoire_crop_bounds.json first). Derived 2026-09-08 by taking the median of pipeline/row_detect._detect_vertical_dividers across every page of a group -- steadier than one visual reading, and within a group the positions vary by only 1-2% of width against columns 17-25% wide. Spread seasons (1890-91..1897-98) are keyed by season, put the DATE column at the table's RIGHT edge, and have 5 theaters. Single-page seasons (1898-99 onward) are keyed 'season:parity' because the recto/verso gutter offset shifts the table within a season crop (splitting by parity drops sigma from 0.056 to ~0.020); they put the DATE column at the LEFT and have 3 theaters. Groups are gated on even spacing, since theaters are equal-width -- check 'evenly_spaced' and 'source' before trusting one. NOTE on the final divider of spread seasons: it bounds the DATE column, which is NARROWER than a theater, so extrapolating it by one theater width overshoots. 1890-91 (0.966) and 1891-92 (0.982) overshot into the date column itself and were corrected against the page to 0.900 and 0.945; the rest landed in a consistent 0.918-0.943 band. Spread seasons therefore fail the even-spacing check by design. IMPORTANT: these fractions are relative to the CROPPED width, so any change to docs/repertoire_crop_bounds.json invalidates them and they must be rescaled or re-derived. 1891-92, 1898-99 and 1902-03 were rescaled on 2026-09-08 for exactly this reason. ADDENDUM 2026-09-09 (docs/eval/known_issues.md #69/#70): these values are no longer applied as a blind absolute template. The first position in each group's `dividers` list is now an ANCHOR/PRIOR, not a trusted final position: pipeline/row_detect.detect_columns refines it per page via `_refine_divider0`, which detects the real divider fresh and picks the candidate closest to this anchor within a small tolerance -- this is what the Gate 3 defect (kopecks truncated on 23-82% of even pages in several seasons, because the table's true position wanders by up to 0.11 of crop width within one group) needed, and a blind template alone could not give it. The remaining `dividers` entries are NOT used directly at all anymore -- only the GAPS between them are (season-level column widths, confirmed stable to 1-2% of table width, including on the two groups -- 1902-03:1 and 1907-08 -- that an earlier pass could not get automatic per-page detection to agree on for every divider). Per-page detection alone is not the fix either: a fully unconstrained search on repertoire_1907-08_p011 locked onto five evenly-spaced, 100%-confidence false candidates from faint paper staining in an oversized margin, ahead of the real divider -- the anchor is what lets the search reject that. Every value below therefore still matters (as the anchor + the gap template), and none needed re-measuring for this change; only the CODE that consumes them changed. Validated 2026-09-09 against 1902-03:1, 1907-08:0, 1907-08:1 (the two previously-stuck groups), 1898-99 and 1906-07 (both parities, as a regression check), and 1893-94 (spread format) -- 26 pages, every group producing the correct theater count with consistent widths, including repertoire_1907-08_p011 itself.",
   "_needs_review": [],
   "_verified_visually": [
     "1893-94",
@@ -263,26 +263,26 @@
     "format": "single",
     "date_side": "left",
     "dividers": [
-      0.3151,
-      0.5263,
-      0.7488
+      0.2976,
+      0.4971,
+      0.7072
     ],
     "n_pages_agreeing": 13,
     "extrapolated": false,
     "evenly_spaced": true,
-    "source": "re-derived 2026-09-08 against the corrected per-parity crop (x 0.08-0.95); previous values were fractions of a crop that truncated \u041c\u0438\u0445\u0430\u0439\u043b\u043e\u0432\u0441\u043a\u0456\u0439 on every even page"
+    "source": "re-derived 2026-09-08 against the corrected per-parity crop (x 0.08-0.95); previous values were fractions of a crop that truncated Михайловскій on every even page; RESCALED x0.9444 on 2026-09-09 after the season crop was widened (x1 0.90->0.95) to stop it clipping printed content on even pages -- these fractions are relative to the crop, so they move when the crop does"
   },
   "1903-04:1": {
     "format": "single",
     "date_side": "left",
     "dividers": [
-      0.1223,
-      0.3432,
-      0.5984
+      0.1155,
+      0.3241,
+      0.5652
     ],
     "n_pages_agreeing": 7,
     "extrapolated": false,
-    "source": "measured",
+    "source": "measured; RESCALED x0.9444 on 2026-09-09 after the season crop was widened (x1 0.90->0.95) to stop it clipping printed content on even pages -- these fractions are relative to the crop, so they move when the crop does",
     "evenly_spaced": true
   },
   "1904-05:0": {
@@ -386,7 +386,7 @@
     ],
     "n_pages_agreeing": 8,
     "extrapolated": false,
-    "source": "hand-read from the page 2026-09-08, REPLACING an earlier hand estimate [0.19, 0.48, 0.72] that fell inside \u0411\u043e\u043b\u044c\u0448\u043e\u0439, inside \u041c\u0430\u043b\u044b\u0439 and past \u041d\u043e\u0432\u044b\u0439; that estimate was flagged _needs_review and never used in a run",
+    "source": "hand-read from the page 2026-09-08, REPLACING an earlier hand estimate [0.19, 0.48, 0.72] that fell inside Большой, inside Малый and past Новый; that estimate was flagged _needs_review and never used in a run",
     "evenly_spaced": true
   }
 }
