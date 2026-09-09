@@ -62,6 +62,10 @@
 #
 #   Do NOT transcribe library stamps or pencilled numbers. Note them in
 #   copy_artifacts below instead.
+#
+#   Do NOT transcribe an engraver's signature drawn inside a vignette (small
+#   cursive under an engraving). That is part of the artwork. A vignette with
+#   only a signature is recorded by tailpiece_present alone.
 # ===================================================================
 
 [FIELDS]

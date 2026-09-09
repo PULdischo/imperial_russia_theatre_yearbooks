@@ -188,10 +188,15 @@ PAGE FIELDS
                   in the top corners — those are NOT the folio. If no
                   printed number appears, leave it null.
 "tailpiece_present"  True if a decorative tailpiece or vignette closes the
-                  page. A purely decorative ornament carrying NO text is
-                  recorded ONLY by this flag -- do not emit a "figure" block
-                  for it. If the ornament contains text, transcribe the text
-                  (usually as a "heading").
+                  page. A purely decorative ornament is recorded ONLY by this
+                  flag -- do not emit a "figure" block for it.
+                  If the ornament contains PRINTED text (e.g. a title set in
+                  type inside a decorative frame), transcribe that text,
+                  usually as a "heading".
+                  Do NOT transcribe an engraver's or artist's signature drawn
+                  into the artwork itself -- typically small cursive script
+                  under an engraving, like "Грав: И. Гескій." That is part of
+                  the image, not text on the page. Ignore it entirely.
 "no_text"         True ONLY if there is genuinely nothing to transcribe. A
                   plate WITH a caption is not textless. Look carefully for
                   sideways captions before setting this.

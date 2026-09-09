@@ -164,13 +164,13 @@ the page.
 
 | Type | Notes |
 |---|---|
-| `heading` | Includes lettered subsections (`в) Балетъ.`) and ornamental headpieces containing text |
+| `heading` | Includes lettered subsections (`в) Балетъ.`) and ornamental headpieces containing **printed** text |
 | `paragraph` | Running prose — the bulk |
 | `verse` | Quoted poetry. **Exempt from line-rejoining** (§7) |
 | `cast_list` | Role → performer runs, prose-set or block-set |
 | `personnel_news` | `Приняты на службу:` / `Оставили службу:` / `Умерли:` / transfers. **Provisional** — see below |
 | `enumerated_list` | See below |
-| `figure` | Subtyped (plate, photograph, notated example, ornament-with-text); caption transcribed verbatim |
+| `figure` | Subtyped (plate, photograph, notated example, ornament-with-printed-text); caption transcribed verbatim |
 | `footnote` | Kept with its page, in printed order, at the foot |
 | `byline` | Rare; appears only in later seasons |
 | `other` | **Catch-all. Never discard text.** |
@@ -178,6 +178,27 @@ the page.
 `other` is load-bearing: without a legal home, unclassifiable text is text a
 model will quietly drop. Anything unrecognised goes into `other` verbatim and
 is flagged for review.
+
+### Engraved signatures inside ornaments are not transcribed
+
+The rule that "an ornament containing text gets its text transcribed" means
+**printed** text — a framed headpiece like `ИМПЕРАТОРСКІЕ МОСКОВСКІЕ ТЕАТРЫ`,
+set in type inside a decorative border.
+
+It does **not** cover an engraver's signature drawn into the plate itself
+(1907-08 BalletMoscow p160 carries one reading approximately
+`Грав: И. Гескій.`). Those are part of the artwork, in the way an artist's
+signature on a painting is: cursive, drawn rather than set, and functioning
+as authorship of the image rather than as text on the page.
+
+Decided 2026-09-09 (RG). Three reasons: they are image, not typography;
+transcribing engraved cursive would yield mostly `<unclear>`, which is
+low-value uncertainty polluting a metric that matters; and engraver
+attribution is peripheral to the research question. They remain recoverable
+from the page images if ever wanted.
+
+A vignette carrying only such a signature is therefore recorded by
+`tailpiece_present` alone, with no `figure` block.
 
 ### `personnel_news` is provisional
 
