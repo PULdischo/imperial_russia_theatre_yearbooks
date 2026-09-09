@@ -3929,3 +3929,67 @@ used `substr(page_id,13,7)`, which slices `'893-94_'` rather than
 `'1893-94'` and collapsed every season into one bucket at 100% flagged.
 Corrected to `substr(page_id,12,7)` — `'repertoire_'` is 11 characters.
 The bad numbers were not used.
+
+## 2026-09-09 — Do en dashes (U+2013) occur in the yearbooks at all?
+
+Asked while establishing punctuation-fidelity conventions for the season-review
+gold transcriptions (docs/season_reviews.md §7 forbids normalising dashes, so we
+need to know which dashes actually occur).
+
+```sql
+WITH v AS (
+  SELECT 'person_entry.tenure_note_text' AS fld, tenure_note_text AS t FROM raw.person_entry
+  UNION ALL SELECT 'person_entry.credit_summary_text', credit_summary_text FROM raw.person_entry
+  UNION ALL SELECT 'person_entry.family_name', family_name FROM raw.person_entry
+  UNION ALL SELECT 'person_entry.rank_or_title', rank_or_title FROM raw.person_entry
+  UNION ALL SELECT 'person_entry.heading_path', heading_path FROM raw.person_entry
+  UNION ALL SELECT 'event_entry.theater', theater FROM raw.event_entry
+  UNION ALL SELECT 'event_entry.date_text', date_text FROM raw.event_entry
+  UNION ALL SELECT 'event_entry.annotation', annotation FROM raw.event_entry
+  UNION ALL SELECT 'event_entry.receipts_text', receipts_text FROM raw.event_entry
+  UNION ALL SELECT 'eep.performance_title', performance_title FROM raw.event_entry_performance
+  UNION ALL SELECT 'pes.start_date_text', start_date_text FROM raw.person_entry_service
+  UNION ALL SELECT 'pes.end_date_text', end_date_text FROM raw.person_entry_service
+  UNION ALL SELECT 'pec.label', label FROM raw.person_entry_credit
+  UNION ALL SELECT 'pec.role_name', role_name FROM raw.person_entry_credit
+)
+SELECT fld,
+  SUM(length(t) - length(replace(t, chr(8212), ''))) AS em_2014,
+  SUM(length(t) - length(replace(t, chr(8211), ''))) AS en_2013,
+  SUM(length(t) - length(replace(t, chr(45),   ''))) AS hyphen_002D
+FROM v GROUP BY fld;
+```
+
+Result: across all 14 verbatim text fields — **36,119 em dashes, 9,714 hyphens,
+and 0 en dashes**. Not one, in any field.
+
+Caveat noted at the time: this is the model's transcription, so it could in
+principle reflect en→em normalisation by the model rather than the printed page.
+Cross-checked against the hand-typed gold (below), which is independent.
+
+## 2026-09-09 — Same question, checked against the hand-typed gold
+
+Not SQL — a character count over `docs/eval/gold/*.csv`, which RG typed by hand
+from the scans and which never passed through the model.
+
+Result: **70 em dashes, 2,288 hyphens, 0 en dashes.** The generating scripts
+(`_build_roster.py`, `_build_repertoire.py`) agree: 71 em, 1,181 hyphen, 0 en.
+
+Two independent sources therefore agree that the en dash does not occur.
+
+## 2026-09-09 — Which dash do year ranges use?
+
+Prompted by my own (wrong) guess that spaced year ranges like "1894 — 1895" might
+be en dashes.
+
+```sql
+SELECT t FROM (
+  SELECT tenure_note_text AS t FROM raw.person_entry
+  UNION ALL SELECT credit_summary_text FROM raw.person_entry
+  UNION ALL SELECT annotation FROM raw.event_entry
+) WHERE regexp_matches(t, '1[89][0-9][0-9]\s*[—–-]\s*1[89][0-9][0-9]');
+```
+
+Result: 9 matching strings, **all unspaced em dashes** (`Въ 1892—1893 учебномъ
+году...`). No en dashes, no spaced variants. My earlier guidance to RG that en
+dashes appear in number ranges was wrong and has been corrected.

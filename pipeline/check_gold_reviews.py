@@ -20,9 +20,34 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from gold_reviews import BLOCK_TYPES, GoldParseError, parse_gold_file
-from schemas.review import LETTER_SPACING_LEAK_RE, block_plain_text, page_plain_text
+from schemas.review import (LETTER_SPACING_LEAK_RE, block_plain_text,
+                            page_plain_text, spans_plain_text)
 
 HEADERISH_RE = re.compile(r"^\[([a-zA-Z_][a-zA-Z_ )0-9]*)\]\s*$")
+
+# The marks docs/season_reviews.md §7 forbids normalising. In a monospace
+# font these are visually near-identical, so the only reliable way to know
+# what you typed is to count codepoints.
+# Pre-reform orthography: a word ending in a hard consonant takes a final ъ.
+# A modern Russian spellchecker strips exactly these ("балетъ" -> "балет"),
+# which is silent, plausible-looking, and destroys the thing the corpus is
+# for. Abbreviations (соч., карт.) legitimately end without one, so a token
+# followed by a full stop is exempt.
+HARD_CONSONANTS = "бвгджзклмнпрстфхцчшщ"
+WORD_RE = re.compile(r"[А-Яа-яЁёѢѣІіѲѳѴѵЪъЬь]+")
+
+WATCHED = [
+    ("\u2014", "em dash  —"),
+    ("\u2013", "en dash – <- WRONG: does not occur in these volumes"),
+    ("\u002d", "hyphen   -"),
+    ("\u00ab", "«"),
+    ("\u00bb", "»"),
+    ("\u201e", "„"),
+    ("\u201c", "“"),
+    ("\u201d", "”  <- curly, usually WRONG here"),
+    ("\u2019", "’  <- curly apostrophe, usually WRONG"),
+    ("\u0022", '"  <- straight, usually WRONG'),
+]
 TAGS = ("r", "b", "i", "d", "l")
 
 
@@ -66,6 +91,24 @@ def lint(path: Path) -> tuple[list[str], list[str], dict]:
         errors.append(str(e))
         return errors, warns, stats
 
+    plain = page_plain_text(page)
+    stats["punct"] = [(label, plain.count(ch)) for ch, label in WATCHED
+                      if plain.count(ch)]
+    missing_hard_sign = []
+    for b in page.blocks:
+        # Check the block's CONCATENATED text, not span by span: inline markup
+        # splits a word across spans ("Сенъ-Жорж<d>а</d>"), and checking spans
+        # individually reports the truncated half as a missing-ъ error.
+        for txt in (block_plain_text(b), spans_plain_text(b.caption)):
+            for m in WORD_RE.finditer(txt):
+                word = m.group(0)
+                nxt = txt[m.end():m.end() + 1]
+                # exempt abbreviations ("соч.") and the first half of a word
+                # broken across a line ("Постав-" / "ленъ")
+                if len(word) > 1 and word[-1].lower() in HARD_CONSONANTS \
+                        and nxt not in (".", "-"):
+                    missing_hard_sign.append(word)
+    stats["missing_hard_sign"] = missing_hard_sign
     stats["blocks"] = len(page.blocks)
     stats["chars"] = len(page_plain_text(page))
     stats["folio"] = page.printed_folio
@@ -128,6 +171,22 @@ def main() -> None:
                   f"  |  folio {stats['folio'] or '-'}")
         else:
             print()
+        if stats.get("punct"):
+            marks = "   ".join(f"{lab.split()[0] if ' ' in lab else lab}"
+                               f" x{n}" for lab, n in stats["punct"])
+            print(f"    punctuation: {marks}")
+            for lab, n in stats["punct"]:
+                if "WRONG" in lab:
+                    warns.append(f"found {n}x {lab} -- check this is really "
+                                 f"what the page prints; editors insert these "
+                                 f"automatically")
+        mhs = stats.get("missing_hard_sign") or []
+        if mhs:
+            uniq = sorted(set(mhs))
+            warns.append(
+                f"{len(mhs)} word(s) end in a hard consonant with no final ъ — "
+                f"check against the page; a Russian spellchecker strips these: "
+                f"{', '.join(uniq[:8])}" + (" ..." if len(uniq) > 8 else ""))
         for e in errors:
             print(f"    ERROR  {e}")
         for w in warns:
