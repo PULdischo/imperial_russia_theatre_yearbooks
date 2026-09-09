@@ -1,0 +1,133 @@
+{
+  "_note": "Per-season crop bounds for Repertoire scans, as fractions of image width/height. Read by eye off contact sheets (crop_to_table.py --contact-sheet) on 2026-09-08; see docs/eval/known_issues.md #69. Fractions, not pixels: page pixel dimensions vary within a season while the framing does not. A season listed here is NOT automatically beneficial to crop -- run --evaluate first; 5 of 18 seasons score SKIP because they already detect well and the crop costs them the table's outer border rows.",
+  "_skip": [
+    "1890-91",
+    "1891-92",
+    "1893-94",
+    "1896-97",
+    "1897-98",
+    "1898-99"
+  ],
+  "1890-91": {
+    "x0": 0.07,
+    "x1": 0.89,
+    "y0": 0.07,
+    "y1": 0.89
+  },
+  "1891-92": {
+    "x0": 0.04,
+    "x1": 0.94,
+    "y0": 0.09,
+    "y1": 0.89
+  },
+  "1892-93": {
+    "x0": 0.07,
+    "x1": 0.94,
+    "y0": 0.09,
+    "y1": 0.93
+  },
+  "1893-94": {
+    "x0": 0.04,
+    "x1": 0.91,
+    "y0": 0.07,
+    "y1": 0.92
+  },
+  "1894-95": {
+    "x0": 0.04,
+    "x1": 0.91,
+    "y0": 0.07,
+    "y1": 0.91
+  },
+  "1895-96": {
+    "x0": 0.04,
+    "x1": 0.91,
+    "y0": 0.07,
+    "y1": 0.91
+  },
+  "1896-97": {
+    "x0": 0.04,
+    "x1": 0.91,
+    "y0": 0.07,
+    "y1": 0.91
+  },
+  "1897-98": {
+    "x0": 0.04,
+    "x1": 0.91,
+    "y0": 0.07,
+    "y1": 0.9
+  },
+  "1898-99": {
+    "x0": 0.04,
+    "x1": 0.92,
+    "y0": 0.14,
+    "y1": 0.84
+  },
+  "1899-00": {
+    "x0": 0.05,
+    "x1": 0.9,
+    "y0": 0.12,
+    "y1": 0.87
+  },
+  "1900-01": {
+    "x0": 0.05,
+    "x1": 0.9,
+    "y0": 0.12,
+    "y1": 0.87
+  },
+  "1901-02": {
+    "x0": 0.05,
+    "x1": 0.9,
+    "y0": 0.13,
+    "y1": 0.86
+  },
+  "1902-03": {
+    "x0": 0.08,
+    "x1": 0.94,
+    "y0": 0.13,
+    "y1": 0.85
+  },
+  "1903-04": {
+    "x0": 0.05,
+    "x1": 0.9,
+    "y0": 0.13,
+    "y1": 0.86
+  },
+  "1904-05": {
+    "x0": 0.05,
+    "x1": 0.9,
+    "y0": 0.14,
+    "y1": 0.86
+  },
+  "1905-06": {
+    "x0": 0.05,
+    "x1": 0.93,
+    "y0": 0.14,
+    "y1": 0.86
+  },
+  "1906-07": {
+    "x0": 0.04,
+    "x1": 0.78,
+    "y0": 0.14,
+    "y1": 0.88
+  },
+  "1907-08": {
+    "x0": 0.06,
+    "x1": 0.96,
+    "y0": 0.14,
+    "y1": 0.86
+  },
+  "_clipping_note": "All 18 crops were checked LEFT and RIGHT at native resolution on 2026-09-08 -- the only method that has proved reliable here. Three were cutting through printed content and are now fixed: 1902-03 x1 0.90->0.94 (cut the last column's receipts, '611 \u0440. 75 \u043a.' became '611 \u0440. 7'), 1898-99 x1 0.87->0.92 (cut receipts: '2740 \u0440. 50 \u043a.' severed after the '\u0440.'), 1891-92 x1 0.89->0.94 (cut through the rotated date labels). The other 15 seasons are clean on both side edges. TOP and BOTTOM edges have NOT been checked this way. Two automated clipping checks were tried and both failed: an Otsu-based one read blank margin as 93% ink (on a mostly-blank crop Otsu's split falls inside the paper's own noise), and a fixed-threshold one cannot tell table overflow from the facing page, book edge and fingers, so its scores ROSE as the crop widened. NOTE that crop_to_table.py's --evaluate gate cannot catch clipping at all: it scores row DETECTION, which is unaffected by losing a few pixels of a number. TOP/BOTTOM edges were then checked the same way: 1906-07 was clipping at BOTH (y0 0.19 cut through the table header itself, y1 0.82 cut the last row's receipts -- '3057 \u0440. 08 \u043a.' fell outside); corrected to 0.14/0.88. Every other season keeps its full header and last row. 1902-03, 1904-05, 1905-06 and 1907-08 clip only the date-range CAPTION above the table ('20 \u0434\u0435\u043a\u0430\u0431\u0440\u044f. 1902-1903 \u0433\u0433.'), not the column headings -- left as-is, since #50 records that caption leaking into date_text when it IS included. Changing y-bounds does not disturb docs/repertoire_column_bounds.json, whose fractions are of WIDTH; changing x-bounds does.",
+  "1906-07:0": {
+    "x0": 0.12,
+    "x1": 0.94,
+    "y0": 0.14,
+    "y1": 0.88
+  },
+  "_parity_note": "Keys of the form '<season>:<parity>' override the season entry for pages of that index parity, resolved by crop_to_table.crop_for(). Added 2026-09-08 for 1906-07's EVEN pages: the season crop (x 0.04-0.78, fitted to odd pages) sliced the third theater off every even page, which scored 0% column reconciliation against 80% on odd pages. Verified by eye that x 0.12-0.94 contains all three St Petersburg theaters with the right border inside. Most seasons do NOT need this -- 1898-99 and 1899-00 shift too little between parities to matter. NOTE that changing a crop invalidates that group's entry in docs/repertoire_column_bounds.json, whose dividers are fractions of the CROPPED width.",
+  "1903-04:0": {
+    "x0": 0.08,
+    "x1": 0.95,
+    "y0": 0.13,
+    "y1": 0.86
+  }
+}

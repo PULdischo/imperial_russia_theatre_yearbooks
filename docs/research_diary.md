@@ -74,7 +74,7 @@ wrong.
   disconnected from the person's full record elsewhere. Began
   reconnecting them.
 
-## August 19, 2026 (today) — Reconnected split records; two dancers, one name
+## August 19, 2026 — Reconnected split records; two dancers, one name
 
 - Finished reconnecting the disconnected musician cross-references to
   their full records — about 27 people, each verified against service
@@ -98,3 +98,284 @@ wrong.
     name Voskresenskaya). The yearbook itself distinguishes them as
     "Гаврилова 1-я" / "Гаврилова 2-я." Kept as two separate records
     rather than merged.
+
+## August 20, 2026 — The ballet school graduates: who they were, where they went
+
+- Finished a reference list of 399 ballet-department graduates of the
+  Imperial Theater School, St. Petersburg and Moscow, one row per
+  graduate, with the date each entered service.
+- Found that drama-department graduates had leaked into the list — the
+  School Reports cover both departments in one document. Traced the
+  drama section to two specific pages, excluded them, then swept the
+  whole corpus for drama-specific wording to confirm none were left.
+- Hand-checked every graduate whose report didn't state a start date,
+  and verified the school (St. Petersburg or Moscow) for all 399.
+- Linked the graduates to their later careers as dancers elsewhere in
+  the yearbooks. Nine ambiguous matches were reviewed one by one
+  together rather than decided automatically.
+- Fixed a name-field bug affecting dancers and musicians, noticed
+  because it made the count of "dancers who never graduated" look
+  implausibly high.
+
+## August 21, 2026 — Merging split identities, then checking the merges didn't go too far
+
+- Merged 287 fragmented dancer identities — the same person appearing
+  as several unconnected records across different years.
+- Found that the label chosen for a merged record sometimes picked a
+  rare or garbled spelling of the name over the common one; 64 records
+  relabeled. The same bug turned out to affect first names and
+  patronymics across every category, not just dancers: 253 more
+  records corrected, and the cause fixed in the pipeline itself rather
+  than patched in the data.
+- Ran the opposite check on all 287 merges — looking for merges that
+  had gone *too* far, by testing whether the combined service dates
+  made sense for one career. About 35 names were then verified page by
+  page against the original scans.
+- Extended the name-field audit to the five remaining categories: 244
+  more rows fixed.
+- Swept the whole corpus for duplicate people: 233 found and merged,
+  and a permanent check added to the pipeline so this happens
+  automatically from now on instead of by hand.
+
+## August 24, 2026 — Hand-verified work wired into the pipeline; a real gap in the scans
+
+- The 136 hand-verified graduate service dates were built into the
+  pipeline itself. Re-running the transcription now reproduces them
+  automatically, instead of requiring the reference spreadsheet to be
+  consulted by hand.
+- Worked through the possible-duplicate groups that had been held back
+  as too uncertain to decide in bulk — nine groups overlapping in
+  season and city, ten sharing no dates at all (six merged, four left
+  open).
+- Fixed two confirmed cases where a person's institution or department
+  had been attached to the wrong entry, and a spelling error in a
+  production-staff heading (Отдѣль → Отдѣлъ).
+- **Confirmed a genuine gap in the scanning, not a transcription
+  problem**: in the 1890-91 Repertoire volume, the book's own printed
+  page numbers jump straight from 7 to 10. Pages 8–9 — roughly October
+  12–31, 1890 — were never scanned and can't be recovered from what we
+  have.
+- Four other apparent gaps looked like missing pages at first and
+  turned out to be date-extraction bugs instead; all four fixed.
+
+## August 25, 2026 — Repertoire dates, and the discovery behind the box-office gaps
+
+- Reconstructed, session by session, a date drift on one 1897-98 page
+  where performances had slid onto the wrong days, and fixed it.
+- Swept the whole corpus for dates printed without a day number (a bare
+  "апр." with nothing before it). Fifteen pages checked against the
+  original scans; five confirmed bugs fixed.
+- Then took on the oldest open problem in the project: transcribing the
+  same repertoire page twice gives slightly different answers about
+  which performances happened and which nights were dark.
+  - Tested whether running the model in "thinking mode" helped. It
+    didn't.
+  - Tested breaking pages into chunks.
+  - **The decisive finding: this was never random noise.** Cropping a
+    single row out of the table and transcribing it alone, with no
+    neighbouring dates in the picture, eliminated the misattribution
+    entirely. The model wasn't guessing — it was being confused by
+    adjacent rows.
+
+## August 26, 2026 — Building row-by-row table reading
+
+- Built the tool that finds the horizontal rules in a repertoire table
+  and cuts each date's row out as its own image, so it can be read in
+  isolation.
+- Evaluated two off-the-shelf document-analysis tools (Transkribus and
+  ScanTailor) against the scans before committing to writing our own.
+- Worked out why the detected row boundaries come out curved rather
+  than straight: these volumes are thickly bound, and the paper curves
+  inward toward the fold, more so the closer the content sits to it.
+  Tested whether the whole page could be flattened first using the
+  table's outer border as a guide — it couldn't; the border stays
+  nearly flat while interior lines bow substantially.
+- Testing the detector against a whole season surfaced an unrelated
+  corrupted page (1893-94, p007) where real content had been attached
+  to a mechanically counted-up run of dates that continues past the end
+  of the physical page.
+
+## August 27, 2026 — The musicians' instruments, part one
+
+- Checked two orthographic worries directly against the scans:
+  "театр." without the pre-reform ъ, and Маріинскій sometimes losing
+  its і. Both real, both normalised in the derived layer while the
+  verbatim transcription stays untouched.
+- Cleared the pending list of possible-duplicate people: four pairs,
+  each one's full career pulled and checked against the scans — three
+  confirmed as two genuinely different people, one merged.
+- **The main find: the field meant to hold a musician's civil rank or
+  honorific was almost entirely holding instruments instead.** Of 3,157
+  filled-in values, 3,048 were instrument names. Fixed by *splitting*
+  the field rather than emptying it — every one of the roughly 90
+  genuine non-instrument values was read by hand first, so no real
+  honorific was destroyed to clean up the rest.
+- Migrated instruments out of the section-heading field too. All 19
+  affected pages were read against their own scans before anything
+  moved — justified in the event: 23 of the 774 rows needed a
+  correction rather than a straight copy, because the heading itself
+  had picked up a neighbouring row's value.
+- The related work on false row boundaries in the repertoire tables
+  (where the gap between a matinee and an evening performance gets
+  mistaken for a printed rule) was put on hold here after eight
+  detection approaches, none reliable enough to use.
+
+## August 28, 2026 — The musicians' instruments, part two; and separating rank from title
+
+- Recovered 1,854 more instruments from the free-text tenure notes,
+  where they had been sitting unextracted all along. Across the whole
+  arc of this work, the share of musicians with a known instrument went
+  from 17% to 93%. Ten rows were spot-checked against scans, and all
+  1,854 cross-checked against the same person's other appearances.
+- Triaged the roughly 512 still-empty rows rather than declaring
+  victory: 58 more recovered from two overlooked patterns and three
+  unrecognised spellings; the remaining ~454 confirmed genuinely blank
+  in the printed source, not a transcription failure.
+- Several smaller fixes along the way: a fabricated cross-reference
+  note attached to 23 rows, a cluster of names fused to their
+  instrument, and entries that weren't people at all — stray fragments
+  reading "Оставилъ службу" ("left service") or a dagger symbol.
+- **Split rank from title**, prompted by the observation that these
+  aren't the same kind of thing.
+  - *Rank* is status conferred by an institution: Table-of-Ranks civil
+    grades, military ranks, court honorifics, Academy of Arts
+    distinctions.
+  - *Title* is how the Yearbook labels the entry: the job, the subject
+    taught, the workshop specialty.
+  - Two things belonged to neither and were moved rather than
+    discarded: the "1-я / 2-я" ordinals, which turned out to be a way
+    of telling same-named people apart rather than a mark of seniority
+    (moved onto the surname, matching the convention already used
+    elsewhere in the corpus); and dual-role notes like "(онъ же и
+    режиссеръ)" ("he is also the director" — moved to the tenure note).
+    All 24 affected rows were
+    checked against the scans before the change was applied.
+
+## August 28–30, 2026 — A second, parallel pipeline for the season reviews
+
+- Each volume of the Yearbook carries narrative prose reviews of the
+  season — Russian drama, opera, ballet and French drama, for both
+  cities. These are continuous prose, and don't fit the "one row per
+  printed appearance" shape the rest of the dataset is built on.
+- Rather than bend them into it, designed and built a **separate
+  transcription track**: nine scripts covering rendering, extraction,
+  validation, quality checks, accuracy scoring, and output in scholarly
+  formats.
+- 41 PDFs, 1,024 pages, 17 seasons — all rendered and ready.
+- This pass is deliberately transcription only. Identifying the people
+  and works named in the prose is left for later.
+- **Now waiting on 12 hand-typed sample pages** to score accuracy
+  against, the same way the tabular pipeline is scored.
+
+## September 1, 2026 — Reading the repertoire tables three different ways
+
+- Row-by-row reading helps, but isn't enough on its own. Added a third,
+  independent approach: reading one theater's column straight down the
+  page, which never needs a row boundary at all — so it fails
+  differently from the other two, by design.
+- Confirmed the damage the old approach was doing is real and worse
+  than local: on one page, a false row boundary caused an entire
+  evening's box-office takings to be relabelled with the *previous*
+  day's date. A date-plausibility check would never have caught it —
+  the wrong date is a perfectly valid date; only the content attached
+  to it is wrong.
+- **Corrected an earlier finding of our own.** One page previously
+  listed as having a false boundary turned out, on close inspection, to
+  have a real printed rule there — the original call was a misreading.
+  The lesson was written into the file: draw the detected line onto the
+  image and check it pixel by pixel, never judge from an eyeballed
+  zoom.
+- Also established an honest limit: on one date, two of the three
+  methods made the *same* wrong reading. Two methods agreeing is not
+  proof of correctness when both are looking at the same visual
+  ambiguity.
+- Fixed several detection bugs that only appeared at whole-season
+  scale, including one where a column boundary was mis-picked badly
+  enough to put a whole theater's contents where the date column should
+  have been — a wrong-but-plausible result being worse than an honest
+  failure.
+- Re-ran the row-by-row reading across a full 40-page season and
+  triaged everything it flagged: **15 pages need a human look**, by
+  cause — 12 with a single tall row split in two, 3 with several rows
+  merged into one, and 1 with a work title landing in the theater
+  column. That's within the "about 20 pages I can hand-read" budget
+  this was sized against.
+- Decided the column-wise pass runs routinely on every repertoire page
+  rather than only on pages some cheaper test flags first: accuracy,
+  not cost, is the constraint here.
+
+## September 7, 2026 — New machine
+
+- Moved the project to a new computer and put the setup on a
+  reproducible footing: one command now provisions the right version of
+  Python and every dependency at exactly the versions the project was
+  validated against.
+- Dropped an old constraint on the image-processing library that had
+  been needed only because of the *previous* machine's operating-system
+  version. Confirmed first that the new version produces byte-identical
+  results at every intermediate step, rather than assuming it would.
+- Fixed a bug that had been silently blocking regeneration of the
+  published dataset export since the rank/title split.
+- Verified the whole pipeline reproduces the old machine's output
+  exactly, and that accuracy scores match the recorded history.
+
+## September 8, 2026 (today) — This diary brought up to date
+
+- The entries above for August 20 through September 7 were written
+  today, reconstructed from the project's internal logs — the diary had
+  fallen about three weeks behind the actual work.
+- Currently open: the repertoire table work above (three categories of
+  page still needing attention); the season reviews, waiting on hand-
+  typed sample pages; an archive thread on RGIA Fond 497, waiting on
+  hand-filled worksheets; one spelling decision on a merged person
+  record; and the matinee/evening row-split problem, still on hold.
+
+### Later the same day — reading the tables without ScanTailor
+
+- Established that the repertoire tables can be processed **without the
+  hand-operated preprocessing step**, which had been the main obstacle to
+  running the whole corpus unattended. Everything below was done on raw
+  scans.
+- Flagged the text obscured by the binding fold rather than guessing at
+  it: 451 cells across the 97 two-page-spread pages, with cropped images
+  of each, saved for checking against the physical volumes. Some whole
+  rows are lost in the fold, so this is genuinely missing data, not just
+  hard-to-read data.
+- Measured how often the table's rows are detected correctly across the
+  whole corpus for the first time, instead of relying on earlier
+  impressions. Cropping each page down to the table itself cut the pages
+  where nothing at all was detected from 161 to 11.
+- Settled on **different methods for the two page formats**. For the
+  single-page seasons, reading the table one column at a time now agrees
+  with the older whole-page reading on about 99% of box-office figures,
+  and is the cheapest of the three methods. The two-page-spread seasons
+  remain unsolved; the older method stays in place there.
+- Taught the column-by-column reader to **refuse rather than guess** when
+  a theater's rows don't reconcile against the calendar, and to record
+  why. An honest gap is recoverable; a confident wrong date is not.
+- Tested the method on two new seasons; both passed. Started the test on
+  the remaining eight and **stopped it early**, because the results
+  exposed a real flaw (below).
+
+### Where this stopped, and what tomorrow starts with
+
+- On even-numbered pages, the box-office figures were losing their
+  kopecks — the rubles were right, the performances were right, and the
+  last few characters of each figure fell outside the slice being read.
+- The cause turned out to be an assumption baked into the configuration:
+  that the table sits in a fixed position on the page for a given
+  left/right-hand parity. It doesn't. On one season's even pages the
+  table's left edge moved by more than a whole column's tolerance from
+  page to page. The odd-numbered pages had been working by coincidence.
+- Measuring the column boundaries as distances from **the table's own
+  edge** instead makes them stable, and consistent across both parities
+  and across seasons — which fits, since these are typeset pages.
+- Tomorrow's decision is whether to rebuild the configuration on that
+  basis (which would retire a day's worth of hand-read boundaries but
+  removes the trap for every future season) or to re-read the eight
+  affected page groups by hand.
+- A cautionary note worth keeping: the first version of the analysis that
+  compared the two approaches said the new one was *worse*. That was a
+  bug in the analysis, not a finding. Two other apparent problems today
+  also turned out to be artifacts of comparing text that differs only in
+  old-orthography spelling — the third time that has happened.

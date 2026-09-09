@@ -33,6 +33,7 @@ from schemas import (
     RosterPage, RepertoirePage, DateOnlyPage, TheaterOnlyPage, merge_columnwise_page,
 )
 from row_detect import detect_rows, detect_columns
+from crop_to_table import load_column_config, column_group_for
 
 PROMPTS_DIR = Path(__file__).parent / "prompts"
 BASE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
@@ -149,8 +150,9 @@ async def call_one_row(client: AsyncOpenAI, sem: asyncio.Semaphore, model: str,
 async def process_page_rowlevel(client: AsyncOpenAI, sem: asyncio.Semaphore, row: dict,
                                  images_dir: Path, out_dir: Path, row_crops_dir: Path,
                                  model: str, repertoire_prompt: str, repertoire_schema: dict,
-                                 header_line_count: int, corrected_analysis_dir: Path | None = None
-                                 ) -> dict:
+                                 header_line_count: int,
+                                 corrected_analysis_dir: Path | None = None,
+                                 outer_top_border: bool = True) -> dict:
     """Row-isolated Repertoire extraction (known_issues.md #1/#49): detect
     each dated row locally (free, no API cost), crop it with the header
     reattached and zero neighboring-row content, then issue one API call
@@ -196,7 +198,8 @@ async def process_page_rowlevel(client: AsyncOpenAI, sem: asyncio.Semaphore, row
             analysis = pickle.load(f)
     try:
         row_crops = detect_rows(image_path, row_crops_dir / page_id,
-                                 header_line_count=header_line_count, analysis=analysis)
+                                 header_line_count=header_line_count, analysis=analysis,
+                                 outer_top_border=outer_top_border)
     except Exception as e:
         log_row.update(status="row_detect_failed", elapsed_seconds=f"{time.monotonic() - t0:.1f}",
                         error=str(e))
@@ -263,7 +266,8 @@ async def call_theateronly(client: AsyncOpenAI, sem: asyncio.Semaphore, model: s
 async def process_page_columnwise(client: AsyncOpenAI, sem: asyncio.Semaphore, row: dict,
                                    images_dir: Path, out_dir: Path, column_crops_dir: Path,
                                    model: str, dateonly_prompt: str, theateronly_prompt: str,
-                                   dateonly_schema: dict, theateronly_schema: dict) -> dict:
+                                   dateonly_schema: dict, theateronly_schema: dict,
+                                   column_config: dict | None = None) -> dict:
     """Column-wise Repertoire extraction (known_issues.md #68): reads the
     date column once and each theater column once, independently -- no
     row-boundary detection involved at all, so this is structurally
@@ -275,13 +279,23 @@ async def process_page_columnwise(client: AsyncOpenAI, sem: asyncio.Semaphore, r
     to compare against -- three genuinely different failure modes, not
     three attempts at the same thing.
 
-    A theater whose row count doesn't match the date column's own row
-    count is dropped from the output entirely for this page (see
-    `merge_columnwise_page`'s docstring) rather than guessed at -- this
-    is a real, if incomplete, page-level result: the flag comes from
-    `write_page_flag=True` staying absent, not from a missing file, so a
-    caller can tell "no data" from "some theaters unreadable this way"
-    by checking which theaters are present in the output."""
+    Days a theater cannot be reconciled against are reported rather than
+    guessed at, but the days that DO reconcile are kept (2026-09-08). The
+    previous behaviour dropped the whole theater-page on any single
+    ambiguity, which measured at 79% loss for columns carrying even one
+    compound morning/evening day (docs/eval/known_issues.md #69). Per-column
+    outcomes, and the raw per-column reads behind them, are written to
+    `<page_id>.columns.json` beside the merged page.
+
+    `column_config` (2026-09-08, docs/repertoire_column_bounds.json)
+    supplies each page's column positions from a per-season measurement
+    instead of detecting them on that page. Per-page detection finds the
+    right column count on only 31/40 pages of a season, and when it is
+    wrong it can be wrong SILENTLY -- on repertoire_1898-99_p024 it once
+    produced a theater's content where the date crop belonged. The config
+    also carries `date_side`, which matters because the two formats put
+    the date column on opposite sides. Falls back to per-page detection
+    when no config is given or the page has no entry."""
     page_id = row["page_id"]
     out_path = out_dir / f"{page_id}.raw.json"
     log_row = {"page_id": page_id, "status": "", "n_theaters_ok": "", "n_theaters_total": "",
@@ -302,7 +316,13 @@ async def process_page_columnwise(client: AsyncOpenAI, sem: asyncio.Semaphore, r
 
     t0 = time.monotonic()
     try:
-        columns = detect_columns(image_path, column_crops_dir / page_id)
+        group = column_group_for(page_id, column_config) if column_config else None
+        if group is not None:
+            columns = detect_columns(image_path, column_crops_dir / page_id,
+                                     dividers_frac=group["dividers"],
+                                     date_side=group["date_side"])
+        else:
+            columns = detect_columns(image_path, column_crops_dir / page_id)
     except Exception as e:
         log_row.update(status="column_detect_failed", elapsed_seconds=f"{time.monotonic() - t0:.1f}",
                         error=str(e))
@@ -334,18 +354,32 @@ async def process_page_columnwise(client: AsyncOpenAI, sem: asyncio.Semaphore, r
 
     all_sessions: list[dict] = []
     n_ok = 0
+    merge_report = []
+    raw_columns = {"date_rows": date_rows, "theaters": {}}
     for result in results:
         if isinstance(result, Exception):
             continue
         theater_name, theater_rows, usage = result
         _accumulate(usage)
-        sessions = merge_columnwise_page(date_rows, theater_name, theater_rows)
-        if sessions is None:
-            continue  # length mismatch -- real signal, not guessed at, see docstring
-        all_sessions.extend(sessions)
-        n_ok += 1
+        raw_columns["theaters"][theater_name] = theater_rows
+        merged = merge_columnwise_page(date_rows, theater_name, theater_rows)
+        all_sessions.extend(merged.sessions)
+        n_ok += merged.ok
+        merge_report.append({
+            "theater": theater_name, "ok": merged.ok,
+            "n_sessions": len(merged.sessions), "unresolved": merged.unresolved,
+            "n_date_days": merged.n_date_days, "n_theater_rows": merged.n_theater_rows,
+            "reason": merged.reason,
+        })
 
     out_path.write_text(json.dumps({"sessions": all_sessions}, ensure_ascii=False), encoding="utf-8")
+    # The per-column reads and the merge outcome, kept alongside the merged
+    # page. Without these a refusal threw its own evidence away: the only way
+    # to see WHY a theater failed to reconcile was to pay for the extraction
+    # again (2026-09-08).
+    (out_path.parent / f"{page_id}.columns.json").write_text(
+        json.dumps({"merge": merge_report, "raw": raw_columns}, ensure_ascii=False),
+        encoding="utf-8")
     log_row.update(status="ok" if n_ok == len(columns) else "partial",
                     n_theaters_ok=n_ok, n_theaters_total=len(columns),
                     elapsed_seconds=f"{time.monotonic() - t0:.1f}", **usage_totals)
@@ -377,10 +411,16 @@ async def main_async(args):
         dateonly_schema = DateOnlyPage.model_json_schema()
         theateronly_schema = TheaterOnlyPage.model_json_schema()
         args.column_crops_dir.mkdir(parents=True, exist_ok=True)
+        column_config = load_column_config(args.column_config) if args.column_config else None
+        if column_config:
+            covered = sum(1 for r in rows if column_group_for(r["page_id"], column_config))
+            print(f"column config: {len(column_config)} group(s); covers "
+                  f"{covered}/{len(rows)} page(s) -- the rest fall back to per-page detection")
         tasks = [
             process_page_columnwise(client, sem, row, args.images_dir, args.out_dir,
                                      args.column_crops_dir, args.model, dateonly_prompt,
-                                     theateronly_prompt, dateonly_schema, theateronly_schema)
+                                     theateronly_prompt, dateonly_schema, theateronly_schema,
+                                     column_config=column_config)
             for row in rows
         ]
     elif args.row_level:
@@ -394,7 +434,8 @@ async def main_async(args):
             process_page_rowlevel(client, sem, row, args.images_dir, args.out_dir,
                                    args.row_crops_dir, args.model, repertoire_prompt,
                                    repertoire_schema, args.header_line_count,
-                                   args.corrected_analysis_dir)
+                                   args.corrected_analysis_dir,
+                                   outer_top_border=not args.cropped_images)
             for row in rows
         ]
     else:
@@ -475,6 +516,10 @@ def main():
                           "review pass (analyze_page + insert_row_boundary/delete_row_boundary) "
                           "-- if a page's pkl exists here, crop from that confirmed boundary set "
                           "instead of running fresh automatic detection")
+    ap.add_argument("--cropped-images", action="store_true",
+                    help="the --images-dir holds pages already cropped to the table "
+                         "(pipeline/crop_to_table.py), so the table's own outer top "
+                         "rule is out of frame -- see detect_rows(outer_top_border=)")
     ap.add_argument("--column-level", action="store_true",
                      help="column-wise Repertoire extraction (known_issues.md #68) -- reads the "
                           "date column and each theater column independently, no row-boundary "
@@ -482,6 +527,10 @@ def main():
                           "column-vs-page cross-check, not a replacement for --row-level -- "
                           "write --out-dir to a separate directory from any other pass over the "
                           "same manifest. Assumes every row in --manifest is Repertoire.")
+    ap.add_argument("--column-config", type=Path, default=None,
+                    help="per-season column divider positions "
+                         "(docs/repertoire_column_bounds.json). Without it, columns "
+                         "are detected per page, which is less reliable")
     ap.add_argument("--column-crops-dir", type=Path, default=None,
                      help="where row_detect.py writes cropped date/theater column images; "
                           "defaults to <out-dir>/column_crops")

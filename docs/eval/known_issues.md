@@ -6252,3 +6252,758 @@ scan-second discipline this file has used throughout caught a real
 mischaracterization here (category A was first read as a session-
 labeling gap, actually a row-boundary split) -- worth remembering next
 time a flag pattern looks self-explanatory from the data alone.
+
+## 69. Row-boundary detection measured from scratch across 225 pages --
+misses outnumber spurious boundaries ~7:1, and 21% of pages detect
+nothing at all; three distinct causes, two of them new
+
+**Status: measured, not fixed.** RG, 2026-09-08: "I want to know the
+failure rate of detecting real rows across the corpus and the failure
+rate of creating spurious rows across the corpus... Let's not make any
+assumptions from previous sessions." Everything below was established
+fresh, against no prior finding in this file.
+
+### Why the existing data could not answer this
+
+Three sources look like ground truth and are not:
+
+- **The gold set** (`docs/eval/gold/`) has only 4 repertoire pages, and
+  its `images/` are downscaled reference copies (e.g.
+  `repertoire_1898-99_p019` at 923x1130 against ~2543x3078 for a real
+  300dpi render). `_detect_line_curves` returns 1-2 curves on them at any
+  threshold -- a pure resolution artifact. **Do not evaluate the detector
+  against the gold images.**
+- **The production extraction** (`raw.event_entry` date counts) is
+  downstream of the thing being measured, and known corrupted on some
+  pages (#49, #68). Circular.
+- **Row counts alone**, from any source: a miss and a spurious cancel.
+  A page with 20 real rows detecting 20 can carry one of each. Scoring
+  has to be at the BOUNDARY level, against positions.
+
+Ground truth here is therefore read by eye from the scans: the date
+column carries exactly one label per real row, so it gives both the true
+count and the true boundary positions. The column sits at the table's
+RIGHT edge on the two-page-spread seasons and its LEFT edge from 1898-99
+on; on the spread seasons the labels are additionally printed rotated 90
+degrees.
+
+### Corpus sweep -- detector output on 225 pages (free, no API calls)
+
+All 8 spread seasons (97 pages) plus 3 single-page seasons rendered for
+this purpose (1898-99, 1902-03, 1906-07 = 128 pages), at
+`presence_frac=0.5`, i.e. current code as it stands.
+
+| season | format | pages | zero curves | <5 rows | median rows |
+|---|---|---|---|---|---|
+| 1890-91 | spread | 13 | 0 | 0 | 24 |
+| 1891-92 | spread | 12 | 0 | 0 | 24 |
+| 1892-93 | spread | 12 | 1 | 4 | 10 |
+| 1893-94 | spread | 12 | 0 | 0 | 18 |
+| 1894-95 | spread | 9 | 0 | 1 | 15 |
+| 1895-96 | spread | 13 | 0 | 1 | 18 |
+| 1896-97 | spread | 13 | 0 | 0 | 20 |
+| 1897-98 | spread | 13 | 0 | 0 | 18 |
+| 1898-99 | single | 40 | 0 | 0 | 12 |
+| 1902-03 | single | 38 | 2 | 3 | 8 |
+| **1906-07** | single | 50 | **45** | 3 | **0** |
+
+**48/225 pages (21.3%) detect ZERO boundaries; 60/225 (26.7%) detect
+fewer than 5 rows**, implausible for tables printing 10-25 dated rows.
+Overwhelmingly concentrated: excluding 1906-07, zero-detection runs
+3/175 (1.7%).
+
+### Miss rate vs spurious rate
+
+Hand-counted ground truth against detected boundary positions:
+
+| page | real rows | implied | missed | spurious |
+|---|---|---|---|---|
+| `repertoire_1898-99_p003` | 12 (16 Среда - 27 Воскрес.) | 12 | ~1 | ~1 |
+| `repertoire_1902-03_p007` | 12 (9 Среда - 21 Понед., 20 genuinely absent) | 9 | 3 | 0 |
+| `repertoire_1902-03_p024` | 12 (27 Понед. - 8 Суббота) | 6 | ~7 | ~1 |
+| `repertoire_1906-07_p041` | ~11 (31 Суббота - 10 Вторн.) | **0** | all | 0 |
+| `repertoire_1892-93_p008` | 20+ (rotated labels, approximate) | 3 | most | 0 |
+
+Across the four counted precisely (~51 real boundaries): **~23 missed,
+~2 spurious. Miss rate ~45%, spurious rate ~6%** -- misses dominate by
+roughly an order of magnitude.
+
+**This is worth holding against #68's category A.** That category
+("spurious mid-row split", 12 of 15 flagged pages) is an EXTRACTION-level
+duplicate -- two partial reads of one row -- not the boundary detector
+inventing a line. At the detection layer, invented boundaries are rare;
+the failure is almost entirely that real printed rules are not found.
+
+### Three distinct causes, measured not assumed
+
+**1. Chain-presence collapse (new).** `_build_chains` finds plenty of
+chains on failing pages; they just do not persist across strips.
+Measured (40 strips each):
+
+| page | chains | chains >= 0.5 presence | top presences |
+|---|---|---|---|
+| `1898-99_p003` (works) | 26 | **13** -> 12 rows | 1.0, 0.95, 0.8, 0.8, 0.8, 0.78 |
+| `1906-07_p041` (zero) | 25 | 2 | 0.9, 0.75, cliff to **0.45** |
+| `1906-07_p011` (zero) | 19 | 2 | 1.0, 1.0, cliff to **0.28** |
+| `1892-93_p008` (3 rows) | 52 | 4 | 1.0, 0.97, 0.9, 0.9, cliff to 0.33 |
+
+On the zero pages the only chains clearing the threshold are the scan
+edges, which `_detect_line_curves`'s edge-artifact filter then correctly
+drops -- leaving nothing. **Not recoverable by lowering the threshold**:
+at 0.25 `p041` yields 7 candidates against ~11 real rows while admitting
+noise. The rules in that scan batch are genuinely weak in the ink
+profile (p95 ink 0.059 vs 0.109 on a working page). The pages are
+entirely legible to a human -- `p041`'s 11 dates were read off by eye
+without difficulty -- so this is a detector failure, not an image one.
+
+**2. `_table_x_bounds` does not locate the table at all (CORRECTED --
+this was first written up here as an over-extension bug, which is wrong).**
+It trims a fixed 8% margin off each edge and returns 8%-92% on EVERY page,
+by design; its own docstring says so, and says why -- precise border
+detection "turned out to be its own hard problem (physical-scan edge
+artifacts -- binding shadow, page curl, background outside the page --
+dominate a raw column-darkness scan far more than the actual thin table
+border does)". So this is not a defect to fix but a documented
+approximation that fails whenever the table does not happen to fill
+~84% of the frame. On `repertoire_1902-03_p024` the table spans ~30%-92%,
+so ~600px of margin, fore-edge and the holder's hand are pulled into the
+range the row-darkness profile is computed over. That page found 6 rows
+against 12 printed.
+
+**3. Scattered single-boundary misses on otherwise healthy pages.**
+`1902-03_p007` detects cleanly either side of a 514px gap
+(1634 -> 2148) spanning three real rows whose rules are plainly visible
+on the scan. No threshold or bounds problem apparent; not root-caused.
+
+### Caveats that limit what these numbers mean
+
+- The precise miss/spurious rates rest on **4-5 hand-counted pages**.
+  Enough to establish that misses dominate by roughly an order of
+  magnitude; NOT a precise corpus rate.
+- The single-page-format frame is **3 of 10 seasons**. 1906-07 may be an
+  unusually poor scan batch; whether its failure extends to the other
+  seven unrendered seasons is unknown and would change the 21.3% figure
+  materially either way.
+- The spread-season ground truth is harder to read (rotated date labels)
+  and `1892-93_p008`'s count is approximate.
+
+### Not done
+
+- Ground truth for the remaining sample pages, particularly the spread
+  format.
+- Whether 1906-07's failure generalises to 1899-00, 1900-01, 1901-02,
+  1903-04, 1904-05, 1905-06, 1907-08.
+- Causes 2 and 3 root-caused or fixed. RG on 1906-07, same session:
+  "I'm sure the 1906-07 failure can be explained and addressed later."
+- A paid full-page vs row-level extraction comparison on the same 10
+  sampled pages (3 samples each, ~1.4M tokens) was launched this session
+  and is separate from the detection measurement above.
+
+### Addendum (2026-09-08): cropping to the table fixes most of this, and
+per-season crops are the practical route -- `pipeline/crop_to_table.py`
+
+RG: "would it help if we cropped images so that page edges and fingers
+didn't confuse the model?" Tested directly, and the answer is yes, by a
+wide margin.
+
+**Mechanism, confirmed not assumed.** Row detection keeps a line only if
+it chains across `presence_frac` of the strips spanning `x0..x1`. Strips
+lying in margin cannot contain a printed rule, so they cap and then
+suppress every real rule's presence. Cropping two failing pages by hand
+(bounds read off a percentage grid, so this tests whether cropping helps
+independently of whether bounds can be found automatically):
+
+| page | GT rows | uncropped | cropped | chains >= 0.5 presence |
+|---|---|---|---|---|
+| `1906-07_p041` | ~11 | **0** | **9** | 2 -> 15 |
+| `1892-93_p008` | ~20+ | **3** | **19** | 4 -> 20 |
+| `1898-99_p003` (control) | 12 | 12 | 10-11 | 13 -> 13 |
+
+**Automatic bound detection failed four ways** and is documented here so
+it is not retried blind: (a) `_binarize` marks the near-black backing
+board as ink, so a widest-dense-run search locks onto the board; (b)
+thresholding relative to the profile's own maximum locks onto the page's
+dark edge line; (c) the low-ink gaps BETWEEN table columns break any
+widest-contiguous-run search, returning one column; (d) the holder's
+fingers are solid ink blobs carrying more mass than the print, so
+cumulative-ink trimming cannot remove them. This is the same wall
+`_table_x_bounds` already documents (cause 2 above).
+
+**What works instead: one hand-set crop per season.** A season is one book
+photographed in one sitting, so framing is stable. Applying a single crop
+read off ONE page to the whole season:
+
+| season | zero-detection pages | median rows | verdict |
+|---|---|---|---|
+| 1906-07 | **45 -> 0** | 0 -> 10 | adopt |
+| 1892-93 | 1 -> 0 | 10 -> 18 | adopt |
+| 1898-99 | 0 -> 0 | 12 -> 10 | **skip** |
+| 1902-03 | 2 -> 4 | 8 -> 10 | **skip** |
+
+**Cropping is NOT universally beneficial** -- on the already-healthy
+1898-99 it costs 1-2 rows (the crop removes the table's outer top/bottom
+borders, which `detect_rows` counts as boundaries), and a badly-read crop
+made 1902-03 worse. Padding the crop outward recovers 1898-99 but
+reintroduces zeros elsewhere (1892-93 at +1.5%, 1906-07 at +3%), so there
+is no single safe padding. A crop must therefore be validated per season
+before adoption.
+
+`pipeline/crop_to_table.py` implements this: `--contact-sheet` writes a
+grid-overlaid sheet for reading bounds by eye, `--evaluate` reports
+detection with and without the crop and prints ADOPT/SKIP, and `--out-dir`
+applies it. This is the same workflow as ScanTailor's "Apply to All
+Pages", without ScanTailor.
+
+**Not done**: bounds for the other 14 seasons; re-reading 1902-03's bounds
+(the ones tried were wrong, not evidence that cropping fails there);
+deciding whether adopted crops feed `run_pilot.py --row-level` directly.
+
+### Addendum (2026-09-08): crop bounds read for all 18 seasons; the
+recto/verso mechanism confirmed (RG's, correcting mine) but per-parity
+crops give no measurable gain over per-season union crops
+
+**All 18 seasons' bounds read** off contact sheets and evaluated with
+`crop_to_table.py --evaluate`. **13 adopt, 5 skip.** The late single-page
+seasons were badly broken and are now fixed:
+
+| season | zero-detection pages | median rows |
+|---|---|---|
+| 1906-07 | **45 -> 0** | 0 -> 10 |
+| 1907-08 | **35 -> 1** | 0 -> 11 |
+| 1904-05 | **31 -> 0** | 0 -> 11 |
+| 1905-06 | **23 -> 0** | 4 -> 11 |
+| 1903-04 | 20 -> 9 | 0 -> 10 |
+| 1901-02 | 3 -> 0 | 10 -> 11 |
+| 1902-03 | 2 -> 1 | 8 -> 11 |
+
+Roughly **154 pages that detected nothing now detect plausible row
+counts**, from eighteen hand-read numbers. Skipped (already healthy, and
+the crop costs their outer border rows): 1890-91, 1891-92, 1893-94,
+1896-97, 1897-98, 1898-99. Config: `docs/repertoire_crop_bounds.json` (kept in docs/, not outputs/, so it survives an outputs/ wipe -- same reasoning as docs/ballet_graduates_tenure.csv).
+
+**Why the table position varies within a season -- RG's explanation,
+which corrects the one first written here.** This file previously said
+1902-03 "wasn't photographed with stable framing." Wrong. RG: "the tables
+are not centered in each page: they are closer to the fold than to the
+outside edge, so the margins are uneven. Pages on the left have a wider
+lefthand margin, and pages on the right have a wider righthand margin."
+
+Confirmed by measuring ink centre-of-mass per page against page parity:
+
+| format | seasons | even COM | odd COM | gap |
+|---|---|---|---|---|
+| two-page spread (1890-91–1897-98) | 8 | -- | -- | **0.000-0.040 (none)** |
+| single page (1898-99–1907-08) | 10 | ~0.31-0.49 | ~0.60-0.76 | **0.17-0.46 (strong)** |
+
+Within a parity group the scatter is small (+/-0.02-0.05) against a gap of
+0.17-0.46. And the format split follows directly from the mechanism: a
+SPREAD image contains both a recto and a verso, so the gutter sits in the
+middle and the asymmetry cancels; only single-page seasons alternate.
+This also supersedes an intermediate guess made here that the split was
+St Petersburg vs Moscow pages -- city correlates with parity in these
+volumes, but the gutter is the mechanism.
+
+**But per-parity crops do not help, tested two ways:**
+- *COM-centred windows* (fixed width centred on each parity's mean COM):
+  WORSE -- 1903-04 zero 9 -> 13, 1907-08 zero 1 -> 5. Centre-of-mass is a
+  poor proxy for the table's centre; fingers and blank areas drag it.
+- *Hand-read per-parity bounds* on the four cleanly-separated seasons
+  (1898-99, 1899-00, 1900-01, 1901-02): **identical** to the union crops --
+  same zero count (0), same median, same `<5 rows` count.
+
+And on the two seasons that still carry residual zeros, parity is not the
+right split at all: 1903-04 and 1907-08 show BOTH positions within EACH
+parity (e.g. 1903-04 p012 at x 6-72% and p024 at 12-78%, both even),
+matching their weak/noisy parity flags (sigma 0.12 and 0.10).
+
+**Conclusion**: once the gross margin (fingers, backing board, fore-edge)
+is removed, row detection is insensitive to the remaining slack -- the
+per-season union crop is already inside the good-enough region. Keep one
+crop per season. 1903-04's residual 9 zero-detection pages are NOT a
+parity problem and remain unexplained.
+
+### Addendum (2026-09-08): `detect_rows` no longer depends on the table's
+outer top border, and post-crop accuracy re-measured -- miss rate
+33.8% -> 4.4% on hand-counted pages
+
+Two changes done together, so the measurement reflects the fixed code.
+
+**1. `detect_rows(..., outer_top_border=False)`.** Cropping tightly enough
+to exclude fingers and the fore-edge also cuts the table's own outer top
+rule. The old code assumed `curves[0]` WAS that rule, so on a cropped page
+`curves[0]` is instead the header-BOTTOM rule -- meaning the band pasted
+onto every row crop as "the header" is actually the first row's content,
+and every row shifts up by one. **That is a correctness bug, not an
+off-by-one in a count.** With the flag set, the header band runs from the
+image's own top edge to `curves[header_line_count - 1]`, and row
+boundaries start one curve earlier. Same principle as `detect_columns`'
+2026-09-01 redesign in this file: depend on interior rules and let the
+outer edge be the image edge.
+
+Default is `True`, so the uncropped path is untouched (verified: row
+counts unchanged on a 6-page sample, and the two known zero-detection
+pages still raise the same ValueError).
+
+Recovered 1-2 rows per page in EVERY season. Four of the six seasons that
+scored SKIP now match or beat their uncropped counts once cropped
+(1891-92 20->22, 1893-94 20->21, 1896-97 20->22, 1897-98 18->20).
+
+**2. Accuracy re-measured against hand-counted ground truth**, since
+median row count is not accuracy and the previous miss/spurious figures
+were measured pre-crop and had gone stale:
+
+| page | GT rows | uncropped | crop + fix |
+|---|---|---|---|
+| `1898-99_p003` | 12 | 12 | 11 |
+| `1902-03_p007` | 12 | 9 | **12** |
+| `1902-03_p024` | 12 | 6 | **12** |
+| `1906-07_p041` | 11 | 0 | 10 |
+| `1893-94_p001` | 21 | 18 | 20 |
+| **total** | **68** | **45** | **65** |
+
+**Miss rate 33.8% -> 4.4%. Spurious: none observed** -- no page
+over-detects against its ground truth, consistent with the pre-crop
+finding that this detector misses rules rather than inventing them.
+
+Corpus-wide, with adopted crops applied across all 519 repertoire pages:
+zero-detection pages **161 -> 11 (31.0% -> 2.1%)**, `<5 rows`
+**183 -> 14 (35.3% -> 2.7%)**.
+
+**Caveats**: five hand-counted pages, four of them single-page format.
+`1898-99_p003` still loses one row when cropped (12 -> 11), consistent
+with its SKIP verdict -- cropping is not free on already-healthy pages.
+`1893-94_p001`'s GT of 21 counts the fold-obscured `23 Четвергъ` row
+confirmed earlier today, which no method recovers from the image.
+
+**Not done**: the 11 residual zero-detection pages (9 in 1903-04, cause
+unknown and NOT parity); wiring adopted crops into
+`run_pilot.py --row-level`, which still renders from uncropped images, so
+none of this reaches extraction yet.
+
+### Addendum (2026-09-08): full-page vs row-level extraction compared
+head to head -- row-level is far more REPRODUCIBLE, but only as good as
+row detection; the two methods fail on disjoint page sets
+
+RG: "How do full page reads compare with row reads?" No row-level output
+existed on this machine, so both were re-run from scratch on the same 10
+sampled pages, **3 independent samples per method** (issue #1: this
+extraction is non-deterministic, so a single sample per method cannot
+separate a real difference from run-to-run noise).
+
+Cost measured, not estimated: **~111k tokens per full-page run vs ~410k
+per row-level run over the same 10 pages -- 3.7x**, close to the 3.5-4x
+predicted from one page becoming 10-12 calls.
+
+**They fail on DISJOINT page sets.**
+- Row-level lost 2/10: `repertoire_1906-07_p041` and `_p011`, both
+  `row_detect_failed` with 0 grid lines. **Row reads inherit row-detection
+  failure completely** -- no boundaries, no extraction at all.
+- Full-page lost 1/10: `repertoire_1891-92_p005`, `Exceeded limit on max
+  bytes per data-uri item: 20971520` (the documented DashScope cap).
+  Row-level SUCCEEDED on that page, because a row crop is far under the
+  limit. **Row reads can extract oversized pages full-page cannot.**
+
+**Row-level is markedly more reproducible.** Mean self-agreement across
+each method's own 3 samples, over the 7 pages both produced:
+**row-level 82%, full-page 57%.**
+
+**But cross-method agreement tracks row-detection quality exactly:**
+
+| page | format | theater-field valid (page/row) | receipts agree |
+|---|---|---|---|
+| `1898-99_p003` | single | 100% / 100% | **100%** |
+| `1902-03_p007` | single | 100% / 100% | **100%** |
+| `1902-03_p024` | single | 100% / 100% | **89%** |
+| `1895-96_p002` | spread | 100% / 99% | 60% |
+| `1892-93_p008` | spread | 100% / 92% | 64% |
+| `1893-94_p001` | spread | 100% / **44%** | 33% |
+| `1892-93_p001` | spread | 80% / 99% | 22% |
+
+Where row detection is healthy (the single-page pages) the two methods
+agree on 89-100% of receipts figures and both keep a valid theater name in
+every cell. Where detection is poor -- the spread pages, which this
+session measured at a 33.8% boundary miss rate uncropped -- row-level
+degrades badly: on `1893-94_p001` **56% of its cells carry a WORK TITLE in
+the `theater` field** ("Аида, оп.", "Le Duc Job, com.") rather than a
+theater name. That is issue #68's category C column-shift, reproduced here
+at scale and shown to be a consequence of bad row crops, not an
+independent bug.
+
+**Methodology note, and a real artifact caught.** A first pass keyed cells
+on `(date, theater, session)` with theater compared verbatim, and reported
+0% self-agreement on `1898-99_p003`. That was entirely an artifact: the
+same cell is emitted as "Большой театр." / "Большой театръ" / "Большой
+театръ." across runs (the #15 театръ/театр orthography variance) while the
+receipts under it are byte-identical. Normalising the ъ and trailing period
+moved that page to 94%/97%/86% on 36/36 shared keys. Same lesson as #21's
+positional-alignment artifact: check the comparison before believing its
+output.
+
+**Caveat**: row-level here ran on UNCROPPED images, so its poor showing on
+spread pages reflects pre-crop detection. Re-running it against the adopted
+crops is the obvious next test and needs a fresh paid run.
+
+### Addendum (2026-09-08): CORRECTION -- the 4.4% miss rate above is wrong
+(it counted the header as a data row); and `outer_top_border=False` must
+NOT be applied blanketly to cropped pages
+
+Found while running the cropped row-level extraction below. Both errors are
+mine, in the measurement and in how the new flag was used.
+
+**1. The crop bounds RETAIN the table's outer top border on virtually every
+page.** Measured directly on the 10-page sample: the first detected curve
+sits at 1.2-4.0% of crop height on 9 of 10 pages -- i.e. it IS the outer
+border, still in frame. Only `1898-99_p003` (5.4%) had it cut. That makes
+sense: the bounds were read AT the table's border, so the border survives.
+
+**2. Therefore `outer_top_border=False` was wrong on those 9 pages**, with
+two consequences:
+- *Measurement*: with the border present, the flag makes `row_boundaries`
+  start one curve early, so the HEADER ROW is counted as a data row. Every
+  cropped count was inflated by one. **The "miss rate 33.8% -> 4.4%" figure
+  in the addendum above is wrong. Corrected: 68 GT rows, 45 detected
+  uncropped (33.8% miss) -> 60 detected cropped with the border retained
+  (11.8% miss).** Still a large improvement, less than half the claimed one.
+  The corpus-wide `161 -> 11 (31.0% -> 2.1%)` figure is unaffected -- it was
+  computed with the border retained -- but an intermediate `161 -> 2` quoted
+  in conversation was inflated the same way and is withdrawn.
+- *Extraction*: the header band becomes the blank sliver above the border,
+  so each row crop carries NO column headings. The model then invents
+  theater names: on `repertoire_1902-03_p007` the cropped run labels the
+  columns Маріинскій/Александринскій/Михайловскій where the page truly
+  prints Большой/Малый/Новый -- while the receipts under them
+  (1265 р. 93 к., 718 р. 11 к., 2213 р. — к.) are byte-identical to the
+  full-page read. **Values right, column labels fabricated.**
+
+**Guidance**: keep the `outer_top_border` parameter -- it is correct where
+the border genuinely is cut -- but leave it at its `True` default with these
+crop bounds, and do NOT pass `run_pilot.py --cropped-images` with them. A
+crop that retains the border needs no flag. If bounds are ever tightened
+past the border, the flag becomes necessary, and whether the border survived
+is cheaply checkable (is the first curve within ~4% of the crop's top edge).
+
+**Note on the validity metric**: "theater-field valid" cannot catch this --
+"Маріинскій" IS a valid theater name, just the wrong one. Only comparison
+against another method's output surfaced it. A field-shape check is not a
+correctness check.
+
+### Addendum (2026-09-08): clean cropped row-level re-run -- cropping
+massively improves row DETECTION but does NOT improve row-level
+EXTRACTION, because the header-reattachment step is separately broken
+
+Re-ran row-level extraction 3x on the same 10 cropped pages with the flag
+left at its `True` default (border retained), 1.53M tokens, 10/10 pages
+every run. Compared against three other conditions on identical pages.
+
+| metric (mean over the sample) | row uncropped | row cropped, wrong flag | **row cropped, clean** |
+|---|---|---|---|
+| theater-field valid | 86% | 89% | **79%** |
+| receipts agree vs full-page | 59% | 69% | **66%** |
+| self-consistency over 3 samples | 85% | -- | **84%** |
+
+**The clean cropped run is not better than the uncropped run.** Detection
+improved enormously (this session: zero-detection pages 161 -> 11
+corpus-wide) and extraction did not follow. That is a real negative result,
+and the cause is not cropping.
+
+**Root cause: the header band pasted onto each row crop is frequently not
+the header.** `detect_rows` defines it as the span between two DETECTED
+curves (`curves[0]` .. `curves[header_line_count]`). Where the column
+headings' own bounding rules are not among the detected curves, the band
+silently lands on data instead. Verified by looking at the crops directly:
+
+- `1895-96_p002`'s row-1 crop carries "Золушка, бал. / Недоросль, ком. /
+  Травіата, оп. / Евгеній Онѣгинъ" as its "header" -- row content.
+  `header_line_count` 1, 2 and 3 all produce the SAME wrong band, so this
+  is not the un-auto-detected `header_line_count` noted in #50: the
+  headings sit ABOVE the first detected curve and are unreachable by any
+  index.
+- `1898-99_p003` (100% correct uncropped) drops to 0% valid theater names
+  cropped. It is the one page in the sample whose crop genuinely CUT the
+  outer border, so `outer_top_border=True` is wrong for it specifically --
+  confirming the flag must be decided PER PAGE, not per batch. The
+  border-survival test is cheap: is the first curve within ~4% of the
+  crop's top edge.
+- Where the header band IS correct, results are excellent:
+  `1902-03_p007`/`p024`, `1906-07_p011`/`p041` all reach 100% theater
+  validity and 90-100% receipts agreement -- and the two 1906-07 pages
+  produced NOTHING at all before cropping.
+
+**What this means practically**: row-level extraction on cropped pages
+cannot be fairly evaluated until the header band is correct. Two concrete
+fixes, both unstarted:
+1. Decide `outer_top_border` per page from the border-survival test above
+   rather than per batch.
+2. Make the header band robust when the headings' rules are not detected --
+   e.g. take everything above the first ROW boundary as header rather than
+   requiring a detected curve pair to bound it.
+
+**Do not read the 66% vs 59% receipts figure as "cropping helps
+extraction"**: the sample mixes pages with correct and corrupted header
+bands, so it measures the header defect more than it measures cropping.
+
+### Addendum (2026-09-08): header-band fix attempted -- NOT solved; a
+verification tool built instead, and why three auto-detection approaches
+failed
+
+RG: "fix the header band." Partially done: the failure is now precisely
+characterised and inspectable, but no robust automatic fix landed. Recorded
+here so the dead ends are not re-run.
+
+**What the band actually is.** `detect_rows` reattaches, to every row crop,
+the image between two DETECTED curves: `curves[0]..curves[header_line_count]`
+when `outer_top_border=True`, or `image top..curves[header_line_count-1]`
+when False. Which is correct depends on whether `curves[0]` is the table's
+outer top rule or the rule *below* the column headings -- and that varies
+PER PAGE, not per season or per format:
+
+- `1898-99_p003`: `True` yields ROW CONTENT as the header; `False` yields
+  the correct headings.
+- `1902-03_p007`: `True` yields the correct headings; `False` additionally
+  pulls in the page's own date caption ("9 октября ... 1902 г."), the exact
+  content #50 documented leaking into `date_text`.
+- `1895-96_p000` needs False, `1895-96_p006` is correct either way --
+  **within one season.**
+
+So neither blanket setting is safe, and per-season configuration (which
+worked for crop bounds) is NOT sufficient here.
+
+**Three auto-detection discriminators tried, all failed on real pages:**
+1. *Distance of `curves[0]` from the crop's top edge* -- cannot distinguish
+   "curve0 is the outer border" from "curve0 is the header-bottom rule";
+   both sit at 1-5% of height.
+2. *Ink density above `curves[0]`* -- a date caption reads as densely as
+   column headings (`1902-03_p007` 0.081 vs `1895-96_p002` 0.190, and
+   `1892-93_p008` 0.0001 for a genuinely blank margin). No threshold
+   separates caption from headings.
+3. *Counting column blocks above `curves[0]`* -- headings on
+   `1895-96_p002` merge into ONE block, scoring identically to a caption,
+   while `1892-93_p001`'s score 9.
+
+**Built: `pipeline/check_header_band.py`.** Renders the band `detect_rows`
+would actually reattach, for BOTH settings side by side, per season, from
+the real row crops rather than recomputing. A correct band shows the column
+headings; a wrong one shows row content or a bare caption. This is what
+makes any per-page or per-season setting verifiable instead of guessed.
+
+**Still open, and this is the blocker for cropped row-level extraction:**
+the band should not be inferred from curve indices at all. A more robust
+design would define it explicitly -- e.g. an anchored y-range per format,
+or reattaching no image header and instead supplying the column names to
+the prompt. Until then, `--cropped-images` should not be used for
+production row-level runs, and the uncropped path remains the default.
+
+### Addendum (2026-09-08): column boundaries measured per season and wired
+into `detect_columns` -- and a structural bug found: the date column was
+assumed to be on the LEFT, which is wrong for every spread season
+
+RG: "let's look at alternative ways of figuring out which rows cells belong
+to" after agreeing automatic geometry detection is not workable at scale.
+The alternative is the column-wise track (#68): read the DATE column for the
+authoritative row sequence, read each THEATER column, and let
+`merge_columnwise_page` align them by calendar day and session label. No
+horizontal row boundaries anywhere -- which removes the component that has
+failed eleven distinct ways.
+
+**Column positions are stable enough to be a per-group constant.** Measured
+`_detect_vertical_dividers` across every page of a group, on CROPPED pages:
+
+| group | sigma of divider position |
+|---|---|
+| 1893-94 (spread, per season) | 0.003-0.013 |
+| 1898-99, per season | 0.056 |
+| 1898-99, **split by parity** | **~0.020** |
+
+against columns 17-25% wide. The parity split is RG's recto/verso finding
+again: within a season crop the table still shifts sideways between recto
+and verso, and splitting on it drops sigma by ~3x. So spread seasons are
+keyed by season (8 groups) and single-page seasons by "season:parity"
+(20 groups) -- **28 groups, in `docs/repertoire_column_bounds.json`**.
+
+**Derived by measurement, not by eye**, taking the median across a whole
+group -- steadier than one visual reading. Gated on EVEN SPACING, since
+theaters are equal-width, which caught three bad groups: `1896-97` (the
+detector returned the table's outer LEFT border as a divider and missed the
+date one), `1907-08:0` (two spurious dividers), `1902-03:1` (4 dividers
+where a 3-theater layout allows 3). Those were hand-corrected against the
+page. **`1907-08:1` remains flagged in `_needs_review`** -- its hand-read
+gaps (0.29/0.24) are too uneven to trust.
+
+**Structural bug found while wiring this in**: `detect_columns` computed the
+date crop as `img[:, 0:dividers[0]]` -- i.e. it assumed the date column is at
+the table's LEFT. That holds from 1898-99 on, but the two-page-spread
+seasons (1890-91..1897-98) put it at the RIGHT. Every spread page run
+through `--column-level` would therefore have had a THEATER's content in its
+date crop. Fixed with a `date_side` parameter, driven from the config.
+
+**Verified end to end on 146 pages across 4 seasons**: config-driven column
+slicing succeeds on 146/146, and the crops were checked by eye for both
+formats -- `1893-94_p006` (spread) yields a date crop holding "Мѣсяцъ, день
+и число" with the rotated dates and theater crops holding Маріинскій /
+Александринскій / Михайловскій; `1898-99_p003` (single) yields 16 Среда..20
+Воскрес and Большой / Малый / Новый. Detection-based slicing "succeeds" on
+the same pages only in the sense that it does not raise -- it has no way to
+guarantee the right column COUNT, which the config does.
+
+**Not done**: `1907-08:1`'s bounds; wiring the config through
+`run_pilot.py --column-level`; and a paid column-wise extraction run to test
+whether this actually beats the row-level and full-page paths.
+
+### Addendum (2026-09-08): DECISION -- different extraction methods for the
+two page formats; column-wise adopted for the single-page seasons (81% of
+Repertoire), spread seasons still unresolved
+
+RG: "It's okay if we have different extraction methods for the two
+different formats." That settles a question this file has been circling all
+day, and the evidence supports splitting.
+
+**Corpus split**: single-page format (1898-99..1907-08) is **422 of 519
+Repertoire pages (81%)**; two-page-spread (1890-91..1897-98) is 97 (19%).
+
+**Column-wise extraction, re-run on corrected crops, receipts compared
+NUMERICALLY** (see the method note below):
+
+| page | format | coverage | receipts agree |
+|---|---|---|---|
+| `1898-99_p003` | single | 100% | **100%** |
+| `1906-07_p041` | single | 100% | **100%** |
+| `1906-07_p011` | single | 92% | **100%** |
+| `1902-03_p007` | single | 67% | **100%** |
+| `1902-03_p024` | single | 50% | 77% |
+| `1895-96_p002` | spread | 38% | 63% |
+| `1893-94_p001` | spread | 80% | 23% |
+| `1892-93_p008` | spread | 35% | 14% |
+
+**Every single-page season reaches 77-100% agreement with the full-page
+baseline; every spread season sits at 14-63%.** The split is by FORMAT, not
+by whether the crop was corrected -- it only became visible once the crop
+bugs and three separate comparison artifacts were cleared.
+
+Why the spread format is harder for this method is plausible but untested:
+5 theater columns instead of 3, date labels printed rotated 90 degrees, and
+the binding fold running through the middle of every page.
+
+**Cost**: column-wise is the CHEAPEST of the three methods, ~7k tokens/page
+against ~11k full-page and ~51k row-level -- roughly 7x cheaper than
+row-level, because a page becomes 4-6 narrow images rather than 10-21 row
+strips.
+
+**Where this leaves each format:**
+- *Single-page (422 pp)*: column-wise is the candidate -- best agreement,
+  lowest cost, and it refuses rather than guesses (`merge_columnwise_page`
+  drops a theater whose row count does not reconcile). The open problem is
+  COVERAGE, not accuracy: 50-100% per page, because of those refusals.
+- *Spread (97 pp)*: **unresolved.** Column-wise is poor; row-level on
+  uncropped spread pages was 13-57% on receipts; full-page remains the
+  incumbent and has no better-tested rival. Do NOT read this addendum as
+  recommending column-wise for spread seasons.
+
+**Method note -- three string-comparison artifacts, all of which made
+correct data look wrong**, in the order they were caught: театръ/театр
+orthography (#15) scoring a page at 0% self-agreement; і/и in Маріинскій/
+Мариинскій flagging two pages as theater-name mismatches; and a Latin `p`
+where the full-page read emits Cyrillic `р` ("611 p, 75 к." vs
+"611 р. 75 к.", the same figure). Receipts are now compared as two NUMBERS
+rather than as strings. Any future comparison of these outputs should do
+the same, and should be checked against a page before its verdict is
+believed.
+
+### Addendum (2026-09-08): Gate 3 STOPPED at 62/332 -- the per-parity column config is the wrong abstraction; dividers are anchored to the TABLE, not to the crop
+
+Gate 3 (the 8 remaining single-page seasons, 332 pp) was launched after
+1898-99 and 1906-07 both passed, and was **killed at 62 pages** once the
+partial output showed a systematic defect. It is not a method failure and
+not a merge failure -- it is the column-divider configuration, and the
+partial run is what exposed it.
+
+**The symptom.** Receipts on even-numbered pages lose their kopecks. The
+rubles are correct, the work titles are correct, the row placement is
+correct, and the kopecks are simply absent, because the column crop ends
+mid-number. Measured as "share of extracted receipts that contain a
+kopecks figure at all", across the 62 pages that completed:
+
+| season  | even pages | odd pages |
+|---------|-----------:|----------:|
+| 1899-00 |        95% |      100% |
+| 1900-01 |        82% |       99% |
+| 1901-02 |        91% |       99% |
+| 1902-03 |        82% |       98% |
+| 1903-04 |    **23%** |      100% |
+| 1904-05 |    **37%** |      100% |
+| 1905-06 |        69% |       98% |
+| 1907-08 |        64% |       98% |
+
+Odd pages are effectively clean everywhere; even pages range from mildly
+to badly truncated. Confirmed by eye at native resolution on
+`repertoire_1903-04_p034`, theater column 0: the crop shows
+`Ромео и Джульетта, оп` and `960 р` with the `60 к.` outside the frame,
+and simultaneously bleeds `Четвергъ.` in from the *date* column on the
+left -- the whole column window sits too far left.
+
+**Why the existing config cannot fix this by retuning.** The dividers in
+`docs/repertoire_column_bounds.json` are fractions **of the cropped
+image**, hand-read per `season:parity`. That assumes the table sits at a
+fixed x-position within the crop for a given parity. It does not. On
+1903-04's even pages alone the table's left edge measured 0.107, 0.184,
+0.220 -- a 0.11 wander *within one parity group*, larger than a whole
+column's worth of tolerance. Parity is only a coarse proxy for where the
+table actually is, which is why odd pages happen to work (their table sits
+near x=0, so crop-relative and table-relative nearly coincide) and even
+pages do not.
+
+**What the geometry actually obeys.** Measure each divider as an offset
+from the table's own left edge and the wander disappears. Detected rules
+were pooled per season as offsets from the table edge (no assumption about
+how many rules a page yields -- see the method note below):
+
+| season  | parity 0 offsets      | parity 1 offsets      | cluster spread |
+|---------|-----------------------|-----------------------|---------------:|
+| 1899-00 | 0.087, 0.339, 0.591   | 0.087, 0.336, 0.587   |          0.021 |
+| 1901-02 | 0.083, 0.321, 0.563   | 0.084, 0.324, 0.564   |          0.003 |
+| 1903-04 | 0.095, 0.344, 0.594   | 0.081, 0.345, 0.619   |          0.038 |
+| 1904-05 | 0.090, 0.354, 0.608   | 0.090, 0.384, 0.644   |          0.079 |
+
+The two parities agree to within a few thousandths on 1899-00 and 1901-02,
+and the first divider lands at 0.083-0.095 in every season measured --
+consistent typesetting, as expected for a fixed page format. Under the
+crop-relative convention the same seasons spread by 0.18-0.25.
+
+**Proposed fix (NOT yet implemented):** detect the table's left edge per
+page and place dividers as offsets from it, collapsing the 28
+`season:parity` groups to one set of offsets per season. Two seasons resist
+the automatic table-edge detection so far (1902-03 parity 1, where the
+detected left edge is clearly too far left, and 1907-08, where the detector
+returns six clusters instead of four); those need the edge found more
+robustly before the convention can be applied corpus-wide.
+
+**Method note -- a broken measurement was nearly reported as a refutation.**
+The first corpus-wide comparison of the two conventions appeared to show
+table-relative was WORSE for 1902-03 and no better for 1899-00. That was a
+bug in the analysis, not a result: the rule detector returns a *variable*
+number of lines per page (sometimes the left border, sometimes not,
+sometimes only two internal dividers), so indexing the "3 internal
+dividers" as `detected[1:4]` compared different physical rules on different
+pages. Pooling every detected rule as an independent offset and clustering
+removes the index assumption, and is what the table above uses.
+
+**Second method note.** The Latin-`p`-for-Cyrillic-`р` artifact (#15) bit a
+*third* time, here in the scoring code rather than the data: a receipts
+parser that located the rubles group by searching for `р` read
+`'332 p. 95 к.'` as 95 kopecks and scored it as a mismatch. This alone
+moved 1906-07's measured receipts agreement from 95.5% to **99.1%**.
+Parse receipts positionally -- first number is rubles, second is kopecks --
+never by keying off the unit letter.
+
+**Third finding -- receipts agreement is blind to dropped rows.** Agreement
+is computed over slots BOTH runs report, so a session the column-wise merge
+never emitted is invisible to it. Counting rows per (day, theater) on
+1906-07, restricted to theater columns the merge reported `ok`: 97.9% of
+slots have identical row counts, with 17 rows dropped by column-wise
+against 9 dropped by full-page (net -8 rows, 0.6%). The column-wise drops
+concentrate on compound days -- 1906-07 p011, p027, p031 and p032 each kept
+the evening row, dropped the morning one, and labelled the survivor
+`session: unspecified` where the full-page read has a утро/вечеръ pair.
+Coverage does not catch these: the column reported `ok`. Any future
+scorecard for this method needs all three numbers -- coverage, row
+completeness, and receipts agreement -- because each is blind to a
+different failure.

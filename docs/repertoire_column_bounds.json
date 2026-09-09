@@ -1,0 +1,392 @@
+{
+  "_note": "Column divider positions for Repertoire tables, as fractions of the CROPPED table width (apply docs/repertoire_crop_bounds.json first). Derived 2026-09-08 by taking the median of pipeline/row_detect._detect_vertical_dividers across every page of a group -- steadier than one visual reading, and within a group the positions vary by only 1-2% of width against columns 17-25% wide. Spread seasons (1890-91..1897-98) are keyed by season, put the DATE column at the table's RIGHT edge, and have 5 theaters. Single-page seasons (1898-99 onward) are keyed 'season:parity' because the recto/verso gutter offset shifts the table within a season crop (splitting by parity drops sigma from 0.056 to ~0.020); they put the DATE column at the LEFT and have 3 theaters. Groups are gated on even spacing, since theaters are equal-width -- check 'evenly_spaced' and 'source' before trusting one. NOTE on the final divider of spread seasons: it bounds the DATE column, which is NARROWER than a theater, so extrapolating it by one theater width overshoots. 1890-91 (0.966) and 1891-92 (0.982) overshot into the date column itself and were corrected against the page to 0.900 and 0.945; the rest landed in a consistent 0.918-0.943 band. Spread seasons therefore fail the even-spacing check by design. IMPORTANT: these fractions are relative to the CROPPED width, so any change to docs/repertoire_crop_bounds.json invalidates them and they must be rescaled or re-derived. 1891-92, 1898-99 and 1902-03 were rescaled on 2026-09-08 for exactly this reason.",
+  "_needs_review": [],
+  "_verified_visually": [
+    "1893-94",
+    "1896-97",
+    "1898-99:0",
+    "1898-99:1",
+    "1904-05:0",
+    "1907-08:0"
+  ],
+  "1890-91": {
+    "format": "spread",
+    "date_side": "right",
+    "dividers": [
+      0.2069,
+      0.3967,
+      0.5856,
+      0.7759,
+      0.9
+    ],
+    "n_pages_agreeing": 12,
+    "extrapolated": true,
+    "source": "measured; final (date) divider hand-corrected 0.966 -> 0.900",
+    "evenly_spaced": false
+  },
+  "1891-92": {
+    "format": "spread",
+    "date_side": "right",
+    "dividers": [
+      0.2469,
+      0.4172,
+      0.587,
+      0.7573,
+      0.8925
+    ],
+    "n_pages_agreeing": 7,
+    "extrapolated": true,
+    "source": "measured; final (date) divider hand-corrected 0.982 -> 0.945; RESCALED x0.944 on 2026-09-08 after the season crop was widened (x1 0.89->0.94) to stop it clipping printed content -- these fractions are relative to the crop, so they move when the crop does",
+    "evenly_spaced": false
+  },
+  "1892-93": {
+    "format": "spread",
+    "date_side": "right",
+    "dividers": [
+      0.2321,
+      0.4055,
+      0.5785,
+      0.7527,
+      0.9261
+    ],
+    "n_pages_agreeing": 6,
+    "extrapolated": true,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1893-94": {
+    "format": "spread",
+    "date_side": "right",
+    "dividers": [
+      0.2438,
+      0.4123,
+      0.5801,
+      0.7494,
+      0.9179
+    ],
+    "n_pages_agreeing": 6,
+    "extrapolated": true,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1894-95": {
+    "format": "spread",
+    "date_side": "right",
+    "dividers": [
+      0.24,
+      0.4153,
+      0.5899,
+      0.766,
+      0.9412
+    ],
+    "n_pages_agreeing": 8,
+    "extrapolated": true,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1895-96": {
+    "format": "spread",
+    "date_side": "right",
+    "dividers": [
+      0.2449,
+      0.4186,
+      0.5913,
+      0.7659,
+      0.9396
+    ],
+    "n_pages_agreeing": 11,
+    "extrapolated": true,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1896-97": {
+    "format": "spread",
+    "date_side": "right",
+    "dividers": [
+      0.257,
+      0.427,
+      0.596,
+      0.766,
+      0.936
+    ],
+    "n_pages_agreeing": 12,
+    "extrapolated": false,
+    "source": "hand-corrected",
+    "evenly_spaced": true
+  },
+  "1897-98": {
+    "format": "spread",
+    "date_side": "right",
+    "dividers": [
+      0.2457,
+      0.4198,
+      0.5938,
+      0.7686,
+      0.9427
+    ],
+    "n_pages_agreeing": 9,
+    "extrapolated": true,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1898-99:0": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.2527,
+      0.4835,
+      0.7216
+    ],
+    "n_pages_agreeing": 16,
+    "extrapolated": false,
+    "source": "measured; RESCALED x0.943 on 2026-09-08 after the season crop was widened (x1 0.87->0.92) to stop it clipping printed content -- these fractions are relative to the crop, so they move when the crop does",
+    "evenly_spaced": true
+  },
+  "1898-99:1": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1516,
+      0.3858,
+      0.6179
+    ],
+    "n_pages_agreeing": 20,
+    "extrapolated": false,
+    "source": "measured; RESCALED x0.943 on 2026-09-08 after the season crop was widened (x1 0.87->0.92) to stop it clipping printed content -- these fractions are relative to the crop, so they move when the crop does",
+    "evenly_spaced": true
+  },
+  "1899-00:0": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.3066,
+      0.5197,
+      0.7333
+    ],
+    "n_pages_agreeing": 19,
+    "extrapolated": false,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1899-00:1": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.2287,
+      0.4422,
+      0.6556
+    ],
+    "n_pages_agreeing": 19,
+    "extrapolated": false,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1900-01:0": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.3039,
+      0.5156,
+      0.7289
+    ],
+    "n_pages_agreeing": 17,
+    "extrapolated": false,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1900-01:1": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.2217,
+      0.4356,
+      0.6492
+    ],
+    "n_pages_agreeing": 19,
+    "extrapolated": false,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1901-02:0": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.3545,
+      0.5571,
+      0.7637
+    ],
+    "n_pages_agreeing": 19,
+    "extrapolated": false,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1901-02:1": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1955,
+      0.3991,
+      0.6032
+    ],
+    "n_pages_agreeing": 18,
+    "extrapolated": false,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1902-03:0": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.327,
+      0.543,
+      0.7633
+    ],
+    "n_pages_agreeing": 11,
+    "extrapolated": false,
+    "source": "measured; RESCALED x0.953 on 2026-09-08 after the season crop was widened (x1 0.9->0.94) to stop it clipping printed content -- these fractions are relative to the crop, so they move when the crop does",
+    "evenly_spaced": true
+  },
+  "1902-03:1": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1097,
+      0.3137,
+      0.533
+    ],
+    "n_pages_agreeing": 5,
+    "extrapolated": false,
+    "source": "measured; CORRECTED 2026-09-08 -- an earlier pass dropped the leading divider as spurious, but 0.115 is the real date|theater-1 boundary and 0.783 was the spurious one (verified against p013/p025). Dropping the wrong end put a theater's content in the date crop.; RESCALED x0.953 on 2026-09-08 after the season crop was widened (x1 0.9->0.94) to stop it clipping printed content -- these fractions are relative to the crop, so they move when the crop does",
+    "evenly_spaced": true
+  },
+  "1903-04:0": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.3151,
+      0.5263,
+      0.7488
+    ],
+    "n_pages_agreeing": 13,
+    "extrapolated": false,
+    "evenly_spaced": true,
+    "source": "re-derived 2026-09-08 against the corrected per-parity crop (x 0.08-0.95); previous values were fractions of a crop that truncated \u041c\u0438\u0445\u0430\u0439\u043b\u043e\u0432\u0441\u043a\u0456\u0439 on every even page"
+  },
+  "1903-04:1": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1223,
+      0.3432,
+      0.5984
+    ],
+    "n_pages_agreeing": 7,
+    "extrapolated": false,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1904-05:0": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.2794,
+      0.4987,
+      0.7217
+    ],
+    "n_pages_agreeing": 21,
+    "extrapolated": false,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1904-05:1": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1629,
+      0.3905,
+      0.6137
+    ],
+    "n_pages_agreeing": 16,
+    "extrapolated": false,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1905-06:0": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.2762,
+      0.4913,
+      0.7056
+    ],
+    "n_pages_agreeing": 20,
+    "extrapolated": false,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1905-06:1": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1863,
+      0.4055,
+      0.6235
+    ],
+    "n_pages_agreeing": 16,
+    "extrapolated": false,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1906-07:0": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.3097,
+      0.544,
+      0.7678
+    ],
+    "n_pages_agreeing": 15,
+    "extrapolated": false,
+    "evenly_spaced": true,
+    "source": "re-derived 2026-09-08 against the CORRECTED per-parity crop (x 0.12-0.94); the previous values were fractions of a crop that sliced the third theater off every even page"
+  },
+  "1906-07:1": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1305,
+      0.3705,
+      0.6127
+    ],
+    "n_pages_agreeing": 14,
+    "extrapolated": false,
+    "source": "measured",
+    "evenly_spaced": true
+  },
+  "1907-08:0": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.333,
+      0.585,
+      0.807
+    ],
+    "n_pages_agreeing": 12,
+    "extrapolated": false,
+    "source": "hand-corrected",
+    "evenly_spaced": true
+  },
+  "1907-08:1": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.115,
+      0.32,
+      0.53
+    ],
+    "n_pages_agreeing": 8,
+    "extrapolated": false,
+    "source": "hand-read from the page 2026-09-08, REPLACING an earlier hand estimate [0.19, 0.48, 0.72] that fell inside \u0411\u043e\u043b\u044c\u0448\u043e\u0439, inside \u041c\u0430\u043b\u044b\u0439 and past \u041d\u043e\u0432\u044b\u0439; that estimate was flagged _needs_review and never used in a run",
+    "evenly_spaced": true
+  }
+}

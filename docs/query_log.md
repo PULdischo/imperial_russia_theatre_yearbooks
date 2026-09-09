@@ -3780,3 +3780,152 @@ spurious -- removed from the confirmed list. Re-checked the other 6
 pages with exact-curve-overlay-on-tight-crop precision (not wide
 eyeball zoom); all 6 held up. Corrected confirmed-spurious list: 6
 pages (p019, p028, p030, p036, p037, p039), not 7.
+
+## 2026-09-08 — Can the spread-format seasons skip ScanTailor? Row-boundary detection measured against raw renders, 1893-94
+
+Re-ran the 2026-08-26 ground-truth query (unchanged) to score a fresh
+raw-render detection sweep against:
+
+```sql
+SELECT page_id, COUNT(DISTINCT date_text) AS n_dates
+FROM raw.event_entry
+WHERE page_id LIKE 'repertoire_1893-94_%'
+GROUP BY page_id ORDER BY page_id;
+```
+
+Result: 12 pages, unchanged from 2026-08-26 — p000-p011 at 20/20/20/20/20/
+19/20/**29**/19/18/20/19. p007's 29 is known-corrupt (issue #49: real page
+ends Feb 3, ~20 dates; the raw JSON fabricates 12 dates past the end of the
+physical page), so p007 is excluded from scoring below.
+
+**Caveat on calling this "ground truth"**: these counts come from the
+production extraction's own raw JSON, not from hand-transcribed gold —
+none of the 12 gold pages are in the 1893-94 season. It is a proxy good
+enough to detect gross under/over-detection, not a byte-exact standard.
+
+**What was measured** (free, local, no API calls; rendered to a scratch
+dir, nothing under `outputs/` touched): `ForUpload_1893-94_Repertoire.pdf`
+re-rendered raw at 300dpi — NO ScanTailor — and `_detect_line_curves`
+run over all 12 pages at three presence_frac values. Row count derived as
+`n_curves - 2` (header_line_count=1).
+
+| presence_frac | pages within ±1 of proxy truth (of 11) | diff range |
+|---|---|---|
+| 0.7 (old default) | 4 | -11 … +1 |
+| 0.5 (current `detect_rows`) | 4 | -7 … +4 |
+| 0.4 | 3 | -5 … +4 |
+
+**Finding: the errors are page-to-page scatter, not a constant offset.**
+At 0.5 the same season contains both p000 at -7 and p008 at +4. This
+matters because a uniform miscount (e.g. if `header_line_count` is really
+2 for this two-page-spread format rather than 1, which is not yet
+confirmed) would shift every page by the same amount and is therefore
+ruled out as the explanation. No single threshold fixes it: lowering to
+0.4 trades under-detection for over-detection and scores slightly worse
+overall.
+
+**Conclusion**: raw renders are NOT a drop-in substitute for ScanTailor on
+the two-page-spread seasons (1890-91–1897-98, 97 pages). This is
+consistent with, and does not contradict, the post-1898-99 finding that
+raw scans need no ScanTailor at all — those are a different physical
+format (single page per city, table away from the binding fold).
+Automating the manual step for the 97 spread pages therefore means
+replacing what ScanTailor does (deskew + page-box crop + fill margins),
+not simply dropping it.
+
+## 2026-09-08 — Fold damage on the two-page-spread seasons: one row lost per spread, confirmed against the scan, and a 40x day-of-week failure rate split exactly at the format boundary
+
+Follow-up to the same-day ScanTailor-independence work above. RG: "I am
+prepared to go back and fill in any text that is obscured by the fold.
+Just flag the text that is obscured."
+
+**1. Direct scan-vs-database comparison, `repertoire_1893-94_p001`.**
+Traced the fold, cropped it at native resolution, and read the printed
+page directly against what the pipeline extracted.
+
+Printed (confirmed by eye at native resolution, date column and
+Маріинскій/Александринскій columns):
+
+| printed date | Маріинскій | receipts |
+|---|---|---|
+| 22 Среда | Карменъ, оп. | 2857 р. 13 к. |
+| **23 Четвергъ** | **Лоэнгринъ, оп.** | **in the fold** |
+| 24 Пятница | Вражья сила, оп. | 2005 р. 60 к. |
+
+What the database has:
+
+```sql
+SELECT e.date_text, e.theater, e.receipts_text,
+       string_agg(p.performance_title, ' | ' ORDER BY p.performance_order)
+FROM raw.event_entry e
+LEFT JOIN raw.event_entry_performance p ON p.event_id = e.event_id
+WHERE e.page_id = 'repertoire_1893-94_p001' AND e.theater = 'Маріинскій'
+GROUP BY 1,2,3 ORDER BY min(e.event_id);
+```
+
+Result: `22 Четвергъ / Карменъ / 2857 р. 13 к.` then
+`23 Пятница / Вражья сила / 2005 р. 60 к.` — the **`23 Четвергъ`
+Лоэнгринъ row is absent entirely**, and every following date carries the
+correct day-NAME with a day-NUMBER one lower than the print.
+
+Confirmed the row is not merely misfiled elsewhere:
+
+```sql
+SELECT count(*) FROM raw.event_entry e
+JOIN raw.event_entry_performance p ON p.event_id = e.event_id
+WHERE p.performance_title LIKE '%Лоэнгринъ%'
+  AND e.page_id LIKE 'repertoire_1893-94%';
+```
+
+Result: **0** on `p001` and **0 across the entire 1893-94 season**, for a
+major repertory opera that is plainly printed on the page. Same check:
+`Пиковая дама` 0 on p001 (8 elsewhere in the season), `Семейныя тайны`
+0 on p001 (2 elsewhere).
+
+So the fold does not merely clip a receipts figure — on this page it cost
+the dataset **one entire dated row across all five theaters**, plus a
+cascading one-day renumbering of every row after it.
+
+**2. Does this generalize? Day-of-week verification rate by page format.**
+`validate_performance_dates.py` already checks each date_text's day-number
+against its printed day-name; a fold-induced dropped row shows up as drift.
+
+```sql
+SELECT CASE WHEN substr(e.page_id,12,7) < '1898-99' THEN 'spread' ELSE 'single' END era,
+       count(*) cells,
+       sum(CASE WHEN c.date_confidence = 'verified' THEN 1 ELSE 0 END) verified
+FROM raw.event_entry e
+JOIN analysis.event_entry_date_check c USING(event_id)
+WHERE e.page_id LIKE 'repertoire_%' GROUP BY 1;
+```
+
+Result:
+
+| era | cells | not verified |
+|---|---|---|
+| spread, 1890-91–1897-98 | 8,941 | **35.6%** |
+| single-page, 1898-99–1907-08 | 14,931 | **0.9%** |
+
+Per season the spread range is 21.8% (1890-91) to 62.9% (1892-93); the
+single-page range is 0.1% to 3.0%. **A ~40x difference, splitting exactly
+at the format boundary** — independent corroboration, from a check built
+for an unrelated purpose, that the two-page-spread format is where the
+damage is concentrated.
+
+Breakdown of the 3,181 non-verified spread-season cells: 1,902
+`corrected` (day-name/number drift the validator could resolve) and 1,279
+`unresolved`/`intra_block_disagreement`/`unparseable`.
+
+**Caveat, stated because it limits what the 3,181 means**: not all of it
+is fold damage. It is a superset — fold-dropped rows and their
+renumbering cascade, plus the pre-existing date bugs already tracked in
+issues #48/#49, plus genuine printed closures. The fold-specific
+population is much smaller and bounded: one obscured row per spread,
+5 theater cells each, ~97 spreads => **on the order of 485 cells** for
+hand-transcription.
+
+**Method note (not a query)**: a mistaken first version of the era query
+used `substr(page_id,13,7)`, which slices `'893-94_'` rather than
+`'1893-94'` and collapsed every season into one bucket at 100% flagged.
+Corrected to `substr(page_id,12,7)` — `'repertoire_'` is 11 characters.
+The bad numbers were not used.

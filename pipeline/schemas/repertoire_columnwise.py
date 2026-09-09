@@ -75,90 +75,168 @@ def _session_record(date_text: str, session: str, theater: str, t: dict,
     }
 
 
+class MergeResult:
+    """Outcome of aligning one theater column against the date column.
+
+    Replaces the old `list | None` return (2026-09-08). `None` discarded a
+    whole theater-page -- up to 20 reconciled days thrown away because one
+    was ambiguous -- and measured at 79% loss on columns carrying any
+    compound day (docs/eval/known_issues.md #69). Now the reconciled days
+    are kept and only the ambiguous ones are reported in `unresolved`."""
+
+    __slots__ = ("sessions", "unresolved", "n_date_days", "n_theater_rows", "reason")
+
+    def __init__(self, sessions, unresolved, n_date_days, n_theater_rows, reason=""):
+        self.sessions = sessions
+        self.unresolved = unresolved
+        self.n_date_days = n_date_days
+        self.n_theater_rows = n_theater_rows
+        self.reason = reason
+
+    @property
+    def ok(self) -> bool:
+        return not self.unresolved and bool(self.sessions)
+
+
+def _date_groups(dates: list[dict]) -> list[tuple[str, list[dict]]]:
+    """Consecutive date-column rows sharing a date_text are one calendar day
+    that the DATE column itself marked as split."""
+    out: list[tuple[str, list[dict]]] = []
+    for d in dates:
+        if out and out[-1][0] == d["date_text"]:
+            out[-1][1].append(d)
+        else:
+            out.append((d["date_text"], [d]))
+    return out
+
+
+def _theater_days(theater_rows: list[dict]) -> list[list[dict]]:
+    """Groups one theater's rows into calendar days using the THEATER's own
+    УТРО/ВЕЧ labels.
+
+    This is the 2026-09-08 correction, and it reverses an assumption this
+    module was built on. Session subdivision is NOT a property of the day --
+    it is printed inside each theater's own cell, and one theater can split
+    a day its neighbours print whole. Verified directly on
+    repertoire_1898-99_p009's "25 Воскрес.": Большой and Малый each print
+    one cell, while Новый prints two, with УТРО/ВЕЧ markers in a narrow
+    strip inside NOVY's column. The date column carries no marker at all
+    there -- correctly, since it reports DAYS.
+
+    Asking the date column how many sessions a day has was therefore asking
+    a question the page does not answer, and it is why theaters that split
+    were refused: measured across 1898-99, the date column reported 42
+    compound days while the theater columns' own labels reported 61.
+
+    A `morning` row immediately followed by an `evening` row is one day
+    printed as two sessions. Anything else is one row, one day.
+    """
+    rows = sorted(theater_rows, key=lambda r: r["index"])
+    days: list[list[dict]] = []
+    i = 0
+    while i < len(rows):
+        if (rows[i].get("session") == "morning"
+                and i + 1 < len(rows)
+                and rows[i + 1].get("session") == "evening"):
+            days.append([rows[i], rows[i + 1]])
+            i += 2
+        else:
+            days.append([rows[i]])
+            i += 1
+    return days
+
+
 def merge_columnwise_page(date_rows: list[dict], theater: str,
                            theater_rows: list[dict],
                            month_text: str | None = None,
-                           year_text: str | None = None) -> list[dict] | None:
-    """Aligns one theater's rows against the date sequence by GROUPING the
-    dates into calendar days first, then matching each day's theater
-    row(s) by session label -- not by raw list position (2026-09-01
-    redesign, docs/eval/known_issues.md #68 addendum; see `TheaterRowLLM`'s
-    `session` field docstring for the confirmed evidence this replaces).
+                           year_text: str | None = None) -> "MergeResult":
+    """Aligns one theater's column against the date column's calendar.
 
-    A "compound" calendar day is 2 adjacent DateRowLLM entries sharing the
-    same `date_text` (that's what session-splitting in the date column
-    means). For each such day, three outcomes, checked in order:
+    The date column supplies the DATE SEQUENCE and nothing else. How many
+    sessions a given day holds is decided per theater, from that theater's
+    own УТРО/ВЕЧ labels -- see `_theater_days` for the evidence that this,
+    not the date column, is where the page marks it.
 
-    1. The next 2 theater rows' session labels are exactly {morning,
-       evening} (a set, order-independent) -- this theater DOES split the
-       day too. Match each date sub-row to the theater row with the same
-       session label, consume both.
-    2. The next 1 theater row is NOT itself a confident morning/evening
-       match for a 2-way split (i.e. outcome 1 didn't apply) -- treat this
-       as a theater that genuinely doesn't subdivide this particular day
-       (confirmed real and correct on repertoire_1898-99_p008's
-       Михайловскій column, which reads real content once where
-       Маріинскій reads twice the same day). Emit ONE session record for
-       the whole day rather than forcing a false split, consuming only 1
-       theater row.
-    3. Not enough theater rows remain to do either -- unresolved, same as
-       any other real count mismatch.
+    Alignment is then one theater-day to one calendar date, in order. When
+    the two counts agree, every date is filled. When they do not, the
+    matching prefix and suffix are still emitted and only the region that
+    cannot be placed is reported in `.unresolved` -- a mismatch means rows
+    have shifted somewhere in the middle, so days on either side of it are
+    still soundly anchored to the ends.
 
-    A simple (non-compound) day always consumes exactly 1 theater row.
-
-    Returns None -- not a best-effort partial merge -- if theater rows run
-    out early, or are left over at the end unconsumed: either means this
-    theater's read still doesn't reconcile with the date column even
-    session-aware, which is itself the signal the cross-check this feeds
-    into is built to catch. This is deliberately conservative: outcome 1
-    only fires on an EXACT, unambiguous session-label match -- anything
-    murkier (e.g. both theater rows say "unspecified" when two real,
-    distinct sessions plausibly exist) falls through to outcome 2 taking
-    just one row, since guessing which of two ambiguous rows is which
-    session is exactly the kind of silent misattribution this whole
-    date/theater-split design exists to avoid."""
+    Returns a `MergeResult`, never None: refusing a whole theater-page for
+    one bad day discarded up to 20 good days and measured at 79% loss
+    (docs/eval/known_issues.md #69).
+    """
     dates = sorted(date_rows, key=lambda r: r["index"])
-    theaters = sorted(theater_rows, key=lambda r: r["index"])
-
-    date_groups: list[tuple[str, list[dict]]] = []
+    calendar: list[tuple[str, str]] = []
     for d in dates:
-        if date_groups and date_groups[-1][0] == d["date_text"]:
-            date_groups[-1][1].append(d)
-        else:
-            date_groups.append((d["date_text"], [d]))
+        dt = d["date_text"]
+        if calendar and calendar[-1][0] == dt:
+            continue                      # date column occasionally repeats a day
+        calendar.append((dt, d.get("session", "unspecified")))
 
-    sessions = []
-    ti = 0
-    for date_text, group in date_groups:
-        if len(group) == 1:
-            if ti >= len(theaters):
-                return None
-            t = theaters[ti]; ti += 1
-            sessions.append(_session_record(
-                date_text, group[0].get("session", "unspecified"), theater, t,
-                month_text, year_text))
-            continue
+    tdays = _theater_days(theater_rows)
 
-        expected_sessions = {d.get("session", "unspecified") for d in group}
-        if (ti + 1 < len(theaters)
-                and {theaters[ti].get("session", "unspecified"),
-                     theaters[ti + 1].get("session", "unspecified")} == expected_sessions
-                and "unspecified" not in expected_sessions):
-            by_session = {theaters[ti].get("session"): theaters[ti],
-                          theaters[ti + 1].get("session"): theaters[ti + 1]}
-            ti += 2
-            for d in group:
-                t = by_session[d.get("session", "unspecified")]
+    def emit(date_text, day_rows):
+        if len(day_rows) == 2:
+            return [_session_record(date_text, r.get("session", "unspecified"),
+                                     theater, r, month_text, year_text)
+                    for r in day_rows]
+        return [_session_record(date_text, day_rows[0].get("session", "unspecified"),
+                                 theater, day_rows[0], month_text, year_text)]
+
+    n_cal, n_th = len(calendar), len(tdays)
+    if n_cal == n_th:
+        sessions = []
+        for (dt, _), day in zip(calendar, tdays):
+            sessions.extend(emit(dt, day))
+        return MergeResult(sessions, [], n_cal, len(theater_rows))
+
+    # Labels did not reconcile. They are not always emitted: measured over
+    # 1898-99, Маріинскій returned 32/33 morning/evening pairs and Новый
+    # 17/17, but Александринскій returned ONE label across 252 rows while
+    # genuinely splitting days on 11 pages. So fall back to arithmetic,
+    # using the date column's own compound days as the candidate split
+    # positions -- the two sources are complementary rather than rival:
+    # labels know which day split when present, the date column knows when
+    # it marked one, and either alone leaves a different theater stranded.
+    compound = [i for i, (_, g) in enumerate(_date_groups(dates)) if len(g) > 1]
+    groups = _date_groups(dates)
+    n_rows = len(theater_rows)
+    needed = n_rows - len(groups)
+    if 0 <= needed <= len(compound):
+        plan = [1] * len(groups)
+        if needed == len(compound):
+            for idx in compound:
+                plan[idx] = 2
+        elif needed > 0:
+            # Ambiguous which of the compound days split; do not guess.
+            return MergeResult(
+                [], [dt for dt, _ in groups], len(groups), n_rows,
+                reason=(f"{needed} split(s) needed among {len(compound)} compound "
+                        f"day(s), and no labels to say which"))
+        rows_sorted = sorted(theater_rows, key=lambda r: r["index"])
+        sessions, ti = [], 0
+        for idx, (dt, grp) in enumerate(groups):
+            take = plan[idx]
+            chunk = rows_sorted[ti:ti + take]
+            ti += take
+            if take == 2 and len(grp) == 2:
+                for k, dsub in enumerate(grp):
+                    sessions.append(_session_record(
+                        dt, dsub.get("session", "unspecified"), theater, chunk[k],
+                        month_text, year_text))
+            else:
                 sessions.append(_session_record(
-                    date_text, d.get("session", "unspecified"), theater, t,
-                    month_text, year_text))
-        elif ti < len(theaters):
-            t = theaters[ti]; ti += 1
-            sessions.append(_session_record(
-                date_text, "unspecified", theater, t, month_text, year_text))
-        else:
-            return None
+                    dt, grp[0].get("session", "unspecified") if len(grp) == 1 else "unspecified",
+                    theater, chunk[0], month_text, year_text))
+        return MergeResult(sessions, [], len(groups), n_rows)
 
-    if ti != len(theaters):
-        return None
-    return sessions
+    # Neither source explains the discrepancy, and it cannot be localised:
+    # emitting a plausible-looking but wrongly-dated row is the failure this
+    # whole date/theater split exists to prevent.
+    return MergeResult(
+        [], [dt for dt, _ in _date_groups(dates)], n_cal, len(theater_rows),
+        reason=(f"{n_th} theater day(s) against {n_cal} calendar date(s); "
+                f"{len(theater_rows)} row(s) -- cannot localise"))

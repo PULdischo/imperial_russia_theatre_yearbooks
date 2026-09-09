@@ -596,7 +596,9 @@ class ColumnCrop:
 
 
 def detect_columns(image_path: Path, out_dir: Path,
-                    date_pad: int = 120, theater_pad: int = 15) -> list[ColumnCrop]:
+                    date_pad: int = 120, theater_pad: int = 15,
+                    dividers_frac: list[float] | None = None,
+                    date_side: str = "left") -> list[ColumnCrop]:
     """Detects the table's vertical column dividers and writes one
     (date_column_image, theater_column_image) pair per theater column --
     see `ColumnCrop`'s docstring for why these are separate files, not
@@ -630,32 +632,67 @@ def detect_columns(image_path: Path, out_dir: Path,
     across pages the same way row heights do -- RG, 2026-09-01), and on
     one page (repertoire_1898-99_p024) that fragility didn't just fail
     loudly, it silently produced a THEATER column where the date crop
-    should have been."""
+    should have been.
+
+    2026-09-08: `dividers_frac` supplies divider positions directly, as
+    fractions of image width, instead of detecting them per page -- see
+    docs/repertoire_column_bounds.json. Within a season (and, for
+    single-page seasons, a page parity) positions vary by only 1-2% of
+    width against columns 17-25% wide, so a measured per-group constant
+    is steadier than per-page detection, which finds the right divider
+    count on only 31/40 pages of a season. Detection stays the default.
+
+    `date_side` exists because the two formats put the date column on
+    opposite sides: RIGHT on the two-page-spread seasons (1890-91..
+    1897-98), LEFT from 1898-99 on. This function previously assumed
+    left unconditionally, which silently mis-sliced every spread page --
+    its date crop would have held a theater's content."""
     out_dir.mkdir(parents=True, exist_ok=True)
     img = cv2.imread(str(image_path))
     if img is None:
         raise FileNotFoundError(f"could not read image: {image_path}")
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    dividers = _detect_vertical_dividers(gray)
-    if len(dividers) < 2:
-        raise ValueError(
-            f"{image_path.name}: only found {len(dividers)} internal column "
-            f"divider(s), need at least 2 (date/theater-1 boundary plus at "
-            f"least one theater/theater boundary) -- detection likely failed "
-            f"on this page, inspect before trusting output"
-        )
-
     W = img.shape[1]
-    x1_date = int(dividers[0].max()) + date_pad
-    date_crop = img[:, 0:x1_date]
+    if date_side not in ("left", "right"):
+        raise ValueError(f"date_side must be 'left' or 'right', got {date_side!r}")
+
+    if dividers_frac is not None:
+        if len(dividers_frac) < 2:
+            raise ValueError(
+                f"{image_path.name}: dividers_frac needs at least 2 positions, "
+                f"got {len(dividers_frac)}")
+        xs = [int(round(f * W)) for f in sorted(dividers_frac)]
+        lo = hi = xs                  # a constant divider has no min/max spread
+    else:
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        dividers = _detect_vertical_dividers(gray)
+        if len(dividers) < 2:
+            raise ValueError(
+                f"{image_path.name}: only found {len(dividers)} internal column "
+                f"divider(s), need at least 2 (date/theater-1 boundary plus at "
+                f"least one theater/theater boundary) -- detection likely failed "
+                f"on this page, inspect before trusting output"
+            )
+        lo = [int(d.min()) for d in dividers]
+        hi = [int(d.max()) for d in dividers]
+
+    n_div = len(lo)
+    if date_side == "left":
+        date_span = (0, min(W, hi[0] + date_pad))
+        bounds = [(max(0, lo[i] - theater_pad),
+                   min(W, hi[i + 1] + theater_pad) if i + 1 < n_div else W)
+                  for i in range(n_div)]
+    else:
+        date_span = (max(0, lo[-1] - date_pad), W)
+        bounds = [(0 if i == 0 else max(0, lo[i - 1] - theater_pad),
+                   min(W, hi[i] + theater_pad))
+                  for i in range(n_div)]
+
+    date_crop = img[:, date_span[0]:date_span[1]]
     date_path = out_dir / f"{image_path.stem}__dateonly.png"
     cv2.imwrite(str(date_path), date_crop)
 
     results = []
-    n_theaters = len(dividers)
-    for i in range(n_theaters):
-        x0_th = max(0, int(dividers[i].min()) - theater_pad)
-        x1_th = (int(dividers[i + 1].max()) + theater_pad) if i + 1 < n_theaters else W
+    for i, (x0_th, x1_th) in enumerate(bounds):
         theater_crop = img[:, x0_th:x1_th]
         theater_path = out_dir / f"{image_path.stem}__theateronly_{i}.png"
         cv2.imwrite(str(theater_path), theater_crop)
@@ -804,7 +841,8 @@ def _adaptive_pads(row_boundaries: list[np.ndarray], row_pad: int,
 
 def detect_rows(image_path: Path, out_dir: Path, header_line_count: int = 1,
                  row_pad: int = 25, analysis: PageAnalysis | None = None,
-                 presence_frac: float = 0.5) -> list[RowCrop]:
+                 presence_frac: float = 0.5,
+                 outer_top_border: bool = True) -> list[RowCrop]:
     """Main entry point. Detects grid lines on the page (or uses an
     already-reviewed/corrected `analysis` from `analyze_page` +
     `insert_row_boundary`/`delete_row_boundary` -- pass one in to crop
@@ -870,20 +908,41 @@ def detect_rows(image_path: Path, out_dir: Path, header_line_count: int = 1,
     else:
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         curves = _detect_line_curves(gray, presence_frac=presence_frac)
-    if len(curves) < header_line_count + 2:
+    # `outer_top_border=False` means the table's own outer top rule is not in
+    # frame -- which is exactly what pipeline/crop_to_table.py produces, since
+    # a crop tight enough to exclude fingers and the fore-edge also cuts the
+    # table's border. Without this flag a cropped page silently mis-slices:
+    # curves[0] is then the HEADER-BOTTOM rule, so the band pasted onto every
+    # row crop as "the header" is actually the first row's content, and every
+    # row shifts up by one. That is a correctness bug, not just an off-by-one
+    # in the row count. Same principle as detect_columns' 2026-09-01 redesign
+    # (known_issues.md #68): depend on interior rules, let the outer edge be
+    # the image's own edge.
+    if outer_top_border:
+        min_curves = header_line_count + 2
+    else:
+        if header_line_count < 1:
+            raise ValueError("outer_top_border=False requires header_line_count >= 1")
+        min_curves = header_line_count + 1
+    if len(curves) < min_curves:
         raise ValueError(
             f"{image_path.name}: only found {len(curves)} grid line(s), "
-            f"need at least {header_line_count + 2} (header lines + at "
+            f"need at least {min_curves} (header lines + at "
             f"least one row's top/bottom boundary) -- detection likely "
             f"failed on this page, inspect before trusting output"
         )
 
-    header_bottom_curve = curves[header_line_count]
-    header_top_curve = curves[0]
+    if outer_top_border:
+        header_bottom_curve = curves[header_line_count]
+        header_top_curve = curves[0]
+    else:
+        header_bottom_curve = curves[header_line_count - 1]
+        header_top_curve = np.zeros(img.shape[1], dtype=curves[0].dtype)
     header_img = _dewarp_band(img, header_top_curve, header_bottom_curve, pad_top=2, pad_bottom=2)
 
     results = []
-    row_boundaries = curves[header_line_count:]
+    row_boundaries = (curves[header_line_count:] if outer_top_border
+                      else curves[header_line_count - 1:])
     boundary_pads = _adaptive_pads(row_boundaries, row_pad)
     for i in range(len(row_boundaries) - 1):
         top_curve = row_boundaries[i]
