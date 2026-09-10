@@ -194,7 +194,12 @@ def parse_gold_file(path: Path) -> ReviewPageLLM:
 
     close_block()
 
+    # "no" / "none" / "-" are natural things to type in a field that is
+    # otherwise left blank; treat them as blank rather than as an artifact
+    # literally named "no".
     artifacts = fields.get("copy_artifacts", "").strip()
+    if artifacts.lower() in ("no", "none", "n/a", "-", "nothing"):
+        artifacts = ""
     return ReviewPageLLM(
         printed_folio=fields.get("printed_folio", "").strip() or None,
         tailpiece_present=fields.get("tailpiece_present", "").strip().lower() in TRUTHY,

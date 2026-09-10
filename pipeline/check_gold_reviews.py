@@ -34,6 +34,17 @@ HEADERISH_RE = re.compile(r"^\[([a-zA-Z_][a-zA-Z_ )0-9]*)\]\s*$")
 # for. Abbreviations (соч., карт.) legitimately end without one, so a token
 # followed by a full stop is exempt.
 HARD_CONSONANTS = "бвгджзклмнпрстфхцчшщ"
+
+# Cyrillic and Latin share many identical-looking glyphs (о/o, е/e, а/a, р/p,
+# с/c, х/x, у/y, В/B, Н/H, Т/T ...). A word mixing the two scripts is almost
+# always a keyboard-layout slip -- and it is invisible on screen, so nothing
+# but a codepoint check will find it. This page mixes French and Russian
+# constantly, which makes the slip likely rather than rare.
+CYR = set("абвгдежзийклмнопрстуфхцчшщъыьэюяѣіѳѵ"
+          "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯѢІѲѴЁё")
+LAT = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+          "àâçéèêëîïôùûüÿœæÀÂÇÉÈÊËÎÏÔÙÛÜŸŒÆ")
+MIXED_WORD_RE = __import__("re").compile(r"[^\W\d_]{2,}")
 WORD_RE = re.compile(r"[А-Яа-яЁёѢѣІіѲѳѴѵЪъЬь]+")
 
 WATCHED = [
@@ -90,6 +101,39 @@ def lint(path: Path) -> tuple[list[str], list[str], dict]:
     except GoldParseError as e:
         errors.append(str(e))
         return errors, warns, stats
+
+    # Invisible whitespace. None of this is visible on screen, and every one
+    # of them is a straight character mismatch against the model's output.
+    for b in page.blocks:
+        for txt, where in ((block_plain_text(b), "text"),
+                           (spans_plain_text(b.caption), "caption")):
+            for bad, name in (("\t", "TAB"), ("\u00a0", "non-breaking space"),
+                              ("  ", "double space")):
+                if bad in txt:
+                    i = txt.index(bad)
+                    warns.append(
+                        f"{b.block_type} {where}: {name} at "
+                        f"...{txt[max(0,i-22):i+12]!r}... — invisible on screen, "
+                        f"but a character mismatch")
+    for ln, line in enumerate(body_lines, 1):
+        if line != line.rstrip():
+            warns.append(f"line {ln}: trailing whitespace")
+
+    # mixed-script words
+    for b in page.blocks:
+        for txt in (block_plain_text(b), spans_plain_text(b.caption)):
+            for m in MIXED_WORD_RE.finditer(txt):
+                word = m.group(0)
+                cyr = [c for c in word if c in CYR]
+                lat = [c for c in word if c in LAT]
+                if cyr and lat:
+                    # In this corpus Cyrillic is the base script and stray
+                    # Latin lookalikes are the error, so name the Latin ones.
+                    latin = "".join(sorted(set(lat)))
+                    warns.append(
+                        f"MIXED SCRIPT in {word!r}: the Latin letter(s) "
+                        f"{latin!r} sit inside a Cyrillic word — identical on "
+                        f"screen, almost always a keyboard-layout slip")
 
     plain = page_plain_text(page)
     stats["punct"] = [(label, plain.count(ch)) for ch, label in WATCHED

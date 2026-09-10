@@ -344,6 +344,31 @@ U+201E/U+201C) — sometimes in the same volume. Em dash (U+2014), en dash
 and must not be flattened. Naming the codepoints makes this mechanically
 checkable by character-frequency comparison against gold.
 
+**Spacing around the em dash is a known limit of the source, not signal.**
+The corpus shows all three forms — `Робертъ—г. Мордкинъ` (flush both sides),
+`свита —воспитанники` (apparent gap before only), `Коломбина — г-жа Гордова`
+(apparent gaps both sides). It is tempting to treat that variation as
+meaningful. It probably is not reliably recoverable.
+
+An em dash is cast on a full-em body and its stroke does not fill that body,
+so the sort carries side bearing that looks like a space even where none is
+set. Justification stretches whatever spaces exist, compounding it. At the
+resolution of these scans the two causes cannot be told apart.
+
+Measured impact, over the first three hand-typed gold pages: 16 em dashes in
+2,618 characters, of which only **2** carry an adjacent space at all. Even
+assuming every one of those two is transcribed wrongly, that is **0.08% CER**
+— about a twentieth of the error rate ordinary transcription produces, and
+0.61% in an implausible worst case where every dash is disputed.
+
+Two consequences follow. Transcribe what looks right and do not agonise: the
+flush cases, which are the large majority, are unambiguous anyway. And do
+**not** build dash-spacing normalisation into the eval — it would be
+machinery, and a place for a bug, in service of a distinction worth eight
+hundredths of a percent. What deserves that attention instead is ъ/ь, which
+is more frequent, invisible to the automated checks, and produces a genuinely
+wrong character rather than an unresolvable ambiguity.
+
 **Abbreviations are never expanded.** `г-жа`, `г.`, `всп-ца`, `б-тъ`. A model
 that writes out `госпожа` has fabricated text that is not on the page.
 Expansion belongs in a derived layer (§12) — and "cleaned" there means
