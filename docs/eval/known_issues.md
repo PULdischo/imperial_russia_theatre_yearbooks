@@ -7166,3 +7166,145 @@ this same 332-page scale (this addendum only re-measured kopecks
 completeness, the specific metric that stopped Gate 3 -- the full
 three-number scorecard this file's own methodology calls for is still
 outstanding for the newly-fixed seasons).
+
+### Addendum (2026-09-09): 32-page sample scorecard; a new
+`check_repertoire_malformed_receipts` QC check; three DISTINCT root
+causes found behind what looked like one "missing units" symptom
+
+**Sample scorecard** (row completeness + receipts-value agreement,
+sampled 4 pages/season x 8 seasons = 32 pages, per RG's "sample first"
+preference, mirroring the escalation logic Gate 3 itself already used):
+row completeness 79.3% (896/1130 slots -- consistent with
+`merge_columnwise_page`'s already-documented refusal behaviour, not a
+new problem); receipts-value agreement on slots both methods report
+93.8% (94.8% excluding one page -- see below). Not yet escalated to
+the full 332-page baseline; the sample didn't surface anything that
+demands it.
+
+**One page in the sample, `1902-03_p024`, showed a clear systematic
+date shift** -- baseline's value for one date appears in column-wise
+under the FOLLOWING date, across at least 6 consecutive dates for
+Маріинскій. Same shift signature documented earlier this session on
+other pages; not investigated further here, flagged for whoever picks
+up the row-completeness thread next.
+
+**New QC check**: `check_repertoire_malformed_receipts` in
+`pipeline/quality_checks.py`, matching `check_repertoire_unknown_
+theater`'s pattern -- flags a `receipts_text` with no р./p. rubles
+marker at all. Run against the Gate 3 output (with 1903-04's stale
+pre-fix pages excluded, superseded by the corrected re-run): 111 flags
+across 28/332 pages, concentrated rather than scattered (two pages
+alone -- `1904-05_p000`/`p008` -- accounted for 42 of the 111).
+
+**Spot-checked per RG's request ("spot check to see whether these are
+non-determined or structural") before fixing anything -- and found
+THREE distinct causes, not one:**
+
+1. **Pure model non-determinism (the majority).** Re-ran
+   `repertoire_1904-05_p000` alone, same crop, same prompt, fresh
+   sample: every previously-malformed row came back perfect, INCLUDING
+   one (`138` -> `1553 р. 60 к.`) that looked like a genuine misread,
+   not just missing units. Row alignment (dates, work titles) was
+   already 100% correct in the ORIGINAL malformed run -- only the
+   receipts reading varied, which is the signature of sampling
+   variance on this one API call, not a geometric/crop defect (which
+   would hit every row in a column identically). Re-ran all 28 flagged
+   pages: 111 -> 40 flags, 28 -> 21 pages. Merged the resampled output
+   back over the originals.
+
+2. **Genuine crop clipping, but content-driven, not the Gate 3
+   divider defect** -- `repertoire_1903-04_p030`'s Александринскій
+   column is a GUEST GERMAN TROUPE's repertoire (titles like "Adelaide,
+   Schauspiel", "Liebes-Manöver, Lustspiel"). German genre/title text
+   runs measurably longer than this corpus's usual Russian
+   abbreviations, and the column is clipped on the right -- confirmed
+   directly in the crop image, every entry cut off mid-word
+   ("Schau[spiel]", "Dra[ma]"), reproducing byte-identical across the
+   resample (ruling out non-determinism). `theater_pad`'s fixed 15px
+   isn't enough for this troupe's wider typesetting. Not fixed this
+   session -- narrow, apparently tied to specific guest-troupe pages,
+   worth a wider-pad retry rather than a season-level change.
+
+3. **Field-mapping confusion, not a formatting or crop issue at
+   all** -- `repertoire_1903-04_p028`'s `receipts_text` for two rows
+   contains an entire multi-work benefit/gala program description
+   ("5-я и 7-я сц. 1-го д. тр. Макбетъ 2-я карт. 2-го д. и 2-я карт.
+   3-го д. оп. Пиковая дама..." -- five different works' excerpt
+   scenes) instead of a receipts figure. These look like genuinely
+   unusual rows with no standard box-office total printed (a special
+   gala night), and the model put the descriptive text in the wrong
+   field rather than `annotation`. Distinct from #2: this is a schema/
+   prompt-adherence issue on an unusual row shape, not a geometric
+   clipping issue.
+
+**Not yet done**: none of #2/#3 fixed -- both are narrow and
+page-specific enough that documenting them (this addendum) seemed more
+proportionate than a targeted prompt or padding change for what may be
+a handful of pages corpus-wide; escalating the sample scorecard to the
+full 332 pages if the `1902-03_p024`-style shift turns out not to be
+isolated.
+
+### Addendum (2026-09-10): `1902-03_p024`'s date shift root-caused and
+fixed (non-determinism); new `check_repertoire_cross_theater_date_
+mismatch` QC check built to catch this pattern going forward
+
+**Root cause, confirmed against the scan**: the date-only column
+under-split one compound day -- "2 Воскрес." prints as two sessions
+(morning/evening, each with its own receipts figure) on the actual
+page, but the original column-wise date-only read returned it as a
+single row. `merge_columnwise_page` (`pipeline/schemas/
+repertoire_columnwise.py`) aligns each theater's rows against that
+date-only column's calendar POSITIONALLY, so undercounting one day by
+one row shifted every date after it, for the rest of the page --
+consistent with the "baseline's value for one date appears under the
+FOLLOWING date" signature already noted above, and a much more severe
+consequence than a single bad cell: every downstream value stays
+individually well-formed, just attached to the wrong date, so nothing
+already in `quality_checks.py` caught it.
+
+**Fix confirmed, not designed**: re-ran the single page fresh (same
+crop, same prompts, no code change) via `run_pilot.py --column-level
+--cropped-images`. The new date-only read correctly split "2 Воскрес."
+into morning/evening and correctly left "8 Суббота." dark; every value
+on the page then matched the full-page baseline exactly. Same
+diagnosis as cause #1 above (pure model non-determinism on the
+date-only call, not a crop/structural defect) -- merged the corrected
+result back over the original in `raw_columnwise/`.
+
+**The open question this left**: how often does this pattern recur
+across the full 332-page corpus, given it's invisible to every
+per-cell QC check that already exists. Built
+`check_repertoire_cross_theater_date_mismatch` in
+`pipeline/quality_checks.py` to catch it directly, without needing a
+baseline comparison: since every theater on one page aligns against
+the SAME date-only calendar, a real under/over-count there can make
+*different* theaters land on different outcomes (one theater's row
+count may happen to match the wrong calendar length and align
+positionally anyway; another's may not, and fall through to
+`merge_columnwise_page`'s compound-day reconciliation fallback) --
+producing a direct, single-page, cross-theater disagreement on the
+DATE SEQUENCE the page covers. The check compares each theater's
+distinct date_text sequence (consecutive repeats of one date_text --
+the legitimate compound-day signature -- collapsed before comparing)
+and deliberately does NOT compare row counts, since compound-day
+splitting is a genuine per-theater property, not a per-page one
+(`_theater_days`'s docstring, `repertoire_columnwise.py`): a 13-row
+Маріинскій column and a 12-row Александринскій column covering the
+same 12 calendar dates are both correct.
+
+**Validated, not just plausible**: run against the full current Gate 3
+output (332 pages, 263 with 2+ theaters to compare) -- 0 mismatches.
+Confirms the cross-theater date-sequence invariant holds cleanly once
+the divider/crop fixes are in place, so the check is a clean signal
+rather than one needing a tolerance band, AND is consistent with the
+sample-scorecard shift pattern being isolated to `p024` rather than
+widespread -- answering the "not investigated further" question left
+open above without needing the full-corpus baseline-comparison
+escalation that was flagged as a fallback option.
+
+Wired into `main()` alongside `check_repertoire_unknown_theater` and
+`check_repertoire_malformed_receipts` (same `for raw_dir in (page,
+row, column)` loop) -- the underlying invariant (one printed table,
+one shared calendar, every theater column reporting the same days)
+isn't specific to column-wise extraction even though the causal bug
+that motivated it is, so it runs against any raw_dir.

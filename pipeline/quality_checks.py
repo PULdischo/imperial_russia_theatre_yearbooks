@@ -404,6 +404,124 @@ def check_repertoire_unknown_theater(raw_dir: Path | None) -> list[dict]:
     return flags
 
 
+#: A well-formed receipts figure always carries a rubles UNIT MARKER --
+#: "р." (Cyrillic) or, per known_issues.md #15, occasionally "p." (Latin,
+#: a confirmed OCR/model substitution this corpus already has to parse
+#: around positionally rather than by unit letter). This is deliberately
+#: permissive about everything else (kopecks may be a number OR the
+#: dash-for-zero convention, e.g. "2710 р. — к." -- also confirmed real,
+#: not malformed, in the same addendum) -- it only checks that SOME
+#: rubles marker is present at all.
+_RECEIPTS_UNIT_RE = re.compile(r"\d\s*[рp]\.?", re.IGNORECASE)
+
+
+def check_repertoire_malformed_receipts(raw_dir: Path | None) -> list[dict]:
+    """Flags a `receipts_text` that's bare digits with no rubles unit
+    marker at all -- e.g. `"2086"` instead of `"2086 р. — к."`. Confirmed
+    real 2026-09-09 (docs/eval/known_issues.md #69 Gate 3 addendum) on a
+    handful of pages per season (e.g. repertoire_1904-05_p000/p008,
+    repertoire_1903-04_p030) -- concentrated on specific pages rather
+    than scattered at random, so a real per-page signal worth routing to
+    review rather than noise. Not a crop/divider issue (those produce
+    truncated-from-the-EDGE figures like "611 р. 7", still carrying a
+    unit marker) -- this is the model dropping the unit text entirely
+    while keeping the number itself intact, a different failure mode.
+
+    Works against any raw *.raw.json directory, matching
+    check_repertoire_unknown_theater's scope -- this failure mode isn't
+    specific to column-wise extraction and could recur on any method."""
+    flags = []
+    if not raw_dir or not raw_dir.exists():
+        return flags
+
+    for raw_path in sorted(raw_dir.glob("*.raw.json")):
+        page_id = raw_path.stem.replace(".raw", "")
+        d = json.loads(raw_path.read_text(encoding="utf-8"))
+        for i, s in enumerate(d.get("sessions", []), start=1):
+            rt = (s.get("receipts_text") or "").strip()
+            if not rt or _RECEIPTS_UNIT_RE.search(rt):
+                continue
+            flags.append(dict(
+                page_id=page_id, table="event_entry", row_id=f"{page_id}__s{i:03d}",
+                flag="malformed_receipts_missing_unit",
+                detail=f"receipts_text={rt!r} has no р./p. rubles marker -- "
+                       f"date={s.get('date_text')!r} theater={s.get('theater')!r}",
+            ))
+    return flags
+
+
+def check_repertoire_cross_theater_date_mismatch(raw_dir: Path | None) -> list[dict]:
+    """Flags a page where theaters disagree on the DATE SEQUENCE the page
+    covers -- the direct, single-page signal for the "date-only under-
+    splits a compound day, shifting every subsequent date" failure mode
+    confirmed 2026-09-10 on repertoire_1902-03_p024 (docs/eval/
+    known_issues.md #69 addendum). On column-wise extraction specifically,
+    `merge_columnwise_page` aligns each theater INDEPENDENTLY against the
+    same date-only calendar (pipeline/schemas/repertoire_columnwise.py):
+    when that calendar under- or over-counts a compound day, different
+    theaters can land on different outcomes depending on whether their own
+    row count happened to match the (wrong) calendar length or instead
+    fell through to the compound-day reconciliation fallback -- producing
+    exactly the disagreement this check looks for. The underlying
+    invariant it checks -- one printed table, one shared calendar, every
+    theater column reporting the same days -- holds regardless of
+    extraction method, so this runs against any raw_dir, matching
+    check_repertoire_unknown_theater's scope.
+
+    Compares the DISTINCT date_text sequence per theater, with consecutive
+    repeats of the same date_text collapsed to one -- a genuine compound
+    морн./веч. day legitimately repeats one date_text twice in a row in
+    the session list, and that repetition is not the signal here. Row
+    COUNT is deliberately not compared: theaters legitimately differ in
+    whether they split a given day into two sessions (confirmed
+    per-theater, not per-page -- see `_theater_days`'s docstring in
+    repertoire_columnwise.py), so a 13-row Маріинскій column and a 12-row
+    Александринскій column on the same page are both correct provided the
+    underlying dates they cover are identical and in the same order,
+    which is what's actually checked.
+
+    Calibrated against real data, not a guessed tolerance: 0 mismatches
+    across 263 Gate 3 pages with 2+ theaters once the divider/crop fixes
+    were in place (2026-09-10) -- full cross-theater date-sequence
+    agreement is the observed norm on a correctly-extracted page, not an
+    approximation worth padding with slack."""
+    flags = []
+    if not raw_dir or not raw_dir.exists():
+        return flags
+
+    for raw_path in sorted(raw_dir.glob("*.raw.json")):
+        page_id = raw_path.stem.replace(".raw", "")
+        d = json.loads(raw_path.read_text(encoding="utf-8"))
+        by_theater = defaultdict(list)
+        for s in d.get("sessions", []):
+            theater = _normalize_theater(s.get("theater") or "")
+            date_text = (s.get("date_text") or "").strip()
+            if not theater or not date_text:
+                continue
+            by_theater[theater].append(date_text)
+
+        if len(by_theater) < 2:
+            continue
+
+        def dedupe(seq: list[str]) -> list[str]:
+            out: list[str] = []
+            for x in seq:
+                if not out or out[-1] != x:
+                    out.append(x)
+            return out
+
+        sequences = {t: dedupe(v) for t, v in by_theater.items()}
+        distinct = {tuple(v) for v in sequences.values()}
+        if len(distinct) > 1:
+            flags.append(dict(
+                page_id=page_id, table="event_entry", row_id="",
+                flag="cross_theater_date_mismatch",
+                detail=f"{len(distinct)} distinct date sequences across theaters "
+                       f"on this page: {sequences}",
+            ))
+    return flags
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--parsed-dir", required=True, type=Path)
@@ -431,6 +549,8 @@ def main():
         flags += check_repertoire_rowlevel_duplicates(args.row_raw_dir)
     for raw_dir in (args.page_raw_dir, args.row_raw_dir, args.column_raw_dir):
         flags += check_repertoire_unknown_theater(raw_dir)
+        flags += check_repertoire_malformed_receipts(raw_dir)
+        flags += check_repertoire_cross_theater_date_mismatch(raw_dir)
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with open(args.out, "w", newline="", encoding="utf-8") as f:
