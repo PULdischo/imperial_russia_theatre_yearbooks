@@ -7473,3 +7473,59 @@ concentrated in 1905-06, the 337 modernized-theater-spelling instances
 with no Repertoire-side repair function yet, the 33 unrecognized-theater-
 field instances, and the 178/332 "partial"-merge pages with unresolved
 slots) are also still open, not addressed by this addendum.
+
+### Addendum (2026-09-10): all 370 `unknown_theater` flags fixed --
+one was three DISTINCT underlying patterns, not one, found by tracing
+each to the real column it belongs to
+
+Picked up items #2/#3 (theater-field flags) from the previous addendum's
+open list. Broke the 33 `unrecognized_theater_field` flags down by
+page -- all 3 pages, all in 1903-04/1907-08 -- and scan-verified each
+against its own crop (matching works/receipts back to the real column,
+not guessing from the wrong string), which turned up three genuinely
+different failure shapes hiding behind one flag type:
+
+1. **`repertoire_1903-04_p032`**: `'С.-Петербургский театр.'` -- the
+   model substituted the page's own generic running header ("С.-
+   Петербургскіе театры.", printed above every column's own header) for
+   the column-specific one. Confirmed genuinely Маріинскій: the
+   session's works ("Царя, оп." -> "Жизнь за Царя", "Волшебная флейта")
+   match that theater's own crop row for row, receipts included.
+2. **`repertoire_1907-08_p024`**: `'бургскіе театры. Александрийскій
+   театръ.'` -- the tail of that same generic header concatenated with
+   a slightly misspelled real header. Confirmed genuinely
+   Александринскій by its Russian spoken-drama titles ("Холопы",
+   "Смерть Іоанна Грознаго", "Урокъ танцевъ").
+3. **`repertoire_1907-08_p008`**: `'Александровскій театръ.'` -- NOT a
+   header-mixing or spelling-drift case: this string doesn't resemble
+   either the real per-column header or the running header at all.
+   Confirmed genuinely Михайловскій by direct crop comparison -- French
+   works ("commissaire est bon enfant", "L'espionne") and exact receipts
+   figures (1413 p. 88 к., 614 p. 88 к., ...) match that crop row for
+   row. A plain, untraceable model error, content-matched to the
+   correct theater rather than pattern-matched from the wrong one.
+
+Also broke down all 337 `modernized_theater_spelling` flags (27 pages) by
+theater name -- every single one is "Мариинскій" (with or without the
+"театръ." suffix); no other KNOWN_THEATERS name showed this drift in the
+theater field.
+
+**Fixed, both value-matched so safe for any extraction source**: added
+`_REPERTOIRE_THEATER_FIELD_FIXES` (the 3 confirmed exact-string cases
+above) and `_repair_repertoire_theater_spelling` (a Мариинскій-\>
+Маріинскій regex fix for the theater field, mirroring Roster's
+`_repair_mariinsky_spelling` but reimplemented since it targets a
+session's `theater` field rather than an entry's
+`heading_path`/`institution`) to `pipeline/parse_and_validate.py`, wired
+into `_repair_repertoire` and logged the same way as its other fixes.
+
+Verified against the full 332-page consolidated corpus, not just the
+flagged pages: re-ran `parse_and_validate.py --extraction-source
+columnwise` end to end -- 337 spelling fixes + 33 field fixes logged
+(exactly the flagged counts, nothing more/less), 0 validation errors,
+same 8664 `event_entry` row count as before, and a direct grep of the
+output `event_entry.csv` for every wrong string confirms 0 remain.
+
+All `unknown_theater` items from the outstanding list are now closed.
+Still open: the 28 malformed-receipts flags concentrated in 1905-06, and
+the 178/332 "partial"-merge pages with unresolved slots.

@@ -1284,6 +1284,83 @@ _REPERTOIRE_DUPLICATE_SESSIONS: dict[str, set[int]] = {
     "repertoire_1905-06_p011": {26, 27, 28},
 }
 
+# Three confirmed cases (2026-09-10, docs/eval/known_issues.md #69,
+# check_repertoire_unknown_theater's unrecognized_theater_field flags on
+# the column-wise Gate 3 corpus) where a theater-only crop's own `theater`
+# field came back wrong in a way no simple і/и normalization covers --
+# each individually scan-verified by matching the session's OWN
+# works/receipts against the real column that content belongs to, not
+# guessed from the wrong string alone:
+#   - repertoire_1903-04_p032: 'С.-Петербургский театр.' -- the model
+#     substituted the page's own generic running header ("С.-
+#     Петербургскіе театры.", printed above every column's specific
+#     header) for the column-specific one. Confirmed genuinely
+#     Маріинскій: the flagged rows' works ("Царя, оп." -> "Жизнь за
+#     Царя", "Волшебная флейта") match Маріинскій's own crop
+#     (repertoire_1903-04_p032__theateronly_0.png) row for row, including
+#     receipts figures.
+#   - repertoire_1907-08_p024: 'бургскіе театры. Александрийскій
+#     театръ.' -- the tail of that same generic running header
+#     concatenated with a slightly-misspelled real header ("Александрий-"
+#     for "Александрин-"). Confirmed genuinely Александринскій: works
+#     ("Холопы", "Смерть Іоанна Грознаго", "Урокъ танцевъ") are Russian
+#     spoken-drama titles matching that theater's known repertoire.
+#   - repertoire_1907-08_p008: 'Александровскій театръ.' -- NOT a
+#     header-mixing or spelling-drift case at all: this string doesn't
+#     resemble either the real per-column header or the running header.
+#     Confirmed genuinely Михайловскій by direct crop comparison
+#     (repertoire_1907-08_p008__theateronly_2.png) -- receipts figures
+#     (1413 p. 88 к., 614 p. 88 к., ...) and French works ("commissaire
+#     est bon enfant", "L'espionne") match that crop exactly, row for
+#     row. A plain model error with no traceable relationship to what's
+#     actually printed -- content-matched to the correct theater, not
+#     pattern-matched to the wrong one.
+# Matched by exact VALUE (not session index), so safe regardless of
+# extraction source -- see _repair_repertoire's docstring on why that
+# distinction matters here.
+_REPERTOIRE_THEATER_FIELD_FIXES: dict[str, dict[str, str]] = {
+    "repertoire_1903-04_p032": {"С.-Петербургский театр.": "Маріинскій театръ."},
+    "repertoire_1907-08_p024": {"бургскіе театры. Александрийскій театръ.": "Александринскій театръ."},
+    "repertoire_1907-08_p008": {"Александровскій театръ.": "Михайловскій театръ."},
+}
+
+
+_REPERTOIRE_MARIINSKY_TYPO_RE = re.compile(r"\bМариинскій\b")
+
+
+def _repair_repertoire_theater_spelling(parsed: dict, page_id: str) -> tuple[int, int]:
+    """Two theater-field fixes applied to EVERY Repertoire page, value-
+    matched (not index-matched) so both are safe for any extraction
+    source:
+
+    1. The page-specific `_REPERTOIRE_THEATER_FIELD_FIXES` table above --
+       an exact string match, so it only ever touches the confirmed wrong
+       value on the confirmed page.
+    2. The Мариинскій -> Маріинскій modernized-spelling drift (modern и
+       for pre-reform і) -- measured at 337 flagged sessions across 27
+       pages of the Gate 3 corpus, ALL of them this one theater (no other
+       KNOWN_THEATERS name showed this drift in the theater field). Same
+       fix shape as Roster's `_repair_mariinsky_spelling`
+       (`_MARIINSKY_TYPO_RE` above), reimplemented here rather than
+       shared because it applies to a session's `theater` field, not an
+       entry's `heading_path`/`institution`.
+
+    Returns (n_field_fixed, n_spelling_fixed)."""
+    field_fixes = _REPERTOIRE_THEATER_FIELD_FIXES.get(page_id, {})
+    n_field, n_spelling = 0, 0
+    for s in parsed.get("sessions", []):
+        theater = s.get("theater")
+        if not theater:
+            continue
+        if theater in field_fixes:
+            s["theater"] = field_fixes[theater]
+            n_field += 1
+            continue
+        if _REPERTOIRE_MARIINSKY_TYPO_RE.search(theater):
+            s["theater"] = _REPERTOIRE_MARIINSKY_TYPO_RE.sub("Маріинскій", theater)
+            n_spelling += 1
+    return n_field, n_spelling
+
 
 def _repair_repertoire(parsed: dict, page_id: str, source: str = "baseline") -> tuple[dict, dict[str, int]]:
     """`source` distinguishes which extraction produced `parsed`, because
@@ -1331,6 +1408,7 @@ def _repair_repertoire(parsed: dict, page_id: str, source: str = "baseline") -> 
         "year_fixed": 0, "month_fixed": 0, "day_fixed": 0, "session_fixed": 0,
         "field_overridden": 0, "inserted": 0,
         "fabricated_dropped": 0, "duplicate_dropped": 0,
+        "theater_field_fixed": 0, "theater_spelling_fixed": 0,
     }
     index_keyed_safe = source == "baseline"
     year_fix = _REPERTOIRE_YEAR_FIXES.get(page_id)
@@ -1372,6 +1450,9 @@ def _repair_repertoire(parsed: dict, page_id: str, source: str = "baseline") -> 
             kept.append(insertions[i])
             counts["inserted"] += 1
     parsed["sessions"] = kept
+    n_field, n_spelling = _repair_repertoire_theater_spelling(parsed, page_id)
+    counts["theater_field_fixed"] = n_field
+    counts["theater_spelling_fixed"] = n_spelling
     return parsed, counts
 
 
@@ -1403,6 +1484,13 @@ _REPERTOIRE_FIX_MESSAGES = {
         "session(s) confirmed to duplicate content already correctly "
         "captured elsewhere on the same page and dropped -- see "
         "_REPERTOIRE_DUPLICATE_SESSIONS"),
+    "theater_field_fixed": ("repertoire_theater_field_fixed",
+        "session(s) had a scan-verified `theater` field correction "
+        "applied for a wrong/header-mixed value (see "
+        "_REPERTOIRE_THEATER_FIELD_FIXES)"),
+    "theater_spelling_fixed": ("repertoire_theater_spelling_fixed",
+        "session(s) had the Мариинскій->Маріинскій modernized-spelling "
+        "typo fixed in `theater` (see _repair_repertoire_theater_spelling)"),
 }
 
 
