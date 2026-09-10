@@ -13,6 +13,7 @@ Lines beginning '#' are comments. Two sections:
     tailpiece_present: yes
     no_text: no
     copy_artifacts:
+    reading_order_uncertain:
     notes:
 
     [BLOCKS]
@@ -204,6 +205,8 @@ def parse_gold_file(path: Path) -> ReviewPageLLM:
         printed_folio=fields.get("printed_folio", "").strip() or None,
         tailpiece_present=fields.get("tailpiece_present", "").strip().lower() in TRUTHY,
         no_text=fields.get("no_text", "").strip().lower() in TRUTHY,
+        reading_order_uncertain=fields.get(
+            "reading_order_uncertain", "").strip().lower() in TRUTHY,
         copy_artifacts=[artifacts] if artifacts else [],
         blocks=blocks,
     )

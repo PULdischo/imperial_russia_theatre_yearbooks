@@ -64,6 +64,9 @@
 #
 #   Transcribe blocks in READING ORDER, top to bottom as a reader would
 #   follow them — not in the order they happen to sit on the page.
+#   A figure inset beside a column goes where its CAPTION falls vertically.
+#   If the order is genuinely arguable, set reading_order_uncertain: yes —
+#   that records the ambiguity instead of hiding it behind a guess.
 #
 #   Do NOT transcribe library stamps or pencilled numbers. Note them in
 #   copy_artifacts below instead.
