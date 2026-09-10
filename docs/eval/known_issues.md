@@ -7396,3 +7396,80 @@ spot-check earlier in this issue), not a regression from widening
 LEFT edge (absorbing more of Александринскій's real content, itself
 confirmed harmless earlier), never touched its own right edge where its
 real content sits.
+
+### Addendum (2026-09-10): before loading this corpus into the DB --
+consolidated the canonical raw JSON, and closed a real risk in
+`parse_and_validate.py`'s hand-verified repair tables
+
+Asked (before scoping out the actual DB-load step) whether anything else
+needed doing for the single-page-format seasons. Found five things by
+actually checking rather than assuming; two are addressed here.
+
+**1. No single clean corpus directory existed.** The scratch
+`raw_columnwise/` still held the STALE pre-fix `1903-04` pages
+side-by-side with the corrected `raw_columnwise_1903fix2/` -- 332 vs. 38
+overlapping on the same page_ids. Consolidated into
+`outputs/gate3_columnwise/raw_columnwise/` (332 files, every non-1903-04
+page from the original Gate 3 run plus all 38 corrected `1903-04` pages
+from `raw_columnwise_1903fix2/`, stale versions never copied). Verified:
+0 duplicate page_ids, and `quality_checks.py`'s three Repertoire checks
+return identical counts here as against the scratch sources (28
+`malformed_receipts` / 19 pages, 370 `unknown_theater` [337
+modernized-spelling + 33 unrecognized], 0 `cross_theater_date_mismatch`).
+See `outputs/gate3_columnwise/README.md` for full provenance.
+
+**5. `parse_and_validate.py`'s hand-verified Repertoire repair tables
+are keyed to baseline's session ORDERING, which column-wise doesn't
+share -- a real misapplication risk, not just a hygiene concern.**
+`_REPERTOIRE_MONTH_FIXES`, `_REPERTOIRE_SESSION_DATE_FIXES`,
+`_REPERTOIRE_FIELD_OVERRIDES`, `_REPERTOIRE_SESSION_INSERTIONS`,
+`_REPERTOIRE_FABRICATED_SESSIONS`, and `_REPERTOIRE_DUPLICATE_SESSIONS`
+all key their fixes to a 1-based sequential INDEX into
+`parsed["sessions"]`, hand-verified against the single-call baseline
+extraction's ordering (interleaved by date across every theater on the
+page). Column-wise's merged output orders sessions GROUPED BY THEATER
+instead (confirmed directly against the raw JSON) -- a fundamentally
+different ordering, so the same index in column-wise output very likely
+points at a different session's data entirely. Six of these page_ids are
+part of the Gate 3 corpus (`1899-00_p037`, `1907-08_p000`,
+`1902-03_p008`, `1904-05_p021`, `1903-04_p008`, `1900-01_p009`,
+`1905-06_p005`, `1905-06_p011`), so this was live, not hypothetical.
+
+Confirmed the risk directly rather than assuming it: ran
+`_repair_repertoire` against `1904-05_p021`'s column-wise data with
+`source="baseline"` (i.e. the OLD unconditional behavior) -- it silently
+no-op'd only because that page's index-40 target happened to fall
+outside column-wise's shorter 32-session list, not because of any real
+protection. On a different page the same index could easily have landed
+in-range and overwritten the wrong row.
+
+**Fixed**: added a `source` parameter to `_repair_repertoire` (and an
+`--extraction-source {baseline,columnwise,rowlevel}` CLI flag, default
+`baseline` so every existing/older run's behavior is unchanged) that
+skips all six index-keyed tables when `source != "baseline"`.
+`_REPERTOIRE_YEAR_FIXES`/`_REPERTOIRE_DAY_FIXES` stay active
+unconditionally -- both match by VALUE (the session's own
+`year_text`/`date_text` equals a confirmed-wrong string), which is
+order-independent and can only fire if that exact wrong string is
+actually present.
+
+Smoke-tested end to end, not just the repair function in isolation: ran
+`parse_and_validate.py --extraction-source columnwise` against the full
+332-page consolidated corpus -- 0 validation errors, 8664 `event_entry`
+rows, 8804 `event_entry_performance` rows. Confirms both that the new
+gating works and that column-wise's merged JSON shape validates cleanly
+against `RepertoirePage`/`flatten_repertoire_page` with no changes needed
+there.
+
+**Deliberately NOT done here**: none of the 6 gated pages' original
+defects have been re-verified against column-wise's own read yet (column-
+wise might not even reproduce the same failure -- it's a structurally
+different extraction, not just a re-run) -- until each is checked against
+its own scan and given a content-keyed fix if the defect recurs, those 6
+pages parse with `_repair_repertoire` contributing nothing for them,
+which is the safe state, not the finished one. Items #2/#3/#4 from the
+original five-item list (28 remaining malformed-receipts flags
+concentrated in 1905-06, the 337 modernized-theater-spelling instances
+with no Repertoire-side repair function yet, the 33 unrecognized-theater-
+field instances, and the 178/332 "partial"-merge pages with unresolved
+slots) are also still open, not addressed by this addendum.

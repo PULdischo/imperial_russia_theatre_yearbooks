@@ -1285,20 +1285,63 @@ _REPERTOIRE_DUPLICATE_SESSIONS: dict[str, set[int]] = {
 }
 
 
-def _repair_repertoire(parsed: dict, page_id: str) -> tuple[dict, dict[str, int]]:
+def _repair_repertoire(parsed: dict, page_id: str, source: str = "baseline") -> tuple[dict, dict[str, int]]:
+    """`source` distinguishes which extraction produced `parsed`, because
+    the tables below are NOT all equally safe to apply regardless of that.
+
+    `_REPERTOIRE_YEAR_FIXES` and `_REPERTOIRE_DAY_FIXES` match by VALUE
+    (the session's own `year_text`/`date_text` equals the confirmed-wrong
+    string) -- order-independent, so they only ever fire if that exact
+    wrong string is actually present, regardless of extraction method.
+    Applied unconditionally.
+
+    Every other table here -- `_REPERTOIRE_MONTH_FIXES`,
+    `_REPERTOIRE_SESSION_DATE_FIXES`, `_REPERTOIRE_FIELD_OVERRIDES`,
+    `_REPERTOIRE_SESSION_INSERTIONS`, `_REPERTOIRE_FABRICATED_SESSIONS`,
+    `_REPERTOIRE_DUPLICATE_SESSIONS` -- is keyed to a 1-based SEQUENTIAL
+    INDEX into `parsed["sessions"]`, hand-verified against the single-call
+    baseline extraction's own session ordering (interleaved by date across
+    every theater on the page, one row per date/session). Column-wise
+    extraction's merged output (`merge_columnwise_page`,
+    `pipeline/schemas/repertoire_columnwise.py`) orders sessions GROUPED BY
+    THEATER instead -- a completely different ordering -- so the same
+    index `i` in column-wise output almost certainly lands on a different
+    session's data entirely. Applying these unconditionally there would
+    either silently misapply a hand-verified fix to the wrong row, or
+    (for the range+value compound check in `_REPERTOIRE_MONTH_FIXES`)
+    occasionally still match by coincidence on an unrelated session that
+    happens to carry the same wrong value -- neither is acceptable for a
+    fix that was specifically scan-verified against one exact row.
+
+    Confirmed 2026-09-10 (docs/eval/known_issues.md #69) that several of
+    these page_ids ARE part of the column-wise Gate 3 corpus
+    (repertoire_1899-00_p037, repertoire_1907-08_p000,
+    repertoire_1902-03_p008, repertoire_1904-05_p021,
+    repertoire_1903-04_p008, repertoire_1900-01_p009,
+    repertoire_1905-06_p005, repertoire_1905-06_p011) -- so this isn't a
+    hypothetical risk, it's live for the very corpus about to be parsed.
+    Until each of those 6 pages (`_REPERTOIRE_DAY_FIXES`/
+    `_REPERTOIRE_YEAR_FIXES` don't apply to any of them) is individually
+    re-verified against column-wise's own read and given its own
+    content-keyed fix if the same defect recurs there, `source="columnwise"`
+    skips all six index-keyed tables entirely rather than risk a silent
+    misapplication -- an unfixed page that still needs review beats a
+    wrongly "fixed" one that looks clean."""
     counts = {
         "year_fixed": 0, "month_fixed": 0, "day_fixed": 0, "session_fixed": 0,
         "field_overridden": 0, "inserted": 0,
         "fabricated_dropped": 0, "duplicate_dropped": 0,
     }
+    index_keyed_safe = source == "baseline"
     year_fix = _REPERTOIRE_YEAR_FIXES.get(page_id)
-    month_fixes = _REPERTOIRE_MONTH_FIXES.get(page_id, [])
     day_fix = _REPERTOIRE_DAY_FIXES.get(page_id)
-    session_fixes = _REPERTOIRE_SESSION_DATE_FIXES.get(page_id, {})
-    field_overrides = _REPERTOIRE_FIELD_OVERRIDES.get(page_id, {})
-    insertions = {idx: new_s for idx, new_s in _REPERTOIRE_SESSION_INSERTIONS.get(page_id, [])}
-    drop_indices = _REPERTOIRE_FABRICATED_SESSIONS.get(page_id, set())
-    duplicate_indices = _REPERTOIRE_DUPLICATE_SESSIONS.get(page_id, set())
+    month_fixes = _REPERTOIRE_MONTH_FIXES.get(page_id, []) if index_keyed_safe else []
+    session_fixes = _REPERTOIRE_SESSION_DATE_FIXES.get(page_id, {}) if index_keyed_safe else {}
+    field_overrides = _REPERTOIRE_FIELD_OVERRIDES.get(page_id, {}) if index_keyed_safe else {}
+    insertions = ({idx: new_s for idx, new_s in _REPERTOIRE_SESSION_INSERTIONS.get(page_id, [])}
+                  if index_keyed_safe else {})
+    drop_indices = _REPERTOIRE_FABRICATED_SESSIONS.get(page_id, set()) if index_keyed_safe else set()
+    duplicate_indices = _REPERTOIRE_DUPLICATE_SESSIONS.get(page_id, set()) if index_keyed_safe else set()
     counts["fabricated_dropped"] = len(drop_indices)
     counts["duplicate_dropped"] = len(duplicate_indices)
     kept = []
@@ -1918,6 +1961,13 @@ def main():
     ap.add_argument("--manifest", required=True, type=Path)
     ap.add_argument("--raw-dir", required=True, type=Path)
     ap.add_argument("--out-dir", required=True, type=Path)
+    ap.add_argument("--extraction-source", choices=["baseline", "columnwise", "rowlevel"],
+                     default="baseline",
+                     help="which extraction method produced --raw-dir's JSON. Controls "
+                          "whether _repair_repertoire's index-keyed hand-fix tables apply "
+                          "(they were verified against baseline's session ordering; see "
+                          "_repair_repertoire's docstring). Default 'baseline' preserves "
+                          "existing behavior for every run before 2026-09-10.")
     args = ap.parse_args()
 
     rows = list(csv.DictReader(open(args.manifest, encoding="utf-8")))
@@ -2145,7 +2195,8 @@ def main():
                 page = RosterPage.model_validate(parsed_json)
                 tables = flatten_roster_page(page_id, row["entity_type"], page)
             else:
-                parsed_json, repertoire_counts = _repair_repertoire(parsed_json, page_id)
+                parsed_json, repertoire_counts = _repair_repertoire(
+                    parsed_json, page_id, source=args.extraction_source)
                 for key, n in repertoire_counts.items():
                     if n:
                         stage, msg = _REPERTOIRE_FIX_MESSAGES[key]

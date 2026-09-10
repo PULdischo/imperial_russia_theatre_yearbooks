@@ -3993,3 +3993,32 @@ SELECT t FROM (
 Result: 9 matching strings, **all unspaced em dashes** (`Въ 1892—1893 учебномъ
 году...`). No en dashes, no spaced variants. My earlier guidance to RG that en
 dashes appear in number ranges was wrong and has been corrected.
+
+## 2026-09-10 — does outputs/full_run/imperial_theaters.duckdb contain the column-wise Gate 3 Repertoire data?
+
+```sql
+select count(*) from raw.source_pages where entity_type='Repertoire';
+
+select season, count(*) from raw.source_pages where entity_type='Repertoire'
+group by season order by season;
+
+select date_text, theater, time_of_day, event_status, receipts_text
+from raw.event_entry where page_id='repertoire_1902-03_p024'
+order by theater, date_text;
+```
+
+Result: 519 Repertoire pages present across all 18 seasons (including the
+single-page-format ones this session's Gate 3 work covers), but
+`imperial_theaters.duckdb`'s file mtime is 2026-08-28 -- before any of the
+column-wise extraction work (which started ~2026-09-01) even existed. Spot
+check on `repertoire_1902-03_p024` confirms this directly: the stored rows
+use a "1 Февраль" date label and put the compound morning/evening split on
+that date, with `Михайловскій театръ` marked `performed` (not dark) on
+"8 Суббота" -- none of which matches the column-wise extraction's read of
+the same page (date label "2 Воскрес.", compound split there instead, all
+three theaters dark on "8 Суббота"). This is the OLD single-call full-page
+baseline extraction (`run_pilot.py`'s default path), not the column-wise
+Gate 3 output -- the two have never been parsed/loaded into this DB. All of
+the column-wise/Gate 3 work this session lives only in the scratchpad
+directory's raw JSON; `parse_and_validate.py` and `build_duckdb.py` have
+not been run against any of it.
