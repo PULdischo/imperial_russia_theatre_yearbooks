@@ -7529,3 +7529,83 @@ output `event_entry.csv` for every wrong string confirms 0 remain.
 All `unknown_theater` items from the outstanding list are now closed.
 Still open: the 28 malformed-receipts flags concentrated in 1905-06, and
 the 178/332 "partial"-merge pages with unresolved slots.
+
+### Addendum (2026-09-10): the 28 malformed-receipts flags triaged down to
+7 genuine printed anomalies -- most were a check bug, not a data bug; one
+real crop-clipping fix applied and verified
+
+Went through all 28 by hand, scan-verifying rather than guessing, and
+found the check itself was wrong far more often than the data was.
+
+**17 of 28 were false positives in `check_repertoire_malformed_receipts`
+itself**, not extraction problems. `_RECEIPTS_UNIT_RE` required a digit
+immediately before the р./p. marker -- but confirmed against the scan,
+this corpus legitimately prints a receipts figure with NOTHING before
+the marker at all, two different ways: a dash for a fully-missing figure
+("— р. — к.", a Chaliapin benefit night with no box-office figure
+printed at all -- 15 instances) or plain blank space ("р.    к.", a
+УТРО half of a compound day with nothing recorded -- 2 instances,
+including one where I'd first miscategorized it as "no dash present" and
+had to look again). Both are genuine, verbatim-correct printed
+content -- fixed the regex to just check for the marker's presence,
+regardless of what precedes it (`[рp]\.?`, matching what the check's own
+docstring already claimed to do). First attempt at the fix
+(`[рp]\.`, period required) overcorrected and produced 60+ NEW false
+positives from perfectly normal receipts whose punctuation after the
+marker varies (comma/dash/colon/nothing instead of a period) -- caught by
+re-running the check immediately after the "fix" instead of assuming it
+worked, and corrected before it went anywhere near a commit.
+
+**7 of the remaining 11 were genuine PRINTED TYPESETTING ERRORS in the
+original yearbooks, correctly transcribed verbatim -- not extraction
+bugs, and not to be corrected.** Every one has the rubles marker printed
+as something other than "р."/"p." (д., г., or к. -- the same letter as
+the kopecks marker, twice in a row): `1901-02_p026` ("1495 д. 25 к."),
+`1904-05_p009` ("736 к. 49 к."), `1905-06_p017`/`p018`/`p043`,
+`1907-08_p000`/`p024`. Confirmed genuine by direct scan comparison on
+three of these (p018, p009, p043) rather than assuming the pattern held
+for all seven: in every case the model's output matches the PRINTED page
+exactly, glyph for glyph -- this is the original book's own typesetting
+error, not a misread. (One of these, p018's "г." for "р.", I had
+initially misread as a model error on first glance -- the two glyphs are
+genuinely easy to confuse at this resolution; a second, closer look at
+the same crop corrected that.) Per this project's core verbatim-
+preservation mandate, these are LEFT AS EXTRACTED, not "fixed" to what
+the printer presumably meant -- `check_repertoire_malformed_receipts`
+flagging them is still useful (a human reviewing the data benefits from
+knowing the source itself is anomalous here), just not actionable as a
+pipeline defect.
+
+**5 of 11 (2 on `1907-08_p030`, 3 on `1907-08_p032`) were bare digits
+with no marker at all** -- resampled to separate non-determinism from
+something structural (same method as the earlier malformed-receipts
+triage). `p032`'s 3 resolved cleanly on resample (pure non-determinism).
+`p030`'s 2 did NOT -- persisted byte-identical across an independent
+resample, the deterministic signature of a real clip. Rendering the
+page's own rightmost 10% unclipped (bypassing `docs/
+repertoire_crop_bounds.json`'s crop entirely) confirmed it directly: both
+figures ("466 p. 55 к.", "1133 p. — к.") are fully legible just past the
+season's old x1=0.96 boundary, with the true table border sitting at
+~0.991 of full page width -- the SAME class of fix as 1903-04's x1
+0.90->0.95 earlier in this issue, on the same last/rightmost theater
+column (Михайловскій, whose crop always extends to the image's own
+right edge -- so when the crop itself is too narrow, nothing short of
+widening it can help). Corrected 1907-08's x1 0.96->0.99
+(`docs/repertoire_crop_bounds.json`).
+
+Verified against the WHOLE season, not just the one flagged page: re-ran
+all 50 `1907-08` pages fresh through crop + column detection +
+extraction. `check_repertoire_malformed_receipts`: p030's 2 flags gone,
+0 new flags introduced anywhere in the season (52 total across the
+season are the 2 genuine-typo cases already characterized above, both
+correctly left alone). `check_repertoire_cross_theater_date_mismatch`:
+still 0. Merged the corrected season into
+`outputs/gate3_columnwise/raw_columnwise/`, re-ran the full 332-page
+`parse_and_validate.py --extraction-source columnwise` smoke test again
+-- 0 real validation errors, 0 remaining bad theater strings in the
+output CSV.
+
+**Final count**: 7 genuine flags remain in the corpus, all confirmed
+printed-source anomalies, correctly transcribed and intentionally left
+as-is. The malformed-receipts item is closed. Still open: the 178/332
+"partial"-merge pages with unresolved slots.

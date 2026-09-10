@@ -408,11 +408,25 @@ def check_repertoire_unknown_theater(raw_dir: Path | None) -> list[dict]:
 #: "р." (Cyrillic) or, per known_issues.md #15, occasionally "p." (Latin,
 #: a confirmed OCR/model substitution this corpus already has to parse
 #: around positionally rather than by unit letter). This is deliberately
-#: permissive about everything else (kopecks may be a number OR the
-#: dash-for-zero convention, e.g. "2710 р. — к." -- also confirmed real,
-#: not malformed, in the same addendum) -- it only checks that SOME
-#: rubles marker is present at all.
-_RECEIPTS_UNIT_RE = re.compile(r"\d\s*[рp]\.?", re.IGNORECASE)
+#: permissive about everything else -- kopecks may be a number, the
+#: dash-for-zero convention (e.g. "2710 р. — к."), or entirely blank; and,
+#: confirmed against the scan 2026-09-10 (known_issues.md #69), the
+#: RUBLES figure itself is sometimes printed with no digit at all -- a
+#: dash ("— р. — к.", a Chaliapin benefit night with no box-office figure
+#: printed) or plain blank space ("р.    к.", a УТРО session of a
+#: compound day with nothing recorded) are both genuine, verbatim-correct
+#: printed conventions, not truncation. Earlier this required a digit
+#: immediately before the marker (`\d\s*[рp]\.?`), which flagged both of
+#: those as malformed -- contradicting this check's own intent (stated
+#: below) of only checking that a marker is present at all, not what
+#: precedes it. Now checks for the marker alone -- and the trailing
+#: period stays optional (re-confirmed 2026-09-10 fixing the digit
+#: requirement above first made the period mandatory instead, which
+#: immediately produced 60+ new false positives: this corpus's genuine
+#: "р"/"p" marker is followed just as often by a comma, a dash, a colon,
+#: or nothing at all as by a period -- a punctuation detail with no
+#: bearing on whether the figure itself is malformed).
+_RECEIPTS_UNIT_RE = re.compile(r"[рp]\.?", re.IGNORECASE)
 
 
 def check_repertoire_malformed_receipts(raw_dir: Path | None) -> list[dict]:
