@@ -53,6 +53,11 @@
 #     («Царь Кандавлъ», балетъ Сенъ-Жоржа, дѣйствіе 1-е. картина 2-я).
 #
 #   [verse] keeps its line breaks AND its indentation. Do not reflow.
+#     Use FOUR SPACES per indentation level — not tabs, not a count of
+#     spaces matched to the page. What matters is the LEVEL: lines that sit
+#     at the same depth on the page get the same indent; a line set further
+#     in gets one more level (8 spaces). A fixed convention is needed so
+#     gold and model agree; the exact measure on the page is not recoverable.
 #
 #   Language markup: <l fr>Pas de deux</l>  (fr, de, it, la)
 #

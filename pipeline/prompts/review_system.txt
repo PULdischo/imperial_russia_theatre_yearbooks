@@ -149,8 +149,13 @@ BLOCK TYPES
 "heading"           Section headings, including lettered ones ("в) Балетъ.")
                     and text set inside an ornamental headpiece.
 "paragraph"         Running prose. The default.
-"verse"             Quoted poetry. Keep the line breaks AND the indentation
-                    exactly — both are part of the text.
+"verse"             Quoted poetry. Keep the line breaks AND the indentation:
+                    both are part of the text, unlike in prose where a line
+                    break is a typographic accident.
+                    Indent with FOUR SPACES per level. What matters is the
+                    LEVEL, not the measured width: lines sitting at the same
+                    depth get the same indent, a line set further in gets
+                    eight spaces. Never use tabs.
 "cast_list"         Role-to-performer runs ("Аврора—г-жа Кшесинская 2-я").
                     Alternates appear either in parentheses or after "или";
                     keep whichever is printed.

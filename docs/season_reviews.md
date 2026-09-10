@@ -409,6 +409,13 @@ accident; in verse it is part of the text. Indentation within verse is also
 meaningful and preserved — 1894-95 OperaMoscow p299 varies indentation across
 eleven lines of quoted libretto.
 
+Indentation is recorded as **levels, four spaces each**, never as a measured
+width. The absolute inset on the page is not recoverable and would differ
+between gold and model anyway; what carries meaning is that some lines sit
+deeper than others. A fixed convention on both sides keeps that difference
+without inventing spurious character mismatches — on an eleven-line verse
+page a disagreement about indent width alone could cost over 2% CER.
+
 ---
 
 ## 8. Reading order

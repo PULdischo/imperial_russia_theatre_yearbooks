@@ -115,9 +115,13 @@ def lint(path: Path) -> tuple[list[str], list[str], dict]:
     for b in page.blocks:
         for txt, where in ((block_plain_text(b), "text"),
                            (spans_plain_text(b.caption), "caption")):
+            # Verse indentation is legitimately a run of spaces, so check
+            # its lines with the leading indent removed.
+            probe = ("\n".join(l.lstrip(" ") for l in txt.split("\n"))
+                     if b.block_type == "verse" else txt)
             for bad, name in (("\t", "TAB"), ("\u00a0", "non-breaking space"),
                               ("  ", "double space")):
-                if bad in txt:
+                if bad in (probe if bad == "  " else txt):
                     i = txt.index(bad)
                     warns.append(
                         f"{b.block_type} {where}: {name} at "
@@ -140,6 +144,20 @@ def lint(path: Path) -> tuple[list[str], list[str], dict]:
                    ("ends" if t[-1].isspace() else "")
             warns.append(f"{b.block_type} block {side} with whitespace: "
                          f"{t[:34]!r} — check for a space inside a tag")
+
+    # verse indentation must be whole levels of four spaces, so gold and
+    # model agree on a width neither can measure from the page
+    for b in page.blocks:
+        if b.block_type != "verse":
+            continue
+        for ln, line in enumerate(block_plain_text(b).split("\n"), 1):
+            if not line.strip():
+                continue
+            lead = len(line) - len(line.lstrip(" "))
+            if lead % 4:
+                warns.append(
+                    f"verse line {ln} is indented {lead} space(s) — use whole "
+                    f"levels of 4 ({4 * round(lead / 4) or 4} here): {line[:38]!r}")
 
     # mixed-script words
     for b in page.blocks:
