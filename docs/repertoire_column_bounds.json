@@ -270,7 +270,9 @@
     "n_pages_agreeing": 13,
     "extrapolated": false,
     "evenly_spaced": true,
-    "source": "re-derived 2026-09-08 against the corrected per-parity crop (x 0.08-0.95); previous values were fractions of a crop that truncated Михайловскій on every even page; RESCALED x0.9444 on 2026-09-09 after the season crop was widened (x1 0.90->0.95) to stop it clipping printed content on even pages -- these fractions are relative to the crop, so they move when the crop does"
+    "source": "re-derived 2026-09-08 against the corrected per-parity crop (x 0.08-0.95); previous values were fractions of a crop that truncated Михайловскій on every even page; RESCALED x0.9444 on 2026-09-09 after the season crop was widened (x1 0.90->0.95) to stop it clipping printed content on even pages -- these fractions are relative to the crop, so they move when the crop does",
+    "theater_pad": 150,
+    "theater_pad_note": "2026-09-10 (docs/eval/known_issues.md #69): this season's Александринскій column carries a guest German troupe's repertoire for several weeks (repertoire_1903-04_p030) whose titles/receipts run well past the default theater_pad=15's crop edge, confirmed by direct pixel comparison against the scan -- 150 was verified to capture every title/figure in full while leaving the neighboring Михайловскій crop's own header/content unambiguous. NOT raised as the global default -- the narrowest spread-format columns (~300px) can't absorb a symmetric 150px pad from each neighbor without risking their own content being swallowed by the overlap; this is a per-season opt-in (pipeline/run_pilot.py reads it from this group)."
   },
   "1903-04:1": {
     "format": "single",
@@ -283,7 +285,9 @@
     "n_pages_agreeing": 7,
     "extrapolated": false,
     "source": "measured; RESCALED x0.9444 on 2026-09-09 after the season crop was widened (x1 0.90->0.95) to stop it clipping printed content on even pages -- these fractions are relative to the crop, so they move when the crop does",
-    "evenly_spaced": true
+    "evenly_spaced": true,
+    "theater_pad": 150,
+    "theater_pad_note": "see 1903-04:0's theater_pad_note -- same season, same guest-troupe clipping risk, applied to both parities for consistency even though the confirmed clipped page (p030) is parity 0."
   },
   "1904-05:0": {
     "format": "single",

@@ -7308,3 +7308,91 @@ row, column)` loop) -- the underlying invariant (one printed table,
 one shared calendar, every theater column reporting the same days)
 isn't specific to column-wise extraction even though the causal bug
 that motivated it is, so it runs against any raw_dir.
+
+### Addendum (2026-09-10): causes #2 and #3 above (German-troupe crop
+clipping, gala-program field mapping) fixed and verified
+
+Both diagnosed causes from the previous addendum applied and confirmed
+against a fresh re-run of the affected pages -- neither was a blind
+guess, each was pixel/scan-verified before and after.
+
+**Cause #2 fixed -- `theater_pad` override, scoped to `1903-04`.**
+`repertoire_1903-04_p030`'s Александринскій column carries a guest
+German troupe's repertoire across several weeks; German titles/
+receipts run past the default `theater_pad=15`'s crop edge
+(`pipeline/row_detect.py`'s `detect_columns`). Confirmed the fix by
+direct pixel comparison, not assumption: at `theater_pad=150`, every
+truncated title and figure on that column comes back complete
+("Adelaide, Schau" -> "Adelaide, Schauspiel.", "26" -> "2634 p. 80"),
+while the neighboring Михайловскій crop -- which absorbs the same
+overlap from its own side -- stays completely unambiguous (own header,
+clean rule, no content confusion). This is real printed margin the
+default pad wasn't using, not a divider-position error.
+
+Not raised as the new global default: the narrowest spread-format
+seasons' columns are only ~300px wide (vs. ~500-525px for 1903-04), and
+a symmetric 150px pad from each neighbor there would consume nearly the
+whole column, risking a narrow theater's own content being swallowed by
+the overlap. Instead, added an optional `theater_pad` field to a
+column-bounds GROUP (`docs/repertoire_column_bounds.json`, defaulting
+to 15 when absent) and threaded it through in `pipeline/run_pilot.py`'s
+`detect_columns(...)` call -- set to 150 on `1903-04:0`/`1903-04:1`
+only.
+
+Verified: re-ran `repertoire_1903-04_p030` fresh with the new config.
+Every previously-truncated title and receipts figure on the
+Александринскій column now comes back complete and matches what the
+Михайловскій crop's own leftover-overlap text already showed verbatim
+(e.g. "2789 p. 30", "1813 p. —", "2077 p. 25"). `check_repertoire_
+malformed_receipts` against the re-run: 0 flags (was flagging this
+page before the fix). Merged the corrected output into
+`raw_columnwise_1903fix2/`.
+
+**Cause #3 fixed -- prompt clarification for `receipts_text`.** Added
+an explicit instruction to `pipeline/prompts/
+repertoire_theateronly_system.txt`'s `receipts_text` bullet: when a row
+is a benefit/gala program listing several works' scene excerpts with NO
+box-office figure printed anywhere in the cell, put the excerpts in
+`works` as usual and leave `receipts_text` OMITTED -- never copy
+`works`/`annotation` text into it as a fallback. The model had
+correctly captured the charity heading in `annotation` and the 6 works
+in `works` already; the only wrong field was `receipts_text` duplicating
+that same text when no figure existed to put there.
+
+Verified: re-ran `repertoire_1903-04_p028` fresh with the new prompt.
+Both previously-affected rows ("21 Суббота", "22 Воскрес.") now return
+`receipts_text=None`, with `annotation` and `works` unchanged from the
+already-correct original read. `check_repertoire_malformed_receipts`:
+0 flags on this page (was flagging it before). Merged into
+`raw_columnwise_1903fix2/`.
+
+**Not a concern from this fix, but worth noting**: the re-run's fresh
+date-only/theater-only calls happened to spell the same theater
+"Мариинскій" (modern и) rather than "Маріинскій" (pre-reform і) on
+several rows -- `check_repertoire_unknown_theater`'s already-documented
+`modernized_theater_spelling` case (2026-09-01 addendum), pure
+call-to-call non-determinism, unrelated to either fix applied here and
+not chased further.
+
+Both fixes re-verified with `check_repertoire_cross_theater_date_
+mismatch` too (0 flags on both re-run pages) -- confirms neither change
+introduced the date-shift failure mode from the previous addendum.
+
+**Regression check on `theater_pad=150`, not just the target page.**
+Re-ran `repertoire_1903-04_p010` (an unaffected, non-German-troupe page
+already in `raw_columnwise_1903fix2/`) fresh with the new config, to
+check the wider pad doesn't leak real content between columns
+elsewhere in the same season. It came back with every Михайловскій
+receipts figure missing its kopecks portion ("156 р. 13 к." -> "156
+р.", same for all 11 rows) -- looked at first like exactly the kind of
+side effect a wider pad could cause. Ran a control before concluding
+anything: re-ran the SAME page with the OLD default (`theater_pad`
+override removed from a scratch copy of the config) -- the identical
+kopecks-loss pattern appeared there too, on every row, unrelated to the
+pad change entirely. This is the corpus's already-documented per-call
+non-determinism (same diagnostic method as the malformed-receipts
+spot-check earlier in this issue), not a regression from widening
+`theater_pad` -- the wider pad only added overlap to Михайловскій's
+LEFT edge (absorbing more of Александринскій's real content, itself
+confirmed harmless earlier), never touched its own right edge where its
+real content sits.

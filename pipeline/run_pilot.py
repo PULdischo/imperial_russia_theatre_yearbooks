@@ -318,9 +318,21 @@ async def process_page_columnwise(client: AsyncOpenAI, sem: asyncio.Semaphore, r
     try:
         group = column_group_for(page_id, column_config) if column_config else None
         if group is not None:
-            columns = detect_columns(image_path, column_crops_dir / page_id,
-                                     dividers_frac=group["dividers"],
-                                     date_side=group["date_side"])
+            # theater_pad is an optional per-group override (2026-09-10,
+            # docs/eval/known_issues.md #69) -- absent for every group except
+            # 1903-04, where the Александринскій column's guest German-troupe
+            # weeks need much more right-side padding than this corpus's
+            # usual Russian abbreviations (theater_pad=15 clipped titles and
+            # receipts figures mid-word/mid-number, confirmed against the
+            # scan). Not raised as the new *default*: the narrowest
+            # spread-format seasons' columns are only ~300px wide, and a
+            # symmetric 150px pad from each neighbor would consume nearly
+            # the whole column -- this needs to stay a per-group opt-in, not
+            # a global constant.
+            kwargs = dict(dividers_frac=group["dividers"], date_side=group["date_side"])
+            if "theater_pad" in group:
+                kwargs["theater_pad"] = group["theater_pad"]
+            columns = detect_columns(image_path, column_crops_dir / page_id, **kwargs)
         else:
             columns = detect_columns(image_path, column_crops_dir / page_id)
     except Exception as e:

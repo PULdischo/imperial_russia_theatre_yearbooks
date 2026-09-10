@@ -28,7 +28,14 @@ Then, for each row give:
   "бал.", "ком.", "др.", "сц.", "вод.", "траг.", "пьеса" -- leave genre
   empty if none is printed). A benefit-performance heading or anniversary
   note is NOT a work -- put that text in annotation instead, not works.
-- receipts_text: the box-office figure verbatim, or omit if none printed
+- receipts_text: the box-office figure verbatim (a rubles/kopecks amount,
+  e.g. "1234 р. 56 к."), or omit entirely if no such figure is printed for
+  that row. Some benefit/gala rows print a multi-work scene-excerpt
+  program instead of a single title, with NO box-office figure anywhere
+  in the cell -- when that happens, put each excerpt in works as usual and
+  leave receipts_text OMITTED. Never copy works or annotation text into
+  receipts_text as a fallback, even when that text is the only thing
+  printed in the row.
 - annotation: any benefit-performance or anniversary heading printed for
   that row, verbatim
 - is_dark: true only if the row is a plain dash, nothing else printed
