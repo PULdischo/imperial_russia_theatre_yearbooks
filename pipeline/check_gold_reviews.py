@@ -87,7 +87,15 @@ def lint(path: Path) -> tuple[list[str], list[str], dict]:
                     f"line {n}: '[{m.group(1)}]' is not a block type -- it will "
                     f"be swallowed as body text. Valid: {', '.join(sorted(BLOCK_TYPES))}")
 
-    text = "\n".join(body_lines)
+    # Count markup ONLY inside [BLOCKS]. The notes: field legitimately
+    # mentions tags like "<d>" in prose, and counting those made a balanced
+    # file look unbalanced.
+    try:
+        blocks_at = next(i for i, l in enumerate(body_lines)
+                         if l.strip() == "[BLOCKS]")
+        text = "\n".join(body_lines[blocks_at + 1:])
+    except StopIteration:
+        text = "\n".join(body_lines)
     for t in TAGS:
         opens = len(re.findall(rf"<{t}(?:\s+[a-z]{{2}})?>", text))
         closes = len(re.findall(rf"</{t}>", text))
@@ -118,6 +126,20 @@ def lint(path: Path) -> tuple[list[str], list[str], dict]:
     for ln, line in enumerate(body_lines, 1):
         if line != line.rstrip():
             warns.append(f"line {ln}: trailing whitespace")
+
+    # A block whose text begins or ends with a space. Usually a space typed
+    # inside a markup tag ("<l fr> Divertissement"). VERSE is exempt --
+    # there leading whitespace is the printed indentation and is meaningful.
+    for b in page.blocks:
+        if b.block_type == "verse":
+            continue
+        t = block_plain_text(b)
+        if t and t != t.strip():
+            side = ("starts" if t[0].isspace() else "") + \
+                   ("/" if t[0].isspace() and t[-1].isspace() else "") + \
+                   ("ends" if t[-1].isspace() else "")
+            warns.append(f"{b.block_type} block {side} with whitespace: "
+                         f"{t[:34]!r} — check for a space inside a tag")
 
     # mixed-script words
     for b in page.blocks:

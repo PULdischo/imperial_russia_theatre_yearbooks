@@ -73,7 +73,7 @@ printed_folio: 131
 tailpiece_present: no
 no_text: no
 copy_artifacts:
-notes:
+notes: Two printer's defects, both transcribed as printed and marked <d>: "Михайловп" (expected Михайлова); "Геатральнаго" (expected Театральнаго — a Т with the left crossbar arm broken off; the same word appears correctly three times elsewhere on this page).
 
 [BLOCKS]
 
@@ -124,3 +124,29 @@ flocons de neige</l>—г-жи Сланцова, Голубева, Ильина 
 Постоленко, Прудникова, Горская, Болдырева, Черноруцкая, Мацкевичъ,
 Кузьмина, Кустереръ, Эрлеръ 1, Левенсонъ 2, Пахомова, Горячева, Але-
 ксандрова 1-я и Бастманъ.
+
+[paragraph]
+<l fr>Divertissement</l> исполняли:
+
+[enumerated_list 1)]
+<l fr>Chocolat (Danse espagnole)</l>—г-жа Чума-
+кова, г. Кусовъ; г-жи Рошъ, Постоленко, Прудникова, Лобанова, Матя-
+тина, Вертинская; гг. Гольде, Тихоміровъ 2, Масловъ; Новиковъ, Бочаровъ,
+Трудовъ;
+
+[enumerated_list 2)]
+<l fr>Ca<d>f</d>é (Danse arabe)</l>—г-жи Леонова 1, Степанова 2, Пахомова,
+Вилль, Натарова, Ильина 2, Александрова 1; гг. Печатниковъ, Черниковъ,
+Плесюкъ, Іосафовъ, Гончаровъ, Григорьевъ;
+
+[enumerated_list 3)]
+<l fr>Thé (Danse chinoise)</l> г-жа
+Рыхлякова 1; г. Стуколкинъ; г-жи Михайлов<d>п</d>, Левенсонъ 2, Горская<d>,</d>
+Ниманъ; гг. Федоровъ, Полянскій, Тихоміровъ 1, Смирновъ 2.
+
+[enumerated_list 4)]
+<l fr>Danse des bouffons</l>—г. Кремневъ и воспитанники Императорскаго <d>Г</d>еатральнаго Учи-
+лища.
+
+[enumerated_list 5)]
+<l fr>Danse des mirlitons</l>—г-жи Алексне, Матвѣева, Рѣпина, Эльпе,
