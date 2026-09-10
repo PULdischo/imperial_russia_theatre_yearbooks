@@ -498,10 +498,27 @@ def check_repertoire_cross_theater_date_mismatch(raw_dir: Path | None) -> list[d
     across 263 Gate 3 pages with 2+ theaters once the divider/crop fixes
     were in place (2026-09-10) -- full cross-theater date-sequence
     agreement is the observed norm on a correctly-extracted page, not an
-    approximation worth padding with slack."""
+    approximation worth padding with slack.
+
+    ADDENDUM (2026-09-10, the repair pass in known_issues.md #69):
+    comparing date_text VERBATIM stopped being safe once a page can mix
+    an originally-successful theater's sessions with another theater's
+    sessions recovered from an independent resample or a baseline
+    fallback call -- two independent reads of the same calendar
+    legitimately spell it differently ("13 Среда" vs "13 Среда.", "14
+    Четвергъ" vs "14 Четвергь", ъ/ь being a common OCR-adjacent
+    substitution) without the underlying day being wrong at all.
+    Confirmed directly: 92 of a sample of 109 post-repair flags were this
+    exact cosmetic variance, not a real shift. Now compares only each
+    date_text's LEADING DIGIT RUN (the day number) -- the one substring
+    that must be identical whether or not two calls agree on trailing
+    weekday spelling/punctuation -- while still reporting the original,
+    unmodified strings in `detail` for a human to read."""
     flags = []
     if not raw_dir or not raw_dir.exists():
         return flags
+
+    day_number_re = re.compile(r"^\d+")
 
     for raw_path in sorted(raw_dir.glob("*.raw.json")):
         page_id = raw_path.stem.replace(".raw", "")
@@ -524,14 +541,21 @@ def check_repertoire_cross_theater_date_mismatch(raw_dir: Path | None) -> list[d
                     out.append(x)
             return out
 
+        def day_numbers(seq: list[str]) -> tuple:
+            out = []
+            for x in seq:
+                m = day_number_re.match(x)
+                out.append(m.group() if m else x)
+            return tuple(out)
+
         sequences = {t: dedupe(v) for t, v in by_theater.items()}
-        distinct = {tuple(v) for v in sequences.values()}
+        distinct = {day_numbers(v) for v in sequences.values()}
         if len(distinct) > 1:
             flags.append(dict(
                 page_id=page_id, table="event_entry", row_id="",
                 flag="cross_theater_date_mismatch",
                 detail=f"{len(distinct)} distinct date sequences across theaters "
-                       f"on this page: {sequences}",
+                       f"on this page (compared by day number): {sequences}",
             ))
     return flags
 

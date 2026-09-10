@@ -7609,3 +7609,132 @@ output CSV.
 printed-source anomalies, correctly transcribed and intentionally left
 as-is. The malformed-receipts item is closed. Still open: the 178/332
 "partial"-merge pages with unresolved slots.
+
+### Addendum (2026-09-10): built and ran a two-tier repair pass for the
+missing-theater problem -- measured coverage 48% -> 97.3%, after finding
+and fixing a real duplication bug AND a real infrastructure hang
+
+The 178/332 "partial"-merge item above understated the problem: measured
+directly (counting distinct theaters actually present per page, not
+trusting the page-level "partial" label), 171/332 pages (51.5%) were
+missing at least one whole theater's data outright -- 102 missing one,
+49 missing two, 20 missing all three. Root cause: `merge_columnwise_page`
+refuses a theater's whole page rather than guess when its own row count
+doesn't reconcile against the date-only column's day count (a
+deliberate, correct design choice per that function's own docstring --
+but 271/996 theater-merge-attempts (27.2%) hit it in practice, most
+(55%) an exact ±1 day-count mismatch matching the already-diagnosed
+`1902-03_p024` pattern, the rest (41%) larger mismatches implying
+MULTIPLE missed compound-day splits on the same page, plus one 100-row
+outlier that's a distinct extraction glitch).
+
+**Built `pipeline/repair_columnwise_merge.py`**: a two-tier repair for
+every theater `merge_columnwise_page` refused. Tier 1 resamples the SAME
+column-wise method (fresh date-only + theater-only calls, re-merged) --
+validated on a random 12-case sample before running at scale: recovers
+about half outright, including large mismatches, not just off-by-one
+ones, with no extra scrutiny needed since it's the same trusted method.
+Tier 2, for whatever's still stuck, falls back to one whole-page
+baseline call and takes that theater's sessions from it -- recovers
+coverage in every case tested but not necessarily the same reliability
+(baseline is the method known_issues.md #1/#68 already documents as
+prone to cross-date bleed), so every tier-2 row is marked
+`_repair_tier: "baseline_fallback"` and logged as `NEEDS REVIEW` in the
+repair report, never silently treated as equivalent to a column-wise
+read.
+
+**A theater-name matching bug, caught before it reached real numbers**:
+comparing theater strings by exact equality missed that one call can
+spell a theater in modern Cyrillic (и) while another spells it correctly
+(pre-reform і) -- on `1899-00_p026` this made a genuine, present
+recovery register as `unrecovered`. Fixed by reusing the existing
+modernized-spelling resolver for every match in the repair script, not
+just the exact string.
+
+**Ran at full scale (all 332 pages, 3 season-specific crop/pad
+configs)** -- and found a SECOND, more serious bug checking the result
+for regressions rather than trusting the coverage number alone: 35 of
+332 pages had a theater's rows doubled. Root cause, confirmed on
+`1903-04_p030`: the script excluded already-good sessions from a failed
+theater's OWN raw JSON by exact string match against the merge report's
+theater name, but that merge report can itself be stale or garbled (this
+page's said "Маріинскій т.", truncated, while its own already-present
+sessions were correctly labeled "Маріинскій театръ.") -- the exclusion
+silently failed to match, so tier 1's (also successful) fresh resample
+got appended ON TOP of the sessions already there instead of replacing
+them. Fixed by excluding via the same canonical-name resolver as the
+matching fix above, not literal string equality. Given a subtle
+assembly-logic bug had already produced one round of silently-wrong
+output, re-ran the full repair pass CLEAN from scratch rather than trying
+to patch the already-wrong merged files -- cost noted, not worked around,
+per this project's stance that accuracy is the constraint here, not cost.
+
+**A real infrastructure bug found along the way, not a data problem**:
+the clean re-run stalled repeatedly -- established-but-silent TCP
+connections to the API host sitting at 0% CPU for 5-30+ minutes with
+zero progress, at every concurrency level tried. Isolated the cause with
+a fresh, standalone client outside the running batch: the SAME endpoint,
+including a real page-image call, returned in seconds both times, ruling
+out a DashScope-side outage. The signature (fine in isolation, reliably
+stalling only on a long-lived client under sustained use) matches a
+NAT/middlebox silently dropping an idle keep-alive connection without a
+proper close -- the socket still looks ESTABLISHED locally, but the
+first request to reuse it from the pool hangs until something ends it,
+and with no client-side timeout configured, nothing ever did (despite
+`call_with_retry`'s retry loop already knowing how to handle
+`APITimeoutError` -- the mechanism was always there, nothing timed-out
+was ever handed to it). Fixed in both `repair_columnwise_merge.py` and
+`run_pilot.py`: an explicit 120s client timeout, plus
+`max_keepalive_connections=0` to force a fresh connection per request
+(confirmed effective -- pace went from ~1 page per 4-5 minutes, with
+nearly every request needing a full timeout-and-retry cycle, to steady
+completion once applied).
+
+**Final, stable numbers** (re-verified after the clean re-run, not
+carried over from the buggy one): theater coverage 323/332 pages (97.3%,
+up from 161/332 = 48.5% before any repair) with all 3 theaters present.
+Of 202 distinct theater-repairs needed corpus-wide: 46 (22.8%) recovered
+via tier 1 (fully trusted), 149 (73.8%) via tier 2 (flagged for review),
+7 (3.5%) unrecovered after both tiers -- the SAME 7 both before and
+after the duplication-bug fix, confirming they're genuinely hard rather
+than an artifact:
+- `1907-08_p001`/`p023`/`p025` (Новый), `1907-08_p000` (Михайловскій),
+  `1907-08_p046` (Александринскій) -- 5 of 7 cluster in one season,
+  worth a closer look as a group rather than one at a time.
+- `1904-05_p000` (Михайловскій).
+- `1903-04_p017` -- theater field reads "Московский театръ.", a name
+  that doesn't match any KNOWN_THEATERS entry even modernized; likely
+  the same kind of header-hallucination already confirmed elsewhere in
+  this issue (`1907-08_p008`'s "Александровскій театръ."), not yet
+  traced to its real theater.
+
+Duplicate-session check after the fix: only 2 true duplicates remain
+(byte-identical content repeated), both on `1899-00_p029` -- the same
+page whose Малый театръ. tier-2 recovery was already the messiest in
+the corpus (multiple overlapping partial reads), already flagged `NEEDS
+REVIEW`, not a new problem. Separately, 86 sessions across 32 pages
+share a (theater, date, session) key with DIFFERENT content, not
+identical -- confirmed these are genuine distinct compound-day sessions
+(different receipts, different works) that a tier-2 baseline call
+didn't label "morning"/"evening" the way column-wise's per-theater
+labels do; a real data-quality gap specific to baseline-recovered rows,
+not a duplication bug.
+
+Also fixed `check_repertoire_cross_theater_date_mismatch` while
+verifying the repair pass, since it started producing noise the moment
+theaters could carry independently-resampled date text: it compared
+date_text VERBATIM, and 92 of a 109-flag sample were pages where two
+independently-read calendars legitimately spell the same day
+differently ("13 Среда" vs "13 Среда.", ъ/ь substitution) with no actual
+date shift at all. Now compares only the leading day-number, narrowing
+that sample to 17 real cases; re-measured on the final corrected corpus
+at 12 remaining (a `Мартъ.`/`Январь`/`Май.` month-name-leaking-into-
+date_text pattern on several, individual dropped days on others) --
+still open, not investigated further this addendum.
+
+Repair pass is applied and merged into
+`outputs/gate3_columnwise/raw_columnwise/`; `pipeline/
+repair_columnwise_merge.py` is the new script, `run_pilot.py`'s client
+construction and `quality_checks.py`'s cross-theater-date-mismatch check
+both carry fixes from this addendum. Not yet done: the 7 remaining
+unrecovered theaters, and the 12 genuine cross-theater date mismatches.

@@ -403,7 +403,12 @@ async def main_async(args):
     api_key = os.environ.get("DASHSCOPE_API_KEY")
     if not api_key:
         raise SystemExit("DASHSCOPE_API_KEY not set (check .env)")
-    client = AsyncOpenAI(api_key=api_key, base_url=BASE_URL)
+    # Explicit timeout, not the SDK default -- see repair_columnwise_merge.py's
+    # main_async for the full diagnosis (2026-09-10): a long-lived client
+    # with no request timeout can get a connection that never completes,
+    # hanging silently (0% CPU, connection stays ESTABLISHED) rather than
+    # raising something call_with_retry's existing retry loop can catch.
+    client = AsyncOpenAI(api_key=api_key, base_url=BASE_URL, timeout=120.0)
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
     rows = list(csv.DictReader(open(args.manifest, encoding="utf-8")))
