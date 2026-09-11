@@ -7991,3 +7991,52 @@ placeholders, never removed a real theater), 0 true duplicate sessions
 corpus-wide, malformed-receipts and unknown-theater counts unchanged.
 `cross_theater_date_mismatch` down to 2 -- both deliberately deferred
 with a precise diagnosis, not silently left broken.
+
+### Addendum (2026-09-11): the `1903-04_p026` annotation/works split bug,
+fixed before loading
+
+Before proceeding to the DuckDB load, went back to the annotation/works
+inconsistency spotted (but not fixed) while working `1903-04_p026`'s date
+mismatch. Confirmed against the theater-only crop at full resolution:
+Михайловскій театръ's Feb 4 row is a single printed cell listing FOUR
+comedy titles under one receipts figure (482 р. 35 к.) -- "Les projets de
+ma tante, com." / "Les romanesques, com." / "Mariage d'amour, com." /
+"L'irrésolu, com." -- confirmed by the row's horizontal-divider boundaries
+in the crop, which place all four lines and the single receipts number
+inside one cell, with the neighboring Feb 5 and Feb 6 cells clearly
+separated below it.
+
+The raw extraction had split this one cell across two schema fields:
+`annotation` held the first two titles, `works` held the last two. That's
+not itself impossible -- the schema legitimately uses `works` for a
+primary-title-plus-extras split (e.g. this same page's Alexandrinsky Feb 4:
+"Ревизоръ, ком." as annotation + "Дѣло" as a `works` entry, a real
+benefit-night structure) -- but here it doesn't hold up: the exact same
+two pairs of titles appear on Feb 5 ("Mariage d'amour"/"L'irrésolu") and
+Feb 6 ("Les projets de ma tante"/"Les romanesques") as plain `annotation`
+text with empty `works`, on this very page. So splitting them across
+`annotation`/`works` specifically on Feb 4 was an arbitrary artifact of
+there being four text lines to place, not a real primary/extra
+distinction -- and it mattered beyond cosmetics: per
+`flatten_repertoire_page` (`pipeline/schemas/repertoire.py`), only
+`works` entries become structured, indexed `event_entry_performance`
+rows -- `annotation` is unindexed free text. Left as extracted, "Mariage
+d'amour" and "L'irrésolu" would have shown up as structured, queryable
+performances specifically on Feb 4 and nowhere else, even though the
+exact same two titles are performed (per the same page) on Feb 5 with no
+structured performance entry at all -- a misleading artifact for anyone
+querying `research.performance` for these works.
+
+Fixed by merging the two `works` titles back into `annotation` as
+additional lines (matching how Feb 5/Feb 6 represent the identical pairs)
+and clearing `works` to `[]`. No sessions added or removed -- verified
+unchanged after the fix: 332/332 theater coverage, 0 true duplicates, 9
+malformed-receipts, 2 cross-theater-date-mismatches (still only the two
+deliberately deferred pages).
+
+This was the last known content-correctness issue (as opposed to a
+flagged, visible gap) in the column-wise Repertoire corpus. With this
+fixed, `outputs/gate3_columnwise/raw_columnwise/` is ready to proceed to
+`parse_and_validate.py` / `build_duckdb.py` -- the two deferred date-
+mismatch pages remain open but are correctly flagged in
+`quality_flags.csv`, not silently wrong.
