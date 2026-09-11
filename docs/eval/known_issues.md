@@ -8923,3 +8923,239 @@ still 0, 332/332 theater coverage, malformed-receipts still 9.
 this round and the three that preceded it earlier today (Gate 3
 completeness sweep addenda aside) will be batched into one
 `outputs/full_run/` propagation later rather than done per-round.
+
+---
+
+**2026-09-11, dedicated pass on the 13 shift-bug cases flagged by the
+previous round.** Direct follow-up: the previous addendum found 51 of
+64 "both legs unspecified" keys were genuine morning/evening splits
+(fixed) and left 13 untouched because they were actually spurious
+pairings produced by the cascading date/title/receipts shift bug
+(#49-class), not this round's bug. This pass went back and reconstructed
+each of the 5 affected pages properly -- not just the 2 sessions each
+key originally flagged, but the full local run of dates each shift
+touched, checked line-by-line against the scan (title *and* receipts
+figure, never position alone).
+
+**`1903-04_p027` (Большой театр. + Малый театръ. + Новый театр., all
+three columns, same page-wide shift):** every session from `4 Среда.`
+through `8 Воскрес.` was one position off, on **all three theater
+columns simultaneously** (row-detection shifts the whole page width
+together) -- reassigned `date_text`/`session` on 24 sessions across the
+three columns. `4 Среда.` itself (a charity double-bill of "Жизнь за
+Царя" with no receipts printed for either leg) was **missing entirely**
+from Большой театр.'s column -- added both sessions back, using the
+"Спектакль для воспитанниковъ" convention already established for the
+free morning leg (matching Новый театръ.'s own `4 Среда.` entries on
+the same row, which had the banner annotation captured correctly) and
+the printed charity-benefit annotation for the evening leg. Малый
+театръ.'s column was additionally missing its 5 dark placeholders for
+`16 Понед.`-`20 Пятница.` entirely (its shifted entries had absorbed
+those date labels instead of being recorded as blank) -- added those
+back too, matching the dark-entry shape already used by the other two
+columns on this same page.
+
+**`1901-02_p018` (Александринскій театръ):** the deepest reconstruction
+of the five. Three distinct contamination shapes on one column:
+- `16 Воскрес.`-`17 Понед.`: a clean one-position date shift (`17
+  Понед.`'s "Мишура" session is actually `16 Воскрес.`'s evening).
+- `22 Суббота.`-`27 Четвергъ.`: `22 Суббота.`'s real annotation-only
+  benefit note (no receipts printed) had **absorbed a stray receipts
+  figure** (264 р. 70 к.) that actually belongs to a `26 Среда.`
+  morning session missing from the JSON entirely (`"Много шуму изъ
+  ничего"`) -- cleared the stray figure and added the missing session
+  back. `26 Среда.`'s existing "Ирининская община" entry was really its
+  evening leg (not morning, as its `"unspecified"` label implied); the
+  entry that had inherited `26 Среда.`'s date_text ("Недоросль") turned
+  out to be `27 Четвергъ.`'s real morning leg.
+- `28 Пятница.`-`29 Суббота.`: **receipts values were shifted one
+  position relative to their own titles** within existing entries --
+  the entry titled "Старый закалъ" (28 Пятница.'s real morning title)
+  carried 29 Пятница evening's receipts value instead of its own; the
+  "Комета" entry (28 Пятница.'s real evening title) carried a receipts
+  figure that actually belongs to `29 Суббота.`'s morning ("Снѣгурочка",
+  missing from the JSON entirely). Corrected both entries' receipts and
+  added the missing `29 Суббота.` morning session. `29 Суббота.`'s
+  evening entry also carried a receipts value (1770 р. -- к.) that
+  turned out to be **copied from Михайловскій театръ's own same-row
+  entry** (same page, same date, identical figure) -- the scan shows
+  no receipts printed at all for Александринскій that evening (a
+  benefit note, same shape as `22 Суббота.`); cleared it.
+
+16 sessions touched (11 relabeled, 3 receipts-corrected, 2 added) to
+fully sort out dates `16 Воскрес.` through `29 Суббота.`.
+
+**`1902-03_p026` (Александринскій театръ):** a page-wide shift spanning
+`13 Четвергъ.` through `26 Среда.`, 11 sessions reassigned. One entry
+(`_repair_tier: "baseline_fallback"`, the two-tier repair pass from
+three rounds ago) had **contaminated title/genre/annotation**, not just
+date: the fallback-recovered row for `24 Понед.` carried the title
+"Der blinde Passagier" (actually `25`/`26`'s play) copy-pasted along
+with its own annotation, while its receipts figure (1885 р. 45 к.) was
+the only genuinely-correct part, matching `24 Понед.`'s real bill --
+"Kollegen, Charakter-Komödie" + "Die goldene Ewa, Lustspiel" (a
+German-troupe guest performance, confirmed on the scan). Corrected the
+works list and cleared the borrowed annotation; the following two
+`26 Среда.`-labeled entries needed only their dates shifted back one
+day each (`25 Вторникъ.`/`26 Среда.`), their "Der blinde Passagier"
+content already being correct.
+
+**`1901-02_p028` (Александринскій театръ.), `20 Среда.`:** a smaller,
+local version of the same shift -- `20 Среда.`'s real morning leg
+("Снѣгурочка", the free-matinee convention, no receipts) was missing
+from the JSON; the session carrying its evening content ("Бенефисъ
+г-жи Мичуриной...") was correctly dated but mislabeled `"unspecified"`;
+the following "Комета" session belonged to `21 Четвергъ.`'s morning,
+not `20 Среда.`'s evening, and `21 Четвергъ.`'s own real evening
+("Ревизоръ") was sitting under the right date already but likewise
+`"unspecified"`. Added the missing entry, relabeled the rest.
+
+**`1903-04_p020` (Александринскій театръ), `1 Четв.`:** the smallest of
+the five -- a one-entry local shift, not a page-wide cascade. The
+session labeled `"1 Четв."` with title "Пустощвѣтъ" is actually `31
+Среда.`'s real evening leg; `31 Среда.`'s existing morning entry just
+needed its session field set. `1 Четв.`'s own single real entry
+("Мѣсяцъ въ деревнѣ") was already correctly dated and didn't need to
+move.
+
+**`1903-04_p025` (Новый театръ), `2 Понед.`:** re-examined and
+corrected an over-hasty conclusion from the *previous* round, which
+had assumed a genuine extraction miss here. On closer inspection there
+is no tick-mark row at all for Новый театръ around these dates --
+`2 Понед.` is a genuine single unsplit entry ("Пустоцвѣтъ"/"У елки",
+already correct as-is), and the two sessions that looked like a
+mismatched `2 Понед.` pair are actually `3 Вторн.`'s real morning/evening
+split, one of which had simply inherited the wrong date_text. Simpler
+fix than originally diagnosed: one date reassignment, two session
+labels.
+
+**Left alone, confirmed not a match for this bug**: `1901-02_p011`
+(Новый театръ, `11 Воскрес.`) -- re-confirmed on the scan a second
+time. Content matches the claimed date exactly (no shift), the cell is
+genuinely divided by a printed rule, but there is no УТРО/ВЕЧ tick mark
+and it isn't the free-matinee convention either. Left as `unspecified`
+per this whole exercise's own evidentiary bar.
+
+**Net change**: 10 previously-missing sessions added (across the 5
+pages), several dozen `date_text`/`session` reassignments, and 4
+entries had contaminated `works`/`annotation`/`receipts_text` fields
+corrected where the scan made the real content unambiguous (all within
+the shift itself -- nothing invented). Corpus session count: 11,832 ->
+11,842.
+
+**Verified after all fixes**: re-ran the same both-unspecified-pair
+sweep corpus-wide -- exactly 1 key remains (`1901-02_p011`, confirmed
+correctly left alone above), 0 new spurious pairs introduced. Also
+checked for duplicate `(theater, date_text, session)` triples on all 5
+touched pages as a sanity net: found exactly one, on `1901-02_p018`
+(`Михайловскій театръ`, `16 Воскрес.`, both `"unspecified"`) -- **not
+something this pass touched or introduced**; it's the same
+titles-in-`annotation`-instead-of-`works` pattern documented elsewhere
+in this issue, on a column this pass never edited. Flagged here for a
+future pass, not fixed now (out of scope -- fixing it means moving
+`annotation` content into `works` first, a different bug class).
+
+**Not yet propagated into `outputs/full_run/`** -- per RG's standing
+instruction, batched with the other rounds from today rather than
+propagated per-round.
+
+
+---
+
+**2026-09-11, worked verbatim-rule example: 3 genuine printed date
+typos.** Following up on the weekday-text audit above, RG asked to
+(1) document these as a worked example of CLAUDE.md's
+never-modernize-a-printed-typo rule and (2) make sure the research
+layer still gets a usable date despite the source's own error.
+
+The 3 cases (`1904-05_p014` `28 Понед.`, `1905-06_p027` `23 Вторн.`,
+`1905-06_p036` `16 Среда.`) are the book's own typesetting error, not
+an extraction artifact -- confirmed on all three scans: each misprinted
+row sits directly between two rows whose weekdays are otherwise
+perfectly consistent (e.g. `1904-05_p014`: `27 Суббота.` -> `28
+Воскрес.` -> **`28 Понед.`** -> `30 Вторникъ.` -- only internally
+consistent if that middle row is really the 29th). `raw.event_entry.date_text`
+keeps the book's own "28 Понед." forever, unchanged -- that's the
+verbatim guarantee, and nothing above touches it.
+
+**What "flag them for the research layer" means concretely**: this
+corpus already has exactly the right mechanism for this --
+`pipeline/validate_performance_dates.py`'s `analysis.event_entry_date_check`
+table, whose `corrected_date_undate` flows into `research.event.date`
+(`build_research_model.py`: `coalesce(dc.corrected_date_undate,
+ae.date_undate)`), with `date_confidence` always traveling alongside
+so a query can tell which rows were touched. That module already
+detects a weekday/day-number mismatch like these three -- but by
+design it only *auto*-corrects a run of >=2 consecutive mismatched
+rows that independently agree on the same shift, and deliberately
+never touches an isolated single-row mismatch (the module's own
+docstring names the exact false-positive that discipline exists to
+prevent). These three are isolated, so the existing heuristic
+correctly leaves them alone -- flagged (`unresolved`), not corrected.
+Added a small, explicitly-documented `_MANUAL_DATE_OVERRIDES` table to
+the same module: keyed by `(page_id, printed date_text)` rather than
+`event_id` (stable across a corpus rebuild, unlike `event_id`), applied
+as a final pass over every event so it isn't tied to whichever
+block-level status the row happened to land in. Gives these three
+`date_confidence='corrected_manual'` and the scan-verified date, with a
+`note` naming the reasoning inline in the table itself.
+
+Tested against a scratch copy of `outputs/gate3_columnwise/imperial_theaters.duckdb`
+(never the original) before considering this done -- and the first
+version of the override didn't actually fire for any of the 3 cases,
+for an instructive reason (see next section).
+
+**A much bigger finding surfaced while testing this.** All three
+target rows turned out to have `date_undate = NULL` (two of the three
+pages) or to land in `'intra_block_disagreement'` rather than a clean
+`'mismatch'` (the third) -- neither of which the block-level draft of
+the override could see at all. Chasing why surfaced a corpus-wide gap
+that has nothing to do with these three typos:
+
+`flatten_repertoire_page` computes `date_undate` from *only* that
+individual session's own `month_text`/`year_text` (`pipeline/schemas/repertoire.py`:
+`date_input = f"{day} {s.month_text or ''} {s.year_text or ''}"`) --
+no inheritance from neighboring rows on the same page, no fallback to
+the page's own printed header date range. Issue #14 already measured
+this for the *baseline* single-call extraction and got it to a 99.8%
+fill rate. That fix never touched column-wise extraction, and nobody
+re-measured `date_undate` fill rate after Gate 3 shipped (it isn't
+scored by `eval_against_gold.py`, so a regression here is invisible to
+the usual signal -- issue #14's own closing line about this exact
+trap). Checked `raw.event_entry.date_undate` fill rate by season in
+`outputs/full_run/imperial_theaters.duckdb` directly:
+
+| season | date_undate fill |
+|---|---|
+| 1890-91 through 1898-99 (baseline) | 100.0% |
+| 1899-00 | 17.2% |
+| 1900-01 | 17.0% |
+| 1901-02 | 18.3% |
+| 1902-03 | 19.3% |
+| 1903-04 | 21.4% |
+| 1904-05 | 20.9% |
+| 1905-06 | 13.2% |
+| 1906-07 (baseline, not column-wise) | 99.3% |
+| 1907-08 | 15.7% |
+
+Every column-wise-extracted season sits at 13-21%; every
+baseline-extracted season (including 1906-07, which was never migrated
+to column-wise) sits at ~100%. This means roughly 80-87% of events in
+8 of the corpus's 18 seasons currently have **no calendar date at all**
+in `research.event.date` -- `date_undate` and, downstream,
+`corrected_date_undate`/`date` are simply NULL. This is a far larger
+gap than the 3 typos that led here, affects any date-range query
+against those 8 seasons today, and is NOT yet fixed -- flagged here as
+its own open item, deliberately not tackled in this pass (needs either
+propagating `month_text`/`year_text` across a page's sessions during
+flatten, or reconstructing it from each page's own printed header date
+range, and deserves its own scoped pass rather than a bolt-on here).
+
+**Verified**: tested the `_MANUAL_DATE_OVERRIDES` mechanism against a
+scratch copy of the database (not the original) -- all 9 affected rows
+(3 theaters x 3 pages) now resolve to `corrected_manual` with the
+correct scan-verified date. Not yet run against `outputs/full_run/`
+itself (batched with the rest of today's propagation, per RG's
+instruction) -- `validate_performance_dates.py` needs to be re-run
+there whenever that batch happens for these three corrections (and any
+future ones) to actually reach `research.event.date`.

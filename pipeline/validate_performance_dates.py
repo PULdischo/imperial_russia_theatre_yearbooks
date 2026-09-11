@@ -72,6 +72,42 @@ _SEARCH_RADIUS = 7
 # is not enough evidence, confirmed the hard way).
 _MIN_RUN_AGREEMENT = 2
 
+# Manual overrides for individual isolated mismatches this module's own
+# run-based heuristic correctly declines to auto-correct (an isolated
+# single-block mismatch is exactly the unsafe case the module's design
+# guards against -- see the module docstring). These three were instead
+# scan-verified by hand (RG's request, 2026-09-11, docs/eval/known_issues.md
+# #69's "event-date field audit" addendum): the source book itself
+# misprints the day NUMBER on one row while every surrounding row's
+# weekday stays internally consistent -- confirmed directly against the
+# page image, not inferred from the weekday-is-reliable heuristic alone.
+# Textbook case for this project's verbatim rule: raw.event_entry.date_text
+# keeps the book's own typo forever ("28 Понед.", not "29 Понед."); this
+# override only ever touches the *derived* analysis/research date, never
+# the verbatim source. Keyed by (page_id, printed date_text) rather than
+# event_id, since event_id isn't stable across a corpus rebuild but the
+# printed text is. Applies to every theater's block sharing that date_text
+# on the page -- the misprint is one shared row label, not a per-theater
+# difference.
+_MANUAL_DATE_OVERRIDES: dict[tuple[str, str], tuple[str, str]] = {
+    # Book prints "28 Понед." directly after "28 Воскрес." with no "29" --
+    # the run (27 Суббота -> 28 Воскрес -> [this row] -> 30 Вторникъ) is
+    # only internally consistent if this row is the 29th.
+    ('repertoire_1904-05_p014', '28 Понед'): (
+        '1904-11-29', 'scan-verified: book misprints day as "28" (should be "29"); known_issues.md #69',
+    ),
+    # Book prints "23 Вторн." directly after "23 Понед." with no "24" --
+    # 22 Воскрес -> 23 Понед -> [this row] is only consistent as the 24th.
+    ('repertoire_1905-06_p027', '23 Вторн'): (
+        '1906-01-24', 'scan-verified: book misprints day as "23" (should be "24"); known_issues.md #69',
+    ),
+    # Book prints "16 Среда." then "16 Четв." with no "15" in between --
+    # 14 Вторн -> [this row] -> 16 Четв. is only consistent as the 15th.
+    ('repertoire_1905-06_p036', '16 Среда'): (
+        '1906-03-15', 'scan-verified: book misprints day as "16" (should be "15"); known_issues.md #69',
+    ),
+}
+
 
 def _parse_dow_word(word: str) -> int | None:
     t = word.lower().strip().rstrip('.').replace('ъ', '').replace('ь', '')
@@ -139,7 +175,8 @@ def validate_and_correct(con: duckdb.DuckDBPyConnection) -> dict:
                 info['texts'] = distinct_texts
                 block_infos.append(info)
                 continue
-            wd = _parse_dow(next(iter(distinct_texts)))
+            info['date_text'] = next(iter(distinct_texts))
+            wd = _parse_dow(info['date_text'])
             if wd is None:
                 info['status'] = 'unparseable'
                 block_infos.append(info)
@@ -216,6 +253,26 @@ def validate_and_correct(con: duckdb.DuckDBPyConnection) -> dict:
     for event_id, date_undate in all_ids:
         if event_id not in results:
             results[event_id] = ('no_date', None, None, None)
+
+    # Scan-verified manual overrides, applied last and unconditionally by
+    # (page_id, printed date_text) -- deliberately NOT folded into the
+    # block logic above. These three isolated printed typos land in
+    # 'intra_block_disagreement' (their date_undate collides with a
+    # sibling row's, since date_undate is computed from the day NUMBER
+    # alone -- see flatten_repertoire_page) or 'no_date' (most rows in
+    # these particular seasons have no date_undate at all, a separate,
+    # much larger gap flagged in known_issues.md #69), never a clean
+    # single-weekday 'mismatch' block the run-based heuristic could see.
+    # Matching directly against each event's own raw date_text sidesteps
+    # all of that. Trailing-period presence on date_text varies by which
+    # theater's column an entry came from even for the same printed date,
+    # so match on the period-stripped form.
+    for event_id, page_id, date_text, _date_undate in rows:
+        override = _MANUAL_DATE_OVERRIDES.get((page_id, (date_text or '').rstrip('.')))
+        if override is None:
+            continue
+        corrected_str, note = override
+        results[event_id] = ('corrected_manual', corrected_str, None, note)
 
     con.execute("""
         CREATE OR REPLACE TABLE analysis.event_entry_date_check (
