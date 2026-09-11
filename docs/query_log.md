@@ -4089,3 +4089,51 @@ pages, resolving to 2,008 distinct `work` entities. A naive merge
 invalidate this existing linkage work for these 8 seasons unless done
 carefully. Used directly to answer RG's "pros and cons of merging"
 question.
+
+## 2026-09-11 — full_run merge: verification queries at every stage
+
+Full detail and rationale in known_issues.md #69's final addendum. The
+core verification queries, run against both the pre-merge
+`outputs/full_run/imperial_theaters.duckdb` and the merged
+`outputs/full_run_merge_work/imperial_theaters_new.duckdb` before
+swap-in:
+
+```sql
+-- untouched-page integrity (the 1,017 non-Gate3 pages)
+SELECT COUNT(*) FROM raw.source_pages;
+SELECT COUNT(*) FROM raw.event_entry e WHERE e.page_id NOT IN (<gate3 332 ids>);
+SELECT COUNT(*) FROM raw.person_entry;
+-- row-content diff on those same untouched pages (old vs new, ORDER BY event_id)
+SELECT * FROM raw.event_entry WHERE page_id NOT IN (<gate3 332 ids>) ORDER BY event_id;
+
+-- person-continuity check after build_entities.py
+SELECT entry_id, person_id FROM entities.person_link;  -- old vs new: set-equal
+SELECT COUNT(*) FROM entities.person_merge_log;         -- old vs new: unchanged
+SELECT work_id, appearance_count FROM entities.work WHERE canonical_title = 'Евгеній Онѣгинъ';
+
+-- research-layer comparison after build_research_model.py
+SELECT COUNT(*) FROM research.theater;  SELECT COUNT(*) FROM research.person;
+SELECT * FROM research.person_appearance ORDER BY 1,2,3;  -- old vs new: byte-identical
+SELECT COUNT(*) FROM research.work; SELECT COUNT(*) FROM research.event;
+SELECT COUNT(*) FROM research.performance;
+
+-- spot check the corrected page landed right
+SELECT date_text, theater, receipts_text, annotation FROM raw.event_entry
+  WHERE page_id='repertoire_1903-04_p032' ORDER BY event_id;
+```
+
+Result: source_pages 1,349=1,349. Non-Gate3 event_entry 12,094=12,094
+(exact), person_entry 21,168=21,168 (exact). 114 row-level diffs on
+untouched pages, all explained by `{city, theater}` field changes
+(a pre-existing city-fill-in and the Мариинскій->Маріинскій spelling
+fix, not caused by this merge) -- zero unexplained. `person_link`
+byte-identical (21,168 rows, set-equal), `person_merge_log` unchanged
+(1,022=1,022). "Евгеній Онѣгинъ" work_id stable across the rebuild
+(`788fd62c-a3cc-5103-9563-0475a531996c` both before and after),
+appearance_count 361->366. `research.theater`/`person` unchanged
+(6=6, 2,894=2,894), `person_appearance` byte-identical content.
+`work`/`event`/`performance` shifted consistently with the Gate 3
+corrections (4,530->4,412, 27,637->29,157, 24,892->25,316).
+`1903-04_p032` confirmed showing three theaters with three correct,
+distinct sets of receipts in the merged database. All of this was the
+basis for proceeding with the swap-in described in known_issues.md.

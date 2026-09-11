@@ -8169,3 +8169,159 @@ The corpus is ready to proceed to `parse_and_validate.py` /
 `build_duckdb.py`, with three pages' known, precisely-diagnosed gaps
 left open rather than guessed at: `1899-00_p029`, `1903-04_p004`, and
 now `1901-02_p028`.
+
+### Addendum (2026-09-11): merged the corrected Gate 3 corpus into
+`outputs/full_run/` -- two real pipeline bugs caught before they could
+do damage; publish step deliberately deferred
+
+With the completeness sweep done, ran the corrected 332-page corpus
+through the standalone `parse_and_validate.py`/`build_duckdb.py` pair
+first (`outputs/gate3_columnwise/imperial_theaters.duckdb` -- 332
+source_pages, 11,827 event_entry rows, 6 theaters roughly balanced, 8
+seasons, ~11.8M rubles total receipts, all sanity-checked directly).
+That was a standalone deliverable, not yet touching the published
+database.
+
+RG then asked about merging into `outputs/full_run/` -- the actual
+published/served database (HF dataset repo + Cloud Run `spiski`). Spot
+check confirmed the *current* `full_run` Repertoire data for these 8
+seasons is the old single-call baseline extraction (file predates all
+of this project's column-wise work), independently confirmed wrong
+earlier (`repertoire_1902-03_p024`: wrong date labels, wrong dark/
+performed status, wrong compound-day handling). Worked through what
+merging would actually cost before doing it:
+
+- Checked (not assumed) whether anything downstream already depends on
+  the old data: `entities.work_link` had 10,697 rows and the published
+  `research` layer had 13,009 events / 10,697 performances / 2,008
+  resolved works keyed to these exact 332 pages' old, position-based
+  IDs (`{page_id}__s{NNN}__w{M}`, not content-addressed).
+- Traced the actual mechanism: `raw_performance_id` has no FK back to
+  `raw.event_entry_performance`, so a raw content swap wouldn't error
+  or cascade, it would leave those rows silently dangling. But
+  `entities.work_link`/`work_genre_candidate` are fully DROP+rebuilt by
+  `build_entities.py` on every run regardless, with no persisted
+  manual-review state for works (unlike `person_link`/`person_candidate`,
+  which explicitly preserve prior decisions) -- and `work_id` is a
+  deterministic `uuid5` hash of the normalized title, not random, so
+  canonical work identities survive a rebuild for unchanged titles.
+  Confirmed directly post-merge: "Евгеній Онѣгинъ"'s dominant work_id
+  (`788fd62c-...`) is byte-identical before and after.
+- Considered and rejected an explicit supersede-rather-than-delete
+  scheme (the pattern this project already uses for confirmed person
+  merges, `entities.person.superseded_by_person_id`) -- that principle
+  exists for genuine ambiguity where either identity could reasonably
+  be revisited later, not for a confirmed extraction bug with no
+  legitimate alternative reading. Checked whether anyone/anything
+  external currently depends on the old IDs: no -- the HF repo is
+  private and Cloud Run is password-gated, so the dataset isn't in a
+  state where outside citation is realistic yet. Decided on a straight
+  overwrite instead, provided downstream tables get rebuilt afterward
+  so nothing is left dangling.
+
+**Safety approach**: confirmed RG's backup drive had arrived (the
+standing "never overwrite `outputs/`" guardrail from the 2026-09-07
+machine-migration session was explicitly about having no backup yet),
+then copied `outputs/full_run/` (146M) wholesale to
+`outputs/full_run_merge_work/` before touching anything -- verified
+byte-identical (`diff -rq`, exit 0) -- and did every step of the merge
+against that copy. `outputs/full_run/` itself stayed completely
+untouched until the final, deliberate swap-in.
+
+**The merge itself**, all inside `full_run_merge_work/`:
+
+1. Overwrote the 332 pages' raw JSON in the copy with the verified
+   `raw_columnwise/` versions (confirmed via `diff -rq`: exactly and
+   only those 332 files changed).
+2. **First real bug caught**: initially ran `parse_and_validate.py
+   --extraction-source columnwise` across the full 1,349-page manifest
+   in one pass. The flag's own docstring warns this disables several
+   index-keyed hand-fix tables globally -- safe for the 332 column-wise
+   pages (their row ordering differs from what those fixes were
+   verified against), but wrong for the other 1,017 pages, which are
+   still genuinely baseline-extracted and need those exact fixes. The
+   docstring even names specific page_ids proving this isn't
+   hypothetical. Caught before running `build_duckdb.py`, discarded
+   that pass, and redid it as two separate runs (332 pages with
+   `--extraction-source columnwise`, the other 1,017 with the
+   `baseline` default), then merged the resulting CSVs. Confirmed
+   post-merge that the index-keyed fixes (`repertoire_year_fixed`,
+   `repertoire_month_fixed`, `repertoire_session_date_fixed`,
+   `repertoire_fabricated_dropped`) correctly fired in the baseline
+   pass, which the wrong single-pass run would have silently skipped
+   for all 1,349 pages.
+3. Ran `build_duckdb.py` on the merged, full manifest. Verified against
+   the old published database: `source_pages` unchanged (1,349),
+   non-Gate3 `event_entry` row count for the untouched 1,017 pages
+   exactly unchanged (12,094 = 12,094), `person_entry` completely
+   unchanged (21,168 = 21,168). A row-content diff on those same
+   untouched pages found 114 differing rows -- checked every one:
+   all 114 are exactly and only `{city, theater}` field changes (a
+   `city` value getting filled in where it was `NULL`, or the
+   pre-existing `Мариинскій`->`Маріинскій` spelling fix), pipeline
+   improvements that simply hadn't been re-applied since the old
+   database was last built (Aug 28) -- zero unexplained differences,
+   nothing caused by the merge itself.
+4. **Second real bug caught**: before running `build_entities.py`,
+   recognized that its person-identity-continuity logic
+   (`entry_to_current_person`) only works if `entities.person_link`
+   already exists in the target database -- checks the same DB
+   connection it's given, nothing else. The freshly-built merged
+   database had no `entities` schema at all yet, so running it as-is
+   would have treated every person as "never seen before" and minted
+   brand-new random UUIDs for all 2,900 live people, discarding 1,022
+   prior merge-log entries and 23 already-reviewed candidate decisions.
+   Fixed by `ATTACH`-ing the old database and copying the entire
+   `entities` schema across before running `build_entities.py`, so it
+   had the same continuity state it would have had from an ordinary
+   in-place re-run. Verified after: `entities.person_link` byte-
+   identical (21,168 rows, set-equal), `person_merge_log` unchanged
+   (1,022 = 1,022), `work` correctly regenerated (4,530 -> 4,412,
+   reflecting the corrected content) with confirmed-stable IDs.
+5. **Third catch**: `build_research_model.py` failed outright --
+   `analysis.event_entry_date_check` didn't exist, because
+   `validate_performance_dates.py` (documented in CLAUDE.md's normal
+   pipeline order, between `build_entities.py` and `link_wikidata.py`)
+   had been left out of the plan entirely. Ran it (23,921 rows, the
+   usual verified/no_date/corrected/unparseable/unresolved/
+   intra_block_disagreement breakdown), then `build_research_model.py`
+   succeeded.
+6. Deliberately skipped `link_wikidata.py` -- it operates only on
+   `entities.person`, which this Repertoire-only merge left completely
+   untouched (confirmed), so running it would just re-query the live
+   Wikidata API for the same people for no new benefit. Flagged as
+   separate, ongoing project work rather than silently run or silently
+   dropped.
+7. `build_datasette.py` produced `research_dataset_new.sqlite`; opened
+   and spot-checked directly (29,157 events, matching the `.duckdb`'s
+   `research.event` count exactly).
+
+**Final verification** before swap-in: `research.theater`/`person`
+completely unchanged (6=6, 2,894=2,894), `research.person_appearance`
+byte-identical content (not just count) confirming zero impact on the
+person side, `work`/`event`/`performance` shifted in ways fully
+consistent with the Gate 3 corrections (4,530->4,412, 27,637->29,157,
+24,892->25,316). `1903-04_p032` spot-checked directly in the merged
+database: three theaters, three correct, distinct sets of receipts.
+
+**Local swap-in**: moved (not deleted outright) the old
+`imperial_theaters.duckdb`/`parsed/`/`research_dataset.sqlite` aside,
+copied the verified new versions into place, confirmed the live
+database in `outputs/full_run/` matches what was verified in the
+working copy. Then, once confirmed good, deleted the pre-merge
+snapshots plus two pre-existing stray artifacts surfaced along the way
+(`imperial_theaters.duckdb.bak_pre_teatr_fix`, an already-stale Aug 27
+backup nobody had cleaned up, and a `parsed 2/` directory dated Aug 28
+-- a duplicate leftover from however the original `full_run` was built,
+predating this session entirely).
+
+**Explicitly NOT done**: publishing. `outputs/full_run/` is now the
+verified, corrected local deliverable, but the HF dataset repo and
+Cloud Run `spiski` still serve the old data -- republishing is a
+separate, deliberate decision (HF upload + Cloud Run redeploy, both
+with their own documented gotchas in CLAUDE.md's Publishing section)
+that RG asked to defer. `outputs/full_run_merge_work/` -- the working
+copy this was all built in, including the `parsed_gate3/`/
+`parsed_baseline/` split kept as an audit trail of the two-pass
+methodology -- is still on disk, left as a deliberate choice pending a
+later decision to remove it.
