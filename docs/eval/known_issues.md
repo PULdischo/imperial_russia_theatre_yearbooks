@@ -8678,3 +8678,77 @@ confirmed-genuine cases above remain out of the original 18.
 **Not yet propagated into `outputs/full_run/`** -- like the
 annotation-audit round before it, this lives only in
 `outputs/gate3_columnwise/raw_columnwise/` so far.
+
+
+---
+
+**2026-09-11, later still: stray утро/вечер text sweep.** RG asked to
+check whether "утро" or "вечер" text appears anywhere unexpected --
+i.e. whether the printed sub-row labels (УТРО./ВЕЧЕРЪ.) or fragments
+of them had leaked into a field where they don't belong, the way a
+genuine performance title can also leak into `annotation` (the pattern
+this whole issue keeps surfacing). Regex-searched every field across
+the corpus for "утр"/"вечер" case-insensitively: 51 hits. The large
+majority are genuine Russian titles/genres that happen to contain the
+word ("Вечерняя заря", "Утро дѣлового человѣка", "Женихъ (Утро
+жениха)", concert titles like "Музыкально-Литературный вечеръ") --
+not bugs. Six were real, all scan-verified before fixing:
+
+- **`1904-05_p013`**: a literal header-label leak, not a fragment --
+  `annotation` held the bare string `"ВЕЧЕРЪ."` on two sessions
+  (Малый and Новый театръ, both dated `13 Суббота.`) while the scan
+  shows both are actually `14 Воскрес.`'s morning leg (the free
+  "Безплатные спектакли..." block), with a real evening leg
+  immediately after that had picked up the same bogus `"ВЕЧЕРЪ."`
+  annotation instead of being labeled `session="evening"`. Reassigned
+  dates/sessions on all four entries; this left `13 Суббота.` missing
+  its own dark placeholder for Малый/Новый (Большой already had one),
+  caught by re-running `check_repertoire_cross_theater_date_mismatch`
+  afterward -- added the two missing dark entries to match.
+- **`1903-04_p019`**: `annotation` on Малый театръ's `20 Суббота.`
+  read `"престарѣ-емействъ. ай вечеръ."` -- a garbled, truncated
+  duplicate of Большой театръ's real annotation on the *same date*
+  ("Въ пользу Убѣжища для престарѣлыхъ артистовъ и ихъ семействъ.
+  Музыкально-Литературный вечеръ."). The scan shows Малый was simply
+  dark that day (a plain dash). Cross-column content bleed corrupting
+  a blank cell -- cleared to `is_dark: true, works: [], annotation: null`.
+- **`1901-02_p030`**: the reverse bug (real performance titles sitting
+  in `annotation` instead of `works`) -- Маріинскій театръ's
+  `12 Вторникъ` had a genuine benefit note followed by two real titles
+  ("Урвази—утренняя звѣзда, оп." and "Le cœur de la marquise,
+  pantomime.") all concatenated into `annotation`, `works` empty.
+  Split them out.
+- **`1907-08_p025`**: same reverse-bug shape plus OCR corruption --
+  Большой театръ's `11 Пятница.` had a benefit note and two work
+  titles in `annotation` (one missing its "Зв" -- "аный вечеръ съ
+  итальянцами" for "Званый вечеръ..."), with only the third title
+  correctly in `works`. Split all three out, using the intact spelling
+  confirmed on the scan.
+- **`1907-08_p027`**: found while cross-checking the previous case
+  against a second occurrence of the same touring bill -- a genuine,
+  separate cascading shift: `19 Суббота.`'s real content (the same
+  benefit note + "Въ горахъ Кавказа" + "Званый вечеръ съ итальянцами",
+  no receipts printed) had absorbed `20 Воскрес.`'s morning leg
+  ("Фра-Діаволо", 604 р. 46 к.) into its own `works`/receipts, while
+  `20 Воскрес.` itself carried the misplaced annotation atop what was
+  actually its own evening leg. Reassigned `19 Суббота.`'s works back
+  to the two benefit-program titles (receipts cleared -- none printed),
+  and split `20 Воскрес.` into its real morning/evening pair.
+- **`1903-04_p032`**: another reverse-bug instance -- Александринскій
+  театръ's `10 Сб.` had a benefit note plus "Соловушка, сц." and
+  "Званый вечеръ съ итальянцами, оперетка." all in `annotation`,
+  `works` empty. Split them out.
+
+Re-ran the regex sweep after fixing: 48 hits remain, all confirmed
+genuine (real titles, or benefit/concert nights where `annotation`
+holds the full note and `works` is legitimately empty -- checked each
+of the remaining `annotation`-field hits individually). A second,
+stricter sweep for the literal all-caps header strings ("УТРО.",
+"ВЕЧЕРЪ.") anywhere in any field: 0 hits corpus-wide.
+
+**Verified after all fixes**: `check_repertoire_cross_theater_date_mismatch`
+back to 0 (briefly regressed to 1 after the `1904-05_p013` date
+reassignment, caught and fixed by adding the two missing dark
+placeholders), 332/332 theater coverage, malformed-receipts still 9.
+
+**Not yet propagated into `outputs/full_run/`.**
