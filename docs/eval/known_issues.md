@@ -8752,3 +8752,174 @@ reassignment, caught and fixed by adding the two missing dark
 placeholders), 332/332 theater coverage, malformed-receipts still 9.
 
 **Not yet propagated into `outputs/full_run/`.**
+
+---
+
+**2026-09-11, later still: the deferred 76-key "both legs mislabeled
+unspecified" pass** -- the background task flagged two rounds back
+("out of scope for this round's actual question ... flagged as a
+background task for a dedicated pass"). Regrouped all sessions
+corpus-wide by `(page, theater, date_text)`; a stricter definition
+than the original quick sweep (require exactly 2 sessions at the key,
+both `session="unspecified"`, both `is_dark=false`, both with a
+non-empty `works` and a non-null `receipts_text` -- i.e. two real,
+already-transcribed printed cells, not a `_repair_tier` placeholder or
+a half-empty benefit note) found **64** keys, not 76 -- the earlier
+number was an unscoped estimate; 64 is what the round's own criteria
+actually produce.
+
+**Checked all 64 against the source scans (`pdf/RepertoireTables/`,
+not the gitignored 300dpi renders, which aren't present on this
+machine right now) before touching anything**, matching each
+session's *title and receipts figure*, not just its position in the
+row, against the printed cell -- position-only matching turns out not
+to be safe here (see below). **51 of the 64 confirmed genuine**: the
+scan shows two real printed sub-rows at that date for that theater,
+either under explicit УТРО./ВЕЧЕРЪ. tick-mark labels, or -- for 6 of
+the 51 -- under the recurring "Спектакль для учащейся молодежи" free-
+matinee convention already established as morning by this issue's
+earlier rounds (no tick mark printed for that convention, but the
+divider line and the header text are the same signal precedent already
+accepted). All 51 confirmed cases have idx-order matching print order
+(lower session index = top of the printed cell = morning; higher =
+bottom = evening) -- relabeled `session` only, `works`/`receipts_text`/
+`annotation`/`date_text` untouched, per this round's scope.
+
+**The other 13 are not this bug at all -- they're spurious pairings
+produced by the cascading one-position date/title/receipts shift bug
+documented repeatedly elsewhere in this issue** (`repertoire_1893-94_p007`
+in #49, `1901-02_p028`/`1902-03_p019`/`1904-05_p012` in the pairing-
+completeness round two entries back). In each case the group's two
+"unspecified" sessions are real printed cells, but at least one of
+them belongs to a *different, adjacent date* that the extraction
+mislabeled -- so it only looks like a same-date morning/evening pair
+because its title+receipts happen to land on the wrong `date_text`
+next to a genuinely unrelated session. Confirmed by checking the
+neighboring dates on the same scan and finding an exact title+receipts
+match there instead:
+
+- `1901-02_p018` (Александринскій театръ, 3 keys: `17 Понед.`,
+  `26 Среда`, `28 Пятница`) -- a previously-undocumented instance of
+  this page's own shift bug, distinct from and in addition to any
+  fix already applied elsewhere on this page. Spans at least
+  `16 Воскрес.` through `29 Суббота.`.
+- `1901-02_p028` (Александринскій театръ., `20 Среда.`) -- the
+  776 р. 49 к. "Комета" session belongs to `21 Четвергъ.`'s morning,
+  not `20 Среда.`'s evening. A different shift than the
+  Михайловскій-column shift on dates 17-20 this same page already
+  fixed by the pairing-completeness round -- this one is on the
+  Александринскій column.
+- `1902-03_p026` (Александринскій театръ, 4 keys: `14 Пятница.`,
+  `16 Воскрес.`, `24 Понед.`, `26 Среда.`) -- a page-wide one-position
+  shift spanning `13 Четвергъ.` through at least `26 Среда.`: e.g. the
+  pair filed under `16 Воскрес.` (`Чайка`/`Вопросъ`) is actually
+  `15 Суббота.`'s real entries, and the pair filed under `24 Понед.`
+  (`Зарница`/`Волки и овцы`) is actually `16 Воскрес.`'s.
+- `1903-04_p020` (Александринскій театръ, `1 Четв.`) -- the
+  1881 р. 50 к. "Пустоцвѣтъ" session is `31 Среда.`'s evening, not
+  `1 Четв.`'s morning.
+- `1903-04_p027` (`7 Суббота.`, both Большой театр. and Новый театр.)
+  -- both columns' "7 Суббота." pairs are actually `6 Пятница.`'s real
+  entries (confirmed exact title+receipts match both cases).
+- `1903-04_p025` (Новый театръ, `2 Понед.`) -- a different shape, not
+  a same-page-neighbor shift: the session filed as `2 Понед.`'s
+  "evening" (`Пустоцвѣтъ`/`У елки`, 1170 р. 79 к.) doesn't match
+  *any* nearby date's scan cell, while the real `2 Понед.` evening
+  (`Даровой пассажиръ, ком.`, 869 р. 40 к., clearly printed on the
+  scan) is simply absent from the JSON -- an extraction miss paired
+  with an unrelated stray entry, not a shift.
+- `1901-02_p011` (Новый театръ, `11 Воскрес.`) -- left un-relabeled
+  for a different reason: the two sessions' titles and receipts *do*
+  match the scan exactly at that date (Севильскій цирюльникъ 311 р.
+  59 к. / Моцартъ и Сальери + Пиръ во время чумы + Сынъ мандарина
+  1625 р. 15 к.), and the cell is genuinely divided by a printed rule
+  -- but there is no УТРО./ВЕЧЕРЪ. tick mark for this theater on this
+  row, and it isn't the free-matinee convention either. This task's
+  own instruction was to relabel only where the scan confirms
+  *explicit* УТРО/ВЕЧЕРЪ sub-labels; absent that, left as `unspecified`
+  rather than assumed.
+
+None of the 13 above were touched. They're a real, separately-worth-
+fixing bug (the same shift-bug class as #49/the pairing-completeness
+round), just not *this* bug -- flagging here rather than folding a
+different fix into this round's scope.
+
+**Verified after fixing the 51**: re-ran the same grouping query
+corpus-wide -- exactly the 13 excluded keys above remain, 0 new ones
+introduced, total session count unchanged (11,832, only the `session`
+field value changed on 102 sessions across 24 files).
+
+**Not yet propagated into `outputs/full_run/`** -- lives only in
+`outputs/gate3_columnwise/raw_columnwise/` so far, consistent with
+every other round in this issue.
+
+
+---
+
+**2026-09-11, event-date field audit.** RG asked to look carefully at
+the `date_text`/`month_text`/`year_text` fields for anything
+unexpected. Ran several structural checks corpus-wide rather than
+scan-checking all 11,832 sessions individually:
+
+**2 real bugs found and fixed, both scan-verified:**
+- **`1903-04_p021`**: a dropped leading "1" digit, identically across
+  all 3 theaters -- `"0 Суббота."` and `"1 Воскрес."` should be `"10
+  Суббота."` and `"11 Воскрес."` (confirmed against the scan: `9
+  Пятница.` is immediately followed by a fully dark `10 Суббота.`, then
+  `11 Воскрес.`, not a nonsensical day "0" or a second day "1"). Fixed
+  7 entries.
+- **`1904-05_p032`**: a bare month-header row -- the printed label
+  `"Мартъ."` that separates February from March in the date column,
+  with no theater content at all -- had been captured as if it were
+  its own session (once per theater, `is_dark: true, works: []`).
+  Confirmed against the scan this is pure page furniture, not a
+  calendar day; no other page in the corpus has this problem (checked
+  all 12 month-header strings corpus-wide). Removed the 3 bogus
+  sessions.
+
+**Checked and confirmed NOT bugs, no fix made:**
+- **30 "day sequence jumps backward" cases across 10 pages** (e.g.
+  Мариинскій театръ's date sequence going `...31, 10...` or `...27,
+  7...` within one page) turned out to be genuine multi-day gaps
+  *printed in the source itself* -- spot-checked two on their scans
+  (`1899-00_p034`: the table jumps directly from "31 Пятница." to
+  "Апрѣль. / 10 Понед." with no rows at all for April 1-9;
+  `1903-04_p028`: jumps from "27 Пятница." straight to "Мартъ. / 7
+  Воскрес.", skipping Feb 28-March 6 for *all three* theaters, not
+  just one). Most likely Great Lent closures (the date ranges land
+  right where Orthodox Lent/Holy Week fell in those years) -- the
+  print never had rows for those days, so there's nothing to recover.
+- **56 "weekday text differs between theaters for the same day
+  number" cases**: in every one, the calendar-anchoring day *number*
+  agrees across all theater columns -- only the weekday abbreviation's
+  last letter or spacing differs (`"Четвергъ"` vs `"Четвергь"` -- ъ/ь
+  are easily confused in this typeface; `"Вторн"` vs `"Втори"`;
+  `"Суббо та"` with a stray space). Per CLAUDE.md's verbatim rule this
+  isn't something to normalize toward one "correct" spelling across
+  columns -- it doesn't change which calendar day is meant, and each
+  column's own OCR reading stays as extracted.
+- **Season vs. `year_text` cross-check**: 0 mismatches -- every
+  populated `year_text` value falls inside its own page's season.
+  `month_text`/`year_text` value sets both inspected directly: broad
+  capitalization/punctuation/case variance (expected OCR noise) but no
+  garbled or out-of-range values.
+
+**Found but not fixed -- flagged as a background task instead**: 123
+`date_text` values across 5 pages (`1903-04_p018`, and four 1907-08
+pages: `p016`, `p020`, `p022`, `p032`) have truncated weekday
+abbreviations (e.g. `"16 Су"` instead of `"16 Суббота."`). The day
+number is unambiguous in every case (checked: no page has two
+different real dates sharing a truncated stem), so this isn't a
+correctness bug -- but on 3 of the 5 pages, *every* sighting of some
+calendar days is truncated with no full-form sibling elsewhere on the
+page to copy from, so restoring the full text needs a scan-by-scan
+pass rather than a mechanical fill-in. Out of scope for this round;
+spun off as its own task.
+
+**Verified after the two fixes**: `check_repertoire_cross_theater_date_mismatch`
+still 0, 332/332 theater coverage, malformed-receipts still 9.
+
+**Not yet propagated into `outputs/full_run/`** -- per RG's instruction,
+this round and the three that preceded it earlier today (Gate 3
+completeness sweep addenda aside) will be batched into one
+`outputs/full_run/` propagation later rather than done per-round.
