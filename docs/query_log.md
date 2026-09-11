@@ -4055,3 +4055,37 @@ raw.event_entry_performance rows. receipts_total_kopecks sums to
 benign Мариинскій->Маріинскій orthography-variant repair, not real
 validation failures (confirmed by reading every row of
 `validation_errors.csv`).
+
+## 2026-09-11 — checking what a full_run merge would put at risk (design question, not data question, but the risk itself is factual)
+
+```sql
+-- old raw rows for the 332 Gate 3 page_ids, in the PUBLISHED full_run db
+SELECT COUNT(*) FROM raw.event_entry e JOIN gate3_pages g USING(page_id);
+SELECT COUNT(*) FROM raw.event_entry_performance p
+  JOIN raw.event_entry e ON p.event_id = e.event_id
+  JOIN gate3_pages g ON e.page_id = g.page_id;
+-- entity-resolution work tied to those old performance rows
+SELECT COUNT(*) FROM entities.work_link wl
+  JOIN raw.event_entry_performance p ON wl.raw_performance_id = p.performance_id
+  JOIN raw.event_entry e ON p.event_id = e.event_id
+  JOIN gate3_pages g ON e.page_id = g.page_id;
+-- published research layer for the same pages
+SELECT COUNT(*) FROM research.event e JOIN gate3_pages g ON e.event_id LIKE g.page_id || '__%';
+SELECT COUNT(*) FROM research.performance p JOIN research.event e ON p.event_id = e.event_id
+  JOIN gate3_pages g ON e.event_id LIKE g.page_id || '__%';
+SELECT COUNT(DISTINCT p.work_id) FROM research.performance p
+  JOIN research.event e ON p.event_id = e.event_id
+  JOIN gate3_pages g ON e.event_id LIKE g.page_id || '__%' WHERE p.work_id IS NOT NULL;
+```
+
+Result: `full_run`'s raw layer has 11,778 event_entry rows and 10,715
+event_entry_performance rows for these 332 page_ids (the old, confirmed-
+buggy single-call baseline extraction). 10,697 of those performance rows
+are referenced by `entities.work_link` -- essentially all of them already
+have entity-resolution crosswalk work done. The published `research`
+layer carries 13,009 event rows and 10,697 performance rows for these
+pages, resolving to 2,008 distinct `work` entities. A naive merge
+(replace raw content, rebuild analysis/research on top) would orphan or
+invalidate this existing linkage work for these 8 seasons unless done
+carefully. Used directly to answer RG's "pros and cons of merging"
+question.
