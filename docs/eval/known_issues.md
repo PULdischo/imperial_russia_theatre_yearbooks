@@ -7846,3 +7846,64 @@ added. It didn't, fully:
 Final malformed-receipts count: 9 (all genuine, intentionally left
 as-is). `pipeline/quality_checks.py` carries the bare-dash tolerance
 fix.
+
+### Addendum (2026-09-11): attempted a batch fix for the 13
+cross-theater date mismatches, caused real (fully-recovered) data loss
+doing it, reverted -- documenting the mistake and why WHOLE-PAGE
+resampling is the wrong tool here
+
+Resampled all 13 flagged pages fresh (the same cheap, established
+tier-1 method used throughout this issue) -- every one came back with
+`check_repertoire_cross_theater_date_mismatch` reporting 0 mismatches,
+which looked like a clean, complete fix.
+
+**It wasn't, and trusting that number without checking theater COUNT
+alongside it was the mistake.** The check only compares theaters that
+are actually present -- on a page where a fresh resample itself failed
+to reconcile 1-2 theaters (a real risk on exactly these pages, since
+they're already the corpus's hardest cases), there's nothing left to
+disagree with, so the check reports "0 mismatches" whether the page has
+all 3 theaters or only 1. Blindly copying the fresh resample's whole
+page over the existing (already fully-repaired, 100%-coverage) file
+overwrote several already-good, previously-recovered theaters with
+nothing -- confirmed directly: `1903-04_p017` dropped back to 2
+theaters (losing the Большой content this issue had already confirmed
+and added), `1907-08_p000` dropped to 1, `1907-08_p030` dropped to 2.
+Caught this by re-measuring theater coverage immediately after (not
+trusting the date-mismatch number alone), which had fallen from 332/332
+back toward the same shape as before the whole repair pass -- a real,
+if temporary, regression back to square one for the pages it touched.
+
+A first recovery attempt (restore each page from `repairfull2_A/B/C` --
+the last known-good, 100%-coverage checkpoint -- then re-apply the SAME
+per-theater replacements, scoped to only the specific theater causing
+each page's mismatch rather than the whole page) surfaced a SECOND
+version of the same mistake: several of the fresh resamples used as the
+replacement SOURCE were themselves missing the exact theater being
+replaced (one, `1903-04_p026`, had recovered ZERO theaters that
+attempt), so the targeted per-theater swap deleted the existing good
+data and added nothing back, the same failure mode at a smaller scope.
+
+**Fully recovered, verified twice**: restored all 13 pages from
+`repairfull2_A/B/C` again. Confirmed theater coverage back to 332/332,
+the true-duplicate count back to 1 (the already-known messiest page,
+`1899-00_p029`, unchanged), and malformed-receipts/unknown-theater
+counts unchanged from before this attempt. `1903-04_p017`'s and
+`1907-08_p000`'s SCAN-VERIFIED fixes (the ones added via direct crop
+inspection + confirmed baseline content, not blind resampling) were
+untouched throughout, since they were never part of either overwrite.
+`cross_theater_date_mismatch` is back to its pre-attempt 13, genuinely
+unfixed -- not silently broken, just honestly still open.
+
+**The actual lesson, for whoever picks this thread back up**: resampling
+a WHOLE page to fix ONE theater's date sequence is not safe on pages
+that have already needed repair once -- the same difficulty that caused
+the original problem can just as easily strike a DIFFERENT theater on
+the resample, and "0 mismatches" from `check_repertoire_cross_theater_
+date_mismatch` alone is not sufficient evidence of a clean fix on these
+specific pages; theater COUNT must be checked in the same breath, every
+time, exactly the discipline this issue used successfully for the
+7-unrecovered-theaters addendum (which scan-verified each fix
+individually rather than trusting an automated resample's aggregate
+result). The 13 mismatches remain open, to be revisited with that
+slower, individually-verified approach rather than a batch resample.
