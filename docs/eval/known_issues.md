@@ -8409,3 +8409,52 @@ from the merge documented in the previous addendum. Propagating this
 into `full_run/` needs the same careful two-pass-aware methodology as
 that merge (on a much smaller scale -- 3 pages, not 332), and hasn't
 been done yet.
+
+### Addendum (2026-09-11, later same day): propagated the 3 fixes into
+`outputs/full_run/` -- a much lighter-weight version of the earlier
+merge, same discipline
+
+A small-scale repeat of the full merge documented two addenda up, using
+one shortcut the earlier merge's own findings made safe: `build_duckdb.py`,
+`validate_performance_dates.py`, and `build_research_model.py` all use
+`CREATE OR REPLACE`/explicit `DROP TABLE IF EXISTS` on their own tables
+-- confirmed by reading each script directly, not assumed -- so they can
+run safely **in place** against a copy of the current
+`outputs/full_run/imperial_theaters.duckdb`, leaving the `entities`
+schema (and its person-continuity state) untouched automatically. No
+need to re-attach and copy the old database's `entities` schema across
+like the original 332-page merge required, since this time the working
+copy already had it baked in from that merge.
+
+Steps: copied the current `imperial_theaters.duckdb` to a small scratch
+copy; copied the 3 corrected raw JSON files + a 3-page manifest;
+ran `parse_and_validate.py --extraction-source columnwise` on just
+those 3 pages (123 event_entry rows, 130 performance rows, zero
+validation errors); spliced the old/new rows into the existing merged
+`parsed/` CSVs (matched by `page_id` for `event_entry`, by `event_id`
+prefix for `event_entry_performance`) rather than re-running the full
+two-pass split across all 1,349 pages again; ran `build_duckdb.py` /
+`validate_performance_dates.py` / `build_entities.py` /
+`build_research_model.py` / `build_datasette.py` against that one
+scratch file, in order, same as the full merge (skipped
+`link_wikidata.py` again, same reasoning -- person data untouched).
+
+**Verified before swap-in**: untouched-page `event_entry` rows
+byte-identical to the pre-patch database (23,800 rows, unchanged);
+`person_entry`, `entities.person_link` (21,168, set-equal), and
+`entities.person_merge_log` (1,022) all exactly unchanged;
+`research.person_appearance` byte-identical content; 0 orphaned
+`event_entry_performance` rows, 0 duplicate `event_id`s; all 3 patched
+pages show exactly 3 distinct theaters each; `.duckdb`'s
+`research.event` count (29,141) matches the `.sqlite` export exactly.
+
+Swapped into `outputs/full_run/` using the same move-aside-then-replace
+pattern as the original merge (never a direct overwrite), verified the
+live state matched the scratch copy, then deleted the pre-patch
+snapshots and the scratch working directory once confirmed good --
+nothing old left lying around this time, cleanup done as part of the
+same sitting rather than deferred.
+
+`outputs/full_run/` now has zero known open Repertoire issues for the
+Gate 3 corpus. Publishing (HF upload + Cloud Run redeploy) remains
+explicitly deferred, unchanged from the earlier addendum.
