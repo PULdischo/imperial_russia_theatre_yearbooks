@@ -7738,3 +7738,72 @@ repair_columnwise_merge.py` is the new script, `run_pilot.py`'s client
 construction and `quality_checks.py`'s cross-theater-date-mismatch check
 both carry fixes from this addendum. Not yet done: the 7 remaining
 unrecovered theaters, and the 12 genuine cross-theater date mismatches.
+
+### Addendum (2026-09-10/11): the 7 unrecovered theaters resolved --
+theater coverage now 332/332 (100%); a separate, unrelated stale-metadata
+bug found and fixed along the way
+
+Went through each of the 7 by hand rather than accepting "unrecovered" at
+face value, since that outcome string only means "the automated tiers
+gave up," not "the content doesn't exist."
+
+**6 of 7 turned out to be the SAME root cause, confirmed against the
+scan for every one**: the theater is genuinely, entirely DARK (a plain
+dash) for the page's whole printed date range. A column of nothing but
+repeated dashes gives a vision model almost no distinguishing content to
+anchor an accurate row count on, which is exactly what both
+`merge_columnwise_page`'s reconciliation and a baseline whole-page read
+depend on -- so both methods struggled with row-counting even though the
+actual CONTENT (just "dark" repeated) is trivially unambiguous. Checked
+`1907-08_p023`, `p046`, `p025`, `p000` (Михайловскій) and
+`1904-05_p000` directly against their crops: 6/6 confirmed all-dash, 0
+exceptions. Fixed by constructing `is_dark=True` sessions directly from
+the page's OWN already-correct calendar (borrowed from whichever
+theater on the same page DID reconcile) -- not a guess, a direct
+transcription of what the scan shows, for exactly the number of
+calendar days already confirmed correct by a sibling column.
+
+**The 7th, `1903-04_p017`'s "Московский театръ."**, was a different,
+already-familiar pattern: a hallucinated/generic theater name (see the
+"С.-Петербургскій театр."/"Александровскій театръ." cases earlier in
+this issue) that matched none of the page's real theaters and so never
+recovered via either tier. A fresh baseline read of the page returned a
+real, clean 11-row Большой театръ column (opera/ballet repertoire,
+consistent with that theater) with no theater under any name resembling
+"Московский" -- confirmed this is genuinely that page's real third
+theater, just mislabeled at extraction time. Fixed by adding those rows
+under the corrected canonical name.
+
+**A separate, unrelated bug found auditing the fix**: two MORE pages
+(`1901-02_p011`'s Новый, `1904-05_p026`'s Михайловскій) were ALSO
+missing a theater, despite their `.columns.json` merge reports claiming
+`ok=True` with real session counts (12 and 10 respectively) for exactly
+that theater -- a genuine STALE-METADATA bug, not something the repair
+pass caused (both pages' pre-repair `raw_columnwise/` files, untouched
+by this session's repair work, already lacked the sessions their own
+merge report claimed existed). Audited the whole corpus for the same
+signature (a `.columns.json` entry marked `ok=True` whose claimed
+theater has zero matching sessions in the paired `raw.json`) and found
+2 more instances (`1907-08_p013`, `1907-08_p024`) that turned out to be
+false alarms -- both were ALSO missing a DIFFERENT theater that WAS
+correctly flagged `ok=False`, so the repair pass processed the whole
+page anyway and incidentally fixed the stale entry as a side effect;
+only pages where EVERY entry claimed `ok=True` (so the repair pass had
+nothing to trigger on and copied the stale file straight through)
+stayed broken. Both fixed the same way: `1901-02_p011`'s Новый had real,
+substantial content (confirmed against the crop, not dark) so resampled
+column-wise fresh first (still failed to reconcile) then recovered via
+baseline fallback; `1904-05_p026`'s Михайловскій recovered via baseline
+fallback directly. Root cause of the stale metadata itself not traced
+further -- likely provenance drift from one of the several earlier
+`1903-04`/`1907-08`-style re-runs this issue documents, predating this
+session's repair work; worth keeping in mind if a "columns.json says ok"
+signal is ever trusted again without cross-checking the paired raw.json.
+
+**Final coverage: 332/332 pages (100%) with all 3 theaters present**,
+up from 161/332 (48.5%) before any repair work this issue. Malformed-
+receipts and cross-theater-date-mismatch counts are essentially
+unchanged (11 and 13 respectively) -- the newly-added content didn't
+introduce new problems at meaningful scale. Both remain open, not
+investigated further this addendum. The theater-coverage thread from
+this issue is now closed.
