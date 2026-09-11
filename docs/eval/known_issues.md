@@ -8040,3 +8040,132 @@ fixed, `outputs/gate3_columnwise/raw_columnwise/` is ready to proceed to
 `parse_and_validate.py` / `build_duckdb.py` -- the two deferred date-
 mismatch pages remain open but are correctly flagged in
 `quality_flags.csv`, not silently wrong.
+
+### Addendum (2026-09-11): a completeness sweep -- "are we missing any
+cells/text?" -- 412 blank-receipts sessions individually triaged, 7 real
+bugs found and fixed, 1 new deferred row-shift page found
+
+RG asked directly whether anything was still missing before proceeding
+to the DB load. Investigated systematically: every non-dark session in
+all 332 pages was checked for outright-missing fields (empty page,
+missing theater/date, zero content at all) -- none found -- and then
+specifically for blank `receipts_text`, since that's the one field that
+can legitimately be blank (a genuine "no figure printed" case) *or*
+silently lost, with no way to tell the two apart without checking the
+scan. 412 non-dark sessions had blank receipts.
+
+**First attempt was wrong and was fully reverted.** Tried two
+shortcuts to avoid a full manual sweep: (1) pulling the pre-merge
+per-crop read from each page's `.columns.json` `raw.theaters` data, and
+(2) matching sessions by work-title/annotation content when (1) was
+ambiguous. Both were unsafe in ways not caught until spot-checking
+against the scan: (1) assumed the theater's own row-index numbering
+aligned 1:1 with the shared calendar's `date_rows` index, which breaks
+whenever the theater's own compound-day handling differs from the
+calendar's (confirmed wrong on `1900-01_p022`: attached day 16's
+receipts to day 15's row) -- and (2) content-signature matching isn't
+reliable either, because titles repeat across many dates in a repertory
+theater's bill, so a "unique match" isn't actually unique (silently
+corrupted an unrelated, already-correct session on `1903-04_p036`
+this way). Caught both via direct scan comparison, reverted every
+change from both attempts back to the pre-attempt state, and verified
+the revert precisely (touched-page blank-receipts counts matched the
+original enumeration exactly, session by session) before redoing this
+properly.
+
+**Redone the reliable way: every one of the 61 flagged page/theater
+pairs (n>=2 blank-receipts occurrences) checked individually against
+the actual page scan**, date-column included in every crop so a date
+could never be misread by position alone (the exact mistake that broke
+the first attempt). Two clear categories emerged, and the split held up
+under direct verification in every single case:
+
+- **Genuinely blank in the source** (384 sessions corpus-wide, after
+  fixes) -- benefit/charity performances, guest-artist and
+  guest-troupe engagements, and A. Siloti / orchestra concert-series
+  dates never had a box-office figure printed at all. Confirmed directly
+  for dozens of these across every season 1899-00 through 1907-08,
+  including two extended cases worth noting explicitly: `1907-08_p044`/
+  `p046`/`p048`'s consecutive Михайловскій run (Ibsen/Andreev/Chekhov --
+  Брандъ, Докторъ Штокманъ, Росмерсхольмъ, Жизнь человѣка, Горе отъ ума,
+  Вишневый садъ) is a visiting dramatic company's engagement, confirmed
+  via the scan to have no receipts printed for the entire run while
+  Alexandrinsky sits dark for the same stretch -- and `1899-00_p032`/
+  `1901-02_p032`/`1900-01_p030`/`1905-06_p038` etc.'s repeated
+  "rehearsal / concert / repeat concert въ пользу инвалидовъ" triples
+  are recurring annual war-veteran charity concerts, also genuinely
+  receiptless every time they recur.
+
+- **Real bugs, confirmed and fixed** (7 distinct issues, 6 pages, ~41
+  data points corrected):
+  - `1903-04_p018` (Мариинскій, 14 dates) and `1903-04_p032`
+    (Маріинскій, 10 of 12 dates) -- a crop-clipping bug: the
+    theater-only crop used for extraction was too narrow on the right
+    edge, cutting the receipts sub-column out of the model's view
+    entirely (title text survived because it sits further left in the
+    cell). Confirmed by viewing the full, uncropped page scan, where
+    every one of these figures is clearly printed. Recovered by reading
+    the values directly off the full page. (The other 2 of `p032`'s 12
+    flagged dates -- two grand multi-work charity benefits -- were
+    confirmed genuinely blank, same as the pattern above.)
+  - `1903-04_p032`'s second theater column, separately: not a receipts
+    problem at all -- the column labeled `"С.-Петербургский театр."`
+    in the raw JSON was never a real third theater. It's Александринскій
+    театръ, mislabeled, with its `works`/`annotation` fields retaining
+    garbled fragments of the real Alexandrinsky titles (confirmed via
+    the scan: "Калигула,", "Невольницы.", "Горе отъ ума" etc. all
+    matched real Alexandrinsky rows) while its `receipts_text` values
+    were verbatim duplicates of Маріинскій's own figures for the same
+    dates (down to the kopeck -- e.g. both showing "2713 р. 44 к." for
+    31 Ср., impossible as independent box-office figures). This meant
+    the corpus's own `theater-count histogram: {3: 332}` sanity check,
+    and the "332/332 100% coverage" headline from the repair-pass work,
+    both missed that this page's real Alexandrinsky content was gone --
+    counting *a* third theater isn't the same as counting the *right*
+    three. Reconstructed all 12 sessions from the scan and renamed the
+    theater to `"Александринскій театръ."`.
+  - `1903-04_p036` -- a localized 2-row swap: 24 Суббота's charity
+    benefit (correctly blank) had 25 Воскрес's "Лордъ Квексъ" receipts
+    figure (1045.92) attached to it, while 25 Воскрес itself showed
+    blank. Every other row on the page was correctly aligned. Swapped
+    the one misplaced value back to its correct row.
+  - `1904-05_p042` (Маріинскій, 24 Воскрес) -- a plain missing figure,
+    no special-event marker at all, receipts genuinely printed in the
+    scan (2435.70) and simply dropped.
+  - `1905-06_p042` (Маріинскій) -- the same swap pattern as `p036`: 8
+    Суббота's charity benefit (correctly blank) had 9 Воскрес's real
+    figure (2611.70) attached; swapped back. Plus a separate plain
+    missing figure on 16 Воскрес (2826.70), no marker, genuinely
+    printed and dropped.
+  - `1905-06_p020` (Маріинскій, 18 Воскр. evening) -- the evening leg of
+    a compound day (a benefit, correctly blank) had the *morning* leg's
+    receipts figure duplicated onto it. Cleared.
+
+- **1 new deferred issue, found but not fixed**: `1901-02_p028`
+  (Мариинскій) has the same kind of row-alignment bug already on file
+  for `1903-04_p004` -- every row from 16 Суббота onward is shifted by
+  one position relative to the scan (confirmed: the JSON's "16 Суббота"
+  receipts figure, 2965.15, actually belongs to the scan's "17
+  Воскрес" row; a spanning "Безплатные спектакли для воспитанниковъ"
+  note between 19 Вторн and 20 Среда got folded into 19 Вторн's own
+  session incorrectly). Needs the same careful, deliberate row-by-row
+  reconstruction as `1903-04_p004` -- not attempted here, logged for
+  the same future pass.
+
+**Verified after all fixes**: 332/332 theater coverage (unchanged --
+these were content corrections, not row additions/removals except the
+Alexandrinsky reconstruction, which replaced 12 already-counted
+sessions rather than adding a theater), 0 true duplicate sessions, 9
+malformed-receipts (unchanged, still the same genuine typos), 2
+cross-theater-date-mismatches (still only the 2 pages deliberately
+deferred -- `1899-00_p029` and `1903-04_p004` -- `1901-02_p028`'s new
+row-shift issue doesn't happen to trip this particular check, which is
+exactly why a targeted completeness sweep like this one was needed
+rather than relying on the existing flags alone). 384 non-dark sessions
+still have blank receipts_text, all individually scan-confirmed
+genuine.
+
+The corpus is ready to proceed to `parse_and_validate.py` /
+`build_duckdb.py`, with three pages' known, precisely-diagnosed gaps
+left open rather than guessed at: `1899-00_p029`, `1903-04_p004`, and
+now `1901-02_p028`.
