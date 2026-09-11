@@ -8458,3 +8458,116 @@ same sitting rather than deferred.
 `outputs/full_run/` now has zero known open Repertoire issues for the
 Gate 3 corpus. Publishing (HF upload + Cloud Run redeploy) remains
 explicitly deferred, unchanged from the earlier addendum.
+
+### Addendum (2026-09-11): full-corpus `annotation` field audit --
+one whole-page systematic bug found and reversed one of THIS issue's
+own earlier fixes, ~90 sessions corrected across 20 pages
+
+RG spotted a specific anomaly -- `repertoire_1899-00_p000__s006` had a
+real performance fragment ("1-е д. бал. Дочь Микадо.") sitting in
+`annotation` instead of `works` -- and asked to sweep the whole corpus
+for the same pattern. Per `flatten_repertoire_page`
+(`pipeline/schemas/repertoire.py`), this matters beyond tidiness: only
+`works` entries become structured, indexed `event_entry_performance`
+rows; `annotation` is unindexed free text. A title stuck in
+`annotation` is invisible to anyone querying `research.performance`
+for that work.
+
+**Method**: classified all 635 distinct annotation strings corpus-wide
+by two signals -- genuine-note keywords (пользу, безплатн, бенефис,
+гастрол, юбилейн, концерт, etc.) vs. title-shaped text (ends in a bare
+genre abbreviation, or carries an act/scene-number prefix like "1-е
+д."/"2-я карт."). 66 distinct strings (88 sessions) matched
+"title-shaped, no note keyword." Triaged into three buckets before
+touching anything: exact duplicates of an already-correct `works`
+entry (safe to just clear), `works`-empty cases (the annotation is the
+session's *only* title), and compound candidates (works already has
+content, annotation looks like an additional item).
+
+**The big one: `1903-04_p026` was systematically bugged, not following
+a legitimate page convention.** All ~30 non-benefit sessions across
+all 3 theaters had their real title sitting in `annotation` with
+`works` empty -- confirmed NOT a valid page-specific pattern by
+checking an unaffected comparison page
+(`1902-03_p026`, unrelated despite the similar filename): there,
+`annotation` is reliably `None` for ordinary performances and `works`
+holds the title, exactly matching the flatten logic's expectation.
+**This directly contradicts a decision made earlier in this very
+issue** (the "1903-04_p026 annotation/works split bug" addendum, which
+merged Feb 4's `works` entries *into* `annotation` specifically to
+match this page's *other* rows) -- that fix matched against rows that
+were themselves bugged, not against the corpus's real convention.
+Reversed it: Feb 4's Михайловскій content moved back into `works`
+along with the other ~30 sessions on the page. One row needed more
+care than a mechanical move -- `4 Среда.` Маріинскій's `works` array
+itself had a benefit description ("Прощальный бенефисъ г-жи М.
+Кшесинской") sitting where a work belonged; swapped it into
+`annotation` and moved the real annotation title into `works` in its
+place.
+
+**Three more pages had the same whole-column bug** (one or two of the
+three theaters, not all three): `1900-01_p017` (Большой + Новый, 18
+sessions), `1903-04_p025` (Малый + Новый, 20 sessions), `1903-04_p037`
+(Новый only, 9 sessions -- two of which were a different shape: "27
+Вторникъ" and "29 Четвергъ" had each been split into two separate
+session dicts for what the scan confirms is one printed cell sharing a
+single receipts figure; merged each pair back into one session with
+two works rather than moving text between fields).
+
+**Remaining ~20 pages had one or two isolated sessions each**, several
+needing scan verification rather than a blind move because the shape
+was genuinely ambiguous:
+- **Qualifier-merge cases**: an annotation like "2-е д. бал.
+  Талисманъ." or "5 д. бал." isn't always a new work -- sometimes it's
+  an act/scene qualifier that belongs merged into an *already-listed*
+  work's title. Confirmed both shapes directly against scans:
+  `1905-06_p023` (4 sessions, Большой) has qualifiers that attach to
+  specific existing works, not new ones; `1905-06_p045_s027`'s "3-е
+  д." attaches to "Эсмеральда" specifically, not "Два вора" (its
+  sibling work); `1903-04_p034_s003`'s three-part qualifier attaches
+  entirely to "Волшебное зеркало", not split across both existing
+  works; `1900-01_p036_s014`'s "3-й актъ изъ траг." attaches to "Марія
+  Стюартъ" (already genre="траг."), with "На рѣкѣ" as a genuinely
+  separate third work.
+- **The reverse bug, found while checking the above**: `1905-06_p045_s030`
+  had "Въ пользу инвалидовъ." -- a genuine charity note -- sitting in
+  `works` instead of `annotation`. Moved it back.
+- **Two more session-split cases**, same shape as `1903-04_p037`'s:
+  `1902-03_p026_s021` (Михайловскій, `12 Среда.`) and
+  `1903-04_p027_s024` (Новый, `4 Среда.`) had a genuine free
+  morning-matinee session (the "Безплатные спектакли для
+  воспитанниковъ столичныхъ учебныхъ заведеній." header, now confirmed
+  recurring across many pages this whole issue) merged into the same
+  session dict as the real evening performance. Split each into
+  separate morning (free, no receipts) and evening sessions, confirmed
+  against the scan in both cases.
+- **A second, unrelated shift bug found while scan-checking**:
+  `1907-08_p013` had "9 Пятница." wrongly carrying the "10 Суббота."
+  charity gala's annotation, "10 Суббота." wrongly carrying "11
+  Воскрес."'s receipts and title, and "11 Воскрес." itself needing a
+  genuine morning/evening split -- same class of cascading-shift bug
+  as `1903-04_p004`/`1901-02_p028` from the completeness-sweep
+  addendum, caught here by the same discipline (checking the scan
+  before trusting a mechanical field move). Also found and fixed one
+  incidental case while checking `1900-01_p036`'s scan for an
+  unrelated reason: `s018`'s "На бойкомъ мѣстѣ, ком." was a third work
+  mixed into a benefit annotation that wasn't in the original flagged
+  list at all (the "бенефисъ" keyword had excluded it from detection).
+
+**One self-caught transcription slip**: while retyping
+`1900-01_p017_s028`'s title, wrote "Принцесса Грѳза" instead of the
+extracted text's actual "Принцесса Грѳва" -- an unintentional
+"correction" toward the real opera's modern title, exactly what
+CLAUDE.md's orthography rule forbids. Caught on self-audit before
+moving to the next page, reverted to the verbatim original spelling.
+Worth naming as a reminder: moving text between fields carries the
+same verbatim-transcription risk as any other edit to this corpus.
+
+**Verified after all fixes**: `check_repertoire_cross_theater_date_mismatch`
+still 0, 332/332 theater coverage unchanged, 0 true duplicate
+sessions, 9 malformed-receipts unchanged. Re-ran the full classifier
+sweep: 0 sessions still flagged corpus-wide.
+
+**Not yet done**: like the individual-page fixes before it, this round
+lives only in `outputs/gate3_columnwise/raw_columnwise/` --
+`outputs/full_run/` has not been re-synced to include it.
