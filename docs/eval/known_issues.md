@@ -8571,3 +8571,110 @@ sweep: 0 sessions still flagged corpus-wide.
 **Not yet done**: like the individual-page fixes before it, this round
 lives only in `outputs/gate3_columnwise/raw_columnwise/` --
 `outputs/full_run/` has not been re-synced to include it.
+
+
+---
+
+**2026-09-11, later same day: утро/вечер (morning/evening) pairing
+completeness check.** RG asked whether every date with a утро entry
+also has a вечер entry, and vice versa. Grouped all sessions by
+(page, theater, date_text) corpus-wide: 778 groups use morning/evening
+at all, 18 of them (9 morning-only, 9 evening-only) had just one leg.
+
+**6 turned out to be a labeling issue, not missing data**: an
+`"unspecified"` session sitting where the scan clearly shows a printed
+УТРО label (paired with a real `"evening"` sibling) -- 5 on
+`1899-00_p021` (Малый and Новый, five dates) and 1 on `1904-05_p026`
+(which also had a bonus annotation/works bug in the same session,
+fixed alongside: a title had escaped the earlier corpus-wide sweep
+because its annotation contained "Спектакль," a word the sweep's
+keyword classifier treats as a genuine-note signal).
+
+**Investigating the remaining 12 found four more distinct real bugs,
+all confirmed against scans before fixing:**
+- `1901-02_p028` (Михайловскій): a cascading one-position shift across
+  dates 17-20, separate from and in addition to the one already fixed
+  on this page in the completeness-sweep round -- 17 Воскрес's real
+  single-session content ("Les forfaits de Pipermans") had been split
+  across a fabricated morning/evening pair using 18 Понед's and 19
+  Вторн.'s actual content, 19 Вторн. itself absorbed 20 Среда's free
+  morning leg (the recurring "Безплатные спектакли для
+  воспитанниковъ..." header) under the wrong date, and 20 Среда's real
+  evening ("La Tosca") had been mislabeled as its morning with a
+  fabricated dark evening in its place. Reassigned all four dates'
+  session/date_text fields using the same already-transcribed text
+  (no retyping, to avoid the transcription-slip risk named in the
+  previous round). Confirmed `24 Воскрес.`'s evening-only entry is
+  genuine (the scan shows no морнинг row or dash at all for
+  Михайловскій that Sunday, exactly the "single leg only, no dash
+  counterpart" pattern below) -- left as-is.
+- `1901-02_p021` (Новый театр.): `6 Воскрес.`'s morning
+  ("Бѣдность не порокъ, ком.", 384 р. 40 к.) was missing outright --
+  this page's Новый театръ column carries `_repair_tier:
+  "baseline_fallback"` markers, and the fallback extraction had simply
+  dropped the session. Added it back, verbatim from the scan. While
+  re-scanning this page, also caught two sessions -- `30 Воскрес.` and
+  `31 Понед.` -- where both legs existed but were both labeled
+  `"unspecified"` instead of morning/evening (the scan shows explicit
+  УТРО/ВЕЧЕРЪ splits for both); relabeled.
+- `1902-03_p019` (Большой театръ.): a longer cascading one-position
+  shift spanning `21 Суббота.` through `29 Воскрес.`'s morning (7
+  calendar days), self-resolving exactly at `29 Воскрес.`'s evening --
+  same bug class as `1901-02_p028`/`1903-04_p004` from the
+  completeness sweep. Reassigned dates on the 6 already-transcribed
+  entries and added 2 genuine dark placeholders (`21 Суббота.` and
+  `28 Суббота.` evening) that the shift had swallowed -- both confirmed
+  as printed dashes on the scan.
+- `1904-05_p012` (Александринскій театръ.): the same shift pattern
+  again, this time spanning `14 Воскрес.`-`15 Понед.` -- 14 Воскрес's
+  free-morning header leg ("Плоды просвѣщенія") had absorbed 14
+  Воскрес's own evening receipts, its real evening ("Благодѣтели
+  человѣчества" + "Женихъ изъ долгового отдѣленія") was mislabeled as
+  `15 Понед.` morning, and 15 Понед's real single-session day ("Отецъ"
+  + "Наканунѣ, возможный случай") was mislabeled evening instead of
+  unspecified. Fixed all three entries; added the
+  "Безплатные спектакли для воспитанниковъ столичныхъ учебныхъ
+  заведеній." annotation to 14 Воскрес's morning leg, matching the
+  convention already used by this page's Маріинскій театръ row.
+
+**4 more were pure session-mislabeling** (a single, unsplit printed
+row -- confirmed on the scan -- tagged "morning" instead of
+"unspecified"): `1901-02_p019` (Большой, `26 Среда.`), `1907-08_p020`
+(Александринскій, `15 Суббота.`), `1907-08_p026` (Маринскій, `15
+Вт.`), `1907-08_p032` (Михайловскій, `16 Суббота.`).
+
+**2 confirmed genuine, no fix needed**: `1901-02_p028`'s `24 Воскрес.`
+(evening-only) and `1905-06_p015`'s `20 Воскрес.` (morning-only,
+Новый театръ) both show, on the scan, a single performance sitting in
+one labeled slot with literally no printed row or dash for the other
+leg -- not a data-loss bug, just a theater that had one show that day.
+
+**2 confirmed genuine page-boundary artifacts, unfixable**:
+`1905-06_p005`'s `1 Суббота.` (Новый театръ, Moscow table) and
+`1905-06_p008`'s `23 Воскрес.` (Маріинскій, Petersburg table) both cut
+off mid-row exactly at the physical bottom of their printed page (page
+89 and page 92 respectively) with only a УТРО leg shown; the next page
+of the *same* city's table picks up at the following calendar day with
+no continuation of the cut-off row. Moscow and Petersburg tables run
+as separate page-sequences covering overlapping date ranges (verified
+by checking the intervening and following pages), so there's no
+missing-but-recoverable вечер here -- the book itself never printed it
+where a corpus page boundary could capture it.
+
+**One related pattern found but deliberately not fixed here**: while
+confirming the `1901-02_p021` case above, noticed that BOTH legs of a
+compound day are sometimes present but BOTH mislabeled
+`"unspecified"` instead of morning/evening. A corpus-wide sweep found
+76 (theater, date) keys with this exact shape. Out of scope for this
+round's actual question (both legs *do* exist, so it's invisible to a
+morning-only/evening-only check) -- flagged as a background task for a
+dedicated pass rather than fixed opportunistically here.
+
+**Verified after all fixes**: `check_repertoire_cross_theater_date_mismatch`
+still 0, 332/332 theater coverage unchanged, malformed-receipts still 9.
+Re-ran the morning/evening pairing check corpus-wide: only the 4
+confirmed-genuine cases above remain out of the original 18.
+
+**Not yet propagated into `outputs/full_run/`** -- like the
+annotation-audit round before it, this lives only in
+`outputs/gate3_columnwise/raw_columnwise/` so far.
