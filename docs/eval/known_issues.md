@@ -7907,3 +7907,87 @@ time, exactly the discipline this issue used successfully for the
 individually rather than trusting an automated resample's aggregate
 result). The 13 mismatches remain open, to be revisited with that
 slower, individually-verified approach rather than a batch resample.
+
+### Addendum (2026-09-11): the 13 cross-theater date mismatches, done
+the slow way -- 11 of 13 fixed and scan-verified individually, 2
+deliberately deferred
+
+Went through each of the 13 by hand, checking the actual crop (date-only
+and/or theater-only) before touching anything, per the lesson from the
+previous addendum's mistake. Findings split into clean, well-evidenced
+categories:
+
+- **Genuinely dark days, dropped entirely from extraction** (5 cases):
+  `1907-08_p030` (day 8), `1907-08_p000` (day 1), `1904-05_p005` (day
+  1, less certain -- see below), `1907-08_p020` (days 17/19/21, a clean
+  alternating content/dash pattern in the crop), `1903-04_p036`
+  (Михайловскій collapsed to just 2 real rows, the other 10 genuinely
+  dark per the crop). Fixed by inserting `is_dark=True` placeholder rows
+  at the confirmed positions, matching a sibling theater's date_text
+  exactly.
+- **Spurious month-label row, no real content of its own** (1 case):
+  `1903-04_p037`'s "Май." row -- confirmed via crop it's a genuine
+  printed row (own table cell) but purely a transition marker with
+  nothing under it; the sibling theaters correctly never created a slot
+  for it. Fixed by dropping the row entirely, matching what the
+  siblings already do.
+- **Dropped annotation/content on an existing row** (1 case):
+  `1907-08_p044`'s day 21 already had its works but was missing the
+  benefit-performance annotation, and day 27 was missing outright.
+  Resampled the page fresh (twice -- the first fresh attempt also
+  failed to reconcile this theater, same recurring difficulty), and the
+  raw per-crop theater-only read (kept in `.columns.json` even though
+  the merge itself failed) had both the correct annotation and,
+  combined with the calendar, confirmed day 27 as a plain dark row.
+- **Genuine single-digit misread** (2 cases): `1902-03_p036`
+  (Александринскій read "13" where the date-only crop clearly shows
+  "15" -- confirmed at native resolution) and `1901-02_p019` (Малый's
+  "1ъ Среда." is a "9"/"ъ" glyph confusion for "19 Среда.", unambiguous
+  given its position between 18 and 20). Fixed by correcting the single
+  wrong token, nothing else touched.
+- **Crop-boundary clipping on the DATE column itself, not a model
+  error** (1 case): `1903-04_p017`'s Малый/Новый date_text values were
+  missing their leading day-digit entirely ("Суббота." instead of "6
+  Суббота.") -- confirmed via the date-only crop that the digits are
+  genuinely cut off by the crop's own left margin on this page, not
+  misread. Reconstructed the correct digits positionally from
+  Большой's independently-sourced (baseline, whole-page image, not
+  subject to the same crop) calendar -- weekday names and content order
+  matched exactly, including a compound-Sunday count difference (12
+  rows vs Большой's 11) that confirmed the position-by-position mapping
+  was right before applying it.
+
+**2 deliberately deferred, not guessed at**:
+- `1903-04_p004`: the "Октябрь." row is a genuine bare month-transition
+  label (confirmed via the date-only crop), but unlike `p037`'s clean
+  case, real content (Баядерка/1244.57) is misattributed to it, which
+  cascades a one-position shift through several rows after it,
+  including a compound benefit day. Reconstructing the correct
+  row-by-row mapping is very likely possible but requires more careful,
+  slower reconciliation than was safe to rush in this pass -- diagnosis
+  recorded precisely here for whoever picks it up.
+- `1899-00_p029`: already documented as the corpus's messiest page.
+  Removed 5 further exact-duplicate sessions found while investigating
+  (safe -- byte-identical repeats), but what's left still shows Малый
+  and Новый with two overlapping, PARTIALLY CONFLICTING reads of the
+  same date range (e.g. "16 Среда" with two different, non-duplicate
+  work-title sets at the same receipts figure) -- and the crop revealed
+  MORE real content rows than the current date framework accounts for,
+  meaning the page's true calendar may need re-deriving from scratch
+  rather than patched. Left as-is rather than risk a wrong
+  reconstruction.
+
+Also fixed two small side-issues found while verifying: a theater-name
+punctuation inconsistency on `1907-08_p044` (two spellings of
+Александринскій coexisting after a fix, normalized to one) and a
+missing day 15 on `1907-08_p030`'s Михайловскій (added as an uncertain
+dark placeholder, tagged `manual_uncertain_dark_placeholder` for future
+review, since the crop's exact edge wasn't fully confirmed for this
+one).
+
+**Verified after all fixes**: theater coverage 332/332 (100%, unchanged
+-- these fixes only added/corrected date labels and a handful of dark
+placeholders, never removed a real theater), 0 true duplicate sessions
+corpus-wide, malformed-receipts and unknown-theater counts unchanged.
+`cross_theater_date_mismatch` down to 2 -- both deliberately deferred
+with a precise diagnosis, not silently left broken.
