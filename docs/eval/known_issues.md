@@ -9384,3 +9384,44 @@ untouched: `1907-08_p036`'s Alexandrinsky column carrying 3 extra rows
 narrow column-wise contamination bug, found as a side effect of the
 day-range cross-check, flagged here rather than fixed (out of scope for
 a header-extraction pass).
+
+
+---
+
+**2026-09-11, `1907-08_p036` investigated: not a bug, a second instance
+of a genuine printed header typo.** Follow-up on the contamination
+concern flagged in the date-gap-closing addendum above (the
+day-range-vs-raw-JSON cross-check had flagged this page because its
+header claims to start at day 9, but all three theaters' sessions
+start at day 6).
+
+Checked the scan directly, both for this page and the prior page in
+the same city's own sequence (`1907-08_p034`, Petersburg, ends cleanly
+at `5 Среда.` with no overlap). **`1907-08_p036`'s table genuinely,
+correctly starts at `6 Четвергъ.` across all three theaters** --
+picking up exactly where `p034` leaves off, no gap, no duplication.
+The Moscow companion page for the same window (`1907-08_p037`)
+confirms this independently: its own header reads "6 марта. 1908 г.
+16 марта.", matching the table's true start day.
+
+**`1907-08_p036`'s own printed header says "9 марта." where it should
+say "6 марта."** -- confirmed directly against the scan, a single
+misprinted digit, the same class of source-level error as
+`1902-03_p008`'s swapped month names two addenda up. Unlike that case,
+this one needs no code fix at all: `_backfill_month_year` only ever
+uses the header's start/end *month* to decide where a page's one
+possible month-rollover happens, never the exact start/end day -- and
+this page never crosses a month boundary (everything is `марта`
+start to finish), so the wrong day digit never reaches any date
+computation. Confirmed `raw.event_entry.date_undate` for the `6
+Четв.` row is already correctly `1908-03-06` in the currently-live
+`outputs/full_run/` (propagated in the previous addendum, before this
+page was singled out for a closer look) -- nothing to re-propagate.
+
+`page_header_dates.csv` keeps the verbatim "9 марта. 1908 г. 16
+марта." unchanged, same reasoning as `1902-03_p008`'s kept-verbatim
+header: the book's own error belongs in the record of what was
+printed, not silently corrected.
+
+**No raw JSON edit was needed.** `check_repertoire_cross_theater_date_mismatch`
+confirmed 0 both before and after this investigation (nothing changed).
