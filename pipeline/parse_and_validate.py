@@ -29,6 +29,61 @@ ROSTER_KINDS = {"Administrators", "BalletArtists", "Musicians", "ProductionTeam"
 # normalizing here is correct rather than a verbatim-preservation violation.
 SESSION_LABEL_FIX = {"утро": "morning", "вечеръ": "evening", "день": "unspecified"}
 
+# Matches pipeline/extract_page_headers.py's verbatim header_text, e.g.
+# "16 февраля. 1908 г. 23 февраля." or a season-spanning "28 декабря.
+# 1905—1906 гг. 5 января." -- see docs/eval/known_issues.md #69's
+# "event-date field audit" addendum for why this exists (flatten_repertoire_
+# page's per-session date_undate has no cross-row month/year inheritance,
+# leaving ~80-87% of column-wise-extracted sessions with no date at all).
+_PAGE_HEADER_RE = re.compile(
+    r"^\s*(\d{1,2})\s+([а-яёіѣ]+)\.?\s*,?\s*"
+    r"(\d{4}(?:\s*[—\-–]\s*\d{4})?\s*(?:г\.?г?\.?|гг\.?))\s+"
+    r"(\d{1,2})\s+([а-яёіѣ]+)\.?\s*$",
+    re.IGNORECASE,
+)
+
+
+# One page's own printed header genuinely has its two month names swapped
+# from calendar order -- confirmed against the scan (repertoire_1902-03_p008:
+# "22 ноября. 1902 г. 3 октября.", verbatim, both months clearly legible;
+# the table's OWN internal "Ноябрь" divider row, printed between day 31 and
+# day 1, proves the true order is October 22 - November 3, not the reverse).
+# A genuine one-off (checked: no other page in the corpus has a header whose
+# end-month falls chronologically before its start-month without a
+# Dec->Jan year wrap) -- not worth generalizing into swap-detection logic
+# that would risk misfiring on a page that genuinely needs the order it
+# printed. page_header_dates.csv keeps the verbatim header text forever;
+# this override only ever corrects the *derived* month assignment used to
+# backfill date_undate, exactly the same verbatim-in/best-effort-derived-out
+# split as _MANUAL_DATE_OVERRIDES in validate_performance_dates.py.
+_PAGE_HEADER_MONTH_SWAP_FIX = {
+    "repertoire_1902-03_p008": ("октября", "ноября"),
+}
+
+
+def load_page_headers(path: Path) -> dict[str, dict]:
+    """Parses pipeline/extract_page_headers.py's output CSV into
+    {page_id: {"start_month": ..., "end_month": ..., "year_text": ...}}
+    for flatten_repertoire_page's page_header argument. A header_text that
+    doesn't match the expected shape is skipped (not raised) -- the page
+    just falls back to per-session month_text/year_text only, same as
+    before this argument existed, rather than failing the whole run over
+    one page's unusual header."""
+    headers: dict[str, dict] = {}
+    for row in csv.DictReader(open(path, encoding="utf-8")):
+        page_id = row["page_id"]
+        text = (row.get("header_text") or "").strip()
+        m = _PAGE_HEADER_RE.match(text)
+        if not m:
+            continue
+        _start_day, start_month, year_text, _end_day, end_month = m.groups()
+        if page_id in _PAGE_HEADER_MONTH_SWAP_FIX:
+            start_month, end_month = _PAGE_HEADER_MONTH_SWAP_FIX[page_id]
+        headers[page_id] = {
+            "start_month": start_month, "end_month": end_month, "year_text": year_text,
+        }
+    return headers
+
 # Rare (~4/20000 roster entries) recurring model failure: when a row has no
 # heading of its own to repeat, the model sometimes puts the person's full
 # name ("Surname, First Patronymic") into heading_path and leaves
@@ -2056,9 +2111,18 @@ def main():
                           "(they were verified against baseline's session ordering; see "
                           "_repair_repertoire's docstring). Default 'baseline' preserves "
                           "existing behavior for every run before 2026-09-10.")
+    ap.add_argument("--page-headers", type=Path, default=None,
+                     help="pipeline/extract_page_headers.py's output CSV (page_id, "
+                          "header_text, ...). Optional -- when given, backfills "
+                          "date_undate for Repertoire sessions that have no month_text/"
+                          "year_text of their own, using the page's own printed date-"
+                          "range header (see flatten_repertoire_page's page_header arg "
+                          "and docs/eval/known_issues.md #69). Never touches the "
+                          "verbatim month_text/year_text fields themselves.")
     args = ap.parse_args()
 
     rows = list(csv.DictReader(open(args.manifest, encoding="utf-8")))
+    page_headers = load_page_headers(args.page_headers) if args.page_headers else {}
 
     merged = {
         "person_entry": [], "person_entry_service": [], "person_entry_credit": [],
@@ -2292,7 +2356,8 @@ def main():
                                         "error": f"{n} {msg}; not a validation failure, "
                                                  f"logged for visibility"})
                 page = RepertoirePage.model_validate(parsed_json)
-                tables = flatten_repertoire_page(page_id, row["season"], row["city"], page)
+                tables = flatten_repertoire_page(page_id, row["season"], row["city"], page,
+                                                  page_header=page_headers.get(page_id))
 
             for table_name, table_rows in tables.items():
                 merged[table_name].extend(table_rows)

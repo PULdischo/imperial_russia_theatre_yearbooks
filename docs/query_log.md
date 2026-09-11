@@ -4195,3 +4195,54 @@ time). Swapped `imperial_theaters.duckdb` + `research_dataset.sqlite` +
 `parsed/` into `outputs/full_run/` via move-aside-then-replace, `cmp`
 confirmed the live files byte-identical to the verified scratch copy,
 then deleted the pre-patch snapshot and scratch working directory.
+
+## 2026-09-11 — date_undate coverage gap: page-header extraction + verification
+
+Full detail in known_issues.md #69's final addendum. Closing the date_undate
+coverage gap (13-21% fill for column-wise seasons vs ~100% baseline) via a
+small targeted re-extraction of each page's own printed header date range
+(pipeline/extract_page_headers.py), not a full re-extraction. Key checks:
+
+```sql
+-- header dataset self-consistency (before trusting it)
+-- regex parse rate, season/year cross-check, and day-range vs raw JSON's
+-- own first/last day-number cross-check -- all done in Python against
+-- outputs/gate3_columnwise/page_header_dates.csv, not SQL (see script)
+
+-- fill-rate before/after (test parse, not yet in outputs/full_run/)
+SELECT count(*), count(date_undate) FROM raw.event_entry;  -- gate3-only test db
+
+-- weekday-consistency before/after the validate_performance_dates.py fixes
+-- (_DOW_PREFIXES short forms, whitespace-tolerant matching, parsed-weekday
+-- grouping instead of raw-string grouping) -- Python, reusing
+-- pipeline.validate_performance_dates._parse_dow/_true_weekday directly
+
+-- full propagation verification (same shape as the earlier 5-round merge):
+SELECT count(*) FROM raw.source_pages;                              -- 1349=1349
+SELECT count(*) FROM raw.event_entry WHERE page_id NOT IN (<gate3>); -- 12094=12094, 0 diffs
+SELECT event_status, count(*) FROM research.event GROUP BY 1;
+  -- performed/no_performance byte-identical (18427, 5509); only
+  -- not_captured changed (5283 -> 3934, fewer/more-accurate synthesized
+  -- gaps now that date ranges are reliable)
+SELECT entry_id, person_id FROM entities.person_link;  -- old vs new: set-equal
+SELECT * FROM research.person_appearance ORDER BY 1,2,3;  -- byte-identical
+SELECT event_id, date_confidence, corrected_date_undate
+  FROM analysis.event_entry_date_check WHERE date_confidence='corrected_manual';
+  -- all 9 rows present with the scan-verified dates
+```
+
+Result: date_undate fill for the 332 Gate 3 pages 13-21% -> 100%. Weekday-
+verified rate on those same pages 85.8% -> 99.3% after also fixing two
+`validate_performance_dates.py` limitations the coverage fix exposed for
+the first time (short weekday abbreviations not in `_DOW_PREFIXES`, and
+raw-string instead of parsed-weekday grouping for cross-theater block
+agreement). 33 residual rows (0.3%) are genuine: 3 already-known
+verbatim typos (`corrected_manual`) and a handful of newly-visible,
+genuinely rare OCR letter-transposition artifacts, correctly left
+flagged rather than guessed at. Full corpus (all 1,349 pages):
+non-gate3 rows exactly byte-identical (0 diffs), entities/person
+continuity exactly preserved, research.performance/work/person/theater
+unchanged, only `research.event`'s synthesized `not_captured` gap count
+changed (explained above, not a real-data change). Swapped into
+outputs/full_run/ via move-aside-then-replace, `cmp`-confirmed
+byte-identical to the verified scratch copy, cleaned up.

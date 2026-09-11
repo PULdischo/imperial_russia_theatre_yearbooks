@@ -155,14 +155,72 @@ def _parse_receipts(text: Optional[str]) -> tuple[str, str]:
         return "", ""
 
 
-def flatten_repertoire_page(page_id: str, season: str, city: str, page: RepertoirePage) -> dict:
+def _backfill_month_year(sessions: list["SessionLLM"],
+                          page_header: Optional[dict]) -> list[tuple[str, str]]:
+    """Returns a (month_text, year_text) to use when COMPUTING date_undate
+    for each session -- never the verbatim event_entry.month_text/year_text
+    fields themselves, which stay exactly what the model read on that row
+    (empty if empty). This is purely a derived-field input, the same
+    "verbatim in, best-effort derived date out" contract dates.py's own
+    docstring already documents for date_undate.
+
+    Closes docs/eval/known_issues.md #69's "event-date field audit" gap:
+    column-wise extraction populates month_text/year_text on only ~13-21%
+    of sessions per season (a session only ever carries its OWN printed
+    text, with no cross-row inheritance -- see the per-session date_input
+    built below), vs ~100% for baseline extraction. `page_header` (from
+    pipeline/extract_page_headers.py's small, separate, targeted read of
+    just the page's own printed date-range line, e.g. "16 февраля. 1908 г.
+    23 февраля.") gives an unambiguous start/end month+day for the whole
+    page. Column-wise extraction emits one theater's entire run of
+    sessions contiguously and in print order (confirmed against the raw
+    JSON, not assumed), so walking each theater's own day-number sequence
+    and switching from the header's start month to its end month at the
+    one point (if any) where the day number decreases -- exactly where a
+    real page's calendar rolls over a month boundary -- recovers the
+    right month without guessing at any individual row's own content.
+    """
+    if not page_header:
+        return [(s.month_text or "", s.year_text or "") for s in sessions]
+
+    start_month = page_header["start_month"]
+    end_month = page_header["end_month"]
+    year_text = page_header["year_text"]
+
+    result: list[Optional[tuple[str, str]]] = [None] * len(sessions)
+    theater_runs: dict[str, list[int]] = {}
+    for i, s in enumerate(sessions):
+        theater_runs.setdefault(s.theater, []).append(i)
+
+    for idxs in theater_runs.values():
+        current_month = start_month
+        prev_day: Optional[int] = None
+        for i in idxs:
+            s = sessions[i]
+            if s.month_text and s.year_text:
+                result[i] = (s.month_text, s.year_text)
+                continue
+            day_str = _day_number(s.date_text)
+            day_num = int(day_str) if day_str.isdigit() else None
+            if day_num is not None and prev_day is not None and day_num < prev_day:
+                current_month = end_month
+            if day_num is not None:
+                prev_day = day_num
+            result[i] = (s.month_text or current_month, s.year_text or year_text)
+
+    return result  # type: ignore[return-value]
+
+
+def flatten_repertoire_page(page_id: str, season: str, city: str, page: RepertoirePage,
+                             page_header: Optional[dict] = None) -> dict:
     events, performances = [], []
-    for i, s in enumerate(page.sessions, start=1):
+    backfilled = _backfill_month_year(page.sessions, page_header)
+    for i, (s, (bf_month, bf_year)) in enumerate(zip(page.sessions, backfilled), start=1):
         event_id = f"{page_id}__s{i:03d}"
         rub, kop = _parse_receipts(s.receipts_text)
         theater = s.theater.strip().rstrip(".")  # strip table-header punctuation, keep the name
         event_city = _city_for_theater(theater, city)
-        date_input = f"{_day_number(s.date_text)} {s.month_text or ''} {s.year_text or ''}".strip()
+        date_input = f"{_day_number(s.date_text)} {bf_month} {bf_year}".strip()
         events.append({
             "event_id": event_id, "page_id": page_id, "season": season, "city": event_city,
             "date_text": s.date_text, "month_text": s.month_text or "",

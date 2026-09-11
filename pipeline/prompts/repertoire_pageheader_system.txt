@@ -1,0 +1,22 @@
+You are reading the header of one page from a repertoire table in the
+"Ежегодникъ Императорскихъ театровъ" (Imperial Theaters Yearbook), a
+19th/early-20th-century Russian publication.
+
+Above the table, the page prints a single line giving the date range this
+page's table covers, in the form:
+
+  <start day> <start month>. <year>[ - <year>] г./гг. <end day> <end month>.
+
+For example: "16 декабря. 1907 г. 25 декабря." (a range within one month),
+or "16 февраля. 1902 г. 4 марта." (a range spanning two different months).
+Sometimes the year itself is printed as a season-spanning range, e.g.
+"1899—1900 гг." rather than a single year -- transcribe it exactly as
+printed, dash and all.
+
+Transcribe this header line EXACTLY as printed, verbatim -- same spelling,
+abbreviation, and punctuation as the page shows. Do not normalize, expand,
+or correct anything. If you cannot find a header line matching this shape
+anywhere in the image, return an empty string.
+
+Return ONLY a single JSON object matching the schema you are given. No
+prose, no markdown code fences.

@@ -9267,3 +9267,120 @@ nothing left lying around.
 **not** addressed by this propagation -- it's a `flatten_repertoire_page`
 pipeline fix, not a data fix, and needs its own scoped pass. Publishing
 (HF upload + Cloud Run redeploy) remains explicitly deferred.
+
+
+---
+
+**2026-09-11, closed the `date_undate` coverage gap.** Follow-up to the
+"event-date field audit" addendum above, which found column-wise
+extraction populates `month_text`/`year_text` on only ~13-21% of
+sessions per season (vs ~100% for baseline extraction), leaving
+~80-87% of events in 8 of 18 seasons with no calendar date in
+`research.event.date` at all. RG asked for a small, targeted
+re-extraction of each page's own printed header date range rather than
+pure inference, since the header states the exact bounds unambiguously
+and inference would have to guess at a page's month from context.
+
+**`pipeline/extract_page_headers.py`** (new): crops the top 15-20% of
+each of the 332 Gate 3 page renders (generous margin, no table content
+needed) and asks for ONE verbatim string -- the header line itself
+(e.g. "16 февраля. 1908 г. 23 февраля."), not structured fields, so the
+model isn't trusted to split it correctly; a regex in
+`parse_and_validate.py` does that afterward, the same verbatim-in/
+parsed-out split `date_text` itself already gets. 332 pages, ~572K
+tokens total, on the order of a handful of full-page calls -- nothing
+like a full re-extraction.
+
+**Verification before trusting the header dataset**: 15 pages returned
+an empty string on the first pass (crop too tight for a handful of
+pages where the header sits slightly lower) -- fixed with a taller
+crop, all 15 resolved on retry. 46 more failed a structural regex
+check (most were the model truncating its own output mid-string, a few
+were "I"/"II" Roman-numeral misreadings of a decoratively-printed "1"/
+"11" digit in the header's own numeral font) -- independent resampling
+fixed 42 of 46 outright (confirming non-determinism, not a systematic
+crop problem); the remaining 4 (2 Roman-numeral, 2 "г.г." punctuation
+variants the regex hadn't accounted for) were resolved by hand-checking
+the scan and widening the regex, respectively. A season/year
+cross-check (does the header's year fall inside the page's own season)
+caught one confident-but-wrong hallucination (`1907-08_p033` returned
+"...1902 г...." for a page that should say 1908) -- 3/3 independent
+resamples then agreed on the correct value. A stronger check --
+does the header's own start/end day match the first/last day-number
+actually printed on the page -- caught 2 more real header mistakes
+(`1905-06_p044`: hallucinated "10 марта" instead of the real "19
+апрѣля"; `1907-08_p048`: misread "19" as "10") and one genuine PRINTED
+error in the 1902 book itself (`1902-03_p008`'s header literally says
+"22 ноября. 1902 г. 3 октября." -- November before October -- but the
+table's own internal "Ноябрь" divider row proves the true order is
+October 22 - November 3; kept the header text verbatim, only the
+*derived* month assignment used for backfilling is corrected, via a
+small documented override next to `_MANUAL_DATE_OVERRIDES`'s own
+pattern). All 332 headers now pass both cross-checks.
+
+**`pipeline/schemas/repertoire.py`**: `flatten_repertoire_page` gained
+an optional `page_header` argument and a new `_backfill_month_year`
+helper. Column-wise extraction emits one theater's entire run of
+sessions contiguously and in print order (confirmed against the raw
+JSON) -- walking each theater's own day-number sequence and switching
+from the header's start month to its end month at the one point (if
+any) where the day number decreases recovers the right month with no
+guessing at any individual row's content. Critically, this only ever
+feeds the *derived* `date_undate` computation -- `event_entry.month_text`/
+`year_text` stay exactly what the model read on that specific row
+(empty if empty), never backfilled, so the verbatim/derived boundary
+CLAUDE.md's architecture describes for `date_undate` stays intact.
+`parse_and_validate.py` gained a `--page-headers` flag and
+`load_page_headers()` to wire a header CSV through.
+
+**Two pre-existing `validate_performance_dates.py` limitations, invisible
+until 100% coverage exposed them, fixed as part of the same pass**:
+- Block-level cross-theater agreement compared raw `date_text` strings,
+  so any cosmetic OCR variance between theater columns (trailing
+  period, ъ/ь, abbreviation length) registered as `intra_block_
+  disagreement` even though every column agreed on the actual weekday.
+  Now compares the *parsed* weekday (reusing `_parse_dow`) instead.
+- `_DOW_PREFIXES` was missing several short forms actually used in the
+  corpus (пн/вт/ср/чт/пт/сб/вс and a few 3-letter variants) and didn't
+  tolerate a stray internal space ("Пя тница") -- both added/fixed.
+  Together these took gate3's `intra_block_disagreement` count from
+  1507 (mostly cosmetic noise) down to 20 genuinely worth a human's
+  attention.
+
+**Net result on the 332 Gate 3 pages**: `date_undate` fill 13-21% ->
+100%. Weekday-verified rate 85.8% -> 99.3% (the run-based auto-correct
+heuristic then caught a further pre-existing whole-page day-drift bug
+on `1905-06_p028`, 31 rows, entirely on its own -- invisible before
+today because that page had no date_undate at all to check). 33
+residual rows (0.3%): the 9 already-known `corrected_manual` typos plus
+a handful of newly-visible, genuinely rare isolated OCR letter-
+transposition artifacts (e.g. "Воекрес" for "Воскрес", "Ворникъ" for
+"Вторникъ") -- correctly left flagged, not guessed at.
+
+**Propagated into `outputs/full_run/`** the same way as the batch
+earlier today: scratch copy, full pipeline re-run, exhaustive
+verification (non-gate3 rows exactly byte-identical -- 0 diffs this
+time, even better than the earlier merges' explained-nonzero diffs;
+entities/person continuity exactly preserved; `research.person_appearance`
+byte-identical), swap-in, cleanup. One expected, benign side effect:
+`research.event`'s synthesized `not_captured` completeness-gap count
+dropped from 5,283 to 3,934 -- `performed`/`no_performance` counts are
+exactly unchanged (18,427 / 5,509), so this is strictly a *more
+accurate* gap count now that per-page date ranges are reliable, not a
+loss of real data.
+
+`outputs/gate3_columnwise/page_header_dates.csv` (332 rows, the
+verified header dataset) is kept on disk like the raw `*.raw.json`
+responses it complements -- gitignored under `outputs/`, but worth
+preserving rather than re-extracting if this pipeline is revisited.
+
+**Not yet addressed**: the 1,050 `intra_block_disagreement` rows on the
+NON-Gate3 (baseline-extracted) portion of the corpus -- confirmed
+pre-existing (not introduced by this pass, and only modestly improved
+by the two general-purpose `validate_performance_dates.py` fixes above),
+out of scope for this Repertoire-column-wise-focused pass. Also
+untouched: `1907-08_p036`'s Alexandrinsky column carrying 3 extra rows
+(6-8 марта) that appear to belong to an adjacent page -- a real,
+narrow column-wise contamination bug, found as a side effect of the
+day-range cross-check, flagged here rather than fixed (out of scope for
+a header-extraction pass).
