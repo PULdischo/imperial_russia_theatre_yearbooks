@@ -7804,6 +7804,45 @@ signal is ever trusted again without cross-checking the paired raw.json.
 up from 161/332 (48.5%) before any repair work this issue. Malformed-
 receipts and cross-theater-date-mismatch counts are essentially
 unchanged (11 and 13 respectively) -- the newly-added content didn't
-introduce new problems at meaningful scale. Both remain open, not
-investigated further this addendum. The theater-coverage thread from
-this issue is now closed.
+introduce new problems at meaningful scale. The theater-coverage thread
+from this issue is now closed.
+
+### Addendum (2026-09-11): the 11 post-repair malformed-receipts flags
+triaged individually -- 9 genuine typos, 1 more check-tolerance gap, 1
+real content-drop bug fixed
+
+Went through all 11 by hand rather than assuming the earlier "7 genuine
+anomalies" characterization still covered whatever the repair pass had
+added. It didn't, fully:
+
+- **9 confirmed genuine printed typos** (the original 7, plus
+  `1901-02_p011`'s "263 д. 64 к." -- visible in a crop already pulled
+  earlier for an unrelated check -- and `1902-03_p019`'s "876 к. 18
+  к.", freshly confirmed against the scan). Same category as before,
+  left as-is.
+- **`1901-02_p012`: a third legitimate way to represent "no figure
+  printed"**. The row (a guest-troupe performance, "Гастроль г-жи Адель
+  Зандрокъ... Die Cameliendame") genuinely has no receipts line under
+  it in the scan -- confirmed directly. Already-tolerated siblings were
+  `None`/blank and "— р. — к."; this call rendered the same absence as
+  a bare "—" with no marker at all. Fixed `_RECEIPTS_UNIT_RE`'s caller
+  in `check_repertoire_malformed_receipts` to also accept a
+  dash-only `receipts_text` (`_BARE_DASH_RE`).
+- **`1907-08_p036`: a genuine bug, not a formatting variant**. The "8
+  Суббота" row has real printed content -- a benefit heading ("Въ
+  пользу школы Императорскаго Женскаго Патріотическаго Общества.") and
+  two real works ("На бойкомъ мѣстѣ", "Египетскія ночи") -- confirmed
+  against the scan, but the extracted session had `works=[]` entirely,
+  not just a missing receipts figure. Resampled the page fresh:
+  Маріинскій failed to reconcile that time (worse, not better), but the
+  underlying THEATER-ONLY read (kept in `.columns.json`'s `raw` section
+  even though the merge itself failed) had the row exactly right,
+  matching the scan detail for detail. Hand-applied that corrected row
+  (annotation + both works, receipts_text=None) directly to the merged
+  output -- another confirmation that a failed *merge* doesn't mean the
+  underlying *read* was wrong, just that reconciliation couldn't place
+  it automatically.
+
+Final malformed-receipts count: 9 (all genuine, intentionally left
+as-is). `pipeline/quality_checks.py` carries the bare-dash tolerance
+fix.

@@ -428,6 +428,18 @@ def check_repertoire_unknown_theater(raw_dir: Path | None) -> list[dict]:
 #: bearing on whether the figure itself is malformed).
 _RECEIPTS_UNIT_RE = re.compile(r"[рp]\.?", re.IGNORECASE)
 
+#: A receipts_text that's ONLY dash character(s) -- no marker, no digits
+#: at all -- is a third legitimate representation of "no box-office
+#: figure printed", confirmed against the scan 2026-09-11
+#: (`repertoire_1901-02_p012`'s "17 Суббота", a guest-troupe performance
+#: with no receipts line printed under it at all). Already-confirmed
+#: siblings: `None`/blank (handled above by the `not rt` check) and
+#: "— р. — к." (has markers, already matches `_RECEIPTS_UNIT_RE`). This
+#: is the same absence, just a THIRD way a fresh call happens to render
+#: it -- a bare "—" with nothing else is not itself evidence of
+#: truncation.
+_BARE_DASH_RE = re.compile(r"^[—\-–]+$")
+
 
 def check_repertoire_malformed_receipts(raw_dir: Path | None) -> list[dict]:
     """Flags a `receipts_text` that's bare digits with no rubles unit
@@ -453,7 +465,7 @@ def check_repertoire_malformed_receipts(raw_dir: Path | None) -> list[dict]:
         d = json.loads(raw_path.read_text(encoding="utf-8"))
         for i, s in enumerate(d.get("sessions", []), start=1):
             rt = (s.get("receipts_text") or "").strip()
-            if not rt or _RECEIPTS_UNIT_RE.search(rt):
+            if not rt or _RECEIPTS_UNIT_RE.search(rt) or _BARE_DASH_RE.match(rt):
                 continue
             flags.append(dict(
                 page_id=page_id, table="event_entry", row_id=f"{page_id}__s{i:03d}",
