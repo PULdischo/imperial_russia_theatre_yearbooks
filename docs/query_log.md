@@ -4246,3 +4246,26 @@ unchanged, only `research.event`'s synthesized `not_captured` gap count
 changed (explained above, not a real-data change). Swapped into
 outputs/full_run/ via move-aside-then-replace, `cmp`-confirmed
 byte-identical to the verified scratch copy, cleaned up.
+
+## 2026-09-11 — 1901-02_p018 whole-column fix: verification + propagation
+
+Full detail in known_issues.md #69's final addendum.
+
+```sql
+-- duplicate check on the touched page before/after
+-- (Python, Counter over (theater, date_text, session))
+
+-- full propagation verification, same shape as every earlier round today
+SELECT count(*) FROM raw.event_entry WHERE page_id NOT IN (<gate3 332 ids>);  -- 12094=12094, 0 diffs
+SELECT entry_id, person_id FROM entities.person_link;  -- old vs new: set-equal
+SELECT * FROM research.person_appearance ORDER BY 1,2,3;  -- byte-identical
+SELECT theater, date_text, time_of_day, annotation FROM raw.event_entry
+  WHERE page_id='repertoire_1901-02_p018' AND theater LIKE '%Михайл%';
+```
+
+Result: all 11 affected sessions (16 Воскрес. morning+evening plus the
+10 other dates on the same Михайловскій театръ column) now carry the
+real title in a performance row and only a genuine note (or nothing)
+in `annotation`. Non-gate3 rows exactly byte-identical, entities/person
+continuity preserved, person_appearance byte-identical. Swapped into
+outputs/full_run/, cmp-confirmed, cleaned up.

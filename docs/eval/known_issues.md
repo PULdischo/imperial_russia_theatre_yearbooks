@@ -9425,3 +9425,46 @@ printed, not silently corrected.
 
 **No raw JSON edit was needed.** `check_repertoire_cross_theater_date_mismatch`
 confirmed 0 both before and after this investigation (nothing changed).
+
+
+---
+
+**2026-09-11, closed the last known Gate 3 loose end -- turned out to
+be a whole-column bug, not one date: `1901-02_p018`.** The one isolated
+titles-in-`annotation`-instead-of-`works` case flagged (but
+deliberately not fixed) during the shift-bug follow-up several addenda
+up was `16 Воскрес.`. Fixing it and re-checking the rest of this page's
+Михайловскій театръ column (all of it tagged `_repair_tier:
+"baseline_fallback"`, the same two-tier repair pass implicated in
+earlier whole-column bugs this issue) found the identical pattern on
+**every other date on the page** -- 10 more sessions, not just the one
+flagged.
+
+`16 Воскрес.` is a genuine morning/evening compound day: both legs had
+been captured as `session: "unspecified"` duplicates, each mixing a
+genuine note with the real performance title in `annotation`, `works`
+left empty. Morning: "Спектакль для учащейся молодежи." (note) + "Le
+philosophe sans le savoir, com." (title). Evening: "Bénéfice de m-lle
+Barety." (note) + "Yvette, com." (title). The other 10 dates (`17
+Понед.` through `29 Суббота`) needed the same works/annotation split,
+several with two titles in one string (`17 Понед.`: "Омуть, ком." +
+"Пожарь, сп."; `21 Пятница`: "Школьные товарищи, ком." + "Красный
+цвѣтокъ, др. ят." -- kept "др. ят." together as one genre string,
+matching how it was originally extracted, not split further) and two
+more with a genuine benefit note ahead of the title (`22 Суббота`:
+"Bénéfice de m-lle Salmon." + "Pour être aimée, com."; `29 Суббота`:
+"Bénéfice de m-r Paul Reney." + "Crime et châtiment, scène."). Moved
+substrings only -- no retyping -- to avoid the transcription risk this
+issue already caught once before (the Грѳза/Грѳва slip).
+
+**Verified**: `check_repertoire_cross_theater_date_mismatch` still 0,
+malformed-receipts still 9, 332/332 theater coverage, session count
+unchanged (11,842 -- pure relabel/field-splits, no sessions added or
+removed). The duplicate `(theater, date_text, session)` triple on this
+page is gone.
+
+This closes out the last known open item from today's rounds on the
+1899-00 through 1907-08 (Gate 3) corpus. Propagated into
+`outputs/full_run/` the same day (see the query_log.md entry) --
+verified exhaustively (0 diffs on untouched pages, entities/person
+continuity preserved) before swap-in.
