@@ -4022,3 +4022,36 @@ Gate 3 output -- the two have never been parsed/loaded into this DB. All of
 the column-wise/Gate 3 work this session lives only in the scratchpad
 directory's raw JSON; `parse_and_validate.py` and `build_duckdb.py` have
 not been run against any of it.
+
+## 2026-09-11 — Gate 3 column-wise Repertoire corpus loaded into a fresh DuckDB; sanity-verified
+
+After the completeness sweep (known_issues.md #69's final addendum),
+ran `parse_and_validate.py --extraction-source columnwise` and
+`build_duckdb.py` against `outputs/gate3_columnwise/raw_columnwise/`
+(332 pages, single-page-format seasons 1899-00 through 1907-08) for
+the first time -- output written to
+`outputs/gate3_columnwise/imperial_theaters.duckdb`, a new database,
+NOT a merge into `outputs/full_run/imperial_theaters.duckdb` (that
+file predates all of this session's column-wise work, per the
+2026-09-10 log entry above, and this run doesn't touch it).
+
+```sql
+SELECT COUNT(*) FROM raw.source_pages;
+SELECT theater_canonical, COUNT(*) FROM analysis.event_entry GROUP BY 1 ORDER BY 2 DESC;
+SELECT season, COUNT(*) FROM raw.event_entry GROUP BY 1 ORDER BY 1;
+SELECT SUM(receipts_total_kopecks), AVG(receipts_total_kopecks)
+  FROM analysis.event_entry WHERE receipts_total_kopecks IS NOT NULL;
+```
+
+Result: 332 source_pages (matches the corpus exactly). 6 theaters,
+roughly balanced (Маріинскій 2660, Александринскій 2481, Большой 2373,
+Новый 2354, Малый 2345, Михайловскій 2316). 8 seasons present, matching
+the corpus's coverage exactly (1899-00 through 1907-08, no 1906-07 --
+that season isn't part of Gate 3). 11,827 raw.event_entry rows, 11,122
+raw.event_entry_performance rows. receipts_total_kopecks sums to
+~11.8M rubles across the corpus with a plausible per-event average
+(~1648 rubles). `parse_and_validate.py` logged 25 pages under
+`repertoire_theater_spelling_fixed` -- all the already-documented,
+benign Мариинскій->Маріинскій orthography-variant repair, not real
+validation failures (confirmed by reading every row of
+`validation_errors.csv`).
