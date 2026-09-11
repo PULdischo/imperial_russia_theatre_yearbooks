@@ -9159,3 +9159,56 @@ itself (batched with the rest of today's propagation, per RG's
 instruction) -- `validate_performance_dates.py` needs to be re-run
 there whenever that batch happens for these three corrections (and any
 future ones) to actually reach `research.event.date`.
+
+---
+
+**2026-09-11, the deferred 123-value truncated-weekday task, done --
+actually 147, not 123.** Picked up the background task spun off two
+addenda back. Re-ran the truncation check with the same
+day-number-unambiguous logic but counting every affected session row
+rather than distinct values: **147** across the 5 flagged pages
+(`1903-04_p018`: 16, `1907-08_p016`: 36, `1907-08_p020`: 24,
+`1907-08_p022`: 37, `1907-08_p032`: 34) -- the original 123 undercounted
+`1907-08_p020`'s 24 by missing that page from whatever tally produced
+the earlier estimate, the same kind of unscoped-estimate correction
+seen elsewhere in this issue (the 76-vs-64 pass above).
+
+**Method matched what the original flagging predicted**: on
+`1903-04_p018` and `1907-08_p020`, every truncated stem has a full-form
+sibling elsewhere on the same page (a different theater column or
+session leg already carrying the untruncated word for that same day
+number) -- derived a day-number-to-full-text map from each file's own
+already-correct rows and filled the truncated ones from it, with no
+new transcription. On `1907-08_p016`, `1907-08_p022`, and
+`1907-08_p032`, entire calendar days had no full-form sibling anywhere
+on the page, so those weekday strings were read directly off the page
+scans instead of assumed from corpus convention.
+
+**That scan check paid off: `1907-08_p032` uses genuinely shorter
+abbreviations than the rest of the corpus for two of its weekdays,
+confirmed by zooming the scan rather than trusting the convention seen
+on other pages** -- `17 Воскр.` (not the `Воскрес.` used everywhere
+else, including `1907-08_p016`'s own `2 Воскрес.`) and `21 Четв.` (not
+`Четвергъ.`), both printed with a period and clear whitespace after in
+the column, i.e. not truncated by a tight crop -- genuinely how this
+page's typesetting abbreviated those two days. Restored verbatim as
+printed rather than normalized to the more common corpus form; every
+other restored value across all 5 pages matched the standard
+full-word-plus-period convention exactly (`Суббота.`, `Воскрес.`,
+`Понед.`, `Вторн.`, `Среда.`, `Четвергъ.`, `Пятница.`) once read off
+the correct page. Day numbers were left untouched throughout -- only
+the weekday text changed.
+
+**Verified after fixing**: all 147 target sessions now end in a full
+word + period (nothing left matching the old truncated-stem shape);
+JSON structure, session counts per file, and every non-`date_text`
+field unchanged.
+
+**Not yet propagated into `outputs/full_run/`** -- per RG's explicit
+instruction, this fix is being batched together with the other pending
+Gate 3 rounds rather than propagated on its own.
+
+*(Reconciled here from a parallel worktree session's `claude/peaceful-hugle-4058ff`
+branch, which had branched off before this issue existed on this branch
+and so logged the same entry provisionally in its own copy of this
+file; this is that entry's canonical home.)*
