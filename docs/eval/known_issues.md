@@ -9212,3 +9212,58 @@ Gate 3 rounds rather than propagated on its own.
 branch, which had branched off before this issue existed on this branch
 and so logged the same entry provisionally in its own copy of this
 file; this is that entry's canonical home.)*
+
+
+---
+
+**2026-09-11, propagated all five of today's rounds into
+`outputs/full_run/`.** Batched per RG's standing instruction rather
+than propagated per-round: the annotation-field audit, утро/вечер
+pairing check, stray-text sweep, event-date field audit, and the
+shift-bug follow-up + truncated-date restoration (the two background
+tasks). Also carries the new `_MANUAL_DATE_OVERRIDES` code change in
+`pipeline/validate_performance_dates.py`.
+
+Same lighter-weight in-place methodology as the earlier "3 deferred
+pages" propagation this same day, scaled to the full 332-page Gate 3
+corpus rather than a 3-page shortcut: ran
+`parse_and_validate.py --extraction-source columnwise` fresh against
+all 332 pages, spliced the result into the existing merged `parsed/`
+CSVs by `page_id` (event_entry) / `event_id` prefix (event_entry_
+performance) rather than touching the 1,017 non-Gate3 pages' rows at
+all, then ran `build_duckdb.py` / `build_entities.py` /
+`validate_performance_dates.py` / `build_research_model.py` /
+`build_datasette.py` in order against a scratch copy of the live
+database (never the original), verified exhaustively, then swapped in.
+
+**Verified before swap-in** (full queries in `docs/query_log.md`):
+`source_pages` 1,349=1,349, `person_entry` 21,168=21,168, non-Gate3
+`event_entry` 12,094=12,094 with **zero** row-content diffs (better
+than the original merge's 114 explained-but-nonzero diffs -- no
+concurrent unrelated change this time); Gate3 `event_entry` 11,829 ->
+11,842 (matches today's net additions exactly); 0 orphaned
+`event_entry_performance` rows, 0 duplicate `event_id`s;
+`entities.person_link`/`person_merge_log`/`person` all exactly
+unchanged (21,168 / 1,022 / 4,359) and `person_link` set-equal;
+`research.person_appearance` byte-identical (21,154 rows);
+`research.theater`/`person` unchanged (6 / 2,894); `research.work`
+4,410 -> 4,451, `research.event` 29,141 -> 29,219, `research.performance`
+25,313 -> 25,466. `_MANUAL_DATE_OVERRIDES` confirmed landing correctly:
+all 9 affected rows show `date_confidence='corrected_manual'` with the
+scan-verified date. Spot-checked `1902-03_p019`'s Большой театръ
+sequence and `1904-05_p013`'s `13 Суббота.`/`14 Воскрес.` split against
+what this session actually fixed -- both match exactly.
+
+Swapped `imperial_theaters.duckdb`, `research_dataset.sqlite`, and
+`parsed/` into `outputs/full_run/` via move-aside-then-replace, `cmp`
+confirmed the live files byte-identical to the verified scratch copy,
+then deleted the pre-patch snapshot and scratch working directory --
+nothing left lying around.
+
+`outputs/full_run/` now reflects everything in
+`outputs/gate3_columnwise/raw_columnwise/` as of today, including the
+`corrected_manual` date fixes. The `date_undate` coverage gap
+(13-21% fill for column-wise seasons) documented two addenda up is
+**not** addressed by this propagation -- it's a `flatten_repertoire_page`
+pipeline fix, not a data fix, and needs its own scoped pass. Publishing
+(HF upload + Cloud Run redeploy) remains explicitly deferred.

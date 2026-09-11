@@ -4137,3 +4137,61 @@ corrections (4,530->4,412, 27,637->29,157, 24,892->25,316).
 `1903-04_p032` confirmed showing three theaters with three correct,
 distinct sets of receipts in the merged database. All of this was the
 basis for proceeding with the swap-in described in known_issues.md.
+
+## 2026-09-11 — full_run propagation (5 rounds batched): verification queries at every stage
+
+Full detail and rationale in known_issues.md #69's final addendum.
+Propagates today's five rounds (annotation audit, утро/вечер pairing,
+stray-text sweep, event-date audit, shift-bug follow-up + truncated-
+date restoration) from `outputs/gate3_columnwise/raw_columnwise/` into
+`outputs/full_run/`, plus the new `_MANUAL_DATE_OVERRIDES` code change
+in `validate_performance_dates.py`. Same lighter-weight in-place
+methodology as the 2026-09-11 "propagate the 3 deferred-page fixes"
+addendum (CREATE OR REPLACE / DROP+CREATE on every downstream script's
+own tables), scaled up to all 332 Gate 3 pages via
+`parse_and_validate.py --extraction-source columnwise` + splicing the
+result into the existing merged `parsed/` CSVs by page_id, rather than
+the 3-page shortcut used last time.
+
+```sql
+-- pre/post row counts, scratch copy vs live pre-patch db
+select count(*) from raw.source_pages;                              -- 1349 = 1349
+select count(*) from raw.person_entry;                              -- 21168 = 21168
+select count(*) from raw.event_entry where page_id not in (<332 gate3 ids>);  -- 12094 = 12094
+select count(*) from raw.event_entry where page_id in (<332 gate3 ids>);     -- 11829 -> 11842
+-- full row-content diff on the 12094 untouched-page rows (ORDER BY event_id)
+select event_id, page_id, season, city, date_text, month_text, year_text,
+       date_undate, time_of_day, theater, event_status, receipts_text,
+       receipts_rubles, receipts_kopecks, annotation
+  from raw.event_entry where page_id not in (<332 gate3 ids>) order by event_id;
+-- orphaned performance rows / duplicate event_ids (sanity net)
+select count(*) from raw.event_entry_performance p
+  left join raw.event_entry e on e.event_id = p.event_id where e.event_id is null;
+select event_id, count(*) from raw.event_entry group by event_id having count(*) > 1;
+-- person-continuity after build_entities.py
+select count(*) from entities.person_link;         -- 21168 = 21168
+select count(*) from entities.person_merge_log;     -- 1022 = 1022
+select count(*) from entities.person;               -- 4359 = 4359
+select entry_id, person_id from entities.person_link;  -- old vs new: set-equal
+-- research layer after build_research_model.py
+select count(*) from research.theater;   -- 6 = 6
+select count(*) from research.person;    -- 2894 = 2894
+select * from research.person_appearance order by 1,2,3;  -- old vs new: byte-identical (21154 rows)
+select count(*) from research.work;         -- 4410 -> 4451
+select count(*) from research.event;        -- 29141 -> 29219
+select count(*) from research.performance;  -- 25313 -> 25466
+-- _MANUAL_DATE_OVERRIDES landed correctly
+select event_id, date_confidence, corrected_date_undate, note
+  from analysis.event_entry_date_check where date_confidence = 'corrected_manual';  -- 9 rows, all correct
+-- spot check a specific corrected page
+select date_text, time_of_day, event_status from raw.event_entry
+  where page_id = 'repertoire_1902-03_p019' and theater like '%Больш%' order by event_id;
+```
+
+Result: every check above passed exactly as annotated. 0 unexplained
+diffs on untouched pages (better than the original merge's 114
+explained-but-nonzero diffs -- no concurrent unrelated change this
+time). Swapped `imperial_theaters.duckdb` + `research_dataset.sqlite` +
+`parsed/` into `outputs/full_run/` via move-aside-then-replace, `cmp`
+confirmed the live files byte-identical to the verified scratch copy,
+then deleted the pre-patch snapshot and scratch working directory.
