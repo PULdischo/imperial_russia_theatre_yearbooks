@@ -8325,3 +8325,87 @@ copy this was all built in, including the `parsed_gate3/`/
 `parsed_baseline/` split kept as an audit trail of the two-pass
 methodology -- is still on disk, left as a deliberate choice pending a
 later decision to remove it.
+
+### Addendum (2026-09-11): all 3 deferred pages resolved --
+`cross_theater_date_mismatch` is 0 across the corpus for the first time
+
+RG asked to go back and look carefully at the 3 pages still open
+(`1899-00_p029`, `1903-04_p004`, `1901-02_p028`) rather than leave them
+deferred indefinitely. All 3 turned out to be solvable with the same
+scan-verified, cross-theater-corroborated discipline used throughout
+this issue -- the earlier "needs re-deriving from scratch" framing for
+`1899-00_p029` undersold how tractable it actually was once looked at
+directly, and `1903-04_p004`'s cascading shift turned out to be more
+contained than the original diagnosis suggested.
+
+**`1901-02_p028`** (the row-shift bug found during the completeness
+sweep): reconstructed all 15 Маріинскій sessions from the scan, correcting
+a cascading one-position shift that started at "16 Суббота" and resolved
+by "24 Воскрес" -- a spanning "Безплатные спектакли для воспитанниковъ
+столичныхъ учебныхъ заведеній" header (misread in the raw JSON as "для
+военныхъ") had gotten folded into a session's own content instead of
+being recognized as label-only. Independently corroborated: the
+reconstructed date sequence matches both Александринскій's and
+Михайловскій's own coverage on the same page exactly.
+
+**`1903-04_p004`**: same class of bug, but more contained than
+originally diagnosed. The "Октябрь." row is a genuine month-transition
+label -- but unlike a simple drop, it had absorbed 1 Среда's real
+content (Баядерка/1244.57), cascading a one-position shift through
+2 Четвергъ, 3 Пятница, and 4 Суббота (a multi-item benefit gala for the
+Pushkin-monument fund), which had collapsed the true 4 Суббота/5
+Воскрес distinction into a single mislabeled "4 Суббота" plus a
+separately-mislabeled "5 Воскрес". Reconstructed 30 Вторн. through 10
+Пятница. in full; confirmed the shift resolves cleanly at 6 Понед.
+(everything 6 Понед. onward was already correct). Separately, on the
+same page: Михайловскій was missing two genuinely-dark days (30 Вторн.,
+2 Четвергъ -- confirmed dashes in the scan, aligned against
+Александринскій's already-correct row positions) that had never gotten
+an explicit `is_dark` placeholder; added both.
+
+**`1899-00_p029`** ("the corpus's messiest page"): the real structure,
+once read directly against the scan, is much simpler than the tangle of
+current-JSON duplicates suggested. A single spanning header --
+"Безплатные спектакли для воспитанниковъ столичныхъ учебныхъ заведеній"
+-- sits once at the top of a 16-20 Февраля block and describes only the
+very first row's morning leg (16 Среда, matching the same header-scope
+convention established elsewhere this issue), not the whole week. Every
+date 16-20 is a genuine morning/evening split across all three Moscow
+theaters (Большой, Малый, Новый) -- confirmed directly against the
+scan for all three, side by side. The raw JSON's "two overlapping,
+partially conflicting reads" were mostly NOT conflicting at all: they
+were the correctly-captured morning and evening legs, just both left
+`session="unspecified"`, with the free-show header wrongly duplicated
+onto every evening entry (which all have their own real, distinct
+receipts -- confirmed against the scan, not free performances) and the
+morning legs' receipts wrongly duplicated from the evening figures
+instead of being cleared. One genuine cross-theater contamination found
+along the way: a "Горе отъ ума"/"Прощальный ужинъ" entry sitting under
+Большой театръ with Большой's own (duplicated) receipts figure is
+actually Малый's real 20 Воскрес evening content, confirmed directly in
+Малый's own crop with its own distinct receipts (1555.66, not 1795.26).
+Reconstructed all three theaters' full 16-20 blocks (10 sessions each
+for Большой/Новый, 9 for Малый, which has a single unsplit performance
+on 17 Четвергъ rather than a morning/evening pair). The remaining dark
+stretch (27 Воскрес./28 Понед./29 Вторн./2 Четвергъ./3 Пятница., all
+three theaters agreeing already) was spot-checked against the scan and
+confirmed genuinely dark, unchanged.
+
+**Verified after all three fixes**: `check_repertoire_cross_theater_date_mismatch`
+is **0 across the full 332-page corpus** -- down from the 2 pages
+deliberately deferred at completeness-sweep time, plus the 1
+subsequently found. 332/332 theater coverage unchanged, 0 true
+duplicate sessions, 9 malformed-receipts (unchanged, genuine typos).
+`check_repertoire_unknown_theater` dropped from 324 to 312, an
+unplanned but welcome side effect of using the corpus's own already-
+established theater-name strings consistently during these
+reconstructions.
+
+**Not yet done**: these fixes are only in
+`outputs/gate3_columnwise/raw_columnwise/` (the canonical source
+corpus) -- `outputs/full_run/`'s copy of these 3 pages' raw JSON, and
+the `.duckdb`/`.sqlite` built from it, still reflect the pre-fix state
+from the merge documented in the previous addendum. Propagating this
+into `full_run/` needs the same careful two-pass-aware methodology as
+that merge (on a much smaller scale -- 3 pages, not 332), and hasn't
+been done yet.
