@@ -438,17 +438,32 @@ async def process_page_columnwise(client: AsyncOpenAI, sem: asyncio.Semaphore, r
             len(date_rows), [len(r[1]) for r in results if not isinstance(r, Exception)]),
         "theaters": {},
     }
-    for result in results:
+    canonical_theaters = group.get("theaters") if group else None
+    for i, result in enumerate(results):
         if isinstance(result, Exception):
             continue
-        theater_name, theater_rows, usage = result
+        model_said, theater_rows, usage = result
         _accumulate(usage)
+        # Prefer the config's own known theater order over the model's read
+        # (2026-09-12, full-corpus sweep): confirmed the theater-name header
+        # is printed only on a spread's TOP half -- 89 of 90 bottom halves
+        # checked came back with EVERY theater crop reading the same
+        # (wrong) name, since there's nothing to read on those pages at
+        # all. `columns[i].theater_index` is the crop's known left-to-right
+        # position, stable regardless of what's printed on any given page;
+        # `canonical_theaters[i]` is that season's own fixed print order,
+        # already established by direct scan inspection. Falls back to the
+        # model's own read when a group has no `theaters` list configured.
+        if canonical_theaters and i < len(canonical_theaters):
+            theater_name = canonical_theaters[i]
+        else:
+            theater_name = model_said
         raw_columns["theaters"][theater_name] = theater_rows
         merged = merge_columnwise_page(date_rows, theater_name, theater_rows)
         all_sessions.extend(merged.sessions)
         n_ok += merged.ok
         merge_report.append({
-            "theater": theater_name, "ok": merged.ok,
+            "theater": theater_name, "model_said": model_said, "ok": merged.ok,
             "n_sessions": len(merged.sessions), "unresolved": merged.unresolved,
             "n_date_days": merged.n_date_days, "n_theater_rows": merged.n_theater_rows,
             "reason": merged.reason,
