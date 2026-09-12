@@ -9468,3 +9468,187 @@ This closes out the last known open item from today's rounds on the
 `outputs/full_run/` the same day (see the query_log.md entry) --
 verified exhaustively (0 diffs on untouched pages, entities/person
 continuity preserved) before swap-in.
+
+
+---
+
+## 70. Fold-split extraction for the two-page-spread Repertoire seasons
+(1890-91..1897-98) -- Phases 1-5 built; found and fixed the real cause
+of #68's 14-63% spread-format scores along the way
+
+**Context.** Issue #68's addendum (2026-09-08) measured column-wise
+extraction at 77-100% receipts agreement on every single-page season
+but only 14-63% on every spread season (`1895-96_p002` 63%,
+`1893-94_p001` 23%, `1892-93_p008` 14%), and named three untested
+hypotheses for the gap: more theater columns, rotated date labels, the
+binding fold. RG, 2026-09-11: "Let's start brainstorming how to tackle
+the two page spreads." Direct scan sampling (8 pages, one per season)
+found something the #68 investigation didn't have: each spread splits
+cleanly into two independent, complete single-page-format tables (own
+theater columns, own date column, own genuine printed page number),
+which is the premise the plan below builds on.
+
+### Phase 1-2: physical split (`pipeline/split_spread_pages.py`)
+
+Finds the fold's cut line per page and splits into two overlapping
+half-images. Confidence-tiered search band (fold-trace estimate ±260px
+when high-confidence, ±500px when low-confidence -- every one of the 91
+spread pages has SOME fold-geometry entry, none are truly untraced) using
+`row_detect`'s own `_row_darkness_profile`/`_find_peaks` on the band,
+not `_detect_line_curves`/`_build_chains` (built for a different
+problem, untested at this aspect ratio). A single dominant peak is
+accepted directly as the cut (not just a two-peak gap) -- confirmed
+necessary on `repertoire_1891-92_p000`, whose one clean peak sat right
+at the true fold but was being discarded for lack of a second reference
+point.
+
+**Straddling rows are common, not rare.** The original 8-page sample
+suggested ~37%; the full 91-page run measured **47/97 (48%)** via a
+tight-band ink-density check, and spot-verification confirmed real
+cases (e.g. `repertoire_1892-93_p001`: "Заварила кашу-расхлебывай,
+фарсъ. / Перекати-поле, карт." visibly split across the physical fold).
+`split_page()` therefore gives each half a 500px overlap past the cut
+(sized from measured row heights, 150-500px in the samples checked) so
+a straddling row lands complete in at least one half; downstream de-dup
+against the recorded `SplitExtent` bounds is not yet built.
+
+Also found and fixed: every top half's OWN top edge is the physical
+page's outer edge, and the scan catches a dark sliver of book cover
+there -- confirmed as the cause of a real Phase 5 failure (see below).
+`TOP_EDGE_TRIM_FRAC = 0.08` trims it before any downstream crop sees it;
+8% comfortably clears the measured ~100-200px band while the true table
+header doesn't start until ~17% down.
+
+### Phase 3: page-number verification (`pipeline/extract_split_page_numbers.py`)
+
+Reads each half's real printed page number from its left-margin strip
+(rotated; the DATE-RANGE header turned out to be a separate thing on
+the RIGHT margin, not this). Full 182-half run: continuity chained
+cleanly except 15 misreads, all hand-verified against the scan and all
+had one plain, legible true value -- e.g. `repertoire_1890-91_p001`
+read "14" for a printed "4" (spurious digit), four different seasons'
+"p003" tops all read empty for a plainly legible "8", one page's number
+was hidden behind a library RECAP stamp but still legible past it. A
+same-crop resample was confirmed USELESS here (returns the identical
+wrong answer every time -- this model is near-deterministic on this
+kind of short, simple read) so the 15 were corrected by hand rather
+than automated further; see `hand_verified_note` in
+`split_page_numbers.csv`. One genuine parsing bug fixed along the way:
+"II" is a misread "11" (I/1 glyph confusion), not the Roman numeral 2.
+
+**Two genuinely separate findings surfaced here, not extraction bugs**:
+`repertoire_1890-91` pages 8-9 are missing from this render entirely
+(RG: rescanning); pages 10-11 were rendered TWICE under two filenames
+(RG: accidentally scanned the same two pages twice). Both are known,
+expected, and unrelated to anything below.
+
+### Phase 4: column-bounds config (`docs/repertoire_column_bounds.json`)
+
+New `"<season>:<parity>"` `spread_split` entries for all 8 seasons,
+measured fresh against actual split halves via `_refine_dividers`
+(raw `_detect_vertical_dividers` alone found a clean 5-divider set on
+only 1-6 of 12 sampled halves per season/half -- the same noise problem
+already documented for single-page seasons). Every split half's real
+page number is even for the top half, odd for the bottom, with zero
+exceptions across all 182 -- so the existing `parity_of()`/
+`column_group_for()` machinery already resolves top vs. bottom
+correctly with no new code. `1891-92` and `1893-94` show a real,
+non-noise top/bottom divergence and get genuinely different `:0`/`:1`
+values; the other 6 seasons converge and keep identical values in both
+keys purely for lookup consistency. `1890-91` could not be measured
+this way at all (100% fallback to the template on every sampled
+half) -- carried forward as an unverified prior, flagged in
+`_needs_review`.
+
+Also: hand-measured bounds for the 6 true `single_leaf` pages
+(`flag_fold_damage.classify_page`: landscape, no fold, never split) --
+automated detection wasn't worth building for a group this small (2/6
+even found a genuine candidate via seeded refinement). Required a small
+fix to `pipeline/crop_to_table.py`'s `column_group_for()`: it only
+checked `"<season>:<parity>"` then `"<season>"`, so a `single_leaf`
+page's own render-index parity would have collided with and wrongly
+applied its season's new `spread_split` bounds. Added an exact-`page_id`
+check ahead of the parity/season fallback.
+
+**Margin crop**: tested empirically (`crop_to_table.detected_rows`
+before/after), not assumed -- applying the seasons' existing `x0`/`x1`
+crop bounds (not `y0`/`y1`, fit to the whole 2-leaf image and
+meaningless for a single split leaf) fixed `1892-93` and `1894-95`'s
+row detection (3/8 and 3/8 zero-detection pages -> 0/8 each). Not yet
+wired into the actual split-half pipeline.
+
+### Phase 5: run the existing column-wise pipeline -- and the big finding
+
+Running `pipeline/run_pilot.py --column-level` unmodified against a
+4-page smoke sample (`repertoire_1893-94`, both halves of two source
+spreads) surfaced a severe, page-specific failure: the date-only column
+read only 3 rows out of ~13 actually printed, on 2 of 4 pages, with
+`n_theaters_ok=0/5` on each. Direct inspection of the actual crop
+(confirmed the crop itself was legible, ruling out a rendering problem)
+found the real cause was structural, not a model reliability problem:
+
+**`detect_columns()`'s date-only crop for `date_side="right"` extended
+unconditionally to the image's own right edge.** On every spread season
+checked, there is a wide blank margin past the table's own true border,
+and further out in THAT margin sits a wholly separate printed
+element -- the page's own running date-range header (the same kind of
+thing `extract_page_headers.py` reads for single-page seasons) -- not
+part of the per-row date column at all. Worse: **the divider position
+feeding that crop (`divider[4]`, `Малый`|`Date`) was itself wrong on
+every one of the 8 spread seasons** -- it was never actually measured
+when the whole-spread config was first built (2026-09-08, #68's
+addendum), only extrapolated one theater-width past `divider[3]`, and
+landed in that same blank margin rather than on the real boundary.
+Re-measured directly against the scan (grid-overlay contact sheets,
+2%-precision) on all 8 seasons: the true boundary sits at ~0.82-0.86 of
+table width, not the ~0.90-0.94 the old config carried; the true date
+column's own width past that boundary is a small, fairly consistent
+~0.034-0.055 of table width regardless of season.
+
+**This is very likely the actual, previously-unidentified explanation
+for #68's 14-63% whole-spread scores** -- not primarily the fold or
+rotation hypotheses that addendum named. The date crop was reading the
+wrong region entirely, not failing to read a genuinely hard one; a
+model reading rotated text well (confirmed directly: one `1893-94`
+bottom-half page read 18 dates correctly on the first try) says the
+rotation itself was never the blocker.
+
+**Fixed in two places**:
+- `pipeline/row_detect.py`: `detect_columns()` gained
+  `date_col_width_frac`, bounding the date crop's right edge at
+  `lo[-1] + date_col_width_frac * W` instead of `W` itself.
+  Deliberately NOT solved by detecting the table's own outer border
+  directly -- that border detection is exactly the fragility
+  `_detect_vertical_dividers`'s own docstring already documents and
+  works around.
+- `docs/repertoire_column_bounds.json`: `divider[4]` corrected and
+  `date_col_width_frac` added for all 24 spread-format entries (8
+  plain `"<season>"` + 16 `spread_split` `"<season>:<parity>"`).
+
+**A second, smaller fix in the same pass**: `process_page_columnwise`'s
+date-only call gets a multi-attempt retry (`DATEONLY_MAX_ATTEMPTS=3`)
+with a plausibility check against the theater columns' own row counts
+(`_date_rows_plausible`, ≥0.4× the best theater's row count). Confirmed
+this class of failure genuinely benefits from resampling, unlike the
+page-number task above -- one page's date read went 3→19 rows on a
+single retry with the identical crop and prompt. Also confirmed a
+single resample is not always enough: a persistently-stuck page
+(`repertoire_1893-94`'s other broken half) returned the exact same 3
+rows across 4+ independent calls, trim fix included -- this turned out
+to be the SAME wrong-region bug above, not a separate model-reliability
+issue, and resolved once the crop itself was fixed.
+
+**Verified on the same 4-page sample after both fixes**: every date
+read went from ~0-3 rows to 11-18, several theaters now reconcile
+exactly (13/13, 10/10) against it, and the residual mismatches (11 vs
+13, 12 vs 13 row counts) are ordinary VLM row-count noise -- ground
+already covered by the existing merge/retry machinery -- not the
+systematic wrong-column failure this addendum is about.
+
+**Not yet done**: Phase 6 (the plan's own broader pilot -- the 3
+`#68`-baseline pages plus an expanded, hand-verified sample across
+seasons, reporting receipts agreement per season before any full-corpus
+decision); a cross-split date-continuity de-dup check for the
+straddling-row overlap; re-deriving `divider[4]`/`date_col_width_frac`
+for `1890-91` by some means other than the failed automated
+re-measurement.
