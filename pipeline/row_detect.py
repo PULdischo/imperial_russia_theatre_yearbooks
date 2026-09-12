@@ -675,7 +675,8 @@ class ColumnCrop:
 def detect_columns(image_path: Path, out_dir: Path,
                     date_pad: int = 120, theater_pad: int = 15,
                     dividers_frac: list[float] | None = None,
-                    date_side: str = "left") -> list[ColumnCrop]:
+                    date_side: str = "left",
+                    date_col_width_frac: float | None = None) -> list[ColumnCrop]:
     """Detects the table's vertical column dividers and writes one
     (date_column_image, theater_column_image) pair per theater column --
     see `ColumnCrop`'s docstring for why these are separate files, not
@@ -739,7 +740,34 @@ def detect_columns(image_path: Path, out_dir: Path,
     opposite sides: RIGHT on the two-page-spread seasons (1890-91..
     1897-98), LEFT from 1898-99 on. This function previously assumed
     left unconditionally, which silently mis-sliced every spread page --
-    its date crop would have held a theater's content."""
+    its date crop would have held a theater's content.
+
+    `date_col_width_frac` (2026-09-12, fold-split extraction pilot):
+    for `date_side="right"`, the date crop's right edge used to extend
+    unconditionally to the image's own right edge (W) -- fine when the
+    table's outer border sits close to the image edge, but wrong on
+    every spread-format season checked: there's a wide blank margin past
+    the table's true border, and further out in THAT margin sits a
+    completely separate printed element -- the page's own running
+    date-range header (the same kind of thing extract_page_headers.py
+    reads for single-page seasons), not part of the per-row date column
+    at all. Without a bound, that unrelated header text gets pulled into
+    the date-only crop, confirmed directly to cause severe under-reads
+    (3 rows found out of ~13 actually printed on one page) and jumbled
+    reads mixing real per-row dates with header-style text on another.
+    Deliberately NOT solved by detecting the table's own outer border
+    directly -- `_detect_vertical_dividers`'s docstring already
+    documents that border detection as the fragile part of this whole
+    module. Measured instead, directly against the scan, across all 8
+    spread seasons: the true date column's own width is a small and
+    fairly consistent fraction of the table width (~0.034-0.055 in the
+    samples checked) regardless of season. Passing that fraction here
+    bounds the crop at `lo[-1] + date_col_width_frac * W` (plus
+    `date_pad` again, symmetric with the left-side pad) instead of at W
+    itself. None given (the default) preserves the old unbounded
+    behaviour, e.g. for `date_side="left"` callers where this problem
+    doesn't arise (the date column there is the FIRST column, bounded on
+    its right by a real internal divider already)."""
     out_dir.mkdir(parents=True, exist_ok=True)
     img = cv2.imread(str(image_path))
     if img is None:
@@ -777,7 +805,11 @@ def detect_columns(image_path: Path, out_dir: Path,
                    min(W, hi[i + 1] + theater_pad) if i + 1 < n_div else W)
                   for i in range(n_div)]
     else:
-        date_span = (max(0, lo[-1] - date_pad), W)
+        if date_col_width_frac is not None:
+            date_right = min(W, lo[-1] + int(round(date_col_width_frac * W)) + date_pad)
+        else:
+            date_right = W
+        date_span = (max(0, lo[-1] - date_pad), date_right)
         bounds = [(0 if i == 0 else max(0, lo[i - 1] - theater_pad),
                    min(W, hi[i] + theater_pad))
                   for i in range(n_div)]

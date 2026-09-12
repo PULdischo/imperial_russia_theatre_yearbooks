@@ -1,13 +1,24 @@
 {
-  "_note": "Column divider positions for Repertoire tables, as fractions of the CROPPED table width (apply docs/repertoire_crop_bounds.json first). Derived 2026-09-08 by taking the median of pipeline/row_detect._detect_vertical_dividers across every page of a group -- steadier than one visual reading, and within a group the positions vary by only 1-2% of width against columns 17-25% wide. Spread seasons (1890-91..1897-98) are keyed by season, put the DATE column at the table's RIGHT edge, and have 5 theaters. Single-page seasons (1898-99 onward) are keyed 'season:parity' because the recto/verso gutter offset shifts the table within a season crop (splitting by parity drops sigma from 0.056 to ~0.020); they put the DATE column at the LEFT and have 3 theaters. Groups are gated on even spacing, since theaters are equal-width -- check 'evenly_spaced' and 'source' before trusting one. NOTE on the final divider of spread seasons: it bounds the DATE column, which is NARROWER than a theater, so extrapolating it by one theater width overshoots. 1890-91 (0.966) and 1891-92 (0.982) overshot into the date column itself and were corrected against the page to 0.900 and 0.945; the rest landed in a consistent 0.918-0.943 band. Spread seasons therefore fail the even-spacing check by design. IMPORTANT: these fractions are relative to the CROPPED width, so any change to docs/repertoire_crop_bounds.json invalidates them and they must be rescaled or re-derived. 1891-92, 1898-99 and 1902-03 were rescaled on 2026-09-08 for exactly this reason. ADDENDUM 2026-09-09 (docs/eval/known_issues.md #69/#70): these values are no longer applied as a blind absolute template. The first position in each group's `dividers` list is now an ANCHOR/PRIOR, not a trusted final position: pipeline/row_detect.detect_columns refines it per page via `_refine_divider0`, which detects the real divider fresh and picks the candidate closest to this anchor within a small tolerance -- this is what the Gate 3 defect (kopecks truncated on 23-82% of even pages in several seasons, because the table's true position wanders by up to 0.11 of crop width within one group) needed, and a blind template alone could not give it. The remaining `dividers` entries are NOT used directly at all anymore -- only the GAPS between them are (season-level column widths, confirmed stable to 1-2% of table width, including on the two groups -- 1902-03:1 and 1907-08 -- that an earlier pass could not get automatic per-page detection to agree on for every divider). Per-page detection alone is not the fix either: a fully unconstrained search on repertoire_1907-08_p011 locked onto five evenly-spaced, 100%-confidence false candidates from faint paper staining in an oversized margin, ahead of the real divider -- the anchor is what lets the search reject that. Every value below therefore still matters (as the anchor + the gap template), and none needed re-measuring for this change; only the CODE that consumes them changed. Validated 2026-09-09 against 1902-03:1, 1907-08:0, 1907-08:1 (the two previously-stuck groups), 1898-99 and 1906-07 (both parities, as a regression check), and 1893-94 (spread format) -- 26 pages, every group producing the correct theater count with consistent widths, including repertoire_1907-08_p011 itself.",
-  "_needs_review": [],
+  "_note": "Column divider positions for Repertoire tables, as fractions of the CROPPED table width (apply docs/repertoire_crop_bounds.json first). Derived 2026-09-08 by taking the median of pipeline/row_detect._detect_vertical_dividers across every page of a group -- steadier than one visual reading, and within a group the positions vary by only 1-2% of width against columns 17-25% wide. Spread seasons (1890-91..1897-98) are keyed by season, put the DATE column at the table's RIGHT edge, and have 5 theaters. Single-page seasons (1898-99 onward) are keyed 'season:parity' because the recto/verso gutter offset shifts the table within a season crop (splitting by parity drops sigma from 0.056 to ~0.020); they put the DATE column at the LEFT and have 3 theaters. Groups are gated on even spacing, since theaters are equal-width -- check 'evenly_spaced' and 'source' before trusting one. NOTE on the final divider of spread seasons: it bounds the DATE column, which is NARROWER than a theater, so extrapolating it by one theater width overshoots. 1890-91 (0.966) and 1891-92 (0.982) overshot into the date column itself and were corrected against the page to 0.900 and 0.945; the rest landed in a consistent 0.918-0.943 band. Spread seasons therefore fail the even-spacing check by design. IMPORTANT: these fractions are relative to the CROPPED width, so any change to docs/repertoire_crop_bounds.json invalidates them and they must be rescaled or re-derived. 1891-92, 1898-99 and 1902-03 were rescaled on 2026-09-08 for exactly this reason. ADDENDUM 2026-09-09 (docs/eval/known_issues.md #69/#70): these values are no longer applied as a blind absolute template. The first position in each group's `dividers` list is now an ANCHOR/PRIOR, not a trusted final position: pipeline/row_detect.detect_columns refines it per page via `_refine_divider0`, which detects the real divider fresh and picks the candidate closest to this anchor within a small tolerance -- this is what the Gate 3 defect (kopecks truncated on 23-82% of even pages in several seasons, because the table's true position wanders by up to 0.11 of crop width within one group) needed, and a blind template alone could not give it. The remaining `dividers` entries are NOT used directly at all anymore -- only the GAPS between them are (season-level column widths, confirmed stable to 1-2% of table width, including on the two groups -- 1902-03:1 and 1907-08 -- that an earlier pass could not get automatic per-page detection to agree on for every divider). Per-page detection alone is not the fix either: a fully unconstrained search on repertoire_1907-08_p011 locked onto five evenly-spaced, 100%-confidence false candidates from faint paper staining in an oversized margin, ahead of the real divider -- the anchor is what lets the search reject that. Every value below therefore still matters (as the anchor + the gap template), and none needed re-measuring for this change; only the CODE that consumes them changed. Validated 2026-09-09 against 1902-03:1, 1907-08:0, 1907-08:1 (the two previously-stuck groups), 1898-99 and 1906-07 (both parities, as a regression check), and 1893-94 (spread format) -- 26 pages, every group producing the correct theater count with consistent widths, including repertoire_1907-08_p011 itself. ADDENDUM 2026-09-11 (fold-split extraction plan, Phase 4): 16 new \"<season>:<parity>\" entries added, format \"spread_split\", for the 8 spread seasons two-page-spread pages once physically split at the binding fold (pipeline/split_spread_pages.py). These are NOT the same geometry as the plain \"<season>\" spread entries above (those are fit to the whole unsplit two-leaf image) -- measured fresh against actual split half-images via _refine_dividers, seeded from the whole-spread dividers as an anchor/gap prior only. Keyed by parity exactly like the single-page seasons, and it works out cleanly: every split halfs own real printed page number is even for the top half and odd for the bottom half, confirmed with zero exceptions across all 182 halves checked, so parity_of() already resolves top vs bottom correctly with no code changes. Two seasons (1891-92, 1893-94) showed a real, non-noise divergence between top and bottom geometry and get genuinely different :0/:1 values; the other 6 seasons converge to the same value for both parities (kept as two identical entries only for lookup-key consistency). 1890-91 could not be verified this way at all -- _refine_dividers found zero gap-consistent candidates on every single sampled half (100% fallback) -- so its two entries just carry the old whole-spread numbers forward as an unverified prior; see _needs_review. The 6 true single_leaf pages (flag_fold_damage.classify_page) are not covered by any spread_split entry -- they need their own small, hand-measured bounds, not yet done. ADDENDUM 2026-09-12: the divider[4] value in every spread-format entry (plain \"<season>\" and \"<season>:<parity>\" spread_split alike) was found to be wrong -- extrapolated rather than measured when first built, and landing in blank margin past the table's own true border on every season checked. Re-measured directly against the scan on all 8 spread seasons and corrected; each entry also gained date_col_width_frac, a new field pipeline/row_detect.detect_columns() uses to bound the date-only crop at the table's border instead of the image edge (see that function's own docstring for the full mechanism). This is believed to be the primary, previously-unidentified cause of the spread format's historically poor whole-page column-wise receipts-agreement scores.",
+  "_needs_review": [
+    "1890-91:0",
+    "1890-91:1",
+    "1891-92:0",
+    "1893-94:0"
+  ],
   "_verified_visually": [
     "1893-94",
     "1896-97",
     "1898-99:0",
     "1898-99:1",
     "1904-05:0",
-    "1907-08:0"
+    "1907-08:0",
+    "repertoire_1890-91_p000",
+    "repertoire_1890-91_p012",
+    "repertoire_1894-95_p008",
+    "repertoire_1895-96_p012",
+    "repertoire_1896-97_p012",
+    "repertoire_1897-98_p012"
   ],
   "1890-91": {
     "format": "spread",
@@ -17,12 +28,13 @@
       0.3967,
       0.5856,
       0.7759,
-      0.9
+      0.85
     ],
     "n_pages_agreeing": 12,
     "extrapolated": true,
-    "source": "measured; final (date) divider hand-corrected 0.966 -> 0.900",
-    "evenly_spaced": false
+    "source": "measured; final (date) divider hand-corrected 0.966 -> 0.900 CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": false,
+    "date_col_width_frac": 0.045
   },
   "1891-92": {
     "format": "spread",
@@ -32,12 +44,13 @@
       0.4172,
       0.587,
       0.7573,
-      0.8925
+      0.854
     ],
     "n_pages_agreeing": 7,
     "extrapolated": true,
-    "source": "measured; final (date) divider hand-corrected 0.982 -> 0.945; RESCALED x0.944 on 2026-09-08 after the season crop was widened (x1 0.89->0.94) to stop it clipping printed content -- these fractions are relative to the crop, so they move when the crop does",
-    "evenly_spaced": false
+    "source": "measured; final (date) divider hand-corrected 0.982 -> 0.945; RESCALED x0.944 on 2026-09-08 after the season crop was widened (x1 0.89->0.94) to stop it clipping printed content -- these fractions are relative to the crop, so they move when the crop does CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": false,
+    "date_col_width_frac": 0.048
   },
   "1892-93": {
     "format": "spread",
@@ -47,12 +60,13 @@
       0.4055,
       0.5785,
       0.7527,
-      0.9261
+      0.9109
     ],
     "n_pages_agreeing": 6,
     "extrapolated": true,
-    "source": "measured",
-    "evenly_spaced": true
+    "source": "measured CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.0667
   },
   "1893-94": {
     "format": "spread",
@@ -62,12 +76,13 @@
       0.4123,
       0.5801,
       0.7494,
-      0.9179
+      0.85
     ],
     "n_pages_agreeing": 6,
     "extrapolated": true,
-    "source": "measured",
-    "evenly_spaced": true
+    "source": "measured CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.045
   },
   "1894-95": {
     "format": "spread",
@@ -77,12 +92,13 @@
       0.4153,
       0.5899,
       0.766,
-      0.9412
+      0.931
     ],
     "n_pages_agreeing": 8,
     "extrapolated": true,
-    "source": "measured",
-    "evenly_spaced": true
+    "source": "measured CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.0563
   },
   "1895-96": {
     "format": "spread",
@@ -92,12 +108,13 @@
       0.4186,
       0.5913,
       0.7659,
-      0.9396
+      0.8966
     ],
     "n_pages_agreeing": 11,
     "extrapolated": true,
-    "source": "measured",
-    "evenly_spaced": true
+    "source": "measured CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.0839
   },
   "1896-97": {
     "format": "spread",
@@ -107,12 +124,13 @@
       0.427,
       0.596,
       0.766,
-      0.936
+      0.85
     ],
     "n_pages_agreeing": 12,
     "extrapolated": false,
-    "source": "hand-corrected",
-    "evenly_spaced": true
+    "source": "hand-corrected CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.045
   },
   "1897-98": {
     "format": "spread",
@@ -122,12 +140,13 @@
       0.4198,
       0.5938,
       0.7686,
-      0.9427
+      0.8325
     ],
     "n_pages_agreeing": 9,
     "extrapolated": true,
-    "source": "measured",
-    "evenly_spaced": true
+    "source": "measured CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.047
   },
   "1898-99:0": {
     "format": "single",
@@ -392,5 +411,383 @@
     "extrapolated": false,
     "source": "hand-read from the page 2026-09-08, REPLACING an earlier hand estimate [0.19, 0.48, 0.72] that fell inside Большой, inside Малый and past Новый; that estimate was flagged _needs_review and never used in a run",
     "evenly_spaced": true
+  },
+  "1890-91:0": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.2069,
+      0.3967,
+      0.5856,
+      0.7759,
+      0.85
+    ],
+    "n_pages_agreeing": 11,
+    "extrapolated": true,
+    "source": "NOT independently verified against split-half images -- _refine_dividers found zero gap-consistent candidates on all 11 sampled top AND all 11 sampled bottom split halves (100% fallback to the whole-spread template), likely reflecting this seasons own poor scan quality (RG: oldest, no receipts printed, generally hardest season). Carrying the whole-spread \"1890-91\" dividers forward as the best available prior for both parities until hand-verified during the Phase 6 pilot -- do not trust this entry ahead of that check. CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": false,
+    "date_col_width_frac": 0.045
+  },
+  "1890-91:1": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.2069,
+      0.3967,
+      0.5856,
+      0.7759,
+      0.85
+    ],
+    "n_pages_agreeing": 11,
+    "extrapolated": true,
+    "source": "NOT independently verified against split-half images -- _refine_dividers found zero gap-consistent candidates on all 11 sampled top AND all 11 sampled bottom split halves (100% fallback to the whole-spread template), likely reflecting this seasons own poor scan quality (RG: oldest, no receipts printed, generally hardest season). Carrying the whole-spread \"1890-91\" dividers forward as the best available prior for both parities until hand-verified during the Phase 6 pilot -- do not trust this entry ahead of that check. CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": false,
+    "date_col_width_frac": 0.045
+  },
+  "1891-92:0": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.2469,
+      0.4172,
+      0.587,
+      0.7573,
+      0.854
+    ],
+    "n_pages_agreeing": 12,
+    "extrapolated": true,
+    "source": "measured on split top halves via _refine_dividers seeded from the whole-spread template (crop_bounds x0=0.04/x1=0.94 applied first); only 2/12 pages found a genuine gap-consistent candidate set, the rest fell back to the template -- lower-confidence than most other seasons, worth a spot-check in the Phase 6 pilot CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.048
+  },
+  "1891-92:1": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.2624,
+      0.4172,
+      0.5825,
+      0.7343,
+      0.854
+    ],
+    "n_pages_agreeing": 12,
+    "extrapolated": true,
+    "source": "measured on split bottom halves via _refine_dividers; 7/12 genuine detections. DIFFERS from top (divider 4: 0.734 vs 0.757, divider 1: 0.262 vs 0.247) -- real, not noise -- this season needs top/bottom keying, unlike most others checked CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.048
+  },
+  "1892-93:0": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.2321,
+      0.4055,
+      0.5785,
+      0.7527,
+      0.9109
+    ],
+    "n_pages_agreeing": 24,
+    "extrapolated": true,
+    "source": "top and bottom medians converge to the same values (measured separately, no meaningful divergence found) -- pooled n=24 (12 top + 12 bottom) via _refine_dividers, crop_bounds x0=0.07/x1=0.94 applied first; 14/24 genuine detections CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.0667
+  },
+  "1892-93:1": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.2321,
+      0.4055,
+      0.5785,
+      0.7527,
+      0.9109
+    ],
+    "n_pages_agreeing": 24,
+    "extrapolated": true,
+    "source": "identical to :0 -- top and bottom converge for this season, kept as two entries only for lookup-key consistency with column_group_for() CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.0667
+  },
+  "1893-94:0": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.2438,
+      0.4123,
+      0.5801,
+      0.7494,
+      0.85
+    ],
+    "n_pages_agreeing": 12,
+    "extrapolated": true,
+    "source": "measured on split top halves via _refine_dividers seeded from the whole-spread template; only 4/12 genuine detections, rest fell back to template -- lower-confidence, worth a spot-check in the Phase 6 pilot CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.045
+  },
+  "1893-94:1": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.2505,
+      0.409,
+      0.5609,
+      0.7114,
+      0.85
+    ],
+    "n_pages_agreeing": 12,
+    "extrapolated": true,
+    "source": "measured on split bottom halves via _refine_dividers; 9/12 genuine detections. DIFFERS clearly from top (dividers 3-5 off by 0.02-0.04) -- this season needs top/bottom keying CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.045
+  },
+  "1894-95:0": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.24,
+      0.4153,
+      0.5899,
+      0.766,
+      0.931
+    ],
+    "n_pages_agreeing": 16,
+    "extrapolated": true,
+    "source": "top and bottom medians converge (measured separately) -- pooled n=16 (8 top + 8 bottom) via _refine_dividers, crop_bounds x0=0.04/x1=0.91 applied first; small sample (only 8 pages/half available in this test batch), 11/16 genuine detections CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.0563
+  },
+  "1894-95:1": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.24,
+      0.4153,
+      0.5899,
+      0.766,
+      0.931
+    ],
+    "n_pages_agreeing": 16,
+    "extrapolated": true,
+    "source": "identical to :0 -- see that entry CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.0563
+  },
+  "1895-96:0": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.2449,
+      0.4186,
+      0.5913,
+      0.7659,
+      0.8966
+    ],
+    "n_pages_agreeing": 24,
+    "extrapolated": true,
+    "source": "top and bottom medians converge -- pooled n=24 via _refine_dividers, crop_bounds x0=0.04/x1=0.91 applied first; 13/24 genuine detections CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.0839
+  },
+  "1895-96:1": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.2449,
+      0.4186,
+      0.5913,
+      0.7659,
+      0.8966
+    ],
+    "n_pages_agreeing": 24,
+    "extrapolated": true,
+    "source": "identical to :0 -- see that entry CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.0839
+  },
+  "1896-97:0": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.2624,
+      0.413,
+      0.5607,
+      0.7105,
+      0.85
+    ],
+    "n_pages_agreeing": 24,
+    "extrapolated": true,
+    "source": "top and bottom medians close enough to pool (within measurement sigma) -- pooled n=24 via _refine_dividers, no crop_bounds applied (season is in repertoire_crop_bounds.json _skip); 19/24 genuine detections. Note: divider 1 (first) differs more between top (0.266) and bottom (0.257) than the rest -- if the Phase 6 pilot finds date-column truncation on this season, revisit splitting this one entry CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.045
+  },
+  "1896-97:1": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.2624,
+      0.413,
+      0.5607,
+      0.7105,
+      0.85
+    ],
+    "n_pages_agreeing": 24,
+    "extrapolated": true,
+    "source": "identical to :0 -- see that entry, including its caveat on divider 1 CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.045
+  },
+  "1897-98:0": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.2466,
+      0.4108,
+      0.5619,
+      0.7135,
+      0.8325
+    ],
+    "n_pages_agreeing": 24,
+    "extrapolated": true,
+    "source": "top and bottom medians close enough to pool -- pooled n=24 via _refine_dividers, no crop_bounds applied (season is in repertoire_crop_bounds.json _skip); 16/24 genuine detections CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.047
+  },
+  "1897-98:1": {
+    "format": "spread_split",
+    "derived_from": "spread",
+    "split_cut_method": "row_detect_gap_search_v1",
+    "date_side": "right",
+    "dividers": [
+      0.2466,
+      0.4108,
+      0.5619,
+      0.7135,
+      0.8325
+    ],
+    "n_pages_agreeing": 24,
+    "extrapolated": true,
+    "source": "identical to :0 -- see that entry CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin.",
+    "evenly_spaced": true,
+    "date_col_width_frac": 0.047
+  },
+  "repertoire_1890-91_p000": {
+    "format": "single_leaf",
+    "date_side": "right",
+    "dividers": [
+      0.22,
+      0.44,
+      0.55,
+      0.72,
+      0.88
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "hand-read from a 2%-gridline contact sheet (crop_to_table.contact_sheet), 2026-09-11 -- one-off page, no group to average against; precision ~+/-1-2% of width. single_leaf (landscape, no fold) -- flag_fold_damage.classify_page confirmed",
+    "evenly_spaced": false
+  },
+  "repertoire_1890-91_p012": {
+    "format": "single_leaf",
+    "date_side": "right",
+    "dividers": [
+      0.24,
+      0.45,
+      0.57,
+      0.75,
+      0.91
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "hand-read from a 2%-gridline contact sheet (crop_to_table.contact_sheet), 2026-09-11 -- one-off page, no group to average against; precision ~+/-1-2% of width. single_leaf (landscape, no fold)",
+    "evenly_spaced": false
+  },
+  "repertoire_1894-95_p008": {
+    "format": "single_leaf",
+    "date_side": "right",
+    "dividers": [
+      0.27,
+      0.52,
+      0.63,
+      0.78,
+      0.86
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "hand-read from a 2%-gridline contact sheet (crop_to_table.contact_sheet), 2026-09-11 -- one-off page, no group to average against; precision ~+/-1-2% of width. single_leaf (landscape, no fold); header sits lower on the page than the other 5 -- needed a taller crop (30% of height) to read",
+    "evenly_spaced": false
+  },
+  "repertoire_1895-96_p012": {
+    "format": "single_leaf",
+    "date_side": "right",
+    "dividers": [
+      0.28,
+      0.46,
+      0.59,
+      0.78,
+      0.86
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "hand-read from a 2%-gridline contact sheet (crop_to_table.contact_sheet), 2026-09-11 -- one-off page, no group to average against; precision ~+/-1-2% of width. single_leaf (landscape, no fold); page-corner curl obscures the very top of the page in the scan, header read from further down",
+    "evenly_spaced": false
+  },
+  "repertoire_1896-97_p012": {
+    "format": "single_leaf",
+    "date_side": "right",
+    "dividers": [
+      0.24,
+      0.44,
+      0.57,
+      0.75,
+      0.92
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "hand-read from a 2%-gridline contact sheet (crop_to_table.contact_sheet), 2026-09-11 -- one-off page, no group to average against; precision ~+/-1-2% of width. single_leaf (landscape, no fold)",
+    "evenly_spaced": false
+  },
+  "repertoire_1897-98_p012": {
+    "format": "single_leaf",
+    "date_side": "right",
+    "dividers": [
+      0.28,
+      0.46,
+      0.59,
+      0.78,
+      0.85
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "hand-read from a 2%-gridline contact sheet (crop_to_table.contact_sheet), 2026-09-11 -- one-off page, no group to average against; precision ~+/-1-2% of width. single_leaf (landscape, no fold); large fingertip covers the top-left corner in the scan, header read from further down",
+    "evenly_spaced": false
   }
 }
