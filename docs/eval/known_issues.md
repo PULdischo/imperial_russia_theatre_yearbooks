@@ -9652,3 +9652,71 @@ decision); a cross-split date-continuity de-dup check for the
 straddling-row overlap; re-deriving `divider[4]`/`date_col_width_frac`
 for `1890-91` by some means other than the failed automated
 re-measurement.
+
+
+### Addendum (2026-09-12): Phase 6 pilot run -- two more config bugs found
+and fixed, then 7/8 seasons hand-verified clean against the scan
+
+Ran the plan's own Phase 6 pilot: the 3 `#68`-baseline pages
+(`1895-96_p002`->real pp. 6/7, `1893-94_p001`->pp. 4/5, `1892-93_p008`->pp.
+18/19) plus one page per season (adding an `1891-92` page to stress-test
+the low-confidence path and 4 more `straddle_suspected` pages beyond the
+3 already known) and one `single_leaf` page -- 17 pages total.
+
+**Two more bugs found before the sample would even run cleanly:**
+
+1. **Reframe bug, 3 seasons.** The previous divider[4] fix for
+   `1892-93`/`1894-95`/`1895-96` was computed in the CROPPED reference
+   frame (matching divider[0-3]'s own convention for those 3 seasons,
+   which do have a real `repertoire_crop_bounds.json` entry) -- but that
+   crop is never actually applied anywhere in the real `--column-level`
+   pipeline (confirmed by `grep`: it's referenced only inside
+   `crop_to_table.py`'s own separate, unused-here CLI). This
+   reintroduced the exact wrong-region failure from before on these 3
+   seasons specifically, confirmed directly: the resulting divider for
+   `1895-96` sat at 2562px on a 2858px-wide page, past the true border
+   at ~2501px. Reverted to the raw-image-frame values actually measured
+   against the scan.
+2. **`single_leaf` pages never had `date_col_width_frac` at all** -- it
+   was added only for the spread-format seasons in the original fix.
+   Checked rather than assumed: confirmed on `repertoire_1895-96_p012`
+   and `repertoire_1890-91_p000` that these 6 pages share the identical
+   boxed-column-then-separate-margin-header structure. Measured and
+   corrected `divider[4]` + added `date_col_width_frac` for all 6.
+
+**A third, smaller crop-padding bug found during hand-verification**:
+`repertoire_1893-94_p004`'s Мариинскій column was silently truncating
+content mid-line under the default `theater_pad` (15) -- "Гарлемскій
+тюльпанъ, бал." read as just "Гарлемскій тюльпанъ", "1306 р. 70 к." read
+as just "1306 р.", on every row checked. `theater_pad=150` (the same
+value already used for the existing `1903-04` override) fully recovers
+both; checked directly for the cross-theater bleed the existing code
+comment warns 150px could cause on a narrow spread-format column --
+none found, 4/5 theaters on this page now reconcile at the full
+expected row count with correct content in each column.
+
+**Hand-verification against the scan, 7 of 8 seasons, every field
+checked came back correct**: titles, receipts (rubles AND kopecks,
+including the genuine "— к." dash notation, preserved verbatim rather
+than normalized), weekday words, morning/evening session splits with
+their own separate receipts, multi-line benefit annotations, and
+dark/blank-row flags. Specific matches confirmed line-for-line against
+the scan on `1890-91_p013`, `1891-92_p019`, `1892-93_p018`,
+`1893-94_p004`, `1894-95_p010`, `1895-96_p006`, `1896-97_p010`,
+`1897-98_p018` -- a dramatic contrast with the 14-63% whole-spread
+scores that started this whole thread.
+
+**One isolated, confirmed-unfixable failure**: `repertoire_1890-91_p012`
+-- identical wrong date-column read across 4+ independent calls, crop
+visually confirmed correct (the true per-row date column is legible and
+dominant in the frame). Not a config or code problem; a genuine
+`needs_review` case for hand-transcription, same as `_needs_review`
+entries elsewhere in `docs/repertoire_column_bounds.json`.
+
+**Not yet done**: a broader corpus rollout decision (this pilot passing
+cleanly is the gate the plan set for that, not the rollout itself); a
+systematic sweep for the SAME kind of `theater_pad` truncation on the
+other 7 seasons (only found by hand-verifying `1893-94` specifically --
+plausible it recurs elsewhere, not yet checked); the cross-split
+date-continuity de-dup check for the straddling-row overlap, still
+outstanding from the original Phase 1-5 addendum above.
