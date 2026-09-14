@@ -9720,3 +9720,122 @@ other 7 seasons (only found by hand-verifying `1893-94` specifically --
 plausible it recurs elsewhere, not yet checked); the cross-split
 date-continuity de-dup check for the straddling-row overlap, still
 outstanding from the original Phase 1-5 addendum above.
+
+
+### Addendum (2026-09-12/14): full-corpus sweep (the `theater_pad` check
+promised above) -- one large, previously-unknown bug found (theater
+identity collision on ~half the corpus), one false alarm caught and
+corrected before being treated as a bug
+
+**What prompted this**: RG asked for the `theater_pad` truncation check
+above to be run against the whole 91-page corpus (180 split halves)
+rather than the 8-9 page pilot sample. Ran the actual (billed)
+column-wise extraction across all 180 halves -- ~3.9M tokens -- rather
+than trying to infer this from crops alone, then applied the same
+receipts-inconsistency heuristic used in the pilot.
+
+**The receipts heuristic itself stayed clean at this scale**: 53
+page/theater combinations flagged a bare "NNNN р." with no kopecks
+alongside other rows that do show kopecks. Checked the 4 most extreme
+(highest no-kopecks-to-has-kopecks ratio) directly against the scan --
+all 4 genuine (the source really does sometimes print a whole-ruble
+figure with no kopecks notation at all, already established in the
+Phase 6 pilot addendum above). No evidence the `theater_pad` truncation
+found on `1893-94` recurred elsewhere via this specific check.
+
+**What the sweep found instead, while investigating an unrelated
+outlier, was much bigger**: `repertoire_1895-96_p011`'s `Малый` theater
+crop came out only 184px wide (vs 500-700px for its neighbors),
+garbling titles from the LEFT ("Власть тьмы" read as "сть тьмы",
+"Демонъ" read as "емонъ") -- and worse, `.raw.json` showed what looked
+like 3-4 duplicate, overlapping session sets all labeled "Большой
+театръ." for the same dates. Checking `.columns.json` directly confirmed
+it: **all 5 of this page's theater crops came back named "Большой
+театръ."** -- the model wasn't distinguishing them at all, just
+returning the same guess five times.
+
+Checked the crop itself: no theater-name header printed anywhere in the
+image, just content starting immediately at the top. Checked a second
+crop from the same page: same thing. **The theater-name header is
+printed only on a spread's TOP half** -- the bottom half is a straight
+continuation of the same table and never repeats it. Measured this
+properly across the whole corpus (not just this one page): **89 of 90
+bottom halves show the same collision** (all theater crops on that page
+reading back the same name), versus 1 of 90 top halves (a different,
+minor near-miss, not full collapse). This is not an edge case -- it was
+the DEFAULT state for half the corpus.
+
+**Root fix**: `TheaterOnlyPage.theater` is still asked for (kept as a
+fallback for formats/pages with no configured order), but
+`process_page_columnwise` now overrides it unconditionally with the
+season's own known left-to-right print order -- a new `theaters` list
+added to all 24 spread-format entries and all 6 `single_leaf` entries in
+`docs/repertoire_column_bounds.json`, confirmed by direct scan
+inspection across all 8 seasons (`Маріинскій. / Александринскій. /
+Михайловскій. / Большой. / Малый.`, always in that order). Applied
+unconditionally rather than only as a bottom-half fallback: this also
+fixed a smaller, related issue found along the way -- even some TOP
+halves were misnaming `Большой`/`Малый` as their own shared
+"Московскіе театры." group header instead of their individual name.
+This has the further benefit of giving fully consistent theater identity
+corpus-wide regardless of what spelling variant the model happened to
+read on any given page, which matters for downstream entity resolution.
+Verified directly on `repertoire_1895-96_p011`: the model still says
+"Большой театръ." for all 5 crops after the fix (confirming nothing
+changed model-side, exactly as expected), but the 5 sessions now carry 5
+distinct, correct identities. The model's own (often wrong) read is kept
+as `model_said` in `.columns.json`'s merge report, not discarded --
+transparency over silently masking what actually happened.
+
+**A second, smaller bug found investigating the same page**: the
+`divider[4]` fix from the Phase 6 pilot addendum above had only ever
+been independently measured on ONE parity per season and assumed to
+apply to both -- true for `1890-91`, but 5 other seasons
+(`1892-93`, `1894-95`, `1895-96`, `1896-97`, `1897-98`) needed their own
+bottom-half value, re-measured directly against the scan (gaps
+0.012-0.038; `1895-96`'s 0.03 gap was large enough to be the proximate
+cause of the too-narrow `Малый` crop that surfaced the theater-name bug
+above).
+
+**A dead end, caught and corrected rather than shipped as a "fix"**:
+chasing why `Малый` still looked unreliable after the divider[4]
+correction, found 26 corpus-wide instances of a theater column reading
+back as 15-100 consecutive identical `is_dark=True, no content` rows --
+looked exactly like a model hallucination loop, and `Малый` was
+over-represented (11/26). Before treating this as a bug, checked the 3
+most suspicious instances directly against the scan (including both
+exact-100-row outliers, the most suspicious shape). **All three were
+genuine**: real "--" printed for many consecutive rows in the actual
+source -- extended theater closures, the same "never assume date
+completeness" principle already established elsewhere in this project,
+just applying to whole theaters' operating weeks rather than individual
+dates. This was walked back rather than left standing as a finding --
+the 26 "degenerate" reads are not evidence of a defect.
+
+What DOES still stand on its own, independent of that dead end:
+`Малый`'s crop was confirmed narrow enough on several seasons to clip
+its own column header entirely (`repertoire_1890-91_p022`, directly
+verified -- the header became legible only after widening). `theater_pad`
+was raised to 150 (the same value already used for `1893-94`) across all
+21 remaining spread-format entries on this narrower, more defensible
+justification -- not the original, mistaken one.
+
+**Final full-corpus extraction, all fixes applied** (a third full
+180-half run, ~4.4M tokens, run specifically to reflect the `theater_pad`
+broadening): 0/90 theater-name collisions on both halves (fully
+resolved, stable); 20 of 180 pages now fully reconcile all 5 theaters
+(up from 11 before the `theater_pad` broadening); per-theater-instance
+reconciliation 36.0% (324/900) corpus-wide, up modestly from 34.8%. This
+number should NOT be read as "64% wrong" -- given the closures finding
+above, a substantial share of non-reconciling instances are the merge
+logic correctly refusing to guess at genuine ambiguity or accurately
+representing genuine closures, the same coverage-vs-accuracy distinction
+already established for the single-page-format seasons (#68's own
+addendum: "The open problem is COVERAGE, not accuracy").
+
+**Not yet done**: a broader corpus rollout decision; a proper
+receipts/title accuracy re-verification specifically on the pages
+affected by today's fixes (the Phase 6 pilot's hand-verification
+predates all three fixes above); the cross-split date-continuity de-dup
+check for the straddling-row overlap, still outstanding since the
+original Phase 1-5 addendum.
