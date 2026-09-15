@@ -10095,10 +10095,87 @@ surfaced a few more genuine collisions.
 **Not yet done**: wiring `.resolved_sessions.json` into
 `parse_and_validate.py` (deliberately deferred -- still gated behind the
 broader corpus-rollout decision, same as everything else in this
-thread); hand-resolving the 146-row pending queue (a mix of `real`,
-`variant_only`, and `month_rollover_collision` -- the 29 boundary-row
-cases hand-verified earlier in this addendum's history could be
-transcribed into the queue's `kept_half`/`corrected_*` columns directly,
-resolving a meaningful chunk of it without fresh scan-reading); the 52
-remaining source-page pairs (of 91) not yet checkable at all because
-neither half has fully reconciled sessions in the current corpus run.
+thread); the 52 remaining source-page pairs (of 91) not yet checkable at
+all because neither half has fully reconciled sessions in the current
+corpus run.
+
+### Addendum (2026-09-15): the 146-row pending queue hand-resolved to 0
+-- and the process surfaced two more real bugs in this session's own
+Option B code, both fixed and verified the same way as before (direct,
+not assumed).
+
+**Applying the 29 already-known boundary-row answers first** (free --
+no fresh scan-reading) dropped the queue from 146 to 90. The 42
+`variant_only` rows resolved almost entirely from the JSON alone (no
+scan needed): a structural rule -- prefer whichever side keeps genre in
+its own field rather than duplicated in the title string -- covered 40
+of them (confirmed safe by inspecting each one, not applied blind); the
+remaining 2 had a genuine few-kopeck receipts discrepancy and were left
+for a scan check rather than guessed.
+
+**The 12 `month_rollover_collision` rows all traced to the same
+mechanism**: a half's own list producing a spurious duplicate or
+shifted-content entry right at a month boundary, while the OTHER half's
+single entry for that slot stayed correct and internally consistent --
+resolved `kept_half=top` (or `bottom`, once) using the same cross-
+referencing technique as the rest of this addendum (a receipts figure
+matching some other already-confirmed day's value pins down exactly
+which day's content got misplaced). This is where hand-resolving found
+a real bug in `apply_split_overlap_resolutions.py` itself: it never
+actually consulted the queue for this case, unconditionally routing
+every month-rollover combination straight to `pending` regardless of
+what a human had recorded. Root cause: `queue_by_key` was a plain
+`{key: row}` dict, and dedup_split_overlap.py deliberately writes
+MULTIPLE rows under the same key for this exact case (one per
+top/bottom combination) -- so loading it that way silently kept only
+the last row per key, the identical failure pattern `keyed_sessions()`
+was already built to prevent, just recurring one layer up, in the
+consolidation script's OWN queue-loading instead of the session data.
+Fixed by keying the load as `{key: [rows]}` and disambiguating by exact
+`date_text` match (`find_queue_row`); also had to guard against the
+same fix's new failure mode -- resolving multiple combinations of the
+same month-rollover key to literally the same content would double-
+count the very thing this mechanism exists to prevent, so resolved
+sessions are deduplicated by content before being added to `trusted`.
+
+**Working through the remaining 34 `real` rows found one case that
+wasn't a disagreement to resolve at all**: `1897-98_p020`/`p021` day
+27 and day 28 (Александринскій). Cross-referencing receipts across the
+whole column showed both sides were independently CORRECT --
+top's late-February entries and bottom's own, much-later, unrelated
+occurrences of a day 27 and day 28 deeper in its own season -- that
+happened to collide only because the matching key uses day-of-month
+alone, ignoring month (a known, accepted limitation of this whole
+mechanism, flagged from the start rather than discovered late). Forcing
+`kept_half` to pick one side here would have silently discarded a
+genuinely distinct, correct row -- a direct violation of "never lose
+text". Added a third resolution value, `kept_half=both`, and changed
+`resolve_row`'s return type from one `(session, disposition)` pair to a
+list, so a queue row can now legitimately resolve to zero (still
+pending), one (the normal case), or two (both sides independently
+correct) trusted sessions -- verified this doesn't reopen the double-
+counting question `keyed_sessions()` already closed, since the two
+`both`-resolved sessions here have DIFFERENT `date_text`/content, not
+duplicate representations of the same physical row.
+
+**Final state, all 39 checkable page-pairs**: 3,695 passthrough, 95
+auto-resolved, 141 human-resolved, **0 pending**. Re-ran the full
+"never lose text" verification afterward (same containment-based check
+as the previous addendum, extended to also treat a key as accounted-
+for when the queue recorded an explicit resolution for it, not just a
+literal string match -- resolving a collision in favor of one side is
+supposed to let the other side's exact phrasing go, that's what
+resolution means, not a loss): **0 of 2,637 raw sessions genuinely
+unaccounted for.** The hand-annotated queue is committed at
+`docs/eval/repertoire_split_overlap_queue_resolved.csv` -- every
+`reviewer_note` documents the specific evidence (a scan read, a
+receipts cross-reference, an established spelling rule) behind that
+row's resolution, so none of this reasoning lives only in a chat
+transcript.
+
+**Not yet done**: the 52 remaining source-page pairs (of 91) still not
+checkable because neither half has fully reconciled sessions in the
+current corpus run -- resolving those will need a fresh
+`dedup_split_overlap.py` pass once more of the corpus reconciles, not
+just re-running against what's already been extracted; wiring
+`.resolved_sessions.json` into `parse_and_validate.py`, same as before.

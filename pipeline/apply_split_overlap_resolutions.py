@@ -75,17 +75,32 @@ def _parse_corrected_works(text: str) -> list[dict]:
     return works
 
 
-def resolve_row(queue_row: dict, ts: dict, bs: dict) -> tuple[dict | None, str]:
-    """Returns (session_or_None, disposition). session is None only when
-    this key is still unresolved (tier 'ambiguous' with no hand
-    annotation) -- the caller routes that to pending_review.json, never
-    drops it."""
+def resolve_row(queue_row: dict, ts: dict, bs: dict) -> list[tuple[dict, str]]:
+    """Returns a list of (session, disposition) pairs to add to trusted.
+    Empty list means this key is still unresolved (tier 'ambiguous' with
+    no hand annotation) -- the caller routes that to pending_review.json,
+    never drops it. Almost always at most one pair; `kept_half == "both"`
+    is the one exception (see below) and returns two.
+
+    "both" (2026-09-15, hand-resolving the pending queue): confirmed
+    this session that day-only matching (day-of-month, ignoring month)
+    can produce a FALSE collision -- two genuinely different, both-
+    correct calendar days that happen to share a day-of-month digit,
+    most likely when one is near a split boundary and the other is a
+    much-later occurrence deep in the same half's own list (found on
+    `1897-98_p020`/`p021`: top's Feb 27 collided with bottom's own,
+    unrelated, later-season day 27). Picking either side here would
+    silently discard a real, correct, distinct row -- so a human marking
+    `kept_half=both` keeps both verbatim as separate trusted sessions
+    rather than being forced into a choice that violates "never lose
+    text". Distinct from `corrected_*`, which represents one merged
+    human transcription, not two independently-valid raw reads."""
     tier = queue_row["tier"]
     if tier == "exact":
-        return dict(ts), "auto:exact"
+        return [(dict(ts), "auto:exact")]
     if tier == "clear":
         chosen = ts if queue_row["suggested_keep"] == "top" else bs
-        return dict(chosen), f"auto:clear:{queue_row['suggested_keep']}"
+        return [(dict(chosen), f"auto:clear:{queue_row['suggested_keep']}")]
 
     # ambiguous -- only a human annotation resolves this
     corrected_works = (queue_row.get("corrected_works") or "").strip()
@@ -102,14 +117,16 @@ def resolve_row(queue_row: dict, ts: dict, bs: dict) -> tuple[dict | None, str]:
             "annotation": (queue_row.get("corrected_annotation") or "").strip() or None,
             "works": _parse_corrected_works(corrected_works) if corrected_works else [],
         }
-        return session, "human:corrected"
+        return [(session, "human:corrected")]
 
     kept_half = (queue_row.get("kept_half") or "").strip().lower()
     if kept_half in ("top", "bottom"):
         chosen = ts if kept_half == "top" else bs
-        return dict(chosen), f"human:kept_{kept_half}"
+        return [(dict(chosen), f"human:kept_{kept_half}")]
+    if kept_half == "both":
+        return [(dict(ts), "human:kept_both:top"), (dict(bs), "human:kept_both:bottom")]
 
-    return None, "unresolved"
+    return []
 
 
 def main():
@@ -126,10 +143,26 @@ def main():
     ap.add_argument("--out-dir", type=Path, required=True)
     args = ap.parse_args()
 
-    queue_by_key: dict[tuple, dict] = {}
+    # A key can have MORE than one queue row -- dedup_split_overlap.py
+    # writes one row per (top, bottom) combination for a month-rollover
+    # collision (see its module docstring), so this must be a list, not
+    # a single row: collapsing to one via a plain {key: row} dict would
+    # silently lose every combination but the last, the exact bug
+    # keyed_sessions() exists to prevent elsewhere in this pipeline.
+    queue_by_key: dict[tuple, list[dict]] = defaultdict(list)
     for r in csv.DictReader(open(args.queue, encoding="utf-8")):
         key = (r["source_page_id"], r["day"], r["theater"], r["session"])
-        queue_by_key[key] = r
+        queue_by_key[key].append(r)
+
+    def find_queue_row(source_pid: str, key: tuple, ts: dict, bs: dict) -> dict | None:
+        """Disambiguates among multiple queue rows sharing a key by
+        matching the exact date_text on both sides -- unique per
+        combination even though day/theater/session collide."""
+        candidates = queue_by_key.get((source_pid, key[0], key[1], key[2]), [])
+        for r in candidates:
+            if r["top_date_text"] == ts["date_text"] and r["bottom_date_text"] == bs["date_text"]:
+                return r
+        return candidates[0] if len(candidates) == 1 else None
 
     number_rows = list(csv.DictReader(open(args.page_numbers, encoding="utf-8")))
     pairs: dict[str, dict[str, int]] = defaultdict(dict)
@@ -187,23 +220,53 @@ def main():
                 # A month rollover repeated this (day, theater, session)
                 # within one half, at a point that ALSO collides with
                 # the other half -- rare. Never guess which top session
-                # pairs with which bottom one; hold every combination for
-                # review so nothing is dropped.
+                # pairs with which bottom one; each combination gets its
+                # own queue row (dedup_split_overlap.py) and is resolved
+                # (or left pending) exactly like any other ambiguous row.
+                # Combinations that resolve to the literally same content
+                # (e.g. one top session correctly dominating two
+                # different bottom duplicates) are deduplicated before
+                # adding to `trusted` -- otherwise the same real session
+                # would be counted twice, the exact double-counting this
+                # whole mechanism exists to prevent.
+                resolved_sessions, seen_norm = [], set()
                 for ts in top_group:
                     for bs in bottom_group:
-                        pending.append({
-                            "source_page_id": source_pid, "day": key[0], "theater": key[1],
-                            "session": key[2], "reason": "multiple same-key sessions within "
-                            "one half (month rollover) collided with the other half",
-                            "top_session": ts, "bottom_session": bs,
-                        })
-                        totals["unresolved"] += 1
+                        qrow = find_queue_row(source_pid, key, ts, bs)
+                        if qrow is None:
+                            pending.append({
+                                "source_page_id": source_pid, "day": key[0], "theater": key[1],
+                                "session": key[2], "reason": "multiple same-key sessions within "
+                                "one half (month rollover), collision not in queue -- re-run "
+                                "dedup_split_overlap.py against this raw-dir first",
+                                "top_session": ts, "bottom_session": bs,
+                            })
+                            totals["unresolved_not_in_queue"] += 1
+                            continue
+                        results = resolve_row(qrow, ts, bs)
+                        if not results:
+                            pending.append({
+                                "source_page_id": source_pid, "day": key[0], "theater": key[1],
+                                "session": key[2], "reason": "ambiguous (month-rollover "
+                                "collision), not yet hand-reviewed",
+                                "top_session": ts, "bottom_session": bs,
+                            })
+                            totals["unresolved"] += 1
+                            continue
+                        for session, disposition in results:
+                            norm = json.dumps(session, sort_keys=True, ensure_ascii=False)
+                            if norm not in seen_norm:
+                                seen_norm.add(norm)
+                                session["_source"] = disposition
+                                resolved_sessions.append((session, disposition))
+                for session, disposition in resolved_sessions:
+                    trusted.append(session)
+                    totals[disposition.split(":")[0]] += 1
                 continue
 
             ts, bs = top_group[0], bottom_group[0]
             # collides on both halves -- must go through the queue
-            qkey = (source_pid, key[0], key[1], key[2])
-            qrow = queue_by_key.get(qkey)
+            qrow = find_queue_row(source_pid, key, ts, bs)
             if qrow is None:
                 # Collision exists in the raw data but wasn't in the queue
                 # (queue built from a different raw-dir/run) -- do NOT
@@ -217,8 +280,8 @@ def main():
                 })
                 totals["unresolved_not_in_queue"] += 1
                 continue
-            session, disposition = resolve_row(qrow, ts, bs)
-            if session is None:
+            results = resolve_row(qrow, ts, bs)
+            if not results:
                 pending.append({
                     "source_page_id": source_pid, "day": key[0], "theater": key[1],
                     "session": key[2], "reason": "ambiguous, not yet hand-reviewed",
@@ -226,9 +289,10 @@ def main():
                 })
                 totals["unresolved"] += 1
             else:
-                session["_source"] = disposition
-                trusted.append(session)
-                totals[disposition.split(":")[0]] += 1
+                for session, disposition in results:
+                    session["_source"] = disposition
+                    trusted.append(session)
+                    totals[disposition.split(":")[0]] += 1
 
         out_path = args.out_dir / f"{source_pid}.resolved_sessions.json"
         out_path.write_text(json.dumps({"trusted": trusted, "pending": pending},
