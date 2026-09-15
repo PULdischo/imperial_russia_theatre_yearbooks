@@ -10456,3 +10456,110 @@ from 290).
 corpus-wide -- worth checking how common it is outside the two
 instances found here; the remaining 24 blocked pairs, unchanged from
 before; wiring into `parse_and_validate.py`, still deferred.
+
+### Addendum to #70 (2026-09-15): scoped the column-bleed pattern
+corpus-wide, root-caused it to the `theater_pad=150` broadening from
+earlier in this issue, and measured a targeted fix.
+
+**Corpus-wide scope**: checked every reconciled RAW (pre-merge)
+theater column against its immediate left/right neighbor for the two
+concrete signatures already confirmed (`p004`/`p005`, `p012`/`p013`
+above) -- wholesale absorption (one column's crop reads back almost
+ALL of a neighbor's content, while the neighbor's own crop comes back
+mostly blank) and fragment/truncated bleed (one column's titles are
+truncated left-prefixes of the neighbor's real titles). Comparing
+MERGED sessions first returned 0 matches despite the two known
+instances -- the affected neighbor often hadn't reconciled that date
+at all, nothing to diff against -- so the check was redone on RAW
+per-row theater data instead (`.columns.json`'s `raw.theaters`, before
+merge/reconciliation). That surfaced **25 candidate pages** showing one
+or both signatures, concentrated on `Малый`'s left boundary
+(Большой↔Малый) but not exclusively -- at least one confirmed instance
+sits at Маріинскій↔Александринскій (`1894-95_p012`, already logged
+above), a boundary with nothing to do with Малый's own header-clipping
+history.
+
+**Root cause, confirmed by direct before/after comparison**: compared
+`/tmp/full_corpus_raw_v2` (captured before this issue's earlier
+`theater_pad` broadening) against the current corpus for
+`1895-96_p006`. Pre-fix, Малый's own crop was genuinely truncated
+("ЛЫЙ." -- a literal fragment of its own header, the exact defect the
+broadening was meant to fix). Post-fix, Большой's crop now shows
+Малый's FULL content duplicated wholesale. This is a real regression
+from this issue's own earlier fix, not a pre-existing problem newly
+noticed.
+
+**The mechanism**: `theater_pad` pads BOTH sides of EVERY theater
+column's crop by the same amount
+(`pipeline/row_detect.py`'s `date_side != "left"` branch), so any two
+adjacent columns overlap by `2 x theater_pad` regardless of their own
+width. At `theater_pad=150` that is a 300px structural overlap. Малый
+columns run 154-312px wide across the 8 spread seasons (measured
+below) -- so on the narrower end, the overlap alone exceeds the
+column's own width, and either neighbor's crop can capture the
+other's content wholesale. `theater_pad` was broadened to 150
+uniformly (all 5 columns, both edges, all 21 remaining spread-format
+config entries) on the strength of ONE confirmed clip
+(`repertoire_1890-91_p022`, addendum above) -- the value itself was
+never per-season measured, just adopted from what `1893-94` already
+happened to be set to.
+
+**RG's challenge, and why the original fix idea (a smaller but still
+uniform per-season `theater_pad`) doesn't hold up**: even a properly
+*measured* smaller value is still applied to all 5 columns' both
+edges via one scalar. Four of those ten edges were never shown to have
+a clipping problem at all -- reducing them along with the one that
+does just trades one uncontrolled variable for another, and doesn't
+explain the confirmed non-Малый bleed instance at all. The
+defensible fix is targeted and asymmetric: leave the other four
+columns (eight edges) at a low baseline, and widen only Малый's own
+left edge, by its own per-season measured minimum. This requires a
+small code change to `detect_columns`'s bound-computation loop
+(`pipeline/row_detect.py:804-814`) to accept a per-column/per-edge
+override instead of one scalar for the whole page -- not written yet,
+scoped below.
+
+**Per-season minimum measured directly** (one representative
+split-half image per season, `Малый` column, candidate pads tested by
+eye against the actual header text until "Малый." reads clean with a
+real margin -- the same discipline as every other measurement in this
+project):
+
+| season  | Малый col width (px) | min. pad needed (px) |
+|---------|----------------------|------------------------|
+| 1890-91 | not recorded         | ~50 (already measured, earlier addendum) |
+| 1891-92 | 270                  | ~0 (fully legible unpadded) |
+| 1892-93 | 312                  | ~0 (fully legible unpadded) |
+| 1893-94 | 293                  | ~0 (fully legible unpadded) |
+| 1894-95 | 239                  | ~40 |
+| 1895-96 | 154                  | ~70 (already measured, earlier addendum) |
+| 1896-97 | 242                  | ~30-40 |
+| 1897-98 | 183                  | ~90-100 |
+
+Two things worth flagging rather than smoothing over: (1) `1893-94`
+needing ~0px here directly contradicts it being the season whose
+existing `theater_pad=150` was *adopted as the template* for the
+broadening -- whatever originally justified 150 there, it wasn't this
+same header-clip pattern on this page; worth a quick look before
+finalizing that season's override, not assumed resolved. (2) minimum
+pad does not track column width monotonically -- `1897-98` (183px)
+needs *more* padding than `1895-96` (154px, the narrowest column
+measured), so whatever varies (typesetting offset within the column,
+font size) is season-specific and not predictable from width alone,
+consistent with why this project measures per-season rather than
+computing a formula. (3) `1897-98`'s own minimum (~90-100px) is close
+to its own column's width (183px) -- the fix is still sound (it only
+widens Малый's own left crop boundary, not Большой's right one, so it
+creates no new overlap on that boundary by construction), but it's a
+tight enough margin that this page deserves a direct re-check after
+the fix ships, not just an assumption that "targeted" means "safe."
+
+**Not yet done**: the `detect_columns` per-edge override code change
+itself; re-running the 25 corpus-wide bleed candidates after the fix
+to confirm the duplication/fragment signature actually clears;
+confirming whether the confirmed non-Малый instance
+(Маріинскій↔Александринскій, `1894-95_p012`) needs its own,
+independently-measured override or resolves as a side effect of
+reverting the other four columns off `theater_pad=150`; a
+regression check on `Малый`-clipping-sensitive pages per season after
+any padding reduction; the `1893-94` discrepancy noted above.
