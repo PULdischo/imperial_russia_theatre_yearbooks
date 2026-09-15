@@ -10404,3 +10404,55 @@ remaining 24 blocked pairs (37 minus the 13 pairs this round newly
 unblocked) -- mostly the 3 total-column-failures and severe-undercount
 halves whose PARTNER half is also broken, so fixing one side wasn't
 enough; wiring into `parse_and_validate.py`, still deferred.
+
+### Addendum to #70 (2026-09-15): hand-resolved the 49-row queue the
+hand-read dates surfaced. Found a genuinely new failure mode along the
+way -- vertical column bleed between adjacent theaters, confirmed twice
+on different season/column pairs, not the same bug as anything logged
+earlier in this issue.
+
+**182 of 231 total rows carried forward automatically** (unchanged
+since the underlying data for those pairs didn't move); 49 genuinely
+new. Cross-referencing against content already confirmed earlier this
+session resolved most of them quickly: **clean shift chains** on
+`1895-96_p002/003` (Михайловскій, -2), `1895-96_p014/015` (Малый, +1,
+5 consecutive rows), and `1896-97_p024/025` (Малый, +1, 3 rows --
+this one also caught bottom silently correcting a typo top had:
+top's own "имепинникъ" vs the shifted match's correctly-spelled
+"именинникъ", confirming the match beyond just content overlap).
+Several more were plain genre-embedding-style variants, resolved the
+same way as throughout this issue.
+
+**New failure mode, found via direct scan checks on
+`1894-95_p004`/`p005` and `1894-95_p012`/`p013`**: a theater's OWN
+crop reading back a NEIGHBORING theater's content wholesale, not
+truncation and not a date-column shift. On `p004`/`p005`, top's
+"Большой" column showed Малый's own printed content for 3 separate
+days (confirmed: "Въ разлуку/Баби" is verbatim Малый's day-23 entry,
+not Большой's -- the real Большой day-23 is "Аида, оп.", present in
+neither original reading, needed a correction combining scan-confirmed
+title + receipts from scratch). On `p012`/`p013`, top's "Маріинскій"
+column showed Александринскій's German-troupe titles ("Die Schme...",
+"Ein Fa...") for 6 consecutive days, when Маріинскій was actually
+printed as blank/dark (dashes) that whole range -- bottom's empty read,
+which looked like a failure, was actually correct. Both are the same
+underlying defect (a column crop capturing its horizontal NEIGHBOR
+instead of itself) -- distinct from the theater-name-collision bug
+fixed earlier in this issue (that one mislabeled a correctly-read
+column; this one reads the wrong column's content entirely) and from
+the boundary-row misalignment Option A/B were built around (this
+happens mid-page, unrelated to the split or the fold). Not scoped
+corpus-wide -- flagged here as a new, real pattern worth a dedicated
+look, not chased further within this addendum.
+
+**Final state, all 67 checkable pairs**: 4,387 passthrough, 138
+auto-resolved, 224 human-resolved, 0 pending. Re-verified "never lose
+text" against the full set: **0 of 4,362 raw sessions unaccounted
+for.** Updated queue committed at
+`docs/eval/repertoire_split_overlap_queue_resolved.csv` (370 rows, up
+from 290).
+
+**Not yet done**: the column-bleed pattern just found isn't scoped
+corpus-wide -- worth checking how common it is outside the two
+instances found here; the remaining 24 blocked pairs, unchanged from
+before; wiring into `parse_and_validate.py`, still deferred.
