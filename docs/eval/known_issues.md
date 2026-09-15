@@ -10563,3 +10563,97 @@ independently-measured override or resolves as a side effect of
 reverting the other four columns off `theater_pad=150`; a
 regression check on `Малый`-clipping-sensitive pages per season after
 any padding reduction; the `1893-94` discrepancy noted above.
+
+### Addendum to #70 (2026-09-15): implemented and verified the
+targeted per-edge padding fix.
+
+**Code**: `detect_columns` (`pipeline/row_detect.py`) gained a new
+`theater_pad_overrides: dict[int, dict[str, int]] | None` parameter --
+keyed by 0-based `theater_index`, each entry optionally setting
+"left"/"right" to override the page-level `theater_pad` for just that
+one edge. A small `_edge_pad()` helper resolves each bound
+independently instead of applying one scalar to all ten edges;
+`None` (the default) preserves the old uniform-padding behaviour
+exactly, so every other caller (single-page-format seasons, the
+1903-04 Александринскій override) is unaffected. `run_pilot.py`'s
+`process_page_columnwise` threads a `theater_pad_overrides` key
+through from the column config the same way it already does for
+`theater_pad`/`date_col_width_frac`.
+
+**Config, and a real mistake caught before it mattered**: first pass
+reverted `theater_pad` and added the override only on the bare
+`"<season>"` config entries. A verification run showed **zero
+change** -- new crop widths matched the OLD 150-pad prediction
+almost exactly. Root cause: `column_group_for`
+(`pipeline/crop_to_table.py`) resolves `"<season>:<parity>"` groups
+*before* falling back to the bare season key, and those
+`spread_split`-format parity groups (added 2026-09-11, hand-measured
+against split-half geometry) still carried their own
+`theater_pad: 150`, untouched by the first edit. Caught by checking
+actual crop pixel widths against the predicted new bounds *before*
+trusting the fix -- exactly the discipline this whole issue has been
+built on. Corrected: applied the same revert
+(remove `theater_pad`) + override (`theater_pad_overrides: {"4":
+{"left": <measured>}}`) to all 24 real entries (bare season + `:0` +
+`:1`, all 8 seasons). Re-checked the math before spending another
+API call: predicted Большой/Малый overlap on `1895-96_p007` dropped
+from 300px (2x150) to 85px.
+
+**Verification run** (15 pages matching this addendum's own
+corpus-wide bleed scan -- re-implemented fresh since the original
+session's exact 25-page list wasn't persisted to disk; this
+re-implementation, scanning RAW per-row theater content for
+exact/substring duplication between index-aligned rows in adjacent
+theaters, found 15 comparable candidates and was used as the working
+set both before and after): **14 of 15 pages flagged before the fix
+(up to 9-11 duplicate/fragment rows each) dropped to 2 of 15 after**
+(1-2 matches each). One page (`1895-96_p010`) went from `partial` to
+full `ok` 5-theater reconciliation as a side benefit. All 3
+previously-flagged Маріинскій↔Александринскій instances
+(`1894-95_p012`, `1894-95_p013`, `1892-93_p009`) cleared completely --
+confirming the "revert the base, override only the confirmed edge"
+design: those boundaries never needed their own override, just relief
+from the uniform 150. ~365K + ~315K tokens billed across the two runs
+(the first run validated nothing, since it used the un-corrected
+config -- logged honestly rather than only reporting the second).
+
+**Checked the 2 residual pages against the actual scan (not assumed
+fixed, not assumed still-broken)**: `1895-96_p006` and
+`1895-96_p009`, both flagging `Малый` opera titles (`Евгеній Онѣгинъ`,
+`Фаустъ`, `Риголетто`, `Демонъ`) also appearing in `Большой`'s raw
+read. The scan resolves this cleanly and surprisingly: `Малый`
+genuinely performed opera on these specific dates -- printed as such
+on the actual page -- while `Большой` is printed as dark (a plain
+"--") for those SAME rows (worth its own note: this corpus-wide
+extraction had been silently assuming `Малый`, Moscow's drama house,
+never staged opera; both pages directly contradict that). `Малый`'s
+own reads are correct. The bleed is real, but now narrower and
+specific: `Большой`'s raw extraction is not correctly reporting
+`is_dark` on its own genuinely-blank rows -- it is instead pulling in
+`Малый`'s real content next door, sometimes into `annotation` (row
+right at a half-crop's own edge -- likely the ALREADY-documented
+boundary-row-misalignment bug, not this one) and at least once
+(`1895-96_p006` "Фаустъ") into `work_title` on an interior row, which
+is this bug's own signature, just far smaller in scope than before.
+Most likely explanation: the residual 85px overlap this fix
+deliberately keeps (needed so `Малый`'s own header isn't clipped
+again) is still enough for the model to reach for neighboring content
+specifically when its OWN crop shows nothing to read, rather than
+correctly returning `is_dark=True`. A `Большой`-dark-but-non-empty
+quality check (parallel to the existing dark-cell checks in
+`quality_checks.py`) would catch this pattern directly and cheaply,
+worth adding as a follow-up rather than chasing the pad value lower
+still.
+
+**Bottom line**: this is a large, measured reduction (14/15 -> 2/15
+pages, and the 2 remaining are a narrower, different-mechanism residual
+of the same root cause, not the original wholesale/fragment pattern),
+not a claimed complete fix -- consistent with how every other finding
+in this issue has been reported. Not yet done: the corpus-wide
+25-candidate rescan at full scope (this addendum covers the 15-page
+working set only); the `Большой`-dark-but-non-empty quality check
+just proposed; the `1893-94` theater_pad=150-origin discrepancy noted
+in the prior addendum, still unexplained; wiring any of this into
+`parse_and_validate.py`, still deferred; a fresh full-corpus
+column-wise run reflecting this fix, not yet done (this was a
+targeted verification subset, not a rollout).

@@ -42,7 +42,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 50
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (which created a 2x150=300px overlap on every adjacent column pair, exceeding this season's own Малый column width and causing wholesale cross-column bleed) back to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)'s left edge -- the one edge confirmed to clip its own header -- by its own per-season measured minimum. Большой's own right edge at that same divider is intentionally left at the low base, so no new overlap is created there. See addendum for the measured-minimum table and two open flags (1893-94's ~0px result vs. its prior theater_pad=150; the confirmed non-Малый bleed at Маріинскій<->Александринскій on 1894-95_p012, not addressed by this override). 2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1891-92": {
     "format": "spread",
@@ -66,7 +71,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 0
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (which created a 2x150=300px overlap on every adjacent column pair, exceeding this season's own Малый column width and causing wholesale cross-column bleed) back to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)'s left edge -- the one edge confirmed to clip its own header -- by its own per-season measured minimum. Большой's own right edge at that same divider is intentionally left at the low base, so no new overlap is created there. See addendum for the measured-minimum table and two open flags (1893-94's ~0px result vs. its prior theater_pad=150; the confirmed non-Малый bleed at Маріинскій<->Александринскій on 1894-95_p012, not addressed by this override). 2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1892-93": {
     "format": "spread",
@@ -90,7 +100,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 0
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (which created a 2x150=300px overlap on every adjacent column pair, exceeding this season's own Малый column width and causing wholesale cross-column bleed) back to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)'s left edge -- the one edge confirmed to clip its own header -- by its own per-season measured minimum. Большой's own right edge at that same divider is intentionally left at the low base, so no new overlap is created there. See addendum for the measured-minimum table and two open flags (1893-94's ~0px result vs. its prior theater_pad=150; the confirmed non-Малый bleed at Маріинскій<->Александринскій on 1894-95_p012, not addressed by this override). 2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1893-94": {
     "format": "spread",
@@ -107,14 +122,19 @@
     "source": "measured CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin. ADDENDUM 2026-09-12 (Phase 6 pilot): added theater_pad=150 (same value as the existing 1903-04 override) after finding the default (15) truncates content mid-line on the Mariinskii column -- confirmed directly against the scan (\"1306 p. 70 k.\" and the genre suffix \"bal.\" both cut off at the crop edge with the default pad, both fully recovered at 150). ADDENDUM 2026-09-12 (theater-name fix): added theaters, the fixed left-to-right print order for this seasons 5 columns, confirmed directly by scan across all 8 spread seasons. Overrides the model own read unconditionally (not just as a bottom-half fallback) -- see pipeline/run_pilot.process_page_columnwise and pipeline/schemas/repertoire_columnwise.TheaterOnlyPage for why, and docs/eval/known_issues.md issue #70 addendum for the full-corpus scope (89/90 bottom halves affected).",
     "evenly_spaced": true,
     "date_col_width_frac": 0.045,
-    "theater_pad": 150,
     "theaters": [
       "Маріинскій.",
       "Александринскій.",
       "Михайловскій.",
       "Большой.",
       "Малый."
-    ]
+    ],
+    "theater_pad_overrides": {
+      "4": {
+        "left": 0
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (which created a 2x150=300px overlap on every adjacent column pair, exceeding this season's own Малый column width and causing wholesale cross-column bleed) back to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)'s left edge -- the one edge confirmed to clip its own header -- by its own per-season measured minimum. Большой's own right edge at that same divider is intentionally left at the low base, so no new overlap is created there. See addendum for the measured-minimum table and two open flags (1893-94's ~0px result vs. its prior theater_pad=150; the confirmed non-Малый bleed at Маріинскій<->Александринскій on 1894-95_p012, not addressed by this override). 2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1894-95": {
     "format": "spread",
@@ -138,7 +158,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 40
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (which created a 2x150=300px overlap on every adjacent column pair, exceeding this season's own Малый column width and causing wholesale cross-column bleed) back to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)'s left edge -- the one edge confirmed to clip its own header -- by its own per-season measured minimum. Большой's own right edge at that same divider is intentionally left at the low base, so no new overlap is created there. See addendum for the measured-minimum table and two open flags (1893-94's ~0px result vs. its prior theater_pad=150; the confirmed non-Малый bleed at Маріинскій<->Александринскій on 1894-95_p012, not addressed by this override). 2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1895-96": {
     "format": "spread",
@@ -162,7 +187,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 70
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (which created a 2x150=300px overlap on every adjacent column pair, exceeding this season's own Малый column width and causing wholesale cross-column bleed) back to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)'s left edge -- the one edge confirmed to clip its own header -- by its own per-season measured minimum. Большой's own right edge at that same divider is intentionally left at the low base, so no new overlap is created there. See addendum for the measured-minimum table and two open flags (1893-94's ~0px result vs. its prior theater_pad=150; the confirmed non-Малый bleed at Маріинскій<->Александринскій on 1894-95_p012, not addressed by this override). 2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1896-97": {
     "format": "spread",
@@ -186,7 +216,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 40
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (which created a 2x150=300px overlap on every adjacent column pair, exceeding this season's own Малый column width and causing wholesale cross-column bleed) back to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)'s left edge -- the one edge confirmed to clip its own header -- by its own per-season measured minimum. Большой's own right edge at that same divider is intentionally left at the low base, so no new overlap is created there. See addendum for the measured-minimum table and two open flags (1893-94's ~0px result vs. its prior theater_pad=150; the confirmed non-Малый bleed at Маріинскій<->Александринскій on 1894-95_p012, not addressed by this override). 2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1897-98": {
     "format": "spread",
@@ -210,7 +245,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 100
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (which created a 2x150=300px overlap on every adjacent column pair, exceeding this season's own Малый column width and causing wholesale cross-column bleed) back to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)'s left edge -- the one edge confirmed to clip its own header -- by its own per-season measured minimum. Большой's own right edge at that same divider is intentionally left at the low base, so no new overlap is created there. See addendum for the measured-minimum table and two open flags (1893-94's ~0px result vs. its prior theater_pad=150; the confirmed non-Малый bleed at Маріинскій<->Александринскій on 1894-95_p012, not addressed by this override). 2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1898-99:0": {
     "format": "single",
@@ -500,7 +540,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 50
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1890-91:1": {
     "format": "spread_split",
@@ -526,7 +571,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 50
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1891-92:0": {
     "format": "spread_split",
@@ -552,7 +602,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 0
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1891-92:1": {
     "format": "spread_split",
@@ -578,7 +633,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 0
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1892-93:0": {
     "format": "spread_split",
@@ -604,7 +664,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 0
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1892-93:1": {
     "format": "spread_split",
@@ -630,7 +695,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 0
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1893-94:0": {
     "format": "spread_split",
@@ -649,14 +719,19 @@
     "source": "measured on split top halves via _refine_dividers seeded from the whole-spread template; only 4/12 genuine detections, rest fell back to template -- lower-confidence, worth a spot-check in the Phase 6 pilot CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin. ADDENDUM 2026-09-12 (Phase 6 pilot): added theater_pad=150 (same value as the existing 1903-04 override) after finding the default (15) truncates content mid-line on the Mariinskii column -- confirmed directly against the scan (\"1306 p. 70 k.\" and the genre suffix \"bal.\" both cut off at the crop edge with the default pad, both fully recovered at 150). ADDENDUM 2026-09-12 (theater-name fix): added theaters, the fixed left-to-right print order for this seasons 5 columns, confirmed directly by scan across all 8 spread seasons. Overrides the model own read unconditionally (not just as a bottom-half fallback) -- see pipeline/run_pilot.process_page_columnwise and pipeline/schemas/repertoire_columnwise.TheaterOnlyPage for why, and docs/eval/known_issues.md issue #70 addendum for the full-corpus scope (89/90 bottom halves affected).",
     "evenly_spaced": true,
     "date_col_width_frac": 0.045,
-    "theater_pad": 150,
     "theaters": [
       "Маріинскій.",
       "Александринскій.",
       "Михайловскій.",
       "Большой.",
       "Малый."
-    ]
+    ],
+    "theater_pad_overrides": {
+      "4": {
+        "left": 0
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1893-94:1": {
     "format": "spread_split",
@@ -675,14 +750,19 @@
     "source": "measured on split bottom halves via _refine_dividers; 9/12 genuine detections. DIFFERS clearly from top (dividers 3-5 off by 0.02-0.04) -- this season needs top/bottom keying CORRECTED 2026-09-12: the divider[4] value above was WRONG -- it was never actually measured, only extrapolated (one theater-width past divider[3]), and every season checked landed in the blank margin past the table own true border, not on the real Malyj|Date boundary. Re-measured directly against the scan (grid-overlay contact sheets), confirmed on all 8 seasons: the true boundary sits noticeably further left (~0.82-0.86 vs the old ~0.90-0.94). This alone likely explains this season's historically poor whole-spread column-wise score more than the fold or rotation hypotheses originally suspected -- the date crop was reading the wrong region, not failing to read a hard one. date_col_width_frac is new: bounds the date crop's right edge at the true table border (pipeline/row_detect.detect_columns, 2026-09-12) instead of extending to the image edge, which used to pull in a wholly separate printed element -- the page's own running date-range header, sitting further out in the same blank margin. ADDENDUM 2026-09-12 (Phase 6 pilot): added theater_pad=150 (same value as the existing 1903-04 override) after finding the default (15) truncates content mid-line on the Mariinskii column -- confirmed directly against the scan (\"1306 p. 70 k.\" and the genre suffix \"bal.\" both cut off at the crop edge with the default pad, both fully recovered at 150). ADDENDUM 2026-09-12 (theater-name fix): added theaters, the fixed left-to-right print order for this seasons 5 columns, confirmed directly by scan across all 8 spread seasons. Overrides the model own read unconditionally (not just as a bottom-half fallback) -- see pipeline/run_pilot.process_page_columnwise and pipeline/schemas/repertoire_columnwise.TheaterOnlyPage for why, and docs/eval/known_issues.md issue #70 addendum for the full-corpus scope (89/90 bottom halves affected).",
     "evenly_spaced": true,
     "date_col_width_frac": 0.045,
-    "theater_pad": 150,
     "theaters": [
       "Маріинскій.",
       "Александринскій.",
       "Михайловскій.",
       "Большой.",
       "Малый."
-    ]
+    ],
+    "theater_pad_overrides": {
+      "4": {
+        "left": 0
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1894-95:0": {
     "format": "spread_split",
@@ -708,7 +788,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 40
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1894-95:1": {
     "format": "spread_split",
@@ -734,7 +819,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 40
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1895-96:0": {
     "format": "spread_split",
@@ -760,7 +850,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 70
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1895-96:1": {
     "format": "spread_split",
@@ -786,7 +881,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 70
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1896-97:0": {
     "format": "spread_split",
@@ -812,7 +912,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 40
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1896-97:1": {
     "format": "spread_split",
@@ -838,7 +943,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 40
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1897-98:0": {
     "format": "spread_split",
@@ -864,7 +974,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 100
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "1897-98:1": {
     "format": "spread_split",
@@ -890,7 +1005,12 @@
       "Большой.",
       "Малый."
     ],
-    "theater_pad": 150
+    "theater_pad_overrides": {
+      "4": {
+        "left": 100
+      }
+    },
+    "theater_pad_note": "2026-09-15 (known_issues.md #70 addendum): reverted from the uniform theater_pad=150 (2x150=300px overlap on every adjacent column pair, exceeding this seasons own Малый column width and causing wholesale cross-column bleed) to the base theater_pad=15 default on all edges, with a targeted theater_pad_overrides entry widening ONLY theater_index 4 (Малый)s left edge by its own measured minimum. FIRST APPLIED to the bare season-level entry only (2026-09-15); corrected same day to also cover the <season>:<parity> spread_split groups, which column_group_for actually resolves to for real pages (confirmed empirically: the first fix verification run showed no change at all, crop widths matched the OLD 150-pad config exactly)."
   },
   "repertoire_1890-91_p000": {
     "format": "single_leaf",

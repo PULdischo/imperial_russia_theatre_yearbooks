@@ -367,6 +367,13 @@ async def process_page_columnwise(client: AsyncOpenAI, sem: asyncio.Semaphore, r
                 kwargs["theater_pad"] = group["theater_pad"]
             if "date_col_width_frac" in group:
                 kwargs["date_col_width_frac"] = group["date_col_width_frac"]
+            if "theater_pad_overrides" in group:
+                # JSON keys are always strings; detect_columns keys its
+                # overrides by the 0-based int theater_index (2026-09-15,
+                # docs/eval/known_issues.md #70 addendum).
+                kwargs["theater_pad_overrides"] = {
+                    int(k): v for k, v in group["theater_pad_overrides"].items()
+                }
             columns = detect_columns(image_path, column_crops_dir / page_id, **kwargs)
         else:
             columns = detect_columns(image_path, column_crops_dir / page_id)
