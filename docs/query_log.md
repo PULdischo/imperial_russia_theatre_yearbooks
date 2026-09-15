@@ -4269,3 +4269,64 @@ real title in a performance row and only a genuine note (or nothing)
 in `annotation`. Non-gate3 rows exactly byte-identical, entities/person
 continuity preserved, person_appearance byte-identical. Swapped into
 outputs/full_run/, cmp-confirmed, cleaned up.
+
+## 2026-09-15 — Рюминъ extraction error on gold page theaterschoolstaff_1899-00_p000 (production ID: …1899-90_p000; known_issues #71): first 6 raw rows of that page
+
+```sql
+SELECT entry_id, list_number, family_name, first_name, patronymic, heading_path, rank_or_title, tenure_note_text
+FROM raw.person_entry WHERE page_id = 'theaterschoolstaff_1899-90_p000' ORDER BY entry_id LIMIT 6
+```
+
+Result: e001 (Управляющій Училищемъ) has family_name='Ивановичъ', first_name='Иванъ', patronymic='Ивановичъ', rank 'д. ст. сов., въ званіи гофмейстера', tenure 'съ 27 мая 1887 г.). † 2 сентября 1899 г.'. The raw JSON (outputs/full_run/raw/theaterschoolstaff_1899-90_p000.raw.json, entries[0]) has the same values, so this is model output, not a parse artifact. The scan prints the surname letter-spaced: «Р ю м и н ъ, Иванъ Ивановичъ».
+
+## 2026-09-15 — every raw appearance matching Рюмин in any name field
+
+```sql
+SELECT r.entry_id, sp.season, r.family_name, r.first_name, r.patronymic, r.heading_path, r.tenure_note_text
+FROM raw.person_entry r JOIN raw.source_pages sp USING (page_id)
+WHERE r.family_name LIKE '%Рюмин%' OR r.first_name LIKE '%Рюмин%' OR r.patronymic LIKE '%Рюмин%'
+ORDER BY sp.season, r.entry_id
+```
+
+Result: 30 rows. 22 are Рюминъ, Иванъ Ивановичъ, TheaterSchoolStaff, 1890-91 through 1899-90: 10 as Управляющій (1890-91 to 1898-99) and 12 as Почетный членъ (including theaterschoolstaff_1899-90_p003__e005 with '† 2 сентября 1899 г.'). The other 8 are an unrelated Бестужевъ-Рюминъ, Алексѣй Ивановичъ (Administrators, 1902-03 to 1907-08). The 1899-00 Управляющій appearance is missing from this list, which is the extraction error.
+
+## 2026-09-15 — research-layer effect: first 4 person_appearance rows on that page
+
+```sql
+SELECT pa.appearance_id, pa.season, p.display_name, p.person_id
+FROM research.person_appearance pa JOIN research.person p USING (person_id)
+WHERE pa.appearance_id LIKE 'theaterschoolstaff_1899-90_p000__e00%' ORDER BY 1 LIMIT 4
+```
+
+Result: e001 resolves to person 2f34649f… 'Ивановичъ, Иванъ Ивановичъ', not to Рюминъ.
+
+## 2026-09-15 — research.person records with family name Ивановичъ or Рюминъ
+
+```sql
+SELECT p.person_id, p.display_name, p.first_attested_season, p.last_attested_season, count(*) AS n_appearances
+FROM research.person p JOIN research.person_appearance pa USING (person_id)
+WHERE p.canonical_family_name IN ('Ивановичъ','Рюминъ') GROUP BY ALL ORDER BY n_appearances DESC
+```
+
+Result: 2 rows. Рюминъ, Иванъ Ивановичъ (24f7fc76…, 1890-91 to 1899-90, 22 appearances). Phantom person Ивановичъ, Иванъ Ивановичъ (2f34649f…, 1899-90 only, 1 appearance).
+
+## 2026-09-15 — entity-review traces for the phantom and for Рюминъ
+
+```sql
+SELECT * FROM entities.person_candidate WHERE display_1 LIKE '%Ивановичъ, Иванъ%' OR display_2 LIKE '%Ивановичъ, Иванъ%' OR display_1 LIKE 'Рюминъ%' OR display_2 LIKE 'Рюминъ%';
+SELECT count(*) FROM entities.person_merge_log WHERE display_1 LIKE 'Рюминъ%' OR display_2 LIKE 'Рюминъ%';
+```
+
+Result: 1 candidate, 'Ивановичъ, Иванъ Ивановичъ' vs 'Ивановъ, Иванъ Ивановичъ' (family_name_variant, score 0.78), status rejected (conflicting_dates). No candidate ever paired the phantom with Рюминъ. Merge log: 1 row involving Рюминъ.
+
+## 2026-09-15 — corpus-wide check: family_name identical to patronymic (patronymic-as-surname shape)
+
+```sql
+SELECT r.entry_id, r.family_name, r.first_name, r.patronymic, r.heading_path
+FROM raw.person_entry r
+WHERE r.family_name IS NOT NULL AND r.patronymic IS NOT NULL
+  AND trim(r.family_name) = trim(r.patronymic)
+ORDER BY r.entry_id
+```
+
+Result: 2 rows. theaterschoolstaff_1899-90_p000__e001 (the Рюминъ case), plus balletartists_1898-99_MSK_p001__e020 'Джурі, Адель, patronymic=Джурі', which is a different shape (surname copied into patronymic). This detector only catches a dropped surname when the patronymic was also captured.
