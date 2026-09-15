@@ -9839,3 +9839,266 @@ affected by today's fixes (the Phase 6 pilot's hand-verification
 predates all three fixes above); the cross-split date-continuity de-dup
 check for the straddling-row overlap, still outstanding since the
 original Phase 1-5 addendum.
+
+### Addendum (2026-09-14): re-verified receipts/titles on 8 representative
+pages (one per season) affected by the day's fixes -- all matched the
+scan exactly, including a full 5-theater single-row match on
+`1897-98_p005`. Then did the cross-split de-dup check, which surfaced a
+bigger finding than a dedup problem: a genuine row-alignment defect at
+the split boundary.
+
+**What prompted this**: the de-dup check outstanding since Phase 1-5
+(the deliberate 500px overlap in `split_spread_pages.py` means a row
+straddling the fold can be captured, independently, by both halves --
+undeduplicated, every such row is double-counted). Built
+`pipeline/dedup_split_overlap.py` to find every `(day, theater, session)`
+key appearing in both a source page's top-half and bottom-half sessions
+(`/tmp/full_corpus_raw_v3`), pairing halves via
+`split_test_out5/split_page_numbers.csv`'s top/bottom page-number
+mapping (the same hand-verified mapping from Phase 3).
+
+**Initial scope**: of the 91 source pages, 39 had reconciled sessions on
+both halves checkable this way (the rest await broader corpus
+reconciliation). Those 39 pairs contained 2,637 combined sessions, of
+which **234 (8.9%) were exact-key duplicates** -- confirming the overlap
+design is doing what it was built for (a straddling row really does land
+in both halves), but nothing downstream was deduplicating them.
+
+**Triage, not auto-resolution**: RG's explicit direction (2026-09-14) was
+that both open design questions here -- which half's page a surviving
+duplicate row should be attributed to, and how to break a tie when two
+copies are equally complete but read differently -- go to manual,
+scan-based review rather than a programmatic pick ("when in doubt,
+handread the scan"). `dedup_split_overlap.py` was built as a triage
+queue, not a resolver: it classifies every duplicate into `exact` (both
+copies byte-identical -- 78 of the 234), `clear` (one copy is a strict
+superset of the other by title-multiset/receipts/annotation -- 18), or
+`ambiguous` (138) with a `subtier` split into `variant_only` (43 --
+resolves to the same work list once genre-suffix and curly-quote
+normalization is applied, so needs only an orthography spot-check) and
+`real` (95 -- genuinely differing content, full hand-read). Nothing is
+discarded automatically; the queue (`/tmp/split_overlap_dedup_queue.csv`)
+points each row at both halves' scan images for review.
+
+**The `real` tier turned out not to be an ordinary dedup problem.** Of
+the 95, 29 were the bottom half's very *first* theater-row for that
+column -- the row sitting right at the crop's own edge, with no "before"
+context for row detection to anchor against. Hand-reading all 29 against
+the scan (not a sample -- every one) found:
+
+- **19 of 29 are a confirmed row-misalignment bug**: a half-crop's theater
+  column loses sync with its own date column right at the crop's boundary
+  edge and silently substitutes in a *different* row's content while
+  keeping the correct-looking date label. First case found directly:
+  `repertoire_1890-91_p011` (bottom half), Малый, day 11 -- the scan
+  reads day 11 as "Сестры Саморуковы, др. эт." + "Левъ Гурычъ
+  Синичкинъ, вод."; the bottom half's own extraction returned "Новое
+  дѣло" instead, which is day *12*'s title, while day 12 lost "Новое
+  дѣло" and kept only half its true content. The top half's overlapping
+  capture had the right content, just truncated at the crop's left edge
+  ("естры Саморуковы" / "евъ Гурычъ Синичкинъ" -- missing the first
+  letter of each word). Repeated, unambiguously, on `1892-93_p005`
+  (Александринскій day 23 labeled with day 20's content, a 3-row
+  shift), `1895-96_p007` (Михайловскій *and* Малый day 17, both
+  actually showing day 15's content), and more -- see the full list
+  below.
+- **A testable signature, not just impressionistic**: since top's
+  readings were correct in every direct check, top's own session list
+  was used as ground truth to test the other 26 first-row cases
+  programmatically -- does the bottom half's mismatched content match
+  some *earlier* row already present in top's list? **13 matched exactly
+  or as a subset** without needing a scan lookup at all (e.g.
+  `1893-94_p013` Большой day 12 labeled with day 10's content;
+  `1893-94_p017` Малый *and* Большой day 24 both labeled with day 23's
+  content; `1897-98_p021` Александринскій day 2 (March) labeled with day
+  27 (February)'s content). The remaining cases were hand-verified
+  directly against the scan.
+- **One case forced a correction to the working hypothesis.**
+  `1897-98_p012/p013`, Малый, day 11: here it was the **top** half's
+  *last* row that was wrong, not bottom's first -- top's claimed content
+  ("Рцы, ком." / "Гь миръ…, ком.") is a badly garbled misread of day
+  10's actual content ("Борцы, ком." / "Кто любить миръ…, ком.",
+  matching receipts 1366 р. 04 к. exactly), while the bottom half's
+  fresh read of day 11 was correct. So the bug is **not** "prefer top,
+  bottom's first row is unreliable" -- it is "row detection is
+  unreliable at a half-crop's own edge nearest the physical fold cut,
+  and either half can be the one that slipped." No blanket rule
+  substitutes for checking the scan.
+- **8 of 29 were ordinary variance, not this bug**: OCR/orthography
+  spot-checks with a real, checkable answer either way -- e.g. `Іоаннъ`
+  (top, pre-1918-correct: "и" before a vowel takes "і") vs `Иоаннъ`
+  (bottom, a modernized misread) on `1891-92_p007`; `Кручина` (bottom,
+  correct) vs `Кручины` (top, misread) on `1891-92_p011`; `Азъ` (top,
+  correct -- the historical name of the letter А ends hard-sign) vs
+  `Азь` (bottom) on `1891-92_p013`. Two of these resolved in top's
+  favor, one in bottom's -- no directional pattern here either.
+- **2 of 29 were structural, not factual, differences**: one half put a
+  second work title in the `annotation` field instead of `works`
+  (`1892-93_p005` Михайловскій day 23, `1891-92_p017` Михайловскій day
+  1) -- both readings carry the same information, just shaped
+  differently; not a bug worth fixing at the dedup layer.
+
+**Scope not yet covered**: the 66 `real`-tier duplicates that are *not*
+a half's first/last boundary row (i.e. an interior-row collision, a
+different and so far unexamined failure mode); the 43 `variant_only` and
+18 `clear` tiers (spot-checks and confirmations, not yet worked through);
+the 52 remaining source-page pairs (of 91) not yet checkable because one
+or both halves haven't fully reconciled sessions in the current corpus
+run. The true corpus-wide count of boundary-row misalignments is
+therefore almost certainly higher than the 19 confirmed here -- this was
+a full census of one specific slice (bottom-half first-rows within the
+39 checkable pairs), not a corpus-wide sweep.
+
+**Conclusion**: this is not a dedup-selection problem to patch over with
+a "pick the more complete copy" heuristic (the `dominates()` logic in
+`dedup_split_overlap.py` was explicitly built as a *triage hint only*,
+never applied automatically, precisely because of findings like this).
+It is a genuine extraction/merge defect in `process_page_columnwise`'s
+row-alignment logic specifically at a split half's own boundary edge,
+independent of the overlap-duplication issue the de-dup check was
+originally scoped to find. A real fix belongs in the pipeline, not in
+post-hoc row selection -- scoped separately below.
+
+### Addendum (2026-09-14): Option A (an automatic crop-trim fix) scoped,
+built, measured, and tested at scale -- then set aside as unreliable.
+Option B (detect and flag, never auto-fix) built instead, with two hard
+guarantees RG set (never lose text, never make up text) verified
+directly against the real corpus rather than assumed.
+
+**Option A's premise**: the boundary-row bug traces to
+`split_spread_pages.py`'s `OVERLAP_PX = 500` -- worth ~2-2.5 rows at
+this table's height -- handed to the model unindexed and crowded right
+against a photographed page-seam artifact in every split-half column
+crop. Confirmed directly (not inferred): pulled the actual crop the
+model saw for `repertoire_1890-91_p011`'s Малый column and found day
+11's content perfectly legible in it, well past the confusing overlap
+rows -- so this was a row-counting problem, not a legibility problem,
+and trimming the model's input crop closer to the true cut seemed like
+a targeted fix.
+
+**Measured, not guessed**: row height is consistent across all 8
+seasons (184-235px -- `render_pages.py` normalizes DPI before this
+stage runs, despite source scans varying in native DPI, per
+[[source-scan-dpi-varies-by-season]]) and the tightest natural inter-row
+gaps on `straddle_suspected` pages are 17-37px. A first attempt at
+`margin=120px` (~3-7x the tightest gap) was simulated directly on real
+page geometry and looked right -- but the first REAL extraction test
+showed it was worse than the original bug: trimmed flush against the
+true first row's own top border with zero context above it, the model
+stopped misattributing that row and started dropping it outright
+(`"8 theater day(s) against 10 calendar date(s) -- cannot localise"`).
+Widened to `margin=200px` (a thin sliver of the prior row plus the full
+blank gap -- the same minimal anchor a person uses to confirm "this is
+where a new row starts") fixed that specific case.
+
+**Tested against the 3-pair sample it was calibrated on: looked like a
+clean win.** Every case that had been silently reconciling with wrong
+content either now reconciled with content confirmed correct against
+the scan, or refused to reconcile at all (honest failure). Also
+surfaced that one case the earlier hand-verification had treated as a
+"bottom half's own first row" (`1895-96_p007` day 17) actually sits
+entirely on the TOP half's side of the physical seam on direct
+re-inspection of the scan -- excluding it from the bottom crop entirely
+was correct, not over-trimming.
+
+**Expanded to all 13 confirmed-bug page-pairs (RG, 2026-09-14): the fix
+did not generalize.** Of the 17 unique confirmed-bug rows: 8 correctly
+converted from silently-wrong to honest refusal (the fix working as
+intended); of the 9 that reconciled, only 3 were actually correct --
+**6 of 17 (35%) were still wrong**, three with the true row missing
+from the output entirely (`1893-94_p005` Большой day 23,
+`1893-94_p011` Маріинскій day 22, `1893-94_p013` Большой day 12) and
+three with correct content silently mislabeled under a shifted date
+(`1894-95_p007` Михайловскій day 13 read back as day 14;
+`1895-96_p007` Михайловскій day 17 as day 19; `1895-96_p007` Малый day
+17 as day 18, with duplicate dates further down the same column). A
+fixed pixel margin, calibrated against one page's geometry, does not
+hold across pages whose true boundary-row offset varies more than that
+one calibration case suggested -- and worse, it fails in the *silent*
+direction: several of these still reconcile cleanly, so nothing
+downstream would flag them.
+
+**RG's call (2026-09-14): set Option A aside.** "It's my sense that a
+generalized fix is not going to be feasible across pages and seasons."
+The crop-trim code (`row_detect.detect_columns`'s `y_start`/`y_end`,
+`run_pilot.py`'s `--split-boundaries` plumbing and
+`SPLIT_BOUNDARY_MARGIN_PX`, `build_split_boundaries.py`,
+`docs/repertoire_split_boundaries.json`) was reverted/deleted rather
+than left half-adopted in the tree -- this addendum is the record of
+what was tried and why, not the code itself.
+
+**Option B, built instead**: never try to auto-fix a disputed boundary
+row -- detect disagreement between a split page's two independently-
+captured halves and route it to a human, with two hard guarantees RG
+set as the actual bar (2026-09-14): **never lose text, never make up
+text**.
+
+- `pipeline/dedup_split_overlap.py` -- the original one-off triage
+  script generalized into a real CLI tool (no more hardcoded `/tmp`
+  paths). Unchanged in method: finds every `(day, theater, session)` key
+  colliding across a source page's two halves, classifies `exact` /
+  `clear` / `ambiguous` (`real` / `variant_only` / the new
+  `month_rollover_collision`, below). The same output file, hand-
+  annotated (`kept_half` or a typed `corrected_*` transcription), IS the
+  resolutions input the companion script reads -- one file, two phases.
+- `pipeline/apply_split_overlap_resolutions.py` (new) -- consolidates
+  each page-pair into one trusted session list per the queue: a non-
+  colliding key passes through verbatim; `exact`/`clear` auto-resolve
+  (never a real conflict, just the fuller of two actual reads); an
+  unresolved `ambiguous` key is held in `pending`, not guessed at and
+  not dropped.
+
+**Verifying "never lose text" found a real bug in this session's own
+new code before it shipped.** A plain `{(day, theater, session): s for
+s in sessions}` dict comprehension -- what both scripts originally did
+-- silently drops an earlier session whenever a LATER one in the SAME
+half's own list shares its key. Confirmed this genuinely happens: 16
+pages, 42 sessions, wherever a half's page spans a month rollover (day
+30, then day 1 of the next month -- both real, different calendar days,
+same day-of-month digit). Fixed by `keyed_sessions()`: segment each
+theater's own sequence on day-of-month decreases before keying, so a
+rollover repeat gets a different key instead of silently overwriting;
+if two sessions still land on the same key after that (confirmed rare,
+and only ever observed within one half, never yet at an actual cross-
+half collision), neither is dropped -- both are held for review rather
+than paired by guesswork (the new `month_rollover_collision` subtier).
+
+Verified directly afterward, not just re-counted: for all 39 checkable
+page-pairs (2,637 raw sessions), every single one is findable in the
+trusted output or preserved inside a pending entry. First pass of this
+check found 75 "missing" (the bug above); after the fix, still 48; then
+0, but only once the *verification script itself* was corrected twice
+-- it was initially stricter than the guarantee it was supposed to
+check, flagging harmless date-text phrasing differences (`"2
+Вторник."` vs `"2 Октября."`, same calendar day) and genre-abbreviation
+spelling (`"com."` vs `"ком."`, same word) as "lost" when the actual
+content was correctly preserved via a superset match. Final check uses
+containment, not exact equality, matching `classify()`'s own
+already-established definition of equivalence -- **0 of 2,637 raw
+sessions genuinely lost**.
+
+**"Never make up text" verified by reading every code path** (not
+tested empirically -- there's no way to "run" an absence of fabrication,
+only to confirm the code structurally cannot do it): passthrough copies
+a raw session verbatim; `exact`/`clear` copy one of the two actual raw
+sessions verbatim (`dict(ts)` or `dict(bs)`, never a merge of the two);
+a hand-resolved `ambiguous` row uses either a verbatim raw session
+(`kept_half`) or a human's own typed transcription (`corrected_*`).
+Nothing anywhere blends, interpolates, or guesses.
+
+**Current numbers, full corpus, 39 checkable pairs**: 3,695 sessions
+pass through with no collision; 95 auto-resolve (`exact`/`clear`); 146
+sit in `pending_review`, awaiting hand annotation of the queue CSV --
+up from the original ~138 estimate once the month-rollover fix
+surfaced a few more genuine collisions.
+
+**Not yet done**: wiring `.resolved_sessions.json` into
+`parse_and_validate.py` (deliberately deferred -- still gated behind the
+broader corpus-rollout decision, same as everything else in this
+thread); hand-resolving the 146-row pending queue (a mix of `real`,
+`variant_only`, and `month_rollover_collision` -- the 29 boundary-row
+cases hand-verified earlier in this addendum's history could be
+transcribed into the queue's `kept_half`/`corrected_*` columns directly,
+resolving a meaningful chunk of it without fresh scan-reading); the 52
+remaining source-page pairs (of 91) not yet checkable at all because
+neither half has fully reconciled sessions in the current corpus run.
