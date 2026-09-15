@@ -4330,3 +4330,24 @@ ORDER BY r.entry_id
 ```
 
 Result: 2 rows. theaterschoolstaff_1899-90_p000__e001 (the Рюминъ case), plus balletartists_1898-99_MSK_p001__e020 'Джурі, Адель, patronymic=Джурі', which is a different shape (surname copied into patronymic). This detector only catches a dropped surname when the patronymic was also captured.
+
+## 2026-09-15 — publish-readiness check: research-layer row counts, duckdb vs. sqlite, full_run vs. full_run_seasonfix
+
+Run read-only against both `outputs/full_run/` and `outputs/full_run_seasonfix/`
+(`imperial_theaters.duckdb` and `research_dataset.sqlite` in each).
+
+```sql
+-- per table t in (theater, work, person, event, performance, person_appearance),
+-- in DuckDB (research.t) and in the SQLite export (t):
+SELECT count(*) FROM research.{t};
+SELECT count(*) FILTER (WHERE season LIKE '1899-90%' OR season LIKE '1905-07%') AS typo_rows
+  FROM research.person_appearance;
+SELECT min(season), max(season), count(DISTINCT season) FROM research.event;
+SELECT DISTINCT schema_name FROM duckdb_tables() ORDER BY 1;
+```
+
+Result: identical counts in both run dirs and in both file formats — theater 6,
+work 4,456, person 2,894, event 27,870, performance 25,480, person_appearance
+21,154; event seasons 1890-91..1907-08 (18). Only difference: season-typo rows
+in person_appearance = 281 in full_run, 0 in full_run_seasonfix (known_issues #71).
+Both DuckDB files contain raw/analysis/entities/research schemas.
