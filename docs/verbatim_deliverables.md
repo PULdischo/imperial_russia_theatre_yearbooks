@@ -32,7 +32,7 @@ Six tables feed every format below: `source_pages`, `person_entry`,
 | CSV bundle (6 files) | High — every tool opens CSV | Good — largest table is ~32k rows, trivial for any tool | Per-table filtering; cross-table work is manual (VLOOKUP-style) | **Exists** (`parse_and_validate.py`) |
 | Excel workbook (1 file, 6 sheets) | Highest for Sheets/Excel users | Good, same data as CSV bundle | Same as CSV, but one file instead of six | **Built** (`build_excel_workbook.py`) — 6MB, drag into Drive to get a native multi-tab Sheet |
 | OpenRefine project | High — Refine opens CSV/Excel directly | Good up to tens of thousands of rows (in range here) | **Best for cleaning/reconciliation** — faceting, clustering, this is the on-ramp to the research dataset | No new format — reuses the CSV/Excel bundle |
-| Obsidian vault (1 note/page) | High, if already an Obsidian user | Good for browsing; large due to embedded page images | Best for reading/annotating page-by-page, close to how the researcher already thinks about "a page in the yearbook" | **Built** (`build_obsidian_vault.py`) — 378MB (1,299 pages + downscaled images), down from 12.8GB at archival resolution |
+| Obsidian vault (1 note/page) | High, if already an Obsidian user | Good for browsing; large due to embedded page images | Best for reading/annotating page-by-page, close to how the researcher already thinks about "a page in the yearbook" | **Built** (`build_obsidian_vault.py`) — 378MB (1,349 pages + downscaled images), down from 12.8GB at archival resolution |
 
 ## DuckDB file
 
@@ -115,7 +115,7 @@ dataset):
 ## Obsidian vault
 
 **Built** (`pipeline/build_obsidian_vault.py`). **One note per source
-page** (1,299 notes, one per `source_pages` row), because that's the
+page** (1,349 notes, one per `source_pages` row), because that's the
 natural unit for "verbatim, exactly as it appears in the scans" — it
 mirrors how the researcher already thinks about the material (a page in a
 given year's yearbook), rather than one note per transcribed row (~44k
@@ -143,23 +143,37 @@ printed_page_number:
 [[administration_1907-08_p001|Next page ->]]
 ```
 
-Repertoire pages get a sessions table instead (Date/Theater/Session/Status/
+Repertoire pages get a sessions table instead (Date/Theater/Time of day/Status/
 Works/Receipts/Annotation, works flattened to `Title (genre); Title2
-(genre2)`); six entity-type index notes group pages by season, and a
+(genre2)`); seven entity-type index notes group pages by season, and a
 `Home.md` links to those.
 
 - **Accessibility**: high if the researcher is already in Obsidian daily —
   no new tool, and it supports exactly the workflow of reading a page,
   annotating it, and linking observations across pages/seasons.
-- **Performance**: 1,299 notes is comfortably within what Obsidian handles
+- **Performance**: 1,349 notes is comfortably within what Obsidian handles
   well. The real constraint, as anticipated, was disk/sync size from the
   page images: the archival 300dpi PNGs average ~9.9MB each (12.8GB across
   the corpus), which would make the vault impractical to sync via Obsidian
   Sync or a cloud folder. Fixed by generating a separate, disposable
   *viewing* copy per page (long edge capped at 1600px, JPEG quality 82) for
   the vault, leaving the archival images untouched — this took the vault
-  down to 378MB total (369.8MB images + 8.7MB notes), a ~34x reduction,
+  down to 378MB total (367MB images + 11MB notes), a ~34x reduction,
   with no loss of legibility at normal reading zoom.
+
+**Rebuilding / where the live copy is.** RG's working vault lives in iCloud
+at `iCloud~md~obsidian/Documents/Yearbook_Obsidian_Vault` (last rebuilt
+2026-09-15 from `outputs/full_run_seasonfix/`, known_issues.md #71; the
+prior July/August build lacked Graduates and predated the #54-#67 roster
+and repertoire fixes). The archival PNGs are no longer on local disk
+(`outputs/full_run/images/` is empty), so rebuild into a scratch `--out-dir`
+pre-seeded with the vault's existing `images/*.jpg` —
+`make_viewing_image` skips any image already present — and pass an
+`--images-dir` holding PNGs rendered from `pdf/` for only the pages that
+lack one. Then back up the vault's notes and sync `pages/`, `images/` and
+the index notes in, leaving `.obsidian/` and `Table of Contents.base`
+(RG's own) alone. The vault holds no hand annotations as of that rebuild —
+check again before overwriting if that changes.
 - **Utility**: best of any format here for close reading, annotation, and
   building up qualitative/contextual notes page-by-page — genuinely
   different work from what Sheets/OpenRefine/DuckDB support. Not meant for

@@ -1740,7 +1740,8 @@ already established this session):**
   time. He appears to have no real patronymic in the source (common for
   the German-surnamed musicians in this corpus); cleared to `NULL`.
 - `Пигулевскій, Василій Фавстовичъ` (TheaterSchoolStaff, priest) had one
-  of 47 appearances (`theaterschoolstaff_1899-90_p002__e025`) with
+  of 47 appearances (`theaterschoolstaff_1899-00_p002__e025`; written
+  `1899-90` at the time, relabelled by #71) with
   `patronymic = "Фавстовичъ (священникъ церкви Училища)"` — the role
   annotation appended onto an otherwise-correct patronymic — while every
   other appearance splits it correctly into `patronymic="Фавстовичъ"` +
@@ -10179,3 +10180,86 @@ current corpus run -- resolving those will need a fresh
 `dedup_split_overlap.py` pass once more of the corpus reconciles, not
 just re-running against what's already been extracted; wiring
 `.resolved_sessions.json` into `parse_and_validate.py`, same as before.
+
+## 71. Season-label typos `1899-90` / `1905-07` fixed at source (TheaterSchoolStaff) — relabel only, no content change
+
+**Found** 2026-09-15 while rebuilding the Obsidian vault: two
+`pdf/Spiski_TheaterSchoolStaff/` files still carried their inventory-time
+filename typos, `ForUpload_1899-90_Spisok_Teachers.pdf` (really 1899-00)
+and `ForUpload_1905-07_Spisok_Teachers.pdf` (really 1905-06). The renames
+had already been *decided* — the gold `source_pages.csv` notes record both,
+with the evidence (a death date for 1899-00; the separate 1906-07 file's
+printed "1906-1907" signature for 1905-06) — but never applied on disk.
+`render_pages.py` takes the season straight from the filename, so the typo
+became part of 11 `page_id`s and every `entry_id` below them:
+11 `source_pages`, 282 `person_entry`, 257 `person_entry_service`,
+8 `person_entry_credit`, 281 `research.person_appearance` rows, and
+`first_/last_attested_season` for 22 `research.person` rows.
+`docs/season_reviews.md` ("Season parsing") had already named these two as
+the motivating case for a season validator; `render_reviews.py` got one,
+`render_pages.py` never did.
+
+**Two further consequences surfaced by the fix:**
+- **A gold page has been silently unscored since 2026-08-15.**
+  `theaterschoolstaff_1899-00_p000` is one of the 12 gold pages under its
+  correct ID; the production parse only had `…1899-90_p000`, so
+  `eval_against_gold.py` reported `gold=19 pred=0` and scored 0/0 fields —
+  the page simply dropped out of the roster denominator. Re-scored on the
+  relabelled parse: 157/171 fields; roster 879/1071 (82.1%) →
+  1036/1242 (83.4%), grand 86.7% → 87.1%. Nothing about extraction
+  changed — this is the true figure the eval should always have reported.
+  (The 14 mismatches are the familiar tenure-parentheses pattern plus one
+  real extraction error, `Рюминъ` with `family_name='Ивановичъ'`, not
+  investigated here.)
+- **Entity identity does not survive an `entry_id` rename on its own.**
+  `build_person_tier1` reuses person UUIDs by entry membership in
+  `entities.person_link` (#41). A first rebuild with relabelled IDs treated
+  all 282 entries as never-seen, minted fresh UUIDs, and orphaned every
+  prior decision on them: 143 got re-merged by `merge_duplicate_persons`,
+  11 more auto-confirmed via tenure corroboration, but **20 reviewed people
+  were split in two** (e.g. Погожевъ 39+4, Ширяевъ 44+4; the 1905-06
+  entries now correctly overlap other 1905-06 rosters, so gate 2 refuses to
+  re-merge them — the typo had been hiding that overlap). Fixed with
+  `pipeline/remap_entry_ids.py`, which renames the `person_link` entry_id
+  prefixes 1:1 on the DB copy *before* `build_entities.py` runs.
+
+**Fix (no API cost; `outputs/full_run/` read-only throughout):**
+1. `render_pages.py`: `validate_season()` fails loudly unless the second
+   half is the first half + 1 (century rollover allowed) — confirmed it
+   rejects the old filename, then renamed both PDFs (`pdf/` is gitignored;
+   SHA-1 `3ae65152…` and `62c6c1d9…` respectively, unchanged by the rename).
+2. New run dir `outputs/full_run_seasonfix/`: raw JSON copied with the 11
+   files renamed (content untouched — the JSON carries no page_id);
+   manifest relabelled and verified row-for-row against what
+   `render_pages.discover_pdfs` now yields from the renamed PDFs.
+3. Parsed layer: the three roster CSVs re-parsed from the relabelled raw
+   JSON — byte-identical to production's modulo the season token (a
+   no-rename re-parse reproduces production's roster CSVs byte-for-byte).
+   The two repertoire CSVs are copied unchanged from production: they are
+   the merged column-wise/fold-split product, which a plain re-parse of
+   `raw/` does not reproduce, and contain neither typo.
+4. DB: copy of production → `remap_entry_ids.py` → `build_duckdb.py` →
+   `build_entities.py` → `validate_performance_dates.py` →
+   `build_research_model.py` → `build_datasette.py`. `link_wikidata.py`
+   not re-run (network; its table is carried in the copy and is keyed on
+   person_id, which is now stable).
+
+**Verification.** First, a control: the same stage sequence on an
+un-relabelled copy of production reproduces all 25 tables exactly (0 rows
+differ either direction), so the stages are safe to re-run. Then, the fixed
+run against production with production's season tokens remapped: **24 of
+25 tables identical** — every `raw`, `analysis`, `research` table, plus
+`person_link`, `person_candidate` (23, 0 pending), `person_merge_log`
+(1022), `person_wikidata_link`, works and theaters. The one exception is 7
+tombstoned `entities.person` rows, which `build_person_tier1` carries
+forward byte-unchanged by design (superseded snapshots, unpublished) and
+so still read `1899-90`/`1905-07`; left as-is rather than hand-edited.
+No other occurrence of either typo remains anywhere in the new DB or
+`research_dataset.sqlite` (date columns `*_undate` excluded — `1905-07-…`
+there is a real July 1905 date).
+
+**Not done / for RG:** `outputs/full_run_seasonfix/` has not been promoted
+over `outputs/full_run/` (outputs guardrail; also #70 is mid-flight
+against production). `raw/usage_log.csv` still logs the old page_ids,
+deliberately — it is a record of what was actually sent to the API. HF and
+Cloud Run still serve the typo'd IDs until the next publish.
