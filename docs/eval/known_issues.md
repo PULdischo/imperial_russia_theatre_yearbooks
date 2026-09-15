@@ -10263,3 +10263,68 @@ over `outputs/full_run/` (outputs guardrail; also #70 is mid-flight
 against production). `raw/usage_log.csv` still logs the old page_ids,
 deliberately — it is a record of what was actually sent to the API. HF and
 Cloud Run still serve the typo'd IDs until the next publish.
+
+### Addendum to #70 (2026-09-15): scoped and closed most of the 52
+pairs still blocked from the de-dup check -- a targeted re-extraction,
+not a code fix, recovered 15 of them; the rest trace to a real,
+pre-existing, already-documented bug this addendum just newly quantified.
+
+**Scoping first**: a pair was blocked whenever at least one half had
+*zero* reconciled sessions across all 5 theaters -- not the single-row
+misalignment the rest of this issue is about, a whole-page reconciliation
+failure. Sharply directional: of 52 pairs, **35 had only the bottom half
+at zero** (top often had 40-70+ sessions), 8 had only top at zero, 9 had
+both. Bottom fails completely ~4x more often than top, consistent with
+everything else in this issue about bottom-half extraction being less
+reliable, just a more severe symptom than a boundary row.
+
+Checked the actual cause on every one of the 61 zero-session halves
+(not a sample): **18 were the already-documented severe date-undercount
+bug** (`run_pilot.py`'s own comments describe it -- a date-only call
+badly under-reading a long rotated column, surviving all 3 retries; here
+often exactly 3 date rows against 10-100 theater rows). **~40 were
+ordinary marginal mismatches** -- the same reconciliation noise behind
+the corpus's known 36% baseline rate, just landing on all 5 theaters of
+one page by chance. **3 were total column failures** -- even the theater
+columns returned zero rows, a crop/detection-level problem, not a
+counting one.
+
+**RG approved a targeted re-extraction** (the 61 zero-session halves
+only, not the full 180-page corpus) rather than a code change --
+consistent with this session's finding that a resample of the same
+crop "sometimes recovers completely, sometimes doesn't": worth trying
+before investing in a fix. Cost: 1,568,906 tokens (`/tmp/rerun_zero`).
+Result: **21 of 61 halves recovered non-zero sessions; 15 of the 52
+pairs became checkable** (39 -> 54 of 91). The other 37 pairs are
+unchanged -- consistent with the severe-undercount bug being real and
+not reliably fixed by a plain retry, matching what the original
+`DATEONLY_MAX_ATTEMPTS` comment already predicted.
+
+**Extended the full de-dup + hand-resolution pass to the newly-checkable
+15 pairs**, merging the re-extraction into the existing corpus
+(`/tmp/full_corpus_raw_v4`) and carrying forward all 146 previously
+hand-resolved rows by key match (verified they matched byte-for-byte,
+since none of the original 39 pairs' underlying data changed). Found 36
+new colliding rows; resolved all of them the same way as before --
+receipts cross-referencing against already-confirmed values, direct
+scan reads where cross-referencing wasn't conclusive
+(`1894-95_p008`/`p009`, 16 rows: confirmed bottom correct throughout,
+and found top's Михайловскій column was contaminated with Большой's own
+content on 3 rows -- "Фаустъ"/"Пиковая дама"/"Аида" are literally what
+Большой shows those same days, a horizontal column-bleed, not just
+truncation).
+
+**Final state, all 54 checkable pairs**: 4,050 passthrough, 107
+auto-resolved, 176 human-resolved, 0 pending. Re-ran "never lose text"
+verification against the full expanded set: **0 of 3,478 raw sessions
+unaccounted for.** Updated queue committed at
+`docs/eval/repertoire_split_overlap_queue_resolved.csv` (290 rows, up
+from 242).
+
+**Not yet done**: the remaining 37 blocked pairs -- 18 severe-
+undercount instances would need a real fix (e.g. raising
+`DATEONLY_MAX_ATTEMPTS` for split halves specifically, or a different
+date-crop strategy) rather than another plain retry; the 3 total-
+column-failures need individual inspection; wiring
+`.resolved_sessions.json` into `parse_and_validate.py`, still gated
+behind the broader corpus-rollout decision, unchanged from before.
