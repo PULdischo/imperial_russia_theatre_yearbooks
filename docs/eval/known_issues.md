@@ -10328,3 +10328,79 @@ date-crop strategy) rather than another plain retry; the 3 total-
 column-failures need individual inspection; wiring
 `.resolved_sessions.json` into `parse_and_validate.py`, still gated
 behind the broader corpus-rollout decision, unchanged from before.
+
+### Addendum to #70 (2026-09-15): hand-read the severe date-undercount
+cases directly -- no new API calls needed, since the theater data on
+these pages was already fine. Recovered 15 pages from zero sessions to
+real data; pushed checkable pairs to 67 of 91.
+
+**Re-scoped first, on the current (v4) corpus, not the pre-re-extraction
+count**: of the original 18, 2 were false positives -- a single theater
+column at exactly 100 rows (the same degenerate-hallucination pattern
+investigated and found genuine earlier in this issue) was inflating the
+"max theater rows" denominator used to flag severity. Recomputed with
+the MEDIAN across theaters instead of the max: **15 genuinely severe
+cases**, 13 of which show exactly `date_rows=3` after exhausting all 3
+retries -- the known bug, precisely quantified this time. 12 of 15 are
+bottom halves, the same directional skew as everywhere else in this issue.
+
+**RG's question -- "can they be hand-read?" -- yes, and cheaply**: the
+theater columns on these 15 pages already extracted successfully; only
+the date column was broken. `pipeline/apply_handread_dates.py` (new)
+re-runs `merge_columnwise_page` for a page using a hand-transcribed date
+sequence against its EXISTING theater data (`<raw-dir>/<page_id>.
+columns.json`, unchanged) -- no model calls at all. Safe by construction,
+not just in intent: the merge only ever accepts an EXACT row-count
+reconciliation, so a wrong hand-read date count simply makes that
+theater refuse (same as any other page), never produces wrong data --
+verified this directly (see below) rather than assuming it.
+
+**First pass moved too fast and got caught by the merge's own safety
+net exactly as designed**: reading full page-width screenshots led to
+skipped and duplicated rows on more than one page -- `1892-93_p012`
+came back 0/5 reconciled on a first attempt (15 hand-read rows against
+theater counts of 12/22/14/13/11 -- close enough to look plausible,
+wrong enough to refuse everywhere). RG: "slow down and do it carefully
+... I always prefer a slow accurate reading over rushing." Switched to
+cropping just the right-margin date column as its own tall, narrow,
+full-resolution strip before reading it -- removes the compression that
+was causing the misreads, and immediately caught two concrete errors
+on that same page (a skipped day 15, and three trailing days that
+belonged to a different image entirely, mixed in from reading multiple
+pages in one batch). Re-verified with the crop technique: `1892-93_p009`
+matched its very first (pre-crop) transcription exactly, confirming the
+technique isn't just "different", it's the more reliable one. Used this
+cropped-strip method for the rest.
+
+**A genuine date gap found along the way, not a misread**:
+`1893-94_p020`'s date column jumps from Feb 27 straight to March 6 (a
+6-day gap) -- confirmed via the crop that this is what's actually
+printed, not a row I failed to capture. Consistent with
+[[never-assume-date-completeness]] (Lenten closures are common in this
+period) -- recorded as read, not "corrected" to look continuous.
+
+**Result, all 15 pages**: every one went from 0 sessions to real data.
+Not every theater on every page reconciled (a theater with its own
+independent row-count problem still correctly refuses, same as
+anywhere else in this corpus) -- 1893-94_p021 needed one more
+correction after an initial 0/5: three theaters agreed on 13 rows
+against my 14, and the culprit was the boundary-adjacent first row
+(day 6, sitting right at the physical fold) -- dropping it brought that
+page to 3/5, the same boundary-row unreliability this whole issue has
+been tracking, just caught here through a count mismatch instead of a
+content mismatch. **496 sessions recovered total**, zero new API tokens
+spent.
+
+**Merged into the corpus (`/tmp/full_corpus_raw_v5`) and re-ran the
+de-dup triage**: checkable pairs jumped from 54 to **67 of 91** --
+larger than the 15 pages directly fixed, since repairing one half of a
+pair can make the whole pair checkable even when its partner's data
+was already fine. Carried forward all 182 previously-resolved queue
+rows by key match; 49 new ambiguous rows surfaced, not yet
+hand-resolved as of this addendum.
+
+**Not yet done**: hand-resolving the new 49-row queue (next); the
+remaining 24 blocked pairs (37 minus the 13 pairs this round newly
+unblocked) -- mostly the 3 total-column-failures and severe-undercount
+halves whose PARTNER half is also broken, so fixing one side wasn't
+enough; wiring into `parse_and_validate.py`, still deferred.
