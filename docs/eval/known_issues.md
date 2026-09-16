@@ -10837,3 +10837,57 @@ itself -- a distinct, smaller finding worth a look if this class of
 bug recurs, not chased further here since the `.raw.json` output (the
 only thing `parse_and_validate.py` reads) is already correct for all
 7.
+
+### Addendum to #70 (2026-09-16): re-ran the split-overlap dedup
+against the fresh `outputs/repertoire_spreadfix_v6/` data -- and
+confirmed the existing hand-resolved queue could NOT have been safely
+reused as-is, exactly the risk flagged pausing before this step.
+
+**Recovering the lost pairing file**: `split_page_numbers.csv`
+(`dedup_split_overlap.py`'s `--page-numbers` input) was lost in the
+same `/tmp` sweep as everything else. Recovered without re-running the
+billed page-number extraction: confirmed directly (0 mismatches across
+all 369 rows of the existing resolved queue) that `top_page_id` always
+carries the LOWER real page number and `bottom_page_id` the higher, so
+each spread's pair is just its two consecutive real page numbers
+within a season. All 176 surviving split-half images paired cleanly
+this way -- 88 pairs, 0 unpaired stragglers (one gap, `1890-91`'s
+missing 8/9, is a matched PAIR missing together, not an orphan).
+Synthetic `source_page_id` values were invented for this regenerated
+mapping (the true original scan IDs are unrecoverable) -- harmless,
+since `dedup_split_overlap.py` only uses that field for season-parsing
+and labeling, never for matching real files.
+
+**Fresh scan result**: 41 of 88 pairs checkable (both halves
+reconciled), 255 duplicate keys found -- 77 `exact` + 19 `clear`
+(both auto-resolve, no human judgment needed) + 159 `ambiguous` (110
+`real`, 28 `month_rollover_collision`, 21 `variant_only`).
+
+**Comparing against the existing 369-row hand-resolved queue,
+key-by-key** (not source_page_id, which differs by construction; kept
+on `(top_page_id, bottom_page_id, day, theater, session)`): only 116
+of 346 old distinct keys still exist at all in the v6 scan. Of those
+116, a full 74 have DIFFERENT raw content now than when the old
+resolution was recorded -- this week's crop/pad fix genuinely changed
+what many pages read as, so re-applying an old human judgment to
+different underlying text would have been exactly the kind of
+unverified guess this whole issue's discipline exists to prevent.
+Only 42 carried-forward keys are byte-identical in content, and of
+those, 17 actually had a resolution recorded (the rest were
+`exact`/`clear` tier, which auto-resolve regardless of history) --
+those 17 were carried forward directly, tagged in `reviewer_note` as
+reused rather than freshly checked. Everything else -- the 74
+changed-content carries, plus 74 brand-new ambiguous keys never seen
+before -- was left blank for fresh review. `docs/eval/
+repertoire_split_overlap_queue_resolved.csv` was regenerated in place
+(255 rows, replacing the prior 369 -- the row count itself isn't
+comparable across the swap, since this is a different underlying
+extraction, not an incremental addition to the same one).
+
+**Remaining hand-review scope, precisely counted, not estimated**:
+**142 ambiguous rows** need a fresh look (98 `real`, 26
+`month_rollover_collision`, 18 `variant_only`) -- larger than any
+single hand-resolution batch this issue has tackled so far (the
+largest prior round was 49 rows). Not started yet -- reporting the
+scope before committing to it, same pattern used earlier in this issue
+("Scope the remaining 52 pairs..." before "Go ahead").
