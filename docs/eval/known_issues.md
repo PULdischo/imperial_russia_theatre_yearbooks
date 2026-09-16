@@ -10807,5 +10807,33 @@ false-positive dark flag FROM a real content row). Low volume (7 rows
 total) makes this a good candidate for the same manual-queue pattern
 already used throughout #70 (`kept_half`/`corrected_works` in
 `repertoire_split_overlap_queue_resolved.csv`) rather than urgent
-pipeline work -- not yet applied, queued for the next hand-resolution
-pass.
+pipeline work.
+
+**Applied (2026-09-16)**: all 7 fixed directly in
+`outputs/repertoire_spreadfix_v6/raw_columnwise/*.raw.json` --
+`is_dark: false` on all 7, plus `works` restored on the one row that
+had also lost its title (`1894-95_p007` `Маріинскій` `16 Воскресенье.`
+-- re-zoomed the scan crop before writing anything, confirmed
+"Паяцы, оп." / "Тщетная предосторожность, бал." precisely, matching
+the row's already-correct `3598 р. 50 к.` receipts exactly). Each edit
+asserted the expected `date_text`/`theater`/prior `is_dark` value
+before writing, so a stale assumption would have raised rather than
+silently miswriting a different row. Re-ran
+`check_repertoire_dark_row_with_content` after: 0 flags remain on any
+of the 4 affected pages (56 flags remain corpus-wide, all on the
+separate, already-scoped `Большой` boundary residual this fix doesn't
+touch).
+
+Also mirrored the fix into the source `.columns.json` per-theater
+rows, matched by `(theater, date_text)` via `date_rows` rather than
+assumed index alignment (a `.columns.json` theater row's own `index`
+is that theater's sequential position, not the merged session list's
+position). Only 4 of the 7 needed the source-level edit -- the other
+3 (`Михайловскій`'s `14 Пятница.`/`23 Воскр.`/`25 Вторн.`, the rest of
+the French-troupe cluster) already had `is_dark: false` correctly in
+the raw per-theater data, meaning THOSE 3 rows' bug was introduced
+during `merge_columnwise_page`'s own merge step, not the extraction
+itself -- a distinct, smaller finding worth a look if this class of
+bug recurs, not chased further here since the `.raw.json` output (the
+only thing `parse_and_validate.py` reads) is already correct for all
+7.
