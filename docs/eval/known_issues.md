@@ -10762,11 +10762,50 @@ scan-verified whether those 7 are the same bleed mechanism on a
 different boundary or something else entirely -- flagged for the next
 pass, not resolved here.
 
-**Not yet done**: scan-verifying the 7 non-`Большой` `dark_row_with_content`
-instances; a decision on auto-clearing confirmed instances versus
-routing to manual review, still open from the prior addendum; whether
-`1895-96`'s remaining 4-page residual needs its own further-narrowed
-override or is an acceptable remainder; wiring any of this into
-`parse_and_validate.py`, still deferred; promoting
-`outputs/repertoire_spreadfix_v6` over `outputs/full_run`, a separate
-rollout decision not made here.
+**Not yet done**: whether `1895-96`'s remaining 4-page bleed residual
+needs its own further-narrowed override or is an acceptable
+remainder; wiring any of this into `parse_and_validate.py`, still
+deferred; promoting `outputs/repertoire_spreadfix_v6` over
+`outputs/full_run`, a separate rollout decision not made here.
+
+### Addendum to #70 (2026-09-16): scan-verified all 7 non-`Большой`
+`dark_row_with_content` flags -- and they are NOT this issue's bug.
+
+Checked all 7 against the actual scan (`1891-92_p018` Михайловскій x4,
+`1894-95_p007` Маріинскій, `1895-96_p011` Маріинскій, `1895-96_p017`
+Малый). In every single case the flagged theater's `works`/
+`receipts_text` **already matches the real printed scan exactly** --
+`Михайловскій`'s "L'Article 47, dr." genuinely appears twice on
+`1891-92_p018` (French-troupe repertoire, real and correctly
+transcribed); `Малый`'s "Маріана, др. / Елка, ком. / Троеженецъ, сц."
+on `1895-96_p017`'s `27 Суббота.` matches the scan verbatim, receipts
+figure included; `Маріинскій`'s `3598 р. 50 к.` on `1894-95_p007`
+matches a real printed row too (its title only -- "Паяцы, оп. /
+Тщетная предосторожность, бал." -- got dropped from `works`, a
+separate, ordinary title-omission, not a dark-row issue). The ONE
+thing wrong in all 7 rows is the `is_dark` flag itself: `True` on a
+row that has genuine, correctly-read content.
+
+That is the OPPOSITE defect from this issue's own bug (real content
+bleeding onto a row that actually IS blank) -- these are real,
+non-blank rows the model mislabeled as blank despite reading their
+content correctly. Different mechanism, different root cause
+(something about the `is_dark` judgment misfiring specifically, not
+`theater_pad`/crop geometry), and not concentrated on the
+`Большой`<->`Малый` boundary the fix targeted -- confirming these 7
+don't belong to this issue at all. Filed as its own thing rather than
+folded into #70's own scope.
+
+**Is it handfixable?** Yes, and unusually cleanly: because the
+underlying `works`/`receipts_text` data these 7 rows already carry is
+CORRECT (scan-verified above), the fix in every case is a single
+field flip -- `is_dark: True -> False` -- with nothing else to
+re-derive or re-read. Same shape as the existing `1903-04_p019`
+precedent's fix (issue #68), just the opposite direction (that one
+cleared a false-positive content row TO dark; these clear a
+false-positive dark flag FROM a real content row). Low volume (7 rows
+total) makes this a good candidate for the same manual-queue pattern
+already used throughout #70 (`kept_half`/`corrected_works` in
+`repertoire_split_overlap_queue_resolved.csv`) rather than urgent
+pipeline work -- not yet applied, queued for the next hand-resolution
+pass.
