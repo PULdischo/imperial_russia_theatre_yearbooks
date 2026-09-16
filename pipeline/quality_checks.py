@@ -572,6 +572,65 @@ def check_repertoire_cross_theater_date_mismatch(raw_dir: Path | None) -> list[d
     return flags
 
 
+def check_repertoire_dark_row_with_content(raw_dir: Path | None) -> list[dict]:
+    """Flags a session that is SELF-CONTRADICTORY: `is_dark=True` (the
+    model's own claim that nothing was printed for this theater on this
+    day) alongside real content in `works`, `annotation`, or
+    `receipts_text` -- a genuinely dark day has none of those.
+
+    Found investigating the spread-format column-bleed fix
+    (docs/eval/known_issues.md #70, 2026-09-15 addendum): after
+    narrowing the `theater_pad` overlap that was causing one theater's
+    crop to read back its neighbor's content wholesale, a smaller
+    residual remained on `Большой`<->`Малый` boundaries specifically --
+    confirmed against the scan (`1895-96_p006`/`p009`): `Малый`
+    genuinely performed opera on days `Большой` was dark, and
+    `Большой`'s own extraction correctly set `is_dark=True` for those
+    rows while ALSO pulling in `Малый`'s real title, apparently
+    reaching for neighboring content when its own crop had nothing to
+    read rather than returning a clean empty row. This is a strictly
+    SELF-CONTAINED signature -- no cross-theater or cross-page
+    comparison needed, unlike the corpus-wide bleed scan that first
+    found the pattern -- because the model's own `is_dark` flag and its
+    own `works`/`annotation`/`receipts_text` fields already disagree
+    with each other on the same row. That also means it isn't specific
+    to the spread-format bleed bug or to column-wise extraction at all:
+    any extraction method, on any Repertoire season, could in principle
+    produce this same self-contradiction, so this checks every
+    `*.raw.json` directory the same way `check_repertoire_unknown_theater`
+    and `check_repertoire_malformed_receipts` do, not just column-wise
+    output.
+
+    Not yet corpus-scanned as of the addendum that added this check --
+    written to make that scan repeatable and routine going forward
+    rather than a one-off script, matching this module's own purpose."""
+    flags = []
+    if not raw_dir or not raw_dir.exists():
+        return flags
+
+    for raw_path in sorted(raw_dir.glob("*.raw.json")):
+        page_id = raw_path.stem.replace(".raw", "")
+        d = json.loads(raw_path.read_text(encoding="utf-8"))
+        for i, s in enumerate(d.get("sessions", []), start=1):
+            if not s.get("is_dark"):
+                continue
+            works = s.get("works") or []
+            annotation = (s.get("annotation") or "").strip()
+            receipts = (s.get("receipts_text") or "").strip()
+            titled_works = [w.get("work_title") for w in works if (w.get("work_title") or "").strip()]
+            has_receipts_digit = bool(receipts) and not _BARE_DASH_RE.match(receipts)
+            if not titled_works and not annotation and not has_receipts_digit:
+                continue
+            flags.append(dict(
+                page_id=page_id, table="event_entry", row_id=f"{page_id}__s{i:03d}",
+                flag="dark_row_with_content",
+                detail=f"is_dark=True but works={titled_works!r} "
+                       f"annotation={annotation!r} receipts_text={receipts!r} -- "
+                       f"date={s.get('date_text')!r} theater={s.get('theater')!r}",
+            ))
+    return flags
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--parsed-dir", required=True, type=Path)
@@ -601,6 +660,7 @@ def main():
         flags += check_repertoire_unknown_theater(raw_dir)
         flags += check_repertoire_malformed_receipts(raw_dir)
         flags += check_repertoire_cross_theater_date_mismatch(raw_dir)
+        flags += check_repertoire_dark_row_with_content(raw_dir)
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with open(args.out, "w", newline="", encoding="utf-8") as f:

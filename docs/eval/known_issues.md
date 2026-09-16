@@ -10657,3 +10657,66 @@ in the prior addendum, still unexplained; wiring any of this into
 `parse_and_validate.py`, still deferred; a fresh full-corpus
 column-wise run reflecting this fix, not yet done (this was a
 targeted verification subset, not a rollout).
+
+### Addendum to #70 (2026-09-16): built the proposed quality check,
+and it turned out simpler than planned -- no cross-theater comparison
+needed at all.
+
+**The insight**: both residual `1895-96_p006`/`p009` rows already had
+`is_dark: true` set CORRECTLY by the model, on the same row that also
+carried real leftover content (`Малый`'s title, bled into `Большой`'s
+own `works`/`annotation`). That means the bug is visible entirely
+within one theater's own row -- `is_dark=True` contradicting non-empty
+`works`/`annotation`/`receipts_text` -- with no need to compare
+against a neighboring column at all. Simpler than the corpus-wide
+bleed scanner this addendum's prior entry built, and general-purpose:
+not specific to column-wise extraction, the spread format, or this one
+boundary, so it now runs against every `*.raw.json` directory
+(`check_repertoire_dark_row_with_content`, `pipeline/quality_checks.py`,
+wired into `main()`'s existing page/row/column loop next to
+`check_repertoire_unknown_theater` and
+`check_repertoire_malformed_receipts`).
+
+**A directly relevant precedent found while scoping this**: issue
+#68's own addendum already confirmed this exact shape once before,
+independently -- `1903-04_p019`, Малый театръ, where cross-column
+bleed corrupted a genuinely-dark cell's `annotation` with a garbled
+duplicate of Большой's real annotation for the same date, fixed by
+clearing to `is_dark: true, works: [], annotation: null`. This check
+makes that failure mode routinely detectable instead of something
+that has to be independently rediscovered by hand each time.
+
+**Checked for the obvious false-positive risk before trusting it**:
+could a genuinely dark day legitimately carry a closure-reason
+annotation (e.g. "Праздникъ" for a holiday) alongside `is_dark=True`?
+Spot-checked directly against the scan
+(`repertoire_1897-98_p002`, `Большой`, four consecutive flagged rows
+17-20 August): the real printed cell is a PLAIN DASH, nothing else --
+no closure-reason text at all. The model's "Праздникъ"/"По крещенію"/
+"Осенній" annotations on those rows are not printed anywhere on the
+page; this is the same bleed/fabrication pattern, not a legitimate
+convention this check would wrongly flag. No narrowing needed.
+
+**Run against the 15-page verification set from the prior addendum**:
+18 flags (3 pages) on the pre-fix run, 23 flags (3 pages, same three)
+on the post-fix run -- a higher COUNT, but not a regression: before
+the fix, this same underlying defect mostly surfaced as the coarser
+wholesale-absorption pattern the corpus-wide bleed scanner already
+measured dropping 14/15 -> 2/15 (`is_dark=False` with fully duplicated
+content, a different observable shape); the fix converts most of that
+into a cleaner but still-imperfect `is_dark=True`-with-leftover
+pattern, which this new, more granular check is naturally better
+positioned to catch than the coarser scanner was. Two different
+instruments measuring overlapping parts of the same shrinking problem,
+not two independent problems.
+
+**Not yet done**: a corpus-wide run of this check (only the 15-page
+verification subset checked so far, same scope limit as the rest of
+this addendum chain); whether `dark_row_with_content` instances
+concentrate on the same `Большой`<->`Малый` boundary specifically or
+show up elsewhere too (the check itself is boundary-agnostic by
+design, so this is worth knowing); a decision on whether to
+auto-clear a confirmed instance to `is_dark: true, works: [],
+annotation: null` (the `1903-04_p019` precedent's own fix) once this
+check is trusted at scale, or keep routing to manual review like
+everything else in this issue.
