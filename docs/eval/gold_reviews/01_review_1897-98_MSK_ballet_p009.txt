@@ -77,12 +77,32 @@
 # ===================================================================
 
 [FIELDS]
-printed_folio:
-tailpiece_present:
+printed_folio: 381
+tailpiece_present: no
 no_text:
 copy_artifacts:
-reading_order_uncertain:
+reading_order_uncertain: yes
 notes:
 
 [BLOCKS]
 
+[figure photograph]
+caption: Восп-ца Тарасенко.
+Г-жа Дьякъ.
+Восп-ца Соколова.
+Восп-ца Павлова.
+Восп-ца Егорова.
+«Сатурнъ и 4 его спутника»
+(«Звѣзды», балетъ К. Ѳ. Вальца и И. Н. Хлюстина).
+
+[paragraph]
+сковскаго театральнаго училища Никитинъ 2-й, Рябцовъ, Козловъ, Куз-
+нецовъ 2-й, Михайловъ и Мордкинъ.
+
+[enumerated_list]
+<i><l fr>Solo des Etoiles doubles</l></i>—г-жи Мендесъ 1-я и Мендесъ 2-я.
+
+[enumerated_list]
+<i><l fr>Solo de Saturne et de ses 4 sattelites</l></i>—г-жа Шишко или г-жа Дьякъ
+и воспитанницы Императорскаго Московскаго театральнаго училища Тара-
+сенко, Павлова, Егорова и Соколова.
