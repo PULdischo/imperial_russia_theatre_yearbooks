@@ -10720,3 +10720,53 @@ auto-clear a confirmed instance to `is_dark: true, works: [],
 annotation: null` (the `1903-04_p019` precedent's own fix) once this
 check is trusted at scale, or keep routing to manual review like
 everything else in this issue.
+
+### Addendum to #70 (2026-09-16): rolled out to the full corpus, both
+checks re-run at scale.
+
+**The rollout**: `/tmp` had been swept clean overnight between
+sessions -- the split-half image directory and `raw_columnwise` crops
+survived, but the manifest and every intermediate `/tmp/full_corpus_raw_v*`
+snapshot did not. Rebuilt a manifest directly from the 176 surviving
+split-half images (8 seasons, 16-24 pages each -- 1894-95 the
+smallest at 16) and re-ran column-wise extraction corpus-wide with the
+corrected `theater_pad_overrides` config: `/tmp/full_rollout_v6`,
+176/176 pages, 13 fully-reconciled (`ok`, up from single digits before
+this fix), 3.8M tokens billed. Copied the raw output (not the crop
+images) to `outputs/repertoire_spreadfix_v6/raw_columnwise/` --
+`/tmp` has already proven unreliable as the only copy once this
+session, and per this repo's own convention (`CLAUDE.md`: raw
+`*.raw.json` is worth keeping, everything else regenerates) this is
+exactly the artifact that belongs somewhere more durable. NOT
+promoted over `outputs/full_run` -- same convention as the
+2026-09-15 season-typo fix (`outputs/full_run_seasonfix/`), a
+separate, later decision.
+
+**Wholesale/fragment bleed scan, full corpus**: 4 of 176 pages
+flagged (2.3%, down from an unscoped-but-clearly-much-worse starting
+point) -- all four on `1895-96`, all `Большой`<->`Малый`. Consistent
+with that season's own numbers: `1895-96` has the narrowest measured
+`Малый` column (154px) and needed the largest override relative to
+its own width of the three "moderate" seasons, so residual risk
+concentrating there specifically, rather than spreading evenly across
+seasons, matches the root-cause story rather than contradicting it.
+
+**`dark_row_with_content`, full corpus**: 63 flags across 13 of 176
+pages (7.4%). 56 of the 63 (89%) are `Большой` -- overwhelmingly the
+same boundary, as expected. The remaining 7 are split across
+`Михайловскій` (4), `Маріинскій` (2), and `Малый` (1) -- a small tail
+worth noting rather than ignoring: this check is boundary-agnostic by
+design, and it found a handful of instances that have nothing to do
+with the `Большой`/`Малый` edge this whole fix targeted. Not yet
+scan-verified whether those 7 are the same bleed mechanism on a
+different boundary or something else entirely -- flagged for the next
+pass, not resolved here.
+
+**Not yet done**: scan-verifying the 7 non-`Большой` `dark_row_with_content`
+instances; a decision on auto-clearing confirmed instances versus
+routing to manual review, still open from the prior addendum; whether
+`1895-96`'s remaining 4-page residual needs its own further-narrowed
+override or is an acceptable remainder; wiring any of this into
+`parse_and_validate.py`, still deferred; promoting
+`outputs/repertoire_spreadfix_v6` over `outputs/full_run`, a separate
+rollout decision not made here.
