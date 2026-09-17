@@ -11456,3 +11456,27 @@ count now meets or exceeds `full_run`'s old count for that same page
 raw/` are kept alongside `parse_raw/` as the durable record of this
 recovery (mirroring the "keep the raw `*.raw.json` responses" rule for
 the rest of this pipeline).
+
+### Addendum to #70 (2026-09-17): `build_duckdb.py` run -- closes this issue
+
+`outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb` built against
+the 89-page manifest (83 split pairs + 6 single_leaf) and verified
+directly against the database, not just the build log: `raw.event_entry`
+4,161 rows, `raw.event_entry_performance` 5,342 rows, 89 distinct
+`page_id`s, all 8 seasons (1890-91 through 1897-98) represented.
+`analysis.event_entry` built with 0 `not_captured` completeness gaps.
+Query logged in `docs/query_log.md`.
+
+This is a scratch build only -- `outputs/repertoire_spreadfix_v6`, not
+`outputs/full_run` -- matching the 2026-09-15 season-typo-fix precedent.
+Promoting it into production, and running the entity-resolution stages
+(`build_entities.py`, `link_wikidata.py`, `build_research_model.py`,
+etc.) against it, are both separate decisions not yet made.
+
+**This closes issue #70.** Everything from the original fold-split-
+extraction plan through dedup, both quality-check triage passes (cross-
+theater-mismatch and receipts residual), the parse_raw/resolved_sessions
+propagation guard, and the single_leaf page recovery is done and
+verified. What's left is promotion/entity-resolution, which is new,
+separate work whenever RG decides to take it up -- not a continuation
+of this issue.
