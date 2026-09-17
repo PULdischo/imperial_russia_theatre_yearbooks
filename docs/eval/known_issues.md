@@ -11480,3 +11480,83 @@ propagation guard, and the single_leaf page recovery is done and
 verified. What's left is promotion/entity-resolution, which is new,
 separate work whenever RG decides to take it up -- not a continuation
 of this issue.
+
+### Addendum to #70 (2026-09-17): post-build spot check found 8 more
+duplicate sessions `duplicate_event_key` can't see -- fixed, and closed
+the gap in the check itself
+
+Spot-checking two pages against the built database after `build_duckdb.py`
+(one already-fixed single_leaf page, one "pair" page never individually
+scan-verified anywhere in this whole issue) turned up a real duplicate on
+the untouched page: `1893-94_pair006`, `14 Четвергъ.`/`Большой` had THREE
+sessions where two real ones (morning + evening) were expected -- the
+third was `Снѣгурочка, оп. -- 1941 р. 47 к.`, byte-identical to the
+`evening` session, but labeled `session="unspecified"`.
+
+**Root cause**: `duplicate_event_key` (`check_repertoire`) keys on
+`(date_text, theater, time_of_day)` literally. `dedup_split_overlap.
+keyed_sessions` uses the same shape of key to detect top/bottom
+collisions. When the SAME real printed row got captured independently
+by two different reads (one half's passthrough, one half's passthrough
+or a dedup-queue resolution) that happened to disagree on the `session`
+label (`"evening"` vs `"unspecified"`, or `"morning"` vs
+`"unspecified"`), neither mechanism ever saw them as the same key --
+the collision-detector let both through as if they were about different
+sessions, and the duplicate-key checker never compared them either.
+Both guarantees this pipeline is built around ("never lose text", "never
+make up text") stayed intact -- nothing was fabricated -- but a real
+event got double-counted, which would inflate any receipts sum or event
+count run against it.
+
+**Scoped the whole corpus, not just the one page found by chance**:
+grepped every page in `outputs/repertoire_spreadfix_v6/parse_raw/` for
+sessions sharing `(date_text, theater)` with byte-identical `works`
+(every title AND genre) and `receipts_text` -- found **8 such pairs
+across 6 pages** (`1891-92_pair008` x2, `1891-92_pair012`,
+`1893-94_pair006`, `1895-96_pair004` x2, `1895-96_pair006`,
+`1897-98_pair010`), none previously flagged. Because the shared content
+had to match in full (not just date+theater), false positives from two
+genuinely different performances coinciding are effectively ruled out --
+two different real programs essentially never share an identical
+receipts figure by chance too.
+
+**Fixed all 8** by dropping the redundant session, keeping the other
+(assert-prior-value discipline, matching every other fix in this issue).
+7 of 8 followed one clean pattern: a specific `morning`/`evening` session
+vs. a duplicate `unspecified` one -- kept the specific label, dropped the
+`unspecified` copy. The 8th (`1891-92_pair008`, `9 Суббота.`/
+`Михайловскій.`, `Madame Agnès`/`De 1 h. à 3 h.`) had two SPECIFIC but
+different labels (`morning` vs `evening`) both sourced from the same
+single half's own raw read -- couldn't locate the source scan to confirm
+which is correct (yet another instance of this issue's now-familiar
+render-vs-printed-page-number problem), but `receipts_text` was `None`
+on both, so no figure is at stake in the choice, only which label
+survives; kept the first-listed (`evening`) and documented the
+uncertainty rather than guessing at a scan location.
+
+**Propagated to `resolved_sessions/`** the same way every other direct
+`parse_raw` fix in this issue has been (verified 0 diffs across the 6
+affected files afterward).
+
+**Added `check_repertoire_duplicate_content_across_sessions`**
+(`pipeline/quality_checks.py`) so this class of duplicate is caught
+automatically going forward instead of relying on a spot check to find
+it again by chance -- flags any two sessions sharing `(date_text,
+theater)` with fully-identical `works` + `receipts_text`, regardless of
+`session` label. Unit-verified against the exact `Снѣгурочка` shape
+before trusting it against the real corpus (found it correctly on
+synthetic data; found 0 on the corpus, which is right, since all 8 real
+instances were already fixed by the time it ran for real).
+
+**Final re-verified state**: `parse_and_validate.py` -- 0 validation
+errors, `event_entry` 4,161 -> 4,153 (-8, exactly the removed sessions),
+`event_entry_performance` 5,342 -> 5,330 (-12, matching the removed
+sessions' own work counts). `quality_checks.py`: 152 flags, same total
+and same per-category breakdown as before this addendum (the new check
+correctly contributes 0, and none of the existing categories were
+touched by removing pure duplicates) -- `duplicate_event_key` unchanged
+at 4 (confirming these 8 were never counted there, exactly the gap this
+addendum closes). `build_duckdb.py` re-run and re-verified directly
+against the database: 4,153/5,330 rows, and the specific `1893-94_
+pair006` case spot-checked down to 2 sessions (not 3) for that date/
+theater. Query logged in `docs/query_log.md`.

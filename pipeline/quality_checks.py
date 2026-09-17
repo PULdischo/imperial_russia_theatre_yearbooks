@@ -631,6 +631,78 @@ def check_repertoire_dark_row_with_content(raw_dir: Path | None) -> list[dict]:
     return flags
 
 
+def check_repertoire_duplicate_content_across_sessions(raw_dir: Path | None) -> list[dict]:
+    """Flags two sessions on the same page, same `date_text` + `theater`,
+    that share byte-identical `works` (title+genre) AND `receipts_text` --
+    the same real printed row captured twice -- even though their
+    `session` (morning/evening/unspecified) fields differ.
+
+    This is the gap the plain `duplicate_event_key` check (`check_
+    repertoire`, keyed on date+theater+time_of_day) cannot see: found
+    2026-09-17 spot-checking `outputs/repertoire_spreadfix_v6` after
+    `build_duckdb.py` -- 8 cases across 6 pages where the same row
+    survived twice under two different session labels, invisible to
+    `duplicate_event_key` specifically because the labels differ. 7 of
+    the 8 were a single consistent shape: a plain passthrough session
+    (a specific `morning`/`evening` label, from one split-page half)
+    duplicating a `session="unspecified"` session that either passed
+    through from the OTHER half or came out of the split-overlap dedup
+    queue (`_source: "human:kept_top"`/`"human:kept_bottom"`) -- the
+    dedup collision-detection key includes `session` as a literal string
+    match (`dedup_split_overlap.keyed_sessions`), so a real top/bottom
+    collision whose two reads disagreed on session label never even
+    registered as a collision to resolve, and both copies passed straight
+    through as if unrelated. Confirmed a real, not coincidental, dupe
+    every time by requiring the WHOLE content (every work title, every
+    genre, the receipts figure) to match exactly, not just the date and
+    theater -- two genuinely different real performances on the same day
+    essentially never share an identical program AND an identical
+    receipts figure by chance.
+
+    Only flags when the shared content is non-empty (a title, or a
+    receipts figure) -- two blank/dark sessions for the same date+theater
+    are not a meaningful duplicate to report (and are already a normal,
+    harmless artifact of how dark placeholder rows get generated).
+
+    Works against any raw *.raw.json directory, matching this module's
+    other structural, extraction-method-agnostic checks."""
+    flags = []
+    if not raw_dir or not raw_dir.exists():
+        return flags
+
+    for raw_path in sorted(raw_dir.glob("*.raw.json")):
+        page_id = raw_path.stem.replace(".raw", "")
+        d = json.loads(raw_path.read_text(encoding="utf-8"))
+        sessions = d.get("sessions", [])
+        by_key: dict[tuple, list[tuple[int, dict]]] = defaultdict(list)
+        for i, s in enumerate(sessions, start=1):
+            key = ((s.get("date_text") or "").strip(), (s.get("theater") or "").strip())
+            by_key[key].append((i, s))
+
+        for (date_text, theater), items in by_key.items():
+            if len(items) < 2:
+                continue
+            by_content: dict[tuple, list[int]] = defaultdict(list)
+            for i, s in items:
+                works = tuple((w.get("work_title"), w.get("genre")) for w in (s.get("works") or []))
+                receipts = (s.get("receipts_text") or "").strip()
+                if not works and not receipts:
+                    continue  # two blank rows for the same slot -- not a meaningful dupe
+                by_content[(works, receipts)].append(i)
+            for (works, receipts), idxs in by_content.items():
+                if len(idxs) < 2:
+                    continue
+                sessions_seen = [sessions[i - 1].get("session") for i in idxs]
+                flags.append(dict(
+                    page_id=page_id, table="event_entry", row_id=f"{page_id}__s{idxs[0]:03d}",
+                    flag="duplicate_content_across_sessions",
+                    detail=f"date={date_text!r} theater={theater!r} -- {len(idxs)} sessions "
+                           f"(session labels {sessions_seen!r}) share identical works={works!r} "
+                           f"receipts_text={receipts!r}",
+                ))
+    return flags
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--parsed-dir", required=True, type=Path)
@@ -661,6 +733,7 @@ def main():
         flags += check_repertoire_malformed_receipts(raw_dir)
         flags += check_repertoire_cross_theater_date_mismatch(raw_dir)
         flags += check_repertoire_dark_row_with_content(raw_dir)
+        flags += check_repertoire_duplicate_content_across_sessions(raw_dir)
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with open(args.out, "w", newline="", encoding="utf-8") as f:
