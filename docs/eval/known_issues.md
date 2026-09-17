@@ -11627,3 +11627,83 @@ Re-verified: 0 validation errors, `event_entry` unchanged at 4,153,
 any tracked check). `build_duckdb.py` re-run and re-verified directly:
 the fixed titles/genres confirmed present, no stray truncated values
 remain.
+
+### Addendum to #70 (2026-09-17): blank-`genre` audit -- 24 more fixes,
+plus a whole-page duplicate found and removed
+
+RG asked specifically whether blank (`NULL`) `genre` cells are
+intentional or accidental drops. 226 of 5,331 performance rows had
+`genre=NULL`. Categorized all of them:
+
+- **~206 confirmed legitimate** -- excerpt/act markers where the genre
+  (if any) is embedded in the title itself, matching this corpus's own
+  established convention (`'2-е д. бал. Фіаметта'`, `'Актъ бал.
+  Фіаметта'`, etc.); anthems (`Гимнъ`/`Hymne`, 36 rows -- not a
+  categorized genre at all); named-reciter pieces (`Сцена г. Вейнберга`/
+  `Сцена г. Горбунова`, 37 rows, consistently genre-less); benefit/
+  commemorative announcement titles (`Бенефисъ г. ...`, `Спектакль въ
+  память И. А. Крылова`, etc.).
+- **24 rows were real, accidental drops** -- the title carried its own
+  genre suffix (this corpus's established title-duplicates-genre
+  convention, e.g. `'Heimath, Schausp.'`) but the separate `genre` field
+  was left null anyway. Found via a suffix-pattern search, then widened
+  once to catch multi-word suffixes (`'Myrane, étude dr.'`) and titles
+  where the genre word wasn't comma-separated (`'Помолвка въ Галерной
+  гаван карт.'`). All 24 fixed by duplicating the title's own suffix
+  into `genre` (18 rows), or a small title/genre reconstruction backed
+  by a clean corpus duplicate of the same (truncated) title (4 rows:
+  `'Заварила кашу—расхлебывафарсъ'` -> title `'Заварила кашу—
+  расхлебывай'` + genre `'фарсъ'`; `'Помолвка въ Галерной гаван(ъ)
+  карт.'` and a second, differently-truncated occurrence of the same
+  title both -> `'Помолвка въ Галерной гавани'` + `'карт.'`; `'нина,
+  др. льшую роль!, ш.'` split into two real works, `'Родина, др.'` +
+  `'Я играю большую роль!'`/`'ш.'`, both confirmed via 12 and 16 clean
+  corpus occurrences respectively).
+- **1 row corrected to a dark cell, not a title** -- `'Кубокъ,
+  Собачкинъ, Месть Амура, Дивертиссементъ'` (Большой, `1895-96_
+  pair010`, `20 Понед.` morning) was a byte-for-byte match (once split)
+  to the SAME date's Малый-theater row on the same page (already fixed
+  earlier this session) with no receipts figure of its own -- matches
+  the already-documented "theater reaches into a blank neighbor's
+  content" bleed pattern, not a real second performance. Corrected to
+  `is_dark=true`, `works=[]`.
+
+**Investigating one of these (`'Дюующіе спек-'`/`'онца сезона—'`/
+`'атные.'`, three garbled fragments of "Всѣ послѣдующіе спектакли до
+конца сезона—безплатные" masquerading as separate work titles) turned
+up a much bigger problem**: its source traced to `repertoire_1895-96_
+p012`, one of the 6 `single_leaf` pages fully rebuilt from the scan
+earlier this session (see this issue's single_leaf-recovery addendum).
+Checking further, `repertoire_1895-96_pair012` -- a DIFFERENT page_id,
+already sitting in `manifest.csv`/`parse_raw/` -- turned out to be a
+**complete duplicate**: all 10 of its sessions (same 10 dates, same
+theater, Малый only) exactly matched the (date, theater) pairs already
+correctly captured, with far better quality, under the single_leaf
+page's own id. Every one of those 10 events would have been double-
+counted in the database.
+
+**Checked whether this was a wider pattern, not assumed**: 4 more
+`pairNNN` ids also cite a single_leaf render page as one of their
+`_source`s (`1890-91_pair012`, `1894-95_pair008`, `1896-97_pair012`,
+`1897-98_pair012`). Cross-referenced (date, theater) pairs between each
+and its single_leaf counterpart: **zero overlap in all 4 cases** --
+spot-checked actual titles/dates to confirm they're genuinely different
+real content (e.g. December performances vs. the single_leaf page's May
+content), not a subtler duplicate. This is the same `_source`-string
+ambiguity this issue has hit repeatedly (a label that looks like a
+render-sequential page id sometimes isn't one) -- coincidence, not a
+second duplicate. Only `repertoire_1895-96_pair012` was real.
+
+**Removed `repertoire_1895-96_pair012`** from `manifest.csv` and
+`parse_raw/` (superseded entirely by the higher-quality single_leaf
+fix; not deleted from `resolved_sessions/`, kept as the historical
+audit record).
+
+**Final re-verified state**: `event_entry` 4,153 -> 4,143 (-10, the
+removed duplicate page), `event_entry_performance` 5,331 -> 5,317, 88
+distinct pages (was 89), 0 validation errors, `quality_flags.csv`
+unchanged (152 flags -- none of this touched a tracked check).
+Propagated to `resolved_sessions/` for all 11 affected files.
+`build_duckdb.py` re-run and re-verified directly against the database
+(0 rows remaining for the removed page_id). Queries logged in
+`docs/query_log.md`.
