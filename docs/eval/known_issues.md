@@ -12293,3 +12293,62 @@ Only item 5 remains open** -- `repertoire_1892-93_pair008`, `26
 Октября.`, Маріинскій, `annotation = "Отечественный"`, no corpus match
 anywhere to confirm what follows -- genuinely unrecoverable, not
 merely unattempted.
+
+### Addendum to #70 (2026-09-17): item 5 checked too -- it wasn't
+genuinely unrecoverable after all, it was a plain extraction misread;
+also surfaced a new "missing theater column" instance the
+`zero_dark_cells_on_multiweek_page` check doesn't catch
+
+RG asked to check the last open row. It turned out NOT unrecoverable --
+findable the same way as everything else in this issue, just needing
+the render-vs-printed-page-number puzzle solved once more.
+`_source` cited `repertoire_1892-93_p008 (top)`; reading that as the
+render-sequential index (JPG008, printed p.18) landed on an unrelated
+Feb/Mar 1893 page; reading it as the PRINTED page number instead
+(`p003__top` -> printed p.8, per `split_page_numbers_final.csv`) landed
+on the right page -- `ForUpload_1892-93_Repertoire_003.jpg`, dates 24
+October - 4 November 1892. The `26 Октября.` cell plainly reads
+`"Отелло, оп. 2947 р. 70 к."` -- no `"Отечественный"` text anywhere
+near it. Almost certainly a VLM misread off the shared `"Оте-"` prefix
+between `Отелло` and `Отечественный`, not a real printed annotation.
+
+Checking the surrounding rows for context (to confirm the row mapping
+before trusting the fix) turned up a repeating, Mariinsky-column-only
+defect across most of the rest of this same page: 7 more sessions (`27`-
+`30 Октября.`, `1`-`4 Ноября.`) had `receipts_text` silently dropped
+(Большой's and Михайловскій's receipts on the identical rows were all
+intact -- this was never a page-wide gap), and 3 of those (`28`, `29
+Октября.`, `3 Ноября.`) also had `Млада` mistagged `"бал."` instead of
+`"оп."` (it's Rimsky-Korsakov's opera). Recovered all 8 receipts
+figures and fixed all 3 genre tags from the same scan; fixed one title
+typo (`"Дочь фараопа."` -> `"Дочь фараона."`, the real ballet name) and
+corrected `_source` on every touched session.
+
+**New finding, flagged but not fixed this pass**: this same page is
+missing TWO ENTIRE THEATER COLUMNS (Александринскій, Малый) across its
+whole 12-date range -- only Маріинскій/Большой/Михайловскій are
+present in `parse_raw`. This is the identical "missing entire theater
+column" pattern already resolved corpus-wide for the 4 pages behind
+`zero_dark_cells_on_multiweek_page` -- but this page was never flagged
+by that check, because it still has real dark cells on `24`/`31
+Октября.` for the theaters it does have, so the check's zero-dark-cells
+heuristic never triggered. **This is a genuine gap in that check's
+coverage** -- worth a corpus-wide sweep for other pages with the same
+blind spot (a page missing theater columns entirely, but not flagged,
+because its surviving theaters still show ordinary dark days). Not
+resolved here -- scope was already well beyond the single row RG asked
+to check; a fresh, separate pass should locate the scan, recover
+Александринскій + Малый for all 12 dates, and re-check the whole corpus
+for other pages with the same false-negative.
+
+Propagated, re-ran `parse_and_validate.py` -> `quality_checks.py` ->
+`build_duckdb.py`. 4359 events unchanged, 5649 -> 5650 performances
+(+1, the recovered `Отелло` session), 5 quality flags unchanged.
+Rebuilt and verified directly against the database. Queries logged in
+`docs/query_log.md`.
+
+**`genre-field-3-inferred-rows-followup.md` is now fully resolved --
+0 rows open.** The newly-discovered missing-column gap on
+`repertoire_1892-93_pair008` (and the possibility of siblings elsewhere
+in the corpus) is a new, separate open item, not yet tracked as its own
+numbered issue.
