@@ -11901,3 +11901,66 @@ logged in `docs/query_log.md`.
 after the title audit** -- nothing outstanding remains from the
 `genre`/`performance_title`/`annotation` field-audit sequence except
 the original 3 inferred-not-scan-verified genre rows, still open.
+
+### Addendum to #70 (2026-09-17): `receipts_text`/`receipts_rubles`/
+`receipts_kopecks` field audit -- a real parsing bug plus a fully
+corrupted theater column
+
+RG asked to check the receipts field the same way. Two findings, one
+code-level and one data-level.
+
+**Code-level: a symmetric twin of the rubles-marker fix from earlier
+this session.** `pipeline/schemas/repertoire.py`'s `_parse_receipts`
+cleaned the kopecks side with a literal `kop_part.replace("к.", "")` --
+requires the exact period after "к", same gap the rubles-side fix
+(this issue's earlier "dropped-period" addendum) had already found and
+fixed on the OTHER side of the split. 7 rows have `receipts_text` like
+`"2697 р. 70 к"` (no period after "к"), which silently left `"70 к"`
+unstripped in `receipts_kopecks` instead of `"70"`. Fixed with the same
+`\b`-bounded regex approach (`_KOPECKS_MARKER_RE = re.compile(r"\bк\.?")`),
+for the same reason (a bare `к` would also match the letter "к" inside
+an ordinary Cyrillic word). Verified against all receipts_text in the
+corpus (0 bad kopecks values remain) and a handful of hand-picked edge
+cases (dash convention, missing-period, normal) before trusting it.
+
+**Data-level: the 8 "truncated leading digit" `receipts_parse_failed`
+cases weren't truncation at all.** All 8 were on `repertoire_1894-95_
+pair008`'s `Михайловскій` column, the same page already flagged this
+session for a corrupted `Большой` column and several `Малый`-theater
+truncations. Checking these against the scan already open from that
+earlier work (`ForUpload_1894-95_Repertoire_003.jpg`) revealed the
+`Михайловскій` column was corrupted for **10 consecutive dates (6-15
+Января)**, not just these 8 rows -- every session in that span had a
+work title DUPLICATED from a neighboring theater (`Мелузина`, `Донъ
+Жуанъ`, `Жизнь за царя`, `Русланъ и Людмила` -- all really `Большой`'s
+or `Маріинскій`'s titles for those same dates) paired with receipts
+truncated to match (`"р. 47 к."` etc.), one row wrongly marked
+`is_dark=true` despite the scan showing real content (`14 Субб.`,
+`Bénéfice de M-r Valbel.`/`La Contagion, com.`), and one more merged-
+title case caught in the same pass on `Малый` (`'Еелентъева, др.
+ртинка, карт.'` -> `Василиса Мелентьева, др.` + `Лѣтняя картинка,
+карт.`, two real, separate works).
+
+Rebuilt all 10 `Михайловскій` sessions directly from the scan --
+genuinely different content for every date (mostly French plays: `Les
+Joies du Foyer`/`La Filleule de Cabassou` recurring several times,
+plus a handful of Russian titles), nothing recycled from a neighbor.
+**Spot-checked dates 16-25 on the same column against the scan too,
+rather than assuming the corruption's boundary** -- confirmed genuinely
+clean (matching titles, full receipts, no duplication), so the
+corrupted span is exactly 6-15 Января, not the whole column.
+
+One receipts figure (`15 Воскрес.`, `Риголетто, оп.`) stayed partially
+unresolved on purpose: its leading rubles digits sit directly in the
+page-curvature shadow at the binding fold and are genuinely illegible
+in the scan (the same illegibility class RG confirmed exists early in
+this whole issue) -- title fixed with confidence, `receipts_text` left
+as the honest partial `"р. 75 к."` rather than guessed.
+
+**Final re-verified state**: `event_entry` unchanged at 4,143,
+`event_entry_performance` 5,342 -> 5,353 (+11, mostly recovered works
+on the rebuilt Михайловскій rows), 0 validation errors,
+`receipts_parse_failed` 50 -> 43 (7 resolved; the one genuinely-
+illegible case stays flagged, correctly). Propagated to `resolved_
+sessions/`. `build_duckdb.py` re-run and re-verified. Queries logged in
+`docs/query_log.md`.

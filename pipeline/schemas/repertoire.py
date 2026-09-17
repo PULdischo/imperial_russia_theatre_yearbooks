@@ -165,13 +165,24 @@ def merge_repertoire_samples(sample_dicts: list[dict]) -> tuple[dict, dict]:
 #: token rather than merely appear somewhere in the string.
 _RUBLES_MARKER_RE = re.compile(r"\bр\.?")
 
+#: Same dropped-trailing-period gap as `_RUBLES_MARKER_RE`, just on the
+#: kopecks side -- found 2026-09-17 doing the receipts-field audit
+#: (docs/eval/known_issues.md #70): 7 sessions have receipts_text like
+#: "2697 р. 70 к" (no period after "к"). The old literal `.replace("к.",
+#: "")` silently left the marker in place ("70 к" instead of "70") since
+#: it requires the exact "к." substring -- a real parsing gap, not
+#: caught by the rubles-side fix since this is a different marker on the
+#: other side of the same split. `\b` for the same reason as the rubles
+#: marker (a bare `к` would also match inside an ordinary word).
+_KOPECKS_MARKER_RE = re.compile(r"\bк\.?")
+
 
 def _parse_receipts(text: Optional[str]) -> tuple[str, str]:
     if not text:
         return "", ""
     try:
         rub_part, kop_part = _RUBLES_MARKER_RE.split(text.replace("—", "-"), maxsplit=1)
-        kop = kop_part.replace("к.", "").strip()
+        kop = _KOPECKS_MARKER_RE.sub("", kop_part).strip()
         return rub_part.strip(), ("" if kop == "-" else kop)
     except Exception:
         return "", ""
