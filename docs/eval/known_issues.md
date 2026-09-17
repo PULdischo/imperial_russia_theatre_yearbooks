@@ -11707,3 +11707,66 @@ Propagated to `resolved_sessions/` for all 11 affected files.
 `build_duckdb.py` re-run and re-verified directly against the database
 (0 rows remaining for the removed page_id). Queries logged in
 `docs/query_log.md`.
+
+### Addendum to #70 (2026-09-17): `performance_title` field audit, 57
+fixes
+
+RG asked to check the `performance_title` field the same way. Since a
+real title is always capitalized in this corpus, distinct titles
+starting with a LOWERCASE letter are a strong, cheap signal of a
+left-truncated title (the same crop/divider truncation documented
+repeatedly throughout this issue, now swept systematically instead of
+found one row at a time). 42 such titles found. For each, searched the
+rest of the corpus for a longer title ending in the same tail --
+resolved 53 of them this way, e.g. `'ды просвѣщенія'` -> `'Плоды
+просвѣщенія'` (5 occurrences across 2 pages), `'опекъ-горбунокъ'`/
+`'некъ-горбунокъ'`/`'Онекъ-горбунокъ'`/`'Орнекъ-горбунокъ'` (four
+different truncations of the same ballet) -> `'Конекъ-горбунокъ'`,
+5 different mangled forms of `'Русланъ и Людмила'` (`'Слацъ и
+Людмила'`, `'Ганъ и Людмила'`, `'Сланъ и Людмила'`, `'Гань и Людмила'`,
+bare `'Людмила'`) all -> the real title, confirmed by 32+ clean
+occurrences elsewhere. Also caught (not lowercase-starting, found by
+direct read): `'Евге'` + `'Онѣгинъ'` stored as two separate works on
+one row -- a hyphenated line-break ("Евге-/ній Онѣгинъ") misread as two
+titles -- merged into one, `'Евгеній Онѣгинъ, оп.'`.
+
+**Investigating one cluster surfaced a deeper, already-known problem
+recurring**: `repertoire_1894-95_pair008`'s `Большой` column has ~10
+severely truncated/garbled titles (`'статуя, бал.'`, `'онъ, оп.'`,
+`'сть, оп.'`, etc.) with correspondingly garbled `annotation` text
+(multiple unrelated fragments run together). Traced this directly to
+the SAME stale, wrong-page `raw_columnwise` extraction that was
+discovered and discarded earlier this session for the single_leaf
+`1894-95_p008` page (confirmed by matching receipts figures and
+annotation text byte-for-byte against that abandoned dump) -- except
+here the dates genuinely don't overlap with the single_leaf page's
+fixed content (real January content, not a duplicate; already confirmed
+during the whole-page-duplicate check earlier this session), so this
+data wasn't discarded along with that fix. Fixed what's individually
+recoverable via corpus cross-reference (`'Мелузина'`, `'Русланъ и
+Людмила, оп.'`, `'Кипрская статуя, бал.'`, etc. -- 7 titles); one
+(`'онъ, оп.'` -> `'Демонъ, оп.'`) applied at medium confidence only
+(53 clean occurrences of `Демонъ` vs. 8 of `Манонъ`, not scan-confirmed
+-- the ambiguity is real, just resolved by strong prior rather than
+direct evidence). **The `annotation` field on this same column is still
+garbled and out of scope for this titles-only pass** -- flagged, not
+fixed; would need the same scan-based rebuild treatment already used
+for the single_leaf pages, or at minimum its own dedicated cross-
+reference pass.
+
+**11 titles left genuinely unresolved**, documented rather than
+guessed: `'карт.'` and `'фарсъ'` standalone (the real title fully lost,
+only the genre word survives -- nothing to reconstruct from); `'къ
+дѣлу, сц.'`, `'г. Садовскаго. съ, ком.'`, `'ль супружества'`/`'оль
+супружества'` (no corpus match at all, either truncation length); `'хъ,
+ком.'` (3 plausible candidates, genuinely ambiguous -- and its own
+`genre` field, `'опер.'`, doesn't even match the `', ком.'` suffix
+embedded in the title, a sign this row is more confused than a simple
+truncation).
+
+**Final re-verified state**: `event_entry` unchanged at 4,143,
+`event_entry_performance` 5,317 -> 5,316 (-1, the Евге+Онѣгинъ merge),
+0 validation errors, `quality_flags.csv` unchanged (152 flags -- none
+of this touched a tracked check). Propagated to `resolved_sessions/`
+for 17 affected files. `build_duckdb.py` re-run and re-verified.
+Queries logged in `docs/query_log.md`.
