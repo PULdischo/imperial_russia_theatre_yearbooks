@@ -11361,3 +11361,98 @@ correctly detects a reverted-to-wrong `trusted` list and leaves the
 file byte-identical on disk. `--force` remains available for an
 intentional regeneration, with the docstring pointing back to this
 addendum for what would need re-applying afterward.
+
+### Addendum to #70 (2026-09-17): the 6 `single_leaf` pages were entirely
+missing from `outputs/repertoire_spreadfix_v6` -- found before build,
+recovered, all scan-verified
+
+Pre-build readiness check (RG: "are you sure we're ready?") found that
+the 6 `single_leaf` pages within these 8 seasons -- ordinary landscape
+leaves with no binding fold, identified by `flag_fold_damage.classify_
+page` (`repertoire_1890-91_p000`, `_p012`; `1894-95_p008`; `1895-96_
+p012`; `1896-97_p012`; `1897-98_p012`) -- were never carried into
+`manifest.csv`/`parse_raw/` at all. Confirmed against `outputs/full_
+run`: all 6 already have data there (239 events total, old extraction
+method) -- not data that never existed, just missing from this specific
+build. Queries logged in `docs/query_log.md`.
+
+**First real problem: render-page drift.** 5 of the 6 already had
+column-wise `raw_columnwise/*.raw.json` extractions sitting around from
+2026-09-16. Re-verifying one against a freshly re-rendered image (`/tmp`
+had been swept again) found the SAME render-sequential page id
+(`repertoire_1894-95_p008`) now pointed at a completely different
+physical page than the 09-16 extraction had captured -- April 28-May 7,
+1895 (confirmed against the scan) vs. the stored extraction's January
+dates. `render_pages.py`'s page-to-content mapping is evidently not
+stable run-to-run even with nominally the same inputs, on top of the
+already-known render-sequential-vs-printed-page-number distinction
+(this issue's earlier addenda). Treated today's fresh, single-batch
+render as authoritative (verified all 13 files in the 1890-91 season
+render came from one uninterrupted run, timestamps ~1s apart) and
+copied the needed images to `outputs/repertoire_spreadfix_v6/single_
+leaf_images/` -- durable, not `/tmp` -- before doing anything else with
+them. All 5 stale extractions were discarded and re-run fresh (plus the
+6th, `1890-91_p000`, extracted for the first time) against these
+verified-correct images.
+
+**Second problem: per-theater merge failures, most with real content at
+stake.** The column-wise merge (`merge_columnwise_page`) refuses to
+align a theater's column against the shared date column when their
+row counts disagree ("cannot localise") -- appropriately cautious, but
+it means the THEATER IS DROPPED FROM THE OUTPUT ENTIRELY rather than
+partially included. Every one of the 6 pages had at least one such
+failure; `1890-91_p012` had four of five theaters fail. A shallow
+total-session-count check (comparing to `full_run`) looked reassuring
+at first and was wrong to trust -- it doesn't distinguish "the failed
+theater is wholesale blank, so any row-count mismatch is harmless" from
+"the failed theater has real content that's now silently missing,"
+which turned out to be the majority of the 14 theater/page failures.
+
+**Resolution, page by page, all against the scan (RG's standing
+preference for full reads over triage):**
+- Where a date column had a spurious extra entry (rotated page-header
+  text bled into the date column as its own row, or a real row got
+  spuriously split into a phantom morning/evening pair) but every
+  "failed" theater was genuinely blank throughout (confirmed against
+  the scan) -- rebuilt with one dark session per REAL date, dropping
+  the spurious slot. `1890-91_p000`, `1890-91_p012`.
+- Where the raw column extraction itself was too unreliable to
+  realign confidently -- `1894-95_p008` had Большой's column-read
+  literally contain Малый's own work titles for one row (a genuine
+  column-boundary misattribution, not just a count mismatch);
+  `1895-96_p012`'s Большой/Малый reads were full of OCR fragments of
+  a "free admission" notice mis-parsed as work titles -- re-
+  transcribed both pages' full grids directly from the scan rather
+  than trying to patch the extraction.
+- Where the extraction was basically sound but had truncated the
+  leading word(s) of many titles (the same crop/divider truncation
+  family already documented for receipts_text elsewhere in this
+  issue, here hitting work_title instead) -- `1896-97_p012`,
+  `1897-98_p012` -- recovered full titles against the scan; for
+  `1897-98_p012` this was done for ALL 5 theaters (not just the one
+  flagged theater), since spot-checking the "OK" theaters turned up
+  the same truncation pattern in titles the merge had accepted
+  without complaint (a successful merge is not proof of correctness).
+- Two additional genuine completeness recoveries along the way: a
+  session on `1897-98_p012` whose receipts/second work were legible
+  only as a partial line right at the physical page edge (left as
+  incomplete rather than guessed, matching RG's confirmed page-
+  curvature/binding illegibility class); a charity/benefit notice
+  ("Въ пользу пострадавшихъ отъ недорода хлѣбовъ" -- famine relief)
+  correctly captured as an annotation alongside its real work title on
+  two rows across two theaters, instead of being lost or misparsed.
+
+**Final verified state**: 4,161 events / 5,342 performances (up from
+3,905 / 5,195 before this addendum -- +256 events across the 6 pages,
+matching the rebuilt session counts exactly), 0 validation errors,
+**zero new quality-check flags** on any of the 6 pages (152 flags
+total, unchanged from before -- confirmed by filtering `quality_flags.
+csv` to just these 6 `page_id`s). Where comparable, every page's event
+count now meets or exceeds `full_run`'s old count for that same page
+(`1890-91_p012`: 14 -> 30, more than doubled; the rest flat or +1).
+`manifest.csv` now has 89 rows (83 "pair" pages + these 6).
+
+`outputs/repertoire_spreadfix_v6/single_leaf_images/` and `single_leaf_
+raw/` are kept alongside `parse_raw/` as the durable record of this
+recovery (mirroring the "keep the raw `*.raw.json` responses" rule for
+the rest of this pipeline).
