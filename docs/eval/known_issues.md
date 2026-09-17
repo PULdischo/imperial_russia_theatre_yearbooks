@@ -10891,3 +10891,79 @@ single hand-resolution batch this issue has tackled so far (the
 largest prior round was 49 rows). Not started yet -- reporting the
 scope before committing to it, same pattern used earlier in this issue
 ("Scope the remaining 52 pairs..." before "Go ahead").
+
+### Addendum to #70 (2026-09-16/17): all 142 ambiguous rows hand-
+resolved, across three stages and two sessions (paused and resumed
+twice at RG's request). Granular per-page reasoning lives in the git
+history of `docs/eval/repertoire_split_overlap_queue_resolved.csv`
+(one commit per page-pair batch); this entry is the consolidated
+summary and the findings worth remembering.
+
+**Final state**: 255 total queue rows -- 77 `exact` + 19 `clear`
+(auto-resolve) + 159 `ambiguous`, of which 156 got a real resolution
+(`kept_half`: 119 `top`, 28 `bottom`, 7 `both`; 2 used
+`corrected_works`/`corrected_receipts` directly) and 3 were left
+deliberately blank with a `reviewer_note` explaining why (confirmed
+phantom duplicates whose real content is captured via a sibling row
+instead -- keeping them too would have double-counted, not preserved
+anything).
+
+**The technique that resolved the large majority of rows, with no
+scan needed**: pull each page pair's full raw session sequence for
+the collision's theater(s) via a quick JSON dump and look for an
+EXACT title+receipts match between the "mystery" candidate and some
+OTHER already-known-correct day, usually already present in `top`'s
+own clean sequence. Confirmed, repeatedly, across nearly every page in
+the 1893-94 season especially: `bottom`'s date-column labels are
+drifted/mislabeled relative to true row content by some amount --
+often a different amount per theater on the SAME page, since each
+theater's own column independently mis-tracked the date sequence.
+Once one candidate on a page is confirmed via an exact match, the
+SAME mechanism reliably explains the rest of that page's collisions
+too -- checked, not assumed, on every page, but rarely needed a fresh
+scan look once the page's own pattern was established.
+
+**Two real bugs caught by continuing the investigation, not stopping
+at the first plausible answer**:
+1. A carried-forward resolution (`1893-94_p012/013`, Большой,
+   "Хрустальный башмачекъ") whose reasoning cited another row's
+   content that had genuinely changed between the pre-rollout queue
+   and this week's fresh extraction -- the row's OWN content matched
+   byte-for-byte (all the carry-forward safety check verifies), but
+   the REASONING referencing a different row didn't hold anymore.
+   Caught while resolving a fresh, related collision on the same page
+   that happened to prove the old note wrong. Fixed, and 4 sibling
+   rows on the same page pair (originally resolved `kept_half=both`
+   as "real content, uncertain date") were revised to `kept_half=top`
+   once the same investigation proved they were confirmed duplicates
+   of top's own day-10/11/12 rows -- keeping them as `both` would have
+   double-counted real sessions already present in the trusted output.
+2. `1894-95_p008/009`, Михайловскій, day 17 (the `1394-95 Понедѣльник`
+   collision -- Group listed above): checked the actual scan directly
+   rather than picking a side, and found BOTH candidates were wrong.
+   Top's own entry was a confirmed cross-column bleed from `Большой`
+   (the day-17 opera title, not this theater's own French-repertoire
+   content); bottom's candidate was a duplicate of this theater's own
+   day-15 entry. Neither belonged -- the true content
+   ("La Contagion, com." 928 р. 13 к.) was supplied directly via
+   `corrected_works`/`corrected_receipts` rather than guessed from
+   either flawed side.
+
+**A smaller, structural finding worth remembering**: `/private/tmp`
+got swept clean a SECOND time overnight between the two resumed
+sessions (the split-half source images, not the durable
+`outputs/repertoire_spreadfix_v6/` copy). One row genuinely needed a
+scan look after that -- recovered without any billed re-extraction by
+finding leftover per-page crop images under other, unrelated `/tmp`
+test directories from earlier in this project (`margin_fix_test2` and
+similar), which happened to still hold this exact page's crops from
+an older pipeline test. Not guaranteed to work for every future page,
+but worth checking before assuming a scan-check is blocked.
+
+**Not yet done**: running `apply_split_overlap_resolutions.py`
+against this completed queue to actually produce trusted per-page
+session lists (the queue being fully resolved is a precondition, not
+the same thing as having applied it); then `parse_and_validate.py` ->
+`quality_checks.py` -> `build_duckdb.py`, still the full remaining
+path to a queryable database, as scoped in the addendum that started
+this whole dedup detour.
