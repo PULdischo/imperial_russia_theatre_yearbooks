@@ -12234,3 +12234,62 @@ and `zero_dark_cells_on_multiweek_page` is fully resolved);
 `duplicate_event_key` (4, confirmed legitimate) and the single
 genuinely-illegible receipts figure remain, both already understood
 and not further actionable.
+
+### Addendum to #70 (2026-09-17): checked the last 3 inferred-not-verified
+genre rows -- all 3 confirmed correct, plus one more render-vs-printed-
+page-number mismatch caught along the way
+
+RG asked to revisit the 3 rows the genre-field audit had only inferred
+(no scan located at the time), tracked since in
+`genre-field-3-inferred-rows-followup.md`. Both source pages turned out
+to need the render-vs-printed-page-number puzzle solved yet again, in
+opposite directions from each other:
+
+- `repertoire_1897-98_pair006` cites `_source: repertoire_1897-98_p006`.
+  This time the render-sequential reading was the wrong one -- checking
+  it directly (confirmed against `split_page_numbers_final.csv`,
+  `p006__top` -> printed p.14) landed on a page from an entirely
+  different month (Dec 20 - Jan 9, not this pair's actual Oct 3-16
+  range). Reading `p006` as the PRINTED page number instead (`p002__top`
+  -> printed p.6) landed on the right page immediately --
+  `ForUpload_1897-98_Repertoire_002.jpg`, dates 3-23 October 1897.
+  Confirmed both inferred genres: `12 Воскрес.` evening
+  "Осеній вечеръ въ деревнѣ, вод." and `16 Четв.`
+  "Госпожа-служанка, вод." -- `"вод."` correct in both cases, not a
+  guess. While reading that row, recovered two more things the original
+  extraction had left incomplete on the same `16 Четв.` session (not
+  part of the original 3, found opportunistically): the third work's
+  genre (`"Осеній вечеръ въ деревнѣ"`, previously `null`) and the whole
+  session's `receipts_text` (previously `null`) were both plainly legible
+  in the same scan row -- genre `"вод."` and receipts `"1359 р. 21 к."`
+  added. Also corrected a spelling typo present in both rows
+  (`Осеній` -> `Осенній`, missing one н -- the scan clearly prints it
+  double).
+- `repertoire_1894-95_pair004` cites `_source: repertoire_1894-95_p005
+  (bottom)`. Here the render-sequential reading was checked first and
+  was ALSO wrong -- that render is a German-guest-troupe engagement page
+  (Большой and Малый both entirely dark for its whole date range),
+  nothing like the session in question. Reading `p005` as the PRINTED
+  page number instead (`p001__bottom` -> printed p.5) landed on the
+  right page, confirmed by an exact receipts match (550 р. 21 к.) --
+  `ForUpload_1894-95_Repertoire_001.jpg`, dates 12 September - 3 October
+  1894. Confirmed the inferred title/genre `"Рай земной, ком."` was
+  correct, not a guess. Also fixed a spelling typo on the companion work
+  (`"Ирэнь"` -> `"Ирэнъ"`, soft sign -> hard sign, matching what's
+  actually printed -- this is a transcription correction, not an
+  orthography modernization) and corrected the session's own `_source`
+  citation, which had pointed at the wrong render page entirely.
+
+Propagated both pages to `resolved_sessions/`, re-ran
+`parse_and_validate.py` -> `quality_checks.py` -> `build_duckdb.py`.
+4359 events / 5649 performances unchanged (pure corrections -- title,
+genre, spelling, one recovered receipts figure -- no sessions added or
+removed), `quality_flags.csv` unchanged at 5. Rebuilt and directly
+verified all 3 fixes against `imperial_theaters.duckdb`. Queries logged
+in `docs/query_log.md`.
+
+**This closes items 1-3 of `genre-field-3-inferred-rows-followup.md`.
+Only item 5 remains open** -- `repertoire_1892-93_pair008`, `26
+Октября.`, Маріинскій, `annotation = "Отечественный"`, no corpus match
+anywhere to confirm what follows -- genuinely unrecoverable, not
+merely unattempted.
