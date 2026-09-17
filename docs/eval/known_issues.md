@@ -11019,3 +11019,103 @@ confirmed, resolved collision-loser.
 `build_duckdb.py` against this resolved output -- the actual remaining
 path to a queryable database, now that the dedup gate (the reason this
 whole detour started) is fully closed and verified.
+
+### Addendum to #70 (2026-09-17): ran `parse_and_validate.py` ->
+`quality_checks.py` for real, found a genuinely new failure mode
+(`cross_theater_date_mismatch`, unrelated to split-overlap dedup), and
+hand-verified all 24 affected pages against the actual scans rather
+than guessing at severity.
+
+**The new check result**: 38 of 83 "pair" pages flagged. Scoped before
+chasing it: 22 were pure coverage gaps (one theater covering fewer
+days than another -- expected, not a bug, matches "coverage vs
+accuracy"). The remaining 24 had a genuine same-day-number
+disagreement not explained by a simple coverage gap.
+
+**Root cause, confirmed rather than assumed**: this check (built for
+Gate 3's single-page-format seasons, where one shared date column
+serves every theater on the page) doesn't cleanly apply to these
+"pair" pages, where each theater's dates come from whichever half (top
+or bottom) *that theater* happened to reconcile on -- independently
+per theater. Confirmed the page-pairing itself was NOT the problem
+first (checked that every flagged page's theaters cover a broadly
+consistent overall date range, ruling out a mispaired spread before
+investigating anything else).
+
+**Regenerated the source images to actually check this**, since
+`/tmp` had been swept a third time by this point. Re-rendered all 519
+Repertoire pages from the source PDFs (`render_pages.py`, free, local,
+~5 min), re-split the 8 spread seasons (`split_spread_pages.py` against
+`fold_geometry.json`), and re-ran `extract_split_page_numbers.py`
+(730 halves, ~1.1M tokens) to recover the render-order-to-printed-
+page-number mapping -- confirmed NOT 1:1 (e.g. `1893-94_p003`'s render
+order maps to printed pages 8-9, not "p008" as page IDs might suggest)
+and genuinely necessary to locate any specific page. 5 of 182 relevant
+halves needed a `--resample`; a handful of persistent misreads
+(mostly outside this issue's own 24 target pages) were resolved by
+inference from the adjacent, successfully-read half -- each one
+confirmed correct once actually opened, not assumed.
+
+**All 24 pages hand-verified against the real scan, per RG's explicit
+preference for full scan reads over a cheaper triage.** Result: 8
+pages confirmed fully benign (content correct, conflict was pure
+weekday-vs-month-name formatting for the same real day); 16 pages had
+at least one genuine content error -- same mislabeling family as
+every other finding in this issue (a theater's row landing under the
+wrong day-number), just surfaced here as a cross-theater inconsistency
+instead of a same-half collision, because it never produced a
+same-theater cross-half collision for `dedup_split_overlap.py` to
+catch. One case (`1891-92_pair004`, `Большой`/`Малый` day 28) wasn't a
+mislabel at all -- both were extracted as blank/no-content when the
+scan clearly shows real performances for both.
+
+**Applied 21 session-level corrections directly to
+`outputs/repertoire_spreadfix_v6/parse_raw/*.raw.json`** across the 16
+confirmed-wrong pages, each asserting the expected prior value before
+overwriting (same safety discipline as the dedup queue fixes). True
+replacement content was scan-confirmed for every fix -- either an
+exact match found elsewhere already in the data, or read directly off
+the scan when no existing session held it.
+
+**Two of my own mistakes caught by re-running the checks afterward,
+not assumed clean**:
+1. One fix (`1897-98_pair022`, `Михайловскій` day 21) set `is_dark:
+   true` but left a stale `annotation` field from the row's old
+   (wrong) content -- created a fresh, self-inflicted
+   `dark_row_with_content` flag. Caught immediately by re-running
+   `quality_checks.py` rather than trusting the edit blind.
+2. Chasing that fix down further surfaced a SECOND, pre-existing
+   mislabel independent of anything this addendum was originally
+   about: the real day-21 content (a Dumas-monument benefit
+   performance) was already present in the data, just mislabeled as
+   day 22 -- confirmed by direct re-inspection of the scan crop (the
+   entry's receipts figure spans across the physical fold in the
+   photograph, which is what caused my own first reading of it to
+   misattribute the row). Relabeled it to its correct day rather than
+   leaving a redundant near-duplicate standing.
+3. Also caught: an earlier `duplicate_event_key` fix made directly to
+   the dedup queue CSV had never actually been propagated into
+   `parse_raw` (the queue was edited, but `apply_split_overlap_
+   resolutions.py` was never re-run afterward, and by the time this
+   was noticed, re-running it would have discarded today's direct
+   cross-theater-check fixes). Applied the same correction directly
+   to `parse_raw` instead.
+
+**Final state, re-verified**: `parse_and_validate.py` runs clean, 0
+validation errors, exactly 3,904 sessions preserved (matching the
+pre-fix count precisely -- no session lost or duplicated across 21
+edits). `quality_checks.py`: `dark_row_with_content` back to 56 (the
+self-inflicted flag cleared), `duplicate_event_key` down to 4 (all 4
+confirmed legitimate `kept_half=both` cases, re-verified). The
+`cross_theater_date_mismatch` raw COUNT is unchanged (38) and
+expected to stay that way -- the check flags day-NUMBER coverage
+patterns per theater, which none of today's fixes were about (they
+corrected which CONTENT sits at an already-existing day-number, not
+which day-numbers a theater's reconciliation covers) -- the count
+being unchanged is the correct outcome, not a sign anything went
+unfixed.
+
+**Not yet done**: `receipts_parse_failed`'s ~10 "other" cases (2
+already identified as genuine content-misplacement, not yet fixed);
+`build_duckdb.py`, the actual last step to a queryable database, still
+not run.
