@@ -11560,3 +11560,70 @@ addendum closes). `build_duckdb.py` re-run and re-verified directly
 against the database: 4,153/5,330 rows, and the specific `1893-94_
 pair006` case spot-checked down to 2 sessions (not 3) for that date/
 theater. Query logged in `docs/query_log.md`.
+
+### Addendum to #70 (2026-09-17): full `genre` field audit, 22 fixes
+
+RG asked for a field-by-field audit of `event_entry_performance.genre`
+(same style as the earlier people-entities field passes). Pulled all 99
+distinct values across 5,330 rows and classified every one:
+
+- **Legitimate variety, no action** -- the long tail of rare values is
+  mostly genuine 19th-c. theatrical genre vocabulary (`истор. карт.`,
+  `пров.`/French `prov.`, `феерія`, `лир. сказка`, `Ор.` as a shorter
+  German `Oper.`, etc.) -- confirmed by context, not just assumed
+  correct because it looked plausible.
+- **22 rows needed fixing**, in four confidence tiers, all applied:
+  1. **7 confirmed via a clean duplicate elsewhere in this corpus** --
+     e.g. `genre='в.'` on `Бѣда отъ нѣжнаго сердца` fixed to `вод.`
+     because that exact title appears with `вод.` cleanly 14 other
+     times on this page's neighbors.
+  2. **4 fixed by the same crop-truncation pattern** already exhaustively
+     documented in this issue for `receipts_text`/`work_title`, now
+     confirmed hitting `genre` too (`'к'`/`'ко'`/`'към.'`/`'ом.'` etc. as
+     truncated `ком.`) -- applied to well-known/plausible real titles
+     with no internal duplicate to confirm against, but an unambiguous
+     truncation shape.
+  3. **2 fixed by matching a title already scan-verified earlier THIS
+     SESSION on a different page** (`Секретное предписаніе`/`карт.`,
+     `Голь на выдумки хитра`/`вод.` -- both recovered from genuine
+     scan reads during the earlier single_leaf and receipts-residual
+     work, recurring here in truncated form again).
+  4. **3 inferred with documented uncertainty** -- could not locate the
+     correct scan page for these (the render-vs-printed-page-number
+     problem this issue keeps running into) but had partial internal
+     evidence: `Осеній вечеръ въ деревнѣ`/`Госпожа-служанка` inferred
+     to `вод.` from the general `в`/`во` truncation family; `Земной`
+     inferred to the fuller title `Рай земной` + `genre=ком.` from a
+     single partial corpus match. Flagged here explicitly as the
+     least-certain of the 22 -- worth a scan check if the right page is
+     ever located.
+- **2 genuine parsing bugs, not truncation** -- content that was never a
+  genre at all had landed in the genre field:
+  - `genre='Зорай'` on `'2-я и 3-я карт. бал.'` -- merged into one
+    title, `'2-я и 3-я карт. бал. Зорайя'`, `genre=None`, matching this
+    corpus's own established convention for such excerpt-prefixed
+    titles (already used repeatedly this issue, e.g. `'2-е д. бал.
+    Фіаметта'`).
+  - `genre='2-е д. ком.'` on `'Безъ вины виноватые'` -- same fix shape:
+    merged to `'2-е д. ком. Безъ вины виноватые'`, `genre=None` (a
+    benefit bill performing just Act 2 of this comedy, the `2-е д.`
+    excerpt marker had been split into the genre field instead of
+    folded into the title).
+  - One **structural split**: `'Амура, лир. ск.'` / `genre='вертиссементъ'`
+    was actually two merged, truncated real works -- split into
+    `'Месть Амура'` (`genre='лир. ск.'`, matching a clean duplicate of
+    this exact title elsewhere) + `'Дивертиссементъ'` (`genre=None`,
+    matching the standalone-Divertissement pattern seen elsewhere on
+    the same page's neighboring rows).
+  - Plus 2 rows of trivial whitespace normalization (`' Lustsp.'` ->
+    `'Lustsp.'`).
+
+Propagated to `resolved_sessions/` for all 18 affected "pair" files
+(0 diffs remaining, per the established discipline -- the single_leaf
+pages have no `resolved_sessions` counterpart, correctly skipped).
+Re-verified: 0 validation errors, `event_entry` unchanged at 4,153,
+`event_entry_performance` 5,330 -> 5,331 (+1, the structural split),
+`quality_flags.csv` unchanged (152 flags, genre-only edits don't touch
+any tracked check). `build_duckdb.py` re-run and re-verified directly:
+the fixed titles/genres confirmed present, no stray truncated values
+remain.
