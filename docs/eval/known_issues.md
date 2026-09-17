@@ -10967,3 +10967,55 @@ the same thing as having applied it); then `parse_and_validate.py` ->
 `quality_checks.py` -> `build_duckdb.py`, still the full remaining
 path to a queryable database, as scoped in the addendum that started
 this whole dedup detour.
+
+### Addendum to #70 (2026-09-17): `apply_split_overlap_resolutions.py`
+run against the completed queue, and the "never lose text" guarantee
+verified directly rather than assumed.
+
+Regenerated `split_page_numbers.csv` a second time (`/tmp` was swept
+again overnight -- the durable `outputs/repertoire_spreadfix_v6/`
+copy was unaffected, but the pairing file itself lived only in
+`/tmp`). Same deterministic logic as before (consecutive real page
+numbers per season), rebuilt from the raw-output filenames this time
+instead of the (now also gone) split-half images -- identical result,
+176 half-rows / 88 pairs, 0 unpaired.
+
+**Run result**: 3,655 passthrough (no collision) + 96 auto-resolved
+(`exact`/`clear`) + 153 human-resolved sessions written to trusted
+output across 83 checkable page pairs (5 of the 88 pairs have no data
+on either half at all, unaffected by any of this); 3 still pending
+(the 3 intentionally-unresolved phantom-duplicate rows from stage 2,
+exactly as expected -- nothing else). Output copied to
+`outputs/repertoire_spreadfix_v6/resolved_sessions/` (not `/tmp`,
+same durability reasoning as everything else this week).
+
+**The 153-vs-156 count difference, checked rather than assumed
+benign**: 156 ambiguous rows got a real resolution, but only 153
+sessions carry a `human:*` disposition in the output. Traced to the
+apply script's own duplicate-collapsing logic (`seen_norm` in
+`apply_split_overlap_resolutions.py`): a month-rollover collision with
+multiple candidate pairings can have MORE THAN ONE queue row resolve
+to pointing at the exact same top-side session (e.g. `1893-94_p012/013`'s
+Большой/Малый/Маріинскій day-13 groups, where both the "vs 12 Декабря"
+and "vs 13 Понед." pairings independently resolved to keeping the same
+top session) -- correctly collapsed to one trusted entry instead of
+counted twice. Working as designed, not a discrepancy.
+
+**"Never lose text", verified directly**: wrote a script comparing
+every raw session across all 83 checkable pairs (4,151 total) against
+the trusted+pending output, but -- unlike a naive first pass, which
+flagged 196 "missing" sessions that turned out to just be the
+correctly-rejected LOSING side of resolved collisions (e.g. `Баль-
+маскарадъ`, dropped in favor of the historically-correct `Балъ-
+маскарадъ` per this issue's own day-30 resolution) -- cross-referenced
+against which base-keys actually collided per `dedup_split_overlap.py`'s
+own keying logic, so a session is only flagged if it's absent AND
+was never part of any resolved collision at all. **Result: 0
+unexplained missing sessions.** Every one of the 4,151 raw sessions is
+accounted for -- present in the trusted output, pending review, or a
+confirmed, resolved collision-loser.
+
+**Not yet done**: `parse_and_validate.py` -> `quality_checks.py` ->
+`build_duckdb.py` against this resolved output -- the actual remaining
+path to a queryable database, now that the dedup gate (the reason this
+whole detour started) is fully closed and verified.
