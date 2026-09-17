@@ -12004,3 +12004,65 @@ Checked both directions for internal inconsistency:
 `quality_flags.csv` unchanged (145 flags). Propagated to `resolved_
 sessions/` for 3 files. `build_duckdb.py` re-run and re-verified.
 Queries logged in `docs/query_log.md`.
+
+### Addendum to #70 (2026-09-17): resolved all 56 `dark_row_with_content`
+flags -- the Большой-column bleed pattern, closed corpus-wide
+
+RG asked to address the 56 `no_performance`-with-content flags
+confirmed (in the `event_status` addendum above) as the already-known
+`Большой`-column bleed pattern. Scoped precisely: 100% `Большой`
+theater, across 9 "pair" pages (`1890-91_pair024`, `1891-92_pair020`,
+`1892-93_pair002`/`pair022`, `1894-95_pair002`, `1895-96_pair002`/
+`pair004`/`pair006`, `1897-98_pair002`) -- mostly one big cluster per
+page (5-12 rows) plus a couple of singletons.
+
+Rather than bulk-clearing on the strength of the already-established
+pattern alone, checked the actual scan for every page (season-opener
+`p000`/season-start regions, since every affected page turned out to
+be Большой's own late-opening stretch at the START of a season --
+Большой in this corpus routinely doesn't begin performing until well
+into the autumn, while Малый starts in August):
+
+- **2 rows were genuinely misclassified, not bleed at all** --
+  `is_dark=true` but with real, clean, un-garbled content (`repertoire_
+  1892-93_pair022`'s `Робертъ и Бертрамъ, бал.`; `repertoire_1891-92_
+  pair020`'s `Концертъ въ пользу инвалидовъ.` notice, the same phrase
+  already established elsewhere in this corpus as a legitimate
+  `performed` event). Both flipped to `is_dark=false` rather than
+  cleared.
+- **1 row looked like bleed but wasn't** -- `repertoire_1895-96_
+  pair002`, `3 Воскр.`: the scan showed genuine content (`Севильскій
+  цирюльникъ, оп.`, `2134 р. 20 к.`) on a date sitting right at the
+  boundary where this theater's season actually starts. Recovered
+  instead of cleared -- checking the scan for every row, not just a
+  representative sample, is what caught this one.
+- **The remaining 53 were confirmed genuine bleed**, page by page,
+  against the real scan -- `Большой` entirely blank (every cell a bare
+  dash) for the WHOLE date range on every page checked, with the
+  garbled annotation fragments matching `Малый`'s own real neighboring
+  content word-for-word when checked side by side (e.g. `"Тартк
+  Продѣлки"` against Малый's real `"Тартюфа, ком. / Продѣлки Скапена,
+  ком."` on the same row). Cleared all 53 (`works=[]`,
+  `annotation=None`, `is_dark` stays `true`).
+
+Where multiple dates on the same page fell within an already-scan-
+confirmed-blank stretch (e.g. `Большой` checked and found blank
+continuously from August through November across three separate scans
+in the same season), later dates in that same confirmed range were
+cleared without a separate scan check for each individual date --
+documented explicitly here as a deliberate efficiency, not an
+assumption skipped by accident.
+
+**Final re-verified state**: `event_entry` unchanged at 4,143,
+`event_entry_performance` 5,356 -> 5,357 (+1, the recovered
+`Севильскій цирюльникъ`), 0 validation errors. `dark_row_with_content`
+flag count: 56 -> 0. Total `quality_flags.csv`: 145 -> 89. Propagated
+to `resolved_sessions/` for all 9 affected files. `build_duckdb.py`
+re-run and re-verified. Queries logged in `docs/query_log.md`.
+
+**This closes the last quality-flag category from this whole receipts-
+residual-through-field-audit arc that hadn't been individually
+resolved.** Remaining open flags (`receipts_parse_failed` 43,
+`cross_theater_date_mismatch` 38, `zero_dark_cells_on_multiweek_page`
+4, `duplicate_event_key` 4) are all already-triaged, understood, non-
+blocking categories documented earlier in this issue.
