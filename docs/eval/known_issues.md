@@ -12066,3 +12066,59 @@ resolved.** Remaining open flags (`receipts_parse_failed` 43,
 `cross_theater_date_mismatch` 38, `zero_dark_cells_on_multiweek_page`
 4, `duplicate_event_key` 4) are all already-triaged, understood, non-
 blocking categories documented earlier in this issue.
+
+### Addendum to #70 (2026-09-17): closed 42 of the last 43
+`receipts_parse_failed` flags -- the "Latin p/k substitution" bucket
+was a genuine parsing gap, not a stylistic variant to leave alone
+
+RG asked to revisit `receipts_parse_failed`'s remaining 43 flags. 42
+were the already-known "Latin p/k substitution" category from way back
+in this issue -- the model occasionally writes the rubles/kopecks
+markers in Latin script (`p`/`k`, visually near-identical to Cyrillic
+`р`/`к` in this typeface) instead of Cyrillic. Re-examining the exact
+shapes turned up something the earlier categorization had missed: 9 of
+the 42 are actually MIXED-script (`"534 p. 50 к."` -- Latin `p.`,
+Cyrillic `к.`), not purely Latin -- a too-strict regex in an earlier
+check had lumped them into the same bucket without noticing.
+
+**Deliberately reconsidered whether this deserved fixing at all**,
+since this issue already has an explicit precedent for the opposite
+call: the `genre` field's Latin/Cyrillic variants (`оп.`/`op.`) were
+left alone, because both are equally complete, final values needing no
+further processing -- fixing them would just be normalizing verbatim
+model output for its own sake. Receipts are different: `receipts_
+rubles`/`receipts_kopecks` are DERIVED numeric fields computed FROM
+`receipts_text`, and the old Cyrillic-only marker regex made that
+derivation fail completely whenever the marker was Latin -- not a
+stylistic difference, a genuine parsing gap, the same family as the
+two dropped-trailing-period fixes earlier in this issue.
+
+Widened `_RUBLES_MARKER_RE`/`_KOPECKS_MARKER_RE`
+(`pipeline/schemas/repertoire.py`) to accept Latin `p`/`k`
+(case-insensitive) as well as Cyrillic `р`/`к`, as alternates within
+the same `\b`-bounded pattern -- `receipts_text` itself stays
+completely untouched (verbatim model output, script and all); only the
+derived-field parsing was widened. Verified against 7 hand-picked edge
+cases (mixed-script figures, bare rubles-only figures, and confirming
+Cyrillic words like `"карт."`/`"играю"` still correctly don't
+false-match) before trusting it against the real corpus, then
+confirmed 0 unintended regressions by checking every session's
+receipts_text still parses the same or better (41 fully-Latin + 9
+mixed-script cases newly resolved, 1 already-documented genuine
+illegibility remains, nothing that previously parsed changed).
+
+**Final re-verified state**: `event_entry`/`event_entry_performance`
+unchanged (a code-only fix, no raw session edited), 0 validation
+errors, `receipts_parse_failed` 43 -> 1 (the one genuinely illegible
+figure, already documented, correctly still flagged), total
+`quality_flags.csv` 89 -> 47. `build_duckdb.py` re-run and
+re-verified; spot-checked several of the newly-recovered values
+directly against the database. Queries logged in `docs/query_log.md`.
+
+**Every quality-flag category left standing is now either fully
+resolved or an explicitly-documented, understood residual**:
+`cross_theater_date_mismatch` (38, structural -- doesn't apply cleanly
+to "pair" pages, not a bug, documented at length earlier in this
+issue), `zero_dark_cells_on_multiweek_page` (4), `duplicate_event_key`
+(4, all confirmed legitimate `kept_half=both` cases), and the single
+genuinely-illegible receipts figure.

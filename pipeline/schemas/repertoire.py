@@ -163,7 +163,21 @@ def merge_repertoire_samples(sample_dicts: list[dict]) -> tuple[dict, dict]:
 #: Python's `re` treats Cyrillic as word characters under `\b` by
 #: default, so this correctly requires "р" to stand alone as a marker
 #: token rather than merely appear somewhere in the string.
-_RUBLES_MARKER_RE = re.compile(r"\bр\.?")
+#:
+#: Also accepts a Latin "p"/"P" as the same marker -- confirmed
+#: 2026-09-17 (known_issues.md #70's receipts-field addendum) on 42
+#: sessions where the model wrote the rubles marker in Latin script
+#: (visually near-identical to Cyrillic "р" in this typeface; 9 of
+#: those even mix scripts within one figure, Latin "p." paired with
+#: Cyrillic "к."). Unlike the genre field's Latin/Cyrillic script
+#: variants (left alone there -- both are equally complete, final
+#: values needing no further processing), this is a genuine parsing
+#: gap: the old Cyrillic-only marker silently failed the whole split on
+#: every one of these, even though the figure itself is perfectly
+#: legible -- receipts_text itself is untouched either way (verbatim
+#: model output, script and all), only the derived rubles/kopecks
+#: parsing is widened to recognize both scripts as the same marker.
+_RUBLES_MARKER_RE = re.compile(r"\b[рp]\.?", re.IGNORECASE)
 
 #: Same dropped-trailing-period gap as `_RUBLES_MARKER_RE`, just on the
 #: kopecks side -- found 2026-09-17 doing the receipts-field audit
@@ -173,8 +187,10 @@ _RUBLES_MARKER_RE = re.compile(r"\bр\.?")
 #: it requires the exact "к." substring -- a real parsing gap, not
 #: caught by the rubles-side fix since this is a different marker on the
 #: other side of the same split. `\b` for the same reason as the rubles
-#: marker (a bare `к` would also match inside an ordinary word).
-_KOPECKS_MARKER_RE = re.compile(r"\bк\.?")
+#: marker (a bare `к` would also match inside an ordinary word). Also
+#: accepts Latin "k"/"K", same reasoning and same 2026-09-17 finding as
+#: the rubles marker above.
+_KOPECKS_MARKER_RE = re.compile(r"\b[кk]\.?", re.IGNORECASE)
 
 
 def _parse_receipts(text: Optional[str]) -> tuple[str, str]:
