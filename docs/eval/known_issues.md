@@ -11828,3 +11828,76 @@ field audits except the one still-open, larger finding: `1894-95_
 pair008`'s `Большой`-column `annotation` field (a different field,
 explicitly out of scope for a titles-only pass) -- tracked in memory
 for a future dedicated pass.
+
+### Addendum to #70 (2026-09-17): `annotation` field audit -- 35 fixes,
+including the previously-flagged `Большой`-column cluster
+
+RG asked to check the `annotation` field the same way. Same lowercase-
+start heuristic as the title audit (386 non-blank annotations checked;
+19 start with a lowercase letter, a real annotation always opens with a
+capitalized word or a proper name).
+
+**Most (18 of 19) turned out to be a truncated SECOND work title that
+belonged in `works`, not `annotation` at all** -- e.g. `annotation:
+"страха глаза велики, ш"` on a row whose `works` held only one title;
+the scan-cross-reference technique from the title audit resolved these
+the same way (`"У страха глаза велики"`, confirmed via 3 clean corpus
+occurrences of the full title). Moved each into `works` as a proper
+second entry and cleared the annotation. One case had an EMPTY `works`
+list with two merged, truncated titles in the annotation (`repertoire_
+1895-96_pair004`, `24 Воскрес.`, Малый) -- both recovered and used to
+actually populate `works` for the first time. One more had one real
+work already present plus two MORE merged into the annotation
+(`repertoire_1895-96_pair008`, `5 Ноября.`, Малый evening) -- recovered
+both (`Месть Амура`, `Слабая струна`, both confirmed via clean corpus
+duplicates).
+
+**One (`'вые утренніе спект'`) was a genuine special-notice
+annotation, not a missing work** -- recovered in full as `"Безплатные
+утренніе спектакли для воспитанниковъ учебныхъ заведеній."` (free
+morning performances for students), confirmed against the scan for a
+DIFFERENT page this session had already opened for an earlier fix
+(`pdf/RepertoireTables/ForUpload_1891-92_Repertoire_003.jpg`) -- this
+exact phrase appears there as a section header spanning all theaters,
+directly above a `Гимнъ`+`Гамлетъ` row matching this session's own
+`works`.
+
+**A "г. Горбунова." cluster (3 rows)** needed more untangling: each had
+this fragment as `annotation` (should be `"Сцена г. Горбунова."`, a
+legitimate standalone reciter piece already established with
+`genre=None` during the earlier genre audit) PLUS the row's own SECOND
+work was independently truncated too (`'Кашу — расхлебывай, ф.'` ->
+`'Заварила кашу—расхлебывай'`/`фарсъ`; `'Скоропризами, сц.'` -> `'Утро
+съ сюрпризами'`/`сц.`). Fixed both problems per row: corrected the
+truncated second work, added `Сцена г. Горбунова.` as a genuine third
+work, cleared the annotation.
+
+**The previously-flagged `repertoire_1894-95_pair008` Большой-column
+cluster is now fully resolved too**, not just documented. Located BOTH
+source scans this data spans (dates 6-19 Января at printed pp.8-9,
+`ForUpload_1894-95_Repertoire_003.jpg`, already open from the title
+audit; dates 22-25 Января at the bottom of that same image) and checked
+every single one of the 11 garbled annotations against the real
+printed table directly. **Confirmed all 11 have no counterpart in the
+source at all** -- the `Большой` column is genuinely blank of any extra
+text for every one of these rows; the garbled fragments
+(`"Волки и о Утро съ сюрпризомъ"`, `"На порогѣ Вѣчн."`, etc.) are bleed
+from the neighboring `Малый` column's own real, different content,
+visibly matching word-for-word when checked side by side in the scan.
+Cleared all 11 rather than reconstructing anything, since there was
+genuinely nothing there to recover -- "never make up text" cuts both
+ways: don't fabricate a title, but also don't preserve one that never
+existed just because deleting it feels like giving up.
+
+**Final re-verified state**: `event_entry` unchanged at 4,143,
+`event_entry_performance` 5,317 -> 5,342 (+25, mostly recovered works
+that had been missing or merged into annotation text), 0 lowercase-
+starting annotations remain, 0 validation errors, `quality_flags.csv`
+unchanged (152 flags). Propagated to `resolved_sessions/` for 8
+affected files. `build_duckdb.py` re-run and re-verified. Queries
+logged in `docs/query_log.md`.
+
+**This closes the `Большой`-column follow-up item tracked in memory
+after the title audit** -- nothing outstanding remains from the
+`genre`/`performance_title`/`annotation` field-audit sequence except
+the original 3 inferred-not-scan-verified genre rows, still open.
