@@ -11197,3 +11197,121 @@ mismatch pages before this residual can be closed: `'1-я к. 3-го д.
 cases (`'р. 47 к.'` etc., missing the leading rubles number entirely)
 are the already-documented crop/divider truncation pattern, not this
 bug.
+
+### Addendum to #70 (2026-09-17): scan-verified all 4 remaining
+`receipts_parse_failed`/`malformed_receipts_missing_unit` "other" cases
+-- closes the receipts residual, surfaced two more 3-date cascading
+mislabels along the way
+
+All 4 required locating the real source page first, since none of
+their `_source` render-page labels could be trusted at face value --
+confirmed directly, not assumed, that these labels are inconsistent
+across files: sometimes the literal render-sequential page id
+(`repertoire_1895-96_p010` really is render page p010), sometimes the
+*printed* page number reused as if it were a page id (`repertoire_
+1892-93_p021` in one session's `_source` does not exist as a render
+page at all -- 1892-93 only renders to `p011` -- it's printed page 21,
+which is actually `p009__bottom`). Caught this by simply trying the
+literal id first and getting a page whose printed dates didn't match
+the session's own `date_text` at all (Feb 1893 content under a
+label claiming Oct/Nov 1892) -- a concrete confirmation of the same
+render-vs-printed-page-number pitfall this issue's 2026-09-17 cross-
+theater-mismatch addendum already flagged, now hit from the opposite
+direction. `docs/repertoire_column_bounds.json`/`split_page_numbers_
+final.csv` (printed page -> render half) was the reliable way through
+it each time.
+
+**1. `1892-93_pair008__s011`** (25 Октября., Маріинскій, `'3-я карт.'`):
+printed page 8. The scan shows TWO works on this row -- `Пахита, бал.`
+and `3-я карт. бал. Зорайя.` (a 3rd-scene excerpt) -- with the real
+figure `1601 р. 20 к.` printed below both. The model captured only the
+first work (and with the wrong genre, `оп.` instead of `бал.`), and
+the second work's `3-я карт.` prefix ended up alone in `receipts_text`
+while the real figure was dropped entirely. Fixed: `works` now holds
+both (second work's title carries its own `N-я карт.` prefix, genre
+`None` -- matching the established convention for this exact pattern,
+e.g. `repertoire_1897-98_pair018`'s `'2-я карт. 3-го д. бал. Синяя
+борода'`), `receipts_text` = `'1601 р. 20 к.'`.
+
+**2. `1892-93_pair008__s002`** (1 Ноября., Маріинскій, `'1-я к. 3-го д.
+бал.'`): same page, same failure shape -- `Калькабрино, бал.` (model
+had it as `Калькабри`, missing genre) + `1-я к. 3-го д. бал. Дочь
+фараопа.` (verbatim as printed -- the source itself prints "фараопа",
+not "фараона"; not corrected, per the never-modernize/never-guess
+rule), figure `2569 р. 70 к.` Same fix shape as #1.
+
+**3. `1892-93_pair020__s003`** (1 Четв., Маріинскій, `'2676'`): printed
+page 21 (`p009__bottom`). This one wasn't just a truncated figure --
+tracing it surfaced a **3-date cascading row shift**, the same failure
+family as this issue's very first findings (a session's content
+lands one date/theater slot too early or late), just not caught by
+`cross_theater_date_mismatch` because it only affected one theater's
+own column, not a cross-theater date-sequence disagreement:
+- `30 Вторникъ.`/Маріинскій held `31 Среда.`'s real content
+  (`annotation: "Гугеноты, оп."`) instead of its own (a blank concert-
+  repeat announcement).
+- `31 Среда.`/Маріинскій held `1 Четв.` утро's real content
+  (`Щелкунчикъ, бал.` + a garbled `"3-я карт. бал. Зорька"` annotation,
+  correct spelling `Зорайя`) instead of its own (`Гугеноты, оп.`,
+  `2395 р. 70 к.`).
+- `1 Четв.` утро's session was **missing from the data entirely** --
+  its content was the one sitting one slot early on `31 Среда.`
+  Recovered and re-inserted as its own session (`Щелкунчикъ` +
+  `3-я карт. бал. Зорайя.`, `1208 р. 50 к.`, `session: "morning"`).
+- The surviving `1 Четв.` session (`Демонъ, оп.`) was correct in
+  content but truncated (`'2676'` -> `'2676 р. 7 к.'`) and mislabeled
+  `session: "unspecified"` instead of `"evening"`.
+
+All three real dates' content (30th, 31st, 1st) confirmed against the
+scan and reassigned to their correct dates; net effect is one
+previously fully-lost session recovered, not just a receipts fix.
+
+**4. `1895-96_pair010__s051`** (`'Золотая свадьба. Я играю болѣе 25
+лѣтъ'`, tagged theater `Большой`): the deepest of the four. The
+session's own date_text (`"26 Воскресенье."`) didn't match ANY March
+calendar page in this season (day 26 falls on a Tuesday in March
+1896, not Sunday) -- the printed-page-number lookup (`p010` literal
+-> printed page 22, wrong) also didn't contain it. Correctly located
+via the content itself: `"Безплатный спектакль для гг.
+георгіевскихъ кавалеровъ"` (free performance for Knights of the Order
+of St. George) is a specific, dateable imperial commemoration --
+November 26 (O.S.), the Order's feast day -- which pointed to printed
+page 10 (`p004__top`, confirmed: this page's own "26 ноября" row
+carries exactly that text). A second cascading mislabel on the same
+row: Малый's `26 ноября` утро session (`Евгеній Онѣгинъ, оп.`, `939 р.
+42 к.`) had been mis-dated to `"25 Суббота."` evening, with the title
+truncated to `"Геній Онѣгинъ"` and receipts cut to `'939 р. 4'`. Fixed
+both the date/session and the truncated fields. Малый's `26 ноября`
+вечер session was also incomplete -- `Золото, ком.` only, missing its
+actual second work `Я играю большую роль!, ш.` (misplaced into
+`annotation` as a garbled fragment); added it. Its receipts figure
+(`'1360 р.'`) is left as-is -- the kopecks are genuinely illegible in
+the scan, sitting right in the page-curvature/binding shadow at the
+fold, the class of unreadability RG confirmed exists earlier this
+session (not the same thing as a parsing gap). Finally, the `Большой`
+session that originally carried this issue's flag turned out to be
+**pure hallucination**: the scan shows `Большой` genuinely blank
+(dark) for `26 ноября` -- its "receipts_text" was two fragments of
+Малый's own two work titles stitched together (`Золот[о]` +
+`Я играю бол[ьшую роль]`) into text that reads like a plausible
+25th-anniversary benefit announcement but was never printed anywhere.
+Corrected to `is_dark: true`, `receipts_text: null`, matching what the
+page actually shows.
+
+**Applied via the same assert-prior-value-before-overwrite discipline
+as every other fix in this issue.** Final re-verified state: `parse_
+and_validate.py` -- 0 validation errors, `event_entry` 3,904 -> 3,905
+(the one recovered session), `event_entry_performance` 5,190 -> 5,195
+(5 new work rows across the fixes). `quality_checks.py`:
+`receipts_parse_failed` 60 -> 50 (down to exactly the 42 already-known
+Latin p/k substitution + 8 already-known `1894-95_pair008` truncation
+cases, zero "other" residual left); `malformed_receipts_missing_unit`
+2 -> 0; `duplicate_event_key` unchanged at 4 (the new session didn't
+collide with anything); `cross_theater_date_mismatch` unchanged at 38
+(expected, same reasoning as the earlier addendum -- these fixes
+corrected which day-number a theater's content belongs to within an
+already-flagged date range, not the range itself, for the 2 pages
+that overlap this issue's own 38).
+
+**This closes the receipts residual.** `build_duckdb.py` is now the
+only remaining step to a queryable database.
