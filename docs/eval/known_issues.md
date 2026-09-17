@@ -11119,3 +11119,81 @@ unfixed.
 already identified as genuine content-misplacement, not yet fixed);
 `build_duckdb.py`, the actual last step to a queryable database, still
 not run.
+
+### Addendum to #70 (2026-09-17): fixed a real parsing bug behind 6 of
+the 10 `receipts_parse_failed` "other" cases, caught and corrected a
+regression in the fix itself before it touched any output
+
+Categorized all 60 `receipts_parse_failed` flags before touching
+anything: 42 are the already-known Latin p/k substitution (model
+writes Latin "p"/"k" instead of Cyrillic "р"/"к" -- unrelated,
+untouched here), 8 are genuinely truncated ("р. 47 к." with no
+leading number at all -- a crop/divider issue, also untouched), and
+10 were unexplained "other" cases needing individual review. 2 of
+those 10 (`'1-я к. 3-го д. бал.'`, `'2676'`) already overlap
+`malformed_receipts_missing_unit`.
+
+**Root cause of 6 of the remaining 8**: `pipeline/schemas/
+repertoire.py`'s `_parse_receipts` used a literal `text.split("р.")`
+-- requires the period immediately after "р" to match at all. Six
+otherwise perfectly legible receipts figures (`'2943 р 70'`, `'2901
+р'`, `'471 р 40 к.'`, `'917 р 84 к.'`, `'1272 р'`, `'1074 р'`) have the
+model dropping just that one trailing period, which silently fails
+the whole split (caught by the `except`, returns `("", "")` -- rubles
+AND kopecks both lost) even though the figure itself needs no
+judgment call to read correctly. This is a parsing gap, not a data
+problem -- fixed in the flatten function itself rather than by
+touching any raw session, and it's corpus-wide (`flatten_repertoire_
+page` is shared by every Repertoire season, not just the 8
+two-page-spread ones), so any other season with the same dropped-
+period pattern benefits too, not just this issue's own scope.
+
+Fix: replaced the literal split with `_RUBLES_MARKER_RE =
+re.compile(r"р\.?")` (period now optional) and `.split(maxsplit=1)`.
+Confirmed first that no session's `receipts_text` in this corpus
+contains more than one "р" occurrence, so `maxsplit=1` can't silently
+mis-split a multi-marker string that the old code would have failed
+loudly on instead.
+
+**Caught a real regression in my own fix before it reached any
+output**: re-running `quality_checks.py` after this first version
+dropped `receipts_parse_failed` from 60 to 52, not the expected 54.
+The extra 2 "fixes" were wrong -- a bare `р\.?` matches the letter
+"р" *anywhere*, including embedded inside an ordinary Cyrillic word,
+which is exactly what the other 2 "other" cases are: `'3-я карт.'`
+and `'Золотая свадьба. Я играю болѣе 25 лѣтъ'` both contain "р" as
+part of an ordinary word (карт, играю), not as a rubles marker. The
+first version of the fix silently reinterpreted the text after that
+embedded "р" as a kopecks figure (e.g. `'3-я карт.'` -> rubles=`'3-я
+ка'`, kopecks=`'т.'`) instead of correctly failing to parse -- these
+2 sessions are known content-misplacement bugs (something other than
+a receipts figure ended up in the `receipts_text` field), not
+receipts figures with a missing period, and silently fabricating a
+rubles/kopecks split out of them would have been worse than the
+original silent-failure bug.
+
+Fixed by requiring a word boundary: `r"\bр\.?"`. Python's `re` treats
+Cyrillic letters as `\w` by default, so `\b` correctly requires "р"
+to stand alone as a token rather than merely occur inside a longer
+word. Verified against all 13 relevant cases (the 6 target fixes, the
+4 genuine other-category cases including the 2 that caused the
+regression, plus the dash convention and blank/empty) before
+re-running the pipeline.
+
+**Final verified state**: `parse_and_validate.py` -- 0 validation
+errors, exactly 3,904 events / 5,190 performances (unchanged).
+`quality_checks.py`: `receipts_parse_failed` 60 -> 54 (exactly the 6
+targeted cases resolved, confirmed by diffing the flag list, not just
+the count); `malformed_receipts_missing_unit` unchanged at 2 (the 2
+overlap cases, correctly still flagged); no new flags introduced
+anywhere else.
+
+**Still open**: 4 genuine content-misplacement candidates need the
+same scan-verification treatment used for the 24 cross-theater-
+mismatch pages before this residual can be closed: `'1-я к. 3-го д.
+бал.'` and `'3-я карт.'` (both `1892-93_pair008`, Маріинскій), `'2676'`
+(`1892-93_pair020`, Маріинскій), `'Золотая свадьба. Я играю болѣе 25
+лѣтъ'` (`1895-96_pair010`). The 8 `1894-95_pair008` truncated
+cases (`'р. 47 к.'` etc., missing the leading rubles number entirely)
+are the already-documented crop/divider truncation pattern, not this
+bug.

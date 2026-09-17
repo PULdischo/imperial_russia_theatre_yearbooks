@@ -144,11 +144,33 @@ def merge_repertoire_samples(sample_dicts: list[dict]) -> tuple[dict, dict]:
     return merged, stats
 
 
+#: The rubles marker's trailing period is sometimes dropped by the model
+#: ("2943 р 70" instead of "2943 р. 70 к.") -- confirmed 2026-09-17
+#: (docs/eval/known_issues.md #70's receipts_parse_failed addendum) on
+#: 6 sessions across the two-page-spread seasons, via quality_checks.py's
+#: check_repertoire comparing this function's own output against
+#: receipts_text. A literal `.split("р.")` silently drops the whole
+#: figure (rub AND kop both come back "") whenever that period is
+#: missing, even though the figure itself is perfectly legible -- this
+#: was a parsing gap, not a data problem, so fixed here rather than by
+#: touching any raw session. `maxsplit=1` matches the previous split's
+#: behavior of splitting on the first occurrence only. `\b` is required
+#: (not just bare `р`) -- caught live by re-running quality_checks.py
+#: after this fix: a bare `р\.?` also matches the letter "р" wherever it
+#: happens to occur INSIDE an ordinary Cyrillic word (e.g. "3-я каРт.",
+#: "Я игРаю") -- two already-known receipts_text content-misplacement
+#: cases (`known_issues.md` #70) that are not receipts figures at all.
+#: Python's `re` treats Cyrillic as word characters under `\b` by
+#: default, so this correctly requires "р" to stand alone as a marker
+#: token rather than merely appear somewhere in the string.
+_RUBLES_MARKER_RE = re.compile(r"\bр\.?")
+
+
 def _parse_receipts(text: Optional[str]) -> tuple[str, str]:
     if not text:
         return "", ""
     try:
-        rub_part, kop_part = text.replace("—", "-").split("р.")
+        rub_part, kop_part = _RUBLES_MARKER_RE.split(text.replace("—", "-"), maxsplit=1)
         kop = kop_part.replace("к.", "").strip()
         return rub_part.strip(), ("" if kop == "-" else kop)
     except Exception:
