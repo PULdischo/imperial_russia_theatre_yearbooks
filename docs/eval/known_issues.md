@@ -12122,3 +12122,115 @@ to "pair" pages, not a bug, documented at length earlier in this
 issue), `zero_dark_cells_on_multiweek_page` (4), `duplicate_event_key`
 (4, all confirmed legitimate `kept_half=both` cases), and the single
 genuinely-illegible receipts figure.
+
+### Addendum to #70 (2026-09-17): resolved `zero_dark_cells_on_multiweek_page`
+(4 pages) -- the flag's name was misleading; the real defect was 3-4 of
+5 theater columns missing entirely, not a dark-cell problem, and one of
+the 4 pages turned out to have a second, unrelated defect underneath it
+
+RG asked to check the last 4 `zero_dark_cells_on_multiweek_page` flags,
+carried over unresolved from the previous addendum. Pulling all 4 pages
+showed the check's own name doesn't describe what's actually wrong with
+them: each page has 3-4 of its 5 theaters completely ABSENT from
+`parse_raw` for every date on the page -- not garbled, not bled-into by
+a neighbor (the established `Большой`-column-bleed pattern earlier in
+this issue), just never captured at all, with only one theater's column
+surviving. Confirmed via `_source` cross-check across every other page
+in each season that none of the missing theaters' data had been
+misattributed to a different page -- genuinely lost from the
+extraction, not merely misplaced.
+
+Traced each page's real printed-page scan the same way as the rest of
+this issue: `_source` cites e.g. `repertoire_1895-96_p014`, and that
+`p0NN` is the PRINTED page number, not a render-sequential index (the
+now-familiar ambiguity this whole issue keeps running into) --
+confirmed against `outputs/repertoire_spreadfix_v6/page_numbers/
+split_page_numbers_final.csv` where it had coverage (the 1896-97 case),
+and by direct visual match against the raw PDF page images
+(`pdf/RepertoireTables/ForUpload_<season>_Repertoire_<NNN>.jpg`) for the
+two 1895-96 cases, which predate that CSV's 24-page investigation batch.
+Transcribed every missing theater's sessions directly from the scan,
+cross-checking the ALREADY-PRESENT theater's data against the same scan
+first to confirm the page itself wasn't corrupted (it never was -- the
+surviving column's data matched exactly in all 4 cases), then applied
+via the same assert-prior-value-then-overwrite discipline as every
+other fix in this issue, with `_fix_note` provenance on every recovered
+session.
+
+- `repertoire_1890-91_pair004` (10 -> 50 sessions): 4 theaters
+  recovered across 10 dates, 10-21 September 1890 -- printed p. 5
+  (`ForUpload_1890-91_Repertoire_001.jpg`, bottom half).
+- `repertoire_1895-96_pair014` (12 -> 81 sessions): 4 theaters
+  recovered across 12 dates, 30 Декабря 1895 - 11 Января 1896 --
+  printed pp. 14-15 (`ForUpload_1895-96_Repertoire_006.jpg`). One row
+  (7 Января) has receipts genuinely illegible corpus-wide, across
+  multiple columns at once, where the book's binding crease runs
+  directly under the printed figures for that entire row -- left null
+  rather than guessed, consistent with this page's own pre-existing
+  Mikhaylovsky session for that exact row (already null, for the same
+  reason, before this fix).
+- `repertoire_1895-96_pair016` (25 -> 72 sessions, a full rebuild, not
+  just an addition): this page had a SECOND, independent defect layered
+  on top of the missing columns. Its existing Malyy/Mariinsky sessions
+  (the two theaters that WERE captured) carried systematically wrong
+  `date_text`/`session` labels -- work and receipts content from
+  several different calendar dates had been merged onto a handful of
+  date labels. For example, the old `"26 января."` session spliced
+  together Malyy content that really belongs to `24 Среда.` with
+  Mariinsky content that really belongs to `28 Воскресенье.`; several
+  other dates had their morning/evening session tags simply swapped.
+  This wasn't discoverable without first reconstructing the missing
+  columns -- attempting to anchor new, correct Александринскій/
+  Михайловскій/Большой data to the existing (wrong) date labels would
+  have just compounded the error. Rebuilt the full date range
+  24 Января - 2 Февраля 1896 from the scan
+  (`ForUpload_1895-96_Repertoire_007.jpg`, printed pp. 16-17),
+  re-keying every session to its correct calendar date; each
+  replacement was cross-verified via an exact receipts-figure match
+  against the old mislabeled entry it superseded, not just a title
+  match, so nothing here is a guess. This also surfaced two entirely
+  missing rows (`24 Среда.`, `25 Четвергъ.`) that the original
+  extraction had dropped outright rather than mislabeled. One
+  pre-existing entry -- Malyy, `30 Вторникъ.` evening, annotation `"Для
+  воспитанницъ и воспитанниковъ"`, `works=[]` -- could not be
+  corroborated anywhere in the scan for that date/theater; both real
+  performance-rows for that exact slot are fully accounted for by
+  ordinary paid shows with receipts, and no such annotation is visible
+  in the source. Removed as uncorroborated rather than kept as a
+  redaction-worthy duplicate -- this resolves
+  `genre-field-3-inferred-rows-followup.md` item 6 (previously tracked
+  as "genuinely ambiguous, no corpus match").
+- `repertoire_1896-97_pair014` (10 -> 73 sessions): 4 theaters
+  recovered across 10 dates, 19-31 Декабря 1896 -- printed pp. 14-15
+  (`ForUpload_1896-97_Repertoire_006.jpg`). Clean page otherwise -- no
+  date-mislabeling found here, unlike the 1895-96 case above.
+
+Propagated all 4 pages to `resolved_sessions/` (`"trusted"` list
+overwritten to match the edited `parse_raw`), re-ran
+`parse_and_validate.py` -> `quality_checks.py` -> `build_duckdb.py`.
+
+**Final re-verified state**: 4143 -> 4359 events, 5357 -> 5649
+performances, 0 validation errors (the one line in
+`validation_errors.csv` is a pre-existing, unrelated informational
+`repertoire_fabricated_dropped` log entry on `repertoire_1890-91_p012`,
+not a failure and not touched by this fix). `quality_flags.csv`: 47 ->
+5 total. `zero_dark_cells_on_multiweek_page` 4 -> 0, the direct target
+-- and, unexpectedly but explainably, `cross_theater_date_mismatch`
+also dropped 38 -> 0 as a side effect: nearly all of those mismatches
+turned out to be a downstream symptom of these same 4 missing-column
+pages (a date looking inconsistent across theaters because 3-4 of the
+5 theaters simply weren't there to compare against). The remaining 5
+flags (`duplicate_event_key` x4, `receipts_parse_failed` x1) are all
+pre-existing, on unrelated pages (`repertoire_1894-95_pair006`/
+`pair008`, `repertoire_1897-98_pair016`/`pair020`), untouched by this
+fix and already understood from earlier addenda. `build_duckdb.py`
+re-run and directly verified: all 4 pages now show all 5 theaters
+present for every date. Queries logged in `docs/query_log.md`.
+
+**This closes out every quality-flag category from the last addendum
+except the two structurally-expected residuals**
+(`cross_theater_date_mismatch` is now 0 rather than merely explained,
+and `zero_dark_cells_on_multiweek_page` is fully resolved);
+`duplicate_event_key` (4, confirmed legitimate) and the single
+genuinely-illegible receipts figure remain, both already understood
+and not further actionable.
