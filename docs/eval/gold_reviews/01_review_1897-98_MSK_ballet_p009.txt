@@ -106,3 +106,20 @@ caption: Восп-ца Тарасенко.
 <i><l fr>Solo de Saturne et de ses 4 sattelites</l></i>—г-жа Шишко или г-жа Дьякъ
 и воспитанницы Императорскаго Московскаго театральнаго училища Тара-
 сенко, Павлова, Егорова и Соколова.
+
+[enumerated_list]
+<i><l fr>Solo de l'Etoile polaire</l></i>—г-жа Грачевская 1-я.
+
+[enumerated_list]
+<i><l fr>Groupes des Nèbuleuses</l></i> — г-жи Бакина 1-я, Егорова, Крылова 1-я,
+восп-ца Ѳедорова и 16 маленькихъ воспитанницъ Императорскаго Москов-
+скаго театральнаго училища.
+
+[enumerated_list]
+<i><l fr>Pas de la Comète</l></i>—г-жа Самойлова.
+
+[enumerated_list]
+<i><l fr>Scène lunaire</l></i>—всѣ участвующіе.
+
+[enumerated_list]
+<i><l fr>Entrée de Venus</l></i>—г-жа Рославлева или г-жа Джури.
