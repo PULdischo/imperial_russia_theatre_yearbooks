@@ -11315,3 +11315,49 @@ that overlap this issue's own 38).
 
 **This closes the receipts residual.** `build_duckdb.py` is now the
 only remaining step to a queryable database.
+
+### Addendum to #70 (2026-09-17): closed the parse_raw/resolved_sessions
+propagation gap flagged above
+
+All 28 direct session-level content fixes applied today across 16
+pages (both this addendum's 7 and the earlier cross-theater-mismatch
+addendum's 21) had gone straight into `outputs/repertoire_spreadfix_
+v6/parse_raw/*.raw.json` and never back into `resolved_sessions/`'s
+`trusted` lists, which `parse_raw/` was originally derived from.
+Confirmed the exposure directly rather than assuming it: diffed every
+one of the 83 `parse_raw` files against its `resolved_sessions`
+counterpart's `trusted` list. Found exactly 16 files differing (15 by
+same-index value changes, plus `1892-93_pair020`'s one length
+mismatch -- the recovered `1 Четв.` утро session, confirmed via
+`difflib.SequenceMatcher` to be a clean single insertion, nothing
+else misaligned) -- 28 differing sessions total, matching the fix
+count exactly. Since `resolved_sessions/` was never touched by any of
+today's edits, every diff is, by construction, exactly one of today's
+corrections with no other explanation -- propagated by setting each
+differing file's `trusted` = the corresponding `parse_raw` sessions
+list wholesale. Re-diffed all 83 files afterward: 0 remaining
+differences.
+
+**This does not fully close the exposure on its own** -- `resolved_
+sessions/` is itself regenerated from scratch by `apply_split_
+overlap_resolutions.py` (reads `raw_columnwise/` + the queue CSV), and
+that script has no way to know about a content fix that was never a
+top/bottom collision (the overwhelming majority of today's 28 --
+these are single-half misreads the model made, not disagreements
+between two halves). A future re-run of that script, for an unrelated
+reason (e.g. a new queue resolution), would still silently regenerate
+`resolved_sessions/` from the ORIGINAL uncorrected raw extraction and
+discard today's work, propagation into `trusted` notwithstanding.
+
+Closed that too: added a `--force`-gated overwrite guard to `pipeline/
+apply_split_overlap_resolutions.py` (plus a module-docstring warning
+naming the exact exposure). By default, if an output file's on-disk
+`trusted` list would change from what a run recomputes, that file is
+now left untouched and reported by name at the end of the run instead
+of silently overwritten -- verified in isolation (not via a full
+pipeline re-run, since reconstructing today's exact original
+`--page-numbers` CLI input wasn't attempted here) that the guard
+correctly detects a reverted-to-wrong `trusted` list and leaves the
+file byte-identical on disk. `--force` remains available for an
+intentional regeneration, with the docstring pointing back to this
+addendum for what would need re-applying afterward.

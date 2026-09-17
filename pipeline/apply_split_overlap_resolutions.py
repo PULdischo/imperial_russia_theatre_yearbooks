@@ -33,6 +33,20 @@ dedup_split_overlap.py's tiers:
     ONLY if the queue row has been hand-annotated: `corrected_*` columns
     (a human's own transcription, checked against the scan) take
     priority over `kept_half` (a human's judgment that one machine read
+
+CAUTION (added 2026-09-17, known_issues.md #70's receipts-residual
+addenda): this script's OWN inputs are `--raw-dir` (raw model output)
+and `--queue` (collision resolutions) -- it has no way to know about
+content corrections that were applied AFTER the fact, directly to an
+`--out-dir` file, for errors that were never a top/bottom collision in
+the first place (a single half's own row simply misread by the model --
+28 sessions' worth, across 16 pages, as of the above addenda). Those
+corrections live only in the `trusted` list on disk. Re-running this
+script recomputes `trusted` from scratch and will silently overwrite
+that file, discarding them, unless `--force` is passed. Default
+behavior is to refuse to overwrite a `trusted` list that would change
+from what's on disk, and print exactly which files/sessions differ, so
+this can never happen silently.
     was already correct) -- both require a person to have looked. An
     unannotated ambiguous row is written to `pending_review.json`, not
     guessed at, and not dropped.
@@ -141,6 +155,12 @@ def main():
                           "-- unannotated ambiguous rows are written to pending_review.json, "
                           "never guessed at")
     ap.add_argument("--out-dir", type=Path, required=True)
+    ap.add_argument("--force", action="store_true",
+                     help="overwrite an existing <page_id>.resolved_sessions.json even if its "
+                          "on-disk `trusted` list differs from what this run recomputes -- that "
+                          "difference is presumptively a manual content correction applied "
+                          "after the fact (see this module's docstring); without --force such a "
+                          "file is left untouched and reported instead of silently clobbered")
     args = ap.parse_args()
 
     # A key can have MORE than one queue row -- dedup_split_overlap.py
@@ -173,6 +193,7 @@ def main():
     args.out_dir.mkdir(parents=True, exist_ok=True)
     totals = defaultdict(int)
     pending_all = []
+    skipped_diffs = []
 
     for source_pid, halves in sorted(pairs.items()):
         if "top" not in halves or "bottom" not in halves:
@@ -295,6 +316,12 @@ def main():
                     totals[disposition.split(":")[0]] += 1
 
         out_path = args.out_dir / f"{source_pid}.resolved_sessions.json"
+        if out_path.exists() and not args.force:
+            existing = json.loads(out_path.read_text(encoding="utf-8"))
+            if existing.get("trusted") != trusted:
+                skipped_diffs.append(source_pid)
+                pending_all.extend({**p, "source_page_id": source_pid} for p in pending)
+                continue
         out_path.write_text(json.dumps({"trusted": trusted, "pending": pending},
                                         ensure_ascii=False, indent=2), encoding="utf-8")
         pending_all.extend({**p, "source_page_id": source_pid} for p in pending)
@@ -307,6 +334,15 @@ def main():
         print(f"  ({totals['unresolved_not_in_queue']} of those weren't in the queue at all -- "
               f"re-run dedup_split_overlap.py against the same --raw-dir)")
     print(f"per-page-pair output -> {args.out_dir}/<source_page_id>.resolved_sessions.json")
+    if skipped_diffs:
+        print(f"\nWARNING: {len(skipped_diffs)} file(s) left UNTOUCHED because their on-disk "
+              f"`trusted` list differs from what this run recomputed -- that's presumptively a "
+              f"manual content correction applied after the fact (see this module's docstring "
+              f"and docs/eval/known_issues.md #70's receipts-residual addenda). Pass --force to "
+              f"overwrite anyway once you've confirmed those corrections are captured elsewhere "
+              f"(or don't need to be):")
+        for pid in skipped_diffs:
+            print(f"  {pid}")
 
 
 if __name__ == "__main__":
