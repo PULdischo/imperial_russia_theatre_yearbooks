@@ -11964,3 +11964,43 @@ on the rebuilt Михайловскій rows), 0 validation errors,
 illegible case stays flagged, correctly). Propagated to `resolved_
 sessions/`. `build_duckdb.py` re-run and re-verified. Queries logged in
 `docs/query_log.md`.
+
+### Addendum to #70 (2026-09-17): `event_status` field audit -- clean
+field, 3 more misplaced titles found and fixed
+
+RG asked to check `event_status` (derived as `"no_performance" if
+is_dark else "performed"`). The field itself is clean: only the two
+expected values, `performed` (3,333) and `no_performance` (810).
+
+Checked both directions for internal inconsistency:
+- **`performed` with literally nothing** (no works, no annotation, no
+  receipts): 0 found.
+- **`performed` with no works but some annotation/receipts** (23
+  found): mostly legitimate -- concert/benefit notices and anthems with
+  genuinely no titled work (`Концертъ въ пользу инвалидовъ`, bare
+  `Гимнъ.`, etc., matching the same legitimate-no-genre pattern already
+  established in the genre-field audit). But 5 had the same
+  embedded-genre-suffix signal used throughout this session's field
+  audits (a title ending `, оп.`/`, др.` sitting in `annotation`
+  instead of `works`) -- 3 fixed with high confidence via clean corpus
+  duplicates: `Майская ночь, оп.` (6 clean occurrences), `Гибель
+  Содома, др.` (11 clean occurrences), and `Парадный спектакль. 1-е и
+  2-е д. бал. Спящая красавица.` split into annotation (`Парадный
+  спектакль.`) + a proper excerpt-prefixed work (matching this
+  corpus's established convention). **2 left unresolved and
+  documented, not guessed**: `'Отечественный'` and `'Для воспитанницъ
+  и воспитанниковъ'` -- neither has any other occurrence anywhere in
+  the corpus (as a title OR an annotation) and neither has a receipts
+  figure to cross-reference, so there's nothing to confirm a
+  reconstruction against.
+- **`no_performance` with actual content**: exactly 56, precisely
+  matching the already-tracked `dark_row_with_content` flag count --
+  confirmed this is the known `Большой`-column bleed pattern already
+  documented elsewhere in this issue, not a new problem surfaced by
+  this angle.
+
+**Final re-verified state**: `event_entry` unchanged at 4,143,
+`event_entry_performance` 5,353 -> 5,356 (+3), 0 validation errors,
+`quality_flags.csv` unchanged (145 flags). Propagated to `resolved_
+sessions/` for 3 files. `build_duckdb.py` re-run and re-verified.
+Queries logged in `docs/query_log.md`.
