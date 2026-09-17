@@ -11770,3 +11770,61 @@ truncation).
 of this touched a tracked check). Propagated to `resolved_sessions/`
 for 17 affected files. `build_duckdb.py` re-run and re-verified.
 Queries logged in `docs/query_log.md`.
+
+### Addendum to #70 (2026-09-17): tracked down the real scans for the
+remaining 8 unresolved titles -- all 8 resolved
+
+RG asked to keep going and locate the actual scans for the 8 titles left
+undone by the previous addendum. Found both source pages directly:
+`repertoire_1891-92_pair012`'s 4 rows trace to printed pages 12-13
+(`pdf/RepertoireTables/ForUpload_1891-92_Repertoire_005.jpg`);
+`repertoire_1894-95_pair008`'s 4 rows (part of the same page whose
+`Большой` column was already flagged as stale/garbled) trace to printed
+pages 8-9 (`ForUpload_1894-95_Repertoire_003.jpg`) -- both located by
+reasoning from the known weekday/date pairs in the stored `date_text`
+values to the correct month (this corpus's session field doesn't carry
+`month_text` reliably, but a date's weekday pins down which month is
+consistent with the Julian calendar), not by guessing at a render page
+number.
+
+Two of the 8 turned out not to be truncations at all: `'карт.'` and
+`'фарсъ'` (both on `1891-92_pair012`) were confirmed, reading the scan
+directly, to be nothing but a duplicate of the PRECEDING work's own
+genre marker, machine-split into a bogus third "work" with no title of
+its own -- removed rather than reconstructed, since there was never a
+missing title to recover.
+
+Two more (`'хъ, ком.'`, `'къ дѣлу, сц.'`, both `1894-95_pair008`, `8
+Воскресенье.` Малый) turned out to be a title from ONE real work fused
+with the genre of the ADJACENT work on the same row -- exactly the
+mismatch flagged in the previous addendum as a sign of "more confused
+than a simple truncation." The scan confirmed each session is really
+two works: `На порогѣ къ дѣлу, сц.` + `Вѣрь, ком.` (morning), `У своихъ,
+ком.` + `Парики, опер.` (evening) -- split into 4 correctly-paired
+works.
+
+The other 4 were ordinary truncations, recovered in full: `Соль
+супружества` (twice, confirming the earlier corpus-only guess of
+`"...ль супружества"` was on the right track but had the wrong leading
+letter); `Фаустъ, оп.` (`'сть, оп.'` was a truncation combined with a
+ъ/ь OCR confusion); and `'г. Садовскаго. съ, ком.'` unpacked into an
+annotation (`Бенефисъ г. Садовскаго.`) plus TWO real works, one of which
+(`Спириты, вод.`) had been completely absent from the data until now,
+not merely truncated -- recovered rather than left half-fixed. Also
+cleared one clearly-spurious `annotation` (`"Золотой Стряпчій
+подьячій"` on the `Фаустъ` row) that the scan shows has no counterpart
+printed there at all.
+
+**Final state**: 0 lowercase-starting titles remain corpus-wide (down
+from 8). `event_entry` unchanged at 4,143, `event_entry_performance`
+5,316 -> 5,317 (+1 net, matching the two removed spurious entries
+against the four recovered real works). 0 validation errors,
+`quality_flags.csv` unchanged. Propagated to `resolved_sessions/` for
+both affected files, `build_duckdb.py` re-run and re-verified. Queries
+logged in `docs/query_log.md`.
+
+This closes every item raised by the `genre` and `performance_title`
+field audits except the one still-open, larger finding: `1894-95_
+pair008`'s `Большой`-column `annotation` field (a different field,
+explicitly out of scope for a titles-only pass) -- tracked in memory
+for a future dedicated pass.
