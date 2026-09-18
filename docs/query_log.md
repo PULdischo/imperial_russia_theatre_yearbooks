@@ -6229,3 +6229,48 @@ pre-existing problems, not new breakage: `zero_dark_cells_on_multiweek_page` on
 has no other captured dark day at all -- likely a genuinely missing Aug24/Суббота row, not
 something introduced here) and the `duplicate_event_key` on `1895-96_pair002`'s "3 Воскр."
 Михайловскій described above.
+
+## 2026-09-18 — found the 1895-96_pair002 missing date; audited all 8 remaining unscanned page headers (follow-up to issue #72)
+
+**Missing date found**: Михайловскій's session at 675 р.63 к. ("Первая муха"/"Угасшая искра"/
+"Изъ-за мышенка"), left unresolved in the prior pass, is confirmed as true **"4 Понедѣльн."**
+(Sept 4, 1895) -- exact match on all 3 titles and the receipts figure, found in
+`ForUpload_1895-96_Repertoire_000.jpg`. Fixed with no collision. `duplicate_event_key` flags
+dropped from 4 to 3 (the 3 remaining are pre-existing, unrelated to #72, on 1897-98 pages).
+
+**Header re-audit**: checked the pickle for any page still carrying the original unverified
+"single anchor month, trusted for whole page" note (never individually re-scanned this
+session, as opposed to "CONFIRMED"/"CORRECTED" notes from actual scan checks). Found 8:
+`1890-91_p000`, `1890-91_pair004`, `1890-91_pair006`, `1890-91_pair016`, `1890-91_pair020`,
+`1891-92_pair002`, `1891-92_pair006`, `1891-92_pair012`. Scan-checked all 8 against their
+renders:
+
+- `1890-91_p000`: CONFIRMED correct (16-26 Августа).
+- `1890-91_pair004`: CORRECTED -- true range is 27 Августа-21 Сентября (was guessed as
+  10-21 Сентября only). Scan-verified `ForUpload_1890-91_Repertoire_001.jpg`.
+- `1890-91_pair006`: CORRECTED -- true range is 22 Сентября-11 Октября (was guessed as
+  2-11 Октября only). Scan-verified `ForUpload_1890-91_Repertoire_002.jpg`. Neither correction
+  changed any date_undate values -- the raw JSON simply has no session data in the
+  newly-added day range, so this is a header-accuracy fix for future extraction work, not a
+  regression fix.
+- `1890-91_pair016`: no header fix needed for date_undate correctness -- it's a genuine
+  single-month January page (confirmed via explicit "14 Января."/"15 Января." inline anchors),
+  so the threshold logic never triggers regardless of exact day bounds. BUT found a real,
+  separate data question: pair016's own day-10-18 entries appear to duplicate/overlap with
+  the already-confirmed-correct `1890-91_pair022` (also Jan 10-23, German-language touring-
+  troupe content, scan-verified as genuinely distinct from pair016's Russian repertoire) --
+  deliberately NOT chased further, out of scope, documented as a new deferred item (see memory).
+- `1890-91_pair020`: no cross-month evidence in the raw day sequence (14-26, single Михайловскій
+  theater only, explicit "14 Февраля." anchor) -- left as-is, low risk.
+- `1891-92_pair002`, `1891-92_pair006`, `1891-92_pair012`: no cross-month evidence (clean day
+  sequences, no stray low-day entries after this session's earlier `pair002` cleanup) --
+  `1891-92_pair006`'s Oct8 start also lines up with zero overlap against the newly-corrected
+  `1891-92_pair004`'s Oct7 end, corroborating both.
+
+Reran the full pipeline after all fixes. Full 88-page cross-check against scan-verified
+windows: 2 violations remain, both the same already-understood harmless case
+(`1892-93_pair024`'s header end_day being a conservative underestimate within the correct
+end_month, not a real error). `quality_checks.py`: 5 flags (duplicate_event_key 3 -- back to
+baseline; zero_dark_cells_on_multiweek_page 1; receipts_parse_failed 1).
+`validate_performance_dates.py`: unresolved unchanged at 6 (both header fixes didn't touch any
+existing date_undate values, as noted above), verified 80.8%.
