@@ -13383,4 +13383,33 @@ needed Большой added. Scan-verified against
 flags unchanged. Verified directly -- zero remaining null receipts,
 every date has all 5 theaters.
 
-**1 of 7 deferred sub-issues remains**: `1897-98_pair018`.
+### Addendum to #70 (2026-09-18): deferred issue 7/7 RESOLVED (FINAL)
+-- `repertoire_1897-98_pair018`, full rebuild
+
+Full page rebuild (29 Января-8 Февраля 1898). Confirmed
+Александринскій and Большой share one continuous date-label shift
+running from "29 Четвергъ." (a duplicate of "29 января.") through "7
+Суббота." (=true 8 Воскресенье утро); Маріинскій has its own separate,
+much shorter shift (29-31 Января only, self-resolving by 2
+Понедѣльникъ.). Recovered Михайловскій and Малый, both entirely
+missing from this file (the earlier investigation had only caught
+Михайловскій). Confirmed "6 Пятница." is genuinely crease-illegible
+for all 5 theaters (titles legible, receipts swallowed by the binding
+fold). The 3 genuine drops at "8 Воскресенье." fixed earlier this
+session were independently re-confirmed correct against this fresh,
+careful reading. Scan-verified against
+`ForUpload_1897-98_Repertoire_008.jpg` (printed pp.18-19).
+
+36 -> 59 sessions. 4916 -> 4939 events, 6468 -> 6509 performances, 4
+flags unchanged. Verified directly -- every date has all 5 theaters;
+only 6 confirmed-legitimate nulls remain (1 charity benefit, 5 from
+the crease-affected row).
+
+**THIS RESOLVES THE LAST OF THE 7 DEFERRED MULTI-THEATER TANGLES FROM
+ISSUE #70.** Combined with the full null-receipts audit (both buckets,
+all 8 seasons) completed earlier, issue #70's entire deferred-work
+backlog from this arc is now clear. Two small items remain genuinely
+unresolved (not deferred multi-theater tangles, just individually
+unconfirmed rows): `1892-93_pair024`'s "3 Четверг." Малый (ambiguous --
+same title recurs on two different dates) and `1893-94_pair010`'s "23
+Вторникъ." Маріинскій (source row not located).

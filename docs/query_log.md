@@ -5992,3 +5992,32 @@ select date_text, theater from raw.event_entry
 
 Result: 0 rows -- verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
 Every date now has all 5 theaters. 4 quality flags unchanged.
+
+## 2026-09-18 — deferred-issue resolution 7/7 (FINAL): repertoire_1897-98_pair018
+
+```sql
+select date_text, count(distinct theater) from raw.event_entry
+    where page_id='repertoire_1897-98_pair018' group by date_text order by 1
+```
+
+Full page rebuild (29 Января - 8 Февраля 1898). Confirmed Александринскій and Большой share one
+continuous date-label shift running from "29 Четвергъ." (a duplicate of "29 января.") through
+"7 Суббота." (=true 8 Воскресенье утро); Маріинскій has its own separate, much shorter shift
+(29-31 Января only, self-resolving by 2 Понедѣльникъ.). Recovered Михайловскій and Малый, both
+entirely missing from this file (not just Михайловскій, as originally noted). Confirmed "6
+Пятница." is genuinely crease-illegible for all 5 theaters (titles legible, receipts swallowed
+by the binding fold). The 3 genuine drops at "8 Воскресенье." fixed earlier this session were
+independently re-confirmed correct against this fresh, careful reading. Scan-verified against
+ForUpload_1897-98_Repertoire_008.jpg (printed pp.18-19). 36 -> 59 sessions.
+
+```sql
+select date_text, theater, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair018' and event_status='performed' and receipts_text is null
+```
+
+Result: 6 rows after fix -- "1 Воскресенье." Маріинскій (confirmed charity benefit, no receipts
+printed) and all 5 theaters at "6 Пятница." (confirmed crease-illegible). Every date has all 5
+theaters. Verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+4 quality flags unchanged.
+
+**THIS RESOLVES THE LAST OF THE 7 DEFERRED MULTI-THEATER TANGLES FROM ISSUE #70.**
