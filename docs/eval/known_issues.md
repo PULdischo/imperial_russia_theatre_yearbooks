@@ -12352,3 +12352,33 @@ Rebuilt and verified directly against the database. Queries logged in
 `repertoire_1892-93_pair008` (and the possibility of siblings elsewhere
 in the corpus) is a new, separate open item, not yet tracked as its own
 numbered issue.
+
+### Addendum to #70 (2026-09-18): repertoire_1892-93_pair008's missing
+Александринскій + Малый columns recovered -- the check-coverage gap
+itself is still open
+
+Finished the fix flagged at the end of yesterday's addendum. Transcribed
+the remaining dates (`30 Октября.` - `4 Ноября.`) from
+`ForUpload_1892-93_Repertoire_003.jpg` (printed pp.8-9) -- the earlier
+dates (`24`-`29 Октября.`) had already been read while investigating
+item 5. Applied all 26 recovered sessions (12 dates x 2 theaters, with
+morning/evening splits on 3 of the 12) via the same
+assert-prior-value-then-overwrite discipline as every other fix in
+this issue, `_fix_note` provenance on each. All 5 theaters now present
+for all 12 dates.
+
+Propagated to `resolved_sessions/`, re-ran `parse_and_validate.py` ->
+`quality_checks.py` -> `build_duckdb.py`: 4359 -> 4385 events, 5650 ->
+5688 performances, `quality_flags.csv` unchanged at 5 (no new
+duplicates or parse failures introduced by the new sessions). Rebuilt
+and verified directly against the database -- all 5 theaters, all 12
+dates confirmed present. Queries logged in `docs/query_log.md`.
+
+**Still open**: the check-coverage gap itself (`zero_dark_cells_on_
+multiweek_page` missing this page because its captured theaters still
+show ordinary dark days) is not yet fixed, and the corpus hasn't been
+swept for other pages with the same blind spot. See
+`missing-theater-column-check-gap` memory for the suggested check (a
+straightforward `count(distinct theater) < 5` per page_id, stricter
+than the existing zero-dark-cells heuristic for this specific failure
+mode) -- not yet implemented in `pipeline/quality_checks.py`.
