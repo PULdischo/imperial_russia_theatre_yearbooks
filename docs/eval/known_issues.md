@@ -13290,6 +13290,31 @@ and "22 Пон." Малый (its receipts sit directly under a physical
 binding thread in the scan -- genuinely illegible, left null rather
 than guessed).
 
-**5 of 7 deferred sub-issues remain**: `1894-95_pair006`,
-`1895-96_pair006`, `1896-97_pair004`, `1896-97_pair008`,
-`1897-98_pair018`.
+### Addendum to #70 (2026-09-18): deferred issue 3/7 resolved --
+`repertoire_1894-95_pair006`, full October-portion rebuild
+
+The originally-flagged "14 Пятн."/"4 Октября." duplicate clusters
+turned out to be symptoms of a much wider defect spanning the whole
+5-19 Октября range: Александринскій carried its own continuous
+date-label shift starting at 5 Среда; Михайловскій had scattered
+spurious duplicates plus its own shift from 16 Воскресенье onward;
+Большой had non-adjacent duplicate/misattributed sessions, including
+two cases where receipts from January dates were mistakenly copied
+onto unrelated October rows. Маріинскій and Малый were already almost
+entirely correct throughout.
+
+Rebuilt all 5 theaters for 4-19 Октября directly from
+`ForUpload_1894-95_Repertoire_002.jpg` (printed pp.6-7); confirmed 1-4
+Января were already content-correct (the "4 Среда."/"4 Октября." label
+confusion was just a naming inconsistency, relabeled to "4 Января." for
+consistency with its siblings).
+
+109 -> 109 sessions (pure relabel/dedup). 4817 -> 4835 events, 6360 ->
+6368 performances. **Quality flags dropped from 5 to 4** -- this
+rebuild resolved the pre-existing `duplicate_event_key` flag for this
+page's "14 Пятн." Большой duplicate as a side effect. Verified
+directly -- zero remaining null receipts, every date has all 5
+theaters.
+
+**4 of 7 deferred sub-issues remain**: `1895-96_pair006`,
+`1896-97_pair004`, `1896-97_pair008`, `1897-98_pair018`.

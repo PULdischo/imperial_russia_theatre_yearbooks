@@ -5884,3 +5884,32 @@ Result: 4 rows after fix -- the 2 confirmed-legitimate rows above, plus "14 Во
 directly under a physical binding thread in the scan, genuinely illegible -- left null rather
 than guessed). Verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
 5 quality flags unchanged.
+
+## 2026-09-18 — deferred-issue resolution 3/7: repertoire_1894-95_pair006
+
+```sql
+select date_text, count(distinct theater) from raw.event_entry
+    where page_id='repertoire_1894-95_pair006' group by date_text order by 2
+```
+
+Investigation of the originally-flagged "14 Пятн."/"4 Октября." duplicate clusters revealed the
+underlying defect actually spans the whole October portion of the page (5-19 Октября):
+Александринскій carried its own continuous date-label shift starting at 5 Среда; Михайловскій
+had scattered spurious duplicates plus its own shift from 16 Воскресенье onward; Большой had
+non-adjacent duplicate/misattributed sessions (including two cases where receipts from January
+dates were mistakenly copied onto October rows). Маріинскій and Малый were already almost
+entirely correct. Rebuilt all 5 theaters for 4-19 Октября directly from
+ForUpload_1894-95_Repertoire_002.jpg (printed pp.6-7); confirmed 1-4 Января were already correct
+(the "4 Среда."/"4 Октября." label confusion was just a naming inconsistency -- content was
+already right, relabeled to "4 Января." for consistency with its siblings "1 Январь"/"2
+Понедѣльникъ"/"3 Вторн."). 109 -> 109 sessions (pure relabel/dedup, no net count change).
+
+```sql
+select date_text, theater, annotation from raw.event_entry
+    where page_id='repertoire_1894-95_pair006' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows -- every date now has all 5 theaters, verified against rebuilt
+outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb. Quality flags DROPPED from 5 to 4 --
+the pre-existing duplicate_event_key flag for this page's "14 Пятн." Большой duplicate is
+resolved by this rebuild.
