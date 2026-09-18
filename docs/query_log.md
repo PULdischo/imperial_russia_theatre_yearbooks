@@ -5687,3 +5687,21 @@ unrecoverable: the row sits exactly at the physical bottom edge of the photograp
 theaters but the receipts line itself was never captured in either scan (the next photo
 resumes at "16 Четверг.", not a re-photograph of this row). Same precedent as
 repertoire_1894-95_p008. No fix applied -- left as null, confirmed genuine.
+
+## 2026-09-18 — annotated-bucket audit page 1: repertoire_1897-98_pair022 (biggest, 8 rows)
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair022' and event_status='performed'
+    and receipts_text is null and annotation is not null
+```
+
+Result: 8 rows -- all charity/benefit performances by a touring German opera company plus two
+Russian invalid-relief/Red-Cross benefit concerts at Большой (14/15 Суббота-Воскресенье
+Маріинскій; 19 Четвергъ/21 марта/7 Вторникъ Большой; 21 Суббота Маріинскій; 22
+Воскресенье/23 Понед. Большой). All confirmed genuinely blank in the source -- titles/annotations
+match the scan exactly, no receipts figure printed for any of them. Scan-verified against
+ForUpload_1897-98_Repertoire_010.jpg (printed pp.22-23). Noted in passing: "23 Понед." Большой
+has a duplicate entry (empty ann=None + the charity-annotated one, matching "22 Воскресенье."'s
+text byte-for-byte) -- likely a duplicate-capture artifact, not touched (both are legitimately
+null regardless). No fixes applied -- all 8 confirmed legitimate.

@@ -13092,6 +13092,24 @@ tracked in its own memory file: `repertoire-1892-93-pair014-missing-theaters.md`
 `repertoire-1895-96-pair006-scattered-duplicates.md`,
 `repertoire-1896-97-pair004-multi-theater-tangle.md`,
 `repertoire-1896-97-pair008-open-issues.md`, and
-`repertoire-1897-98-pair018-date-tangle.md`. The separate 56-row
-annotated bucket (see `1890-91-1891-92-no-receipts-printed.md`) has not
-yet been started.
+`repertoire-1897-98-pair018-date-tangle.md`.
+
+### Addendum to #70 (2026-09-18): annotated-bucket page 1 --
+`repertoire_1897-98_pair022`, biggest page (8 rows), all confirmed
+legitimate
+
+Started the separate 56-row annotated bucket (rows that already carry
+some annotation). This page's 8 nulls are all charity/benefit
+performances by a touring German opera company (14/15 Суббота-
+Воскресенье, 21 Суббота Маріинскій) plus Russian invalid-relief/Red-
+Cross benefit concerts (19 Четвергъ/21 марта/7 Вторникъ/22 Воскресенье/
+23 Понед. Большой). All confirmed genuinely blank in the source --
+titles and annotations match the scan exactly, no receipts figure
+printed for any of them. Scan-verified against
+`ForUpload_1897-98_Repertoire_010.jpg` (printed pp.22-23). Noted in
+passing (not fixed): "23 Понед." Большой carries a duplicate entry
+whose annotation matches "22 Воскресенье."'s byte-for-byte -- likely a
+duplicate-capture artifact, but both copies are legitimately null
+regardless.
+
+43 sessions unchanged -- no fix applied, all 8 confirmed legitimate.
