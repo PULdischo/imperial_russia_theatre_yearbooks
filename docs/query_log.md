@@ -5730,3 +5730,21 @@ recurs on two different true dates in the scan (6 Четвергъ with 1069 р.
 231 р. 9 к.) and neither maps unambiguously to file's "3 Четверг." label; genuinely ambiguous,
 deferred rather than guessed. Scan-verified against ForUpload_1892-93_Repertoire_011.jpg
 (printed pp.24-25).
+
+## 2026-09-18 — annotated-bucket audit pages 6-8: repertoire_1893-94_pair010/016/022
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id=? and event_status='performed' and receipts_text is null and annotation is not null
+```
+
+pair016: 0 rows (already resolved). pair022 (1 row, "22 Вторн." Маріинскій, "Повтореніе
+концерта въ пользу инвалидовъ.") confirmed legitimate -- matches the charity-concert row
+exactly (scan shows it under "23 Среда.", a minor date-label discrepancy not otherwise
+investigated), no receipts printed. Scan-verified against ForUpload_1893-94_Repertoire_010.jpg
+(printed pp.22-23). pair010 (1 row, "23 Вторникъ." Маріинскій, "Въ пользу школъ Спб. Женскаго
+Патриотического Общества...") NOT resolved -- checked ForUpload_1893-94_Repertoire_005.jpg and
+_006.jpg (printed pp.12-15) without finding this specific row; this page already has known
+date-labeling problems (see repertoire-1893-94-pair010-open-issues.md) that make its true
+calendar position unclear. Left unconfirmed rather than assumed from pattern -- added to that
+page's existing deferred-issues memory.

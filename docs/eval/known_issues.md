@@ -13139,3 +13139,21 @@ the file's date label, genuinely ambiguous rather than guessed.
 All scan-verified against `ForUpload_1892-93_Repertoire_004/009/011.jpg`.
 No fixes applied this batch -- 8 of 9 checked rows confirmed
 legitimate, 1 deferred as ambiguous.
+
+### Addendum to #70 (2026-09-18): annotated-bucket pages 6-8 --
+1893-94 season (pair010/016/022)
+
+`pair016` already had 0 annotated nulls. `pair022` (1 row, "22 Вторн."
+Маріинскій, "Повтореніе концерта въ пользу инвалидовъ.") confirmed
+legitimate -- matches the charity-concert row exactly (found under
+"23 Среда." in the scan, a minor date-label discrepancy not otherwise
+investigated), no receipts printed. Scan-verified against
+`ForUpload_1893-94_Repertoire_010.jpg` (printed pp.22-23). `pair010`
+(1 row, "23 Вторникъ." Маріинскій, "Въ пользу школъ Спб. Женскаго
+Патриотического Общества...") left UNRESOLVED -- checked
+`ForUpload_1893-94_Repertoire_005.jpg`/`_006.jpg` (printed pp.12-15)
+without finding this specific row; this page already carries known
+date-labeling problems (`repertoire-1893-94-pair010-open-issues.md`)
+that make its true calendar position unclear. Not assumed from the
+strong corroborating pattern elsewhere -- left genuinely unconfirmed,
+added to that page's existing deferred-issues memory.
