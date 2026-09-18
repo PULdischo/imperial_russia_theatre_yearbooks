@@ -12520,3 +12520,27 @@ Fully rebuilt (26 -> 70 sessions, 14 real dates x 5 theaters). 4382 ->
 directly. Query in `docs/query_log.md`.
 
 **Three pages down, ~37 to go.**
+
+### Addendum to #70 (2026-09-18): page 4 (`repertoire_1892-93_pair004`)
+-- missing Большой column throughout, plus scattered Александринскій
+content misattribution across several dates
+
+`repertoire_1892-93_pair004` (10 Сентября - 2 Октября 1892) was
+missing Большой entirely across all 20 dates (confirmed genuinely
+active in the scan, unlike `pair002`'s early-season gap). Александринскій
+had scattered misattribution too: old `"1 Четв."` held a garbled
+duplicate combining `29 Вторникъ`'s and `30 Среда`'s real content,
+while `1 Четв.`'s own genuine content had been mislabeled under `"2
+Пятница."`; old `"26 Суббота."` held a duplicate of `24 Четвергъ`'s
+content where the scan shows Alexandrinsky genuinely dark.
+Маріинскій/Малый were also entirely missing for `26`-`30` (both
+theaters had opened for the season by then, confirmed active in the
+scan). Checked against `ForUpload_1892-93_Repertoire_001.jpg` (printed
+pp.4-5). One row (`22 Вторникъ`) has every column's receipts genuinely
+illegible -- a binding-fold crease under the whole row.
+
+Fully rebuilt (68 -> 100 sessions). 4426 -> 4458 events, 5715 -> 5752
+performances, 5 flags unchanged. Verified directly. Query in
+`docs/query_log.md`.
+
+**Four pages down, ~36 to go.**
