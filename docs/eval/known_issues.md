@@ -12382,3 +12382,61 @@ swept for other pages with the same blind spot. See
 straightforward `count(distinct theater) < 5` per page_id, stricter
 than the existing zero-dark-cells heuristic for this specific failure
 mode) -- not yet implemented in `pipeline/quality_checks.py`.
+
+### Addendum to #70 (2026-09-18): started a null-receipts audit across
+the 6 non-1890-91/91-92 seasons; page 1 of the worklist
+(`repertoire_1895-96_p012`) turned out to need a full rebuild, same as
+`pair016` -- a THIRD distinct disguise for the missing-theater-column
+defect
+
+RG asked to follow up on the 173-row null-receipts residual identified
+2026-09-17 (117 no-annotation + 56 annotated, spread across ~40 pages
+in seasons `1892-93`-`1897-98`), checking both buckets page by page
+against the scans. First page worked (`repertoire_1895-96_p012`, 17 of
+the 173 rows) turned out not to be a receipts problem at all --
+
+`repertoire_1895-96_p012` is the only 1895-96 page named bare `p012`
+(every other even-numbered slot, 002 through 024, has a proper
+`pairNNN` file) and carries no `_source` citation on any session --
+clear evidence it never went through this issue's usual dual-
+extraction/merge/cross-check pipeline the way its neighbors did.
+Checking it against the scan (`ForUpload_1895-96_Repertoire_003.jpg`
+printed p.9 for 15-17 Ноября, `_004.jpg` printed pp.10-11 for 19-26
+Ноября 1895) found Маріинскій/Александринскій/Михайловскій uniformly
+mismarked `is_dark=true`/`works=[]` on every one of the file's 10
+dates despite being fully active and printed in the source. This is
+the SAME underlying defect as the 4 `zero_dark_cells_on_multiweek_page`
+pages and `repertoire_1892-93_pair008` -- three theaters genuinely
+missing from capture -- but manifesting a third way: instead of the
+sessions being absent from `parse_raw` (the original 4 pages) or the
+column merely lacking receipts (`pair008`), here they're PRESENT but
+falsely flagged dark. Also found Большой/Малый's existing "captured"
+content didn't reliably match the scan either -- e.g. `17 Ноября.`'s
+Большой and Малый content was swapped with each other (scan shows
+Большой dark and Малый active; the file had it the other way round),
+and `20 Ноября.` was entirely misattributed (file showed Большой/Малый
+active with unrelated content; scan shows the whole day dark except
+Михайловскій). RG approved a full rebuild, same treatment as
+`repertoire_1895-96_pair016`'s date-remapping rebuild.
+
+Re-transcribed all 5 theaters for all 10 dates directly from the scan
+and replaced the session list wholesale (50 -> 55 sessions). One row
+(`26 Ноября.`) sits on the binding-fold boundary -- 4 figures there
+are either genuinely uncaptured (a free/benefit show with no printed
+receipts) or physically torn away by the fold; left honestly null,
+each case documented rather than guessed.
+
+Re-ran `parse_and_validate.py` -> `quality_checks.py` ->
+`build_duckdb.py`: 4385 -> 4390 events, 5688 -> 5728 performances, 5
+quality flags unchanged. Rebuilt and verified directly against the
+database -- all 5 theaters present for all 10 dates, and this page's
+null-receipts count dropped from 17 to 4 (all 4 now legitimately
+explained, not silent gaps). Queries logged in `docs/query_log.md`.
+
+**Audit still in progress** -- ~39 more pages remain in the 173-row
+worklist (see `1890-91-1891-92-no-receipts-printed.md` memory for the
+full page-by-page breakdown). Given this first page turned out to be a
+disguised instance of the missing-theater-column defect rather than an
+ordinary receipts gap, every subsequent page in the worklist should be
+checked for the same possibility (falsely-dark theaters, not just
+absent receipts) before assuming a simple fix.
