@@ -12613,3 +12613,19 @@ Fully rebuilt (12 -> 65 sessions). 4492 -> 4545 events, 5793 -> 5873
 performances, 5 flags unchanged. Verified directly.
 
 **Seven pages down, ~33 to go.**
+
+### Addendum to #70 (2026-09-18): page 8 (`repertoire_1893-94_pair006`,
+first 1893-94 page) -- clean single-column recovery
+
+Михайловскій missing entirely across all 20 dates (4-23 Октября 1893),
+confirmed genuinely active via `ForUpload_1893-94_Repertoire_002.jpg`
+(printed pp.6-7). Unlike the recent run of 1892-93 pages, the other 4
+theaters' own data checked out correct -- a clean single-column
+recovery, no scrambling found. `13 Октября`'s receipts left null,
+matching the already-correct null status of Александринскій/Большой
+that day (whole-row crease damage).
+
+Added 20 sessions (86 -> 106). 4545 -> 4565 events, 5873 -> 5911
+performances, 5 flags unchanged. Verified directly.
+
+**Eight pages down, ~32 to go.**
