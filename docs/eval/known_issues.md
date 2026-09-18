@@ -13241,6 +13241,30 @@ explanation for the adjacent Малый cell) also crosses directly through
 Михайловскій's receipts position; title legible, figure not. Both
 left null, confirmed legitimate -- no data changes.
 
+### Addendum to #70 (2026-09-18): final unresolved row 2/2 --
+`repertoire_1892-93_pair024`, ambiguity resolved
+
+"3 Четверг." Малый relabeled to true "6 Четвергъ." -- the title
+("Новое дѣло, ком.", ann="Гимнъ.") recurs twice in the scan (true 6
+Четвергъ. at 1069 р. 97 к., true 12 Среда. at 231 р. 9 к.), but only
+the 6 Четвергъ. occurrence shares the file label's weekday name.
+Separately confirmed the file's own nearby date labels for this
+stretch don't match the true calendar (true 3-4 Мая 1893 were
+Понедельникъ/Вторникъ, not Среда/Четвергъ per the scan's own date
+column), establishing weekday-name matching as the reliable
+disambiguator. Scan-verified against
+`ForUpload_1892-93_Repertoire_011.jpg` (printed pp.24-25).
+
+The one remaining null on this page ("31 Понедѣльн." Малый) was
+already confirmed legitimate earlier this session -- genuinely
+obscured by the physical page fold (visible as a diagonal crease
+line in the scan).
+
+**THIS RESOLVES THE LAST OF THE TWO INDIVIDUALLY-UNRESOLVED ROWS FROM
+THE ENTIRE #70 NULL-RECEIPTS AUDIT.** Every null-receipts cell in the
+corpus is now either fixed, confirmed genuinely legitimate, or
+confirmed genuinely physically unrecoverable -- nothing remains open.
+
 ### Addendum to #70 (2026-09-18): deferred issue 1/7 resolved --
 `repertoire_1892-93_pair014` missing theaters, full rebuild
 

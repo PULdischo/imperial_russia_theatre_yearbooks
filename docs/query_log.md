@@ -6039,3 +6039,32 @@ that crosses this entire row (already accepted as the explanation for the adjace
 Малый cell) also crosses directly through Михайловскій's receipts position; title
 ("Венецейскій истуканъ, карт. / Бѣдовая дѣвушка, вод.") is legible, figure is not. Both left
 null, confirmed legitimate. No data changes -- 91 sessions unchanged.
+
+## 2026-09-18 — final unresolved row 2/2: repertoire_1892-93_pair024
+
+```sql
+select date_text, theater, receipts_text from raw.event_entry
+    where page_id='repertoire_1892-93_pair024' and theater='Малый' order by date_text
+```
+
+Resolved the ambiguity: "3 Четверг." Малый (title "Новое дѣло, ком.", ann="Гимнъ.") relabeled
+to true "6 Четвергъ." -- confirmed via weekday-name matching. The title recurs twice in the
+scan (true 6 Четвергъ. at 1069 р. 97 к., true 12 Среда. at 231 р. 9 к.), but only the 6
+Четвергъ. occurrence shares the file label's weekday name ("Четвергъ"); separately confirmed
+the file's own nearby date labels for this stretch (1 Вторник./2 Среда./3 Четверг.) do NOT
+match the true calendar (true 3-4 Мая 1893 were Понедельникъ/Вторникъ per the scan's own date
+column, not Среда/Четвергъ), establishing that weekday-name matching is the reliable
+disambiguator for this page. Scan-verified against ForUpload_1892-93_Repertoire_011.jpg
+(printed pp.24-25).
+
+```sql
+select date_text, theater, receipts_text from raw.event_entry
+    where page_id='repertoire_1892-93_pair024' and event_status='performed' and receipts_text is null
+```
+
+Result: 1 row -- "31 Понедѣльн." Малый, already confirmed legitimate earlier this session
+(genuinely obscured by the physical page fold, visible as a diagonal crease line in the scan
+right through that row). Verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+4 quality flags unchanged.
+
+**THIS RESOLVES THE LAST OF THE TWO INDIVIDUALLY-UNRESOLVED ROWS FROM THE ENTIRE #70 NULL-RECEIPTS AUDIT.**
