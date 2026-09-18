@@ -12778,3 +12778,25 @@ Added 10 sessions (40 -> 50). 4653 -> 4663 events, 6053 -> 6063
 performances, 5 flags unchanged. Verified directly.
 
 **Sixteen pages down, ~24 to go.**
+
+### Addendum to #70 (2026-09-18): page 17 (`repertoire_1895-96_pair006`)
+-- a Большой-column-bleed instance missed by the earlier corpus-wide
+fix; scattered duplicates deferred
+
+All 7 flagged nulls were Большой -- confirmed genuinely dark for every
+date on this page against `ForUpload_1895-96_Repertoire_002.jpg`
+(printed pp.6-7); the garbled annotations/titles were bleed from
+Малый's content, the established Большой-bleed pattern already
+resolved for 9 other pages earlier in this issue. This page had been
+missed by that pass. Cleared all 7 plus one duplicate placeholder.
+
+**Deferred**: scattered duplicate sessions in Маріинскій/Михайловскій
+(the same performance recurring under multiple date labels with
+different receipts) and `21`-`28 Октября` missing Александринскій/
+Малый/Большой entirely. Tracked in
+`repertoire-1895-96-pair006-scattered-duplicates.md`.
+
+79 -> 77 sessions. 4663 -> 4661 events, 6063 -> 6056 performances, 5
+flags unchanged. Verified directly.
+
+**Seventeen pages down, ~23 to go.**
