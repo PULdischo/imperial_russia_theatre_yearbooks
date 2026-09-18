@@ -63,12 +63,21 @@ _PAGE_HEADER_MONTH_SWAP_FIX = {
 
 def load_page_headers(path: Path) -> dict[str, dict]:
     """Parses pipeline/extract_page_headers.py's output CSV into
-    {page_id: {"start_month": ..., "end_month": ..., "year_text": ...}}
-    for flatten_repertoire_page's page_header argument. A header_text that
-    doesn't match the expected shape is skipped (not raised) -- the page
-    just falls back to per-session month_text/year_text only, same as
-    before this argument existed, rather than failing the whole run over
-    one page's unusual header."""
+    {page_id: {"start_month": ..., "end_month": ..., "year_text": ...,
+    "start_day": ...}} for flatten_repertoire_page's page_header argument.
+    A header_text that doesn't match the expected shape is skipped (not
+    raised) -- the page just falls back to per-session month_text/year_text
+    only, same as before this argument existed, rather than failing the
+    whole run over one page's unusual header.
+
+    start_day is kept (not just start_month/end_month/year_text) because
+    _backfill_month_year assigns each session's month by comparing its own
+    day number against start_day, not by walking session order -- see that
+    function's docstring for why (docs/eval/known_issues.md's two-page-
+    spread date_undate backfill: ~1/3 of pages have session lists that
+    aren't stored in chronological order per theater, from cumulative
+    manual out-of-order session fixes, which broke the original file-order
+    rollover-detection approach)."""
     headers: dict[str, dict] = {}
     for row in csv.DictReader(open(path, encoding="utf-8")):
         page_id = row["page_id"]
@@ -76,11 +85,12 @@ def load_page_headers(path: Path) -> dict[str, dict]:
         m = _PAGE_HEADER_RE.match(text)
         if not m:
             continue
-        _start_day, start_month, year_text, _end_day, end_month = m.groups()
+        start_day, start_month, year_text, _end_day, end_month = m.groups()
         if page_id in _PAGE_HEADER_MONTH_SWAP_FIX:
             start_month, end_month = _PAGE_HEADER_MONTH_SWAP_FIX[page_id]
         headers[page_id] = {
             "start_month": start_month, "end_month": end_month, "year_text": year_text,
+            "start_day": int(start_day),
         }
     return headers
 

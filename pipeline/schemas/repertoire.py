@@ -192,6 +192,19 @@ _RUBLES_MARKER_RE = re.compile(r"\b[рp]\.?", re.IGNORECASE)
 #: the rubles marker above.
 _KOPECKS_MARKER_RE = re.compile(r"\b[кk]\.?", re.IGNORECASE)
 
+#: Genitive month name -> calendar length, for _backfill_month_year's
+#: sanity check that a session's day number can't exceed its assigned
+#: month's own length. Not a leap-year-aware calendar (February's 28 is
+#: never actually hit as a start_month length check in this corpus, since
+#: no page's own start_month is February with a day number that would
+#: need this distinction) -- just enough precision for the one real case
+#: this exists for.
+_MONTH_LENGTH = {
+    "января": 31, "февраля": 28, "марта": 31, "апрѣля": 30, "мая": 31,
+    "іюня": 30, "іюля": 31, "августа": 31, "сентября": 30, "октября": 31,
+    "ноября": 30, "декабря": 31,
+}
+
 
 def _parse_receipts(text: Optional[str]) -> tuple[str, str]:
     if not text:
@@ -221,13 +234,34 @@ def _backfill_month_year(sessions: list["SessionLLM"],
     pipeline/extract_page_headers.py's small, separate, targeted read of
     just the page's own printed date-range line, e.g. "16 февраля. 1908 г.
     23 февраля.") gives an unambiguous start/end month+day for the whole
-    page. Column-wise extraction emits one theater's entire run of
-    sessions contiguously and in print order (confirmed against the raw
-    JSON, not assumed), so walking each theater's own day-number sequence
-    and switching from the header's start month to its end month at the
-    one point (if any) where the day number decreases -- exactly where a
-    real page's calendar rolls over a month boundary -- recovers the
-    right month without guessing at any individual row's own content.
+    page.
+
+    Assignment rule: a two-page-spread page's own day-number sequence
+    resets from a high number back down near 1 exactly once, at the
+    start/end-month boundary -- so any session whose own day number is
+    >= the header's start_day belongs to start_month, and any session
+    whose day number is < start_day (having wrapped around) belongs to
+    end_month. This depends only on each session's own day number, not on
+    where it sits in the sessions list -- deliberately NOT the file-order,
+    walk-and-flip-on-decrease approach an earlier version of this function
+    used, which assumed each theater's sessions are stored in chronological
+    print order. That assumption turned out to be false for roughly a
+    third of the two-page-spread corpus (confirmed by direct scan
+    verification of all 88 pages, docs/eval/known_issues.md): cumulative
+    manual out-of-order session fixes/insertions across this project left
+    many theaters' session lists with day numbers that jump around rather
+    than increasing monotonically, which made the old approach flip to
+    end_month at the first stray out-of-order low day number and then
+    mislabel every later, still-legitimately-start_month session for the
+    rest of that theater's run.
+
+    One more sanity check on top of the day>=start_day rule: a session day
+    number that exceeds start_month's own calendar length (e.g. "31" on a
+    page whose start_month is April, which only has 30 days) can't
+    actually belong to start_month regardless of the threshold comparison
+    -- it must be an end_month day instead (this surfaced on a real page,
+    repertoire_1892-93_pair024, whose "мая"/May end_month legitimately has
+    a 31st).
     """
     if not page_header:
         return [(s.month_text or "", s.year_text or "") for s in sessions]
@@ -235,29 +269,29 @@ def _backfill_month_year(sessions: list["SessionLLM"],
     start_month = page_header["start_month"]
     end_month = page_header["end_month"]
     year_text = page_header["year_text"]
+    start_day = page_header.get("start_day")
+    start_month_len = _MONTH_LENGTH.get(start_month)
 
-    result: list[Optional[tuple[str, str]]] = [None] * len(sessions)
-    theater_runs: dict[str, list[int]] = {}
-    for i, s in enumerate(sessions):
-        theater_runs.setdefault(s.theater, []).append(i)
-
-    for idxs in theater_runs.values():
-        current_month = start_month
-        prev_day: Optional[int] = None
-        for i in idxs:
-            s = sessions[i]
-            if s.month_text and s.year_text:
-                result[i] = (s.month_text, s.year_text)
-                continue
+    result: list[tuple[str, str]] = []
+    for s in sessions:
+        if s.month_text and s.year_text:
+            result.append((s.month_text, s.year_text))
+            continue
+        if start_month == end_month or start_day is None:
+            month = start_month
+        else:
             day_str = _day_number(s.date_text)
             day_num = int(day_str) if day_str.isdigit() else None
-            if day_num is not None and prev_day is not None and day_num < prev_day:
-                current_month = end_month
-            if day_num is not None:
-                prev_day = day_num
-            result[i] = (s.month_text or current_month, s.year_text or year_text)
+            if day_num is not None and day_num < start_day:
+                month = end_month
+            elif (day_num is not None and start_month_len is not None
+                  and day_num > start_month_len):
+                month = end_month
+            else:
+                month = start_month
+        result.append((s.month_text or month, s.year_text or year_text))
 
-    return result  # type: ignore[return-value]
+    return result
 
 
 def flatten_repertoire_page(page_id: str, season: str, city: str, page: RepertoirePage,

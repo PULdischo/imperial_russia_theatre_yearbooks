@@ -13450,3 +13450,133 @@ unresolved (not deferred multi-theater tangles, just individually
 unconfirmed rows): `1892-93_pair024`'s "3 Четверг." Малый (ambiguous --
 same title recurs on two different dates) and `1893-94_pair010`'s "23
 Вторникъ." Маріинскій (source row not located).
+
+(Note, 2026-09-18: both were resolved later the same day -- see
+issue #72's context and the "final unresolved row 1/2"/"2/2" addenda
+earlier in this file. Nothing remains open on the #70 null-receipts
+audit itself.)
+
+## Issue #72: two-page-spread `date_undate` backfill, all 8 seasons
+(2026-09-18)
+
+**What.** `event_entry.date_undate` was 100% null for all 8 two-page-
+spread Repertoire seasons (1890-91 through 1897-98, 88 pages) -- the
+`--page-headers` backfill mechanism (`_backfill_month_year` in
+`pipeline/schemas/repertoire.py`, driven by a `page_id -> header_text`
+CSV via `parse_and_validate.py --page-headers`) had never been run for
+this corpus; it was built for and only ever used on the single-page
+1898-99+ "Gate 3" seasons, whose `pipeline/extract_page_headers.py`
+crops a distinct caption line that doesn't exist on spread pages (the
+date range there is only ever encoded in the table's own date column).
+`event_entry.month_text`/`year_text` are, by design, NOT the fix for
+this -- confirmed by reading `_backfill_month_year`'s own docstring and
+`flatten_repertoire_page`: those two fields are set directly from each
+session's own verbatim printed text with zero cross-row inheritance,
+correctly near-always-empty, and out of scope here. RG chose (over two
+alternatives put to her, including a small paid DashScope pass) to have
+every page's date range established by direct scan reading, free, with
+the same rigor as the rest of this project -- no paid API calls.
+
+**Building `page_header_dates.csv` (the `(start_day, start_month,
+start_year, end_day, end_month, end_year)` per page_id).** Three
+successive automated approaches to inferring a page's date range purely
+from its own already-extracted session day numbers were each tried and
+each found to have a real, confirmed bug before being abandoned in favor
+of full manual verification:
+
+1. File-order rollover detection (walk each theater's session list,
+   flip to the header's end-month the first time the day number
+   decreases) -- fails whenever a theater's session list isn't stored in
+   chronological print order, which turned out to be common (see below).
+2. Sorted-unique-day gap clustering (`gap>=3` triggers a month split) --
+   misfired on `repertoire_1891-92_pair002`, reading a legitimate
+   within-month gap as a month boundary and producing an impossible
+   backwards year (`start_year=1892, end_year=1891`).
+3. Anchor-required + month-length-sanity-checked splitting -- the
+   soundest of the three, but still depends on the page carrying an
+   inline month-name anchor at all (a minority of pages do), and even
+   where it applied, later direct scan-checking of `repertoire_1890-91_
+   pair012` found its computed range was wrong (three narrow, genuinely
+   separate render windows read by this method as one broad two-month
+   span).
+
+Given that, **every one of the 88 pages was scan-verified directly**
+against its actual render image (not just the ~14 pages the automated
+methods couldn't resolve at all) -- an initial spot check surfaced
+silent errors in the "confident" automated results too (e.g. a page
+auto-resolved as spanning a full calendar month was actually only its
+back half; a two-anchor page's computed end date was a week short of
+the real one), so trusting only the flagged subset would have left the
+backfill wrong for an unknown fraction of the "confident" pages as well.
+`page_header_dates.csv` (`outputs/repertoire_spreadfix_v6/`) is the
+result -- 88 rows, one per page_id, each independently confirmed against
+its own render before being written.
+
+**A second, more serious bug found only after building the CSV and
+running the backfill.** Spot-checking the resulting `date_undate` values
+against the scan-verified ranges (e.g. `repertoire_1891-92_pair010`,
+verified as 17 Ноября-6 Декабря 1891) found dates as wide as
+1891-11-01 to 1891-12-30 -- the whole of both months. Cause: `_backfill_
+month_year`'s file-order rollover-detection assumes each theater's
+session list is stored in chronological print order, but a session's
+day-number sequence in the raw JSON now routinely isn't, from the
+cumulative effect of this project's own manual session-level fixes
+(inserted/appended wherever convenient, not necessarily in date order).
+For `pair010` specifically, Александринскій's session order was `1, 1,
+17, 17, 18, 19, 2, 20, 21, ..., 29, 3, 30, ...` -- the stray early "2"
+triggered a premature flip to the end-month, after which every later,
+still-legitimately-start-month day (20 through 30) was mislabeled.
+Checked corpus-wide: **29 of the 88 pages (33%)** have at least one
+theater whose session list decreases in day number two or more times,
+meaning the old rollover approach was at risk of silently mis-assigning
+month/year on roughly a third of the corpus, not just the one page that
+happened to surface it.
+
+**Fix (RG chose to patch the pipeline, not a one-off post-process
+script -- correct for every future re-run too, not just this one).**
+Replaced the file-order flip detection in `_backfill_month_year` with a
+rule that depends only on each session's own day number, never its
+position in the list: for a two-month page, a session's day >=
+`start_day` (now threaded through from `load_page_headers` in
+`parse_and_validate.py`, alongside the existing `start_month`/
+`end_month`/`year_text`) belongs to `start_month`; otherwise it belongs
+to `end_month`. Added one more sanity layer on top (`_MONTH_LENGTH`, a
+genitive-month-name -> calendar-length lookup): a day number that
+exceeds `start_month`'s own length can't actually belong to
+`start_month` regardless of the threshold comparison and must be an
+`end_month` day instead -- caught for real on `repertoire_1892-93_
+pair024`, whose "31 Понедѣльн." session was being computed as the
+invalid calendar date "1893-04-31" (April has 30 days) before this
+check; correctly "1893-05-31" after (`мая`, this page's own end_month,
+legitimately has a 31st).
+
+**Verification.** Reran the full sequence (`parse_and_validate.py
+--page-headers` -> `quality_checks.py` -> `build_duckdb.py` ->
+`validate_performance_dates.py`) after the fix:
+- `date_undate` fill: 4937/4939 = 99.96% (the 2 remaining nulls are
+  genuine -- `repertoire_1894-95_pair010`'s two sessions read only
+  "Февр." with no day number at all, nothing to compute a date from).
+- Every one of the 4939 rows checked programmatically against its own
+  page's scan-verified `(start_date, end_date)` window -- 0 rows land on
+  an invalid calendar date or the wrong month/year; the only 3 rows
+  falling outside a page's window do so because that page's own
+  `end_day` estimate in the CSV undersold its true extent within the
+  SAME end_month (harmless -- correctness only depends on the month/year
+  assignment, not the exact estimated end_day).
+- `quality_checks.py`: unchanged at 4 pre-existing, already-documented
+  flags (3 `duplicate_event_key`, 1 `receipts_parse_failed`) -- nothing
+  new.
+- `pipeline/validate_performance_dates.py` (proper Julian-calendar
+  weekday cross-check via `convertdate.julian`, independent of anything
+  built for this issue): **79.4% verified outright, 15.5%
+  intra_block_disagreement, 4.1% corrected, 0.9% unresolved, 0.0%
+  no_date** -- a categorical improvement over the previously-documented
+  35.6% weekday-mismatch rate on unheadered spread dates
+  (`outputs/fold_review/README.md`), and strong independent
+  corroboration that the backfilled dates are actually right, not just
+  internally consistent with their own headers.
+
+**Files changed:** `pipeline/schemas/repertoire.py`
+(`_backfill_month_year`, new `_MONTH_LENGTH`), `pipeline/parse_and_
+validate.py` (`load_page_headers` now also captures `start_day`),
+`outputs/repertoire_spreadfix_v6/page_header_dates.csv` (new, 88 rows).

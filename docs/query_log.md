@@ -6068,3 +6068,31 @@ right through that row). Verified against rebuilt outputs/repertoire_spreadfix_v
 4 quality flags unchanged.
 
 **THIS RESOLVES THE LAST OF THE TWO INDIVIDUALLY-UNRESOLVED ROWS FROM THE ENTIRE #70 NULL-RECEIPTS AUDIT.**
+
+## 2026-09-18 — date_undate fill rate and correctness check after the two-page-spread header backfill (issue #72)
+
+```sql
+-- fill rate
+SELECT count(*), count(date_undate) FROM raw.event_entry;
+```
+
+Result: 4937/4939 = 99.96% filled (the 2 nulls are genuine -- `repertoire_1894-95_pair010`'s
+two "Февр." sessions carry no day number at all).
+
+```python
+# programmatic cross-check: every date_undate against its own page's scan-verified
+# (start_date, end_date) window, from the 88-row page_header_dates.csv
+```
+
+Result: 0 invalid calendar dates, 0 wrong-month/year assignments; 3 rows fall slightly outside
+a page's window because that page's own `end_day` estimate undersold its true extent within the
+same end_month (harmless, not a correctness issue).
+
+```bash
+uv run python pipeline/validate_performance_dates.py --db outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb
+```
+
+Result: verified 3924 (79.4%), intra_block_disagreement 767 (15.5%), corrected 204 (4.1%),
+unresolved 42 (0.9%), no_date 2 (0.0%) -- independent Julian-calendar weekday corroboration
+that the backfilled dates are correct, not just internally consistent with their own headers.
+Prior baseline (unheadered spread dates, outputs/fold_review/README.md): 35.6% weekday mismatch.
