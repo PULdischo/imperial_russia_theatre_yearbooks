@@ -12762,3 +12762,19 @@ duplicate date spelling (`"16 января."` merged into `"16
 flags unchanged. Verified directly.
 
 **Fifteen pages down, ~25 to go.**
+
+### Addendum to #70 (2026-09-18): page 16 (`repertoire_1894-95_pair016`)
+-- flagged row confirmed crease-damaged, Маріинскій recovered
+throughout
+
+All 4 flagged nulls (`18 Апрѣля.`) confirmed genuinely illegible under
+a binding-fold crease affecting the whole row. Cleaned up two
+data-shape artifacts on the same row: a bogus Большой annotation
+(bleed from Малый's title) and two OCR typos in Малый's title. Also
+recovered Маріинскій, entirely missing across all 10 dates. Checked
+against `ForUpload_1894-95_Repertoire_007.jpg` (printed pp.16-17).
+
+Added 10 sessions (40 -> 50). 4653 -> 4663 events, 6053 -> 6063
+performances, 5 flags unchanged. Verified directly.
+
+**Sixteen pages down, ~24 to go.**
