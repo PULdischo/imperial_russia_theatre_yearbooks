@@ -5630,3 +5630,18 @@ select date_text, theater, receipts_text, annotation from raw.event_entry
 
 Result: 2 rows after fix -- both confirmed legitimate (verified against rebuilt
 outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).
+
+## 2026-09-18 — null-receipts audit page 30: repertoire_1897-98_pair016
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair016' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows -- ('18 Воскрес.', 'Большой'/'Малый'/'Маріинскій'/'Михайловскій'), all None, all
+the same physical row. Confirmed genuinely illegible: the scan
+(ForUpload_1897-98_Repertoire_007.jpg, printed pp.16-17) shows the page physically curling into
+the binding fold at exactly this row, swallowing the entire receipts line for Маріинскій,
+Большой, Михайловскій, and Малый's evening session -- no digits visible at all, titles above
+are legible. Matches the established crease-illegibility pattern (distinct from an extraction
+drop). No fix applied -- left as null, confirmed legitimate.

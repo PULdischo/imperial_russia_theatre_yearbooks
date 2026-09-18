@@ -13029,3 +13029,20 @@ pp.14-15).
 remaining nulls, both confirmed legitimate.
 
 **Twenty-nine pages down, ~11 to go.**
+
+### Addendum to #70 (2026-09-18): page 30 -- `repertoire_1897-98_pair016`,
+all 4 flagged nulls confirmed crease-illegible, no fix needed
+
+All 4 flagged nulls ("18 Воскрес.", Большой/Малый/Маріинскій/
+Михайловскій) are the same physical row. The scan
+(`ForUpload_1897-98_Repertoire_007.jpg`, printed pp.16-17) shows the
+page physically curling into the binding fold at exactly this row,
+swallowing the entire receipts line for all 4 theaters -- titles above
+are legible, no digits visible at all beneath. Matches the established
+crease-illegibility pattern; left as null, confirmed genuinely
+unrecoverable from this scan.
+
+73 sessions unchanged -- no fix applied, nothing to verify beyond the
+scan confirmation itself.
+
+**Thirty pages down, ~10 to go.**
