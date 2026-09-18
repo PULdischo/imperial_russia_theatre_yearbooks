@@ -5852,3 +5852,35 @@ Result: 4 rows after fix -- all "6 Среда." (the confirmed crease-illegible 
 20 dates x 5 theaters fully populated. Verified against rebuilt
 outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb. 5 quality flags unchanged (still
 exactly 5, no new duplicates introduced by the rebuild).
+
+## 2026-09-18 — deferred-issue resolution 2/7: repertoire_1893-94_pair010
+
+```sql
+select distinct theater from raw.event_entry where page_id='repertoire_1893-94_pair010'
+```
+
+Before fix: 4 theaters (Малый missing). An initial quick scan check mistakenly concluded Малый
+was dark the whole page; a careful full-column crop showed it is genuinely active on most dates.
+Recovered Малый for all 20 dates from ForUpload_1893-94_Repertoire_004.jpg (printed pp.10-11).
+Also re-verified the earlier "Маріинскій whole-column date shift" theory from the prior session
+and found it was a misreading from imprecise cropping -- Маріинскій is almost entirely correctly
+labeled already. Real issues found and fixed: "24 Среда." Михайловскій had 2 spurious duplicate
+sessions (one copying "23 Вторникъ."'s content, one copying "22 Пон."'s title with a fabricated
+receipts figure) -- removed, kept only the correct single session; "29 Понед." Михайловскій had
+1 spurious duplicate (copying "28 Воскрес." утро's content) -- removed; "24 Среда." Маріинскій
+had a contaminated annotation bled in from the adjacent "23 Вторникъ." cell -- cleared, title
+and receipts were already correct; "26 Пятница." Маріинскій had an OCR typo ("Лида" for "Аида").
+Confirmed as legitimate (no fix): "22 Пон." Михайловскій is crease-illegible; "23 Вторникъ."
+Маріинскій is a charity benefit with no receipts printed (title/annotation match the scan
+exactly). 73 -> 91 sessions.
+
+```sql
+select date_text, theater, annotation from raw.event_entry
+    where page_id='repertoire_1893-94_pair010' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows after fix -- the 2 confirmed-legitimate rows above, plus "14 Воскресенье." Малый
+(the free "Гимнъ" morning show, genuinely blank) and "22 Пон." Малый (this one's receipts sit
+directly under a physical binding thread in the scan, genuinely illegible -- left null rather
+than guessed). Verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+5 quality flags unchanged.

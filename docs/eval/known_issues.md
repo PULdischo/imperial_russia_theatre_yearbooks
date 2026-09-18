@@ -13259,6 +13259,37 @@ unchanged. Verified directly -- only the 4 confirmed-illegible "6
 Среда." cells remain null; every other date x theater combination is
 populated.
 
-**6 of 7 deferred sub-issues remain**: `1893-94_pair010`,
-`1894-95_pair006`, `1895-96_pair006`, `1896-97_pair004`,
-`1896-97_pair008`, `1897-98_pair018`.
+### Addendum to #70 (2026-09-18): deferred issue 2/7 resolved --
+`repertoire_1893-94_pair010`, Малый recovered, two spurious duplicates
+removed
+
+An initial quick check on the prior pass had mistakenly concluded
+Малый was dark for this whole page; a careful full-column crop showed
+it's genuinely active on most dates. Recovered Малый for all 20 dates
+from `ForUpload_1893-94_Repertoire_004.jpg` (printed pp.10-11).
+
+Also re-verified the earlier "Маріинскій whole-column date shift"
+theory from the prior session and found it was itself a misreading
+from imprecise cropping -- Маріинскій was almost entirely correctly
+labeled already. The real issues: "24 Среда." Михайловскій carried 2
+spurious duplicate sessions (one copying "23 Вторникъ."'s content, one
+copying "22 Пон."'s title with a fabricated receipts figure) --
+removed, kept the correct single session; "29 Понед." Михайловскій had
+1 spurious duplicate (copying "28 Воскрес." утро) -- removed; "24
+Среда." Маріинскій had a contaminated annotation bled in from the
+adjacent "23 Вторникъ." cell -- cleared (title/receipts were already
+correct); "26 Пятница." Маріинскій had an OCR typo ("Лида" for "Аида").
+Confirmed as legitimate, no fix: "22 Пон." Михайловскій is
+crease-illegible; "23 Вторникъ." Маріинскій is a charity benefit
+matching the scan exactly, no receipts printed.
+
+73 -> 91 sessions. 4817 -> 4835 events, 6329 -> 6360 performances, 5
+flags unchanged. Verified directly -- 4 remaining nulls: 2 confirmed
+legitimate as above, plus "14 Воскресенье." Малый (free-show, blank)
+and "22 Пон." Малый (its receipts sit directly under a physical
+binding thread in the scan -- genuinely illegible, left null rather
+than guessed).
+
+**5 of 7 deferred sub-issues remain**: `1894-95_pair006`,
+`1895-96_pair006`, `1896-97_pair004`, `1896-97_pair008`,
+`1897-98_pair018`.
