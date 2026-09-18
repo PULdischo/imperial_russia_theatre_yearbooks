@@ -76,12 +76,72 @@
 # ===================================================================
 
 [FIELDS]
-printed_folio:
-tailpiece_present:
-no_text:
+printed_folio: 106
+tailpiece_present: no
+no_text: no
 copy_artifacts:
-reading_order_uncertain:
+reading_order_uncertain: yes
 notes:
 
 [BLOCKS]
 
+[paragraph]
+1-й, Улановъ, Крис-
+терсонъ, Ивановъ
+3-й.
+
+[enumerated_list 10)]
+<r><l fr>La Gavotte
+pressée</l></r> — г-жа
+Леньяни и г. Ле-
+гатъ 1-й.
+
+[enumerated_list 11)]
+<r><l fr>Variation
+du temps de la
+Comargo</l></r> — г-жа
+Леньяни.
+
+[enumerated_list 12)]
+<r><l fr>La Frica-
+ssée</l></r>—г-жа Петипа
+1-я, г. Легатъ 3-й,
+г-жа Леньяни, г.
+Гердтъ и всѣ уча-
+ствующіе.
+
+[paragraph]
+Распредѣленіе
+ролей въ балетѣ
+„Жемчужина“ было
+слѣдующее:
+
+[cast_list]
+бѣлая
+жемчужина — г-жа
+Леньяни (г-жа Сѣ-
+дова); царь корал-
+ловъ — г. Аистовъ
+(г. Гиллертъ); геній
+земли—г. Гердтъ (г.
+Легатъ 3-й).
+
+[figure photograph]
+caption: <i>«Испытаніе Дамиса<d>»</d>, бал. А. Глазун<d>о</d>в<d>а</d>.
+Гость графини (г. Фокинъ).</i>
+
+[paragraph]
+Танцовали:
+
+[enumerated_list 1)]
+<r><l fr>Danse des
+perles</l></r>—г-жи Рыхлякова 1-й, Обухова, Петипа 3-я, Павлова 2-я, Борхардъ,
+Офицерова, Фонарева, Чумакова, Сланцова, Васильева, Бакеркина, Куниц-
+кая, Павлова 1-я, Касаткина, Леонова 2-я, Степанова 2-я, Эрлеръ 2-я, Лицъ,
+Щедрина, Конецкая.
+
+[enumerated_list 2)]
+<r><l fr>Scène dansante</l></r>—г-жа Леньяни и г. Гердтъ.
+
+[enumerated_list 3)]
+<r><l fr>Combat des coraux et des métaux</l></r>—г-жи Махотина, Гонча-
