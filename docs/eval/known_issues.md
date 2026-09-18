@@ -12440,3 +12440,59 @@ disguised instance of the missing-theater-column defect rather than an
 ordinary receipts gap, every subsequent page in the worklist should be
 checked for the same possibility (falsely-dark theaters, not just
 absent receipts) before assuming a simple fix.
+
+### Addendum to #70 (2026-09-18): page 2 of the null-receipts audit
+(`repertoire_1895-96_pair010`) needed a full rebuild too, and turned
+out to share a genuine date-range duplicate with the just-fixed `p012`
+
+RG asked to dig in and resolve fully rather than defer. Checking
+`repertoire_1895-96_pair010` (12 of the 173 target rows) against the
+scan turned up three compounding defects, one of them a real
+cross-file duplicate with `p012`:
+
+1. **Systematic Bolshoy-column bleed** -- Большой consistently showed
+   a garbled echo of Малый's real content (e.g. `"Спорный
+   наслѣдникъ"/"Долото"` vs Малый's genuine `"Спорный вопросъ"/
+   "Лолотта"` on the same date) on every date `18 Ноября` - `2 Декабря`
+   where the scan shows Большой genuinely dark -- the already-
+   documented Большой-bleed pattern from earlier in this issue,
+   just not previously caught on this page. Confirmed Большой
+   genuinely resumes performing `3 Декабря` onward (distinct, real
+   content, not bleed).
+2. **Several dates entirely missing 3-4 theaters** (`30 Ноября.`,
+   `1 Декабря.` had only Маріинскій captured in the old data).
+3. **A one-date mislabeling cascade, `2`-`6 Декабря`**: old `"2
+   Суббота."` actually held `3 Воскрес.`'s content; old `"3
+   Воскрес."` held `4 Понед.`'s; old `"4 Понед."` held `5 Вторникъ.`'s;
+   old `"5 Вторникъ."` held `6 Среда.` morning's (the free students'
+   show). Net effect: the true `5 Декабря` had been dropped from the
+   file entirely, and the true `2 Декабря` (all dark except one
+   Mikhaylovsky benefit) never appeared under any label at all. `6
+   Среда.` evening was the one date in the run already correctly
+   labeled (an exact receipts match confirmed it), which is what made
+   the cascade traceable.
+4. **Confirmed genuine duplicate with `repertoire_1895-96_p012`**:
+   dates `19`-`26 Ноября` appear correctly, independently, in BOTH
+   files -- same scan, same printed page (`ForUpload_1895-96_
+   Repertoire_004.jpg`, pp.10-11). Removed the duplicated dates from
+   `p012` (kept only its own unique `15`-`17 Ноября`, sourced from a
+   different printed page), leaving `pair010` as sole owner of the
+   full `18 Ноября` - `6 Декабря` range.
+
+Fully re-transcribed all 5 theaters for all 19 true dates and replaced
+`pair010`'s session list wholesale (74 -> 106 sessions). Re-ran
+`parse_and_validate.py` -> `quality_checks.py` -> `build_duckdb.py`:
+4390 -> 4382 events (net of the pair010 recovery and the p012 trim),
+5728 -> 5703 performances, `quality_flags.csv` unchanged at 5 -- no new
+`duplicate_event_key` flags from the overlap cleanup, confirming it was
+genuinely resolved rather than merely hidden. Rebuilt and verified
+directly: all 5 theaters present across all 19 `pair010` dates and all
+3 `p012` dates, and a direct query confirms zero remaining date/theater
+overlap between the two files. Queries logged in `docs/query_log.md`.
+
+**Two pages down, ~38 to go** in the null-receipts worklist. Given two
+consecutive pages have now turned out to hide the missing-theater-
+column defect (in two different disguises) plus one cross-file
+duplicate, the remaining pages should all get the same full scrutiny
+-- not just a receipts check, but a check for scrambled/bled theaters
+and cross-file date overlaps too.
