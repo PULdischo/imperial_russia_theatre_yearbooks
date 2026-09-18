@@ -12822,3 +12822,39 @@ Added 15 sessions + fixed 4 receipts (52 -> 67). 4661 -> 4676 events,
 
 **1895-96 season's no-annotation bucket fully cleared** (except
 `pair006`'s deferred items). **Twenty pages down, ~20 to go.**
+
+### Addendum to #70 (2026-09-18): page 21 -- `repertoire_1896-97_pair002`,
+first page of the 1896-97 season, another date-label cascade
+
+First 1896-97-season page in this pass. The 2 flagged nulls
+(`3 Вторникъ.`, Малый + Михайловскій) turned out to be a symptom of a
+whole-file date-label cascade: every date from the 2nd row onward was
+labeled one true-date-slot too early. The file had 14 date labels --
+`16, 17, 18, 19, 20, 21, 22, 23, 25, 26, 27 Августа`, `1, 2, 3 Сентября`
+-- but `17 Августа` is a spurious label that never existed in the
+source (both `17` and `24 Августа` are Saturdays with no printed row
+at all that year). Every session from row 2 onward was really the
+*next* row's content, cascading all the way through; the true final
+row (`4 Среда.`, receipts 531 р. 58 к. / 700 р. — к.) was entirely
+absent, hiding under the mislabeled `3 Вторникъ.` with its receipts
+dropped.
+
+Content itself was correctly captured throughout -- this was pure
+relabeling, not a recovery -- plus one incidental OCR letter-swap fix
+(`Вой бабочекъ` -> `Бой бабочекъ`). Scan-verified against
+`ForUpload_1896-97_Repertoire_000.jpg` (printed pp.2-3, render index 0,
+*not* a literal reading of the "p002" `_source` citation -- another
+instance of the render-vs-printed-page ambiguity).
+
+This page also confirms a genuine, legitimate early-season convention
+rather than a defect: Михайловскій is dark for the entire
+`16`-`27 Августа` stretch (season not yet open for that theater) and
+only becomes active starting `1 Сентября` -- matches the same "some
+theaters open later than others" pattern already established on
+several other season-opener pages this pass.
+
+28 -> 28 sessions (pure relabel, no net count change). 4676 events /
+6081 performances unchanged, 5 flags unchanged. Verified directly --
+zero remaining null receipts for this page.
+
+**Twenty-one pages down, ~19 to go.**
