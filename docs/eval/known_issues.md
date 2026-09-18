@@ -12651,3 +12651,22 @@ flags unchanged. Verified directly.
 `repertoire-1893-94-pair010-open-issues.md`.
 
 **Nine pages down, ~31 to go.**
+
+### Addendum to #70 (2026-09-18): page 10 (`repertoire_1893-94_pair016`)
+-- all 3 flagged rows fixed, plus 3 scattered duplicates untangled
+
+Checked against `ForUpload_1893-94_Repertoire_007.jpg` (printed
+pp.16-17). Resolved all 3 originally-flagged rows (`17 Понед.`
+Маріинскій recovered receipts; `27 Четв.`/`27 Четвергъ.` Маріинскій
+recovered content and consolidated onto one date label), plus
+untangled 3 scattered Александринскій sessions the investigation
+surfaced -- each had been filed under a spurious extra date-label
+variant (`"25 Января."` x2, `"25 января."`) instead of their real
+dates (`25 Вторник.`, `23 Воскрес.`, `24 Понед.`), one with a digit
+typo (1045->1015) corrected along the way.
+
+90 -> 90 sessions (pure relabeling/recovery, net zero). Counts
+unchanged (4561 events, 5903 performances), 5 flags unchanged.
+Verified directly.
+
+**Ten pages down, ~30 to go.**
