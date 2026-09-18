@@ -5748,3 +5748,36 @@ _006.jpg (printed pp.12-15) without finding this specific row; this page already
 date-labeling problems (see repertoire-1893-94-pair010-open-issues.md) that make its true
 calendar position unclear. Left unconfirmed rather than assumed from pattern -- added to that
 page's existing deferred-issues memory.
+
+## 2026-09-18 — annotated-bucket audit pages 9-10: repertoire_1894-95_pair010/016
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id=? and event_status='performed' and receipts_text is null and annotation is not null
+```
+
+pair016: 0 rows (already resolved). pair010 (1 row, "8 Февраля." Маріинскій, annotation
+truncated to "Безплатные у") confirmed legitimate -- this is the "Безплатные утренніе спектакли
+для воспитанниковъ учебныхъ заведеній" free-show section header (truncated in extraction), no
+receipts printed for the whole block. Scan shows it under "9 Февраля." not "8 Февраля." (minor
+date-label discrepancy, not investigated further). Scan-verified against
+ForUpload_1894-95_Repertoire_004.jpg (printed pp.10-11).
+
+## 2026-09-18 — annotated-bucket audit pages 11-13: repertoire_1895-96_pair006/010/014/016
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id=? and event_status='performed' and receipts_text is null and annotation is not null
+```
+
+pair006: 0 rows (already resolved). pair010 (6 rows: "26 Воскресенье." Александринскій
+"Безплатный спектакль для гг. георгіевскихъ кавалеровъ." + "6 Среда." all 5 theaters
+"Безплатные утренніе спектакли...") confirmed legitimate -- both blocks scan-verified
+against ForUpload_1895-96_Repertoire_004.jpg (printed pp.10-11), no receipts printed. pair014
+(1 row, "3 Среда." Александринскій, same free-show annotation) confirmed legitimate against
+ForUpload_1895-96_Repertoire_006.jpg (printed pp.14-15). pair016 (5 rows: "30 Вторникъ."
+Маріинскій/Александринскій/Михайловскій + "31 Среда." Большой/Малый, same free-show pattern
+split across two consecutive free-show blocks -- Petersburg theaters on 30th, Moscow theaters
+on 31st) confirmed legitimate against ForUpload_1895-96_Repertoire_007.jpg (printed pp.16-17).
+This closes out the entire 1895-96 season's annotated bucket -- all 12 rows confirmed
+legitimate, no fixes needed.

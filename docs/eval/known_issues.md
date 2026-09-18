@@ -13157,3 +13157,28 @@ date-labeling problems (`repertoire-1893-94-pair010-open-issues.md`)
 that make its true calendar position unclear. Not assumed from the
 strong corroborating pattern elsewhere -- left genuinely unconfirmed,
 added to that page's existing deferred-issues memory.
+
+### Addendum to #70 (2026-09-18): annotated-bucket pages 9-13 --
+1894-95 (pair010/016) and 1895-96 (pair006/010/014/016) seasons
+
+`1894-95_pair016` already had 0 annotated nulls. `1894-95_pair010` (1
+row, "8 Февраля." Маріинскій, annotation truncated to "Безплатные у")
+confirmed legitimate -- the free-show section header
+("Безплатные утренніе спектакли для воспитанниковъ учебныхъ
+заведеній"), truncated in extraction, no receipts printed for the
+block. Scan-verified against `ForUpload_1894-95_Repertoire_004.jpg`
+(printed pp.10-11; scan shows it under "9 Февраля.", a minor
+date-label discrepancy not investigated).
+
+`1895-96_pair006` already had 0 annotated nulls. `pair010` (6 rows: one
+"Безплатный спектакль для гг. георгіевскихъ кавалеровъ." +
+five-theater "Безплатные утренніе спектакли..."), `pair014` (1 row,
+same free-show pattern), and `pair016` (5 rows, the same pattern split
+across two consecutive free-show blocks -- Petersburg theaters on the
+30th, Moscow theaters on the 31st) all confirmed legitimate,
+scan-verified against `ForUpload_1895-96_Repertoire_004/006/007.jpg`.
+**This closes out the entire 1895-96 season's annotated bucket** -- 12
+of 12 rows confirmed legitimate.
+
+No fixes applied this batch -- all 13 checked rows across both seasons
+confirmed legitimate.
