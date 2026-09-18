@@ -12496,3 +12496,27 @@ column defect (in two different disguises) plus one cross-file
 duplicate, the remaining pages should all get the same full scrutiny
 -- not just a receipts check, but a check for scrambled/bled theaters
 and cross-file date overlaps too.
+
+### Addendum to #70 (2026-09-18): page 3 (`repertoire_1892-93_pair002`,
+the very start of the 1892-93 season) -- another full rebuild, a
+distinct third flavor: whole-file date-label shift, not bleed
+
+RG: "keep working through the list now. I prefer accuracy over speed."
+`repertoire_1892-93_pair002` (16 Августа - 1 Сентября 1892) had date
+labels shifted against real content almost from the start -- `"17
+Понед."` had merged two calendar rows under one label, `27 Августа`
+and `1 Сентября` were entirely absent, and the true multi-theater
+season-opener (`30 Августа`, `"Гимнъ."` across all 5 theaters) had
+been dropped, its slot instead holding the next day's content. Also
+confirmed against the scan
+(`ForUpload_1892-93_Repertoire_000.jpg`, printed p.2) that `16`-`26
+Августа` genuinely have only Малый active (the other theaters hadn't
+opened yet -- correct, not a defect) and `22`/`28`/`29 Августа` have no
+row at all in the source (genuine gap). One receipts figure (`26
+Августа`) is torn away, left honestly null.
+
+Fully rebuilt (26 -> 70 sessions, 14 real dates x 5 theaters). 4382 ->
+4426 events, 5703 -> 5715 performances, 5 flags unchanged. Verified
+directly. Query in `docs/query_log.md`.
+
+**Three pages down, ~37 to go.**
