@@ -5449,3 +5449,28 @@ select date_text, theater, receipts_text from raw.event_entry
 ```
 
 Result: 0 rows after fix -- confirmed against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+
+## 2026-09-18 — null-receipts audit page 22: repertoire_1896-97_pair004
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1896-97_pair004' and event_status='performed' and receipts_text is null
+```
+
+Result: 3 rows before fix -- ('26 Четверг.', 'Александринскій', None, None),
+('26 Четверг.', 'Маріинскій', None, None), ('26 Четверг.', 'Михайловскій', None, None).
+All 3 confirmed to be true "27 Пятница." content mislabeled/truncated -- relabeled and
+completed (works + receipts) with scan verification against
+ForUpload_1896-97_Repertoire_001.jpg (printed pp.4-5). Also fully rebuilt Малый (which had
+its own independent 22-28 Сентября date scramble, 14 -> 21 sessions). Found but NOT fixed:
+Александринскій/Маріинскій/Михайловскій/Большой have a broader date-label tangle for
+16-26 Сентября (each theater's shift starts at a different row) plus a missing tail
+(27 Сентября - 3 Октября) for all 4 theaters -- deferred, see
+repertoire-1896-97-pair004-multi-theater-tangle.md.
+
+```sql
+select date_text, theater, receipts_text from raw.event_entry
+    where page_id='repertoire_1896-97_pair004' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows after fix -- confirmed against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.

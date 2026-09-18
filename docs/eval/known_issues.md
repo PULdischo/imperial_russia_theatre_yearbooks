@@ -12858,3 +12858,35 @@ several other season-opener pages this pass.
 zero remaining null receipts for this page.
 
 **Twenty-one pages down, ~19 to go.**
+
+### Addendum to #70 (2026-09-18): page 22 -- `repertoire_1896-97_pair004`,
+Малый fully rebuilt, 3 flagged cells fixed, broader 4-theater tangle
+deferred
+
+The 3 flagged nulls (Александринскій/Маріинскій/Михайловскій, all at
+"26 Четверг.") turned out to be true "27 Пятница." content with works
+truncated and receipts dropped -- relabeled and completed with full
+confidence. Separately, Малый had its own independent date scramble for
+22-28 Сентября (true "22 Воскресенье" content mislabeled onto spurious
+"23/24 сентября." entries, subsequent dates each one slot early) --
+fully rebuilt (14 -> 21 sessions). Both scan-verified against
+`ForUpload_1896-97_Repertoire_001.jpg` (printed pp.4-5, render p001 --
+again *not* a literal reading of the file's own "p004"/"p005" `_source`
+citation).
+
+**Deferred**: Александринскій, Маріинскій, Михайловскій, and Большой
+each carry their own independent date-label shift somewhere in
+15-26 Сентября, with a *different onset row per theater*
+(Александринскій shifts from 16 Понед., plus a spurious duplicate at
+15 Воскрес.; Михайловскій from 18 Среда.; Маріинскій somewhere between
+19 and 22; Большой not shifted at all). All four also stop entirely
+after "26 Четверг." -- true 28 Сентября-3 Октября (6 dates) are missing
+for all four, confirmed not duplicated in the next file (`pair006`
+starts cleanly at 4 Октября). Full detail in
+`repertoire-1896-97-pair004-multi-theater-tangle.md`.
+
+68 -> 75 sessions. 4676 -> 4683 events, 6081 -> 6099 performances, 5
+flags unchanged. Verified directly -- zero remaining null receipts for
+this page.
+
+**Twenty-two pages down, ~18 to go.**
