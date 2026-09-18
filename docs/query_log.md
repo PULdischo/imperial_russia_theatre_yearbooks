@@ -5607,3 +5607,26 @@ select date_text, theater, receipts_text, annotation from raw.event_entry
 
 Result: 4 rows after fix -- all confirmed legitimate (verified against rebuilt
 outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).
+
+## 2026-09-18 — null-receipts audit page 29: repertoire_1897-98_pair014
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair014' and event_status='performed' and receipts_text is null
+```
+
+Result: 3 rows before fix -- ('2 Пя.', 'Михайловскій'), ('20 Декабря.', 'Александринскій'),
+('27 Суббота.', 'Александринскій'), all None. The 2 Александринскій rows (both "Спектакль
+г-жи Тины ди Лоренцо" touring guest performances) confirmed genuinely blank in the source --
+no receipts figure printed for either. "2 Пя." Михайловскій was a genuine drop (truncated
+title, dropped receipts) -- completed to "Le Maître de Forges/Le Bésique chinois, 1450 р. 13
+к.", matching the same calendar date's separately-labeled "2 Пятница." entry. Scan-verified
+against ForUpload_1897-98_Repertoire_006.jpg (printed pp.14-15).
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair014' and event_status='performed' and receipts_text is null
+```
+
+Result: 2 rows after fix -- both confirmed legitimate (verified against rebuilt
+outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).

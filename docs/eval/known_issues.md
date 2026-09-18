@@ -13010,3 +13010,22 @@ performances unchanged, 5 flags unchanged. Verified directly -- 4
 remaining nulls, all confirmed legitimate.
 
 **Twenty-eight pages down, ~12 to go.**
+
+### Addendum to #70 (2026-09-18): page 29 -- `repertoire_1897-98_pair014`,
+1 dropped-cell recovered, 2 confirmed legitimate (touring Italian
+actress)
+
+Of the 3 flagged nulls, 2 ("20 Декабря."/"27 Суббота.", Александринскій,
+both "Спектакль г-жи Тины ди Лоренцо" guest performances) confirmed
+genuinely blank in the source. "2 Пя." Михайловскій was a genuine drop
+(truncated title + missing receipts) -- completed to match the same
+calendar date's separately-labeled "2 Пятница." entry
+("Le Maître de Forges"/"Le Bésique chinois", 1450 р. 13 к.).
+Scan-verified against `ForUpload_1897-98_Repertoire_006.jpg` (printed
+pp.14-15).
+
+47 sessions unchanged (one cell completed). 4721 -> 4721 events, 6178
+-> 6179 performances, 5 flags unchanged. Verified directly -- 2
+remaining nulls, both confirmed legitimate.
+
+**Twenty-nine pages down, ~11 to go.**
