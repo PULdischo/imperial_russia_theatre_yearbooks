@@ -12960,3 +12960,18 @@ legitimate ceremonial-show row).
 **1896-97 season's no-annotation bucket fully cleared** (except
 `pair004`'s and `pair008`'s deferred items). **Twenty-five pages down,
 ~15 to go.**
+
+### Addendum to #70 (2026-09-18): page 26 -- `repertoire_1897-98_pair006`,
+first page of the 1897-98 season -- 4 dropped receipts fixed
+
+All 5 theaters' titles for "16 Четв." were already correctly captured
+(Малый already had its receipts figure); only the other 4 theaters'
+receipts were dropped. Fixed directly, no relabeling or scrambling
+found on this page. Scan-verified against
+`ForUpload_1897-98_Repertoire_002.jpg` (printed pp.6-7).
+
+72 sessions unchanged (receipts fill only). 4721 events / 6178
+performances unchanged, 5 flags unchanged. Verified directly -- zero
+remaining null receipts for this page.
+
+**Twenty-six pages down, ~14 to go.**

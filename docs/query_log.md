@@ -5542,3 +5542,22 @@ select date_text, theater, receipts_text, annotation from raw.event_entry
 
 Result: 1 row after fix -- the confirmed-legitimate 16 Среда. Маріинскій "Парадный спектакль."
 row (verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).
+
+## 2026-09-18 — null-receipts audit page 26: repertoire_1897-98_pair006 (first 1897-98 page)
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair006' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows before fix -- all at ('16 Четв.', <theater>) for Александринскій, Большой,
+Маріинскій, Михайловскій. Titles were already correct for all 5 theaters (Малый already had
+its receipts) -- only the 4 figures were dropped. Fixed directly, no relabeling needed.
+Scan-verified against ForUpload_1897-98_Repertoire_002.jpg (printed pp.6-7).
+
+```sql
+select date_text, theater, receipts_text from raw.event_entry
+    where page_id='repertoire_1897-98_pair006' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows after fix -- confirmed against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
