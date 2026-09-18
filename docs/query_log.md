@@ -5645,3 +5645,30 @@ the binding fold at exactly this row, swallowing the entire receipts line for М
 Большой, Михайловскій, and Малый's evening session -- no digits visible at all, titles above
 are legible. Matches the established crease-illegibility pattern (distinct from an extraction
 drop). No fix applied -- left as null, confirmed legitimate.
+
+## 2026-09-18 — null-receipts audit page 31: repertoire_1897-98_pair018
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair018' and event_status='performed' and receipts_text is null
+```
+
+Result: 7 rows before fix -- ('31 Суббота.', 'Маріинскій'), ('5 Четвергъ.', 'Александринскій'),
+('5 Четвергъ.', 'Большой'), ('6 Пятница.', 'Маріинскій'), ('8 Воскресенье.', 'Александринскій'),
+('8 Воскресенье.', 'Большой'), ('8 Воскресенье.', 'Маріинскій'), all None. The 3
+"8 Воскресенье." rows were genuine drops (titles correct); recovered all 3. The other 4 trace
+to a deeper multi-theater date-label tangle: "5 Четвергъ." Алекс/Большой are actually true
+"6 Пятн." content (which itself sits on a row where the printed page curls into the binding,
+swallowing receipts for ALL theaters that row -- confirmed via scan); "6 Пятница." Маріинскій
+is that same crease-affected row's Маріинскій cell; "31 Суббота." Маріинскій is actually true
+"1 Воскресенье." content (a charity benefit performance with no receipts printed at all,
+confirmed separately). Scan-verified against ForUpload_1897-98_Repertoire_008.jpg (printed
+pp.18-19). Full relabeling deferred -- see repertoire-1897-98-pair018-date-tangle.md.
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair018' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows after fix -- all confirmed legitimate content-wise (mislabeled dates deferred,
+verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).

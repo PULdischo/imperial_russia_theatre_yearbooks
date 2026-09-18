@@ -13046,3 +13046,25 @@ unrecoverable from this scan.
 scan confirmation itself.
 
 **Thirty pages down, ~10 to go.**
+
+### Addendum to #70 (2026-09-18): page 31 -- `repertoire_1897-98_pair018`,
+3 dropped receipts fixed, deeper multi-theater date tangle deferred
+
+The 3 "8 Воскресенье." nulls (Маріинскій/Александринскій/Большой) were
+genuine drops with titles already correct -- recovered. The other 4
+flagged nulls trace to a deeper structure: Александринскій/Большой
+share one date shift (their "5 Четвергъ." entries are really true
+"6 Пятн." content), Маріинскій has its own separate shift in the same
+29 Января-6 Февраля window, and "6 Пятн." itself is a row where the
+scanned page curls into the binding fold, swallowing receipts for ALL
+FIVE theaters that day (confirmed via scan). Михайловскій is also
+missing from this entire file. Scan-verified against
+`ForUpload_1897-98_Repertoire_008.jpg` (printed pp.18-19); full detail
+and relabeling plan in `repertoire-1897-98-pair018-date-tangle.md`.
+
+36 sessions unchanged (3 receipts filled). 4721 events / 6179
+performances unchanged, 5 flags unchanged. Verified directly -- 4
+remaining nulls, content confirmed legitimate but dates need
+relabeling (deferred).
+
+**Thirty-one pages down, ~9 to go.**
