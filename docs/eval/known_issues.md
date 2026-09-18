@@ -12725,3 +12725,24 @@ values. All 5 theaters present, 40/40 sessions complete, no other
 defects found. No changes made.
 
 **Thirteen pages down, ~27 to go.**
+
+### Addendum to #70 (2026-09-18): page 14 (`repertoire_1894-95_pair006`)
+-- flagged row confirmed clean, recovered a 6-date cluster, deferred
+two duplicate-content clusters
+
+The flagged row (`15 Суббота` Александринскій) confirmed genuinely
+dark against `ForUpload_1894-95_Repertoire_002.jpg` (printed pp.6-7).
+While checking, found Александринскій and Малый also missing (beyond
+the flagged null) for a 6-date cluster (`16`-`19 Октября`, `1`-`3
+Январь`) -- recovered from the same scan.
+
+**Deferred**: `14 Пятн.`/`14 Октября.` and `4 Октября.`/`4 Среда.`
+each carry multiple duplicate sessions per theater (content from
+several real dates merged onto one label) -- same defect class as
+`pair014`/`pair010`, not untangled this pass. Tracked in
+`repertoire-1894-95-pair006-duplicate-dates.md`.
+
+92 -> 109 sessions. 4627 -> 4643 events, 6003 -> 6038 performances, 5
+flags unchanged.
+
+**Fourteen pages down, ~26 to go.**
