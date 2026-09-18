@@ -13113,3 +13113,29 @@ duplicate-capture artifact, but both copies are legitimately null
 regardless.
 
 43 sessions unchanged -- no fix applied, all 8 confirmed legitimate.
+
+### Addendum to #70 (2026-09-18): annotated-bucket pages 2-5 --
+1892-93 season (pair004/006/010/020/024)
+
+`pair004`/`pair006` already had 0 annotated nulls (resolved earlier as
+part of this same page's no-annotation-bucket rebuild). `pair010` (2
+rows, "14 Суббота." Большой/Михайловскій, both "Гимнъ.") confirmed
+legitimate -- the free student morning-show row, no receipts printed
+for any theater. `pair020` (5 rows, Маріинскій + Большой
+"Концертъ/Генеральная репетиция/Повтореніе концерта въ пользу
+инвалидовъ") confirmed legitimate -- charity war-invalid-relief
+concerts never print receipts; noted in passing a 1-day Маріинскій
+date-shift on 2 of the 5 rows and a spurious duplicate "29 Понед."
+entry, neither touched (both out of scope for the null-receipts
+question and don't change the legitimacy finding). `pair024` (2 rows):
+"31 Понедѣльн." Малый confirmed legitimate (also notes an
+un-applied OCR fix, "Крица"->"Жрица искусства", and a mis-filed second
+work title sitting in the annotation field); "3 Четверг." Малый left
+UNRESOLVED -- its title ("Новое дѣло,ком.") recurs on two different
+true dates in the scan with different receipts figures (6 Четвергъ:
+1069 р. 97 к.; 12 Среда: 231 р. 9 к.), neither an unambiguous match to
+the file's date label, genuinely ambiguous rather than guessed.
+
+All scan-verified against `ForUpload_1892-93_Repertoire_004/009/011.jpg`.
+No fixes applied this batch -- 8 of 9 checked rows confirmed
+legitimate, 1 deferred as ambiguous.

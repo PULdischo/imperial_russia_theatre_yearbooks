@@ -5705,3 +5705,28 @@ ForUpload_1897-98_Repertoire_010.jpg (printed pp.22-23). Noted in passing: "23 �
 has a duplicate entry (empty ann=None + the charity-annotated one, matching "22 Воскресенье."'s
 text byte-for-byte) -- likely a duplicate-capture artifact, not touched (both are legitimately
 null regardless). No fixes applied -- all 8 confirmed legitimate.
+
+## 2026-09-18 — annotated-bucket audit pages 2-5: repertoire_1892-93_pair004/006/010/020/024
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id=? and event_status='performed' and receipts_text is null and annotation is not null
+```
+
+Checked repertoire_1892-93_pair004, pair006 (both 0 rows -- already resolved as part of the
+earlier no-annotation-bucket full rebuilds of these same pages). pair010 (2 rows, "14 Суббота."
+Большой/Михайловскій, both ann="Гимнъ.") confirmed legitimate -- matches the free student
+morning-show row exactly (ForUpload_1892-93_Repertoire_004.jpg, printed pp.10-11), no receipts
+printed for any theater that row. pair020 (5 rows, all "Концертъ/Генеральная репетиция/
+Повтореніе концерта въ пользу инвалидовъ", Маріинскій + Большой) confirmed legitimate --
+charity war-invalid-relief concerts, no receipts printed for any occurrence, scan-verified
+against ForUpload_1892-93_Repertoire_009.jpg (printed pp.20-21); noted in passing (not fixed) a
+1-day Маріинскій date-shift for 2 of the 5 rows and a spurious duplicate "29 Понед." entry.
+pair024 (2 rows): "31 Понедѣльн." Малый confirmed legitimate (matches scan exactly -- "Жрица
+искусства"/"Сосѣдъ и сосѣдка, вод." with no receipts printed; also notes an OCR fix needed,
+"Крица"->"Жрица", and that the second title belongs in works not annotation, not applied this
+pass); "3 Четверг." Малый ("Новое дѣло,ком.", ann="Гимнъ.") left UNRESOLVED -- the same title
+recurs on two different true dates in the scan (6 Четвергъ with 1069 р. 97 к., 12 Среда with
+231 р. 9 к.) and neither maps unambiguously to file's "3 Четверг." label; genuinely ambiguous,
+deferred rather than guessed. Scan-verified against ForUpload_1892-93_Repertoire_011.jpg
+(printed pp.24-25).
