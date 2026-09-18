@@ -13648,3 +13648,65 @@ point 3 -- a real, separate, already-documented data-quality issue
 numbers across those seasons, a project on the scale of the #70 arc),
 not a defect in `date_undate` or in this issue's header-backfill
 mechanism.
+
+### Addendum to #72 (2026-09-18): individually resolved all 6 remaining
+pages, unresolved 42 -> 6
+
+RG asked to go ahead and actually fix these rather than leave them
+documented-but-open. Did a full row-by-row content check (titles, and
+receipts figures where the season prints them) against the scans for
+each page, not just weekday labels:
+
+- `1890-91_pair024` (3 rows) and `1892-93_pair024` (1 row): pure
+  weekday-word fixes ("22 Пятница."->"22 Понед.", "3 Четверг."->
+  "3 Понедѣльн."), day/month/content already correct.
+- `1891-92_pair002` (3 rows): two sessions both labeled "17 Среда."
+  (Малый) turned out to belong to two different true dates --
+  title-matched and split into "18 Воскрес." (morning) and "19 Понед."
+  (evening). A third row, a content-free dark placeholder ("1 Воскр.",
+  no works/receipts/annotation, no plausible true position before the
+  season's Aug16 opening), removed as a spurious artifact.
+- **`1891-92_pair004` (16 rows, the big one)**: full cross-check against
+  both `ForUpload_1891-92_Repertoire_000.jpg` and `_001.jpg` found the
+  page's header itself was wrong, not the individual rows -- the old
+  "1-30 Сентября" single-anchor guess (never re-scanned this session
+  until now) was simply false. The raw JSON's day-1/2/3 sessions for
+  every theater already correctly match **October 1/2/3** verbatim
+  (title AND weekday both match October); they only needed the right
+  month, not any date_text edit. Corrected header to `11 Сентября -
+  7 Октября 1891`, which lines up with zero overlap against
+  `1891-92_pair006`'s already-confirmed Oct8-27 start -- strong
+  corroboration. One genuine duplicate found and removed in the same
+  pass (Малый's "28 Сентября." was an exact content duplicate of the
+  real "29 Воскрес." session; true Sept28 is blank for Малый).
+- `1895-96_pair002` (6 rows): receipts-figure matching (this season
+  prints receipts, unlike 1890-91/1891-92) found a 3-way date scramble
+  -- raw's "26 Воскрес."/"27 Четверг." labels actually covered three
+  different true dates (27 Воскр., 31 Четвергъ., and 1 Пятн. of
+  September). Fixed via exact receipts match. Fixing the last one
+  collided with an unrelated, already-mislabeled pre-existing session
+  at the same key, which was itself title/receipts-matched to its true
+  date (3 Воскр.) -- which in turn collided with yet another pre-
+  existing mislabeled session already sitting there. Stopped chasing
+  that specific sub-thread (genuinely out of the original 42-row scope,
+  and this page clearly has its own, separate, deeper date-tangle
+  worth a dedicated investigation later) and left it as an honestly
+  surfaced `duplicate_event_key` flag rather than silently guessing.
+  Two blank/dark "Большой" rows at the same two mislabeled dates were
+  left as-is (zero data content either way).
+- `1894-95_pair008` (5 rows): re-confirmed as the genuine 1895-volume
+  printing error already documented above -- no fix, verbatim is
+  correct.
+
+**Final state**: unresolved 42 -> 6 (5 genuine printing-error rows +
+1 content-free blank placeholder, both fully explained, nothing
+silently swept under the rug). verified rose to 80.8%.
+`quality_checks.py` went from 4 to 6 flags, but both new ones are
+honest surfacing of pre-existing problems the fixes above unmasked,
+not new breakage: `zero_dark_cells_on_multiweek_page` on
+`1891-92_pair002` (this page apparently has no captured dark day at
+all once the spurious placeholder is gone -- likely a genuinely
+missing Aug24/Суббота row, a pre-existing gap, not something this pass
+introduced) and the `1895-96_pair002` `duplicate_event_key` from the
+unresolved sub-thread above. Both are legitimate future-work items, not
+regressions.

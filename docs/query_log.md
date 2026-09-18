@@ -6172,3 +6172,60 @@ two bugs affected); verified rose 79.4% -> 79.9%; corrected 204 -> 190; quality_
 unchanged at 4. Remaining 34 unresolved rows are all the pre-existing date_text extraction defect
 described in point 3 above -- confirmed not a date_undate/header problem, a separate, already-
 documented issue outside this task's scope.
+
+## 2026-09-18 — fixed the remaining unresolved rows individually (follow-up to issue #72)
+
+Full row-by-row content verification (titles, and receipts where the season has them) against
+the actual scans for each of the 6 pages behind the 42 originally-unresolved rows. Result:
+
+- `repertoire_1890-91_pair024` (3 rows): pure weekday-word fix, "22 Пятница." -> "22 Понед."
+  (day/month/receipts all already correct).
+- `repertoire_1892-93_pair024` (1 row): pure weekday-word fix on a blank dark placeholder,
+  "3 Четверг." -> "3 Понедѣльн." (Большой).
+- `repertoire_1891-92_pair002` (3 rows): the two sessions both labeled "17 Среда." (Малый)
+  actually belong to two different true dates -- title-matched against
+  `ForUpload_1891-92_Repertoire_000.jpg` and split into "18 Воскрес." (morning) and
+  "19 Понед." (evening). The third row, a blank/dark "1 Воскр." Малый placeholder with zero
+  content (no works, no receipts, no annotation) and no plausible true-August-1 position
+  (the season doesn't open before Aug16 per the render, and this entry's own content is
+  empty), was removed as a spurious duplicate artifact.
+- `repertoire_1891-92_pair004` (16 rows) -- the big one. Full row-by-row cross-check against
+  BOTH `ForUpload_1891-92_Repertoire_000.jpg` (Aug16-Sep10) and `_001.jpg` (Sep11-Oct7) found
+  this page's header was fundamentally wrong (old single-anchor guess: "1-30 Сентября"). The
+  raw JSON's day-1/2/3 sessions for every theater already correctly match OCTOBER 1/2/3
+  content verbatim (title AND weekday both match October, not September) -- they only needed
+  the right month assigned, not any date_text edit. Corrected header to
+  `start_day=11, start_month=сентября, end_day=7, end_month=октября` (matches
+  `repertoire_1891-92_pair006`'s already-confirmed Oct8-27 start with zero overlap -- strong
+  corroboration). Also found and removed one genuine duplicate: Малый's "28 Сентября."
+  session was an exact content duplicate of the real "29 Воскрес." session (true Sept28 is
+  blank for Малый per the scan). Residual, NOT fixed: one stray Александринскій "1 Вторн."
+  (evening) session (Василиса Мелентьева/Фотографъ-любитель) whose true date wasn't found in
+  the Aug16-Oct7 range read this pass -- left as-is, low priority (doesn't block anything,
+  single row).
+- `repertoire_1895-96_pair002` (6 rows): receipts-figure matching against
+  `ForUpload_1895-96_Repertoire_000.jpg` found a 3-way date scramble -- raw's "26 Воскрес."
+  and "27 Четверг." labels actually cover THREE different true dates (27 Воскр., 31 Четвергъ.,
+  and 1 Пятн. of the following month). Fixed all 4 non-blank rows via receipts-figure exact
+  match (1356 р./808 р./1347 р./404 р.25 к.). Fixing the last one (Михайловскій -> "1 Пятн.")
+  collided with an ALREADY-mislabeled pre-existing session at that same key (2134 р.20 к.,
+  Севильскій цирюльникъ) -- title/receipts-matched that one too, to true "3 Воскр." (Sept3).
+  That reassignment collided with YET ANOTHER pre-existing session already sitting at
+  "3 Воскр." (675 р.63 к., Первая муха/Угасшая искра/Изъ-за мышенка) whose true date wasn't
+  found in a search through Sep1-15 this pass -- stopped chasing this specific sub-thread
+  (out of the original 42-row scope) and left it as an honestly-flagged
+  `duplicate_event_key` for a future pass, rather than silently guessing. The 2 blank/dark
+  "Большой" rows at "26"/"27" (zero content either way) were left unfixed -- no data impact.
+- `repertoire_1894-95_pair008` (5 rows): re-confirmed as a genuine printing error in the
+  original 1895 volume itself (the scan literally prints "25 Суббота." at that row; true
+  Jan25,1895 was a Среда) -- correctly left verbatim per project convention, no fix.
+
+Reran the full pipeline (parse_and_validate -> build_duckdb -> quality_checks ->
+validate_performance_dates) after all fixes: unresolved 42 -> 6 (all 6 fully explained: the 5
+genuine-printing-error rows above, plus the 1 remaining blank Большой row). verified rose to
+80.8%. `quality_checks.py` went from 4 to 6 flags -- both NEW flags are honest surfacing of
+pre-existing problems, not new breakage: `zero_dark_cells_on_multiweek_page` on
+`1891-92_pair002` (removing the spurious "1 Воскр." dark placeholder unmasked that this page
+has no other captured dark day at all -- likely a genuinely missing Aug24/Суббота row, not
+something introduced here) and the `duplicate_event_key` on `1895-96_pair002`'s "3 Воскр."
+Михайловскій described above.
