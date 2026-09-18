@@ -12917,3 +12917,23 @@ flags unchanged. Verified directly -- zero remaining null receipts for
 this page.
 
 **Twenty-three pages down, ~17 to go.**
+
+### Addendum to #70 (2026-09-18): page 24 -- `repertoire_1896-97_pair016`,
+Александринскій + Малый recovered whole-page, 3 flagged receipts fixed
+
+The 3 flagged nulls (Большой/Маріинскій/Михайловскій, all at
+"21 Вторн.") had correct titles already captured -- only the receipts
+figures were dropped, fixed directly with no relabeling needed.
+Separately, Александринскій and Малый were entirely missing from this
+page's extraction across all 13 dates (9-21 Января 1897) -- recovered
+both columns in full (26 new sessions), also confirming
+11 Суббота./18 Суббота are genuinely dark for them too (benefit shows
+where only Михайловскій performed). Scan-verified against
+`ForUpload_1896-97_Repertoire_007.jpg` (printed pp.16-17). Clean
+recovery, no scrambling or date shifts found on this page.
+
+39 -> 65 sessions. 4687 -> 4713 events, 6108 -> 6160 performances, 5
+flags unchanged. Verified directly -- zero remaining null receipts for
+this page.
+
+**Twenty-four pages down, ~16 to go.**

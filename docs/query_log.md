@@ -5497,3 +5497,24 @@ select date_text, theater, receipts_text from raw.event_entry
 ```
 
 Result: 0 rows after fix -- confirmed against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+
+## 2026-09-18 — null-receipts audit page 24: repertoire_1896-97_pair016
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1896-97_pair016' and event_status='performed' and receipts_text is null
+```
+
+Result: 3 rows before fix -- ('21 Вторн.', 'Большой'/'Маріинскій'/'Михайловскій', None).
+Titles were already correct, only receipts figures dropped -- fixed directly. Separately,
+Александринскій and Малый were entirely missing from this page's extraction across all 13
+dates (9-21 Января 1897); recovered both columns in full (26 new sessions), confirming
+11 Суббота./18 Суббота are genuinely dark for them too (benefit shows, only Михайловскій
+performed). Scan-verified against ForUpload_1896-97_Repertoire_007.jpg (printed pp.16-17).
+
+```sql
+select date_text, theater, receipts_text from raw.event_entry
+    where page_id='repertoire_1896-97_pair016' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows after fix -- confirmed against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
