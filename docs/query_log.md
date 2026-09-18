@@ -5561,3 +5561,25 @@ select date_text, theater, receipts_text from raw.event_entry
 ```
 
 Result: 0 rows after fix -- confirmed against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+
+## 2026-09-18 — null-receipts audit page 27: repertoire_1897-98_pair008
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair008' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows before fix -- ('25 Суббота.', 'Александринскій'), ('26 Воскрес.',
+'Александринскій'), ('5 Среда.', 'Александринскій'), ('5 Среда.', 'Маріинскій'), all None.
+The first two (Représentation de M-me Réjane guest performances) confirmed genuinely blank in
+the source -- no receipts figure printed at all for either. The other two were genuine drops
+(titles already correct); recovered 1193 р. 72 к. (Алекс) and 3602 р. 50 к. (Мар).
+Scan-verified against ForUpload_1897-98_Repertoire_003.jpg (printed pp.8-9).
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair008' and event_status='performed' and receipts_text is null
+```
+
+Result: 2 rows after fix -- the confirmed-legitimate Représentation de M-me Réjane rows
+(verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).

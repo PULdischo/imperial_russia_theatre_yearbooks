@@ -12975,3 +12975,20 @@ performances unchanged, 5 flags unchanged. Verified directly -- zero
 remaining null receipts for this page.
 
 **Twenty-six pages down, ~14 to go.**
+
+### Addendum to #70 (2026-09-18): page 27 -- `repertoire_1897-98_pair008`,
+2 dropped receipts fixed, 2 confirmed legitimate (Réjane guest shows)
+
+Of the 4 flagged nulls, 2 ("25 Суббота." and "26 Воскрес."-утро,
+Александринскій) are the touring "Représentation de M-me Réjane" guest
+performances -- confirmed genuinely blank in the source, no receipts
+figure printed at all for either. The other 2 ("5 Среда.",
+Александринскій + Маріинскій) were genuine drops with titles already
+correct; recovered. Scan-verified against
+`ForUpload_1897-98_Repertoire_003.jpg` (printed pp.8-9).
+
+69 sessions unchanged (receipts fill only). 4721 events / 6178
+performances unchanged, 5 flags unchanged. Verified directly -- 2
+remaining nulls (both confirmed legitimate).
+
+**Twenty-seven pages down, ~13 to go.**
