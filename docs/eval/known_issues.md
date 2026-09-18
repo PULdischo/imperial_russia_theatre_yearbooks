@@ -12629,3 +12629,25 @@ Added 20 sessions (86 -> 106). 4545 -> 4565 events, 5873 -> 5911
 performances, 5 flags unchanged. Verified directly.
 
 **Eight pages down, ~32 to go.**
+
+### Addendum to #70 (2026-09-18): page 9 (`repertoire_1893-94_pair010`)
+-- targeted duplicate cleanup only; several more issues deferred
+
+Same pervasive-corruption shape as `pair014`: Малый entirely missing,
+plus several duplicate/misattributed sessions beyond the flagged ones
+(`24 Среда.` has 3 Михайловскій entries, `29 Понед.` has 2). Fixed what
+could be verified with full confidence: `13 Субб.`'s three bogus
+duplicate sessions (fragments of `14 Воскресенье`'s real free-show
+block, mislabeled) removed; `14 Воскресенье.` Михайловскій's split
+entry (wrong title/right receipts + right title/null receipts) merged
+into one correct session. Checked against
+`ForUpload_1893-94_Repertoire_004.jpg` (printed pp.10-11).
+
+77 -> 73 sessions. 4565 -> 4561 events, 5911 -> 5903 performances, 5
+flags unchanged. Verified directly.
+
+**Deferred**: Малый's missing column, 2 more flagged nulls (`22 Пон.`,
+`23 Вторникъ.`), and the remaining unexplained duplicates. Tracked in
+`repertoire-1893-94-pair010-open-issues.md`.
+
+**Nine pages down, ~31 to go.**
