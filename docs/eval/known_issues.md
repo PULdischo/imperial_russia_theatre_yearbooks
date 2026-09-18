@@ -12562,3 +12562,34 @@ Fully rebuilt (70 -> 106 sessions). 4458 -> 4494 events, 5752 -> 5795
 performances, 5 flags unchanged. Verified directly.
 
 **Five pages down, ~35 to go.**
+
+### Addendum to #70 (2026-09-18): page 6 (`repertoire_1892-93_pair014`)
+-- targeted duplicate cleanup only; a confirmed missing-theater-column
+issue deferred to its own follow-up
+
+`repertoire_1892-93_pair014` (27 Декабря 1892 - 16 Января 1893) only
+ever had Маріинскій captured across all 22 dates -- confirmed via the
+scan (`ForUpload_1892-93_Repertoire_006.jpg`, printed pp.14-15) that
+all 4 other theaters are genuinely active throughout, the same
+missing-theater-column defect as several earlier pages. This page's
+dense utro/vecher-per-theater layout made row-to-date alignment
+unusually error-prone; rather than risk a wrong full rebuild, scoped
+this pass down to what could be verified with full confidence: the two
+originally-flagged null-receipts rows.
+
+`6 Срѣд.` "Фаустъ" confirmed genuinely illegible (a binding-fold
+crease under the whole row, all 5 theaters). `8 Пятница.` had two
+duplicate Mariinsky sessions -- a "Гугеноты" entry really belonging to
+`7 Четвергъ` (exact receipts match) and a null "Фаустъ" duplicating `6
+Срѣд.`'s own entry -- removed both; the genuine `8 Пятница.` content
+was already correct. 27 -> 25 sessions. 4494 -> 4492 events, 5795 ->
+5793 performances, 5 flags unchanged. Verified directly.
+
+**Deferred, not fixed this pass**: recovering the missing 4 theaters
+across this whole page (confirmed real, same defect class as
+`pair004`/`pair006`/`pair008`) plus at least one more suspected
+duplicate around `4 Понед.`/`6 января.`. Tracked in a new memory file
+(`repertoire-1892-93-pair014-missing-theaters.md`) rather than guessed
+at under time pressure.
+
+**Six pages down, ~34 to go.**
