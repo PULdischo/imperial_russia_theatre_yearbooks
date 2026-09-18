@@ -13360,5 +13360,27 @@ flags unchanged. Verified directly -- zero remaining null receipts,
 every date has all 5 theaters (except the two genuinely-dark
 Saturdays, 21/28 Суббота, correctly showing 4).
 
-**2 of 7 deferred sub-issues remain**: `1896-97_pair008`,
-`1897-98_pair018`.
+### Addendum to #70 (2026-09-18): deferred issue 6/7 resolved --
+`repertoire_1896-97_pair008`, full rebuild with a page-wide uniform
+shift
+
+Full page rebuild (25 Октября-13 Ноября 1896, the full extent of this
+scan). This page's defect turned out to be a UNIFORM date-label shift
+affecting ALL theaters simultaneously (unlike every other tangled page
+this issue, which had per-theater independent shifts) starting at "26
+Суббота." -- every date from there was one true-date-slot too early,
+with a spurious duplicate "25 Пятница." entry (really true 26 Суббота
+content) and a "3 Воскрес." entry (an exact duplicate of the
+already-correctly-fixed "4 Ноября.") left behind at each end of the
+shifted block. Большой was entirely missing throughout the whole page.
+The tail beyond the already-fixed 4-7 Ноября (8-13 Ноября) was missing
+entirely for all 5 theaters. Independently re-confirmed the earlier
+4-7 Ноября fix was correct against this fresh reading -- it only
+needed Большой added. Scan-verified against
+`ForUpload_1896-97_Repertoire_003.jpg` (printed pp.8-9).
+
+64 -> 106 sessions. 4874 -> 4916 events, 6418 -> 6468 performances, 4
+flags unchanged. Verified directly -- zero remaining null receipts,
+every date has all 5 theaters.
+
+**1 of 7 deferred sub-issues remains**: `1897-98_pair018`.

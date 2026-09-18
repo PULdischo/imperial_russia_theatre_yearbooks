@@ -5966,3 +5966,29 @@ select date_text, theater from raw.event_entry
 Result: 0 rows -- verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
 Every date now has all 5 theaters (4 on the two genuinely-dark-for-most-theaters Saturdays,
 21/28 Суббота, correctly). 4 quality flags unchanged.
+
+## 2026-09-18 — deferred-issue resolution 6/7: repertoire_1896-97_pair008
+
+```sql
+select date_text, count(distinct theater) from raw.event_entry
+    where page_id='repertoire_1896-97_pair008' group by date_text order by 1
+```
+
+Full page rebuild (25 Октября - 13 Ноября 1896, the full extent of this scan). Discovered a
+UNIFORM date-label shift affecting ALL theaters simultaneously (unlike other pages' per-theater
+independent shifts) starting at "26 Суббота." -- every date from there was one true-date-slot
+too early, with a spurious duplicate "25 Пятница." entry (really true 26 Суббота content) and
+"3 Воскрес." entry (an exact duplicate of the already-correctly-fixed "4 Ноября.") left behind.
+Большой was entirely missing throughout the whole page. The tail beyond the already-fixed
+4-7 Ноября (8-13 Ноября) was missing entirely for all 5 theaters. Independently re-confirmed
+the earlier 4-7 Ноября fix was correct (matches this fresh reading exactly) -- only needed
+Большой added there. Scan-verified against ForUpload_1896-97_Repertoire_003.jpg (printed
+pp.8-9). 64 -> 106 sessions.
+
+```sql
+select date_text, theater from raw.event_entry
+    where page_id='repertoire_1896-97_pair008' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows -- verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+Every date now has all 5 theaters. 4 quality flags unchanged.
