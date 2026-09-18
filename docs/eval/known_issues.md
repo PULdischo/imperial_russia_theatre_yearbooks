@@ -12593,3 +12593,23 @@ duplicate around `4 Понед.`/`6 января.`. Tracked in a new memory file
 at under time pressure.
 
 **Six pages down, ~34 to go.**
+
+### Addendum to #70 (2026-09-18): page 7 (`repertoire_1892-93_pair022`)
+-- only Большой present, and even it was scrambled; recovered 2 extra
+dates that had no home anywhere else in the season
+
+`repertoire_1892-93_pair022` only had Большой present across `11`-`21
+апрѣля 1893`, and even that column was scrambled: old `11 апрѣля.` was
+really `9 Апрѣля`'s content, old `13 апрѣля.` carried a duplicate that
+really belongs to `12 Апрѣля` (explaining that date's null-receipts
+flag). True `11 Апрѣля` had never been captured under any label
+(recovered, though its own receipts are illegible -- binding-fold
+crease). Also recovered `9`-`10 Апрѣля`, previously absent from every
+file in this whole season -- checked, no other file captures them.
+Checked against `ForUpload_1892-93_Repertoire_010.jpg` (printed
+pp.22-23).
+
+Fully rebuilt (12 -> 65 sessions). 4492 -> 4545 events, 5793 -> 5873
+performances, 5 flags unchanged. Verified directly.
+
+**Seven pages down, ~33 to go.**
