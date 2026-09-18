@@ -5803,3 +5803,26 @@ ForUpload_1896-97_Repertoire_009.jpg (printed pp.20-21). pair022 (1 row, "19 С�
 (printed pp.22-23). pair024's row ("16 Среда." Маріинскій, "Парадный спектакль.") was already
 confirmed legitimate earlier this session as part of the main no-annotation audit of this same
 page. This closes out the entire 1896-97 season's annotated bucket.
+
+## 2026-09-18 — annotated-bucket audit pages 20-23 (final): repertoire_1897-98_p012/pair010/pair012/pair018
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id=? and event_status='performed' and receipts_text is null and annotation is not null
+```
+
+pair010's 2 rows and pair018's 2 rows were already confirmed earlier this session as part of the
+main no-annotation-bucket work on these same pages (German touring-troupe rows on pair010; the
+already-documented date-tangle rows on pair018, tracked in repertoire-1897-98-pair018-date-tangle.md).
+p012 (2 rows, "4 Понедѣльник."/"5 Вторникъ.", both "Въ пользу пострадавшихъ отъ недорода хлѣбовъ."
+-- famine-relief charity) confirmed legitimate against ForUpload_1897-98_Repertoire_012.jpg
+(printed pp.26-27, last page of the season); the second row also sits at the literal last row of
+the season, page-edge cut, consistent with the established unrecoverable-edge pattern. pair012
+(1 row, "6 Суббота." Маріинскій, ann="Безплатные спектакли для военныхъ") confirmed legitimate --
+title matches the scan's free-show row exactly (ForUpload_1897-98_Repertoire_005.jpg, printed
+pp.12-13); noted in passing that the annotation text itself appears to be a misread of the
+scan's actual header ("для воспитанниковъ столичныхъ учебныхъ заведеній", not "для военныхъ") --
+a separate minor annotation-accuracy issue, not touched, doesn't affect the null-receipts finding.
+
+**THIS COMPLETES THE ENTIRE ANNOTATED BUCKET (56 rows) AND THE FULL NULL-RECEIPTS AUDIT
+(both buckets, all 8 seasons).**

@@ -13199,3 +13199,31 @@ scan-verified against `ForUpload_1896-97_Repertoire_004/005/006/009/010.jpg`.
 **This closes out the entire 1896-97 season's annotated bucket.**
 
 No fixes applied -- all checked rows confirmed legitimate.
+
+### Addendum to #70 (2026-09-18): annotated-bucket pages 20-23 (FINAL)
+-- 1897-98 season complete, entire annotated bucket done
+
+`pair010`'s 2 rows and `pair018`'s 2 rows were already confirmed
+earlier this session (German touring-troupe rows; the already-
+documented `pair018` date-tangle rows). `p012` (2 rows, both "Въ
+пользу пострадавшихъ отъ недорода хлѣбовъ." famine-relief charity, the
+literal last two rows of the season) confirmed legitimate, one sitting
+at the page's own last-row edge (consistent with the established
+unrecoverable-edge pattern). `pair012` (1 row, a free-show row whose
+title matches the scan exactly) confirmed legitimate -- noted in
+passing that its annotation text appears to be a misread of the scan's
+actual institution name, a separate minor issue not touched here.
+
+**THIS COMPLETES THE ENTIRE 56-ROW ANNOTATED BUCKET, AND WITH IT THE
+FULL NULL-RECEIPTS AUDIT ACROSS BOTH BUCKETS AND ALL 8 REPERTOIRE
+SEASONS (1890-91 through 1897-98).** Every null-receipts cell in the
+corpus has now been traced to one of: a fixable extraction drop
+(fixed), a genuinely blank source row -- benefit/charity performances,
+free student or military morning shows, touring guest companies,
+memorial spectacles -- confirmed and left as null, or a physically
+unrecoverable row (binding-fold crease or photographed-page edge)
+confirmed and documented. Outstanding: 7 deferred multi-theater/date-
+tangle sub-issues (each with its own memory file, listed in the
+no-annotation-bucket-complete addendum above) and one genuinely
+unresolved ambiguous row (`1892-93_pair024`'s "3 Четверг." Малый) and
+one unlocated row (`1893-94_pair010`'s "23 Вторникъ." Маріинскій).
