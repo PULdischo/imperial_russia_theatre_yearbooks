@@ -12544,3 +12544,21 @@ performances, 5 flags unchanged. Verified directly. Query in
 `docs/query_log.md`.
 
 **Four pages down, ~36 to go.**
+
+### Addendum to #70 (2026-09-18): page 5 (`repertoire_1892-93_pair006`)
+-- a dropped date, one wrongly-dark theater, 6 dates missing 4 theaters,
+and a recurring OCR truncation
+
+`repertoire_1892-93_pair006` (3-22 October 1892): date `4 Октября` was
+entirely absent (its Alexandrinsky content misattributed to `3
+Октября`, genuinely dark that theater in the scan); `16 Октября`'s
+Alexandrinsky wrongly marked dark despite real content; `17`-`22
+Октября` missing Маріинскій/Михайловскій/Большой/Малый entirely; and a
+recurring truncation ("Я картинка"/"Ъ картинка" for "Лѣтняя картинка")
+on several Малый titles. Checked against
+`ForUpload_1892-93_Repertoire_002.jpg` (printed pp.6-7).
+
+Fully rebuilt (70 -> 106 sessions). 4458 -> 4494 events, 5752 -> 5795
+performances, 5 flags unchanged. Verified directly.
+
+**Five pages down, ~35 to go.**
