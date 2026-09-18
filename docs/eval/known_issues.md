@@ -12691,3 +12691,23 @@ along with that date's other missing theaters).
 flags unchanged. Verified directly.
 
 **Eleven pages down, ~29 to go.**
+
+### Addendum to #70 (2026-09-18): page 12 (`repertoire_1893-94_pair024`)
+-- whole-file date-cascade fix; 3 theaters deferred
+
+Checked the flagged row against `ForUpload_1893-94_Repertoire_011.jpg`
+(printed pp.24-25) and found a consistent whole-file date-label
+cascade: every session `19 Вторникъ` through `28 Четвергъ` (10
+sessions) was one calendar day early, confirmed via exact receipts
+matches at every step. Relabeled all 10, resolved a leftover
+duplicate the shift created. The flagged null (now correctly `27
+Среда.`) stays null -- genuinely illegible under the binding crease.
+
+19 -> 18 sessions (one duplicate removed). Events/performances
+essentially unchanged, 5 flags unchanged. Verified directly.
+
+**Deferred**: Михайловскій, Большой, Малый all missing from this page
+too (confirmed genuinely active for most of April) -- not recovered
+this pass.
+
+**Twelve pages down, ~28 to go.**
