@@ -13316,5 +13316,26 @@ page's "14 Пятн." Большой duplicate as a side effect. Verified
 directly -- zero remaining null receipts, every date has all 5
 theaters.
 
-**4 of 7 deferred sub-issues remain**: `1895-96_pair006`,
-`1896-97_pair004`, `1896-97_pair008`, `1897-98_pair018`.
+### Addendum to #70 (2026-09-18): deferred issue 4/7 resolved --
+`repertoire_1895-96_pair006`, duplicates untangled, missing theaters
+recovered
+
+Untangled the scattered Маріинскій/Михайловскій duplicates and
+recovered the missing Александринскій/Малый for 22-28 Октября (Большой
+was already confirmed genuinely dark throughout the whole page).
+Specific fixes: relabeled "17 октября." Маріинскій to "17 Вторн." (true
+17 Вторн content was otherwise entirely missing under its own label);
+removed 3 spurious duplicate sessions that had copied already-correct
+content from neighboring dates onto "18 Среда."/"18 октября."; recovered
+a dropped "8 Октября." Малый evening session (a duplicate of it had
+been mistakenly captured under "9 Понед." instead, removed separately);
+fixed an OCR typo; recovered Александринскій + Малый for 22-28 Октября
+(16 new sessions). Scan-verified against
+`ForUpload_1895-96_Repertoire_002.jpg` (printed pp.6-7).
+
+77 -> 90 sessions. 4835 -> 4848 events, 6368 -> 6387 performances, 4
+flags unchanged. Verified directly -- zero remaining null receipts,
+every date consistently covered.
+
+**3 of 7 deferred sub-issues remain**: `1896-97_pair004`,
+`1896-97_pair008`, `1897-98_pair018`.

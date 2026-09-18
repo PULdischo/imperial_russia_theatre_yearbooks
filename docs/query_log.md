@@ -5913,3 +5913,29 @@ Result: 0 rows -- every date now has all 5 theaters, verified against rebuilt
 outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb. Quality flags DROPPED from 5 to 4 --
 the pre-existing duplicate_event_key flag for this page's "14 Пятн." Большой duplicate is
 resolved by this rebuild.
+
+## 2026-09-18 — deferred-issue resolution 4/7: repertoire_1895-96_pair006
+
+```sql
+select date_text, count(distinct theater) from raw.event_entry
+    where page_id='repertoire_1895-96_pair006' group by date_text order by 1
+```
+
+Untangled the scattered Маріинскій/Михайловскій duplicates and recovered the missing
+Александринскій/Малый for 22-28 Октября (Большой confirmed genuinely dark throughout the whole
+page, already established). Specific fixes: relabeled "17 октября." Маріинскій to "17 Вторн."
+(true 17 Вторн content was otherwise entirely missing); removed 3 spurious duplicate sessions
+("18 Среда." Маріинскій morning + "18 октября." Маріинскій, both duplicating already-correct
+content from 17 Вторн/16 Понед; "18 Среда." Михайловскій morning, duplicating 17 Вторн);
+recovered a dropped "8 Октября." Малый evening session (a duplicate of it had been mistakenly
+captured under "9 Понед." instead, removed separately); fixed an OCR typo ("Вольницы"->
+"Невольницы"); recovered Александринскій + Малый for 22-28 Октября (16 new sessions).
+Scan-verified against ForUpload_1895-96_Repertoire_002.jpg (printed pp.6-7). 77 -> 90 sessions.
+
+```sql
+select date_text, theater, annotation from raw.event_entry
+    where page_id='repertoire_1895-96_pair006' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows -- verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+4 quality flags unchanged.
