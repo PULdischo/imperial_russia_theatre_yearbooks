@@ -261,7 +261,17 @@ def _backfill_month_year(sessions: list["SessionLLM"],
     actually belong to start_month regardless of the threshold comparison
     -- it must be an end_month day instead (this surfaced on a real page,
     repertoire_1892-93_pair024, whose "мая"/May end_month legitimately has
-    a 31st).
+    a 31st). _MONTH_LENGTH's February entry (28) is the common case only
+    -- when start_month is "февраля" and the page's own start year is a
+    Julian leap year (divisible by 4; no Gregorian century exception --
+    this is the source calendar throughout, per dates.py), the length used
+    here is bumped to 29, or a genuine "29 Суббота." row gets wrongly
+    kicked into end_month by this same sanity check it exists to serve
+    (confirmed on a real page, repertoire_1891-92_pair018, 1892 being a
+    leap year: without this, Feb 29 gets reassigned to Mar 29, which
+    lands on a different real weekday and fails validate_performance_
+    dates.py's cross-check even though the original day>=start_day
+    assignment was already correct).
     """
     if not page_header:
         return [(s.month_text or "", s.year_text or "") for s in sessions]
@@ -271,6 +281,10 @@ def _backfill_month_year(sessions: list["SessionLLM"],
     year_text = page_header["year_text"]
     start_day = page_header.get("start_day")
     start_month_len = _MONTH_LENGTH.get(start_month)
+    if start_month == "февраля" and start_month_len is not None:
+        start_year_match = re.match(r"\d{4}", year_text or "")
+        if start_year_match and int(start_year_match.group()) % 4 == 0:
+            start_month_len = 29
 
     result: list[tuple[str, str]] = []
     for s in sessions:

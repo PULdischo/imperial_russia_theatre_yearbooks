@@ -13580,3 +13580,71 @@ legitimately has a 31st).
 (`_backfill_month_year`, new `_MONTH_LENGTH`), `pipeline/parse_and_
 validate.py` (`load_page_headers` now also captures `start_day`),
 `outputs/repertoire_spreadfix_v6/page_header_dates.csv` (new, 88 rows).
+
+### Addendum to #72 (2026-09-18): scan-checked all 9 pages behind the 42
+`validate_performance_dates.py` "unresolved" rows -- found and fixed 2
+more real bugs, confirmed the rest are a separate pre-existing issue
+
+RG asked to have the scans checked for every one of the 42 "unresolved"
+rows rather than accepting the summary stat. Doing that surfaced two
+more genuine problems, both now fixed, plus confirmed the remaining
+rows aren't a date_undate/header issue at all:
+
+1. **`repertoire_1890-91_pair018` had never been individually
+   re-scanned this session** -- it was still on the original,
+   already-proven-unreliable "single anchor month, trusted for whole
+   page" guess ("1-31 Января 1891"). Scan-checked against
+   `ForUpload_1890-91_Repertoire_008.jpg`: the true range is 25 Января -
+   13(+) Февраля 1891. The two stray "1 Пятн."/"2 Суббота." entries
+   sitting at the front of the file's own (non-chronological) session
+   order -- which look like they don't fit a January-only page --
+   turned out to be Февраля 1-2, weekday-confirmed (true Feb1,1891 =
+   Пятница, Feb2 = Суббота, exactly matching the printed labels).
+   Header corrected: `start_day=25, start_month=января, end_day=13,
+   end_month=февраля`.
+
+2. **A real bug in this issue's own `_MONTH_LENGTH` fix**: hardcoded
+   февраля=28 days, not accounting for Julian leap years (1892 and 1896
+   both fall in this corpus). This wrongly reassigned genuine February
+   29th sessions to March 29th instead -- caught on
+   `repertoire_1891-92_pair018`'s "29 Суббота." (scan-confirmed true
+   Feb29,1892 = Суббота; the wrong March 29 is a Sunday, hence the
+   validator's mismatch) and, same root cause,
+   `repertoire_1895-96_pair020`'s "29 Четвергъ." (1896 also a leap
+   year). Fixed: `_backfill_month_year` now checks the page's own start
+   year for `start_month == "февраля"` and uses 29 instead of 28 when
+   `start_year % 4 == 0` (the Julian leap rule -- no Gregorian century
+   exception, matching this whole corpus's calendar convention).
+
+3. **Everything else checked (`1890-91_pair024`, `1891-92_pair002`/
+   `pair004`, `1892-93_pair024`, `1894-95_pair008`, `1895-96_pair002`)
+   is a separate, pre-existing defect already documented in
+   `validate_performance_dates.py`'s own module docstring** -- isolated
+   rows/short runs where the raw extraction's `date_text` carries the
+   wrong weekday word or day number (concentrated in the 1891-92
+   through 1896-97 seasons, exactly as that docstring already says),
+   confirmed directly against the scans, not something today's header-
+   backfill work introduced or is responsible for fixing. Concretely:
+   `1891-92_pair004`'s "1 Вторн./2 Среда/3 Четверг." (all 5 theaters)
+   should read "1 Восир./2 Понед./3 Вторникъ" per the scan -- date_undate
+   for these rows is already correct (matches both the scan's day
+   column and true Julian weekday), only the verbatim `date_text`
+   weekday word is wrong. `1892-93_pair024`'s flagged "3 Четверг."
+   Большой is a blank dark-day placeholder (no real content) with the
+   same kind of wrong weekday word; the scan's true "3 Понедѣльн." row
+   for that date is blank too. `1894-95_pair008`'s "25 Суббота." looks
+   like a genuine printing error in the *original 1895 volume itself*
+   -- the scan clearly prints "25 Суббота." at exactly the row the raw
+   JSON extracted, but Jan 25, 1895 was a Среда; per this project's
+   verbatim-transcription rule, that stays as printed, not "corrected."
+
+**Reran the full pipeline after the two fixes**: `validate_performance_
+dates.py`'s unresolved count dropped 42 -> 34 (exactly the 8 rows the
+two bugs affected), verified rose 79.4% -> 79.9%, corrected 204 -> 190,
+`quality_checks.py` unchanged at 4 pre-existing flags. The remaining 34
+unresolved rows are all the pre-existing date_text extraction defect in
+point 3 -- a real, separate, already-documented data-quality issue
+(fixing it would mean auditing individual date_text weekday words/day
+numbers across those seasons, a project on the scale of the #70 arc),
+not a defect in `date_undate` or in this issue's header-backfill
+mechanism.

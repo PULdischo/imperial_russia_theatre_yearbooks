@@ -6096,3 +6096,79 @@ Result: verified 3924 (79.4%), intra_block_disagreement 767 (15.5%), corrected 2
 unresolved 42 (0.9%), no_date 2 (0.0%) -- independent Julian-calendar weekday corroboration
 that the backfilled dates are correct, not just internally consistent with their own headers.
 Prior baseline (unheadered spread dates, outputs/fold_review/README.md): 35.6% weekday mismatch.
+
+## 2026-09-18 — characterizing the 42 'unresolved' rows from validate_performance_dates.py (follow-up to issue #72)
+
+```sql
+SELECT e.page_id, e.event_id, e.date_text, e.theater, e.date_undate, d.date_confidence
+FROM analysis.event_entry_date_check d JOIN raw.event_entry e USING (event_id)
+WHERE d.date_confidence = 'unresolved' ORDER BY e.page_id, e.date_undate;
+```
+
+Result: 42 rows across 9 pages. Largest cluster: repertoire_1891-92_pair004, 21 rows (3
+consecutive dates, 1/2/3 Сентября 1891, ~5-6 theaters each). Computed true weekday (Julian,
+convertdate.julian.jwday) vs. parsed printed weekday for all 42: every row shows a small,
+consistent offset (1-2 days) between what the day-number implies and what the printed weekday
+word says -- matching validate_performance_dates.py's own documented "day number drift" defect
+(module docstring: concentrated in the 1891-92 through 1896-97 seasons), not something
+introduced by today's date_undate backfill.
+
+Debug-traced why the 1891-92_pair004 3-day run didn't auto-correct despite sharing the same
++2-day offset: the script's run-detection walks blocks in `event_id` order (raw file/session
+print order), not calendar order. Confirmed directly -- block_order for this page shows
+1891-09-01, then 1891-09-11, then 1891-09-19, then 1891-09-02 -- i.e. Sep2's block is NOT
+adjacent to Sep1's in file order, because (same root cause as issue #72's pipeline fix) this
+page's session lists aren't stored chronologically. The Sep11/19 blocks in between are
+'verified' (no mismatch), breaking the run and leaving Sep1/2/3 each as an isolated
+single-block run, which can't meet _MIN_RUN_AGREEMENT=2 alone. This is a real, separate
+follow-on consequence of the non-chronological-session-order root cause, but in a different
+script (validate_performance_dates.py) that issue #72 did not touch -- noted for a possible
+future fix, not addressed today.
+
+## 2026-09-18 — scan-checked all 9 pages behind the 42 'unresolved' rows (follow-up to issue #72)
+
+Read the actual render image for at least one representative flagged date on each of the 9
+pages. Findings:
+
+1. `repertoire_1890-91_pair018` and `repertoire_1891-92_pair002`/`pair004` had never been
+   individually re-scanned this session -- they were still using the original, already-proven-
+   unreliable "single anchor month, trusted for whole page" guess. Checked directly:
+   - `1890-91_pair018`: guess was "1-31 Января 1891"; scan (`ForUpload_1890-91_Repertoire_008.jpg`)
+     shows the true range is 25 Января - 13(+) Февраля 1891, with the day-1/2 stragglers at the
+     front of the file's own session order actually being Feb 1-2 (weekday-confirmed: true
+     Feb1,1891=Пятн., Feb2=Субб., matching the printed labels exactly). A real, previously-missed
+     header error -- FIXED, see known_issues.md.
+   - `1891-92_pair002`/`pair004`: the "1-30 Августа"/"1-30 Сентября" guesses turned out to be
+     directionally correct (confirmed against `ForUpload_1891-92_Repertoire_000.jpg`, which shows
+     Aug16-Sep10 continuously) -- NOT a header bug. But the 3 flagged September 1/2/3 rows
+     revealed something else: the scan clearly shows "1 Восир.(Sun)/2 Понед.(Mon)/3 Вторникъ(Tue)"
+     while raw `date_text` for all 5 theaters says "1 Вторн./2 Среда/3 Четверг" (each 2 weekdays
+     later) -- a pre-existing raw-extraction weekday-word misread, confirmed on the page itself,
+     NOT a date_undate error (date_undate for these 3 rows is already correct -- matches both the
+     scan's day column and true Julian weekday).
+
+2. Found and fixed a real bug in today's own `_backfill_month_year` patch: the `_MONTH_LENGTH`
+   sanity check hardcoded февраля=28, not accounting for Julian leap years (1892, 1896 in this
+   corpus). This wrongly reassigned genuine "29 Суббота."/"29 Четвергъ." February 29th sessions to
+   March 29th instead. Confirmed directly: `repertoire_1891-92_pair018`'s "29 Суббота." scan
+   (`ForUpload_1891-92_Repertoire_008.jpg`) shows Feb29,1892 as Суббота -- true weekday (Julian)
+   for 1892-02-29 is also Суббота; but 1892-03-29 (where the old bug sent it) is a Sunday, hence
+   the mismatch. Same root cause hit `repertoire_1895-96_pair020`'s "29 Четвергъ." (1896 also a
+   leap year). FIXED -- see known_issues.md.
+
+3. The remaining pages checked (`1890-91_pair024`, `1892-93_pair024`, `1894-95_pair008`,
+   `1895-96_pair002`) all show the SAME kind of pre-existing, isolated date_text weekday/day-number
+   drift already documented in `validate_performance_dates.py`'s own module docstring (concentrated
+   in 1891-92 through 1896-97) -- e.g. `1892-93_pair024`'s flagged "3 Четверг." Большой is a blank
+   dark-day placeholder (no real content) whose weekday word is simply wrong; the true row for that
+   date on the scan is blank too, just correctly labeled "3 Понедѣльн." One page
+   (`1894-95_pair008`, "25 Суббота.") appears to be a genuine PRINTING error in the original 1895
+   volume itself (real content, weekday label doesn't match the true calendar, but the scan itself
+   prints "25 Суббота." right where the raw JSON has it) -- correctly left as-is per the project's
+   verbatim-transcription rule, nothing to fix.
+
+Reran the full pipeline after the two fixes: unresolved dropped 42 -> 34 (exactly the 8 rows the
+two bugs affected); verified rose 79.4% -> 79.9%; corrected 204 -> 190; quality_flags.csv
+unchanged at 4. Remaining 34 unresolved rows are all the pre-existing date_text extraction defect
+described in point 3 above -- confirmed not a date_undate/header problem, a separate, already-
+documented issue outside this task's scope.
