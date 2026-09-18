@@ -6274,3 +6274,39 @@ end_month, not a real error). `quality_checks.py`: 5 flags (duplicate_event_key 
 baseline; zero_dark_cells_on_multiweek_page 1; receipts_parse_failed 1).
 `validate_performance_dates.py`: unresolved unchanged at 6 (both header fixes didn't touch any
 existing date_undate values, as noted above), verified 80.8%.
+
+## 2026-09-18 — resolved the repertoire_1890-91_pair016/pair022 question: pair022 was mislabeled as January all along, true content is March
+
+Re-read `ForUpload_1890-91_Repertoire_007.jpg` (the render supposedly shared by both pages)
+row by row for all 5 theater columns, days 10-18. Every single one of `pair016`'s own entries
+for that range matched the scan exactly (title-for-title: "10 Четвергъ."=Цѣпи/Сцена г.Горбунова,
+"11 Пятница."=Раздѣлъ/Гость/Первое декабря..., "14 Понед."=Симфонія/Дочь русскаго актера,
+"15 Вторникъ."=Цѣпи/Азъ и Фертъ, "16 Среда."=Озимь/Старое старится.../Сцена г.Горбунова). My
+first read of this row (in the prior session segment) had mismatched day8's Alexandrinsky
+title with day10's row -- a misreading on my own part, not a data problem. Conclusion:
+pair016 is genuine, correct January 3-18 content, not a duplicate of anything.
+
+That meant pair022's own German/French-titled content (Das zweite Gesicht, Die Haubenlerche,
+Thermidor, etc., all under a suspiciously perfect no-gaps day10-23 sequence with an odd
+"10 Март." label) had to belong somewhere else. Read `ForUpload_1890-91_Repertoire_009.jpg`
+(14 Февраля - 3 Марта 1891, showing "Thermidor, dr." recurring for Михайловскій) and
+`ForUpload_1890-91_Repertoire_010.jpg` (10 Марта - 29 Марта 1891) -- exact match: render010's
+"10 Воскр." row shows Александринскій="Das zweite Gesicht, Lustsp." and
+Михайловскій="Thermidor, dr.", and "11 Понед." shows Александринскій="Die Haubenlerche,
+Schausp." -- identical to pair022's own "10 Март."/"11 Понед." entries. Weekday cross-check
+(Julian): true 1891-03-10 = Воскресенье, true 1891-03-23 = Суббота -- both match the file's
+own labels exactly.
+
+**Conclusion: `repertoire_1890-91_pair022` was never January at all.** Its true content is
+10-23 Марта 1891 (a German/French touring-troupe schedule for the Alexandrinsky/Mikhailovsky/
+Bolshoy/Maly columns). Corrected the header (`10 марта. 1891 г. 23 марта.`). Reran the full
+pipeline: `date_undate` for every one of this page's ~52 sessions is now correctly March
+instead of January. `validate_performance_dates.py`: verified rose 80.8% -> 81.9%, corrected
+dropped 170 -> 118 (these 52 rows no longer need a weekday-based shift-correction, they're
+directly right). unresolved unchanged at 6. Full 88-page window cross-check: still only the
+2 same already-understood harmless cases (1892-93_pair024's end_day underestimate).
+
+Noted but not chased further: render010 continues with distinct content through 29 Марта
+(Das letzte Wort, Der Unterstaatssecretair, etc.) beyond pair022's day23 end -- this
+March24-29 stretch doesn't appear to be captured under any existing page_id, consistent with
+the missing-page pattern already documented elsewhere in this corpus.

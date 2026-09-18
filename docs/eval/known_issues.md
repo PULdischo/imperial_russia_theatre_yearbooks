@@ -13774,3 +13774,43 @@ every page, including a second and third pass triggered by problems
 found downstream. Two small, explicitly out-of-scope items remain
 deferred (the `1890-91_pair016`/`pair022` overlap question above; see
 also the `1895-96_pair002` residual tangle noted earlier).
+
+### Addendum to #72 (2026-09-18): resolved the pair016/pair022
+question -- pair022 was never January, it's genuinely March
+
+RG asked to go find the answer, not just leave it deferred.
+Row-by-row content check of `ForUpload_1890-91_Repertoire_007.jpg`
+(days 10-18, all 5 theater columns) found every one of `pair016`'s own
+entries matches the scan exactly, title for title -- the earlier
+"overlap" concern traced back to a misreading on this session's own
+part (day8's Alexandrinsky title had been mismatched against day10's
+row in an earlier crop). **`pair016` is genuine, correct January 3-18
+content.**
+
+That meant `pair022`'s own content -- German/French play titles (Das
+zweite Gesicht, Die Haubenlerche, Thermidor), a suspiciously perfect
+gap-free day10-23 sequence, and an odd "10 Март." label that had
+never actually been questioned -- had to belong somewhere else.
+`ForUpload_1890-91_Repertoire_010.jpg` (10-29 Марта 1891) settles it:
+its "10 Воскр." row shows Александринскій="Das zweite Gesicht" and
+Михайловскій="Thermidor", "11 Понед." shows "Die Haubenlerche" --
+identical to `pair022`'s own "10 Март."/"11 Понед." entries, and
+Julian-weekday-consistent (true 1891-03-10 = Воскресенье, true
+1891-03-23 = Суббота, matching the file's own labels exactly).
+
+**`repertoire_1890-91_pair022` was mislabeled as January this entire
+session -- its true content is 10-23 Марта 1891**, a German/French
+touring-troupe schedule. Corrected the header. Reran the pipeline:
+`verified` rose 80.8% -> **81.9%**, `corrected` dropped 170 -> 118
+(52 rows -- this page's near-full session count -- no longer need a
+weekday-based shift-correction, they're directly right now).
+`unresolved` unchanged at 6; full 88-page window cross-check still
+shows only the 2 same, already-understood harmless cases. Noted but
+not chased further: render010 continues past `pair022`'s day-23 end
+with distinct content through day 29, apparently uncaptured under any
+existing page_id -- consistent with the missing-page pattern already
+documented elsewhere in this corpus.
+
+Both deferred items from the prior addendum are now resolved (this
+one, plus the `1895-96_pair002` missing date found in the addendum
+just before it). Nothing remains open on issue #72.
