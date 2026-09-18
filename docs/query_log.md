@@ -5826,3 +5826,29 @@ a separate minor annotation-accuracy issue, not touched, doesn't affect the null
 
 **THIS COMPLETES THE ENTIRE ANNOTATED BUCKET (56 rows) AND THE FULL NULL-RECEIPTS AUDIT
 (both buckets, all 8 seasons).**
+
+## 2026-09-18 — deferred-issue resolution 1/7: repertoire_1892-93_pair014 missing theaters
+
+```sql
+select distinct theater from raw.event_entry where page_id='repertoire_1892-93_pair014'
+```
+
+Before fix: only Маріинскій (1 theater). Full page rebuild: transcribed all 5 theaters for all
+22 true calendar dates (27 Декабря 1892 - 16 Января 1893) directly from
+ForUpload_1892-93_Repertoire_006.jpg (printed pp.14-15). Found the existing Маріинскій column
+itself carried a whole-file date-label shift (every file label held the PREVIOUS true date's
+content, e.g. file's old "11 Понед." was really true "10 Воскресенье.") plus a duplicated
+benefit performance (Бенефисъ г. Л. Иванова appeared under both "4 Понед." and "6 января.",
+really belonging only to true "3 Воскресенье."). Confirmed "6 Среда." is a genuine
+crease-illegible row (page physically folds there, swallowing all 5 theaters' receipts --
+titles legible, figures not). 25 -> 121 sessions.
+
+```sql
+select date_text, theater from raw.event_entry
+    where page_id='repertoire_1892-93_pair014' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows after fix -- all "6 Среда." (the confirmed crease-illegible row), all other
+20 dates x 5 theaters fully populated. Verified against rebuilt
+outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb. 5 quality flags unchanged (still
+exactly 5, no new duplicates introduced by the rebuild).

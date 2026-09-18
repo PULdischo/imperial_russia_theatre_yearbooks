@@ -13227,3 +13227,38 @@ tangle sub-issues (each with its own memory file, listed in the
 no-annotation-bucket-complete addendum above) and one genuinely
 unresolved ambiguous row (`1892-93_pair024`'s "3 Четверг." Малый) and
 one unlocated row (`1893-94_pair010`'s "23 Вторникъ." Маріинскій).
+
+### Addendum to #70 (2026-09-18): deferred issue 1/7 resolved --
+`repertoire_1892-93_pair014` missing theaters, full rebuild
+
+Began working through the 7 deferred multi-theater/date-tangle
+sub-issues. This page had only Маріинскій captured; Александринскій,
+Михайловскій, Большой, and Малый were entirely missing across all 22
+dates (27 Декабря 1892 - 16 Января 1893). Worse, the existing
+Маріинскій column itself carried a whole-file date-label shift --
+every file label actually held the PREVIOUS true calendar date's
+content (e.g. the file's old "11 Понед." entry was really true "10
+Воскресенье."'s performance) -- plus a duplicated benefit performance
+("Бенефисъ г. Л. Иванова" had been captured twice, under both "4
+Понед." and "6 января.", when it really belongs only to true "3
+Воскресенье.").
+
+Fully rebuilt: transcribed all 5 theaters for all 22 true calendar
+dates directly from `ForUpload_1892-93_Repertoire_006.jpg` (printed
+pp.14-15), replacing the entire session list rather than attempting a
+partial merge (too much of the existing data was mislabeled to trust
+selectively). Confirmed "6 Среда." is a genuine crease-illegible row --
+the scan shows the page physically folding exactly there, swallowing
+every theater's receipts figure while titles stay legible -- left null
+for all 5 theaters, matching the established crease pattern.
+
+25 -> 121 sessions. 4721 -> 4817 events (session count intentionally
+diverges from earlier per-page deltas reported this issue since this
+rebuild spans the whole page, not an incremental patch), 5 flags
+unchanged. Verified directly -- only the 4 confirmed-illegible "6
+Среда." cells remain null; every other date x theater combination is
+populated.
+
+**6 of 7 deferred sub-issues remain**: `1893-94_pair010`,
+`1894-95_pair006`, `1895-96_pair006`, `1896-97_pair004`,
+`1896-97_pair008`, `1897-98_pair018`.
