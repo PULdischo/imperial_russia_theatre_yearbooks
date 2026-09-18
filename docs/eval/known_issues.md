@@ -12890,3 +12890,30 @@ flags unchanged. Verified directly -- zero remaining null receipts for
 this page.
 
 **Twenty-two pages down, ~18 to go.**
+
+### Addendum to #70 (2026-09-18): page 23 -- `repertoire_1896-97_pair008`,
+4-7 Ноября date cascade fixed, Большой-missing + duplicate rows deferred
+
+The 4 flagged nulls (all at "6 Среда.", one per non-Большой theater)
+traced to a date-label cascade starting at "4 Ноября.": every date from
+there was one true-date-slot too early, dropping true "4 Ноября."
+entirely and truncating "7 Четверг."'s shifted-in content (works +
+receipts). Rebuilt all 4 dates x 4 theaters (Александринскій,
+Маріинскій, Михайловскій, Малый), scan-verified against
+`ForUpload_1896-97_Repertoire_003.jpg` (printed pp.8-9, render p003 --
+again not a literal reading of the file's own "p008" `_source`
+citation).
+
+**Deferred**: Большой is missing from this entire file (not just this
+range -- all ~13 dates, 25 Октября-7 Ноября). Also found a spurious
+duplicate empty "25 Пятница." entry sitting alongside a correctly
+populated "25 Октября." for the same calendar date, plus several other
+doubled date labels (`26 Суббота.`, `1 Ноября.`, `2 Суббота.`) not yet
+checked against the scan. Full detail in
+`repertoire-1896-97-pair008-open-issues.md`.
+
+60 -> 64 sessions. 4683 -> 4687 events, 6099 -> 6108 performances, 5
+flags unchanged. Verified directly -- zero remaining null receipts for
+this page.
+
+**Twenty-three pages down, ~17 to go.**

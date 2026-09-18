@@ -5474,3 +5474,26 @@ select date_text, theater, receipts_text from raw.event_entry
 ```
 
 Result: 0 rows after fix -- confirmed against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+
+## 2026-09-18 — null-receipts audit page 23: repertoire_1896-97_pair008
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1896-97_pair008' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows before fix -- all at ('6 Среда.', <theater>) for Александринскій, Малый,
+Маріинскій, Михайловскій. Investigation revealed a date-label cascade starting at "4 Ноября.":
+every date from there was labeled one true-date-slot too early, dropping true "4 Ноября."
+entirely and truncating the shifted-in "7 Четверг." content. Rebuilt all 4 dates x 4 theaters
+(4/5/6/7 Ноября), scan-verified against ForUpload_1896-97_Repertoire_003.jpg (printed pp.8-9).
+Found but NOT fixed: Большой is absent from this entire file (all dates, not just this range);
+also a spurious duplicate "25 Пятница." entry (empty) alongside the correct "25 Октября." for
+the same calendar date. Both deferred -- see repertoire-1896-97-pair008-open-issues.md.
+
+```sql
+select date_text, theater, receipts_text from raw.event_entry
+    where page_id='repertoire_1896-97_pair008' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows after fix -- confirmed against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
