@@ -6021,3 +6021,21 @@ theaters. Verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_thea
 4 quality flags unchanged.
 
 **THIS RESOLVES THE LAST OF THE 7 DEFERRED MULTI-THEATER TANGLES FROM ISSUE #70.**
+
+## 2026-09-18 — final unresolved rows 1/2: repertoire_1893-94_pair010
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1893-94_pair010' and event_status='performed' and receipts_text is null
+```
+
+Both remaining open items resolved by re-checking ForUpload_1893-94_Repertoire_004.jpg (printed
+pp.10-11) with a cleaner, more precisely-targeted crop than the earlier pass. "23 Вторникъ."
+Маріинскій (ann="Въ пользу школъ Спб. Женскаго Патриотического Общества...") confirmed
+genuinely blank -- the scan shows this exact annotation text with no receipts figure printed
+beneath it at all (unlike the adjacent Александринскій cell on the same row, which does show a
+figure). "22 Пон." Михайловскій confirmed thread-obscured -- the same physical binding thread
+that crosses this entire row (already accepted as the explanation for the adjacent "22 Пон."
+Малый cell) also crosses directly through Михайловскій's receipts position; title
+("Венецейскій истуканъ, карт. / Бѣдовая дѣвушка, вод.") is legible, figure is not. Both left
+null, confirmed legitimate. No data changes -- 91 sessions unchanged.

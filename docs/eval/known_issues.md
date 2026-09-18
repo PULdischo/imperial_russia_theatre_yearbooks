@@ -13228,6 +13228,19 @@ no-annotation-bucket-complete addendum above) and one genuinely
 unresolved ambiguous row (`1892-93_pair024`'s "3 Четверг." Малый) and
 one unlocated row (`1893-94_pair010`'s "23 Вторникъ." Маріинскій).
 
+### Addendum to #70 (2026-09-18): final unresolved row 1/2 --
+`repertoire_1893-94_pair010`, both open items resolved
+
+Re-checked `ForUpload_1893-94_Repertoire_004.jpg` (printed pp.10-11)
+with a more precisely-targeted crop. "23 Вторникъ." Маріинскій
+confirmed genuinely blank -- the scan shows the full charity
+annotation with no receipts figure printed beneath it at all. "22
+Пон." Михайловскій confirmed thread-obscured -- the same physical
+binding thread that crosses this entire row (already the accepted
+explanation for the adjacent Малый cell) also crosses directly through
+Михайловскій's receipts position; title legible, figure not. Both
+left null, confirmed legitimate -- no data changes.
+
 ### Addendum to #70 (2026-09-18): deferred issue 1/7 resolved --
 `repertoire_1892-93_pair014` missing theaters, full rebuild
 
