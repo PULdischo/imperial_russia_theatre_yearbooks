@@ -12711,3 +12711,17 @@ too (confirmed genuinely active for most of April) -- not recovered
 this pass.
 
 **Twelve pages down, ~28 to go.**
+
+### Addendum to #70 (2026-09-18): page 13 (`repertoire_1894-95_p008`)
+-- confirmed legitimate, no fix needed
+
+Checked `7 Воскресенье.` (Александринскій + Малый, both null) against
+`ForUpload_1894-95_Repertoire_008.jpg` (printed p.18) -- the final
+scanned page of the 1894-95 season (only 9 renders exist). The row's
+receipts are cut off at the physical bottom edge of the image itself,
+not a crease -- no further page exists to capture them. Confirmed
+genuinely unrecoverable, matching the file's own already-correct null
+values. All 5 theaters present, 40/40 sessions complete, no other
+defects found. No changes made.
+
+**Thirteen pages down, ~27 to go.**
