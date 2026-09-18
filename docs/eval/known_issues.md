@@ -13182,3 +13182,20 @@ of 12 rows confirmed legitimate.
 
 No fixes applied this batch -- all 13 checked rows across both seasons
 confirmed legitimate.
+
+### Addendum to #70 (2026-09-18): annotated-bucket pages 14-19 --
+1896-97 season complete (pair010/012/014/020/022/024)
+
+All remaining 1896-97 annotated nulls confirmed legitimate:
+`pair010` (2 rows -- a "Гимнъ." free-show and a "Спектакль въ память
+Императрицы Екатерины II." memorial performance), `pair012` (1 row,
+the free morning-show row on a date that also has a separate, genuinely
+paid evening "Гимнъ."-prefixed session), `pair014` (1 row, a Дом
+Милосердія charity benefit), `pair020` (1 row, free-show, OCR-garbled
+annotation), `pair022` (1 row, another Концертъ въ пользу инвалидовъ
+charity concert). `pair024`'s row was already confirmed earlier this
+session as part of the main no-annotation audit of that same page. All
+scan-verified against `ForUpload_1896-97_Repertoire_004/005/006/009/010.jpg`.
+**This closes out the entire 1896-97 season's annotated bucket.**
+
+No fixes applied -- all checked rows confirmed legitimate.

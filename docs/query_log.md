@@ -5781,3 +5781,25 @@ split across two consecutive free-show blocks -- Petersburg theaters on 30th, Mo
 on 31st) confirmed legitimate against ForUpload_1895-96_Repertoire_007.jpg (printed pp.16-17).
 This closes out the entire 1895-96 season's annotated bucket -- all 12 rows confirmed
 legitimate, no fixes needed.
+
+## 2026-09-18 — annotated-bucket audit pages 14-19: repertoire_1896-97_pair010/012/014/020/022/024
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id=? and event_status='performed' and receipts_text is null and annotation is not null
+```
+
+pair010 (2 rows: "14 Четверг." Александринскій "Гимнъ." free-show; "24 Воск." Александринскій
+"Спектакль въ память Императрицы Екатерины II.") both confirmed legitimate against
+ForUpload_1896-97_Repertoire_004.jpg (printed pp.10-11). pair012 (1 row, "6 Пятница."
+Маріинскій, truncated "Безплата") confirmed legitimate -- the free morning-show row (a second,
+genuinely-paid evening "Гимнъ."-prefixed session exists on the same date, which is why receipts
+appear elsewhere that day); ForUpload_1896-97_Repertoire_005.jpg (printed pp.12-13). pair014
+(1 row, "19 Декабря." Александринскій, "Спектакль въ пользу Спб. Дома Милосердія.") confirmed
+legitimate against ForUpload_1896-97_Repertoire_006.jpg (printed pp.14-15). pair020 (1 row,
+"19 Среда." Маріинскій, truncated/OCR-garbled "Везплам") confirmed legitimate (free-show) against
+ForUpload_1896-97_Repertoire_009.jpg (printed pp.20-21). pair022 (1 row, "19 Среда." Большой,
+"Концертъ въ пользу инвалидовъ") confirmed legitimate against ForUpload_1896-97_Repertoire_010.jpg
+(printed pp.22-23). pair024's row ("16 Среда." Маріинскій, "Парадный спектакль.") was already
+confirmed legitimate earlier this session as part of the main no-annotation audit of this same
+page. This closes out the entire 1896-97 season's annotated bucket.
