@@ -12746,3 +12746,19 @@ several real dates merged onto one label) -- same defect class as
 flags unchanged.
 
 **Fourteen pages down, ~26 to go.**
+
+### Addendum to #70 (2026-09-18): page 15 (`repertoire_1894-95_pair008`)
+-- all 3 flagged rows fixed, plus a duplicate label and a 5-date
+cluster recovered
+
+All 3 flagged rows (`19 Четвергъ.`) were genuine extraction drops,
+clearly legible in the scan -- recovered. Also found and fixed a
+duplicate date spelling (`"16 января."` merged into `"16
+Понедѣльн."`) and a 5-date cluster (`21`-`25 Января`) missing
+Александринскій/Маріинскій entirely. Checked against
+`ForUpload_1894-95_Repertoire_003.jpg` (printed pp.8-9).
+
+88 -> 98 sessions. 4643 -> 4653 events, 6038 -> 6053 performances, 5
+flags unchanged. Verified directly.
+
+**Fifteen pages down, ~25 to go.**
