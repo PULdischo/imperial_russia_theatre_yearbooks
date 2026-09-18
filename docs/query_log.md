@@ -5583,3 +5583,27 @@ select date_text, theater, receipts_text, annotation from raw.event_entry
 
 Result: 2 rows after fix -- the confirmed-legitimate Représentation de M-me Réjane rows
 (verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).
+
+## 2026-09-18 — null-receipts audit page 28: repertoire_1897-98_pair010
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair010' and event_status='performed' and receipts_text is null
+```
+
+Result: 5 rows before fix -- ('14 Пятница.', 'Александринскій'/'Малый', None), ('22 Суббота.',
+'Александринскій', None, 'Спектакль труппы Берлинскаго Лессингъ-театра.'), ('27 Четверг.',
+'Александринскій', None), ('29 Суббота.', 'Александринскій', None, same annotation). 4 of the
+5 confirmed genuinely blank in the source: the 2 "14 Пятница." rows are free "Гимнъ" morning
+shows for students (no receipts printed), and both German-troupe guest performances (22/29
+Суббота.) likewise have no receipts figure printed at all. Only "27 Четверг." was a genuine
+drop (title correct); recovered 1583 р. 50 к. Scan-verified against
+ForUpload_1897-98_Repertoire_004.jpg (printed pp.10-11).
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair010' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows after fix -- all confirmed legitimate (verified against rebuilt
+outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).

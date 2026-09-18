@@ -12992,3 +12992,21 @@ performances unchanged, 5 flags unchanged. Verified directly -- 2
 remaining nulls (both confirmed legitimate).
 
 **Twenty-seven pages down, ~13 to go.**
+
+### Addendum to #70 (2026-09-18): page 28 -- `repertoire_1897-98_pair010`,
+1 dropped receipts fixed, 4 confirmed legitimate (free shows + German
+touring troupe)
+
+Of the 5 flagged nulls, 4 are confirmed genuinely blank in the source:
+the 2 "14 Пятница." rows (Александринскій + Малый) are free "Гимнъ"
+morning shows for students, and both "Спектакль труппы Берлинскаго
+Лессингъ-театра." guest performances (22/29 Суббота., Александринскій)
+likewise print no receipts figure at all. Only "27 Четверг." was a
+genuine drop with the title already correct; recovered. Scan-verified
+against `ForUpload_1897-98_Repertoire_004.jpg` (printed pp.10-11).
+
+62 sessions unchanged (receipts fill only). 4721 events / 6178
+performances unchanged, 5 flags unchanged. Verified directly -- 4
+remaining nulls, all confirmed legitimate.
+
+**Twenty-eight pages down, ~12 to go.**
