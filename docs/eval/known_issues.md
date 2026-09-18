@@ -12800,3 +12800,25 @@ different receipts) and `21`-`28 Октября` missing Александрин�
 flags unchanged. Verified directly.
 
 **Seventeen pages down, ~23 to go.**
+
+### Addendum to #70 (2026-09-18): pages 18-20 -- `pair014`/`pair016`
+confirmed already-clean, `pair022`'s missing Малый column recovered
+
+Pages 18-19 (`repertoire_1895-96_pair014`/`pair016`) needed no new
+work -- both were fully rebuilt yesterday for
+`zero_dark_cells_on_multiweek_page`, and their remaining null-receipts
+rows are the same crease-damaged/free-show rows already documented
+then. Confirmed, no changes.
+
+Page 20 (`repertoire_1895-96_pair022`, last page in this season's
+no-annotation bucket): Малый missing entirely across all 13 dates (30
+Марта - 11 Апрѣля 1896), recovered from
+`ForUpload_1895-96_Repertoire_010.jpg` (printed pp.22-23). The 4
+flagged nulls (`11 Четвергъ.`) were genuine drops with titles already
+correct -- just recovered receipts.
+
+Added 15 sessions + fixed 4 receipts (52 -> 67). 4661 -> 4676 events,
+6056 -> 6081 performances, 5 flags unchanged. Verified directly.
+
+**1895-96 season's no-annotation bucket fully cleared** (except
+`pair006`'s deferred items). **Twenty pages down, ~20 to go.**
