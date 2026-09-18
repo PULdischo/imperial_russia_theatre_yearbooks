@@ -12670,3 +12670,24 @@ unchanged (4561 events, 5903 performances), 5 flags unchanged.
 Verified directly.
 
 **Ten pages down, ~30 to go.**
+
+### Addendum to #70 (2026-09-18): page 11 (`repertoire_1893-94_pair018`)
+-- an unevenly-split missing-theater defect plus a spurious duplicate
+date and two misattributed sessions
+
+Unusual shape: Михайловскій missing for `4`-`14 Февраля`, Большой and
+Малый missing for all 19 dates, Александринскій/Маріинскій missing for
+`18`-`22 Февраля` -- the same underlying defect but distributed
+unevenly rather than as one clean dropped column. Checked against
+`ForUpload_1893-94_Repertoire_008.jpg` (printed pp.18-19).
+
+Also found beyond the 4 flagged rows: the entire spurious date `"14
+Февраля."` (3 duplicate/fragment sessions, removed); `16 Среда.`'s
+Маріинскій/Михайловскій misattributed (a commemorative concert for
+Tchaikovsky's memory actually belongs to `17 Четвергъ.`, moved there
+along with that date's other missing theaters).
+
+40 -> 106 sessions. 4561 -> 4627 events, 5903 -> 6003 performances, 5
+flags unchanged. Verified directly.
+
+**Eleven pages down, ~29 to go.**
