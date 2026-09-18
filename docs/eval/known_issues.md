@@ -12937,3 +12937,26 @@ flags unchanged. Verified directly -- zero remaining null receipts for
 this page.
 
 **Twenty-four pages down, ~16 to go.**
+
+### Addendum to #70 (2026-09-18): page 25 -- `repertoire_1896-97_pair024`,
+last page of 1896-97 season -- Малый recovered, 1 receipts fixed, 1
+confirmed legitimate
+
+Of the 2 nulls on this page, "16 Среда." Маріинскій ("Парадный
+спектакль." annotation) is confirmed genuinely blank in the source --
+a ceremonial performance with no receipts figure printed at all,
+matching the established free/ceremonial-show convention. "20
+Воскресенье." Михайловскій was a genuine drop (title already correct)
+-- recovered 558 р. 85 к. Separately, Малый was entirely missing from
+this page's extraction across all dates; recovered for 16-24 Апрѣля (8
+sessions), confirming 3/4 Апрѣля. and 14/15 Понед./Вторн. are
+genuinely dark for Малый too. Scan-verified against
+`ForUpload_1896-97_Repertoire_011.jpg` (printed pp.24-25).
+
+52 -> 60 sessions. 4713 -> 4721 events, 6160 -> 6178 performances, 5
+flags unchanged. Verified directly -- 1 remaining null (the confirmed
+legitimate ceremonial-show row).
+
+**1896-97 season's no-annotation bucket fully cleared** (except
+`pair004`'s and `pair008`'s deferred items). **Twenty-five pages down,
+~15 to go.**

@@ -5518,3 +5518,27 @@ select date_text, theater, receipts_text from raw.event_entry
 ```
 
 Result: 0 rows after fix -- confirmed against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+
+## 2026-09-18 — null-receipts audit page 25: repertoire_1896-97_pair024 (last 1896-97 page)
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1896-97_pair024' and event_status='performed' and receipts_text is null
+```
+
+Result: 2 rows before fix -- ('16 Среда.', 'Маріинскій', None, 'Парадный спектакль.') and
+('20 Воскресенье.', 'Михайловскій', None, None). The 16 Среда. row confirmed genuinely blank
+in the source (a ceremonial "Парадный спектакль" performance with no receipts figure printed
+at all) -- legitimate, left as null. The 20 Воскресенье. row was a genuine drop (title already
+correct); recovered 558 р. 85 к. Separately, Малый was entirely missing from this page's
+extraction across all dates; recovered for 16-24 Апрѣля (8 sessions), confirmed genuinely dark
+for 3/4 Апрѣля. and 14/15 Понед./Вторн. Scan-verified against
+ForUpload_1896-97_Repertoire_011.jpg (printed pp.24-25).
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1896-97_pair024' and event_status='performed' and receipts_text is null
+```
+
+Result: 1 row after fix -- the confirmed-legitimate 16 Среда. Маріинскій "Парадный спектакль."
+row (verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).
