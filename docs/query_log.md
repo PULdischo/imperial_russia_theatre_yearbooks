@@ -5672,3 +5672,18 @@ select date_text, theater, receipts_text, annotation from raw.event_entry
 
 Result: 4 rows after fix -- all confirmed legitimate content-wise (mislabeled dates deferred,
 verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).
+
+## 2026-09-18 — null-receipts audit page 32: repertoire_1897-98_pair024 (last page in main worklist)
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair024' and event_status='performed' and receipts_text is null
+```
+
+Result: 3 rows -- ('15 Среда.', 'Большой'/'Маріинскій'/'Михайловскій'), all None, same row
+(Александринскій/Малый for this date already have their receipts). Confirmed genuinely
+unrecoverable: the row sits exactly at the physical bottom edge of the photographed page
+(ForUpload_1897-98_Repertoire_011.jpg, printed pp.24-25) -- titles are legible for all 5
+theaters but the receipts line itself was never captured in either scan (the next photo
+resumes at "16 Четверг.", not a re-photograph of this row). Same precedent as
+repertoire_1894-95_p008. No fix applied -- left as null, confirmed genuine.

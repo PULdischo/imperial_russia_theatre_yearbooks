@@ -13068,3 +13068,30 @@ remaining nulls, content confirmed legitimate but dates need
 relabeling (deferred).
 
 **Thirty-one pages down, ~9 to go.**
+
+### Addendum to #70 (2026-09-18): page 32 -- `repertoire_1897-98_pair024`,
+last page in the main no-annotation worklist -- 3 nulls confirmed
+genuinely unrecoverable
+
+The 3 flagged nulls ("15 Среда.", Большой/Маріинскій/Михайловскій) sit
+on a row at the exact physical bottom edge of the photographed page
+(`ForUpload_1897-98_Repertoire_011.jpg`, printed pp.24-25) -- titles
+legible for all 5 theaters, but the receipts line itself was never
+captured in either scan (the next photo resumes at "16 Четверг.", not
+a re-photograph of this row). Same precedent as `repertoire_1894-95_p008`
+earlier in this audit. No fix possible; left as null, confirmed
+genuine.
+
+30 sessions unchanged -- no fix applied.
+
+**THE MAIN NO-ANNOTATION WORKLIST IS NOW COMPLETE: 32 of 32 pages
+resolved or confirmed.** Six pages carry deferred sub-issues, each
+tracked in its own memory file: `repertoire-1892-93-pair014-missing-theaters.md`,
+`repertoire-1893-94-pair010-open-issues.md`,
+`repertoire-1894-95-pair006-duplicate-dates.md`,
+`repertoire-1895-96-pair006-scattered-duplicates.md`,
+`repertoire-1896-97-pair004-multi-theater-tangle.md`,
+`repertoire-1896-97-pair008-open-issues.md`, and
+`repertoire-1897-98-pair018-date-tangle.md`. The separate 56-row
+annotated bucket (see `1890-91-1891-92-no-receipts-printed.md`) has not
+yet been started.
