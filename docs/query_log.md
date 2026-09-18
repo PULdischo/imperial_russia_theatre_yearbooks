@@ -5939,3 +5939,30 @@ select date_text, theater, annotation from raw.event_entry
 
 Result: 0 rows -- verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
 4 quality flags unchanged.
+
+## 2026-09-18 — deferred-issue resolution 5/7: repertoire_1896-97_pair004
+
+```sql
+select date_text, count(distinct theater) from raw.event_entry
+    where page_id='repertoire_1896-97_pair004' group by date_text order by 1
+```
+
+Full rebuild of Александринскій, Маріинскій, Михайловскій, Большой for the whole page
+(12 Сентября - 3 Октября 1896). Precisely pinned down each theater's shift onset via direct
+receipts-figure matching against the scan: Александринскій and Михайловскій both shift starting
+at "16 Понед." (with true 16 Понед content duplicated onto a spurious extra "15 Воскрес." entry
+for each), continuing through "27 Пятница." (already fixed earlier this session); Маріинскій has
+its own separate shift starting at "21 Суббота." (a genuinely dark day for it, whose true content
+got skipped, and everything from "22 Воскрес." onward held the next day's content); Большой was
+never shifted throughout. All four were also missing 28 Сентября-3 Октября entirely -- recovered.
+Малый (already fixed earlier this session) was left untouched. Scan-verified against
+ForUpload_1896-97_Repertoire_001.jpg (printed pp.4-5). 75 -> 101 sessions.
+
+```sql
+select date_text, theater from raw.event_entry
+    where page_id='repertoire_1896-97_pair004' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows -- verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+Every date now has all 5 theaters (4 on the two genuinely-dark-for-most-theaters Saturdays,
+21/28 Суббота, correctly). 4 quality flags unchanged.

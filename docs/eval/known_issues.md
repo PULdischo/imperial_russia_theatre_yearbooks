@@ -13337,5 +13337,28 @@ fixed an OCR typo; recovered Александринскій + Малый for 22-
 flags unchanged. Verified directly -- zero remaining null receipts,
 every date consistently covered.
 
-**3 of 7 deferred sub-issues remain**: `1896-97_pair004`,
-`1896-97_pair008`, `1897-98_pair018`.
+### Addendum to #70 (2026-09-18): deferred issue 5/7 resolved --
+`repertoire_1896-97_pair004`, full rebuild with precise per-theater
+shift onsets
+
+Full rebuild of Александринскій, Маріинскій, Михайловскій, Большой for
+the whole page (12 Сентября-3 Октября 1896). Precisely pinned down
+each theater's shift onset via direct receipts-figure matching against
+the scan: Александринскій and Михайловскій both shift starting at "16
+Понед." (with true 16 Понед content duplicated onto a spurious extra
+"15 Воскрес." entry for each), continuing through "27 Пятница."
+(already fixed earlier this session); Маріинскій has its own separate
+shift starting at "21 Суббота." (a genuinely dark day for it, whose
+true content got skipped, cascading every subsequent date one slot
+early); Большой was never shifted throughout. All four theaters were
+also missing 28 Сентября-3 Октября entirely -- recovered. Малый
+(already fixed earlier this session) was left untouched. Scan-verified
+against `ForUpload_1896-97_Repertoire_001.jpg` (printed pp.4-5).
+
+75 -> 101 sessions. 4848 -> 4874 events, 6387 -> 6418 performances, 4
+flags unchanged. Verified directly -- zero remaining null receipts,
+every date has all 5 theaters (except the two genuinely-dark
+Saturdays, 21/28 Суббота, correctly showing 4).
+
+**2 of 7 deferred sub-issues remain**: `1896-97_pair008`,
+`1897-98_pair018`.
