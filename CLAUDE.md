@@ -108,6 +108,39 @@ Then the normal sequence continues as above (`eval_against_gold.py`,
 `build_duckdb.py`) — the two extra passes and the cross-check are an
 addition to the standard flow, not a fork of it.
 
+**This literal recipe is for the single-page-format seasons (1898-99
+onward, 81% of Repertoire pages) only.** For the two-page-spread
+seasons (1890-91–1897-98, `outputs/repertoire_spreadfix_v6`), don't
+run it as shown above — both extra passes were tried against this
+format specifically and neither works the way this section implies:
+
+- **`--column-level` against the whole, unsplit spread image measured
+  14–63% receipts agreement with the baseline** (`docs/eval/
+  known_issues.md`, 2026-09-08 addendum) — explicitly rejected, not a
+  viable cross-check for this format as-is.
+- **`--row-level --cropped-images` hits a real, still-open bug**: the
+  header-band reattachment it depends on doesn't work reliably on
+  cropped/split images. The project's own conclusion, unchanged since
+  2026-09-08: *"`--cropped-images` should not be used for production
+  row-level runs."* Running it will rediscover this, not produce a
+  usable second opinion.
+
+**What was actually done instead**, and is already complete: physically
+split each spread page into top/bottom halves (`pipeline/
+split_spread_pages.py`), run `--column-level` on each half (this makes
+each half resemble the single-page format the method already works
+well on), deduplicate the deliberate overlap between halves
+(`dedup_split_overlap.py`), then hand-verify against the scans — this
+last step is the bulk of `docs/eval/known_issues.md` issue #70 and most
+of this project's session history. `outputs/repertoire_spreadfix_v6/
+raw_columnwise/*.raw.json` is the result, and it — not a fresh
+full-page call — is what `parse_and_validate.py` actually reads for
+these seasons. Don't propose or run a "row-level/column-wise
+cross-check" for spread-season pages as if it were a gap; the
+equivalent quality-assurance work already happened, just structured
+around this format's real constraints instead of the generic recipe
+above.
+
 ```
 python pipeline/eval_against_gold.py --parsed-dir outputs/<run>/parsed \
     --gold-dir docs/eval/gold --out outputs/<run>/eval_report.txt --run-id <label>
