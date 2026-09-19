@@ -6350,3 +6350,24 @@ wrong-month mislabeling? Ran three computational checks against all 88 pages:
 inline-month-conflict) come back clean corpus-wide, and the one class of page that superficially
 resembled it (all-foreign-language content) turned out on direct verification to be genuine
 historical Lenten programming, not mislabeling.
+
+## 2026-09-19 — consolidated every date-coverage gap in the two-page-spread corpus into one inventory
+
+RG asked to pull the many individually-noted missing-page mentions from this session (and the
+2026-08-24 audit) into one consolidated list. Computed gaps between consecutive scan-verified
+page date-ranges per season using confident_headers_v3.pkl (the same data issue #72 built and
+fully verified this session):
+
+```python
+# per season: sort pages by (start_date, end_date), flag any gap of >1 day between
+# one page's end and the next page's start
+```
+
+Result: 12 gaps found across the 8 seasons (after filtering out three 1-day boundary artifacts
+from header end_day imprecision, not real gaps). Classified each against what was actually
+directly confirmed by reading the render this session or in the 2026-08-24 audit: 9 confirmed
+"extraction gaps" (real printed content exists on a render, no page_id captures it -- recoverable
+in principle), 1 confirmed "scan gap" (1890-91 Oct12-31, book's own page numbers skip 7->10, never
+photographed, not recoverable), 1 plausible Holy Week/Easter closure (1893-94 Apr9-17, no render
+covers either side of the gap at all), and 1 genuinely unconfirmed (1890-91 Mar4-9, not yet checked
+against any render). Full table written to docs/eval/known_issues.md issue #73.

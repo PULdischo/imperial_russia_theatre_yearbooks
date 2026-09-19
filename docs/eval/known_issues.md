@@ -13849,3 +13849,74 @@ needed for the first two:
 **No second `pair022` found.** Both checks capable of catching it come
 back clean, and the one superficially similar pattern (all-foreign
 content) checks out as genuine on direct verification.
+
+## Issue #73: consolidated inventory of date-coverage gaps, two-page-
+spread seasons (2026-09-19)
+
+**Why this exists**: throughout issue #72's scan-verification work
+(and #70 before it), individual pages turned out to have stretches of
+real, printed content on their own render image that no `page_id` in
+the corpus captures at all -- noted each time in `docs/query_log.md`
+or in the moment, but never pulled into one place. RG asked for that
+consolidated list. Built by computing every gap between consecutive
+scan-verified page date-ranges within each season
+(`confident_headers_v3.pkl`, the same data issue #72 built and
+verified), then classifying each by how solidly it's been checked.
+
+**Two genuinely different kinds of gap, worth keeping separate:**
+- **Extraction gap**: the render image exists and has real, legible
+  printed content for the missing dates -- it was simply never pulled
+  into any `page_id`'s `parse_raw`. Recoverable in principle, same as
+  any other missing-theater-column fix in this project, just at
+  whole-page scale.
+- **Scan gap**: the physical page was never photographed at all (the
+  book's own printed page numbers skip, confirmed by the 2026-08-24
+  missing-pages audit for `1890-91`). Not recoverable from what this
+  project has.
+
+**Confirmed extraction gaps** (a render was personally read this
+session or in the 2026-08-24 audit, with real content, and no
+`page_id` captures it):
+
+| season | gap | days | how confirmed |
+|---|---|---|---|
+| 1891-92 | 31 Августа - 10 Сентября 1891 | ~10 | `ForUpload_1891-92_Repertoire_000.jpg` -- read directly during the `pair004` header investigation (issue #72), real sessions transcribed (e.g. Малый's true Sept 1 = "Царь Іоаннъ IV") |
+| 1893-94 | 17 Августа - 3 Октября 1893 (season opener, before the first captured page) | ~48 | `_Repertoire_000.jpg`/`_001.jpg`, both read in full during the header sweep, real content throughout, no page_id |
+| 1893-94 | 23 Декабря 1893 - 14 Января 1894 | ~23 | `_Repertoire_006.jpg`, read in full ("26 Декабря 1893 - 14 Января 1894") |
+| 1893-94 | 23 Февраля - 19 Марта 1894 | ~25 | `_Repertoire_009.jpg`, read in full |
+| 1894-95 | 13 Февраля - 14 Марта 1895 | ~30 | render read in full during the header sweep ("19 Февраля - 14 Марта 1895") |
+| 1895-96 | 7 - 29 Декабря 1895 | ~23 | `_Repertoire_005.jpg`, read in full ("7 Декабря - 29 Декабря 1895") |
+| 1890-91 | 28 Декабря 1890 - 2 Января 1891 | ~6 | `_Repertoire_006.jpg`, read in full during the `pair014`/`pair016` boundary check |
+| 1890-91 | 19 - 24 Января 1891 | ~6 | `_Repertoire_007.jpg` (confirmed spans 3-24 Января in full; `pair016`'s own content stops at day 18) |
+| 1890-91 | 24 Марта - 21 Апрѣля 1891 | ~29 | `_Repertoire_010.jpg` (continues with real content past `pair022`'s day-23 end, noted in issue #72) + `_Repertoire_011.jpg` (starts 30 Марта, read at the very start of this session's header work) |
+
+**Confirmed scan gap** (from the 2026-08-24 audit, re-confirmed
+consistent with this session's own header data):
+
+| season | gap | days | note |
+|---|---|---|---|
+| 1890-91 | 12 - 31 Октября 1890 | ~20 | book's own printed page numbers jump 7->10 between `_Repertoire_002.jpg`/`_003.jpg` -- never photographed, not recoverable |
+
+**Plausible closures, not individually re-verified this pass** (short
+windows matching the already-established recurring Christmas/Holy
+Week closure pattern from the 2026-08-24 audit -- presumptively real
+history, not a data gap, per this project's "never assume date
+completeness, but a gap matching a known closure pattern doesn't need
+re-proving every time" convention):
+
+| season | gap | days | likely explanation |
+|---|---|---|---|
+| 1893-94 | 9 - 17 Апрѣля 1894 | ~9 | Holy Week/Easter (O.S. Easter 1894 fell ~10 Апрѣля) -- no render covers this window at all on either side |
+
+**Unconfirmed** (found by the date-arithmetic computation, not yet
+checked against any render):
+
+| season | gap | days |
+|---|---|---|
+| 1890-91 | 4 - 9 Марта 1891 | ~6 |
+
+**Not chased further**: whether the extraction gaps above are worth
+recovering (a real but bounded amount of additional paid extraction +
+manual verification work, same discipline as the rest of this
+project) is a separate decision from cataloguing them. This issue is
+the inventory; recovering any of them is its own future task.
