@@ -6310,3 +6310,43 @@ Noted but not chased further: render010 continues with distinct content through 
 (Das letzte Wort, Der Unterstaatssecretair, etc.) beyond pair022's day23 end -- this
 March24-29 stretch doesn't appear to be captured under any existing page_id, consistent with
 the missing-page pattern already documented elsewhere in this corpus.
+
+## 2026-09-19 — pursued whether any other page shares pair022's wrong-month bug
+
+RG asked to pursue the residual risk flagged after fixing `1890-91_pair022` (mislabeled
+January, real content was March): could another "confident" page have the same undetected
+wrong-month mislabeling? Ran three computational checks against all 88 pages:
+
+1. **Date-range overlap** (using confident_headers_v3.pkl's per-page windows): 3 overlapping
+   pairs found (`1895-96_pair008`/`p012`, `1895-96_p012`/`pair010`, `1897-98_pair020`/
+   `pair022`). Checked each against actual raw session day-numbers: all 3 trace to an
+   imprecise `end_day` upper-bound estimate in the header (e.g. `p012`'s real content only
+   reaches day 17, header guessed 26) -- not genuine duplicate content. None are a repeat of
+   pair022's problem.
+2. **Inline month-name conflict**: scanned every session's own `date_text` across all 88 pages
+   for a month name that disagrees with its page's assigned header month (exactly pair022's
+   original signature: "10 Март." inside a page then-labeled January). 0 matches.
+3. **Zero-Cyrillic-content pages**: 5 pages have works entirely in Latin script across every
+   session -- `1890-91_pair022` (already fixed), `1891-92_pair018`, `1892-93_pair018`,
+   `1895-96_pair020`, `1896-97_pair022`. Investigated the latter 4:
+   - `1896-97_pair022` (Александринскій=German, Михайловскій=French, Большой=Italian opera,
+     simultaneously, mid-Lent 1897): scan-verified against `ForUpload_1896-97_Repertoire_
+     010.jpg` -- exact title+receipts match on every row checked (Gräfin Fritzi/Abu Seid
+     1943р.11к; Rigoletto 2000р.10к; Gli Ugonotti 3152р.30к, etc.). Genuine: multiple foreign
+     touring companies performing simultaneously during Great Lent, when Russian-language
+     dramatic performance was restricted, is real documented historical practice, not a data
+     error.
+   - `1895-96_pair020` (Александринскій=German, Михайловскій=French, Feb28-Mar29 1896, also
+     Lenten): scan-verified against `ForUpload_1895-96_Repertoire_009.jpg` -- exact match
+     (Cardillac/Untreu 2479р.10к; Feu Toupinel/Camille 661р.5к), and the scan shows normal
+     Russian repertoire resuming right at the end of the window (Lent's end), consistent with
+     the pattern. Genuine.
+   - `1891-92_pair018`, `1892-93_pair018`: both single-theater (Михайловскій only, its
+     regular resident French troupe -- an extremely common, already-repeatedly-confirmed
+     pattern throughout this whole corpus), both already date-range-verified this session.
+     Lower priority, not individually re-verified further.
+
+**Conclusion: no second pair022 found.** The two checks that would have caught it (overlap,
+inline-month-conflict) come back clean corpus-wide, and the one class of page that superficially
+resembled it (all-foreign-language content) turned out on direct verification to be genuine
+historical Lenten programming, not mislabeling.

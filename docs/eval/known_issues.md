@@ -13814,3 +13814,38 @@ documented elsewhere in this corpus.
 Both deferred items from the prior addendum are now resolved (this
 one, plus the `1895-96_pair002` missing date found in the addendum
 just before it). Nothing remains open on issue #72.
+
+### Addendum to #72 (2026-09-19): pursued whether any other page
+shares `pair022`'s wrong-month bug -- none found
+
+RG's own question after the `pair022` fix: is it plausible another
+"confident" page has the same undetected wrong-month mislabeling?
+Three computational checks across all 88 pages, no scan-reading
+needed for the first two:
+
+1. **Date-range overlap** between pages in the same season -- 3 hits,
+   all traced to an imprecise header `end_day` upper-bound estimate
+   (e.g. `1895-96_p012`'s real content stops at day 17, its header
+   guessed 26), not genuine duplication.
+2. **Inline month-name conflict** -- every session's own `date_text`
+   checked for a month name disagreeing with its page's assigned
+   header month (`pair022`'s original signature: "10 Март." inside a
+   page labeled January). 0 matches corpus-wide.
+3. **Zero-Cyrillic-content pages** (every work title on the page is
+   Latin-script) -- 5 found: `1890-91_pair022` (already fixed),
+   `1891-92_pair018`, `1892-93_pair018`, `1895-96_pair020`,
+   `1896-97_pair022`. The latter two were scan-verified directly
+   (`ForUpload_1896-97_Repertoire_010.jpg`, `ForUpload_1895-96_
+   Repertoire_009.jpg`) -- exact title+receipts matches confirming
+   genuine content: multiple foreign touring companies (German
+   drama, French comedy, Italian opera) performing simultaneously
+   during Great Lent, when Russian-language dramatic performance was
+   restricted, is real documented historical practice, not a data
+   error. The other two are single-theater (Михайловскій only, its
+   long-running resident French troupe -- an extremely common,
+   already-repeatedly-confirmed pattern throughout this corpus) and
+   already date-range-verified; not individually re-checked further.
+
+**No second `pair022` found.** Both checks capable of catching it come
+back clean, and the one superficially similar pattern (all-foreign
+content) checks out as genuine on direct verification.
