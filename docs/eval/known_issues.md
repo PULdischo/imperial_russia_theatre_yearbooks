@@ -13920,3 +13920,41 @@ recovering (a real but bounded amount of additional paid extraction +
 manual verification work, same discipline as the rest of this
 project) is a separate decision from cataloguing them. This issue is
 the inventory; recovering any of them is its own future task.
+
+### Addendum to #73 (2026-09-19): recovered the 1893-94 season-opener
+gap, the largest of the 9
+
+RG asked to actually recover this one. Manually transcribed both
+renders in full -- no paid API call, same discipline as the rest of
+this project's manual-correction work -- into two new pages:
+`repertoire_1893-94_pair002` (17-27 Августа + 30 Августа-10 Сентября
+1893, 100 sessions, from `ForUpload_1893-94_Repertoire_000.jpg`) and
+`repertoire_1893-94_pair004` (12 Сентября-3 Октября 1893, 100
+sessions, from `_001.jpg`). Every theater column transcribed as
+printed, including blank cells (recorded as explicit `is_dark: true`,
+not silently omitted, matching this project's convention throughout).
+
+**Two rows left honestly incomplete**, both confirmed by direct
+close-up re-check: `pair002`'s "27 Пятница." Малый receipts and
+`pair004`'s entire "23 Четвергъ." row (all 5 theaters) sit exactly on
+the scan's physical binding fold -- titles legible, receipts
+figures not.
+
+**One new source-printing inconsistency found and left verbatim**
+(same class as `1894-95_pair008`'s "25 Суббота." from issue #72):
+`pair004`'s "13 Среда." -- re-zoomed to confirm the printed digit is
+genuinely "13" (not a misread "15"), but 13 Сентября 1893 was
+actually a Monday. Not a transcription error; the source page itself
+is inconsistent here. Preserved as printed, correctly flagged by
+`validate_performance_dates.py` as unresolved rather than silently
+"corrected."
+
+Added both pages to `manifest.csv` and `page_header_dates.csv`, reran
+the full pipeline: `event_entry` 4937 -> 5137 (+200, exactly the
+transcribed sessions), 0 new validation errors, `quality_checks.py`
+unchanged at 5 flags, full 90-page date-window cross-check clean
+(same 2 pre-existing harmless cases as before). `validate_performance_
+dates.py` verified rose 81.9% -> **82.5%**.
+
+8 of the original 9 confirmed extraction gaps remain uncataloged for
+recovery -- next up per RG's request.

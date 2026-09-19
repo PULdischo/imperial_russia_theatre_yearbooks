@@ -6371,3 +6371,26 @@ in principle), 1 confirmed "scan gap" (1890-91 Oct12-31, book's own page numbers
 photographed, not recoverable), 1 plausible Holy Week/Easter closure (1893-94 Apr9-17, no render
 covers either side of the gap at all), and 1 genuinely unconfirmed (1890-91 Mar4-9, not yet checked
 against any render). Full table written to docs/eval/known_issues.md issue #73.
+
+## 2026-09-19 — recovered 1893-94's season-opener extraction gap (17 Августа - 3 Октября 1893)
+
+RG asked to recover the largest confirmed extraction gap from issue #73's inventory. Manually
+transcribed both renders in full (no paid API call, same methodology as the rest of this
+session): `ForUpload_1893-94_Repertoire_000.jpg` (17-27 Августа + 30 Августа-10 Сентября,
+100 sessions -> new page `repertoire_1893-94_pair002`) and `_001.jpg` (12 Сентября-3 Октября,
+100 sessions -> new page `repertoire_1893-94_pair004`). All 5 theaters transcribed per date
+where printed; blank-dash cells recorded as explicit `is_dark: true` (not omitted), matching
+project convention. Two rows left honestly incomplete: `pair002`'s "27 Пятница." Малый receipts
+and `pair004`'s entire "23 Четвергъ." row (all 5 theaters) are swallowed by the physical binding
+fold in the scan -- titles legible, receipts not, confirmed by direct close-up re-check.
+
+Added both to `manifest.csv` and `page_header_dates.csv` (`pair002`: 17 августа-10 сентября 1893;
+`pair004`: 12 сентября-3 октября 1893). Reran the full pipeline: `event_entry` 4937 -> 5137
+(+200, exactly the transcribed sessions), 0 new validation errors (the 1 pre-existing flag is
+unrelated), `quality_checks.py` unchanged at 5 flags, full 90-page date-window cross-check clean
+(same 2 pre-existing harmless cases only). `validate_performance_dates.py`: verified rose
+81.9% -> 82.5%. One new genuinely-flagged row found and confirmed as a real source-printing
+inconsistency (not a transcription error): `pair004`'s "13 Среда." (all 5 theaters) -- re-zoomed
+the scan to confirm the digit is definitely "13" not "15", but 13 Сентября 1893 was actually a
+Monday, not Wednesday -- same class of verbatim-preserved printing quirk as `1894-95_pair008`'s
+"25 Суббота.", left as printed.
