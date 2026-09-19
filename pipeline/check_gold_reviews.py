@@ -104,6 +104,25 @@ def lint(path: Path) -> tuple[list[str], list[str], dict]:
     if text.count("[?") != len(re.findall(r"\[\?[^\]]*\]", text)):
         errors.append("an unclosed [? ... ] -- every [? needs a closing ]")
 
+    # Yes/no fields. An unrecognised value silently parses as FALSE, so
+    # "ыес" (yes typed on the Russian layout) would quietly drop a tailpiece.
+    YESNO = {"yes", "no", "true", "false", "y", "n", "1", "0", ""}
+    in_fields = False
+    for line in body_lines:
+        st = line.strip()
+        if st == "[FIELDS]":
+            in_fields = True; continue
+        if st == "[BLOCKS]":
+            break
+        if in_fields and ":" in st:
+            k, v = (x.strip() for x in st.split(":", 1))
+            if k in ("tailpiece_present", "no_text", "reading_order_uncertain") \
+                    and v.lower() not in YESNO:
+                errors.append(f"{k}: {v!r} is not yes/no — it would silently read "
+                              f"as FALSE (typed on the Russian layout?)")
+            if k == "printed_folio" and v and not any(c.isdigit() for c in v):
+                warns.append(f"printed_folio {v!r} contains no digits")
+
     try:
         page = parse_gold_file(path)
     except GoldParseError as e:

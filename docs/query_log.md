@@ -4137,3 +4137,2306 @@ corrections (4,530->4,412, 27,637->29,157, 24,892->25,316).
 `1903-04_p032` confirmed showing three theaters with three correct,
 distinct sets of receipts in the merged database. All of this was the
 basis for proceeding with the swap-in described in known_issues.md.
+
+## 2026-09-11 — full_run propagation (5 rounds batched): verification queries at every stage
+
+Full detail and rationale in known_issues.md #69's final addendum.
+Propagates today's five rounds (annotation audit, утро/вечер pairing,
+stray-text sweep, event-date audit, shift-bug follow-up + truncated-
+date restoration) from `outputs/gate3_columnwise/raw_columnwise/` into
+`outputs/full_run/`, plus the new `_MANUAL_DATE_OVERRIDES` code change
+in `validate_performance_dates.py`. Same lighter-weight in-place
+methodology as the 2026-09-11 "propagate the 3 deferred-page fixes"
+addendum (CREATE OR REPLACE / DROP+CREATE on every downstream script's
+own tables), scaled up to all 332 Gate 3 pages via
+`parse_and_validate.py --extraction-source columnwise` + splicing the
+result into the existing merged `parsed/` CSVs by page_id, rather than
+the 3-page shortcut used last time.
+
+```sql
+-- pre/post row counts, scratch copy vs live pre-patch db
+select count(*) from raw.source_pages;                              -- 1349 = 1349
+select count(*) from raw.person_entry;                              -- 21168 = 21168
+select count(*) from raw.event_entry where page_id not in (<332 gate3 ids>);  -- 12094 = 12094
+select count(*) from raw.event_entry where page_id in (<332 gate3 ids>);     -- 11829 -> 11842
+-- full row-content diff on the 12094 untouched-page rows (ORDER BY event_id)
+select event_id, page_id, season, city, date_text, month_text, year_text,
+       date_undate, time_of_day, theater, event_status, receipts_text,
+       receipts_rubles, receipts_kopecks, annotation
+  from raw.event_entry where page_id not in (<332 gate3 ids>) order by event_id;
+-- orphaned performance rows / duplicate event_ids (sanity net)
+select count(*) from raw.event_entry_performance p
+  left join raw.event_entry e on e.event_id = p.event_id where e.event_id is null;
+select event_id, count(*) from raw.event_entry group by event_id having count(*) > 1;
+-- person-continuity after build_entities.py
+select count(*) from entities.person_link;         -- 21168 = 21168
+select count(*) from entities.person_merge_log;     -- 1022 = 1022
+select count(*) from entities.person;               -- 4359 = 4359
+select entry_id, person_id from entities.person_link;  -- old vs new: set-equal
+-- research layer after build_research_model.py
+select count(*) from research.theater;   -- 6 = 6
+select count(*) from research.person;    -- 2894 = 2894
+select * from research.person_appearance order by 1,2,3;  -- old vs new: byte-identical (21154 rows)
+select count(*) from research.work;         -- 4410 -> 4451
+select count(*) from research.event;        -- 29141 -> 29219
+select count(*) from research.performance;  -- 25313 -> 25466
+-- _MANUAL_DATE_OVERRIDES landed correctly
+select event_id, date_confidence, corrected_date_undate, note
+  from analysis.event_entry_date_check where date_confidence = 'corrected_manual';  -- 9 rows, all correct
+-- spot check a specific corrected page
+select date_text, time_of_day, event_status from raw.event_entry
+  where page_id = 'repertoire_1902-03_p019' and theater like '%Больш%' order by event_id;
+```
+
+Result: every check above passed exactly as annotated. 0 unexplained
+diffs on untouched pages (better than the original merge's 114
+explained-but-nonzero diffs -- no concurrent unrelated change this
+time). Swapped `imperial_theaters.duckdb` + `research_dataset.sqlite` +
+`parsed/` into `outputs/full_run/` via move-aside-then-replace, `cmp`
+confirmed the live files byte-identical to the verified scratch copy,
+then deleted the pre-patch snapshot and scratch working directory.
+
+## 2026-09-11 — date_undate coverage gap: page-header extraction + verification
+
+Full detail in known_issues.md #69's final addendum. Closing the date_undate
+coverage gap (13-21% fill for column-wise seasons vs ~100% baseline) via a
+small targeted re-extraction of each page's own printed header date range
+(pipeline/extract_page_headers.py), not a full re-extraction. Key checks:
+
+```sql
+-- header dataset self-consistency (before trusting it)
+-- regex parse rate, season/year cross-check, and day-range vs raw JSON's
+-- own first/last day-number cross-check -- all done in Python against
+-- outputs/gate3_columnwise/page_header_dates.csv, not SQL (see script)
+
+-- fill-rate before/after (test parse, not yet in outputs/full_run/)
+SELECT count(*), count(date_undate) FROM raw.event_entry;  -- gate3-only test db
+
+-- weekday-consistency before/after the validate_performance_dates.py fixes
+-- (_DOW_PREFIXES short forms, whitespace-tolerant matching, parsed-weekday
+-- grouping instead of raw-string grouping) -- Python, reusing
+-- pipeline.validate_performance_dates._parse_dow/_true_weekday directly
+
+-- full propagation verification (same shape as the earlier 5-round merge):
+SELECT count(*) FROM raw.source_pages;                              -- 1349=1349
+SELECT count(*) FROM raw.event_entry WHERE page_id NOT IN (<gate3>); -- 12094=12094, 0 diffs
+SELECT event_status, count(*) FROM research.event GROUP BY 1;
+  -- performed/no_performance byte-identical (18427, 5509); only
+  -- not_captured changed (5283 -> 3934, fewer/more-accurate synthesized
+  -- gaps now that date ranges are reliable)
+SELECT entry_id, person_id FROM entities.person_link;  -- old vs new: set-equal
+SELECT * FROM research.person_appearance ORDER BY 1,2,3;  -- byte-identical
+SELECT event_id, date_confidence, corrected_date_undate
+  FROM analysis.event_entry_date_check WHERE date_confidence='corrected_manual';
+  -- all 9 rows present with the scan-verified dates
+```
+
+Result: date_undate fill for the 332 Gate 3 pages 13-21% -> 100%. Weekday-
+verified rate on those same pages 85.8% -> 99.3% after also fixing two
+`validate_performance_dates.py` limitations the coverage fix exposed for
+the first time (short weekday abbreviations not in `_DOW_PREFIXES`, and
+raw-string instead of parsed-weekday grouping for cross-theater block
+agreement). 33 residual rows (0.3%) are genuine: 3 already-known
+verbatim typos (`corrected_manual`) and a handful of newly-visible,
+genuinely rare OCR letter-transposition artifacts, correctly left
+flagged rather than guessed at. Full corpus (all 1,349 pages):
+non-gate3 rows exactly byte-identical (0 diffs), entities/person
+continuity exactly preserved, research.performance/work/person/theater
+unchanged, only `research.event`'s synthesized `not_captured` gap count
+changed (explained above, not a real-data change). Swapped into
+outputs/full_run/ via move-aside-then-replace, `cmp`-confirmed
+byte-identical to the verified scratch copy, cleaned up.
+
+## 2026-09-11 — 1901-02_p018 whole-column fix: verification + propagation
+
+Full detail in known_issues.md #69's final addendum.
+
+```sql
+-- duplicate check on the touched page before/after
+-- (Python, Counter over (theater, date_text, session))
+
+-- full propagation verification, same shape as every earlier round today
+SELECT count(*) FROM raw.event_entry WHERE page_id NOT IN (<gate3 332 ids>);  -- 12094=12094, 0 diffs
+SELECT entry_id, person_id FROM entities.person_link;  -- old vs new: set-equal
+SELECT * FROM research.person_appearance ORDER BY 1,2,3;  -- byte-identical
+SELECT theater, date_text, time_of_day, annotation FROM raw.event_entry
+  WHERE page_id='repertoire_1901-02_p018' AND theater LIKE '%Михайл%';
+```
+
+Result: all 11 affected sessions (16 Воскрес. morning+evening plus the
+10 other dates on the same Михайловскій театръ column) now carry the
+real title in a performance row and only a genuine note (or nothing)
+in `annotation`. Non-gate3 rows exactly byte-identical, entities/person
+continuity preserved, person_appearance byte-identical. Swapped into
+outputs/full_run/, cmp-confirmed, cleaned up.
+
+## 2026-09-15 — Рюминъ extraction error on gold page theaterschoolstaff_1899-00_p000 (production ID: …1899-90_p000; known_issues #71): first 6 raw rows of that page
+
+```sql
+SELECT entry_id, list_number, family_name, first_name, patronymic, heading_path, rank_or_title, tenure_note_text
+FROM raw.person_entry WHERE page_id = 'theaterschoolstaff_1899-90_p000' ORDER BY entry_id LIMIT 6
+```
+
+Result: e001 (Управляющій Училищемъ) has family_name='Ивановичъ', first_name='Иванъ', patronymic='Ивановичъ', rank 'д. ст. сов., въ званіи гофмейстера', tenure 'съ 27 мая 1887 г.). † 2 сентября 1899 г.'. The raw JSON (outputs/full_run/raw/theaterschoolstaff_1899-90_p000.raw.json, entries[0]) has the same values, so this is model output, not a parse artifact. The scan prints the surname letter-spaced: «Р ю м и н ъ, Иванъ Ивановичъ».
+
+## 2026-09-15 — every raw appearance matching Рюмин in any name field
+
+```sql
+SELECT r.entry_id, sp.season, r.family_name, r.first_name, r.patronymic, r.heading_path, r.tenure_note_text
+FROM raw.person_entry r JOIN raw.source_pages sp USING (page_id)
+WHERE r.family_name LIKE '%Рюмин%' OR r.first_name LIKE '%Рюмин%' OR r.patronymic LIKE '%Рюмин%'
+ORDER BY sp.season, r.entry_id
+```
+
+Result: 30 rows. 22 are Рюминъ, Иванъ Ивановичъ, TheaterSchoolStaff, 1890-91 through 1899-90: 10 as Управляющій (1890-91 to 1898-99) and 12 as Почетный членъ (including theaterschoolstaff_1899-90_p003__e005 with '† 2 сентября 1899 г.'). The other 8 are an unrelated Бестужевъ-Рюминъ, Алексѣй Ивановичъ (Administrators, 1902-03 to 1907-08). The 1899-00 Управляющій appearance is missing from this list, which is the extraction error.
+
+## 2026-09-15 — research-layer effect: first 4 person_appearance rows on that page
+
+```sql
+SELECT pa.appearance_id, pa.season, p.display_name, p.person_id
+FROM research.person_appearance pa JOIN research.person p USING (person_id)
+WHERE pa.appearance_id LIKE 'theaterschoolstaff_1899-90_p000__e00%' ORDER BY 1 LIMIT 4
+```
+
+Result: e001 resolves to person 2f34649f… 'Ивановичъ, Иванъ Ивановичъ', not to Рюминъ.
+
+## 2026-09-15 — research.person records with family name Ивановичъ or Рюминъ
+
+```sql
+SELECT p.person_id, p.display_name, p.first_attested_season, p.last_attested_season, count(*) AS n_appearances
+FROM research.person p JOIN research.person_appearance pa USING (person_id)
+WHERE p.canonical_family_name IN ('Ивановичъ','Рюминъ') GROUP BY ALL ORDER BY n_appearances DESC
+```
+
+Result: 2 rows. Рюминъ, Иванъ Ивановичъ (24f7fc76…, 1890-91 to 1899-90, 22 appearances). Phantom person Ивановичъ, Иванъ Ивановичъ (2f34649f…, 1899-90 only, 1 appearance).
+
+## 2026-09-15 — entity-review traces for the phantom and for Рюминъ
+
+```sql
+SELECT * FROM entities.person_candidate WHERE display_1 LIKE '%Ивановичъ, Иванъ%' OR display_2 LIKE '%Ивановичъ, Иванъ%' OR display_1 LIKE 'Рюминъ%' OR display_2 LIKE 'Рюминъ%';
+SELECT count(*) FROM entities.person_merge_log WHERE display_1 LIKE 'Рюминъ%' OR display_2 LIKE 'Рюминъ%';
+```
+
+Result: 1 candidate, 'Ивановичъ, Иванъ Ивановичъ' vs 'Ивановъ, Иванъ Ивановичъ' (family_name_variant, score 0.78), status rejected (conflicting_dates). No candidate ever paired the phantom with Рюминъ. Merge log: 1 row involving Рюминъ.
+
+## 2026-09-15 — corpus-wide check: family_name identical to patronymic (patronymic-as-surname shape)
+
+```sql
+SELECT r.entry_id, r.family_name, r.first_name, r.patronymic, r.heading_path
+FROM raw.person_entry r
+WHERE r.family_name IS NOT NULL AND r.patronymic IS NOT NULL
+  AND trim(r.family_name) = trim(r.patronymic)
+ORDER BY r.entry_id
+```
+
+Result: 2 rows. theaterschoolstaff_1899-90_p000__e001 (the Рюминъ case), plus balletartists_1898-99_MSK_p001__e020 'Джурі, Адель, patronymic=Джурі', which is a different shape (surname copied into patronymic). This detector only catches a dropped surname when the patronymic was also captured.
+
+## 2026-09-15 — publish-readiness check: research-layer row counts, duckdb vs. sqlite, full_run vs. full_run_seasonfix
+
+Run read-only against both `outputs/full_run/` and `outputs/full_run_seasonfix/`
+(`imperial_theaters.duckdb` and `research_dataset.sqlite` in each).
+
+```sql
+-- per table t in (theater, work, person, event, performance, person_appearance),
+-- in DuckDB (research.t) and in the SQLite export (t):
+SELECT count(*) FROM research.{t};
+SELECT count(*) FILTER (WHERE season LIKE '1899-90%' OR season LIKE '1905-07%') AS typo_rows
+  FROM research.person_appearance;
+SELECT min(season), max(season), count(DISTINCT season) FROM research.event;
+SELECT DISTINCT schema_name FROM duckdb_tables() ORDER BY 1;
+```
+
+Result: identical counts in both run dirs and in both file formats — theater 6,
+work 4,456, person 2,894, event 27,870, performance 25,480, person_appearance
+21,154; event seasons 1890-91..1907-08 (18). Only difference: season-typo rows
+in person_appearance = 281 in full_run, 0 in full_run_seasonfix (known_issues #71).
+Both DuckDB files contain raw/analysis/entities/research schemas.
+
+## 2026-09-16 — state of Repertoire data: is the spread-season column-bleed fix (known_issues #70) reflected in production yet?
+
+Read-only against `outputs/full_run/imperial_theaters.duckdb` (last built 2026-09-11, per file mtime -- predates all of this week's split/column-bleed fix work).
+
+```sql
+SELECT regexp_extract(page_id, 'repertoire_([0-9]{4}-[0-9]{2})', 1) AS season,
+       count(*) AS n_pages
+FROM raw.source_pages
+WHERE page_id LIKE 'repertoire_%'
+GROUP BY 1 ORDER BY 1;
+
+SELECT count(*) FROM raw.source_pages WHERE page_id LIKE 'repertoire_%';
+SELECT count(*) FROM raw.event_entry e JOIN raw.source_pages p ON e.page_id = p.page_id
+  WHERE p.page_id LIKE 'repertoire_%';
+
+SELECT page_id FROM raw.source_pages WHERE page_id LIKE 'repertoire_1895-96%' ORDER BY page_id;
+```
+
+Result: 1890-91..1897-98 (the 8 spread seasons) show only 9-13 `source_pages`
+rows each -- matching the ORIGINAL, UNSPLIT whole-spread-image page count
+(sequential render order, e.g. `repertoire_1895-96_p000`..`p012`), not the
+176 real-printed-page-numbered split halves this week's work produced. This
+confirms production still holds the OLD whole-spread-image extraction for
+these 8 seasons (the one originally measured at 14-63% receipts agreement,
+the reason the split-page approach was built at all) -- none of this week's
+split + column-bleed-fix work (outputs/repertoire_spreadfix_v6/) has been
+parsed, validated, or built into any duckdb yet, let alone promoted into
+outputs/full_run. 1898-99..1907-08 (the single-page-format seasons) show
+38-50 pages each, consistent with the already-resolved Gate 3 332/332 state.
+Total repertoire source_pages = 519; total event_entry rows joined to a
+repertoire page = 23,936 (a mix of good single-page-format data and the
+known-poor spread-season baseline).
+
+## 2026-09-17 — readiness check before build_duckdb.py: are the 6 single_leaf pages (non-spread landscape leaves within the 8 spread seasons) covered by outputs/repertoire_spreadfix_v6?
+
+```sql
+select page_id, count(*) from raw.event_entry
+where page_id in (
+  'repertoire_1890-91_p000','repertoire_1890-91_p012','repertoire_1894-95_p008',
+  'repertoire_1895-96_p012','repertoire_1896-97_p012','repertoire_1897-98_p012'
+)
+group by page_id;
+-- run against outputs/full_run/imperial_theaters.duckdb
+```
+
+Result: full_run has 45/14/40/50/50/40 = 239 events total across these 6
+pages (old extraction method). outputs/repertoire_spreadfix_v6/manifest.csv
+has ZERO entries for these page_ids (confirmed: no non-"pairNNN" rows at
+all) -- these 6 pages were never carried into this build's parse_raw/ or
+manifest.csv. 5 of the 6 already have raw_columnwise/*.raw.json extraction
+done (real content, e.g. 1894-95_p008 shows 73 sessions vs full_run's 40
+events for the same page -- the new extraction looks meaningfully more
+complete, consistent with this whole arc's findings elsewhere). The 6th
+(1890-91_p000) has no raw_columnwise extraction at all yet. Not a "ready to
+build" blocker for data that already exists in full_run, but a real scope
+gap if repertoire_spreadfix_v6 is meant to stand alone as a complete
+8-season replacement -- flagged to RG before proceeding to build_duckdb.py.
+
+## 2026-09-17 — post-build sanity check on outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb
+
+```sql
+select count(*) from raw.event_entry;
+select count(*) from raw.event_entry_performance;
+select count(distinct page_id) from raw.event_entry;
+select season, count(*) from raw.event_entry group by season order by season;
+```
+
+Result: 4161 event_entry rows, 5342 event_entry_performance rows, 89
+distinct pages -- all matching parse_and_validate.py's output exactly.
+All 8 seasons (1890-91 through 1897-98) represented with plausible counts
+(361-701 events/season). `analysis.event_entry` built with 0 not_captured
+completeness gaps. First scratch database built from repertoire_
+spreadfix_v6 -- not promoted over outputs/full_run, that stays a separate
+decision.
+
+## 2026-09-17 — spot-check found session-label duplicates; verify fix + rebuild
+
+```sql
+select count(*) from raw.event_entry;
+select count(*) from raw.event_entry_performance;
+select date_text, theater from raw.event_entry
+  where page_id='repertoire_1893-94_pair006' and date_text='14 Четвергъ.' and theater='Большой';
+```
+
+Result: post-fix rebuild -- 4153 events (was 4161, -8 matching the 8 removed
+duplicate sessions), 5330 performances (was 5342, -12). Spot-checked
+`1893-94_pair006`'s day-14 Большой row: now 2 sessions (morning+evening),
+not 3 -- confirms the duplicate ('Снѣгурочка' appearing under both
+`evening` and a redundant `unspecified` session) is gone from the rebuilt
+database.
+
+## 2026-09-17 — blank-genre audit + a whole-page duplicate found and removed
+
+```sql
+select count(*) from raw.event_entry_performance where genre is null;
+-- plus targeted title-pattern queries to find embedded genre suffixes
+-- with genre=NULL, and a page_id/date_text/theater cross-reference to
+-- confirm repertoire_1895-96_pair012 duplicated repertoire_1895-96_p012
+```
+
+Result: 226 null-genre rows audited; ~206 confirmed legitimate (excerpt/
+act markers, anthems, named-reciter "Сцена г. X" pieces, benefit-notice
+titles -- genre genuinely doesn't apply). 24 were real drops, fixed (20
+where the title already carried its own genre suffix per this corpus's
+convention but the separate field was empty, 4 more found via a broader
+suffix search). While investigating one of those (traced to
+`repertoire_1895-96_p012`, a single_leaf page fixed earlier this session)
+found `repertoire_1895-96_pair012` was a COMPLETE duplicate of it -- same
+10 (date, theater) pairs, same content, just older/lower-quality
+(garbled "free admission" notice fragments where the single_leaf fix has
+clean text). Checked the 4 other "pairNNN" ids that also cite a
+single_leaf render page as a source and found 0 date/theater overlap for
+all 4 (genuinely different real content, a `_source`-label coincidence,
+not a duplicate) -- confirmed via spot-checking actual titles/dates, not
+assumed. Removed `repertoire_1895-96_pair012` from manifest.csv/
+parse_raw/. Final: 4,143 events (-10) / 5,317 performances, 88 distinct
+pages (was 89), 0 validation errors, 152 quality flags (unchanged).
+
+## 2026-09-17 — titles field audit: 57 truncation/merge fixes, verified build
+
+```sql
+-- python-side scan: distinct performance_title values starting with a
+-- lowercase letter (a real title is always capitalized), then for each
+-- searched all distinct titles ending in the same tail for a fuller match
+```
+
+Result: 42 lowercase-starting titles found, cross-referenced against the
+rest of the corpus for a clean, complete match. ~53 fixed via clear or
+well-supported matches (many recurring truncations of common titles:
+Плоды просвѣщенія, Конекъ-горбунокъ, Русланъ и Людмила, Тщетная
+предосторожность, etc.). Investigating one garbled cluster
+(`repertoire_1894-95_pair008`'s Большой column) traced to the same stale
+extraction abandoned earlier this session for the single_leaf `1894-95_
+p008` page -- confirmed via matching receipts figures/annotations
+byte-for-byte with the discarded raw dump. Fixed the recoverable titles
+on that column individually (Мелузина, Демонъ [medium confidence, 53
+clean occurrences vs Манонъ's 8], Русланъ и Людмила, etc.); the
+column's ANNOTATION field is also garbled there (separate finding,
+flagged for later, out of scope for a titles-only pass). Final: 4,143
+events (unchanged) / 5,316 performances (-1, the Евге+Онѣгинъ merge), 0
+validation errors, 152 quality flags (unchanged). 11 titles left
+genuinely unresolved (documented, not guessed) -- no corpus match and no
+scan available.
+
+## 2026-09-17 — tracked down real scans for the 8 remaining unresolved titles
+
+Result: all 8 resolved. `repertoire_1891-92_pair012` (4 rows) traced to
+printed pages 12-13 (`pdf/RepertoireTables/ForUpload_1891-92_Repertoire_005.jpg`).
+`repertoire_1894-95_pair008` (4 rows) traced to printed pages 8-9
+(`ForUpload_1894-95_Repertoire_003.jpg`). Two of the 8 ('карт.', 'фарсъ'
+standalone) turned out to be duplicate genre-marker artifacts, not lost
+titles at all -- removed. Two more ('хъ, ком.', 'къ дѣлу, сц.') were each
+actually two merged works with a title from one and a genre from the
+other -- split into 4 correctly-paired works. The other 4 were ordinary
+truncations, recovered in full ('Соль супружества' x2, 'Фаустъ, оп.',
+and 'Бенефисъ г. Садовскаго.'/'Лѣсъ, ком.'/'Спириты, вод.' disentangled
+from one merged fragment). 0 lowercase-starting titles remain corpus-wide.
+
+## 2026-09-17 — annotation field audit, 35 fixes total
+
+Result: 386 non-blank annotations checked. 19 lowercase-starting ones
+found (same truncation signal used for titles) -- resolved into 24 row
+fixes (most were a truncated SECOND work title that belonged in `works`,
+not `annotation`; one was a legitimate special-notice phrase recovered
+in full; a few needed splitting a genuinely merged title+genre pair).
+Separately, the already-known garbled `repertoire_1894-95_pair008`
+Большой-column cluster (11 total spurious annotations across two
+render-page sources, p008 and p009) was resolved by locating both source
+scans (printed pp.8-9 and 9-10) -- confirmed EVERY one of the 11 has NO
+real counterpart in the source at all (the Большой column is genuinely
+blank there; the garbled text is bleed from the neighboring Малый
+column's own real content) -- cleared rather than reconstructed. Final:
+4143 events (unchanged), 5342 performances (+25 net, mostly recovered
+works), 0 validation errors, quality_flags.csv unchanged.
+
+## 2026-09-17 — receipts field audit: kopecks-marker parsing bug + a fully corrupted theater column found
+
+```sql
+select receipts_text, receipts_rubles, receipts_kopecks from raw.event_entry
+where receipts_kopecks is not null and receipts_kopecks != ''
+and try_cast(receipts_kopecks as integer) is null;
+```
+
+Result: found the kopecks-side twin of the rubles-marker bug fixed earlier
+this session -- `_parse_receipts`'s `.replace("к.", "")` required the
+literal period, silently leaving "70 к" (no period) unstripped in
+receipts_kopecks for 7 rows. Fixed with the same `\b`-bounded regex
+approach used for the rubles marker. Checking the 8 "truncated leading
+digit" receipts_parse_failed cases (all on repertoire_1894-95_pair008,
+Михайловскій) against the scan already open from earlier fixes revealed
+this wasn't truncation at all -- the entire Михайловскій column for 10
+consecutive dates (6-15 Января) had been corrupted: every row duplicated
+a NEIGHBORING theater's title (Большой's "Мелузина", "Донъ Жуанъ", etc.)
+with receipts truncated to match. Rebuilt all 10 sessions directly from
+the scan (both source pages, ForUpload_1894-95_Repertoire_003.jpg).
+Spot-checked dates 16-25 on the same column against the scan too --
+confirmed genuinely clean, corruption was isolated to exactly 6-15
+Января. One receipts figure (15 Воскрес.) left partially unresolved --
+its leading rubles digits are genuinely illegible in the scan, obscured
+by page curvature right at the binding fold; documented, not guessed.
+Final: 4143 events (unchanged), 5353 performances (+11 net), 0
+validation errors, receipts_parse_failed 50->43 (7 resolved, 1 already-
+documented illegibility remains). Rebuilt and re-verified
+imperial_theaters.duckdb.
+
+## 2026-09-17 — event_status field audit
+
+Result: only 2 distinct values ('performed'/'no_performance'), correctly
+derived from is_dark. Checked both directions for inconsistency: (a)
+'performed' events with zero works/annotation/receipts -- 0 found; (b)
+'performed' events with zero works but SOME annotation/receipts -- 23
+found, mostly legitimate (concert/benefit notices with no titled work),
+but 5 were real work titles misplaced in annotation (matching the
+embedded-genre-suffix signal from the earlier title audit) -- 3 fixed
+with high confidence via clean corpus duplicates (Майская ночь/оп.,
+Гибель Содома/др., Парадный спектакль./Спящая красавица split), 2 left
+unresolved (no corpus match, no receipts to cross-reference: 'Отечественный',
+'Для воспитанницъ и воспитанниковъ'); (c) 'no_performance' events with
+actual content -- exactly 56, matching the already-documented
+dark_row_with_content flag count precisely (the known Большой-column
+bleed pattern, not a new issue). Final: 4143 events (unchanged), 5356
+performances (+3), 0 validation errors, quality_flags.csv unchanged.
+
+## 2026-09-17 — resolved all 56 dark_row_with_content flags (Большой-column bleed)
+
+Result: RG asked to address the 56 no_performance-with-content flags
+confirmed as the known Большой-column bleed pattern. Scoped: 100%
+Большой theater, across 9 pages. Two rows turned out to be genuinely
+misclassified (is_dark=true but real, clean content -- 'Робертъ и
+Бертрамъ, бал.' and a 'Концертъ въ пользу инвалидовъ.' notice) -- fixed
+to is_dark=false. One row was wrongly cleared as bleed at first glance
+but the scan showed real content ('3 Воскр.', 'Севильскій цирюльникъ,
+оп.', 2134 р. 20 к.) -- recovered instead of cleared. The remaining 53
+were confirmed genuine bleed via direct scan checks across all 9 pages
+(Большой column entirely blank for the whole date range on every page
+checked, with the garbled fragments matching Малый's real neighboring
+content word-for-word) -- cleared. Final: 4143 events (unchanged), 5357
+performances (+1, the recovered Севильскій цирюльникъ), 0 validation
+errors, dark_row_with_content flag count 56 -> 0, total flags 145 -> 89.
+Rebuilt and re-verified imperial_theaters.duckdb.
+
+## 2026-09-17 — closed 42 of the last 43 receipts_parse_failed flags (Latin p/k marker gap)
+
+Result: RG asked to revisit the remaining 43 receipts_parse_failed flags.
+42 were the already-known "Latin p/k substitution" category (9 of which
+turned out to be mixed-script, Latin "p." paired with Cyrillic "к.",
+previously miscounted as part of the same bucket by a too-strict check).
+Reconsidered whether this deserved a code fix (like the genre field's
+Latin/Cyrillic variants, left alone) vs treating it as a genuine parsing
+gap (like the two dropped-period fixes earlier this session) -- concluded
+it's the latter: unlike genre, these are DERIVED numeric fields that come
+back completely empty when the marker is Latin, not just a differently-
+scripted but equally complete value. Widened _RUBLES_MARKER_RE/
+_KOPECKS_MARKER_RE to accept Latin p/k (case-insensitive) as well as
+Cyrillic р/к, verified against 7 synthetic edge cases (mixed script, bare
+figures, and confirming Cyrillic words like "карт."/"играю" still don't
+false-match) before trusting it, then against the whole corpus (0 -> 1
+remaining failure, the one already-documented genuine illegibility case).
+Final: 4143 events / 5357 performances (unchanged, code-only fix),
+0 validation errors, receipts_parse_failed 43 -> 1, total quality flags
+89 -> 47. Rebuilt and re-verified imperial_theaters.duckdb; spot-checked
+recovered values directly against the database.
+
+## 2026-09-17 — resolved zero_dark_cells_on_multiweek_page (4 pages, missing theater columns)
+
+```sql
+-- verification query run after the fix, against the rebuilt duckdb
+select theater, count(distinct date_text) as ndates, count(*) as nrows
+from raw.event_entry where page_id = ?
+group by theater order by theater
+-- run once per page_id in
+-- ('repertoire_1890-91_pair004','repertoire_1895-96_pair014',
+--  'repertoire_1895-96_pair016','repertoire_1896-97_pair014')
+```
+
+Result: RG asked to check the 4 `zero_dark_cells_on_multiweek_page` flags.
+The check's own name was misleading -- these pages weren't lacking dark
+cells, they were missing 3-4 of 5 theater columns ENTIRELY from
+`parse_raw` (not garbled, not bled-into, just never captured). Confirmed
+via `_source` cross-check across every other page in each season that no
+other page had absorbed the missing theaters' data -- genuinely lost, not
+misattributed. Traced each page's real printed-page scan (the usual
+render-vs-printed-page-number ambiguity: `_source` cites e.g.
+`repertoire_1895-96_p014`, which is the PRINTED page number, not a
+render-sequential index -- confirmed against
+`split_page_numbers_final.csv` for the 1896-97 case, by direct visual
+match for the other two seasons which predate that CSV's coverage) and
+transcribed the missing theaters' sessions directly from the scan:
+
+- `repertoire_1890-91_pair004` (10→50 sessions): 4 theaters recovered
+  across 10 dates, 10-21 September 1890 -- printed p. 5
+  (ForUpload_1890-91_Repertoire_001.jpg, bottom half). [Done earlier this
+  session, propagated together with the other 3 in this pass.]
+- `repertoire_1895-96_pair014` (12→81 sessions): 4 theaters recovered
+  across 12 dates, 30 Дек 1895 - 11 Янв 1896 -- printed pp. 14-15
+  (ForUpload_1895-96_Repertoire_006.jpg). One row (7 Января) has receipts
+  genuinely illegible corpus-wide across multiple columns where the
+  binding crease runs directly under the printed figures -- left null
+  rather than guessed, matching the page's own existing (pre-fix)
+  Mikhaylovsky null for that exact row.
+- `repertoire_1895-96_pair016` (25→72 sessions, full rebuild not just an
+  addition): this page turned out to have a SECOND, independent defect
+  layered on top of the missing columns -- its existing Malyy/Mariinsky
+  sessions carried systematically wrong date_text/session labels (content
+  from several different calendar dates had been merged onto a handful of
+  date labels, e.g. the old "26 января." session spliced together Malyy
+  content that really belongs to 24 Среда. with Mariinsky content that
+  really belongs to 28 Воскресенье.). Rebuilt the full date range
+  24 Января - 2 Февраля 1896 from the scan (ForUpload_1895-96_Repertoire_007.jpg,
+  printed pp. 16-17), re-keyed every session to its correct calendar date,
+  each cross-verified via an exact receipts-figure match against the old
+  mislabeled entry it replaced. One pre-existing entry -- Malyy, 30
+  Вторникъ. evening, annotation "Для воспитанницъ и воспитанниковъ",
+  works=[] -- could not be corroborated anywhere in the scan for that
+  date/theater (both real rows for that slot are fully accounted for by
+  ordinary paid performances with receipts) and was removed as
+  uncorroborated rather than kept; resolves
+  genre-field-3-inferred-rows-followup.md item 6.
+- `repertoire_1896-97_pair014` (10→73 sessions): 4 theaters recovered
+  across 10 dates, 19-31 Декабря 1896 -- printed pp. 14-15
+  (ForUpload_1896-97_Repertoire_006.jpg). Clean page, no date-mislabeling
+  found here (unlike the 1895-96 case above).
+
+Re-ran parse_and_validate.py + quality_checks.py + build_duckdb.py.
+Final: 4143 -> 4359 events, 5357 -> 5649 performances, 0 validation
+errors (one pre-existing, unrelated informational
+`repertoire_fabricated_dropped` log line on `repertoire_1890-91_p012`,
+not a failure). Quality flags: 47 -> 5 -- `zero_dark_cells_on_multiweek_page`
+4 -> 0 as directly targeted, and as a side effect
+`cross_theater_date_mismatch` also dropped 38 -> 0 (those mismatches were
+almost entirely a downstream symptom of the same missing-column pages).
+Remaining 5 flags (`duplicate_event_key` x4, `receipts_parse_failed` x1)
+are all pre-existing, on unrelated pages
+(`repertoire_1894-95_pair006`/`pair008`, `repertoire_1897-98_pair016`/
+`pair020`), untouched by this fix. Rebuilt and verified
+imperial_theaters.duckdb directly (all 4 pages now show all 5 theaters
+present for every date).
+
+## 2026-09-17 — checked the 3 remaining inferred-genre rows from genre-field-3-inferred-rows-followup.md
+
+```sql
+-- verification, run against the rebuilt duckdb after applying the fixes below
+select ee.date_text, ee.time_of_day, ee.receipts_text, eep.performance_title, eep.genre
+from raw.event_entry ee join raw.event_entry_performance eep using(event_id)
+where ee.page_id='repertoire_1897-98_pair006' and ee.theater='Малый'
+  and ee.date_text in ('12 Воскрес.','16 Четв.');
+
+select ee.date_text, ee.receipts_text, eep.performance_title, eep.genre
+from raw.event_entry ee join raw.event_entry_performance eep using(event_id)
+where ee.page_id='repertoire_1894-95_pair004' and ee.theater='Малый'
+  and ee.date_text = '29 Четвергъ.';
+```
+
+Result: RG asked to check the 3 rows still tracked as "inferred, not
+scan-verified" in the genre-field follow-up memory. Located both source
+pages and confirmed all 3 inferences were correct:
+
+- `repertoire_1897-98_pair006` cites `_source: repertoire_1897-98_p006`,
+  which (unlike some other pages in this issue) really is the RENDER-
+  sequential index -- confirmed against `split_page_numbers_final.csv`
+  (`p006__top` -> printed p.14) and by directly checking that render:
+  wrong season/month entirely (Dec 20 - Jan 9, not the Oct 3-16 range
+  this pair actually covers). Re-derived the correct render by checking
+  printed page 6 instead (`p002__top` -> printed p.6,
+  `ForUpload_1897-98_Repertoire_002.jpg`) -- this one matches exactly,
+  dates 3-23 October 1897. Confirmed:
+  - `12 Воскрес.` evening, "Осеній вечеръ въ деревнѣ, вод." -- genre
+    "вод." correct; fixed a spelling typo (Осеній -> Осенній, the scan
+    clearly shows a double н) while there.
+  - `16 Четв.`, "Госпожа-служанка, вод." -- genre "вод." correct.
+  - Bonus (not one of the original 3, found while re-reading this row):
+    the same session's third work ("Осеній вечеръ въ деревнѣ", genre
+    previously null) and the whole session's `receipts_text` (previously
+    null) were both recoverable from the same scan row -- genre "вод."
+    and receipts "1359 р. 21 к." added, plus the same Осеній->Осенній
+    spelling fix.
+- `repertoire_1894-95_pair004` cites `_source: repertoire_1894-95_p005
+  (bottom)`, which turned out to be the WRONG page for this content
+  (that render is a German-guest-troupe page, Большой/Малый both
+  entirely dark throughout -- doesn't match at all). Found the real
+  page by checking printed page 5 instead (`p001__bottom` -> printed
+  p.5 per the CSV, `ForUpload_1894-95_Repertoire_001.jpg`) -- confirmed
+  by an exact receipts match (550 р. 21 к.), dates 12 Sept - 3 Oct 1894.
+  Confirmed "Рай земной, ком." was the correct full title/genre (not a
+  guess); also fixed a spelling typo on the companion work ("Ирэнь" ->
+  "Ирэнъ", soft sign -> hard sign, matching what's actually printed) and
+  corrected the session's own `_source` citation, which had cited the
+  wrong render page.
+
+Propagated both pages to `resolved_sessions/`, re-ran
+`parse_and_validate.py` + `quality_checks.py` + `build_duckdb.py`.
+4359 events / 5649 performances unchanged (pure title/genre/receipts
+corrections, no rows added or removed), 5 quality flags unchanged.
+Rebuilt `imperial_theaters.duckdb` and verified all 3 fixes directly
+(query above). This closes items 1-3 of
+`genre-field-3-inferred-rows-followup.md` -- only item 5 (the
+`"Отечественный"` event_status row, no corpus match) remains open.
+
+## 2026-09-17 — checked genre-field-followup item 5 (repertoire_1892-93_pair008, 26 Октября., Маріинскій, annotation "Отечественный") against the scan
+
+```sql
+-- verification, run against the rebuilt duckdb after applying the fixes below
+select ee.date_text, ee.receipts_text, eep.performance_title, eep.genre
+from raw.event_entry ee join raw.event_entry_performance eep using(event_id)
+where ee.page_id='repertoire_1892-93_pair008' and ee.theater='Маріинскій'
+order by ee.date_text;
+```
+
+Result: RG asked to check the last open item (previously assessed as
+"genuinely unrecoverable, no corpus match"). Turned out NOT to be
+unrecoverable -- it was a straightforward extraction misread, findable
+the same way as everything else in this issue. `_source` cited
+`repertoire_1892-93_p008 (top)`; the render-sequential reading (JPG008,
+printed p.18) was wrong (an unrelated Feb/Mar 1893 page); the
+printed-page-number reading (`p003__top` -> printed p.8, per
+`split_page_numbers_final.csv`) was right --
+`ForUpload_1892-93_Repertoire_003.jpg`, dates 24 Oct - 4 Nov 1892. The
+`26 Октября.` cell reads plainly `"Отелло, оп. 2947 р. 70 к."` -- no
+`"Отечественный"` text anywhere near it; likely a VLM misread off the
+shared `"Оте-"` prefix between `Отелло` and `Отечественный`.
+
+While checking the adjacent rows for context, found the SAME
+Mariinsky-column-only defect repeating across most of this page's
+date range: 7 more sessions (`27`-`30 Октября.`, `1`-`4 Ноября.`) had
+`receipts_text` silently dropped (Бolshoy and Mikhaylovsky's receipts
+on the same rows were all intact -- this wasn't a page-wide gap, just
+Mariinsky), and 3 of those (`28`, `29 Октября.`, `3 Ноября.`) also had
+`Млада` mistagged `"бал."` instead of `"оп."` (Млада is Rimsky-Korsakov's
+opera). Recovered all 8 receipts figures and fixed all 3 genre tags
+directly from the same scan; also fixed one title typo
+(`"Дочь фараопа."` -> `"Дочь фараона."`, matching the real ballet) and
+corrected the `_source` citation on every touched session (old value
+pointed at the wrong render).
+
+**Also newly discovered, NOT fixed this pass, flagged for follow-up**:
+`repertoire_1892-93_pair008` is missing TWO ENTIRE THEATER COLUMNS
+(Александринскій, Малый -- only Маріинскій/Александринскій/Михайловскій...
+correction, only Маріинскій/Большой/Михайловскій are present) across
+its whole 12-date range. This is the same "missing entire theater
+column" pattern already fixed corpus-wide for the 4
+`zero_dark_cells_on_multiweek_page` pages, but this page wasn't in that
+flagged set (it has real dark cells on `24`/`31 Октября.` for the
+theaters it does have, so the flag's zero-dark-cells heuristic didn't
+trigger) -- a genuine gap in that check's coverage. Not resolved here;
+scope was already well beyond the single row RG asked to check.
+
+Propagated, re-ran `parse_and_validate.py` + `quality_checks.py` +
+`build_duckdb.py`. 4359 -> 4359 events (unchanged), 5649 -> 5650
+performances (+1, the recovered `Отелло` session), 5 quality flags
+unchanged. Rebuilt and verified directly against the database (query
+above). This closes item 5 -- **`genre-field-3-inferred-rows-followup.md`
+is now fully resolved, 0 rows open.**
+
+## 2026-09-17 — are there other entries where we'd expect receipts but don't? (RG asked, follow-up to the pair008 silently-dropped-receipts fix)
+
+```sql
+select event_status, count(*) as n, count(receipts_text) as n_with_receipts,
+       count(*) - count(receipts_text) as n_null_receipts
+from raw.event_entry
+where page_id like 'repertoire_%'
+group by 1 order by 1;
+
+select regexp_extract(page_id, 'repertoire_([0-9]{4}-[0-9]{2})', 1) as season,
+       count(*) as n_performed, count(receipts_text) as n_with_receipts,
+       count(*) - count(receipts_text) as n_null
+from raw.event_entry
+where page_id like 'repertoire_%' and event_status='performed'
+group by 1 order by 1;
+
+select regexp_extract(page_id, 'repertoire_([0-9]{4}-[0-9]{2})', 1) as season,
+       (annotation is not null) as has_annotation, count(*) as n
+from raw.event_entry
+where page_id like 'repertoire_%' and event_status='performed' and receipts_text is null
+      and regexp_extract(page_id, 'repertoire_([0-9]{4}-[0-9]{2})', 1) not in ('1890-91','1891-92')
+group by 1,2 order by 1,2;
+```
+
+Result: 826 `no_performance` (dark) rows correctly have no receipts.
+Of 3,533 `performed` rows, 1,050 have null `receipts_text`. Broken out
+by season: `1890-91` (337/337) and `1891-92` (540/540) are **100%
+null** -- confirmed via 2 direct scan checks (Sept 1890 opener,
+March 1891) that neither season's printed table carries receipts
+figures anywhere at all; RG confirmed this as a genuine source
+convention, not a bug (see `1890-91-1891-92-no-receipts-printed.md`
+memory). The other six seasons (`1892-93`-`1897-98`) have a combined
+173 nulls, 117 of them on ordinary (no-annotation) performances --
+spread across ~30 different pages, no single page dominating,
+confirmed a mixed bag on spot-check (one page's nulls were a whole-row
+binding-crease pattern already understood; another looked like a
+genuine extraction gap similar to the just-fixed `pair008` case). Not
+yet systematically audited -- flagged as a candidate follow-up, not
+acted on this turn.
+
+## 2026-09-18 — fixed repertoire_1892-93_pair008's missing theater columns (Александринскій, Малый)
+
+```sql
+-- verification, run against the rebuilt duckdb
+select theater, count(distinct date_text) as ndates, count(*) as nrows
+from raw.event_entry where page_id='repertoire_1892-93_pair008'
+group by theater order by theater;
+```
+
+Result: finished the fix flagged yesterday
+([[missing-theater-column-check-gap]]) -- transcribed the remaining
+dates (30 Октября - 4 Ноября) from `ForUpload_1892-93_Repertoire_003.jpg`
+(printed pp.8-9) and applied all 26 recovered sessions (12 dates x 2
+theaters, with morning/evening splits on 3 of those dates). All 5
+theaters now present for all 12 dates (24 Октября - 4 Ноября 1892).
+Propagated to `resolved_sessions/`, re-ran `parse_and_validate.py` +
+`quality_checks.py` + `build_duckdb.py`: 4359 -> 4385 events, 5650 ->
+5688 performances, 5 quality flags unchanged (no new duplicates or
+parse failures introduced). Rebuilt and verified directly against the
+database (query above).
+
+## 2026-09-18 — full rebuild of repertoire_1895-96_p012 (null-receipts audit, page 1 of the worklist)
+
+```sql
+-- verification, run against the rebuilt duckdb
+select theater, count(distinct date_text) as ndates, count(*) as nrows, count(receipts_text) as n_receipts
+from raw.event_entry where page_id='repertoire_1895-96_p012'
+group by theater order by theater;
+
+select date_text, theater, receipts_text, annotation
+from raw.event_entry where page_id='repertoire_1895-96_p012' and event_status='performed' and receipts_text is null
+order by date_text;
+```
+
+Result: RG asked to check the null-receipts residual in the 6 non-
+1890-91/91-92 seasons; the first page in the worklist (17 of the 173
+target rows) turned out to be a much bigger defect than missing
+receipts. `repertoire_1895-96_p012` is the only 1895-96 page named
+bare `p012` (no `pair012` counterpart exists, unlike every other
+even-numbered slot) and carried no `_source` on any session --
+evidence it never went through this issue's usual dual-extraction/
+merge pipeline. Checked against the scan
+(`ForUpload_1895-96_Repertoire_003.jpg` printed p.9 for 15-17 Nov,
+`_004.jpg` printed pp.10-11 for 19-26 Nov 1895) and found
+Маріинскій/Александринскій/Михайловскій uniformly mismarked
+`is_dark=true`/`works=[]` on every one of the file's 10 dates despite
+being fully active in the source -- and Большой/Малый's existing
+content didn't match the scan either on several dates (e.g. 17
+Ноября's Большой/Малый content was swapped with each other; 20 Ноября
+was entirely misattributed). RG approved a full rebuild, same
+treatment as `repertoire_1895-96_pair016` yesterday.
+
+Re-transcribed all 5 theaters for all 10 dates directly from the scan
+and replaced the file's session list wholesale (50 -> 55 sessions).
+One row (26 Ноября) sits right on the binding-fold boundary -- 4
+figures there are genuinely either uncaptured (free/benefit shows with
+no printed figure) or physically torn away; left honestly null rather
+than guessed, each documented with which case applies.
+
+Re-ran `parse_and_validate.py` -> `quality_checks.py` ->
+`build_duckdb.py`: 4385 -> 4390 events, 5688 -> 5728 performances, 5
+quality flags unchanged. Rebuilt and verified directly: all 5 theaters
+now present for all 10 dates, and the null-receipts count for this
+page dropped from 17 to 4 (all 4 legitimately explained above).
+
+## 2026-09-18 — full rebuild of repertoire_1895-96_pair010 + duplicate-coverage cleanup with p012
+
+```sql
+-- verification, run against the rebuilt duckdb
+select theater, count(distinct date_text) ndates, count(*) nrows, count(receipts_text) n_receipts
+from raw.event_entry where page_id='repertoire_1895-96_pair010' group by theater order by theater;
+
+-- confirm no remaining cross-file date/theater overlap between p012 and pair010
+select a.date_text, a.theater
+from (select distinct date_text, theater from raw.event_entry where page_id='repertoire_1895-96_p012') a
+join (select distinct date_text, theater from raw.event_entry where page_id='repertoire_1895-96_pair010') b
+using(date_text, theater);
+```
+
+Result: continuing the null-receipts audit, checking `repertoire_1895-
+96_pair010` (12 of the 173 target rows) turned up two compounding
+defects and a genuine cross-file duplicate with the just-fixed `p012`:
+
+1. **Bolshoy-column bleed, systematic**: Большой consistently showed a
+   corrupted echo of Малый's real content (titles/genres visibly
+   mangled versions of Малый's own, e.g. "Спорный наслѣдникъ/Долото"
+   vs Малый's real "Спорный вопросъ/Лолотта") on every date 18 Ноября
+   - 2 Декабря where the scan shows Большой genuinely dark. Matches
+   this issue's already-documented Большой-bleed pattern, just not
+   previously caught on this page. Большой genuinely resumes
+   performing 3 Декабря onward (confirmed real, distinct content).
+2. **Several dates missing 3-4 theaters entirely** (`30 Ноября.`,
+   `1 Декабря.` originally had only Маріинскій captured).
+3. **A one-date mislabeling cascade for 2-6 Декабря**: the old file's
+   `"2 Суббота."` session actually contained `3 Воскрес.`'s content,
+   `"3 Воскрес."`'s contained `4 Понед.`'s, `"4 Понед."`'s contained
+   `5 Вторникъ.`'s, and `"5 Вторникъ."`'s contained `6 Среда.` morning's
+   (the free students' show) -- meaning the true `5 Декабря` had been
+   dropped entirely and true `2 Декабря` (all dark except a
+   Mikhaylovsky benefit) never appeared under any label. `6 Среда.`
+   evening was the one date in this stretch already correctly labeled
+   (confirmed via an exact receipts match), which is what made the
+   cascade findable.
+4. **Confirmed duplicate coverage with `repertoire_1895-96_p012`**:
+   dates 19-26 Ноября appeared correctly in both files independently
+   (same scan, same printed page). Removed from `p012` (kept only its
+   unique 15-17 Ноября), keeping `pair010` as the sole owner of 18
+   Ноября - 6 Декабря.
+
+Fully re-transcribed all 5 theaters for all 19 true dates from
+`ForUpload_1895-96_Repertoire_004.jpg` (same image used for `p012`) and
+replaced `pair010`'s session list wholesale (74 -> 106 sessions).
+Re-ran `parse_and_validate.py` -> `quality_checks.py` ->
+`build_duckdb.py`: 4390 -> 4382 events (net change reflects both the
+pair010 recovery and the p012 trim), 5728 -> 5703 performances, 5
+quality flags unchanged (no new duplicate keys introduced by the
+overlap cleanup). Rebuilt and verified directly: all 5 theaters present
+across all 19 dates in `pair010`, all 5 theaters present across all 3
+dates in `p012`, and a direct query confirms zero remaining date/theater
+overlap between the two files.
+
+## 2026-09-18 — full rebuild of repertoire_1892-93_pair002 (null-receipts audit, page 3)
+
+```sql
+-- verification, run against the rebuilt duckdb
+select theater, count(distinct date_text) ndates, count(*) nrows
+from raw.event_entry where page_id='repertoire_1892-93_pair002' group by theater order by theater;
+```
+
+Result: page 3 of the null-receipts worklist. `repertoire_1892-93_
+pair002` covers the very start of the 1892-93 season (16 Августа - 1
+Сентября 1892). Checked against `ForUpload_1892-93_Repertoire_000.jpg`
+(printed p.2) and found date labels shifted against their real content
+almost immediately -- old `"17 Понед."` had merged two different
+calendar rows' content under one label, two real dates (`27 Августа`,
+`1 Сентября`) were entirely absent from the file, and the true
+multi-theater season-opener day (`30 Августа`, marked `"Гимнъ."` across
+all 5 theaters at once) had been dropped -- its date slot instead held
+the FOLLOWING day's content, cascading one slot further for `31
+Августа` too (which in turn held `1 Сентября`'s content).
+
+Confirmed against the scan that `16`-`26 Августа` genuinely have only
+Малый active (the other 4 theaters hadn't opened for the season yet)
+-- not a defect, matches this corpus's established early-season
+pattern. `22`, `28`, `29 Августа` have no table row at all in the
+source (a genuine calendar gap, not a bug). One row (`26 Августа`)
+has receipts genuinely illegible -- a torn page edge right where the
+figure would print.
+
+Fully re-transcribed every date from the scan and replaced the file's
+session list wholesale (26 -> 70 sessions, now covering 14 real dates
+x 5 theaters). Re-ran `parse_and_validate.py` -> `quality_checks.py`
+-> `build_duckdb.py`: 4382 -> 4426 events, 5703 -> 5715 performances, 5
+quality flags unchanged. Rebuilt and verified directly: all 5 theaters
+present across all 14 dates, `30 Августа`'s Гимнъ-marked multi-theater
+day and `1 Сентября` both now correctly populated.
+
+## 2026-09-18 — full rebuild of repertoire_1892-93_pair004 (null-receipts audit, page 4)
+
+```sql
+select theater, count(distinct date_text) ndates, count(*) nrows
+from raw.event_entry where page_id='repertoire_1892-93_pair004' group by theater order by theater;
+```
+
+Result: page 4 of the worklist. `repertoire_1892-93_pair004` (10
+Сентября - 2 Октября 1892) was missing Большой entirely across all 20
+dates (confirmed genuinely active in the scan, not a season-opening
+gap this time -- e.g. "Демонъ, оп." on 10 Сентября). Александринскій
+also had scattered content misattribution: old `"1 Четв."` held a
+garbled duplicate combining `29 Вторникъ`'s and `30 Среда`'s real
+Alexandrinsky content, while `1 Четв.`'s own genuine content had been
+mislabeled under `"2 Пятница."`; old `"26 Суббота."` held a duplicate
+of `24 Четвергъ`'s content where the scan shows Alexandrinsky
+genuinely dark that day. Маріинскій/Малый were also entirely missing
+for `26`-`30` (both had opened for the season by then, confirmed
+active in the scan). Checked against
+`ForUpload_1892-93_Repertoire_001.jpg` (printed pp.4-5). One row (`22
+Вторникъ`) has every column's receipts genuinely illegible -- a
+binding-fold crease runs directly beneath the whole row.
+
+Fully rebuilt (68 -> 100 sessions, 20 dates x 5 theaters).
+`parse_and_validate.py` -> `quality_checks.py` -> `build_duckdb.py`:
+4426 -> 4458 events, 5715 -> 5752 performances, 5 quality flags
+unchanged. Verified directly: all 5 theaters present across all 20
+dates.
+
+## 2026-09-18 — full rebuild of repertoire_1892-93_pair006 (null-receipts audit, page 5)
+
+```sql
+select theater, count(distinct date_text) ndates, count(*) nrows
+from raw.event_entry where page_id='repertoire_1892-93_pair006' group by theater order by theater;
+```
+
+Result: page 5. `repertoire_1892-93_pair006` (3-22 October 1892) had:
+date `4 Октября` entirely absent (its Alexandrinsky content had been
+misattributed to `3 Октября`, which the scan shows genuinely dark for
+that theater); `16 Октября`'s Alexandrinsky wrongly marked dark
+despite being active; dates `17`-`22 Октября` missing
+Маріинскій/Михайловскій/Большой/Малый entirely (only Alexandrinsky
+captured); and a recurring OCR truncation ("Я картинка"/"Ъ картинка"
+for "Лѣтняя картинка") on several Малый entries. Checked against
+`ForUpload_1892-93_Repertoire_002.jpg` (printed pp.6-7).
+
+Fully rebuilt (70 -> 106 sessions, 20 dates x 5 theaters). 4458 ->
+4494 events, 5752 -> 5795 performances, 5 quality flags unchanged.
+Verified directly: all 5 theaters present across all 20 dates.
+
+## 2026-09-18 — repertoire_1892-93_pair014 (null-receipts audit, page 6) -- targeted duplicate cleanup; broader missing-theater issue confirmed but deferred
+
+```sql
+select date_text, receipts_text, eep.performance_title
+from raw.event_entry ee join raw.event_entry_performance eep using(event_id)
+where page_id='repertoire_1892-93_pair014' and date_text in ('6 Срѣд.','8 Пятница.')
+order by date_text;
+```
+
+Result: page 6. This file only ever had Маріинскій captured across all
+22 dates (27 Декабря 1892 - 16 Января 1893) -- confirmed via the scan
+(`ForUpload_1892-93_Repertoire_006.jpg`, printed pp.14-15) that all 4
+other theaters are genuinely active throughout, so this is the same
+missing-theater-column defect as several earlier pages. Given this
+page's dense utro/vecher-per-theater layout made row-to-date alignment
+unusually error-prone on a first pass, scoped this session's fix down
+to what could be verified with full confidence: the two originally-
+flagged null-receipts rows.
+
+- `6 Срѣд.` "Фаустъ": confirmed genuinely illegible -- a binding-fold
+  crease runs directly beneath this whole row (all 5 theaters, not
+  just Маріинскій, are affected there). Left null, now documented.
+- `8 Пятница.`: had THREE Mariinsky sessions stored, two of them
+  duplicates -- a "Гугеноты" entry that actually belongs to `7
+  Четвергъ` (confirmed via an exact receipts match, 3605 р. 70 к.) and
+  a null-receipts "Фаустъ" entry duplicating `6 Срѣд.`'s own entry.
+  Removed both; the genuine `8 Пятница.` content ("Эсклармонда", 3593
+  р. 70 к.) was already correct and untouched.
+
+Removed 2 duplicate sessions (27 -> 25). Re-ran
+`parse_and_validate.py` -> `quality_checks.py` -> `build_duckdb.py`:
+4494 -> 4492 events, 5795 -> 5793 performances, 5 quality flags
+unchanged. Verified directly (query above): both originally-flagged
+rows now resolved (one confirmed legitimately null, one fixed).
+
+**NOT resolved this pass, flagged for a dedicated follow-up**: the
+missing Александринскій/Михайловскій/Большой/Малый across this whole
+page (22 dates x 4 theaters) -- confirmed real via the scan, same
+underlying defect as `pair004`/`pair006`/`pair008`, but recovering it
+needs more careful row-by-row scan work than this session's cursory
+check could responsibly deliver. Also noticed but not chased down: at least one more
+likely duplicate/misattribution around `4 Понед.`/`6 января.` (the
+"Бенефисъ г. Л. Иванова" Щелкунчикъ/Спящая красавица entry appears
+close to twice, with slightly different receipts figures each time) --
+not touched, since confidence in the correct resolution wasn't high
+enough this pass.
+
+## 2026-09-18 — full rebuild of repertoire_1892-93_pair022 (null-receipts audit, page 7)
+
+```sql
+select theater, count(distinct date_text) ndates, count(*) nrows
+from raw.event_entry where page_id='repertoire_1892-93_pair022' group by theater order by theater;
+```
+
+Result: page 7. `repertoire_1892-93_pair022` only had Большой present
+(11 апрѣля - 21 апрѣля 1893), and even that column had misattributed
+content: old `11 апрѣля.` was really `9 Апрѣля`'s content, and old `13
+апрѣля.` carried a duplicate that really belongs to `12 Апрѣля` --
+explaining that date's original null-receipts flag. True `11 Апрѣля`
+had never been captured under any label; its own receipts are
+genuinely illegible (binding-fold crease). Recovered `9`-`10 Апрѣля`
+too (previously absent from every file in this season -- checked, no
+other file captures them) since the real data was sitting mislabeled
+in this one. Checked against `ForUpload_1892-93_Repertoire_010.jpg`
+(printed pp.22-23).
+
+Fully rebuilt (12 -> 65 sessions, 13 dates x 5 theaters). 4492 -> 4545
+events, 5793 -> 5873 performances, 5 quality flags unchanged (no new
+cross-file duplicate from adding 9-10 Апрѣля). Verified directly: all
+5 theaters present across all 13 dates.
+
+## 2026-09-18 — recovered repertoire_1893-94_pair006's missing Михайловскій column (null-receipts audit, page 8)
+
+```sql
+select theater, count(distinct date_text) ndates, count(*) nrows
+from raw.event_entry where page_id='repertoire_1893-94_pair006' group by theater order by theater;
+```
+
+Result: page 8, first 1893-94 season page. Михайловскій was entirely
+missing across all 20 dates (4-23 Октября 1893) -- confirmed genuinely
+active throughout via
+`ForUpload_1893-94_Repertoire_002.jpg` (printed pp.6-7). Unlike recent
+1892-93 pages, the other 4 theaters' own data was already correct
+(no scrambling/misattribution found on spot-check) -- a
+cleaner, single-column recovery. `13 Октября`'s receipts left null for
+Михайловскій, matching the already-correct null status of
+Александринскій/Большой that day -- the whole physical row is cut off
+by the binding-fold crease, not just isolated columns.
+
+Added 20 recovered Михайловскій sessions (86 -> 106). Re-ran
+`parse_and_validate.py` -> `quality_checks.py` -> `build_duckdb.py`:
+4545 -> 4565 events, 5873 -> 5911 performances, 5 quality flags
+unchanged. Verified directly: all 5 theaters present across all 20
+dates.
+
+## 2026-09-18 — repertoire_1893-94_pair010 (null-receipts audit, page 9) -- targeted duplicate cleanup; broader issues deferred
+
+```sql
+select date_text, theater, receipts_text, eep.performance_title
+from raw.event_entry ee join raw.event_entry_performance eep using(event_id)
+where page_id='repertoire_1893-94_pair010' and date_text in ('13 Субб.','14 Воскресенье.')
+order by date_text, theater;
+```
+
+Result: page 9. This file has the same pervasive kind of corruption as
+`pair014` (only 4 of 5 theaters present -- Малый entirely missing --
+plus several more duplicate/misattributed sessions beyond the flagged
+ones: e.g. `24 Среда.` has 3 Mikhaylovsky sessions, `29 Понед.` has 2).
+Checked against `ForUpload_1893-94_Repertoire_004.jpg` (printed
+pp.10-11) and fixed what could be verified with full confidence:
+
+- `13 Субб.`: confirmed genuinely dark for Маріинскій/Александринскій/
+  Большой (only Михайловскій performed, a benefit). The "Гимнъ."/
+  "Безплатное" fragments previously stored under this date for those
+  3 theaters were duplicates of `14 Воскресенье`'s real free-show
+  block (that date already has its own correct entries for the same
+  theaters) -- removed all 3.
+- `14 Воскресенье.` Михайловскій: had two sessions for what's really
+  one performance -- one with the wrong title ("L'Etrangère") but
+  correct receipts (1216 р.), one with the correct title ("L'Honneur
+  et l'Argent") but null receipts. Removed the wrong-title duplicate,
+  recovered the correct one's receipts.
+
+77 -> 73 sessions (net: -4 removed, +0 added, 1 receipts fix). Re-ran
+`parse_and_validate.py` -> `quality_checks.py` -> `build_duckdb.py`:
+4565 -> 4561 events, 5911 -> 5903 performances, 5 quality flags
+unchanged. Verified directly (query above): both originally-flagged
+issues resolved.
+
+**NOT resolved this pass, flagged for follow-up**: Малый missing
+entirely across this whole page (confirmed likely real, same defect
+class as other pages); the remaining flagged nulls at `22 Пон.`
+Михайловскій and `23 Вторникъ.` Маріинскій (the latter has a benefit
+annotation, plausibly legitimate); and further duplicate sessions
+spotted at `24 Среда.` (3x Михайловскій) and `29 Понед.` (2x
+Михайловскій) not yet untangled.
+
+## 2026-09-18 — repertoire_1893-94_pair016 (null-receipts audit, page 10) -- 3 flagged rows + 3 scattered duplicates untangled
+
+```sql
+select date_text, theater, receipts_text, eep.performance_title
+from raw.event_entry ee join raw.event_entry_performance eep using(event_id)
+where page_id='repertoire_1893-94_pair016' and date_text in ('17 Понед.','23 Воскрес.','24 Понед.','25 Вторник.','27 Четвергъ.') and theater in ('Маріинскій','Александринскій')
+order by date_text, theater;
+```
+
+Result: page 10. Checked against `ForUpload_1893-94_Repertoire_007.jpg`
+(printed pp.16-17) and resolved all 3 originally-flagged rows, plus
+untangled 3 scattered Alexandrinsky sessions the same investigation
+surfaced (each stored under a spurious extra date-label variant --
+`"25 Января."` x2 and `"25 января."` -- rather than under their real
+dates):
+
+- `17 Понед.` Маріинскій: recovered missing receipts (928 р. 97 к.);
+  work title was already correct, just the figure was dropped.
+- `25 Вторник.` Александринскій: recovered from a mislabeled `"25
+  Января."` entry that also had a digit typo (1045->1015 р. 75 к.).
+- `23 Воскрес.` Александринскій: recovered from a mislabeled `"25
+  января."` (lowercase) entry -- exact receipts match confirmed it.
+- `24 Понед.` Александринскій: recovered from the second `"25
+  Января."` duplicate; receipts read from a crease-damaged row
+  (moderate confidence, "1585 р. 20 к.").
+- `27 Четв.`/`27 Четвергъ.`: these were the same calendar date split
+  across two labels. Recovered Маріинскій's missing content (was null,
+  now "Іоаннъ Лейденскій", 2937 р. 20 к.) and consolidated both
+  theaters onto the `"27 Четвергъ."` label already used by the rest of
+  that date's sessions.
+
+90 -> 90 sessions (3 removed, 3 added, net zero -- pure relabeling/
+recovery, no new events). Re-ran `parse_and_validate.py` ->
+`quality_checks.py` -> `build_duckdb.py`: counts unchanged (4561
+events, 5903 performances), 5 quality flags unchanged. Verified
+directly (query above): all 5 fixes confirmed.
+
+## 2026-09-18 — full recovery of repertoire_1893-94_pair018 (null-receipts audit, page 11)
+
+```sql
+select theater, count(distinct date_text) ndates, count(*) nrows
+from raw.event_entry where page_id='repertoire_1893-94_pair018' group by theater order by theater;
+```
+
+Result: page 11. This page had an unusual split defect: Михайловскій
+missing for dates 4-14 Февраля, Большой and Малый missing for ALL 19
+dates, and Александринскій/Маріинскій missing for 18-22 Февраля -- an
+uneven distribution of the same missing-theater-column defect (not a
+uniform single-column drop like most other pages). Checked against
+`ForUpload_1893-94_Repertoire_008.jpg` (printed pp.18-19).
+
+Also found and fixed, beyond the 4 originally-flagged rows: the entire
+spurious date `"14 Февраля."` (3 sessions, all duplicates/fragments of
+`13 Воскрес.` and `14 Понед.`, removed); `16 Среда.`'s Маріинскій and
+Михайловскій sessions were both misattributed (the "Спектакль въ
+память П. И. Чайковскаго" commemorative concert stored there actually
+belongs to `17 Четвергъ.`, moved there along with recovering that
+date's other 3 missing theaters).
+
+Added ~66 recovered/corrected sessions net (40 -> 106). Re-ran
+`parse_and_validate.py` -> `quality_checks.py` -> `build_duckdb.py`:
+4561 -> 4627 events, 5903 -> 6003 performances, 5 quality flags
+unchanged. Verified directly: all 5 theaters present across all 19
+dates.
+
+## 2026-09-18 — repertoire_1893-94_pair024 (null-receipts audit, page 12) -- whole-file date-cascade fix
+
+```sql
+select date_text, receipts_text, eep.performance_title
+from raw.event_entry ee join raw.event_entry_performance eep using(event_id)
+where page_id='repertoire_1893-94_pair024' order by date_text;
+```
+
+Result: page 12. Checked the flagged row (`26 Вторникъ` Александринскій,
+null) against `ForUpload_1893-94_Repertoire_011.jpg` (printed pp.24-25)
+and found a consistent whole-file date-label cascade: every session
+from `19 Вторникъ` through `28 Четвергъ` (10 sessions) was labeled one
+calendar day earlier than its real content, confirmed via exact
+receipts matches at every step of the chain. Relabeled all 10;
+resolved a leftover duplicate created by the shift (`29 Пятница.`
+appeared twice after the cascade -- the duplicate, a dark placeholder,
+relabeled to `30 Суббота.` and then de-duplicated against the file's
+own pre-existing dark entry for that date).
+
+The originally-flagged null (what's now correctly `27 Среда.`) remains
+null -- its receipts sit directly under the binding-fold crease and
+are genuinely illegible, same as several other pages' crease rows.
+
+19 -> 18 sessions (net -1, one duplicate removed). Re-ran
+`parse_and_validate.py` -> `quality_checks.py` -> `build_duckdb.py`:
+4627 -> 4626 events, 6003 -> 6003 performances (unchanged), 5 quality
+flags unchanged. Verified directly (query above): clean date sequence,
+no duplicates.
+
+**Not fixed this pass**: Михайловскій, Большой, and Малый are all
+missing from this page too (confirmed genuinely active in the scan for
+most of April) -- flagged for follow-up, not recovered this session.
+
+## 2026-09-18 — repertoire_1894-95_p008 (null-receipts audit, page 13) -- confirmed legitimate, no fix needed
+
+Result: page 13. Checked `7 Воскресенье.` (Александринскій + Малый,
+both null) against `ForUpload_1894-95_Repertoire_008.jpg` (printed
+p.18) -- this is the LAST page of the 1894-95 season's scanned
+Repertoire table (only 9 renders exist for this season, 000-008, and
+this is the final one). The row's receipts are cut off at the physical
+bottom edge of the scanned image itself -- not a crease, just no
+further page exists to capture them. Confirmed genuinely unrecoverable
+from available materials, matching the file's own already-correct null
+values. All 5 theaters present across all 8 dates (28 Апрѣля - 7 Мая
+1895), 40/40 sessions complete -- no other defects found on this page.
+No changes made.
+
+## 2026-09-18 — repertoire_1894-95_pair006 (null-receipts audit, page 14) -- confirmed flagged row + recovered 6-date cluster
+
+Result: page 14. The single flagged row (`15 Суббота` Александринскій)
+confirmed genuinely dark against `ForUpload_1894-95_Repertoire_002.jpg`
+(printed pp.6-7) -- no fix needed there. While checking, found
+Александринскій and Малый were ALSO missing (beyond the one flagged
+null) for a 6-date cluster: `16`-`19 Октября` and `1`-`3 Январь` --
+recovered all from the same scan.
+
+**NOT fixed this pass**: `14 Пятн.`/`14 Октября.` and `4 Октября.`/`4
+Среда.` each carry MULTIPLE duplicate sessions per theater (e.g. 3
+different Маріинскій entries under `14 Пятн.` alone) -- content from
+several different calendar dates merged onto these labels, the same
+class of defect as `pair014`/`pair010`'s deferred issues. Not
+untangled this pass; flagged for follow-up.
+
+92 -> 109 sessions. Re-ran `parse_and_validate.py` ->
+`quality_checks.py` -> `build_duckdb.py`: 4627 -> 4643 events, 6003 ->
+6038 performances, 5 quality flags unchanged.
+
+## 2026-09-18 — repertoire_1894-95_pair008 (null-receipts audit, page 15) -- 3 flagged rows fixed + 5-date cluster recovered
+
+Result: page 15. All 3 originally-flagged rows (`19 Четвергъ.`
+Александринскій/Малый/Маріинскій) were genuine extraction drops --
+recovered from `ForUpload_1894-95_Repertoire_003.jpg` (printed p.9),
+clearly legible, not crease-damaged. Also found and fixed: a duplicate
+date spelling (`"16 января."` Малый relabeled to merge with `"16
+Понедѣльн."`, its rightful date) and a 5-date cluster (`21`-`25
+Января`) missing Александринскій/Маріинскій entirely (21st confirmed
+genuinely dark for both; 22-25 recovered from the scan).
+
+88 -> 98 sessions. Re-ran `parse_and_validate.py` ->
+`quality_checks.py` -> `build_duckdb.py`: 4643 -> 4653 events, 6038 ->
+6053 performances, 5 quality flags unchanged. Verified directly: all 5
+theaters present across all dates.
+
+## 2026-09-18 — recovered repertoire_1894-95_pair016's missing Маріинскій column (null-receipts audit, page 16)
+
+```sql
+select theater, count(distinct date_text) ndates, count(*) nrows
+from raw.event_entry where page_id='repertoire_1894-95_pair016' group by theater order by theater;
+```
+
+Result: page 16. All 4 flagged nulls (`18 Апрѣля.`) confirmed
+genuinely illegible -- a binding-fold crease runs under the whole row
+(all theaters affected). Cleaned up two data-shape artifacts on the
+same row while there: Большой's bogus annotation ("Волки Ира") was
+bleed from Малый's own title (cleared), and Малый's title had two OCR
+typos (Палки->Волки, Ирэнь->Иронъ). Also found and recovered
+Маріинскій, entirely missing across all 10 dates on this page --
+scan-verified against `ForUpload_1894-95_Repertoire_007.jpg` (printed
+pp.16-17).
+
+Added 10 recovered Маріинскій sessions (40 -> 50). Re-ran
+`parse_and_validate.py` -> `quality_checks.py` -> `build_duckdb.py`:
+4653 -> 4663 events, 6053 -> 6063 performances, 5 quality flags
+unchanged. Verified directly: all 5 theaters present across all 10
+dates.
+
+## 2026-09-18 — repertoire_1895-96_pair006 (null-receipts audit, page 17) -- Большой-bleed cleared; scattered duplicates deferred
+
+```sql
+select date_text, receipts_text, event_status from raw.event_entry
+where page_id='repertoire_1895-96_pair006' and theater='Большой' order by date_text;
+```
+
+Result: page 17. All 7 flagged null rows were Большой -- confirmed
+against `ForUpload_1895-96_Repertoire_002.jpg` (printed pp.6-7) that
+Большой is genuinely dark for every single date on this page. The
+garbled annotations/titles stored under those flagged sessions
+("Лолоттъ", "Наканунѣ золотой", "Грандъ-балъ", etc.) were bleed from
+Малый's real neighboring content -- the established Большой-column-
+bleed pattern already resolved for 9 other pages earlier in this
+issue; this page was apparently missed by that earlier pass. Cleared
+all 7 (plus one exact duplicate dark placeholder), not reconstructed.
+
+**NOT fixed this pass**: found significant scattered duplication in
+Маріинскій and Михайловскій too (recurring titles like "Орестейя" and
+"Blanchette, com. / Le Chatouilleur du Puy de Dôme..." reappearing
+under multiple date labels with different receipts each time -- e.g.
+"17 октября." vs "17 Вторн.", extra entries duplicated onto "18
+Среда."/"19 Четвергъ."), plus Александринскій/Малый/Большой entirely
+missing for `21`-`28 Октября` (Маріинскій/Михайловскій present there
+instead). Not untangled this pass -- flagged for follow-up.
+
+79 -> 77 sessions (net: 7 cleared to dark + 1 duplicate removed).
+Re-ran `parse_and_validate.py` -> `quality_checks.py` ->
+`build_duckdb.py`: 4663 -> 4661 events, 6063 -> 6056 performances, 5
+quality flags unchanged. Verified directly: Большой correctly dark for
+all 14 dates on this page.
+
+## 2026-09-18 — repertoire_1895-96_pair014 and pair016 (null-receipts audit, pages 18-19) -- already confirmed legitimate
+
+Result: both pages were fully rebuilt yesterday (2026-09-17) as part of
+the `zero_dark_cells_on_multiweek_page` fix. Checked their remaining
+null-receipts rows against what was already documented then:
+`pair014`'s 6 rows are the `7 Воскрес.` crease-damaged row (all 5
+theaters) plus `3 Среда.` Александринскій's free-show notice
+(annotation "Безплатный спектакль для воспитанниковъ учебныхъ
+заведеній.", genuinely no figure). `pair016`'s 10 rows are the `26
+Пятница.` crease-damaged row (all 5 theaters) plus the `30 Вторникъ.`/
+`31 Среда.` free-morning-show sessions (annotation "Безплатные
+утренніе спектакли..."). All already correctly documented as
+legitimate during yesterday's rebuild -- no new issues, no changes
+made.
+
+## 2026-09-18 — recovered repertoire_1895-96_pair022's missing Малый column + fixed flagged row (null-receipts audit, page 20)
+
+```sql
+select theater, count(distinct date_text) ndates, count(*) nrows
+from raw.event_entry where page_id='repertoire_1895-96_pair022' group by theater order by theater;
+```
+
+Result: page 20 (last 1895-96 page in the no-annotation bucket).
+Малый was entirely missing across all 13 dates (30 Марта - 11
+Апрѣля/11 Четвергъ 1896) -- recovered from
+`ForUpload_1895-96_Repertoire_010.jpg` (printed pp.22-23). The 4
+originally-flagged nulls (`11 Четвергъ.`, all other 4 theaters) were
+genuine extraction drops with correct titles already present -- just
+recovered the receipts. One Малый row (`8 Понед.`) has receipts
+genuinely illegible at the binding crease, left null.
+
+Added 15 Малый sessions + fixed 4 receipts (52 -> 67 sessions). Re-ran
+`parse_and_validate.py` -> `quality_checks.py` -> `build_duckdb.py`:
+4661 -> 4676 events, 6056 -> 6081 performances, 5 quality flags
+unchanged. Verified directly: all 5 theaters present across all 13
+dates.
+
+## 2026-09-18 — null-receipts audit page 21: repertoire_1896-97_pair002 (1896-97 season opener)
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1896-97_pair002' and event_status='performed' and receipts_text is null
+```
+
+Result: 2 rows before fix -- ('3 Вторникъ.', 'Малый', None), ('3 Вторникъ.', 'Михайловскій', None).
+Investigation revealed a whole-file date-label cascade (every date from the 2nd row onward
+was labeled one true-date-slot too early; a spurious "17 Среда." row never existed in the
+source). Rebuilt all 14 dates (28 sessions) with correct labels, scan-verified against
+ForUpload_1896-97_Repertoire_000.jpg (printed pp.2-3). Confirmed Михайловскій genuinely dark
+16-27 Августа (season not yet open) -- a legitimate convention, not a defect.
+
+```sql
+select date_text, theater, receipts_text from raw.event_entry
+    where page_id='repertoire_1896-97_pair002' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows after fix -- confirmed against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+
+## 2026-09-18 — null-receipts audit page 22: repertoire_1896-97_pair004
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1896-97_pair004' and event_status='performed' and receipts_text is null
+```
+
+Result: 3 rows before fix -- ('26 Четверг.', 'Александринскій', None, None),
+('26 Четверг.', 'Маріинскій', None, None), ('26 Четверг.', 'Михайловскій', None, None).
+All 3 confirmed to be true "27 Пятница." content mislabeled/truncated -- relabeled and
+completed (works + receipts) with scan verification against
+ForUpload_1896-97_Repertoire_001.jpg (printed pp.4-5). Also fully rebuilt Малый (which had
+its own independent 22-28 Сентября date scramble, 14 -> 21 sessions). Found but NOT fixed:
+Александринскій/Маріинскій/Михайловскій/Большой have a broader date-label tangle for
+16-26 Сентября (each theater's shift starts at a different row) plus a missing tail
+(27 Сентября - 3 Октября) for all 4 theaters -- deferred, see
+repertoire-1896-97-pair004-multi-theater-tangle.md.
+
+```sql
+select date_text, theater, receipts_text from raw.event_entry
+    where page_id='repertoire_1896-97_pair004' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows after fix -- confirmed against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+
+## 2026-09-18 — null-receipts audit page 23: repertoire_1896-97_pair008
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1896-97_pair008' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows before fix -- all at ('6 Среда.', <theater>) for Александринскій, Малый,
+Маріинскій, Михайловскій. Investigation revealed a date-label cascade starting at "4 Ноября.":
+every date from there was labeled one true-date-slot too early, dropping true "4 Ноября."
+entirely and truncating the shifted-in "7 Четверг." content. Rebuilt all 4 dates x 4 theaters
+(4/5/6/7 Ноября), scan-verified against ForUpload_1896-97_Repertoire_003.jpg (printed pp.8-9).
+Found but NOT fixed: Большой is absent from this entire file (all dates, not just this range);
+also a spurious duplicate "25 Пятница." entry (empty) alongside the correct "25 Октября." for
+the same calendar date. Both deferred -- see repertoire-1896-97-pair008-open-issues.md.
+
+```sql
+select date_text, theater, receipts_text from raw.event_entry
+    where page_id='repertoire_1896-97_pair008' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows after fix -- confirmed against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+
+## 2026-09-18 — null-receipts audit page 24: repertoire_1896-97_pair016
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1896-97_pair016' and event_status='performed' and receipts_text is null
+```
+
+Result: 3 rows before fix -- ('21 Вторн.', 'Большой'/'Маріинскій'/'Михайловскій', None).
+Titles were already correct, only receipts figures dropped -- fixed directly. Separately,
+Александринскій and Малый were entirely missing from this page's extraction across all 13
+dates (9-21 Января 1897); recovered both columns in full (26 new sessions), confirming
+11 Суббота./18 Суббота are genuinely dark for them too (benefit shows, only Михайловскій
+performed). Scan-verified against ForUpload_1896-97_Repertoire_007.jpg (printed pp.16-17).
+
+```sql
+select date_text, theater, receipts_text from raw.event_entry
+    where page_id='repertoire_1896-97_pair016' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows after fix -- confirmed against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+
+## 2026-09-18 — null-receipts audit page 25: repertoire_1896-97_pair024 (last 1896-97 page)
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1896-97_pair024' and event_status='performed' and receipts_text is null
+```
+
+Result: 2 rows before fix -- ('16 Среда.', 'Маріинскій', None, 'Парадный спектакль.') and
+('20 Воскресенье.', 'Михайловскій', None, None). The 16 Среда. row confirmed genuinely blank
+in the source (a ceremonial "Парадный спектакль" performance with no receipts figure printed
+at all) -- legitimate, left as null. The 20 Воскресенье. row was a genuine drop (title already
+correct); recovered 558 р. 85 к. Separately, Малый was entirely missing from this page's
+extraction across all dates; recovered for 16-24 Апрѣля (8 sessions), confirmed genuinely dark
+for 3/4 Апрѣля. and 14/15 Понед./Вторн. Scan-verified against
+ForUpload_1896-97_Repertoire_011.jpg (printed pp.24-25).
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1896-97_pair024' and event_status='performed' and receipts_text is null
+```
+
+Result: 1 row after fix -- the confirmed-legitimate 16 Среда. Маріинскій "Парадный спектакль."
+row (verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).
+
+## 2026-09-18 — null-receipts audit page 26: repertoire_1897-98_pair006 (first 1897-98 page)
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair006' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows before fix -- all at ('16 Четв.', <theater>) for Александринскій, Большой,
+Маріинскій, Михайловскій. Titles were already correct for all 5 theaters (Малый already had
+its receipts) -- only the 4 figures were dropped. Fixed directly, no relabeling needed.
+Scan-verified against ForUpload_1897-98_Repertoire_002.jpg (printed pp.6-7).
+
+```sql
+select date_text, theater, receipts_text from raw.event_entry
+    where page_id='repertoire_1897-98_pair006' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows after fix -- confirmed against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+
+## 2026-09-18 — null-receipts audit page 27: repertoire_1897-98_pair008
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair008' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows before fix -- ('25 Суббота.', 'Александринскій'), ('26 Воскрес.',
+'Александринскій'), ('5 Среда.', 'Александринскій'), ('5 Среда.', 'Маріинскій'), all None.
+The first two (Représentation de M-me Réjane guest performances) confirmed genuinely blank in
+the source -- no receipts figure printed at all for either. The other two were genuine drops
+(titles already correct); recovered 1193 р. 72 к. (Алекс) and 3602 р. 50 к. (Мар).
+Scan-verified against ForUpload_1897-98_Repertoire_003.jpg (printed pp.8-9).
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair008' and event_status='performed' and receipts_text is null
+```
+
+Result: 2 rows after fix -- the confirmed-legitimate Représentation de M-me Réjane rows
+(verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).
+
+## 2026-09-18 — null-receipts audit page 28: repertoire_1897-98_pair010
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair010' and event_status='performed' and receipts_text is null
+```
+
+Result: 5 rows before fix -- ('14 Пятница.', 'Александринскій'/'Малый', None), ('22 Суббота.',
+'Александринскій', None, 'Спектакль труппы Берлинскаго Лессингъ-театра.'), ('27 Четверг.',
+'Александринскій', None), ('29 Суббота.', 'Александринскій', None, same annotation). 4 of the
+5 confirmed genuinely blank in the source: the 2 "14 Пятница." rows are free "Гимнъ" morning
+shows for students (no receipts printed), and both German-troupe guest performances (22/29
+Суббота.) likewise have no receipts figure printed at all. Only "27 Четверг." was a genuine
+drop (title correct); recovered 1583 р. 50 к. Scan-verified against
+ForUpload_1897-98_Repertoire_004.jpg (printed pp.10-11).
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair010' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows after fix -- all confirmed legitimate (verified against rebuilt
+outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).
+
+## 2026-09-18 — null-receipts audit page 29: repertoire_1897-98_pair014
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair014' and event_status='performed' and receipts_text is null
+```
+
+Result: 3 rows before fix -- ('2 Пя.', 'Михайловскій'), ('20 Декабря.', 'Александринскій'),
+('27 Суббота.', 'Александринскій'), all None. The 2 Александринскій rows (both "Спектакль
+г-жи Тины ди Лоренцо" touring guest performances) confirmed genuinely blank in the source --
+no receipts figure printed for either. "2 Пя." Михайловскій was a genuine drop (truncated
+title, dropped receipts) -- completed to "Le Maître de Forges/Le Bésique chinois, 1450 р. 13
+к.", matching the same calendar date's separately-labeled "2 Пятница." entry. Scan-verified
+against ForUpload_1897-98_Repertoire_006.jpg (printed pp.14-15).
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair014' and event_status='performed' and receipts_text is null
+```
+
+Result: 2 rows after fix -- both confirmed legitimate (verified against rebuilt
+outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).
+
+## 2026-09-18 — null-receipts audit page 30: repertoire_1897-98_pair016
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair016' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows -- ('18 Воскрес.', 'Большой'/'Малый'/'Маріинскій'/'Михайловскій'), all None, all
+the same physical row. Confirmed genuinely illegible: the scan
+(ForUpload_1897-98_Repertoire_007.jpg, printed pp.16-17) shows the page physically curling into
+the binding fold at exactly this row, swallowing the entire receipts line for Маріинскій,
+Большой, Михайловскій, and Малый's evening session -- no digits visible at all, titles above
+are legible. Matches the established crease-illegibility pattern (distinct from an extraction
+drop). No fix applied -- left as null, confirmed legitimate.
+
+## 2026-09-18 — null-receipts audit page 31: repertoire_1897-98_pair018
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair018' and event_status='performed' and receipts_text is null
+```
+
+Result: 7 rows before fix -- ('31 Суббота.', 'Маріинскій'), ('5 Четвергъ.', 'Александринскій'),
+('5 Четвергъ.', 'Большой'), ('6 Пятница.', 'Маріинскій'), ('8 Воскресенье.', 'Александринскій'),
+('8 Воскресенье.', 'Большой'), ('8 Воскресенье.', 'Маріинскій'), all None. The 3
+"8 Воскресенье." rows were genuine drops (titles correct); recovered all 3. The other 4 trace
+to a deeper multi-theater date-label tangle: "5 Четвергъ." Алекс/Большой are actually true
+"6 Пятн." content (which itself sits on a row where the printed page curls into the binding,
+swallowing receipts for ALL theaters that row -- confirmed via scan); "6 Пятница." Маріинскій
+is that same crease-affected row's Маріинскій cell; "31 Суббота." Маріинскій is actually true
+"1 Воскресенье." content (a charity benefit performance with no receipts printed at all,
+confirmed separately). Scan-verified against ForUpload_1897-98_Repertoire_008.jpg (printed
+pp.18-19). Full relabeling deferred -- see repertoire-1897-98-pair018-date-tangle.md.
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair018' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows after fix -- all confirmed legitimate content-wise (mislabeled dates deferred,
+verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb).
+
+## 2026-09-18 — null-receipts audit page 32: repertoire_1897-98_pair024 (last page in main worklist)
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair024' and event_status='performed' and receipts_text is null
+```
+
+Result: 3 rows -- ('15 Среда.', 'Большой'/'Маріинскій'/'Михайловскій'), all None, same row
+(Александринскій/Малый for this date already have their receipts). Confirmed genuinely
+unrecoverable: the row sits exactly at the physical bottom edge of the photographed page
+(ForUpload_1897-98_Repertoire_011.jpg, printed pp.24-25) -- titles are legible for all 5
+theaters but the receipts line itself was never captured in either scan (the next photo
+resumes at "16 Четверг.", not a re-photograph of this row). Same precedent as
+repertoire_1894-95_p008. No fix applied -- left as null, confirmed genuine.
+
+## 2026-09-18 — annotated-bucket audit page 1: repertoire_1897-98_pair022 (biggest, 8 rows)
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair022' and event_status='performed'
+    and receipts_text is null and annotation is not null
+```
+
+Result: 8 rows -- all charity/benefit performances by a touring German opera company plus two
+Russian invalid-relief/Red-Cross benefit concerts at Большой (14/15 Суббота-Воскресенье
+Маріинскій; 19 Четвергъ/21 марта/7 Вторникъ Большой; 21 Суббота Маріинскій; 22
+Воскресенье/23 Понед. Большой). All confirmed genuinely blank in the source -- titles/annotations
+match the scan exactly, no receipts figure printed for any of them. Scan-verified against
+ForUpload_1897-98_Repertoire_010.jpg (printed pp.22-23). Noted in passing: "23 Понед." Большой
+has a duplicate entry (empty ann=None + the charity-annotated one, matching "22 Воскресенье."'s
+text byte-for-byte) -- likely a duplicate-capture artifact, not touched (both are legitimately
+null regardless). No fixes applied -- all 8 confirmed legitimate.
+
+## 2026-09-18 — annotated-bucket audit pages 2-5: repertoire_1892-93_pair004/006/010/020/024
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id=? and event_status='performed' and receipts_text is null and annotation is not null
+```
+
+Checked repertoire_1892-93_pair004, pair006 (both 0 rows -- already resolved as part of the
+earlier no-annotation-bucket full rebuilds of these same pages). pair010 (2 rows, "14 Суббота."
+Большой/Михайловскій, both ann="Гимнъ.") confirmed legitimate -- matches the free student
+morning-show row exactly (ForUpload_1892-93_Repertoire_004.jpg, printed pp.10-11), no receipts
+printed for any theater that row. pair020 (5 rows, all "Концертъ/Генеральная репетиция/
+Повтореніе концерта въ пользу инвалидовъ", Маріинскій + Большой) confirmed legitimate --
+charity war-invalid-relief concerts, no receipts printed for any occurrence, scan-verified
+against ForUpload_1892-93_Repertoire_009.jpg (printed pp.20-21); noted in passing (not fixed) a
+1-day Маріинскій date-shift for 2 of the 5 rows and a spurious duplicate "29 Понед." entry.
+pair024 (2 rows): "31 Понедѣльн." Малый confirmed legitimate (matches scan exactly -- "Жрица
+искусства"/"Сосѣдъ и сосѣдка, вод." with no receipts printed; also notes an OCR fix needed,
+"Крица"->"Жрица", and that the second title belongs in works not annotation, not applied this
+pass); "3 Четверг." Малый ("Новое дѣло,ком.", ann="Гимнъ.") left UNRESOLVED -- the same title
+recurs on two different true dates in the scan (6 Четвергъ with 1069 р. 97 к., 12 Среда with
+231 р. 9 к.) and neither maps unambiguously to file's "3 Четверг." label; genuinely ambiguous,
+deferred rather than guessed. Scan-verified against ForUpload_1892-93_Repertoire_011.jpg
+(printed pp.24-25).
+
+## 2026-09-18 — annotated-bucket audit pages 6-8: repertoire_1893-94_pair010/016/022
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id=? and event_status='performed' and receipts_text is null and annotation is not null
+```
+
+pair016: 0 rows (already resolved). pair022 (1 row, "22 Вторн." Маріинскій, "Повтореніе
+концерта въ пользу инвалидовъ.") confirmed legitimate -- matches the charity-concert row
+exactly (scan shows it under "23 Среда.", a minor date-label discrepancy not otherwise
+investigated), no receipts printed. Scan-verified against ForUpload_1893-94_Repertoire_010.jpg
+(printed pp.22-23). pair010 (1 row, "23 Вторникъ." Маріинскій, "Въ пользу школъ Спб. Женскаго
+Патриотического Общества...") NOT resolved -- checked ForUpload_1893-94_Repertoire_005.jpg and
+_006.jpg (printed pp.12-15) without finding this specific row; this page already has known
+date-labeling problems (see repertoire-1893-94-pair010-open-issues.md) that make its true
+calendar position unclear. Left unconfirmed rather than assumed from pattern -- added to that
+page's existing deferred-issues memory.
+
+## 2026-09-18 — annotated-bucket audit pages 9-10: repertoire_1894-95_pair010/016
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id=? and event_status='performed' and receipts_text is null and annotation is not null
+```
+
+pair016: 0 rows (already resolved). pair010 (1 row, "8 Февраля." Маріинскій, annotation
+truncated to "Безплатные у") confirmed legitimate -- this is the "Безплатные утренніе спектакли
+для воспитанниковъ учебныхъ заведеній" free-show section header (truncated in extraction), no
+receipts printed for the whole block. Scan shows it under "9 Февраля." not "8 Февраля." (minor
+date-label discrepancy, not investigated further). Scan-verified against
+ForUpload_1894-95_Repertoire_004.jpg (printed pp.10-11).
+
+## 2026-09-18 — annotated-bucket audit pages 11-13: repertoire_1895-96_pair006/010/014/016
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id=? and event_status='performed' and receipts_text is null and annotation is not null
+```
+
+pair006: 0 rows (already resolved). pair010 (6 rows: "26 Воскресенье." Александринскій
+"Безплатный спектакль для гг. георгіевскихъ кавалеровъ." + "6 Среда." all 5 theaters
+"Безплатные утренніе спектакли...") confirmed legitimate -- both blocks scan-verified
+against ForUpload_1895-96_Repertoire_004.jpg (printed pp.10-11), no receipts printed. pair014
+(1 row, "3 Среда." Александринскій, same free-show annotation) confirmed legitimate against
+ForUpload_1895-96_Repertoire_006.jpg (printed pp.14-15). pair016 (5 rows: "30 Вторникъ."
+Маріинскій/Александринскій/Михайловскій + "31 Среда." Большой/Малый, same free-show pattern
+split across two consecutive free-show blocks -- Petersburg theaters on 30th, Moscow theaters
+on 31st) confirmed legitimate against ForUpload_1895-96_Repertoire_007.jpg (printed pp.16-17).
+This closes out the entire 1895-96 season's annotated bucket -- all 12 rows confirmed
+legitimate, no fixes needed.
+
+## 2026-09-18 — annotated-bucket audit pages 14-19: repertoire_1896-97_pair010/012/014/020/022/024
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id=? and event_status='performed' and receipts_text is null and annotation is not null
+```
+
+pair010 (2 rows: "14 Четверг." Александринскій "Гимнъ." free-show; "24 Воск." Александринскій
+"Спектакль въ память Императрицы Екатерины II.") both confirmed legitimate against
+ForUpload_1896-97_Repertoire_004.jpg (printed pp.10-11). pair012 (1 row, "6 Пятница."
+Маріинскій, truncated "Безплата") confirmed legitimate -- the free morning-show row (a second,
+genuinely-paid evening "Гимнъ."-prefixed session exists on the same date, which is why receipts
+appear elsewhere that day); ForUpload_1896-97_Repertoire_005.jpg (printed pp.12-13). pair014
+(1 row, "19 Декабря." Александринскій, "Спектакль въ пользу Спб. Дома Милосердія.") confirmed
+legitimate against ForUpload_1896-97_Repertoire_006.jpg (printed pp.14-15). pair020 (1 row,
+"19 Среда." Маріинскій, truncated/OCR-garbled "Везплам") confirmed legitimate (free-show) against
+ForUpload_1896-97_Repertoire_009.jpg (printed pp.20-21). pair022 (1 row, "19 Среда." Большой,
+"Концертъ въ пользу инвалидовъ") confirmed legitimate against ForUpload_1896-97_Repertoire_010.jpg
+(printed pp.22-23). pair024's row ("16 Среда." Маріинскій, "Парадный спектакль.") was already
+confirmed legitimate earlier this session as part of the main no-annotation audit of this same
+page. This closes out the entire 1896-97 season's annotated bucket.
+
+## 2026-09-18 — annotated-bucket audit pages 20-23 (final): repertoire_1897-98_p012/pair010/pair012/pair018
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id=? and event_status='performed' and receipts_text is null and annotation is not null
+```
+
+pair010's 2 rows and pair018's 2 rows were already confirmed earlier this session as part of the
+main no-annotation-bucket work on these same pages (German touring-troupe rows on pair010; the
+already-documented date-tangle rows on pair018, tracked in repertoire-1897-98-pair018-date-tangle.md).
+p012 (2 rows, "4 Понедѣльник."/"5 Вторникъ.", both "Въ пользу пострадавшихъ отъ недорода хлѣбовъ."
+-- famine-relief charity) confirmed legitimate against ForUpload_1897-98_Repertoire_012.jpg
+(printed pp.26-27, last page of the season); the second row also sits at the literal last row of
+the season, page-edge cut, consistent with the established unrecoverable-edge pattern. pair012
+(1 row, "6 Суббота." Маріинскій, ann="Безплатные спектакли для военныхъ") confirmed legitimate --
+title matches the scan's free-show row exactly (ForUpload_1897-98_Repertoire_005.jpg, printed
+pp.12-13); noted in passing that the annotation text itself appears to be a misread of the
+scan's actual header ("для воспитанниковъ столичныхъ учебныхъ заведеній", not "для военныхъ") --
+a separate minor annotation-accuracy issue, not touched, doesn't affect the null-receipts finding.
+
+**THIS COMPLETES THE ENTIRE ANNOTATED BUCKET (56 rows) AND THE FULL NULL-RECEIPTS AUDIT
+(both buckets, all 8 seasons).**
+
+## 2026-09-18 — deferred-issue resolution 1/7: repertoire_1892-93_pair014 missing theaters
+
+```sql
+select distinct theater from raw.event_entry where page_id='repertoire_1892-93_pair014'
+```
+
+Before fix: only Маріинскій (1 theater). Full page rebuild: transcribed all 5 theaters for all
+22 true calendar dates (27 Декабря 1892 - 16 Января 1893) directly from
+ForUpload_1892-93_Repertoire_006.jpg (printed pp.14-15). Found the existing Маріинскій column
+itself carried a whole-file date-label shift (every file label held the PREVIOUS true date's
+content, e.g. file's old "11 Понед." was really true "10 Воскресенье.") plus a duplicated
+benefit performance (Бенефисъ г. Л. Иванова appeared under both "4 Понед." and "6 января.",
+really belonging only to true "3 Воскресенье."). Confirmed "6 Среда." is a genuine
+crease-illegible row (page physically folds there, swallowing all 5 theaters' receipts --
+titles legible, figures not). 25 -> 121 sessions.
+
+```sql
+select date_text, theater from raw.event_entry
+    where page_id='repertoire_1892-93_pair014' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows after fix -- all "6 Среда." (the confirmed crease-illegible row), all other
+20 dates x 5 theaters fully populated. Verified against rebuilt
+outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb. 5 quality flags unchanged (still
+exactly 5, no new duplicates introduced by the rebuild).
+
+## 2026-09-18 — deferred-issue resolution 2/7: repertoire_1893-94_pair010
+
+```sql
+select distinct theater from raw.event_entry where page_id='repertoire_1893-94_pair010'
+```
+
+Before fix: 4 theaters (Малый missing). An initial quick scan check mistakenly concluded Малый
+was dark the whole page; a careful full-column crop showed it is genuinely active on most dates.
+Recovered Малый for all 20 dates from ForUpload_1893-94_Repertoire_004.jpg (printed pp.10-11).
+Also re-verified the earlier "Маріинскій whole-column date shift" theory from the prior session
+and found it was a misreading from imprecise cropping -- Маріинскій is almost entirely correctly
+labeled already. Real issues found and fixed: "24 Среда." Михайловскій had 2 spurious duplicate
+sessions (one copying "23 Вторникъ."'s content, one copying "22 Пон."'s title with a fabricated
+receipts figure) -- removed, kept only the correct single session; "29 Понед." Михайловскій had
+1 spurious duplicate (copying "28 Воскрес." утро's content) -- removed; "24 Среда." Маріинскій
+had a contaminated annotation bled in from the adjacent "23 Вторникъ." cell -- cleared, title
+and receipts were already correct; "26 Пятница." Маріинскій had an OCR typo ("Лида" for "Аида").
+Confirmed as legitimate (no fix): "22 Пон." Михайловскій is crease-illegible; "23 Вторникъ."
+Маріинскій is a charity benefit with no receipts printed (title/annotation match the scan
+exactly). 73 -> 91 sessions.
+
+```sql
+select date_text, theater, annotation from raw.event_entry
+    where page_id='repertoire_1893-94_pair010' and event_status='performed' and receipts_text is null
+```
+
+Result: 4 rows after fix -- the 2 confirmed-legitimate rows above, plus "14 Воскресенье." Малый
+(the free "Гимнъ" morning show, genuinely blank) and "22 Пон." Малый (this one's receipts sit
+directly under a physical binding thread in the scan, genuinely illegible -- left null rather
+than guessed). Verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+5 quality flags unchanged.
+
+## 2026-09-18 — deferred-issue resolution 3/7: repertoire_1894-95_pair006
+
+```sql
+select date_text, count(distinct theater) from raw.event_entry
+    where page_id='repertoire_1894-95_pair006' group by date_text order by 2
+```
+
+Investigation of the originally-flagged "14 Пятн."/"4 Октября." duplicate clusters revealed the
+underlying defect actually spans the whole October portion of the page (5-19 Октября):
+Александринскій carried its own continuous date-label shift starting at 5 Среда; Михайловскій
+had scattered spurious duplicates plus its own shift from 16 Воскресенье onward; Большой had
+non-adjacent duplicate/misattributed sessions (including two cases where receipts from January
+dates were mistakenly copied onto October rows). Маріинскій and Малый were already almost
+entirely correct. Rebuilt all 5 theaters for 4-19 Октября directly from
+ForUpload_1894-95_Repertoire_002.jpg (printed pp.6-7); confirmed 1-4 Января were already correct
+(the "4 Среда."/"4 Октября." label confusion was just a naming inconsistency -- content was
+already right, relabeled to "4 Января." for consistency with its siblings "1 Январь"/"2
+Понедѣльникъ"/"3 Вторн."). 109 -> 109 sessions (pure relabel/dedup, no net count change).
+
+```sql
+select date_text, theater, annotation from raw.event_entry
+    where page_id='repertoire_1894-95_pair006' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows -- every date now has all 5 theaters, verified against rebuilt
+outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb. Quality flags DROPPED from 5 to 4 --
+the pre-existing duplicate_event_key flag for this page's "14 Пятн." Большой duplicate is
+resolved by this rebuild.
+
+## 2026-09-18 — deferred-issue resolution 4/7: repertoire_1895-96_pair006
+
+```sql
+select date_text, count(distinct theater) from raw.event_entry
+    where page_id='repertoire_1895-96_pair006' group by date_text order by 1
+```
+
+Untangled the scattered Маріинскій/Михайловскій duplicates and recovered the missing
+Александринскій/Малый for 22-28 Октября (Большой confirmed genuinely dark throughout the whole
+page, already established). Specific fixes: relabeled "17 октября." Маріинскій to "17 Вторн."
+(true 17 Вторн content was otherwise entirely missing); removed 3 spurious duplicate sessions
+("18 Среда." Маріинскій morning + "18 октября." Маріинскій, both duplicating already-correct
+content from 17 Вторн/16 Понед; "18 Среда." Михайловскій morning, duplicating 17 Вторн);
+recovered a dropped "8 Октября." Малый evening session (a duplicate of it had been mistakenly
+captured under "9 Понед." instead, removed separately); fixed an OCR typo ("Вольницы"->
+"Невольницы"); recovered Александринскій + Малый for 22-28 Октября (16 new sessions).
+Scan-verified against ForUpload_1895-96_Repertoire_002.jpg (printed pp.6-7). 77 -> 90 sessions.
+
+```sql
+select date_text, theater, annotation from raw.event_entry
+    where page_id='repertoire_1895-96_pair006' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows -- verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+4 quality flags unchanged.
+
+## 2026-09-18 — deferred-issue resolution 5/7: repertoire_1896-97_pair004
+
+```sql
+select date_text, count(distinct theater) from raw.event_entry
+    where page_id='repertoire_1896-97_pair004' group by date_text order by 1
+```
+
+Full rebuild of Александринскій, Маріинскій, Михайловскій, Большой for the whole page
+(12 Сентября - 3 Октября 1896). Precisely pinned down each theater's shift onset via direct
+receipts-figure matching against the scan: Александринскій and Михайловскій both shift starting
+at "16 Понед." (with true 16 Понед content duplicated onto a spurious extra "15 Воскрес." entry
+for each), continuing through "27 Пятница." (already fixed earlier this session); Маріинскій has
+its own separate shift starting at "21 Суббота." (a genuinely dark day for it, whose true content
+got skipped, and everything from "22 Воскрес." onward held the next day's content); Большой was
+never shifted throughout. All four were also missing 28 Сентября-3 Октября entirely -- recovered.
+Малый (already fixed earlier this session) was left untouched. Scan-verified against
+ForUpload_1896-97_Repertoire_001.jpg (printed pp.4-5). 75 -> 101 sessions.
+
+```sql
+select date_text, theater from raw.event_entry
+    where page_id='repertoire_1896-97_pair004' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows -- verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+Every date now has all 5 theaters (4 on the two genuinely-dark-for-most-theaters Saturdays,
+21/28 Суббота, correctly). 4 quality flags unchanged.
+
+## 2026-09-18 — deferred-issue resolution 6/7: repertoire_1896-97_pair008
+
+```sql
+select date_text, count(distinct theater) from raw.event_entry
+    where page_id='repertoire_1896-97_pair008' group by date_text order by 1
+```
+
+Full page rebuild (25 Октября - 13 Ноября 1896, the full extent of this scan). Discovered a
+UNIFORM date-label shift affecting ALL theaters simultaneously (unlike other pages' per-theater
+independent shifts) starting at "26 Суббота." -- every date from there was one true-date-slot
+too early, with a spurious duplicate "25 Пятница." entry (really true 26 Суббота content) and
+"3 Воскрес." entry (an exact duplicate of the already-correctly-fixed "4 Ноября.") left behind.
+Большой was entirely missing throughout the whole page. The tail beyond the already-fixed
+4-7 Ноября (8-13 Ноября) was missing entirely for all 5 theaters. Independently re-confirmed
+the earlier 4-7 Ноября fix was correct (matches this fresh reading exactly) -- only needed
+Большой added there. Scan-verified against ForUpload_1896-97_Repertoire_003.jpg (printed
+pp.8-9). 64 -> 106 sessions.
+
+```sql
+select date_text, theater from raw.event_entry
+    where page_id='repertoire_1896-97_pair008' and event_status='performed' and receipts_text is null
+```
+
+Result: 0 rows -- verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+Every date now has all 5 theaters. 4 quality flags unchanged.
+
+## 2026-09-18 — deferred-issue resolution 7/7 (FINAL): repertoire_1897-98_pair018
+
+```sql
+select date_text, count(distinct theater) from raw.event_entry
+    where page_id='repertoire_1897-98_pair018' group by date_text order by 1
+```
+
+Full page rebuild (29 Января - 8 Февраля 1898). Confirmed Александринскій and Большой share one
+continuous date-label shift running from "29 Четвергъ." (a duplicate of "29 января.") through
+"7 Суббота." (=true 8 Воскресенье утро); Маріинскій has its own separate, much shorter shift
+(29-31 Января only, self-resolving by 2 Понедѣльникъ.). Recovered Михайловскій and Малый, both
+entirely missing from this file (not just Михайловскій, as originally noted). Confirmed "6
+Пятница." is genuinely crease-illegible for all 5 theaters (titles legible, receipts swallowed
+by the binding fold). The 3 genuine drops at "8 Воскресенье." fixed earlier this session were
+independently re-confirmed correct against this fresh, careful reading. Scan-verified against
+ForUpload_1897-98_Repertoire_008.jpg (printed pp.18-19). 36 -> 59 sessions.
+
+```sql
+select date_text, theater, annotation from raw.event_entry
+    where page_id='repertoire_1897-98_pair018' and event_status='performed' and receipts_text is null
+```
+
+Result: 6 rows after fix -- "1 Воскресенье." Маріинскій (confirmed charity benefit, no receipts
+printed) and all 5 theaters at "6 Пятница." (confirmed crease-illegible). Every date has all 5
+theaters. Verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+4 quality flags unchanged.
+
+**THIS RESOLVES THE LAST OF THE 7 DEFERRED MULTI-THEATER TANGLES FROM ISSUE #70.**
+
+## 2026-09-18 — final unresolved rows 1/2: repertoire_1893-94_pair010
+
+```sql
+select date_text, theater, receipts_text, annotation from raw.event_entry
+    where page_id='repertoire_1893-94_pair010' and event_status='performed' and receipts_text is null
+```
+
+Both remaining open items resolved by re-checking ForUpload_1893-94_Repertoire_004.jpg (printed
+pp.10-11) with a cleaner, more precisely-targeted crop than the earlier pass. "23 Вторникъ."
+Маріинскій (ann="Въ пользу школъ Спб. Женскаго Патриотического Общества...") confirmed
+genuinely blank -- the scan shows this exact annotation text with no receipts figure printed
+beneath it at all (unlike the adjacent Александринскій cell on the same row, which does show a
+figure). "22 Пон." Михайловскій confirmed thread-obscured -- the same physical binding thread
+that crosses this entire row (already accepted as the explanation for the adjacent "22 Пон."
+Малый cell) also crosses directly through Михайловскій's receipts position; title
+("Венецейскій истуканъ, карт. / Бѣдовая дѣвушка, вод.") is legible, figure is not. Both left
+null, confirmed legitimate. No data changes -- 91 sessions unchanged.
+
+## 2026-09-18 — final unresolved row 2/2: repertoire_1892-93_pair024
+
+```sql
+select date_text, theater, receipts_text from raw.event_entry
+    where page_id='repertoire_1892-93_pair024' and theater='Малый' order by date_text
+```
+
+Resolved the ambiguity: "3 Четверг." Малый (title "Новое дѣло, ком.", ann="Гимнъ.") relabeled
+to true "6 Четвергъ." -- confirmed via weekday-name matching. The title recurs twice in the
+scan (true 6 Четвергъ. at 1069 р. 97 к., true 12 Среда. at 231 р. 9 к.), but only the 6
+Четвергъ. occurrence shares the file label's weekday name ("Четвергъ"); separately confirmed
+the file's own nearby date labels for this stretch (1 Вторник./2 Среда./3 Четверг.) do NOT
+match the true calendar (true 3-4 Мая 1893 were Понедельникъ/Вторникъ per the scan's own date
+column, not Среда/Четвергъ), establishing that weekday-name matching is the reliable
+disambiguator for this page. Scan-verified against ForUpload_1892-93_Repertoire_011.jpg
+(printed pp.24-25).
+
+```sql
+select date_text, theater, receipts_text from raw.event_entry
+    where page_id='repertoire_1892-93_pair024' and event_status='performed' and receipts_text is null
+```
+
+Result: 1 row -- "31 Понедѣльн." Малый, already confirmed legitimate earlier this session
+(genuinely obscured by the physical page fold, visible as a diagonal crease line in the scan
+right through that row). Verified against rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+4 quality flags unchanged.
+
+**THIS RESOLVES THE LAST OF THE TWO INDIVIDUALLY-UNRESOLVED ROWS FROM THE ENTIRE #70 NULL-RECEIPTS AUDIT.**
+
+## 2026-09-18 — date_undate fill rate and correctness check after the two-page-spread header backfill (issue #72)
+
+```sql
+-- fill rate
+SELECT count(*), count(date_undate) FROM raw.event_entry;
+```
+
+Result: 4937/4939 = 99.96% filled (the 2 nulls are genuine -- `repertoire_1894-95_pair010`'s
+two "Февр." sessions carry no day number at all).
+
+```python
+# programmatic cross-check: every date_undate against its own page's scan-verified
+# (start_date, end_date) window, from the 88-row page_header_dates.csv
+```
+
+Result: 0 invalid calendar dates, 0 wrong-month/year assignments; 3 rows fall slightly outside
+a page's window because that page's own `end_day` estimate undersold its true extent within the
+same end_month (harmless, not a correctness issue).
+
+```bash
+uv run python pipeline/validate_performance_dates.py --db outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb
+```
+
+Result: verified 3924 (79.4%), intra_block_disagreement 767 (15.5%), corrected 204 (4.1%),
+unresolved 42 (0.9%), no_date 2 (0.0%) -- independent Julian-calendar weekday corroboration
+that the backfilled dates are correct, not just internally consistent with their own headers.
+Prior baseline (unheadered spread dates, outputs/fold_review/README.md): 35.6% weekday mismatch.
+
+## 2026-09-18 — characterizing the 42 'unresolved' rows from validate_performance_dates.py (follow-up to issue #72)
+
+```sql
+SELECT e.page_id, e.event_id, e.date_text, e.theater, e.date_undate, d.date_confidence
+FROM analysis.event_entry_date_check d JOIN raw.event_entry e USING (event_id)
+WHERE d.date_confidence = 'unresolved' ORDER BY e.page_id, e.date_undate;
+```
+
+Result: 42 rows across 9 pages. Largest cluster: repertoire_1891-92_pair004, 21 rows (3
+consecutive dates, 1/2/3 Сентября 1891, ~5-6 theaters each). Computed true weekday (Julian,
+convertdate.julian.jwday) vs. parsed printed weekday for all 42: every row shows a small,
+consistent offset (1-2 days) between what the day-number implies and what the printed weekday
+word says -- matching validate_performance_dates.py's own documented "day number drift" defect
+(module docstring: concentrated in the 1891-92 through 1896-97 seasons), not something
+introduced by today's date_undate backfill.
+
+Debug-traced why the 1891-92_pair004 3-day run didn't auto-correct despite sharing the same
++2-day offset: the script's run-detection walks blocks in `event_id` order (raw file/session
+print order), not calendar order. Confirmed directly -- block_order for this page shows
+1891-09-01, then 1891-09-11, then 1891-09-19, then 1891-09-02 -- i.e. Sep2's block is NOT
+adjacent to Sep1's in file order, because (same root cause as issue #72's pipeline fix) this
+page's session lists aren't stored chronologically. The Sep11/19 blocks in between are
+'verified' (no mismatch), breaking the run and leaving Sep1/2/3 each as an isolated
+single-block run, which can't meet _MIN_RUN_AGREEMENT=2 alone. This is a real, separate
+follow-on consequence of the non-chronological-session-order root cause, but in a different
+script (validate_performance_dates.py) that issue #72 did not touch -- noted for a possible
+future fix, not addressed today.
+
+## 2026-09-18 — scan-checked all 9 pages behind the 42 'unresolved' rows (follow-up to issue #72)
+
+Read the actual render image for at least one representative flagged date on each of the 9
+pages. Findings:
+
+1. `repertoire_1890-91_pair018` and `repertoire_1891-92_pair002`/`pair004` had never been
+   individually re-scanned this session -- they were still using the original, already-proven-
+   unreliable "single anchor month, trusted for whole page" guess. Checked directly:
+   - `1890-91_pair018`: guess was "1-31 Января 1891"; scan (`ForUpload_1890-91_Repertoire_008.jpg`)
+     shows the true range is 25 Января - 13(+) Февраля 1891, with the day-1/2 stragglers at the
+     front of the file's own session order actually being Feb 1-2 (weekday-confirmed: true
+     Feb1,1891=Пятн., Feb2=Субб., matching the printed labels exactly). A real, previously-missed
+     header error -- FIXED, see known_issues.md.
+   - `1891-92_pair002`/`pair004`: the "1-30 Августа"/"1-30 Сентября" guesses turned out to be
+     directionally correct (confirmed against `ForUpload_1891-92_Repertoire_000.jpg`, which shows
+     Aug16-Sep10 continuously) -- NOT a header bug. But the 3 flagged September 1/2/3 rows
+     revealed something else: the scan clearly shows "1 Восир.(Sun)/2 Понед.(Mon)/3 Вторникъ(Tue)"
+     while raw `date_text` for all 5 theaters says "1 Вторн./2 Среда/3 Четверг" (each 2 weekdays
+     later) -- a pre-existing raw-extraction weekday-word misread, confirmed on the page itself,
+     NOT a date_undate error (date_undate for these 3 rows is already correct -- matches both the
+     scan's day column and true Julian weekday).
+
+2. Found and fixed a real bug in today's own `_backfill_month_year` patch: the `_MONTH_LENGTH`
+   sanity check hardcoded февраля=28, not accounting for Julian leap years (1892, 1896 in this
+   corpus). This wrongly reassigned genuine "29 Суббота."/"29 Четвергъ." February 29th sessions to
+   March 29th instead. Confirmed directly: `repertoire_1891-92_pair018`'s "29 Суббота." scan
+   (`ForUpload_1891-92_Repertoire_008.jpg`) shows Feb29,1892 as Суббота -- true weekday (Julian)
+   for 1892-02-29 is also Суббота; but 1892-03-29 (where the old bug sent it) is a Sunday, hence
+   the mismatch. Same root cause hit `repertoire_1895-96_pair020`'s "29 Четвергъ." (1896 also a
+   leap year). FIXED -- see known_issues.md.
+
+3. The remaining pages checked (`1890-91_pair024`, `1892-93_pair024`, `1894-95_pair008`,
+   `1895-96_pair002`) all show the SAME kind of pre-existing, isolated date_text weekday/day-number
+   drift already documented in `validate_performance_dates.py`'s own module docstring (concentrated
+   in 1891-92 through 1896-97) -- e.g. `1892-93_pair024`'s flagged "3 Четверг." Большой is a blank
+   dark-day placeholder (no real content) whose weekday word is simply wrong; the true row for that
+   date on the scan is blank too, just correctly labeled "3 Понедѣльн." One page
+   (`1894-95_pair008`, "25 Суббота.") appears to be a genuine PRINTING error in the original 1895
+   volume itself (real content, weekday label doesn't match the true calendar, but the scan itself
+   prints "25 Суббота." right where the raw JSON has it) -- correctly left as-is per the project's
+   verbatim-transcription rule, nothing to fix.
+
+Reran the full pipeline after the two fixes: unresolved dropped 42 -> 34 (exactly the 8 rows the
+two bugs affected); verified rose 79.4% -> 79.9%; corrected 204 -> 190; quality_flags.csv
+unchanged at 4. Remaining 34 unresolved rows are all the pre-existing date_text extraction defect
+described in point 3 above -- confirmed not a date_undate/header problem, a separate, already-
+documented issue outside this task's scope.
+
+## 2026-09-18 — fixed the remaining unresolved rows individually (follow-up to issue #72)
+
+Full row-by-row content verification (titles, and receipts where the season has them) against
+the actual scans for each of the 6 pages behind the 42 originally-unresolved rows. Result:
+
+- `repertoire_1890-91_pair024` (3 rows): pure weekday-word fix, "22 Пятница." -> "22 Понед."
+  (day/month/receipts all already correct).
+- `repertoire_1892-93_pair024` (1 row): pure weekday-word fix on a blank dark placeholder,
+  "3 Четверг." -> "3 Понедѣльн." (Большой).
+- `repertoire_1891-92_pair002` (3 rows): the two sessions both labeled "17 Среда." (Малый)
+  actually belong to two different true dates -- title-matched against
+  `ForUpload_1891-92_Repertoire_000.jpg` and split into "18 Воскрес." (morning) and
+  "19 Понед." (evening). The third row, a blank/dark "1 Воскр." Малый placeholder with zero
+  content (no works, no receipts, no annotation) and no plausible true-August-1 position
+  (the season doesn't open before Aug16 per the render, and this entry's own content is
+  empty), was removed as a spurious duplicate artifact.
+- `repertoire_1891-92_pair004` (16 rows) -- the big one. Full row-by-row cross-check against
+  BOTH `ForUpload_1891-92_Repertoire_000.jpg` (Aug16-Sep10) and `_001.jpg` (Sep11-Oct7) found
+  this page's header was fundamentally wrong (old single-anchor guess: "1-30 Сентября"). The
+  raw JSON's day-1/2/3 sessions for every theater already correctly match OCTOBER 1/2/3
+  content verbatim (title AND weekday both match October, not September) -- they only needed
+  the right month assigned, not any date_text edit. Corrected header to
+  `start_day=11, start_month=сентября, end_day=7, end_month=октября` (matches
+  `repertoire_1891-92_pair006`'s already-confirmed Oct8-27 start with zero overlap -- strong
+  corroboration). Also found and removed one genuine duplicate: Малый's "28 Сентября."
+  session was an exact content duplicate of the real "29 Воскрес." session (true Sept28 is
+  blank for Малый per the scan). Residual, NOT fixed: one stray Александринскій "1 Вторн."
+  (evening) session (Василиса Мелентьева/Фотографъ-любитель) whose true date wasn't found in
+  the Aug16-Oct7 range read this pass -- left as-is, low priority (doesn't block anything,
+  single row).
+- `repertoire_1895-96_pair002` (6 rows): receipts-figure matching against
+  `ForUpload_1895-96_Repertoire_000.jpg` found a 3-way date scramble -- raw's "26 Воскрес."
+  and "27 Четверг." labels actually cover THREE different true dates (27 Воскр., 31 Четвергъ.,
+  and 1 Пятн. of the following month). Fixed all 4 non-blank rows via receipts-figure exact
+  match (1356 р./808 р./1347 р./404 р.25 к.). Fixing the last one (Михайловскій -> "1 Пятн.")
+  collided with an ALREADY-mislabeled pre-existing session at that same key (2134 р.20 к.,
+  Севильскій цирюльникъ) -- title/receipts-matched that one too, to true "3 Воскр." (Sept3).
+  That reassignment collided with YET ANOTHER pre-existing session already sitting at
+  "3 Воскр." (675 р.63 к., Первая муха/Угасшая искра/Изъ-за мышенка) whose true date wasn't
+  found in a search through Sep1-15 this pass -- stopped chasing this specific sub-thread
+  (out of the original 42-row scope) and left it as an honestly-flagged
+  `duplicate_event_key` for a future pass, rather than silently guessing. The 2 blank/dark
+  "Большой" rows at "26"/"27" (zero content either way) were left unfixed -- no data impact.
+- `repertoire_1894-95_pair008` (5 rows): re-confirmed as a genuine printing error in the
+  original 1895 volume itself (the scan literally prints "25 Суббота." at that row; true
+  Jan25,1895 was a Среда) -- correctly left verbatim per project convention, no fix.
+
+Reran the full pipeline (parse_and_validate -> build_duckdb -> quality_checks ->
+validate_performance_dates) after all fixes: unresolved 42 -> 6 (all 6 fully explained: the 5
+genuine-printing-error rows above, plus the 1 remaining blank Большой row). verified rose to
+80.8%. `quality_checks.py` went from 4 to 6 flags -- both NEW flags are honest surfacing of
+pre-existing problems, not new breakage: `zero_dark_cells_on_multiweek_page` on
+`1891-92_pair002` (removing the spurious "1 Воскр." dark placeholder unmasked that this page
+has no other captured dark day at all -- likely a genuinely missing Aug24/Суббота row, not
+something introduced here) and the `duplicate_event_key` on `1895-96_pair002`'s "3 Воскр."
+Михайловскій described above.
+
+## 2026-09-18 — found the 1895-96_pair002 missing date; audited all 8 remaining unscanned page headers (follow-up to issue #72)
+
+**Missing date found**: Михайловскій's session at 675 р.63 к. ("Первая муха"/"Угасшая искра"/
+"Изъ-за мышенка"), left unresolved in the prior pass, is confirmed as true **"4 Понедѣльн."**
+(Sept 4, 1895) -- exact match on all 3 titles and the receipts figure, found in
+`ForUpload_1895-96_Repertoire_000.jpg`. Fixed with no collision. `duplicate_event_key` flags
+dropped from 4 to 3 (the 3 remaining are pre-existing, unrelated to #72, on 1897-98 pages).
+
+**Header re-audit**: checked the pickle for any page still carrying the original unverified
+"single anchor month, trusted for whole page" note (never individually re-scanned this
+session, as opposed to "CONFIRMED"/"CORRECTED" notes from actual scan checks). Found 8:
+`1890-91_p000`, `1890-91_pair004`, `1890-91_pair006`, `1890-91_pair016`, `1890-91_pair020`,
+`1891-92_pair002`, `1891-92_pair006`, `1891-92_pair012`. Scan-checked all 8 against their
+renders:
+
+- `1890-91_p000`: CONFIRMED correct (16-26 Августа).
+- `1890-91_pair004`: CORRECTED -- true range is 27 Августа-21 Сентября (was guessed as
+  10-21 Сентября only). Scan-verified `ForUpload_1890-91_Repertoire_001.jpg`.
+- `1890-91_pair006`: CORRECTED -- true range is 22 Сентября-11 Октября (was guessed as
+  2-11 Октября only). Scan-verified `ForUpload_1890-91_Repertoire_002.jpg`. Neither correction
+  changed any date_undate values -- the raw JSON simply has no session data in the
+  newly-added day range, so this is a header-accuracy fix for future extraction work, not a
+  regression fix.
+- `1890-91_pair016`: no header fix needed for date_undate correctness -- it's a genuine
+  single-month January page (confirmed via explicit "14 Января."/"15 Января." inline anchors),
+  so the threshold logic never triggers regardless of exact day bounds. BUT found a real,
+  separate data question: pair016's own day-10-18 entries appear to duplicate/overlap with
+  the already-confirmed-correct `1890-91_pair022` (also Jan 10-23, German-language touring-
+  troupe content, scan-verified as genuinely distinct from pair016's Russian repertoire) --
+  deliberately NOT chased further, out of scope, documented as a new deferred item (see memory).
+- `1890-91_pair020`: no cross-month evidence in the raw day sequence (14-26, single Михайловскій
+  theater only, explicit "14 Февраля." anchor) -- left as-is, low risk.
+- `1891-92_pair002`, `1891-92_pair006`, `1891-92_pair012`: no cross-month evidence (clean day
+  sequences, no stray low-day entries after this session's earlier `pair002` cleanup) --
+  `1891-92_pair006`'s Oct8 start also lines up with zero overlap against the newly-corrected
+  `1891-92_pair004`'s Oct7 end, corroborating both.
+
+Reran the full pipeline after all fixes. Full 88-page cross-check against scan-verified
+windows: 2 violations remain, both the same already-understood harmless case
+(`1892-93_pair024`'s header end_day being a conservative underestimate within the correct
+end_month, not a real error). `quality_checks.py`: 5 flags (duplicate_event_key 3 -- back to
+baseline; zero_dark_cells_on_multiweek_page 1; receipts_parse_failed 1).
+`validate_performance_dates.py`: unresolved unchanged at 6 (both header fixes didn't touch any
+existing date_undate values, as noted above), verified 80.8%.
+
+## 2026-09-18 — resolved the repertoire_1890-91_pair016/pair022 question: pair022 was mislabeled as January all along, true content is March
+
+Re-read `ForUpload_1890-91_Repertoire_007.jpg` (the render supposedly shared by both pages)
+row by row for all 5 theater columns, days 10-18. Every single one of `pair016`'s own entries
+for that range matched the scan exactly (title-for-title: "10 Четвергъ."=Цѣпи/Сцена г.Горбунова,
+"11 Пятница."=Раздѣлъ/Гость/Первое декабря..., "14 Понед."=Симфонія/Дочь русскаго актера,
+"15 Вторникъ."=Цѣпи/Азъ и Фертъ, "16 Среда."=Озимь/Старое старится.../Сцена г.Горбунова). My
+first read of this row (in the prior session segment) had mismatched day8's Alexandrinsky
+title with day10's row -- a misreading on my own part, not a data problem. Conclusion:
+pair016 is genuine, correct January 3-18 content, not a duplicate of anything.
+
+That meant pair022's own German/French-titled content (Das zweite Gesicht, Die Haubenlerche,
+Thermidor, etc., all under a suspiciously perfect no-gaps day10-23 sequence with an odd
+"10 Март." label) had to belong somewhere else. Read `ForUpload_1890-91_Repertoire_009.jpg`
+(14 Февраля - 3 Марта 1891, showing "Thermidor, dr." recurring for Михайловскій) and
+`ForUpload_1890-91_Repertoire_010.jpg` (10 Марта - 29 Марта 1891) -- exact match: render010's
+"10 Воскр." row shows Александринскій="Das zweite Gesicht, Lustsp." and
+Михайловскій="Thermidor, dr.", and "11 Понед." shows Александринскій="Die Haubenlerche,
+Schausp." -- identical to pair022's own "10 Март."/"11 Понед." entries. Weekday cross-check
+(Julian): true 1891-03-10 = Воскресенье, true 1891-03-23 = Суббота -- both match the file's
+own labels exactly.
+
+**Conclusion: `repertoire_1890-91_pair022` was never January at all.** Its true content is
+10-23 Марта 1891 (a German/French touring-troupe schedule for the Alexandrinsky/Mikhailovsky/
+Bolshoy/Maly columns). Corrected the header (`10 марта. 1891 г. 23 марта.`). Reran the full
+pipeline: `date_undate` for every one of this page's ~52 sessions is now correctly March
+instead of January. `validate_performance_dates.py`: verified rose 80.8% -> 81.9%, corrected
+dropped 170 -> 118 (these 52 rows no longer need a weekday-based shift-correction, they're
+directly right). unresolved unchanged at 6. Full 88-page window cross-check: still only the
+2 same already-understood harmless cases (1892-93_pair024's end_day underestimate).
+
+Noted but not chased further: render010 continues with distinct content through 29 Марта
+(Das letzte Wort, Der Unterstaatssecretair, etc.) beyond pair022's day23 end -- this
+March24-29 stretch doesn't appear to be captured under any existing page_id, consistent with
+the missing-page pattern already documented elsewhere in this corpus.
+
+## 2026-09-19 — pursued whether any other page shares pair022's wrong-month bug
+
+RG asked to pursue the residual risk flagged after fixing `1890-91_pair022` (mislabeled
+January, real content was March): could another "confident" page have the same undetected
+wrong-month mislabeling? Ran three computational checks against all 88 pages:
+
+1. **Date-range overlap** (using confident_headers_v3.pkl's per-page windows): 3 overlapping
+   pairs found (`1895-96_pair008`/`p012`, `1895-96_p012`/`pair010`, `1897-98_pair020`/
+   `pair022`). Checked each against actual raw session day-numbers: all 3 trace to an
+   imprecise `end_day` upper-bound estimate in the header (e.g. `p012`'s real content only
+   reaches day 17, header guessed 26) -- not genuine duplicate content. None are a repeat of
+   pair022's problem.
+2. **Inline month-name conflict**: scanned every session's own `date_text` across all 88 pages
+   for a month name that disagrees with its page's assigned header month (exactly pair022's
+   original signature: "10 Март." inside a page then-labeled January). 0 matches.
+3. **Zero-Cyrillic-content pages**: 5 pages have works entirely in Latin script across every
+   session -- `1890-91_pair022` (already fixed), `1891-92_pair018`, `1892-93_pair018`,
+   `1895-96_pair020`, `1896-97_pair022`. Investigated the latter 4:
+   - `1896-97_pair022` (Александринскій=German, Михайловскій=French, Большой=Italian opera,
+     simultaneously, mid-Lent 1897): scan-verified against `ForUpload_1896-97_Repertoire_
+     010.jpg` -- exact title+receipts match on every row checked (Gräfin Fritzi/Abu Seid
+     1943р.11к; Rigoletto 2000р.10к; Gli Ugonotti 3152р.30к, etc.). Genuine: multiple foreign
+     touring companies performing simultaneously during Great Lent, when Russian-language
+     dramatic performance was restricted, is real documented historical practice, not a data
+     error.
+   - `1895-96_pair020` (Александринскій=German, Михайловскій=French, Feb28-Mar29 1896, also
+     Lenten): scan-verified against `ForUpload_1895-96_Repertoire_009.jpg` -- exact match
+     (Cardillac/Untreu 2479р.10к; Feu Toupinel/Camille 661р.5к), and the scan shows normal
+     Russian repertoire resuming right at the end of the window (Lent's end), consistent with
+     the pattern. Genuine.
+   - `1891-92_pair018`, `1892-93_pair018`: both single-theater (Михайловскій only, its
+     regular resident French troupe -- an extremely common, already-repeatedly-confirmed
+     pattern throughout this whole corpus), both already date-range-verified this session.
+     Lower priority, not individually re-verified further.
+
+**Conclusion: no second pair022 found.** The two checks that would have caught it (overlap,
+inline-month-conflict) come back clean corpus-wide, and the one class of page that superficially
+resembled it (all-foreign-language content) turned out on direct verification to be genuine
+historical Lenten programming, not mislabeling.
+
+## 2026-09-19 — consolidated every date-coverage gap in the two-page-spread corpus into one inventory
+
+RG asked to pull the many individually-noted missing-page mentions from this session (and the
+2026-08-24 audit) into one consolidated list. Computed gaps between consecutive scan-verified
+page date-ranges per season using confident_headers_v3.pkl (the same data issue #72 built and
+fully verified this session):
+
+```python
+# per season: sort pages by (start_date, end_date), flag any gap of >1 day between
+# one page's end and the next page's start
+```
+
+Result: 12 gaps found across the 8 seasons (after filtering out three 1-day boundary artifacts
+from header end_day imprecision, not real gaps). Classified each against what was actually
+directly confirmed by reading the render this session or in the 2026-08-24 audit: 9 confirmed
+"extraction gaps" (real printed content exists on a render, no page_id captures it -- recoverable
+in principle), 1 confirmed "scan gap" (1890-91 Oct12-31, book's own page numbers skip 7->10, never
+photographed, not recoverable), 1 plausible Holy Week/Easter closure (1893-94 Apr9-17, no render
+covers either side of the gap at all), and 1 genuinely unconfirmed (1890-91 Mar4-9, not yet checked
+against any render). Full table written to docs/eval/known_issues.md issue #73.
+
+## 2026-09-19 — recovered 1893-94's season-opener extraction gap (17 Августа - 3 Октября 1893)
+
+RG asked to recover the largest confirmed extraction gap from issue #73's inventory. Manually
+transcribed both renders in full (no paid API call, same methodology as the rest of this
+session): `ForUpload_1893-94_Repertoire_000.jpg` (17-27 Августа + 30 Августа-10 Сентября,
+100 sessions -> new page `repertoire_1893-94_pair002`) and `_001.jpg` (12 Сентября-3 Октября,
+100 sessions -> new page `repertoire_1893-94_pair004`). All 5 theaters transcribed per date
+where printed; blank-dash cells recorded as explicit `is_dark: true` (not omitted), matching
+project convention. Two rows left honestly incomplete: `pair002`'s "27 Пятница." Малый receipts
+and `pair004`'s entire "23 Четвергъ." row (all 5 theaters) are swallowed by the physical binding
+fold in the scan -- titles legible, receipts not, confirmed by direct close-up re-check.
+
+Added both to `manifest.csv` and `page_header_dates.csv` (`pair002`: 17 августа-10 сентября 1893;
+`pair004`: 12 сентября-3 октября 1893). Reran the full pipeline: `event_entry` 4937 -> 5137
+(+200, exactly the transcribed sessions), 0 new validation errors (the 1 pre-existing flag is
+unrelated), `quality_checks.py` unchanged at 5 flags, full 90-page date-window cross-check clean
+(same 2 pre-existing harmless cases only). `validate_performance_dates.py`: verified rose
+81.9% -> 82.5%. One new genuinely-flagged row found and confirmed as a real source-printing
+inconsistency (not a transcription error): `pair004`'s "13 Среда." (all 5 theaters) -- re-zoomed
+the scan to confirm the digit is definitely "13" not "15", but 13 Сентября 1893 was actually a
+Monday, not Wednesday -- same class of verbatim-preserved printing quirk as `1894-95_pair008`'s
+"25 Суббота.", left as printed.
+
+## 2026-09-19 — recovered the remaining 7 confirmed extraction gaps (issue #73, "all of them, one at a time")
+
+Manually transcribed all 7 remaining confirmed extraction gaps from the issue #73 inventory --
+no paid API calls, same discipline as the rest of this project. Summary (full detail in
+known_issues.md's addenda):
+
+- `repertoire_1891-92_p003` (31 Августа-10 Сентября 1891, 45 sessions) -- Aug31 (a Saturday) has
+  no printed row at all; real content starts Sep1. From `ForUpload_1891-92_Repertoire_000.jpg`,
+  already read during issue #72's pair004 investigation.
+- `repertoire_1893-94_pair014` (26 Декабря 1893-14 Января 1894, 120 sessions) -- a dense page
+  with frequent morning/evening splits and a free "Гимнъ" (Hymn) student-matinee day (26 Дек).
+  From `ForUpload_1893-94_Repertoire_006.jpg`.
+- `repertoire_1893-94_pair020` (23 Февраля-19 Марта 1894, 116 sessions) -- confirmed the
+  now-familiar Lenten pattern (German troupe/Alexandrinsky, French/Mikhailovsky, blank
+  Маріинскій+Малый) starting 6 Марта; Feb28-Mar5 has no printed rows (first week of Great
+  Lent). From `ForUpload_1893-94_Repertoire_009.jpg`.
+- `repertoire_1894-95_pair012` (19 Февраля-14 Марта 1895, 100 sessions) -- same Lenten pattern
+  (only Александринскій/Михайловскій active, German/French). Found Feb13-18 has no available
+  render at all (neither the prior nor this render covers it) -- reclassified from "extraction
+  gap" to a probable first-week-of-Lent closure, not recoverable. From
+  `ForUpload_1894-95_Repertoire_005.jpg`.
+- `repertoire_1895-96_pair012` (7-29 Декабря 1895, 111 sessions) -- ordinary full 5-theater
+  programming, no Lenten pattern (December, not Lent). From
+  `ForUpload_1895-96_Repertoire_005.jpg`.
+- `repertoire_1890-91_p015` (28 Декабря 1890-2 Января 1891, 55 sessions) -- from
+  `ForUpload_1890-91_Repertoire_006.jpg` (the same render already used for the adjacent
+  `pair014`/`pair016` boundary work in issue #72).
+- `repertoire_1890-91_p023` (24 Марта-12 Апрѣля 1891, 77 sessions) -- Lenten pattern again
+  (Александринскій=German, Михайловскій=French, others blank). Found Apr13-21 has no printed
+  rows at all -- matches the established recurring Holy Week/Easter closure pattern (Easter
+  1891 O.S. fell Apr21) exactly, reclassified as not recoverable, not a gap. Confirmed Apr22
+  onward is already captured in the existing `pair024`. From `ForUpload_1890-91_Repertoire_
+  010.jpg` (Mar24-29 tail) + `_011.jpg` (Mar30-Apr12).
+
+Reran the full pipeline after all 7: `event_entry` 5418 -> 5761, 0 new validation errors,
+`quality_checks.py` unchanged at 5 pre-existing flags, full 97-page date-window cross-check
+clean (same 2 pre-existing harmless cases only). `validate_performance_dates.py`: verified rose
+82.5% -> **84.3%**; all 11 remaining unresolved rows are the same already-explained cases from
+before (5 rows: `1893-94_pair004`'s "13 Среда." genuine printing inconsistency; 5 rows:
+`1894-95_pair008`'s "25 Суббота." genuine printing inconsistency; 1 row: a blank placeholder) --
+nothing new introduced by any of the 7 recoveries.
+
+Every one of the 9 originally-confirmed extraction gaps is now either recovered (7) or
+reclassified as a genuine, non-recoverable closure after closer inspection (2: 1894-95's
+Feb13-18, 1890-91's Apr13-21, both matching the established Lenten/Holy-Week closure pattern).

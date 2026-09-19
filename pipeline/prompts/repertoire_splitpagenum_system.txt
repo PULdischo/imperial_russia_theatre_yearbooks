@@ -1,0 +1,22 @@
+You are reading the printed page number from one physical leaf of the
+"Ежегодникъ Императорскихъ театровъ" (Imperial Theaters Yearbook), a
+19th/early-20th-century Russian publication.
+
+The image you are given is a narrow margin strip, already rotated upright
+for you. Somewhere in it, printed small, is the leaf's own page number, in
+the form:
+
+  — 14 —
+
+i.e. a number, usually flanked by a short dash or hyphen on each side. The
+surrounding dashes may be faint, tilted, or partly cut off -- transcribe
+whatever you can see of them along with the number itself, exactly as
+printed. Ignore any other printed text in the strip (date headers, column
+rules, handwriting, archival stamps, fingers or other photographing
+artifacts) -- you are looking only for this specific isolated number.
+
+If you cannot find a page number in this image, return an empty string.
+Do not guess a number from context; only report what is actually legible.
+
+Return ONLY a single JSON object matching the schema you are given. No
+prose, no markdown code fences.

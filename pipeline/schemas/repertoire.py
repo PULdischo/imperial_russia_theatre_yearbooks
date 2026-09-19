@@ -144,25 +144,180 @@ def merge_repertoire_samples(sample_dicts: list[dict]) -> tuple[dict, dict]:
     return merged, stats
 
 
+#: The rubles marker's trailing period is sometimes dropped by the model
+#: ("2943 р 70" instead of "2943 р. 70 к.") -- confirmed 2026-09-17
+#: (docs/eval/known_issues.md #70's receipts_parse_failed addendum) on
+#: 6 sessions across the two-page-spread seasons, via quality_checks.py's
+#: check_repertoire comparing this function's own output against
+#: receipts_text. A literal `.split("р.")` silently drops the whole
+#: figure (rub AND kop both come back "") whenever that period is
+#: missing, even though the figure itself is perfectly legible -- this
+#: was a parsing gap, not a data problem, so fixed here rather than by
+#: touching any raw session. `maxsplit=1` matches the previous split's
+#: behavior of splitting on the first occurrence only. `\b` is required
+#: (not just bare `р`) -- caught live by re-running quality_checks.py
+#: after this fix: a bare `р\.?` also matches the letter "р" wherever it
+#: happens to occur INSIDE an ordinary Cyrillic word (e.g. "3-я каРт.",
+#: "Я игРаю") -- two already-known receipts_text content-misplacement
+#: cases (`known_issues.md` #70) that are not receipts figures at all.
+#: Python's `re` treats Cyrillic as word characters under `\b` by
+#: default, so this correctly requires "р" to stand alone as a marker
+#: token rather than merely appear somewhere in the string.
+#:
+#: Also accepts a Latin "p"/"P" as the same marker -- confirmed
+#: 2026-09-17 (known_issues.md #70's receipts-field addendum) on 42
+#: sessions where the model wrote the rubles marker in Latin script
+#: (visually near-identical to Cyrillic "р" in this typeface; 9 of
+#: those even mix scripts within one figure, Latin "p." paired with
+#: Cyrillic "к."). Unlike the genre field's Latin/Cyrillic script
+#: variants (left alone there -- both are equally complete, final
+#: values needing no further processing), this is a genuine parsing
+#: gap: the old Cyrillic-only marker silently failed the whole split on
+#: every one of these, even though the figure itself is perfectly
+#: legible -- receipts_text itself is untouched either way (verbatim
+#: model output, script and all), only the derived rubles/kopecks
+#: parsing is widened to recognize both scripts as the same marker.
+_RUBLES_MARKER_RE = re.compile(r"\b[рp]\.?", re.IGNORECASE)
+
+#: Same dropped-trailing-period gap as `_RUBLES_MARKER_RE`, just on the
+#: kopecks side -- found 2026-09-17 doing the receipts-field audit
+#: (docs/eval/known_issues.md #70): 7 sessions have receipts_text like
+#: "2697 р. 70 к" (no period after "к"). The old literal `.replace("к.",
+#: "")` silently left the marker in place ("70 к" instead of "70") since
+#: it requires the exact "к." substring -- a real parsing gap, not
+#: caught by the rubles-side fix since this is a different marker on the
+#: other side of the same split. `\b` for the same reason as the rubles
+#: marker (a bare `к` would also match inside an ordinary word). Also
+#: accepts Latin "k"/"K", same reasoning and same 2026-09-17 finding as
+#: the rubles marker above.
+_KOPECKS_MARKER_RE = re.compile(r"\b[кk]\.?", re.IGNORECASE)
+
+#: Genitive month name -> calendar length, for _backfill_month_year's
+#: sanity check that a session's day number can't exceed its assigned
+#: month's own length. Not a leap-year-aware calendar (February's 28 is
+#: never actually hit as a start_month length check in this corpus, since
+#: no page's own start_month is February with a day number that would
+#: need this distinction) -- just enough precision for the one real case
+#: this exists for.
+_MONTH_LENGTH = {
+    "января": 31, "февраля": 28, "марта": 31, "апрѣля": 30, "мая": 31,
+    "іюня": 30, "іюля": 31, "августа": 31, "сентября": 30, "октября": 31,
+    "ноября": 30, "декабря": 31,
+}
+
+
 def _parse_receipts(text: Optional[str]) -> tuple[str, str]:
     if not text:
         return "", ""
     try:
-        rub_part, kop_part = text.replace("—", "-").split("р.")
-        kop = kop_part.replace("к.", "").strip()
+        rub_part, kop_part = _RUBLES_MARKER_RE.split(text.replace("—", "-"), maxsplit=1)
+        kop = _KOPECKS_MARKER_RE.sub("", kop_part).strip()
         return rub_part.strip(), ("" if kop == "-" else kop)
     except Exception:
         return "", ""
 
 
-def flatten_repertoire_page(page_id: str, season: str, city: str, page: RepertoirePage) -> dict:
+def _backfill_month_year(sessions: list["SessionLLM"],
+                          page_header: Optional[dict]) -> list[tuple[str, str]]:
+    """Returns a (month_text, year_text) to use when COMPUTING date_undate
+    for each session -- never the verbatim event_entry.month_text/year_text
+    fields themselves, which stay exactly what the model read on that row
+    (empty if empty). This is purely a derived-field input, the same
+    "verbatim in, best-effort derived date out" contract dates.py's own
+    docstring already documents for date_undate.
+
+    Closes docs/eval/known_issues.md #69's "event-date field audit" gap:
+    column-wise extraction populates month_text/year_text on only ~13-21%
+    of sessions per season (a session only ever carries its OWN printed
+    text, with no cross-row inheritance -- see the per-session date_input
+    built below), vs ~100% for baseline extraction. `page_header` (from
+    pipeline/extract_page_headers.py's small, separate, targeted read of
+    just the page's own printed date-range line, e.g. "16 февраля. 1908 г.
+    23 февраля.") gives an unambiguous start/end month+day for the whole
+    page.
+
+    Assignment rule: a two-page-spread page's own day-number sequence
+    resets from a high number back down near 1 exactly once, at the
+    start/end-month boundary -- so any session whose own day number is
+    >= the header's start_day belongs to start_month, and any session
+    whose day number is < start_day (having wrapped around) belongs to
+    end_month. This depends only on each session's own day number, not on
+    where it sits in the sessions list -- deliberately NOT the file-order,
+    walk-and-flip-on-decrease approach an earlier version of this function
+    used, which assumed each theater's sessions are stored in chronological
+    print order. That assumption turned out to be false for roughly a
+    third of the two-page-spread corpus (confirmed by direct scan
+    verification of all 88 pages, docs/eval/known_issues.md): cumulative
+    manual out-of-order session fixes/insertions across this project left
+    many theaters' session lists with day numbers that jump around rather
+    than increasing monotonically, which made the old approach flip to
+    end_month at the first stray out-of-order low day number and then
+    mislabel every later, still-legitimately-start_month session for the
+    rest of that theater's run.
+
+    One more sanity check on top of the day>=start_day rule: a session day
+    number that exceeds start_month's own calendar length (e.g. "31" on a
+    page whose start_month is April, which only has 30 days) can't
+    actually belong to start_month regardless of the threshold comparison
+    -- it must be an end_month day instead (this surfaced on a real page,
+    repertoire_1892-93_pair024, whose "мая"/May end_month legitimately has
+    a 31st). _MONTH_LENGTH's February entry (28) is the common case only
+    -- when start_month is "февраля" and the page's own start year is a
+    Julian leap year (divisible by 4; no Gregorian century exception --
+    this is the source calendar throughout, per dates.py), the length used
+    here is bumped to 29, or a genuine "29 Суббота." row gets wrongly
+    kicked into end_month by this same sanity check it exists to serve
+    (confirmed on a real page, repertoire_1891-92_pair018, 1892 being a
+    leap year: without this, Feb 29 gets reassigned to Mar 29, which
+    lands on a different real weekday and fails validate_performance_
+    dates.py's cross-check even though the original day>=start_day
+    assignment was already correct).
+    """
+    if not page_header:
+        return [(s.month_text or "", s.year_text or "") for s in sessions]
+
+    start_month = page_header["start_month"]
+    end_month = page_header["end_month"]
+    year_text = page_header["year_text"]
+    start_day = page_header.get("start_day")
+    start_month_len = _MONTH_LENGTH.get(start_month)
+    if start_month == "февраля" and start_month_len is not None:
+        start_year_match = re.match(r"\d{4}", year_text or "")
+        if start_year_match and int(start_year_match.group()) % 4 == 0:
+            start_month_len = 29
+
+    result: list[tuple[str, str]] = []
+    for s in sessions:
+        if s.month_text and s.year_text:
+            result.append((s.month_text, s.year_text))
+            continue
+        if start_month == end_month or start_day is None:
+            month = start_month
+        else:
+            day_str = _day_number(s.date_text)
+            day_num = int(day_str) if day_str.isdigit() else None
+            if day_num is not None and day_num < start_day:
+                month = end_month
+            elif (day_num is not None and start_month_len is not None
+                  and day_num > start_month_len):
+                month = end_month
+            else:
+                month = start_month
+        result.append((s.month_text or month, s.year_text or year_text))
+
+    return result
+
+
+def flatten_repertoire_page(page_id: str, season: str, city: str, page: RepertoirePage,
+                             page_header: Optional[dict] = None) -> dict:
     events, performances = [], []
-    for i, s in enumerate(page.sessions, start=1):
+    backfilled = _backfill_month_year(page.sessions, page_header)
+    for i, (s, (bf_month, bf_year)) in enumerate(zip(page.sessions, backfilled), start=1):
         event_id = f"{page_id}__s{i:03d}"
         rub, kop = _parse_receipts(s.receipts_text)
         theater = s.theater.strip().rstrip(".")  # strip table-header punctuation, keep the name
         event_city = _city_for_theater(theater, city)
-        date_input = f"{_day_number(s.date_text)} {s.month_text or ''} {s.year_text or ''}".strip()
+        date_input = f"{_day_number(s.date_text)} {bf_month} {bf_year}".strip()
         events.append({
             "event_id": event_id, "page_id": page_id, "season": season, "city": event_city,
             "date_text": s.date_text, "month_text": s.month_text or "",

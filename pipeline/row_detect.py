@@ -675,7 +675,9 @@ class ColumnCrop:
 def detect_columns(image_path: Path, out_dir: Path,
                     date_pad: int = 120, theater_pad: int = 15,
                     dividers_frac: list[float] | None = None,
-                    date_side: str = "left") -> list[ColumnCrop]:
+                    date_side: str = "left",
+                    date_col_width_frac: float | None = None,
+                    theater_pad_overrides: dict[int, dict[str, int]] | None = None) -> list[ColumnCrop]:
     """Detects the table's vertical column dividers and writes one
     (date_column_image, theater_column_image) pair per theater column --
     see `ColumnCrop`'s docstring for why these are separate files, not
@@ -739,7 +741,55 @@ def detect_columns(image_path: Path, out_dir: Path,
     opposite sides: RIGHT on the two-page-spread seasons (1890-91..
     1897-98), LEFT from 1898-99 on. This function previously assumed
     left unconditionally, which silently mis-sliced every spread page --
-    its date crop would have held a theater's content."""
+    its date crop would have held a theater's content.
+
+    `date_col_width_frac` (2026-09-12, fold-split extraction pilot):
+    for `date_side="right"`, the date crop's right edge used to extend
+    unconditionally to the image's own right edge (W) -- fine when the
+    table's outer border sits close to the image edge, but wrong on
+    every spread-format season checked: there's a wide blank margin past
+    the table's true border, and further out in THAT margin sits a
+    completely separate printed element -- the page's own running
+    date-range header (the same kind of thing extract_page_headers.py
+    reads for single-page seasons), not part of the per-row date column
+    at all. Without a bound, that unrelated header text gets pulled into
+    the date-only crop, confirmed directly to cause severe under-reads
+    (3 rows found out of ~13 actually printed on one page) and jumbled
+    reads mixing real per-row dates with header-style text on another.
+    Deliberately NOT solved by detecting the table's own outer border
+    directly -- `_detect_vertical_dividers`'s docstring already
+    documents that border detection as the fragile part of this whole
+    module. Measured instead, directly against the scan, across all 8
+    spread seasons: the true date column's own width is a small and
+    fairly consistent fraction of the table width (~0.034-0.055 in the
+    samples checked) regardless of season. Passing that fraction here
+    bounds the crop at `lo[-1] + date_col_width_frac * W` (plus
+    `date_pad` again, symmetric with the left-side pad) instead of at W
+    itself. None given (the default) preserves the old unbounded
+    behaviour, e.g. for `date_side="left"` callers where this problem
+    doesn't arise (the date column there is the FIRST column, bounded on
+    its right by a real internal divider already).
+
+    `theater_pad_overrides` (2026-09-15, docs/eval/known_issues.md #70
+    addendum): `theater_pad` alone is a single scalar applied to BOTH
+    sides of EVERY theater column, so raising it to fix one column's
+    clipped header (`Малый`'s, confirmed on `repertoire_1890-91_p022`)
+    necessarily widened all 5 columns' both edges too -- creating a
+    2*theater_pad structural overlap between every adjacent column
+    pair, which on the narrower spread-format `Малый` columns (154-
+    312px across the 8 seasons) exceeded the column's own width and
+    caused a NEW bug: a column's crop reading back its neighbor's
+    content wholesale (confirmed corpus-wide, 25 candidate pages).
+    `theater_pad_overrides` lets a caller widen just the one edge that
+    actually needs it, e.g. `{4: {"left": 100}}` to widen only theater
+    index 4's (`Малый`'s) left edge -- the edge bordering `Большой`,
+    the one confirmed to clip -- while every other edge, including
+    `Большой`'s own right edge at that same divider, stays at the low
+    base `theater_pad`. Keyed by 0-based `theater_index` (matching
+    `ColumnCrop.theater_index`); each entry may set "left" and/or
+    "right", independently overriding the base `theater_pad` for that
+    side only. None (the default) preserves the old uniform-padding
+    behaviour exactly."""
     out_dir.mkdir(parents=True, exist_ok=True)
     img = cv2.imread(str(image_path))
     if img is None:
@@ -770,16 +820,27 @@ def detect_columns(image_path: Path, out_dir: Path,
         lo = [int(d.min()) for d in dividers]
         hi = [int(d.max()) for d in dividers]
 
+    def _edge_pad(theater_index: int, side: str) -> int:
+        """Per-edge override, falling back to the page-level `theater_pad`
+        -- see `theater_pad_overrides` in this function's docstring."""
+        if theater_pad_overrides and theater_index in theater_pad_overrides:
+            return theater_pad_overrides[theater_index].get(side, theater_pad)
+        return theater_pad
+
     n_div = len(lo)
     if date_side == "left":
         date_span = (0, min(W, hi[0] + date_pad))
-        bounds = [(max(0, lo[i] - theater_pad),
-                   min(W, hi[i + 1] + theater_pad) if i + 1 < n_div else W)
+        bounds = [(max(0, lo[i] - _edge_pad(i, "left")),
+                   min(W, hi[i + 1] + _edge_pad(i, "right")) if i + 1 < n_div else W)
                   for i in range(n_div)]
     else:
-        date_span = (max(0, lo[-1] - date_pad), W)
-        bounds = [(0 if i == 0 else max(0, lo[i - 1] - theater_pad),
-                   min(W, hi[i] + theater_pad))
+        if date_col_width_frac is not None:
+            date_right = min(W, lo[-1] + int(round(date_col_width_frac * W)) + date_pad)
+        else:
+            date_right = W
+        date_span = (max(0, lo[-1] - date_pad), date_right)
+        bounds = [(0 if i == 0 else max(0, lo[i - 1] - _edge_pad(i, "left")),
+                   min(W, hi[i] + _edge_pad(i, "right")))
                   for i in range(n_div)]
 
     date_crop = img[:, date_span[0]:date_span[1]]

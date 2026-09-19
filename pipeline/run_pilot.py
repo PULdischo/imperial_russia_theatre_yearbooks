@@ -45,6 +45,39 @@ RETRYABLE = (APIError, APITimeoutError, RateLimitError, ConnectionError, Timeout
 MAX_ATTEMPTS = 4
 BACKOFF_BASE_SECONDS = 5
 
+# Split-half date-only columns (2026-09-11 fold-split extraction pilot):
+# a single date-only call can silently under-read a long rotated date
+# column -- schema satisfied, no exception raised, just wrong (3 rows read
+# out of ~13 actually printed, confirmed by direct inspection of the crop).
+# A resample of the SAME crop/prompt sometimes recovers completely (3->19
+# rows) and sometimes doesn't (stayed stuck at a different-but-still-wrong
+# 3 rows) -- unlike the earlier page-number-reading task (which turned out
+# to be near-deterministic per crop, see extract_split_page_numbers.py),
+# this harder, longer-output task genuinely varies call to call, so
+# multiple attempts are worth it here in a way they weren't there.
+DATEONLY_MAX_ATTEMPTS = 3
+# A theater column doesn't share this failure mode (never observed
+# undercounting a theater this way in the pilot); its own row count is
+# therefore a same-page, same-scan-quality reference the date column
+# SHOULD be broadly comparable to. 0.4x the best theater's row count
+# cleanly separates the pilot's good calls (10-19 date rows against
+# 11-14 theater rows) from its bad ones (3 date rows against the same
+# 11-14) without needing a tighter, more fragile threshold.
+DATEONLY_PLAUSIBLE_MIN_FRACTION = 0.4
+DATEONLY_PLAUSIBLE_ABS_MIN = 4
+
+
+def _date_rows_plausible(n_date_rows: int, theater_row_counts: list[int]) -> bool:
+    """Judges a date-only read against the theater columns from the SAME
+    page -- see DATEONLY_MAX_ATTEMPTS's docstring for why this signal
+    exists at all. No theater succeeded -> nothing to compare against,
+    so nothing to reject; accept whatever the date call returned."""
+    if not theater_row_counts:
+        return True
+    if n_date_rows < DATEONLY_PLAUSIBLE_ABS_MIN:
+        return False
+    return n_date_rows >= DATEONLY_PLAUSIBLE_MIN_FRACTION * max(theater_row_counts)
+
 
 def encode_image(image_path: Path) -> str:
     data = base64.b64encode(image_path.read_bytes()).decode("utf-8")
@@ -332,6 +365,15 @@ async def process_page_columnwise(client: AsyncOpenAI, sem: asyncio.Semaphore, r
             kwargs = dict(dividers_frac=group["dividers"], date_side=group["date_side"])
             if "theater_pad" in group:
                 kwargs["theater_pad"] = group["theater_pad"]
+            if "date_col_width_frac" in group:
+                kwargs["date_col_width_frac"] = group["date_col_width_frac"]
+            if "theater_pad_overrides" in group:
+                # JSON keys are always strings; detect_columns keys its
+                # overrides by the 0-based int theater_index (2026-09-15,
+                # docs/eval/known_issues.md #70 addendum).
+                kwargs["theater_pad_overrides"] = {
+                    int(k): v for k, v in group["theater_pad_overrides"].items()
+                }
             columns = detect_columns(image_path, column_crops_dir / page_id, **kwargs)
         else:
             columns = detect_columns(image_path, column_crops_dir / page_id)
@@ -348,37 +390,87 @@ async def process_page_columnwise(client: AsyncOpenAI, sem: asyncio.Semaphore, r
             if v:
                 usage_totals[k] += int(v)
 
-    try:
-        date_rows, date_usage = await call_dateonly(
-            client, sem, model, dateonly_prompt, dateonly_schema, Path(columns[0].date_image_path))
-    except Exception as e:
-        log_row.update(status="failed", elapsed_seconds=f"{time.monotonic() - t0:.1f}",
-                        error=f"date-only call failed: {e!r}")
-        return log_row
-    _accumulate(date_usage)
-
-    results = await asyncio.gather(
+    # Theater columns kick off immediately, in parallel with the date-only
+    # attempts below -- their row counts are what judges date-only
+    # plausibility, so they're needed either way, and there's no reason to
+    # wait for them serially first.
+    theater_task = asyncio.gather(
         *[call_theateronly(client, sem, model, theateronly_prompt, theateronly_schema,
                             Path(c.theater_image_path))
           for c in columns],
         return_exceptions=True,
     )
 
+    date_rows = None
+    date_all_attempts: list[list[dict]] = []
+    theater_results = None
+    for attempt in range(1, DATEONLY_MAX_ATTEMPTS + 1):
+        try:
+            rows, usage = await call_dateonly(
+                client, sem, model, dateonly_prompt, dateonly_schema, Path(columns[0].date_image_path))
+        except Exception as e:
+            if attempt == DATEONLY_MAX_ATTEMPTS:
+                log_row.update(status="failed", elapsed_seconds=f"{time.monotonic() - t0:.1f}",
+                                error=f"date-only call failed: {e!r}")
+                return log_row
+            continue
+        _accumulate(usage)
+        date_all_attempts.append(rows)
+        if theater_results is None:
+            theater_results = await theater_task
+        theater_row_counts = [len(r[1]) for r in theater_results if not isinstance(r, Exception)]
+        if _date_rows_plausible(len(rows), theater_row_counts):
+            date_rows = rows
+            break
+    if date_rows is None:
+        # Every attempt looked implausible -- use whichever attempt read
+        # the MOST rows as the best available guess, not just the last one
+        # tried. Not treated as a silent success either way: merge_report
+        # below still reports per-theater unresolved days from whatever
+        # date_rows ends up being, so a still-bad read stays visible
+        # downstream rather than being masked by this fallback.
+        date_rows = max(date_all_attempts, key=len)
+    if theater_results is None:
+        theater_results = await theater_task
+    results = theater_results
+
     all_sessions: list[dict] = []
     n_ok = 0
     merge_report = []
-    raw_columns = {"date_rows": date_rows, "theaters": {}}
-    for result in results:
+    raw_columns = {
+        "date_rows": date_rows,
+        "date_attempts": len(date_all_attempts),
+        "date_all_attempts": date_all_attempts if len(date_all_attempts) > 1 else None,
+        "date_plausible": _date_rows_plausible(
+            len(date_rows), [len(r[1]) for r in results if not isinstance(r, Exception)]),
+        "theaters": {},
+    }
+    canonical_theaters = group.get("theaters") if group else None
+    for i, result in enumerate(results):
         if isinstance(result, Exception):
             continue
-        theater_name, theater_rows, usage = result
+        model_said, theater_rows, usage = result
         _accumulate(usage)
+        # Prefer the config's own known theater order over the model's read
+        # (2026-09-12, full-corpus sweep): confirmed the theater-name header
+        # is printed only on a spread's TOP half -- 89 of 90 bottom halves
+        # checked came back with EVERY theater crop reading the same
+        # (wrong) name, since there's nothing to read on those pages at
+        # all. `columns[i].theater_index` is the crop's known left-to-right
+        # position, stable regardless of what's printed on any given page;
+        # `canonical_theaters[i]` is that season's own fixed print order,
+        # already established by direct scan inspection. Falls back to the
+        # model's own read when a group has no `theaters` list configured.
+        if canonical_theaters and i < len(canonical_theaters):
+            theater_name = canonical_theaters[i]
+        else:
+            theater_name = model_said
         raw_columns["theaters"][theater_name] = theater_rows
         merged = merge_columnwise_page(date_rows, theater_name, theater_rows)
         all_sessions.extend(merged.sessions)
         n_ok += merged.ok
         merge_report.append({
-            "theater": theater_name, "ok": merged.ok,
+            "theater": theater_name, "model_said": model_said, "ok": merged.ok,
             "n_sessions": len(merged.sessions), "unresolved": merged.unresolved,
             "n_date_days": merged.n_date_days, "n_theater_rows": merged.n_theater_rows,
             "reason": merged.reason,

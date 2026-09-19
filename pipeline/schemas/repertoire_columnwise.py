@@ -53,9 +53,16 @@ class TheaterRowLLM(BaseModel):
 
 class TheaterOnlyPage(BaseModel):
     # The theater's own printed name, read from the header text visible at
-    # the top of the crop -- NOT supplied by the caller. Manifest.csv has
-    # no per-page theater-name list to fall back on, and the header is
-    # already right there in the image the model is reading anyway.
+    # the top of the crop. Still asked for here (kept for pages/formats
+    # with no configured theater order to fall back on), but for the
+    # two-page-spread seasons the caller now OVERRIDES this with the
+    # season's own known column order rather than trusting it --
+    # confirmed 2026-09-12 (full-corpus sweep) that a spread's bottom half
+    # essentially never repeats the header row a spread's top half
+    # carries (89 of 90 bottom halves checked), so there is nothing for
+    # the model to read there at all; it was returning the same guessed
+    # name for every column on those pages. See
+    # run_pilot.process_page_columnwise's `canonical_theaters` handling.
     theater: str
     rows: list[TheaterRowLLM] = Field(default_factory=list)
 

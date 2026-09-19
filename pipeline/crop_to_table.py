@@ -85,8 +85,22 @@ def load_column_config(path: Path) -> dict:
 
 
 def column_group_for(page_id: str, columns: dict) -> dict | None:
-    """Resolves a page to its column group, preferring the parity-specific
-    entry and falling back to a season-wide one."""
+    """Resolves a page to its column group: an exact page_id entry first,
+    then the parity-specific entry, then a season-wide fallback.
+
+    The exact-page_id check exists for the 6 true `single_leaf` two-page-
+    spread-season pages (flag_fold_damage.classify_page) -- landscape, no
+    fold, so never split, but their own page_id's parity (even/odd,
+    per the page's render index, not its printed page number) would
+    otherwise collide with that season's new "<season>:<parity>"
+    `spread_split` entries (2026-09-11), which are hand-measured against a
+    SPLIT HALF's own narrower geometry and would badly mis-crop a
+    single_leaf page's genuinely different (landscape, unsplit, often
+    differently-proportioned) column layout. A one-off page_id key lets
+    these 6 pages carry their own hand-measured bounds without otherwise
+    touching the parity/season resolution every other page relies on."""
+    if page_id in columns:
+        return columns[page_id]
     season = season_of(page_id)
     if season is None:
         return None

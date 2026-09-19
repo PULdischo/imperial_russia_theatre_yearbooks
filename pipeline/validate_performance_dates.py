@@ -48,14 +48,22 @@ from convertdate import julian
 # "четвергъ" gets a chance -- mirrors the same discipline as
 # build_entities.py's ordinal-suffix regexes (don't guess from a partial
 # match when a more specific one is available).
+# The 2-3 letter forms (пн/вт/ср/чт/пт/сб/вс and сре/суб/чтв/птн) were added
+# 2026-09-11 (docs/eval/known_issues.md #69's "event-date field audit"
+# addendum) after 100% date_undate coverage made them visible for the first
+# time as spurious 'intra_block_disagreement' rows -- some column-wise
+# extractions abbreviate this short, confirmed against several pages'
+# scans, not a truncation artifact. Each is unambiguous (no two weekdays
+# share a first-two-letter prefix in this table), so adding them carries
+# no collision risk with the existing longer stems.
 _DOW_PREFIXES = {
-    'понедѣльник': 0, 'понед': 0, 'пон': 0,
+    'понедѣльник': 0, 'понед': 0, 'пон': 0, 'пн': 0,
     'вторник': 1, 'вторн': 1, 'втор': 1, 'вт': 1,
-    'середа': 2, 'сред': 2, 'срѣд': 2,
-    'четвергъ': 3, 'четверг': 3, 'четв': 3,
-    'пятница': 4, 'пятниц': 4, 'пятн': 4,
-    'суббота': 5, 'суббот': 5, 'субб': 5,
-    'воскресенье': 6, 'воскресенiе': 6, 'воскрес': 6, 'воскр': 6,
+    'середа': 2, 'сред': 2, 'срѣд': 2, 'сре': 2, 'ср': 2,
+    'четвергъ': 3, 'четверг': 3, 'четв': 3, 'чтв': 3, 'чт': 3,
+    'пятница': 4, 'пятниц': 4, 'пятн': 4, 'пят': 4, 'птн': 4, 'пт': 4, 'пя': 4,
+    'суббота': 5, 'суббот': 5, 'субб': 5, 'суб': 5, 'сб': 5,
+    'воскресенье': 6, 'воскресенiе': 6, 'воскрес': 6, 'воскр': 6, 'воск': 6, 'вскр': 6, 'вс': 6,
     'недѣля': 6, 'недѣл': 6, 'вокрес': 6,
 }
 _DOW_ORDERED = sorted(_DOW_PREFIXES.items(), key=lambda kv: -len(kv[0]))
@@ -110,7 +118,12 @@ _MANUAL_DATE_OVERRIDES: dict[tuple[str, str], tuple[str, str]] = {
 
 
 def _parse_dow_word(word: str) -> int | None:
-    t = word.lower().strip().rstrip('.').replace('ъ', '').replace('ь', '')
+    # A stray internal space ("Пя тница", "Суббо та" -- confirmed OCR
+    # noise on several pages, docs/eval/known_issues.md #69) breaks a
+    # plain startswith() match even though every letter of the real word
+    # is present in order -- stripping ALL whitespace (not just the ends)
+    # is safe here since no genuine weekday word legitimately contains one.
+    t = re.sub(r'\s+', '', word.lower()).rstrip('.').replace('ъ', '').replace('ь', '')
     for prefix, wd in _DOW_ORDERED:
         if t.startswith(prefix.replace('ъ', '').replace('ь', '')):
             return wd
@@ -168,9 +181,23 @@ def validate_and_correct(con: duckdb.DuckDBPyConnection) -> dict:
             _, date_undate = key
             members = blocks[key]
             distinct_texts = {dt for _, dt in members if dt is not None}
+            # A block's date_text often comes from 3+ theater columns
+            # sharing one printed date label, and different columns'
+            # extractions routinely disagree on purely cosmetic details --
+            # trailing-period presence, abbreviation length ("Втори" vs
+            # "Вторн" vs "Вторникъ"), ъ/ь confusion (confirmed across many
+            # pages, docs/eval/known_issues.md #69's event-date field
+            # audit) -- never a genuinely different date. Comparing on the
+            # PARSED weekday (via `_parse_dow`, which already normalizes
+            # all of that -- see `_parse_dow_word`'s own prefix-matching
+            # and ъ/ь-stripping) rather than the raw strings keeps that
+            # from registering as 'intra_block_disagreement'; two texts
+            # that genuinely parse to different weekdays still don't
+            # agree and are still caught below.
+            parsed_weekdays = {_parse_dow(t) for t in distinct_texts}
             y, m, d = map(int, date_undate.split('-'))
             info = {'key': key, 'y': y, 'm': m, 'd': d, 'members': members}
-            if len(distinct_texts) != 1:
+            if len(parsed_weekdays) != 1 or None in parsed_weekdays:
                 info['status'] = 'intra_block_disagreement' if distinct_texts else 'unparseable'
                 info['texts'] = distinct_texts
                 block_infos.append(info)

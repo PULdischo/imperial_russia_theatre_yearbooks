@@ -51,6 +51,19 @@ def city_from_filename(name: str) -> tuple[str, str]:
     return "", ""
 
 
+def validate_season(season: str, name: str) -> None:
+    """Second half must be the first half plus one, century rollover allowed
+    (`1899-00` is well-formed). Fails loudly: the season becomes part of every
+    page_id/entry_id downstream, which is how the `1899-90` and `1905-07`
+    filename typos reached the manifest, the DuckDB file and the vault before
+    being caught (docs/eval/known_issues.md #71). Same rule as
+    render_reviews.py's validate_season."""
+    first, second = season.split("-")
+    if (int(first) + 1) % 100 != int(second):
+        raise SystemExit(f"{name}: malformed season {season!r} "
+                         f"({second} is not {first}+1) -- rename the PDF")
+
+
 def discover_pdfs(pdf_dir: Path):
     for folder in sorted(pdf_dir.iterdir()):
         if not folder.is_dir() or folder.name not in FOLDER_MAP:
@@ -59,6 +72,8 @@ def discover_pdfs(pdf_dir: Path):
         for pdf_path in sorted(folder.glob("*.pdf")):
             m = SEASON_RE.match(pdf_path.name)
             season = m.group(1) if m else "unknown"
+            if m:
+                validate_season(season, pdf_path.name)
             city_token, city_value = city_from_filename(pdf_path.name)
             yield pdf_path, entity_type, slug, season, city_token, city_value
 
