@@ -14014,3 +14014,31 @@ recovered (7) or reclassified as a genuine, non-recoverable closure
 after closer inspection (2, both matching the established Lenten/Holy-
 Week closure pattern already documented in the 2026-08-24 missing-
 pages audit). Nothing remains open on issue #73.
+
+### Addendum to #72 (2026-09-19): resolved the last loose thread --
+`1891-92_pair004`'s stray Alexandrinsky session
+
+RG asked to address this rather than leave it noted-but-unfixed. The
+session (date_text "1 Вторн." evening, "Василиса Мелентьева"/
+"Фотографъ-любитель") had no match anywhere in the season -- both
+titles individually recur as genuine Alexandrinsky repertoire
+elsewhere, but never paired together, confirmed by searching every
+page's raw JSON.
+
+Went back to `ForUpload_1891-92_Repertoire_001.jpg` directly and found
+the real row: "20 Пятница." (Sept 20, 1891) Александринскій =
+"Василиса Мелентьева, др./Дочь русскаго актера, вод." -- correct
+title, a *different* correct companion piece, different date
+entirely. `pair004` had no existing entry at all for day 20
+Alexandrinsky, so this was a garbled version of a genuinely missing
+row, not a duplicate. Julian weekday check confirms: true
+1891-09-20 = Пятница, exact match.
+
+Fixed: relabeled to "20 Пятница.", corrected the companion title,
+changed `session` from "evening" to "unspecified" (no real утро/веч
+split exists for this date). Reran the pipeline: 0 new validation
+errors, `quality_checks.py` unchanged at 5 flags,
+`validate_performance_dates.py` unchanged at 84.3% verified / 11
+unresolved. No regressions.
+
+This closes the last open item from issue #72.

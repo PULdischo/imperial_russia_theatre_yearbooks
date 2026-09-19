@@ -6440,3 +6440,26 @@ nothing new introduced by any of the 7 recoveries.
 Every one of the 9 originally-confirmed extraction gaps is now either recovered (7) or
 reclassified as a genuine, non-recoverable closure after closer inspection (2: 1894-95's
 Feb13-18, 1890-91's Apr13-21, both matching the established Lenten/Holy-Week closure pattern).
+
+## 2026-09-19 — resolved the last loose thread from issue #72: 1891-92_pair004's stray Alexandrinsky session
+
+RG asked to address the stray session (date_text "1 Вторн." evening, Александринскій, "Василиса
+Мелентьева"/"Фотографъ-любитель") left unresolved when issue #72 fixed this page's header.
+Searched every other page in the 1891-92 season's raw JSON for either title -- both titles
+individually recur elsewhere as genuine Alexandrinsky repertoire, but never paired together, and
+no match was found anywhere in the season.
+
+Went back to the actual render (`ForUpload_1891-92_Repertoire_001.jpg`) and found the real row:
+"20 Пятница." (Sept 20, 1891) Александринскій = "Василиса Мелентьева, др./Дочь русскаго актера,
+вод." -- the correct title, a DIFFERENT correct companion piece ("Дочь русскаго актера", not
+"Фотографъ-любитель"), and a different date entirely. Confirmed `pair004` had no existing entry
+at all for day 20 Alexandrinsky -- so this was a garbled version of a genuinely missing row, not
+a duplicate. Julian weekday check: true 1891-09-20 = Пятница, matching exactly.
+
+Fixed: relabeled to "20 Пятница.", corrected the second work title to "Дочь русскаго актера",
+changed session from "evening" to "unspecified" (no real утро/веч split exists for this date).
+Reran the full pipeline: row count unchanged (5761, a relabel not an addition), 0 new validation
+errors, quality_checks.py unchanged at 5 flags, validate_performance_dates.py unchanged at 84.3%
+verified / 11 unresolved. No regressions.
+
+This closes the last open item from issue #72's investigation.
