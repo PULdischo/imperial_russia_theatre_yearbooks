@@ -14042,3 +14042,112 @@ errors, `quality_checks.py` unchanged at 5 flags,
 unresolved. No regressions.
 
 This closes the last open item from issue #72.
+
+## Issue #74: the three pre-existing `quality_checks.py` flags never
+investigated (`receipts_parse_failed`, `duplicate_event_key` x2,
+`zero_dark_cells_on_multiweek_page`) -- all resolved, corpus now at
+zero flags
+
+RG's own words from the "what's left" survey prompted this: "Three
+pre-existing quality flags, never investigated, predating today's work
+entirely: `zero_dark_cells_on_multiweek_page` on `1891-92_pair002`,
+`receipts_parse_failed` on `1894-95_pair008`, `duplicate_event_key` x2
+on `1897-98_pair016`/`pair020`" -- then simply "investigate."
+
+**`receipts_parse_failed`, `repertoire_1894-95_pair008`**: `receipts_text`
+was `'р. 75 к.'` for the "15 Воскресенье." Михайловскій session -- the
+leading `1599` had been dropped. Scan-verified (render for that page)
+and corrected to `'1599 р. 75 к.'`. One-line fix.
+
+**`duplicate_event_key`, `repertoire_1897-98_pair016`**: the flagged
+collision at "21 Среда." Малый turned out to be a 3-day cascading
+mislabel, not a simple duplicate -- fixing it revealed the *existing*
+"22 Четвергъ." entry was itself one day off, which in turn had a
+spurious dark placeholder already sitting at the correct destination.
+Resolved as a chain: day21's second session -> "22 Четвергъ.", the
+pre-existing "22 Четвергъ." entry -> "23 Пятница.", and removed the
+spurious dark placeholder that had been squatting at "23 Пятница." All
+three now match `ForUpload_1897-98_Repertoire_007.jpg` exactly.
+
+**`duplicate_event_key` x2, `repertoire_1897-98_pair020`**: this one
+went much deeper than the other two. The two flagged collisions (both
+`_source: human:kept_both`, meaning an earlier dedup pass had
+deliberately kept two same-date candidates rather than choosing one)
+turned out to be the visible symptom of a page-wide cascading
+date-label shift, not an isolated pair -- following the receipts-figure
+fingerprint chain (each session's printed rubles/kopecks total is
+effectively unique per page and doesn't change when a date label gets
+corrupted) traced the corruption across **both** the Александринскій
+and Маріинскій columns from 1 Марта through 12 Марта 1898, all
+scan-verified against `ForUpload_1897-98_Repertoire_009.jpg`:
+
+- Александринскій: 12 sessions relabeled/fixed across the 1-12 Марта
+  range (one genuinely missing session recovered at "3 Вторникъ.", one
+  receipts figure that had been misattached to the wrong row cleared
+  back to null at "1 Воскресенье." to match what's actually printed --
+  no receipts at all that day -- and 2 pure duplicate rows deleted).
+- Маріинскій: same chain, 8 sessions relabeled, 1 new session
+  recovered ("28 Суббота.", Lohengrin -- had been entirely missing),
+  1 new no-receipts session recovered ("1 Воскресенье.", Lohengrin
+  repeat). Two of the flagged page's "empty is_dark placeholder"
+  entries were initially deleted as apparent junk in a first pass, but
+  turned out on closer scan inspection to be **genuine** dark-day
+  markers (render_009 shows a literal dash for Маріинскій on "4
+  Среда." and "7 Суббота.") that had simply been mislabeled with
+  garbled dates (page-corner-stamp bleed-through, e.g. "4 Опера.") --
+  restored rather than left deleted. A third empty placeholder ("9
+  Понедѣльник.") had no scan-verifiable true date anywhere on this
+  page and was left deleted -- genuinely spurious or from an unrelated
+  page, not chased further.
+
+Two adjacent findings on this same page were noted but deliberately
+**not** chased this pass, to keep this investigation bounded to what
+the flags actually implicated: (1) a `'2 марта.'`/`'3 марта.'`-labeled
+pair of entries (both Маріинскій and Александринскій) whose titles
+don't match their receipts figures either -- these look like the same
+corner-stamp-bleed artifact one page-section earlier (around 25
+Февраля), unconnected to the 1-12 Марта chain; (2) the fact that this
+same page-corner-stamp-into-date_text failure mode was found on *two
+independent columns* of the *same* page raises the question of whether
+other two-page-spread Repertoire pages have the same silent (non-
+flagging, since it only surfaces via `duplicate_event_key` when two
+mislabeled rows happen to collide) corruption elsewhere in the corpus.
+Neither has been scoped or investigated -- flagging here for whoever
+picks this up next, not fixing now.
+
+**`zero_dark_cells_on_multiweek_page`, `repertoire_1891-92_pair002`**:
+the most substantial of the four. This page (16-30 Августа 1891, the
+very start of the 1891-92 season) had only ever captured the Малый
+column -- Мариинскій/Александринскій/Михайловскій/Большой were dropped
+entirely despite being clearly dark (a literal printed dash) for all
+10 non-opening dates on `ForUpload_1891-92_Repertoire_000.jpg`,
+confirming the flag's own stated suspicion verbatim ("suspect the
+model silently dropped blank cells this run"). On top of that, the
+captured Малый column itself had a systematic 2-row date shift (each
+entry's real content belonged two calendar-rows later than its label)
+plus several OCR title garbles (e.g. "Какіе помѣщики" ->
+"Хрущевскіе помѣщики", "Зимняя осень" -> "Ранняя осень", "Леанская
+дѣва" -> "Орлеанская дѣва"), and the season-opening "30 Пятница."
+row (all 5 theaters open with a "Гимнъ" / national-anthem piece before
+the main work) was almost entirely missing -- only Малый had an entry,
+and its content was a wrong duplicate of the 19th's. Rebuilt the whole
+16-30 Августа window from the scan: fixed/relabeled all 11 Малый
+sessions, added 41 dark-day markers (4 theaters x 10 non-opening
+dates + Александринскій dark on the 30th too), and added the 3 missing
+"30 Пятница." Гимнъ sessions (Мариинскій, Михайловскій, Большой). Final
+state is a clean, fully cross-checked 11-date x 5-theater grid with no
+collisions.
+
+**Verification, all four fixes together**: `event_entry` 5761 -> 5802
+(+41 net, entirely from the pair002 dark-cell recovery -- pair016 and
+pair020 were each net negative or roughly neutral after removing
+duplicates). `quality_checks.py` **5 flags -> 0** -- every flag in the
+corpus is now resolved. `validate_performance_dates.py`: verified
+84.3% -> 84.4%, unresolved unchanged at 11 (the same already-explained
+residual from issue #72), no regressions. 0 new validation errors
+(the 1 pre-existing `repertoire_1890-91_p012` fabricated-session note
+is unrelated, predates this work).
+
+Nothing remains open on issue #74 itself; see the two deliberately-
+deferred sub-threads noted above under `pair020` for follow-up
+candidates.

@@ -6463,3 +6463,49 @@ errors, quality_checks.py unchanged at 5 flags, validate_performance_dates.py un
 verified / 11 unresolved. No regressions.
 
 This closes the last open item from issue #72's investigation.
+
+## 2026-09-19 — investigated and resolved all three pre-existing quality_checks.py flags (receipts_parse_failed, duplicate_event_key x2, zero_dark_cells_on_multiweek_page)
+
+RG's instruction, quoting their own earlier survey: "Three pre-existing quality flags, never
+investigated, predating today's work entirely: zero_dark_cells_on_multiweek_page on
+1891-92_pair002, receipts_parse_failed on 1894-95_pair008, duplicate_event_key x2 on
+1897-98_pair016/pair020" -- then "investigate."
+
+**receipts_parse_failed (1894-95_pair008)**: one-line fix, `receipts_text` had lost its leading
+`1599` (was `'р. 75 к.'`), scan-verified and restored to `'1599 р. 75 к.'`.
+
+**duplicate_event_key (1897-98_pair016)**: scan-verified against `ForUpload_1897-98_Repertoire_007.jpg`.
+A 3-day cascading mislabel, not a simple duplicate: day21's second Малый session -> "22 Четвергъ.",
+the pre-existing "22 Четвергъ." entry (itself one day off) -> "23 Пятница.", and a spurious dark
+placeholder already sitting at "23 Пятница." removed.
+
+**duplicate_event_key x2 (1897-98_pair020)**: much larger than it looked. Both flagged collisions
+were `human:kept_both` markers from an earlier dedup pass. Cross-checked every receipts figure
+(effectively a unique fingerprint per session on a page) against `ForUpload_1897-98_Repertoire_009.jpg`
+and found the corruption was a page-wide cascading date-label shift spanning BOTH the
+Александринскій and Маріинскій columns, 1-12 Марта 1898 -- not just the 2 flagged rows. Fixed 12
+Александринскій sessions + 8 Маріинскій sessions (relabels, 2 genuinely-missing sessions recovered,
+2 pure duplicates deleted, 1 receipts figure cleared back to null to match what's actually printed).
+Two of three "empty is_dark placeholder" entries deleted in a first pass turned out on closer scan
+inspection to be genuine dark-day markers (real printed dashes) mislabeled with page-corner-stamp
+bleed-through dates -- restored rather than left deleted; a third had no verifiable true date and
+was left deleted. Noted but NOT chased: a similar corner-stamp-bleed artifact ~25 Февраля on this
+same page, and the open question of whether this failure mode recurs on other two-page-spread pages.
+
+**zero_dark_cells_on_multiweek_page (1891-92_pair002)**: the biggest of the four. Confirmed the
+flag's own suspicion exactly -- Мариинскій/Александринскій/Михайловскій/Большой had been dropped
+entirely from this page (16-30 Августа 1891, season opener) despite clear printed dashes on
+`ForUpload_1891-92_Repertoire_000.jpg`; only Малый was captured, and even that had a systematic
+2-row date shift plus several OCR title garbles. Rebuilt the full 16-30 Августа window from the
+scan: fixed/relabeled 11 Малый sessions, added 41 dark-day markers across the other 4 theaters,
+added 3 missing "30 Пятница." season-opening Гимнъ sessions (Мариинскій/Михайловскій/Большой).
+
+```sql
+-- verification after all four fixes, run against the rebuilt outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb
+-- (via pipeline/quality_checks.py and pipeline/validate_performance_dates.py, not raw SQL)
+```
+
+Result: `event_entry` 5761 -> 5802 rows. `quality_checks.py`: **5 flags -> 0** -- every flag in
+the corpus resolved. `validate_performance_dates.py`: verified 84.3% -> 84.4%, unresolved
+unchanged at 11, no regressions. 0 new validation errors. Full detail: `docs/eval/known_issues.md`
+issue #74.
