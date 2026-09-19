@@ -6509,3 +6509,53 @@ Result: `event_entry` 5761 -> 5802 rows. `quality_checks.py`: **5 flags -> 0** -
 the corpus resolved. `validate_performance_dates.py`: verified 84.3% -> 84.4%, unresolved
 unchanged at 11, no regressions. 0 new validation errors. Full detail: `docs/eval/known_issues.md`
 issue #74.
+
+## 2026-09-19 — promoted repertoire_spreadfix_v6 over outputs/full_run (the published production database)
+
+RG asked to "promote this build over outputs/full_run" after issue #74 closed with quality_flags.csv
+at 0. This is the first promotion of the two-page-spread Repertoire rework (issues #69-#74, ~2 months
+of work) into the actual production deliverable already published to HF/Cloud Run.
+
+Confirmed with RG first: backup drive has arrived (guardrail from cost-and-outputs-guardrails.md no
+longer applies at full strength), and to skip re-running link_wikidata.py this round (external API,
+unaffected by this change -- Repertoire pages never produce person_entry rows, so wikidata person
+links are structurally untouched by any of this).
+
+**Scope**: swapped the 97 old single-page-scheme `repertoire_<season>_p###.raw.json` files (1890-91
+through 1897-98) for repertoire_spreadfix_v6's 97 new two-page-spread `pair###`/`p###`-scheme files,
+combined manifest.csv accordingly (removed 97 old rows, added 97 new), left the 422 single-page-season
+(1898-99+) Repertoire files and all 831 Musicians/Roster/TheaterSchoolStaff/Administration files
+completely untouched.
+
+**Verified safe before running anything**: traced build_entities.py's source queries -- entities.person/
+person_candidate/person_link/person_merge_log are built exclusively from raw.person_entry, which
+Repertoire pages never populate, so none of the Musicians/Roster entity-resolution work (2900 live
+people, 23 already-reviewed candidate decisions, person_merge_log) was at risk. entities.work is a
+full CREATE OR REPLACE every run regardless (deterministic from raw.event_entry_performance, no
+manual state to lose). entities.person_wikidata_link belongs solely to link_wikidata.py, untouched by
+build_entities.py.
+
+**Safety backup made first** (outputs/full_run_pre_promote_backup_2026-09-19/): imperial_theaters.duckdb,
+research_dataset.sqlite, manifest.csv, and the 97 old raw JSON files being replaced.
+
+**Pipeline rerun, full corpus**: parse_and_validate.py (with --page-headers for date_undate backfill)
+-> build_duckdb.py -> quality_checks.py -> validate_performance_dates.py -> build_entities.py ->
+build_research_model.py -> build_datasette.py. link_wikidata.py deliberately skipped.
+
+```sql
+-- verification: person_entry (Musicians/Roster) byte-identical old vs new
+-- select count(*) from raw.person_entry  -> 21168 both before and after
+-- select count(*) from entities.person_wikidata_link -> 43 both before and after
+-- select count(*) from entities.person_candidate where status != 'pending' -> 23, "already-reviewed
+--   decisions preserved from a previous run" (build_entities.py's own log line)
+```
+
+Result: raw.event_entry for the 8 promoted seasons dropped 8941 -> 5802 rows (expected -- old data
+was the pre-dedup baseline extraction; new data is the fully hand-verified result of this session's
+whole Repertoire two-page-spread arc). quality_flags.csv: 0 flags for all 97 promoted pages (1059
+flags remain, all pre-existing and unrelated -- Musicians/Roster checks + single-page-season
+Repertoire, both untouched). validate_performance_dates.py for the promoted seasons: verified 84.4%,
+matching repertoire_spreadfix_v6 exactly (4898/5802). Musicians/Roster entity counts (person_entry,
+person_wikidata_link, 23 preserved candidate decisions) all byte-identical old vs new -- confirmed no
+collateral effect on unrelated entity-resolution work. outputs/full_run/imperial_theaters.duckdb and
+research_dataset.sqlite rebuilt in place. Full detail in docs/eval/known_issues.md's promotion note.
