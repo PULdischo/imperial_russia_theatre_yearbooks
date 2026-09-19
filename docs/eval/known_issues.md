@@ -13958,3 +13958,59 @@ dates.py` verified rose 81.9% -> **82.5%**.
 
 8 of the original 9 confirmed extraction gaps remain uncataloged for
 recovery -- next up per RG's request.
+
+### Addendum to #73 (2026-09-19): recovered all 7 remaining confirmed
+extraction gaps ("all of them, one at a time")
+
+RG asked to recover every remaining gap, not just the season opener.
+Manually transcribed all 7 -- no paid API calls, same discipline as the
+rest of this project:
+
+- **`repertoire_1891-92_p003`** (31 Августа-10 Сентября 1891, 45
+  sessions). Aug 31 (a Saturday) has no printed row at all -- real
+  content starts Sept 1. From `ForUpload_1891-92_Repertoire_000.jpg`
+  (already read once during issue #72's `pair004` investigation).
+- **`repertoire_1893-94_pair014`** (26 Декабря 1893-14 Января 1894, 120
+  sessions). A dense page with frequent morning/evening splits and a
+  free "Гимнъ" student-matinee day (26 Дек, no receipts on the free
+  showings). From `ForUpload_1893-94_Repertoire_006.jpg`.
+- **`repertoire_1893-94_pair020`** (23 Февраля-19 Марта 1894, 116
+  sessions). Confirms the now-familiar Lenten pattern (German troupe
+  at Александринскій, French at Михайловскій, Маріинскій+Малый blank)
+  starting 6 Марта; Feb 28-Mar 5 has no printed rows at all (first
+  week of Great Lent). From `ForUpload_1893-94_Repertoire_009.jpg`.
+- **`repertoire_1894-95_pair012`** (19 Февраля-14 Марта 1895, 100
+  sessions). Same Lenten pattern. Found Feb 13-18 has no available
+  render on either side (the prior render ends Feb 12, this one
+  starts Feb 19) -- reclassified from "extraction gap" to a probable
+  first-week-of-Lent closure, not recoverable. From
+  `ForUpload_1894-95_Repertoire_005.jpg`.
+- **`repertoire_1895-96_pair012`** (7-29 Декабря 1895, 111 sessions).
+  Ordinary full 5-theater programming (December, not Lent). From
+  `ForUpload_1895-96_Repertoire_005.jpg`.
+- **`repertoire_1890-91_p015`** (28 Декабря 1890-2 Января 1891, 55
+  sessions). From `ForUpload_1890-91_Repertoire_006.jpg` (the same
+  render already used for the `pair014`/`pair016` boundary work in
+  issue #72).
+- **`repertoire_1890-91_p023`** (24 Марта-12 Апрѣля 1891, 77 sessions).
+  Lenten pattern again. Found Apr 13-21 has no printed rows at all --
+  matches the established recurring Holy Week/Easter closure pattern
+  exactly (Easter 1891 O.S. fell Apr 21), reclassified as not
+  recoverable rather than a gap. Confirmed Apr 22 onward is already
+  captured in the existing `pair024`. From
+  `ForUpload_1890-91_Repertoire_010.jpg` (Mar 24-29 tail) + `_011.jpg`
+  (Mar 30-Apr 12).
+
+**Final state**: `event_entry` 5418 -> 5761, 0 new validation errors,
+`quality_checks.py` unchanged at 5 pre-existing flags, full 97-page
+date-window cross-check clean (same 2 pre-existing harmless cases
+only). `validate_performance_dates.py` verified rose 82.5% -> **84.3%**;
+all 11 remaining unresolved rows are the same already-explained cases
+from before this addendum -- nothing new introduced by any of the 7
+recoveries.
+
+Every one of the 9 originally-confirmed extraction gaps is now either
+recovered (7) or reclassified as a genuine, non-recoverable closure
+after closer inspection (2, both matching the established Lenten/Holy-
+Week closure pattern already documented in the 2026-08-24 missing-
+pages audit). Nothing remains open on issue #73.
