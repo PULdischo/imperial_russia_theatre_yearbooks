@@ -6634,3 +6634,37 @@ Scan-verified all 9 genuine-conflict blocks:
 Verification: event_entry 5810 -> 5809 (net -1, one duplicate removed). quality_flags.csv stayed at
 0. validate_performance_dates.py: verified 84.9% -> 85.4%, intra_block_disagreement 751 -> 720
 (exactly -31, matching the 31 events fixed), unresolved unchanged at 11, no regressions.
+
+## 2026-09-22 — investigated all 11 remaining "unresolved" date-check rows
+
+RG asked to turn to the 11 unresolved rows next. Queried them directly (not from memory):
+
+```sql
+select dc.event_id, e.page_id, e.theater, e.date_text, e.date_undate, e.season, dc.note
+from analysis.event_entry_date_check dc join raw.event_entry e on e.event_id = dc.event_id
+where dc.date_confidence = 'unresolved' order by e.page_id, e.date_undate
+```
+
+Result: 3 blocks. (1) repertoire_1893-94_pair004, "13 Среда." (1893-09-13), all 5 theaters --
+true Julian weekday is Понедѣльникъ (Monday). (2) repertoire_1894-95_pair008, "25 Суббота."
+(1895-01-25), all 5 theaters -- true weekday is Среда (Wednesday). (3) repertoire_1895-96_pair002,
+"26 Воскрес." (1895-08-26), Большой only, is_dark placeholder, no content.
+
+Re-verified all 3 against source, not trusting old memory notes:
+- (1) ForUpload_1893-94_Repertoire_001.jpg: all 5 theaters' titles/receipts match exactly; "13
+  Среда." is genuinely printed that way. Confirmed real 1893-volume printing error, correctly
+  verbatim.
+- (2) ForUpload_1894-95_Repertoire_003.jpg: all 5 theaters' titles/receipts match exactly; "25
+  Суббота." genuinely printed. Also noticed the printed sequence itself jumps oddly from "24
+  Вторникъ" straight to "25 Суббота." -- an internal inconsistency in the source itself, not just
+  this row. Confirmed real 1895-volume printing error, correctly verbatim.
+- (3) ForUpload_1895-96_Repertoire_000.jpg: checked the full row sequence across all 5 theater
+  columns -- day 26 has NO printed row at all anywhere on the page (24 Четвергъ -> 25 Пятница ->
+  27 Воскрес, a genuine gap). The "26 Воскрес." Большой entry (empty, is_dark placeholder) has no
+  corresponding source content whatsoever -- confirmed fabricated, not a mislabeled real row.
+  Deleted, matching the established fabricated-session-drop precedent (repertoire_1890-91_p012).
+
+Reran full pipeline: event_entry 5809 -> 5808 (the deleted fabrication). quality_flags.csv stayed
+at 0. validate_performance_dates.py: verified unchanged 85.4%, unresolved 11 -> 10 (the two
+genuine-printing-error blocks remain, correctly, since they're accurate transcriptions of a real
+source inconsistency -- nothing left to "fix" there without falsifying the primary source).

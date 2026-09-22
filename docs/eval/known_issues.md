@@ -14361,3 +14361,49 @@ couldn't confirm by its own design (month-name labels, format
 inconsistency), and the genuinely actionable fraction was a tiny,
 findable slice. `outputs/full_run` still not re-promoted with any of
 today's fixes (2026-09-22 session) -- that remains a separate step.
+
+### Follow-up (2026-09-22): investigated all 11 `unresolved` rows,
+re-verified rather than trusting the old "already explained" note
+
+RG asked to turn to these next. Queried fresh: 3 blocks. Re-verified
+each directly against its scan rather than accepting the prior
+session's claim at face value:
+
+- **`1893-94_pair004`, "13 Среда." (1893-09-13), all 5 theaters** --
+  every title and receipts figure matches
+  `ForUpload_1893-94_Repertoire_001.jpg` exactly. The printed source
+  genuinely says "Среда" for day 13, but the true Julian weekday is
+  Понедѣльникъ (Monday). Confirmed real: a printing error in the
+  1893 volume itself, correctly transcribed verbatim -- there is
+  nothing to fix here without falsifying the primary source.
+- **`1894-95_pair008`, "25 Суббота." (1895-01-25), all 5 theaters** --
+  same situation, confirmed against
+  `ForUpload_1894-95_Repertoire_003.jpg`. Noticed in passing that the
+  printed sequence itself jumps oddly from "24 Вторникъ" straight to
+  "25 Суббота." -- an internal weekday inconsistency in the source
+  document, not isolated to this one row. Correctly verbatim.
+- **`1895-96_pair002`, "26 Воскрес." (1895-08-26), Большой only** --
+  different from the other two: this was an empty `is_dark`
+  placeholder, not a real session. Checked the full row sequence
+  across all 5 theater columns on
+  `ForUpload_1895-96_Repertoire_000.jpg` and found day 26 has **no
+  printed row at all anywhere on the page** (24 Четвергъ -> 25
+  Пятница -> 27 Воскрес, a genuine gap in the source). The entry had
+  no corresponding content whatsoever -- confirmed fabricated, not a
+  mislabeled real row. Deleted, matching the established fabricated-
+  session-drop precedent from `repertoire_1890-91_p012`.
+
+**Verification**: `event_entry` 5809 -> 5808 (the one fabrication
+removed). `quality_flags.csv` stayed at 0. `validate_performance_
+dates.py`: verified unchanged at 85.4%, `unresolved` 11 -> **10** (the
+two genuine-printing-error blocks remain by design -- they are
+accurate transcriptions of a real source inconsistency, not pipeline
+defects).
+
+**This closes the loop on every checkable date in the corpus.** Of
+5,808 events: 4,960 independently verified, 118 auto-corrected, 720
+`intra_block_disagreement` (confirmed 96% harmless format variance,
+4% already fixed above), and the 10 remaining `unresolved` rows are
+each individually documented as genuine, unfixable-without-
+falsification source printing errors. `outputs/full_run` still not
+re-promoted with any of today's (2026-09-22) fixes.
