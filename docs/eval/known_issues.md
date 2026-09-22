@@ -15842,13 +15842,75 @@ baseline confirmed exactly (2900 live/1459 tombstoned/23 preserved),
 `raw.person_entry`/`entities.person_wikidata_link` byte-identical.
 Promoted.
 
-RG then paused this line of work to step back before continuing to
-Александринскій/Михайловскій/Большой on this same page or any of the
-other 33 flagged pages -- so the scope described above (33 pages
-effectively untouched, ~4 theaters' worth of this one page still
-unverified) still stands as the honest current state. What's changed
-is the *method* going forward: direct, date-by-date interactive
-verification against the scan (not solo crop-reading, composited or
-otherwise) is now the demonstrated, working approach for this specific
-bug class -- slow, but the only one that's actually resolved a
-stretch of dates with full confidence today.
+RG then paused this line of work to step back -- and the method that
+came out of that pause turned out to be decisively better than
+anything tried before it.
+
+### Addendum, same day: RG-marked-up-PDF method resolves the whole page
+
+RG proposed marking up a printed PDF of the page directly: one color
+for date/row boundaries, one color for morning/evening split
+boundaries, drawn by hand against the actual scan. Delivered as a
+single-page PDF extracted from the source (`pymupdf`, page index 6 of
+`ForUpload_1892-93_Repertoire.pdf`), annotated, saved to
+`outputs/repertoire_markup/`, and read back in. This resolved every
+remaining ambiguity on the 27 Дек-4 Января stretch in one pass,
+including several things the crop-reading and even the interactive
+Q&A hadn't yet reached:
+
+- **Confirmed all 5 theaters genuinely split on 27 Декабря** -- not
+  just Малый and Маріинскій. The blue markup line runs the full table
+  width at this row with no gaps, crossing every theater column.
+  Structurally this looked identical to a single date to every
+  automated check tried (one undivided line of text, one receipts
+  figure, no internal rule) -- there was and is no mechanical signal
+  that would have caught this; only knowing the true calendar/title
+  sequence (from RG) or a hand-drawn boundary (from RG) resolves it.
+- **The blue lines are drawn per-column, only where a real split
+  exists** -- confirmed directly (e.g. on 28th, the line crosses
+  Маріинскій and Большой but visibly gaps across Александринскій/
+  Михайловскій, exactly matching that those two are single that day).
+  This makes the markup a precise, column-by-column ground truth, not
+  just a row-level "something split here" signal.
+- Filled in the one cell no crop had fully resolved: Александринскій's
+  2 Суббота evening is genuinely blank/dark in print (a plain dash),
+  not a missing transcription.
+
+**Full corrected sequence for all 5 theaters, 27 Декабря-4 Января,
+RG-verified via the markup**: 27th -- all 5 split (Маріинскій:
+`Евгеній Онѣгинъ`/`Талисманъ`; Александринскій: `Женитьба Бѣлугина`/
+`Вольная волюшка`; Михайловскій: `La Demoiselle du Téléphone`/
+`Monsieur chasse`; Большой: `Аида`/`Бенефисъ г-жи Гейтенъ 1-й.
+Фіаметта`; Малый: `Дмитрій Самозванецъ`/`Перекати-поле`+`Левъ Гурычъ
+Синичкинъ`). 28th -- Маріинскій/Большой/Малый split, Александринскій/
+Михайловскій single. 29th -- Маріинскій/Александринскій/Большой/Малый
+split, Михайловскій single. 30th -- Александринскій/Большой/Малый
+split, Маріинскій/Михайловскій single. 31st -- all except Михайловскій
+split. 1 Января -- all single. 2 Января -- Маріинскій dark,
+Александринскій split (evening half dark), Михайловскій/Большой/Малый
+single. 3 Января -- Александринскій/Большой split, Маріинскій/
+Михайловскій/Малый single. 4 Января -- Большой split, the rest single
+(exact titles/receipts for all of the above in the raw JSON, `_source`
+tagged `"RG markup-verified"`).
+
+Applied to all 5 theaters (Малый and Маріинскій had already been fixed
+via the interactive method earlier the same day; this addendum's work
+was Александринскій/Михайловскій/Большой, 39 wrong sessions dropped,
+36 correct ones inserted). Rebuilt in place, re-verified:
+`duplicate_event_key` still 0, `validate_performance_dates.py`
+unchanged at 95.6%, `build_entities.py` baseline confirmed exactly
+(2900 live/1459 tombstoned/23 preserved), `raw.person_entry`/
+`entities.person_wikidata_link` byte-identical. Promoted.
+
+**Still open**: this page's remaining dates (5 Января-16 Января, not
+yet touched by any method) and all 33 other flagged pages. RG does not
+want to do the markup exercise for every page -- reserved for pages
+that turn out this complex; a lighter method is still needed for the
+rest of the backlog, not yet decided. The markup method itself is now
+validated and ready to reuse on whichever pages need it: extract the
+single source PDF page (`pymupdf`, `insert_pdf(src, from_page=N,
+to_page=N)`), have RG mark it up (red = date boundaries, blue =
+morning/evening splits, drawn per-column only where a split genuinely
+exists), save to `outputs/repertoire_markup/`, read back and
+transcribe date-by-date, cross-referencing every reconstructed cell
+against the current DB before writing.

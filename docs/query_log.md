@@ -7504,3 +7504,26 @@ select count(*) from entities.person_wikidata_link;  -- 43 (byte-identical)
 Result: build_entities.py baseline confirmed exactly (2900 live/1459 tombstoned/23 preserved).
 validate_performance_dates.py unchanged at 95.6%. Promoted to outputs/full_run (backup:
 outputs/full_run_pre_promote_backup_2026-09-22_cascadeaudit/).
+
+## 2026-09-22 — repertoire_1892-93_pair014 full 5-theater reconstruction via RG markup: verification
+
+```sql
+select date_text, theater, time_of_day, receipts_text from raw.event_entry
+where page_id='repertoire_1892-93_pair014' and date_text in
+  ('27 Декабря.','28 Понед.','29 Вторн.','30 Среда.','31 Четвергъ.','1 Пятн.','2 Суббота.','3 Воскресенье.','4 Понед.')
+order by date_undate, theater, time_of_day
+```
+Result: used to compare current DB state against the RG-markup-verified reference table for
+Александринскій/Михайловскій/Большой before writing the fix (Малый/Маріинскій already fixed earlier
+the same day).
+
+```sql
+select count(*) from raw.event_entry;               -- 21230 (final)
+select count(*) from raw.person_entry;               -- 21168 (byte-identical)
+select count(*) from entities.person_wikidata_link;  -- 43 (byte-identical)
+```
+Result: build_entities.py baseline confirmed exactly (2900 live/1459 tombstoned/23 preserved).
+validate_performance_dates.py unchanged at 95.6%. Promoted to outputs/full_run.
+
+All 5 theaters now fully corrected for 27 Декабря-4 Января on this page. Remaining: 5 Января-16 Января
+on this same page, and all 33 other flagged pages from the Tier-0 audit -- untouched.
