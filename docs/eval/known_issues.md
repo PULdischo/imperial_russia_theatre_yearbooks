@@ -14860,3 +14860,62 @@ before this exhaustive pass even started (from the same kind of
 targeted question); the exhaustive pass itself found zero additional
 fold-boundary errors, only completeness-gap corrections that don't
 affect any existing event's page number.
+
+### Addendum (2026-09-22): recovering the content gaps, starting with
+1890-91 (all 5 gaps in this season now recovered) -- per RG's request
+to "go ahead and tackle the content gaps next"
+
+Same discipline as issue #73's earlier gap recoveries: read the
+render directly, manually transcribe every theater's cell for every
+missing date (including explicit `is_dark` rows for blank cells, not
+just the sessions with content), attach to the existing page_id's raw
+JSON (`parse_raw/*.raw.json`) with an honest `_source` note, extend
+`page_header_dates.csv` and `printed_page_numbers/1890-91.csv` to
+cover the recovered range, then rerun the full pipeline.
+
+**All 5 of 1890-91's gaps recovered**:
+- `pair004` top (27 Августа-9 Сентября 1890, page 4) -- 55 sessions,
+  10 dates (28-29 Августа and 1, 7 Сентября have no printed row at
+  all -- a genuine skip in the source, not missing transcription).
+- `pair006` top (22 Сентября-1 Октября 1890, page 6) -- 51 sessions,
+  10 dates.
+- `pair016` tail (19-24 Января 1891, page 17) -- 31 sessions, 6 dates
+  (closing the gap issue #73 had catalogued but never actually
+  recovered, despite that issue's "recovered all 7 remaining"
+  framing).
+- `pair018` tail (8-13 Февраля 1891, page 19) -- 31 sessions, 6 dates.
+- `pair020` tail (27 Февраля-3 Марта 1891, page 21) -- 39 sessions,
+  4 dates (1 Марта has no printed row).
+
+**One real pipeline bug found and fixed along the way**: two of these
+recoveries (`pair016`, `pair020`) extend a page_id's content across a
+month boundary the page's own `page_header_dates.csv` entry didn't
+yet know about -- e.g. `pair020`'s header still said "14 февраля...26
+февраля" after I'd added March content, so `_backfill_month_year`'s
+day-number-threshold rule (day < start_day -> end_month) resolved my
+new "2 Суббота"/"3 Воскресенье" sessions to **February** 2/3 instead
+of March, since end_month was still February too. Caught immediately
+by the printed_page_number empty-row check (19 events with no page
+number, all under `pair020`) -- not by weekday validation, since
+Feb2/3 1891 and Mar2/3 1891 don't happen to collide on weekday, so a
+wrong-month date can still "validate" against the wrong day's weekday
+by coincidence for some dates; this class of bug needs the emptiness
+check, not just the weekday check. Fixed by extending both `pair016`'s
+and `pair020`'s header entries to their true (now fully transcribed)
+end dates; `pair004`/`pair006`/`pair018`'s existing header entries
+already happened to cover their full extended ranges, so no fix
+needed there.
+
+**Verification**: full pipeline rerun (`parse_and_validate.py` ->
+`quality_checks.py` -> `build_duckdb.py` -> `validate_performance_
+dates.py`). `event_entry` 5808 -> 6015 (+207, exactly the transcribed
+session count). `quality_checks.py`: 0 flags. `printed_page_number`:
+1890-91 now 808/808 (100%), up from 601/601 -- every recovered event
+resolved to a page. Weekday validation: all 207 new sessions verified
+clean against the Julian calendar (0 new unresolved/disagreement rows
+-- the 10 pre-existing `unresolved` rows are unchanged, both from
+seasons untouched by this pass).
+
+Remaining: 1892-93's much larger gap (Dec31 1892-Feb5 1893, ~37 days)
+plus its two smaller gaps (Feb24-Mar12 1893, partial Mar4-12 1893) --
+not yet started.

@@ -6896,3 +6896,41 @@ already-catalogued Jan19-24,1891 gap (issue #73) was never actually recovered de
 Final state: 5804/5808 events (99.93%) filled, unchanged from before this pass -- this
 re-verification found and fixed 0 new fold-boundary bugs (the corpus was already correct after
 the earlier fix), only corrected the documented SIZE of one already-known content gap.
+
+## 2026-09-22 — content gap recovery, 1890-91 (all 5 gaps in this season)
+
+RG asked to tackle the content gaps found during the fold-reverification pass. Recovered all 5
+gaps in 1890-91 by reading each render directly and manually transcribing every theater's cell
+(including explicit dark-cell rows) into the existing page_id's raw JSON.
+
+Verification query used repeatedly during this work (check whether a new session's date actually
+resolved to a page number):
+```sql
+SELECT season, page_id, date_undate, count(*) FROM raw.event_entry
+WHERE printed_page_number='' OR printed_page_number IS NULL
+GROUP BY season, page_id, date_undate ORDER BY season, date_undate
+```
+First run after adding pair020's Feb27-Mar3 recovery surfaced a real bug: 19 events under
+pair020 with date_undate 1891-03-02/03 had empty printed_page_number, tracing to
+page_header_dates.csv's stale header entry ("14 февраля...26 февраля") causing the
+month-backfill threshold logic to resolve "2 Суббота"/"3 Воскресенье" as February instead of
+March. Fixed by extending pair020's and pair016's header entries to their true recovered end
+dates (3 марта and 24 января respectively); reran and confirmed 0 empty rows remained for
+1890-91.
+
+Weekday sanity check on the fix:
+```sql
+SELECT dc.date_confidence, count(*) FROM analysis.event_entry_date_check dc
+JOIN analysis.event_entry ae ON ae.event_id=dc.event_id
+WHERE ae.date_undate IN ('1891-03-02','1891-03-03')
+GROUP BY dc.date_confidence
+```
+Result: all 19 events verified (weekday matches calendar) after the fix.
+
+Final state: event_entry 5808 -> 6015 (+207, exactly the transcribed session count),
+quality_checks.py 0 flags, 1890-91 printed_page_number now 808/808 (100%, up from 601/601).
+validate_performance_dates.py: 10 pre-existing unresolved rows unchanged (both in seasons
+untouched by this pass, already documented), 0 new disagreements among the 207 new sessions.
+
+1892-93's larger gaps (Dec31,1892-Feb5,1893 ~37 days; Feb24-Mar12,1893 ~17 days; partial
+Mar4-12,1893) not yet started.
