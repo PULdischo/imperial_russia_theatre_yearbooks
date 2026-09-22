@@ -15027,3 +15027,65 @@ fixed along the way (the two month-threshold collisions and the
 that this generated file needs rebuilding from its 8 per-season
 sources after *every* edit to any of them, easy to forget mid-session
 and silently run stale data through the pipeline).
+
+### Promotion (2026-09-22): the entire `printed_page_number` build-out
+(Phases 1 and 2, plus all content-gap recoveries) promoted over
+`outputs/full_run` -- RG asked to go ahead
+
+Same procedure as the two prior 2026-09-19/09-22 promotions. Made a
+fresh safety backup first
+(`outputs/full_run_pre_promote_backup_2026-09-22_printedpage/` --
+distinct name from the same-day backup already sitting there from an
+earlier, unrelated promotion this same day): `imperial_theaters.duckdb`,
+`manifest.csv`, `research_dataset.sqlite`, and the *entire* `raw/`
+directory (not just the Repertoire subset, for maximum safety this
+time since the change touches both phases plus a brand-new page_id).
+
+**What changed**: copied all 98 `repertoire_spreadfix_v6/parse_raw/*.raw.json`
+files into `outputs/full_run/raw/` (97 existing + the new
+`pair016`), added the one new `pair016` manifest row (the only
+manifest diff -- confirmed by diffing the two manifests' Repertoire
+page_id sets directly before touching anything), and built a combined
+`printed_page_numbers_all.csv` (614 rows: Phase 1's 192-row
+`combined_phase1.csv` + Phase 2's 422-row `combined_phase2.csv`) as
+the single `--printed-page-numbers` input covering both season
+groups in one pipeline run.
+
+Reran the full chain: `parse_and_validate.py` (`--page-headers`
++ `--printed-page-numbers`) -> `quality_checks.py` -> `build_duckdb.py`
+-> `validate_performance_dates.py` -> `build_entities.py` ->
+`build_research_model.py` -> `build_datasette.py`.
+
+**Verification**:
+- `event_entry`: 20788 -> 21308 (+520, exactly the content-gap-
+  recovery session total -- Phase 2's single-page seasons contribute
+  no new events, only page numbers on existing ones).
+- `raw.person_entry` and `entities.person_wikidata_link`: byte-
+  identical against the backup (21168 and 43 rows respectively) --
+  Musicians/Roster untouched, same isolation guarantee `build_entities.py`
+  provides structurally (Repertoire never populates `person_entry`).
+- `entities.person`/`person_candidate`: "23 already-reviewed decisions
+  preserved from a previous run," 2900 live people -- unchanged.
+- `quality_flags.csv`: 1059 -> 1071 (+12, exactly the already-
+  investigated-and-confirmed-harmless `duplicate_event_key` coincidence
+  from the gap-recovery work -- same 12 event_ids, same explanation:
+  a pre-existing OCR-mismatched December weekday label coincidentally
+  matching newly-recovered January sessions' correct one).
+- `validate_performance_dates.py`, filtered to just the two-page-spread
+  seasons: verified 5480, corrected 118, intra_block_disagreement 720,
+  unresolved 10 -- an exact match to `repertoire_spreadfix_v6`'s own
+  numbers, confirming the promotion transferred cleanly.
+- The single-page seasons' own `validate_performance_dates.py` numbers
+  (`no_date`: 9729, `unresolved`: 10, `corrected_manual`: 9,
+  `invalid_date`: 1) are pre-existing and untouched by this session's
+  work -- `printed_page_number` build-out never modified any
+  single-page season's date computation, only added a page-number
+  column derived from `source_page_index`. Flagged for RG's own
+  next-asked follow-up: looking at the empty-`date_undate` rows
+  directly.
+
+**Not done this round**: `link_wikidata.py` (unaffected, Repertoire
+never touches Wikidata links) and the HF dataset repo / Cloud Run
+republish -- promoting the local `outputs/full_run` deliverable and
+pushing it to the external endpoints remain two separate actions per
+this project's own established distinction.

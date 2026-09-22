@@ -7000,3 +7000,37 @@ Whole content-gap-recovery effort, final tally: event_entry 5808 -> 6328 (+520 s
 coincidence, 0 new weekday-validation problems, 3 real pipeline bugs found and fixed (two
 month-threshold collisions, one combined_phase1.csv staleness trap -- must rebuild that
 generated file after every edit to its 8 source CSVs).
+
+## 2026-09-22 — promoted printed_page_number build-out (Phases 1+2, all gap recoveries) to outputs/full_run
+
+RG asked to promote. Backed up first (full_run_pre_promote_backup_2026-09-22_printedpage/).
+Copied all 98 repertoire_spreadfix_v6 raw JSON files into full_run/raw/, added the one new
+pair016 manifest row (confirmed via direct manifest diff this was the only difference), built a
+combined 614-row printed_page_numbers_all.csv (Phase 1 + Phase 2), reran the full pipeline chain.
+
+Verification queries:
+```sql
+-- two-page-spread seasons date-check breakdown, compared against repertoire_spreadfix_v6's own numbers
+SELECT dc.date_confidence, count(*) FROM analysis.event_entry_date_check dc
+JOIN analysis.event_entry ae ON ae.event_id = dc.event_id
+WHERE ae.season IN ('1890-91','1891-92','1892-93','1893-94','1894-95','1895-96','1896-97','1897-98')
+GROUP BY dc.date_confidence
+```
+Result: verified 5480, corrected 118, intra_block_disagreement 720, unresolved 10 -- exact match.
+
+```sql
+SELECT season, count(*) FROM analysis.event_entry WHERE event_status = 'not_captured' GROUP BY season ORDER BY season
+```
+Result: spread across all 18 seasons (not concentrated in touched seasons) -- confirmed pre-existing
+analysis-layer completeness-gap synthesis, not a regression.
+
+raw.person_entry (21168 rows) and entities.person_wikidata_link (43 rows) confirmed byte-identical
+against the backup via direct row comparison in Python/duckdb.
+
+Final state: event_entry 20788 -> 21308 (+520), quality_flags.csv 1059 -> 1071 (+12, the
+already-investigated duplicate_event_key coincidence, same 12 event_ids), Musicians/Roster
+isolation confirmed byte-identical. outputs/full_run/imperial_theaters.duckdb and
+research_dataset.sqlite rebuilt in place. Not done: link_wikidata.py, HF/Cloud Run republish.
+
+Noted for follow-up (RG's next request): the single-page seasons show 9729 event_entry_date_check
+rows with date_confidence='no_date' -- pre-existing, untouched by this session, next to investigate.
