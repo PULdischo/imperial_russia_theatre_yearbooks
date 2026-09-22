@@ -78,9 +78,34 @@ python pipeline/render_pages.py --pdf-dir pdf --out-dir outputs/<run> --dpi 300
 python pipeline/run_pilot.py --manifest outputs/<run>/manifest.csv \
     --images-dir outputs/<run>/images --out-dir outputs/<run>/raw --max-concurrent 8
 python pipeline/parse_and_validate.py --manifest outputs/<run>/manifest.csv \
-    --raw-dir outputs/<run>/raw --out-dir outputs/<run>/parsed
+    --raw-dir outputs/<run>/raw --out-dir outputs/<run>/parsed \
+    --page-headers outputs/repertoire_singlepage_pagenumbers/all_page_headers.csv
 python pipeline/quality_checks.py --parsed-dir outputs/<run>/parsed --out outputs/<run>/quality_flags.csv
 ```
+
+**Always pass `--page-headers` for Repertoire, both season formats.**
+Without it, `date_undate` for single-page seasons (1898-99-1907-08,
+column-wise extraction) is ~46% empty corpus-wide — not because the
+dates are unreadable, only because most sessions' own row never
+carries `month_text`/`year_text` (a known column-wise limitation,
+docs/eval/known_issues.md #69's "event-date field audit" addendum),
+and nothing backfills it without a page-level header. This isn't
+optional polish: skipping the flag silently produces a run where
+`validate_performance_dates.py` can't check ~half the corpus at all
+(confirmed directly — issue #76, verified rate 50.3% -> 95.3%
+corpus-wide once wired in). `outputs/
+repertoire_singlepage_pagenumbers/all_page_headers.csv` is a combined
+file covering every season (`repertoire_spreadfix_v6/
+page_header_dates.csv`'s 97 two-page-spread rows +
+`outputs/gate3_columnwise/page_header_dates.csv`'s 332 single-page
+rows) — if it's missing (outputs/ is gitignored and disposable, see
+below), rebuild it by concatenating those two source files, both of
+which already exist and need no new extraction. 1898-99 and 1906-07
+don't need this (baseline single-call extraction already populates
+`month_text`/`year_text` reliably), so they're simply absent from the
+file — `load_page_headers` skips any page_id it has no row for and
+falls back to the session's own fields, same as before this flag
+existed.
 
 **Repertoire pages specifically get two additional passes, routinely, on
 every page — not gated behind a screening heuristic (RG, 2026-09-01:
