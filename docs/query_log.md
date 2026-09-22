@@ -7069,3 +7069,46 @@ entities.person_wikidata_link byte-identical, entities.person still 2900 live/23
 candidates. research.event 28096 -> 26618 (fewer not_captured synthetic rows now that real dates
 are known). Combined header file saved permanently at
 outputs/repertoire_singlepage_pagenumbers/all_page_headers.csv for reuse.
+
+## 2026-09-22 — single-page-season quality-flag backlog, part 1: fabricated/misplaced performance data (issue #77)
+
+Started triaging the 172-row single-page-season quality-flag backlog RG asked about. Investigating
+the 20 receipts_parse_failed rows found a much larger pattern. Corpus-wide query:
+```sql
+SELECT ee.page_id, ee.theater, count(*) FROM raw.event_entry ee
+LEFT JOIN raw.event_entry_performance eep ON eep.event_id = ee.event_id
+WHERE ee.season IN (10 single-page seasons)
+  AND ee.event_status = 'performed' AND eep.event_id IS NULL
+  AND (ee.receipts_text IS NOT NULL AND ee.receipts_text != '')
+GROUP BY ee.page_id, ee.theater ORDER BY count(*) DESC
+```
+Result: 254 rows, 64 page/theater combinations. Traced to two causes: (1) rare fabricated tiny
+receipts for genuinely dark cells (12 rows, one page), (2) the overwhelming majority: real
+performances with the title sitting in annotation instead of works. Discovered outputs/full_run/raw/
+was stale relative to outputs/gate3_columnwise/raw_columnwise/ (65 of 332 pages differed) --
+re-syncing alone dropped the count from 254 to 139.
+
+Built an annotation-to-works parser with a safety check (lines with >1 comma held back from
+auto-fix). Manually scan-verified every ambiguous case individually (~40), catching two more
+cascading date-mislabeling bugs (1900-01_p027, 1904-05_p032) along the way, verified via receipts-
+figure matching:
+```sql
+-- pattern used repeatedly: match a session by its unique receipts_text rather than trusting
+-- its own date_text label, since the labels themselves were sometimes wrong
+```
+
+Caught and corrected a serious process error before promoting: had copied a freshly-built scratch
+.duckdb (with no entities history) directly over the live outputs/full_run/imperial_theaters.duckdb,
+causing build_entities.py to lose all tombstone/merge history (2900 live people -> 4063, 23 preserved
+candidates -> 853). Caught from the build_entities.py log output itself, restored from the
+pre-promotion backup, redid the rebuild in place on the real file instead of copying in a scratch
+copy, reverified entities.person/person_candidate matched the established baseline exactly.
+
+Final verification: 254-row query -> 0 remaining. event_entry unchanged (21321), event_entry_performance
+22424 -> 22809 (+385). quality_checks.py 1071 -> 986. validate_performance_dates.py verified 95.3% ->
+95.6%, invalid_date 4 -> 1. raw.person_entry and entities.person_wikidata_link byte-identical against
+backup; entities.person/person_candidate match baseline exactly (2900 live, 23 preserved). Promoted to
+outputs/full_run.
+
+Remaining from the original 172-row ask: duplicate_event_key (57), zero_dark_cells_on_multiweek_page
+(16), receipts_parse_failed (14) -- not yet triaged, a distinct continuation.
