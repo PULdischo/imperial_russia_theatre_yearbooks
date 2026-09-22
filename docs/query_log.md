@@ -7571,3 +7571,85 @@ Result: build_entities.py baseline confirmed exactly. validate_performance_dates
 95.6% -> 95.8% (header fix alone removed false date-mismatch noise page-wide). Promoted.
 
 **repertoire_1892-93_pair014 is now fully resolved, every date, every theater.**
+
+## 2026-09-22 — Broadened audit: weekday-disagreement % by page_id, two-page-spread corpus
+
+```sql
+-- (via validate_performance_dates.py's analysis.event_entry_date_check output,
+--  aggregated by page_id, sorted by pct intra_block_disagreement/unresolved)
+```
+
+Result: top 4 "100%-flagged" pages (1892-93_pair022, 1892-93_pair008,
+1894-95_pair016, 1895-96_pair008) all use pure "day + month" date_text
+(no weekday word) -- confirmed via direct code read of
+validate_performance_dates.py (~line 200-201) that this date format is
+automatically flagged regardless of correctness. Signal is not a valid
+proxy for the cascade bug on these pages; false positive.
+
+## 2026-09-22 — repertoire_1892-93_pair022: printed page-number range and current DB state
+
+```sql
+-- grep repertoire_1892-93_pair022 outputs/repertoire_singlepage_pagenumbers/printed_page_numbers/1892-93.csv (or equivalent)
+```
+
+Result: pair022 spans 1893-04-09 to 1893-04-21 (printed pages 22-23).
+
+```python
+data = json.load(open('outputs/full_run/raw/repertoire_1892-93_pair022.raw.json'))
+for s in data['sessions']: print(s['date_text'], s['theater'], s['session'], s['is_dark'], s['receipts_text'], [w['work_title'] for w in s['works']])
+```
+
+Result: 65 sessions, 9-21 апрѣля, all 5 theaters present every date
+except is_dark=True blocks on 10th (4 of 5 theaters) and 17th (4 of 5
+theaters). No morning/evening splits present anywhere on the page.
+
+## 2026-09-22 — repertoire_1892-93_pair022 direct scan verification, 9-12 апрѣля
+
+Rendered ForUpload_1892-93_Repertoire.pdf at 300dpi
+(pipeline/render_pages.py), read page index 10 (repertoire_1892-93_p010.png),
+compared 9/10/11/12 апрѣля (incl. page-fold boundary at 11th) against
+current DB raw JSON directly (visual read, no SQL).
+
+Result: exact match on all 5 theaters' works and receipts for all 4
+dates checked, including dark-cell pattern on the 10th. No evidence of
+the pair014-style dropped-session cascade. Page confirmed clean.
+
+## 2026-09-22 — repertoire_1895-96_pair008: theater count check
+
+```python
+data = json.load(open('outputs/full_run/raw/repertoire_1895-96_pair008.raw.json'))
+print(sorted(set(s['theater'] for s in data['sessions'])), len(data['sessions']))
+```
+
+Result: only ['Малый.'], 15 sessions total. Маріинскій/Александринскій/
+Михайловскій/Большой entirely absent from this page's raw JSON.
+
+## 2026-09-22 — repertoire_1895-96_pair008: "31 Ноября." date_undate check
+
+```sql
+SELECT date_text, date_undate FROM raw.event_entry
+WHERE page_id = 'repertoire_1895-96_pair008' AND date_text LIKE '%Ноября%';
+```
+
+Result: date_undate correctly resolved to 1895-10-31 despite the
+verbatim OCR-quirky date_text "31 Ноября." -- not a bug, matches
+verbatim-raw/corrected-analysis-layer convention. No fix needed.
+
+## 2026-09-22 — Corpus-wide sweep: distinct theaters per two-page-spread page_id
+
+```python
+import json, glob
+for f in sorted(glob.glob('outputs/full_run/raw/repertoire_*_pair*.raw.json')):
+    data = json.load(open(f))
+    theaters = set(s['theater'] for s in data['sessions'])
+    if len(theaters) <= 3:
+        print(f, len(theaters), sorted(theaters))
+```
+
+Result: 28 of the two-page-spread pages show <=3 distinct theaters
+(expected 5); 7 of those show only 1 theater for their entire date
+range (1891-92_pair018, 1891-92_pair024, 1893-94_pair022,
+1893-94_pair024, 1894-95_pair004, 1895-96_pair008, 1896-97_pair020) --
+logged as new issue #78 in known_issues.md. The remaining 21 pages
+show varying 2-3-theater subsets, more consistent with genuine partial
+closures than a uniform bug; not yet individually verified.

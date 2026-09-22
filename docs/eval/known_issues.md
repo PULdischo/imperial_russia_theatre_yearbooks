@@ -15971,3 +15971,112 @@ morning/evening splits, drawn per-column only where a split genuinely
 exists), save to `outputs/repertoire_markup/`, read back and
 transcribe date-by-date, cross-referencing every reconstructed cell
 against the current DB before writing.
+
+**Update, same day: broadened the audit population, checked
+`repertoire_1892-93_pair022` (the top priority result), found it
+clean -- but found a bigger, different bug in the process.**
+
+Broadened the candidate population beyond the original Tier-0 34 pages
+by aggregating `validate_performance_dates.py`'s
+`intra_block_disagreement`/`unresolved` flags by `page_id` across the
+whole two-page-spread corpus, sorted by percentage flagged. **Finding,
+reported directly to RG rather than acted on blind:** the top 4
+"100%-flagged" pages (`1892-93_pair022`, `1892-93_pair008`,
+`1894-95_pair016`, `1895-96_pair008`) all share one trait -- pure "day
++ month" `date_text` with no weekday word at all (e.g. `"9 апрѣля."`).
+Per direct inspection of `validate_performance_dates.py` (~line
+200-201: `if len(parsed_weekdays) != 1 or None in parsed_weekdays:
+info['status'] = 'intra_block_disagreement' if distinct_texts else
+'unparseable'`), a page whose date format never carries a weekday word
+is automatically flagged regardless of whether the underlying date is
+actually correct. **The weekday-disagreement signal is not a valid
+proxy for the pair014-style cascade bug on pages using this date
+format** -- it's a false-positive artifact of print convention, not
+evidence of corruption. Any future prioritized list built from this
+signal needs to filter these out first.
+
+Went back to direct scan verification for `repertoire_1892-93_pair022`
+per RG's instruction (`printed_page_numbers/1892-93.csv`: spans
+1893-04-09 to 1893-04-21, PDF page index 10, rendered at 300dpi).
+Compared 9, 10, 11 (page-fold boundary -- the highest-risk spot for
+the pair014-style dropped-session bug), and 12 апрѣля directly against
+the scan: all 5 theaters, all works, all receipts figures matched the
+DB exactly, including the dark cells on the 10th (Маріинскій/
+Александринскій/Большой/Малый all correctly `is_dark=True`, only
+Михайловскій running). No УТРО/ВЕЧ split markers appear anywhere on
+this page at all (unlike pair014), consistent with there being no
+dropped split-session content to find. **Conclusion: pair022 does NOT
+have the cascade bug. Clean, no fix needed.**
+
+While investigating, also chased down two things RG flagged should be
+set aside rather than pursued immediately (via AskUserQuestion,
+"go back and check pair022"):
+- **`1895-96_pair008`, "31 Ноября."` looked like an impossible
+  calendar date (November has only 30 days) -- investigated and found
+  it's not a bug: the pipeline's own date-parsing had already
+  correctly resolved `date_undate` to `1895-10-31` (true October 31st)
+  while preserving the verbatim OCR-quirky `date_text`, matching the
+  project's established verbatim-raw/corrected-analysis-layer
+  philosophy. No fix needed.
+- **`1895-96_pair008` is missing 4 of its 5 theaters entirely** --
+  see new issue below, this turned out to be much bigger than one
+  page.
+
+## Issue #78: two-page-spread pages with entire theater columns
+missing from the extraction -- a different bug class from the
+date cascade, corpus scope 28 pages (7 severe)
+
+Discovered while investigating `1895-96_pair008` for the pair014-style
+cascade (see addendum above) -- that page's raw JSON contains **only**
+`Малый.` for its entire date range; `Маріинскій`/`Александринскій`/
+`Михайловскій`/`Большой` are completely absent, not just
+under-flagged or dark. This is a **whole-column extraction gap**, not
+a date-cascade or misattribution bug -- the model (or the
+row/column-detection step feeding it) apparently only captured one of
+five printed columns for this page.
+
+**No existing automated check can catch this.** `duplicate_event_key`,
+`receipts_parse_failed`, and `zero_dark_cells_on_multiweek_page` all
+operate on rows/columns that exist in the data; a column that's simply
+absent from the JSON produces no duplicate key, no unparseable
+receipt, and no zero-dark-cells-among-populated-rows -- there is
+nothing for any of them to flag. This is the exact gap already logged
+in a prior session's `missing-theater-column-check-gap` note (from
+when the same class of bug was first caught by hand on
+`repertoire_1892-93_pair008`): the check that would catch it directly
+(distinct theater count per page_id) was never built, and the corpus
+was never swept for siblings. It surfaced today only because of an ad
+hoc `set(theater for s in sessions)` count run across every
+`pair*.raw.json`, not because any pipeline stage flagged it.
+
+**Corpus sweep result** (`outputs/full_run/raw/repertoire_*_pair*.raw.json`,
+distinct theaters per page_id):
+
+- **7 pages have only ONE theater for their entire two-week date
+  range** -- the severe, almost-certainly-real bug cases:
+  `1891-92_pair018` (only Михайловскій), `1891-92_pair024` (only
+  Маріинскій), `1893-94_pair022` (only Маріинскій), `1893-94_pair024`
+  (only Александринскій), `1894-95_pair004` (only Малый),
+  `1895-96_pair008` (only Малый), `1896-97_pair020` (only Маріинскій).
+  All 5 Imperial theaters being simultaneously dark for an entire
+  2-week span, 7 separate times across 5 different seasons, is not a
+  plausible historical pattern -- this reads as the same
+  whole-column-drop bug repeating.
+- **21 more pages show exactly 2 or 3 theaters**, but critically, a
+  *different* subset each time (e.g. `1897-98_pair002` has
+  {Александринскій, Большой, Малый}; `1897-98_pair010` has
+  {Александринскій, Малый, Маріинскій}; `1897-98_pair012` has
+  {Большой, Маріинскій, Михайловскій} -- no repeated column position).
+  This is more consistent with genuine partial theater closures
+  (real, uneven Imperial-theater schedules) than a uniform
+  column-detection bug, which would be expected to drop the same
+  column position repeatedly. Lower priority than the 7 single-theater
+  pages, but not yet individually verified either.
+
+**Not yet investigated further** -- flagging scope and stopping here
+per RG's explicit choice to return to the pair022 cascade check first.
+Next step, when picked up: scan-verify the 7 single-theater pages
+directly (cheapest, highest-confidence bucket) using the same
+render-and-compare method as pair022/pair014; decide whether the
+21 partial-subset pages need individual verification or can be
+spot-checked and accepted as genuine.
