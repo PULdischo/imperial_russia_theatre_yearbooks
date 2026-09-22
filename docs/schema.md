@@ -127,6 +127,7 @@ receipts are actually printed at, even when multiple works share the bill.
 | `receipts_rubles` | int, nullable | parsed |
 | `receipts_kopecks` | int, nullable | parsed |
 | `annotation` | string, nullable | benefit-performance / anniversary notes printed in the cell, verbatim |
+| `printed_page_number` | string, nullable | the page number actually printed on the physical page this session appeared on — for citation. Lives here, not just on `source_pages`, because a two-page-spread `page_id` (1890-91–1897-98) can combine content from more than one physical printed page; the session's own `date_undate` picks out which one. Backfilled from a scan-verified reference table (`pipeline/parse_and_validate.py --printed-page-numbers`), never derived from `page_id`/render-index — that inference has produced real bugs before (see `docs/eval/known_issues.md`'s printed_page_number build-out). |
 
 **`event_status` and the completeness problem it doesn't solve on its own.**
 `no_performance` (formerly named `is_dark` — renamed because "dark cell" is

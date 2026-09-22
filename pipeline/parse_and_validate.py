@@ -94,6 +94,24 @@ def load_page_headers(path: Path) -> dict[str, dict]:
         }
     return headers
 
+
+def load_printed_page_numbers(path: Path) -> dict[str, list[tuple[str, str, str]]]:
+    """Parses the printed-page-number reference CSV (page_id, start_date,
+    end_date, printed_page_number) into
+    {page_id: [(start_date, end_date, printed_page_number), ...]}, for
+    flatten_repertoire_page's printed_page_ranges argument -- see
+    schemas/repertoire.py's _printed_page_for docstring for the single-row
+    vs two-row (single-page vs two-page-spread season) shape this supports.
+    Built by scan-verifying every page's own printed folio, never guessed
+    or derived from page_id/render-index alone (see docs/eval/known_issues.md's
+    printed_page_number build-out for why that inference isn't safe here)."""
+    ranges: dict[str, list[tuple[str, str, str]]] = {}
+    for row in csv.DictReader(open(path, encoding="utf-8")):
+        ranges.setdefault(row["page_id"], []).append(
+            (row["start_date"], row["end_date"], row["printed_page_number"])
+        )
+    return ranges
+
 # Rare (~4/20000 roster entries) recurring model failure: when a row has no
 # heading of its own to repeat, the model sometimes puts the person's full
 # name ("Surname, First Patronymic") into heading_path and leaves
@@ -2129,10 +2147,18 @@ def main():
                           "range header (see flatten_repertoire_page's page_header arg "
                           "and docs/eval/known_issues.md #69). Never touches the "
                           "verbatim month_text/year_text fields themselves.")
+    ap.add_argument("--printed-page-numbers", type=Path, default=None,
+                     help="scan-verified reference CSV (page_id, start_date, end_date, "
+                          "printed_page_number). Optional -- when given, backfills "
+                          "event_entry.printed_page_number for Repertoire sessions (see "
+                          "flatten_repertoire_page's printed_page_ranges arg and "
+                          "docs/eval/known_issues.md's printed_page_number build-out).")
     args = ap.parse_args()
 
     rows = list(csv.DictReader(open(args.manifest, encoding="utf-8")))
     page_headers = load_page_headers(args.page_headers) if args.page_headers else {}
+    printed_page_ranges = (load_printed_page_numbers(args.printed_page_numbers)
+                            if args.printed_page_numbers else {})
 
     merged = {
         "person_entry": [], "person_entry_service": [], "person_entry_credit": [],
@@ -2367,7 +2393,8 @@ def main():
                                                  f"logged for visibility"})
                 page = RepertoirePage.model_validate(parsed_json)
                 tables = flatten_repertoire_page(page_id, row["season"], row["city"], page,
-                                                  page_header=page_headers.get(page_id))
+                                                  page_header=page_headers.get(page_id),
+                                                  printed_page_ranges=printed_page_ranges)
 
             for table_name, table_rows in tables.items():
                 merged[table_name].extend(table_rows)

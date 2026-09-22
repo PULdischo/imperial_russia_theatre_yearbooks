@@ -308,8 +308,43 @@ def _backfill_month_year(sessions: list["SessionLLM"],
     return result
 
 
+def _printed_page_for(page_id: str, date_undate: str,
+                       printed_page_ranges: Optional[dict[str, list[tuple[str, str, str]]]]) -> str:
+    """Looks up the verbatim printed page number for one session, from a
+    small reference table built by scan-verifying every page (see
+    docs/eval/known_issues.md's printed_page_number build-out). One CSV
+    shape covers both season formats:
+
+    - Single-page seasons (1898-99 onward): exactly one reference row per
+      page_id, its [start_date, end_date] spanning the whole page -- always
+      matches regardless of the session's own date.
+    - Two-page-spread seasons (1890-91-1897-98): TWO reference rows share
+      one page_id (one per physical printed half), each with a distinct,
+      non-overlapping [start_date, end_date] sub-range and its own
+      printed_page_number -- the session's own date_undate picks out which
+      half it was actually printed on.
+
+    A page_id missing from the reference table, or a date_undate that
+    doesn't fall inside any of its ranges (an unparseable/missing date),
+    returns "" rather than guessing -- same verbatim-in/best-effort-out
+    contract as every other backfilled field here."""
+    if not printed_page_ranges or page_id not in printed_page_ranges:
+        return ""
+    ranges = printed_page_ranges[page_id]
+    if len(ranges) == 1:
+        return ranges[0][2]
+    if not date_undate:
+        return ""
+    for start_date, end_date, page_num in ranges:
+        if start_date <= date_undate <= end_date:
+            return page_num
+    return ""
+
+
 def flatten_repertoire_page(page_id: str, season: str, city: str, page: RepertoirePage,
-                             page_header: Optional[dict] = None) -> dict:
+                             page_header: Optional[dict] = None,
+                             printed_page_ranges: Optional[dict[str, list[tuple[str, str, str]]]] = None
+                             ) -> dict:
     events, performances = [], []
     backfilled = _backfill_month_year(page.sessions, page_header)
     for i, (s, (bf_month, bf_year)) in enumerate(zip(page.sessions, backfilled), start=1):
@@ -318,15 +353,17 @@ def flatten_repertoire_page(page_id: str, season: str, city: str, page: Repertoi
         theater = s.theater.strip().rstrip(".")  # strip table-header punctuation, keep the name
         event_city = _city_for_theater(theater, city)
         date_input = f"{_day_number(s.date_text)} {bf_month} {bf_year}".strip()
+        date_undate = parse_russian_date(date_input) or ""
         events.append({
             "event_id": event_id, "page_id": page_id, "season": season, "city": event_city,
             "date_text": s.date_text, "month_text": s.month_text or "",
             "year_text": s.year_text or "",
-            "date_undate": parse_russian_date(date_input) or "",
+            "date_undate": date_undate,
             "time_of_day": s.session, "theater": theater,
             "event_status": "no_performance" if s.is_dark else "performed",
             "receipts_text": s.receipts_text or "", "receipts_rubles": rub,
             "receipts_kopecks": kop, "annotation": s.annotation or "",
+            "printed_page_number": _printed_page_for(page_id, date_undate, printed_page_ranges),
         })
         for j, w in enumerate(s.works, start=1):
             performances.append({

@@ -167,6 +167,41 @@ def check_repertoire(parsed_dir: Path) -> list[dict]:
     return flags
 
 
+def check_repertoire_printed_page_sequence(parsed_dir: Path) -> list[dict]:
+    """Printed page numbers are a physical fact, not a model guess: within
+    one page_id, a later date can never carry an earlier printed page
+    number -- docs/verbatim_deliverables.md's own stated validation rule
+    for this field (folios run consecutively; any break is flagged). Flags
+    any page_id where sorting its distinct (date_undate, printed_page_number)
+    pairs by date does NOT also sort printed_page_number non-decreasing --
+    catches a bad reference-table row (wrong cutover_date, wrong page
+    number) directly and cheaply, no scan-reading needed to spot it.
+    Non-numeric printed_page_number values (a stylized folio like
+    "— 194 —" surviving unnormalized, or blank/not-yet-backfilled) are
+    skipped, not flagged -- this check is about ordering, not formatting."""
+    flags = []
+    events = by_page(load(parsed_dir / "event_entry.csv"))
+    for page_id, rows in events.items():
+        dated = sorted(
+            {(r["date_undate"], r["printed_page_number"]) for r in rows
+             if r.get("date_undate") and r.get("printed_page_number")}
+        )
+        last_num = last_date = None
+        for date_undate, page_num_text in dated:
+            try:
+                num = int(page_num_text)
+            except ValueError:
+                continue
+            if last_num is not None and num < last_num:
+                flags.append(dict(page_id=page_id, table="event_entry", row_id="",
+                                   flag="printed_page_number_out_of_sequence",
+                                   detail=f"date {date_undate} has printed_page_number {num}, "
+                                          f"earlier than {last_num} seen at {last_date} on the "
+                                          f"same page_id"))
+            last_num, last_date = num, date_undate
+    return flags
+
+
 def _normalize_theater(theater: str) -> str:
     """Matches by PREFIX against the same known-theater list check_repertoire
     uses, for the same reason: `театръ`/`театр` (pre-reform ъ present or
@@ -722,7 +757,8 @@ def main():
                           "--column-level's --out-dir), for the same check")
     args = ap.parse_args()
 
-    flags = check_roster(args.parsed_dir) + check_repertoire(args.parsed_dir)
+    flags = (check_roster(args.parsed_dir) + check_repertoire(args.parsed_dir)
+             + check_repertoire_printed_page_sequence(args.parsed_dir))
     if args.page_raw_dir or args.row_raw_dir or args.column_raw_dir:
         flags += check_repertoire_cross_extraction(
             args.page_raw_dir, args.row_raw_dir, args.column_raw_dir)

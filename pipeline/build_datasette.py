@@ -74,7 +74,7 @@ SCHEMAS = {
             event_id TEXT PRIMARY KEY, theater_id TEXT REFERENCES theater(theater_id),
             season TEXT, city TEXT, date_verbatim TEXT, date_undate TEXT,
             date TEXT, date_confidence TEXT, event_status TEXT,
-            receipts_total_kopecks INTEGER
+            receipts_total_kopecks INTEGER, printed_page_number TEXT
         )""",
     "performance": """
         CREATE TABLE performance (

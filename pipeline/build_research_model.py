@@ -169,7 +169,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             date VARCHAR,
             date_confidence VARCHAR,
             event_status VARCHAR,
-            receipts_total_kopecks INTEGER
+            receipts_total_kopecks INTEGER,
+            printed_page_number VARCHAR
         )
     """)
     con.execute("""
@@ -187,7 +188,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                      ELSE 'unparseable' END
             ) AS date_confidence,
             ae.event_status,
-            ae.receipts_total_kopecks
+            ae.receipts_total_kopecks,
+            ae.printed_page_number
         FROM analysis.event_entry ae
         LEFT JOIN analysis.event_entry_date_check dc ON dc.event_id = ae.event_id
         LEFT JOIN entities.theater t ON t.canonical_name = ae.theater_canonical
