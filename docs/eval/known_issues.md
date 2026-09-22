@@ -14446,3 +14446,84 @@ promoted seasons: verified 85.4%, unresolved 10 -- matching
 `research_dataset.sqlite` rebuilt in place. Not done: `link_wikidata.py`
 (unaffected either way) and the actual HF/Cloud Run republish (still a
 separate, later step).
+
+## Issue #75: `printed_page_number` build-out -- new `event_entry` field
+so RG can cite the physical page for any entry
+
+RG's need: cite the physical printed page number when writing about a
+specific database entry. Confirmed via direct query this was 0% filled
+across all 20,788 events, every one of the 18 Repertoire seasons --
+the schema reserved a page-level field for this
+(`raw.source_pages.printed_page_number`) but that's the wrong grain,
+since a two-page-spread `pairNNN` page_id can span content from more
+than one physical printed page.
+
+**Investigation found no reliable shortcut for either season group.**
+The `pairNNN` page_id and each session's `_source` citation cannot be
+trusted as a formula for "which physical page was this printed on" --
+confirmed only ~54% of `_source` citations match the "p0NN =
+render-sequential index" theory, and `_source` is silently dropped by
+the pydantic model today, never reaching `event_entry` at all. For the
+single-page seasons, `source_page_index + constant_offset` does NOT
+hold across seasons (1898-99 is +2, but the project's own gold data
+shows 1907-08 is +76) -- each season needs independent verification.
+
+**Build-out, Phase 0 (schema/pipeline)**: added `printed_page_number`
+to `raw.event_entry`/`analysis`/`research`/`research_dataset.sqlite` as
+a plain passthrough column. New `--printed-page-numbers` CSV input to
+`parse_and_validate.py` (`page_id, start_date, end_date,
+printed_page_number`), mirroring the existing `--page-headers`
+mechanism -- one row per page_id for single-page seasons, two rows
+sharing one page_id (non-overlapping date sub-ranges) for two-page-
+spread seasons. New `check_repertoire_printed_page_sequence` in
+`quality_checks.py` enforces that printed page numbers run
+non-decreasing within a page_id's date range
+(`docs/verbatim_deliverables.md`'s own stated validation rule for this
+field). Verified end-to-end with a synthetic test before touching real
+data: correct backfill, correct boundary behavior, untouched pages
+stay empty, and the check both passes clean data and catches a
+deliberately broken sequence.
+
+**Build-out, Phase 1 (two-page-spread seasons), season 1 of 8 --
+1890-91 complete.** Scan-verified all 13 renders directly (11
+two-page-spread + 2 single-leaf), cross-checking the existing
+`outputs/repertoire_spreadfix_v6/page_numbers/split_page_numbers_final.csv`
+extraction rather than trusting it blindly -- found and fixed one real
+misread (`repertoire_1890-91_p001`'s top half was recorded as page "1",
+a truncated/misread "10", confirmed and corrected against the scan).
+Also found `p003` and `p004` are literally duplicate scans of the same
+two physical pages (10/11) -- checked the live database and confirmed
+this never produced duplicate event rows, so no data bug, just
+redundant source material.
+
+**New finding, previously undocumented despite two separate corpus-wide
+audits (issue #48, issue #73): ~24 days of genuine missing content.**
+`repertoire_1890-91_pair004`'s own scan-verified header range is 27
+Августа-21 Сентября 1890, but it has zero captured events before Sep
+10 -- the render (`ForUpload_1890-91_Repertoire_001.jpg`) clearly shows
+real printed content for Aug27-Sep9 (page 4) that was simply never
+transcribed. Same pattern for `pair006` (header 22 Сентября-11
+Октября): zero events before Oct2, though `render_002` shows real
+content for Sep22-Oct1 (page 6). Confirmed via direct query -- zero
+rows in either date range anywhere in the season, not just under the
+expected page_id. Not recovered as part of this task (a transcription
+job, not a page-numbering one) -- flagged here for separate follow-up.
+Likely explanation for why two prior audits missed it: both checked
+date continuity *within already-captured content*; this gap is
+invisible to that method because the page's own header (correctly)
+claims a wider range than what was ever captured under it, which
+neither audit's methodology cross-checked.
+
+**Result for 1890-91**: 601/601 events (100%) resolved to exactly one
+printed page, clean boundaries at every page_id transition (including
+pages legitimately shared across two page_ids, e.g. page 15 spans
+`pair014`'s tail and `p015`'s manually-recovered content). Ran through
+the full Phase 0 mechanism end-to-end: 0 new `quality_checks.py`
+flags, no regression to the 5808-row baseline. Reference data saved to
+`outputs/repertoire_spreadfix_v6/printed_page_numbers/1890-91.csv`.
+
+**Remaining**: 7 more two-page-spread seasons (1891-92-1897-98, ~84
+renders) and all 10 single-page seasons (1898-99-1907-08, 422 renders,
+via the spot-check-then-formula approach per the approved plan). Not
+yet started. Not promoted to `outputs/full_run` -- this is
+`repertoire_spreadfix_v6`-only so far.

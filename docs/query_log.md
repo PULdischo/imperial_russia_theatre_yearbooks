@@ -6704,3 +6704,39 @@ seasons: verified 85.4%, unresolved 10, matching repertoire_spreadfix_v6 exactly
 entity resolution and Wikidata links confirmed byte-identical (second promotion, second
 confirmation the isolation holds). outputs/full_run/imperial_theaters.duckdb and
 research_dataset.sqlite rebuilt in place.
+
+## 2026-09-22 — printed_page_number build-out, Phase 1, season 1 of 8 (1890-91)
+
+RG asked to build out printed_page_number for every entry, to cite when writing about specific
+database rows. Scan-verified all 13 renders for 1890-91 (11 two-page-spread + 2 single-leaf)
+directly against ForUpload_1890-91_Repertoire_000.jpg through _012.jpg, cross-checking each
+against the existing outputs/repertoire_spreadfix_v6/page_numbers/split_page_numbers_final.csv
+extraction rather than trusting it blindly.
+
+Found and fixed one real misread: p003's top-half page number was recorded as "1" (a truncated/
+misread "10") -- confirmed against the scan directly, corrected to 10. Also found p003 and p004
+are literally duplicate scans of the same two physical pages (10/11, "1-20 ноября") -- checked
+the live database and confirmed this did NOT create duplicate event rows (only 4 expected
+morning/evening-split duplicates in that range, out of 60 events), so no data bug, just a
+redundant source scan.
+
+**New finding, not previously documented**: two genuine content gaps, ~24 days total, that the
+2026-08-24 missing-pages audit (issue #48) and the 2026-09-19 gap inventory (issue #73) both
+missed -- repertoire_1890-91_pair004 (header range 27 Августа-21 Сентября per page_header_dates.csv,
+scan-verified correct) has ZERO captured events before Sep10, even though the render
+(ForUpload_1890-91_Repertoire_001.jpg) clearly shows real printed content for Aug27-Sep9 (page 4).
+Same pattern for pair006 (header 22 Сентября-11 Октября) -- zero events before Oct2, though
+render_002 shows real content for Sep22-Oct1 (page 6). Confirmed via direct DB query (0 rows in
+both ranges, corpus-wide, not just under the expected page_id). Not recovered as part of this
+task -- flagged for separate transcription work.
+
+Built the render-level reference table (12 renders' verified top/bottom page numbers + cutover
+dates), cross-matched against every 1890-91 event's actual date_undate: 601/601 events (100%)
+resolved to exactly one page with clean, non-overlapping boundaries at every page_id transition
+(including pages shared across two page_ids, e.g. page 15 spans pair014's tail and p015's
+manually-recovered content). Saved to
+outputs/repertoire_spreadfix_v6/printed_page_numbers/1890-91.csv.
+
+Ran through pipeline/parse_and_validate.py --printed-page-numbers end-to-end: 601/601 events
+backfilled correctly, 0 new quality_checks.py flags (including the new sequence-consistency
+check), no regression to the existing 5808-row/0-flag baseline.
