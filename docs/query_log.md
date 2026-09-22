@@ -6820,3 +6820,40 @@ baseline -- 0 regression, 0 new printed_page_number_out_of_sequence flags across
 Phase 2 complete. Both phases of the printed_page_number plan are now done: 5,804/5,808 (99.93%)
 two-page-spread events + 14,980/14,980 (100%) single-page events. Phase 3 (promoting into
 outputs/full_run) remains a separate, later decision, not done here.
+
+## 2026-09-22 — printed_page_number fold-boundary confidence check (prompted by RG's question)
+
+RG asked whether we're confident about an entry's page number at a page fold. Ran a systematic
+overlap check across all 91 two-page-spread fold boundaries (187 reference rows in
+outputs/repertoire_spreadfix_v6/printed_page_numbers/*.csv):
+
+```python
+# for each page_id with 2 reference rows, check if end_date of the earlier range >= start_date
+# of the later range (an overlap, meaning the same date is claimed by both halves)
+```
+
+Result: exactly 1 overlap found, repertoire_1897-98_pair018 (top ending 1898-02-07, bottom also
+starting 1898-02-07).
+
+```sql
+SELECT event_id, date_undate, printed_page_number FROM raw.event_entry
+WHERE page_id = 'repertoire_1897-98_pair018' AND date_undate = '1898-02-07'
+```
+Result: 5 real events (pair018__s046 through __s050), all showing page 18.
+
+Re-examined ForUpload_1897-98_Repertoire_008.jpg directly (cropped for a close look at the fold
+region): confirmed the true fold falls between 6 Февраля (last row on top, page 18) and 7 Февраля
+(first row on bottom, page 19, Михайловскій only). Fixed 1897-98.csv (top range end_date
+1898-02-07 -> 1898-02-06), rebuilt combined_phase1.csv, reran parse_and_validate.py ->
+quality_checks.py -> build_duckdb.py: 5,808/5,808 events unchanged, 0 quality flags, the 5
+corrected events verified to now read page 19.
+
+Also ran a non-adjacency check (any fold boundary where the two ranges aren't exactly 1 day
+apart, which would catch an off-by-one-in-the-other-direction misreading that wouldn't produce a
+literal overlap): found 7 gaps, all either small (2-4 day) plausible season-opening dark-day gaps
+or the already-documented 11-day 1892-93_pair014 gap (Dec17-26,1892, known_issues.md #75's first
+addendum) -- nothing newly concerning.
+
+Documented the honest limit of this check in known_issues.md: it catches boundary dates that
+disturb the date-range arithmetic, not a misreading that still happens to produce a tidy
+one-day-apart split. Full re-verification of all 91 folds against the scan was not done.

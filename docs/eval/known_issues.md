@@ -14711,3 +14711,64 @@ done: 5,804/5,808 two-page-spread events (99.93%) plus 14,980/14,980
 single-page events (100%) now carry a `printed_page_number`. Remaining
 per the plan: Phase 3 (promoting all of this into `outputs/full_run`) --
 a separate, later decision, not done automatically here.
+
+### Addendum (2026-09-22): fold-boundary confidence check -- one real
+error found and fixed, prompted by RG asking "are we confident about an
+entry's page number when it is at a page fold?"
+
+Good question to interrogate directly: `_printed_page_for`'s two-page-
+spread logic assigns a session to top/bottom by checking whether its
+`date_undate` falls in that half's `[start_date, end_date]` range --
+it has no visibility into where the row actually sits relative to the
+physical fold in the scan. Confidence at a fold is therefore only as
+good as the accuracy of the one boundary date I read off each render,
+and critically, **a wrong boundary date does not show up in the
+Phase 1 cross-match** (that check only confirms every event's date
+falls in *some* range for its page_id, not that it landed on the
+*correct* one of the two halves).
+
+Ran two systematic checks across all 91 two-page-spread fold
+boundaries (187 reference rows) that a boundary-reading error could
+plausibly produce:
+
+1. **Overlap check** (a date claimed by both halves): found exactly
+   one. `repertoire_1897-98_pair018` (render `p008`) had top ending
+   1898-02-07 and bottom also starting 1898-02-07 -- the literal
+   duplicate-date bug this question was asked about. Re-examined the
+   scan directly (cropped for a closer look): the fold actually falls
+   between 6 Февраля (last row on top, page 18 -- filled across all
+   five theater columns) and 7 Февраля (first row on bottom, page 19 --
+   only Михайловскій played that day, every other theater dark).
+   **Confirmed wrong**: 5 real events
+   (`repertoire_1897-98_pair018__s046` through `__s050`, all dated
+   1898-02-07) were tagged page 18; corrected to page 19. Fixed in
+   `printed_page_numbers/1897-98.csv` (top range now ends
+   1898-02-06), propagated through `combined_phase1.csv`, and reran
+   the full pipeline (`parse_and_validate.py` -> `quality_checks.py`
+   -> `build_duckdb.py`): still 5,808/5,808 events, 0 quality flags,
+   the 5 corrected rows verified to read `19` post-fix.
+2. **Non-adjacency check** (any boundary where top's end_date and
+   bottom's start_date aren't exactly one calendar day apart -- the
+   failure mode an off-by-one-in-the-other-direction misreading would
+   produce, since it wouldn't necessarily create a literal overlap):
+   found 7 gaps, all explainable and none newly concerning -- five are
+   small 2-4 day gaps at individual seasons' openings (plausible
+   ordinary dark days at the very start of a season, not extraction
+   artifacts -- see `never-assume-date-completeness` memory), and the
+   11-day `1892-93_pair014` gap is the already-documented Dec17-26,1892
+   content gap from this same issue's first addendum, not a new find.
+
+**Honest limit of this check**: the overlap/adjacency scans catch a
+boundary date that's wrong *in a way that disturbs the date-range
+arithmetic*. They cannot catch a boundary that's off by a day in a way
+that still produces a clean, non-overlapping, one-day-apart split --
+i.e., a case where I misread which day the fold actually falls on, but
+the resulting two ranges still look tidy. Ruling that out completely
+would require re-examining all 91 folds directly against the scan,
+which hasn't been done here; what has been done is exactly the layer
+of validation this question called for (an automated corpus-wide
+integrity check plus a direct re-look at the one place the automated
+check actually flagged), consistent with the project's normal script-
+first-then-verify practice elsewhere. Single-page seasons (Phase 2)
+have no equivalent "fold" concept -- one render is one printed page
+outright, so this class of error doesn't apply there.
