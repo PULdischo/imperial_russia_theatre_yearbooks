@@ -14919,3 +14919,63 @@ seasons untouched by this pass).
 Remaining: 1892-93's much larger gap (Dec31 1892-Feb5 1893, ~37 days)
 plus its two smaller gaps (Feb24-Mar12 1893, partial Mar4-12 1893) --
 not yet started.
+
+### Addendum (2026-09-22): recovered 1892-93's large Dec31-Feb5 gap
+(the season's biggest, ~37 days, 233 sessions)
+
+Same discipline as the 1890-91 recoveries, extended across renders
+`_005.jpg` (page13 tail, 17-26 Декабря), `_006.jpg` (page14 tail,
+1-6 Января, plus all of page15, 7-16 Января), and `_007.jpg` (a new
+page_id, `pair016`, covering all of pages 16 and 17, 17 Января-5
+Февраля). This season prints real receipts (unlike 1890-91), so every
+session also carries its transcribed ruble/kopeck figure where
+legible -- a handful of cells sit exactly on the scan's physical
+binding crease and were left with an honest `annotation` ("receipts
+illegible") rather than guessed, same policy as the fold-adjacent rows
+issue #73 already left incomplete on other pages.
+
+**A second real pipeline bug found and fixed, distinct from the
+1890-91 month-threshold bug**: extending `pair014` (already spanning
+5 "page groups" -- 11 through 15 -- an existing, pre-documented
+quirk of this specific page_id) across the Dec/Jan month boundary hit
+a structural limit the day-threshold rule can't handle at all: both
+December's existing content and January's new content contain literal
+day-number repeats (day 4 and day 11 both appear in each month's
+portion), so no single threshold could route them correctly --
+confirmed the first attempt silently misassigned all of January's
+sessions to December. Fixed by setting `month_text`/`year_text`
+explicitly on every new session instead of relying on
+`page_header_dates.csv`'s backfill at all (`_backfill_month_year`
+already honors an explicit month/year over its own header-derived
+guess, by design -- this is the first recovery to actually need that
+escape hatch). Used the same explicit-month approach for the new
+`pair016` page_id from the start, sidestepping the whole class of bug.
+
+**One coincidental, confirmed-harmless quality flag**: 12
+`duplicate_event_key` flags appeared, all from `pair014`'s new
+January sessions sharing a printed weekday label ("4 Понед.", "11
+Понед.") with pre-existing December sessions on the same page_id.
+Investigated directly: the pre-existing December sessions' weekday
+label was already wrong in the original source extraction and
+`validate_performance_dates.py` had already silently corrected their
+computed date (status `corrected`, not `verified`) -- an unrelated,
+pre-existing peculiarity, not something this recovery introduced. My
+new January sessions are independently `verified` (weekday matches
+the Julian calendar exactly). Both resolve to their own correct,
+distinct `date_undate` and `printed_page_number` -- the flag is a
+same-page text coincidence, not a real duplicate, confirmed rather
+than assumed.
+
+**Verification**: `event_entry` 6015 -> 6248 (+233, exactly the
+transcribed count across all three renders). `quality_checks.py`:
+12 flags, all the one confirmed-harmless coincidence above (0 new
+categories). `printed_page_number`: 1892-93 now 879/879 filled except
+the 4 already-documented unassignable rows (2 May31 stray events,
+2 Nov2 1896-97-season duplicates -- unrelated to this gap). Weekday
+validation: all 233 new sessions verified clean (0 new unresolved/
+disagreement rows; the 10 pre-existing unresolved rows, both in other
+seasons, are unchanged).
+
+Remaining in 1892-93: Feb24-Mar12 1893 (~17 days) and a partial
+Mar4-12 1893 window -- not yet started. No other seasons' gaps
+remain per the fold-reverification pass's full-corpus read.

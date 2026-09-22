@@ -6934,3 +6934,41 @@ untouched by this pass, already documented), 0 new disagreements among the 207 n
 
 1892-93's larger gaps (Dec31,1892-Feb5,1893 ~37 days; Feb24-Mar12,1893 ~17 days; partial
 Mar4-12,1893) not yet started.
+
+## 2026-09-22 — content gap recovery, 1892-93's large Dec31-Feb5 gap (233 sessions)
+
+Continued gap recovery into 1892-93's biggest gap. Transcribed page13's tail (17-26 Дек, into
+existing pair014), page14's tail (1-6 Янв, into pair014) and all of page15 (7-16 Янв, into
+pair014), plus a brand-new page_id pair016 covering pages 16 and 17 in full (17 Янв - 5 Февр).
+This season prints real receipts, transcribed alongside every title; a few cells sit on the
+scan's binding crease and were left with annotation="receipts illegible" rather than guessed.
+
+First pipeline run surfaced a structural bug: extending pair014 across the Dec/Jan boundary hit
+day-number collisions the header-based month-threshold backfill can't resolve (day 4 and day 11
+both occur in December's existing content and January's new content). Fixed by setting
+month_text/year_text explicitly on every new session (confirmed via code read that
+_backfill_month_year honors an explicit month/year over its own header guess). Verification
+query used to confirm the fix:
+```sql
+SELECT event_id, date_undate, printed_page_number FROM raw.event_entry
+WHERE page_id='repertoire_1892-93_pair014' AND date_undate IN ('1892-12-04','1893-01-04')
+```
+Result: both resolved to their own correct page (12 and 14 respectively), no collision.
+
+quality_checks.py surfaced 12 duplicate_event_key flags -- investigated and confirmed harmless:
+pre-existing December sessions on the same page_id have an OCR-mismatched weekday label already
+auto-corrected by validate_performance_dates.py (status 'corrected'), coincidentally colliding
+in raw date_text with my accurately-transcribed ('verified') January sessions. Confirmed via:
+```sql
+SELECT dc.event_id, ae.date_undate, dc.date_confidence FROM analysis.event_entry_date_check dc
+JOIN analysis.event_entry ae ON ae.event_id=dc.event_id
+WHERE dc.event_id IN ('repertoire_1892-93_pair014__s060','repertoire_1892-93_pair014__s182', ...)
+```
+
+Final state: event_entry 6015 -> 6248 (+233), quality_checks.py 12 flags (all the one confirmed
+coincidence above), printed_page_number 1892-93 now 879/879 filled except the 4 already-known
+unassignable rows. validate_performance_dates.py: all 233 new sessions verified (weekday matches
+calendar), 0 new unresolved rows.
+
+Remaining in 1892-93: Feb24-Mar12,1893 (~17 days) and a partial Mar4-12,1893 window, not yet
+started.
