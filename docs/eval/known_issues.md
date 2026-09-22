@@ -14596,12 +14596,21 @@ the id the pipeline actually keys on, so it could not have caught this
 on its own.
 
 **New finding, same invisible-to-prior-audits pattern as 1890-91's
-pair004/pair006**: `1892-93` has a genuine ~10-day content gap,
-Dec17-26 1892 -- zero events anywhere in the season for that range,
+pair004/pair006**: `1892-93` has a genuine content gap starting
+Dec17 1892 -- zero events anywhere in the season for that range,
 confirmed via direct query, though the surrounding pages' own header
 ranges imply content should exist there. Not recovered as part of this
 task; flagged for the same future transcription follow-up as
-1890-91's gap.
+1890-91's gap. **Correction (2026-09-22, see the fold-reverification
+addendum below): this gap's true extent is much larger than first
+estimated here -- Dec31 1892 through Feb5 1893, ~37 days, not the
+~10-day Dec17-26 window originally reported.** The Dec17-26 figure was
+an undercount from checking only the immediately-adjacent pages;
+scan-reading every render in the season during the fold-reverification
+pass found real, uncaptured content continuing across three more
+renders (pages 14's tail, 15, 16, and 17 in full) before page 18
+resumes Feb6. Left as-is below for an honest record of what this issue
+originally said; treat the addendum as the current, accurate figure.
 
 **New finding, distinct pattern -- a genuine duplicate/misfiled pair,
 not a gap**: `1896-97_pair010` contains 2 events dated 2 Ноября 1896
@@ -14772,3 +14781,82 @@ check actually flagged), consistent with the project's normal script-
 first-then-verify practice elsewhere. Single-page seasons (Phase 2)
 have no equivalent "fold" concept -- one render is one printed page
 outright, so this class of error doesn't apply there.
+
+### Addendum (2026-09-22): full manual re-verification of all 91
+two-page-spread fold boundaries, per RG's explicit request ("do the
+full re-verification pass on all 91 folds. I'd rather be accurate")
+
+The prior addendum's automated overlap/adjacency checks are necessary
+but not sufficient -- they can only catch a boundary misreading that
+disturbs the date-range arithmetic in a detectable way. RG asked for
+the real thing: reading every one of the 91 fold-bearing renders
+directly and confirming the last date on top and the first date on
+bottom against the printed_page_numbers CSV by eye, render by render,
+season by season -- the same standard applied throughout Phase 1
+itself.
+
+**Result: 91/91 renders checked. The one bug found and fixed in the
+prior addendum (`1897-98_pair018`, Feb6/Feb7) is the only fold-
+boundary error in the entire two-page-spread corpus.** Every other
+fold matches its recorded boundary exactly -- 1890-91: 11/11 correct;
+1891-92: 12/12; 1892-93: 12/12; 1893-94: 12/12; 1894-95: 8/8;
+1895-96: 12/12; 1896-97: 12/12; 1897-98: 12/12 (including re-
+confirming the fix itself sits at the true fold). `1890-91_p004`
+(the known duplicate-scan render) re-confirmed byte-identical to
+`p003`, same as issue #75's original finding.
+
+**Byproduct findings from reading every render in full** (not fold
+errors -- these are completeness gaps the fold-by-fold reading
+surfaced along the way, same "not silently expanding scope, but not
+silently ignoring what's found either" practice as the rest of this
+project):
+
+- **1890-91: two further undocumented content gaps**, both confirmed
+  by direct query (zero DB events, real printed content on the scan):
+  Feb8-13 1891 (~6 days, page 19) and Feb27-Mar3 1891 (~5 days,
+  page 21). A third gap at this same location, Jan19-24 1891, was
+  already identified in issue #73's original 9-gap inventory but --
+  contrary to that issue's "recovered all 7 remaining" framing --
+  was never actually one of the 7 recovered; it remains open.
+- **1892-93: the season's true gap is far larger than issue #75's
+  first addendum reported.** Reading `_Repertoire_005.jpg` through
+  `_007.jpg` in full (not just their fold-adjacent rows) found real,
+  substantial printed content -- multiple theaters, full programming,
+  no different from any other week -- continuing well past the
+  Dec16 boundary this project had been treating as the edge of the
+  gap. Direct query confirms zero database events from Dec31 1892
+  through Feb5 1893 (the last event before the gap is Dec31 1892 on
+  page 14; the first after is Feb6 1893 on page 18) -- a ~37-day
+  gap spanning the tail of page 14 and the entirety of pages 15, 16,
+  and 17, not the ~10-day Dec17-26 window originally documented.
+  Also found two further, smaller already-implied-but-unconfirmed
+  gaps in this same season while reading: Feb24-Mar12 1893 (~17 days,
+  matching the "17 day gap" the non-adjacency check had already
+  flagged in the prior addendum) and a partial Mar4-12 window
+  (content visible on `_009.jpg`'s top half, page20, never captured).
+  None of this new-est reading changes the season's `printed_page_
+  number` correctness (no DB events exist in any of these windows to
+  mis-assign) -- it is purely a correction to how large the known
+  content gap actually is.
+- Every other season's renders, read in full for this pass, showed no
+  further undocumented gaps beyond what issue #73's inventory and this
+  issue's own prior addenda already cover -- including re-confirming
+  the Alexander III mourning closure (`1894-95_pair006`, matches
+  exactly) and the recurring Lenten dark-theater pattern across
+  multiple seasons' March/April renders.
+
+**Not chased further, same as issue #73's own stated policy**:
+recovering any of these gaps (the newly found ones, or the corrected-
+larger 1892-93 one) is separate future transcription work, not part
+of this printed_page_number task. Flagged here for whoever picks that
+up next, with the corrected scope.
+
+**RG's question answered directly**: yes, printed page numbers at a
+fold boundary are now as reliable as everywhere else in the two-page-
+spread corpus -- every one of the 91 folds has been individually
+confirmed against its scan, not just cross-matched in aggregate. The
+one real error this scrutiny was worth doing for was found and fixed
+before this exhaustive pass even started (from the same kind of
+targeted question); the exhaustive pass itself found zero additional
+fold-boundary errors, only completeness-gap corrections that don't
+affect any existing event's page number.

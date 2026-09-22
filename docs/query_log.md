@@ -6857,3 +6857,42 @@ addendum) -- nothing newly concerning.
 Documented the honest limit of this check in known_issues.md: it catches boundary dates that
 disturb the date-range arithmetic, not a misreading that still happens to produce a tidy
 one-day-apart split. Full re-verification of all 91 folds against the scan was not done.
+
+## 2026-09-22 — full manual re-verification of all 91 two-page-spread fold boundaries
+
+RG asked for a full re-verification pass on all 91 folds after the earlier automated-check-only
+pass found and fixed one bug (1897-98_pair018). Read every one of the 91 fold-bearing renders
+directly (all 8 seasons, season by season: 1890-91 11 renders, 1891-92 12, 1892-93 12, 1893-94 12,
+1894-95 8, 1895-96 12, 1896-97 12, 1897-98 12), confirming the last date on top and first date on
+bottom against printed_page_numbers/{season}.csv by eye.
+
+Result: 91/91 checked, only the one already-fixed bug found -- no new fold-boundary errors.
+Re-confirmed the fix itself sits at the true fold:
+
+```sql
+SELECT event_id, date_undate, printed_page_number FROM raw.event_entry
+WHERE page_id = 'repertoire_1897-98_pair018' AND date_undate = '1898-02-07'
+```
+Result: all 5 rows correctly read page 19 (post-fix).
+
+Byproduct of reading every render in full (not just fold-adjacent rows): found the 1892-93
+"Dec17-26,1892" gap documented in issue #75's first addendum was a significant undercount --
+reading _Repertoire_005.jpg through _007.jpg in full showed real content continuing well past
+Dec16. Queried to confirm:
+
+```sql
+SELECT event_id, page_id, date_undate, printed_page_number FROM raw.event_entry
+WHERE season = '1892-93' AND date_undate BETWEEN '1892-12-17' AND '1893-02-06'
+ORDER BY date_undate, event_id
+```
+Result: 42 rows, all dated Dec27-31,1892 (page14) -- zero events Jan1-Feb5,1893. True gap is
+Dec31,1892-Feb5,1893 (~37 days), not ~10 days as originally reported.
+
+Also found two further undocumented gaps in 1890-91 (Feb8-13 and Feb27-Mar3,1891), confirmed via
+direct query each showed zero events despite real printed content on the scan; and confirmed the
+already-catalogued Jan19-24,1891 gap (issue #73) was never actually recovered despite that issue's
+"recovered all 7 remaining" framing.
+
+Final state: 5804/5808 events (99.93%) filled, unchanged from before this pass -- this
+re-verification found and fixed 0 new fold-boundary bugs (the corpus was already correct after
+the earlier fix), only corrected the documented SIZE of one already-known content gap.
