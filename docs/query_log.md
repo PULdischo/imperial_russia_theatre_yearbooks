@@ -7327,3 +7327,63 @@ select count(*) from entities.person_wikidata_link;  -- 43 (byte-identical)
 Result: build_entities.py baseline confirmed exactly (2900 live/1459 tombstoned/23 preserved).
 validate_performance_dates.py unchanged at 95.6%. Promoted to outputs/full_run (backup:
 outputs/full_run_pre_promote_backup_2026-09-22_utrovecher/).
+
+## 2026-09-22 — session-completeness detection, Tier 0 (docs/session_completeness_detection.md)
+
+```sql
+with anno as (
+    select distinct page_id, date_text, theater
+    from raw.event_entry
+    where annotation ilike '%воспитанник%'
+),
+counts as (
+    select e.page_id, e.date_text, e.theater, count(*) as n
+    from raw.event_entry e
+    join anno a using (page_id, date_text, theater)
+    group by 1,2,3
+)
+select n, count(*) from counts group by 1 order by 1
+```
+Result: 39 groups with n=1 (only one session despite carrying a "Безплатные спектакли для
+воспитанниковъ" free-matinee annotation), 39 with n=2 (already correct). The n=1 39-row list:
+
+```
+repertoire_1898-99_p013__s001/s002/s003 (14 Суббота., Большой/Малый/Новый)
+repertoire_1898-99_p017__s001/s002/s003 (6 Воскрес., Большой/Малый/Новый)
+repertoire_1898-99_p028__s025/s026 (24 Среда., Александринскій/Михайловскій)
+repertoire_1898-99_p028__s029/s030 (25 Четвергъ., Александринскій/Михайловскій)
+repertoire_1898-99_p028__s033/s034 (26 Пятница., Александринскій/Михайловскій)
+repertoire_1898-99_p038__s025 (6 Четвергъ, Александринскій)
+repertoire_1898-99_p039__s026 (6 Четвергъ, Малый)
+repertoire_1899-00_p028__s001/s002/.../s034 (16 Среда. - 3 Пятница., Александринскій/
+  Михайловскій/Маріинскій -- 15 rows, this page alone)
+repertoire_1900-01_p012__s028 (14 Вторн., Михайловскій)
+repertoire_1900-01_p022__s003 (14 Воскрес., Александринскій)
+repertoire_1901-02_p016__s028 (6 Четвергъ., Михайловскій)
+repertoire_1902-03_p011__s036 (14 Четвергъ, Новый)
+repertoire_1903-04_p017__s025 (6 Суббота., Большой)
+```
+Full per-row detail (event_id/receipts/annotation) captured in session transcript, not re-pasted
+here -- re-run the query above for a fresh authoritative list before acting on it.
+
+```sql
+with per_group as (
+    select page_id, date_text, theater_canonical, date_undate, count(*) as n
+    from analysis.event_entry
+    where date_undate is not null and date_undate != ''
+    group by 1,2,3,4
+)
+select theater_canonical, dayname(try_cast(date_undate as date)) as wd,
+       count(*) as n_groups,
+       sum(case when n>1 then 1 else 0 end) as n_split,
+       round(100.0*sum(case when n>1 then 1 else 0 end)/count(*), 1) as split_pct
+from per_group
+where try_cast(date_undate as date) is not null
+group by 1,2 order by 1, split_pct desc
+```
+Result: Monday is the real high-split weekday for every theater (16-33%), all other weekdays
+1-9%. Too weak alone to flag anything but usable as a secondary ranking signal. Full per-theater/
+weekday table in session transcript.
+
+Neither query mutated any data. Full scoping (Tiers 0-3, caveats, status) in
+docs/session_completeness_detection.md.
