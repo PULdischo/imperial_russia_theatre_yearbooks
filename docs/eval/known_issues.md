@@ -16080,3 +16080,34 @@ directly (cheapest, highest-confidence bucket) using the same
 render-and-compare method as pair022/pair014; decide whether the
 21 partial-subset pages need individual verification or can be
 spot-checked and accepted as genuine.
+
+**Update, same day: RG asked whether this extends into the later
+single-page format (1898-99+), not just the two-page-spread seasons
+-- checked directly, answer is yes, but much smaller in scope.**
+
+The later single-page format's normal structure is 3 theaters per
+page, alternating by city group across facing pages covering the same
+date span -- a Petersburg page (`Александринскій`/`Маріинскій`/
+`Михайловскій`) paired with a Moscow page (`Большой`/`Малый`/`Новый`),
+e.g. `1906-07_p044` (Petersburg, 1-30) alongside `p045` (Moscow,
+1-30); `p048` (Petersburg, 13-23) alongside `p047` (Moscow, 10-9).
+Because 3 theaters is already the expected normal count, the earlier
+"deviates from expected count" sweep (which caught the two-page-spread
+cases) doesn't directly surface this format's version of the bug --
+found by checking a specific page's theater set against its
+city-group and date-neighbor instead.
+
+Found one confirmed instance this way: **`1906-07_p046`** (dates
+2-12, same range and city-group as `p044`) has **only Михайловскій**
+-- Александринскій and Маріинскій, both expected, are entirely absent
+from the page's raw JSON. Same signature as the two-page-spread bug
+(a whole column dropped from extraction), just less severe here (2 of
+3 columns vs. up to 4 of 5).
+
+**Scope not yet swept for the single-page format** -- only this one
+page has been checked so far; the 431-page corpus needs a smarter
+check than a bare theater-count filter (compare each page's theater
+set against its city-group's expected trio and its date-range
+neighbor, not just count distinct theaters). Deferred to a future
+session; flagged here so the scope question doesn't get re-asked from
+scratch.

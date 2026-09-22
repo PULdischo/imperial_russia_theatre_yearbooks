@@ -7653,3 +7653,71 @@ range (1891-92_pair018, 1891-92_pair024, 1893-94_pair022,
 logged as new issue #78 in known_issues.md. The remaining 21 pages
 show varying 2-3-theater subsets, more consistent with genuine partial
 closures than a uniform bug; not yet individually verified.
+
+## 2026-09-22 — Single-page-season (1898-99+) morning/evening split status
+
+```sql
+SELECT sp.season, ee.time_of_day, count(*) n
+FROM raw.event_entry ee JOIN raw.source_pages sp ON ee.page_id = sp.page_id
+WHERE sp.season >= '1898-99'
+GROUP BY sp.season, ee.time_of_day ORDER BY sp.season, ee.time_of_day;
+
+-- remaining unconverted duplicate (page_id, date_text, theater) groups still 'unspecified'
+SELECT ee.page_id, ee.date_text, ee.theater, count(*) n
+FROM raw.event_entry ee JOIN raw.source_pages sp ON ee.page_id = sp.page_id
+WHERE sp.season >= '1898-99' AND ee.time_of_day = 'unspecified'
+GROUP BY ee.page_id, ee.date_text, ee.theater HAVING count(*) >= 2;
+
+-- 1906-07 morning/evening count imbalance by page/theater
+SELECT ee.page_id, ee.theater,
+       count(*) FILTER (WHERE ee.time_of_day='morning') m,
+       count(*) FILTER (WHERE ee.time_of_day='evening') e
+FROM raw.event_entry ee JOIN raw.source_pages sp ON ee.page_id=sp.page_id
+WHERE sp.season = '1906-07'
+GROUP BY ee.page_id, ee.theater HAVING m != e;
+```
+
+Result: each single-page season (1898-99 through 1907-08) has 87-168
+morning/evening pairs (11-18% of sessions split), roughly balanced.
+Zero remaining unconverted duplicate-key groups corpus-wide -- the
+issue #77 duplicate_event_key fix (69 rows) fully closed that specific
+pattern, confirmed fresh. One apparent imbalance found
+(repertoire_1906-07_p015, 3 theaters showing evening>>morning) --
+inspected directly: this page tags most single (non-split) sessions
+explicitly as time_of_day='evening' rather than 'unspecified', which
+is a legitimate page-level printed-convention difference, not a bug;
+only 14 Вторн. (all 3 theaters) and 19 Воскрес. (Большой) are genuine
+splits, both correctly captured. No fix needed.
+
+## 2026-09-22 — Does the missing-theater-column bug (issue #78) extend into the single-page format?
+
+```python
+import json, glob, collections
+rows = []
+for f in sorted(glob.glob('outputs/full_run/raw/repertoire_*.raw.json')):
+    name = f.split('/')[-1].replace('repertoire_','').replace('.raw.json','')
+    if 'pair' in name: continue
+    data = json.load(open(f))
+    theaters = set(s['theater'] for s in data['sessions'])
+    rows.append((name, len(theaters)))
+print(collections.Counter(n for _, n in rows))
+```
+
+Result: 421/431 single-page-format pages have exactly 3 theaters
+(the normal structure for this format -- pages alternate Petersburg
+{Александринскій/Маріинскій/Михайловскій} vs Moscow {Большой/Малый/
+Новый} groups). 9 pages show 5 (leftover un-split two-page-spread
+season renders, not part of this format). 1 page,
+`1906-07_p046`, shows only 1 theater.
+
+```python
+data = json.load(open('outputs/full_run/raw/repertoire_1906-07_p046.raw.json'))
+# and neighbors p044/p045/p047/p048 for date range + city-group comparison
+```
+
+Result: `1906-07_p046` (dates 2-12 Февраля, same range/city-group as
+`p044`) has only Михайловскій; Александринскій and Маріинскій are
+completely absent from the page's raw JSON -- confirmed instance of
+the issue #78 missing-column bug in the later single-page format, not
+just the two-page-spread seasons. Scope not yet swept beyond this one
+page for this format.
