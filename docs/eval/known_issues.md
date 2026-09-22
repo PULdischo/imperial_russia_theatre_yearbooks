@@ -14979,3 +14979,51 @@ seasons, are unchanged).
 Remaining in 1892-93: Feb24-Mar12 1893 (~17 days) and a partial
 Mar4-12 1893 window -- not yet started. No other seasons' gaps
 remain per the fold-reverification pass's full-corpus read.
+
+### Addendum (2026-09-22): recovered 1892-93's last two gaps
+(Feb24-Mar12 1893) -- all gaps found during this session's fold-
+reverification pass are now closed
+
+Both fall inside Great Lent 1893, following the recurring pattern
+already established elsewhere in this project: Маріинскій (opera/
+ballet) and Малый (Moscow) go completely dark for the whole stretch;
+only Александринскій (a visiting German troupe -- "Eva, Schausp.",
+"Wohlthätige Frauen, Lustsp.", etc.) and Михайловскій (French --
+"L'Ami des Femmes, com.", "Niniche, vaud.", etc.) perform, plus two
+isolated Большой symphonic concerts on the Sundays (7 and 9 Марта --
+"Донъ Жуанъ, музыка къ драм. поэмѣ" / "Сюита изъ бал. Щелкунчикъ").
+Recovered page 19's tail (24 Февраля-3 Марта, into the existing
+`pair018`) and all of page 20 (4-12 Марта, into the existing
+`pair020` -- 13 Марта onward was already captured, confirmed by
+reading the existing raw JSON before transcribing, so no overlap).
+Used explicit `month_text`/`year_text` on every new session
+throughout (the lesson from the two upstream month-threshold bugs
+this same issue already found and fixed) -- no new date bugs surfaced
+this time.
+
+**Verification**: `event_entry` 6248 -> 6328 (+80, exactly the
+transcribed count). `quality_checks.py`: still exactly the same 12
+already-confirmed-harmless `duplicate_event_key` flags, 0 new
+categories. `printed_page_number`: 1892-93 now 959/959 filled except
+the same 4 already-documented unassignable rows. Weekday validation:
+all 80 new sessions verified clean; the 10 pre-existing unresolved
+rows (both in other seasons) unchanged.
+
+**Full-corpus re-check**: reran the season-wide date-range gap scan
+across all 8 two-page-spread seasons' reference CSVs. Every gap this
+session's fold-reverification pass discovered (1890-91's Jan19-24/
+Feb8-13/Feb27-Mar3, 1892-93's Dec31-Feb5/Feb24-Mar12) no longer
+appears. The gaps still present in the scan are exactly the ones
+issue #73 already catalogued and triaged (the 20-day 1890-91 scan
+gap, the recurring Lenten/Holy-Week closures in 1893-94 and 1894-95,
+etc.) -- pre-existing, understood, and out of this addendum's scope.
+
+**Summary of this whole content-gap-recovery effort**: `event_entry`
+5808 -> 6328 (+520 sessions, manually transcribed and scan-verified
+across 8 renders in 2 seasons), 0 new quality-check categories, 0
+new weekday-validation problems, and 3 real pipeline bugs found and
+fixed along the way (the two month-threshold collisions and the
+`combined_phase1.csv` staleness trap -- the last one being a reminder
+that this generated file needs rebuilding from its 8 per-season
+sources after *every* edit to any of them, easy to forget mid-session
+and silently run stale data through the pipeline).

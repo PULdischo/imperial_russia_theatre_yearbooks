@@ -6972,3 +6972,31 @@ calendar), 0 new unresolved rows.
 
 Remaining in 1892-93: Feb24-Mar12,1893 (~17 days) and a partial Mar4-12,1893 window, not yet
 started.
+
+## 2026-09-22 — content gap recovery, 1892-93's final two gaps (Feb24-Mar12,1893, 80 sessions)
+
+Completed 1892-93's remaining gaps: page19 tail (24 Feb-3 Mar, into existing pair018) and all of
+page20 (4-12 Mar, into existing pair020). Both fall in Great Lent 1893 -- confirmed the recurring
+pattern (Маріинскій/Малый dark, only the German/French guest troupes at Александринскій/
+Михайловскій, plus 2 Большой symphonic concerts). Checked the existing pair020 raw JSON before
+transcribing to confirm 13 Марта onward was already captured (avoided duplicating).
+
+Final verification:
+```sql
+SELECT dc.date_confidence, count(*) FROM analysis.event_entry_date_check dc
+JOIN analysis.event_entry ae ON ae.event_id=dc.event_id
+WHERE (ae.page_id='repertoire_1892-93_pair018' AND ae.date_undate BETWEEN '1893-02-24' AND '1893-03-03')
+   OR (ae.page_id='repertoire_1892-93_pair020' AND ae.date_undate BETWEEN '1893-03-04' AND '1893-03-12')
+GROUP BY dc.date_confidence
+```
+Result: all 80 verified.
+
+Ran a final full-corpus gap scan (all 8 two-page-spread seasons' printed_page_numbers CSVs) to
+confirm completeness -- every gap this session's fold-reverification pass found is now closed;
+remaining gaps in the scan are exactly issue #73's pre-existing, already-triaged inventory.
+
+Whole content-gap-recovery effort, final tally: event_entry 5808 -> 6328 (+520 sessions across
+8 renders, 2 seasons), 0 new quality-check categories beyond the one confirmed-harmless
+coincidence, 0 new weekday-validation problems, 3 real pipeline bugs found and fixed (two
+month-threshold collisions, one combined_phase1.csv staleness trap -- must rebuild that
+generated file after every edit to its 8 source CSVs).
