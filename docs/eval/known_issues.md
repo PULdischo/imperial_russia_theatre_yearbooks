@@ -15557,3 +15557,106 @@ Promoted to `outputs/full_run`.
 flag backlog** (`receipts_parse_failed` 14, `zero_dark_cells_on_
 multiweek_page` 16, `duplicate_event_key` 69, all -> 0) identified at
 the start of this "Keep going now" continuation.
+
+### Addendum 2026-09-22: morning/evening (УТРО/ВЕЧЕРЪ) session-label confidence audit
+
+RG asked how confident we should be in the corpus's morning/evening
+session labeling generally, not just in the specific rows this session's
+`duplicate_event_key` work already touched. Queried the live DB directly
+rather than answering from the work already done: 1,537 (page_id,
+date_text, theater) combinations have more than one printed session --
+the only place the label matters. Two residual gaps turned up that
+`duplicate_event_key` structurally cannot see, because neither produces
+a literal key collision:
+
+**6 three-row groups (all two-page-spread pages).** A clean
+morning+evening pair plus a spurious third row. 4 of the 6 shared an
+unambiguous signature -- the third row's receipts_text nearly exactly
+duplicated the evening row's (`'2946 р. 20 к.'` vs `'2946 р. 20'`,
+`'617 р. 29 к.'` vs `'617 р. 29'`, `'2205 р.'` vs `'2205 р.'`,
+`'1718 р. 48 к.'` vs `'1718 р. 48 к.'`) and every one carried
+`"_source": "human:kept_top"` -- the tag `apply_split_overlap_
+resolutions.py` writes when a human resolved a genuine top/bottom-half
+collision. Root cause: each split half's own column-wise extraction
+pass independently emitted the same phantom extra row (a duplicate of
+the evening session, tagged `session="unspecified"` instead of
+repeating `"evening"`), so when both halves carried the identical
+phantom the overlap-dedup step saw a normal, resolvable collision and
+waved it through -- never recognizing the resolved row was garbage
+that predated the split, not a real second read of real content.
+Dropped all 4 (`repertoire_1893-94_pair006`'s Маріинскій and Малый "14
+Четвергъ.", `repertoire_1895-96_pair018`'s Михайловскій "17 Суббота.",
+`repertoire_1895-96_pair004`'s Михайловскій "28 Четвергъ."), zero
+information lost in every case.
+
+The other 2 needed individual scan verification -- structurally
+different, not simple duplicates:
+- `repertoire_1897-98_pair010`, Александринскій, "21 Пятница."/"22
+  Суббота.": "Гернани"/"Германи" (Бенефисъ г. Аполлонскаго, 3848 р. 60
+  к.) appeared under both dates with identical content. Scan-verified
+  against the correct source render (`repertoire_1897-98_pair010`
+  covers 1897-11-13 to 1897-12-01 per `printed_page_numbers/1897-98.csv`
+  -- the PDF page index is NOT the pair number's own digits, confirmed
+  the hard way after rendering the wrong month first): the real date is
+  21 Пятница; the 22 Суббота copy is a one-day-cascaded duplicate.
+  Dropped it; 22 Суббота's own correctly-captured morning/evening pair
+  (`Die versunkene Glocke` / `Горе отъ ума`) was already right and
+  untouched.
+- `repertoire_1891-92_pair008`, two separate sub-issues on the same
+  page, both scan-verified against `ForUpload_1891-92_Repertoire.pdf`
+  page index 3: (1) Александринскій "11 Понед." -- a genuine single,
+  undivided printed row (`Гроза, др. / Жеманницы, ком.`, no УТРО/ВЕЧ
+  split), but the raw JSON also carried a `morning`-labeled duplicate of
+  Маріинскій's real "10 Воскрес." evening content (`Ваалъ`/`Встрѣча`/
+  `Дочь русскаго актера`) mislabeled onto the 11th, plus a partial
+  (title-only) duplicate of its own correct row. Dropped both spurious
+  rows; corrected the one real row's session from `evening` to
+  `unspecified` to match the printed layout. (2) Михайловскій: the
+  recurring French-troupe double-bill "Madame Agnès"/"De 1 h. à 3 h."
+  genuinely ran 9 Суббота, 10 Воскрес., and 12 Вторникъ (confirmed
+  against the scan) but NOT 11 Понед. (that date's own real, single
+  content is "Новое дѣло", already correctly captured) -- the raw JSON
+  had it duplicated onto 9 Суббота (dropped the extra copy, corrected
+  the survivor's session from `evening` to `unspecified`) and entirely
+  missing from 12 Вторникъ, where a stray, wrongly-dated copy of "Новое
+  дѣло" sat instead (relabeled the misdated "Madame Agnès" row from "11
+  Понед." to "12 Вторникъ" and corrected its session to `unspecified`;
+  dropped the wrong "Новое дѣло" placeholder it replaced).
+
+**Separately, RG asked that a `morning`/`evening` row never be left
+paired with an `unspecified` row** (a real second session correctly
+detected but only one side labeled) -- structurally a different problem
+from the above (no data was wrong, just an incomplete label), but the
+same query surfaced it. 8 such pairs existed corpus-wide as of this
+audit; 2 resolved themselves as a side effect of the Михайловскій fix
+above (both were genuine `Madame Agnès` sessions that had been
+miscounted into an unrelated collision). Checked all 8 pairs' content
+before touching them (distinct titles/receipts on both sides in every
+case -- none were disguised duplicates) and assigned the complementary
+label by document order, the same convention scan-verified earlier this
+session: `1904-05_p029` (2 Среда., Новый театр), `1895-96_pair006` (8
+Октября., Малый), `1898-99_p016` (13 Воскрес., Александринскій),
+`1903-04_p012` (23 Воскрес., Александринскій), `1900-01_p027` (11
+Воскрес., Новый театръ), `1901-02_p011` (4 Воскрес., Новый театръ).
+
+**Verification**: re-synced `gate3_columnwise/raw_columnwise/` ->
+`full_run/raw/`, re-ran the full pipeline. `quality_checks.py`:
+`duplicate_event_key` stayed at 0 (none of this reintroduced a
+collision). Direct queries confirm the residual-gap classes are now
+empty corpus-wide: 0 multi-session groups with >2 rows, 0 groups with
+both sides still `unspecified`, 0 groups with one side labeled and the
+other still `unspecified`. `event_entry` 21235 -> 21226 (-9: 4+1+2
+duplicate/misattached rows dropped from the triples, 2 dropped from the
+Михайловскій fix). `validate_performance_dates.py` unchanged at 95.6%
+verified. `build_entities.py`: baseline confirmed exactly (2900
+live/1459 tombstoned/23 preserved). `raw.person_entry` (21168) and
+`entities.person_wikidata_link` (43) unchanged. Backup:
+`outputs/full_run_pre_promote_backup_2026-09-22_utrovecher/`. Promoted
+to `outputs/full_run`.
+
+**Still open, not part of this audit**: this only searched for
+groups where a phantom row shares a page/date/theater with a real
+morning/evening pair. It cannot detect the case where the model
+captured only one of two genuinely-printed sessions and silently
+dropped the other outright -- there is currently no corpus-wide check
+for that failure mode.

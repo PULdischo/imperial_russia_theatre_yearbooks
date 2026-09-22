@@ -7239,3 +7239,91 @@ tombstoned/23 preserved). `validate_performance_dates.py` unchanged at 95.6%. Pr
 (backup: outputs/full_run_pre_promote_backup_2026-09-22_dupeventkey/).
 
 **This closes the entire original 172-row single-page-season quality-flag backlog.**
+
+## 2026-09-22 — confidence check on morning/evening (УТРО/ВЕЧЕРЪ) session labeling
+
+```sql
+select time_of_day, count(*) from raw.event_entry group by 1 order by 2 desc
+```
+Result: unspecified 18120, evening 1569, morning 1546.
+
+```sql
+select count(*) from (
+    select page_id, date_text, theater, count(*) as n
+    from raw.event_entry group by 1,2,3 having count(*) > 1
+)
+```
+Result: 1537 (page_id, date_text, theater) groups have more than one printed session -- these are the
+only rows where morning/evening actually matters.
+
+```sql
+select count(*) from (
+    select page_id, date_text, theater, count(*) as n,
+           sum(case when time_of_day='unspecified' then 1 else 0 end) as n_unspec
+    from raw.event_entry group by 1,2,3 having count(*) > 1
+) t where n = n_unspec
+```
+Result: 0 -- confirms this session's duplicate_event_key fixes left no group with BOTH sessions still
+unlabeled.
+
+```sql
+select n, count(*) from (
+    select page_id, date_text, theater, count(*) as n
+    from raw.event_entry group by 1,2,3 having count(*) > 1
+) group by 1 order by 1
+```
+Result: 1531 groups of size 2 (clean morning/evening pairs), 6 groups of size 3.
+
+```sql
+select count(*) from (
+    select page_id, date_text, theater, count(*) as n,
+           sum(case when time_of_day='unspecified' then 1 else 0 end) as n_unspec
+    from raw.event_entry group by 1,2,3 having count(*) > 1
+) t where n_unspec > 0 and n_unspec < n
+```
+Result: 14 two-row groups have exactly one row still labeled 'unspecified' instead of morning/evening
+(the other row IS labeled) -- session distinction incomplete for these, not investigated this session.
+
+Direct row dump of all 6 three-row groups (page_id/date_text/theater, event_id/time_of_day/
+receipts_text): 4 of the 6 (repertoire_1893-94_pair006 x2, repertoire_1895-96_pair018,
+repertoire_1895-96_pair004) show evening+morning+a THIRD 'unspecified' row whose receipts_text nearly
+exactly duplicates the evening row's (e.g. '2946 р. 20 к.' vs '2946 р. 20', '617 р. 29 к.' vs
+'617 р. 29') -- the same duplication signature found and fixed this session on
+repertoire_1892-93_pair014 and repertoire_1904-05_p032, but NOT caught by quality_checks.py's
+duplicate_event_key check because the extra row's session value ('unspecified') doesn't collide with
+either real label. repertoire_1897-98_pair010's triple group does not fit this pattern (morning has no
+receipts, unspecified has an unrelated, much larger figure). repertoire_1891-92_pair008's triple group
+has no receipts on any of the 3 rows, so duplication can't be confirmed/ruled out by this same method.
+None of these 6 investigated further or fixed this session -- flagged as a genuine, unresolved,
+previously-uncaught bug class, distinct from and not covered by this session's duplicate_event_key
+backlog work (which was scoped to single-page seasons only; all 6 of these are two-page-spread pages).
+
+## 2026-09-22 — morning/evening triples + unspecified-pair fixes: verification
+
+```sql
+select count(*) from (
+    select page_id, date_text, theater, count(*) as n from event_entry group by 1,2,3 having count(*) > 2
+)
+```
+Result: 0 (all 6 three-row groups resolved -- 4 confirmed duplicates dropped, 2 individually
+scan-verified and corrected).
+
+```sql
+select count(*) from (
+    select page_id, date_text, theater, count(*) as n,
+           sum(case when time_of_day='unspecified' then 1 else 0 end) as n_unspec
+    from event_entry group by 1,2,3 having count(*) > 1
+) t where n_unspec > 0 and n_unspec < n
+```
+Result: 0 (all 8 partial-unspecified pairs resolved -- complementary morning/evening label assigned
+to each, after confirming distinct content on both sides).
+
+```sql
+select count(*) from raw.event_entry;               -- 21226 (final)
+select count(*) from raw.event_entry_performance;    -- 22659 (final)
+select count(*) from raw.person_entry;               -- 21168 (byte-identical)
+select count(*) from entities.person_wikidata_link;  -- 43 (byte-identical)
+```
+Result: build_entities.py baseline confirmed exactly (2900 live/1459 tombstoned/23 preserved).
+validate_performance_dates.py unchanged at 95.6%. Promoted to outputs/full_run (backup:
+outputs/full_run_pre_promote_backup_2026-09-22_utrovecher/).
