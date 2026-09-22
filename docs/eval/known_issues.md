@@ -14527,3 +14527,123 @@ renders) and all 10 single-page seasons (1898-99-1907-08, 422 renders,
 via the spot-check-then-formula approach per the approved plan). Not
 yet started. Not promoted to `outputs/full_run` -- this is
 `repertoire_spreadfix_v6`-only so far.
+
+### Addendum (2026-09-22): Phase 1 complete -- all 8 two-page-spread
+seasons (1891-92 through 1897-98) scan-verified, per RG's go-ahead to
+"keep going through the rest of phase 1."
+
+Same methodology as 1890-91 throughout: read every render directly
+(including every single-leaf page), cross-check
+`split_page_numbers_final.csv`'s prior extraction rather than trust it,
+build a render-level `(start_date, end_date, page_number)` table per
+season, cross-match every one of that season's `raw.event_entry` rows
+against it via direct DuckDB query, and only write the reference CSV
+once matching is at or near 100%.
+
+**Corrections found against the prior extraction** (same misread
+patterns as 1890-91, confirming this double-check step is pulling its
+weight, not just formality):
+- `1891-92_p008` bottom: extraction said "61" -- actually "19"
+  (9-rotated-to-6 digit misread, sequential context makes 61
+  impossible after top=18).
+- `1891-92_p009`: extraction said top=21/bottom=21 (duplicate,
+  impossible) -- actually top=20/bottom=21.
+- `1892-93_p010` bottom: extraction said "13" -- actually "23"
+  (2-for-1 digit confusion).
+- `1895-96_p003` top: extraction left this blank -- actually "8"
+  (scan-confirmed, not illegible, just never captured by the earlier
+  pass).
+- `1896-97_p008` bottom: extraction said "61" -- actually "19" (same
+  9/6-rotation pattern as `1891-92_p008`).
+- `1897-98_p001` top: extraction garbled as "1 4 1" -- actually "4".
+- `1897-98_p010` bottom: extraction said "123" -- actually "23".
+
+**Genuinely illegible, left unfilled rather than guessed**:
+`1892-93_p000` bottom -- checked multiple crop positions including
+around the archival call-number stamp that partly obscures this area;
+no printed page number is visible anywhere on this specific half.
+Strong circumstantial case for "3" (unbroken sequence: page 2 before,
+page 4 after), but not printed/legible, so not written into the
+reference CSV. Events in that date range (Aug30-Sep9, 1892) are simply
+absent from `printed_page_numbers/1892-93.csv` -- an open item, not
+silently guessed.
+
+**Pipeline bug found and fixed during the final combined rebuild+verify
+pass, before promotion to `repertoire_spreadfix_v6`'s live
+`.duckdb`**: the reference CSVs for 1895-96/1896-97/1897-98 were
+initially written keyed by render-sequential page_id
+(`repertoire_1895-96_p002`, etc.), following the same id scheme as the
+render-level ground-truth tables used to build them. That id scheme is
+NOT what `raw.event_entry.page_id` actually contains for two-page-
+spread seasons -- the real key is the manifest's `pairNNN` id (e.g.
+`repertoire_1895-96_pair006`), confirmed against
+`outputs/repertoire_spreadfix_v6/manifest.csv` and cross-checked
+against 1891-92's already-correct CSV, where this pattern held:
+`pairNNN`'s numeric suffix is the *printed page number of that render's
+top half* (not a render index), and single-leaf pages keep their bare
+`p0NN` id since they were never split. First full pipeline run under
+the wrong ids silently backfilled almost nothing for the three affected
+seasons (2,139/5,808 events came back empty) -- `parse_and_validate.py`
+doesn't error on an unmatched page_id, it just leaves
+`printed_page_number` blank, so this needed the fill-rate check (not
+just "did it run") to catch. Rewrote all three CSVs with the correct
+`pairNNN` ids and reran; fill rate recovered to expected levels
+immediately. Documented here as a concrete instance of why the
+Verification section's "manual sample audit" step matters even after a
+clean per-season cross-match -- the per-season cross-match script used
+the *render*-level table directly against dates, which never exercises
+the id the pipeline actually keys on, so it could not have caught this
+on its own.
+
+**New finding, same invisible-to-prior-audits pattern as 1890-91's
+pair004/pair006**: `1892-93` has a genuine ~10-day content gap,
+Dec17-26 1892 -- zero events anywhere in the season for that range,
+confirmed via direct query, though the surrounding pages' own header
+ranges imply content should exist there. Not recovered as part of this
+task; flagged for the same future transcription follow-up as
+1890-91's gap.
+
+**New finding, distinct pattern -- a genuine duplicate/misfiled pair,
+not a gap**: `1896-97_pair010` contains 2 events dated 2 Ноября 1896
+("Старый закалъ"/"Госпожа-служанка, вод." and "Disparu!!!"/"Marthe")
+whose date falls entirely within `pair008`'s own scan-verified range
+(25 Октября-3 Ноября). Checked directly: `pair008` already has its own
+event on that exact date with the identical "Disparu!!!"/"Marthe"
+pairing (`repertoire_1896-97_pair008__s045`) -- confirms `pair010`'s
+copy is a duplicate/misfiled entry, not new content. Left unassigned
+in `printed_page_numbers/1896-97.csv` rather than guessed at, same
+policy as the pre-existing `1892-93` May31 pair. Not a
+`printed_page_number` bug -- a pre-existing raw-data anomaly this
+cross-check surfaced as a side effect; not fixed here (out of this
+task's scope), just documented.
+
+**Per-season results** (all 8 seasons, `raw.event_entry` counts):
+
+| season | events | filled | notes |
+|---|---|---|---|
+| 1890-91 | 601 | 601 (100%) | see above |
+| 1891-92 | 741 | 741 (100%) | 2 misreads fixed |
+| 1892-93 | 646 | 644 (99.7%) | 2 May31 events + p000 bottom illegibility; Dec17-26 gap |
+| 1893-94 | 1022 | 1022 (100%) | clean, no corrections needed |
+| 1894-95 | 556 | 556 (100%) | clean |
+| 1895-96 | 801 | 801 (100%) | 1 blank-top correction |
+| 1896-97 | 713 | 711 (99.7%) | 2 misreads fixed; 2 duplicate-content events (see above) |
+| 1897-98 | 728 | 728 (100%) | 2 misreads/garbled fixed |
+| **total** | **5808** | **5804 (99.93%)** | 4 genuinely-unassignable stray/duplicate rows, none guessed |
+
+**Verification**: full combined rebuild
+(`parse_and_validate.py --page-headers --printed-page-numbers` ->
+`quality_checks.py` -> `build_duckdb.py`) against all 8 seasons'
+reference CSVs together (`printed_page_numbers/combined_phase1.csv`,
+186 rows). `quality_checks.py`: 0 flags, including the new
+`printed_page_number_out_of_sequence` check across the whole corpus.
+No regression to the 5808-row baseline; `analysis.event_entry` still
+shows 0 `not_captured` completeness gaps (all previously-recovered
+content stayed recovered). Reference CSVs:
+`outputs/repertoire_spreadfix_v6/printed_page_numbers/{season}.csv`
+for all 8 seasons plus `combined_phase1.csv`.
+
+**Phase 1 is now complete.** Remaining: Phase 2 (all 10 single-page
+seasons, 1898-99-1907-08, 422 renders, spot-check-then-formula per the
+approved plan) -- not yet started. Promotion to `outputs/full_run` is a
+separate, later decision per the plan, not done here.

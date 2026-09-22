@@ -6740,3 +6740,49 @@ outputs/repertoire_spreadfix_v6/printed_page_numbers/1890-91.csv.
 Ran through pipeline/parse_and_validate.py --printed-page-numbers end-to-end: 601/601 events
 backfilled correctly, 0 new quality_checks.py flags (including the new sequence-consistency
 check), no regression to the existing 5808-row/0-flag baseline.
+
+## 2026-09-22 — printed_page_number build-out, Phase 1 seasons 2-8 (1891-92 through 1897-98), completing Phase 1
+
+Continued from 1890-91 per RG's go-ahead ("keep going through the rest of phase 1"). Same method
+per season: scan-verify every render directly (including every single-leaf page), cross-check
+split_page_numbers_final.csv's prior extraction rather than trust it, build a render-level
+(start_date, end_date, page_number) table, cross-match every one of that season's raw.event_entry
+rows against it via direct DuckDB query against outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb.
+
+Query pattern used for every season (example, 1897-98):
+```sql
+SELECT event_id, date_undate FROM raw.event_entry WHERE season = '1897-98'
+```
+(cross-matched in Python against the render-level page_for() lookup, not as a single SQL query,
+since the lookup logic is date-range containment across 13 renders per season)
+
+Results per season: 1891-92 741/741 (100%, 2 misreads fixed: p008 bottom "61"->19, p009
+top/bottom 21/21->20/21); 1892-93 644/646 matched + 2 deliberately unmatched (May31,1893 stray
+events, unrecoverable citation) + p000 bottom genuinely illegible (not guessed) + new Dec17-26,1892
+content gap found (zero events, corpus-wide query confirmed); 1893-94 1022/1022 (100%, clean, no
+corrections); 1894-95 556/556 (100%, clean); 1895-96 801/801 (100%, 1 correction: p003 top blank->8);
+1896-97 711/713 matched + 2 unassigned (pair010's 2Ноября1896 events duplicate pair008's own
+same-date "Disparu!!!"/"Marthe" event -- confirmed via direct query, a pre-existing raw-data
+duplicate/misfiling, not a printed_page_number bug); 1897-98 728/728 (100%, 2 corrections: p001
+top garbled "1 4 1"->4, p010 bottom "123"->23).
+
+**Bug found during final combined rebuild**: reference CSVs for 1895-96/1896-97/1897-98 were
+initially keyed by render-sequential page_id (repertoire_1895-96_p002) instead of the manifest's
+actual pairNNN id (repertoire_1895-96_pair006) that raw.event_entry.page_id uses for two-page-
+spread seasons. Confirmed the correct convention against manifest.csv and 1891-92's
+already-correct CSV: pairNNN's numeric suffix = printed page number of that render's top half.
+First pipeline run under wrong ids silently left 2,139/5,808 events with blank printed_page_number
+(parse_and_validate.py doesn't error on an unmatched page_id). Caught via fill-rate check, not
+"did it run" -- rewrote all three CSVs, reran, fill rate recovered immediately.
+
+Combined all 8 seasons' reference CSVs (outputs/repertoire_spreadfix_v6/printed_page_numbers/combined_phase1.csv,
+186 rows) and ran the full pipeline end-to-end: parse_and_validate.py --page-headers
+--printed-page-numbers -> quality_checks.py -> build_duckdb.py. Final result: 5804/5808 events
+(99.93%) resolved to exactly one printed page across all 8 seasons; 4 residual rows are genuinely
+unassignable (2 unmatched May31,1893 stray events + 2 duplicate 2Ноября1896 events), none guessed.
+quality_checks.py: 0 flags (including the new printed_page_number_out_of_sequence check across the
+whole corpus). No regression to the 5808-row baseline; 0 not_captured completeness gaps (all
+previously-recovered content stayed recovered).
+
+Phase 1 (all 8 two-page-spread seasons) is now complete. Phase 2 (10 single-page seasons,
+1898-99-1907-08) not yet started.
