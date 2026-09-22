@@ -14405,5 +14405,44 @@ defects).
 `intra_block_disagreement` (confirmed 96% harmless format variance,
 4% already fixed above), and the 10 remaining `unresolved` rows are
 each individually documented as genuine, unfixable-without-
-falsification source printing errors. `outputs/full_run` still not
-re-promoted with any of today's (2026-09-22) fixes.
+falsification source printing errors.
+
+### Promotion (2026-09-22): today's date-accuracy fixes re-promoted
+over `outputs/full_run`
+
+RG: the two remaining `unresolved` printing errors can be addressed
+in the research layer later, not worth blocking on -- go ahead and
+promote. Same procedure as the 2026-09-19 promotion. `manifest.csv`'s
+page_id set was already identical (today's fixes only edited content
+within existing pages, never added/removed a page_id), so only the
+raw JSON needed re-copying.
+
+**Found and cleaned up unrelated debris in the process**: every one
+of the 97 raw files from the 2026-09-19 promotion had picked up an
+orphaned `"<page_id>.raw 2.json"` duplicate in
+`outputs/full_run/raw/` (93 files, plus one page with a `" 3.json"`
+variant too) -- leftover from whatever `cp` invocation did that
+promotion, never noticed or cleaned up since a malformed filename
+like that is invisible to normal file-count checks and harmless to
+the pipeline (parse_and_validate.py's exact `{page_id}.raw.json`
+lookup can never read it). Confirmed each was a genuine orphan (older
+raw content, unreachable filename) before deleting all 93. Checked
+the rest of `raw/` for the same pattern -- none found elsewhere,
+isolated to this one prior operation.
+
+Reran the full pipeline in place, same order as 2026-09-19. Verified
+`raw.person_entry`, `entities.person_wikidata_link`, and the 23
+already-reviewed `person_candidate` decisions all byte-identical
+against the pre-promote backup -- second confirmation the Repertoire/
+Roster isolation holds.
+
+**Result**: `event_entry` 20782 -> 20788 (+6, exactly matching
+`repertoire_spreadfix_v6`'s net change across today's fixes).
+`quality_flags.csv`: 0 for all 97 promoted pages (1059 total
+corpus-wide, unchanged). `validate_performance_dates.py` for the
+promoted seasons: verified 85.4%, unresolved 10 -- matching
+`repertoire_spreadfix_v6` exactly.
+`outputs/full_run/imperial_theaters.duckdb` and
+`research_dataset.sqlite` rebuilt in place. Not done: `link_wikidata.py`
+(unaffected either way) and the actual HF/Cloud Run republish (still a
+separate, later step).

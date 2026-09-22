@@ -6668,3 +6668,39 @@ Reran full pipeline: event_entry 5809 -> 5808 (the deleted fabrication). quality
 at 0. validate_performance_dates.py: verified unchanged 85.4%, unresolved 11 -> 10 (the two
 genuine-printing-error blocks remain, correctly, since they're accurate transcriptions of a real
 source inconsistency -- nothing left to "fix" there without falsifying the primary source).
+
+## 2026-09-22 — re-promoted repertoire_spreadfix_v6 over outputs/full_run with today's date-accuracy fixes
+
+RG: "the printers' errors can be addressed in the research layer later. go ahead and promote today's
+fixes to outputs/full_run." Same procedure as the 2026-09-19 promotion (see that entry): manifest
+page_id set was already identical (no manifest changes needed, today's fixes only edited content
+within existing pages, never added/removed page_ids), so this run only needed to re-copy raw JSON
+for the 9 pages actually touched today (plus the two verified-but-unmodified pages) -- done as a
+full re-copy of all 97 files for simplicity/consistency with Friday's approach.
+
+Safety backup made first (outputs/full_run_pre_promote_backup_2026-09-22/).
+
+**Found and cleaned up unrelated debris while doing this**: every one of the 97 raw files from
+Friday's promotion had an orphaned "<page_id>.raw 2.json" duplicate sitting in outputs/full_run/raw/
+(93 total, plus a " 3.json" variant for one page) -- leftover artifacts from whatever `cp` operation
+created the Friday promotion, never cleaned up. Confirmed each was a harmless orphan (malformed
+filename means parse_and_validate.py's exact page_id.raw.json lookup can never read it) before
+deleting all 93. Checked the rest of outputs/full_run/raw/ for the same " N.json" pattern -- none
+found elsewhere, confirmed isolated to this one prior operation.
+
+Reran full pipeline: parse_and_validate.py -> build_duckdb.py -> quality_checks.py ->
+validate_performance_dates.py -> build_entities.py -> build_research_model.py -> build_datasette.py.
+link_wikidata.py again not run (still unaffected, per the same reasoning as 2026-09-19).
+
+```sql
+-- verification: person_entry, entities.person_wikidata_link, and reviewed person_candidate count
+-- all byte-identical between the pre-promote backup and the new build (21168 / 43 / 23)
+```
+
+Result: event_entry 20782 -> 20788 (+6, matching the net change in repertoire_spreadfix_v6 across
+today's fixes exactly). quality_flags.csv: 0 for all 97 promoted pages (1059 total, unchanged --
+same pre-existing/unrelated flags as before). validate_performance_dates.py for the promoted
+seasons: verified 85.4%, unresolved 10, matching repertoire_spreadfix_v6 exactly. Musicians/Roster
+entity resolution and Wikidata links confirmed byte-identical (second promotion, second
+confirmation the isolation holds). outputs/full_run/imperial_theaters.duckdb and
+research_dataset.sqlite rebuilt in place.
