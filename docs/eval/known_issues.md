@@ -15902,12 +15902,69 @@ unchanged at 95.6%, `build_entities.py` baseline confirmed exactly
 (2900 live/1459 tombstoned/23 preserved), `raw.person_entry`/
 `entities.person_wikidata_link` byte-identical. Promoted.
 
-**Still open**: this page's remaining dates (5 Января-16 Января, not
-yet touched by any method) and all 33 other flagged pages. RG does not
-want to do the markup exercise for every page -- reserved for pages
-that turn out this complex; a lighter method is still needed for the
-rest of the backlog, not yet decided. The markup method itself is now
-validated and ready to reuse on whichever pages need it: extract the
+**Update, continuing the same day: `repertoire_1892-93_pair014` fully
+resolved.** RG's markup PDF turned out to cover the whole page, not
+just the top portion -- reading further down it revealed the remaining
+range (7 Января-16 Января) was **already correct** in the DB; the
+cascade corruption was confined to 27 Декабря-6 Января. Two more things
+resolved this pass:
+
+- **A genuine page-fold-obscured row, 6 Января**: titles legible
+  (`Фаустъ` Маріинскій, `Сѣти Фенизы`+`Предложеніе` Михайловскій,
+  `Кипрская статуя` Большой, `За право и правду`+`Утро съ сюрпризами`
+  Малый, `Подруга жизни`+`Не бывать бы счастью` Александринскій),
+  receipts genuinely illegible for all 5 (physical crease, not a
+  transcription gap). 4 of 5 theaters were already correctly captured
+  this way (title present, `receipts_text: null`); Александринскій was
+  missing outright and has now been added with the same null-receipts
+  convention already established for its neighbors on this exact row.
+- **A separate, page-wide root-cause bug, unrelated to the cascade**:
+  `outputs/repertoire_spreadfix_v6/page_header_dates.csv`'s entry for
+  this page_id read `"4 декабря. 1892 г. 26 декабря."` -- a
+  same-month, wrong-range header, when every sibling "pair014" page in
+  other seasons correctly shows the season-crossing format (e.g.
+  `repertoire_1891-92_pair014`: `"30 декабря. 1891-1892 гг. 21
+  января."`). Because `_backfill_month_year`'s fast path fires when
+  `start_month == end_month`, EVERY session on this page had been
+  defaulting to December regardless of its own day number -- so "1
+  Пятн." resolved to `date_undate = 1892-12-01` instead of
+  `1893-01-01`, silently, for the whole page, independent of anything
+  else fixed today. Corrected the header text (in both
+  `repertoire_spreadfix_v6/page_header_dates.csv` and the combined
+  `repertoire_singlepage_pagenumbers/all_page_headers.csv`) to `"27
+  декабря. 1892-1893 гг. 16 января."`, matching the page's actual true
+  range and the sibling-page format. This is a detection-and-correction
+  fix to shared reference data, not a one-off patch -- it's now right
+  for anyone re-running the pipeline against this page going forward.
+
+Rebuilt in place, re-verified: `duplicate_event_key` still 0,
+`validate_performance_dates.py` improved 95.6% -> 95.8% (the header fix
+alone removed a page's worth of false date-mismatch noise),
+`build_entities.py` baseline confirmed exactly (2900 live/1459
+tombstoned/23 preserved), `raw.person_entry`/
+`entities.person_wikidata_link` byte-identical. Promoted.
+
+**`repertoire_1892-93_pair014` is now fully resolved end to end** --
+every date, every theater, scan-verified via the markup method, plus
+the underlying page-header bug fixed at the root. This closes the page
+that started this whole addendum.
+
+**Still open**: all 33 other flagged pages from the Tier-0 audit,
+untouched. RG does not want to do the markup exercise for every page
+-- reserved for pages that turn out this complex; a lighter method is
+still needed for the rest of the backlog, not yet decided. Two things
+worth checking early on any page picked up next, given what this one
+page taught: (1) whether its own page-header CSV entry has the same
+same-month-range bug (cheap to check: `grep` the page_id in
+`page_header_dates.csv` and eyeball whether start/end month differ for
+any page whose true range should cross a month boundary), since that
+class of bug is silent and page-specific, not something the cascade
+fix would have caught; (2) whether the "corruption" is actually
+confined to a sub-range of the page rather than the whole thing, as it
+was here -- worth checking the tail of a page against the DB directly
+before assuming the whole thing needs markup.
+
+The markup method itself is validated and ready to reuse: extract the
 single source PDF page (`pymupdf`, `insert_pdf(src, from_page=N,
 to_page=N)`), have RG mark it up (red = date boundaries, blue =
 morning/evening splits, drawn per-column only where a split genuinely

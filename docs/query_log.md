@@ -7527,3 +7527,47 @@ validate_performance_dates.py unchanged at 95.6%. Promoted to outputs/full_run.
 
 All 5 theaters now fully corrected for 27 Декабря-4 Января on this page. Remaining: 5 Января-16 Января
 on this same page, and all 33 other flagged pages from the Tier-0 audit -- untouched.
+
+## 2026-09-22 — repertoire_1892-93_pair014 full resolution: 6 Января fold row + page-header bug
+
+```sql
+select date_text, date_undate, theater, time_of_day, receipts_text
+from raw.event_entry where page_id='repertoire_1892-93_pair014' order by event_id limit 20
+```
+Result: found date_undate wrongly resolving January dates to December (e.g. "1 Пятн." -> 1892-12-01).
+Traced to a wrong page_header_dates.csv entry for this page_id ("4 декабря. 1892 г. 26 декабря." --
+same start/end month, hitting _backfill_month_year's fast-path default). Compared against sibling
+"pair014" pages in other seasons (correct season-crossing format confirmed) before fixing.
+
+```python
+# outputs/repertoire_spreadfix_v6/page_header_dates.csv and
+# outputs/repertoire_singlepage_pagenumbers/all_page_headers.csv:
+# repertoire_1892-93_pair014 header corrected to "27 декабря. 1892-1893 гг. 16 января."
+```
+Result: re-ran parse_and_validate.py, confirmed date_undate now correct across the whole page
+(27 Дек->1892-12-27, 1 Пятн->1893-01-01, 16 Суббота->1893-01-16).
+
+```sql
+select theater, session, receipts_text, [work titles] from raw.event_entry (via raw JSON)
+where page_id='repertoire_1892-93_pair014' and date_text='6 Среда.'
+```
+Result: 4 of 5 theaters already correctly captured (titles present, receipts null -- genuine
+page-fold illegibility, not a gap); Александринскій missing outright, added with the same
+null-receipts convention, title read directly from RG's markup.
+
+```sql
+select theater, ... from raw.event_entry
+where page_id='repertoire_1892-93_pair014' and date_text in ('7 Четвергъ.'...'16 Суббота.')
+```
+Result: entire 7 Января-16 Января range already correct in the DB, no fixes needed -- the cascade
+corruption was confined to 27 Декабря-6 Января.
+
+```sql
+select count(*) from raw.event_entry;               -- 21231 (final)
+select count(*) from raw.person_entry;               -- 21168 (byte-identical)
+select count(*) from entities.person_wikidata_link;  -- 43 (byte-identical)
+```
+Result: build_entities.py baseline confirmed exactly. validate_performance_dates.py improved
+95.6% -> 95.8% (header fix alone removed false date-mismatch noise page-wide). Promoted.
+
+**repertoire_1892-93_pair014 is now fully resolved, every date, every theater.**
