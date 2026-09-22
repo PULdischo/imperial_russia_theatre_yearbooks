@@ -79,7 +79,7 @@
 [FIELDS]
 printed_folio: 381
 tailpiece_present: no
-no_text:
+no_text: no
 copy_artifacts:
 reading_order_uncertain: yes
 notes:
