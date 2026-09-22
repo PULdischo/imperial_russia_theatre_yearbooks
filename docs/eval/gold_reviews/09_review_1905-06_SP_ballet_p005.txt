@@ -81,6 +81,7 @@ printed_folio: 131
 tailpiece_present: no
 no_text: no
 copy_artifacts:
+reading_order_uncertain:
 notes: Two printer's defects, both transcribed as printed and marked <d>: "Михайловп" (expected Михайлова); "Геатральнаго" (expected Театральнаго — a Т with the left crossbar arm broken off; the same word appears correctly three times elsewhere on this page).
 
 [BLOCKS]

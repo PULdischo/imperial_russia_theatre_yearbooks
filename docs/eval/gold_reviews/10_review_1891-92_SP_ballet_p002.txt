@@ -81,6 +81,7 @@ printed_folio: 165
 tailpiece_present: no
 no_text: no
 copy_artifacts:
+reading_order_uncertain:
 notes:
 
 [BLOCKS]
