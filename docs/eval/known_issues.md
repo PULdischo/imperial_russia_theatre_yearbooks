@@ -15439,3 +15439,121 @@ precision fix only, no underlying data touched).
 **Next**: `duplicate_event_key` (69, includes 12 already-confirmed-
 harmless from earlier this session) is the last category in the
 original backlog.
+
+### Addendum 2026-09-22: `duplicate_event_key` (69 rows) -- resolved, closes the original backlog
+
+Last category from the original 172-row single-page-season quality-flag
+ask. Broke into four distinct shapes, one of them a previously-unknown
+pipeline bug:
+
+**1. `repertoire_1892-93_pair014` (12 rows) -- a real wholesale
+duplication, not a false positive.** This two-page-spread page's raw
+JSON had grown to 244 sessions, when the last confirmed-correct backup
+(taken right after the printed_page_number promotion, earlier the same
+day) had only 121. Diffed the two: the file's first 162 sessions were
+exactly the correct, complete content (the original 121-session rebuild
+from 2026-09-18 plus a genuine +41-session date-range extension from
+issue #75's gap recovery, both scan-sourced from the same
+`ForUpload_1892-93_Repertoire_006.jpg`). Sessions 163-244 (82 rows) were
+a pure re-duplication of a subset of that same range (1 Пятница-16
+Суббота) -- every single one matched an existing entry once trailing-
+punctuation and abbreviation-vs-full-spelling formatting differences
+were normalized (receipts figures matched exactly; a couple of titles
+differed only by a Cyrillic/Latin homograph, e.g. "Iоланта" vs
+"Іоланта"). Root cause not fully traced (this file sits outside
+`gate3_columnwise`'s resync path, so it wasn't touched by this
+session's bulk `cp` operations), but the fix is unambiguous: truncated
+back to the first 162 sessions, verified zero net information loss.
+
+**2. A genuine, previously-undocumented pipeline bug affecting 3 pages
+(`1900-01_p009`, `1903-04_p008`, `1904-05_p021`, 5 rows total).**
+`pipeline/parse_and_validate.py`'s `_repair_repertoire` has several
+hand-verified fix tables (`_REPERTOIRE_FIELD_OVERRIDES`,
+`_REPERTOIRE_SESSION_INSERTIONS`, `_REPERTOIRE_DUPLICATE_SESSIONS`,
+`_REPERTOIRE_MONTH_FIXES`, `_REPERTOIRE_SESSION_DATE_FIXES`) that are
+keyed to a 1-based sequential index into the session list -- safe only
+when that list is ordered the way the old baseline (single-call)
+extraction produces it, and the function's own docstring already
+documented (2026-09-10, issue #69) that 8 specific pages are actually
+column-wise-sourced despite the whole run being invoked with the
+default `--extraction-source baseline`, making those index-keyed fixes
+unsafe there -- but nothing had actually implemented the exclusion yet.
+Confirmed live and actively corrupting data: on `1900-01_p009`,
+`_REPERTOIRE_FIELD_OVERRIDES` collapsed three genuinely different
+Новый театръ dates (31 Вторн./1 Среда./2 Четвергъ) onto two repeated
+labels ("1 Среда"/"2 Четвергъ") because the index positions it targets
+landed on unrelated column-wise rows; on `1904-05_p021`,
+`_REPERTOIRE_SESSION_INSERTIONS` inserted a synthetic ВЕЧЕРЪ session on
+top of a slot column-wise had already captured correctly, producing an
+exact duplicate. Fixed at the root: added an explicit
+`_COLUMNWISE_SOURCED_IN_BASELINE_DIR` set (the same 8 page_ids already
+named in the docstring) that forces `index_keyed_safe = False` for
+those pages regardless of the `source` argument -- implements exactly
+what the existing docstring already called for, just not yet done. No
+raw JSON was edited for these 3 pages; the fix is in the pipeline code
+and reproduces correctly on every future run. The other 5 named pages
+(`1899-00_p037`, `1907-08_p000`, `1902-03_p008`, `1905-06_p005`,
+`1905-06_p011`) are now also protected even though they weren't
+producing a visible `duplicate_event_key` symptom this round -- spot-
+checked that disabling the tables for them is a safe no-op (their
+column-wise data either doesn't hit the affected index range or
+already matches what the fix would have produced), but `1907-08_p000`'s
+`_REPERTOIRE_MONTH_FIXES` entry (a real "Августъ"->"Сентябрь" month
+mislabel) does still have literal "Августъ" values in its column-wise
+read -- worth an individual content-keyed re-verification later, per
+the docstring's own original plan, not attempted here since it's
+outside this backlog's scope and wasn't producing a flag.
+
+**3. The dominant shape (43 rows across 14 pages, entirely 1898-99 plus
+two 1901-02 singles) -- a printed УТРО/ВЕЧЕРЪ split row where the model
+captured both sessions' distinct content correctly but left
+`session="unspecified"` for both instead of `morning`/`evening`.**
+Confirmed the document-order convention (first occurrence = morning,
+second = evening) three ways: several groups already carried explicit
+`annotation="УТРО."/"ВЕЧ."` tags confirming the order; scan-verified
+directly against `repertoire_1898-99_p029` (pp.31, Moscow theaters,
+four separate dates all showing this exact printed layout); and the
+fix produces zero WARNING mismatches when applied mechanically across
+all 14 pages by matching each date+theater+`unspecified` group (every
+one had exactly 2 members). Fixed by setting session to morning/evening
+by document order for all 44 flagged groups (`1898-99_p004/p009/p010/
+p011/p015/p018/p019/p021/p024/p025/p026/p027/p029/p030`,
+`1901-02_p011/p027`).
+
+**4. `repertoire_1904-05_p032` (6 rows, Маріинскій морning column,
+24-27 Февраля 1905) -- content genuinely bled across four consecutive
+dates.** Scan-verified against `ForUpload_1904-05_Repertoire.pdf` page
+32 (printed p.122): found 7 spurious no-receipts rows, each carrying
+the SAME work title as a correctly-dated with-receipts row nearby but
+attached to the wrong date (mostly one date early: "Демонъ" belongs to
+25 Пятница evening but a phantom copy sat under 26 Суббота morning;
+"Борисъ Годуновъ"/"Корсаръ"/"Евгеній Онѣгинъ"/the 27 Воскрес. ballet
+divertissement each had the same shape). Dropped all 7 (verified each
+against its expected title before dropping). This also surfaced a
+genuine, separate content gap the duplication had been masking: 25
+Пятница's real morning performance ("Конекъ-Горбунокъ, бал.", 2725 р.
+95 к., confirmed on the scan) didn't exist anywhere in the raw JSON at
+all -- added as a new session.
+
+**Verification**: re-synced `gate3_columnwise/raw_columnwise/` ->
+`full_run/raw/`, re-ran `parse_and_validate.py` (with both
+`--page-headers` and `--printed-page-numbers`) and `quality_checks.py`:
+`duplicate_event_key` 57 -> 0, total flags 944 -> 887 (887 is entirely
+the four pre-existing, out-of-scope categories --
+`institution_duplicated_in_heading_path`, `credit_sum_mismatch`,
+`duplicate_person_on_page`, `rank_class_left_in_heading_path` -- none
+of which were part of this backlog). Rebuilt `raw`/`analysis` **in
+place**, `validate_performance_dates.py` unchanged at 95.6% verified
+(`invalid_date` 1 -> 0). `build_entities.py`: baseline confirmed
+exactly -- 2900 live people / 1459 tombstoned carried forward
+unchanged, 23 preserved candidate decisions. `raw.person_entry`
+(21168) and `entities.person_wikidata_link` (43) unchanged, confirming
+Musicians/Roster isolation held throughout this entire backlog.
+`build_research_model.py`/`build_datasette.py` rebuilt successfully.
+Backup: `outputs/full_run_pre_promote_backup_2026-09-22_dupeventkey/`.
+Promoted to `outputs/full_run`.
+
+**This closes the entire original 172-row single-page-season quality-
+flag backlog** (`receipts_parse_failed` 14, `zero_dark_cells_on_
+multiweek_page` 16, `duplicate_event_key` 69, all -> 0) identified at
+the start of this "Keep going now" continuation.

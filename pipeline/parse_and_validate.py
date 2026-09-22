@@ -1493,7 +1493,32 @@ def _repair_repertoire(parsed: dict, page_id: str, source: str = "baseline") -> 
         "fabricated_dropped": 0, "duplicate_dropped": 0,
         "theater_field_fixed": 0, "theater_spelling_fixed": 0,
     }
-    index_keyed_safe = source == "baseline"
+    # outputs/full_run/raw/ is a mixed directory: most pages hold genuine
+    # baseline output, but these 8 (the exact list this docstring names
+    # above) were resynced in from gate3_columnwise/raw_columnwise/ during
+    # issue #77 and every later promotion, so their content on disk there
+    # is column-wise-ordered even though the whole run is invoked with
+    # --extraction-source baseline (the default, and the only option that
+    # also correctly serves every OTHER page in the same directory).
+    # Without this override, index_keyed_safe went true for these too and
+    # silently misapplied baseline-ordered fixes to column-wise data --
+    # confirmed 2026-09-22 on repertoire_1900-01_p009 (three unrelated
+    # Новый театръ dates all collapsed onto "1 Среда"/"2 Четвергъ",
+    # duplicate_event_key) and repertoire_1904-05_p021 (a synthetic
+    # ВЕЧЕРЪ session inserted on top of one column-wise had already
+    # captured correctly, duplicate_event_key). Confirmed harmless for
+    # the other 6 on the same audit -- their column-wise read either
+    # doesn't hit the affected index range or already matches what the
+    # fix would have produced -- but excluded regardless since applying
+    # a baseline-ordering fix to column-wise data is unsafe in general,
+    # not just where it happened to collide this time.
+    _COLUMNWISE_SOURCED_IN_BASELINE_DIR = {
+        "repertoire_1899-00_p037", "repertoire_1907-08_p000",
+        "repertoire_1902-03_p008", "repertoire_1904-05_p021",
+        "repertoire_1903-04_p008", "repertoire_1900-01_p009",
+        "repertoire_1905-06_p005", "repertoire_1905-06_p011",
+    }
+    index_keyed_safe = source == "baseline" and page_id not in _COLUMNWISE_SOURCED_IN_BASELINE_DIR
     year_fix = _REPERTOIRE_YEAR_FIXES.get(page_id)
     day_fix = _REPERTOIRE_DAY_FIXES.get(page_id)
     month_fixes = _REPERTOIRE_MONTH_FIXES.get(page_id, []) if index_keyed_safe else []

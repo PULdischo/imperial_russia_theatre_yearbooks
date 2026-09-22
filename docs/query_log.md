@@ -7196,3 +7196,46 @@ No data changed (detection-precision fix only); no pipeline rebuild needed.
 
 Remaining from the original 172-row ask: duplicate_event_key (69, includes 12 already-confirmed-
 harmless from earlier this session) -- last category, next up.
+
+## 2026-09-22 — duplicate_event_key backlog (69 rows): investigation and resolution
+
+```sql
+select page_id, count(*) from (
+  select distinct row_id, page_id, detail from raw.event_entry  -- via quality_flags.csv, not a live SQL source
+) group by page_id
+```
+
+Result: (queried via quality_flags.csv grep, not SQL) confirmed the 69 rows spanned 21 distinct pages,
+heavily concentrated in 1898-99 (13 pages).
+
+```sql
+select event_id, date_text, theater, time_of_day, receipts_text
+from raw.event_entry where page_id = 'repertoire_1892-93_pair014' order by event_id
+```
+
+Result: found the page had grown to 244 sessions; cross-referenced against 4 backup copies to find a
+121-session pre-duplication baseline, then diffed to isolate the genuine 244-session file's first-162
+vs. duplicated-tail structure.
+
+```python
+# per-page raw JSON dumps (uv run python, not SQL) for all 20 remaining flagged pages after pair014,
+# grouping sessions by (date_text, theater, session) to find every colliding group's exact content
+```
+
+Result: classified all 57 remaining rows into the pipeline-bug shape (1900-01_p009/1903-04_p008/
+1904-05_p021, 5 rows), the УТРО/ВЕЧ session-missing shape (43 rows, 14 pages), and the content-bleed
+shape (1904-05_p032, 6 rows) -- see known_issues.md addendum for full detail.
+
+```sql
+select count(*) from raw.event_entry;               -- 21235 (final, post-fix)
+select count(*) from raw.event_entry_performance;    -- 22677 (final, post-fix)
+select count(*) from raw.person_entry;               -- 21168 (byte-identical)
+select count(*) from entities.person_wikidata_link;  -- 43 (byte-identical)
+```
+
+Result: `quality_checks.py`: duplicate_event_key 57 -> 0, total flags 944 -> 887 (887 is entirely
+pre-existing out-of-scope categories). `build_entities.py` baseline confirmed exactly (2900 live/1459
+tombstoned/23 preserved). `validate_performance_dates.py` unchanged at 95.6%. Promoted to outputs/full_run
+(backup: outputs/full_run_pre_promote_backup_2026-09-22_dupeventkey/).
+
+**This closes the entire original 172-row single-page-season quality-flag backlog.**
