@@ -7416,3 +7416,91 @@ since there's no confirmed real example of the underlying premise (marker text l
 annotation while time_of_day fails to update) to test against.
 
 No data mutated by either investigation.
+
+## 2026-09-22 — two new suspected phantom-session bugs found while testing label convention (DEFERRED, not fixed)
+
+While testing whether the УТРО/ВЕЧ label-per-row convention (see session-completeness doc) holds across
+seasons, picked two-page-spread multi-theater-split candidates via:
+```sql
+select page_id, date_text, count(distinct theater) from (
+    select page_id, date_text, theater, count(*) n from raw.event_entry group by 1,2,3 having count(*)>1
+) group by 1,2 having count(distinct theater)>=2
+```
+Both candidates checked against their actual scans turned out NOT to be genuine splits:
+- `repertoire_1893-94_pair008`, "11 Четвергъ.": scan shows a single undivided row for every theater
+  (ForUpload_1893-94_Repertoire.pdf page index 3, printed pp.14-15 area). DB's "morning" session for
+  Большой (459 р. 19 к.) is actually "10 Среда."'s real content (visually confirmed matching receipts),
+  mislabeled onto the wrong date. Малый/Маріинскій/Михайловскій's "morning" sessions for this date not
+  yet traced to their true source.
+- `repertoire_1892-93_pair014`, "3 Воскресенье.": scan confirms Александринскій genuinely splits
+  (УТРО 280 р. 90 к./ВЕЧЕРЪ 1670 р. 91 к., matches DB exactly) but Большой and Малый are single lines
+  in print (2053 р. 70 к. and 1379 р. 48 к. only). DB's "morning" sessions for those two (1099 р. 29 к.,
+  694 р. 71 к.) don't match anything visible on this row -- not yet traced to their true source. Notable:
+  this is a page already extensively fixed earlier this session (issue #77 addendum, the 244->162
+  session truncation) -- this is a separate, still-open residual issue on the same page, not something
+  that fix should have caught.
+
+RG's call: defer fixing both, keep working the label-convention question. Flagging here so neither is
+lost -- next step when revisited is tracing where each phantom "morning" receipts figure actually
+belongs (same technique used throughout issue #77: match by exact receipts figure against nearby real
+dates on the same page).
+
+## 2026-09-22 — third suspected phantom-session bug found (same session, DEFERRED)
+
+- `repertoire_1891-92_pair020`, "23 Понед." (ForUpload_1891-92_Repertoire.pdf page index 9, printed
+  pp.20-21): scan shows Маріинскій/Михайловскій/Большой/Малый all completely dark ("—") for this date
+  -- a Lenten closure stretch (surrounding dates 9 Марта-6 Апреля 1892 show almost the whole table dark
+  except a German/French touring troupe at Александринскій). DB currently shows Большой, Малый, and
+  Маріинскій each with a full 2-session (morning+evening, both receipts NULL) performance for this date
+  -- doesn't match the scan at all. Third instance of this general bug shape found today (see the two
+  logged above), each on a different page/season (1893-94_pair008, 1892-93_pair014, 1891-92_pair020) --
+  possibly systemic rather than three isolated incidents, worth keeping in mind when this is picked back
+  up. Deferred per RG, not investigated further or fixed.
+
+## 2026-09-22 — fourth instance + a discriminating signal found
+
+- `repertoire_1890-91_pair004`, "8 Суббота" (ForUpload_1890-91_Repertoire.pdf page index 1, printed
+  pp.4-5): scan shows Маріинскій/Александринскій/Михайловскій completely blank and Большой/Малый each
+  with a single УТРО-only entry, not the 5-theater full 2-session set the DB shows. Fourth instance of
+  the same bug shape today, across four different seasons (1890-91, 1891-92, 1892-93, 1893-94).
+
+Noticed a pattern across all 4 bad instances: every single one has NULL receipts_text on BOTH sessions.
+The one genuine split scan-confirmed today (repertoire_1892-93_pair014's Александринскій, "3 Воскресенье.")
+has real, distinct receipts on both sides (280 р. 90 к. / 1670 р. 91 к.). Filtering multi-theater-split
+candidates to require non-NULL receipts on both sessions as a cheap way to avoid re-picking another
+instance of this bug class.
+
+## 2026-09-22 — CRITICAL: earlier fix today (repertoire_1893-94_pair006, 14 Четвергъ.) confirmed wrong
+
+Scan (ForUpload_1893-94_Repertoire.pdf page index 2, printed pp.6-7) shows "14 Четвергъ." as a SINGLE
+undivided row for all 5 theaters -- no УТРО/ВЕЧ split anywhere. Маріинскій=2946 р. 20 к. only,
+Малый=617 р. 29 к. only, Большой=1941 р. 47 к. only (all matching the "evening" values kept earlier
+today). The "morning" sessions kept as genuine in this session's earlier duplicate_event_key work
+(2999 р. 20 к. Маріинскій, 1158 р. 27 к. Малый, 1099 р. 91 к. Большой) do not appear anywhere on this
+row. That earlier fix correctly identified and dropped ONE phantom row (the "unspecified" duplicate,
+_source human:kept_top) but incorrectly kept the "morning" row as genuine -- it is ALSO phantom, just
+with different-looking numbers that didn't trip the identical-receipts duplicate check used at the time.
+This fix is currently live in outputs/full_run (promoted earlier today).
+
+This is now 5 of 5 two-page-spread multi-theater-split candidates checked today that turned out to be
+this same bug shape, including this one already "fixed" and promoted. No longer looks like isolated bad
+pages -- looks like a systemic reliability problem with two-page-spread season morning/evening session
+pairs generally. Not fixed -- reporting to RG before continuing, per instruction to defer fixes but this
+crosses into "something already promoted is wrong," which is different from the other 4 deferred items.
+
+## 2026-09-22 — repertoire_1892-93_pair014 Маріинскій reconstruction: verification queries
+
+```sql
+select date_text, theater, time_of_day, receipts_text from raw.event_entry
+where page_id='repertoire_1892-93_pair014' and theater='Маріинскій' order by date_undate
+```
+Result: used before/after to confirm the RG-verified 27 Дек-3 Янв sequence landed correctly post-rebuild.
+
+```sql
+select count(*) from raw.event_entry;               -- 21228 (final)
+select count(*) from raw.person_entry;               -- 21168 (byte-identical)
+select count(*) from entities.person_wikidata_link;  -- 43 (byte-identical)
+```
+Result: build_entities.py baseline confirmed exactly (2900 live/1459 tombstoned/23 preserved).
+validate_performance_dates.py unchanged at 95.6%. Promoted to outputs/full_run (backup:
+outputs/full_run_pre_promote_backup_2026-09-22_cascadeaudit/).

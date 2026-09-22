@@ -15660,3 +15660,195 @@ morning/evening pair. It cannot detect the case where the model
 captured only one of two genuinely-printed sessions and silently
 dropped the other outright -- there is currently no corpus-wide check
 for that failure mode.
+
+### Addendum 2026-09-22: a much larger, still-mostly-open problem found while checking the above -- systemic session cascades on two-page-spread pages
+
+Following on directly from the audit above: RG asked to scope a
+detector for the "silently dropped session" gap just named. That
+scoping work (`docs/session_completeness_detection.md`) tried a
+row-height CV approach (abandoned -- doesn't transfer to this corpus,
+see that doc), then a manual triage of every two-page-spread page with
+a multi-theater simultaneous morning/evening split (34 pages, 408
+(date, theater) pairs). That triage surfaced something well beyond a
+detector-scoping exercise: **individual scan-verification of essentially
+every multi-theater-split candidate checked this session turned up a
+genuine, previously-unknown bug** -- not the duplicate-phantom-row
+shape already fixed above, but *content that was captured correctly
+but attached to the wrong date*, cascading through a run of subsequent
+dates once one session goes missing from a theater's own column.
+
+**Root cause, confirmed on `repertoire_1892-93_pair014`** (scan-verified
+directly, `ForUpload_1892-93_Repertoire.pdf` printed pp.14-15): for
+several theaters on this page, the session actually printed under "29
+Вторникъ" evening was never captured by the original extraction at
+all. Since nothing else disagreed with this (the top/bottom overlap
+dedup process only flags a *disagreement* between two reads, not a
+silently-consistent gap), every date's content from that point forward
+inherited the PREVIOUS date's label -- not a clean, uniform "off by
+one" either: the displacement accumulates further wherever *another*
+session goes missing later in the same column, so by a few dates in,
+content can be three or more calendar days away from its true label
+with no trivial way to reverse the offset. Confirmed on 5 of 5
+two-page-spread pages spot-checked this way earlier in the day's work
+(see the duplicate_event_key addendum above), including one page
+(`1893-94_pair006`) already "fixed" and promoted earlier the same
+session on a different, incomplete understanding of the bug -- that
+fix correctly dropped one phantom duplicate row but incorrectly kept a
+second, also-wrong row as genuine.
+
+**What actually got fixed this addendum, with full confidence**: only
+`repertoire_1892-93_pair014`'s Малый column for 27-28 Декабря 1892.
+Confirmed via a direct crop (theater column pasted immediately next to
+its own date-label column, at both 300dpi and 600dpi, cross-checked
+twice independently): Малый's true 27th splits into `Дмитрій
+Самозванецъ` (585 р. 12 к., morning) / `Перекати-поле` + `Левъ Гурычъ
+Синичкинъ` (1342 р. 47 к., evening); 28th splits into `Марія
+Шотландская` (389 р. 73 к., morning) / `Въ родномъ углу` + `Шашки`
+(1026 р. 96 к., evening). The DB had 27th's true evening mislabeled as
+"28th morning," 28th's own morning correctly dated but mislabeled
+"evening," and 28th's true evening missing outright. Fixed: dropped
+the 3 wrong Малый sessions for these 2 dates, inserted the 4 correct
+ones. `event_entry` 21226 -> 21227 (net +1, matching 4 inserted - 3
+dropped). Rebuilt in place, verified: `duplicate_event_key` stays 0,
+`validate_performance_dates.py` unchanged at 95.6%, `build_entities.py`
+baseline confirmed exactly (2900 live/1459 tombstoned/23 preserved),
+`raw.person_entry` (21168) and `entities.person_wikidata_link` (43)
+byte-identical. Backup:
+`outputs/full_run_pre_promote_backup_2026-09-22_cascadeaudit/`.
+Promoted.
+
+**Everything else on this same page is confirmed corrupted by the same
+mechanism but NOT fixed** -- deliberately left as-is rather than
+guessed at. This needs its own explanation, because the reason is a
+real methodology finding, not just "ran out of time":
+
+- Attempting the full reconstruction (all ~22 dates x 5 theaters on
+  this one page) surfaced repeated, genuine self-contradictions in the
+  reading process itself. A first pass built a plausible-looking
+  27-Дек-to-4-Янв table for all 5 theaters from separately-cropped
+  images, cross-referenced by counting rows across crops -- and it
+  contained a real error (a literal copy-paste duplicate value across
+  two different dates), caught only by chance before writing it.
+- A second attempt used composited crops (theater column pasted next
+  to a separately-cropped date-label column) to avoid the row-counting
+  problem -- but this introduced a NEW failure mode: the two crops are
+  torn from physically distant parts of the same photographed page,
+  and page curvature/skew between them broke the assumption that the
+  same absolute pixel-y corresponds to the same table row in both
+  pieces. Confirmed by RG spotting a real misattribution this produced
+  (`Аида`/`Бенефисъ г-жи Гейтенъ 1-й.../Фіаметта` -- initially read as
+  two different theaters, actually morning/evening of one date).
+- A third attempt, undoctored full-width crops (no compositing, no
+  cross-image row-counting) at both 300dpi and 600dpi, resolved that
+  specific case but still left at least one genuinely ambiguous
+  boundary (whether Большой's own 27th split shares Малый's exact row
+  or is one row later) that two independent close readings, including
+  one prompted directly by RG, could not settle with confidence.
+- RG's own tested hypothesis this same session -- "maybe every theater
+  splits every day here, not just the two confirmed ones" -- was
+  checked directly at 2x resolution and does NOT hold structurally for
+  Александринскій/Михайловскій/Маріинскій on 27-28 Дек: their cells
+  show one clean, undivided line of content with a single receipts
+  figure each, no missing-content signature. So the corruption's exact
+  shape genuinely varies by theater column even within one page, not a
+  single uniform rule to apply everywhere.
+
+**The actual lesson**: pure pixel-crop reading, even done carefully,
+even redone multiple times, even at 600dpi, is not by itself reliable
+enough for this specific failure mode (ambiguous internal row
+boundaries within one compound printed cell) at the confidence bar
+this dataset has held all session. Every other fix today that used
+scan-reading was for content that was either unambiguous at normal
+resolution or had an independent cross-check (a duplicate literal
+value, a receipts figure matching a neighboring date). This bug class
+doesn't offer that -- the ambiguity is structural, not a resolution
+problem alone.
+
+**Scope of what's left, corpus-wide**: 34 two-page-spread pages had at
+least one multi-theater-simultaneous-split date (408 (date, theater)
+pairs total, see `docs/session_completeness_detection.md`'s Tier-0
+audit for the full list). Only 1 page (`1892-93_pair014`) got any
+attention this addendum, and only 2 dates on it (out of ~22) got fixed.
+The other 33 pages are entirely unaudited for this specific bug beyond
+the original block-pattern/literal-duplicate screens (which, per the
+addendum above, catch only a minority of instances -- most of the
+corruption this addendum found has neither signature). A further ~25
+pages have only single-theater splits and were never even in this
+audit's candidate list, since the triage method required a
+*simultaneous* multi-theater split to compare structure across
+columns -- there is no reason to assume single-theater-split pages are
+any less likely to have the same cascade.
+
+**Recommendation for resuming this**: do not repeat the composited-crop
+approach (confirmed unreliable above). Undoctored, full-width,
+600dpi-or-higher crops worked better but still weren't sufficient
+alone for every case -- a second pair of eyes (human, not just a
+second Claude pass) checking the genuinely ambiguous boundaries before
+they're written is probably necessary for full coverage, or a
+different technical approach entirely (the abandoned Tier 1 CV design
+in `docs/session_completeness_detection.md`, revisited now with the
+concrete row-shape evidence gathered this addendum, might be worth a
+second look -- the earlier abandonment was based on one page in a
+different season/format; whether the "all-morning-then-all-evening
+block" signature or some other structural feature holds more
+consistently specifically for this cascade-shape bug, as opposed to
+the phantom-duplicate shape it was originally tested against, hasn't
+been checked).
+
+**Update, same session, immediately after the above was written**: RG
+looked at the same page directly and worked through Маріинскій's true
+date-by-date structure interactively (one date at a time, each
+confirmed or corrected by RG against the actual scan before moving to
+the next) -- this is exactly the "second pair of eyes" the
+recommendation above called for, and it resolved Маріинскій
+completely and with full confidence for 27 Дек-3 Января, including two
+findings the crop-reading approach had gotten wrong in ways that
+looked structurally clean (i.e., would NOT have been caught by any of
+the mechanical checks tried so far):
+
+- **27, 28, and 29 Декабря are each genuinely compound (morning +
+  evening)** -- the crop-reading passes had read these as three
+  separate SINGLE dates (`Евгеній Онѣгинъ`, `Талисманъ`, `Спящая
+  красавица`+`Травіата` as one date, `Талисманъ`[again]+`Русланъ и
+  Людмила`...), when the true structure pairs them as 27th
+  (`Евгеній Онѣгинъ`/`Талисманъ`), 28th (`Спящая красавица`/
+  `Травіата`), 29th (`Талисманъ`/`Русланъ и Людмила`). Confirms
+  RG's mid-session hypothesis ("maybe more theaters split than
+  confirmed") was directionally right for Маріинскій specifically,
+  even though the earlier structural check (clean single line, one
+  receipts figure, no visible divider) had found no evidence for it --
+  the split isn't marked by any visible per-cell divider at all here,
+  it's only recoverable from knowing the true calendar and title
+  sequence.
+- **But not every date splits** -- 30 Декабря is genuinely single
+  (`Травіата`, 2950 р. 20 к. alone), confirmed directly by RG after an
+  initial guess (continuing the compound pattern) was wrong. There is
+  no uniform rule ("every date splits" or "no date splits") to lean
+  on; each date genuinely needs its own confirmation.
+
+Full corrected sequence, RG-verified: 27 Дек split (`Евгеній Онѣгинъ`
+3261 р. 70 к. morning / `Талисманъ` 2090 р. 45 к. evening), 28th split
+(`Спящая красавица` 1446 р. 70 к. morning / `Травіата` 2916 р. 70 к.
+evening), 29th split (`Талисманъ` 633 р. 75 к. morning / `Русланъ и
+Людмила` 2881 р. 95 к. evening), 30th single (`Травіата` 2950 р. 20
+к.), 31st split (`Спящая красавица` 1721 р. 25 к. morning / `Юдиѳь`
+1942 р. 70 к. evening), 1 Января single (`Іоланта`+`Щелкунчикъ`, one
+double-bill, 4137 р. 90 к.), 2 Января dark (confirmed blank in print),
+3 Января single (`Бенефисъ г. Л. Иванова`/`Щелкунчикъ`/`1-е д. бал.
+Спящая красавица`/`Дивертиссементъ`, 2733 р. 95 к.). Applied, rebuilt
+in place, re-verified: `duplicate_event_key` still 0,
+`validate_performance_dates.py` unchanged at 95.6%, `build_entities.py`
+baseline confirmed exactly (2900 live/1459 tombstoned/23 preserved),
+`raw.person_entry`/`entities.person_wikidata_link` byte-identical.
+Promoted.
+
+RG then paused this line of work to step back before continuing to
+Александринскій/Михайловскій/Большой on this same page or any of the
+other 33 flagged pages -- so the scope described above (33 pages
+effectively untouched, ~4 theaters' worth of this one page still
+unverified) still stands as the honest current state. What's changed
+is the *method* going forward: direct, date-by-date interactive
+verification against the scan (not solo crop-reading, composited or
+otherwise) is now the demonstrated, working approach for this specific
+bug class -- slow, but the only one that's actually resolved a
+stretch of dates with full confidence today.
