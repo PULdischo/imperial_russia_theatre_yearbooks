@@ -14216,3 +14216,90 @@ choice -- unaffected either way, revisit separately). HF dataset repo
 the local `outputs/full_run` deliverable and pushing it to the
 external HF/Cloud Run endpoints are two different actions; this
 addendum covers only the former.
+
+### Follow-up (2026-09-22): the two deferred `pair020` threads --
+both resolved, and the pattern really did recur elsewhere
+
+RG asked to fix the two things flagged but not chased when issue #74
+closed: the corner-stamp-bleed date corruption near 25 Февраля on
+`1897-98_pair020` itself, and whether the same failure mode recurs
+elsewhere in the corpus.
+
+**`1897-98_pair020` completion**: the three remaining garbled entries
+(`'2 марта.'`/`'3 марта.'` labels, both Александринскій and
+Маріинскій) were the same page-corner-stamp bleed-through already
+diagnosed in issue #74 -- confirmed via receipts-figure fingerprint
+against `render_009`. Fixed: 2 relabeled with corrected titles, 1 pure
+duplicate deleted, 7 new Маріинскій sessions recovered (this theater's
+"14 Суббота." through "24 Вторн." block had never been captured at
+all). **Also found a parallel instance on the same page I'd missed the
+first time**: a Михайловскій session with the identical `'2 Бродник.'`
+garbled label (title was already correct, just needed relabeling to
+"3 Вторникъ.").
+
+**Corpus-wide sweep**: wrote a script classifying every session's
+`date_text` second token as a real weekday word, a real month name, or
+neither -- 43 candidates survived after tuning out false positives
+(abbreviated weekdays like "Ноябр.", and genuine first-row/month-
+transition labels that legitimately spell out the month name, both
+confirmed against `page_header_dates.csv`'s own start_day for each
+page). Checked each candidate against its scan:
+
+- **`1890-91_pair010`** "11 Ноябр." -- false positive, content matches
+  exactly, just an abbreviated month spelling not in the whitelist.
+- **`1890-91_pair014`** bare "27" (all 4 theaters) -- legitimate
+  content, just missing its weekday word; one incidental OCR title fix
+  (Конекъ-горбунокъ).
+- **`1893-94_pair016`** "1.Вторн." -- content was already correct for
+  Михайловскій; the other 4 theaters are genuinely dark that day
+  (printed dash), previously captured as `is_dark=False` with empty
+  works instead of `True`; Маріинскій's dark marker was missing
+  entirely.
+- **`1894-95_pair010`** -- by far the biggest recurrence found:
+  nearly the entire Александринскій and Большой columns across
+  26 Января - 7 Февраля were cascading-shifted by 1-2 rows, the same
+  failure mode as `pair020`'s Марта chain but affecting far more of
+  the page. ~25 corrections (relabels, session-field fixes, OCR title
+  fixes), 6 genuinely-missing sessions recovered, 5 spurious/duplicate
+  entries removed. Scan-verified row by row against
+  `ForUpload_1894-95_Repertoire_004.jpg`, both halves.
+- **`1895-96_pair018`** -- the weekday word had been replaced by the
+  page's own running month-name header ("Бокреп."/"февралЯ."/
+  "Февраль." instead of "Воскрес."/"Суббота."/"Воскресенье."), i.e.
+  the corner-stamp-bleed pattern's cousin: header text overwriting the
+  row's real weekday rather than a neighboring row's content leaking
+  in. 7 entries fixed (mostly verbatim spelling/session corrections,
+  2 genuine relabels with OCR title fixes).
+- **`1891-92_pair018`** "11 Бторникъ." -- trivial OCR letter-swap
+  (в/б), content already correct, page's own real first-row label.
+- **Checked and confirmed legitimate, no fix needed**:
+  `1890-91_pair022` "10 Март.", `1890-91_pair012` "1 Декабрь.",
+  `1891-92_pair016` "1 Февр.", `1894-95_pair006` "1 Январь." (all
+  page-boundary or mid-page month-transition labels matching their
+  page's own header, verified against `page_header_dates.csv`),
+  `1896-97_pair012` "9/8 дека́бря" (a stray Unicode combining-accent
+  mark, cosmetic only), `1896-97_pair022`/`1897-98_pair022` (both
+  legitimate first-row month labels).
+
+**Verification**: `event_entry` 5802 -> 5810 (net +8 across all fixes
+combined -- gains from recovered sessions partly offset by deleted
+duplicates/spurious placeholders). `quality_checks.py` stayed at
+**0 flags** throughout every intermediate rebuild.
+`validate_performance_dates.py` verified 84.4% -> **84.9%**,
+unresolved unchanged at 11, no regressions at any step.
+
+**Not chased further**: this sweep used one heuristic (weekday/month
+whitelist matching on `date_text`'s second token). It would not catch
+a corner-stamp-bleed instance where the corrupted label happens to
+still parse as a plausible weekday/month word by coincidence -- the
+5 real instances found this pass were all caught because the garble
+was linguistically obvious, not because the sweep is exhaustive. If
+this class of bug turns out to matter for future work, a receipts-
+uniqueness cross-check (every session's receipts figure should appear
+on exactly one date per page) would catch content-mismatch cases this
+heuristic can't.
+
+Nothing remains open from the two deferred threads. `outputs/full_run`
+was NOT re-promoted with these fixes as part of this pass -- it still
+reflects the 2026-09-19 promotion (event_entry 5802 for these 8
+seasons); re-promoting is a separate step.

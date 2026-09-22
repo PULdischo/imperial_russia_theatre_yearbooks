@@ -6559,3 +6559,32 @@ matching repertoire_spreadfix_v6 exactly (4898/5802). Musicians/Roster entity co
 person_wikidata_link, 23 preserved candidate decisions) all byte-identical old vs new -- confirmed no
 collateral effect on unrelated entity-resolution work. outputs/full_run/imperial_theaters.duckdb and
 research_dataset.sqlite rebuilt in place. Full detail in docs/eval/known_issues.md's promotion note.
+
+## 2026-09-22 — fixed pair020's remaining corner-stamp-bleed entries, and swept the whole corpus for the same failure mode
+
+RG asked to fix the two things deferred when issue #74 closed: the '2 марта.'/'3 марта.' garbled
+entries still on 1897-98_pair020 near 25 Февраля, and whether that failure mode recurs elsewhere.
+
+Completed pair020: relabeled 2 garbled entries (Александринскій, Маріинскій) with corrected titles
+via receipts-figure fingerprint against render_009, deleted 1 pure duplicate, recovered 7 new
+Маріинскій sessions that had never been captured (14 Суббота - 24 Вторн. block), and found + fixed
+a parallel Михайловскій instance of the exact same bug that was missed the first time ('2 Бродник.'
+-> '3 Вторникъ.').
+
+Wrote a corpus-wide sweep classifying every session's date_text second token as weekday/month/other;
+43 candidates after tuning out false positives against page_header_dates.csv's start_day. Scan-checked
+each:
+
+```
+-- detection script (not SQL): pipeline/parse_raw/*.raw.json date_text classification,
+-- see docs/eval/known_issues.md's 2026-09-22 addendum for the full script logic and results
+```
+
+Result: 5 pages had real bugs (1890-91_pair014, 1893-94_pair016, 1894-95_pair010 [the big one --
+nearly the whole Александринскій+Большой columns cascading-shifted], 1895-96_pair018,
+1891-92_pair018), all scan-verified and fixed. 8 more candidates checked and confirmed legitimate
+(page-boundary/month-transition labels or cosmetic Unicode marks), no fix needed.
+
+Final verification: event_entry 5802 -> 5810, quality_flags.csv stayed at 0 throughout, verified
+84.4% -> 84.9%, unresolved unchanged at 11, no regressions. outputs/full_run NOT re-promoted this
+pass -- still reflects the 2026-09-19 promotion's data; that's a separate next step.
