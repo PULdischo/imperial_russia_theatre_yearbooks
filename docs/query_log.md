@@ -7112,3 +7112,46 @@ outputs/full_run.
 
 Remaining from the original 172-row ask: duplicate_event_key (57), zero_dark_cells_on_multiweek_page
 (16), receipts_parse_failed (14) -- not yet triaged, a distinct continuation.
+
+## 2026-09-22 — receipts_parse_failed backlog (14 rows): investigation and resolution
+
+```sql
+select se.page_id, se.event_id, se.date_text, se.theater, se.receipts_text
+from raw.event_entry se
+where se.event_id in (
+    select event_id from raw.event_entry
+    where page_id like '%1901-02_p012%' or page_id like '%1905-06_p004%' or page_id like '%1905-06_p010%'
+)
+```
+
+Result: pulled full session lists for the 3 pages whose exact receipts_text values hadn't been
+captured yet (the other 11 flagged rows' pages were already known from quality_checks.py's detail
+strings). Found the two genuinely-blank cases (`1905-06_p004__s034` = 'р. — к.', `1905-06_p010__s007`
+= 'р. к.') and confirmed `1901-02_p012__s030` still showed receipts_text='—'.
+
+```sql
+select count(*) from raw.event_entry;         -- 21321, unchanged (pre-rebuild live DB)
+select count(*) from raw.event_entry_performance;  -- 22809 (pre-rebuild)
+```
+
+Result: baseline row counts confirmed before starting fixes, to detect any accidental row
+add/drop from the upcoming edits.
+
+After all 14 rows resolved (10 fixed as genuine OCR/field-scrambling bugs, 4 scan-verified as
+correct-as-is and excluded from the check going forward — see known_issues.md addendum), rebuilt
+raw/analysis/entities/research in place:
+
+```sql
+select count(*) from raw.event_entry;               -- 21321 (unchanged)
+select count(*) from raw.event_entry_performance;    -- 22810 (+1, the 1906-07_p035 fix)
+select count(*) from raw.person_entry;               -- 21168 (byte-identical, Musicians/Roster untouched)
+select count(*) from entities.person_wikidata_link;  -- 43 (byte-identical)
+```
+
+Result: all baselines held. `build_entities.py` log confirmed 2900 live people / 1459 tombstoned
+carried forward unchanged, 23 preserved candidate decisions. `validate_performance_dates.py`: 95.6%
+verified, unchanged. `quality_checks.py`: receipts_parse_failed 14 -> 0, total flags 986 -> 972.
+Promoted to outputs/full_run (backup: outputs/full_run_pre_promote_backup_2026-09-22_receiptsfix/).
+
+Remaining from the original 172-row ask: duplicate_event_key (69, includes the 12 already-confirmed-
+harmless from earlier this session), zero_dark_cells_on_multiweek_page (16) -- next up.

@@ -147,7 +147,15 @@ def check_repertoire(parsed_dir: Path) -> list[dict]:
                                    flag="duplicate_event_key", detail=str(key)))
             seen_keys.add(key)
 
-            if r.get("receipts_text", "").strip() and not r.get("receipts_rubles", "").strip():
+            receipts_text = r.get("receipts_text", "").strip()
+            # A receipts_text with no digits at all (e.g. "-", "р. - к.") is a
+            # genuinely blank printed figure, verbatim -- not a parse failure.
+            # Only flag when there's a digit the parser should have found but didn't
+            # (issue #77 addendum, 2026-09-22: confirmed against scans for the 4
+            # cases this excludes -- 1901-02_p012__s030, 1906-07_p020__s004,
+            # 1905-06_p004__s034, 1905-06_p010__s007).
+            if (receipts_text and any(c.isdigit() for c in receipts_text)
+                    and not r.get("receipts_rubles", "").strip()):
                 flags.append(dict(page_id=page_id, table="event_entry", row_id=r["event_id"],
                                    flag="receipts_parse_failed",
                                    detail=f"receipts_text={r['receipts_text']!r} but receipts_rubles is empty"))

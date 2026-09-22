@@ -15319,3 +15319,77 @@ essentially untouched by this pass), `receipts_parse_failed` (14,
 mostly OCR digit/letter confusions like the `263 д.` -> `263 р.` case
 already fixed in passing). These are a related but distinct
 continuation, not covered by this issue's fix.
+
+### Addendum 2026-09-22: `receipts_parse_failed` (14 rows) -- resolved
+
+Continuation of the backlog above, tackled first for its mechanical
+simplicity. Split the 14 rows into three groups by what `receipts_text`
+actually contained:
+
+- **9 OCR letter-misread cases** (`1901-02_p026`, `1904-05_p009`,
+  `1905-06_p017`, `1905-06_p018`, `1905-06_p043`, `1902-03_p019`,
+  `1906-07_p015`, `1907-08_p000`, `1907-08_p024`): the model transcribed
+  the rubles-marker "р." as "к.", "д.", or "г." (e.g. `'736 к. 49 к.'`),
+  same class of error already fixed once earlier this session
+  (`1901-02_p011`'s `263 д.` -> `263 р.`). All had complete, correct
+  `works` content -- only the marker character was wrong. Fixed by
+  restoring "р." in place, one file at a time (8 of 9 in
+  `gate3_columnwise/raw_columnwise/`, canonical; `1906-07_p015` directly
+  in `full_run/raw/`, since 1906-07 has no gate3_columnwise coverage).
+- **1 title-fragment misattachment** (`1906-07_p035__s001`, 28 Среда,
+  Большой театръ, morning session): fields were badly scrambled --
+  `receipts_text` held a ballet title fragment ("4-е д. бал. Волшебное
+  зеркало."), `annotation` held a different work's title ("Жизель,
+  бал."), and `works` held the benefit notice itself
+  ("Прощальный бенефисъ г. Власова.", wrongly tagged genre "бал.").
+  Scan-verified (p. 119): this is a free student performance (the page's
+  own header: "Безплатные спектакли для воспитанниковъ и воспитанницъ
+  столичныхъ учебныхъ заведеній") pairing "Жизель, бал." with the same
+  "4-е д. бал. Волшебное зеркало" excerpt-title fragment already
+  resolved once this session on `1906-07_p045` (same fragment, same
+  convention: its own `works` entry with `genre: null`). Restructured to
+  `receipts_text: null` (free performance, no box office), `annotation:
+  "Прощальный бенефисъ г. Власова."`, `works: [{"Жизель", "бал."},
+  {"4-е д. бал. Волшебное зеркало", null}]`.
+- **4 genuinely-blank-in-print cases** (`1901-02_p012__s030`,
+  `1906-07_p020__s004`, `1905-06_p004__s034`, `1905-06_p010__s007`):
+  scan-verified each one individually. `1901-02_p012__s030` (17
+  Суббота, Александринскій) is a literal dash in the receipts cell with
+  no performance and no figure that day. `1906-07_p020__s004` (16
+  Суббота, benefit "Спектакль съ благотворительною цѣлью") has no
+  receipts line printed under it at all. `1905-06_p004__s034` (1
+  Суббота, Михайловскій, "Réouverture") and `1905-06_p010__s007` (30
+  Воскрес. утро, Маріинскій, "Фиделіо") both print the "р." / "к."
+  markers with the numeral slots left visibly blank -- i.e.
+  `receipts_text` already matches the scan verbatim; there was never a
+  rubles figure to extract. No data fix applied to any of the 4 --
+  fixing them would mean inventing figures the source never printed.
+
+Since these 4 will always trip the naive "text non-empty but rubles
+empty" heuristic, refined `quality_checks.py`'s `receipts_parse_failed`
+check to only fire when `receipts_text` contains at least one digit
+(every genuine parse failure has one; a truly blank printed field never
+does) -- `pipeline/quality_checks.py`'s `check_repertoire_*` function.
+This is a detection-precision fix, not a data change.
+
+**Verification**: re-ran `parse_and_validate.py` (with both
+`--page-headers` and `--printed-page-numbers`, per the mandatory
+CLAUDE.md recipe) against the re-synced `full_run/raw/`, then
+`quality_checks.py`: `receipts_parse_failed` 14 -> 0, total flags 986 ->
+972. Rebuilt `raw`/`analysis` **in place** on the live
+`imperial_theaters.duckdb` (never via a scratch copy, per the process
+rule established earlier this session) --
+`event_entry` unchanged at 21321 rows, `event_entry_performance` 22809
+-> 22810 (+1, the `1906-07_p035` fix's newly-split "Жизель"
+performance). `validate_performance_dates.py`: 95.6% verified,
+unchanged. `build_entities.py`: baseline confirmed exactly -- 2900 live
+people / 1459 tombstoned carried forward unchanged, 23 preserved
+candidate decisions. `raw.person_entry` (21168) and
+`entities.person_wikidata_link` (43) unchanged, confirming Musicians/
+Roster isolation held. `build_research_model.py` /
+`build_datasette.py` rebuilt successfully. Backup:
+`outputs/full_run_pre_promote_backup_2026-09-22_receiptsfix/`.
+Promoted to `outputs/full_run`.
+
+**Next**: `zero_dark_cells_on_multiweek_page` (16) and
+`duplicate_event_key` (57) remain from the original backlog.
