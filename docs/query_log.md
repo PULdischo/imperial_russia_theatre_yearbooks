@@ -6588,3 +6588,49 @@ nearly the whole Александринскій+Большой columns cascading
 Final verification: event_entry 5802 -> 5810, quality_flags.csv stayed at 0 throughout, verified
 84.4% -> 84.9%, unresolved unchanged at 11, no regressions. outputs/full_run NOT re-promoted this
 pass -- still reflects the 2026-09-19 promotion's data; that's a separate next step.
+
+## 2026-09-22 — RG asked what the 84.9% "verified" figure actually means; re-ran the check fresh to answer accurately
+
+```sql
+select date_confidence, count(*) from analysis.event_entry_date_check group by 1 order by 2 desc
+```
+
+Result (outputs/repertoire_spreadfix_v6/imperial_theaters.duckdb, the two-page-spread seasons only):
+verified 4930 (84.9%), intra_block_disagreement 751 (12.9%), corrected 118 (2.0%), unresolved 11
+(0.2%), total 5810. Explained to RG what each status means per pipeline/validate_performance_dates.py's
+actual logic (weekday cross-check against date_undate, not a general correctness score).
+
+## 2026-09-22 — broke down and fixed the 751 intra_block_disagreement rows
+
+RG asked how to verify/fix the intra_block_disagreement bucket after the 84.9% explanation. Imported
+validate_performance_dates.py's own _parse_dow() and re-classified all 751 events by re-parsing each
+block's distinct date_text values directly, rather than trusting the note string alone.
+
+```python
+# classification: for each (page_id, note) group, parse every distinct date_text with _parse_dow()
+# all_unparseable: every text fails to parse as a weekday -> legitimate month-name-only labels
+# mixed: some parse, some don't -> same date, inconsistent format across theater columns (still correct)
+# genuine_conflict: 2+ DIFFERENT real parsed weekdays -> actual signal something's mislabeled
+```
+
+Result: 519 events (69%) all-unparseable -- confirmed via sampling these are the established
+"first row of a date range gets the full month name" convention, not errors. 201 events (27%) mixed
+-- confirmed via sampling these are the SAME correct date recorded in two valid formats across
+columns (e.g. "1 Декабря." vs "1 Суббота", both true), not factual errors. 31 events (4%) genuine
+weekday-vs-weekday conflict, concentrated in exactly 3 pages/9 note-groups.
+
+Scan-verified all 9 genuine-conflict blocks:
+- repertoire_1891-92_pair016 (Feb 2-4, 1892): Александринскій ran 1 day behind Мариинский/
+  Михайловский; titles were already correct (Ревизоръ, Лѣтнія грѣзы, Въ такую ночь!.. all matched
+  the true date exactly), only date_text was wrong. Fixed via ForUpload_1891-92_Repertoire_007.jpg.
+- repertoire_1891-92_pair020 (Mar 21-25, 1892): Большой ran 1 day behind Малый/Мариинский; all
+  entries were pure is_dark placeholders (Большой genuinely dark this whole range per the scan), no
+  real content at risk. Fixed via ForUpload_1891-92_Repertoire_009.jpg; 1 redundant duplicate dark
+  marker deleted.
+- repertoire_1895-96_pair002 (Aug 27, 1895): Большой's dark placeholder mislabeled "27 Четверг."
+  instead of "27 Воскрес." (matching Малый, which already had the correct label and real content).
+  Fixed via ForUpload_1895-96_Repertoire_000.jpg.
+
+Verification: event_entry 5810 -> 5809 (net -1, one duplicate removed). quality_flags.csv stayed at
+0. validate_performance_dates.py: verified 84.9% -> 85.4%, intra_block_disagreement 751 -> 720
+(exactly -31, matching the 31 events fixed), unresolved unchanged at 11, no regressions.
