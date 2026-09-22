@@ -7034,3 +7034,38 @@ research_dataset.sqlite rebuilt in place. Not done: link_wikidata.py, HF/Cloud R
 
 Noted for follow-up (RG's next request): the single-page seasons show 9729 event_entry_date_check
 rows with date_confidence='no_date' -- pre-existing, untouched by this session, next to investigate.
+
+## 2026-09-22 — investigated and fixed single-page-season date_undate gap (issue #76)
+
+RG asked to look at empty date_undate entries right after the printed_page_number promotion.
+
+```sql
+SELECT season, count(*) FROM raw.event_entry
+WHERE date_undate IS NULL OR date_undate = ''
+GROUP BY season ORDER BY count(*) DESC
+```
+Result: 9737/21308 (45.7%) empty, concentrated in 8 single-page seasons (1899-00 through 1907-08
+except 1906-07); 1898-99 had 0, 1906-07 had 12.
+
+Traced root cause: outputs/gate3_columnwise/page_header_dates.csv (332 rows, all status=ok)
+already had the header data needed for _backfill_month_year, just never passed via
+--page-headers for these seasons. Tested combining it with repertoire_spreadfix_v6's own header
+file in a scratch parse_and_validate.py run: no_date dropped to 15, then found a second bug (a
+trailing comma in some sessions' own month_text breaking pipeline/schemas/dates.py's _DATE_RE)
+affecting the remaining 12 (all in 1906-07). Fixed the regex (widened \.? to [.,]?), verified:
+
+```python
+parse_russian_date('1 января, 1906—1907 гг.')  # now '1907-01-01', was None
+parse_russian_date('1 мая 1882 г.')  # unchanged, '1882-05-01'
+```
+
+Reran: no_date collapsed to 3 (confirmed non-events -- "Мартъ." month-divider rows with no day
+number and 0 attached performances). Weekday-verified rate 50.3% -> 95.3% corpus-wide.
+quality_checks.py unchanged (1071 flags, 0 new).
+
+Promoted to outputs/full_run (backup: full_run_pre_promote_backup_2026-09-22_dateundate/).
+Verified: raw.event_entry row count unchanged (21308), raw.person_entry and
+entities.person_wikidata_link byte-identical, entities.person still 2900 live/23 preserved
+candidates. research.event 28096 -> 26618 (fewer not_captured synthetic rows now that real dates
+are known). Combined header file saved permanently at
+outputs/repertoire_singlepage_pagenumbers/all_page_headers.csv for reuse.

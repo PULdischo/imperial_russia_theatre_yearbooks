@@ -36,7 +36,13 @@ _DATE_RE = re.compile(
     # #34) across 188 rows in 4 entity types (Graduates, BalletArtists,
     # Musicians, TheaterSchoolStaff), not just the Graduates report this was
     # found in -- every one of those was previously returning None here.
-    r"(\d{1,2})(?:-(?:го|й|е|я|му))?\s+([а-яіѣ]+)\.?\s+(\d{4})(?:\s*[—\-–]\s*(\d{4}))?",
+    # The month word may be followed by a comma instead of (or with no)
+    # period -- confirmed on single-page-season Repertoire sessions whose
+    # own printed month_text carries one ("1 января, 1906—1907 гг."); widen
+    # the separator to [.,]? rather than just \.? so this comma case matches
+    # too, without narrowing what already matched (this can only add
+    # matches, never break an existing period-terminated or bare one).
+    r"(\d{1,2})(?:-(?:го|й|е|я|му))?\s+([а-яіѣ]+)[.,]?\s+(\d{4})(?:\s*[—\-–]\s*(\d{4}))?",
     re.IGNORECASE,
 )
 

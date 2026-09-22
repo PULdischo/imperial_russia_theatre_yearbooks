@@ -15089,3 +15089,105 @@ never touches Wikidata links) and the HF dataset repo / Cloud Run
 republish -- promoting the local `outputs/full_run` deliverable and
 pushing it to the external endpoints remain two separate actions per
 this project's own established distinction.
+
+## Issue #76: single-page-season Repertoire `date_undate` was 45.7%
+empty corpus-wide -- found while RG asked to look at the empty-
+`date_undate` rows right after the printed_page_number promotion
+
+Immediately after promoting issue #75, RG asked to look at the
+`no_date` bucket `validate_performance_dates.py` had just surfaced
+for the single-page seasons (1899-00-1907-08). Turned out to be much
+bigger than a curiosity: **9,737 of 21,308 corpus-wide `event_entry`
+rows (45.7%) had no `date_undate` at all**, concentrated entirely in
+the 8 column-wise-extracted single-page seasons (1898-99 and 1906-07,
+which use the baseline single-call extraction instead, were
+essentially unaffected -- 0 and 12 rows respectively). Every one of
+these rows has a real, legible printed date (`date_text` like "30
+Понед.") -- the day number was never the problem.
+
+**Root cause, two distinct bugs stacked on top of each other:**
+
+1. **The fix already existed but was never wired in for these
+   seasons.** `_backfill_month_year` (added for the two-page-spread
+   seasons, issue #72) needs a page-level header
+   (`page_id -> "30 августа. 1899 г. 15 сентября."`) to backfill
+   `month_text`/`year_text` when a session's own row doesn't carry
+   them -- exactly the ~80-87% gap `pipeline/parse_and_validate.py`'s
+   own code comment already documents for column-wise extraction.
+   `outputs/gate3_columnwise/page_header_dates.csv` -- 332 rows,
+   every status `ok`, one row per page across all 8 affected seasons
+   -- has held this exact data since the Gate 3 columnwise work
+   (docs predate this session). It was simply never passed to
+   `--page-headers` in any promotion; `outputs/full_run` has no
+   `page_header_dates.csv`-equivalent of its own at all, and nothing
+   in `CLAUDE.md`'s documented pipeline recipe mentions single-page
+   seasons needing one. `load_page_headers` reads `header_text` by
+   column name via `csv.DictReader`, so the file's extra LLM-run-log
+   columns (`status`, `elapsed_seconds`, token counts) are simply
+   ignored -- directly usable with no reformatting.
+2. **A real, small regex bug, found only once bug #1 exposed enough
+   real data to hit it.** A handful of sessions' own printed
+   `month_text` carries a trailing comma instead of a period ("1
+   января, 1906—1907 гг.", visible on `1906-07_p022`) --
+   `pipeline/schemas/dates.py`'s `_DATE_RE` only tolerated an
+   optional period (`\.?`) between the month word and the required
+   whitespace before the year, so the comma broke the match entirely
+   and `parse_russian_date` silently returned `None`. Fixed by
+   widening that one separator to `[.,]?` -- confirmed this can only
+   ever *add* matches (a period-terminated or bare month word still
+   matches exactly as before), verified directly:
+   `parse_russian_date('1 января, 1906—1907 гг.')` now returns
+   `'1907-01-01'` (correctly resolving to the season's second year,
+   per this function's existing Aug-Jul season-range rule), while
+   `'1 мая 1882 г.'` and `'1-го сентября 1890 г.'` (the two existing
+   documented cases this regex already handled) are unaffected.
+
+**Combined fix, tested in a scratch run before touching production**:
+built one `--page-headers` input covering both season groups
+(`repertoire_spreadfix_v6/page_header_dates.csv`'s 97 two-page-spread
+rows + `gate3_columnwise/page_header_dates.csv`'s 332 single-page
+rows, saved permanently at
+`outputs/repertoire_singlepage_pagenumbers/all_page_headers.csv` for
+reuse), combined with the `dates.py` regex fix.
+
+**Result**: `no_date` 9,729 -> **3** (the 3 survivors are confirmed
+non-events -- `date_text` "Мартъ." with no leading day number at all,
+the table's own internal month-divider row mistakenly captured as if
+it were a session, same class of artifact as the already-documented
+"Ноябрь" divider case in `pipeline/parse_and_validate.py`'s own
+comments; confirmed zero `event_entry_performance` rows attached to
+any of the 3, so genuinely not events, not a data-loss risk).
+Corpus-wide weekday-verified rate: 50.3% -> **95.3%**. The small
+increases in `unresolved` (20 -> 28) and new `invalid_date` (0 -> 4)
+are exactly what you'd expect once ~9,700 previously-invisible rows
+start actually getting checked -- inspected all of them directly:
+each is an individually-explicable genuine source printing error
+(e.g. `"0 Суббота."` -- an evident misread digit; `"31 Пятница"` in
+September, which only has 30 days), the same class this project
+already treats as verbatim-preserved, unfixable-without-falsification
+printing errors for the two-page-spread seasons. `quality_checks.py`:
+unchanged at 1071 flags, 0 new categories or counts.
+
+**Promoted to `outputs/full_run`** in the same session, immediately
+after verifying the scratch run (backup:
+`outputs/full_run_pre_promote_backup_2026-09-22_dateundate/`, lighter
+than the printed_page_number promotion's backup since this change
+touches no raw JSON, only the `--page-headers` input and the shared
+`dates.py` regex). `raw.event_entry` row count unchanged (21308 ->
+21308, only `date_undate` values changed on existing rows).
+`raw.person_entry` and `entities.person_wikidata_link` confirmed
+byte-identical against the backup. `entities.person`: still 2900 live
+people, 23 preserved candidate decisions -- isolation held.
+`research.event`: 28096 -> 26618 (-1478, tracking the drop in
+`not_captured` completeness-gap synthesis, 6788 -> 5310 -- previously
+many of those synthetic rows were papering over dates that are now
+known and real, not actual gaps).
+
+**Not done**: cleaning up the 3 confirmed non-event "Мартъ." divider
+rows (a separate, tiny, low-priority cleanup -- they cost nothing
+sitting in `raw.event_entry` with a null date and no performances,
+same "tag rather than delete, raw stays untouched" policy as this
+project's other confirmed-non-record cases). `CLAUDE.md`'s pipeline
+recipe still doesn't document `--page-headers` for single-page
+seasons -- worth adding next time that file is touched, so a future
+from-scratch rebuild doesn't silently regress back to 45.7% empty.
