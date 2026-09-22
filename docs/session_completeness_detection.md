@@ -100,7 +100,62 @@ actual page image. Next step is working the 39-row list (page-by-page,
 verified -- render the source PDF page, confirm against the actual
 printed layout, only then touch data.
 
-## Tier 1 -- row-height geometric screening (not built)
+## Tier 1 -- row-height geometric screening: TRIED, ABANDONED 2026-09-22
+
+**Do not restart this without reading this section first.** The
+hypothesis below was tested directly against `repertoire_1898-99_p029`
+-- a page with fully scan-verified ground truth from this session's
+earlier `duplicate_event_key` work (confirmed compound rows: 21
+Воскрес., 24 Среда., 25 Четвергъ., 26 Пятница.; confirmed single rows:
+17/18/19/22/23; confirmed dark: 20 Суббота.) -- using
+`row_detect.py`'s own `analyze_page`/`debug_visualize`, not a
+hypothetical. The result contradicted the design below in an
+informative way, not just "didn't work":
+
+- **Synchronized splits work, sort of, but not via height.** On 21
+  Воскрес. (all 3 theaters split together), the internal УТРО/ВЕЧ
+  divider genuinely spans the full table width, so the existing
+  detector picks it up as a real boundary and produces **two
+  normal-height rows**, not one tall one. The signal that actually
+  fires here is extra row *count*, not height -- the original
+  hypothesis was wrong about the mechanism even in the case that works.
+- **Partial splits (one theater splits, others don't -- confirmed the
+  common case, e.g. 24 Среда. where only Большой splits) break it.**
+  The internal divider has nothing to anchor to in the two unsplit
+  columns, and the detector produced an anomalously *short* fragment
+  (111px vs. a ~180px baseline) instead of a tall row.
+- **Boundary tracking silently failed further down the same page.** By
+  25-26 Четвергъ/Пятница (both also compound), the chain tracker lost
+  the thread entirely -- one detected "row" spanned 565px, swallowing
+  25 Четвергъ's evening half, all of 26 Пятница, and the page margin
+  below it into a single blob.
+
+This confirms the caveat this doc already flagged before testing:
+`row_detect.py` was built and tuned against the two-page-spread format,
+not the single-page column-wise corpus, and does not transfer cleanly.
+RG's call (2026-09-22), given this: drop the CV approach rather than
+sink more time debugging a detector fighting the wrong format; extend
+Tier 0's SQL/text heuristics instead. If this is ever revisited, the
+partial-split failure mode is the one to solve first -- it's the
+common case, not the edge case, and the current detector actively
+produces a misleading signal for it (short, not tall) rather than just
+missing it.
+
+**Also tried and ruled out** (2026-09-22, same session): searching
+`annotation` for the literal marker text "утро"/"веч" as a proxy for
+"the model saw a session label but didn't route it to `time_of_day`."
+12 rows matched, all false positives -- every one is an ordinary
+benefit-event title using the common Russian words "утро"
+(morning)/"вечеръ" (evening, as in "an evening of...") as ordinary
+nouns ("Музыкально-Литературный вечеръ" = "an evening of music and
+literature"), not the structural УТРО./ВЕЧ. abbreviation. Not a viable
+signal as stated; a stricter pattern (anchored, abbreviated form only:
+`^УТРО\.?$`/`^ВЕЧ\.?$`) might avoid the false positives but wasn't
+tried, since the underlying premise (session field failing to update
+while the marker text leaks into annotation) has no confirmed real
+example to test against yet.
+
+## Tier 1 (superseded) -- original design, kept for reference only
 
 `pipeline/row_detect.py` already does real per-row boundary detection
 for this table format and already computes each detected row band's
@@ -135,9 +190,14 @@ user memory `repertoire-row-boundary-detection-on-hold.md`,
 `known_issues.md` #50/#51) -- read that before restarting this work; it
 may already document why this is harder than it looks.
 
-## Tier 2 -- cheap disambiguation of Tier 1's candidates (not built)
+## Tier 2 -- cheap disambiguation of Tier 1's candidates: PAUSED (depends on abandoned Tier 1)
 
-Two discriminator branches, both applied only to Tier 1's short
+Kept below for reference and in case a future Tier 1 replacement
+produces a similar candidate list to disambiguate -- but there is
+currently no Tier 1 output feeding this, so nothing here is actionable
+right now.
+
+Two discriminator branches, both meant to apply only to a short
 candidate list, never corpus-wide:
 
 **Branch A -- session-split classification** (the original ask). For
@@ -190,8 +250,17 @@ doing something else.
 
 | Tier | Built? | Cost | Output |
 |---|---|---|---|
-| 0 | Done | Free (SQL only) | 39-row candidate list (annotation-anchored), Monday ranking weight |
-| 1 | Not started | Free (CPU, reuses `row_detect.py`) | Corpus-wide tall-row candidate list |
-| 2A | Not started | Free-to-cheap (OCR, or small VLM crop-query as fallback) | Split confirmed/ruled out |
-| 2B | Not started | Same as 2A | Content-drop confirmed/ruled out |
+| 0 | Done, extendable | Free (SQL only) | 39-row candidate list (annotation-anchored), Monday ranking weight |
+| 1 | **Abandoned 2026-09-22** | -- | Tried against `row_detect.py`, found unreliable on this format (see section above); "утро/веч in annotation" alternative also tried and ruled out |
+| 2A | Paused (no Tier 1 feed) | -- | -- |
+| 2B | Paused (no Tier 1 feed) | -- | -- |
 | 3 | N/A | Manual, same as rest of session | Data fixed and scan-verified |
+
+**Current direction (2026-09-22)**: stay within Tier 0 -- extend the
+SQL/text-heuristic approach rather than pursue image-geometry
+detection further. Next candidate ideas to evaluate, none built yet:
+cross-theater/cross-week streak anomalies (a theater that splits on
+every other occurrence of a weekday within a season, flagged where one
+occurrence in the middle of a streak doesn't), and a tighter,
+anchored-pattern version of the annotation-marker search that failed
+above (`^УТРО\.?$`/`^ВЕЧ\.?$` rather than a loose substring match).

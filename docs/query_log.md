@@ -7387,3 +7387,32 @@ weekday table in session transcript.
 
 Neither query mutated any data. Full scoping (Tiers 0-3, caveats, status) in
 docs/session_completeness_detection.md.
+
+## 2026-09-22 — Tier 1 CV validation (row_detect.py on single-page format): abandoned
+
+Ran `row_detect.py`'s `analyze_page`/`debug_visualize` against the rendered image for
+`repertoire_1898-99_p029` (scan-verified ground truth already established earlier this session:
+compound rows 21 Воскрес./24 Среда./25 Четвергъ./26 Пятница., single rows 17-23, dark 20 Суббота.).
+Not a SQL query -- a direct test of the proposed Tier 1 detector against known-correct answers.
+
+Result: hypothesis ("compound rows are taller") did not hold as designed. Synchronized splits (all
+3 theaters split together, e.g. 21 Воскрес.) produced two normal-height rows via the internal divider
+being picked up as a real full-width boundary, not one tall row. Partial splits (one theater splits,
+others don't -- the common case, e.g. 24 Среда.) produced an anomalously SHORT fragment (111px vs
+~180px baseline), not a tall one. Boundary tracking failed entirely further down the page (one
+"row" spanned 565px, swallowing 25 Четвергъ's evening half, all of 26 Пятница, and the page margin).
+Full detail in docs/session_completeness_detection.md's Tier 1 section. RG's decision: abandon the
+CV approach, extend Tier 0 (SQL/text heuristics) instead.
+
+```sql
+select time_of_day, count(*) from raw.event_entry
+where annotation ilike '%утро%' or annotation ilike '%веч%' group by 1 order by 2 desc
+```
+Result: (unspecified, 12), (evening, 8), (morning, 8). Checked the 12 unspecified rows individually --
+all false positives, ordinary benefit-event titles using "утро"/"вечеръ" as common nouns ("Музыкально-
+Литературный вечеръ" = "an evening of music and literature"), not the structural УТРО./ВЕЧ. session
+marker. Heuristic ruled out as stated; a stricter anchored pattern might avoid this but wasn't tried
+since there's no confirmed real example of the underlying premise (marker text leaking into
+annotation while time_of_day fails to update) to test against.
+
+No data mutated by either investigation.
