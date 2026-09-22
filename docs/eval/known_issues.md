@@ -14647,3 +14647,67 @@ for all 8 seasons plus `combined_phase1.csv`.
 seasons, 1898-99-1907-08, 422 renders, spot-check-then-formula per the
 approved plan) -- not yet started. Promotion to `outputs/full_run` is a
 separate, later decision per the plan, not done here.
+
+### Addendum (2026-09-22): Phase 2 complete -- all 10 single-page
+seasons (1898-99 through 1907-08), spot-check-then-formula per the
+approved plan.
+
+Per season, read the first, middle, and last render (by
+`source_page_index`) directly off the scan and confirmed
+`printed_page = source_page_index + constant_offset` holds internally
+before trusting it for the season's remaining renders -- 30 reads
+total (3 x 10), the plan's best case. Every season's three checkpoints
+agreed with each other, so none needed the fallback (reading every
+render individually) -- no season came in worse than the best case.
+
+**Offsets found, one per season** (this is the actual finding -- the
+formula's constant is genuinely per-season, not a single corpus-wide
+number, confirming the plan's premise that this needed checking rather
+than assumed):
+
+| season | offset | pages |
+|---|---|---|
+| 1898-99 | +2 | 2-41 |
+| 1899-00 | +2 | 2-39 |
+| 1900-01 | +2 | 2-39 |
+| 1901-02 | +2 | 2-39 |
+| 1902-03 | +2 | 2-39 |
+| 1903-04 | +2 | 2-39 |
+| 1904-05 | +90 | 90-133 |
+| 1905-06 | +84 | 84-131 |
+| 1906-07 | +84 | 84-133 |
+| 1907-08 | +76 | 76-125 |
+
+The jump from +2 (six straight seasons, 1898-99-1903-04) to +90
+(1904-05) and back down to +84/+84/+76 for the last three is real, not
+a misread -- each was independently confirmed at 3 points per season,
+and a 4th spot-check on 1904-05 (`p010`, a render none of the 3
+checkpoints touched) landed exactly on the predicted page 100, ruling
+out a checkpoint-local coincidence. Front matter preceding the
+Repertoire section evidently varies a great deal in length year to
+year -- not investigated further here since it's outside this task's
+scope (citing the page, not explaining the front matter).
+
+**Verification**: ran `parse_and_validate.py --printed-page-numbers`
+against `outputs/full_run/manifest.csv` + `outputs/full_run/raw`
+(read-only source; all output written to a new scratch dir,
+`outputs/repertoire_singlepage_pagenumbers/`, never touching
+`outputs/full_run` itself) with all 10 seasons' reference data combined
+(`combined_phase2.csv`, 422 rows, one per render). Result: 14,980/14,980
+Repertoire events across the 10 single-page seasons (100%) resolved to
+exactly one printed page -- matches the plan's own estimate of the
+corpus size exactly. The 8 already-done two-page-spread seasons'
+5,808 events correctly stayed empty in this run (no reference CSV was
+passed for them this time, confirming no cross-season leakage).
+`quality_checks.py` against the resulting parsed output produced
+exactly 1,059 flags, byte-identical (diffed page_id/table/row_id/flag
+tuples, 0 differences) to `outputs/full_run/quality_flags.csv`'s
+existing baseline -- zero regression, and the new
+`printed_page_number_out_of_sequence` check found 0 issues across all
+422 pages.
+
+**Phase 2 is now complete.** Both phases of the plan's build-out are
+done: 5,804/5,808 two-page-spread events (99.93%) plus 14,980/14,980
+single-page events (100%) now carry a `printed_page_number`. Remaining
+per the plan: Phase 3 (promoting all of this into `outputs/full_run`) --
+a separate, later decision, not done automatically here.

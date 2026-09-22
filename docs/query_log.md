@@ -6786,3 +6786,37 @@ previously-recovered content stayed recovered).
 
 Phase 1 (all 8 two-page-spread seasons) is now complete. Phase 2 (10 single-page seasons,
 1898-99-1907-08) not yet started.
+
+## 2026-09-22 — printed_page_number build-out, Phase 2 (all 10 single-page seasons, 1898-99 through 1907-08)
+
+Continued directly from Phase 1's completion, per RG's "continue straight into Phase 2." Followed the
+approved plan's spot-check-then-formula approach: read first/middle/last render (by source_page_index)
+per season directly off the scan, checked whether printed_page = source_page_index + constant_offset
+holds across those 3 points before trusting it for the rest of that season.
+
+Offsets found: 1898-99 through 1903-04 all +2; 1904-05 jumps to +90; 1905-06/1906-07 both +84;
+1907-08 +76 (matches docs/eval/gold/source_pages.csv's known +76 for this season). Every season's 3
+checkpoints agreed, so all 10 resolved at the plan's best-case cost (30 reads, no season needed the
+render-by-render fallback). Extra 4th check on 1904-05 p010 (page 100 predicted, page 100 confirmed)
+ruled out the +90 jump being a checkpoint-local misread.
+
+Built outputs/repertoire_singlepage_pagenumbers/{season}.csv (one row per page_id, single-page-season
+shape) plus combined_phase2.csv (422 rows, all 10 seasons). Verification query pattern:
+
+```sql
+SELECT event_id, printed_page_number FROM event_entry WHERE season IN (10 single-page seasons)
+```
+(checked programmatically in Python against the parsed CSV output, not a live duckdb query this time --
+this run never touched outputs/full_run/imperial_theaters.duckdb, only its read-only manifest/raw dirs)
+
+Ran pipeline/parse_and_validate.py --printed-page-numbers against outputs/full_run/manifest.csv +
+outputs/full_run/raw (read-only), writing all output to a new scratch dir
+(outputs/repertoire_singlepage_pagenumbers/parsed_test/) rather than outputs/full_run itself. Result:
+14,980/14,980 single-page-season events (100%) filled; the 8 already-completed spread-season events
+(5,808) correctly stayed empty (no cross-season leakage). quality_checks.py: 1,059 flags, verified
+byte-identical (diffed page_id/table/row_id/flag) to outputs/full_run/quality_flags.csv's existing
+baseline -- 0 regression, 0 new printed_page_number_out_of_sequence flags across all 422 pages.
+
+Phase 2 complete. Both phases of the printed_page_number plan are now done: 5,804/5,808 (99.93%)
+two-page-spread events + 14,980/14,980 (100%) single-page events. Phase 3 (promoting into
+outputs/full_run) remains a separate, later decision, not done here.
