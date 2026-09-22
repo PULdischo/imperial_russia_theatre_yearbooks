@@ -15393,3 +15393,49 @@ Promoted to `outputs/full_run`.
 
 **Next**: `zero_dark_cells_on_multiweek_page` (16) and
 `duplicate_event_key` (57) remain from the original backlog.
+
+### Addendum 2026-09-22: `zero_dark_cells_on_multiweek_page` (16 rows) -- resolved, all 16 false positives
+
+Continuation of the backlog. All 16 flagged pages (`1898-99_p000`,
+`1899-00_p000/p001/p018`, `1900-01_p000/p001/p008`,
+`1901-02_p020/p021/p026`, `1902-03_p001/p016`, `1903-04_p001/p003`,
+`1906-07_p022`, `1907-08_p032`) were individually scan-verified against
+their rendered page images -- not sampled, every one. Each covers a
+different season (7 of the 8 single-page-format seasons are
+represented), a mix of St. Petersburg pages (Маріинскій/
+Александринскій/Михайловскій) and Moscow pages (Большой/Малый/Новый),
+and a mix of calendar positions (season openers, ordinary mid-season
+weeks, the Christmas/New Year stretch, a Lenten free-performance week).
+Every single page shows all three theaters performing on every printed
+date with no exceptions -- the raw JSON matches each scan exactly
+(cross-checked receipts figures, not just dates/titles). Structural
+check on all 16 also confirmed exactly 3 distinct theaters per page
+with plausible session density (~3-3.7 events/day, consistent with
+occasional Sunday double-bills), ruling out a silently-dropped theater
+column as an alternative explanation.
+
+**Conclusion**: the check's assumption ("real tables almost always
+have at least one dark day, e.g. Saturdays") is empirically false for
+this corpus's single-page-season data (1898-99 onward) -- both St.
+Petersburg's and Moscow's Imperial theaters ran every single day
+without closure throughout the active season, in every year and every
+part of the calendar sampled. This is a genuine historical fact about
+these six flagship theaters, not an extraction bug. The check does
+have a real track record elsewhere: it caught a genuine missing-
+theater-column bug on the two-page-spread season format (issue #74,
+`1891-92_pair002`, 4 missing columns) -- that hit rate is unrelated to
+this batch and isn't in question.
+
+**Fix**: no data was changed (all 16 pages were already correct).
+Refined `quality_checks.py`'s `check_repertoire` to only fire this flag
+for two-page-spread page_ids (those containing `"pair"`), preserving
+the check's one confirmed real hit while dropping a 100%-false-positive
+class for the single-page-season format.
+
+**Verification**: `quality_checks.py`: `zero_dark_cells_on_multiweek_page`
+16 -> 0, total flags 972 -> 956. No pipeline rebuild needed (detection-
+precision fix only, no underlying data touched).
+
+**Next**: `duplicate_event_key` (69, includes 12 already-confirmed-
+harmless from earlier this session) is the last category in the
+original backlog.

@@ -132,7 +132,18 @@ def check_repertoire(parsed_dir: Path) -> list[dict]:
     for page_id, rows in events.items():
         dark_count = sum(1 for r in rows if r.get("event_status", "").strip() == "no_performance")
         days = {r["date_text"].split()[0] for r in rows if r.get("date_text")}
-        if dark_count == 0 and len(days) >= 6:
+        # "Real tables almost always have a dark day" only holds for the
+        # two-page-spread seasons (page_id contains "pair") -- that's where
+        # this check has a real track record (issue #74's 1891-92_pair002
+        # missing-theater-column bug). For single-page seasons it's simply
+        # false: all 16 flagged rows were individually scan-verified
+        # 2026-09-22 (known_issues.md #77 addendum) and every one is a
+        # genuine zero-dark-day stretch -- the Imperial theaters (both
+        # St. Petersburg's 3 and Moscow's 3) ran daily with no closures
+        # across every sampled season, city, and time of year. Scoping the
+        # check to "pair" page_ids preserves its one real hit and drops a
+        # 100%-false-positive class.
+        if dark_count == 0 and len(days) >= 6 and "pair" in page_id:
             flags.append(dict(page_id=page_id, table="event_entry", row_id="",
                                flag="zero_dark_cells_on_multiweek_page",
                                detail=f"{len(rows)} events across {len(days)} distinct days, none dark -- "

@@ -7155,3 +7155,44 @@ Promoted to outputs/full_run (backup: outputs/full_run_pre_promote_backup_2026-0
 
 Remaining from the original 172-row ask: duplicate_event_key (69, includes the 12 already-confirmed-
 harmless from earlier this session), zero_dark_cells_on_multiweek_page (16) -- next up.
+
+## 2026-09-22 — zero_dark_cells_on_multiweek_page backlog (16 rows): investigation and resolution
+
+```sql
+select distinct page_id, count(*) as sessions, sum(case when event_status='no_performance' then 1 else 0 end) as dark
+from raw.event_entry group by page_id having page_id in (
+  'repertoire_1898-99_p000','repertoire_1899-00_p000','repertoire_1899-00_p001','repertoire_1899-00_p018',
+  'repertoire_1901-02_p020','repertoire_1901-02_p021','repertoire_1901-02_p026',
+  'repertoire_1900-01_p000','repertoire_1900-01_p001','repertoire_1900-01_p008',
+  'repertoire_1902-03_p001','repertoire_1902-03_p016','repertoire_1903-04_p001','repertoire_1903-04_p003',
+  'repertoire_1906-07_p022','repertoire_1907-08_p032'
+)
+```
+
+Result: confirmed the 16 flagged pages' session counts and zero dark-day counts, cross-checked against
+quality_flags.csv detail strings.
+
+Structural cross-check (theater cardinality, to rule out a silently-dropped theater column as an
+alternative explanation for the zero-dark-day pattern):
+
+```python
+# for each of the 16 raw JSON files: len({s['theater'].strip() for s in sessions})
+```
+
+Result: all 16 pages show exactly 3 distinct theaters, consistent with full column coverage (no
+evidence of a dropped theater column).
+
+Rendered all 8 seasons' source PDFs (render_pages.py, free/local, no paid API calls) and individually
+scan-verified all 16 pages against their page images -- every one confirmed genuinely zero dark days,
+matching the raw JSON exactly (including receipts figures). See known_issues.md addendum for the full
+page list and narrative.
+
+```sql
+-- after refining quality_checks.py's check_repertoire to scope the flag to "pair" (two-page-spread) page_ids:
+```
+
+Result: quality_checks.py rerun -- zero_dark_cells_on_multiweek_page 16 -> 0, total flags 972 -> 956.
+No data changed (detection-precision fix only); no pipeline rebuild needed.
+
+Remaining from the original 172-row ask: duplicate_event_key (69, includes 12 already-confirmed-
+harmless from earlier this session) -- last category, next up.
