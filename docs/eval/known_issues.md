@@ -16205,9 +16205,38 @@ that left 3 phantom dark placeholder rows alongside the real ones --
 caught immediately by the quality-flag rebuild step and fixed before
 promotion), `validate_performance_dates.py` improved 95.8% -> 95.9%.
 
-**Remaining from the original 7 severe pages**: `1891-92_pair024`,
-`1893-94_pair022`, `1893-94_pair024`, `1896-97_pair020` -- not yet
-started this round.
+**Update, continuing the same session: 3 more of the pilot's 6 pages
+fully reconstructed and promoted** -- `repertoire_1891-92_pair024`
+(Маріинскій/Александринскій/Михайловскій/Большой real content for
+their active dates, all scan-verified; most of April/May shows only
+Малый running, matching the scan's genuine dark pattern for the rest),
+`repertoire_1893-94_pair022` (Александринскій/Михайловскій/Большой
+real content; Маріинскій genuinely dark the whole page except one
+benefit-concert annotation with no performance; Малый genuinely dark
+throughout -- confirming the theater's original "12 theater rows" was
+pure extraction noise, not real content), and
+`repertoire_1893-94_pair024` (Маріинскій/Михайловскій/Большой/Малый
+real content for their active dates; Маріинскій genuinely dark the
+entire page; one cell, Алекс/Большой on 27 Среда, has titles legible
+but receipts illegible under a page-fold crease -- captured with the
+same null-receipts convention already established on pair014's 6
+Января). All 3 rebuilt in place and verified the same way: zero
+validation errors, zero Repertoire quality flags, baselines unchanged
+(`person_entry` 21168, entities 2900/1459/23),
+`validate_performance_dates.py` improved 95.9% -> 96.0%, all 3
+pages confirmed showing all 5 theaters via direct query.
+
+**Remaining**: `repertoire_1896-97_pair020` -- attempted, but this
+page turned out to be dramatically more complex than the other 5
+pilot pages: dense УТРО/ВЕЧ splits across all 5 theaters for nearly
+every date, multiple benefit-performance annotations, and at least
+one theater (Михайловскій) showing what appear to be multi-day merged
+print cells that don't cleanly align to individual dates the way
+every other page this session did. Paused rather than risk a rushed,
+lower-confidence transcription -- this is a genuine candidate for the
+RG-markup method (per the precedent set on `pair014`) rather than a
+plain scan read. Not started; the other 6 of the original 7
+severe-case pages are now fully resolved.
 
 **Future work item, flagged by RG while reading this page's italic
 section header** ("Безплатные утренніе спектакли для воспитанниковъ

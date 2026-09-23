@@ -7817,3 +7817,24 @@ produced the original raw_columnwise data. Decision: use this repaired
 output only as a secondary cross-check alongside the original raw
 columnwise data during manual scan reconstruction, not as a
 promotable source on its own.
+
+## 2026-09-23 — repertoire_1891-92_pair024, 1893-94_pair022, 1893-94_pair024: full rebuild verification
+
+```bash
+uv run python pipeline/parse_and_validate.py --manifest outputs/full_run/manifest.csv --raw-dir outputs/full_run/raw --out-dir outputs/full_run/parsed --page-headers outputs/repertoire_singlepage_pagenumbers/all_page_headers.csv
+uv run python pipeline/quality_checks.py --parsed-dir outputs/full_run/parsed --out outputs/full_run/quality_flags.csv
+uv run python pipeline/build_duckdb.py --parsed-dir outputs/full_run/parsed --manifest outputs/full_run/manifest.csv --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/validate_performance_dates.py --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/build_entities.py --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/build_research_model.py --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/build_datasette.py --db outputs/full_run/imperial_theaters.duckdb --out outputs/full_run/research_dataset.sqlite
+SELECT DISTINCT theater FROM raw.event_entry WHERE page_id='...';
+```
+
+Result: no validation errors on any of the 3 pages, zero Repertoire
+quality flags, all baselines unchanged (person_entry 21168, entities
+2900/1459/23), validate_performance_dates.py improved 95.9% -> 96.0%.
+All 3 pages confirmed showing all 5 theaters (75/100/90 rows
+respectively). Backed up pre-fix DB to
+outputs/full_run_pre_promote_backup_2026-09-23_severepage3/ before
+rebuilding in place.
