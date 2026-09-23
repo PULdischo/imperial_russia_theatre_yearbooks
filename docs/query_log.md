@@ -7838,3 +7838,35 @@ All 3 pages confirmed showing all 5 theaters (75/100/90 rows
 respectively). Backed up pre-fix DB to
 outputs/full_run_pre_promote_backup_2026-09-23_severepage3/ before
 rebuilding in place.
+
+## 2026-09-23 — repertoire_1896-97_pair020: RG-markup-verified reconstruction and rebuild
+
+Extracted single source PDF page (ForUpload_1896-97_Repertoire.pdf,
+index 9) to outputs/repertoire_markup/pair020_page_for_markup.pdf for
+RG to mark up (red=date boundaries, blue=morning/evening splits).
+Read back the marked-up PDF, rendered at 3x zoom, cropped section by
+section. Markup resolved the key ambiguity: Михайловскій never splits
+on this page even on dates where the other 4 theaters do -- it runs a
+single nightly production across several consecutive dates, with the
+title printed once and each night's own receipts figure positioned
+below it, which had looked like an ambiguous multi-day merged cell
+without the markup.
+
+```bash
+uv run python pipeline/parse_and_validate.py --manifest outputs/full_run/manifest.csv --raw-dir outputs/full_run/raw --out-dir outputs/full_run/parsed --page-headers outputs/repertoire_singlepage_pagenumbers/all_page_headers.csv
+uv run python pipeline/quality_checks.py --parsed-dir outputs/full_run/parsed --out outputs/full_run/quality_flags.csv
+uv run python pipeline/build_duckdb.py --parsed-dir outputs/full_run/parsed --manifest outputs/full_run/manifest.csv --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/validate_performance_dates.py --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/build_entities.py --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/build_research_model.py --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/build_datasette.py --db outputs/full_run/imperial_theaters.duckdb --out outputs/full_run/research_dataset.sqlite
+SELECT DISTINCT theater FROM raw.event_entry WHERE page_id='repertoire_1896-97_pair020';
+```
+
+Result: no validation errors, zero Repertoire quality flags, baselines
+unchanged (person_entry 21168, entities 2900/1459/23),
+validate_performance_dates.py unchanged at 96.0%. Page confirmed
+showing all 5 theaters (113 rows). This closes out all 7 of the
+original issue #78 severe (single-theater) pages. Backed up pre-fix
+DB to outputs/full_run_pre_promote_backup_2026-09-23_pair020/ before
+rebuilding in place.

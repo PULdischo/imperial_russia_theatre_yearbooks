@@ -16226,17 +16226,26 @@ validation errors, zero Repertoire quality flags, baselines unchanged
 `validate_performance_dates.py` improved 95.9% -> 96.0%, all 3
 pages confirmed showing all 5 theaters via direct query.
 
-**Remaining**: `repertoire_1896-97_pair020` -- attempted, but this
-page turned out to be dramatically more complex than the other 5
-pilot pages: dense УТРО/ВЕЧ splits across all 5 theaters for nearly
-every date, multiple benefit-performance annotations, and at least
-one theater (Михайловскій) showing what appear to be multi-day merged
-print cells that don't cleanly align to individual dates the way
-every other page this session did. Paused rather than risk a rushed,
-lower-confidence transcription -- this is a genuine candidate for the
-RG-markup method (per the precedent set on `pair014`) rather than a
-plain scan read. Not started; the other 6 of the original 7
-severe-case pages are now fully resolved.
+**Update, same day: `repertoire_1896-97_pair020` resolved via the
+RG-markup method, closing out all 7 of the original severe-case
+pages.** RG marked up the extracted source page (red=date boundaries,
+blue=morning/evening splits); the markup resolved exactly the
+ambiguity that stalled the plain scan read -- Михайловскій never
+splits on this page even on dates where the other 4 theaters do; it
+runs a single nightly production across several consecutive dates,
+title printed once, each night's own receipts figure positioned below
+it, which looked like an ambiguous multi-day merged cell without the
+markup to disambiguate. Once that was settled the rest of the page
+(dense УТРО/ВЕЧ splits 18-23 Февраля, several benefit-performance
+annotations, plain single-entry rows for the March portion)
+transcribed cleanly. Rebuilt in place and verified the same way as
+every other page this session: no validation errors, zero Repertoire
+quality flags, baselines unchanged, `validate_performance_dates.py`
+unchanged at 96.0%, all 5 theaters confirmed present via direct
+query (113 rows).
+
+**All 7 of the original issue #78 severe (single-theater) pages are
+now fully resolved and promoted.**
 
 **Future work item, flagged by RG while reading this page's italic
 section header** ("Безплатные утренніе спектакли для воспитанниковъ
