@@ -7721,3 +7721,41 @@ completely absent from the page's raw JSON -- confirmed instance of
 the issue #78 missing-column bug in the later single-page format, not
 just the two-page-spread seasons. Scope not yet swept beyond this one
 page for this format.
+
+## 2026-09-23 — repertoire_1891-92_pair018: page-range and gap check before reconstruction
+
+```sql
+-- grep repertoire_1891-92_pair018/pair016 in page_header_dates.csv
+```
+
+Result: pair016 = 22 января-10 февраля 1892; pair018 = 11 февраля-8
+марта 1892 -- contiguous, no overlap. Confirms the 17-22 Февраля gap
+found on pair018's scan is not a page-boundary artifact (neither
+neighboring page covers it either).
+
+## 2026-09-23 — repertoire_1891-92_pair018: full rebuild verification post-fix
+
+```bash
+uv run python pipeline/parse_and_validate.py --manifest outputs/full_run/manifest.csv --raw-dir outputs/full_run/raw --out-dir outputs/full_run/parsed --page-headers outputs/repertoire_singlepage_pagenumbers/all_page_headers.csv
+uv run python pipeline/quality_checks.py --parsed-dir outputs/full_run/parsed --out outputs/full_run/quality_flags.csv
+uv run python pipeline/build_duckdb.py --parsed-dir outputs/full_run/parsed --manifest outputs/full_run/manifest.csv --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/validate_performance_dates.py --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/build_entities.py --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/build_research_model.py --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/build_datasette.py --db outputs/full_run/imperial_theaters.duckdb --out outputs/full_run/research_dataset.sqlite
+```
+
+Result: raw.person_entry 21168 (byte-identical), entities.person 2900
+live/1459 tombstoned/23 candidate-pairs preserved (all baselines
+unchanged), entities.person_wikidata_link 43 (byte-identical).
+quality_flags.csv: 887 flags, all pre-existing Musicians/staff-record
+categories (institution_duplicated_in_heading_path, credit_sum_mismatch,
+duplicate_person_on_page, rank_class_left_in_heading_path) -- zero
+Repertoire-page flags, confirmed by filtering page_id LIKE
+'repertoire%'. validate_performance_dates.py: 95.8% verified corpus-
+wide, unchanged from pre-fix baseline. repertoire_1891-92_pair018 now
+shows 127 raw.event_entry rows across all 5 theaters (confirmed via
+`SELECT DISTINCT theater ... WHERE page_id='repertoire_1891-92_pair018'`).
+Backed up pre-fix DB to outputs/full_run_pre_promote_backup_2026-09-23_pair018/
+before rebuilding in place. Not yet promoted further (HF/Cloud Run
+republish still deferred per established convention).

@@ -16111,3 +16111,53 @@ set against its city-group's expected trio and its date-range
 neighbor, not just count distinct theaters). Deferred to a future
 session; flagged here so the scope question doesn't get re-asked from
 scratch.
+
+**Update, 2026-09-23: `repertoire_1891-92_pair018` (one of the 7
+single-theater severe cases) fully reconstructed, scan-verified.**
+
+Confirmed via direct scan comparison this was genuinely the same
+missing-column bug, not a real 4-theater closure: the scan shows all 5
+theaters (Маріинскій/Александринскій/Михайловскій/Большой/Малый)
+actively performing 11-16 Февраля 1892, then a German (Александринскій)
+/ French (Михайловскій) guest-troupe takeover from 23 Февраля with the
+other 3 theaters genuinely dark -- but the DB had only Михайловскій for
+the *entire* page, and even that one surviving column had internal
+corruption: a phantom duplicate of "Séraphine" sat on 23 Февраля
+(should have been the real, different 4-work Bénéfice de M-lle Legault
+program, which was missing outright), and a phantom duplicate of 25
+Февраля's content sat on 24 Февраля (which the scan shows fully dark
+for every theater).
+
+Also found: **17-22 Февраля has no printed rows on this page at all**
+-- checked this isn't a page-boundary artifact by confirming the
+neighboring page's own header (`1891-92_pair016`: 22 января-10
+февраля) doesn't cover it either. Genuinely absent from the printed
+source; not fabricated, not chased further (matches the project's
+`never-assume-date-completeness` convention -- a gap is presumptively
+the source's own, until shown otherwise).
+
+Reconstructed all 127 sessions for the page (11 Февраля - 8 Марта)
+directly from the scan (`pdf/RepertoireTables/ForUpload_1891-92_
+Repertoire_008.jpg`), theater by theater, date by date, including
+correcting the 23/24 Февраля Михайловскій corruption and adding 3
+entirely-missing dates (6-8 Марта) that weren't in the DB in any form
+before. No receipts figures exist anywhere on this page in the source
+(confirmed by inspection, not an extraction gap) -- `receipts_text`
+correctly stays null throughout, matching what the pre-existing
+Михайловскій rows already had.
+
+**Not yet done this round**: pipeline rebuild/promotion (pending);
+the other 6 single-theater pages and 21 partial-subset pages remain
+unstarted.
+
+**Future work item, flagged by RG while reading this page's italic
+section header** ("Безплатные утренніе спектакли для воспитанниковъ
+учебныхъ заведеній." -- "Free morning performances for students of
+educational institutions", governing the morning session for every
+theater 13-16 Февраля): cross-cutting italic headers like this aren't
+captured anywhere in the raw JSON today -- the sessions under them are
+transcribed like any other row, with nothing linking them back to the
+header that explains why that slot exists. RG's ask: attach the header
+text as the `annotation` on every session it covers. Needs a design
+decision first (new field on `SessionLLM` vs. reusing `annotation` vs.
+a page-level note) -- not scoped, not started, logged here for later.
