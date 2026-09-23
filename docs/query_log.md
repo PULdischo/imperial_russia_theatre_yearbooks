@@ -7759,3 +7759,61 @@ shows 127 raw.event_entry rows across all 5 theaters (confirmed via
 Backed up pre-fix DB to outputs/full_run_pre_promote_backup_2026-09-23_pair018/
 before rebuilding in place. Not yet promoted further (HF/Cloud Run
 republish still deferred per established convention).
+
+## 2026-09-23 — detect_columns / merge_columnwise_page root-cause investigation for issue #78
+
+Read pipeline/row_detect.py's detect_columns (crop generation) and
+pipeline/schemas/repertoire_columnwise.py's merge_columnwise_page (date
+alignment) directly, plus outputs/repertoire_spreadfix_v6/raw_columnwise/
+repertoire_1891-92_p018.columns.json.
+
+Result: NOT a column-crop-detection failure -- the model successfully
+extracted real content for all 5 theaters on pair018. The failure is in
+merge_columnwise_page: when a theater's own row count doesn't reconcile
+against the calendar date count (exactly, or via the compound-day
+arithmetic fallback), it deliberately emits nothing for that theater
+rather than guess (a reasoned tradeoff, see pipeline/schemas/
+repertoire_columnwise.py's docstring, issue #69). The refusal itself is
+recorded (`"ok": false`, with a `reason`) but nothing downstream turns
+these into a corpus-wide flag -- that's the actual gap issue #78
+describes.
+
+```python
+import json, glob
+# count pages/theaters with ok:false across all raw_columnwise .columns.json
+```
+
+Result: 164 of 177 two-page-spread half-pages (92.7%) have >=1 failed
+theater; 558 total failed theater-columns corpus-wide. This is a finer
+grain than the 28-page/7-severe scope found 2026-09-22 -- most
+half-page failures get rescued by the other half or a later repair
+step; only when BOTH halves fail for the same theater does it surface
+as a fully-missing column in the final promoted DB.
+
+## 2026-09-23 — repair_columnwise_merge.py pilot, 6 severe pages (12 half-pages)
+
+Regenerated split top/bottom half images (render_pages.py -> 
+split_spread_pages.py against outputs/fold_review/fold_geometry.json,
+5 seasons: 1891-92/1893-94/1894-95/1895-96/1896-97) since the original
+split images are not retained on disk (outputs/ disposable by
+convention). Verified true printed page numbers directly against scans
+(not the pre-existing split_page_numbers_final.csv, which has at least
+one confirmed error -- 1891-92_p008__bottom read "61" instead of "19")
+-- all 6 confirmed via exact date-range match against page_header_dates.csv.
+
+Ran pipeline/repair_columnwise_merge.py against the 12 renamed half-pages,
+--raw-dir outputs/repertoire_spreadfix_v6/raw_columnwise, --column-config
+docs/repertoire_column_bounds.json.
+
+Result: 95 theater-repair attempts -- 8 recovered_tier1_resample (clean),
+35 recovered_tier2_baseline (tool's own "NEEDS REVIEW" flag), 42
+tier1_still_unresolved, 10 unrecovered. 2 of 12 half-pages
+(1891-92_p025, 1896-97_p021) got zero recovery on every theater. Several
+pages' fresh date-only re-read returned far fewer calendar dates than
+the original attempt (e.g. 1893-94_p022: 16 -> 3), which directly
+contradicts direct scan reads done the same session -- indicates the
+regenerated split crops are not geometrically identical to whatever
+produced the original raw_columnwise data. Decision: use this repaired
+output only as a secondary cross-check alongside the original raw
+columnwise data during manual scan reconstruction, not as a
+promotable source on its own.

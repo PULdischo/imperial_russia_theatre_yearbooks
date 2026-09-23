@@ -16150,6 +16150,65 @@ correctly stays null throughout, matching what the pre-existing
 the other 6 single-theater pages and 21 partial-subset pages remain
 unstarted.
 
+**Update, 2026-09-23: confirmed root cause, and a repair-tool pilot
+that gave a mixed but useful result.** Traced the missing-column bug to
+`merge_columnwise_page` (`pipeline/schemas/repertoire_columnwise.py`) --
+column detection itself is fine (the model reads real content for
+every theater), but the date-alignment step deliberately drops a
+theater's entire session list when its own row count can't be
+reconciled against the calendar date count (a reasoned tradeoff from
+issue #69, not a new bug). This refusal IS recorded per-theater as
+`"ok": false` with a `reason` in each page's `.columns.json`, but
+nothing downstream turns it into a corpus-wide flag -- that's the
+actual gap. A corpus sweep of `outputs/repertoire_spreadfix_v6/
+raw_columnwise/*.columns.json` found 164 of 177 half-pages (92.7%,
+558 total failed theater-columns) carrying at least one such refusal
+-- a much finer-grained number than the 28-page/7-severe scope found
+the day before, since most half-page failures get rescued by the
+OTHER half or a later repair step and never reach the final DB;
+only a full, unrescued failure on both halves surfaces as an
+entirely-missing column.
+
+There's an existing repair tool for exactly this (`pipeline/
+repair_columnwise_merge.py`, previously used to fully resolve the same
+problem for the single-page seasons -- Gate 3, now 0 known issues) but
+it had never been run against the two-page-spread corpus. Piloted it
+on the 6 remaining severe pages (12 half-pages): regenerated the split
+top/bottom images (not retained on disk by convention), verified true
+printed page numbers directly against scans (the existing
+`split_page_numbers_final.csv` has at least one confirmed error), and
+ran the tool fresh. Result: 45% of the 95 theater-repair attempts
+recovered (8 cleanly via resample, 35 via the tool's own
+"NEEDS REVIEW"-flagged baseline fallback), but 2 of 12 half-pages
+recovered nothing at all, and several pages' fresh date-only reads
+returned far fewer calendar dates than direct scan-reading confirmed
+correct the same session -- evidence the regenerated crops aren't
+geometrically identical to whatever produced the original data.
+**Decision: use the tool's output only as a secondary cross-check
+during manual scan reconstruction, not as a promotable source on its
+own** -- it doesn't eliminate the verification work, only adds a
+second (imperfect) reading to compare against the scan.
+
+Two of the 6 pilot pages fully reconstructed and promoted this way:
+`repertoire_1894-95_pair004` (Маріинскій genuinely dark the whole
+page; Александринскій/Михайловскій/Большой/Малый all real content,
+scan-verified) and `repertoire_1895-96_pair008` (Большой genuinely
+dark throughout; Маріинскій/Александринскій/Михайловскій all real
+content -- the pre-existing "Малый-only" DB state itself turned out to
+be corrupted, not just incomplete: shifted dates and garbled titles,
+e.g. "Новая муха" for "Первая муха", two different rows both dated
+"24" while the real 24th is dark). Both rebuilt in place and verified:
+`raw.person_entry` 21168 (byte-identical), entities 2900/1459/23
+unchanged, zero Repertoire quality flags (one `duplicate_event_key`
+self-introduced during the `pair008` fix -- a helper-function misuse
+that left 3 phantom dark placeholder rows alongside the real ones --
+caught immediately by the quality-flag rebuild step and fixed before
+promotion), `validate_performance_dates.py` improved 95.8% -> 95.9%.
+
+**Remaining from the original 7 severe pages**: `1891-92_pair024`,
+`1893-94_pair022`, `1893-94_pair024`, `1896-97_pair020` -- not yet
+started this round.
+
 **Future work item, flagged by RG while reading this page's italic
 section header** ("Безплатные утренніе спектакли для воспитанниковъ
 учебныхъ заведеній." -- "Free morning performances for students of
