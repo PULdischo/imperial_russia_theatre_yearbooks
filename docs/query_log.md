@@ -7870,3 +7870,22 @@ showing all 5 theaters (113 rows). This closes out all 7 of the
 original issue #78 severe (single-theater) pages. Backed up pre-fix
 DB to outputs/full_run_pre_promote_backup_2026-09-23_pair020/ before
 rebuilding in place.
+
+## 2026-09-23 — Correction: are the 21 partial-subset pages genuine closures or the same bug?
+
+```python
+import json, glob
+# For each of the 21 pages, map pairNNN -> p{NNN}/p{NNN+1}, check the
+# "missing" theaters' n_theater_rows and ok status in each half's
+# .columns.json merge report.
+```
+
+Result: ALL 21 pages, every missing theater, both halves: n_theater_rows
+is substantial and nonzero (range 7-20 rows), ok:False throughout. Zero
+instances of n_theater_rows near 0 (which would indicate a genuinely
+dark/closed theater). This directly contradicts yesterday's hypothesis
+that these pages reflect real partial theater closures -- every one is
+the same merge_columnwise_page alignment-refusal bug as the 7 severe
+pages, just less complete data loss (2-3 of 5 theaters vs 4-5 of 5).
+Corrects known_issues.md's prior characterization of this bucket as
+"more likely genuine closures, lower priority."

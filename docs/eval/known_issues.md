@@ -16247,6 +16247,42 @@ query (113 rows).
 **All 7 of the original issue #78 severe (single-theater) pages are
 now fully resolved and promoted.**
 
+**Update, 2026-09-23: correction to the 21 "partial-subset" pages'
+characterization.** The 2026-09-22 entry above guessed these were
+"more likely genuine partial closures than a uniform bug" because a
+different subset of theaters is missing each time. Checked directly
+against the now-understood mechanism instead of guessing again: for
+all 21 pages, every missing theater's original column-wise extraction
+(`outputs/repertoire_spreadfix_v6/raw_columnwise/*.columns.json`) shows
+a substantial, nonzero row count (7-20 rows) with `"ok": false` -- real
+extracted content that got orphaned by `merge_columnwise_page`'s
+alignment refusal, exactly like the 7 severe pages. Zero instances of
+a near-0 row count, which is what a genuinely dark/closed theater
+would show. **The "different theaters missing each time" pattern is
+not evidence of real closures -- it's just which theater's row count
+happened to reconcile against the calendar that week, which varies
+page to page for the same reason the severe pages varied.** The 21
+pages are confirmed real instances of the same bug, not a lower-
+priority bucket. Full page list (each `pairNNN`, missing theaters):
+`1890-91_pair012` (Малый/Маріинскій/Большой), `1890-91_pair024`
+(Малый/Александринскій), `1891-92_pair016` (Малый/Большой),
+`1891-92_pair020` (Александринскій/Михайловскій), `1892-93_pair024`
+(Александринскій/Михайловскій/Маріинскій), `1894-95_pair010`
+(Малый/Михайловскій), `1894-95_pair014` (Маріинскій/Большой),
+`1895-96_pair002` (Александринскій/Маріинскій), `1895-96_pair018`
+(Малый/Александринскій/Маріинскій), `1895-96_pair020`
+(Маріинскій/Большой), `1896-97_pair002`
+(Александринскій/Маріинскій/Большой), `1896-97_pair006`
+(Александринскій/Маріинскій), `1896-97_pair010`
+(Маріинскій/Большой), `1896-97_pair012`
+(Александринскій/Михайловскій), `1897-98_pair002`
+(Маріинскій/Михайловскій), `1897-98_pair010`
+(Большой/Михайловскій), `1897-98_pair012`
+(Малый/Александринскій), `1897-98_pair014` (Малый/Маріинскій),
+`1897-98_pair020` (Малый/Большой), `1897-98_pair022`
+(Малый/Александринскій), `1897-98_pair024` (Малый/Александринскій).
+Not yet fixed -- scope confirmed, reconstruction not started.
+
 **Future work item, flagged by RG while reading this page's italic
 section header** ("Безплатные утренніе спектакли для воспитанниковъ
 учебныхъ заведеній." -- "Free morning performances for students of
