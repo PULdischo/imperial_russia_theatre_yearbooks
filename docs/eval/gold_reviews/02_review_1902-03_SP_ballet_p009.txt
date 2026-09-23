@@ -77,12 +77,120 @@
 # ===================================================================
 
 [FIELDS]
-printed_folio:
-tailpiece_present:
-no_text:
+printed_folio: 151
+tailpiece_present: no
+no_text: no
 copy_artifacts:
-reading_order_uncertain:
-notes:
+reading_order_uncertain: no
+notes: Item 21 prints "Карсавина: гг." with a colon where the parallel construction in item 19 has a semicolon — typesetter's error, kept verbatim.
 
 [BLOCKS]
 
+[paragraph]
+Театральнаго училища.—Дѣйствіе II, картина 2-я.
+
+[enumerated_list 12)]
+<l fr>Danses des esclaves</l> —
+г-жи Трефилова, Кякштъ, Карсавина.
+
+[enumerated_list 13)]
+<l fr>Scène mimique</l> — г-жи Трефилова, Карса-
+вина, Кякштъ, гг. Гиллертъ, Медалинскій, Воронковъ 1 и Григорьевъ;
+
+[enumerated_list 14)]
+<l fr>Rentrée
+de la caravane et scène mimique</l>—г-жи М. Петипа, Яковлева 1, Трефилова, Кякштъ,
+Карсавина, гг. Гиллертъ, Бекефи, Воронковъ 1, Григорьевъ и Медалинскій;
+
+[enumerated_list 15)]
+<l fr>Pas de
+voiles</l> —г-жи Павлова 1, Бакеркина 1, Васильева, Касаткина, Леонова 2, Эрлеръ 2,
+Спрышинская, Конецкая, Георгіевская, Дорина, Яковлева 2, Уракова, Лобанова, Цали-
+сонсъ, Эрлеръ 1, Степанова 3 и проч. танцовщицы;
+
+[enumerated_list 16)]
+<l fr>Adagio fascination</l> — г-жи
+М. Петипа, Трефилова, Карсавина, Кякштъ и г. Гиллертъ.
+
+[enumerated_list 17)]
+<l fr>Variations</l> — г-жа
+М. Петипа;
+
+[enumerated_list 18)]
+<l fr>Grand Ballabile Oriental</l> — всѣ участвующіе;
+
+[enumerated_list 19)]
+<l fr>Scène mimique</l>—
+г-жи О. Преображенская, М. Петипа, Сѣдова, Трефилова, Кякштъ, Карсавина; гг.
+Н. Легатъ, Ширяевъ, Гиллертъ, Медалинскій, Воронковъ 1 и Григорьевъ;
+
+[enumerated_list 20)]
+<l fr>La guirlande de fleurs</l> — г-жа О. Преображенская;
+
+[enumerated_list 21)]
+<l fr>Pas d’action</l> — г-жи О.
+Преображенская, М. Петипа, Сѣдова, Трефилова, Кякштъ, Карсавина: гг. Н. Легатъ,
+Ширяевъ, Гиллертъ, Бекефи, Воронковъ 1, Медалинскій, Григорьевъ и другіе;
+
+[enumerated_list 22)]
+<l fr>Danse</l>—г-жи О. Преображенская, Трефилова, Кякштъ и Карсавина, гг. Н. Легатъ,
+Гиллертъ;
+
+[enumerated_list 23)]
+<l fr>Variations:</l>
+
+[enumerated_list a)]
+г. Н. Легатъ;
+
+[enumerated_list b)]
+г-жа Сѣдова;
+
+[enumerated_list c)]
+г-жа О. Преображен-
+ская;
+
+[enumerated_list 24)]
+<l fr>Final, Coda</l> — г-жа О. Преображенская, г. Н. Легатъ.
+
+[enumerated_list 25)]
+<l fr>Scène mimique</l> —
+г-жи О. Преображенская, М. Петипа, Трефилова, Сѣдова, Карсавина, Кякштъ. гг.
+Бекефи, Н. Легатъ, Медалинскій и Григорьевъ.
+
+[enumerated_list 26)]
+<l fr>Danse finale et Triomphe de
+Naila</l>—г-жа О. Преображенская и всѣ участвующіе.—Дѣйствіе III, картина 3-я.
+
+[enumerated_list 27)]
+<l fr>Scène
+mimique</l>—г-жи О. Преображенская, М. Петипа, Сѣдова, гг. Бекефи, Ширяевъ, Огневъ,
+Ивановъ 2, Прѣсниковъ и Киселевъ.—Картина 4-я.
+
+[enumerated_list 28)]
+<l fr>Grande valse (ballabile des
+papillons)</l> г-жи Павлова 2, Трефилова, Карсавина, Кякштъ, Эльпе, Снѣткова, Прохо-
+рова, Пршебылецкая, Лопухова, Алексне, Матвѣева, Карлсонъ, Чернявская, Гонча-
+рова, Павлова 1, Касаткина, Нестеровская, Эдуардова, Конецкая, Эрлеръ 2, Рошъ,
+Цалисонъ, Штихлингъ, Уракова, Георгіевская, Бѣлинская, Леонова 2, Куницкая, До-
+рина, Бастманъ, Лобанова, Легатъ, Яковлева 2, Степанова 3, Сазонова, Степанова 2,
+Лицъ, Степанова 4, Чернятина, Прудникова, Ильина 2, Ниманъ, Матятина, Симо-
+нова, Пахомова, Свирская, Кустереръ, Вертинская, Ильина 1, Горская и Постоленко;
+
+[enumerated_list 29)]
+<l fr>Variations</l>:
+
+[enumerated_list a)]
+г-жа Кякштъ;
+
+[enumerated_list b)]
+г-жа Карсавина;
+
+[enumerated_list c)]
+г-жа Павлова 2,
+
+[enumerated_list d)]
+г-жа Трефи-
+лова.
+
+[enumerated_list 30)]
+<l fr>Pas de deux</l>
