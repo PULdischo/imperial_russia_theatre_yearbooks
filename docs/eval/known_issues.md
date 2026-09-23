@@ -16283,6 +16283,74 @@ priority bucket. Full page list (each `pairNNN`, missing theaters):
 (Малый/Александринскій), `1897-98_pair024` (Малый/Александринскій).
 Not yet fixed -- scope confirmed, reconstruction not started.
 
+**Update, 2026-09-23: all 21 pages reconstructed and promoted, closing
+issue #78's full scope (7 severe + 21 partial-subset = 28 pages).**
+Worked through the list in order, same methodology as the severe
+pages -- scan-verify against the source PDF, cross-check any
+"already present" theater's existing data before trusting it (it was
+corrupted, via the same cascade-shift/phantom-duplicate patterns
+already documented, on roughly half of these pages -- full replacement
+used there; the other half had existing data that checked out clean
+against independent re-reading, so only the missing pieces were
+added). Two genuinely new failure signatures found along the way,
+beyond what the 7 severe pages had already shown:
+
+- **A whole-page-format guest-opera-troupe pattern**: several 1897-98
+  pages (`pair020`, `pair022`) turned out to be a German touring opera
+  company (Wagner repertoire -- Tristan, Die Walküre, Siegfried, Die
+  Meistersinger, Lohengrin) occupying Маріинскій for weeks at a time,
+  with Александринскій/Михайловскій running their own separate season
+  alongside it and Большой/Малый genuinely dark. Confirmed via direct
+  scan reading, not fabricated -- these pages needed real, careful
+  date-by-date verification rather than a generic template, same
+  discipline as the free-student-matinee and guest-troupe patterns
+  already documented for other seasons.
+- **"Already present" theaters missing whole date *ranges*, not just
+  scattered dates**: on several pages (`1896-97_pair006/010/012`,
+  `1897-98_pair020/022/024`) a theater that technically had *some*
+  data for the page was nonetheless missing an entire contiguous tail
+  (a week or more), invisible to a simple "theater present y/n" check
+  -- confirmed by comparing each theater's actual date_text list
+  against the full header range, not just checking non-zero row
+  count. This is the same root gap already identified for the single-
+  page format's `1906-07_p046` case, now confirmed structurally
+  common on the two-page-spread side too.
+
+**One real transcription error caught and fixed mid-session, worth
+recording precisely**: on `1897-98_pair014`, a missed morning/evening
+split on 4 Января (Александринскій splits that day, Маріинскій
+doesn't -- but the resulting taller row threw off manual row-counting
+for Маріинскій specifically) caused every subsequent Маріинскій date
+from 6-9 Января to be misattributed one row early (6th got 7th's
+content, 7th got 8th's, etc.), while Малый's readings for the same
+stretch were unaffected (it doesn't split on 4th, so its row-count
+never desynced). Caught only because RG asked directly how confident
+this work was, prompting a targeted re-crop with the date-label margin
+visible rather than trusting the original row-by-row read -- the
+automated structural checks (duplicate-key, validation-error) cannot
+catch this class of error at all, since a shifted-by-one read is
+still internally consistent (no duplicates, no orphaned keys). Fixed
+before promotion, verified against the corrected crop.
+
+**Confidence assessment, given directly to RG mid-session and worth
+keeping on record**: automated checks after each page (structural
+correctness -- no duplicate keys, no validation errors, all 5
+theaters present, baselines unchanged) are solid, and did catch two
+real bugs this session (a duplicate-entry mistake on `1897-98_pair002`,
+and near-duplicate additions on `1897-98_pair022` where "missing"
+theaters turned out to already have correct data). But NONE of these
+checks can catch a semantic misreading -- wrong date, wrong theater
+column, misread digit -- the `pair014` incident above is a confirmed
+instance of exactly that. Confidence is not uniform across the batch:
+highest on `1894-95_pair010` (RG's own markup, not just this session's
+reading), high on pages where receipts figures were independently
+cross-validated against pre-existing "good" data, more moderate on the
+remainder, single-pass read pages. **A second, independent
+verification pass against the scans -- not just structural checks --
+is planned as explicit next-session work, prioritized by confidence
+level (the 1897-98 season pages, read fastest, first).** Not done
+this session; flagging the plan here so it isn't lost.
+
 **Future work item, flagged by RG while reading this page's italic
 section header** ("Безплатные утренніе спектакли для воспитанниковъ
 учебныхъ заведеній." -- "Free morning performances for students of

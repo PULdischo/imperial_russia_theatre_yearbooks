@@ -7889,3 +7889,23 @@ the same merge_columnwise_page alignment-refusal bug as the 7 severe
 pages, just less complete data loss (2-3 of 5 theaters vs 4-5 of 5).
 Corrects known_issues.md's prior characterization of this bucket as
 "more likely genuine closures, lower priority."
+
+## 2026-09-23 — All 21 partial-subset pages: final rebuild verification
+
+```bash
+uv run python pipeline/parse_and_validate.py --manifest outputs/full_run/manifest.csv --raw-dir outputs/full_run/raw --out-dir outputs/full_run/parsed --page-headers outputs/repertoire_singlepage_pagenumbers/all_page_headers.csv
+uv run python pipeline/quality_checks.py --parsed-dir outputs/full_run/parsed --out outputs/full_run/quality_flags.csv
+uv run python pipeline/build_duckdb.py --parsed-dir outputs/full_run/parsed --manifest outputs/full_run/manifest.csv --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/validate_performance_dates.py --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/build_entities.py --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/build_research_model.py --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/build_datasette.py --db outputs/full_run/imperial_theaters.duckdb --out outputs/full_run/research_dataset.sqlite
+-- + a loop over all 21 page_ids: SELECT DISTINCT theater FROM raw.event_entry WHERE page_id=...
+```
+
+Result: zero validation errors, zero Repertoire quality flags across all 21
+pages, baselines unchanged (person_entry 21168, entities 2900/1459/23,
+Wikidata links unchanged), validate_performance_dates.py improved
+95.6% (session start) -> 96.4% corpus-wide. All 21 pages confirmed
+showing all 5 theaters via direct query. This closes issue #78's full
+28-page scope (7 severe + 21 partial-subset).
