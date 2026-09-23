@@ -16362,3 +16362,62 @@ header that explains why that slot exists. RG's ask: attach the header
 text as the `annotation` on every session it covers. Needs a design
 decision first (new field on `SessionLLM` vs. reusing `annotation` vs.
 a page-level note) -- not scoped, not started, logged here for later.
+
+**Second-pass verification, started 2026-09-23 per RG's explicit request
+("do the second pass now... particularly anxious to make sure that the
+right performances end up associated with the correct dates and times"),
+IN PROGRESS, paused mid-batch at RG's request.** Method: dump each fixed
+page's current DB content per-theater (`dump_page.py`), re-fetch the full
+source scan fresh, and trace every date across all 5 theaters row-by-row
+against it -- independent of and in addition to the first pass's own
+scan read. 13 of the 21 partial-subset pages checked so far:
+
+- **9 confirmed clean, zero changes**: `1890-91_pair012`, `1890-91_pair024`,
+  `1891-92_pair016`, `1891-92_pair018`, `1891-92_pair020`, `1895-96_pair002`,
+  `1896-97_pair012`, `1897-98_pair012`, and `1897-98_pair014`'s Маріинскій/
+  Александринскій/Большой (the pages/columns not already flagged below).
+- **4 pages had real errors caught and fixed, all invisible to every
+  automated structural check** (each internally self-consistent -- no
+  duplicate keys, no validation failures):
+  - `1897-98_pair014` (the page with the already-known 6-9 Января cascade
+    from the first pass): re-checking the REST of this page found two more
+    errors the first pass missed. (1) Михайловскій was missing its entire
+    1-9 Января tail (8 dates) -- present on the scan, never captured.
+    (2) Малый had its own one-row cascade: 29 Понедѣльник's evening
+    session was dropped during the first-pass transcription, which pushed
+    30 Вторникъ and 31 Среда each to show the PRIOR date's content, and
+    31 Среда's true content (Полоцкое разоренье / Питомка) was lost
+    entirely -- never captured under any date. 2 Пятница was separately
+    missing its own evening session. Also fixed 27 Суббота, where two
+    works belonging to one combined morning session had been wrongly
+    split into two sessions, inventing a false dark=False no-receipts
+    evening entry where the scan shows evening is genuinely dark.
+  - `1894-95_pair014`: 3 small omissions (a missing bénéfice annotation,
+    two missing receipts figures) -- no date/performance misattribution.
+  - `1896-97_pair002`: Малый missing its entire 5 Четвергъ - 11 Среда tail
+    (6 dates), same failure class as every other issue #78 gap.
+  - `1896-97_pair006`: a field-categorization bug, not a date error --
+    Михайловскій "6 Воскресенье" had a work title ("Безчестные, др.")
+    wrongly stored in `annotation` instead of `works` (confirmed by the
+    scan showing it printed identically to the other two works that date,
+    no bénéfice formatting), plus one OCR typo fixed in the same session
+    ("страницки" -> "странички").
+
+All fixes applied directly to the affected `outputs/full_run/raw/*.raw.json`
+files, duplicate-key-checked, and the full chain re-run
+(`parse_and_validate.py` + `quality_checks.py`): 0 Repertoire quality flags
+throughout (887 total flags, all pre-existing Musicians/Roster baseline,
+confirmed unchanged), zero new validation errors on any touched page.
+Full detail and exact figures for each fix are in `docs/query_log.md`'s
+2026-09-23 entries.
+
+**Not yet re-verified (8 of 21 remaining)**: `1894-95_pair010` (RG's own
+markup -- already highest first-pass confidence), `1895-96_pair018`,
+`1895-96_pair020`, `1896-97_pair010`, `1897-98_pair002`, `1897-98_pair010`,
+`1897-98_pair020`, `1897-98_pair022`, `1897-98_pair024`. Given a genuine
+error was found on roughly 1 in 3 pages checked so far -- including one
+page (`pair014`) that had ALREADY been individually fixed once and was
+still wrong elsewhere -- the remaining 8 should not be assumed clean
+without the same row-by-row check. No consolidated rebuild/promotion has
+been done for this round's fixes yet; that, plus finishing the remaining
+8 pages, is the next-session work.

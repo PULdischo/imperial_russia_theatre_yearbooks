@@ -7909,3 +7909,78 @@ Wikidata links unchanged), validate_performance_dates.py improved
 95.6% (session start) -> 96.4% corpus-wide. All 21 pages confirmed
 showing all 5 theaters via direct query. This closes issue #78's full
 28-page scope (7 severe + 21 partial-subset).
+
+## 2026-09-23 — Second-pass verification, issue #78: pair014 (1897-98) cascade + Михайловскій gap
+
+```sql
+-- verification was via direct raw JSON dump (dump_page.py) + scan re-read, not SQL;
+-- post-fix structural check:
+SELECT theater, date_text, session, COUNT(*) FROM raw.event_entry
+WHERE page_id = 'repertoire_1897-98_pair014' GROUP BY 1,2,3 HAVING COUNT(*) > 1;
+```
+
+Result: Re-verifying `1897-98_pair014` (the page with the already-known 6-9
+Января Маріинскій cascade, fixed last session) turned up two MORE real
+errors on the same page, both missed in the first pass:
+
+1. **Михайловскій was missing its entire 1-9 Января tail** (8 dates) —
+   present on the scan, absent from the DB. Added via direct scan read.
+2. **Малый had its own one-row cascade**: 29 Понедѣльник's evening session
+   was dropped during the first-pass transcription, which pushed every
+   subsequent date's content back by one slot — 30 Вторникъ showed 29's
+   true evening content, 31 Среда showed 30's true content (both
+   sessions), and 31 Среда's OWN true content (Полоцкое разоренье /
+   Питомка) was lost entirely, never captured under any date. 2 Пятница
+   was separately missing its own evening session. Also fixed a smaller
+   error on 27 Суббота: two works that are one combined morning session
+   ("На бойкомъ мѣстѣ" + "Женитьба", 522 р.) had been wrongly split into
+   two separate sessions, with the evening one inventing a false
+   dark=False no-receipts entry where the scan clearly shows evening is
+   dark.
+
+All fixes made directly against `outputs/full_run/raw/repertoire_1897-98_pair014.raw.json`.
+Verified zero duplicate (theater, date_text, session) keys after the fix.
+Re-ran `parse_and_validate.py` + `quality_checks.py`: 0 Repertoire quality
+flags (887 total flags, all pre-existing Musicians/Roster baseline,
+confirmed unrelated). 280 validation-failed pages is the pre-existing
+baseline, none newly introduced (grepped — no `1897-98_pair014` entries in
+`validation_errors.csv`).
+
+This is exactly the failure class RG asked the second pass to specifically
+guard against ("right performances end up associated with the correct
+dates and times") — a shifted-by-one read that's internally self-
+consistent and invisible to every automated check, only catchable by
+re-reading the scan row-by-row.
+
+## 2026-09-23 — Second-pass verification, issue #78: pair002 gap + pair006 field-categorization bug
+
+Continuing the second pass (13 of 21 pages checked so far: 9 confirmed clean
+with zero changes, 4 had real errors caught and fixed — see the pair014
+entry above for the first two).
+
+**`1896-97_pair002`**: Малый was missing its entire 5 Четвергъ - 11 Среда
+tail (6 dates) — present on the scan, absent from the DB (same failure
+class as every other issue #78 gap this session). Added directly from the
+scan.
+
+**`1896-97_pair006`**: Михайловскій "6 Воскресенье" had "Безчестные, др."
+wrongly stored in the `annotation` field instead of as the first work in
+the session's `works` list — the scan shows it printed identically to the
+other two works on that date (no bénéfice/special-event formatting), so
+this was a field-categorization error, not a date/performance
+misattribution. Fixed by moving it into `works` and clearing the
+annotation. Also corrected an OCR typo on the same session found in the
+process: "Двѣ страницки любви" -> "Двѣ странички любви" (confirmed against
+the same session's own re-read and against the correctly-spelled instance
+of this same title elsewhere on the page, 23 Среда).
+
+Verified zero duplicate (theater, date_text, session) keys on all 3 pages
+touched this round. Re-ran `parse_and_validate.py` + `quality_checks.py`:
+0 Repertoire quality flags (887 total, unchanged pre-existing Musicians/
+Roster baseline); grepped `validation_errors.csv` for all 3 page_ids —
+zero validation errors introduced.
+
+Session paused here at RG's request (mid-second-pass). Remaining pages not
+yet re-verified: 1894-95_pair010 (RG-markup, highest first-pass confidence
+already), 1895-96_pair018, 1895-96_pair020, 1896-97_pair010, 1897-98_pair002,
+1897-98_pair010, 1897-98_pair020, 1897-98_pair022, 1897-98_pair024 (8 of 21).
