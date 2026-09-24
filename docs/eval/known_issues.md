@@ -16528,3 +16528,60 @@ just the raw JSON) to confirm at least one fix -- `pair014`'s
 Actual HF/Cloud Run republish not done this round, matching the
 project's established practice of treating promotion/publish as a
 separate, later, explicitly-requested step.
+
+## Issue #79: single-page-format seasons (1898-99-1907-08) -- morning/evening
+## split-capture audit
+
+Following issue #78's close, RG asked whether the single-page-format
+seasons (column-wise extraction, ~422 renders, Gate 3-clean per the
+`columnwise-paused-table-anchored-dividers` memory) have the same kind of
+problems. A 6-page manual sample (one render per season) found a much
+lower-severity error profile than issue #78 -- OCR typos and work/
+annotation field mixups, no date or theater misattribution -- except one
+page (`1903-04_p030`) which did show a cross-column-bleed artifact (see
+`docs/query_log.md`, 2026-09-24 entries, for the full per-page detail and
+all fixes applied in that sample).
+
+**Split-day structural audit (corpus-wide, all 10 single-page seasons):**
+no (theater, date) ever has more than 2 sessions; all two-session groups
+are clean morning+evening pairs (1098 of them). But 34 cases had exactly
+one session (`morning` or `evening`) with no counterpart row at all,
+spread across 7 pages. Scan-verified all 34, two distinct failure
+classes:
+
+- **32 of 34 -- session mislabeling, no data loss.** A theater's single,
+  unsplit performance on a date where at least one OTHER theater on the
+  same printed row genuinely splits gets tagged `morning` or `evening`
+  instead of `unspecified` -- confirmed by the scan showing no УТРО./
+  ВЕЧЕРЪ. label structure at all for that theater's cell. 27 of the 32
+  sit on one page (`1906-07_p015`, all 3 Moscow theaters, 15-23 Ноября);
+  the rest are `1906-07_p034` (Михайловскій x3), `1901-02_p028`,
+  `1898-99_p030`, `1905-06_p015` (one each). **FIXED 2026-09-24**:
+  changed `session` to `unspecified` in all 32 `outputs/full_run/raw/
+  *.raw.json` files, rebuilt the full chain, verified corpus-wide that
+  exactly these 32 (and no others) changed. 0 duplicate keys, 0 new
+  validation errors, 0 Repertoire quality flags throughout.
+- **2 of 34 -- genuine, unresolved content gaps. Left open, not fixed.**
+  `repertoire_1905-06_p008` (Маріинскій театръ, 23 Воскрес., morning
+  captured: "Евгеній Онѣгинъ" 1883 р. 50 к.) and `repertoire_1905-06_p005`
+  (Новый театръ, 1 Суббота., morning captured: "Каширская старина"
+  273 р. 41 к.) both print an explicit "УТРО." label -- meaning a real
+  ВЕЧЕРЪ. entry existed in the source -- but the row sits on the very
+  last line of its photographed page, and the evening content is not
+  recoverable from the digitized set: checked every neighboring render
+  directly (both the extracted date lists AND the actual page images) --
+  `p008`'s neighbors are `p009` (a different city's table, same date
+  range) and `p010` (next Petersburg page, resumes at "24 Понед." with
+  no trace of "23 Воскрес."); `p005`'s neighbors are `p006` (Petersburg,
+  different city) and `p007` (next Moscow page, resumes cleanly at
+  "2 Воскрес." with no trace of "1 Суббота."). The missing content isn't
+  misfiled on an adjacent render -- it simply isn't in the photographed
+  set. Resolving this needs the physical volume, not further pipeline
+  work. **Documented and left as-is per RG's instruction (2026-09-24)
+  -- do not re-investigate without new evidence (e.g. a better scan of
+  these two physical pages).**
+
+Full query text and per-fix detail: `docs/query_log.md`, entries dated
+2026-09-24 ("Sample scan-read...", "Morning/evening split distribution...",
+"Do the single-page seasons have problems capturing split days?", "Fixed
+the 32 session-mislabeled entries...").
