@@ -8475,3 +8475,81 @@ The 2 genuine-gap cases (`1905-06_p005` Новый театръ 1 Суббота
 `1905-06_p008` Маріинскій театръ 23 Воскрес.) remain open -- real,
 scan-confirmed printed content (a ВЕЧЕРЪ. entry) that was never captured,
 not a labeling issue. Not investigated further this round.
+
+## 2026-09-24 — Extended sample scan-read to the remaining 4 single-page seasons
+
+Extended the general-accuracy manual sample to the 4 single-page seasons
+not covered by the original 6-page sample: 1900-01, 1902-03, 1904-05,
+1906-07 (one render each). All scan-verified against
+`pdf/RepertoireTables/ForUpload_<season>_Repertoire_<NNN>.jpg`.
+
+- **`repertoire_1900-01_p012`** -- 7 fixes: a misfiled operetta title
+  ("Не бывать-бы счастью, да несчастье помогло" was in `annotation`,
+  moved to `works`); a truncated section-header annotation on
+  Маріинскій's free-matinee morning session ("Безплатные спектакли для"
+  cut off mid-sentence, completed to match the full header used
+  elsewhere on the same page); a misfiled bénéfice line on Михайловскій
+  18 Суббота ("Bénéfice de M-r Brouette" was in `works`, moved to
+  `annotation`); 3 instances of a date_text OCR typo ("Четвергь" ->
+  "Четвергъ", ь/ъ confusion); 1 instance of a work-title OCR typo
+  ("Лѣсь" -> "Лѣсъ", same ь/ъ confusion, confirmed via zoom against a
+  clean crop). Two suspicious-looking items checked and left alone as
+  genuine print defects, confirmed by zoom: "Закать" (should grammatically
+  be "Закатъ" but the print itself shows ь) and "994 р- 75 к." (a broken
+  period rendered as a dash in the original type).
+- **`repertoire_1902-03_p022`** -- the most substantial fix of this
+  batch: Александринскій and Михайловскій both had a real, uncaptured
+  morning/evening split on 26 Воскрес. -- the scan shows two distinct
+  receipts figures stacked in one cell for each theater (no УТРО./
+  ВЕЧЕРЪ. tick-mark column, but the visual grouping and figure count
+  make the split unambiguous), which had been merged into one entry
+  with only the evening receipts kept and the morning's own receipts
+  entirely dropped. Also recovered one work title that had been dropped
+  outright in the merge (Михайловскій's "Démocrite", printed as its own
+  line between two other titles), and moved "Спектакль для учащейся
+  молодежи" out of the merged works list into a proper `annotation` on
+  the new morning sessions for both theaters. Plus 2 more OCR typos
+  fixed: "Тріестанъ и Изольда" -> "Тристанъ и Изольда" (Wagner's
+  Tristan und Isolde), "Воспитатель Фахсманъ" -> "Воспитатель
+  Флаксманъ" (this character's name recurs across several 1900s-era
+  pages and has now been seen misspelled three different ways --
+  Фахсманъ, Флаксмансъ -- always confirmed against a clean crop before
+  fixing). "Le deux écoles" (missing the plural -s on "Les") checked and
+  left alone -- confirmed via zoom as the print's own typo, appearing
+  consistently for this one specific occurrence while every other
+  instance of the same title on the page correctly prints "Les deux
+  écoles".
+- **`repertoire_1904-05_p028`** -- 1 fix: "Жаннна" (extra н)
+  -> "Жанина", confirmed against a clean crop and against the correct
+  spelling used for the same title elsewhere on the page. The page's
+  large 4-10 Февраля dark stretch (all 3 theaters, 7 consecutive dates)
+  confirmed genuine against the scan -- no fix needed.
+- **`repertoire_1906-07_p040`** -- 3 fixes, one of them a correction in
+  the opposite direction from usual: "Воспитатель Флаксмансъ" (extra с)
+  -> "Флаксманъ" (matches the confirmed-correct spelling); a spurious
+  annotation that verbatim-duplicated the same session's own `works`
+  content, removed; and -- confirmed by zoom -- the print genuinely
+  reads "Съ повымъ годомъ" (not the grammatically-sensible "Съ новымъ
+  годомъ", "Happy New Year"), which the DB had silently normalized to
+  the sensible reading. Per this project's verbatim-transcription
+  convention, restored the DB to match what the source actually prints,
+  nonsensical as it is. Two more items checked and left alone as
+  genuine print defects: "Husarenlieber" (grammatically should be
+  "Husarenliebe", print shows the extra r) and "Das aite Heim"
+  (grammatically "alte", print shows "aite" -- a broken/worn "l"
+  glyph, confirmed by zoom).
+
+Zero duplicate (theater, date_text, session) keys on all 4 pages.
+Re-ran `parse_and_validate.py` + `quality_checks.py`: 0 new validation
+errors, 0 Repertoire quality flags (887 total, unchanged baseline).
+
+**All 10 single-page seasons now have at least one manually scan-read
+sample page** (10 total pages checked across the two sampling rounds:
+6 pages 2026-09-24 morning, 4 pages 2026-09-24 afternoon). Combined
+error count: 2 of 10 sample pages completely clean
+(`1899-00_p020`, `1907-08_p045`); 8 of 10 had fixes, ranging from a
+single typo to the `1902-03_p022`
+missed-split reconstruction. No date/performance misattribution of the
+issue #78 kind found in this second batch either -- the errors remain
+OCR typos, work/annotation field mixups, and (once, on `1902-03_p022`)
+a missed split, not a shifted date or swapped theater.
