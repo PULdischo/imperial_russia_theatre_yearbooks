@@ -8630,3 +8630,27 @@ down into three categories:
 
 All 17 single-page-season `intra_block_disagreement` rows are now
 accounted for -- 0 remaining open questions in this group.
+
+## 2026-09-24 — What are the 22 `no_date` rows?
+
+```sql
+SELECT e.page_id, e.event_id, e.date_text, e.theater, e.date_undate, e.event_status
+FROM analysis.event_entry_date_check c
+JOIN raw.event_entry e ON e.event_id = c.event_id
+WHERE c.date_confidence = 'no_date'
+ORDER BY e.page_id;
+```
+
+Result: all 22 were on a single page, `repertoire_1906-07_p046` -- exactly
+the 22 dark placeholder sessions (Маріинскій + Александринскій, 11 dates
+each) added earlier this session to fix that page's dropped-theater-
+column bug (see issue #79's final addendum). Root cause: those placeholder
+sessions were created without `month_text`/`year_text`, and `1906-07`
+is deliberately absent from `all_page_headers.csv` (per CLAUDE.md, that
+season's baseline extraction normally populates month/year directly per
+session, so it was never expected to need header backfill) -- so nothing
+filled the gap in for these two synthetic rows. Fixed by copying the
+`month_text: 'мая'` / `year_text: '1907 г.'` already present on every
+real (Михайловскій) session on the same page onto the 22 placeholders.
+Rebuilt the full chain: `no_date` 22 -> 0, `verified` 22357 -> 22379
+(96.5%), exact +22 match. Musicians/Roster numbers unchanged.
