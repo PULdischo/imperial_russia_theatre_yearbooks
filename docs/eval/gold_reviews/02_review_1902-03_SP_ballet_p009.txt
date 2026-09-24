@@ -82,7 +82,7 @@ tailpiece_present: no
 no_text: no
 copy_artifacts:
 reading_order_uncertain: no
-notes: Item 21 prints "Карсавина: гг." with a colon where the parallel construction in item 19 has a semicolon — typesetter's error, kept verbatim.
+notes: Item 21 prints "Карсавина: гг." with a colon where the parallel construction in item 19 has a semicolon — typesetter's error, kept verbatim; Three surnames are spelled two ways on this page, all kept verbatim: Карлсонъ (item 28) / Карльсонъ (item 31); Пршебылецкая (28) / Пржебылецкая (31); Цалисонсъ (15) / Цалисонъ (28).
 
 [BLOCKS]
 
@@ -193,4 +193,17 @@ papillons)</l> г-жи Павлова 2, Трефилова, Карсавина,
 лова.
 
 [enumerated_list 30)]
-<l fr>Pas de deux</l>
+<l fr>Pas de deux</l>—г-жа О. Преображенская и г. Легатъ;
+
+[enumerated_list 31)]
+<l fr>Final. Coda</l>—
+г-жи О. Преображенская, Павлова 2, Трефилова, Карсавина, Кякштъ, Офицерова,
+Снѣткова, Фонарева, Лопухова, Матвѣева, Пржебылецкая, Алексне, Карльсонъ
+и всѣ участвующіе;
+
+[enumerated_list 32)]
+<l fr>Scène mimique</l> — г-жи М. Петипа, О. Преображенская,
+Сѣдова, г. Н. Легатъ;
+
+[enumerated_list 33)]
+<l fr>Le talisman et la mort de la fée de la source</l> — г-жи О.
