@@ -8208,3 +8208,68 @@ Next step: a consolidated full-chain rebuild (`build_duckdb.py` ->
 `validate_performance_dates.py` -> `build_entities.py`), baseline
 verification (Musicians/Roster untouched, quality_flags.csv still 0),
 and a `known_issues.md` closing summary -- not yet done this session.
+
+## 2026-09-24 — Sample scan-read of single-page-format Repertoire renders (1898-99 through 1907-08)
+
+Following the completed issue #78 second pass (two-page-spread seasons,
+1890-91-1897-98), RG asked whether the single-page-format seasons
+(1898-99-1907-08, column-wise extraction, ~422 renders, per known_issues.md
+only 1 previously checked) need the same treatment. Sampled 6 renders, one
+per season, spread across the decade and across page position (early/mid/
+late), scan-read in full against `pdf/RepertoireTables/ForUpload_<season>_
+Repertoire_<NNN>.jpg` (these are the original per-page source images --
+column-wise render used the same JPGs 1:1, `p{NNN}` = `_{NNN}.jpg`):
+
+- `repertoire_1898-99_p005` -- 3 OCR title typos fixed ("Лѣсь"->"Лѣсъ",
+  "Поэдная любовь"->"Поздная любовь", "Ночной пикинкъ"->"Ночной пикникъ").
+  No structural/date errors.
+- `repertoire_1899-00_p020` -- clean, zero changes.
+- `repertoire_1901-02_p010` -- 3 issues: 2 instances of a mixed-script
+  typo ("Мишурa" with a Latin "a" -> "Мишура"), 1 OCR typo repeated twice
+  ("Беаприданница"->"Безприданница"), and one bénéfice line wrongly filed
+  as a work title instead of an annotation ("Bénéfice de M-r Brouette").
+- `repertoire_1903-04_p030` -- 5 issues, the most of any sample: a
+  cross-column bleed bug (three of Маріинскій's charity-concert
+  announcements had phantom truncated fragments leaking into
+  Александринскій's annotation field on 17/19/29, one of which should
+  have been genuinely dark and wasn't); a missing word in a German
+  benefit-announcement title ("im" dropped from "für die Krieger im
+  fernen Osten") that had also been wrongly filed as a work instead of
+  an annotation; and one OCR digit error in a fractional-kopeck receipt
+  ("15¹/₉" -> "15½", confirmed against the half-kopeck fraction notation
+  used consistently elsewhere on the same page).
+- `repertoire_1905-06_p015` -- 1 OCR typo repeated twice ("Неводь"->
+  "Неводъ"). Also found and correctly left alone: Малый "24 Четвергъ."
+  has a genuinely blank work title in the source print itself (just
+  ", ком." with nothing before the comma, confirmed by direct zoom) --
+  not an extraction error.
+- `repertoire_1907-08_p045` -- clean, zero changes. The page's large
+  21-27 Апрѣля dark stretch (all 3 theaters, all 7 dates) is genuine --
+  confirmed against the scan, and consistent with Orthodox Holy Week/
+  Easter 1908 (April 13/26 O.S./N.S.) -- not a bug.
+
+**Summary: 2 of 6 pages completely clean, 4 had minor issues, 14 total
+fixes -- but the error PROFILE is qualitatively different from the
+two-page-spread pages just closed out in issue #78.** Every single error
+found in this sample was an OCR misread or a field-categorization slip
+(work title vs. annotation); NONE were a date/performance misattribution,
+a missing theater column, or a cross-date cascade -- the failure classes
+that dominated issue #78. This is consistent with the column-wise
+extraction method for these seasons already being validated clean at Gate
+3 (332/332, see `columnwise-paused-table-anchored-dividers` memory) for
+its own structural correctness; this sample suggests genuine transcription
+typos still exist at a low, steady rate (roughly 2-3 per page) but the
+severe bugs this whole session has been chasing (missing columns, swapped
+theaters, phantom duplicate dates) are much rarer here, though not zero --
+the `1903-04_p030` cross-column bleed shows the same failure class CAN
+occur in this format too, just less often.
+
+Duplicate-key-checked (0 on all 6 pages), `parse_and_validate.py` +
+`quality_checks.py` re-run: 0 new validation errors, 0 Repertoire quality
+flags (887 total, unchanged baseline).
+
+**Recommendation, not yet acted on**: given a ~67% per-page hit rate on a
+tiny sample, a fuller sweep of the single-page-format seasons is probably
+worth doing at some point, but not urgently -- unlike issue #78, nothing
+found here misattributes a performance to the wrong date or theater,
+which was RG's stated top concern. This is lower-stakes cleanup work.
