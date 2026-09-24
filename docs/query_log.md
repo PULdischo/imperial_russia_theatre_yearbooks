@@ -8553,3 +8553,38 @@ missed-split reconstruction. No date/performance misattribution of the
 issue #78 kind found in this second batch either -- the errors remain
 OCR typos, work/annotation field mixups, and (once, on `1902-03_p022`)
 a missed split, not a shifted date or swapped theater.
+
+## 2026-09-24 — Full sweep of remaining single-page-season Repertoire renders (post-sweep verification queries)
+
+```sql
+-- duplicate-key check across all 422 single-page-season raw JSON files (via Python, not SQL)
+-- corpus-wide theater-column-count check (any page_id with <3 distinct theaters)
+SELECT page_id, COUNT(DISTINCT theater) AS n_theaters
+FROM raw.event_entry
+WHERE page_id LIKE 'repertoire_18%' OR page_id LIKE 'repertoire_19%'
+GROUP BY page_id
+HAVING COUNT(DISTINCT theater) < 3;
+```
+
+Result: 0 duplicate-key files (422/422 clean); 0 pages with fewer than 3
+theaters after the `repertoire_1906-07_p046` fix (was 1 before). Full
+sweep covered all ~412 remaining single-page renders across 24 parallel
+agent batches; see `docs/eval/known_issues.md` issue #79's final
+addendum and `docs/eval/run_history.csv` row
+`full_sweep_singlepage_2026-09-24` for the complete summary
+(event_entry 21308->23181, Repertoire gold-eval 94.9%->96.1%,
+validate_performance_dates.py verified rate 96.4% corpus-wide, 0
+genuine Repertoire quality flags, Musicians/Roster isolation confirmed
+byte-identical).
+
+```sql
+SELECT SUM(receipts_total_kopecks) FROM analysis.event_entry WHERE 0=1; -- not run; spot query only
+```
+
+Also ran, to confirm the 7 `receipts_parse_failed` flags: pulled
+`date_text`/`theater`/`receipts_text`/`printed_page_number` for each of
+the 7 flagged `event_id`s from `event_entry.csv` directly (not SQL --
+parsed CSV read), then manually compared each against its source scan
+image in `pdf/RepertoireTables/`. All 7 confirmed as genuine period
+typesetting defects (rubles unit "р." misprinted as "к."/"и."/"г." in
+the original print), left verbatim, no fix applied.

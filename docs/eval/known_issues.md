@@ -16612,3 +16612,83 @@ Musicians/Roster baselines unchanged.
 This was a SAMPLE (10 of ~422 single-page renders, roughly 2.4%), not a
 full sweep -- a full sweep of the remaining ~412 renders is still
 undone and not currently planned; revisit if RG wants that scope.
+
+**Addendum 2026-09-24 (same day): full sweep of all ~412 remaining
+renders, issue CLOSED.** RG asked for the full sweep. Dispatched 24
+parallel agent batches (2-3 per season, contiguous page ranges) each
+independently reading every assigned page's source scan against its
+extracted JSON and correcting on the spot, per the same methodology and
+verbatim-preservation rules as every prior round. Every one of the ~412
+remaining renders across all 10 single-page seasons was individually
+scan-verified -- not sampled. Two batches needed resuming mid-run after
+a network outage and, later, a session rate-limit; both resumed cleanly
+from their own last-reported progress with no lost work.
+
+**Aggregate results:** all 24 batches found at least one fix; the
+large majority of pages had at least one fix. Dominant error classes,
+consistent across every batch and matching the sample rounds above:
+OCR letter-level typos (ъ/ь confusion, Latin/Cyrillic homoglyphs, the
+fita/в/ф substitution recurring heavily on 1898-99's Pushkin-centennial
+pages); missed morning/evening splits (the most serious and recurring
+class -- silently dropped titles and receipts, sometimes cascading
+across several consecutive dates); bénéfice/benefit-announcement text
+miscategorized between `works` and `annotation` in both directions;
+cross-column bleed (one theater's content leaking into a neighbor's
+cell); and several multi-day cascading date-shift bugs, some affecting
+15-20+ sessions across two theater columns at once (e.g.
+`1900-01_p026`/`_p027`, `1903-04_p018`, `1898-99_p016`/`_p017`). Full
+per-page fix lists live in the individual agent completion reports
+(not reproduced here); `docs/query_log.md` was not used for this phase
+since it was pure raw-JSON editing, not database querying -- see the
+`docs/eval/run_history.csv` row `full_sweep_singlepage_2026-09-24` for
+the consolidated summary instead.
+
+**One structural bug found and fixed:** `repertoire_1906-07_p046` --
+the scan (2-12 Мая 1907) shows Маріинскій and Александринскій театръ
+printed with blank dashes for every one of the 11 dates (genuinely
+dark/closed), but the extraction had dropped both columns entirely
+instead of recording explicit `is_dark=True` placeholder sessions the
+way every sibling page does -- so the page silently had zero rows for
+2 of its 3 theaters instead of 22 dark placeholders. Fixed by adding
+all 22 missing dark sessions, scan-verified. A corpus-wide follow-up
+check (any single-page-season page with fewer than 3 distinct
+theaters) found zero other instances of this bug.
+
+**Post-sweep verification:**
+- All 422 single-page-season raw JSON files re-checked for duplicate
+  `(theater, date_text, session)` keys: 0 found.
+- `parse_and_validate.py` (`--page-headers` + `--printed-page-numbers`):
+  268 log entries, all either explicitly non-failure repair-log noise
+  or pre-existing Musicians/Administration repair patterns unrelated to
+  this sweep -- 0 genuine Repertoire validation failures.
+- `event_entry`: 21308 -> 23181 (+1873, recovered/split sessions from
+  the sweep).
+- `quality_checks.py`: 894 flags total, 0 in any Repertoire-specific
+  category (no `duplicate_event_key`, no `zero_dark_cells_*`) except 7
+  `receipts_parse_failed`. All 7 individually scan-verified: each is a
+  genuine period typesetting defect (the rubles unit "р." misprinted as
+  "к.", "и.", or "г." in the original 1902-1908 volumes) already
+  correctly transcribed verbatim -- confirmed against the actual page
+  image in every case, not assumed from the pattern. No fix needed or
+  applied.
+- `validate_performance_dates.py`: 96.4% verified corpus-wide (up from
+  the pre-sweep baseline), 0.2% unresolved, 0.1% no_date.
+- `entities.person`/`entities.person_wikidata_link`: 21168 roster
+  appearances, 2900 live people, 23 preserved candidate decisions --
+  byte-identical to the pre-sweep backup. Musicians/Roster isolation
+  held, as structurally guaranteed (Repertoire never populates
+  `person_entry`).
+- `eval_against_gold.py` Repertoire score: 94.9% -> 96.1% (584/608).
+- Pre-sweep database backed up to
+  `outputs/full_run_pre_promote_backup_2026-09-24_full_sweep/` before
+  rebuilding. `link_wikidata.py` and the HF/Cloud Run republish were
+  deliberately not run this round, per established convention (a
+  separate step, only on request).
+
+**Issue #79 is now fully closed**: every single-page-format Repertoire
+render (all ~422, 1898-99 through 1907-08) has been individually
+scan-verified at least once, and the split-day mislabeling bug, the
+one structural missing-column bug, and the general OCR/field-mixup
+backlog are all resolved. No further sweep of this season group is
+planned; a new gap would need new evidence, same as issue #79's own
+2 documented unresolved content gaps above.
