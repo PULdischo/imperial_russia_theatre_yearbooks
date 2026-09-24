@@ -8341,3 +8341,104 @@ where it's the top day) is not primarily attributable to a specific named
 event type (e.g. "free student matinee") captured in the annotation
 field; only a minority (~63 rows) have any annotation, and those are a
 mix of several different phrasings, not one dominant convention.
+
+## 2026-09-24 — Do the single-page seasons have problems capturing split days?
+
+RG asked directly whether there are real problems capturing morning/
+evening splits in the single-page-format seasons (1898-99-1907-08),
+following the weekday-distribution query above.
+
+```sql
+-- (page,theater,date) groups with more than 2 sessions -- structurally impossible
+SELECT page_id, theater, date_text, COUNT(*) n, string_agg(time_of_day, ',') sessions
+FROM raw.event_entry
+WHERE season IN (<10 single-page seasons>)
+GROUP BY 1,2,3 HAVING COUNT(*) > 2;
+-- Result: 0 rows.
+
+-- (page,theater,date) groups with exactly 2 sessions -- do they always pair morning+evening?
+WITH g AS (
+  SELECT page_id, theater, date_text,
+         string_agg(time_of_day, ',' ORDER BY time_of_day) AS combo, COUNT(*) n
+  FROM raw.event_entry
+  WHERE season IN (<10 single-page seasons>)
+  GROUP BY 1,2,3 HAVING COUNT(*) = 2
+)
+SELECT combo, COUNT(*) FROM g GROUP BY 1;
+-- Result: ('evening,morning', 1098) -- all 1098 two-row groups are a clean pair, no mismatched pairs.
+
+-- (page,theater,date) groups with exactly 1 session tagged morning or evening (no counterpart row at all)
+WITH g AS (
+  SELECT page_id, theater, date_text, COUNT(*) n,
+         string_agg(time_of_day, ',' ORDER BY time_of_day) combo
+  FROM raw.event_entry
+  WHERE season IN (<10 single-page seasons>)
+  GROUP BY 1,2,3
+)
+SELECT page_id, theater, date_text, n, combo FROM g WHERE combo IN ('morning','evening')
+ORDER BY page_id, theater, date_text;
+-- Result: 34 rows, on 7 distinct pages.
+```
+
+All 34 lone entries scan-verified page by page (source images in
+`pdf/RepertoireTables/ForUpload_<season>_Repertoire_<NNN>.jpg`):
+
+- **`repertoire_1906-07_p015`, 27 entries** (all 3 Moscow theaters,
+  dates 15-23 Ноября minus the 20 Понед. dark day): scan shows these
+  rows have no УТРО./ВЕЧЕРЪ. split structure printed at all -- each is a
+  single, ordinary performance. The `time_of_day='evening'` tag on all
+  27 is a mislabeling: the correct value is `unspecified`. The
+  performance, date, and receipts themselves are correctly captured in
+  every one of the 27; nothing is missing.
+- **`repertoire_1906-07_p034`, 3 entries** (Михайловскій, 2/3/4 Пятница-
+  Воскрес.): scan-confirmed same pattern -- no split printed for
+  Михайловскій on these 3 dates (Маріинскій/Александринскій do split
+  that day, Михайловскій doesn't), `time_of_day='morning'` should be
+  `unspecified`. No missing content.
+- **`repertoire_1901-02_p028`, 1 entry** (Михайловскій, 24 Воскрес.):
+  same pattern, scan-confirmed no split printed, should be
+  `unspecified`, no missing content.
+- **`repertoire_1898-99_p030`, 1 entry** (Михайловскій, 28 Воскрес.):
+  same pattern, scan-confirmed no split printed, should be
+  `unspecified`, no missing content.
+- **`repertoire_1905-06_p008`, 1 entry** (Маріинскій, 23 Воскрес.,
+  morning): DIFFERENT signature -- the scan explicitly prints a "УТРО."
+  label for this row (unlike the 32 above, which print no split label
+  at all), meaning a real ВЕЧЕРЪ. entry existed in the source. That
+  entry is genuinely absent from the DB: it is not on this render, not
+  on the next Petersburg render (`p010`, which resumes at "24 Понед."
+  with no continuation of "23 Воскрес."), and not on the intervening
+  Moscow render (`p009`, a different city's tables for the same date
+  range). **This is a confirmed real content gap, not a labeling
+  artifact** -- one evening performance's data (title, receipts) is
+  missing from the corpus entirely.
+- **`repertoire_1905-06_p005`, 1 entry** (Новый театръ, 1 Суббота.,
+  morning): AMBIGUOUS, not resolved. The scan shows a "УТРО." label (so,
+  like the p008 case above, a split may genuinely exist) but the row
+  sits at the very last line of the photographed page, cut off by the
+  physical page edge; the next render (`p006`) resumes at "2 Воскрес."
+  with no continuation. Could be a second genuine gap of the same kind
+  as `p008`, or could be a page genuinely printed with only a morning
+  show that day whose ВЕЧЕРЪ. label (if any) fell in unphotographed
+  space. Not distinguishable from the scan alone without the physical
+  volume.
+
+**Answer to RG's question: yes, there are two distinct real problems**,
+of very different severity:
+1. **A session-mislabeling bug, 32 of 34 cases** (all except the last
+   two above): a theater's single, unsplit performance on a date where
+   at least one OTHER theater on the same row genuinely splits gets
+   tagged `morning` or `evening` instead of `unspecified`. No
+   performance/receipts data is lost in any of these 32 -- this is a
+   metadata-correctness issue (a query filtering by `time_of_day` would
+   misclassify these), not a missing-content issue.
+2. **A genuine missing-evening-entry gap, at least 1 confirmed case (
+   `1905-06_p008`, Маріинскій 23 Воскрес.) and 1 unresolved candidate
+   (`1905-06_p005`, Новый театръ 1 Суббота.)**: real printed content
+   that the extraction never captured, both located at a page-image
+   boundary.
+
+Not yet fixed. This was a corpus-wide structural query across all 10
+single-page seasons (not limited to the earlier 6-page manual sample) --
+it is a full accounting of every lone morning/evening entry in the
+single-page-format corpus, not a further sample.
