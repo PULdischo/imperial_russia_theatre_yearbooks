@@ -142,10 +142,22 @@ into a new span only where styling or language changes.
 Styling flags describe how the text is PRINTED. They never change the
 characters:
 
-  "italic"
+  "italic"   sloped type
 
-Do not force emphasis where there is none: in some volumes French dance
-titles are set in ordinary roman type with no distinction at all.
+ITALIC MATTERS AND IS EASY TO MISS. In several volumes the French and
+Italian dance titles inside enumerated lists are set in italic while
+everything around them is upright. Compare each title against the text
+immediately beside it, not against the page as a whole.
+
+  {"text": "Solo des Etoiles doubles", "italic": true}
+  {"text": "—г-жи Мендесъ 1-я и Мендесъ 2-я."}
+
+Titles set this way come in RUNS: if one item's title is italic, check
+every sibling item in the same list.
+
+But do not force emphasis where there is none: in other volumes the very
+same French titles are set in ordinary upright roman with no distinction at
+all. Flag what is sloped on THIS page, and nothing else.
 
 ================================================================
 BLOCK TYPES

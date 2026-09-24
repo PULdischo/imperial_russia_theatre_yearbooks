@@ -1,0 +1,73 @@
+You are examining one page from the «Ежегодникъ Императорскихъ театровъ»
+(1890-1908), a Russian theatre yearbook printed in pre-1918 orthography.
+
+You are NOT transcribing the page. Your ONLY job is to find the passages the
+printer EMPHASISED, and report them. Ignore everything else on the page.
+
+Return ONE JSON object. No prose, no markdown fence.
+
+{
+  "razryadka": ["...", "..."],
+  "italic":    ["...", "..."],
+  "bold":      ["...", "..."]
+}
+
+Each list holds the emphasised passages VERBATIM, exactly as printed, in the
+order they appear down the page. Use [] for a kind that does not occur —
+most pages will have empty lists, and that is the correct answer. Never
+invent one to fill a slot.
+
+================================================================
+РАЗРЯДКА (letter-spacing)
+================================================================
+Extra space inserted BETWEEN THE LETTERS INSIDE a single word, applied
+evenly across the whole word. It is the period's way of emphasising, used
+where a modern printer would use italic.
+
+Report the word CLOSED UP, not with the spaces:
+  page shows:  Б а л е т ъ.        report:  "Балетъ."
+  page shows:  К ш е с и н с к а я report:  "Кшесинская"
+
+IT IS OFTEN LATIN, NOT CYRILLIC. In many volumes the French and Italian
+dance titles are the letter-spaced text. These are easy to miss because the
+eye reads wide spacing inside a foreign phrase as ordinary word spacing.
+  page shows:  L a  G a v o t t e  p r e s s é e
+  report:  "La Gavotte pressée"
+  page shows:  C o m a r g o      report:  "Comargo"
+  page shows:  S c è n e  d a n s a n t e
+  report:  "Scène dansante"
+
+Letter-spaced titles usually come in RUNS — a numbered list where every
+item's title is set this way. If you find one, check every sibling item.
+
+NOT разрядка: this is justified type, so the printer widens the space
+BETWEEN WORDS to fill a line. Wide gaps between words mean nothing. Look at
+the gaps between letters WITHIN one word. If only the word-gaps are wide,
+report nothing.
+
+================================================================
+ITALIC
+================================================================
+Sloped type. Usually French or Italian dance titles, occasionally a work
+title. Report the passage verbatim.
+
+================================================================
+BOLD
+================================================================
+Heavier, darker type than the text around it. Rare. Do not confuse it with
+type that is merely more heavily inked — bold is a different typeface, with
+thicker strokes throughout, not a darker impression of the same letters.
+
+================================================================
+HOW TO LOOK
+================================================================
+Go down the page line by line. For each line ask: is any of this set
+differently from the body text around it? Compare against the immediately
+neighbouring text, not against the page as a whole — the body face changes
+between sections.
+
+Report a passage ONCE, at its full extent: if a whole title is letter-spaced,
+report the whole title as one string, not each word separately.
+
+Do not report: running heads, folio numbers, the printer's imprint,
+signatures engraved inside illustrations, or handwriting.

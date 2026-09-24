@@ -1,0 +1,112 @@
+You are examining one page from the «Ежегодникъ Императорскихъ театровъ»
+(1890-1908), a Russian theatre yearbook printed in pre-1918 orthography.
+
+You are NOT transcribing the page. Your ONLY job is to judge, for passages on
+this page, whether the printer set them in a DIFFERENT TYPE from the body
+text around them — and if so, which.
+
+================================================================
+THE ONE MISTAKE THAT MATTERS
+================================================================
+Do not decide from WHAT A PASSAGE SAYS. Decide from HOW IT IS PRINTED.
+
+French and Italian dance titles — "Pas de trois", "Galop general",
+"Allegro", "Finale", "Polonaise" — appear constantly in these lists. In
+SOME volumes they are emphasised. In OTHERS they are set in exactly the
+same plain upright type as the Russian around them, with no distinction
+whatsoever. Both are common.
+
+So being a French dance title is NOT evidence of emphasis. A page can
+contain thirty French titles and no emphasis at all, and that is a normal
+page. If this page's titles are set in ordinary type, return empty lists.
+That is a correct and expected answer, not a failure to find anything.
+
+================================================================
+THE THREE KINDS, BY APPEARANCE
+================================================================
+"razryadka" — LETTER-SPACED. The letters within a single word are pushed
+    apart, evenly, across the whole word. The letterforms are the ORDINARY
+    UPRIGHT ONES; only the gaps change. It looks stretched.
+        Опера       set as   О п е р а
+        Mazurka     set as   M a z u r k a
+
+"italic" — SLOPED. The letters lean to the right and their shapes are
+    different from the upright face — narrower, more cursive, with curved
+    entry strokes. Spacing is NORMAL. It looks slanted, not stretched.
+        Marche des toreadors   in sloped, cursive letterforms
+
+    RAZRYADKA AND ITALIC ARE NOT THE SAME AND ARE NEVER CONFUSABLE ONCE
+    LOOKED AT. Stretched-but-upright is razryadka. Slanted-but-normally-
+    spaced is italic. If a passage is slanted, it is italic no matter how
+    wide it looks.
+
+"bold" — HEAVIER. Every stroke is thicker and darker than the surrounding
+    text, and the letterforms are upright and normally spaced. Bold is as
+    likely on these pages as the other two — do not treat it as exotic.
+    What it is NOT: type that is merely more heavily inked, blotchy, uneven
+    or darker in patches. That is a printing accident. Bold is uniform
+    across the whole passage and structural.
+
+================================================================
+WHAT IS NOT EMPHASIS
+================================================================
+* Justification. This is justified type: the printer widens the spaces
+  BETWEEN WORDS to fill out a line. Wide word-gaps mean nothing. Razryadka
+  is wide gaps BETWEEN LETTERS INSIDE one word.
+* Running heads and folio numbers — the furniture that repeats on every
+  page in its own face. Skip those.
+  A HEADING IS NOT SKIPPED. Section headings are frequently letter-spaced or
+  bold, and that is exactly the kind of mark to report. A short line standing
+  alone above a section, set in spaced-out or heavier type, belongs in the
+  list like any other passage.
+* Any passage merely because it is foreign, a title, a proper name, or
+  introduced by a number.
+
+================================================================
+HOW TO DECIDE
+================================================================
+For each passage you are tempted to report, compare it against the text
+IMMEDIATELY BESIDE IT on the same line or the line above. Ask:
+    - are the letters within its words pushed apart?   -> razryadka
+    - do the letters lean and change shape?            -> italic
+    - are the strokes uniformly thicker?               -> bold
+    - none of these?                                   -> do not report it
+
+WHEN YOU ARE UNSURE, REPORT IT ANYWAY and mark it "possible". A human
+reviews this list, so a wrong mark costs a moment to discard, while a mark
+you never report is one they will never see. Err towards reporting.
+
+  "confidence": "clear"     you can see the difference plainly
+  "confidence": "possible"  it may be set differently; you are not certain
+
+Still do not report a passage merely for being foreign, a title or a proper
+name — that is not uncertainty, it is guessing from the words. "Possible"
+means you saw something and are unsure what, not that you suspect something
+from the text.
+
+================================================================
+OUTPUT
+================================================================
+Return ONE JSON object. No prose, no markdown fence.
+
+{
+  "marks": [
+    {"text": "Опера.", "kind": "razryadka", "confidence": "clear",
+     "evidence": "letters within the word evenly spaced apart; upright"},
+    {"text": "Marche des toreadors", "kind": "italic", "confidence": "clear",
+     "evidence": "letters lean right and are cursive; spacing normal"},
+    {"text": "Аида", "kind": "bold", "confidence": "possible",
+     "evidence": "strokes look thicker than the line above, but inking is uneven here"}
+  ]
+}
+
+"text" is the passage VERBATIM as printed, closed up normally — for
+razryadka write "Опера", never "О п е р а".
+"evidence" is one short phrase naming what you actually SAW. Write it
+before you commit to "kind". If you cannot describe a visible difference,
+the passage does not belong in the list.
+
+An empty list — {"marks": []} — is the right answer when the page genuinely
+has no differently-set type, which is common. But if something looks
+different and you cannot say why, report it as "possible" rather than
+dropping it.
