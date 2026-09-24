@@ -8442,3 +8442,36 @@ Not yet fixed. This was a corpus-wide structural query across all 10
 single-page seasons (not limited to the earlier 6-page manual sample) --
 it is a full accounting of every lone morning/evening entry in the
 single-page-format corpus, not a further sample.
+
+## 2026-09-24 — Fixed the 32 session-mislabeled entries (single-page seasons)
+
+RG asked to fix the 32 confirmed session-mislabeling cases from the prior
+query (excluding the 2 genuine-gap cases, `1905-06_p005` and
+`1905-06_p008`, left untouched). Changed `session` from `morning`/
+`evening` to `unspecified` in place on the affected `outputs/full_run/
+raw/*.raw.json` files:
+
+- `repertoire_1898-99_p030`: 1 entry
+- `repertoire_1901-02_p028`: 1 entry
+- `repertoire_1905-06_p015`: 1 entry
+- `repertoire_1906-07_p015`: 27 entries
+- `repertoire_1906-07_p034`: 3 entries
+
+Total: 32. Two entries needed a direct fix pass after the first attempt
+under-matched (theater name field has an inconsistent trailing period
+within the same file in a couple of cases -- 'Новый театръ' vs 'Новый
+театръ.' -- so an exact-string match missed them on the first pass;
+matched by stripping the trailing period on retry).
+
+Verified via a full corpus-wide re-scan (all 10 single-page seasons):
+exactly 2 lone morning/evening entries remain, and they are precisely
+the 2 genuine-gap cases that were deliberately excluded -- confirms no
+over- or under-fixing. Zero duplicate (theater, date_text, session) keys
+on all 5 touched pages. Re-ran `parse_and_validate.py` + `quality_checks.py`:
+0 new validation errors, 0 Repertoire quality flags (887 total, unchanged
+baseline).
+
+The 2 genuine-gap cases (`1905-06_p005` Новый театръ 1 Суббота., 
+`1905-06_p008` Маріинскій театръ 23 Воскрес.) remain open -- real,
+scan-confirmed printed content (a ВЕЧЕРЪ. entry) that was never captured,
+not a labeling issue. Not investigated further this round.
