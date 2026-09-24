@@ -8135,3 +8135,26 @@ baseline).
 
 18 of 21 pages now checked in the second pass; 3 remain: `1897-98_pair020`,
 `1897-98_pair022`, `1897-98_pair024`.
+
+## 2026-09-23 — Second-pass verification, issue #78: pair020 (1897-98) clean, pair022 (1897-98) Михайловскій rebuild
+
+`1897-98_pair020` re-verified clean across all 20 dates -- zero changes.
+
+`1897-98_pair022`: Михайловскій was missing its entire 13-20 Марта stretch
+(8 dates) entirely, plus a separate error around the 21-22 Марта boundary
+-- the real content and receipts for 22 Воскресенье had been wrongly
+merged into 21 Суббота's entry (which on the scan has no receipts and a
+different annotation, a Dumas-monument benefit announcement), while two
+phantom page-margin-header artifacts ("21 марта."/"22 марта.") sat in the
+DB in place of real data. Also fixed two smaller mislabelings: "13 Мартъ."
+was a mislabeled "13 Пятница." for both Маріинскій (real content) and
+Большой (dark), and Большой's "23 Понед." wrongly carried 22
+Воскресенье's charity-concert annotation (the scan shows that
+announcement belongs only to 22 Воскресенье; 23 Понед. is genuinely dark,
+already correctly captured separately as "23 Понедѣльникъ.").
+
+Zero duplicate keys confirmed after all fixes. Re-ran validate +
+quality_checks: 0 errors, 0 Repertoire flags (887 total, unchanged
+baseline).
+
+20 of 21 pages now checked in the second pass; 1 remains: `1897-98_pair024`.
