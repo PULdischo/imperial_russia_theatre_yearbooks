@@ -8273,3 +8273,71 @@ tiny sample, a fuller sweep of the single-page-format seasons is probably
 worth doing at some point, but not urgently -- unlike issue #78, nothing
 found here misattributes a performance to the wrong date or theater,
 which was RG's stated top concern. This is lower-stakes cleanup work.
+
+## 2026-09-24 — Morning/evening split distribution, single-page-format seasons (1898-99–1907-08)
+
+RG asked how single-page-format seasons handle morning/evening session
+splits, after an initial 6-page sample suggested (wrongly) that splits
+cluster on Sundays.
+
+```sql
+-- total split events, all 10 single-page seasons
+SELECT COUNT(*) FROM raw.event_entry
+WHERE time_of_day IN ('morning','evening')
+  AND season IN ('1898-99','1899-00','1900-01','1901-02','1902-03',
+                  '1903-04','1904-05','1905-06','1906-07','1907-08');
+
+-- weekday distribution, corpus-wide
+SELECT strftime(CAST(COALESCE(c.corrected_date_undate, e.date_undate) AS DATE), '%A') AS weekday,
+       COUNT(*) AS n_split_events
+FROM raw.event_entry e
+JOIN analysis.event_entry_date_check c USING (event_id)
+WHERE e.time_of_day IN ('morning','evening')
+  AND e.season IN ('1898-99','1899-00','1900-01','1901-02','1902-03',
+                    '1903-04','1904-05','1905-06','1906-07','1907-08')
+GROUP BY 1 ORDER BY n_split_events DESC;
+
+-- weekday distribution, broken out by season
+SELECT e.season,
+       strftime(CAST(COALESCE(c.corrected_date_undate, e.date_undate) AS DATE), '%A') AS weekday,
+       COUNT(*) n
+FROM raw.event_entry e
+JOIN analysis.event_entry_date_check c USING (event_id)
+WHERE e.time_of_day IN ('morning','evening')
+  AND e.season IN ('1898-99','1899-00','1900-01','1901-02','1902-03',
+                    '1903-04','1904-05','1905-06','1906-07','1907-08')
+GROUP BY 1,2 ORDER BY 1, n DESC;
+
+-- annotation breakdown on Monday-morning splits specifically
+SELECT e.annotation, COUNT(*) n
+FROM raw.event_entry e
+JOIN analysis.event_entry_date_check c USING (event_id)
+WHERE e.time_of_day = 'morning'
+  AND e.season IN ('1898-99','1899-00','1900-01','1901-02','1902-03',
+                    '1903-04','1904-05','1905-06','1906-07','1907-08')
+  AND strftime(CAST(COALESCE(c.corrected_date_undate, e.date_undate) AS DATE), '%A') = 'Monday'
+GROUP BY 1 ORDER BY n DESC;
+```
+
+Result: 2,230 total morning/evening split events across the 10 single-page
+seasons. Corpus-wide weekday counts: Monday 992, Tuesday 306, Friday 218,
+Thursday 205, Saturday 198, Sunday 184, Wednesday 127 -- every day of the
+week appears, none at zero.
+
+Broken out by season, the corpus-wide Monday total is not representative
+of any individual season on its own -- it's an average over two distinct
+patterns: 1898-99 and 1899-00 each have Tuesday as the top day (115, 116
+events) with every other weekday, including Monday, in single or
+low-double digits; 1900-01 through 1907-08 (all 8 remaining seasons) each
+have Monday as the top day (84-164 events per season), with the
+second-place day varying season to season (Friday, Saturday, or
+Thursday) and no other single day close behind. In no season does one
+weekday account for all or nearly all splits -- every season has splits
+on every day of the week it was queried for, at varying counts.
+
+Of 496 Monday-morning split events specifically, 433 (87%) carry no
+`annotation` value at all -- the Monday concentration (in the 8 seasons
+where it's the top day) is not primarily attributable to a specific named
+event type (e.g. "free student matinee") captured in the annotation
+field; only a minority (~63 rows) have any annotation, and those are a
+mix of several different phrasings, not one dominant convention.
