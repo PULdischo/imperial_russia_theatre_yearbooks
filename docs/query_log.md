@@ -8087,3 +8087,51 @@ Zero duplicate keys confirmed after the fix. Re-ran validate + quality_checks:
 
 17 of 21 pages now checked in the second pass; 4 remain: `1897-98_pair010`,
 `1897-98_pair020`, `1897-98_pair022`, `1897-98_pair024`.
+
+## 2026-09-23 — Second-pass verification, issue #78: pair010 (1897-98) multiple cross-column bugs
+
+`1897-98_pair010` had the highest bug density of any page in the second
+pass -- five distinct issues, none of them simple gaps:
+
+1. Two page-margin month-header artifacts ("21 ноября."/"22 ноября.")
+   misread as real date rows during extraction (same failure class as
+   pair010 1896-97's "2 Ноября." and pair018 1895-96's "13 Понед."). "21
+   ноября." held real Маріинскій content that actually belongs under
+   "21 Пятница." (renamed, not deleted -- Маріинскій had no other entry
+   for that date). "22 ноября." entries (Маріинскій/Александринскій/
+   Малый) were pure phantom dark duplicates of "22 Суббота." (deleted).
+2. Александринскій "22 Суббота."/"23 Воскресенье." had cross-wired
+   content: 22 Суббота is genuinely a single unsplit session ("Die
+   versunkene Glocke", no receipts), but the DB had 23 Воскресенье
+   утро's real content (Горе отъ ума, 276 р. 55 к.) wrongly attached to
+   it as an "evening" session, while 23 Воскресенье утро itself wrongly
+   showed "Die versunkene Glocke" instead of its own content. Untangled
+   both.
+3. Михайловскій had phantom duplicate entries on TWO dates (16
+   Воскресенье, 30 Воскрес.) that were exact copies of Александринскій's
+   split sessions rather than its own real, unsplit content.
+4. On 30 Воскрес. specifically, this compounded into a second swap:
+   Большой showed Михайловскій's real content (Севильскій цирюльникъ) in
+   its own slot, while Большой's own true content (Сатанилла, бал.,
+   1164 р. 54 к.) was missing from the DB entirely. Untangled: Мих ->
+   Севильскій цирюльникъ, Бол -> Сатанилла.
+5. One OCR title typo: "Воробьишкъ" -> "Воробышекъ" (confirmed against a
+   clean crop; the source is legible, this was a straightforward misread).
+
+None of these were shifted-date attributions in the pair014 sense (no
+performance moved to a genuinely wrong day), but several put a
+performance under the wrong THEATER, which matters just as much for "the
+right performances end up associated with the correct dates" -- the date
+was right, the venue was wrong. All five would have been invisible to
+`quality_checks.py`'s duplicate/structural checks (each pairing that
+created a duplicate did so under content, not under a literal
+(theater, date, session) key clash for that pass -- the checks fired
+correctly where they applied, but couldn't detect a same-key swap or a
+different-date-string duplicate on their own).
+
+Zero duplicate keys confirmed after all fixes. Re-ran validate +
+quality_checks: 0 errors, 0 Repertoire flags (887 total, unchanged
+baseline).
+
+18 of 21 pages now checked in the second pass; 3 remain: `1897-98_pair020`,
+`1897-98_pair022`, `1897-98_pair024`.
