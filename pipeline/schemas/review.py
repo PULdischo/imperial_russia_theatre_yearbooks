@@ -100,11 +100,24 @@ class SpanLLM(BaseModel):
 
 
 def _as_list(v):
-    """Models routinely emit "" or null for an empty list. Re-parsing is free
-    and re-extraction is not, so repair rather than reject (the approach
-    known_issues.md #10-12 took for the tabular pipeline)."""
+    """Models routinely emit "" or null for an empty list, and sometimes a
+    bare string where a one-span list belongs. Re-parsing is free and
+    re-extraction is not, so repair rather than reject (the approach
+    known_issues.md #10-12 took for the tabular pipeline).
+
+    The bare-string case showed up in the 2026-09-24 annotation ablation:
+    the plain prompt, which does not spell the span contract out at length,
+    got `"caption": "Восп-ца Тарасова..."` on a figure block. Rejecting that
+    would have scored the ablation as a total failure on a page the model
+    actually read correctly, which would have measured the prompt's verbosity
+    rather than its effect on accuracy. Wrapping loses nothing: a bare string
+    carries no styling, so the one span it becomes is exactly what it says.
+    Lists pass through untouched, so nothing that already validated changes.
+    """
     if v in ("", None):
         return []
+    if isinstance(v, str):
+        return [{"text": v}]
     return v
 
 

@@ -16,9 +16,35 @@ THE DESIGN POINT, and the reason this is not a copy of eval_against_gold.py:
   a structural disagreement shows up as a structural finding instead of
   silently destroying the text score.
 
+  That was not enough. Sequence alignment tolerates insertions and deletions
+  but NOT a move: a block that is correct and merely somewhere else stops
+  being recognisable as matching, and the mismatch propagates. Measured on
+  gold page 03 (2026-09-24, run `lines-qwen3vl`), where the model placed a
+  63-character photo caption first and the gold places it seventh:
+
+      as returned              49% of gold characters aligned    CER 1.019
+      that one block moved     94%                               CER 0.082
+
+  One displaced block took an 8%-wrong page to 102% wrong and dragged the
+  corpus mean from ~0.039 to 0.121. So CER is now computed after matching
+  predicted blocks to gold blocks BY CONTENT and restoring them to gold's
+  order, and the ordering itself is scored separately as `order` -- §11 lists
+  reading order as its own metric precisely because it is a different kind of
+  error from misreading a letter. `cer_raw` keeps the as-returned number so
+  nothing is hidden by the repair.
+
+  Note this deliberately does NOT try to fix under-segmentation: when the
+  model returns one block where gold has thirty, the text still aligns fine
+  as one long run, and `struct` is the metric that reports it.
+
 Metrics
 -------
-cer                 headline: edit distance / gold length, over plain text
+cer                 headline: edit distance / gold length, over plain text,
+                    after restoring gold's block order (see above)
+cer_raw             the same, over the blocks exactly as returned
+order               fraction of matched block PAIRS in the same relative
+                    order as gold; 1.00 = reading order fully agrees
+blocks_moved        how many predicted blocks had to be moved
 folio_exact         printed folio matched
 block_type_ratio    similarity of the block-type sequence (structure only)
 <attr>_p / _r       precision and recall for разрядка / bold / italic / lang
@@ -42,7 +68,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from gold_reviews import is_filled_in, parse_gold_file
 from parse_reviews import repair
-from schemas.review import ReviewPageLLM, page_plain_text
+from schemas.review import (BlockLLM, ReviewPageLLM, block_plain_text,
+                            page_plain_text, spans_plain_text)
 
 # The marks docs/season_reviews.md §7 forbids normalising.
 PUNCT = ["«", "»", "„", "“", "—", "–", "-"]
@@ -111,14 +138,113 @@ def pr(gold: Counter, pred: Counter) -> tuple[float, float]:
     return p, r
 
 
+
+def _block_key(b: BlockLLM) -> str:
+    """The text a block contributes, normalised for matching only.
+
+    Caption is included because a figure block's text often lives entirely
+    there. Whitespace is collapsed so that a line-break disagreement cannot
+    stop two blocks from being recognised as the same block."""
+    return _norm(block_plain_text(b) + " " + spans_plain_text(b.caption))
+
+
+def align_blocks(gold: ReviewPageLLM, pred: ReviewPageLLM) -> list[int | None]:
+    """For each predicted block, the index of the gold block it best matches.
+
+    Greedy over all pairs, best similarity first, each gold block claimed at
+    most once -- good enough here and far easier to reason about than an
+    optimal assignment. The 0.6 floor is difflib's own conventional
+    "close enough" ratio; below it we would be inventing a correspondence.
+
+    Returns None for a predicted block with no gold counterpart (a genuine
+    insertion, e.g. a running head the gold does not record)."""
+    g_keys = [_block_key(b) for b in gold.blocks]
+    p_keys = [_block_key(b) for b in pred.blocks]
+    pairs = []
+    for pi, pk in enumerate(p_keys):
+        if not pk:
+            continue
+        for gi, gk in enumerate(g_keys):
+            if not gk:
+                continue
+            r = difflib.SequenceMatcher(None, gk, pk, autojunk=False).ratio()
+            if r >= 0.6:
+                pairs.append((r, pi, gi))
+    pairs.sort(key=lambda t: -t[0])
+    assign: list[int | None] = [None] * len(pred.blocks)
+    taken_g: set[int] = set()
+    for _, pi, gi in pairs:
+        if assign[pi] is None and gi not in taken_g:
+            assign[pi] = gi
+            taken_g.add(gi)
+    return assign
+
+
+def restore_order(pred: ReviewPageLLM,
+                  assign: list[int | None]) -> ReviewPageLLM:
+    """Predicted blocks sorted into gold's reading order.
+
+    A block with no gold counterpart keeps its place by inheriting the
+    position of the last block that did have one, so an unmatched block is
+    never flung to one end of the page."""
+    keys, last = [], -1.0
+    for i, gi in enumerate(assign):
+        if gi is not None:
+            last = float(gi)
+        else:
+            last += 1e-3           # just after whatever it followed
+        keys.append((last, i))     # original index breaks ties: stable
+    order = sorted(range(len(assign)), key=lambda i: keys[i])
+    return pred.model_copy(update={"blocks": [pred.blocks[i] for i in order]})
+
+
+def order_score(assign: list[int | None]) -> tuple[float, int]:
+    """(concordant fraction, blocks that had to move).
+
+    Over every PAIR of matched blocks, how often does the model present them
+    in the same relative order as the gold. Pairwise rather than positional
+    so that one block in the wrong place costs roughly one block's worth of
+    score, instead of shifting -- and so penalising -- every block after it.
+    """
+    idx = [gi for gi in assign if gi is not None]
+    if len(idx) < 2:
+        return 1.0, 0
+    good = tot = 0
+    for a in range(len(idx)):
+        for b in range(a + 1, len(idx)):
+            tot += 1
+            if idx[a] < idx[b]:
+                good += 1
+    moved = sum(1 for a, b in zip(idx, sorted(idx)) if a != b)
+    return good / tot, moved
+
+
 def score_page(gold: ReviewPageLLM, pred: ReviewPageLLM) -> dict:
-    g_text, p_text = page_plain_text(gold), page_plain_text(pred)
+    g_text = page_plain_text(gold)
+
+    # Reading order and transcription are different errors and are scored
+    # separately: CER over blocks put back in gold's order, `order` over the
+    # ordering itself. cer_raw keeps the as-returned figure.
+    assign = align_blocks(gold, pred)
+    ordered = restore_order(pred, assign)
+    ord_frac, moved = order_score(assign)
+
+    p_text = page_plain_text(ordered)
+    p_text_raw = page_plain_text(pred)
     dist = edit_distance(g_text, p_text)
+    dist_raw = edit_distance(g_text, p_text_raw)
+
+    def _cer(d: int, p: str) -> float:
+        return d / len(g_text) if g_text else (0.0 if not p else 1.0)
+
     row = {
         "gold_chars": len(g_text),
         "pred_chars": len(p_text),
         "edits": dist,
-        "cer": dist / len(g_text) if g_text else (0.0 if not p_text else 1.0),
+        "cer": _cer(dist, p_text),
+        "cer_raw": _cer(dist_raw, p_text_raw),
+        "order": ord_frac,
+        "blocks_moved": moved,
         "folio_exact": (gold.printed_folio or "") == (pred.printed_folio or ""),
         "gold_blocks": len(gold.blocks),
         "pred_blocks": len(pred.blocks),
@@ -127,6 +253,7 @@ def score_page(gold: ReviewPageLLM, pred: ReviewPageLLM) -> dict:
             [b.block_type for b in pred.blocks]).ratio(),
     }
     for attr in ("razryadka", "bold", "italic", "lang"):
+        # Multiset comparison, so ordering never mattered here.
         p, r = pr(marked(gold, attr), marked(pred, attr))
         row[f"{attr}_p"], row[f"{attr}_r"] = p, r
     row["punct_delta"] = {
@@ -180,6 +307,9 @@ def main() -> None:
         "run_id": args.run_id,
         "pages": n,
         "cer": sum(r["cer"] for r in rows) / n,
+        "cer_raw": sum(r["cer_raw"] for r in rows) / n,
+        "order": sum(r["order"] for r in rows) / n,
+        "blocks_moved": sum(r["blocks_moved"] for r in rows),
         "folio_exact": sum(r["folio_exact"] for r in rows) / n,
         "block_type_ratio": sum(r["block_type_ratio"] for r in rows) / n,
     }
@@ -188,16 +318,22 @@ def main() -> None:
         agg[f"{attr}_r"] = sum(r[f"{attr}_r"] for r in rows) / n
 
     lines = [f"run_id: {args.run_id}", f"pages scored: {n}", ""]
-    lines.append(f"{'page':40}{'CER':>8}{'edits':>8}{'blocks g/p':>12}"
-                 f"{'struct':>8}{'folio':>7}")
+    lines.append(f"{'page':38}{'CER':>8}{'raw':>8}{'edits':>7}"
+                 f"{'blocks g/p':>12}{'struct':>8}{'order':>7}{'mv':>4}"
+                 f"{'folio':>7}")
     for r in sorted(rows, key=lambda x: -x["cer"]):
-        lines.append(f"{r['page_id']:40}{r['cer']:>8.4f}{r['edits']:>8}"
+        lines.append(f"{r['page_id']:38}{r['cer']:>8.4f}{r['cer_raw']:>8.4f}"
+                     f"{r['edits']:>7}"
                      f"{str(r['gold_blocks'])+'/'+str(r['pred_blocks']):>12}"
-                     f"{r['block_type_ratio']:>8.2f}"
+                     f"{r['block_type_ratio']:>8.2f}{r['order']:>7.2f}"
+                     f"{r['blocks_moved']:>4}"
                      f"{'ok' if r['folio_exact'] else 'MISS':>7}")
     lines += ["", f"MEAN CER: {agg['cer']:.4f}   "
-                  f"folio exact: {agg['folio_exact']*100:.0f}%   "
-                  f"block-type similarity: {agg['block_type_ratio']:.2f}", ""]
+                  f"(as returned: {agg['cer_raw']:.4f})   "
+                  f"folio exact: {agg['folio_exact']*100:.0f}%", 
+              f"reading order: {agg['order']:.2f}   "
+              f"blocks moved: {agg['blocks_moved']}   "
+              f"block-type similarity: {agg['block_type_ratio']:.2f}", ""]
     for attr in ("razryadka", "bold", "italic", "lang"):
         lines.append(f"  {attr:10} P={agg[f'{attr}_p']:.2f}  R={agg[f'{attr}_r']:.2f}")
     deltas = Counter()

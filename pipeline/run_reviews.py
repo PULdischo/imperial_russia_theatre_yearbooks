@@ -78,8 +78,15 @@ def strip_fence(text: str) -> str:
 
 
 class Provider:
-    def __init__(self, name: str, model: str, max_tokens: int):
+    def __init__(self, name: str, model: str, max_tokens: int,
+                 temperature: float | None = None):
         self.name, self.model, self.max_tokens = name, model, max_tokens
+        # None = the provider's own default (was the only behaviour before
+        # 2026-09-24). Transcription is not a creative task: sampling makes
+        # the model sometimes emit a reading it ranked BELOW its best one,
+        # which is an avoidable error, and it is most of the run-to-run
+        # spread the eval measures. Default is 0.0 -- see --temperature.
+        self.temperature = temperature
         load_dotenv()
         if name == "dashscope":
             from openai import AsyncOpenAI
@@ -113,6 +120,8 @@ class Provider:
                     ]},
                 ],
                 max_tokens=self.max_tokens,
+                **({} if self.temperature is None
+                   else {"temperature": self.temperature}),
             )
             u = completion.usage
             usage = {
@@ -125,6 +134,8 @@ class Provider:
         msg = await self.client.messages.create(
             model=self.model,
             max_tokens=self.max_tokens,
+            **({} if self.temperature is None
+               else {"temperature": self.temperature}),
             system=system_prompt,
             thinking={"type": "adaptive"},
             messages=[{"role": "user", "content": [
@@ -202,7 +213,9 @@ async def main_async(args) -> None:
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
     provider = Provider(args.provider, args.model or DEFAULTS[args.provider],
-                        args.max_tokens)
+                        args.max_tokens,
+                        None if args.temperature < 0
+                        else args.temperature)
     sem = asyncio.Semaphore(args.max_concurrent)
 
     print(f"{len(rows)} pages | provider={args.provider} model={provider.model} "
@@ -250,6 +263,12 @@ def main() -> None:
     ap.add_argument("--model", default=None)
     ap.add_argument("--prompt", default="review_system.txt")
     ap.add_argument("--max-tokens", type=int, default=16000)
+    ap.add_argument("--temperature", type=float, default=0.0,
+                    help="0 = always take the model's best reading "
+                         "(default; right for verbatim transcription). "
+                         "Pass -1 to send no temperature at all and use "
+                         "the provider default, which is what every run "
+                         "before 2026-09-24 did.")
     ap.add_argument("--max-concurrent", type=int, default=6)
     ap.add_argument("--only", nargs="*", default=None, help="page_id(s) only")
     ap.add_argument("--limit", type=int, default=None)
