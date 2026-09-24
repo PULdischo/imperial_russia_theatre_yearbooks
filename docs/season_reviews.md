@@ -369,6 +369,35 @@ the prompt is not that the distinction is worthless — it is that identifying
 French vs Italian is a *text* problem that should not be paid for at vision
 time, where it also measurably competes with transcription accuracy.
 
+### What the gold set does and does not represent
+
+Measured 2026-09-24 against 60 non-gold pages, stratified across all 41
+season/city/genre groups and all 17 seasons:
+
+| | gold (12 pages) | out of sample (60) |
+|---|---|---|
+| pages containing an enumerated list | 42% | **17%** |
+| items carrying a printed enumerator | 85% | 81% |
+
+The enumerator ratio generalises. **The prevalence of lists does not** — the
+gold set over-represents list-heavy pages by roughly 2.5x, because those
+pages were deliberately chosen to stress the hardest layouts. A day of
+prompt work on segmentation was therefore work on about a sixth of the
+corpus, and anyone reading the eval numbers should scale their sense of the
+problem accordingly.
+
+Worse, segmentation measured on the gold does not survive contact with
+unseen pages. On the gold the model marked all 47 enumerators. Out of
+sample it marked **29 while its own transcribed text contained 90** — it
+reads the items correctly and files two thirds of them as ordinary prose.
+That is the overfitting risk of tuning against twelve pages, measured
+rather than feared.
+
+Bold is a second, opposite case: the gold contains exactly **one** bold
+mark, which is a sampling artefact and not a fact about the corpus (RG,
+2026-09-24: bold is not uncommon). Bold recall therefore cannot be measured
+from this gold set at all, in either direction.
+
 ### The governing rule
 
 **Base text accuracy outranks every annotation.** If the annotation-heavy
