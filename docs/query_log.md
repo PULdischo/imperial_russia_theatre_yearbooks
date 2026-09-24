@@ -7984,3 +7984,52 @@ Session paused here at RG's request (mid-second-pass). Remaining pages not
 yet re-verified: 1894-95_pair010 (RG-markup, highest first-pass confidence
 already), 1895-96_pair018, 1895-96_pair020, 1896-97_pair010, 1897-98_pair002,
 1897-98_pair010, 1897-98_pair020, 1897-98_pair022, 1897-98_pair024 (8 of 21).
+
+## 2026-09-23 — Second-pass verification, issue #78: pair018 (1895-96) major rebuild
+
+Continuing the second pass. `1894-95_pair010` (RG's own hand-markup page,
+highest first-pass confidence) re-verified clean: all 27 dates across 5
+theaters matched perfectly, only one tiny OCR typo fixed ("Странчій подъ
+столомъ" -> "Стряпчій подъ столомъ", confirmed against the correctly-
+spelled instance of the same title elsewhere on the same page).
+
+`1895-96_pair018` needed a much bigger rebuild than the first pass caught:
+
+1. **3-4 Февраля**: the first-pass fix hardcoded `receipts_text=None` for
+   every Маріинскій/Александринскій/Малый session added that day, despite
+   all figures being clearly printed on the scan (8 receipts added). Also,
+   Маріинскій genuinely splits into two sessions on 3 Суббота
+   (Конекъ-горбунокъ 2892р70к morning / Вертеръ 2939р30к evening) but only
+   one was captured. Separately, Большой's PRE-EXISTING data for these two
+   dates (never touched by the first-pass fix, since Большой wasn't
+   flagged as missing) had real column-bleed corruption: annotation fields
+   contained garbled fragments of Малый's neighboring cell text
+   ("Темная Анна Кер Гуверна" instead of blank; "Золот На тотъ" instead of
+   "Бенефисъ кордебалета."), and work-title lists were mangled/truncated.
+   Rebuilt both Большой sessions from a fresh scan read.
+2. **11-27 Февраля**: the first pass assumed (based on a pattern confirmed
+   on two OTHER pages, 1891-92 pair018/pair020) that Александринскій and
+   Маріинскій were genuinely dark for this whole guest-troupe stretch,
+   with only Михайловскій active. That assumption was wrong on THIS page:
+   Александринскій ran its own separate German Schauspiel troupe on every
+   single date (Die Venus von Milo, Der Dornenweg, Die Mütter, Das Glück
+   im Winkel, Die Haubenlerche, Comtesse Guckerl -- 16 dates, all added),
+   and Маріинскій ran its own guest opera ("Гибель Фауста") on 4 of those
+   dates (odd Mon/Wed/Fri pattern: 19, 21, 23, 25 Февраля). Also caught and
+   fixed a first-pass labeling bug: the row between 11 Воскрес. and
+   13 Вторникъ had been mislabeled "13 Понед." instead of "12 Понед."
+   (confirmed against Михайловскій's own untouched, correctly-labeled
+   data for the same row).
+3. **Большой, 20-27 Февраля**: missing entirely (not even a dark marker).
+   20-24 and 27 are genuinely dark; 25 Воскрес has a real charity-concert
+   entry ("Въ пользу фонда на учрежденіе... Музыкально-литературный вечеръ
+   съ живыми картинами.", 4933 р.) that had never been captured at all.
+
+This is the largest single-page correction of the second pass so far --
+16 of 21 pages checked, this being the only one needing a rebuild this
+size. Verified zero duplicate keys after each edit (caught and fixed one
+duplicate-key mistake of my own mid-fix: forgot to remove the pre-existing
+dark Маріинскій entries before adding the 4 real Гибель Фауста sessions).
+Re-ran `parse_and_validate.py` + `quality_checks.py`: 0 Repertoire quality
+flags, 887 total (unchanged pre-existing Musicians/Roster baseline), zero
+new validation errors on either touched page.
