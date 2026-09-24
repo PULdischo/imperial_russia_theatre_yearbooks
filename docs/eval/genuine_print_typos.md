@@ -1,0 +1,116 @@
+# Genuine print typos and typesetting quirks
+
+A running collection of confirmed errors and oddities in the *original*
+1890–1908 yearbook printing itself — not extraction or OCR errors. Every
+entry here was scan-verified directly against the source page image
+before being added; per this project's verbatim-preservation rule
+(`CLAUDE.md`), none of these are "corrected" anywhere in the dataset —
+they're transcribed exactly as printed, dropped letters, wrong words,
+worn type and all.
+
+Kept here purely because they're a nice trace of the actual human hands
+that set this type by hand under deadline, well over a century ago. Add
+to it as new ones turn up — no format requirements, just: what's printed,
+what it "should" say, where, and why it's confirmed genuine rather than
+an extraction slip.
+
+## Dropped or added letters
+
+- **`repertoire_1903-04_p010`, "4 Ворникъ."** — should be "Вторникъ"
+  (Tuesday); the compositor dropped the т. Printed identically across
+  all three theater columns on the row, so it's not a one-column slip —
+  the whole row shares one printed date label.
+- **`repertoire_1899-00_p037`, "9 Четвергъ."** — appears out of sequence
+  between "3 Среда" and "5 Пятница"; the scan confirms the page really
+  does print it there, misnumbered, not a transcription reordering.
+
+## Wrong word / misheard-by-the-typesetter substitutions
+
+- **German operetta program, `repertoire_1904-05` range: "Husarenlieber"**
+  for "Husarenliebe" — an extra letter, print-original.
+- **"Das aite Heim"** for "Das alte Heim" — a worn/broken "l" glyph in
+  the actual printing block, confirmed by zoom; reads as "aite" on the
+  page itself.
+- **`repertoire_1900-01_p030`: "Denice"** for "Denise" — a genuine period
+  spelling variant in the print, not a misread.
+
+## Receipts-figure typos (rubles marker "р." misprinted)
+
+A recurring class: the compositor printed the *kopecks* marker's letter
+("к.", or a lookalike) where the *rubles* marker "р." belongs, sometimes
+twice in the same figure. All confirmed by direct scan comparison —
+these are why `quality_checks.py`'s `receipts_parse_failed` flag will
+never go to zero, by design:
+
+- `repertoire_1901-02_p026`: "1495 д. 25 к."
+- `repertoire_1901-02_p011`: "263 д. 64 к."
+- `repertoire_1902-03_p019`: "876 к. 18 к."
+- `repertoire_1904-05_p009`: "736 к. 49 н."
+- `repertoire_1905-06_p017`, `_p018`, `_p043`: same pattern
+- `repertoire_1906-07_p021`: "1041 и. 53 к."
+- `repertoire_1906-07_p023`: "701 г. 06 к."
+- `repertoire_1906-07_p035`: "433 к. 45 к."
+- `repertoire_1907-08_p000`: "1055 к. 04 к."
+- `repertoire_1907-08_p024`: "1107 к. 62 к."
+- `repertoire_1901-02` range: "7166 р. 87 г." (kopecks marker garbled
+  this time, rubles marker fine)
+
+## Misprinted day numbers (weekday word right, digit wrong)
+
+The compositor's eye clearly tracked the weekday correctly but slipped on
+the day number — confirmed because the printed sequence becomes
+internally consistent again the moment you assume the digit is off by
+one:
+
+- **`repertoire_1904-05_p014`**: "28 Понед." printed directly after
+  "28 Воскрес." with no "29" anywhere — should be "29 Понед."
+- **`repertoire_1905-06_p027`**: "23 Вторн." printed directly after
+  "23 Понед." with no "24" — should be "24 Вторн."
+- **`repertoire_1905-06_p036`**: "16 Среда." printed before "16 Четв."
+  with no "15" — should be "15 Среда."
+- **`repertoire_1907-08_p036`**: header prints "9" where the table
+  itself (cross-checked against the neighboring page) actually starts
+  at day 6.
+
+## Wrong weekday word entirely (date_undate correct, printed word isn't)
+
+- **`repertoire_1891-92_pair004`**: "1 Вторн./2 Среда/3 Четверг." across
+  all 5 theater columns — should read "1 Воскр./2 Понед./3 Вторникъ".
+  The calendar date was already right; only the printed weekday word is
+  wrong, in the original.
+- **`repertoire_1894-95_pair008`**: "25 Суббота." — scan confirms the
+  print, but 25 Jan 1895 was actually a Среда (Wednesday). Left as
+  printed.
+- **`repertoire_1893-94_pair004`**: "13 Среда." — re-zoomed to rule out
+  a misread "15"; the digit is genuinely 13 in print, but 13 Sept 1893
+  was a Monday, not Wednesday.
+
+## A whole misprinted date-range header
+
+- **`repertoire_1902-03_p008`**: the page's own printed date-range
+  header literally reads "22 ноября. 1902 г. 3 октября." — November
+  before October. The table's internal "Ноябрь" divider row proves the
+  true order is Oct 22 – Nov 3. Header text kept exactly as printed;
+  only the derived calendar field uses the corrected order.
+
+## People: a patronymic misprinted the same way across multiple editions
+
+- **Орchestra roster entry, 1903-04 & 1907-08 editions**: patronymic
+  printed "Вавиловичъ" where nine other editions of the same person's
+  entry print "Васильевичъ" — confirmed genuinely printed that way (not
+  a misread) on both source PDFs directly, page and item number checked.
+- **Симонова Марія Петровна / Сапожникова Анна Іосифовна / Анкудинова
+  Ольга Евгеніевна**: each has one edition printing a birth/service year
+  a decade off from every other edition of the same person's entry — a
+  recurring one-edition defect across multiple, unrelated print runs,
+  not a single bad batch.
+- **Рахмановъ Сергѣй Павловичъ**: two separate editions (1905-06 and
+  1907-08) both print his *brother* Викторъ's service-start year ("1903")
+  onto his own line — the same error, independently repeated in two
+  different print runs years apart.
+
+---
+
+*Started 2026-09-24. Harvested from `docs/eval/known_issues.md`'s
+scan-verification history plus that day's single-page-season full sweep;
+add new finds here as they turn up.*
