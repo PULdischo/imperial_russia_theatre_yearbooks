@@ -16455,8 +16455,76 @@ Takeaway carried forward: a page having "already fixed once" status, or
 matching a pattern confirmed elsewhere, is not evidence it's correct --
 only reading its own scan is.
 
-**Not yet re-verified (7 of 21 remaining)**: `1895-96_pair020`,
-`1896-97_pair010`, `1897-98_pair002`, `1897-98_pair010`, `1897-98_pair020`,
-`1897-98_pair022`, `1897-98_pair024`. No consolidated rebuild/promotion
-has been done for this round's fixes yet; that, plus finishing the
-remaining pages, is the next-session work.
+**Continued 2026-09-23/24, session resumed a second time: second pass
+COMPLETE.** All 7 remaining pages checked: `1895-96_pair020` clean;
+`1896-97_pair010` had three bugs (a phantom duplicate under a fabricated
+date label "2 Ноября.", a wrongly-merged morning/evening split on
+Михайловскій "14 Четвергъ.", and Малый missing its entire 22 Пятница -
+30 Суббота tail); `1897-98_pair002` had a duplicate-key bug hiding behind
+two spellings of the same date ("31 Воскресенье."/"31 Воскрес.",
+"2 Вторникъ."/"2 Вторник"), invisible to the exact-match duplicate check;
+`1897-98_pair010` had the highest bug density of the whole pass -- two
+more page-margin date-label artifacts, a cross-wired Александринскій
+session pair (22 Суббота's single session had 23 Воскресенье's real
+morning content wrongly attached as a fabricated evening slot, while
+23 Воскресенье's own morning showed 22's content instead), and a
+Михайловскій/Большой theater-attribution swap repeated on two separate
+dates (16 Воскресенье, 30 Воскрес.) where Михайловскій showed a phantom
+copy of Александринскій's split and, on 30 Воскрес., Большой's own real
+content was completely missing, replaced by Михайловскій's; `1897-98_pair020`
+clean; `1897-98_pair022` was missing Михайловскій's entire 13-20 Марта
+stretch (8 dates) plus a receipts/annotation mixup across the 21-22 Марта
+boundary; `1897-98_pair024` had Малый missing its entire 12 Воскресенье.
+split and a charity-benefit annotation misattached to the wrong Suббота
+(phantom copy on 18 Суббота, real home on 11 Суббота, which was also
+missing a third work).
+
+**Second pass closed out in full: all 21 of the 21 partial-subset pages
+independently re-checked against the scans.** Final tally: 12 pages
+clean on first re-check; 9 pages had real, previously-uncaught errors
+(one of them, `1897-98_pair014`, had ALREADY been individually fixed
+once this issue and still had two more bugs on re-check). Every error
+found this pass was invisible to `quality_checks.py`'s automated
+structural checks -- each was internally self-consistent (no duplicate
+keys under an exact string match, no validation failures) until read
+against the scan line by line. New failure classes surfaced beyond the
+simple "present theater, missing date range" gap that characterized the
+first pass:
+
+- **Duplicate dates hiding behind spelling variants** -- the same
+  calendar date entered twice under two different date_text strings
+  (e.g. "2 Вторник" vs "2 Вторникъ.", "31 Воскрес." vs "31 Воскресенье."),
+  invisible to any check that matches dates by exact string.
+- **Page-margin text misread as a date row** -- month-header or
+  page-signature text near a real row misread as if it were its own
+  date, producing either a phantom duplicate (delete) or, when the
+  extraction stole a neighboring real row's content, a mislabeled entry
+  that needs renaming rather than deleting.
+- **Cross-column content bleed** -- one theater's annotation or work
+  title appearing, garbled or verbatim, inside a neighboring theater's
+  cell in the DB, not on the scan.
+- **Theater-to-theater attribution swaps** -- a whole session's content
+  correct in every detail except which theater it's filed under.
+- **An inherited "genuinely dark" assumption that didn't hold on a new
+  page** -- a pattern confirmed correct on one page (`1891-92_pair018`/
+  `pair020`) was applied to a different page (`1895-96_pair018`) where it
+  was wrong; two OTHER theaters ran their own full, independent guest
+  seasons throughout the exact date range the pattern predicted would be
+  dark.
+
+A consolidated full-chain rebuild was run after the last fix
+(`build_duckdb.py` -> `validate_performance_dates.py` -> `build_entities.py`),
+backed up first to `outputs/full_run_pre_promote_backup_2026-09-24_secondpass_complete/`.
+Baselines confirmed unchanged: `raw.person_entry` 21168 (byte-identical),
+`entities.person` 2900 live / 1459 tombstoned, `entities.person_candidate`
+23 pairs preserved, `entities.person_wikidata_link` 43 (untouched, as
+expected -- `link_wikidata.py` deliberately not re-run this round).
+`validate_performance_dates.py`'s corpus-wide verified rate rose
+96.4% -> 96.5%. `quality_flags.csv` stayed at 0 Repertoire flags
+throughout every fix. Spot-checked the rebuilt `.duckdb` directly (not
+just the raw JSON) to confirm at least one fix -- `pair014`'s
+Михайловскій Январь tail -- reached `analysis.event_entry` correctly.
+
+Actual HF/Cloud Run republish not done this round, matching the
+project's established practice of treating promotion/publish as a
+separate, later, explicitly-requested step.

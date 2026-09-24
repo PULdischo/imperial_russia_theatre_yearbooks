@@ -8158,3 +8158,53 @@ quality_checks: 0 errors, 0 Repertoire flags (887 total, unchanged
 baseline).
 
 20 of 21 pages now checked in the second pass; 1 remains: `1897-98_pair024`.
+
+## 2026-09-24 — Second-pass verification, issue #78: pair024 (1897-98) COMPLETE — all 21 pages checked
+
+`1897-98_pair024`, the last of the 21 partial-subset pages: two real
+errors found.
+
+1. Малый was missing its entire "12 Воскресенье." split (present on the
+   scan -- morning "Джентльмэнъ" 1369 р. 80 к., evening "И въ рукахъ было,
+   да сплыло"/"За чѣмъ пойдешь, то и найдешь" 681 р. 13 к. -- absent from
+   the DB, which had it as a single dark=True entry).
+2. Александринскій "11 Суббота." was missing a third work ("Музыкальное
+   отдѣленіе.") and its own charity-benefit annotation ("Спектакль въ
+   пользу Общества попеченія о слабосильныхъ и выздоравливающихъ."). That
+   exact annotation text had instead been misattached to "18 Суббота.",
+   which is genuinely dark on the scan with no such announcement --
+   removed the phantom copy there and restored it to its real home on
+   11 Суббота., where the scan shows an explicit "УТРО." label confirming
+   the session type too (fixed from unspecified to morning).
+
+Zero duplicate keys confirmed after the fix. Re-ran validate +
+quality_checks: 0 errors, 0 Repertoire flags (887 total, unchanged
+baseline).
+
+**This closes the second-pass verification pass in full: all 21 of the
+21 partial-subset pages have now been independently re-checked against
+the scans, distinct from and in addition to the first pass's own read.**
+Summary across the whole second pass:
+- 12 pages confirmed clean on first re-check, zero changes.
+- 9 pages had real errors caught and fixed, none of them visible to any
+  automated structural check (all internally self-consistent -- no
+  duplicate keys, no validation failures) until the scan was re-read
+  line by line: `1894-95_pair014`, `1896-97_pair002`, `1896-97_pair006`,
+  `1896-97_pair010`, `1897-98_pair002`, `1897-98_pair010`,
+  `1897-98_pair014` (already partially fixed once and STILL had two more
+  bugs), `1897-98_pair022`, `1897-98_pair024`, plus the major
+  `1895-96_pair018` rebuild.
+- Failure classes found this pass, beyond the simple "missing date range"
+  gap already characteristic of issue #78's first pass: phantom
+  duplicate entries under a second spelling of the same date (invisible
+  to exact-string duplicate checks), page-margin month-header text
+  misread as a real date row, cross-column content bleed (one theater's
+  annotation or works appearing in a neighboring theater's cell),
+  theater-to-theater content swaps on a single date, and a wrong
+  "genuinely dark" assumption carried over from a different page's
+  confirmed pattern.
+
+Next step: a consolidated full-chain rebuild (`build_duckdb.py` ->
+`validate_performance_dates.py` -> `build_entities.py`), baseline
+verification (Musicians/Roster untouched, quality_flags.csv still 0),
+and a `known_issues.md` closing summary -- not yet done this session.
