@@ -8654,3 +8654,65 @@ filled the gap in for these two synthetic rows. Fixed by copying the
 real (Михайловскій) session on the same page onto the 22 placeholders.
 Rebuilt the full chain: `no_date` 22 -> 0, `verified` 22357 -> 22379
 (96.5%), exact +22 match. Musicians/Roster numbers unchanged.
+
+## 2026-09-24 — Check the remaining `unresolved` and `corrected` date-check rows
+
+```sql
+SELECT e.page_id, COUNT(*), MIN(e.date_text), MAX(e.date_text)
+FROM analysis.event_entry_date_check c
+JOIN raw.event_entry e ON e.event_id = c.event_id
+WHERE c.date_confidence = 'corrected'
+GROUP BY e.page_id ORDER BY 2 DESC;
+
+SELECT e.page_id, COUNT(*)
+FROM analysis.event_entry_date_check c
+JOIN raw.event_entry e ON e.event_id = c.event_id
+WHERE c.date_confidence = 'unresolved'
+GROUP BY e.page_id ORDER BY 2 DESC;
+```
+
+**`unresolved` (40 rows, 10 pages)**: scan-verified every page.
+
+- **Two genuine extraction bugs found and fixed** (not print defects):
+  `repertoire_1898-99_p020` (8 rows) had the Alexandrinsky column's
+  `month_text` wrongly captured as "декабря" for 5 January dates (1, 2,
+  3, 10, 11), while Маріинскій/Михайловскій correctly say "января" for
+  the same dates -- scan confirms all are genuinely January performances.
+  `repertoire_1903-04_p020` (1 row) had one Alexandrinsky evening
+  session's `month_text` say "Январь" instead of "декабря", inconsistent
+  with its own morning sibling on the same printed date. Fixed both
+  (`month_text` corrected to match the sibling sessions/scan), rebuilt:
+  `unresolved` 40->31, `verified` 22379->22388 (96.6%), exact +9 match.
+- **The remaining 31 unresolved rows are all confirmed genuine period
+  print defects**, left verbatim: `repertoire_1899-00_p037` (3, already
+  documented, out-of-sequence "9 Четвергъ"), `repertoire_1898-99_p017`
+  (3, "28 Среда." printed after a 12-day gap), `repertoire_1904-05_p011`
+  (3, "23 Пятница." should be "5 Пятница."), `repertoire_1905-06_p023`
+  (4, New Year's Day mislabeled "1 Вторникъ" instead of Sunday),
+  `repertoire_1906-07_p041` (3, "6 Понед." should be "6 Пятница."), plus
+  the two-page-spread residuals `repertoire_1892-93_pair024` (5, "2
+  Вторн." should be Sunday), `repertoire_1893-94_pair004` (5) and
+  `repertoire_1894-95_pair008` (5) -- both already investigated in
+  earlier sessions, re-confirmed genuine. All added to
+  `docs/eval/genuine_print_typos.md`.
+
+**`corrected` (91 rows, 4 pages)**: this bucket is the pipeline's own
+conservative auto-correction (only fires on a run of >=2 consecutive
+rows agreeing on the same day-shift, per `validate_performance_dates.py`'s
+module docstring). Spot-verified `repertoire_1905-06_p028` (31 rows, the
+largest single-page-season instance) directly: confirmed it's not a
+fresh bug but the same defect as the already-fixed
+`repertoire_1905-06_p027` (`23 Вторн.` -> really day 24) rippling
+forward -- computed true weekdays directly (Jan 24 1906 = Tuesday,
+matching `p027`'s existing fix; Jan 25 = Wednesday, but `p028` prints
+"25 Четвергъ." = Thursday, one day ahead) and confirmed the whole
+10-row run is internally consistent under a uniform +1 shift. Every row
+within each of the 4 `corrected` pages shares one identical drift value
+across every theater column (`repertoire_1890-91_pair020`: -1,
+`repertoire_1892-93_pair014`: +4, `repertoire_1899-00_p027`: +3,
+`repertoire_1905-06_p028`: +1) -- the self-consistency plus the
+`p027`/`p028` cross-page corroboration gives high confidence in the
+existing correction; not exhaustively scan-verified row by row.
+
+Rebuilt full chain after the two `month_text` fixes: Musicians/Roster
+byte-identical, `quality_flags.csv` unchanged (894/7 receipts flags).

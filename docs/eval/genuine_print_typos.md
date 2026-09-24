@@ -71,6 +71,24 @@ one:
 - **`repertoire_1907-08_p036`**: header prints "9" where the table
   itself (cross-checked against the neighboring page) actually starts
   at day 6.
+- **`repertoire_1904-05_p011`**: "23 Пятница." printed directly after
+  "4 Четв." with no "5" anywhere — should be "5 Пятница."
+- **`repertoire_1898-99_p017`**: "28 Среда." printed directly after
+  "15 Вторн.", skipping days 16–27 entirely, as an isolated inserted
+  row — the whole gap and its weekday label are exactly as printed.
+- **`repertoire_1905-06_p027`/`p028`, a two-page cascade**: `p027`'s
+  "23 Вторн." (see above) is really day 24; the compositor's day-count
+  then stayed one behind truth for the rest of that page AND rolled
+  onto the next page — `p028`'s whole 25 Янв.–3 Февр. run (10 rows,
+  all 3 theaters) prints weekday words that are internally consistent
+  with each other but one day ahead of the true Julian calendar
+  throughout. Confirmed by computing true weekdays directly (Jan 24
+  1906 = Tue, matching `p027`'s fix; Jan 25 = Wed, but `p028` prints
+  "25 Четвергъ." = Thu) — not a fresh defect, the same dropped day
+  rippling forward. `validate_performance_dates.py` catches this whole
+  class automatically (a run of ≥2 consecutive pages/rows agreeing on
+  one consistent day-shift) and corrects the derived calendar date
+  without touching the verbatim `date_text`.
 
 ## Wrong weekday word entirely (date_undate correct, printed word isn't)
 
@@ -84,6 +102,16 @@ one:
 - **`repertoire_1893-94_pair004`**: "13 Среда." — re-zoomed to rule out
   a misread "15"; the digit is genuinely 13 in print, but 13 Sept 1893
   was a Monday, not Wednesday.
+- **`repertoire_1892-93_pair024`**: "2 Вторн." — legible despite sitting
+  right on the binding fold. The surrounding sequence (30 Пятн.=Fri,
+  3 Понедѣльн.=Mon, 4 Вторникъ.=Tue…) is only internally consistent if
+  May 2, 1893 was a Sunday, not a Tuesday — the compositor mislabeled
+  it.
+- **`repertoire_1905-06_p023`**: "1 Вторникъ" for New Year's Day — the
+  surrounding sequence (28 Среда→29 Четвергъ→30 Пятница→31 Суббота)
+  makes Jan 1 a Sunday, not the printed Tuesday.
+- **`repertoire_1906-07_p041`**: "6 Понед." printed right after
+  "5 Четвергъ." — should be "6 Пятница." per the sequence.
 
 ## A whole misprinted date-range header
 
