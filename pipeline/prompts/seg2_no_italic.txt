@@ -15,6 +15,13 @@ line by line. If a word is broken across a line, keep BOTH the hyphen and the
 newline: "возобновле-\nніемъ". Do not join it up. The examples below show
 this; copy their shape.
 
+THE SECOND MOST COMMON FAILURE IS LUMPING A NUMBERED LIST INTO ONE BLOCK.
+A page that prints "12) ... 13) ... 14) ..." is THREE blocks, not one, and a
+page with thirty items is thirty blocks — numbered, lettered or unlabelled
+alike. Each gets its own
+"enumerated_list" block with its own "enumerator". The examples below show
+three in a row; copy their shape.
+
 ================================================================
 EXACT OUTPUT SHAPE — use these key names precisely
 ================================================================
@@ -41,8 +48,29 @@ EXACT OUTPUT SHAPE — use these key names precisely
       "block_type": "enumerated_list",
       "enumerator": "1)",
       "spans": [
-        {"text": "Pas de\ndeux", "italic": true},
+        {"text": "Pas de\ndeux", "lang": "fr"},
         {"text": "—г-жа Кшесин-\nская 2-я."}
+      ]
+    },
+    {
+      "block_type": "enumerated_list",
+      "enumerator": "2)",
+      "spans": [
+        {"text": "Variations", "lang": "fr"},
+        {"text": "—г-жа Сѣдова."}
+      ]
+    },
+    {
+      "block_type": "enumerated_list",
+      "enumerator": "a)",
+      "spans": [ {"text": "г. Н. Легатъ;"} ]
+    },
+    {
+      "block_type": "enumerated_list",
+      "enumerator": "",
+      "spans": [
+        {"text": "Solo de Vénus", "lang": "fr"},
+        {"text": "—г-жа Рославлева."}
       ]
     },
     {
@@ -116,7 +144,7 @@ characters:
 
   "razryadka"  letter-spaced emphasis
   "bold"
-  "italic"
+  "lang"       "ru" | "fr" | "de" | "it" | "la"
 
 CRITICAL — THIS IS THE EASIEST MISTAKE TO MAKE:
 span "text" always contains the NORMAL, CLOSED-UP word. Letter-spacing is
@@ -139,6 +167,11 @@ fill a line. That is justification and means NOTHING. Разрядка is extra
 space BETWEEN THE LETTERS INSIDE a single word, applied consistently across
 the whole word, and it carries meaning. If only the gaps between words look
 wide, set no flag.
+
+LANGUAGE: tag non-Russian spans. Note that ballet vocabulary mixes French
+and Italian in the same sentence — "Pas de deux" and "Entrée" are French,
+but "Adagio", "Coda", "Ballabile" and "Tarantella" are Italian. Do not tag
+everything non-Cyrillic as French. Russian text needs no lang tag.
 
 Do not force emphasis where there is none: in some volumes French dance
 titles are set in ordinary roman type with no distinction at all.
@@ -172,7 +205,27 @@ BLOCK TYPES
 "enumerated_list"   A run of labelled items, each naming a dance, scene or
                     decoration followed by the people responsible. Set
                     "enumerator" to the label EXACTLY as printed — "1)",
-                    "б)", or "" when there is none. Emit one block per item.
+                    "б)", or "" when there is none.
+
+                    ONE BLOCK PER ITEM. Never merge items.
+                    page shows: 12) Danse des esclaves—г-жи Трефилова,
+                                Кякштъ. 13) Scene mimique—г-жа Павлова.
+                    WRONG: one block holding both.
+                    RIGHT: {"enumerator": "12)", ...},
+                           {"enumerator": "13)", ...}
+                    The items often run on within the same printed line and
+                    even start mid-line. That does not join them.
+                    Sub-items lettered a) b) c) are blocks in their own
+                    right too, in the order printed.
+
+                    A LABEL IS NOT REQUIRED. Many volumes print the same
+                    structure with no enumerator at all — a run of dance
+                    titles each followed by its performers:
+                        Solo de Vénus—г-жа Рославлева.
+                        Entrée de l'Étoile polaire—г-жа Грачевская 1-я.
+                    These are still "enumerated_list", one block each, with
+                    "enumerator": "". Do not demote them to "paragraph"
+                    merely because they are unnumbered.
 "figure"            An image. Set "figure_subtype". Transcribe its caption
                     into "caption". If the caption is set sideways (rotated
                     90 degrees, common on full-page plates), still transcribe

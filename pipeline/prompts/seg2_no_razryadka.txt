@@ -15,6 +15,13 @@ line by line. If a word is broken across a line, keep BOTH the hyphen and the
 newline: "возобновле-\nніемъ". Do not join it up. The examples below show
 this; copy their shape.
 
+THE SECOND MOST COMMON FAILURE IS LUMPING A NUMBERED LIST INTO ONE BLOCK.
+A page that prints "12) ... 13) ... 14) ..." is THREE blocks, not one, and a
+page with thirty items is thirty blocks — numbered, lettered or unlabelled
+alike. Each gets its own
+"enumerated_list" block with its own "enumerator". The examples below show
+three in a row; copy their shape.
+
 ================================================================
 EXACT OUTPUT SHAPE — use these key names precisely
 ================================================================
@@ -27,13 +34,13 @@ EXACT OUTPUT SHAPE — use these key names precisely
   "blocks": [
     {
       "block_type": "heading",
-      "spans": [ {"text": "Балетъ.", "razryadka": true} ]
+      "spans": [ {"text": "Балетъ."} ]
     },
     {
       "block_type": "paragraph",
       "spans": [
         {"text": "въ послѣдній спектакль была\nдана опера "},
-        {"text": "«Евгеній Онѣгинъ»"},
+        {"text": "«Евгеній Онѣгинъ»", "bold": true},
         {"text": "."}
       ]
     },
@@ -43,6 +50,27 @@ EXACT OUTPUT SHAPE — use these key names precisely
       "spans": [
         {"text": "Pas de\ndeux", "italic": true, "lang": "fr"},
         {"text": "—г-жа Кшесин-\nская 2-я."}
+      ]
+    },
+    {
+      "block_type": "enumerated_list",
+      "enumerator": "2)",
+      "spans": [
+        {"text": "Variations", "italic": true, "lang": "fr"},
+        {"text": "—г-жа Сѣдова."}
+      ]
+    },
+    {
+      "block_type": "enumerated_list",
+      "enumerator": "a)",
+      "spans": [ {"text": "г. Н. Легатъ;"} ]
+    },
+    {
+      "block_type": "enumerated_list",
+      "enumerator": "",
+      "spans": [
+        {"text": "Solo de Vénus", "italic": true, "lang": "fr"},
+        {"text": "—г-жа Рославлева."}
       ]
     },
     {
@@ -114,31 +142,9 @@ into a new span only where styling or language changes.
 Styling flags describe how the text is PRINTED. They never change the
 characters:
 
-  "razryadka"  letter-spaced emphasis
+  "bold"
   "italic"
   "lang"       "ru" | "fr" | "de" | "it" | "la"
-
-CRITICAL — THIS IS THE EASIEST MISTAKE TO MAKE:
-span "text" always contains the NORMAL, CLOSED-UP word. Letter-spacing is
-recorded by the FLAG, never by putting spaces between the letters.
-
-  page shows:  Б а л е т ъ.
-  WRONG:  {"text": "Б а л е т ъ.", "razryadka": true}
-  RIGHT:  {"text": "Балетъ.",      "razryadka": true}
-
-  page shows:  К ш е с и н с к а я
-  WRONG:  {"text": "К ш е с и н с к а я", "razryadka": true}
-  RIGHT:  {"text": "Кшесинская",          "razryadka": true}
-
-Literal letter-spacing in the text corrupts the transcription and every
-search over it. Close the word up. Always.
-
-РАЗРЯДКА vs JUSTIFICATION — read this carefully:
-This is justified type, and the printer widens the space BETWEEN WORDS to
-fill a line. That is justification and means NOTHING. Разрядка is extra
-space BETWEEN THE LETTERS INSIDE a single word, applied consistently across
-the whole word, and it carries meaning. If only the gaps between words look
-wide, set no flag.
 
 LANGUAGE: tag non-Russian spans. Note that ballet vocabulary mixes French
 and Italian in the same sentence — "Pas de deux" and "Entrée" are French,
@@ -177,7 +183,27 @@ BLOCK TYPES
 "enumerated_list"   A run of labelled items, each naming a dance, scene or
                     decoration followed by the people responsible. Set
                     "enumerator" to the label EXACTLY as printed — "1)",
-                    "б)", or "" when there is none. Emit one block per item.
+                    "б)", or "" when there is none.
+
+                    ONE BLOCK PER ITEM. Never merge items.
+                    page shows: 12) Danse des esclaves—г-жи Трефилова,
+                                Кякштъ. 13) Scene mimique—г-жа Павлова.
+                    WRONG: one block holding both.
+                    RIGHT: {"enumerator": "12)", ...},
+                           {"enumerator": "13)", ...}
+                    The items often run on within the same printed line and
+                    even start mid-line. That does not join them.
+                    Sub-items lettered a) b) c) are blocks in their own
+                    right too, in the order printed.
+
+                    A LABEL IS NOT REQUIRED. Many volumes print the same
+                    structure with no enumerator at all — a run of dance
+                    titles each followed by its performers:
+                        Solo de Vénus—г-жа Рославлева.
+                        Entrée de l'Étoile polaire—г-жа Грачевская 1-я.
+                    These are still "enumerated_list", one block each, with
+                    "enumerator": "". Do not demote them to "paragraph"
+                    merely because they are unnumbered.
 "figure"            An image. Set "figure_subtype". Transcribe its caption
                     into "caption". If the caption is set sideways (rotated
                     90 degrees, common on full-page plates), still transcribe
