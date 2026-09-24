@@ -254,8 +254,14 @@ def score_page(gold: ReviewPageLLM, pred: ReviewPageLLM) -> dict:
     }
     for attr in ("razryadka", "bold", "italic", "lang"):
         # Multiset comparison, so ordering never mattered here.
-        p, r = pr(marked(gold, attr), marked(pred, attr))
+        gm, pm = marked(gold, attr), marked(pred, attr)
+        p, r = pr(gm, pm)
         row[f"{attr}_p"], row[f"{attr}_r"] = p, r
+        # Raw counts as well, because averaging the per-page rates is
+        # badly misleading on a sparse attribute -- see main().
+        row[f"{attr}_hit"] = sum((gm & pm).values())
+        row[f"{attr}_gold"] = sum(gm.values())
+        row[f"{attr}_pred"] = sum(pm.values())
     row["punct_delta"] = {
         PUNCT_NAMES[ch]: p_text.count(ch) - g_text.count(ch)
         for ch in PUNCT if g_text.count(ch) or p_text.count(ch)
@@ -313,9 +319,25 @@ def main() -> None:
         "folio_exact": sum(r["folio_exact"] for r in rows) / n,
         "block_type_ratio": sum(r["block_type_ratio"] for r in rows) / n,
     }
+    # Corpus-wide (micro-averaged) precision/recall, NOT the mean of the
+    # per-page rates.
+    #
+    # These attributes are sparse: разрядка appears on 2 of the 12 gold
+    # pages, bold on 1. A page where gold and prediction are both empty
+    # scores a trivial 1.0, so averaging per-page rates mostly averages
+    # those. Until 2026-09-24 this reported разрядка P=R=0.83 and bold
+    # P=R=0.92 -- which read as "usually right" but was exactly
+    # (10 x 1.0 + 2 x 0.0)/12: the model found NONE of the 7 real разрядка
+    # marks and none of the 1 bold mark. Pooling hits over the corpus
+    # instead gives 0.00, which is the truth.
     for attr in ("razryadka", "bold", "italic", "lang"):
-        agg[f"{attr}_p"] = sum(r[f"{attr}_p"] for r in rows) / n
-        agg[f"{attr}_r"] = sum(r[f"{attr}_r"] for r in rows) / n
+        hit = sum(r[f"{attr}_hit"] for r in rows)
+        g_n = sum(r[f"{attr}_gold"] for r in rows)
+        p_n = sum(r[f"{attr}_pred"] for r in rows)
+        agg[f"{attr}_p"] = hit / p_n if p_n else (1.0 if not g_n else 0.0)
+        agg[f"{attr}_r"] = hit / g_n if g_n else (1.0 if not p_n else 0.0)
+        agg[f"{attr}_gold_n"] = g_n
+        agg[f"{attr}_pred_n"] = p_n
 
     lines = [f"run_id: {args.run_id}", f"pages scored: {n}", ""]
     lines.append(f"{'page':38}{'CER':>8}{'raw':>8}{'edits':>7}"
@@ -334,8 +356,11 @@ def main() -> None:
               f"reading order: {agg['order']:.2f}   "
               f"blocks moved: {agg['blocks_moved']}   "
               f"block-type similarity: {agg['block_type_ratio']:.2f}", ""]
+    lines.append("attributes (corpus-wide, not a per-page average):")
     for attr in ("razryadka", "bold", "italic", "lang"):
-        lines.append(f"  {attr:10} P={agg[f'{attr}_p']:.2f}  R={agg[f'{attr}_r']:.2f}")
+        lines.append(f"  {attr:10} P={agg[f'{attr}_p']:.2f}  R={agg[f'{attr}_r']:.2f}"
+                     f"   ({agg[f'{attr}_gold_n']} in gold, "
+                     f"{agg[f'{attr}_pred_n']} predicted)")
     deltas = Counter()
     for r in rows:
         for k, v in r["punct_delta"].items():

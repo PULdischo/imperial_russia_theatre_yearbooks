@@ -164,7 +164,7 @@ the page.
 
 | Type | Notes |
 |---|---|
-| `heading` | Includes lettered subsections (`в) Балетъ.`) and ornamental headpieces containing **printed** text |
+| `heading` | Includes lettered subsections (`в) Балетъ.`) and ornamental headpieces containing **printed** text. **NOT run-in introducers** — see below |
 | `paragraph` | Running prose — the bulk |
 | `verse` | Quoted poetry. **Exempt from line-rejoining** (§7) |
 | `cast_list` | Role → performer runs, prose-set or block-set |
@@ -174,6 +174,37 @@ the page.
 | `footnote` | Kept with its page, in printed order, at the foot |
 | `byline` | Rare; appears only in later seasons |
 | `other` | **Catch-all. Never discard text.** |
+
+### Headings are rare, and introducers are not headings
+
+**RG, 2026-09-24, and this is the general rule, not a ruling on one phrase:
+"If I tag them, it will be because of what they say, not their formatting."**
+
+The vision pass records **form** — what the printer did. Meaning is assigned
+**later, from the finished text**, where it can be revised for free. So
+`Танцовали:`, `роли исполняли:` and `исполнено было:` are `paragraph`: in
+form they are run-in sentence openings, set in the same type as the prose
+they belong to. That they *function* as introducers to the list below is a
+statement about content, and content is the later pass's job (deferred item 1
+already splits `enumerated_list` the same way).
+
+This is also the test for whether any future field belongs in the extraction
+prompt at all. `lang` failed it — "which language is this" is a question
+about meaning, and it turned out to be answerable from the characters
+downstream at 100% rather than from the model at 10%. Разрядка, bold and
+italic pass the test in principle, being purely typographic; разрядка fails
+in practice for separate reasons (see below).
+
+The model over-applies `heading` to exactly these introducers — across five
+runs of the `seg2` prompt it called `Танцовали:` a heading every time, and
+twice promoted a figure caption as well. Actual headings across the twelve
+gold pages: **one** (`Балетъ.`, page 06), which the model finds 5 times in 5
+without needing разрядка — short text alone on a line is cue enough.
+
+**This will change.** Headings stay rare in the season reviews proper, but
+jubilee and obituary material (not yet in the corpus) carries many more, so
+the block type earns its place and the convention is worth fixing now rather
+than after those volumes arrive (§13).
 
 `other` is load-bearing: without a legal home, unclassifiable text is text a
 model will quietly drop. Anything unrecognised goes into `other` verbatim and
@@ -295,21 +326,48 @@ Empirically, across volumes:
 But **the convention is not stable across the corpus.** The same job — marking
 a dance title — is done by разрядка in 1899-00, by italic in 1897-98 Moscow,
 and by *nothing at all* in 1902-03 BalletSP, where French titles sit in plain
-roman. Typography alone therefore cannot find titles, which is the strongest
-argument for the `lang` tag: on some volumes it is the only handle.
+roman. Typography alone therefore cannot find titles. **Script detection can**, on
+every volume and regardless of how the printer set them — a Latin-script run
+is a Latin-script run whether it is letter-spaced, italic, or plain roman.
+This was originally the argument for the `lang` tag; it is now the argument
+for not needing one (see "Language" below).
 
-### Language
+### Language — Russian vs non-Russian only, and not the model's job
 
-The vocabulary includes `de` even though German is of little research
-interest, because **the slot protects the French set**: with no home for
-German, the model must either mislabel it as French or drop the tag, and
-mislabelling pollutes exactly the set that matters.
+**RG, 2026-09-24: the only distinction she needs is Russian vs
+non-Russian.** French vs Italian vs German is not required, now or later.
 
-The distinction that matters for ballet is **French vs. Italian**: `Adagio`,
-`Coda`, `Grand ballabile`, `Tarantella` are Italian and sit inside the same
-lists as `Pas de deux` and `Scène dansante`. A model tagging everything
-non-Cyrillic as `fr` is wrong on precisely the technical vocabulary at the
-centre of the subject.
+That collapses the whole problem, because the distinction she wants is
+**recoverable from the characters themselves**, with no model involvement:
+
+| | |
+|---|---|
+| model asked to tag `lang` | **10%** recall (5 of 52 spans) |
+| script detection over the gold text | **100%** (48/48) |
+| script detection over the model's text | ~80%, and every miss is a place the model misread the characters, not a tagging failure |
+
+All 52 lang-tagged spans in the gold contain Latin letters and **zero**
+contain Cyrillic. The rule is exact, deterministic, free, and runs over text
+already on disk, so it never costs a vision call and can be re-run whenever.
+
+**Therefore `lang` is dropped from the extraction prompt** (`seg2_trim.txt`,
+2026-09-24). Nothing is lost that RG wants. This supersedes the earlier
+rationale on this page — that the `de` slot had to exist to "protect the
+French set" from mislabelling, and that French-vs-Italian was the
+distinction that mattered for ballet. Both were reasoning about a
+requirement RG has since said she does not have.
+
+The `Lang` enum stays in `schemas/review.py`: it costs nothing unused, gold
+pages already typed carry `<l fr>` tags, and reinstating the field later
+would otherwise mean a schema change. Nothing populates it from vision.
+
+**A language-ID pass remains available and RG explicitly wants that door left
+open** ("we can do one later if it's helpful"). It is cheap to add whenever:
+it runs over finished text, needs no vision call, and can be iterated or
+thrown away without re-extracting anything. The point of dropping `lang` from
+the prompt is not that the distinction is worthless — it is that identifying
+French vs Italian is a *text* problem that should not be paid for at vision
+time, where it also measurably competes with transcription accuracy.
 
 ### The governing rule
 
