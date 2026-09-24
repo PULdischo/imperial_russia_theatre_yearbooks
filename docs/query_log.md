@@ -8066,3 +8066,24 @@ Re-ran validate + quality_checks: 0 errors, 0 Repertoire quality flags
 16 of 21 pages now checked in the second pass; 5 remain:
 `1897-98_pair002`, `1897-98_pair010`, `1897-98_pair020`, `1897-98_pair022`,
 `1897-98_pair024`.
+
+## 2026-09-23 — Second-pass verification, issue #78: pair002 (1897-98) duplicate-date-spelling bug
+
+`1897-98_pair002`: found and fixed a duplicate-key bug invisible to the
+`duplicate_event_key` structural check because it hides behind two
+different spellings of the same date. The original whole-page
+reconstruction added Александринскій sessions for "31 Воскресенье." and
+"2 Вторникъ." without checking whether that date already existed under a
+different date_text spelling -- it did, as "31 Воскрес." and "2 Вторник"
+(no trailing "ъ."/"ъ"), both with byte-identical works and receipts. Since
+the two spellings are different strings, the exact-match duplicate check
+never caught it. Removed the two newer duplicates (kept the pre-existing
+short-form entries, matching the spelling convention Большой/Малый
+already used for the same two dates on this page). Rest of the page
+(20 dates, 5 theaters) verified clean against the scan.
+
+Zero duplicate keys confirmed after the fix. Re-ran validate + quality_checks:
+0 errors, 0 Repertoire flags (887 total, unchanged baseline).
+
+17 of 21 pages now checked in the second pass; 4 remain: `1897-98_pair010`,
+`1897-98_pair020`, `1897-98_pair022`, `1897-98_pair024`.
