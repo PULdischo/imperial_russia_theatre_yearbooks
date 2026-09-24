@@ -15995,6 +15995,19 @@ format** -- it's a false-positive artifact of print convention, not
 evidence of corruption. Any future prioritized list built from this
 signal needs to filter these out first.
 
+**CORRECTION, 2026-09-24 (see issue #80): this conclusion was wrong.**
+Re-checked `pair022` directly against the scan with a tight crop of the
+date-label margin and found the weekday word IS printed on every row
+("9 Пятница.", "10 Суббота.", etc.) -- it was dropped during
+extraction, not absent from the source. The "day + month, no weekday"
+format never existed as a real print convention; it was an artifact of
+the extraction gap itself. This was a genuine, previously
+mischaracterized bug affecting 629 sessions across 63 pages, now fixed
+-- see issue #80 for the full investigation and fix. Left this section
+unedited above (rather than deleted) so the reasoning trail stays
+honest about the wrong turn, per this project's own convention of never
+silently erasing a superseded conclusion.
+
 Went back to direct scan verification for `repertoire_1892-93_pair022`
 per RG's instruction (`printed_page_numbers/1892-93.csv`: spans
 1893-04-09 to 1893-04-21, PDF page index 10, rendered at 300dpi).
@@ -16692,3 +16705,105 @@ one structural missing-column bug, and the general OCR/field-mixup
 backlog are all resolved. No further sweep of this season group is
 planned; a new gap would need new evidence, same as issue #79's own
 2 documented unresolved content gaps above.
+
+## Issue #80: two-page-spread seasons -- dropped weekday word in
+`date_text`, corpus-wide, 629 sessions / 63 pages -- CLOSED
+
+Found while sizing which `intra_block_disagreement` rows (issue #79's
+closure left this metric's two-page-spread side largely uninvestigated,
+see that issue's addendum) were worth a scan-verification pass. RG
+asked "don't all pages have a weekday word?" when told the earlier
+conclusion (issue #78's addendum, "false-positive artifact of print
+convention") -- a fair challenge that turned out to be right.
+
+**Re-investigated from scratch rather than trusting the existing
+write-up.** Direct scan comparison on `repertoire_1892-93_pair022`
+(one of the pages the earlier conclusion called clean) found the
+weekday word clearly printed on every row -- "9 Пятница.", "10
+Суббота.", "11 Воскресенье.", confirmed with a tight crop of the
+date-label margin. The dataset stored `"9 апрѣля."` (day + month
+only). Spot-checked 4 more pages across 4 more seasons
+(`1892-93_pair008`, `1893-94_pair010`, `1894-95_pair016`,
+`1890-91_p015`) -- every one showed the identical pattern: weekday
+genuinely printed, silently dropped from `date_text`. The "no-weekday
+date format" the earlier session documented never existed as a real
+print convention; it was the extraction gap itself, mistaken for a
+format quirk because every row on the worst-affected pages was
+uniformly missing it.
+
+**Sizing** (corpus-wide scan of all `outputs/full_run/raw/
+repertoire_*_pair*.raw.json` / two-page-spread `p0NN` files, checking
+for a weekday-word stem in `date_text`): 629 of 8092 two-page-spread
+sessions (7.8%) had no weekday word, across 63 of 98 pages. Only 3
+pages were *fully* affected (every session); the other 60 were
+partial -- some sessions on the page had it, some didn't, invisible
+to any per-page "clean/dirty" heuristic. Heavily concentrated in
+1892-93 (25.6% of that whole season, vs 2.9-10.4% everywhere else),
+but genuinely present in every one of the 8 two-page-spread seasons.
+
+**Fix**: dispatched 4 parallel agent batches (63 pages split ~16/batch,
+balanced by session count) to scan-verify and restore the weekday word
+for each affected date, using a folio-number-based render lookup
+(`printed_page_numbers/*.csv` gives each page's physical folio number;
+`split_page_numbers_final.csv` maps folio -> source render + half --
+built and verified as a reusable, reliable page-to-scan lookup, more
+robust than trial-and-error render guessing). Methodology: locate the
+date-label margin column, read the exact weekday word as printed
+(preserving whatever abbreviation length/punctuation/ъ-ь spelling the
+row actually shows -- never normalized), append it to `date_text` for
+every theater column sharing that date, verbatim-preservation rule
+applied throughout (a genuinely typo'd or damaged weekday word gets
+transcribed as-is, not silently corrected).
+
+**Result**: 629 -> 70 flagged as still no-weekday after the fix, and
+of those 70, 69 were confirmed by direct inspection to already be
+complete, short-but-valid abbreviations ("Субб.", "Пон.", "Воск.")
+that the sizing script's crude weekday-stem regex simply didn't
+recognize -- not real gaps. **Exactly one genuine unresolved case**:
+`repertoire_1892-93_pair022`, "11 апрѣля." (5 sessions across all 5
+theaters) -- the weekday word sits exactly on the book's binding
+gutter and is illegible in this scan; left as printed rather than
+guessed, matching this project's standing rule for physically damaged
+text.
+
+**Post-fix verification**: 0 duplicate-key files across the corpus
+except one pre-existing collision surfaced (not caused) by the fix --
+`repertoire_1891-92_pair012`, two Александринскій "29 Воскрес."
+sessions both stuck at `session: "unspecified"` instead of
+morning/evening (a distinct, unrelated session-labeling gap); resolved
+by assigning morning/evening from each session's own content (the
+solo-Гамлетъ entry vs. the comedy double-bill). `parse_and_validate.py`:
+0 new genuine validation failures (same 268 log lines / 7 genuine
+non-Repertoire entries as before). `validate_performance_dates.py`:
+`verified` 96.6%->97.7%, `intra_block_disagreement` 662->391 (271
+rows resolved corpus-wide, single-page-season's own already-explained
+13 untouched). `quality_checks.py`: unchanged (894 flags, 7
+`receipts_parse_failed`, 0 genuine Repertoire flags).
+Musicians/Roster: byte-identical (21168 roster appearances, 2900 live
+people, 23 preserved candidate decisions). Backed up first to
+`outputs/full_run_pre_promote_backup_2026-09-24_weekday_restore/`.
+
+**Follow-ups flagged during the fix, not yet individually resolved**
+(each narrow enough to revisit on its own, none blocking):
+- `repertoire_1890-91_pair016`, "14 Января." (Александринскій): the
+  row sits exactly on the binding fold; the applied weekday
+  ("Понед.") is a convention-match, not a clean direct read.
+- `repertoire_1894-95_pair016` day 18 and `repertoire_1892-93_pair002`
+  days 26/27: applied weekday is moderate-confidence, page edge
+  partially cut/torn in this particular scan.
+- `repertoire_1893-94_pair016`: Малый and Михайловскій have
+  suspected duplicate/near-duplicate entries split across two
+  adjacent dates with matching or near-matching receipts -- noticed
+  in passing while fixing this page's weekday collision, not
+  investigated.
+- `repertoire_1893-94_pair012`: pre-existing mislabeled-date bug --
+  the stored "22 Среда." session actually contains day 21's content.
+  Unrelated to the weekday fix, left as found.
+- `repertoire_1897-98_pair016`: the "18 Воскрес." session's actual
+  content (по receipts/works) matches what should be day 19's
+  session instead. Unrelated to the weekday fix, left as found.
+
+**Issue #80 is closed** for its own stated scope (restore the dropped
+weekday word). The five follow-ups above are new, narrower, separate
+findings -- worth their own look if RG wants to continue pulling this
+thread, but not required to consider this issue done.

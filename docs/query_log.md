@@ -8716,3 +8716,32 @@ existing correction; not exhaustively scan-verified row by row.
 
 Rebuilt full chain after the two `month_text` fixes: Musicians/Roster
 byte-identical, `quality_flags.csv` unchanged (894/7 receipts flags).
+
+## 2026-09-24 — Issue #80: dropped weekday word in date_text, two-page-spread seasons
+
+```sql
+-- sizing (via Python, not SQL): scanned every outputs/full_run/raw/repertoire_*_pair*.raw.json
+-- and single-leaf two-page-spread p0NN file for a weekday-word stem in date_text
+```
+
+Result: 629 of 8092 two-page-spread sessions (7.8%) had no weekday word,
+across 63 of 98 pages (3 fully affected, 60 partial), concentrated in
+1892-93 (25.6%). Scan-verified on 5 pages first (all 5 confirmed: weekday
+genuinely printed, not a format quirk -- corrected a wrong conclusion
+from an earlier session, see known_issues.md issue #80's correction to
+issue #78's addendum). Fixed via 4 parallel scan-verification batches;
+629 -> 70 residual flags, 69 of which are the sizing script's own regex
+missing valid short abbreviations, 1 genuinely illegible (binding
+gutter, left as printed). Full write-up: known_issues.md issue #80.
+
+```sql
+SELECT date_confidence, COUNT(*) FROM analysis.event_entry_date_check GROUP BY 1 ORDER BY 2 DESC;
+```
+
+Result after rebuild: verified 22659 (97.7%, up from 96.6%),
+intra_block_disagreement 391 (down from 662), corrected 91, unresolved
+31, corrected_manual 9. Also fixed one pre-existing duplicate-key
+collision surfaced along the way (repertoire_1891-92_pair012, two
+Александринскій "29 Воскрес." sessions both `session: "unspecified"`
+instead of morning/evening -- assigned from content). Musicians/Roster
+byte-identical throughout.
