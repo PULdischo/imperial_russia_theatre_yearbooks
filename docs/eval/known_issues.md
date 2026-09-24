@@ -16585,3 +16585,30 @@ Full query text and per-fix detail: `docs/query_log.md`, entries dated
 2026-09-24 ("Sample scan-read...", "Morning/evening split distribution...",
 "Do the single-page seasons have problems capturing split days?", "Fixed
 the 32 session-mislabeled entries...").
+
+**Addendum 2026-09-24 (same day): sample coverage extended to all 10
+seasons.** RG asked to check the remaining 4 single-page seasons not
+covered by the original 6-page sample (1900-01, 1902-03, 1904-05,
+1906-07 -- one render each). 8 more fixes found and applied: mostly OCR
+typos and misfiled bénéfice/section-header annotations (same low-severity
+profile as the first 6-page sample), but `1902-03_p022` had a real missed
+morning/evening split -- two theaters, one date (26 Воскрес.), a dropped
+morning receipts figure and a dropped work title ("Démocrite") recovered
+from what had been merged into a single entry. One fix went in the
+unusual direction: `1906-07_p040` had a silently "corrected" title
+("Съ новымъ годомъ", the sensible New Year's greeting) restored to match
+what the scan actually prints ("Съ повымъ годомъ") per this project's
+verbatim-transcription convention -- confirmed by zoom, not assumed.
+
+All 10 single-page seasons now have at least one manually scan-read
+sample page (10 pages total across both rounds). 2 of 10 completely
+clean, 8 of 10 had fixes. No date/performance misattribution found in
+either round -- the failure profile for this whole format stays
+qualitatively different from issue #78's two-page-spread pages. Full
+chain rebuilt and backed up after this round too
+(`outputs/full_run_pre_promote_backup_2026-09-24_remaining_seasons_sample/`);
+Musicians/Roster baselines unchanged.
+
+This was a SAMPLE (10 of ~422 single-page renders, roughly 2.4%), not a
+full sweep -- a full sweep of the remaining ~412 renders is still
+undone and not currently planned; revisit if RG wants that scope.
