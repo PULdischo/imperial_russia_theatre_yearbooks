@@ -8033,3 +8033,36 @@ dark Маріинскій entries before adding the 4 real Гибель Фаус
 Re-ran `parse_and_validate.py` + `quality_checks.py`: 0 Repertoire quality
 flags, 887 total (unchanged pre-existing Musicians/Roster baseline), zero
 new validation errors on either touched page.
+
+## 2026-09-23 — Second-pass verification, issue #78: pair020 (1895-96) clean, pair010 (1896-97) three bugs
+
+`1895-96_pair020` re-verified clean across all 22 dates/5 theaters -- zero
+changes. Notably this page uses the SAME "guest troupe, other 4 theaters
+dark" pattern that turned out wrong on its sibling page `pair018`; here
+the pattern held (confirms per-page verification is still necessary even
+when a neighboring page's assumption was wrong -- neither "trust the
+pattern" nor "distrust the pattern" is a shortcut for reading the scan).
+
+`1896-97_pair010`: three distinct bugs found, none of them a shifted-date
+misattribution but all real:
+1. A phantom duplicate Михайловскій entry under a nonexistent date label
+   "2 Ноября." -- an exact duplicate (same works, same receipts) of the
+   real "20 Среда." entry. No such row exists on the scan; deleted.
+2. Михайловскій "14 Четвергъ." genuinely splits into a free morning
+   student matinee and a paid evening show, but had been captured as ONE
+   unspecified session pairing the morning's works with the evening's
+   receipts and silently dropping the evening's own works entirely. Split
+   into two correct sessions.
+3. Малый was missing its entire 22 Пятница - 30 Суббота tail (9 dates),
+   same failure class as elsewhere in this issue.
+
+Self-caught a bug in my own fix script immediately after applying it: used
+`None` instead of `False` for `is_dark` on 6 sessions, causing 6 pydantic
+validation errors on `parse_and_validate.py` (a real, useful catch by that
+automated check). Fixed by setting `is_dark=False` wherever it was `None`.
+Re-ran validate + quality_checks: 0 errors, 0 Repertoire quality flags
+(887 total, unchanged baseline). Zero duplicate keys confirmed.
+
+16 of 21 pages now checked in the second pass; 5 remain:
+`1897-98_pair002`, `1897-98_pair010`, `1897-98_pair020`, `1897-98_pair022`,
+`1897-98_pair024`.
