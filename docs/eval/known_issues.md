@@ -16411,13 +16411,52 @@ confirmed unchanged), zero new validation errors on any touched page.
 Full detail and exact figures for each fix are in `docs/query_log.md`'s
 2026-09-23 entries.
 
-**Not yet re-verified (8 of 21 remaining)**: `1894-95_pair010` (RG's own
-markup -- already highest first-pass confidence), `1895-96_pair018`,
-`1895-96_pair020`, `1896-97_pair010`, `1897-98_pair002`, `1897-98_pair010`,
-`1897-98_pair020`, `1897-98_pair022`, `1897-98_pair024`. Given a genuine
-error was found on roughly 1 in 3 pages checked so far -- including one
-page (`pair014`) that had ALREADY been individually fixed once and was
-still wrong elsewhere -- the remaining 8 should not be assumed clean
-without the same row-by-row check. No consolidated rebuild/promotion has
-been done for this round's fixes yet; that, plus finishing the remaining
-8 pages, is the next-session work.
+**Continued 2026-09-23 (same day, session resumed after a pause)**: 4 more
+pages checked (14 of 21 total now done).
+
+- `1894-95_pair010` (RG's own hand-markup, the page expected to need the
+  least scrutiny) came back clean across all 27 dates / 5 theaters -- one
+  tiny OCR typo fixed ("Странчій" -> "Стряпчій"), nothing structural.
+  Reassuring: the highest-confidence page held up under full re-check.
+- `1896-97_pair002`: Малый missing its entire 5 Четвергъ - 11 Среда tail
+  (6 dates), the same "present theater, missing date range" failure class
+  documented earlier in this issue.
+- `1896-97_pair006`: not a date error -- a work title ("Безчестные, др.")
+  had been filed into `annotation` instead of `works` on one session,
+  confirmed by the scan printing it identically to the other two works
+  that date (no bénéfice formatting). Fixed, plus one OCR typo.
+- **`1895-96_pair018` needed the largest rebuild of the second pass so
+  far**, and is worth reading in full because it undermines a pattern this
+  project had trusted: two OTHER pages (`1891-92_pair018`/`pair020`)
+  established that during a guest-troupe stretch, only Михайловскій is
+  active and Александринскій/Маріинскій/Большой/Малый are genuinely dark.
+  The first-pass fix applied that same assumption to this page's 11-27
+  Февраля stretch -- and it was wrong here. Independent re-reading found
+  Александринскій running its OWN separate German Schauspiel troupe on
+  literally every date in that range (16 dates: Die Venus von Milo, Der
+  Dornenweg, Die Mütter, Das Glück im Winkel, Die Haubenlerche, Comtesse
+  Guckerl), and Маріинскій running its own guest opera ("Гибель Фауста")
+  on 4 of those dates in an odd Mon/Wed/Fri pattern. A confirmed pattern
+  from other pages is not a substitute for reading this page's own scan.
+  Also on this page: the first-pass fix hardcoded `receipts_text=None`
+  for every session it added on 3-4 Февраля despite the figures being
+  clearly printed (8 added back); Большой's PRE-EXISTING data for the
+  same two dates (untouched by the first pass, since Большой wasn't
+  flagged missing) had real column-bleed corruption -- annotation fields
+  containing garbled fragments of the neighboring Малый column's text,
+  and mangled/truncated work titles, all silently sitting in production
+  since promotion; and a first-pass labeling bug mislabeled one row
+  "13 Понед." instead of "12 Понед." (caught by cross-referencing
+  Михайловскій's own untouched, correctly-labeled row for the same date).
+  Большой was also missing 20-27 Февраля outright (5 dark dates plus one
+  real, entirely uncaptured charity-concert entry on 25 Воскрес).
+
+Takeaway carried forward: a page having "already fixed once" status, or
+matching a pattern confirmed elsewhere, is not evidence it's correct --
+only reading its own scan is.
+
+**Not yet re-verified (7 of 21 remaining)**: `1895-96_pair020`,
+`1896-97_pair010`, `1897-98_pair002`, `1897-98_pair010`, `1897-98_pair020`,
+`1897-98_pair022`, `1897-98_pair024`. No consolidated rebuild/promotion
+has been done for this round's fixes yet; that, plus finishing the
+remaining pages, is the next-session work.
