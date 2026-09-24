@@ -8588,3 +8588,45 @@ parsed CSV read), then manually compared each against its source scan
 image in `pdf/RepertoireTables/`. All 7 confirmed as genuine period
 typesetting defects (rubles unit "р." misprinted as "к."/"и."/"г." in
 the original print), left verbatim, no fix applied.
+
+## 2026-09-24 — Sort out the 17 single-page-season `intra_block_disagreement` rows
+
+```sql
+SELECT e.page_id, e.event_id, e.date_text, e.theater, e.event_status, c.note
+FROM analysis.event_entry_date_check c
+JOIN raw.event_entry e ON e.event_id = c.event_id
+WHERE c.date_confidence = 'intra_block_disagreement'
+  AND e.season NOT IN ('1890-91','1891-92','1892-93','1893-94','1894-95','1895-96',
+                        '1896-97','1897-98')
+ORDER BY e.page_id, e.date_text;
+```
+
+Result: 17 rows across 5 pages. Scan-verified all 5 pages directly. Broke
+down into three categories:
+
+- **10 rows (1904-05_p014, 1905-06_p027, 1905-06_p036)**: NOT a data
+  problem. These are the correctly-printed sibling rows of a day-number
+  misprint already fixed via `_MANUAL_DATE_OVERRIDES` (e.g.
+  `1904-05_p014`'s "28 Понед." should be "29 Понед." -- the book itself
+  skips printing a "29" row). The override correctly resolves the
+  misprinted row to `corrected_manual`; its sibling row (the OTHER,
+  correctly-printed date sharing the same raw day-number) still shows
+  `intra_block_disagreement` purely because the script groups rows by
+  day-number-derived `date_undate`, and that block genuinely contains two
+  different real calendar dates due to the source's own printing error.
+  No further fix possible or needed -- confirmed both overrides and their
+  sibling rows are already at their correct final state.
+- **3 rows (1903-04_p010, "4 Ворникъ.")**: confirmed genuine period print
+  typo (missing "т" in "Вторникъ") via scan -- all 3 theaters correctly
+  transcribed the verbatim (wrong) printed text. Left as-is; will always
+  show as `intra_block_disagreement` since "Ворникъ" doesn't parse as any
+  weekday, which is expected/correct.
+- **4 rows (1905-06_p014, "20 Воекрес.")**: confirmed a genuine
+  EXTRACTION typo -- the scan clearly prints "20 Воскрес.". Fixed all 4
+  sessions on that page, rebuilt the full chain. `verified` 22353->22357,
+  `intra_block_disagreement` 666->662 in `analysis.event_entry_date_check`
+  (exact match to the 4-row fix). No other numbers changed (Musicians/
+  Roster untouched, quality_flags.csv unchanged at 894/7 receipts flags).
+
+All 17 single-page-season `intra_block_disagreement` rows are now
+accounted for -- 0 remaining open questions in this group.
