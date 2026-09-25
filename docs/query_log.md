@@ -9035,3 +9035,13 @@ rubles marker so receipts_rubles/receipts_kopecks still compute correctly --
 RG's explicit choice, the one exception to this corpus's genuine-print-typo
 receipts figures staying permanently unparsed by design. Documented in
 docs/eval/genuine_print_typos.md.
+
+## 2026-09-25 — Correction: "q" stays unparsed at the raw layer, not widened into _RUBLES_MARKER_RE
+
+Supersedes the previous entry's regex-widening approach. RG's actual instruction:
+leave "q." unparsed at this layer, same treatment as this corpus's other genuine
+rubles-marker typos (к./и./г.) -- receipts_rubles/receipts_kopecks stay empty,
+joins receipts_parse_failed (7->8). A corrected numeric value belongs in the
+research layer (SQL-derived), not baked into raw-tier parsing -- not built yet.
+Reverted _RUBLES_MARKER_RE, updated the raw JSON's _fix_note and
+docs/eval/genuine_print_typos.md to match. Committed 9034f55.
