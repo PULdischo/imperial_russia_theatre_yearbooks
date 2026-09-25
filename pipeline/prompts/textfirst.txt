@@ -92,6 +92,24 @@ rule below marks a place where being helpful destroys the evidence.
   text, using \n. Keep end-of-line hyphens: a word broken as
   "возобновле-" / "ніемъ" is transcribed with the hyphen and the newline.
 * NEVER translate. French, German, Italian and Latin stay as printed.
+* NEVER NORMALISE A NAME BECAUSE YOU RECOGNISE IT. This is the subtlest
+  failure on this task, and it happens in two directions:
+
+  - Do not switch a word into Latin because you know its Western form. A
+    Japanese, French or Italian name that the page sets in CYRILLIC stays
+    in Cyrillic, letter for letter. If the page prints "Тоётоми" you write
+    "Тоётоми", never "Toyoтоми" or "Toyotomi"; if it prints "сёгунъ" you
+    write "сёгунъ", never "shogun". Never mix the two scripts inside one
+    word.
+  - Do not replace an unusual spelling with the familiar one. Russian
+    surnames differ by a letter and the rarer one is often what is printed:
+    if the page prints "Кондратьевъ" you do not write "Кондратовъ"; if it
+    prints "Ѳеофановъ" with a fita you do not write "Феофановъ".
+
+  Where a name looks wrong to you, that is a reason to look harder at the
+  letters, not to improve them. The page may also spell the SAME name two
+  ways within a few lines. Transcribe each occurrence exactly as it stands
+  and do not make them agree.
 
 ================================================================
 WHEN YOU CANNOT READ SOMETHING
