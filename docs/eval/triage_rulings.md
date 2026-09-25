@@ -239,6 +239,10 @@ in the production prompt when these passes ran.
 | **all three passes wrong together** | **5** (бокаловъ, Іоритомо, Ѳомичевъ, Преображенская, Ѳедорова) |
 | **a pass silently DROPPED text** | **1** (p027, six names from the narrow columns) |
 
+The batched pass over the remaining 8 queue pages adds 66 more rulings —
+18 further majority failures and 12 further all-three-wrong readings, 3 of
+which were never flagged as disputes at all. See "Batched triage" below.
+
 The three passes find WHERE to look and cannot decide WHAT is right. Majority
 vote would have corrupted three readings and could never have caught бокаловъ,
 where all three agreed on the same wrong word. Every ruling needs the scan.
@@ -259,9 +263,185 @@ modernised, which is the exact failure the verbatim rule exists to prevent. Wher
 word and one dissents, the dissenter is worth a look.
 
 
+
+## Batched triage — the remaining 10 queue pages
+
+RG, 2026-09-25: "switch to the batched form now", after the ten
+one-at-a-time calibration pages agreed 29 of 30. Batched = every dispute on
+a page read against the scan and brought as one consolidated list per page,
+instead of one crop at a time. RG still rules; crops go with anything
+consequential or surprising.
+
+Two queue pages — `review_1897-98_SP_ballet_p015` and
+`review_1902-03_SP_opera_p034` — carried nothing but spacing/punctuation
+differences and produced no rulings.
+
+**63 flagged disputes across 8 pages, plus 3 errors found only by reading
+the scan that the disagreement signal never saw.** 66 rulings.
+
+### review_1902-03_SP_opera_p010  (folio 117, Rimsky-Korsakov's «Сервилія»)
+
+| runs 1 / 2 / 3 | ruling | note |
+|---|---|---|
+| Сервиліи, / Сервилии, / Сервилии, (x3 places) | **Сервиліи,** | 2-run majority WRONG each time |
+| Сервилія, / Сервиля, / Сервилія, (x3 places) | **Сервилія,** | run 2 dropped the і |
+| Сервиліей. / Сервилей. / Сервилией. | **Сервиліей.** | all three differ; run 1 right |
+| палъ / паль / паль | **палъ** | 2-run majority WRONG; ъ/ь |
+| силою / силой / силой | **силой** | majority right |
+| Сервилія тушитъ / Сервиля тушить / … | **Сервилія тушитъ** | run 2 wrong twice in one token |
+| Неволя / Неволея / Неволея | **Неволея** | majority right |
+| запертум / запертыймъ / запертыймъ | **запертымъ** | **ALL THREE WRONG** |
+
+### review_1901-02_MSK_ballet_p020  (folio 305)
+
+| runs 1 / 2 / 3 | ruling | note |
+|---|---|---|
+| хвостѣ / хвость / хвостѣ | **хвостѣ** | |
+| подводнаго / подводного / подводного | **подводнаго** | 2-run majority WRONG — the genitive modernised from -аго to -ого, the same "reach for the modern form" pattern as карэ/каре |
+
+### review_1900-01_MSK_opera_p015  (folio 251, Cui's «Анджело»)
+
+| runs 1 / 2 / 3 | ruling | note |
+|---|---|---|
+| Анджело (x6 places) | **Анджело** | runs 1+2 wrote Андржело at 3 of the 6; majority WRONG there |
+| говоритъ / … / говорить | **говоритъ** | |
+| сообщаетъ / … / сообщается | **сообщаетъ** | |
+| женщицу / женщицу / женщину | **женщину** | 2-run majority WRONG — same word RG ruled on before |
+| слышать / слышать / слышатъ | **слышатъ** | 2-run majority WRONG; ъ/ь |
+| просить / просить / проситъ | **проситъ** | 2-run majority WRONG; ъ/ь |
+| напасть / напасть / нарасть | **напасть** | |
+| Анджело объщаетъ / Андржело обѣщаетъ / Анджело объщаетъ | **Анджело обѣщаетъ** | **ALL THREE WRONG as tokens** — each half was gettable, no pass got both |
+| офѣпенѣніи / офпенійніи / офѣпенѣніи | **оцѣпенѣніи** | **ALL THREE WRONG** — ц read as ф |
+
+### review_1906-07_MSK_ballet_p001  (folio 233)
+
+| runs 1 / 2 / 3 | ruling | note |
+|---|---|---|
+| Волиничь. / Волининъ. / Волиничь. | **Волининъ.** | 2-run majority WRONG; run 2 alone right |
+| Арендсъ. (x2 places) | **Арендсъ.** | |
+| ІЕдоро вой / Єедоровой / Єедоровой | **Ѳедоровой 2-й** | **ALL THREE WRONG** |
+| ІЕдоро ва / Єедорова / Єедорова | **Ѳедорова 2-я** | **ALL THREE WRONG** |
+| ІЕдорова / Єедорова / Єедорова | **Ѳедорова 2-я** | **ALL THREE WRONG** |
+| (not flagged — all three agreed) | **Аѳонасьева** | **ALL THREE WRONG, SILENT.** All wrote Аво-/насьева. Found only by reading. |
+| Дирижировалъ / Дирижеровалъ / Дирижеровалъ | **Дирижеровалъ** | runs 2+3 right. The page prints Дирижеровалъ here and Дирижировалъ twice elsewhere — a print inconsistency, candidate for genuine_print_typos.md |
+
+### review_1900-01_MSK_opera_p023  (folio 219)
+
+| runs 1 / 2 / 3 | ruling | note |
+|---|---|---|
+| Ксеніи—г-жѣ / Ксениі—г-жѣ / Ксеніи—г-жѣ | **Ксеніи—г-жѣ** | |
+| (not flagged — all three agreed) | **Ѳеодора** | **ALL THREE WRONG, SILENT.** All wrote Феодора; the page prints Ѳео-/дора. |
+
+### review_1894-95_MSK_opera_p023  (folio 303)
+
+| runs 1 / 2 / 3 | ruling | note |
+|---|---|---|
+| ударять / ударяетъ / ударяетъ | **ударяетъ** | |
+| пожарь / пожаръ / пожаръ | **пожаръ** | the orthography rule's original answer, re-confirmed |
+| tushinцы / тушинцы / тушинцы | **тушинцы** | Latin intrusion, run 1 |
+| Украйнцевъ(г. / Украинцевъ(г. / Украинцевъ (г. | **Украинцевъ(г.** | run 2 exactly right; the print sets the paren tight, with no space |
+| хоромы) Спасеные / хоромы)Спасены / хоромы)Спасены | **Спасенье тамъ!** on its own verse line | **ALL THREE WRONG** — wrong word AND all three ran it onto the stage-direction line |
+
+### review_1893-94_SP_ballet_p021  (folio 251)
+
+All ten flagged disputes go to runs 1+2. Run 3 carried a systematic `ІѲ`
+corruption on every fita name on the page (Ѳедорова x3, Ѳедуловъ,
+Ѳедоровъ x2) and Latin `kova` twice (Горшенкова, Потайкова). Also
+`сатурнъ—г.` (not гг.) and Cyrillic `гг.`
+
+| (not flagged — all three agreed) | **Мартьяновъ** | **ALL THREE WRONG, SILENT.** All wrote Мартъяновъ with a hard sign; the page prints ь. The same name RG ruled on earlier from a different page. |
+
+### review_1901-02_MSK_ballet_p002  (folio 287)
+
+| runs 1 / 2 / 3 | ruling | note |
+|---|---|---|
+| Мендесь / Мендесь / Мендесъ (x5 places) | **Мендесъ** | 2-run majority WRONG all five times; ъ/ь. The final letter matches the ъ of `старикъ` two words later on the first instance. |
+| Валиничь. / Валиничь. / Валиниъ. (x2 places) | **Валининъ.** | **ALL THREE WRONG**, twice |
+| бабочкъ / бабочкъ / бабочекъ | **бабочекъ** | 2-run majority WRONG |
+| представленся / представляется / представляется | **представляется** | |
+| ing / нимъ / нимъ | **нимъ** | Latin intrusion, run 1 |
+| друг.; / друг.; / др.; | **друг.;** | |
+| Галатъ, / Галать, / Галатъ, | **Галатъ,** | |
+
+Note on the first row of p002: run 3 alone had the letters of
+`Мендесъ; старикъ-` right but dropped the end-of-line hyphen, so no pass
+reproduced the token exactly.
+
+**`Валининъ` (1901-02 Moscow) vs `Волининъ` (1906-07 Moscow)** — same
+dancer, different vowel, two volumes. Both stay verbatim; this is recorded,
+not reconciled.
+
+### Batch tally
+
+| | |
+|---|---|
+| pages with rulings | 8 (2 more had spacing differences only) |
+| rulings | 66 — 63 flagged disputes + 3 found only by reading |
+| **2-run majority WRONG** | **18** |
+| **all three passes wrong** | **9 flagged + 3 silent = 12** |
+
+## Fita: a worklist, NOT a rule — RG, 2026-09-25
+
+I counted, across the 200-page pilot, how often each pass wrote Ф or В on
+stems I had listed as "fita-taking" (Ѳедор-, Ѳедул-, Ѳом-, Аѳон-, Ѳеодор-,
+Ѳеофан-, Ѳекл-, Ѳадде-), and reported 42–45% per pass as an error rate.
+
+**That figure is withdrawn.** RG: *"I don't think we can make a fita
+assumption, because the point of pre-reformed orthography is that it's
+unstable."* The count assumed those stems always print with Ѳ, so any Ф on
+them must be a transcription error. The print itself is not consistent, so
+the count measures what the passes wrote, not how often they were wrong.
+
+This is the same mistake as the reverted -арь/-ярь suffix rule: inferring a
+norm from a handful of cases and then treating deviation from it as error.
+
+**What survives is scan-verified instances only — 7 of them**, each read
+individually: Ѳедорова (1901-02_MSK_ballet_p024), Ѳедоровой + Ѳедорова x2 +
+Аѳонасьева (1906-07_MSK_ballet_p001), Ѳомичевъ (1901-02_SP_ballet_p027),
+Ѳеодора (1900-01_MSK_opera_p023). Three of the seven were silent — every
+pass agreed on the wrong letter, so the disagreement signal never saw them.
+
+**What the 19 pages are:** a worklist — pages where all three passes wrote
+Ф on a stem that *sometimes* takes Ѳ. Each instance must be read against
+its own scan. Nothing goes into `orthography.py`: fita is lexical, not
+phonological, and a gazetteer of "fita-taking names" would encode exactly
+the stability assumption being rejected here.
+
+Pages in the worklist:
+
+- `review_1897-98_MSK_ballet_p012`
+- `review_1899-00_MSK_all_p004`
+- `review_1899-00_MSK_all_p016`
+- `review_1900-01_MSK_ballet_p005`
+- `review_1900-01_MSK_opera_p023`
+- `review_1901-02_SP_ballet_p027`
+- `review_1901-02_SP_ballet_p029`
+- `review_1901-02_SP_ballet_p030`
+- `review_1902-03_MSK_ballet_p003`
+- `review_1903-04_SP_ballet_p010`
+- `review_1903-04_SP_ballet_p012`
+- `review_1903-04_SP_ballet_p013`
+- `review_1904-05_MSK_ballet_p001`
+- `review_1904-05_MSK_ballet_p022`
+- `review_1904-05_SP_ballet_p013`
+- `review_1905-06_MSK_ballet_p015`
+- `review_1905-06_MSK_ballet_p020`
+- `review_1905-06_SP_ballet_p010`
+- `review_1906-07_MSK_ballet_p001`
+
+(`p027`, `1900-01_MSK_opera_p023` and `1906-07_MSK_ballet_p001` are already
+read; the other 16 are open.)
+
 ## Resuming
 
-**Next:** the remaining 12 flagged pages from
+**Next:** the 16 unread pages of the fita worklist above, each instance
+read against its own scan. The 20-page disagreement queue is now fully
+triaged.
+
+(Historical note: the queue was described mid-session as "12 remaining
+pages"; it was 10, and 2 of those had no real disputes.)
+
+**Superseded:** the remaining flagged pages from
 `outputs/reviews/triage_queue.txt`, in BATCHED form — RG, 2026-09-25:
 "switch to the batched form now", after the ten one-at-a-time calibration
 pages agreed 29 of 30. Batched means Claude reads every dispute on a page
