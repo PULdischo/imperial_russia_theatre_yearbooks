@@ -177,7 +177,23 @@ def merge_repertoire_samples(sample_dicts: list[dict]) -> tuple[dict, dict]:
 #: legible -- receipts_text itself is untouched either way (verbatim
 #: model output, script and all), only the derived rubles/kopecks
 #: parsing is widened to recognize both scripts as the same marker.
-_RUBLES_MARKER_RE = re.compile(r"\b[рp]\.?", re.IGNORECASE)
+#:
+#: Also accepts "q"/"Q" -- NOT a visual lookalike the way Latin "p" is
+#: (unlike "p", a "q" doesn't actually resemble Cyrillic "р" in this
+#: typeface). `repertoire_1892-93_pair012`, 8 Вторн., Михайловскій
+#: (issue #85's reconstruction) genuinely prints "1225 q. 27 к." -- RG
+#: confirmed directly against the scan (2026-09-25) that the glyph really
+#: is a "q", a compositor error, not a misread. We know it means rubles
+#: from CONTEXT (position in the figure, matching every other session's
+#: "<rubles> р. <kopecks> к." shape corpus-wide) rather than from any
+#: visual resemblance -- the same genuine-typo class as the separately
+#: documented к./и./г. substitutions in docs/eval/genuine_print_typos.md,
+#: which are left permanently unparsed by design. This one is different
+#: only by RG's explicit choice: `receipts_text` stays exactly as printed
+#: ("q." and all, raw is never touched), but the derived
+#: `receipts_rubles`/`receipts_kopecks` parse correctly anyway rather
+#: than joining `receipts_parse_failed`.
+_RUBLES_MARKER_RE = re.compile(r"\b[рpq]\.?", re.IGNORECASE)
 
 #: Same dropped-trailing-period gap as `_RUBLES_MARKER_RE`, just on the
 #: kopecks side -- found 2026-09-17 doing the receipts-field audit

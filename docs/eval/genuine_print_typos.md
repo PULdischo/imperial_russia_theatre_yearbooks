@@ -75,6 +75,20 @@ never go to zero, by design:
 - `repertoire_1907-08_p024`: "1107 к. 62 к."
 - `repertoire_1901-02` range: "7166 р. 87 г." (kopecks marker garbled
   this time, rubles marker fine)
+- **`repertoire_1892-93_pair012`, 8 Вторн., Михайловскій: "1225 q. 27
+  к."** — a different case from the rest of this list. The others above
+  are the compositor reaching for the *kopecks* marker glyph on the
+  rubles side; this one is a Latin "q", which doesn't visually resemble
+  "р." at all in this typeface. Confirmed directly against the scan
+  (RG, 2026-09-25) that the glyph genuinely is a "q" — read as the
+  rubles marker from context (its position in the figure, matching
+  every other session's "<rubles> р. <kopecks> к." shape corpus-wide),
+  not from any visual similarity. `receipts_text` stays exactly as
+  printed; unlike every other entry in this section, RG asked for this
+  one to still parse correctly downstream (`_RUBLES_MARKER_RE` in
+  `pipeline/schemas/repertoire.py` widened to accept "q"/"Q") rather
+  than join `receipts_parse_failed` — so this is the one exception to
+  "these are why the flag will never go to zero."
 
 ## Misprinted day numbers (weekday word right, digit wrong)
 

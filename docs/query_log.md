@@ -9016,3 +9016,22 @@ misdated to 23 Ноября 1904, entirely outside that page's own declared date
 duplicating (with disagreeing content) what p015 already correctly owns (deleted
 the 3 stray sessions). Re-ran after both fixes: 0 cross_page_duplicate_event flags.
 event_entry 24204->24186. Full narrative: docs/eval/known_issues.md issue #86.
+
+## 2026-09-25 — pair012 verification: found+fixed one wrongly-normalized figure
+
+Checked the 5 low-confidence spots flagged by the pair012 reconstruction agent
+directly against the scan. 4 of 5 (3 fold-blurred receipts figures near the
+page-13 binding gutter, 1 ink blot correctly not treated as a footnote marker)
+confirmed as genuinely at the edge of scan legibility -- added to the Binding
+Fold Log candidates rather than resolved further. 1 of 5 was a real, confirmable
+finding: Михайловскій, 8 Вторн., receipts printed "1225 q. 27 к." -- the
+reconstruction agent had normalized this to "р." Zoomed to max resolution,
+shared the crop directly with RG, who confirmed the glyph is genuinely a "q" --
+a real compositor typo, not a misread, understood as the rubles marker by
+context (position + corpus-wide figure shape) rather than visual resemblance.
+Restored receipts_text to the verbatim "1225 q. 27 к." and widened
+_RUBLES_MARKER_RE (pipeline/schemas/repertoire.py) to parse "q"/"Q" as a
+rubles marker so receipts_rubles/receipts_kopecks still compute correctly --
+RG's explicit choice, the one exception to this corpus's genuine-print-typo
+receipts figures staying permanently unparsed by design. Documented in
+docs/eval/genuine_print_typos.md.
