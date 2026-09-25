@@ -116,15 +116,38 @@ Structural, no ruling: run 2 classified the caption text as a `figure`
 block where runs 1 and 3 used body paragraphs. Nothing was dropped — the
 body-only comparison simply does not see caption text.
 
+## review_1899-00_SP_ballet_p027  (folio 108)
+
+Short page: one photograph, four lines of text beneath it.
+
+| # | runs 1 / 2 / 3 | ruling | note |
+|---|---|---|---|
+| 1 | Пре-/ображевская / Пре-/ображенная / Пре-/ображанская | **Пре-**/**ображенская** (RG) | **ALL THREE WRONG, in three different ways.** The page prints the standard spelling plainly. |
+
+Not raised: apostrophe type in `L’arrivée` (runs 1,3 curly) vs
+`L'arrivée` (run 2 straight).
+
+**This one complicates the rarity story.** Ѳомичевъ and Іоритомо were rare
+names the model did not know. `Преображенская` is the opposite — one of the
+commonest names in the corpus — and all three passes still corrupted it,
+each differently, none matching the page or each other. The likely cause is
+the letter shapes rather than the word: `-ображенская` is six rounded
+characters in a row.
+
+**Compare page p027 of 1901-02**, where the page genuinely printed
+`Пребраженская` and one pass silently normalised it to the standard form.
+Here the page prints it correctly and all three passes corrupted it. Same
+name, opposite errors — and only the scan tells them apart.
+
 ## Running tally
 
 | | |
 |---|---|
-| pages triaged | 6 of 10 |
-| rulings | 17 |
-| RG agreed with Claude's reading | 17 of 17 |
+| pages triaged | 7 of 10 |
+| rulings | 18 |
+| RG agreed with Claude's reading | 18 of 18 |
 | **2-run majority WRONG** | **7 of 16** (женщину, Вдали, Шарпантье, Легатъ, Мартьяновъ, Пребраженская, Сенъ-Нинъ) |
-| **all three passes wrong together** | **3** (бокаловъ, Іоритомо, Ѳомичевъ) |
+| **all three passes wrong together** | **4** (бокаловъ, Іоритомо, Ѳомичевъ, Преображенская) |
 | **a pass silently DROPPED text** | **1** (p027, six names from the narrow columns) |
 
 The three passes find WHERE to look and cannot decide WHAT is right. Majority
@@ -195,6 +218,12 @@ find passages where the passes differ.
 vocabulary appears exactly once, and the median word frequency is 1,
 because the corpus is mostly dancers' surnames. Flagging every rare word
 would flag most of the text.
+
+**A fourth consensus failure complicates this.** `Преображенская` is one of
+the commonest names in the corpus, and all three passes still corrupted it,
+each differently. Rarity did not predict that one; the letter shapes
+probably did — `-ображенская` is six rounded characters in a row. So rarity
+catches some consensus failures, not all.
 
 The useful reading is that there are **two complementary signals for two
 different failures**:
