@@ -29,6 +29,24 @@ slip.
 
 ## Wrong word / misheard-by-the-typesetter substitutions
 
+- **`review_1901-02_SP_ballet_p027` (folio 193): "Пребраженская"** for
+  "Преображенская" — the compositor dropped the о. What makes this one
+  worth having is that **the same page prints the name both ways**:
+  "О. Преображенская" correctly at full width near the top, then
+  "О. Пребражен-ская" four lines down in the narrow column running beside
+  the photograph. Same page, same dancer, same setting session.
+
+  Caught in the pilot triage (2026-09-25): of three extraction passes, two
+  transcribed the column instance as printed and one silently normalised it
+  to the standard spelling. Scan-verified at 4x; RG confirmed. Kept verbatim
+  in both places, per the verbatim rule.
+
+  This is the same phenomenon as the surname variants in the Season Reviews
+  gold set — Карлсонъ/Карльсонъ, Пршебылецкая/Пржебылецкая,
+  Цалисонсъ/Цалисонъ, all within a page or two of each other — which is
+  why the standing rule is never to assume spelling consistency and to
+  verify every instance on its own.
+
 - **German operetta program, `repertoire_1904-05` range: "Husarenlieber"**
   for "Husarenliebe" — an extra letter, print-original.
 - **"Das aite Heim"** for "Das alte Heim" — a worn/broken "l" glyph in
