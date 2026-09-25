@@ -16870,3 +16870,74 @@ weekday word exactly as printed, dropped or truncated nowhere left
 undiscovered by this specific check. The five narrower follow-ups
 flagged during issue #80's fix (see that issue) remain open and
 unrelated to this one.
+
+## Addendum to #80 (2026-09-25): the five follow-ups checked -- 4
+resolved, 1 turned out much bigger than flagged
+
+RG asked to go ahead and check all five narrow follow-ups from issue
+#80's fix. Re-verified each directly against its scan rather than
+trusting the original flag's framing.
+
+1. **`repertoire_1890-91_pair016`, "14 Января" low-confidence weekday
+   -- turned out to be a bigger, different bug.** This page was
+   already fully scan-verified back on 2026-09-18 (see that date's
+   query_log entry): "14 Понед." and "15 Вторникъ." (no month) were
+   confirmed correct then. The flagged "14 Января. Понед."/"15 Января.
+   Вторникъ." entries (2 theaters each, Александринскій/Большой) are
+   stray phantom duplicates with fabricated content matching nothing
+   on the actual page (e.g. Большой's "Пикъ-горбунокъ" — likely a
+   garbled echo of "Конекъ-горбунокъ" from earlier the same page).
+   Deleted all 4 phantom sessions.
+2. **`repertoire_1894-95_pair016` day 18 and `repertoire_1892-93_pair002`
+   days 26/27 -- confirmed correct, no change needed.** Both sit
+   exactly where the physical photograph's frame cuts the row off.
+   `1894-95_pair016`'s "18 Вторни[къ]" -- the visible prefix matches
+   the applied "Вторникъ" exactly, nothing more of the word survives
+   in this scan. `1892-93_pair002`'s day 26 shows "26 Ср" directly
+   (matches "Среда"); day 27's label is entirely below the frame, but
+   Aug 27 1892 is arithmetically forced to be Thursday given the
+   visible surrounding days -- matches what's already applied. Both
+   are permanent scan limitations, not fixable further.
+3. **`repertoire_1893-94_pair016`, suspected duplicate entries --
+   confirmed real, same phantom-duplicate pattern as #1.** Малый and
+   Михайловскій each had day 24's content spuriously copied onto day
+   25 (in addition to day 25's own real content, itself duplicated
+   twice). Scan-verified day 25's true content for both theaters
+   ("Волки и овцы"/"Это мой маленькій капризъ" for Малый, "Les vieux
+   Garçons" for Михайловскій). Removed 2 phantom (day-24-echo) sessions
+   and 2 redundant exact-duplicate sessions.
+4. **`repertoire_1893-94_pair012`, "22 Среда." holding day 21's content
+   -- confirmed, but the real bug is much bigger than one row.** Full
+   cascading one-row date shift spanning at least 8 consecutive dates
+   (14-21 Декабря): every one of the currently-labeled dates 15
+   through 22 actually holds the PRECEDING day's content (e.g. "16
+   Четвергъ." = true day 15, matching the scan title-for-title;
+   "22 Среда." = true day 21, confirming the original flag), except
+   the shift self-corrects exactly at day 22 -- the existing
+   "22 Декабря. Среда." entry is already the correct, un-shifted day
+   22. At least one row (day 20/labeled 21) also has a theater-content
+   swap on top of the date shift (Александринскій content appearing
+   under Михайловскій). **NOT fixed this round** -- this needs its own
+   properly-scoped reconstruction pass (5 theaters x 8+ dates), the
+   same scale as this project's other "major page-wide cascading
+   shift" fixes (e.g. `1894-95_pair010`), not something to rush
+   through as a follow-up check. Flagged for a dedicated session.
+5. **`repertoire_1897-98_pair016`, "18 Воскрес." content mismatch --
+   the original flag was wrong; real issue was smaller.** Direct
+   re-verification found BOTH title-pairs on this date (Недоросль/
+   Волки и овцы for Александринскій; Бѣдность не порокъ.../Волки и
+   овцы+Гастролерша for Малый) genuinely belong to day 18 as a real
+   morning+evening split -- confirmed against the scan's own УТРО./
+   ВЕЧ. markers. They only looked like a duplicate-or-mislabeled pair
+   because both sessions had `session: "unspecified"` instead of
+   morning/evening. Fixed by setting the session field correctly (4
+   sessions); no date or content was actually wrong.
+
+**Net result**: 4 of 5 resolved (1, 2 as "already correct", 3, 5), 8
+phantom/duplicate sessions removed, 4 session-field labels fixed. Item
+4 stays open, now properly scoped as its own reconstruction task
+rather than a quick follow-up. Rebuilt full chain: event_entry
+23181->23173 (-8, exactly the removed phantoms), `verified` 97.7%->97.8%,
+`intra_block_disagreement` 391->383, quality_flags.csv unchanged
+(894/7), Musicians/Roster byte-identical. Backed up first to
+`outputs/full_run_pre_promote_backup_2026-09-25_followups/`.

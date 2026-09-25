@@ -8771,3 +8771,27 @@ didn't move date-correctness confidence (the existing short-form
 weekday parser already handled truncated forms like "Вт." correctly),
 it's a verbatim-completeness fix, not a correctness one. 0
 duplicate-key collisions corpus-wide. Musicians/Roster byte-identical.
+
+## 2026-09-25 — Checked issue #80's five follow-ups
+
+Re-verified each against its scan directly. 4 of 5 resolved:
+`1890-91_pair016` and `1893-94_pair016` both had the same phantom-
+duplicate pattern (a prior date's content spuriously echoed onto the
+next date, plus exact-duplicate redundant rows) -- 8 stray sessions
+removed total. `1894-95_pair016` day 18 and `1892-93_pair002` days
+26/27 reconfirmed correct as already applied (permanent photo-frame
+scan limitations). `1897-98_pair016` turned out to be a session-field
+labeling gap (morning/evening both stored as "unspecified"), not a
+content mismatch -- fixed, 4 sessions. `1893-94_pair012` confirmed as
+a real, much bigger cascading date shift (8+ consecutive dates) than
+originally flagged -- NOT fixed, needs its own reconstruction pass.
+Full detail: known_issues.md's addendum to issue #80.
+
+```sql
+SELECT date_confidence, COUNT(*) FROM analysis.event_entry_date_check GROUP BY 1 ORDER BY 2 DESC;
+```
+
+Result after rebuild: verified 22659 (97.8%), intra_block_disagreement
+383 (down from 391), event_entry 23181->23173 (-8, exactly the removed
+phantom sessions). 0 duplicate-key collisions corpus-wide.
+Musicians/Roster byte-identical.
