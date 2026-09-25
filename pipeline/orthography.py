@@ -50,7 +50,14 @@ SOFT_FINAL = {
     "царь", "князь", "конь", "день", "огонь", "корабль", "рубль", "путь",
     "зритель", "учитель", "писатель", "родитель", "деятель", "житель",
 }
-SOFT_SUFFIXES = ("тель", "арь", "ырь", "ель", "знь", "сть", "чь", "щь")
+# Soft-sign noun classes narrow enough to be safe. Two attempts were wrong:
+#   * bare "нь"/"ль"/"рь" -- far too broad; flipped "Аслинъ" and "театралъ".
+#   * "арь"/"ярь" -- январь and словарь take ь, but пожаръ and самоваръ do
+#     not, so the ending alone cannot decide. (An earlier bug hid this: the
+#     test ran on the STEM, so "пожар" never met "арь" and the wrong rule
+#     looked right.)
+# Anything not covered here is left to SOFT_FINAL, or goes unjudged.
+SOFT_SUFFIXES = ("тель", "ырь", "знь", "сть", "чь", "щь")
 
 
 def _strip(w: str) -> str:
@@ -88,6 +95,9 @@ def judge_hard_soft(variants: list[str]) -> tuple[str | None, str]:
         # which made it answer "царъ" and "ролъ".
         soft_form = forms[0][:-1].lower() + "ь"
         soft = soft_form in SOFT_FINAL or soft_form.endswith(SOFT_SUFFIXES)
+        # Found on triage page 9: the page prints "юбилярь", a masculine
+        # noun in -ярь like январь/словарь/вратарь. The suffix test above
+        # matched the STEM, so "юбиляр" never met "ярь".
         want_last = "ь" if soft else "ъ"
         for v, g in zip(variants, forms):
             if g[-1] == want_last:

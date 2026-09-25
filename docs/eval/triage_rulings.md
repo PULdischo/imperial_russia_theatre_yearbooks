@@ -171,13 +171,47 @@ Applies to all 1,024 pages. The folio itself is still captured, in
 `printed_folio`, which is a separate thing.
 
 
+## review_1906-07_MSK_ballet_p008  (folio 240)
+
+Illustration at left with text wrapping round it, then full width below.
+14 disputes.
+
+| # | runs 1 / 2 / 3 | ruling | note |
+|---|---|---|---|
+| 1 | открытіи занавѣсъ / открытіи занавѣсъ / открытомъ занавѣсѣ | **открытомъ зана-**/**вѣсѣ,** (RG) | 2-run majority WRONG; run 3 alone right |
+| 2 | юбилияръ / юбиляръ / юбилияръ | **юбиляръ** (RG) | 2-run majority WRONG; run 2 alone right. Claude first read the scan as "юбилярь" with a SOFT sign and was corrected by RG at 9x. |
+| 3 | капельмейстеръ / капелмейстеръ / капельмейстеръ | settled by rule | run 2 dropped the ь |
+| 4 | театралъ / театраль / театралъ | settled by rule | |
+
+### What the юбиляръ misread cost, and what it taught
+
+Claude read the scan as `юбилярь`, declared all three passes wrong, and
+"fixed" `orthography.py` to treat -арь/-ярь as a soft-sign class. RG read it
+at 9x as `юбиляръ` — a hard sign — which was right.
+
+Everything that followed from the misread was therefore wrong, and is
+reverted:
+
+- It is a 2-run-majority failure, not a consensus failure. Run 2 was right.
+- The orthography rule's ORIGINAL answer (hard consonant takes ъ) was
+  correct all along.
+- The suffix "fix" was doubly wrong. `арь`/`ярь` cannot decide anything:
+  январь and словарь take ь, but пожаръ and самоваръ do not. It also broke
+  `пожаръ`, which had passed only because of a separate bug — the test ran
+  on the stem, so `пожар` never met `арь`.
+- A first attempt at the same fix added bare `нь`/`ль`/`рь`, which flipped
+  `Аслинъ` and `театралъ`, both already ruled the other way by RG.
+
+`orthography.py` now carries a 12-case self-test built from RG's actual
+rulings, which is what should have gated the change in the first place.
+
 ## Running tally
 
 | | |
 |---|---|
-| pages triaged | 8 of 10 |
-| rulings | 24 |
-| RG agreed with Claude's reading | 24 of 24 |
+| pages triaged | 9 of 10 |
+| rulings | 26 |
+| RG agreed with Claude's reading | 26 of 27 — one disagreement: юбиляръ |
 | **2-run majority WRONG** | **12 of 24** — exactly half (женщину, Вдали, Шарпантье, Легатъ x2, Мартьяновъ, Пребраженская, Сенъ-Нинъ, Аслинъ, шіеся, Леньяни, карэ) |
 | **all three passes wrong together** | **4** (бокаловъ, Іоритомо, Ѳомичевъ, Преображенская) |
 | **a pass silently DROPPED text** | **1** (p027, six names from the narrow columns) |
