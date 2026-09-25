@@ -8951,3 +8951,28 @@ extraction bug; searched the repo for any alternate/misfiled 1894-95 source,
 found none. Documented as docs/eval/known_issues.md issue #84. Remaining ~155
 scattered not_captured rows in 1894-95's other 8 pages, and the rest of the
 corpus's not_captured totals, not triaged this pass.
+
+## 2026-09-25 — Correcting the 1894-95 gap: printed page numbers, not scan pages
+
+RG pushed back on the issue #84 conclusion: "do the page numbers show a gap?
+It's possible that the theaters were literally closed during that period."
+
+```sql
+select page_id, min(date_undate), max(date_undate),
+       min(printed_page_number::int), max(printed_page_number::int)
+from raw.event_entry
+where season='1894-95' and page_id like 'repertoire_%'
+group by 1 order by min(date_undate);
+```
+
+Result: printed page numbers run perfectly consecutively, 2-3, 4-5, 6-7, 8-9, ...
+18, with zero gap -- pair006 (pages 6-7) just covers an unusually wide 91-day
+span instead of the normal ~20 days. Confirmed directly against the scan
+(ForUpload_1894-95_Repertoire_002.jpg): the printed date column runs day-by-day
+to "19 Среда." (19 Октября), then the very next row is the "ЯНВАРЬ" header and
+"1 Воскр." -- no separator, no annotation, just a direct jump in the original
+print. Coincides exactly with Tsar Alexander III's death (20 Октября 1894,
+Julian) and the Imperial theaters' traditional mourning closure. This reverses
+issue #84's original conclusion (PDF-page-count comparison, which only checks
+whether rendering skipped a page, not whether the print itself is continuous) --
+see that issue's own correction addendum in known_issues.md.

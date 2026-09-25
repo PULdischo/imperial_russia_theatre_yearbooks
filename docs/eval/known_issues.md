@@ -17313,3 +17313,52 @@ similarly-scattered `not_captured` totals in every other season, were
 not triaged this pass -- worth a lighter follow-up sweep if RG wants
 the full 3032 count driven down further, now that the one large
 structural outlier is explained.
+
+**CORRECTION, same session, minutes later**: the conclusion above is
+wrong -- RG asked directly "do the page numbers show a gap? It's
+possible the theaters were literally closed." They do not, and they
+were. This was a real, avoidable miss: the PDF-page-count comparison
+above checked whether pages were skipped during *rendering*, but never
+checked whether the *printed folio numbers themselves* (built out
+earlier the same session, issue #83) run consecutively across the
+transition -- the more direct and authoritative check, sitting right
+there in the data already.
+
+They do run consecutively, with zero gap: `pair002`=pages 2-3,
+`pair004`=4-5, `pair006`=6-7, `pair008`=8-9, `pair010`=10-11, ...
+straight through to page 18, every page-pair present and accounted
+for. `pair006` (pages 6-7) is simply the ONE page-pair that happens to
+cover an unusually wide 91-day span instead of every other pair's
+normal ~20 days -- not because pages are missing, but because almost
+nothing was printed for most of that span.
+
+Confirmed directly against the scan
+(`pdf/RepertoireTables/ForUpload_1894-95_Repertoire_002.jpg`): the
+printed date column runs day-by-day through "19 Среда." (19 Октября),
+then the very next printed row is the "ЯНВАРЬ" month header followed by
+"1 Воскр." (1 Января) -- no separator, no annotation, no explanation,
+just a direct jump in the table itself. The original compositor never
+laid out rows for 20 Октября - 31 Декабря 1894 at all.
+
+This lines up with real history: **Tsar Alexander III died 20 Октября
+1894** (Julian calendar) -- the exact date the table goes dark, and
+Imperial theaters traditionally observed an extended closure for court
+mourning. A closure running through the New Year is entirely
+consistent with that. Not confirmed by an external historical source
+this session, but the date coincidence is exact enough to state with
+confidence: **this is a genuine, deliberate printed closure, not any
+kind of gap** -- not in the scan, not in extraction, not in the source
+material. Nothing is missing or unrecoverable; there is simply nothing
+to recover, because nothing happened.
+
+**Lesson for next time**: once printed_page_number exists, it's the
+fastest and most authoritative way to distinguish "pages missing from
+this scan" from "the print itself has a real gap here" -- check it
+before reaching for a PDF-page-count comparison, which only rules out
+the render step ever skipping a PDF page and says nothing about
+whether the print itself has continuous content. `not_captured` rows
+inside a genuine closure aren't a data quality problem to fix; they're
+exactly what should exist for that stretch, and probably don't need a
+special code path -- `event_status='not_captured'` already reads fine
+as "nothing to capture, and nothing was," not just "an extraction
+miss."
