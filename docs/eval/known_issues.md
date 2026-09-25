@@ -17256,6 +17256,46 @@ sequence-consistency flags. `validate_performance_dates.py` unchanged
 (98.1%). Full chain rebuilt clean. Full narrative:
 `docs/query_log.md`'s second 2026-09-25 printed_page_number entry.
 
+**Addendum, later the same day (excerpt-linking session): a real near-miss
+regression found and fixed, plus a genuine residual gap.** Re-running
+`parse_and_validate.py` to apply an unrelated raw-JSON typo fix (issue
+#88's "Люcія"->"Лючія" correction) without the `--printed-page-numbers`
+flag silently reset `event_entry.printed_page_number` to null for the
+**entire** corpus on rebuild -- the flag is optional, defaults to
+backfilling nothing, and nothing downstream errors or warns when it's
+missing. Caught only because RG asked to confirm whether this issue's
+own plan file was safe to discard, which prompted a direct query rather
+than trusting the "100% fill" memory note. Fixed by re-running
+`parse_and_validate.py` + `build_duckdb.py` with
+`--printed-page-numbers outputs/full_run/printed_page_numbers_all.csv`
+restored -- **root cause was that CLAUDE.md's documented pipeline recipe
+never actually included this flag**, despite an earlier entry in this
+file (2026-09-19-ish) calling it "the mandatory CLAUDE.md recipe";
+CLAUDE.md itself has been fixed to include it, alongside the existing
+`--page-headers` callout, so this can't recur silently the same way.
+
+Restoring the flag brought fill back to 23861/24266 (98.3%), not the
+100% recorded at closure -- a **genuine, separate residual gap**, not
+caused by this regression (the same file, same rows, both before and
+after the accidental wipe). event_entry grew 24081 -> 24266 (+185) since
+this issue closed, from issues #85 (`repertoire_1892-93_pair012` +108,
+`repertoire_1895-96_p026` +50 -- two brand-new page_ids that didn't
+exist when `printed_page_numbers_all.csv` was built, so naturally
+uncovered) and #87 (missing-column fixes on 9 *existing* page_ids --
+`1894-95_pair004`, `1892-93_pair008`, `1894-95_pair014`,
+`1892-93_pair022`, `1892-93_pair024`, `1893-94_pair022`,
+`1891-92_pair018`, `1891-92_pair024`, `1892-93_pair018` -- adding
+sessions at dates outside that page_id's originally-recorded date range
+in the reference CSV, so only the *newly added* rows on those 9 pages
+are null; each page's pre-existing rows still resolve correctly, confirmed
+directly, e.g. `1894-95_pair004`: 55/100 filled, not 0/100). Not fixed
+this round -- closing it fully needs either extending those 9 page_ids'
+date ranges in `printed_page_numbers_all.csv` (cheap, no new scan reads,
+since the added sessions' dates are already known) plus fresh folio
+reads for the 2 new pages (comparable in scope to this issue's original
+per-page work). Worth a look next time this area comes up, but not
+blocking anything today.
+
 ## Issue #84: `1894-95` is missing ~10-11 weeks of Repertoire content --
 ## confirmed source-material gap, not an extraction bug
 

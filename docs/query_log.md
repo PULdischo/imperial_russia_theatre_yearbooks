@@ -9116,3 +9116,37 @@ canonical_genre, appearance_count from entities.work` pull.
 Result: 21 unmatched (34 appearances) of 159 excerpt-shaped titles, up from
 138 matched (was 96/47 at session start, 137/22 before the Люcія fix). Full
 categorization in known_issues.md issue #88 and docs/work_normalization.md.
+
+## 2026-09-25 — printed_page_number fill check (confirming plan file staleness)
+
+```sql
+select count(*) total, count(printed_page_number) filled from raw.event_entry
+```
+
+Result: (24266, 0) — column entirely null. Revealed a real regression: an
+earlier parse_and_validate.py re-run today (for issue #88's typo fix)
+omitted --printed-page-numbers, silently wiping the whole column. Fixed
+by re-running with the flag restored; re-checked:
+
+```sql
+select count(*) total, count(printed_page_number) filled from raw.event_entry
+```
+
+Result: (24266, 23861) — 98.3%, matching pre-regression state (confirmed
+the wipe-and-restore was a round trip, not new data loss).
+
+```sql
+select page_id, count(*) from raw.event_entry where printed_page_number is null group by page_id order by count(*) desc
+```
+
+Result: 11 page_ids, 405 rows — 2 are brand-new pages (issue #85,
+never covered by the reference CSV), 9 are pre-existing pages that grew
+new sessions after issue #87's missing-column fixes, outside the
+originally-recorded date range. See known_issues.md issue #83 addendum.
+
+```sql
+select count(*) total, count(printed_page_number) filled from raw.event_entry where page_id='repertoire_1894-95_pair004'
+```
+
+Result: (100, 55) — confirms partial fill (pre-existing rows still
+resolve; only newly-added rows are null), not a page-level wipe.

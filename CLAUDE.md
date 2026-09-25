@@ -79,9 +79,24 @@ python pipeline/run_pilot.py --manifest outputs/<run>/manifest.csv \
     --images-dir outputs/<run>/images --out-dir outputs/<run>/raw --max-concurrent 8
 python pipeline/parse_and_validate.py --manifest outputs/<run>/manifest.csv \
     --raw-dir outputs/<run>/raw --out-dir outputs/<run>/parsed \
-    --page-headers outputs/repertoire_singlepage_pagenumbers/all_page_headers.csv
+    --page-headers outputs/repertoire_singlepage_pagenumbers/all_page_headers.csv \
+    --printed-page-numbers outputs/full_run/printed_page_numbers_all.csv
 python pipeline/quality_checks.py --parsed-dir outputs/<run>/parsed --out outputs/<run>/quality_flags.csv
 ```
+
+**Always pass `--printed-page-numbers` for Repertoire against `outputs/full_run`.**
+Without it, `event_entry.printed_page_number` is silently null for the
+entire run — there's no error, no warning, just an empty column,
+because the flag is optional and defaults to backfilling nothing
+(issue #83, `docs/eval/known_issues.md`). This is a real trap, not a
+hypothetical one: re-running `parse_and_validate.py` against
+`outputs/full_run` without this flag — e.g. to apply an unrelated raw-JSON
+fix — silently wipes the physical-page-number citation for all ~24k
+Repertoire events on rebuild, and nothing downstream fails loudly to
+flag it (confirmed directly, 2026-09-25 — caught only by chance while
+checking on an unrelated plan). `outputs/full_run/printed_page_numbers_all.csv`
+is gitignored along with the rest of `outputs/` (see below) — if it's
+missing, it needs rebuilding per issue #83's writeup, not skipping.
 
 **Always pass `--page-headers` for Repertoire, both season formats.**
 Without it, `date_undate` for single-page seasons (1898-99-1907-08,
