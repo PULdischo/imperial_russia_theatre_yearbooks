@@ -730,6 +730,14 @@ walls of text.
 
 1. Semantic classification of `enumerated_list` (production credits vs.
    divertissement programme) — text pass
+1b. **Detecting BARE-LABELLED items** — a dance title followed by its
+   performers with no printed enumerator. RG, 2026-09-25: "we can later
+   identify these lists from the meaning of their content." A pattern rule
+   (Latin-script title + em dash) scored 7/8 with no false positives on the
+   gold and was rejected anyway: script is a correlate of these titles, not
+   the thing itself, and a volume with bare Russian titles would defeat it
+   silently. `segment_reviews.py` handles only printed enumerators, which
+   ARE the label. See that module's docstring.
 2. Cast-list parsing into role → performer pairs, including both alternate
    conventions (§6)
 3. Mention detection and entity linking (people, works, events, dates) —

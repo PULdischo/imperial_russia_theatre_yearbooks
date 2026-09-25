@@ -19,12 +19,36 @@ This is the flatten-boundary discipline CLAUDE.md already mandates: keep
 the paid, non-deterministic vision output stable and derive what can be
 derived downstream, where it is free to iterate.
 
-WHAT IT DOES NOT DO
--------------------
-Bare-labelled items. 61 of the gold's 108 blocks carry no enumerator at
-all, and only 20% of those begin at a line break -- the rest start mid-line
-(the prose-set cases). Those still need the vision pass, and this script
-leaves them alone.
+WHAT IT DOES NOT DO, AND WHY IT SHOULD NOT
+------------------------------------------
+Bare-labelled items -- a dance title followed by its performers, with no
+printed "1)" in front of it. Eight of them in the gold, e.g.
+"Solo des Etoiles doubles—г-жи Мендесъ 1-я и Мендесъ 2-я."
+
+A pattern rule for these was tested and DELIBERATELY NOT ADOPTED. Matching
+"Latin-script title + em dash" found 7 of the 8 with zero false positives
+across the twelve gold pages -- tempting, and wrong.
+
+RG, 2026-09-25: "I don't think we can assume that bare-labelled always
+starts with Latin. We can later identify these lists from the meaning of
+their content."
+
+The distinction this script rests on:
+
+  * "12)" and "а)" ARE the label. The printer put them there to mark the
+    item, so finding them finds the thing itself. That is why the rule
+    generalised to 90/90 across 60 unseen pages.
+  * Latin script is a CORRELATE. It coincides with dance titles in the
+    volumes examined; nothing guarantees it. A volume with bare RUSSIAN
+    titles would defeat it silently, which is the worst failure mode --
+    it would look like the page simply had no items.
+
+Recognising "this is a dance title followed by who performed it" is a
+judgement about meaning, not typography, and belongs in a later pass over
+finished text where it is free to iterate and never re-pays for vision.
+Same place the language-ID pass sits. See docs/season_reviews.md, deferred
+work, and the general rule: the vision pass records FORM; meaning is
+assigned downstream.
 
 Usage:
     python pipeline/segment_reviews.py --parsed-dir outputs/reviews/parsed \
