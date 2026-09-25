@@ -139,14 +139,46 @@ characters in a row.
 Here the page prints it correctly and all three passes corrupted it. Same
 name, opposite errors — and only the scan tells them apart.
 
+## review_1895-96_SP_ballet_p025  (folio 257)
+
+One illustration with a caption, then solid prose. Five character disputes.
+
+| # | runs 1 / 2 / 3 | ruling | note |
+|---|---|---|---|
+| 1 | Аслинь / Аслинъ / Аслинъ | **Аслинъ** (RG) — hard sign | ъ/ь again |
+| 2 | Легать / Легать / Легатъ (x3) | — | same name RG already ruled hard sign on p027 |
+| 3 | Леньяни / Леньяни / Леняни | **Леньяни** (RG) | Pierina Legnani; run 3 dropped the soft sign |
+| 4 | каре / карэ / каре | — | scan shows `карэ`; majority gave the MODERN spelling |
+| 5 | шіеся / шіесъ / шіесъ | **шіеся** (RG) | 2-run majority WRONG; run 1 alone right |
+| 6 | running head transcribed / omitted / omitted | **omit** (RG) | runs 2 and 3 right. Convention for the whole corpus — see below |
+
+### Running heads — DECIDED: not transcribed
+
+RG, 2026-09-26: **"We do not need to include the running head in the seasons
+that include them."** This settles the design note that had been left open
+("Return to this if you see it in one of the Yearbooks and we'll decide").
+
+The head on this page sits at the foot in small caps:
+`ЕЖЕГОДНИКЪ ИМП. Т. 1895–1896 ГГ.`, beside the folio `— 257 —` and a
+signature mark `17`. Run 1 transcribed it; runs 2 and 3 omitted it, and
+were right.
+
+It is page furniture: identical on every page of a volume, and carrying
+nothing the manifest does not already record. Note the phrasing — only SOME
+seasons print one, so this is not a rule that fires everywhere.
+
+Applies to all 1,024 pages. The folio itself is still captured, in
+`printed_folio`, which is a separate thing.
+
+
 ## Running tally
 
 | | |
 |---|---|
-| pages triaged | 7 of 10 |
-| rulings | 18 |
-| RG agreed with Claude's reading | 18 of 18 |
-| **2-run majority WRONG** | **7 of 16** (женщину, Вдали, Шарпантье, Легатъ, Мартьяновъ, Пребраженская, Сенъ-Нинъ) |
+| pages triaged | 8 of 10 |
+| rulings | 21 |
+| RG agreed with Claude's reading | 21 of 21 |
+| **2-run majority WRONG** | **9 of 20** (женщину, Вдали, Шарпантье, Легатъ, Мартьяновъ, Пребраженская, Сенъ-Нинъ, Аслинъ, шіеся) |
 | **all three passes wrong together** | **4** (бокаловъ, Іоритомо, Ѳомичевъ, Преображенская) |
 | **a pass silently DROPPED text** | **1** (p027, six names from the narrow columns) |
 

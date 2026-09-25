@@ -252,6 +252,12 @@ BLOCK TYPES
 PAGE FIELDS
 ================================================================
 "printed_folio"   The PRINTED page number, at the foot of the type block.
+                  RUNNING HEADS are not transcribed. Some volumes
+                  print one beside the folio -- a small-caps line such
+                  as "ЕЖЕГОДНИКЪ ИМП. Т. 1895-1896 ГГ." -- and it is
+                  page furniture, identical on every page. Leave it
+                  out of the blocks entirely. Capture only the page
+                  NUMBER itself, here.
                   It appears variously as "— 194 —", "151", or set to one
                   side. Some of these books carry PENCILLED archival numbers
                   in the top corners — those are NOT the folio. If no
