@@ -8861,3 +8861,12 @@ quality_checks.py, back to 894 (0 genuine Repertoire flags). Gold-eval: roster 8
 96.1% (unchanged -- no gold Repertoire page is two-page-spread format), grand 87.2%. entities
 layer confirmed stable (2900 live people, 0 new merges) -- Musicians/Roster isolation held. Full
 narrative: docs/eval/run_history.csv row `full_sweep_twopagespread_2026-09-25`.
+
+## 2026-09-25 — Filled the second dark-day placeholder gap on repertoire_1892-93_pair018
+
+Fixed the small follow-up flagged during the pair018 duplicate_event_key fix earlier today:
+Маріинскій/Большой/Малый each had only one `is_dark` entry for the combined "20 Субб./21
+Воскрес." date, though the scan shows dash placeholders on both days for all three. Added
+the missing "21 Воскрес." dark entry for each theater (+3 sessions). Rebuilt full chain:
+event_entry 24078->24081, verified 98.1%->98.1% (unchanged), quality_flags.csv unchanged
+(894/7, 0 genuine Repertoire flags).
