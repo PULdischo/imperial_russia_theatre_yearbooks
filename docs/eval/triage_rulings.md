@@ -205,15 +205,38 @@ reverted:
 `orthography.py` now carries a 12-case self-test built from RG's actual
 rulings, which is what should have gated the change in the first place.
 
+## review_1901-02_MSK_ballet_p024  (folio 309)
+
+Plate mid-page; body text in two blocks above and below it. 3 disputes.
+
+| # | runs 1 / 2 / 3 | ruling | note |
+|---|---|---|---|
+| 1 | Конекъ-Горбункѣ / Конекъ-Горбункѣ / Конькѣ-Горбункѣ | **Конькѣ-Горбункѣ** (RG) | 2-run majority WRONG; run 3 alone right |
+| 2 | Федорова / Фёдорова / Фёдорова | **Ѳедорова** (RG) | **ALL THREE WRONG.** Fita, no ё. All three passes wrote Ф; they disputed only the ё. |
+| 3 | Открытие / Открытіе / Открытие | **Открытіе** (RG) | 2-run majority WRONG; run 2 alone right, and the і-before-vowel rule agreed independently |
+
+The title case is the sharper of the three: four lines below the disputed
+word the same page prints the genitive `Конька-Горбунка`, which all three
+passes transcribed correctly. Having the right stem elsewhere on the page
+did not help any of them at the top.
+
+`Ѳедорова` is the fifth consensus failure and the second fita one after
+`Ѳомичевъ`. Nothing in the machinery could have caught it: the passes did
+not disagree about the first letter, so the disagreement signal was silent
+there, and no orthographic rule distinguishes Ѳ from Ф — that is lexical,
+not phonological. It was found only by reading the scan. Note also that the
+"never normalise a name because you recognise it" instruction was already
+in the production prompt when these passes ran.
+
 ## Running tally
 
 | | |
 |---|---|
-| pages triaged | 9 of 10 |
-| rulings | 26 |
-| RG agreed with Claude's reading | 26 of 27 — one disagreement: юбиляръ |
-| **2-run majority WRONG** | **12 of 24** — exactly half (женщину, Вдали, Шарпантье, Легатъ x2, Мартьяновъ, Пребраженская, Сенъ-Нинъ, Аслинъ, шіеся, Леньяни, карэ) |
-| **all three passes wrong together** | **4** (бокаловъ, Іоритомо, Ѳомичевъ, Преображенская) |
+| pages triaged one at a time | 10 of 10 — calibration set COMPLETE |
+| rulings | 29 |
+| RG agreed with Claude's reading | 29 of 30 — one disagreement: юбиляръ |
+| **2-run majority WRONG** | **13 of 27** (женщину, Вдали, Шарпантье, Легатъ x2, Мартьяновъ, Пребраженская, Сенъ-Нинъ, Аслинъ, шіеся, Леньяни, карэ, Конькѣ-Горбункѣ, Открытіе) |
+| **all three passes wrong together** | **5** (бокаловъ, Іоритомо, Ѳомичевъ, Преображенская, Ѳедорова) |
 | **a pass silently DROPPED text** | **1** (p027, six names from the narrow columns) |
 
 The three passes find WHERE to look and cannot decide WHAT is right. Majority
@@ -238,9 +261,16 @@ word and one dissents, the dissenter is worth a look.
 
 ## Resuming
 
-**Next:** pages 5–10 of the first ten, from `outputs/reviews/triage_queue.txt`
-(20 body-text pages below 0.95 in the 200-page pilot; ~103 expected across
-the full 1,024).
+**Next:** the remaining 12 flagged pages from
+`outputs/reviews/triage_queue.txt`, in BATCHED form — RG, 2026-09-25:
+"switch to the batched form now", after the ten one-at-a-time calibration
+pages agreed 29 of 30. Batched means Claude reads every dispute on a page
+against the scan and brings RG one consolidated list per page rather than
+one crop at a time; RG still rules on every character, and any case Claude
+cannot read confidently still gets its own crop.
+
+The queue is 20 body-text pages below 0.95 in the 200-page pilot; ~103 are
+expected across the full 1,024.
 
 **How this runs** (agreed 2026-09-25): Claude compares the three passes,
 resolves what is unambiguous, and brings RG only genuine character
