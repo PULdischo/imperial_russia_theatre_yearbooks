@@ -119,16 +119,32 @@ ROMAN_SUFFIXED = re.compile(r"^[IVXLCDM]+[-\u2013\u2014][\u0400-\u04FF]+$")
 
 
 def repair_mixed_script(text: str) -> tuple[str, list[str]]:
-    """Fix Latin letters stranded inside otherwise-Cyrillic words.
+    """Report EVERY word mixing Cyrillic and Latin; repair only the certain ones.
 
     RG, 2026-09-25: "definitely don't mix Cyrillic and latin letters in one
-    word." True, with the two exceptions above, which are checked first.
+    word", and then: "I'd rather be suspicious of all mixed Cyrillic/latin
+    words, then discard the false positives."
 
-    Repairs only where Cyrillic clearly dominates (at least three Cyrillic
-    letters per Latin one) and every stray letter has an unambiguous
-    counterpart. Everything else is REPORTED, not changed: a word that is
-    half one script and half the other is not a typo we understand, and
-    guessing at it would invent a reading rather than recover one."""
+    So nothing is silently exempted. Every mixed word produces a line, tagged
+    by what was done with it:
+
+      repaired   -- one stray Latin letter in a word of 2+ Cyrillic, or
+                    Cyrillic outnumbering Latin 3:1, and every stray letter
+                    has an unambiguous counterpart. The text IS changed.
+      unresolved -- mixed, but the fix is not obvious: a half-and-half word,
+                    or a letter that could map several ways (s -> с/з/ш,
+                    h -> н/х, b -> в/ь, u -> и/у). Text left alone.
+      roman      -- a Roman numeral with a Cyrillic suffix ("III-е", "II-й"),
+                    which is correct: Roman numerals are Latin here by RG's
+                    gold ruling, since Cyrillic І is glyph-identical but
+                    makes the text unsearchable. Text left alone, still
+                    reported so she can confirm rather than trust me.
+
+    An earlier version exempted French particles hyphenated to Russian
+    surnames ("de-Бріена") without reporting them. That was wrong twice
+    over: the scan shows the page prints CYRILLIC "де-Бріена" throughout, so
+    the exemption protected the very error it should fix -- and because it
+    was silent, nothing would have surfaced the mistake."""
     fixes: list[str] = []
 
     def fix_word(m: re.Match) -> str:
@@ -138,14 +154,15 @@ def repair_mixed_script(text: str) -> tuple[str, list[str]]:
         if not cyr or not lat:
             return w                                  # single script
         if ROMAN_SUFFIXED.match(w):
-            return w                                  # legitimate, see above
-        # one stray letter in a real word, or Cyrillic dominating 3:1
-        ok = (len(lat) == 1 and cyr >= 2) or cyr >= 3 * len(lat)
-        if not ok or any(c not in LATIN_TO_CYRILLIC for c in lat):
-            fixes.append(f"UNRESOLVED mixed-script {w!r} -- CHECK THIS PAGE")
+            fixes.append(f"roman {w!r} -- left as printed, confirm")
+            return w
+        certain = ((len(lat) == 1 and cyr >= 2) or cyr >= 3 * len(lat)) and \
+                  all(c in LATIN_TO_CYRILLIC for c in lat)
+        if not certain:
+            fixes.append(f"unresolved {w!r} -- CHECK THIS PAGE")
             return w
         out = "".join(LATIN_TO_CYRILLIC.get(c, c) for c in w)
-        fixes.append(f"{w!r} -> {out!r}")
+        fixes.append(f"repaired {w!r} -> {out!r}")
         return out
 
     return WORD_RE.sub(fix_word, text), fixes
