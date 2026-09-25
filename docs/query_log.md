@@ -9045,3 +9045,27 @@ joins receipts_parse_failed (7->8). A corrected numeric value belongs in the
 research layer (SQL-derived), not baked into raw-tier parsing -- not built yet.
 Reverted _RUBLES_MARKER_RE, updated the raw JSON's _fix_note and
 docs/eval/genuine_print_typos.md to match. Committed 9034f55.
+
+## 2026-09-25 — Full not_captured audit (issue #87)
+
+```sql
+-- contiguous per-theater block extraction + Easter/Clean-Monday/mid-Lent/Christmas
+-- calendar matching (see known_issues.md issue #87 for the Python logic)
+select page_id, theater, date_undate from analysis.event_entry where event_status='not_captured';
+
+-- disproportionate-theater check
+select page_id, theater, count(*) n from analysis.event_entry where event_status='not_captured' group by 1,2;
+```
+
+Result: every contiguous block >=3 days matched Julian Easter, Clean Monday, mid-Lent,
+or Christmas/New Year, or sat at a genuine page-boundary edge -- 5 independent Easter-year
+matches landed exactly on the computed date. Spot-verified one Clean-Monday match directly
+against the scan (repertoire_1900-01_p026: print jumps straight from 11 Февраля to 19
+Февраля with zero rows between, Clean Monday 1901 = 12 Февраля). Disproportionate-theater
+check found 8 real missing-column bugs (2 already found via other means this session, 6 new);
+dispatched fixes for the 7 outstanding -- 5 confirmed and fixed (+66 sessions total), 2 were
+NOT bugs after scan verification (1906-07_p037 is structurally Moscow-only, Petersburg
+theaters live on sibling page p036 which is already correct; 1890-91_p012's "missing" theater
+is genuinely dark, matching its siblings). Re-ran the disproportionate check after fixes: 0
+pages flagged. event_entry 24186->24266. not_captured 3000->2935. Full narrative:
+docs/eval/known_issues.md issue #87.

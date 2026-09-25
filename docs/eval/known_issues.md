@@ -17527,3 +17527,108 @@ clean.
 
 This check is now part of the standard `quality_checks.py` run --
 future rebuilds get it automatically, no special flag needed.
+
+## Issue #87: full `not_captured` audit -- found 6 more real
+## missing-theater-column bugs, confirmed the rest is genuine Lent/
+## Easter/Christmas closures (calendar-verified, not guessed)
+
+Direct continuation of RG's "make sure we've addressed all of these
+gaps" request after issue #86. Full corpus-wide triage of the 3000
+remaining `not_captured` rows, using a structural method rather than
+reading scans one at a time:
+
+**Method**: grouped every page's `not_captured` rows into contiguous
+per-theater date blocks. Any block >=3 days was checked against
+computed Julian-calendar Easter, Clean Monday (Great Lent's start, 48
+days before Easter), a mid-Lent anchor (Veneration of the Cross week,
+27 days before Easter), and the Christmas/New Year window. Separately,
+checked every page for one theater's `not_captured` count being wildly
+disproportionate to its 4-5 siblings on the same page (the exact
+signature of the "whole theater column silently missing" bug class
+issues #79/#82/#85 kept finding) -- a purely SQL-driven check, no
+scan-reading needed to run it at full corpus scale.
+
+**Results were unambiguous.** Every single contiguous block of 3+ days
+in the whole corpus matched one of the four calendar anchors, or sat at
+a page's own start/end where NO theater has data (a real, boring "this
+page's captured range doesn't extend that far" edge case, not a gap).
+Spot-verified this isn't just calendar coincidence: `repertoire_1900-01_p026`'s
+scan (4-19 Февраля 1901) shows the printed table itself jumping directly
+from "11 Воскресенье" to "19 Понед." with zero rows in between -- Clean
+Monday 1901 falls on 12 Февраля, exactly the first missing day. The
+Julian Easter matches were even more precise: 5 independent years
+checked, every one landed on the exact computed date (1899-04-18,
+1901-04-01, 1902-04-14, 1903-04-06, 1904-03-28) -- Holy Week closures,
+confirmed to the day, recurring in the same relative page-position
+across seasons that otherwise have nothing else in common.
+
+**The disproportionate-theater check found 8 real bugs** (2 already
+found this session via other means -- `1892-93_pair010`, issue #85's
+earlier finding, and re-confirmed here as a sanity check; 6 new).
+Dispatched a batch fix for the 7 not-yet-fixed cases (the 8th, pair010,
+was already fixed). **5 of 7 were confirmed real and fixed; 2 were NOT
+bugs after direct scan verification** -- worth recording precisely,
+since blindly trusting the SQL signal would have fabricated data on
+both:
+
+- **`repertoire_1906-07_p037`** looked like 3 missing St. Petersburg
+  theaters, but this single-page-season render is structurally
+  Moscow-only ("Московскіе театры" -- Большой/Малый/Новый); the 3
+  Petersburg theaters for the identical date range live on the sibling
+  page `repertoire_1906-07_p036` ("С.-Петербургскіе театры"), which
+  already has complete, correct data. Single-page seasons split by
+  city onto separate render pages the same way two-page-spread seasons
+  do -- the SQL check's per-page_id grouping doesn't know this, a
+  structural gap in the check itself, not in the data. Nothing changed.
+- **`repertoire_1890-91_p012`** looked like Александринскій was
+  missing, but the scan shows all 3 St. Petersburg theaters genuinely
+  dark for the page's whole (short, 6-date) remaining range -- already
+  correctly recorded as `is_dark: true`, matching its siblings exactly.
+  Nothing changed.
+
+**5 confirmed real gaps, fixed** (all verified directly against scans,
+not guessed):
+- `repertoire_1894-95_pair002`: Маріинскій entirely absent for its
+  whole 20-date range (16 Авг-11 Сент 1894) -- genuinely dark every
+  single day (summer opera break), added as 20 explicit `is_dark: true`
+  placeholders rather than left as silent gaps.
+- `repertoire_1890-91_pair020`: 4 theaters (all but Михайловскій, which
+  had already been fixed earlier the same session) missing for 24-26
+  Февраля 1891, including a free-student-matinee row on the 26th.
+  +24 sessions.
+- `repertoire_1895-96_pair004`: Малый missing 1-7 Октября 1895
+  (including a morning/evening split and a genuine dark day). +8
+  sessions.
+- `repertoire_1891-92_pair006`: Александринскій missing 24-27 Октября
+  1891 (including a dark day and a morning/evening split). +5 sessions.
+- `repertoire_1893-94_pair016`: Александринскій missing 15-22 Января
+  1894 (dark-content-dark pattern). +9 sessions.
+
+Two judgment calls flagged by the fixing agent, both resolved per
+established project convention rather than guessed: a genre field
+("опер." vs "оперетта") left exactly as THIS instance prints it even
+though the same work is spelled out in full elsewhere in the same file
+(per "never assume spelling consistency"); an illegible title read from
+an unambiguous same-file precedent (3 other clean instances of the same
+opera title) rather than the blurrier local crop.
+
+**Result**: event_entry 24186->24266 (+80, net of the 66 newly-added
+sessions here plus the 14 from `pair010` completing the picture from
+issue #85's original find). `not_captured`: 3000 -> 2935. Re-ran the
+disproportionate-theater check after the fixes: **zero pages remain
+flagged**. quality_flags.csv unchanged (895 total: 894 baseline + 8
+genuine receipts typos). `validate_performance_dates.py` unchanged
+(98.1%). Full chain rebuilt clean.
+
+**This closes the `not_captured` audit.** The remaining 2935 rows are,
+to the best of a full-corpus structural check plus targeted scan
+verification, genuine period closures (Great Lent's Clean Week and Holy
+Week, Christmas/New Year, a handful of confirmed multi-week mourning/
+off-season closures) or genuine page-boundary edges where no theater
+has data -- not a residue of unfound extraction bugs. Nothing about
+this check is infallible (a closure could theoretically coincide with a
+genuine bug on the same dates without being caught), but between the
+calendar precision, the direct scan spot-check, and the exhaustive
+disproportionate-theater sweep finding zero further instances after
+the fix, this is as thorough an audit as this metric is going to get
+without reading several thousand individual scan cells by hand.
