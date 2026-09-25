@@ -86,6 +86,71 @@ def repair_json_escapes(text: str) -> tuple[str, int]:
     return BAD_ESCAPE.sub(fix, text), n
 
 
+# Latin letters the model substitutes for Cyrillic. Not lookalikes -- these
+# are TRANSLITERATION slips: it writes the Latin letter for the same sound.
+# Measured over the 600-response pilot: d->д 84x, g->г 16x, r->р 15x, v->в
+# 10x, plus the true homoglyphs. Deliberately EXCLUDED as ambiguous: s
+# (с/з/ш), h (н/х), b (в/ь), u (и/у) -- guessing those would invent readings.
+LATIN_TO_CYRILLIC = {
+    "a": "а", "c": "с", "e": "е", "o": "о", "p": "р", "x": "х", "y": "у",
+    "k": "к", "t": "т", "n": "н", "m": "м", "d": "д", "g": "г", "v": "в",
+    "z": "з", "r": "р", "i": "і", "l": "л", "f": "ф",
+    "A": "А", "B": "В", "C": "С", "E": "Е", "H": "Н", "K": "К", "M": "М",
+    "O": "О", "P": "Р", "T": "Т", "X": "Х", "Y": "У", "G": "Г", "D": "Д",
+}
+CYRILLIC_RE = re.compile(r"[\u0400-\u04FF]")
+LATIN_RE = re.compile(r"[A-Za-z]")
+WORD_RE = re.compile(r"[^\s\u2014\u2013,;:.!?()\u00ab\u00bb\u201e\u201c]+")
+
+# RG's rule -- never mix the scripts inside one word -- has exactly ONE
+# genuine exception in this corpus: a Roman numeral with a Cyrillic suffix
+# ("III-е", "II-й"). Roman numerals are Latin here by RG's own gold ruling,
+# because Cyrillic І is glyph-identical but makes the text unsearchable.
+#
+# I briefly added a second exception for a French particle hyphenated to a
+# Russian surname ("de-Бріена", "de-Вантадуръ") and it was WRONG. Checking
+# 1897-98_SP_ballet_p027 against the scan: the page prints Cyrillic
+# "де-Бріена" in all five places, and Latin "de-" was the model's own
+# substitution. The exception would have protected the very error it should
+# repair. These are real French names -- Jean de Brienne and Bernart de
+# Ventadorn, troubadours in Raymonda -- but the yearbook sets them in
+# Cyrillic.
+ROMAN_SUFFIXED = re.compile(r"^[IVXLCDM]+[-\u2013\u2014][\u0400-\u04FF]+$")
+
+
+def repair_mixed_script(text: str) -> tuple[str, list[str]]:
+    """Fix Latin letters stranded inside otherwise-Cyrillic words.
+
+    RG, 2026-09-25: "definitely don't mix Cyrillic and latin letters in one
+    word." True, with the two exceptions above, which are checked first.
+
+    Repairs only where Cyrillic clearly dominates (at least three Cyrillic
+    letters per Latin one) and every stray letter has an unambiguous
+    counterpart. Everything else is REPORTED, not changed: a word that is
+    half one script and half the other is not a typo we understand, and
+    guessing at it would invent a reading rather than recover one."""
+    fixes: list[str] = []
+
+    def fix_word(m: re.Match) -> str:
+        w = m.group(0)
+        cyr = len(CYRILLIC_RE.findall(w))
+        lat = LATIN_RE.findall(w)
+        if not cyr or not lat:
+            return w                                  # single script
+        if ROMAN_SUFFIXED.match(w):
+            return w                                  # legitimate, see above
+        # one stray letter in a real word, or Cyrillic dominating 3:1
+        ok = (len(lat) == 1 and cyr >= 2) or cyr >= 3 * len(lat)
+        if not ok or any(c not in LATIN_TO_CYRILLIC for c in lat):
+            fixes.append(f"UNRESOLVED mixed-script {w!r} -- CHECK THIS PAGE")
+            return w
+        out = "".join(LATIN_TO_CYRILLIC.get(c, c) for c in w)
+        fixes.append(f"{w!r} -> {out!r}")
+        return out
+
+    return WORD_RE.sub(fix_word, text), fixes
+
+
 def load_folio_corrections(path: Path) -> dict[str, str]:
     """Hand-verified printed_folio overrides, applied at PARSE time.
 
@@ -157,6 +222,15 @@ def main() -> None:
         page, notes = repair(page)
         for note in notes:
             repairs.append({"page_id": page_id, "repair": note})
+
+        mixed: list[str] = []
+        for blk in page.blocks:
+            for sp in list(blk.spans) + list(blk.caption):
+                if sp.text:
+                    sp.text, f = repair_mixed_script(sp.text)
+                    mixed += f
+        for f in mixed:
+            repairs.append({"page_id": page_id, "repair": f"mixed_script: {f}"})
 
         if page_id in folio_fixes:
             was = page.printed_folio
