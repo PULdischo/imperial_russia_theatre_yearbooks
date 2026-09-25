@@ -8745,3 +8745,29 @@ collision surfaced along the way (repertoire_1891-92_pair012, two
 Александринскій "29 Воскрес." sessions both `session: "unspecified"`
 instead of morning/evening -- assigned from content). Musicians/Roster
 byte-identical throughout.
+
+## 2026-09-25 — Issue #81: truncated weekday word in date_text, single-page seasons
+
+```sql
+-- sizing (via Python, not SQL): scanned every outputs/full_run/raw/repertoire_*_p*.raw.json
+-- for the 10 single-page seasons, checking date_text for a weekday-word stem
+```
+
+Result: 237 of 15092 single-page sessions (1.6%) had a truncated (not
+fully dropped) weekday word, across 20 pages, concentrated in 1907-08
+(14 of 20 pages). Scan-verified 2 pages first (`1903-04_p032`,
+`1907-08_p006`), both confirmed genuine truncation. Fixed via 2
+parallel batches; 237 -> 6 residual, both confirmed genuine period
+print typos (not bugs) -- `1903-04_p010` (already documented) and
+`1901-02_p002` (newly confirmed, added to genuine_print_typos.md).
+Full write-up: known_issues.md issue #81.
+
+```sql
+SELECT date_confidence, COUNT(*) FROM analysis.event_entry_date_check GROUP BY 1 ORDER BY 2 DESC;
+```
+
+Result after rebuild: unchanged at verified 22659 (97.7%) -- this fix
+didn't move date-correctness confidence (the existing short-form
+weekday parser already handled truncated forms like "Вт." correctly),
+it's a verbatim-completeness fix, not a correctness one. 0
+duplicate-key collisions corpus-wide. Musicians/Roster byte-identical.

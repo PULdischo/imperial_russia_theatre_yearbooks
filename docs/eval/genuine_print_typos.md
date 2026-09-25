@@ -112,6 +112,8 @@ one:
   makes Jan 1 a Sunday, not the printed Tuesday.
 - **`repertoire_1906-07_p041`**: "6 Понед." printed right after
   "5 Четвергъ." — should be "6 Пятница." per the sequence.
+- **`repertoire_1901-02_p002`**: "16 Вокрес." for "Воскресенье" (Sunday)
+  — a dropped с, confirmed genuinely printed that way.
 
 ## A whole misprinted date-range header
 

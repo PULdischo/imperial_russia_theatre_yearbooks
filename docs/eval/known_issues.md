@@ -16706,6 +16706,12 @@ backlog are all resolved. No further sweep of this season group is
 planned; a new gap would need new evidence, same as issue #79's own
 2 documented unresolved content gaps above.
 
+**CORRECTION, 2026-09-25**: "fully closed" was overstated -- the
+24-agent sweep verified session *content* but never specifically
+checked whether the weekday word in `date_text` survives intact. It
+didn't always; see issue #81, now fixed. Content-wise this issue's
+closure still stands.
+
 ## Issue #80: two-page-spread seasons -- dropped weekday word in
 `date_text`, corpus-wide, 629 sessions / 63 pages -- CLOSED
 
@@ -16807,3 +16813,60 @@ people, 23 preserved candidate decisions). Backed up first to
 weekday word). The five follow-ups above are new, narrower, separate
 findings -- worth their own look if RG wants to continue pulling this
 thread, but not required to consider this issue done.
+
+## Issue #81: single-page-format seasons -- truncated (not fully
+dropped) weekday word in `date_text` -- CLOSED
+
+Sibling bug to issue #80, found immediately after it. RG asked "really?
+nothing else to check?" about issue #79's "fully closed" claim -- fair
+challenge, and right again: the 24-agent sweep (issue #79) verified
+session *content* but never specifically checked whether the weekday
+word in `date_text` survives intact from the scan. On some pages it
+doesn't -- not fully dropped like issue #80's two-page-spread bug, but
+truncated. E.g. the yearbook prints "2 Вторникъ." in full;
+`date_text` stored just "2 Вт."
+
+**Scan-verified on 2 pages first** (`1903-04_p032`, `1907-08_p006`) --
+both confirmed: full weekday word genuinely printed, dataset has the
+truncated form.
+
+**Sizing** (same crude weekday-stem-regex method as issue #80): 237 of
+15092 single-page sessions (1.6%) across 20 pages. Heavily concentrated
+in **1907-08** (14 of the 20 pages, ~185 of the 237 sessions) --
+something about how that season's later pages were extracted seems to
+have consistently over-truncated the weekday word, distinct from
+whatever caused issue #80 in the earlier seasons.
+
+**Fix**: 2 parallel agent batches (10 pages/~119 sessions each --
+single-page render lookup is direct, `page_id`'s own index maps
+straight to `ForUpload_{season}_Repertoire_{NNN}.jpg`, no folio-lookup
+dance needed unlike issue #80). Same methodology: read the date-label
+margin, restore the full weekday word exactly as printed, verbatim
+rule applied (a genuine period typo gets transcribed as a typo, not
+"corrected").
+
+**Result**: 237 -> 6 residual flags, and both remaining are confirmed
+genuine period print typos, not bugs -- `repertoire_1903-04_p010`'s
+"4 Ворникъ." (already documented, issue predates this one) and
+`repertoire_1901-02_p002`'s "16 Вокрес." (newly confirmed, a dropped с
+in "Воскресенье"; added to `docs/eval/genuine_print_typos.md`). 0
+duplicate-key collisions anywhere in the corpus after the fix.
+
+**Post-fix verification**: `parse_and_validate.py`: 0 new genuine
+validation failures (0 Repertoire). `validate_performance_dates.py`:
+unchanged at 97.7% verified -- unlike issue #80, this fix didn't move
+the needle on date-correctness confidence, because the existing
+short-form weekday parser (`_DOW_PREFIXES`) already recognized 2-3
+letter abbreviations like "Вт."/"Ср." as valid, so these dates were
+already computing correctly; this fix is a verbatim-completeness
+improvement, not a correctness one. `quality_checks.py`: unchanged
+(894 flags, 7 `receipts_parse_failed`, 0 genuine Repertoire).
+Musicians/Roster: byte-identical. Backed up first to
+`outputs/full_run_pre_promote_backup_2026-09-25_singlepage_weekday/`.
+
+**Issue #81 is closed.** Between issue #80 and #81, every Repertoire
+`date_text` field in the corpus (both season formats) now carries the
+weekday word exactly as printed, dropped or truncated nowhere left
+undiscovered by this specific check. The five narrower follow-ups
+flagged during issue #80's fix (see that issue) remain open and
+unrelated to this one.
