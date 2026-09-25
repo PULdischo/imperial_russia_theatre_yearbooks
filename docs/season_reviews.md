@@ -400,6 +400,29 @@ from this gold set at all, in either direction.
 
 ### The governing rule
 
+**RG, 2026-09-25: "I'm happy to do things with the finished text AFTER we
+get all the characters down."**
+
+This is the sequencing rule for the whole track, and it decides most of the
+arguments on this page before they start. The vision pass has ONE job:
+capture every character on the page, in the right order. Everything that
+can be derived from finished text is derived later — free to iterate, never
+re-paying for a vision call, and never allowed to compete with the
+characters for room in the prompt.
+
+What that has already settled, each measured rather than assumed:
+
+| question | resolved to |
+|---|---|
+| разрядка / bold / italic / lang in the prompt? | **no** — all four failed the test below |
+| Russian vs non-Russian? | downstream, 100% from script vs 10% from the model |
+| numbered item boundaries? | downstream, `segment_reviews.py`, 90/90 out of sample |
+| bare-labelled item boundaries? | downstream, semantically, once the text exists |
+| French vs Italian? | downstream if ever wanted |
+
+### The test that rule applies
+
+
 **Base text accuracy outranks every annotation.** If the annotation-heavy
 prompt measurably degrades plain-text character accuracy, the annotations go
 and the transcription stays. This is tested directly (§11), not assumed.
