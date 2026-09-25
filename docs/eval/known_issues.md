@@ -16588,11 +16588,26 @@ classes:
   no trace of "23 Воскрес."); `p005`'s neighbors are `p006` (Petersburg,
   different city) and `p007` (next Moscow page, resumes cleanly at
   "2 Воскрес." with no trace of "1 Суббота."). The missing content isn't
-  misfiled on an adjacent render -- it simply isn't in the photographed
-  set. Resolving this needs the physical volume, not further pipeline
-  work. **Documented and left as-is per RG's instruction (2026-09-24)
-  -- do not re-investigate without new evidence (e.g. a better scan of
-  these two physical pages).**
+  misfiled on an adjacent render.
+
+  **CORRECTION, 2026-09-25: this is not a scanning/photography gap at
+  all -- it's a genuine period PRINTING limitation, and re-scanning
+  would not help.** RG pointed out there's clean blank margin (with the
+  folio number fully visible, "89"/"92") below both flagged rows --
+  the photograph isn't truncated. Re-examined the row's own printed
+  border structure directly and compared it against a confirmed
+  genuine УТРО./ВЕЧЕРЪ. split elsewhere on the same page (`p005`'s "25
+  Воскрес.": a taller box with a horizontal divider, each half with
+  its own label and content). Both flagged rows look nothing like
+  that -- their vertical column-divider lines run down past the
+  morning entry's receipts figure and simply stop, with no closing
+  border and no second sub-cell ever drawn. The compositor ran out of
+  vertical space on the physical page mid-row and the evening entry
+  was never typeset in the original book at all -- not lost in
+  scanning, never printed. No better scan of these two pages, however
+  good, would recover anything more; the original bound volume itself
+  doesn't contain this data. **Documented and left as-is -- do not
+  re-investigate further, there is nothing left to find.**
 
 Full query text and per-fix detail: `docs/query_log.md`, entries dated
 2026-09-24 ("Sample scan-read...", "Morning/evening split distribution...",

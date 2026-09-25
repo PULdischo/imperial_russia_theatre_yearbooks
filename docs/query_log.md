@@ -8819,3 +8819,23 @@ SELECT date_confidence, COUNT(*) FROM analysis.event_entry_date_check GROUP BY 1
 Result after rebuild: verified 22701 (97.8%, +42), intra_block_disagreement
 368 (down from 383). event_entry 23173->23200 (+27). 0 duplicate-key
 collisions corpus-wide. Musicians/Roster byte-identical.
+
+## 2026-09-25 — Re-examined the two "unresolved content gap" pages more precisely
+
+RG pushed back twice on the standing conclusion for `1905-06_p005`/
+`p008` ("do a better scan"): first asking whether neighboring renders
+were really checked (re-verified directly, yes -- both continuation
+pages open cleanly at their own next date with no orphaned content),
+then pointing out there's genuine blank margin with the folio number
+fully visible below both flagged rows, meaning the photograph isn't
+truncated at all. Re-examined each row's printed border structure and
+compared against a confirmed genuine УТРО./ВЕЧЕРЪ. split elsewhere on
+`p005` (day 25's taller two-part box). Both flagged rows' column
+lines run down past the receipts figure and simply stop -- no closing
+border, no second sub-cell ever drawn. Conclusion revised: this is a
+genuine period PRINTING limitation (the compositor ran out of page
+space mid-row), not a scanning gap -- a better scan would recover
+nothing, since the original book itself never typeset the evening
+entry. No data change (the existing "morning"-labeled capture is
+already verbatim-correct); known_issues.md's write-up corrected to
+stop suggesting re-scanning as a path forward.
