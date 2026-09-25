@@ -146,9 +146,9 @@ One illustration with a caption, then solid prose. Five character disputes.
 | # | runs 1 / 2 / 3 | ruling | note |
 |---|---|---|---|
 | 1 | Аслинь / Аслинъ / Аслинъ | **Аслинъ** (RG) — hard sign | ъ/ь again |
-| 2 | Легать / Легать / Легатъ (x3) | — | same name RG already ruled hard sign on p027 |
+| 2 | Легать / Легать / Легатъ (x3) | **Легатъ** | applying RG's ruling from 1901-02_SP_ballet_p027; 2-run majority WRONG |
 | 3 | Леньяни / Леньяни / Леняни | **Леньяни** (RG) | Pierina Legnani; run 3 dropped the soft sign |
-| 4 | каре / карэ / каре | — | scan shows `карэ`; majority gave the MODERN spelling |
+| 4 | каре / карэ / каре | **карэ** (RG) | 2-run majority WRONG — gave the MODERN spelling where the page has э |
 | 5 | шіеся / шіесъ / шіесъ | **шіеся** (RG) | 2-run majority WRONG; run 1 alone right |
 | 6 | running head transcribed / omitted / omitted | **omit** (RG) | runs 2 and 3 right. Convention for the whole corpus — see below |
 
@@ -176,9 +176,9 @@ Applies to all 1,024 pages. The folio itself is still captured, in
 | | |
 |---|---|
 | pages triaged | 8 of 10 |
-| rulings | 21 |
-| RG agreed with Claude's reading | 21 of 21 |
-| **2-run majority WRONG** | **9 of 20** (женщину, Вдали, Шарпантье, Легатъ, Мартьяновъ, Пребраженская, Сенъ-Нинъ, Аслинъ, шіеся) |
+| rulings | 24 |
+| RG agreed with Claude's reading | 24 of 24 |
+| **2-run majority WRONG** | **12 of 24** — exactly half (женщину, Вдали, Шарпантье, Легатъ x2, Мартьяновъ, Пребраженская, Сенъ-Нинъ, Аслинъ, шіеся, Леньяни, карэ) |
 | **all three passes wrong together** | **4** (бокаловъ, Іоритомо, Ѳомичевъ, Преображенская) |
 | **a pass silently DROPPED text** | **1** (p027, six names from the narrow columns) |
 
@@ -194,9 +194,11 @@ transcription. Worth watching for specifically.
 Сенъ-Нинъ, plus the gold-set Карльсонъ). This is the corpus's single most
 reliable trap, for the model and for RG alike.
 
-The other recurring pattern: **the model reaches for the commoner word.**
-Мартыновъ for Мартьяновъ, женщицу for женщину, Преображенская for the
-page's own misprint Пребраженская. Where two passes agree on a plausible
+The other recurring pattern: **the model reaches for the commoner or more
+MODERN form.** Мартыновъ for Мартьяновъ, женщицу for женщину,
+Преображенская for the page's own misprint Пребраженская, and каре for the
+printed карэ — that last one is a pre-reform spelling the model quietly
+modernised, which is the exact failure the verbatim rule exists to prevent. Where two passes agree on a plausible
 word and one dissents, the dissenter is worth a look.
 
 
