@@ -84,15 +84,35 @@ read the photo caption as `Camargo (1-жа Леньяни)` — a `1` where the 
 prints `Г-жа`. All three wrong, so no disagreement flags it. Captions are
 set aside per RG, 2026-09-25.
 
+## review_1897-98_SP_ballet_p003  (folio 239)
+
+«Дочь микадо» — a Japanese-themed ballet, and the page that produced the
+"do not normalise names you recognise" prompt rule (commit 19f5071).
+Photograph with a narrow text column beside it.
+
+| # | runs 1 / 2 / 3 | ruling | note |
+|---|---|---|---|
+| 1 | Сень-Нинъ / Сенъ-Нинъ / Сень-Нинъ | **Сенъ-Нинъ** (RG) — hard sign | 2-run majority WRONG. ъ/ь again. Both halves of the name end the same way, twice over. |
+| 2 | Оёдоровъ / Оедоровъ / Ѳедоровъ | **Ѳедоровъ** — fita | settled from the scan; RG delegated |
+| 3 | Юриtomo / Іориtomo / Иориtomo | **Іори-**/**томо** | settled from the scan; RG delegated. The page prints it in italic CYRILLIC across a line break. ALL THREE passes romanised it. |
+
+Also on this page and NOT raised, now handled automatically: Миkado,
+Каsatkina, Бакерkina, Новоbrачные, ввеsti, поdарками, подnоситъ — the same
+romanising failure, caught by `repair_mixed_script` or flagged by it.
+
+Structural, no ruling needed: run 1 put the figure's caption text into a
+body block where runs 2 and 3 put it in the figure caption, which accounts
+for most of run 1's apparent extra words.
+
 ## Running tally
 
 | | |
 |---|---|
-| pages triaged | 4 of 10 |
-| rulings | 13 |
-| RG agreed with Claude's reading | 13 of 13 |
-| **2-run majority WRONG** | **6 of 12** (женщину, Вдали, Шарпантье, Легатъ, Мартьяновъ, Пребраженская) |
-| **all three passes wrong together** | **1** (бокаловъ) |
+| pages triaged | 5 of 10 |
+| rulings | 16 |
+| RG agreed with Claude's reading | 16 of 16 |
+| **2-run majority WRONG** | **7 of 16** (женщину, Вдали, Шарпантье, Легатъ, Мартьяновъ, Пребраженская, Сенъ-Нинъ) |
+| **all three passes wrong together** | **2** (бокаловъ, Іоритомо) |
 | **a pass silently DROPPED text** | **1** (p027, six names from the narrow columns) |
 
 The three passes find WHERE to look and cannot decide WHAT is right. Majority
@@ -102,6 +122,10 @@ where all three agreed on the same wrong word. Every ruling needs the scan.
 Half the majority failures are ъ/ь confusions (Шарпантье, Легатъ, and the
 gold-set Карльсонъ before it) — the same trap that recurs in RG's own
 transcription. Worth watching for specifically.
+
+**Five of the seven majority failures are ъ/ь** (Шарпантье, Легатъ,
+Сенъ-Нинъ, plus the gold-set Карльсонъ). This is the corpus's single most
+reliable trap, for the model and for RG alike.
 
 The other recurring pattern: **the model reaches for the commoner word.**
 Мартыновъ for Мартьяновъ, женщицу for женщину, Преображенская for the
