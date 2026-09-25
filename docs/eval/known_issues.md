@@ -17109,3 +17109,100 @@ seasons) -- every Repertoire render in the corpus has now been
 individually scan-verified at least once, in both formats.
 `link_wikidata.py` and the HF/Cloud Run republish were deliberately not
 run this round, per established convention.
+
+## Issue #83: `printed_page_number` build-out for Repertoire
+
+RG asked for this directly, right after the issue #82 sweep wrapped up:
+being able to cite the physical printed page number for any database
+entry, which was impossible before this -- the field was 0% populated
+across all 24,081 Repertoire events. An approved plan
+(`.claude/plans/nifty-enchanting-sedgewick.md`) scoped this as two-part
+work, phased by season format.
+
+**Phase 0 (schema/pipeline plumbing) turned out to already be built** --
+commit `1e15f75`, 2026-09-22, three days before this session picked the
+plan back up. The `printed_page_number` column, the
+`--printed-page-numbers` CSV loader, the `_assign_printed_page`-style
+backfill in `flatten_repertoire_page`, and a
+`printed_page_number_out_of_sequence` quality check all existed and
+worked correctly -- they'd simply never been fed real data. Confirmed by
+direct query (0/24081 filled) before trusting the plan's own "not yet
+started" framing, since the plan document itself was stale on this point.
+Went straight to the actual manual folio-reading.
+
+**Two-page-spread seasons (1890-91-1897-98, 97 renders)**: dispatched as
+6 parallel batches, each reading a render's printed folio number(s) --
+crop-verified against an earlier VLM pass's candidate values rather than
+trusted blindly (docs/verbatim_deliverables.md's folio-detection method:
+the number sits at the foot of single-page-format pages, but on these
+two-page-spread renders it's rotated 90 degrees in the LEFT MARGIN, "— N
+—" -- a genuine methodology correction from what the generic task
+description assumed, caught independently by the first agent to finish
+and relayed to the other 5 mid-task). Also caught: the render JPGs on
+disk are exactly HALF the pixel dimensions of the coordinate space an
+earlier pipeline pass's `cut_y`/extent values were computed in --
+crops would have landed on the wrong content without scaling by 0.5
+first. Several VLM-pass candidate numbers were corrected against direct
+reads: digit duplication ("— 123 —" read as "— 61 —"), rotated-glyph
+misreads ("23" read as "13"), and outright garbled/empty candidates.
+
+Each render's own printed cutover date (which calendar date is the last
+one on the render's top half vs. the first on its bottom half) was
+matched against that final page_id's actual `date_undate` values already
+in the database, rather than re-derived from scratch -- this correctly
+produced 85 of 85 split page_ids with perfectly consecutive top/bottom
+page numbers (n, n+1), a strong internal-consistency signal that both the
+folio reads and the date-matching were right.
+
+**90 of 98 two-page-spread page_ids backfilled cleanly.** 8 deliberately
+NOT guessed, per the same verbatim-in/best-effort-out contract the
+backfill code already enforces:
+- `repertoire_1892-93_pair014` and `repertoire_1890-91_pair010`: both
+  multi-render page_ids (the former resolved mid-issue-#82 to draw from
+  two different renders for two different date sub-ranges, the latter
+  built from two renders each contributing one physical page) -- need
+  one more targeted render read each rather than the single-render
+  assembly logic used for the other 96.
+- `repertoire_1890-91_p015`, `_p023`, `repertoire_1891-92_p003`,
+  `repertoire_1892-93_pair024`, `repertoire_1895-96_p012`,
+  `repertoire_1897-98_pair020`: the read cutover date's day-of-month
+  didn't match any actual `date_undate` value on record for that
+  page_id (likely a dark day with no event_entry row, or a page-mapping
+  question left over from earlier corrections) -- flagged rather than
+  assumed.
+
+One low-confidence flag worth a physical/archival look: on
+`repertoire_1892-93_p000`'s bottom half, no printed folio number is
+visible anywhere in the scan -- only a handwritten pencil "1892/93 — 3
+—" nearby, which was correctly NOT treated as the printed number per
+`docs/verbatim_deliverables.md`'s own warning against confusing the two.
+Reported as a low-confidence inference (continuing the sequence from the
+top half's "2"), not a confirmed read; the printed number may genuinely
+not have been captured in this particular scan.
+
+**Single-page seasons (1898-99-1907-08, 422 renders)**: spot-checked 3
+renders per season (first/middle/last by position) -- all 10 seasons
+held to a constant `printed_page_number = source_page_index + offset`
+across all 3 sample points, so none needed escalation to full
+per-season reads (the plan's stated criterion for staying at the cheap
+spot-check level). Offsets: 1898-99 through 1903-04 all +2; 1904-05 +90;
+1905-06 +84; 1906-07 +84; 1907-08 +76 -- confirming the plan's own
+warning that no single constant holds across all seasons, only within
+each one. All 422 page_ids backfilled by formula.
+
+**Result**: 23422/24081 Repertoire events (97.3%) now carry a
+scan-verified printed page number. New
+`printed_page_number_out_of_sequence` check: 0 flags corpus-wide. 4/4
+available gold cross-checks (`docs/eval/gold/source_pages.csv`) matched
+exactly. `validate_performance_dates.py` unchanged (98.1%, expected --
+pure additive column, no session content touched).
+`entities.person`/`entities.work` confirmed stable (0 new merges).
+Threaded through to `research.event` (23422/27113 filled) and
+`research_dataset.sqlite`. Full narrative:
+`docs/query_log.md`'s 2026-09-25 printed_page_number entries.
+
+**Not done**: the 8 deferred page_ids above, and Phase 3 (this work was
+built directly against `outputs/full_run`, not a separate scratch
+directory, so there's no separate "promote" step this time -- but
+`link_wikidata.py` and the HF/Cloud Run republish are still
+deliberately deferred, same as every recent round).

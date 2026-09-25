@@ -8870,3 +8870,34 @@ Fixed the small follow-up flagged during the pair018 duplicate_event_key fix ear
 the missing "21 Воскрес." dark entry for each theater (+3 sessions). Rebuilt full chain:
 event_entry 24078->24081, verified 98.1%->98.1% (unchanged), quality_flags.csv unchanged
 (894/7, 0 genuine Repertoire flags).
+
+## 2026-09-25 — printed_page_number build-out: assembly and backfill
+
+```
+pipeline/parse_and_validate.py ... --printed-page-numbers outputs/full_run/printed_page_numbers/printed_page_numbers.csv
+pipeline/quality_checks.py --parsed-dir outputs/full_run/parsed --out outputs/full_run/quality_flags.csv
+pipeline/build_duckdb.py ... (full rebuild)
+```
+
+Result: 23422/24081 Repertoire event_entry rows (97.3%) now carry a scan-verified
+printed_page_number. Two-page-spread seasons: 90 of 98 page_ids backfilled from 97
+manually-read render folios (dispatched as 6 parallel batches, cross-checked against
+existing `split_page_numbers_final.csv`/`split_extents.csv` candidates rather than
+trusting them blindly -- several VLM misreads caught and corrected). All 85 split-page
+top/bottom pairs came out perfectly consecutive (n, n+1), a strong internal-consistency
+signal. New `printed_page_number_out_of_sequence` quality check: 0 flags corpus-wide.
+4/4 available gold cross-checks (docs/eval/gold/source_pages.csv) matched exactly.
+8 spread page_ids deferred, not guessed: repertoire_1892-93_pair014 and
+repertoire_1890-91_pair010 (multi-render, need one more targeted render read each);
+repertoire_1890-91_p015/_p023, repertoire_1891-92_p003, repertoire_1892-93_pair024,
+repertoire_1895-96_p012, repertoire_1897-98_pair020 (cutover date's day-of-month not
+found in that page's actual date_undate list -- needs individual resolution, not a
+formula fallback).
+
+Single-page seasons: all 422 page_ids backfilled by formula after a 30-read spot-check
+(3 per season) found every one of the 10 seasons holds a constant
+printed_page = source_page_index + offset (offsets: 1898-99 through 1903-04 = +2,
+1904-05 = +90, 1905-06 = +84, 1906-07 = +84, 1907-08 = +76). No escalation to full
+per-season reads was needed -- all 10 seasons passed the 3-point consistency check.
+validate_performance_dates.py unchanged (98.1%, expected -- pure additive column).
+Full narrative: docs/eval/known_issues.md issue #83.
