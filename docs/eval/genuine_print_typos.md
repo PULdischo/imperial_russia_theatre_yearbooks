@@ -9,10 +9,13 @@ they're transcribed exactly as printed, dropped letters, wrong words,
 worn type and all.
 
 Kept here purely because they're a nice trace of the actual human hands
-that set this type by hand under deadline, well over a century ago. Add
-to it as new ones turn up — no format requirements, just: what's printed,
-what it "should" say, where, and why it's confirmed genuine rather than
-an extraction slip.
+that set this type by hand under deadline, well over a century ago —
+and, per the "material constraints" section below, of the physical
+production process itself (running out of page, a fold swallowing a
+figure) rather than just individual keystrokes. Add to it as new ones
+turn up — no format requirements, just: what's printed, what it "should"
+say, where, and why it's confirmed genuine rather than an extraction
+slip.
 
 ## Dropped or added letters
 
@@ -114,6 +117,29 @@ one:
   "5 Четвергъ." — should be "6 Пятница." per the sequence.
 - **`repertoire_1901-02_p002`**: "16 Вокрес." for "Воскресенье" (Sunday)
   — a dropped с, confirmed genuinely printed that way.
+
+## Material constraints of the printing process itself
+
+Not typos — cases where the physical limits of the page or the press
+run visibly shaped what got printed, independent of any single
+character being wrong. The compositor's hand shows up here too, just
+at the level of layout and page-planning rather than spelling.
+
+- **`repertoire_1905-06_p005` (Новый театръ, "1 Суббота.") and
+  `repertoire_1905-06_p008` (Маріинскій театръ, "23 Воскрес.")**: both
+  rows print a lone "УТРО." (morning) label with no "ВЕЧЕРЪ." (evening)
+  counterpart, and both happen to be the very last row on their page.
+  Confirmed this isn't a missing-scan problem (clean blank margin below
+  each row, with the folio number fully legible) — the row's own
+  printed column-divider lines simply run down past the morning entry
+  and stop, with no closing border and no second sub-cell ever drawn,
+  unlike a real morning/evening split elsewhere on the same page (a
+  taller box with a horizontal divider). The compositor ran out of
+  vertical space on the physical page mid-row; whatever evening
+  performance may have occurred was never typeset at all. No amount of
+  re-scanning recovers this — the original bound volume itself doesn't
+  contain it. First flagged 2026-09-24, reasoning corrected 2026-09-25
+  after being asked to double-check the "blank margin" detail directly.
 
 ## A whole misprinted date-range header
 
