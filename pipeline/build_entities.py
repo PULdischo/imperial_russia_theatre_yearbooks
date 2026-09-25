@@ -157,13 +157,55 @@ _GIMN_CONTAMINATED_GENRE_FOLDS = {
 # two ordinals joined by "и") and "1-я карт. 4-го д." (two independent
 # ordinal+marker pairs, scene-of-an-act, no "и" between them -- missed by
 # an earlier version of this regex, confirmed via a real example that
-# stayed unlinked because of it).
+# stayed unlinked because of it). A unit's first number is sometimes bare
+# (no ordinal suffix) when paired with "и" before a second, suffixed
+# number -- "1 и 2 карт." (found 2026-09-25, issue #87's excerpt-linking
+# follow-up).
+#
+# A GROUP (one or two units back to back) can itself repeat up to 4 times,
+# joined by an optional comma and/or "и" -- covers titles citing 3+
+# separate act/scene references, e.g. "1-е д., 1-я карт. 2-го д. и 1-я
+# карт. 4-го д. Аида" (also found 2026-09-25: the earlier 1-or-2-unit cap
+# left a mangled leftover fragment, not the bare base title, as the
+# extracted "base" for every title with 3+ references -- 11 titles were
+# silently unlinkable for this reason alone before the fix).
 _ORDINAL_MARKER_UNIT = (
-    r"\d+-(?:й|е|я|го)\.?\s+(?:и\s+\d+-(?:й|е|я|го)\.?\s+)?(?:д\.|дѣйств\w*|актъ|карт\.)\.?"
+    r"(?:\d+-(?:й|е|я|го)\.?\s+(?:и\s+\d+-(?:й|е|я|го)\.?\s+)?"
+    r"|\d+\s+и\s+\d+\s+)"
+    r"(?:д\.|дѣйств\w*|актъ|карт\.)\.?"
 )
+_ORDINAL_MARKER_GROUP = (
+    _ORDINAL_MARKER_UNIT + r"(?:\s+" + _ORDINAL_MARKER_UNIT + r")?"
+)
+# The genre word between the act/scene marker and the base title is
+# usually a short abbreviation ("ком.", "бал.", "оп."), but sometimes
+# printed out in full, genitive case ("балета", "оперы", "драмы",
+# "водевиля", "пьесы" -- "of the ballet/opera/drama/vaudeville/play"),
+# with no trailing period to signal "this is an abbreviation" -- missed
+# by the plain abbreviation pattern until 2026-09-25 (issue #87's
+# follow-up), leaving the genre word stuck onto the front of `base`
+# ("1-е д. балета Калькабрино" -> base wrongly "балета Калькабрино").
+# Also sometimes prefixed with "изъ" ("from the ..."), harmless to strip.
+_EXCERPT_GENRE_WORD = (
+    r"[а-яА-ЯёЁ\-]{1,10}\.|оперы|балета|драмы|водевиля|пьесы|трагедіи|оперетты|комедіи"
+)
+# Maps a genitive-case genre word (matched by _EXCERPT_GENRE_WORD above)
+# to the SAME abbreviation a parent work's own `canonical_genre` would
+# use, purely so the excerpt-linking tiebreak below can compare them --
+# never touches `_fold_genre` itself (that function's Problem #5 contract
+# -- case + trailing-period only, no abbreviation normalization -- is
+# relied on elsewhere and stays exactly as-is). Added 2026-09-25 (issue
+# #87's follow-up): without this, "3-е д. балета Пахита" folds to
+# "балета", which never equals a real work's own "бал." fold ("бал"),
+# so an otherwise-resolvable single-candidate match was missed.
+_GENITIVE_GENRE_TO_ABBREV = {
+    "оперы": "оп.", "балета": "бал.", "драмы": "др.", "водевиля": "вод.",
+    "трагедіи": "траг.", "оперетты": "оперет.", "комедіи": "ком.",
+}
 _EXCERPT_PREFIX_RE = re.compile(
-    r"^(?P<note>" + _ORDINAL_MARKER_UNIT + r"(?:\s+" + _ORDINAL_MARKER_UNIT + r")?)\s*"
-    r"(?:(?P<genre>[а-яА-ЯёЁ\-]{1,10}\.)\s+)?"
+    r"^(?P<note>" + _ORDINAL_MARKER_GROUP
+    + r"(?:\s*,?\s*(?:и\s+)?" + _ORDINAL_MARKER_GROUP + r"){0,3})\s*,?\s*"
+    r"(?:(?:изъ\s+)?(?P<genre>" + _EXCERPT_GENRE_WORD + r")\s+)?"
     r"(?P<base>.+)$"
 )
 
@@ -239,12 +281,21 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     # Problem #4: excerpt/partial-performance titles. Resolved as a second
     # pass over the now-deduplicated work rows, matching the excerpt's
     # extracted base title (folded the same way) against a real work --
-    # preferring one whose own genre agrees with the excerpt's extracted
-    # genre when the base title is ambiguous (split across >1 work by the
-    # step above), never guessing when it isn't resolvable.
+    # preferring one whose own genre agrees with the excerpt's genre when
+    # the base title is ambiguous (split across >1 work by the step
+    # above), never guessing when it isn't resolvable. The excerpt's genre
+    # for this comparison is EITHER an inline genre word the regex
+    # captured between the act/scene marker and the base title ("1-е д.
+    # КОМ. Нахлѣбникъ") OR, when there's no inline word, the excerpt row's
+    # own `canonical_genre` field ("3-е д. Аида", genre "оп." on the row
+    # itself, nothing inline) -- added 2026-09-25 (issue #87's follow-up)
+    # after finding several otherwise-resolvable ambiguous cases (e.g.
+    # "3-е д. Аида" against two "Аида" candidates under different genre
+    # folds) were left unlinked purely because the only genre signal
+    # available was on the row, not inline in the title text.
     excerpt_links: dict[str, tuple[str, str]] = {}  # work_uuid -> (parent_work_id, note)
     n_excerpt_matched = n_excerpt_unmatched = 0
-    for work_uuid, canonical_title, _, _, title_key in work_rows:
+    for work_uuid, canonical_title, canonical_genre, _, title_key in work_rows:
         m = _EXCERPT_PREFIX_RE.match(canonical_title)
         if not m:
             continue
@@ -255,12 +306,15 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
         parent = None
         if len(candidates) == 1:
             parent = candidates[0]
-        elif len(candidates) > 1 and m.group("genre"):
-            excerpt_genre_fold = _fold_genre(m.group("genre"))
-            same_genre = [c for c in candidates
-                          if _fold_genre(next(g for u, _, g, _, _ in work_rows if u == c)) == excerpt_genre_fold]
-            if len(same_genre) == 1:
-                parent = same_genre[0]
+        elif len(candidates) > 1:
+            excerpt_genre_raw = m.group("genre") or canonical_genre
+            excerpt_genre_raw = _GENITIVE_GENRE_TO_ABBREV.get(excerpt_genre_raw, excerpt_genre_raw)
+            excerpt_genre_fold = _fold_genre(excerpt_genre_raw)
+            if excerpt_genre_fold:
+                same_genre = [c for c in candidates
+                              if _fold_genre(next(g for u, _, g, _, _ in work_rows if u == c)) == excerpt_genre_fold]
+                if len(same_genre) == 1:
+                    parent = same_genre[0]
         if parent:
             excerpt_links[work_uuid] = (parent, m.group("note").strip())
             n_excerpt_matched += 1

@@ -254,18 +254,75 @@ against the full corpus:
   дѣло`, `Евгеній Онѣгинъ`, `Паяцы`, `Сверхъ комплекта`, `Ревизоръ`,
   `Старый закалъ`, `Жизнь за Царя`) — treated as missing genre data for
   `Гимнъ` specifically, not folded into any general rule.
-- **96 excerpt/partial-performance titles linked** to their parent work via
-  `excerpt_of_work_id`/`excerpt_note` (strategy #4); **49 left unlinked**
-  (ambiguous base title, multiple same-title candidates with no genre to
-  disambiguate, or a genuinely garbled title/genre split with no coherent
-  base at all). The regex needed one real fix beyond the design in this
-  doc: a first version only handled a single ordinal+marker or an
-  "и"-joined pair ("1-е и 2-е д."), missing the equally common
-  "scene-of-an-act" shape with two independent markers back to back
-  ("1-я карт. 4-го д.", "Scene 1 of Act 4") — caught by checking the
-  motivating example end-to-end (all 3 remaining "Жизнь за Царя" rows,
-  including both excerpts) rather than trusting the regex from the design
-  alone.
+- **138 excerpt/partial-performance titles linked** to their parent work via
+  `excerpt_of_work_id`/`excerpt_note` (strategy #4), up from 96 as of
+  2026-09-25 (issue #88); **21 left unlinked**, down from 49. The regex
+  needed several real fixes beyond the design in this doc:
+  - A first version only handled a single ordinal+marker or an
+    "и"-joined pair ("1-е и 2-е д."), missing the equally common
+    "scene-of-an-act" shape with two independent markers back to back
+    ("1-я карт. 4-го д.", "Scene 1 of Act 4") — caught by checking the
+    motivating example end-to-end (all 3 remaining "Жизнь за Царя" rows,
+    including both excerpts) rather than trusting the regex from the design
+    alone.
+  - A 1-or-2-unit cap on the marker group left a mangled leftover fragment
+    (not the bare base title) as the extracted "base" for any title citing
+    3+ separate act/scene references (e.g. "1-е д., 1-я карт. 2-го д. и
+    1-я карт. 4-го д. Аида") — 11 titles were silently unlinkable for this
+    reason alone; fixed by letting the marker group itself repeat up to 4
+    times.
+  - The genre word between the marker and the base title is sometimes
+    spelled out in full, genitive case, with no trailing period ("балета",
+    "оперы", "драмы" vs. the abbreviated "бал.", "оп.", "др.") — missed by
+    the abbreviation-only pattern, leaving the genre word stuck onto the
+    front of `base` (e.g. "1-е д. балета Калькабрино" → base wrongly
+    "балета Калькабрино"). Fixed by adding a genitive-word alternation,
+    plus (separately) a small `_GENITIVE_GENRE_TO_ABBREV` map used *only* at
+    the excerpt-linking tiebreak, never touching the shared `_fold_genre()`
+    function's deliberate no-abbreviation-normalization contract.
+  - The ambiguous-candidate tiebreak now also falls back to the excerpt
+    row's own `canonical_genre` database field when the title has no
+    inline genre word at all (e.g. "3-е д. Аида", genre "оп." on the row
+    itself but nothing inline) — several otherwise-resolvable cases were
+    previously left unlinked purely for lack of this fallback.
+
+  **Of the 21 still unlinked** (issue #88's final categorization):
+  - **14 have no standalone parent anywhere in the corpus at all** — a
+    correct, final state, not a bug (these excerpts were apparently never
+    billed as a full stand-alone performance in any of the 18 seasons).
+    Notably "1-е д. ком. Нахлѣбникъ" / "1-е д. изъ ком. Нахлѣбникъ" (10
+    combined appearances) and "2-я и 3-я карт. бал." (4 appearances,
+    always the *second* item in a 3-work bill — see below, this is a
+    different bug class, not an unlinked excerpt at all).
+  - **4 are genuine cross-work ambiguity needing a human call**, not a
+    mechanical fix: two different "Русалка" candidates (opera vs. a
+    "1-я сцена"-genre work, possibly the same drama mislabeled); two
+    different "Пахита" candidates (one with a contaminated "3 д. бал."
+    genre field); two different "Царь Борисъ" candidates (траг./др.); and
+    "Прекрасная Елена" whose own genre field ("оп.") doesn't match any of
+    its 3 real operetta-genre candidates, suggesting the excerpt row's
+    genre may itself be a period mislabeling.
+  - **2 are structurally not a single-parent excerpt at all**: one compound
+    bill citing 3 different ballets in one title ("Конекъ-Горбунокъ, бал.
+    Пахита и 2-е д. бал. Фіаметто"), and one where the printed title text
+    genuinely didn't survive extraction ("2-я карт. 2-го акта и 1-я
+    карт." — no base title follows the markers at all).
+
+  **A separate bug found during this triage, not an excerpt-linking
+  problem**: "2-я и 3-я карт. бал." (4 appearances, all Маріинскій,
+  1895-96) is not an independent excerpt-of-another-work at all — checking
+  the raw JSON shows it's always the *second* work in a 3-item list
+  (`["<a real ballet>", "2-я и 3-я карт. бал.", "Своенравная жена"]`),
+  meaning the printed billing is literally "[Ballet], 2nd & 3rd tableaux"
+  as one continuous entry, split by extraction into two separate `works`
+  array items instead of one. `_EXCERPT_PREFIX_RE`'s corpus-wide
+  title-matching mechanism can't resolve this (there's no title text to
+  match against), because the real fix is same-session adjacency ("this
+  performance continues the immediately preceding work in this same
+  billing"), a different mechanism than Problem #4 as designed. Not fixed
+  this round — flagged here rather than force-linked, since it needs new
+  logic (session-scoped, not corpus-wide) that would need its own design
+  pass.
 
 The motivating example now resolves cleanly: **1 main work (238
 appearances, correctly summing the 195+39+4 safely-merged rows) + 2

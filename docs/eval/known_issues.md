@@ -17632,3 +17632,124 @@ calendar precision, the direct scan spot-check, and the exhaustive
 disproportionate-theater sweep finding zero further instances after
 the fix, this is as thorough an audit as this metric is going to get
 without reading several thousand individual scan cells by hand.
+
+## Issue #88: excerpt/partial-performance title linking (Problem #4) --
+from 96/49 (linked/unlinked) to 138/21, plus one manual-transcription
+typo and one newly-found bug class
+
+RG: "20 unlinked excerpt titles, let's start these" (an earlier
+approximate count from memory; the actual precise count, re-queried by
+replicating `build_entities.py`'s own regex/matching logic exactly
+rather than a rough `LIKE` query, was **47** unmatched of 143
+excerpt-shaped titles -- corrected to RG before proceeding).
+
+**Three real regex/matching bugs fixed in `_EXCERPT_PREFIX_RE` and its
+matching loop** (`pipeline/build_entities.py`), each found by tracing a
+real failing example end-to-end rather than guessing:
+
+1. The marker group (`_ORDINAL_MARKER_GROUP`) capped at one-or-two
+   act/scene-marker units, truncating any title citing 3+ separate
+   references (e.g. "1-е д., 1-я карт. 2-го д. и 1-я карт. 4-го д.
+   Аида") into a mangled leftover fragment instead of the bare base
+   title -- 11 titles were silently unlinkable for this reason alone.
+   Fixed by letting the marker group itself repeat up to 4 times.
+2. The genre word between the marker and the base title was only
+   matched as a period-terminated abbreviation ("ком.", "бал.", "оп."),
+   missing the equally common full genitive-case spelling ("комедіи",
+   "балета", "оперы", "драмы", "водевиля", "пьесы", "трагедіи",
+   "оперетты" -- "of the comedy/ballet/opera/..."), with no trailing
+   period to signal "this is an abbreviation." Left the genre word
+   stuck onto the front of the extracted base title (e.g. "1-е д.
+   балета Калькабрино" -> base wrongly "балета Калькабрино"). Fixed by
+   adding a genitive-word alternation to the regex.
+3. The ambiguous-candidate tiebreak (when a base title matches >1
+   real work) only compared genre when the excerpt title had an inline
+   genre word captured by the regex -- several otherwise-resolvable
+   cases (e.g. "3-е д. Аида") have no inline genre word at all, only
+   the excerpt row's own `canonical_genre` database field. Fixed by
+   falling back to that field when no inline word exists, paired with
+   a small `_GENITIVE_GENRE_TO_ABBREV` map (genitive genre word ->
+   abbreviation) used *only* at this one tiebreak call site --
+   deliberately NOT touching the shared `_fold_genre()` function, whose
+   documented "Problem #5" contract (case + trailing-period-only
+   normalization, no cross-abbreviation folding) is relied on
+   elsewhere and stays exactly as designed.
+
+**Progress, tracked via the pipeline's own printed summary line after
+each fix, re-run against the live production `.duckdb`**: 96/47
+(baseline) -> 127/32 (fix 1) -> 134/25 (fix 2) -> 137/22 (fix 3) ->
+**138/21** (see below, one more resolved by a data fix rather than a
+regex fix).
+
+**A manual-transcription typo found and fixed while diagnosing the
+final unmatched list**: "1-я карт. 3-го д. оп. Люcія ди Ламермуръ"
+(`repertoire_1895-96_p026`, one of the two genuinely-missing pages
+reconstructed earlier this session, issue #85) had a Latin "c" (U+0063)
+in place of Cyrillic "ч" (U+0447) in "Лючія" -- my own typo made while
+hand-transcribing that page, not a scan ambiguity or model error.
+Re-checked the scan directly (`ForUpload_1895-96_Repertoire_012.jpg`):
+unambiguously prints "Лючія ди Ламермуръ." Fixed the raw JSON directly,
+re-ran `parse_and_validate.py` + `build_duckdb.py` (row counts and
+`not_captured` unchanged, confirming no regression) + `build_entities.py`
+-- this one character fix alone resolved the "Лючія"/"Люcія" false
+non-match, bringing the total to 138/21.
+
+**Final categorization of the remaining 21** (34 appearances total):
+
+- **14 titles genuinely have no standalone parent anywhere in the
+  corpus** -- a correct, final state, not a bug (these excerpts were,
+  as far as the full 18-season corpus shows, never billed as a
+  complete stand-alone performance). Includes "1-е д. ком. Нахлѣбникъ"
+  / "1-е д. изъ ком. Нахлѣбникъ" (10 combined appearances).
+- **4 titles are genuine cross-work ambiguity needing a human
+  decision**, not a mechanical fix -- left unlinked rather than
+  guessed, per this project's non-fabrication discipline:
+  - Two different "Русалка" candidates (one genre "оп." [opera], one
+    genre "1-я сцена" -- possibly the same drama work whose genre field
+    is itself non-standard, or a genuinely different work).
+  - Two different "Пахита" candidates (one has a contaminated genre
+    field, "3 д. бал." instead of a clean "бал.").
+  - Two different "Царь Борисъ" candidates (траг./др.).
+  - "Прекрасная Елена": the excerpt's own genre field ("оп.") matches
+    none of its 3 real candidates (all operetta-genre variants),
+    suggesting the excerpt row's genre may itself be a period
+    mislabeling rather than a real ambiguity.
+- **2 titles are structurally not a single-parent excerpt at all**:
+  one compound bill citing 3 different ballets in one title
+  ("...Конекъ-Горбунокъ, бал. Пахита и 2-е д. бал. Фіаметто"), and one
+  where the actual title text didn't survive extraction at all
+  ("2-я карт. 2-го акта и 1-я карт." -- nothing follows the markers).
+- **1 title ("2-я и 3-я карт. бал.", 4 appearances) is a different bug
+  class entirely, not an unlinked excerpt** -- see below.
+
+**New bug class found during this triage** (not fixed this round,
+documented for a future pass): "2-я и 3-я карт. бал." (4 appearances,
+all Маріинскій, 1895-96 season) is always the *second* item in a
+3-work billing (`["<a real ballet>", "2-я и 3-я карт. бал.",
+"Своенравная жена"]`) -- the printed billing is literally "[Ballet],
+2nd & 3rd tableaux" as one continuous entry, split by extraction into
+two separate `works` array items instead of one. Problem #4's
+corpus-wide title-matching mechanism cannot resolve this (there's no
+title text left to match against); the real fix is same-session
+adjacency ("this performance continues the immediately preceding work
+in the same billing"), a different mechanism than Problem #4 as
+designed, needing its own design pass (probably keyed on
+`performance_order` within one `event_id` rather than a corpus-wide
+title index).
+
+**Result**: `entities.work` excerpt links 96 -> 138 (of 159
+excerpt-shaped titles total); Musicians/Roster isolation confirmed
+unchanged throughout (2900 live people, 23 candidate pairs, matching
+the pre-session baseline). `entities` is pipeline-internal audit state
+(not published, per `CLAUDE.md`'s architecture section) -- no
+downstream `research`/`research_dataset.sqlite` rebuild forced by this
+change alone; deferred along with the standing HF/Cloud Run republish
+gap (last live publish 2026-09-19).
+
+Full diagnostic method: a standalone script imported
+`_EXCERPT_PREFIX_RE`, `_title_key`, `_fold_genre`,
+`_GENITIVE_GENRE_TO_ABBREV` directly from `pipeline/build_entities.py`
+and replayed the exact matching logic against `entities.work`,
+printing extracted base/genre and full candidate lists for every
+still-unmatched title -- the only way to get a trustworthy list rather
+than approximating with a raw SQL `LIKE`.

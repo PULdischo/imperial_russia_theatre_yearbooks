@@ -9069,3 +9069,50 @@ theaters live on sibling page p036 which is already correct; 1890-91_p012's "mis
 is genuinely dark, matching its siblings). Re-ran the disproportionate check after fixes: 0
 pages flagged. event_entry 24186->24266. not_captured 3000->2935. Full narrative:
 docs/eval/known_issues.md issue #87.
+
+## 2026-09-25 — excerpt-linking triage: "2-я и 3-я карт. бал." source rows
+
+```sql
+select p.event_id, e.page_id, e.date_text, e.theater
+from raw.event_entry_performance p join raw.event_entry e on p.event_id=e.event_id
+where p.performance_title = '2-я и 3-я карт. бал.'
+```
+
+Result: 4 rows, all Маріинскій, 1895-96 season (`pair004` x2, `pair008`,
+`pair010`) — led to inspecting the raw JSON directly and finding this is
+always the 2nd item of a 3-work bill, a different bug class than
+excerpt-linking (see known_issues.md issue #88).
+
+## 2026-09-25 — "Люcія ди Ламермуръ" homoglyph check
+
+```sql
+select work_id, canonical_title, canonical_genre, appearance_count
+from entities.work where canonical_title ilike '%амермур%'
+```
+
+Result: 7 works, confirming a real standalone "Лючія ди Ламермуръ" (10
+appearances) exists; the unlinked excerpt used Latin "c" (U+0063) where
+Cyrillic "ч" (U+0447) belonged — confirmed via `ord()` comparison, then
+via the source event:
+
+```sql
+select p.event_id, e.page_id, e.date_text, e.theater
+from raw.event_entry_performance p join raw.event_entry e on p.event_id=e.event_id
+where p.performance_title = '1-я карт. 3-го д. оп. Люcія ди Ламермуръ'
+```
+
+Result: 1 row, `repertoire_1895-96_p026__s039` — my own manual-transcription
+typo (page reconstructed earlier this session, issue #85). Verified against
+`ForUpload_1895-96_Repertoire_012.jpg` directly, fixed the raw JSON, re-ran
+`parse_and_validate.py` + `build_duckdb.py` + `build_entities.py`.
+
+## 2026-09-25 — excerpt-linking final diagnostic (post-fixes)
+
+Standalone Python script importing `_EXCERPT_PREFIX_RE`, `_title_key`,
+`_fold_genre`, `_GENITIVE_GENRE_TO_ABBREV` from `pipeline/build_entities.py`,
+replaying the matching logic against a fresh `select work_id, canonical_title,
+canonical_genre, appearance_count from entities.work` pull.
+
+Result: 21 unmatched (34 appearances) of 159 excerpt-shaped titles, up from
+138 matched (was 96/47 at session start, 137/22 before the Люcія fix). Full
+categorization in known_issues.md issue #88 and docs/work_normalization.md.
