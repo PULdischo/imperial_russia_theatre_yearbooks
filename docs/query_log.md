@@ -8927,3 +8927,27 @@ earlier "two renders" read was based on stale leftover `_source` tags from befor
 Result: 24081/24081 Repertoire event_entry rows (100.00%) now carry a printed_page_number.
 0 sequence-consistency flags. validate_performance_dates unchanged (98.1%). Full chain
 rebuilt clean through research.event/research_dataset.sqlite.
+
+## 2026-09-25 — Auditing the not_captured completeness gap, starting with 1894-95
+
+```sql
+select event_status, count(*) from analysis.event_entry group by 1 order by 2 desc;
+select season, count(*) from analysis.event_entry where event_status='not_captured' group by 1 order by 2 desc;
+select page_id, count(*) from analysis.event_entry where event_status='not_captured' and season='1894-95' group by 1 order by 2 desc;
+select theater, count(*) from analysis.event_entry where event_status='not_captured' and season='1894-95' group by 1 order by 2 desc;
+select distinct date_undate, date_text from raw.event_entry where page_id='repertoire_1894-95_pair006' order by date_undate;
+select page_id, min(date_undate), max(date_undate), count(distinct date_undate) from raw.event_entry where season='1894-95' and page_id like 'repertoire_%' group by 1 order by 2;
+```
+
+Result: not_captured totals 3032 corpus-wide; 1894-95 is an outlier at 520 (vs.
+under-270 everywhere else, 1905-06/1906-07 near-zero, 1907-08 zero). 365 of the
+520 concentrated on repertoire_1894-95_pair006 alone, evenly split across all 5
+theaters (~100 each) -- the signature of "no theater has anything for these
+dates" rather than a missing-column bug. That page's actual content jumps from
+19 Окт 1894 to 1 Янв 1895 (73-day gap). Confirmed via direct PDF page-count check
+(pymupdf) that ForUpload_1894-95_Repertoire.pdf has exactly 9 pages against every
+comparable season's 12-13 -- a genuine source-material shortfall, not an
+extraction bug; searched the repo for any alternate/misfiled 1894-95 source,
+found none. Documented as docs/eval/known_issues.md issue #84. Remaining ~155
+scattered not_captured rows in 1894-95's other 8 pages, and the rest of the
+corpus's not_captured totals, not triaged this pass.

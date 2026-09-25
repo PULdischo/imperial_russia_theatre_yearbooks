@@ -17255,3 +17255,61 @@ a printed_page_number -- full coverage, no deferrals remaining. 0
 sequence-consistency flags. `validate_performance_dates.py` unchanged
 (98.1%). Full chain rebuilt clean. Full narrative:
 `docs/query_log.md`'s second 2026-09-25 printed_page_number entry.
+
+## Issue #84: `1894-95` is missing ~10-11 weeks of Repertoire content --
+## confirmed source-material gap, not an extraction bug
+
+RG asked which fields were worth auditing next; `analysis.event_entry`'s
+synthesized `not_captured` completeness-gap count (3032 rows corpus-wide,
+tracked as a byproduct metric since 2026-09-18 but never itself the
+direct target of an audit) was uneven enough to be informative:
+1907-08 is fully clean (0), 1905-06/1906-07 are nearly clean (3, 5), but
+**1894-95 sits at 520 -- nearly 4x every other season**. Investigated
+directly rather than assuming it was just more scattered dark days than
+usual.
+
+520 broke down as 365 on a single page (`repertoire_1894-95_pair006`)
+plus ~155 scattered across the season's other 8 pages (ordinary,
+already-familiar completeness noise -- individual missing dark-day
+placeholders within otherwise-normal 18-20-day pages, the same pattern
+seen corpus-wide, not investigated further here).
+
+**`repertoire_1894-95_pair006`'s own captured content jumps directly
+from 19 Октября 1894 to 1 Января 1895** -- a 73-day gap, affecting all
+5 theaters equally (~100 `not_captured` rows each, the tell that this is
+"no theater has anything for these dates" rather than "one theater's
+column went missing," a structurally different signature from the
+missing-column bug class issues #79/#82 fixed repeatedly this session).
+
+Confirmed this is a genuine source-material limitation, not a pipeline
+bug:
+- The season's own source PDF (`pdf/RepertoireTables/ForUpload_1894-95_Repertoire.pdf`)
+  has exactly **9 pages** -- matching the 9 renders already extracted
+  (`_000` through `_008`) exactly. Nothing was skipped during rendering;
+  every page of the PDF that exists was processed.
+- Every comparable two-page-spread season has **12-13 pages**: 1890-91
+  (13), 1891-92 (12), 1892-93 (12), 1893-94 (12), 1895-96 (13), 1896-97
+  (13), 1897-98 (13). 1894-95's 9 is a clear structural outlier, short
+  by 3-4 pages -- and 3-4 pages at ~20 days/page is almost exactly the
+  73-day gap (Oct 20 - Dec 31 1894) found in the data.
+- No alternate or misfiled source exists: searched the whole repo for
+  any other 1894-95 Repertoire PDF/image under a different name --
+  nothing found beyond the 9 already-processed pages.
+
+**Conclusion**: the physical/scanned source for the 1894-95 volume is
+missing roughly 3-4 printed pages covering approximately 20 Октября -
+31 Декабря 1894 (about 10-11 weeks of performances, all 5 theaters).
+This cannot be fixed by re-reading the existing scan more carefully --
+the content simply was not captured in the source PDF this project has.
+Recovering it would require locating and digitizing the missing pages
+from the physical bound volume itself (or a more complete scan/copy),
+which is outside what this pipeline can do. Parallels the already-known
+`1890-91` Oct12-31 unrecoverable scan gap, but at roughly 7x the scale.
+
+**Not done**: no data changes made (nothing to fix in the pipeline --
+this is a documented limitation, not a bug); the smaller ~155-row
+scattered `not_captured` remainder in 1894-95's other 8 pages, and the
+similarly-scattered `not_captured` totals in every other season, were
+not triaged this pass -- worth a lighter follow-up sweep if RG wants
+the full 3032 count driven down further, now that the one large
+structural outlier is explained.
