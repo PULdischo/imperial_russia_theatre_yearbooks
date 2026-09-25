@@ -54,18 +54,44 @@ def repair(page: ReviewPageLLM) -> tuple[ReviewPageLLM, list[str]]:
     return page, notes
 
 
+def load_folio_corrections(path: Path) -> dict[str, str]:
+    """Hand-verified printed_folio overrides, applied at PARSE time.
+
+    raw/*.raw.json is the model's response and the reproducibility record --
+    CLAUDE.md: "verbatim, never hand-edited". So corrections live in a CSV
+    that is applied on the way out, exactly like the tabular pipeline puts
+    fixes in `analysis` rather than `raw`. Re-parsing is free, so a
+    correction costs nothing and can be withdrawn by deleting a row.
+
+    An empty printed_folio column means "this page carries NO printed folio"
+    -- which is a real and common answer: full-page plates are unpaginated,
+    and the model sometimes invents a number from the caption instead.
+    """
+    if not path or not path.exists():
+        return {}
+    with open(path, newline="", encoding="utf-8") as f:
+        return {r["page_id"]: r["printed_folio"].strip()
+                for r in csv.DictReader(f) if r.get("page_id")}
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--manifest", required=True, type=Path)
     ap.add_argument("--raw-dir", required=True, type=Path)
     ap.add_argument("--out-dir", required=True, type=Path)
+    ap.add_argument("--folio-corrections", type=Path,
+                    default=Path("docs/review_folio_corrections.csv"),
+                    help="hand-verified printed_folio overrides; applied at "
+                         "parse time so raw/ is never edited. Pass a "
+                         "nonexistent path to disable.")
     args = ap.parse_args()
     args.out_dir.mkdir(parents=True, exist_ok=True)
 
     rows = list(csv.DictReader(open(args.manifest, encoding="utf-8")))
     out = {t: [] for t in TABLES}
+    folio_fixes = load_folio_corrections(args.folio_corrections)
     errors, repairs = [], []
-    n_ok = n_missing = n_failed = 0
+    n_ok = n_missing = n_failed = n_folio_fixed = 0
 
     for r in rows:
         page_id = r["page_id"]
@@ -91,6 +117,15 @@ def main() -> None:
         page, notes = repair(page)
         for note in notes:
             repairs.append({"page_id": page_id, "repair": note})
+
+        if page_id in folio_fixes:
+            was = page.printed_folio
+            page = page.model_copy(
+                update={"printed_folio": folio_fixes[page_id] or None})
+            repairs.append({"page_id": page_id,
+                            "repair": f"folio_correction: {was!r} -> "
+                                      f"{page.printed_folio!r}"})
+            n_folio_fixed += 1
 
         flat = flatten_review_page(page_id, r["season"], r["city"], r["genre"], page)
         for t in TABLES:
@@ -126,6 +161,8 @@ def main() -> None:
             w.writerows(repairs)
 
     print(f"parsed {n_ok} pages | not yet extracted {n_missing} | failed {n_failed}")
+    if folio_fixes:
+        print(f"  folio corrections applied: {n_folio_fixed} of {len(folio_fixes)} on file")
     for t in TABLES:
         print(f"  {t}: {len(out[t])} rows")
     if repairs:
