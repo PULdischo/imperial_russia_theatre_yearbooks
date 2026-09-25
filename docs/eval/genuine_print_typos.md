@@ -84,11 +84,14 @@ never go to zero, by design:
   rubles marker from context (its position in the figure, matching
   every other session's "<rubles> р. <kopecks> к." shape corpus-wide),
   not from any visual similarity. `receipts_text` stays exactly as
-  printed; unlike every other entry in this section, RG asked for this
-  one to still parse correctly downstream (`_RUBLES_MARKER_RE` in
-  `pipeline/schemas/repertoire.py` widened to accept "q"/"Q") rather
-  than join `receipts_parse_failed` — so this is the one exception to
-  "these are why the flag will never go to zero."
+  printed, and (RG's call) so does the rest of this section's
+  treatment: left unparsed at the raw/analysis layer, same as every
+  other entry here (`receipts_rubles`/`receipts_kopecks` empty, joins
+  `receipts_parse_failed`) rather than special-cased into
+  `_RUBLES_MARKER_RE`. A corrected numeric value for cases like this
+  belongs in the `research` layer (derived via SQL only, never baked
+  into raw-tier parsing) — not yet built; when it is, this is the case
+  that motivated it.
 
 ## Misprinted day numbers (weekday word right, digit wrong)
 
