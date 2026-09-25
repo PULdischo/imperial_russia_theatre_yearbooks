@@ -104,15 +104,27 @@ Structural, no ruling needed: run 1 put the figure's caption text into a
 body block where runs 2 and 3 put it in the figure caption, which accounts
 for most of run 1's apparent extra words.
 
+## review_1895-96_SP_ballet_p014  (folio 246)
+
+Montage of six overlapping photographs with the text in a column at right.
+
+| # | runs 1 / 2 / 3 | ruling | note |
+|---|---|---|---|
+| 1 | Оомичевъ / Оомичевъ / Ꙋомичевъ | **Ѳомичевъ** (RG) — fita | **ALL THREE WRONG.** Run 3 produced Ꙋ (archaic "uk"), a letter not in this typeface. The model is NOT blind to fita — four lines down it reads `Ѳедуловъ` and `Ѳедоровъ 1-й` correctly in the same column. It failed on the rarer name. `Ѳомичевъ` appears nowhere else in the 200-page pilot. |
+
+Structural, no ruling: run 2 classified the caption text as a `figure`
+block where runs 1 and 3 used body paragraphs. Nothing was dropped — the
+body-only comparison simply does not see caption text.
+
 ## Running tally
 
 | | |
 |---|---|
-| pages triaged | 5 of 10 |
-| rulings | 16 |
-| RG agreed with Claude's reading | 16 of 16 |
+| pages triaged | 6 of 10 |
+| rulings | 17 |
+| RG agreed with Claude's reading | 17 of 17 |
 | **2-run majority WRONG** | **7 of 16** (женщину, Вдали, Шарпантье, Легатъ, Мартьяновъ, Пребраженская, Сенъ-Нинъ) |
-| **all three passes wrong together** | **2** (бокаловъ, Іоритомо) |
+| **all three passes wrong together** | **3** (бокаловъ, Іоритомо, Ѳомичевъ) |
 | **a pass silently DROPPED text** | **1** (p027, six names from the narrow columns) |
 
 The three passes find WHERE to look and cannot decide WHAT is right. Majority
@@ -155,3 +167,38 @@ word on pre-reform orthography.
   type, which is a real character poorly inked.
 
 **Set aside for separate handling:** plate pages and figure captions.
+
+
+## Rarity predicts the consensus failures
+
+RG, 2026-09-26, on the all-three-wrong cases: "notice these are unusual
+words/names." Measured against word frequencies across the 200-page pilot:
+
+| word | times in 200 pages | failure |
+|---|---|---|
+| Іоритомо | 0 | all three wrong |
+| Ѳомичевъ | 0 | all three wrong |
+| бокаловъ | 1 | all three wrong |
+| откланиваются | 1 | majority wrong |
+| женщину | 2 | majority wrong |
+| Мартьяновъ | 3 | majority wrong |
+| Вдали | 4 | majority wrong |
+| Шарпантье | 8 | majority wrong |
+| Ѳедоровъ | 10 | majority wrong |
+| Легатъ | 33 | majority wrong |
+
+**All three consensus failures sit at the very bottom.** That matters
+because the disagreement signal is structurally blind to them — it can only
+find passages where the passes differ.
+
+**But rarity alone is not a usable filter.** 64% of the pilot's distinct
+vocabulary appears exactly once, and the median word frequency is 1,
+because the corpus is mostly dancers' surnames. Flagging every rare word
+would flag most of the text.
+
+The useful reading is that there are **two complementary signals for two
+different failures**:
+
+- **rarity** predicts the consensus failures, which nothing else detects;
+- **ъ/ь** predicts the majority failures (5 of 7), which disagreement does
+  detect.
