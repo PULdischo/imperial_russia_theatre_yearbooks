@@ -67,11 +67,28 @@ structural disagreement between runs.
 run 1 does not. This is the failure class that matters most, and no
 consensus vote could have found it — only the disagreement signal did.
 
+## review_1899-00_SP_ballet_p028  (folio 109)  — PAUSED MID-PAGE
+
+An easy page: one photograph, three short enumerated items, runs nearly
+identical. The 0.800 stability score was almost entirely dash spacing.
+
+| # | runs 1 / 2 / 3 | ruling | note |
+|---|---|---|---|
+| 1 | (nothing) / (nothing) / `„Лукья-` | **OPEN — awaiting RG** | Something IS printed before `Лукья-`: at 6x, a small filled square above a comma-shaped mark, between the comma after `2-й` and the `Л`. Does not look like `„` (which is two comma shapes side by side). Probably damaged or foul type. An opening quote before a surname mid-cast-list would not make sense. |
+
+Not raised, dash spacing only: `ambassadeurs — гг.` (runs 1,2) vs
+`ambassadeurs— гг.` (run 3), three times over.
+
+**Outside the body text, for when captions are picked up:** all three runs
+read the photo caption as `Camargo (1-жа Леньяни)` — a `1` where the page
+prints `Г-жа`. All three wrong, so no disagreement flags it. Captions are
+set aside per RG, 2026-09-25.
+
 ## Running tally
 
 | | |
 |---|---|
-| pages triaged | 3 of 10 |
+| pages triaged | 3 of 10 complete, page 4 open |
 | rulings | 12 |
 | RG agreed with Claude's reading | 12 of 12 |
 | **2-run majority WRONG** | **6 of 12** (женщину, Вдали, Шарпантье, Легатъ, Мартьяновъ, Пребраженская) |
@@ -90,3 +107,25 @@ The other recurring pattern: **the model reaches for the commoner word.**
 Мартыновъ for Мартьяновъ, женщицу for женщину, Преображенская for the
 page's own misprint Пребраженская. Where two passes agree on a plausible
 word and one dissents, the dissenter is worth a look.
+
+
+## Resuming
+
+**Next:** finish page 4 — one open question, the mark before `Лукья-`.
+Then pages 5–10 of the first ten, from `outputs/reviews/triage_queue.txt`
+(20 body-text pages below 0.95 in the 200-page pilot; ~103 expected across
+the full 1,024).
+
+**How this runs** (agreed 2026-09-25): Claude compares the three passes,
+resolves what is unambiguous, and brings RG only genuine character
+disagreements, with image crops. RG rules. Claude does NOT get the last
+word on pre-reform orthography.
+
+**Already handled automatically, do not re-surface:**
+- Latin letters stranded in Cyrillic words — `parse_reviews.py` repairs the
+  certain ones and flags the rest; every case is listed in
+  `outputs/reviews/mixed_script_review.csv`.
+- Numbered/lettered item boundaries — `segment_reviews.py`, downstream.
+- Dash spacing and line-break placement — known unstable, not chased.
+
+**Set aside for separate handling:** plate pages and figure captions.
