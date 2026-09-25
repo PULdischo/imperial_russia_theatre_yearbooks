@@ -9004,3 +9004,15 @@ by direct content match, not just date/theater) -- removed from pair014. event_e
 24081->24204 net. printed_page_number fill stayed 100.00%. quality_flags.csv unchanged
 (894/7). validate_performance_dates.py unchanged (98.1%). Full narrative:
 docs/eval/known_issues.md issue #85.
+
+## 2026-09-25 — Added and ran the new cross_page_duplicate_event check
+
+New pipeline/quality_checks.py check (check_repertoire_cross_page_duplicate),
+flag cross_page_duplicate_event: flags any (theater, date_undate, time_of_day)
+claimed by more than one page_id. First run found 18 flags: repertoire_1895-96_p012
+was a pure 100%-redundant duplicate of part of pair008 (deleted outright, verified
+byte-identical field-by-field first); repertoire_1904-05_p011 had 3 sessions
+misdated to 23 Ноября 1904, entirely outside that page's own declared date range,
+duplicating (with disagreeing content) what p015 already correctly owns (deleted
+the 3 stray sessions). Re-ran after both fixes: 0 cross_page_duplicate_event flags.
+event_entry 24204->24186. Full narrative: docs/eval/known_issues.md issue #86.

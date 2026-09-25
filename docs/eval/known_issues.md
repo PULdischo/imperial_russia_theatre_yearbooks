@@ -17475,3 +17475,55 @@ this pass; the corpus-wide page-number-continuity sweep (the method that
 actually found both real gaps this round) is complete and clean, so any
 further work here would be scattered single-cell checking rather than
 another structural sweep.
+
+## Issue #86: new `cross_page_duplicate_event` quality check, catches 2
+## more real bugs on first run (one single-page-season, one from today)
+
+RG asked directly, after issue #85 found the pair014/pair016 duplicate
+by accident: should the pipeline catch this class of bug going forward?
+Yes -- added `check_repertoire_cross_page_duplicate` to
+`pipeline/quality_checks.py`, flag `cross_page_duplicate_event`. Flags
+any (theater, date_undate, time_of_day) triple claimed by more than one
+page_id -- every Repertoire page_id owns a distinct, non-overlapping
+date range by construction, so any overlap is always wrong, whether the
+content matches exactly (a straight duplicate) or disagrees (two
+conflicting claims about the same performance). Neither existing
+duplicate check (`duplicate_event_key`, `duplicate_content_across_
+sessions`) can see this -- both are scoped to one page_id's own
+sessions. Runs on `parsed_dir` (needs `date_undate`, only available
+post-parse, and immune to `date_text` formatting drift between pages).
+
+**First run found 18 flags, two distinct real bugs, immediately:**
+
+1. **`repertoire_1895-96_p012` was a pure, 100%-redundant duplicate of
+   part of `repertoire_1895-96_pair008`.** All 15 of its sessions
+   (3 dates x 5 theaters, 15-17 Ноября 1895) were byte-identical to
+   content `pair008` already legitimately owns (pair008's own second
+   printed page covers 8-17 Ноября in full). Confirmed via direct
+   field-by-field comparison before deleting anything -- ALL MATCH,
+   zero mismatches. Root cause: this `p012` page_id predates this
+   session's work and appears to have been an entirely spurious extra
+   page_id with no real content of its own. Deleted outright (raw JSON,
+   manifest row, page-header row, printed_page_number rows) rather than
+   patched -- there was nothing correct about it to keep.
+2. **`repertoire_1904-05_p011` had 3 sessions (Большой/Малый/Новый
+   театръ, "23 Пятница.") dated to 23 Ноября 1904 -- a date entirely
+   outside this page's own declared range** (its page-header says
+   29 Октября - 8 Ноября 1904). `repertoire_1904-05_p015` already
+   correctly owns 23 Ноября (its range is 20-30 Ноября) with different,
+   presumably-correct content for that date. `p011`'s 3 stray sessions
+   were deleted; not a duplicate in the identical-content sense, a
+   genuinely misplaced row (content disagreed between the two claims,
+   which is the more concerning of the two possible signatures this
+   check was designed to catch).
+
+**Result**: event_entry 24204->24186 (-18: -15 pure duplicate, -3
+misplaced). `cross_page_duplicate_event`: 18 -> 0. quality_flags.csv:
+894 total, unchanged baseline otherwise (still 0 other genuine
+Repertoire flags). `validate_performance_dates.py`: 98.1%, `unresolved`
+26->23 (net positive from removing the p011 anomaly). Repertoire
+gold-eval unchanged (96.1%, no gold page affected). Full chain rebuilt
+clean.
+
+This check is now part of the standard `quality_checks.py` run --
+future rebuilds get it automatically, no special flag needed.

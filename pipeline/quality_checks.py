@@ -221,6 +221,59 @@ def check_repertoire_printed_page_sequence(parsed_dir: Path) -> list[dict]:
     return flags
 
 
+def check_repertoire_cross_page_duplicate(parsed_dir: Path) -> list[dict]:
+    """Flags any (theater, date_undate, time_of_day) triple claimed by
+    more than one page_id. Every Repertoire page_id owns a distinct,
+    non-overlapping date range by construction (that's the whole point
+    of splitting a season into pages) -- two different page_ids both
+    carrying a session for the same theater/date/session is always
+    wrong, whichever way it happened: identical content (a straight
+    duplicate -- issue #85's `pair014`/`pair016` case, 35 rows, where a
+    fix sourced content for a date range a different page already
+    legitimately owned) or disagreeing content (worse: two conflicting
+    claims about what was performed that day).
+
+    Neither existing duplicate check can see this: `duplicate_event_key`
+    (`check_repertoire`) and `duplicate_content_across_sessions` are both
+    scoped to one page_id's own sessions, so a collision between two
+    DIFFERENT page_ids is invisible to both -- exactly how issue #85's
+    dupe survived an earlier sweep undetected. Needs `date_undate`
+    (only available post-parse, and immune to `date_text` formatting
+    drift across pages), so this runs on `parsed_dir`, not raw JSON."""
+    flags = []
+    events = load(parsed_dir / "event_entry.csv")
+    perf_by_event: dict[str, list[tuple[str, str]]] = defaultdict(list)
+    for p in load(parsed_dir / "event_entry_performance.csv"):
+        perf_by_event[p["event_id"]].append(
+            (p.get("performance_title", ""), p.get("genre", "")))
+
+    by_key: dict[tuple, list[dict]] = defaultdict(list)
+    for r in events:
+        if not r.get("date_undate"):
+            continue
+        key = (r["theater"].strip(), r["date_undate"], r["time_of_day"])
+        by_key[key].append(r)
+
+    for (theater, date_undate, time_of_day), rows in by_key.items():
+        page_ids = sorted({r["page_id"] for r in rows})
+        if len(page_ids) < 2:
+            continue
+        contents = {
+            (tuple(sorted(perf_by_event.get(r["event_id"], []))),
+             (r.get("receipts_text") or "").strip())
+            for r in rows
+        }
+        same_content = len(contents) == 1
+        flags.append(dict(
+            page_id="/".join(page_ids), table="event_entry", row_id="",
+            flag="cross_page_duplicate_event",
+            detail=f"theater={theater!r} date_undate={date_undate} session={time_of_day!r} "
+                   f"claimed by {page_ids} -- "
+                   f"{'identical content on both pages' if same_content else 'CONTENT DISAGREES between pages'}",
+        ))
+    return flags
+
+
 def _normalize_theater(theater: str) -> str:
     """Matches by PREFIX against the same known-theater list check_repertoire
     uses, for the same reason: `театръ`/`театр` (pre-reform ъ present or
@@ -777,7 +830,8 @@ def main():
     args = ap.parse_args()
 
     flags = (check_roster(args.parsed_dir) + check_repertoire(args.parsed_dir)
-             + check_repertoire_printed_page_sequence(args.parsed_dir))
+             + check_repertoire_printed_page_sequence(args.parsed_dir)
+             + check_repertoire_cross_page_duplicate(args.parsed_dir))
     if args.page_raw_dir or args.row_raw_dir or args.column_raw_dir:
         flags += check_repertoire_cross_extraction(
             args.page_raw_dir, args.row_raw_dir, args.column_raw_dir)
