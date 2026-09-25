@@ -8,6 +8,9 @@ catch the failures that are invisible to a character-accuracy score.
 Checks
 ------
 missing_page          A break in the printed-folio run within a file.
+folio_gap_unverifiable  Two folios with scan pages between them that are
+                      absent from this input -- the sequence cannot be
+                      checked there. Expected on any partial run.
 duplicate_folio       The same folio twice in one file.
 letter_spacing_leak   Literal letter-spacing in span text that was NOT
                       flagged as разрядка (flagged ones are repaired at parse
@@ -89,7 +92,7 @@ def main() -> None:
     for src, items in sorted(by_file.items()):
         items.sort(key=lambda t: t[0])
         seen = {}
-        prev = None            # (folio, page_id)
+        prev = None            # (folio, page_id, source_page_index)
         unpaginated_since = 0
         for idx, p in items:
             m = FOLIO_RE.search(p["printed_folio"] or "")
@@ -103,15 +106,35 @@ def main() -> None:
                      f"folio {folio} also on {seen[folio]}")
             seen[folio] = p["page_id"]
             if prev is not None:
-                gap = folio - prev[0] - 1
-                # docs/season_reviews.md §10: the gap must be exactly the
-                # number of unpaginated scan pages sitting between them.
-                if gap != unpaginated_since:
-                    flag(p["page_id"], "missing_page",
-                         f"{src}: folio {prev[0]} ({prev[1]}) -> {folio}; "
-                         f"gap of {gap} with {unpaginated_since} unpaginated "
-                         f"page(s) between")
-            prev = (folio, p["page_id"])
+                # Only compare pages we can actually account for. Between
+                # two folios there are (idx - prev_idx - 1) scan pages; we
+                # saw `unpaginated_since` of them without a folio. Any
+                # others are simply NOT IN THIS INPUT, and then the folio
+                # gap says nothing.
+                #
+                # 2026-09-25: without this the check fires on any partial
+                # input. On a 200-page stratified pilot it reported
+                # "194 -> 117" as a missing page, when the two were nine
+                # scan pages apart and everything between was unsampled --
+                # a false positive that would have buried a real one. It
+                # also matters on the full run, where a render failure or a
+                # skipped page leaves the same hole.
+                absent = (idx - prev[2] - 1) - unpaginated_since
+                if absent > 0:
+                    flag(p["page_id"], "folio_gap_unverifiable",
+                         f"{src}: folio {prev[0]} ({prev[1]}) -> {folio}, but "
+                         f"{absent} scan page(s) between are absent from this "
+                         f"input; sequence not checkable here")
+                else:
+                    gap = folio - prev[0] - 1
+                    # docs/season_reviews.md §10: the gap must be exactly the
+                    # number of unpaginated scan pages sitting between them.
+                    if gap != unpaginated_since:
+                        flag(p["page_id"], "missing_page",
+                             f"{src}: folio {prev[0]} ({prev[1]}) -> {folio}; "
+                             f"gap of {gap} with {unpaginated_since} "
+                             f"unpaginated page(s) between")
+            prev = (folio, p["page_id"], idx)
             unpaginated_since = 0
 
     # ---- zero uncertainty across a whole file ---------------------------
