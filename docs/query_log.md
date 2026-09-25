@@ -8839,3 +8839,25 @@ nothing, since the original book itself never typeset the evening
 entry. No data change (the existing "morning"-labeled capture is
 already verbatim-correct); known_issues.md's write-up corrected to
 stop suggesting re-scanning as a path forward.
+
+## 2026-09-25 — Two-page-spread full sweep: rebuild + gold-eval + quality-flag delta
+
+```
+pipeline/parse_and_validate.py --manifest outputs/full_run/manifest.csv --raw-dir outputs/full_run/raw --out-dir outputs/full_run/parsed --page-headers outputs/repertoire_singlepage_pagenumbers/all_page_headers.csv
+pipeline/quality_checks.py --parsed-dir outputs/full_run/parsed --out outputs/full_run/quality_flags.csv
+pipeline/build_duckdb.py --parsed-dir outputs/full_run/parsed --manifest outputs/full_run/manifest.csv --db outputs/full_run/imperial_theaters.duckdb
+pipeline/validate_performance_dates.py --db outputs/full_run/imperial_theaters.duckdb
+pipeline/build_entities.py --db outputs/full_run/imperial_theaters.duckdb
+pipeline/build_research_model.py --db outputs/full_run/imperial_theaters.duckdb
+pipeline/build_datasette.py --db outputs/full_run/imperial_theaters.duckdb --out outputs/full_run/research_dataset.sqlite
+pipeline/eval_against_gold.py --parsed-dir outputs/full_run/parsed --gold-dir docs/eval/gold --out outputs/full_run/eval_report_spreadsweep_2026-09-25.txt --run-id spreadsweep_2026-09-25
+```
+
+Result: event_entry 23200 -> 24078 (+878). validate_performance_dates verified 97.8% -> 98.1%.
+quality_flags.csv: 896 immediately post-sweep (894 pre-existing Musicians/Roster baseline + 2 new
+`duplicate_event_key` on repertoire_1892-93_pair018) -> fixed the 2 flags by splitting a combined
+"20 Субб. Воскрес." date label into its two real calendar days per the page's own scan -> re-ran
+quality_checks.py, back to 894 (0 genuine Repertoire flags). Gold-eval: roster 82.1%, repertoire
+96.1% (unchanged -- no gold Repertoire page is two-page-spread format), grand 87.2%. entities
+layer confirmed stable (2900 live people, 0 new merges) -- Musicians/Roster isolation held. Full
+narrative: docs/eval/run_history.csv row `full_sweep_twopagespread_2026-09-25`.

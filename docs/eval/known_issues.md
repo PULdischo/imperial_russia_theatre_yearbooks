@@ -17008,3 +17008,104 @@ Backed up first to
 
 **Issue #80's follow-up list is now fully closed** -- all five items
 resolved (4 directly, this one via full reconstruction).
+
+## Issue #82: two-page-spread seasons (1890-91-1897-98) -- full
+## content-verification sweep
+
+Mirrors issue #79 (the single-page-season sweep) for the other Repertoire
+format. RG asked, after issue #79 closed out the single-page seasons,
+whether the two-page-spread seasons (1890-91 through 1897-98, 98 render
+pages, ~19% of the Repertoire corpus by page count) were ready for the
+same treatment. They were -- dispatched as parallel agent batches, each
+independently reading every assigned page's source scan against its
+extracted JSON, same methodology as #79.
+
+**Coverage discipline**: the batch-splitting recursively sub-delegated in
+places (an agent given several pages sometimes spawned its own sub-agents
+per page), which made naive batch-count tracking unreliable. Caught this
+by cross-checking every completion report's page_id list, by name, against
+the full 98-page render-map scope -- found 4 pages (`repertoire_1892-93_pair020`,
+`repertoire_1893-94_pair020`, `repertoire_1895-96_pair008`,
+`repertoire_1895-96_pair020`) that no batch had actually covered, and
+dispatched a final small batch for them before declaring the sweep done.
+Lesson for any future large fan-out: track completion by comparing the
+full scope list against page_ids explicitly named in results, not by
+counting dispatched batches or by file-modification-time alone (a page
+verified clean produces no file write and so is invisible to an mtime
+check).
+
+**Findings**: the dominant bug class here was more severe than in the
+single-page sweep -- **whole theater columns silently missing for a date
+range**, not just individual cells. Found repeatedly: all of Малый missing
+20 dates on `1891-92_pair006`; all of Александринскій missing across an
+entire page on `1893-94_pair008`; all of Маріинскій missing on
+`1896-97_pair022`; 3-4 theaters missing 10-18 consecutive dates at once on
+several pages (`1890-91_pair018`, `1890-91_pair020`, `1891-92_pair004`,
+`1891-92_pair014`, `1892-93_pair018`, and others). Several of these were
+layered with a cascading date-shift, usually traced to a phantom duplicate
+row pushing every later date one slot off. Other recurring classes: OCR
+letter-typos (ъ/ь, Latin/Cyrillic homoglyphs, fita), missing Bénéfice/
+benefit headings, cross-date/cross-column content bleed, truncated
+receipts (dropped kopeck marker), and a systematic bug where a genre
+abbreviation got duplicated into the `work_title` string itself, found on
+two pages (`1895-96_pair022`, ~40 titles; `1897-98_pair010`, ~19 titles).
+
+**Two structural corrections mid-sweep**: `repertoire_1890-91_pair010`'s
+assigned render mapping was wrong (pointed at a later March-May page
+instead of the correct November one) -- caught and self-corrected by the
+agent before reconstructing. `repertoire_1892-93_pair014`'s previously
+"render-uncertain" status (3 candidate renders, flagged during batch
+dispatch) is now resolved: dates 27 Дек-16 Янв come from render `_006.jpg`
+as expected, but the file's existing "17-26" tail turned out to be a
+mislabeled verbatim duplicate of that same render's December 17-22/26
+data -- the true January 17-26 content lives on a render not in the
+original 3-candidate list (`_007.jpg`). Replaced 41 wrong entries with 35
+correct ones.
+
+**One new quality-flag regression, found and fixed post-sweep**:
+`quality_checks.py` flagged `duplicate_event_key` (x2) on
+`repertoire_1892-93_pair018` -- a printed row labeled "20 Субб. Воскрес."
+turned out to be two genuinely separate calendar days (Saturday the 20th
+and Sunday the 21st, confirmed via the page's own running-header margin
+text) sharing one combined date_text, colliding at the (date_text,
+theater, session) key once both days' content was correctly captured.
+Fixed by splitting the shared label into "20 Субб." / "21 Воскрес.",
+matching this page's own single-weekday convention elsewhere -- not a
+merge or a drop, both days' real content is preserved. A related gap was
+flagged but not fixed (out of scope for that fix): the three dark
+theaters on the same combined row (Маріинскій, Большой, Малый) each have
+only one `is_dark` entry for the two-day span, when the scan shows dash
+placeholders on both days -- the second day's dark placeholder for those
+three theaters was likely never captured. Worth a small follow-up.
+
+**Also compiled during this sweep**: a running list of receipts/work-title
+cells genuinely obscured by the physical binding fold or gutter (as
+opposed to an extraction bug) -- e.g. `1892-93_pair020`'s "13 Суббота"
+row (Александринскій, Михайловскій), whose receipts fall in the physical
+gap between the two half-page photographs and cannot be read from the
+scan at all. Turned into an interactive review tool for RG to check
+against the physical volumes in person; results will be folded back into
+the raw JSON once collected.
+
+**Result**: event_entry 23200->24078 (+878). `validate_performance_dates.py`
+verified 97.8%->98.1% corpus-wide. `quality_checks.py`: 894 flags, all
+pre-existing Musicians/Roster-category baseline (byte-identical row set)
+plus the same 7 genuine-print-typo `receipts_parse_failed` -- 0 genuine
+Repertoire flags after the pair018 fix (was briefly 896 before that fix).
+`entities.person` confirmed stable (2900 live people, 0 new merges, 23
+preserved candidate decisions) -- Musicians/Roster isolation held.
+Repertoire gold-eval 96.1%->96.1% (unchanged; none of the 4 gold
+Repertoire pages are two-page-spread format, so this sweep's fixes
+couldn't move that number even though real corpus errors were fixed --
+worth remembering when a sweep's gold-eval doesn't move but
+`validate_performance_dates` and raw counts clearly did). Backed up first
+to `outputs/full_run_pre_promote_backup_2026-09-25_spreadsweep/`. Full
+narrative: `docs/eval/run_history.csv` row
+`full_sweep_twopagespread_2026-09-25`.
+
+**This closes out the whole two-format Repertoire content-verification
+arc** (issue #79 for single-page seasons, this issue for two-page-spread
+seasons) -- every Repertoire render in the corpus has now been
+individually scan-verified at least once, in both formats.
+`link_wikidata.py` and the HF/Cloud Run republish were deliberately not
+run this round, per established convention.
