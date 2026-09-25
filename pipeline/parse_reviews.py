@@ -27,6 +27,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -52,6 +53,37 @@ def repair(page: ReviewPageLLM) -> tuple[ReviewPageLLM, list[str]]:
         kept.append(b)
     page.blocks = kept
     return page, notes
+
+
+# A backslash that is not the start of a valid JSON escape. Seen once in
+# 600 pilot calls (2026-09-25): the model wrote "съ\нимъ" where it meant
+# "съ\nнимъ" -- CYRILLIC н in place of Latin n inside the escape sequence
+# itself. A homoglyph error in the JSON syntax, not in the transcription.
+# Left alone it costs the whole page: json.loads raises and the extraction
+# is discarded. At ~1 in 600 that is roughly five pages of a 3,072-call
+# full run, so it is worth repairing rather than re-paying for.
+BAD_ESCAPE = re.compile(r'\\(?![\"\\/bfnrtu])')
+
+
+def repair_json_escapes(text: str) -> tuple[str, int]:
+    """Make an otherwise-valid response parseable. Returns (text, n_fixed).
+
+    Cyrillic н (and Latin-lookalike т/р/с) directly after a backslash is
+    read as a mangled \n and restored as a newline, keeping the character
+    that follows. Any other invalid escape has the stray backslash dropped,
+    which loses nothing but the backslash.
+
+    Every repair is logged, and the page is flagged so it can be eyeballed
+    -- this guesses at intent, and a guess belongs in front of a human."""
+    n = 0
+
+    def fix(m: re.Match) -> str:
+        nonlocal n
+        n += 1
+        nxt = text[m.end():m.end() + 1]
+        return "\\n" if nxt == "\u043d" else ""      # н -> newline, else drop
+
+    return BAD_ESCAPE.sub(fix, text), n
 
 
 def load_folio_corrections(path: Path) -> dict[str, str]:
@@ -99,13 +131,21 @@ def main() -> None:
         if not raw_path.exists():
             n_missing += 1
             continue
+        text = raw_path.read_text(encoding="utf-8")
         try:
-            data = json.loads(raw_path.read_text(encoding="utf-8"))
-        except json.JSONDecodeError as e:
-            n_failed += 1
-            errors.append({"page_id": page_id, "stage": "json",
-                           "error": f"{type(e).__name__}: {e}"})
-            continue
+            data = json.loads(text)
+        except json.JSONDecodeError:
+            fixed, n_esc = repair_json_escapes(text)
+            try:
+                data = json.loads(fixed)
+            except json.JSONDecodeError as e:
+                n_failed += 1
+                errors.append({"page_id": page_id, "stage": "json",
+                               "error": f"{type(e).__name__}: {e}"})
+                continue
+            repairs.append({"page_id": page_id,
+                            "repair": f"json_escape_repair: {n_esc} invalid "
+                                      f"escape(s) -- CHECK THIS PAGE"})
         try:
             page = ReviewPageLLM.model_validate(data)
         except ValidationError as e:
