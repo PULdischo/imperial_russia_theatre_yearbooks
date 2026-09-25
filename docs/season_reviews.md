@@ -547,11 +547,35 @@ A page can score perfectly on characters while being scrambled — which is
 invisible if only CER is measured. Reading-order accuracy is therefore its
 own metric (§11).
 
-Only genuinely ambiguous pages reach a human: multi-column, text wrapping
-around inset figures, montage layouts. Most pages are single-column prose
-with exactly one possible order. The review interface is a page thumbnail
-with blocks outlined and numbered in the order the model read them —
-confirm or renumber, seconds per page, no reading required.
+**How ambiguous pages are FOUND — settled 2026-09-25, RG accepted all four.**
+
+*Not by asking the model.* `reading_order_uncertain` fired on **2 of 60**
+non-gold pages while **63%** of them carry the ambiguous condition (a figure
+and text on the same page). This is the same failure as `uncertain` and
+`gap`, which the model set exactly **zero** times across 493 spans: it does
+not self-report, and instructing it harder does not change that.
+
+*Not by adding position tracking to the prompt.* Bounding boxes would work
+in principle — see the paragraph above — but every addition tested against
+this prompt has cost character accuracy, and it breaks the sequencing rule
+in §"The governing rule": characters first, everything derivable later.
+
+*By run-to-run disagreement.* Extract each page three times and compare the
+block sequences. On the 60-page sample this flags **30%** of pages, and it
+is a RANKED signal rather than a yes/no — sort by how far the runs diverge
+and review from the top until the returns stop. It needs no gold, so it
+works across all 1,024 pages. (Caveats: the 30% came from an arbitrary
+0.95 similarity threshold that still needs tuning against real cases, and
+it currently conflates order disagreement with segmentation disagreement.)
+
+*Review visually.* A page thumbnail with blocks outlined and numbered in
+the order the model read them — confirm or renumber, seconds per page, no
+reading required.
+
+**This does not block the full run.** Block order is array sequence in the
+JSON, so correcting a page is a data edit on a file already on disk: no
+vision call, no cost, reversible. Extract everything first, review order
+afterwards.
 
 Hardest known cluster: 1896-97 BalletSP idx 12–18, and 1895-96 BalletSP
 idx 13–15 (colour photographic montages scattered diagonally).
