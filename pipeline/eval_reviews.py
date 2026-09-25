@@ -61,6 +61,7 @@ import argparse
 import csv
 import difflib
 import json
+import re
 import sys
 from collections import Counter
 from pathlib import Path
@@ -149,17 +150,32 @@ def _block_key(b: BlockLLM) -> str:
 
 
 def align_blocks(gold: ReviewPageLLM, pred: ReviewPageLLM) -> list[int | None]:
-    """For each predicted block, the index of the gold block it best matches.
+    """For each predicted block, the index of the gold block it belongs at.
 
-    Greedy over all pairs, best similarity first, each gold block claimed at
-    most once -- good enough here and far easier to reason about than an
-    optimal assignment. The 0.6 floor is difflib's own conventional
-    "close enough" ratio; below it we would be inventing a correspondence.
+    Greedy exclusive matching by similarity, then a containment fallback for
+    the two disagreements exclusivity cannot express (both measured
+    2026-09-25 on textfirst):
 
-    Returns None for a predicted block with no gold counterpart (a genuine
-    insertion, e.g. a running head the gold does not record)."""
+      * MERGE -- one predicted block spanning four gold blocks scores 0.52
+        against any single one, under the 0.6 floor, so it went unmatched
+        and was parked mid-page. On gold page 03 that one misplacement
+        produced CER 0.60 for a page whose text was ~96% right. Fallback:
+        if gold blocks are CONTAINED in the predicted one, anchor at the
+        earliest of them.
+      * SPLIT -- two predicted blocks covering one gold block: only one
+        could claim it and the other was orphaned at 0.41. Fallback: a
+        predicted block contained in a gold block anchors there even if
+        that gold block is already claimed.
+
+    Exclusivity is kept for the first pass on purpose. A global sequence
+    alignment was tried instead and is WRONG for this: it is order-preserving
+    by construction, so it scored deliberately shuffled pages as order 1.00.
+    Per-block search without exclusivity is also wrong -- these pages repeat
+    near-identical short blocks ("г-жа Кякштъ;", "г-жа Карсавина;") and the
+    repeats anchor to the wrong occurrence."""
     g_keys = [_block_key(b) for b in gold.blocks]
     p_keys = [_block_key(b) for b in pred.blocks]
+
     pairs = []
     for pi, pk in enumerate(p_keys):
         if not pk:
@@ -172,21 +188,37 @@ def align_blocks(gold: ReviewPageLLM, pred: ReviewPageLLM) -> list[int | None]:
                 pairs.append((r, pi, gi))
     pairs.sort(key=lambda t: -t[0])
     assign: list[int | None] = [None] * len(pred.blocks)
-    taken_g: set[int] = set()
+    taken: set[int] = set()
     for _, pi, gi in pairs:
-        if assign[pi] is None and gi not in taken_g:
+        if assign[pi] is None and gi not in taken:
             assign[pi] = gi
-            taken_g.add(gi)
+            taken.add(gi)
+
+    for pi, pk in enumerate(p_keys):
+        if assign[pi] is not None or not pk:
+            continue
+        # merge: which gold blocks does this one swallow?
+        inside = [gi for gi, gk in enumerate(g_keys)
+                  if gk and len(gk) >= 12 and gk in pk]
+        if inside:
+            assign[pi] = min(inside)
+            continue
+        # split: which gold block swallows this one?
+        holders = [gi for gi, gk in enumerate(g_keys)
+                   if gk and len(pk) >= 12 and pk in gk]
+        if holders:
+            assign[pi] = min(holders)
     return assign
 
 
 def restore_order(pred: ReviewPageLLM,
                   assign: list[int | None]) -> ReviewPageLLM:
-    """Predicted blocks sorted into gold's reading order.
+    """Predicted blocks sorted into gold's reading order, by where each
+    block's text sits in the gold page (see align_blocks).
 
-    A block with no gold counterpart keeps its place by inheriting the
-    position of the last block that did have one, so an unmatched block is
-    never flung to one end of the page."""
+    A block with no recognisable anchor keeps its place by inheriting the
+    position of the last block that had one, so an unmatched block is never
+    flung to one end of the page."""
     keys, last = [], -1.0
     for i, gi in enumerate(assign):
         if gi is not None:
@@ -219,8 +251,20 @@ def order_score(assign: list[int | None]) -> tuple[float, int]:
     return good / tot, moved
 
 
+def _relax_indent(s: str) -> str:
+    """Collapse leading whitespace on every line.
+
+    RG, 2026-09-25: verse indentation is no longer required. It is rare in
+    the corpus and verse is recognisable without it, while reproducing it
+    cost 0.4pt of corpus CER on its own -- the single largest recoverable
+    chunk of error, and a convention question rather than a model failure.
+    Gold KEEPS its indentation (it is the verbatim record); the eval simply
+    stops charging the model for not reproducing it."""
+    return re.sub(r"(?m)^[ \t]+", "", s)
+
+
 def score_page(gold: ReviewPageLLM, pred: ReviewPageLLM) -> dict:
-    g_text = page_plain_text(gold)
+    g_text = _relax_indent(page_plain_text(gold))
 
     # Reading order and transcription are different errors and are scored
     # separately: CER over blocks put back in gold's order, `order` over the
@@ -229,8 +273,8 @@ def score_page(gold: ReviewPageLLM, pred: ReviewPageLLM) -> dict:
     ordered = restore_order(pred, assign)
     ord_frac, moved = order_score(assign)
 
-    p_text = page_plain_text(ordered)
-    p_text_raw = page_plain_text(pred)
+    p_text = _relax_indent(page_plain_text(ordered))
+    p_text_raw = _relax_indent(page_plain_text(pred))
     dist = edit_distance(g_text, p_text)
     dist_raw = edit_distance(g_text, p_text_raw)
 

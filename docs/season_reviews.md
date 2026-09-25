@@ -166,7 +166,7 @@ the page.
 |---|---|
 | `heading` | Includes lettered subsections (`в) Балетъ.`) and ornamental headpieces containing **printed** text. **NOT run-in introducers** — see below |
 | `paragraph` | Running prose — the bulk |
-| `verse` | Quoted poetry. **Exempt from line-rejoining** (§7) |
+| `verse` | Quoted poetry. **Exempt from line-rejoining**; indentation NOT preserved (§7) |
 | `cast_list` | Role → performer runs, prose-set or block-set |
 | `personnel_news` | `Приняты на службу:` / `Оставили службу:` / `Умерли:` / transfers. **Provisional** — see below |
 | `enumerated_list` | See below |
@@ -492,16 +492,24 @@ line-rejoined searchable text (§2, layer 4) is derived from it by rule.
 Neither fidelity nor usability is sacrificed.
 
 **`verse` is exempt from rejoining.** In prose a line break is a typographic
-accident; in verse it is part of the text. Indentation within verse is also
-meaningful and preserved — 1894-95 OperaMoscow p299 varies indentation across
-eleven lines of quoted libretto.
+accident; in verse it is part of the text, and verse line breaks are kept.
 
-Indentation is recorded as **levels, four spaces each**, never as a measured
-width. The absolute inset on the page is not recoverable and would differ
-between gold and model anyway; what carries meaning is that some lines sit
-deeper than others. A fixed convention on both sides keeps that difference
-without inventing spurious character mismatches — on an eleven-line verse
-page a disagreement about indent width alone could cost over 2% CER.
+**Indentation is NOT preserved. RG, 2026-09-25: "There is very little verse
+across the corpus, so I think we can relax it. It's clear when something is
+in verse without indentation."**
+
+This reverses the earlier rule on this page, which required four spaces per
+level. The measurement that prompted the change: reproducing indentation
+cost **0.4pt of corpus CER on its own** — on 1894-95 OperaMoscow p299 it was
+the *entire* 9% error for that page, every difference being a run of eight
+spaces the model did not emit. That made it the single largest recoverable
+chunk of error in the whole eval, and it was never a reading failure.
+
+Concretely: extraction prompts ask for verse line breaks and tell the model
+to start every line at the left margin; `eval_reviews.py` collapses leading
+whitespace on both sides before scoring (`_relax_indent`). **The gold keeps
+its indentation** — it is the verbatim record and costs nothing to retain —
+so the decision is reversible without re-typing anything.
 
 ---
 
