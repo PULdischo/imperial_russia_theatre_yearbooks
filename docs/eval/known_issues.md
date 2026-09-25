@@ -17362,3 +17362,116 @@ exactly what should exist for that stretch, and probably don't need a
 special code path -- `event_status='not_captured'` already reads fine
 as "nothing to capture, and nothing was," not just "an extraction
 miss."
+
+## Issue #85: two genuinely missing Repertoire pages recovered, using
+## printed_page_number continuity as the audit method -- one more
+## explained closure, corpus-wide render-usage swept clean
+
+Direct continuation of issue #84's correction: once `printed_page_number`
+continuity was established as the right way to tell "a page is missing"
+from "nothing happened," RG asked to keep going through the rest of the
+corpus with the same method rather than stopping at 1894-95.
+
+**Method**: for every two-page-spread season, checked whether each
+page_id's printed-page-number range picks up exactly where the previous
+page_id's leaves off (`lo - prev_hi = 1` for every adjacent pair). Any
+break is either a genuine printed closure (verify against the scan: does
+the date column itself skip, cleanly, with no separator?) or a genuinely
+un-transcribed render (check whether an unused render file exists on
+disk that could fill the gap). Also swept every season's full set of
+render files against which ones are actually cited by any final page_id,
+to catch a render that was simply never assigned to anything.
+
+**Two real, previously-undetected gaps found and fixed:**
+
+1. **`repertoire_1892-93`, pages 12-13 (4-26 Декабря 1892)** -- entirely
+   absent from the dataset. The render (`ForUpload_1892-93_Repertoire_005.jpg`)
+   existed on disk and was fully legible; it had simply never been
+   assigned to any final page_id at all (confirmed: unused by
+   cross-referencing every final page_id's actual render citations
+   against the full set of render files on disk for this season).
+   Fully transcribed (108 sessions, 20 distinct dates, 5 theaters) as a
+   new page_id, `repertoire_1892-93_pair012`, matching this corpus's
+   established JSON schema and verbatim conventions. Confirmed genuine
+   print gap of its own, 23-25 Декабря (row "22 Вторникъ." is
+   immediately followed by "26 Суббота." with no scan damage) -- left
+   untouched per "never assume date completeness," consistent with a
+   short Christmas-adjacent closure.
+2. **`repertoire_1895-96`, page 26 (15-26 Мая 1896)** -- the true final
+   page of the season, also entirely absent. Same cause: an unused
+   render (`ForUpload_1895-96_Repertoire_012.jpg`) sitting on disk,
+   never assigned. Transcribed directly (50 sessions, 10 distinct
+   dates -- 18 Мая itself absent from the print, not investigated
+   further). Only Большой/Малый (Moscow) have content; Маріинскій/
+   Александринскій/Михайловскій (St. Petersburg) are genuinely dark
+   throughout -- their season had already ended, a real and expected
+   asymmetry near a season's close, not a bug. Named `repertoire_1895-96_p026`
+   (by printed page number, to avoid colliding with the unrelated
+   pre-existing `repertoire_1895-96_p012`, whose `p012` suffix is a
+   coincidental render-index label, not a printed-page reference).
+
+Both new pages needed the standard wiring, not just a raw JSON file:
+added to `outputs/full_run/manifest.csv` (parse_and_validate.py's driver
+list -- a raw JSON file with no manifest row is silently invisible to
+the pipeline), `outputs/repertoire_singlepage_pagenumbers/all_page_headers.csv`
+(the month/year backfill source both season formats share -- missed on
+the first rebuild pass for `p026`, surfaced immediately as 50
+`no_date` rows in `validate_performance_dates.py`'s output, then fixed),
+and `outputs/full_run/printed_page_numbers/printed_page_numbers.csv`.
+
+**One more real bug found and fixed along the way, discovered purely as
+a side effect of the continuity check**: `repertoire_1892-93_pair014`
+and `repertoire_1892-93_pair016` had **35 duplicate sessions** (7 dates x
+5 theaters, 17-22 and 26 Января 1893) -- byte-identical content
+(same receipts, same works) captured under both final page_ids. Root
+cause: issue #82's sweep had replaced `pair014`'s corrupted "17-26 tail"
+(previously a mislabeled duplicate of December content) with content it
+sourced from render `_007.jpg`, without checking whether `pair016`
+already legitimately owned that date range (it did, independently and
+correctly, as `pair016`'s pages 16-17). Fixed by removing the 35
+duplicated sessions from `pair014` (verified via direct content
+comparison, not just date/theater matching, before deleting anything)
+and trimming `pair014`'s printed_page_number range back to pages 14-15
+only (Dec27-Jan16). This is exactly the kind of cross-page-id
+duplication `quality_checks.py`'s `duplicate_event_key` check CANNOT
+catch (it only compares within one page_id) -- found only because the
+printed-page-number continuity check surfaced the overlapping range
+claim.
+
+**Corpus-wide render-usage sweep, all 8 two-page-spread seasons**: found
+2 more "unused" renders that turned out to be false positives, not real
+gaps -- `1890-91`'s render `_003.jpg` is a duplicate scan of the same
+physical pages already correctly used as render `_004.jpg` (pages 10-11,
+Nov 1-20 1890, identical content in both photographs); `1892-93`'s
+render `_006.jpg` only LOOKED unused because of a stale multi-candidate
+label in the render-mapping file, left over from before `pair014`'s
+render was resolved earlier the same session. No other season showed
+any real page-number discontinuity or unused render. Combined with
+issue #84's already-explained 1894-95 gap and the pre-existing,
+already-verified 1890-91 Oct12-31 closure, **every two-page-spread
+season's printed-page sequence is now either fully continuous or has
+every break individually explained** -- nothing left unaccounted for at
+the page level.
+
+**Result**: event_entry 24081 -> 24204 (+108 +50 -35 = +123 net, across
+the two recovered pages and the one duplicate-removal fix).
+`printed_page_number` fill: still 100.00% (24204/24204). 0 genuine
+Repertoire quality flags (894 total, same Musicians/Roster baseline).
+`validate_performance_dates.py`: 98.1%, unchanged. Repertoire gold-eval:
+96.1%, unchanged (none of the gold pages are affected). Full chain
+rebuilt clean.
+
+**Not done**: the ~2500 remaining scattered `not_captured` rows spread
+across many pages/seasons corpus-wide -- these did NOT show the
+`pair006`/`pair012`/`p026` structural signature (a whole page-pair's
+worth of missing content with a page-number tell) and are much more
+likely to be the ordinary, ones-and-twos kind (individual missing
+dark-day placeholders within an otherwise normal ~20-day page) already
+seen and partly fixed throughout issues #79/#82 -- the `not_captured`
+month distribution (heavily Feb-Apr, consistent with Great Lent/Holy
+Week, which moves year to year) supports genuine recurring closures as
+the dominant remaining explanation, not bugs. Not triaged individually
+this pass; the corpus-wide page-number-continuity sweep (the method that
+actually found both real gaps this round) is complete and clean, so any
+further work here would be scattered single-cell checking rather than
+another structural sweep.

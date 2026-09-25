@@ -8976,3 +8976,31 @@ Julian) and the Imperial theaters' traditional mourning closure. This reverses
 issue #84's original conclusion (PDF-page-count comparison, which only checks
 whether rendering skipped a page, not whether the print itself is continuous) --
 see that issue's own correction addendum in known_issues.md.
+
+## 2026-09-25 — Corpus-wide printed_page_number continuity sweep (issue #85)
+
+```sql
+-- adjacent page-pair continuity check, per season
+with pages as (
+  select season, page_id, min(printed_page_number::int) lo, max(printed_page_number::int) hi
+  from raw.event_entry where page_id like 'repertoire_%' and printed_page_number != ''
+  group by 1,2
+),
+ordered as (select *, lag(hi) over (partition by season order by lo) as prev_hi from pages)
+select season, page_id, lo, hi, prev_hi, lo - prev_hi as gap
+from ordered where prev_hi is not null and lo - prev_hi != 1
+order by season, lo;
+```
+
+Result: found 1 already-explained gap (1890-91), 1 new real gap (1892-93 pages 12-13),
+and several false positives from single-render-final-page_ids sharing a page number
+with a sibling (expected, not a bug). Cross-referenced against a corpus-wide render-file
+usage check (every render file on disk vs. every render actually cited by a final
+page_id) to find 1892-93's render_005.jpg and 1895-96's render_012.jpg sitting
+completely unused -- both fully transcribed as new pages (repertoire_1892-93_pair012,
+108 sessions; repertoire_1895-96_p026, 50 sessions). Also found, as a side effect,
+35 duplicate sessions shared between repertoire_1892-93_pair014 and _pair016 (verified
+by direct content match, not just date/theater) -- removed from pair014. event_entry
+24081->24204 net. printed_page_number fill stayed 100.00%. quality_flags.csv unchanged
+(894/7). validate_performance_dates.py unchanged (98.1%). Full narrative:
+docs/eval/known_issues.md issue #85.
