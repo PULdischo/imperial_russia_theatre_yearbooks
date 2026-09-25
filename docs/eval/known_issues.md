@@ -16941,3 +16941,55 @@ rather than a quick follow-up. Rebuilt full chain: event_entry
 `intra_block_disagreement` 391->383, quality_flags.csv unchanged
 (894/7), Musicians/Roster byte-identical. Backed up first to
 `outputs/full_run_pre_promote_backup_2026-09-25_followups/`.
+
+## Addendum to #80 (2026-09-25): `repertoire_1893-94_pair012` full
+reconstruction -- the flagged follow-up item #4
+
+Full reconstruction of the page flagged in the previous addendum as
+"needs its own session." Turned out to be four *independent* bugs
+layered on one page, not one cascading shift:
+
+- **Александринскій театръ was completely absent -- zero sessions for
+  the entire page (all 20 dates, 3-22 Декабря 1893).**
+- **Малый театръ was missing for d3-d11**, and for d12-d21 every
+  session was shifted -1 (each date label held the *previous* day's
+  true content) -- the shift boundary traces to the d11/d12 seam
+  (11 Декабря is a near-empty day, only Михайловскій running).
+- **Большой/Маріинскій/Михайловскій were each independently correct
+  through d15**, but d15's content got duplicated onto d16 (confirmed
+  identical title+receipts at both labels for all three), which then
+  cascaded a -1 shift through d16-d21 for each of these three theaters
+  too -- a separate duplication point from Малый's, consistent with
+  each theater column having been extracted/row-detected somewhat
+  independently (this season uses the column-wise reconstruction
+  pipeline).
+- **All four present theaters' "22 Среда." entry was a redundant wrong
+  duplicate of true d21** -- the pre-existing "22 Декабря. Среда."
+  entry (odd naming aside) was the correct, independently-captured
+  d22 all along, on every theater.
+
+Reconstructed from the scan (`ForUpload_1893-94_Repertoire_005.jpg`,
+verified date range 3-22 Декабря 1893, cross-checked column-by-column,
+catching and correcting one of my own early misreads along the way --
+a Александринскій/Михайловскій column-position mixup at d20, resolved
+by re-cropping and reading more carefully): rebuilt all 5 theaters'
+sessions for the full 20-day range from scratch using verified
+title+receipts pairs, preserving 3 genuine morning/evening splits
+(d5, d12, d19 for Александринскій) and genuinely dark days (d4, d11
+partial, d18) exactly as printed. One confirmed OCR digit typo fixed
+in passing (Большой's kept d15 receipts, "210 р. 2 к." -> "310 р. 2
+к.", confirmed by the clean duplicate at the old d16 label before it
+was removed). One receipts figure left null (Александринскій d12
+evening -- illegible under the physical binding fold, same convention
+as other fold-damage cases this project has documented).
+
+**Result**: event_entry 23173->23200 (+27, net of removed phantoms
+and inserted missing content). `verified` 97.8%->97.8% (22659->22701,
++42 absolute), `intra_block_disagreement` 383->368. 0 duplicate-key
+collisions corpus-wide. 0 genuine Repertoire validation failures.
+quality_flags.csv unchanged (894/7). Musicians/Roster byte-identical.
+Backed up first to
+`outputs/full_run_pre_promote_backup_2026-09-25_pair012_reconstruct/`.
+
+**Issue #80's follow-up list is now fully closed** -- all five items
+resolved (4 directly, this one via full reconstruction).

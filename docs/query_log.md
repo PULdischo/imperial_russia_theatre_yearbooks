@@ -8795,3 +8795,27 @@ Result after rebuild: verified 22659 (97.8%), intra_block_disagreement
 383 (down from 391), event_entry 23181->23173 (-8, exactly the removed
 phantom sessions). 0 duplicate-key collisions corpus-wide.
 Musicians/Roster byte-identical.
+
+## 2026-09-25 — Reconstructed repertoire_1893-94_pair012 (issue #80 follow-up #4)
+
+Full page reconstruction. Root cause turned out to be four independent
+bugs, not one cascade: Александринскій entirely absent (all 20 dates);
+Малый missing d3-11 and shifted -1 for d12-21; Большой/Маріинскій/
+Михайловскій each independently duplicated d15 onto d16, cascading a
+-1 shift through d21; all four present theaters' "22 Среда." was a
+redundant wrong duplicate of true d21 (the odd "22 Декабря. Среда."
+entry was the correct d22 all along). Rebuilt all 5 theaters' sessions
+for the full 3-22 Декабря 1893 range from the scan, verified
+column-by-column (title + receipts cross-checked against the scan for
+every date), preserving 3 genuine morning/evening splits and 3
+genuinely dark days. One OCR digit typo fixed (Большой's "210 р. 2
+к." -> "310 р. 2 к.", confirmed via the clean duplicate that existed
+before cleanup). Full detail: known_issues.md's addendum to issue #80.
+
+```sql
+SELECT date_confidence, COUNT(*) FROM analysis.event_entry_date_check GROUP BY 1 ORDER BY 2 DESC;
+```
+
+Result after rebuild: verified 22701 (97.8%, +42), intra_block_disagreement
+368 (down from 383). event_entry 23173->23200 (+27). 0 duplicate-key
+collisions corpus-wide. Musicians/Roster byte-identical.
