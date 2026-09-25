@@ -17206,3 +17206,52 @@ built directly against `outputs/full_run`, not a separate scratch
 directory, so there's no separate "promote" step this time -- but
 `link_wikidata.py` and the HF/Cloud Run republish are still
 deliberately deferred, same as every recent round).
+
+**Addendum, same day: the last 8 gaps closed, 100% fill.** RG asked for
+a closer look rather than leaving these deferred. 6 of 8 resolved with
+no further scan reads at all -- each one draws from a render that ALSO
+supplies a different, already-successfully-backfilled final page_id, so
+the render's true cutover date was already known precisely; the earlier
+failure was purely a matching-logic gap (requiring the cutover day to
+appear literally in the page's own date_undate list, which breaks when
+a final page_id uses only one side of a split render, or when the exact
+cutover date is itself a dark/uncaptured day):
+`repertoire_1890-91_p015` (=15), `_p023` (=23),
+`repertoire_1891-92_p003` (=3), `repertoire_1895-96_p012` (=9) each use
+only one side of their render and get a single page number for their
+whole range; `repertoire_1892-93_pair024` (split 24/25) and
+`repertoire_1897-98_pair020` (split 20/21) split cleanly at the actual
+date boundary around a missing day (1893-05-01 and 1898-03-02
+respectively -- neither has an event_entry row, presumably a genuine
+period gap, not investigated further here).
+
+The remaining 2 needed a fresh dispatched read, since both had
+conflicting or stale prior claims about which render(s) they actually
+draw from -- resolved by going back to the scans and cross-checking
+content directly rather than trusting any earlier label:
+
+- **`repertoire_1892-93_pair014` spans THREE printed pages, not two.**
+  The Dec27-Jan16 block (already known to come from render `_006.jpg`)
+  itself splits across two printed pages -- 14 (Dec27-Jan6) and 15
+  (Jan7-16) -- on top of the already-known Jan17-26 tail from render
+  `_007.jpg`, which is page 16. The original framing (2 renders = 2
+  pages) undercounted by one.
+- **`repertoire_1890-91_pair010`'s "multi-render" status was itself
+  wrong.** The raw JSON's `_source` fields still carried stale tags
+  from before a same-day correction (citing renders `_010.jpg`/`_011.jpg`
+  as "top"/"bottom"), left over rather than cleaned up when the content
+  was rebuilt from the correct render. Direct scan comparison confirmed
+  `_010.jpg` is an entirely unrelated March page (German-language
+  Михайловскій repertoire, folios 22/23, zero content overlap) -- the
+  real source is the single render `_004.jpg` (Nov 1-20 1890), a normal
+  two-page-spread page like the other 96, folios 10/11. Worth
+  remembering: a stale `_source` citation left in the raw JSON after a
+  content fix can itself become the next investigation's false lead --
+  cross-check against actual printed content, not just what a field
+  says, especially on a page with any known correction history.
+
+**Result**: 24081/24081 Repertoire event_entry rows (100.00%) now carry
+a printed_page_number -- full coverage, no deferrals remaining. 0
+sequence-consistency flags. `validate_performance_dates.py` unchanged
+(98.1%). Full chain rebuilt clean. Full narrative:
+`docs/query_log.md`'s second 2026-09-25 printed_page_number entry.

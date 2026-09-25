@@ -8901,3 +8901,29 @@ printed_page = source_page_index + offset (offsets: 1898-99 through 1903-04 = +2
 per-season reads was needed -- all 10 seasons passed the 3-point consistency check.
 validate_performance_dates.py unchanged (98.1%, expected -- pure additive column).
 Full narrative: docs/eval/known_issues.md issue #83.
+
+## 2026-09-25 — printed_page_number: closed the last 8 gaps, 100% fill
+
+Followed up on RG's "take a closer look" request. 6 of 8 resolved by cross-referencing
+a sibling page_id drawing from the same render (already successfully backfilled) --
+no additional reads needed, just correct date-boundary logic:
+repertoire_1890-91_p015 (=15, entirely after render p006's cutover),
+repertoire_1890-91_p023 (=23, entirely after render p010's cutover),
+repertoire_1891-92_p003 (=3, entirely after render p000's cutover),
+repertoire_1895-96_p012 (=9, entirely after render p003's cutover),
+repertoire_1892-93_pair024 (split 24/25 at the actual date-boundary around a dark/
+uncaptured May 1st), repertoire_1897-98_pair020 (split 20/21 at the actual date-
+boundary around a dark/uncaptured March 2nd).
+
+The last 2 needed a dispatched agent to re-verify the render mapping directly against
+scan content (not trust prior claims): repertoire_1892-93_pair014 turned out to span
+THREE printed pages, not two (14: Dec27-Jan6, 15: Jan7-16, 16: Jan17-26 -- the render
+_006.jpg is itself a normal two-page-spread render, on top of already needing _007.jpg
+for the Jan17-26 tail). repertoire_1890-91_pair010's "multi-render" status was itself
+wrong -- turned out to be a normal single-render page (_004.jpg, folios 10/11); the
+earlier "two renders" read was based on stale leftover `_source` tags from before a
+2026-09-25 correction, not a real second physical source.
+
+Result: 24081/24081 Repertoire event_entry rows (100.00%) now carry a printed_page_number.
+0 sequence-consistency flags. validate_performance_dates unchanged (98.1%). Full chain
+rebuilt clean through research.event/research_dataset.sqlite.
