@@ -67,14 +67,14 @@ structural disagreement between runs.
 run 1 does not. This is the failure class that matters most, and no
 consensus vote could have found it — only the disagreement signal did.
 
-## review_1899-00_SP_ballet_p028  (folio 109)  — PAUSED MID-PAGE
+## review_1899-00_SP_ballet_p028  (folio 109)
 
 An easy page: one photograph, three short enumerated items, runs nearly
 identical. The 0.800 stability score was almost entirely dash spacing.
 
 | # | runs 1 / 2 / 3 | ruling | note |
 |---|---|---|---|
-| 1 | (nothing) / (nothing) / `„Лукья-` | **OPEN — awaiting RG** | Something IS printed before `Лукья-`: at 6x, a small filled square above a comma-shaped mark, between the comma after `2-й` and the `Л`. Does not look like `„` (which is two comma shapes side by side). Probably damaged or foul type. An opening quote before a surname mid-cast-list would not make sense. |
+| 1 | (nothing) / (nothing) / `„Лукья-` | **ignore — printing artefact** (RG) | Something IS printed before `Лукья-`: at 6x, a small filled square above a comma-shaped mark, between the comma after `2-й` and the `Л`. Does not look like `„` (which is two comma shapes side by side). RG: "it's a printing artifact. It doesn't have any semantic meaning." Runs 1 and 2 were right to omit it. Confirmed by the next line: the item runs on to `новъ; г-жи Петипа 1-я и Петипа 2-я.` with NO closing quote anywhere, and item 4 begins cleanly. A similar speck sits after `Леньяни.` in item 4 — debris on this part of the page, not type. |
 
 Not raised, dash spacing only: `ambassadeurs — гг.` (runs 1,2) vs
 `ambassadeurs— гг.` (run 3), three times over.
@@ -88,9 +88,9 @@ set aside per RG, 2026-09-25.
 
 | | |
 |---|---|
-| pages triaged | 3 of 10 complete, page 4 open |
-| rulings | 12 |
-| RG agreed with Claude's reading | 12 of 12 |
+| pages triaged | 4 of 10 |
+| rulings | 13 |
+| RG agreed with Claude's reading | 13 of 13 |
 | **2-run majority WRONG** | **6 of 12** (женщину, Вдали, Шарпантье, Легатъ, Мартьяновъ, Пребраженская) |
 | **all three passes wrong together** | **1** (бокаловъ) |
 | **a pass silently DROPPED text** | **1** (p027, six names from the narrow columns) |
@@ -111,8 +111,7 @@ word and one dissents, the dissenter is worth a look.
 
 ## Resuming
 
-**Next:** finish page 4 — one open question, the mark before `Лукья-`.
-Then pages 5–10 of the first ten, from `outputs/reviews/triage_queue.txt`
+**Next:** pages 5–10 of the first ten, from `outputs/reviews/triage_queue.txt`
 (20 body-text pages below 0.95 in the 200-page pilot; ~103 expected across
 the full 1,024).
 
@@ -127,5 +126,8 @@ word on pre-reform orthography.
   `outputs/reviews/mixed_script_review.csv`.
 - Numbered/lettered item boundaries — `segment_reviews.py`, downstream.
 - Dash spacing and line-break placement — known unstable, not chased.
+- **Printing artefacts** — stray ink, specks, foul type. RG, 2026-09-26:
+  ignore them, they carry no semantic meaning. Distinct from `<d>` damaged
+  type, which is a real character poorly inked.
 
 **Set aside for separate handling:** plate pages and figure captions.
