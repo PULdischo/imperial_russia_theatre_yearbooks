@@ -17753,3 +17753,13 @@ and replayed the exact matching logic against `entities.work`,
 printing extracted base/genre and full candidate lists for every
 still-unmatched title -- the only way to get a trustworthy list rather
 than approximating with a raw SQL `LIKE`.
+
+**Addendum, same day**: RG reviewed the 4 cross-work-ambiguity cases
+directly. Decision: leave all 4 unlinked rather than force a guess on
+either the "Русалка" pair (opera vs. "1-я сцена"-genre candidate) or
+"Прекрасная Елена" (excerpt's "оп." vs. its 3 operetta-genre candidates)
+-- both genuinely need a scan check, not a plausibility argument, before
+linking. Applies by the same logic to the "Пахита" and "Царь Борисъ"
+pairs, not asked individually but the identical situation. The
+same-billing-continuation bug ("2-я и 3-я карт. бал.") is confirmed
+deferred, documented above, not built this round.
