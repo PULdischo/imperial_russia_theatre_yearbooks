@@ -798,6 +798,27 @@ walls of text.
 7. Abbreviation expansion in a derived "cleaned" layer
 8. Whether разрядка / bold / italic / lang are rendered — decided by §11
 9. Running heads — none observed; revisit if any turn up
+10. **Plate captions — CONFIRMED DEFERRED, RG 2026-09-26:** "we will handle
+   captions after we get the main text." Body text first; captions are a
+   separate pass afterwards.
+
+   Three things to know when that pass comes:
+
+   - **They are already being transcribed.** Every view captures caption
+     text — about 100 words across the 11 measured gold pages, roughly 4.5%
+     of body-text volume. Nothing needs re-extracting; the data is on disk.
+   - **Their accuracy is entirely unmeasured.** Every accuracy figure in
+     `docs/eval/selector_2026-09-26.md` and
+     `docs/eval/multiview_merge_2026-09-26.md` excludes `[figure …]` blocks.
+     98.91% is a BODY-TEXT number and says nothing about captions.
+   - **The eval is already built.** The gold files carry hand-transcribed
+     captions inside their `[figure …]` blocks. Scoring captions is a
+     filter change in the scorer, not new hand transcription — a few
+     minutes' work and no API calls, whenever RG wants the number.
+
+   Chunking interacts with this: captions were the single largest class of
+   text dropped at band seams (`docs/eval/chunking_test_2026-09-26.md`), so
+   a caption pass probably wants the full-page view, not a banded one.
 
 ---
 
