@@ -17296,6 +17296,71 @@ reads for the 2 new pages (comparable in scope to this issue's original
 per-page work). Worth a look next time this area comes up, but not
 blocking anything today.
 
+**Addendum, next morning (2026-09-26): fully closed, 100% fill restored.**
+
+**The 9 existing pages needed no new scan reads**, exactly as anticipated:
+`_printed_page_for`'s matching logic (`pipeline/schemas/repertoire.py`)
+only requires a session's `date_undate` to fall within one of its page_id's
+recorded `[start_date, end_date]` ranges, and the cutover date between a
+two-page spread's top/bottom halves is a physical fact about the print
+layout -- unrelated to how much of the database happened to be populated
+when `printed_page_numbers_all.csv` was built. Since every one of the 9
+gaps sat strictly *outside* the existing range on one side (confirmed
+directly -- queried each page's null-date min/max and checked it matched
+the outer-boundary pattern before touching anything), extending that one
+outer edge to the page's current true min/max date_undate was safe by
+construction: 8 of 9 were simple extensions (e.g. `1894-95_pair004`
+folio 4's range widened from `09-23`-only back to `09-12`-`09-23`); the
+9th (`1892-93_pair018`'s single missing day, `1893-02-21`) had an
+existing, already-scan-verified source note pinning it to the page 19
+side explicitly ("bottom=21 Февраля margin header"), so even that wasn't
+a guess.
+
+**The 2 brand-new pages needed fresh reads, as expected, but with one
+extra find.** `repertoire_1895-96_p026`'s reference row already existed
+in the CSV -- correctly dated (`1896-05-15`-`1896-05-26`) and correctly
+numbered (folio 26) -- but filed under the WRONG page_id,
+`repertoire_1895-96_p012`: leftover from before this session's recovery
+work renamed the page (the render file is literally `..._012.jpg`, and
+`p012` was this page's original name per the very same list in the
+`printed_page_number` build-out plan that named it one of 6 `single_leaf`
+pages needing a direct read -- it was renamed to `p026` once determined
+to be the season's true final page, but the reference row was never
+updated to match). Re-verified the folio directly against the scan
+before trusting the stale row (`ForUpload_1895-96_Repertoire_012.jpg`'s
+left margin unambiguously reads "-- 26 --") -- simple rename, no new
+number needed.
+
+`repertoire_1892-93_pair012` genuinely needed a fresh read: cropped the
+scan (`ForUpload_1892-93_Repertoire_005.jpg`), confirmed the left-margin
+folios read "-- 12 --" (top half) and "-- 13 --" (bottom half), and the
+cutover date (13/14 Декабря) matches the page's actual date_undate
+values exactly (12-04 to 12-13 on top, 12-14 to 12-26 on bottom, with the
+already-known 23-25 Дек print gap falling inside the bottom range, which
+is fine -- the matching logic only needs the *existing* dates to fall
+inside the range, not every calendar day).
+
+**A stale-data find made in the process, cleaned up in the same pass**:
+`repertoire_1892-93_pair014`'s reference rows still included 3 leftover
+entries for folios 11-13 (`1892-12-01` through `1892-12-26`) -- dead
+cruft from before `pair012` was discovered as a genuinely missing page,
+when that whole date range had been wrongly assumed to belong to
+`pair014`. Confirmed via direct query that `pair014`'s actual current
+content starts at `1892-12-27` (folio 14) -- these 3 rows matched zero
+live event_entry rows and were pure noise, never actually exercised by
+`_printed_page_for` since no session's `page_id` matched them, but
+worth deleting since a future reader of the raw CSV could easily be
+misled by the overlap with `pair012`'s legitimate claim to the same
+folios. Removed.
+
+**Result**: 24266/24266 event_entry rows (100.00%) filled, all 11 gaps
+closed. `printed_page_number_out_of_sequence`: 0 flags. `quality_flags.csv`:
+895 total, unchanged from the established baseline. `not_captured`: 2935,
+unchanged (pure additive column, no session content touched).
+`entities.person`/`entities.work` confirmed byte-stable (2900 live
+people, 3498 works, 138 excerpt links -- all untouched, as expected,
+since `printed_page_number` never feeds entity resolution).
+
 ## Issue #84: `1894-95` is missing ~10-11 weeks of Repertoire content --
 ## confirmed source-material gap, not an extraction bug
 

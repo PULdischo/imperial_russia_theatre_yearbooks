@@ -9150,3 +9150,51 @@ select count(*) total, count(printed_page_number) filled from raw.event_entry wh
 
 Result: (100, 55) — confirms partial fill (pre-existing rows still
 resolve; only newly-added rows are null), not a page-level wipe.
+
+## 2026-09-26 — printed_page_number residual gap closure (issue #83 addendum)
+
+```sql
+select page_id, count(*), min(date_undate), max(date_undate)
+from raw.event_entry where printed_page_number is null group by page_id
+```
+
+Result: 11 page_ids, 405 rows -- for each of the 9 pre-existing pages,
+confirmed the null-date min/max sat strictly outside the existing
+reference-CSV range on one side (safe outer-boundary extension, no
+scan re-read needed). Full detail in known_issues.md issue #83 addendum.
+
+```sql
+select distinct date_undate from raw.event_entry
+where page_id='repertoire_1892-93_pair018' and printed_page_number is null
+```
+
+Result: single day, 1893-02-21 -- matched an already-existing source
+note explicitly citing "bottom=21 Февраля margin header", confirming
+which side of the page split it belongs on without guessing.
+
+```sql
+select distinct date_undate from raw.event_entry
+where page_id='repertoire_1892-93_pair014' order by date_undate
+```
+
+Result: 1892-12-27 through 1893-01-16 only -- confirmed 3 stale rows in
+printed_page_numbers_all.csv (folios 11-13, dated 1892-12-01 to
+1892-12-26) were dead cruft from before repertoire_1892-93_pair012 was
+discovered as a genuinely missing page; removed.
+
+```sql
+select distinct date_undate from raw.event_entry
+where page_id='repertoire_1895-96_p026' order by date_undate
+```
+
+Result: 1896-05-15 to 1896-05-26 (10 rows) -- matched an existing
+reference row filed under the stale page_id 'repertoire_1895-96_p012'
+exactly (same date range, folio 26); re-verified folio 26 directly
+against ForUpload_1895-96_Repertoire_012.jpg before renaming the row.
+
+```sql
+select count(*) total, count(printed_page_number) filled from raw.event_entry
+```
+
+Result: (24266, 24266) -- 100% fill restored after all fixes applied
+and the full raw/analysis chain rebuilt.
