@@ -798,6 +798,34 @@ walls of text.
 7. Abbreviation expansion in a derived "cleaned" layer
 8. Whether разрядка / bold / italic / lang are rendered — decided by §11
 9. Running heads — none observed; revisit if any turn up
+12. **Bilingual reading files — `outputs/reviews/bilingual/`, RG 2026-09-26.**
+   One Markdown file **per review** (per PDF: season + city + art form), not
+   per page. Russian paragraph, then English, separated by rules. Reflowed:
+   printed line breaks and end-of-line hyphens are joined, because RG will
+   **quote from the scan, never from the transcription** — so these exist for
+   reading and translation, not fidelity.
+
+   **They are a DERIVED layer and must never be hand-edited.** RG,
+   2026-09-26: *"Make a note to update the files when we make any
+   corrections in the future to the season review raw text."* Any correction
+   to the raw text makes every affected file stale, silently.
+
+   Two mechanisms, because a prose reminder is not enough:
+
+   - Every generated file carries a header comment with `source-layer`,
+     `source-pages`, `source-hash` (sha256 of the source text) and `built`
+     date. **A mismatch between `source-hash` and the current source means
+     the file is stale** — that is checkable by a script, not by memory.
+   - Regeneration is a build step (`pipeline/build_bilingual.py`), so the
+     fix for staleness is always "re-run it", never "edit the file".
+
+   **`source-layer` is deliberately a field, not a constant.** RG:
+   *"Later I might decide to use the search layer text."* The builder takes
+   the source layer as an argument so the whole set can be rebuilt from the
+   corrected/search layer instead of raw, without touching anything else.
+   The sample built 2026-09-26 used `gold`, which is the most accurate text
+   that exists but covers only the 12 gold pages.
+
 11. **Composer entities — DEFERRED, RG 2026-09-26:** "we don't need to do
    this layer yet." Recorded here because it is NOT a linking task and
    should not be mistaken for one later: `research.work` has no composer
