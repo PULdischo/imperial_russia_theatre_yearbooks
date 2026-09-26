@@ -798,6 +798,22 @@ walls of text.
 7. Abbreviation expansion in a derived "cleaned" layer
 8. Whether разрядка / bold / italic / lang are rendered — decided by §11
 9. Running heads — none observed; revisit if any turn up
+11. **Composer entities — DEFERRED, RG 2026-09-26:** "we don't need to do
+   this layer yet." Recorded here because it is NOT a linking task and
+   should not be mistaken for one later: `research.work` has no composer
+   column at all, and `research.person` holds only the handful of composers
+   who also appear on a ROSTER (Глазуновъ, Дриго, Вальцъ, Пуни) — Чайковскій,
+   Минкусъ and Бларамбергъ are absent entirely (query logged
+   docs/query_log.md, 2026-09-26). Tracking composers means building a new
+   entity population.
+
+   When it comes back: it touches Repertoire too — every work there has a
+   composer named in the print that currently goes nowhere — so the design
+   question (rows in `research.person` with a role, vs. a composer relation
+   on `research.work`, vs. both) should be settled across both tracks at
+   once. It is also the one entity type where `link_wikidata.py` would pay
+   off immediately, since composers resolve reliably against Wikidata.
+
 10. **Plate captions — CONFIRMED DEFERRED, RG 2026-09-26:** "we will handle
    captions after we get the main text." Body text first; captions are a
    separate pass afterwards.
