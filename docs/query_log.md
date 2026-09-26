@@ -9198,3 +9198,70 @@ select count(*) total, count(printed_page_number) filled from raw.event_entry
 
 Result: (24266, 24266) -- 100% fill restored after all fixes applied
 and the full raw/analysis chain rebuilt.
+
+## 2026-09-26 — receipts_total_kopecks NULL-propagation finding, verified against RG's caution
+
+RG: "check this, but realize that some seasons don't report box office
+receipts and some performances are free" -- verified the finding doesn't
+conflate those cases with the actual bug.
+
+```sql
+select count(*) from raw.event_entry
+where receipts_rubles is not null and receipts_kopecks is null
+```
+Result: 735.
+
+```sql
+select count(*) from raw.event_entry
+where receipts_rubles is not null and receipts_kopecks is null and receipts_rubles != '-'
+```
+Result: 720 -- the other 15 are the separately-found dash-placeholder
+bug ("— р. — к.", both sides blank), already correctly excluded from any
+total since TRY_CAST('-') is NULL regardless of the kopecks-side fix.
+
+```sql
+select count(*) from raw.event_entry
+where receipts_rubles is not null and receipts_kopecks is null and receipts_rubles != '-'
+and try_cast(receipts_rubles as integer) is null
+```
+Result: 0 -- confirms all 720 have a genuinely valid numeric rubles figure.
+
+```sql
+select season, count(*) total, count(receipts_text) has_text,
+       round(100.0*count(receipts_text)/count(*),1) pct
+from raw.event_entry group by 1 order by 1
+```
+Result: 1890-91 and 1891-92 both 0.0% (confirmed, matches the
+already-documented issue #70 finding -- a genuine season-wide absence,
+not a parsing gap) -- these rows have receipts_rubles NULL too, so
+they're structurally outside the 720-row population; unaffected by
+the proposed fix.
+
+```sql
+select event_id, annotation, receipts_rubles from raw.event_entry
+where (annotation ilike '%безплатн%' or annotation ilike '%гратис%' or annotation ilike '%даров%')
+and receipts_rubles is not null
+```
+Result: 59 rows -- all "free performance for [audience group]" cases
+(e.g. free tickets for students) that still carry a real recorded
+receipts figure (presumably subsidized/institutional accounting, not a
+contradiction) -- none are placeholder values, confirms the 720-row
+population is genuinely clean.
+
+Conclusion: fix is safe -- COALESCE only ever changes a total for a row
+that already has a real, valid rubles figure; a genuinely-blank or
+free-with-no-receipts row's rubles stays NULL/non-numeric regardless,
+so TRY_CAST(...)*100 stays NULL and the COALESCE on the kopecks side
+never fires for it.
+
+## 2026-09-26 — receipts_total_kopecks fix applied, verified
+
+```sql
+select count(receipts_total_kopecks) from analysis.event_entry
+```
+Result: 15784 (up from 15064 pre-fix, +720 -- exactly the population
+verified above). Spot-checked repertoire_1898-99_p000__s006 ("239 р. —
+к.") now correctly totals 23900; a dash-placeholder row
+(repertoire_1905-06_p018__s031, "— p. — к.") correctly stays NULL;
+quality_flags.csv unchanged at 895; entities.person/work unchanged
+(4359/3498).

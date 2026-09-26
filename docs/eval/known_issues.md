@@ -17868,3 +17868,101 @@ linking. Applies by the same logic to the "Пахита" and "Царь Бори�
 pairs, not asked individually but the identical situation. The
 same-billing-continuation bug ("2-я и 3-я карт. бал.") is confirmed
 deferred, documented above, not built this round.
+
+## Issue #89: `receipts_total_kopecks` silently NULL for 720 events with a
+## perfectly valid rubles figure -- SQL NULL-propagation bug, not a data gap
+
+RG: "audit all the fields associated with repertoire pages to find
+anything missing, seems like it shouldn't be there, or is really
+unusual." A systematic per-field null/blank/outlier sweep across every
+`raw.event_entry`/`raw.event_entry_performance` column (24,266 events,
+26,154 performances) turned up two real bugs, one genuine print
+anomaly worth documenting, and a batch of harmless character-level
+findings, all field-by-field:
+
+**The bug (fixed this round)**: `analysis.event_entry`'s
+`receipts_total_kopecks` was computed as
+`TRY_CAST(receipts_rubles AS INTEGER) * 100 + TRY_CAST(receipts_kopecks AS INTEGER)`
+with no `COALESCE` -- SQL's `NULL + anything = NULL` silently nulled the
+whole total whenever a session's receipts figure had no printed kopecks
+digit at all (the source prints "239 р. — к.", a dash where the kopecks
+digits would go -- a real, legible round-number receipts convention, not
+an extraction failure). **720 events** had this exact shape: a genuinely
+valid, parseable rubles figure with a dash-only kopecks side.
+
+RG's caution before applying any fix: some seasons don't report box
+office receipts at all, and some performances are free -- don't conflate
+either of those with this bug. Verified directly rather than assuming:
+- **1890-91 and 1891-92 report 0.0% receipts corpus-wide** (confirmed by
+  season, matches the already-documented issue #70 finding) -- these
+  rows have `receipts_rubles` NULL too, structurally outside this bug's
+  population (a NULL rubles keeps the whole product NULL regardless of
+  what the kopecks side does).
+- **59 "free performance" annotations still carry a real receipts
+  figure** (e.g. "Безплатные спектакли для воспитанниковъ..." -- free
+  tickets for a specific audience group, but the house still recorded
+  real box-office receipts, presumably institution-subsidized) -- none
+  are placeholder junk, confirming the 720-row population is genuinely
+  clean rubles data, not a free-performance artifact.
+- All 720 rows independently confirmed to have a genuinely
+  `TRY_CAST`-able numeric rubles value (0 non-numeric survivors).
+- 0 rows have the reverse shape (kopecks present, rubles null) --
+  confirms the fix only ever needs to touch the kopecks side.
+
+**Fix**: `COALESCE(TRY_CAST(receipts_kopecks AS INTEGER), 0)` on the
+kopecks term only (`pipeline/build_duckdb.py`). Safe by construction for
+every non-reporting/free case: those rows' `receipts_rubles` is
+NULL or non-numeric already, so `TRY_CAST(...)*100` stays NULL no
+matter what the kopecks side coalesces to.
+
+**A closely related, smaller bug found in the same sweep, not yet
+fixed**: 15 of those 735 originally-null-kopecks rows are actually a
+fully-blank receipts figure ("— р. — к.", both sides dashes) --
+`_parse_receipts` (`pipeline/schemas/repertoire.py`) has an asymmetry:
+the kopecks side explicitly converts a lone "-" to `""`, but the rubles
+side has no equivalent check, so these 15 rows store the literal string
+`"-"` in `receipts_rubles` instead of empty. Harmless for any
+`TRY_CAST`-based total (a `"-"` still casts to NULL), but a real
+data-hygiene inconsistency for any future code that checks
+`receipts_rubles IS NOT NULL` as a "has a figure" proxy. Not fixed this
+round -- flagged for the next receipts-parsing pass.
+
+**Result**: `receipts_total_kopecks` filled 15064 -> **15784** (+720).
+`quality_flags.csv`: 895, unchanged. `entities.person`/`entities.work`:
+unchanged (4359 rows incl. tombstoned / 3498), confirming this touched
+only `analysis.event_entry`, nothing upstream or downstream of it.
+
+**Other findings from the same field sweep, documented but not (yet)
+acted on**:
+- One genuinely blank `performance_title`
+  (`repertoire_1905-06_p015__s021__w1`, "24 Четвергъ.", Малый театръ) --
+  zoomed into `ForUpload_1905-06_Repertoire_015.jpg` and confirmed the
+  source itself prints only ", ком." with the play's title dropped at
+  typesetting. Already correctly transcribed (blank title, verbatim);
+  just wasn't previously documented as a known genuine-omission case.
+- **60 instances** (48 in `performance_title`, 12 in `genre`) of a Latin
+  "i" (U+0069) mixed into an otherwise-Cyrillic pre-reform word (e.g.
+  "Дѣвичiй", "Марiя", "Коппелiя", "Iоланта") -- almost certainly the
+  extraction model choosing the wrong Unicode codepoint for a
+  visually-identical glyph (pre-reform "і десятеричное" is nearly
+  indistinguishable from a plain dotted Latin i in most renders) rather
+  than a genuine print variation. A handful of the `genre` instances are
+  more seriously garbled, not just a clean codepoint swap ("ком.-боuffe",
+  "пієсe", "Дrama") and look like real extraction confusion warranting a
+  closer look. Not investigated further this round -- a corpus-wide,
+  systematic codepoint-level finding like this is exactly the kind of
+  thing that should be a worklist for scan-by-scan review, not an
+  auto-fix, per the standing "pre-reform orthography is unstable" rule.
+- Confirmed clean, no action needed: `theater` (6 canonical venues incl.
+  the legitimate "Новый театръ" -- Moscow's sixth stage, opened 1898 --
+  and one harmless trailing-comma raw variant, both already correctly
+  normalized by `theater_canonical`); `time_of_day`/`event_status`/`city`
+  (small, expected enums); `performance_order` (clean 1-6 range);
+  `genre` nulls (1053, spread evenly across all 18 seasons, not
+  concentrated anywhere); `printed_page_number` (100% filled, all
+  numeric, sane 2-133 range, per issue #83's second addendum);
+  `date_confidence`'s 23 `unresolved` rows (matches the count already on
+  record as of issue #86, all already investigated and confirmed
+  genuine source printing errors, not a fresh find); and no control
+  characters, replacement characters, or other encoding corruption
+  anywhere across `date_text`/`annotation`/`performance_title`/`genre`.

@@ -624,8 +624,23 @@ def build_analysis_schema(con: duckdb.DuckDBPyConnection) -> None:
             CREATE OR REPLACE TABLE analysis.event_entry AS
             WITH base AS (
                 SELECT *,
+                       -- COALESCE on the kopecks side only: a session with a
+                       -- real, legible rubles figure but no printed kopecks
+                       -- digit ("239 р. -- к.", 720 rows, issue #89) still
+                       -- has a real total (rubles*100 + 0), and without this
+                       -- the bare `+` silently nulled it out even though
+                       -- rubles was perfectly valid -- SQL's NULL propagation
+                       -- through arithmetic, not a source ambiguity. Safe by
+                       -- construction for every other case: a session with no
+                       -- receipts at all (a whole non-reporting season, or a
+                       -- genuinely blank "-- р. -- к." pair) has NULL/non-numeric
+                       -- receipts_rubles too, so TRY_CAST(...)*100 stays NULL
+                       -- regardless of what's coalesced on the kopecks side --
+                       -- confirmed directly, no row has kopecks present with
+                       -- rubles null.
                        TRY_CAST(receipts_rubles AS INTEGER) * 100
-                           + TRY_CAST(receipts_kopecks AS INTEGER) AS receipts_total_kopecks,
+                           + COALESCE(TRY_CAST(receipts_kopecks AS INTEGER), 0)
+                           AS receipts_total_kopecks,
                        TRY_CAST(date_undate AS DATE) AS date_parsed,
                        -- RG's 2026-08-24 venue-accuracy audit: on a day when
                        -- one specific theater (not its whole city) was dark,
