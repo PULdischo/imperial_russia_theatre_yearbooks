@@ -155,6 +155,17 @@ no work/receipts data. This makes completeness directly queryable (e.g.
 "what fraction of expected cells are `not_captured`, by season") instead
 of invisible.
 
+`research.event` carries these placeholders forward (`date_confidence =
+'synthesized_gap'`) with one exception (`build_research_model.py`, RG
+2026-09-26, known_issues.md #93): a placeholder is left out when a real
+event on the same page and theater resolves to the same *research-layer*
+date. That happens when a printed day is misprinted (the analysis layer
+places the gap on the true day, while the real row's date is only
+corrected later by `validate_performance_dates.py`'s overrides), or when
+a page's header can't be parsed and `RESEARCH_PAGE_MONTH_OVERRIDES`
+supplies its month. `analysis.event_entry` keeps every placeholder
+unchanged.
+
 Two assumptions this reconciliation rests on, both worth stating rather
 than leaving implicit: (1) the source prints one row per calendar day with
 no skipped days within a page's date range, so a page's min/max captured

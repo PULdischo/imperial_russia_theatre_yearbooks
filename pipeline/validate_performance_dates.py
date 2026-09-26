@@ -114,6 +114,12 @@ _MANUAL_DATE_OVERRIDES: dict[tuple[str, str], tuple[str, str]] = {
     ('repertoire_1905-06_p036', '16 Среда'): (
         '1906-03-15', 'scan-verified: book misprints day as "16" (should be "15"); known_issues.md #69',
     ),
+    # Book prints "4 Четвергъ." then "4 Пятница." with no "5" -- 3 Среда ->
+    # 4 Четвергъ -> [this row] -> 6 Суббота is only consistent as the 5th;
+    # cell contents are not shifted (all 3 Moscow theaters).
+    ('repertoire_1908-09_p022', '4 Пятница'): (
+        '1908-12-05', 'scan-verified: book misprints day as "4" (should be "5"); known_issues.md #93',
+    ),
 }
 
 

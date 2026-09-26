@@ -200,6 +200,43 @@ at the level of layout and page-planning rather than spelling.
   onto his own line — the same error, independently repeated in two
   different print runs years apart.
 
+## 1908-09 volume (Repertoire, added 2026-09-26, issue #93)
+
+Found during the new season's full scan-verification sweep. Items marked
+† were re-checked directly against the scan by the coordinating session,
+not only by the sweep agent; the rest were zoom-verified by the agent.
+
+- **`p022`, date column** †: "4 Четвергъ." followed by "4 Пятница." --
+  Friday 5 December 1908 printed as "4". Contents not shifted.
+- **Receipts, rubles marker for kopecks**: "3049 р. 78 р." (`p004`
+  Большой 8 Сентября), "366 р. 54 р." and "777 р. 33 р." (`p024` Малый).
+- **Receipts, comma after р.**: "2650 р, 28 к." (`p023`), "2286 р, 28 к."
+  (`p025`), "2686 р, 15 к." (`p045`) -- all Маріинскій; also "3493 р. 40
+  к," (`p007`).
+- **Receipts, stray period after kopecks**: "937 р. 06. к." (`p013`) †,
+  "1439 р. 37. к." (`p009`), "571 р. 45. к." (`p023`).
+- **Receipts, missing unit**: "3977 р. 50" (`p010` Большой, no "к.").
+- **Uninked digit** (physical check needed): `p009` Александринскій
+  11 Сентября, "15?2 р. 34 к." -- third digit didn't print.
+- **French titles (Михайловскій)**: "La course du flambean", "L'ami de la
+  maisou", "La chrysaeide", "Le demi-moude", "La famme de César" / "La
+  femme dé César", "Vingt. jours à l'ombre".
+- **French genres at the column rule without final period** †: "vaud"
+  (`p013`), "vaud. nouv" (`p017`); also "vaud nouv." (`p005`), "com,
+  nouv." (`p029`).
+- **Russian**: "Донъ Кихотъ Ломанчскій" (`p024`); "Черевички, эп,"
+  (`p035`, "эп," where "оп." expected); "Карменъ, др." (`p006`);
+  "Женитьба, оп." (`p044`); "Сполохи, ком." (`p013`, elsewhere "пьеса");
+  "Дивертиссментъ" (dropped е, several pages); banner "...учебныхъ
+  аведеній." (`p033`, з missing).
+- **Printing ghost**: rotated session label "ВВЧЕРЪ." for "ВЕЧЕРЪ."
+  (`p001`, 7 Сентября; label text isn't stored as data).
+- **Lone УТРО. cell** †: `p027` Маріинскій 3 Января 1909 -- labelled "УТРО."
+  (Пиковая дама, 2201 р. 28 к.) but no ВЕЧЕРЪ sub-cell was ever drawn.
+- **Duplicated figures, possibly typesetter repeats**: `p047`
+  Александринскій 12 Апрѣля morning and evening both "1491 р. 07 к.";
+  `p052` Малый 26 and 28 Апрѣля both "1467 р. 02 к.".
+
 ---
 
 *Started 2026-09-24. Harvested from `docs/eval/known_issues.md`'s

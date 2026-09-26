@@ -18261,3 +18261,249 @@ confirmed unchanged throughout.
 
 This closes every item from the original field audit (issue #89) and
 its follow-ups (#90, #91).
+
+
+## Issue #93: new season 1908-09 Repertoire -- extracted, repaired,
+## fully scan-verified; staged in `outputs/repertoire_1908-09/`, NOT yet
+## promoted into `outputs/full_run`
+
+RG scanned the 1908-09 volume's Repertoire section
+(`ForUpload_1908-09_Repertoire.pdf`, 55 pages, 300 dpi) and asked for it
+to go through "everything we've learned from the previous repertoire
+tables". Same single-page format as 1898-99 onward: odd pages
+Petersburg (Маріинскій / Александринскій / Михайловскій), even pages
+Moscow (Большой / Малый / Новый), both for the same date range; `p000`
+is the section title page ("Репертуаръ сезона 1908—1909 г.", folio 1),
+not a table, and is left out of the extraction manifest
+(`manifest_tables.csv`, 54 pages).
+
+**Pipeline, in order** (all artifacts under `outputs/repertoire_1908-09/`):
+
+1. `render_pages.py` from a one-PDF staging dir (`pdf_stage/`) -- the
+   script has no season filter, pointing it at `pdf/` re-renders all 19.
+2. **Calibration (free), new config entries `1908-09:0` / `1908-09:1`**
+   in both `docs/repertoire_crop_bounds.json` and
+   `docs/repertoire_column_bounds.json`. Crops read off grid contact
+   sheets by parity; divider template = median of
+   `_detect_vertical_dividers` over the pages returning exactly 3
+   dividers (16/27 even, 20/27 odd). Gaps hold at 0.21-0.24 of table
+   width while divider[0] swings up to ~0.16 page to page -- exactly
+   what `_refine_dividers` absorbs. **Right-edge clipping caught before
+   any paid call**: at the first odd crop (x1 = 0.96) the table's outer
+   border fell outside the crop on `p027`/`p053`, with Михайловскій's
+   kopecks ~2px from the edge (native-resolution check) -- the same class
+   1903-04 and 1907-08 hit. Widened to 1.00 and re-derived the odd
+   template. Every page's four column crops were then eyeballed as a
+   header-strip montage (54/54 correct) plus a bottom-strip montage (last
+   row + folio inside every crop). NB: `crop_to_table.py`'s own
+   `--out-dir` path ignores parity keys (`crops.get(season)`), so the
+   cropped images were written with `crop_for`-equivalent logic instead.
+3. **Paid extraction, ~3M tokens total** (qwen3-vl-plus): page headers
+   91K; baseline 419K (54/54); row-level 1.39M (50/54 -- `p001`, `p003`,
+   `p004`, `p024` failed local row detection, no call made); column-wise
+   661K; `repair_columnwise_merge.py` (untallied, ~0.5M by call count).
+4. **Column-wise merge was weaker than Gate 3's**: 56/162 theater columns
+   failed to reconcile; tier-1 resample recovered only 6 (Gate 3: ~half),
+   tier-2 baseline 45, 5 unrecovered. Diagnosed on `p043`: this season
+   has long Lent/Holy-Week runs of identical dashes, and theater-only
+   reads over-count them (11-13 rows against 10 printed dates, plus one
+   hallucinated duplicate performance). The merge refuses rather than
+   misdates, so this cost coverage, not correctness. All 5 unrecovered
+   columns were whole all-dash columns baseline also dropped (Новый on
+   `p002`/`p006`/`p028`, Маріинскій + Александринскій on `p051`) -- the
+   `1906-07_p046` class from #79.
+5. **Automated checks before the sweep** -- the canonical copy (repaired
+   column-wise) had 5 `cross_theater_date_mismatch`, 2
+   `cross_page_duplicate_event`, 55 `modernized_theater_spelling`; a
+   per-theater date-completeness check against each page's own header
+   range found 10 pages with missing dates/columns. These became
+   per-page hints for the sweep.
+6. **Full scan-verification sweep, all 54 pages** -- 6 parallel agents x
+   9 contiguous pages, same rules as #79/#81/#82 (verbatim pre-reform
+   orthography, full printed weekday word, a session per printed date per
+   theater, УТРО/ВЕЧЕРЪ discipline, works vs annotation). Coverage
+   cross-checked by page_id name against the full scope (per the
+   large-sweep lesson), 54/54. 53 of 54 pages had fixes (`p042` only
+   needed reordering). Error classes, same profile as #79: ъ/ь
+   ("Четвергь." on nearly every page), dropped/invented letters in
+   titles (`p032`: "Сланъ"->"Русланъ", "Вененная"->"Казенная",
+   "Катели"->"Искатели"), genre glued into titles (whole columns on
+   several pages), French/German double bills merged into one work,
+   Cyrillic homoglyphs in Михайловскій genres/receipts (the #90 class),
+   spanning "Безплатные спектакли для воспитанниковъ учебныхъ
+   заведеній." banners truncated or misplaced (`p015`/`p016`/`p021`/
+   `p022`/`p033`/`p034`), invented morning/evening splits on all-dark
+   Новый cells, and real **cascading shifts / missed splits** on `p013`,
+   `p021`, `p024`, `p027`, `p041`, `p045`. All 5 missing all-dark
+   columns (plus partial gaps on `p040`/`p044`/`p050`/`p053`) filled with
+   scan-verified dark placeholders.
+7. Spot re-verification of agent claims against the scan: `p022`'s
+   "4 Пятница." (below), `p050` "17 Пятн." and `p053` "7 Четв." (printed
+   abbreviations), and two genres an agent had silently normalized
+   ("vaud"/"vaud. nouv" printed without the final period at the column
+   rule, `p013`/`p017`) -- **reverted to verbatim**, along with `p013`'s
+   printed "937 р. 06. к.". One curly apostrophe normalized on `p031` for
+   within-season consistency (NB production itself still carries 104
+   curly ’ -- "Souper d’adieu" vs "Souper d'adieu" style work-identity
+   splits are a corpus-wide worklist, not fixed here).
+
+**New convention** (confirmed by RG, see below): this volume is the first
+to print premiere/revival markers ("Въ 1-й разъ.", "Въ 1-й разъ по
+возобн.", "Возобновлена") -- no earlier season has them in any field.
+Stored verbatim in `annotation`, never glued onto `work_title`.
+
+**Genuine print typo, date**: `p022` prints "4 Четвергъ." then
+"4 Пятница." (no "5") in the shared date column; cell contents are not
+shifted (scan-verified directly, not just on the agent's word). Kept
+verbatim; derived date corrected via a new
+`validate_performance_dates._MANUAL_DATE_OVERRIDES` entry -> 1908-12-05
+(3 rows `corrected_manual`). The 3 true "4 Четвергъ." rows stay
+`intra_block_disagreement` as an explained residual, same as #69's
+analogues.
+
+**`p003`'s header -- RESOLVED in the research layer (RG, 2026-09-26:
+"keep verbatim in raw data, and fix in research layer")**: printed
+"8 сен тября." (a type gap, confirmed on the scan), so
+`load_page_headers` leaves the page without header backfill and raw/
+analysis keep `date_undate` NULL for its 20 Маріинскій/Александринскій
+sessions (8-17 Sep 1908) -- unchanged, verbatim. `build_research_model.py`
+gained `RESEARCH_PAGE_MONTH_OVERRIDES` (page_id -> year, month; single-
+month pages only), from which research.event.date is built off each
+row's printed day number (`date_confidence = 'corrected_manual'`).
+It also gained a general rule: a synthesized `not_captured` placeholder
+is left out of research.event when a real event on the same page and
+theater resolves to the same research-layer date. That removes the 20
+p003 phantoms and `p022`'s 3 (5 Dec, now covered by the "4 Пятница."
+override) -- and, measured on the 18 existing seasons, exactly 6 more:
+the phantom gaps sitting beside the two already-known misprinted days
+(`1904-05_p014` "28 Понед." = 29 Nov, `1905-06_p036` "16 Среда." = 15
+Mar, 3 theaters each). 0 other date changes, performance counts
+identical. `analysis.event_entry` keeps every placeholder. Documented in
+`docs/schema.md`.
+
+**Premiere/revival-marker convention -- CONFIRMED by RG (2026-09-26)**:
+"Въ 1-й разъ.", "Въ 1-й разъ по возобн.", "Возобновлена" go verbatim in
+`annotation`, never in `work_title`.
+
+**Also open (physical check)**: `p009` Александринскій 11 Суббота
+receipts print a 4-digit-wide figure whose third digit did not ink
+("15?2 р. 34 к."); the data has "152 р. 34 к.", almost certainly one
+digit short -- for the campus-visit list.
+
+**Standing limitation surfaced, not new**: fractional kopecks
+("62½ к.", 12 Михайловскій German-troupe rows here) contribute rubles
+only to `receipts_total_kopecks` -- shared analysis-layer behaviour.
+
+**Final state (1908-09 alone, `parsed_final/`)**: event_entry 1668
+(1615 pre-sweep), event_entry_performance 1295, 0 validation errors,
+`quality_checks.py` 0 flags, date-completeness clean on 53/54 pages
+(`p022` = the print typo above), 0 mixed-script tokens, date_text
+identical across theaters on every page. `validate_performance_dates`:
+98.4% verified before the p022 override.
+
+**Integration test (scratch, `integration/` vs `control/`)**: full chain
+(build_duckdb -> validate_performance_dates -> build_entities ->
+build_research_model) on the 18 existing seasons + 1908-09, compared
+against a CONTROL built by the identical current code on the 18 seasons
+alone. Every pre-existing row of raw/analysis event_entry,
+research.event, research.person, research.person_appearance and
+entities.person is identical; the only research.work differences are
+122 existing works whose appearance_count rose and 2 whose majority-vote
+canonical form shifted ("Le Maître de Forges"/"Samson": "pièce." ->
+"pièce", consistent with the corpus majority of period-less full-word
+genres); 119 new works, 0 work_ids lost. research.event 27201 -> 28892,
+not_captured 2935 -> 2958 (20 of the +23 are the p003 phantoms). After
+the research-layer fix above: research.event 28863 in the integration
+build (control, 18 seasons: 27201 -> 27195, the 6 older phantom gaps).
+`quality_checks.py` corpus-wide 895 -> 895, identical categories. Gold
+eval unchanged (82.1 / 96.1 / 87.2; no gold page is 1908-09).
+
+**Found along the way, NOT part of this issue**: the published
+`outputs/full_run/imperial_theaters.duckdb` has a current `entities`
+layer (3397 works, matching issue #92's own count) but a STALE
+`research` layer: research.work 3498 rows (current code: 3397),
+research.performance 26153 (current: 26154), and research.event's
+receipts_total_kopecks summing to 2,399,535,656 vs 2,555,499,136 from
+current code -- consistent with `build_research_model.py` (and
+`build_datasette.py`) not having been re-run after issues #89-92
+(research_dataset.sqlite is dated 2026-09-25 18:01, before them). Any
+promotion should re-run the full chain from `parsed/`.
+
+**Pre-commit audit round (RG: "do we need to run any audits before we
+commit and push?", 2026-09-26)** -- the later-arc checks not yet run on
+this season, all free:
+- утро/вечер pairing (#79/#69): 4 non-pair groups -- `p022` x3 (the "4
+  Пятница." print typo) and `p027` Маріинскій 3 Суббота, a lone УТРО
+  cell with no ВЕЧЕРЪ sub-cell ever drawn (scan-checked; kept as printed,
+  added to genuine_print_typos.md).
+- Stray УТРО/ВЕЧЕРЪ label text in any field: 0. Annotation-type text in
+  works: 0. Genre glued into work_title: 0. Title-like text in
+  annotation: 0. Dark rows with content: 0. Blank/whitespace titles: 0.
+- Blank receipts on non-dark sessions (#69 completeness sweep): 68, every
+  one explained -- 17 free/charity performances (Безплатные спектакли
+  mornings, the Messina-earthquake benefit, Gogol centenary/monument
+  days, invalid-charity concerts) and 51 Михайловскій, concentrated on
+  `p045`-`p053` (Moscow Art Theatre guest run, titles only, no figures
+  printed -- scan-checked on `p049`) plus banner mornings and the Sarah
+  Bernhardt guest nights.
+- Theater-string consistency: 133 rows ("театр." missing ъ, or missing
+  final period) normalized to the printed "... театръ." form; parsed
+  `theater` now exactly 6 values.
+- Two concert nights carry annotation only, no works (`p042` Большой 8
+  Марта, `p043` Маріинскій 19 Марта) -- consistent with rule 6; note that
+  1907-08 production stores the same "Концертъ въ пользу инвалидовъ." in
+  works on some rows and annotation on others (pre-existing mix).
+- Excerpt linking (#88): of 10 excerpt-style 1908-09 titles, 2 linked
+  to their parent before any change ("2-е д. бал. Корсаръ", "4-я карт.
+  3-го д. Аленькій цвѣточекъ"). **Fixed, RG: "do this"** -- see the
+  excerpt-linker addendum below.
+
+Re-verified after the normalization: 1668 events, 0 validation errors, 0
+quality flags, date completeness clean except `p022`.
+
+**Excerpt-linker addendum (`pipeline/build_entities.py`)**: this volume
+prints act/scene references in shapes the #88 linker didn't cover.
+`_EXCERPT_PREFIX_RE` now accepts an em dash after the marker ("2-е
+д.—Лебединое озеро") and plural "дд." ("3 и 4 дд. Мѣсяцъ въ деревнѣ");
+new `_EXCERPT_SUFFIX_RE` handles the reference printed AFTER the title
+("Послѣдняя жертва, 1, 2, 4 и 5 д. изъ комедіи", "Женитьба (1-е
+дѣйствіе)"), end-anchored and requiring number + marker, tried only when
+the prefix form fails. Measured on the integration build: linked 139 ->
+143, 0 links lost, 0 work_ids or work_link rows changed. New links: "3 и
+4 дд. Мѣсяцъ въ деревнѣ", both "Послѣдняя жертва" act-selections, and
+one pre-existing title the old linker always missed ("Марія Стюартъ,
+3-й актъ изъ траг.", older season). Still unlinked, correctly (the
+linker never guesses): "2-е д.—Лебединое озеро" (two "Лебединое озеро"
+work rows, one a garbled older excerpt whose genre field holds "2 карт.
+1 д. бал.") and "Женитьба (1-е дѣйствіе)" (printed genre "оп." matches
+none of Gogol's "Женитьба" rows). "Отрывокъ изъ Мертвыхъ душъ (чтеніе)"
+has no parent in the same grammatical form -- same as the existing
+"3 сцены изъ Мертвыхъ душъ".
+
+**Correction**: bare "Отрывокъ, сц." is NOT a #92-style continuation.
+It is Gogol's dramatic scene «Отрывокъ» (1842), a work in its own right
+-- billed beside his other scenes (Утро дѣлового человѣка, Лакейская,
+Тяжба, Разговоръ двухъ дамъ) in 1892-93/1901-02 and 1908-09, and paired
+with Ostrovsky's "Бѣдность—не порокъ" at the Малый. Left as its own work.
+
+**Observed, not changed**: "Бѣдность—не порокъ" (1908-09, printed with a
+dash, 14 appearances) and "Бѣдность не порокъ" (31, earlier seasons, and
+once on 1908-09's `p026`) are separate work rows -- `_title_key` doesn't
+treat "—" as equivalent to a space. A corpus-wide normalization question
+for the works layer, not specific to this season.
+
+**Independent accuracy audit before commit (RG: commit only "if we are
+confident that this season has been accurately transcribed, thoroughly
+checked, and corrected")**: 6 randomly drawn pages (seeded, 3 per city:
+`p010`, `p026`, `p027`, `p031`, `p035`, `p038`), re-read cell by cell
+against the scans by 2 fresh read-only agents with no knowledge of the
+sweep's fixes. **193 cells checked, 0 discrepancies.** Both
+independently confirmed the kept-verbatim print typos ("Черевички, эп,",
+"3977 р. 50", "275 р 60 к.", the lone УТРО. cell on `p027`) and read two
+damaged-type spots the same way the data does (`p026` "Кармcнъ" ->
+Карменъ, `p027` "Beıgerac" -> Bergerac). Their only other note is the
+known uneven month_text/year_text fill (dates unaffected, see above).
+
+**Not done**: promotion into `outputs/full_run` (needs RG's go),
+`link_wikidata.py`, HF/Cloud Run republish, and CLAUDE.md/README's
+"1890/91-1907/08" season-range wording (update on promotion).

@@ -86,6 +86,20 @@ NON_PERSON_IDS = [
 ]
 
 
+# Research-layer-only page date fixes (RG, 2026-09-26, docs/eval/known_issues.md
+# #93): pages whose printed header genuinely can't be parsed, so raw/analysis
+# leave date_undate NULL (verbatim, deliberately not bent around in
+# parse_and_validate.py). Maps page_id -> (year, month) for the whole page;
+# research.event.date is then built from each row's own printed day number.
+# Only for pages that do NOT cross a month boundary -- a crossing page would
+# need a per-row month, not a page-wide one.
+RESEARCH_PAGE_MONTH_OVERRIDES = {
+    # header printed "8 сен тября. 1908 г. 17 сентября." -- a type gap inside
+    # the month word; 8-17 Sep 1908, single month (scan-verified).
+    "repertoire_1908-09_p003": (1908, 9),
+}
+
+
 def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     con.execute("CREATE SCHEMA IF NOT EXISTS research")
 
@@ -173,26 +187,64 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             printed_page_number VARCHAR
         )
     """)
+    con.execute("CREATE OR REPLACE TEMP TABLE page_month_override (page_id VARCHAR, y INTEGER, m INTEGER)")
+    if RESEARCH_PAGE_MONTH_OVERRIDES:
+        con.executemany("INSERT INTO page_month_override VALUES (?, ?, ?)",
+                        [(p, y, m) for p, (y, m) in RESEARCH_PAGE_MONTH_OVERRIDES.items()])
+    # `resolved` = every event with its best-available date. A not_captured
+    # placeholder means "no real event was found for this theater/date on
+    # this page"; when the resolved dates show a real event there after all
+    # (e.g. a page override above, or a manual/weekday date correction moving
+    # a misprinted row onto its true day), the placeholder is spurious and is
+    # left out of research.event -- analysis.event_entry keeps it untouched.
     con.execute("""
         INSERT INTO research.event
+        WITH resolved AS (
+            SELECT
+                ae.*,
+                coalesce(
+                    dc.corrected_date_undate,
+                    ae.date_undate,
+                    CASE WHEN pmo.page_id IS NOT NULL AND ae.event_status <> 'not_captured'
+                         THEN strftime(make_date(pmo.y, pmo.m,
+                                  TRY_CAST(regexp_extract(ae.date_text, '^\\s*(\\d+)', 1) AS INTEGER)),
+                              '%Y-%m-%d')
+                    END
+                ) AS resolved_date,
+                CASE WHEN dc.corrected_date_undate IS NULL AND ae.date_undate IS NULL
+                          AND pmo.page_id IS NOT NULL AND ae.event_status <> 'not_captured'
+                     THEN 'corrected_manual'
+                     ELSE coalesce(
+                         dc.date_confidence,
+                         CASE WHEN ae.event_status = 'not_captured' THEN 'synthesized_gap'
+                              ELSE 'unparseable' END)
+                END AS resolved_confidence
+            FROM analysis.event_entry ae
+            LEFT JOIN analysis.event_entry_date_check dc ON dc.event_id = ae.event_id
+            LEFT JOIN page_month_override pmo ON pmo.page_id = ae.page_id
+        )
         SELECT
-            ae.event_id,
+            r.event_id,
             t.theater_id,
-            ae.season, ae.city,
-            ae.date_text AS date_verbatim,
-            ae.date_undate,
-            coalesce(dc.corrected_date_undate, ae.date_undate) AS date,
-            coalesce(
-                dc.date_confidence,
-                CASE WHEN ae.event_status = 'not_captured' THEN 'synthesized_gap'
-                     ELSE 'unparseable' END
-            ) AS date_confidence,
-            ae.event_status,
-            ae.receipts_total_kopecks,
-            ae.printed_page_number
-        FROM analysis.event_entry ae
-        LEFT JOIN analysis.event_entry_date_check dc ON dc.event_id = ae.event_id
-        LEFT JOIN entities.theater t ON t.canonical_name = ae.theater_canonical
+            r.season, r.city,
+            r.date_text AS date_verbatim,
+            r.date_undate,
+            r.resolved_date AS date,
+            r.resolved_confidence AS date_confidence,
+            r.event_status,
+            r.receipts_total_kopecks,
+            r.printed_page_number
+        FROM resolved r
+        LEFT JOIN entities.theater t ON t.canonical_name = r.theater_canonical
+        WHERE NOT (
+            r.event_status = 'not_captured' AND EXISTS (
+                SELECT 1 FROM resolved x
+                WHERE x.event_status <> 'not_captured'
+                  AND x.page_id = r.page_id
+                  AND x.theater_canonical = r.theater_canonical
+                  AND x.resolved_date = r.resolved_date
+            )
+        )
     """)
 
     con.execute("""

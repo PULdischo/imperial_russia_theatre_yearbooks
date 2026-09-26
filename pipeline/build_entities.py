@@ -172,7 +172,7 @@ _GIMN_CONTAMINATED_GENRE_FOLDS = {
 _ORDINAL_MARKER_UNIT = (
     r"(?:\d+-(?:й|е|я|го)\.?\s+(?:и\s+\d+-(?:й|е|я|го)\.?\s+)?"
     r"|\d+\s+и\s+\d+\s+)"
-    r"(?:д\.|дѣйств\w*|актъ|карт\.)\.?"
+    r"(?:дд\.|д\.|дѣйств\w*|актъ|карт\.)\.?"
 )
 _ORDINAL_MARKER_GROUP = (
     _ORDINAL_MARKER_UNIT + r"(?:\s+" + _ORDINAL_MARKER_UNIT + r")?"
@@ -202,11 +202,27 @@ _GENITIVE_GENRE_TO_ABBREV = {
     "оперы": "оп.", "балета": "бал.", "драмы": "др.", "водевиля": "вод.",
     "трагедіи": "траг.", "оперетты": "оперет.", "комедіи": "ком.",
 }
+# 2026-09-26 (known_issues.md #93, 1908-09 volume): the marker may be
+# followed by an em dash instead of a space/comma ("2-е д.—Лебединое
+# озеро"), and plural "дд." ("3 и 4 дд. Мѣсяцъ въ деревнѣ") joins "д.".
 _EXCERPT_PREFIX_RE = re.compile(
     r"^(?P<note>" + _ORDINAL_MARKER_GROUP
-    + r"(?:\s*,?\s*(?:и\s+)?" + _ORDINAL_MARKER_GROUP + r"){0,3})\s*,?\s*"
+    + r"(?:\s*,?\s*(?:и\s+)?" + _ORDINAL_MARKER_GROUP + r"){0,3})\s*[,—]?\s*"
     r"(?:(?:изъ\s+)?(?P<genre>" + _EXCERPT_GENRE_WORD + r")\s+)?"
     r"(?P<base>.+)$"
+)
+# Same idea with the act/scene reference printed AFTER the base title --
+# first seen in the 1908-09 volume (#93): "Послѣдняя жертва, 1, 2, 4 и
+# 5 д. изъ комедіи", "Послѣдняя жертва, 1, 2, 4 и 5 дѣйствія изъ ком.",
+# "Женитьба (1-е дѣйствіе)". Anchored to the END of the title and
+# requires a number + act/scene marker, so a comma or parenthesis inside
+# an ordinary title can't trigger it. Tried only when the prefix form
+# doesn't match.
+_EXCERPT_SUFFIX_RE = re.compile(
+    r"^(?P<base>.+?)(?:\s*,\s*|\s+\()"
+    r"(?P<note>\d+(?:-(?:й|е|я|го))?(?:\s*(?:,|и)\s*\d+(?:-(?:й|е|я|го))?)*\s*"
+    r"(?:дд\.|д\.|дѣйств\w*|актъ|карт\.)"
+    r"(?:\s+изъ\s+(?P<genre>" + _EXCERPT_GENRE_WORD + r"))?)\)?\.?$"
 )
 
 
@@ -315,7 +331,7 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     excerpt_links: dict[str, tuple[str, str]] = {}  # work_uuid -> (parent_work_id, note)
     n_excerpt_matched = n_excerpt_unmatched = 0
     for work_uuid, canonical_title, canonical_genre, _, title_key in work_rows:
-        m = _EXCERPT_PREFIX_RE.match(canonical_title)
+        m = _EXCERPT_PREFIX_RE.match(canonical_title) or _EXCERPT_SUFFIX_RE.match(canonical_title)
         if not m:
             continue
         base_key = _title_key(m.group("base"))

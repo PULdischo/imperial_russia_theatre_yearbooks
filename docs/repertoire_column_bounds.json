@@ -1149,5 +1149,31 @@
       "Большой.",
       "Малый."
     ]
+  },
+  "1908-09:0": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.197,
+      0.4168,
+      0.6392
+    ],
+    "n_pages_agreeing": 16,
+    "extrapolated": false,
+    "source": "measured 2026-09-26: median of _detect_vertical_dividers over the 16/27 even (Moscow) pages returning exactly 3 dividers, on the per-parity crop 1908-09:0 (x 0.00-0.88). Gaps 0.205-0.243; divider[0] swings 0.145-0.265 across pages, which _refine_dividers absorbs.",
+    "evenly_spaced": true
+  },
+  "1908-09:1": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.2341,
+      0.4514,
+      0.6731
+    ],
+    "n_pages_agreeing": 20,
+    "extrapolated": false,
+    "source": "measured 2026-09-26: median of _detect_vertical_dividers over the 20/27 odd (Petersburg) pages returning exactly 3 dividers, on the per-parity crop 1908-09:1 (x 0.12-1.00). Gaps 0.206-0.230; divider[0] swings widely page to page, absorbed by _refine_dividers. x1 is the full image width because at 0.96 the table's outer right border fell outside the crop on p027/p053, leaving Михайловскій's kopecks ~2px from the edge (checked at native resolution) -- the same right-edge clipping class 1903-04 and 1907-08 hit.",
+    "evenly_spaced": true
   }
 }
