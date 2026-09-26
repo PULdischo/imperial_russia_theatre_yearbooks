@@ -4,7 +4,8 @@ How 144 scanned volumes of the **Ежегодникъ Императорских
 ("Yearbook of the Imperial Theatres") become a diplomatic transcription
 and a linked research dataset — who worked at the Imperial Theatres, what
 was performed, when, and for how much — spanning 18 consecutive seasons,
-1890/91 through 1907/08.
+1890/91 through 1907/08, with the Repertoire tables extended to a 19th,
+1908/09 (added 2026-09-26, `docs/eval/known_issues.md` #93).
 
 ## The source
 

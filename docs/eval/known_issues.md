@@ -18504,6 +18504,30 @@ damaged-type spots the same way the data does (`p026` "Кармcнъ" ->
 Карменъ, `p027` "Beıgerac" -> Bergerac). Their only other note is the
 known uneven month_text/year_text fill (dates unaffected, see above).
 
-**Not done**: promotion into `outputs/full_run` (needs RG's go),
-`link_wikidata.py`, HF/Cloud Run republish, and CLAUDE.md/README's
-"1890/91-1907/08" season-range wording (update on promotion).
+**PROMOTED into `outputs/full_run`, 2026-09-26 (RG: "promote 1908-09 into
+full_run")**. Backed up first to
+`outputs/full_run_pre_promote_backup_2026-09-26_1908-09/` (db, sqlite,
+parsed/, manifest, folio CSV, quality flags, all_page_headers.csv).
+Pre-checks: re-parsing full_run as-is reproduced all 5 parsed CSVs
+byte-identically, and 1908-09 parses identically under the default
+(baseline) and columnwise extraction sources, so the standard single-pass
+recipe applies. Added: 54 raw JSON to `full_run/raw/`, 55 renders to
+`full_run/images/`, 54 manifest rows, 54 rows each to
+`repertoire_singlepage_pagenumbers/all_page_headers.csv` and
+`full_run/printed_page_numbers_all.csv` (all new keys, nothing
+overwritten). Parse: event_entry 24266 -> 25934, event_entry_performance
+26155 -> 27450, every non-1908-09 row in all 5 tables identical,
+validation_errors.csv unchanged. DB rebuilt on a working copy (build_duckdb
+-> validate_performance_dates -> build_entities -> build_research_model),
+compared table by table against the integration build (25 tables, only
+difference = the 31 theater strings normalized after that build) and
+against old production (entities.person/person_link/person_candidate/
+person_wikidata_link and all pre-existing raw.event_entry rows
+identical), then swapped in; research_dataset.sqlite rebuilt (research.
+event 28863, 19 seasons). quality_flags.csv 895 (unchanged categories);
+dates 98.1% verified; gold eval 82.1/96.1/87.2 (unchanged). This rebuild
+also brought the published research layer up to date with issues #89-92.
+README/CLAUDE.md season range updated.
+
+**Not done**: `link_wikidata.py` and the HF / Cloud Run republish
+(deliberately separate, only on request -- per convention).

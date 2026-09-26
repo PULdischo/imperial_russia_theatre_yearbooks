@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 A pipeline that turns 144 scanned volumes of the *Ежегодникъ Императорскихъ
-театровъ* (1890/91–1907/08) into (1) a diplomatic verbatim transcription and
+театровъ* (1890/91–1907/08; Repertoire also 1908/09, known_issues.md #93) into (1) a diplomatic verbatim transcription and
 (2) a linked research dataset (resolved people/works/theaters/performances).
 Pre-1918 Cyrillic orthography (ъ, ѣ, і, ѳ) is preserved verbatim throughout —
 never modernize it. See `README.md` for the full narrative and the two
