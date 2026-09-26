@@ -9291,3 +9291,54 @@ Post-fix re-query (same query, after applying the fix and rebuilding):
 genre-split collapse). `entities.work_genre_candidate`: 354 -> 304
 groups. `quality_flags.csv` unchanged (895). Musicians/Roster isolation
 and issue #88's excerpt-linking (138/21) both confirmed unchanged.
+
+## 2026-09-26 — do entities.person surnames corroborate Season Reviews name spellings?
+
+RG's idea: reviews and the tabular roster describe the same people, so
+`entities.person` is an independent check on review spellings.
+
+```sql
+SELECT count(*), count(DISTINCT canonical_family_name) FROM research.person;
+SELECT DISTINCT canonical_family_name FROM research.person
+ WHERE canonical_family_name IS NOT NULL;
+```
+
+Result: 2,894 people, 1,692 distinct family names.
+
+Cross-checked against the 16 spellings flagged by `pipeline/name_variants.py`
+on the 200-page review pilot: 10 had the dominant spelling present in
+entities and the minority absent (variant suspect); 1 (`Тихоміровъ` /
+`Тихомировъ`) had BOTH present, correctly identifying the case gold shows is
+genuine print variation; 5 were not personal names at all.
+
+```sql
+SELECT canonical_family_name, count(*) n, min(first_attested_season),
+       max(last_attested_season)
+  FROM research.person WHERE canonical_family_name = ? GROUP BY 1;
+```
+
+Result, for the near-1:1 pairs frequency alone cannot resolve:
+
+| spelling | people in entities | seasons |
+|---|---|---|
+| Легатъ / Легать | 4 / **8** | both 1890-91..1907-08 |
+| Ѳедоровъ / Федоровъ | **11** / 3 | 1890-91..1907-08 / **1904-05..1905-06 only** |
+| Мендесъ / Мендесь | 3 / **absent** | |
+| Галатъ / Галать | **absent** / 2 | |
+| Аслинъ / Аслинь | 3 / **absent** | |
+| Кустереръ / Кустерерь | 1 / **absent** | |
+| Валининъ / Волининъ | 1 / 2 | **1901-02 only** / 1900-01..1907-08 |
+| Корсаръ / Корсарь | absent / absent | (a work, not a person) |
+
+**Key negative finding: entities is NOT a clean authority on ъ/ь.** It holds
+`Легать` for 8 people against `Легатъ` for 4, and `Галать` but not `Галатъ`
+— yet RG ruled `Легатъ` and `Галатъ` from the scans. The roster layer was
+extracted by the same kind of model and carries the same systematic ъ->ь
+slip, so agreement between the two sources is not independent on that axis.
+
+Where entities holds one spelling and not the other it is good
+corroboration (`Мендесъ`, `Аслинъ`, `Кустереръ` — all matching RG's or
+Claude's scan readings). The season range is a useful extra signal:
+`Валининъ` appears only in 1901-02 and `Волининъ` from 1900-01 onward,
+exactly matching what the scans show — independent confirmation from a
+different extraction path.
