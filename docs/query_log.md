@@ -9548,3 +9548,45 @@ same underlying regex gap).
 
 Post-fix: `entities.work` excerpt links 138 -> 159. Musicians/Roster
 isolation (2900/23) and quality_flags.csv (895) both unchanged.
+
+## 2026-09-26 — Русалка "drama" excerpts: which theaters?
+
+```sql
+select p.event_id, e.page_id, e.date_text, e.season, e.city, e.theater, p.performance_title, p.genre
+from raw.event_entry_performance p join raw.event_entry e on p.event_id=e.event_id
+where p.performance_title in ('1-й актъ драмы Русалка.', '1-е д. др. Русалка', 'Русалка')
+   or (p.performance_title = 'Русалка' and p.genre = '1-я сцена')
+order by e.season, e.date_text
+```
+
+Result: the two "drama"-genre excerpts are BOTH at Михайловскій театръ
+(1890-91 and 1893-94), not Малый where the Pushkin-gala "1-я сцена" row
+sits (Moscow, 1898-99, a different theater and season entirely). All
+other ~140 rows are the standard Dargomyzhsky opera at Большой/
+Маріинскій. This complicates the "Pushkin's own drama, cited at a
+literary gala" theory floated earlier -- Михайловскій mostly hosted the
+French repertoire, so a "drama" excerpt there is at least as plausibly a
+foreign-language dramatic adaptation as it is Pushkin's Russian text.
+
+## 2026-09-26 — triaging the last 21 unlinked excerpts (issue #95)
+
+```sql
+select canonical_title, canonical_genre, appearance_count
+from entities.work where canonical_title ilike ?
+```
+Checked each of: Цыганскій баронъ, Эрнани, Папоротникъ, Свои семьи (all
+0 standalone rows, confirmed genuinely no parent exists); Прекрасная
+Елена (2 tiny candidates, оперет./оперетка, genuine genre-merge
+question deferred to the review queue); Конекъ-Горбунокъ/Пахита/
+Фіаметто (first two have solid parents, Фіаметто has none, and the
+compound bill can't express 3 parents in one FK regardless).
+
+Scan-confirmed one genuine content bug: repertoire_1900-01_p007, "18
+Среда.", Большой театр -- one raw performance entry actually represents
+two separate billed works ("2-е д. оп. Севильскій цирюльникъ." and
+"Паяцы, оп."). Split into two `works` entries; both resolved correctly
+after rebuild (Паяцы -> existing 61-appearance parent, Севильскій
+цирюльникъ excerpt -> existing 50-appearance parent).
+
+Result: 21 -> 20 unlinked. quality_flags.csv and Musicians/Roster
+isolation (2900/23) both unchanged.

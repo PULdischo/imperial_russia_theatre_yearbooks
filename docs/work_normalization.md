@@ -349,3 +349,32 @@ properly-linked excerpts**, down from 5 disconnected rows.
   bill item" heuristic**, or is a dozen or so hand-fixed rows genuinely
   the whole problem? Needs a fuller audit (this doc checked 4 candidates,
   not all high-genre-variance titles) before deciding.
+
+### Русалка "drama" excerpts — left unlinked, RG's call (2026-09-26)
+
+Two excerpt-shaped titles reference "Русалка" with genre "драмы"/"др."
+(1-й актъ драмы Русалка., 1890-91, 28 Jan 1891, Михайловскій;
+1-е д. др. Русалка, 1893-94, 30 Aug 1893, Михайловскій) that don't match
+either of the two real "Русалка" work rows in `entities.work`
+(`оп.` = Dargomyzhsky's opera, 149 appearances; `1-я сцена` = a bare
+scene marker from an unrelated 26 Apr 1899 Pushkin-memorial gala at
+Малый театръ, a different theater and season entirely, left verbatim
+untouched per RG's separate call in issue #94).
+
+Considered whether these two "drama" citations might be Pushkin's own
+(unfinished) dramatic text "Русалка" (which Dargomyzhsky's opera adapts)
+rather than the opera itself -- plausible given the genre word, but
+both citations are at Михайловскій, which mostly hosted the French
+touring repertoire (see issue #90/#91's genre-corruption sweep), so a
+foreign-language dramatic adaptation is at least as likely as Pushkin's
+own text. Nothing in this corpus currently resolves which.
+
+**RG's decision**: leave both unlinked. RG's priority is the
+ballet/opera side of this dataset, not Russian drama specifically, so
+resolving this isn't worth chasing further right now -- but RG noted a
+concrete way to check later if it becomes relevant: the Season Reviews
+track (a separate, parallel thread in this same repo) covers Russian
+drama reviews season-by-season and could confirm which "Русалка"
+production(s), if any, played at Михайловскій in 1890-91 and 1893-94.
+Documented here rather than re-investigated, in case this comes up
+again.

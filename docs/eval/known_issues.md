@@ -18606,3 +18606,71 @@ this issue's direct fix, 11 from the bonus regex-gap fix, 4 more from
 the newly-arrived 1908-09 season's own excerpt content). Musicians/
 Roster isolation confirmed unchanged (2900 live people, 23 candidate
 pairs). `quality_flags.csv` unchanged (895).
+
+## Issue #95: triaging the last unlinked excerpts -- one genuine
+## content-merge bug found and fixed, the rest confirmed correctly
+## unresolvable
+
+RG: "let's try to get the rest linked," following up on issue #94's
+138->159. Re-queried the full unlinked list fresh (21 titles, since the
+1908-09 season and issue #94's fix both changed the count from
+yesterday) and checked each remaining case rather than re-guessing from
+memory.
+
+**1 genuine bug found and fixed**: `repertoire_1900-01_p007`, "18
+Среда.", Большой театр -- raw data had ONE performance entry,
+`work_title: "2-е д. оп. Севильскій цирюльникъ. Паяцы"`, but the scan
+(`ForUpload_1900-01_Repertoire_007.jpg`) clearly shows **two separate
+billed works**: "2-е д. оп. Севильскій цирюльникъ." (Act 2 of Barber of
+Seville) and "Паяцы, оп." (Pagliacci, a complete opera) as two distinct
+lines. Split into two `works` entries. Both resolved correctly after
+rebuilding: "Паяцы" merged into its existing 61-appearance parent,
+"2-е д. оп. Севильскій цирюльникъ." linked as an excerpt of the existing
+"Севильскій цирюльникъ"/оп. work (50 appearances).
+
+**Русалка "drama" excerpts -- explicitly left unlinked, RG's call.**
+Brought the ambiguity back to RG given today's broader understanding of
+this class of bug. Checked exact theaters/dates:
+`1-й актъ драмы Русалка.` (28 Jan 1891, Михайловскій) and `1-е д. др.
+Русалка` (30 Aug 1893, Михайловскій) -- both Михайловскій, the
+French-repertoire house, not Малый where the unrelated Pushkin-gala
+`1-я сцена` row sits (26 Apr 1899, a different theater and season
+entirely). Given Михайловскій mostly hosted French rep, a "drama"
+excerpt there is at least as plausibly a foreign dramatic adaptation as
+Pushkin's own text -- nothing in this corpus resolves which. **RG's
+decision**: leave both unlinked; RG's priority is ballet/opera, not
+Russian drama, and the Season Reviews track (a separate parallel
+thread) could confirm this later if it becomes relevant -- documented
+in `docs/work_normalization.md` rather than re-investigated further.
+
+**Everything else confirmed genuinely unresolvable, not fixable**:
+- `Цыганскій баронъ`, `Эрнани`, `Папоротникъ`, `Свои семьи` -- zero
+  standalone occurrences anywhere in the corpus (queried directly, not
+  assumed). Correct final state.
+- `Прекрасная Елена` ("1-е д. оп. Прекрасная Елена.", genre "оп.") --
+  its 2 real candidates are `оперет.`/`оперетка` (1 appearance each,
+  1901-02 and 1905-06, almost certainly the same recurring operetta
+  spelled two ways across different years). Confirmed this is a
+  genre-canonicalization question (Problem #1/#3, already correctly
+  flagged in `entities.work_genre_candidate` for human review), not an
+  excerpt-linking one: even merging the two spelling variants wouldn't
+  help this specific excerpt, since its own stated genre ("оп.", opera)
+  doesn't match either candidate's real genre-concept (operetta) at
+  all -- forcing a link here would be auto-deciding the genre-merge
+  question through the back door, which this pipeline deliberately
+  avoids doing without review. Left as-is.
+- The 3-ballet compound bill ("...Конекъ-Горбунокъ, бал. Пахита и 2-е д.
+  бал. Фіаметто") -- confirmed `Конекъ-Горбунокъ` (198 appearances) and
+  `Пахита` (38) both have solid standalone parents, but `Фіаметто` has
+  none, and regardless, `entities.work.excerpt_of_work_id` is one FK per
+  row -- structurally can't express "this one row cites three different
+  parents." Not worth a schema change for a single row.
+- The remaining comedy/tragedy/drama-genre titles (`Нахлѣбникъ` x2 forms
+  9+1, `Андрей Степановичъ Бука` x2 forms 2+1, `Дмитрій Донской`,
+  `Рюи-Блазъ`, `Свои семьи`, the malformed/bare-genre titles) --
+  unchanged from issue #88's original triage, still genuinely no
+  parent or structurally unresolvable, and lower priority per RG's
+  stated ballet/opera focus.
+
+**Result**: 21 -> 20 unlinked (the one fixed compound title). Musicians/
+Roster isolation and quality_flags.csv both confirmed unchanged.
