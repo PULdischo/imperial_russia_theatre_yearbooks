@@ -9402,3 +9402,128 @@ the same title's other 2 untouched occurrences in the same file.
 Final re-verification: 0 remaining mixed-script instances,
 quality_flags.csv unchanged (895), entities.work 3398->3397, Musicians/
 Roster isolation and excerpt-linking counts unchanged.
+
+## 2026-09-26 — new season 1908-09 Repertoire: extraction, sweep, integration test (issue #93)
+
+All against scratch databases under `outputs/repertoire_1908-09/`
+(`scratch.duckdb` = 1908-09 alone; `integration/` = 18 existing seasons
++ 1908-09; `control/` = the 18 existing seasons rebuilt with the same
+current code). `outputs/full_run` was only read, never written.
+
+```sql
+-- non-verified dates, 1908-09 alone
+select e.page_id, e.theater, e.date_text, e.month_text, e.year_text, e.date_undate,
+       d.date_confidence, d.corrected_date_undate, d.note
+from analysis.event_entry_date_check d join raw.event_entry e using(event_id)
+where d.date_confidence <> 'verified';
+```
+26 rows: 20 `no_date` on `p003` (unparsed "8 сен тября." header) and 6
+`intra_block_disagreement` on `p022` ("4 Пятница." print typo). After the
+`_MANUAL_DATE_OVERRIDES` entry: 3 `corrected_manual`, 3 residual.
+Verified 1642/1668 (98.4%).
+
+```sql
+-- per table, pre-existing rows changed by adding 1908-09 (control vs integration)
+select count(*) from (select * from control.<t> where <not 1908-09>
+                      except select * from integration.<t> where <not 1908-09>);
+```
+0 for raw.event_entry, analysis.event_entry, research.event,
+research.person, research.person_appearance, entities.person.
+research.work: 122 rows differ (appearance_count), 2 canonical-genre
+flips (pièce. -> pièce), 0 work_ids lost, 119 new works.
+
+```sql
+select count(*), sum(receipts_total_kopecks)/100 from analysis.event_entry
+where season = '1908-09' and event_status = 'performed';
+select event_status, count(*) from analysis.event_entry where season = '1908-09' group by 1;
+```
+1053 performed events, 1,784,570.90 rubles summed receipts; 615
+no_performance, 23 not_captured (20 = `p003` phantoms, 3 = `p022`).
+
+```sql
+select count(*) from entities.work; select count(*) from research.work;
+select count(*) from research.performance; select sum(receipts_total_kopecks) from research.event;
+```
+Production full_run: 3397 / 3498 / 26153 / 2,399,535,656. Control
+(same parsed/, current code): 3397 / 3397 / 26154 / 2,555,499,136 --
+production's research layer is stale relative to issues #89-92.
+
+## 2026-09-26 — p003 research-layer date fix + phantom-gap rule (issue #93)
+
+```sql
+-- per scratch db, research.event before vs after build_research_model.py's new rule
+select season, count(*) from before.research.event
+where event_id not in (select event_id from after.research.event) group by 1;
+select b.season, b.date_confidence, a.date_confidence, count(*)
+from before.research.event b join after.research.event a using(event_id)
+where b.date is distinct from a.date or b.date_confidence is distinct from a.date_confidence
+group by all;
+```
+Control (18 seasons): 6 placeholders dropped (1904-05 x3, 1905-06 x3),
+0 other rows changed. Integration: those 6 + 23 in 1908-09 dropped; 20
+1908-09 rows no_date -> corrected_manual; research.performance 27449
+unchanged. The 6 older ones checked individually: each sits beside a
+real row dated by an existing `_MANUAL_DATE_OVERRIDES` entry
+(1904-05_p014 "28 Понед." -> 1904-11-29; 1905-06_p036 "16 Среда." ->
+1906-03-15).
+
+## 2026-09-26 — excerpt-linker extension (issue #93)
+
+```sql
+-- integration build, entities.work before vs after the new prefix/suffix patterns
+select a.canonical_title, p.canonical_title as parent, a.excerpt_note
+from after.entities.work a left join before.entities.work b using(work_id)
+left join after.entities.work p on p.work_id = a.excerpt_of_work_id
+where a.excerpt_of_work_id is distinct from b.excerpt_of_work_id;
+```
+4 new links, 0 lost; entities.work 3515 -> 3515; entities.work_link 0 rows
+changed. Linked total 139 -> 143.
+
+```sql
+select p.event_id, p.performance_order, p.performance_title, p.genre from raw.event_entry_performance p
+where p.performance_title ilike 'Отрывок%';
+```
+24 rows: every bare "Отрывокъ" is Gogol's scene, billed with his other
+scenes or after "Бѣдность—не порокъ" -- not an excerpt/continuation.
+
+## 2026-09-26 — how much does the season narrow a surname to one person, and are composers in the database?
+
+Both for scoping the Season Reviews mention-linking work (RG: link review
+mentions to entities; match the review's season to the entry's year; and
+begin tracking people not in the database, especially composers).
+
+```sql
+SELECT person_id, canonical_family_name, ordinal_suffix,
+       first_attested_season, last_attested_season
+  FROM research.person WHERE canonical_family_name IS NOT NULL;
+```
+
+Result: on 406 surname mentions across the 11 gold review pages that hit a
+known entity, candidates narrow as follows.
+
+| filter | ambiguous (>1 person) | resolved to exactly 1 |
+|---|---|---|
+| surname only | 322 (79.3%) | 84 (20.7%) |
+| + season overlap | 172 (42.4%) | 234 (57.6%) |
+| + season + ordinal | 93 (22.9%) | 313 (77.1%) |
+
+**But 63 mentions (15.5%) have ZERO candidates left after season+ordinal.**
+A person named in a review need not be on that season's roster (guests,
+roster gaps), and the review's ordinal need not match the one recorded in
+entities. So season and ordinal must RANK candidates, not gate them — a hard
+filter silently discards one mention in six.
+
+```sql
+DESCRIBE research.work;
+SELECT count(*) FROM research.person WHERE canonical_family_name ILIKE '%<name>%';
+```
+
+Result: `research.work` has **no composer column at all** (work_id,
+canonical_title, canonical_genre, appearance_count, excerpt_of_work_id,
+excerpt_note). And composers are almost absent from `research.person` —
+Чайковск 0, Минкус 0, Бларамберг 0; Глазунов 1, Дриго 1, Вальц 1, Пуни 3,
+and those are people who appear on a ROSTER (as conductors/staff), not
+composer records.
+
+**Tracking composers is therefore new construction, not linking.** There is
+no composer entity population to link to.
