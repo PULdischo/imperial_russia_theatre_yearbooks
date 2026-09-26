@@ -95,9 +95,12 @@ def judge_hard_soft(variants: list[str]) -> tuple[str | None, str]:
         # which made it answer "царъ" and "ролъ".
         soft_form = forms[0][:-1].lower() + "ь"
         soft = soft_form in SOFT_FINAL or soft_form.endswith(SOFT_SUFFIXES)
-        # Found on triage page 9: the page prints "юбилярь", a masculine
-        # noun in -ярь like январь/словарь/вратарь. The suffix test above
-        # matched the STEM, so "юбиляр" never met "ярь".
+        # NB: an earlier version of this comment claimed triage page 9
+        # prints "юбилярь" and added -арь/-ярь as a soft class. RG read the
+        # scan at 9x: it is "юбиляръ", a HARD sign, and that change was
+        # reverted. -арь/-ярь cannot decide anything either way (январь and
+        # словарь take ь; пожаръ and самоваръ do not), and adding it also
+        # broke пожаръ. Do not reintroduce it. See docs/eval/triage_rulings.md.
         want_last = "ь" if soft else "ъ"
         for v, g in zip(variants, forms):
             if g[-1] == want_last:
