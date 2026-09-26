@@ -9527,3 +9527,24 @@ composer records.
 
 **Tracking composers is therefore new construction, not linking.** There is
 no composer entity population to link to.
+
+## 2026-09-26 — genre-field-excerpt bug found and fixed (issue #94)
+
+```sql
+-- genre field itself matching an act/scene/tableau marker pattern
+select p.event_id, e.page_id, e.date_text, e.theater, p.performance_title, p.genre
+from raw.event_entry_performance p join raw.event_entry e on p.event_id=e.event_id
+where p.genre is not null
+```
+Result (filtered in Python against a marker regex): 7 instances across
+4 pages, all confirmed against scans -- see known_issues.md issue #94
+for the full table and per-page citations.
+
+Corpus-wide regression check on the `_ORDINAL_MARKER_UNIT` bare-ordinal
+regex extension (every distinct `performance_title`, old regex vs. new):
+0 new false positives, 11 genuinely correct excerpt titles newly caught
+(bonus fix, unrelated to this issue's own field-splitting bug but the
+same underlying regex gap).
+
+Post-fix: `entities.work` excerpt links 138 -> 159. Musicians/Roster
+isolation (2900/23) and quality_flags.csv (895) both unchanged.

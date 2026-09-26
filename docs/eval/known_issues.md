@@ -18531,3 +18531,78 @@ README/CLAUDE.md season range updated.
 
 **Not done**: `link_wikidata.py` and the HF / Cloud Run republish
 (deliberately separate, only on request -- per convention).
+
+## Issue #94: excerpt marker landing in the GENRE field instead of the
+## title -- 6 fixed, 1 deliberately deferred to the research layer,
+## plus an 11-title bonus fix to the excerpt-linking regex itself
+
+RG spotted this while reviewing the `work_genre_candidate` queue: a
+"different genre" split that was actually an excerpt marker sitting in
+the wrong field ("Русалка", genre "1-я сцена" -- not a real genre at
+all, a scene reference). Broadening the search (any performance whose
+`genre` field itself matches an act/scene/tableau marker pattern) found
+7 total instances across 4 pages, all confirmed against scans: every one
+comes from a benefit/gala cell listing several separately-billed
+excerpts together, and in every case the source prints a completely
+normal "[marker] [genre]. Title" (or, for the one exception, "Title,
+marker") citation -- there is no field-boundary information in the
+original print at all (title vs. genre is entirely our own schema's
+structure), so this is a pure field-splitting error in extraction, not
+a source ambiguity, and belongs fixed in raw the same way the
+Михайловскій genre corruption (#90) did.
+
+**Considered and reverted first**: an initial pass tried to leave raw
+data untouched and resolve each performance directly via
+`entities.work_link` (mirroring the "2-я и 3-я карт. бал." same-billing
+fix). Reconsidered once the "no field-boundary info in the print"
+point was made explicit -- reconstructing the title is not reordering
+anything the typesetter chose, just correcting which of *our* fields
+the same extracted words landed in, so fixing raw directly is both
+safe and preferable (keeps the data shape consistent with every other
+excerpt in the corpus, and self-heals if this pattern recurs elsewhere).
+The work_link-only code was fully reverted before the real fix.
+
+**6 of 7 fixed** by moving the genre field's marker text to prefix the
+title (matching the dominant corpus convention) and setting genre to
+the clean abbreviation:
+
+| Title (was bare) | Genre (was the whole marker) | Fixed title | Fixed genre |
+|---|---|---|---|
+| Птички пѣвчія | 1-е д. оперет. | 1-е д. оперет. Птички пѣвчія | оперет. |
+| Прекрасная Елена | 2-е д. оперет. | 2-е д. оперет. Прекрасная Елена | оперет. |
+| Орфей въ аду | 1-е и 2-е д. опер. | 1-е и 2-е д. опер. Орфей въ аду | опер. |
+| „Брама“ | 2-я карт. бал. | 2-я карт. бал. „Брама“ | бал. |
+| Лебединое озеро | 2 карт. 1 д. бал. | 2 карт. 1 д. бал. Лебединое озеро | бал. |
+| Пахита | 3 д. бал. | 3 д. бал. Пахита | бал. |
+
+Two of these (Лебединое озеро, Пахита) needed a genuine regex gap
+closed first: `_ORDINAL_MARKER_UNIT` (`pipeline/build_entities.py`)
+only recognized an ordinal-suffixed number ("2-я карт.") or two bare
+numbers joined by "и" ("1 и 2 карт."), not a bare number on its own
+("2 карт. 1 д." -- two consecutive bare-ordinal units, no suffix, no
+"и" between them). Added a third alternative for a lone bare number,
+tried last so it never swallows a number that's actually the start of
+a suffixed or "и"-joined form. **Verified corpus-wide before and after
+the change** (matched every distinct `performance_title` against the
+old and new regex): zero new false positives, and a genuine bonus --
+**11 more titles newly recognized as excerpts** that were silently
+missed before for the exact same reason ("3 д. бал. Пахита", "1 д. бал.
+Лебединое озеро", "2 карт. 1 д. Борисъ Годуновъ", and 8 more), none of
+them touched by this issue's own field-splitting bug -- just the same
+underlying regex gap, hit independently.
+
+**1 of 7 deliberately left completely untouched, per RG's explicit
+call**: "Русалка" (genre "1-я сцена") is the one exception whose print
+order is reversed ("Русалка, 1-я сцена" -- title, then the scene note,
+from a numbered Pushkin-memorial concert program rather than the
+standard repertoire-table format). RG: keep the raw title/genre exactly
+as extracted; any correction happens later in the research layer, same
+treatment as the "q" receipts-marker typo (issue #89) -- both raw
+fields stay exactly `"Русалка"` / `"1-я сцена"`, no work_link override
+either.
+
+**Result**: `entities.work` excerpt links 138 -> **159** (+21: 6 from
+this issue's direct fix, 11 from the bonus regex-gap fix, 4 more from
+the newly-arrived 1908-09 season's own excerpt content). Musicians/
+Roster isolation confirmed unchanged (2900 live people, 23 candidate
+pairs). `quality_flags.csv` unchanged (895).

@@ -160,7 +160,12 @@ _GIMN_CONTAMINATED_GENRE_FOLDS = {
 # stayed unlinked because of it). A unit's first number is sometimes bare
 # (no ordinal suffix) when paired with "и" before a second, suffixed
 # number -- "1 и 2 карт." (found 2026-09-25, issue #87's excerpt-linking
-# follow-up).
+# follow-up). A number can also be bare on its own, with no ordinal
+# suffix and no "и" -- "2 карт. 1 д. бал. Лебединое озеро" (found
+# 2026-09-26, issue #94's genre-field-excerpt follow-up: two consecutive
+# bare-ordinal units, not joined by "и" at all). Tried last, after the
+# more specific suffixed/"и"-joined forms, so it never swallows a number
+# that's actually the start of one of those.
 #
 # A GROUP (one or two units back to back) can itself repeat up to 4 times,
 # joined by an optional comma and/or "и" -- covers titles citing 3+
@@ -171,7 +176,8 @@ _GIMN_CONTAMINATED_GENRE_FOLDS = {
 # silently unlinkable for this reason alone before the fix).
 _ORDINAL_MARKER_UNIT = (
     r"(?:\d+-(?:й|е|я|го)\.?\s+(?:и\s+\d+-(?:й|е|я|го)\.?\s+)?"
-    r"|\d+\s+и\s+\d+\s+)"
+    r"|\d+\s+и\s+\d+\s+"
+    r"|\d+\s+)"
     r"(?:дд\.|д\.|дѣйств\w*|актъ|карт\.)\.?"
 )
 _ORDINAL_MARKER_GROUP = (
