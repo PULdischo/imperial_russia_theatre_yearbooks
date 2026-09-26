@@ -212,10 +212,22 @@ async def main_async(args) -> None:
         rows = rows[: args.limit]
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
+    # Current Claude models (Opus 5, Opus 5.5, Fable 5/5.1, Sonnet 5) REMOVED
+    # the sampling parameters: sending `temperature` at all returns a 400. The
+    # flag's default of 0.0 is right for DashScope and fatal here, so drop it
+    # for the anthropic provider unless the user asked for a value explicitly.
+    temperature = None if args.temperature < 0 else args.temperature
+    if args.provider == "anthropic" and temperature is not None:
+        if "--temperature" not in sys.argv:
+            temperature = None
+        else:
+            raise SystemExit(
+                "Claude models no longer accept `temperature` -- Opus 5 and "
+                "Fable 5.1 return a 400. Re-run without --temperature (or "
+                "with --temperature -1) and control determinism with "
+                "output_config.effort instead.")
     provider = Provider(args.provider, args.model or DEFAULTS[args.provider],
-                        args.max_tokens,
-                        None if args.temperature < 0
-                        else args.temperature)
+                        args.max_tokens, temperature)
     sem = asyncio.Semaphore(args.max_concurrent)
 
     print(f"{len(rows)} pages | provider={args.provider} model={provider.model} "
