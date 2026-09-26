@@ -9265,3 +9265,29 @@ verified above). Spot-checked repertoire_1898-99_p000__s006 ("239 р. —
 (repertoire_1905-06_p018__s031, "— p. — к.") correctly stays NULL;
 quality_flags.csv unchanged at 895; entities.person/work unchanged
 (4359/3498).
+
+## 2026-09-26 — Михайловскій French genre corruption sweep (issue #90)
+
+RG: "Mikhailovsky usually has french titles and genre markings. so if
+there's non-French letters there, we should check those."
+
+```sql
+select p.event_id, e.page_id, e.date_text, e.theater, p.performance_title, p.genre
+from raw.event_entry_performance p join raw.event_entry e on p.event_id=e.event_id
+where e.theater like '%Михайлов%'
+```
+Result: 6088 rows total, of which 2128 contain any Cyrillic character in
+title or genre -- too broad (Михайловскій also hosted genuine Russian
+productions). Narrowed to: title has ZERO Cyrillic characters (a real
+French title) AND genre has at least one Cyrillic character -- 332 rows,
+27 distinct corrupted genre strings, 49 pages. Every distinct value
+checked against its scan (8+ pages directly verified at zoom, several
+more confirmed via title-inline text already spelling out the genre in
+French) before building the fix mapping -- full detail and mapping table
+in known_issues.md issue #90.
+
+Post-fix re-query (same query, after applying the fix and rebuilding):
+0 remaining rows. `entities.work`: 3498 -> 3435 (-63, spurious
+genre-split collapse). `entities.work_genre_candidate`: 354 -> 304
+groups. `quality_flags.csv` unchanged (895). Musicians/Roster isolation
+and issue #88's excerpt-linking (138/21) both confirmed unchanged.

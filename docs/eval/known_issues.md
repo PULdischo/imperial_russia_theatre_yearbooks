@@ -17966,3 +17966,120 @@ acted on**:
   genuine source printing errors, not a fresh find); and no control
   characters, replacement characters, or other encoding corruption
   anywhere across `date_text`/`annotation`/`performance_title`/`genre`.
+
+## Issue #90: systematic Cyrillic-script corruption of Михайловскій's
+## French genre markers -- 332 rows fixed across 49 pages
+
+Direct follow-up to issue #89's field audit. RG: "you'll notice that
+Mikhailovsky usually has french titles and genre markings. so if
+there's non-French letters there, we should check those" -- this steer
+turned a narrow 60-instance homoglyph curiosity into a much larger,
+well-defined systematic bug.
+
+**The bug**: Михайловскій театръ hosted the French troupe; its genre
+markers are printed in French/Latin ("com.", "dr.", "pièce.", "vaud.",
+"opérette.", etc.), matching its French titles. The extraction pipeline
+periodically rendered these genre markers in Cyrillic script instead --
+sometimes a clean homoglyph swap (Cyrillic "р." for Latin "p.", "сом."
+for "com."), sometimes a full transliteration ("ком." for "com.",
+"драме" for "drame", "вауд." for "vaud.", "пров." for "prov.",
+"опера-комике" for "opéra-comique"), and for "pièce" specifically,
+11 distinct corrupted spellings ("пієс.", "піèce", "піёсе", "піѐсе",
+"піèсе", plus trailing "nouv."/"-нов." variants).
+
+**Verification method**: queried every Михайловскій performance whose
+`performance_title` is genuinely pure Latin/French (zero Cyrillic
+characters -- i.e. a real French title, not a Russian-language
+production the theater also sometimes hosted) paired with a genre
+containing any Cyrillic character. This cleanly separates the bug
+population from the many legitimate Russian-titled productions
+Михайловскій also staged (which correctly keep Russian genre words).
+**332 rows, 27 distinct corrupted genre strings, 49 pages, spanning
+1890-91 through 1907-08.**
+
+Every one of the 27 distinct corrupted values was individually
+confirmed against its scan before mapping (zoomed to the exact cell in
+several cases) -- zero counter-examples found across 8+ independently
+checked pages/seasons. Two independent confirmation methods, both
+converging on the same answer every time: (1) direct scan reads
+(e.g. `ForUpload_1899-00_Repertoire_014.jpg`, "25 Четвергъ.": "L'Ami
+Fritz, com." / "Le Régiment qui passe, com." in unambiguous Latin
+serif type, confirmed at 4x zoom crop against the raw JSON's "ком."),
+and (2) internal title-text consistency, where the title itself already
+spells out the genre inline ("Le coeur et le reste, com. vaud." with
+genre field "вауд."; "Le Revenant, prov." with genre field "пров.",
+confirmed independently on two different pages).
+
+**Full mapping applied** (`pipeline/schemas/repertoire.py` untouched --
+this is a one-time raw-JSON content correction, not a parsing-code
+change, since the pipeline's own genre field is a pure passthrough of
+whatever the extraction produced):
+
+| corrupted | correct | count |
+|---|---|---|
+| ком. | com. | 213 |
+| др. | dr. | 25 |
+| пьеса | pièce | 24 |
+| пієс. | pièce. | 18 |
+| р. | p. | 6 |
+| com. нов. | com. nouv. | 5 |
+| вауд. | vaud. | 5 |
+| драме. | drame. | 4 |
+| піèce | pièce | 4 |
+| драме | drame | 3 |
+| оп. | opérette / opérette. (per-session, matching that session's own trailing punctuation) | 3 |
+| ком.-боuffe | com.-bouffe | 2 |
+| піёсе | pièce | 2 |
+| пієсe | pièce | 2 |
+| пієсe-нов. | pièce-nouv. | 2 |
+| пієсe. | pièce. | 2 |
+| пров. | prov. | 2 |
+| пієсе | pièce | 1 |
+| піѐсе | pièce | 1 |
+| пієсe nouv. | pièce nouv. | 1 |
+| опера-комике | opéra-comique | 1 |
+| піèсе | pièce | 1 |
+| піèce nouv. | pièce nouv. | 1 |
+| пієсе. | pièce. | 1 |
+| опера, bouffe | opéra, bouffe | 1 |
+| сом. | com. | 1 |
+| сцм. | com. | 1 |
+
+Applied via a script matching each target row by (page_id, date_text,
+theater, performance_title, old_genre) against the raw JSON -- tested
+first against a scratch copy of `outputs/full_run/raw` (all 332 matched
+exactly, zero left over) before touching production. One matching bug
+caught during the test run: the JSON's own `theater` field carries a
+trailing period ("Михайловскій.") that the flattened `raw.event_entry`
+table strips -- fixed the match condition before the real run.
+
+**Result**: 24266/26154 rows unchanged in count (pure content fix, no
+sessions added/removed/merged); 0 remaining corrupted rows in a
+post-fix re-query; `quality_flags.csv` unchanged (895);
+`validate_performance_dates.py`-relevant fields untouched.
+`entities.work`: 3498 -> **3435** (-63) -- confirms the fix also
+collapsed a batch of spurious genre-based work splits (Problem #3) that
+were themselves artifacts of this bug (e.g. "Le juif polonais" printed
+under both a clean "dr." row elsewhere and a corrupted "др." row here,
+previously treated as two different works purely because of the script
+mismatch). `entities.work_genre_candidate`: 354 -> 304 groups (-50).
+Excerpt-linking (issue #88) unaffected: still 138/21.
+Musicians/Roster isolation confirmed unchanged throughout (2900 live
+people, 23 candidate pairs).
+
+**Also fixed in the same pass**: `repertoire_1903-04_p028`
+(Александринскій театръ, a German touring production, "Zapfenstreich")
+had the identical corruption pattern outside the Михайловскій-scoped
+batch fix -- "Дrama" (Cyrillic Д) for the scan-confirmed "Drama" (2
+instances, already found and verified during issue #89's broader
+mixed-script sweep, applied directly here since it was already
+confirmed rather than re-verifying).
+
+**Not investigated further**: whether this same corruption pattern
+exists on any OTHER guest-troupe stretches at theaters whose genre
+convention should also be non-Russian for specific runs (e.g. other
+German touring engagements at Александринскій). `theater_canonical`
+shows Александринскій is overwhelmingly Russian-repertoire, so any such
+population would be small and localized -- worth a similar targeted
+sweep (pure-non-Cyrillic-title + Cyrillic-genre, scoped per theater and
+date range) if this area comes up again.
