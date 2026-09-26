@@ -228,8 +228,14 @@ def _parse_receipts(text: Optional[str]) -> tuple[str, str]:
         return "", ""
     try:
         rub_part, kop_part = _RUBLES_MARKER_RE.split(text.replace("—", "-"), maxsplit=1)
+        rub = rub_part.strip()
         kop = _KOPECKS_MARKER_RE.sub("", kop_part).strip()
-        return rub_part.strip(), ("" if kop == "-" else kop)
+        # A lone "-" (from a printed em-dash where the source leaves a
+        # figure blank, e.g. "-- р. -- к.") means no figure, not a literal
+        # "-" string -- issue #89 found this handled on the kopecks side
+        # but not the rubles side, so a fully-blank receipts figure stored
+        # "-" as receipts_rubles instead of empty (15 rows, corpus-wide).
+        return ("" if rub == "-" else rub), ("" if kop == "-" else kop)
     except Exception:
         return "", ""
 

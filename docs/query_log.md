@@ -9342,3 +9342,37 @@ Claude's scan readings). The season range is a useful extra signal:
 `Валининъ` appears only in 1901-02 and `Волининъ` from 1900-01 onward,
 exactly matching what the scans show — independent confirmation from a
 different extraction path.
+
+## 2026-09-26 — closing all 3 field-audit follow-ups (issue #91)
+
+```sql
+select receipts_rubles, count(*) from raw.event_entry
+where receipts_rubles = '-'
+```
+Result: 15 rows before the _parse_receipts fix, 0 after.
+
+```sql
+select performance_title from raw.event_entry_performance
+-- Latin-i/Cyrillic-і mixed-script scan, same method as issue #89
+```
+Result: 49 instances confirmed still present (48 title + 1 genre) --
+deliberately left as a worklist, not fixed, per the pre-reform
+orthography rule.
+
+```sql
+select p.event_id, e.page_id, e.date_text, e.theater, p.performance_title, p.genre
+from raw.event_entry_performance p join raw.event_entry e on p.event_id=e.event_id
+where e.theater not like '%Михайлов%'
+```
+Result (filtered to pure-Latin-title + Cyrillic-genre, same isolation
+method as issue #90 minus the theater filter): 65 candidates, 49 pages.
+Each distinct (title, genre) pair individually scan-verified (13 page
+reads) before deciding fix vs. leave-alone -- full detail and per-page
+citations in known_issues.md issue #91. 10 confirmed genuinely Cyrillic
+(left alone), 55 confirmed corrupted (fixed), plus 1 genuine
+cross-theater content swap found and fixed separately
+(repertoire_1903-04_p026, "17 Вторн.").
+
+Post-fix re-query: 10 remaining rows, all 10 the confirmed-legitimate
+set. `entities.work`: 3435 -> 3426 (-9). `event_entry_performance`:
+26154 -> 26155 (+1, the p026 fix). `quality_flags.csv` unchanged (895).

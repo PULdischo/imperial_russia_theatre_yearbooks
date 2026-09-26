@@ -18083,3 +18083,114 @@ shows Александринскій is overwhelmingly Russian-repertoire, so an
 population would be small and localized -- worth a similar targeted
 sweep (pure-non-Cyrillic-title + Cyrillic-genre, scoped per theater and
 date range) if this area comes up again.
+
+## Issue #91: closing all 3 outstanding items from the field audit --
+## receipts_rubles asymmetry fixed, guest-troupe genre sweep extended
+## corpus-wide, one genuine cross-theater content swap found
+
+RG: "do all 3" (the three items left open after issues #89/#90: the
+`receipts_rubles='-'` parser asymmetry, the remaining Latin-i/Cyrillic-і
+homoglyph worklist, and a corpus-wide sweep for the Михайловскій-style
+genre corruption at other theaters).
+
+**1. `receipts_rubles='-'` fixed.** `_parse_receipts`
+(`pipeline/schemas/repertoire.py`) now applies the same
+lone-dash-means-empty check to the rubles side that the kopecks side
+already had (issue #89's "leave genuine print typos unparsed" rule
+doesn't apply here -- this is our own parser's asymmetry, not a source
+typo). 15 rows: `receipts_rubles` was `"-"`, now correctly `""` (NULL
+after the CSV round-trip, matching the kopecks side's existing
+behavior).
+
+**2. The 49-instance Latin-i/Cyrillic-і homoglyph worklist -- NOT
+touched, deliberately.** Re-confirmed still 49 (48 `performance_title` +
+1 `genre`) after issues #90/#91's other fixes. Per the standing
+"pre-reform orthography is unstable" rule, this stays a worklist for
+scan-by-scan review, not a mechanical fix -- unlike the Михайловскій
+genre bug, there's no single-theater/single-convention signal to isolate
+the bug population cleanly here (these are scattered across
+otherwise-legitimate Russian titles at every theater).
+
+**3. Corpus-wide guest-troupe genre sweep -- 55 more rows fixed, plus
+10 correctly left alone, plus one genuine content-attribution bug
+found and fixed in the process.**
+
+Re-ran the same isolation query from issue #90 (pure-Latin title +
+Cyrillic genre) with the Михайловскій filter *removed* -- 65 candidates
+at other theaters (Александринскій, Маріинскій, Большой, Малый).
+**This population needed individual scan verification, not a blanket
+fix** -- unlike Михайловскій (a dedicated French-troupe house where
+Cyrillic genre is *always* wrong for a French title), these theaters
+host their own regular Russian repertoire *and* occasional
+guest-troupe/guest-star engagements, so the same signal (pure-Latin
+title + Cyrillic genre) has two genuinely different explanations:
+
+- **Confirmed genuine (correctly Cyrillic, left untouched) -- 10 rows,
+  4 titles**: `Tête-à-tête`/`ком.` (Александринскій, x3, 1890-91),
+  `Viola tricolor`/`ком.` (Малый, x3, 1900-01), `Virtus antiqua`/`сказка`
+  (Александринскій, x3, 1901-02), `Wiener Blut`/`оперет.` (Маріинскій,
+  x1, 1900-01) -- all scan-confirmed as genuinely printed in Cyrillic:
+  isolated/occasional foreign-language titles inside the theater's own
+  normal Russian-language programming, correctly labeled in Russian.
+  Occurrence count alone isn't a reliable signal, though (see below) --
+  each was checked directly against its scan, not assumed from
+  frequency.
+- **Confirmed corrupted (fixed) -- 55 rows**, all scan-verified guest
+  engagements: a German drama/comedy troupe at Александринскій
+  (`repertoire_1896-97_pair022`, `1900-01_p030`, `1903-04_p028`,
+  `1904-05_p034`, `1906-07_p036` -- "Lustsp."->"Lustsp.", "Dr."->"Dr.",
+  "Komödie."->"Komödie.", "Schausp."->"Schausp.", "histor.
+  Schwank."->"histor. Schwank.", etc., all confirmed against scans
+  spanning 6 different pages/years); a German *opera* touring company at
+  Маріинскій (`repertoire_1897-98_pair020`, "Ор."->"Oper.", 9 rows,
+  Wagner: Lohengrin/Walküre/Siegfried/Meistersinger/etc.); an Italian
+  opera touring company at Большой (`repertoire_1893-94_pair022`,
+  "Otello"->"op."); and two individual guest-star engagements --
+  Mounet-Sully at Александринскій (`repertoire_1899-00_p012`,
+  "Ruy-Blas"->"drame.") and Réjane with her troupe, also
+  Александринскій (`repertoire_1901-02_p008`, "Madame
+  Sans-Gêne"->"com.") -- confirming occurrence count doesn't predict
+  genuineness: this last one is a *single* row, same as the confirmed-
+  legitimate `Wiener Blut`, but is a real bug (the source explicitly
+  says "Спектакль г-жи Режанъ съ ея труппою" -- a marked guest tour --
+  right above it, unlike `Wiener Blut`'s ordinary programming).
+  `repertoire_1903-04_p028`'s "Der Hochtourist"/"оп." needed a *content*
+  correction, not just a script fix -- scan shows "Der Hochtourist,
+  Schwank." (a farce), not an opera at all.
+
+**A genuine cross-theater content-attribution bug found in the
+process, fixed separately**: `repertoire_1903-04_p026`, "17 Вторн." --
+Михайловскій's own session that date (receipts, annotation, work title,
+genre) had been entirely attached to Александринскій's "17 Вторн."
+session instead, while Александринскій's real content that date
+("Zapfenstreich, Drama.", matching its own neighboring dates 16
+Понед./18 Среда exactly) was missing, and Михайловскій's true session
+was wrongly marked `is_dark: true`. Confirmed directly against
+`ForUpload_1903-04_Repertoire_026.jpg`: Александринскій's own column
+shows "Zapfenstreich, Drama." for that date; Михайловскій's column shows
+"Au bénéfice de m-r Duplay, pour ses adieux. / L'hôtel du libre échange,
+pièce." (matching its own 19 Четв./20 Пятница neighbors, which already
+had this same title correctly). Swapped both sessions' content to match
+the scan.
+
+**Verification method throughout**: every distinct (title, genre) pair
+checked against its actual scan before mapping (13 pages read across
+issues #90/#91 combined) -- zero blind/unverified fixes applied.
+Confirmed-legitimate titles are hard-excluded from the fix script by
+exact title string, so a future re-run of the same sweep can't
+accidentally re-flag or overwrite them.
+
+**Result**: `event_entry_performance` 26154 -> 26155 (+1, the p026
+Михайловскій session gaining its real work where it had none).
+`event_entry` unchanged (24266) -- the p026 fix is a pure content
+correction on an existing (previously wrongly-dark) session, not a new
+row. `quality_flags.csv` unchanged (895). Corpus-wide re-query: 10
+remaining Cyrillic-genre/Latin-title rows, all 10 the confirmed-
+legitimate ones -- 0 unresolved/unverified. `entities.work`: 3435 ->
+**3426** (-9, more spurious genre-based splits collapsed, same
+mechanism as issue #90). Musicians/Roster isolation and issue #88's
+excerpt-linking (138/21) both confirmed unchanged.
+
+This closes the repertoire field audit (issue #89) started by RG's
+"audit all the fields" request -- all 3 follow-up items are resolved or
+explicitly deferred as a documented worklist.
