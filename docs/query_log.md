@@ -9376,3 +9376,29 @@ cross-theater content swap found and fixed separately
 Post-fix re-query: 10 remaining rows, all 10 the confirmed-legitimate
 set. `entities.work`: 3435 -> 3426 (-9). `event_entry_performance`:
 26154 -> 26155 (+1, the p026 fix). `quality_flags.csv` unchanged (895).
+
+## 2026-09-26 — closing the last 2 field-audit items (issue #92)
+
+```sql
+select performance_order, performance_title from raw.event_entry_performance
+where event_id = ?
+```
+Used to resolve each of the 4 "2-я и 3-я карт. бал." rows to whichever
+performance immediately precedes it in the same event (performance_order
+- 1), matching by title then disambiguating by genre when the preceding
+title itself splits into >1 real genre. All 4 confirmed correct against
+entities.work_link (2 -> Коппелія/бал., 2 -> Лебединое озеро/бал.).
+
+```sql
+-- same mixed-script detection query used throughout issues #89-91,
+-- performance_title and genre, corpus-wide
+```
+Result: 49 -> 0 after applying the targeted per-string codepoint fix.
+One self-inflicted regression caught by re-running this same query
+post-fix (49 -> 1, not 0): "Царь Іоаннъ IV"'s Roman numeral "IV" had
+been partially converted to "ІV" -- fixed by hand, confirmed against
+the same title's other 2 untouched occurrences in the same file.
+
+Final re-verification: 0 remaining mixed-script instances,
+quality_flags.csv unchanged (895), entities.work 3398->3397, Musicians/
+Roster isolation and excerpt-linking counts unchanged.

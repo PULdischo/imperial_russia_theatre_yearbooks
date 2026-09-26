@@ -18194,3 +18194,70 @@ excerpt-linking (138/21) both confirmed unchanged.
 This closes the repertoire field audit (issue #89) started by RG's
 "audit all the fields" request -- all 3 follow-up items are resolved or
 explicitly deferred as a documented worklist.
+
+## Issue #92: closing the last 2 field-audit items -- Latin-i/Cyrillic-і
+## homoglyphs fixed corpus-wide, "2-я и 3-я карт. бал." same-billing
+## continuation resolved without a new work entity
+
+RG: "Fix #2 and #3" (the two remaining items from the outstanding-work
+list after issue #91: the 49-instance homoglyph worklist, and the
+same-billing-continuation bug class).
+
+**#3, same-billing continuation (`pipeline/build_entities.py`,
+`build_work`)**: "2-я и 3-я карт. бал." genuinely continues a
+*different* parent ballet on 2 of its 4 appearances (Коппелія) than the
+other 2 (Лебединое озеро) -- confirmed in issue #88's original writeup,
+which is exactly why Problem #4's corpus-wide title matching could
+never resolve it (there's no title text to match, and even if there
+were, one `entities.work` row can only carry one `excerpt_of_work_id`).
+Pulled these 4 raw performance rows out before the normal title-grouping
+pass entirely, so no "2-я и 3-я карт. бал." work row gets created at
+all, and resolved each one separately once `title_key_to_work_ids`
+exists: look up whichever performance immediately precedes it in the
+SAME event (`performance_order - 1`), and link straight to that
+performance's own resolved work -- disambiguating via the preceding
+performance's own printed genre when its title alone is ambiguous
+(`Коппелія`/`Лебединое озеро` both split into >1 real genre, Problem
+#3, so the genre-fold tiebreak already used elsewhere in this function
+was needed here too). All 4 resolved correctly (2 -> Коппелія/бал., 2 ->
+Лебединое озеро/бал.), verified directly against `entities.work_link`.
+
+**#2, the 49-instance homoglyph worklist**: fixed as a targeted
+per-character codepoint swap (Latin "i"/"I" -> Cyrillic "і"/"І"),
+applied only to the exact 49 flagged (title/genre) strings, never a
+blanket find-replace across a file. Reasoning for treating this as a
+safe, deterministic fix rather than an "unstable orthography" judgment
+call (the standing rule this project holds for genuine orthographic
+variation): 19th-century Russian typesetting used a dedicated metal
+sort for "і десятеричное," physically distinct from a Latin "i" sort,
+so the ORIGINAL PRINT could not have mixed a Latin letter into a
+Cyrillic word -- this is a pure Unicode-codepoint choice made by the
+extraction model between two visually near-identical glyphs, not a
+question of what the source actually says. Confirmed this holds with
+zero exceptions: all 49 instances match the deterministic "і before a
+vowel or й" pre-reform rule, and every resulting word is a real,
+recognizable, correctly-spelled title (Лючія, Индія, Марія, Севильскій,
+Евгеній Онѣгинъ, etc.) -- spot-verified 2 of the 7 affected pages
+directly against their scans (`ForUpload_1892-93_Repertoire_007.jpg`,
+`ForUpload_1897-98_Repertoire_007.jpg`) to confirm no other content
+issue was hiding alongside the script question.
+
+**One genuine mistake caught and fixed in the same pass**: the blanket
+per-string replace touched `"Царь Іоаннъ IV"`'s Roman numeral too,
+turning "IV" into "ІV" (Cyrillic І + Latin V) -- a new, self-inflicted
+mixed-script token, caught immediately by re-running the same detection
+query after applying the fix (it dropped from 49 remaining to 1, not 0).
+Confirmed via the same title's other 2 (untouched) occurrences elsewhere
+in the same file, which correctly kept "IV" -- fixed by hand, matching
+them.
+
+**Result**: 0 remaining mixed-script title/genre instances corpus-wide
+(confirmed by re-running the same detection query used throughout
+issues #89-92). `quality_flags.csv` unchanged (895). `entities.work`:
+3398 -> 3397 (the Roman-numeral fix collapsed one more spurious title
+variant, on top of the -63/-9 already seen from issues #90/#91).
+Musicians/Roster isolation (2900/23) and excerpt-linking (138 linked)
+confirmed unchanged throughout.
+
+This closes every item from the original field audit (issue #89) and
+its follow-ups (#90, #91).

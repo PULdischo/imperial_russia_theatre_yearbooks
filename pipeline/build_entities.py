@@ -216,6 +216,25 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
         WHERE performance_title IS NOT NULL AND trim(performance_title) <> ''
     """).fetchall()
 
+    # docs/work_normalization.md / known_issues.md issue #88 & #91: "2-я и
+    # 3-я карт. бал." (4 appearances, all Маріинскій, 1895-96) is not a
+    # distinct work, and not even a single fixed excerpt-of-one-parent
+    # either -- confirmed it's always the 2nd item of a 3-work billing
+    # ("[[ballet]], 2nd & 3rd tableaux, [comedy]"), and which ballet it
+    # continues genuinely differs per appearance (2 continue "Коппелія",
+    # 2 continue "Лебединое озеро") -- so Problem #4's corpus-wide title
+    # matching below can never resolve it (there's no title text left to
+    # match), and it can't get its own `excerpt_of_work_id` either (that's
+    # one FK per work row, not per raw appearance). Pulled out before
+    # grouping and resolved separately at the very end, once
+    # `title_key_to_work_ids` exists, by looking up whichever performance
+    # immediately precedes it in the SAME event and linking straight to
+    # that performance's own resolved work -- these 4 raw performance ids
+    # never get a work row of their own.
+    _BARE_CONTINUATION_TITLE = "2-я и 3-я карт. бал."
+    continuation_rows = [r for r in rows if r[1] == _BARE_CONTINUATION_TITLE]
+    rows = [r for r in rows if r[1] != _BARE_CONTINUATION_TITLE]
+
     # Group on title alone first (suffix-stripped, folded) -- genre is
     # decided per-title-group below, not baked into the grouping key from
     # the start, per docs/work_normalization.md Problem #2: a title
@@ -320,6 +339,45 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
             n_excerpt_matched += 1
         else:
             n_excerpt_unmatched += 1
+
+    # Resolve the bare-continuation rows pulled out above: each links
+    # straight to whichever performance immediately precedes it in the
+    # SAME event, never guessed -- if there's no preceding performance,
+    # or its own title doesn't resolve to exactly one work, it's left
+    # out of entities.work_link entirely rather than forced.
+    n_continuation_linked = 0
+    for performance_id, _, _ in continuation_rows:
+        event_id, _, order_str = performance_id.rpartition("__w")
+        order = int(order_str)
+        if order <= 1:
+            continue
+        prev = con.execute(
+            "SELECT performance_title, genre FROM raw.event_entry_performance "
+            "WHERE event_id = ? AND performance_order = ?",
+            [event_id, str(order - 1)],
+        ).fetchone()
+        if not prev or not prev[0]:
+            continue
+        prev_title, prev_genre = prev
+        prev_title_key = _title_key(_strip_genre_suffix(prev_title))
+        candidates = title_key_to_work_ids.get(prev_title_key, [])
+        target = None
+        if len(candidates) == 1:
+            target = candidates[0]
+        elif len(candidates) > 1:
+            # Same genre-fold tiebreak as the excerpt-linking pass above --
+            # "Коппелія"/"Лебединое озеро" both split into >1 real genre
+            # (Problem #3), so the preceding performance's own printed
+            # genre ("бал.") is what actually picks out the right one.
+            prev_genre_fold = _fold_genre(prev_genre) if prev_genre else None
+            if prev_genre_fold:
+                same_genre = [c for c in candidates
+                              if _fold_genre(next(g for u, _, g, _, _ in work_rows if u == c)) == prev_genre_fold]
+                if len(same_genre) == 1:
+                    target = same_genre[0]
+        if target:
+            link_rows.append((performance_id, target))
+            n_continuation_linked += 1
 
     # Drop the dependent table first -- entities.work_link's FK reference
     # blocks CREATE OR REPLACE on entities.work otherwise, which would
@@ -427,6 +485,9 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     print(f"  {n_excerpt_matched} excerpt/partial-performance titles linked to a parent work "
           f"({n_excerpt_unmatched} excerpt-shaped titles left unlinked -- ambiguous or garbled, "
           f"see docs/work_normalization.md)")
+    print(f"  {n_continuation_linked}/{len(continuation_rows)} bare same-billing-continuation "
+          f"performances (\"{_BARE_CONTINUATION_TITLE}\") linked directly to their preceding "
+          f"performance's work, no separate work row created")
 
 
 def export_work_genre_review_queue(con: duckdb.DuckDBPyConnection, out_path: Path) -> None:
