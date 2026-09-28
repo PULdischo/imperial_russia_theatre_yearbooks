@@ -9829,3 +9829,15 @@ where e.season='1897-98' and e.city='SP' and t.canonical_name='Маріинск�
 ```
 
 Result: Repertoire has Дочь микадо 1897-11-14, 11-16, 11-19, 12-14, 12-29, 1898-01-04, 04-19 and 04-22 (1-е д.) = 8. Suggests list "24" = 14 and "38" = 29 (12-28 was Жизнь за Царя). The Repertoire has NO Маріинскій events 1897-11-06..11-12, so the list's 9 Nov is unverifiable there — a possible Repertoire gap to check.
+
+## 2026-09-28 — Which Repertoire pages bound the list-vs-Repertoire date gaps, and are printed pages truncated? (issue #101)
+
+```sql
+select date_undate, city, page_id, printed_page_number from raw.event_entry where season=? and date_undate in (?,?) group by all order by 1,2;  -- once per gap, 12 gaps
+select page_id, printed_page_number, min(date_undate), max(date_undate), count(*) from raw.event_entry where season='1896-97' group by 1,2 order by 3;
+select season, page_id, printed_page_number, count(*) n, min(date_undate) a, max(date_undate) b from raw.event_entry
+where season between '1890-91' and '1897-98' group by all having count(*) < 35 order by season, a;
+select count(distinct season||page_id||printed_page_number) from raw.event_entry where season between '1890-91' and '1897-98';
+```
+
+Result: every gap falls at the join between consecutive spreads, with consecutive printed page numbers, so no pages are missing. 1896-97 p. 15 has 18 rows (30–31 Dec) but the scan prints 30 Dec – 8 Jan; p. 17 has 17 rows (19–21 Jan) but the scan prints 19–28 Jan. 19 of 192 printed pages in the spread seasons have <35 rows. Some are genuinely short (season start/end, Lent); the rest match the list gaps: 1892-93 p3, 1894-95 p17, 1895-96 p16/p23, 1896-97 p15/17/19/23/25, 1897-98 p7/9/19.
