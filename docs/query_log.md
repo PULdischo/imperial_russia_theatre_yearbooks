@@ -9802,3 +9802,30 @@ where wg.canonical_title in ('Не все коту масляница','Sodom''s
 ```
 
 Result: both located and scan-verified genuine (Не все коту масляница, ком. on repertoire_1891-92_pair012; Sodom's Ende, Schausp. on repertoire_1891-92_pair020). This closes the entire 111-group balanced tier at 111/111. See known_issues.md issue #100.
+
+## 2026-09-28 — Ballet productions lists loaded into DuckDB; list-vs-Repertoire comparison (issue #101)
+
+pipeline/load_productions.py created raw.production_entry (480 rows) and raw.production_entry_performance (1881 rows, 0 orphans, 1880 with a valid date) in outputs/full_run/imperial_theaters.duckdb (backup first: imperial_theaters.pre_productions_2026-09-28.duckdb). Sanity queries:
+
+```sql
+select season, city, count(*), sum(total_count), sum(n_dates) from raw.production_entry group by all order by 1,2;
+select count(*), count(date), min(date), max(date) from raw.production_entry_performance;
+select count(*) from raw.event_entry;
+select season, city, count(*), count(date), count(date_undate), min(date), max(date) from research.event where season in ('1890-91','1899-00','1904-05') group by all order by 1,2;
+select date_confidence, count(*) from research.event group by 1;
+select distinct t.canonical_name, t.city from research.theater t order by 2,1;
+select event_status, count(*) from research.event group by 1;
+```
+
+pipeline/compare_productions_repertoire.py (read-only; its two SELECTs join raw.production_entry/_performance, and research.performance/event/theater/work incl. excerpt_of_work_id parent). Result: 1881 list dates → exact 1573, excerpt 134, fuzzy 75, nearby_date 23, other_titles 29, no_event 46, impossible_date 1; 61 Repertoire performances not accounted for (31 ballet_not_in_list, 30 title_in_list_other_date). CSVs in outputs/ballet_productions_pilot/compare/.
+
+## 2026-09-28 — Дочь микадо 1897-98 SP: Repertoire dates vs the list's "ноября 9, 24, 16, 19; декабря 14, 38"
+
+```sql
+select e.date, e.date_verbatim, t.canonical_name, p.verbatim_title, e.printed_page_number from research.performance p join research.event e using(event_id) join research.theater t on t.theater_id=e.theater_id
+where e.season='1897-98' and e.city='SP' and p.verbatim_title ilike '%микадо%' order by e.date;
+select e.date, e.date_verbatim, t.canonical_name, string_agg(p.verbatim_title, ' | ') from research.event e join research.theater t on t.theater_id=e.theater_id left join research.performance p using(event_id)
+where e.season='1897-98' and e.city='SP' and t.canonical_name='Маріинскій' and e.date between '1897-11-05' and '1897-12-31' group by all order by 1;
+```
+
+Result: Repertoire has Дочь микадо 1897-11-14, 11-16, 11-19, 12-14, 12-29, 1898-01-04, 04-19 and 04-22 (1-е д.) = 8. Suggests list "24" = 14 and "38" = 29 (12-28 was Жизнь за Царя). The Repertoire has NO Маріинскій events 1897-11-06..11-12, so the list's 9 Nov is unverifiable there — a possible Repertoire gap to check.

@@ -19211,9 +19211,15 @@ identification belongs in the research layer's creator link, recorded as
    don't-add-up items incl. two impossible years in 1902-03 SP and
    "декабря 38"; 17 uncertain readings; ~15 print slips waiting for her
    confirmation before going into genuine_print_typos.md).
-2. Load into DuckDB (raw tier) and build the list-vs-Repertoire comparison
-   (roll excerpts up to parent work; classify mismatches). First lead
-   already: Repertoire "Рустикальный башмачекъ" 1890-11-11 = Хрустальный.
+2. DONE 2026-09-28: loaded as raw.production_entry / _performance
+   (`pipeline/load_productions.py`; 480 entries, 1881 dates incl. the
+   interim 1899-00 Moscow list), and compared with the Repertoire
+   (`pipeline/compare_productions_repertoire.py`): 91% of list dates match
+   outright, 95% with near-identical titles. Findings and worklist in
+   `docs/eval/ballet_productions_repertoire_audit.md`. The biggest one:
+   ~16 week-long date blocks with NO Repertoire rows in either city,
+   mostly 1896-97/1897-98, on dates the lists show ballets were performed.
+   Not yet scan-checked.
 3. Production Stats pages (per-season performance counts) as a second audit.
 
 ## Issue #100: `work_genre_candidate` balanced tier -- RG: "just go
