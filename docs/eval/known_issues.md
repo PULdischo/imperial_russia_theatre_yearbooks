@@ -19498,3 +19498,106 @@ near-identical titles).
   1 May 1896 not checked.
 - New print-typo candidates for RG: Кому вессло живется, По крогавымъ
   слѣдамъ, Я имениниикъ, Le Barbier de Sévilie, Маіорша/Майорша.
+
+## Issue #104: Repertoire `annotation` audit -- debug-note leak (13 rows)
+## and banner-undercapture (28 rows), both fixed; false-positive class
+## documented -- RG, 2026-09-28: "Can we do an audit of annotations?
+## Some annotations occur in the cell along with the production info.
+## But other are like a banner above several cells."
+
+Two distinct bug classes found in `raw.event_entry.annotation`, both
+fixed after individual scan verification.
+
+**1. Debug-note leak (13 rows, 2 distinct strings, contained).** Two
+prior-session fix-comments were written into the actual `annotation`
+content field instead of staying out of it: 12 rows on
+`repertoire_1903-04_p000` (Михайловскій театръ, 31 Воскрес.-15 Понед.)
+carried the literal text "corrected 2026-09-22: model fabricated a
+spurious sub-6-ruble receipts figure for this cell; scan ... issue
+#77"; 1 row on `repertoire_1898-99_p016` (13 Воскрес. evening,
+Александринскій театръ) carried a similar date-correction note
+referencing `ForUpload_1898-99_Repertoire_016.jpg`. A search for
+English diagnostic words (corrected/scan/model/fixed/confirmed/
+verified/issue/bug/mislabel) across all 738 distinct annotation values
+found only these two -- confirmed contained, not systemic. Fixed by
+nulling `annotation` on the 13 affected rows (their `is_dark`/
+`receipts_text`/`works`/date fields were already correctly fixed by
+the original correction passes; only the leaked comment needed
+removing).
+
+**2. Banner-style annotations under-captured to a single theater (real
+extraction bug, larger).** Some annotations are page-wide banners --
+a heading printed once, spanning the full table, applying to every
+theater's session for one date/time-of-day slot (confirmed via direct
+scan inspection on `repertoire_1899-00_p012` and
+`repertoire_1902-03_p010`/`p011`). A first-pass SQL query flagged 138
+candidate "gaps" (a sibling theater performed in the identical
+(page_id, date_text, time_of_day) slot as a theater carrying one of 10
+recurring annotation strings, but itself had annotation=NULL).
+
+**Critical methodology correction, caught before writing anything**:
+the naive query is NOT safe to apply mechanically. Two early spot-checks
+(`repertoire_1900-01_p006` 22 Воскрес. morning; `repertoire_1901-02_p029`
+21 Четвергъ) showed the same annotation text is very often a PER-THEATER
+note (e.g. "Спектакль для учащейся молодежи." is printed inline in only
+ONE theater's own cell, most often Александринскій, while sibling
+theaters -- especially Маріинскій, an opera/ballet house -- run their own
+unrelated full-price program with no trace of the heading), and that
+even a genuine multi-theater banner can legitimately exclude a
+thematically-ineligible theater (e.g. "Спектакль въ память Н. В. Гоголя."
+-- a literary memorial -- correctly excludes Большой театръ, a ballet/
+opera house running its own unrelated program that day). A SQL join
+cannot determine thematic eligibility; only a scan can.
+
+**Full scan-verified sweep run instead of the mechanical fix.** All 138
+candidate rows across 84 pages were dispatched to 8 parallel agents,
+each independently reading the actual scan for every flagged date/
+session/theater and comparing against the raw JSON. Result: **only 28
+of 138 (20%) were genuine** -- the other 110 (80%) would have been
+wrong writes had the naive query been trusted. Confirmed genuine
+banners: "Гимнъ." (a patriotic/state-occasion opener, always printed
+identically atop every theater's own cell when it occurs -- 20 rows
+across 5 pages), "Безплатные [утренніе] спектакли для воспитанниковъ
+[столичныхъ] учебныхъ заведеній." (free student-body performances,
+printed as an actual merged/italic/bold header row spanning the
+relevant city's theater columns -- 8 rows across 6 pages).
+
+**Confirmed stable false-positive classes, worth remembering for any
+future annotation-completeness query**: "Спектакль для учащейся
+молодежи." (student-youth matinee) is reliably a per-theater note tied
+to one specific theater's own recurring free Sunday-morning matinee
+(usually Александринскій, occasionally Михайловскій) -- Маріинскій
+invariably runs its own regular full-price opera/ballet in the same
+slot instead, across every one of ~40 instances checked spanning
+1900-1909. "Концертъ въ пользу инвалидовъ." (a charity concert for
+disabled veterans) and other one-off charity/jubilee headings
+("Спектакль въ память А. С. Пушкина.", "Юбилейный спектакль въ память
+столѣтія...", "Въ пользу Иверской Общины...") are single-theater or
+single-city (Petersburg-only or Moscow-only) events that never extend
+across the table's other block. Neither should be treated as an
+under-captured banner without individual scan verification.
+
+**Also confirmed NOT bugs, resolving 2 more audit oddities**: "Morituri:"
+is Sudermann's 1896 one-act trilogy title (Teja/Fritzchen/Das
+Ewig-Männliche) -- a genuine printed program heading correctly split
+from its 3 constituent plays in `works`. "1, 2, 3 и 4 д." on two
+"Гугеноты" (5-act opera) performances is a genuine printed note that
+only 4 of 5 acts were given that night. Both are legitimate annotation
+subtypes the pipeline already handles correctly, not extraction bugs.
+The 8-way spelling variance in "...для [г.г./гг.] [Г/г]еоргіевскихъ
+кавалеровъ." is genuine period spelling/abbreviation variance (per
+[[pre-reform-orthography-is-unstable]]), not a bug; 2 verbose instances
+that fold a work title into the annotation string alongside the heading
+are redundant but not lossy -- `works` stays fully intact in both.
+
+**One side-finding, NOT yet fixed, flagged for a future pass**: a
+verification agent found `repertoire_1903-04_p012`'s raw JSON has the
+"Спектакль для учащейся молодежи." annotation and 488 р. 20 к. receipts
+attached to Михайловскій `session="evening"`, but the scan clearly shows
+that text+receipts under the УТРО (morning) sub-row instead, with the
+true evening figure being 789 р. 50 к. and no banner. A session-
+mislabeling bug, separate from this issue's scope.
+
+Rebuilt the full chain. See `docs/query_log.md` for every query run
+during the investigation (both the flawed first-pass join and its
+correction are logged, per the project's honest-trail convention).

@@ -9877,6 +9877,158 @@ Result: 297 title groups / 701 rows total in `entities.work_genre_candidate`. 10
 
 This closes 100% of the genre-review queue's "genuinely distinct genre family" tier (188/188 groups), on top of the already-closed singleton-outlier and balanced tiers. The 109 noise groups remain permanently in the queue by design (Problem #5).
 
+## 2026-09-28 — Annotation audit: banner-style vs per-cell annotations (RG's request)
+
+RG asked to audit `raw.event_entry.annotation`: some annotations sit in one
+cell alongside that session's own production info, others print as a
+banner heading spanning several theater columns for one date/session.
+Ran a sequence of queries; exact SQL for the first few reconstructed from
+session notes after a context-window boundary (not preserved verbatim),
+noted below where approximate.
+
+**Query 1 (approximate) — overall annotation value distribution:**
+```sql
+select annotation, count(*) from raw.event_entry
+where annotation is not null group by annotation order by count(*) desc
+```
+Result: 738 distinct non-null annotation values across the corpus.
+
+**Query 2 (approximate) — debug/fix-note leakage search:**
+```sql
+select annotation, count(*) from raw.event_entry
+where annotation is not null
+  and (annotation ilike '%corrected%' or annotation ilike '%scan%'
+       or annotation ilike '%model%' or annotation ilike '%fixed%'
+       or annotation ilike '%confirmed%' or annotation ilike '%verified%'
+       or annotation ilike '%issue%' or annotation ilike '%bug%'
+       or annotation ilike '%mislabel%')
+group by annotation
+```
+Result: exactly 2 matches, both genuine developer debug-notes leaked into
+the content field instead of being left null: (1) 12 rows on
+`repertoire_1903-04_p000` (all `Михайловскій театръ.`, dates 31 Воскрес.
+through 15 Понед.) carrying the literal text "corrected 2026-09-22: model
+fabricated a spurious sub-6-ruble receipts figure for this cell; scan
+(ForUpload_1903-04_Repertoire_000.jpg) shows a literal dash, no
+performance, issue #77"; (2) 1 row carrying "date_text corrected from
+mislabeled \"14 Понед.\" to \"13 Воскрес.\" (scan-verified,
+ForUpload_1898-99_Repertoire_016.jpg): this row is the 13th evening
+session, not the 14th" (page not yet independently re-confirmed by page_id
+this segment, filename in the leaked text points to
+`repertoire_1898-99_p016`). 13 rows total, contained, not widespread
+(next largest match count after these two is 0).
+
+**Query 3 (approximate, self-corrected mid-investigation) — banner-gap
+detection, first pass (flawed — joined only on page_id+date_text, no
+session):**
+```sql
+select e1.page_id, e1.date_text, e1.annotation, e2.theater
+from raw.event_entry e1
+join raw.event_entry e2
+  on e1.page_id = e2.page_id and e1.date_text = e2.date_text
+  and e2.annotation is null and e2.event_status != 'no_performance'
+where e1.annotation in (<4 known banner strings>)
+```
+Result: 419 apparent "gaps" — later found to be an artifact of not
+constraining on `time_of_day`/session, conflating a date's morning and
+evening sessions. Spot-check against raw JSON for
+`repertoire_1899-00_p012` ("14 Воскрес.") showed all 3 theaters' morning
+sessions already correctly carried the banner, directly contradicting this
+query's face-value output. Superseded by Query 4.
+
+**Query 4 — corrected banner-gap detection, joined on
+(page_id, date_text, time_of_day):**
+```sql
+select e1.page_id, e1.date_text, e1.time_of_day, e1.annotation, e2.theater, e2.event_status
+from raw.event_entry e1
+join raw.event_entry e2
+  on e1.page_id = e2.page_id and e1.date_text = e2.date_text
+  and e1.time_of_day = e2.time_of_day
+  and e2.annotation is null
+where e1.annotation in (<4 known institutional banner strings>)
+```
+Result: 84 real sibling comparisons for the 4 known banner strings; 77
+confirmed true gaps (sibling theater performed in the identical
+page/date/session slot but is missing the banner), 5 legitimately dark
+(no gap expected), 2 legitimately carry the theater's own distinct
+benefit program instead. Cross-verified directly against scans for 2
+independent examples (`repertoire_1899-00_p012` "14 Воскрес." morning;
+`repertoire_1902-03_p010`/`p011` "14 Четвергъ." morning) — both confirm
+the banner prints once, centered across the full table width, above one
+specific date's specific session, and both confirm the raw data currently
+under-captures it to a single theater.
+
+**Query 5 — corpus-wide coverage-ratio scan across all annotation values
+(≥3 occurrences), to look for banner candidates beyond the 4 manually
+identified:**
+```sql
+with occ as (
+  select annotation, page_id, date_text, time_of_day, count(distinct theater) as n_theaters_with_it,
+         (select count(distinct theater) from raw.event_entry e2
+          where e2.page_id = e1.page_id and e2.date_text = e1.date_text and e2.time_of_day = e1.time_of_day
+            and e2.event_status != 'no_performance') as n_theaters_performed_that_slot
+  from raw.event_entry e1
+  where annotation is not null
+  group by annotation, page_id, date_text, time_of_day
+)
+select annotation, count(*) as n_occurrences_page_date,
+       sum(n_theaters_with_it) as total_theater_rows,
+       sum(n_theaters_performed_that_slot) as total_theater_rows_performed,
+       round(sum(n_theaters_with_it)*1.0/sum(n_theaters_performed_that_slot), 2) as coverage_ratio
+from occ group by annotation having count(*) >= 3
+order by coverage_ratio asc, n_occurrences_page_date desc limit 40
+```
+Result: lowest-ratio entries were dominated by personal benefit-performance
+annotations ("Бенефисъ г. Садовскаго.", "Бенефисъ г-жи Савиной.", etc.) —
+a naturally low, CORRECT coverage ratio for a genuinely per-theater note
+(only the theater hosting that named artist's benefit should ever carry
+it), so raw coverage ratio alone cannot distinguish a true under-captured
+banner from a correctly-narrow personal note. Superseded by Query 6, which
+adds the distinguishing test.
+
+**Query 6 — refined: only flag annotation values already confirmed to
+co-occur across 2+ theaters in the same slot at least once (a personal
+benefit for one named artist cannot legitimately do this; only an
+institutional/page-wide banner can), then check remaining coverage gap:**
+```sql
+with occ as (
+  select annotation, page_id, date_text, time_of_day, count(distinct theater) as n_theaters_with_it,
+         (select count(distinct theater) from raw.event_entry e2
+          where e2.page_id = e1.page_id and e2.date_text = e1.date_text and e2.time_of_day = e1.time_of_day
+            and e2.event_status != 'no_performance') as n_theaters_performed_that_slot
+  from raw.event_entry e1
+  where annotation is not null
+  group by annotation, page_id, date_text, time_of_day
+),
+confirmed_banner as (
+  select distinct annotation from occ where n_theaters_with_it >= 2
+)
+select o.annotation, count(*) as n_occurrences,
+       sum(o.n_theaters_with_it) as total_rows_with_it,
+       sum(o.n_theaters_performed_that_slot) as total_rows_performed,
+       sum(o.n_theaters_performed_that_slot) - sum(o.n_theaters_with_it) as missing_rows
+from occ o
+where o.annotation in (select annotation from confirmed_banner)
+group by o.annotation having missing_rows > 0
+order by missing_rows desc
+```
+Result: 10 distinct confirmed-banner annotation strings with a real,
+quantified undercapture gap, 151 missing theater-rows total:
+Спектакль для учащейся молодежи. (68 missing), Концертъ въ пользу
+инвалидовъ. (37), Гимнъ. (16), Безплатные спектакли для воспитанниковъ
+столичныхъ учебныхъ заведеній. (11), Безплатные утренніе спектакли для
+воспитанниковъ учебныхъ заведеній. (7), Спектакль въ память Н. В. Гоголя.
+(5), Спектакль въ память А. С. Пушкина. (3), Въ пользу Иверской Общины
+сестеръ милосердія Краснаго Креста. (2), Спектакль въ пользу Иверской
+Общины Краснаго Креста. (1), Юбилейный спектакль въ память столѣтія со
+дня рожденія А. С. Пушкина. (1). This is the working confirmed-bug list
+for the banner-undercapture class; the long tail of low-coverage-ratio
+"Бенефисъ г./г-жи [Name]." entries from Query 5 is NOT part of this list
+and should not be treated as buggy — their low ratio is the correct,
+expected shape of a genuinely per-theater note. No fix applied yet;
+investigation only, per RG's request ("take a look and see if there's
+anything unexpected").
+
 ## 2026-09-28 — Truncated spread pages: integration vs control vs production, and list comparison after the fix (issue #103)
 
 Read-only counts on three DBs (outputs/full_run, recovery .../control, .../integration):
@@ -9897,3 +10049,62 @@ select e.page_id, e.date_undate, string_agg(distinct e.date_text, ' / '), count(
 ```
 
 Result: control == production everywhere. Integration (and production after promotion) has raw.event_entry 26039 -> 26485, research.event 28968 -> 29439, research.performance 27591 -> 28221, research.work 3482 -> 3511, verified 25550 -> 26016, intra_block 397 -> 377, persons 2900 unchanged, non-spread seasons unchanged. The pair020 March rows sat on 1896-02-28/29 (intra_block, not corrected); 73 intra_block page/date groups, and only pair020 and 1894-95 pair006 (4 Oct) show two weekdays on one date. compare_productions_repertoire.py on production afterwards: no_event 46 -> 0, exact 1624, excerpt 140, fuzzy 77, other_titles 24, nearby_date 15.
+
+## 2026-09-28 — Annotation audit: applying and verifying issue #104's fixes
+
+**Debug-note-leak fix**: nulled `annotation` on 12 rows in
+`repertoire_1903-04_p000.raw.json` and 1 row in
+`repertoire_1898-99_p016.raw.json` (exact rows identified via the query
+below), matching the 13 rows found in the investigation phase.
+```sql
+select page_id, date_text, time_of_day, theater, annotation
+from raw.event_entry
+where annotation ilike '%corrected%' or annotation ilike '%mislabel%'
+order by page_id, date_text
+```
+Result (pre-fix): 13 rows, exact text confirmed matching the leaked
+debug comments. Post-fix same query returns 0 rows.
+
+**Banner-backfill full scan-verified sweep**: rather than trust the
+138-row mechanical gap query, dispatched 8 parallel agents to
+individually scan-verify every one of the 138 candidate rows across 84
+pages against the actual printed scan (resolved via
+`ForUpload_{season}_Repertoire_{idx:03d}.jpg`, with pair-numbered
+spread-season ids resolved via the `(pairnum-2)/2` formula documented
+in known_issues.md issue #98's follow-up, and 1908-09's 11 missing
+renders freshly rendered from its PDF at 200dpi with PyMuPDF).
+
+Result: **28 of 138 (20%) confirmed genuine, 110 (80%) confirmed false
+positives** — the naive query would have been wrong 4 times out of 5.
+Confirmed genuine banner strings: "Гимнъ." (20 rows/5 pages) and
+"Безплатные [утренніе] спектакли для воспитанниковъ [столичныхъ]
+учебныхъ заведеній." (8 rows/6 pages) — both visually confirmed as an
+actual merged/italic/bold header row spanning the relevant theaters'
+columns. All other candidates (dominated by "Спектакль для учащейся
+молодежи." and "Концертъ въ пользу инвалидовъ.") were per-theater or
+per-city notes incorrectly flagged by the same-slot join; see issue
+#104 in known_issues.md for the full breakdown and the specific
+false-positive classes now documented for future queries.
+
+Applied the 28 confirmed rows directly to their raw JSON files (theater/
+date_text/time_of_day matched against each verdict, annotation set only
+where previously null — 0 write failures). Verification query
+post-rebuild:
+```sql
+select count(*) from raw.event_entry where annotation in (<10 banner strings>)
+```
+Result: 321 total rows now carry one of these 10 strings corpus-wide
+(up from the pre-fix count), consistent with 28 new + prior existing
+occurrences.
+
+Rebuilt full chain (`parse_and_validate.py` with both mandatory flags →
+`quality_checks.py` → `build_duckdb.py` → `build_entities.py` →
+`validate_performance_dates.py` → `build_research_model.py`). Confirmed
+stable: quality_flags.csv 895 (baseline), validation_errors.csv 268
+(baseline), dates verified 98.2%, Musicians/Roster entity isolation
+2900/23 (unchanged), work_genre_candidate 297 groups/702 rows
+(unchanged from concurrent session's own state). event_entry 26485
+(reflects concurrent issue #103 work already in outputs/full_run, not a
+regression from this session's changes — no session/work rows were
+added or removed by this fix, only `annotation` values on existing
+rows).
