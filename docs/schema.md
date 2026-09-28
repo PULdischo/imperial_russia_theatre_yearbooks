@@ -208,7 +208,7 @@ single receipts figure (e.g. two one-act comedies).
 ## Productions lists (BalletProductions) — `production_entry`, `production_entry_performance`
 
 The per-season list of productions (списокъ пьесъ), "Балетъ" section,
-one list per season × city (known_issues.md #100). Verbatim tier: the
+one list per season × city (known_issues.md #101). Verbatim tier: the
 printed description is NOT split into genre / acts / roles here — that
 belongs to the research layer (how to read "соч." as a role is RG's open
 question). CSVs: `outputs/<run>/parsed_verified/`; not yet in DuckDB.

@@ -19132,7 +19132,7 @@ every batch. `entities.work_genre_candidate`: 302 -> 299 title groups
 3. The queue itself remains open-ended by design -- continue on
    request, no defined "done."
 
-## Issue #100: Ballet productions lists (списокъ пьесъ, "Балетъ") --
+## Issue #101 (renumbered from #100 -- collided with the genre-review issue; RG, 2026-09-28): Ballet productions lists (списокъ пьесъ, "Балетъ") --
 ## new source transcribed and fully scan-verified, 1890-91 – 1904-05
 
 RG, 2026-09-28: the yearbooks' per-season list of productions, by genre

@@ -3,7 +3,7 @@
 Source: the per-season ballet productions lists ("Балетъ" section of the
 списокъ пьесъ), 1890-91 – 1904-05, SP + Moscow, 29 lists / 47 pages
 (`pdf/Spiski_BalletProductions/`). Transcribed with `qwen3-vl-plus`, then
-every entry and field scan-checked (known_issues.md #100). Everything
+every entry and field scan-checked (known_issues.md #101). Everything
 below is **left exactly as printed / as best read from the scan**; none
 of it has been corrected, and no reading was settled from the Repertoire
 data (the lists are an independent audit of it). Page refs are
