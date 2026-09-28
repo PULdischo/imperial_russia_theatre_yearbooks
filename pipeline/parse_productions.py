@@ -126,18 +126,14 @@ def main():
     for p in bad:
         print(f"  {p['production_performance_id']}  {p['day_text']} {p['month_text']} {p['year_text']}")
 
-    # a season runs roughly August (first year) to July (second year); a date
-    # outside that window is either a misread or a print error (e.g. a year
-    # not reprinted after the New Year) -- never corrected here, only listed
-    season_of = {e["production_entry_id"]: e["season"] for e in merged}
-    print("\nout_of_season_date:")
+    # dates are derived from the list's season (schemas/productions.py
+    # _season_date); these are the rows whose PRINTED year disagrees with it --
+    # a print quirk to show RG, not a date problem
+    print("\nyear_printed_differs_from_season:")
     for p in perfs:
-        if not p["date"]:
-            continue
-        first = int(season_of[p["production_entry_id"]][:4])
-        if not (f"{first}-08-01" <= p["date"] <= f"{first + 1}-07-31"):
+        if p["year_printed_matches_season"] is False:
             print(f"  {p['production_performance_id']}  {p['day_text']} {p['month_text']} "
-                  f"{p['year_text']} -> {p['date']}")
+                  f"printed {p['year_text']} -> season date {p['date']}")
 
     print("\npost_total consistency (post_total_text <-> outside_total dates):")
     outside = defaultdict(int)

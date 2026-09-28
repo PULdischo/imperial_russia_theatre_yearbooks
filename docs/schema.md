@@ -242,4 +242,5 @@ question). CSVs: `outputs/<run>/parsed_verified/`; not yet in DuckDB.
 | `year_text`, `month_text`, `day_text` | string | verbatim, year/month carried forward as the print implies |
 | `note` | string, nullable | the per-date parenthetical, e.g. "2-я и 3-я карт." |
 | `outside_total` | bool | a part-performance printed after Всего |
-| `date` | ISO date, nullable | NULL if the printed date is impossible ("38 декабря"); out-of-season years are left as printed |
+| `date` | ISO date, nullable | derived from the list's **season** (Aug–Dec = the season's first year, Jan–Jul = its second), not from the printed year (RG, 2026-09-28): the list belongs to its season by provenance. NULL if the printed day is impossible ("38 декабря") |
+| `year_printed_matches_season` | bool, nullable | false when the printed year differs from the one the season implies (4 rows, e.g. "1897 г.—февраля 12" in the 1897-98 list); the printed year stays verbatim in `year_text` |

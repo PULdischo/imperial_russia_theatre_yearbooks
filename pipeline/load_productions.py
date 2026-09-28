@@ -55,7 +55,8 @@ def main():
                CAST(date_order AS INTEGER) AS date_order,
                year_text, month_text, day_text, NULLIF(note, '') AS note,
                CAST(outside_total AS BOOLEAN) AS outside_total,
-               CAST(NULLIF(date, '') AS DATE) AS date
+               CAST(NULLIF(date, '') AS DATE) AS date,
+               CAST(NULLIF(year_printed_matches_season, '') AS BOOLEAN) AS year_printed_matches_season
         FROM read_csv('{perf_csv}', all_varchar = true, header = true)
     """)
     for t in ("production_entry", "production_entry_performance"):

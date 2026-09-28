@@ -80,6 +80,8 @@ replace** — some variants (Волшебные грезы, Царь Канда�
 
 ## Finding 3 — list print errors the Repertoire can speak to
 
+(Update 2026-09-28: list dates are now taken from the season, not the printed year, per RG, since the season is fixed by the list's provenance. So the four "out-of-season" dates below now match the Repertoire directly: Пери 12 Feb 1898, Дочь Микадо 19 Apr 1900, Коппелія 6 Nov 1902, Тщетная 27 Apr 1903. The printed years are kept verbatim and flagged.)
+
 - **Дочь микадо 1897-98 SP:** the list prints "ноября 9, 24, 16, 19;
   декабря 14, 38". The Repertoire has 14, 16, 19 Nov and 14, 29 Dec,
   which suggests "24" = 14 and "38" = 29. 9 Nov falls in a Repertoire gap

@@ -73,6 +73,22 @@ def _valid_iso(iso: Optional[str]) -> Optional[str]:
     return iso
 
 
+def _season_date(season: str, day_text: str, month_text: str) -> Optional[str]:
+    """Calendar date from the list's own SEASON, not the printed year (RG,
+    2026-09-28): a list belongs to its season by provenance (volume/file),
+    so a performance in it falls August-December of the season's first year
+    or January-July of its second, whatever year is printed beside it.
+    The printed year stays verbatim in year_text; a disagreement is flagged
+    separately (year_printed_matches_season), never silently "corrected"."""
+    first = int(season[:4])
+    probe = parse_russian_date(f"{day_text} {month_text} {first}")
+    if not probe:
+        return None
+    month = int(probe[5:7])
+    year = first if month >= 8 else first + 1
+    return _valid_iso(f"{year:04d}{probe[4:]}")
+
+
 def _total_from_text(total_text: Optional[str]) -> Optional[int]:
     m = _TOTAL_RE.search(total_text or "")
     return int(m.group(1)) if m else None
@@ -116,6 +132,13 @@ def flatten_productions_page(page_id: str, season: str, city: str,
                 "day_text": d.day_text,
                 "note": d.note,
                 "outside_total": d.outside_total,
-                "date": _valid_iso(parse_russian_date(f"{d.day_text} {d.month_text} {d.year_text}")),
+                "date": _season_date(season, d.day_text, d.month_text),
+                # False when the printed year isn't the one the season implies
+                # (e.g. "1897 г.—февраля 12" in the 1897-98 list); None when
+                # the printed year can't be read as a number
+                "year_printed_matches_season": (
+                    None if not (d.year_text or "").strip().isdigit()
+                    or not _season_date(season, d.day_text, d.month_text)
+                    else _season_date(season, d.day_text, d.month_text)[:4] == d.year_text.strip()),
             })
     return {"production_entry": entries, "production_entry_performance": perfs}

@@ -17,11 +17,13 @@ Per-change detail for every item: `outputs/ballet_productions_pilot/verify_logs/
 | # | Where | Entry | What's printed | Why it doesn't add up |
 |---|---|---|---|---|
 | 1 | 1897-98 SP (pp. 32–33 spread) | #2 Дочь микадо | "декабря 38"; also "ноября 9, 24, 16, 19" | impossible day; ноября dates out of order. 9 dates = Всего—9 |
-| 2 | 1897-98 Moscow p001 (p. 40) | #9 Пери | "Исполнено: 1897 г.—февраля 12" | Feb 1897 is before the 1897-98 season (Feb 1898?). Zoom-checked: 1897 is clearly printed |
-| 3 | 1899-00 SP p000 (p. 46) | #6 Дочь Микадо | "…1899 г.—… апрѣля 19" (no new year printed) | year carries forward as 1899, but April falls in 1900 by season |
-| 4 | 1902-03 SP p001 (p. 45) | #14 Коппелія | "1903 г.—ноября 6. 1903 г.—февраля 15" | November 1903 is outside the 1902-03 season (1902?) |
-| 5 | 1902-03 SP p001 (p. 45) | #25 Тщетная предосторожность | "1904 г.—апрѣля 27" | April 1904 is outside the season (1903?) |
+| 2 | 1897-98 Moscow p001 (p. 40) | #9 Пери | "Исполнено: 1897 г.—февраля 12" | Printed year differs from the season; the date is taken from the season: **12 Feb 1898**. Confirmed by the Repertoire (Домашевъ benefit, "1-е д. бал. Пери") |
+| 3 | 1899-00 SP p000 (p. 46) | #6 Дочь Микадо | "…1899 г.—… апрѣля 19" (no new year printed) | Date from the season: **19 Apr 1900**. Confirmed by the Repertoire ("1-е д. бал. Дочь Микадо") |
+| 4 | 1902-03 SP p001 (p. 45) | #14 Коппелія | "1903 г.—ноября 6. 1903 г.—февраля 15" | Date from the season: **6 Nov 1902**. Confirmed by the Repertoire (Коппелія + Волшебная флейта) |
+| 5 | 1902-03 SP p001 (p. 45) | #25 Тщетная предосторожность | "1904 г.—апрѣля 27" | Date from the season: **27 Apr 1903** |
 | 6 | 1904-05 Moscow p000 (p. 145) | #4 Золотая рыбка | 6 dates, "Всего—7 разъ"; ноября 14 note "2 раза: утромъ и вечеромъ" | the only dates-vs-Всего mismatch in the whole corpus; probably consistent (14 Nov counted twice) |
+
+**Dates (RG, 2026-09-28):** a list belongs to its season by provenance, so every calendar date is taken from the season (Aug–Dec = first year, Jan–Jul = second). Rows 2–5 print a year that differs from the season; the year stays verbatim in `year_text` and is flagged (`year_printed_matches_season = false`), and the date is still the season's.
 
 All six were read twice from the scan, by the checking agent and then by a
 second close-up zoom (2026-09-28); in every case the transcription matches

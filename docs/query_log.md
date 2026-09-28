@@ -10216,3 +10216,11 @@ issue #104 follow-up entry.
 ## 2026-09-28 — (subagent, logged retroactively) read-only checks during the other-title round, item 8 (issue #101 follow-up)
 
 A checker ran two read-only queries on outputs/full_run to understand item 8 (1895-96 Moscow Катарина "января 17"). The exact SQL was not reported. What it looked up: (1) Moscow events on the list's Катарина dates (13 Dec 1895, 17 and 28 Jan 1896); (2) Большой events 14–21 Jan 1896. Result: Катарина appears on 13 Dec and 28 Jan, and on 17 Jan the Большой has Эсмеральда (500 р. 50 к.), matching the scan, so item 8 is a genuine list/Repertoire disagreement (category E). Not used to decide any reading.
+
+## 2026-09-28 — Ballet-list dates re-derived from the season, not the printed year (RG): what changed
+
+```sql
+select production_performance_id, date from raw.production_entry_performance;  -- compared with the re-parsed CSV before reloading
+```
+
+Result: 1881 dates, 4 changed (1897-02-12 -> 1898-02-12 Пери; 1899-04-19 -> 1900-04-19 Дочь Микадо; 1903-11-06 -> 1902-11-06 Коппелія; 1904-04-27 -> 1903-04-27 Тщетная). All 4 now match the Repertoire; comparison exact 1691, excerpt 142 (was 1689/140), other_titles 24 -> 21, nearby_date 15 -> 14.
