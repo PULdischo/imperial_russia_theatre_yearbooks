@@ -9687,3 +9687,22 @@ order by e.date, t.canonical_name, p.performance_order
 ```
 
 Result: "2-е д. бал. Фіаметта" present on 1891-10-13, 11-14, 12-28, 1892-02-14 (Маріинскій) = printed 4; "2-я и 3-я карт. бал. Зорайя" on 1892-04-26 = printed 3rd Зорайя. Both are excerpt works (excerpt_of_work_id set) with NULL genre. So all 13 printed ballets fully reconcile with the Repertoire data.
+
+## 2026-09-28 — Establishing the pairNNN -> printed-page -> scan-render mapping for spread-season pages
+
+```sql
+-- (not a DB query; reconstructed from source: pipeline/split_spread_pages.py,
+-- pipeline/extract_split_page_numbers.py, outputs/full_run/printed_page_numbers_all.csv,
+-- and resolved_sessions/*.resolved_sessions.json's own _source provenance field)
+```
+
+Result: confirmed `raw_columnwise/{season}_pNNN.raw.json`'s `NNN` is the real printed page number (read off the scan's rotated left-margin stamp), not source-render order; `outputs/repertoire_spreadfix_v6/single_leaf_images/*.png` is a stale 5-file debug leftover sharing filenames by coincidence — do not reuse. `ForUpload_{season}_Repertoire_{(pair_number-2)/2:03d}.jpg` (0-indexed, pairs increment by 2 from pair002) gives the correct render; verified against 4 independent pair/season combos by reading each render's own date header before trusting the arithmetic. See known_issues.md issue #98 follow-up for the full writeup.
+
+## 2026-09-28 — Post-fix verification: Золото / Левъ Гурычъ Синичкинъ / Шашки genre-candidate state
+
+```sql
+select canonical_title, canonical_genre, appearance_count from entities.work_genre_candidate
+where title_key in ('золото','левъ гурычъ синичкинъ','шашки') order by title_key, canonical_genre
+```
+
+Result: Золото ком.(37)/к.-м.(1, genuine); Левъ Гурычъ Синичкинъ вод.(37)/ком-вод.(1, genuine spelling variant); Шашки ш.(59)/шут.(40)/шутка(10)/ком.(1, genuine)/…(1, genuine — stain-obscured, honest transcription). Confirms both fixes (Золото/Шашки split, Левъ Гурычъ Синичкинъ р.->вод.) landed cleanly and the 2 confirmed-genuine rows are untouched. See known_issues.md issue #98 follow-up.

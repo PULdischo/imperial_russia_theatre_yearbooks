@@ -18903,14 +18903,82 @@ concurrent session's issue #97 pair008 recovery, which landed in
 `outputs/full_run` in the same window -- both sets of changes present
 together in the final rebuilt DB, checked directly rather than assumed.
 
-**Still open**: 4 more singleton-outlier rows on two-page-spread-season
-pages ("Золото" x2, "Левъ Гурычъ Синичкинъ" / `р.`, "Шашки" / `…`) --
-deferred because the `pairNNN` page_id -> scan-image mapping used for
-single-page seasons (`ForUpload_{season}_Repertoire_{NNN}.jpg`) doesn't
-hold for spread pages, and a first attempt at the spreadfix single-leaf
-images landed on the wrong date range for one of them, meaning the
-`pairNNN` -> physical-leaf correspondence needs to be re-established
-properly rather than guessed at again. The broader
-`work_genre_candidate` queue (~314 title groups after this round, most
-genuine spelling-variant noise per Problem #5, not bugs) remains
-open-ended -- no defined "done," continue spot-checking on request.
+**Follow-up, same day: the `pairNNN` -> scan-image mapping fixed, and
+all 4 deferred rows checked.** RG: "fix the pairNNN mapping and check
+those 4."
+
+**The mapping.** `outputs/repertoire_spreadfix_v6/single_leaf_images/`
+turns out to be a small (5-file) leftover debug set from early
+development, sharing `pNNN` filenames with the CURRENT, actually-used
+numbering by pure coincidence -- confirmed by a direct date-range
+mismatch (its `repertoire_1894-95_p008.png` covers Apr28-May7, but the
+production `raw_columnwise/repertoire_1894-95_p008.raw.json` and
+`entities.work_link`/`resolved_sessions` provenance for the same
+page_id are unambiguously Jan6-25). Don't reuse it. The real chain,
+read off `pipeline/split_spread_pages.py` and
+`pipeline/extract_split_page_numbers.py`: a `pNNN` id inside
+`raw_columnwise` is keyed by the REAL PRINTED PAGE NUMBER (read off the
+scan's rotated left-margin stamp), not by source-render order --
+confirmed directly against `resolved_sessions/*.resolved_sessions.json`'s
+own `_source` field (e.g. `"repertoire_1894-95_p008 (top, no
+collision)"`) and `raw_columnwise/*.columns.json`'s own `date_rows`
+(both agree with the pair's real date range, unlike the stale debug
+images). `outputs/full_run/printed_page_numbers_all.csv` (current,
+authoritative -- unlike the same-named file inside the
+`repertoire_spreadfix_v6/` subdirectory, which is the stale one here)
+gives each `pairNNN`'s real printed-page range directly. From there,
+one physical `ForUpload_{season}_Repertoire_{NNN}.jpg` render (0-
+indexed) covers one `pairNNN` unit's whole two-page spread; since pair
+numbers increment by 2 starting at `pair002`, the render index is
+simply `(pair_number - 2) / 2` -- confirmed against 3 independent
+season/pair combinations (1894-95_pair008 -> render 003, 1891-92_pair004
+-> render 001, 1895-96_pair018 -> render 008, 1896-97_pair014 -> render
+006), each verified by reading the render's own printed date header
+before trusting the arithmetic. Worth writing down permanently since
+this mapping had to be reconstructed from source rather than looked up.
+
+**The 4 rows, checked against the correctly-mapped scans:**
+
+- **"Золото" (`repertoire_1894-95_pair008`, 12 Четв., Малый) -- another
+  structural split bug, same class as this issue's Коппелія/
+  Дивертиссементъ finding**: raw had ONE work,
+  `{"work_title": "Золото, ком.", "genre": "ш."}`, but the scan
+  (`ForUpload_1894-95_Repertoire_003.jpg`) reads two separate lines,
+  "Золото, ком." and "Шашки, ш." -- two distinct billed works, not one.
+  The second work's title ("Шашки") had been dropped entirely and its
+  genre ("ш.") had landed on the first work. Fixed by splitting into
+  `{"Золото", "ком."}` + `{"Шашки", "ш."}`.
+- **"Левъ Гурычъ Синичкинъ" (`repertoire_1891-92_pair004`, 29 Воскрес.,
+  Малый) -- a genuine truncation, not a homoglyph**: raw had genre
+  `р.`, scan (`ForUpload_1891-92_Repertoire_001.jpg`) reads clearly
+  "Левъ Гурычъ Синичкинъ, вод." -- the model dropped everything but the
+  last letter of "вод." Fixed to `вод.`
+- **"Золото" `к.-м.` (`repertoire_1895-96_pair018`, 4 Воскресенье. вечеръ,
+  Малый) -- confirmed genuine, already correctly structured**: scan
+  (`ForUpload_1895-96_Repertoire_008.jpg`) reads "Золото, к.м." exactly;
+  raw's `"Золото"`/`"к.-м."` (already its own clean two-work split from
+  an earlier session) differs only by a hyphen, a Problem #5 spelling
+  variant, not a bug. Left as-is.
+- **"Шашки" `…` (`repertoire_1896-97_pair014`, 30 Понедѣльник. утро,
+  Малый) -- confirmed genuine, and a good example of the project's
+  "never fabricate" rule working as intended**: the scan
+  (`ForUpload_1896-97_Repertoire_006.jpg`) shows visible foxing/staining
+  directly over this cell's genre text -- "Шашки" is otherwise
+  overwhelmingly `ш.`/`шут.`/`шутка` corpus-wide (109 appearances), so
+  `ш.` would be the safe guess, but it is NOT legible in this specific
+  printing. The `…` already in raw (added 2026-09-17, per its own
+  `_fix_note`) is the model's honest transcription of illegible text,
+  not a bug to fix by guessing the likely value. Left as-is.
+
+**Rebuilt the full chain again.** Confirmed clean: `validation_errors.csv`
+unchanged (268, neither touched page among them), `quality_flags.csv`
+unchanged (895), `work_genre_candidate` 316 title groups unchanged (752
+rows, -2 exactly matching the 2 fixed rows; both title groups keep
+their OTHER genuine variants, correctly), dates 98.1% verified
+(unchanged), Musicians/Roster isolation (2900/23) unchanged.
+
+**This closes out every row from this issue's original singleton-
+outlier scan.** The broader `work_genre_candidate` queue (~313 title
+groups, mostly genuine spelling-variant noise per Problem #5, not bugs)
+remains open-ended -- no defined "done," continue spot-checking on
+request.
