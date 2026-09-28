@@ -18,8 +18,18 @@ READINGS for words. That is deliberate: the selector may choose a different
 word, never a different structure, so the merged output stays comparable to
 the reference run and the printed line breaks are preserved exactly.
 
-A block that only one run produced is kept verbatim from the reference. A
-block no run but the reference saw gets no candidates and is unchanged.
+Alignment is done ONCE PER PAGE, not per block, and that matters. A banded
+view fragments the page differently — review_1902-03_SP_ballet_p009 is one
+block whole and twenty-two blocks when quartered, because each band cuts a
+paragraph and the model emits every piece separately. Matching blocks
+one-to-one would throw twenty-one of those away. Instead each view's whole
+page is projected onto the reference's word positions, and every reference
+block takes its slice of that projection.
+
+Where a view cannot be aligned at all (genuinely different reading order,
+missing page) its candidate at each position comes back empty, the selector
+drops it, and the reference word stands. Views degrade to silence rather
+than to damage.
 
 Usage:
     uv run python pipeline/merge_views.py \
@@ -103,17 +113,23 @@ def project(ref_words: list[str], other_words: list[str]) -> list[str]:
     return out
 
 
-def merge_text(ref_text: str, others: list[str]) -> tuple[str, int]:
-    """Selector over the views, splicing chosen words back into ref's whitespace."""
+def merge_text(ref_text: str, projected: list[list[str]]) -> tuple[str, int]:
+    """Selector over the views, splicing chosen words back into ref's whitespace.
+
+    `projected` holds, per view, what that view reads at each of this block's
+    word positions (already aligned page-wide by the caller).
+    """
     spans = list(WORD.finditer(ref_text))
-    if not spans or not others:
+    if not spans or not projected:
         return ref_text, 0
     ref_words = [m.group() for m in spans]
-    projected = [project(ref_words, WORD.findall(t)) for t in others]
+    usable = [p for p in projected if len(p) == len(ref_words)]
+    if not usable:
+        return ref_text, 0
 
     pieces, last, changed = [], 0, 0
     for i, m in enumerate(spans):
-        cands = [ref_words[i]] + [p[i] for p in projected]
+        cands = [ref_words[i]] + [p[i] for p in usable]
         chosen, _ = select(cands, prefer=ref_words[i])
         pieces.append(ref_text[last:m.start()])
         pieces.append(chosen)
@@ -150,26 +166,37 @@ def main() -> None:
     pages_missing = collections.Counter()
     merged: list[dict] = []
     for page_id, ref_blocks in ref_pages.items():
-        aligned = []
+        # one alignment per page per view; each block then takes its slice
+        ref_words: list[str] = []
+        bounds: list[tuple[int, int]] = []
+        for rb in ref_blocks:
+            w = WORD.findall(rb[field_of(rb)] or "")
+            bounds.append((len(ref_words), len(ref_words) + len(w)))
+            ref_words.extend(w)
+
+        projections = []
         for other in others:
             ob = other.get(page_id)
             if not ob:
                 pages_missing[page_id] += 1
-                aligned.append({})
-            else:
-                aligned.append(align_blocks(ref_blocks, ob))
-        for i, rb in enumerate(ref_blocks):
+                continue
+            other_words: list[str] = []
+            for b in ob:
+                other_words.extend(WORD.findall(b[field_of(b)] or ""))
+            if other_words and ref_words:
+                projections.append(project(ref_words, other_words))
+
+        for (start, end), rb in zip(bounds, ref_blocks):
             col = field_of(rb)
             ref_text = rb[col] or ""
-            cands = [m[i][field_of(m[i])] or "" for m in aligned
-                     if i in m and (m[i][field_of(m[i])] or "").strip()]
-            new_text, changed = merge_text(ref_text, cands)
+            slices = [p[start:end] for p in projections]
+            new_text, changed = merge_text(ref_text, slices)
             row = dict(rb)
             row[col] = new_text
             merged.append(row)
             n_blocks += 1
             n_changed += changed
-            n_words += len(WORD.findall(ref_text))
+            n_words += end - start
 
     a.out_dir.mkdir(parents=True, exist_ok=True)
     with open(a.parsed_dirs[0] / "review_block.csv", encoding="utf-8") as f:
