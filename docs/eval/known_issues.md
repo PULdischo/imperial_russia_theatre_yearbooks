@@ -19313,12 +19313,36 @@ either a bug or a false alarm.**
 (895), dates 98.1% verified (unchanged), Musicians/Roster isolation
 (2900/23) unchanged.
 
+**Correction, same day**: the "~9 groups not yet reached" note above
+undercounted the true remainder -- it conflated "102 targets in the
+one-check target list" with "102 of 111 groups checked," without
+accounting for the 9 groups already fully checked earlier the same
+session (in the exhaustive multi-variant pass, before the one-check-
+per-group pacing decision). Re-derived the real count directly against
+the live queue rather than trusting the earlier tally: only 2 groups
+were actually unchecked -- exactly the two named above, nothing else.
+Checked both:
+
+- **"Не все коту масляница" (`repertoire_1891-92_pair012`, 10 Вторникъ,
+  Александринскій) -- confirmed genuine.** Scan reads "Не все коту
+  масляница, ком." cleanly, matching raw exactly.
+- **"Sodom's Ende" (`repertoire_1891-92_pair020`, 25 Среда,
+  Александринскій) -- confirmed genuine.** Scan reads "Sodom's Ende,
+  Schausp." cleanly, matching raw exactly.
+
+Neither needed a fix -- **this closes the entire 111-group balanced
+tier at 111/111**, no rebuild needed for this round (no raw JSON
+changes). Combined with issue #99's 83-group singleton-outlier tier,
+every group RG asked to be shown or scan-checked in the genre-review
+queue this session (194 groups total across issues #99-100) has now
+been individually verified against the source scans.
+
 **Still open:**
-1. The 2 unchecked spread groups (Не все коту масляница, Sodom's
-   Ende) -- session paused before reaching them, not because of any
-   finding.
-2. The ~9 groups not yet reached in the balanced tier generally (111
-   total, 102 done).
-3. Красный цвѣтокъ's remaining spelling variants (flagged since issue
-   #99, still not chased).
-4. Queue remains open-ended by design.
+1. Красный цвѣтокъ's remaining spelling variants (flagged since issue
+   #99, still not chased) -- a worklist item, not a gap in coverage.
+2. The queue remains open-ended by design: `entities.work_genre_
+   candidate` will always contain genuine spelling-variant noise
+   (Problem #5's contract) and genuine dual-genre titles that are
+   correctly never merged. There is no state where the queue is
+   "empty" -- "done" here means every group has been looked at, not
+   that the table is cleared.

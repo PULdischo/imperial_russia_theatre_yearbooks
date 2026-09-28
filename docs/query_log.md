@@ -9779,3 +9779,26 @@ Result: 0 rows for both. He is not on any staff/artist roster (he was a visiting
 ```
 
 Result: 102 of 111 balanced-tier groups scan-verified (70 single-page-season + 32 two-page-spread-season). 10 genuine bugs found and fixed (a genre-field-excerpt bug with 2 recovered missing works on Волки и овцы, a сц./ком. misread, an этюдъ/этюдь misread, 2 more genre-fabrication bugs, a truncation bug affecting 3 rows on one page, and a genre-contamination bug). ~90 confirmed genuine. 2 spread groups (Не все коту масляница, Sodom's Ende) not reached — session paused. See known_issues.md issue #100.
+
+## 2026-09-28 — Genre review queue: re-deriving the true count of unchecked balanced-tier groups
+
+```sql
+-- (not a DB query; cross-checked own session tracking (/tmp/oc_single.json, /tmp/oc_spread.json)
+-- against the original 111-group balanced_tier.json list)
+```
+
+Result: found and corrected a counting error in the prior turn's status report — only 2 groups (Не все коту масляница, Sodom's Ende) were actually unchecked, not ~9. The "102 of 111" figure had conflated the one-check target-list size with total groups checked, without crediting the 9 groups already fully checked earlier the same session. See known_issues.md issue #100 correction.
+
+## 2026-09-28 — Genre review queue: final 2 balanced-tier groups
+
+```sql
+select ee.date_text, ee.theater, p.page_id, p.season
+from entities.work_genre_candidate wg
+join entities.work_link wl on wg.work_id = wl.work_id
+join raw.event_entry_performance ep on wl.raw_performance_id = ep.performance_id
+join raw.event_entry ee on ep.event_id = ee.event_id
+join raw.source_pages p on ee.page_id = p.page_id
+where wg.canonical_title in ('Не все коту масляница','Sodom''s Ende') and wg.appearance_count = 1
+```
+
+Result: both located and scan-verified genuine (Не все коту масляница, ком. on repertoire_1891-92_pair012; Sodom's Ende, Schausp. on repertoire_1891-92_pair020). This closes the entire 111-group balanced tier at 111/111. See known_issues.md issue #100.
