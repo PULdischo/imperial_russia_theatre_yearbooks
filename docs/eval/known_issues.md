@@ -19601,3 +19601,49 @@ mislabeling bug, separate from this issue's scope.
 Rebuilt the full chain. See `docs/query_log.md` for every query run
 during the investigation (both the flawed first-pass join and its
 correction are logged, per the project's honest-trail convention).
+
+## Issue #105: Repertoire title misreads found by the ballet lists (#101) --
+## 67 fixed, 11 genuine print variants kept, 13 phantom works gone
+
+The 77 list dates where the Repertoire had only a *near-identical* title
+were each checked on the Repertoire scan (5 checkers, scan-only;
+`outputs/recovery_2026-09-28_fuzzy_titles/`, logs per page).
+**67 misreads fixed:** Корсарь -> Корсаръ (25), Данта -> Даита (10),
+Царь Кандавъ/Кандавль -> Кандавлъ (12, which also resolves the work
+split first seen in the 1891-92 spot check), Фея куколь -> куколъ (5),
+Ненюфарь -> Ненюфаръ (3), Бандерка -> Баядерка (3), Горбуночекъ/
+Горбуночкъ -> Конекъ-Горбунокъ (2), Лебединное -> Лебединое (2),
+Рустикальный -> Хрустальный башмачекъ, Кальнабрино -> Калькабрино,
+Своеправная -> Своенравная жена, Ациснъ -> Ацисъ, Граціела -> Граціелла,
+and Грацієла (Ukrainian є) -> Граціела. Also: 1898-99 p024 "Корсаръ,
+бал." split into title + genre; 1899-00 p017 "Волшебный башмачек" ->
+башмачекъ; 1904-05 p016 Михайловскій receipts had Latin "p" in all 11
+cells -> Cyrillic "р".
+
+**Genuine print variants, kept verbatim (for RG's typo list):**
+Волшебные грезы (x3) / Волшебныя грезы (1899-00, both on one page);
+Маркабомба (1899-00 p026); Привалъ кавалерія (1899-00 p037); Фіамметта
+(1900-01 p026, 1902-03 p014); Фіаметто (1903-04 p024); Пригалъ кавалеріи
+(1903-04 p013, a broken sort for в?); Паяда и рыбакъ (1892-93 p. 4,
+240 dpi scan, worth a look in the physical volume); Граціела with one л
+(1904-05 p016).
+
+**Effect** (integration vs same-code control, then production):
+research.work 3511 -> 3499 (13 misread works merged into their real
+titles; +1 genuine "Фея-куколъ"). Events, performances, receipts and
+persons unchanged. Ballet-list comparison: fuzzy 77 -> 12 (the genuine
+variants), exact 1624 -> 1689; exact+excerpt 1829/1881 = 97.2%.
+
+**Promotion incident:** the first promotion copied whole staged files
+and overwrote 26 annotation edits the parallel session had made in the
+meantime (its issue #104 work). Repaired from the pre-promotion backup
+(`outputs/full_run_pre_promote_backup_2026-09-28_fuzzytitles/`): their
+versions restored, and only this issue's fields (works, 11 receipts_text,
+_fix_note on 78 sessions) re-applied. A field-level diff confirms nothing
+else changed. Rebuilt; the other session was told.
+
+**Follow-ups:** 1895-96 pair024 has the genre written into work_title
+page-wide ("Паяцы, оп.", "Даита, бал."). 1903-04 p027 theater
+"Большой театр" lacks ъ. 1904-05 p014 "28 Понед." likely a misprint
+for 29. Remaining list leads: 24 other_titles, 15 nearby_date, 36 + 28
+Repertoire-side rows.

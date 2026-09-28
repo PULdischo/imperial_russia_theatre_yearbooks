@@ -10108,3 +10108,18 @@ stable: quality_flags.csv 895 (baseline), validation_errors.csv 268
 regression from this session's changes — no session/work rows were
 added or removed by this fix, only `annotation` values on existing
 rows).
+
+## 2026-09-28 — Fuzzy-title round (issue #105): worklist, integration/control diff, restore check
+
+```sql
+-- worklist: one Repertoire cell per fuzzy list date
+select e.page_id, e.printed_page_number, e.date_text, e.theater, e.time_of_day, p.performance_title, p.genre
+from raw.event_entry e join raw.event_entry_performance p using(event_id) where e.city=? and e.date_undate=? and p.performance_title=?;
+-- builds: counts of raw.event_entry, research.performance, research.work, research.event, verified, receipts sum, persons, entities.work_genre_candidate, raw.production_entry
+select canonical_title, appearance_count from ctl.research.work where canonical_title not in (select canonical_title from research.work);
+select canonical_title, appearance_count from research.work where canonical_title not in (select canonical_title from ctl.research.work);
+select count(*) from raw.event_entry where annotation is not null;
+select count(*) from research.work where canonical_title in ('Данта','Бандерка','Царь Кандавъ','Царь Кандавль','Рустикальный башмачекъ','Ненюфарь');
+```
+
+Result: 77 cells on 59 pages. Integration vs control: works 3511 -> 3499 (13 misread works gone, +Фея-куколъ); everything else identical. Final production: works 3499, annotated raw rows 1458 (the parallel session's edits kept), misread works 0; comparison fuzzy 12, exact 1689, excerpt 140.
