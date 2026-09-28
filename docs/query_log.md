@@ -9770,3 +9770,12 @@ where regexp_matches(p.performance_title, 'Бер[н]?а[р]?д[еѣьe]л|Бе�
 ```
 
 Result: 0 rows for both. He is not on any staff/artist roster (he was a visiting/historical figure, not Imperial Theaters personnel). Outside the DB: the season reviews (1892-93 SP ballet p018: "соч. Бернаделли"; 1894-95 SP ballet p002: "г-жи Бернаделли … г. Бернаделли", visiting artists from Vienna) and the ballet lists 1892-93–1895-96 ("соч. Бернаделли") all spell it Бернаделли; only 1897-98 prints "Бернарделли".
+
+## 2026-09-28 — Genre review queue: balanced-tier full scan-check, one representative check per group
+
+```sql
+-- located via entities.work_link -> raw.event_entry_performance -> raw.event_entry -> raw.source_pages joins,
+-- one target per group (smallest-count non-blank variant), for 102 of 111 balanced-tier groups
+```
+
+Result: 102 of 111 balanced-tier groups scan-verified (70 single-page-season + 32 two-page-spread-season). 10 genuine bugs found and fixed (a genre-field-excerpt bug with 2 recovered missing works on Волки и овцы, a сц./ком. misread, an этюдъ/этюдь misread, 2 more genre-fabrication bugs, a truncation bug affecting 3 rows on one page, and a genre-contamination bug). ~90 confirmed genuine. 2 spread groups (Не все коту масляница, Sodom's Ende) not reached — session paused. See known_issues.md issue #100.

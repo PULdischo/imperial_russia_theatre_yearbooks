@@ -19215,3 +19215,110 @@ identification belongs in the research layer's creator link, recorded as
    (roll excerpts up to parent work; classify mismatches). First lead
    already: Repertoire "Рустикальный башмачекъ" 1890-11-11 = Хрустальный.
 3. Production Stats pages (per-season performance counts) as a second audit.
+
+## Issue #100: `work_genre_candidate` balanced tier -- RG: "just go
+## ahead and do the full scan-check treatment"; ~100 of 111 groups done
+
+Following on from issue #99 closing the singleton-outlier tier, RG asked
+to see the ~111-group "balanced" tier (groups with two or more genuinely
+recurring genres, not a single stray outlier) before deciding how to
+proceed with it -- published as an interactive table artifact
+(`claude.ai/artifact/UJc5m3zKPBZk2gGyiucXzL`). RG's answer: "just go
+ahead and do the full scan-check treatment."
+
+Given the true scope (each group can have 2+ distinct genre values, so
+"full" verification means checking every value, not just one row per
+group -- initially ~251 individual checks), re-checked pacing with RG
+partway through; settled on checking ONE representative occurrence per
+group (prioritizing the smallest-count variant, where a real bug is
+most likely to hide) and trusting the majority value as already
+corpus-established, rather than exhaustively verifying every value in
+every group.
+
+**Coverage this round: 102 of 111 groups checked** (70 single-page-
+season + 32 two-page-spread-season groups; 2 spread groups -- Не все
+коту масляница (`repertoire_1891-92_pair012`) and Sodom's Ende
+(`repertoire_1891-92_pair020`) -- not reached, still open).
+
+**10 more genuine bugs found and fixed, all scan-verified:**
+
+- **"Волки и овцы" (`repertoire_1899-00_p022`, 19 Среда., Маріинскій)
+  -- a genre-field-excerpt bug AND two completely missing works, found
+  together**: this is RG's own Savina benefit-performance annotation
+  listing four excerpts in a row ("Сцена 4-го д. ком. Ревизоръ. ...
+  4-е д. ком. Послѣдняя жертва. ... Сцены 3-го д. ком. Волки и овцы.
+  Лакейская, сц."). The `works` array only captured "Провинціалка",
+  "Волки и овцы" (with its excerpt marker's genre "ком." landing as a
+  bare genre value instead of being read as "scenes from the comedy"),
+  and "Лакейская" -- "Ревизоръ" and "Послѣдняя жертва" weren't captured
+  as works at all, only surviving in the annotation text. Fixed by
+  reconstructing all 5 works with the excerpt markers properly
+  prefixed onto their titles, matching the corpus's established
+  excerpt-linking convention.
+- **"Поздняя любовь" (`repertoire_1899-00_p017`, 5 Воскрес., Малый) --
+  `ком.` misread for `сц.`**, confirmed by a second "сц." occurrence on
+  the same page. **Also confirmed on a LATER page (1908-09) that "ком."
+  is independently, genuinely printed for OTHER performances of this
+  same title** -- worth remembering: fixing one confirmed-wrong instance
+  of a value doesn't mean every other instance of that value is wrong
+  too; each row still stands on its own evidence.
+- **"Волшебные звуки" (`repertoire_1900-01_p035`, 24 Вторникъ., Новый)
+  -- another instance of the "этюдь"/"этюдъ" ending-letter confusion
+  already established in issue #98/#99's Красный цвѣтокъ finding.**
+- **Two more genre-fabrication bugs** (genre bled from an adjacent
+  work onto a title with nothing printed, same class documented
+  repeatedly in issues #98-99): "Лѣтняя картинка" x2 on
+  `repertoire_1904-05_p020` (both `27 Понед.` and `31 Пятница.`
+  mornings), and "Сказаніе о невидимомъ градѣ Китежѣ и дѣвѣ Февроніи"
+  on `repertoire_1907-08_p004`.
+- **"Наканунѣ, возможный случай" (`repertoire_1903-04_p018`) --** same
+  fabrication class, genre set to blank; cross-checked genuine
+  (correctly blank already) on a second page the same session.
+- **"Фантазеръ" x3 (`repertoire_1905-06_p005`, 23/27/29, Новый) -- a
+  consistent truncation**, not a one-off: all three occurrences on this
+  page had "трагич." dropped from the genre, leaving bare `ком.` The
+  scan reads "Фантазеръ, трагич. ком." cleanly on every one. Fixed all
+  three together once the pattern was confirmed on the first.
+- **"Спорный вопросъ, др." (`repertoire_1893-94_pair006`, 4 Понед.,
+  Малый) -- a contamination bug, not the "genre embedded in title"
+  pattern it looks like at first**: the title already carries its own
+  genre suffix ("...,  др."), but the separate `genre` field said
+  `ком.` -- which turned out to belong to the adjacent, separately-
+  billed "Ирэнь, ком." instead. Fixed to `др.`, matching the title's
+  own suffix and the corpus's 22-appearance majority for this title.
+
+**~90 more confirmed genuine**, spanning familiar disposition classes
+from earlier issues: real dual-genre titles (Отелло оп./траг./тр.,
+Faust Schausp./Tragödie, Царь Борисъ траг./др., Царская невѣста
+оп./др.), benefit/gala excerpt-shaped genres (another Пушкин-
+centennial program confirming Борисъ Годуновъ, "Каменный гость, сц."
+etc.), guest-troupe foreign-language genre labels, and abbreviation-
+length spelling variants.
+
+**Two direct-reading corrections caught mid-session, worth recording
+as their own lesson**: a "Гроза" (`repertoire_1896-97_pair006`) row and
+a "Каширская старина" cross-check both got misread on a first,
+lower-zoom pass and correctly re-read as genuine on a second, tighter
+zoom -- the *opposite* mistake from issues #98-99's х/д lesson (there,
+low zoom made a genuine `др.` look like a misread `хр.`; here, low zoom
+briefly suggested a value that turned out, at higher zoom, to match
+raw all along). Same underlying lesson holds either direction: **never
+conclude anything about a specific cell from a low-resolution
+full-page read -- always zoom the exact cell before deciding it's
+either a bug or a false alarm.**
+
+**Rebuilt the full chain.** Confirmed clean: `event_entry_performance`
+27589 -> 27591 (+2, the two recovered Волки и овцы excerpt works),
+`validation_errors.csv` unchanged (268), `quality_flags.csv` unchanged
+(895), dates 98.1% verified (unchanged), Musicians/Roster isolation
+(2900/23) unchanged.
+
+**Still open:**
+1. The 2 unchecked spread groups (Не все коту масляница, Sodom's
+   Ende) -- session paused before reaching them, not because of any
+   finding.
+2. The ~9 groups not yet reached in the balanced tier generally (111
+   total, 102 done).
+3. Красный цвѣтокъ's remaining spelling variants (flagged since issue
+   #99, still not chased).
+4. Queue remains open-ended by design.
