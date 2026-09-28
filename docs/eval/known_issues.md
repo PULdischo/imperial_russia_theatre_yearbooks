@@ -19647,3 +19647,82 @@ page-wide ("Паяцы, оп.", "Даита, бал."). 1903-04 p027 theater
 "Большой театр" lacks ъ. 1904-05 p014 "28 Понед." likely a misprint
 for 29. Remaining list leads: 24 other_titles, 15 nearby_date, 36 + 28
 Repertoire-side rows.
+
+## Issue #104 follow-up: 9 occasion headings miscaptured as spurious
+## `works` entries instead of `annotation` (7 pages), plus 2 genuinely
+## missing sessions recovered as a side effect -- RG: "what else do we
+## need to look at carefully around annotations (both banners and
+## benefits)"
+
+Checking whether the SAME kind of heading text (that issue #104 audited
+inside `annotation`) was also sometimes landing in
+`raw.event_entry_performance.performance_title` instead surfaced 8
+entirely new occasion headings never on the radar at all, all captured
+as a genre-less spurious "work" with `annotation=NULL`: Спектакль въ
+память А. С. Грибоѣдова, Спектакль въ память И. А. Крылова, Концертъ въ
+пользу фонда на сооруженіе въ С.-Петербургѣ памятника М. И. Глинкѣ,
+Спектакль въ память Н. И. Хмельницкаго, Спектакль въ память Вольфганга
+Гёте, Спектакль въ память Императрицы Екатерины II, and a
+no-trailing-period variant of the already-known "Спектакль для
+учащейся молодежи". This is structurally the same bug class as this
+doc's Коппелія/Дивертиссементъ finding (issue #98) -- a heading landing
+where a title should be -- just never checked from the annotation-field
+angle before.
+
+**All 9 rows across the 7 pages scan-verified genuine, 0 false
+positives this round.** Unlike issue #104's banner-gap sweep (80% false
+positive rate), every one of these checked out: 3 pairs (Грибоѣдовъ on
+`repertoire_1894-95_pair006`, Крыловъ on `repertoire_1894-95_pair010`,
+Екатерина II on `repertoire_1896-97_pair010`) independently confirmed
+shared across exactly 2 theaters on the same date/session via direct
+scan comparison, matching the "literary/historical memorial -> only the
+drama-focused theaters that specific year participate" pattern already
+established in issue #104 (never assumed corpus-wide -- verified each
+pair individually). The other 3 (Глинка-fund concert on
+`repertoire_1901-02_p030`, Гёте on `repertoire_1899-00_p018`,
+Хмельницкій on `repertoire_1896-97_pair002`, student-matinee on
+`repertoire_1902-03_p010`) confirmed single-theater and self-contained
+-- no title beneath the heading in some cases, meaning the heading text
+literally IS the entire cell content.
+
+Fixed by moving each heading from `works` into `annotation` (removing
+the spurious no-genre `works` entry, keeping any genuinely distinct
+co-listed item -- Хмельницкій's commemorative lecture by И. А. Шляпкинъ
+was kept as its own work, since a public lecture is a real distinct
+program item, not a duplicate of the heading text).
+
+**2 more genuinely missing sessions found as a side effect** of
+scan-checking the Ekaterina II page in full: `repertoire_1896-97_pair010`,
+`24 Воскресенье.`, had BOTH Большой театръ and Маріинскій театръ
+entirely absent from raw JSON (the page's own earlier `_source` note
+already flagged "Маріинскій/Большой entirely missing from extraction"
+as a known limitation from a 2026-09-23 reconstruction pass, but this
+specific date had fallen outside what that pass covered). Recovered
+both directly from the scan: Большой carried the same Ekaterina II
+heading plus "О время!, ком. / Ѳедулъ съ дѣтьми, оп. / Апоѳеозъ"
+(receipts 2643 р. 52 к.); Маріинскій ran its own unrelated regular
+ballet, "Конекъ-горбунокъ, бал." (receipts 2893 р. 32 к., no
+annotation, correctly excluded from the memorial).
+
+Rebuilt clean: quality_flags.csv 895 (baseline), validation_errors.csv
+268 (baseline), dates 98.2% (+2 verified, matching the 2 recovered
+sessions), work_genre_candidate 297/702 (unchanged), Musicians/Roster
+2900/23 (unchanged). event_entry 26485->26487 (+2 recovered sessions),
+event_entry_performance 28222->28217 (net -5: -9 spurious heading-works
+removed, +4 real works added for the 2 recovered sessions).
+
+**Still open, explicitly out of scope this round**: "Гимнъ" (the
+anthem) appears as a `works` entry 145 times corpus-wide, always with
+`genre=NULL` -- genuinely a performed opener, not itself a bug -- but
+only 16 of those sessions also carry a matching "Гимнъ."/"Hymne."
+annotation; 118 have `annotation=NULL` entirely. Given how systematic
+the confirmed institutional banners turned out to be on the 14 Ноября
+1896 page in this same season (every one of 5 theaters' free-student-day
+morning cell opens with "Гимнъ"/"Hymne" alongside the shared
+"Безплатные спектакли..." banner), this 118-row population very likely
+contains a real, much larger population of under-captured occasion
+headings -- but given the earlier banner-gap sweep's 80% false-positive
+rate, this needs the same full scan-verified treatment before touching
+anything, not a shortcut. RG asked to start with just the 7-page/9-row
+set above; this 118-row thread is the natural next phase whenever RG
+wants to continue.

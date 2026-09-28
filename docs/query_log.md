@@ -10123,3 +10123,96 @@ select count(*) from research.work where canonical_title in ('Данта','Ба�
 ```
 
 Result: 77 cells on 59 pages. Integration vs control: works 3511 -> 3499 (13 misread works gone, +Фея-куколъ); everything else identical. Final production: works 3499, annotated raw rows 1458 (the parallel session's edits kept), misread works 0; comparison fuzzy 12, exact 1689, excerpt 140.
+
+## 2026-09-28 — Follow-up to issue #104: headings miscaptured as spurious `works` entries
+
+RG asked "what else do we need to look at carefully around annotations
+(both banners and benefits)". Checked whether banner/occasion headings
+were ever landing in `raw.event_entry_performance.performance_title`
+instead of `annotation` (a structural-split bug, same class as issue
+#98's Коппелія/Дивертиссементъ finding), rather than only auditing the
+`annotation` field itself as issue #104 did.
+
+```sql
+select ep.performance_title, count(*)
+from raw.event_entry_performance ep
+where ep.performance_title ilike '%Гимнъ%' or ep.performance_title ilike '%безплатн%'
+   or ep.performance_title ilike '%спектакль для учащ%' or ep.performance_title ilike '%въ память%'
+   or ep.performance_title ilike '%юбилейн%' or ep.performance_title ilike '%концертъ въ пользу%'
+group by ep.performance_title order by count(*) desc
+```
+Result: "Гимнъ"/"Гимнъ." as a work_title, 145 occurrences total (genre
+always NULL, consistent with a genuinely performed wordless anthem
+opener -- NOT flagged as a bug). Plus 9 occurrences of 8 entirely new
+occasion headings never covered by issue #104's 10-string banner list:
+Спектакль въ память А. С. Грибоѣдова (x2), Спектакль въ память И. А.
+Крылова (x2), Концертъ въ пользу фонда на сооруженіе... М. И. Глинкѣ
+(x1), Спектакль въ память Н. И. Хмельницкаго (x1), Спектакль въ память
+Вольфганга Гёте (x1), Спектакль въ память Императрицы Екатерины II
+(x1), Спектакль для учащейся молодежи with no trailing period (x1) --
+all 9 with `annotation` NULL.
+
+```sql
+select case when annotation ilike '%Гимнъ%' or annotation ilike '%Hymne%' then 'has_gimn_annotation'
+            when annotation is null then 'annotation_null' else 'other_annotation' end as bucket, count(*)
+from raw.event_entry_performance ep join raw.event_entry ee on ep.event_id = ee.event_id
+where ep.performance_title ilike '%Гимнъ%' group by bucket
+```
+Result: of the 145 "Гимнъ" sessions, only 16 also carry a matching
+"Гимнъ."/"Hymne." annotation; 118 have annotation=NULL entirely, 11
+have some other annotation. Left uninvestigated this round (out of
+scope for the 7-page follow-up RG asked to start with) -- flagged as
+the largest remaining open thread.
+
+Individually scan-verified all 9 new-heading rows across their 7 pages
+(resolved via the same season/pairnum scan-mapping as issue #104).
+Result: **all 9 confirmed genuine** (no false positives this round,
+unlike the earlier banner-gap sweep) -- each heading is a real printed
+occasion notice that the extractor correctly transcribed but placed in
+`works` instead of `annotation` (structurally identical to issue #98's
+Коппелія/Дивертиссементъ bug). 3 pairs (Грибоѣдовъ, Крыловъ, Екатерина
+II) independently confirmed shared across exactly 2 theaters each on
+the same date/session via direct scan comparison; the other 3
+(Глинка-concert, Гёте, Хмельницкій, student-matinee) confirmed
+single-theater and self-contained, matching the already-established
+"literary/historical memorial -> drama-focused theaters only, verify
+per instance, never assume corpus-wide" rule from issue #104.
+
+**2 additional genuinely missing sessions found as a side effect** of
+scan-checking the Ekaterina II page in full: Большой театръ and
+Маріинскій театръ both had their entire `24 Воскресенье.` session
+missing from raw JSON for `repertoire_1896-97_pair010` (page's own
+`_source` note already flagged "Маріинскій/Большой entirely missing
+from extraction" as a known limitation from issue #78's 2023 -- er,
+2026-09-23 reconstruction, but this specific date had fallen outside
+what that pass covered). Recovered both directly from the scan
+(`ForUpload_1896-97_Repertoire_004.jpg`): Большой = "О время!, ком. /
+Ѳедулъ съ дѣтьми, оп. / Апоѳеозъ" under the shared Ekaterina II
+heading, receipts 2643 р. 52 к.; Маріинскій = "Конекъ-горбунокъ, бал.",
+receipts 2893 р. 32 к., no annotation (Маріинскій's own regular ballet
+that night, unrelated to the memorial).
+
+Applied: moved all 9 headings from `works` to `annotation` (removing
+the spurious no-genre `works` entry in each case, keeping any genuinely
+distinct co-listed items -- e.g. Хмельницкій's commemorative LECTURE by
+И. А. Шляпкинъ was kept as its own work, since a lecture is a real
+distinct program item, not a duplicate of the heading). Added the 2
+recovered sessions.
+
+Rebuilt full chain. Confirmed stable: quality_flags.csv 895 (baseline),
+validation_errors.csv 268 (baseline), dates 98.2% (26016->26018
+verified, +2 matching the 2 recovered sessions), work_genre_candidate
+297 groups/702 rows (unchanged), Musicians/Roster 2900/23 (unchanged).
+event_entry 26485->26487 (+2, the recovered sessions);
+event_entry_performance 28222->28217 (-5, net of -9 removed spurious
+heading-works +4 added real works for the 2 recovered sessions).
+
+**Still open, not investigated this round**: the 118-row "Гимнъ
+present as work, annotation NULL" population -- likely the largest
+remaining thread in this area, but out of today's scope (RG asked to
+start with just the 7-page/9-row new-heading set). See known_issues.md
+issue #104 follow-up entry.
+
+## 2026-09-28 — (subagent, logged retroactively) read-only checks during the other-title round, item 8 (issue #101 follow-up)
+
+A checker ran two read-only queries on outputs/full_run to understand item 8 (1895-96 Moscow Катарина "января 17"). The exact SQL was not reported. What it looked up: (1) Moscow events on the list's Катарина dates (13 Dec 1895, 17 and 28 Jan 1896); (2) Большой events 14–21 Jan 1896. Result: Катарина appears on 13 Dec and 28 Jan, and on 17 Jan the Большой has Эсмеральда (500 р. 50 к.), matching the scan, so item 8 is a genuine list/Repertoire disagreement (category E). Not used to decide any reading.
