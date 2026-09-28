@@ -18799,3 +18799,118 @@ Not done: `link_wikidata.py` and HF/Cloud Run republish (on request
 only, per convention). Every two-page-spread season's printed-page
 sequence is now fully continuous or explained by a genuine printed
 closure -- no missing-scan gaps remain.
+
+## Issue #98: `entities.work_genre_candidate` systematic spot-check --
+## 6 genuine extraction bugs found and fixed, ~15 more confirmed genuine
+
+RG: "keep working the genre-candidate queue," continuing from issue
+#96's single-outlier-genre technique. Rather than one row at a time,
+queried every title group where a majority genre (>=10 appearances) has
+a same-title singleton outlier genre -- 130 such rows across the whole
+queue -- and worked through the highest-signal subset (structurally odd
+outliers: near-miss spellings, single letters, excerpt markers, a
+placeholder ellipsis), deferring pure spelling/abbreviation-family
+variants (Problem #5's contract: those are legitimately never merged,
+correctly flagged for human review, not bugs).
+
+**6 genuine extraction bugs found and fixed, all scan-verified before
+touching raw JSON:**
+
+- **"Волшебные звуки" x2**: genre extracted as `атюдь`
+  (`repertoire_1899-00_p027`, 26 Вторн., Новый театръ) and `втюдъ`
+  (`repertoire_1902-03_p017`, 19 Четвергъ, Новый театр) -- both scans
+  read clearly "Волшебные звуки, этюдъ." (etude). Fixed both to `этюдъ`.
+- **"Конекъ-Горбунокъ"**: `repertoire_1903-04_p032`, 4 Воскрес.,
+  Маріинскій театръ -- genre recorded as `сц.`, scan reads clearly
+  "Конекъ-Горбунокъ, бал." Fixed to `бал.` **Contrast with issue #96's
+  companion finding**: that session found a *different*
+  Конекъ-Горбунокъ row (`repertoire_1907-08_p031`) where the lone
+  `оп.` outlier was genuinely printed that way -- same title, same
+  "singleton outlier" shape, opposite disposition, because the scan
+  said something different each time. The scan decides, not the
+  pattern.
+- **"Коппелія" / "Дивертиссементъ" -- a structural split bug, not just
+  a wrong genre value**: `repertoire_1902-03_p005`, 2 Среда., Новый
+  театръ. Scan reads "1-е и 2-е д., бал. Коппелія. Дивертиссементъ." --
+  one excerpt performance (Acts 1-2 of the ballet Коппелія) followed by
+  a second, separately-billed item (Дивертиссементъ, no genre stated).
+  Raw JSON had wrongly split this into `{"1-е и 2-е д.", "бал."}` +
+  `{"Коппелія", "Дивертиссементъ"}` -- the SECOND work's title landed in
+  the FIRST work's genre field, and "Коппелія" itself ended up with
+  "Дивертиссементъ" as its genre. Same underlying bug class as
+  known_issues.md's Problem #3 (Гимнъ contamination) and issue #95's
+  Севильскій цирюльникъ/Паяцы merge, just two objects splitting the
+  wrong way instead of two merging into one. Fixed by reconstructing
+  the intended two-work split: `{"1-е и 2-е д. Коппелія", "бал."}` +
+  `{"Дивертиссементъ", null}`.
+- **"Соломенная шляпка"**: `repertoire_1904-05_p033`, 25 Пятница., Новый
+  театръ -- genre recorded as `ком.-вол.`, scan reads clearly
+  "Соломенная шляпка, ком.-вод." (д/л misread). Fixed to `ком.-вод.`
+- **"Эсмеральда" -> "Эсклармонда" -- a TITLE misread, not a genre
+  one**: `repertoire_1898-99_p022`, 22 Пятница., Маріинскій театръ.
+  Raw JSON recorded `{"Эсмеральда", "оп."}`, which is why it surfaced
+  in the genre queue at all (Эсмеральда's other 70 appearances are all
+  `бал.`) -- but the scan doesn't say Эсмеральда there at all. It reads
+  "Эсклармонда, оп." (Massenet's opera *Esclarmonde*), a completely
+  different work that happens to share no letters with "Эсмеральда"
+  worth noting -- this wasn't a homoglyph or a near-miss, the model
+  substituted a familiar corpus title for an unfamiliar one it misread.
+  Fixed the title itself; genre `оп.` was already correct for the real
+  work. This is the first genre-queue bug this session traced back to a
+  wrong TITLE rather than a wrong genre value -- worth checking title
+  spelling, not just genre spelling, on any future single-occurrence
+  outlier that looks stranger than a simple abbreviation variant.
+
+**~15 more checked and confirmed genuine** (scan matches raw exactly),
+left untouched:
+
+- Two "Борисъ Годуновъ" excerpt-genre rows (`2 сцены` on
+  `repertoire_1898-99_p036`, a Pushkin-centennial gala program -- same
+  event class as issue #94-95's Русалка "1-я сцена" case; `сц.` on
+  `repertoire_1907-08_p026`, a children's-orphanage benefit spectacle)
+  -- both genuinely printed, both legitimate excerpt-billing genre
+  values distinct from the opera's own 27-appearance `оп.`, correctly
+  left flagged in the review queue rather than merged or fixed.
+  Consistent with RG's standing Русалка decision -- benefit/gala
+  programs get excerpt-shaped genre text as a matter of course.
+- "Коппелія, оп." (`repertoire_1907-08_p013`, 11 Воскр., Большой
+  театръ) and "Раймонда, оп." (`repertoire_1901-02_p026`, 13 Среда.,
+  Маріинскій театръ) -- both scan-confirmed as genuinely printed
+  `оп.` for otherwise all-ballet titles, same anomaly class as issue
+  #96's Конекъ-Горбунокъ finding. Left as-is.
+- "Левъ Гурычъ Синичкинъ, ком-вод." (`repertoire_1901-02_p026`, same
+  page as Раймонда, Александринскій театръ) -- genuinely printed
+  "ком.-вод.", the review-queue entry is only a punctuation-normalization
+  difference from the majority spelling, not a content bug.
+- "Соломенная шляпка, оп.-вод." (`repertoire_1905-06_p017`) and
+  "Соломенная шляпка, ком." with no vaudeville suffix at all
+  (`repertoire_1900-01_p013`) -- both scan-confirmed exactly as printed,
+  genuine one-off alternate genre labels for individual performances.
+- "Шашки, ком." (`repertoire_1902-03_p031`, a Red Cross benefit
+  performance) -- scan-confirmed exactly as printed.
+
+**Rebuilt the full chain** (`parse_and_validate.py` ->
+`build_duckdb.py` -> `quality_checks.py` -> `build_entities.py` ->
+`validate_performance_dates.py` -> `build_research_model.py`) after the
+6 fixes. Confirmed clean: `validation_errors.csv` unchanged (268,
+none of the 6 touched pages among them), `quality_flags.csv` unchanged
+(895), `entities.work_genre_candidate` 317 title groups -> 316 (only
+Эсмеральда dropped out entirely; "Волшебные звуки" stays flagged for
+its other, untouched spelling variants -- correct per Problem #5),
+excerpt links, Musicians/Roster isolation (2900 live people / 23
+candidate pairs) all unchanged. Confirmed no interference from the
+concurrent session's issue #97 pair008 recovery, which landed in
+`outputs/full_run` in the same window -- both sets of changes present
+together in the final rebuilt DB, checked directly rather than assumed.
+
+**Still open**: 4 more singleton-outlier rows on two-page-spread-season
+pages ("Золото" x2, "Левъ Гурычъ Синичкинъ" / `р.`, "Шашки" / `…`) --
+deferred because the `pairNNN` page_id -> scan-image mapping used for
+single-page seasons (`ForUpload_{season}_Repertoire_{NNN}.jpg`) doesn't
+hold for spread pages, and a first attempt at the spreadfix single-leaf
+images landed on the wrong date range for one of them, meaning the
+`pairNNN` -> physical-leaf correspondence needs to be re-established
+properly rather than guessed at again. The broader
+`work_genre_candidate` queue (~314 title groups after this round, most
+genuine spelling-variant noise per Problem #5, not bugs) remains
+open-ended -- no defined "done," continue spot-checking on request.

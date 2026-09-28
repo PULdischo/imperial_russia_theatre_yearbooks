@@ -9627,3 +9627,63 @@ where perf.verbatim_title = 'Конекъ-Горбунокъ' and perf.verbatim_
 ```
 
 Result: single row — season 1907-08, "10 Воскрес.", Большой театръ. Scan-verified against ForUpload_1907-08_Repertoire_031.jpg: reads clearly "Конекъ-Горбунокъ, оп.", clean print, no ambiguity — a genuine period print anomaly, not an extraction error. Left unchanged. See known_issues.md issue #96.
+
+## 2026-09-28 — Genre review queue: all title groups with a majority genre (>=10) and a singleton-outlier genre
+
+```sql
+with grp as (
+  select title_key, max(appearance_count) as max_n, count(*) as n_variants
+  from entities.work_genre_candidate
+  group by title_key
+)
+select c.title_key, c.canonical_title, c.canonical_genre, c.appearance_count, g.max_n
+from entities.work_genre_candidate c
+join grp g on c.title_key = g.title_key
+where c.appearance_count = 1 and g.max_n >= 10
+order by g.max_n desc
+```
+
+Result: 130 singleton-outlier rows across the queue. Worked through the structurally-odd subset (near-miss spellings, single letters, excerpt markers, a placeholder ellipsis); found page/date/theater for 19 of them via entities.work_link -> raw.event_entry_performance -> raw.event_entry -> raw.source_pages joins, scan-verified 15, confirmed 6 genuine extraction bugs and fixed them (issue #98), confirmed ~9 genuine (left as-is). 4 more (on two-page-spread-season pages) deferred — page_id-to-scan mapping didn't hold for that format, needs proper re-establishing rather than reuse of the single-page mapping.
+
+## 2026-09-28 — Post-fix verification: work_genre_candidate state for the 4 fixed title groups plus Дивертиссементъ
+
+```sql
+select canonical_title, canonical_genre, appearance_count from entities.work_genre_candidate
+where title_key in ('волшебные звуки','эсмеральда','конекъ-горбунокъ','коппелия','соломенная шляпка','дивертиссементъ')
+order by title_key, canonical_genre
+```
+
+Result: confirmed all 6 fixes landed correctly post-rebuild (no orphaned "атюдь"/"втюдъ"/"сц." on Конекъ-Горбунокъ/"Дивертиссементъ" on Коппелія/"ком.-вол." remaining), Эсмеральда dropped out of the queue entirely (single genre left), "Дивертиссементъ" as its own title unaffected (pre-existing, unrelated candidate entry). See known_issues.md issue #98.
+
+## 2026-09-28 — Confirming no clobbering between this session's genre fixes and the concurrent session's issue #97 (1890-91 pp.8-9) promotion
+
+```sql
+select canonical_title, canonical_genre, appearance_count from entities.work_genre_candidate
+where title_key in ('волшебные звуки','конекъ-горбунокъ','коппелия','соломенная шляпка') order by title_key, canonical_genre;
+select count(*) from raw.event_entry where page_id='repertoire_1890-91_pair008';
+```
+
+Result: both sessions' changes present together in the final rebuilt outputs/full_run/imperial_theaters.duckdb — 12 genre-candidate rows reflecting this session's fixes, and 103 rows for the recovered 1890-91_pair008 page. No file-write race, checked directly rather than assumed.
+
+## 2026-09-28 — 1891-92 St. Petersburg ballet performances by work (spot-check vs. printed "Балетъ" productions list, p. 31)
+
+```sql
+select w.canonical_title, count(*) n, string_agg(coalesce(cast(e.date as varchar),e.date_verbatim)||' '||t.canonical_name, '; ' order by e.date) dates
+from research.performance p join research.event e using(event_id) join research.work w using(work_id) join research.theater t on t.theater_id=e.theater_id
+where e.season='1891-92' and e.city='SP' and (w.canonical_genre ilike '%бал%' or p.verbatim_genre ilike '%бал%')
+group by 1 order by 1
+```
+
+Result: 13 works. (A first attempt with `e.city ilike '%петерб%'` returned 0 rows — city is coded 'SP'/'Moscow'.) Dates match the printed list exactly for 10 of 13 ballets. Царь Кандавлъ split across two work entities (Царь Кандавлъ 6 + Царь Кандавъ 4 = printed 10). Зорайя shows 2 vs printed 3 and Фиаметта absent — both because the excerpt rows have NULL genre (checked in next query).
+
+## 2026-09-28 — Фиаметта / Зорайя excerpt rows, 1891-92 SP
+
+```sql
+select e.date, t.canonical_name, p.performance_order, p.verbatim_title, p.verbatim_genre, w.canonical_title, w.canonical_genre, w.excerpt_of_work_id
+from research.performance p join research.event e using(event_id) join research.work w using(work_id) join research.theater t on t.theater_id=e.theater_id
+where e.season='1891-92' and e.city='SP' and (p.verbatim_title ilike '%Фiамет%' or p.verbatim_title ilike '%Фіамет%' or p.verbatim_title ilike '%Зора%'
+ or e.date in ('1892-04-26','1891-10-13','1891-11-14','1891-12-28','1892-02-14'))
+order by e.date, t.canonical_name, p.performance_order
+```
+
+Result: "2-е д. бал. Фіаметта" present on 1891-10-13, 11-14, 12-28, 1892-02-14 (Маріинскій) = printed 4; "2-я и 3-я карт. бал. Зорайя" on 1892-04-26 = printed 3rd Зорайя. Both are excerpt works (excerpt_of_work_id set) with NULL genre. So all 13 printed ballets fully reconcile with the Repertoire data.
