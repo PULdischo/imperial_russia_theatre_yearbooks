@@ -9841,3 +9841,26 @@ select count(distinct season||page_id||printed_page_number) from raw.event_entry
 ```
 
 Result: every gap falls at the join between consecutive spreads, with consecutive printed page numbers, so no pages are missing. 1896-97 p. 15 has 18 rows (30–31 Dec) but the scan prints 30 Dec – 8 Jan; p. 17 has 17 rows (19–21 Jan) but the scan prints 19–28 Jan. 19 of 192 printed pages in the spread seasons have <35 rows. Some are genuinely short (season start/end, Lent); the rest match the list gaps: 1892-93 p3, 1894-95 p17, 1895-96 p16/p23, 1896-97 p15/17/19/23/25, 1897-98 p7/9/19.
+
+## 2026-09-28 — Красный цвѣтокъ: all remaining "этюдъ"-family genre spellings, located and scan-checked
+
+```sql
+select wg.canonical_genre, ee.date_text, ee.theater, p.page_id, p.season
+from entities.work_genre_candidate wg
+join entities.work_link wl on wg.work_id = wl.work_id
+join raw.event_entry_performance ep on wl.raw_performance_id = ep.performance_id
+join raw.event_entry ee on ep.event_id = ee.event_id
+join raw.source_pages p on ee.page_id = p.page_id
+where wg.canonical_title = 'Красный цвѣтокъ'
+order by wg.canonical_genre, ee.date_text
+```
+
+Result: 8 distinct genre spellings, 17 total occurrences across 14 pages, all individually scan-verified. 1 genuine misread found and fixed (`др. ят.`->`др. эт.`), 2 real date/session bugs found and fixed as a side effect (a mis-dated session on repertoire_1900-01_p016 that also exposed a missing session once corrected; a 3-way date/content tangle on repertoire_1903-04_p012 that exposed another missing session). 14 more confirmed genuine, including "драм. втюдъ" (2 occurrences) confirmed as a genuine period spelling, not the misread it was expected to be. See known_issues.md issue #102.
+
+## 2026-09-28 — Post-fix verification: Красный цвѣтокъ genre-candidate state
+
+```sql
+select canonical_title, canonical_genre, appearance_count from entities.work_genre_candidate where title_key='красный цветокъ' order by appearance_count desc
+```
+
+Result: 7 distinct genre spellings (down from 8), 17 total appearances unchanged. Confirms both fixes landed cleanly (др. ят. merged into др. эт.; the recovered/untangled sessions kept the same genre values they already had). See known_issues.md issue #102.

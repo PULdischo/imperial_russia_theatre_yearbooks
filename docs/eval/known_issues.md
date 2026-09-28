@@ -19352,3 +19352,70 @@ been individually verified against the source scans.
    correctly never merged. There is no state where the queue is
    "empty" -- "done" here means every group has been looked at, not
    that the table is cleared.
+
+## Issue #102: Красный цвѣтокъ's remaining "этюдъ"-family spelling
+## variants -- the last worklist item from issues #98-100, closed
+
+RG: "start on the Красный цвѣтокъ spelling variants." This title had 8
+distinct genre spellings (17 total appearances) all built from
+"драматическій этюдъ" (dramatic study/etude), and one of its 9
+occurrences was already confirmed a genuine misread in issue #98
+(`др. втюдь` -> `др. этюдъ`). Given the demonstrated corruption history
+specific to THIS title (в/э and letter-shape confusions), every
+remaining occurrence got individually scan-verified rather than
+assumed genuine by pattern, matching the project's standing rule never
+to infer an orthographic norm from a pattern.
+
+**1 more genuine misread found and fixed**: `репertoire_1901-02_p018`,
+21 Пятница., Михайловскій -- raw had `др. ят.`, scan reads clearly
+"Красный цвѣтокъ, др. эт." (я/э letter-shape confusion, the same class
+of mistake as this issue's own earlier д/х and в/э findings, just a
+different letter pair).
+
+**2 real date/session bugs found as a side effect of locating specific
+cells**, both fixed:
+- `repertoire_1900-01_p016`: a session recorded as `11 Понед.`
+  (unspecified) was actually printed under `10 Воскрес.` (evening) --
+  confirmed by the receipts figure and by `10 Воскрес.` already having
+  its own correctly-dated morning session (`Честь`). Fixing the date
+  emptied `11 Понед.` entirely, which turned out to be wrong too -- the
+  scan shows real content there (`Волшебная сказка, пьеса.`, 1337 р.
+  37 к.) that had never been captured in `raw` at all. Recovered it.
+- `repertoire_1903-04_p012`: a genuine 3-way tangle on the Михайловскій
+  column. `15 Суббота.` held the real `14 Пятница.` evening content
+  (`За чѣмъ пойдешь... / Красный цвѣтокъ / Юбилей`, matching receipts
+  525 р. 25 к.); `14 Пятница.` itself held a spurious duplicate of
+  `24 Понед.`'s real content (`La course du flambeau`, with no receipts
+  figure at all -- a tell that it didn't belong); and `15 Суббота.`'s
+  own real content (`La famille Benoiton, com.`, 1626 р. — к., visible
+  on the scan) had never been captured anywhere. Untangled by moving
+  the `14 Пятница.` content to its correct date, replacing the spurious
+  duplicate with the real (previously-missing) `15 Суббота.` session,
+  and leaving `24 Понед.`'s own already-correct entry untouched.
+
+**14 more confirmed genuine**, including a specific and useful negative
+result: **`драм. втюдъ` (2 occurrences, two different pages) is a
+genuinely printed spelling, not a misread** -- both zoomed at high
+resolution and both clearly show "втюдъ" (в, not э). This one surprised
+the running assumption going in (the group's own description going
+into this issue explicitly expected втюдъ to be corrupted, by analogy
+with issue #98's Волшебные звуки finding of the identical letter
+swap) -- worth remembering as a concrete case where the SAME
+letter-confusion shape turned out to be a genuine period spelling in
+one title and a real bug in another. Pattern-matching from one title's
+confirmed bug to another title's superficially-similar spelling is not
+a substitute for checking the specific cell.
+
+**Rebuilt the full chain.** Confirmed clean: `event_entry` 26038 ->
+26039 (+1, the recovered `Волшебная сказка` session on
+`repertoire_1900-01_p016`), `event_entry_performance` 27591 -> 27592,
+`quality_flags.csv` unchanged (895), dates 98.1% verified (unchanged),
+Musicians/Roster isolation (2900/23) unchanged.
+`entities.work_genre_candidate`'s Красный цвѣтокъ group: 8 -> 7 distinct
+genre spellings (17 appearances unchanged in total -- the two
+one-off fixes each merged into an existing spelling, no appearances
+lost or gained).
+
+This closes the last specifically-named worklist item from issues
+#98-100. The broader `work_genre_candidate` queue remains open-ended
+by design.
