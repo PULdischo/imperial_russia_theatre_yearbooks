@@ -9864,3 +9864,15 @@ select canonical_title, canonical_genre, appearance_count from entities.work_gen
 ```
 
 Result: 7 distinct genre spellings (down from 8), 17 total appearances unchanged. Confirms both fixes landed cleanly (др. ят. merged into др. эт.; the recovered/untangled sessions kept the same genre values they already had). See known_issues.md issue #102.
+
+## 2026-09-28 — Final survey of the genre-review queue: what's genuinely left, and closing the last 3 unverified titles
+
+```sql
+-- classified all 297 current title groups into "same-family spelling noise" (Problem #5, correctly
+-- never merged) vs "genuinely distinct genre families" via a prefix-relation union-find over normalized
+-- genre values, then cross-referenced against every title checked this session
+```
+
+Result: 297 title groups / 701 rows total in `entities.work_genre_candidate`. 109 groups are correctly-noise (spelling variants, not a task). Of 188 groups with genuinely distinct genre families, 179 were individually scan-checked this session (today, issues #98-102); the remaining 9 had documented resolutions from earlier sessions (Борисъ Годуновъ, Русалка, Севильскій цирюльникъ, Раймонда, Карменъ — all cited in known_issues.md from issues #89-99) except 3 (Я играю большую роль, Гамлетъ, Фаустъ) which had never been individually scan-verified. Checked all 3 fresh: all confirmed genuine (Я играю большую роль, ком. on repertoire_1899-00_p019; Гамлетъ, оп. as part of a benefit-gala excerpt listing on repertoire_1904-05_p031; Фаустъ, др. поэма on repertoire_1905-06_p022, Goethe's poem distinct from Gounod's opera). No fixes needed.
+
+This closes 100% of the genre-review queue's "genuinely distinct genre family" tier (188/188 groups), on top of the already-closed singleton-outlier and balanced tiers. The 109 noise groups remain permanently in the queue by design (Problem #5).
