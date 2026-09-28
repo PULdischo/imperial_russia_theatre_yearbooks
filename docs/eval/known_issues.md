@@ -19419,3 +19419,82 @@ lost or gained).
 This closes the last specifically-named worklist item from issues
 #98-100. The broader `work_genre_candidate` queue remains open-ended
 by design.
+
+## Issue #103: Truncated bottom pages in the two-page-spread Repertoire seasons --
+## found by the ballet-list audit (#101), 446 sessions recovered and promoted
+
+**How it was found.** Comparing the scan-verified ballet productions lists
+(#101) with the Repertoire put 46 printed ballet dates on days where the
+Repertoire had no rows at all, in either city. On the scans the dates ARE
+printed: in the spread seasons the transcription of a spread's second
+(bottom) printed page stopped after 2-3 dates. The #82 full sweep compared
+transcribed cells to the scan, but never asked whether each page's dates
+ran to the bottom, and the `not_captured` synthesis never fires because
+the gap falls between pages. This is the lists doing exactly what RG
+brought them in for.
+
+**Recovered (read from the scans only, 6 parallel checkers, staging in
+`outputs/recovery_2026-09-28_spread_truncation/`, logs per page there):**
+
+| Page | Printed dates recovered | Sessions |
+|---|---|---|
+| 1892-93 pair002 p. 3 | 2, 3, 4, 6, 8, 9 Sep 1892 (5 and 7 Sep not printed) | 30 |
+| 1894-95 pair016 p. 17 | 22-27 Apr 1895 (20 Apr not printed) | 30 |
+| 1895-96 pair016 p. 16 | 18-23 Jan 1896 | 32 |
+| 1895-96 pair022 p. 23 | 12-18 Apr 1896 | 36 |
+| 1896-97 pair014 p. 15 | 1-4, 6-8 Jan 1897 | 45 |
+| 1896-97 pair016 p. 17 | 22-28 Jan 1897 | 37 |
+| 1896-97 pair018 p. 19 | 10-17 Feb 1897 | 46 |
+| 1896-97 pair022 p. 23 | 26 Mar - 2 Apr 1897 (not a closure) | 40 |
+| 1896-97 pair024 p. 25 | 25-30 Apr, 2 May 1897 | 35 |
+| 1897-98 pair006 p. 7 | 17-19, 21-23 Oct 1897 (20 Oct not printed) | 32 |
+| 1897-98 pair008 p. 9 | 6-12 Nov 1897 | 37 |
+| 1897-98 pair018 pp. 18-19 | 9-13 Feb 1898 (+2 dark утро/веч. cells on 1 Feb) | 46 |
+
+The other short pages (1890-91 pair014/pair022/p023/pair024/p012, 1891-92
+pair002/pair024) were checked and are complete: split page_ids plus real
+Christmas/Lent/Easter/season-end breaks. Recovered sessions carry
+month_text/year_text explicitly, as in the #75 recovery. "Гимнъ"/"Hymne"
+is recorded as a work (157 existing spread sessions) rather than an
+annotation (19), and 5 recovered annotations were converted to match.
+
+**Also fixed:** 1895-96 pair020, the 28 Четвергъ / 29 Пятница March rows
+(p. 21) had no month and were dated 1896-02-28/29, on top of p. 20's real
+28 Среда / 29 Четвергъ Feb rows (10 rows per date, `intra_block_disagreement`).
+month_text/year_text were set to Марта 1896 on those 10 sessions.
+
+**Integration vs same-code control** (control == production on every
+metric): raw.event_entry 26039 -> 26485 (+446), research.event +471
+(+25 new not_captured rows for unprinted dates inside the recovered weeks),
+research.performance +630, research.work +29 (excerpt labels, genuinely
+new titles, and 4 verbatim print typos: Кому вессло живется, По крогавымъ
+слѣдамъ, Я имениниикъ, Le Barbier de Sévilie), date `verified` +466,
+`intra_block_disagreement` 397 -> 377, entities.person unchanged (2900),
+quality_flags.csv unchanged (896), no change outside the spread seasons.
+**Promoted 2026-09-28**; backup at
+`outputs/full_run_pre_promote_backup_2026-09-28_truncation/`. Production
+== integration on every metric after the rebuild; raw.production_entry
+tables survived it. link_wikidata / HF / Cloud Run not run.
+
+**Ballet-list audit after the fix:** list dates with no Repertoire event
+46 -> **0**. Exact+excerpt matches 1711 -> 1764 of 1881 (93.8%; 97.9% incl.
+near-identical titles).
+
+**Follow-ups noticed, not fixed:**
+- 1894-95 pair006: "4 Вторникъ." and "4 Среда." both dated 1894-10-04
+  (13 rows): probably the same missing-month collision as pair020.
+- 1892-93 pair004 jumps 11 -> 15 Sep 1892 (not checked on the scan).
+- 1890-91 pair014: Большой `annotation` holds cut-off Малый titles on 7 Dec
+  dates. 26 Dec has утро/веч. rows but the evening content is stored as
+  `unspecified`, with no dark утро cells.
+- 1896-97 pair016: "21 Вторн." vs printed "Вторникъ."; 18 Jan
+  Михайловскій benefit heading duplicated as a work; some dark cells
+  deliberately left out by an earlier fix.
+- 1896-97 pair024: "Затѣмъ пойдешь" should be "Зачѣмъ" (17 Apr); possibly
+  "Признаки горя" should be "Призраки" (24 Apr).
+- 1897-98 pair018: 1 Feb Маріинскій benefit should be `morning`.
+  pair020: "Andrienne Lecouvreur" (8 Mar) vs "Adrienne".
+- 1895-96 pair024: "30 Вторник." / "30 Вторникъ." spelled two ways;
+  1 May 1896 not checked.
+- New print-typo candidates for RG: Кому вессло живется, По крогавымъ
+  слѣдамъ, Я имениниикъ, Le Barbier de Sévilie, Маіорша/Майорша.

@@ -9,6 +9,12 @@ The two sources are independent transcriptions of different parts of the
 same yearbook. A disagreement is a **lead to check on the scans**, not a
 verdict, and nothing has been changed in either source.
 
+## Update 2026-09-28: Finding 1 fixed (issue #103)
+
+446 truncated rows recovered on 12 spreads and promoted. After the fix: **no_event 46 -> 0**,
+exact 1624, excerpt 140 (93.8%), fuzzy 77 (97.9% incl.), nearby_date 15, other_titles 24.
+The tables below are the FIRST pass, before the fix.
+
 ## Headline numbers (1881 printed list dates, 30 lists, 1890-91 – 1904-05)
 
 | Category | Dates | Meaning |

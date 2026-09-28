@@ -9876,3 +9876,24 @@ Result: 7 distinct genre spellings (down from 8), 17 total appearances unchanged
 Result: 297 title groups / 701 rows total in `entities.work_genre_candidate`. 109 groups are correctly-noise (spelling variants, not a task). Of 188 groups with genuinely distinct genre families, 179 were individually scan-checked this session (today, issues #98-102); the remaining 9 had documented resolutions from earlier sessions (Борисъ Годуновъ, Русалка, Севильскій цирюльникъ, Раймонда, Карменъ — all cited in known_issues.md from issues #89-99) except 3 (Я играю большую роль, Гамлетъ, Фаустъ) which had never been individually scan-verified. Checked all 3 fresh: all confirmed genuine (Я играю большую роль, ком. on repertoire_1899-00_p019; Гамлетъ, оп. as part of a benefit-gala excerpt listing on repertoire_1904-05_p031; Фаустъ, др. поэма on repertoire_1905-06_p022, Goethe's poem distinct from Gounod's opera). No fixes needed.
 
 This closes 100% of the genre-review queue's "genuinely distinct genre family" tier (188/188 groups), on top of the already-closed singleton-outlier and balanced tiers. The 109 noise groups remain permanently in the queue by design (Problem #5).
+
+## 2026-09-28 — Truncated spread pages: integration vs control vs production, and list comparison after the fix (issue #103)
+
+Read-only counts on three DBs (outputs/full_run, recovery .../control, .../integration):
+
+```sql
+select count(*) from raw.event_entry;  select count(*) from raw.event_entry_performance;
+select count(*) from research.event;  select count(*) from research.performance;  select count(*) from research.work;
+select count(*) from entities.person where superseded_by_person_id is null;
+select count(*) from research.event where event_status='not_captured';
+select count(*) from research.event where date_confidence in ('verified','intra_block_disagreement');
+select count(*) from research.event where season between '1890-91' and '1897-98';  -- and season > '1897-98'
+select sum(receipts_total_kopecks) from research.event;
+select w.canonical_title, w.canonical_genre, w.appearance_count from research.work w where w.canonical_title not in (select canonical_title from ctl.research.work);
+select e.date_text, e.date_undate, d.corrected_date_undate, d.date_confidence, count(*) from raw.event_entry e left join analysis.event_entry_date_check d using(event_id)
+ where e.page_id='repertoire_1895-96_pair020' and e.date_undate in ('1896-02-28','1896-02-29','1896-03-28','1896-03-29') group by all;
+select e.page_id, e.date_undate, string_agg(distinct e.date_text, ' / '), count(*) from raw.event_entry e join analysis.event_entry_date_check d using(event_id)
+ where d.date_confidence='intra_block_disagreement' group by 1,2;
+```
+
+Result: control == production everywhere. Integration (and production after promotion) has raw.event_entry 26039 -> 26485, research.event 28968 -> 29439, research.performance 27591 -> 28221, research.work 3482 -> 3511, verified 25550 -> 26016, intra_block 397 -> 377, persons 2900 unchanged, non-spread seasons unchanged. The pair020 March rows sat on 1896-02-28/29 (intra_block, not corrected); 73 intra_block page/date groups, and only pair020 and 1894-95 pair006 (4 Oct) show two weekdays on one date. compare_productions_repertoire.py on production afterwards: no_event 46 -> 0, exact 1624, excerpt 140, fuzzy 77, other_titles 24, nearby_date 15.
