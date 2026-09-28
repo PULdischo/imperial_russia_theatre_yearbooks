@@ -10224,3 +10224,13 @@ select production_performance_id, date from raw.production_entry_performance;  -
 ```
 
 Result: 1881 dates, 4 changed (1897-02-12 -> 1898-02-12 Пери; 1899-04-19 -> 1900-04-19 Дочь Микадо; 1903-11-06 -> 1902-11-06 Коппелія; 1904-04-27 -> 1903-04-27 Тщетная). All 4 now match the Repertoire; comparison exact 1691, excerpt 142 (was 1689/140), other_titles 24 -> 21, nearby_date 15 -> 14.
+
+## 2026-09-28 — Other-title round (issue #106): worklist and integration/control diff
+
+```sql
+select e.page_id, e.printed_page_number, e.date_text, e.theater, e.time_of_day, string_agg(p.performance_title||coalesce(' ['||p.genre||']',''), ' + ' order by p.performance_order)
+from raw.event_entry e left join raw.event_entry_performance p using(event_id) where e.city=? and e.date_undate=? group by all order by 4,5;
+-- builds: counts of raw.event_entry, research.performance, research.work, research.event, verified, intra_block, receipts sum, persons, annotated raw rows
+```
+
+Result: 24 items (21 after the season-date change). Integration vs control: raw.event_entry +12, research.performance +31, research.work -3, research.event +7, verified +12, receipts +72,747 kopecks, persons unchanged, annotated rows -4. Production == integration after promotion. Comparison: other_titles 12, exact 1694, excerpt 148.

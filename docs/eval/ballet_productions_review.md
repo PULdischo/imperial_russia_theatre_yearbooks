@@ -84,3 +84,17 @@ Checked on arrival: every entry's printed dates add up to its "Всего".
 Use it until RG requests and scans a physical copy, then **replace it and
 re-verify that list against the new scan**. Faint punctuation and fine ъ/ь
 distinctions are less reliable on this bilevel copy.
+
+## 6. Repertoire cells for RG (from the list audit, 2026-09-28)
+
+- **1897-98 Repertoire p. 27 (p012), 5 May 1898, Маріинскій:** a third work line inside the binding
+  fold, read from letter tops as "3-е д. бал. Пахита". It is NOT promoted, because only the list supports
+  the reading, which would make the audit circular. Needs the physical 1897-98 volume.
+- **1903-04 Repertoire p025, 25 Jan 1904, Большой:** printed "**Ваядерка**" (В for Б). Scan is low-res;
+  confirm the first letter.
+- **1892-93 Repertoire pair004 (p. 4), 20 Sep 1892, Маріинскій:** "**Паяда** и рыбакъ" (П for Н?),
+  a 240 dpi scan.
+- Other print variants kept verbatim (#105): Волшебные/Волшебныя грезы, Маркабомба, Привалъ кавалерія,
+  Фіамметта ×2, Фіаметто, Пригалъ кавалеріи, Граціела, Кому вессло живется, По крогавымъ слѣдамъ,
+  Я имениниикъ, Le Barbier de Sévilie, Маіорша.
+- **Pairs where the yearbook contradicts itself:** see known_issues.md #106 (12 dates).

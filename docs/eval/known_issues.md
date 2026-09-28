@@ -19726,3 +19726,68 @@ rate, this needs the same full scan-verified treatment before touching
 anything, not a shortcut. RG asked to start with just the 7-page/9-row
 set above; this 118-row thread is the natural next phase whenever RG
 wants to continue.
+
+## Issue #106: Ballet-list "other title" dates (#101) -- Repertoire structural
+## damage found and repaired on 4 spreads; 12 genuine list/Repertoire disagreements
+
+The 24 list dates where the Repertoire showed other titles that day were
+each checked on BOTH scans (list and Repertoire, each read on its own;
+staging and logs in `outputs/recovery_2026-09-28_other_titles/`). After
+the season-date change (dates from the list's season, not the printed
+year; RG), 21 remained. They came out as:
+
+**Repertoire repairs (promoted):**
+- 1892-93 pair016, 26–29 Jan 1893: the binding fold merged the 26/27 rows,
+  so every theater column from 26 Jan was shifted a day early and 29 Jan
+  was missing. The block was rebuilt from the scan in all 5 theaters and
+  29 Jan added. Fold-hidden receipts (26 Jan, all theaters) are null, not
+  guessed, and so is the fold-hidden 27 Jan Малый heading
+  ("Бенефисъ г. Садовск…?").
+- 1893-94 pair010, 14 Nov 1893: the Маріинскій cell was garbled
+  ("Нарыбакъ" = "1-я и 2-я к. 3-го д. бал. Наяда и рыбакъ", Поллини
+  benefit; Очарованный лѣсъ had been attached to 15 Nov). The students'
+  free matinees were added (Маріинскій, Александринскій, Большой), and the
+  Михайловскій evening (L'Etrangère, 1216 р.), wrongly deleted as a
+  "duplicate" on 2026-09-18, was restored. 28 Nov Маріинскій works re-split.
+- 1893-94 pair018: the Маріинскій column was shifted a day from 20 Feb 1894
+  (the Золушка evening); Гусь лапчатый restored; "Паизухина" -> "Пазухина".
+- 1893-94 pair014, 29 Dec: dropped evenings restored (Большой Кольцо любви;
+  Малый Жизнь / На тотъ свѣтъ).
+- 1892-93 pair010, 22 Nov and 2 Dec: excerpts stored as annotations moved
+  to works (3-я карт. бал. Зорайя; 1-я к. 3-го д. бал. Дочь фараона).
+- 1903-04 p018: "Очарованный принцъ" -> "Очарованный лѣсъ" (29 Dec).
+  1903-04 p025: "Вандерка" -> "Ваядерка", the print's own spelling
+  (В for Б), a candidate for RG's typo list.
+Integration vs same-code control: +12 raw events, +31 performances,
+-3 garbled works, +727 р. 47 к. of receipts, 0 new quality flags, persons
+unchanged. Backup `outputs/full_run_pre_promote_backup_2026-09-28_othertitles/`.
+All 7 files were confirmed unchanged in production since staging right
+before promotion (per the #105 lesson).
+
+**Held back for RG, not promoted:** 1897-98 p012, 5 May 1898, Маріинскій,
+a third work line inside the binding fold, read as "3-е д. бал. Пахита"
+from letter tops. The checker leaned on the list to read it, which would
+make the audit circular, so it needs the physical volume. Staged in
+`outputs/recovery_2026-09-28_other_titles/raw/repertoire_1897-98_p012.raw.json`.
+
+**Genuine disagreements inside the yearbook** (both transcriptions match
+their scans; nothing changed; for RG): 1895-96 Moscow Катарина 17 Jan 1896
+(the Repertoire has Эсмеральда); 1897-98 SP Волшебная флейта 25 Oct 1897
+(Маріинскій dark); Дочь микадо "ноября 24" (the Repertoire has 14 Nov; list
+misprint); Очарованный лѣсъ 21 Sep 1898; Маркитантка 11 Feb 1901 (the list's
+own Камарго/Фіаметта/Щелкунчикъ entries agree on 11 Feb without it);
+Лебединое озеро 21 Sep 1901 Moscow; Волшебная флейта 19 Dec 1901 (the list
+implies a double bill with Сильвія) and 30 Nov 1903; На перепутьи 17 Dec 1904;
+Дочь Фараона 13 Feb 1905 (the Repertoire prints only the corps-de-ballet
+benefit heading). "Ученики Дюпрэ" / "Les élèves de Dupré" is the same work
+(matcher limitation).
+
+**After:** other_titles 21 -> 12; exact 1694 + excerpt 148 = 1842/1881 (97.9%).
+
+**Noticed, not fixed:** 1892-93 pair016 31 Jan (and maybe 18/21 Jan) Малый
+"Иренъ" vs printed "Ирэнъ"; 1893-94 pair010 14 Nov Малый genre "др. вт."
+vs printed "др. эт."; genres inside titles across 1893-94 pair010 and
+1895-96 pair024; 1893-94 pair018 21 Feb "павлиныхъ" vs "павлиньихъ";
+1904-05 p030 benefit heading stored as a work and Latin "p/k" in receipts;
+1900-01 p026 Feb 11 excerpt qualifiers only in the annotation. The Latin
+letters in receipts recur: a corpus-wide sweep is worth doing.
