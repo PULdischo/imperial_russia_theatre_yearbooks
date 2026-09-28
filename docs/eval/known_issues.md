@@ -19131,3 +19131,87 @@ every batch. `entities.work_genre_candidate`: 302 -> 299 title groups
    dual-genre noise per Problem #5, but not individually confirmed.
 3. The queue itself remains open-ended by design -- continue on
    request, no defined "done."
+
+## Issue #100: Ballet productions lists (списокъ пьесъ, "Балетъ") --
+## new source transcribed and fully scan-verified, 1890-91 – 1904-05
+
+RG, 2026-09-28: the yearbooks' per-season list of productions, by genre
+and city, alphabetical, gives each work's genre/acts, authors/composer,
+every performance date, the printed total ("Всего—N разъ"), and a
+premiere asterisk (`*` = premiere, RG confirmed). Two uses: data in its
+own right (the first per-season source of creators per work -- raw
+material for RG's Production level), and an **independent audit of the
+Repertoire tables**. Ballet first; opera later once RG scans those pages.
+
+**Independence rule (RG confirmed):** the lists are transcribed and
+verified from the scan ALONE. A checker once settled 5 blurred 1890-91
+digits from the Repertoire DB; reverted to scan-only readings, logged
+`uncertain`, queries logged in query_log.md. Otherwise the audit is circular.
+
+**Source:** `pdf/Spiski_BalletProductions/` (29 PDFs, 47 pages; RG's own
+season+city splits, renamed `ForUpload_*`; 1899-00 is SP only). No lists
+for 1899-00 Moscow or 1905-06 – 1908-09. Pages never print the city --
+it comes from the filename (French drama follows every SP list, never a
+Moscow one, which corroborates it).
+
+**Pipeline:** `render_pages.py` (new folder -> entity_type
+`BalletProductions`), `run_pilot.py` / `extract.py --kind productions`,
+prompt `prompts/productions_system.txt`, schema `schemas/productions.py`,
+combine + checks `parse_productions.py`. Two spreads (1892-93 SP,
+1897-98 SP) exceed DashScope's 20 MB data-uri limit as PNG -> JPEG.
+Run dir `outputs/ballet_productions_pilot/`: `raw_full/` (model, untouched),
+`raw_verified/` (scan-checked), `verify_logs/` (one row per change),
+`parsed_verified/production_entry{,_performance}.csv`. Not yet in DuckDB.
+
+**Model quality (qwen3-vl-plus):** dates were mostly right, but not
+reliably: dates dropped across page breaks (Конекъ-горбунокъ 1895-96 MSK,
+Дочь Фараона 1898-99 SP), dates copied from a neighbouring entry
+(1893-94 MSK #1/#7, 1901-02 SP #6), a whole invented description
+(1900-01 SP #19), italic 3 read as 8 in "Всего" (9 entries -- every
+"3 dates, Всего—8" flag was this, none genuine). Italic names are weak and
+the errors *repeat identically across runs*, so resampling can't catch
+them: Дрио/Дриго, П./Ц. Пуни, Шелля/Шеля, Армсеймер/Армсгеймер,
+Добервалья/Доберваля, К. О./К. Ѳ., ъ/ь. It also normalises "Исполненъ"
+(printed for ballets) to "Исполнена" and leaves "Всего…" in performed_text.
+
+**Verification:** 8 parallel checkers + 1 second pass (the sweep for the
+known-misread patterns found 10 residuals, 6 on 1901-02 SP). 1121 logged
+changes: 661 misread, 399 structure, 13 missing, 4 extra, 24
+genuine_print, 20 uncertain. Final: 467 entries, 39 premieres, 1800
+dates (22 outside_total, 95 with a per-date note); list numbering 1..N
+continuous in all 29 lists; printed dates match Всего everywhere but one.
+
+**Conventions settled during the run:**
+- Text printed AFTER "Всего" ("2-е дѣйствіе исполнено: … апрѣля 25")
+  -> `post_total_text`; its dates are real part-performances, kept with
+  `outside_total=true` so `n_dates` stays comparable to `total_count`.
+- title = bold (or letter-spaced, in later volumes) words only; a
+  regular-type parenthetical ("(La Fille mal gardée)") starts
+  `description_text`. A bold/spaced one stays in the title.
+- A per-date parenthetical ("(2-я и 3-я карт.)") goes on the day number
+  printed immediately before it, only that date.
+- Page-break fragments: `continues` / `continued`, merged by
+  `parse_productions.py`.
+- `parse_russian_date` (shared with 12 other callers) doesn't validate
+  the day ("38 декабря" -> "1897-12-38"); productions.py validates locally
+  and leaves an impossible date NULL. The shared function was left alone
+  on purpose -- changing it would touch every other pipeline stage.
+
+**Pseudonyms (RG, 2026-09-28):** three asterisks in a triangle mark a
+withheld name; recorded verbatim as ⁂ (U+2042), never "***", so it can't
+be confused with the premiere `*`. Four instances: Волшебное зеркало
+"либретто … Петипа и Г⁂" (1902-03, 1903-04, 1904-05 SP) -- RG identifies
+Г⁂ as **Всеволожскій** (И. А. Всеволожскій); and Шалости сверчка
+"музыка ⁂" (1897-98 Moscow #15), composer not yet identified. The
+identification belongs in the research layer's creator link, recorded as
+"printed as Г⁂; identified by RG", not in the verbatim transcription.
+
+**Open:**
+1. RG's review list: `docs/eval/ballet_productions_review.md` (6
+   don't-add-up items incl. two impossible years in 1902-03 SP and
+   "декабря 38"; 17 uncertain readings; ~15 print slips waiting for her
+   confirmation before going into genuine_print_typos.md).
+2. Load into DuckDB (raw tier) and build the list-vs-Repertoire comparison
+   (roll excerpts up to parent work; classify mismatches). First lead
+   already: Repertoire "Рустикальный башмачекъ" 1890-11-11 = Хрустальный.
+3. Production Stats pages (per-season performance counts) as a second audit.

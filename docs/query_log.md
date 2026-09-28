@@ -9759,3 +9759,14 @@ select count(distinct title_key), count(*) from entities.work_genre_candidate
 ```
 
 Result: 299 title groups (down from 302), 708 rows (down from 716). Matches expectation for the 5 fixes just applied. See known_issues.md issue #99 follow-up.
+
+## 2026-09-28 — Does the choreographer "Бернаделли" (Волшебная флейта) appear in any spiski or Repertoire title? (cross-check of an uncertain 1896-97 ballet-list reading)
+
+```sql
+select p.page_id, p.family_name, p.first_name, p.heading_path, p.credit_summary_text from raw.person_entry p
+where regexp_matches(coalesce(p.family_name,'')||' '||coalesce(p.credit_summary_text,'')||' '||coalesce(p.tenure_note_text,''), 'Бер[н]?а[р]?д[еѣьe]л|Бернадел|Бернардел');
+select e.season, e.date_undate, p.performance_title from raw.event_entry e join raw.event_entry_performance p using(event_id)
+where regexp_matches(p.performance_title, 'Бер[н]?а[р]?д[еѣьe]л|Бернадел|Бернардел');
+```
+
+Result: 0 rows for both. He is not on any staff/artist roster (he was a visiting/historical figure, not Imperial Theaters personnel). Outside the DB: the season reviews (1892-93 SP ballet p018: "соч. Бернаделли"; 1894-95 SP ballet p002: "г-жи Бернаделли … г. Бернаделли", visiting artists from Vienna) and the ballet lists 1892-93–1895-96 ("соч. Бернаделли") all spell it Бернаделли; only 1897-98 prints "Бернарделли".

@@ -202,3 +202,44 @@ single receipts figure (e.g. two one-act comedies).
 - ProductionStats structure is still unconfirmed — likely closer to the
   Repertoire family (work × season aggregate) but needs a real sample page
   before committing to `event_entry_performance`-shaped columns vs. something new.
+
+---
+
+## Productions lists (BalletProductions) — `production_entry`, `production_entry_performance`
+
+The per-season list of productions (списокъ пьесъ), "Балетъ" section,
+one list per season × city (known_issues.md #100). Verbatim tier: the
+printed description is NOT split into genre / acts / roles here — that
+belongs to the research layer (how to read "соч." as a role is RG's open
+question). CSVs: `outputs/<run>/parsed_verified/`; not yet in DuckDB.
+
+### `production_entry` — one row per printed entry
+
+| column | type | notes |
+|---|---|---|
+| `production_entry_id` | string, PK | `{page_id}__e{NNN}` (a page-break entry keeps its first fragment's ID) |
+| `page_id`, `season`, `city` | string | city from the filename (`SP`/`Moscow`) — never printed on the page |
+| `section_heading` | string, nullable | "Балетъ", or null on a continuation page |
+| `printed_page_number` | string, nullable | "32-33" for a two-page spread; null if not printed |
+| `entry_order` | int | order on the page |
+| `list_number` | string | printed number, without `*` |
+| `is_premiere` | bool | `*` printed before the number |
+| `title` | string | bold / letter-spaced words only |
+| `description_text` | string | everything between title and "Исполненъ", verbatim: genre, acts/scenes, authorship, a regular-type parenthetical title. Three asterisks printed as a triangle (an asterism: a withheld name) are recorded as the single character **⁂** (U+2042), e.g. "Петипа и Г⁂" — search for ⁂, not "***". Who is behind a pseudonym is research-layer information, never written into this field |
+| `performed_text` | string | "Исполненъ: …" verbatim, up to (not including) "Всего" |
+| `total_text` / `total_count` | string / int | "Всего—N разъ." and N (integer taken from the printed text) |
+| `post_total_text` | string, nullable | text printed after Всего (extra part-performances not counted in the total) |
+| `n_dates` | int | counted dates (excludes `outside_total`), comparable to `total_count` |
+| `fragment` | string, nullable | `merged` if the entry spanned a page break |
+
+### `production_entry_performance` — one row per printed date
+
+| column | type | notes |
+|---|---|---|
+| `production_performance_id` | string, PK | `{production_entry_id}__d{NNN}` |
+| `production_entry_id` | FK | |
+| `date_order` | int | printed order (not always chronological in the print) |
+| `year_text`, `month_text`, `day_text` | string | verbatim, year/month carried forward as the print implies |
+| `note` | string, nullable | the per-date parenthetical, e.g. "2-я и 3-я карт." |
+| `outside_total` | bool | a part-performance printed after Всего |
+| `date` | ISO date, nullable | NULL if the printed date is impossible ("38 декабря"); out-of-season years are left as printed |
