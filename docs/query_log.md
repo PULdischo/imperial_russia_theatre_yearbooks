@@ -9725,3 +9725,19 @@ where e.season='1890-91' and p.performance_title ilike '%{t}%' group by 1,2;
 ```
 
 Result: Сатанилла Большой 1890-09-23, 11-14, 12-12, 1891-02-06, 02-17; Хрустальный башмачекъ 1890-09-30, 12-09, 1891-01-30; "Рустикальный башмачекъ" 1890-11-11 (likely a Repertoire misread of Хрустальный башмачекъ — list prints ноября 11); Шалость SP 1890-11-11, 11-14, 11-18, 12-30, 1891-02-24, 02-28; Фіаметт SP 1890-11-11, 11-18, 12-30, 1891-01-20, 03-03; Фиаметт none; Эсмеральд SP 11-25, 11-28 + Moscow 9 dates; Талисман SP 09-02, 09-16; Катарин SP 09-19; Капризы SP 09-19.
+
+## 2026-09-28 — Genre review queue, scaled up: all title groups with a majority genre (>=10) and a singleton-outlier genre, corpus-wide
+
+```sql
+select title_key, canonical_title, canonical_genre, appearance_count from entities.work_genre_candidate
+```
+
+Result: 130 singleton-outlier rows corpus-wide (87 unique title groups not yet checked this session). RG chose "singleton-outliers only, lighter touch on rest" — worked through all 58 single-page-season groups in this batch (the 25 spread-season groups are next). Found page/date/theater for each via entities.work_link -> raw.event_entry_performance -> raw.event_entry -> raw.source_pages joins, scan-verified all 58 against ForUpload_{season}_Repertoire_{NNN}.jpg, confirmed 22 genuine bugs (fixed, issue #99) and 36 genuine (left as-is). See known_issues.md issue #99 for the full breakdown.
+
+## 2026-09-28 — Post-fix verification: work_genre_candidate queue size after issue #99's fixes
+
+```sql
+select count(*) as n_groups from (select title_key from entities.work_genre_candidate group by title_key)
+```
+
+Result: 302 title groups (down from 316 before this round's fixes), 716 rows (down from 752). Matches expectation — roughly 19 distinct titles resolved or partially resolved this round. See known_issues.md issue #99.

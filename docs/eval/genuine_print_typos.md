@@ -61,6 +61,12 @@ slip.
   page itself.
 - **`repertoire_1900-01_p030`: "Denice"** for "Denise" — a genuine period
   spelling variant in the print, not a misread.
+- **`repertoire_1900-01_p025`, "30 Вторникъ." Малый: "Шутники, вартина."**
+  for "картина" (tableau) — а В/К swap, found 2026-09-28 while checking
+  the genre-candidate review queue (known_issues.md issue #99). Zoomed
+  directly on the cell: reads cleanly "вартина," no smudging or damage,
+  matching the raw extraction exactly — a genuine period typesetting
+  slip, not an OCR/extraction misread.
 
 ## Receipts-figure typos (rubles marker "р." misprinted)
 

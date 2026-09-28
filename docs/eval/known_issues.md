@@ -18982,3 +18982,116 @@ outlier scan.** The broader `work_genre_candidate` queue (~313 title
 groups, mostly genuine spelling-variant noise per Problem #5, not bugs)
 remains open-ended -- no defined "done," continue spot-checking on
 request.
+
+## Issue #99: `work_genre_candidate` queue, scaled up -- RG: "keep going
+## until it's done"; single-page tier fully swept, 22 more genuine bugs
+
+RG explicitly authorized continuing the queue "until it's done." Scaled
+issue #98's technique to the FULL queue: queried every title group with
+a majority genre (appearance_count >= 10) and a same-title singleton-
+outlier genre, corpus-wide, not just the previously-checked subset --
+130 rows total, 87 unique title groups not yet looked at this session.
+Given the scale, RG chose "singleton-outliers only, lighter touch on
+the rest" over exhaustive per-row verification of the ~120 more evenly-
+balanced groups (which are overwhelmingly genuine dual-genre situations
+already, per this issue's own findings below).
+
+Worked through all 58 single-page-season groups in this tier (the 25
+two-page-spread-season groups are the next step, not done in this
+pass). Every check was scan-verified against the actual
+`ForUpload_{season}_Repertoire_{NNN}.jpg` render before touching
+anything.
+
+**22 more genuine bugs found and fixed, all scan-verified:**
+
+- **Two recurring letter-confusion patterns, found repeatedly across
+  unrelated titles/pages/seasons -- not isolated mistakes but a real
+  systematic extraction weakness worth knowing about for future
+  audits:**
+  - `ном.` misread for `ком.` (н/к confusion at the very start of the
+    abbreviation): Лѣсъ (`repertoire_1901-02_p012`), На тотъ свѣтъ
+    (`repertoire_1898-99_p001`, genre `ном.-шут.` -> `ком.-шут.`),
+    Муравейникъ (`repertoire_1898-99_p001`, same page/date as На тотъ
+    свѣтъ), Закатъ (`repertoire_1901-02_p020`). 4 instances.
+  - `сп.` misread for `сц.` (a single mis-stroke turning "сцена"'s
+    abbreviation into a nonsense one): Утро съ сюрпризами
+    (`repertoire_1898-99_p023`), Не все коту масленица AND Просители
+    (both `repertoire_1905-06_p046`, same date/theater cell), На
+    премію (`repertoire_1901-02_p020`), Счастливый день
+    (`repertoire_1898-99_p025`). 5 instances.
+- **Three more genre-fabrication bugs** (genre duplicated from an
+  adjacent work onto a title with NO genre actually printed --
+  confirmed by direct inspection each time, same class as issue #98's
+  Коппелія/Дивертиссементъ and Помолвка finding): Лѣтняя картинка
+  (`repertoire_1900-01_p016`, inherited "ком." from the preceding
+  "Дикарка"), Балъ-маскарадъ (`repertoire_1907-08_p028`), Дивертиссементъ
+  (`repertoire_1904-05_p042`). All 3 set to blank genre, matching the
+  title's own established blank-genre pattern in each case.
+- **A compound date+genre bug**: `repertoire_1903-04_p011`'s "Ночное"
+  session was recorded under date `8 Суббота.` with `session:
+  unspecified`, genre `дѣт. сц.` -- but the scan shows this exact
+  session (Женитьба + Ночное) sits under `9 Воскрес.`, morning session,
+  and Большой/Малый theaters both confirm `8 Суббота.` is genuinely
+  dark that day. Also the genre itself misreads "лѣт. сц." (summer
+  scene) as "дѣт. сц." (children's scene) -- confirmed by a SECOND,
+  correctly-dated occurrence of the same title elsewhere on the corpus
+  reading "лѣтняя сцена" in full. Fixed the date, session, AND genre
+  together, and added an explicit dark placeholder for the now-correctly-
+  empty `8 Суббота.` Новый театръ row (matching how Большой/Малый
+  record their own dark days).
+- **Assorted single-instance misreads, each scan-confirmed**: Великая
+  тайна (`этюдь`->`этюдъ`), Галька (`сп.`->`оп.`, a plain misread, not
+  the "genuine ном./сп. confusion" family), Вій (`др. спажа`->
+  `др. сказка`), Секретное предписаніе (`март.`->`карт.`, matching the
+  title's own 21-occurrence majority exactly), Каширская старина
+  (`хр.`->`др.`, re-confirmed genuine at 3 OTHER pages showing the
+  correct `др.` at zoom after an initial low-resolution misreading of
+  my own scared me into re-checking -- worth remembering that a
+  full-page thumbnail is not reliable enough to distinguish `х`/`д` at
+  a glance, always zoom the specific cell), Комета (`эпизодь`->
+  `эпизодъ`, ending letter), Марія Стюартъ (`trag.`-> Cyrillic `траг.`,
+  a script-family bug, not a spelling one -- the scan reads plain
+  Cyrillic with a trailing comma), Дѣло (Отжитое время) (`хр.`->`др.`,
+  same х/д pattern as Каширская старина), Les folies dramatiques
+  (`vand.`->`vaud.`, a Latin u/n misread), Красный цвѣтокъ
+  (`др. втюдь`->`др. этюдъ`, the same "этюдъ" corruption family as
+  issue #98's Волшебные звуки finding -- this title has 9 total
+  spelling variants of "этюдъ," most likely several more misreads in
+  the un-checked remainder, flagged below as a worklist item rather
+  than chased exhaustively this round).
+
+**36 more confirmed genuine, left untouched** (scan matches raw
+exactly) -- including one real print typo worth adding to
+`docs/eval/genuine_print_typos.md` ("Шутники, вартина." -- a genuine
+В/К swap in the original 1901 printing, not an extraction error, per
+[[genuine-print-typos-collection]]), and confirmed dual-genre or
+one-off-label cases for Карменъ, Баядерка, Джиоконда, Скупой рыцарь,
+Злая сила, Стѣны, and others where a real ballet/opera/drama
+occasionally gets billed under an unexpected genre for one specific
+performance -- same anomaly class already established in issues #96/
+#98, not chased for a "fix" since the print itself is what it is.
+
+**Rebuilt the full chain.** Confirmed clean: `event_entry` 26037 ->
+26038 (+1, the new `8 Суббота.` dark placeholder), `event_entry_
+performance` unchanged (27589, pure content edits), `validation_errors.
+csv` unchanged (268, none of the 19 touched pages among them),
+`quality_flags.csv` unchanged (895), dates 98.1% verified (unchanged),
+Musicians/Roster isolation (2900 live people / 23 candidate pairs)
+unchanged. `work_genre_candidate` 316 -> 302 title groups (716 rows,
+down from 752) -- roughly matches the ~19 distinct titles resolved,
+several titles still correctly flagged for their OTHER, untouched
+spelling variants.
+
+**Still open, in priority order:**
+1. The 25 two-page-spread-season groups in this same singleton-outlier
+   tier -- not started this round. Use the `pairNNN` -> printed-page ->
+   `ForUpload_{season}_Repertoire_{(pair-2)/2:03d}.jpg` mapping
+   established in issue #98's follow-up.
+2. Красный цвѣтокъ's remaining 8 "этюдъ"-family spelling variants --
+   worth a dedicated pass given this round found a genuine misread
+   among them; likely several more.
+3. The ~120 more-balanced groups RG chose to defer this round (lighter
+   touch, not exhaustive verification) -- overwhelmingly genuine
+   dual-genre noise per Problem #5, but not individually confirmed.
+4. The queue itself remains open-ended by design -- continue on
+   request, no defined "done."
