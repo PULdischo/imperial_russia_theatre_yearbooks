@@ -71,3 +71,14 @@ dates vs 1779 total across all 467 entries; the difference is #6).
 ## 4. For the Repertoire audit (not a list problem)
 
 - The Repertoire data has "**Рустикальный** башмачекъ" at the Большой on 1890-11-11; the list prints Хрустальный башмачекъ on ноября 11 — very likely a Repertoire misread. To be picked up in the list-vs-Repertoire comparison.
+
+## 5. Interim source: 1899-00 Moscow (stand-in copy)
+
+`pdf/Spiski_BalletProductions/ForUpload_1899-00_Spisok_BalletProductionsMoscow.pdf`
+(p. 55, entries 1–13) is **not from RG's volumes**. It's a black-and-white
+Google Books scan of the University of Michigan copy that RG found on
+2026-09-28, original image kept in `pdf/Spiski_BalletProductions_interim_sources/`.
+Checked on arrival: every entry's printed dates add up to its "Всего".
+Use it until RG requests and scans a physical copy, then **replace it and
+re-verify that list against the new scan**. Faint punctuation and fine ъ/ь
+distinctions are less reliable on this bilevel copy.
