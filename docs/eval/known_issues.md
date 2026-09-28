@@ -3758,6 +3758,8 @@ extraction bugs instead, or vice versa.
 -- the book's own printed page numbers jump from 7 straight to 10
 between `_002.jpg` and `_003.jpg`; pages 8-9 (~Oct 12-31, 1890) were
 never scanned. Not recoverable from what we have; RG informed.
+**[RESOLVED 2026-09-28, issue #97: RG photographed pp. 8-9 from the
+physical volume; now `repertoire_1890-91_pair008`.]**
 
 **Four real extraction date bugs found and fixed, all the same general
 shape** (a page-specific wrong `month_text`/`year_text`, each confirmed
@@ -17410,6 +17412,8 @@ Recovering it would require locating and digitizing the missing pages
 from the physical bound volume itself (or a more complete scan/copy),
 which is outside what this pipeline can do. Parallels the already-known
 `1890-91` Oct12-31 unrecoverable scan gap, but at roughly 7x the scale.
+[That 1890-91 gap was later recovered from RG's own photographs --
+issue #97, 2026-09-28.]
 
 **Not done**: no data changes made (nothing to fix in the pipeline --
 this is a documented limitation, not a bug); the smaller ~155-row
@@ -17553,7 +17557,8 @@ label in the render-mapping file, left over from before `pair014`'s
 render was resolved earlier the same session. No other season showed
 any real page-number discontinuity or unused render. Combined with
 issue #84's already-explained 1894-95 gap and the pre-existing,
-already-verified 1890-91 Oct12-31 closure, **every two-page-spread
+already-verified 1890-91 Oct12-31 gap (a missing-scan gap, not a
+closure -- recovered 2026-09-28, issue #97), **every two-page-spread
 season's printed-page sequence is now either fully continuous or has
 every break individually explained** -- nothing left unaccounted for at
 the page level.
@@ -18723,3 +18728,74 @@ this project's standing rule on genuine print oddities. **Contrast with
 #96 above**: same detection method (single-outlier-genre scan check),
 opposite disposition -- the scan is the arbiter, not the corpus-wide
 majority genre.
+
+## Issue #97: 1890-91 printed pages 8-9 (12-31 Октября 1890) recovered
+## from RG's own photographs -- the last missing Repertoire page pair
+
+The one page-level gap previously written off as unrecoverable (see the
+missing-pages audit above: the source PDF's printed page numbers jump
+7 -> 10 between `_002.jpg` and `_003.jpg`). RG photographed both pages
+from the physical volume (2026-09-28, `~/Downloads/Missingpages.pdf`,
+two separate page photos).
+
+**Image**: rotated 90 deg clockwise and stacked page 8 over page 9 to
+match every other 1890-91 spread render, saved as
+`pdf/RepertoireTables/ForUpload_1890-91_Repertoire_002a.jpg` (2882x4921;
+the `a` suffix avoids renumbering `_003`-`_012`, which everything
+downstream cites). Roughly half the pixel resolution of the 600-dpi
+archival scans -- still fully legible. The Oct 21 / Oct 22 rows at the
+photo seam are slightly clipped but readable.
+
+**Extraction**: split at the exact photo seam (no fold detection
+needed) into `repertoire_1890-91_p008`/`p009`. Automatic column
+detection failed on both halves (2 and 6 columns found), and the
+`1890-91:0/1` column-bounds entries were never verified and assume the
+old scan's framing, so column x-bounds were hand-measured on grid
+overlays and injected into `run_pilot.py --column-level` via a
+`detect_columns` substitute (prompts, merge logic, canonical theater
+order all unchanged). 35,245 tokens (~2-3 cents). Both halves merged
+5/5 theaters cleanly. Work files: `outputs/recovery_1890-91_pp8-9/`
+(`build_pair008.py` holds every correction below, with reasons).
+
+**Scan verification -- every cell, 10 extraction errors fixed**:
+weekday read as a month ("22/29 Ноябр." -> "Понед."); "Четверг." ->
+"Четвергъ." as printed (x2 dates); Александринскій 27-28 Октября shifted
+by one (27 is dark; 28 is an утро/веч. pair); Малый 22 Октября dropped
+"Хрущевскіе помѣщики, ком."; "1-й актъ др. Псковитянка" and "Сцена г.
+Горбунова" put in `annotation` instead of `works` (moved, matching this
+season's existing convention of genre-less works); "Выгодное
+предприятіе" -> "предпріятіе"; "Басье дѣло" -> "Бабье дѣло"; French
+works' genre read as Cyrillic "ком."/"сом." -> Latin "com.". One genuine
+print typo kept verbatim, "Севильскій обольстатель" (added to
+`genuine_print_typos.md`).
+
+**Integration test before promotion**: full re-parse with the new page
+wired in (manifest, `all_page_headers.csv`, both printed-page-number
+files) -- every non-`pair008` row in all 5 parsed tables byte-identical,
+`validation_errors.csv` unchanged. DB chain run on a copy of production
+AND on a same-code control without the page: integration vs control
+differs only by +103 events / +137 performances / +1 source page, 60
+work `appearance_count` increments, 6 new works (Toto chez Tata, Partie
+pour Saumur, Звѣзда Севильи, Не было ни гроша да вдругъ алтынъ,
+Севильскій обольстатель, and Простушка и воспитанная under its printed
+genre "в.", which the genre-review queue pairs with the existing entry).
+Date check 103/103 verified. 1 Октября - 10 Ноября 1890 now continuous
+(41/41 days), printed pages 6-11 continuous.
+
+**Side effect worth knowing**: production's research layer was stale
+relative to its own raw tier for issues #94-96 -- the control build
+showed 8 `research.performance` rows (the #94 excerpt-title fixes, #95
+Севильскій цирюльникъ/Паяцы, #96 Ромео и Джульетта) that the raw/parsed
+fixes had never been rebuilt into. This promotion's rebuild carries them
+into `full_run` too.
+
+**PROMOTED into `outputs/full_run`, 2026-09-28 (RG: "yes promote it")**.
+Backup: `outputs/full_run_pre_promote_backup_2026-09-28_1890-91_pp8-9/`.
+full_run re-parse byte-identical to the integration parse; rebuilt DB
+identical to the integration DB table-for-table. event_entry 25934 ->
+26037; research.event 28863 -> 28966 (19 seasons). quality_flags.csv 895
+(identical), dates 98.1% verified, gold eval 82.1/96.1/87.2 (unchanged).
+Not done: `link_wikidata.py` and HF/Cloud Run republish (on request
+only, per convention). Every two-page-spread season's printed-page
+sequence is now fully continuous or explained by a genuine printed
+closure -- no missing-scan gaps remain.

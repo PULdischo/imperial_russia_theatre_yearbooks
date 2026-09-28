@@ -26,6 +26,13 @@ slip.
 - **`repertoire_1899-00_p037`, "9 Четвергъ."** — appears out of sequence
   between "3 Среда" and "5 Пятница"; the scan confirms the page really
   does print it there, misnumbered, not a transcription reordering.
+- **`repertoire_1890-91_pair008` (p. 9, 24 Октября 1890, Малый):
+  "Севильскій обольстатель, др."** — should be "обольститель"; а set
+  for и. Confirmed at full resolution on RG's 2026-09-28 photograph of
+  the previously-missing pp. 8-9 (issue #97) — the letter is clearly an
+  а, not a worn и. The same play is printed correctly as "Севильскій
+  обольститель" on two later 1890-91 pages (`pair010`, `pair014`), so it
+  is one slip on this page, not the volume's spelling of the title.
 
 ## Wrong word / misheard-by-the-typesetter substitutions
 
