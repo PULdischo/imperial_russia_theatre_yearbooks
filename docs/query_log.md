@@ -9741,3 +9741,21 @@ select count(*) as n_groups from (select title_key from entities.work_genre_cand
 ```
 
 Result: 302 title groups (down from 316 before this round's fixes), 716 rows (down from 752). Matches expectation — roughly 19 distinct titles resolved or partially resolved this round. See known_issues.md issue #99.
+
+## 2026-09-28 — Genre review queue: two-page-spread-season singleton-outlier groups, mapped via pairNNN->printed-page->render
+
+```sql
+-- located via entities.work_link -> raw.event_entry_performance -> raw.event_entry -> raw.source_pages joins,
+-- plus the pairNNN->render mapping from issue #98's follow-up, re-verified against 3 more seasons
+-- (1890-91, 1892-93, 1893-94) before trusting it for all 25 targets
+```
+
+Result: all 25 two-page-spread-season singleton-outlier groups scan-verified against ForUpload_{season}_Repertoire_{(pair-2)/2:03d}.jpg. 5 genuine bugs found and fixed (Каширская старина, Цѣна жизни, Гроза, Гибель Содома, Sapho — all misreads matching an established shape), 20 confirmed genuine. This closes the entire 83-group singleton-outlier tier. See known_issues.md issue #99 follow-up.
+
+## 2026-09-28 — Post-fix verification: work_genre_candidate queue size after the full singleton-outlier tier
+
+```sql
+select count(distinct title_key), count(*) from entities.work_genre_candidate
+```
+
+Result: 299 title groups (down from 302), 708 rows (down from 716). Matches expectation for the 5 fixes just applied. See known_issues.md issue #99 follow-up.

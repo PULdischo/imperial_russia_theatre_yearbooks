@@ -19082,16 +19082,52 @@ down from 752) -- roughly matches the ~19 distinct titles resolved,
 several titles still correctly flagged for their OTHER, untouched
 spelling variants.
 
+**Follow-up, same day: the 25 two-page-spread-season groups swept too,
+closing out the entire singleton-outlier tier.** Used the `pairNNN` ->
+printed-page -> `ForUpload_{season}_Repertoire_{(pair-2)/2:03d}.jpg`
+mapping established in issue #98's follow-up, spot-verifying it against
+3 more seasons not yet used with it (1890-91, 1892-93, 1893-94, in
+addition to 1897-98) before trusting it across all 25 targets -- every
+one checked out against the render's own printed date header.
+
+**5 more genuine bugs found and fixed, all following the same
+established misread shapes**: Каширская старина (`хр.`->`др.`, the
+same х/д confusion as its own two single-page-season instances earlier
+today), Цѣна жизни (`ком.`->`др.`, a plain misread -- the scan reads
+"Цѣна жизни, др." cleanly, no ambiguity), Гроза (`ком.`->`др.`, same
+shape -- caught only by zooming the exact cell after a full-page
+thumbnail read said `сц.` at first, which turned out to be bleed from
+the row below; the same "thumbnails lie, zoom the cell" lesson from
+Каширская старина applies here too), Гибель Содома (`тр.`->`др.` --
+this title has TWO occurrences on the same page, one already correctly
+`др.`, the other wrongly `тр.`; both should read `др.`, confirmed by
+directly checking which receipts figure aligned with which date label
+after an initial row mix-up), Sapho (`com.`->`dr.`, a script-plus-word
+misread -- the scan's own Latin text reads "Sapho, dr." unambiguously).
+
+**20 more confirmed genuine**, including several that needed the
+receipts-figure-as-anchor technique to locate the correct row on a
+busy two-page-spread image (denser and more error-prone to navigate by
+percentage-of-page-height guessing than the single-page renders) --
+worth remembering for next time: when a row is hard to find by
+guessing crop coordinates, find a distinctive nearby receipts figure or
+adjacent title in the full-page read first, then crop precisely around
+it, rather than iterating blind guesses.
+
+**This closes the entire singleton-outlier tier RG authorized**: 83
+title groups (58 single-page-season + 25 two-page-spread-season), 100%
+scan-verified. 35 genuine bugs found and fixed across the whole tier
+today (issue #99 and this follow-up combined); rebuilt clean after
+every batch. `entities.work_genre_candidate`: 302 -> 299 title groups
+(708 rows). Musicians/Roster isolation (2900/23), quality_flags.csv
+(895), and dates (98.1%) unchanged throughout.
+
 **Still open, in priority order:**
-1. The 25 two-page-spread-season groups in this same singleton-outlier
-   tier -- not started this round. Use the `pairNNN` -> printed-page ->
-   `ForUpload_{season}_Repertoire_{(pair-2)/2:03d}.jpg` mapping
-   established in issue #98's follow-up.
-2. Красный цвѣтокъ's remaining 8 "этюдъ"-family spelling variants --
-   worth a dedicated pass given this round found a genuine misread
+1. Красный цвѣтокъ's remaining 8 "этюдъ"-family spelling variants --
+   worth a dedicated pass given this tier found a genuine misread
    among them; likely several more.
-3. The ~120 more-balanced groups RG chose to defer this round (lighter
+2. The ~120 more-balanced groups RG chose to defer this round (lighter
    touch, not exhaustive verification) -- overwhelmingly genuine
    dual-genre noise per Problem #5, but not individually confirmed.
-4. The queue itself remains open-ended by design -- continue on
+3. The queue itself remains open-ended by design -- continue on
    request, no defined "done."
