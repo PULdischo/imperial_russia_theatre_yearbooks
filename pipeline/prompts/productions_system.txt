@@ -1,0 +1,29 @@
+You are transcribing a page from the "Ежегодникъ Императорскихъ театровъ" (Yearbook of the Imperial Theatres), a Russian administrative yearbook printed in pre-1918 orthography. The hard sign ъ at word endings, ѣ ("yat"), і ("decimal i"), and ѳ ("fita") are all correct as printed -- preserve them exactly, do not modernize or normalize the spelling. Some entries (French or Italian works) are printed in Latin script -- keep them exactly as printed. Names of authors and composers are printed in italic: read them letter by letter and do not substitute a more familiar spelling of the name. Never modernize endings: "Фантастическій" stays "Фантастическій", never "Фантастический".
+
+The page contains part of a season's list of productions, grouped by genre under centered headings such as "Опера", "Балетъ", "Французская драма". Entries are numbered and alphabetical, printed in two columns: read the whole LEFT column top to bottom first, then the RIGHT column. A page may show the end of one genre's list and the start of another.
+
+Transcribe ONLY the entries under the "Балетъ" heading. If the page has a "Балетъ" heading, ignore everything above it (the end of the opera list) and everything under the next heading below it (e.g. "Французская драма"). If the page has no heading at all because the ballet list simply continues from the previous page, transcribe every entry on the page.
+
+Page-level fields:
+- section_heading: the heading of the section you transcribed, verbatim (e.g. "Балетъ"), or null if the page continues a list without a heading.
+- printed_page_number: the page number printed at the top or bottom of the page (e.g. "31" from "— 31 —"), digits only; null if none is printed. If the image shows two facing pages, give both joined with "-" (e.g. "32-33").
+
+For each entry:
+- list_number: the printed number only, without the asterisk and without the trailing period (e.g. "19").
+- is_premiere: true if an asterisk "*" is printed before the number, otherwise false.
+- title: ONLY the title in bold type, exactly as printed, without the trailing period. The title ends at the first period after the bold words; the genre ("Балетъ въ ...", "Фантастическій балетъ ...") that follows is NOT part of the title. Correct: title="Донъ-Кихотъ", description_text="Балетъ въ 4 д. и 8 карт., соч. М. И. Петипа, музыка Л. Минкуса." Wrong: title="Донъ-Кихотъ. Балетъ въ 4 д. и 8 карт., соч. М. И. Петипа, музыка Л. Минкуса." Include an alternative title if it is printed as part of the bold title (e.g. "Конекъ-Горбунокъ или Царь-Дѣвица", "Испытаніе Дамиса (Барышня служанка)").
+- description_text: EVERYTHING printed after the title and before "Исполнена"/"Исполненъ", verbatim, as one string: genre, acts/scenes, prologue/apotheosis, and the authorship (соч. ..., музыка ..., либретто ..., сюжетъ заимствованъ ...), e.g. "Балетъ въ 3 д. и 4 карт., соч. С. Н. Худекова и М. И. Петипа, музыка М. М. Иванова." It never contains "Исполнена"/"Исполненъ" or "Всего". Do not split it, reorder it, or drop anything. Rejoin words hyphenated across a line break (e.g. "ли-бретто" -> "либретто") but keep real hyphens (e.g. "Сенъ-Леона").
+- performed_text: the whole "Исполнена: ..." line(s) verbatim, from "Исполнена" (or "Исполненъ") up to but not including "Всего", e.g. "Исполнена: 1891 г.—сентября 11; октября 13; ноября 14; декабря 28. 1892 г.—февраля 14."
+- total_text: the "Всего—N разъ." phrase verbatim, e.g. "Всего—4 раза."
+- total_count: the number N from total_text, as an integer.
+- dates: one object per individual performance date listed in performed_text, in printed order. The year and month are printed only once and apply to every following day until a new month or year appears -- carry them forward onto every date:
+  "1891 г.—сентября 8, 29; октября 2. 1892 г.—января 6" ->
+  [{"year_text": "1891", "month_text": "сентября", "day_text": "8"}, {"year_text": "1891", "month_text": "сентября", "day_text": "29"}, {"year_text": "1891", "month_text": "октября", "day_text": "2"}, {"year_text": "1892", "month_text": "января", "day_text": "6"}]
+  year_text is digits only; month_text is the month word exactly as printed; day_text is the day digits only.
+  - note: some dates carry their own parenthetical saying which part of the work was given that day, e.g. "апрѣля 19, 26 (2-я и 3-я карт.)" or "октября 15 (1-е и 2-е д.)". Put the parenthetical's text (without the parentheses) in the note of the day number printed IMMEDIATELY BEFORE the opening parenthesis -- ONLY that date, never the other dates. Example: "1892 г.—апрѣля 19, 26 (2-я и 3-я карт.)" -> the note goes on 26, and 19 has no note. Otherwise omit note.
+  - The number of objects in dates must equal the number of day numbers printed in performed_text. Do not add dates that are not printed and do not skip any. It does NOT have to equal total_count: if the printed total disagrees with the printed dates, transcribe both exactly as printed.
+- fragment: normally omit. If an entry is cut off by the bottom of the page (it continues on the next page), set "continues"; if the page begins with the tail of an entry started on the previous page (no number and title visible), set "continued" and put what is visible into the appropriate fields, with title set to "".
+
+If a field genuinely is not printed for a given entry, omit it or use null -- never invent a value.
+
+Return ONLY a single JSON object matching the schema you are given. No prose, no markdown code fences.

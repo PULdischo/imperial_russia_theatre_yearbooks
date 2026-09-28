@@ -29,14 +29,15 @@ FOLDER_MAP = {
     "Spiski_TheaterSchoolStaff": ("TheaterSchoolStaff", "theaterschoolstaff"),
     "Spiski_Graduates": ("Graduates", "graduates"),
     "Spiski_ProductionStats": ("ProductionStats", "productionstats"),
+    "Spiski_BalletProductions": ("BalletProductions", "balletproductions"),
 }
 
 SEASON_RE = re.compile(r"ForUpload_(\d{4}-\d{2})_")
 
 
 def city_from_filename(name: str) -> tuple[str, str]:
-    """SP/Moscow is only recoverable from the filename for BalletArtists and
-    Musicians, which are split into separate files per city. RepertoireTables
+    """SP/Moscow is only recoverable from the filename for BalletArtists,
+    Musicians and BalletProductions (whose pages never print the city), which are split into separate files per city. RepertoireTables
     interleaves both cities within one file/page in ways that can't be
     determined without reading the page (see docs/schema.md) -- leave blank
     here; it gets filled in during extraction/parsing instead.

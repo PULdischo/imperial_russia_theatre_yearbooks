@@ -27,6 +27,7 @@ from openai import OpenAI
 sys.path.insert(0, str(Path(__file__).parent))
 from schemas import (
     RosterPage, RepertoirePage, flatten_roster_page, flatten_repertoire_page,
+    ProductionsPage, flatten_productions_page,
 )
 
 PROMPTS_DIR = Path(__file__).parent / "prompts"
@@ -100,7 +101,7 @@ def write_csv(rows: list[dict], path: Path) -> None:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--image", required=True, type=Path)
-    ap.add_argument("--kind", required=True, choices=["roster", "repertoire"])
+    ap.add_argument("--kind", required=True, choices=["roster", "repertoire", "productions"])
     ap.add_argument("--page-id", required=True)
     ap.add_argument("--entity-type", default="")
     ap.add_argument("--season", default="")
@@ -115,6 +116,9 @@ def main():
     if args.kind == "roster":
         system_prompt = (PROMPTS_DIR / "roster_system.txt").read_text(encoding="utf-8")
         schema = RosterPage.model_json_schema()
+    elif args.kind == "productions":
+        system_prompt = (PROMPTS_DIR / "productions_system.txt").read_text(encoding="utf-8")
+        schema = ProductionsPage.model_json_schema()
     else:
         system_prompt = (PROMPTS_DIR / "repertoire_system.txt").read_text(encoding="utf-8")
         schema = RepertoirePage.model_json_schema()
@@ -130,6 +134,9 @@ def main():
     if args.kind == "roster":
         page = RosterPage.model_validate(result["parsed"])
         tables = flatten_roster_page(args.page_id, args.entity_type, page)
+    elif args.kind == "productions":
+        page = ProductionsPage.model_validate(result["parsed"])
+        tables = flatten_productions_page(args.page_id, args.season, args.city, page)
     else:
         page = RepertoirePage.model_validate(result["parsed"])
         tables = flatten_repertoire_page(args.page_id, args.season, args.city, page)

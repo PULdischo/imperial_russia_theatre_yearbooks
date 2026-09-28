@@ -31,6 +31,7 @@ from openai import AsyncOpenAI, APIError, APITimeoutError, RateLimitError
 sys.path.insert(0, str(Path(__file__).parent))
 from schemas import (
     RosterPage, RepertoirePage, DateOnlyPage, TheaterOnlyPage, merge_columnwise_page,
+    ProductionsPage,
 )
 from row_detect import detect_rows, detect_columns
 from crop_to_table import load_column_config, column_group_for
@@ -40,6 +41,11 @@ BASE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
 DEFAULT_MODEL = "qwen3-vl-plus"
 ROSTER_KINDS = {"Administrators", "BalletArtists", "Musicians", "ProductionTeam",
                 "TheaterSchoolStaff", "Graduates"}
+# Per-season productions lists (списокъ пьесъ): their own prompt + schema,
+# loaded here rather than threaded through every process_page signature.
+PRODUCTIONS_KINDS = {"BalletProductions"}
+PRODUCTIONS_PROMPT = (PROMPTS_DIR / "productions_system.txt").read_text(encoding="utf-8")
+PRODUCTIONS_SCHEMA = ProductionsPage.model_json_schema()
 
 RETRYABLE = (APIError, APITimeoutError, RateLimitError, ConnectionError, TimeoutError)
 MAX_ATTEMPTS = 4
@@ -151,6 +157,8 @@ async def process_page(client: AsyncOpenAI, sem: asyncio.Semaphore, row: dict,
     kind = "roster" if row["entity_type"] in ROSTER_KINDS else "repertoire"
     system_prompt = roster_prompt if kind == "roster" else repertoire_prompt
     schema = roster_schema if kind == "roster" else repertoire_schema
+    if row["entity_type"] in PRODUCTIONS_KINDS:
+        system_prompt, schema = PRODUCTIONS_PROMPT, PRODUCTIONS_SCHEMA
 
     async with sem:
         t0 = time.monotonic()

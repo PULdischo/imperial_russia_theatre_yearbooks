@@ -9,6 +9,9 @@ from .review import (
     ReviewPageLLM, BlockLLM, SpanLLM, flatten_review_page,
     block_plain_text, page_plain_text, spans_plain_text,
 )
+from .productions import (
+    ProductionsPage, ProductionEntryLLM, ProductionDateLLM, flatten_productions_page,
+)
 from .dates import parse_russian_date
 
 __all__ = [
@@ -17,5 +20,6 @@ __all__ = [
     "DateOnlyPage", "DateRowLLM", "TheaterOnlyPage", "TheaterRowLLM", "merge_columnwise_page",
     "ReviewPageLLM", "BlockLLM", "SpanLLM", "flatten_review_page",
     "block_plain_text", "page_plain_text", "spans_plain_text",
+    "ProductionsPage", "ProductionEntryLLM", "ProductionDateLLM", "flatten_productions_page",
     "parse_russian_date",
 ]
