@@ -9590,3 +9590,40 @@ after rebuild (Паяцы -> existing 61-appearance parent, Севильскій
 
 Result: 21 -> 20 unlinked. quality_flags.csv and Musicians/Roster
 isolation (2900/23) both unchanged.
+
+## 2026-09-27 — Genre review queue: which season used "лир. сц." (lyric scenes) as a genre marker?
+
+```sql
+select e.season, e.date_verbatim, t.canonical_name, perf.verbatim_title, perf.verbatim_genre
+from research.performance perf
+join research.event e on perf.event_id = e.event_id
+join research.theater t on e.theater_id = t.theater_id
+where perf.verbatim_genre = 'лир. сц.'
+```
+
+Result: single row — season 1904-05, "21 Вторникъ", Маріинскій театръ, "Евгеній Онѣгинъ" billed as "лир. сц." (lyric scenes) — Tchaikovsky's own subtitle for the opera ("лирическія сцены"), a one-off genre label rather than the usual "оп." for this title elsewhere in the corpus.
+
+## 2026-09-27 — Genre review queue: Ромео и Джульетта single "бал." outlier among ~130 "оп." appearances
+
+```sql
+select e.season, e.date_verbatim, t.canonical_name, perf.verbatim_title, perf.verbatim_genre
+from research.performance perf
+join research.event e on perf.event_id = e.event_id
+join research.theater t on e.theater_id = t.theater_id
+where perf.verbatim_title = 'Ромео и Джульетта'
+order by perf.verbatim_genre
+```
+
+Result: ~130 rows genre "оп.", one row genre "бал." — season 1903-04, "29 Понед.", Маріинскій театръ, evening session. Scan-verified against ForUpload_1903-04_Repertoire_018.jpg: reads clearly "Ромео и Джульетта, оп." — a genuine extraction misread (о→а), fixed in raw JSON. See known_issues.md issue #96.
+
+## 2026-09-27 — Genre review queue: Конекъ-Горбунокъ single "оп." outlier among 198 "бал." appearances
+
+```sql
+select e.season, e.date_verbatim, t.canonical_name, perf.verbatim_title, perf.verbatim_genre
+from research.performance perf
+join research.event e on perf.event_id = e.event_id
+join research.theater t on e.theater_id = t.theater_id
+where perf.verbatim_title = 'Конекъ-Горбунокъ' and perf.verbatim_genre = 'оп.'
+```
+
+Result: single row — season 1907-08, "10 Воскрес.", Большой театръ. Scan-verified against ForUpload_1907-08_Repertoire_031.jpg: reads clearly "Конекъ-Горбунокъ, оп.", clean print, no ambiguity — a genuine period print anomaly, not an extraction error. Left unchanged. See known_issues.md issue #96.

@@ -18674,3 +18674,52 @@ in `docs/work_normalization.md` rather than re-investigated further.
 
 **Result**: 21 -> 20 unlinked (the one fixed compound title). Musicians/
 Roster isolation and quality_flags.csv both confirmed unchanged.
+
+## Issue #96: "Ромео и Джульетта" misread as `бал.` instead of `оп.` on
+## one appearance -- genuine extraction error, fixed directly in raw
+
+RG was spot-checking `entities.work_genre_candidate` fresh on 2026-09-27
+("tell me about the genre review queue," then "check the romeo and
+juliet ballet entry on the scan"). The title has ~130 appearances
+corpus-wide, essentially all genre `оп.` (opera; Gounod's setting was
+the standard repertoire piece for this title in the corpus), with a
+single `бал.` outlier: `repertoire_1903-04_p018`, "29 Понед.",
+Маріинскій театръ, evening session.
+
+Zoomed into `ForUpload_1903-04_Repertoire_018.jpg` at that exact row --
+scan reads clearly and unambiguously "Ромео и Джульетта, оп.", matching
+every other appearance of this title. No homoglyph, no smudging, no
+ambiguous ligature -- a plain one-character extraction misread (о -> а),
+not a print anomaly (contrast issue #96's neighbor case below, where
+the scan itself is the anomaly).
+
+Fixed directly in raw JSON (genuine extraction error, not a print
+question -- same category as issues #90/#91's genre corruption, not the
+"leave typos verbatim" rule):
+
+```python
+# repertoire_1903-04_p018.raw.json, "29 Понед." Маріинскій, evening
+# work_title "Ромео и Джульетта": genre "бал." -> "оп."
+```
+
+Rebuilt the full chain (`parse_and_validate.py` -> `build_duckdb.py` ->
+`quality_checks.py` -> `build_entities.py`). Confirmed clean: event_entry/
+event_entry_performance counts unchanged (pure content edit, no row
+added/removed), quality_flags.csv unchanged (895, same 5 categories),
+`entities.work` 3513 -> 3512 (one spurious genre-split collapsed, as
+expected), `work_genre_candidate` 762 -> 761 rows / 317 title groups
+unchanged, excerpt links (159 linked / 20 unlinked) and Musicians/Roster
+isolation (2900 live people / 23 candidate pairs) both unchanged.
+
+**Companion check, same session, NOT a bug**: same review pass also
+hit `Конекъ-Горбунокъ` (198 appearances, always `бал.`) showing a single
+`оп.` outlier -- `repertoire_1907-08_p031__s007`, "10 Воскрес.", Большой
+театръ. Zoomed into `ForUpload_1907-08_Repertoire_031.jpg`: scan reads
+clearly "Конекъ-Горбунокъ, оп.", clean print, no ambiguity. Unlike the
+Ромео и Джульетта case, this is NOT an extraction error -- it's what the
+volume itself printed. Left as-is, genuine period print anomaly (the
+theater/typesetter's own choice, or the original error), verbatim per
+this project's standing rule on genuine print oddities. **Contrast with
+#96 above**: same detection method (single-outlier-genre scan check),
+opposite disposition -- the scan is the arbiter, not the corpus-wide
+majority genre.
