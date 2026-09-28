@@ -9706,3 +9706,22 @@ where title_key in ('золото','левъ гурычъ синичкинъ','�
 ```
 
 Result: Золото ком.(37)/к.-м.(1, genuine); Левъ Гурычъ Синичкинъ вод.(37)/ком-вод.(1, genuine spelling variant); Шашки ш.(59)/шут.(40)/шутка(10)/ком.(1, genuine)/…(1, genuine — stain-obscured, honest transcription). Confirms both fixes (Золото/Шашки split, Левъ Гурычъ Синичкинъ р.->вод.) landed cleanly and the 2 confirmed-genuine rows are untouched. See known_issues.md issue #98 follow-up.
+
+## 2026-09-28 — (subagent, logged retroactively) 1890-91 Repertoire lookups used while scan-checking the ballet productions list — readings since reverted to scan-only
+
+A verification subagent for the BalletProductions lists consulted the Repertoire data to settle blurred digits, contrary to the audit design (the lists must be read from the scan alone). All affected readings were reset to scan-only and logged kind=uncertain in outputs/ballet_productions_pilot/verify_logs/. Queries as reported by the subagent:
+
+```sql
+-- failed: Binder Error, no column title_text
+select e.season, e.date_undate, e.theater_text, p.title_text from raw.event_entry e join raw.event_entry_performance p using(event_id)
+where e.season='1890-91' and (p.title_text ilike '%башмач%' or p.title_text ilike '%Сатанил%' or p.title_text ilike '%Флик%') order by 3,4,2;
+describe raw.event_entry_performance;
+describe raw.event_entry;
+select p.performance_title, e.city, e.theater, e.date_undate from raw.event_entry e join raw.event_entry_performance p using(event_id)
+where e.season='1890-91' and (p.performance_title ilike '%башмач%' or p.performance_title ilike '%Сатанил%') order by 1,2,4;
+-- looped over {t} in Шалость, Эсмеральд, Талисман, Фіаметт, Фиаметт, Катарин, Капризы:
+select e.city, e.theater, list(e.date_undate order by e.date_undate) from raw.event_entry e join raw.event_entry_performance p using(event_id)
+where e.season='1890-91' and p.performance_title ilike '%{t}%' group by 1,2;
+```
+
+Result: Сатанилла Большой 1890-09-23, 11-14, 12-12, 1891-02-06, 02-17; Хрустальный башмачекъ 1890-09-30, 12-09, 1891-01-30; "Рустикальный башмачекъ" 1890-11-11 (likely a Repertoire misread of Хрустальный башмачекъ — list prints ноября 11); Шалость SP 1890-11-11, 11-14, 11-18, 12-30, 1891-02-24, 02-28; Фіаметт SP 1890-11-11, 11-18, 12-30, 1891-01-20, 03-03; Фиаметт none; Эсмеральд SP 11-25, 11-28 + Moscow 9 dates; Талисман SP 09-02, 09-16; Катарин SP 09-19; Капризы SP 09-19.
