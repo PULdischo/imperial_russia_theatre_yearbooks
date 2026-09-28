@@ -1,4 +1,17 @@
 """Stage 2 of the season-reviews pipeline: call a vision model on every page
+
+OPERATIONAL NOTE (2026-09-28, from the 6,970-call 3-view run): a single
+AsyncOpenAI client DEGRADES over a long run. Throughput fell 41 -> 24 -> 11
+calls/min over about half an hour and eventually threw APIConnectionError on
+every retry, while `curl` to the same DashScope endpoint returned HTTP 200 in
+under a second. It is the client, not the network and not throttling.
+
+Killing the process and re-running restored full speed each time, instantly
+and for free, because every stage skips raw files already on disk. On runs of
+more than a couple of thousand calls, cycle the process every ~30 minutes
+rather than diagnosing this again. The misleading part is that the slowdown
+starts long before any error appears.
+
 in a reviews manifest and save the RAW JSON response, one file per page.
 
 Parsing/validation is a separate step (parse_reviews.py), so re-parsing after
