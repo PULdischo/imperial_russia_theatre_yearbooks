@@ -45,7 +45,17 @@ Several `nearby_date` rows sit right at these gap edges (e.g. 1897-98
 Moscow Звѣзды 11, 12, 13 Feb all pointing at 14 Feb), so they're likely
 the same problem: dates squeezed or shifted around a missing block.
 
-**Next:** open the Repertoire renders for these weeks and check whether
+**Cause, confirmed on the scans (2026-09-28):** the dates ARE printed. Every gap sits at
+the join between two consecutive spreads, with consecutive printed page numbers, and the
+transcription of the second (bottom) printed page of the spread stops after 2–3 dates. Example:
+1896-97 p. 15 prints 30 Dec 1896 – 8 Jan 1897 (Эсмеральда 1 Jan; Синяя борода 2, 4, 8 Jan…), but
+only 30–31 Dec (18 rows) were transcribed; p. 17 prints 19–28 Jan, but only 19–21 Jan were. Of 192
+printed pages in the spread seasons, 19 have fewer than 35 rows (a full page is ~50). The issue #82
+full sweep compared what was transcribed against the scan, but didn't check that each page's dates
+ran to the bottom. Recovery pass started 2026-09-28: staging in
+`outputs/recovery_2026-09-28_spread_truncation/`.
+
+**Original next step:** open the Repertoire renders for these weeks and check whether
 the content is on the page but untranscribed (like issues #73/#85/#87),
 or whether pages are missing.
 
