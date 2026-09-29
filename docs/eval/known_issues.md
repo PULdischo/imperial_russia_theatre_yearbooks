@@ -20281,3 +20281,16 @@ RG, 2026-09-29: "I was pretty careful to scan the pages that included ballet." T
 PDFs in `pdf/Spiski_BalletProductions/` therefore hold every page with ballet content, so a
 page missing from a PDF (like 1902-03 Moscow p. 52) had no ballet content. This closes the
 "limit" above.
+
+**#114, 2026-09-29: "Балстный" (F4, 1901-02 p035, p. 37) settled from the scan: broken е, not
+a wrong sort.** The letter was magnified from the full-resolution PDF image and compared with a
+genuine с and е on the same line ("дивертиссементъ"). See
+`docs/eval/img/1901-02_p035_balstnyi_glyph_check.png`.
+- In this typeface, **с** has a heavy ball terminal at its top right.
+- **е** has no ball: its upper bowl's right stroke comes down to the crossbar at mid-height.
+- The suspect letter has no ball terminal. Its right stroke descends to mid-height and stops
+  exactly where the е crossbar sits. That is an е whose crossbar didn't print (damaged or
+  uninked type), not a с put in by mistake.
+
+The transcription "Балетный" stands. This is not a print typo (not added to
+genuine_print_typos.md), and the physical check is dropped.
