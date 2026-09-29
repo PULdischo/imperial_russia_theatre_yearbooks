@@ -10305,3 +10305,12 @@ select receipts_source, count(*) from research.event group by 1;
 ```
 
 Result: 60 confirmed figures found, each exactly once; 4 already parse correctly, 56 corrected. receipts_source: parsed 17110, corrected_print_typo 56, NULL 12297. sum(receipts_total_kopecks) 2800248320 -> 2802505260 (+2,256,940 = 22,569 р. 40 к.); every other count unchanged.
+
+## 2026-09-29 — Issue #110: effect of rebuilding 1899-00 p028 and re-splitting 1902-03 p011
+
+```sql
+select e.page_id, e.date_text, e.theater, e.time_of_day, e.annotation from raw.event_entry e where e.date_undate=? and e.theater like ?;  -- 1900-02-20 Маріинскій, 1902-11-13 Новый
+-- before/after: counts of raw.event_entry, research.event, research.performance, research.work, persons, sum(receipts_total_kopecks), annotated rows, verified, raw.production_entry
+```
+
+Result: raw.event_entry 26516 -> 26524, research.event 29463 -> 29471, research.performance 28254 -> 28259, research.work 3489 -> 3484, persons 2900, receipts 2802505260 -> 2803164121, annotated 1464 -> 1442, verified 26065 -> 26073. List comparison: exact 1705, excerpt 149; Repertoire-side not-accounted 52.

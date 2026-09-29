@@ -19937,3 +19937,46 @@ Other counts unchanged (events, performances, works, persons, annotations,
 production lists). Backup `outputs/full_run_pre_promote_backup_2026-09-29_receiptscorr/`.
 Also 2026-09-29: "736 к. 49 н." re-read on the scan as "736 к. 49 к."
 (transcription and typos list corrected).
+
+## Issue #110: Two Repertoire cells from the ballet-list "not a production" leads --
+## 1899-00 p028 (Масленица week 1900) rebuilt; 1902-03 p011 excerpt re-split
+
+Two of the Repertoire-side leads (#101) looked like non-productions:
+"Бенефисъ кордебалета" and "5-я карт.". Both turned out to be
+transcription damage, scan-checked and fixed:
+
+- **1902-03 p011, 13 Nov 1902, Новый (Moscow):** printed "Клоринда, бал. /
+  5-я карт. бал. Дочь Фараона. / Дивертиссементъ. / 317 р. 32 к". The
+  transcription had split the excerpt in two ("5-я карт." as a work, and
+  "Дочь Фараона" with genre "Дивертиссементъ"). Now 3 works: Клоринда (бал.),
+  "5-я карт. бал. Дочь Фараона", Дивертиссементъ.
+- **1899-00 p028 (printed p. 30), 16–20 Feb 1900:** the page prints утро/веч.
+  rows for Масленица week, and the transcription had mangled them. Rebuilt
+  from the scan (staging outputs/recovery_2026-09-29_p028/):
+  - the banner "Безплатные спектакли для воспитанниковъ столичныхъ учебныхъ
+    заведеній." (printed once, above the 16 Feb row) now sits only on the
+    three 16 Feb утро sessions (no receipts, free matinees); it was removed
+    from 34 other sessions it had been copied onto;
+  - 16 Feb: утро/веч. were merged in all 3 theaters; now split (Маріинскій
+    Коппелія + Маркобомба / Богема 3464 р. 95 к.; Александринскій Недоросль +
+    Воздушные замки / Свѣтитъ, да не грѣетъ + Шашки 1628 р. 91 к. (title was
+    misread "Свѣтить, да не грѣть"); Михайловскій Cyrano ×2);
+  - Александринскій 17–20 Feb: the four evening performances were missing
+    entirely (Выгодное предпріятіе 1653 р. 89 к.; Биронъ 1650 р. 50 к.;
+    Девятый валъ + На рѣкѣ 1640 р. 70 к.; Волки и овцы 1643 р. 52 к.);
+  - Михайловскій 19 Feb: the literary-musical matinee (heading only, nothing
+    else printed) and the Lortheur benefit evening were split;
+  - Маріинскій 20 Feb утро: "Бенефисъ кордебалета." moved from works to
+    annotation (Арлекинада, Жемчужина, Капризы бабочки, 5973 р. 95 к.);
+  - genres removed from titles in these sessions ("Богема, оп." etc.).
+  Cells printed as one spanning утро+веч. (Михайловскій 17, 18, 20) stay
+  single "unspecified" sessions.
+Effect: raw.event_entry +8, research.performance +5, research.work -5,
+receipts +6,588 р. 61 к., annotated rows -22, verified +8; persons and
+lists unchanged; the 56 receipts corrections still apply. Backup
+`outputs/full_run_pre_promote_backup_2026-09-29_p011p028/` (both files and
+the DB, checked unchanged before promotion). Comparison afterwards: exact
+1705, excerpt 149; Repertoire-side leads 54 -> 52.
+Reading to check: "Выгодное предпріятіе" (17 Feb 1900), final letter faint.
+Noticed, not fixed: 1899-00 p028 Александринскій 2–3 Mar "Onkel Toni,
+Comödie." has the genre inside the title.
