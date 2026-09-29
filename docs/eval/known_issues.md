@@ -20294,3 +20294,24 @@ genuine с and е on the same line ("дивертиссементъ"). See
 
 The transcription "Балетный" stands. This is not a print typo (not added to
 genuine_print_typos.md), and the physical check is dropped.
+
+**#101/#105 follow-up, 2026-09-29: the held-back Пахита fold cell (1897-98 p012, p. 26, 5 May
+1898, Маріинскій) re-read without the list.** Sources: the full-resolution PDF image and the
+separate ForUpload JPG, which is a different, lower-resolution photograph with the same fold.
+- **The third line exists**, below "Концертное отдѣленіе."; only the upper halves of its
+  letters are visible.
+- **It must be a ballet, from the Repertoire volume alone.** The season totals on p. 27 print
+  "Смѣшанныхъ: … (русская драма, опера и балетъ) 1 ⁸)", and footnote 8 reads "Въ пользу
+  пострадавшихъ отъ недорода хлѣбовъ", which is this benefit's heading. The visible lines give
+  the drama (Женитьба) and the Концертное отдѣленіе; the ballet can only be the third line.
+- **The work is Пахита.** The letter tops read "…-е д. бал. П" followed by about 5 letters of
+  x-height only; the width was measured against "Концертное" on the line above. The 1897-98
+  Petersburg Repertoire has two П-ballets, Пахита and Привалъ кавалеріи, and only Пахита fits.
+  (Пахита was also given at the Маріинскій on 26 Apr, on this page.)
+- **The act digit is unreadable.** Only its top curve is visible, and 2 and 3 look the same to
+  that depth. The list's "3-е д." is therefore neither confirmed nor contradicted by the scan.
+- **Transcription question for RG:** titles already use "?" as real punctuation ("Qui?",
+  "Которая изъ двухъ?"), and "[" or "]" never occurs in titles or annotations. A bracketed
+  "[?]-е д. бал. Пахита" would be an unambiguous marker, but it would be a new convention.
+  The cell is still unpromoted (staged in `outputs/recovery_2026-09-28_other_titles/raw/`,
+  which reads "3-е").

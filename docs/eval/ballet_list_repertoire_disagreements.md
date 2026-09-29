@@ -109,8 +109,13 @@ seasons with no ballet list in our set (1905-06 ×2, 1908-09 ×1).
 
 ## Not (yet) on the list: waiting for a physical check or not a disagreement
 
-- **Waiting for RG's physical check:** 1897-98 SP Пахита "мая 5 (3-е д.)" vs. a Repertoire line inside the
-  binding fold (p012, p. 26, read from letter tops as "3-е д. бал. Пахита", not promoted); 1892-93 SP
+- **Waiting for RG's physical check:** 1897-98 SP Пахита "мая 5 (3-е д.)": **work settled, act digit open**
+  (2026-09-29). The Repertoire volume alone establishes a third line "…-е д. бал. Пахита" in the 5 May 1898
+  Маріинскій benefit cell (p012, p. 26). The p. 27 season totals count one mixed "(русская драма, опера и балетъ)"
+  performance, whose footnote 8 is this benefit. The letter tops read "-е д. бал. П" plus about 5 x-height
+  letters, and Пахита is the only П-ballet of that length in the 1897-98 Petersburg Repertoire. The act digit's
+  visible top fits 2 or 3, so the list's "3-е" can be neither confirmed nor contradicted from the scan. Not
+  promoted, pending RG's transcription decision. 1892-93 SP
   "Паяда и рыбакъ" (pair004, p. 4, 240 dpi; list "Наяда"); 1903-04 Moscow "Ваядерка" (p025, p. 27, low-res;
   list "Баядерка"); 1903-04 Moscow "Пригалъ кавалеріи" (p013, p. 15, possibly a broken sort; list "Привалъ").
 - **Not a disagreement:** 1900-01 SP "Ученики Дюпрэ" = Repertoire "Les élèves de Dupré" (same work, Russian

@@ -10509,3 +10509,29 @@ Result: ballet-genre works = the list's 10 (Конекъ-Горбунокъ 13+1
 Дочь фараона 3, Волшебный башмачекъ 3, Донъ Кихотъ 2+1, Коппелія 2+1, Корсаръ 2+1, Клоринда 2) plus Балетный
 дивертиссементъ 2. Genre-less: 5 excerpts of listed ballets, Да здравствуетъ жизнь! др. 3, Снѣгурочка 2, Дивертиссементъ 5.
 No unlisted ballet → no missing p. 52 entries.
+
+## 2026-09-29 — Пахита fold cell (1897-98 p012, 5 May 1898): П-ballets in the 1897-98 Petersburg Repertoire
+
+```sql
+select coalesce(pw.canonical_title, w.canonical_title) t, count(*) n, min(e.date), max(e.date)
+from research.performance p join research.event e using (event_id) join research.work w using (work_id)
+left join research.work pw on pw.work_id = w.excerpt_of_work_id
+where e.season = '1897-98' and e.city not ilike 'Mos%'
+  and (w.canonical_genre ilike '%бал%' or pw.canonical_genre ilike '%бал%' or p.verbatim_title ilike '%бал.%')
+group by all order by 1
+```
+
+Result: 15 ballets; П-titles are Пахита (3, last 1898-04-26) and Привалъ кавалеріи (2). Only Пахита fits the fragment's ~6-letter word.
+
+## 2026-09-29 — Is "?" or "[" already used inside titles? (transcription marker for an unreadable digit)
+
+```sql
+select p.performance_title, e.page_id, e.date_text from raw.event_entry_performance p join raw.event_entry e using (event_id)
+where p.performance_title like '%?%' limit 20;
+select count(*) from raw.event_entry where receipts_text like '%?%';
+select count(*) from raw.event_entry_performance where performance_title like '%[%' or performance_title like '%]%';
+select count(*) from raw.event_entry where annotation like '%[%'
+```
+
+Result: "?" is real punctuation in several titles (Гдѣ мой зять?, Которая изъ двухъ?, Что такое любовь?, Qui?); 2 receipts
+use "?" as an uncertainty marker; brackets occur in 0 titles and 0 annotations.
