@@ -19727,7 +19727,35 @@ anything, not a shortcut. RG asked to start with just the 7-page/9-row
 set above; this 118-row thread is the natural next phase whenever RG
 wants to continue.
 
-## Issue #106: Ballet-list "other title" dates (#101) -- Repertoire structural
+**CORRECTION, 2026-09-29 (caught by the concurrent Ballet-productions
+session, issue #111): the "2 genuinely missing sessions" above were
+WRONG -- they were never missing.** Both Большой and Маріинскій already
+had a row for this date, just spelled `24 Воскрес.` (matching the
+page's OTHER dates' abbreviated style) rather than `24 Воскресенье.`
+(the one spelling I searched, because that's what Александринскій/
+Михайловскій/Малый happened to use for this specific date on this
+page). My own completeness check matched sessions by exact `date_text`
+string only and never searched for a spelling variant before concluding
+"missing" -- precisely the trap [[never-assume-spelling-consistency]]
+warns about, and I hit it myself despite having spent two days applying
+that exact lesson to `annotation`/`genre` text. Adding the 2 new rows
+therefore created duplicates (visually confirmed on the scan: one cell
+per theater, not two). The concurrent session found this via its own
+ballet-list audit, removed my 2 added rows, and normalized the two
+original rows' `date_text` to the printed `24 Воскресенье.` instead,
+preserving my `annotation`/`works` field-level content on both (the
+Ekaterina II heading correctly landed on Большой's real row, not a
+duplicate). Independently re-verified after their fix: exactly 7 rows
+now exist for `24 Воскресенье.` corpus-wide on this page (one per
+theater, Александринскій/Малый correctly split morning/evening) -- no
+duplicates, no lost content. **The rest of this entry's fixes (the 9
+heading `works`->`annotation` moves) are unaffected** -- none of those
+added new rows; all matched an existing, uniquely-identified session by
+exact `(date_text, session, theater)` before editing, and the lookup
+function asserted exactly one match or raised an error, so a silent
+wrong-row edit was not possible there. This was the only "assume
+missing, add a new row" operation performed in this whole two-day
+thread; no other instance of this risk exists in the issue #104 work.
 ## damage found and repaired on 4 spreads; 12 genuine list/Repertoire disagreements
 
 The 24 list dates where the Repertoire showed other titles that day were
@@ -19980,3 +20008,52 @@ the DB, checked unchanged before promotion). Comparison afterwards: exact
 Reading to check: "Выгодное предпріятіе" (17 Feb 1900), final letter faint.
 Noticed, not fixed: 1899-00 p028 Александринскій 2–3 Mar "Onkel Toni,
 Comödie." has the genre inside the title.
+
+## Issue #111: Repertoire performances the ballet lists leave out (#101) --
+## 11 confirmed disagreements, 6 copied "morning" rows and 2 duplicates removed
+
+**Matcher first.** Of 31 Repertoire rows "on the list, but on a date the
+list doesn't give", 13 were artifacts of `compare_productions_repertoire.py`:
+opera prefix matches (Робертъ vs Роберт и Бертрам), same-cell continuations
+("2-я и 3-я карт. бал.") taking a list date's claim, and matinee+evening pairs
+claimed twice. Fixed in e6bcafd; list-side matches unchanged.
+
+**15 cases were checked on both scans** (staging outputs/recovery_2026-09-29_list_omissions/).
+In every one, the list's printed "Всего" equals its printed dates.
+- **Confirmed disagreements, now in docs/eval/ballet_list_repertoire_disagreements.md
+  section D (D1–D8)** plus paired evidence added to A3 (list "25" / Repertoire
+  15 Oct), A7 (list "21" / Repertoire 2 Sep) and A12 (list "17" / Repertoire
+  27 Dec). Observed pattern: D3–D8 are all charity/benefit bills with no
+  receipts, omitted from the lists.
+- **Repertoire faults, fixed and promoted:**
+  - Spurious "morning" rows copying the previous day's cells (source
+    "p00X (bottom, no collision)" merges): 1893-94 pair006, 14 Oct 1893
+    (Большой, Малый, Маріинскій: "Хрустальный башмачекъ 1099 р. 91 к.",
+    "Сиящая красавица 2999 р. 20 к." etc.) and 1895-96 pair004, 28 Sep 1895
+    (Маріинскій, Александринскій, Михайловскій). 6 rows removed; the real
+    single cells are now "unspecified". Also added the missing "De 1 h. à 3 h."
+    (Михайловскій, 28 Sep 1895).
+  - 1896-97 pair010, 24 Nov 1896: 2 duplicates (Маріинскій, Большой)
+    that the 2026-09-28 issue #104 follow-up added as "missing" when the rows
+    existed under "24 Воскрес.". Removed; the originals' date_text set to the
+    printed "24 Воскресенье."; the Main session was told.
+  - 1902-03 p031, 9 Apr 1903 Большой: the 8 Apr Иверская bill annotation had
+    bled onto it; removed.
+Effect: raw.event_entry -8, research.performance -14, research.work -1
+("Сиящая красавица"), receipts -13,949 р. 27 к. (double-counted copies
+removed), annotations -2; persons and lists unchanged. Backup
+`outputs/full_run_pre_promote_backup_2026-09-29_listomissions/`. Production
+files were confirmed unchanged since staging (mtime) before the copy.
+Repertoire-side leads 39 -> 34.
+
+**Worklist, NOT errors (RG's rule):** a detector for "morning" sessions
+identical to the same theater's adjacent day found 55 candidates on 35 pages
+(outputs/recovery_2026-09-29_list_omissions/morning_copy_candidates.csv).
+Most have different receipts and are probably genuine repeats. Strongest
+suspect: 1903-04 p015 Большой 29/30 Mar 1904, Евгеній Онѣгинъ, both 4993 р. 20 к.
+Needs scan checks before anything is called an error.
+**Uncertain:** 13 Oct 1893 Большой/Малый receipts are in the binding gutter
+("?74 р. ?3 к."; "1156 р. 27" with the к. lost).
+**Noticed, not fixed:** 1903-04 p032 Маріинскій "Аида, оп." (genre in title) and
+31 Mar "Жизнь за Царя" genre null (printed оп.); 1904-05 p020 "Корсаръ, бал.
+15291 р. 95 к." as printed (likely print typo, RG's list).

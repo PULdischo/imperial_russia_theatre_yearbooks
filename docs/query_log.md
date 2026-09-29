@@ -10324,3 +10324,11 @@ select production_entry_id,season,city,list_number,title,page_id,printed_page_nu
 ```
 
 Result: of 31 "title_in_list_other_date" rows, 13 were comparison-script artifacts (6 operas Робертъ/Балъ-маскарадъ prefix-matched to ballets; 4 same-cell "2-я и 3-я карт. бал." continuations that took the list date's claim; 3 matinee+evening pairs where one list date claimed both, incl. Золотая рыбка "ноября 14 (2 раза: утромъ и вечеромъ)"). After the matcher fixes: 18 remain = 3 halves of confirmed disagreements (A1, A4, A5) + 15 to scan-check (11 dates, 1 suspected Repertoire duplicate, 3 likely paired with A3/A7/A12). In all 15, the list's printed Всего equals its printed date count. The list-side match counts are unchanged (exact 1705, excerpt 149).
+
+## 2026-09-29 — Issue #111 effect, and the copied-"morning"-row detector
+
+```sql
+-- before/after: counts of raw.event_entry, research.event, research.performance, research.work, persons, sum(receipts_total_kopecks), annotated rows, verified, raw.production_entry
+```
+
+Result: raw.event_entry 26524 -> 26516, research.event 29471 -> 29463, research.performance 28259 -> 28245, research.work 3484 -> 3483, receipts 2803164121 -> 2801769194, annotated 1442 -> 1440, verified 26073 -> 26065; comparison exact 1705 / excerpt 149; Repertoire-side leads 34. Detector (a JSON scan of outputs/full_run/raw, not SQL): 55 "morning" sessions whose works equal the same theater's adjacent day, on 35 pages.

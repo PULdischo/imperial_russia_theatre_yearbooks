@@ -18,16 +18,16 @@ Sources: list page = `balletproductions_<season>_<city>_pNNN` (printed page); Re
 |---|---|---|---|---|---|---|
 | A1 | 1895-96 Moscow | Катарина (Дочь разбойника), #4 (p. 40) | января 17 [1896] | 17 Jan, Большой: Эсмеральда, бал. (pair014, p. 15) | Per our (scan-verified) list transcription, the list's own Эсмеральда entry gives января 14, 24, with no 17. Катарина's other list dates (13 Dec, 28 Jan) match the Repertoire | #106 item 8 |
 | A2 | 1895-96 Moscow | Пробужденіе Флоры, #11 (p. 41) | мая 2, 22 [1896] | 2 May, Большой: Паяцы + Даита. 3 May (Пятница): Пряничный домикъ + Пробужденіе Флоры (pair024, p. 25) | The list's Даита entry gives мая 2, which agrees with the Repertoire's 2 May | #107 item 6 |
-| A3 | 1897-98 SP | Волшебная флейта, #1 (pp. 32–33) | октября 5, 25 [1897] | 25 Oct, Маріинскій: dash (dark) (pair008, p. 8) | Neighbouring days: 24 Oct Гензель и Гретель, 26 Oct Спящая красавица | #106 item 10 |
+| A3 | 1897-98 SP | Волшебная флейта, #1 (pp. 32–33) | октября 5, 25 [1897] | 25 Oct, Маріинскій: dash (dark) (pair008, p. 8) | Neighbouring days: 24 Oct Гензель и Гретель, 26 Oct Спящая красавица. **Paired (#111):** the Repertoire prints Пахита + Волшебная флейта on **15** Oct (pair006), a date the list doesn't give; the list's 3 dates = Всего 3 | #106 item 10; #111 item 1 |
 | A4 | 1897-98 SP | Дочь микадо, #2 (pp. 32–33) | ноября 9, **24**, 16, 19 | Дочь микадо on 9, **14**, 16, 19 Nov; 24 Nov Маріинскій: Фра-Дьяволо (pair010, p. 11) | The list's "24" breaks its own ascending order; its 9 dates pair 1:1 with the Repertoire's 9 | #106 item 11 |
 | A5 | 1897-98 SP | Дочь микадо, #2 (pp. 32–33) | декабря 14, **38** | Дочь микадо on 14 and **28** Dec (pair014, pp. 14–15, after the #107 column repair) | "38" is not a possible day; it pairs with the Repertoire's 28 | #106/#107 |
 | A6 | 1897-98 SP | Коппелія, #6 (pp. 32–33) | ноября 3 [1897] | 2 Nov, Маріинскій: Коппелія, бал. + 2-е д. бал. Млада. 3 Nov: Опричникъ (pair008, p. 8) | The list's own Млада entry prints "ноября 2 (2-е д.)", which agrees with the Repertoire's 2 Nov double bill | #107 item 13 |
-| A7 | 1898-99 SP | Очарованный лѣсъ, #11 (p. 49) | сентября 21, 27 [1898] | 21 Sep, Маріинскій: Фераморсъ. Очарованный лѣсъ on 27 Sep only (p002, p. 4) | none | #106 item 13 |
+| A7 | 1898-99 SP | Очарованный лѣсъ, #11 (p. 49) | сентября 21, 27 [1898] | 21 Sep, Маріинскій: Фераморсъ. Очарованный лѣсъ on 27 Sep only (p002, p. 4) | **Paired (#111):** the Repertoire prints Капризы бабочки, Волшебная флейта, Очарованный лѣсъ on **2** Sep 1898 (p000, 1731 р. 85 к.), a date the list doesn't give; the list's own Капризы бабочки entry gives "сентября 2, 23" | #106 item 13; #111 item 9 |
 | A8 | 1900-01 SP | Маркитантка, #9 (p. 46) | февраля 4, 11 [1901] | 11 Feb Маріинскій: morning Садко; evening Бенефисъ Кордебалета (4-я карт. бал. Камарго, 2-е д. бал. Фіамметта, 2-е д. бал. Щелкунчикъ). Маркитантка on 4 Feb only (p026, p. 28) | The list's own Камарго, Фіаметта and Щелкунчикъ entries all give 11 Feb, without Маркитантка | #106 item 16 |
 | A9 | 1901-02 Moscow | Лебединое озеро, #9 (p. 54) | сентября 16, 21 [1901] | 21 Sep, Большой: Русланъ и Людмила, оп. Лебединое озеро on 16 Sep only (p003, p. 5) | none | #106 item 17 |
 | A10 | 1901-02 SP | Волшебная флейта, #3 (p. 46) | декабря 19, 28 [1901] | 19 Dec, Маріинскій: Сильвія, бал. only. Волшебная флейта on 28 Dec morning (p018, p. 20) | The list's own Сильвія entry also gives 19 Dec, so the list implies a double bill that the Repertoire doesn't print | #106 item 18 |
 | A11 | 1903-04 SP | Волшебная флейта, #4 (p. 45) | ноября 30 [1903] | 30 Nov, Маріинскій: morning Фаустъ; evening Фея куколъ + 2-е д. бал. Фіаметта (p014, p. 16) | none | #106 item 21 |
-| A12 | 1904-05 SP | На перепутьи, #17 (p. 139) | декабря 12, 17 [1904] | На перепутьи on 12 Dec evening only (Ширяевъ benefit); 17 Dec: other titles (p018, p. 108) | none | #106 item 23 |
+| A12 | 1904-05 SP | На перепутьи, #17 (p. 139) | декабря 12, 17 [1904] | На перепутьи on 12 Dec evening only (Ширяевъ benefit); 17 Dec Маріинскій: Валкирія only (p018, p. 108) | **Paired (#111):** the Repertoire prints Пробужденіе флоры / На перепутьи / Фея куколъ at the **27** Dec утро (p020, 1883 р. 19 к.); the list's Пробужденіе флоры and Фея куколъ entries both give 27 Dec | #106 item 23; #111 item 3 |
 
 ## B. Works: the list names a ballet that the Repertoire cell doesn't name
 
@@ -50,6 +50,21 @@ list spelling was confirmed in the list verification (issue #101).
 | C6 | 1903-04 SP, 25 Jan 1904 | Фіаметта (#26, p. 46) | 2-е д. бал. Фіаметто (p024, p. 26) |
 | C7 | 1904-05 SP, 1 Dec 1904 | Граціелла (#6, p. 138) | Граціела (p016, p. 106) |
 
+## D. Performances the Repertoire prints but the list leaves out (list internally consistent: its printed dates = its "Всего")
+
+| # | Season, city | Ballet (list entry) | Repertoire prints | List prints | Evidence in the yearbook | Checked |
+|---|---|---|---|---|---|---|
+| D1 | 1897-98 Moscow | Фея куколъ, #13 (p. 40) | 14 Jan 1898, Большой: Жизель + Фея куколъ, 517 р. 30 к. (pair016) | 10 dates, none in January; Всего—10 | none | #111 item 2 |
+| D2 | 1898-99 Moscow | Привалъ кавалеріи, #9 (p. 58) | 25 Apr 1899, Большой: Фея куколъ / 2-е д. бал. Конекъ-Горбунокъ / Привалъ кавалеріи, 959 р. 15 к. | 9 dates, no 25 Apr; Всего—9 | The list's own Фея куколъ entry does give "апрѣля 25", and the two share a bill on most other Фея куколъ dates | #111 item 10 |
+| D3 | 1900-01 SP | Фіаметта, #20 (p. 47) | 30 Dec 1900, Маріинскій evening: Русское Театральное Общество benefit incl. "2-е д. бал. Фіаметта.", no receipts | "1901 г.—февраля 11. Всего—1 разъ." | Charity/benefit bill | #111 item 14 |
+| D4 | 1902-03 Moscow | Конекъ-горбунокъ, #5 (p. 51) | 8 Apr 1903, Большой: Иверская Община charity bill incl. "7-я и 11-я карт. бал. Конекъ-горбунокъ", no receipts (p031) | 12 dates to "апрѣля 13" + post-total "1-е дѣйствіе исполнено … апрѣля 27"; no 8 Apr | Charity bill | #111 item 5 |
+| D5 | 1903-04 Moscow | Золотая рыбка, #4 (p. 52) | 30 Mar 1904, Большой: Иверская charity bill incl. "Золотая рыбка, бал.", no receipts (p031) | 8 dates, no 30 Mar; Всего—8 | Charity bill | #111 item 6 |
+| D6 | 1903-04 SP | 2-е д. Лебединое озеро, #14 (p. 45) | 21 Feb 1904, Маріинскій: Red Cross benefit incl. "2-е д. бал. Лебединое озеро.", no receipts | "ноября 16 … января 18; февраля 4 (2-я картина 1-го дѣйствія). Всего—3 раза" | Charity bill | #111 item 15 |
+| D7 | 1903-04 SP | Волшебная флейта, #4 (p. 45) | 3 Apr 1904, Маріинскій: Гребловская школа charity bill, item "2) Волшебная флейта, бал.", no receipts (p032) | "сентября 28; ноября 30. 1904 г.—февраля 7. Всего 3 раза" | Charity bill | #111 item 8 |
+| D8 | 1903-04 SP | Фея куколъ, #25 (p. 46) | 10 Apr 1904, Маріинскій: sailors' families charity bill, item "5) Фея куколъ, бал.", no receipts (p032) | "1903 г.—ноября 30. Всего—1 разъ" | Charity bill | #111 item 7 |
+
+**Observed pattern (not a conclusion):** D3–D8 are all charity or benefit bills with no receipts printed, and in each the list omits the date. A checker noticed the same for Сынъ Мандарина on the 8 Apr 1903 Иверская bill (not a ballet; not yet checked).
+
 ## Not (yet) on the list: waiting for a physical check or not a disagreement
 
 - **Waiting for RG's physical check:** 1897-98 SP Пахита "мая 5 (3-е д.)" vs. a Repertoire line inside the
@@ -60,5 +75,5 @@ list spelling was confirmed in the list verification (issue #101).
   vs French title). The four list dates with a printed year that differs from the season (Пери, Дочь Микадо
   1899-00, Коппелія 1902-03, Тщетная 1902-03) all match the Repertoire once the date is taken from the
   season, so they aren't disagreements.
-- **Not yet investigated:** the 54 Repertoire-side leads (Repertoire ballet performances the lists don't
+- **Not yet investigated (as of #111):** the remaining Repertoire-side leads; was: the 54 Repertoire-side leads (Repertoire ballet performances the lists don't
   account for, `outputs/ballet_productions_pilot/compare/repertoire_not_in_lists.csv`).
