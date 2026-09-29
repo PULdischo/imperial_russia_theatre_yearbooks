@@ -10478,3 +10478,14 @@ where p.performance_title in ('Анда','Анда.') or p.performance_title ili
 
 Result: 5 "Анда, оп." rows at the Маріинскій (1896-97 pair004 24 Вт.; 1898-99 p030 7 Вс.; 1904-05 p030 13 Вс. утро;
 1905-06 p006 9 Вс. утро; 1905-06 p022 28 Ср. веч.). Not scan-checked: could be a misread of "Аида" or genuine print.
+
+## 2026-09-29 — Issue #114 (2nd addendum): list pages for the three seasons with ballet divertissements
+
+```sql
+select season, city, page_id, printed_page_number, source_file, source_page_index, count(*), min(list_number), max(list_number)
+from raw.production_entry
+where (season, city) in (('1901-02','Moscow'), ('1902-03','Moscow'), ('1903-04','SP')) group by all order by 1, 2, 4
+```
+
+Result: 1901-02 MSK p. 54 (15 entries); 1902-03 MSK p. 51 (10); 1903-04 SP pp. 44 (2), 45 (22), 46 (4). Used only to
+locate the scans; the lists themselves were then read on the scans, not from the transcription.

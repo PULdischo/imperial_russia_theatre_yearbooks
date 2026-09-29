@@ -98,6 +98,10 @@ Each list's whole "Балетъ" section (every entry, title, excerpt note and p
   9 and 16 Jan 1902 Новый; 25 Jan 1903 Малый; 12 Apr 1903 and 20 Apr 1902 Большой. No list has a divertissement
   entry (query, #114). All 8 Repertoire cells have been read on the scans (#113, #114 addendum): each prints
   "Балетный дивертиссементъ" with no genre, and the transcriptions match.
+  The three lists were then read in full on their own scans (#114, 2nd addendum): 1901-02 Moscow (p. 54, 15 entries),
+  1902-03 Moscow (p. 51, 10 entries) and 1903-04 SP (pp. 44–46, 28 entries). None mentions a divertissement. None
+  gives any of the 8 dates, under any entry or post-total note. Caveat: the 1902-03 Moscow section ends mid-page on
+  p. 51 with no closing ornament, and our scan has no p. 52, so its completeness is unconfirmed.
   Whether these count as list omissions is RG's call.
 - **Repertoire-side leads (as of #114):** 40 in `outputs/ballet_productions_pilot/compare/repertoire_not_in_lists.csv`:
   the 8 divertissements above, the 12 comedy-ballet (ком.-бал.) performances (Батюшкина дочка ×7, Мѣщанинъ во

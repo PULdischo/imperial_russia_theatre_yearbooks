@@ -20236,3 +20236,22 @@ The transcription stays "Балетный" until the page is seen.
 1901, Новый prints "Парижскій рынокъ, бал. / Волшебныя грезы, бал. / Дивертиссементъ." That
 is a plain divertissement on an all-ballet bill. It's only an observation; plain
 divertissements stay outside the rule.
+
+**#114 2nd addendum, 2026-09-29: the three ballet lists read on their scans for the 8
+divertissements.** At RG's request. Before this, "no list mentions a divertissement" rested on
+a query of the list transcription. Each whole "Балетъ" section was read from the
+full-resolution embedded PDF image, including every date line and post-total note:
+- **1901-02 Moscow (p. 54):** 15 entries, closing ornament, section complete. No
+  divertissement. No октября 17 [1901], and no января 9 or 16 or апрѣля 20 [1902]. Nearest:
+  Конекъ-горбунокъ "января 6, 20 … апрѣля 21"; Корсаръ "января 13 … апрѣля 28".
+- **1902-03 Moscow (p. 51):** 10 entries. No divertissement. No января 25 or апрѣля 12 [1903].
+  Nearest: Конекъ-горбунокъ "апрѣля 13"; Эсмеральда "апрѣля 10, 27". **Caveat:** the section
+  ends mid-page with both columns short and no closing ornament, and the scan PDF has only this
+  page. Whether anything continues on p. 52 is unconfirmed; that needs a physical check.
+- **1903-04 SP (pp. 44–46):** 28 entries, ending where "Французская драма" begins; section
+  complete. No divertissement. No февраля 22 or апрѣля 17 [1904]. Nearest: Лебединое озеро
+  "февраля 4 (2-я картина 1-го дѣйствія)"; апрѣля 11, 14, 18.
+
+So on both sides of all 8 cases the yearbook says the same thing: the Repertoire prints a
+"Балетный дивертиссементъ" on these dates, and the lists never mention a divertissement.
+Whether that makes them list omissions is RG's decision; nothing is assumed about why.
