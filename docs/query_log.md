@@ -10461,3 +10461,20 @@ Result: first run (regex without е?) matched 1 work only; after the fix printed
 Балетный дивертиссементъ бал. 9 + Балетный дивертиссментъ бал. 2 = 11 performances; raw genre NULL for all 11;
 the other 4 divertissement works untouched. compare_productions_repertoire.py: Repertoire-side leads 32 → 40
 (ballet_not_in_list 17 → 25; 8 divertissements in list seasons).
+
+## 2026-09-29 — What is still outstanding between the ballet lists and the Repertoire (status review)
+
+Read outputs/ballet_productions_pilot/compare/list_dates_vs_repertoire.csv (non-exact/excerpt rows) and
+repertoire_not_in_lists.csv, then mapped each against docs/eval/ballet_list_repertoire_disagreements.md.
+Result: list side, 27 non-matched dates. Each is in A1–A12, B1 or C1–C7, is one of the 4 waiting for RG's physical
+check (Паяда/Наяда, Ваядерка/Баядерка, Пригалъ/Привалъ, Пахита fold cell), or is Ученики Дюпрэ (not a disagreement).
+Repertoire side, 40 = 5 E + 15 in A/D + 8 ballet divertissements (RG's call) + 12 comedy-ballets (research need).
+
+```sql
+select e.page_id, e.date_text, e.theater, e.time_of_day, p.performance_title, p.genre, e.receipts_text
+from raw.event_entry e join raw.event_entry_performance p using (event_id)
+where p.performance_title in ('Анда','Анда.') or p.performance_title ilike 'Анда,%'
+```
+
+Result: 5 "Анда, оп." rows at the Маріинскій (1896-97 pair004 24 Вт.; 1898-99 p030 7 Вс.; 1904-05 p030 13 Вс. утро;
+1905-06 p006 9 Вс. утро; 1905-06 p022 28 Ср. веч.). Not scan-checked: could be a misread of "Аида" or genuine print.
