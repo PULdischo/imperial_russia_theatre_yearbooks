@@ -10332,3 +10332,26 @@ Result: of 31 "title_in_list_other_date" rows, 13 were comparison-script artifac
 ```
 
 Result: raw.event_entry 26524 -> 26516, research.event 29471 -> 29463, research.performance 28259 -> 28245, research.work 3484 -> 3483, receipts 2803164121 -> 2801769194, annotated 1442 -> 1440, verified 26073 -> 26065; comparison exact 1705 / excerpt 149; Repertoire-side leads 34. Detector (a JSON scan of outputs/full_run/raw, not SQL): 55 "morning" sessions whose works equal the same theater's adjacent day, on 35 pages.
+
+## 2026-09-29 — Correction: the "2 missing sessions" from issue #104's follow-up were never missing
+
+The concurrent Ballet-productions session (issue #111) caught that the
+2 sessions I added to `repertoire_1896-97_pair010` yesterday (Большой
+and Маріинскій, `24 Воскресенье.`) already existed under `date_text`
+`24 Воскрес.` -- a shorter spelling variant used elsewhere on the same
+page, which my own lookup never searched for before concluding
+"missing." Verification query, post their fix:
+```sql
+select theater, date_text, session, annotation, receipts_text
+from raw.event_entry
+where page_id = 'repertoire_1896-97_pair010' and date_text = '24 Воскресенье.'
+```
+Result: exactly 7 rows (one per theater; Александринскій/Малый split
+morning/evening as expected), no duplicates. My `annotation` content
+(the Ekaterina II heading on Большой's real row) and `works` content
+were both preserved by their fix -- only the duplicate-row mistake and
+the date_text spelling were corrected. See known_issues.md issue #104
+follow-up's correction addendum for the full writeup and the lesson
+(never conclude "missing" without checking for a spelling/abbreviation
+variant of the date string first, especially on a page that already
+mixes conventions).
