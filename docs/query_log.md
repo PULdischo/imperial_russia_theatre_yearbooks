@@ -10314,3 +10314,13 @@ select e.page_id, e.date_text, e.theater, e.time_of_day, e.annotation from raw.e
 ```
 
 Result: raw.event_entry 26516 -> 26524, research.event 29463 -> 29471, research.performance 28254 -> 28259, research.work 3489 -> 3484, persons 2900, receipts 2802505260 -> 2803164121, annotated 1464 -> 1442, verified 26065 -> 26073. List comparison: exact 1705, excerpt 149; Repertoire-side not-accounted 52.
+
+## 2026-09-29 — Repertoire-side leads: why "list leaves out a date" rows were really matcher artifacts
+
+```sql
+select e.page_id, e.date_text, e.theater, e.time_of_day, p.performance_title, e.receipts_text, e.event_id
+from raw.event_entry e join raw.event_entry_performance p using(event_id) where e.city=? and e.date_undate=? and p.performance_title ilike ?;  -- per lead
+select production_entry_id,season,city,list_number,title,page_id,printed_page_number,performed_text,total_text,total_count,n_dates from raw.production_entry;
+```
+
+Result: of 31 "title_in_list_other_date" rows, 13 were comparison-script artifacts (6 operas Робертъ/Балъ-маскарадъ prefix-matched to ballets; 4 same-cell "2-я и 3-я карт. бал." continuations that took the list date's claim; 3 matinee+evening pairs where one list date claimed both, incl. Золотая рыбка "ноября 14 (2 раза: утромъ и вечеромъ)"). After the matcher fixes: 18 remain = 3 halves of confirmed disagreements (A1, A4, A5) + 15 to scan-check (11 dates, 1 suspected Repertoire duplicate, 3 likely paired with A3/A7/A12). In all 15, the list's printed Всего equals its printed date count. The list-side match counts are unchanged (exact 1705, excerpt 149).

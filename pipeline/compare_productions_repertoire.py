@@ -107,6 +107,8 @@ def main():
         by_city_date[(r["city"], r["date"])].append(r)
 
     def how(list_key: str, r: dict) -> str | None:
+        if norm(r["verbatim_title"]) == list_key:
+            return "exact_printed"
         if list_key in r["k_self"]:
             return "exact"
         if r["k_parent"] and r["k_parent"] == list_key:
@@ -115,7 +117,11 @@ def main():
             return "excerpt"
         # the list's title is the fuller form ("Донъ-Кихотъ Ламанчскій" vs
         # the Repertoire's "Донъ-Кихотъ"): the Repertoire key starts it
-        if any(len(k) >= 5 and list_key.startswith(k + " ") for k in r["k_self"]):
+        # only for ballet (or genre-less) rows: the opera "Робертъ" must not
+        # match the ballet "Роберт и Бертрам"
+        is_ballet_or_blank = not ((r["verbatim_genre"] or "") + (r["canonical_genre"] or "")) or \
+            "бал" in ((r["verbatim_genre"] or "") + (r["canonical_genre"] or "")).lower()
+        if is_ballet_or_blank and any(len(k) >= 5 and list_key.startswith(k + " ") for k in r["k_self"]):
             return "exact"
         if any(SequenceMatcher(None, list_key, k).ratio() >= 0.8 for k in r["k_self"]):
             return "fuzzy"
@@ -128,8 +134,12 @@ def main():
                     return "fuzzy"
         return None
 
-    rank = {"exact": 0, "excerpt": 1, "fuzzy": 2}
-    out1, claimed = [], set()
+    # prefer the row whose PRINTED title is the ballet over one only linked to
+    # it (e.g. a same-billing continuation "2-я и 3-я карт. бал." linked to its
+    # parent), and never let two list dates claim the same Repertoire row
+    # (a ballet given at both the matinee and the evening of one day)
+    rank = {"exact_printed": 0, "exact": 1, "excerpt": 2, "fuzzy": 3}
+    out1, claimed, claimed_pairs = [], set(), set()
     for L in lst:
         key = norm(L["title"])
         row = dict(L, category="", rep_theater="", rep_title="", rep_date="",
@@ -140,9 +150,13 @@ def main():
             continue
         hits = [(how(key, r), r) for r in by_city_date.get((L["city"], L["date"]), [])]
         hits = sorted([h for h in hits if h[0]], key=lambda h: rank[h[0]])
+        unclaimed = [h for h in hits if h[1]["performance_id"] not in claimed]
+        hits = unclaimed or hits
         if hits:
             kind, r = hits[0]
             claimed.add(r["performance_id"])
+            claimed_pairs.add((r["event_id"], key))
+            kind = "exact" if kind == "exact_printed" else kind
             row.update(category=kind, rep_theater=r["theater"], rep_title=r["verbatim_title"],
                        rep_date=r["date"], rep_printed_page=r["rep_printed_page"], date_offset=0)
         else:
@@ -152,7 +166,7 @@ def main():
                 ds = (d0 + timedelta(days=off)).isoformat()
                 for r in by_city_date.get((L["city"], ds), []):
                     k = how(key, r)
-                    if k in ("exact", "excerpt"):
+                    if k in ("exact_printed", "exact", "excerpt"):
                         near = (off, r)
                         break
                 if near:
@@ -177,6 +191,13 @@ def main():
         list_keys[(L["season"], L["city"])].add(norm(L["title"]))
     covered = set(list_keys)
     near_claimed = {(r["rep_date"], r["rep_title"]) for r in out1 if r["category"] == "nearby_date"}
+    # rows covered by a claimed performance without a list date of their own:
+    # (a) a continuation printed in the SAME cell (same event) as a claimed
+    #     row of the same ballet ("Коппелія" + "2-я и 3-я карт. бал."), and
+    # (b) a second performance on a list date whose note says it was given
+    #     twice ("ноября 14 (2 раза: утромъ и вечеромъ)")
+    twice = {(L["city"], L["date"], norm(L["title"])) for L in lst
+             if L["date"] and "2 раза" in (L["note"] or "")}
     out2 = []
     for r in rep:
         if (r["season"], r["city"]) not in covered or r["performance_id"] in claimed:
@@ -184,8 +205,10 @@ def main():
         if (r["date"], r["verbatim_title"]) in near_claimed:
             continue
         keys = list_keys[(r["season"], r["city"])]
-        on_list = next((k for k in keys if how(k, r) in ("exact", "excerpt")), None)
+        on_list = next((k for k in keys if how(k, r) in ("exact_printed", "exact", "excerpt")), None)
         is_ballet = "бал" in ((r["verbatim_genre"] or "") + (r["canonical_genre"] or "")).lower()
+        if on_list and ((r["event_id"], on_list) in claimed_pairs or (r["city"], r["date"], on_list) in twice):
+            continue
         if on_list:
             cat = "title_in_list_other_date"
         elif is_ballet:
