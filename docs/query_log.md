@@ -10268,3 +10268,12 @@ from raw.event_entry where receipts_text is not null group by 1;
 ```
 
 Result: Latin-letter receipts parse fine (0 missing rubles/kopecks among 737); 8 non-Latin receipts have an unparsed kopeck figure. Integration == control except text; after promotion: Latin-letter receipts 738 -> 1 (the genuine "q."), '¼' 24 -> 0, receipts total unchanged (2800248320).
+
+## 2026-09-29 — The 8 receipts with an unparsed figure (follow-up to issue #108)
+
+```sql
+select page_id, date_text, theater, time_of_day, receipts_text, receipts_rubles, receipts_kopecks
+from raw.event_entry where receipts_text is not null and regexp_matches(receipts_text,'\d\s*[kк]') and receipts_kopecks is null order by page_id;
+```
+
+Result: 8 rows, all documented genuine print typos in the ruble/kopeck marker (1225 q. 27 к.; 876 к. 18 к.; 736 к. 49 н.; 1041 и. 53 к.; 701 г. 06 к.; 433 к. 45 к.; 1055 к. 04 к.; 1107 к. 62 к.). They are deliberately unparsed per RG's rule, so they are excluded from receipts totals until a research-layer correction exists.

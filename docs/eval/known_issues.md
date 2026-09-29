@@ -19883,6 +19883,11 @@ so it can't overwrite parallel sessions' edits: 754 sessions changed, fields
 receipts_text/_fix_note/session only. Backup
 `outputs/full_run_pre_promote_backup_2026-09-29_latinreceipts/`.
 
-**Follow-up noticed:** 8 receipts in ordinary Cyrillic have a kopeck
-figure that doesn't parse (receipts_kopecks null while the text has a
-"к." figure). Not investigated.
+**Follow-up checked (2026-09-29):** the 8 receipts whose figure doesn't
+parse are NOT a new problem. All 8 are documented genuine print typos in
+the rubles/kopecks marker (docs/eval/genuine_print_typos.md, "Receipts-figure
+typos": "q." x1, "к." for "р." x5, "и.", "г.", and "н." for "к."). They are
+deliberately left unparsed at the raw tier per RG's 2026-09-25 rule, so they
+contribute nothing to receipts totals until the planned research-layer
+(SQL-derived) correction for known receipts typos is built. That correction
+has not been built yet.
