@@ -20209,3 +20209,30 @@ layer, but not in the raw."*
   went 32 → 40. They're recorded in `docs/eval/ballet_list_repertoire_disagreements.md` as not
   yet placed in any section; that's RG's call. The other 3 (1905-06 ×2, 1908-09) fall in
   seasons with no list.
+
+**#114 addendum, 2026-09-29: the other 6 divertissement cells, checked on the scans.** Read
+from the full-resolution embedded PDF images at RG's request. Each prints "Балетный
+дивертиссементъ." with **no genre**, and each whole cell matches the transcription:
+- **1903-04 p028 (p. 30), 22 Feb 1904 Маріинскій.** Benefit for the Общество попеченія о
+  душевно-больныхъ. Numbered items 1) чтеніе, пляска 2) 2-е д. оп. Карменъ 3) 1-я карт. 4-го д.
+  оп. Аида 4) Балетный дивертиссементъ 5) сцена изъ 4-го д. оп. Гугеноты. No receipts.
+- **1901-02 p007 (p. 9), 17 Oct 1901 Новый.** Соломенная шляпка, ком.-вод. / Балетный
+  дивертиссементъ, 557 р. 88 к.
+- **1901-02 p021 (p. 23), 9 Jan 1902 Новый.** The same pair, 417 р. 89 к.
+- **1902-03 p023 (p. 25), 25 Jan 1903 Малый.** Benefit for the Драматическіе Курсы students.
+  Женская логика, ком. / Балетный дивертиссементъ. No receipts.
+- **1902-03 p033 (p. 35), 12 Apr 1903 Большой.** Benefit for the убѣжище для престарѣлыхъ
+  артистовъ. Ревизоръ, ком. / Балетный дивертиссементъ. No receipts.
+- **1901-02 p035 (p. 37), 20 Apr 1902 Большой.** Бенефисъ вторыхъ режиссеровъ и суфлеровъ.
+  Items: Гугеноты (3-е и 4-е д.), Макбетъ (сцена 5-го д.), Горе отъ ума (3-е д.), Концертное
+  отдѣленіе, Балетный дивертиссементъ. 3286 р. 36 к.
+
+**For RG's physical check:** on 1901-02 p035, magnified, the first word prints as
+"Балстный": a clean с with no crossbar, while the е later on the same line has one. It could
+be a wrong sort (a print typo) or an е whose crossbar didn't ink. The image can't settle it.
+The transcription stays "Балетный" until the page is seen.
+
+**Noticed, for RG's open question about plain "Дивертиссементъ":** on 1901-02 p007, 10 Oct
+1901, Новый prints "Парижскій рынокъ, бал. / Волшебныя грезы, бал. / Дивертиссементъ." That
+is a plain divertissement on an all-ballet bill. It's only an observation; plain
+divertissements stay outside the rule.

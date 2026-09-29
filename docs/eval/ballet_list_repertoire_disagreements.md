@@ -96,7 +96,8 @@ Each list's whole "Балетъ" section (every entry, title, excerpt note and p
   "Балетный дивертиссементъ" the genre "бал." (raw keeps the printed empty genre), so the comparison now counts
   8 of them as ballet performances with no list entry. These are 22 Feb and 17 Apr 1904 Маріинскій; 17 Oct 1901,
   9 and 16 Jan 1902 Новый; 25 Jan 1903 Малый; 12 Apr 1903 and 20 Apr 1902 Большой. No list has a divertissement
-  entry (query, #114). Only 16 Jan 1902 and 17 Apr 1904 have had their Repertoire cells read on the scan (#113).
+  entry (query, #114). All 8 Repertoire cells have been read on the scans (#113, #114 addendum): each prints
+  "Балетный дивертиссементъ" with no genre, and the transcriptions match.
   Whether these count as list omissions is RG's call.
 - **Repertoire-side leads (as of #114):** 40 in `outputs/ballet_productions_pilot/compare/repertoire_not_in_lists.csv`:
   the 8 divertissements above, the 12 comedy-ballet (ком.-бал.) performances (Батюшкина дочка ×7, Мѣщанинъ во
