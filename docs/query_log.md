@@ -10277,3 +10277,31 @@ from raw.event_entry where receipts_text is not null and regexp_matches(receipts
 ```
 
 Result: 8 rows, all documented genuine print typos in the ruble/kopeck marker (1225 q. 27 к.; 876 к. 18 к.; 736 к. 49 н.; 1041 и. 53 к.; 701 г. 06 к.; 433 к. 45 к.; 1055 к. 04 к.; 1107 к. 62 к.). They are deliberately unparsed per RG's rule, so they are excluded from receipts totals until a research-layer correction exists.
+
+## 2026-09-29 — Receipts that fail to parse, or parse only partly (research-layer correction, issue #109)
+
+```sql
+-- fully unparsed
+select e.page_id, e.date_text, e.theater, e.time_of_day, e.receipts_text, e.receipts_rubles, e.receipts_kopecks, a.receipts_total_kopecks
+from raw.event_entry e join analysis.event_entry a using(event_id)
+where e.receipts_text is not null and regexp_matches(e.receipts_text,'\d') and a.receipts_total_kopecks is null order by e.page_id;
+-- malformed rubles/kopecks parts (partial parses)
+select e.page_id, e.date_text, e.theater, e.time_of_day, e.receipts_text, e.receipts_rubles, e.receipts_kopecks, a.receipts_total_kopecks
+from raw.event_entry e join analysis.event_entry a using(event_id)
+where e.receipts_text is not null and (
+   (e.receipts_kopecks is not null and not regexp_matches(e.receipts_kopecks, '^\s*(\d+([½¼¾]|¹/₂)?|[—–-]+)?\s*$'))
+or (e.receipts_rubles is not null and not regexp_matches(e.receipts_rubles, '^\s*(\d+|[—–-]+)\s*$'))) order by 1;
+-- plus a lookup of the other documented receipts typos by their printed figures (1495, 263, 7166, 3049 р. 78, 366 р. 54, 777 р. 33, 3977 р. 50, and the 1905-06 p017/p018/p043 pages)
+```
+
+Result: 11 fully unparsed (the 8 documented typos plus "(3058 р. 08 к.)", "1с31 р. 35 к.", "19 22 р. 34 к."); 53 malformed-part receipts, most silently undercounted (e.g. "13.472 р. 22 к." counted as 1322 kopecks; "292 р. 04 р." loses its kopecks). Documented typos "1495 д.", "263 д." and the 1905-06 cases are transcribed with р. in raw, i.e. normalised away from the print. A scan check confirmed the print has the typo for 5 of them, so they are to be restored.
+
+## 2026-09-29 — Receipts correction applied (issue #109): intended values and effect
+
+```sql
+select page_id,date_text,theater,time_of_day,receipts_text,receipts_total_kopecks from analysis.event_entry where receipts_text in (<60 scan-confirmed figures>);
+select receipts_source, count(*) from research.event group by 1;
+-- before/after: counts of raw.event_entry, research.event, research.performance, research.work, persons, sum(receipts_total_kopecks), raw.production_entry, annotated rows
+```
+
+Result: 60 confirmed figures found, each exactly once; 4 already parse correctly, 56 corrected. receipts_source: parsed 17110, corrected_print_typo 56, NULL 12297. sum(receipts_total_kopecks) 2800248320 -> 2802505260 (+2,256,940 = 22,569 р. 40 к.); every other count unchanged.

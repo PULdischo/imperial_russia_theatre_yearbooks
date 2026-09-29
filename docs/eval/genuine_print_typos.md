@@ -79,7 +79,7 @@ never go to zero, by design:
 - `repertoire_1901-02_p026`: "1495 д. 25 к."
 - `repertoire_1901-02_p011`: "263 д. 64 к."
 - `repertoire_1902-03_p019`: "876 к. 18 к."
-- `repertoire_1904-05_p009`: "736 к. 49 н."
+- `repertoire_1904-05_p009`: "736 к. 49 к." (kopeck marker re-read on the scan 2026-09-29; earlier transcribed "н.", but the print has к.)
 - `repertoire_1905-06_p017`, `_p018`, `_p043`: same pattern
 - `repertoire_1906-07_p021`: "1041 и. 53 к."
 - `repertoire_1906-07_p023`: "701 г. 06 к."
@@ -88,6 +88,16 @@ never go to zero, by design:
 - `repertoire_1907-08_p024`: "1107 к. 62 к."
 - `repertoire_1901-02` range: "7166 р. 87 г." (kopecks marker garbled
   this time, rubles marker fine)
+- **Named 2026-09-29 (scan-checked, issue #109):** `1905-06_p017` 4 Воскрес. Новый утро "323 к. 37 к.";
+  `1905-06_p018` 8 Четвергъ Александринскій "1667 г. 46 к." (г., not к.); `1905-06_p043` 16 Воскрес. Новый утро "79 к. 02 к.".
+  Kopecks marker misprinted: "292 р. 04 р.", "297 р. 87 р.", "478 р. 86 р.", "912 р. 02 г." (1901-02);
+  "1483 р. 49 р.", "1939 р. 33 г.", "270 р. 25 г.", "1413 р. 58 р.", "703 р. 99 р." (1902-03); "856 р. 11 р." (1903-04);
+  "720 р. 97 р.", "586 р. 82 л." (1905-06); "190 р. 98 р." (1906-07); "1497 р. 75 р." (1907-08).
+  Punctuation: "276 р, 98 к.", "1062 р. 71 к;", "800 р, 06 к." (1899-00); "1155 р, 72½ к.", "994 р- 75 к." (1900-01);
+  "1958 р, 57 к." (1901-02); "1421 р, 46 к.", "1556 р- 42 к." (1902-03); "557 р: 75 к:", "1132 р, 91 к." (1904-05);
+  "552 р, 74 к.", "403 р, 01 к." (1905-06). Other: "19 22 р. 34 к." (space printed, 1902-03 p018);
+  "13.472 р. 22 к." (thousands separator, 1906-07 p027); ".575 р. 40 к." (1907-08 p017, meaning unclear);
+  "1553 р," (1895-96 pair008, no kopecks printed).
 - **`repertoire_1892-93_pair012`, 8 Вторн., Михайловскій: "1225 q. 27
   к."** — a different case from the rest of this list. The others above
   are the compositor reaching for the *kopecks* marker glyph on the

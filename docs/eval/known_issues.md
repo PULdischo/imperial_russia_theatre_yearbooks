@@ -19891,3 +19891,49 @@ deliberately left unparsed at the raw tier per RG's 2026-09-25 rule, so they
 contribute nothing to receipts totals until the planned research-layer
 (SQL-derived) correction for known receipts typos is built. That correction
 has not been built yet.
+
+## Issue #109: Research-layer receipts correction for confirmed print typos --
+## 56 figures, +22,569 р. 40 к. in research.event (raw stays verbatim)
+
+RG asked for the correction deferred since 2026-09-25 ("q." ruling), built
+out for confirmed typos. **Mechanism:** `pipeline/research_corrections/receipts_print_typos.csv`,
+applied by `build_research_model.py` in SQL:
+`research.event.receipts_total_kopecks = coalesce(correction, parsed)`,
+plus new columns `receipts_source` (parsed | corrected_print_typo) and
+`receipts_correction_note` (quotes the printed text). Each row is keyed on
+page_id + date_text + theater + time_of_day + the VERBATIM receipts text,
+and the build fails if a row doesn't match exactly one entry. The raw tier
+and its parsing regex are unchanged (RG's rule).
+
+**How the 56 were found:** (a) the 8 documented unparsed typos; (b) a
+query for receipts whose rubles/kopecks part parses only partly, which found
+many figures SILENTLY undercounted, e.g. "13.472 р. 22 к." (Шаляпинъ
+benefit, Большой, 16 Jan 1907) counted as 13 kopecks, and "292 р. 04 р."
+dropping its kopecks; (c) documented typos whose transcription had been
+normalised away from the print. Every figure was read on its scan (spot
+checks 2026-09-29, crops in outputs/recovery_2026-09-29_latin_receipts/work_disputed/
+and work_malformed/). Classes: punctuation after р instead of "." (14),
+р./г./л. for the kopecks marker (18), к./г./д./и./q. for the rubles marker (13),
+half-kopecks printed "¹/₂", "¹|₂" or "¹ ₂" (7), punctuation after к (2),
+a space inside the number (1), a thousands separator (1).
+
+**Transcription fixes applied at the same time** (raw, field-level, all
+scan-confirmed): 5 typos RESTORED to the print after being normalised away
+("1495 д. 25 к.", "263 д. 64 к.", "323 к. 37 к.", "1667 г. 46 к.",
+"79 к. 02 к."); "22⁴/₂" -> "22¹/₂"; "19¹⁄₂" -> "19¹ ₂" (no slash printed);
+"90 м." -> "90 к." (blotted к); "52'|2" -> "52¹|₂"; "11.7" -> "11?7" and
+"1с31" -> "1?31" (a digit lost to broken or under-inked type); and a
+trailing "." on "(3058 р. 08 к.).".
+
+**Not corrected, for RG:** "1553 р," (1895-96 pair008, no kopecks printed);
+".575 р. 40 к." (1907-08 p017: 575, or a dropped leading digit?);
+"11?7 р. 08 к." (1906-07 p030) and "1?31 р. 35 к." (1901-02 p021, lost
+digits: physical check); "(3058 р. 08 к.)." (1901-02 p005, a benefit; the
+parentheses are printed but unexplained, and may mark something); "218 р.
+42 е." (1902-03 p021, the marker letter is illegible, though the value isn't
+in doubt).
+
+Other counts unchanged (events, performances, works, persons, annotations,
+production lists). Backup `outputs/full_run_pre_promote_backup_2026-09-29_receiptscorr/`.
+Also 2026-09-29: "736 к. 49 н." re-read on the scan as "736 к. 49 к."
+(transcription and typos list corrected).

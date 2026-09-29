@@ -137,6 +137,19 @@ never even be attempted. Verified directly: a real multi-work session
 (`repertoire_1890-91_p000__s005`, 2 works) produces exactly 2
 `performance` rows and exactly 1 `session` row.
 
+**Receipts corrected from print typos (issue #109, 2026-09-29)**: for a
+receipts figure whose *print* is a confirmed typo in the rubles/kopecks
+marker ("876 к. 18 к.", "1225 q. 27 к.", "3049 р. 78 р."), the raw tier
+stays verbatim and unparsed (RG's rule), and `research.event` applies the
+intended value from the curated table
+`pipeline/research_corrections/receipts_print_typos.csv`.
+`research.event.receipts_source` = `parsed` | `corrected_print_typo` (NULL
+when there are no receipts), and `receipts_correction_note` quotes the
+printed text and says what was misprinted. Each correction row is keyed on
+the verbatim receipts text, and the build fails if a row stops matching
+exactly one entry. Only scan-confirmed typos (docs/eval/genuine_print_typos.md)
+are added.
+
 **`session.date`** is the best-available date: the run-corroborated
 correction from `docs/performance_normalization.md` when there is one,
 otherwise the original computed date, with `date_confidence` always

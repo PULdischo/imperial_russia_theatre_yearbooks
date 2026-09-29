@@ -100,6 +100,44 @@ RESEARCH_PAGE_MONTH_OVERRIDES = {
 }
 
 
+#: Curated research-layer correction for receipts figures whose PRINT is a
+#: confirmed typo in the rubles/kopecks marker (e.g. "876 к. 18 к.",
+#: "1225 q. 27 к.", "3049 р. 78 р."). RG's rule (2026-09-25): the raw tier
+#: stays verbatim and its parsing regex is never widened for print typos;
+#: the intended numeric value is applied HERE, in SQL, one reviewed row at a
+#: time. Each row is keyed on page_id + date_text + theater + time_of_day
+#: AND the verbatim receipts_text, so it can never attach to a different
+#: figure, and the build fails if a row doesn't match exactly one entry
+#: (e.g. after the transcription changes). Only scan-confirmed typos go in
+#: (docs/eval/genuine_print_typos.md). Issue #109.
+RECEIPTS_PRINT_TYPOS_CSV = Path(__file__).parent / "research_corrections" / "receipts_print_typos.csv"
+
+
+def load_receipts_corrections(con: duckdb.DuckDBPyConnection) -> int:
+    import csv as _csv
+    con.execute("""CREATE OR REPLACE TEMP TABLE receipts_correction (
+        page_id VARCHAR, date_text VARCHAR, theater VARCHAR, time_of_day VARCHAR,
+        receipts_text_verbatim VARCHAR, corrected_total_kopecks INTEGER, basis VARCHAR)""")
+    rows = list(_csv.DictReader(open(RECEIPTS_PRINT_TYPOS_CSV, encoding="utf-8"))) \
+        if RECEIPTS_PRINT_TYPOS_CSV.exists() else []
+    if rows:
+        con.executemany("INSERT INTO receipts_correction VALUES (?, ?, ?, ?, ?, ?, ?)",
+                        [(r["page_id"], r["date_text"], r["theater"], r["time_of_day"],
+                          r["receipts_text_verbatim"], int(r["corrected_total_kopecks"]), r["basis"])
+                         for r in rows])
+    bad = con.execute("""
+        SELECT rc.page_id, rc.date_text, rc.theater, rc.receipts_text_verbatim, count(ae.event_id) AS n
+        FROM receipts_correction rc
+        LEFT JOIN analysis.event_entry ae
+          ON ae.page_id = rc.page_id AND ae.date_text = rc.date_text AND ae.theater = rc.theater
+         AND ae.time_of_day = rc.time_of_day AND ae.receipts_text = rc.receipts_text_verbatim
+        GROUP BY ALL HAVING count(ae.event_id) <> 1
+    """).fetchall()
+    if bad:
+        raise SystemExit(f"receipts_print_typos.csv rows not matching exactly one entry: {bad}")
+    return len(rows)
+
+
 def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     con.execute("CREATE SCHEMA IF NOT EXISTS research")
 
@@ -184,9 +222,12 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             date_confidence VARCHAR,
             event_status VARCHAR,
             receipts_total_kopecks INTEGER,
+            receipts_source VARCHAR,
+            receipts_correction_note VARCHAR,
             printed_page_number VARCHAR
         )
     """)
+    n_corr = load_receipts_corrections(con)
     con.execute("CREATE OR REPLACE TEMP TABLE page_month_override (page_id VARCHAR, y INTEGER, m INTEGER)")
     if RESEARCH_PAGE_MONTH_OVERRIDES:
         con.executemany("INSERT INTO page_month_override VALUES (?, ?, ?)",
@@ -232,10 +273,17 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             r.resolved_date AS date,
             r.resolved_confidence AS date_confidence,
             r.event_status,
-            r.receipts_total_kopecks,
+            coalesce(rc.corrected_total_kopecks, r.receipts_total_kopecks) AS receipts_total_kopecks,
+            CASE WHEN rc.page_id IS NOT NULL THEN 'corrected_print_typo'
+                 WHEN r.receipts_total_kopecks IS NOT NULL THEN 'parsed' END AS receipts_source,
+            CASE WHEN rc.page_id IS NOT NULL
+                 THEN 'printed "' || r.receipts_text || '": ' || rc.basis END AS receipts_correction_note,
             r.printed_page_number
         FROM resolved r
         LEFT JOIN entities.theater t ON t.canonical_name = r.theater_canonical
+        LEFT JOIN receipts_correction rc
+          ON rc.page_id = r.page_id AND rc.date_text = r.date_text AND rc.theater = r.theater
+         AND rc.time_of_day = r.time_of_day AND rc.receipts_text_verbatim = r.receipts_text
         WHERE NOT (
             r.event_status = 'not_captured' AND EXISTS (
                 SELECT 1 FROM resolved x
@@ -309,6 +357,10 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     print("research schema built:")
     for t, n in counts.items():
         print(f"  research.{t}: {n} rows")
+    n_applied = con.execute(
+        "SELECT count(*) FROM research.event WHERE receipts_source = 'corrected_print_typo'").fetchone()[0]
+    print(f"  receipts corrected from confirmed print typos: {n_applied} "
+          f"(of {n_corr} rows in {RECEIPTS_PRINT_TYPOS_CSV.name})")
 
     # Sanity check: receipts must live only on event, never on
     # performance -- the entire point of keeping them distinct.

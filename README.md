@@ -293,6 +293,8 @@ erDiagram
         string date_confidence
         string event_status
         int receipts_total_kopecks
+        string receipts_source
+        string receipts_correction_note
     }
     performance {
         string performance_id PK
