@@ -10256,3 +10256,15 @@ select distinct e.page_id, e.printed_page_number from raw.event_entry e where e.
 ```
 
 Result: integration vs control raw.event_entry +17, performances +7, receipts +1,066,463 kopecks, verified +35, intra_block -13; production == integration after promotion. Дочь микадо 1897-98 SP now on 9, 14, 16, 19 Nov; 14, 28 Dec; 4 Jan; 19, 22 Apr (9 dates, 1:1 with the list's 9; "24" pairs with 14, "38" with 28, not 29 as reported 2026-09-28 from the then-shifted column). Comparison after the list fix (Кандавлъ): exact 1706, excerpt 148, fuzzy 12, other_titles 12, nearby_date 2.
+
+## 2026-09-29 — Latin letters / quarter fractions in receipts (issue #108)
+
+```sql
+select regexp_matches(receipts_text,'[pk]') latin, count(*) n,
+ sum(case when regexp_matches(receipts_text,'\d\s*[pр]') and receipts_rubles is null then 1 else 0 end) rub_missing,
+ sum(case when regexp_matches(receipts_text,'\d\s*[kк]') and receipts_kopecks is null then 1 else 0 end) kop_missing
+from raw.event_entry where receipts_text is not null group by 1;
+-- builds: counts of raw.event_entry, research.performance, research.work, sum(receipts_total_kopecks), receipts with Latin letters, receipts containing '¼', verified, persons
+```
+
+Result: Latin-letter receipts parse fine (0 missing rubles/kopecks among 737); 8 non-Latin receipts have an unparsed kopeck figure. Integration == control except text; after promotion: Latin-letter receipts 738 -> 1 (the genuine "q."), '¼' 24 -> 0, receipts total unchanged (2800248320).

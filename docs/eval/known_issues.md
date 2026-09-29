@@ -19850,3 +19850,39 @@ maybe "848"; 1893-94 pair016 Александринскій 25 Jan "1015" vs may
 Александринскій 9 Jan "Приличія" genre (ш. printed, ком. transcribed);
 1897-98 pair014 Малый 2 Jan "случившийся" vs probably "случившійся";
 1897-98 pair008 genres inside titles.
+
+## Issue #108: Latin letters and misread fractions in Repertoire receipts_text --
+## 737 + 24 fixed corpus-wide (text only; no receipts total changes)
+
+Flagged 3 times during the ballet-list audit (#105, #106), then swept
+corpus-wide. **738** Repertoire sessions had Latin letters in
+receipts_text: Latin "p" for Cyrillic "р" (737) and "k" for "к" (126),
+mostly in the Михайловскій (French) column, where the model slipped into
+Latin next to French titles, plus some Александринскій. A scan spot check
+of 7 cells across seasons, theaters and pages (outputs/recovery_2026-09-29_latin_receipts/work/)
+found ordinary Russian р./к. in every one. Latin k vs Cyrillic к is visibly
+different (ascender), and all 3 sampled "k" were printed к. Latin p vs
+Cyrillic р is identical in roman type, so that part of the fix rests on
+language, as with the #92 і/i homoglyph fix. **737 fixed**; the 1
+remaining is "1225 q. 27 к." (1892-93 pair012), the confirmed genuine print
+typo that RG ruled stays verbatim (2026-09-25).
+
+The spot check also found a misread fraction, so every "¼" in receipts
+(24, all Михайловскій 1899-1906) was checked on the scan. **All 24 are
+printed ½** (a raised 1, slash, 2), with no genuine quarter-kopecks in the
+corpus; 2 also carried a stray "/2" ("22¼/2"). All corrected to "½".
+Also swapped: 1901-02 p028, 21 Feb Михайловскій утро/веч. labels (утро
+is a dash; the performance and 1097 р. 27½ к. are веч.).
+
+Parsing was never affected: receipts_rubles/kopecks were already correct
+for all 737, and receipts_total_kopecks stores whole kopecks, so the ¼/½
+correction doesn't move it. Integration vs control: identical except
+receipts_text (and the 2 session labels). Applied in place to production
+by `outputs/recovery_2026-09-29_latin_receipts/fix_receipts.py`, field-level,
+so it can't overwrite parallel sessions' edits: 754 sessions changed, fields
+receipts_text/_fix_note/session only. Backup
+`outputs/full_run_pre_promote_backup_2026-09-29_latinreceipts/`.
+
+**Follow-up noticed:** 8 receipts in ordinary Cyrillic have a kopeck
+figure that doesn't parse (receipts_kopecks null while the text has a
+"к." figure). Not investigated.
