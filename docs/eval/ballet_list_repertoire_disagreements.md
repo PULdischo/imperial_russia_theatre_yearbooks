@@ -101,7 +101,8 @@ these dates under any entry or post-total note (#114, 2nd addendum).
 ornament, and our scan has only that page. But the Repertoire shows nothing missing. Every ballet-genre Moscow
 performance that season is one of the list's 10 works or an excerpt of one; the only exception is the divertissement
 (F5, F6). The season's genre-less Moscow rows hold no other ballet. The list is also alphabetical and ends at
-"Эсмеральда". So no p. 52 check is needed. **Observed (not a
+"Эсмеральда". So no p. 52 check is needed. RG also confirms she scanned every page that
+included ballet, so the ballet-list PDFs are complete by design. **Observed (not a
 conclusion):** 5 of the 8 (F4–F8) are on benefit or charity bills; F1–F3 are ordinary Новый evenings pairing a
 comedy with the divertissement. **Not in this table:** 3 more ballet divertissements fall in
 seasons with no ballet list in our set (1905-06 ×2, 1908-09 ×1).

@@ -20277,3 +20277,7 @@ Repertoire." Checked:
 Conclusion: p. 52 carries no missing ballet entries, and the physical check is dropped.
 Limit: this can't rule out p. 52 holding a note that adds nothing new, but nothing in the
 Repertoire needs one.
+RG, 2026-09-29: "I was pretty careful to scan the pages that included ballet." The ballet-list
+PDFs in `pdf/Spiski_BalletProductions/` therefore hold every page with ballet content, so a
+page missing from a PDF (like 1902-03 Moscow p. 52) had no ballet content. This closes the
+"limit" above.
