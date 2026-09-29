@@ -79,12 +79,38 @@ Each list's whole "Балетъ" section (every entry, title, excerpt note and p
 
 **Observed pattern (not a conclusion):** all five are on jubilee or charity bills with no receipts printed, the same shape as D3–D8. Side note: the 1904-05 SP list does have Голубая георгина (#5, p. 138: февраля 20, 27 1905, no * premiere marker).
 
+## F. Ballet divertissements: printed in the Repertoire, outside what the lists record (tracked)
+
+**RG, 2026-09-29:** these are outside what the ballet lists record, so they are not disagreements, but they are
+important to track. Each Repertoire cell prints "Балетный дивертиссементъ" (no genre; the research layer assigns
+"бал.", #114). Each list was read in full on its own scan: no list mentions a divertissement anywhere, and none gives
+these dates under any entry or post-total note (#114, 2nd addendum).
+
+| # | Season, city | Repertoire prints | List | Checked |
+|---|---|---|---|---|
+| F1 | 1901-02 Moscow | 17 Oct 1901, Новый: Соломенная шляпка, ком.-вод. / Балетный дивертиссементъ, 557 р. 88 к. (p007, p. 9) | p. 54, entries 1–15: no divertissement, no октября 17 | #114 |
+| F2 | 1901-02 Moscow | 9 Jan 1902, Новый: Соломенная шляпка, ком.-вод. / Балетный дивертиссементъ, 417 р. 89 к. (p021, p. 23) | Same list: no января 9 | #114 |
+| F3 | 1901-02 Moscow | 16 Jan 1902, Новый: Воспитатель Флаксманъ, ком. / Балетный дивертиссементъ, 430 р. 68 к. (p023, p. 25) | Same list: no января 16 | #113 |
+| F4 | 1901-02 Moscow | 20 Apr 1902, Большой: "Бенефисъ вторыхъ режиссеровъ и суфлеровъ." 3-е и 4-е д. оп. Гугеноты / Сцена 5-го д. траг. Макбетъ / 3-е д. ком. Горе отъ ума / Концертное отдѣленіе / Балетный дивертиссементъ, 3286 р. 36 к. (p035, p. 37). The first word may print "Балстный" (physical check) | Same list: no апрѣля 20 | #114 |
+| F5 | 1902-03 Moscow | 25 Jan 1903, Малый: "Въ пользу недостаточныхъ учащихся Драматическихъ Курсовъ при Императорскомъ Московскомъ Театральномъ Училищѣ." Женская логика, ком. / Балетный дивертиссементъ, no receipts (p023, p. 25) | p. 51, entries 1–10: no divertissement, no января 25 (p. 52 not in our scan, see caveat) | #114 |
+| F6 | 1902-03 Moscow | 12 Apr 1903, Большой: "Въ пользу убѣжища для престарѣлыхъ артистовъ." Ревизоръ, ком. / Балетный дивертиссементъ, no receipts (p033, p. 35) | Same list: no апрѣля 12 | #114 |
+| F7 | 1903-04 SP | 22 Feb 1904, Маріинскій: benefit of the Спб. Общество попеченія о душевно-больныхъ, part of the takings to the committee for strengthening the navy. 1) чтеніе, пляска 2) 2-е д. оп. Карменъ 3) 1-я карт. 4-го д. оп. Аида 4) Балетный дивертиссементъ 5) сцена изъ 4-го д. оп. Гугеноты, no receipts (p028, p. 30) | pp. 44–46, entries 1–28: no divertissement, no февраля 22 | #114 |
+| F8 | 1903-04 SP | 17 Apr 1904, Маріинскій: Red Cross benefit for crippled soldiers and their families. 2-е и 3-е д. ком. Волки и овцы / Паяцы, оп. Леонковалло / Балетный дивертиссементъ / Птички-пѣвчія, оперетта, no receipts (p034, p. 36) | Same list: no апрѣля 17 | #113 |
+
+**Caveat:** the 1902-03 Moscow "Балетъ" section ends mid-page on p. 51 with no closing ornament, and our scan has
+only that page. Whether anything continues on p. 52 is unconfirmed (physical check). **Observed (not a
+conclusion):** 5 of the 8 (F4–F8) are on benefit or charity bills; F1–F3 are ordinary Новый evenings pairing a
+comedy with the divertissement. **Not in this table:** 3 more ballet divertissements fall in
+seasons with no ballet list in our set (1905-06 ×2, 1908-09 ×1).
+
 ## Not (yet) on the list: waiting for a physical check or not a disagreement
 
 - **Waiting for RG's physical check:** 1897-98 SP Пахита "мая 5 (3-е д.)" vs. a Repertoire line inside the
   binding fold (p012, p. 26, read from letter tops as "3-е д. бал. Пахита", not promoted); 1892-93 SP
   "Паяда и рыбакъ" (pair004, p. 4, 240 dpi; list "Наяда"); 1903-04 Moscow "Ваядерка" (p025, p. 27, low-res;
   list "Баядерка"); 1903-04 Moscow "Пригалъ кавалеріи" (p013, p. 15, possibly a broken sort; list "Привалъ").
+  For section F: whether the 1902-03 Moscow "Балетъ" section continues on p. 52, and whether F4 (1901-02 p035,
+  p. 37) prints "Балстный" (wrong sort) or "Балетный" with an uninked crossbar.
 - **Not a disagreement:** 1900-01 SP "Ученики Дюпрэ" = Repertoire "Les élèves de Dupré" (same work, Russian
   vs French title). The four list dates with a printed year that differs from the season (Пери, Дочь Микадо
   1899-00, Коппелія 1902-03, Тщетная 1902-03) all match the Repertoire once the date is taken from the
@@ -92,17 +118,6 @@ Each list's whole "Балетъ" section (every entry, title, excerpt note and p
 - **Checked, not a disagreement (#113):** the 2 "Балетный дивертиссементъ" leads (16 Jan 1902 Новый, 1901-02
   p023; 17 Apr 1904 Маріинскій, 1903-04 p034). Both scans print "Балетный дивертиссементъ." with no genre; the
   "бал." was a transcription addition, now removed. Neither list has an entry or a date for them.
-- **Ballet divertissements (#114), not placed in any section yet:** since #114 the research layer gives
-  "Балетный дивертиссементъ" the genre "бал." (raw keeps the printed empty genre), so the comparison now counts
-  8 of them as ballet performances with no list entry. These are 22 Feb and 17 Apr 1904 Маріинскій; 17 Oct 1901,
-  9 and 16 Jan 1902 Новый; 25 Jan 1903 Малый; 12 Apr 1903 and 20 Apr 1902 Большой. No list has a divertissement
-  entry (query, #114). All 8 Repertoire cells have been read on the scans (#113, #114 addendum): each prints
-  "Балетный дивертиссементъ" with no genre, and the transcriptions match.
-  The three lists were then read in full on their own scans (#114, 2nd addendum): 1901-02 Moscow (p. 54, 15 entries),
-  1902-03 Moscow (p. 51, 10 entries) and 1903-04 SP (pp. 44–46, 28 entries). None mentions a divertissement. None
-  gives any of the 8 dates, under any entry or post-total note. Caveat: the 1902-03 Moscow section ends mid-page on
-  p. 51 with no closing ornament, and our scan has no p. 52, so its completeness is unconfirmed.
-  Whether these count as list omissions is RG's call.
 - **Repertoire-side leads (as of #114):** 40 in `outputs/ballet_productions_pilot/compare/repertoire_not_in_lists.csv`:
-  the 8 divertissements above, the 12 comedy-ballet (ком.-бал.) performances (Батюшкина дочка ×7, Мѣщанинъ во
+  the 8 divertissements (section F), the 12 comedy-ballet (ком.-бал.) performances (Батюшкина дочка ×7, Мѣщанинъ во
   дворянствѣ ×5; RG's separate research need, drama performances with ballet or dancers), and the rest in A, D or E.

@@ -20255,3 +20255,9 @@ full-resolution embedded PDF image, including every date line and post-total not
 So on both sides of all 8 cases the yearbook says the same thing: the Repertoire prints a
 "Балетный дивертиссементъ" on these dates, and the lists never mention a divertissement.
 Whether that makes them list omissions is RG's decision; nothing is assumed about why.
+
+**#114 decision, 2026-09-29 (RG):** *"add them to the list as section F. They are outside what
+the list records, but they are important to track."* The 8 ballet divertissements are now
+section F (F1–F8) in `docs/eval/ballet_list_repertoire_disagreements.md`. They are tracked
+there, not classed as disagreements. The two physical checks (1902-03 Moscow p. 52;
+"Балстный") were added to that document's waiting list.
