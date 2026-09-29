@@ -798,6 +798,25 @@ walls of text.
 7. Abbreviation expansion in a derived "cleaned" layer
 8. Whether разрядка / bold / italic / lang are rendered — decided by §11
 9. Running heads — none observed; revisit if any turn up
+**STATUS 2026-09-28 — the corpus is extracted, merged and translated.**
+All 1,024 pages have been read at three views (full page + 2-band + 4-band),
+merged through the selector, and translated. 41 review files in
+`outputs/reviews/bilingual/`: 184,290 Russian words against 223,075 English,
+no untranslated rows. Measured text quality 98.10% (11 gold pages, end to
+end through the real pipeline), mention linking 99.8% at this configuration.
+
+The commands, in order — all free except the last:
+
+    bash pipeline/extract_3views.sh                    # 6,970 calls, 26.8M tok
+    pipeline/stitch_bands.py  --raw-dir .../bandsN/raw --out-dir .../stitched
+    pipeline/parse_reviews.py                          # once per view
+    pipeline/merge_views.py   --parsed-dir <full> <2band> <4band>
+    pipeline/build_bilingual.py
+    pipeline/translate_reviews.py                      # 4,434 blocks, 3.0M tok
+
+Still unbuilt: mention detection (§12 item 3) — nothing yet connects a name
+on a page to its entity. That is the remaining half of what the text is for.
+
 12. **Bilingual reading files — `outputs/reviews/bilingual/`, RG 2026-09-26.**
    One Markdown file **per review** (per PDF: season + city + art form), not
    per page. Russian paragraph, then English, separated by rules. Reflowed:
