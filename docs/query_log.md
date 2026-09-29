@@ -10434,3 +10434,30 @@ select performance_title, genre, count(*) from raw.event_entry_performance where
 
 Result: (26520, 28246, 29467, 2801057477, 3481), unchanged; all 11 divertissement rows now genre NULL.
 compare_productions_repertoire.py: list side unchanged; Repertoire-side not accounted for 34 → 32 (17 ballet_not_in_list, 15 title_in_list_other_date).
+
+## 2026-09-29 — Issue #114: divertissement works in research.work before the genre rule
+
+```sql
+select w.work_id, w.canonical_title, w.canonical_genre, w.appearance_count, count(p.performance_id),
+       string_agg(distinct coalesce(p.verbatim_genre,'∅'), ', '), string_agg(distinct p.verbatim_title, ' ; ')
+from research.work w left join research.performance p using (work_id)
+where w.canonical_title ilike '%дивертис%' or w.canonical_title ilike '%дивертисм%' group by all order by 5 desc
+```
+
+Result: Дивертиссементъ 81 (∅, др.); Балетный дивертиссементъ 9 (∅); Дивертиссментъ 5; Большой дивертиссементъ 2 (др.);
+Балетный дивертиссментъ 2 (∅); Концертный и балетный дивертиссемент 1. All genre NULL except Большой (др.).
+
+## 2026-09-29 — Issue #114: research.work after RESEARCH_GENRE_RULES
+
+```sql
+select genre_source, count(*) from research.work group by 1 order by 1;
+select canonical_title, canonical_genre, appearance_count from research.work where genre_source = 'research_rule';
+select count(*) from research.performance p join research.work w using (work_id) where w.genre_source = 'research_rule';
+select genre, count(*) from raw.event_entry_performance where performance_title ilike 'Балетный дивертис%' group by 1;
+select canonical_title, canonical_genre from research.work where canonical_title ilike '%дивертис%' and genre_source is distinct from 'research_rule'
+```
+
+Result: first run (regex without е?) matched 1 work only; after the fix printed 3074, research_rule 2, NULL 405;
+Балетный дивертиссементъ бал. 9 + Балетный дивертиссментъ бал. 2 = 11 performances; raw genre NULL for all 11;
+the other 4 divertissement works untouched. compare_productions_repertoire.py: Repertoire-side leads 32 → 40
+(ballet_not_in_list 17 → 25; 8 divertissements in list seasons).

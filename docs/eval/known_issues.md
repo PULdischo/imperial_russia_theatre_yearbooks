@@ -20174,3 +20174,38 @@ are in the disagreements list or are the 12 comedy-ballets.
 
 Noticed, not fixed: on 1903-04 p034, Паяцы has genre "оп. Леонковалло" (the composer's name
 is inside the genre field).
+
+## Issue #114: ballet divertissements get the ballet genre in the research layer -- 2026-09-29, DONE
+
+RG's decision: *"Ballet divertisements will be assigned ballet as their genre in the research
+layer, but not in the raw."*
+
+- **Raw is unchanged.** Every "Балетный дивертиссементъ" / "Балетный дивертиссментъ" row keeps
+  genre NULL, as printed (all 11; #113 removed the 2 transcribed "бал." that the scans don't
+  print).
+- **`pipeline/build_research_model.py`** gets a new `RESEARCH_GENRE_RULES` list (title regex →
+  genre, with a reason).
+  - It is applied inside the `research.work` INSERT, not as an UPDATE, because of DuckDB's FK
+    rule. The build fails if a rule matches no work.
+  - New columns: `research.work.genre_source` (`printed` | `research_rule`; NULL when there is
+    no genre) and `genre_note`.
+  - First rule: `^Балетный дивертисс?е?ментъ?\.?$` → "бал.". This gives 2 works and 11
+    performances.
+  - The first version of the regex missed the "дивертиссментъ" misprint; caught by counting
+    matched works.
+  - Deliberately **not** covered, as open questions for RG:
+    - plain "Дивертиссементъ" (81 appearances, 2 of them with verbatim genre "др.");
+    - "Дивертиссментъ" (5);
+    - "Концертный и балетный дивертиссемент" (1);
+    - "Большой дивертиссементъ" (2, genre "др.").
+- **`pipeline/build_datasette.py`:** the `work` schema gains the two columns. The `event` schema
+  also gains `receipts_source` and `receipts_correction_note`. Those were added to
+  research.event in #109 but never to the SQLite schema, so the Datasette export would have
+  failed on its next run. Checked by exporting to a scratch file: work 3481, event 29467.
+- **Production:** only the research layer was rebuilt. research.work 3481 rows: printed 3074,
+  research_rule 2, no genre 405.
+- **Knock-on in `compare_productions_repertoire.py`:** it reads `canonical_genre`, so 8
+  divertissements in list seasons now count as ballet performances with no list entry. Leads
+  went 32 → 40. They're recorded in `docs/eval/ballet_list_repertoire_disagreements.md` as not
+  yet placed in any section; that's RG's call. The other 3 (1905-06 ×2, 1908-09) fall in
+  seasons with no list.

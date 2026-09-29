@@ -100,6 +100,21 @@ RESEARCH_PAGE_MONTH_OVERRIDES = {
 }
 
 
+#: Research-layer-only genre assignments by work title (RG, 2026-09-29, issue
+#: #114). The raw tier keeps the printed genre verbatim -- a ballet
+#: divertissement is printed with no genre abbreviation at all ("Балетный
+#: дивертиссементъ."), and raw stays that way -- but research.work gives it
+#: the ballet genre. Each rule is (regex on entities.work.canonical_title,
+#: canonical_genre to assign, reason). Anchored on the title's own word
+#: "Балетный", so a mixed "Концертный и балетный дивертиссемент" or a plain
+#: "Дивертиссементъ" is NOT caught (those are open questions, not ballet by
+#: default). The build fails if a rule matches no work.
+RESEARCH_GENRE_RULES = [
+    (r"^Балетный дивертисс?е?ментъ?\.?$", "бал.",
+     "ballet divertissement: printed without a genre; ballet assigned in the research layer (RG, issue #114)"),
+]
+
+
 #: Curated research-layer correction for receipts figures whose PRINT is a
 #: confirmed typo in the rubles/kopecks marker (e.g. "876 к. 18 к.",
 #: "1225 q. 27 к.", "3049 р. 78 р."). RG's rule (2026-09-25): the raw tier
@@ -170,7 +185,9 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             canonical_genre VARCHAR,
             appearance_count INTEGER,
             excerpt_of_work_id UUID,
-            excerpt_note VARCHAR
+            excerpt_note VARCHAR,
+            genre_source VARCHAR,
+            genre_note VARCHAR
         )
     """)
     # excerpt_of_work_id deliberately has no REFERENCES clause -- same
@@ -179,7 +196,26 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # incoming FK. Not an issue here (this is a single INSERT, not an
     # UPDATE), but kept consistent with entities.work's own schema so a
     # future change to one doesn't silently diverge from the other.
-    con.execute("INSERT INTO research.work SELECT * FROM entities.work")
+    # RESEARCH_GENRE_RULES are applied inside the INSERT for the same
+    # reason (no UPDATE once research.performance references research.work).
+    con.execute("CREATE OR REPLACE TEMP TABLE genre_rule (pattern VARCHAR, genre VARCHAR, note VARCHAR)")
+    con.executemany("INSERT INTO genre_rule VALUES (?, ?, ?)", RESEARCH_GENRE_RULES)
+    for pattern, _, _ in RESEARCH_GENRE_RULES:
+        n = con.execute("SELECT count(*) FROM entities.work WHERE regexp_matches(canonical_title, ?)",
+                        [pattern]).fetchone()[0]
+        if n == 0:
+            raise SystemExit(f"RESEARCH_GENRE_RULES: pattern {pattern!r} matches no entities.work row")
+    con.execute("""
+        INSERT INTO research.work
+        SELECT w.work_id, w.canonical_title,
+               coalesce(g.genre, w.canonical_genre) AS canonical_genre,
+               w.appearance_count, w.excerpt_of_work_id, w.excerpt_note,
+               CASE WHEN g.genre IS NOT NULL THEN 'research_rule'
+                    WHEN w.canonical_genre IS NOT NULL THEN 'printed' END AS genre_source,
+               g.note AS genre_note
+        FROM entities.work w
+        LEFT JOIN genre_rule g ON regexp_matches(w.canonical_title, g.pattern)
+    """)
 
     con.execute("""
         CREATE TABLE research.person (

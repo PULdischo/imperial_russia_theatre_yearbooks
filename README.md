@@ -276,6 +276,8 @@ erDiagram
         int appearance_count
         uuid excerpt_of_work_id FK
         string excerpt_note
+        string genre_source
+        string genre_note
     }
     person {
         uuid person_id PK

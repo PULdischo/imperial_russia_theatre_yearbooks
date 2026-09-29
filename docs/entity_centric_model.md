@@ -150,6 +150,17 @@ the verbatim receipts text, and the build fails if a row stops matching
 exactly one entry. Only scan-confirmed typos (docs/eval/genuine_print_typos.md)
 are added.
 
+**Genre assigned in the research layer (issue #114, 2026-09-29)**: some works
+are printed with no genre, but RG has decided their research genre. For these,
+`research.work.canonical_genre` is set by a title rule (`RESEARCH_GENRE_RULES`
+in `build_research_model.py`) while raw keeps the verbatim empty genre. The
+first rule: a ballet divertissement ("Балетный дивертиссементъ", also the
+misprint "дивертиссментъ") gets "бал.". A plain "Дивертиссементъ" and the mixed
+"Концертный и балетный дивертиссемент" are deliberately not included.
+`research.work.genre_source` = `printed` (from entities.work) | `research_rule`
+(NULL when there is no genre), and `genre_note` gives the rule's reason. The
+build fails if a rule matches no work.
+
 **`session.date`** is the best-available date: the run-corroborated
 correction from `docs/performance_normalization.md` when there is one,
 otherwise the original computed date, with `date_confidence` always

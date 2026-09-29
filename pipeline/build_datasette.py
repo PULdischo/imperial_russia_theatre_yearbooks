@@ -60,7 +60,7 @@ SCHEMAS = {
         CREATE TABLE work (
             work_id TEXT PRIMARY KEY, canonical_title TEXT, canonical_genre TEXT,
             appearance_count INTEGER, excerpt_of_work_id TEXT REFERENCES work(work_id),
-            excerpt_note TEXT
+            excerpt_note TEXT, genre_source TEXT, genre_note TEXT
         )""",
     "person": """
         CREATE TABLE person (
@@ -74,7 +74,8 @@ SCHEMAS = {
             event_id TEXT PRIMARY KEY, theater_id TEXT REFERENCES theater(theater_id),
             season TEXT, city TEXT, date_verbatim TEXT, date_undate TEXT,
             date TEXT, date_confidence TEXT, event_status TEXT,
-            receipts_total_kopecks INTEGER, printed_page_number TEXT
+            receipts_total_kopecks INTEGER, receipts_source TEXT,
+            receipts_correction_note TEXT, printed_page_number TEXT
         )""",
     "performance": """
         CREATE TABLE performance (
