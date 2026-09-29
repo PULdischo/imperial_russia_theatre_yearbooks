@@ -10234,3 +10234,25 @@ from raw.event_entry e left join raw.event_entry_performance p using(event_id) w
 ```
 
 Result: 24 items (21 after the season-date change). Integration vs control: raw.event_entry +12, research.performance +31, research.work -3, research.event +7, verified +12, receipts +72,747 kopecks, persons unchanged, annotated rows -4. Production == integration after promotion. Comparison: other_titles 12, exact 1694, excerpt 148.
+
+## 2026-09-29 — Near-date round: worklist of list dates where the Repertoire has the ballet 1–3 days away
+
+```sql
+select e.page_id, e.date_text, e.theater, e.time_of_day, string_agg(p.performance_title, ' + ' order by p.performance_order)
+from raw.event_entry e left join raw.event_entry_performance p using(event_id) where e.city=? and e.date_undate=? group by all order by 3,4;
+-- run for both the list date and the matched Repertoire date of each of the 13 nearby_date items
+```
+
+Result: comparison on current production is unchanged overnight (exact 1694, excerpt 148, nearby_date 13, fuzzy 13, other_titles 12). The 13 cluster as: 5 Большой cases on 1897-98 pair014 around New Year 1898 (likely column shift), plus Золушка on the same page; 2 on 1894-02-02, where the Repertoire has no Маріинскій session at all (likely column shift); 2 Moscow dates with no Repertoire rows at all (1893-09-15, 1895-01-04); 3 single offsets.
+
+## 2026-09-29 — Near-date round (issue #107): builds, promotion check, and the confirmed-disagreements list
+
+```sql
+-- integration vs control vs production: counts of raw.event_entry, research.performance, research.work, research.event,
+-- verified, intra_block_disagreement, sum(receipts_total_kopecks), live persons, annotated raw rows
+select e.date, e.date_verbatim, t.canonical_name, p.verbatim_title from research.performance p join research.event e using(event_id) join research.theater t on t.theater_id=e.theater_id
+ where e.season='1897-98' and e.city='SP' and p.verbatim_title ilike '%микадо%' order by e.date;
+select distinct e.page_id, e.printed_page_number from raw.event_entry e where e.city=? and e.date_undate=?;  -- page refs for each remaining mismatch
+```
+
+Result: integration vs control raw.event_entry +17, performances +7, receipts +1,066,463 kopecks, verified +35, intra_block -13; production == integration after promotion. Дочь микадо 1897-98 SP now on 9, 14, 16, 19 Nov; 14, 28 Dec; 4 Jan; 19, 22 Apr (9 dates, 1:1 with the list's 9; "24" pairs with 14, "38" with 28, not 29 as reported 2026-09-28 from the then-shifted column). Comparison after the list fix (Кандавлъ): exact 1706, excerpt 148, fuzzy 12, other_titles 12, nearby_date 2.

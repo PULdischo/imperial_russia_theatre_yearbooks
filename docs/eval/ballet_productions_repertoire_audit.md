@@ -84,7 +84,7 @@ replace** — some variants (Волшебные грезы, Царь Канда�
 
 - **Дочь микадо 1897-98 SP:** the list prints "ноября 9, 24, 16, 19;
   декабря 14, 38". The Repertoire has 14, 16, 19 Nov and 14, 29 Dec,
-  which suggests "24" = 14 and "38" = 29. 9 Nov falls in a Repertoire gap
+  which suggests "24" = 14 and "38" = 29. **Correction 2026-09-29:** the 29 Dec reading came from a Маріинскій column that was shifted in the transcription; after the #107 repair the Repertoire has Дочь микадо on **28** Dec, so "38" pairs with 28. (Recorded in `ballet_list_repertoire_disagreements.md`, A4/A5.) 9 Nov falls in a Repertoire gap
   (Finding 1).
 - The four out-of-season list years (Пери "1897", Дочь Микадо 1899-00
   апрѣля, Коппелія "1903 ноября", Тщетная "1904 апрѣля"): the comparison

@@ -19791,3 +19791,62 @@ vs printed "др. эт."; genres inside titles across 1893-94 pair010 and
 1904-05 p030 benefit heading stored as a work and Latin "p/k" in receipts;
 1900-01 p026 Feb 11 excerpt qualifiers only in the annotation. The Latin
 letters in receipts recur: a corpus-wide sweep is worth doing.
+
+## Issue #107: Ballet-list near-date cases (#101) -- utro/vecher and column
+## shifts on 5 spreads repaired; confirmed-disagreements list started
+
+The 13 list dates where the Repertoire had the ballet 1–3 days away were
+checked on both scans (staging `outputs/recovery_2026-09-29_nearby_dates/`).
+11 were Repertoire transcription faults, now promoted:
+- 1897-98 pair014 (items 7–12): from 27 Dec 1897 the Большой and
+  Маріинскій print утро/вечеръ sub-rows. The transcription lost the pairing,
+  so every later cell sat 1–3 rows late. Большой realigned (20 cells; a
+  bogus 31 Dec copy of 29 Dec removed; dark 27 Dec вечеръ added);
+  Маріинскій 27 Dec – 3 Jan realigned, with a dropped Мефистофель cell
+  (3599 р. 30 к.) and dark rows restored. Also Александринскій 7 Jan
+  ("Виноватая, ком.", which had held the Михайловскій's works) and Малый
+  3 Jan (утро + dark вечеръ).
+- 1890-91 pair016 (item 1): 3 and 4 Jan 1891 утро/веч. split; the 3 Jan
+  evening row (Спящая красавица etc.) had been lost in all 3 SP theaters.
+- 1893-94 pair004 (item 2): "13 Среда." was a misread of the printed
+  "15 Среда." (all 5 sessions).
+- 1893-94 pair016 (items 3–4): the Маріинскій 2 and 3 Feb 1894 cells were
+  missing (2 Feb утро Коппелія + Жертвы Амуру, веч. Черное домино; 3 Feb
+  Фальстафъ). Александринскій 30 Jan утро/веч. split; the evening receipts
+  had slipped to 31 Jan. Also 17 Jan Маріинскій receipts that were the
+  Александринскій's (set null), "Смерть Наухина" -> Пазухина, and "Онь" -> "Онъ".
+- 1894-95 pair006 (item 5): the "4 Среда." January row was dated 1894-10-04
+  because the page runs 4 Oct – 4 Jan and the header backfill read day 4 as
+  October. month_text/year_text set explicitly (Января 1895). This resolves
+  the "4 Вторникъ / 4 Среда" collision flagged in #103. The same resolver
+  weakness could affect other pages that span a long closure: worth a
+  corpus check.
+Integration vs same-code control: +17 raw events, +7 performances,
++10,664 р. 63 к. receipts, date `verified` +35, `intra_block_disagreement`
+-13, 0 new quality flags. Promoted; all 5 files unchanged in production
+since staging (checked by mtime); backup
+`outputs/full_run_pre_promote_backup_2026-09-29_nearbydates/`.
+2 were genuine (A2 Пробужденіе Флоры, A6 Коппелія in the new list).
+
+Also fixed: our LIST transcription had "Царь Кандавль" (1896-97 SP #13);
+the scan prints bold "Кандавлъ".
+
+**Confirmed-disagreements list (RG, 2026-09-29):**
+`docs/eval/ballet_list_repertoire_disagreements.md`, which holds only
+cases where both scans were read and both transcriptions match, with the
+yearbook's own evidence recorded and no cause assumed. Current: 12 date
+disagreements, 1 work-naming, 7 title spellings, plus a separate
+not-yet-confirmed section. Correction recorded there: the list's
+"декабря 38" pairs with the Repertoire's **28** Dec (the earlier "29" came
+from the shifted column).
+
+**After:** comparison exact 1706, excerpt 148 (1854/1881 = 98.6%),
+nearby_date 2, other_titles 12, fuzzy 12.
+
+**Noticed, not fixed:** 1893-94 pair004 Малый 15 Sep receipts "818" vs
+maybe "848"; 1893-94 pair016 Александринскій 25 Jan "1015" vs maybe
+"1045"; Малый/Михайловскій 25 Jan tagged evening but single cells;
+Малый genres doubled ("ком., ком.") in parsed output; 1897-98 pair014
+Александринскій 9 Jan "Приличія" genre (ш. printed, ком. transcribed);
+1897-98 pair014 Малый 2 Jan "случившийся" vs probably "случившійся";
+1897-98 pair008 genres inside titles.

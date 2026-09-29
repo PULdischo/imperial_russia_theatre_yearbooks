@@ -1,0 +1,64 @@
+# Confirmed disagreements: ballet productions lists vs. Repertoire tables
+
+Started 2026-09-29 at RG's request. **Only confirmed cases**: both the list entry and the Repertoire
+cell were read on their own scans, and each transcription matches what its scan prints, so the
+yearbook really does say two different things. Cases still under investigation or waiting for a physical
+check are kept apart at the bottom and are NOT part of the list. No cause is assumed. Where the
+yearbook itself points one way (e.g. the list's own entry for another ballet agrees with the Repertoire),
+that is recorded as *evidence*, not as a verdict. Dates are Old Style; list dates take their year from the
+list's season (see `docs/schema.md`).
+
+Sources: list page = `balletproductions_<season>_<city>_pNNN` (printed page); Repertoire page =
+`repertoire_<season>_…` (printed page). Found by `pipeline/compare_productions_repertoire.py`
+(issue #101), then checked on both scans in issues #106 and #107.
+
+## A. Dates: the list and the Repertoire disagree about when a ballet was given
+
+| # | Season, city | Ballet (list entry) | List prints | Repertoire prints | Evidence in the yearbook | Checked |
+|---|---|---|---|---|---|---|
+| A1 | 1895-96 Moscow | Катарина (Дочь разбойника), #4 (p. 40) | января 17 [1896] | 17 Jan, Большой: Эсмеральда, бал. (pair014, p. 15) | Per our (scan-verified) list transcription, the list's own Эсмеральда entry gives января 14, 24, with no 17. Катарина's other list dates (13 Dec, 28 Jan) match the Repertoire | #106 item 8 |
+| A2 | 1895-96 Moscow | Пробужденіе Флоры, #11 (p. 41) | мая 2, 22 [1896] | 2 May, Большой: Паяцы + Даита. 3 May (Пятница): Пряничный домикъ + Пробужденіе Флоры (pair024, p. 25) | The list's Даита entry gives мая 2, which agrees with the Repertoire's 2 May | #107 item 6 |
+| A3 | 1897-98 SP | Волшебная флейта, #1 (pp. 32–33) | октября 5, 25 [1897] | 25 Oct, Маріинскій: dash (dark) (pair008, p. 8) | Neighbouring days: 24 Oct Гензель и Гретель, 26 Oct Спящая красавица | #106 item 10 |
+| A4 | 1897-98 SP | Дочь микадо, #2 (pp. 32–33) | ноября 9, **24**, 16, 19 | Дочь микадо on 9, **14**, 16, 19 Nov; 24 Nov Маріинскій: Фра-Дьяволо (pair010, p. 11) | The list's "24" breaks its own ascending order; its 9 dates pair 1:1 with the Repertoire's 9 | #106 item 11 |
+| A5 | 1897-98 SP | Дочь микадо, #2 (pp. 32–33) | декабря 14, **38** | Дочь микадо on 14 and **28** Dec (pair014, pp. 14–15, after the #107 column repair) | "38" is not a possible day; it pairs with the Repertoire's 28 | #106/#107 |
+| A6 | 1897-98 SP | Коппелія, #6 (pp. 32–33) | ноября 3 [1897] | 2 Nov, Маріинскій: Коппелія, бал. + 2-е д. бал. Млада. 3 Nov: Опричникъ (pair008, p. 8) | The list's own Млада entry prints "ноября 2 (2-е д.)", which agrees with the Repertoire's 2 Nov double bill | #107 item 13 |
+| A7 | 1898-99 SP | Очарованный лѣсъ, #11 (p. 49) | сентября 21, 27 [1898] | 21 Sep, Маріинскій: Фераморсъ. Очарованный лѣсъ on 27 Sep only (p002, p. 4) | none | #106 item 13 |
+| A8 | 1900-01 SP | Маркитантка, #9 (p. 46) | февраля 4, 11 [1901] | 11 Feb Маріинскій: morning Садко; evening Бенефисъ Кордебалета (4-я карт. бал. Камарго, 2-е д. бал. Фіамметта, 2-е д. бал. Щелкунчикъ). Маркитантка on 4 Feb only (p026, p. 28) | The list's own Камарго, Фіаметта and Щелкунчикъ entries all give 11 Feb, without Маркитантка | #106 item 16 |
+| A9 | 1901-02 Moscow | Лебединое озеро, #9 (p. 54) | сентября 16, 21 [1901] | 21 Sep, Большой: Русланъ и Людмила, оп. Лебединое озеро on 16 Sep only (p003, p. 5) | none | #106 item 17 |
+| A10 | 1901-02 SP | Волшебная флейта, #3 (p. 46) | декабря 19, 28 [1901] | 19 Dec, Маріинскій: Сильвія, бал. only. Волшебная флейта on 28 Dec morning (p018, p. 20) | The list's own Сильвія entry also gives 19 Dec, so the list implies a double bill that the Repertoire doesn't print | #106 item 18 |
+| A11 | 1903-04 SP | Волшебная флейта, #4 (p. 45) | ноября 30 [1903] | 30 Nov, Маріинскій: morning Фаустъ; evening Фея куколъ + 2-е д. бал. Фіаметта (p014, p. 16) | none | #106 item 21 |
+| A12 | 1904-05 SP | На перепутьи, #17 (p. 139) | декабря 12, 17 [1904] | На перепутьи on 12 Dec evening only (Ширяевъ benefit); 17 Dec: other titles (p018, p. 108) | none | #106 item 23 |
+
+## B. Works: the list names a ballet that the Repertoire cell doesn't name
+
+| # | Season, city | Ballet (list entry) | List prints | Repertoire prints | Checked |
+|---|---|---|---|---|---|
+| B1 | 1904-05 SP | Дочь Фараона, #7 (p. 138) | февраля 13 [1905] | 13 Feb, Маріинскій evening: only the heading "Бенефисъ кордебалетныхъ артистовъ и артистокъ." and 8750 р. 70 к., with no work titles (p030, p. 120) | #106 item 24 |
+
+## C. Titles: both sources name the same performance but spell the title differently
+
+Each Repertoire spelling was confirmed on its scan in issue #105 (transcription matches the print), and the
+list spelling was confirmed in the list verification (issue #101).
+
+| # | Season, city, date | List prints | Repertoire prints (page) |
+|---|---|---|---|
+| C1 | 1899-00 Moscow, 5, 8 and 19 Dec 1899 | Волшебныя грёзы (#2, p. 55) | Волшебные грезы, 3 cells (p017 p. 19; p019 p. 21). The same Repertoire page also prints "Волшебныя грезы" on 28 Dec |
+| C2 | 1899-00 Moscow, 23 Apr 1900 | Привалъ кавалеріи (#8, p. 55) | Привалъ кавалерія (p037, p. 39) |
+| C3 | 1899-00 SP, 9 Feb 1900 | Маркобомба (#17, p. 46) | Маркабомба (p026, p. 28) |
+| C4 | 1900-01 SP, 11 Feb 1901 | Фіаметта (#20, p. 47) | 2-е д. бал. Фіамметта (p026, p. 28) |
+| C5 | 1902-03 SP, 4 Dec 1902 | Фіаметта (#27, p. 45) | 2-е д. бал. Фіамметта (p014, p. 16) |
+| C6 | 1903-04 SP, 25 Jan 1904 | Фіаметта (#26, p. 46) | 2-е д. бал. Фіаметто (p024, p. 26) |
+| C7 | 1904-05 SP, 1 Dec 1904 | Граціелла (#6, p. 138) | Граціела (p016, p. 106) |
+
+## Not (yet) on the list: waiting for a physical check or not a disagreement
+
+- **Waiting for RG's physical check:** 1897-98 SP Пахита "мая 5 (3-е д.)" vs. a Repertoire line inside the
+  binding fold (p012, p. 26, read from letter tops as "3-е д. бал. Пахита", not promoted); 1892-93 SP
+  "Паяда и рыбакъ" (pair004, p. 4, 240 dpi; list "Наяда"); 1903-04 Moscow "Ваядерка" (p025, p. 27, low-res;
+  list "Баядерка"); 1903-04 Moscow "Пригалъ кавалеріи" (p013, p. 15, possibly a broken sort; list "Привалъ").
+- **Not a disagreement:** 1900-01 SP "Ученики Дюпрэ" = Repertoire "Les élèves de Dupré" (same work, Russian
+  vs French title). The four list dates with a printed year that differs from the season (Пери, Дочь Микадо
+  1899-00, Коппелія 1902-03, Тщетная 1902-03) all match the Repertoire once the date is taken from the
+  season, so they aren't disagreements.
+- **Not yet investigated:** the 54 Repertoire-side leads (Repertoire ballet performances the lists don't
+  account for, `outputs/ballet_productions_pilot/compare/repertoire_not_in_lists.csv`).
