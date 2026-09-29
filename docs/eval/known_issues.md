@@ -19756,6 +19756,8 @@ function asserted exactly one match or raised an error, so a silent
 wrong-row edit was not possible there. This was the only "assume
 missing, add a new row" operation performed in this whole two-day
 thread; no other instance of this risk exists in the issue #104 work.
+
+## Issue #106: Ballet-list "other title" dates (#101) -- Repertoire structural
 ## damage found and repaired on 4 spreads; 12 genuine list/Repertoire disagreements
 
 The 24 list dates where the Repertoire showed other titles that day were
