@@ -10549,3 +10549,28 @@ where p.verbatim_title like '[?]%'
 Result: before (backup db) (26520, 28246, 29467, 3481, 169); after (26520, 28247, 29467, 3482, 170).
 "[?]-е д. бал. Пахита" → excerpt_note "[?]-е д.", parent Пахита. compare_productions_repertoire.py: exact 1705, excerpt 150,
 fuzzy 12, other_titles 11, nearby_date 2, impossible_date 1; Repertoire-side 40 (unchanged).
+
+## 2026-09-29 — Production-stats scoping pilot, 1896-97: events and receipts per theater
+
+```sql
+select t.canonical_name, e.event_status, count(*) n, count(e.receipts_total_kopecks) n_rec, round(sum(e.receipts_total_kopecks)/100.0, 2) rub
+from research.event e join research.theater t using (theater_id) where e.season = '1896-97' group by all order by 1, 2
+```
+
+Result (performed): Александринскій 231 (322,673.29), Большой 203 (365,675.65), Малый 217 (218,125.13),
+Маріинскій 182 (541,846.23), Михайловскій 217 (258,763.16). The stats page (p. 27) gives Moscow Russian drama 217 (219,255.13).
+
+## 2026-09-29 — Production-stats pilot, 1896-97: performed events split by Latin-script titles (foreign troupes)
+
+```sql
+with ev as (select e.event_id, t.canonical_name th, e.receipts_total_kopecks k,
+  bool_or(regexp_matches(p.verbatim_title, '^[A-Za-zÀ-ÿ]')) latin
+  from research.event e join research.theater t using (theater_id) join research.performance p using (event_id)
+  where e.season = '1896-97' and e.event_status = 'performed' group by all)
+select th, latin, count(*), round(sum(k)/100.0, 2) from ev group by all order by 1, 2
+```
+
+Result: Александринскій Russian 193 (249,583.89) / Latin 38 (73,089.40); Большой 177 (299,895.45) / 25 (65,780.20);
+Малый 217 (218,125.13); Маріинскій 178 (538,135.23) / 1 (3,711.00); Михайловскій 72 (78,846.09) / 145 (179,917.07).
+Against the stats page: Михайловскій French 145 = 145; Михайловскій drama + opera + ballet 55 + 14 + 3 = 72 = 72;
+Большой Italian opera 25 = 25; Малый 217 = 217; German 34 vs 38 Latin at the Александринскій.
