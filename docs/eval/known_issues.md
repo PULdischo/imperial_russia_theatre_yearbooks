@@ -20148,3 +20148,29 @@ Other errors fixed on the same pages:
 - 1903-04 p012 Александринскій titles still carry the genre in the title text.
 - 1902-03 p016 (E1, the Page Corps jubilee) has its works duplicated in the annotation (an encoding quirk, not
   a scan error).
+
+## Issue #113: the 2 "Балетный дивертиссементъ" ballet-list leads (#101) -- 2026-09-29, FIXED
+
+These were the last unchecked Repertoire-side leads from the ballet-list audit. Both rows had
+genre "бал.". The other 9 divertissement rows in the corpus have no genre, which is why only
+these two were counted as ballet performances.
+- **1901-02 p023 (p. 25), 16 Среда, Новый.** The scan prints "Воспитатель Флаксманъ, ком. /
+  Балетный дивертиссементъ. / 430 р. 68 к.": no genre on the divertissement line.
+- **1903-04 p034 (p. 36), 17 Суббота, Маріинскій.** This is the Red Cross benefit for crippled
+  soldiers. The scan prints "… Паяцы, оп. Леонковалло. / Балетный дивертиссементъ. / Птички-пѣвчія,
+  оперетта.": again no genre.
+
+In both cases the "бал." was a transcription addition, the same genre-fabrication pattern as
+#99. I removed it in place in full_run/raw (field-level, with a `_fix_note`). Backup and build
+log are in `outputs/full_run_pre_promote_backup_2026-09-29_issue113/`.
+
+The ballet lists (scan-verified transcription, #101) have no divertissement entry for these
+seasons and no "января 16" (1901-02 Moscow) or "апрѣля 17" (1903-04 SP) under any entry. So
+there is no disagreement.
+
+After the rebuild, counts are unchanged (event_entry 26520, performances 28246, research.work
+3481) and quality_flags.csv is identical. Repertoire-side leads went 34 → 32; all remaining ones
+are in the disagreements list or are the 12 comedy-ballets.
+
+Noticed, not fixed: on 1903-04 p034, Паяцы has genre "оп. Леонковалло" (the composer's name
+is inside the genre field).

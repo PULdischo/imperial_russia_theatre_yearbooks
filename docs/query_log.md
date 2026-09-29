@@ -10400,3 +10400,37 @@ pipeline/compare_productions_repertoire.py (read-only; same two SELECTs as befor
 34 Repertoire-side not accounted for (19 ballet_not_in_list, 15 title_in_list_other_date). After #112 all 34 are
 in the disagreements list's A/D/E sections, except 12 comedy-ballets (research need) and 2 "Балетный
 дивертиссементъ" rows, not yet checked.
+
+## 2026-09-29 — Issue #113: every "Балетный дивертиссементъ" performance in the Repertoire
+
+```sql
+select e.event_id, e.page_id, e.date_text, e.theater, e.time_of_day, e.printed_page_number, e.receipts_text, e.annotation,
+       string_agg(p.performance_title||' | '||coalesce(p.genre,''), ' // ' order by p.performance_order)
+from raw.event_entry e join raw.event_entry_performance p using (event_id)
+where e.event_id in (select event_id from raw.event_entry_performance where performance_title ilike 'Балетный дивертис%')
+group by all
+```
+
+Result: 11 rows; only 1901-02 p023 (16 Среда, Новый) and 1903-04 p034 (17 Суббота, Маріинскій) had genre "бал." (the two leads); the other 9 had no genre.
+
+## 2026-09-29 — Issue #113: ballet lists mentioning a divertissement, or the two dates
+
+```sql
+select season, city, list_number, title, performed_text, post_total_text from raw.production_entry
+where concat_ws(' ', title, description_text, performed_text, post_total_text) ilike '%дивертис%';
+select list_number, title, performed_text from raw.production_entry
+where season = ? and city ilike ? and (performed_text ilike ? or post_total_text ilike ?)  -- ('1901-02','Moscow%','%января%'), ('1903-04','SP%','%апрѣля%')
+```
+
+Result: only 1891-92 Moscow #7 and 1892-93 Moscow #1 mention a divertissement (descriptions, unrelated). No 1901-02 Moscow entry gives января 16; no 1903-04 SP entry gives апрѣля 17.
+
+## 2026-09-29 — Issue #113: production after the fix
+
+```sql
+select (select count(*) from raw.event_entry), (select count(*) from raw.event_entry_performance), (select count(*) from research.event),
+       (select sum(receipts_total_kopecks) from research.event), (select count(*) from research.work);
+select performance_title, genre, count(*) from raw.event_entry_performance where performance_title ilike 'Балетный дивертис%' group by all
+```
+
+Result: (26520, 28246, 29467, 2801057477, 3481), unchanged; all 11 divertissement rows now genre NULL.
+compare_productions_repertoire.py: list side unchanged; Repertoire-side not accounted for 34 → 32 (17 ballet_not_in_list, 15 title_in_list_other_date).

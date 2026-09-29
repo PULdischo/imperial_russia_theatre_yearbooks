@@ -89,8 +89,9 @@ Each list's whole "Балетъ" section (every entry, title, excerpt note and p
   vs French title). The four list dates with a printed year that differs from the season (Пери, Дочь Микадо
   1899-00, Коппелія 1902-03, Тщетная 1902-03) all match the Repertoire once the date is taken from the
   season, so they aren't disagreements.
-- **Not yet investigated (as of #112):** of the 34 Repertoire-side leads left after #112
-  (`outputs/ballet_productions_pilot/compare/repertoire_not_in_lists.csv`), all are now in A, D or E above
-  except: the 12 comedy-ballet (ком.-бал.) performances (Батюшкина дочка ×7, Мѣщанинъ во дворянствѣ ×5), kept
-  as RG's separate research need (drama performances with ballet or dancers), and 2 "Балетный дивертиссементъ"
-  rows (16 Jan 1902 Новый; 17 Apr 1904 Маріинскій), not yet checked on either scan.
+- **Checked, not a disagreement (#113):** the 2 "Балетный дивертиссементъ" leads (16 Jan 1902 Новый, 1901-02
+  p023; 17 Apr 1904 Маріинскій, 1903-04 p034). Both scans print "Балетный дивертиссементъ." with no genre; the
+  "бал." was a transcription addition, now removed. Neither list has an entry or a date for them.
+- **Repertoire-side leads (as of #113):** 32 remain in `outputs/ballet_productions_pilot/compare/repertoire_not_in_lists.csv`.
+  All are in A, D or E above, except the 12 comedy-ballet (ком.-бал.) performances (Батюшкина дочка ×7,
+  Мѣщанинъ во дворянствѣ ×5), kept as RG's separate research need (drama performances with ballet or dancers).
