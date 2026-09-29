@@ -10489,3 +10489,23 @@ where (season, city) in (('1901-02','Moscow'), ('1902-03','Moscow'), ('1903-04',
 
 Result: 1901-02 MSK p. 54 (15 entries); 1902-03 MSK p. 51 (10); 1903-04 SP pp. 44 (2), 45 (22), 46 (4). Used only to
 locate the scans; the lists themselves were then read on the scans, not from the transcription.
+
+## 2026-09-29 — Is the 1902-03 Moscow ballet list (p. 51) missing a continuation? Repertoire-side test
+
+```sql
+select coalesce(pw.canonical_title, w.canonical_title) t, w.canonical_genre, count(*) n, string_agg(distinct th.canonical_name, ', ')
+from research.performance p join research.event e using (event_id) join research.work w using (work_id)
+left join research.work pw on pw.work_id = w.excerpt_of_work_id join research.theater th on th.theater_id = e.theater_id
+where e.season = '1902-03' and e.city ilike 'Mos%'
+  and (w.canonical_genre ilike '%бал%' or pw.canonical_genre ilike '%бал%' or p.verbatim_genre ilike '%бал%' or p.verbatim_title ilike '%бал.%')
+group by all order by n desc;
+select list_number, title, total_count from raw.production_entry where season = '1902-03' and city ilike 'Mos%' order by try_cast(list_number as int);
+select w.canonical_title, count(*), string_agg(distinct th.canonical_name, ', ')
+from research.performance p join research.event e using (event_id) join research.work w using (work_id) join research.theater th on th.theater_id = e.theater_id
+where e.season = '1902-03' and e.city ilike 'Mos%' and w.canonical_genre is null and p.verbatim_genre is null group by all order by 1
+```
+
+Result: ballet-genre works = the list's 10 (Конекъ-Горбунокъ 13+1, Эсмеральда 7+1, Лебединое озеро 5, Спящая красавица 4,
+Дочь фараона 3, Волшебный башмачекъ 3, Донъ Кихотъ 2+1, Коппелія 2+1, Корсаръ 2+1, Клоринда 2) plus Балетный
+дивертиссементъ 2. Genre-less: 5 excerpts of listed ballets, Да здравствуетъ жизнь! др. 3, Снѣгурочка 2, Дивертиссементъ 5.
+No unlisted ballet → no missing p. 52 entries.

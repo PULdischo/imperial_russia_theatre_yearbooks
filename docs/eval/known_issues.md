@@ -20261,3 +20261,19 @@ the list records, but they are important to track."* The 8 ballet divertissement
 section F (F1–F8) in `docs/eval/ballet_list_repertoire_disagreements.md`. They are tracked
 there, not classed as disagreements. The two physical checks (1902-03 Moscow p. 52;
 "Балстный") were added to that document's waiting list.
+
+**#114, 2026-09-29: 1902-03 Moscow list completeness settled from the Repertoire (RG's
+point).** "If p. 52 were missing entries, there'd be unaccounted performances in the
+Repertoire." Checked:
+- Every 1902-03 Moscow Repertoire performance with a ballet genre (work, parent work or
+  verbatim) belongs to one of the list's 10 works or is an excerpt of one. The only exception
+  is "Балетный дивертиссементъ" (F5, F6).
+- The genre-less Moscow rows that season are:
+  - excerpts of listed ballets;
+  - "Да здравствуетъ жизнь! др." and "Снѣгурочка, весенняя сказка" (not ballets);
+  - 5 plain "Дивертиссементъ" (RG's open question).
+- The list is alphabetical and ends at Эсмеральда.
+
+Conclusion: p. 52 carries no missing ballet entries, and the physical check is dropped.
+Limit: this can't rule out p. 52 holding a note that adds nothing new, but nothing in the
+Repertoire needs one.

@@ -92,13 +92,16 @@ these dates under any entry or post-total note (#114, 2nd addendum).
 | F2 | 1901-02 Moscow | 9 Jan 1902, Новый: Соломенная шляпка, ком.-вод. / Балетный дивертиссементъ, 417 р. 89 к. (p021, p. 23) | Same list: no января 9 | #114 |
 | F3 | 1901-02 Moscow | 16 Jan 1902, Новый: Воспитатель Флаксманъ, ком. / Балетный дивертиссементъ, 430 р. 68 к. (p023, p. 25) | Same list: no января 16 | #113 |
 | F4 | 1901-02 Moscow | 20 Apr 1902, Большой: "Бенефисъ вторыхъ режиссеровъ и суфлеровъ." 3-е и 4-е д. оп. Гугеноты / Сцена 5-го д. траг. Макбетъ / 3-е д. ком. Горе отъ ума / Концертное отдѣленіе / Балетный дивертиссементъ, 3286 р. 36 к. (p035, p. 37). The first word may print "Балстный" (physical check) | Same list: no апрѣля 20 | #114 |
-| F5 | 1902-03 Moscow | 25 Jan 1903, Малый: "Въ пользу недостаточныхъ учащихся Драматическихъ Курсовъ при Императорскомъ Московскомъ Театральномъ Училищѣ." Женская логика, ком. / Балетный дивертиссементъ, no receipts (p023, p. 25) | p. 51, entries 1–10: no divertissement, no января 25 (p. 52 not in our scan, see caveat) | #114 |
+| F5 | 1902-03 Moscow | 25 Jan 1903, Малый: "Въ пользу недостаточныхъ учащихся Драматическихъ Курсовъ при Императорскомъ Московскомъ Театральномъ Училищѣ." Женская логика, ком. / Балетный дивертиссементъ, no receipts (p023, p. 25) | p. 51, entries 1–10: no divertissement, no января 25 (section complete, see note below) | #114 |
 | F6 | 1902-03 Moscow | 12 Apr 1903, Большой: "Въ пользу убѣжища для престарѣлыхъ артистовъ." Ревизоръ, ком. / Балетный дивертиссементъ, no receipts (p033, p. 35) | Same list: no апрѣля 12 | #114 |
 | F7 | 1903-04 SP | 22 Feb 1904, Маріинскій: benefit of the Спб. Общество попеченія о душевно-больныхъ, part of the takings to the committee for strengthening the navy. 1) чтеніе, пляска 2) 2-е д. оп. Карменъ 3) 1-я карт. 4-го д. оп. Аида 4) Балетный дивертиссементъ 5) сцена изъ 4-го д. оп. Гугеноты, no receipts (p028, p. 30) | pp. 44–46, entries 1–28: no divertissement, no февраля 22 | #114 |
 | F8 | 1903-04 SP | 17 Apr 1904, Маріинскій: Red Cross benefit for crippled soldiers and their families. 2-е и 3-е д. ком. Волки и овцы / Паяцы, оп. Леонковалло / Балетный дивертиссементъ / Птички-пѣвчія, оперетта, no receipts (p034, p. 36) | Same list: no апрѣля 17 | #113 |
 
-**Caveat:** the 1902-03 Moscow "Балетъ" section ends mid-page on p. 51 with no closing ornament, and our scan has
-only that page. Whether anything continues on p. 52 is unconfirmed (physical check). **Observed (not a
+**1902-03 Moscow completeness (RG's point, 2026-09-29):** the section ends mid-page on p. 51 with no closing
+ornament, and our scan has only that page. But the Repertoire shows nothing missing. Every ballet-genre Moscow
+performance that season is one of the list's 10 works or an excerpt of one; the only exception is the divertissement
+(F5, F6). The season's genre-less Moscow rows hold no other ballet. The list is also alphabetical and ends at
+"Эсмеральда". So no p. 52 check is needed. **Observed (not a
 conclusion):** 5 of the 8 (F4–F8) are on benefit or charity bills; F1–F3 are ordinary Новый evenings pairing a
 comedy with the divertissement. **Not in this table:** 3 more ballet divertissements fall in
 seasons with no ballet list in our set (1905-06 ×2, 1908-09 ×1).
@@ -109,8 +112,8 @@ seasons with no ballet list in our set (1905-06 ×2, 1908-09 ×1).
   binding fold (p012, p. 26, read from letter tops as "3-е д. бал. Пахита", not promoted); 1892-93 SP
   "Паяда и рыбакъ" (pair004, p. 4, 240 dpi; list "Наяда"); 1903-04 Moscow "Ваядерка" (p025, p. 27, low-res;
   list "Баядерка"); 1903-04 Moscow "Пригалъ кавалеріи" (p013, p. 15, possibly a broken sort; list "Привалъ").
-  For section F: whether the 1902-03 Moscow "Балетъ" section continues on p. 52, and whether F4 (1901-02 p035,
-  p. 37) prints "Балстный" (wrong sort) or "Балетный" with an uninked crossbar.
+  For section F: whether F4 (1901-02 p035, p. 37) prints "Балстный" (wrong sort) or "Балетный" with an uninked
+  crossbar.
 - **Not a disagreement:** 1900-01 SP "Ученики Дюпрэ" = Repertoire "Les élèves de Dupré" (same work, Russian
   vs French title). The four list dates with a printed year that differs from the season (Пери, Дочь Микадо
   1899-00, Коппелія 1902-03, Тщетная 1902-03) all match the Repertoire once the date is taken from the
