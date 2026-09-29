@@ -10535,3 +10535,17 @@ select count(*) from raw.event_entry where annotation like '%[%'
 
 Result: "?" is real punctuation in several titles (Гдѣ мой зять?, Которая изъ двухъ?, Что такое любовь?, Qui?); 2 receipts
 use "?" as an uncertainty marker; brackets occur in 0 titles and 0 annotations.
+
+## 2026-09-29 — Issue #115: production before/after promoting "[?]-е д. бал. Пахита"
+
+```sql
+select (select count(*) from raw.event_entry), (select count(*) from raw.event_entry_performance), (select count(*) from research.event),
+       (select count(*) from research.work), (select count(*) from research.work where excerpt_of_work_id is not null);
+select p.verbatim_title, w.canonical_title, w.excerpt_note, pw.canonical_title
+from research.performance p join research.work w using (work_id) left join research.work pw on pw.work_id = w.excerpt_of_work_id
+where p.verbatim_title like '[?]%'
+```
+
+Result: before (backup db) (26520, 28246, 29467, 3481, 169); after (26520, 28247, 29467, 3482, 170).
+"[?]-е д. бал. Пахита" → excerpt_note "[?]-е д.", parent Пахита. compare_productions_repertoire.py: exact 1705, excerpt 150,
+fuzzy 12, other_titles 11, nearby_date 2, impossible_date 1; Repertoire-side 40 (unchanged).

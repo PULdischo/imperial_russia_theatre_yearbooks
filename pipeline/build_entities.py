@@ -174,8 +174,12 @@ _GIMN_CONTAMINATED_GENRE_FOLDS = {
 # left a mangled leftover fragment, not the bare base title, as the
 # extracted "base" for every title with 3+ references -- 11 titles were
 # silently unlinkable for this reason alone before the fix).
+#
+# "[?]" can stand in for the number (2026-09-29, issue #115, per RG): the
+# transcription's marker for a digit the scan can't show, e.g. a binding-fold
+# line read as "[?]-е д. бал. Пахита". Brackets never occur in printed titles.
 _ORDINAL_MARKER_UNIT = (
-    r"(?:\d+-(?:й|е|я|го)\.?\s+(?:и\s+\d+-(?:й|е|я|го)\.?\s+)?"
+    r"(?:(?:\d+|\[\?\])-(?:й|е|я|го)\.?\s+(?:и\s+\d+-(?:й|е|я|го)\.?\s+)?"
     r"|\d+\s+и\s+\d+\s+"
     r"|\d+\s+)"
     r"(?:дд\.|д\.|дѣйств\w*|актъ|карт\.)\.?"

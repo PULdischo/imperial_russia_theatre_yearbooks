@@ -20315,3 +20315,37 @@ separate ForUpload JPG, which is a different, lower-resolution photograph with t
   "[?]-е д. бал. Пахита" would be an unambiguous marker, but it would be a new convention.
   The cell is still unpromoted (staged in `outputs/recovery_2026-09-28_other_titles/raw/`,
   which reads "3-е").
+
+## Issue #115: Пахита fold line promoted as "[?]-е д. бал. Пахита" (1897-98 p012) -- 2026-09-29, PROMOTED; act digit open
+
+This follows the re-read above. RG chose to promote with a bracketed marker for the
+unreadable digit.
+- **Raw change:** `outputs/full_run/raw/repertoire_1897-98_p012.raw.json`, 5 Вторникъ.,
+  Маріинскій. A 3rd work `{"work_title": "[?]-е д. бал. Пахита", "genre": null}` was added,
+  with a `_fix_note`.
+  - Field-level edit on current production.
+  - Backup: `outputs/full_run_pre_promote_backup_2026-09-29_pakhita/`.
+  - The 2026-09-28 staged copy (which read "3-е") is superseded.
+- **New transcription convention (RG):** `[?]` marks a character the scan can't show.
+  Documented at `performance_title` in docs/schema.md. Brackets occur in no printed title or
+  annotation; "?" alone is real punctuation in titles.
+- **`pipeline/build_entities.py`:** `_ORDINAL_MARKER_UNIT` accepts `[?]` in place of the
+  number, so the line links as an excerpt of Пахита (excerpt_note "[?]-е д.").
+  - Checked that "Qui?" still doesn't match.
+  - Excerpt-linked works 169 → 170.
+- **Production rebuilt:**
+  - raw.event_entry unchanged at 26520; event_entry_performance 28246 → 28247.
+  - research.work 3481 → 3482 (the new excerpt work).
+  - quality_flags.csv identical.
+- **Comparison:** the list's 1897-98 SP Пахита "мая 5 (3-е д.)" now matches as an excerpt.
+  excerpt 149 → 150, other_titles 12 → 11; exact + excerpt 1855/1881.
+- **Evidence image:** `docs/eval/img/1897-98_p012_pakhita_fold_cell.png`. All four panels come
+  from the one photograph of the pp. 26–27 spread (ForUpload_1897-98_Repertoire.pdf, page 12,
+  embedded full-resolution image):
+  1. the cell (p. 26);
+  2. the magnified fold line;
+  3. the p. 27 season-totals line "Смѣшанныхъ … (русская драма, опера и балетъ) 1 ⁸)";
+  4. p. 27 footnote 8.
+- **Open:** the act digit (2 or 3). RG will check it in person; she has the volume at the
+  library. If it is 3, replace "[?]" with "3". If it is 2, the list's "3-е д." becomes a
+  confirmed title/act disagreement.

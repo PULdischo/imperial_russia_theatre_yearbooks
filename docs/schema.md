@@ -189,7 +189,7 @@ single receipts figure (e.g. two one-act comedies).
 | `performance_id` | string (PK) | |
 | `event_id` | FK → event_entry | |
 | `performance_order` | int | 1-based, order printed in the cell |
-| `performance_title` | string | verbatim |
+| `performance_title` | string | verbatim. `[?]` marks a character the scan can't show (e.g. a digit hidden in the binding fold: "[?]-е д. бал. Пахита"); brackets never occur in printed titles (RG, 2026-09-29, issue #115) |
 | `genre` | string, nullable | verbatim abbreviation (`оп.`, `бал.`, `ком.`, `др.`, `сц.`, `вод.`, `траг.`, `пьеса`, `карт.`, etc.) |
 
 ---
