@@ -24,7 +24,7 @@ Sources: list page = `balletproductions_<season>_<city>_pNNN` (printed page); Re
 | A6 | 1897-98 SP | Коппелія, #6 (pp. 32–33) | ноября 3 [1897] | 2 Nov, Маріинскій: Коппелія, бал. + 2-е д. бал. Млада. 3 Nov: Опричникъ (pair008, p. 8) | The list's own Млада entry prints "ноября 2 (2-е д.)", which agrees with the Repertoire's 2 Nov double bill | #107 item 13 |
 | A7 | 1898-99 SP | Очарованный лѣсъ, #11 (p. 49) | сентября 21, 27 [1898] | 21 Sep, Маріинскій: Фераморсъ. Очарованный лѣсъ on 27 Sep only (p002, p. 4) | **Paired (#111):** the Repertoire prints Капризы бабочки, Волшебная флейта, Очарованный лѣсъ on **2** Sep 1898 (p000, 1731 р. 85 к.), a date the list doesn't give; the list's own Капризы бабочки entry gives "сентября 2, 23" | #106 item 13; #111 item 9 |
 | A8 | 1900-01 SP | Маркитантка, #9 (p. 46) | февраля 4, 11 [1901] | 11 Feb Маріинскій: morning Садко; evening Бенефисъ Кордебалета (4-я карт. бал. Камарго, 2-е д. бал. Фіамметта, 2-е д. бал. Щелкунчикъ). Маркитантка on 4 Feb only (p026, p. 28) | The list's own Камарго, Фіаметта and Щелкунчикъ entries all give 11 Feb, without Маркитантка | #106 item 16 |
-| A9 | 1901-02 Moscow | Лебединое озеро, #9 (p. 54) | сентября 16, 21 [1901] | 21 Sep, Большой: Русланъ и Людмила, оп. Лебединое озеро on 16 Sep only (p003, p. 5) | none | #106 item 17 |
+| A9 | 1901-02 Moscow | Лебединое озеро, #9 (p. 54) | сентября 16, 21 [1901] | 21 Sep, Большой: Русланъ и Людмила, оп. Лебединое озеро on 16 Sep only (p003, p. 5) | **Paired (#112):** the Repertoire prints Лебединое озеро, бал. at the Большой on **21 Oct** 1901 (p009, p. 11, 2421 р. 58 к.), a date the list doesn't give; the list's 8 dates = its "Всего—8" and include no October date | #106 item 17; #112 |
 | A10 | 1901-02 SP | Волшебная флейта, #3 (p. 46) | декабря 19, 28 [1901] | 19 Dec, Маріинскій: Сильвія, бал. only. Волшебная флейта on 28 Dec morning (p018, p. 20) | The list's own Сильвія entry also gives 19 Dec, so the list implies a double bill that the Repertoire doesn't print | #106 item 18 |
 | A11 | 1903-04 SP | Волшебная флейта, #4 (p. 45) | ноября 30 [1903] | 30 Nov, Маріинскій: morning Фаустъ; evening Фея куколъ + 2-е д. бал. Фіаметта (p014, p. 16) | none | #106 item 21 |
 | A12 | 1904-05 SP | На перепутьи, #17 (p. 139) | декабря 12, 17 [1904] | На перепутьи on 12 Dec evening only (Ширяевъ benefit); 17 Dec Маріинскій: Валкирія only (p018, p. 108) | **Paired (#111):** the Repertoire prints Пробужденіе флоры / На перепутьи / Фея куколъ at the **27** Dec утро (p020, 1883 р. 19 к.); the list's Пробужденіе флоры and Фея куколъ entries both give 27 Dec | #106 item 23; #111 item 3 |
@@ -65,6 +65,20 @@ list spelling was confirmed in the list verification (issue #101).
 
 **Observed pattern (not a conclusion):** D3–D8 are all charity or benefit bills with no receipts printed, and in each the list omits the date. A checker noticed the same for Сынъ Мандарина on the 8 Apr 1903 Иверская bill (not a ballet; not yet checked).
 
+## E. Ballets the Repertoire prints that have no entry at all in that season's list
+
+Each list's whole "Балетъ" section (every entry, title, excerpt note and post-total note) was read on its scan; the ballet appears nowhere in it. Each Repertoire cell was read on its own scan (#112).
+
+| # | Season, city | Repertoire prints | List | Checked |
+|---|---|---|---|---|
+| E1 | 1902-03 SP | 14 Dec 1902, Маріинскій: "Спектакль по случаю 100-лѣтняго юбилея Пажескаго Его Императорскаго Величества корпуса. 1-е д. оп. Жизнь за Царя. 1-е д. бал. Дочь Микадо, бал.", no receipts (p016, p. 18) | pp. 44–45, entries 1–30: no Дочь Микадо, and no декабря 14 under any entry | #112 item 1 |
+| E2 | 1903-04 SP | 24 Apr 1904, Маріинскій: "Спектакль въ пользу раненыхъ и больныхъ воиновъ дѣйствующей арміи." Мнимыя дріады, бал.-карт. / Голубая Георгина, бал. / Дивертиссементъ, no receipts (p036, p. 38) | pp. 44–46, entries 1–28: no Голубая Георгина, and no апрѣля 24 under any entry | #112 item 2 |
+| E3 | 1903-04 SP | Same bill as E2: Мнимыя дріады, бал.-карт. | Same list: no Мнимыя дріады under any title, excerpt or note | #112 item 3 |
+| E4 | 1904-05 SP | 29 Mar 1905, Маріинскій: "Спектакль въ пользу Отдѣла защиты дѣтей отъ жестокаго обращенія." Эсмеральда, бал., no receipts (p038, p. 128) | pp. 138–139, entries 1–30: no Эсмеральда, and no марта 29 | #112 item 4 |
+| E5 | 1904-05 SP | 23 Apr 1905, Маріинскій: "Спектакль въ пользу Общества попеченія о Гребловской школѣ имени Н. В. Гоголя." „Письмо Татьяны", сц. изъ оп. Евгеній Онѣгинъ / Балетоманъ / Сонъ въ лѣтнюю ночь, бал. / Дивертиссементъ / Свадьба, сц., no receipts (p042, p. 132) | Same list: no Сонъ въ лѣтнюю ночь (nor Балетоманъ), and no апрѣля 23 | #112 item 5 |
+
+**Observed pattern (not a conclusion):** all five are on jubilee or charity bills with no receipts printed, the same shape as D3–D8. Side note: the 1904-05 SP list does have Голубая георгина (#5, p. 138: февраля 20, 27 1905, no * premiere marker).
+
 ## Not (yet) on the list: waiting for a physical check or not a disagreement
 
 - **Waiting for RG's physical check:** 1897-98 SP Пахита "мая 5 (3-е д.)" vs. a Repertoire line inside the
@@ -75,5 +89,8 @@ list spelling was confirmed in the list verification (issue #101).
   vs French title). The four list dates with a printed year that differs from the season (Пери, Дочь Микадо
   1899-00, Коппелія 1902-03, Тщетная 1902-03) all match the Repertoire once the date is taken from the
   season, so they aren't disagreements.
-- **Not yet investigated (as of #111):** the remaining Repertoire-side leads; was: the 54 Repertoire-side leads (Repertoire ballet performances the lists don't
-  account for, `outputs/ballet_productions_pilot/compare/repertoire_not_in_lists.csv`).
+- **Not yet investigated (as of #112):** of the 34 Repertoire-side leads left after #112
+  (`outputs/ballet_productions_pilot/compare/repertoire_not_in_lists.csv`), all are now in A, D or E above
+  except: the 12 comedy-ballet (ком.-бал.) performances (Батюшкина дочка ×7, Мѣщанинъ во дворянствѣ ×5), kept
+  as RG's separate research need (drama performances with ballet or dancers), and 2 "Балетный дивертиссементъ"
+  rows (16 Jan 1902 Новый; 17 Apr 1904 Маріинскій), not yet checked on either scan.

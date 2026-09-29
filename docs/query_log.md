@@ -10355,3 +10355,48 @@ follow-up's correction addendum for the full writeup and the lesson
 (never conclude "missing" without checking for a spelling/abbreviation
 variant of the date string first, especially on a page that already
 mixes conventions).
+
+## 2026-09-29 — Issue #112: integration vs control counts (missing ballets + copied-morning sweep)
+
+```sql
+select (select count(*) from raw.event_entry), (select count(*) from raw.event_entry_performance),
+       (select count(*) from research.event), (select sum(receipts_total_kopecks) from research.event),
+       (select count(*) from research.work)
+-- run on outputs/recovery_2026-09-28_spread_truncation/r0929_ctl and r0929_int, and on full_run after promotion
+```
+
+Result: control (26516, 28246, 29463, 2801769194, 3483); integration = production after promotion
+(26520, 28246, 29467, 2801057477, 3481). quality_flags.csv identical (900 rows).
+
+## 2026-09-29 — Issue #112: event-level diff, control vs integration, on the 40 staged pages
+
+```sql
+select e.page_id, e.date_text, e.theater, e.time_of_day, e.event_status, e.receipts_total_kopecks,
+       string_agg(p.performance_title, ' / ' order by p.performance_order)
+from {a|b}.analysis.event_entry e left join {a|b}.raw.event_entry_performance p using (event_id)
+where e.page_id in (<40 staged page_ids>) group by all
+-- set difference control minus integration and vice versa
+```
+
+Result: 48 rows removed / 55 added, every one a documented agent or scan fix (listed in known_issues.md #112);
+receipts delta −711717 kopecks, fully accounted for (−499320, −162600, −20555, −187825, +158583).
+
+## 2026-09-29 — Issue #112: printed page numbers of the five "no list entry" ballet cells + 21 Oct 1901
+
+```sql
+select e.page_id, e.date_text, e.theater, e.time_of_day, e.printed_page_number, e.receipts_text, e.annotation
+from raw.event_entry e
+where (e.page_id, e.date_text) in (('repertoire_1902-03_p016','14 Суббота.'), ('repertoire_1903-04_p036','24 Суббота.'),
+  ('repertoire_1904-05_p038','29 Вторн.'), ('repertoire_1904-05_p042','23 Суббота.'), ('repertoire_1901-02_p009','21 Воскрес.'))
+  and (e.theater ilike '%аріин%' or e.theater ilike '%Больш%') order by 1
+```
+
+Result: printed pp. 11 (1901-02 Большой, 2421 р. 58 к.), 18, 38, 128, 132; the four charity/jubilee cells have no receipts.
+
+## 2026-09-29 — Issue #112: compare_productions_repertoire.py on production after promotion
+
+pipeline/compare_productions_repertoire.py (read-only; same two SELECTs as before). Result: unchanged —
+1881 list dates → exact 1705, excerpt 149, fuzzy 12, other_titles 12, nearby_date 2, impossible_date 1;
+34 Repertoire-side not accounted for (19 ballet_not_in_list, 15 title_in_list_other_date). After #112 all 34 are
+in the disagreements list's A/D/E sections, except 12 comedy-ballets (research need) and 2 "Балетный
+дивертиссементъ" rows, not yet checked.

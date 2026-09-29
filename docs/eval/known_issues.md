@@ -20059,3 +20059,92 @@ Needs scan checks before anything is called an error.
 **Noticed, not fixed:** 1903-04 p032 Маріинскій "Аида, оп." (genre in title) and
 31 Mar "Жизнь за Царя" genre null (printed оп.); 1904-05 p020 "Корсаръ, бал.
 15291 р. 95 к." as printed (likely print typo, RG's list).
+
+## Issue #112: ballets missing from the lists + copied-morning sweep (#101) -- 2026-09-29, PROMOTED
+
+Two worklists from the ballet-list audit, both checked on the scans (every cell read on its
+own scan, neither source settled from the other).
+
+**1. The 6 Repertoire ballets with no list entry** (`outputs/recovery_2026-09-29_missing_ballets/`,
+`worklist.csv`, `logs/item_0N.csv`). Every "Балетъ" section of the four seasons was read in full.
+- Five are real disagreements: the ballet is printed in the Repertoire and appears nowhere in
+  that season's list. Recorded as E1–E5 in `docs/eval/ballet_list_repertoire_disagreements.md`:
+  Дочь Микадо (14 Dec 1902, Пажескій корпусъ centenary); Мнимыя дріады and Голубая Георгина
+  (24 Apr 1904, wounded soldiers' benefit); Эсмеральда (29 Mar 1905, child-protection
+  benefit); Сонъ въ лѣтнюю ночь (23 Apr 1905, Гребловская school benefit). All are jubilee or
+  charity bills with no receipts printed. That is an observed pattern, not a cause.
+- The sixth, Лебединое озеро at the Большой on 21 Oct 1901, was a transcription misspelling
+  ("Лебединное"; the scan has one н). Fixed. It is now paired evidence on A9: the list prints
+  "сентября 16, 21", 21 Sep is Русланъ и Людмила, and the list's 8 dates contain no October.
+- Fixed along the way:
+  - 1903-04 p036: receipts 2261 р. 45 к. were on 24 Apr (the charity cell prints none). They
+    belong to 25 Apr (Пахита). Moved.
+  - 1904-05 p042: the title "Письмо Татьяны", сц. had lost "изъ оп. Евгеній Онѣгинъ". Restored
+    as the full printed phrase, with genre null.
+
+**2. The 55 "morning" sessions whose works equal the same theater's adjacent day**
+(`outputs/recovery_2026-09-29_morning_copies/`, `candidates.csv`, `logs/<page_id>.csv`). These
+are detector candidates only, after the copies found on 1893-94 pair006 and 1895-96 pair004 in
+#111. Results:
+- 43 GENUINE: real repeats and matinees.
+- 5 already fixed in #111.
+- 2 COPY:
+  - 1905-06 p016, 4 Воскрес. Александринскій: a single cell. The "morning" Божій цвѣтникъ was
+    spurious.
+  - 1903-04 p012, 16 Воскрес. Михайловскій: the morning was a copy of the 15th, and every cell
+    from 16 to 24 had slid down one row. The column was rebuilt from the scan. The page prints
+    no 20th.
+- 5 OTHER:
+  - 1891-92 pair014, 19 and 20 Jan Маріинскій; 1892-93 pair016, 5 Feb Михайловскій: a
+    one-cell double bill had been split into morning and evening. Merged.
+  - 1901-02 p028, 23 Михайловскій: утро/веч labels swapped. Same on the 22nd.
+  - 1903-04 p015, Большой 29: a copy of the 30 утро. The 29th is a dash on the scan; now dark.
+
+Other errors fixed on the same pages:
+- 1890-91 p023: Михайловскій 7 Apr was one cell but had been split. Merged.
+- 1890-91 pair014, 26 Dec: утро/веч is printed for all five theaters. Four had been
+  "unspecified"; they are now evening, plus the dashed (dark) mornings. Two garbage annotations
+  spilled over from Малый were removed. The title "случившийся" became "случившійся".
+- 1894-95 pair010, 8 Feb Александринскій утро: added "Медвѣдь, ш.", the cell's missing second
+  line. I checked this one myself.
+- 1893-94 pair006, 14 Oct Малый: "Горячія письма" became "Горящія письма". I checked this myself
+  too; the #111 rebuild had read it wrongly.
+- 1901-02 p028: added the missing Александринскій 24 утро (Сонъ въ лѣтнюю ночь, 1585 р. 83 к.).
+  Михайловскій 24 is now a dark утро plus веч.
+- 1901-02 p029: Новый 16 is a dash on the scan. Разрывъ-трава moved to 17 утро.
+- 1903-04 p012:
+  - added the missing Михайловскій 14 утро;
+  - split Александринскій 14 (утро Венеціанскій купецъ, веч. Горе отъ ума);
+  - added the Маріинскій 14 утро free-performance banner;
+  - "Benoîton" became "Benoiton", as printed.
+- 1903-04 p015: Новый had the same shift as the Большой. "Елки" became "У елки" twice.
+- 1903-04 p026, 16 Feb:
+  - Александринскій receipts 2083 р. 80 к. (a copy of the 17th) became 1878 р. 25 к.;
+  - the Маріинскій concert benefit prints no receipts, so they were removed;
+  - "краснаго" became "Краснаго".
+  I checked the scan myself; Михайловскій 775 р. 45 к. is confirmed unchanged.
+- 1906-07 p026, 21 Маріинскій утро: "Черевички, оп." became "Черевички" (genre was inside the title).
+
+**Promotion:**
+- Production raw files were unchanged since staging (sha1 recorded in
+  `prod_hashes_at_merge.txt`, rechecked right before copying).
+- 40 raw files were promoted. The backup is in `outputs/full_run_pre_promote_backup_2026-09-29_issue112/`.
+- The integration build equals the rebuilt production. Against control:
+  - raw.event_entry 26516 → 26520; research.event 29463 → 29467;
+  - raw.event_entry_performance unchanged at 28246; research.work 3483 → 3481 (spelling merges);
+  - quality_flags.csv identical (900 rows).
+- research.event receipts total −7117 р. 17 к., fully accounted for:
+  - −4993.20: the Большой 29 Nov copy (1903-04 p015);
+  - −1626.00: the Михайловскій 16 утро copy (p012);
+  - −205.55 and −1878.25: 1903-04 p026;
+  - +1585.83: the recovered Александринскій 24 утро (1901-02 p028).
+- `compare_productions_repertoire.py` is unchanged: exact 1705, excerpt 149, fuzzy 12,
+  other_titles 12, nearby_date 2, impossible_date 1; 34 Repertoire-side leads.
+
+**Open:**
+- The 2 "Балетный дивертиссементъ" leads (16 Jan 1902 Новый; 17 Apr 1904 Маріинскій) have not
+  been checked.
+- 1904-05 p038/p042 carry the header-derived month_text "Мартъ" (the page header prints "марта").
+- 1903-04 p012 Александринскій titles still carry the genre in the title text.
+- 1902-03 p016 (E1, the Page Corps jubilee) has its works duplicated in the annotation (an encoding quirk, not
+  a scan error).
