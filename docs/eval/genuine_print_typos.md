@@ -250,6 +250,12 @@ known_issues.md issue #119, not here.
   silently "corrected" this to the expected spelling; restored verbatim.
 - **Genuine letter substitution**: `p007` "Тихая пристань, **цьеса**."
   for "пьеса" (ц/п confusion, confirmed at zoom).
+- **Genuine letter substitution, title**: `p047`, 8 Четвергъ, Маріинскій:
+  "**Шоиеніана**" for "Шопеніана" (и/п confusion; RG read the scan
+  letterform directly). Fokine's ballet *Chopiniana*, Mariinsky,
+  premiered 1907 -- no ballet named "Шоиеніана" exists. Kept verbatim in
+  raw; corrected to "Шопеніана" in the research layer only via
+  `build_research_model.RESEARCH_TITLE_CORRECTIONS` (RG, 2026-09-30).
 - **Printing ghost / genuine leading hyphen**: `p006` "**-**Евгеній
   Онѣгинъ, оп." -- a stray leading hyphen genuinely printed before the
   title, not an extraction artifact.

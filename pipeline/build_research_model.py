@@ -115,6 +115,22 @@ RESEARCH_GENRE_RULES = [
 ]
 
 
+#: Research-layer-only work-title corrections for confirmed genuine print
+#: typos (RG, 2026-09-30, issue #119). The raw tier keeps the exact printed
+#: letterform verbatim -- e.g. "Шоиеніана" is what's actually printed on
+#: repertoire_1909-10_p047 (RG re-read the scan directly: the disputed
+#: letter is и, not ж or п) -- but research.work canonicalizes to the
+#: intended title. Each entry is (verbatim entities.work.canonical_title,
+#: corrected title, reason). The build fails if an entry matches no work,
+#: so a title that's since changed (re-canonicalized, fixed upstream) is
+#: caught rather than silently orphaned.
+RESEARCH_TITLE_CORRECTIONS = {
+    "Шоиеніана": ("Шопеніана",
+                  "genuine print typo (и for п); Fokine's ballet \"Chopiniana\", "
+                  "Mariinsky, premiered 1907 -- no ballet named \"Шоиеніана\" exists"),
+}
+
+
 #: Parent genre (RG, 2026-09-30; the name may change). A work that the yearbook
 #: prints in its ballet productions lists ("Списокъ пьесъ … Балетъ", 1890-91 to
 #: 1904-05) has parent genre "ballet", whatever its printed genre -- e.g. Кольцо
@@ -290,9 +306,16 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     con.execute("CREATE OR REPLACE TEMP TABLE parent_genre_ballet (work_id UUID, note VARCHAR)")
     con.executemany("INSERT INTO parent_genre_ballet VALUES (?, ?)",
                     [(w, PARENT_GENRE_BALLET_NOTE.format(seasons=", ".join(s))) for w, s in listed.items()])
+    con.execute("CREATE OR REPLACE TEMP TABLE title_correction (verbatim_title VARCHAR, corrected_title VARCHAR, note VARCHAR)")
+    con.executemany("INSERT INTO title_correction VALUES (?, ?, ?)",
+                    [(verbatim, corrected, note) for verbatim, (corrected, note) in RESEARCH_TITLE_CORRECTIONS.items()])
+    for verbatim in RESEARCH_TITLE_CORRECTIONS:
+        n = con.execute("SELECT count(*) FROM entities.work WHERE canonical_title = ?", [verbatim]).fetchone()[0]
+        if n == 0:
+            raise SystemExit(f"RESEARCH_TITLE_CORRECTIONS: {verbatim!r} matches no entities.work row")
     con.execute("""
         INSERT INTO research.work
-        SELECT w.work_id, w.canonical_title,
+        SELECT w.work_id, coalesce(tc.corrected_title, w.canonical_title) AS canonical_title,
                coalesce(g.genre, w.canonical_genre) AS canonical_genre,
                w.appearance_count, w.excerpt_of_work_id, w.excerpt_note,
                CASE WHEN g.genre IS NOT NULL THEN 'research_rule'
@@ -303,6 +326,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         FROM entities.work w
         LEFT JOIN genre_rule g ON regexp_matches(w.canonical_title, g.pattern)
         LEFT JOIN parent_genre_ballet pg ON pg.work_id = w.work_id
+        LEFT JOIN title_correction tc ON tc.verbatim_title = w.canonical_title
     """)
 
     con.execute("""

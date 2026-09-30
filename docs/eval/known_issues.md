@@ -20553,38 +20553,53 @@ leading hyphen before a title (`p006`); a missing genre period
 (`p040`); a French-article gender slip across two consecutive days
 (`p023`); a capitalization typo (`p027`).
 
-**Flagged for RG's judgment, not decided unilaterally by the sweep**:
-1. `p010`, 12 Понед., Большой театръ: receipts "3049 р. 78⅞ к." -- an
-   odd mark that could be a genuine fractional-kopeck glyph (this
-   season's convention already includes real halves, e.g. "62½ к.") or
-   ink bleed-through; left unchanged pending a cleaner scan or the
-   physical volume.
-2. `p047`, 8 Четвергъ, Маріинскій: "Шошеніана"->"Шопеніана" (Fokine's
-   *Chopiniana*) -- the scan letterform is genuinely smudged/ambiguous;
-   resolved via historical knowledge (no ballet named "Шошеніана"
-   exists, Chopiniana was in Mariinsky rotation in 1910), not a clean
-   visual read. Worth a second look.
-3. `p047`, 6 Вторн., Маріинскій: "Тангейзеръ, оп" carries no genre-final
-   period on the scan -- transcribed verbatim, but may just be a faint/
-   uninked period rather than a genuine omission.
-4. `p015`/`p016`: the free-student banner's exact date/session scope
-   was ambiguous where a genuinely-free (no-receipts) session sits next
-   to a paid matinee on an adjacent date with its own separate note --
-   the sweep attached the banner only to the literally-free sessions;
-   whether it should read more broadly is a judgment call.
-5. `p055`: two Михайловскій sessions carry real printed author-credit
-   text ("гр. А. К. Толстого.", "И. С. Тургенева.") with no dedicated
-   schema field -- appended into `genre` verbatim rather than dropped,
-   since the schema has no author field; flagged as worth a corpus-wide
-   grep if RG wants a standard convention for this (this is the only
-   instance found in the sweep, not chased further).
-6. `p037`'s Savina-gala genre used the full printed word "комедія"
-   where sibling list-items on the same page use "ком." -- kept as
-   printed rather than normalized; and the same page's French titles
-   keep French genre tags ("pièce", "com.") where the identical title
-   on `p031`/`p033` was normalized to Russian ("пьеса") -- each page's
-   own extraction pass evidently preserved a different convention; not
-   harmonized across pages since neither is wrong on its own page.
+**Flagged for RG's judgment -- reviewed directly against the scans,
+2026-09-30, 6 of 7 resolved cleanly**:
+1. **RESOLVED**: `p010`, 12 Понед., Большой театръ, receipts "3049 р.
+   78⅞ к." -- the identical figure "3049 р. 78 к." (no mark) appears
+   clean on the very next row (15 Четвергъ, a different opera, same
+   theater) -- Большой's typical full-house gross recurs constantly this
+   season. The odd mark is print damage, not a fractional kopeck.
+2. **RESOLVED (RG re-read the scan directly)**: `p047`, 8 Четвергъ,
+   Маріинскій -- the disputed letter is и, not ж or п. Raw kept verbatim
+   as "Шоиеніана" (confirmed genuine print typo -- see
+   `docs/eval/genuine_print_typos.md`); corrected to "Шопеніана" in the
+   research layer only, via a new `RESEARCH_TITLE_CORRECTIONS` mechanism
+   in `build_research_model.py` (mirrors `RESEARCH_GENRE_RULES`'s
+   pattern: a small curated dict, validated to match at least one
+   `entities.work` row, applied at `research.work` INSERT time -- raw/
+   entities stay verbatim, only the research-layer display title
+   changes). This ballet already has 8 correctly-spelled prior
+   appearances elsewhere in the corpus under "Шопеніана"; RG chose to
+   leave this as a 2nd, separate `research.work` row (both now correctly
+   spelled) rather than merge work_ids -- merging is a bigger, separate
+   entity-layer change and this is the only known instance of the split.
+3. **RESOLVED**: `p047`, 6 Вторн., Маріинскій, "Тангейзеръ, оп" -- zoomed
+   to the cell's bottom border; genuinely no period printed there.
+   Correct as transcribed, not faint ink.
+4. **RESOLVED**: `p015`/`p016` -- the banner genuinely covers only 14
+   Суббота's morning session (all 3 theaters, zero receipts anywhere);
+   15 Воскрес carries a *different*, separately-worded note
+   ("Спектакль для учащейся молодежи.") on a *paid* Александринскій
+   matinee (762 р. 70 к.), matching the established issue #104 pattern
+   that this exact phrase is always a distinct per-theater note, never
+   the shared banner. The sweep's conservative scoping was correct.
+5. **Confirmed structural, left as the sweep applied it**: `p055`'s
+   author-credit text really is printed as its own second line under
+   the title+genre line (not part of genre), with no dedicated schema
+   field for it. Folding it into `genre` is a defensible, verbatim-
+   preserving choice given that constraint; a dedicated author field
+   would need its own schema decision, not pursued here.
+6. **Confirmed correct as printed, not an inconsistency**: `p037`'s
+   Savina-gala item 3 ("3-е д. комедіи Мѣсяцъ въ деревнѣ.") uses a full
+   grammatical noun phrase ("act of the comedy...") where item 1 uses a
+   short abbreviated tag ("1-го д. ком. Дикарка.") -- these are
+   genuinely different printed phrasings for the same genre concept, not
+   an extraction inconsistency; normalizing item 3 to "ком." would
+   misrepresent what's actually printed. The separate French-genre-tag-
+   vs-Russian-normalized inconsistency across pages for one title is
+   real but reflects pre-existing corpus-wide practice, not something
+   this season introduced or needs to resolve alone.
 7. **Pre-existing, corpus-wide, NOT specific to this season**: a large
    fraction of `works` entries keep the genre abbreviation duplicated
    inside `work_title` (e.g. `work_title: "Жизнь за Царя, оп."`,
