@@ -20675,3 +20675,83 @@ tombstoned with all 23 reviewed candidate decisions preserved,
 research.work 3662). full_run now covers 21 seasons. HF/Cloud Run
 republish and `link_wikidata.py` deliberately NOT done this round, same
 as every recent promotion.
+
+## Issue #120: the 118-row "Гимнъ" population (issue #104 follow-up) --
+## audited and closed, 2026-10-01
+
+Resumed the open thread from issue #104's follow-up entry: "Гимнъ" (the
+imperial anthem) appears as a genuine `works` entry (genre always
+`NULL`, correctly a real performed opener, not a bug) corpus-wide, but
+only a fraction of those sessions also carry a matching `annotation`.
+The cached "118 rows" figure was 4 days stale (a new season and several
+concurrent issues had landed since) -- re-queried fresh per the
+project's standing rule: **149 raw `Гимнъ`-as-work rows, spanning only
+48 distinct (page_id, date_text, time_of_day) occasions** across 29
+pages, all in the two-page-spread era (1890-91 through 1897-98 --
+"Гимнъ" as a captured `works` entry doesn't occur in the single-page-
+era corpus at all). 48 occasions, not 149 individual things, made this
+tractable for a full scan-verified sweep rather than a shortcut.
+
+**5 parallel agents, all 29 pages, every theater performing in each
+slot checked against the scan (not just the ones already flagged)** --
+the same standard as issue #104: per-instance verification, never
+assume a pattern applies corpus-wide. Result:
+
+- **11 genuine missing-`works` fixes**: a theater's own cell visibly
+  printed "Гимнъ"/"Hymne" as the opening line but it wasn't captured at
+  all (8 on `repertoire_1890-91_pair010`, 2 on `repertoire_1897-98_
+  pair010`, 1 on `repertoire_1896-97_pair024`).
+- **~35 genuine missing-`annotation` fixes**: a page-wide banner (most
+  commonly "Безплатные [утренніе] спектакли для воспитанниковъ учебныхъ
+  заведеній.", the same free-student-performance class from issue #104)
+  spanned the row above several theaters' cells and was correctly
+  captured on some but missing on siblings in the identical slot (5 on
+  `pair020`, 5 on `1892-93_pair010`, 10 each on `1896-97_pair010` and
+  `pair012`).
+- **1 real correction to my own earlier issue #104 work, caught by a
+  sweep agent and verified directly against the scan**:
+  `repertoire_1890-91_pair010`, "14 Среда." -- all 10 sessions
+  (5 theaters x morning/evening) had `annotation: "Гимнъ."`, applied
+  during issue #104's original banner-gap sweep. Re-checked the scan:
+  the actual page-wide banner there is "Безплатные утренніе спектакли
+  для воспитанниковъ учебныхъ заведеній." (explicitly morning-only,
+  same string confirmed on 3 sibling pages this same sweep), printed
+  above the morning sub-row; "Гимнъ." is separately and correctly each
+  theater's own `works` opener in BOTH sessions. Corrected: morning
+  sessions' `annotation` -> the real banner text (5 rows); evening
+  sessions' `annotation` -> `null` (5 rows, the banner is explicitly
+  morning-only and evening has no shared note of its own). This was a
+  genuine transcription error from 4 days ago, not a new ambiguity --
+  worth remembering that even a scan-verified fix from an earlier
+  session can still be wrong and should be re-checked, not assumed
+  settled, when a later pass's evidence disagrees with it.
+- **1 small orthographic-key fix, not a content error**: Михайловскій's
+  "14 Четвергъ." session on `repertoire_1896-97_pair010` was stored
+  under `date_text: "14 Четверг."` (missing the final ъ) while its 4
+  sibling theaters used the correctly-spelled form for the identical
+  date -- normalized to match, fixing the key mismatch that had caused
+  this occasion to only surface 4 of its 5 theaters in the original
+  query.
+- **The overwhelming majority (dozens of occasions/theater-sessions
+  checked) were already correct** -- several had already been
+  independently fixed the same day by a concurrent session's own issue
+  #116 pass (confirmed byte-identical against the scan, no duplicate
+  work, no conflict). Confirmed non-bugs, matching the false-positive
+  lesson from issue #104: many theaters genuinely don't share a given
+  occasion (a touring foreign troupe with no banner that day, a theater
+  that's genuinely dark, a benefit specific to one theater only) --
+  never assumed, checked individually every time.
+
+Rebuilt the full chain directly on `outputs/full_run/imperial_
+theaters.duckdb` in place. Confirmed clean: event_entry unchanged at
+28256 (no sessions added/removed, only field edits plus 11 new
+performance rows for the missing works, event_entry_performance
+29554->29565 exactly matching the 11 work-additions), quality_flags
+902 (unchanged), dates 98.4% (unchanged, all non-verified category
+counts identical), entities.person 2900 live/1459 tombstoned (all 23
+reviewed candidate decisions preserved), research.work 3662 rows
+(unchanged -- "Гимнъ" already existed as a work entity, these are all
+new appearances of it, not a new work), research.work's "Гимнъ" row
+appearance_count 149->160 matching the 11 new raw appearances exactly.
+
+This closes the open thread flagged in issue #104's follow-up entry.

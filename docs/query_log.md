@@ -10969,3 +10969,54 @@ Same session query as for 1906-07/1907-08 (season '1908-09'); plus the raw sessi
 Result: Александринскій 223 = stats (219 receipted, 281,648.62; 4 free). Михайловскій: Moscow Art Theatre 46 (30 Mar–3 May 1909, no
 receipts, named on the scan) + 2 receipted charity benefits (3,225.75; 749.25). Маріинскій: charity operetta + "Черевички, эп,"
 (genuine print misprint of "оп."). 273 = 223 + 46 + 2 + 1 + 1.
+
+## 2026-10-01 — Issue #120: re-querying the stale "118-row Гимнъ" figure fresh
+
+Per the mandatory rule (never trust a cached number from a prior turn),
+re-ran the population query from issue #104's follow-up before acting
+on it -- 4 days and a full season promotion had passed since it was
+cached.
+
+```sql
+select genre, count(*) from raw.event_entry_performance
+where performance_title ilike 'Гимнъ%' group by genre
+```
+Result: `(NULL, 149)` -- up from the cached 145 (all genre-null,
+confirming it's still a genuine performed opener corpus-wide, not a bug
+itself).
+
+```sql
+select case when ee.annotation ilike '%Гимнъ%' or ee.annotation ilike '%Hymne%' then 'has_gimn_annotation'
+            when ee.annotation is null then 'annotation_null' else 'other_annotation' end as bucket, count(*)
+from raw.event_entry_performance ep join raw.event_entry ee on ep.event_id = ee.event_id
+where ep.performance_title ilike 'Гимнъ%' group by bucket
+```
+Result: `has_gimn_annotation` 16 (unchanged), `annotation_null` 105
+(down from 118 -- some already fixed by concurrent work since), a
+previously-unreported `other_annotation` bucket of 28 (sessions with
+Гимнъ plus some unrelated annotation, e.g. a personal benefit --
+correctly excluded from the sweep's scope, not gaps).
+
+```sql
+select ee.page_id, ee.date_text, ee.time_of_day, count(distinct ee.theater), ee.annotation
+from raw.event_entry_performance ep join raw.event_entry ee on ep.event_id = ee.event_id
+where ep.performance_title ilike 'Гимнъ%'
+group by ee.page_id, ee.date_text, ee.time_of_day
+```
+Result: 48 distinct occasions (not 149 individual rows to check), all
+within the 1890-91-1897-98 two-page-spread era, spanning 29 distinct
+pages -- this reframing (occasions, not raw rows) is what made a full
+scan-verified sweep tractable rather than a shortcut. Dispatched 5
+parallel agents, one per ~6-page batch, each checking every theater
+performing in every occasion's slot (not only the ones the query
+flagged) directly against the scan. Full results and the 1
+self-correction found (a wrong annotation from issue #104's own
+original sweep) are in known_issues.md issue #120.
+
+Post-fix verification:
+```sql
+select count(*) from raw.event_entry_performance where performance_title ilike 'Гимнъ%'
+```
+Result: 160 (149 + 11 genuine missing-work additions found by the
+sweep), matching `research.work`'s "Гимнъ" appearance_count exactly
+after rebuild.
