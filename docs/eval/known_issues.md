@@ -20755,3 +20755,60 @@ new appearances of it, not a new work), research.work's "Гимнъ" row
 appearance_count 149->160 matching the 11 new raw appearances exactly.
 
 This closes the open thread flagged in issue #104's follow-up entry.
+
+## Issue #121: 1909-10, 46 fabricated Cyrillic genres on Latin-script
+## (mostly French) titles -- relayed from the Ballet-productions
+## session via RG, fixed 2026-10-01
+
+Flagged by the concurrent Ballet-productions session while running
+`pipeline/compare_season_stats.py` against the freshly-promoted 1909-10
+season: 46 `raw.event_entry_performance` rows with a Latin-script title
+and a Cyrillic genre ("ком." x32, "пьеса" x12, "вауд." x1, "д." x1),
+concentrated at Михайловскій театръ (the French-language house) across
+6 pages (p013, p023, p025, p027, p031, p033), plus 1 at Маріинскій (a
+French item inside an otherwise-Russian numbered benefit gala on
+`p033`, "6 Суббота."). Their scan-check (`p023`, 15 Вторн.) found the
+print reads "La rampe, pièce nouv." / "Les vacances d'Antoinette, com.
+nouv." with no Cyrillic genre anywhere -- the French genre abbreviation
+is already embedded in the title text itself, and the Cyrillic value
+looks like a translation the extraction added on top, not something
+printed. They explicitly asked that each be checked individually rather
+than bulk-cleared, since other seasons have a handful of similar-looking
+rows that turn out genuine (e.g. a French-titled work performed at a
+Russian-language theater).
+
+**Directly scan-verified all 6 pages myself** (28 distinct title/page
+groups covering the 46 rows) before fixing anything -- confirmed 100%
+consistent, zero exceptions: every French/Latin title at Михайловскій
+this season already carries its own French genre suffix in the title
+(", com.", ", pièce.", ", vaud. nouv.") with no separate Cyrillic genre
+printed anywhere near it, and the one Маріинскій instance ("Le festival
+des noces", item 6 of a flood-relief charity gala) prints with no genre
+marker at all. This differs from the "genuine" cross-theater cases the
+concurrent session flagged (a French title at a *Russian-language*
+theater, like "Viola tricolor, ком." at Малый) -- here every instance is
+specifically at the one house that performs in French, where a French
+genre suffix already does the job the Cyrillic value was redundantly
+(and wrongly) duplicating.
+
+Nulled `genre` on all 46 rows (45 at Михайловскій matched by theater +
+date_text + time_of_day + exact title/genre; 1 at Маріинскій matched
+separately once the theater-filtered pass reported it unmatched --
+correctly caught rather than silently skipped). Each affected session
+(30 total) carries a `_fix_note`.
+
+Rebuilt the full chain. quality_flags/dates/entities/Musicians-Roster
+all unchanged. **Side effect, a genuine improvement**: `entities.
+work_genre_candidate` dropped from 323/773 to 321/768 (2 groups, 5
+rows) -- some of these titles had been artificially split into multiple
+genre-candidate entries purely because the fabricated Cyrillic genre
+created a false disagreement against the title's other (correctly
+null or French-tagged) appearances; removing the fabrication let them
+correctly re-merge. `research.work` 3662->3659 for the same reason.
+
+This is the second finding from `compare_season_stats.py`'s
+cross-check of the newly-promoted season against itself -- worth
+remembering that a season-stats comparison tool built for an unrelated
+purpose (issue #101/#116) is proving to be a useful independent check
+on fresh extraction quality, catching things the Repertoire-side sweep
+alone didn't.

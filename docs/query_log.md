@@ -11032,3 +11032,41 @@ where regexp_matches(p.performance_title, '^[\W\d]*[A-Za-zÀ-ÿ]') and regexp_ma
 Result: 1909-10 has 46 entries on 6 pages ("ком." 32, "пьеса" 12); other seasons 1–15. The p023 15 Dec 1909 scan shows no Cyrillic genre, so
 these were added by the transcription. Recount with Latin titles as foreign: the Art Theatre 35 = stats 35 exactly; French 107/107,172.60 vs
 100/107,243.10; ballet 50 vs 51; German 22 vs 25; Russian drama 269 vs 258.
+
+## 2026-10-01 — Issue #121: 1909-10 fabricated Cyrillic genres on Latin-script titles
+
+Relayed by the concurrent Ballet-productions session (their own query,
+reproduced here since it's what identified the population):
+```sql
+select a.page_id, count(*)
+from raw.event_entry_performance p join analysis.event_entry a using (event_id)
+where a.season = '1909-10'
+  and regexp_matches(p.performance_title, '^[\W\d]*[A-Za-zÀ-ÿ]')
+  and regexp_matches(coalesce(p.genre, ''), '[а-яё]')
+group by 1
+```
+Result: 46 rows across 6 pages (p013 x1, p023 x10, p025 x8, p027 x10,
+p031 x10, p033 x7).
+
+Full detail pulled before fixing:
+```sql
+select a.page_id, a.date_text, a.time_of_day, a.theater, p.performance_title, p.genre
+from raw.event_entry_performance p join analysis.event_entry a using (event_id)
+where a.season = '1909-10'
+  and regexp_matches(p.performance_title, '^[\W\d]*[A-Za-zÀ-ÿ]')
+  and regexp_matches(coalesce(p.genre, ''), '[а-яё]')
+order by a.page_id, a.date_text
+```
+Result: 46 rows, collapsing to 28 distinct (page_id, title, genre)
+groups -- all 46 at Михайловскій except 1 at Маріинскій. Personally
+scan-verified all 6 pages (not delegated) before fixing -- 100%
+consistent, no exceptions found. See known_issues.md issue #121.
+
+Post-fix verification:
+```sql
+select count(*) from raw.event_entry_performance p join analysis.event_entry a using (event_id)
+where a.season = '1909-10'
+  and regexp_matches(p.performance_title, '^[\W\d]*[A-Za-zÀ-ÿ]')
+  and regexp_matches(coalesce(p.genre, ''), '[а-яё]')
+```
+Result: 0.
