@@ -10787,3 +10787,19 @@ Result: yes. 1892-93 Moscow list #1 (p. 38): "Балъ-маскарадъ въ �
 Гейтенъ 1-я benefit, 1-е д. оп. Фенелла / 2-е д. бал. Корсаръ / 2-е д. и 1-я карт. 3-го д. бал. Дочь фараона /
 "Балъ-маскарадъ въ Венеціи, див.". The Verdi opera "Балъ-маскарадъ, оп." is a separate work and is not given the ballet
 parent genre.
+
+## 2026-09-30 — Three-way ballet count per season-city: stats page, ballet list, Repertoire (parent_genre)
+
+```sql
+select e.season, e.city, p.date, p.note from raw.production_entry_performance p join raw.production_entry e using (production_entry_id)
+where not p.outside_total and p.date is not null;   -- list: distinct dates, "2 раза" counted twice
+select e.season, e.city, count(distinct e.event_id) from research.event e join research.performance p using (event_id)
+join research.work w using (work_id) where e.event_status = 'performed' and w.parent_genre = 'ballet' group by all;
+-- per mismatching season-city: Repertoire parent-ballet sessions per date (theater, time_of_day, titles) vs list dates
+```
+
+Result: all three agree 11/28, two agree 14, all differ 3. Differences mapped to dates: a matinée/evening counting
+artifact (1893-94 MSK+SP, 1898-99 MSK ×5, 1899-00 MSK ×5); recorded disagreements A2–A12, B1, D3–D8, E1, E2, E4;
+new leads 1899-01-23 Маріинскій (Балъ изъ бал. Пахита), 1901-12-12 and 1901-12-19 Новый (Коппелія), 1902-02-21
+Большой утро (Жизель / Корсаръ). Added the alias Ученики Дюпрэ → Les élèves de Dupré; research.work parent_genre ballet
+184 → 185.

@@ -140,6 +140,7 @@ BALLET_LIST_TITLE_ALIASES = {
     "Граціелла": ["Граціела"],                                          # C7
     "Наяда и рыбакъ": ["Паяда и рыбакъ"],                               # awaits physical check
     "Баядерка": ["Ваядерка"],                                           # awaits physical check
+    "Ученики Дюпрэ": ["Les élèves de Dupré"],                          # same work, Russian vs French title (1900-01 SP)
 }
 
 

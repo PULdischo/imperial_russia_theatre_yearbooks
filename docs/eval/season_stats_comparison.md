@@ -86,3 +86,34 @@ matches, because double bills are counted per work.
 for this work. The works the lists call "Балетъ-феерія" (Спящая красавица, Щелкунчикъ, Синяя борода) are counted under
 "Балетныхъ". So in the stats, "Феерій" is not the ballet-féerie. Whether Кольцо любви itself is a ballet is RG's
 question: the yearbook calls it a "волшебная сказка" but prints it in the ballet list.
+
+### Three-way ballet count: stats page, ballet list, Repertoire (2026-09-30)
+
+- **Stats:** "Балетныхъ" + mixed lines that include ballet + "Феерій" (Кольцо любви).
+- **List:** distinct dates, a date counted twice when its note says "2 раза".
+- **Repertoire:** performed sessions that include a work with parent genre ballet (#118).
+
+Result over 28 season-cities: all three agree in 11; exactly two agree in 14; all three differ in 3. Mapping every
+list/Repertoire difference to its dates:
+
+- **Counting artifact (mine):** two different ballets on one date, as a matinée and an evening, share a single list
+  date. This explains 1893-94 Moscow and SP (29 Dec 1893, 20 Feb 1894), all 5 of 1898-99 Moscow, and all 5 of 1899-00
+  Moscow. Corrected, 1893-94 Moscow, 1893-94 SP and 1898-99 Moscow agree in all three sources.
+- **Already on the disagreements list:**
+  - 1895-96 Moscow: A2.
+  - 1897-98 SP: A3–A6.
+  - 1898-99 SP: A7.
+  - 1900-01 SP: D3, plus "Ученики Дюпрэ" = "Les élèves de Dupré", now aliased for the parent genre.
+  - 1901-02 Moscow: A9.
+  - 1902-03 Moscow: D4. 1902-03 SP: E1.
+  - 1903-04 Moscow: D5. 1903-04 SP: D6–D8, E2.
+  - 1904-05 SP: A12, B1, E4.
+- **Observed:** in 1902-03 and 1903-04 the stats page equals the list, and both leave out the same charity and jubilee
+  bills (D4–D8, E1, E2) that the Repertoire prints. This is a pattern, not a stated rule.
+- **New leads (not yet scan-checked):**
+  - 23 Jan 1899, Маріинскій: "Балъ изъ бал. Пахита" (1898-99 SP).
+  - 12 and 19 Dec 1901, Новый: "Коппелія" (1901-02 Moscow).
+  - 21 Feb 1902, Большой утро: "Жизель / 1-е, 2-е и 3-е д. бал. Корсаръ" (1901-02 Moscow).
+- **Stats page differs from list = Repertoire:** 1894-95 SP (+2), 1895-96 SP (−1), 1899-00 Moscow (−2), 1904-05
+  Moscow (−2), 1903-04 Moscow (−2 vs list). These are probably questions of how the stats page classed mixed bills.
+  Not yet examined.
