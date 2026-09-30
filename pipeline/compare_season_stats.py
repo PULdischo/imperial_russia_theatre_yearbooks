@@ -179,7 +179,10 @@ def classify_event(fams):
     if not core:
         if "concert" in fams:
             return "concert"
-        return "drama" if "unmarked" in fams else "no_works"
+        # Only genre-less works (e.g. "Сказаніе о невидимомъ градѣ Китежѣ", an opera printed
+        # without "оп." in 1906-07): the family can't be read from the page, so it is
+        # "unknown", not drama (changed 2026-09-30; it had inflated the drama counts).
+        return "unknown" if "unmarked" in fams else "no_works"
     if len(core) == 1:
         return next(iter(core))
     return "mixed:" + "+".join(sorted(core))

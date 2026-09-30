@@ -229,3 +229,31 @@ disagreements are allowed for. No ballet performance the yearbook's statistics c
 Many seasons match performance for performance, often to the kopeck in receipts. Open items affect receipts or which
 receipt-less performance the stats page omitted, never a missing ballet performance. 1890-91 (no stats page) and 1905-06
 (no stats page found) aren't covered by this check.
+
+## Petersburg drama excess, 1906-07 (2026-09-30): resolved except a small Александринскій receipts residual
+
+Stats: Russian drama by theater, Александринскій 197 (247,576.17 р.), Михайловскій 25 (10,353.15 р.), Маріинскій 1
+(7,262.50 р.). Opera 159.
+- **Михайловскій:** the Repertoire's 24 receipted Russian-drama sessions total 10,353.15 р., exactly the stats figure.
+  The unreceipted extras are:
+  - **the Moscow Art Theatre tour, 24 performances, 23 Apr – 17 May 1907.** The 23 Apr cell is headed "Спектакли
+    Московскаго Художественнаго Театра"; the plays are Горе отъ ума, Три сестры, Брандъ, Драма жизни and Дядя Ваня
+    (9 May morning, "На памятникъ А. П. Чехову");
+  - a charity bill on 14 Feb and one morning performance on 6 Dec.
+  The stats count 25 = the 24 receipted + one of those two. The 1906-07 stats page has no line for the Art Theatre (the
+  1909-10 page has one: "Московскаго художественнаго театра 35").
+- **Маріинскій:** stats 1 = the Стрѣльская 50-year benefit, 7,262.50 р., exactly. The Repertoire's extras are two charity
+  operetta evenings with no receipts (Веселая вдова, 16 Dec; Боккаччіо, 23 Apr), and 4 performances of "Сказаніе о
+  невидимомъ градѣ Китежѣ", printed without a genre. The classifier had counted them as drama; they are Rimsky-Korsakov's
+  opera, and with them the opera count is 155 + 4 = 159 = stats.
+- **Александринскій:** 197 = 197 after the fix below. The receipts are 2,307.23 р. higher than the stats, with no single
+  session or pair matching; left with the paused receipts leads. Also noticed: the 26 Nov 1906 evening, printed
+  "Безплатный спектакль для георгіевскихъ кавалеровъ", carries receipts of 600.75 р. That is odd for a free performance
+  and worth a scan look sometime.
+
+**Classifier change:** a session whose works all lack a genre is now "unknown", not drama. It had inflated drama with
+Китежъ and three "Драма жизни" cells. Level 2 now: 59/254 family rows exact.
+
+**Pattern for 1907-09 (to test next):** the excess is unreceipted runs by visiting companies (the Art Theatre in 1906-07;
+likely the spring 1908 Михайловскій run too, but that is not assumed) and charity evenings. The stats pages count neither
+as Russian drama.

@@ -10936,3 +10936,19 @@ current production — Roster untouched since 1909-10 is Repertoire-only;
 `entities.work_genre_candidate`: 323 groups unchanged, +74 rows from
 new appearances of already-ambiguous titles; `not_captured` gap count:
 2976, identical).
+
+## 2026-09-30 — 1906-07 SP drama excess, by theater
+
+```sql
+select e.event_id, e.date, t.canonical_name, a.time_of_day, left(a.annotation, 75), e.receipts_total_kopecks,
+       list(p.verbatim_title order by p.performance_order), list(coalesce(w.canonical_genre, p.verbatim_genre) order by p.performance_order)
+from research.event e join research.theater t using (theater_id) join analysis.event_entry a using (event_id)
+left join research.performance p using (event_id) left join research.work w using (work_id)
+where e.season = '1906-07' and e.city = 'SP' and e.event_status = 'performed' group by all order by 2
+-- classified with compare_season_stats; then Александринскій singles and pairs tested against 2,307.23
+```
+
+Result: Михайловскій receipted drama 24 = 10,353.15 (stats exact); extras: Moscow Art Theatre 24 sessions (23 Apr–17 May 1907), 14 Feb
+charity, 6 Dec morning. Маріинскій: Стрѣльская benefit 7,262.50 (stats exact); extras: 2 charity operettas + 4 Китежъ (genre-less
+opera). Александринскій 198 → 197 after the classifier fix; receipts +2,307.23, no single/pair match. After the fix: 1906-07 SP
+drama Alex 197/197, opera 155 + 4 unknown (Китежъ). 1909-10 is now in research.event (added by the other chat); SP drama +60.
