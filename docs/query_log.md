@@ -10671,3 +10671,30 @@ Result: 1,847 performed events include a ballet work; 122 also include another a
 Маріинскій 26, Михайловскій 2); ballet + drama 46 (spread over all six theaters); ballet + drama + opera 7; small groups
 with concerts and French plays. Known classifier limits: "ком.-бал." counts as ballet (Батюшкина дочка, Мѣщанинъ во
 дворянствѣ), "Grand pas изъ балета Корсаръ" is misread as French, and 85 events have no works at all.
+
+## 2026-09-30 — Are comedy-ballets in the ballet productions lists? (RG side question)
+
+```sql
+select season, city, list_number, title, left(description_text, 90) from raw.production_entry
+where regexp_matches(lower(concat_ws(' ', title, description_text)), 'батюшкин|мѣщанинъ|комеді[яи][- ]балет|ком\.-бал|съ балетомъ|comédie-ballet');
+select e.season, t.canonical_name, p.verbatim_title, p.verbatim_genre, count(*) from research.performance p join research.event e using (event_id)
+join research.theater t using (theater_id) where e.event_status = 'performed' and regexp_matches(lower(p.verbatim_genre), 'ком.*бал') group by all order by 1
+```
+
+Result: 0 list entries. Repertoire "ком.-бал.": Батюшкина дочка at the Александринскій 3+3+1 (1893-94, 1894-95, 1895-96);
+Мѣщанинъ во дворянствѣ Новый 4 + Большой 1 (1899-00).
+
+## 2026-09-30 — Stats receipt leads: single-digit-slip candidates (pipeline/season_stats_receipt_candidates.py)
+
+Same event join as the script's EVENT_SQL (research.event + analysis.event_entry + performance/work), classified with
+compare_season_stats.py. For each of the 64 leads (count exact, receipts differ), every event whose receipts would account
+for the difference by one digit change or one adjacent swap.
+
+Result: only 8 of 64 leads have any candidate, and all but one have many (e.g. Δ30.00: 81 candidates), so the slip
+hypothesis explains little. Most differences are hundreds to thousands of rubles.
+
+## 2026-09-30 — Stats receipt leads: sessions without receipts and charity receipts per lead
+
+Result: most positive leads (stats higher) have 1–7 performed sessions with NULL receipts in the category (none with
+unparsed receipts_text except 2). This gives a worklist of 79 receipt-less sessions on 44 pages
+(outputs/recovery_2026-09-30_stats_receipts/worklist.csv), sent for scan checks.
