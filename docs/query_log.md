@@ -10773,3 +10773,17 @@ Result: first run (exact/excerpt only) 175 works; "Раймонда, оп." (190
 Кольцо любви "феерія." correctly included. 8 ballet works were missed only by spelling. After the curated aliases:
 184 works, 2,267 performances. The ballet-genre works left NULL are exactly Балетный дивертиссементъ, the two
 comedy-ballets, Сонъ въ лѣтнюю ночь and Мнимыя дріады (none is in a list).
+
+## 2026-09-30 — Is "Балъ-маскарадъ въ Венеціи" (printed "див.") in the ballet productions list?
+
+```sql
+select e.season, e.city, e.list_number, e.printed_page_number, e.title, e.description_text, e.performed_text, e.total_text
+from raw.production_entry e where e.title ilike 'Балъ-маскарад%';
+-- plus every Repertoire event with a work titled 'Балъ-маскарад%', and research.work rows with that title and their parent_genre
+```
+
+Result: yes. 1892-93 Moscow list #1 (p. 38): "Балъ-маскарадъ въ Венеціи. Большой дивертиссементъ, составленъ Н. Ѳ.
+Манохинымъ. Исполненъ: 1893 г.—февраля 5. Всего—1 разъ." Repertoire 5 Feb 1893 Большой (1892-93 pair016, p. 17): the
+Гейтенъ 1-я benefit, 1-е д. оп. Фенелла / 2-е д. бал. Корсаръ / 2-е д. и 1-я карт. 3-го д. бал. Дочь фараона /
+"Балъ-маскарадъ въ Венеціи, див.". The Verdi opera "Балъ-маскарадъ, оп." is a separate work and is not given the ballet
+parent genre.
