@@ -10661,3 +10661,13 @@ Result: 299 such bills (180 ballet, 119 opera), and the "drama" item was usually
 by title marker or as neutral: 78 remain (48 ballet, 30 opera), mostly still misreads (the Псковитянка prologue printed
 "Боярыня Вѣра Шелога, прологъ, др.", "Мѣщанинъ во дворянствѣ, ком.-бал.", "Соломенная шляпка, оп.-вод."). Re-test with the
 script's own functions: 57 exact / |Δ| 710 without the convention, 55 / 662 with it. The convention was dropped.
+
+## 2026-09-30 — First look: events where ballet appears with another art form (RG's research interest)
+
+LEVEL2_SQL (pipeline/compare_season_stats.py) ordered by event_id, performance_order; works classified with classify_work;
+events containing a ballet-family work, grouped by the other families present (neutral genre-less items ignored).
+
+Result: 1,847 performed events include a ballet work; 122 also include another art form. Ballet + opera 60 (Большой 32,
+Маріинскій 26, Михайловскій 2); ballet + drama 46 (spread over all six theaters); ballet + drama + opera 7; small groups
+with concerts and French plays. Known classifier limits: "ком.-бал." counts as ballet (Батюшкина дочка, Мѣщанинъ во
+дворянствѣ), "Grand pas изъ балета Корсаръ" is misread as French, and 85 events have no works at all.
