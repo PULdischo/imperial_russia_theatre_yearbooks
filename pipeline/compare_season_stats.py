@@ -47,6 +47,19 @@ Stats lines map to families by their category text (STATS_FAMILY). Lines naming
 a single guest company (Режанъ, Тина ди Лоренцо, Лессингъ-театръ), the drama-school
 performance and the music-literary evenings go to "other".
 
+Level 3 -- ballet performances per season-city, three ways (2026-09-30):
+  - stats page: "Балетныхъ" + the "Смѣшанныхъ" lines whose qualifier includes
+    балет + "Феерій" (only Кольцо любви, Moscow 1892-94);
+  - ballet productions list: performances implied by its dates. Per date, the
+    larger of (a) what the list states itself -- the same ballet printed twice on
+    one date (утро/вечеръ rows) or a "2 раза" note -- and (b) the number of
+    separate Repertoire sessions that day playing one of that date's listed
+    ballets, capped at the number of list rows for the date. (b) only decides
+    whether entries sharing a date are one double bill or a matinée plus an
+    evening; the cap means it can never add a performance the list doesn't print;
+  - Repertoire: performed sessions that include a work with parent_genre ballet.
+  Matching of list dates to Repertoire sessions is build_research_model.ballet_list_matches.
+
 Usage:
     uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb \
         --out-dir outputs/season_stats_compare
@@ -237,6 +250,72 @@ def level2(con, out_dir):
     return rows
 
 
+def ballet_counts(con, out_dir):
+    from build_research_model import ballet_list_matches
+    from collections import defaultdict
+    rows_by_date = defaultdict(list)
+    for season, city, d, title, note in con.execute("""
+        SELECT e.season, e.city, strftime(p.date, '%Y-%m-%d'), e.title, p.note
+        FROM raw.production_entry_performance p JOIN raw.production_entry e USING (production_entry_id)
+        WHERE p.date IS NOT NULL AND NOT p.outside_total""").fetchall():
+        rows_by_date[(season, city, d)].append((title, 2 if note and "2 раза" in note else 1))
+    matched = defaultdict(set)
+    for season, city, d, _title, _note, eid, _wid, _p in ballet_list_matches(con):
+        matched[(season, city, d)].add(eid)
+    list_perf = {}
+    for k, rows in rows_by_date.items():
+        per_title = defaultdict(int)
+        for title, n in rows:
+            per_title[title] += n
+        explicit = max(per_title.values())
+        n_rows = sum(n for _, n in rows)
+        list_perf[k] = max(explicit, min(n_rows, len(matched.get(k, ()))))
+    rep_by_date = defaultdict(list)
+    for season, city, d, th, tod, titles in con.execute("""
+        SELECT e.season, e.city, e.date, t.canonical_name, a.time_of_day, string_agg(DISTINCT p.verbatim_title, ' / ')
+        FROM research.event e JOIN research.theater t USING (theater_id)
+        JOIN analysis.event_entry a USING (event_id) JOIN research.performance p USING (event_id)
+        JOIN research.work w USING (work_id)
+        WHERE e.event_status = 'performed' AND w.parent_genre = 'ballet' GROUP BY ALL""").fetchall():
+        rep_by_date[(season, city, d)].append(f"{th} {tod}: {titles}")
+    st = defaultdict(lambda: [0, 0, 0])
+    for r in csv.DictReader(open(STATS_DIR / "lines.csv", encoding="utf-8")):
+        if r["line_kind"] == "subtotal":
+            continue
+        k = (r["season"], CITY[r["city"]])
+        if r["category"] == "Балетныхъ":
+            st[k][0] += int(r["count"])
+        elif r["category"] == "Смѣшанныхъ" and "балет" in r["qualifier_verbatim"]:
+            st[k][1] += int(r["count"])
+        elif r["category"] == "Феерій":
+            st[k][2] += int(r["count"])
+    seasons = sorted({(k[0], k[1]) for k in list_perf} & set(st))
+    out, detail = [], []
+    for season, city in seasons:
+        L = sum(v for k, v in list_perf.items() if k[:2] == (season, city))
+        R = sum(len(v) for k, v in rep_by_date.items() if k[:2] == (season, city))
+        S = sum(st[(season, city)])
+        verdict = ("all agree" if S == L == R else "stats = list" if S == L else "list = Repertoire" if L == R
+                   else "stats = Repertoire" if S == R else "all differ")
+        out.append({"season": season, "city": city, "stats_ballet": st[(season, city)][0],
+                    "stats_mixed_with_ballet": st[(season, city)][1], "stats_feerie": st[(season, city)][2],
+                    "stats_total": S, "list_performances": L, "rep_sessions": R, "verdict": verdict})
+        for k in sorted({k for k in list(list_perf) + list(rep_by_date) if k[:2] == (season, city)}):
+            lp, rp = list_perf.get(k, 0), len(rep_by_date.get(k, []))
+            if lp != rp:
+                detail.append({"season": season, "city": city, "date": k[2], "list_performances": lp,
+                               "rep_sessions": rp, "list_titles": " / ".join(t for t, _ in rows_by_date.get(k, [])),
+                               "rep_sessions_detail": " | ".join(rep_by_date.get(k, []))})
+    for name, rows in (("ballet_counts.csv", out), ("ballet_count_dates.csv", detail)):
+        with open(out_dir / name, "w", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, fieldnames=list(rows[0]))
+            w.writeheader(); w.writerows(rows)
+    from collections import Counter
+    print(f"\nlevel 3 (ballet counts): {len(out)} season-cities: {dict(Counter(r['verdict'] for r in out))}; "
+          f"{len(detail)} dates where list and Repertoire differ")
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--db", required=True)
@@ -280,6 +359,7 @@ def main():
     print(f"\n{len(rows)} city-seasons; exact count match: sessions {exact}, days {exact_d}")
     print(f"wrote {out}")
     level2(con, a.out_dir)
+    ballet_counts(con, a.out_dir)
 
 
 if __name__ == "__main__":

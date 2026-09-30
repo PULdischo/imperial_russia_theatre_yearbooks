@@ -144,16 +144,23 @@ BALLET_LIST_TITLE_ALIASES = {
 }
 
 
-def ballet_list_work_ids(con: duckdb.DuckDBPyConnection) -> dict:
-    """work_id -> sorted list of list seasons, for works matched to a ballet-list date."""
+def ballet_list_matches(con: duckdb.DuckDBPyConnection) -> list:
+    """Every (list date, Repertoire performance) pair that names the same ballet.
+
+    Returns tuples (season, city, date 'YYYY-MM-DD', list_title, list_note, event_id,
+    work_id, parent_work_id_if_matched_via_parent). Matching: same city and date, and
+    the title equal after norm() (or a curated alias), or the work is an excerpt of
+    it. Shared by ballet_list_work_ids (parent genre) and
+    pipeline/compare_season_stats.py (ballet counts).
+    """
     from compare_productions_repertoire import norm, contains
     lst = con.execute("""
-        SELECT e.season, e.city, e.title, strftime(p.date, '%Y-%m-%d')
+        SELECT e.season, e.city, e.title, strftime(p.date, '%Y-%m-%d'), p.note
         FROM raw.production_entry_performance p JOIN raw.production_entry e USING (production_entry_id)
         WHERE p.date IS NOT NULL
     """).fetchall()
     rep = con.execute("""
-        SELECT ae.city, coalesce(dc.corrected_date_undate, ae.date_undate) AS d,
+        SELECT ae.city, coalesce(dc.corrected_date_undate, ae.date_undate) AS d, eep.event_id,
                wl.work_id, eep.performance_title, w.canonical_title, w.excerpt_of_work_id, pw.canonical_title
         FROM raw.event_entry_performance eep
         JOIN entities.work_link wl ON wl.raw_performance_id = eep.performance_id
@@ -164,17 +171,26 @@ def ballet_list_work_ids(con: duckdb.DuckDBPyConnection) -> dict:
         WHERE ae.event_status = 'performed'
     """).fetchall()
     by_day = {}
-    for city, d, wid, vt, ct, parent_id, pt in rep:
-        by_day.setdefault((city, d), []).append((wid, {norm(vt), norm(ct)} - {""}, norm(pt), parent_id))
+    for city, d, eid, wid, vt, ct, parent_id, pt in rep:
+        by_day.setdefault((city, d), []).append((eid, wid, {norm(vt), norm(ct)} - {""}, norm(pt), parent_id))
     aliases = {norm(k): {norm(v) for v in vs} for k, vs in BALLET_LIST_TITLE_ALIASES.items()}
-    out = {}
-    for season, city, title, d in lst:
+    out = []
+    for season, city, title, d, note in lst:
         lkeys = {norm(title)} | aliases.get(norm(title), set())
-        for wid, keys, pkey, parent_id in by_day.get((city, d), []):
+        for eid, wid, keys, pkey, parent_id in by_day.get((city, d), []):
             if (lkeys & keys) or (pkey and pkey in lkeys) or any(contains(k, lk) for k in keys for lk in lkeys):
-                out.setdefault(wid, set()).add(season)
-                if parent_id is not None and pkey in lkeys:
-                    out.setdefault(parent_id, set()).add(season)
+                out.append((season, city, d, title, note, eid, wid,
+                            parent_id if (parent_id is not None and pkey in lkeys) else None))
+    return out
+
+
+def ballet_list_work_ids(con: duckdb.DuckDBPyConnection) -> dict:
+    """work_id -> sorted list of list seasons, for works matched to a ballet-list date."""
+    out = {}
+    for season, _city, _d, _title, _note, _eid, wid, parent_id in ballet_list_matches(con):
+        out.setdefault(wid, set()).add(season)
+        if parent_id is not None:
+            out.setdefault(parent_id, set()).add(season)
     return {w: sorted(s) for w, s in out.items()}
 
 
