@@ -10574,3 +10574,51 @@ Result: Александринскій Russian 193 (249,583.89) / Latin 38 (73,0
 Малый 217 (218,125.13); Маріинскій 178 (538,135.23) / 1 (3,711.00); Михайловскій 72 (78,846.09) / 145 (179,917.07).
 Against the stats page: Михайловскій French 145 = 145; Михайловскій drama + opera + ballet 55 + 14 + 3 = 72 = 72;
 Большой Italian opera 25 = 25; Малый 217 = 217; German 34 vs 38 Latin at the Александринскій.
+
+## 2026-09-30 — Season stats vs Repertoire, level 1: city totals per season (pipeline/compare_season_stats.py)
+
+```sql
+with ev as (
+  select e.season, e.city, e.event_id, e.theater_id, coalesce(e.date, e.event_id) as day_key,
+         e.receipts_total_kopecks as k,
+         coalesce(regexp_matches(lower(a.annotation), 'въ пользу'), false) as charity_text
+  from research.event e left join analysis.event_entry a using (event_id)
+  where e.event_status = 'performed')
+select season, city, count(*) sessions, count(distinct (theater_id, day_key)) days, count(k) sessions_with_receipts,
+       coalesce(sum(k), 0), coalesce(sum(k) filter (where charity_text), 0), count(*) filter (where charity_text)
+from ev group by all
+```
+
+Result (34 city-seasons vs docs/season_stats/lines.csv, subtotals excluded): counting sessions (утро/веч. separately)
+is within −3..+11 of the stats count in 1891-92 to 1900-01; counting distinct theater-days is short by 19–63 in every
+season, so the yearbook counted morning and evening performances separately. From 1901-02 the Repertoire exceeds the
+stats (SP +33 1901-02, +34 1906-07, +70 1907-08, +55 1908-09; Moscow +38 1907-08). Counting only sessions with receipts
+doesn't match either (mostly −5..−30). Exact count matches: 2 (1892-93 and 1899-00 Moscow). 1908-09 Moscow receipts
+differ by +10,775.35 while charity-text sessions carry 10,775.55.
+
+## 2026-09-30 — Later-season excess: performed sessions per theater, with receipts and mornings
+
+```sql
+select e.season, e.city, t.canonical_name, count(*), count(e.receipts_total_kopecks),
+       count(*) filter (where a.time_of_day = 'morning'),
+       count(*) filter (where e.receipts_total_kopecks is null and a.time_of_day = 'morning')
+from research.event e join research.theater t using (theater_id) join analysis.event_entry a using (event_id)
+where e.event_status = 'performed' and e.season in ('1900-01','1901-02','1907-08','1908-09') group by all order by 1, 2, 3
+```
+
+Result: 1907-08 Михайловскій 173 sessions, 124 with receipts (stats French 103 + German 24 = 127). 1908-09 Михайловскій
+178 / 127 (stats 103 + 25 = 128).
+
+## 2026-09-30 — 1907-08 Михайловскій sessions without receipts
+
+```sql
+select a.page_id, a.date_text, a.time_of_day, a.receipts_text, left(coalesce(a.annotation, ''), 70), string_agg(p.performance_title, ' / ')
+from research.event e join research.theater t using (theater_id) join analysis.event_entry a using (event_id)
+left join raw.event_entry_performance p using (event_id)
+where e.event_status = 'performed' and e.season = '1907-08' and t.canonical_name = 'Михайловскій' and e.receipts_total_kopecks is null
+group by all order by 1, 2
+```
+
+Result: 49 sessions. 12 are charity or free student performances; about 37 (p042–p048, 14 Apr to 13 May 1908) are a
+continuous run of Брандъ, Росмерсхольмъ, Жизнь человѣка, Докторъ Штокманъ, Вишневый садъ, Горе отъ ума with no receipts.
+Scan p042 (checked at 300 dpi) prints no company heading for the run, so the performer is not stated there.
