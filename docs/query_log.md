@@ -10709,3 +10709,21 @@ select (select count(*) from raw.event_entry), (select count(*) from raw.event_e
 
 Result: control (26520, 28247, 29467, 2801057477, 3482, 1440); integration = production after promotion
 (26523, 28249, 29470, 2801057472, 3482, 1485). compare_season_stats.py afterwards: family rows 57/223 exact, venue rows 52/99.
+
+## 2026-09-30 — When does the stats page's ballet count match the ballet productions lists?
+
+```sql
+-- per season/city: sum of printed "Всего" totals, list date rows, distinct list dates, distinct dates without a note
+select e.season, e.city, sum(e.total_count) ...;   -- over raw.production_entry
+select e.season, e.city, count(distinct p.date) from raw.production_entry_performance p join raw.production_entry e using (production_entry_id)
+where not p.outside_total group by all
+```
+
+Compared with docs/season_stats/lines.csv, "Балетныхъ" (non-subtotal lines) and "Смѣшанныхъ" lines whose qualifier mentions балет.
+Result (28 overlapping season-cities, 1891-92–1904-05):
+- Σ "Всего" never matches; it is always higher, because double bills are counted per work.
+- Distinct list dates = the stats ballet line in 8 (1891-92 MSK, 1896-97 SP, 1899-00 SP, 1900-01 MSK, 1901-02 SP,
+  1902-03 MSK, 1902-03 SP, 1903-04 SP).
+- Distinct list dates = ballet + mixed-with-ballet in 5 more (1891-92 SP, 1892-93 SP, 1894-95 MSK, 1896-97 MSK, 1897-98 MSK).
+- 13/28 in all. The largest gap is 1892-93 MSK (+11 after mixed). Lists are lower than stats in 1898-99 MSK (−5), 1899-00 MSK (−3)
+  and 1901-02 MSK (−3). Distinct dates merge same-day утро + веч. ballet, so they can undercount.
