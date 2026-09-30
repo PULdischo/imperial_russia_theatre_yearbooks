@@ -10891,3 +10891,48 @@ Then 1907-08 Moscow: sessions with receipts = 758171 (none) and the "Коппе�
 Result: 1907-08 SP, 1908-09 SP (41 + 7 Шопеніана bills) and 1908-09 MSK (48 + Нуръ и Анитра/Раймонда) match count and receipts
 exactly. 1906-07 SP receipts exact (count 55 vs 53). 1906-07 MSK Repertoire 51 vs 49. 1907-08 MSK 47 vs 48, resolved by 11 Nov 1907
 Большой Коппелія "оп." (2,578.77); receipts still 5,002.94 short.
+
+## 2026-09-30 — Issue #119: 1909-10 onboarding, integration-test verification queries
+
+**Confirming zero regression to pre-existing corpus data after merging
+1909-10 into a scratch integration DB:**
+```sql
+-- quality_flags delta
+-- current full_run: 900 flags (receipts_parse_failed=13)
+-- integration (full_run + 1909-10): 902 flags (receipts_parse_failed=15)
+```
+Result: +2, exactly the 2 confirmed genuine print typos in 1909-10
+(`p016`, `p050`). All other flag categories identical counts.
+
+```sql
+select * from (
+  select * from research.event where event_id not in
+    (select event_id from raw.event_entry where page_id like 'repertoire_1909-10%')
+  except select * from prod.research.event
+)
+```
+Result: 0 rows — every pre-existing `research.event` row byte-identical
+between current production and the integration build.
+
+```sql
+select * from (
+  select p.* from research.performance p join research.event e using(event_id)
+  where e.event_id not in (select event_id from raw.event_entry where page_id like 'repertoire_1909-10%')
+  except select * from prod.research.performance
+)
+```
+Result: 3 differing rows (`repertoire_1895-96_pair024__s024__w2`,
+`repertoire_1898-99_p000__s019__w4`, `repertoire_1906-07_p004__s021__w1`)
+— each a pre-existing null-genre raw row (confirmed via direct
+`raw.event_entry_performance` lookup by `event_id`, not touched by
+1909-10) whose canonicalized `work_id`/`canonical_genre` shifted once
+1909-10's own correctly-genred appearances of the same 3 titles joined
+the corpus-wide majority vote. Traced to completion; not a 1909-10 data
+defect. See known_issues.md issue #119 for the full writeup.
+
+Entity counts cross-checked directly (`entities.person`/`research.
+person`/`research.person_appearance`: 4359/2894/21154, identical to
+current production — Roster untouched since 1909-10 is Repertoire-only;
+`entities.work_genre_candidate`: 323 groups unchanged, +74 rows from
+new appearances of already-ambiguous titles; `not_captured` gap count:
+2976, identical).

@@ -20438,3 +20438,212 @@ discuss it as "феерія В. А. Крылова".
 - Seasons after 1904-05 have no lists, so no work gets a parent genre from a list there.
 - **Not done:** the season-review half of the rule (needs mention detection).
 - **Production:** only the research layer was rebuilt; the Datasette export was checked on a scratch file.
+
+## Issue #119: new season 1909-10 Repertoire -- extracted, calibrated,
+## paid-extraction 3-way cross-checked, fully scan-verified (6 parallel
+## agents, 56 pages, ~785 sessions touched); staged in
+## `outputs/repertoire_1909-10/`, integration-tested clean, NOT yet
+## promoted into `outputs/full_run`
+
+RG: source PDF already in the repo (`pdf/RepertoireTables/1909-10_
+Repertoire.pdf`, missing the `ForUpload_` prefix every other season's
+file uses -- renamed to `ForUpload_1909-10_Repertoire.pdf` to match
+`render_pages.py`'s season-parsing convention before anything else
+could run), asked for "all the checks and double checks we did for the
+other repertoire tables."
+
+**Format**: single-page (post-1898-99 style), 57 PDF pages total --
+`p000` is the title page ("Репертуаръ сезона 1909-1910 г.", excluded
+from `manifest_tables.csv`, 56 table pages). Printed page number =
+PDF index + 1 throughout (confirmed by direct visual inspection of
+every one of the 56 bottom-strip page numbers, not assumed). Season
+runs 30 августа 1909 - 19 мая 1910.
+
+**Pipeline, in order** (all artifacts under `outputs/repertoire_1909-10/`):
+
+1. `render_pages.py` from a one-PDF staging dir.
+2. **Calibration (free)**: new `1909-10:0`/`1909-10:1` entries in both
+   `docs/repertoire_crop_bounds.json` (started from 1908-09's bounds as
+   a prior, since the two seasons are adjacent, then independently
+   re-measured -- `_detect_vertical_dividers` medians differ meaningfully
+   between the two seasons' typesetting, confirming per-season
+   calibration matters rather than blind reuse) and
+   `docs/repertoire_column_bounds.json`. Every one of the 56 pages'
+   header-strip AND bottom-strip montage was checked at native
+   resolution for clipping before any paid call -- 56/56 clean on both.
+3. **Paid extraction**: page headers (98K tokens, 56/56), baseline
+   (432K tokens, 56/56), row-level (1.6M tokens, 51/56 -- 5 pages
+   failed local row-boundary detection: `p036`, `p040`, `p043`, `p046`,
+   `p047`), column-wise (838K tokens, 21 ok + 35 partial, 0 failed).
+4. `repair_columnwise_merge.py`: 104 theater-repair attempts, 30
+   recovered via tier-2 baseline fallback, 26 via tier-1 resample, 16
+   unrecovered (left for the sweep). `httpx` was missing from the
+   installed venv (imported directly by this script, not surfaced by
+   any prior run this season) -- added via `uv pip install httpx`
+   (additive, doesn't touch `pyproject.toml`/`uv.lock`, safe for
+   concurrent sessions sharing the same venv; briefly ran a plain
+   `uv sync` first which uninstalled a concurrent session's `anthropic`
+   extra -- caught immediately and restored with
+   `uv sync --extra anthropic`).
+5. **Automated pre-sweep checks**: `quality_checks.py`'s 3-way
+   cross-check (page/row/column raw dirs) found 1453 flags, dominated
+   by `cross_extraction_disagreement` (1144, expected noise from
+   comparing 3 independent passes) -- folded into per-page hint files
+   for the sweep rather than treated as a bug list.
+6. **Full scan-verification sweep, all 56 pages, 6 parallel agents**
+   (~10 pages each; the p041-p050 agent further split into 4
+   sub-agents of its own -- fine, all reconverged and reported in),
+   same rules as every prior season's sweep (#79/#82/#93): verbatim
+   pre-reform orthography, full printed weekday word, one session per
+   printed date per theater, УТРО/ВЕЧЕРЪ discipline, works-vs-annotation
+   placement (explicitly briefed on this month's banner/heading-in-works
+   lessons from issue #104 and its follow-up). Pages `p037`/`p038`
+   (printed 38/39, "18-24 февраля 1910") were flagged in advance as
+   unusually dense -- a per-theater student-matinee note, a needy-
+   drama-students charity benefit, a co-ed-phrased free-student banner
+   variant ("...воспитанниковъ и воспитанницъ...", not seen in any
+   prior season's banner list), and actress М. Г. Савиной's 5-item
+   numbered 35th-jubilee gala -- and both were fully and correctly
+   reconstructed.
+
+**~785 sessions touched total across the sweep** (135 + 99 + 116 + 191
++ 170 + 74 across the 6 batches). **The single dominant bug class,
+found on nearly every page**: an entire 3rd theater column silently
+dropped by the merge pipeline, in one of two ways --
+(a) genuinely all-dark and extraction correctly returned nothing but
+the merge left the column entirely absent instead of writing dark
+placeholders (recovered ~15 times across the sweep, matching the
+`repertoire_1906-07_p046` class from issue #79); or
+(b) a real, populated column extraction failed on entirely, and the
+merge **silently relabeled a different theater's rows under the missing
+theater's name** instead of leaving a visible gap -- this second
+sub-class is the more dangerous one, since it did NOT show up in the
+`unresolved_columnwise_theaters` hint at all on 2 of the pages it hit
+(`p002`, `p004`) and is worth widening whatever check produces that
+hint list. Confirmed instances: full-column reconstructions on
+`p001`/`p003`/`p015`/`p029`/`p035`/`p039`/`p043`/`p047` (Александринскій,
+once each), `p046` (Малый+Новый together), plus mislabeled-not-missing
+relabelings on `p002`/`p004`/`p016`/`p022`/`p024`/`p026`/`p028`/`p030`
+(Новый мislabeled as Большой, or missing its own trailing "ъ").
+
+**Other recurring bug classes**: truncated weekday words missing the
+final ъ (~40+ instances, the single most common fix); headings landing
+in `works` with null genre instead of `annotation` (same class as issue
+#104, hit p011/p013/p017/p021/p026/p027/p028/p031); the reverse (a real
+work misfiled into `annotation`) on p009/p019; page-wide missing
+trailing periods on theater names (systemic on several individual
+pages, not random); an off-by-one-day content-misattribution bug found
+independently on 2 Moscow pages (`p034`, `p036`) -- content shifted to
+the wrong calendar date, collapsing a real УТРО/ВЕЧЕРЪ split and
+falsely marking the true date dark; concentrated receipts-figure
+truncation on `p037` (~10 instances, restored from scan); spurious
+invented морning/evening splits on Новый театръ where the scan shows one
+unsplit dash (`p012`, `p014`, `p020`, `p048` -- looks specific to that
+column).
+
+**Genuine print typos found and left verbatim** (added to
+`docs/eval/genuine_print_typos.md`'s new "1909-10 volume" section):
+2 more rubles-marker-misprinted-as-kopecks receipts (`p016`, `p050`,
+same corpus-wide class as every earlier season); missing/stray
+receipts punctuation (`p032`, `p034`, `p037`); a genuine period-typo
+in running text ("моледежи" for "молодежи", `p019` -- extraction had
+silently "corrected" this to the expected spelling, restored verbatim);
+a genuine letter substitution ("цьеса" for "пьеса", `p007`); a genuine
+leading hyphen before a title (`p006`); a missing genre period
+(`p040`); a French-article gender slip across two consecutive days
+(`p023`); a capitalization typo (`p027`).
+
+**Flagged for RG's judgment, not decided unilaterally by the sweep**:
+1. `p010`, 12 Понед., Большой театръ: receipts "3049 р. 78⅞ к." -- an
+   odd mark that could be a genuine fractional-kopeck glyph (this
+   season's convention already includes real halves, e.g. "62½ к.") or
+   ink bleed-through; left unchanged pending a cleaner scan or the
+   physical volume.
+2. `p047`, 8 Четвергъ, Маріинскій: "Шошеніана"->"Шопеніана" (Fokine's
+   *Chopiniana*) -- the scan letterform is genuinely smudged/ambiguous;
+   resolved via historical knowledge (no ballet named "Шошеніана"
+   exists, Chopiniana was in Mariinsky rotation in 1910), not a clean
+   visual read. Worth a second look.
+3. `p047`, 6 Вторн., Маріинскій: "Тангейзеръ, оп" carries no genre-final
+   period on the scan -- transcribed verbatim, but may just be a faint/
+   uninked period rather than a genuine omission.
+4. `p015`/`p016`: the free-student banner's exact date/session scope
+   was ambiguous where a genuinely-free (no-receipts) session sits next
+   to a paid matinee on an adjacent date with its own separate note --
+   the sweep attached the banner only to the literally-free sessions;
+   whether it should read more broadly is a judgment call.
+5. `p055`: two Михайловскій sessions carry real printed author-credit
+   text ("гр. А. К. Толстого.", "И. С. Тургенева.") with no dedicated
+   schema field -- appended into `genre` verbatim rather than dropped,
+   since the schema has no author field; flagged as worth a corpus-wide
+   grep if RG wants a standard convention for this (this is the only
+   instance found in the sweep, not chased further).
+6. `p037`'s Savina-gala genre used the full printed word "комедія"
+   where sibling list-items on the same page use "ком." -- kept as
+   printed rather than normalized; and the same page's French titles
+   keep French genre tags ("pièce", "com.") where the identical title
+   on `p031`/`p033` was normalized to Russian ("пьеса") -- each page's
+   own extraction pass evidently preserved a different convention; not
+   harmonized across pages since neither is wrong on its own page.
+7. **Pre-existing, corpus-wide, NOT specific to this season**: a large
+   fraction of `works` entries keep the genre abbreviation duplicated
+   inside `work_title` (e.g. `work_title: "Жизнь за Царя, оп."`,
+   `genre: "оп."`), contradicting the extraction prompt's own
+   instruction to strip it -- confirmed via direct query as an existing
+   387-instance pattern already in production, not introduced here. Not
+   touched (would need its own scoped pass).
+
+**Rebuild results** (own standalone `outputs/repertoire_1909-10/
+staging.duckdb`, Repertoire-only): 0 validation errors (down from 9
+benign auto-fixed spelling logs pre-sweep), quality_flags 1453 -> 2
+(both confirmed genuine print typos), 0 `not_captured` completeness
+gaps, dates 100.0% verified (1733/1733).
+
+**Integration test** (scratch `outputs/integration_1909-10/
+integration.duckdb`, built by copying the CURRENT `outputs/full_run/
+imperial_theaters.duckdb` -- including its already-curated `entities`
+layer -- then rebuilding `raw`/`analysis` in place and re-running
+`build_entities`/`validate_performance_dates`/`build_research_model` on
+top of it, so prior tombstones and reviewed `person_candidate` decisions
+carry forward instead of re-clustering from scratch; the first attempt,
+building from a bare `build_duckdb.py`-only file, produced a materially
+different from-scratch person clustering and was discarded before
+anything was written anywhere real). Confirmed against the current
+production DB: **every pre-existing `research.event` row byte-identical
+(0 diffs)**; `entities.person`/`research.person`/`research.person_
+appearance` completely unchanged (4359/2894/21154, Roster untouched, as
+expected since 1909-10 is Repertoire-only); `entities.work_genre_
+candidate` unchanged at 323 groups (+74 rows, all attributable to new
+appearances of already-ambiguous titles); `quality_flags.csv` 900 ->
+902 (+2, exactly the 2 confirmed genuine typos); dates 26072 -> 27805
+verified (+1733, the entire new season, 100% clean), all other date-
+confidence categories unchanged; `analysis.event_entry`'s `not_captured`
+gap count identical (2976 -> 2976).
+
+**One real, narrow, non-blocking side effect found and traced to
+completion, same class as 1908-09's "2 works whose majority-vote
+canonical form shifted"**: `research.performance.work_id` reassigned
+for exactly 3 pre-existing performances (`repertoire_1895-96_pair024
+__s024__w2`, `repertoire_1898-99_p000__s019__w4`,
+`repertoire_1906-07_p004__s021__w1`), each losing a previously-correct
+`canonical_genre` (ком./бал./ком. -> NULL). Traced to source: each of
+these 3 raw performance rows has carried a **pre-existing, unrelated-
+to-this-work `genre: NULL`** since whenever their own season was
+originally processed (confirmed directly -- 1895-96's genre landed on
+the wrong fragment of a 3-way split billing, 1898-99's on an
+under-filled ballet-divertissement program, 1906-07's on one of two
+separate performances of the same title on the same page). Adding
+1909-10's own new, correctly-genred appearances of the same 3 titles
+shifted the corpus-wide majority-vote clustering enough to flip which
+`work_id` these 3 already-null rows canonicalize into -- raw/analysis
+data for these rows is untouched (confirmed byte-identical), only the
+derived research-layer genre display for these 3 specific performances
+changed. Not fixed here (out of scope, pre-existing, doesn't affect
+1909-10's own data quality) -- worth a small follow-up pass on those 3
+older-season null-genre rows if RG wants the display corrected, but not
+a blocker.
+
+**NOT promoted into `outputs/full_run`** -- staged and integration-
+tested only, per the same pattern as issue #93's 1908-09 onboarding.
+Waiting on RG for the 7 flagged judgment calls above before deciding
+whether/when to promote.

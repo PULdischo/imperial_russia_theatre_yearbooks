@@ -1175,5 +1175,31 @@
     "extrapolated": false,
     "source": "measured 2026-09-26: median of _detect_vertical_dividers over the 20/27 odd (Petersburg) pages returning exactly 3 dividers, on the per-parity crop 1908-09:1 (x 0.12-1.00). Gaps 0.206-0.230; divider[0] swings widely page to page, absorbed by _refine_dividers. x1 is the full image width because at 0.96 the table's outer right border fell outside the crop on p027/p053, leaving Михайловскій's kopecks ~2px from the edge (checked at native resolution) -- the same right-edge clipping class 1903-04 and 1907-08 hit.",
     "evenly_spaced": true
+  },
+  "1909-10:0": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1477,
+      0.3593,
+      0.5705
+    ],
+    "n_pages_agreeing": 28,
+    "extrapolated": false,
+    "source": "measured 2026-09-30: median of _detect_vertical_dividers over 28/29 even (Moscow) pages returning exactly 3 dividers, on the per-parity crop 1909-10:0 (x 0.00-0.88, copied from 1908-09 and re-verified clean at native resolution left/right edges for this season). Gaps ~0.211 both; std 0.019-0.025.",
+    "evenly_spaced": true
+  },
+  "1909-10:1": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.2346,
+      0.4425,
+      0.6527
+    ],
+    "n_pages_agreeing": 14,
+    "extrapolated": false,
+    "source": "measured 2026-09-30: median of _detect_vertical_dividers over 14/29 odd (Petersburg) pages returning exactly 3 dividers, on the per-parity crop 1909-10:1 (x 0.12-1.00, copied from 1908-09 and re-verified clean at native resolution left/right edges for this season). Gaps ~0.21; std 0.034-0.040 (wider sway than parity 0, absorbed by _refine_dividers).",
+    "evenly_spaced": true
   }
 }

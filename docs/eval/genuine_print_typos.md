@@ -86,6 +86,10 @@ never go to zero, by design:
 - `repertoire_1906-07_p035`: "433 к. 45 к."
 - `repertoire_1907-08_p000`: "1055 к. 04 к."
 - `repertoire_1907-08_p024`: "1107 к. 62 к."
+- `repertoire_1909-10_p050`, 21 Среда., Малый театръ: "1425 к. 60 к."
+  (zoom-confirmed 2026-09-30 against `repertoire_1909-10_p050.png`,
+  same corpus-wide pattern — rubles marker printed as "к." instead of
+  "р."; `receipts_text` kept verbatim)
 - `repertoire_1901-02` range: "7166 р. 87 г." (kopecks marker garbled
   this time, rubles marker fine)
 - **Named 2026-09-29 (scan-checked, issue #109):** `1905-06_p017` 4 Воскрес. Новый утро "323 к. 37 к.";
@@ -222,6 +226,42 @@ at the level of layout and page-planning rather than spelling.
   1907-08) both print his *brother* Викторъ's service-start year ("1903")
   onto his own line — the same error, independently repeated in two
   different print runs years apart.
+
+## 1909-10 volume (Repertoire, added 2026-09-30, issue #119)
+
+Found during the new season's full scan-verification sweep (6 parallel
+agents, 56 pages). Only confirmed-genuine items are listed here; the
+sweep's raw JSON fixes for actual extraction errors are documented in
+known_issues.md issue #119, not here.
+
+- **Receipts, rubles marker misprinted**: `p016` Большой 8 Воскрес.
+  evening "2466 **о.** 88 к." (coordinating-session re-check † against
+  `repertoire_1909-10_p016.png` -- confirmed, same corpus-wide class as
+  the `p050` entry already in the Receipts-figure typos section above).
+- **Receipts, missing/stray period**: `p032` "3049 р 78 к." (no period
+  after "р"); `p034` "1388 р- 90 к." (hyphen for period); `p037`
+  "734 р· 30 к." (mid-dot for period).
+- **Receipts, wrong unit letter**: `p036` "727 р. 70 **р.**" (kopecks
+  marker printed as рубли); `p037` and `p039` both print "2841 р. 60
+  **р.**" for the same Михайловскій benefit-receipts line -- same slip
+  twice, possibly this compositor's habit.
+- **Genuine period-typo in running text**: `p019` "**моледежи**" for
+  "молодежи" (Спектакль для учащейся молодежи) -- extraction had
+  silently "corrected" this to the expected spelling; restored verbatim.
+- **Genuine letter substitution**: `p007` "Тихая пристань, **цьеса**."
+  for "пьеса" (ц/п confusion, confirmed at zoom).
+- **Printing ghost / genuine leading hyphen**: `p006` "**-**Евгеній
+  Онѣгинъ, оп." -- a stray leading hyphen genuinely printed before the
+  title, not an extraction artifact.
+- **Genre abbreviation, no closing period**: `p040` "Спящая красавица,
+  **бал**" (scan shows no period where one is used everywhere else for
+  this genre).
+- **Name/spelling variance across consecutive days, not an error**:
+  `p023` "**La** paradis" vs "**Le** paradis" (French article gender
+  slip, printed differently on two consecutive dates for what appears
+  to be the same production).
+- **Genuine capitalization typo**: `p027` "**Eamily**-hôtel" (capital E
+  for F, confirmed at zoom, appears twice).
 
 ## 1908-09 volume (Repertoire, added 2026-09-26, issue #93)
 
