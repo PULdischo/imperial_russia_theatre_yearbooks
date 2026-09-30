@@ -318,3 +318,8 @@ Counting every Latin-titled play as foreign for this check:
 - Russian drama 258 / 327,041.88 р. vs Александринскій 236 + Михайловскій 33 = 269 / 328,682.43 р. (+11).
 
 These residuals are left until the genres are corrected, then to be rerun.
+
+**1909-10 SP rerun after the Main session's fix (f0f0545) of the 46 added genres:** French 101 vs stats 100 (receipts
+−70.50 р.). Russian drama 294, which includes the 35 Moscow Art Theatre sessions that the stats page puts on their own
+line; without them, 259 vs 258. German 22 vs 25, with 3 more in French/German double bills (mixed). Ballet 47 vs 51, with
+the Шопеніана bills in mixed. The 1909-10 residuals are now as small as the other seasons'.

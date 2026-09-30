@@ -20812,3 +20812,27 @@ remembering that a season-stats comparison tool built for an unrelated
 purpose (issue #101/#116) is proving to be a useful independent check
 on fresh extraction quality, catching things the Repertoire-side sweep
 alone didn't.
+
+## Issue #121: noted-but-unfixed transcription errors from #117 and the stats comparison -- 2026-09-30, FIXED (scan-checked)
+
+Each cell was read on its own scan before any edit, and the edits were made field-level on current production with a
+`_fix_note`. Backup: `outputs/full_run_pre_promote_backup_2026-09-30_issue121/`.
+- **1895-96 pair014, 7 Воскрес., Александринскій:** morning receipts "816 р. 7 к." → **"846 р. 7 к."**. Evening titles
+  "Жизнь жизни" → **"Боязнь жизни"**, and "Причалы" → **"Приличія"** (a second misread in the same cell).
+- **1895-96 pair010, 6 Среда (6 Dec 1895), evenings:** "Гимнъ." is printed as the opening line at the Александринскій,
+  Михайловскій (in Russian), Большой and Малый, and was not transcribed. It is now added as a work, following the #120
+  convention. It is not printed at the Маріинскій (Леньяни benefit). Александринскій "Проступка и воспитанная" →
+  **"Простушка и воспитанная"**.
+- **"Анда" → "Аида"** where the scan shows the diagonal of и: 1896-97 pair004 (24 Sep 1896), 1904-05 p030 (13 Feb 1905,
+  morning), 1905-06 p022 (28 Dec 1905, evening). (1898-99 p030 had been fixed in #117.)
+- **Left as is:** 1905-06 p006 (9 Oct 1905, morning). At native resolution the second letter shows two stems and no
+  readable diagonal or crossbar, so и vs н can't be settled from the scan.
+- **1906-07 p016, 26 Воскрес. (26 Nov 1906), Александринскій, evening:** "Безплатный спектанль для георгіевскихъ
+  кавалеровъ". The scan prints no receipts. The transcription's "600 р. 75 к." is the Михайловскій's figure for the same
+  date (L'armature, 600 р. 75 к., confirmed), so it was removed from the Александринскій. Noticed, not changed: the
+  heading prints "спектанль" (a wrong sort or damaged к?); the annotation keeps "спектакль".
+- **1898-99 p017 "28 Среда.":** not an error. It is already recorded in genuine_print_typos.md as a printed misnumbering;
+  confirmed on the scan, left verbatim.
+
+Production rebuilt: event_entry 28256 unchanged; performances 29565 → 29569 (+4 Гимнъ); research.work 3659 → 3657;
+receipts −570.75 р. (−600.75 + 30.00); quality_flags identical.

@@ -11070,3 +11070,14 @@ where a.season = '1909-10'
   and regexp_matches(coalesce(p.genre, ''), '[а-яё]')
 ```
 Result: 0.
+
+## 2026-09-30 — Issue #121 fixes: production before/after; 1909-10 SP rerun
+
+```sql
+select (select count(*) from raw.event_entry), (select count(*) from raw.event_entry_performance),
+       (select count(*) from research.work), (select sum(receipts_total_kopecks) from research.event)
+```
+
+Result: before (28256, 29565, 3659, 2999154050); after (28256, 29569, 3657, 2999096975); Δ receipts −57,075 kopecks =
+−600.75 + 30.00. compare_season_stats.py 1909-10 SP: drama 294 (incl. the Art Theatre 35; 259 vs 258 without it), French 101 vs 100,
+German 22 vs 25, ballet 47 vs 51, opera 158 vs 157.
