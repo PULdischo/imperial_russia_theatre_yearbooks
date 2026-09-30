@@ -72,3 +72,17 @@ All 79 performed sessions with no receipts in the positive receipt leads (stats 
 No dropped figure could be restored with certainty. So for 1893-98 the receipts gaps are largely fold-hidden figures, and
 settling them needs the physical volumes (`docs/eval/stats_receipts_fold_cells.csv`). Along the way the check fixed two
 shifted Новый columns (+3 sessions) and restored 45 free-performance banners.
+
+## Stats ballet counts vs. the ballet productions lists (2026-09-30)
+
+The number of distinct dates in a season's ballet list matches the stats page in 13 of 28 season-cities: the "Балетныхъ"
+line alone in 8, or with the stats mixed lines that include ballet in 5. Summing the lists' printed "Всего" totals never
+matches, because double bills are counted per work.
+
+**1892-93 Moscow is explained by "Феерій".** The list includes Кольцо любви, "Волшебная сказка въ 3 д. и 10 карт."
+(В. А. Крыловъ, music partly П. П. Золотаренко), with 11 dates. These equal the Repertoire's 11 Большой sessions printed
+"феерія", and the stats page's "Феерій 11": 41 + 2 + 11 = 54 = the list's dates. 1893-94 Moscow likewise has Кольцо любви
+5 = "Феерій 5" (total 50 vs 49 list dates). The stats pages print a "Феерій" line only in these two seasons, and only
+for this work. The works the lists call "Балетъ-феерія" (Спящая красавица, Щелкунчикъ, Синяя борода) are counted under
+"Балетныхъ". So in the stats, "Феерій" is not the ballet-féerie. Whether Кольцо любви itself is a ballet is RG's
+question: the yearbook calls it a "волшебная сказка" but prints it in the ballet list.

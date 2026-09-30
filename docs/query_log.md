@@ -10727,3 +10727,25 @@ Result (28 overlapping season-cities, 1891-92–1904-05):
 - Distinct list dates = ballet + mixed-with-ballet in 5 more (1891-92 SP, 1892-93 SP, 1894-95 MSK, 1896-97 MSK, 1897-98 MSK).
 - 13/28 in all. The largest gap is 1892-93 MSK (+11 after mixed). Lists are lower than stats in 1898-99 MSK (−5), 1899-00 MSK (−3)
   and 1901-02 MSK (−3). Distinct dates merge same-day утро + веч. ballet, so they can undercount.
+
+## 2026-09-30 — 1892-93 Moscow: ballet-list dates (54) vs stats ballet 41 + mixed 2; and what "Феерій" covers
+
+```sql
+select try_cast(e.list_number as int), e.title, left(e.description_text, 110), e.total_count, count(p.*) filter (where not p.outside_total),
+       string_agg(strftime(p.date, '%m-%d') || coalesce('(' || p.note || ')', ''), ' ' order by p.date)
+from raw.production_entry e join raw.production_entry_performance p using (production_entry_id)
+where e.season = '1892-93' and e.city = 'Moscow' group by all order by 1;
+select e.date, t.canonical_name, string_agg(p.verbatim_title || ' | ' || coalesce(p.verbatim_genre, ''), ' / ')
+from research.event e join research.theater t using (theater_id) join research.performance p using (event_id)
+where e.season = '1892-93' and e.city = 'Moscow' and e.event_status = 'performed'
+  and e.event_id in (select event_id from research.performance where lower(coalesce(verbatim_genre, '')) like '%феер%') group by all order by 1;
+-- then: every list entry whose title/description mentions кольцо любви / феері / волшебная сказка, every season;
+-- every Repertoire performance with a "феер" genre; full description of Кольцо любви
+```
+
+Result: list #5 Кольцо любви, "Волшебная сказка въ 3 д. и 10 карт., составлена по нѣмецкимъ народнымъ сказкамъ и повѣрьямъ
+В. А. Крыловымъ, музыка частью П. П. Золотаренко, частью заимствована". 11 dates, identical to the 11 Repertoire sessions
+(Большой, genre "феерія"), = stats "Феерій 11". 41 + 2 + 11 = 54 = list dates. 1893-94 Moscow: Кольцо любви 5 = stats
+"Феерій 5"; 43 + 2 + 5 = 50 vs 49 list dates. The stats pages have a "Феерій" line only in these two Moscow seasons.
+Works the lists call "Балетъ-феерія" (Спящая красавица, Щелкунчикъ, Синяя борода) never get a separate stats line; they
+fall under "Балетныхъ". In the Repertoire, "феер" genres occur only for Кольцо любви (1892-94) and three single later sessions.
