@@ -175,3 +175,13 @@ so the two uncounted performances must be among the five with no receipts: three
 The likeliest reading is that the stats page left out the two charity performances: that fits 1902-03 and 1903-04,
 where the stats page and the list both leave out charity bills (D4–D8). It is not proven, because receipts can't
 separate performances that have none.
+
+**1904-05 SP narrowed, not resolved (2026-09-30).** Stats 46 (130,012.64 р.), list 48, Repertoire 47 (135,020.94 р.).
+The list's extra dates are the recorded disagreements A12 (17 Dec) and B1 (13 Feb; the Repertoire cell prints only
+"Бенефисъ кордебалетныхъ артистовъ" and 8,750.70 р.). The Repertoire's extra is E4 (29 Mar, a charity Эсмеральда, no
+receipts). No choice of performances matches the stats count and receipts exactly. The reading most consistent with
+the other seasons is: the stats page leaves out the two charity performances (29 Mar Эсмеральда, and 6 Apr Рафаэль +
+Наяда и рыбакъ + Брама, no receipts) and includes the 13 Feb corps-de-ballet benefit (B1). The receipts would then fit
+only if the 28 Dec 1904 morning "Корсаръ", printed 15,291 р. 95 к. and already flagged as a likely print typo (#111
+notes), had taken 1,532 р. 95 к. That is not a simple one-digit slip, so it stays unresolved. It goes with the receipt
+audit, which is paused until RG's fold checks.

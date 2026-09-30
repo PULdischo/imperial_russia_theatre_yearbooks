@@ -10865,3 +10865,12 @@ group by all order by 2;
 Result: 41 sessions, receipts 82,893.95 (stats 82,893.92); 5 without receipts: 3 free student matinées and 2 charity performances
 (16 Feb retirement-home benefit Макбетъ/Гамлетъ/Фіаметта; 19 Apr Иверская, Волшебное зеркало). The list prints all 5. The 2 the
 stats page omits are among these 5, most likely the charity pair (unproven).
+
+## 2026-09-30 — 1904-05 SP ballet count: stats 46 vs list 48 vs Repertoire 47
+
+Parent-ballet sessions 1904-05 SP (research.event/performance/work, as for Moscow), receipts per session; the 13 Feb 1905
+Маріинскій sessions; brute-force search over dropping sessions (± adding the 13 Feb evening, 8,750.70) for count 46 and
+receipts 130,012.64.
+Result: 47 sessions, 135,020.94 р.; no exact solution. Closest solutions involve the 28 Dec 1904 morning Корсаръ, 15,291.95
+(already flagged as a likely print typo). Count reading: stats = Repertoire − 2 charity performances (29 Mar, 6 Apr) + B1 (13 Feb).
+Unproven; receipts paused.
