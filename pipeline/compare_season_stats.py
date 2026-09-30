@@ -225,7 +225,9 @@ def level2(con, out_dir):
             if r["receipts_kopecks"] != "":
                 s["k"] += float(r["receipts_kopecks"]); s["n_k"] += int(r["count"])
             s["labels"].append(r["category_verbatim"] + (" " + r["qualifier_verbatim"] if r["qualifier_verbatim"] else ""))
-    seasons = {k[0] for k in st}
+    rep_seasons = {r[0] for r in con.execute("SELECT DISTINCT season FROM research.event").fetchall()}
+    seasons = {k[0] for k in st} & rep_seasons
+    st = {k: v for k, v in st.items() if k[0] in rep_seasons}
     rows = []
     # family rows: every family either side has, for stats seasons; venue rows: only where the stats print a venue line
     keys = {k for k in st} | {k for k in rep if k[0] in seasons and k[3] == ""}
@@ -340,6 +342,9 @@ def main():
     a.out_dir.mkdir(parents=True, exist_ok=True)
     rows = []
     for (season, city) in sorted(st):
+        if (season, city) not in rep:
+            print(f"(skipped {season} {city}: stats page transcribed, but no Repertoire for that season yet)")
+            continue
         s = st[(season, city)]
         sessions, days, n_rec, rk, rk_ch, n_ch = rep.get((season, city), (0,) * 6)
         rows.append({

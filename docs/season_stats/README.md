@@ -19,8 +19,9 @@ free student performances and charity performances. Plan and pilot: RG approved,
   - 1906-07 has counts + receipts and no footnotes;
   - 1908-09 has footnotes again.
 
-**Transcribed:** all 17 pages (2026-09-30): every season 1891-92 to 1908-09 except
-1905-06. That comes to 285 lines and 118 footnotes. The data lives in `_build.py`: edit it
+**Transcribed:** 18 pages (2026-09-30): every season 1891-92 to 1909-10 except
+1905-06. 1909-10 was added from RG's new scan; the Repertoire doesn't cover 1909-10 yet, so the
+comparison skips it. That comes to 285 lines and 118 footnotes. The data lives in `_build.py`: edit it
 there, then run `uv run python docs/season_stats/_build.py` to regenerate the CSVs and rerun
 every check.
 
@@ -53,6 +54,8 @@ every check.
     widening the parser.
   - `footnote_refs`: the superscript number(s) on the line.
 - `footnotes.csv`: one row per footnote, verbatim.
+- `dated_notes.csv`: from 1909-10, the page lists jubilees and benefits by date after each city's totals.
+  These are verbatim, one row per printed line.
 
 ## Conventions
 

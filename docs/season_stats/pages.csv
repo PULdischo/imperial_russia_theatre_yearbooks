@@ -16,3 +16,4 @@ season,source_file,printed_page,heading_verbatim,heading_footnote,format,note
 1906-07,1906-07_ProductionStats.pdf,,Всего въ теченіе сезона 1906—1907 гг. было спектаклей:,,counts_receipts,page number too faint to read; no footnotes printed
 1907-08,1907-08_ProductionStats.pdf,126,Всего въ теченіе сезона 1907—1908 гг. было спектаклей:,,counts_receipts_footnotes,"file page 1 of 11 (pp. 2-11 are the season ""Списокъ пьесъ"", not transcribed here); no venue breakdown printed; footnotes but no heading footnote"
 1908-09,1908-09_ProductionStats.pdf,56,Всего въ теченіе сезона 1908—1909 гг. было спектаклей:,,counts_receipts_footnotes,no venue breakdown printed; footnotes but no heading footnote
+1909-10,1909-10_ProductionStats.pdf,58,Всего въ теченіе сезона 1909—1910 гг. было спектаклей:,,counts_receipts_footnotes,no venue breakdown; after each city a dated list of jubilees and benefits (dated_notes.csv); German and Moscow Art Theatre lines print no receipts

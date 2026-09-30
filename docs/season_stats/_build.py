@@ -30,6 +30,7 @@ PAGES = {
     '1904-05': ('1904-05_ProductionStats.pdf', '134', 'Всего въ теченіе сезона 1904—1905 гг. было спектаклей:', '', 'counts_receipts', 'no footnotes printed'),
     '1907-08': ('1907-08_ProductionStats.pdf', '126', 'Всего въ теченіе сезона 1907—1908 гг. было спектаклей:', '', 'counts_receipts_footnotes', 'file page 1 of 11 (pp. 2-11 are the season "Списокъ пьесъ", not transcribed here); no venue breakdown printed; footnotes but no heading footnote'),
     '1908-09': ('1908-09_ProductionStats.pdf', '56', 'Всего въ теченіе сезона 1908—1909 гг. было спектаклей:', '', 'counts_receipts_footnotes', 'no venue breakdown printed; footnotes but no heading footnote'),
+    '1909-10': ('1909-10_ProductionStats.pdf', '58', 'Всего въ теченіе сезона 1909—1910 гг. было спектаклей:', '', 'counts_receipts_footnotes', 'no venue breakdown; after each city a dated list of jubilees and benefits (dated_notes.csv); German and Moscow Art Theatre lines print no receipts'),
 }
 
 # Receipts whose rubles/kopecks MARKER is misprinted: the verbatim text stays as
@@ -346,6 +347,16 @@ LINES = [
     ('1908-09', M, 'category', 'Русскихъ оперныхъ', 'Русскихъ оперныхъ', '', '', 165, '381,017 р. 33 к.', '6', ''),
     ('1908-09', M, 'category', 'Балетныхъ', 'Балетныхъ', '', '', 49, '101,477 р. 91 к.', '7', ''),
     ('1908-09', M, 'category', 'Смѣшанныхъ', 'Смѣшанныхъ', '', '', 1, '1,550 р. 28 к.', '8', ''),
+    # --- 1909-10 ---
+    ('1909-10', S, 'category', 'Русскихъ драматическихъ', 'Русскихъ драматическихъ', '', '', 258, '327,041 р. 88 к.', '1', ''),
+    ('1909-10', S, 'category', 'Русскихъ оперныхъ', 'Русскихъ оперныхъ', '', '', 157, '531,215 р. 89 к.', '2', ''),
+    ('1909-10', S, 'category', 'Балетныхъ', 'Балетныхъ', '', '', 51, '167,180 р. 22 к.', '3', ''),
+    ('1909-10', S, 'category', 'Французскихъ', 'Французскихъ', '', '', 100, '107,243 р. 10 к.', '4', ''),
+    ('1909-10', S, 'category', 'Нѣмецкихъ', 'Нѣмецкихъ', '', '', 25, '', '', 'no receipts printed'),
+    ('1909-10', S, 'category', 'Московскаго художественнаго театра', 'Московскаго художественнаго театра', '', '', 35, '', '', 'no receipts printed; guest performances of the Moscow Art Theatre in Petersburg'),
+    ('1909-10', M, 'category', 'Русскихъ драматическихъ', 'Русскихъ драматическихъ', '', '', 134, '266,240 р. 80 к.', '5', ''),
+    ('1909-10', M, 'category', 'Русскихъ оперныхъ', 'Русскихъ оперныхъ', '', '', 168, '427,242 р. 67 к.', '6', ''),
+    ('1909-10', M, 'category', 'Балетныхъ', 'Балетныхъ', '', '', 49, '110,363 р. 31 к.', '7', ''),
 ]
 
 # (season, footnote_no, text_verbatim, note)
@@ -468,6 +479,29 @@ FOOTNOTES = [
     ('1908-09', 6, 'Въ томъ числѣ 3 бенефиса и 2 безплатныхъ спектакля для воспитанниковъ учебныхъ заведеній.', ''),
     ('1908-09', 7, 'Въ томъ числѣ 2 бенефиса и 1 безплатный спектакль для воспитанниковъ учебныхъ заведеній.', ''),
     ('1908-09', 8, 'Спектакль въ память 100-лѣтія со дня рожденія Н. В. Гоголя.', ''),
+    ('1909-10', 1, 'Въ томъ числѣ 1 бенефисъ и 4 безплатныхъ спектакля для воспитанниковъ.', ''),
+    ('1909-10', 2, 'Въ томъ числѣ 2 бенефиса и 3 безплатныхъ спектакля.', ''),
+    ('1909-10', 3, 'Въ томъ числѣ 2 бенефиса.', ''),
+    ('1909-10', 4, 'Въ томъ числѣ 8 бенефисовъ и 2 безплатныхъ спектакля.', ''),
+    ('1909-10', 5, 'Въ томъ числѣ 1 бенефисъ и 3 безплатныхъ спектакля.', ''),
+    ('1909-10', 6, 'Въ томъ числѣ 3 бенефиса и 1 безплатный спектакль.', ''),
+    ('1909-10', 7, 'Въ томъ числѣ 1 бенефисъ и 2 безплатныхъ спектакля.', ''),
+]
+
+# Dated lists of jubilees and benefits printed after a city's totals (from 1909-10).
+# (season, city, text_verbatim, note)
+Y='printed year 1909 on a 1909-10 page: January 1909 falls in the previous season; possibly a misprint for 1910, not assumed'
+DATED_NOTES = [
+    ('1909-10', S, '24 февраля—35-ти лѣтіе службы М. Г. Савиной.', ''),
+    ('1909-10', S, '24 января—прощальный спектакль балерины Трефиловой.', ''),
+    ('1909-10', S, '1 октября—25-ти лѣтіе литерат.-драмат. дѣятельности В. А. Тихонова.', ''),
+    ('1909-10', S, '11 января 1909 г.—50-ти лѣтіе музык. дѣятельности Ц. А. Кюи.', Y),
+    ('1909-10', S, '18 декабря 1909 г.—50-ти лѣтіе Имп. Русск. Музык. Общества.', ''),
+    ('1909-10', S, '30 октября—бенефисъ оркестра; 27 ноября—бенефисъ хора; 18 декабря—бенефисъ вторыхъ артистовъ труппы (др.).', ''),
+    ('1909-10', M, '10 октября—бенефисъ хора.', ''),
+    ('1909-10', M, '3 ноября—бенефисъ оркестра.', ''),
+    ('1909-10', M, '18 ноября—прощальный бенефисъ г-жи Звягиной.', ''),
+    ('1909-10', M, '10 января 1909 г.—бенефисъ кордебалета.', Y),
 ]
 
 
@@ -509,7 +543,7 @@ def main():
             if (r[0], int(ref)) not in fn:
                 print(f'MISSING FOOTNOTE {r[0]} {ref}'); problems += 1
     # mixed-script words
-    for row in [*lines, *FOOTNOTES, *[(s, *v) for s, v in PAGES.items()]]:
+    for row in [*lines, *FOOTNOTES, *DATED_NOTES, *[(s, *v) for s, v in PAGES.items()]]:
         for v in row:
             for w in re.findall(r'\w+', str(v)):
                 if re.search('[a-zA-Z]', w) and re.search('[а-яА-ЯѣѢіІѳъ]', w):
@@ -521,6 +555,8 @@ def main():
           [(s, *PAGES[s]) for s in sorted(PAGES)])
     write('lines.csv', ['season', 'city', 'line_no', 'line_kind', 'category_verbatim', 'category', 'venue_verbatim',
                         'qualifier_verbatim', 'count', 'receipts_verbatim', 'receipts_kopecks', 'footnote_refs', 'note'], lines)
+    write('dated_notes.csv', ['season', 'city', 'note_no', 'text_verbatim', 'note'],
+          [(d[0], d[1], i + 1, d[2], d[3]) for i, d in enumerate(sorted(DATED_NOTES, key=lambda d: order[d[0]]))])
     write('footnotes.csv', ['season', 'footnote_no', 'text_verbatim', 'note'], sorted(FOOTNOTES, key=lambda f: (order[f[0]], f[1])))
     print(f'{len(PAGES)} pages, {len(lines)} lines, {len(FOOTNOTES)} footnotes; problems: {problems}')
     sys.exit(1 if problems else 0)
