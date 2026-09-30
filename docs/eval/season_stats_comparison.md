@@ -185,3 +185,24 @@ the other seasons is: the stats page leaves out the two charity performances (29
 only if the 28 Dec 1904 morning "Корсаръ", printed 15,291 р. 95 к. and already flagged as a likely print typo (#111
 notes), had taken 1,532 р. 95 к. That is not a simple one-digit slip, so it stays unresolved. It goes with the receipt
 audit, which is paused until RG's fold checks.
+
+**1900-01 SP resolved (2026-09-30): a French-company benefit ending with a ballet is counted as French.** Stats 54
+ballet + 1 unqualified mixed (the 30 Dec 1900 РТО gala, D3) = 55; list 55; Repertoire 56. The list omits D3, so the
+Repertoire's other 55 = the list's 55, and the stats page counts one of them elsewhere. The ballet receipts decide it.
+The Repertoire's 55 total 149,818.37 р., 2,590.51 р. above the stats ballet line. The 2 Mar 1901 Михайловскій
+"Bénéfice de M-lle Barety" (Rosalie / Nos alliées / Les élèves de Dupré, ballet) took 2,590.50 р., the only match.
+So the stats page counts it under "Французскихъ", while the list gives it under "Ученики Дюпрэ". Removing it gives 54
+and a 1-kopeck receipts difference. Also noted, receipts paused: the stats page prints 5,043.90 р. for the РТО mixed
+performance, but the Repertoire cell for 30 Dec 1900 prints no figure (scan-checked in #111).
+
+**Summary of the ballet-count reconciliation (2026-09-30).** Of the 28 season-cities with both a stats page and a
+list:
+- 14 agree in all three sources as counted by the script.
+- 1899-00 Moscow agrees once its unqualified mixed line is included.
+- The others are explained by how the stats page classified particular bills: Кольцо любви as "Феерій" (1892-94
+  Moscow), plain-divertissement drama bills as drama + ballet (1894-95 SP), a free student matinée as drama
+  (1895-96 SP), a French-company benefit as French (1900-01 SP).
+- Or by the recorded list/Repertoire disagreements (A, B, D, E).
+- Two stay open: 1904-05 Moscow (which two receipt-less performances the stats omit) and 1904-05 SP (receipts tied to
+  the 15,291.95 р. Корсаръ figure).
+- 1903-04 Moscow's single unqualified mixed performance can't be identified from the page.

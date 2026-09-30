@@ -10874,3 +10874,11 @@ receipts 130,012.64.
 Result: 47 sessions, 135,020.94 р.; no exact solution. Closest solutions involve the 28 Dec 1904 morning Корсаръ, 15,291.95
 (already flagged as a likely print typo). Count reading: stats = Repertoire − 2 charity performances (29 Mar, 6 Apr) + B1 (13 Feb).
 Unproven; receipts paused.
+
+## 2026-09-30 — 1900-01 SP ballet count: stats 54 (+1 mixed) vs list 55 vs Repertoire 56
+
+Parent-ballet sessions 1900-01 SP with receipts; D3 (1900-12-30) separated; single-session drop tested against the stats
+ballet receipts 147,227.86.
+Result: the other 55 total 149,818.37 (Δ 2,590.51). 2 Mar 1901 Михайловскій Bénéfice de M-lle Barety (Rosalie / Nos alliées /
+Les élèves de Dupré) = 2,590.50, counted under "Французскихъ" by the stats page. D3 has no Repertoire receipts, but the stats
+prints 5,043.90 for the РТО mixed performance.
