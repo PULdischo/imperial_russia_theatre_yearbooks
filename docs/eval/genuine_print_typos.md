@@ -265,3 +265,18 @@ not only by the sweep agent; the rest were zoom-verified by the agent.
 *Started 2026-09-24. Harvested from `docs/eval/known_issues.md`'s
 scan-verification history plus that day's single-page-season full sweep;
 add new finds here as they turn up.*
+
+## Season production-stats pages: arithmetic that doesn't add up (added 2026-09-30)
+
+Found while transcribing the season totals pages ("Всего въ теченіе сезона … было
+спектаклей") into `docs/season_stats/`. Both were checked at high magnification;
+every other subtotal on these pages adds up.
+
+- **1896-97 (p. 27), Petersburg "Балетныхъ":** the lines print 50 (Маріинскій)
+  and 3 (Михайловскій), but the subtotal prints **52**, not 53. The receipts
+  subtotal (118,760 р. 24 к) does equal its two lines. Which figure is off (50, 3
+  or 52) is still open; the Repertoire itself can arbitrate.
+- **1906-07 (page number unreadable), Petersburg "Русскихъ драматическихъ":** the
+  receipts lines print 247,576 р. 17 к. + 10,353 р. 15 к. + 7,262 р. 50 к. =
+  265,191 р. 82 к., but the subtotal prints **265,272 р. 82 к.**, exactly 81 р.
+  more. The counts (197 + 25 + 1 = 223) add up.
