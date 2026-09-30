@@ -257,3 +257,27 @@ Stats: Russian drama by theater, Александринскій 197 (247,576.17 
 **Pattern for 1907-09 (to test next):** the excess is unreceipted runs by visiting companies (the Art Theatre in 1906-07;
 likely the spring 1908 Михайловскій run too, but that is not assumed) and charity evenings. The stats pages count neither
 as Russian drama.
+
+## Petersburg drama excess, 1907-08 (2026-09-30): explained except a small Александринскій residual
+
+Stats: Russian drama 217 (263,589.03 р.), single line, no theater breakdown. Footnote 1: 2 benefits, 3 free student
+performances, 1 free performance for the георгіевскіе кавалеры. The Repertoire counts 268 drama sessions:
+- **Александринскій 218:** 214 with receipts (265,164.75 р.) + 4 without (the free performance for the георгіевскіе
+  кавалеры, 26 Nov; two free student mornings, 6 Dec and 20 Feb; the prompters' benefit, 21 Apr). These are the kinds the
+  footnote says are included. It is one over the stats (218 vs 217), with receipts +1,575.72 р.; no single session
+  matches. Left with the paused receipts leads.
+- **Маріинскій 6 and Михайловскій 6:** charity evenings, all without receipts.
+- **Михайловскій, 38 sessions, 14 Apr – 13 May 1908, all without receipts:** Росмерсхольмъ, Жизнь человѣка, Докторъ
+  Штокманъ, Брандъ, Вишневый садъ, Горе отъ ума.
+  - **Not on the Imperial record:** the yearbook's own "Списокъ пьесъ, исполненныхъ на сценахъ Императорскихъ театровъ въ
+    сезонѣ 1907–1908 гг." (1907-08_ProductionStats.pdf, file p. 2 = printed p. 127) has none of these plays among its
+    Petersburg Russian-drama entries: no Брандъ, Вишневый садъ, Горе отъ ума or Докторъ Штокманъ in their alphabetical
+    places.
+  - **The company is not named** in the Repertoire (p042, checked at 300 dpi) or anywhere found in the 1907-08 materials
+    we hold. The digitized reviews are ballet only.
+  - **Why it is probably the Moscow Art Theatre (strong inference, not a finding):** the repertoire is that theatre's (the
+    named 1906-07 tour also gave Брандъ and Горе отъ ума); it is the same spring slot at the same theatre; and the
+    1909-10 stats page gives the Art Theatre its own line.
+
+So 268 = 217 + 1 (Александринскій) + 12 charity + 38 spring run. Nothing counted by the stats page is missing from the
+Repertoire.

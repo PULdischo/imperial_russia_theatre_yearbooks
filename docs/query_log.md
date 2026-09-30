@@ -10952,3 +10952,12 @@ Result: Михайловскій receipted drama 24 = 10,353.15 (stats exact); e
 charity, 6 Dec morning. Маріинскій: Стрѣльская benefit 7,262.50 (stats exact); extras: 2 charity operettas + 4 Китежъ (genre-less
 opera). Александринскій 198 → 197 after the classifier fix; receipts +2,307.23, no single/pair match. After the fix: 1906-07 SP
 drama Alex 197/197, opera 155 + 4 unknown (Китежъ). 1909-10 is now in research.event (added by the other chat); SP drama +60.
+
+## 2026-09-30 — 1907-08 SP drama excess, by theater
+
+Same session query as for 1906-07 (season '1907-08'); drama sessions per theater with receipts; the Александринскій tested
+for a single session of 1,575.72. Also read (scan, no SQL): the 1907-08 "Списокъ пьесъ" p. 127 (Petersburg Russian drama,
+entries 1–14).
+Result: Александринскій 218 (214 receipted, 265,164.75; 4 free/benefit), Маріинскій 6 and Михайловскій 6 charity (no receipts),
+Михайловскій spring run 38 (14 Apr–13 May 1908, no receipts). No single Александринскій session = 1,575.72. The list of plays has
+none of the run's plays; the company is not named in the materials checked.
