@@ -20813,10 +20813,10 @@ purpose (issue #101/#116) is proving to be a useful independent check
 on fresh extraction quality, catching things the Repertoire-side sweep
 alone didn't.
 
-## Issue #121: noted-but-unfixed transcription errors from #117 and the stats comparison -- 2026-09-30, FIXED (scan-checked)
+## Issue #122: noted-but-unfixed transcription errors from #117 and the stats comparison -- 2026-09-30, FIXED (scan-checked)
 
 Each cell was read on its own scan before any edit, and the edits were made field-level on current production with a
-`_fix_note`. Backup: `outputs/full_run_pre_promote_backup_2026-09-30_issue121/`.
+`_fix_note`. Backup: `outputs/full_run_pre_promote_backup_2026-09-30_issue121/` (folder name keeps the old number).
 - **1895-96 pair014, 7 Воскрес., Александринскій:** morning receipts "816 р. 7 к." → **"846 р. 7 к."**. Evening titles
   "Жизнь жизни" → **"Боязнь жизни"**, and "Причалы" → **"Приличія"** (a second misread in the same cell).
 - **1895-96 pair010, 6 Среда (6 Dec 1895), evenings:** "Гимнъ." is printed as the opening line at the Александринскій,
