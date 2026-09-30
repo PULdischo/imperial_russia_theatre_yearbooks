@@ -166,3 +166,12 @@ Contrast with 1894-95: this season the Александринскій benefit of
 NOT in the mixed line, because that line is fully accounted for by the Михайловскій bills. So a drama +
 plain-divertissement bill was counted as mixed in 1894-95 but not in 1895-96, and the comedy-ballet bill (22 Jan 1896,
 Батюшкина дочка) was again not counted as mixed. The yearbook's own practice varies by season.
+
+**1904-05 Moscow narrowed, not fully resolved (2026-09-30).** Stats "Балетныхъ 39" (no theater or mixed lines) vs list
+= Repertoire 41. The Repertoire's 41 sessions total 82,893.95 р. against the stats 82,893.92 р., a 3-kopeck difference,
+so the two uncounted performances must be among the five with no receipts: three free student matinées (14 Nov, 6 Dec
+1904, 24 Feb 1905), the 16 Feb 1905 benefit for the actors' retirement home (scenes from Макбетъ and Гамлетъ +
+Фіаметта), and the 19 Apr 1905 Иверская Община charity morning (Волшебное зеркало). The list prints all five dates.
+The likeliest reading is that the stats page left out the two charity performances: that fits 1902-03 and 1903-04,
+where the stats page and the list both leave out charity bills (D4–D8). It is not proven, because receipts can't
+separate performances that have none.

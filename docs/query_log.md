@@ -10849,3 +10849,19 @@ plus the list entry for Очарованный лѣсъ 1895-96 SP and footnote 
 Result: Маріинскій ballet 46; Михайловскій ballet 1 (1,195.60 = stats); Михайловскій drama + ballet 4 (2,457.95 = stats).
 The extra performance is 3 Jan 1896 Александринскій утро, a free student performance (Старый закалъ + Очарованный лѣсъ); the
 list prints "января 3". Not counted as mixed: 29 Mar 1896 (Друзья-пріятели + Дивертиссементъ) and 22 Jan 1896 (Батюшкина дочка).
+
+## 2026-09-30 — 1904-05 Moscow ballet count: stats 39 vs list = Repertoire 41
+
+```sql
+select e.event_id, e.date, t.canonical_name, a.time_of_day, left(a.annotation, 70), e.receipts_total_kopecks, string_agg(...)
+from research.event e join research.theater t using (theater_id) join analysis.event_entry a using (event_id)
+join research.performance p using (event_id) join research.work w using (work_id)
+where e.season = '1904-05' and e.city = 'Moscow' and e.event_status = 'performed'
+  and e.event_id in (select p2.event_id from research.performance p2 join research.work w2 using (work_id) where w2.parent_genre = 'ballet')
+group by all order by 2;
+-- list rows for 1904-11-14, 1904-12-06, 1905-02-16, 1905-02-24, 1905-04-19
+```
+
+Result: 41 sessions, receipts 82,893.95 (stats 82,893.92); 5 without receipts: 3 free student matinées and 2 charity performances
+(16 Feb retirement-home benefit Макбетъ/Гамлетъ/Фіаметта; 19 Apr Иверская, Волшебное зеркало). The list prints all 5. The 2 the
+stats page omits are among these 5, most likely the charity pair (unproven).
