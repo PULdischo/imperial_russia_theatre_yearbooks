@@ -20372,3 +20372,47 @@ to drama. RG asked for examples, and the examples showed it. Those works are now
 marker or treated as neutral, and the convention is dropped. Results: 57/223 exact category rows (55 with
 the convention), total |difference| 710; 64 rows where the count matches but receipts differ. See
 docs/eval/season_stats_comparison.md.
+
+## Issue #117: season-stats receipt leads, round 1: receipt-less sessions scan-checked -- 2026-09-30, PROMOTED
+
+What was checked: all 79 performed sessions with no receipts in the stats categories where the count matches exactly but
+the stats receipts are higher (#116). Worklist: `outputs/recovery_2026-09-30_stats_receipts/worklist.csv`.
+Three agents read every cell on the full-resolution scans; logs are in `logs/`.
+
+- **46 NONE_PRINTED.** The scan prints no figure (free student matinées, benefits, charity bills, the 1895-96 free run).
+- **31 UNREADABLE.** Every one sits in the binding fold, in the last date column of the left-hand page of a spread (1893-94 to
+  1897-98). In some the tops of the digits show; in others the receipts line is wholly inside the fold. **This is the main
+  finding: in 1893-98 the stats-vs-Repertoire receipts gaps come largely from figures the fold hides from the scan, not
+  from transcription errors.** Settling them needs the physical volumes. The list, with 32 cells, is in
+  `docs/eval/stats_receipts_fold_cells.csv`.
+- **1 DROPPED, held back:** 1895-96 pair014, 7 Воскрес., Большой (Аида). The agent read "2647 р. 62 к." from the digit tops at
+  the fold. That is not certain enough to promote (same standard as the Пахита fold cell, #115), so the cell is on the fold
+  list instead.
+- **1 OTHER:** 1901-02 p005, 29 Суббота, Малый, prints the figure in parentheses, "(3058 р. 08 к.).". It is already verbatim in
+  raw, but the parentheses stop it parsing. It is on RG's existing list; any correction belongs in the research layer.
+
+Errors fixed along the way (scan-certain, each with a `_fix_note`):
+- **1898-99 p029 (24–26 Feb 1899):** the Новый column was shifted by one slot and the Малый 24th was mis-split. Both were
+  re-aligned, recovering the Новый 24 утро (Севильскій цирюльникъ) and the Малый 24 веч. (Волки и овцы, 1497 р. 49 к.).
+- **1901-02 p013 (14–17 Nov 1901):** the Новый column was shifted down one row. It was re-aligned, recovering the 14 утро
+  (Фра-Діаволо); the 17th is dark.
+- **Free-performance banners** were missing on 12 dates across 12 pages. They were restored to every утро session under the
+  banner (issue #104 convention).
+- **1898-99 p030:** "Анда" → "Аида" (one of the five "Анда" rows noted 2026-09-29); Михайловскій receipts 1691 р. 58 к. → 53 к.
+- **1901-02 p037:** removed a fabricated genre "траг." on "Прологъ изъ траг. Орлеанская дѣва".
+- **Small punctuation restorations:** 1893-94 pair016 and 1898-99 p032.
+
+Promotion:
+- 17 raw files; production was unchanged since staging (sha1).
+- Backup: `outputs/full_run_pre_promote_backup_2026-09-30_issue117/`.
+- Integration = rebuilt production: event_entry 26520 → 26523, performances 28247 → 28249, annotations 1440 → 1485, receipts
+  −5 kopecks, quality_flags identical.
+
+Noticed by the agents, not yet fixed (need a scan check):
+- **1895-96 pair014, 7 Воскрес., Александринскій:** утро prints "846 р. 7 к." (raw 816); веч. title "Боязнь жизни" (raw "Жизнь
+  жизни").
+- **1895-96 pair010:**
+  - 26th: Михайловскій (Травіата) and Малый веч. (Золото) receipts are in the fold.
+  - 6th, evenings: "Гимнъ." is not transcribed; "Простушка" is printed where raw has "Проступка".
+- **1898-99 p017:** a "28 Среда" where 16 might be expected (not checked).
+- **Four more "Анда, оп." rows:** 1896-97 pair004, 1904-05 p030, 1905-06 p006, 1905-06 p022.

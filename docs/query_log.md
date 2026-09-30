@@ -10698,3 +10698,14 @@ hypothesis explains little. Most differences are hundreds to thousands of rubles
 Result: most positive leads (stats higher) have 1–7 performed sessions with NULL receipts in the category (none with
 unparsed receipts_text except 2). This gives a worklist of 79 receipt-less sessions on 44 pages
 (outputs/recovery_2026-09-30_stats_receipts/worklist.csv), sent for scan checks.
+
+## 2026-09-30 — Issue #117: control vs integration vs production after the receipt-less-session round
+
+```sql
+select (select count(*) from raw.event_entry), (select count(*) from raw.event_entry_performance), (select count(*) from research.event),
+       (select sum(receipts_total_kopecks) from research.event), (select count(*) from research.work),
+       (select count(*) from raw.event_entry where annotation is not null)
+```
+
+Result: control (26520, 28247, 29467, 2801057477, 3482, 1440); integration = production after promotion
+(26523, 28249, 29470, 2801057472, 3482, 1485). compare_season_stats.py afterwards: family rows 57/223 exact, venue rows 52/99.

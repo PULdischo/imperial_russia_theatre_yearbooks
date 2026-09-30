@@ -60,3 +60,15 @@ sources count as receipts that season, not a set of misreads. This is not assume
 
 **C. 85 performed sessions have no works listed** (benefit headings, concerts with no title and similar).
 They can't be sorted into a category.
+
+## Audit round 1 (issue #117, 2026-09-30): the receipt-less sessions
+
+All 79 performed sessions with no receipts in the positive receipt leads (stats higher) were read on the scans:
+- 46 genuinely print no figure;
+- 31 have their receipts line in the binding fold, all on 1893-94 to 1897-98 spreads;
+- 1 fold reading was held back;
+- 1 is the bracketed "(3058 р. 08 к.)".
+
+No dropped figure could be restored with certainty. So for 1893-98 the receipts gaps are largely fold-hidden figures, and
+settling them needs the physical volumes (`docs/eval/stats_receipts_fold_cells.csv`). Along the way the check fixed two
+shifted Новый columns (+3 sessions) and restored 45 free-performance banners.
