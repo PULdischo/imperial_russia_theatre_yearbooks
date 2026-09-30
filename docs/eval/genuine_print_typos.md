@@ -337,3 +337,9 @@ every other subtotal on these pages adds up.
   In footnote 2, "**соорженія** памятника" (у dropped); in footnote 11, "**вп** пользу" for "въ".
 - 1904-05 (p. 134), SP drama subtotal: the "р." has lost its descender and looks like "ь".
   That is damaged type, not a wrong letter, and is transcribed as "р".
+
+## Genre abbreviation misprinted (added 2026-09-30)
+
+- **`repertoire_1908-09_p035` (6 Feb 1909, Маріинскій, вечеръ): "Черевички, эп,"**. The genre should be "оп." (Tchaikovsky's
+  opera), but "э" is set for "о" and a comma for the full stop. Checked at 600 dpi; the transcription matches the print.
+  Found through the season-stats comparison, where the misprinted genre made the opera count as drama.

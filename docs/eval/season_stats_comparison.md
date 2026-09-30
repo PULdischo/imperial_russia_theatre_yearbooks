@@ -281,3 +281,22 @@ performances, 1 free performance for the георгіевскіе кавалер
 
 So 268 = 217 + 1 (Александринскій) + 12 charity + 38 spring run. Nothing counted by the stats page is missing from the
 Repertoire.
+
+## Petersburg drama excess, 1908-09 (2026-09-30): explained
+
+Stats: Russian drama 223 (281,966.05 р.); footnote 1: 1 benefit and 4 free student performances. The Repertoire counts
+273 drama sessions:
+- **Александринскій 223 = stats, exactly.** Its 4 receipt-less sessions are the free student performances (14 Nov,
+  6 Dec, 4 Feb) and the free Gogol-centenary performance (20 Mar). Receipts are 317.43 р. short of the stats; left with
+  the paused leads.
+- **Moscow Art Theatre at the Михайловскій, 46 sessions, 30 Mar – 3 May 1909, no receipts.** Named on the scan: the 30 Mar
+  cell reads "Спектакли Московскаго Художественнаго театра". Plays: Синяя птица, Ревизоръ, Три сестры, У царскихъ вратъ.
+- **Two charity benefits at the Михайловскій with receipts** (17 Dec 1908: 3,225.75 р.; 26 Jan 1909: 749.25 р.). They are
+  not in the stats' drama line; from 1898-99 the stats' receipts exclude charity.
+- **Маріинскій:** a charity operetta (Птички пѣвчія, 20 Apr, no receipts), and "Черевички, эп," (6 Feb, 3,283.90 р.). That
+  is Tchaikovsky's opera, with the genre misprinted in the yearbook itself (added to genuine_print_typos.md), so it
+  belongs to opera, not drama.
+
+So 273 = 223 + 46 + 2 + 1 + 1. Nothing counted by the stats page is missing from the Repertoire. Across 1906-07 to
+1908-09 the pattern holds: the "excess" is visiting-company runs (the Art Theatre named in 1906-07 and 1908-09; the
+1907-08 run unnamed) and charity evenings, which the stats pages don't count as Russian drama.

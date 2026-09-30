@@ -10961,3 +10961,11 @@ entries 1–14).
 Result: Александринскій 218 (214 receipted, 265,164.75; 4 free/benefit), Маріинскій 6 and Михайловскій 6 charity (no receipts),
 Михайловскій spring run 38 (14 Apr–13 May 1908, no receipts). No single Александринскій session = 1,575.72. The list of plays has
 none of the run's plays; the company is not named in the materials checked.
+
+## 2026-09-30 — 1908-09 SP drama excess, by theater
+
+Same session query as for 1906-07/1907-08 (season '1908-09'); plus the raw sessions for repertoire_1908-09_p035 "6 Пятница."
+(scan checked at 600 dpi).
+Result: Александринскій 223 = stats (219 receipted, 281,648.62; 4 free). Михайловскій: Moscow Art Theatre 46 (30 Mar–3 May 1909, no
+receipts, named on the scan) + 2 receipted charity benefits (3,225.75; 749.25). Маріинскій: charity operetta + "Черевички, эп,"
+(genuine print misprint of "оп."). 273 = 223 + 46 + 2 + 1 + 1.
