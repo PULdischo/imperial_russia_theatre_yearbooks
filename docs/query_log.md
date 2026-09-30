@@ -10841,3 +10841,11 @@ where e.season = '1894-95' and e.city = 'SP' and e.event_status = 'performed' an
 Result: Маріинскій ballet 17, Михайловскій 3, opera + ballet 4, all as printed. Drama + ballet: 2 listed-ballet bills + the two
 "Дивертиссементъ" bills (21 and 29 Sep 1894) = 9,015.98 р. exactly (the only pair). The three Батюшкина дочка bills are not
 counted there. Маріинскій pure-ballet receipts 44,784.11 vs stats 44,984.11 (Δ 200.00, not pursued; receipts paused).
+
+## 2026-09-30 — 1895-96 SP ballet count: stats 51 vs list = Repertoire 52
+
+Same session query as for 1894-95 (season '1895-96'), grouped by theater and family with compare_season_stats.classify_work;
+plus the list entry for Очарованный лѣсъ 1895-96 SP and footnote 2.
+Result: Маріинскій ballet 46; Михайловскій ballet 1 (1,195.60 = stats); Михайловскій drama + ballet 4 (2,457.95 = stats).
+The extra performance is 3 Jan 1896 Александринскій утро, a free student performance (Старый закалъ + Очарованный лѣсъ); the
+list prints "января 3". Not counted as mixed: 29 Mar 1896 (Друзья-пріятели + Дивертиссементъ) and 22 Jan 1896 (Батюшкина дочка).

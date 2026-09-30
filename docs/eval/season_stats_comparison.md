@@ -152,3 +152,17 @@ with the comedy-ballet Батюшкина дочка (15 Sep, 13 Oct, 11 Apr) an
 statistics counted the two divertissement bills as drama + ballet and the comedy-ballet bills as drama; the list
 includes neither. (This is one season's evidence on RG's open question about plain "Дивертиссементъ", not a rule.)
 Also noticed, receipts paused: the Маріинскій ballet receipts differ from the stats by exactly 200.00 р.
+
+**1895-96 SP resolved (2026-09-30): a free student matinée with a ballet counted as drama.** Stats 51 vs list =
+Repertoire 52. Every stats line is matched exactly: Маріинскій ballet 46; Михайловскій ballet 1 (17 Jan 1896,
+Коппелія / Жертвы Амуру, 1,195.60 р. = stats); "(русская драма и балетъ) 4" = the four Михайловскій bills of 31 Aug,
+1 Sep, 5 Sep and 12 Sep 1895 (a comedy or drama + Очарованный лѣсъ / Жертвы Амуру / Волшебная флейта), 2,457.95 р. =
+stats to the kopeck. The 52nd performance is 3 Jan 1896, Александринскій утро, "Безплатный спектакль для воспитанниковъ
+учебныхъ заведеній": Старый закалъ, др. + Очарованный лѣсъ, бал. (no receipts). The list gives it ("января 3"), and the
+stats page doesn't count it as ballet or mixed. Presumably it is one of the 4 free student performances in footnote 2
+of the Александринскій drama line, but that is inference, not stated.
+
+Contrast with 1894-95: this season the Александринскій benefit of 29 Mar 1896 (Друзья-пріятели + Дивертиссементъ) is
+NOT in the mixed line, because that line is fully accounted for by the Михайловскій bills. So a drama +
+plain-divertissement bill was counted as mixed in 1894-95 but not in 1895-96, and the comedy-ballet bill (22 Jan 1896,
+Батюшкина дочка) was again not counted as mixed. The yearbook's own practice varies by season.
