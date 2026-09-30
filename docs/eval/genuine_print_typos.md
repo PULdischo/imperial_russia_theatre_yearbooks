@@ -280,3 +280,14 @@ every other subtotal on these pages adds up.
   receipts lines print 247,576 р. 17 к. + 10,353 р. 15 к. + 7,262 р. 50 к. =
   265,191 р. 82 к., but the subtotal prints **265,272 р. 82 к.**, exactly 81 р.
   more. The counts (197 + 25 + 1 = 223) add up.
+- **1900-01 (p. 40), Moscow "Русскихъ оперныхъ":** the lines print 337,935 р. 17 к.
+  + 33,944 р. 03 к. = 371,879 р. 20 к., but the subtotal prints **371,878 р. 20 к.**,
+  exactly 1 р. less. All three figures were checked magnified.
+
+### Other slips on the same pages (kept verbatim in `docs/season_stats/`)
+
+- 1893-94 (p. 26), Moscow drama at the Большой: "24,517 р. 92 **л.**", with "л." for "к.".
+- 1897-98 (p. 27): "Спектаклей труппы **Берлинскго** Лессингъ-театра" (а dropped).
+  In footnote 2, "**соорженія** памятника" (у dropped); in footnote 11, "**вп** пользу" for "въ".
+- 1904-05 (p. 134), SP drama subtotal: the "р." has lost its descender and looks like "ь".
+  That is damaged type, not a wrong letter, and is transcribed as "р".

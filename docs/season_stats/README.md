@@ -19,15 +19,28 @@ free student performances and charity performances. Plan and pilot: RG approved,
   - 1906-07 has counts + receipts and no footnotes;
   - 1908-09 has footnotes again.
 
-**Transcribed so far:** 1891-92, 1896-97, 1906-07 (the three format pilots).
+**Transcribed:** all 17 pages (2026-09-30): every season 1891-92 to 1908-09 except
+1905-06. That comes to 285 lines and 118 footnotes. The data lives in `_build.py`: edit it
+there, then run `uv run python docs/season_stats/_build.py` to regenerate the CSVs and rerun
+every check.
+
+**Format by season (observed on the scans):**
+- 1891-92, 1892-93: counts only.
+- 1893-94 to 1900-01: counts + receipts + footnotes. From 1898-99, footnote 1 says the
+  receipts EXCLUDE charity performances.
+- 1901-02 to 1904-05, and 1906-07: counts + receipts, no footnotes.
+- 1907-08, 1908-09: category totals only, with no per-theater breakdown, and footnotes again.
+- Lines with a count but no receipts occur in 1897-98, 1898-99 (charity) and 1891-92/1892-93
+  (counts-only seasons).
 
 ## Files
 
 - `pages.csv`: one row per page (season, source file, printed page, verbatim
   heading, heading footnote, format, note).
 - `lines.csv`: one row per printed line that carries a number.
-  - `line_kind`: `venue` (an indented "въ … театрѣ" line under a category),
-    `subtotal` (the ruled total under venue lines), or `category` (a single line).
+  - `line_kind`: `venue` (an indented "въ … театрѣ" line under a category), `part` (an
+    indented sub-line of a category that is not a venue, e.g. the kinds of Смѣшанныхъ),
+    `subtotal` (the ruled total under venue/part lines), or `category` (a single line).
   - `category_verbatim`: exactly as printed, including a ditto mark `»` or a
     trailing colon.
   - `category`: the same with the ditto resolved and the colon dropped, for
@@ -35,7 +48,9 @@ free student performances and charity performances. Plan and pilot: RG approved,
   - `qualifier_verbatim`: printed parentheticals such as "(опера и балетъ)".
   - `receipts_verbatim`: the italic figure inside the parentheses, as printed
     (a missing period after "к" is kept).
-  - `receipts_kopecks`: that figure parsed.
+  - `receipts_kopecks`: that figure parsed. A printed half-kopeck ("18½ к.") is kept as
+    .5. A misprinted marker ("л." for "к.") is read explicitly in `KOPECKS_READ`, never by
+    widening the parser.
   - `footnote_refs`: the superscript number(s) on the line.
 - `footnotes.csv`: one row per footnote, verbatim.
 
@@ -47,9 +62,12 @@ free student performances and charity performances. Plan and pilot: RG approved,
 - Damaged type is transcribed as the intended letter, with a note (as with
   "Балстный", #114). A true wrong letter would be kept as printed.
 - A number the print gets wrong stays as printed, and `note` says so. See
-  `docs/eval/genuine_print_typos.md`. So far there are two: 1896-97 SP ballet
-  count subtotal 52 (lines 50 + 3), and 1906-07 SP drama receipts subtotal
-  81 р. over its lines.
-- Every row was read from the scan at 300–600 dpi.
-- Each subtotal was checked against its lines by script, and every text field
-  was checked for mixed Latin/Cyrillic letters.
+  `docs/eval/genuine_print_typos.md`. There are three subtotal slips: 1896-97 SP ballet
+  count 52 (lines 50 + 3); 1900-01 Moscow opera receipts 1 р. under its lines; 1906-07 SP
+  drama receipts 81 р. over its lines. There are also several letter slips.
+- Every row was read from the scan at 250–600 dpi. Doubtful characters were magnified
+  further.
+- `_build.py` fails if:
+  - a subtotal doesn't equal its lines, unless the note starts "PRINT:";
+  - a footnote reference has no footnote;
+  - any field mixes Latin and Cyrillic letters.
