@@ -17,6 +17,28 @@ Level 1 -- city totals, per season. It needs no category or venue mapping:
     (information only, not subtracted: which events the yearbook treated as
     charity is not assumed).
 
+Level 2 -- families (the stats page's categories) and venues. Each performed
+Repertoire session is sorted into a family by explicit rules (classify_work /
+classify_event below), each derived from what the data shows, not assumed:
+  - a Latin-script title is a foreign performance: genre "op."/"oper." = foreign
+    opera (Italian opera at the Большой, German opera at the Маріинскій 1897-98);
+    German genre words or German function words in the title = German; otherwise
+    French;
+  - Cyrillic: genre containing "бал" = ballet; "оп." (exactly, or starting "оп."
+    but not "опер"/"оперет") = opera; "феер" = feerie; everything else = Russian
+    drama. "опер." is operetta by the drama company (Александринскій/Малый titles
+    such as "Не бывать бы счастью"), so it stays drama;
+  - a title containing "концерт" is a concert part. It doesn't count as a family
+    when other works share the bill (the 1897-98 "(русская драма, опера и балетъ)"
+    line is Женитьба + Концертное отдѣленіе + Пахита); alone it makes a concert;
+  - an event whose works fall in more than one family is "mixed" (its combination
+    is kept), EXCEPT Russian drama + one opera/ballet family, which counts under
+    that family: a convention chosen because it fits the stats best (see
+    classify_event), not something the yearbook states.
+Stats lines map to families by their category text (STATS_FAMILY). Lines naming
+a single guest company (Режанъ, Тина ди Лоренцо, Лессингъ-театръ), the drama-school
+performance and the music-literary evenings go to "other".
+
 Usage:
     uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb \
         --out-dir outputs/season_stats_compare
@@ -25,6 +47,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import re
 from pathlib import Path
 
 import duckdb
@@ -72,6 +95,140 @@ from ev group by all
 """
 
 
+STATS_FAMILY = {
+    "Русскихъ драматическихъ": "drama",
+    "Оперныхъ": "opera", "Русскихъ оперныхъ": "opera", "Оперныхъ въ Великомъ посту": "opera",
+    "Балетныхъ": "ballet",
+    "Французскихъ": "french",
+    "Нѣмецкихъ": "german", "Нѣмецкихъ драматическихъ": "german",
+    "Нѣмецкихъ оперныхъ": "foreign_opera", "Итальянскихъ оперныхъ": "foreign_opera",
+    "Смѣшанныхъ": "mixed",
+    "Концертовъ": "concert",
+    "Феерій": "feerie",
+}
+VENUE = {"Александринскомъ": "Александринскій", "Михайловскомъ": "Михайловскій", "Маріинскомъ": "Маріинскій",
+         "Маломъ": "Малый", "Большомъ": "Большой", "Новомъ": "Новый"}
+LATIN = re.compile(r"^[\W\d]*[A-Za-zÀ-ÿ]")
+GERMAN_GENRE = re.compile(r"lustsp|schausp|schwank|comöd|komöd|posse|trauersp|volksst|charakterb|genreb", re.I)
+GERMAN_WORD = re.compile(r"\b(der|die|das|und|ein|eine|im|vom|zum|zur|dem|den)\b|[äöüß]", re.I)
+
+
+def classify_work(title, genre):
+    title, g = title or "", (genre or "").lower().strip()
+    if "концерт" in title.lower():
+        return "concert"
+    # A Cyrillic genre decides the family even for a Latin title ("Viola tricolor,
+    # ком." at the Малый, "Virtus antiqua, сказка" at the Александринскій are
+    # Russian productions); only a Latin or missing genre falls to the Latin rule.
+    if LATIN.match(title) and not re.search(r"[а-яё]", g):
+        if g in ("op.", "oper.", "op", "oper"):
+            return "foreign_opera"
+        # German genre words are often printed inside the title ("Grossmama, Schwank")
+        if GERMAN_GENRE.search(g) or GERMAN_GENRE.search(title) or GERMAN_WORD.search(title):
+            return "german"
+        return "french"
+    if "бал" in g:
+        return "ballet"
+    if g == "оп." or g == "оп" or (g.startswith("оп.") and not g.startswith("опер")):
+        return "opera"
+    if "феер" in g:
+        return "feerie"
+    return "drama"
+
+
+def classify_event(fams):
+    fams = set(fams)
+    core = fams - {"concert"}
+    if not core:
+        return "concert" if fams else "no_works"
+    if len(core) == 1:
+        return next(iter(core))
+    # Counting convention chosen by fit, not taken from the yearbook: a bill that
+    # joins Russian drama to ONE opera or ballet family is counted under that
+    # opera/ballet family (a curtain-raiser doesn't make it "mixed"). Tested
+    # 2026-09-30 against all 17 stats pages: exact family matches 20 -> 48 and
+    # total |difference| 1236 -> 748; also folding opera+ballet together did
+    # worse (43, 782). Everything else with more than one family stays mixed.
+    # A Latin-script bill with French-looking and German works is German when any work
+    # is marked German (e.g. "In Behandlung, Com." + "Das Oelkrüglein, Lustsp.", 1898-99).
+    if core == {"french", "german"}:
+        return "german"
+    for top in ("ballet", "opera", "foreign_opera"):
+        if top in core and core - {top} <= {"drama"}:
+            return top
+    return "mixed:" + "+".join(sorted(core))
+
+
+LEVEL2_SQL = """
+select e.event_id, e.season, e.city, t.canonical_name, e.receipts_total_kopecks,
+       p.verbatim_title, coalesce(w.canonical_genre, p.verbatim_genre)
+from research.event e join research.theater t using (theater_id)
+left join research.performance p using (event_id) left join research.work w using (work_id)
+where e.event_status = 'performed'
+"""
+
+
+def level2(con, out_dir):
+    ev = {}
+    for eid, season, city, th, k, title, genre in con.execute(LEVEL2_SQL).fetchall():
+        e = ev.setdefault(eid, {"season": season, "city": city, "theater": th, "k": k, "fams": []})
+        if title is not None:
+            e["fams"].append(classify_work(title, genre))
+    rep = {}
+    for e in ev.values():
+        cls = classify_event(e["fams"])
+        fam = "mixed" if cls.startswith("mixed:") else cls
+        for key in [(e["season"], e["city"], fam, ""), (e["season"], e["city"], fam, e["theater"])]:
+            r = rep.setdefault(key, {"n": 0, "k": 0, "n_k": 0, "combos": {}})
+            r["n"] += 1
+            if e["k"] is not None:
+                r["k"] += e["k"]; r["n_k"] += 1
+            if fam == "mixed":
+                r["combos"][cls[6:]] = r["combos"].get(cls[6:], 0) + 1
+    st = {}
+    for r in csv.DictReader(open(STATS_DIR / "lines.csv", encoding="utf-8")):
+        if r["line_kind"] == "subtotal":
+            continue
+        fam = STATS_FAMILY.get(r["category"], "other")
+        city = CITY[r["city"]]
+        venue = next((v for k, v in VENUE.items() if k in r["venue_verbatim"]), "")
+        keys = [(r["season"], city, fam, "")] + ([(r["season"], city, fam, venue)] if venue else [])
+        for key in keys:
+            s = st.setdefault(key, {"n": 0, "k": 0.0, "n_k": 0, "labels": []})
+            s["n"] += int(r["count"])
+            if r["receipts_kopecks"] != "":
+                s["k"] += float(r["receipts_kopecks"]); s["n_k"] += int(r["count"])
+            s["labels"].append(r["category_verbatim"] + (" " + r["qualifier_verbatim"] if r["qualifier_verbatim"] else ""))
+    seasons = {k[0] for k in st}
+    rows = []
+    # family rows: every family either side has, for stats seasons; venue rows: only where the stats print a venue line
+    keys = {k for k in st} | {k for k in rep if k[0] in seasons and k[3] == ""}
+    for key in sorted(keys):
+        s = st.get(key, {"n": 0, "k": 0.0, "n_k": 0, "labels": []})
+        r = rep.get(key, {"n": 0, "k": 0, "n_k": 0, "combos": {}})
+        comparable_k = s["n_k"] > 0 and s["n_k"] == s["n"]
+        rows.append({
+            "season": key[0], "city": key[1], "family": key[2], "venue": key[3],
+            "stats_count": s["n"], "rep_sessions": r["n"], "diff": r["n"] - s["n"],
+            "stats_receipts_rub": round(s["k"] / 100, 2) if s["n_k"] else "",
+            "rep_receipts_rub": round(r["k"] / 100, 2),
+            "diff_receipts_rub": round((r["k"] - s["k"]) / 100, 2) if comparable_k else "",
+            "rep_sessions_with_receipts": r["n_k"],
+            "stats_lines": " | ".join(s["labels"]),
+            "rep_mixed_combos": "; ".join(f"{c} {n}" for c, n in sorted(r["combos"].items(), key=lambda x: -x[1])),
+        })
+    out = out_dir / "family_totals.csv"
+    with open(out, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=list(rows[0]))
+        w.writeheader(); w.writerows(rows)
+    fam_rows = [r for r in rows if r["venue"] == ""]
+    exact = sum(1 for r in fam_rows if r["diff"] == 0)
+    print(f"\nlevel 2: {len(fam_rows)} season-city-family rows, {exact} exact; "
+          f"{len(rows) - len(fam_rows)} venue rows, {sum(1 for r in rows if r['venue'] and r['diff'] == 0)} exact")
+    print(f"wrote {out}")
+    return rows
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--db", required=True)
@@ -114,6 +271,7 @@ def main():
     exact_d = sum(1 for r in rows if r["diff_days"] == 0)
     print(f"\n{len(rows)} city-seasons; exact count match: sessions {exact}, days {exact_d}")
     print(f"wrote {out}")
+    level2(con, a.out_dir)
 
 
 if __name__ == "__main__":

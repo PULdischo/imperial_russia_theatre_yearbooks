@@ -10622,3 +10622,31 @@ group by all order by 1, 2
 Result: 49 sessions. 12 are charity or free student performances; about 37 (p042–p048, 14 Apr to 13 May 1908) are a
 continuous run of Брандъ, Росмерсхольмъ, Жизнь человѣка, Докторъ Штокманъ, Вишневый садъ, Горе отъ ума with no receipts.
 Scan p042 (checked at 300 dpi) prints no company heading for the run, so the performer is not stated there.
+
+## 2026-09-30 — Season stats level 2: genre labels and Latin-title samples (to derive family rules)
+
+```sql
+select lower(coalesce(w.canonical_genre, p.verbatim_genre, '∅')) g, count(*) from research.performance p join research.work w using (work_id)
+join research.event e using (event_id) where e.event_status = 'performed' and e.season >= '1891-92' group by 1 order by 2 desc limit 70;
+select e.city, t.canonical_name, count(*) from research.performance p join research.event e using (event_id) join research.theater t using (theater_id)
+where e.event_status = 'performed' and regexp_matches(p.verbatim_title, '^[A-Za-zÀ-ÿ]') group by all;
+-- per ambiguous genre g in ('опер.','oper.','op.','dr.','p.','∅'): top 10 titles with theater and season
+```
+
+Result: "опер." = operetta by the drama company (Александринскій/Малый: Не бывать бы счастью, Парики); "oper." = German
+opera at the Маріинскій 1897-98 (Lohengrin, Siegfried); "op." = Italian opera at the Большой (Otello, La Traviata);
+"dr."/"p." with Latin titles = French troupe at the Михайловскій. Latin-titled performances: Михайловскій 4639,
+Александринскій 711, Большой 52, Маріинскій 35, Малый 3.
+
+## 2026-09-30 — Season stats level 2: family comparison (pipeline/compare_season_stats.py, LEVEL2_SQL)
+
+```sql
+select e.event_id, e.season, e.city, t.canonical_name, e.receipts_total_kopecks, p.verbatim_title, coalesce(w.canonical_genre, p.verbatim_genre)
+from research.event e join research.theater t using (theater_id)
+left join research.performance p using (event_id) left join research.work w using (work_id)
+where e.event_status = 'performed'
+```
+
+Result: classified in Python (rules in the script). Exact family matches: 20 (strict "mixed") → 48 (drama + opera/ballet
+counted under opera/ballet) → 55 after the Latin-title rules; total |Δ| 1236 → 748 → 642. Venue rows: 45/99 exact.
+Leads: 63 rows with exact count but differing receipts; later SP drama excess (+37, +58, +50 in 1906-09); 85 sessions with no works.

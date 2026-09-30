@@ -20349,3 +20349,18 @@ unreadable digit.
 - **Open:** the act digit (2 or 3). RG will check it in person; she has the volume at the
   library. If it is 3, replace "[?]" with "3". If it is 2, the list's "3-е д." becomes a
   confirmed title/act disagreement.
+
+## Issue #116: season production-stats pages vs. Repertoire -- 2026-09-30, comparison built, audit not started
+
+- The stats pages were transcribed in `docs/season_stats/`: 17 seasons, 285 lines, 118 footnotes.
+- The comparison is `pipeline/compare_season_stats.py` (levels 1 and 2). Results and leads are in
+  `docs/eval/season_stats_comparison.md`.
+- Established:
+  - The yearbook counted утро/веч. performances separately.
+  - A drama curtain-raiser on an opera/ballet bill counts under the opera/ballet (chosen by fit).
+  - 55/222 category rows match exactly.
+- Leads for a scan audit:
+  - 63 rows where the count matches but receipts differ (several look like single-digit misreads);
+  - 1893-94 receipts systematically low;
+  - later-season Petersburg drama excess (1906-09), partly an unreceipted spring-1908 Михайловскій run.
+- Nothing has been changed in the Repertoire yet.
