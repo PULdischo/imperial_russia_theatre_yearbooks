@@ -300,3 +300,21 @@ Stats: Russian drama 223 (281,966.05 р.); footnote 1: 1 benefit and 4 free stud
 So 273 = 223 + 46 + 2 + 1 + 1. Nothing counted by the stats page is missing from the Repertoire. Across 1906-07 to
 1908-09 the pattern holds: the "excess" is visiting-company runs (the Art Theatre named in 1906-07 and 1908-09; the
 1907-08 run unnamed) and charity evenings, which the stats pages don't count as Russian drama.
+
+## 1909-10 SP (2026-09-30): Moscow Art Theatre line matches; residuals wait for a transcription fix
+
+**Transcription issue in the new 1909-10 Repertoire (the other chat's work; reported, not fixed here):** 46 French-play
+entries on 6 pages carry a Cyrillic genre that the print doesn't have ("ком." 32, "пьеса" 12). Example, repertoire_1909-10_p023
+(p. 24), 15 Dec 1909, Михайловскій: the scan (500 dpi) prints "La rampe, pièce nouv." / "Les vacances d'Antoinette, com. nouv.",
+while the raw has genres "пьеса" / "ком.". Other seasons have 1–15 such entries each, mostly genuine, like "Viola tricolor, ком.".
+The comparison script's Cyrillic-genre rule would count these French performances as Russian drama.
+
+Counting every Latin-titled play as foreign for this check:
+- **"Московскаго художественнаго театра 35" = the Repertoire's 35 Михайловскій sessions, 19 Apr – 14 May 1910,
+  exactly.** In 1909-10 the stats page counts the Art Theatre on its own line, not as Russian drama.
+- French 100 / 107,243.10 р. vs 107 (99 with receipts) / 107,172.60 р.
+- Ballet 51 / 167,180.22 р. vs 47 + 3 Шопеніана bills = 50 / 165,051.62 р.
+- German 25 vs 19 + 3 French/German double bills.
+- Russian drama 258 / 327,041.88 р. vs Александринскій 236 + Михайловскій 33 = 269 / 328,682.43 р. (+11).
+
+These residuals are left until the genres are corrected, then to be rerun.

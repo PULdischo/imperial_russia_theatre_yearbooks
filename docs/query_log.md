@@ -11020,3 +11020,15 @@ select count(*) from raw.event_entry_performance where performance_title ilike '
 Result: 160 (149 + 11 genuine missing-work additions found by the
 sweep), matching `research.work`'s "Гимнъ" appearance_count exactly
 after rebuild.
+
+## 2026-09-30 — 1909-10 SP: stats vs Repertoire, and Latin-titled works with Cyrillic genres
+
+```sql
+select e.season, count(*), count(distinct a.page_id) from raw.event_entry_performance p join analysis.event_entry a using (event_id)
+join research.event e using (event_id)
+where regexp_matches(p.performance_title, '^[\W\d]*[A-Za-zÀ-ÿ]') and regexp_matches(coalesce(p.genre, ''), '[а-яё]') group by 1 order by 1
+```
+
+Result: 1909-10 has 46 entries on 6 pages ("ком." 32, "пьеса" 12); other seasons 1–15. The p023 15 Dec 1909 scan shows no Cyrillic genre, so
+these were added by the transcription. Recount with Latin titles as foreign: the Art Theatre 35 = stats 35 exactly; French 107/107,172.60 vs
+100/107,243.10; ballet 50 vs 51; German 22 vs 25; Russian drama 269 vs 258.
