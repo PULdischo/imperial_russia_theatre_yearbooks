@@ -140,3 +140,15 @@ second verdict that counts them in:
   page doesn't say which it counts.
 - **1901-02 Moscow:** the 20 Apr 1902 benefit with "Балетный дивертиссементъ" (F4). Not a listed ballet, so it is
   correctly outside the count.
+
+**1894-95 SP resolved (2026-09-30): the stats page counts plain-divertissement drama bills as "русская драма и
+балетъ".** Stats 28 vs list = Repertoire 26. Line by line, the Repertoire matches exactly: ballet Маріинскій 17,
+Михайловскій 3, opera + ballet 4. The gap is on "русская драма и балетъ 4", where the Repertoire's listed-ballet bills
+number 2: 25 Sep 1894 (Комикъ XVII столѣтія + Тщетная предосторожность) and 5 Apr 1895 (second-artists' benefit,
+… + 3-е д. балета Пахита = footnote 6). Five Александринскій drama bills have a ballet element outside the lists: three
+with the comedy-ballet Батюшкина дочка (15 Sep, 13 Oct, 11 Apr) and two with a plain "Дивертиссементъ" (21 Sep:
+Дворянское гнѣздо; 29 Sep: Собака садовника / Въ бѣгахъ). The printed receipts decide it. 1,671.75 + 4,173.60 +
+1,561.76 + 1,608.87 = 9,015.98 р., exactly the stats line, and no other pair of the five gives it. So in 1894-95 the
+statistics counted the two divertissement bills as drama + ballet and the comedy-ballet bills as drama; the list
+includes neither. (This is one season's evidence on RG's open question about plain "Дивертиссементъ", not a rule.)
+Also noticed, receipts paused: the Маріинскій ballet receipts differ from the stats by exactly 200.00 р.

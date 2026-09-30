@@ -10825,3 +10825,19 @@ Result:
 - 1900-01 SP: РТО 30 Dec 1900 (… 2-е д. бал. Фіаметта).
 - 1903-04 MSK: 18 Oct 1903 benefit (1-е д. Донъ-Кихотъ) and 24 Oct 1903 Tchaikovsky memorial (3-е д. Лебединое озеро).
 - ballet_counts.csv: all three agree 14/28.
+
+## 2026-09-30 — 1894-95 SP ballet count: which performances make the stats page's "русская драма и балетъ 4"?
+
+```sql
+-- every performed 1894-95 SP session with a ballet element (parent_genre ballet, a бал genre, "бал."/"балет"/"дивертис" in a title)
+select e.date, t.canonical_name, a.time_of_day, a.page_id, left(a.annotation, 70), e.receipts_total_kopecks is not null,
+       max(case when w.parent_genre = 'ballet' then 1 else 0 end), string_agg(p.verbatim_title || ' | ' || coalesce(p.verbatim_genre, ''), ' / ')
+from research.event e join research.theater t using (theater_id) join analysis.event_entry a using (event_id)
+join research.performance p using (event_id) join research.work w using (work_id)
+where e.season = '1894-95' and e.city = 'SP' and e.event_status = 'performed' and e.event_id in (...) group by all order by 1, 2;
+-- receipts of the 7 Александринскій candidates; every pair tested against the printed 9,015 р. 98 к.
+```
+
+Result: Маріинскій ballet 17, Михайловскій 3, opera + ballet 4, all as printed. Drama + ballet: 2 listed-ballet bills + the two
+"Дивертиссементъ" bills (21 and 29 Sep 1894) = 9,015.98 р. exactly (the only pair). The three Батюшкина дочка bills are not
+counted there. Маріинскій pure-ballet receipts 44,784.11 vs stats 44,984.11 (Δ 200.00, not pursued; receipts paused).
