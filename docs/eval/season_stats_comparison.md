@@ -206,3 +206,26 @@ list:
 - Two stay open: 1904-05 Moscow (which two receipt-less performances the stats omit) and 1904-05 SP (receipts tied to
   the 15,291.95 р. Корсаръ figure).
 - 1903-04 Moscow's single unqualified mixed performance can't be identified from the page.
+
+### Is the Repertoire complete for ballet? (RG's priority, 2026-09-30)
+
+**1906-07 to 1908-09 (stats pages, no ballet lists).** A Repertoire session counts as ballet when a work is printed with a
+"бал" genre (the parent_genre rule can't apply without a list):
+- **1907-08 SP:** 52 / 172,712.87 р. = stats, exactly.
+- **1908-09 SP:** 41 pure-ballet sessions + 7 bills with "Шопеніана, сюита" (Евника, Египетскія ночи, Павильонъ Армиды …)
+  = 48 / 156,197.22 р. = stats, exactly. The only one left out is the Lohengrin + Балетный дивертиссментъ charity bill.
+- **1908-09 Moscow:** 48 + the Арендсъ benefit (Нуръ и Анитра, хореограф. карт. / Раймонда) = 49 / 101,477.91 р. = stats,
+  exactly.
+- **1906-07 SP:** 55 sessions; receipts 168,182.50 р. = stats exactly; the stats count 53 leaves out 2 of the 3 receipt-less
+  sessions.
+- **1906-07 Moscow:** Repertoire 51 vs stats 49 (the Repertoire has more).
+- **1907-08 Moscow:** Repertoire 47 vs stats 48. The one short is the 11 Nov 1907 Большой "Коппелія", printed "оп."
+  (scan-confirmed genuine, #100; 2,578.77 р.). As a ballet, 48 = stats. Receipts remain 5,002.94 р. short of the stats
+  (paused with the other receipt leads).
+
+**Conclusion, for every season with a stats page (1891-92 to 1908-09, except 1905-06):** the Repertoire has at least as
+many ballet performances as the stats page counts, once the stats page's own classing and the recorded list
+disagreements are allowed for. No ballet performance the yearbook's statistics count is missing from the Repertoire.
+Many seasons match performance for performance, often to the kopeck in receipts. Open items affect receipts or which
+receipt-less performance the stats page omitted, never a missing ballet performance. 1890-91 (no stats page) and 1905-06
+(no stats page found) aren't covered by this check.

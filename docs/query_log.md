@@ -10882,3 +10882,12 @@ ballet receipts 147,227.86.
 Result: the other 55 total 149,818.37 (Δ 2,590.51). 2 Mar 1901 Михайловскій Bénéfice de M-lle Barety (Rosalie / Nos alliées /
 Les élèves de Dupré) = 2,590.50, counted under "Французскихъ" by the stats page. D3 has no Repertoire receipts, but the stats
 prints 5,043.90 for the РТО mixed performance.
+
+## 2026-09-30 — Ballet completeness, 1906-07 to 1908-09 (stats pages without ballet lists)
+
+Performed sessions 1906-09 per season-city, works classified with compare_season_stats.classify_work; pure ballet vs mixed
+with ballet, receipts, receipt-less count; compared with docs/season_stats/lines.csv "Балетныхъ" (+ 1908-09 MSK "Смѣшанныхъ 1").
+Then 1907-08 Moscow: sessions with receipts = 758171 (none) and the "Коппелія | оп." session.
+Result: 1907-08 SP, 1908-09 SP (41 + 7 Шопеніана bills) and 1908-09 MSK (48 + Нуръ и Анитра/Раймонда) match count and receipts
+exactly. 1906-07 SP receipts exact (count 55 vs 53). 1906-07 MSK Repertoire 51 vs 49. 1907-08 MSK 47 vs 48, resolved by 11 Nov 1907
+Большой Коппелія "оп." (2,578.77); receipts still 5,002.94 short.
