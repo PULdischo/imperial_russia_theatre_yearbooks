@@ -49,7 +49,12 @@ performance and the music-literary evenings go to "other".
 
 Level 3 -- ballet performances per season-city, three ways (2026-09-30):
   - stats page: "Балетныхъ" + the "Смѣшанныхъ" lines whose qualifier includes
-    балет + "Феерій" (only Кольцо любви, Moscow 1892-94);
+    балет + "Феерій" (only Кольцо любви, Moscow 1892-94). "Смѣшанныхъ" lines
+    printed WITHOUT a qualifier (1898-99 SP, 1899-00 MSK, 1900-01 SP, 1901-02 MSK,
+    1903-04 MSK, 1908-09 MSK) may or may not include a ballet; they are reported
+    separately (stats_mixed_unqualified) with a second verdict counting them in.
+    E.g. 1899-00 MSK footnote 12: the Bolshoi 75th anniversary + an "(опера и
+    балетъ)" charity bill, both with a listed ballet in the Repertoire;
   - ballet productions list: performances implied by its dates. Per date, the
     larger of (a) what the list states itself -- the same ballet printed twice on
     one date (утро/вечеръ rows) or a "2 раза" note -- and (b) the number of
@@ -278,7 +283,7 @@ def ballet_counts(con, out_dir):
         JOIN research.work w USING (work_id)
         WHERE e.event_status = 'performed' AND w.parent_genre = 'ballet' GROUP BY ALL""").fetchall():
         rep_by_date[(season, city, d)].append(f"{th} {tod}: {titles}")
-    st = defaultdict(lambda: [0, 0, 0])
+    st = defaultdict(lambda: [0, 0, 0, 0])
     for r in csv.DictReader(open(STATS_DIR / "lines.csv", encoding="utf-8")):
         if r["line_kind"] == "subtotal":
             continue
@@ -287,6 +292,8 @@ def ballet_counts(con, out_dir):
             st[k][0] += int(r["count"])
         elif r["category"] == "Смѣшанныхъ" and "балет" in r["qualifier_verbatim"]:
             st[k][1] += int(r["count"])
+        elif r["category"] == "Смѣшанныхъ" and not r["qualifier_verbatim"]:
+            st[k][3] += int(r["count"])
         elif r["category"] == "Феерій":
             st[k][2] += int(r["count"])
     seasons = sorted({(k[0], k[1]) for k in list_perf} & set(st))
@@ -294,12 +301,18 @@ def ballet_counts(con, out_dir):
     for season, city in seasons:
         L = sum(v for k, v in list_perf.items() if k[:2] == (season, city))
         R = sum(len(v) for k, v in rep_by_date.items() if k[:2] == (season, city))
-        S = sum(st[(season, city)])
-        verdict = ("all agree" if S == L == R else "stats = list" if S == L else "list = Repertoire" if L == R
-                   else "stats = Repertoire" if S == R else "all differ")
+        S = sum(st[(season, city)][:3])
+        U = st[(season, city)][3]
+
+        def verdict_for(s):
+            return ("all agree" if s == L == R else "stats = list" if s == L else "list = Repertoire" if L == R
+                    else "stats = Repertoire" if s == R else "all differ")
+        verdict = verdict_for(S)
         out.append({"season": season, "city": city, "stats_ballet": st[(season, city)][0],
                     "stats_mixed_with_ballet": st[(season, city)][1], "stats_feerie": st[(season, city)][2],
-                    "stats_total": S, "list_performances": L, "rep_sessions": R, "verdict": verdict})
+                    "stats_total": S, "list_performances": L, "rep_sessions": R, "verdict": verdict,
+                    "stats_mixed_unqualified": U,
+                    "verdict_with_unqualified": verdict_for(S + U) if U else ""})
         for k in sorted({k for k in list(list_perf) + list(rep_by_date) if k[:2] == (season, city)}):
             lp, rp = list_perf.get(k, 0), len(rep_by_date.get(k, []))
             if lp != rp:

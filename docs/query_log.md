@@ -10803,3 +10803,25 @@ artifact (1893-94 MSK+SP, 1898-99 MSK ×5, 1899-00 MSK ×5); recorded disagreeme
 new leads 1899-01-23 Маріинскій (Балъ изъ бал. Пахита), 1901-12-12 and 1901-12-19 Новый (Коппелія), 1902-02-21
 Большой утро (Жизель / Корсаръ). Added the alias Ученики Дюпрэ → Les élèves de Dupré; research.work parent_genre ballet
 184 → 185.
+
+## 2026-09-30 — 1899-00 Moscow and the other unqualified "Смѣшанныхъ" lines: which Repertoire sessions are they?
+
+```sql
+-- 1899-00 Moscow sessions whose annotation mentions the 75th anniversary or the Иверская Община, with works and parent_genre
+select e.date, t.canonical_name, a.time_of_day, a.page_id, a.printed_page_number, left(a.annotation, 120), e.receipts_total_kopecks,
+       string_agg(p.verbatim_title || ' | ' || coalesce(p.verbatim_genre, '') || ' | ' || coalesce(w.parent_genre, ''), ' / ')
+from research.event e join research.theater t using (theater_id) join analysis.event_entry a using (event_id)
+join research.performance p using (event_id) join research.work w using (work_id)
+where e.season = '1899-00' and e.city = 'Moscow' and e.event_status = 'performed'
+  and (a.annotation ilike '%75%' or a.annotation ilike '%Иверск%') group by all;
+-- list rows on 1900-01-06 and 1900-04-12 (1899-00 Moscow); РТО / Литературный фондъ sessions 1898-99 SP; РТО 1900-01 SP;
+-- 1903-04 Moscow sessions mixing a parent-ballet work with other genres
+```
+
+Result:
+- 1899-00 MSK: 6 Jan 1900 Большой (75th anniversary, includes Танцовщики по неволѣ, бал.) and 12 Apr 1900 Большой
+  (Иверская, Лакме / Фея куколъ). The list prints both dates, so 62 + 2 = 64 in all three sources.
+- 1898-99 SP: РТО 23 Jan 1899 gala (… Балъ изъ бал. Пахита); no session found for the Литературный фондъ.
+- 1900-01 SP: РТО 30 Dec 1900 (… 2-е д. бал. Фіаметта).
+- 1903-04 MSK: 18 Oct 1903 benefit (1-е д. Донъ-Кихотъ) and 24 Oct 1903 Tchaikovsky memorial (3-е д. Лебединое озеро).
+- ballet_counts.csv: all three agree 14/28.

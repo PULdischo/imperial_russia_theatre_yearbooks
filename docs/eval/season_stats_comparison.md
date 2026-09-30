@@ -117,3 +117,26 @@ list/Repertoire difference to its dates:
 - **Stats page differs from list = Repertoire:** 1894-95 SP (+2), 1895-96 SP (−1), 1899-00 Moscow (−2), 1904-05
   Moscow (−2), 1903-04 Moscow (−2 vs list). These are probably questions of how the stats page classed mixed bills.
   Not yet examined.
+
+**Built into the script (2026-09-30):** `pipeline/compare_season_stats.py` level 3 writes `ballet_counts.csv` and
+`ballet_count_dates.csv`. A list date counts as the larger of what the list states itself (утро/вечеръ rows, "2
+раза") and the number of separate Repertoire sessions that day playing one of its listed ballets, capped at the
+list's rows for that date. Result: all three agree in 14 of 28.
+
+**"Смѣшанныхъ" lines printed without a qualifier** are now reported separately (`stats_mixed_unqualified`), with a
+second verdict that counts them in:
+- **1899-00 Moscow: resolved, all three sources agree.** Footnote 12 gives the Bolshoi's 75th anniversary (6 Jan 1900:
+  Торжество музъ / Мѣщанинъ во дворянствѣ / Танцовщики по неволѣ, бал.) and an "(опера и балетъ)" Иверская Община
+  benefit (12 Apr 1900: Лакме / Фея куколъ). Both include a listed ballet, and the list prints both dates:
+  62 + 2 = 64 = list = Repertoire.
+- **1898-99 SP:** of the two mixed performances (footnote 8), the РТО benefit on 23 Jan 1899 is a gala ending with
+  "Балъ изъ бал. Пахита"; nothing was found for the Литературный фондъ one. Counting the РТО gala, 53 + 1 = 54 =
+  list = Repertoire in total. The list reaches 54 by including 21 Sep 1898 (A7) and leaving out 23 Jan (a charity
+  gala, like section D).
+- **1900-01 SP:** the one mixed performance is the РТО benefit of 30 Dec 1900 with "2-е д. бал. Фіаметта" (= D3).
+  54 + 1 = 55 = list; the Repertoire has 56.
+- **1903-04 Moscow:** one mixed performance, no footnote. The Repertoire has two candidates: the 18 Oct 1903 benefit
+  (… "1-е д. Донъ-Кихотъ Ламанчскій") and the 24 Oct 1903 Tchaikovsky memorial (… "3-е д. Лебединое озеро"). The
+  page doesn't say which it counts.
+- **1901-02 Moscow:** the 20 Apr 1902 benefit with "Балетный дивертиссементъ" (F4). Not a listed ballet, so it is
+  correctly outside the count.
