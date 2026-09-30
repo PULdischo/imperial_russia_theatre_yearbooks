@@ -10650,3 +10650,14 @@ where e.event_status = 'performed'
 Result: classified in Python (rules in the script). Exact family matches: 20 (strict "mixed") → 48 (drama + opera/ballet
 counted under opera/ballet) → 55 after the Latin-title rules; total |Δ| 1236 → 748 → 642. Venue rows: 45/99 exact.
 Leads: 63 rows with exact count but differing receipts; later SP drama excess (+37, +58, +50 in 1906-09); 85 sessions with no works.
+
+## 2026-09-30 — Examples of "drama + opera/ballet" bills (RG asked what the convention covered)
+
+Same join as LEVEL2_SQL plus analysis.event_entry (page_id, date_text, printed_page_number), ordered by performance_order,
+seasons 1891-92–1908-09 except 1905-06; classified with pipeline/compare_season_stats.py.
+
+Result: 299 such bills (180 ballet, 119 opera), and the "drama" item was usually genre-less: benefit headings stored as works,
+"Гимнъ", excerpts ("3-е д. бал. Пахита", "1-е д. оп. Невѣста-лунатикъ"), "Дивертиссементъ". After classifying genre-less works
+by title marker or as neutral: 78 remain (48 ballet, 30 opera), mostly still misreads (the Псковитянка prologue printed
+"Боярыня Вѣра Шелога, прологъ, др.", "Мѣщанинъ во дворянствѣ, ком.-бал.", "Соломенная шляпка, оп.-вод."). Re-test with the
+script's own functions: 57 exact / |Δ| 710 without the convention, 55 / 662 with it. The convention was dropped.

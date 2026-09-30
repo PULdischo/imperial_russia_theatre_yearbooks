@@ -31,10 +31,18 @@ classify_event below), each derived from what the data shows, not assumed:
   - a title containing "концерт" is a concert part. It doesn't count as a family
     when other works share the bill (the 1897-98 "(русская драма, опера и балетъ)"
     line is Женитьба + Концертное отдѣленіе + Пахита); alone it makes a concert;
-  - an event whose works fall in more than one family is "mixed" (its combination
-    is kept), EXCEPT Russian drama + one opera/ballet family, which counts under
-    that family: a convention chosen because it fits the stats best (see
-    classify_event), not something the yearbook states.
+  - a genre-less work takes its family from an excerpt marker in its title
+    ("3-е д. бал. Пахита"); otherwise it is neutral (benefit headings stored as
+    works, "Гимнъ", "Дивертиссементъ"), and an event of only neutral works counts
+    as drama;
+  - an event whose works fall in more than one family is "mixed", and its
+    combination is kept. (A "drama + opera/ballet counts as opera/ballet"
+    convention was tried on 2026-09-30 and dropped: its apparent gain came from
+    genre-less works defaulting to drama, and once those were classified it no
+    no longer earned its place: 57 exact / total |difference| 710 without it,
+    55 / 662 with it, and the remaining gain came from bills this classifier still
+    misreads -- an opera's prologue printed "прологъ, др.", comedy-ballets
+    ("ком.-бал."), an opera-vaudeville ("оп.-вод.").)
 Stats lines map to families by their category text (STATS_FAMILY). Lines naming
 a single guest company (Режанъ, Тина ди Лоренцо, Лессингъ-театръ), the drama-school
 performance and the music-literary evenings go to "other".
@@ -133,29 +141,29 @@ def classify_work(title, genre):
         return "opera"
     if "феер" in g:
         return "feerie"
+    if not g:
+        # No genre: an excerpt carries it inside the title ("3-е д. бал. Пахита",
+        # "1-е д. оп. Невѣста-лунатикъ"); anything else genre-less (a benefit heading
+        # stored as a work, "Гимнъ", "Дивертиссементъ", "Апоѳеозъ") is neutral and
+        # doesn't decide the event's family.
+        tl = title.lower()
+        if re.search(r"\bбал(\.|ета)", tl):
+            return "ballet"
+        if re.search(r"\bоп(\.|еры)", tl):
+            return "opera"
+        return "unmarked"
     return "drama"
 
 
 def classify_event(fams):
     fams = set(fams)
-    core = fams - {"concert"}
+    core = fams - {"concert", "unmarked"}
     if not core:
-        return "concert" if fams else "no_works"
+        if "concert" in fams:
+            return "concert"
+        return "drama" if "unmarked" in fams else "no_works"
     if len(core) == 1:
         return next(iter(core))
-    # Counting convention chosen by fit, not taken from the yearbook: a bill that
-    # joins Russian drama to ONE opera or ballet family is counted under that
-    # opera/ballet family (a curtain-raiser doesn't make it "mixed"). Tested
-    # 2026-09-30 against all 17 stats pages: exact family matches 20 -> 48 and
-    # total |difference| 1236 -> 748; also folding opera+ballet together did
-    # worse (43, 782). Everything else with more than one family stays mixed.
-    # A Latin-script bill with French-looking and German works is German when any work
-    # is marked German (e.g. "In Behandlung, Com." + "Das Oelkrüglein, Lustsp.", 1898-99).
-    if core == {"french", "german"}:
-        return "german"
-    for top in ("ballet", "opera", "foreign_opera"):
-        if top in core and core - {top} <= {"drama"}:
-            return top
     return "mixed:" + "+".join(sorted(core))
 
 

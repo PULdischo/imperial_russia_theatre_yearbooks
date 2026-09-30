@@ -10,17 +10,29 @@ yet. These are leads for a scan audit of both sides, with the same rules as the 
 - **The yearbook counted morning and evening performances separately.** Counting sessions, the Repertoire is
   within −3..+11 of the stats totals in 1891-92 to 1900-01. Counting distinct theater-days, it is 19–63 short
   in every season (level 1, `city_totals.csv`).
-- **A drama curtain-raiser on an opera or ballet bill is counted under the opera/ballet.** This was chosen
-  by fit, not stated by the yearbook. With it, exact category matches rise from 20 to 48 and the total
-  difference falls from 1,236 to 748. Treating those bills as "mixed" leaves the Repertoire with far more
-  mixed bills than the stats, and matching shortfalls in ballet and opera. Folding opera + ballet together as
-  well did worse (43 exact).
+- **Correction (2026-09-30, RG asked for examples):** an earlier version of this note said "a drama
+  curtain-raiser on an opera or ballet bill is counted under the opera/ballet (chosen by fit)". That was
+  wrong. The examples showed that the "drama" in those 299 bills was almost never a curtain-raiser. It was
+  mostly genre-less items that the classifier had defaulted to drama:
+  - benefit headings stored as works ("Бенефисъ г-жи Гейтенъ 1-й / Фіаметта, бал.");
+  - "Гимнъ";
+  - excerpts carrying their genre in the title ("3-е д. бал. Пахита");
+  - "Дивертиссементъ".
+
+  The classifier now takes a genre-less work's family from the excerpt marker in its title, or else treats
+  it as neutral, and the convention was dropped: 57 exact without it, 55 with it. Of the bills that still
+  join drama to opera or ballet, many are further classifier misreads:
+  - the prologue of Псковитянка ("Боярыня Вѣра Шелога, прологъ, др.");
+  - comedy-ballets;
+  - an opera-vaudeville.
+
+  Genuine ones exist ("О время!, ком. / Ѳедулъ съ дѣтьми, оп.", 1896-97 Большой) but are few.
 - **Rules for foreign performances**, all taken from the data:
   - A Cyrillic genre decides the family even for a Latin title ("Viola tricolor, ком.").
   - German genre words also count when printed inside the title ("Grossmama, Schwank").
   - A French-looking + German bill with a German-marked work counts as German.
   - "опер." is operetta by the drama company, not opera.
-- **After these rules:** 55 of 222 season-city-category rows match exactly, and the total difference is 642.
+- **After these rules:** 57 of 223 season-city-category rows match exactly, and the total difference is 710. Venue rows: 51 of 99 exact.
 
 ## Leads
 
@@ -28,7 +40,7 @@ yet. These are leads for a scan audit of both sides, with the same rules as the 
 of performances is being summed. Several look like a single misread digit: −30.00, −40.00, +100.00,
 −200.00, +50.00, −146.00, −294.00 and the 1896-97 Михайловскій drama −19,709.00. Tiny differences (±0.01 to
 ±5.68) are kopeck-level; half-kopecks are printed in three seasons. Full list:
-`family_totals.csv` rows with diff = 0 and diff_receipts_rub ≠ 0; 63 rows as of 2026-09-30.
+`family_totals.csv` rows with diff = 0 and diff_receipts_rub ≠ 0; 64 rows after the correction.
 
 **1893-94 is systematically low on the Repertoire side in every category** (for example Moscow drama −4,188,
 opera −4,402, SP French −5,265). The pattern across all categories suggests a difference in what the two

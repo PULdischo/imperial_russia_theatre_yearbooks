@@ -20364,3 +20364,11 @@ unreadable digit.
   - 1893-94 receipts systematically low;
   - later-season Petersburg drama excess (1906-09), partly an unreceipted spring-1908 Михайловскій run.
 - Nothing has been changed in the Repertoire yet.
+
+**#116 correction, 2026-09-30:** the "drama + opera/ballet counts as opera/ballet" convention reported
+above was an artefact of my classifier, not a finding about the yearbook. Genre-less works (benefit
+headings stored as works, "Гимнъ", excerpts such as "3-е д. бал. Пахита", "Дивертиссементъ") had defaulted
+to drama. RG asked for examples, and the examples showed it. Those works are now classified by title
+marker or treated as neutral, and the convention is dropped. Results: 57/223 exact category rows (55 with
+the convention), total |difference| 710; 64 rows where the count matches but receipts differ. See
+docs/eval/season_stats_comparison.md.
