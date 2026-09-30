@@ -161,6 +161,16 @@ misprint "дивертиссментъ") gets "бал.". A plain "Диверти
 (NULL when there is no genre), and `genre_note` gives the rule's reason. The
 build fails if a rule matches no work.
 
+**Parent genre (issue #118, 2026-09-30; RG may rename it)**: RG's rule is that a work printed in the
+ballet productions lists (and the season's ballet review) has parent genre ballet, whatever its printed genre.
+`research.work.parent_genre` = `ballet` for every work with a Repertoire performance on one of the list's dates, in
+the same city, under the list's title: the same title after `norm()`, or an excerpt of it. Nothing fuzzy is used;
+the only extra matches come from a curated alias list of scan-confirmed spelling differences
+(`BALLET_LIST_TITLE_ALIASES`). `parent_genre_note` names the list seasons. The printed genre stays in
+`canonical_genre`: for example Кольцо любви "феерія." (stats page "Феерій") and the one genuinely printed
+"Раймонда, оп.". Works never in a list stay NULL: divertissements, the comedy-ballets, and the section-E ballets.
+Lists cover 1890-91 to 1904-05. The ballet-review half of the rule waits for mention detection.
+
 **`session.date`** is the best-available date: the run-corroborated
 correction from `docs/performance_normalization.md` when there is one,
 otherwise the original computed date, with `date_confidence` always

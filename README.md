@@ -278,6 +278,8 @@ erDiagram
         string excerpt_note
         string genre_source
         string genre_note
+        string parent_genre
+        string parent_genre_note
     }
     person {
         uuid person_id PK

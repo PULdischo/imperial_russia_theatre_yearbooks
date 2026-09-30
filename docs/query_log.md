@@ -10749,3 +10749,27 @@ Result: list #5 Кольцо любви, "Волшебная сказка въ 3
 "Феерій 5"; 43 + 2 + 5 = 50 vs 49 list dates. The stats pages have a "Феерій" line only in these two Moscow seasons.
 Works the lists call "Балетъ-феерія" (Спящая красавица, Щелкунчикъ, Синяя борода) never get a separate stats line; they
 fall under "Балетныхъ". In the Repertoire, "феер" genres occur only for Кольцо любви (1892-94) and three single later sessions.
+
+## 2026-09-30 — Кольцо любви in the ballet season reviews (does RG's parent-genre rule's second condition hold?)
+
+Text search (not SQL) of outputs/reviews/view_full_parsed/text/*.txt for "Кольцо любви".
+Result: review_1892-93_MSK_ballet_p004 (caption "Сцена 1-й картины 2-го дѣйствія фееріи В. А. Крылова—«Кольцо любви»");
+review_1893-94_MSK_ballet_p000 ("43 балетныхъ спектакля, 2 смѣшанныхъ (балетъ и опера вмѣстѣ) и 5 спектаклей, въ которыхъ
+была дана феерія («Кольцо любви»)", the same figures as the 1893-94 stats page); review_1893-94_MSK_ballet_p012
+(the season's last performance, 25 Apr, was the féerie).
+
+## 2026-09-30 — Issue #118: parent_genre = ballet (scratch copy, then production)
+
+```sql
+select count(*), count(*) filter (where excerpt_of_work_id is not null) from research.work where parent_genre = 'ballet';
+select coalesce(canonical_genre, '∅'), count(*) from research.work where parent_genre = 'ballet' group by 1 order by 2 desc;
+select w.canonical_title, w.canonical_genre, count(*) from research.work w join research.performance p using (work_id)
+join research.event e using (event_id) where w.canonical_genre ilike '%бал%' and w.parent_genre is null and e.season <= '1904-05'
+group by all order by 3 desc;
+select count(*) from research.performance p join research.work w using (work_id) where w.parent_genre = 'ballet'
+```
+
+Result: first run (exact/excerpt only) 175 works; "Раймонда, оп." (1901-02 p026, scan-confirmed genuine print) and
+Кольцо любви "феерія." correctly included. 8 ballet works were missed only by spelling. After the curated aliases:
+184 works, 2,267 performances. The ballet-genre works left NULL are exactly Балетный дивертиссементъ, the two
+comedy-ballets, Сонъ въ лѣтнюю ночь and Мнимыя дріады (none is in a list).

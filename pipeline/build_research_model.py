@@ -115,6 +115,68 @@ RESEARCH_GENRE_RULES = [
 ]
 
 
+#: Parent genre (RG, 2026-09-30; the name may change). A work that the yearbook
+#: prints in its ballet productions lists ("Списокъ пьесъ … Балетъ", 1890-91 to
+#: 1904-05) has parent genre "ballet", whatever its printed genre -- e.g. Кольцо
+#: любви, printed "феерія" in the Repertoire and "Волшебная сказка" in the list.
+#: The printed genre stays in canonical_genre. A work counts as listed when a
+#: Repertoire performance of it falls on one of the list's dates in the same
+#: city under the list's title: equal after compare_productions_repertoire.norm,
+#: or an excerpt of it (its parent work, or the list title inside its own title).
+#: Nothing fuzzy. RG's rule also covers the season's ballet review; that half
+#: needs mention detection, which doesn't exist yet.
+PARENT_GENRE_BALLET_NOTE = "printed in the ballet productions list(s) {seasons}"
+
+#: Same ballet, spelled differently in the list and the Repertoire: only the
+#: scan-confirmed title disagreements C1-C7 of
+#: docs/eval/ballet_list_repertoire_disagreements.md, plus three awaiting RG's
+#: physical check of the spelling (the work itself isn't in doubt). List title ->
+#: Repertoire spellings; compared after norm().
+BALLET_LIST_TITLE_ALIASES = {
+    "Волшебныя грёзы": ["Волшебные грезы"],                            # C1
+    "Привалъ кавалеріи": ["Привалъ кавалерія", "Пригалъ кавалеріи"],    # C2; Пригалъ awaits physical check
+    "Маркобомба": ["Маркабомба"],                                       # C3
+    "Фіаметта": ["Фіамметта", "Фіаметто"],                              # C4-C6
+    "Граціелла": ["Граціела"],                                          # C7
+    "Наяда и рыбакъ": ["Паяда и рыбакъ"],                               # awaits physical check
+    "Баядерка": ["Ваядерка"],                                           # awaits physical check
+}
+
+
+def ballet_list_work_ids(con: duckdb.DuckDBPyConnection) -> dict:
+    """work_id -> sorted list of list seasons, for works matched to a ballet-list date."""
+    from compare_productions_repertoire import norm, contains
+    lst = con.execute("""
+        SELECT e.season, e.city, e.title, strftime(p.date, '%Y-%m-%d')
+        FROM raw.production_entry_performance p JOIN raw.production_entry e USING (production_entry_id)
+        WHERE p.date IS NOT NULL
+    """).fetchall()
+    rep = con.execute("""
+        SELECT ae.city, coalesce(dc.corrected_date_undate, ae.date_undate) AS d,
+               wl.work_id, eep.performance_title, w.canonical_title, w.excerpt_of_work_id, pw.canonical_title
+        FROM raw.event_entry_performance eep
+        JOIN entities.work_link wl ON wl.raw_performance_id = eep.performance_id
+        JOIN analysis.event_entry ae ON ae.event_id = eep.event_id
+        LEFT JOIN analysis.event_entry_date_check dc ON dc.event_id = ae.event_id
+        LEFT JOIN entities.work w ON w.work_id = wl.work_id
+        LEFT JOIN entities.work pw ON pw.work_id = w.excerpt_of_work_id
+        WHERE ae.event_status = 'performed'
+    """).fetchall()
+    by_day = {}
+    for city, d, wid, vt, ct, parent_id, pt in rep:
+        by_day.setdefault((city, d), []).append((wid, {norm(vt), norm(ct)} - {""}, norm(pt), parent_id))
+    aliases = {norm(k): {norm(v) for v in vs} for k, vs in BALLET_LIST_TITLE_ALIASES.items()}
+    out = {}
+    for season, city, title, d in lst:
+        lkeys = {norm(title)} | aliases.get(norm(title), set())
+        for wid, keys, pkey, parent_id in by_day.get((city, d), []):
+            if (lkeys & keys) or (pkey and pkey in lkeys) or any(contains(k, lk) for k in keys for lk in lkeys):
+                out.setdefault(wid, set()).add(season)
+                if parent_id is not None and pkey in lkeys:
+                    out.setdefault(parent_id, set()).add(season)
+    return {w: sorted(s) for w, s in out.items()}
+
+
 #: Curated research-layer correction for receipts figures whose PRINT is a
 #: confirmed typo in the rubles/kopecks marker (e.g. "876 к. 18 к.",
 #: "1225 q. 27 к.", "3049 р. 78 р."). RG's rule (2026-09-25): the raw tier
@@ -187,7 +249,9 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             excerpt_of_work_id UUID,
             excerpt_note VARCHAR,
             genre_source VARCHAR,
-            genre_note VARCHAR
+            genre_note VARCHAR,
+            parent_genre VARCHAR,
+            parent_genre_note VARCHAR
         )
     """)
     # excerpt_of_work_id deliberately has no REFERENCES clause -- same
@@ -205,6 +269,10 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                         [pattern]).fetchone()[0]
         if n == 0:
             raise SystemExit(f"RESEARCH_GENRE_RULES: pattern {pattern!r} matches no entities.work row")
+    listed = ballet_list_work_ids(con)
+    con.execute("CREATE OR REPLACE TEMP TABLE parent_genre_ballet (work_id UUID, note VARCHAR)")
+    con.executemany("INSERT INTO parent_genre_ballet VALUES (?, ?)",
+                    [(w, PARENT_GENRE_BALLET_NOTE.format(seasons=", ".join(s))) for w, s in listed.items()])
     con.execute("""
         INSERT INTO research.work
         SELECT w.work_id, w.canonical_title,
@@ -212,9 +280,12 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                w.appearance_count, w.excerpt_of_work_id, w.excerpt_note,
                CASE WHEN g.genre IS NOT NULL THEN 'research_rule'
                     WHEN w.canonical_genre IS NOT NULL THEN 'printed' END AS genre_source,
-               g.note AS genre_note
+               g.note AS genre_note,
+               CASE WHEN pg.work_id IS NOT NULL THEN 'ballet' END AS parent_genre,
+               pg.note AS parent_genre_note
         FROM entities.work w
         LEFT JOIN genre_rule g ON regexp_matches(w.canonical_title, g.pattern)
+        LEFT JOIN parent_genre_ballet pg ON pg.work_id = w.work_id
     """)
 
     con.execute("""

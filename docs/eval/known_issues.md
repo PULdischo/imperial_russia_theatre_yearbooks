@@ -20416,3 +20416,25 @@ Noticed by the agents, not yet fixed (need a scan check):
   - 6th, evenings: "Гимнъ." is not transcribed; "Простушка" is printed where raw has "Проступка".
 - **1898-99 p017:** a "28 Среда" where 16 might be expected (not checked).
 - **Four more "Анда, оп." rows:** 1896-97 pair004, 1904-05 p030, 1905-06 p006, 1905-06 p022.
+
+## Issue #118: research-layer "parent genre" = ballet for works in the ballet productions lists -- 2026-09-30, DONE
+
+RG's rule: *"if it shows up in the Ballet Production lists (and the season's season review), it's parent genre is
+ballet"* (the name "parent genre" may change). It came up with Кольцо любви: printed "феерія" in the Repertoire and
+"Волшебная сказка" in the 1892-93/1893-94 Moscow lists; the stats page counts it as "Феерій"; the ballet reviews
+discuss it as "феерія В. А. Крылова".
+
+- **New columns:** `research.work.parent_genre` and `parent_genre_note` (built by `pipeline/build_research_model.py`,
+  `ballet_list_work_ids`; also exported by `build_datasette.py`).
+- **Rule:** a work is listed when one of its performances falls on a list date, in the same city, under the list's
+  title. The title must be equal after `compare_productions_repertoire.norm`, or the work must be an excerpt of it.
+  No fuzzy matching. `BALLET_LIST_TITLE_ALIASES` adds only the scan-confirmed spelling differences C1–C7, plus
+  Паяда/Наяда, Ваядерка/Баядерка and Пригалъ/Привалъ, which await RG's physical check of the spelling only.
+- **Result:** 184 works, 2,267 performances. Printed genres among them: "бал." for most; genre-less excerpts;
+  "феерія." (Кольцо любви); "див." (Балъ-маскарадъ въ Венеціи); "оп." (Раймонда, 13 Feb 1902, a genuinely printed
+  "оп.", scan-confirmed earlier).
+- **Not marked, correctly under the rule:** Балетный дивертиссементъ (section F), Батюшкина дочка and Мѣщанинъ во
+  дворянствѣ (comedy-ballets), Сонъ въ лѣтнюю ночь and Мнимыя дріады (section E).
+- Seasons after 1904-05 have no lists, so no work gets a parent genre from a list there.
+- **Not done:** the season-review half of the rule (needs mention detection).
+- **Production:** only the research layer was rebuilt; the Datasette export was checked on a scratch file.

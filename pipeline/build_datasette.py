@@ -60,7 +60,8 @@ SCHEMAS = {
         CREATE TABLE work (
             work_id TEXT PRIMARY KEY, canonical_title TEXT, canonical_genre TEXT,
             appearance_count INTEGER, excerpt_of_work_id TEXT REFERENCES work(work_id),
-            excerpt_note TEXT, genre_source TEXT, genre_note TEXT
+            excerpt_note TEXT, genre_source TEXT, genre_note TEXT,
+            parent_genre TEXT, parent_genre_note TEXT
         )""",
     "person": """
         CREATE TABLE person (
