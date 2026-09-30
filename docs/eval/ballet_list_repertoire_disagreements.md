@@ -107,6 +107,13 @@ conclusion):** 5 of the 8 (F4–F8) are on benefit or charity bills; F1–F3 are
 comedy with the divertissement. **Not in this table:** 3 more ballet divertissements fall in
 seasons with no ballet list in our set (1905-06 ×2, 1908-09 ×1).
 
+**A divertissement the lists do include (added 2026-09-30):** the 1892-93 Moscow list opens with #1 (p. 38)
+"Балъ-маскарадъ въ Венеціи. Большой дивертиссементъ, составленъ Н. Ѳ. Манохинымъ. Исполненъ: 1893 г.—февраля 5.
+Всего—1 разъ." The Repertoire prints it on that date at the Большой (1892-93 pair016, p. 17), closing the Гейтенъ 1-я
+benefit bill: "Балъ-маскарадъ въ Венеціи, див." So the lists can include a divertissement when it is a named,
+specially composed work. The F rows are unnamed ("Балетный дивертиссементъ"), and the three lists they fall in don't
+mention one. Whether that difference is what decides inclusion is not assumed.
+
 ## Not (yet) on the list: waiting for a physical check or not a disagreement
 
 - **Waiting for RG's physical check:** 1897-98 SP Пахита "мая 5 (3-е д.)": **work settled and promoted; act digit
