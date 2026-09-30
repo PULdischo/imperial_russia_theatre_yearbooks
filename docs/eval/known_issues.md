@@ -20441,9 +20441,8 @@ discuss it as "феерія В. А. Крылова".
 
 ## Issue #119: new season 1909-10 Repertoire -- extracted, calibrated,
 ## paid-extraction 3-way cross-checked, fully scan-verified (6 parallel
-## agents, 56 pages, ~785 sessions touched); staged in
-## `outputs/repertoire_1909-10/`, integration-tested clean, NOT yet
-## promoted into `outputs/full_run`
+## agents, 56 pages, ~785 sessions touched); PROMOTED into
+## `outputs/full_run` 2026-09-30
 
 RG: source PDF already in the repo (`pdf/RepertoireTables/1909-10_
 Repertoire.pdf`, missing the `ForUpload_` prefix every other season's
@@ -20658,7 +20657,21 @@ changed. Not fixed here (out of scope, pre-existing, doesn't affect
 older-season null-genre rows if RG wants the display corrected, but not
 a blocker.
 
-**NOT promoted into `outputs/full_run`** -- staged and integration-
-tested only, per the same pattern as issue #93's 1908-09 onboarding.
-Waiting on RG for the 7 flagged judgment calls above before deciding
-whether/when to promote.
+**PROMOTED into `outputs/full_run` 2026-09-30** (backup
+`outputs/full_run_pre_promote_backup_2026-09-30_1909-10/`, includes the
+pre-promotion `.duckdb`, `raw/`, `manifest.csv` and
+`printed_page_numbers_all.csv`). All 7 judgment calls above were
+reviewed directly against the scans with RG first (see the resolutions
+inline above) -- 6 resolved cleanly, the 7th (the Шоиеніана/Шопеніана
+typo) fixed via the new research-layer correction mechanism. Rebuilt
+the full chain directly on `outputs/full_run/imperial_theaters.duckdb`
+in place (not a copied scratch file) -- `parse_and_validate.py` ->
+`quality_checks.py` -> `build_duckdb.py` -> `validate_performance_
+dates.py` -> `build_entities.py` -> `build_research_model.py` -- and
+every stage's output matched the integration test's numbers exactly
+(event_entry 28256, quality_flags 902, dates 98.4% with the same
+non-verified category counts, entities.person 2900 live/1459
+tombstoned with all 23 reviewed candidate decisions preserved,
+research.work 3662). full_run now covers 21 seasons. HF/Cloud Run
+republish and `link_wikidata.py` deliberately NOT done this round, same
+as every recent promotion.
