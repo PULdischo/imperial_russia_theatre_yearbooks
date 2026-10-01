@@ -343,3 +343,14 @@ every other subtotal on these pages adds up.
 - **`repertoire_1908-09_p035` (6 Feb 1909, Маріинскій, вечеръ): "Черевички, эп,"**. The genre should be "оп." (Tchaikovsky's
   opera), but "э" is set for "о" and a comma for the full stop. Checked at 600 dpi; the transcription matches the print.
   Found through the season-stats comparison, where the misprinted genre made the opera count as drama.
+
+## BalletArtists credit totals that don't sum (Roster, added 2026-10-01, issue #123)
+
+Found scan-verifying the `credit_sum_mismatch` flags on the newly-onboarded 1908-10 Roster batch. In each case both the
+per-category counts and the printed "Всего" total were checked directly against the scan at full resolution and are
+unambiguous -- the components genuinely don't sum to the stated total in the original print, not a transcription error.
+
+- **`balletartists_1908-09_SP_p006`, Матятинъ А.А.**: "Времена года (сатиръ—3). Всего—въ 1 балетѣ—2 раза." Both digits
+  (3 and 2) are crisp; 3≠2.
+- **`balletartists_1909-10_MSK_p006`, Козловъ 2-й А.М.**: "Въ 13 балетахъ—43; въ 5 операхъ—34. Всего—83 раза." 43+34=77≠83.
+- **`balletartists_1909-10_MSK_p007`, Никитинъ 1-й В.Д.**: "Въ 10 балетахъ—37; въ 5 операхъ—40. Всего—67 раза." 37+40=77≠67.

@@ -34,7 +34,12 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-RANK_CLASS_RE = re.compile(r",?\s*[IVXLC]+\s*кл\.?:?\s*$", re.IGNORECASE)
+# Includes Cyrillic Х (U+0425) alongside Latin X -- a Latin-only class let a
+# genuine instance (administration_1908-09_p002's Бартновскій, "Чиновники
+# Х кл.") through undetected entirely (2026-10-01, found onboarding the
+# 1908-10 Roster batch: two siblings on the same heading using Latin X were
+# flagged, this one wasn't, despite the identical unfixed heading shape).
+RANK_CLASS_RE = re.compile(r",?\s*[IVXLCХ]+\s*кл\.?:?\s*$", re.IGNORECASE)
 
 #: The theater names Repertoire pages actually contain, this season and
 #: every other one checked so far. Used three ways in this file: matching

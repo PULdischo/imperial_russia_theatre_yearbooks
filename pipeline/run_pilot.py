@@ -508,7 +508,16 @@ async def main_async(args):
     # with no request timeout can get a connection that never completes,
     # hanging silently (0% CPU, connection stays ESTABLISHED) rather than
     # raising something call_with_retry's existing retry loop can catch.
-    client = AsyncOpenAI(api_key=api_key, base_url=BASE_URL, timeout=120.0)
+    # 300s not 120s (raised 2026-09-30, Roster onboarding): a dense
+    # Administration page (~8MB PNG, long structured transcription) measured
+    # 142s for a single solo request direct against the API -- with
+    # --max-concurrent N holding the semaphore for the whole retry cycle
+    # (call_with_retry runs inside `async with sem`), 120s was tight enough
+    # that every attempt on these pages timed out and retried forever,
+    # looking identical to a genuine hang (8 ESTABLISHED connections, zero
+    # forward progress) but was actually just an undersized timeout for
+    # this page class.
+    client = AsyncOpenAI(api_key=api_key, base_url=BASE_URL, timeout=300.0)
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
     rows = list(csv.DictReader(open(args.manifest, encoding="utf-8")))

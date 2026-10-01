@@ -11083,3 +11083,35 @@ Result: before (28256, 29565, 3659, 2999154050); after (28256, 29569, 3657, 2999
 German 22 vs 25, ballet 47 vs 51, opera 158 vs 157.
 
 (Note 2026-09-30: the entry above headed "Issue #121 fixes" is issue #122. The Main session had already used #121 for the 1909-10 genre fix.)
+
+## 2026-10-01 — Issue #123 Roster 1908-10: production baseline for the new batch's quality flags
+
+```python
+# compared outputs/full_run/quality_flags.csv's flag-type breakdown against the new batch's 3 flag categories
+```
+
+Result: production (full_run, pre-this-session) already carries these exact 3 categories at similar proportional
+rates: credit_sum_mismatch 285, rank_class_left_in_heading_path 134, duplicate_person_on_page 178,
+institution_duplicated_in_heading_path 290 -- known_issues.md documents all 4 as a standing "pre-existing,
+out-of-scope" backlog, confirming the new batch's 107 flags aren't a new defect class from onboarding.
+
+## 2026-10-01 — Issue #123: is credit_sum_mismatch's false-positive shape (single-category phrasing) corpus-wide?
+
+```python
+# for each production credit_sum_mismatch-flagged entry_id, checked whether its credit_summary_text contains ';'
+# (multi-category "N1 cat1—M1; N2 cat2—M2" shape) vs not (single-category "Всего—всѣ N cat—M" shape)
+```
+
+Result: of 285 production flags, 265 are multi-category shape (';' present), only 20 single-category. The
+single-category false-positive pattern found in this session's batch is NOT simply "most of the corpus's 285" --
+needs its own dedicated investigation before touching production; deferred per RG ("just log it for later").
+
+## 2026-10-01 — Issue #123: does production's rank_class_left_in_heading_path backlog use the same 'кл.' shape as the new batch's 40?
+
+```python
+# regex-matched the tail of every production-flagged entry's heading_path against r"([IVXLCХ]+\s*кл\.?):?\s*$"
+```
+
+Result: all 134 production instances match cleanly (0 non-matches), all using plain "VII кл."-style suffixes with
+Latin-letter roman numerals -- confirms the new general repair (_repair_heading_path_rank_class) will clear all 134
+on the next full-corpus parse_and_validate.py run, not just the new batch's 40.

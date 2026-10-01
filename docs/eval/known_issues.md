@@ -20836,3 +20836,99 @@ Each cell was read on its own scan before any edit, and the edits were made fiel
 
 Production rebuilt: event_entry 28256 unchanged; performances 29565 → 29569 (+4 Гимнъ); research.work 3659 → 3657;
 receipts −570.75 р. (−600.75 + 30.00); quality_flags identical.
+
+## Issue #123: Roster 1908-10 onboarding (Administrators/BalletArtists/Musicians/ProductionTeam/TheaterSchoolStaff/Graduates) -- 2026-10-01
+
+RG: "For all the new files in the repo: let's run them through their appropriate pipeline." / "Start the Roster
+pipeline, leave Season Reviews for that thread." 90 pages (6 entity types × seasons 1908-09/1909-10, 16 source PDFs),
+single-pass baseline extraction (`run_pilot.py`, no Repertoire-style triple-pass -- confirmed out of scope for Roster
+per CLAUDE.md). All 90 extracted cleanly (0 failures) after one operational snag below. Then RG: "let's do this
+[scan-verification spot-checks]. I'm curious what we'll find" on `quality_checks.py`'s 107 flags.
+
+**Extraction stall, not a hang**: `run_pilot.py`'s 120s client timeout was tuned for ordinary pages; Roster's
+Administration pages are unusually dense (~7-9MB PNGs, long structured transcriptions) and genuinely take 140s+
+server-side -- verified directly by sending the exact production request (system prompt + schema + one stalled
+page's image) straight to DashScope, which took 142s solo. Since `call_with_retry` runs inside `async with sem`,
+every concurrent slot was retrying in a loop that could never succeed, looking identical to a dead connection (8
+ESTABLISHED TCP connections, zero forward progress for 30+ minutes). Fixed by raising the timeout to 300s
+(`run_pilot.py`'s `main_async`); extraction then completed cleanly.
+
+**Scan-verification of the 107 flags (3 parallel agents, 17 distinct pages) found more than routine noise:**
+
+1. **`rank_class_left_in_heading_path` (40 flags, 4 administration pages) -- 38 mechanical, 2 a real miscategorization.**
+   The prompt instructs moving a trailing Table-of-Ranks class marker ("VII кл.") out of `heading_path` into
+   `service_class`; 38 of 40 were exactly that, confirmed correct as transcribed. The other 2
+   (`administration_1908-09_p000`'s Смирновъ; `administration_1908-09_p002`'s Глѣбовъ/Менгденъ) were a column-break
+   heading-continuation bug: a repeated heading got dropped at the page/column break, so these 3 people landed under
+   the *next* heading's class (VIII instead of VII; XII instead of Х) instead of continuing the list above. Hand-fixed
+   directly in the raw JSON (heading_path corrected to match the sibling entries they actually belong with).
+   - **This pattern was already a pre-existing, never-fixed backlog**: production had 134 unflagged instances of the
+     same mechanical pattern before this session, going back to earlier seasons. Wrote a general repair,
+     `_repair_heading_path_rank_class` in `parse_and_validate.py` (chained into `_repair_roster`'s sequence, same
+     style as `_repair_mariinsky_spelling` etc.), so this clears corpus-wide (134 + 40 = 174), not just this batch.
+   - **Checker blind spot found and fixed alongside**: `administration_1908-09_p002`'s Бартновскій has the identical
+     unfixed heading (`"Чиновники Х кл."`) as the 2 siblings fixed above, but was never flagged at all --
+     `quality_checks.py`'s own `RANK_CLASS_RE` was Latin-letter-only (`[IVXLC]+`) and silently missed the Cyrillic
+     homoglyph Х (U+0425) used for this particular numeral. Widened both `RANK_CLASS_RE` and the new repair's regex
+     to `[IVXLCХ]+`. (A further variant, "VII класса" written out instead of abbreviated "VII кл.", also evades both
+     regexes -- confirmed not present in any of the 134+40 flagged instances, so out of scope for this fix; noted as
+     a possible future blind spot, not yet swept for.)
+
+2. **`credit_sum_mismatch` (62 flags) -- genuinely mixed; most are a checker-logic false positive, not a data bug.**
+   - **5 real digit-transcription errors**, corrected Всего values (all hand-fixed in raw JSON, scan-confirmed):
+     `balletartists_1909-10_SP_p005` Ширяева (72→121, the raw JSON even carried a "72?" uncertainty marker -- real
+     value is 121, matching 52+69 exactly) and Гельцеръ (68→1 -- a guest-artist entry under a separate "Танцовала на
+     Петербургской сценѣ..." heading, whose `family_name` had absorbed the first credit title ("Гельцеръ
+     Донъ-Кихотъ" split into name="Гельцеръ" + a proper `Донъ-Кихотъ` credit row), and whose Всего had picked up "68"
+     from the neighboring Чернецкая entry); `balletartists_1909-10_SP_p009` Сергѣевъ 2-й (87→81, matches 31+50);
+     `balletartists_1909-10_SP_p010` Alex, Marthe (86→74) and Bade, Eujénie (88→66) -- both French-repertoire guest
+     entries where a bogus number was prepended before the real "N пьесахъ—M раза" phrase.
+   - **3 genuine print-era arithmetic slips**, left verbatim (now logged in `docs/eval/genuine_print_typos.md`):
+     Матятинъ (3≠2), Козловъ 2-й (43+34≠83), Никитинъ 1-й (37+40≠67) -- every operand unambiguous on the scan.
+   - **2 real bugs independent of the flag itself, both on `balletartists_1908-09_MSK_p004`**: a column break
+     misattributed Волинъ А.Е.'s entire credit block to the next entry, Ѳектистова Л.В. (whose own block is genuinely
+     blank), and silently dropped 2 of Волинъ's own named-work lines in the process; reconstructed his full credit
+     block from the two raw-JSON fragments (confirmed they concatenate into the exact printed sentence) and blanked
+     Ѳектистова's. Separately, Бакинъ 1-й С.В. (also genuinely blank) had been assigned a byte-for-byte duplicate of
+     Гавриловъ's credit numbers with no basis in the print; blanked.
+   - **14 flags on `balletartists_1908-09_MSK_p006` traced to one bug**: the distinct-ballet-count field ("N" in "Въ N
+     балетахъ—M") was corrupted to the literal constant "88" for *every* entry on the page, in both the structured
+     field and the prose `credit_summary_text` itself. The real Всего totals on this page were already correct
+     throughout; only the "88" needed replacing with each entry's true distinct-work count (one, `balletartists_
+     1908-09_MSK_p006__e018`/Чудиновъ 1-й, has a genuine print anomaly -- "11" printed despite only 6 distinct titles
+     actually listed -- preserved verbatim per RG's scan-confirmed read).
+   - **The remaining ~34 flags are the checker comparing the wrong number, not a data error.** When a performer's
+     credit block has only one category (no "категорія1—M1; категорія2—M2" split), the print collapses into one
+     sentence ("Всего—всѣ N <категорія>—M раза"), and the model's own extraction sometimes still emits a separate
+     `category_totals` row holding N (distinct-work count) as if it were a second amount summable against Всего (M,
+     the real performance count) -- they are different units entirely. Checked whether this explains the corpus's
+     existing 285 `credit_sum_mismatch` flags: **not simply** "single-category phrasing = bug" -- a quick corpus
+     query found 265/285 are multi-category phrasing (where the check is legitimately comparing two real sub-totals,
+     as confirmed by the Козловъ 2-й/Никитинъ 1-й genuine print-error cases above), only 20 single-category. The
+     checker-logic question needs its own dedicated investigation before touching the corpus's 285 -- **deliberately
+     not fixed this session, logged here as a follow-up** (RG: "just log it for later").
+
+3. **`duplicate_person_on_page` (5 flags) -- all confirmed FALSE_POSITIVE**, matching the known issue #9 pattern:
+   same person legitimately holding 2-3 concurrent posts/troupe roles, listed once per role under distinct headings
+   with distinct (or in one case identical) tenure dates. `administration_1908-09_p001`'s Быковъ (2 posts, different
+   start dates); `balletartists_1908-09_SP_p001`'s Исаева (genuinely printed twice in the source itself, same tenure,
+   no distinguishing heading -- verbatim to the book); `productionteam_1908-09_p001`'s Педдеръ (3 troupes, shared
+   wigmaker); `productionteam_1909-10_p001`'s Григорьевъ (2 troupes, identical tenure date). No merges applied.
+
+**Verification after all fixes**: re-ran `parse_and_validate.py` + `quality_checks.py` on the batch --
+`rank_class_left_in_heading_path` 40→0, `credit_sum_mismatch` 62→56 (the 6 genuine fixes removed; the ~34+ checker
+false-positives remain by design, per the deferred investigation above), `duplicate_person_on_page` unchanged at 5
+(all false positives, correctly not touched).
+
+**Integration-tested and PROMOTED to `outputs/full_run` the same day.** Copied production's `.duckdb` first (per the
+established methodology), merged the 90 new raw JSON files + manifest, re-ran `parse_and_validate.py` (with
+`--page-headers`/`--printed-page-numbers`, since the same run also touches Repertoire pages) across the full merged
+corpus (1552 pages) to pick up the new general repair corpus-wide: `quality_flags.csv` 902→829, reconciling exactly
+to 902 − 134 (rank_class cleared) + 56 (new batch's remaining credit_sum_mismatch) + 5 (new batch's confirmed-false-
+positive duplicates) = 829. Every pre-existing Repertoire-side research number came back byte-identical
+(`research.theater`/`work`/`event`/`performance`/receipts sum, `entities.person_wikidata_link`), and all 1,459
+pre-existing tombstoned `entities.person` rows remained tombstoned (0 un-tombstoned). Rebuilt the full chain directly
+on `outputs/full_run/imperial_theaters.duckdb` in place; backup at
+`outputs/full_run_pre_promote_backup_2026-09-30_roster1908-10/`. `entities.person` live count 2900→3345 (new Roster
+people, normal for a 90-page addition); HF/Cloud Run republish and `link_wikidata.py` not done this round, matching
+recent promotion precedent.

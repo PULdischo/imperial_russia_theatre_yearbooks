@@ -2131,6 +2131,47 @@ def _repair_mariinsky_spelling(parsed: dict) -> int:
     return n_fixed
 
 
+# roster_system.txt explicitly instructs the model to pull a trailing
+# Table-of-Ranks class marker ("..., VII кл.:") out of heading_path into its
+# own service_class field -- quality_checks.py's rank_class_left_in_heading_path
+# check catches every case where that instruction was ignored (134 instances
+# pre-existing in production before this repair existed, plus 40 more found
+# onboarding the 1908-10 Roster batch, 2026-10-01). Scan-verified across all
+# 40 of the new batch's instances: the mechanical fix (move the class token,
+# touch nothing else) was correct in 38/40 -- the other 2
+# (administration_1908-09_p000/p002) were a DIFFERENT bug, a column-break
+# heading misattachment, hand-fixed directly in the raw JSON before this
+# repair runs, so this function only ever sees the clean mechanical case.
+# Character class includes Cyrillic Х (U+0425) alongside Latin X: found by
+# comparing administration_1908-09_p002's 3 "Чиновники Х кл." entries --
+# Бартновскій's uses Cyrillic Х and was never flagged by quality_checks.py's
+# own Latin-only RANK_CLASS_RE at all (a confirmed detector blind spot, fixed
+# there too), while Глѣбовъ/Менгденъ's (hand-corrected to match the same
+# heading, see above) do get flagged since they were still attached to a
+# different, Latin-only "XII кл." heading before the fix.
+_RANK_CLASS_RE = re.compile(r",?\s*([IVXLCХ]+\s*кл\.?):?\s*$", re.IGNORECASE)
+
+
+def _repair_heading_path_rank_class(parsed: dict) -> int:
+    """Moves a trailing Table-of-Ranks class marker (e.g. "VII кл.") out of
+    heading_path into service_class, when service_class is empty -- the
+    model's own prompt-documented behavior that quality_checks.py's
+    rank_class_left_in_heading_path flags when skipped. Returns the count
+    of entries touched."""
+    n_fixed = 0
+    for e in parsed.get("entries", []):
+        if (e.get("service_class") or "").strip():
+            continue
+        heading = e.get("heading_path") or ""
+        m = _RANK_CLASS_RE.search(heading)
+        if not m:
+            continue
+        e["service_class"] = m.group(1).strip()
+        e["heading_path"] = heading[:m.start()].rstrip()
+        n_fixed += 1
+    return n_fixed
+
+
 def _strip_code_fence(text: str) -> str:
     text = text.strip()
     if text.startswith("```"):
@@ -2252,6 +2293,13 @@ def main():
                                     "error": f"{n_mariinsky} entrie(s) had the Мариинскій"
                                              f"->Маріинскій typo fixed; not a validation "
                                              f"failure, logged for visibility"})
+                n_rank_class = _repair_heading_path_rank_class(parsed_json)
+                if n_rank_class:
+                    errors.append({"page_id": page_id, "stage": "heading_path_rank_class_fixed",
+                                    "error": f"{n_rank_class} entrie(s) had a trailing Table-of-"
+                                             f"Ranks class marker moved out of heading_path into "
+                                             f"service_class; not a validation failure, logged "
+                                             f"for visibility"})
                 n_mokeev = _repair_mokeev_spelling(parsed_json)
                 if n_mokeev:
                     errors.append({"page_id": page_id, "stage": "mokeev_spelling_fixed",
