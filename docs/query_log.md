@@ -11232,3 +11232,260 @@ Result: 7 of 21 resolved as transcription errors (not entity decisions) after zo
 confirmed MERGE, 7 confirmed REJECT, 1 left deliberately pending (Давильеръ/Девильеръ). entities.person
 3350->3342 live, all 2181 pre-existing tombstones preserved, 0 orphaned person_link rows, all Repertoire-side
 research numbers unchanged. Full writeup: known_issues.md issue #125.
+
+## 2026-10-01 — Issue #46 resumed: heading_path/role_normalized survey scope
+
+```sql
+select entity_type, count(distinct role_normalized) n_distinct, count(*) n_total
+from analysis.person_entry where role_normalized is not null and role_normalized <> ''
+group by 1 order by 1
+```
+
+Result: Administrators 262 distinct (1651 rows), BalletArtists 165 (3226), Graduates 14 (485), Musicians 169
+(5472), ProductionTeam 219 (1967), TheaterSchoolStaff 179 (2536) -- 1008 distinct role_normalized values total
+across 6 entity types. Starting a programmatic near-duplicate-spelling survey (normalized-key clustering) before
+hand-reviewing clusters, same approach as the institution field audit (issue #46/#52).
+
+## 2026-10-01 — Stuck heading_path sweep: real heading/institution for 5 pages (musicians_1903-04_SP_p002, musicians_1906-07_MSK_p002, musicians_1906-07_SP_p002, balletartists_1893-94_SP_p006, balletartists_1898-99_SP_p008)
+
+```sql
+-- per-season/city: group by page_id, heading_path, institution to find section boundaries
+SELECT page_id, heading_path, institution, COUNT(*) AS n
+FROM raw.person_entry WHERE page_id LIKE '<prefix>%'
+GROUP BY page_id, heading_path, institution ORDER BY page_id;
+
+-- then per page: list_number continuity check
+SELECT list_number, family_name, first_name, heading_path, institution
+FROM raw.person_entry WHERE page_id = '<page_id>' ORDER BY list_number;
+
+-- exact institution string check (period vs no period)
+SELECT DISTINCT institution FROM raw.person_entry WHERE page_id = '<p000 page_id>';
+```
+
+Result: confirmed all 5 target pages are mid-list continuation pages (no heading reprinted on the
+page itself) whose heading_path/institution are stuck on "Управляющій Училищемъ" /
+"Императорское С.-Петербургское Театральное Училище". list_number sequences run unbroken from
+each section's genuine start page (p000 for the 3 Musicians pages, p005 for both BalletArtists
+pages) through the target page and beyond, with no restart at "1." on the target page, confirming
+each target page belongs entirely to one real section, not a mix. Real values (see full report
+to RG): musicians_1903-04_SP_p002 = "Оркестръ оперы и балета / Музыканты" / "Оркестры.";
+musicians_1906-07_MSK_p002 = "Музыканты" / "Оркестры."; musicians_1906-07_SP_p002 = "Музыканты" /
+"Оркестры" (no period, verbatim difference from the other two — confirmed via DISTINCT, not a
+display artifact); balletartists_1893-94_SP_p006 and balletartists_1898-99_SP_p008 both =
+"Артисты:" / "Балетная труппа." (heading text confirmed directly on the scan of each section's
+start page — balletartists_1893-94_SP_p005 and balletartists_1898-99_SP_p005 — institution value
+inferred by analogy with the genuine "Артисты:"/"Балетная труппа." pairing on each season's own
+p000, since no institution banner is visible on the continuation or start pages themselves).
+
+## 2026-10-01 — Broadened stuck-heading_path scope check (entity-type/content mismatch, not just the 3 original substrings)
+
+```sql
+-- Musicians: heading_path containing admin-department language that cannot belong on a Musicians page
+SELECT COUNT(*) n, COUNT(DISTINCT page_id) pages FROM raw.person_entry
+WHERE entity_type='Musicians' AND (heading_path ILIKE '%полиц%' OR heading_path ILIKE '%артисты балета%'
+  OR heading_path ILIKE '%управляющій училищемъ%' OR heading_path ILIKE '%хозяйствен%'
+  OR heading_path ILIKE '%врачебн%' OR heading_path ILIKE '%счетн%');
+
+-- BalletArtists: heading_path containing musician/admin language that cannot belong on a BalletArtists page
+SELECT COUNT(*) n, COUNT(DISTINCT page_id) pages FROM raw.person_entry
+WHERE entity_type='BalletArtists' AND (heading_path ILIKE '%полиц%' OR heading_path ILIKE '%музыкант%'
+  OR heading_path ILIKE '%оркестр%' OR heading_path ILIKE '%управляющій училищемъ%'
+  OR heading_path ILIKE '%хозяйствен%' OR heading_path ILIKE '%врачебн%' OR heading_path ILIKE '%счетн%');
+
+-- TheaterSchoolStaff: heading_path containing musician/ballet language
+SELECT COUNT(*) n, COUNT(DISTINCT page_id) pages FROM raw.person_entry
+WHERE entity_type='TheaterSchoolStaff' AND (heading_path ILIKE '%музыкант%' OR heading_path ILIKE '%оркестр%'
+  OR heading_path ILIKE '%артисты балета%');
+
+-- Administrators: same check
+SELECT COUNT(*) n, COUNT(DISTINCT page_id) pages FROM raw.person_entry
+WHERE entity_type='Administrators' AND (heading_path ILIKE '%музыкант%' OR heading_path ILIKE '%оркестр%'
+  OR heading_path ILIKE '%артисты балета%');
+```
+
+Result: Musicians 1357 rows/39 pages, BalletArtists 283 rows/12 pages, TheaterSchoolStaff 7 rows/2
+pages, Administrators 0. Grand total (de-duplicated page_ids): **1647 rows across 53 pages** —
+substantially larger than the original narrow-substring detection (954 rows/34 pages, issue #46
+follow-up item #1). 36 of the 53 pages are outside the page list already dispatched for scan
+verification this session; 5 of those 36 (musicians_1903-04_SP_p002, musicians_1906-07_MSK_p002,
+musicians_1906-07_SP_p002, balletartists_1893-94_SP_p006, balletartists_1898-99_SP_p008) already
+have confirmed real values logged above from an earlier pass this session. ~31 pages remain
+genuinely unverified. A looser version of this query (adding generic "%музыкант%"/"%оркестр%" as
+wrong-value indicators for the Musicians entity_type itself) produces 5170 rows/268 pages — mostly
+noise, since those words are the CORRECT heading content on most Musicians pages, not a mismatch
+signal. Reported to RG for a scope/cost decision before dispatching further verification agents.
+
+## 2026-10-01 — Attempted structural detection of remaining stuck-heading pages (singleton heading/institution pairs)
+
+```sql
+with pair_pages as (
+    select entity_type, heading_path, institution, page_id, count(*) n
+    from raw.person_entry
+    where entity_type in ('Musicians','BalletArtists','TheaterSchoolStaff','Administrators')
+    group by 1,2,3,4
+),
+pair_totals as (
+    select entity_type, heading_path, institution, count(distinct page_id) n_pages, sum(n) n_rows
+    from pair_pages group by 1,2,3
+)
+select entity_type, heading_path, institution, n_rows
+from pair_totals
+where n_pages = 1 and n_rows > 8
+order by entity_type, n_rows desc
+```
+
+Result: 114 (heading_path, institution) pairs that occur on exactly one page_id corpus-wide with
+>8 rows. Inspected the list: this signal is too noisy to use directly — most of the 114 are
+genuine, legitimate section headers/institution-name spellings that are simply rare (unique per
+season/city, or a real one-off subsection), not stuck-value bugs. Distinguishing the two
+requires the same scan-verification as the 60 pages already confirmed this session, not a cheap
+DB-only heuristic. Concluded that chasing this further converges with the previously-discussed
+"full Roster sweep" (see memory) rather than being a quick addition to the current stuck-heading
+item; deferred to that future effort rather than expanding the current fix scope again. Current
+confirmed scope for this item stands at 60 pages (34 original + 26 broadened-detection
+follow-up), all scan-verified with real heading_path/institution values and two-tier exceptions
+identified.
+
+## 2026-10-01 — Stuck heading_path fix applied (issue #126), post-fix verification
+
+```sql
+-- confirm no remaining stuck-value rows among the 60 touched pages
+SELECT COUNT(*) FROM raw.person_entry WHERE page_id IN (<60 page_ids>)
+  AND (heading_path ILIKE '%полиц%' OR heading_path ILIKE '%артисты балета%'
+       OR heading_path ILIKE '%управляющій училищемъ%' OR heading_path ILIKE '%хозяйствен%'
+       OR heading_path ILIKE '%врачебн%' OR heading_path ILIKE '%счетн%');
+
+-- check corpus precedent before applying a tentative institution guess
+SELECT heading_path, institution, COUNT(*), COUNT(DISTINCT page_id)
+FROM raw.person_entry WHERE heading_path ILIKE '%Александринскаго театра%' GROUP BY 1,2;
+
+-- post-fix identity/tombstone verification (old vs new duckdb)
+SELECT person_id FROM entities.person WHERE superseded_by_person_id IS NOT NULL;  -- set-compared
+SELECT COUNT(*) FROM entities.person_link pl LEFT JOIN entities.person p ON pl.person_id=p.person_id
+  WHERE p.person_id IS NULL;  -- orphan check
+```
+
+Result: 0 remaining stuck-value rows across the 60 fixed pages. The Alexandrinsky institution
+guess had zero corpus precedent (all 14 other existing instances of that heading paired with
+generic placeholders, never with the proposed value) -- reverted before promoting. Post-rebuild:
+person_entry 23173 (unchanged), quality_flags 825 (matches pre-sweep baseline exactly), entities
+.person 3342 live/2189 tombstoned, tombstone person_id set identical to backup, 0 orphaned
+person_link rows, Repertoire-side raw/research counts and receipts_total_kopecks sum byte-
+identical. Full writeup: known_issues.md issue #126.
+
+## 2026-10-01 — institution_duplicated_in_heading_path review, 4 assigned pages (musicians_1897-98_SP_p003, productionteam_1896-97_p001, productionteam_1900-01_p002, productionteam_1907-08_p002)
+
+```sql
+-- flagged-page row dumps (repeated per page_id)
+SELECT entry_id, list_number, family_name, heading_path, institution
+FROM raw.person_entry WHERE page_id='musicians_1897-98_SP_p003' ORDER BY entry_id;
+
+-- sibling-series cross-check (p000-p004 of same file, each series)
+SELECT DISTINCT page_id FROM raw.person_entry WHERE page_id LIKE 'musicians_1897-98_SP%' ORDER BY page_id;
+SELECT entry_id, list_number, family_name, heading_path, institution
+FROM raw.person_entry WHERE page_id IN ('musicians_1897-98_SP_p000','musicians_1897-98_SP_p001','musicians_1897-98_SP_p002') ORDER BY entry_id;
+
+SELECT DISTINCT page_id FROM raw.person_entry WHERE page_id LIKE 'productionteam_1896-97%' ORDER BY page_id;
+SELECT entry_id, list_number, family_name, heading_path, institution
+FROM raw.person_entry WHERE page_id IN ('productionteam_1896-97_p000','productionteam_1896-97_p001') ORDER BY entry_id;
+
+SELECT DISTINCT page_id FROM raw.person_entry WHERE page_id LIKE 'productionteam_1900-01%' ORDER BY page_id;
+SELECT entry_id, list_number, family_name, heading_path, institution
+FROM raw.person_entry WHERE page_id IN ('productionteam_1900-01_p000','productionteam_1900-01_p001','productionteam_1900-01_p002') ORDER BY entry_id;
+
+SELECT DISTINCT page_id FROM raw.person_entry WHERE page_id LIKE 'productionteam_1907-08%' ORDER BY page_id;
+SELECT entry_id, list_number, family_name, heading_path, institution
+FROM raw.person_entry WHERE page_id IN ('productionteam_1907-08_p000','productionteam_1907-08_p001','productionteam_1907-08_p002') ORDER BY entry_id;
+```
+
+Result: cross-checked against full-res scans (outputs/roster_images_full/images/*.png) page by
+page. musicians_1897-98_SP_p003: the 42 bare "Музыканты:"=="Музыканты:" rows (e001-e042) are a
+genuine bug — scan shows the preceding page (p002/printed p.73) ends with the heading "Оркестръ
+Александринскаго театра." followed by "Капельмейстеръ"/Галкинъ, and p003 opens directly with the
+repeated running sub-head "Музыканты:" for that same orchestra's continuing roster — the real
+institution ("Оркестръ Александринскаго театра.") was dropped on page-break. The other 9 rows on
+that page (Оркестръ Михайловскаго театра. / Капельмейстеръ and /Музыканты:) are fine as-is,
+confirmed by direct parallel structure on the same page. productionteam_1896-97_p001: 12 of 27
+flagged rows (mechanist/lighting/props sections, bare duplicates) are a bug — p000 of the same
+document establishes institution="С.-ПЕТЕРБУРГЪ." (the document title) uniformly across every
+department, and p001 is a page-break continuation of that same document with no new title;
+institution should be "С.-ПЕТЕРБУРГЪ." The remaining 15 rows (Отдѣлъ гардеробный sub-sections)
+are fine as-is — department-level truncation, consistent with the issue #52 convention.
+productionteam_1900-01_p002: all 21 flagged rows are fine as-is, including the 2 bare
+"Французская труппа"=="Французская труппа" rows — scan confirms no deeper venue subdivision was
+ever printed for the French troupe's hairdressers (unlike the opera/ballet/Russian-drama troupes
+on the same page, which do subdivide by theater), so the troupe name is genuinely the full,
+correct institution value there. productionteam_1907-08_p002: both flagged rows are a bug, but
+not in isolation — institution='Михайловскій театръ' is stuck/constant across all 20 rows on this
+page (confirmed directly: rows e014/e015/e017/e018 explicitly describe Маріинскій and
+Александринскій театръ staff yet still carry institution='Михайловскій театръ', an internal
+contradiction), carried over incorrectly from the page's first entry. The 2 flagged rows only
+coincidentally textually match their own heading's trailing venue segment. By cross-page
+convention (productionteam_1900-01_p002 pairs the identical "Мѣстные гардеробы / Гардеробмейстеры
+(-рши) / <theater>" heading with institution="Мѣстные гардеробы"), the real institution for both
+flagged rows, and for the other 18 unflagged-but-equally-wrong rows on this page, should be
+"Мѣстные гардеробы" / "Отдѣлъ гардеробный" / "Главный гардеробъ" per sub-section (not any single
+theater name) — flagged as a broader page-wide data-quality issue beyond the 2 rows originally
+in scope.
+
+## 2026-10-01 — Item #2: institution_duplicated_in_heading_path review (issue #127), fix applied + verified
+
+Result: all 290 flags across the 12 flagged pages reviewed (3 parallel agents, same scan +
+same-file-convention discipline as issue #126). 219 rows were genuine bugs (overarching
+institution/document title dropped at a page break, replaced by the narrow sub-heading in both
+fields); 71 were confirmed fine-as-is (a genuine, accepted department-level truncation, same
+shape as issue #52's precedent). Applied the 219 fixes directly to `outputs/full_run/raw/*.raw.json`.
+One apparent residual-flag anomaly investigated and resolved: `productionteam_1895-96_p001__e007`
+is governed by a pre-existing hard-coded `_MISATTACHMENT_FIXES` entry in `parse_and_validate.py`
+(from an earlier session) that unconditionally restores its correct, scan-verified values every
+parse — my raw-JSON edit to that one row was harmless but moot; confirmed via a full scan of both
+`_MISATTACHMENT_FIXES` and `_HEADING_PATH_RESTORE_FIXES` for any other overlap with either this
+item's or issue #126's touched pages (one overlap found, this one, already resolved correctly).
+Post-rebuild: person_entry 23173 unchanged, entities.person 3342 live/2189 tombstoned (tombstone
+SET identical to backup), 0 orphaned person_link, Repertoire-side counts and receipts sum byte-
+identical. Backup at `outputs/full_run_pre_promote_backup_2026-10-01_institutiondup/`. Full
+writeup: known_issues.md issue #127.
+
+## 2026-10-01 — Item #3: Alexandrinsky theater naming, fresh full-corpus spelling survey
+
+```sql
+SELECT page_id, entry_id, heading_path, institution FROM raw.person_entry
+WHERE heading_path ILIKE '%александр%театр%' OR institution ILIKE '%александр%театр%'
+   OR heading_path ILIKE '%александр%скаго%' OR institution ILIKE '%александр%скаго%';
+```
+(then regex-extracted every `Александр...ск...` token from heading_path/institution and tallied)
+
+Result: 919 total rows reference the theater. Dominant/correct forms: "Александринскаго" (674),
+"Александринскій" (155) = 829 (90.2%). Four non-standard variants found, more than the "7 vs 3
+instances" the original item framing described: "Александрийскаго" (79), "Александрийскій" (17),
+"Александриискій" (14), "Александрійскій" (7), "Александри́нскій" (5, with a stray Unicode
+combining-acute-accent mark), "Александриискаго" (3) -- 125 total non-standard instances, spread
+across many distinct pages/seasons (not isolated to one volume), suggesting OCR/transcription
+noise rather than genuine period variation for a single well-known theater's name. Scan-sampling
+each variant class next before concluding anything is a real bug vs. genuine print variation.
+
+## 2026-10-01 — Item #3: Alexandrinsky naming fix applied + verified (issue #128)
+
+Result: scan-confirmed (3 independent samples across Musicians/ProductionTeam, 3 different years)
+that "Александрийскій/-аго", "Александриискій/-аго", and "Александри́нскій" (stray combining
+accent) are all pure transcription noise -- the scans plainly and consistently print the standard
+"Александринскій/Александринскаго". Applied a corpus-wide string-normalization across all 4
+non-standard spelling patterns: 121 replacements across 18 raw JSON files. Separately, chasing the
+"Александрійскій" (і-variant, 7 instances, all on administration_1902-03_p004) led to a deeper
+discovery: that page's heading_path for e001-e026 (both the "Маріинскій театръ" AND
+"Александрійскій театръ" labeled rows) is entirely fabricated -- cross-year exact-name match
+against administration_1904-05_p004 (same 24 names in the same order under heading_path =
+"Чиновники X класса") proves e001-e026 is really one uniform "Чиновники X класса" (Class-X civil
+officials) list with no theater-level subdivision at all. Fixed heading_path for all 26 entries.
+Found but NOT fixed (logged as a worklist item): productionteam_1892-93_p001__e001-e009 shows the
+same stuck/fabricated-heading bug (names exactly matching productionteam_1891-92_p000's "Помощники
+декораторовъ" continuation, mislabeled "Хозяйственное отдѣленіе / Полиціймейстеры / Маріинскій
+театръ") -- same bug class as issue #126, outside this item's narrower scope, needs its own
+list_number-continuity verification pass.
+
+Post-rebuild: person_entry 23173 unchanged, quality_flags institution_duplicated_in_heading_path
+74->75 (+1, a harmless newly-coincidental truncation match, same accepted pattern as issue #127),
+entities.person 3342 live/2189 tombstoned identical, 0 orphaned person_link, Repertoire-side counts
+and receipts_total_kopecks sum byte-identical. 0 non-standard Alexandrinsky spellings remain
+corpus-wide. Backup at `outputs/full_run_pre_promote_backup_2026-10-01_alexandrinsky/`. Full
+writeup: known_issues.md issue #128.

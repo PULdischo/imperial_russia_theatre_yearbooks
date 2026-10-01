@@ -21223,3 +21223,205 @@ superseded person, all Repertoire-side `research.*` numbers byte-identical throu
 **Remaining queue state**: 1 pending (Давильеръ/Девильеръ, deliberately deferred), plus whatever new candidates
 the 8 merges' canonical-field refresh surfaces on the next `build_entities.py` run (not yet re-exported/reviewed
 this session).
+
+## Issue #126: Stuck/page-wide `heading_path`+`institution` bug, Roster corpus-wide (60 pages, 1,772 entries)
+
+**Symptom**: on continuation pages where a numbered list of people spans multiple scans and the
+real section heading is only printed once (at the start of the section), the extraction model
+sometimes loses track of the correct heading and defaults to some unrelated value seen elsewhere
+in the document -- an administrative title ("Управляющій Училищемъ" = School Manager), a police-
+roster department label ("Хозяйственное отдѣленіе / Полиц(і)ймейстеры"), or a ballet-section
+label ("Артисты балета") applied uniformly across most/all rows on the page, regardless of actual
+content (orchestra musicians, dancers, teachers). First spotted at small scale on 2 Musicians pages
+during issue #124's side-findings; this item was RG's "item 1" of a 3-item follow-up list ("do 1,
+2, and 3, reporting back to me after each one").
+
+**Scope-finding process (itself worth documenting)**: an initial narrow substring search (3 known
+wrong-value phrases) found 34 pages / 954 rows. Scan-verifying those (6 parallel agents) repeatedly
+surfaced agents' own side-notes that neighboring, unassigned pages showed the *same* bug with
+*different* wrong values not caught by the narrow search. A broadened, entity-type-mismatch search
+(heading_path containing content that cannot belong on that entity_type -- e.g. police/admin
+language on a Musicians page, or musician/orchestra language on a BalletArtists page) found 53
+pages / 1,647 rows -- a near-doubling. Reconciled against the actual 32-file bundle directory built
+for the first pass (not a reconstructed-from-memory list, which had drifted after a context
+compaction) to find the true incremental set: 26 new pages / 810 rows, verified by 4 more parallel
+agents. A further attempt to push the net wider still (singleton heading/institution pairs,
+corpus-wide) returned 114 candidates but turned out too noisy to use -- most are genuine rare-but-
+real headers, not bugs, and separating the two requires the same scan verification already done,
+not a cheap heuristic. Concluded that further expansion belongs to a future full Roster sweep (RG:
+"perhaps we could sweep by one list type at a time" -- Musicians first, mirroring the Repertoire
+per-season sweep pattern), not this item. **Final confirmed scope: 60 pages, 1,772 entries touched.**
+
+**Determination method** (all 10 scan-verification agents, same discipline): read the full-
+resolution scan of the target page plus earlier pages in the same page_id series (same prefix,
+lower pNNN), and trace the printed `list_number` sequence back to wherever it runs unbroken from a
+page that *does* print the real heading, with no restart at "1." (proving the target page belongs
+entirely to that one section). Values were graded by evidence tier: direct scan read (highest),
+list_number-continuity inference (high), analogy to a comparable page/season (medium-low, flagged
+explicitly).
+
+**Two-tiered pages are common, not rare** -- roughly a third of the 60 pages had only *some* rows
+actually bugged, with the rest already correct and requiring no change:
+- The recurring "Фарскій, Альбертъ Карловичъ" pattern (a violist who also served as music
+  librarian) appears as a standalone, already-correct librarian entry on at least 4 of the 60 pages
+  (`musicians_1899-00_MSK_p004`, `musicians_1895-96_MSK_p003`, `musicians_1902-03_MSK_p004`,
+  `musicians_1903-04_MSK_p004`) -- confirmed by scan each time, never touched.
+- Several pages mid-file genuinely transition to a new, correctly-tagged subsection (a Малый
+  театръ orchestra sub-list, a Балетный оркестръ sub-list, an already-correct "Оркестры."/
+  "Музыканты" block inserted mid-ballet-roster) -- these were explicitly identified and excluded
+  from the fix.
+- One case (`musicians_1896-97_MSK_p003__e037`, a *second* listing of Фарскій) looked like the
+  same "already correct, leave alone" pattern but was NOT -- it carried the bulk wrong value too
+  and needed its own distinct fix (`Библіотекарь` / `Музыкальная библіотека.`), not the orchestra
+  fix applied to his first listing a few rows earlier. Confirms the "look like the Фарскій pattern"
+  heuristic isn't automatic -- each instance was scan-checked individually.
+
+**Institution-value conventions resolved**: the BalletArtists institution discrepancy flagged
+mid-sweep ("Балетная труппа." vs. "ПЕТЕРБУРГСКАЯ БАЛЕТНАЯ ТРУППА.") resolved in favor of the
+scan-and-corpus-pattern-verified fuller form for the SP/MSK-specific volumes that use it, and the
+plainer "Балетная труппа." for the volumes whose own `p000` prints that shorter form directly --
+both are genuine, era/volume-specific, not interchangeable. The "Оркестры." vs. "Оркестры" (no
+period) distinction between Musicians sub-series is genuine per-source variation, confirmed via
+`SELECT DISTINCT` on each season's own un-bugged `p000`, not normalized away.
+
+**One tentative fix reverted after application**: `musicians_1907-08_SP_p003__e024`-`e037`'s
+institution was initially set to a scan-ungrounded guess ("Оркестръ Александринскаго театра",
+inferred only by analogy to a different season). Applying it created a genuine new
+`institution_duplicated_in_heading_path` flag (institution text duplicating the heading's own
+prefix) with zero corpus precedent for that exact pairing anywhere else -- checked directly via
+`SELECT heading_path, institution, count(*) ... WHERE heading_path ILIKE '%Александринскаго
+театра%'` before and after. Reverted to the original placeholder value for those 14 rows, leaving
+this specific sub-question genuinely open rather than asserting an ungrounded fix just because an
+agent proposed one.
+
+**Verification**: `parse_and_validate.py` -- `person_entry` 23173 rows, unchanged (confirms zero
+rows gained or lost from 1,772 field-level edits across 60 files). `quality_checks.py` -- 825
+flags, identical breakdown to the pre-sweep baseline (`institution_duplicated_in_heading_path`
+290, `duplicate_person_on_page` 179, `credit_sum_mismatch` 341, `receipts_parse_failed` 15) --
+confirmed only after reverting the tentative Alexandrinsky institution guess, which had briefly
+pushed this to 839/304. Rebuilt the full chain: `entities.person` 3342 live / 2189 tombstoned,
+**tombstone person_id SET verified identical** (not just count) to the pre-fix backup, 0 orphaned
+`person_link` rows, all Repertoire-side `raw`/`research` counts and the `receipts_total_kopecks`
+sum byte-identical throughout. Backup at
+`outputs/full_run_pre_promote_backup_2026-10-01_stuckheading/`.
+
+**Still open / deferred**:
+- The reverted Alexandrinsky institution value on `musicians_1907-08_SP_p003` (14 rows) -- real
+  value unknown, needs its own scan-verification pass if RG wants it resolved.
+- Two other institution values applied at explicitly tentative confidence and left as-is pending a
+  second look: `musicians_1900-01_SP_p006__e035` and `musicians_1906-07_SP_p006__e008` (both
+  "Старшій библіотекарь" rows, institution inferred by cross-page analogy, not scan-confirmed).
+- The future full Roster sweep (per entity type, Musicians first) that would catch any remaining
+  instances of this bug class outside the 60-page confirmed scope.
+- Items #2 (the 290 `institution_duplicated_in_heading_path` flags) and #3 (Александрійскій vs.
+  Александрийскій naming) from RG's original 3-item list, not yet started.
+
+## Issue #127: `institution_duplicated_in_heading_path` review (RG's "item 2")
+
+**Background**: 290 flags across 12 pages (far fewer distinct pages than the 290-row count
+suggested). Per issue #46's precedent, this flag is known to be mostly noise — `institution`
+legitimately holding just a department-level name (a genuine truncation, with the fuller context
+living in `heading_path`) is an accepted, correct convention (cf. issue #52). The real bug shape
+is different: `institution` holding a BARE heading label with zero additional information (the
+row's `heading_path` is a single flat segment, identical to `institution`), meaning the real
+overarching institution/document title was dropped entirely and the narrow label leaked into both
+fields.
+
+**Split, by direct scan + same-file convention cross-checking** (3 parallel agents, same
+methodology as issue #126): of 290 flagged rows, **219 were genuine bugs** and **71 were confirmed
+fine as-is**. Six of the twelve pages turned out to be ALL-bug (every flagged row on that page was
+wrong) rather than the mostly-noise pattern issue #46 established — `administration_1894-95_p001`
+(36), `productionteam_1895-96_p001` (28), `theaterschoolstaff_1890-91_p001` (22),
+`theaterschoolstaff_1891-92_p001` (30, a *different* institution string than 1890-91's — each
+season's own scan-confirmed title, not normalized to match), `balletartists_1895-96_SP_p001`
+(29), `productionteam_1899-00_p002` (3). The other six were a genuine mix of bug and fine-as-is
+rows, consistent with #46's pattern.
+
+**Two pages turned out to have MORE wrong rows than the flag itself caught** (not fixed this
+pass, logged as a worklist item below):
+- `productionteam_1907-08_p002`: only 2 of this page's 20 wrong rows tripped the substring check
+  (institution stuck at "Михайловскій театръ" page-wide, even for rows explicitly describing
+  Маріинскій/Александринскій staff) — fixed the 2 flagged rows (to "Мѣстные гардеробы", matching
+  cross-page precedent); the other 18 need their own pass.
+- `productionteam_1899-00_p002`: similarly, rows e008-e021 (~15 more, unflagged) show the same
+  stuck-institution pattern as the 3 flagged rows, confirmed via a direct within-page contradiction
+  (one row's `heading_path` names a different theater than its own `institution`).
+
+**One apparent post-fix anomaly, investigated and resolved, not a bug in this fix**: after
+applying the uniform fix to all 28 flagged rows on `productionteam_1895-96_p001`, one row
+(`e007`) kept showing its pre-fix value. Traced to a pre-existing, hard-coded
+`_MISATTACHMENT_FIXES` entry in `pipeline/parse_and_validate.py` (from an earlier session) that
+unconditionally restores this one row's `institution`/`heading_path` on every parse, based on its
+own direct scan citation — the value it restores ("Михайловскій театръ." / ".../ Помощникъ
+машиниста.") is itself a legitimate, correct department-level truncation, not a bug, so no
+further action was needed; my raw-JSON edit to that row was simply overwritten downstream, which
+is fine since it already held the right value. Checked the two relevant hard-coded fix tables
+(`_MISATTACHMENT_FIXES`, `_HEADING_PATH_RESTORE_FIXES`) against every page touched by both this
+issue and issue #126 — this was the only overlap.
+
+**Verification**: `person_entry` 23173 unchanged, `quality_flags` institution_duplicated_in_
+heading_path 290 -> 74 (matching the expected 71 confirmed-fine rows plus 3 rows whose *fixed*
+value still legitimately trips the same noisy substring check, same as any other accepted
+truncation). `entities.person` 3342 live/2189 tombstoned, tombstone SET identical to backup, 0
+orphaned `person_link`, Repertoire-side counts and `receipts_total_kopecks` sum byte-identical.
+Backup at `outputs/full_run_pre_promote_backup_2026-10-01_institutiondup/`.
+
+**Still open**: the ~33 additional wrong-but-unflagged rows on `productionteam_1907-08_p002` and
+`productionteam_1899-00_p002` (same stuck-institution bug, invisible to this specific check);
+item #3 (Александрійскій/Александрийскій naming) from RG's original list; the future full Roster
+sweep.
+
+## Issue #128: Alexandrinsky theater naming (RG's "item 3")
+
+**Original framing**: "Александрійскій" (7 instances) vs. "Александрийскій" (3 instances) --
+neither matches the corpus's dominant, established spelling "Александринскій". Fresh full-corpus
+survey (never trust the original framing's counts without re-querying) found the real scope was
+much larger: **919 total references to the theater, 125 non-standard** across **six** distinct
+variant spellings, not two -- "Александрийскаго" (79), "Александрийскій" (17), "Александриискій"
+(14), "Александрійскій" (7), "Александри́нскій" (5, a stray Unicode combining-acute-accent mark,
+not a real spelling difference), "Александриискаго" (3).
+
+**Scan-verified, 3 independent samples** (musicians_1904-05_SP_p004, productionteam_1904-05_p002,
+productionteam_1891-92_p000 -- three different entity types, three different years): every scan
+plainly and consistently prints the standard "Александринскій"/"Александринскаго". None of the
+non-standard spellings are period-genuine variation for this single, well-known theater's name --
+all are transcription noise. **Fixed via corpus-wide string normalization**: 121 replacements
+across 18 raw JSON files, covering every instance of the 4 OCR-shaped variants (bare spelling
+fixes, not touching "Александрійскій" -- see below).
+
+**The "Александрійскій" (і-variant) cluster turned out to not be a spelling question at all.**
+All 7 instances sit on one page, `administration_1902-03_p004`, as the heading_path for entries
+e020-e026 ("Хозяйственное отдѣленіе / Полиціймейстеры / Александрійскій театръ"), immediately
+following e001-e019's "...Маріинскій театръ" labeling on the same page. The scan of this page
+(p.128) shows **no theater-name text printed anywhere** for any of these 26 rows -- a bare,
+uninterrupted numbered list (#5-30) with zero section break. Decisive evidence: `administration_
+1904-05_p004` (a later year, same office) shows the **exact same 24 names in the exact same
+order** (Власовъ...Тулиновъ, #7-30) all correctly captured under heading_path = "Чиновники X
+класса" (Class-X civil officials) -- a completely different classification with no
+theater/"Полиціймейстеры" content at all. The model fabricated the "Полиціймейстеры / [театр]"
+labels (reusing the genuinely correct 3-person Полиціймейстеры list's own labels from this same
+file's `p001`) and applied them wrongly across this entirely unrelated list. **Fixed**: heading_
+path for all 26 entries (e001-e026) -> "Чиновники X класса", matching the cross-year precedent;
+institution was already correct and untouched.
+
+**Found but explicitly NOT fixed this pass** (same bug class as issue #126, needs its own proper
+verification): `productionteam_1892-93_p001__e001`-`e009` (9 entries, "Хозяйственное отдѣленіе /
+Полиціймейстеры / Маріинскій театръ") are provably the same bug -- their names (Ланге, Лупановъ,
+Львовъ, Маловъ, Рудаковъ, Унгебауэръ, Ширяевъ, Юргенсъ, Яковлевъ) exactly match `productionteam_
+1891-92_p000`'s "Помощники декораторовъ" list continuing at #8-16 -- i.e. this is really a
+continuation of the Decorator-Assistants list, not a Полиціймейстеры list at all. Logged as a
+worklist item for the future full Roster sweep rather than fixed ad hoc.
+
+**Verification**: person_entry 23173 unchanged. quality_flags institution_duplicated_in_heading_
+path 74->75 (+1, a harmless newly-coincidental truncation match -- two independently-misspelled
+fields both corrected to the same right spelling, same accepted pattern as issue #127). entities.
+person 3342 live/2189 tombstoned identical, 0 orphaned person_link, Repertoire-side counts and
+receipts_total_kopecks sum byte-identical. 0 non-standard Alexandrinsky spellings remain anywhere
+in the corpus. Backup at `outputs/full_run_pre_promote_backup_2026-10-01_alexandrinsky/`.
+
+**Still open**: `productionteam_1892-93_p001`'s 9-row fabricated heading (above); the other
+~33-row ProductionTeam stuck-institution findings from issue #127; the future full Roster sweep
+(now with growing evidence that the issue #126 bug class recurs in ProductionTeam/Administrators,
+not just Musicians/BalletArtists).
+
+**All three of RG's original items (#126, #127, #128) are now closed.**
