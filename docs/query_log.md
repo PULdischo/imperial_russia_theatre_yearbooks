@@ -11489,3 +11489,25 @@ entities.person 3342 live/2189 tombstoned identical, 0 orphaned person_link, Rep
 and receipts_total_kopecks sum byte-identical. 0 non-standard Alexandrinsky spellings remain
 corpus-wide. Backup at `outputs/full_run_pre_promote_backup_2026-10-01_alexandrinsky/`. Full
 writeup: known_issues.md issue #128.
+
+## 2026-10-01 — Worklist cleanup: 4 items from issues #126-128 resolved (issue #129)
+
+Result: all 4 logged-but-not-acted-on items from today's earlier passes resolved:
+(1) `productionteam_1892-93_p001__e001`-`e009`: scan+list_number continuity confirmed these are
+the direct continuation of `p000`'s "Отдѣлъ декораціонный / Помощники декораторовъ" list (#7
+Ламбинъ -> #8 Ланге, no restart) -- heading_path fixed, institution already correct/unchanged.
+(2) `productionteam_1907-08_p002` (18 more rows beyond the 2 already fixed) and
+`productionteam_1899-00_p002` (same pattern): scan-read both pages directly, confirmed the
+institution should be the printed department header ("Отдѣлъ бутафорскій."/"Отдѣлъ гардеробный."/
+"Главный гардеробъ."/"Мѣстные гардеробы.") rather than a single stuck theater name -- fixed per-
+subsection on both pages (1 row deliberately left untouched on 1899-00_p002, ambiguous evidence).
+(3) `musicians_1907-08_SP_p003__e024`-`e037`: the institution value reverted during issue #126 is
+now resolved using direct scan evidence already in hand from issue #128's investigation (the same
+theater's orchestra roster, scanned 3 years earlier, shows institution = "Оркестръ
+Александринскаго театра." for this exact heading) -- applied.
+
+Post-rebuild: person_entry 23173 unchanged, quality_flags 608 (institution_duplicated_in_heading_
+path 75->73), entities.person 3342 live/2189 tombstoned identical, 0 orphaned person_link,
+Repertoire-side counts and receipts_total_kopecks sum byte-identical. Backup at
+`outputs/full_run_pre_promote_backup_2026-10-01_worklist/`. Full writeup: known_issues.md issue
+#129.

@@ -21425,3 +21425,41 @@ in the corpus. Backup at `outputs/full_run_pre_promote_backup_2026-10-01_alexand
 not just Musicians/BalletArtists).
 
 **All three of RG's original items (#126, #127, #128) are now closed.**
+
+## Issue #129: Worklist cleanup from issues #126-128 (4 items)
+
+Closed out the four items explicitly logged-but-deferred from today's earlier three passes,
+rather than letting them sit as an open-ended backlog.
+
+**1. `productionteam_1892-93_p001` fabricated-heading sibling (9 rows)**, found during issue
+#128's investigation. Scan + list_number continuity confirmed: `p000`'s "Отдѣлъ декораціонный /
+Помощники декораторовъ" list ends at #7 (Ламбинъ); `p001`'s e001 ("Ланге") picks up at #8 with no
+restart and no new heading printed -- it's a plain continuation, not a "Полиціймейстеры /
+Маріинскій театръ" list. Fixed heading_path for e001-e009; institution (a generic, already-
+correct document title) untouched.
+
+**2. The ~33 extra ProductionTeam rows from issue #127** (`productionteam_1907-08_p002`,
+`productionteam_1899-00_p002`). Read both scans directly: both show institution stuck on a single
+theater name ("Михайловскій театръ" / "Французская труппа") across an entire page spanning
+several genuinely different departments (Отдѣлъ бутафорскій, Отдѣлъ гардеробный, Главный
+гардеробъ, Мѣстные гардеробы), each with its own printed section header. Fixed institution per
+printed department section on both pages (1907-08_p002: all 20 rows now consistent; 1899-00_p002:
+20 of 21 rows, 1 row -- e022, heading=None -- left untouched, insufficient evidence to override).
+Side-finding, NOT fixed (logged only): `productionteam_1907-08_p002`'s heading_path has its own
+separate off-by-one bug for e007/e008 (the Alexandrinsky/Mikhailovsky sub-theater labels are
+shifted one row relative to what the scan actually shows) -- a different bug from the institution
+fix applied here.
+
+**3. The reverted Alexandrinsky institution on `musicians_1907-08_SP_p003`** (e024-e037, 14 rows,
+left pending at the end of issue #126 for lack of scan-grounded evidence). Resolved using scan
+evidence already gathered during issue #128's investigation: the same theater's orchestra roster,
+scanned on a different page 3 years earlier (`musicians_1904-05_SP_p004`), plainly prints
+institution = "Оркестръ Александринскаго театра." for this exact heading. Applied.
+
+**Verification**: person_entry 23173 unchanged. quality_flags 608 total (institution_duplicated_
+in_heading_path 75->73). entities.person 3342 live/2189 tombstoned identical, 0 orphaned
+person_link, Repertoire-side counts and receipts_total_kopecks sum byte-identical. Backup at
+`outputs/full_run_pre_promote_backup_2026-10-01_worklist/`.
+
+**Still open**: `productionteam_1907-08_p002`'s e007/e008 heading_path shift; the future full
+Roster sweep.
