@@ -11115,3 +11115,120 @@ needs its own dedicated investigation before touching production; deferred per R
 Result: all 134 production instances match cleanly (0 non-matches), all using plain "VII кл."-style suffixes with
 Latin-letter roman numerals -- confirms the new general repair (_repair_heading_path_rank_class) will clear all 134
 on the next full-corpus parse_and_validate.py run, not just the new batch's 40.
+
+## 2026-10-01 — Holistic status summary for RG (morning check-in)
+
+```sql
+select count(distinct season) from raw.source_pages;
+select count(*) from raw.event_entry; select count(*) from raw.event_entry_performance;
+select date_confidence, count(*) from analysis.event_entry_date_check group by 1 order by 2 desc;
+select entity_type, count(*) from raw.person_entry group by 1 order by 2 desc;
+select count(*) from entities.person where superseded_by_person_id is null; -- live
+select count(*) from entities.person where superseded_by_person_id is not null; -- tombstoned
+select count(*) from entities.work; select count(*) from entities.person_wikidata_link;
+select status, count(*) from entities.person_candidate group by 1;
+select count(*) from entities.work_genre_candidate;
+select count(*) from research.event; select count(*) from research.performance;
+select count(*) from research.person; select count(*) from research.person_appearance;
+```
+
+Result: 22 Repertoire seasons, 28256 events / 29569 performances, dates 98.4% verified (27805/28256). Roster:
+8523 BalletArtists + 7606 Musicians + 2700 TheaterSchoolStaff + 2003 ProductionTeam + 1841 Administrators + 504
+Graduates = 23177 person_entry rows. entities.person 3351 live / 2180 tombstoned; 3657 works; 43 Wikidata links;
+person_candidate queue 25 pending / 23 rejected; work_genre_candidate queue 768 rows. research.event 31203,
+research.performance 29568, research.person 3345, research.person_appearance 23163. quality_flags.csv 829 rows
+(all 4 categories pre-existing/known, see known_issues.md issue #123).
+
+## 2026-10-01 — Issue #124: duplicate_person_on_page corpus-wide sweep setup and verification
+
+```python
+# grouped all duplicate_person_on_page flags by page_id/entity_type from quality_flags.csv for sweep planning
+# post-fix: re-ran parse_and_validate.py + quality_checks.py, compared flag-type counts before/after
+```
+
+Result: 183 flags / 98 pages pre-sweep (TheaterSchoolStaff 122, ProductionTeam 33, Administration 10, Musicians
+10, BalletArtists 4, Graduates 4). Post-fix: 179 (4 genuine extraction bugs fixed: Нелидовъ+Бриліантовъ
+split-entry merges on administration_1894-95_p002, Бенда death-note reattribution + Гордонъ merge on
+musicians_1894-95_MSK_p000). person_entry 23177->23173. All other flag categories and Repertoire-side numbers
+unchanged -- see known_issues.md issue #124 for full writeup.
+
+## 2026-10-01 — "What's next for the people entity?" status check
+
+```sql
+select status, count(*) from entities.person_candidate group by 1;
+select match_reason, count(*) from entities.person_candidate where status='pending' group by 1 order by 2 desc;
+select count(*) from entities.person where superseded_by_person_id is null;
+select count(*) from entities.person where superseded_by_person_id is not null;
+select count(*) from entities.person_wikidata_link;
+```
+
+Result: person_candidate 21 pending (18 family_name_variant, 3 patronymic_variant) / 23 rejected. entities.person
+3350 live / 2181 tombstoned. entities.person_wikidata_link 43 (a pilot-scale run, not full-corpus).
+
+## 2026-10-01 — Issue #71 promotion: before/after verification
+
+```python
+# compared control (no-rename rebuild of current production) vs fixed (remap+rename+rebuild) duckdb copies
+# across research.theater/work/event/performance, entities.person live/tombstoned (as sets, not just counts),
+# entities.person_link entry_id prefixes, research.person season-field leftover typo tokens
+```
+
+Result: control and fixed identical throughout (research.event 31203, research.work 3657, entities.person
+3350 live/2181 tombstoned with IDENTICAL tombstoned-id sets). entities.person_link: 0 old-prefix (theaterschool
+staff_1899-90_/1905-07_) remaining, 282 new-prefix present. research.person: 0 leftover typo season tokens.
+quality_checks.py: 825 flags, same breakdown as pre-fix production. Promoted clean.
+
+## 2026-10-01 — Issue #52 re-verification before deciding a fix
+
+```sql
+select page_id, institution, count(*) from raw.person_entry where page_id='administration_1903-04_p003' group by 1,2;
+select count(*) from raw.person_entry where institution like '%состоящихъ на службѣ въ Императорскомъ%';
+```
+
+Result: unchanged from the original finding — exactly 32 rows on administration_1903-04_p003, all carrying
+"Списокъ лицъ, состоящихъ на службѣ въ Императорскомъ Мариинскомъ театрѣ", and this exact phrase occurs nowhere
+else in the corpus. Confirms the issue is still live and unchanged before deciding a fix.
+
+## 2026-10-01 — Issue #52 fix survey and verification
+
+```sql
+select institution, entity_type, count(*) n, count(distinct page_id) np from raw.person_entry
+  where institution is not null and length(institution) > 60 group by 1,2 order by length(institution) desc;
+select institution, entity_type, count(*) n, count(distinct page_id) np from raw.person_entry
+  where institution like '%(%' and institution not like 'Списокъ%' and institution not like '%Контор%'
+  group by 1,2 having count(*) >= 5 order by n desc;
+-- post-fix verification:
+select count(*) from raw.person_entry where institution like '%Мариинскомъ театрѣ%';
+select count(*) from raw.person_entry where institution like '%Завѣдывающій центральною библіотекою%';
+```
+
+Result: survey of long/sentence-shaped institution values found one more real bug beyond #52's original 32
+(administration_1900-01_p001, 24 entries, a stuck single-person position note instead of the page's real
+multi-department structure) -- fixed both. Broader structural heuristic for "fabricated title" pages was too
+noisy (matched legitimate document-title pages too, e.g. administration_1890-91_p000) -- not pursued further
+this session, logged as a worklist item. Post-fix: 0 instances of either fabricated/stuck phrase remain anywhere
+in raw.person_entry.
+
+## 2026-10-01 — person_candidate pending queue, full detail for review
+
+```sql
+select candidate_id, display_1, display_2, similarity_score, match_reason, tenure_signal, tenure_evidence
+from entities.person_candidate where status='pending' order by match_reason, similarity_score desc;
+```
+
+Result: 21 pending pairs (18 family_name_variant, 3 patronymic_variant), all tenure_signal in
+(conflicting_dates, no_date_data) -- no matching_dates corroboration available for any of them, so each needs
+individual review. Full list pulled for RG's review session; see known_issues.md for decisions as they're made.
+
+## 2026-10-01 — Issue #125: person_candidate review queue, verification queries
+
+```python
+# pulled all 21 pending pairs with display names/dates; pulled full raw.person_entry history for each
+# surname across all seasons to check corroborating role/date/graduation evidence; post-decision verification
+# comparing production against pre-decision backup
+```
+
+Result: 7 of 21 resolved as transcription errors (not entity decisions) after zoom-level scan checks; 13
+confirmed MERGE, 7 confirmed REJECT, 1 left deliberately pending (Давильеръ/Девильеръ). entities.person
+3350->3342 live, all 2181 pre-existing tombstones preserved, 0 orphaned person_link rows, all Repertoire-side
+research numbers unchanged. Full writeup: known_issues.md issue #125.

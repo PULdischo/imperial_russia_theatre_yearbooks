@@ -20932,3 +20932,294 @@ on `outputs/full_run/imperial_theaters.duckdb` in place; backup at
 `outputs/full_run_pre_promote_backup_2026-09-30_roster1908-10/`. `entities.person` live count 2900→3345 (new Roster
 people, normal for a 90-page addition); HF/Cloud Run republish and `link_wikidata.py` not done this round, matching
 recent promotion precedent.
+
+## Issue #124: corpus-wide `duplicate_person_on_page` sweep (183 flags, 98 pages) -- 2026-10-01
+
+RG: "Let's take a look at these today" (the `duplicate_person_on_page` backlog, 183 flags, only 5 spot-checked
+as of issue #123). Recommended and agreed to tackle this before `institution_duplicated_in_heading_path` (290,
+unchecked) and the deferred `credit_sum_mismatch` checker-logic question (#123).
+
+**No rendered images existed for most of this corpus** (`outputs/<season>/images/` directories are disposable
+scratch, already cleaned up for every season except the newest). Re-rendered all 920 Roster-type pages fresh at
+300dpi into `outputs/roster_images_full/` (local-only, no API cost) -- a reusable asset for any future Roster
+scan-check. Two page_ids (`theaterschoolstaff_1899-90_*`, `theaterschoolstaff_1905-07_*`) carry a stale season
+label from before their source PDF was renamed (`ForUpload_1899-90_...pdf` -> `...1899-00...pdf`,
+`...1905-07...pdf` -> `...1905-06...pdf`); reconciled by copying the correctly-named render under the old
+page_id (same PDF, same page order, verified by cross-checking a distinctive name -- Чекетти, Энрико Цезаревичъ
+-- against the raw JSON before trusting the mapping).
+
+**7 parallel agents scan-verified all 98 pages / 183 flags.** Result: **179/183 (98%) FALSE_POSITIVE**, matching
+the documented issue #9 pattern -- a real person legitimately listed twice under distinct headings/roles/
+departments/dates on the same page. Recurring confirmed shapes: a TheaterSchoolStaff teacher holding two posts
+(e.g. Ширяевъ А.В., "Репетиторъ танцевъ" since 1891 + "Танцы" since 1899, recurs on at least 6 different season
+pages); a clergy member who's also a teacher ("Дьяконъ"/"Священникъ" + "Законъ Божій", several recurring names);
+an administrative post-holder with two concurrent appointments (Быковъ А.Г., recurs across 3 seasons); a craftsman
+serving multiple troupes (Педдеръ/Григорьевъ, wigmaker for Opera+Ballet+Drama, often with an explicit "(онъ же и
+...)" ["he is also..."] cross-reference printed in the source itself); Карлъ Вальцъ, Bolshoi's decorator AND stage
+machinist (explicit "(онъ же и декораторъ)" annotation, recurs across at least 6 seasons); Альбертъ Фарскій,
+orchestra musician AND music-library librarian (same explicit cross-reference pattern, recurs across at least 5
+seasons); and the school director Рюминъ/Управляющий Училищемъ holding an ex-officio honorary-conference seat.
+One instance (`balletartists_1908-09_SP_p001`'s Исаева Татьяна Михайловна, #31 and #38) is a genuine print
+peculiarity -- she's printed twice, identically, out of alphabetical order -- confirmed directly against the scan
+myself after two independent agents disagreed on it (yesterday's #123 sweep called it FALSE_POSITIVE; today's
+agent initially called it a GENUINE_DUPLICATE to drop; the scan unambiguously shows both #31 and #38 printed).
+**Lesson repeated from the Гимнъ-population thread**: a prior scan verdict is not automatically right just
+because it was checked once, but neither is a new one -- re-check from the primary source every time, especially
+when two independent passes disagree.
+
+**4/183 were genuine extraction bugs, and none were simple "drop a row" duplicates** -- every one turned out to
+be a single printed entry (one person, one paragraph) carrying an indented continuation note (a promotion, a
+transfer, a death) that the model split into a second, separate person_entry row instead of folding into the
+first entry's `tenure_note_text`, exactly mirroring an already-established corpus pattern (compare
+`administration_1904-05_p001`'s Поспѣевъ: `tenure_note_text` = "съ 18 января 1883 г.). Назначенъ бухгалтеромъ 1
+сентября 1904 г.", one row, `service_periods` closing with `end_type: "left service"`):
+- `administration_1894-95_p002`: Нелидовъ В.А. (promotion note "назначенъ помощникомъ завѣдывающаго
+  монтировочною частью") and Бриліантовъ А.Е. (promotion note "назначенъ чиновникомъ особыхъ порученій при
+  Конторѣ") both split this way -- merged each into one entry, `tenure_note_text`/`service_periods` rebuilt to
+  match the established format. Бриліантовъ's entries also carried an unrelated spelling bug (`family_name`
+  "Бриліантова" with a feminine ending on a man; `first_name` "Алексъй" for "Алексѣй") -- fixed in the same edit,
+  confirmed against the scan.
+- `musicians_1894-95_MSK_p000`: Гордонъ А.Б.'s transfer note ("переведенъ въ С.-Петербургскій оркестръ") was the
+  same split-entry pattern -- merged. Бесслеръ О.'s case was different and more interesting: the scan shows "8.
+  Бенда, Маттіасъ (съ 15 января 1879 г.). Ударные инструменты. † 7 марта 1895 г. / 9. Бесслеръ, Отто..." -- the
+  death note between the two numbered entries belongs to **Бенда** (the preceding entry), but the model attached
+  it to a spurious duplicate of **Бесслеръ** (the following entry) instead. Бенда had no death info captured at
+  all before this fix. Reattributed the death note to Бенда's own entry, deleted the spurious Бесслеръ duplicate.
+
+**2 flags are a different, non-person structural mis-parse, not a duplicate-person bug**: `graduates_1890-91_p001`
+and `graduates_1895-96_p002` have aggregate school-wide statistics sentences ("Воспитанниковъ 26, воспитанницъ
+47...") captured as `person_entry` rows sharing a generic placeholder name field ("воспитанницъ"/"Ученицы и
+ученики"), which collide on the same key by construction. Not fixed this session (out of scope -- a `quality_
+checks.py` false-positive source worth a dedicated check later, distinct from real person-duplicates).
+
+**A sub-agent spawned an unauthorized background task** (via `spawn_task`) during a report-only pass, suggesting
+a fix for an unrelated bug it noticed in passing. Flagged by the harness's own security check
+("SECURITY WARNING: auto mode blocked this subagent's report... [Modify Shared Resources]"). Withdrawn
+(`dismiss_task`) rather than acted on -- the underlying finding is logged in the worklist below instead, to be
+looked at deliberately.
+
+**Side findings, out of scope for this sweep, worklist for later (not fixed)**:
+- `theaterschoolstaff_1890-91_p005`: subject field "Исторія русской литературы" bled from the following
+  section's first row (Веселовскій) onto two unrelated entries (Бороздина, Каменевъ) that print with no subject
+  at all.
+- `theaterschoolstaff_1897-98_p001`: a row's heading mislabeled "Учительницы" (female teachers) when the scan
+  shows "Учителя" (male teachers).
+- `theaterschoolstaff_1891-92_p002`: an "Оставилъ службу" (left service) note attached to the wrong row --
+  belongs to the preceding entry (Сазоновъ), not the one it's attached to (Соколовъ).
+- `musicians_1899-00_MSK_p004` and `musicians_1896-97_MSK_p003`: every row's `heading_path`/`institution` field
+  on the whole page is stuck at "Музыкальная библіотека / Библіотекарь" (or "Управляющій Училищемъ") instead of
+  each row's real per-section heading -- a page-wide heading-extraction bug, not isolated to the flagged rows.
+- `productionteam_1890-91_p003`: "Кунъ 1-й" and "Кунъ 2-й, Альбертъ Францевичъ" are two distinct real people
+  (brothers/relatives sharing first+patronymic, distinguished in print only by the "Кунъ 1-й"/"Кунъ 2-й" ordinal
+  prefix) whose shared surname "Кунъ" landed in `heading_path` instead of `family_name` for both -- collapsed
+  them onto an identical, wrong (family='Альбертъ', first='', patronymic='Францевичъ') key. Needs a parsing fix,
+  not a duplicate-person merge (both people are real and distinct).
+- `administration_1907-08_p002`: Василевскій Н.А., identical title+rank+date under two different departments,
+  no explicit cross-reference phrase (the one case in this whole sweep without one) -- plausible dual-department
+  clerk appointment, but flagged as the closest call if a similar pattern turns up elsewhere.
+- `productionteam_1899-00_p002`: possible OCR/transcription variant "Пеллеръ" for "Педдеръ" (the recurring
+  wigmaker) -- not verified against the scan this session.
+
+**Verification**: re-ran `parse_and_validate.py` + `quality_checks.py` directly on production (no separate
+integration test needed -- 4 surgical row-level fixes, zero Repertoire-side risk). `duplicate_person_on_page`
+183->179 (exactly the 4 fixed instances); `credit_sum_mismatch` 341, `institution_duplicated_in_heading_path`
+290, `receipts_parse_failed` 15 all unchanged. `person_entry` 23177->23173 (-4, matching the 4 merged/dropped
+rows exactly). Rebuilt the full chain in place on `outputs/full_run/imperial_theaters.duckdb`: all 2,180
+pre-existing tombstoned `entities.person` rows carried forward unchanged; `research.theater`/`work`/`event`/
+`performance` all byte-identical to before (6/3657/31203/29568); `entities.person` live 3351->3350 and
+`research.person` 3345->3344 (both -1, a clean byproduct of the Нелидовъ/Бриліантовъ merges no longer
+double-clustering); dates unchanged at 98.4% (Repertoire untouched throughout).
+
+### Addendum to #71 (2026-10-01): promoted to production, 2.5 weeks after the original fix
+
+**The original fix (above) was built and verified against a 2026-09-15 snapshot of `outputs/full_run/` but
+never promoted** — explicitly deferred ("Not done / for RG", issue #70 was mid-flight at the time) and then
+never revisited. By 2026-10-01 that snapshot was stale: two more Repertoire seasons, the Roster 1908-10
+onboarding, and the duplicate_person_on_page sweep (#124) had all landed on production since. Promoting the old
+`outputs/full_run_seasonfix/` wholesale would have silently reverted several weeks of subsequent work — caught
+this before touching anything and redid the fix fresh against current production instead, reusing the exact
+recipe and `pipeline/remap_entry_ids.py` tool already built in September.
+
+**Methodology** (mirrors the original, run fresh): a control rebuild (no renames) first, confirming the full
+`build_duckdb.py`→`build_entities.py`→`validate_performance_dates.py`→`build_research_model.py` chain reproduces
+current production exactly (3350 live / 2181 tombstoned, byte-identical) — rules out incidental rebuild
+non-determinism before attributing any delta to the rename itself. Then: `remap_entry_ids.py` against a DB copy
+first (282 entry_ids repointed, matching the original count exactly), *then* renamed the 11 raw JSON files +
+updated `manifest.csv`, then rebuilt the full chain on top of the already-remapped DB.
+
+**Result, compared against the control (not the stale snapshot)**: entities.person live/tombstoned counts
+identical (3350/2181), and the **tombstoned person_id set is exactly identical, not just equal in count** —
+confirming zero identity disruption, the exact failure mode the original fix was built to prevent. All
+Repertoire-side research numbers identical. `entities.person_link`: 0 old-prefix entry_ids remaining, 282
+new-prefix. `research.person`: 0 remaining `1899-90`/`1905-07` tokens in season fields. `quality_checks.py`:
+825 flags, identical breakdown to pre-fix production (confirmed this is a pure relabel with no content-check
+impact). Promoted to `outputs/full_run` directly (backup:
+`outputs/full_run_pre_promote_backup_2026-10-01_seasonfix71/`).
+
+**Still not done**: `raw/usage_log.csv` still logs the old page_ids (deliberate, per the original fix — a record
+of what was actually sent to the API, not re-written). HF and Cloud Run still serve the typo'd IDs until the next
+publish. The 7 pre-existing tombstoned `entities.person` rows still reading the old season token remain as-is by
+design (immutable superseded snapshots). The gold-eval re-score (86.7%→87.1%) from the original writeup hasn't
+been re-run against this promoted state — `eval_against_gold.py` should now report the corrected figure
+automatically on its next run.
+
+### Addendum to #52 (2026-10-01): fixed, plus one more related bug found and fixed, PROMOTED
+
+RG: "do this one" (issue #52, after a status check on the people-entity layer). Re-verified fresh first (still
+exactly 32 rows, still unique to the one page, nothing changed since the original finding) before touching
+anything.
+
+**Confirmed directly against the scan** (`ForUpload_1903-04_Spisok_Administration.pdf` p.126): no title, banner,
+or heading resembling the fabricated sentence appears anywhere on the page. The page is a direct continuation
+flowing from p.125 (Монтировочная часть promotions) into a new, clearly-printed "Врачебная часть" section
+heading (Старшій врачъ / Врачи / Дежурные врачи, 23 of them). `heading_path` already captured every entry's real,
+specific position correctly — only `institution` was fabricated.
+
+**Fix**: replaced the fabricated sentence with the real section headings actually printed on the page, matched to
+each entry: `institution` = "Монтировочная часть" for the 4 entries continuing that section (Обуховъ, Леммлейнъ,
+Розовъ, Плескій); blanked for 2 standalone individual posts with no applicable department header on the page
+(Коровинъ "Художникъ и библіотекарь", Дворецъ-Дворецкій "Регистраторъ" — matching issue #46's established
+"blank rather than guess" precedent); "Врачебная часть" for the remaining 26 (Казанскій through Ремезовъ, all
+directly under that visible heading).
+
+**Checked whether this pattern recurs elsewhere** (explicitly flagged as not-yet-done in the original #52
+writeup). A broad structural heuristic (one `institution` value spanning 3+ distinct `heading_path` departments
+on one page) was too noisy — it mostly caught legitimate title pages (e.g. `administration_1890-91_p000`'s real
+document title correctly spanning Директоръ/Архитекторы/Хозяйственное отдѣленіе/etc., exactly as intended). A
+narrower, more targeted heuristic — a parenthetical, person-specific-sounding `institution` value (not a
+"Списокъ..."/"...Контор..." template) applied to 5+ entries on one page — found exactly **one more real bug**:
+`administration_1900-01_p001`, 24 entries, all carrying `institution` = "Помощникъ дѣлопроизводителя. (Завѣдывающій
+центральною библіотекою)." — a single person's own specific job title (presumably the first entry's, Щенкъ's),
+stuck across the whole page. `heading_path` here showed the real structure clearly: only 8 of 24 entries actually
+shared "Хозяйственное отдѣленіе" as their top-level department — the rest spanned "Счетное отдѣленіе" (3),
+"Монтировочная часть" (11), "Врачебная часть" (1), and one standalone position with no department
+("Журналистъ Конторы", Клементьевъ — blanked). Fixed the same way: `institution` set to each entry's real
+top-level `heading_path` segment, blanked where none applies.
+
+**Own mistake caught immediately via validation**: set the 3 blanked entries' `institution` to Python `None`
+first — the LLM-facing schema (`RosterEntryLLM.institution: str`) is non-nullable, so this silently failed
+Pydantic validation and **dropped both entire pages** (56 rows) from the parse with no loud error, only a quiet
+line in `validation_errors.csv`. Caught by the row-count drop not matching expectations; fixed by using `""`
+instead of `None`, matching the schema's actual contract.
+
+**Also cleaned up an avoidable new flag**: deriving `institution` directly from `heading_path`'s own first
+segment initially left that segment duplicated in both fields, triggering 49 new `institution_duplicated_in_
+heading_path` flags (not a correctness bug — both fields were individually accurate — but avoidable redundancy
+inconsistent with how already-correct pages in this same file are structured, e.g. `administration_1903-04_p001`
+keeps `heading_path` as just the bare position, no repeated department prefix). Stripped the now-redundant
+department prefix from `heading_path` on both pages; `institution_duplicated_in_heading_path` returned to its
+pre-fix baseline (290).
+
+**Verification**: `quality_checks.py` 825 flags, identical breakdown to pre-fix production. `person_entry` 23173
+unchanged (confirms the None-mistake was fully corrected, no residual row loss). Rebuilt the full chain on
+`outputs/full_run/imperial_theaters.duckdb` in place: `entities.person` 3350 live / 2181 tombstoned unchanged
+(pure content fix, zero identity impact, as expected); all `research.*` counts identical to pre-fix production.
+Backup: `outputs/full_run_pre_promote_backup_2026-10-01_issue52/`.
+
+**Not done**: a full scan-by-scan audit for the broader "fabricated sentence-title" sub-pattern (distinct from
+the "stuck person-specific note" sub-pattern just fixed) — no reliable structural heuristic was found to
+distinguish a fabricated title from a genuine one without checking each candidate against its scan individually;
+logged as a worklist item, not attempted this session.
+
+## Issue #125: entities.person_candidate review queue -- all 21 pending pairs resolved, 2026-10-01
+
+RG: "the 21-pair person_candidate review queue" (chosen from the people-entity status menu, see issue #52's addendum
+and the "what's next" summary). Walked through all 21 pairs one at a time with RG, each presented with scan
+evidence before a verdict -- not batch-approved from my own tiering.
+
+**7 of 21 turned out not to be entity-resolution questions at all -- they were single transcription misreads**,
+caught only because RG kept pushing back on claims not grounded in an actual scan read ("did you check the scan
+on this? it's hard to believe...", "check the scans for transcription error first"). Every one of these resolves
+automatically on rebuild once the raw JSON is corrected (identical spelling after the fix -> Tier 1 exact-match
+clustering, no merge decision needed):
+- `balletartists_1908-09_SP_p003`: "Поманъ" -> **Пюманъ** (the real letter is ю, not о -- matches the 1907-08
+  page's spelling exactly, confirmed at zoom).
+- `balletartists_1908-09_SP_p001` + `balletartists_1909-10_SP_p001`: "Доброљубова"/"Доброљюбова" -> both
+  **Добролюбова** -- a stray Serbian/Macedonian Cyrillic "љ" (U+0459) had replaced "л" on *both* independent
+  pages, plus a second compounding vowel error on one side. Corpus-wide grep for the character found no other
+  instances.
+- `musicians_1909-10_SP_p000`: "Александръ" -> **Александеръ** (missing "е" -- every other year, 1903-04 through
+  1907-08, already reads "Александеръ" consistently; only the newest page had it wrong).
+- `productionteam_1908-09_p003`: "Гейкбломъ" -> **Гейкблюмъ** (the real letter is ю, not о -- caught only by
+  zooming 3x; at normal resolution it reads ambiguously close to the wrong letter).
+- `balletartists_1908-09_SP_p004`: "Шолларь" -> **Шолларъ** (hard sign, not soft -- every other year, 1906-07
+  through 1909-10, already reads "Шолларъ").
+- `balletartists_1906-07_SP_p003`: "Мироникова" -> **Миронникова** (missing one "н" -- both other years,
+  1907-08 and 1908-09, already read "Миронникова"; her surname was never actually inconsistent, only the
+  1906-07 transcription was wrong).
+- `balletartists_1908-09_SP_p002`: found an unflagged **third occurrence** of Нижинская mistranscribed entirely
+  differently as "Ніясинская" -- not in the original 21 candidates at all (too garbled to even match as a
+  near-duplicate), caught incidentally while zoom-checking the neighboring Миронникова entry on the same page.
+  Fixed, folds into the Нижинская merge below.
+
+**Lesson, stated plainly because it recurred this many times in one sitting**: a "both sides read the same at
+normal resolution" check is not reliable for distinguishing о/ю, ь/ъ, or a doubled consonant -- deliberately
+zooming each candidate at 3x before concluding "confirmed accurate" is what actually caught 7 of these. A normal-
+resolution read that looks fine is not evidence; only a zoomed one is.
+
+**13 confirmed MERGE** (including the 6 transcription-driven ones above, now confirmed as the same person by
+definition once corrected):
+- **Всеволожскій/Всеволожской, Иванъ Александровичъ** -- RG specifically challenged this one ("hard to believe
+  his name was misspelled"), right to. Confirmed via direct scan read: the print genuinely alternates between
+  "-ской" and "-скій" endings across 19 years for this one real, singular historical figure (Director of Imperial
+  Theaters 1881-1899, then honorary council member through his death, which the record itself marks: "† 28
+  октября 1909 г."). A genuine period orthographic instability on an adjectival-surname ending, not an extraction
+  error -- confirmed on `theaterschoolstaff_1908-09_p000`.
+- **Фонъ-Бооль/Фонъ Бооль, Николай Константиновичъ** -- stronger than a spelling argument: the School-Director
+  record explicitly cross-references itself, in parentheses, as "(Управляющій Московской Конторой Императорскихъ
+  театровъ)" -- the same explicit "онъ же" self-identification pattern confirmed repeatedly in the Roster sweep
+  two days ago.
+- **Бриліантова/Брилліантова, Варвара Николаевна** -- both spellings zoom-confirmed accurate (single vs. double
+  л), same wardrobe-assistant role, same year (1898), 2.5 months apart.
+- **Иванова, Ираида Даниіловна/Даниловна** -- RG's own synthesis after I'd second-guessed myself: same person
+  across 6 consecutive years (1904-1910) and an independent graduation record both corroborating "1 іюня 1904,"
+  with the 1908-10 volumes alone reporting a contradictory earlier date (19 сентября 1902). Concluded the later
+  volumes simply got the date wrong, rather than treating two years of anomaly as grounds to override four years
+  of corroborated continuity plus the graduation record.
+- **Нижинская, Бронислава Фоминишна/Ѳоминична** (+ the "Ніясинская" 3rd occurrence above) -- a clean theatrical-
+  school-to-troupe progression (institution switches from "Императорское С.-Петербургское Театральное Училище"
+  to "ПЕТЕРБУРГСКАЯ БАЛЕТНАЯ ТРУППА" between the two records), matching the real historical Bronislava Nijinska's
+  documented 1908 graduation. "Фоминишна"/"Ѳоминична" are both genuine period-attested patronymic forms (-ишна
+  archaic vs. -ична standard, like "Ильинишна"/"Ильинична"), not a misspelling.
+- **Галейзовская/Голейховская, Надежда Карловна** -- RG asked for her graduation-list spelling specifically,
+  which turned up a *third* spelling ("Голейзовская") in the Moscow school's spring-1906 graduating class list,
+  fitting the troupe-entry timeline perfectly (graduates spring 1906 -> first troupe appearance season 1906-07).
+  RG: "there aren't any other graduates who could be candidates for this person, so merge."
+
+**7 confirmed REJECT** (genuinely two different real people, not spelling noise):
+- **Гренбергъ, Софья Павловна/Карловна** -- different patronymics (different fathers). RG asked for the roles;
+  scan-confirmed Павловна is "Смотрительница" of men's costumes specifically (narrower role, started 1907),
+  Карловна is "Смотрительница отдѣловъ" (broader, started 1905) -- two differently-scoped positions, not the
+  same woman.
+- **Каржавина/Коржавина, Евгенія Алексѣевна** -- RG asked to check the scans first; both letterforms (а vs о)
+  confirmed genuinely distinct, and a graduation record pins Каржавина's real troupe-entry to 1907, which
+  contradicts Коржавина's independently-dated 1905 troupe record (can't have joined the professional troupe two
+  years before graduating).
+- **Розовъ/Морозовъ, Александръ Ѳедоровичъ** -- confirmed via 30+ other `Морозовъ` records corpus-wide
+  (distinct dancer, violinist, and drama-teacher namesakes already tracked) that this is a real, independently-
+  attested surname, not a misread of Розовъ. Different department entirely (administrator since 1874 vs.
+  musician/organist since 1906).
+- **Пузановъ/Гудановъ, Александръ Николаевичъ** -- same first+patronymic, but exact tenure dates conflict (7
+  Dec vs. 1 Aug 1892) and departments differ (administrative/medical-duty vs. wardrobe).
+- **Свѣтинская/Снѣжинская, Марія Александровна** -- a 20-year continuous, single-dated career (1878-1898) vs.
+  an independently multi-period-dated career (1905-1908). No overlap, no bridge.
+- **Горохова/Горшкова, Марія Николаевна** -- 1873-1893 vs. 1903-1909, a 30-year gap. ("Горохова" independently
+  confirmed a common surname in this corpus -- two other unrelated Гороховы turned up in passing.)
+- **Давильеръ/Девильеръ, Екатерина Львовна** -- checked for a transcription error per RG's request; both
+  letterforms (а vs е) came back independently confirmed accurate as two genuinely different surnames. **Left
+  deliberately UNDECIDED, not rejected** -- RG: "let's keep this one undecided until I get scans of the artist
+  spiski for later seasons. if she shows up again in those, we'll have more evidence." Only two total
+  appearances exist corpus-wide (1908-09, 1909-10 Moscow BalletArtists), both from the newest batch, with no
+  earlier/later record under either spelling and no graduation record to arbitrate.
+
+**Verification**: re-ran `parse_and_validate.py` (person_entry 23173 unchanged, confirming the 7 spelling fixes
+cost zero rows) + `quality_checks.py` (825 flags, identical to the pre-session baseline) before applying the
+decisions. `build_entities.py --apply-decisions`: 13 confirmed / 7 rejected / 1 left pending, exactly as
+intended. Rebuilt the full chain: `entities.person` 3350 -> 3342 live (8 genuine merges), all 2,181 pre-existing
+tombstones preserved (0 un-tombstoned, confirmed via set comparison), 0 `person_link` rows pointing at a
+superseded person, all Repertoire-side `research.*` numbers byte-identical throughout. Promoted to
+`outputs/full_run`, backup at `outputs/full_run_pre_promote_backup_2026-10-01_personcandidates/`.
+
+**Remaining queue state**: 1 pending (Давильеръ/Девильеръ, deliberately deferred), plus whatever new candidates
+the 8 merges' canonical-field refresh surfaces on the next `build_entities.py` run (not yet re-exported/reviewed
+this session).
