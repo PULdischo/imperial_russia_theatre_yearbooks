@@ -21644,3 +21644,14 @@ likely a stray print mark (genuine-typo candidate); not changed. (2) The audit c
 **Issue #130 batch 6 addendum -- Новоселовъ's stray † (2026-10-02, DONE, RG decision)**: `musicians_1906-07_SP_p006` Новоселовъ has a lone "†" under his entry (scan viewed at zoom with RG); he is alive in 1907-08 and dies
 5 мая 1908. Per RG: † kept verbatim in the raw data and tenure_note_text, end_type cleared (was "died", no date), logged in docs/eval/genuine_print_typos.md. person_entry unchanged; one service-table row
 (end_type died -> empty); live persons 3338, tombstones identical, orphans 0, flags 599, receipts sum unchanged. Backup: full_run_pre_promote_backup_2026-10-02_novoselov.
+
+**Issue #130 batch 7 -- notes-only audit of the remaining Musicians pages (2026-10-02, IN PROGRESS)**: all 185 Musicians pages not covered by batch 6 (215 total; the "142" first quoted omitted 43 pages verified earlier for headings only) are being
+audited entry-by-entry for printed notes by independent report-only agents (37 groups of 5 pages, bundles in /tmp/audit2, results in /tmp/audit2/results/group*.txt); every reported discrepancy is
+re-read by hand on the scan before being applied. Applied so far (groups 1-16 of 37): **1890-91 MSK p003: 27 "(см. оперный оркестръ)." cross-references restored** -- they had been destroyed by MY wave-1 heading
+fix (the old heading_path held the extractor's entry text including the cross-reference, and overwriting it lost it; checked all 20 backups: only these 27 rows were affected, no other wave); Нахтигалъ/Нигофъ
+1890-91 SP p001 (note misattached to the neighbour: moved); 1893-94: Витолло, Голласъ, Гофманъ †, Геншъ, Гоппе †, Акимовъ, Каминскій (dropped left-service/death notes); Дмитріева 1896-97 ("Оставила службу 1 августа
+1896 г."); Триньякъ 1898-99 (the 1898 note the sweep had attributed to the wrong season); Келеръ 1898-99 SP (transfer wording, end date already stored); Фарскій 1899-00 ("онъ же и библіотекарь" cross-note) and Николаевъ
+(Шмулевичъ) 1899-00 (alias, stored in print order in tenure_note_text like the existing "(онъ же и ...)" parentheticals); Нальхановъ 1898-99 "октѣбря" -> "октября" (extractor ѣ misread, two independent reads). No person-entity
+changes (person_link 0 changed; live 3338, tombstones 2245, flags 599). Backups: full_run_pre_promote_backup_2026-10-02_audit_w1 / _audit_w2. Probable genuine print oddities collected for the typo list when the audit
+finishes: Колосовъ 1895-96 MSK p003 "декабри"; Ѳедоровъ Петръ 1898-99 SP p004 day glyph a colon; Валеніусъ 1899-00 MSK p000 instrument "Туба"; Торманъ 1899-00 SP p003 "Туба"; Павловъ 1899-00 MSK p002 contract span
+"по 30 декабря 1880 и (съ 19 сентября 1882 г.)"; Федоровъ 1899-00 SP p005 leave date (1 іюня 1889) before start (1 сентября 1889).
