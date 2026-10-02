@@ -21594,3 +21594,8 @@ subsections.* All 52 library-related Musicians rows now carry institution "Ор�
 inconsistent values ("Училище", "Ежегодникъ...", "Списокъ лицъ...", "Оркестръ Малаго театра.", modernized "Центральная Музыкальная Библиотека", "Музыканты:",
 "Музыкальная библіотека."). The unrelated Moscow-drama "Библіотекарша" row is untouched. Left as stored: the printed typo "Бблiотеки" on 1898-99 SP p006 (the data reads
 "Бібліотеки"), trailing-period variants in SP headings.
+
+**Issue #130 secondary batch 3 -- 1908-10 running-head institutions (2026-10-02, DONE)**: the 1908-09/1909-10 Musicians pages stored the printed page-top running head as institution
+(UPPERCASE, partly lowercase) while every earlier season stores the section title. Per RG's rule (institution from the section title; headings reflect subsections) 464 orchestra rows now
+carry "Оркестры."; the section title was also stripped from 250 1909-10 headings where it duplicated the institution. Non-orchestra rows misfiled in these series (ballet tails, French-troupe
+actors, Moscow drama roster) were left as stored for the row-removal batch. Open cosmetic item surfaced: trailing colons in headings ("Музыканты:" vs "Музыканты") split role_normalized.

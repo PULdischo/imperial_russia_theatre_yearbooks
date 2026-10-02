@@ -11667,3 +11667,14 @@ St. Petersburg Новоселовъ/Тильпъ 1896-97..1907-08) -- every row 
 Библіотеки." No other column changed (person_entry 23238 rows, flags 599, tombstone set identical, orphans 0, Repertoire receipts sum identical). The first pass missed two rows whose
 heading lacked the keyword (Орловъ "Помощникъ его" 1900-01/1901-02) and one with "Бібліотеки" (1898-99 SP p006 e030); all three fixed. Backup:
 outputs/full_run_pre_promote_backup_2026-10-02_library/.
+
+## 2026-10-02 — 1908-10 running-head institutions normalized (issue #130 secondary batch 3)
+
+Decision (RG, following the library rule): institution = the section title "Оркестры."; the printed page-top running head ("ПЕТЕРБУРГСКІЕ/МОСКОВСКІЕ ОРКЕСТРЫ.", also stored
+lowercase in places) is a page header, not a section title -- city is already in page_id / source_pages.
+Result: 464 orchestra rows on musicians_1908-09_* and musicians_1909-10_* changed from the running head to "Оркестры." (1908-09 MSK p001-p003 103, SP p001-p003 105;
+1909-10 MSK p000-p003 119, SP p000-p004 ... ); 16 non-orchestra rows keep the stored value (1908-09 MSK p000 e001-e007 ballet tail, 1908-09 SP p000 e001-e003 and 1909-10 SP p000 e012-e015
+French-troupe actors, 1909-10 MSK p000 e027-e028 ballet tail) pending the row-removal decision; the Moscow drama rows ("МОСКВА...") untouched. Side effect handled: 1909-10 headings began with the
+section title ("Оркестры. / Музыканты:", "Оркестры / Музыканты"), which now duplicated the institution (131 new institution_duplicated_in_heading_path flags); that redundant prefix was stripped
+from 250 heading_path values (1909-10 only), returning flags to 599. Column diffs: batch 3a institution only (464), 3b heading_path only (250). Remaining cosmetic: trailing colons split
+role_normalized ("Музыканты:" 127 vs "Музыканты" 119). Tombstone set identical, orphans 0, receipts sum identical. Backup: outputs/full_run_pre_promote_backup_2026-10-02_runninghead/.
