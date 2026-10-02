@@ -11828,3 +11828,13 @@ select count(*) from raw.person_entry where page_id like 'musicians_%' and regex
 ```
 
 Result: 7 pages (1894-95/1896-97/1897-98 MSK p000-p002) had "Оркестр оперы и балета", and by the full heading listing 8 more (1890-93 MSK p000-p002) had "Оперный оркестр" -- 544 rows in all; scans of all six p000 pages print the hard sign. After the fix: 0 rows left.
+
+## 2026-10-02 -- research_dataset.sqlite rebuilt from the current full_run DuckDB
+
+```sql
+-- sqlite (new) vs sqlite (28 Sep backup) vs duckdb research.*: select count(*) from <table> for theater/work/person/event/performance/person_appearance;
+select count(*) from person_appearance where instrument in ('Виолончель','Біолончель','Вальдгорнь','Альть');
+select sum(receipts_total_kopecks) from event;  pragma integrity_check;  pragma foreign_key_check;
+```
+
+Result: new sqlite row counts equal duckdb research.* exactly (theater 6, work 3657, person 3274, event 31203, performance 29568, person_appearance 23151; the 28 Sep file had work 3518, person 2894, event 28966, performance 27587, person_appearance 21154); misread instrument spellings 112 -> 0; receipts sum 2999096975 in both; integrity ok, 0 foreign-key violations. Old file kept as outputs/full_run/research_dataset.sqlite.bak_2026-10-02.
