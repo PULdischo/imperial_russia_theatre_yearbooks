@@ -11798,3 +11798,12 @@ where p.superseded_by_person_id is not null  -- minus the 2246 tombstones presen
 ```
 
 Result: 46 new tombstones (2246 -> 2292), live persons 3326 -> 3280; every pair is the same normalized name in the same or adjacent seasons (list in known_issues #130 batch 9); 157 person_link rows repointed, all explained by those tombstones; 0 orphans; receipts sum identical.
+
+## 2026-10-02 -- court-soloist / ballet-soloist titles in Musicians (issue #130 batch 9 addendum)
+
+```sql
+select family_name,count(*) filter (where rank_or_title is not null),count(*) from raw.person_entry where page_id like 'musicians_%' and family_name in ('Ауэръ','Цабель','Сиборъ') group by 1;
+select entry_id,family_name,tenure_note_text from raw.person_entry where page_id like 'musicians_%' and rank_or_title is null and regexp_matches(tenure_note_text,'(Солист|Двора|Концертмейст|Капельмейст|Дирижеръ|Органист|Піанист|библіотекар|Репетитор|Аккомпан)');
+```
+
+Result: before, 18 rows (Цабель 8, Чіарлоне Виргинія 5, Ауэръ 4, Сиборъ 1) had the title only inside tenure_note_text; after the fix every Ауэръ (17/17) and Сиборъ (4/4) row has it, Цабель 14/17 (3 cross-reference rows, none printed), Чіарлоне 8 (the SP rows where it is printed).
