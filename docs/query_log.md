@@ -11703,3 +11703,15 @@ select entry_id,family_name,tenure_note_text from raw.person_entry where tenure_
 Result: the four persons appear only on musicians_1908-09_SP_p000 / musicians_1909-10_SP_p000 (7 entries, 4 person_ids). 118 entries carry "переведен" in tenure_note_text (convention: note folded
 into the person's own tenure note); 1 row had it as family_name (the stray 1908-09 SP p002 e035). Scan check: note is printed under no. 70 Мнацагановъ. After rebuild: 23176 entries, live persons 3338,
 tombstones identical (2245), orphans 0, flags 599, receipts sum 2999096975 unchanged.
+
+## 2026-10-02 -- Issue #130 dropped identity notes: which Musicians rows carry a printed left-service/death note without a service end?
+
+```sql
+select e.entry_id,e.list_number,e.family_name,e.tenure_note_text,s.end_date_text,s.end_type
+from raw.person_entry e left join raw.person_entry_service s using(entry_id)
+where e.page_id like 'musicians_%' and (e.tenure_note_text like '%Оставил%' or e.tenure_note_text like '%†%')
+  and not exists (select 1 from raw.person_entry_service s2 where s2.entry_id=e.entry_id and s2.end_date_text is not null and s2.end_date_text<>'');
+```
+
+Result: 3 rows after the batch (Плацатка 1897-98, Барсукъ-Самборскій 1903-04, Новоселовъ 1906-07). Two fixed (end dates set from the scan); Новоселовъ's lone "†" left (see known_issues #130 batch 6).
+Final state: musicians end_type counts None 7083 / left service 329 / died 72 / other 41; 23176 entries; live persons 3338; tombstones identical (2245); orphan links 0; flags 599; receipts sum 2999096975.

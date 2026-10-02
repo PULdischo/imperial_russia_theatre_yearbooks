@@ -21617,3 +21617,26 @@ person_link was remapped first (14/14 identities unchanged). Also, 1908-09 SP p0
 indented note printed under no. 70 Мнацагановъ (not a person); the extractor had emitted it as a stray last row. Merged into Мнацагановъ's tenure_note_text following the corpus convention for
 transfer notes ("съ 1 сентября 1902 г. Переведенъ ... съ 1 ноября 1905 г."); the phantom person is gone. person_entry 23184->23176 (-8); live persons 3343->3338 (-5: 4 French + 1 phantom);
 tombstones identical (2245), orphans 0, flags 599, receipts sum unchanged. Backup: full_run_pre_promote_backup_2026-10-02_removals2.
+
+**Issue #130 secondary batch 6 -- dropped identity notes ("Оставилъ службу" / † / "Переведенъ" / "назначенъ"), Musicians (2026-10-02, DONE)**: the sweep had flagged ~40 candidate notes whose printed text
+was missing from the stored data. Each candidate page (30) was re-verified by an independent report-only agent reading the scan at zoom, which also audited EVERY entry's trailing note on those pages;
+the long/orthography-sensitive notes and the one disputed date were then re-read by hand. The sweep list was wrong in 5 places, which is why independent verification mattered: **Вейнаръ 1900-01
+(no note printed), Триньякъ 1897-98 (the note is Туровичъ's, already stored), Цабель 1896-97 (court-soloist title already in rank_or_title), Сиборъ 1907-08 (already in rank_or_title), Мнацагановъ
+1908-09 SP p002 (done in batch 5)**; and the agent transcriptions needed correcting once (Крюгеръ's month is printed "іюля" with і, not "июля"). Applied (raw JSON -> re-parse; person_entry only
+tenure_note_text changed, 41 rows + 1 credit_summary_text; person_link unchanged):
+- **29 left-service notes** added (text + end date, end_type "left service"): Литтихъ, Михельсонъ, Гуляевъ, Нестеровъ, Поповъ 1-й (1891-92 SP); Царскій (1893-94 MSK); Фишеръ (1893-94 SP); Кажданъ
+  (1894-95 MSK -- note was stored under the NEIGHBOUR Канисъ, who has none; moved); Гейне, Бизье, Кудике, Адольфи 1-й/2-й, Штейнсъ, Кюне ("Оставила"), Елизаровъ, Кротковъ, Подруцкій; plus Барсукъ-Самборскій
+  1903-04 and Плацатка 1897-98 (text present, end missing); Шульцъ Карлъ and Богуславъ 1891-92 MSK (text arrived via the fragment-merge repair, service end was missing).
+- **7 deaths** (†, end_type "died"): Шестаковъ, Брауэръ (the date had been stored on the NEIGHBOUR Вейнбергъ, who is not printed with one; moved), Крюгеръ (9 іюля 1895), Палице, Майеръ-Пирко; Головацкій's
+  text added (end already stored).
+- **Transfers / appointments**: Арендсъ 1892-93, Кучера 1893-94, Галкинъ 1894-95 (appointments, no end date, matching existing Арендсъ rows); Чіарлоне 1-я, Гейслеръ, Фогтъ (note had been filed in
+  credit_summary_text; moved), Мнацагановъ x2 (1905-06 SP out to Маріинскій with end 1 ноября 1905 = "other"; 1907-08 SP in from Михайловскій, no end); Гейслеръ's end_type "left service" -> "other".
+- **Wrong date**: Рессеръ 1907-08 MSK p002 printed "1 августа 1908 г." (1906 had been copied from Подруцкій's note above him); fixed text + end date.
+- Text-only (end date already stored, note text missing from tenure_note_text): Блась, Гейнъ, Адамовъ, Борхъ, Бюхнеръ, Воячекъ. Веребрюсовъ's note had been duplicated x2 (also relocated from rank_or_title): deduplicated.
+Conventions: a final "." was normalized onto notes the print leaves unpunctuated (Нестеровъ, Гейне, Бизье, Кудике, Палице, etc.), as the corpus already does for Штаакъ; transfers use end_type "other" (the
+most common existing form; existing transfer rows remain inconsistent -- "left service"/"other"/none -- not re-normalized). Verification: service table 30 end-date changes + 2 (Барсукъ, Плацатка), person_entry
+23176 unchanged, live persons 3338, tombstones identical (2245), orphans 0, person_link 0 changed, flags 599, receipts sum unchanged. Backup: full_run_pre_promote_backup_2026-10-02_dropnotes.
+**Left for RG / follow-ups**: (1) Новоселовъ 1906-07 SP p006 has a lone "†" printed under his entry with no date, stored with end_type "died", yet he is listed alive in 1907-08 and dies 5 мая 1908 --
+likely a stray print mark (genuine-typo candidate); not changed. (2) The audit covered only the 30 pages carrying candidates; a notes-only audit of the other ~142 Musicians pages would give full assurance.
+(3) Цабель's "Солистъ Двора..." appears in rank_or_title in some seasons only (1893-94..1896-97, 1899-00, 1901-02) -- others unchecked. (4) 1903-04 MSK p000 Адамовъ note stored "Московскімъ", print reads
+"Московскимъ" (letter-level misread, in the name-misread batch).
