@@ -283,6 +283,7 @@ these the hard way:**
   `REFERENCES` clause, and why schema-building scripts use `CREATE TABLE`
   (inline constraints) + `INSERT INTO ... SELECT` rather than
   `CREATE TABLE AS SELECT` + `ALTER`.
+- `entities.person_link` is keyed by `entry_id` = position in the page's raw `entries` array. Mid-array insertions/removals silently shift every later row's person (issue #131) -- append at the END, or renumber/pre-seed `person_link` first, and run `pipeline/check_person_link_alignment.py` before and after any raw-edit sweep (details: docs/pipeline.md).
 - `raw.event_entry_performance.performance_id`, `entities.work.work_id`, and
   `entities.work_link.raw_performance_id` are three different IDs for
   related-but-distinct things — don't assume any two are interchangeable.

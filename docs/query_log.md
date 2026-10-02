@@ -11748,3 +11748,15 @@ select count(*) from raw.person_entry where family_name=? and first_name=?;   --
 ```
 
 Result: both blocks were entirely trailing (1908-09: 8 rows from e017; 1909-10: 5 rows from e022), all "МОСКВА. Русская драматическая труппа". After removal: person_entry 23163, live persons 3327, tombstones 2245, flags 598.
+
+## 2026-10-02 -- Issue #131: shifted person_link blocks; tenure-start consistency of affected persons
+
+```sql
+-- name-consistency of every link (done in pipeline/check_person_link_alignment.py)
+select l.entry_id,e.family_name,p.canonical_family_name from entities.person_link l join raw.person_entry e using(entry_id) join entities.person p on p.person_id=l.person_id;
+-- start-date agreement across a person's entries
+select e.entry_id,s.start_date_text from raw.person_entry e join raw.person_entry_service s using(entry_id) where s.period_order=1;
+```
+
+Result: 230 name-mismatched links on 71 pages; 6 shift blocks (5 pages) found by the new check. After relinking 92 entries on 4 pages: those pages 0 mismatches; affected persons with inconsistent first-period start dates 90 -> 21; shift blocks left: 1 (theaterschoolstaff_1896-97_p000, out of scope).
+Final: live persons 3326, tombstones 2246, orphans 0, receipts sum 2999096975, flags 598.

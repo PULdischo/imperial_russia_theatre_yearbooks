@@ -201,3 +201,13 @@ files rather than letting a finding live only in a chat transcript.
 3. Full-corpus cost/throughput estimate should be built from the actual
    pilot per-page timing now that we have it, not the earlier guess — worth
    revisiting before committing to a full ~1,300-page run.
+
+
+## Editing raw JSON without breaking person identity (issue #131)
+
+`entities.person_link` is keyed by `entry_id` = `<page_id>__eNNN`, and `eNNN` is a row's position in the page's raw `entries` array. Consequences when you edit a page's array:
+- **Appending at the end** is safe (existing ids keep their numbers).
+- **Removing or inserting in the middle shifts every later row** under its person_link: the tail of the page then inherits the previous row's person, silently, and survives every rebuild. Before running `build_entities.py`, renumber
+  `entities.person_link` for the shifted rows (delete the removed row's link, rename `e(N+1)->eN` ... in ascending order).
+- **An inserted row with no link** is given a brand-new person UUID by `build_entities.py`, and the Tier-1 merge may then tombstone the long-lived person in its favour. Pre-seed `entities.person_link` for it (manual_seed) pointing at the intended existing person.
+- After any such edit run `python pipeline/check_person_link_alignment.py --db <db>`: it exits 1 if any page has a shifted block. Run it before AND after a sweep.
