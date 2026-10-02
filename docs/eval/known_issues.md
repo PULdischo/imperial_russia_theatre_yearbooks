@@ -21463,3 +21463,10 @@ person_link, Repertoire-side counts and receipts_total_kopecks sum byte-identica
 
 **Still open**: `productionteam_1907-08_p002`'s e007/e008 heading_path shift; the future full
 Roster sweep.
+
+**Addendum to #129 (2026-10-02)**: closed the side-finding above. `productionteam_1907-08_p002`
+e007 (Педдеръ) and e008 (Шляпниковъ) heading_path corrected to
+"... / Парикмахеры / Русская драматическая труппа / Александринскій театръ" and
+"... / Михайловскій театръ" respectively, per the scan. Verification unchanged (person_entry
+23173, flags 608, tombstones identical, Repertoire byte-identical). Only the future full Roster
+sweep remains open from this arc.

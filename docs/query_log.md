@@ -11511,3 +11511,17 @@ path 75->73), entities.person 3342 live/2189 tombstoned identical, 0 orphaned pe
 Repertoire-side counts and receipts_total_kopecks sum byte-identical. Backup at
 `outputs/full_run_pre_promote_backup_2026-10-01_worklist/`. Full writeup: known_issues.md issue
 #129.
+
+## 2026-10-02 — productionteam_1907-08_p002 e007/e008 heading_path shift fixed (addendum to issue #129)
+
+```sql
+SELECT entry_id, family_name, heading_path FROM raw.person_entry
+WHERE page_id='productionteam_1907-08_p002' AND entry_id LIKE '%e00_' ORDER BY 1;
+```
+
+Result: scan (p.61) prints, under Парикмахеры -> "Русская драматическая труппа.", Педдеръ under
+"Александринскій театръ." and Шляпниковъ under "Михайловскій театръ.". The DB had e007 with no
+theater segment and e008 labeled Александринскій (shifted one row). Fixed both to the four-level
+form used on sibling pages (e.g. productionteam_1904-05_p002). Post-rebuild: person_entry 23173,
+quality_flags 608 (unchanged), entities.person 3342 live/2189 tombstoned (tombstone set identical),
+0 orphaned person_link, receipts_total_kopecks sum identical.
