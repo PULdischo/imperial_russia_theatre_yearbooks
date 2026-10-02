@@ -1,0 +1,32 @@
+PAGE SUMMARY
+musicians_1890-91_MSK_p000 | entries read: 17 | entries with a discrepancy: 0
+musicians_1890-91_MSK_p001 | entries read: 43 | entries with a discrepancy: 5
+musicians_1890-91_MSK_p002 | entries read: 41 | entries with a discrepancy: 4
+musicians_1890-91_MSK_p003 | entries read: 45 | entries with a discrepancy: 3
+musicians_1890-91_MSK_p004 | entries read: 36 | entries with a discrepancy: 1
+DISCREPANCIES
+musicians_1890-91_MSK_p001 | e004 | instrument | STORED: "Піанисть" | PRINTED: "Піанистъ" | confidence: DIRECT(zoomed)
+musicians_1890-91_MSK_p001 | e005 | family | STORED: "Гейнь" | PRINTED: "Гейнъ" | confidence: DIRECT(zoomed)
+musicians_1890-91_MSK_p001 | e006 | family | STORED: "Гейнь" | PRINTED: "Гейнъ" | confidence: DIRECT(zoomed)
+musicians_1890-91_MSK_p001 | e008 | first | STORED: "Карль-Фридрихъ" | PRINTED: "Карлъ - Фридрихъ" (Карлъ with hard sign; hyphen printed with spaces around it) | confidence: DIRECT(zoomed)
+musicians_1890-91_MSK_p001 | e035 | family | STORED: "Лихтен" | PRINTED: "Лихтенъ" | confidence: DIRECT(zoomed)
+musicians_1890-91_MSK_p002 | e011 | first | STORED: "Ипхекъ" | PRINTED: "Ицхекъ" | confidence: DIRECT(zoomed)
+musicians_1890-91_MSK_p002 | e013 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed
+musicians_1890-91_MSK_p002 | e015 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed
+musicians_1890-91_MSK_p002 | e017 | family | STORED: "Фишкінь" | PRINTED: "Фишкинъ" | confidence: DIRECT(zoomed) | stored has і and ь, print has plain и and ъ
+musicians_1890-91_MSK_p003 | e006 | family | STORED: "Гейнь" | PRINTED: "Гейнъ" | confidence: DIRECT(zoomed)
+musicians_1890-91_MSK_p003 | e040 | family | STORED: "Рамбоусенъ" | PRINTED: "Рамбоусекъ" | confidence: DIRECT(zoomed) | (p002 e005 and this page's source entry both print Рамбоусекъ)
+musicians_1890-91_MSK_p003 | e031 | space | STORED: "Карлъ - Фридрихъ" | PRINTED: "Карлъ - Фридрихъ" (spaced hyphen visible in print, probably justification) | confidence: UNCERTAIN | stored has spaces around hyphen; other hyphenated first names on these pages are stored without spaces, so normalize one way
+musicians_1890-91_MSK_p004 | e030 | family | STORED: "Спевак" | PRINTED: "Спевакъ" | confidence: DIRECT(zoomed)
+DATE-CHECK RESULTS
+musicians_1890-91_MSK_p001 | e037 | STORED start: "19 сентября 1882 г." | PRINTED start: "19 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1890-91_MSK_p001 | e027 | STORED start: "28 іюля 1862 г." | PRINTED start: "28 іюля 1862 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1890-91_MSK_p001 | e033 | STORED start: "26 сентября 1885 г." | PRINTED start: "26 сентября 1885 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1890-91_MSK_p001 | e041 | STORED start: "19 сентября 1882 г." | PRINTED start: "19 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- p002 e016 SPACE-IN-FAMILY flag refuted: print is "Туровичъ фонъ-Охота" (genuine space between Туровичъ and фонъ, hyphen before Охота); stored value matches.
+- p003 e045 SPACE-IN-FAMILY flag refuted: print is "Туровичъ фонъ Охота" (no hyphen on this page); stored matches. Same man as p002 e016, so the surname form differs between the two pages in print.
+- p001 e010-e043 (and similar): patronymic is stored inside the first-name field (e.g. "Антонъ Францевичъ") with patronymic empty; text is correct, only the field split.
+- Hyphenated first names are printed with spaces around the hyphen in several places (p001 e008 Карлъ - Фридрихъ, e009 Рудольфъ - Эдуардъ; p004 e020 Генрихъ - Эдуардъ, e027 Іоганъ - Фридрихъ; p003 e031). Stored forms are mixed (spaced only in p003 e031).
+- Print quirks left as printed: p001 e038 Кажданъ patronymic Меѳодіевичъ and e040 Кведнау match print; p003 e026 Крутоголововъ matches print (3x "ов" ending, not a typo in storage).
+- No rows missing from bundles; counts match print (p000 15 numbered + 2 heads; p001 16-58; p002 59-93 + 4 ballet heads + 2; p003 3-47; p004 48-56, 1-25 + 2 heads). p003 starts at no. 3 (nos. 1-2 are on p002, ballet orchestra).

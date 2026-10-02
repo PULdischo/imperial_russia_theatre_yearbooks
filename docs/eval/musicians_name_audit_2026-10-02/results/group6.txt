@@ -1,0 +1,40 @@
+PAGE SUMMARY
+musicians_1892-93_MSK_p003 | entries read: 50 | entries with a discrepancy: 9
+musicians_1892-93_SP_p000 | entries read: 26 | entries with a discrepancy: 0
+musicians_1892-93_SP_p001 | entries read: 53 | entries with a discrepancy: 4
+musicians_1892-93_SP_p002 | entries read: 48 | entries with a discrepancy: 3
+musicians_1892-93_SP_p003 | entries read: 55 | entries with a discrepancy: 4
+DISCREPANCIES
+musicians_1892-93_MSK_p003 | e001 | family | STORED: "Арендъцъ" | PRINTED: "Арендсъ" | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p003 | e006 | first | STORED: "Адалъбертъ" | PRINTED: "Адальбертъ" | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p003 | e016 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і; printed "Віо-/лончель") | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p003 | e017 | family/first | STORED: family "Туровичъ", first "фонъ-Охота" | PRINTED: bold "Туровичъ фонъ-Охота" (all bold = part of surname; no first name printed) | confidence: DIRECT(zoomed) | surname part stored in first-name field
+musicians_1892-93_MSK_p003 | e024 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (printed "Віо-/лончель") | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p003 | e025 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p003 | e038 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p003 | e044 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1892-93_SP_p001 | e010 | family | STORED: "Надлецъ" | PRINTED: "Кадлецъ" | confidence: DIRECT(zoomed)
+musicians_1892-93_SP_p001 | e011 | family | STORED: "Назаковъ" | PRINTED: "Казаковъ" | confidence: DIRECT(zoomed)
+musicians_1892-93_SP_p001 | e021 | family | STORED: "Нункели" | PRINTED: "Кункели" | confidence: DIRECT(zoomed)
+musicians_1892-93_SP_p001 | e035 | family | STORED: "Пертѣль" | PRINTED: "Пертель" (plain е) | confidence: DIRECT(zoomed)
+musicians_1892-93_SP_p002 | e008 | family | STORED: "Цабелъ" | PRINTED: "Цабель" | confidence: DIRECT(zoomed)
+musicians_1892-93_SP_p002 | e028 | first/patronymic | STORED: first "Мейеръ", patronymic "Гиршъ" | PRINTED: "Мейеръ-Гиршъ" (single hyphenated first name, no patronymic) | confidence: DIRECT(zoomed)
+musicians_1892-93_SP_p002 | e029 | first/patronymic | STORED: first "Іоганъ", patronymic "Фридрихъ" | PRINTED: "Іоганъ-Фридрихъ" (single hyphenated first name, no patronymic) | confidence: DIRECT(zoomed)
+musicians_1892-93_SP_p003 | e014 | family | STORED: "Кернешко" | PRINTED: "Керкешко" | confidence: DIRECT(zoomed)
+musicians_1892-93_SP_p003 | e031 | family | STORED: "Тарике 1-й" | PRINTED: "Тарнке 1-й" | confidence: DIRECT(zoomed)
+musicians_1892-93_SP_p003 | e032 | family | STORED: "Тарике 2-й" | PRINTED: "Тарнке 2-й" | confidence: DIRECT(zoomed)
+musicians_1892-93_SP_p003 | e050 | family | STORED: "Анимовъ" | PRINTED: "Акимовъ" | confidence: DIRECT(zoomed)
+DATE-CHECK RESULTS
+musicians_1892-93_SP_p001 | e001 | STORED start: "15 августа 1873 г." | PRINTED start: "15 августа 1873 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1892-93_SP_p002 | e026 | STORED start: "1 сентября 1886 г." | PRINTED start: "1 сентября 1886 г." (printed "1 сентя-/бря 1886 г.") | MATCH | confidence: DIRECT(zoomed)
+musicians_1892-93_SP_p003 | e048 | STORED start: "1 октября 1888 г." | PRINTED start: "1 октября 1888 г." (printed "1 ок-/тября 1888 г.") | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- MSK_p003 e017 (Туровичъ): "фонъ-Охота" is bold and part of the surname; probably should be family "Туровичъ фонъ-Охота" with empty first name.
+- MSK_p003 e043 Падель stored first "Іоганъ-Фридрихъ" (single hyphenated first name, correct as one unit); contrast SP_p002 e029 where the same type of name was split into first/patronymic.
+- SP_p002 e008 Цабель and e032 Ауэръ: print adds "Солистъ Двора Его Императорскаго Величества" after the instrument; stored rank_or_title is "-" for both.
+- SP_p002 e029 Мейеръ: printed note "† 28 марта 1893 г." below the entry (death/end note) -- no stored note visible in bundle.
+- SP_p001 e008 Ивановъ: printed note "Съ 1 ноября 1892 г. переведенъ въ Московскій оркестръ" (transfer) -- not visible in bundle fields.
+- SP_p003 e027/p001 e035 Пертель: print spells with plain е on both pages; the stored Пертѣль on SP_p001 is the only odd one.
+- SP_p003 e031/e032 Тарнке appears in both p001 (Тарнке) and p003 (Тарнке) print; stored "Тарике" is a misread (н read as и).
+- Spot differences that are PRINT features only (no action): SP_p000 "г )", SP_p001 e059 "г )" (missing period), SP_p002 e079-ish similar; ordinals all present in stored family fields.
+- No rows printed-but-missing found on any of the 5 pages; no duplicated rows.

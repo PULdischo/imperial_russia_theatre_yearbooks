@@ -1,0 +1,39 @@
+PAGE SUMMARY
+musicians_1893-94_MSK_p003 | entries read: 37 | entries with a discrepancy: 1
+musicians_1893-94_SP_p000 | entries read: 24 | entries with a discrepancy: 1
+musicians_1893-94_SP_p001 | entries read: 51 | entries with a discrepancy: 9
+musicians_1893-94_SP_p002 | entries read: 51 | entries with a discrepancy: 4
+musicians_1893-94_SP_p003 | entries read: 47 | entries with a discrepancy: 6
+DISCREPANCIES
+musicians_1893-94_MSK_p003 | e014 | list | STORED: "14." | PRINTED: "14" (no period after the number) | confidence: DIRECT(zoomed) | trivial, name fields all match
+musicians_1893-94_SP_p000 | e012 | patronymic | STORED: "Семёновичъ" | PRINTED: "Семеновичъ" (plain е, no diaeresis) | confidence: DIRECT(zoomed)
+musicians_1893-94_SP_p001 | e002 | patronymic | STORED: "Геронимовичъ" | PRINTED: "Іеронимовичъ" (initial dotted І) | confidence: DIRECT(zoomed)
+musicians_1893-94_SP_p001 | e003 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" (hard sign) | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed
+musicians_1893-94_SP_p001 | e011 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed
+musicians_1893-94_SP_p001 | e012 | family | STORED: "Гильдеобрандтъ" | PRINTED: "Гильдебрандтъ" (no "о" after д) | confidence: DIRECT(zoomed)
+musicians_1893-94_SP_p001 | e019 | family | STORED: "Грюнерть" | PRINTED: "Грюнертъ" (ъ at end) | confidence: DIRECT(zoomed)
+musicians_1893-94_SP_p001 | e025 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed
+musicians_1893-94_SP_p001 | e028 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed
+musicians_1893-94_SP_p001 | e032 | family | STORED: "Казановъ" | PRINTED: "Казаковъ" (к, not н) | confidence: DIRECT(zoomed)
+musicians_1893-94_SP_p001 | e051 | family | STORED: "Маннопъ" | PRINTED: "Манкопъ" (к, not н) | confidence: DIRECT(zoomed)
+musicians_1893-94_SP_p002 | e003 | first | STORED: "Филипъ" | PRINTED: "Филиппъ" (double п) | confidence: DIRECT(zoomed)
+musicians_1893-94_SP_p002 | e012 | first | STORED: "Іоифъ" | PRINTED: "Іосифъ" (с dropped in storage) | confidence: DIRECT(zoomed)
+musicians_1893-94_SP_p002 | e030 | family | STORED: "Терь-Огановъ" | PRINTED: "Теръ-Огановъ" (hard sign) | confidence: DIRECT(zoomed)
+musicians_1893-94_SP_p002 | e047 | family | STORED: "Шолларь" | PRINTED: "Шолларъ" (hard sign) | confidence: DIRECT(zoomed)
+musicians_1893-94_SP_p003 | e001 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed
+musicians_1893-94_SP_p003 | e009 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed
+musicians_1893-94_SP_p003 | e033 | patronymic | STORED: "Вареоломеевичъ" | PRINTED: "Варѳоломеевичъ" (Ѳ-like round glyph after "Вар", not е; scan is blurred) | confidence: UNCERTAIN on exact glyph, stored form is certainly wrong
+musicians_1893-94_SP_p003 | e036 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed
+musicians_1893-94_SP_p003 | e039 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed
+musicians_1893-94_SP_p003 | e046 | list | STORED: "38." | PRINTED: "38" (no period) | confidence: DIRECT(zoomed) | trivial
+DATE-CHECK RESULTS
+musicians_1893-94_SP_p000 | e005 | STORED start: "съ 1 сентября 1886 г." | PRINTED start: "съ 1 сентября 1886 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1893-94_SP_p001 | e016 | STORED start: "15 августа 1873 г." | PRINTED start: "съ 15 августа 1873 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1893-94_SP_p002 | e029 | STORED start: "1 сентября 1877 г." | PRINTED start: "съ 1 сентября 1878 г." | DIFFERS | confidence: DIRECT(zoomed) | stored year is a misread; print has 1878
+OTHER FINDINGS
+- SP_p000 e012 Ауэръ: print has "Солистъ Двора Его Императорскаго Величества" after instrument; stored rank_or_title is "-" (not captured; Цабель p002 e040 has the same phrase and it IS captured).
+- Auto-flag INSTR-VARIANT on all 8 "Вальдгорнь" rows (SP_p001 e003/e011/e025/e028, SP_p003 e001/e009/e036/e039) confirmed: printed form is Вальдгорнъ on every one.
+- SP_p003 e033 Моцейкевичъ is on a blurred right-column area of the scan; the whole right column of SP_p003 is out of focus but all other names legible and matched.
+- Printed-but-uncaptured end-of-service/death/transfer notes (not name fields, not checked in bundle): MSK e029 Спевакъ, SP_p000 e019 Браунштейнъ and Канненгиссеръ, SP_p001 e009 Геншъ and e013 Гоппе (†), SP_p002 e032 Фишеръ, SP_p003 e002 Акимовъ, e025 Каминскій, e042 Торманъ (transfer).
+- SP_p002 e033 Франке 1-й: printed comma after patronymic "Юліевичъ," before the date parenthesis; stored name correct.
+- Bundle row counts match the print on all five pages (no missing/duplicate rows seen).

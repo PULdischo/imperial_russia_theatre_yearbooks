@@ -1,0 +1,44 @@
+PAGE SUMMARY
+musicians_1891-92_SP_p004 | entries read: 49 | entries with a discrepancy: 4
+musicians_1891-92_SP_p005 | entries read: 39 | entries with a discrepancy: 3
+musicians_1892-93_MSK_p000 | entries read: 35 | entries with a discrepancy: 4
+musicians_1892-93_MSK_p001 | entries read: 53 | entries with a discrepancy: 5
+musicians_1892-93_MSK_p002 | entries read: 51 | entries with a discrepancy: 2 (plus field-placement issues listed under OTHER FINDINGS)
+DISCREPANCIES
+musicians_1891-92_SP_p004 | e007 | family | STORED: "Бѣлищій" | PRINTED: "Бѣлицкій" (list 6) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p004 | e010 | family | STORED: "Виргеліошъ" | PRINTED: "Виргеліюшъ" (list 9) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p004 | e027 | family | STORED: "Мощейкевичъ" | PRINTED: "Моцейкевичъ" (list 26) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p004 | e027 | patronymic | STORED: "Варооломеевичъ" | PRINTED: "Варѳоломеевичъ" (Ѳ printed, not о) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p004 | e035 | instrument | STORED: "Піанистъ" | PRINTED: "Піанистъ при драматическихъ спектакляхъ" (list 34 Смирновъ; qualifier dropped; rank_or_title stored "-") | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p005 | e003 | family | STORED: "Блась" | PRINTED: "Бласъ" (hard sign, list 7) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p005 | e004 | family | STORED: "Болымъ" | PRINTED: "Больмъ" (list 8) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p005 | e025 | family | STORED: "Петерсень" | PRINTED: "Петерсенъ" (list 29) | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p000 | e004 | ordinal | STORED: family "Адольфи", first "1-й", patronymic "Іоганъ-Фридрихъ" | PRINTED: "Адольфи 1-й, Іоганъ-Фридрихъ" (ordinal belongs after family; Іоганъ-Фридрихъ is the first name) | confidence: DIRECT(zoomed) | flag ORDINAL-IN-FIRSTNAME confirmed
+musicians_1892-93_MSK_p000 | e005 | ordinal | STORED: family "Адольфи", first "2-й", patronymic "Карль-Самуилъ" | PRINTED: "Адольфи 2-й, Карлъ-Самуилъ" | confidence: DIRECT(zoomed) | flag confirmed
+musicians_1892-93_MSK_p000 | e005 | first/patronymic spelling | STORED: "Карль-Самуилъ" | PRINTED: "Карлъ-Самуилъ" (hard sign) | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p000 | e006 | ordinal | STORED: family "Адольфи", first "3-й", patronymic "Фердинандъ" | PRINTED: "Адольфи 3-й, Фердинандъ" | confidence: DIRECT(zoomed) | flag confirmed
+musicians_1892-93_MSK_p000 | e015 | first | STORED: first "Карль", patronymic "Вильгельмъ" | PRINTED: "Карлъ·Вильгельмъ" (list 13 Брандтъ; hyphen/dot-joined double first name, hard sign; no patronymic) | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p001 | e033 | family | STORED: "Рамбоусенъ" | PRINTED: "Рамбоусекъ" (list 66) | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p001 | e034 | first | STORED: "Марлохей" | PRINTED: "Мардохей" (list 67) | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p001 | e037 | family | STORED: "Руссь" | PRINTED: "Руссъ" (list 70) | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p001 | e039 | first | STORED: "Ипхекъ-Мейерь" | PRINTED: "Ицхекъ-Мейеръ" (list 72) | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p001 | e044 | family | STORED: "Триньянъ" | PRINTED: "Триньякъ" (list 77) | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p002 | e032 | family | STORED: "Зозелъ" | PRINTED: "Зозель" (list 17, soft sign) | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p002 | e045 | family | STORED: "Кунсть" | PRINTED: "Кунстъ" (list 30, hard sign) | confidence: DIRECT(zoomed)
+DATE-CHECK RESULTS
+musicians_1891-92_SP_p004 | e001 | STORED start: "1 октября 1888 г." | PRINTED start: "съ 1 октября 1888 г." (line-broken "октя-/бря") | MATCH | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p005 | e017 | STORED start: "1 декабря 1879 г." | PRINTED start: "съ 1 декабря 1879 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p001 | e021 | STORED start: "19 сентября 1882 г." | PRINTED start: "съ 19 сентября 1882 г." (list 54 Марквардтъ Августъ, Корнетъ; the Capellmeister Марквардтъ Августъ on p000 is printed "съ 15 августа 1884 г." -- two different people, entry is not a misread) | MATCH | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p001 | e018 | STORED start: "26 сентября 1885 г." | PRINTED start: "съ 26 сентября 1885 г." (list 51 Лебедевъ Иванъ Григорьевичъ, Флейта) | MATCH | confidence: DIRECT(zoomed)
+musicians_1892-93_MSK_p001 | e026 | STORED start: "19 сентября 1882 г." | PRINTED start: "съ 19 сентября 1882 г." (list 59 Павловъ Михаилъ Львовичъ, Альтъ) | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- p001 e045 flag SPACE-IN-FAMILY refuted: print genuinely has a space, "Туровичъ фонъ-Охота" (list 78), stored value matches.
+- p004 e035 Смирновъ: print instrument is "Піанистъ при драматическихъ спектакляхъ" (line-broken); stored instrument only "Піанистъ", rank_or_title "-".
+- p002 patronymic stored inside first-name field (patronymic column "-"), printed as ordinary "Имя Отчество": e006 "Василій Васильевичъ", e010 "Алексѣй Ивановичъ", e011 "Николай Александровичъ", e012 "Степанъ Яковлевичъ", e013 "Петръ Петровичъ", e014 "Александръ Юліевичъ", e015 "Николай Семеновичъ", e016 "Людвигъ Карловичъ", e030 "Евсей Лейбовичъ", e031 "Антонъ Васильевичъ", e039 "Алексѣй Антоновичъ", e043 "Иванъ Никифоровичъ", e048 "Николай Михайловичъ", e049 "Николай Францевичъ". Text itself matches print.
+- p002: entries printed "(см. оперный оркестръ)" without a first name (list 2,3,5,7-13,17,18,21,22,25,29,31,35,36) are stored with first "-"; consistent with print. The e-numbers: e017 e018 e020 e022-e028 e032 e033 e036 e037 e040 e044 e046 e050 e051.
+- p000 e004-e006 Адольфи: ordinal flag is real; correct fields are family "Адольфи 1-й/2-й/3-й", first name Іоганъ-Фридрихъ / Карлъ-Самуилъ / Фердинандъ.
+- p000 e015 Брандтъ: stored Карль + Вильгельмъ as first+patronymic; print "Карлъ·Вильгельмъ" (double first name, as with e026 Рудольфъ-Эдуардъ).
+- p004 e022/e024/e025/e030/e032/e033 ordinals (Кулле 2-й, Мальковъ 1-й/2-й, Плесковъ 1-й, Поповъ 1-й/2-й) all stored correctly in family and match print; p005 e017 Кулле 1-й and p001 e048 Чіарлоне 2-я also correct.
+- p004 includes annotations "Оставилъ службу" (Гуляевъ, Нестеровъ, Поповъ 1-й) and "† 30 сентября 1891 г." (Шестаковъ) that are outside the name audit; not checked against storage.
+- p005 contains "†" / "Оставилъ службу" notes (Брауэръ e006 † 15 авг 1892, Головацкій e010 † 6 февр 1892, Шейнеръ e035 left 1 мая 1892); not checked against storage.
+- No duplicated rows or printed-but-missing entries found on any of the five pages; list numbers all match (p004 1-43 + 1-4; p005 5-43; p000 1-33; p001 34-86; p002 87-97 and ballet 1-36).
