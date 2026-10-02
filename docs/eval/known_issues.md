@@ -21686,3 +21686,8 @@ e022-e026 (Платонъ, Айдаровъ, Поповъ, Носовъ, Сал�
 Reclassified by hand after reading all 114: Кротковъ 1894-95 and Келеръ 1898-99 (transfer to conduct another theatre's orchestra = OUT). Transfer-out notes with NO printed date (Ветцель 1902-03 SP p004, Липинъ 1903-04 SP p004, Елинекъ
 1903-04 SP p005) were left alone -- nothing to set. Rows with two service periods (Тракалъ, Фельдтъ, Будаевъ 1906-07) keep their odd second open period (structure not touched). Row list: docs/eval/musicians_notes_audit_2026-10-02/
 transfer_end_normalization_rows.json. Verification: 49 entries changed, live persons 3336, tombstones identical (2245), orphans 0, flags 599, receipts sum unchanged. Backups: ..._dramarows, ..._transfers (targeted: DB + parsed + touched raw).
+
+**Issue #130 batch 8 addendum -- rest of the misfiled Moscow drama-troupe block removed (2026-10-02, DONE, RG-approved)**: removed the remaining 13 rows, all trailing and all institution "МОСКВА. Русская драматическая труппа": 1908-09 SP p004 e017-e024 (8: Князь Сумбатовъ,
+Платонъ, Поповъ, Саламатовъ, Зайцевъ, Алексѣева, Монаховъ, Понизовскій; page 24 -> 16 entries) and 1909-10 SP p004 e022-e026 (5: Платонъ, Айдаровъ, Поповъ, Носовъ, Саламатовъ; page 26 -> 21). Trailing rows, so no renumbering. person_entry 23176 -> 23163;
+live persons 3336 -> 3327 (three of the names occur on both pages; one person has other entries elsewhere and stays); tombstones 2245 identical; orphans 0; flags 599 -> 598 (the flag sat on a removed row); receipts sum unchanged. Backup:
+full_run_pre_promote_backup_2026-10-02_dramarest (targeted). All Musicians-page non-musician blocks found so far (French troupe, Moscow drama troupe) are now gone.

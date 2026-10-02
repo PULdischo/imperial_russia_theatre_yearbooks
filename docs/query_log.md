@@ -11739,3 +11739,12 @@ where e.entry_id like 'musicians_%' and regexp_matches(e.tenure_note_text,'(?i)�
 
 Result: 114 entries (65 transfer-out-looking, 30 in, 12 change, 7 appointment by the first-pass regexes; hand-corrected). Before: out = 24 other / 19-22 left service / 7+ none; in/change/appointment: 17 carried a spurious end. After applying
 RG's rule: all transfer-out rows with a printed date are end_type "other"; in/change/appointment rows have no end. Final: person_entry 23176, live persons 3336, tombstones 2245, orphans 0, flags 599, receipts sum 2999096975.
+
+## 2026-10-02 -- Issue #130: structure of the remaining Moscow drama-troupe block on Musicians SP p004 pages
+
+```sql
+-- raw JSON scan of musicians_1908-09_SP_p004 and musicians_1909-10_SP_p004: first index whose institution contains МОСКВ, and whether every later row is drama-troupe
+select count(*) from raw.person_entry where family_name=? and first_name=?;   -- per removed row, other corpus entries with the same name
+```
+
+Result: both blocks were entirely trailing (1908-09: 8 rows from e017; 1909-10: 5 rows from e022), all "МОСКВА. Русская драматическая труппа". After removal: person_entry 23163, live persons 3327, tombstones 2245, flags 598.
