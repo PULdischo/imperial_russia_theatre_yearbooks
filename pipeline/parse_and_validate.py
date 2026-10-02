@@ -406,16 +406,11 @@ _HEADING_PATH_RESTORE_FIXES: dict[str, list[tuple]] = {
     "musicians_1894-95_MSK_p003": [
         (i, "heading_path", "Оркестръ Малаго театра / Музыканты") for i in range(1, 32)
     ],
-    "musicians_1890-91_SP_p004": [
-        (1, "heading_path", "Арфа"), (2, "heading_path", "Литавры"),
-        (3, "heading_path", "Вторая скрипка"), (4, "heading_path", "Первая скрипка"),
-        (5, "heading_path", "Арфа"), (6, "heading_path", "Ударные инструменты"),
-        (7, "heading_path", "Контрабасъ"), (8, "heading_path", "Віолончель"),
-        (9, "heading_path", "Первая скрипка"), (10, "heading_path", "Контрабасъ"),
-        (11, "heading_path", "Первая скрипка"), (12, "heading_path", "Вальдгорнъ"),
-        (13, "heading_path", "Кларнетъ"), (14, "heading_path", "Первая скрипка"),
-        (15, "heading_path", "Первая скрипка"),
-    ],
+    # musicians_1890-91_SP_p004 (entries 1-15) was removed from this table in
+    # issue #130: those rows' instruments are now carried by
+    # _INSTRUMENT_TRANSCRIPTION_FIXES alone, and their heading_path is the
+    # printed ballet-orchestra section ("Балетный оркестръ / Музыканты"), not an
+    # instrument name.
     "musicians_1901-02_MSK_p002": [(i, "heading_path", None) for i in range(1, 40)],
 }
 

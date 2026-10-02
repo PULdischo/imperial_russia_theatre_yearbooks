@@ -21470,3 +21470,44 @@ e007 (Педдеръ) and e008 (Шляпниковъ) heading_path corrected to
 "... / Михайловскій театръ" respectively, per the scan. Verification unchanged (person_entry
 23173, flags 608, tombstones identical, Repertoire byte-identical). Only the future full Roster
 sweep remains open from this arc.
+
+## Issue #130: Full Musicians sweep (RG: sweep by one list type at a time) -- IN PROGRESS
+
+**Scope**: 215 Musicians pages / 7,604 rows. 43 pages already scan-verified in #126; the remaining
+172 are being verified by report-only agents (6 pages each, waves of 5; Tier A = continuation pages
+whose heading/institution differs from the previous page or uses a rare institution, then Tier B,
+then Tier C list-start pages). RG's rule: sweep all 172, not just the risky tiers (the DB
+heuristics can order work but cannot clear a page). Each wave's fixes are applied and verified
+before the next wave.
+
+**Decisions (RG, 2026-10-02)**: (1) continuation-page headings follow each series' own p000 form
+(Moscow 1890-98 stores "Оперный оркестр."/"Оркестр оперы и балета." without the printed ъ and with
+". " instead of " / " in places; St. Petersburg stores plain "Музыканты"); the dropped ъ and the
+separator inconsistency are logged for one later cosmetic normalization pass, not mixed into the
+wrong-section fixes. (2) Ballet-orchestra rows take institution "Оркестры." (the verbatim
+top-level printed title; "Балетный оркестръ." is a second-level tier like the opera one) with
+"Балетный оркестръ / ..." in heading_path.
+
+**Wave 1 (30 pages, 1890-91 to 1895-96)**: all 30 needed fixes (1,228 entries). Bug shapes: the
+running header or a fabricated string ("Списокъ ... Императорскихъ театровъ", "Ежегодникъ ...",
+"Императорскія theatры", "Артисты", "Ученики") in institution with heading lost; a theater
+orchestra label (Малаго/Александринскаго) stamped on rows that are the tail of the opera/ballet
+list above the printed theater heading; instrument names or the whole entry text sitting in
+heading_path; ballet-orchestra rows labelled Оперный (and vice versa); names stuck in list_number.
+Two-tiered pages were common; the library/capellmeister rows were left alone where correct.
+
+**Parser interactions found and handled**: (a) where the old heading_path held a bare instrument
+name the parser's shape-A repair moved it into `instrument`; overwriting the heading would have lost
+257 instruments, so they were written into the raw `instrument` field first (verified by a
+column-level diff of person_entry.csv: only heading_path, institution and list_number differ).
+(b) `_HEADING_PATH_RESTORE_FIXES["musicians_1890-91_SP_p004"]` re-stamped instrument names as
+headings at parse time; removed (instruments there come from `_INSTRUMENT_TRANSCRIPTION_FIXES`).
+
+**Found, NOT yet applied (secondary worklist, wave 1)**: missing rows (Богуславъ, Флорентій
+Вечеславовичъ, capellmeister on musicians_1890-91_MSK_p004; Рамзе, Василій Васильевичъ,
+capellmeister on musicians_1890-91_SP_p005); ~35 name/instrument misreads zoom-confirmed by the
+agents (incl. Ukrainian є in "Майєръ-Пирко"/"Пертєль", Greek ο in "Гугο", Latin o in "Фрomanъ",
+Біолончель/Виолончель for Віолончель); dropped "Оставилъ службу"/† notes; two genuine print typos
+for docs/eval/genuine_print_typos.md ("сентябрь 1888" SP_1890-91_p005 e030; "34." for 54 on
+MSK_1895-96_p001 e032). Name fixes change entity identity, so they will be applied as their own
+verified batch after the sweep. Full agent reports: /tmp/musicians_sweep/results/ (ephemeral).

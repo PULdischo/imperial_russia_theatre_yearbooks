@@ -11525,3 +11525,44 @@ theater segment and e008 labeled Александринскій (shifted one row
 form used on sibling pages (e.g. productionteam_1904-05_p002). Post-rebuild: person_entry 23173,
 quality_flags 608 (unchanged), entities.person 3342 live/2189 tombstoned (tombstone set identical),
 0 orphaned person_link, receipts_total_kopecks sum identical.
+
+## 2026-10-02 — Musicians sweep: opera-orchestra heading forms by season/city (RG: "across seasons or one season?")
+
+```sql
+SELECT regexp_extract(page_id,'musicians_([0-9]{4}-[0-9]{2})',1) s, regexp_extract(page_id,'_(MSK|SP)_',1) c,
+       heading_path, count(*) FROM raw.person_entry
+WHERE entity_type='Musicians' AND (heading_path ILIKE '%оперн%' OR heading_path ILIKE '%оркестр% оперы%' OR heading_path ILIKE '%оркестр оперы%')
+GROUP BY 1,2,3 ORDER BY 1,2,4 DESC;
+```
+
+Result: spans many seasons, not one. 1890-91 to 1892-93 print "Оперный оркестръ" (MSK rows store
+"Оперный оркестр." x87 / "Оперный оркестръ." x35; 1890-91 MSK has both forms; SP stores "Оперный
+оркестръ" x65; 1892-93 SP also "Списокъ артистовъ опернаго оркестра" x47, a stuck-heading case).
+From 1893-94 the printed wording becomes "Оркестръ оперы и балета": SP stores it with ъ
+throughout (379 rows, 1893-94..1909-10); MSK 1894-95, 1896-97, 1897-98 store "Оркестр оперы и
+балета." without the ъ (114 rows) plus 13 without the trailing period. The dropped ъ occurs only in
+the Moscow series (216 rows, 1890-98).
+
+## 2026-10-02 — Musicians full sweep (issue #130), setup + wave 1 applied
+
+```sql
+-- scope
+SELECT count(*), count(distinct page_id) FROM raw.person_entry WHERE entity_type='Musicians';
+-- opera-orchestra heading forms by season/city (see entry above)
+-- post-fix check on the 30 wave-1 pages
+SELECT institution, count(*) FROM raw.person_entry WHERE page_id IN (<30 pages>) GROUP BY 1;
+SELECT count(*) FROM raw.person_entry WHERE page_id IN (<30 pages>) AND (institution ILIKE '%Ежегодникъ%'
+  OR institution ILIKE '%theatры%' OR institution ILIKE 'Списокъ%' OR institution ILIKE '%Училище%'
+  OR heading_path ILIKE '%Артисты%' OR heading_path ILIKE '%Ударные инструменты%');
+```
+
+Result: Musicians = 7,604 rows / 215 pages; 43 already verified (#126), 172 swept in tiered order
+(A 109, B 12, C 51 pages) by 6-page report-only agents in waves of 5. Wave 1 (30 pages, Tier A,
+1890-91 through 1895-96): all 30 pages needed fixes; 1,228 entries edited (heading_path and/or
+institution), 5 junk list_number values nulled. Post-fix: 0 bad tokens on the 30 pages; institutions
+are now Оркестры. (1061), Михайловскаго (142), Александринскаго (131), Малаго (58) театра., library (1).
+Parser side effects handled: 257 instruments that had been recovered from the old (instrument-shaped)
+heading_path were written into the raw `instrument` field so they survive; the hard-coded
+_HEADING_PATH_RESTORE_FIXES entry for musicians_1890-91_SP_p004 removed (it would have re-stamped
+instrument names as headings). Column diff old vs new parsed person_entry: only heading_path,
+institution, list_number changed.
