@@ -21529,3 +21529,20 @@ rows (list 73-123) that are missing from the data entirely; only the Аренд�
 cost statement. Also found: musicians_1897-98_MSK_p003 inst "Музыканты:" on 33 rows (queued in a later wave).
 Secondary worklist additions: 5 more missing capellmeister rows (Келеръ x2, Галкинъ, Арендсъ, Шульцъ), ~65 name
 misreads total, several "Оставилъ службу" notes dropped.
+
+**Issue #130, wave 3 (30 pages, 1901-02 to 1905-06)** plus **recovery of the 51 missing rows on
+musicians_1897-98_MSK_p002**: 30/30 pages needed fixes (879 entries), same bug shapes as waves 1-2 (running-header and
+"Императорскія theatры" institutions; theater-orchestra labels stamped over the tail of the main list; page-wide
+instrument-in-heading; two series missing the trailing period on theater institutions). 26 instruments printed on
+the scans but absent from the data were added (two SP p006 pages whose instruments had been dropped entirely).
+**The 1897-98 MSK p002 gap**: the original vision run emitted 197 tokens (one row) for a page holding 51 musicians
+(list 73-123) and the Арендсъ capellmeister. Re-extracted (qwen3-vl-plus, billed, authorized by RG), verified row by row
+against the scan (9 name/date corrections, no unreadable rows), inserted with the series' heading form. Print oddities kept
+verbatim: Яницкій's instrument printed "Тромбомъ"; Эйхенвальдъ 2-я's first name printed "Належда". Арендсъ stays entry 1 on the
+page (not in print order) so its existing entity link survives; a position shift would have re-pointed it.
+Effect on entities: 51 new person appearances, 50 of which auto-merged into existing same-name persons by shared
+service-start date (tombstones +50; old tombstones all preserved).
+**Open / deferred**: library rows (Новоселовъ etc.) now 4 more across wave 3 (1901-02_SP_p006 e015, 1902-03_SP_p006 e013,
+1903-04_SP_p006 e013, 1904-05_SP_p006 e012); missing capellmeister rows (+Шульцъ x3, Келеръ, Галкинъ); name/instrument
+misreads (~120 total so far); dropped notes; genuine print typos ("И. сб." 1905-06 MSK p001; "18." for 28 on 1902-03 SP p006
+e021; "Тромбомъ"; "Фрацъ").

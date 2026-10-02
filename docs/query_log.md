@@ -11577,3 +11577,19 @@ Post-fix bad-token check on the 30 pages: 2 rows, both the deliberately deferred
 third librarian row (musicians_1897-98_SP_p004 e035) still holds "Центральная Музыкальная
 Библиотека". Flags 608, entities.person 3342 live/2189 tombstoned (set identical), 0 orphans,
 Repertoire receipts sum identical. Backup: outputs/full_run_pre_promote_backup_2026-10-02_musicians_wave2/.
+
+## 2026-10-02 — Musicians sweep wave 3 applied + musicians_1897-98_MSK_p002 recovered (issue #130)
+
+Result: wave 3 (30 Tier A pages, 1901-02 to 1905-06): 30/30 needed fixes, 879 entries edited, 3 junk
+list_numbers nulled, 26 missing instruments set from the scans (musicians_1901-02_SP_p006 e001-e014,
+musicians_1903-04_SP_p006 e001-e012), 72 instruments preserved via the raw instrument field. Column diff
+of parsed person_entry: only heading_path (737), institution (879), list_number (4), instrument (26, intended)
+changed. musicians_1897-98_MSK_p002: re-ran the vision extraction (pipeline/extract.py, qwen3-vl-plus; the
+original run had returned 197 output tokens = one row), checked by an agent line-by-line against the scan
+at 3-8x zoom (9 corrections: Путкамеръ, Рамбоусекъ, Гешеліовичъ, Ицхекъ-Мейеръ, Цыбинъ, Чіарлоне, tenure day),
+heading Оркестр оперы и балета. Музыканты: / Оркестры. set per list-continuity (73-123 continue p001's 20-72),
+Арендсъ kept at index 1 so its entity link keeps its entry_id. person_entry 23173 -> 23224 (+51). The 51 new
+entries link to 52 live persons; 50 new person records were auto-merged into existing same-name persons
+(tombstones 2189 -> 2239, all 2189 old tombstones preserved), live persons 3342 -> 3343. Receipts sum and
+Repertoire counts identical, orphans 0, flags 608. Deferred library rows left untouched (4 more). Backup:
+outputs/full_run_pre_promote_backup_2026-10-02_musicians_wave3/.
