@@ -21511,3 +21511,21 @@ agents (incl. Ukrainian є in "Майєръ-Пирко"/"Пертєль", Greek 
 for docs/eval/genuine_print_typos.md ("сентябрь 1888" SP_1890-91_p005 e030; "34." for 54 on
 MSK_1895-96_p001 e032). Name fixes change entity identity, so they will be applied as their own
 verified batch after the sweep. Full agent reports: /tmp/musicians_sweep/results/ (ephemeral).
+
+**Issue #130, wave 2 (30 pages, 1895-96 to 1900-01)**: 30/30 needed fixes (1,025 entries). Same bug
+shapes as wave 1, plus: the Alexandrinsky/Mikhailovsky blocks stamped over the tail of the main orchestra
+list printed above the theater heading; running-header institutions ("Ежегодникъ...", "Списокъ ...")
+page-wide; fabricated headings ("Артисты", "Скрипки", "Ученики", "Оркестръ Маріинскаго театра" in
+a Moscow series). Several 1898-99/1899-00/1900-01 pages were two-tiered (theater block correct, tail wrong).
+Per-series conventions kept: 1896-97 SP and 1898-99 MSK use "Оркестры" without the period (as their own p000s
+do); 1895-96/1897-98 SP use "Оркестры.".
+**Deferred, needs RG decision**: the librarian row's institution (Новоселовъ "Старшій библіотекарь Центральной
+Музыкальной Библіотеки", and the Фарскій library listings): the data holds "Училище", "Ежегодникъ...",
+"Центральная Музыкальная Библиотека" (modernized spelling) and "Оркестры." in different seasons and the scans print
+no institution for it. Three wave-2 rows left untouched (1897-98_SP_p004 e035, 1898-99_SP_p006 e030, 1899-00_SP_p006 e014).
+**Major content gap found (not yet fixed)**: musicians_1897-98_MSK_p002 (printed p.103) has 51 printed musician
+rows (list 73-123) that are missing from the data entirely; only the Арендсъ row exists, with list_number
+"— 103 —". Fixing it needs re-extraction (billed vision call) or hand transcription; pending RG's go-ahead and a
+cost statement. Also found: musicians_1897-98_MSK_p003 inst "Музыканты:" on 33 rows (queued in a later wave).
+Secondary worklist additions: 5 more missing capellmeister rows (Келеръ x2, Галкинъ, Арендсъ, Шульцъ), ~65 name
+misreads total, several "Оставилъ службу" notes dropped.

@@ -11566,3 +11566,14 @@ heading_path were written into the raw `instrument` field so they survive; the h
 _HEADING_PATH_RESTORE_FIXES entry for musicians_1890-91_SP_p004 removed (it would have re-stamped
 instrument names as headings). Column diff old vs new parsed person_entry: only heading_path,
 institution, list_number changed.
+
+## 2026-10-02 — Musicians sweep wave 2 applied (issue #130)
+
+Result: 30 more Tier A pages (1895-96 to 1900-01) fixed, 1,025 entries edited, 2 junk list_numbers
+nulled; 39 instruments preserved via the raw instrument field (musicians_1898-99_MSK_p001). Column
+diff of parsed person_entry: only heading_path (943), institution (983), list_number (2) changed.
+Post-fix bad-token check on the 30 pages: 2 rows, both the deliberately deferred librarian rows
+(musicians_1899-00_SP_p006 e014 "Ежегодникъ...", musicians_1898-99_SP_p006 e030 "Училище"); the
+third librarian row (musicians_1897-98_SP_p004 e035) still holds "Центральная Музыкальная
+Библиотека". Flags 608, entities.person 3342 live/2189 tombstoned (set identical), 0 orphans,
+Repertoire receipts sum identical. Backup: outputs/full_run_pre_promote_backup_2026-10-02_musicians_wave2/.
