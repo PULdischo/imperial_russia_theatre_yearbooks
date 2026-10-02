@@ -11807,3 +11807,14 @@ select entry_id,family_name,tenure_note_text from raw.person_entry where page_id
 ```
 
 Result: before, 18 rows (Цабель 8, Чіарлоне Виргинія 5, Ауэръ 4, Сиборъ 1) had the title only inside tenure_note_text; after the fix every Ауэръ (17/17) and Сиборъ (4/4) row has it, Цабель 14/17 (3 cross-reference rows, none printed), Чіарлоне 8 (the SP rows where it is printed).
+
+## 2026-10-02 -- Musicians heading_path trailing colons (issue #130 batch 9 addendum 2)
+
+```sql
+select count(*) filter (where heading_path like '%:'), count(*), count(distinct heading_path) filter (where heading_path like '%:'), count(distinct heading_path) from raw.person_entry where page_id like 'musicians_%';
+select heading_path,count(*) n from raw.person_entry where page_id like 'musicians_%' and heading_path like '%:' group by 1 order by n desc limit 8;
+select count(*) from raw.person_entry where page_id like 'musicians_%' and heading_path like '%:' and rtrim(heading_path,':') in (select heading_path from raw.person_entry where page_id like 'musicians_%' and heading_path not like '%:');
+select count(*) from raw.person_entry where page_id like 'musicians_%' and rank_or_title like '%онъ же%';
+```
+
+Result: 759 of 7639 rows end in a colon (9 distinct headings; "Музыканты:" 415, "Оркестр оперы и балета. Музыканты:" 147, "Оркестръ оперы и балета. Музыканты:" 123); 705 of them have a colon-free twin; 0 rows still hold the Фарскій alias in rank_or_title.
