@@ -403,9 +403,9 @@ _HEADING_PATH_RESTORE_FIXES: dict[str, list[tuple]] = {
         [(1, "heading_path", "Музыканты")]
         + [(i, "heading_path", "Музыканты") for i in range(9, 36)]
     ),
-    "musicians_1894-95_MSK_p003": [
-        (i, "heading_path", "Оркестръ Малаго театра / Музыканты") for i in range(1, 32)
-    ],
+    # musicians_1894-95_MSK_p003 (entries 1-31) was removed from this table in
+    # issue #130: the raw heading_path now holds the Малый block's own
+    # sub-heading ("Музыканты") and institution "Оркестръ Малаго театра.".
     # musicians_1890-91_SP_p004 (entries 1-15) was removed from this table in
     # issue #130: those rows' instruments are now carried by
     # _INSTRUMENT_TRANSCRIPTION_FIXES alone, and their heading_path is the

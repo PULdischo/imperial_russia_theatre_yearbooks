@@ -11593,3 +11593,16 @@ entries link to 52 live persons; 50 new person records were auto-merged into exi
 (tombstones 2189 -> 2239, all 2189 old tombstones preserved), live persons 3342 -> 3343. Receipts sum and
 Repertoire counts identical, orphans 0, flags 608. Deferred library rows left untouched (4 more). Backup:
 outputs/full_run_pre_promote_backup_2026-10-02_musicians_wave3/.
+
+## 2026-10-02 — Musicians sweep wave 4 applied (issue #130)
+
+Result: wave 4 (31 pages: 24 Tier A + 7 Tier B; 30 edited, 1 deferred) fixed: 972 entries edited, 101 instruments
+preserved via the raw instrument field. Column diff of parsed person_entry: only heading_path (941) and institution
+(560) changed after two parser interactions were handled: (a) musicians_1906-07_MSK_p003 e018 Сиборъ -- the old raw heading
+"Скрипка. Солистъ балета." had been split by the parser into instrument + rank_or_title title; the new heading dropped the
+title, so rank_or_title "Солистъ балета." was written into the raw entry (RG flagged this person for a later cross-corpus
+check); (b) _HEADING_PATH_RESTORE_FIXES entry for musicians_1894-95_MSK_p003 removed (it pinned the Малый block to
+"Оркестръ Малаго театра / Музыканты" instead of rule-3 "Музыканты" + institution "Оркестръ Малаго театра."). 1908-10 pages:
+heading-only fixes, institutions left as stored per RG's "keep verbatim institutions" (series-level question logged).
+Post-fix: flags 608, entities.person 3343 live / 2239 tombstoned (set identical to pre-wave), orphans 0, Repertoire receipts
+sum identical; 3 bad-token rows remain = deferred librarian rows. Backup: outputs/full_run_pre_promote_backup_2026-10-02_musicians_wave4/.

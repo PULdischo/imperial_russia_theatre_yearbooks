@@ -21546,3 +21546,16 @@ service-start date (tombstones +50; old tombstones all preserved).
 1903-04_SP_p006 e013, 1904-05_SP_p006 e012); missing capellmeister rows (+Шульцъ x3, Келеръ, Галкинъ); name/instrument
 misreads (~120 total so far); dropped notes; genuine print typos ("И. сб." 1905-06 MSK p001; "18." for 28 on 1902-03 SP p006
 e021; "Тромбомъ"; "Фрацъ").
+
+**Issue #130, wave 4 (31 pages, Tier A remainder 1905-06..1909-10 plus the 7 Tier B pages)**: 30 pages fixed (972 entries), 1 deferred.
+New shapes: the 1908-10 series store the printed upper-case running head ("ПЕТЕРБУРГСКІЕ/МОСКОВСКІЕ ОРКЕСТРЫ.") as institution on
+continuation pages with heading missing -- fixed heading only, institution kept verbatim (RG: "keep verbatim institutions"); orchestra
+rows stamped with the Moscow drama troupe's running head (1908-09 SP p004, 1909-10 SP p004) got the series' orchestra institution;
+Moscow drama-roster sub-headings mis-assigned (Суфлеры, Библіотекарша, Режиссеры). 1907-08 SP p004 prints "Бывшій оркестръ
+Михайловскаго театра." -- institution set verbatim. Library rows with a directly printed "Музыкальная библіотека." title
+(1906-07 MSK p004 e018-e019) fixed; the others stay deferred.
+**Deferred (needs row removal/insert or a decision)**: musicians_1908-09_MSK_p000 e001-e007 are not musicians (tail of the Moscow ballet men's
+list, duplicates of balletartists_1908-09_MSK_p007 e001-e007); French-troupe actors spilled into musicians_1908-09_SP_p000 e001-e003 and
+musicians_1909-10_SP_p000 e012-e015; musicians_1909-10_MSK_p000 e027-e028 ballet tail; musicians_1908-09_SP_p002 e035 is a note split
+into a fake person row. Series-level question: 1908-09/1909-10 continuation pages hold the running head while p000 holds the section
+title ("Оркестры.") in 1908-09 MSK/SP, the running head in 1909-10 -- RG to decide whether institutions are normalized.
