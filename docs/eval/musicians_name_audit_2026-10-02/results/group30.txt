@@ -1,0 +1,39 @@
+PAGE SUMMARY
+musicians_1903-04_SP_p001 | entries read: 39 | entries with a discrepancy: 1
+musicians_1903-04_SP_p002 | entries read: 39 | entries with a discrepancy: 2
+musicians_1903-04_SP_p003 | entries read: 39 | entries with a discrepancy: 2
+musicians_1903-04_SP_p004 | entries read: 38 | entries with a discrepancy: 2
+musicians_1903-04_SP_p005 | entries read: 37 | entries with a discrepancy: 0
+DISCREPANCIES
+musicians_1903-04_SP_p001 | e022 | family | STORED: "Каллецъ" | PRINTED: "Кадлецъ" | confidence: DIRECT(zoomed) | printed 3rd letter д (second л is also л: К-а-д-л-е-цъ)
+musicians_1903-04_SP_p002 | e003 | family | STORED: "Лемось" | PRINTED: "Лемосъ" | confidence: DIRECT(zoomed) | ь vs ъ
+musicians_1903-04_SP_p002 | e008 | family | STORED: "Лукась" | PRINTED: "Лукасъ" | confidence: DIRECT(zoomed) | ь vs ъ
+musicians_1903-04_SP_p003 | e010 | family | STORED: "Тронье" | PRINTED: "Тронѣе" | confidence: DIRECT(zoomed) (glyph after н has yat crossbar, not plain ь; moderately sure) |
+musicians_1903-04_SP_p003 | e027 | family | STORED: "Штейнь" | PRINTED: "Штейнъ" | confidence: DIRECT(zoomed) | ь vs ъ
+musicians_1903-04_SP_p004 | e009 | first | STORED: "Меводій" | PRINTED: "Меѳодій" | confidence: DIRECT(zoomed) | в vs ѳ
+musicians_1903-04_SP_p004 | e025 | family | STORED: "Нелзейко" | PRINTED: "Недзейко" | confidence: DIRECT(zoomed) | л vs д
+DATE-CHECK RESULTS
+musicians_1903-04_SP_p001 | e001 | STORED start: "28 мая 1857 г." | PRINTED start: "28 мая 1857 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1903-04_SP_p001 | e017 | STORED start: "1 марта 1877 г." | PRINTED start: "1 марта 1877 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1903-04_SP_p001 | e009 | STORED start: "1 октября 1885 г." | PRINTED start: "1 октября 1885 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1903-04_SP_p001 | e019 | STORED start: "1 марта 1896 г." | PRINTED start: "1 марта 1896 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1903-04_SP_p002 | e037 | STORED start: "1 сентября 1887 г." | PRINTED start: "1 сентября 1887 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1903-04_SP_p003 | e017 | STORED start: "1 апрѣля 1855 г." | PRINTED start: "1 апрѣля 1855 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1903-04_SP_p003 | e024 | STORED start: "1 сентября 1889 г." | PRINTED start: "1 сентября 1889 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1903-04_SP_p003 | e037 | STORED start: "1 сентября 1895 г." | PRINTED start: "1 сентября 1895 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1903-04_SP_p003 | e027 | STORED start: "1 августа 1895 г." | PRINTED start: "1 августа 1895 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1903-04_SP_p004 | e032 | STORED start: "1 іюня 1876 г." | PRINTED start: "1 іюня 1876 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1903-04_SP_p004 | e036 | STORED start: "1 октября 1893 г." | PRINTED start: "1 октября 1893 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1903-04_SP_p005 | e022 | STORED start: "1 мая 1863 г." | PRINTED start: "1 мая 1863 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1903-04_SP_p005 | e037 | STORED start: "1 сентября 1886 г." | PRINTED start: "1 сентября 1886 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- All 13 date-check entries: stored start equals printed start; the disagreements with "modal" dates are genuine source differences (different people/entries) or the other entries' dates, not misreads on these pages.
+- No auto-flags present in any bundle (all "-"); nothing to confirm/refute.
+- No patronymic-inside-first-name pattern on these 5 pages (all patronymics in own field). Two-name hyphenated first names (Фридрихъ-Эрнестъ p001 e034, Августъ-Генрихъ p005 e014) correctly have empty patronymic.
+- p003 e017 Цабель: printed rank/title "Солистъ Двора Его Императорскаго Величества" after instrument; stored rank_or_title is "-" (missing). p003 e019 Чіарлоне: printed "Солистка Двора Его Императорскаго Величества"; stored rank_or_title "-" (missing).
+- p003 e039 Галкинъ (Капельмейстеръ, Оркестръ Александринскаго театра; no list number, no instrument): stored rank_or_title is "-" although printed under heading "Капельмейстеръ" (heading-based; may be handled via heading_path). p005 e004 Келеръ stores "Капельмейстеръ" in rank_or_title, so the two are inconsistent.
+- p001 e011 Гордонъ: print of "Бэрнардовичъ" has a damaged glyph in the 2nd letter (looks like э); stored "Бэрнардовичъ" accepted.
+- p005 e026 Матвѣевъ: print has a stray comma after "Владиміръ," (printed "Владиміръ, Филиппо-/вичъ"); stored without comma (fine, printing artifact).
+- p001 e018 Елинекъ prints first name "Іоганъ" (one н) while p005 e020 prints "Іоганнъ" (two н); both stored as printed (genuine inter-page variation, possible PRINT-TYPO?).
+- Printed annotations present but not in name fields (not audited here): p001 e018 transfer from Mikhailovsky; p002 e004 left service 1 Sept 1903; p002 e005 transferred from Alexandrinsky; p002 e021 left service; p003 e017/e024 left service 1 Dec 1903; p004 e005 died 2 июля 1904; p004 e017 left service 1 Nov 1903; p004 e019 transferred to first violin; p004 e020 transferred to Mariinsky; p004 e035 left service; p005 e003 left service; p005 e005 left service 1 Oct 1903; p005 e016 transferred to Mariinsky; p005 e018 left service; p005 e023 died 29 июня 1904.
+- Numbering is continuous: first orchestra list (heading not on these pages; continues from p000) 26-64 (p001), 65-103 (p002), 104-137 (p003 e001-e034); Orkestr Aleksandrinskago teatra list 1-4 (p003 e035-e038), 5-42 (p004), 43-45 (p005 e001-e003), then Orkestr Mikhailovskago teatra heading with Капельмейстеръ (p005 e004), 1-33 (p005 e005-e037). No rows missing or duplicated against print.

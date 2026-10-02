@@ -1,0 +1,43 @@
+PAGE SUMMARY
+musicians_1906-07_MSK_p004 | entries read: 20 | entries with a discrepancy: 0
+musicians_1906-07_SP_p000 | entries read: 30 | entries with a discrepancy: 3
+musicians_1906-07_SP_p001 | entries read: 38 | entries with a discrepancy: 2
+musicians_1906-07_SP_p002 | entries read: 37 | entries with a discrepancy: 8
+musicians_1906-07_SP_p003 | entries read: 33 | entries with a discrepancy: 1
+DISCREPANCIES
+musicians_1906-07_SP_p000 | e010 | family | STORED: "Аматѣкъ" | PRINTED: "Аматнѣкъ" | confidence: DIRECT(zoomed) | stored lacks the н before ѣ
+musicians_1906-07_SP_p000 | e028 | family | STORED: "Виргеліошъ" | PRINTED: "Виргеліюшъ" | confidence: DIRECT(zoomed 4x) | о vs ю
+musicians_1906-07_SP_p000 | e021 | list | STORED: "13." | PRINTED: "13" (no period after number) | confidence: DIRECT(zoomed) | trivial print omission
+musicians_1906-07_SP_p001 | e030 | space | STORED: "Фридрихъ-Эрнестъ" (first) | PRINTED: "Фридрихъ -Эрнестъ" (space before hyphen) | confidence: DIRECT(zoomed) | cosmetic print spacing
+musicians_1906-07_SP_p001 | e038 | family | STORED: "Лемось" | PRINTED: "Лемосъ" | confidence: DIRECT(zoomed 4x) | ь vs ъ
+musicians_1906-07_SP_p002 | e003 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | Б vs В (AUTO-FLAG INSTR-VARIANT confirmed)
+musicians_1906-07_SP_p002 | e004 | family | STORED: "Лукась" | PRINTED: "Лукасъ" | confidence: DIRECT(zoomed) | ь vs ъ
+musicians_1906-07_SP_p002 | e005 | family | STORED: "Людольфъ" | PRINTED: "Людольфи" | confidence: DIRECT(zoomed) | ъ vs и
+musicians_1906-07_SP_p002 | e011 | family | STORED: "Мѣшанчукъ" | PRINTED: "Мѣщанчукъ" | confidence: DIRECT(zoomed 4x) | ш vs щ
+musicians_1906-07_SP_p002 | e026 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed
+musicians_1906-07_SP_p002 | e033 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed
+musicians_1906-07_SP_p002 | e034 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed
+musicians_1906-07_SP_p002 | e036 | family | STORED: "Словаچевскій" (contains U+0686 ARABIC LETTER TCHEH) | PRINTED: "Словачевскій" | confidence: DIRECT(zoomed) | AUTO-FLAG MIXED-SCRIPT confirmed
+musicians_1906-07_SP_p003 | e011 | family | STORED: "Федегансъ" | PRINTED: "Федергансъ" | confidence: DIRECT(zoomed) | missing р
+DATE-CHECK RESULTS
+musicians_1906-07_MSK_p004 | e010 | STORED start: "21 сентября 1898 г." | PRINTED start: "21 сентября 1898 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_MSK_p004 | e018 | STORED start: "16 декабря 1905 г." | PRINTED start: "16 декабря 1905 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p000 | e008 | STORED start: "1 февраля 1902 г." | PRINTED start: "1 февраля 1902 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p000 | e002 | STORED start: "28 ноября 1863 г." | PRINTED start: "28 ноября 1863 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p001 | e002 | STORED start: "28 мая 1857 г." | PRINTED start: "28 мая 1857 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p001 | e017 | STORED start: "1 марта 1877 г." | PRINTED start: "1 марта 1877 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p001 | e019 | STORED start: "1 марта 1896 г." | PRINTED start: "1 марта 1896 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p002 | e015 | STORED start: "1 сентября 1888 г." | PRINTED start: "1 сентября 1888 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p002 | e032 | STORED start: "1 сентября 1887 г." | PRINTED start: "1 сентября 1887 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p003 | e002 | STORED start: "съ 31 марта 1802 г." | PRINTED start: "съ 31 марта 1802 г." | MATCH | confidence: DIRECT(zoomed) | PRINT-TYPO? (1802 impossible; modal 1892)
+musicians_1906-07_SP_p003 | e024 | STORED start: "съ 1 августа 1895 г." | PRINTED start: "съ 1 августа 1895 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p003 | e020 | STORED start: "съ сентября 1898 г." | PRINTED start: "съ сентября 1898 г." (no day printed) | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- MSK_p004: list number "7." printed twice (e012 Славинскій, e013 Стрекаловъ), next is 9. (no 8); stored e013 list "7." matches print -> PRINT-TYPO? (should be 8).
+- SP_p000: e023 Вальтеръ first name printed "Викто?ъ" with a damaged/broken р glyph; stored "Викторъ" is a reasonable reading.
+- SP_p000: e008 Гордонъ printed patronymic "Бернгардовичъ" but SP_p001 e012 Гордонъ printed "Бернардовичъ" (both stored as printed; genuine spelling variation between the two entries, same surname/first name).
+- SP_p000: e024 stored "Вальтеръ - Кюне" with spaces matches print (spaced hyphen); e005 "Мейеръ-Гиршъ" matches print.
+- SP_p003: e007 and others fine; e001-e030 list numbering 98-127 consistent with print; SP_p001/p002 numbering 23-97 consistent (no gaps).
+- SP_p003 e031/e032 (Галкинъ, Келеръ, Alexandrinsky orchestra) printed without numbers; e033 printed "1." - matches stored.
+- No stray hyphens or line-break artifacts found in any stored value on these pages; known "patronymic inside first-name" pattern not present on these pages.
+- Only non-Cyrillic character found anywhere on the five pages is the U+0686 in SP_p002 e036.

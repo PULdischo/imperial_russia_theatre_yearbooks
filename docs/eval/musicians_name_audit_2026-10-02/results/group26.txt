@@ -1,0 +1,34 @@
+PAGE SUMMARY
+musicians_1901-02_SP_p005 | entries read: 37 | entries with a discrepancy: 1
+musicians_1901-02_SP_p006 | entries read: 15 | entries with a discrepancy: 0
+musicians_1902-03_MSK_p000 | entries read: 27 | entries with a discrepancy: 3
+musicians_1902-03_MSK_p001 | entries read: 39 | entries with a discrepancy: 1
+musicians_1902-03_MSK_p002 | entries read: 37 | entries with a discrepancy: 2
+DISCREPANCIES
+musicians_1901-02_SP_p005 | e025 | ordinal | STORED: "Кулле" | PRINTED: "Кулле 2-й" | confidence: DIRECT(zoomed) | ordinal suffix dropped (print: "18. Кулле 2-й, Альфредъ Ѳедоровичъ")
+musicians_1902-03_MSK_p000 | e008 | family | STORED: "Брындинъ" | PRINTED: "Ѣрындинъ" (initial glyph is a capital Ѣ, not Б) | confidence: DIRECT(zoomed) | PRINT-TYPO? (almost certainly a typesetter's Ѣ for Б; stored value is the normalized reading)
+musicians_1902-03_MSK_p000 | e013 | instrument | STORED: "Ударные инструменты" | PRINTED: NONE (entry "2. Адамовъ, Михаилъ (съ 1 сентября 1898 г.)." is followed only by the note "Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г."; no instrument word) | confidence: DIRECT(zoomed) | stored instrument is not in the print on this page
+musicians_1902-03_MSK_p000 | e016 | family | STORED: "Аспергёръ" | PRINTED: "Аспергеръ" (plain е, no diaeresis) | confidence: DIRECT(zoomed)
+musicians_1902-03_MSK_p001 | e001 | family | STORED: "Гелике" | PRINTED: "Гедике" (д, not л) | confidence: DIRECT(zoomed)
+musicians_1902-03_MSK_p002 | e007 | family | STORED: "Недбалъ" | PRINTED: "Недбаль" (soft sign ь at end) | confidence: DIRECT(zoomed)
+musicians_1902-03_MSK_p002 | e011 | family | STORED: "Пашеевъ" | PRINTED: "Пащеевъ" (щ, not ш) | confidence: DIRECT(zoomed)
+DATE-CHECK RESULTS
+musicians_1901-02_SP_p005 | e006 | STORED start: "1 августа 1880 г." | PRINTED start: "15 августа 1880 г." | DIFFERS | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p005 | e012 | STORED start: "1 сентября 1882 г." | PRINTED start: "1 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p005 | e026 | STORED start: "1 мая 1863 г." | PRINTED start: "1 мая 1863 г." | MATCH | confidence: DIRECT(zoomed) (last digit clearly 3; not 1868)
+musicians_1901-02_SP_p006 | e004 | STORED start: "1 сентября 1886 г." | PRINTED start: "1 сентября 1886 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_MSK_p001 | e032 | STORED start: "10 сентября 1882 г." | PRINTED start: "10 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_MSK_p002 | e010 | STORED start: "10 октября 1878 г." | PRINTED start: "10 октября 1878 г. по 30 декабря 1880 г. и съ 19 сентября 1882 г." (first period starts 10 октября 1878) | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- p005: patronymic is in its own field everywhere; no patronymic-inside-first-name rows on this page. List 35-41 are continuation of the Imperial Theatres orchestra (previous page); e037 Келеръ is the Михайловскій theatre conductor (no list number), correctly unnumbered.
+- p005 e012 Беттенштедтъ and e023 Кнохъ and e034 Нервангъ carry "Оставилъ службу" notes (not name-field issues).
+- p006 e015 Новоселовъ is the senior librarian of the Central Music Library (no list number, no instrument), stored correctly.
+- p000 e005 Арендсъ: print shows first name "Тенрихъ" (initial is a true Т, symmetric crossbar, vs Г in Герберъ). Stored "Тенрихъ" matches the print. PRINT-TYPO? for "Генрихъ" (Т for Г); stored value reproduces the print, flagged only so it is not "fixed" blindly.
+- p000 e010 Марквардтъ (conductor of military music): final glyph of the surname is damaged/odd ("Марквардтт"-like); the same man on p002 e005 prints a normal ъ. Stored "Марквардтъ" is the right reading; UNCERTAIN only about the glyph shape.
+- p000 e019 Бесслеръ: list number printed "8" without a period; stored "8" matches.
+- p000 e001-e006,e010,e011 are directorate/conductor/repetitor/tuner entries with no instrument and no consistent numbering; stored as printed.
+- p000 e007 Барминъ: print shows two tenure periods (1864-1882 and from 22 января 1885); p002 e010 Павловъ and e003 Литвиновъ likewise have two periods.
+- p001 e016-e018 and p002 e023-e025: ordinals 1-й/2-й/3-й are stored inside the family field and match the print (not a discrepancy).
+- p001 e002 Гейслеръ and p002 e004 etc. have transfer/leave notes; not name-field issues.
+- No row printed-but-missing or duplicated on any of the five pages; list numbering is continuous (p005 35-41,1-29; p006 30-43; p000 1-16 plus staff; p001 17-55; p002 56-92).
+- No Latin letters or stray spaces found in any stored name/instrument value of these bundles (checked programmatically).

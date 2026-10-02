@@ -1,0 +1,31 @@
+ITEM musicians_1896-97_MSK_p002|e003|first | READ: "Мардохей" | CHOICE: A | confidence: DIRECT | clear д and х at zoom, entry 79
+ITEM musicians_1896-97_MSK_p002|e013|first | READ: "Ицхекъ-Мейеръ" | CHOICE: B | confidence: DIRECT | ц (with descender) clear, entry 89
+ITEM musicians_1896-97_MSK_p002|e023|family | READ: "Триньякъ" | CHOICE: A | confidence: DIRECT | ends -якъ, entry 99
+ITEM musicians_1896-97_MSK_p002|e029|family | READ: "Цыбинъ" | CHOICE: B | confidence: DIRECT | initial Ц with descender, entry 105
+ITEM musicians_1896-97_MSK_p002|e039|family | READ: "Шпейеръ" | CHOICE: A | confidence: DIRECT | entry 115, Шпейеръ, Фридрихъ, Органъ
+ITEM musicians_1896-97_MSK_p002|e040|family | READ: "Шпеккинъ" | CHOICE: A | confidence: DIRECT | entry 116, double к
+ITEM musicians_1896-97_MSK_p002|e045|instrument | READ: "Эккертъ, Фердинандъ Фердинандовичъ (съ 1 декабря 1895 г.)." | CHOICE: FREEFORM | confidence: DIRECT | no instrument printed after the tenure date; stored "Ударные инструменты" not printed; confirms first reviewer
+ITEM musicians_1896-97_SP_p001|e018|family | READ: "Евстифѣевъ" | CHOICE: A | confidence: DIRECT | ѣ clearly printed, entry 33
+ITEM musicians_1896-97_SP_p002|e025|family | READ: "Теръ-Огановъ" | CHOICE: B | confidence: DIRECT | initial Т (not Г), entry 94
+ITEM musicians_1896-97_SP_p002|e033|first | READ: "Канутъ-Эмерикъ" | CHOICE: A | confidence: DIRECT | final ъ on Канутъ, entry 102
+ITEM musicians_1896-97_SP_p003|e020|first | READ: "Аѳанасій" | CHOICE: A | confidence: DIRECT | ѳ printed as Ө-form, entry 17
+ITEM musicians_1896-97_SP_p003|e050|family | READ: "Больмъ" | CHOICE: B | confidence: DIRECT | entry 5, ь before м
+ITEM musicians_1896-97_SP_p004|e012|family | READ: "Кречмаръ" | CHOICE: B | confidence: DIRECT | entry 15
+ITEM musicians_1896-97_SP_p004|e017|family | READ: "Майеръ-Пирко" | CHOICE: B | confidence: DIRECT | plain Cyrillic е, no є; entry 20
+ITEM musicians_1897-98_MSK_p001|e016|first | READ: "Фрацъ" | CHOICE: A | confidence: DIRECT | printed Фрацъ (no н), entry 36 Зюсъ
+ITEM musicians_1897-98_MSK_p001|e029|family | READ: "Крутоголововъ" | CHOICE: B | confidence: DIRECT | т not г, entry 49
+ITEM musicians_1897-98_MSK_p001|e030|family | READ: "Кунстъ" | CHOICE: B | confidence: DIRECT | final ъ, entry 50
+ITEM musicians_1897-98_MSK_p001|e045|family | READ: "Пащеевъ" | CHOICE: B | confidence: DIRECT | entry 65, Пащеевъ (two е)
+ITEM musicians_1897-98_MSK_p003|e019|patronymic | READ: "Аѳанасьевичъ" | CHOICE: B | confidence: DIRECT | Ө-form ѳ, entry 19 Мясинъ
+ITEM musicians_1897-98_MSK_p003|e029|family | READ: "Шефферъ" | CHOICE: B | confidence: DIRECT | entry 29, ends -феръ (not -фертъ)
+ITEM musicians_1897-98_SP_p001|e017|family | READ: "Инспрукеръ" | CHOICE: B | confidence: DIRECT | entry 37, к not н
+ITEM musicians_1897-98_SP_p001|e054|family | READ: "Плацатка" | CHOICE: A | confidence: DIRECT | entry 74, ends -тка, no final ъ
+ITEM musicians_1897-98_SP_p002|e005|family | READ: "Радике" | CHOICE: B | confidence: DIRECT | entry 79, ends -ке
+ITEM musicians_1897-98_SP_p002|e008|family | READ: "Рехакъ" | CHOICE: B | confidence: DIRECT | entry 82
+ITEM musicians_1897-98_SP_p002|e022|family | READ: "Теръ-Огановъ" | CHOICE: B | confidence: DIRECT | entry 96, Теръ with ъ
+ITEM musicians_1897-98_SP_p002|e031|first | READ: "Канутъ-Эмерикъ" | CHOICE: B | confidence: DIRECT | entry 105, final ъ on Канутъ
+ITEM musicians_1897-98_SP_p002|e033|family | READ: "Цабель" | CHOICE: B | confidence: DIRECT | entry 107, Ц not Щ
+ITEM musicians_1897-98_SP_p002|e034|family | READ: "Циммерманъ" | CHOICE: A | confidence: DIRECT | entry 108 (printed "108" without period), Ц
+ITEM musicians_1897-98_SP_p003|e009|family | READ: "Виргеліюшъ" | CHOICE: B | confidence: DIRECT | entry 9, has і before ю
+ITEM musicians_1897-98_SP_p004|e004|family | READ: "Елинекъ" | CHOICE: A | confidence: DIRECT | entry 12, ends -екъ
+DONE 30 items

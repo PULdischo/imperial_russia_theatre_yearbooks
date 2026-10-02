@@ -1,0 +1,4293 @@
+[
+ {
+  "group": 1,
+  "page": "musicians_1890-91_MSK_p001",
+  "entry": "e004",
+  "field": "instrument",
+  "rest": "STORED: \"Піанисть\" | PRINTED: \"Піанистъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 1,
+  "page": "musicians_1890-91_MSK_p001",
+  "entry": "e005",
+  "field": "family",
+  "rest": "STORED: \"Гейнь\" | PRINTED: \"Гейнъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 1,
+  "page": "musicians_1890-91_MSK_p001",
+  "entry": "e006",
+  "field": "family",
+  "rest": "STORED: \"Гейнь\" | PRINTED: \"Гейнъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 1,
+  "page": "musicians_1890-91_MSK_p001",
+  "entry": "e008",
+  "field": "first",
+  "rest": "STORED: \"Карль-Фридрихъ\" | PRINTED: \"Карлъ - Фридрихъ\" (Карлъ with hard sign; hyphen printed with spaces around it) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 1,
+  "page": "musicians_1890-91_MSK_p001",
+  "entry": "e035",
+  "field": "family",
+  "rest": "STORED: \"Лихтен\" | PRINTED: \"Лихтенъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 1,
+  "page": "musicians_1890-91_MSK_p002",
+  "entry": "e011",
+  "field": "first",
+  "rest": "STORED: \"Ипхекъ\" | PRINTED: \"Ицхекъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 1,
+  "page": "musicians_1890-91_MSK_p002",
+  "entry": "e013",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed"
+ },
+ {
+  "group": 1,
+  "page": "musicians_1890-91_MSK_p002",
+  "entry": "e015",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed"
+ },
+ {
+  "group": 1,
+  "page": "musicians_1890-91_MSK_p002",
+  "entry": "e017",
+  "field": "family",
+  "rest": "STORED: \"Фишкінь\" | PRINTED: \"Фишкинъ\" | confidence: DIRECT(zoomed) | stored has і and ь, print has plain и and ъ"
+ },
+ {
+  "group": 1,
+  "page": "musicians_1890-91_MSK_p003",
+  "entry": "e006",
+  "field": "family",
+  "rest": "STORED: \"Гейнь\" | PRINTED: \"Гейнъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 1,
+  "page": "musicians_1890-91_MSK_p003",
+  "entry": "e040",
+  "field": "family",
+  "rest": "STORED: \"Рамбоусенъ\" | PRINTED: \"Рамбоусекъ\" | confidence: DIRECT(zoomed) | (p002 e005 and this page's source entry both print Рамбоусекъ)"
+ },
+ {
+  "group": 1,
+  "page": "musicians_1890-91_MSK_p003",
+  "entry": "e031",
+  "field": "space",
+  "rest": "STORED: \"Карлъ - Фридрихъ\" | PRINTED: \"Карлъ - Фридрихъ\" (spaced hyphen visible in print, probably justification) | confidence: UNCERTAIN | stored has spaces around hyphen; other hyphenated first names on these pages are stored without spaces, so normalize one way"
+ },
+ {
+  "group": 1,
+  "page": "musicians_1890-91_MSK_p004",
+  "entry": "e030",
+  "field": "family",
+  "rest": "STORED: \"Спевак\" | PRINTED: \"Спевакъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 2,
+  "page": "musicians_1890-91_SP_p000",
+  "entry": "e004",
+  "field": "patronymic",
+  "rest": "STORED: \"Франшевичъ\" | PRINTED: \"Францевичъ\" | confidence: DIRECT(zoomed) | ц misread as ш"
+ },
+ {
+  "group": 2,
+  "page": "musicians_1890-91_SP_p000",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Грибень\" | PRINTED: \"Грибенъ\" | confidence: DIRECT(zoomed) | hard sign (p003 e012 stores Грибенъ correctly)"
+ },
+ {
+  "group": 2,
+  "page": "musicians_1890-91_SP_p001",
+  "entry": "e023",
+  "field": "family",
+  "rest": "STORED: \"Нахтигалъ\" | PRINTED: \"Нахтигаль\" | confidence: DIRECT(zoomed) | printed with soft sign"
+ },
+ {
+  "group": 2,
+  "page": "musicians_1890-91_SP_p002",
+  "entry": "e005",
+  "field": "family",
+  "rest": "STORED: \"Терь-Огановъ\" | PRINTED: \"Теръ-Огановъ\" | confidence: DIRECT(zoomed) | hard sign, not soft"
+ },
+ {
+  "group": 2,
+  "page": "musicians_1890-91_SP_p002",
+  "entry": "e020",
+  "field": "family",
+  "rest": "STORED: \"Шолларь\" | PRINTED: \"Шолларъ\" | confidence: DIRECT(zoomed) | hard sign, not soft"
+ },
+ {
+  "group": 2,
+  "page": "musicians_1890-91_SP_p002",
+  "entry": "e025",
+  "field": "family",
+  "rest": "STORED: \"Эйхгорнь\" | PRINTED: \"Эйхгорнъ\" | confidence: DIRECT(zoomed) | hard sign, not soft"
+ },
+ {
+  "group": 2,
+  "page": "musicians_1890-91_SP_p003",
+  "entry": "e019",
+  "field": "ordinal",
+  "rest": "STORED: family \"Ивановъ\", first \"1-й\", patronymic \"Василій\" | PRINTED: \"Ивановъ 1-й, Василій Андреевичъ\" | confidence: DIRECT(zoomed) | ordinal in first-name field; first/patronymic shifted; patronymic \"Андреевичъ\" missing"
+ },
+ {
+  "group": 2,
+  "page": "musicians_1890-91_SP_p003",
+  "entry": "e020",
+  "field": "ordinal",
+  "rest": "STORED: family \"Ивановъ\", first \"2-й\", patronymic \"Владиміръ\" | PRINTED: \"Ивановъ 2-й, Владиміръ Ивановичъ\" (line break Ивано-/вичъ) | confidence: DIRECT(zoomed) | ordinal in first-name field; first/patronymic shifted; patronymic \"Ивановичъ\" missing"
+ },
+ {
+  "group": 2,
+  "page": "musicians_1890-91_SP_p003",
+  "entry": "e040",
+  "field": "family",
+  "rest": "STORED: \"Пертелъ\" | PRINTED: \"Пертель\" | confidence: DIRECT(zoomed) | printed with soft sign (p001 e030 stores Пертель)"
+ },
+ {
+  "group": 2,
+  "page": "musicians_1890-91_SP_p004",
+  "entry": "e016",
+  "field": "patronymic",
+  "rest": "STORED: \"Сергеевичъ\" | PRINTED: \"Сергѣевичъ\" | confidence: DIRECT(zoomed) | ѣ printed"
+ },
+ {
+  "group": 2,
+  "page": "musicians_1890-91_SP_p004",
+  "entry": "e024",
+  "field": "patronymic",
+  "rest": "STORED: \"Людвиго-вичъ\" | PRINTED: \"Людвиго-/вичъ\" (line break) -> \"Людвиговичъ\" | confidence: DIRECT(zoomed) | line-break hyphen artifact"
+ },
+ {
+  "group": 2,
+  "page": "musicians_1890-91_SP_p004",
+  "entry": "e029",
+  "field": "patronymic",
+  "rest": "STORED: \"Сергеевичъ\" | PRINTED: \"Сергѣевичъ\" (line break Сергѣ-/вичъ... printed \"Сергѣе-/вичъ\") | confidence: DIRECT(zoomed) | ѣ printed"
+ },
+ {
+  "group": 2,
+  "page": "musicians_1890-91_SP_p004",
+  "entry": "e034",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" (line break Віо-/лончель) | confidence: DIRECT(zoomed) | Б vs В; also flagged INSTR-VARIANT (confirmed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e001",
+  "field": "patronymic",
+  "rest": "STORED: \"Вареоломеевичъ\" | PRINTED: \"Варѳоломеевичъ\" (Ѳ; hyphenated Варѳоло-/меевичъ) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e007",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e011",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e016",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e021",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e024",
+  "field": "family",
+  "rest": "STORED: \"Баряининъ\" | PRINTED: \"Барянинъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e027",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e036",
+  "field": "family",
+  "rest": "STORED: \"Грибень\" | PRINTED: \"Грибенъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e038",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1890-91_SP_p006",
+  "entry": "e005",
+  "field": "family",
+  "rest": "STORED: \"Майєръ-Пирко\" (Ukrainian є) | PRINTED: \"Майеръ-Пирко\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1890-91_SP_p006",
+  "entry": "e010",
+  "field": "family",
+  "rest": "STORED: \"Пертєль\" (Ukrainian є) | PRINTED: \"Пертель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1890-91_SP_p006",
+  "entry": "e011",
+  "field": "family",
+  "rest": "STORED: \"Петерсень\" | PRINTED: \"Петерсенъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1891-92_MSK_p000",
+  "entry": "e005",
+  "field": "first",
+  "rest": "STORED: \"Карль-Самуилъ\" | PRINTED: \"Карлъ-Самуилъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1891-92_MSK_p000",
+  "entry": "e015",
+  "field": "first",
+  "rest": "STORED: \"Карль-Вильгельмъ\" | PRINTED: \"Карлъ-Вильгельмъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1891-92_MSK_p001",
+  "entry": "e008",
+  "field": "family",
+  "rest": "STORED: \"Канись\" | PRINTED: \"Канисъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1891-92_MSK_p001",
+  "entry": "e028",
+  "field": "family",
+  "rest": "STORED: \"Палище\" | PRINTED: \"Палице\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1891-92_MSK_p002",
+  "entry": "e003",
+  "field": "family",
+  "rest": "STORED: \"Шлейеръ\" | PRINTED: \"Шпейеръ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1891-92_MSK_p002",
+  "entry": "e004",
+  "field": "family",
+  "rest": "STORED: \"Шпеккинь\" | PRINTED: \"Шпеккинъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1891-92_MSK_p002",
+  "entry": "e004",
+  "field": "instrument",
+  "rest": "STORED: \"Контрабасъ\" | PRINTED: \"Кснтрабасъ\" (с where о expected) | confidence: DIRECT(zoomed) | PRINT-TYPO?"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1891-92_MSK_p002",
+  "entry": "e029",
+  "field": "list",
+  "rest": "STORED: \"14.\" | PRINTED: \"14\" (no period) | confidence: DIRECT(zoomed) | trivial"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1891-92_MSK_p002",
+  "entry": "e032",
+  "field": "family",
+  "rest": "STORED: \"Зозелъ\" | PRINTED: \"Зозель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1891-92_MSK_p002",
+  "entry": "e035",
+  "field": "family",
+  "rest": "STORED: \"Зюстъ\" | PRINTED: \"Зюсъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "page": "musicians_1891-92_MSK_p002",
+  "entry": "e045",
+  "field": "family",
+  "rest": "STORED: \"Кунсть\" | PRINTED: \"Кунстъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_MSK_p003",
+  "entry": "e010",
+  "field": "list",
+  "rest": "STORED: \"48.\" | PRINTED: \"48\" (no period) | confidence: DIRECT(zoomed) | PRINT-TYPO? (trivial)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_MSK_p003",
+  "entry": "e016",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (Віо-/лончель) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_MSK_p003",
+  "entry": "e017",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (Віо-/лончель) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_MSK_p003",
+  "entry": "e028",
+  "field": "family",
+  "rest": "STORED: \"Кржвицкій\" | PRINTED: \"Крживицкій\" (letter и after ж missing in stored) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p000",
+  "entry": "e013",
+  "field": "family",
+  "rest": "STORED: \"Брайнь\" | PRINTED: \"Брайнъ\" (hard sign, not soft) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e002",
+  "field": "ordinal",
+  "rest": "STORED: \"Вальтеръ\" | PRINTED: \"Вальтеръ 1-й\" | confidence: DIRECT(zoomed) | ordinal dropped"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e003",
+  "field": "ordinal",
+  "rest": "STORED: \"Вальтеръ\" | PRINTED: \"Вальтеръ 2-й\" | confidence: DIRECT(zoomed) | ordinal dropped"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e012",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e013",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e014",
+  "field": "family",
+  "rest": "STORED: \"Грибень\" | PRINTED: \"Грибенъ\" (hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e033",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e043",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e052",
+  "field": "ordinal",
+  "rest": "STORED: \"Плесковъ\" | PRINTED: \"Плесковъ 2-й\" | confidence: DIRECT(zoomed) | ordinal dropped"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e054",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p002",
+  "entry": "e026",
+  "field": "family",
+  "rest": "STORED: \"Шенкерль\" | PRINTED: \"Шенекерль\" (extra е after Шен) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p002",
+  "entry": "e040",
+  "field": "family",
+  "rest": "STORED: \"Каннегиссеръ\" | PRINTED: \"Канненгиссеръ\" (К-а-н-н-е-н-г-и-с-с-е-р-ъ; extra н before г) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e004",
+  "field": "ordinal",
+  "rest": "STORED: first=\"2-й\" (family \"Вальтеръ\") | PRINTED: \"Вальтеръ 2-й\" | confidence: DIRECT(zoomed) | ordinal in first-name field"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e008",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e018",
+  "field": "first/patronymic/ordinal",
+  "rest": "STORED: first=\"1-й\", patronymic=\"Василій\" | PRINTED: \"Ивановъ 1-й, Василій Андреевичъ\" (first=Василій, patronymic=Андреевичъ; ordinal belongs in family; patronymic Андреевичъ missing entirely) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e019",
+  "field": "first/patronymic/ordinal",
+  "rest": "STORED: first=\"2-й\", patronymic=\"Владиміръ\" | PRINTED: \"Ивановъ 2-й, Владиміръ Ивановичъ\" (first=Владиміръ, patronymic=Ивановичъ; ordinal belongs in family; patronymic Ивановичъ missing entirely) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e021",
+  "field": "family",
+  "rest": "STORED: \"Назаковъ\" | PRINTED: \"Казаковъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e025",
+  "field": "family",
+  "rest": "STORED: \"Керкешо\" | PRINTED: \"Керкешко\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e030",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e033",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (Віо-/лончель) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e041",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e043",
+  "field": "ordinal",
+  "rest": "STORED: family \"Тарнке\", first=\"1-й\" | PRINTED: \"Тарнке 1-й\" | confidence: DIRECT(zoomed) | ordinal in first-name field"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e044",
+  "field": "ordinal",
+  "rest": "STORED: family \"Тарнке\", first=\"2-й\" | PRINTED: \"Тарнке 2-й\" | confidence: DIRECT(zoomed) | ordinal in first-name field"
+ },
+ {
+  "group": 4,
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e052",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (Віо-/лончель) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1891-92_SP_p004",
+  "entry": "e007",
+  "field": "family",
+  "rest": "STORED: \"Бѣлищій\" | PRINTED: \"Бѣлицкій\" (list 6) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1891-92_SP_p004",
+  "entry": "e010",
+  "field": "family",
+  "rest": "STORED: \"Виргеліошъ\" | PRINTED: \"Виргеліюшъ\" (list 9) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1891-92_SP_p004",
+  "entry": "e027",
+  "field": "family",
+  "rest": "STORED: \"Мощейкевичъ\" | PRINTED: \"Моцейкевичъ\" (list 26) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1891-92_SP_p004",
+  "entry": "e027",
+  "field": "patronymic",
+  "rest": "STORED: \"Варооломеевичъ\" | PRINTED: \"Варѳоломеевичъ\" (Ѳ printed, not о) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1891-92_SP_p004",
+  "entry": "e035",
+  "field": "instrument",
+  "rest": "STORED: \"Піанистъ\" | PRINTED: \"Піанистъ при драматическихъ спектакляхъ\" (list 34 Смирновъ; qualifier dropped; rank_or_title stored \"-\") | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1891-92_SP_p005",
+  "entry": "e003",
+  "field": "family",
+  "rest": "STORED: \"Блась\" | PRINTED: \"Бласъ\" (hard sign, list 7) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1891-92_SP_p005",
+  "entry": "e004",
+  "field": "family",
+  "rest": "STORED: \"Болымъ\" | PRINTED: \"Больмъ\" (list 8) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1891-92_SP_p005",
+  "entry": "e025",
+  "field": "family",
+  "rest": "STORED: \"Петерсень\" | PRINTED: \"Петерсенъ\" (list 29) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1892-93_MSK_p000",
+  "entry": "e004",
+  "field": "ordinal",
+  "rest": "STORED: family \"Адольфи\", first \"1-й\", patronymic \"Іоганъ-Фридрихъ\" | PRINTED: \"Адольфи 1-й, Іоганъ-Фридрихъ\" (ordinal belongs after family; Іоганъ-Фридрихъ is the first name) | confidence: DIRECT(zoomed) | flag ORDINAL-IN-FIRSTNAME confirmed"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1892-93_MSK_p000",
+  "entry": "e005",
+  "field": "ordinal",
+  "rest": "STORED: family \"Адольфи\", first \"2-й\", patronymic \"Карль-Самуилъ\" | PRINTED: \"Адольфи 2-й, Карлъ-Самуилъ\" | confidence: DIRECT(zoomed) | flag confirmed"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1892-93_MSK_p000",
+  "entry": "e005",
+  "field": "first/patronymic spelling",
+  "rest": "STORED: \"Карль-Самуилъ\" | PRINTED: \"Карлъ-Самуилъ\" (hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1892-93_MSK_p000",
+  "entry": "e006",
+  "field": "ordinal",
+  "rest": "STORED: family \"Адольфи\", first \"3-й\", patronymic \"Фердинандъ\" | PRINTED: \"Адольфи 3-й, Фердинандъ\" | confidence: DIRECT(zoomed) | flag confirmed"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1892-93_MSK_p000",
+  "entry": "e015",
+  "field": "first",
+  "rest": "STORED: first \"Карль\", patronymic \"Вильгельмъ\" | PRINTED: \"Карлъ·Вильгельмъ\" (list 13 Брандтъ; hyphen/dot-joined double first name, hard sign; no patronymic) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1892-93_MSK_p001",
+  "entry": "e033",
+  "field": "family",
+  "rest": "STORED: \"Рамбоусенъ\" | PRINTED: \"Рамбоусекъ\" (list 66) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1892-93_MSK_p001",
+  "entry": "e034",
+  "field": "first",
+  "rest": "STORED: \"Марлохей\" | PRINTED: \"Мардохей\" (list 67) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1892-93_MSK_p001",
+  "entry": "e037",
+  "field": "family",
+  "rest": "STORED: \"Руссь\" | PRINTED: \"Руссъ\" (list 70) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1892-93_MSK_p001",
+  "entry": "e039",
+  "field": "first",
+  "rest": "STORED: \"Ипхекъ-Мейерь\" | PRINTED: \"Ицхекъ-Мейеръ\" (list 72) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1892-93_MSK_p001",
+  "entry": "e044",
+  "field": "family",
+  "rest": "STORED: \"Триньянъ\" | PRINTED: \"Триньякъ\" (list 77) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1892-93_MSK_p002",
+  "entry": "e032",
+  "field": "family",
+  "rest": "STORED: \"Зозелъ\" | PRINTED: \"Зозель\" (list 17, soft sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "page": "musicians_1892-93_MSK_p002",
+  "entry": "e045",
+  "field": "family",
+  "rest": "STORED: \"Кунсть\" | PRINTED: \"Кунстъ\" (list 30, hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e001",
+  "field": "family",
+  "rest": "STORED: \"Арендъцъ\" | PRINTED: \"Арендсъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e006",
+  "field": "first",
+  "rest": "STORED: \"Адалъбертъ\" | PRINTED: \"Адальбертъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e016",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і; printed \"Віо-/лончель\") | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e017",
+  "field": "family/first",
+  "rest": "STORED: family \"Туровичъ\", first \"фонъ-Охота\" | PRINTED: bold \"Туровичъ фонъ-Охота\" (all bold = part of surname; no first name printed) | confidence: DIRECT(zoomed) | surname part stored in first-name field"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e024",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (printed \"Віо-/лончель\") | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e025",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e038",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e044",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_SP_p001",
+  "entry": "e010",
+  "field": "family",
+  "rest": "STORED: \"Надлецъ\" | PRINTED: \"Кадлецъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_SP_p001",
+  "entry": "e011",
+  "field": "family",
+  "rest": "STORED: \"Назаковъ\" | PRINTED: \"Казаковъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_SP_p001",
+  "entry": "e021",
+  "field": "family",
+  "rest": "STORED: \"Нункели\" | PRINTED: \"Кункели\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_SP_p001",
+  "entry": "e035",
+  "field": "family",
+  "rest": "STORED: \"Пертѣль\" | PRINTED: \"Пертель\" (plain е) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_SP_p002",
+  "entry": "e008",
+  "field": "family",
+  "rest": "STORED: \"Цабелъ\" | PRINTED: \"Цабель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_SP_p002",
+  "entry": "e028",
+  "field": "first/patronymic",
+  "rest": "STORED: first \"Мейеръ\", patronymic \"Гиршъ\" | PRINTED: \"Мейеръ-Гиршъ\" (single hyphenated first name, no patronymic) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_SP_p002",
+  "entry": "e029",
+  "field": "first/patronymic",
+  "rest": "STORED: first \"Іоганъ\", patronymic \"Фридрихъ\" | PRINTED: \"Іоганъ-Фридрихъ\" (single hyphenated first name, no patronymic) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_SP_p003",
+  "entry": "e014",
+  "field": "family",
+  "rest": "STORED: \"Кернешко\" | PRINTED: \"Керкешко\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_SP_p003",
+  "entry": "e031",
+  "field": "family",
+  "rest": "STORED: \"Тарике 1-й\" | PRINTED: \"Тарнке 1-й\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_SP_p003",
+  "entry": "e032",
+  "field": "family",
+  "rest": "STORED: \"Тарике 2-й\" | PRINTED: \"Тарнке 2-й\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "page": "musicians_1892-93_SP_p003",
+  "entry": "e050",
+  "field": "family",
+  "rest": "STORED: \"Анимовъ\" | PRINTED: \"Акимовъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 7,
+  "page": "musicians_1892-93_SP_p004",
+  "entry": "e008",
+  "field": "family",
+  "rest": "STORED: \"Блась\" | PRINTED: \"Бласъ\" | confidence: DIRECT(zoomed) | soft sign stored, hard sign printed"
+ },
+ {
+  "group": 7,
+  "page": "musicians_1892-93_SP_p004",
+  "entry": "e014",
+  "field": "family",
+  "rest": "STORED: \"Грибень\" | PRINTED: \"Грибенъ\" | confidence: DIRECT(zoomed) | soft sign stored, hard sign printed"
+ },
+ {
+  "group": 7,
+  "page": "musicians_1893-94_MSK_p001",
+  "entry": "e001",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag"
+ },
+ {
+  "group": 7,
+  "page": "musicians_1893-94_MSK_p001",
+  "entry": "e004",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag"
+ },
+ {
+  "group": 7,
+  "page": "musicians_1893-94_MSK_p001",
+  "entry": "e006",
+  "field": "family",
+  "rest": "STORED: \"Гейнь\" | PRINTED: \"Гейнъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 7,
+  "page": "musicians_1893-94_MSK_p001",
+  "entry": "e008",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag"
+ },
+ {
+  "group": 7,
+  "page": "musicians_1893-94_MSK_p001",
+  "entry": "e027",
+  "field": "family",
+  "rest": "STORED: \"Зюсь\" | PRINTED: \"Зюсъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 7,
+  "page": "musicians_1893-94_MSK_p001",
+  "entry": "e050",
+  "field": "family",
+  "rest": "STORED: \"Маривардтъ\" | PRINTED: \"Марквардтъ\" | confidence: DIRECT(zoomed) | same spelling as p000 e005 Марквардтъ"
+ },
+ {
+  "group": 7,
+  "page": "musicians_1893-94_MSK_p002",
+  "entry": "e007",
+  "field": "family",
+  "rest": "STORED: \"Пащееевъ\" | PRINTED: \"Пащеевъ\" | confidence: DIRECT(zoomed) | extra \"е\" stored"
+ },
+ {
+  "group": 7,
+  "page": "musicians_1893-94_MSK_p002",
+  "entry": "e021",
+  "field": "family",
+  "rest": "STORED: \"Руссь\" | PRINTED: \"Руссъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 7,
+  "page": "musicians_1893-94_MSK_p002",
+  "entry": "e023",
+  "field": "first",
+  "rest": "STORED: \"Ипхекъ-Мейеръ\" | PRINTED: \"Ицхекъ-Мейеръ\" | confidence: DIRECT(zoomed) | х for ц"
+ },
+ {
+  "group": 7,
+  "page": "musicians_1893-94_MSK_p002",
+  "entry": "e044",
+  "field": "family",
+  "rest": "STORED: \"Шпейерь\" | PRINTED: \"Шпейеръ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_MSK_p003",
+  "entry": "e014",
+  "field": "list",
+  "rest": "STORED: \"14.\" | PRINTED: \"14\" (no period after the number) | confidence: DIRECT(zoomed) | trivial, name fields all match"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p000",
+  "entry": "e012",
+  "field": "patronymic",
+  "rest": "STORED: \"Семёновичъ\" | PRINTED: \"Семеновичъ\" (plain е, no diaeresis) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e002",
+  "field": "patronymic",
+  "rest": "STORED: \"Геронимовичъ\" | PRINTED: \"Іеронимовичъ\" (initial dotted І) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e003",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" (hard sign) | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e011",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e012",
+  "field": "family",
+  "rest": "STORED: \"Гильдеобрандтъ\" | PRINTED: \"Гильдебрандтъ\" (no \"о\" after д) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e019",
+  "field": "family",
+  "rest": "STORED: \"Грюнерть\" | PRINTED: \"Грюнертъ\" (ъ at end) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e025",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e028",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e032",
+  "field": "family",
+  "rest": "STORED: \"Казановъ\" | PRINTED: \"Казаковъ\" (к, not н) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e051",
+  "field": "family",
+  "rest": "STORED: \"Маннопъ\" | PRINTED: \"Манкопъ\" (к, not н) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p002",
+  "entry": "e003",
+  "field": "first",
+  "rest": "STORED: \"Филипъ\" | PRINTED: \"Филиппъ\" (double п) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p002",
+  "entry": "e012",
+  "field": "first",
+  "rest": "STORED: \"Іоифъ\" | PRINTED: \"Іосифъ\" (с dropped in storage) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p002",
+  "entry": "e030",
+  "field": "family",
+  "rest": "STORED: \"Терь-Огановъ\" | PRINTED: \"Теръ-Огановъ\" (hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p002",
+  "entry": "e047",
+  "field": "family",
+  "rest": "STORED: \"Шолларь\" | PRINTED: \"Шолларъ\" (hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p003",
+  "entry": "e001",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p003",
+  "entry": "e009",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p003",
+  "entry": "e033",
+  "field": "patronymic",
+  "rest": "STORED: \"Вареоломеевичъ\" | PRINTED: \"Варѳоломеевичъ\" (Ѳ-like round glyph after \"Вар\", not е; scan is blurred) | confidence: UNCERTAIN on exact glyph, stored form is certainly wrong"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p003",
+  "entry": "e036",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p003",
+  "entry": "e039",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed"
+ },
+ {
+  "group": 8,
+  "page": "musicians_1893-94_SP_p003",
+  "entry": "e046",
+  "field": "list",
+  "rest": "STORED: \"38.\" | PRINTED: \"38\" (no period) | confidence: DIRECT(zoomed) | trivial"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1893-94_SP_p004",
+  "entry": "e009",
+  "field": "first",
+  "rest": "STORED: \"Гугο\" (final letter is Greek omicron U+03BF) | PRINTED: \"Гуго\" | confidence: DIRECT(zoomed) | MIXED-SCRIPT flag confirmed"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1893-94_SP_p004",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Рендертъ\" | PRINTED: \"Рендеръ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1893-94_SP_p004",
+  "entry": "e030",
+  "field": "family",
+  "rest": "STORED: \"Реханъ\" | PRINTED: \"Рехакъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p000",
+  "entry": "e006",
+  "field": "ordinal",
+  "rest": "STORED: \"Адольфи\" | PRINTED: \"Адольфи 1-й\" | confidence: DIRECT(zoomed) | ordinal dropped"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p000",
+  "entry": "e007",
+  "field": "ordinal",
+  "rest": "STORED: \"Адольфи\" | PRINTED: \"Адольфи 2-й\" | confidence: DIRECT(zoomed) | ordinal dropped"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p000",
+  "entry": "e009",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p000",
+  "entry": "e016",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p000",
+  "entry": "e019",
+  "field": "family",
+  "rest": "STORED: \"Василевъ\" | PRINTED: \"Васильевъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p001",
+  "entry": "e013",
+  "field": "family",
+  "rest": "STORED: \"Зозелъ\" | PRINTED: \"Зозель\" | confidence: DIRECT(zoomed) | ъ for ь"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p001",
+  "entry": "e017",
+  "field": "family",
+  "rest": "STORED: \"Зюсь\" | PRINTED: \"Зюсъ\" | confidence: DIRECT(zoomed) | ь for ъ"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p001",
+  "entry": "e034",
+  "field": "family",
+  "rest": "STORED: \"Кунсть\" | PRINTED: \"Кунстъ\" | confidence: DIRECT(zoomed) | ь for ъ"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e001",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | Б for В; INSTR-VARIANT flag is really a misread"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e003",
+  "field": "family",
+  "rest": "STORED: \"Порубиновскій\" | PRINTED: bold glyph after \"Порубино\" looks like \"з\" not \"в\" (\"Порубиновзкій\"/\"Порубинозскій\"-like; read as Порубино?скій) | confidence: UNCERTAIN | PRINT-TYPO? (ink-clogged в is also possible); stored form is the expected name"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e004",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | Б for В"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e007",
+  "field": "family",
+  "rest": "STORED: \"Рессертъ\" | PRINTED: \"Рессеръ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e018",
+  "field": "family",
+  "rest": "STORED: \"Стреналовъ\" | PRINTED: \"Стрекаловъ\" (5th letter reads к, not н) | confidence: UNCERTAIN (zoomed 25x, bold letter leans к)"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e020",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | Б for В"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e027",
+  "field": "family",
+  "rest": "STORED: \"Чарлоне\" (ordinal \"1-я\" present) | PRINTED: \"Чіарлоне 1-я\" | confidence: DIRECT(zoomed) | missing і"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e028",
+  "field": "family",
+  "rest": "STORED: \"Чарлоне\" (ordinal \"2-я\" present) | PRINTED: \"Чіарлоне 2-я\" | confidence: DIRECT(zoomed) | missing і"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e040",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | Б for В"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e041",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | Б for В"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e043",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | Б for В"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e050",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | Б for В"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e052",
+  "field": "family",
+  "rest": "STORED: \"Витигъ\" | PRINTED: \"Виттигъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 9,
+  "page": "musicians_1894-95_MSK_p003",
+  "entry": "e020",
+  "field": "patronymic",
+  "rest": "STORED: \"Аоанасьевичъ\" | PRINTED: \"Аѳанасьевичъ\" (ѳ, printed as Θ-form) | confidence: DIRECT(zoomed) | о for ѳ"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p000",
+  "entry": "e017",
+  "field": "family",
+  "rest": "STORED: \"Брайнь\" | PRINTED: \"Брайнъ\" (hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p001",
+  "entry": "e011",
+  "field": "family",
+  "rest": "STORED: \"Грибень 1-й\" | PRINTED: \"Грибенъ 1-й\" (hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p001",
+  "entry": "e012",
+  "field": "family",
+  "rest": "STORED: \"Грибень 2-й\" | PRINTED: \"Грибенъ 2-й\" (hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p001",
+  "entry": "e015",
+  "field": "family",
+  "rest": "STORED: \"Грюнерть\" | PRINTED: \"Грюнертъ\" (hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p001",
+  "entry": "e034",
+  "field": "family",
+  "rest": "STORED: \"Кернешко\" | PRINTED: \"Керкешко\" (к, not н) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p002",
+  "entry": "e012",
+  "field": "family",
+  "rest": "STORED: \"Плацатиа\" | PRINTED: \"Плацатка\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p002",
+  "entry": "e030",
+  "field": "family",
+  "rest": "STORED: \"Терь-Огановъ\" | PRINTED: \"Теръ-Огановъ\" (hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p002",
+  "entry": "e037",
+  "field": "family",
+  "rest": "STORED: \"Хаанъ\" | PRINTED: \"Хаакъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p002",
+  "entry": "e048",
+  "field": "family",
+  "rest": "STORED: \"Шолляръ\" | PRINTED: \"Шолларъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p002",
+  "entry": "e050",
+  "field": "family",
+  "rest": "STORED: \"Штаръ\" | PRINTED: \"Штаркъ\" (к before ъ; bold k glyph resembles н) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p002",
+  "entry": "e051",
+  "field": "family",
+  "rest": "STORED: \"Штейль\" | PRINTED: \"Штейдль\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p003",
+  "entry": "e012",
+  "field": "family",
+  "rest": "STORED: \"Бесно\" | PRINTED: \"Беско\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p003",
+  "entry": "e017",
+  "field": "family",
+  "rest": "STORED: \"Виргеліошъ\" | PRINTED: \"Виргеліюшъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p003",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Лень\" | PRINTED: \"Ленъ\" (hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p004",
+  "entry": "e002",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p004",
+  "entry": "e003",
+  "field": "family",
+  "rest": "STORED: \"Армегеймеръ\" | PRINTED: \"Армсгеймеръ\" (с, not е, after м) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p004",
+  "entry": "e007",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p004",
+  "entry": "e014",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p004",
+  "entry": "e024",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed"
+ },
+ {
+  "group": 10,
+  "page": "musicians_1894-95_SP_p004",
+  "entry": "e031",
+  "field": "family",
+  "rest": "STORED: \"Рехахъ\" | PRINTED: \"Рехакъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p001",
+  "entry": "e001",
+  "field": "family",
+  "rest": "STORED: \"Гольдшмить\" | PRINTED: \"Гольдшмитъ\" | confidence: DIRECT(zoomed) | soft sign stored for hard sign"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p001",
+  "entry": "e032",
+  "field": "list",
+  "rest": "STORED: \"54.\" | PRINTED: \"34.\" | confidence: DIRECT(zoomed) | PRINT-TYPO? (sequence runs 53, 34, 55; entry is Крутоголововъ)"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p001",
+  "entry": "e034",
+  "field": "family",
+  "rest": "STORED: \"Кунсть\" | PRINTED: \"Кунстъ\" | confidence: DIRECT(zoomed) | soft sign stored for hard sign"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p001",
+  "entry": "e049",
+  "field": "family",
+  "rest": "STORED: \"Пащеечь\" | PRINTED: \"Пащеевъ\" | confidence: DIRECT(zoomed) | в->ч, ъ->ь"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e005",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | dotted і"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e023",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | dotted і"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e025",
+  "field": "family",
+  "rest": "STORED: \"Триньянъ\" | PRINTED: \"Триньякъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e028",
+  "field": "family",
+  "rest": "STORED: \"Фрице\" | PRINTED: \"Фриче\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Фрomanъ\" (Latin o) | PRINTED: \"Фроманъ\" (all Cyrillic) | confidence: DIRECT(zoomed) | MIXED-SCRIPT flag confirmed"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e042",
+  "field": "family",
+  "rest": "STORED: \"Шпекинъ\" | PRINTED: \"Шпеккинъ\" | confidence: DIRECT(zoomed) | doubled к"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e044",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | dotted і"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e045",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | dotted і"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e047",
+  "field": "family",
+  "rest": "STORED: \"Эквертъ\" | PRINTED: \"Эккертъ\" | confidence: DIRECT(zoomed) | к for в"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e048",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | dotted і"
+ },
+ {
+  "group": 11,
+  "page": "musicians_1895-96_MSK_p003",
+  "entry": "e023",
+  "field": "family",
+  "rest": "STORED: \"Падѣль\" | PRINTED: \"Падель\" | confidence: DIRECT(zoomed) | ordinary е (a stray ink speck sits above it, not a ѣ)"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p001",
+  "entry": "e016",
+  "field": "family",
+  "rest": "STORED: \"Евстифьевъ\" | PRINTED: \"Евстифѣевъ\" | confidence: DIRECT(zoomed) | ѣ printed, stored ь"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p001",
+  "entry": "e023",
+  "field": "family",
+  "rest": "STORED: \"Инспрукертъ\" | PRINTED: \"Инспрукеръ\" | confidence: DIRECT(zoomed) | extra т"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p001",
+  "entry": "e034",
+  "field": "first/patronymic",
+  "rest": "STORED: first \"Фридрихъ\", patronymic \"Эрнестъ\" | PRINTED: \"Фридрихъ-Эрнестъ\" (one hyphenated first name, no patronymic) | confidence: DIRECT(zoomed) | hyphenated double first name split across fields"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e005",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e011",
+  "field": "family",
+  "rest": "STORED: \"Реханъ\" | PRINTED: \"Рехакъ\" | confidence: DIRECT(zoomed, 5x) | final letter before ъ is к not н"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e013",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e017",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e019",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e025",
+  "field": "family",
+  "rest": "STORED: \"Терь-Огановъ\" | PRINTED: \"Теръ-Огановъ\" | confidence: DIRECT(zoomed) | ъ not ь"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e025",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e030",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e031",
+  "field": "family",
+  "rest": "STORED: \"Хаанъ\" | PRINTED: \"Хаакъ\" | confidence: DIRECT(zoomed, 5x) | final letter к not н"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e038",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e042",
+  "field": "family",
+  "rest": "STORED: \"Шолляръ\" | PRINTED: \"Шолларъ\" | confidence: DIRECT(zoomed, 4x) | я for а"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e052",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p003",
+  "entry": "e039",
+  "field": "family",
+  "rest": "STORED: \"Штарнъ\" | PRINTED: \"Штаркъ\" | confidence: DIRECT(zoomed, 6x) | н for к"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p004",
+  "entry": "e007",
+  "field": "family",
+  "rest": "STORED: \"Вилькень\" | PRINTED: \"Вилькенъ\" | confidence: DIRECT(zoomed) | ь for ъ"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1895-96_SP_p004",
+  "entry": "e019",
+  "field": "family",
+  "rest": "STORED: \"Маркузъ\" | PRINTED: \"Маркузэ\" | confidence: DIRECT(zoomed) | final letter is э"
+ },
+ {
+  "group": 12,
+  "page": "musicians_1896-97_MSK_p000",
+  "entry": "e010",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнт\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed, 8x) | final glyph is a slightly smeared/damaged ъ; not т (stored value is a typo)"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e001",
+  "field": "family",
+  "rest": "STORED: \"Губерть\" | PRINTED: \"Губертъ\" | confidence: DIRECT(zoomed) | final hard sign, not soft sign"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e006",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e023",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e028",
+  "field": "family",
+  "rest": "STORED: \"Кругоголововъ\" | PRINTED: \"Крутоголововъ\" | confidence: DIRECT(zoomed) | т misread as г"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e028",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Кунсть\" | PRINTED: \"Кунстъ\" | confidence: DIRECT(zoomed) | final hard sign"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e030",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e045",
+  "field": "family",
+  "rest": "STORED: \"Пащееевъ\" | PRINTED: \"Пащеевъ\" | confidence: DIRECT(zoomed) | extra е"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p002",
+  "entry": "e003",
+  "field": "first",
+  "rest": "STORED: \"Марлохей\" | PRINTED: \"Мардохей\" | confidence: DIRECT(zoomed) | л for д"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p002",
+  "entry": "e013",
+  "field": "first",
+  "rest": "STORED: \"Ипхекъ-Мейеръ\" | PRINTED: \"Ицхекъ-Мейеръ\" | confidence: DIRECT(zoomed) | п for ц"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p002",
+  "entry": "e023",
+  "field": "family",
+  "rest": "STORED: \"Триньянъ\" | PRINTED: \"Триньякъ\" | confidence: DIRECT(zoomed) | н for к"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p002",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Чыбинъ\" | PRINTED: \"Цыбинъ\" | confidence: DIRECT(zoomed) | Ч for Ц"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p002",
+  "entry": "e039",
+  "field": "family",
+  "rest": "STORED: \"Шпекинъ\" | PRINTED: \"Шпейеръ\" | confidence: DIRECT(zoomed) | entry 115 printed Шпейеръ, Фридрихъ, Органъ; stored as duplicate of Шпекинъ"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p002",
+  "entry": "e040",
+  "field": "family",
+  "rest": "STORED: \"Шпекинъ\" | PRINTED: \"Шпеккинъ\" | confidence: DIRECT(zoomed) | double к (entry 116, Эрнестъ-Густавъ)"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_MSK_p002",
+  "entry": "e045",
+  "field": "instrument",
+  "rest": "STORED: \"Ударные инструменты\" | PRINTED: (none; entry 121 Эккертъ ends after \"(съ 1 декабря 1895 г.).\" with no instrument) | confidence: DIRECT(zoomed) | stored instrument not printed"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_SP_p000",
+  "entry": "e016",
+  "field": "family",
+  "rest": "STORED: \"Брайнь\" | PRINTED: \"Брайнъ\" | confidence: DIRECT(zoomed) | final hard sign"
+ },
+ {
+  "group": 13,
+  "page": "musicians_1896-97_SP_p001",
+  "entry": "e018",
+  "field": "family",
+  "rest": "STORED: \"Евстифьевъ\" | PRINTED: \"Евстифѣевъ\" | confidence: DIRECT(zoomed) | ѣ printed, stored ь"
+ },
+ {
+  "group": 14,
+  "page": "musicians_1896-97_SP_p002",
+  "entry": "e025",
+  "field": "family",
+  "rest": "STORED: \"Геръ-Огановъ\" | PRINTED: \"Теръ-Огановъ\" | confidence: DIRECT(zoomed) | Т misread as Г"
+ },
+ {
+  "group": 14,
+  "page": "musicians_1896-97_SP_p002",
+  "entry": "e033",
+  "field": "first",
+  "rest": "STORED: \"Кануть-Эмерикъ\" | PRINTED: \"Канутъ-Эмерикъ\" | confidence: DIRECT(zoomed) | ъ misread as ь"
+ },
+ {
+  "group": 14,
+  "page": "musicians_1896-97_SP_p002",
+  "entry": "e043",
+  "field": "family",
+  "rest": "STORED: \"Шолларь\" | PRINTED: \"Шолларъ\" | confidence: DIRECT(zoomed) | ъ misread as ь (6x zoom)"
+ },
+ {
+  "group": 14,
+  "page": "musicians_1896-97_SP_p003",
+  "entry": "e020",
+  "field": "first",
+  "rest": "STORED: \"Аоанасій\" | PRINTED: \"Аѳанасій\" | confidence: DIRECT(zoomed) | Ѳ read as о"
+ },
+ {
+  "group": 14,
+  "page": "musicians_1896-97_SP_p003",
+  "entry": "e050",
+  "field": "family",
+  "rest": "STORED: \"Болымъ\" | PRINTED: \"Больмъ\" | confidence: DIRECT(zoomed) | letters ь/ы transposed"
+ },
+ {
+  "group": 14,
+  "page": "musicians_1896-97_SP_p004",
+  "entry": "e012",
+  "field": "family",
+  "rest": "STORED: \"Креммаръ\" | PRINTED: \"Кречмаръ\" | confidence: DIRECT(zoomed) | чм read as мм"
+ },
+ {
+  "group": 14,
+  "page": "musicians_1896-97_SP_p004",
+  "entry": "e017",
+  "field": "family",
+  "rest": "STORED: \"Майєръ-Пирко\" | PRINTED: \"Майеръ-Пирко\" | confidence: DIRECT(zoomed) | stored has Ukrainian є (MIXED-SCRIPT flag confirmed)"
+ },
+ {
+  "group": 14,
+  "page": "musicians_1897-98_MSK_p000",
+  "entry": "e008",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | dotted і (INSTR-VARIANT flag confirmed)"
+ },
+ {
+  "group": 14,
+  "page": "musicians_1897-98_MSK_p000",
+  "entry": "e014",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | dotted і (INSTR-VARIANT flag confirmed)"
+ },
+ {
+  "group": 14,
+  "page": "musicians_1897-98_MSK_p001",
+  "entry": "e016",
+  "field": "first",
+  "rest": "STORED: \"Францъ\" | PRINTED: \"Фрацъ\" | confidence: DIRECT(zoomed) | PRINT-TYPO? (printed without н)"
+ },
+ {
+  "group": 14,
+  "page": "musicians_1897-98_MSK_p001",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Кругоголововъ\" | PRINTED: \"Крутоголововъ\" | confidence: DIRECT(zoomed) | т read as г"
+ },
+ {
+  "group": 14,
+  "page": "musicians_1897-98_MSK_p001",
+  "entry": "e030",
+  "field": "family",
+  "rest": "STORED: \"Кунсть\" | PRINTED: \"Кунстъ\" | confidence: DIRECT(zoomed) | ъ misread as ь"
+ },
+ {
+  "group": 14,
+  "page": "musicians_1897-98_MSK_p001",
+  "entry": "e045",
+  "field": "family",
+  "rest": "STORED: \"Пащееевъ\" | PRINTED: \"Пащеевъ\" | confidence: DIRECT(zoomed) | extra е"
+ },
+ {
+  "group": 15,
+  "page": "musicians_1897-98_MSK_p003",
+  "entry": "e019",
+  "field": "patronymic",
+  "rest": "STORED: \"Аоанасьевичъ\" | PRINTED: \"Аѳанасьевичъ\" (Ѳ, same Ѳ as in \"Ѳедоръ\" on the line) | confidence: DIRECT(zoomed 6x)"
+ },
+ {
+  "group": 15,
+  "page": "musicians_1897-98_MSK_p003",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Шеффертъ\" | PRINTED: \"Шефферъ\" | confidence: DIRECT(zoomed 6x) | extra \"т\" appended; MSK_p002 e036 \"Шефферъ, Андрей\" is a different man"
+ },
+ {
+  "group": 15,
+  "page": "musicians_1897-98_SP_p001",
+  "entry": "e017",
+  "field": "family",
+  "rest": "STORED: \"Инспрунеръ\" | PRINTED: \"Инспрукеръ\" | confidence: DIRECT(zoomed 6x) | н for к"
+ },
+ {
+  "group": 15,
+  "page": "musicians_1897-98_SP_p001",
+  "entry": "e031",
+  "field": "family",
+  "rest": "STORED: \"de Ланге\" (Latin d,e) | PRINTED: \"де Ланге\" (Cyrillic) | confidence: DIRECT(zoomed 6x) | confirms MIXED-SCRIPT flag"
+ },
+ {
+  "group": 15,
+  "page": "musicians_1897-98_SP_p001",
+  "entry": "e054",
+  "field": "family",
+  "rest": "STORED: \"Плацатна\" | PRINTED: \"Плацатка\" | confidence: DIRECT(zoomed 6x) | н for к"
+ },
+ {
+  "group": 15,
+  "page": "musicians_1897-98_SP_p002",
+  "entry": "e005",
+  "field": "family",
+  "rest": "STORED: \"Радине\" | PRINTED: \"Радике\" | confidence: DIRECT(zoomed 6x) | н for к"
+ },
+ {
+  "group": 15,
+  "page": "musicians_1897-98_SP_p002",
+  "entry": "e008",
+  "field": "family",
+  "rest": "STORED: \"Реханъ\" | PRINTED: \"Рехакъ\" | confidence: DIRECT(zoomed 6x) | н for к"
+ },
+ {
+  "group": 15,
+  "page": "musicians_1897-98_SP_p002",
+  "entry": "e022",
+  "field": "family",
+  "rest": "STORED: \"Терь-Огановъ\" | PRINTED: \"Теръ-Огановъ\" | confidence: DIRECT(zoomed 5x) | ь for ъ"
+ },
+ {
+  "group": 15,
+  "page": "musicians_1897-98_SP_p002",
+  "entry": "e031",
+  "field": "first",
+  "rest": "STORED: \"Кануть-Эмерикъ\" | PRINTED: \"Канутъ-Эмерикъ\" | confidence: DIRECT(zoomed 5x) | ь for ъ"
+ },
+ {
+  "group": 15,
+  "page": "musicians_1897-98_SP_p002",
+  "entry": "e033",
+  "field": "family",
+  "rest": "STORED: \"Щабель\" | PRINTED: \"Цабель\" | confidence: DIRECT(zoomed 6x) | Щ for Ц"
+ },
+ {
+  "group": 15,
+  "page": "musicians_1897-98_SP_p002",
+  "entry": "e034",
+  "field": "family",
+  "rest": "STORED: \"Щиммерманъ\" | PRINTED: \"Циммерманъ\" | confidence: DIRECT(zoomed 6x) | Щ for Ц"
+ },
+ {
+  "group": 15,
+  "page": "musicians_1897-98_SP_p002",
+  "entry": "e041",
+  "field": "family",
+  "rest": "STORED: \"Шолларь\" | PRINTED: \"Шолларъ\" | confidence: DIRECT(zoomed 5x) | ь for ъ"
+ },
+ {
+  "group": 16,
+  "page": "musicians_1897-98_SP_p003",
+  "entry": "e009",
+  "field": "family",
+  "rest": "STORED: \"Виргелюшъ\" | PRINTED: \"Виргеліюшъ\" (dotted і after л) | confidence: DIRECT(zoomed) | dropped і"
+ },
+ {
+  "group": 16,
+  "page": "musicians_1897-98_SP_p004",
+  "entry": "e004",
+  "field": "family",
+  "rest": "STORED: \"Елиненъ\" | PRINTED: \"Елинекъ\" | confidence: DIRECT(zoomed) | н vs к"
+ },
+ {
+  "group": 16,
+  "page": "musicians_1898-99_MSK_p000",
+  "entry": "e004",
+  "field": "family",
+  "rest": "STORED: \"Брындлинъ\" | PRINTED: \"Брындинъ\" | confidence: DIRECT(zoomed) | stored has extra л"
+ },
+ {
+  "group": 16,
+  "page": "musicians_1898-99_MSK_p001",
+  "entry": "e004",
+  "field": "family",
+  "rest": "STORED: \"Зоземъ\" | PRINTED: \"Зозель\" | confidence: DIRECT(zoomed) | final letters ль (л glyph slightly inky/blobbed, then ь)"
+ },
+ {
+  "group": 16,
+  "page": "musicians_1898-99_MSK_p001",
+  "entry": "e023",
+  "field": "patronymic",
+  "rest": "STORED: \"Васильевичъ\" | PRINTED: \"Васильеничъ\" | confidence: DIRECT(zoomed) | PRINT-TYPO? (н where в expected)"
+ },
+ {
+  "group": 16,
+  "page": "musicians_1898-99_MSK_p001",
+  "entry": "e024",
+  "field": "family",
+  "rest": "STORED: \"Кусевичкій\" | PRINTED: \"Кусевицкій\" | confidence: DIRECT(zoomed) | ц vs чк"
+ },
+ {
+  "group": 16,
+  "page": "musicians_1898-99_MSK_p001",
+  "entry": "e025",
+  "field": "family",
+  "rest": "STORED: \"Лилтке\" | PRINTED: \"Лидтке\" | confidence: DIRECT(zoomed) | л vs д"
+ },
+ {
+  "group": 16,
+  "page": "musicians_1898-99_MSK_p001",
+  "entry": "e032",
+  "field": "family",
+  "rest": "STORED: \"Недбалъ\" | PRINTED: \"Недбаль\" | confidence: DIRECT(zoomed) | soft sign not hard sign"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_MSK_p003",
+  "entry": "e005",
+  "field": "ordinal",
+  "rest": "STORED: family \"Шмидтъ\", first \"І-й\", patronymic \"Францъ\" | PRINTED: \"Шмидтъ 1-й, Францъ\" | confidence: DIRECT(zoomed) | ordinal belongs after surname; first-name field holds ordinal (Cyrillic І U+0406 rather than digit 1), real first name pushed into patronymic"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_MSK_p003",
+  "entry": "e006",
+  "field": "ordinal",
+  "rest": "STORED: family \"Шмидтъ\", first \"2-й\", patronymic \"Фридрихъ\" | PRINTED: \"Шмидтъ 2-й, Фридрихъ\" | confidence: DIRECT(zoomed) | ordinal in first, name pushed into patronymic"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_MSK_p003",
+  "entry": "e012",
+  "field": "ordinal",
+  "rest": "STORED: family \"Эйхенвальдъ\", first \"1-я\", patronymic \"Ида\" | PRINTED: \"Эйхенвальдъ 1-я, Ида\" | confidence: DIRECT(zoomed) | ordinal in first, name pushed into patronymic"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_MSK_p003",
+  "entry": "e013",
+  "field": "ordinal",
+  "rest": "STORED: family \"Эйхенвальдъ\", first \"2-я\", patronymic \"Надежда\" | PRINTED: \"Эйхенвальдъ 2-я, Надежда Александровна\" | confidence: DIRECT(zoomed) | ordinal in first; first name in patronymic field; patronymic \"Александровна\" (line-broken Алек-/сандровна) missing entirely"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_MSK_p003",
+  "entry": "e025",
+  "field": "family",
+  "rest": "STORED: \"Зальборнъ\" | PRINTED: \"Заальборнъ\" | confidence: DIRECT(zoomed) | double а"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_MSK_p004",
+  "entry": "e003",
+  "field": "first",
+  "rest": "STORED: \"Іоганнь-Фридрихъ\" | PRINTED: \"Іоганнъ-Фридрихъ\" | confidence: DIRECT(zoomed) | ь vs ъ"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_MSK_p004",
+  "entry": "e006",
+  "field": "first",
+  "rest": "STORED: \"Никіфоръ\" | PRINTED: \"Никифоръ\" | confidence: DIRECT(zoomed) | stored has dotted і, print has plain и (к glyph has a hook but the following letter is undotted)"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_MSK_p004",
+  "entry": "e002",
+  "field": "family",
+  "rest": "STORED: \"Николаевъ\" | PRINTED: \"Николаевъ (Шмулевичъ)\" | confidence: DIRECT(zoomed) | printed parenthetical original surname \"(Шмулевичъ)\" not captured in any field"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_SP_p001",
+  "entry": "e010",
+  "field": "family",
+  "rest": "STORED: \"Ванштейдъ\" | PRINTED: \"Ваншейдъ\" | confidence: DIRECT(zoomed) | stray extra т"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_SP_p001",
+  "entry": "e016",
+  "field": "ordinal",
+  "rest": "STORED: family \"Вульфъ-Израэль\", first \"І-й\", patronymic \"Михаилъ Александровичъ\" | PRINTED: \"Вульфъ-Израэль 1-й, Михаилъ Александровичъ\" | confidence: DIRECT(zoomed) | ordinal in first (Cyrillic І U+0406); name+patronymic shifted into patronymic"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_SP_p001",
+  "entry": "e017",
+  "field": "ordinal",
+  "rest": "STORED: family \"Вульфъ-Израэль\", first \"2-й\", patronymic \"Евгеній Владиміровичъ\" | PRINTED: \"Вульфъ-Израэль 2-й, Евгеній Владиміровичъ\" | confidence: DIRECT(zoomed) | ordinal in first; name shifted"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_SP_p001",
+  "entry": "e037",
+  "field": "patronymic",
+  "rest": "STORED: \"Мартиновичъ\" | PRINTED: \"Мартыновичъ\" (line-broken Мартыно-/вичъ) | confidence: DIRECT(zoomed) | и vs ы"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_SP_p001",
+  "entry": "e038",
+  "field": "ordinal",
+  "rest": "STORED: family \"Іогансонъ\", first \"1-й\", patronymic \"Августъ Васильевичъ\" | PRINTED: \"Іогансонъ 1-й, Августъ Васильевичъ\" | confidence: DIRECT(zoomed) | ordinal in first; name shifted"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_SP_p002",
+  "entry": "e001",
+  "field": "family",
+  "rest": "STORED: \"Логансонъ 2-й\" | PRINTED: \"Іогансонъ 2-й\" | confidence: DIRECT(zoomed) | first letter is І (compare e038 on previous page), stored Л"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_SP_p002",
+  "entry": "e006",
+  "field": "patronymic",
+  "rest": "STORED: \"Эвалъдовичъ\" | PRINTED: \"Эвальдовичъ\" | confidence: DIRECT(zoomed) | ъ vs ь"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_SP_p002",
+  "entry": "e007",
+  "field": "family",
+  "rest": "STORED: \"Каукалъ\" | PRINTED: \"Каукаль\" | confidence: DIRECT(zoomed) | ъ vs ь"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_SP_p002",
+  "entry": "e014",
+  "field": "family",
+  "rest": "STORED: \"Корнѣвъ\" | PRINTED: \"Корнѣевъ\" | confidence: DIRECT(zoomed) | missing е after ѣ"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_SP_p002",
+  "entry": "e017",
+  "field": "space",
+  "rest": "STORED: \"ДеЛанге\" | PRINTED: \"Де Ланге\" | confidence: DIRECT(zoomed) | printed with a gap between Де and Ланге (letterspaced type, but gap is wider than letterspacing)"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_SP_p002",
+  "entry": "e025",
+  "field": "family/first",
+  "rest": "STORED: family \"Лулольфъ\" | PRINTED: \"Лудольфи\" | confidence: DIRECT(zoomed) | л for д and и for ъ; first Валентинъ OK"
+ },
+ {
+  "group": 17,
+  "page": "musicians_1898-99_SP_p002",
+  "entry": "e032",
+  "field": "instrument",
+  "rest": "STORED: \"Вальторнъ\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) |"
+ },
+ {
+  "group": 18,
+  "page": "musicians_1898-99_SP_p003",
+  "entry": "e031",
+  "field": "first",
+  "rest": "STORED: \"Капутъ-Эмерикъ\" | PRINTED: \"Канутъ-Эмерикъ\" | confidence: DIRECT(zoomed) | п read for н; surname Хейкель matches"
+ },
+ {
+  "group": 18,
+  "page": "musicians_1898-99_SP_p004",
+  "entry": "e018",
+  "field": "family",
+  "rest": "STORED: \"Булановъ\" | PRINTED: \"Будановъ\" | confidence: DIRECT(zoomed) | л read for д (4th letter д, 5th letter а, then н)"
+ },
+ {
+  "group": 18,
+  "page": "musicians_1898-99_SP_p004",
+  "entry": "e033",
+  "field": "first",
+  "rest": "STORED: \"Аеанасій\" | PRINTED: \"Аѳанасій\" | confidence: DIRECT(zoomed) | ѳ read as е; surname Кеймъ and patronymic Ивановичъ match"
+ },
+ {
+  "group": 18,
+  "page": "musicians_1898-99_SP_p005",
+  "entry": "e020",
+  "field": "family",
+  "rest": "STORED: \"Мокъевъ\" | PRINTED: \"Мокѣевъ\" | confidence: DIRECT(zoomed) | ѣ read as ъ (letter 4)"
+ },
+ {
+  "group": 18,
+  "page": "musicians_1898-99_SP_p006",
+  "entry": "e013",
+  "field": "family",
+  "rest": "STORED: \"Мелвѣдевъ\" | PRINTED: \"Медвѣдевъ\" | confidence: DIRECT(zoomed) | л read for д (3rd letter)"
+ },
+ {
+  "group": 18,
+  "page": "musicians_1899-00_MSK_p000",
+  "entry": "e010",
+  "field": "instrument",
+  "rest": "STORED: \"Вальторнъ\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | printed with line-break \"Вальд-/горнъ\"; stored form is a different word"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p001",
+  "entry": "e022",
+  "field": "family",
+  "rest": "STORED: \"Зюстъ\" | PRINTED: \"Зюсъ\" | confidence: DIRECT(zoomed) | no т printed (Ю-с-ъ)"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p002",
+  "entry": "e006",
+  "field": "family",
+  "rest": "STORED: \"Фонтъ-Нольте\" | PRINTED: \"Фонъ-Нольте\" | confidence: DIRECT(zoomed) | stored has stray т"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p002",
+  "entry": "e006",
+  "field": "patronymic",
+  "rest": "STORED: \"Константинъ\" | PRINTED: \"Константиновичъ\" | confidence: DIRECT(zoomed) | printed \"Константи-/новичъ\" (line-end hyphenation, split across lines; first-name field is \"Иванъ\")"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p002",
+  "entry": "e011",
+  "field": "family",
+  "rest": "STORED: \"Пашеевъ\" | PRINTED: \"Пащеевъ\" | confidence: DIRECT(zoomed) | щ not ш"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p002",
+  "entry": "e025",
+  "field": "patronymic/first",
+  "rest": "STORED: \"Павелъ Ѳёдоровичъ\" | PRINTED: \"Павелъ Ѳедоровичъ\" (Ѳедоро-/вичъ) | confidence: UNCERTAIN | only a tiny speck above е at 7x zoom, not a two-dot ё; read as plain е"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p002",
+  "entry": "e026",
+  "field": "patronymic/first",
+  "rest": "STORED: \"Григорій Ѳёдоровичъ\" | PRINTED: \"Григорій Ѳедоровичъ\" (Ѳедоро-/вичъ) | confidence: DIRECT(zoomed) | plain е, no diaeresis/accent"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p002",
+  "entry": "e032",
+  "field": "first",
+  "rest": "STORED: \"Ипхекъ\" | PRINTED: \"Ицхекъ\" | confidence: DIRECT(zoomed) | printed \"Ицхекъ-Мейеръ\" (hyphenated compound); stored splits it into first \"Ипхекъ\" + patronymic \"Мейеръ\""
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p002",
+  "entry": "e037",
+  "field": "instrument",
+  "rest": "STORED: \"Вальторнъ\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p003",
+  "entry": "e001",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | В not Б (INSTR-VARIANT flag confirmed)"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p003",
+  "entry": "e018",
+  "field": "ordinal",
+  "rest": "STORED: \"І-й\" (Cyrillic І) | PRINTED: \"1-й\" (digit 1, printed in the font's ı-shaped numeral) | confidence: DIRECT(zoomed) | printed \"Шмидтъ 1-й. Францъ\" with a period after й instead of comma"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p003",
+  "entry": "e023",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p003",
+  "entry": "e024",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p003",
+  "entry": "e029",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p003",
+  "entry": "e035",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p004",
+  "entry": "e010",
+  "field": "family",
+  "rest": "STORED: \"Лаваревъ\" | PRINTED: \"Лазаревъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 19,
+  "page": "musicians_1899-00_MSK_p004",
+  "entry": "e017",
+  "field": "family",
+  "rest": "STORED: \"Николаевъ\" | PRINTED: \"Николаевъ (Шмулевичъ)\" | confidence: DIRECT(zoomed) | parenthetical alias printed after surname, omitted from stored row"
+ },
+ {
+  "group": 20,
+  "page": "musicians_1899-00_SP_p001",
+  "entry": "e014",
+  "field": "family",
+  "rest": "STORED: \"Гильлебрандъ\" | PRINTED: \"Гильдебрандъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "page": "musicians_1899-00_SP_p001",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Каллецъ\" | PRINTED: \"Кадлецъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "page": "musicians_1899-00_SP_p002",
+  "entry": "e012",
+  "field": "family",
+  "rest": "STORED: \"Лудольфъ\" | PRINTED: \"Лудольфи\" | confidence: DIRECT(zoomed) | PRINT-TYPO? (ending и for ъ)"
+ },
+ {
+  "group": 20,
+  "page": "musicians_1899-00_SP_p003",
+  "entry": "e004",
+  "field": "family",
+  "rest": "STORED: \"Словаچевскій\" (U+0686 Arabic TCHEH in place of ч) | PRINTED: \"Словачевскій\" | confidence: DIRECT(zoomed) | mixed-script flag confirmed"
+ },
+ {
+  "group": 20,
+  "page": "musicians_1899-00_SP_p003",
+  "entry": "e018",
+  "field": "first",
+  "rest": "STORED: \"Кануть-Эмерикъ\" | PRINTED: \"Канутъ-Эмерикъ\" | confidence: DIRECT(zoomed) | printed with hard sign after т"
+ },
+ {
+  "group": 20,
+  "page": "musicians_1899-00_SP_p004",
+  "entry": "e001",
+  "field": "list",
+  "rest": "STORED: \"1.\" | PRINTED: no list number (Капельмейстеръ, unnumbered; the numbered Музыканты list begins at e002 \"1.\") | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "page": "musicians_1899-00_SP_p004",
+  "entry": "e018",
+  "field": "family",
+  "rest": "STORED: \"Ксемъ\" | PRINTED: \"Кеймъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "page": "musicians_1899-00_SP_p004",
+  "entry": "e027",
+  "field": "instrument",
+  "rest": "STORED: \"Флейта\" | PRINTED: \"флейта\" (lower-case ф) | confidence: DIRECT(zoomed) | case only, probably print"
+ },
+ {
+  "group": 20,
+  "page": "musicians_1899-00_SP_p005",
+  "entry": "e014",
+  "field": "first/patronymic",
+  "rest": "STORED: first \"Августъ\", patronymic \"Генрихъ\" | PRINTED: \"Августъ-Генрихъ\" (hyphenated double first name, no patronymic) | confidence: DIRECT(zoomed) | field placement"
+ },
+ {
+  "group": 20,
+  "page": "musicians_1899-00_SP_p005",
+  "entry": "e015",
+  "field": "family",
+  "rest": "STORED: \"Кремарь\" | PRINTED: \"Кречмаръ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "page": "musicians_1899-00_SP_p005",
+  "entry": "e016",
+  "field": "family",
+  "rest": "STORED: \"Кулегольдтъ\" | PRINTED: \"Куденгольдтъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "page": "musicians_1899-00_SP_p005",
+  "entry": "e030",
+  "field": "family",
+  "rest": "STORED: \"Армстеймеръ\" | PRINTED: \"Армсгеймеръ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "page": "musicians_1899-00_SP_p005",
+  "entry": "e031",
+  "field": "family",
+  "rest": "STORED: \"Беттенштедтъ\" | PRINTED: \"Беттенштелтъ\" (л, no д-feet) | confidence: DIRECT(zoomed) | PRINT-TYPO?"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p001",
+  "entry": "e005",
+  "field": "first",
+  "rest": "STORED: \"Сергій\" | PRINTED: \"Сергѣй\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p001",
+  "entry": "e007",
+  "field": "instrument",
+  "rest": "STORED: \"Вальторнъ\" | PRINTED: \"Вальдгорнъ\" (line-break \"Вальд-/горнъ\") | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p001",
+  "entry": "e040",
+  "field": "family",
+  "rest": "STORED: \"Квелнау\" | PRINTED: \"Кведнау\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p002",
+  "entry": "e010",
+  "field": "patronymic",
+  "rest": "STORED: \"Никито-ровичъ\" | PRINTED: \"Никифоровичъ\" (line-break \"Никифо-/ровичъ\") | confidence: DIRECT(zoomed) | two errors: т for ф, and stored hyphen is a line-break artifact"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p002",
+  "entry": "e014",
+  "field": "first",
+  "rest": "STORED: \"Готтильдъ\" | PRINTED: \"Готгильдъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p002",
+  "entry": "e014",
+  "field": "patronymic",
+  "rest": "STORED: \"Францъ\" | PRINTED: \"Францъ\" is a second given name (print \"Готгильдъ Францъ\", no patronymic) | confidence: DIRECT(zoomed) | field-placement note only, text correct"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p002",
+  "entry": "e025",
+  "field": "family",
+  "rest": "STORED: \"Пащевъ\" | PRINTED: \"Пащеевъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p002",
+  "entry": "e034",
+  "field": "first",
+  "rest": "STORED: \"Марлохей\" | PRINTED: \"Мардохей\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e001",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e003",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e010",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e019",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e021",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e033",
+  "field": "instrument",
+  "rest": "STORED: \"Альть\" | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e025",
+  "field": "family",
+  "rest": "STORED: \"Цибинъ\" | PRINTED: \"Цыбинъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 21,
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e037",
+  "field": "family",
+  "rest": "STORED: \"Шталлеръ\" | PRINTED: \"Штадлеръ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 22,
+  "page": "musicians_1900-01_MSK_p004",
+  "entry": "e025",
+  "field": "family",
+  "rest": "STORED: \"Наккій\" | PRINTED: \"Нацкій\" (19. Н а ц к і й, Петръ Андреевичъ) | confidence: DIRECT(zoomed) | кк vs ц"
+ },
+ {
+  "group": 22,
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e009",
+  "field": "family",
+  "rest": "STORED: \"Ваншейль\" | PRINTED: \"Ваншейдъ\" (19. Ваншейдъ, Лоренцъ Ѳедоровичъ) | confidence: DIRECT(zoomed) | ь vs дъ"
+ },
+ {
+  "group": 22,
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e015",
+  "field": "ordinal",
+  "rest": "STORED: family \"Вульфъ-Израэль\", first \"І-й\" | PRINTED: \"Вульфъ-Израэль 1-й\" (ordinal belongs after surname; printed digit-style 1) | confidence: DIRECT(zoomed) | ordinal in first-name field"
+ },
+ {
+  "group": 22,
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e015",
+  "field": "patronymic",
+  "rest": "STORED: \"Михаилъ\" (in patronymic field; first=\"І-й\") | PRINTED: first \"Михаилъ\", patronymic \"Александровичъ\" | confidence: DIRECT(zoomed) | fields shifted by ordinal; patronymic Александровичъ missing entirely"
+ },
+ {
+  "group": 22,
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e016",
+  "field": "ordinal",
+  "rest": "STORED: family \"Вульфъ-Израэль\", first \"2-й\" | PRINTED: \"Вульфъ-Израэль 2-й\" | confidence: DIRECT(zoomed) | ordinal in first-name field"
+ },
+ {
+  "group": 22,
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e016",
+  "field": "patronymic",
+  "rest": "STORED: \"Евгеній\" (in patronymic field; first=\"2-й\") | PRINTED: first \"Евгеній\", patronymic \"Владиміровичъ\" | confidence: DIRECT(zoomed) | fields shifted; patronymic Владиміровичъ missing"
+ },
+ {
+  "group": 22,
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e016",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і; broken Віо-/лончель) | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 22,
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e017",
+  "field": "patronymic",
+  "rest": "STORED: \"Владимировичъ\" | PRINTED: \"Владимiровичъ\" (Влади-/мiровичъ, dotted і after м) | confidence: DIRECT(zoomed) | и vs і"
+ },
+ {
+  "group": 22,
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e018",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 22,
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e021",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 22,
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e022",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 22,
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e037",
+  "field": "ordinal",
+  "rest": "STORED: family \"Іогансонъ\", first \"2-й\" | PRINTED: \"Іогансонъ 2-й\" | confidence: DIRECT(zoomed) | ordinal in first-name field"
+ },
+ {
+  "group": 22,
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e037",
+  "field": "patronymic",
+  "rest": "STORED: \"Викторъ\" (in patronymic field; first=\"2-й\") | PRINTED: first \"Викторъ\", patronymic \"Ивановичъ\" | confidence: DIRECT(zoomed) | fields shifted; patronymic Ивановичъ missing"
+ },
+ {
+  "group": 22,
+  "page": "musicians_1900-01_SP_p002",
+  "entry": "e026",
+  "field": "family",
+  "rest": "STORED: \"Людольфъ\" | PRINTED: \"Людольфи\" (73. Л ю д о л ь ф и, Валентинъ) | confidence: DIRECT(zoomed) | final и not ъ; no patronymic printed (stored empty = correct)"
+ },
+ {
+  "group": 23,
+  "page": "musicians_1900-01_SP_p003",
+  "entry": "e022",
+  "field": "family",
+  "rest": "STORED: \"Словаچевскій\" (contains a non-Cyrillic Arabic-script letter) | PRINTED: \"Словачевскій\" | confidence: DIRECT(zoomed) | mixed-script artifact, plain Cyrillic ч in print"
+ },
+ {
+  "group": 23,
+  "page": "musicians_1900-01_SP_p003",
+  "entry": "e036",
+  "field": "first",
+  "rest": "STORED: \"Кануть-Эмерикъ\" | PRINTED: \"Канутъ-Эмерикъ\" | confidence: DIRECT(zoomed) | ь stored for printed hard sign ъ"
+ },
+ {
+  "group": 23,
+  "page": "musicians_1900-01_SP_p004",
+  "entry": "e015",
+  "field": "first",
+  "rest": "STORED: \"Адолъфъ\" | PRINTED: \"Адольфъ\" | confidence: DIRECT(zoomed) | ъ/ь transposed"
+ },
+ {
+  "group": 23,
+  "page": "musicians_1900-01_SP_p004",
+  "entry": "e027",
+  "field": "first",
+  "rest": "STORED: \"Альфрель\" | PRINTED: \"Альфредъ\" | confidence: DIRECT(zoomed) | patronymic Альфредовичъ stored correctly"
+ },
+ {
+  "group": 23,
+  "page": "musicians_1900-01_SP_p005",
+  "entry": "e005",
+  "field": "family",
+  "rest": "STORED: \"Мокъевъ\" | PRINTED: \"Мокѣевъ\" | confidence: DIRECT(zoomed) | ѣ printed, ъ stored"
+ },
+ {
+  "group": 23,
+  "page": "musicians_1900-01_SP_p005",
+  "entry": "e024",
+  "field": "family",
+  "rest": "STORED: \"Армсгеймѣръ\" | PRINTED: \"Армсгеймеръ\" | confidence: DIRECT(zoomed) | plain е printed, ѣ stored"
+ },
+ {
+  "group": 23,
+  "page": "musicians_1900-01_SP_p005",
+  "entry": "e032",
+  "field": "family",
+  "rest": "STORED: \"Вилькентъ\" | PRINTED: \"Вилькенъ\" | confidence: DIRECT(zoomed) | extra т stored"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p001",
+  "entry": "e002",
+  "field": "family",
+  "rest": "STORED: \"Брындлинъ\" | PRINTED: \"Брындинъ\" | confidence: DIRECT(zoomed) | extra letter л stored"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p001",
+  "entry": "e025",
+  "field": "family",
+  "rest": "STORED: \"Гречкій\" | PRINTED: \"Грецкій\" | confidence: DIRECT(zoomed) | ц misread as ч"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p002",
+  "entry": "e013",
+  "field": "family",
+  "rest": "STORED: \"Кристелъ\" | PRINTED: \"Кристель\" | confidence: DIRECT(zoomed) | soft sign printed, hard sign stored"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p002",
+  "entry": "e014",
+  "field": "patronymic",
+  "rest": "STORED: \"Никитовичъ\" | PRINTED: \"Никифоровичъ\" (line-break Никифо-/ровичъ) | confidence: DIRECT(zoomed) | family Крутоголововъ matches print"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p002",
+  "entry": "e030",
+  "field": "family",
+  "rest": "STORED: \"Пашеевъ\" | PRINTED: \"Пащеевъ\" | confidence: DIRECT(zoomed) | ш stored for щ"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p003",
+  "entry": "e002",
+  "field": "ordinal",
+  "rest": "STORED: \"Ромашковъ\" | PRINTED: \"Ромашковъ 1-й\" | confidence: DIRECT(zoomed) | ordinal dropped"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p003",
+  "entry": "e003",
+  "field": "ordinal",
+  "rest": "STORED: \"Ромашковъ\" | PRINTED: \"Ромашковъ 2-й\" | confidence: DIRECT(zoomed) | ordinal dropped"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p003",
+  "entry": "e004",
+  "field": "ordinal",
+  "rest": "STORED: \"Ромашковъ\" | PRINTED: \"Ромашковъ 3-й\" | confidence: DIRECT(zoomed) | ordinal dropped"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p003",
+  "entry": "e011",
+  "field": "first",
+  "rest": "STORED: \"Инхекъ-Мейеръ\" | PRINTED: \"Ицхекъ-Мейеръ\" | confidence: DIRECT(zoomed) | ц misread as н"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p003",
+  "entry": "e034",
+  "field": "ordinal",
+  "rest": "STORED: \"Шмидтъ\" | PRINTED: \"Шмидтъ 1-й\" | confidence: DIRECT(zoomed) | ordinal dropped"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p003",
+  "entry": "e035",
+  "field": "ordinal",
+  "rest": "STORED: \"Шмидтъ\" | PRINTED: \"Шмидтъ 2-й\" | confidence: DIRECT(zoomed) | ordinal dropped"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p004",
+  "entry": "e001",
+  "field": "ordinal",
+  "rest": "STORED: family \"Эйхенвальдъ\", patronymic \"1-я\" | PRINTED: \"Эйхенвальдъ 1-я, Ида\" (no patronymic) | confidence: DIRECT(zoomed) | ordinal in the wrong field (patronymic) instead of family"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p004",
+  "entry": "e002",
+  "field": "ordinal",
+  "rest": "STORED: \"Эйхенвальдъ\" | PRINTED: \"Эйхенвальдъ 2-я\" | confidence: DIRECT(zoomed) | ordinal dropped (patronymic Александровна is correct)"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p004",
+  "entry": "e030",
+  "field": "first",
+  "rest": "STORED: \"Никіфоръ\" (dotted і U+0456) | PRINTED: \"Никифоръ\" (plain и) | confidence: DIRECT(zoomed) |"
+ },
+ {
+  "group": 24,
+  "page": "musicians_1901-02_MSK_p004",
+  "entry": "e034",
+  "field": "instrument",
+  "rest": "STORED: \"-\" (empty) | PRINTED: \"Альтъ\" | confidence: DIRECT(zoomed) | printed \"(онъ же и библіотекарь Музыкальной библіотеки) (съ 1 января 1894 г.). Альтъ.\"; rank_or_title text matches print"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p000",
+  "entry": "e003",
+  "field": "family",
+  "rest": "STORED: \"Крушевскій\" | PRINTED: \"Крушевекій\" (letters before к read е, not с) | confidence: DIRECT(zoomed) | PRINT-TYPO? stored value is the \"corrected\" form"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p000",
+  "entry": "e015",
+  "field": "instrument",
+  "rest": "STORED: \"Віолончелъ\" | PRINTED: \"Віолончель\" (final soft sign ь) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e001",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e004",
+  "field": "family",
+  "rest": "STORED: \"Болымъ\" | PRINTED: \"Больмъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e006",
+  "field": "family",
+  "rest": "STORED: \"Брекертъ\" | PRINTED: \"Брекеръ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e009",
+  "field": "first",
+  "rest": "STORED: \"Конраль\" | PRINTED: \"Конрадъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e011",
+  "field": "family",
+  "rest": "STORED: \"Ваншейдль\" | PRINTED: \"Ваншейдъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e017",
+  "field": "ordinal",
+  "rest": "STORED: first=\"І-й\" (Cyrillic І), patronymic=\"Михаилъ\" | PRINTED: \"Вульфъ-Израэль 1-й, Михаилъ Александровичъ\" -- ordinal belongs after family (numeral 1-й, not Cyrillic І), first name = Михаилъ, patronymic = Александровичъ (missing) | confidence: DIRECT(zoomed) | confirms ORDINAL-IN-FIRSTNAME"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e018",
+  "field": "ordinal",
+  "rest": "STORED: first=\"2-й\", patronymic=\"Евгеній\" | PRINTED: \"Вульфъ-Израэль 2-й, Евгеній Владиміровичъ\" -- first should be Евгеній, patronymic Владиміровичъ (missing; printed with і) | confidence: DIRECT(zoomed) | confirms ORDINAL-IN-FIRSTNAME"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e018",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" (line-broken \"Віо-/лончель\") | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e019",
+  "field": "patronymic",
+  "rest": "STORED: \"Владимировичъ\" | PRINTED: \"Владиміровичъ\" (line-broken \"Влади-/міровичъ\", dotted і) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e020",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e023",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p002",
+  "entry": "e019",
+  "field": "family",
+  "rest": "STORED: \"Людольфъ\" | PRINTED: \"Людольфи\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p003",
+  "entry": "e011",
+  "field": "first",
+  "rest": "STORED: \"Ѳелоръ\" | PRINTED: \"Ѳедоръ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p003",
+  "entry": "e013",
+  "field": "family",
+  "rest": "STORED: \"Терь-Огановъ\" | PRINTED: \"Теръ-Огановъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p003",
+  "entry": "e022",
+  "field": "first",
+  "rest": "STORED: \"Кануть-Эмерикъ\" | PRINTED: \"Канутъ-Эмерикъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p003",
+  "entry": "e030",
+  "field": "patronymic",
+  "rest": "STORED: \"Александро-вичъ\" | PRINTED: \"Александро-/вичъ\" (line-break) -- stored hyphen is artifact; correct \"Александровичъ\" | confidence: DIRECT(zoomed) | line-break artifact"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p003",
+  "entry": "e031",
+  "field": "family",
+  "rest": "STORED: \"Шоллартъ\" | PRINTED: \"Шолларъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p004",
+  "entry": "e002",
+  "field": "first",
+  "rest": "STORED: \"Алольфъ\" | PRINTED: \"Адольфъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p004",
+  "entry": "e006",
+  "field": "family",
+  "rest": "STORED: \"Булановъ\" | PRINTED: \"Будановъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p004",
+  "entry": "e021",
+  "field": "family",
+  "rest": "STORED: \"Кемеръ\" | PRINTED: \"Келеръ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "page": "musicians_1901-02_SP_p004",
+  "entry": "e022",
+  "field": "family",
+  "rest": "STORED: \"Кеммеръ\" | PRINTED: \"Кеммереръ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 26,
+  "page": "musicians_1901-02_SP_p005",
+  "entry": "e025",
+  "field": "ordinal",
+  "rest": "STORED: \"Кулле\" | PRINTED: \"Кулле 2-й\" | confidence: DIRECT(zoomed) | ordinal suffix dropped (print: \"18. Кулле 2-й, Альфредъ Ѳедоровичъ\")"
+ },
+ {
+  "group": 26,
+  "page": "musicians_1902-03_MSK_p000",
+  "entry": "e008",
+  "field": "family",
+  "rest": "STORED: \"Брындинъ\" | PRINTED: \"Ѣрындинъ\" (initial glyph is a capital Ѣ, not Б) | confidence: DIRECT(zoomed) | PRINT-TYPO? (almost certainly a typesetter's Ѣ for Б; stored value is the normalized reading)"
+ },
+ {
+  "group": 26,
+  "page": "musicians_1902-03_MSK_p000",
+  "entry": "e013",
+  "field": "instrument",
+  "rest": "STORED: \"Ударные инструменты\" | PRINTED: NONE (entry \"2. Адамовъ, Михаилъ (съ 1 сентября 1898 г.).\" is followed only by the note \"Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г.\"; no instrument word) | confidence: DIRECT(zoomed) | stored instrument is not in the print on this page"
+ },
+ {
+  "group": 26,
+  "page": "musicians_1902-03_MSK_p000",
+  "entry": "e016",
+  "field": "family",
+  "rest": "STORED: \"Аспергёръ\" | PRINTED: \"Аспергеръ\" (plain е, no diaeresis) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 26,
+  "page": "musicians_1902-03_MSK_p001",
+  "entry": "e001",
+  "field": "family",
+  "rest": "STORED: \"Гелике\" | PRINTED: \"Гедике\" (д, not л) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 26,
+  "page": "musicians_1902-03_MSK_p002",
+  "entry": "e007",
+  "field": "family",
+  "rest": "STORED: \"Недбалъ\" | PRINTED: \"Недбаль\" (soft sign ь at end) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 26,
+  "page": "musicians_1902-03_MSK_p002",
+  "entry": "e011",
+  "field": "family",
+  "rest": "STORED: \"Пашеевъ\" | PRINTED: \"Пащеевъ\" (щ, not ш) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 27,
+  "page": "musicians_1902-03_MSK_p003",
+  "entry": "e007",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" (hard sign) | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 27,
+  "page": "musicians_1902-03_MSK_p003",
+  "entry": "e010",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" (hard sign) | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 27,
+  "page": "musicians_1902-03_MSK_p003",
+  "entry": "e019",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" (hard sign) | confidence: DIRECT(zoomed 2.4x; ending ъ clear) | AUTO-FLAG INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 27,
+  "page": "musicians_1902-03_MSK_p003",
+  "entry": "e033",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" (hard sign) | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 27,
+  "page": "musicians_1902-03_MSK_p004",
+  "entry": "e020",
+  "field": "family",
+  "rest": "STORED: \"Терентьевъ\" | PRINTED: \"Терёнтьевъ\" (ё with diaeresis dots over 2nd е) | confidence: DIRECT(zoomed 7x)"
+ },
+ {
+  "group": 27,
+  "page": "musicians_1902-03_SP_p002",
+  "entry": "e021",
+  "field": "family",
+  "rest": "STORED: \"Лукась\" | PRINTED: \"Лукасъ\" (hard sign) | confidence: DIRECT(zoomed 8x)"
+ },
+ {
+  "group": 28,
+  "page": "musicians_1902-03_SP_p003",
+  "entry": "e018",
+  "field": "family",
+  "rest": "STORED: \"Терт-Огановъ\" | PRINTED: \"Тер?-Огановъ\" (4th letter is an odd z/inverted-3-shaped glyph, not a normal т; probably a damaged type for \"Тер-Огановъ\" / \"Терт-\") | confidence: UNCERTAIN | PRINT-TYPO? (zoomed 4x)"
+ },
+ {
+  "group": 28,
+  "page": "musicians_1902-03_SP_p003",
+  "entry": "e028",
+  "field": "first",
+  "rest": "STORED: \"Кануть-Эмерикъ\" | PRINTED: \"Канутъ-Эмерикъ\" (hard sign ъ after т) | confidence: DIRECT(zoomed 5x) |"
+ },
+ {
+  "group": 28,
+  "page": "musicians_1902-03_SP_p004",
+  "entry": "e001",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" (hard sign) | confidence: DIRECT(zoomed) | confirms AUTO-FLAG INSTR-VARIANT"
+ },
+ {
+  "group": 28,
+  "page": "musicians_1902-03_SP_p005",
+  "entry": "e003",
+  "field": "family",
+  "rest": "STORED: \"Армсгейммеръ\" | PRINTED: \"Армсгеймеръ\" (single м after й) | confidence: DIRECT(zoomed 4x) |"
+ },
+ {
+  "group": 28,
+  "page": "musicians_1903-04_MSK_p000",
+  "entry": "e008",
+  "field": "family",
+  "rest": "STORED: \"Брындлинъ\" | PRINTED: \"Брындинъ\" (no л) | confidence: DIRECT(zoomed 6x) |"
+ },
+ {
+  "group": 29,
+  "page": "musicians_1903-04_MSK_p001",
+  "entry": "e034",
+  "field": "patronymic",
+  "rest": "STORED: \"Никиторовичъ\" | PRINTED: \"Никифоровичъ\" (line-break \"Никифо-/ровичъ\") | confidence: DIRECT(zoomed) | ф misread as т"
+ },
+ {
+  "group": 29,
+  "page": "musicians_1903-04_MSK_p002",
+  "entry": "e008",
+  "field": "family",
+  "rest": "STORED: \"Пашеевъ\" | PRINTED: \"Пащеевъ\" | confidence: DIRECT(zoomed) | щ misread as ш"
+ },
+ {
+  "group": 29,
+  "page": "musicians_1903-04_MSK_p002",
+  "entry": "e037",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag (soft sign for hard sign)"
+ },
+ {
+  "group": 29,
+  "page": "musicians_1903-04_MSK_p003",
+  "entry": "e036",
+  "field": "patronymic",
+  "rest": "STORED: \"Никifоровичъ\" | PRINTED: \"Никифоровичъ\" | confidence: DIRECT(zoomed) | confirms MIXED-SCRIPT flag (Latin i, f inside Cyrillic)"
+ },
+ {
+  "group": 29,
+  "page": "musicians_1903-04_SP_p000",
+  "entry": "e012",
+  "field": "family",
+  "rest": "STORED: \"Аматфкъ\" | PRINTED: \"Аматнѣкъ\" | confidence: DIRECT(zoomed) | н+ѣ misread as ф"
+ },
+ {
+  "group": 29,
+  "page": "musicians_1903-04_SP_p000",
+  "entry": "e021",
+  "field": "family",
+  "rest": "STORED: \"Болымъ\" | PRINTED: \"Больмъ\" | confidence: DIRECT(zoomed) | ы/ь+м order"
+ },
+ {
+  "group": 29,
+  "page": "musicians_1903-04_SP_p000",
+  "entry": "e023",
+  "field": "first",
+  "rest": "STORED: \"Конралъ\" | PRINTED: \"Конрадъ\" | confidence: DIRECT(zoomed) | д misread as л"
+ },
+ {
+  "group": 29,
+  "page": "musicians_1903-04_SP_p000",
+  "entry": "e025",
+  "field": "patronymic",
+  "rest": "STORED: \"Тригорьевичъ\" | PRINTED: \"Григорьевичъ\" | confidence: DIRECT(zoomed) | Г misread as Т"
+ },
+ {
+  "group": 30,
+  "page": "musicians_1903-04_SP_p001",
+  "entry": "e022",
+  "field": "family",
+  "rest": "STORED: \"Каллецъ\" | PRINTED: \"Кадлецъ\" | confidence: DIRECT(zoomed) | printed 3rd letter д (second л is also л: К-а-д-л-е-цъ)"
+ },
+ {
+  "group": 30,
+  "page": "musicians_1903-04_SP_p002",
+  "entry": "e003",
+  "field": "family",
+  "rest": "STORED: \"Лемось\" | PRINTED: \"Лемосъ\" | confidence: DIRECT(zoomed) | ь vs ъ"
+ },
+ {
+  "group": 30,
+  "page": "musicians_1903-04_SP_p002",
+  "entry": "e008",
+  "field": "family",
+  "rest": "STORED: \"Лукась\" | PRINTED: \"Лукасъ\" | confidence: DIRECT(zoomed) | ь vs ъ"
+ },
+ {
+  "group": 30,
+  "page": "musicians_1903-04_SP_p003",
+  "entry": "e010",
+  "field": "family",
+  "rest": "STORED: \"Тронье\" | PRINTED: \"Тронѣе\" | confidence: DIRECT(zoomed) (glyph after н has yat crossbar, not plain ь; moderately sure) |"
+ },
+ {
+  "group": 30,
+  "page": "musicians_1903-04_SP_p003",
+  "entry": "e027",
+  "field": "family",
+  "rest": "STORED: \"Штейнь\" | PRINTED: \"Штейнъ\" | confidence: DIRECT(zoomed) | ь vs ъ"
+ },
+ {
+  "group": 30,
+  "page": "musicians_1903-04_SP_p004",
+  "entry": "e009",
+  "field": "first",
+  "rest": "STORED: \"Меводій\" | PRINTED: \"Меѳодій\" | confidence: DIRECT(zoomed) | в vs ѳ"
+ },
+ {
+  "group": 30,
+  "page": "musicians_1903-04_SP_p004",
+  "entry": "e025",
+  "field": "family",
+  "rest": "STORED: \"Нелзейко\" | PRINTED: \"Недзейко\" | confidence: DIRECT(zoomed) | л vs д"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p000",
+  "entry": "e005",
+  "field": "family",
+  "rest": "STORED: \"Бейллеръ\" | PRINTED: \"Бейдлеръ\" | confidence: DIRECT(zoomed) | 4th letter has descending feet (д), 5th is л"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p000",
+  "entry": "e013",
+  "field": "family",
+  "rest": "STORED: \"Адольфъ\" | PRINTED: \"Адольфи\" | confidence: DIRECT(zoomed) | final letter и, not ъ"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p000",
+  "entry": "e016",
+  "field": "first",
+  "rest": "STORED: \"Сергѣй\" | PRINTED: \"Серіѣй\" | confidence: UNCERTAIN | 4th letter looks like і (stem with small left serif, no top bar); likely a broken/missing bar of г, PRINT-TYPO? or damaged type"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p000",
+  "entry": "e017",
+  "field": "family",
+  "rest": "STORED: \"Ардль\" | PRINTED: \"Ардъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p000",
+  "entry": "e019",
+  "field": "family",
+  "rest": "STORED: \"Аспергертъ\" | PRINTED: \"Аспергеръ\" | confidence: DIRECT(zoomed) | stored has an extra т; print ends е-р-ъ"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p000",
+  "entry": "e021",
+  "field": "first",
+  "rest": "STORED: \"Іоганнь-Альбертъ\" | PRINTED: \"Іоганнъ-Альбертъ\" | confidence: DIRECT(zoomed) | ь vs ъ"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p000",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Валеніусъ\" | PRINTED: \"Валеніўсъ\" | confidence: UNCERTAIN | у appears to carry a breve/mark; possible PRINT-TYPO?"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p001",
+  "entry": "e010",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнъ\" | PRINTED: \"Вольдгорнъ\" | confidence: DIRECT(zoomed) | о not а in 1st syllable; PRINT-TYPO? (Де-Буръ, no. 28)"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p001",
+  "entry": "e013",
+  "field": "family",
+  "rest": "STORED: \"Дулычъ\" | PRINTED: \"Дудычъ\" | confidence: DIRECT(zoomed) | 3rd letter д (with feet), not л"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p001",
+  "entry": "e018",
+  "field": "family",
+  "rest": "STORED: \"Зоэль\" | PRINTED: \"Зозель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p001",
+  "entry": "e019",
+  "field": "ordinal",
+  "rest": "STORED: \"Золотаренко\" (no ordinal) | PRINTED: \"Золотаренко :-й\" | confidence: UNCERTAIN | digit damaged/looks like colon, almost certainly 1-й (sequence 1-й/2-й/3-й on nos. 37/38/39)"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p001",
+  "entry": "e020",
+  "field": "ordinal",
+  "rest": "STORED: \"Золотаренко\" (no ordinal) | PRINTED: \"Золотаренко 2-й\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p001",
+  "entry": "e021",
+  "field": "ordinal",
+  "rest": "STORED: \"Золотаренко\" (no ordinal) | PRINTED: \"Золотаренко 3-й\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p001",
+  "entry": "e038",
+  "field": "family",
+  "rest": "STORED: \"Кусевичкій\" | PRINTED: \"Кусевицкій\" | confidence: DIRECT(zoomed) | ц not ч"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p002",
+  "entry": "e010",
+  "field": "family",
+  "rest": "STORED: \"Омъ\" | PRINTED: \"Омэ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p002",
+  "entry": "e020",
+  "field": "first",
+  "rest": "STORED: \"Марлохей\" | PRINTED: \"Мардохей\" | confidence: DIRECT(zoomed) | д not л"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p002",
+  "entry": "e020",
+  "field": "patronymic",
+  "rest": "STORED: \"Земинъ\" | PRINTED: \"Земинъ Шломовичъ\" (line-end \"Шло-/мовичъ\", glyph after Шл reads \"ıо\", could be Шлюмовичъ) | confidence: UNCERTAIN on spelling | stored patronymic omits Шломовичъ entirely"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p002",
+  "entry": "e024",
+  "field": "ordinal",
+  "rest": "STORED: \"Ромашковъ\" (no ordinal) | PRINTED: \"Ромашковъ 1-й\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p002",
+  "entry": "e025",
+  "field": "ordinal",
+  "rest": "STORED: \"Ромашковъ\" (no ordinal) | PRINTED: \"Ромашковъ 2-й\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p002",
+  "entry": "e036",
+  "field": "patronymic",
+  "rest": "STORED: \"Никіфоровичъ\" | PRINTED: \"Никифоровичъ\" | confidence: DIRECT(zoomed) | и not і"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p003",
+  "entry": "e001",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | ь vs ъ"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p003",
+  "entry": "e009",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | ь vs ъ"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p003",
+  "entry": "e024",
+  "field": "ordinal",
+  "rest": "STORED: family \"Шмидтъ\", first \"1-й\", patronymic \"Францъ\" | PRINTED: \"Шмидтъ 1-й, Францъ\" | confidence: DIRECT(zoomed) | ordinal belongs after family; Францъ is the first name (no patronymic printed)"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p003",
+  "entry": "e025",
+  "field": "ordinal",
+  "rest": "STORED: family \"Шмидтъ\", first \"2-й\", patronymic \"Фридрихъ\" | PRINTED: \"Шмидтъ 2-й, Фридрихъ\" | confidence: DIRECT(zoomed) | same as e024"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p003",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Шталлеръ\" | PRINTED: \"Штадлеръ\" | confidence: DIRECT(zoomed) | 4th letter д, 5th л"
+ },
+ {
+  "group": 31,
+  "page": "musicians_1904-05_MSK_p003",
+  "entry": "e030",
+  "field": "instrument",
+  "rest": "STORED: \"Вальдгорнь\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed) | ь vs ъ"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p000",
+  "entry": "e024",
+  "field": "patronymic",
+  "rest": "STORED: \"Тригорьевичъ\" | PRINTED: \"Григорьевичъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e002",
+  "field": "family",
+  "rest": "STORED: \"Виргеліошъ\" | PRINTED: \"Виргеліюшъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e007",
+  "field": "ordinal",
+  "rest": "STORED: \"Вульфъ-Израэль\" (no ordinal) | PRINTED: \"Вульфъ-Израэль 1-й\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e008",
+  "field": "ordinal",
+  "rest": "STORED: \"Вульфъ-Израэль\" (no ordinal) | PRINTED: \"Вульфъ - Израэль 2-й\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e008",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e010",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e013",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e027",
+  "field": "family",
+  "rest": "STORED: \"Инспрукертъ\" | PRINTED: \"Инспрукеръ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e037",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p002",
+  "entry": "e003",
+  "field": "family",
+  "rest": "STORED: \"Кубанскъ\" | PRINTED: \"Кубанекъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p002",
+  "entry": "e006",
+  "field": "patronymic",
+  "rest": "STORED: \"Федоровичъ\" | PRINTED: \"Фелоровичъ\" | confidence: DIRECT(zoomed) | PRINT-TYPO? (л printed for д)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p002",
+  "entry": "e007",
+  "field": "family",
+  "rest": "STORED: \"Ле-Лангъ\" | PRINTED: \"Де-Ланге\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p002",
+  "entry": "e008",
+  "field": "family",
+  "rest": "STORED: \"Лангъ\" | PRINTED: \"Ланге\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p002",
+  "entry": "e015",
+  "field": "family",
+  "rest": "STORED: \"Людольфъ\" | PRINTED: \"Людольфи\" | confidence: DIRECT(zoomed) | possibly PRINT-TYPO? (final и)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p002",
+  "entry": "e019",
+  "field": "ordinal",
+  "rest": "STORED: \"Михайловскій\" (no ordinal) | PRINTED: \"Михайловскій 1-й\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p002",
+  "entry": "e020",
+  "field": "ordinal",
+  "rest": "STORED: \"Михайловскій\" (no ordinal) | PRINTED: \"Михайловскій 2-й\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p003",
+  "entry": "e007",
+  "field": "instrument",
+  "rest": "STORED: \"Вальтгорнъ\" | PRINTED: \"Вальдгорнъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p003",
+  "entry": "e012",
+  "field": "family",
+  "rest": "STORED: \"Тепъ\" | PRINTED: \"Тецъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p003",
+  "entry": "e022",
+  "field": "first",
+  "rest": "STORED: \"Кануть\" | PRINTED: \"Канутъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p003",
+  "entry": "e031",
+  "field": "family",
+  "rest": "STORED: \"Штейнъ\" | PRINTED: \"Штейнсъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "page": "musicians_1904-05_SP_p003",
+  "entry": "e037",
+  "field": "family",
+  "rest": "STORED: \"Юнкертъ\" | PRINTED: \"Юнкеръ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "page": "musicians_1904-05_SP_p004",
+  "entry": "e014",
+  "field": "first",
+  "rest": "STORED: \"Меволій\" | PRINTED: \"Меѳолій\" (Θ glyph = ѳ, 4x zoom) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "page": "musicians_1904-05_SP_p004",
+  "entry": "e028",
+  "field": "family",
+  "rest": "STORED: \"Недзѣйко\" | PRINTED: \"Недзейко\" (plain е, no ѣ) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "page": "musicians_1904-05_SP_p004",
+  "entry": "e011",
+  "field": "first",
+  "rest": "STORED: \"Альфредъ\" | PRINTED: \"Альфре?ъ\" (д glyph worn, looks like л; patronymic on same line clearly Альфредовичъ) | confidence: UNCERTAIN | print wear, stored text probably fine"
+ },
+ {
+  "group": 33,
+  "page": "musicians_1904-05_SP_p004",
+  "entry": "e039",
+  "field": "patronymic",
+  "rest": "STORED: \"Федоровичъ\" | PRINTED: \"Фелоровичъ\" (д worn/printed as л-like glyph) | confidence: UNCERTAIN | PRINT-TYPO? worn type; stored text probably fine"
+ },
+ {
+  "group": 33,
+  "page": "musicians_1904-05_SP_p005",
+  "entry": "e005",
+  "field": "family",
+  "rest": "STORED: \"Армгеймеръ\" | PRINTED: \"Армсгеймеръ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "page": "musicians_1904-05_SP_p005",
+  "entry": "e009",
+  "field": "family",
+  "rest": "STORED: \"ВиЛЬкенъ\" | PRINTED: \"Вилькенъ\" (stored has spurious capitals Л Ь) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "page": "musicians_1904-05_SP_p005",
+  "entry": "e033",
+  "field": "patronymic",
+  "rest": "STORED: \"Аеанасьевичъ\" | PRINTED: \"Аѳанасьевичъ\" (ѳ) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "page": "musicians_1904-05_SP_p005",
+  "entry": "e001",
+  "field": "instrument",
+  "rest": "STORED: \"Флейта\" | PRINTED: \"Флейга\" (final т looks like г) | confidence: UNCERTAIN | PRINT-TYPO? or worn type"
+ },
+ {
+  "group": 33,
+  "page": "musicians_1905-06_MSK_p001",
+  "entry": "e012",
+  "field": "instrument",
+  "rest": "STORED: \"-\" (empty) | PRINTED: \"Фаготъ\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "page": "musicians_1905-06_MSK_p001",
+  "entry": "e001",
+  "field": "list",
+  "rest": "STORED: \"-\" | PRINTED: \"1.\" (Репетиторы sub-list) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "page": "musicians_1905-06_MSK_p001",
+  "entry": "e002",
+  "field": "list",
+  "rest": "STORED: \"-\" | PRINTED: \"2.\" (Репетиторы sub-list) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "page": "musicians_1905-06_MSK_p001",
+  "entry": "e003",
+  "field": "list",
+  "rest": "STORED: \"-\" | PRINTED: \"1.\" (Аккомпаніаторы sub-list) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "page": "musicians_1905-06_MSK_p001",
+  "entry": "e004",
+  "field": "list",
+  "rest": "STORED: \"-\" | PRINTED: \"2.\" (Аккомпаніаторы sub-list) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 34,
+  "page": "musicians_1905-06_MSK_p002",
+  "entry": "e016",
+  "field": "family",
+  "rest": "STORED: \"Квелнау\" | PRINTED: \"Кведнау\" | confidence: DIRECT(zoomed) | list 46; 4th letter is д"
+ },
+ {
+  "group": 34,
+  "page": "musicians_1905-06_MSK_p002",
+  "entry": "e020",
+  "field": "family",
+  "rest": "STORED: \"Костлянь\" | PRINTED: \"Костлянъ\" | confidence: DIRECT(zoomed) | hard sign, not soft; list 50"
+ },
+ {
+  "group": 34,
+  "page": "musicians_1905-06_MSK_p003",
+  "entry": "e001",
+  "field": "family",
+  "rest": "STORED: \"Пашеевъ\" | PRINTED: \"Пащеевъ\" | confidence: DIRECT(zoomed) | list 70; letter 3 is щ"
+ },
+ {
+  "group": 34,
+  "page": "musicians_1905-06_MSK_p003",
+  "entry": "e009",
+  "field": "patronymic",
+  "rest": "STORED: \"Земинъ\" | PRINTED: \"Мордохей Земинъ Шліомовичъ\" (line break Шліо-/мовичъ) | confidence: DIRECT(zoomed) | list 78; the true patronymic Шліомовичъ is missing from the stored row; \"Земинъ\" is a second given name, stored in the patronymic field (first stored as \"Мордохей\")"
+ },
+ {
+  "group": 34,
+  "page": "musicians_1905-06_MSK_p004",
+  "entry": "e002",
+  "field": "family",
+  "rest": "STORED: \"Щыбинъ\" | PRINTED: \"Цыбинъ\" | confidence: DIRECT(zoomed) | list 110"
+ },
+ {
+  "group": 34,
+  "page": "musicians_1905-06_MSK_p004",
+  "entry": "e008",
+  "field": "ordinal",
+  "rest": "STORED: family \"Шмидтъ\", first \"І-й\" (Cyrillic І), patronymic \"Францъ\" | PRINTED: \"Шмидтъ 1-й, Францъ\" | confidence: DIRECT(zoomed) | ordinal belongs after surname (\"Шмидтъ 1-й\", Arabic numeral 1); first name is Францъ, stored in patronymic field (no patronymic printed)"
+ },
+ {
+  "group": 34,
+  "page": "musicians_1905-06_MSK_p004",
+  "entry": "e009",
+  "field": "ordinal",
+  "rest": "STORED: family \"Шмидтъ\", first \"2-й\", patronymic \"Фридрихъ\" | PRINTED: \"Шмидтъ 2-й, Фридрихъ\" | confidence: DIRECT(zoomed) | same pattern; first name is Фридрихъ, no patronymic printed"
+ },
+ {
+  "group": 34,
+  "page": "musicians_1905-06_MSK_p004",
+  "entry": "e021",
+  "field": "family",
+  "rest": "STORED: \"Янышиновъ\" | PRINTED: \"Яньшиновъ\" | confidence: DIRECT(zoomed) | list 129; soft sign ь, not ы"
+ },
+ {
+  "group": 34,
+  "page": "musicians_1905-06_MSK_p004",
+  "entry": "e032",
+  "field": "instrument",
+  "rest": "STORED: \"Флейта\" | PRINTED: \"Флейтэ\" | confidence: DIRECT(zoomed) | PRINT-TYPO? list 9 Леоновъ (Малый театръ); final letter printed as э"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p001",
+  "entry": "e017",
+  "field": "family",
+  "rest": "STORED: \"Булдаевъ\" | PRINTED: \"Будаевъ\" | confidence: DIRECT(zoomed) | extra л inserted"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p001",
+  "entry": "e018",
+  "field": "first",
+  "rest": "STORED: \"Конраль\" | PRINTED: \"Конрадъ\" | confidence: DIRECT(zoomed) | д->л and final ъ lost"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p001",
+  "entry": "e025",
+  "field": "family",
+  "rest": "STORED: \"Виргеліошъ\" | PRINTED: \"Виргеліюшъ\" | confidence: DIRECT(zoomed) | о for ю"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p002",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Де-Лангe\" (final letter is LATIN e, flag MIXED-SCRIPT confirmed) | PRINTED: \"Де-Ланге\" (Cyrillic е) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p002",
+  "entry": "e036",
+  "field": "family",
+  "rest": "STORED: \"Лукась\" | PRINTED: \"Лукасъ\" | confidence: DIRECT(zoomed, 5x) | ь for ъ"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p002",
+  "entry": "e040",
+  "field": "ordinal",
+  "rest": "STORED: \"Михаловскій\" | PRINTED: \"Михаловскій 1-й\" (list no. 74; p003 e001 is \"Михаловскій 2-й\") | confidence: DIRECT(zoomed) | ordinal dropped"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p003",
+  "entry": "e026",
+  "field": "family",
+  "rest": "STORED: \"Словацевскій\" | PRINTED: \"Словачевскій\" | confidence: DIRECT(zoomed) | ц for ч"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p004",
+  "entry": "e003",
+  "field": "first",
+  "rest": "STORED: \"Кануть\" | PRINTED: \"Канутъ\" | confidence: DIRECT(zoomed, 6x) | ь for ъ"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p004",
+  "entry": "e021",
+  "field": "patronymic",
+  "rest": "STORED: \"Іоганнъ\" (first also \"Іоганнъ\") | PRINTED: no patronymic printed; \"Алексѣевъ, Іоганнъ (съ 1 сентября 1905 г.)\" | confidence: DIRECT(zoomed) | first name duplicated into patronymic"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p004",
+  "entry": "e032",
+  "field": "first",
+  "rest": "STORED: \"Меводій\" | PRINTED: \"Меѳодій\" (Ѳ) | confidence: DIRECT(zoomed) | в for Ѳ"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p005",
+  "entry": "e014",
+  "field": "family",
+  "rest": "STORED: \"Завъятновскій\" | PRINTED: \"Завѣтновскій\" | confidence: DIRECT(zoomed) | ъя for ѣ"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p005",
+  "entry": "e016",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p005",
+  "entry": "e018",
+  "field": "family",
+  "rest": "STORED: \"Лешинскій\" | PRINTED: \"Лещинскій\" | confidence: DIRECT(zoomed) | ш for щ"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p005",
+  "entry": "e024",
+  "field": "family",
+  "rest": "STORED: \"Нелзейко\" | PRINTED: \"Недзейко\" | confidence: DIRECT(zoomed) | л for д"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p005",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Сальникова\" | PRINTED: \"Сальниковъ\" | confidence: DIRECT(zoomed) | а for ъ"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p005",
+  "entry": "e029",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed"
+ },
+ {
+  "group": 35,
+  "page": "musicians_1905-06_SP_p005",
+  "entry": "e034",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed"
+ },
+ {
+  "group": 36,
+  "page": "musicians_1905-06_SP_p006",
+  "entry": "e001",
+  "field": "family",
+  "rest": "STORED: \"Лихтенбергъ\" | PRINTED: \"Лихтенбергеръ\" | confidence: DIRECT(zoomed) | extra \"е\" before final \"ръ\""
+ },
+ {
+  "group": 36,
+  "page": "musicians_1906-07_MSK_p000",
+  "entry": "e006",
+  "field": "family",
+  "rest": "STORED: \"Авѣрино\" | PRINTED: \"Авьерино\" | confidence: DIRECT(zoomed) | printed letters А-в-ь-е-р-и-н-о (soft sign + е, no ѣ)"
+ },
+ {
+  "group": 36,
+  "page": "musicians_1906-07_MSK_p001",
+  "entry": "e010",
+  "field": "family",
+  "rest": "STORED: \"Бруцынь\" | PRINTED: \"Бруцынъ\" | confidence: DIRECT(zoomed) | hard sign, not soft sign"
+ },
+ {
+  "group": 36,
+  "page": "musicians_1906-07_MSK_p001",
+  "entry": "e026",
+  "field": "family",
+  "rest": "STORED: \"Добрє\" | PRINTED: \"Добре\" | confidence: DIRECT(zoomed) | stored has Ukrainian є (MIXED-SCRIPT flag confirmed); printed is plain Cyrillic е"
+ },
+ {
+  "group": 36,
+  "page": "musicians_1906-07_MSK_p001",
+  "entry": "e028",
+  "field": "family",
+  "rest": "STORED: \"Домашунась\" | PRINTED: \"Домащунасъ\" | confidence: DIRECT(zoomed) | two letter errors: ш for щ, and final ь for ъ"
+ },
+ {
+  "group": 36,
+  "page": "musicians_1906-07_MSK_p002",
+  "entry": "e006",
+  "field": "family",
+  "rest": "STORED: \"Костлянь\" | PRINTED: \"Костлянъ\" | confidence: DIRECT(zoomed) | hard sign, not soft sign"
+ },
+ {
+  "group": 36,
+  "page": "musicians_1906-07_MSK_p002",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Пащееъ\" | PRINTED: \"Пащеевъ\" | confidence: DIRECT(zoomed) | stored is missing the \"в\""
+ },
+ {
+  "group": 36,
+  "page": "musicians_1906-07_MSK_p002",
+  "entry": "e030",
+  "field": "ordinal",
+  "rest": "STORED: \"Пекарскій 1\" | PRINTED: \"Пекарскій I,\" | confidence: DIRECT(zoomed) | printed glyph is a plain capital I (bar, no flag), unlike the flagged digit 1 elsewhere on the page; e031 is printed with arabic \"2\" (\"Пекарскій 2,\"); print inconsistency, stored \"1\" is a normalization"
+ },
+ {
+  "group": 36,
+  "page": "musicians_1906-07_MSK_p003",
+  "entry": "e002",
+  "field": "ordinal",
+  "rest": "STORED: \"Ромашковъ\" | PRINTED: \"Ромашковъ 1-й\" | confidence: DIRECT(zoomed) | ordinal missing from family"
+ },
+ {
+  "group": 36,
+  "page": "musicians_1906-07_MSK_p003",
+  "entry": "e003",
+  "field": "ordinal",
+  "rest": "STORED: \"Ромашковъ\" | PRINTED: \"Ромашковъ 2-й\" | confidence: DIRECT(zoomed) | ordinal missing from family"
+ },
+ {
+  "group": 36,
+  "page": "musicians_1906-07_MSK_p003",
+  "entry": "e011",
+  "field": "ordinal",
+  "rest": "STORED: \"Соколовъ\" | PRINTED: \"Соколовъ 1-й\" | confidence: DIRECT(zoomed) | ordinal missing from family"
+ },
+ {
+  "group": 36,
+  "page": "musicians_1906-07_MSK_p003",
+  "entry": "e012",
+  "field": "ordinal",
+  "rest": "STORED: \"Соколовъ\" | PRINTED: \"Соколовъ 2-й\" | confidence: DIRECT(zoomed) | ordinal missing from family"
+ },
+ {
+  "group": 36,
+  "page": "musicians_1906-07_MSK_p003",
+  "entry": "e017",
+  "field": "first",
+  "rest": "STORED: \"Никіфоръ\" | PRINTED: \"Никифоръ\" | confidence: DIRECT(zoomed) | stored has і, printed has и"
+ },
+ {
+  "group": 36,
+  "page": "musicians_1906-07_MSK_p003",
+  "entry": "e032",
+  "field": "ordinal",
+  "rest": "STORED: \"Шмидтъ\" | PRINTED: \"Шмидтъ 1-й\" | confidence: DIRECT(zoomed) | ordinal missing from family"
+ },
+ {
+  "group": 36,
+  "page": "musicians_1906-07_MSK_p003",
+  "entry": "e033",
+  "field": "ordinal",
+  "rest": "STORED: \"Шмидтъ\" | PRINTED: \"Шмидтъ 2-й\" | confidence: DIRECT(zoomed) | ordinal missing from family"
+ },
+ {
+  "group": 37,
+  "page": "musicians_1906-07_SP_p000",
+  "entry": "e010",
+  "field": "family",
+  "rest": "STORED: \"Аматѣкъ\" | PRINTED: \"Аматнѣкъ\" | confidence: DIRECT(zoomed) | stored lacks the н before ѣ"
+ },
+ {
+  "group": 37,
+  "page": "musicians_1906-07_SP_p000",
+  "entry": "e028",
+  "field": "family",
+  "rest": "STORED: \"Виргеліошъ\" | PRINTED: \"Виргеліюшъ\" | confidence: DIRECT(zoomed 4x) | о vs ю"
+ },
+ {
+  "group": 37,
+  "page": "musicians_1906-07_SP_p000",
+  "entry": "e021",
+  "field": "list",
+  "rest": "STORED: \"13.\" | PRINTED: \"13\" (no period after number) | confidence: DIRECT(zoomed) | trivial print omission"
+ },
+ {
+  "group": 37,
+  "page": "musicians_1906-07_SP_p001",
+  "entry": "e030",
+  "field": "space",
+  "rest": "STORED: \"Фридрихъ-Эрнестъ\" (first) | PRINTED: \"Фридрихъ -Эрнестъ\" (space before hyphen) | confidence: DIRECT(zoomed) | cosmetic print spacing"
+ },
+ {
+  "group": 37,
+  "page": "musicians_1906-07_SP_p001",
+  "entry": "e038",
+  "field": "family",
+  "rest": "STORED: \"Лемось\" | PRINTED: \"Лемосъ\" | confidence: DIRECT(zoomed 4x) | ь vs ъ"
+ },
+ {
+  "group": 37,
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e003",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | Б vs В (AUTO-FLAG INSTR-VARIANT confirmed)"
+ },
+ {
+  "group": 37,
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e004",
+  "field": "family",
+  "rest": "STORED: \"Лукась\" | PRINTED: \"Лукасъ\" | confidence: DIRECT(zoomed) | ь vs ъ"
+ },
+ {
+  "group": 37,
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e005",
+  "field": "family",
+  "rest": "STORED: \"Людольфъ\" | PRINTED: \"Людольфи\" | confidence: DIRECT(zoomed) | ъ vs и"
+ },
+ {
+  "group": 37,
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e011",
+  "field": "family",
+  "rest": "STORED: \"Мѣшанчукъ\" | PRINTED: \"Мѣщанчукъ\" | confidence: DIRECT(zoomed 4x) | ш vs щ"
+ },
+ {
+  "group": 37,
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e026",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 37,
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e033",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 37,
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e034",
+  "field": "instrument",
+  "rest": "STORED: \"Біолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed"
+ },
+ {
+  "group": 37,
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e036",
+  "field": "family",
+  "rest": "STORED: \"Словаچевскій\" (contains U+0686 ARABIC LETTER TCHEH) | PRINTED: \"Словачевскій\" | confidence: DIRECT(zoomed) | AUTO-FLAG MIXED-SCRIPT confirmed"
+ },
+ {
+  "group": 37,
+  "page": "musicians_1906-07_SP_p003",
+  "entry": "e011",
+  "field": "family",
+  "rest": "STORED: \"Федегансъ\" | PRINTED: \"Федергансъ\" | confidence: DIRECT(zoomed) | missing р"
+ },
+ {
+  "group": 38,
+  "page": "musicians_1906-07_SP_p004",
+  "entry": "e001",
+  "field": "instrument",
+  "rest": "STORED: \"Вторая скрипка\" | PRINTED: \"Вторая скричка\" | confidence: DIRECT(zoomed) | PRINT-TYPO? (printed \"скричка\" for \"скрипка\"; stored text is the corrected word)"
+ },
+ {
+  "group": 38,
+  "page": "musicians_1906-07_SP_p004",
+  "entry": "e017",
+  "field": "first",
+  "rest": "STORED: \"Аванасій\" | PRINTED: \"Аѳанасій\" (Ѳ, not В) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "page": "musicians_1906-07_SP_p004",
+  "entry": "e033",
+  "field": "family",
+  "rest": "STORED: \"Сальніковъ\" | PRINTED: \"Сальниковъ\" (plain и, no dotted і) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "page": "musicians_1906-07_SP_p005",
+  "entry": "e002",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "page": "musicians_1906-07_SP_p005",
+  "entry": "e017",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "page": "musicians_1906-07_SP_p005",
+  "entry": "e029",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "page": "musicians_1906-07_SP_p005",
+  "entry": "e031",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "page": "musicians_1907-08_MSK_p000",
+  "entry": "e006",
+  "field": "family",
+  "rest": "STORED: \"Авъерино\" | PRINTED: \"Авьерино\" (soft sign ь, not ъ) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "page": "musicians_1907-08_MSK_p001",
+  "entry": "e019",
+  "field": "instrument",
+  "rest": "STORED: \"Валторна\" | PRINTED: \"Валторнъ\" (hard-sign ending; all other entries on page print \"Валторна\") | confidence: DIRECT(zoomed) | probably printer's variant, report printed form"
+ },
+ {
+  "group": 39,
+  "page": "musicians_1907-08_MSK_p002",
+  "entry": "e003",
+  "field": "space",
+  "rest": "STORED: \"Пащее въ\" | PRINTED: \"Пащеевъ\" | confidence: DIRECT(zoomed) | stray space (AUTO-FLAG SPACE-IN-FAMILY confirmed)"
+ },
+ {
+  "group": 39,
+  "page": "musicians_1907-08_MSK_p002",
+  "entry": "e029",
+  "field": "first",
+  "rest": "STORED: \"Никіфоръ\" | PRINTED: \"Никифоръ\" (plain и, no dot, in the 'ки' and 'ифоръ') | confidence: DIRECT(zoomed) | dotted-і inserted wrongly (Слѣпуховъ, list no. 98)"
+ },
+ {
+  "group": 39,
+  "page": "musicians_1907-08_MSK_p003",
+  "entry": "e006",
+  "field": "ordinal",
+  "rest": "STORED: family \"Шмидтъ\", first \"1-й\", patronymic \"Францъ\" | PRINTED: \"Шмидтъ 1-й, Францъ\" (family=Шмидтъ 1-й, first=Францъ, patronymic none) | confidence: DIRECT(zoomed) | ordinal in first-name field and real first name pushed into patronymic (AUTO-FLAG ORDINAL-IN-FIRSTNAME confirmed)"
+ },
+ {
+  "group": 39,
+  "page": "musicians_1907-08_MSK_p003",
+  "entry": "e007",
+  "field": "ordinal",
+  "rest": "STORED: family \"Шмидтъ\", first \"2-й\", patronymic \"Фридрихъ\" | PRINTED: \"Шмидтъ 2-й, Фридрихъ\" (family=Шмидтъ 2-й, first=Фридрихъ, patronymic none) | confidence: DIRECT(zoomed) | same pattern as e006 (AUTO-FLAG confirmed)"
+ },
+ {
+  "group": 39,
+  "page": "musicians_1907-08_SP_p000",
+  "entry": "e019",
+  "field": "family",
+  "rest": "STORED: \"Больмъ\" | PRINTED: \"Бѳльмъ\" (second letter is lowercase fita ѳ, not о) | confidence: DIRECT(zoomed, 5x) | PRINT-TYPO? (Больмъ presumably intended; ѳ glyph is printed)"
+ },
+ {
+  "group": 39,
+  "page": "musicians_1907-08_SP_p001",
+  "entry": "e035",
+  "field": "family",
+  "rest": "STORED: \"Де-Лангe\" (last letter is Latin e U+0065) | PRINTED: \"Де-Ланге\" (Cyrillic е) | confidence: DIRECT(zoomed) | AUTO-FLAG MIXED-SCRIPT confirmed (verified by codepoint)"
+ },
+ {
+  "group": 39,
+  "page": "musicians_1907-08_SP_p001",
+  "entry": "e037",
+  "field": "family",
+  "rest": "STORED: \"Лангe\" (last letter is Latin e U+0065) | PRINTED: \"Ланге\" (Cyrillic е) | confidence: DIRECT(zoomed) | AUTO-FLAG MIXED-SCRIPT confirmed (verified by codepoint)"
+ },
+ {
+  "group": 39,
+  "page": "musicians_1907-08_SP_p002",
+  "entry": "e004",
+  "field": "family",
+  "rest": "STORED: \"Лукась\" | PRINTED: \"Лукасъ\" | confidence: DIRECT(zoomed) | ь for ъ"
+ },
+ {
+  "group": 39,
+  "page": "musicians_1907-08_SP_p002",
+  "entry": "e005",
+  "field": "family",
+  "rest": "STORED: \"Людольфъ\" | PRINTED: \"Людольфи\" | confidence: DIRECT(zoomed) | final letter и, not ъ"
+ },
+ {
+  "group": 39,
+  "page": "musicians_1907-08_SP_p002",
+  "entry": "e006",
+  "field": "family",
+  "rest": "STORED: \"Малыі\" (final letter is Cyrillic і) | PRINTED: \"Малый\" (й) | confidence: DIRECT(zoomed) | і for й"
+ },
+ {
+  "group": 39,
+  "page": "musicians_1907-08_SP_p002",
+  "entry": "e008",
+  "field": "ordinal",
+  "rest": "STORED: \"Михаловскій\" | PRINTED: \"Михаловскій 1-й\" | confidence: DIRECT(zoomed) | ordinal dropped"
+ },
+ {
+  "group": 39,
+  "page": "musicians_1907-08_SP_p002",
+  "entry": "e009",
+  "field": "ordinal",
+  "rest": "STORED: \"Михаловскій\" | PRINTED: \"Михаловскій 2-й\" | confidence: DIRECT(zoomed) | ordinal dropped"
+ },
+ {
+  "group": 39,
+  "page": "musicians_1907-08_SP_p002",
+  "entry": "e040",
+  "field": "family",
+  "rest": "STORED: \"Тракаль\" | PRINTED: \"Тракалъ\" | confidence: DIRECT(zoomed) | ь for ъ"
+ },
+ {
+  "group": 40,
+  "page": "musicians_1907-08_SP_p003",
+  "entry": "e003",
+  "field": "family",
+  "rest": "STORED: \"Федегансъ\" | PRINTED: \"Федергансъ\" (entry 101; stored drops the р) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 40,
+  "page": "musicians_1907-08_SP_p003",
+  "entry": "e034",
+  "field": "first",
+  "rest": "STORED: \"Меводій\" | PRINTED: \"Меѳодій\" (entry 11 Зедникъ; Ѳ printed as Θ glyph, stored в) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 40,
+  "page": "musicians_1907-08_SP_p003",
+  "entry": "e026",
+  "field": "list",
+  "rest": "STORED: \"3.\" | PRINTED: \"3\" (no period after the number, entry \"3 Алексѣевъ\") | confidence: DIRECT(zoomed) | PRINT-TYPO? trivial"
+ },
+ {
+  "group": 40,
+  "page": "musicians_1907-08_SP_p003",
+  "entry": "e009",
+  "field": "family",
+  "rest": "STORED: \"Хейкель\" | PRINTED: \"Хейк,ель\" (stray comma inside the surname; stored normalized) | confidence: DIRECT(zoomed) | PRINT-TYPO?"
+ },
+ {
+  "group": 40,
+  "page": "musicians_1907-08_SP_p004",
+  "entry": "e002",
+  "field": "first",
+  "rest": "STORED: \"Владиміръ\" | PRINTED: \"Владимиръ\" (plain и, no dot) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 40,
+  "page": "musicians_1907-08_SP_p004",
+  "entry": "e022",
+  "field": "first",
+  "rest": "STORED: \"Владиміръ\" | PRINTED: \"Владимиръ\" (plain и, no dot) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 40,
+  "page": "musicians_1908-09_MSK_p000",
+  "entry": "e014",
+  "field": "first",
+  "rest": "STORED: \"Карлъ-Вильямъ\" | PRINTED: \"Карлъ - Вильямъ\" (spaces around the hyphen in print) | confidence: DIRECT(zoomed) | cosmetic, probably normalization"
+ },
+ {
+  "group": 40,
+  "page": "musicians_1908-09_MSK_p001",
+  "entry": "e013",
+  "field": "family",
+  "rest": "STORED: \"Домащунясть\" | PRINTED: \"Домащунасъ\" (entry 32; two letters differ: -нас-ъ not -нясть) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 40,
+  "page": "musicians_1908-09_MSK_p002",
+  "entry": "e017",
+  "field": "space",
+  "rest": "STORED: \"Пащее въ\" | PRINTED: \"Пащеевъ\" (no space; stray space artifact) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 40,
+  "page": "musicians_1908-09_MSK_p002",
+  "entry": "e024",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і) | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag"
+ },
+ {
+  "group": 41,
+  "page": "musicians_1908-09_SP_p002",
+  "entry": "e017",
+  "field": "family",
+  "rest": "STORED: \"Де-Лангe\" (final letter is Latin U+0065 'e') | PRINTED: \"Де-Ланге\" (all Cyrillic, final Cyrillic е) | confidence: DIRECT(zoomed) | confirms MIXED-SCRIPT flag"
+ },
+ {
+  "group": 41,
+  "page": "musicians_1908-09_SP_p002",
+  "entry": "e019",
+  "field": "family",
+  "rest": "STORED: \"Лемось\" | PRINTED: \"Лемосъ\" (final hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 41,
+  "page": "musicians_1908-09_SP_p002",
+  "entry": "e022",
+  "field": "family",
+  "rest": "STORED: \"Лукась\" | PRINTED: \"Лукасъ\" (final hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 41,
+  "page": "musicians_1908-09_SP_p002",
+  "entry": "e023",
+  "field": "family",
+  "rest": "STORED: \"Людольфъ\" | PRINTED: \"Людольфи\" (final и; no ъ) | confidence: DIRECT(zoomed) | print is clearly и; could be a printer's variant/PRINT-TYPO? for Людольфъ but verbatim is Людольфи"
+ },
+ {
+  "group": 41,
+  "page": "musicians_1908-09_SP_p002",
+  "entry": "e028",
+  "field": "space",
+  "rest": "STORED: \"Михайлова скій\" | PRINTED: \"Михайловскій\" (no space) | confidence: DIRECT(zoomed) | confirms SPACE-IN-FAMILY flag (not a line-break; entry is on one line, letter-spaced print)"
+ },
+ {
+  "group": 41,
+  "page": "musicians_1908-09_SP_p003",
+  "entry": "e003",
+  "field": "patronymic",
+  "rest": "STORED: \"съ 1 сентября 1905 г.\" | PRINTED: no patronymic; print is \"Порманинъ, Тихонъ (съ 1 сентября 1905 г.). Альтъ.\" | confidence: DIRECT(zoomed) | tenure date stored in patronymic field; patronymic should be empty"
+ },
+ {
+  "group": 41,
+  "page": "musicians_1908-09_SP_p003",
+  "entry": "e021",
+  "field": "patronymic",
+  "rest": "STORED: \"съ 1 сентября 1904 г.\" | PRINTED: no patronymic; print is \"Стеличевъ, Мирославъ (съ 1 сентября 1904 г.). Альтъ.\" | confidence: DIRECT(zoomed) | tenure date stored in patronymic field; patronymic should be empty"
+ },
+ {
+  "group": 41,
+  "page": "musicians_1908-09_SP_p003",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Федергансь\" | PRINTED: \"Федергансъ\" (final hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 42,
+  "page": "musicians_1909-10_MSK_p000",
+  "entry": "e014",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і) | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag"
+ },
+ {
+  "group": 42,
+  "page": "musicians_1909-10_MSK_p000",
+  "entry": "e015",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і) | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag"
+ },
+ {
+  "group": 42,
+  "page": "musicians_1909-10_MSK_p000",
+  "entry": "e016",
+  "field": "instrument",
+  "rest": "STORED: \"Виолончель\" | PRINTED: \"Віолончель\" (dotted і) | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag"
+ },
+ {
+  "group": 42,
+  "page": "musicians_1909-10_MSK_p001",
+  "entry": "e029",
+  "field": "instrument",
+  "rest": "STORED: \"Піанисть\" | PRINTED: \"Піанистъ\" (final hard sign) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 42,
+  "page": "musicians_1909-10_MSK_p002",
+  "entry": "e006",
+  "field": "space",
+  "rest": "STORED: \"Пащее въ\" | PRINTED: \"Пащеевъ\" (no space; letterspaced print) | confidence: DIRECT(zoomed) | confirms SPACE-IN-FAMILY flag"
+ },
+ {
+  "group": 43,
+  "page": "musicians_1909-10_SP_p000",
+  "entry": "e007",
+  "field": "list",
+  "rest": "STORED: \"Пахитоновъ\" | PRINTED: (no list number; accompanist, unnumbered) | confidence: DIRECT(zoomed) | surname shifted into list-number column"
+ },
+ {
+  "group": 43,
+  "page": "musicians_1909-10_SP_p000",
+  "entry": "e007",
+  "field": "family",
+  "rest": "STORED: \"Даніилъ\" in bundle (raw JSON family_name = \"Даниилъ\") | PRINTED: family \"Пахитоновъ\" | confidence: DIRECT(zoomed) | first name has been stored as family; raw json lacks i-dotted form (printed Даніилъ)"
+ },
+ {
+  "group": 43,
+  "page": "musicians_1909-10_SP_p000",
+  "entry": "e007",
+  "field": "first",
+  "rest": "STORED: \"-\" (empty) | PRINTED: \"Даніилъ\" | confidence: DIRECT(zoomed) | first name missing; patronymic \"Ильичъ\" printed correctly"
+ },
+ {
+  "group": 43,
+  "page": "musicians_1909-10_SP_p000",
+  "entry": "e008",
+  "field": "instrument",
+  "rest": "STORED: \"-\" | PRINTED: \"Первая срипка\" | confidence: DIRECT(zoomed) | PRINT-TYPO? (срипка for скрипка); Лачиновъ, Репетиторы балета"
+ },
+ {
+  "group": 43,
+  "page": "musicians_1909-10_SP_p001",
+  "entry": "e016",
+  "field": "first",
+  "rest": "STORED: \"Евтіхій\" | PRINTED: \"Евтихій\" (т-и-х-і-й, plain и after т) | confidence: DIRECT(zoomed) | list 17 Васильевъ"
+ },
+ {
+  "group": 43,
+  "page": "musicians_1909-10_SP_p001",
+  "entry": "e029",
+  "field": "first",
+  "rest": "STORED: \"Кануть\" | PRINTED: \"Канутъ\" | confidence: DIRECT(zoomed) | list 30 Гейкель, terminal hard sign"
+ },
+ {
+  "group": 43,
+  "page": "musicians_1909-10_SP_p002",
+  "entry": "e012",
+  "field": "family",
+  "rest": "STORED: \"Каукалъ\" | PRINTED: \"Каукаль\" | confidence: DIRECT(zoomed) | list 48; soft sign"
+ },
+ {
+  "group": 43,
+  "page": "musicians_1909-10_SP_p002",
+  "entry": "e028",
+  "field": "family",
+  "rest": "STORED: \"Лукась\" | PRINTED: \"Лукасъ\" | confidence: DIRECT(zoomed) | list 64; hard sign"
+ },
+ {
+  "group": 43,
+  "page": "musicians_1909-10_SP_p002",
+  "entry": "e029",
+  "field": "family",
+  "rest": "STORED: \"Людольфъ\" | PRINTED: \"Людольфи\" | confidence: DIRECT(zoomed) | list 65; PRINT-TYPO? (final и instead of ъ)"
+ },
+ {
+  "group": 43,
+  "page": "musicians_1909-10_SP_p003",
+  "entry": "e010",
+  "field": "instrument",
+  "rest": "STORED: \"Контрабасъ\" | PRINTED: (no instrument printed; entry ends \"(съ 1 сентября 1909 г.).\") | confidence: DIRECT(zoomed) | list 80 Плотниковъ"
+ },
+ {
+  "group": 43,
+  "page": "musicians_1909-10_SP_p003",
+  "entry": "e012",
+  "field": "patronymic",
+  "rest": "STORED: \"Александровичъ\" | PRINTED: \"Аленсандровичъ\" (Аленсан-/дровичъ) | confidence: DIRECT(zoomed) | list 82 Помазанскій; PRINT-TYPO? (missing к)"
+ },
+ {
+  "group": 43,
+  "page": "musicians_1909-10_SP_p003",
+  "entry": "e028",
+  "field": "patronymic",
+  "rest": "STORED: \"Альтъ\" (instrument also \"Альтъ\") | PRINTED: no patronymic printed (\"Стеличекъ, Мирославъ (съ 1 сентября 1904 г.). Альтъ.\") | confidence: DIRECT(zoomed) | list 98; instrument word stored in patronymic field"
+ }
+]

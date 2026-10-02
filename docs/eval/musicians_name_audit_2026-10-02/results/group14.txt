@@ -1,0 +1,37 @@
+PAGE SUMMARY
+musicians_1896-97_SP_p002 | entries read: 53 | entries with a discrepancy: 3
+musicians_1896-97_SP_p003 | entries read: 50 | entries with a discrepancy: 2
+musicians_1896-97_SP_p004 | entries read: 38 | entries with a discrepancy: 2
+musicians_1897-98_MSK_p000 | entries read: 24 | entries with a discrepancy: 2
+musicians_1897-98_MSK_p001 | entries read: 52 | entries with a discrepancy: 4
+DISCREPANCIES
+musicians_1896-97_SP_p002 | e025 | family | STORED: "Геръ-Огановъ" | PRINTED: "Теръ-Огановъ" | confidence: DIRECT(zoomed) | Т misread as Г
+musicians_1896-97_SP_p002 | e033 | first | STORED: "Кануть-Эмерикъ" | PRINTED: "Канутъ-Эмерикъ" | confidence: DIRECT(zoomed) | ъ misread as ь
+musicians_1896-97_SP_p002 | e043 | family | STORED: "Шолларь" | PRINTED: "Шолларъ" | confidence: DIRECT(zoomed) | ъ misread as ь (6x zoom)
+musicians_1896-97_SP_p003 | e020 | first | STORED: "Аоанасій" | PRINTED: "Аѳанасій" | confidence: DIRECT(zoomed) | Ѳ read as о
+musicians_1896-97_SP_p003 | e050 | family | STORED: "Болымъ" | PRINTED: "Больмъ" | confidence: DIRECT(zoomed) | letters ь/ы transposed
+musicians_1896-97_SP_p004 | e012 | family | STORED: "Креммаръ" | PRINTED: "Кречмаръ" | confidence: DIRECT(zoomed) | чм read as мм
+musicians_1896-97_SP_p004 | e017 | family | STORED: "Майєръ-Пирко" | PRINTED: "Майеръ-Пирко" | confidence: DIRECT(zoomed) | stored has Ukrainian є (MIXED-SCRIPT flag confirmed)
+musicians_1897-98_MSK_p000 | e008 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | dotted і (INSTR-VARIANT flag confirmed)
+musicians_1897-98_MSK_p000 | e014 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | dotted і (INSTR-VARIANT flag confirmed)
+musicians_1897-98_MSK_p001 | e016 | first | STORED: "Францъ" | PRINTED: "Фрацъ" | confidence: DIRECT(zoomed) | PRINT-TYPO? (printed without н)
+musicians_1897-98_MSK_p001 | e029 | family | STORED: "Кругоголововъ" | PRINTED: "Крутоголововъ" | confidence: DIRECT(zoomed) | т read as г
+musicians_1897-98_MSK_p001 | e030 | family | STORED: "Кунсть" | PRINTED: "Кунстъ" | confidence: DIRECT(zoomed) | ъ misread as ь
+musicians_1897-98_MSK_p001 | e045 | family | STORED: "Пащееевъ" | PRINTED: "Пащеевъ" | confidence: DIRECT(zoomed) | extra е
+DATE-CHECK RESULTS
+musicians_1896-97_SP_p003 | e028 | STORED start: "1 сентября 1896 г." | PRINTED start: "съ 1 сентября 1896 г." (line break сен-/тября) | MATCH | confidence: DIRECT(zoomed)
+musicians_1896-97_SP_p004 | e013 | STORED start: "1 декабря 1878 г." | PRINTED start: "съ 1 декабря 1878 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1897-98_MSK_p001 | e042 | STORED start: "10 октября 1878 г." | PRINTED start: "съ 10 октября 1878 г. по 30 декабря 1880 г. и съ 19 сентября 1882 г." (two service periods) | MATCH (stored = first period start) | confidence: DIRECT(zoomed)
+musicians_1897-98_MSK_p001 | e035 | STORED start: "10 декабря 1879 г." | PRINTED start: "съ 10 декабря 1879 г. по 20 октября 1880 г. и съ 19 сентября 1882 г." (two service periods) | MATCH (stored = first period start) | confidence: DIRECT(zoomed)
+musicians_1897-98_MSK_p001 | e031 | STORED start: "1 апрѣля 1897 г." | PRINTED start: "съ 1 апрѣля 1897 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- SP_p002: patronymic inside first-name field NOT observed; patronymics are in the patronymic field throughout this group's pages (no known-pattern rows).
+- SP_p004 e001/e002 (library staff Тильпъ, Новоселовъ): list field holds the name text ("Тильпъ, Францъ" / "Новоселовъ, Александръ Ильичъ") rather than a number; names themselves match print. Тильпъ also has a death note "† 21 мая 1897 г."
+- SP_p002 e035 title "Солистъ Двора Его Императорскаго Величества" matches print (wraps over 2 lines).
+- SP_p002 e046 / e029 / e035 etc: end-of-service notes (Штейнсъ "Оставилъ службу 1 сентября 1896 г.", Штаакъ "† 30 ноября 1896 г.") are printed but not in the bundle's rank/title column (probably captured as tenure fields; not checked).
+- SP_p003 e003 Галкинъ and e045 Кротковъ are Kapellmeister entries with no list number/instrument (print-correct); e003 and e045 patronymics (Владиміровичъ, Сергѣевичъ) match.
+- MSK_p000 e001-e004 are conductor/ballet-staff entries printed without list numbers, as stored; e004 Марквардтъ is the same person as MSK_p001 e037 (list 57), printed identically.
+- MSK_p001 e016 Зюсъ: print genuinely reads "Фрацъ" (n missing), stored "Францъ" silently corrected; flagged PRINT-TYPO?.
+- MSK_p001 e053-line "Кюне Евгенія" has "Оставила службу 4 сентября 1898 г." printed; and e014 Гейнъ (MSK_p000 e022) "Оставилъ службу 1 ноября 1897 г." printed - both outside name fields.
+- No ordinal-suffix (1-й/2-й/3-й) errors: Мальковъ 1-й/2-й, Кулле 1-й/2-й, Мацулевичъ 1-й/2-й, Золотаренко 1-й/2-й/3-й all stored correctly in the family field.
+- No hyphen line-break artifacts found in stored values; no cross-alphabet letters other than SP_p004 e017 (є).

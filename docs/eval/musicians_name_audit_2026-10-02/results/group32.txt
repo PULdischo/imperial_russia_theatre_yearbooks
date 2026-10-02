@@ -1,0 +1,54 @@
+PAGE SUMMARY
+musicians_1904-05_MSK_p004 | entries read: 25 | entries with a discrepancy: 0
+musicians_1904-05_SP_p000 | entries read: 28 | entries with a discrepancy: 1
+musicians_1904-05_SP_p001 | entries read: 39 | entries with a discrepancy: 7
+musicians_1904-05_SP_p002 | entries read: 40 | entries with a discrepancy: 7
+musicians_1904-05_SP_p003 | entries read: 38 | entries with a discrepancy: 5
+DISCREPANCIES
+musicians_1904-05_SP_p000 | e024 | patronymic | STORED: "Тригорьевичъ" | PRINTED: "Григорьевичъ" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p001 | e002 | family | STORED: "Виргеліошъ" | PRINTED: "Виргеліюшъ" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p001 | e007 | ordinal | STORED: "Вульфъ-Израэль" (no ordinal) | PRINTED: "Вульфъ-Израэль 1-й" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p001 | e008 | ordinal | STORED: "Вульфъ-Израэль" (no ordinal) | PRINTED: "Вульфъ - Израэль 2-й" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p001 | e008 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p001 | e010 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p001 | e013 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p001 | e027 | family | STORED: "Инспрукертъ" | PRINTED: "Инспрукеръ" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p001 | e037 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p002 | e003 | family | STORED: "Кубанскъ" | PRINTED: "Кубанекъ" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p002 | e006 | patronymic | STORED: "Федоровичъ" | PRINTED: "Фелоровичъ" | confidence: DIRECT(zoomed) | PRINT-TYPO? (л printed for д)
+musicians_1904-05_SP_p002 | e007 | family | STORED: "Ле-Лангъ" | PRINTED: "Де-Ланге" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p002 | e008 | family | STORED: "Лангъ" | PRINTED: "Ланге" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p002 | e015 | family | STORED: "Людольфъ" | PRINTED: "Людольфи" | confidence: DIRECT(zoomed) | possibly PRINT-TYPO? (final и)
+musicians_1904-05_SP_p002 | e019 | ordinal | STORED: "Михайловскій" (no ordinal) | PRINTED: "Михайловскій 1-й" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p002 | e020 | ordinal | STORED: "Михайловскій" (no ordinal) | PRINTED: "Михайловскій 2-й" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p003 | e007 | instrument | STORED: "Вальтгорнъ" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p003 | e012 | family | STORED: "Тепъ" | PRINTED: "Тецъ" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p003 | e022 | first | STORED: "Кануть" | PRINTED: "Канутъ" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p003 | e031 | family | STORED: "Штейнъ" | PRINTED: "Штейнсъ" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p003 | e037 | family | STORED: "Юнкертъ" | PRINTED: "Юнкеръ" | confidence: DIRECT(zoomed)
+DATE-CHECK RESULTS
+musicians_1904-05_MSK_p004 | e011 | STORED start: "съ 23 сентября 1898 г." | PRINTED start: "съ 23 сентября 1898 г." | MATCH | DIRECT(zoomed)
+musicians_1904-05_MSK_p004 | e019 | STORED start: "съ 26 августа 1904 г." | PRINTED start: "съ 26 августа 1904 г." | MATCH | DIRECT(zoomed)
+musicians_1904-05_MSK_p004 | e023 | STORED start: "съ 16 декабря 1904 г." | PRINTED start: "съ 16 декабря 1904 г." | MATCH | DIRECT(zoomed)
+musicians_1904-05_MSK_p004 | e024 | STORED start: "съ 1 сентября 1882 г." | PRINTED start: "съ 1 сентября 1882 г." | MATCH | DIRECT(zoomed)
+musicians_1904-05_SP_p000 | e008 | STORED start: "1 февраля 1902 г." | PRINTED start: "съ 1 февраля 1902 г." | MATCH | DIRECT(zoomed)
+musicians_1904-05_SP_p000 | e002 | STORED start: "28 ноября 1863 г." | PRINTED start: "съ 28 ноября 1863 г." | MATCH | DIRECT(zoomed)
+musicians_1904-05_SP_p001 | e006 | STORED start: "28 мая 1857 г." | PRINTED start: "съ 28 мая 1857 г." | MATCH | DIRECT(zoomed)
+musicians_1904-05_SP_p001 | e023 | STORED start: "1 марта 1877 г." | PRINTED start: "съ 1 марта 1877 г." | MATCH | DIRECT(zoomed)
+musicians_1904-05_SP_p001 | e015 | STORED start: "1 октября 1885 г." | PRINTED start: "съ 1 октября 1885 г." | MATCH | DIRECT(zoomed)
+musicians_1904-05_SP_p001 | e025 | STORED start: "1 марта 1896 г." | PRINTED start: "съ 1 марта 1896 г." | MATCH | DIRECT(zoomed)
+musicians_1904-05_SP_p002 | e011 | STORED start: "2 октября 1898 г." | PRINTED start: "съ : октября 1898 г." (day glyph is a colon-like smudge, probably a damaged "1"; clearly not "2") | DIFFERS | UNCERTAIN
+musicians_1904-05_SP_p002 | e013 | STORED start: "1 сентября 1894 г." | PRINTED start: "съ 1 сентября 1894 г." | MATCH | DIRECT(zoomed)
+musicians_1904-05_SP_p003 | e002 | STORED start: "1 сентября 1887 г." | PRINTED start: "съ 1 сентября 1887 г." | MATCH | DIRECT(zoomed)
+musicians_1904-05_SP_p003 | e031 | STORED start: "1 августа 1895 г." | PRINTED start: "съ 1 августа 1895 г." | MATCH | DIRECT(zoomed)
+musicians_1904-05_SP_p003 | e015 | STORED start: "1 октября 1903 г." | PRINTED start: "съ 1 октября 1903 г." | MATCH | DIRECT(zoomed)
+OTHER FINDINGS
+- All five pages: every other surname/first name/patronymic/instrument/list number matched the print; no patronymic-inside-first-name rows (patronymics are in their own field).
+- SP_p003 e024 Чіарлоне: print has the title "Солистка Двора Его Императорскаго Величества" after "Арфа." but rank_or_title is stored "-" (compare SP_p000 e012 Ауэръ, whose equivalent title was stored).
+- SP_p000 e008 Гордонъ is printed "Бернгардовичъ" while SP_p001 e017 (also Гордонъ Александръ, Корнетъ) is printed "Бернардовичъ" -- genuine print variation, both stored as printed.
+- SP_p001 e008 is printed "Вульфъ - Израэль 2-й" with spaces around the hyphen (line-justification spacing; stored without spaces, fine).
+- AUTO-FLAGS INSTR-VARIANT on SP_p001 e008/e010/e013/e037 are all CONFIRMED: print is "Віолончель" (В with dotted і), stored value begins with Cyrillic Б (U+0411).
+- SP_p002 e006 "Фелоровичъ": the printed glyph is л (no descender feet like д in "Эдуардовичъ"); treat as a print typo for Федоровичъ.
+- SP_p002 e011 Лиръ: day digit smudged; stored "2" is not supported by the print.
+- SP_p002 e013 Логиновъ and SP_p003 e015 Тракалъ: stored start dates match the print, so the "modal" mismatch is a difference in the other entries (a different year/day), not a misread here.
+- SP_p001 e001 Ветцель: last glyph is very small; read as ь (matches stored); low residual doubt vs ъ.

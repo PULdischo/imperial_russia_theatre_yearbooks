@@ -1,0 +1,45 @@
+PAGE SUMMARY
+musicians_1893-94_SP_p004 | entries read: 39 | entries with a discrepancy: 3
+musicians_1894-95_MSK_p000 | entries read: 28 | entries with a discrepancy: 5
+musicians_1894-95_MSK_p001 | entries read: 52 | entries with a discrepancy: 3
+musicians_1894-95_MSK_p002 | entries read: 52 | entries with a discrepancy: 13
+musicians_1894-95_MSK_p003 | entries read: 32 | entries with a discrepancy: 1
+DISCREPANCIES
+musicians_1893-94_SP_p004 | e009 | first | STORED: "Гугο" (final letter is Greek omicron U+03BF) | PRINTED: "Гуго" | confidence: DIRECT(zoomed) | MIXED-SCRIPT flag confirmed
+musicians_1893-94_SP_p004 | e029 | family | STORED: "Рендертъ" | PRINTED: "Рендеръ" | confidence: DIRECT(zoomed)
+musicians_1893-94_SP_p004 | e030 | family | STORED: "Реханъ" | PRINTED: "Рехакъ" | confidence: DIRECT(zoomed)
+musicians_1894-95_MSK_p000 | e006 | ordinal | STORED: "Адольфи" | PRINTED: "Адольфи 1-й" | confidence: DIRECT(zoomed) | ordinal dropped
+musicians_1894-95_MSK_p000 | e007 | ordinal | STORED: "Адольфи" | PRINTED: "Адольфи 2-й" | confidence: DIRECT(zoomed) | ordinal dropped
+musicians_1894-95_MSK_p000 | e009 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed
+musicians_1894-95_MSK_p000 | e016 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed
+musicians_1894-95_MSK_p000 | e019 | family | STORED: "Василевъ" | PRINTED: "Васильевъ" | confidence: DIRECT(zoomed)
+musicians_1894-95_MSK_p001 | e013 | family | STORED: "Зозелъ" | PRINTED: "Зозель" | confidence: DIRECT(zoomed) | ъ for ь
+musicians_1894-95_MSK_p001 | e017 | family | STORED: "Зюсь" | PRINTED: "Зюсъ" | confidence: DIRECT(zoomed) | ь for ъ
+musicians_1894-95_MSK_p001 | e034 | family | STORED: "Кунсть" | PRINTED: "Кунстъ" | confidence: DIRECT(zoomed) | ь for ъ
+musicians_1894-95_MSK_p002 | e001 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | Б for В; INSTR-VARIANT flag is really a misread
+musicians_1894-95_MSK_p002 | e003 | family | STORED: "Порубиновскій" | PRINTED: bold glyph after "Порубино" looks like "з" not "в" ("Порубиновзкій"/"Порубинозскій"-like; read as Порубино?скій) | confidence: UNCERTAIN | PRINT-TYPO? (ink-clogged в is also possible); stored form is the expected name
+musicians_1894-95_MSK_p002 | e004 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | Б for В
+musicians_1894-95_MSK_p002 | e007 | family | STORED: "Рессертъ" | PRINTED: "Рессеръ" | confidence: DIRECT(zoomed)
+musicians_1894-95_MSK_p002 | e018 | family | STORED: "Стреналовъ" | PRINTED: "Стрекаловъ" (5th letter reads к, not н) | confidence: UNCERTAIN (zoomed 25x, bold letter leans к)
+musicians_1894-95_MSK_p002 | e020 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | Б for В
+musicians_1894-95_MSK_p002 | e027 | family | STORED: "Чарлоне" (ordinal "1-я" present) | PRINTED: "Чіарлоне 1-я" | confidence: DIRECT(zoomed) | missing і
+musicians_1894-95_MSK_p002 | e028 | family | STORED: "Чарлоне" (ordinal "2-я" present) | PRINTED: "Чіарлоне 2-я" | confidence: DIRECT(zoomed) | missing і
+musicians_1894-95_MSK_p002 | e040 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | Б for В
+musicians_1894-95_MSK_p002 | e041 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | Б for В
+musicians_1894-95_MSK_p002 | e043 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | Б for В
+musicians_1894-95_MSK_p002 | e050 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | Б for В
+musicians_1894-95_MSK_p002 | e052 | family | STORED: "Витигъ" | PRINTED: "Виттигъ" | confidence: DIRECT(zoomed)
+musicians_1894-95_MSK_p003 | e020 | patronymic | STORED: "Аоанасьевичъ" | PRINTED: "Аѳанасьевичъ" (ѳ, printed as Θ-form) | confidence: DIRECT(zoomed) | о for ѳ
+DATE-CHECK RESULTS
+musicians_1893-94_SP_p004 | e017 | STORED start: "1 декабря 1879 г." | PRINTED start: "1 декабря 1879 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1894-95_MSK_p001 | e036 | STORED start: "26 сентября 1885 г." | PRINTED start: "26 сентября 1885 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1894-95_MSK_p001 | e046 | STORED start: "19 сентября 1882 г." | PRINTED start: "19 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1894-95_MSK_p002 | e026 | STORED start: "19 сентября 1892 г." | PRINTED start: "19 сентября 1892 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- No patronymic-inside-first-name pattern on any of these five pages (patronymics are in their own field).
+- MSK_p002 e023 SPACE-IN-FAMILY flag refuted: "Туровичъ фонъ-Охота" is printed with that space (bold, one surname).
+- MSK_p002 INSTR-VARIANT flags (e001,e004,e020,e040,e041,e043,e050): print is Віолончель; stored Біолончель has Б for В (letter misread, not a spelling variant). MSK_p000 e009/e016 stored Виолончель vs printed Віолончель (dotted і).
+- MSK_p003 e032 Фарскій (library section) is a genuine second printed entry for the same man as e028 (he is also in the Musicians list, "онъ же и библіотекарь"); not a duplicate row.
+- MSK_p000 e001-e004 (conductor/repetitor/bandmaster, no list numbers) and MSK_p002 e047 (Арендсъ, Малый театръ conductor) are printed unnumbered; stored list "-" is correct. p002 e048-e052 restart at 1-5 (Малый театръ orchestra), correct.
+- MSK_p000 e006/e007 and MSK_p002 e027/e028, e010-e012, e031 and MSK_p001 e014-e016, MSK_p003 e029 ordinals: only the Адольфи pair lost its ordinal; others present and correct.
+- Genuine print oddity (not an error in store): MSK_p002 e003 bold glyph (see above); SP_p004 e033 Степановъ "с 31 марта" etc. fine.

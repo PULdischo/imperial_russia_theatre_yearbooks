@@ -1,0 +1,54 @@
+PAGE SUMMARY
+musicians_1905-06_SP_p001 | entries read: 38 | entries with a discrepancy: 3
+musicians_1905-06_SP_p002 | entries read: 40 | entries with a discrepancy: 3
+musicians_1905-06_SP_p003 | entries read: 40 | entries with a discrepancy: 1
+musicians_1905-06_SP_p004 | entries read: 40 | entries with a discrepancy: 3
+musicians_1905-06_SP_p005 | entries read: 38 | entries with a discrepancy: 6
+DISCREPANCIES
+musicians_1905-06_SP_p001 | e017 | family | STORED: "Булдаевъ" | PRINTED: "Будаевъ" | confidence: DIRECT(zoomed) | extra л inserted
+musicians_1905-06_SP_p001 | e018 | first | STORED: "Конраль" | PRINTED: "Конрадъ" | confidence: DIRECT(zoomed) | д->л and final ъ lost
+musicians_1905-06_SP_p001 | e025 | family | STORED: "Виргеліошъ" | PRINTED: "Виргеліюшъ" | confidence: DIRECT(zoomed) | о for ю
+musicians_1905-06_SP_p002 | e029 | family | STORED: "Де-Лангe" (final letter is LATIN e, flag MIXED-SCRIPT confirmed) | PRINTED: "Де-Ланге" (Cyrillic е) | confidence: DIRECT(zoomed)
+musicians_1905-06_SP_p002 | e036 | family | STORED: "Лукась" | PRINTED: "Лукасъ" | confidence: DIRECT(zoomed, 5x) | ь for ъ
+musicians_1905-06_SP_p002 | e040 | ordinal | STORED: "Михаловскій" | PRINTED: "Михаловскій 1-й" (list no. 74; p003 e001 is "Михаловскій 2-й") | confidence: DIRECT(zoomed) | ordinal dropped
+musicians_1905-06_SP_p003 | e026 | family | STORED: "Словацевскій" | PRINTED: "Словачевскій" | confidence: DIRECT(zoomed) | ц for ч
+musicians_1905-06_SP_p004 | e003 | first | STORED: "Кануть" | PRINTED: "Канутъ" | confidence: DIRECT(zoomed, 6x) | ь for ъ
+musicians_1905-06_SP_p004 | e021 | patronymic | STORED: "Іоганнъ" (first also "Іоганнъ") | PRINTED: no patronymic printed; "Алексѣевъ, Іоганнъ (съ 1 сентября 1905 г.)" | confidence: DIRECT(zoomed) | first name duplicated into patronymic
+musicians_1905-06_SP_p004 | e032 | first | STORED: "Меводій" | PRINTED: "Меѳодій" (Ѳ) | confidence: DIRECT(zoomed) | в for Ѳ
+musicians_1905-06_SP_p005 | e014 | family | STORED: "Завъятновскій" | PRINTED: "Завѣтновскій" | confidence: DIRECT(zoomed) | ъя for ѣ
+musicians_1905-06_SP_p005 | e016 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed
+musicians_1905-06_SP_p005 | e018 | family | STORED: "Лешинскій" | PRINTED: "Лещинскій" | confidence: DIRECT(zoomed) | ш for щ
+musicians_1905-06_SP_p005 | e024 | family | STORED: "Нелзейко" | PRINTED: "Недзейко" | confidence: DIRECT(zoomed) | л for д
+musicians_1905-06_SP_p005 | e029 | family | STORED: "Сальникова" | PRINTED: "Сальниковъ" | confidence: DIRECT(zoomed) | а for ъ
+musicians_1905-06_SP_p005 | e029 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed
+musicians_1905-06_SP_p005 | e034 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed
+DATE-CHECK RESULTS
+musicians_1905-06_SP_p001 | e004 | STORED start: "1 февраля 1902 г." | PRINTED start: "1 февраля 1902 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_SP_p001 | e029 | STORED start: "28 мая 1857 г." | PRINTED start: "28 мая 1857 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_SP_p001 | e038 | STORED start: "1 октября 1885 г." | PRINTED start: "1 октября 1885 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_SP_p002 | e008 | STORED start: "1 марта 1877 г." | PRINTED start: "1 марта 1877 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_SP_p002 | e010 | STORED start: "1 марта 1896 г." | PRINTED start: "1 марта 1896 г." | MATCH | confidence: DIRECT(zoomed) (leading "1" sits at the line start, clear)
+musicians_1905-06_SP_p002 | e035 | STORED start: "1 сентября 1894 г." | PRINTED start: "1 сентября 1894 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_SP_p003 | e022 | STORED start: "1 сентября 1887 г." | PRINTED start: "1 сентября 1887 г." | MATCH | confidence: DIRECT(zoomed) (first "1" of 1887 slightly smudged but legible)
+musicians_1905-06_SP_p003 | e035 | STORED start: "1 октября 1898 г." | PRINTED start: "1 октября 1898 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_SP_p003 | e036 | STORED start: "1 октября 1903 г." | PRINTED start: "1 октября 1903 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_SP_p004 | e023 | STORED start: "1 сентября 1895 г." | PRINTED start: "1 сентября 1895 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_SP_p004 | e011 | STORED start: "1 августа 1895 г." | PRINTED start: "1 августа 1895 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_SP_p005 | e030 | STORED start: "1 іюня 1876 г." | PRINTED start: "1 іюня 1876 г." | MATCH | confidence: DIRECT(zoomed) (paper blemish/stain around the "1" and і, letters still readable)
+musicians_1905-06_SP_p005 | e033 | STORED start: "1 октября 1893 г." | PRINTED start: "1 октября 1893 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- p001: all 7 date-check/AUTO-FLAG items checked; no AUTO-FLAGS on p001. Entry order: ballet repetiteurs e001-e003, kapellmeister e004 (no list number), musicians e005-e038 (list 1-34).
+- p001 e008: rank_or_title "Солистъ Двора Его Императорскаго Величества" matches print.
+- p001 e012 Брекеръ: no instrument printed (stored empty = correct).
+- p002: AUTO-FLAG MIXED-SCRIPT on e029 confirmed (Latin "e" at end of family). No patronymic-in-first-name pattern on any page of this group.
+- p002 e023 Котте: only "Фридрихъ-Эрнестъ" printed, no patronymic (stored empty = correct).
+- p002/p001: Гордонъ patronymic printed "Бернардовичъ" on p002 (list 36) vs "Бернгардовичъ" on p001 (kapellmeister) -- genuine variation in print, stored as printed on both.
+- p003: e009 Парманинъ, e028 Стеличекъ, e032 Таротинъ have no patronymic printed (stored empty = correct).
+- p003 e001 and e002 (Мнацагановъ): printed note lines ("Переведенъ изъ оркестра Михайловскаго театра съ 1 ноября 1905 г.") and e028 Стеличекъ's equivalent ("съ 1 сентября 1905 г.") present in print; not checked against stored annotation field (not in bundle).
+- p004: left col list 115-131 = SP musicians continuation; Галкинъ (e018) kapellmeister of Александринскій театръ, printed "съ 22 января 1877", death note "† 8 мая 1906 г."; new orchestra heading "Оркестръ Александринскаго театра" (list restarts at 1, e019).
+- p004 e019 Александеръ: stored "Александеръ" matches the print (printed with extra "е", not a misread).
+- p004: death marks printed: p001 e007 (Бергхольцъ † 22 сентября 1905), p002 e022 (Корнѣевъ † 22 декабря 1905), p002 e004 (Гримъ † 9 марта 1906), p004 e018 (Галкинъ † 8 мая 1906); p005 notes "Оставилъ службу ..." on e002, e004 (1 октября 1905) and e036 (1 марта 1906) -- not in the bundle fields, just noting.
+- p005: row order in bundle is e001-e018 = Оркестръ Михайловскаго театра (right column: Келеръ kapellmeister + musicians 1-17), then e019-e038 = Alexandrinsky continuation (left column, list 23-42). The left column is printed first on the page, so the stored order is the reverse of reading order (list numbers 18-22 are on p004, consistent). Check heading_path/institution for e019-e038 (should be Александринскій, e001-e018 Михайловскій).
+- p005 e001 Келеръ Морицъ Ѳедоровичъ: kapellmeister of Mikhailovsky, no list number, no instrument (correct).
+- p005 e005 Варнеке, e009 Герберъ, e018 Лешинскій: no patronymic printed (stored empty = correct).
+- p005 e014 Завѣтновскій: also check entities/person links elsewhere for "Завъятновскій" -- a clear misread.

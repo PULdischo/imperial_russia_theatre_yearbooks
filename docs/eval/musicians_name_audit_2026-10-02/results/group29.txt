@@ -1,0 +1,37 @@
+PAGE SUMMARY
+musicians_1903-04_MSK_p001 | entries read: 39 | entries with a discrepancy: 1
+musicians_1903-04_MSK_p002 | entries read: 38 | entries with a discrepancy: 2
+musicians_1903-04_MSK_p003 | entries read: 40 | entries with a discrepancy: 1
+musicians_1903-04_MSK_p004 | entries read: 18 | entries with a discrepancy: 0
+musicians_1903-04_SP_p000 | entries read: 33 | entries with a discrepancy: 4
+DISCREPANCIES
+musicians_1903-04_MSK_p001 | e034 | patronymic | STORED: "Никиторовичъ" | PRINTED: "Никифоровичъ" (line-break "Никифо-/ровичъ") | confidence: DIRECT(zoomed) | ф misread as т
+musicians_1903-04_MSK_p002 | e008 | family | STORED: "Пашеевъ" | PRINTED: "Пащеевъ" | confidence: DIRECT(zoomed) | щ misread as ш
+musicians_1903-04_MSK_p002 | e037 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag (soft sign for hard sign)
+musicians_1903-04_MSK_p003 | e036 | patronymic | STORED: "Никifоровичъ" | PRINTED: "Никифоровичъ" | confidence: DIRECT(zoomed) | confirms MIXED-SCRIPT flag (Latin i, f inside Cyrillic)
+musicians_1903-04_SP_p000 | e012 | family | STORED: "Аматфкъ" | PRINTED: "Аматнѣкъ" | confidence: DIRECT(zoomed) | н+ѣ misread as ф
+musicians_1903-04_SP_p000 | e021 | family | STORED: "Болымъ" | PRINTED: "Больмъ" | confidence: DIRECT(zoomed) | ы/ь+м order
+musicians_1903-04_SP_p000 | e023 | first | STORED: "Конралъ" | PRINTED: "Конрадъ" | confidence: DIRECT(zoomed) | д misread as л
+musicians_1903-04_SP_p000 | e025 | patronymic | STORED: "Тригорьевичъ" | PRINTED: "Григорьевичъ" | confidence: DIRECT(zoomed) | Г misread as Т
+DATE-CHECK RESULTS
+musicians_1903-04_MSK_p001 | e031 | STORED start: "съ 10 сентября 1882 г." | PRINTED start: "съ 10 сентября 1882 г." | MATCH | DIRECT(zoomed) (modal 22/11/1882 belongs to other entries; this entry genuinely prints 10 Sept)
+musicians_1903-04_MSK_p002 | e007 | STORED start: "съ 10 октября 1878 г." | PRINTED start: "съ 10 октября 1878 г. по 30 декабря 1880 г. и съ 19 сентября 1882 г." | MATCH (first interval start; entry has two service periods) | DIRECT(zoomed)
+musicians_1903-04_MSK_p003 | e001 | STORED start: "19 сентября 1882 г." | PRINTED start: "съ 19 сентября 1882 г." | MATCH | DIRECT(zoomed)
+musicians_1903-04_MSK_p003 | e039 | STORED start: "16 августа 1904 г." | PRINTED start: "съ 16 августа 1904 г." | MATCH | DIRECT(zoomed) (print date is later than the 1903-04 season, as printed)
+musicians_1903-04_MSK_p004 | e009 | STORED start: "23 сентября 1898 г." | PRINTED start: "съ 23 сентября 1898 г." | MATCH | DIRECT(zoomed)
+musicians_1903-04_SP_p000 | e008 | STORED start: "1 февраля 1902 г." | PRINTED start: "съ 1 февраля 1902 г." | MATCH | DIRECT(zoomed)
+musicians_1903-04_SP_p000 | e002 | STORED start: "28 ноября 1863 г." | PRINTED start: "съ 28 ноября 1863 г." | MATCH | DIRECT(zoomed)
+musicians_1903-04_SP_p000 | e011 | STORED start: "1 октября 1889 г." | PRINTED start: "съ 1 октября 1889 г." | MATCH | DIRECT(zoomed)
+OTHER FINDINGS
+- No patronymic-inside-first-name pattern on any of these pages; all first/patronymic fields are separate.
+- MSK_p001 e039 Лидтке: stored first "Готтильдъ", patronymic "Францъ"; print has "Готтильдъ Францъ" with no patronymic (Францъ is a second given name). Spelling of "Готтильдъ" at 8x: middle letters "тт" vs "тг" not fully resolved -- UNCERTAIN, treated as match.
+- MSK_p001 e039 Лидтке: "Францъ" is stored in the patronymic field but is a second given name (field placement only, text correct).
+- MSK_p001 e033 Зайцевъ: leaves service 1 сентября 1905 (print), e036 Золотаренко ordinals "1-й/2-й/3-й" all stored correctly in family.
+- MSK_p001 e019 Зюсъ (list 39): print shows death note "† 11 декабря 1903 г." after the entry -- not a name issue.
+- MSK_p003 e010 Яницкій: print has no comma after the surname ("Яницкій Алексѣй ...") -- print quirk, stored text fine.
+- MSK_p003 e040 Шульцъ and MSK_p004 e018 Орловъ: unnumbered conductor/librarian entries, stored list "-" matches print (no number). Орловъ printed "Орловъ".
+- MSK_p003 e013-e018 (list 1-6) and MSK_p004 e001-e017 belong to "Оркестръ Малаго театра" section; no mismatch in list numbers, 7-23 on p004 correct.
+- MSK_p004: right half and lower half of scan show only faint show-through of the reverse page; no extra printed entries missed.
+- SP_p000 e014 Ауэръ printed instrument "Скрипка" + rank "Солистъ Двора Его Императорскаго Величества" -- stored correctly.
+- SP_p000 e008 Гордонъ: initially looked like "Горлонъ" at 3x but 8x zoom shows д (feet serifs, same as д in "Бернгардовичъ") -- stored "Гордонъ" is correct.
+- All other entries (MSK_p001 e001-e039 except e034; MSK_p002 except e008, e037; MSK_p003 except e036; MSK_p004 all; SP_p000 except e012, e021, e023, e025) match print letter by letter, including ordinals Золотаренко 1-й/2-й/3-й, Ромашковъ 1-й/2-й, Шмидтъ 1-й/2-й, Эйхенвальдъ 2-я.

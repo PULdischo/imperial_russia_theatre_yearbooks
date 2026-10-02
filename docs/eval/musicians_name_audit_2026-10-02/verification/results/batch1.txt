@@ -1,0 +1,31 @@
+ITEM musicians_1890-91_MSK_p001|e008|first | READ: "Карлъ - Фридрихъ" | CHOICE: A | confidence: DIRECT | printed Карлъ with final ъ (not ь), hyphen set off by spaces
+ITEM musicians_1890-91_MSK_p001|e035|family | READ: "Лихтенъ" | CHOICE: A | confidence: DIRECT | final ъ present
+ITEM musicians_1890-91_MSK_p002|e011|first | READ: "Ицхекъ" | CHOICE: B | confidence: DIRECT | Ицхекъ, ц then х (not п)
+ITEM musicians_1890-91_MSK_p002|e017|family | READ: "Фишкинъ" | CHOICE: A | confidence: DIRECT | ends in и + ъ, plain и not ь; (stored Фишкінь is wrong)
+ITEM musicians_1890-91_MSK_p003|e031|space | READ: "Карлъ - Фридрихъ" | CHOICE: CANNOT-TELL | confidence: DIRECT | printed with spaces around hyphen; options A and B render identically as given (probably differ only in invisible whitespace char) so no basis to pick; reading itself clear
+ITEM musicians_1890-91_MSK_p003|e040|family | READ: "Рамбоусекъ" | CHOICE: A | confidence: DIRECT | printed bold Рамбоусекъ (к, not н); stored Рамбоусенъ wrong
+ITEM musicians_1890-91_MSK_p004|e030|family | READ: "Спевакъ" | CHOICE: B | confidence: DIRECT | final ъ present
+ITEM musicians_1890-91_SP_p000|e004|patronymic | READ: "Францевичъ" | CHOICE: B | confidence: DIRECT | Францевичъ with ц, not ш
+ITEM musicians_1890-91_SP_p002|e005|family | READ: "Теръ-Огановъ" | CHOICE: B | confidence: DIRECT | ъ after Тер (not ь); bold surname
+ITEM musicians_1890-91_SP_p003|e019|ordinal | READ: "Ивановъ 1-й, Василій Андреевичъ" | CHOICE: FREEFORM | confidence: DIRECT | family Ивановъ, ordinal 1-й belongs to surname, first Василій, patronymic Андреевичъ; matches reviewer note
+ITEM musicians_1890-91_SP_p003|e020|ordinal | READ: "Ивановъ 2-й, Владиміръ Ивано-/вичъ" | CHOICE: FREEFORM | confidence: DIRECT | family Ивановъ, ordinal 2-й, first Владиміръ, patronymic Ивановичъ (line break Ивано-/вичъ); matches reviewer note
+ITEM musicians_1890-91_SP_p004|e016|patronymic | READ: "Сергѣевичъ" | CHOICE: B | confidence: DIRECT | ѣ clear in printed Сергѣевичъ
+ITEM musicians_1890-91_SP_p004|e024|patronymic | READ: "Людвиго-/вичъ" | CHOICE: B | confidence: DIRECT | printed with line break after Людвиго-, вичъ starts next line
+ITEM musicians_1890-91_SP_p004|e029|patronymic | READ: "Сергѣе-/вичъ" | CHOICE: A | confidence: DIRECT | ѣ clear (Сергѣевичъ across line break)
+ITEM musicians_1890-91_SP_p005|e001|patronymic | READ: "Варѳоло-/меевичъ" | CHOICE: B | confidence: DIRECT | Ѳ (Θ-shaped) after Вар, i.e. Варѳоломеевичъ across line break
+ITEM musicians_1890-91_SP_p005|e007|instrument | READ: "Віолончель" | CHOICE: B | confidence: DIRECT | dotted і
+ITEM musicians_1890-91_SP_p005|e011|instrument | READ: "Віолончель" | CHOICE: B | confidence: DIRECT | dotted і
+ITEM musicians_1890-91_SP_p005|e024|family | READ: "Барянинъ" | CHOICE: A | confidence: DIRECT | Барянинъ, single и after ян
+ITEM musicians_1890-91_SP_p005|e036|family | READ: "Грибенъ" | CHOICE: B | confidence: DIRECT | final ъ present
+ITEM musicians_1890-91_SP_p006|e005|family | READ: "Майеръ-Пирко" | CHOICE: A | confidence: DIRECT | ordinary Cyrillic е, not є
+ITEM musicians_1890-91_SP_p006|e010|family | READ: "Пертель" | CHOICE: A | confidence: DIRECT | ordinary е; followed by period after surname rather than comma
+ITEM musicians_1891-92_MSK_p000|e005|first | READ: "Карлъ-Самуилъ" | CHOICE: A | confidence: DIRECT | ъ not ь
+ITEM musicians_1891-92_MSK_p000|e015|first | READ: "Карлъ-Вильгельмъ" | CHOICE: B | confidence: DIRECT | ъ not ь
+ITEM musicians_1891-92_MSK_p001|e028|family | READ: "Палице" | CHOICE: B | confidence: DIRECT | ends -це
+ITEM musicians_1891-92_MSK_p002|e003|family | READ: "Шпейеръ" | CHOICE: A | confidence: DIRECT | Шп (not Шл); stored Шлейеръ wrong
+ITEM musicians_1891-92_MSK_p002|e004|instrument | READ: "Кснтрабасъ" | CHOICE: B | confidence: DIRECT | genuine print typo: letter о missing/replaced -- reads К-с-н-т-р-а-б-а-с-ъ; printed this way
+ITEM musicians_1891-92_MSK_p002|e029|list | READ: "14" | CHOICE: A | confidence: DIRECT | no period after number in print
+ITEM musicians_1891-92_MSK_p002|e035|family | READ: "Зюсъ" | CHOICE: B | confidence: DIRECT | Зюсъ (printed; stored Зюстъ wrong)
+ITEM musicians_1891-92_MSK_p003|e010|list | READ: "48" | CHOICE: A | confidence: DIRECT | no period after number in print
+ITEM musicians_1891-92_MSK_p003|e028|family | READ: "Крживицкій" | CHOICE: B | confidence: DIRECT | Крживицкій (full, with и after ж); stored Кржвицкій drops it
+DONE 30 items

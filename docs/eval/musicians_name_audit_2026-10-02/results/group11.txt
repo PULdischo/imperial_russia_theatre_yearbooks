@@ -1,0 +1,47 @@
+PAGE SUMMARY
+musicians_1895-96_MSK_p000 | entries read: 25 | entries with a discrepancy: 0
+musicians_1895-96_MSK_p001 | entries read: 53 | entries with a discrepancy: 4
+musicians_1895-96_MSK_p002 | entries read: 51 | entries with a discrepancy: 10
+musicians_1895-96_MSK_p003 | entries read: 35 | entries with a discrepancy: 1
+musicians_1895-96_SP_p000 | entries read: 26 | entries with a discrepancy: 0
+DISCREPANCIES
+musicians_1895-96_MSK_p001 | e001 | family | STORED: "Гольдшмить" | PRINTED: "Гольдшмитъ" | confidence: DIRECT(zoomed) | soft sign stored for hard sign
+musicians_1895-96_MSK_p001 | e032 | list | STORED: "54." | PRINTED: "34." | confidence: DIRECT(zoomed) | PRINT-TYPO? (sequence runs 53, 34, 55; entry is Крутоголововъ)
+musicians_1895-96_MSK_p001 | e034 | family | STORED: "Кунсть" | PRINTED: "Кунстъ" | confidence: DIRECT(zoomed) | soft sign stored for hard sign
+musicians_1895-96_MSK_p001 | e049 | family | STORED: "Пащеечь" | PRINTED: "Пащеевъ" | confidence: DIRECT(zoomed) | в->ч, ъ->ь
+musicians_1895-96_MSK_p002 | e005 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | dotted і
+musicians_1895-96_MSK_p002 | e023 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | dotted і
+musicians_1895-96_MSK_p002 | e025 | family | STORED: "Триньянъ" | PRINTED: "Триньякъ" | confidence: DIRECT(zoomed)
+musicians_1895-96_MSK_p002 | e028 | family | STORED: "Фрице" | PRINTED: "Фриче" | confidence: DIRECT(zoomed)
+musicians_1895-96_MSK_p002 | e029 | family | STORED: "Фрomanъ" (Latin o) | PRINTED: "Фроманъ" (all Cyrillic) | confidence: DIRECT(zoomed) | MIXED-SCRIPT flag confirmed
+musicians_1895-96_MSK_p002 | e042 | family | STORED: "Шпекинъ" | PRINTED: "Шпеккинъ" | confidence: DIRECT(zoomed) | doubled к
+musicians_1895-96_MSK_p002 | e044 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | dotted і
+musicians_1895-96_MSK_p002 | e045 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | dotted і
+musicians_1895-96_MSK_p002 | e047 | family | STORED: "Эквертъ" | PRINTED: "Эккертъ" | confidence: DIRECT(zoomed) | к for в
+musicians_1895-96_MSK_p002 | e048 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | dotted і
+musicians_1895-96_MSK_p003 | e023 | family | STORED: "Падѣль" | PRINTED: "Падель" | confidence: DIRECT(zoomed) | ordinary е (a stray ink speck sits above it, not a ѣ)
+DATE-CHECK RESULTS
+musicians_1895-96_MSK_p001 | e041 | STORED start: "19 сентября 1882 г." | PRINTED start: "19 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1895-96_MSK_p001 | e036 | STORED start: "26 сентября 1885 г." | PRINTED start: "26 сентября 1885 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1895-96_MSK_p001 | e046 | STORED start: "19 сентября 1882 г." | PRINTED start: "19 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1895-96_MSK_p002 | e030 | STORED start: "19 сентября 1892 г." | PRINTED start: "19 сентября 1892 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1895-96_MSK_p003 | e016 | STORED start: "26 мая 1868 г." | PRINTED start: "26 мая 1868 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1895-96_SP_p000 | e005 | STORED start: "съ 1 сентября 1886 г." | PRINTED start: "съ 1 сентября 1886 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- MSK p000: all 25 entries match, no discrepancies.
+- MSK p000 e014 Васильевъ: printed note "Оставилъ службу 9 апрѣля 1896 г." (not a name field).
+- MSK p001: no patronymic-inside-first-name rows; fields are separate on this page.
+- MSK p001 e041 Марквардтъ: print has "(онъ же и капельмейстеръ военной музыки)" after the first name; MSK p000 e004 is the same person as the printed conductor.
+- MSK p001 e038 Липаевъ: an ink blot covers the final ъ of "Иванъ"; stored "Иванъ" is plausible (UNCERTAIN, not counted).
+- MSK p001 e020: list numbers run 40 then 42 (no 41 printed); stored 42 is correct.
+- MSK p001 e033 Кудике: printed note beneath: "Оставилъ службу 16 января 1896 г."
+- MSK p002 e026 Туровичъ фонъ-Охота: SPACE-IN-FAMILY flag REFUTED; the space is printed (two words, bold surname). 
+- MSK p002 e029: MIXED-SCRIPT flag CONFIRMED (Latin o). INSTR-VARIANT flags on e005/e023/e044/e045/e048 all CONFIRMED (print is Віолончель).
+- MSK p002 e031: printed note under Чіарлоне 1-я: "Съ 1 іюня 1896 года переведена въ С.-Петербургскій оркестръ оперы и балета."
+- MSK p002 e047 Эккертъ: no instrument is printed (matches stored "-").
+- MSK p003 e001-e034 are Malago theatre orchestra musicians 2-35 (list starts at 2; musician 1 Бергеръ is at the foot of p002). e035 Фарскій is the Музыкальная библіотека librarian entry (no number).
+- MSK p003 e017 Кубацкій: the т in "Викентьевичъ" has a hook-like flourish at 10x zoom (probably ink/print damage); read as т, so stored matches (UNCERTAIN, not counted).
+- MSK p003 e014 Колосовъ: print has "декабри" for the date month (PRINT-TYPO? for декабря); not a name field.
+- SP p000: all 26 entries match; patronymic-inside-first-name pattern on e014 (Викторъ-Рудольфовичъ) is as printed. Rank text on e011 matches print.
+- SP p000 e003/e004 etc.: no list numbers printed for conductors, stored "-" correct.
+- No printed row is missing from any bundle; no duplicate rows found.

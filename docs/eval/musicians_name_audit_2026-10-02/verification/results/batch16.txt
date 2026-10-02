@@ -1,0 +1,11 @@
+ITEM musicians_1909-10_SP_p000|e007|family | READ: "Пахитоновъ" (full entry: "Пахитоновъ, Даніилъ Ильичъ (съ 1 августа 1905 г.)", under heading "Аккомпаніаторъ") | CHOICE: FREEFORM | confidence: DIRECT | printed family is Пахитоновъ; stored family "Даниилъ" is wrong (first name in family field; also lacks printed і)
+ITEM musicians_1909-10_SP_p000|e007|first | READ: "Даніилъ" | CHOICE: A | confidence: DIRECT | first name printed with і; stored "-" is wrong
+ITEM musicians_1909-10_SP_p000|e007|list | READ: "(none; unnumbered accompanist entry)" | CHOICE: FREEFORM | confidence: DIRECT | no list number printed; stored list value "Пахитоновъ" is a shifted surname
+ITEM musicians_1909-10_SP_p000|e008|instrument | READ: "Первая срипка." | CHOICE: A | confidence: DIRECT | verbatim print has typo "срипка" (с-р-и-п-к-а) after "(съ 1 сентября 1897 г.)."; instrument is printed, not "-"
+ITEM musicians_1909-10_SP_p001|e016|first | READ: "Евтихій" | CHOICE: A | confidence: DIRECT | letters Е-в-т-и-х-і-й: 4th letter is plain и (not і), dotted і before й
+ITEM musicians_1909-10_SP_p001|e029|first | READ: "Канутъ" | CHOICE: A | confidence: DIRECT | final letter is ъ, not ь
+ITEM musicians_1909-10_SP_p002|e029|family | READ: "Людольфи" | CHOICE: B | confidence: DIRECT | printed with final и (spaced letters Л ю д о л ь ф и), not ъ
+ITEM musicians_1909-10_SP_p003|e010|instrument | READ: "(no instrument printed; entry ends 'Плотниковъ, Михаилъ Александровичъ (съ 1 сентября 1909 г.).')" | CHOICE: FREEFORM | confidence: DIRECT | stored "Контрабасъ" is not printed for no. 80
+ITEM musicians_1909-10_SP_p003|e012|patronymic | READ: "Аленсандровичъ" | CHOICE: B | confidence: DIRECT | line breaks "Аленсан-/дровичъ"; printed typo (н for к), "Иванъ Аленсан-дровичъ (съ 1 сентября 1868 г.). Арфа."
+ITEM musicians_1909-10_SP_p003|e028|patronymic | READ: "(no patronymic printed; 'Стеличекъ, Мирославъ (съ 1 сентября 1904 г.). Альтъ.')" | CHOICE: FREEFORM | confidence: DIRECT | stored patronymic "Альтъ" is the instrument misplaced; patronymic should be empty
+DONE 10 items

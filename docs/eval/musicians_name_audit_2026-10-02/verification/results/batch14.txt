@@ -1,0 +1,29 @@
+ITEM musicians_1905-06_SP_p004|e021|patronymic | READ: "Алексѣевъ, Іоганнъ (съ 1 сентября 1905 г.)" -- no patronymic printed | CHOICE: FREEFORM | confidence: DIRECT | stored patronymic "Іоганнъ" is a duplicate of the first name; nothing printed between first name and "(съ"
+ITEM musicians_1905-06_SP_p004|e032|first | READ: "Меѳодій" | CHOICE: A | confidence: DIRECT | ѳ (theta) clearly printed, not в
+ITEM musicians_1905-06_SP_p005|e014|family | READ: "Завѣтновскій" | CHOICE: B | confidence: DIRECT | ѣ clearly printed, no ъ
+ITEM musicians_1905-06_SP_p005|e018|family | READ: "Лещинскій" | CHOICE: B | confidence: DIRECT | щ with descender tail
+ITEM musicians_1905-06_SP_p005|e024|family | READ: "Недзейко" | CHOICE: B | confidence: DIRECT | д clearly (Недзейко); printed "28. Недзейко, Станиславъ Ѳомичъ"
+ITEM musicians_1905-06_SP_p005|e029|family | READ: "Сальниковъ" | CHOICE: B | confidence: DIRECT | ends in -овъ
+ITEM musicians_1905-06_SP_p006|e001|family | READ: "Лихтенбергеръ" | CHOICE: A | confidence: DIRECT | letters б-е-р-г-е-р-ъ, "Лихтенбергеръ, Георгій Адольфовичъ"
+ITEM musicians_1906-07_MSK_p000|e006|family | READ: "Авьерино" | CHOICE: B | confidence: DIRECT | в-ь-е, soft sign clearly printed, not ѣ
+ITEM musicians_1906-07_MSK_p001|e026|family | READ: "Добре" | CHOICE: B | confidence: DIRECT | final plain Cyrillic е (stored has Ukrainian є -- wrong)
+ITEM musicians_1906-07_MSK_p001|e028|family | READ: "Домащунасъ" | CHOICE: A | confidence: DIRECT | щ and final ъ (not ь)
+ITEM musicians_1906-07_MSK_p002|e029|family | READ: "Пащеевъ" | CHOICE: B | confidence: DIRECT | ends -еевъ
+ITEM musicians_1906-07_MSK_p002|e030|ordinal | READ: "Пекарскій I," | CHOICE: A | confidence: DIRECT | Roman numeral I (serifed capital, not Arabic 1) followed by comma; next entry prints "Пекарскій 2,"
+ITEM musicians_1906-07_MSK_p003|e002|ordinal | READ: "Ромашковъ 1-й" | CHOICE: B | confidence: DIRECT | "83. Ромашковъ 1-й, Григорій Ѳедоровичъ"
+ITEM musicians_1906-07_MSK_p003|e003|ordinal | READ: "Ромашковъ 2-й" | CHOICE: A | confidence: DIRECT | "84. Ромашковъ 2-й, Павелъ Ѳедоровичъ"
+ITEM musicians_1906-07_MSK_p003|e011|ordinal | READ: "Соколовъ 1-й" | CHOICE: B | confidence: DIRECT | "92. Соколовъ 1-й, Петръ Николаевичъ"
+ITEM musicians_1906-07_MSK_p003|e012|ordinal | READ: "Соколовъ 2-й" | CHOICE: B | confidence: DIRECT | "93. Соколовъ 2-й, Сергѣй Михайловичъ"
+ITEM musicians_1906-07_MSK_p003|e017|first | READ: "Никифоръ" | CHOICE: B | confidence: DIRECT | plain и (no dot) at 6x zoom
+ITEM musicians_1906-07_MSK_p003|e032|ordinal | READ: "Шмидтъ 1-й" | CHOICE: B | confidence: DIRECT | "113. Шмидтъ 1-й, Францъ"
+ITEM musicians_1906-07_MSK_p003|e033|ordinal | READ: "Шмидтъ 2-й" | CHOICE: B | confidence: DIRECT | "114. Шмидтъ 2-й, Фридрихъ"
+ITEM musicians_1906-07_SP_p000|e010|family | READ: "Аматнѣкъ" | CHOICE: A | confidence: DIRECT | А-м-а-т-н-ѣ-к-ъ, extra н printed
+ITEM musicians_1906-07_SP_p000|e021|list | READ: "13" | CHOICE: A | confidence: UNCERTAIN | no clear period; only a very faint speck after 13 (entry 14 has a bold period) -- period essentially absent/unprinted
+ITEM musicians_1906-07_SP_p000|e028|family | READ: "Виргеліюшъ" | CHOICE: B | confidence: DIRECT | "20. Виргеліюшъ, Марцелій Людвиговичъ": letters е-л-і-ю-ш-ъ clearly resolved at zoom
+ITEM musicians_1906-07_SP_p001|e030|space | READ: "Фридрихъ -Эрнестъ" | CHOICE: B | confidence: DIRECT | space before hyphen, none after (justified line)
+ITEM musicians_1906-07_SP_p002|e003|instrument | READ: "Віолончель" | CHOICE: B | confidence: DIRECT | initial В, then і
+ITEM musicians_1906-07_SP_p002|e005|family | READ: "Людольфи" | CHOICE: B | confidence: DIRECT | ends ф-и
+ITEM musicians_1906-07_SP_p002|e011|family | READ: "Мѣщанчукъ" | CHOICE: B | confidence: DIRECT | щ with descender tail
+ITEM musicians_1906-07_SP_p002|e026|instrument | READ: "Віолончель" | CHOICE: A | confidence: DIRECT | initial В, then і
+ITEM musicians_1906-07_SP_p003|e011|family | READ: "Федергансъ" | CHOICE: A | confidence: DIRECT | "108. Федергансъ, Юлій Ивановичъ"
+DONE 28 items

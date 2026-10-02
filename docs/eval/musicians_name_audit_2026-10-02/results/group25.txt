@@ -1,0 +1,51 @@
+PAGE SUMMARY
+musicians_1901-02_SP_p000 | entries read: 16 | entries with a discrepancy: 2
+musicians_1901-02_SP_p001 | entries read: 39 | entries with a discrepancy: 10
+musicians_1901-02_SP_p002 | entries read: 41 | entries with a discrepancy: 1
+musicians_1901-02_SP_p003 | entries read: 39 | entries with a discrepancy: 5
+musicians_1901-02_SP_p004 | entries read: 38 | entries with a discrepancy: 4
+DISCREPANCIES
+musicians_1901-02_SP_p000 | e003 | family | STORED: "Крушевскій" | PRINTED: "Крушевекій" (letters before к read е, not с) | confidence: DIRECT(zoomed) | PRINT-TYPO? stored value is the "corrected" form
+musicians_1901-02_SP_p000 | e015 | instrument | STORED: "Віолончелъ" | PRINTED: "Віолончель" (final soft sign ь) | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p001 | e001 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag
+musicians_1901-02_SP_p001 | e004 | family | STORED: "Болымъ" | PRINTED: "Больмъ" | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p001 | e006 | family | STORED: "Брекертъ" | PRINTED: "Брекеръ" | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p001 | e009 | first | STORED: "Конраль" | PRINTED: "Конрадъ" | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p001 | e011 | family | STORED: "Ваншейдль" | PRINTED: "Ваншейдъ" | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p001 | e017 | ordinal | STORED: first="І-й" (Cyrillic І), patronymic="Михаилъ" | PRINTED: "Вульфъ-Израэль 1-й, Михаилъ Александровичъ" -- ordinal belongs after family (numeral 1-й, not Cyrillic І), first name = Михаилъ, patronymic = Александровичъ (missing) | confidence: DIRECT(zoomed) | confirms ORDINAL-IN-FIRSTNAME
+musicians_1901-02_SP_p001 | e018 | ordinal | STORED: first="2-й", patronymic="Евгеній" | PRINTED: "Вульфъ-Израэль 2-й, Евгеній Владиміровичъ" -- first should be Евгеній, patronymic Владиміровичъ (missing; printed with і) | confidence: DIRECT(zoomed) | confirms ORDINAL-IN-FIRSTNAME
+musicians_1901-02_SP_p001 | e018 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" (line-broken "Віо-/лончель") | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p001 | e019 | patronymic | STORED: "Владимировичъ" | PRINTED: "Владиміровичъ" (line-broken "Влади-/міровичъ", dotted і) | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p001 | e020 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT
+musicians_1901-02_SP_p001 | e023 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT
+musicians_1901-02_SP_p002 | e019 | family | STORED: "Людольфъ" | PRINTED: "Людольфи" | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p003 | e011 | first | STORED: "Ѳелоръ" | PRINTED: "Ѳедоръ" | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p003 | e013 | family | STORED: "Терь-Огановъ" | PRINTED: "Теръ-Огановъ" | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p003 | e022 | first | STORED: "Кануть-Эмерикъ" | PRINTED: "Канутъ-Эмерикъ" | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p003 | e030 | patronymic | STORED: "Александро-вичъ" | PRINTED: "Александро-/вичъ" (line-break) -- stored hyphen is artifact; correct "Александровичъ" | confidence: DIRECT(zoomed) | line-break artifact
+musicians_1901-02_SP_p003 | e031 | family | STORED: "Шоллартъ" | PRINTED: "Шолларъ" | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p004 | e002 | first | STORED: "Алольфъ" | PRINTED: "Адольфъ" | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p004 | e006 | family | STORED: "Булановъ" | PRINTED: "Будановъ" | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p004 | e021 | family | STORED: "Кемеръ" | PRINTED: "Келеръ" | confidence: DIRECT(zoomed)
+musicians_1901-02_SP_p004 | e022 | family | STORED: "Кеммеръ" | PRINTED: "Кеммереръ" | confidence: DIRECT(zoomed)
+DATE-CHECK RESULTS
+musicians_1901-02_SP_p000 | e011 | STORED start: "1 октября 1889 г." | PRINTED start: "1 октября 1889 г." | MATCH | DIRECT(zoomed)
+musicians_1901-02_SP_p001 | e001 | STORED start: "1 сентября 1882 г." | PRINTED start: "1 сентября 1882 г." | MATCH | DIRECT(zoomed)
+musicians_1901-02_SP_p001 | e016 | STORED start: "28 мая 1857 г." | PRINTED start: "28 мая 1857 г." | MATCH | DIRECT(zoomed)
+musicians_1901-02_SP_p001 | e032 | STORED start: "1 марта 1877 г." | PRINTED start: "1 марта 1877 г." | MATCH | DIRECT(zoomed)
+musicians_1901-02_SP_p001 | e025 | STORED start: "1 октября 1885 г." | PRINTED start: "1 октября 1885 г." | MATCH | DIRECT(zoomed)
+musicians_1901-02_SP_p001 | e033 | STORED start: "1 сентября 1897 г." | PRINTED start: "1 сентября 1897 г." | MATCH | DIRECT(zoomed)
+musicians_1901-02_SP_p001 | e019 | STORED start: "1 сентября 1896 г." | PRINTED start: "1 сентября 1896 г." | MATCH | DIRECT(zoomed)
+musicians_1901-02_SP_p002 | e027 | STORED start: "1 августа 1877 г." | PRINTED start: "1 октября 1877 г." | DIFFERS | DIRECT(zoomed)
+musicians_1901-02_SP_p002 | e038 | STORED start: "21 октября 1874 г." | PRINTED start: "21 октября 1874 г." | MATCH | DIRECT(zoomed)
+musicians_1901-02_SP_p003 | e006 | STORED start: "1 сентября 1887 г." | PRINTED start: "1 сентября 1887 г." | MATCH | DIRECT(zoomed)
+musicians_1901-02_SP_p003 | e024 | STORED start: "1 апрѣля 1855 г." | PRINTED start: "1 апрѣля 1855 г." | MATCH | DIRECT(zoomed)
+musicians_1901-02_SP_p003 | e031 | STORED start: "1 сентября 1889 г." | PRINTED start: "1 сентября 1889 г." | MATCH | DIRECT(zoomed)
+musicians_1901-02_SP_p003 | e034 | STORED start: "15 сентября 1897 г." | PRINTED start: "15 сентября 1897 г." | MATCH | DIRECT(zoomed)
+musicians_1901-02_SP_p004 | e037 | STORED start: "1 іюня 1876 г." | PRINTED start: "1 іюня 1876 г." | MATCH | DIRECT(zoomed)
+musicians_1901-02_SP_p004 | e032 | STORED start: "1 сентября 1900 г." | PRINTED start: "1 сентября 1900 г." | MATCH | DIRECT(zoomed)
+OTHER FINDINGS
+- p000 e014: stored "Лоопольдъ" matches the print (printed "Лоопольдъ", likely PRINT-TYPO for Леопольдъ); no change needed.
+- p000 e008: Оглоблинъ is followed by a printed death notice "+ 11 ноября 1901 г."; p001 e021, p003 e019 and p004 e017/e025 carry "Оставилъ службу"/"Переведенъ"/"переведенъ на віолончель" notes (not name issues).
+- No patronymic-inside-first-name pattern on these pages; the only field-placement problem is p001 e017/e018 (ordinal sits in first, first name in patronymic, true patronymic missing).
+- p001 e013 Вихманъ: initial В is a damaged/odd glyph in print but reads В; stored is fine.

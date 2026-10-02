@@ -1,0 +1,31 @@
+ITEM musicians_1892-93_MSK_p001|e033|family | READ: "Рамбоусекъ" | CHOICE: A | confidence: DIRECT | bold "66. Рамбоусекъ, Іосифъ"; final letters с-е-к-ъ; also "41. Рамбоусекъ" on p003 (stored Рамбоусенъ is a misread)
+ITEM musicians_1892-93_MSK_p001|e034|first | READ: "Мардохей" | CHOICE: A | confidence: DIRECT | "67. Рессеръ, Мардохей (съ 30 іюля 1876 г.)"; д clear
+ITEM musicians_1892-93_MSK_p001|e039|first | READ: "Ицхекъ-Мейеръ" | CHOICE: A | confidence: DIRECT | "72. Слуцкій, Ицхекъ-Мейеръ"; ц (not п) and final ъ clear
+ITEM musicians_1892-93_MSK_p001|e044|family | READ: "Триньякъ" | CHOICE: A | confidence: DIRECT | "77. Триньякъ, Францъ (съ 20 октября 1872 г.). Вальдгорнъ."
+ITEM musicians_1892-93_MSK_p003|e001|family | READ: "Арендсъ" | CHOICE: B | confidence: DIRECT | unnumbered Капельмейстеръ line "Арендсъ, Генрихъ (съ 25 сентября 1883 г.)"; no ц
+ITEM musicians_1892-93_MSK_p003|e006|first | READ: "Адальбертъ" | CHOICE: A | confidence: DIRECT | "Фарскій, Адальбертъ Карловичъ (съ 1 сентября 1882 г.)"; soft sign ь before б
+ITEM musicians_1892-93_MSK_p003|e017|family/first | READ: "47. Туровичъ фонъ-Охота (см. оперный оркестръ). Скрипка." | CHOICE: FREEFORM | confidence: DIRECT | reviewer note confirmed: no first name printed; "Туровичъ фонъ-Охота" is the (bold) surname, so stored first="фонъ-Охота" is a surname fragment; no дата in this orchestra cross-reference entry
+ITEM musicians_1892-93_SP_p001|e010|family | READ: "Кадлецъ" | CHOICE: B | confidence: DIRECT | "31. Кадлецъ, Андрей Вячеславовичъ"; initial glyph identical to К of "Казаковъ" and "Кункели"; also "45. Кадлецъ" on 1893-94 SP p001
+ITEM musicians_1892-93_SP_p001|e011|family | READ: "Казаковъ" | CHOICE: A | confidence: DIRECT | "32. Казаковъ, Сергѣй Аѳанасьевичъ"
+ITEM musicians_1892-93_SP_p001|e021|family | READ: "Кункели" | CHOICE: B | confidence: DIRECT | "42. Кункели, Оскаръ Альбертовичъ"; initial К with flag, same glyph as other К in bold
+ITEM musicians_1892-93_SP_p001|e035|family | READ: "Пертель" | CHOICE: B | confidence: DIRECT | "56. Пертель, Эдуардъ Егоровичъ"; ь, no ѣ
+ITEM musicians_1892-93_SP_p002|e028|first/patronymic | READ: "1. Итцигсонъ, Мейеръ-Гиршъ (съ 1 августа 1882 г.)." | CHOICE: FREEFORM | confidence: DIRECT | single hyphenated first name Мейеръ-Гиршъ, no patronymic (reviewer note confirmed)
+ITEM musicians_1892-93_SP_p002|e029|first/patronymic | READ: "2. Мейеръ, Іоганъ-Фридрихъ (съ 1 мая 1855 г.)." | CHOICE: FREEFORM | confidence: DIRECT | single hyphenated first name Іоганъ-Фридрихъ, no patronymic (reviewer note confirmed)
+ITEM musicians_1892-93_SP_p003|e014|family | READ: "Керкешко" | CHOICE: B | confidence: DIRECT | "32. Керкешко (см. оперный оркестръ). Контрабасъ."; 4th glyph is к like the к of "шко" (also "52. Керкешко, Ѳедоръ Игнатьевичъ" on 1893-94 SP p001); stored Кернешко not printed
+ITEM musicians_1892-93_SP_p003|e031|family | READ: "Тарнке 1-й" | CHOICE: B | confidence: DIRECT | "49. Тарнке 1-й (см. оперный оркестръ)"; 4th glyph is н with crossbar, 5th к (not и); matches 1893-94 "Тарнке 1-й"
+ITEM musicians_1892-93_SP_p003|e032|family | READ: "Тарнке 2-й" | CHOICE: A | confidence: DIRECT | "50. Тарнке 2-й (см. оперный оркестръ)"; same н-к as e031
+ITEM musicians_1892-93_SP_p003|e050|family | READ: "Акимовъ" | CHOICE: B | confidence: DIRECT | "2. Акимовъ, Ѳедоръ Фроловичъ (съ 1 марта ... г.). Барабанъ."; 2nd letter к
+ITEM musicians_1893-94_MSK_p001|e050|family | READ: "Марквардтъ" | CHOICE: B | confidence: DIRECT | "67. Марквардтъ, Августъ (съ 19 сентября 1882 г.). Корнетъ."
+ITEM musicians_1893-94_MSK_p002|e007|family | READ: "Пащеевъ" | CHOICE: A | confidence: DIRECT | "75. Пащеевъ, Борисъ Ѳедоровичъ (съ 16 декабря 1893 г.)"; ее then въ, single в-ъ (not ееевъ)
+ITEM musicians_1893-94_MSK_p002|e023|first | READ: "Ицхекъ-Мейеръ" | CHOICE: A | confidence: DIRECT | "91. Слуцкій, Ицхекъ-Мейеръ"; ц, final ъ
+ITEM musicians_1893-94_MSK_p003|e014|list | READ: "14" | CHOICE: B | confidence: DIRECT | printed "14 Клейнике, Альбертъ" with NO period after the number (neighbours have periods)
+ITEM musicians_1893-94_SP_p000|e012|patronymic | READ: "Семеновичъ" | CHOICE: B | confidence: DIRECT | "2. Ауэръ, Леопольдъ Семеновичъ"; plain е, no diaeresis visible at zoom
+ITEM musicians_1893-94_SP_p001|e002|patronymic | READ: "Іеронимовичъ" | CHOICE: B | confidence: DIRECT | "16. Вейкманъ, Андрей Іеронимовичъ"; initial І (not Г)
+ITEM musicians_1893-94_SP_p001|e003|instrument | READ: "Вальдгорнъ" | CHOICE: B | confidence: DIRECT | "17. Векель, Германъ Карловичъ (съ 1 сентября 1878 г.). Вальдгорнъ."; final ъ
+ITEM musicians_1893-94_SP_p001|e012|family | READ: "Гильдебрандтъ" | CHOICE: B | confidence: DIRECT | "26. Гильдебрандтъ, Рихардъ Николаевичъ"; no "об"
+ITEM musicians_1893-94_SP_p001|e032|family | READ: "Казаковъ" | CHOICE: B | confidence: DIRECT | "46. Казаковъ, Сергѣй Аѳанасьевичъ"
+ITEM musicians_1893-94_SP_p001|e051|family | READ: "Манкопъ" | CHOICE: B | confidence: DIRECT | "65. Манкопъ, Ѳедоръ Ѳедоровичъ"; н then к
+ITEM musicians_1893-94_SP_p002|e003|first | READ: "Филиппъ" | CHOICE: B | confidence: DIRECT | "68. Набокинъ, Филиппъ Ѳедоровичъ"; stem count after л shows и-п-п (double п) then ъ; scan is slightly blurry but six stems clear
+ITEM musicians_1893-94_SP_p002|e012|first | READ: "Іосифъ" | CHOICE: B | confidence: DIRECT | "77. Плацатка, Іосифъ Карловичъ"; с present though partly smudged by an ink blot
+ITEM musicians_1893-94_SP_p002|e030|family | READ: "Теръ-Огановъ" | CHOICE: B | confidence: DIRECT | "95. Теръ-Огановъ, Артемій Антоновичъ"; hard sign ъ (not ь) before hyphen
+DONE 30 items

@@ -1,0 +1,36 @@
+PAGE SUMMARY
+musicians_1900-01_SP_p003 | entries read: 39 | entries with a discrepancy: 2
+musicians_1900-01_SP_p004 | entries read: 39 | entries with a discrepancy: 2
+musicians_1900-01_SP_p005 | entries read: 36 | entries with a discrepancy: 3
+musicians_1900-01_SP_p006 | entries read: 35 | entries with a discrepancy: 0
+musicians_1901-02_MSK_p000 | entries read: 5 | entries with a discrepancy: 0
+DISCREPANCIES
+musicians_1900-01_SP_p003 | e022 | family | STORED: "Словаچевскій" (contains a non-Cyrillic Arabic-script letter) | PRINTED: "Словачевскій" | confidence: DIRECT(zoomed) | mixed-script artifact, plain Cyrillic ч in print
+musicians_1900-01_SP_p003 | e036 | first | STORED: "Кануть-Эмерикъ" | PRINTED: "Канутъ-Эмерикъ" | confidence: DIRECT(zoomed) | ь stored for printed hard sign ъ
+musicians_1900-01_SP_p004 | e015 | first | STORED: "Адолъфъ" | PRINTED: "Адольфъ" | confidence: DIRECT(zoomed) | ъ/ь transposed
+musicians_1900-01_SP_p004 | e027 | first | STORED: "Альфрель" | PRINTED: "Альфредъ" | confidence: DIRECT(zoomed) | patronymic Альфредовичъ stored correctly
+musicians_1900-01_SP_p005 | e005 | family | STORED: "Мокъевъ" | PRINTED: "Мокѣевъ" | confidence: DIRECT(zoomed) | ѣ printed, ъ stored
+musicians_1900-01_SP_p005 | e024 | family | STORED: "Армсгеймѣръ" | PRINTED: "Армсгеймеръ" | confidence: DIRECT(zoomed) | plain е printed, ѣ stored
+musicians_1900-01_SP_p005 | e032 | family | STORED: "Вилькентъ" | PRINTED: "Вилькенъ" | confidence: DIRECT(zoomed) | extra т stored
+DATE-CHECK RESULTS
+musicians_1900-01_SP_p003 | e008 | STORED start: "21 октября 1874 г." | PRINTED start: "21 октября 1874 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_SP_p003 | e019 | STORED start: "1 сентября 1887 г." | PRINTED start: "1 сентября 1887 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_SP_p003 | e038 | STORED start: "1 апрѣля 1855 г." | PRINTED start: "1 апрѣля 1855 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_SP_p004 | e006 | STORED start: "съ 1 сентября 1889 г." | PRINTED start: "1 сентября 1889 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_SP_p004 | e009 | STORED start: "съ 15 сентября 1897 г." | PRINTED start: "15 сентября 1897 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_SP_p005 | e013 | STORED start: "1 іюня 1876 г." | PRINTED start: "1 іюня 1876 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_SP_p005 | e026 | STORED start: "1 сентября 1882 г." | PRINTED start: "1 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_SP_p005 | e003 | STORED start: "1 сентября 1889 г." | PRINTED start: "1 сентября 1889 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_SP_p005 | e007 | STORED start: "1 сентября 1900 г." | PRINTED start: "1 сентября 1900 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_SP_p006 | e009 | STORED start: "1 мая 1863 г." | PRINTED start: "1 мая 1863 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_SP_p006 | e023 | STORED start: "1 сентября 1886 г." | PRINTED start: "1 сентября 1886 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_SP_p006 | e005 | STORED start: "1 сентября 1883 г." | PRINTED start: "1 сентября 1883 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_SP_p006 | e034 | STORED start: "15 сентября 1897 г." | PRINTED start: "15 сентября 1897 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- All 13 date-check stored dates equal the printed dates; the "modal" dates that disagree (e.g. Мержинскій 1899, Ластовскій 1868, Кнохъ 1881, Беттенштедтъ 15/11/1881, Цабель 1/8/1855) are therefore either misreads in the other entries/volumes or genuinely different print in those volumes, not errors on these pages.
+- Штейнсъ Іосифъ Францевичъ appears printed as 15 сентября 1897 on both p004 (e009, #134, Mikhailovsky->Marinsky note) and p006 (e034, #48); both are the same person's two orchestra entries and agree.
+- p003 e024 Степановъ: the printed "Флейта" shows a stray dot above the й-position (print artifact); stored Флейта is right.
+- p003 e004-e008, e033: no ordinal suffixes or patronymic-in-first-name pattern anywhere on these pages; p006 e002 Герберъ and p003 e036 Хейкель have no patronymic printed (stored empty, correct); p006 e033 Шредеръ also none.
+- p004 e017 Галкинъ (Капельмейстеръ) and p006 e035 Новоселовъ (librarian) correctly have no list number; p005 e036 Келеръ (Капельмейстеръ) likewise.
+- Surname-ordinal check: only "Кулле 2-й" (p006 e008) exists and is stored correctly in family.
+- MSK_p000 (5 rows): all names, patronymics, "Арендсъ"/"Герберъ" etc. match the print exactly; no instrument printed (stored empty, correct).

@@ -1,0 +1,31 @@
+ITEM musicians_1898-99_MSK_p000|e004|family | READ: "Брындинъ" | CHOICE: B | confidence: DIRECT | printed "1. Брындинъ, Корнелій Корнеліевичъ"; letters н-д-и-н, no л (also 1899-00 prints Брындинъ)
+ITEM musicians_1898-99_MSK_p001|e004|family | READ: "Зозель" | CHOICE: B | confidence: DIRECT | "32. Зозель, Павелъ"; final letters ль, not мъ
+ITEM musicians_1898-99_MSK_p001|e023|patronymic | READ: "Васильеничъ" | CHOICE: B | confidence: DIRECT | "Николай Васильеничъ" printed (н not в before ичъ); likely a print typo, record as printed
+ITEM musicians_1898-99_MSK_p001|e024|family | READ: "Кусевицкій" | CHOICE: B | confidence: DIRECT | "Кусевицкій", ц present, not ч
+ITEM musicians_1898-99_MSK_p001|e025|family | READ: "Лидтке" | CHOICE: B | confidence: DIRECT | "Лидтке, Готгильдъ Францъ"
+ITEM musicians_1898-99_MSK_p003|e005|ordinal | READ: "Шмидтъ 1-й, Францъ" | CHOICE: FREEFORM | confidence: DIRECT | ordinal follows surname; first name Францъ; the "1" is the typeface's old-style digit 1 (same glyph as in "1 сентября"), not Cyrillic І; stored first="І-й", patronymic="Францъ" is wrong
+ITEM musicians_1898-99_MSK_p003|e006|ordinal | READ: "Шмидтъ 2-й, Фридрихъ" | CHOICE: FREEFORM | confidence: DIRECT | ordinal after surname; first name Фридрихъ; no patronymic
+ITEM musicians_1898-99_MSK_p003|e012|ordinal | READ: "Эйхенвальдъ 1-я, Ида" | CHOICE: FREEFORM | confidence: DIRECT | ordinal after surname; first name Ида; no patronymic
+ITEM musicians_1898-99_MSK_p003|e013|ordinal | READ: "Эйхенвальдъ 2-я, Надежда Александровна" | CHOICE: FREEFORM | confidence: DIRECT | "Але-/ксандровна" line-broken; patronymic Александровна missing from stored row
+ITEM musicians_1898-99_MSK_p003|e025|family | READ: "Заальборнъ" | CHOICE: B | confidence: DIRECT | "6. Заальборнъ, Густавъ" double а
+ITEM musicians_1898-99_MSK_p004|e002|family | READ: "Николаевъ (Шмулевичъ)" | CHOICE: B | confidence: DIRECT | "22. Николаевъ (Шмулевичъ), Александръ Михайловичъ"
+ITEM musicians_1898-99_MSK_p004|e003|first | READ: "Іоганнъ-Фридрихъ" | CHOICE: B | confidence: DIRECT | "23. Падель, Іоганнъ-Фридрихъ"; ъ not ь
+ITEM musicians_1898-99_MSK_p004|e006|first | READ: "Никифоръ" | CHOICE: A | confidence: DIRECT | 8x zoom: Н-и-к-и-ф-о-р-ъ, 4th letter is plain и (no dot)
+ITEM musicians_1898-99_SP_p001|e010|family | READ: "Ваншейдъ" | CHOICE: A | confidence: DIRECT | "14. Ваншейдъ, Лоренцъ Ѳедоровичъ" (ш-е-й-д-ъ, no т)
+ITEM musicians_1898-99_SP_p001|e016|ordinal | READ: "Вульфъ-Израэль 1-й, Михаилъ Александровичъ" | CHOICE: FREEFORM | confidence: DIRECT | ordinal after surname; digit 1 glyph; first name Михаилъ, patronymic Александровичъ
+ITEM musicians_1898-99_SP_p001|e017|ordinal | READ: "Вульфъ-Израэль 2-й, Евгеній Владиміровичъ" | CHOICE: FREEFORM | confidence: DIRECT | ordinal after surname; name Евгеній; patronymic Владиміровичъ (Владиміровичъ per line-break "Владимiровичъ" earlier crop at 1x; stored value consistent)
+ITEM musicians_1898-99_SP_p001|e037|patronymic | READ: "Мартыновичъ" | CHOICE: A | confidence: DIRECT | "Мартыно-/вичъ" line-broken; ы printed, not и
+ITEM musicians_1898-99_SP_p001|e038|ordinal | READ: "Іогансонъ 1-й, Августъ Васильевичъ" | CHOICE: FREEFORM | confidence: DIRECT | ordinal after surname; patronymic "Василье-/вичъ"; ordinal in stored first field is wrong placement
+ITEM musicians_1898-99_SP_p002|e001|family | READ: "Іогансонъ 2-й" | CHOICE: B | confidence: DIRECT | initial letter is І (Cyrillic i, serifed bar, no hook), not Л; "43. Іогансонъ 2-й, Викторъ Ивано-/вичъ"
+ITEM musicians_1898-99_SP_p002|e006|patronymic | READ: "Эвальдовичъ" | CHOICE: B | confidence: DIRECT | "Эвальдовичъ" with ь
+ITEM musicians_1898-99_SP_p002|e014|family | READ: "Корнѣевъ" | CHOICE: A | confidence: DIRECT | К-о-р-н-ѣ-е-в-ъ
+ITEM musicians_1898-99_SP_p002|e017|space | READ: "Де Ланге" | CHOICE: B | confidence: DIRECT | printed with a word space, capital Л: "Де Ланге, Людвигъ Михайловичъ" (letterspaced; space between Де and Ланге is clearly wider than letter gaps)
+ITEM musicians_1898-99_SP_p002|e025|family/first | READ: "Лудольфи, Валентинъ" | CHOICE: FREEFORM | confidence: DIRECT | surname Лудольфи (д present, final и not ъ); first name Валентинъ OK; no patronymic; stored "Лулольфъ" wrong
+ITEM musicians_1898-99_SP_p002|e032|instrument | READ: "Вальдгорнъ" | CHOICE: A | confidence: DIRECT | "74. Нагорнюкъ ... Вальдгорнъ."
+ITEM musicians_1898-99_SP_p003|e031|first | READ: "Канутъ-Эмерикъ" | CHOICE: B | confidence: DIRECT | 8x zoom К-а-н-у-т-ъ, not Капутъ
+ITEM musicians_1898-99_SP_p004|e018|family | READ: "Будановъ" | CHOICE: A | confidence: DIRECT | "4. Будановъ, Николай Васильевичъ", д present (Б-у-д-а-н-о-в-ъ)
+ITEM musicians_1898-99_SP_p004|e033|first | READ: "Аѳанасій" | CHOICE: B | confidence: DIRECT | "19. Кеймъ, Аѳанасій Ивановичъ" with barred ѳ
+ITEM musicians_1898-99_SP_p005|e020|family | READ: "Мокѣевъ" | CHOICE: B | confidence: DIRECT | "25. Мокѣевъ, Николай Васильевичъ" with ѣ
+ITEM musicians_1898-99_SP_p006|e013|family | READ: "Медвѣдевъ" | CHOICE: B | confidence: DIRECT | "28. Медвѣдевъ, Михаилъ Михайловичъ"
+ITEM musicians_1899-00_MSK_p000|e010|instrument | READ: "Вальдгорнъ" | CHOICE: A | confidence: DIRECT | "Вальд-/горнъ" line-broken at "4. Барсукъ-Самборскій"
+DONE 30 items

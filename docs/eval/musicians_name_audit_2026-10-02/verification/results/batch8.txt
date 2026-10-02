@@ -1,0 +1,31 @@
+ITEM musicians_1899-00_MSK_p001|e022|family | READ: "Зюсъ" (printed "З ю с ъ, Францъ"; list no. 34.) | CHOICE: A | confidence: DIRECT | ends in съ, no т
+ITEM musicians_1899-00_MSK_p002|e006|family | READ: "Фонъ-Нольте" | CHOICE: A | confidence: DIRECT | Ф-о-н-ъ hyphen Н; no т
+ITEM musicians_1899-00_MSK_p002|e006|patronymic | READ: "Константи-/новичъ" i.e. Константиновичъ (line-broken "Константи-" / "новичъ") | CHOICE: B | confidence: DIRECT | stored "Константинъ" is wrong
+ITEM musicians_1899-00_MSK_p002|e011|family | READ: "Пащеевъ" | CHOICE: B | confidence: DIRECT | letter is щ (with tail), not ш; patronymic printed Ѳедоровичъ
+ITEM musicians_1899-00_MSK_p002|e025|patronymic/first | READ: "Ромашковъ 2-й, Павелъ Ѳедоро-/вичъ" (surname + "2-й" ordinal, first Павелъ, patronymic Ѳедоровичъ) | CHOICE: A | confidence: UNCERTAIN | only a tiny speck above the е of Ѳедоро- at 7x zoom, looks like a dirt fleck not a diaeresis; in neighbour #78 plain е
+ITEM musicians_1899-00_MSK_p002|e026|patronymic/first | READ: "Ромашковъ 3-й, Григорій Ѳедоро-/вичъ" | CHOICE: B | confidence: DIRECT | plain е, no diaeresis/acute
+ITEM musicians_1899-00_MSK_p002|e032|first | READ: "Ицхекъ-Мейеръ" (printed hyphenated "Ицхекъ - Мейеръ"; Слуцкій) | CHOICE: B | confidence: DIRECT | ц with descender tail; note stored patronymic "Мейеръ" is really the 2nd half of a hyphenated first name
+ITEM musicians_1899-00_MSK_p002|e037|instrument | READ: "Вальдгорнъ" (printed "Вальд-/горнъ"; row 89 Сханилецъ, Іосифъ) | CHOICE: B | confidence: DIRECT | д present
+ITEM musicians_1899-00_MSK_p003|e018|ordinal | READ: "1-й" glyph is a slab-serifed ı shape, identical to the digit 1 in "108" and in dates ("15 августа", "1880"); entry reads "108. Шмидтъ 1-й. Францъ" | CHOICE: B | confidence: UNCERTAIN | this typeface's digit 1 and Cyrillic І look the same; siblings use numerals (2-й); B chosen by context
+ITEM musicians_1899-00_MSK_p003|e035|instrument | READ: "Віолончель" (Малый театръ list no. 1 Бруцинъ, Сергѣй Александровичъ) | CHOICE: A | confidence: DIRECT | В not Б
+ITEM musicians_1899-00_MSK_p004|e010|family | READ: "Лазаревъ" | CHOICE: B | confidence: DIRECT | з not в; first name Георгій Артемьевичъ
+ITEM musicians_1899-00_MSK_p004|e017|family | READ: "Николаевъ (Шмулевичъ)" i.e. "Николаевъ (Шмулевичъ), Александръ Михайловичъ" | CHOICE: A | confidence: DIRECT | parenthetical Шмулевичъ is printed after surname
+ITEM musicians_1899-00_SP_p001|e014|family | READ: "Гильдебрандъ" | CHOICE: B | confidence: DIRECT | д present
+ITEM musicians_1899-00_SP_p001|e029|family | READ: "Кадлецъ" | CHOICE: B | confidence: DIRECT | К-а-д-л-е-ц-ъ
+ITEM musicians_1899-00_SP_p002|e012|family | READ: "Лудольфи" (printed "Лудольфи, Валентинъ") | CHOICE: A | confidence: DIRECT | ends in и not ъ
+ITEM musicians_1899-00_SP_p003|e018|first | READ: "Канутъ-Эмерикъ" (Хейкель) | CHOICE: B | confidence: DIRECT | ъ after т, not ь
+ITEM musicians_1899-00_SP_p004|e001|list | READ: "Галкинъ, Николай Владиміровичъ (съ 22 января 1877 г.)." no list number; unnumbered Капельмейстеръ above the numbered Музыканты | CHOICE: FREEFORM | confidence: DIRECT | confirms first reviewer: stored "1." is wrong, none printed. Note printed "Николай" with и-краткое (й)
+ITEM musicians_1899-00_SP_p004|e018|family | READ: "Кеймъ" (17. Кеймъ, Аѳанасій Ивановичъ) | CHOICE: B | confidence: DIRECT | е-й-м-ъ
+ITEM musicians_1899-00_SP_p005|e014|first/patronymic | READ: row e014 itself (16.) is "Кнохъ, Бернгардъ Германовичъ" as stored -- no problem there. The reviewer note actually fits #14 (stored e012): printed "Герберъ, Августъ-Генрихъ (съ 1 [сен]тября 1893 г.). Вальдгорнъ" -- hyphenated double first name, no patronymic | CHOICE: FREEFORM | confidence: DIRECT | item id/row mismatch: for e014 stored row is correct; for e012 the reviewer's "Августъ-Генрихъ" is confirmed
+ITEM musicians_1899-00_SP_p005|e015|family | READ: "Кречмаръ" (17. Кречмаръ, Густавъ Георгіевичъ) | CHOICE: B | confidence: DIRECT | ч-м-а-р-ъ
+ITEM musicians_1899-00_SP_p005|e016|family | READ: "Куденгольдтъ" (18.) | CHOICE: A | confidence: DIRECT | К-у-д-е-н-г-о-л-ь-д-т-ъ
+ITEM musicians_1899-00_SP_p005|e030|family | READ: "Армсгеймеръ" (3.) | CHOICE: A | confidence: DIRECT | с-г, no т
+ITEM musicians_1899-00_SP_p005|e031|family | READ: "Беттенштелтъ" (4. Беттенштелтъ, Ѳедоръ ...вичъ) | CHOICE: A | confidence: DIRECT | letter before тъ is л (no descender feet, small left flick), compared with д in "Ѳедоръ" which has feet
+ITEM musicians_1900-01_MSK_p001|e005|first | READ: "Сергѣй" (2. Андреевъ, Сергѣй) | CHOICE: B | confidence: DIRECT | ѣ not і
+ITEM musicians_1900-01_MSK_p001|e007|instrument | READ: "Вальд-/горнъ" = Вальдгорнъ | CHOICE: A | confidence: DIRECT | stored "Вальторнъ" is wrong
+ITEM musicians_1900-01_MSK_p001|e040|family | READ: "Кведнау" (37. Кведнау, Фридрихъ) | CHOICE: B | confidence: DIRECT | д present, К-в-е-д-н-а-у
+ITEM musicians_1900-01_MSK_p002|e010|patronymic | READ: "Никифо-/ровичъ" = Никифоровичъ (47. Крутоголововъ, Иванъ) | CHOICE: A | confidence: DIRECT | line break after "Никифо-"; stored "Никито-ровичъ" is wrong
+ITEM musicians_1900-01_MSK_p002|e014|first | READ: "Готгильдъ Францъ" (51. Лидтке, Готгильдъ Францъ) | CHOICE: A | confidence: DIRECT | Готгильдъ with т-г
+ITEM musicians_1900-01_MSK_p002|e025|family | READ: "Пащеевъ, Борисъ Ѳедотовичъ" | CHOICE: A | confidence: DIRECT | double ее; patronymic Ѳедотовичъ matches
+ITEM musicians_1900-01_MSK_p002|e034|first | READ: "Мардохей" (71. Рессеръ, Мардохей) | CHOICE: B | confidence: DIRECT | д present
+DONE 30 items

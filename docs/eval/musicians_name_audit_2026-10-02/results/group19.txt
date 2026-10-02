@@ -1,0 +1,50 @@
+PAGE SUMMARY
+musicians_1899-00_MSK_p001 | entries read: 40 | entries with a discrepancy: 1
+musicians_1899-00_MSK_p002 | entries read: 38 | entries with a discrepancy: 6
+musicians_1899-00_MSK_p003 | entries read: 38 | entries with a discrepancy: 6
+musicians_1899-00_MSK_p004 | entries read: 30 | entries with a discrepancy: 2
+musicians_1899-00_SP_p000 | entries read: 19 | entries with a discrepancy: 0
+DISCREPANCIES
+musicians_1899-00_MSK_p001 | e022 | family | STORED: "Зюстъ" | PRINTED: "Зюсъ" | confidence: DIRECT(zoomed) | no т printed (Ю-с-ъ)
+musicians_1899-00_MSK_p002 | e006 | family | STORED: "Фонтъ-Нольте" | PRINTED: "Фонъ-Нольте" | confidence: DIRECT(zoomed) | stored has stray т
+musicians_1899-00_MSK_p002 | e006 | patronymic | STORED: "Константинъ" | PRINTED: "Константиновичъ" | confidence: DIRECT(zoomed) | printed "Константи-/новичъ" (line-end hyphenation, split across lines; first-name field is "Иванъ")
+musicians_1899-00_MSK_p002 | e011 | family | STORED: "Пашеевъ" | PRINTED: "Пащеевъ" | confidence: DIRECT(zoomed) | щ not ш
+musicians_1899-00_MSK_p002 | e025 | patronymic/first | STORED: "Павелъ Ѳёдоровичъ" | PRINTED: "Павелъ Ѳедоровичъ" (Ѳедоро-/вичъ) | confidence: UNCERTAIN | only a tiny speck above е at 7x zoom, not a two-dot ё; read as plain е
+musicians_1899-00_MSK_p002 | e026 | patronymic/first | STORED: "Григорій Ѳёдоровичъ" | PRINTED: "Григорій Ѳедоровичъ" (Ѳедоро-/вичъ) | confidence: DIRECT(zoomed) | plain е, no diaeresis/accent
+musicians_1899-00_MSK_p002 | e032 | first | STORED: "Ипхекъ" | PRINTED: "Ицхекъ" | confidence: DIRECT(zoomed) | printed "Ицхекъ-Мейеръ" (hyphenated compound); stored splits it into first "Ипхекъ" + patronymic "Мейеръ"
+musicians_1899-00_MSK_p002 | e037 | instrument | STORED: "Вальторнъ" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed)
+musicians_1899-00_MSK_p003 | e001 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | В not Б (INSTR-VARIANT flag confirmed)
+musicians_1899-00_MSK_p003 | e018 | ordinal | STORED: "І-й" (Cyrillic І) | PRINTED: "1-й" (digit 1, printed in the font's ı-shaped numeral) | confidence: DIRECT(zoomed) | printed "Шмидтъ 1-й. Францъ" with a period after й instead of comma
+musicians_1899-00_MSK_p003 | e023 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed
+musicians_1899-00_MSK_p003 | e024 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed
+musicians_1899-00_MSK_p003 | e029 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed
+musicians_1899-00_MSK_p003 | e035 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed
+musicians_1899-00_MSK_p004 | e010 | family | STORED: "Лаваревъ" | PRINTED: "Лазаревъ" | confidence: DIRECT(zoomed)
+musicians_1899-00_MSK_p004 | e017 | family | STORED: "Николаевъ" | PRINTED: "Николаевъ (Шмулевичъ)" | confidence: DIRECT(zoomed) | parenthetical alias printed after surname, omitted from stored row
+DATE-CHECK RESULTS
+musicians_1899-00_MSK_p001 | e040 | STORED start: "10 декабря 1879 г." | PRINTED start: "съ 10 декабря 1879 г. по 20 октября 1880 г. и съ 19 сентября 1882 г." | MATCH (first of two stints; modal 19/9/1882 is the second stint, same person) | confidence: DIRECT(zoomed)
+musicians_1899-00_MSK_p001 | e036 | STORED start: "1 апрѣля 1897 г." | PRINTED start: "съ 1 апрѣля 1897 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1899-00_MSK_p002 | e008 | STORED start: "съ 10 октября 1878 г." | PRINTED start: "съ 10 октября 1878 г. по 30 декабря 1880 и (съ 19 сентября 1882 г.)" | MATCH (two stints; modal TIE = the two stints) | confidence: DIRECT(zoomed)
+musicians_1899-00_MSK_p002 | e001 | STORED start: "съ сентября 1891 г." | PRINTED start: "съ 1 сентября 1891 г." | DIFFERS (stored omits the day "1") | confidence: DIRECT(zoomed)
+musicians_1899-00_MSK_p003 | e024 | STORED start: "съ 14 апрѣля 1880 г." | PRINTED start: "съ 14 апрѣля 1880 г. по 1 сентября 1882 г. и съ 1 сентября 1883 г." | MATCH (first of two stints; modal 1/9/1883 = second stint) | confidence: DIRECT(zoomed)
+musicians_1899-00_MSK_p003 | e012 | STORED start: "съ 1 октября 1897 г." | PRINTED start: "съ 1 октября 1897 г." | MATCH (modal 16/10/1897 belongs to another entry) | confidence: DIRECT(zoomed)
+musicians_1899-00_MSK_p004 | e006 | STORED start: "10 сентября 1882 г." | PRINTED start: "съ 10 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1899-00_MSK_p004 | e016 | STORED start: "23 сентября 1898 г." | PRINTED start: "съ 23 сентября 1898 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1899-00_MSK_p004 | e025 | STORED start: "1 января 1894 г." | PRINTED start: "съ 1 января 1894 г." (entry 29 Фарскій, also "онъ же и библіотекарь Музыкальной библіотеки") | MATCH | confidence: DIRECT(zoomed)
+musicians_1899-00_MSK_p004 | e012 | STORED start: "22 сентября 1898 г." | PRINTED start: "съ 22 сентября 1898 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1899-00_SP_p000 | e009 | STORED start: "1 октября 1889 г." | PRINTED start: "съ 1 октября 1889 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1899-00_SP_p000 | e013 | STORED start: "1 сентября 1882 г." | PRINTED start: "съ 1 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- MSK_p001: patronymic inside first name on e007-e040 where a patronymic is printed (known pattern); Золотаренко 1-й/2-й/3-й ordinals correctly stored in family (e019-e021).
+- MSK_p001 e025 Кведнау: printed start date "съ : сентября 1882 г." has a damaged/illegible day (print shows ':' mark); stored dates not provided for it in the bundle.
+- MSK_p002 e006: printed "Иванъ Константи-/новичъ"; stored splits patronymic into "Константинъ" (letters lost: "ов", "ичъ").
+- MSK_p002 e032: print is a hyphenated double name "Ицхекъ-Мейеръ" (no patronymic); stored as first + patronymic.
+- MSK_p002 e012 Пекарскій: faint speck above е in print at 5x zoom; treated as a speck, no accent; stored plain. Print-quality artifact only.
+- MSK_p002 e024-e026 Ромашковъ 1-й/2-й/3-й: ordinals are stored in the first-name field (flag ORDINAL-IN-FIRSTNAME confirmed; printed after surname, before comma).
+- MSK_p003 e018/e019 Шмидтъ and e025/e026 Эйхенвальдъ ordinals also stored in first-name field (flag confirmed); e025/e026 ordinals "1-я"/"2-я" correct (print e026 shows "2·я" with a raised dot, not a hyphen).
+- MSK_p003 e034 Арендсъ: printed note is "1 августа 1900 г. назначенъ капельмейстеромъ балета"; stored rank_or_title omits the date (no letter errors).
+- MSK_p003 INSTR-VARIANT: all five flagged Біолончель rows (e001, e023, e024, e029, e035) are printed "Віолончель" -> misread В->Б; no genuine variant in print.
+- MSK_p004 e029 Ямикъ ok; e030 is the second (library section "Музыкальная библіотека / Библіотекарь") entry for Фарскій printed as an unnumbered row (print: "Фарскій, Альбертъ Карловичъ (съ 1 сентября 1882 г.)"). Stored start for it was not in the DATE-CHECK; the e025 date check is for list 29 (1 января 1894) which MATCHES; the separate library entry carries 1 сентября 1882 (modal) -> the two entries are the same person with genuinely different printed dates.
+- MSK_p004 e017 Николаевъ (Шмулевичъ), Александръ Михайловичъ: stored first/patronymic correct.
+- SP_p000: all 19 entries match letter-for-letter; Ауэръ instrument "Скрипка" and title "Солистъ Двора Его Императорскаго Величества" match print.
+- No rows printed but missing from any bundle; no duplicated rows.

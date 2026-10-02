@@ -1,0 +1,43 @@
+PAGE SUMMARY
+musicians_1900-01_MSK_p004 | entries read: 39 | entries with a discrepancy: 1
+musicians_1900-01_MSK_p005 | entries read: 2 | entries with a discrepancy: 0
+musicians_1900-01_SP_p000 | entries read: 18 | entries with a discrepancy: 0
+musicians_1900-01_SP_p001 | entries read: 37 | entries with a discrepancy: 8
+musicians_1900-01_SP_p002 | entries read: 39 | entries with a discrepancy: 1
+DISCREPANCIES
+musicians_1900-01_MSK_p004 | e025 | family | STORED: "Наккій" | PRINTED: "Нацкій" (19. Н а ц к і й, Петръ Андреевичъ) | confidence: DIRECT(zoomed) | кк vs ц
+musicians_1900-01_SP_p001 | e009 | family | STORED: "Ваншейль" | PRINTED: "Ваншейдъ" (19. Ваншейдъ, Лоренцъ Ѳедоровичъ) | confidence: DIRECT(zoomed) | ь vs дъ
+musicians_1900-01_SP_p001 | e015 | ordinal | STORED: family "Вульфъ-Израэль", first "І-й" | PRINTED: "Вульфъ-Израэль 1-й" (ordinal belongs after surname; printed digit-style 1) | confidence: DIRECT(zoomed) | ordinal in first-name field
+musicians_1900-01_SP_p001 | e015 | patronymic | STORED: "Михаилъ" (in patronymic field; first="І-й") | PRINTED: first "Михаилъ", patronymic "Александровичъ" | confidence: DIRECT(zoomed) | fields shifted by ordinal; patronymic Александровичъ missing entirely
+musicians_1900-01_SP_p001 | e016 | ordinal | STORED: family "Вульфъ-Израэль", first "2-й" | PRINTED: "Вульфъ-Израэль 2-й" | confidence: DIRECT(zoomed) | ordinal in first-name field
+musicians_1900-01_SP_p001 | e016 | patronymic | STORED: "Евгеній" (in patronymic field; first="2-й") | PRINTED: first "Евгеній", patronymic "Владиміровичъ" | confidence: DIRECT(zoomed) | fields shifted; patronymic Владиміровичъ missing
+musicians_1900-01_SP_p001 | e016 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і; broken Віо-/лончель) | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed
+musicians_1900-01_SP_p001 | e017 | patronymic | STORED: "Владимировичъ" | PRINTED: "Владимiровичъ" (Влади-/мiровичъ, dotted і after м) | confidence: DIRECT(zoomed) | и vs і
+musicians_1900-01_SP_p001 | e018 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed
+musicians_1900-01_SP_p001 | e021 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed
+musicians_1900-01_SP_p001 | e022 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed) | INSTR-VARIANT confirmed
+musicians_1900-01_SP_p001 | e037 | ordinal | STORED: family "Іогансонъ", first "2-й" | PRINTED: "Іогансонъ 2-й" | confidence: DIRECT(zoomed) | ordinal in first-name field
+musicians_1900-01_SP_p001 | e037 | patronymic | STORED: "Викторъ" (in patronymic field; first="2-й") | PRINTED: first "Викторъ", patronymic "Ивановичъ" | confidence: DIRECT(zoomed) | fields shifted; patronymic Ивановичъ missing
+musicians_1900-01_SP_p002 | e026 | family | STORED: "Людольфъ" | PRINTED: "Людольфи" (73. Л ю д о л ь ф и, Валентинъ) | confidence: DIRECT(zoomed) | final и not ъ; no patronymic printed (stored empty = correct)
+DATE-CHECK RESULTS
+musicians_1900-01_MSK_p004 | e026 | STORED start: "23 сентября 1898 г." | PRINTED start: "23 сентября 1898 г." | MATCH | DIRECT(zoomed)
+musicians_1900-01_MSK_p004 | e035 | STORED start: "1 января 1894 г." | PRINTED start: "1 января 1894 г." | MATCH | DIRECT(zoomed)
+musicians_1900-01_SP_p000 | e011 | STORED start: "1 октября 1889 г." | PRINTED start: "1 октября 1889 г." | MATCH | DIRECT(zoomed)
+musicians_1900-01_SP_p000 | e017 | STORED start: "1 сентября 1882 г." | PRINTED start: "1 сентября 1882 г." | MATCH | DIRECT(zoomed)
+musicians_1900-01_SP_p001 | e014 | STORED start: "28 мая 1857 г." | PRINTED start: "28 мая 1857 г." | MATCH | DIRECT(zoomed)
+musicians_1900-01_SP_p001 | e031 | STORED start: "1 марта 1877 г." | PRINTED start: "1 марта 1877 г." | MATCH | DIRECT(zoomed)
+musicians_1900-01_SP_p001 | e024 | STORED start: "1 октября 1885 г." | PRINTED start: "1 октября 1885 г." | MATCH | DIRECT(zoomed)
+musicians_1900-01_SP_p001 | e032 | STORED start: "1 сентября 1897 г." | PRINTED start: "1 сентября 1897 г." | MATCH | DIRECT(zoomed)
+musicians_1900-01_SP_p001 | e017 | STORED start: "1 сентября 1899 г." | PRINTED start: "1 сентября 1899 г." | MATCH | DIRECT(zoomed)
+musicians_1900-01_SP_p002 | e021 | STORED start: "20 сентября 1880 г." | PRINTED start: "20 сентября 1880 г." | MATCH | DIRECT(zoomed)
+musicians_1900-01_SP_p002 | e033 | STORED start: "11 октября 1869 г." | PRINTED start: "11 октября 1869 г." | MATCH | DIRECT(zoomed)
+OTHER FINDINGS
+- MSK_p004: patronymic inside first name on e001-e006 and e007-e038 except where only a first name is printed (known pattern; text correct).
+- MSK_p004 e039 Шульцъ (Капельмейстеръ Малаго театра, "съ 1 октября 1883 г.") matches print.
+- MSK_p004 e026 Никитинъ is Алексѣй Никитичъ (1898 start) printed; stored date is correct, the "modal 1/9/1881" comparison is probably a different Никитинъ.
+- MSK_p005 (Музыкальная библіотека): e001 Фарскій printed "съ 1 сентября 1882 г." (the library-librarian start; his Альтъ entry on MSK_p004 prints 1 января 1894), e002 Орловъ printed "съ 1 января 1857 г. по 1 февраля 1897 г. и съ 1 іюня 1897 г."; names match print.
+- SP_p001 e015/e016/e037: all three ordinal entries (Вульфъ-Израэль 1-й/2-й, Іогансонъ 2-й) have ordinal in first, first name in patronymic field, true patronymic missing; printed ordinals use the book's digit 1/2, stored "І-й" for e015 is a letter I.
+- SP_p001: other INSTR-VARIANT AUTO-FLAGS refuted? none; all four (e016, e018, e021, e022) confirmed (printed Віолончель). The ORDINAL-IN-FIRSTNAME flags (e015, e016, e037) are confirmed.
+- SP_p000: all 18 rows match print (no discrepancies); non-bold surnames are letter-spaced in this volume, not bold.
+- SP_p002: e030/e031 Михаловскій 1-й / 2-й match print (ordinal kept in family). e018 "Де Ланге" matches print.
+- Stored text scanned programmatically on all five pages: no Latin/non-Cyrillic letters, no hyphen/space line-break artifacts found.

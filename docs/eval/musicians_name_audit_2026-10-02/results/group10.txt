@@ -1,0 +1,39 @@
+PAGE SUMMARY
+musicians_1894-95_SP_p000 | entries read: 27 | entries with a discrepancy: 1
+musicians_1894-95_SP_p001 | entries read: 47 | entries with a discrepancy: 4
+musicians_1894-95_SP_p002 | entries read: 52 | entries with a discrepancy: 6
+musicians_1894-95_SP_p003 | entries read: 47 | entries with a discrepancy: 3
+musicians_1894-95_SP_p004 | entries read: 42 | entries with a discrepancy: 6
+DISCREPANCIES
+musicians_1894-95_SP_p000 | e017 | family | STORED: "Брайнь" | PRINTED: "Брайнъ" (hard sign) | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p001 | e011 | family | STORED: "Грибень 1-й" | PRINTED: "Грибенъ 1-й" (hard sign) | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p001 | e012 | family | STORED: "Грибень 2-й" | PRINTED: "Грибенъ 2-й" (hard sign) | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p001 | e015 | family | STORED: "Грюнерть" | PRINTED: "Грюнертъ" (hard sign) | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p001 | e034 | family | STORED: "Кернешко" | PRINTED: "Керкешко" (к, not н) | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p002 | e012 | family | STORED: "Плацатиа" | PRINTED: "Плацатка" | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p002 | e030 | family | STORED: "Терь-Огановъ" | PRINTED: "Теръ-Огановъ" (hard sign) | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p002 | e037 | family | STORED: "Хаанъ" | PRINTED: "Хаакъ" | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p002 | e048 | family | STORED: "Шолляръ" | PRINTED: "Шолларъ" | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p002 | e050 | family | STORED: "Штаръ" | PRINTED: "Штаркъ" (к before ъ; bold k glyph resembles н) | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p002 | e051 | family | STORED: "Штейль" | PRINTED: "Штейдль" | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p003 | e012 | family | STORED: "Бесно" | PRINTED: "Беско" | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p003 | e017 | family | STORED: "Виргеліошъ" | PRINTED: "Виргеліюшъ" | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p003 | e029 | family | STORED: "Лень" | PRINTED: "Ленъ" (hard sign) | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p004 | e002 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed
+musicians_1894-95_SP_p004 | e003 | family | STORED: "Армегеймеръ" | PRINTED: "Армсгеймеръ" (с, not е, after м) | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p004 | e007 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed
+musicians_1894-95_SP_p004 | e014 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed
+musicians_1894-95_SP_p004 | e024 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і) | confidence: DIRECT(zoomed) | INSTR-VARIANT flag confirmed
+musicians_1894-95_SP_p004 | e031 | family | STORED: "Рехахъ" | PRINTED: "Рехакъ" | confidence: DIRECT(zoomed)
+DATE-CHECK RESULTS
+musicians_1894-95_SP_p000 | e005 | STORED start: "1 сентября 1886 г." | PRINTED start: "1 сентября 1886 г." (Дриго, line-broken "сен-/тября") | MATCH | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p001 | e012 | STORED start: "15 августа 1873 г." | PRINTED start: "15 августа 1873 г." (Грибенъ 2-й; also "Оставилъ службу 1 октября 1894 г.") | MATCH | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p004 | e018 | STORED start: "1 декабря 1879 г." | PRINTED start: "1 декабря 1879 г." (Кулле 1-й) | MATCH | confidence: DIRECT(zoomed)
+musicians_1894-95_SP_p004 | e042 | STORED start: "1 декабря 1894 г." | PRINTED start: "1 декабря 1894 г." (Шредеръ) | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- No pages have patronymic-in-first-name pattern; all given names/patronymics read correctly (all ѣ/ѳ/і forms match print).
+- All four DATE-CHECK printed dates equal the stored dates; the "disagreeing" other entries are for the same-surname/other person or other year (e.g. Кулле 1-й p004 e018 vs Кулле 2-й p003 e028 are different persons: 1879 vs 1891).
+- p001 e011/e012 (Грибенъ), e015, p002 e030, p000 e017, p003 e029 are all hard-sign (ъ) read as soft sign (ь); the recurring pattern is ъ->ь in surnames.
+- No non-Cyrillic characters or stray spaces/hyphens found in any stored value on these 5 pages.
+- Printed service notes (Оставилъ службу ..., переведенъ ..., Участвуетъ ..., † 18 апрѣля 1895 г. for Франке 2-й) are not rows; not checked for storage.
+- p003 e009 Кротковъ (and p004 e001 Рамзе) are heads without list number, correctly stored.

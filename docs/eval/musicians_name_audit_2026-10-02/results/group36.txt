@@ -1,0 +1,43 @@
+PAGE SUMMARY
+musicians_1905-06_SP_p006 | entries read: 29 | entries with a discrepancy: 1
+musicians_1906-07_MSK_p000 | entries read: 10 | entries with a discrepancy: 1
+musicians_1906-07_MSK_p001 | entries read: 38 | entries with a discrepancy: 3
+musicians_1906-07_MSK_p002 | entries read: 38 | entries with a discrepancy: 3
+musicians_1906-07_MSK_p003 | entries read: 40 | entries with a discrepancy: 8
+DISCREPANCIES
+musicians_1905-06_SP_p006 | e001 | family | STORED: "Лихтенбергъ" | PRINTED: "Лихтенбергеръ" | confidence: DIRECT(zoomed) | extra "е" before final "ръ"
+musicians_1906-07_MSK_p000 | e006 | family | STORED: "Авѣрино" | PRINTED: "Авьерино" | confidence: DIRECT(zoomed) | printed letters А-в-ь-е-р-и-н-о (soft sign + е, no ѣ)
+musicians_1906-07_MSK_p001 | e010 | family | STORED: "Бруцынь" | PRINTED: "Бруцынъ" | confidence: DIRECT(zoomed) | hard sign, not soft sign
+musicians_1906-07_MSK_p001 | e026 | family | STORED: "Добрє" | PRINTED: "Добре" | confidence: DIRECT(zoomed) | stored has Ukrainian є (MIXED-SCRIPT flag confirmed); printed is plain Cyrillic е
+musicians_1906-07_MSK_p001 | e028 | family | STORED: "Домашунась" | PRINTED: "Домащунасъ" | confidence: DIRECT(zoomed) | two letter errors: ш for щ, and final ь for ъ
+musicians_1906-07_MSK_p002 | e006 | family | STORED: "Костлянь" | PRINTED: "Костлянъ" | confidence: DIRECT(zoomed) | hard sign, not soft sign
+musicians_1906-07_MSK_p002 | e029 | family | STORED: "Пащееъ" | PRINTED: "Пащеевъ" | confidence: DIRECT(zoomed) | stored is missing the "в"
+musicians_1906-07_MSK_p002 | e030 | ordinal | STORED: "Пекарскій 1" | PRINTED: "Пекарскій I," | confidence: DIRECT(zoomed) | printed glyph is a plain capital I (bar, no flag), unlike the flagged digit 1 elsewhere on the page; e031 is printed with arabic "2" ("Пекарскій 2,"); print inconsistency, stored "1" is a normalization
+musicians_1906-07_MSK_p003 | e002 | ordinal | STORED: "Ромашковъ" | PRINTED: "Ромашковъ 1-й" | confidence: DIRECT(zoomed) | ordinal missing from family
+musicians_1906-07_MSK_p003 | e003 | ordinal | STORED: "Ромашковъ" | PRINTED: "Ромашковъ 2-й" | confidence: DIRECT(zoomed) | ordinal missing from family
+musicians_1906-07_MSK_p003 | e011 | ordinal | STORED: "Соколовъ" | PRINTED: "Соколовъ 1-й" | confidence: DIRECT(zoomed) | ordinal missing from family
+musicians_1906-07_MSK_p003 | e012 | ordinal | STORED: "Соколовъ" | PRINTED: "Соколовъ 2-й" | confidence: DIRECT(zoomed) | ordinal missing from family
+musicians_1906-07_MSK_p003 | e017 | first | STORED: "Никіфоръ" | PRINTED: "Никифоръ" | confidence: DIRECT(zoomed) | stored has і, printed has и
+musicians_1906-07_MSK_p003 | e032 | ordinal | STORED: "Шмидтъ" | PRINTED: "Шмидтъ 1-й" | confidence: DIRECT(zoomed) | ordinal missing from family
+musicians_1906-07_MSK_p003 | e033 | ordinal | STORED: "Шмидтъ" | PRINTED: "Шмидтъ 2-й" | confidence: DIRECT(zoomed) | ordinal missing from family
+DATE-CHECK RESULTS
+musicians_1906-07_MSK_p001 | e022 | STORED start: "1 октября 1883 г." | PRINTED start: "1 октября 1883 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_MSK_p002 | e028 | STORED start: "19 сентября 1882 г." | PRINTED start: "19 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_MSK_p002 | e010 | STORED start: "10 сентября 1882 г." | PRINTED start: "10 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_MSK_p002 | e024 | STORED start: "1 іюня 1897 г." | PRINTED start: "1 іюня 1897 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_MSK_p002 | e023 | STORED start: "28 августа 1906 г." | PRINTED start: "28 августа 1906 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_MSK_p002 | e016 | STORED start: "23 сентября 1898 г." | PRINTED start: "23 сентября 1898 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_MSK_p003 | e034 | STORED start: "16 августа 1904 г." | PRINTED start: "16 августа 1904 г." | MATCH | confidence: DIRECT(zoomed) | the 9 is slightly smudged but reads 1904
+musicians_1906-07_MSK_p003 | e016 | STORED start: "15 августа 1905 г." | PRINTED start: "15 августа 1905 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- All 8 date-check entries MATCH the print: the stored dates are right, so the disagreeing "modal" dates belong to other entries (or are genuinely different people), not misreads here.
+- SP_p006 e029 (Новоселовъ) is the librarian printed under the heading "Старшій библіотекарь Центральной Музыкальной Библіотеки"; stored title/instrument both "-" (heading not captured on this row). Printed start "съ 1 августа 1882 г.".
+- SP_p006: no hyphenation artifacts; Прокоповичъ e016 print has a damaged initial "Г" in "Григорье-вичъ" but the stored "Григорьевичъ" is the correct reading.
+- MSK_p000 has no instrument printed for the conductors (e001-e005); stored instrument "-" is correct. List numbers restart (1,2 / 1,2 / 1-5) per section; stored matches.
+- MSK_p002 e009 Крейнъ: "Концертмейстеръ" is printed in the instrument position; stored as rank_or_title with instrument "-" (field-placement choice, text correct).
+- MSK_p002 e007 Котрба: stored instrument "Валторнъ" matches print ("Валторнъ", hard sign, unlike "Валторна" elsewhere).
+- MSK_p003 e018 Сиборъ: stored instrument "Скрипка", title "Солистъ балета." matches print.
+- Printed "Оставилъ службу ..." / "Переведенъ ..." notes (SP_p006 e003, e006, e021; MSK_p001 e022, e032; MSK_p002 e003, e008, e010, e035, e038) are not in the bundle's name fields; not checked against other columns.
+- MSK_p003 e017 stored first "Никіфоръ" disagrees with the print and also with the usual spelling of this given name on the page (e019 Табаковъ etc. use ф-forms).
+- No patronymic-inside-first-name rows on these pages (1900s volumes).
+- No printed rows missing from any bundle; all list numbers match the print.

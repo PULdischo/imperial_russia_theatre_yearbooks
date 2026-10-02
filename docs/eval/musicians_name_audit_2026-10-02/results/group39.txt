@@ -1,0 +1,37 @@
+PAGE SUMMARY
+musicians_1907-08_MSK_p002 | entries read: 38 | entries with a discrepancy: 2
+musicians_1907-08_MSK_p003 | entries read: 34 | entries with a discrepancy: 2
+musicians_1907-08_SP_p000 | entries read: 29 | entries with a discrepancy: 1
+musicians_1907-08_SP_p001 | entries read: 38 | entries with a discrepancy: 2
+musicians_1907-08_SP_p002 | entries read: 40 | entries with a discrepancy: 6
+DISCREPANCIES
+musicians_1907-08_MSK_p002 | e003 | space | STORED: "Пащее въ" | PRINTED: "Пащеевъ" | confidence: DIRECT(zoomed) | stray space (AUTO-FLAG SPACE-IN-FAMILY confirmed)
+musicians_1907-08_MSK_p002 | e029 | first | STORED: "Никіфоръ" | PRINTED: "Никифоръ" (plain и, no dot, in the 'ки' and 'ифоръ') | confidence: DIRECT(zoomed) | dotted-і inserted wrongly (Слѣпуховъ, list no. 98)
+musicians_1907-08_MSK_p003 | e006 | ordinal | STORED: family "Шмидтъ", first "1-й", patronymic "Францъ" | PRINTED: "Шмидтъ 1-й, Францъ" (family=Шмидтъ 1-й, first=Францъ, patronymic none) | confidence: DIRECT(zoomed) | ordinal in first-name field and real first name pushed into patronymic (AUTO-FLAG ORDINAL-IN-FIRSTNAME confirmed)
+musicians_1907-08_MSK_p003 | e007 | ordinal | STORED: family "Шмидтъ", first "2-й", patronymic "Фридрихъ" | PRINTED: "Шмидтъ 2-й, Фридрихъ" (family=Шмидтъ 2-й, first=Фридрихъ, patronymic none) | confidence: DIRECT(zoomed) | same pattern as e006 (AUTO-FLAG confirmed)
+musicians_1907-08_SP_p000 | e019 | family | STORED: "Больмъ" | PRINTED: "Бѳльмъ" (second letter is lowercase fita ѳ, not о) | confidence: DIRECT(zoomed, 5x) | PRINT-TYPO? (Больмъ presumably intended; ѳ glyph is printed)
+musicians_1907-08_SP_p001 | e035 | family | STORED: "Де-Лангe" (last letter is Latin e U+0065) | PRINTED: "Де-Ланге" (Cyrillic е) | confidence: DIRECT(zoomed) | AUTO-FLAG MIXED-SCRIPT confirmed (verified by codepoint)
+musicians_1907-08_SP_p001 | e037 | family | STORED: "Лангe" (last letter is Latin e U+0065) | PRINTED: "Ланге" (Cyrillic е) | confidence: DIRECT(zoomed) | AUTO-FLAG MIXED-SCRIPT confirmed (verified by codepoint)
+musicians_1907-08_SP_p002 | e004 | family | STORED: "Лукась" | PRINTED: "Лукасъ" | confidence: DIRECT(zoomed) | ь for ъ
+musicians_1907-08_SP_p002 | e005 | family | STORED: "Людольфъ" | PRINTED: "Людольфи" | confidence: DIRECT(zoomed) | final letter и, not ъ
+musicians_1907-08_SP_p002 | e006 | family | STORED: "Малыі" (final letter is Cyrillic і) | PRINTED: "Малый" (й) | confidence: DIRECT(zoomed) | і for й
+musicians_1907-08_SP_p002 | e008 | ordinal | STORED: "Михаловскій" | PRINTED: "Михаловскій 1-й" | confidence: DIRECT(zoomed) | ordinal dropped
+musicians_1907-08_SP_p002 | e009 | ordinal | STORED: "Михаловскій" | PRINTED: "Михаловскій 2-й" | confidence: DIRECT(zoomed) | ordinal dropped
+musicians_1907-08_SP_p002 | e040 | family | STORED: "Тракаль" | PRINTED: "Тракалъ" | confidence: DIRECT(zoomed) | ь for ъ
+DATE-CHECK RESULTS
+musicians_1907-08_MSK_p002 | e002 | STORED start: "19 сентября 1882 г." | PRINTED start: "19 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_MSK_p002 | e028 | STORED start: "15 августа 1905 г." | PRINTED start: "15 августа 1905 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_MSK_p003 | e024 | STORED start: "21 сентября 1898 г." | PRINTED start: "21 сентября 1898 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_MSK_p003 | e008 | STORED start: "16 августа 1904 г." | PRINTED start: "16 августа 1904 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_MSK_p003 | e032 | STORED start: "1 декабря 1905 г." | PRINTED start: "1 декабря 1905 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_SP_p000 | e009 | STORED start: "1 февраля 1902 г." | PRINTED start: "1 февраля 1902 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_SP_p000 | e002 | STORED start: "28 ноября 1863 г." | PRINTED start: "28 ноября 1863 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_SP_p001 | e020 | STORED start: "1 марта 1896 г." | PRINTED start: "1 марта 1896 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_SP_p002 | e040 | STORED start: "1 октября 1903 г." | PRINTED start: "1 октября 1903 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- All 9 date-check entries match the print; the stored dates are correct, so the disagreement with the other entries reflects genuinely different people or a misread elsewhere.
+- No patronymic-inside-first-name pattern on these five 1907-08 pages (patronymics are in their own field throughout).
+- MSK_p003 e018 (Яньшиновъ) has no instrument printed (print ends after the start date); stored instrument empty is correct. e031-e034 also have no instrument printed.
+- SP_p001 e029 Котте: print has "Фридрихъ - Эрнестъ" with justified spaces around the hyphen; stored "Фридрихъ-Эрнестъ" (no spaces) is a reasonable reading; letters match.
+- SP_p002 e019: print has a period, not a comma, after "Поббигъ." (printing quirk, letters match).
+- SP_p000 e008 etc.: list numbers on all pages match print; no entry missing from a bundle on any page.

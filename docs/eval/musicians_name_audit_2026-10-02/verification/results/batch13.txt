@@ -1,0 +1,31 @@
+ITEM musicians_1904-05_SP_p003|e007|instrument | READ: "Вальдгорнъ" | CHOICE: A | confidence: DIRECT | д with feet clearly visible; stored Вальтгорнъ is wrong
+ITEM musicians_1904-05_SP_p003|e012|family | READ: "Тецъ" | CHOICE: A | confidence: DIRECT | Т е ц ъ (ц with descender tail); not п
+ITEM musicians_1904-05_SP_p003|e031|family | READ: "Штейнсъ" | CHOICE: B | confidence: DIRECT | Ш т е й н с ъ, clear с before ъ (stored Штейнъ drops the с)
+ITEM musicians_1904-05_SP_p003|e037|family | READ: "Юнкеръ" | CHOICE: B | confidence: DIRECT | Ю н к е р ъ, no т (stored Юнкертъ wrong)
+ITEM musicians_1904-05_SP_p004|e011|first | READ: "Альфре[д]ъ" | CHOICE: A | confidence: UNCERTAIN | penultimate glyph is faint/ink-light but д-shaped with base serifs; patronymic on same line is Альфредовичъ; reads as Альфредъ
+ITEM musicians_1904-05_SP_p004|e014|first | READ: "Меѳолій" | CHOICE: A | confidence: DIRECT | clear ѳ (barred theta) in 3rd position; patronymic Іосифовичъ
+ITEM musicians_1904-05_SP_p004|e028|family | READ: "Недзейко" | CHOICE: B | confidence: DIRECT | Н е д з е й к о, plain е (not ѣ) in 5th position; stored Недзѣйко wrong
+ITEM musicians_1904-05_SP_p004|e039|patronymic | READ: "Фелоровичъ" | CHOICE: B | confidence: UNCERTAIN | at 6x the д position is л-shaped (no base feet), same shape as л in Гавріилъ; looks like a print typo (or lost feet) for Федоровичъ
+ITEM musicians_1904-05_SP_p005|e001|instrument | READ: "Флейга" | CHOICE: A | confidence: DIRECT | printed г instead of т (genuine print typo); Флейга
+ITEM musicians_1904-05_SP_p005|e005|family | READ: "Армсгеймеръ" | CHOICE: A | confidence: DIRECT | А р м с г е й м е р ъ, с present after м
+ITEM musicians_1904-05_SP_p005|e009|family | READ: "Вилькенъ" | CHOICE: A | confidence: DIRECT | В и л ь к е н ъ, lowercase л ь (stored ВиЛЬкенъ is case-garbled)
+ITEM musicians_1904-05_SP_p005|e033|patronymic | READ: "Аѳанасьевичъ" | CHOICE: A | confidence: DIRECT | second letter is barred theta ѳ; (nb: ending reads -сьевичъ/-сьсвичъ, е slightly closed) 
+ITEM musicians_1905-06_MSK_p001|e001|list | READ: "1." | CHOICE: B | confidence: DIRECT | Репетиторы section: "1. Брындинъ"
+ITEM musicians_1905-06_MSK_p001|e002|list | READ: "2." | CHOICE: A | confidence: DIRECT | Репетиторы section: "2. Соколовъ"
+ITEM musicians_1905-06_MSK_p001|e003|list | READ: "1." | CHOICE: A | confidence: DIRECT | Аккомпаніаторы section: "1. Китрихъ"
+ITEM musicians_1905-06_MSK_p001|e004|list | READ: "2." | CHOICE: B | confidence: DIRECT | Аккомпаніаторы section: "2. Агамантовъ"
+ITEM musicians_1905-06_MSK_p001|e012|instrument | READ: "Фаготъ" | CHOICE: A | confidence: DIRECT | "6. Арабай, Николай Николаевичъ (съ 16 августа 1905 г.). Фаготъ."
+ITEM musicians_1905-06_MSK_p002|e016|family | READ: "Кведнау" | CHOICE: A | confidence: DIRECT | К в е д н а у, д with feet
+ITEM musicians_1905-06_MSK_p003|e001|family | READ: "Пащеевъ" | CHOICE: B | confidence: DIRECT | П а щ е е в ъ, щ with descender tail
+ITEM musicians_1905-06_MSK_p003|e009|patronymic | READ: "Рессеръ, Мордохей Земинъ Шліомовичъ" | CHOICE: NEITHER | confidence: DIRECT | printed first name = "Мордохей Земинъ", patronymic = "Шліомовичъ" (broken across line "Шліо-/мовичъ"); correct patronymic field is "Шліомовичъ", first "Мордохей Земинъ"; A (Земинъ) is wrong, B is whole-entry not a patronymic
+ITEM musicians_1905-06_MSK_p004|e002|family | READ: "Цыбинъ" | CHOICE: A | confidence: DIRECT | Ц ы б и н ъ, Ц with descender tail, not Щ
+ITEM musicians_1905-06_MSK_p004|e008|ordinal | READ: "Шмидтъ 1-й, Францъ" | CHOICE: FREEFORM | confidence: DIRECT | confirms prior reviewer: ordinal 1-й after surname, first name Францъ, no patronymic (then "(съ 15 августа 1880 г.). Фаготъ.")
+ITEM musicians_1905-06_MSK_p004|e009|ordinal | READ: "Шмидтъ 2-й, Фридрихъ" | CHOICE: FREEFORM | confidence: DIRECT | confirms prior reviewer: ordinal 2-й after surname, first name Фридрихъ, no patronymic (then "(съ 1 сентября 1891 г.). Альтъ.")
+ITEM musicians_1905-06_MSK_p004|e021|family | READ: "Яньшиновъ" | CHOICE: B | confidence: DIRECT | Я н ь ш и н о в ъ, ь after н (stored Янышиновъ has ы)
+ITEM musicians_1905-06_MSK_p004|e032|instrument | READ: "Флейтэ" | CHOICE: B | confidence: DIRECT | final glyph is э-shaped (print typo/damaged а), not а: "Флейтэ."
+ITEM musicians_1905-06_SP_p001|e017|family | READ: "Будаевъ" | CHOICE: B | confidence: DIRECT | Б у д а е в ъ, no л (stored Булдаевъ wrong)
+ITEM musicians_1905-06_SP_p001|e018|first | READ: "Конрадъ" | CHOICE: A | confidence: DIRECT | К о н р а д ъ, д with feet; stored Конраль wrong
+ITEM musicians_1905-06_SP_p001|e025|family | READ: "Виргеліюшъ" | CHOICE: A | confidence: DIRECT | В и р г е л і ю ш ъ; ю (not о) present; stored Виргеліошъ wrong
+ITEM musicians_1905-06_SP_p002|e040|ordinal | READ: "Михаловскій 1-й" | CHOICE: A | confidence: DIRECT | "74. Михаловскій 1-й, Станиславъ Викентьевичъ"; (75 is "Михаловскій 2-й, Сигизмундъ")
+ITEM musicians_1905-06_SP_p003|e026|family | READ: "Словачевскій" | CHOICE: B | confidence: DIRECT | С л о в а ч е в с к і й, ч (not ц) after а; "100." on this page
+DONE 30 items

@@ -1,0 +1,36 @@
+PAGE SUMMARY
+musicians_1901-02_MSK_p001 | entries read: 38 | entries with a discrepancy: 2
+musicians_1901-02_MSK_p002 | entries read: 39 | entries with a discrepancy: 3
+musicians_1901-02_MSK_p003 | entries read: 40 | entries with a discrepancy: 6
+musicians_1901-02_MSK_p004 | entries read: 38 | entries with a discrepancy: 4
+musicians_1901-02_MSK_p005 | entries read: 2 | entries with a discrepancy: 0
+DISCREPANCIES
+musicians_1901-02_MSK_p001 | e002 | family | STORED: "Брындлинъ" | PRINTED: "Брындинъ" | confidence: DIRECT(zoomed) | extra letter л stored
+musicians_1901-02_MSK_p001 | e025 | family | STORED: "Гречкій" | PRINTED: "Грецкій" | confidence: DIRECT(zoomed) | ц misread as ч
+musicians_1901-02_MSK_p002 | e013 | family | STORED: "Кристелъ" | PRINTED: "Кристель" | confidence: DIRECT(zoomed) | soft sign printed, hard sign stored
+musicians_1901-02_MSK_p002 | e014 | patronymic | STORED: "Никитовичъ" | PRINTED: "Никифоровичъ" (line-break Никифо-/ровичъ) | confidence: DIRECT(zoomed) | family Крутоголововъ matches print
+musicians_1901-02_MSK_p002 | e030 | family | STORED: "Пашеевъ" | PRINTED: "Пащеевъ" | confidence: DIRECT(zoomed) | ш stored for щ
+musicians_1901-02_MSK_p003 | e002 | ordinal | STORED: "Ромашковъ" | PRINTED: "Ромашковъ 1-й" | confidence: DIRECT(zoomed) | ordinal dropped
+musicians_1901-02_MSK_p003 | e003 | ordinal | STORED: "Ромашковъ" | PRINTED: "Ромашковъ 2-й" | confidence: DIRECT(zoomed) | ordinal dropped
+musicians_1901-02_MSK_p003 | e004 | ordinal | STORED: "Ромашковъ" | PRINTED: "Ромашковъ 3-й" | confidence: DIRECT(zoomed) | ordinal dropped
+musicians_1901-02_MSK_p003 | e011 | first | STORED: "Инхекъ-Мейеръ" | PRINTED: "Ицхекъ-Мейеръ" | confidence: DIRECT(zoomed) | ц misread as н
+musicians_1901-02_MSK_p003 | e034 | ordinal | STORED: "Шмидтъ" | PRINTED: "Шмидтъ 1-й" | confidence: DIRECT(zoomed) | ordinal dropped
+musicians_1901-02_MSK_p003 | e035 | ordinal | STORED: "Шмидтъ" | PRINTED: "Шмидтъ 2-й" | confidence: DIRECT(zoomed) | ordinal dropped
+musicians_1901-02_MSK_p004 | e001 | ordinal | STORED: family "Эйхенвальдъ", patronymic "1-я" | PRINTED: "Эйхенвальдъ 1-я, Ида" (no patronymic) | confidence: DIRECT(zoomed) | ordinal in the wrong field (patronymic) instead of family
+musicians_1901-02_MSK_p004 | e002 | ordinal | STORED: "Эйхенвальдъ" | PRINTED: "Эйхенвальдъ 2-я" | confidence: DIRECT(zoomed) | ordinal dropped (patronymic Александровна is correct)
+musicians_1901-02_MSK_p004 | e030 | first | STORED: "Никіфоръ" (dotted і U+0456) | PRINTED: "Никифоръ" (plain и) | confidence: DIRECT(zoomed) |
+musicians_1901-02_MSK_p004 | e034 | instrument | STORED: "-" (empty) | PRINTED: "Альтъ" | confidence: DIRECT(zoomed) | printed "(онъ же и библіотекарь Музыкальной библіотеки) (съ 1 января 1894 г.). Альтъ."; rank_or_title text matches print
+DATE-CHECK RESULTS
+musicians_1901-02_MSK_p002 | e028 | STORED start: "съ 10 октября 1878 г." | PRINTED start: "съ 10 октября 1878 г. по 30 декабря 1880 г. и съ 19 сентября 1882 г." | MATCH (first of two tenure periods; stored takes first) | confidence: DIRECT(zoomed)
+musicians_1901-02_MSK_p002 | e016 | STORED start: "съ 1 апрѣля 1897 г.)" | PRINTED start: "съ 1 апрѣля 1897 г." | MATCH (stored has a stray closing paren) | confidence: DIRECT(zoomed)
+musicians_1901-02_MSK_p003 | e040 | STORED start: "14 апрѣля 1880 г." | PRINTED start: "съ 14 апрѣля 1880 г. по 1 сентября 1882 г. и съ 1 сентября 1883 г." | MATCH (first of two tenure periods; the later 1883 start is the modal) | confidence: DIRECT(zoomed)
+musicians_1901-02_MSK_p004 | e026 | STORED start: "съ 23 сентября 1898 г." | PRINTED start: "съ 23 сентября 1898 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1901-02_MSK_p004 | e034 | STORED start: "съ 1 января 1894 г." | PRINTED start: "съ 1 января 1894 г." | MATCH (the modal 1/9/1882 is the separate p005 Музыкальная библіотека entry "съ 1 сентября 1882 г."; as orchestra alto the start is genuinely 1894) | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- No patronymic-inside-first-name pattern on any of these pages; all fields are separated.
+- p002 e019 Лидтке: "Готгильдъ Францъ" are two given names, stored first="Готгильдъ", patronymic="Францъ" (no -ичъ in print); field placement only, text correct.
+- p002 e023 Марквардтъ (printed "онъ же и капельмейстеръ военной музыки") is the same person as p001 e004 Марквардтъ (Капельмейстеръ), both stored; no letter differences.
+- p001 e014 Вейнаръ is followed by "Оставилъ службу 1 октября 1901 г."; p002 e029 Палице followed by "† 23 мая 1902 г."; p004 e001 followed by "Оставила службу 1 декабря 1901 г." (annotations not in name fields).
+- p001 e004 (Марквардтъ), p004 e038 (Шульцъ, Капельмейстеръ) and p005 e001/e002 have no list number in print, as stored.
+- No mixed-script (Latin/Cyrillic) characters found in any stored value on these five pages.
+- p005 Фарскій (Библіотекарь, съ 1 сентября 1882 г.) and Орловъ Александръ Андреевичъ (Помощникъ его, съ 1 января 1857 г. по 1 февраля 1897 г. и съ 1 іюня 1897 г.) match print letter for letter.

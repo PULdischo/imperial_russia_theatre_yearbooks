@@ -1,0 +1,27 @@
+PAGE SUMMARY
+musicians_1898-99_SP_p003 | entries read: 39 | entries with a discrepancy: 1
+musicians_1898-99_SP_p004 | entries read: 37 | entries with a discrepancy: 2
+musicians_1898-99_SP_p005 | entries read: 36 | entries with a discrepancy: 1
+musicians_1898-99_SP_p006 | entries read: 30 | entries with a discrepancy: 1
+musicians_1899-00_MSK_p000 | entries read: 18 | entries with a discrepancy: 1
+DISCREPANCIES
+musicians_1898-99_SP_p003 | e031 | first | STORED: "Капутъ-Эмерикъ" | PRINTED: "Канутъ-Эмерикъ" | confidence: DIRECT(zoomed) | п read for н; surname Хейкель matches
+musicians_1898-99_SP_p004 | e018 | family | STORED: "Булановъ" | PRINTED: "Будановъ" | confidence: DIRECT(zoomed) | л read for д (4th letter д, 5th letter а, then н)
+musicians_1898-99_SP_p004 | e033 | first | STORED: "Аеанасій" | PRINTED: "Аѳанасій" | confidence: DIRECT(zoomed) | ѳ read as е; surname Кеймъ and patronymic Ивановичъ match
+musicians_1898-99_SP_p005 | e020 | family | STORED: "Мокъевъ" | PRINTED: "Мокѣевъ" | confidence: DIRECT(zoomed) | ѣ read as ъ (letter 4)
+musicians_1898-99_SP_p006 | e013 | family | STORED: "Мелвѣдевъ" | PRINTED: "Медвѣдевъ" | confidence: DIRECT(zoomed) | л read for д (3rd letter)
+musicians_1899-00_MSK_p000 | e010 | instrument | STORED: "Вальторнъ" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | printed with line-break "Вальд-/горнъ"; stored form is a different word
+DATE-CHECK RESULTS
+musicians_1898-99_SP_p006 | e005 | STORED start: "1 декабря 1878 г." | PRINTED start: "1 декабря 1878 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1898-99_SP_p006 | e029 | STORED start: "15 сентября 1897 г." | PRINTED start: "15 сентября 1897 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- No bundle on p003/p004/p005/MSK_p000 had DATE-CHECK lines; p006 had two (e005 Кулле 1-й, e029 Штейнсъ), both match print exactly.
+- p003: patronymic printed in all entries is stored in its own field (no patronymic-in-first-name pattern seen on any of my 5 pages).
+- p003 e033 Цабель and e036 Чіарлоне: print adds "Солистъ / Солистка Двора Его Императорскаго Величества" after instrument; stored rank_or_title is "-" in the bundle (possibly stored elsewhere; flag only).
+- p004 e014 Ѳедоровъ: print "Оставилъ службу : сентября 1898 г." (day numeral printed as a colon-like mark, PRINT-TYPO?); instrument printed "Віолончелъ"-looking but glyph read as ь at 14x zoom -> treated as match (UNCERTAIN ъ/ь).
+- p004 e037 Галкинъ (Капельмейстеръ, no instrument/list no.) matches print incl. "Владиміровичъ".
+- p005 e002 Келеръ (Капельмейстеръ Михайловскаго): print "Федоровичъ" with plain Ф (not Ѳ); stored matches.
+- p005 e018/e019 "Мальковъ 1-й"/"2-й" and p006 e005/e006 "Кулле 1-й"/"2-й": ordinals correctly stored in family.
+- p006 e030 Новоселовъ: print has heading "Старшій библіотекарь Центральной Музыкальной Бблиотеки" (sic, print typo "Бблиотеки"); stored rank_or_title "-" and instrument "-".
+- MSK p000: e001-e006 (Симонъ, Альтани, Рябовъ, Брындинъ, Герберъ, Марквардтъ) all match print; no instruments printed for them.
+- No Latin/non-Cyrillic characters found in any stored value on these 5 pages (checked programmatically).

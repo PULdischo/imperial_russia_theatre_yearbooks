@@ -1,0 +1,31 @@
+ITEM musicians_1900-01_MSK_p003|e019|instrument | READ: "Альтъ" | CHOICE: A | confidence: DIRECT | final hard sign clearly present
+ITEM musicians_1900-01_MSK_p003|e021|instrument | READ: "Альтъ" | CHOICE: B | confidence: DIRECT | line-break "Альтъ." ends with ъ
+ITEM musicians_1900-01_MSK_p003|e025|family | READ: "Цыбинъ" | CHOICE: A | confidence: DIRECT | 6x zoom: Ц-ы-б-и-н-ъ (ы, not и); stored Цибинъ is wrong
+ITEM musicians_1900-01_MSK_p003|e037|family | READ: "Штадлеръ" | CHOICE: B | confidence: DIRECT | Ш-т-а-д-л-е-р-ъ; no second л; stored Шталлеръ is wrong
+ITEM musicians_1900-01_MSK_p004|e025|family | READ: "Нацкій" | CHOICE: B | confidence: DIRECT | Н-а-ц-к-і-й; ц, not кк; і (i-decimal) before й
+ITEM musicians_1900-01_SP_p001|e009|family | READ: "Ваншейдъ" | CHOICE: B | confidence: DIRECT | В-а-н-ш-е-й-д-ъ; final letters дъ, not ль
+ITEM musicians_1900-01_SP_p001|e015|ordinal | READ: "Вульфъ-Израэль 1-й, Михаилъ Александровичъ" | CHOICE: FREEFORM | confidence: DIRECT | ordinal after surname, digit-style 1-й; matches reviewer
+ITEM musicians_1900-01_SP_p001|e015|patronymic | READ: "Михаилъ Александровичъ" | CHOICE: FREEFORM | confidence: DIRECT | first Михаилъ, patronymic Александровичъ (line-broken "Михаилъ / Александровичъ"); stored row lacks patronymic
+ITEM musicians_1900-01_SP_p001|e016|ordinal | READ: "Вульфъ-Израэль 2-й, Евгеній Владіміровичъ" | CHOICE: FREEFORM | confidence: DIRECT | ordinal 2-й after surname; matches reviewer
+ITEM musicians_1900-01_SP_p001|e016|patronymic | READ: "Евгеній Владіміровичъ" | CHOICE: FREEFORM | confidence: DIRECT | patronymic Владіміровичъ (Влади-міровичъ spelled Владимiровичъ with і), stored row lacks patronymic
+ITEM musicians_1900-01_SP_p001|e017|patronymic | READ: "Владимiровичъ" (printed line-broken "Влади-/міровичъ", 7th letter is old dotted і) | CHOICE: B | confidence: DIRECT | letters match B; A (plain и in 7th place) is wrong
+ITEM musicians_1900-01_SP_p001|e037|ordinal | READ: "Іогансонъ 2-й, Викторъ Ивановичъ" | CHOICE: FREEFORM | confidence: DIRECT | ordinal after surname; matches reviewer
+ITEM musicians_1900-01_SP_p001|e037|patronymic | READ: "Викторъ Ивановичъ" | CHOICE: FREEFORM | confidence: DIRECT | patronymic Ивановичъ; stored row lacks patronymic
+ITEM musicians_1900-01_SP_p002|e026|family | READ: "Людольфи" | CHOICE: B | confidence: DIRECT | Л-ю-д-о-л-ь-ф-и (ends in и, no ъ); stored Людольфъ is wrong
+ITEM musicians_1900-01_SP_p003|e036|first | READ: "Канутъ-Эмерикъ" | CHOICE: B | confidence: DIRECT | Канутъ with ъ (not ь); stored Кануть is wrong
+ITEM musicians_1900-01_SP_p004|e015|first | READ: "Адольфъ" | CHOICE: A | confidence: DIRECT | А-д-о-л-ь-ф-ъ; ь not ъ; stored Адолъфъ is wrong
+ITEM musicians_1900-01_SP_p004|e027|first | READ: "Альфредъ" | CHOICE: A | confidence: DIRECT | Грюнертъ, Альфредъ Альфредовичъ; stored Альфрель is wrong
+ITEM musicians_1900-01_SP_p005|e005|family | READ: "Мокѣевъ" | CHOICE: B | confidence: DIRECT | М-о-к-ѣ-е-в-ъ; yat clearly present at 6x
+ITEM musicians_1900-01_SP_p005|e024|family | READ: "Армсгеймеръ" | CHOICE: B | confidence: DIRECT | 10x zoom: ...й-м-е-р-ъ, plain е (no yat bar); stored Армсгеймѣръ is wrong
+ITEM musicians_1900-01_SP_p005|e032|family | READ: "Вилькенъ" | CHOICE: B | confidence: DIRECT | В-и-л-ь-к-е-н-ъ; no т; stored Вилькентъ is wrong
+ITEM musicians_1901-02_MSK_p001|e002|family | READ: "Брындинъ" | CHOICE: A | confidence: DIRECT | Б-р-ы-н-д-и-н-ъ; no л; stored Брындлинъ is wrong
+ITEM musicians_1901-02_MSK_p001|e025|family | READ: "Грецкій" | CHOICE: B | confidence: DIRECT | Г-р-е-ц-к-і-й; ц not ч; stored Гречкій is wrong
+ITEM musicians_1901-02_MSK_p002|e014|patronymic | READ: "Никифоровичъ" | CHOICE: A | confidence: DIRECT | line-broken "Никифо-/ровичъ"; stored Никитовичъ is wrong
+ITEM musicians_1901-02_MSK_p002|e030|family | READ: "Пащеевъ" | CHOICE: B | confidence: DIRECT | 14x zoom: П-а-щ-е-е-в-ъ; щ has descender tail; stored Пашеевъ is wrong
+ITEM musicians_1901-02_MSK_p003|e002|ordinal | READ: "Ромашковъ 1-й" | CHOICE: A | confidence: DIRECT | "Ромашковъ 1-й, Капитонъ Андре-/евичъ"; top of line slightly clipped in crop but the 1-й is legible
+ITEM musicians_1901-02_MSK_p003|e003|ordinal | READ: "Ромашковъ 2-й" | CHOICE: A | confidence: DIRECT | printed after surname, before comma
+ITEM musicians_1901-02_MSK_p003|e004|ordinal | READ: "Ромашковъ 3-й" | CHOICE: A | confidence: DIRECT | printed after surname, before comma
+ITEM musicians_1901-02_MSK_p003|e011|first | READ: "Ицхекъ-Мейеръ" | CHOICE: B | confidence: DIRECT | И-ц-х-е-к-ъ with ц; stored Инхекъ is wrong
+ITEM musicians_1901-02_MSK_p003|e034|ordinal | READ: "Шмидтъ 1-й" | CHOICE: B | confidence: DIRECT | "107. Шмидтъ 1-й, Францъ"
+ITEM musicians_1901-02_MSK_p003|e035|ordinal | READ: "Шмидтъ 2-й" | CHOICE: B | confidence: DIRECT | "108. Шмидтъ 2-й, Фридрихъ"
+DONE 30 items

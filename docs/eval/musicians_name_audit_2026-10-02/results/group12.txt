@@ -1,0 +1,43 @@
+PAGE SUMMARY
+musicians_1895-96_SP_p001 | entries read: 51 | entries with a discrepancy: 3
+musicians_1895-96_SP_p002 | entries read: 52 | entries with a discrepancy: 11
+musicians_1895-96_SP_p003 | entries read: 47 | entries with a discrepancy: 1
+musicians_1895-96_SP_p004 | entries read: 37 | entries with a discrepancy: 2
+musicians_1896-97_MSK_p000 | entries read: 28 | entries with a discrepancy: 1
+DISCREPANCIES
+musicians_1895-96_SP_p001 | e016 | family | STORED: "Евстифьевъ" | PRINTED: "Евстифѣевъ" | confidence: DIRECT(zoomed) | ѣ printed, stored ь
+musicians_1895-96_SP_p001 | e023 | family | STORED: "Инспрукертъ" | PRINTED: "Инспрукеръ" | confidence: DIRECT(zoomed) | extra т
+musicians_1895-96_SP_p001 | e034 | first/patronymic | STORED: first "Фридрихъ", patronymic "Эрнестъ" | PRINTED: "Фридрихъ-Эрнестъ" (one hyphenated first name, no patronymic) | confidence: DIRECT(zoomed) | hyphenated double first name split across fields
+musicians_1895-96_SP_p002 | e005 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed)
+musicians_1895-96_SP_p002 | e011 | family | STORED: "Реханъ" | PRINTED: "Рехакъ" | confidence: DIRECT(zoomed, 5x) | final letter before ъ is к not н
+musicians_1895-96_SP_p002 | e013 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed)
+musicians_1895-96_SP_p002 | e017 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed)
+musicians_1895-96_SP_p002 | e019 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed)
+musicians_1895-96_SP_p002 | e025 | family | STORED: "Терь-Огановъ" | PRINTED: "Теръ-Огановъ" | confidence: DIRECT(zoomed) | ъ not ь
+musicians_1895-96_SP_p002 | e025 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed)
+musicians_1895-96_SP_p002 | e030 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed)
+musicians_1895-96_SP_p002 | e031 | family | STORED: "Хаанъ" | PRINTED: "Хаакъ" | confidence: DIRECT(zoomed, 5x) | final letter к not н
+musicians_1895-96_SP_p002 | e038 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed)
+musicians_1895-96_SP_p002 | e042 | family | STORED: "Шолляръ" | PRINTED: "Шолларъ" | confidence: DIRECT(zoomed, 4x) | я for а
+musicians_1895-96_SP_p002 | e052 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed)
+musicians_1895-96_SP_p003 | e039 | family | STORED: "Штарнъ" | PRINTED: "Штаркъ" | confidence: DIRECT(zoomed, 6x) | н for к
+musicians_1895-96_SP_p004 | e007 | family | STORED: "Вилькень" | PRINTED: "Вилькенъ" | confidence: DIRECT(zoomed) | ь for ъ
+musicians_1895-96_SP_p004 | e019 | family | STORED: "Маркузъ" | PRINTED: "Маркузэ" | confidence: DIRECT(zoomed) | final letter is э
+musicians_1896-97_MSK_p000 | e010 | instrument | STORED: "Вальдгорнт" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed, 8x) | final glyph is a slightly smeared/damaged ъ; not т (stored value is a typo)
+DATE-CHECK RESULTS
+musicians_1895-96_SP_p001 | e009 | STORED start: "съ 1 сентября 1895 г." | PRINTED start: "съ 1 сентября 1895 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1895-96_SP_p002 | e039 | STORED start: "19 сентября 1861 г." | PRINTED start: "съ 19 сентября 1861 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1895-96_SP_p002 | e051 | STORED start: "16 октября 1876 г." | PRINTED start: "съ 16 сентября 1876 г." | DIFFERS | confidence: DIRECT(zoomed)
+musicians_1895-96_SP_p003 | e006 | STORED start: "1 сентября 1895 г." | PRINTED start: "съ 1 сентября 1895 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1895-96_SP_p004 | e014 | STORED start: "1 декабря 1878 г." | PRINTED start: "съ 1 декабря 1878 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1895-96_SP_p004 | e037 | STORED start: "1 декабря 1894 г." | PRINTED start: "съ 1 декабря 1894 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- p002: "Альть" stored for 8 viola rows (e005,e013,e017,e019,e025,e030,e038,e052); print is Альтъ every time (p001/p003/p004 store Альтъ correctly)
+- Patronymic-inside-first-name pattern: not present on any of my pages (patronymics in own field)
+- p001 e001-e051 list numbers 18-68, p002 69-120, p003 e001=121 then Alexandrinsky 1-41 and Mikhailovsky 1-3, p004 4-40, MSK 1-24: all match print, no gaps
+- p003 e002 Галкинъ and e044 Кротковъ are unnumbered kapellmeisters; MSK e001-e004 unnumbered conductors; no instruments printed (stored "-" correct)
+- p003 e032 Токаревичъ has printed note of transfer 1 Sept 1896 to the Mikhailovsky orchestra (and p003 p004 has 3 Mikhailovsky musicians continued on p004 4-40)
+- p002 e051 Эрбъ: stored start month октября is a misread; print says сентября (modal 16/9/1876 is right)
+- p001 e009 Гордонъ: printed start 1 сентября 1895 is genuine (modal 1890 is a different/other entry)
+- p002 e039 Шенекерль: printed "19 сентября 1861", so stored matches print; the modal 16/9/1861 is the other entry's value
+- No stray spaces, mixed-script letters or line-break hyphens found in stored values on any of the 5 pages

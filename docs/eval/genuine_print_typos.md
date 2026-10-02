@@ -376,3 +376,21 @@ All read at zoom by an audit agent; those marked * I also saw on the scan myself
 - `musicians_1903-04_MSK_p001` Зюсъ: death year printed "190з" (з-shaped 3), stored 1903. `musicians_1903-04_SP_p000` Гордонъ: print reads "Горлонъ"? (d/l ambiguity, unverified).
 - `musicians_1907-08_SP_p003` Хейкель: stray comma "Хейк,елъ". `musicians_1904-05_SP_p005`: a stray lone "(" under Лачиновъ. `musicians_1905-06_MSK_p005` Орловъ*: the "і" of "іюня" is printed undotted (worn type); transcribed as "іюня".
 - `musicians_1902-03_SP_p006` Напихъ: list number "18." for 28 (already known); `musicians_1906-07_MSK_p004` Стрекаловъ: printed number "7." duplicates Славинскій's; `musicians_1899-00_MSK_p002` Павловъ: contract span printed "по 30 декабря 1880 и (съ 19 сентября 1882 г.)" (no "г.", doubled paren).
+
+## Musicians name/instrument audit, 2026-10-02 (issue #130 batch 9) -- print oddities confirmed by two independent zoom readings
+
+Each was read at zoom by the first-pass agent AND by a blind second reader; stored VERBATIM in the raw JSON (RG's rule), so the research layer is where any
+correction belongs. Entry ids are `<page_id>__eNNN`.
+- **Людольфи / Лудольфи** (final и, not ъ), printed in every season where this double-bass player appears: 1898-99 SP p002 e025, 1899-00 SP p002 e012,
+  1900-01 SP p002 e026, 1901-02 SP p002 e019, 1904-05 SP p002 e015, 1906-07 SP p002 e005, 1907-08 SP p002 e005, 1908-09 SP p002 e023, 1909-10 SP p002 e029.
+  Nine consecutive-ish volumes: probably the printer's own form of the name rather than a one-off slip.
+- `musicians_1907-08_SP_p000` e019 **Бѳльмъ** (barred ѳ where о is meant; same man is Больмъ elsewhere). `musicians_1901-02_SP_p000` e003 **Крушевекій**.
+- Patronymics: `musicians_1904-05_SP_p002` e006 **Фелоровичъ** (л for д; a second л-shaped case, `musicians_1904-05_SP_p004` e039, was too worn to call and is left as
+  stored Федоровичъ); `musicians_1909-10_SP_p003` e012 **Аленсандровичъ** (к missing); `musicians_1898-99_MSK_p001` e023 **Васильеничъ** (н for в).
+- First names: `musicians_1897-98_MSK_p001` e016 **Фрацъ** (Францъ). Surnames: `musicians_1899-00_SP_p005` e031 **Беттенштелтъ**; `musicians_1894-95_MSK_p002` e003
+  **Порубинозскій** (з for в, 9x zoom); `musicians_1904-05_MSK_p000` e029 **Валеніўсъ** (у with a breve).
+- Instruments: **Вольдгорнъ** (1904-05 MSK p001 e010), **Флейга** (1904-05 SP p005 e001), **Флейтэ** (1905-06 MSK p004 e032), **Вторая скричка** (1906-07 SP p004 e001),
+  **Кснтрабасъ** (1891-92 MSK p002 e004), **Первая срипка** (1909-10 SP p000 e008). Also `musicians_1897-98_MSK_p002` e050 **Тромбомъ** (stored as printed).
+- Printed forms that were *not* stored (cosmetic): list numbers without the period after them (12 rows), "Хейк,ель" (1907-08 SP p003 e009), "Пекарскій I," with a Roman
+  numeral (1906-07 MSK p002 e030; stored "Пекарскій 1"), "Карлъ·Вильгельмъ" with a middle dot (1892-93 MSK p000 e015), "Фридрихъ -Эрнестъ"/"Карлъ - Вильямъ" hyphen spacing,
+  the misprinted list number "34." for 54 (1895-96 MSK p001 e032). Damaged-glyph cases resolved by corroboration (not typos): see known_issues #130 batch 9.

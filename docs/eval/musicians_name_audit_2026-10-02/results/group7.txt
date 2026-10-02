@@ -1,0 +1,34 @@
+PAGE SUMMARY
+musicians_1892-93_SP_p004 | entries read: 49 | entries with a discrepancy: 2
+musicians_1892-93_SP_p005 | entries read: 22 | entries with a discrepancy: 0
+musicians_1893-94_MSK_p000 | entries read: 22 | entries with a discrepancy: 0
+musicians_1893-94_MSK_p001 | entries read: 51 | entries with a discrepancy: 6
+musicians_1893-94_MSK_p002 | entries read: 52 | entries with a discrepancy: 4
+DISCREPANCIES
+musicians_1892-93_SP_p004 | e008 | family | STORED: "Блась" | PRINTED: "Бласъ" | confidence: DIRECT(zoomed) | soft sign stored, hard sign printed
+musicians_1892-93_SP_p004 | e014 | family | STORED: "Грибень" | PRINTED: "Грибенъ" | confidence: DIRECT(zoomed) | soft sign stored, hard sign printed
+musicians_1893-94_MSK_p001 | e001 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag
+musicians_1893-94_MSK_p001 | e004 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag
+musicians_1893-94_MSK_p001 | e006 | family | STORED: "Гейнь" | PRINTED: "Гейнъ" | confidence: DIRECT(zoomed)
+musicians_1893-94_MSK_p001 | e008 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag
+musicians_1893-94_MSK_p001 | e027 | family | STORED: "Зюсь" | PRINTED: "Зюсъ" | confidence: DIRECT(zoomed)
+musicians_1893-94_MSK_p001 | e050 | family | STORED: "Маривардтъ" | PRINTED: "Марквардтъ" | confidence: DIRECT(zoomed) | same spelling as p000 e005 Марквардтъ
+musicians_1893-94_MSK_p002 | e007 | family | STORED: "Пащееевъ" | PRINTED: "Пащеевъ" | confidence: DIRECT(zoomed) | extra "е" stored
+musicians_1893-94_MSK_p002 | e021 | family | STORED: "Руссь" | PRINTED: "Руссъ" | confidence: DIRECT(zoomed)
+musicians_1893-94_MSK_p002 | e023 | first | STORED: "Ипхекъ-Мейеръ" | PRINTED: "Ицхекъ-Мейеръ" | confidence: DIRECT(zoomed) | х for ц
+musicians_1893-94_MSK_p002 | e044 | family | STORED: "Шпейерь" | PRINTED: "Шпейеръ" | confidence: DIRECT(zoomed)
+DATE-CHECK RESULTS
+musicians_1892-93_SP_p005 | e001 | STORED start: "1 декабря 1879 г." | PRINTED start: "съ 1 декабря 1879 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1893-94_MSK_p001 | e050 | STORED start: "19 сентября 1882 г." | PRINTED start: "съ 19 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed) | stored date is correct; the "modal" 15/8/1884 belongs to the Капельмейстеръ военной музыки Марквардтъ (p000 e005) - a different person (this one is a cornet player)
+musicians_1893-94_MSK_p001 | e045 | STORED start: "26 сентября 1885 г." | PRINTED start: "съ 26 сентября 1885 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1893-94_MSK_p002 | e004 | STORED start: "19 сентября 1882 г." | PRINTED start: "съ 19 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1893-94_MSK_p002 | e032 | STORED start: "19 сентября 1892 г." | PRINTED start: "съ 19 сентября 1892 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- No patronymic-inside-first-name pattern on any of these 5 pages (patronymics are in their own field).
+- AUTO-FLAG SPACE-IN-FAMILY on MSK_p002 e029 "Туровичъ фонъ-Охота" is refuted: the space is genuine in print (two-word surname, bold).
+- AUTO-FLAGS INSTR-VARIANT on MSK_p001 e001/e004/e008 are confirmed (stored Альть, printed Альтъ).
+- SP_p004 holds two orchestra lists: left column lists 8-37 continue from the previous page; right column starts "Оркестръ Михайловскаго театра" (Капельмейстеръ Рамзе e001, then Музыканты 1-18). Stored numbering matches print.
+- Printed annotations (Оставилъ службу..., † death dates) are not in the name fields; not audited as names.
+- MSK_p001 e042 "Крутоголововъ" printed exactly so (13 letters) - no discrepancy.
+- Names ending in soft sign verified as printed ь (no discrepancy): Шнабль, Пертель, Недбаль, Кристель, Зозель.
+- No rows missing from any bundle; no duplicated rows seen.

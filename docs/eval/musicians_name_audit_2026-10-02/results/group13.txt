@@ -1,0 +1,40 @@
+PAGE SUMMARY
+musicians_1896-97_MSK_p001 | entries read: 52 | entries with a discrepancy: 7
+musicians_1896-97_MSK_p002 | entries read: 52 | entries with a discrepancy: 7
+musicians_1896-97_MSK_p003 | entries read: 37 | entries with a discrepancy: 0
+musicians_1896-97_SP_p000 | entries read: 23 | entries with a discrepancy: 1
+musicians_1896-97_SP_p001 | entries read: 54 | entries with a discrepancy: 1
+DISCREPANCIES
+musicians_1896-97_MSK_p001 | e001 | family | STORED: "Губерть" | PRINTED: "Губертъ" | confidence: DIRECT(zoomed) | final hard sign, not soft sign
+musicians_1896-97_MSK_p001 | e006 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed
+musicians_1896-97_MSK_p001 | e023 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed
+musicians_1896-97_MSK_p001 | e028 | family | STORED: "Кругоголововъ" | PRINTED: "Крутоголововъ" | confidence: DIRECT(zoomed) | т misread as г
+musicians_1896-97_MSK_p001 | e028 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed
+musicians_1896-97_MSK_p001 | e029 | family | STORED: "Кунсть" | PRINTED: "Кунстъ" | confidence: DIRECT(zoomed) | final hard sign
+musicians_1896-97_MSK_p001 | e030 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed
+musicians_1896-97_MSK_p001 | e045 | family | STORED: "Пащееевъ" | PRINTED: "Пащеевъ" | confidence: DIRECT(zoomed) | extra е
+musicians_1896-97_MSK_p002 | e003 | first | STORED: "Марлохей" | PRINTED: "Мардохей" | confidence: DIRECT(zoomed) | л for д
+musicians_1896-97_MSK_p002 | e013 | first | STORED: "Ипхекъ-Мейеръ" | PRINTED: "Ицхекъ-Мейеръ" | confidence: DIRECT(zoomed) | п for ц
+musicians_1896-97_MSK_p002 | e023 | family | STORED: "Триньянъ" | PRINTED: "Триньякъ" | confidence: DIRECT(zoomed) | н for к
+musicians_1896-97_MSK_p002 | e029 | family | STORED: "Чыбинъ" | PRINTED: "Цыбинъ" | confidence: DIRECT(zoomed) | Ч for Ц
+musicians_1896-97_MSK_p002 | e039 | family | STORED: "Шпекинъ" | PRINTED: "Шпейеръ" | confidence: DIRECT(zoomed) | entry 115 printed Шпейеръ, Фридрихъ, Органъ; stored as duplicate of Шпекинъ
+musicians_1896-97_MSK_p002 | e040 | family | STORED: "Шпекинъ" | PRINTED: "Шпеккинъ" | confidence: DIRECT(zoomed) | double к (entry 116, Эрнестъ-Густавъ)
+musicians_1896-97_MSK_p002 | e045 | instrument | STORED: "Ударные инструменты" | PRINTED: (none; entry 121 Эккертъ ends after "(съ 1 декабря 1895 г.)." with no instrument) | confidence: DIRECT(zoomed) | stored instrument not printed
+musicians_1896-97_SP_p000 | e016 | family | STORED: "Брайнь" | PRINTED: "Брайнъ" | confidence: DIRECT(zoomed) | final hard sign
+musicians_1896-97_SP_p001 | e018 | family | STORED: "Евстифьевъ" | PRINTED: "Евстифѣевъ" | confidence: DIRECT(zoomed) | ѣ printed, stored ь
+DATE-CHECK RESULTS
+musicians_1896-97_MSK_p001 | e033 | STORED start: "26 сентября 1885 г." | PRINTED start: "26 сентября 1885 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1896-97_MSK_p001 | e042 | STORED start: "19 сентября 1882 г." | PRINTED start: "19 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1896-97_MSK_p001 | e001 | STORED start: "19 сентября 1892 г." | PRINTED start: "19 сентября 1892 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1896-97_MSK_p001 | e030 | STORED start: "1 апрѣля 1897 г." | PRINTED start: "1 апрѣля 1897 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1896-97_MSK_p002 | e028 | STORED start: "19 сентября 1892 г." | PRINTED start: "19 сентября 1892 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1896-97_MSK_p003 | e015 | STORED start: "26 мая 1868 г." | PRINTED start: "26 мая 1868 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1896-97_SP_p000 | e004 | STORED start: "1 сентября 1886 г." | PRINTED start: "1 сентября 1886 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1896-97_SP_p001 | e049 | STORED start: "11 октября 1869 г." | PRINTED start: "11 октября 1869 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- MSK_p003: patronymic inside first name on e004-e037 (most rows); no letter differences found on this page.
+- MSK_p002 e024: AUTO-FLAG SPACE-IN-FAMILY refuted; the space in "Туровичъ фонъ-Охота" is printed.
+- MSK_p002 e039/e040: print has two different people (115 Шпейеръ Фридрихъ Органъ; 116 Шпеккинъ Эрнестъ-Густавъ Контрабасъ); stored rows both read "Шпекинъ".
+- MSK_p001 e015/e039 and p002 e007/e008, e026 etc: Ѳ printed as Ө-form Ѳ; stored Ѳ is correct.
+- All 8 DATE-CHECK printed dates equal the stored values (stored dates are not misreads; the disagreeing entries are separate persons/ genuinely printed 1892 / 11 Oct).
+- MSK_p002 e050 Арендсъ (Капельмейстеръ, Orchestra of Maly Theatre) has no instrument printed, matches stored.

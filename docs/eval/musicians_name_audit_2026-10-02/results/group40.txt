@@ -1,0 +1,30 @@
+PAGE SUMMARY
+musicians_1907-08_SP_p003 | entries read: 38 | entries with a discrepancy: 4
+musicians_1907-08_SP_p004 | entries read: 36 | entries with a discrepancy: 2
+musicians_1908-09_MSK_p000 | entries read: 19 | entries with a discrepancy: 1
+musicians_1908-09_MSK_p001 | entries read: 33 | entries with a discrepancy: 1
+musicians_1908-09_MSK_p002 | entries read: 34 | entries with a discrepancy: 2
+DISCREPANCIES
+musicians_1907-08_SP_p003 | e003 | family | STORED: "Федегансъ" | PRINTED: "Федергансъ" (entry 101; stored drops the р) | confidence: DIRECT(zoomed)
+musicians_1907-08_SP_p003 | e034 | first | STORED: "Меводій" | PRINTED: "Меѳодій" (entry 11 Зедникъ; Ѳ printed as Θ glyph, stored в) | confidence: DIRECT(zoomed)
+musicians_1907-08_SP_p003 | e026 | list | STORED: "3." | PRINTED: "3" (no period after the number, entry "3 Алексѣевъ") | confidence: DIRECT(zoomed) | PRINT-TYPO? trivial
+musicians_1907-08_SP_p003 | e009 | family | STORED: "Хейкель" | PRINTED: "Хейк,ель" (stray comma inside the surname; stored normalized) | confidence: DIRECT(zoomed) | PRINT-TYPO?
+musicians_1907-08_SP_p004 | e002 | first | STORED: "Владиміръ" | PRINTED: "Владимиръ" (plain и, no dot) | confidence: DIRECT(zoomed)
+musicians_1907-08_SP_p004 | e022 | first | STORED: "Владиміръ" | PRINTED: "Владимиръ" (plain и, no dot) | confidence: DIRECT(zoomed)
+musicians_1908-09_MSK_p000 | e014 | first | STORED: "Карлъ-Вильямъ" | PRINTED: "Карлъ - Вильямъ" (spaces around the hyphen in print) | confidence: DIRECT(zoomed) | cosmetic, probably normalization
+musicians_1908-09_MSK_p001 | e013 | family | STORED: "Домащунясть" | PRINTED: "Домащунасъ" (entry 32; two letters differ: -нас-ъ not -нясть) | confidence: DIRECT(zoomed)
+musicians_1908-09_MSK_p002 | e017 | space | STORED: "Пащее въ" | PRINTED: "Пащеевъ" (no space; stray space artifact) | confidence: DIRECT(zoomed)
+musicians_1908-09_MSK_p002 | e024 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і) | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag
+DATE-CHECK RESULTS
+musicians_1907-08_SP_p003 | e028 | STORED start: "съ 1 сентября 1895 г." | PRINTED start: "съ 1 сентября 1895 г." | MATCH | DIRECT(zoomed)
+musicians_1907-08_SP_p003 | e017 | STORED start: "съ 1 августа 1895 г." | PRINTED start: "съ 1 августа 1895 г." | MATCH | DIRECT(zoomed)
+musicians_1907-08_SP_p004 | e014 | STORED start: "1 октября 1893 г." | PRINTED start: "съ 1 октября 1893 г." | MATCH | DIRECT(zoomed)
+musicians_1908-09_MSK_p000 | e013 | STORED start: "съ 1 октября 1907 г." | PRINTED start: "съ 1 октября 1907 г." (the 9 is faintly printed) | MATCH | DIRECT(zoomed)
+OTHER FINDINGS
+- SP_p003: no patronymic-in-first-name pattern; e038 Келеръ (Капельмейстеръ, no number/instrument) as printed; e034 Зедникъ has "+ 11 апрѣля 1908 г." note.
+- SP_p004: no patronymic-in-first-name pattern. e016 Штейнсъ Францъ is entry 30; e036 Новоселовъ is the librarian (+ 5 мая 1908 г.). e009 Мокѣевъ has "Оставилъ службу 1 мая 1908 г.".
+- MSK_p000: upper half of the scan (Moscow ballet-troupe entries 65-71, with role lists) is not in the bundle; only the orchestra list (1-19) is stored. A thumb covers part of the right column but all entries 10-19 are legible.
+- MSK_p000: e017 Ваксманъ "Луи" in patronymic field is printed so; e009/e014 carry "Оставилъ службу" notes (1 августа 1909; 1 марта 1909).
+- MSK_p001: MSK uses Валторна for horn (not Вальдгорнъ) as stored. Ordinals "1-й"/"2-й" for Золоторенко are stored in family correctly (e018, e019).
+- MSK_p002: Ромашковъ 1-й/2-й and Пекарскій 1-й/2-й ordinals stored correctly in family; e028 first name printed with an accent mark on the Г (Ѓригорій), stored plain Григорій (fine).
+- MSK_p002: e006/e009 rank_or_title "Органистъ и піанистъ." duplicates instrument, as printed.

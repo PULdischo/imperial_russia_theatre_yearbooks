@@ -1,0 +1,35 @@
+PAGE SUMMARY
+musicians_1905-06_MSK_p002 | entries read: 39 | entries with a discrepancy: 2
+musicians_1905-06_MSK_p003 | entries read: 39 | entries with a discrepancy: 2
+musicians_1905-06_MSK_p004 | entries read: 37 | entries with a discrepancy: 5
+musicians_1905-06_MSK_p005 | entries read: 8 | entries with a discrepancy: 0
+musicians_1905-06_SP_p000 | entries read: 5 | entries with a discrepancy: 0
+DISCREPANCIES
+musicians_1905-06_MSK_p002 | e016 | family | STORED: "Квелнау" | PRINTED: "Кведнау" | confidence: DIRECT(zoomed) | list 46; 4th letter is д
+musicians_1905-06_MSK_p002 | e020 | family | STORED: "Костлянь" | PRINTED: "Костлянъ" | confidence: DIRECT(zoomed) | hard sign, not soft; list 50
+musicians_1905-06_MSK_p003 | e001 | family | STORED: "Пашеевъ" | PRINTED: "Пащеевъ" | confidence: DIRECT(zoomed) | list 70; letter 3 is щ
+musicians_1905-06_MSK_p003 | e009 | patronymic | STORED: "Земинъ" | PRINTED: "Мордохей Земинъ Шліомовичъ" (line break Шліо-/мовичъ) | confidence: DIRECT(zoomed) | list 78; the true patronymic Шліомовичъ is missing from the stored row; "Земинъ" is a second given name, stored in the patronymic field (first stored as "Мордохей")
+musicians_1905-06_MSK_p004 | e002 | family | STORED: "Щыбинъ" | PRINTED: "Цыбинъ" | confidence: DIRECT(zoomed) | list 110
+musicians_1905-06_MSK_p004 | e008 | ordinal | STORED: family "Шмидтъ", first "І-й" (Cyrillic І), patronymic "Францъ" | PRINTED: "Шмидтъ 1-й, Францъ" | confidence: DIRECT(zoomed) | ordinal belongs after surname ("Шмидтъ 1-й", Arabic numeral 1); first name is Францъ, stored in patronymic field (no patronymic printed)
+musicians_1905-06_MSK_p004 | e009 | ordinal | STORED: family "Шмидтъ", first "2-й", patronymic "Фридрихъ" | PRINTED: "Шмидтъ 2-й, Фридрихъ" | confidence: DIRECT(zoomed) | same pattern; first name is Фридрихъ, no patronymic printed
+musicians_1905-06_MSK_p004 | e021 | family | STORED: "Янышиновъ" | PRINTED: "Яньшиновъ" | confidence: DIRECT(zoomed) | list 129; soft sign ь, not ы
+musicians_1905-06_MSK_p004 | e032 | instrument | STORED: "Флейта" | PRINTED: "Флейтэ" | confidence: DIRECT(zoomed) | PRINT-TYPO? list 9 Леоновъ (Малый театръ); final letter printed as э
+DATE-CHECK RESULTS
+musicians_1905-06_MSK_p002 | e039 | STORED start: "10 октября 1878 г." | PRINTED start: "10 октября 1878 по 30 декабря 1880 г. и съ 19 сентября 1882 г." | MATCH (first stint start; two stints printed) | confidence: DIRECT(zoomed)
+musicians_1905-06_MSK_p002 | e024 | STORED start: "10 сентября 1882 г." | PRINTED start: "съ 10 сентября 1882 г." (line break сен-/тября) | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_MSK_p002 | e035 | STORED start: "1 іюня 1897 г." | PRINTED start: "съ 1 іюня 1897 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_MSK_p004 | e012 | STORED start: "съ 19 сентября 1882 г." | PRINTED start: "съ 19 сентября 1882 г." (list 120, line break сентя-/бря) | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_MSK_p004 | e013 | STORED start: "съ 10 сентября 1882 г." | PRINTED start: "съ 10 сентября 1882 г." (list 121) | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_MSK_p004 | e034 | STORED start: "съ 23 сентября 1898 г." | PRINTED start: "съ 23 сентября 1898 г." (list 11) | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_MSK_p004 | e010 | STORED start: "съ 16 августа 1901 г." | PRINTED start: "съ 16 августа 190? г." last digit is a damaged glyph: only a vertical stem that descends below the baseline (ordinary 1s sit on the baseline), so it is probably a broken 4, i.e. 1904 | DIFFERS (probably) | confidence: UNCERTAIN
+musicians_1905-06_MSK_p005 | e008 | STORED start: "1 марта 1905 г." | PRINTED start: "съ 1 марта 1905 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_SP_p000 | e002 | STORED start: "съ 28 ноября 1863 г." | PRINTED start: "съ 28 ноября 1863 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- MSK_p002: patronymic-in-first-name pattern not seen; all rows have separate patronymic fields.
+- MSK_p003 e023 (Соколовъ 2-й): no instrument printed, stored empty = correct. e038 "Петръ-Іоганнъ" correct.
+- MSK_p004: e023 Шульцъ is the conductor heading of Малый театръ orchestra (no list number, no instrument) = correct; list numbering restarts 1-14 for the Малый театръ orchestra (e024-e037) and continues on MSK_p005 (15-19).
+- MSK_p004 e008/e009: the AUTO-FLAG ORDINAL-IN-FIRSTNAME is confirmed; also first-name text sits in the patronymic field and e008's ordinal is stored with a Cyrillic І instead of the printed Arabic 1.
+- MSK_p004 e032: the "Флейтэ" glyph is clear at zoom (final letter is э, not а).
+- MSK_p004 e034 Никитинъ: stored date 23 сентября 1898 matches print; the "modal 1/9/1881" in the DATE-CHECK line is a different person or other-year entry.
+- MSK_p005 has a second block (Музыкальная библіотека, list 1-2 + Помощникъ библіотекаря) with no instrument printed; stored empty = correct. e006 Орловъ printed start "съ 1 января 1857 г. по 1 февраля 1897 г. и съ 1 іюня 1897 г." plus "(По найму)"; not date-checked.
+- No duplicated rows and no printed rows missing from any bundle.

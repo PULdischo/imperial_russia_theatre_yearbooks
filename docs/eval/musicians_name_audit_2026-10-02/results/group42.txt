@@ -1,0 +1,28 @@
+PAGE SUMMARY
+musicians_1908-09_SP_p004 | entries read: 16 | entries with a discrepancy: 0
+musicians_1909-10_MSK_p000 | entries read: 26 | entries with a discrepancy: 3
+musicians_1909-10_MSK_p001 | entries read: 34 | entries with a discrepancy: 1
+musicians_1909-10_MSK_p002 | entries read: 33 | entries with a discrepancy: 1
+musicians_1909-10_MSK_p003 | entries read: 26 | entries with a discrepancy: 0
+DISCREPANCIES
+musicians_1909-10_MSK_p000 | e014 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і) | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag
+musicians_1909-10_MSK_p000 | e015 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і) | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag
+musicians_1909-10_MSK_p000 | e016 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (dotted і) | confidence: DIRECT(zoomed) | confirms INSTR-VARIANT flag
+musicians_1909-10_MSK_p001 | e029 | instrument | STORED: "Піанисть" | PRINTED: "Піанистъ" (final hard sign) | confidence: DIRECT(zoomed)
+musicians_1909-10_MSK_p002 | e006 | space | STORED: "Пащее въ" | PRINTED: "Пащеевъ" (no space; letterspaced print) | confidence: DIRECT(zoomed) | confirms SPACE-IN-FAMILY flag
+DATE-CHECK RESULTS
+musicians_1908-09_SP_p004 | e010 | STORED start: "съ 1 августа 1895 г." | PRINTED start: "съ 1 августа 1895 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1909-10_MSK_p000 | e003 | STORED start: "съ 13 сентября 1898 г." | PRINTED start: "съ 13 сентября 1898 г." | MATCH | confidence: DIRECT(zoomed) (digits/month clear; "съ" at crop edge but legible on the page-level view)
+musicians_1909-10_MSK_p001 | e005 | STORED start: "съ 19 сентября 1892 г." | PRINTED start: "съ 19 сентября 1892 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1909-10_MSK_p001 | e011 | STORED start: "съ 26 сентября 1892 г." | PRINTED start: "съ 26 сентября 1892 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1909-10_MSK_p002 | e001 | STORED start: "23 сентября 1898 г." | PRINTED start: "съ 23 сентября 1898 г." | MATCH on date (stored lacks the leading "съ" only) | confidence: DIRECT(zoomed)
+musicians_1909-10_MSK_p003 | e005 | STORED start: "съ 16 августа 1891 г." | PRINTED start: "съ 16 августа 1891 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1909-10_MSK_p003 | e015 | STORED start: "съ 26 августа 1904 г." | PRINTED start: "съ 26 августа 1904 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- All pages: no patronymic-in-first-name pattern (patronymics stored in the patronymic field); line-break hyphens correctly removed; stored list numbers all match print.
+- musicians_1909-10_MSK_p002 e026 Сиборъ: print is "Скрипка. Солистъ балета." (rank/role phrase after the instrument); stored rank_or_title is "-" so "Солистъ балета" is not captured in this bundle (instrument "Скрипка" itself matches).
+- musicians_1909-10_MSK_p002 e032: print reads "Волторна" (stored the same); other horn entries on these pages print "Валторна" -- genuine print variation, not a misread.
+- musicians_1909-10_MSK_p002 e010 Петрушевъ: print's date reads "18 сентябрб 1903" (typo for сентября) -- PRINT-TYPO? in the date, name fields unaffected.
+- musicians_1909-10_MSK_p003 e025 Яницкій: printed tenure is a split span "съ 16 октября 1897 г. по 1 января 1900 г. и съ 1 декабря 1902 г." (not name field).
+- Date-check outliers (modal values like 19/9/1882, 26/9/1902, 16/4/1891, 1/9/1881) are NOT in the print for these entries: the printed dates match the stored ones, so the "modal" comparators belong to other entries/years (genuinely different persons or other-volume misreads).
+- musicians_1909-10_MSK_p000 e002 Александровъ: stray dot above р in print (printing blemish), no letter change.

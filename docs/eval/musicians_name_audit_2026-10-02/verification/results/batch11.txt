@@ -1,0 +1,26 @@
+ITEM musicians_1902-03_MSK_p003|e007|instrument | READ: "Вальдгорнъ" | CHOICE: A | confidence: DIRECT | final letter is hard sign ъ, not ь
+ITEM musicians_1902-03_MSK_p003|e033|instrument | READ: "Вальдгорнъ" | CHOICE: A | confidence: DIRECT | final letter ъ
+ITEM musicians_1902-03_MSK_p004|e020|family | READ: "Терёнтьевъ" | CHOICE: B | confidence: DIRECT | dot(s) clearly printed over the second е (ё)
+ITEM musicians_1902-03_SP_p003|e018|family | READ: "Тер?-Огановъ" (4th letter damaged: top bar + short stem + small right bump, shorter/lighter than the full т in other words) | CHOICE: NEITHER | confidence: UNCERTAIN | glyph is asymmetric (stem right of bar centre), looks more like a damaged ъ than т; probable Теръ-Огановъ (the 1903-04 SP p003 entry 109 prints Теръ-Огановъ). Not clearly Терт
+ITEM musicians_1902-03_SP_p003|e028|first | READ: "Канутъ-Эмерикъ" | CHOICE: B | confidence: DIRECT | ends in ъ, not ь
+ITEM musicians_1902-03_SP_p005|e003|family | READ: "Армсгеймеръ" | CHOICE: A | confidence: DIRECT | only one м after й (й м е р ъ)
+ITEM musicians_1903-04_MSK_p000|e008|family | READ: "Брындинъ" | CHOICE: A | confidence: DIRECT | letters Б р ы н д и н ъ; no л
+ITEM musicians_1903-04_MSK_p001|e034|patronymic | READ: "Никифоровичъ" (broken Никифо-/вичъ at line end) | CHOICE: B | confidence: DIRECT | Ник-и-ф-о: ф clearly printed, not т
+ITEM musicians_1903-04_MSK_p002|e008|family | READ: "Пащеевъ" | CHOICE: A | confidence: DIRECT | щ (with tail) not ш
+ITEM musicians_1903-04_MSK_p002|e037|instrument | READ: "Вальдгорнъ" | CHOICE: B | confidence: DIRECT | final ъ
+ITEM musicians_1903-04_SP_p000|e012|family | READ: "Аматнѣкъ" | CHOICE: B | confidence: DIRECT | А м а т н ѣ к ъ, ѣ clearly with crossbar
+ITEM musicians_1903-04_SP_p000|e021|family | READ: "Больмъ" | CHOICE: B | confidence: DIRECT | Б о л ь м ъ (ь present, л not л-ы)
+ITEM musicians_1903-04_SP_p000|e023|first | READ: "Конрадъ" | CHOICE: B | confidence: DIRECT | the л-like letter has descender feet on both sides (д), unlike л in Больмъ on same page
+ITEM musicians_1903-04_SP_p000|e025|patronymic | READ: "Григорьевичъ" | CHOICE: A | confidence: UNCERTAIN | initial letter is a stem with the bar extending mainly to the right (Г), asymmetric versus a true Т (compared with Т elsewhere); name sense Григорьевичъ
+ITEM musicians_1903-04_SP_p001|e022|family | READ: "Кадлецъ" | CHOICE: B | confidence: DIRECT | К а д л е ц ъ, д with descender feet
+ITEM musicians_1903-04_SP_p003|e010|family | READ: "Тронье" | CHOICE: B | confidence: DIRECT | ь (no crossbar through stem, so not ѣ); a stray reddish speck above it is not a letter part
+ITEM musicians_1903-04_SP_p004|e009|first | READ: "Меѳодій" | CHOICE: B | confidence: DIRECT | ѳ (barred round letter) clearly printed
+ITEM musicians_1903-04_SP_p004|e025|family | READ: "Недзейко" | CHOICE: A | confidence: DIRECT | Н е д з е й к о, д with feet
+ITEM musicians_1904-05_MSK_p000|e005|family | READ: "Бейдлеръ" | CHOICE: B | confidence: DIRECT | Б е й д л е р ъ; д with feet before л
+ITEM musicians_1904-05_MSK_p000|e013|family | READ: "Адольфи" | CHOICE: B | confidence: DIRECT | ends in и (Адольфи, Фердинандъ Вильгельмовичъ)
+ITEM musicians_1904-05_MSK_p000|e016|first | READ: "Серіѣй" (Сер + dotless і-like stem with symmetric serifs + ѣ + й) | CHOICE: B | confidence: UNCERTAIN | glyph before ѣ looks like і/ı (no right-going bar, so not clearly г); dot not visible; may be a worn г
+ITEM musicians_1904-05_MSK_p000|e017|family | READ: "Ардъ" | CHOICE: B | confidence: DIRECT | А р д ъ, no л
+ITEM musicians_1904-05_MSK_p000|e019|family | READ: "Аспергеръ" | CHOICE: A | confidence: DIRECT | А с п е р г е р ъ, no т
+ITEM musicians_1904-05_MSK_p000|e021|first | READ: "Іоганнъ-Альбертъ" | CHOICE: A | confidence: DIRECT | ъ after Іоганнъ
+ITEM musicians_1904-05_MSK_p000|e029|family | READ: "Валеніўсъ" | CHOICE: A | confidence: DIRECT | у carries a breve (ў)
+DONE 25 items

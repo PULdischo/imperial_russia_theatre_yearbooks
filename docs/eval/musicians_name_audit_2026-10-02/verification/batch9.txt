@@ -1,0 +1,196 @@
+# VERIFICATION batch 9  (30 items on 10 pages)
+
+
+## PAGE musicians_1900-01_MSK_p003   scan: outputs/roster_images_full/images/musicians_1900-01_MSK_p003.png   stored-row bundle: /tmp/audit4/musicians_1900-01_MSK_p003.txt
+
+ITEM musicians_1900-01_MSK_p003|e019|instrument
+  stored row: e019 | 94. | Томсонъ | Николай | Фридриховичъ | Альть | - | INSTR-VARIANT
+  field in question: instrument
+  Option A: "Альтъ"
+  Option B: "Альть"
+
+ITEM musicians_1900-01_MSK_p003|e021|instrument
+  stored row: e021 | 96. | Фричъ | Георгъ | - | Альть | - | INSTR-VARIANT
+  field in question: instrument
+  Option A: "Альть"
+  Option B: "Альтъ"
+
+ITEM musicians_1900-01_MSK_p003|e025|family
+  stored row: e025 | 100. | Цибинъ | Владиміръ | Николаевичъ | Флейта | - | -
+  field in question: family
+  Option A: "Цыбинъ"
+  Option B: "Цибинъ"
+
+ITEM musicians_1900-01_MSK_p003|e037|family
+  stored row: e037 | 112. | Шталлеръ | Іосифъ | - | Віолончель | - | -
+  field in question: family
+  Option A: "Шталлеръ"
+  Option B: "Штадлеръ"
+
+## PAGE musicians_1900-01_MSK_p004   scan: outputs/roster_images_full/images/musicians_1900-01_MSK_p004.png   stored-row bundle: /tmp/audit4/musicians_1900-01_MSK_p004.txt
+
+ITEM musicians_1900-01_MSK_p004|e025|family
+  stored row: e025 | 19. | Наккій | Петръ Андреевичъ | - | Контрабасъ | - | -
+  field in question: family
+  Option A: "Наккій"
+  Option B: "Нацкій"
+
+## PAGE musicians_1900-01_SP_p001   scan: outputs/roster_images_full/images/musicians_1900-01_SP_p001.png   stored-row bundle: /tmp/audit4/musicians_1900-01_SP_p001.txt
+
+ITEM musicians_1900-01_SP_p001|e009|family
+  stored row: e009 | 19. | Ваншейль | Лоренцъ | Ѳедоровичъ | Кларнетъ | - | -
+  field in question: family
+  Option A: "Ваншейль"
+  Option B: "Ваншейдъ"
+
+ITEM musicians_1900-01_SP_p001|e015|ordinal
+  stored row: e015 | 25. | Вульфъ-Израэль | І-й | Михаилъ | Первая скрипка | - | ORDINAL-IN-FIRSTNAME
+  field in question: ordinal
+  (free-form item) first reviewer note: STORED: family "Вульфъ-Израэль", first "І-й" | PRINTED: "Вульфъ-Израэль 1-й" (ordinal belongs after surname; printed digit-style 1) | confidence: DIRECT(zoomed) | ordinal in first-name field
+
+ITEM musicians_1900-01_SP_p001|e015|patronymic
+  stored row: e015 | 25. | Вульфъ-Израэль | І-й | Михаилъ | Первая скрипка | - | ORDINAL-IN-FIRSTNAME
+  field in question: patronymic
+  (free-form item) first reviewer note: STORED: "Михаилъ" (in patronymic field; first="І-й") | PRINTED: first "Михаилъ", patronymic "Александровичъ" | confidence: DIRECT(zoomed) | fields shifted by ordinal; patronymic Александровичъ missing entirely
+
+ITEM musicians_1900-01_SP_p001|e016|ordinal
+  stored row: e016 | 26. | Вульфъ-Израэль | 2-й | Евгеній | Виолончель | - | ORDINAL-IN-FIRSTNAME,INSTR-VARIANT
+  field in question: ordinal
+  (free-form item) first reviewer note: STORED: family "Вульфъ-Израэль", first "2-й" | PRINTED: "Вульфъ-Израэль 2-й" | confidence: DIRECT(zoomed) | ordinal in first-name field
+
+ITEM musicians_1900-01_SP_p001|e016|patronymic
+  stored row: e016 | 26. | Вульфъ-Израэль | 2-й | Евгеній | Виолончель | - | ORDINAL-IN-FIRSTNAME,INSTR-VARIANT
+  field in question: patronymic
+  (free-form item) first reviewer note: STORED: "Евгеній" (in patronymic field; first="2-й") | PRINTED: first "Евгеній", patronymic "Владиміровичъ" | confidence: DIRECT(zoomed) | fields shifted; patronymic Владиміровичъ missing
+
+ITEM musicians_1900-01_SP_p001|e017|patronymic
+  stored row: e017 | 27. | Газенкампфъ | Рудольфъ | Владимировичъ | - | - | -
+  field in question: patronymic
+  Option A: "Владимировичъ"
+  Option B: "Владимiровичъ"
+
+ITEM musicians_1900-01_SP_p001|e037|ordinal
+  stored row: e037 | 47. | Іогансонъ | 2-й | Викторъ | Альтъ | - | ORDINAL-IN-FIRSTNAME
+  field in question: ordinal
+  (free-form item) first reviewer note: STORED: family "Іогансонъ", first "2-й" | PRINTED: "Іогансонъ 2-й" | confidence: DIRECT(zoomed) | ordinal in first-name field
+
+ITEM musicians_1900-01_SP_p001|e037|patronymic
+  stored row: e037 | 47. | Іогансонъ | 2-й | Викторъ | Альтъ | - | ORDINAL-IN-FIRSTNAME
+  field in question: patronymic
+  (free-form item) first reviewer note: STORED: "Викторъ" (in patronymic field; first="2-й") | PRINTED: first "Викторъ", patronymic "Ивановичъ" | confidence: DIRECT(zoomed) | fields shifted; patronymic Ивановичъ missing
+
+## PAGE musicians_1900-01_SP_p002   scan: outputs/roster_images_full/images/musicians_1900-01_SP_p002.png   stored-row bundle: /tmp/audit4/musicians_1900-01_SP_p002.txt
+
+ITEM musicians_1900-01_SP_p002|e026|family
+  stored row: e026 | 73. | Людольфъ | Валентинъ | - | Контрабасъ | - | -
+  field in question: family
+  Option A: "Людольфъ"
+  Option B: "Людольфи"
+
+## PAGE musicians_1900-01_SP_p003   scan: outputs/roster_images_full/images/musicians_1900-01_SP_p003.png   stored-row bundle: /tmp/audit4/musicians_1900-01_SP_p003.txt
+
+ITEM musicians_1900-01_SP_p003|e036|first
+  stored row: e036 | 122. | Хейкель | Кануть-Эмерикъ | - | Альтъ | - | -
+  field in question: first
+  Option A: "Кануть-Эмерикъ"
+  Option B: "Канутъ-Эмерикъ"
+
+## PAGE musicians_1900-01_SP_p004   scan: outputs/roster_images_full/images/musicians_1900-01_SP_p004.png   stored-row bundle: /tmp/audit4/musicians_1900-01_SP_p004.txt
+
+ITEM musicians_1900-01_SP_p004|e015|first
+  stored row: e015 | 140. | Юнкеръ | Адолъфъ | Карловичъ | Вальдгорнъ | - | -
+  field in question: first
+  Option A: "Адольфъ"
+  Option B: "Адолъфъ"
+
+ITEM musicians_1900-01_SP_p004|e027|first
+  stored row: e027 | 10. | Грюнертъ | Альфрель | Альфредовичъ | Гобой | - | -
+  field in question: first
+  Option A: "Альфредъ"
+  Option B: "Альфрель"
+
+## PAGE musicians_1900-01_SP_p005   scan: outputs/roster_images_full/images/musicians_1900-01_SP_p005.png   stored-row bundle: /tmp/audit4/musicians_1900-01_SP_p005.txt
+
+ITEM musicians_1900-01_SP_p005|e005|family
+  stored row: e005 | 27. | Мокъевъ | Николай | Васильевичъ | Труба | - | -
+  field in question: family
+  Option A: "Мокъевъ"
+  Option B: "Мокѣевъ"
+
+ITEM musicians_1900-01_SP_p005|e024|family
+  stored row: e024 | 3. | Армсгеймѣръ | Иванъ | Ивановичъ | Труба | - | -
+  field in question: family
+  Option A: "Армсгеймѣръ"
+  Option B: "Армсгеймеръ"
+
+ITEM musicians_1900-01_SP_p005|e032|family
+  stored row: e032 | 11. | Вилькентъ | Алексѣй | Карловичъ | Фаготъ | - | -
+  field in question: family
+  Option A: "Вилькентъ"
+  Option B: "Вилькенъ"
+
+## PAGE musicians_1901-02_MSK_p001   scan: outputs/roster_images_full/images/musicians_1901-02_MSK_p001.png   stored-row bundle: /tmp/audit4/musicians_1901-02_MSK_p001.txt
+
+ITEM musicians_1901-02_MSK_p001|e002|family
+  stored row: e002 | 2. | Брындлинъ | Корнелій | Корнеліевичъ | - | - | -
+  field in question: family
+  Option A: "Брындинъ"
+  Option B: "Брындлинъ"
+
+ITEM musicians_1901-02_MSK_p001|e025|family
+  stored row: e025 | 21. | Гречкій | Аполлонъ | Адальбертовичъ | Віолончель | - | -
+  field in question: family
+  Option A: "Гречкій"
+  Option B: "Грецкій"
+
+## PAGE musicians_1901-02_MSK_p002   scan: outputs/roster_images_full/images/musicians_1901-02_MSK_p002.png   stored-row bundle: /tmp/audit4/musicians_1901-02_MSK_p002.txt
+
+ITEM musicians_1901-02_MSK_p002|e014|patronymic
+  stored row: e014 | 48. | Крутоголововъ | Иванъ | Никитовичъ | Вальдгорнъ | - | -
+  field in question: patronymic
+  Option A: "Никифоровичъ"
+  Option B: "Никитовичъ"
+
+ITEM musicians_1901-02_MSK_p002|e030|family
+  stored row: e030 | 64. | Пашеевъ | Борисъ | Ѳедотовичъ | Первая скрипка | - | -
+  field in question: family
+  Option A: "Пашеевъ"
+  Option B: "Пащеевъ"
+
+## PAGE musicians_1901-02_MSK_p003   scan: outputs/roster_images_full/images/musicians_1901-02_MSK_p003.png   stored-row bundle: /tmp/audit4/musicians_1901-02_MSK_p003.txt
+
+ITEM musicians_1901-02_MSK_p003|e002|ordinal
+  stored row: e002 | 75. | Ромашковъ | Капитонъ | Андреевичъ | Контрабасъ | - | -
+  field in question: ordinal
+  Option A: "Ромашковъ 1-й"
+  Option B: "Ромашковъ"
+
+ITEM musicians_1901-02_MSK_p003|e003|ordinal
+  stored row: e003 | 76. | Ромашковъ | Павелъ | Ѳедоровичъ | Ударные инструменты | - | -
+  field in question: ordinal
+  Option A: "Ромашковъ 2-й"
+  Option B: "Ромашковъ"
+
+ITEM musicians_1901-02_MSK_p003|e004|ordinal
+  stored row: e004 | 77. | Ромашковъ | Григорій | Ѳедоровичъ | Альтъ | - | -
+  field in question: ordinal
+  Option A: "Ромашковъ 3-й"
+  Option B: "Ромашковъ"
+
+ITEM musicians_1901-02_MSK_p003|e011|first
+  stored row: e011 | 84. | Слуцкій | Инхекъ-Мейеръ | - | Первая скрипка | - | -
+  field in question: first
+  Option A: "Инхекъ-Мейеръ"
+  Option B: "Ицхекъ-Мейеръ"
+
+ITEM musicians_1901-02_MSK_p003|e034|ordinal
+  stored row: e034 | 107. | Шмидтъ | Францъ | - | Фаготъ | - | -
+  field in question: ordinal
+  Option A: "Шмидтъ"
+  Option B: "Шмидтъ 1-й"
+
+ITEM musicians_1901-02_MSK_p003|e035|ordinal
+  stored row: e035 | 108. | Шмидтъ | Фридрихъ | - | Альтъ | - | -
+  field in question: ordinal
+  Option A: "Шмидтъ"
+  Option B: "Шмидтъ 2-й"

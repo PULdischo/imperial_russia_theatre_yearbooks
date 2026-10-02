@@ -1,0 +1,44 @@
+PAGE SUMMARY
+musicians_1898-99_MSK_p003 | entries read: 40 | entries with a discrepancy: 5
+musicians_1898-99_MSK_p004 | entries read: 16 | entries with a discrepancy: 3
+musicians_1898-99_SP_p000 | entries read: 12 | entries with a discrepancy: 0
+musicians_1898-99_SP_p001 | entries read: 38 | entries with a discrepancy: 5
+musicians_1898-99_SP_p002 | entries read: 40 | entries with a discrepancy: 7
+DISCREPANCIES
+musicians_1898-99_MSK_p003 | e005 | ordinal | STORED: family "Шмидтъ", first "І-й", patronymic "Францъ" | PRINTED: "Шмидтъ 1-й, Францъ" | confidence: DIRECT(zoomed) | ordinal belongs after surname; first-name field holds ordinal (Cyrillic І U+0406 rather than digit 1), real first name pushed into patronymic
+musicians_1898-99_MSK_p003 | e006 | ordinal | STORED: family "Шмидтъ", first "2-й", patronymic "Фридрихъ" | PRINTED: "Шмидтъ 2-й, Фридрихъ" | confidence: DIRECT(zoomed) | ordinal in first, name pushed into patronymic
+musicians_1898-99_MSK_p003 | e012 | ordinal | STORED: family "Эйхенвальдъ", first "1-я", patronymic "Ида" | PRINTED: "Эйхенвальдъ 1-я, Ида" | confidence: DIRECT(zoomed) | ordinal in first, name pushed into patronymic
+musicians_1898-99_MSK_p003 | e013 | ordinal | STORED: family "Эйхенвальдъ", first "2-я", patronymic "Надежда" | PRINTED: "Эйхенвальдъ 2-я, Надежда Александровна" | confidence: DIRECT(zoomed) | ordinal in first; first name in patronymic field; patronymic "Александровна" (line-broken Алек-/сандровна) missing entirely
+musicians_1898-99_MSK_p003 | e025 | family | STORED: "Зальборнъ" | PRINTED: "Заальборнъ" | confidence: DIRECT(zoomed) | double а
+musicians_1898-99_MSK_p004 | e003 | first | STORED: "Іоганнь-Фридрихъ" | PRINTED: "Іоганнъ-Фридрихъ" | confidence: DIRECT(zoomed) | ь vs ъ
+musicians_1898-99_MSK_p004 | e006 | first | STORED: "Никіфоръ" | PRINTED: "Никифоръ" | confidence: DIRECT(zoomed) | stored has dotted і, print has plain и (к glyph has a hook but the following letter is undotted)
+musicians_1898-99_MSK_p004 | e002 | family | STORED: "Николаевъ" | PRINTED: "Николаевъ (Шмулевичъ)" | confidence: DIRECT(zoomed) | printed parenthetical original surname "(Шмулевичъ)" not captured in any field
+musicians_1898-99_SP_p001 | e010 | family | STORED: "Ванштейдъ" | PRINTED: "Ваншейдъ" | confidence: DIRECT(zoomed) | stray extra т
+musicians_1898-99_SP_p001 | e016 | ordinal | STORED: family "Вульфъ-Израэль", first "І-й", patronymic "Михаилъ Александровичъ" | PRINTED: "Вульфъ-Израэль 1-й, Михаилъ Александровичъ" | confidence: DIRECT(zoomed) | ordinal in first (Cyrillic І U+0406); name+patronymic shifted into patronymic
+musicians_1898-99_SP_p001 | e017 | ordinal | STORED: family "Вульфъ-Израэль", first "2-й", patronymic "Евгеній Владиміровичъ" | PRINTED: "Вульфъ-Израэль 2-й, Евгеній Владиміровичъ" | confidence: DIRECT(zoomed) | ordinal in first; name shifted
+musicians_1898-99_SP_p001 | e037 | patronymic | STORED: "Мартиновичъ" | PRINTED: "Мартыновичъ" (line-broken Мартыно-/вичъ) | confidence: DIRECT(zoomed) | и vs ы
+musicians_1898-99_SP_p001 | e038 | ordinal | STORED: family "Іогансонъ", first "1-й", patronymic "Августъ Васильевичъ" | PRINTED: "Іогансонъ 1-й, Августъ Васильевичъ" | confidence: DIRECT(zoomed) | ordinal in first; name shifted
+musicians_1898-99_SP_p002 | e001 | family | STORED: "Логансонъ 2-й" | PRINTED: "Іогансонъ 2-й" | confidence: DIRECT(zoomed) | first letter is І (compare e038 on previous page), stored Л
+musicians_1898-99_SP_p002 | e006 | patronymic | STORED: "Эвалъдовичъ" | PRINTED: "Эвальдовичъ" | confidence: DIRECT(zoomed) | ъ vs ь
+musicians_1898-99_SP_p002 | e007 | family | STORED: "Каукалъ" | PRINTED: "Каукаль" | confidence: DIRECT(zoomed) | ъ vs ь
+musicians_1898-99_SP_p002 | e014 | family | STORED: "Корнѣвъ" | PRINTED: "Корнѣевъ" | confidence: DIRECT(zoomed) | missing е after ѣ
+musicians_1898-99_SP_p002 | e017 | space | STORED: "ДеЛанге" | PRINTED: "Де Ланге" | confidence: DIRECT(zoomed) | printed with a gap between Де and Ланге (letterspaced type, but gap is wider than letterspacing)
+musicians_1898-99_SP_p002 | e025 | family/first | STORED: family "Лулольфъ" | PRINTED: "Лудольфи" | confidence: DIRECT(zoomed) | л for д and и for ъ; first Валентинъ OK
+musicians_1898-99_SP_p002 | e032 | instrument | STORED: "Вальторнъ" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | 
+DATE-CHECK RESULTS
+musicians_1898-99_MSK_p003 | e011 | STORED start: "14 апрѣля 1880 г." | PRINTED start: "съ 14 апрѣля 1880 г. по 1 сентября 1882 г. и съ 1 сентября 1883 г." | MATCH (two tenure periods printed; stored value is the first start, modal 1/9/1883 is the second) | confidence: DIRECT(zoomed)
+musicians_1898-99_MSK_p003 | e039 | STORED start: "апрѣля 1897 г." | PRINTED start: "съ апрѣля 1897 г." (no day printed) | MATCH | confidence: DIRECT(zoomed)
+musicians_1898-99_MSK_p003 | e036 | STORED start: "22 сентября 1898 г." | PRINTED start: "съ 22 сентября 1898 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1898-99_MSK_p004 | e001 | STORED start: "23 сентября 1898 г." | PRINTED start: "съ 23 сентября 1898 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1898-99_MSK_p004 | e010 | STORED start: "1 января 1894 г." | PRINTED start: "съ 1 января 1894 г." (entry also says "онъ же и библіотекарь Музыкальной библіотеки"); library-section entry e016 prints "съ 1 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1898-99_SP_p001 | e033 | STORED start: "1 сентября 1897 г." | PRINTED start: "съ 1 сентября 1897 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1898-99_SP_p002 | e030 | STORED start: "11 октября 1869 г." | PRINTED start: "съ 11 октября 1869 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- Ordinal-in-first-name rows (MSK_p003 e005/e006/e012/e013; SP_p001 e016/e017/e038) all also shift the real first name into patronymic (no 'patronymic inside first name' pattern on these pages).
+- MSK_p003 e027 Ивановъ: print has extra line "Оставилъ службу 1 октября 1898 г."
+- MSK_p004 e016 (Фарскій, library section, printed "съ 1 сентября 1882 г.") is a second listing of e010's person; e010 print says "онъ же и библіотекарь Музыкальной библіотеки" with start 1 января 1894 (Альтъ), library entry start 1 сентября 1882 -> same person, two genuine different start dates printed.
+- MSK_p004 e032 Шнейдеръ Семенъ: print has "Оставилъ службу 1 сентября 1899 г." line.
+- SP_p001: printed "Оставилъ службу" lines (Биндеръ e002, Векель e011, Гуманъ e029, Евстифѣевъ e031, Затценгоферъ e032); not name-field issues.
+- SP_p002 e008 Келеръ: extra note "Переведенъ на мѣсто капельмейстера Михайловскаго театра 1 декабря 1898 г."
+- No stray spaces/Latin letters found in stored name fields on these pages.
+- SP_p000: patronymic inside first name: none; first 4 conductor rows have no instrument by design.

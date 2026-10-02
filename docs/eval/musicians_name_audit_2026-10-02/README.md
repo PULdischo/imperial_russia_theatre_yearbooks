@@ -10,3 +10,8 @@ same person's other entries (`datecheck_entries.json`, 341 entries on 160 pages)
   TWO different men merged under one name -- a person-merge problem for the entity layer, not misreads.
 - Recurrent structural slips seen: ordinal "1-й/2-й/3-й" stored in the first-name field (Адольфи), patronymic stored inside the first-name field, hyphenated double first names split into first+patronymic (Мейеръ-Гиршъ, Іоганъ-Фридрихъ),
   surname part stored as first name (Туровичъ фонъ-Охота), instrument "Піанистъ при драматическихъ спектакляхъ" truncated, final ъ read as ь (Гейнь, Руссь, Кунсть), Виолончель/Біолончель for printed Віолончель.
+
+## Update 2026-10-02 -- audit completed and applied
+All 43 groups reported (results/group1..43.txt); every flagged item was re-read blind by a second agent (verification/, 16+1 batches; analysis/decisions.json) and
+the verified corrections applied to the raw JSON (apply/: engine.py, apply_all.py, spec_struct*.py, change_log.json, residual_log.json). Full account, counts, policy
+decisions, items left as stored and the entity-layer effect: docs/eval/known_issues.md, "Issue #130 batch 9". Typos stored verbatim: docs/eval/genuine_print_typos.md.

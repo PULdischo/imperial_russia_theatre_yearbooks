@@ -1,0 +1,39 @@
+PAGE SUMMARY
+musicians_1899-00_SP_p006 | entries read: 14 | entries with a discrepancy: 0
+musicians_1900-01_MSK_p000 | entries read: 6 | entries with a discrepancy: 0
+musicians_1900-01_MSK_p001 | entries read: 40 | entries with a discrepancy: 3
+musicians_1900-01_MSK_p002 | entries read: 38 | entries with a discrepancy: 4
+musicians_1900-01_MSK_p003 | entries read: 40 | entries with a discrepancy: 8
+DISCREPANCIES
+musicians_1900-01_MSK_p001 | e005 | first | STORED: "Сергій" | PRINTED: "Сергѣй" | confidence: DIRECT(zoomed)
+musicians_1900-01_MSK_p001 | e007 | instrument | STORED: "Вальторнъ" | PRINTED: "Вальдгорнъ" (line-break "Вальд-/горнъ") | confidence: DIRECT(zoomed)
+musicians_1900-01_MSK_p001 | e040 | family | STORED: "Квелнау" | PRINTED: "Кведнау" | confidence: DIRECT(zoomed)
+musicians_1900-01_MSK_p002 | e010 | patronymic | STORED: "Никито-ровичъ" | PRINTED: "Никифоровичъ" (line-break "Никифо-/ровичъ") | confidence: DIRECT(zoomed) | two errors: т for ф, and stored hyphen is a line-break artifact
+musicians_1900-01_MSK_p002 | e014 | first | STORED: "Готтильдъ" | PRINTED: "Готгильдъ" | confidence: DIRECT(zoomed)
+musicians_1900-01_MSK_p002 | e014 | patronymic | STORED: "Францъ" | PRINTED: "Францъ" is a second given name (print "Готгильдъ Францъ", no patronymic) | confidence: DIRECT(zoomed) | field-placement note only, text correct
+musicians_1900-01_MSK_p002 | e025 | family | STORED: "Пащевъ" | PRINTED: "Пащеевъ" | confidence: DIRECT(zoomed)
+musicians_1900-01_MSK_p002 | e034 | first | STORED: "Марлохей" | PRINTED: "Мардохей" | confidence: DIRECT(zoomed)
+musicians_1900-01_MSK_p003 | e001 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed
+musicians_1900-01_MSK_p003 | e003 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed
+musicians_1900-01_MSK_p003 | e010 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed
+musicians_1900-01_MSK_p003 | e019 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed
+musicians_1900-01_MSK_p003 | e021 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed
+musicians_1900-01_MSK_p003 | e033 | instrument | STORED: "Альть" | PRINTED: "Альтъ" | confidence: DIRECT(zoomed) | AUTO-FLAG confirmed
+musicians_1900-01_MSK_p003 | e025 | family | STORED: "Цибинъ" | PRINTED: "Цыбинъ" | confidence: DIRECT(zoomed)
+musicians_1900-01_MSK_p003 | e037 | family | STORED: "Шталлеръ" | PRINTED: "Штадлеръ" | confidence: DIRECT(zoomed)
+DATE-CHECK RESULTS
+musicians_1899-00_SP_p006 | e003 | STORED start: "1 сентября 1886 г." | PRINTED start: "1 сентября 1886 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1899-00_SP_p006 | e013 | STORED start: "15 сентября 1897 г." | PRINTED start: "15 сентября 1897 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_MSK_p002 | e023 | STORED start: "10 октября 1878 г." | PRINTED start: "10 октября 1878 г." (first interval; printed "съ 10 октября 1878 г. по 30 декабря 1880 г. и съ 19 сентября 1882 г.") | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_MSK_p002 | e012 | STORED start: "1 апрѣля 1897 г." | PRINTED start: "1 апрѣля 1897 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_MSK_p003 | e038 | STORED start: "съ 14 апрѣля 1880 г." | PRINTED start: "14 апрѣля 1880 г." (first interval; printed "съ 14 апрѣля 1880 г. по 1 сентября 1882 г. и съ 1 сентября 1883 г.") | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_MSK_p003 | e015 | STORED start: "съ 15 сентября 1891 г." | PRINTED start: "15 сентября 1891 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1900-01_MSK_p003 | e017 | STORED start: "съ 1 января 1898 г." | PRINTED start: "1 января 1898 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- Scan p006 (SP) e011 Шольце: printed tenure lacks the closing ")" after "г." (print quirk only).
+- MSK p000: header entries without list numbers (e001-e005); e006 Барминъ is repetitor "1."; p001 e001/e002 are repetitors 2./3.; p001 e003 Марквардтъ (Капельмейстеръ военной музыки) is unnumbered, and reappears as p002 e018 (55.) with print "(онъ же и капельмейстеръ военной музыки)".
+- p002 e001 Кламротъ carries printed "Оставилъ службу 15 октября 1900 г"; e033 Рамбоусекъ carries "† 10 марта 1901 г."; p003 e028 Швинкъ "Оставилъ службу 1 ноября 1900 г."; p003 e031 Шиманъ "† 7 декабря 1900 г." (annotations, not name fields).
+- No patronymic-inside-first-name pattern on any of these pages; patronymics are in their own field throughout.
+- p003 e038 Штернбергъ and p002 e023 Павловъ have multi-interval tenures: stored start is the first interval's; the "modal" disagreement is genuine, not a misread. p003 e015 Сѣмашко (1891), e017 Тезавровскій (1898), p002 e012 Кудряшовъ (1897 апрѣля) all match the print exactly, so any disagreement with other volumes is source variation.
+- Hyphenated stored values elsewhere (Барсукъ-Самборскій, Карлъ-Вильгельмъ, Рудольфъ-Эдуардъ, Ицхекъ-Мейеръ, Петръ-Іоганнъ, Фридрихъ-Іоганнъ, Контръ-фаготъ, Фонъ-Нольте) are genuine printed hyphens, not line-break artifacts.
+- Printed list numbers match stored list numbers on every entry of all five pages.

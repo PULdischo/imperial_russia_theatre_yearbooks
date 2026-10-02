@@ -1,0 +1,49 @@
+PAGE SUMMARY
+musicians_1891-92_MSK_p003 | entries read: 49 | entries with a discrepancy: 4
+musicians_1891-92_SP_p000 | entries read: 14 | entries with a discrepancy: 1
+musicians_1891-92_SP_p001 | entries read: 55 | entries with a discrepancy: 9
+musicians_1891-92_SP_p002 | entries read: 50 | entries with a discrepancy: 2
+musicians_1891-92_SP_p003 | entries read: 59 | entries with a discrepancy: 12
+DISCREPANCIES
+musicians_1891-92_MSK_p003 | e010 | list | STORED: "48." | PRINTED: "48" (no period) | confidence: DIRECT(zoomed) | PRINT-TYPO? (trivial)
+musicians_1891-92_MSK_p003 | e016 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (Віо-/лончель) | confidence: DIRECT(zoomed)
+musicians_1891-92_MSK_p003 | e017 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (Віо-/лончель) | confidence: DIRECT(zoomed)
+musicians_1891-92_MSK_p003 | e028 | family | STORED: "Кржвицкій" | PRINTED: "Крживицкій" (letter и after ж missing in stored) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p000 | e013 | family | STORED: "Брайнь" | PRINTED: "Брайнъ" (hard sign, not soft) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p001 | e002 | ordinal | STORED: "Вальтеръ" | PRINTED: "Вальтеръ 1-й" | confidence: DIRECT(zoomed) | ordinal dropped
+musicians_1891-92_SP_p001 | e003 | ordinal | STORED: "Вальтеръ" | PRINTED: "Вальтеръ 2-й" | confidence: DIRECT(zoomed) | ordinal dropped
+musicians_1891-92_SP_p001 | e012 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p001 | e013 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p001 | e014 | family | STORED: "Грибень" | PRINTED: "Грибенъ" (hard sign) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p001 | e033 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p001 | e043 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p001 | e052 | ordinal | STORED: "Плесковъ" | PRINTED: "Плесковъ 2-й" | confidence: DIRECT(zoomed) | ordinal dropped
+musicians_1891-92_SP_p001 | e054 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p002 | e026 | family | STORED: "Шенкерль" | PRINTED: "Шенекерль" (extra е after Шен) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p002 | e040 | family | STORED: "Каннегиссеръ" | PRINTED: "Канненгиссеръ" (К-а-н-н-е-н-г-и-с-с-е-р-ъ; extra н before г) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p003 | e004 | ordinal | STORED: first="2-й" (family "Вальтеръ") | PRINTED: "Вальтеръ 2-й" | confidence: DIRECT(zoomed) | ordinal in first-name field
+musicians_1891-92_SP_p003 | e008 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p003 | e018 | first/patronymic/ordinal | STORED: first="1-й", patronymic="Василій" | PRINTED: "Ивановъ 1-й, Василій Андреевичъ" (first=Василій, patronymic=Андреевичъ; ordinal belongs in family; patronymic Андреевичъ missing entirely) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p003 | e019 | first/patronymic/ordinal | STORED: first="2-й", patronymic="Владиміръ" | PRINTED: "Ивановъ 2-й, Владиміръ Ивановичъ" (first=Владиміръ, patronymic=Ивановичъ; ordinal belongs in family; patronymic Ивановичъ missing entirely) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p003 | e021 | family | STORED: "Назаковъ" | PRINTED: "Казаковъ" | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p003 | e025 | family | STORED: "Керкешо" | PRINTED: "Керкешко" | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p003 | e030 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p003 | e033 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (Віо-/лончель) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p003 | e041 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p003 | e043 | ordinal | STORED: family "Тарнке", first="1-й" | PRINTED: "Тарнке 1-й" | confidence: DIRECT(zoomed) | ordinal in first-name field
+musicians_1891-92_SP_p003 | e044 | ordinal | STORED: family "Тарнке", first="2-й" | PRINTED: "Тарнке 2-й" | confidence: DIRECT(zoomed) | ordinal in first-name field
+musicians_1891-92_SP_p003 | e052 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" (Віо-/лончель) | confidence: DIRECT(zoomed)
+DATE-CHECK RESULTS
+musicians_1891-92_MSK_p003 | e040 | STORED start: "19 сентября 1881 г." | PRINTED start: "съ 19 сентября 1882 г." | DIFFERS (stored year misread; same person Падель, Іоганъ-Фридрихъ) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p001 | e014 | STORED start: "съ 15 августа 1873 г." | PRINTED start: "съ 15 августа 1873 г." | MATCH (so modal 1/8/1897 in other years is the other entries' issue; printed here is 15 августа 1873) | confidence: DIRECT(zoomed)
+musicians_1891-92_SP_p002 | e039 | STORED start: "1 сентября 1886 г." | PRINTED start: "съ 1 сентября 1886 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- MSK_p003: no patronymic-in-first-name pattern; all 49 rows are clean otherwise. e013 Чіарлоне 1-я and e014/e046 Шефферъ 1-й/2-й ordinals are correctly in family.
+- SP_p001: e034 Кункели printed patronymic "Альбертсвичъ" (stored identically) -- PRINT-TYPO? (normal form would be Альбертовичъ).
+- SP_p001: printed "Оставилъ службу 1 мая 1892 г." after e039 Литтихъ and e042 Михельсонъ (annotations, not name data).
+- SP_p002: e021 Цабель and e045 Ауэръ have printed "Солистъ Двора Его Императорскаго Величества." but rank_or_title is stored "-".
+- SP_p003: e018/e019 stored patronymic field holds the printed first name and the real printed patronymic (Андреевичъ / Ивановичъ) is absent from the row -- real content loss, not just placement.
+- SP_p003: ordinals for Вальтеръ 2-й / Ивановъ 1-й,2-й / Тарнке 1-й,2-й stored in the first-name field (ORDINAL-IN-FIRSTNAME flag confirmed for e004,e018,e019,e043,e044).
+- SP_p001 stored 55 rows = printed nos. 9-63; SP_p002 rows match printed (64-101, ballet block 1-3, 1-7); no missing/extra rows on any page.
+- AUTO-FLAGS INSTR-VARIANT: all confirmed (print is Віолончель with dotted і) on MSK e016,e017; SP_p001 e012,e013,e033,e043,e054; SP_p003 e008,e030,e033,e041,e052.
+- Spelling variants within these pages (printed, left as-is): Каннегиссеръ/Канненгиссеръ; Крживицкій; Керкешко (p001 and p003 print Керкешко; p003 stored Керкешо is the error); Грибенъ.

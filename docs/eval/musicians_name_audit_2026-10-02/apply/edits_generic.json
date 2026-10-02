@@ -1,0 +1,4290 @@
+[
+ {
+  "page": "musicians_1890-91_MSK_p001",
+  "entry": "e008",
+  "field": "first",
+  "old": "Карль-Фридрихъ",
+  "new": "Карлъ - Фридрихъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_MSK_p001",
+  "entry": "e035",
+  "field": "family",
+  "old": "Лихтен",
+  "new": "Лихтенъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_MSK_p002",
+  "entry": "e011",
+  "field": "first",
+  "old": "Ипхекъ",
+  "new": "Ицхекъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_MSK_p002",
+  "entry": "e017",
+  "field": "family",
+  "old": "Фишкінь",
+  "new": "Фишкинъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_MSK_p003",
+  "entry": "e040",
+  "field": "family",
+  "old": "Рамбоусенъ",
+  "new": "Рамбоусекъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_MSK_p004",
+  "entry": "e030",
+  "field": "family",
+  "old": "Спевак",
+  "new": "Спевакъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_SP_p000",
+  "entry": "e004",
+  "field": "patronymic",
+  "old": "Франшевичъ",
+  "new": "Францевичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_SP_p002",
+  "entry": "e005",
+  "field": "family",
+  "old": "Терь-Огановъ",
+  "new": "Теръ-Огановъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_SP_p004",
+  "entry": "e016",
+  "field": "patronymic",
+  "old": "Сергеевичъ",
+  "new": "Сергѣевичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_SP_p004",
+  "entry": "e024",
+  "field": "patronymic",
+  "old": "Людвиго-вичъ",
+  "new": "Людвиго-/вичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_SP_p004",
+  "entry": "e029",
+  "field": "patronymic",
+  "old": "Сергеевичъ",
+  "new": "Сергѣевичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e001",
+  "field": "patronymic",
+  "old": "Вареоломеевичъ",
+  "new": "Варѳоломеевичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e007",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e011",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e024",
+  "field": "family",
+  "old": "Баряининъ",
+  "new": "Барянинъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e036",
+  "field": "family",
+  "old": "Грибень",
+  "new": "Грибенъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_SP_p006",
+  "entry": "e005",
+  "field": "family",
+  "old": "Майєръ-Пирко",
+  "new": "Майеръ-Пирко",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_SP_p006",
+  "entry": "e010",
+  "field": "family",
+  "old": "Пертєль",
+  "new": "Пертель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_MSK_p000",
+  "entry": "e005",
+  "field": "first",
+  "old": "Карль-Самуилъ",
+  "new": "Карлъ-Самуилъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_MSK_p000",
+  "entry": "e015",
+  "field": "first",
+  "old": "Карль-Вильгельмъ",
+  "new": "Карлъ-Вильгельмъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_MSK_p001",
+  "entry": "e028",
+  "field": "family",
+  "old": "Палище",
+  "new": "Палице",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_MSK_p002",
+  "entry": "e003",
+  "field": "family",
+  "old": "Шлейеръ",
+  "new": "Шпейеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_MSK_p002",
+  "entry": "e004",
+  "field": "instrument",
+  "old": "Контрабасъ",
+  "new": "Кснтрабасъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_MSK_p002",
+  "entry": "e035",
+  "field": "family",
+  "old": "Зюстъ",
+  "new": "Зюсъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_MSK_p003",
+  "entry": "e028",
+  "field": "family",
+  "old": "Кржвицкій",
+  "new": "Крживицкій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_MSK_p004",
+  "entry": "e002",
+  "field": "family",
+  "old": "Эйхенвальдъ",
+  "new": "Эйхенвальдъ 2-я",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_MSK_p004",
+  "entry": "e030",
+  "field": "first",
+  "old": "Никіфоръ",
+  "new": "Никифоръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_MSK_p004",
+  "entry": "e034",
+  "field": "instrument",
+  "old": "-",
+  "new": "Альтъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p000",
+  "entry": "e003",
+  "field": "family",
+  "old": "Крушевскій",
+  "new": "Крушевекій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e004",
+  "field": "family",
+  "old": "Болымъ",
+  "new": "Больмъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e006",
+  "field": "family",
+  "old": "Брекертъ",
+  "new": "Брекеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e009",
+  "field": "first",
+  "old": "Конраль",
+  "new": "Конрадъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e011",
+  "field": "family",
+  "old": "Ваншейдль",
+  "new": "Ваншейдъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e019",
+  "field": "patronymic",
+  "old": "Владимировичъ",
+  "new": "Владиміровичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e023",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p002",
+  "entry": "e019",
+  "field": "family",
+  "old": "Людольфъ",
+  "new": "Людольфи",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p003",
+  "entry": "e011",
+  "field": "first",
+  "old": "Ѳелоръ",
+  "new": "Ѳедоръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p003",
+  "entry": "e013",
+  "field": "family",
+  "old": "Терь-Огановъ",
+  "new": "Теръ-Огановъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p003",
+  "entry": "e022",
+  "field": "first",
+  "old": "Кануть-Эмерикъ",
+  "new": "Канутъ-Эмерикъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p003",
+  "entry": "e030",
+  "field": "patronymic",
+  "old": "Александро-вичъ",
+  "new": "Александро-/вичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p003",
+  "entry": "e031",
+  "field": "family",
+  "old": "Шоллартъ",
+  "new": "Шолларъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p004",
+  "entry": "e002",
+  "field": "first",
+  "old": "Алольфъ",
+  "new": "Адольфъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p004",
+  "entry": "e006",
+  "field": "family",
+  "old": "Булановъ",
+  "new": "Будановъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p004",
+  "entry": "e021",
+  "field": "family",
+  "old": "Кемеръ",
+  "new": "Келеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p004",
+  "entry": "e022",
+  "field": "family",
+  "old": "Кеммеръ",
+  "new": "Кеммереръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_SP_p005",
+  "entry": "e025",
+  "field": "family",
+  "old": "Кулле",
+  "new": "Кулле 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1902-03_MSK_p000",
+  "entry": "e016",
+  "field": "family",
+  "old": "Аспергёръ",
+  "new": "Аспергеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1902-03_MSK_p001",
+  "entry": "e001",
+  "field": "family",
+  "old": "Гелике",
+  "new": "Гедике",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1902-03_MSK_p002",
+  "entry": "e011",
+  "field": "family",
+  "old": "Пашеевъ",
+  "new": "Пащеевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1902-03_MSK_p003",
+  "entry": "e007",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1902-03_MSK_p003",
+  "entry": "e033",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1902-03_MSK_p004",
+  "entry": "e020",
+  "field": "family",
+  "old": "Терентьевъ",
+  "new": "Терёнтьевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1902-03_SP_p003",
+  "entry": "e028",
+  "field": "first",
+  "old": "Кануть-Эмерикъ",
+  "new": "Канутъ-Эмерикъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1902-03_SP_p005",
+  "entry": "e003",
+  "field": "family",
+  "old": "Армсгейммеръ",
+  "new": "Армсгеймеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1903-04_MSK_p000",
+  "entry": "e008",
+  "field": "family",
+  "old": "Брындлинъ",
+  "new": "Брындинъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1903-04_MSK_p001",
+  "entry": "e034",
+  "field": "patronymic",
+  "old": "Никиторовичъ",
+  "new": "Никифоровичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1903-04_MSK_p002",
+  "entry": "e008",
+  "field": "family",
+  "old": "Пашеевъ",
+  "new": "Пащеевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1903-04_MSK_p002",
+  "entry": "e037",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1903-04_SP_p000",
+  "entry": "e012",
+  "field": "family",
+  "old": "Аматфкъ",
+  "new": "Аматнѣкъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1903-04_SP_p000",
+  "entry": "e021",
+  "field": "family",
+  "old": "Болымъ",
+  "new": "Больмъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1903-04_SP_p000",
+  "entry": "e023",
+  "field": "first",
+  "old": "Конралъ",
+  "new": "Конрадъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1903-04_SP_p001",
+  "entry": "e022",
+  "field": "family",
+  "old": "Каллецъ",
+  "new": "Кадлецъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1903-04_SP_p004",
+  "entry": "e009",
+  "field": "first",
+  "old": "Меводій",
+  "new": "Меѳодій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1903-04_SP_p004",
+  "entry": "e025",
+  "field": "family",
+  "old": "Нелзейко",
+  "new": "Недзейко",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p000",
+  "entry": "e005",
+  "field": "family",
+  "old": "Бейллеръ",
+  "new": "Бейдлеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p000",
+  "entry": "e013",
+  "field": "family",
+  "old": "Адольфъ",
+  "new": "Адольфи",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p000",
+  "entry": "e017",
+  "field": "family",
+  "old": "Ардль",
+  "new": "Ардъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p000",
+  "entry": "e019",
+  "field": "family",
+  "old": "Аспергертъ",
+  "new": "Аспергеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p000",
+  "entry": "e021",
+  "field": "first",
+  "old": "Іоганнь-Альбертъ",
+  "new": "Іоганнъ-Альбертъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p000",
+  "entry": "e029",
+  "field": "family",
+  "old": "Валеніусъ",
+  "new": "Валеніўсъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p001",
+  "entry": "e010",
+  "field": "instrument",
+  "old": "Вальдгорнъ",
+  "new": "Вольдгорнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p001",
+  "entry": "e013",
+  "field": "family",
+  "old": "Дулычъ",
+  "new": "Дудычъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p001",
+  "entry": "e018",
+  "field": "family",
+  "old": "Зоэль",
+  "new": "Зозель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p001",
+  "entry": "e020",
+  "field": "family",
+  "old": "Золотаренко",
+  "new": "Золотаренко 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p001",
+  "entry": "e021",
+  "field": "family",
+  "old": "Золотаренко",
+  "new": "Золотаренко 3-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p001",
+  "entry": "e038",
+  "field": "family",
+  "old": "Кусевичкій",
+  "new": "Кусевицкій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p002",
+  "entry": "e010",
+  "field": "family",
+  "old": "Омъ",
+  "new": "Омэ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p002",
+  "entry": "e020",
+  "field": "first",
+  "old": "Марлохей",
+  "new": "Мардохей",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p002",
+  "entry": "e020",
+  "field": "patronymic",
+  "old": "Земинъ",
+  "new": "Земинъ Шломовичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p002",
+  "entry": "e024",
+  "field": "family",
+  "old": "Ромашковъ",
+  "new": "Ромашковъ 1-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p002",
+  "entry": "e025",
+  "field": "family",
+  "old": "Ромашковъ",
+  "new": "Ромашковъ 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p002",
+  "entry": "e036",
+  "field": "patronymic",
+  "old": "Никіфоровичъ",
+  "new": "Никифоровичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p003",
+  "entry": "e009",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p003",
+  "entry": "e029",
+  "field": "family",
+  "old": "Шталлеръ",
+  "new": "Штадлеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p000",
+  "entry": "e024",
+  "field": "patronymic",
+  "old": "Тригорьевичъ",
+  "new": "Григорьевичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e002",
+  "field": "family",
+  "old": "Виргеліошъ",
+  "new": "Виргеліюшъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e007",
+  "field": "family",
+  "old": "Вульфъ-Израэль",
+  "new": "Вульфъ-Израэль 1-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e008",
+  "field": "family",
+  "old": "Вульфъ-Израэль",
+  "new": "Вульфъ - Израэль 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e027",
+  "field": "family",
+  "old": "Инспрукертъ",
+  "new": "Инспрукеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p002",
+  "entry": "e003",
+  "field": "family",
+  "old": "Кубанскъ",
+  "new": "Кубанекъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p002",
+  "entry": "e006",
+  "field": "patronymic",
+  "old": "Федоровичъ",
+  "new": "Фелоровичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p002",
+  "entry": "e007",
+  "field": "family",
+  "old": "Ле-Лангъ",
+  "new": "Де-Ланге",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p002",
+  "entry": "e008",
+  "field": "family",
+  "old": "Лангъ",
+  "new": "Ланге",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p002",
+  "entry": "e015",
+  "field": "family",
+  "old": "Людольфъ",
+  "new": "Людольфи",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p002",
+  "entry": "e019",
+  "field": "family",
+  "old": "Михайловскій",
+  "new": "Михайловскій 1-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p002",
+  "entry": "e020",
+  "field": "family",
+  "old": "Михайловскій",
+  "new": "Михайловскій 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p003",
+  "entry": "e007",
+  "field": "instrument",
+  "old": "Вальтгорнъ",
+  "new": "Вальдгорнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p003",
+  "entry": "e012",
+  "field": "family",
+  "old": "Тепъ",
+  "new": "Тецъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p003",
+  "entry": "e031",
+  "field": "family",
+  "old": "Штейнъ",
+  "new": "Штейнсъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p003",
+  "entry": "e037",
+  "field": "family",
+  "old": "Юнкертъ",
+  "new": "Юнкеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p004",
+  "entry": "e014",
+  "field": "first",
+  "old": "Меволій",
+  "new": "Меѳолій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p004",
+  "entry": "e028",
+  "field": "family",
+  "old": "Недзѣйко",
+  "new": "Недзейко",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p005",
+  "entry": "e001",
+  "field": "instrument",
+  "old": "Флейта",
+  "new": "Флейга",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p005",
+  "entry": "e005",
+  "field": "family",
+  "old": "Армгеймеръ",
+  "new": "Армсгеймеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p005",
+  "entry": "e009",
+  "field": "family",
+  "old": "ВиЛЬкенъ",
+  "new": "Вилькенъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1904-05_SP_p005",
+  "entry": "e033",
+  "field": "patronymic",
+  "old": "Аеанасьевичъ",
+  "new": "Аѳанасьевичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_MSK_p001",
+  "entry": "e012",
+  "field": "instrument",
+  "old": "-",
+  "new": "Фаготъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_MSK_p002",
+  "entry": "e016",
+  "field": "family",
+  "old": "Квелнау",
+  "new": "Кведнау",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_MSK_p003",
+  "entry": "e001",
+  "field": "family",
+  "old": "Пашеевъ",
+  "new": "Пащеевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_MSK_p004",
+  "entry": "e002",
+  "field": "family",
+  "old": "Щыбинъ",
+  "new": "Цыбинъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_MSK_p004",
+  "entry": "e021",
+  "field": "family",
+  "old": "Янышиновъ",
+  "new": "Яньшиновъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_MSK_p004",
+  "entry": "e032",
+  "field": "instrument",
+  "old": "Флейта",
+  "new": "Флейтэ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_SP_p001",
+  "entry": "e017",
+  "field": "family",
+  "old": "Булдаевъ",
+  "new": "Будаевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_SP_p001",
+  "entry": "e018",
+  "field": "first",
+  "old": "Конраль",
+  "new": "Конрадъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_SP_p001",
+  "entry": "e025",
+  "field": "family",
+  "old": "Виргеліошъ",
+  "new": "Виргеліюшъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_SP_p002",
+  "entry": "e040",
+  "field": "family",
+  "old": "Михаловскій",
+  "new": "Михаловскій 1-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_SP_p003",
+  "entry": "e026",
+  "field": "family",
+  "old": "Словацевскій",
+  "new": "Словачевскій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_SP_p004",
+  "entry": "e032",
+  "field": "first",
+  "old": "Меводій",
+  "new": "Меѳодій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_SP_p005",
+  "entry": "e014",
+  "field": "family",
+  "old": "Завъятновскій",
+  "new": "Завѣтновскій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_SP_p005",
+  "entry": "e018",
+  "field": "family",
+  "old": "Лешинскій",
+  "new": "Лещинскій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_SP_p005",
+  "entry": "e024",
+  "field": "family",
+  "old": "Нелзейко",
+  "new": "Недзейко",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_SP_p005",
+  "entry": "e029",
+  "field": "family",
+  "old": "Сальникова",
+  "new": "Сальниковъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1905-06_SP_p006",
+  "entry": "e001",
+  "field": "family",
+  "old": "Лихтенбергъ",
+  "new": "Лихтенбергеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_MSK_p000",
+  "entry": "e006",
+  "field": "family",
+  "old": "Авѣрино",
+  "new": "Авьерино",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_MSK_p001",
+  "entry": "e026",
+  "field": "family",
+  "old": "Добрє",
+  "new": "Добре",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_MSK_p001",
+  "entry": "e028",
+  "field": "family",
+  "old": "Домашунась",
+  "new": "Домащунасъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_MSK_p002",
+  "entry": "e029",
+  "field": "family",
+  "old": "Пащееъ",
+  "new": "Пащеевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_MSK_p002",
+  "entry": "e030",
+  "field": "family",
+  "old": "Пекарскій 1",
+  "new": "Пекарскій I,",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_MSK_p003",
+  "entry": "e002",
+  "field": "family",
+  "old": "Ромашковъ",
+  "new": "Ромашковъ 1-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_MSK_p003",
+  "entry": "e003",
+  "field": "family",
+  "old": "Ромашковъ",
+  "new": "Ромашковъ 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_MSK_p003",
+  "entry": "e011",
+  "field": "family",
+  "old": "Соколовъ",
+  "new": "Соколовъ 1-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_MSK_p003",
+  "entry": "e012",
+  "field": "family",
+  "old": "Соколовъ",
+  "new": "Соколовъ 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_MSK_p003",
+  "entry": "e017",
+  "field": "first",
+  "old": "Никіфоръ",
+  "new": "Никифоръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_MSK_p003",
+  "entry": "e032",
+  "field": "family",
+  "old": "Шмидтъ",
+  "new": "Шмидтъ 1-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_MSK_p003",
+  "entry": "e033",
+  "field": "family",
+  "old": "Шмидтъ",
+  "new": "Шмидтъ 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_SP_p000",
+  "entry": "e010",
+  "field": "family",
+  "old": "Аматѣкъ",
+  "new": "Аматнѣкъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_SP_p000",
+  "entry": "e028",
+  "field": "family",
+  "old": "Виргеліошъ",
+  "new": "Виргеліюшъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e003",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e005",
+  "field": "family",
+  "old": "Людольфъ",
+  "new": "Людольфи",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e011",
+  "field": "family",
+  "old": "Мѣшанчукъ",
+  "new": "Мѣщанчукъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e026",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_SP_p003",
+  "entry": "e011",
+  "field": "family",
+  "old": "Федегансъ",
+  "new": "Федергансъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_SP_p004",
+  "entry": "e001",
+  "field": "instrument",
+  "old": "Вторая скрипка",
+  "new": "Вторая скричка",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_SP_p004",
+  "entry": "e017",
+  "field": "first",
+  "old": "Аванасій",
+  "new": "Аѳанасій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1906-07_SP_p004",
+  "entry": "e033",
+  "field": "family",
+  "old": "Сальніковъ",
+  "new": "Сальниковъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1907-08_MSK_p000",
+  "entry": "e006",
+  "field": "family",
+  "old": "Авъерино",
+  "new": "Авьерино",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1907-08_MSK_p001",
+  "entry": "e019",
+  "field": "instrument",
+  "old": "Валторна",
+  "new": "Валторнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1907-08_MSK_p002",
+  "entry": "e003",
+  "field": "family",
+  "old": "Пащее въ",
+  "new": "Пащеевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1907-08_MSK_p002",
+  "entry": "e029",
+  "field": "first",
+  "old": "Никіфоръ",
+  "new": "Никифоръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1907-08_SP_p000",
+  "entry": "e019",
+  "field": "family",
+  "old": "Больмъ",
+  "new": "Бѳльмъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1907-08_SP_p002",
+  "entry": "e005",
+  "field": "family",
+  "old": "Людольфъ",
+  "new": "Людольфи",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1907-08_SP_p002",
+  "entry": "e006",
+  "field": "family",
+  "old": "Малыі",
+  "new": "Малый",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1907-08_SP_p002",
+  "entry": "e008",
+  "field": "family",
+  "old": "Михаловскій",
+  "new": "Михаловскій 1-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1907-08_SP_p002",
+  "entry": "e009",
+  "field": "family",
+  "old": "Михаловскій",
+  "new": "Михаловскій 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1907-08_SP_p003",
+  "entry": "e003",
+  "field": "family",
+  "old": "Федегансъ",
+  "new": "Федергансъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1907-08_SP_p003",
+  "entry": "e034",
+  "field": "first",
+  "old": "Меводій",
+  "new": "Меѳодій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1907-08_SP_p004",
+  "entry": "e002",
+  "field": "first",
+  "old": "Владиміръ",
+  "new": "Владимиръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1907-08_SP_p004",
+  "entry": "e022",
+  "field": "first",
+  "old": "Владиміръ",
+  "new": "Владимиръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1908-09_MSK_p001",
+  "entry": "e013",
+  "field": "family",
+  "old": "Домащунясть",
+  "new": "Домащунасъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1908-09_MSK_p002",
+  "entry": "e017",
+  "field": "family",
+  "old": "Пащее въ",
+  "new": "Пащеевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1908-09_SP_p002",
+  "entry": "e023",
+  "field": "family",
+  "old": "Людольфъ",
+  "new": "Людольфи",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1908-09_SP_p002",
+  "entry": "e028",
+  "field": "family",
+  "old": "Михайлова скій",
+  "new": "Михайловскій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1909-10_MSK_p002",
+  "entry": "e006",
+  "field": "family",
+  "old": "Пащее въ",
+  "new": "Пащеевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1909-10_SP_p000",
+  "entry": "e007",
+  "field": "first",
+  "old": "-",
+  "new": "Даніилъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1909-10_SP_p000",
+  "entry": "e008",
+  "field": "instrument",
+  "old": "-",
+  "new": "Первая срипка",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1909-10_SP_p001",
+  "entry": "e016",
+  "field": "first",
+  "old": "Евтіхій",
+  "new": "Евтихій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1909-10_SP_p001",
+  "entry": "e029",
+  "field": "first",
+  "old": "Кануть",
+  "new": "Канутъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1909-10_SP_p002",
+  "entry": "e029",
+  "field": "family",
+  "old": "Людольфъ",
+  "new": "Людольфи",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1909-10_SP_p003",
+  "entry": "e012",
+  "field": "patronymic",
+  "old": "Александровичъ",
+  "new": "Аленсандровичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e002",
+  "field": "family",
+  "old": "Вальтеръ",
+  "new": "Вальтеръ 1-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e003",
+  "field": "family",
+  "old": "Вальтеръ",
+  "new": "Вальтеръ 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e013",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e014",
+  "field": "family",
+  "old": "Грибень",
+  "new": "Грибенъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e052",
+  "field": "family",
+  "old": "Плесковъ",
+  "new": "Плесковъ 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p002",
+  "entry": "e026",
+  "field": "family",
+  "old": "Шенкерль",
+  "new": "Шенекерль",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p002",
+  "entry": "e040",
+  "field": "family",
+  "old": "Каннегиссеръ",
+  "new": "Канненгиссеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e008",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e021",
+  "field": "family",
+  "old": "Назаковъ",
+  "new": "Казаковъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e025",
+  "field": "family",
+  "old": "Керкешо",
+  "new": "Керкешко",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p004",
+  "entry": "e007",
+  "field": "family",
+  "old": "Бѣлищій",
+  "new": "Бѣлицкій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p004",
+  "entry": "e010",
+  "field": "family",
+  "old": "Виргеліошъ",
+  "new": "Виргеліюшъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p004",
+  "entry": "e027",
+  "field": "family",
+  "old": "Мощейкевичъ",
+  "new": "Моцейкевичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p004",
+  "entry": "e027",
+  "field": "patronymic",
+  "old": "Варооломеевичъ",
+  "new": "Варѳоломеевичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p004",
+  "entry": "e035",
+  "field": "instrument",
+  "old": "Піанистъ",
+  "new": "Піанистъ при драматическихъ спектакляхъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p005",
+  "entry": "e004",
+  "field": "family",
+  "old": "Болымъ",
+  "new": "Больмъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1891-92_SP_p005",
+  "entry": "e025",
+  "field": "family",
+  "old": "Петерсень",
+  "new": "Петерсенъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1892-93_MSK_p001",
+  "entry": "e033",
+  "field": "family",
+  "old": "Рамбоусенъ",
+  "new": "Рамбоусекъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1892-93_MSK_p001",
+  "entry": "e034",
+  "field": "first",
+  "old": "Марлохей",
+  "new": "Мардохей",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1892-93_MSK_p001",
+  "entry": "e039",
+  "field": "first",
+  "old": "Ипхекъ-Мейерь",
+  "new": "Ицхекъ-Мейеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1892-93_MSK_p001",
+  "entry": "e044",
+  "field": "family",
+  "old": "Триньянъ",
+  "new": "Триньякъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e001",
+  "field": "family",
+  "old": "Арендъцъ",
+  "new": "Арендсъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e006",
+  "field": "first",
+  "old": "Адалъбертъ",
+  "new": "Адальбертъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1892-93_SP_p001",
+  "entry": "e010",
+  "field": "family",
+  "old": "Надлецъ",
+  "new": "Кадлецъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1892-93_SP_p001",
+  "entry": "e011",
+  "field": "family",
+  "old": "Назаковъ",
+  "new": "Казаковъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1892-93_SP_p001",
+  "entry": "e021",
+  "field": "family",
+  "old": "Нункели",
+  "new": "Кункели",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1892-93_SP_p001",
+  "entry": "e035",
+  "field": "family",
+  "old": "Пертѣль",
+  "new": "Пертель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1892-93_SP_p003",
+  "entry": "e014",
+  "field": "family",
+  "old": "Кернешко",
+  "new": "Керкешко",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1892-93_SP_p003",
+  "entry": "e031",
+  "field": "family",
+  "old": "Тарике 1-й",
+  "new": "Тарнке 1-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1892-93_SP_p003",
+  "entry": "e032",
+  "field": "family",
+  "old": "Тарике 2-й",
+  "new": "Тарнке 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1892-93_SP_p003",
+  "entry": "e050",
+  "field": "family",
+  "old": "Анимовъ",
+  "new": "Акимовъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_MSK_p001",
+  "entry": "e050",
+  "field": "family",
+  "old": "Маривардтъ",
+  "new": "Марквардтъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_MSK_p002",
+  "entry": "e007",
+  "field": "family",
+  "old": "Пащееевъ",
+  "new": "Пащеевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_MSK_p002",
+  "entry": "e023",
+  "field": "first",
+  "old": "Ипхекъ-Мейеръ",
+  "new": "Ицхекъ-Мейеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_SP_p000",
+  "entry": "e012",
+  "field": "patronymic",
+  "old": "Семёновичъ",
+  "new": "Семеновичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e002",
+  "field": "patronymic",
+  "old": "Геронимовичъ",
+  "new": "Іеронимовичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e003",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e012",
+  "field": "family",
+  "old": "Гильдеобрандтъ",
+  "new": "Гильдебрандтъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e032",
+  "field": "family",
+  "old": "Казановъ",
+  "new": "Казаковъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e051",
+  "field": "family",
+  "old": "Маннопъ",
+  "new": "Манкопъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_SP_p002",
+  "entry": "e003",
+  "field": "first",
+  "old": "Филипъ",
+  "new": "Филиппъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_SP_p002",
+  "entry": "e012",
+  "field": "first",
+  "old": "Іоифъ",
+  "new": "Іосифъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_SP_p002",
+  "entry": "e030",
+  "field": "family",
+  "old": "Терь-Огановъ",
+  "new": "Теръ-Огановъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_SP_p003",
+  "entry": "e001",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_SP_p003",
+  "entry": "e033",
+  "field": "patronymic",
+  "old": "Вареоломеевичъ",
+  "new": "Варѳоломеевичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_SP_p004",
+  "entry": "e009",
+  "field": "first",
+  "old": "Гугο",
+  "new": "Гуго",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_SP_p004",
+  "entry": "e029",
+  "field": "family",
+  "old": "Рендертъ",
+  "new": "Рендеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1893-94_SP_p004",
+  "entry": "e030",
+  "field": "family",
+  "old": "Реханъ",
+  "new": "Рехакъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p000",
+  "entry": "e006",
+  "field": "family",
+  "old": "Адольфи",
+  "new": "Адольфи 1-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p000",
+  "entry": "e007",
+  "field": "family",
+  "old": "Адольфи",
+  "new": "Адольфи 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p000",
+  "entry": "e019",
+  "field": "family",
+  "old": "Василевъ",
+  "new": "Васильевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p001",
+  "entry": "e017",
+  "field": "family",
+  "old": "Зюсь",
+  "new": "Зюсъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e001",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e004",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e007",
+  "field": "family",
+  "old": "Рессертъ",
+  "new": "Рессеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e018",
+  "field": "family",
+  "old": "Стреналовъ",
+  "new": "Стрекаловъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e027",
+  "field": "family",
+  "old": "Чарлоне",
+  "new": "Чіарлоне 1-я",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e028",
+  "field": "family",
+  "old": "Чарлоне",
+  "new": "Чіарлоне 2-я",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e052",
+  "field": "family",
+  "old": "Витигъ",
+  "new": "Виттигъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p003",
+  "entry": "e020",
+  "field": "patronymic",
+  "old": "Аоанасьевичъ",
+  "new": "Аѳанасьевичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p000",
+  "entry": "e017",
+  "field": "family",
+  "old": "Брайнь",
+  "new": "Брайнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p001",
+  "entry": "e011",
+  "field": "family",
+  "old": "Грибень 1-й",
+  "new": "Грибенъ 1-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p001",
+  "entry": "e012",
+  "field": "family",
+  "old": "Грибень 2-й",
+  "new": "Грибенъ 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p001",
+  "entry": "e034",
+  "field": "family",
+  "old": "Кернешко",
+  "new": "Керкешко",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p002",
+  "entry": "e012",
+  "field": "family",
+  "old": "Плацатиа",
+  "new": "Плацатка",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p002",
+  "entry": "e030",
+  "field": "family",
+  "old": "Терь-Огановъ",
+  "new": "Теръ-Огановъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p002",
+  "entry": "e037",
+  "field": "family",
+  "old": "Хаанъ",
+  "new": "Хаакъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p002",
+  "entry": "e048",
+  "field": "family",
+  "old": "Шолляръ",
+  "new": "Шолларъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p002",
+  "entry": "e050",
+  "field": "family",
+  "old": "Штаръ",
+  "new": "Штаркъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p002",
+  "entry": "e051",
+  "field": "family",
+  "old": "Штейль",
+  "new": "Штейдль",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p003",
+  "entry": "e012",
+  "field": "family",
+  "old": "Бесно",
+  "new": "Беско",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p003",
+  "entry": "e017",
+  "field": "family",
+  "old": "Виргеліошъ",
+  "new": "Виргеліюшъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p004",
+  "entry": "e003",
+  "field": "family",
+  "old": "Армегеймеръ",
+  "new": "Армсгеймеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p004",
+  "entry": "e007",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p004",
+  "entry": "e024",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1894-95_SP_p004",
+  "entry": "e031",
+  "field": "family",
+  "old": "Рехахъ",
+  "new": "Рехакъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_MSK_p001",
+  "entry": "e034",
+  "field": "family",
+  "old": "Кунсть",
+  "new": "Кунстъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_MSK_p001",
+  "entry": "e049",
+  "field": "family",
+  "old": "Пащеечь",
+  "new": "Пащеевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e025",
+  "field": "family",
+  "old": "Триньянъ",
+  "new": "Триньякъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e028",
+  "field": "family",
+  "old": "Фрице",
+  "new": "Фриче",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e042",
+  "field": "family",
+  "old": "Шпекинъ",
+  "new": "Шпеккинъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e047",
+  "field": "family",
+  "old": "Эквертъ",
+  "new": "Эккертъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_MSK_p003",
+  "entry": "e023",
+  "field": "family",
+  "old": "Падѣль",
+  "new": "Падель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_SP_p001",
+  "entry": "e016",
+  "field": "family",
+  "old": "Евстифьевъ",
+  "new": "Евстифѣевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_SP_p001",
+  "entry": "e023",
+  "field": "family",
+  "old": "Инспрукертъ",
+  "new": "Инспрукеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e011",
+  "field": "family",
+  "old": "Реханъ",
+  "new": "Рехакъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e025",
+  "field": "family",
+  "old": "Терь-Огановъ",
+  "new": "Теръ-Огановъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e031",
+  "field": "family",
+  "old": "Хаанъ",
+  "new": "Хаакъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e042",
+  "field": "family",
+  "old": "Шолляръ",
+  "new": "Шолларъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_SP_p003",
+  "entry": "e039",
+  "field": "family",
+  "old": "Штарнъ",
+  "new": "Штаркъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1895-96_SP_p004",
+  "entry": "e019",
+  "field": "family",
+  "old": "Маркузъ",
+  "new": "Маркузэ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p000",
+  "entry": "e010",
+  "field": "instrument",
+  "old": "Вальдгорнт",
+  "new": "Вальдгорнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e001",
+  "field": "family",
+  "old": "Губерть",
+  "new": "Губертъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e023",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e028",
+  "field": "family",
+  "old": "Кругоголововъ",
+  "new": "Крутоголововъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e045",
+  "field": "family",
+  "old": "Пащееевъ",
+  "new": "Пащеевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p002",
+  "entry": "e003",
+  "field": "first",
+  "old": "Марлохей",
+  "new": "Мардохей",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p002",
+  "entry": "e013",
+  "field": "first",
+  "old": "Ипхекъ-Мейеръ",
+  "new": "Ицхекъ-Мейеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p002",
+  "entry": "e023",
+  "field": "family",
+  "old": "Триньянъ",
+  "new": "Триньякъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p002",
+  "entry": "e029",
+  "field": "family",
+  "old": "Чыбинъ",
+  "new": "Цыбинъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p002",
+  "entry": "e039",
+  "field": "family",
+  "old": "Шпекинъ",
+  "new": "Шпейеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p002",
+  "entry": "e040",
+  "field": "family",
+  "old": "Шпекинъ",
+  "new": "Шпеккинъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_SP_p001",
+  "entry": "e018",
+  "field": "family",
+  "old": "Евстифьевъ",
+  "new": "Евстифѣевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_SP_p002",
+  "entry": "e025",
+  "field": "family",
+  "old": "Геръ-Огановъ",
+  "new": "Теръ-Огановъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_SP_p002",
+  "entry": "e033",
+  "field": "first",
+  "old": "Кануть-Эмерикъ",
+  "new": "Канутъ-Эмерикъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_SP_p003",
+  "entry": "e020",
+  "field": "first",
+  "old": "Аоанасій",
+  "new": "Аѳанасій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_SP_p003",
+  "entry": "e050",
+  "field": "family",
+  "old": "Болымъ",
+  "new": "Больмъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_SP_p004",
+  "entry": "e012",
+  "field": "family",
+  "old": "Креммаръ",
+  "new": "Кречмаръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1896-97_SP_p004",
+  "entry": "e017",
+  "field": "family",
+  "old": "Майєръ-Пирко",
+  "new": "Майеръ-Пирко",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_MSK_p001",
+  "entry": "e016",
+  "field": "first",
+  "old": "Францъ",
+  "new": "Фрацъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_MSK_p001",
+  "entry": "e029",
+  "field": "family",
+  "old": "Кругоголововъ",
+  "new": "Крутоголововъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_MSK_p001",
+  "entry": "e030",
+  "field": "family",
+  "old": "Кунсть",
+  "new": "Кунстъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_MSK_p001",
+  "entry": "e045",
+  "field": "family",
+  "old": "Пащееевъ",
+  "new": "Пащеевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_MSK_p003",
+  "entry": "e019",
+  "field": "patronymic",
+  "old": "Аоанасьевичъ",
+  "new": "Аѳанасьевичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_MSK_p003",
+  "entry": "e029",
+  "field": "family",
+  "old": "Шеффертъ",
+  "new": "Шефферъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_SP_p001",
+  "entry": "e017",
+  "field": "family",
+  "old": "Инспрунеръ",
+  "new": "Инспрукеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_SP_p001",
+  "entry": "e054",
+  "field": "family",
+  "old": "Плацатна",
+  "new": "Плацатка",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_SP_p002",
+  "entry": "e005",
+  "field": "family",
+  "old": "Радине",
+  "new": "Радике",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_SP_p002",
+  "entry": "e008",
+  "field": "family",
+  "old": "Реханъ",
+  "new": "Рехакъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_SP_p002",
+  "entry": "e022",
+  "field": "family",
+  "old": "Терь-Огановъ",
+  "new": "Теръ-Огановъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_SP_p002",
+  "entry": "e031",
+  "field": "first",
+  "old": "Кануть-Эмерикъ",
+  "new": "Канутъ-Эмерикъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_SP_p002",
+  "entry": "e033",
+  "field": "family",
+  "old": "Щабель",
+  "new": "Цабель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_SP_p002",
+  "entry": "e034",
+  "field": "family",
+  "old": "Щиммерманъ",
+  "new": "Циммерманъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_SP_p003",
+  "entry": "e009",
+  "field": "family",
+  "old": "Виргелюшъ",
+  "new": "Виргеліюшъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1897-98_SP_p004",
+  "entry": "e004",
+  "field": "family",
+  "old": "Елиненъ",
+  "new": "Елинекъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_MSK_p000",
+  "entry": "e004",
+  "field": "family",
+  "old": "Брындлинъ",
+  "new": "Брындинъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_MSK_p001",
+  "entry": "e004",
+  "field": "family",
+  "old": "Зоземъ",
+  "new": "Зозель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_MSK_p001",
+  "entry": "e023",
+  "field": "patronymic",
+  "old": "Васильевичъ",
+  "new": "Васильеничъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_MSK_p001",
+  "entry": "e024",
+  "field": "family",
+  "old": "Кусевичкій",
+  "new": "Кусевицкій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_MSK_p001",
+  "entry": "e025",
+  "field": "family",
+  "old": "Лилтке",
+  "new": "Лидтке",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_MSK_p003",
+  "entry": "e025",
+  "field": "family",
+  "old": "Зальборнъ",
+  "new": "Заальборнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_MSK_p004",
+  "entry": "e002",
+  "field": "family",
+  "old": "Николаевъ",
+  "new": "Николаевъ (Шмулевичъ)",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_MSK_p004",
+  "entry": "e003",
+  "field": "first",
+  "old": "Іоганнь-Фридрихъ",
+  "new": "Іоганнъ-Фридрихъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_MSK_p004",
+  "entry": "e006",
+  "field": "first",
+  "old": "Никіфоръ",
+  "new": "Никифоръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_SP_p001",
+  "entry": "e010",
+  "field": "family",
+  "old": "Ванштейдъ",
+  "new": "Ваншейдъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_SP_p001",
+  "entry": "e037",
+  "field": "patronymic",
+  "old": "Мартиновичъ",
+  "new": "Мартыновичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_SP_p002",
+  "entry": "e001",
+  "field": "family",
+  "old": "Логансонъ 2-й",
+  "new": "Іогансонъ 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_SP_p002",
+  "entry": "e006",
+  "field": "patronymic",
+  "old": "Эвалъдовичъ",
+  "new": "Эвальдовичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_SP_p002",
+  "entry": "e014",
+  "field": "family",
+  "old": "Корнѣвъ",
+  "new": "Корнѣевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_SP_p002",
+  "entry": "e017",
+  "field": "family",
+  "old": "ДеЛанге",
+  "new": "Де Ланге",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_SP_p002",
+  "entry": "e032",
+  "field": "instrument",
+  "old": "Вальторнъ",
+  "new": "Вальдгорнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_SP_p003",
+  "entry": "e031",
+  "field": "first",
+  "old": "Капутъ-Эмерикъ",
+  "new": "Канутъ-Эмерикъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_SP_p004",
+  "entry": "e018",
+  "field": "family",
+  "old": "Булановъ",
+  "new": "Будановъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_SP_p004",
+  "entry": "e033",
+  "field": "first",
+  "old": "Аеанасій",
+  "new": "Аѳанасій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_SP_p005",
+  "entry": "e020",
+  "field": "family",
+  "old": "Мокъевъ",
+  "new": "Мокѣевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1898-99_SP_p006",
+  "entry": "e013",
+  "field": "family",
+  "old": "Мелвѣдевъ",
+  "new": "Медвѣдевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p000",
+  "entry": "e010",
+  "field": "instrument",
+  "old": "Вальторнъ",
+  "new": "Вальдгорнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p001",
+  "entry": "e022",
+  "field": "family",
+  "old": "Зюстъ",
+  "new": "Зюсъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p002",
+  "entry": "e006",
+  "field": "family",
+  "old": "Фонтъ-Нольте",
+  "new": "Фонъ-Нольте",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p002",
+  "entry": "e006",
+  "field": "patronymic",
+  "old": "Константинъ",
+  "new": "Константиновичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p002",
+  "entry": "e011",
+  "field": "family",
+  "old": "Пашеевъ",
+  "new": "Пащеевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p002",
+  "entry": "e026",
+  "field": "patronymic/first",
+  "old": "Григорій Ѳёдоровичъ",
+  "new": "Григорій Ѳедоровичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p002",
+  "entry": "e032",
+  "field": "first",
+  "old": "Ипхекъ",
+  "new": "Ицхекъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p002",
+  "entry": "e037",
+  "field": "instrument",
+  "old": "Вальторнъ",
+  "new": "Вальдгорнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p003",
+  "entry": "e035",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p004",
+  "entry": "e010",
+  "field": "family",
+  "old": "Лаваревъ",
+  "new": "Лазаревъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p004",
+  "entry": "e017",
+  "field": "family",
+  "old": "Николаевъ",
+  "new": "Николаевъ (Шмулевичъ)",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_SP_p001",
+  "entry": "e014",
+  "field": "family",
+  "old": "Гильлебрандъ",
+  "new": "Гильдебрандъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_SP_p001",
+  "entry": "e029",
+  "field": "family",
+  "old": "Каллецъ",
+  "new": "Кадлецъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_SP_p002",
+  "entry": "e012",
+  "field": "family",
+  "old": "Лудольфъ",
+  "new": "Лудольфи",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_SP_p003",
+  "entry": "e018",
+  "field": "first",
+  "old": "Кануть-Эмерикъ",
+  "new": "Канутъ-Эмерикъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_SP_p004",
+  "entry": "e018",
+  "field": "family",
+  "old": "Ксемъ",
+  "new": "Кеймъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_SP_p005",
+  "entry": "e015",
+  "field": "family",
+  "old": "Кремарь",
+  "new": "Кречмаръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_SP_p005",
+  "entry": "e016",
+  "field": "family",
+  "old": "Кулегольдтъ",
+  "new": "Куденгольдтъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_SP_p005",
+  "entry": "e030",
+  "field": "family",
+  "old": "Армстеймеръ",
+  "new": "Армсгеймеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1899-00_SP_p005",
+  "entry": "e031",
+  "field": "family",
+  "old": "Беттенштедтъ",
+  "new": "Беттенштелтъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p001",
+  "entry": "e005",
+  "field": "first",
+  "old": "Сергій",
+  "new": "Сергѣй",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p001",
+  "entry": "e007",
+  "field": "instrument",
+  "old": "Вальторнъ",
+  "new": "Вальдгорнъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p001",
+  "entry": "e040",
+  "field": "family",
+  "old": "Квелнау",
+  "new": "Кведнау",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p002",
+  "entry": "e010",
+  "field": "patronymic",
+  "old": "Никито-ровичъ",
+  "new": "Никифоровичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p002",
+  "entry": "e014",
+  "field": "first",
+  "old": "Готтильдъ",
+  "new": "Готгильдъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p002",
+  "entry": "e025",
+  "field": "family",
+  "old": "Пащевъ",
+  "new": "Пащеевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p002",
+  "entry": "e034",
+  "field": "first",
+  "old": "Марлохей",
+  "new": "Мардохей",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e019",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e021",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e025",
+  "field": "family",
+  "old": "Цибинъ",
+  "new": "Цыбинъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e037",
+  "field": "family",
+  "old": "Шталлеръ",
+  "new": "Штадлеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p004",
+  "entry": "e025",
+  "field": "family",
+  "old": "Наккій",
+  "new": "Нацкій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e009",
+  "field": "family",
+  "old": "Ваншейль",
+  "new": "Ваншейдъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e017",
+  "field": "patronymic",
+  "old": "Владимировичъ",
+  "new": "Владимiровичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_SP_p002",
+  "entry": "e026",
+  "field": "family",
+  "old": "Людольфъ",
+  "new": "Людольфи",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_SP_p003",
+  "entry": "e036",
+  "field": "first",
+  "old": "Кануть-Эмерикъ",
+  "new": "Канутъ-Эмерикъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_SP_p004",
+  "entry": "e015",
+  "field": "first",
+  "old": "Адолъфъ",
+  "new": "Адольфъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_SP_p004",
+  "entry": "e027",
+  "field": "first",
+  "old": "Альфрель",
+  "new": "Альфредъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_SP_p005",
+  "entry": "e005",
+  "field": "family",
+  "old": "Мокъевъ",
+  "new": "Мокѣевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_SP_p005",
+  "entry": "e024",
+  "field": "family",
+  "old": "Армсгеймѣръ",
+  "new": "Армсгеймеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1900-01_SP_p005",
+  "entry": "e032",
+  "field": "family",
+  "old": "Вилькентъ",
+  "new": "Вилькенъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_MSK_p001",
+  "entry": "e002",
+  "field": "family",
+  "old": "Брындлинъ",
+  "new": "Брындинъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_MSK_p001",
+  "entry": "e025",
+  "field": "family",
+  "old": "Гречкій",
+  "new": "Грецкій",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_MSK_p002",
+  "entry": "e014",
+  "field": "patronymic",
+  "old": "Никитовичъ",
+  "new": "Никифоровичъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_MSK_p002",
+  "entry": "e030",
+  "field": "family",
+  "old": "Пашеевъ",
+  "new": "Пащеевъ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_MSK_p003",
+  "entry": "e002",
+  "field": "family",
+  "old": "Ромашковъ",
+  "new": "Ромашковъ 1-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_MSK_p003",
+  "entry": "e003",
+  "field": "family",
+  "old": "Ромашковъ",
+  "new": "Ромашковъ 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_MSK_p003",
+  "entry": "e004",
+  "field": "family",
+  "old": "Ромашковъ",
+  "new": "Ромашковъ 3-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_MSK_p003",
+  "entry": "e011",
+  "field": "first",
+  "old": "Инхекъ-Мейеръ",
+  "new": "Ицхекъ-Мейеръ",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_MSK_p003",
+  "entry": "e034",
+  "field": "family",
+  "old": "Шмидтъ",
+  "new": "Шмидтъ 1-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1901-02_MSK_p003",
+  "entry": "e035",
+  "field": "family",
+  "old": "Шмидтъ",
+  "new": "Шмидтъ 2-й",
+  "src": "verified"
+ },
+ {
+  "page": "musicians_1890-91_MSK_p001",
+  "entry": "e004",
+  "field": "instrument",
+  "old": "Піанисть",
+  "new": "Піанистъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_MSK_p001",
+  "entry": "e005",
+  "field": "family",
+  "old": "Гейнь",
+  "new": "Гейнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_MSK_p001",
+  "entry": "e006",
+  "field": "family",
+  "old": "Гейнь",
+  "new": "Гейнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_MSK_p002",
+  "entry": "e013",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_MSK_p002",
+  "entry": "e015",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_MSK_p003",
+  "entry": "e006",
+  "field": "family",
+  "old": "Гейнь",
+  "new": "Гейнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_SP_p000",
+  "entry": "e029",
+  "field": "family",
+  "old": "Грибень",
+  "new": "Грибенъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_SP_p001",
+  "entry": "e023",
+  "field": "family",
+  "old": "Нахтигалъ",
+  "new": "Нахтигаль",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_SP_p002",
+  "entry": "e020",
+  "field": "family",
+  "old": "Шолларь",
+  "new": "Шолларъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_SP_p002",
+  "entry": "e025",
+  "field": "family",
+  "old": "Эйхгорнь",
+  "new": "Эйхгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_SP_p003",
+  "entry": "e040",
+  "field": "family",
+  "old": "Пертелъ",
+  "new": "Пертель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_SP_p004",
+  "entry": "e034",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e016",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e021",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e027",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_SP_p005",
+  "entry": "e038",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1890-91_SP_p006",
+  "entry": "e011",
+  "field": "family",
+  "old": "Петерсень",
+  "new": "Петерсенъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_MSK_p001",
+  "entry": "e008",
+  "field": "family",
+  "old": "Канись",
+  "new": "Канисъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_MSK_p002",
+  "entry": "e004",
+  "field": "family",
+  "old": "Шпеккинь",
+  "new": "Шпеккинъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_MSK_p002",
+  "entry": "e032",
+  "field": "family",
+  "old": "Зозелъ",
+  "new": "Зозель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_MSK_p002",
+  "entry": "e045",
+  "field": "family",
+  "old": "Кунсть",
+  "new": "Кунстъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_MSK_p003",
+  "entry": "e016",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_MSK_p003",
+  "entry": "e017",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_SP_p000",
+  "entry": "e013",
+  "field": "family",
+  "old": "Брайнь",
+  "new": "Брайнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e012",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e033",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e043",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_SP_p001",
+  "entry": "e054",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e030",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e033",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e041",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_SP_p003",
+  "entry": "e052",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1891-92_SP_p005",
+  "entry": "e003",
+  "field": "family",
+  "old": "Блась",
+  "new": "Бласъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1892-93_MSK_p001",
+  "entry": "e037",
+  "field": "family",
+  "old": "Руссь",
+  "new": "Руссъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1892-93_MSK_p002",
+  "entry": "e032",
+  "field": "family",
+  "old": "Зозелъ",
+  "new": "Зозель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1892-93_MSK_p002",
+  "entry": "e045",
+  "field": "family",
+  "old": "Кунсть",
+  "new": "Кунстъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e016",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e024",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e025",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e038",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1892-93_MSK_p003",
+  "entry": "e044",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1892-93_SP_p002",
+  "entry": "e008",
+  "field": "family",
+  "old": "Цабелъ",
+  "new": "Цабель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1892-93_SP_p004",
+  "entry": "e008",
+  "field": "family",
+  "old": "Блась",
+  "new": "Бласъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1892-93_SP_p004",
+  "entry": "e014",
+  "field": "family",
+  "old": "Грибень",
+  "new": "Грибенъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_MSK_p001",
+  "entry": "e001",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_MSK_p001",
+  "entry": "e004",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_MSK_p001",
+  "entry": "e006",
+  "field": "family",
+  "old": "Гейнь",
+  "new": "Гейнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_MSK_p001",
+  "entry": "e008",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_MSK_p001",
+  "entry": "e027",
+  "field": "family",
+  "old": "Зюсь",
+  "new": "Зюсъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_MSK_p002",
+  "entry": "e021",
+  "field": "family",
+  "old": "Руссь",
+  "new": "Руссъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_MSK_p002",
+  "entry": "e044",
+  "field": "family",
+  "old": "Шпейерь",
+  "new": "Шпейеръ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e011",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e019",
+  "field": "family",
+  "old": "Грюнерть",
+  "new": "Грюнертъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e025",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_SP_p001",
+  "entry": "e028",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_SP_p002",
+  "entry": "e047",
+  "field": "family",
+  "old": "Шолларь",
+  "new": "Шолларъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_SP_p003",
+  "entry": "e009",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_SP_p003",
+  "entry": "e036",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1893-94_SP_p003",
+  "entry": "e039",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p000",
+  "entry": "e009",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p000",
+  "entry": "e016",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p001",
+  "entry": "e013",
+  "field": "family",
+  "old": "Зозелъ",
+  "new": "Зозель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p001",
+  "entry": "e034",
+  "field": "family",
+  "old": "Кунсть",
+  "new": "Кунстъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e020",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e040",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e041",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e043",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1894-95_MSK_p002",
+  "entry": "e050",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1894-95_SP_p001",
+  "entry": "e015",
+  "field": "family",
+  "old": "Грюнерть",
+  "new": "Грюнертъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1894-95_SP_p003",
+  "entry": "e029",
+  "field": "family",
+  "old": "Лень",
+  "new": "Ленъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1894-95_SP_p004",
+  "entry": "e002",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1894-95_SP_p004",
+  "entry": "e014",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_MSK_p001",
+  "entry": "e001",
+  "field": "family",
+  "old": "Гольдшмить",
+  "new": "Гольдшмитъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e005",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e023",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e029",
+  "field": "family",
+  "old": "Фрomanъ",
+  "new": "Фроманъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e044",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e045",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_MSK_p002",
+  "entry": "e048",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e005",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e013",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e017",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e019",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e025",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e030",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e038",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_SP_p002",
+  "entry": "e052",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1895-96_SP_p004",
+  "entry": "e007",
+  "field": "family",
+  "old": "Вилькень",
+  "new": "Вилькенъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e006",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e028",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e029",
+  "field": "family",
+  "old": "Кунсть",
+  "new": "Кунстъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1896-97_MSK_p001",
+  "entry": "e030",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1896-97_SP_p000",
+  "entry": "e016",
+  "field": "family",
+  "old": "Брайнь",
+  "new": "Брайнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1896-97_SP_p002",
+  "entry": "e043",
+  "field": "family",
+  "old": "Шолларь",
+  "new": "Шолларъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1897-98_MSK_p000",
+  "entry": "e008",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1897-98_MSK_p000",
+  "entry": "e014",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1897-98_SP_p001",
+  "entry": "e031",
+  "field": "family",
+  "old": "de Ланге",
+  "new": "де Ланге",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1897-98_SP_p002",
+  "entry": "e041",
+  "field": "family",
+  "old": "Шолларь",
+  "new": "Шолларъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1898-99_MSK_p001",
+  "entry": "e032",
+  "field": "family",
+  "old": "Недбалъ",
+  "new": "Недбаль",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1898-99_SP_p002",
+  "entry": "e007",
+  "field": "family",
+  "old": "Каукалъ",
+  "new": "Каукаль",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p003",
+  "entry": "e001",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p003",
+  "entry": "e023",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p003",
+  "entry": "e024",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1899-00_MSK_p003",
+  "entry": "e029",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1899-00_SP_p003",
+  "entry": "e004",
+  "field": "family",
+  "old": "Словаچевскій",
+  "new": "Словачевскій",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1899-00_SP_p004",
+  "entry": "e027",
+  "field": "instrument",
+  "old": "Флейта",
+  "new": "флейта",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p002",
+  "entry": "e014",
+  "field": "patronymic",
+  "old": "Францъ",
+  "new": "Францъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e001",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e003",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e010",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1900-01_MSK_p003",
+  "entry": "e033",
+  "field": "instrument",
+  "old": "Альть",
+  "new": "Альтъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e016",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e018",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e021",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1900-01_SP_p001",
+  "entry": "e022",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1900-01_SP_p003",
+  "entry": "e022",
+  "field": "family",
+  "old": "Словаچевскій",
+  "new": "Словачевскій",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1901-02_MSK_p002",
+  "entry": "e013",
+  "field": "family",
+  "old": "Кристелъ",
+  "new": "Кристель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1901-02_SP_p000",
+  "entry": "e015",
+  "field": "instrument",
+  "old": "Віолончелъ",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e001",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e018",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1901-02_SP_p001",
+  "entry": "e020",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1902-03_MSK_p002",
+  "entry": "e007",
+  "field": "family",
+  "old": "Недбалъ",
+  "new": "Недбаль",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1902-03_MSK_p003",
+  "entry": "e010",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1902-03_MSK_p003",
+  "entry": "e019",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1902-03_SP_p002",
+  "entry": "e021",
+  "field": "family",
+  "old": "Лукась",
+  "new": "Лукасъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1902-03_SP_p004",
+  "entry": "e001",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1903-04_MSK_p003",
+  "entry": "e036",
+  "field": "patronymic",
+  "old": "Никifоровичъ",
+  "new": "Никифоровичъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1903-04_SP_p002",
+  "entry": "e003",
+  "field": "family",
+  "old": "Лемось",
+  "new": "Лемосъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1903-04_SP_p002",
+  "entry": "e008",
+  "field": "family",
+  "old": "Лукась",
+  "new": "Лукасъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1903-04_SP_p003",
+  "entry": "e027",
+  "field": "family",
+  "old": "Штейнь",
+  "new": "Штейнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p003",
+  "entry": "e001",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1904-05_MSK_p003",
+  "entry": "e030",
+  "field": "instrument",
+  "old": "Вальдгорнь",
+  "new": "Вальдгорнъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e008",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e010",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e013",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1904-05_SP_p001",
+  "entry": "e037",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1904-05_SP_p003",
+  "entry": "e022",
+  "field": "first",
+  "old": "Кануть",
+  "new": "Канутъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1905-06_MSK_p002",
+  "entry": "e020",
+  "field": "family",
+  "old": "Костлянь",
+  "new": "Костлянъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1905-06_SP_p002",
+  "entry": "e029",
+  "field": "family",
+  "old": "Де-Лангe",
+  "new": "Де-Ланге",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1905-06_SP_p002",
+  "entry": "e036",
+  "field": "family",
+  "old": "Лукась",
+  "new": "Лукасъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1905-06_SP_p004",
+  "entry": "e003",
+  "field": "first",
+  "old": "Кануть",
+  "new": "Канутъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1905-06_SP_p005",
+  "entry": "e016",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1905-06_SP_p005",
+  "entry": "e029",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1905-06_SP_p005",
+  "entry": "e034",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1906-07_MSK_p001",
+  "entry": "e010",
+  "field": "family",
+  "old": "Бруцынь",
+  "new": "Бруцынъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1906-07_MSK_p002",
+  "entry": "e006",
+  "field": "family",
+  "old": "Костлянь",
+  "new": "Костлянъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1906-07_SP_p001",
+  "entry": "e038",
+  "field": "family",
+  "old": "Лемось",
+  "new": "Лемосъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e004",
+  "field": "family",
+  "old": "Лукась",
+  "new": "Лукасъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e033",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e034",
+  "field": "instrument",
+  "old": "Біолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1906-07_SP_p002",
+  "entry": "e036",
+  "field": "family",
+  "old": "Словаچевскій",
+  "new": "Словачевскій",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1906-07_SP_p005",
+  "entry": "e002",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1906-07_SP_p005",
+  "entry": "e017",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1906-07_SP_p005",
+  "entry": "e029",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1906-07_SP_p005",
+  "entry": "e031",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1907-08_SP_p001",
+  "entry": "e035",
+  "field": "family",
+  "old": "Де-Лангe",
+  "new": "Де-Ланге",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1907-08_SP_p001",
+  "entry": "e037",
+  "field": "family",
+  "old": "Лангe",
+  "new": "Ланге",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1907-08_SP_p002",
+  "entry": "e004",
+  "field": "family",
+  "old": "Лукась",
+  "new": "Лукасъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1907-08_SP_p002",
+  "entry": "e040",
+  "field": "family",
+  "old": "Тракаль",
+  "new": "Тракалъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1908-09_MSK_p002",
+  "entry": "e024",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1908-09_SP_p002",
+  "entry": "e017",
+  "field": "family",
+  "old": "Де-Лангe",
+  "new": "Де-Ланге",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1908-09_SP_p002",
+  "entry": "e019",
+  "field": "family",
+  "old": "Лемось",
+  "new": "Лемосъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1908-09_SP_p002",
+  "entry": "e022",
+  "field": "family",
+  "old": "Лукась",
+  "new": "Лукасъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1908-09_SP_p003",
+  "entry": "e029",
+  "field": "family",
+  "old": "Федергансь",
+  "new": "Федергансъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1909-10_MSK_p000",
+  "entry": "e014",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1909-10_MSK_p000",
+  "entry": "e015",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1909-10_MSK_p000",
+  "entry": "e016",
+  "field": "instrument",
+  "old": "Виолончель",
+  "new": "Віолончель",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1909-10_MSK_p001",
+  "entry": "e029",
+  "field": "instrument",
+  "old": "Піанисть",
+  "new": "Піанистъ",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1909-10_SP_p002",
+  "entry": "e012",
+  "field": "family",
+  "old": "Каукалъ",
+  "new": "Каукаль",
+  "src": "mechanical"
+ },
+ {
+  "page": "musicians_1909-10_SP_p002",
+  "entry": "e028",
+  "field": "family",
+  "old": "Лукась",
+  "new": "Лукасъ",
+  "src": "mechanical"
+ }
+]

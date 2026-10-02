@@ -1,0 +1,31 @@
+PAGE SUMMARY
+musicians_1897-98_SP_p003 | entries read: 51 | entries with a discrepancy: 1
+musicians_1897-98_SP_p004 | entries read: 35 | entries with a discrepancy: 1
+musicians_1898-99_MSK_p000 | entries read: 34 | entries with a discrepancy: 1
+musicians_1898-99_MSK_p001 | entries read: 39 | entries with a discrepancy: 5
+musicians_1898-99_MSK_p002 | entries read: 40 | entries with a discrepancy: 0
+DISCREPANCIES
+musicians_1897-98_SP_p003 | e009 | family | STORED: "Виргелюшъ" | PRINTED: "Виргеліюшъ" (dotted і after л) | confidence: DIRECT(zoomed) | dropped і
+musicians_1897-98_SP_p004 | e004 | family | STORED: "Елиненъ" | PRINTED: "Елинекъ" | confidence: DIRECT(zoomed) | н vs к
+musicians_1898-99_MSK_p000 | e004 | family | STORED: "Брындлинъ" | PRINTED: "Брындинъ" | confidence: DIRECT(zoomed) | stored has extra л
+musicians_1898-99_MSK_p001 | e004 | family | STORED: "Зоземъ" | PRINTED: "Зозель" | confidence: DIRECT(zoomed) | final letters ль (л glyph slightly inky/blobbed, then ь)
+musicians_1898-99_MSK_p001 | e023 | patronymic | STORED: "Васильевичъ" | PRINTED: "Васильеничъ" | confidence: DIRECT(zoomed) | PRINT-TYPO? (н where в expected)
+musicians_1898-99_MSK_p001 | e024 | family | STORED: "Кусевичкій" | PRINTED: "Кусевицкій" | confidence: DIRECT(zoomed) | ц vs чк
+musicians_1898-99_MSK_p001 | e025 | family | STORED: "Лилтке" | PRINTED: "Лидтке" | confidence: DIRECT(zoomed) | л vs д
+musicians_1898-99_MSK_p001 | e032 | family | STORED: "Недбалъ" | PRINTED: "Недбаль" | confidence: DIRECT(zoomed) | soft sign not hard sign
+DATE-CHECK RESULTS
+musicians_1897-98_SP_p004 | e008 | STORED start: "1 декабря 1878 г." | PRINTED start: "съ 1 декабря 1878 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1897-98_SP_p004 | e034 | STORED start: "15 сентября 1897 г." | PRINTED start: "съ 15 сентября 1897 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1898-99_MSK_p001 | e035 | STORED start: "съ 10 октября 1878 г." | PRINTED start: "съ 10 октября 1878 г. по 30 декабря 1880 г. и (съ 19 сентября 1882 г.)" -- two service periods | MATCH (first period start; the other entries' 19/9/1882 is the second period) | confidence: DIRECT(zoomed)
+musicians_1898-99_MSK_p001 | e027 | STORED start: "съ 10 декабря 1879 г." | PRINTED start: "съ 10 декабря 1879 г. по 20 октября 1880 г. и съ 19 сентября 1882 г." -- two service periods | MATCH (first period; modal 19/9/1882 = second period) | confidence: DIRECT(zoomed)
+musicians_1898-99_MSK_p001 | e023 | STORED start: "съ 1 апрѣля 1897 г." | PRINTED start: "съ 1 апрѣля 1897 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1898-99_MSK_p002 | e039 | STORED start: "1 октября 1897 г." | PRINTED start: "съ 1 октября 1897 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- SP_p003/p004: no patronymic-in-first-name pattern seen in these bundles; patronymics are in their own field.
+- SP_p003 e031 (Пронинъ): list number printed as "31" with no period (print glitch, stored "31."); harmless.
+- SP_p004 e003 (Герберъ Августъ-Генрихъ) and e033 (Шредеръ Карлъ): no patronymic printed, stored empty = correct.
+- MSK_p001 e025 (Лидтке, Готгильдъ Францъ): "Францъ" is a second given name (not a patronymic) but is stored in the patronymic field.
+- MSK_p001 e029 (Марквардтъ Августъ): print includes "(онъ же и капельмейстеръ военной музыки)" and the same person appears at MSK_p000 e006 as bandmaster of military music, so two entries for one person.
+- MSK_p001 e027 and e035 print two service periods; the printed first start differs from the 19 сентября 1882 date used by other entries because it is the earlier of two stints (genuine, not a misread).
+- MSK_p002 all 40 entries match print letter for letter (no discrepancies found, e.g. Контръ-фаготъ, Инокентіевичъ, Гешеліовичъ, Ромашковъ 1-й/2-й/3-й all correct).
+- No rows missing from bundles and no duplicated rows on these five pages.

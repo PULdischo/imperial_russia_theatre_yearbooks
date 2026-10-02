@@ -1,0 +1,34 @@
+PAGE SUMMARY
+musicians_1904-05_SP_p004 | entries read: 39 | entries with a discrepancy: 4
+musicians_1904-05_SP_p005 | entries read: 37 | entries with a discrepancy: 4
+musicians_1904-05_SP_p006 | entries read: 12 | entries with a discrepancy: 0
+musicians_1905-06_MSK_p000 | entries read: 6 | entries with a discrepancy: 0
+musicians_1905-06_MSK_p001 | entries read: 37 | entries with a discrepancy: 5
+DISCREPANCIES
+musicians_1904-05_SP_p004 | e014 | first | STORED: "Меволій" | PRINTED: "Меѳолій" (Θ glyph = ѳ, 4x zoom) | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p004 | e028 | family | STORED: "Недзѣйко" | PRINTED: "Недзейко" (plain е, no ѣ) | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p004 | e011 | first | STORED: "Альфредъ" | PRINTED: "Альфре?ъ" (д glyph worn, looks like л; patronymic on same line clearly Альфредовичъ) | confidence: UNCERTAIN | print wear, stored text probably fine
+musicians_1904-05_SP_p004 | e039 | patronymic | STORED: "Федоровичъ" | PRINTED: "Фелоровичъ" (д worn/printed as л-like glyph) | confidence: UNCERTAIN | PRINT-TYPO? worn type; stored text probably fine
+musicians_1904-05_SP_p005 | e005 | family | STORED: "Армгеймеръ" | PRINTED: "Армсгеймеръ" | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p005 | e009 | family | STORED: "ВиЛЬкенъ" | PRINTED: "Вилькенъ" (stored has spurious capitals Л Ь) | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p005 | e033 | patronymic | STORED: "Аеанасьевичъ" | PRINTED: "Аѳанасьевичъ" (ѳ) | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p005 | e001 | instrument | STORED: "Флейта" | PRINTED: "Флейга" (final т looks like г) | confidence: UNCERTAIN | PRINT-TYPO? or worn type
+musicians_1905-06_MSK_p001 | e012 | instrument | STORED: "-" (empty) | PRINTED: "Фаготъ" | confidence: DIRECT(zoomed)
+musicians_1905-06_MSK_p001 | e001 | list | STORED: "-" | PRINTED: "1." (Репетиторы sub-list) | confidence: DIRECT(zoomed)
+musicians_1905-06_MSK_p001 | e002 | list | STORED: "-" | PRINTED: "2." (Репетиторы sub-list) | confidence: DIRECT(zoomed)
+musicians_1905-06_MSK_p001 | e003 | list | STORED: "-" | PRINTED: "1." (Аккомпаніаторы sub-list) | confidence: DIRECT(zoomed)
+musicians_1905-06_MSK_p001 | e004 | list | STORED: "-" | PRINTED: "2." (Аккомпаніаторы sub-list) | confidence: DIRECT(zoomed)
+DATE-CHECK RESULTS
+musicians_1904-05_SP_p004 | e034 | STORED start: "1 іюня 1876 г." | PRINTED start: "съ 1 іюня 1876 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p004 | e037 | STORED start: "1 октября 1893 г." | PRINTED start: "съ 1 октября 1893 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p004 | e005 | STORED start: "1 сентября 1895 г." | PRINTED start: "съ 1 сентября 1895 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1904-05_SP_p005 | e035 | STORED start: "съ 1 сентября 1886 г." | PRINTED start: "съ 1 сентября 1886 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1905-06_MSK_p001 | e028 | STORED start: "съ 1 января 1877 г." | PRINTED start: "съ 1 января 1877 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- p004/p005/p006: patronymic inside first name pattern not observed; all fields separate.
+- p005 e004 Келеръ (Морицъ Федоровичъ) and p004 e001 Галкинъ are unnumbered conductors; correct.
+- p006 e012 Новоселовъ printed under heading "Старшій библіотекарь Центральной Музыкальной Библіотеки"; rank_or_title stored "-" (heading not in rank field).
+- MSK p001 e037 Герберъ (Александръ Юльевичъ) is printed FIRST on the page (under "И. об. 2-го капельмейстера балета") but stored LAST in the bundle: out-of-order position (relevant to entry_id alignment).
+- MSK p001 e002 Соколовъ: printed "репетиторъ Театральнаго училища" matches stored rank.
+- p005 e004/p004: no stray spaces or line-break hyphens found in any stored name.
+- Print-wear note: д prints as л-like in several words on p004 (Альфредъ, Федоровичъ); do not treat as the stored text being wrong.

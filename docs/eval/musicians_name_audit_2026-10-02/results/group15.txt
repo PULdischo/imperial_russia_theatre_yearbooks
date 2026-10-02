@@ -1,0 +1,37 @@
+PAGE SUMMARY
+musicians_1897-98_MSK_p002 | entries read: 52 | entries with a discrepancy: 0
+musicians_1897-98_MSK_p003 | entries read: 34 | entries with a discrepancy: 2
+musicians_1897-98_SP_p000 | entries read: 28 | entries with a discrepancy: 0
+musicians_1897-98_SP_p001 | entries read: 54 | entries with a discrepancy: 3
+musicians_1897-98_SP_p002 | entries read: 52 | entries with a discrepancy: 7
+DISCREPANCIES
+musicians_1897-98_MSK_p003 | e019 | patronymic | STORED: "Аоанасьевичъ" | PRINTED: "Аѳанасьевичъ" (Ѳ, same Ѳ as in "Ѳедоръ" on the line) | confidence: DIRECT(zoomed 6x)
+musicians_1897-98_MSK_p003 | e029 | family | STORED: "Шеффертъ" | PRINTED: "Шефферъ" | confidence: DIRECT(zoomed 6x) | extra "т" appended; MSK_p002 e036 "Шефферъ, Андрей" is a different man
+musicians_1897-98_SP_p001 | e017 | family | STORED: "Инспрунеръ" | PRINTED: "Инспрукеръ" | confidence: DIRECT(zoomed 6x) | н for к
+musicians_1897-98_SP_p001 | e031 | family | STORED: "de Ланге" (Latin d,e) | PRINTED: "де Ланге" (Cyrillic) | confidence: DIRECT(zoomed 6x) | confirms MIXED-SCRIPT flag
+musicians_1897-98_SP_p001 | e054 | family | STORED: "Плацатна" | PRINTED: "Плацатка" | confidence: DIRECT(zoomed 6x) | н for к
+musicians_1897-98_SP_p002 | e005 | family | STORED: "Радине" | PRINTED: "Радике" | confidence: DIRECT(zoomed 6x) | н for к
+musicians_1897-98_SP_p002 | e008 | family | STORED: "Реханъ" | PRINTED: "Рехакъ" | confidence: DIRECT(zoomed 6x) | н for к
+musicians_1897-98_SP_p002 | e022 | family | STORED: "Терь-Огановъ" | PRINTED: "Теръ-Огановъ" | confidence: DIRECT(zoomed 5x) | ь for ъ
+musicians_1897-98_SP_p002 | e031 | first | STORED: "Кануть-Эмерикъ" | PRINTED: "Канутъ-Эмерикъ" | confidence: DIRECT(zoomed 5x) | ь for ъ
+musicians_1897-98_SP_p002 | e033 | family | STORED: "Щабель" | PRINTED: "Цабель" | confidence: DIRECT(zoomed 6x) | Щ for Ц
+musicians_1897-98_SP_p002 | e034 | family | STORED: "Щиммерманъ" | PRINTED: "Циммерманъ" | confidence: DIRECT(zoomed 6x) | Щ for Ц
+musicians_1897-98_SP_p002 | e041 | family | STORED: "Шолларь" | PRINTED: "Шолларъ" | confidence: DIRECT(zoomed 5x) | ь for ъ
+DATE-CHECK RESULTS
+musicians_1897-98_MSK_p002 | e044 | STORED start: "14 апрѣля 1880 г." | PRINTED start: "съ 14 апрѣля 1880 г. по 1 сентября 1882 г. и съ 1 сентября 1883 г." | MATCH (stored = first period; modal 1/9/1883 is the second period of the same entry) | DIRECT(zoomed)
+musicians_1897-98_MSK_p003 | e001 | STORED start: "съ 17 января 1887 г." | PRINTED start: "съ 17 января 1887 г." (entry also: "Оставилъ службу 16 ноября 1897 г.") | MATCH | DIRECT(zoomed)
+musicians_1897-98_MSK_p003 | e028 | STORED start: "съ 1 января 1894 г." | PRINTED start: "съ 1 января 1894 г." (entry reads "онъ же и библіотекарь Музыкальной библіотеки"; the separate library entry e034 prints "съ 1 сентября 1882 г.") | MATCH | DIRECT(zoomed)
+musicians_1897-98_SP_p000 | e004 | STORED start: "съ 1 сентября 1886 г." | PRINTED start: "съ 1 сентября 1886 г." | MATCH | DIRECT(zoomed)
+musicians_1897-98_SP_p001 | e013 | STORED start: "съ 1 сентября 1897 г." | PRINTED start: "съ 1 сентября 1897 г." | MATCH | DIRECT(zoomed)
+musicians_1897-98_SP_p001 | e043 | STORED start: "съ 11 октября 1869 г." | PRINTED start: "съ 11 октября 1869 г." | MATCH | DIRECT(zoomed)
+OTHER FINDINGS
+- No patronymic-inside-first-name pattern on any of these 5 pages; patronymics are in their own field throughout.
+- MSK_p002 e026: SPACE-IN-FAMILY flag REFUTED -- print is "Туровичъ фонъ-Охота" with a real space and printed hyphen.
+- MSK_p002 e046: stored "Належда" MATCHES the print (zoomed 6x: "Належда", л not д) -- PRINT-TYPO? for Надежда.
+- MSK_p002 e050: stored "Тромбомъ" MATCHES the print (zoomed 6x: final м) -- PRINT-TYPO? for Тромбонъ.
+- SP_p002 e034: print gives list number "108" with no period (stored "108.").
+- MSK_p003 e028 Фарскій: printed "(онъ же и библіотекарь Музыкальной библіотеки)" -- rank_or_title stored "-"; e034 is the separate library entry (Библіотекарь), no instrument, consistent with print.
+- SP_p002 e033 Цабель ("Арфа. Солистъ Двора Его Императорскаго Величества.") and e036 Чіарлоне ("Арфа. Солистка Двора Его Императорскаго Величества."): rank_or_title stored "-" (SP_p000 e011 Ауэръ does carry the equivalent).
+- Printed end-of-service notes not visible in the bundle columns (cannot judge whether stored elsewhere): MSK_p002 Туровичъ фонъ-Охота "Оставилъ службу 1 апрѣля 1898 г."; MSK_p003 Бергеръ "Оставилъ службу 16 ноября 1897 г."; SP_p000 Вальтеръ 2-й "† 18 іюня 1898 г."; SP_p001 Плацатка "Оставилъ службу 1 октября 1897 г.".
+- The corrected readings above (Инспрукеръ, Плацатка, Радике, Рехакъ, Теръ-Огановъ, Цабель, Циммерманъ, Шолларъ, Шефферъ) are the forms printed on these pages; other years may spell them differently.
+- Reading resolution 2.1-2.2x for the full sweep; every discrepancy above was re-zoomed at 5-6x.

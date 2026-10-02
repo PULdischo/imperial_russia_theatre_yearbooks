@@ -1,0 +1,31 @@
+PAGE SUMMARY
+musicians_1908-09_MSK_p003 | entries read: 36 | entries with a discrepancy: 0
+musicians_1908-09_SP_p000 | entries read: 14 | entries with a discrepancy: 0
+musicians_1908-09_SP_p001 | entries read: 35 | entries with a discrepancy: 0
+musicians_1908-09_SP_p002 | entries read: 34 | entries with a discrepancy: 5
+musicians_1908-09_SP_p003 | entries read: 35 | entries with a discrepancy: 3
+DISCREPANCIES
+musicians_1908-09_SP_p002 | e017 | family | STORED: "Де-Лангe" (final letter is Latin U+0065 'e') | PRINTED: "Де-Ланге" (all Cyrillic, final Cyrillic е) | confidence: DIRECT(zoomed) | confirms MIXED-SCRIPT flag
+musicians_1908-09_SP_p002 | e019 | family | STORED: "Лемось" | PRINTED: "Лемосъ" (final hard sign) | confidence: DIRECT(zoomed)
+musicians_1908-09_SP_p002 | e022 | family | STORED: "Лукась" | PRINTED: "Лукасъ" (final hard sign) | confidence: DIRECT(zoomed)
+musicians_1908-09_SP_p002 | e023 | family | STORED: "Людольфъ" | PRINTED: "Людольфи" (final и; no ъ) | confidence: DIRECT(zoomed) | print is clearly и; could be a printer's variant/PRINT-TYPO? for Людольфъ but verbatim is Людольфи
+musicians_1908-09_SP_p002 | e028 | space | STORED: "Михайлова скій" | PRINTED: "Михайловскій" (no space) | confidence: DIRECT(zoomed) | confirms SPACE-IN-FAMILY flag (not a line-break; entry is on one line, letter-spaced print)
+musicians_1908-09_SP_p003 | e003 | patronymic | STORED: "съ 1 сентября 1905 г." | PRINTED: no patronymic; print is "Порманинъ, Тихонъ (съ 1 сентября 1905 г.). Альтъ." | confidence: DIRECT(zoomed) | tenure date stored in patronymic field; patronymic should be empty
+musicians_1908-09_SP_p003 | e021 | patronymic | STORED: "съ 1 сентября 1904 г." | PRINTED: no patronymic; print is "Стеличевъ, Мирославъ (съ 1 сентября 1904 г.). Альтъ." | confidence: DIRECT(zoomed) | tenure date stored in patronymic field; patronymic should be empty
+musicians_1908-09_SP_p003 | e029 | family | STORED: "Федергансь" | PRINTED: "Федергансъ" (final hard sign) | confidence: DIRECT(zoomed)
+DATE-CHECK RESULTS
+musicians_1908-09_MSK_p003 | e015 | STORED start: "съ 16 августа 1891 г." | PRINTED start: "съ 16 августа 1891 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1908-09_MSK_p003 | e035 | STORED start: "съ 1 октября 1897 г." | PRINTED start: "съ 1 октября 1897 г. по 1 января 1900 г. и 1 декабря 1902 г." (two stints; first starts 1 октября 1897) | MATCH | confidence: DIRECT(zoomed)
+musicians_1908-09_MSK_p003 | e026 | STORED start: "съ 26 августа 1904 г." | PRINTED start: "съ 26 августа 1904 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1908-09_SP_p000 | e008 | STORED start: "съ 1 февраля 1902 г." | PRINTED start: "съ 1 февраля 1902 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1908-09_SP_p000 | e002 | STORED start: "съ 28 ноября 1863 г." | PRINTED start: "съ 28 ноября 1863 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1908-09_SP_p003 | e020 | STORED start: "съ сентября 1893 г." | PRINTED start: "съ  сентября 1893 г." (no day number printed; a blank gap where the day would be) | MATCH | confidence: DIRECT(zoomed)
+musicians_1908-09_SP_p003 | e002 | STORED start: "съ 1 сентября 1905 г." | PRINTED start: "съ 1 сентября 1905 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- MSK_p003: all 36 entries (list nos. 87-122) match print letter-by-letter incl. ѣ/і/ѳ; no discrepancies. Two-stint tenure on e035 Яницкій (see date-check); e032 Юмрихъ has printed note "Оставилъ службу 1 августа 1909 г." and rank_or_title is stored as "-" in the bundle (check it is captured elsewhere).
+- SP_p000: 14 rows (4 conductors/heads without list numbers + ballet repetitors 1-4 + musicians 1-6) all match; Гордонъ here is printed "Бернгардовичъ" (list 4) while SP_p001 e028 prints "Бернардовичъ" (same person; genuine print variation, both stored faithfully). Page also carries the end of the French-troupe actors' list (Terrier, Valbel, Violette) which is not in this Musicians bundle (expected).
+- SP_p001: all 35 entries (list 7-41) match; ѳ in Вагнеръ Шарлотта Ѳедоровна and Грибенъ Ѳедоръ Ѳедоровичъ preserved; e005 transfer note stored correctly.
+- SP_p002: no patronymic-in-first-name pattern. e030 Мѣщанчукъ has no patronymic printed (correct). e029 Мнацагановъ has printed note "Переведенъ изъ оркестра Михайловскаго театра съ 1 ноября 1905 г" but rank_or_title is "-" in bundle (check captured elsewhere).
+- SP_p003: e032 Фишеръ has printed note "Переведенъ изъ оркестра Александринскаго театра съ 1 сентября 1906 г" but rank_or_title is "-" in bundle (check captured elsewhere). Print has a comma instead of period after "г.)" on e032 ("г.), Труба.") - cosmetic. e006 Поповъ 2-й (list 81) is printed before e007 Поповъ (list 82); order and ordinals stored correctly.
+- Hyphenated line-break names (Іуліановичъ, Мелетевичъ, Станиславовичъ etc.) are all stored without hyphens; hyphenated compound given names (Пьеръ-Іоганнъ, Францъ-Іосифъ-Генрихъ, Фридрихъ-Іоганъ, Николай-Францъ) are genuine and stored correctly.
+- No patronymic-inside-first-name pattern on any of these 1908-09 pages.

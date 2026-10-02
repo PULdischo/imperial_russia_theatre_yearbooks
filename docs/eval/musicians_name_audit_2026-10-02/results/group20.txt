@@ -1,0 +1,45 @@
+PAGE SUMMARY
+musicians_1899-00_SP_p001 | entries read: 40 | entries with a discrepancy: 2
+musicians_1899-00_SP_p002 | entries read: 41 | entries with a discrepancy: 1
+musicians_1899-00_SP_p003 | entries read: 38 | entries with a discrepancy: 2
+musicians_1899-00_SP_p004 | entries read: 37 | entries with a discrepancy: 3
+musicians_1899-00_SP_p005 | entries read: 37 | entries with a discrepancy: 5
+DISCREPANCIES
+musicians_1899-00_SP_p001 | e014 | family | STORED: "Гильлебрандъ" | PRINTED: "Гильдебрандъ" | confidence: DIRECT(zoomed)
+musicians_1899-00_SP_p001 | e029 | family | STORED: "Каллецъ" | PRINTED: "Кадлецъ" | confidence: DIRECT(zoomed)
+musicians_1899-00_SP_p002 | e012 | family | STORED: "Лудольфъ" | PRINTED: "Лудольфи" | confidence: DIRECT(zoomed) | PRINT-TYPO? (ending и for ъ)
+musicians_1899-00_SP_p003 | e004 | family | STORED: "Словаچевскій" (U+0686 Arabic TCHEH in place of ч) | PRINTED: "Словачевскій" | confidence: DIRECT(zoomed) | mixed-script flag confirmed
+musicians_1899-00_SP_p003 | e018 | first | STORED: "Кануть-Эмерикъ" | PRINTED: "Канутъ-Эмерикъ" | confidence: DIRECT(zoomed) | printed with hard sign after т
+musicians_1899-00_SP_p004 | e001 | list | STORED: "1." | PRINTED: no list number (Капельмейстеръ, unnumbered; the numbered Музыканты list begins at e002 "1.") | confidence: DIRECT(zoomed)
+musicians_1899-00_SP_p004 | e018 | family | STORED: "Ксемъ" | PRINTED: "Кеймъ" | confidence: DIRECT(zoomed)
+musicians_1899-00_SP_p004 | e027 | instrument | STORED: "Флейта" | PRINTED: "флейта" (lower-case ф) | confidence: DIRECT(zoomed) | case only, probably print
+musicians_1899-00_SP_p005 | e014 | first/patronymic | STORED: first "Августъ", patronymic "Генрихъ" | PRINTED: "Августъ-Генрихъ" (hyphenated double first name, no patronymic) | confidence: DIRECT(zoomed) | field placement
+musicians_1899-00_SP_p005 | e015 | family | STORED: "Кремарь" | PRINTED: "Кречмаръ" | confidence: DIRECT(zoomed)
+musicians_1899-00_SP_p005 | e016 | family | STORED: "Кулегольдтъ" | PRINTED: "Куденгольдтъ" | confidence: DIRECT(zoomed)
+musicians_1899-00_SP_p005 | e030 | family | STORED: "Армстеймеръ" | PRINTED: "Армсгеймеръ" | confidence: DIRECT(zoomed)
+musicians_1899-00_SP_p005 | e031 | family | STORED: "Беттенштедтъ" | PRINTED: "Беттенштелтъ" (л, no д-feet) | confidence: DIRECT(zoomed) | PRINT-TYPO?
+DATE-CHECK RESULTS
+musicians_1899-00_SP_p001 | e006 | STORED start: "28 мая 1857 г." | PRINTED start: "28 мая 1857 г." | MATCH | DIRECT(zoomed)
+musicians_1899-00_SP_p001 | e021 | STORED start: "1 марта 1877 г." | PRINTED start: "1 марта 1877 г." | MATCH | DIRECT(zoomed)
+musicians_1899-00_SP_p001 | e015 | STORED start: "1 октября 1885 г." | PRINTED start: "1 октября 1885 г." | MATCH | DIRECT(zoomed)
+musicians_1899-00_SP_p001 | e022 | STORED start: "1 сентября 1879 г." | PRINTED start: "1 сентября 1897 г." | DIFFERS | DIRECT(zoomed)
+musicians_1899-00_SP_p001 | e009 | STORED start: "1 сентября 1899 г." | PRINTED start: "1 сентября 1899 г." | MATCH | DIRECT(zoomed)
+musicians_1899-00_SP_p002 | e008 | STORED start: "20 сентября 1880 г." | PRINTED start: "20 сентября 1880 г." | MATCH | DIRECT(zoomed)
+musicians_1899-00_SP_p002 | e031 | STORED start: "21 октября 1874 г." | PRINTED start: "21 октября 1874 г." | MATCH | DIRECT(zoomed)
+musicians_1899-00_SP_p002 | e041 | STORED start: "1 сентября 1887 г." | PRINTED start: "1 сентября 1887 г." | MATCH | DIRECT(zoomed)
+musicians_1899-00_SP_p002 | e017 | STORED start: "11 октября 1869 г." | PRINTED start: "11 октября 1869 г." | MATCH | DIRECT(zoomed)
+musicians_1899-00_SP_p003 | e020 | STORED start: "1 апрѣля 1855 г." | PRINTED start: "1 апрѣля 1855 г." | MATCH | DIRECT(zoomed)
+musicians_1899-00_SP_p003 | e028 | STORED start: "1 сентября 1889 г." | PRINTED start: "1 сентября 1889 г." | MATCH | DIRECT(zoomed)
+musicians_1899-00_SP_p004 | e035 | STORED start: "1 іюня 1876 г." | PRINTED start: "1 іюня 1876 г." | MATCH | DIRECT(zoomed)
+musicians_1899-00_SP_p004 | e026 | STORED start: "1 сентября 1889 г." | PRINTED start: "1 сентября 1889 г." | MATCH | DIRECT(zoomed)
+musicians_1899-00_SP_p005 | e031 | STORED start: "1 сентября 1882 г." | PRINTED start: "[day glyph damaged, reads ':'] сентября 1882 г." | MATCH (month/year; day UNCERTAIN) | UNCERTAIN
+musicians_1899-00_SP_p005 | e017 | STORED start: "1 декабря 1878 г." | PRINTED start: "1 декабря 1878 г." | MATCH | DIRECT(zoomed)
+musicians_1899-00_SP_p005 | e019 | STORED start: "1 мая 1863 г." | PRINTED start: "1 мая 1863 г." | MATCH | DIRECT(zoomed)
+musicians_1899-00_SP_p005 | e014 | STORED start: "1 сентября 1883 г." | PRINTED start: "1 сентября 1883 г." | MATCH | DIRECT(zoomed)
+OTHER FINDINGS
+- None of these five pages uses the "patronymic inside first name" pattern; patronymics are in their own field throughout (hyphenated double first names Котте p002 e002, Хейкель p003 e018 and Герберъ p005 e014 are the only first-name oddities; Котте/Хейкель stored whole in first, Герберъ split across first/patronymic).
+- p004 e001 Галкинъ is the unnumbered Капельмейстеръ; the numbered list restarts at 1 (e002). p005 e037 Келеръ (Капельмейстеръ, Михайловскій театръ) is also unnumbered (stored "-", correct); p005 e008-e027 list nos 10-29 and e028-e036 nos 1-9 follow print order (page-break column order), correct.
+- p004 e002 Александровъ carries a printed transfer note (to ballet orchestra, clarinet, 15 сентября 1899); p004 e018 Кеймъ list no. 17 vs stored e017 Ивановъ=16: sequence fine.
+- p005 e031 start-date day digit is a damaged glyph (looks like ':'); stored 1 is plausible.
+- p001 e022 stored 1879 vs print 1897 means the stored date is a misread (same person otherwise consistent).
+- p003 e003 Семизоровъ, p002 e014 Матасовъ, etc. read fine; no other letter-level differences seen on any page; all ъ/ѣ/і/ѳ forms (Ѳедоровичъ, Тимоѳеевичъ, Рѣзвецовъ, Сергѣй, Віолончель, Аѳанасій) matched print.

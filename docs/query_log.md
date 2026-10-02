@@ -11760,3 +11760,41 @@ select e.entry_id,s.start_date_text from raw.person_entry e join raw.person_entr
 
 Result: 230 name-mismatched links on 71 pages; 6 shift blocks (5 pages) found by the new check. After relinking 92 entries on 4 pages: those pages 0 mismatches; affected persons with inconsistent first-period start dates 90 -> 21; shift blocks left: 1 (theaterschoolstaff_1896-97_p000, out of scope).
 Final: live persons 3326, tombstones 2246, orphans 0, receipts sum 2999096975, flags 598.
+
+## 2026-10-02 — Конскій Григорій: tenure start across years (issue #130 date digit check, 1891-92 MSK p001 e011)
+
+```sql
+select page_id,entry_id,family_name,first_name,tenure_note_text from raw.person_entry where family_name like 'Конск%' and first_name like 'Григор%' order by page_id
+```
+
+Result: see below in the issue #130 date-check entry.
+Result (completing the entry above): `musicians_1890-91_MSK_p001__e027` "(съ 28 іюля 1862 г.)" and `musicians_1891-92_MSK_p001__e011` "(съ 28 іюля 1852 г.)" -- the 1891-92 print's third digit is physically damaged, the 1890-91 print is clearly 1862; stored start corrected to 1862 (known_issues #130 batch 9).
+
+## 2026-10-02 -- Лиръ / Шмукловскій / Пащеевъ: tenure start and patronymic across years (issue #130 batch 9 date checks)
+
+```sql
+select page_id,entry_id,family_name,first_name,patronymic,tenure_note_text from raw.person_entry where family_name like 'Шмукловск%' order by page_id;
+select page_id,entry_id,family_name,first_name,tenure_note_text from raw.person_entry where family_name='Лиръ' order by page_id;
+select page_id,family_name,first_name,patronymic,tenure_note_text from raw.person_entry where family_name like 'Пащее%' order by page_id;
+```
+
+Result: Лиръ prints "съ 1 октября 1898 г." in 10 of 11 seasons (1904-05 stored "2" from a damaged glyph); Шмукловскій prints 16/26 августа 1904 in six seasons (1905-06 stored 1901 from a damaged last digit); Пащеевъ Борисъ, same start 16 декабря 1893 in all 15 seasons, patronymic alternates Ѳедоровичъ (8) / Ѳедотовичъ (7) -- both verified as printed.
+
+## 2026-10-02 -- Musicians instrument values after the name audit (issue #130 batch 9)
+
+```sql
+select instrument,count(*) n from raw.person_entry where page_id like 'musicians_%' group by 1 order by n desc;
+select family_name,count(*) from raw.person_entry where page_id like 'musicians_%' and (regexp_matches(family_name,'[a-zA-Z]') or regexp_matches(family_name,'[^а-яА-ЯѣѢіІѳѲёЁ ,\-0-9.()йЙ]')) group by 1;
+```
+
+Result: no 'Виолончель'/'Біолончель'/'Вальдгорнь'/'Альть' left (Віолончель 591, Вальдгорнъ 432, Альтъ 644); remaining odd instruments (Вальтгорнъ 4, Валторнъ 3, Волторна 2, Тромбомъ 1, ...) were each read at zoom and match the print. One non-Cyrillic character left in any Musicians surname: "Валеніўсъ" (ў printed). 
+
+## 2026-10-02 -- the 46 persons newly merged by the Musicians name fixes (issue #130 batch 9)
+
+```sql
+select p.display_name,p.first_attested_season,p.last_attested_season,s.display_name,s.first_attested_season,s.last_attested_season
+from entities.person p join entities.person s on s.person_id=p.superseded_by_person_id
+where p.superseded_by_person_id is not null  -- minus the 2246 tombstones present in the pre-edit backup
+```
+
+Result: 46 new tombstones (2246 -> 2292), live persons 3326 -> 3280; every pair is the same normalized name in the same or adjacent seasons (list in known_issues #130 batch 9); 157 person_link rows repointed, all explained by those tombstones; 0 orphans; receipts sum identical.

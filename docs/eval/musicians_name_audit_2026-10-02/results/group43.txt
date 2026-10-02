@@ -1,0 +1,34 @@
+PAGE SUMMARY
+musicians_1909-10_SP_p000 | entries read: 11 | entries with a discrepancy: 2
+musicians_1909-10_SP_p001 | entries read: 35 | entries with a discrepancy: 2
+musicians_1909-10_SP_p002 | entries read: 34 | entries with a discrepancy: 3
+musicians_1909-10_SP_p003 | entries read: 36 | entries with a discrepancy: 3
+musicians_1909-10_SP_p004 | entries read: 21 | entries with a discrepancy: 0
+DISCREPANCIES
+musicians_1909-10_SP_p000 | e007 | list | STORED: "Пахитоновъ" | PRINTED: (no list number; accompanist, unnumbered) | confidence: DIRECT(zoomed) | surname shifted into list-number column
+musicians_1909-10_SP_p000 | e007 | family | STORED: "Даніилъ" in bundle (raw JSON family_name = "Даниилъ") | PRINTED: family "Пахитоновъ" | confidence: DIRECT(zoomed) | first name has been stored as family; raw json lacks i-dotted form (printed Даніилъ)
+musicians_1909-10_SP_p000 | e007 | first | STORED: "-" (empty) | PRINTED: "Даніилъ" | confidence: DIRECT(zoomed) | first name missing; patronymic "Ильичъ" printed correctly
+musicians_1909-10_SP_p000 | e008 | instrument | STORED: "-" | PRINTED: "Первая срипка" | confidence: DIRECT(zoomed) | PRINT-TYPO? (срипка for скрипка); Лачиновъ, Репетиторы балета
+musicians_1909-10_SP_p001 | e016 | first | STORED: "Евтіхій" | PRINTED: "Евтихій" (т-и-х-і-й, plain и after т) | confidence: DIRECT(zoomed) | list 17 Васильевъ
+musicians_1909-10_SP_p001 | e029 | first | STORED: "Кануть" | PRINTED: "Канутъ" | confidence: DIRECT(zoomed) | list 30 Гейкель, terminal hard sign
+musicians_1909-10_SP_p002 | e012 | family | STORED: "Каукалъ" | PRINTED: "Каукаль" | confidence: DIRECT(zoomed) | list 48; soft sign
+musicians_1909-10_SP_p002 | e028 | family | STORED: "Лукась" | PRINTED: "Лукасъ" | confidence: DIRECT(zoomed) | list 64; hard sign
+musicians_1909-10_SP_p002 | e029 | family | STORED: "Людольфъ" | PRINTED: "Людольфи" | confidence: DIRECT(zoomed) | list 65; PRINT-TYPO? (final и instead of ъ)
+musicians_1909-10_SP_p003 | e010 | instrument | STORED: "Контрабасъ" | PRINTED: (no instrument printed; entry ends "(съ 1 сентября 1909 г.).") | confidence: DIRECT(zoomed) | list 80 Плотниковъ
+musicians_1909-10_SP_p003 | e012 | patronymic | STORED: "Александровичъ" | PRINTED: "Аленсандровичъ" (Аленсан-/дровичъ) | confidence: DIRECT(zoomed) | list 82 Помазанскій; PRINT-TYPO? (missing к)
+musicians_1909-10_SP_p003 | e028 | patronymic | STORED: "Альтъ" (instrument also "Альтъ") | PRINTED: no patronymic printed ("Стеличекъ, Мирославъ (съ 1 сентября 1904 г.). Альтъ.") | confidence: DIRECT(zoomed) | list 98; instrument word stored in patronymic field
+DATE-CHECK RESULTS
+musicians_1909-10_SP_p000 | e002 | STORED start: "съ 28 ноября 1863 г." | PRINTED start: "28 ноября 1863 г." (printed "(съ 28 ноября 1863 г.)") | MATCH | confidence: DIRECT(zoomed)
+musicians_1909-10_SP_p004 | e015 | STORED start: "1 августа 1895 г." | PRINTED start: "1 августа 1895 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- p000: bundle has only the lower (Оркестры) half; the upper half is French-language Moscow/Michailovsky text (not rows). Rows e001-e011: list numbers 1-3, 1-2, 1-3, 1 restart per subheading as printed; Кучера and Пахитоновъ unnumbered.
+- p000 e007 Пахитоновъ: raw JSON has list_number="Пахитоновъ", family_name="Даниилъ", no first_name -- column-shift bug (surname in list column, first name in family column).
+- p000 e008 Лачиновъ: printed "Первая срипка" (typo for скрипка) -- instrument stored empty.
+- p001 (list 2-36) and p002-p004 (list 37-127): list numbers consecutive, no gaps/duplicates; page p001 begins at list 2 (list 1 is Александеръ on p000).
+- p001 e016 Григорьевичъ: printed e appears to carry a small mark/blemish; read as plain "е" (UNCERTAIN only for the mark, not the letter).
+- p001 e002/e022 etc.: ѣ/і/Ѳ forms (Родіоновичъ, Алексѣевичъ, Ѳедоровна, Матвѣевичъ) all match print.
+- p001 e019 Ветцель printed in letterspaced bold "В е т ц е л ь" -- matches stored.
+- p002 e033/e034 Михаловскій 1-й/2-й and e032 Михайловскій: spellings match print (two distinct surnames).
+- p002 e006/e014 and p003: instrument spellings Вальтгорнъ (p002) vs Вальдгорнъ (p002 e028, p003, p004) match print each time.
+- p003 e012 and p003 e010: other fields correct; p003 e002 Мѣщанчукъ and e001 Сергѣевичъ match.
+- p004: no discrepancies; patronymic-in-first-name pattern not present on any of these pages. Moscow drama section printed at bottom (Южинъ, Платонъ, Айдаровъ, Поповъ, Носовъ, Саламатовъ) not in bundle (expected: previously removed per issue #130).

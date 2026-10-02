@@ -1,0 +1,28 @@
+ITEM musicians_1891-92_SP_p001|e002|ordinal | READ: "Вальтеръ 1-й, Викторъ Григорьевичъ" | CHOICE: A | confidence: DIRECT | bold "Вальтеръ 1-й," printed; ordinal present
+ITEM musicians_1891-92_SP_p001|e003|ordinal | READ: "Вальтеръ 2-й, Петръ Ивановичъ" | CHOICE: A | confidence: DIRECT | ordinal 2-й printed
+ITEM musicians_1891-92_SP_p001|e013|instrument | READ: "Віолончель" | CHOICE: A | confidence: DIRECT | pre-reform і printed in list 21
+ITEM musicians_1891-92_SP_p001|e014|family | READ: "Грибенъ" | CHOICE: B | confidence: DIRECT | final ъ clearly printed; also Ѳедоръ Ѳедоровичъ, с 15 августа 1873 г.
+ITEM musicians_1891-92_SP_p001|e052|ordinal | READ: "Плесковъ 2-й, Александръ Ивановичъ" | CHOICE: B | confidence: DIRECT | ordinal 2-й printed in list 60
+ITEM musicians_1891-92_SP_p002|e026|family | READ: "Шенекерль" | CHOICE: B | confidence: DIRECT | Ш-е-н-е-к-е-р-л-ь
+ITEM musicians_1891-92_SP_p002|e040|family | READ: "Канненгиссеръ" | CHOICE: B | confidence: DIRECT | К-а-н-н-е-н-г-и-с-с-е-р-ъ; Второй капельмейстеръ entry
+ITEM musicians_1891-92_SP_p003|e004|ordinal | READ: "Вальтеръ 2-й (см. оперный оркестръ)" | CHOICE: FREEFORM | confidence: DIRECT | ordinal belongs after surname, not first-name field; no first name printed
+ITEM musicians_1891-92_SP_p003|e008|instrument | READ: "Віолончель" | CHOICE: B | confidence: DIRECT | list 15 Гильдебрандтъ (см. оперный оркестръ). Віолончель.
+ITEM musicians_1891-92_SP_p003|e018|first/patronymic/ordinal | READ: "Ивановъ 1-й, Василій Андреевичъ" | CHOICE: FREEFORM | confidence: DIRECT | first=Василій patronymic=Андреевичъ; ordinal after surname; с 1 сентября 1872 г. Гобой
+ITEM musicians_1891-92_SP_p003|e019|first/patronymic/ordinal | READ: "Ивановъ 2-й, Владиміръ Ивановичъ" | CHOICE: FREEFORM | confidence: DIRECT | first=Владиміръ patronymic=Ивановичъ; ordinal after surname; с 1 сентября 1888 г. Вальдгорнъ
+ITEM musicians_1891-92_SP_p003|e021|family | READ: "Казаковъ" | CHOICE: A | confidence: DIRECT | list 28; bold К slightly blotchy but is К; matches Казаковъ of opera list (28/32)
+ITEM musicians_1891-92_SP_p003|e025|family | READ: "Керкешко" | CHOICE: B | confidence: DIRECT | list 32 К-е-р-к-е-ш-к-о (matches opera list 36 Керкешко)
+ITEM musicians_1891-92_SP_p003|e043|ordinal | READ: "Тарнке 1-й (см. оперный оркестръ)" | CHOICE: FREEFORM | confidence: DIRECT | ordinal after surname, no first name printed
+ITEM musicians_1891-92_SP_p003|e044|ordinal | READ: "Тарнке 2-й (см. оперный оркестръ)" | CHOICE: FREEFORM | confidence: DIRECT | ordinal after surname, no first name printed
+ITEM musicians_1891-92_SP_p004|e007|family | READ: "Бѣлицкій" | CHOICE: B | confidence: DIRECT | Б-ѣ-л-и-ц-к-і-й at 6x zoom
+ITEM musicians_1891-92_SP_p004|e010|family | READ: "Виргеліюшъ" | CHOICE: A | confidence: DIRECT | В-и-р-г-е-л-і-ю-ш-ъ at 8x zoom
+ITEM musicians_1891-92_SP_p004|e027|family | READ: "Моцейкевичъ" | CHOICE: A | confidence: DIRECT | ц not щ
+ITEM musicians_1891-92_SP_p004|e027|patronymic | READ: "Варѳоломеевичъ" | CHOICE: A | confidence: DIRECT | Ѳ (fita) clearly printed in В-а-р-Ѳ-о-л-о-м-е-е-в-и-ч-ъ
+ITEM musicians_1891-92_SP_p004|e035|instrument | READ: "Піанистъ при драматическихъ спектакляхъ" | CHOICE: A | confidence: DIRECT | spans into the next line
+ITEM musicians_1891-92_SP_p005|e004|family | READ: "Больмъ" | CHOICE: A | confidence: DIRECT | Б-о-л-ь-м-ъ
+ITEM musicians_1891-92_SP_p005|e025|family | READ: "Петерсенъ" | CHOICE: A | confidence: DIRECT | final ъ clearly printed
+ITEM musicians_1892-93_MSK_p000|e004|ordinal | READ: "Адольфи 1-й, Іоганъ-Фридрихъ" | CHOICE: FREEFORM | confidence: DIRECT | ordinal after surname; first name Іоганъ-Фридрихъ; no patronymic
+ITEM musicians_1892-93_MSK_p000|e005|first/patronymic spelling | READ: "Карлъ-Самуилъ" | CHOICE: A | confidence: DIRECT | hard sign ъ after Карл at 6x zoom
+ITEM musicians_1892-93_MSK_p000|e005|ordinal | READ: "Адольфи 2-й, Карлъ-Самуилъ" | CHOICE: FREEFORM | confidence: DIRECT | ordinal after surname; first name Карлъ-Самуилъ
+ITEM musicians_1892-93_MSK_p000|e006|ordinal | READ: "Адольфи 3-й, Фердинандъ" | CHOICE: FREEFORM | confidence: DIRECT | ordinal after surname; first name Фердинандъ
+ITEM musicians_1892-93_MSK_p000|e015|first | READ: "Брандтъ, Карлъ·Вильгельмъ" | CHOICE: FREEFORM | confidence: DIRECT | middle dot (not hyphen) joins double first name; hard sign ъ after Карл; no patronymic; с 3 сентября 1890 г. Труба
+DONE 27 items

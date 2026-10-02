@@ -1,0 +1,51 @@
+PAGE SUMMARY
+musicians_1903-04_SP_p006 | entries read: 13 | entries with a discrepancy: 0
+musicians_1904-05_MSK_p000 | entries read: 30 | entries with a discrepancy: 6
+musicians_1904-05_MSK_p001 | entries read: 38 | entries with a discrepancy: 8
+musicians_1904-05_MSK_p002 | entries read: 39 | entries with a discrepancy: 6
+musicians_1904-05_MSK_p003 | entries read: 37 | entries with a discrepancy: 7
+DISCREPANCIES
+musicians_1904-05_MSK_p000 | e005 | family | STORED: "Бейллеръ" | PRINTED: "Бейдлеръ" | confidence: DIRECT(zoomed) | 4th letter has descending feet (д), 5th is л
+musicians_1904-05_MSK_p000 | e013 | family | STORED: "Адольфъ" | PRINTED: "Адольфи" | confidence: DIRECT(zoomed) | final letter и, not ъ
+musicians_1904-05_MSK_p000 | e016 | first | STORED: "Сергѣй" | PRINTED: "Серіѣй" | confidence: UNCERTAIN | 4th letter looks like і (stem with small left serif, no top bar); likely a broken/missing bar of г, PRINT-TYPO? or damaged type
+musicians_1904-05_MSK_p000 | e017 | family | STORED: "Ардль" | PRINTED: "Ардъ" | confidence: DIRECT(zoomed)
+musicians_1904-05_MSK_p000 | e019 | family | STORED: "Аспергертъ" | PRINTED: "Аспергеръ" | confidence: DIRECT(zoomed) | stored has an extra т; print ends е-р-ъ
+musicians_1904-05_MSK_p000 | e021 | first | STORED: "Іоганнь-Альбертъ" | PRINTED: "Іоганнъ-Альбертъ" | confidence: DIRECT(zoomed) | ь vs ъ
+musicians_1904-05_MSK_p000 | e029 | family | STORED: "Валеніусъ" | PRINTED: "Валеніўсъ" | confidence: UNCERTAIN | у appears to carry a breve/mark; possible PRINT-TYPO?
+musicians_1904-05_MSK_p001 | e010 | instrument | STORED: "Вальдгорнъ" | PRINTED: "Вольдгорнъ" | confidence: DIRECT(zoomed) | о not а in 1st syllable; PRINT-TYPO? (Де-Буръ, no. 28)
+musicians_1904-05_MSK_p001 | e013 | family | STORED: "Дулычъ" | PRINTED: "Дудычъ" | confidence: DIRECT(zoomed) | 3rd letter д (with feet), not л
+musicians_1904-05_MSK_p001 | e018 | family | STORED: "Зоэль" | PRINTED: "Зозель" | confidence: DIRECT(zoomed)
+musicians_1904-05_MSK_p001 | e019 | ordinal | STORED: "Золотаренко" (no ordinal) | PRINTED: "Золотаренко :-й" | confidence: UNCERTAIN | digit damaged/looks like colon, almost certainly 1-й (sequence 1-й/2-й/3-й on nos. 37/38/39)
+musicians_1904-05_MSK_p001 | e020 | ordinal | STORED: "Золотаренко" (no ordinal) | PRINTED: "Золотаренко 2-й" | confidence: DIRECT(zoomed)
+musicians_1904-05_MSK_p001 | e021 | ordinal | STORED: "Золотаренко" (no ordinal) | PRINTED: "Золотаренко 3-й" | confidence: DIRECT(zoomed)
+musicians_1904-05_MSK_p001 | e038 | family | STORED: "Кусевичкій" | PRINTED: "Кусевицкій" | confidence: DIRECT(zoomed) | ц not ч
+musicians_1904-05_MSK_p002 | e010 | family | STORED: "Омъ" | PRINTED: "Омэ" | confidence: DIRECT(zoomed)
+musicians_1904-05_MSK_p002 | e020 | first | STORED: "Марлохей" | PRINTED: "Мардохей" | confidence: DIRECT(zoomed) | д not л
+musicians_1904-05_MSK_p002 | e020 | patronymic | STORED: "Земинъ" | PRINTED: "Земинъ Шломовичъ" (line-end "Шло-/мовичъ", glyph after Шл reads "ıо", could be Шлюмовичъ) | confidence: UNCERTAIN on spelling | stored patronymic omits Шломовичъ entirely
+musicians_1904-05_MSK_p002 | e024 | ordinal | STORED: "Ромашковъ" (no ordinal) | PRINTED: "Ромашковъ 1-й" | confidence: DIRECT(zoomed)
+musicians_1904-05_MSK_p002 | e025 | ordinal | STORED: "Ромашковъ" (no ordinal) | PRINTED: "Ромашковъ 2-й" | confidence: DIRECT(zoomed)
+musicians_1904-05_MSK_p002 | e036 | patronymic | STORED: "Никіфоровичъ" | PRINTED: "Никифоровичъ" | confidence: DIRECT(zoomed) | и not і
+musicians_1904-05_MSK_p003 | e001 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | ь vs ъ
+musicians_1904-05_MSK_p003 | e009 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | ь vs ъ
+musicians_1904-05_MSK_p003 | e024 | ordinal | STORED: family "Шмидтъ", first "1-й", patronymic "Францъ" | PRINTED: "Шмидтъ 1-й, Францъ" | confidence: DIRECT(zoomed) | ordinal belongs after family; Францъ is the first name (no patronymic printed)
+musicians_1904-05_MSK_p003 | e025 | ordinal | STORED: family "Шмидтъ", first "2-й", patronymic "Фридрихъ" | PRINTED: "Шмидтъ 2-й, Фридрихъ" | confidence: DIRECT(zoomed) | same as e024
+musicians_1904-05_MSK_p003 | e029 | family | STORED: "Шталлеръ" | PRINTED: "Штадлеръ" | confidence: DIRECT(zoomed) | 4th letter д, 5th л
+musicians_1904-05_MSK_p003 | e030 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" | confidence: DIRECT(zoomed) | ь vs ъ
+DATE-CHECK RESULTS
+musicians_1904-05_MSK_p000 | e010 | STORED start: "1 сентября 1869 г." | PRINTED start: "съ 1 сентября 1869 г." (3rd digit partly smudged but reads 6) | MATCH | confidence: DIRECT(zoomed), 3rd digit slightly smudged; printed day is 1 not 16/12
+musicians_1904-05_MSK_p000 | e025 | STORED start: "1 октября 1904 г." | PRINTED start: "съ 1 октября 1904 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1904-05_MSK_p001 | e002 | STORED start: "съ 1 января 1877 г." | PRINTED start: "съ 1 января 1877 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1904-05_MSK_p001 | e033 | STORED start: "съ 10 сентября 1882 г." | PRINTED start: "съ 10 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1904-05_MSK_p002 | e006 | STORED start: "19 сентября 1882 г." | PRINTED start: "съ 19 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1904-05_MSK_p002 | e011 | STORED start: "10 октября 1878 г." | PRINTED start: "съ 10 октября 1878 г. по 30 декабря 1880 г. и съ 19 сентября 1882 г." | MATCH (first of two tenure periods) | confidence: DIRECT(zoomed)
+musicians_1904-05_MSK_p003 | e026 | STORED start: "19 сентября 1882 г." | PRINTED start: "съ 19 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- SP_p006: all 13 rows match print letter for letter (incl. Новоселовъ under the librarian heading, no list number); no discrepancies.
+- MSK_p000: e001-e012 are unnumbered section heads/repetitors (no list no. except e008-e010 = 1-3 repetitors); musician list no. 1-18 = e013-e030. Patronymic-inside-first-name pattern: none on this page.
+- MSK_p000 e014 Адамовъ: annotation "Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г." printed; e005 Бейдлеръ has multi-period "условіе" dates (not a tenure start).
+- MSK_p001: patronymic inside first name on e004-e038 (known pattern, text correct apart from listed items). Stored "Іоганнъ" e036 Кунстъ and e028 Коробковъ etc. all match. e035 Крутоголововъ and e037/e013 etc. match; instrument words "Вальдгорнъ/Вальлгорнъ" on e035/e037/e013/e030 are legible as Вальдгорнъ (stored matches).
+- MSK_p002: e009 Фонъ-Нольте printed "Іоганъ - Константинъ" (hyphenated double first name, line break "Констан-/тинъ"), but stored first="Іоганъ", patronymic="Константинъ" and the hyphen is dropped: this is a field-placement/hyphen issue, not a patronymic. e002 Лидтке: print "Готгильдъ Францъ" (Францъ is a 2nd first name, stored as patronymic); e005 Марквардтъ Густавъ and e006 Марквардтъ Августъ match; e021 Решке matches.
+- MSK_p002 e034 Соколовская: stored "Александровна" correct (print line-broken "Алексан-/дровна", no stray hyphen).
+- MSK_p003: bundle order is not print order (e001 = no. 110 Ходаровскій, e002-e004 = Малый театръ orchestra nos. 1-3, then 96-109, 111-128, e037 Шульцъ conductor); stored list numbers match print. e006 Султановъ: stored "Мухамелъ-Мансуръ-Шайхель" correct (line-end hyphen after Мансуръ is a real hyphen).
+- MSK_p003 e024/e025 (Шмидтъ 1-й/2-й): ordinal misplaced in first-name field and the real first name pushed into patronymic; print also uses "Шмидтъ 1-й, Францъ" (Францъ is the given name; there is no printed patronymic).
+- MSK_p001 e010 Де-Буръ: print "Вольдгорнъ" (о for а) is a likely genuine print typo; all other Вальдгорнъ entries on the page print with а.

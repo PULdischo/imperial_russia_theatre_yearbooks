@@ -1,0 +1,63 @@
+PAGE SUMMARY
+musicians_1890-91_SP_p005 | entries read: 40 | entries with a discrepancy: 12
+musicians_1890-91_SP_p006 | entries read: 22 | entries with a discrepancy: 3
+musicians_1891-92_MSK_p000 | entries read: 35 | entries with a discrepancy: 2
+musicians_1891-92_MSK_p001 | entries read: 54 | entries with a discrepancy: 2
+musicians_1891-92_MSK_p002 | entries read: 53 | entries with a discrepancy: 6
+DISCREPANCIES
+musicians_1890-91_SP_p005 | e001 | patronymic | STORED: "Вареоломеевичъ" | PRINTED: "Варѳоломеевичъ" (Ѳ; hyphenated Варѳоло-/меевичъ) | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e007 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e009 | instrument(rank_or_title) | STORED: "Пьянисть при драматическихъ спектакляхъ." | PRINTED: "Пьянистъ при драматическихъ спектакляхъ." | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e011 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e016 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e021 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e024 | family | STORED: "Баряининъ" | PRINTED: "Барянинъ" | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e027 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e036 | family | STORED: "Грибень" | PRINTED: "Грибенъ" | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e038 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p006 | e005 | family | STORED: "Майєръ-Пирко" (Ukrainian є) | PRINTED: "Майеръ-Пирко" | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p006 | e010 | family | STORED: "Пертєль" (Ukrainian є) | PRINTED: "Пертель" | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p006 | e011 | family | STORED: "Петерсень" | PRINTED: "Петерсенъ" | confidence: DIRECT(zoomed)
+musicians_1891-92_MSK_p000 | e005 | first | STORED: "Карль-Самуилъ" | PRINTED: "Карлъ-Самуилъ" | confidence: DIRECT(zoomed)
+musicians_1891-92_MSK_p000 | e015 | first | STORED: "Карль-Вильгельмъ" | PRINTED: "Карлъ-Вильгельмъ" | confidence: DIRECT(zoomed)
+musicians_1891-92_MSK_p001 | e008 | family | STORED: "Канись" | PRINTED: "Канисъ" | confidence: DIRECT(zoomed)
+musicians_1891-92_MSK_p001 | e028 | family | STORED: "Палище" | PRINTED: "Палице" | confidence: DIRECT(zoomed)
+musicians_1891-92_MSK_p002 | e003 | family | STORED: "Шлейеръ" | PRINTED: "Шпейеръ" | confidence: DIRECT(zoomed)
+musicians_1891-92_MSK_p002 | e004 | family | STORED: "Шпеккинь" | PRINTED: "Шпеккинъ" | confidence: DIRECT(zoomed)
+musicians_1891-92_MSK_p002 | e004 | instrument | STORED: "Контрабасъ" | PRINTED: "Кснтрабасъ" (с where о expected) | confidence: DIRECT(zoomed) | PRINT-TYPO?
+musicians_1891-92_MSK_p002 | e029 | list | STORED: "14." | PRINTED: "14" (no period) | confidence: DIRECT(zoomed) | trivial
+musicians_1891-92_MSK_p002 | e032 | family | STORED: "Зозелъ" | PRINTED: "Зозель" | confidence: DIRECT(zoomed)
+musicians_1891-92_MSK_p002 | e035 | family | STORED: "Зюстъ" | PRINTED: "Зюсъ" | confidence: DIRECT(zoomed)
+musicians_1891-92_MSK_p002 | e045 | family | STORED: "Кунсть" | PRINTED: "Кунстъ" | confidence: DIRECT(zoomed)
+DATE-CHECK RESULTS
+musicians_1890-91_SP_p005 | e001 | STORED start: "1 сентября 1888 г." | PRINTED start: "1 сентября 1888 г." | MATCH | DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e003 | STORED start: "1 сентября 1888 г." | PRINTED start: "1 сентября 1888 г." | MATCH | DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e016 | STORED start: "1 сентября 1888 г." | PRINTED start: "1 сентября 1888 г." | MATCH | DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e026 | STORED start: "15 ноября 1888 г." | PRINTED start: "15 ноября 1888 г." | MATCH | DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e027 | STORED start: "1 сентября 1882 г." | PRINTED start: "1 сентября 1882 г." | MATCH | DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e029 | STORED start: "15 августа 1880 г." | PRINTED start: "15 августа 1880 г." | MATCH | DIRECT(zoomed)
+musicians_1890-91_SP_p005 | e030 | STORED start: "1 сентября 1888 г." | PRINTED start: "1 сентябрь 1888 г." (month word printed in nominative: "сентябрь") | MATCH on day/month/year | DIRECT(zoomed) | PRINT-TYPO?
+musicians_1890-91_SP_p006 | e003 | STORED start: "1 декабря 1879 г." | PRINTED start: "1 декабря 1879 г." | MATCH | DIRECT(zoomed)
+musicians_1890-91_SP_p006 | e012 | STORED start: "15 сентября 1885 г." | PRINTED start: "15 сентября 1885 г." | MATCH | DIRECT(zoomed)
+musicians_1890-91_SP_p006 | e013 | STORED start: "16 августа 1873 г." | PRINTED start: "16 августа 1873 г." | MATCH | DIRECT(zoomed)
+musicians_1891-92_MSK_p001 | e022 | STORED start: "19 сентября 1882 г." | PRINTED start: "19 сентября 1882 г." | MATCH | DIRECT(zoomed)
+musicians_1891-92_MSK_p001 | e011 | STORED start: "28 іюля 1852 г." | PRINTED start: "28 іюля 18?2 г." third digit damaged/ambiguous, reads 5 or 6 (looks more like 1862) | UNCERTAIN (digit) | UNCERTAIN
+musicians_1891-92_MSK_p001 | e018 | STORED start: "26 сентября 1885 г." | PRINTED start: "26 сентября 1885 г." | MATCH | DIRECT(zoomed)
+musicians_1891-92_MSK_p001 | e027 | STORED start: "19 сентября 1882 г." | PRINTED start: "19 сентября 1882 г." | MATCH | DIRECT(zoomed)
+OTHER FINDINGS
+- p005: INSTR-VARIANT flags on e007,e011,e016,e021,e027,e038 all confirmed (print is Віолончель).
+- p005: all 7 DATE-CHECK printed dates equal stored dates; the "modal" differences are genuinely different print (e.g. Моцейкевичъ/Никитинъ/Чугриновъ/Бочарскій all 1888 here).
+- p005: e040 Рамзе (Капельмейстеръ, no list number, no instrument) correct; heading "Оркестръ Михайловскаго театра". List numbers 25-44 then 1-19 correct.
+- p005: Соловьевъ (e010) and Судовскій (e011) are followed by death/leaving notes (+ 4 октября 1890; Оставилъ службу 1 ноября 1890) - not part of the checked fields.
+- p006: MIXED-SCRIPT flags on e005 and e010 confirmed (Ukrainian є U+0454 stored instead of е); no other non-Cyrillic characters on any of my 5 pages (checked by script).
+- p006: e010 print shows "Пертель." with a period (not a comma) after the surname; harmless.
+- p000 (MSK 1891-92 p000) bundle has no DATE-CHECK lines; the 4 DATE-CHECK entries belong to the p001 bundle.
+- p000: e001-e002 (conductors) read OK; e001 "Ипполитъ" second п printed faintly but legible; matches stored.
+- p000/p002 e026 (p000) list "24" printed without period; stored "24" matches print.
+- p001: e046 SPACE-IN-FAMILY flag REFUTED: "Туровичъ фонъ-Охота" is printed with a real space (two words); stored correct.
+- p001: e011 Конскій printed date has a smudged/damaged third year digit; also a stray dot before "іюля" ("28 .іюля").
+- p001: Конскій (e011) and Лихтенъ (e020) are followed by "Оставилъ службу" notes (1 августа 1892; 1 мая 1892).
+- p002: e006,e010,e011 etc. have patronymic inside first-name field (first = "Василій Васильевичъ" etc.): patronymic inside first name on e006,e010,e011,e012-e016 (rank rows),e030,e031,e039,e043,e048,e049; letters all match print.
+- p002: e004 Шпеккинъ instrument printed "Кснтрабасъ" (probable print typo for Контрабасъ); stored normal form.
+- p002: families on balletnyi orchestra rows 2-3,5,7-13,17-18,21-22,25,29,31,35-38 are "(см. оперный оркестръ)" cross-references with no first name; stored empty first correct.
+- p002: e033/e034 Золотаренко: print 18 is cross-reference, 19 is Иванъ Петровичъ; stored correct.

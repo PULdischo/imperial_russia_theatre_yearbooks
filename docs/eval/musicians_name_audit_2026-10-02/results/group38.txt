@@ -1,0 +1,38 @@
+PAGE SUMMARY
+musicians_1906-07_SP_p004 | entries read: 34 | entries with a discrepancy: 3
+musicians_1906-07_SP_p005 | entries read: 32 | entries with a discrepancy: 4
+musicians_1906-07_SP_p006 | entries read: 8 | entries with a discrepancy: 0
+musicians_1907-08_MSK_p000 | entries read: 36 | entries with a discrepancy: 1
+musicians_1907-08_MSK_p001 | entries read: 38 | entries with a discrepancy: 1
+DISCREPANCIES
+musicians_1906-07_SP_p004 | e001 | instrument | STORED: "Вторая скрипка" | PRINTED: "Вторая скричка" | confidence: DIRECT(zoomed) | PRINT-TYPO? (printed "скричка" for "скрипка"; stored text is the corrected word)
+musicians_1906-07_SP_p004 | e017 | first | STORED: "Аванасій" | PRINTED: "Аѳанасій" (Ѳ, not В) | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p004 | e033 | family | STORED: "Сальніковъ" | PRINTED: "Сальниковъ" (plain и, no dotted і) | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p005 | e002 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p005 | e017 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p005 | e029 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p005 | e031 | instrument | STORED: "Виолончель" | PRINTED: "Віолончель" | confidence: DIRECT(zoomed)
+musicians_1907-08_MSK_p000 | e006 | family | STORED: "Авъерино" | PRINTED: "Авьерино" (soft sign ь, not ъ) | confidence: DIRECT(zoomed)
+musicians_1907-08_MSK_p001 | e019 | instrument | STORED: "Валторна" | PRINTED: "Валторнъ" (hard-sign ending; all other entries on page print "Валторна") | confidence: DIRECT(zoomed) | probably printer's variant, report printed form
+DATE-CHECK RESULTS
+musicians_1906-07_SP_p004 | e003 | STORED start: "1 сентября 1895 г." | PRINTED start: "съ 1 сентября 1895 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p005 | e004 | STORED start: "1 сентября 1905 г." | PRINTED start: "съ 1 сентября 1905 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p005 | e001 | STORED start: "1 октября 1893 г." | PRINTED start: "съ 1 октября 1893 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p005 | e016 | STORED start: "1 ноября 1905 г." | PRINTED start: "съ 1 ноября 1905 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1906-07_SP_p005 | e020 | STORED start: "1 ноября 1905 г." | PRINTED start: "съ 1 ноября 1905 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_MSK_p000 | e013 | STORED start: "19 сентября 1883 г." | PRINTED start: "съ 19 сентября 1883 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_MSK_p000 | e032 | STORED start: "1 октября 1883 г." | PRINTED start: "съ 1 октября 1883 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_MSK_p000 | e031 | STORED start: "6 сентября 1891 г." | PRINTED start: "съ 6 сентября 1891 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_MSK_p001 | e022 | STORED start: "съ 10 сентября 1882 г." | PRINTED start: "съ 10 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_MSK_p001 | e036 | STORED start: "съ 1 іюня 1897 г." | PRINTED start: "съ 1 іюня 1897 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_MSK_p001 | e035 | STORED start: "съ 28 августа 1906 г." | PRINTED start: "съ 28 августа 1906 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1907-08_MSK_p001 | e028 | STORED start: "съ 23 сентября 1890 г." | PRINTED start: "съ 23 сентября 1890 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- p005 AUTO-FLAGS INSTR-VARIANT on e002, e017, e029, e031 CONFIRMED: print is "Віолончель" (dotted і) every time; stored "Виолончель".
+- All the other entries printing Віолончель (p004 e018, e033; MSK p000 e013, e019, e020, e025, e033; MSK p001 e027) are stored correctly with і.
+- p005 e006 (Келеръ, Капельмейстеръ of Михайловскій orchestra) and p006 e008 (Новоселовъ, старшій библіотекарь) have no instrument in print; correct. p006 e008 has a cross (†) printed under the entry.
+- MSK p000 e001-e005 (conductors) have no instrument in print; correct. MSK p001 e021 Крейнъ: "Концертмейстеръ" printed in the instrument position, stored in rank_or_title with instrument empty (field placement, text correct).
+- Ordinals on MSK p001 e008-e010 (Золотаренко 1-й/2-й/3-й) are printed and stored correctly in family.
+- Date-check: all 12 stored dates agree with the print, so each disagreement with the "modal" date comes from the person's other entries (other years' misreads or genuinely different persons), not from these entries. MSK p001 e022/e036/e035/e028 stored values carry a "съ" prefix, as printed.
+- No hyphen/space line-break artifacts found in stored names on these pages (hyphenated names like Авксентьевичъ, Лебрехтовичъ, Григорьевичъ stored joined; Августъ-Генрихъ, Іоаннъ-Альбертъ, Карлъ-Вильгельмъ, Альбертъ-Фердинандъ, Де-Буръ are genuine printed hyphens).
+- No missing or duplicated rows: p004 list nos. 2-35, p005 36-40 then Михайловскій 1-26, p006 27-33 plus librarian, MSK p000 conductors + 1-31, MSK p001 32-69 all present.

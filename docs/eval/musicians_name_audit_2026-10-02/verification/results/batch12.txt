@@ -1,0 +1,30 @@
+ITEM musicians_1904-05_MSK_p001|e010|instrument | READ: "Вольдгорнъ" | CHOICE: A | confidence: DIRECT | entry 28 prints Вольдгорнъ (о after В), unlike Вальдгорнъ in entries 31/48/55
+ITEM musicians_1904-05_MSK_p001|e013|family | READ: "Дудычъ" | CHOICE: A | confidence: DIRECT | 3rd letter has descender feet = д, not л
+ITEM musicians_1904-05_MSK_p001|e018|family | READ: "Зозель" | CHOICE: B | confidence: DIRECT | З-о-з-е-л-ь
+ITEM musicians_1904-05_MSK_p001|e019|ordinal | READ: "Золотаренко :-й" | CHOICE: NEITHER | confidence: UNCERTAIN | an ordinal -й is printed after the surname; digit is damaged, printed as ':' (clearly the 1-й, since 38=2-й, 39=3-й). Best reading "Золотаренко 1-й"; A has the ordinal (right in substance) but the garbled glyph, B lacks it
+ITEM musicians_1904-05_MSK_p001|e020|ordinal | READ: "Золотаренко 2-й" | CHOICE: B | confidence: DIRECT | "Золотаренко 2-й, Павелъ Петровичъ"
+ITEM musicians_1904-05_MSK_p001|e021|ordinal | READ: "Золотаренко 3-й" | CHOICE: A | confidence: DIRECT | "Золотаренко 3-й, Василій Петровичъ"
+ITEM musicians_1904-05_MSK_p001|e038|family | READ: "Кусевицкій" | CHOICE: B | confidence: DIRECT | К-у-с-е-в-и-ц-к-і-й
+ITEM musicians_1904-05_MSK_p002|e010|family | READ: "Омэ" | CHOICE: A | confidence: DIRECT | О-м-э; final letter is э
+ITEM musicians_1904-05_MSK_p002|e020|first | READ: "Мардохей" | CHOICE: A | confidence: DIRECT | "Мардохей Земинъ Шломовичъ" (Ресеръ stored Рессеръ; printed Рессеръ)
+ITEM musicians_1904-05_MSK_p002|e020|patronymic | READ: "Земинъ Шломовичъ" | CHOICE: A | confidence: DIRECT | printed "Мардохей Земинъ Шло-/мовичъ"; Земинъ is a second given name, Шломовичъ the patronymic; A reflects the full printed string
+ITEM musicians_1904-05_MSK_p002|e024|ordinal | READ: "Ромашковъ 1-й" | CHOICE: A | confidence: DIRECT | "Ромашковъ 1-й, Павелъ Ѳедоровичъ"
+ITEM musicians_1904-05_MSK_p002|e025|ordinal | READ: "Ромашковъ 2-й" | CHOICE: A | confidence: DIRECT | "Ромашковъ 2-й, Григорій Ѳедоровичъ"
+ITEM musicians_1904-05_MSK_p002|e036|patronymic | READ: "Никифоровичъ" | CHOICE: B | confidence: DIRECT | Ники-форовичъ with plain и (no і)
+ITEM musicians_1904-05_MSK_p003|e009|instrument | READ: "Вальдгорнъ" | CHOICE: B | confidence: DIRECT | ends in hard sign ъ, not ь
+ITEM musicians_1904-05_MSK_p003|e024|ordinal | READ: "Шмидтъ 1-й, Францъ" | CHOICE: FREEFORM | confidence: DIRECT | ordinal after surname (printed with roman-style "1-й"); Францъ is first name, no patronymic; confirms first reviewer
+ITEM musicians_1904-05_MSK_p003|e025|ordinal | READ: "Шмидтъ 2-й, Фридрихъ" | CHOICE: FREEFORM | confidence: DIRECT | same as e024; no patronymic printed
+ITEM musicians_1904-05_MSK_p003|e029|family | READ: "Штадлеръ" | CHOICE: B | confidence: DIRECT | Ш-т-а-д-л-е-р-ъ; 4th letter is д with feet, 5th л
+ITEM musicians_1904-05_SP_p000|e024|patronymic | READ: "Григорьевичъ" | CHOICE: A | confidence: DIRECT | Григорьевичъ, not Т
+ITEM musicians_1904-05_SP_p001|e002|family | READ: "Виргеліюшъ" | CHOICE: B | confidence: DIRECT | В-и-р-г-е-л-і-ю-ш-ъ
+ITEM musicians_1904-05_SP_p001|e007|ordinal | READ: "Вульфъ-Израэль 1-й" | CHOICE: B | confidence: DIRECT | "Вульфъ-Израэль 1-й, Михаилъ"
+ITEM musicians_1904-05_SP_p001|e008|ordinal | READ: "Вульфъ - Израэль 2-й" | CHOICE: B | confidence: DIRECT | spaces around hyphen as printed; 2-й present
+ITEM musicians_1904-05_SP_p001|e027|family | READ: "Инспрукеръ" | CHOICE: A | confidence: DIRECT | Инспрукеръ, ends -еръ, no т
+ITEM musicians_1904-05_SP_p002|e003|family | READ: "Кубанекъ" | CHOICE: B | confidence: DIRECT | К-у-б-а-н-е-к-ъ
+ITEM musicians_1904-05_SP_p002|e006|patronymic | READ: "Фелоровичъ" | CHOICE: A | confidence: DIRECT | printed with л (apparent print typo for Федоровичъ)
+ITEM musicians_1904-05_SP_p002|e007|family | READ: "Де-Ланге" | CHOICE: B | confidence: DIRECT | "Де-Ланге, Людвигъ Михайловичъ"
+ITEM musicians_1904-05_SP_p002|e008|family | READ: "Ланге" | CHOICE: A | confidence: DIRECT | "Ланге, Леопольдъ Эдуардовичъ"
+ITEM musicians_1904-05_SP_p002|e015|family | READ: "Людольфи" | CHOICE: B | confidence: DIRECT | ends -фи, no final ъ
+ITEM musicians_1904-05_SP_p002|e019|ordinal | READ: "Михайловскій 1-й" | CHOICE: A | confidence: DIRECT | "Михайловскій 1-й, Станиславъ"
+ITEM musicians_1904-05_SP_p002|e020|ordinal | READ: "Михайловскій 2-й" | CHOICE: B | confidence: DIRECT | "Михайловскій 2-й, Сигизмундъ"
+DONE 29 items

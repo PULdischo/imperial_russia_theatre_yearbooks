@@ -1,0 +1,29 @@
+ITEM musicians_1906-07_SP_p004|e001|instrument | READ: "Вторая скричка" | CHOICE: B | confidence: DIRECT | printed "скричка" (ч, not п); print typo for скрипка
+ITEM musicians_1906-07_SP_p004|e017|first | READ: "Аѳанасій" | CHOICE: A | confidence: DIRECT | ѳ (theta with bar) clearly present, no в
+ITEM musicians_1906-07_SP_p004|e033|family | READ: "Сальниковъ" | CHOICE: A | confidence: DIRECT | plain и (no dot) in -никовъ; first name Іосифъ has і
+ITEM musicians_1907-08_MSK_p000|e006|family | READ: "Авьерино" | CHOICE: B | confidence: DIRECT | ь (soft sign) not ъ
+ITEM musicians_1907-08_MSK_p001|e019|instrument | READ: "Валторнъ" | CHOICE: A | confidence: DIRECT | ends in -нъ with hard sign, not -на; (surname printed Котрба, first Іосифъ)
+ITEM musicians_1907-08_MSK_p002|e003|space | READ: "Пащеевъ" | CHOICE: A | confidence: DIRECT | no space in print; letter-spaced surname only
+ITEM musicians_1907-08_MSK_p002|e029|first | READ: "Никифоръ" | CHOICE: A | confidence: DIRECT | plain и in Никифоръ (surname Слѣпуховъ)
+ITEM musicians_1907-08_MSK_p003|e006|ordinal | READ: "113. Шмидтъ 1-й, Францъ (съ 15 августа 1880 г.). Фаготъ." | CHOICE: FREEFORM | confidence: DIRECT | family=Шмидтъ 1-й, first=Францъ, patronymic none; confirms first reviewer
+ITEM musicians_1907-08_MSK_p003|e007|ordinal | READ: "114. Шмидтъ 2-й, Фридрихъ (съ 1 сентября 1891 г.). Альтъ." | CHOICE: FREEFORM | confidence: DIRECT | family=Шмидтъ 2-й, first=Фридрихъ, patronymic none; confirms first reviewer
+ITEM musicians_1907-08_SP_p000|e019|family | READ: "Бѳльмъ" | CHOICE: A | confidence: DIRECT | 2nd letter is ѳ (barred), clearly distinct from О of Отто at same zoom; NB stored Больмъ (plain о) is wrong
+ITEM musicians_1907-08_SP_p002|e005|family | READ: "Людольфи" | CHOICE: A | confidence: DIRECT | ends in и, not ъ (letter-spaced; ѳ-like ф with mark above)
+ITEM musicians_1907-08_SP_p002|e006|family | READ: "Малый" | CHOICE: B | confidence: DIRECT | final letter й with breve, not і
+ITEM musicians_1907-08_SP_p002|e008|ordinal | READ: "Михаловскій 1-й" | CHOICE: B | confidence: DIRECT | ordinal 1-й printed after surname
+ITEM musicians_1907-08_SP_p002|e009|ordinal | READ: "Михаловскій 2-й" | CHOICE: A | confidence: DIRECT | ordinal 2-й printed after surname
+ITEM musicians_1907-08_SP_p003|e003|family | READ: "Федергансъ" | CHOICE: B | confidence: DIRECT | Ф е д е р г а н с ъ (has р)
+ITEM musicians_1907-08_SP_p003|e009|family | READ: "Хейк,ель" | CHOICE: B | confidence: DIRECT | print literally has a comma between к and е (Х е й к , е л ь), a print oddity
+ITEM musicians_1907-08_SP_p003|e026|list | READ: "3" | CHOICE: B | confidence: DIRECT | no period after the number ("3 Алексѣевъ")
+ITEM musicians_1907-08_SP_p003|e034|first | READ: "Меѳодій" | CHOICE: A | confidence: DIRECT | ѳ barred, not в
+ITEM musicians_1907-08_SP_p004|e002|first | READ: "Владимиръ" | CHOICE: B | confidence: DIRECT | plain и, ends -иръ (no і)
+ITEM musicians_1907-08_SP_p004|e022|first | READ: "Владимиръ" | CHOICE: A | confidence: DIRECT | plain и, ends -иръ; stored row has Владиміръ which is wrong (option A = Владимиръ per this list's labelling: Option A text is "Владимиръ")
+ITEM musicians_1908-09_MSK_p000|e014|first | READ: "Карлъ - Вильямъ" | CHOICE: B | confidence: DIRECT | hyphen printed with spaces around it
+ITEM musicians_1908-09_MSK_p001|e013|family | READ: "Домащунасъ" | CHOICE: B | confidence: DIRECT | ends -насъ
+ITEM musicians_1908-09_MSK_p002|e017|space | READ: "Пащеевъ" | CHOICE: B | confidence: DIRECT | no space in print
+ITEM musicians_1908-09_SP_p002|e023|family | READ: "Людольфи" | CHOICE: A | confidence: DIRECT | ends in и not ъ
+ITEM musicians_1908-09_SP_p002|e028|space | READ: "Михайловскій" | CHOICE: A | confidence: DIRECT | no space; letter-spaced print only
+ITEM musicians_1908-09_SP_p003|e003|patronymic | READ: "Порманинъ, Тихонъ (съ 1 сентября 1905 г.). Альтъ." | CHOICE: FREEFORM | confidence: DIRECT | no patronymic printed; confirms first reviewer
+ITEM musicians_1908-09_SP_p003|e021|patronymic | READ: "Стеличевъ, Мирославъ (съ 1 сентября 1904 г.). Альтъ." | CHOICE: FREEFORM | confidence: DIRECT | no patronymic printed (opening paren faint); confirms first reviewer
+ITEM musicians_1909-10_MSK_p002|e006|space | READ: "Пащеевъ" | CHOICE: B | confidence: DIRECT | no space in print
+DONE 28 items

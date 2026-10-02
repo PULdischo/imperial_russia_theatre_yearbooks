@@ -1,0 +1,30 @@
+ITEM musicians_1901-02_MSK_p004|e001|ordinal | READ: "114. Эйхенвальдъ 1-я, Ида (съ 1 сентября 1861 г.). Арфа. / Оставила службу 1 декабря 1901 г." | CHOICE: FREEFORM | confidence: DIRECT | ordinal "1-я" follows surname; no patronymic printed; stored patronymic "1-я" is wrong field (should be ordinal after family)
+ITEM musicians_1901-02_MSK_p004|e002|ordinal | READ: "Эйхенвальдъ 2-я, Надежда Александровна" | CHOICE: A | confidence: DIRECT | "2-я" printed after surname
+ITEM musicians_1901-02_MSK_p004|e030|first | READ: "Никифоръ" | CHOICE: B | confidence: DIRECT | plain и (not і) in both positions: Н-и-к-и-ф-о-р-ъ; entry 22 Слѣпуховъ, Никифоръ Кузьмичъ
+ITEM musicians_1901-02_MSK_p004|e034|instrument | READ: "Альтъ" | CHOICE: B | confidence: DIRECT | entry 26 Фарскій: "(съ 1 января 1894 г.). Альтъ." instrument printed at end of entry
+ITEM musicians_1901-02_SP_p000|e003|family | READ: "Крушевекій" | CHOICE: B | confidence: DIRECT | printed К-р-у-ш-е-в-е-к-і-й (looks like print typo for -вскій); no с, letters "евекій" clear at 4x
+ITEM musicians_1901-02_SP_p001|e004|family | READ: "Больмъ" | CHOICE: A | confidence: DIRECT | Б-о-л-ь-м-ъ
+ITEM musicians_1901-02_SP_p001|e006|family | READ: "Брекеръ" | CHOICE: A | confidence: DIRECT | Б-р-е-к-е-р-ъ, no т
+ITEM musicians_1901-02_SP_p001|e009|first | READ: "Конрадъ" | CHOICE: B | confidence: DIRECT | Вагнеръ, Конрадъ Робертовичъ; д with foot clear (top of line slightly cropped but legible)
+ITEM musicians_1901-02_SP_p001|e011|family | READ: "Ваншейдъ" | CHOICE: B | confidence: DIRECT | В-а-н-ш-е-й-д-ъ; no ль
+ITEM musicians_1901-02_SP_p001|e017|ordinal | READ: "25. Вульфъ-Израэль 1-й, Михаилъ Александровичъ (съ 1 сентября 1892 г.). Первая скрипка." | CHOICE: FREEFORM | confidence: DIRECT | ordinal "1-й" (numeral 1, old-style glyph) after family; first Михаилъ; patronymic Александровичъ (split Алек-/сандровичъ across lines); stored row has ordinal in first-name field and patronymic missing/misplaced
+ITEM musicians_1901-02_SP_p001|e018|ordinal | READ: "26. Вульфъ-Израэль 2-й, Евгеній Владиміровичъ (съ 1 октября 1894 г.). Віолончель." | CHOICE: FREEFORM | confidence: DIRECT | ordinal "2-й" after family; first Евгеній; patronymic Владиміровичъ (with і; split Вла-/диміровичъ); instrument printed "Віо-/лончель"
+ITEM musicians_1901-02_SP_p001|e019|patronymic | READ: "Владиміровичъ" | CHOICE: A | confidence: DIRECT | printed Влади-/міровичъ with і
+ITEM musicians_1901-02_SP_p001|e023|instrument | READ: "Віолончель" | CHOICE: B | confidence: DIRECT | В-і-о-л-о-н-ч-е-л-ь with initial В (not Б)
+ITEM musicians_1901-02_SP_p002|e019|family | READ: "Людольфи" | CHOICE: B | confidence: DIRECT | Л-ю-д-о-л-ь-ф-и, ends in и with no hard sign; entry 66 Людольфи, Валентинъ Ивановичъ
+ITEM musicians_1901-02_SP_p003|e011|first | READ: "Ѳедоръ" | CHOICE: B | confidence: DIRECT | Ѳ-е-д-о-р-ъ
+ITEM musicians_1901-02_SP_p003|e013|family | READ: "Теръ-Огановъ" | CHOICE: A | confidence: DIRECT | Т-е-р-ъ - О-г-а-н-о-в-ъ with ъ (not ь)
+ITEM musicians_1901-02_SP_p003|e022|first | READ: "Канутъ-Эмерикъ" | CHOICE: B | confidence: DIRECT | Хейкель, Канутъ-Эмерикъ; hard sign after т
+ITEM musicians_1901-02_SP_p003|e030|patronymic | READ: "Александро-/вичъ" | CHOICE: B | confidence: DIRECT | printed "Александро-" at line end, "вичъ" begins next line (hyphen is a line-break hyphen); B represents the line break
+ITEM musicians_1901-02_SP_p003|e031|family | READ: "Шолларъ" | CHOICE: A | confidence: DIRECT | Ш-о-л-л-а-р-ъ, no т; Шолларъ, Францъ Францевичъ
+ITEM musicians_1901-02_SP_p004|e002|first | READ: "Адольфъ" | CHOICE: A | confidence: DIRECT | Юнкеръ, Адольфъ Карловичъ; д clear
+ITEM musicians_1901-02_SP_p004|e006|family | READ: "Будановъ" | CHOICE: A | confidence: DIRECT | Б-у-д-а-н-о-в-ъ with д having foot serifs, zoomed 7x
+ITEM musicians_1901-02_SP_p004|e021|family | READ: "Келеръ" | CHOICE: B | confidence: DIRECT | К-е-л-е-р-ъ; Келеръ, Альбертъ Федоровичъ
+ITEM musicians_1901-02_SP_p004|e022|family | READ: "Кеммереръ" | CHOICE: B | confidence: DIRECT | К-е-м-м-е-р-е-р-ъ (Кеммереръ), Владиміръ Николаевичъ
+ITEM musicians_1901-02_SP_p005|e025|ordinal | READ: "Кулле 2-й" | CHOICE: A | confidence: DIRECT | 18. Кулле 2-й, Альфредъ Ѳедоровичъ
+ITEM musicians_1902-03_MSK_p000|e008|family | READ: "Брындинъ" | CHOICE: B | confidence: UNCERTAIN | first glyph is a Б (top bar at top, bowl lower, compared to Б of Барминъ) with ink drop-out in the bar and a stray speck at top right; crossbar is at the top, not mid-stem as in Ѣ; Брындинъ, Корнелій Корнеліевичъ
+ITEM musicians_1902-03_MSK_p000|e013|instrument | READ: "2. Адамовъ, Михаилъ (съ 1 сентября 1898 г.). / Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г." | CHOICE: FREEFORM | confidence: DIRECT | no instrument printed; confirms reviewer: stored "Ударные инструменты" not in print here
+ITEM musicians_1902-03_MSK_p000|e016|family | READ: "Аспергеръ" | CHOICE: B | confidence: DIRECT | А-с-п-е-р-г-е-р-ъ; second е has no diaeresis dots (only faint paper show-through smudge above it at 12x, not crisp ink); entry 5 Аспергеръ, Оскаръ
+ITEM musicians_1902-03_MSK_p001|e001|family | READ: "Гедике" | CHOICE: A | confidence: DIRECT | Г-е-д-и-к-е; д has descending foot serif at 12x, not л
+ITEM musicians_1902-03_MSK_p002|e011|family | READ: "Пащеевъ" | CHOICE: B | confidence: DIRECT | П-а-щ-е-е-въ with щ descender tail clear; entry 66 Пащеевъ, Борисъ Ѳедотовичъ
+DONE 29 items

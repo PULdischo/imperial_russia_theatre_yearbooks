@@ -1,0 +1,30 @@
+ITEM musicians_1893-94_SP_p003|e001|instrument | READ: "Вальдгорнъ" | CHOICE: A | confidence: DIRECT | final letter is hard sign ъ; (neighbour e039 also printed Вальдгорнъ)
+ITEM musicians_1893-94_SP_p003|e033|patronymic | READ: "Варѳоломеевичъ" | CHOICE: A | confidence: DIRECT | at 20x the 4th letter has a faint horizontal bar inside the bowl (blurred print, ѳ), unlike the plain 5th о; not е
+ITEM musicians_1893-94_SP_p003|e046|list | READ: "38" | CHOICE: B | confidence: DIRECT | printed "38 Ѳедоровъ" with NO period after the number
+ITEM musicians_1893-94_SP_p004|e009|first | READ: "Гуго" | CHOICE: B | confidence: DIRECT | normal Cyrillic о (no Greek omicron visible; print is just Cyrillic Гуго)
+ITEM musicians_1893-94_SP_p004|e029|family | READ: "Рендеръ" | CHOICE: A | confidence: DIRECT | ends -еръ, no т
+ITEM musicians_1893-94_SP_p004|e030|family | READ: "Рехакъ" | CHOICE: B | confidence: DIRECT | clear к before ъ (not н)
+ITEM musicians_1894-95_MSK_p000|e006|ordinal | READ: "Адольфи 1-й" | CHOICE: A | confidence: DIRECT | bold "Адольфи 1-й"
+ITEM musicians_1894-95_MSK_p000|e007|ordinal | READ: "Адольфи 2-й" | CHOICE: B | confidence: DIRECT | bold "Адольфи 2-й" printed
+ITEM musicians_1894-95_MSK_p000|e019|family | READ: "Васильевъ" | CHOICE: A | confidence: DIRECT | list no. 15, Митрофанъ Тимоѳеевичъ; surname printed with ь-е (Васильевъ)
+ITEM musicians_1894-95_MSK_p001|e017|family | READ: "Зюсъ" | CHOICE: A | confidence: DIRECT | ends in hard sign ъ
+ITEM musicians_1894-95_MSK_p002|e001|instrument | READ: "Віолончель" | CHOICE: A | confidence: DIRECT | initial letter В with і (В-і-о-л...), not Б
+ITEM musicians_1894-95_MSK_p002|e003|family | READ: "Порубинозскій" | CHOICE: FREEFORM | confidence: DIRECT | at 9x the letter after "Порубино" is clearly з (open-left bowls, no stem), then с к і й; stored "Порубиновскій" differs (в vs з) -> genuine print typo/variant; printed form is Порубинозскій
+ITEM musicians_1894-95_MSK_p002|e004|instrument | READ: "Віолончель" | CHOICE: B | confidence: DIRECT | В-і-о-л... not Б
+ITEM musicians_1894-95_MSK_p002|e007|family | READ: "Рессеръ" | CHOICE: A | confidence: DIRECT | ends -еръ
+ITEM musicians_1894-95_MSK_p002|e018|family | READ: "Стрекаловъ" | CHOICE: B | confidence: DIRECT | 20x: 4th-from-start letter after "Стре" is к (stem + open arm), not н
+ITEM musicians_1894-95_MSK_p002|e027|family | READ: "Чіарлоне 1-я" | CHOICE: A | confidence: DIRECT | Ч-і-а-р-л-о-н-е, bold, with і
+ITEM musicians_1894-95_MSK_p002|e028|family | READ: "Чіарлоне 2-я" | CHOICE: B | confidence: DIRECT | Ч-і-а-р-л-о-н-е 2-я
+ITEM musicians_1894-95_MSK_p002|e052|family | READ: "Виттигъ" | CHOICE: A | confidence: DIRECT | double т
+ITEM musicians_1894-95_MSK_p003|e020|patronymic | READ: "Аѳанасьевичъ" | CHOICE: A | confidence: DIRECT | barred ѳ clearly visible at 8x
+ITEM musicians_1894-95_SP_p000|e017|family | READ: "Брайнъ" | CHOICE: B | confidence: DIRECT | ends hard sign ъ, not ь
+ITEM musicians_1894-95_SP_p001|e011|family | READ: "Грибенъ 1-й" | CHOICE: B | confidence: DIRECT | hard sign ъ
+ITEM musicians_1894-95_SP_p001|e012|family | READ: "Грибенъ 2-й" | CHOICE: A | confidence: DIRECT | hard sign ъ
+ITEM musicians_1894-95_SP_p001|e034|family | READ: "Керкешко" | CHOICE: B | confidence: DIRECT | list no. 52 printed "Керкешко"; second к same bold form as the к in -шко
+ITEM musicians_1894-95_SP_p002|e012|family | READ: "Плацатка" | CHOICE: B | confidence: DIRECT | list 77; ends -тка
+ITEM musicians_1894-95_SP_p002|e030|family | READ: "Теръ-Огановъ" | CHOICE: B | confidence: DIRECT | hard sign ъ after Тер
+ITEM musicians_1894-95_SP_p002|e037|family | READ: "Хаакъ" | CHOICE: B | confidence: DIRECT | ends -акъ
+ITEM musicians_1894-95_SP_p002|e048|family | READ: "Шолларъ" | CHOICE: A | confidence: DIRECT | Ш-о-л-л-а-р-ъ at 10x (no я)
+ITEM musicians_1894-95_SP_p002|e050|family | READ: "Штаркъ" | CHOICE: B | confidence: DIRECT | bold к before ъ
+ITEM musicians_1894-95_SP_p002|e051|family | READ: "Штейдль" | CHOICE: B | confidence: DIRECT | д present (Ш-т-е-й-д-л-ь)
+DONE 29 items

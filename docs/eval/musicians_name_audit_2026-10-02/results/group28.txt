@@ -1,0 +1,35 @@
+PAGE SUMMARY
+musicians_1902-03_SP_p003 | entries read: 40 | entries with a discrepancy: 2
+musicians_1902-03_SP_p004 | entries read: 38 | entries with a discrepancy: 1
+musicians_1902-03_SP_p005 | entries read: 36 | entries with a discrepancy: 1
+musicians_1902-03_SP_p006 | entries read: 28 | entries with a discrepancy: 0
+musicians_1903-04_MSK_p000 | entries read: 30 | entries with a discrepancy: 1
+DISCREPANCIES
+musicians_1902-03_SP_p003 | e018 | family | STORED: "Терт-Огановъ" | PRINTED: "Тер?-Огановъ" (4th letter is an odd z/inverted-3-shaped glyph, not a normal т; probably a damaged type for "Тер-Огановъ" / "Терт-") | confidence: UNCERTAIN | PRINT-TYPO? (zoomed 4x)
+musicians_1902-03_SP_p003 | e028 | first | STORED: "Кануть-Эмерикъ" | PRINTED: "Канутъ-Эмерикъ" (hard sign ъ after т) | confidence: DIRECT(zoomed 5x) |
+musicians_1902-03_SP_p004 | e001 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" (hard sign) | confidence: DIRECT(zoomed) | confirms AUTO-FLAG INSTR-VARIANT
+musicians_1902-03_SP_p005 | e003 | family | STORED: "Армсгейммеръ" | PRINTED: "Армсгеймеръ" (single м after й) | confidence: DIRECT(zoomed 4x) |
+musicians_1903-04_MSK_p000 | e008 | family | STORED: "Брындлинъ" | PRINTED: "Брындинъ" (no л) | confidence: DIRECT(zoomed 6x) |
+DATE-CHECK RESULTS
+musicians_1902-03_SP_p003 | e002 | STORED start: "21 октября 1874 г." | PRINTED start: "21 октября 1874 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p003 | e011 | STORED start: "1 сентября 1887 г." | PRINTED start: "1 сентября 1887 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p003 | e029 | STORED start: "1 апрѣля 1855 г." | PRINTED start: "1 апрѣля 1855 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p003 | e036 | STORED start: "1 сентября 1889 г." | PRINTED start: "1 сентября 1889 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p003 | e039 | STORED start: "15 сентября 1897 г." | PRINTED start: "15 сентября 1897 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p004 | e037 | STORED start: "1 сентября 1900 г." | PRINTED start: "1 сентября 1900 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p005 | e008 | STORED start: "1 іюня 1876 г." | PRINTED start: "1 іюня 1876 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p005 | e036 | STORED start: "1 мая 1863 г." | PRINTED start: "1 мая 1863 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p005 | e007 | STORED start: "сентября 1892 г." | PRINTED start: "сентября 1892 г." (no day number printed) | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p006 | e028 | STORED start: "1 сентября 1886 г." | PRINTED start: "1 сентября 1886 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1903-04_MSK_p000 | e029 | STORED start: "1 января 1877 г." | PRINTED start: "1 января 1877 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- p003: e029 Цабель and e031 Чіарлоне carry printed titles "Солистъ / Солистка Двора Его Императорскаго Величества" but rank_or_title is stored "-" (title not captured).
+- p003 e001/e002 and p004 e004, e002/e005/e007, p005 e006, e009 etc. carry printed transfer/"Оставилъ службу" notes (not name-field issues; only noted).
+- p004: patronymic is separate field throughout; no patronymic-inside-first pattern on any of my pages.
+- p004 e008 (Галкинъ) and p005 e001 (Келеръ), p006 e013 (Новоселовъ), MSK e001-e006,e009,e010 are unnumbered kapellmeister/librarian/etc. entries (list "-") as printed; correct.
+- p006 e021 Напихъ: printed list number is "18." (breaks sequence 27,18,29; should be 28) -- stored "18." matches print: PRINT-TYPO?.
+- p005 e027 Герберъ: printed list number looks like "11:" (damaged colon-like mark), stored 11 OK.
+- p005 e035 "Кулле 2-й": ordinal correctly kept in family field.
+- MSK_p000 scan shows heavy show-through ghost text from the reverse side; did not affect any reading.
+- No Latin/non-Cyrillic letters found in any stored family/first/patronymic/instrument on these 5 pages (programmatic check).
+- No stored hyphen/space line-break artifacts found; no missing or duplicated rows found.

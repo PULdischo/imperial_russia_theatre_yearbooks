@@ -1,0 +1,1366 @@
+[
+ {
+  "group": 1,
+  "line": "musicians_1890-91_MSK_p001 | e037 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"19 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 1,
+  "line": "musicians_1890-91_MSK_p001 | e027 | STORED start: \"28 іюля 1862 г.\" | PRINTED start: \"28 іюля 1862 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 1,
+  "line": "musicians_1890-91_MSK_p001 | e033 | STORED start: \"26 сентября 1885 г.\" | PRINTED start: \"26 сентября 1885 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 1,
+  "line": "musicians_1890-91_MSK_p001 | e041 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"19 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 2,
+  "line": "musicians_1890-91_SP_p000 | e011 | STORED start: \"24 ноября 1878 г.\" | PRINTED start: \"24 ноября 1878 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 2,
+  "line": "musicians_1890-91_SP_p000 | e029 | STORED start: \"15 августа 1873 г.\" | PRINTED start: \"15 августа 1873 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 2,
+  "line": "musicians_1890-91_SP_p002 | e030 | STORED start: \"1 сентября 1886 г.\" | PRINTED start: \"1 сентября 1886 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 2,
+  "line": "musicians_1890-91_SP_p003 | e021 | STORED start: \"съ 20 августа 1878 г.\" | PRINTED start: \"съ 20 августа 1878 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 2,
+  "line": "musicians_1890-91_SP_p004 | e016 | STORED start: \"1 октября 1888 г.\" | PRINTED start: \"1 октября 1888 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 2,
+  "line": "musicians_1890-91_SP_p004 | e034 | STORED start: \"1 октября 1888 г.\" | PRINTED start: \"1 октября 1888 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 2,
+  "line": "musicians_1890-91_SP_p004 | e037 | STORED start: \"1 сентября 1888 г.\" | PRINTED start: \"1 сентября 1888 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 2,
+  "line": "musicians_1890-91_SP_p004 | e038 | STORED start: \"15 января 1888 г.\" | PRINTED start: \"15 января 1888 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 2,
+  "line": "musicians_1890-91_SP_p004 | e039 | STORED start: \"15 апрѣля 1886 г.\" | PRINTED start: \"15 апрѣля 1886 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 2,
+  "line": "musicians_1890-91_SP_p004 | e040 | STORED start: \"1 января 1891 г.\" | PRINTED start: \"1 января 1891 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "line": "musicians_1890-91_SP_p005 | e001 | STORED start: \"1 сентября 1888 г.\" | PRINTED start: \"1 сентября 1888 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "line": "musicians_1890-91_SP_p005 | e003 | STORED start: \"1 сентября 1888 г.\" | PRINTED start: \"1 сентября 1888 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "line": "musicians_1890-91_SP_p005 | e016 | STORED start: \"1 сентября 1888 г.\" | PRINTED start: \"1 сентября 1888 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "line": "musicians_1890-91_SP_p005 | e026 | STORED start: \"15 ноября 1888 г.\" | PRINTED start: \"15 ноября 1888 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "line": "musicians_1890-91_SP_p005 | e027 | STORED start: \"1 сентября 1882 г.\" | PRINTED start: \"1 сентября 1882 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "line": "musicians_1890-91_SP_p005 | e029 | STORED start: \"15 августа 1880 г.\" | PRINTED start: \"15 августа 1880 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "line": "musicians_1890-91_SP_p005 | e030 | STORED start: \"1 сентября 1888 г.\" | PRINTED start: \"1 сентябрь 1888 г.\" (month word printed in nominative: \"сентябрь\") | MATCH on day/month/year | DIRECT(zoomed) | PRINT-TYPO?"
+ },
+ {
+  "group": 3,
+  "line": "musicians_1890-91_SP_p006 | e003 | STORED start: \"1 декабря 1879 г.\" | PRINTED start: \"1 декабря 1879 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "line": "musicians_1890-91_SP_p006 | e012 | STORED start: \"15 сентября 1885 г.\" | PRINTED start: \"15 сентября 1885 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "line": "musicians_1890-91_SP_p006 | e013 | STORED start: \"16 августа 1873 г.\" | PRINTED start: \"16 августа 1873 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "line": "musicians_1891-92_MSK_p001 | e022 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"19 сентября 1882 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "line": "musicians_1891-92_MSK_p001 | e011 | STORED start: \"28 іюля 1852 г.\" | PRINTED start: \"28 іюля 18?2 г.\" third digit damaged/ambiguous, reads 5 or 6 (looks more like 1862) | UNCERTAIN (digit) | UNCERTAIN"
+ },
+ {
+  "group": 3,
+  "line": "musicians_1891-92_MSK_p001 | e018 | STORED start: \"26 сентября 1885 г.\" | PRINTED start: \"26 сентября 1885 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 3,
+  "line": "musicians_1891-92_MSK_p001 | e027 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"19 сентября 1882 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "line": "musicians_1891-92_MSK_p003 | e040 | STORED start: \"19 сентября 1881 г.\" | PRINTED start: \"съ 19 сентября 1882 г.\" | DIFFERS (stored year misread; same person Падель, Іоганъ-Фридрихъ) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "line": "musicians_1891-92_SP_p001 | e014 | STORED start: \"съ 15 августа 1873 г.\" | PRINTED start: \"съ 15 августа 1873 г.\" | MATCH (so modal 1/8/1897 in other years is the other entries' issue; printed here is 15 августа 1873) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 4,
+  "line": "musicians_1891-92_SP_p002 | e039 | STORED start: \"1 сентября 1886 г.\" | PRINTED start: \"съ 1 сентября 1886 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "line": "musicians_1891-92_SP_p004 | e001 | STORED start: \"1 октября 1888 г.\" | PRINTED start: \"съ 1 октября 1888 г.\" (line-broken \"октя-/бря\") | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "line": "musicians_1891-92_SP_p005 | e017 | STORED start: \"1 декабря 1879 г.\" | PRINTED start: \"съ 1 декабря 1879 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "line": "musicians_1892-93_MSK_p001 | e021 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"съ 19 сентября 1882 г.\" (list 54 Марквардтъ Августъ, Корнетъ; the Capellmeister Марквардтъ Августъ on p000 is printed \"съ 15 августа 1884 г.\" -- two different people, entry is not a misread) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "line": "musicians_1892-93_MSK_p001 | e018 | STORED start: \"26 сентября 1885 г.\" | PRINTED start: \"съ 26 сентября 1885 г.\" (list 51 Лебедевъ Иванъ Григорьевичъ, Флейта) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 5,
+  "line": "musicians_1892-93_MSK_p001 | e026 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"съ 19 сентября 1882 г.\" (list 59 Павловъ Михаилъ Львовичъ, Альтъ) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "line": "musicians_1892-93_SP_p001 | e001 | STORED start: \"15 августа 1873 г.\" | PRINTED start: \"15 августа 1873 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "line": "musicians_1892-93_SP_p002 | e026 | STORED start: \"1 сентября 1886 г.\" | PRINTED start: \"1 сентября 1886 г.\" (printed \"1 сентя-/бря 1886 г.\") | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 6,
+  "line": "musicians_1892-93_SP_p003 | e048 | STORED start: \"1 октября 1888 г.\" | PRINTED start: \"1 октября 1888 г.\" (printed \"1 ок-/тября 1888 г.\") | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 7,
+  "line": "musicians_1892-93_SP_p005 | e001 | STORED start: \"1 декабря 1879 г.\" | PRINTED start: \"съ 1 декабря 1879 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 7,
+  "line": "musicians_1893-94_MSK_p001 | e050 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"съ 19 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed) | stored date is correct; the \"modal\" 15/8/1884 belongs to the Капельмейстеръ военной музыки Марквардтъ (p000 e005) - a different person (this one is a cornet player)"
+ },
+ {
+  "group": 7,
+  "line": "musicians_1893-94_MSK_p001 | e045 | STORED start: \"26 сентября 1885 г.\" | PRINTED start: \"съ 26 сентября 1885 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 7,
+  "line": "musicians_1893-94_MSK_p002 | e004 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"съ 19 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 7,
+  "line": "musicians_1893-94_MSK_p002 | e032 | STORED start: \"19 сентября 1892 г.\" | PRINTED start: \"съ 19 сентября 1892 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 8,
+  "line": "musicians_1893-94_SP_p000 | e005 | STORED start: \"съ 1 сентября 1886 г.\" | PRINTED start: \"съ 1 сентября 1886 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 8,
+  "line": "musicians_1893-94_SP_p001 | e016 | STORED start: \"15 августа 1873 г.\" | PRINTED start: \"съ 15 августа 1873 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 8,
+  "line": "musicians_1893-94_SP_p002 | e029 | STORED start: \"1 сентября 1877 г.\" | PRINTED start: \"съ 1 сентября 1878 г.\" | DIFFERS | confidence: DIRECT(zoomed) | stored year is a misread; print has 1878"
+ },
+ {
+  "group": 9,
+  "line": "musicians_1893-94_SP_p004 | e017 | STORED start: \"1 декабря 1879 г.\" | PRINTED start: \"1 декабря 1879 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 9,
+  "line": "musicians_1894-95_MSK_p001 | e036 | STORED start: \"26 сентября 1885 г.\" | PRINTED start: \"26 сентября 1885 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 9,
+  "line": "musicians_1894-95_MSK_p001 | e046 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"19 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 9,
+  "line": "musicians_1894-95_MSK_p002 | e026 | STORED start: \"19 сентября 1892 г.\" | PRINTED start: \"19 сентября 1892 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "line": "musicians_1894-95_SP_p000 | e005 | STORED start: \"1 сентября 1886 г.\" | PRINTED start: \"1 сентября 1886 г.\" (Дриго, line-broken \"сен-/тября\") | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "line": "musicians_1894-95_SP_p001 | e012 | STORED start: \"15 августа 1873 г.\" | PRINTED start: \"15 августа 1873 г.\" (Грибенъ 2-й; also \"Оставилъ службу 1 октября 1894 г.\") | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "line": "musicians_1894-95_SP_p004 | e018 | STORED start: \"1 декабря 1879 г.\" | PRINTED start: \"1 декабря 1879 г.\" (Кулле 1-й) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 10,
+  "line": "musicians_1894-95_SP_p004 | e042 | STORED start: \"1 декабря 1894 г.\" | PRINTED start: \"1 декабря 1894 г.\" (Шредеръ) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 11,
+  "line": "musicians_1895-96_MSK_p001 | e041 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"19 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 11,
+  "line": "musicians_1895-96_MSK_p001 | e036 | STORED start: \"26 сентября 1885 г.\" | PRINTED start: \"26 сентября 1885 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 11,
+  "line": "musicians_1895-96_MSK_p001 | e046 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"19 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 11,
+  "line": "musicians_1895-96_MSK_p002 | e030 | STORED start: \"19 сентября 1892 г.\" | PRINTED start: \"19 сентября 1892 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 11,
+  "line": "musicians_1895-96_MSK_p003 | e016 | STORED start: \"26 мая 1868 г.\" | PRINTED start: \"26 мая 1868 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 11,
+  "line": "musicians_1895-96_SP_p000 | e005 | STORED start: \"съ 1 сентября 1886 г.\" | PRINTED start: \"съ 1 сентября 1886 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 12,
+  "line": "musicians_1895-96_SP_p001 | e009 | STORED start: \"съ 1 сентября 1895 г.\" | PRINTED start: \"съ 1 сентября 1895 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 12,
+  "line": "musicians_1895-96_SP_p002 | e039 | STORED start: \"19 сентября 1861 г.\" | PRINTED start: \"съ 19 сентября 1861 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 12,
+  "line": "musicians_1895-96_SP_p002 | e051 | STORED start: \"16 октября 1876 г.\" | PRINTED start: \"съ 16 сентября 1876 г.\" | DIFFERS | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 12,
+  "line": "musicians_1895-96_SP_p003 | e006 | STORED start: \"1 сентября 1895 г.\" | PRINTED start: \"съ 1 сентября 1895 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 12,
+  "line": "musicians_1895-96_SP_p004 | e014 | STORED start: \"1 декабря 1878 г.\" | PRINTED start: \"съ 1 декабря 1878 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 12,
+  "line": "musicians_1895-96_SP_p004 | e037 | STORED start: \"1 декабря 1894 г.\" | PRINTED start: \"съ 1 декабря 1894 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 13,
+  "line": "musicians_1896-97_MSK_p001 | e033 | STORED start: \"26 сентября 1885 г.\" | PRINTED start: \"26 сентября 1885 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 13,
+  "line": "musicians_1896-97_MSK_p001 | e042 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"19 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 13,
+  "line": "musicians_1896-97_MSK_p001 | e001 | STORED start: \"19 сентября 1892 г.\" | PRINTED start: \"19 сентября 1892 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 13,
+  "line": "musicians_1896-97_MSK_p001 | e030 | STORED start: \"1 апрѣля 1897 г.\" | PRINTED start: \"1 апрѣля 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 13,
+  "line": "musicians_1896-97_MSK_p002 | e028 | STORED start: \"19 сентября 1892 г.\" | PRINTED start: \"19 сентября 1892 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 13,
+  "line": "musicians_1896-97_MSK_p003 | e015 | STORED start: \"26 мая 1868 г.\" | PRINTED start: \"26 мая 1868 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 13,
+  "line": "musicians_1896-97_SP_p000 | e004 | STORED start: \"1 сентября 1886 г.\" | PRINTED start: \"1 сентября 1886 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 13,
+  "line": "musicians_1896-97_SP_p001 | e049 | STORED start: \"11 октября 1869 г.\" | PRINTED start: \"11 октября 1869 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 14,
+  "line": "musicians_1896-97_SP_p003 | e028 | STORED start: \"1 сентября 1896 г.\" | PRINTED start: \"съ 1 сентября 1896 г.\" (line break сен-/тября) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 14,
+  "line": "musicians_1896-97_SP_p004 | e013 | STORED start: \"1 декабря 1878 г.\" | PRINTED start: \"съ 1 декабря 1878 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 14,
+  "line": "musicians_1897-98_MSK_p001 | e042 | STORED start: \"10 октября 1878 г.\" | PRINTED start: \"съ 10 октября 1878 г. по 30 декабря 1880 г. и съ 19 сентября 1882 г.\" (two service periods) | MATCH (stored = first period start) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 14,
+  "line": "musicians_1897-98_MSK_p001 | e035 | STORED start: \"10 декабря 1879 г.\" | PRINTED start: \"съ 10 декабря 1879 г. по 20 октября 1880 г. и съ 19 сентября 1882 г.\" (two service periods) | MATCH (stored = first period start) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 14,
+  "line": "musicians_1897-98_MSK_p001 | e031 | STORED start: \"1 апрѣля 1897 г.\" | PRINTED start: \"съ 1 апрѣля 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 15,
+  "line": "musicians_1897-98_MSK_p002 | e044 | STORED start: \"14 апрѣля 1880 г.\" | PRINTED start: \"съ 14 апрѣля 1880 г. по 1 сентября 1882 г. и съ 1 сентября 1883 г.\" | MATCH (stored = first period; modal 1/9/1883 is the second period of the same entry) | DIRECT(zoomed)"
+ },
+ {
+  "group": 15,
+  "line": "musicians_1897-98_MSK_p003 | e001 | STORED start: \"съ 17 января 1887 г.\" | PRINTED start: \"съ 17 января 1887 г.\" (entry also: \"Оставилъ службу 16 ноября 1897 г.\") | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 15,
+  "line": "musicians_1897-98_MSK_p003 | e028 | STORED start: \"съ 1 января 1894 г.\" | PRINTED start: \"съ 1 января 1894 г.\" (entry reads \"онъ же и библіотекарь Музыкальной библіотеки\"; the separate library entry e034 prints \"съ 1 сентября 1882 г.\") | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 15,
+  "line": "musicians_1897-98_SP_p000 | e004 | STORED start: \"съ 1 сентября 1886 г.\" | PRINTED start: \"съ 1 сентября 1886 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 15,
+  "line": "musicians_1897-98_SP_p001 | e013 | STORED start: \"съ 1 сентября 1897 г.\" | PRINTED start: \"съ 1 сентября 1897 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 15,
+  "line": "musicians_1897-98_SP_p001 | e043 | STORED start: \"съ 11 октября 1869 г.\" | PRINTED start: \"съ 11 октября 1869 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 16,
+  "line": "musicians_1897-98_SP_p004 | e008 | STORED start: \"1 декабря 1878 г.\" | PRINTED start: \"съ 1 декабря 1878 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 16,
+  "line": "musicians_1897-98_SP_p004 | e034 | STORED start: \"15 сентября 1897 г.\" | PRINTED start: \"съ 15 сентября 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 16,
+  "line": "musicians_1898-99_MSK_p001 | e035 | STORED start: \"съ 10 октября 1878 г.\" | PRINTED start: \"съ 10 октября 1878 г. по 30 декабря 1880 г. и (съ 19 сентября 1882 г.)\" -- two service periods | MATCH (first period start; the other entries' 19/9/1882 is the second period) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 16,
+  "line": "musicians_1898-99_MSK_p001 | e027 | STORED start: \"съ 10 декабря 1879 г.\" | PRINTED start: \"съ 10 декабря 1879 г. по 20 октября 1880 г. и съ 19 сентября 1882 г.\" -- two service periods | MATCH (first period; modal 19/9/1882 = second period) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 16,
+  "line": "musicians_1898-99_MSK_p001 | e023 | STORED start: \"съ 1 апрѣля 1897 г.\" | PRINTED start: \"съ 1 апрѣля 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 16,
+  "line": "musicians_1898-99_MSK_p002 | e039 | STORED start: \"1 октября 1897 г.\" | PRINTED start: \"съ 1 октября 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 17,
+  "line": "musicians_1898-99_MSK_p003 | e011 | STORED start: \"14 апрѣля 1880 г.\" | PRINTED start: \"съ 14 апрѣля 1880 г. по 1 сентября 1882 г. и съ 1 сентября 1883 г.\" | MATCH (two tenure periods printed; stored value is the first start, modal 1/9/1883 is the second) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 17,
+  "line": "musicians_1898-99_MSK_p003 | e039 | STORED start: \"апрѣля 1897 г.\" | PRINTED start: \"съ апрѣля 1897 г.\" (no day printed) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 17,
+  "line": "musicians_1898-99_MSK_p003 | e036 | STORED start: \"22 сентября 1898 г.\" | PRINTED start: \"съ 22 сентября 1898 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 17,
+  "line": "musicians_1898-99_MSK_p004 | e001 | STORED start: \"23 сентября 1898 г.\" | PRINTED start: \"съ 23 сентября 1898 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 17,
+  "line": "musicians_1898-99_MSK_p004 | e010 | STORED start: \"1 января 1894 г.\" | PRINTED start: \"съ 1 января 1894 г.\" (entry also says \"онъ же и библіотекарь Музыкальной библіотеки\"); library-section entry e016 prints \"съ 1 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 17,
+  "line": "musicians_1898-99_SP_p001 | e033 | STORED start: \"1 сентября 1897 г.\" | PRINTED start: \"съ 1 сентября 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 17,
+  "line": "musicians_1898-99_SP_p002 | e030 | STORED start: \"11 октября 1869 г.\" | PRINTED start: \"съ 11 октября 1869 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 18,
+  "line": "musicians_1898-99_SP_p006 | e005 | STORED start: \"1 декабря 1878 г.\" | PRINTED start: \"1 декабря 1878 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 18,
+  "line": "musicians_1898-99_SP_p006 | e029 | STORED start: \"15 сентября 1897 г.\" | PRINTED start: \"15 сентября 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 19,
+  "line": "musicians_1899-00_MSK_p001 | e040 | STORED start: \"10 декабря 1879 г.\" | PRINTED start: \"съ 10 декабря 1879 г. по 20 октября 1880 г. и съ 19 сентября 1882 г.\" | MATCH (first of two stints; modal 19/9/1882 is the second stint, same person) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 19,
+  "line": "musicians_1899-00_MSK_p001 | e036 | STORED start: \"1 апрѣля 1897 г.\" | PRINTED start: \"съ 1 апрѣля 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 19,
+  "line": "musicians_1899-00_MSK_p002 | e008 | STORED start: \"съ 10 октября 1878 г.\" | PRINTED start: \"съ 10 октября 1878 г. по 30 декабря 1880 и (съ 19 сентября 1882 г.)\" | MATCH (two stints; modal TIE = the two stints) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 19,
+  "line": "musicians_1899-00_MSK_p002 | e001 | STORED start: \"съ сентября 1891 г.\" | PRINTED start: \"съ 1 сентября 1891 г.\" | DIFFERS (stored omits the day \"1\") | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 19,
+  "line": "musicians_1899-00_MSK_p003 | e024 | STORED start: \"съ 14 апрѣля 1880 г.\" | PRINTED start: \"съ 14 апрѣля 1880 г. по 1 сентября 1882 г. и съ 1 сентября 1883 г.\" | MATCH (first of two stints; modal 1/9/1883 = second stint) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 19,
+  "line": "musicians_1899-00_MSK_p003 | e012 | STORED start: \"съ 1 октября 1897 г.\" | PRINTED start: \"съ 1 октября 1897 г.\" | MATCH (modal 16/10/1897 belongs to another entry) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 19,
+  "line": "musicians_1899-00_MSK_p004 | e006 | STORED start: \"10 сентября 1882 г.\" | PRINTED start: \"съ 10 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 19,
+  "line": "musicians_1899-00_MSK_p004 | e016 | STORED start: \"23 сентября 1898 г.\" | PRINTED start: \"съ 23 сентября 1898 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 19,
+  "line": "musicians_1899-00_MSK_p004 | e025 | STORED start: \"1 января 1894 г.\" | PRINTED start: \"съ 1 января 1894 г.\" (entry 29 Фарскій, also \"онъ же и библіотекарь Музыкальной библіотеки\") | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 19,
+  "line": "musicians_1899-00_MSK_p004 | e012 | STORED start: \"22 сентября 1898 г.\" | PRINTED start: \"съ 22 сентября 1898 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 19,
+  "line": "musicians_1899-00_SP_p000 | e009 | STORED start: \"1 октября 1889 г.\" | PRINTED start: \"съ 1 октября 1889 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 19,
+  "line": "musicians_1899-00_SP_p000 | e013 | STORED start: \"1 сентября 1882 г.\" | PRINTED start: \"съ 1 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p001 | e006 | STORED start: \"28 мая 1857 г.\" | PRINTED start: \"28 мая 1857 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p001 | e021 | STORED start: \"1 марта 1877 г.\" | PRINTED start: \"1 марта 1877 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p001 | e015 | STORED start: \"1 октября 1885 г.\" | PRINTED start: \"1 октября 1885 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p001 | e022 | STORED start: \"1 сентября 1879 г.\" | PRINTED start: \"1 сентября 1897 г.\" | DIFFERS | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p001 | e009 | STORED start: \"1 сентября 1899 г.\" | PRINTED start: \"1 сентября 1899 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p002 | e008 | STORED start: \"20 сентября 1880 г.\" | PRINTED start: \"20 сентября 1880 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p002 | e031 | STORED start: \"21 октября 1874 г.\" | PRINTED start: \"21 октября 1874 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p002 | e041 | STORED start: \"1 сентября 1887 г.\" | PRINTED start: \"1 сентября 1887 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p002 | e017 | STORED start: \"11 октября 1869 г.\" | PRINTED start: \"11 октября 1869 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p003 | e020 | STORED start: \"1 апрѣля 1855 г.\" | PRINTED start: \"1 апрѣля 1855 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p003 | e028 | STORED start: \"1 сентября 1889 г.\" | PRINTED start: \"1 сентября 1889 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p004 | e035 | STORED start: \"1 іюня 1876 г.\" | PRINTED start: \"1 іюня 1876 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p004 | e026 | STORED start: \"1 сентября 1889 г.\" | PRINTED start: \"1 сентября 1889 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p005 | e031 | STORED start: \"1 сентября 1882 г.\" | PRINTED start: \"[day glyph damaged, reads ':'] сентября 1882 г.\" | MATCH (month/year; day UNCERTAIN) | UNCERTAIN"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p005 | e017 | STORED start: \"1 декабря 1878 г.\" | PRINTED start: \"1 декабря 1878 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p005 | e019 | STORED start: \"1 мая 1863 г.\" | PRINTED start: \"1 мая 1863 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 20,
+  "line": "musicians_1899-00_SP_p005 | e014 | STORED start: \"1 сентября 1883 г.\" | PRINTED start: \"1 сентября 1883 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 21,
+  "line": "musicians_1899-00_SP_p006 | e003 | STORED start: \"1 сентября 1886 г.\" | PRINTED start: \"1 сентября 1886 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 21,
+  "line": "musicians_1899-00_SP_p006 | e013 | STORED start: \"15 сентября 1897 г.\" | PRINTED start: \"15 сентября 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 21,
+  "line": "musicians_1900-01_MSK_p002 | e023 | STORED start: \"10 октября 1878 г.\" | PRINTED start: \"10 октября 1878 г.\" (first interval; printed \"съ 10 октября 1878 г. по 30 декабря 1880 г. и съ 19 сентября 1882 г.\") | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 21,
+  "line": "musicians_1900-01_MSK_p002 | e012 | STORED start: \"1 апрѣля 1897 г.\" | PRINTED start: \"1 апрѣля 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 21,
+  "line": "musicians_1900-01_MSK_p003 | e038 | STORED start: \"съ 14 апрѣля 1880 г.\" | PRINTED start: \"14 апрѣля 1880 г.\" (first interval; printed \"съ 14 апрѣля 1880 г. по 1 сентября 1882 г. и съ 1 сентября 1883 г.\") | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 21,
+  "line": "musicians_1900-01_MSK_p003 | e015 | STORED start: \"съ 15 сентября 1891 г.\" | PRINTED start: \"15 сентября 1891 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 21,
+  "line": "musicians_1900-01_MSK_p003 | e017 | STORED start: \"съ 1 января 1898 г.\" | PRINTED start: \"1 января 1898 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 22,
+  "line": "musicians_1900-01_MSK_p004 | e026 | STORED start: \"23 сентября 1898 г.\" | PRINTED start: \"23 сентября 1898 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 22,
+  "line": "musicians_1900-01_MSK_p004 | e035 | STORED start: \"1 января 1894 г.\" | PRINTED start: \"1 января 1894 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 22,
+  "line": "musicians_1900-01_SP_p000 | e011 | STORED start: \"1 октября 1889 г.\" | PRINTED start: \"1 октября 1889 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 22,
+  "line": "musicians_1900-01_SP_p000 | e017 | STORED start: \"1 сентября 1882 г.\" | PRINTED start: \"1 сентября 1882 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 22,
+  "line": "musicians_1900-01_SP_p001 | e014 | STORED start: \"28 мая 1857 г.\" | PRINTED start: \"28 мая 1857 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 22,
+  "line": "musicians_1900-01_SP_p001 | e031 | STORED start: \"1 марта 1877 г.\" | PRINTED start: \"1 марта 1877 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 22,
+  "line": "musicians_1900-01_SP_p001 | e024 | STORED start: \"1 октября 1885 г.\" | PRINTED start: \"1 октября 1885 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 22,
+  "line": "musicians_1900-01_SP_p001 | e032 | STORED start: \"1 сентября 1897 г.\" | PRINTED start: \"1 сентября 1897 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 22,
+  "line": "musicians_1900-01_SP_p001 | e017 | STORED start: \"1 сентября 1899 г.\" | PRINTED start: \"1 сентября 1899 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 22,
+  "line": "musicians_1900-01_SP_p002 | e021 | STORED start: \"20 сентября 1880 г.\" | PRINTED start: \"20 сентября 1880 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 22,
+  "line": "musicians_1900-01_SP_p002 | e033 | STORED start: \"11 октября 1869 г.\" | PRINTED start: \"11 октября 1869 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 23,
+  "line": "musicians_1900-01_SP_p003 | e008 | STORED start: \"21 октября 1874 г.\" | PRINTED start: \"21 октября 1874 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 23,
+  "line": "musicians_1900-01_SP_p003 | e019 | STORED start: \"1 сентября 1887 г.\" | PRINTED start: \"1 сентября 1887 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 23,
+  "line": "musicians_1900-01_SP_p003 | e038 | STORED start: \"1 апрѣля 1855 г.\" | PRINTED start: \"1 апрѣля 1855 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 23,
+  "line": "musicians_1900-01_SP_p004 | e006 | STORED start: \"съ 1 сентября 1889 г.\" | PRINTED start: \"1 сентября 1889 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 23,
+  "line": "musicians_1900-01_SP_p004 | e009 | STORED start: \"съ 15 сентября 1897 г.\" | PRINTED start: \"15 сентября 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 23,
+  "line": "musicians_1900-01_SP_p005 | e013 | STORED start: \"1 іюня 1876 г.\" | PRINTED start: \"1 іюня 1876 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 23,
+  "line": "musicians_1900-01_SP_p005 | e026 | STORED start: \"1 сентября 1882 г.\" | PRINTED start: \"1 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 23,
+  "line": "musicians_1900-01_SP_p005 | e003 | STORED start: \"1 сентября 1889 г.\" | PRINTED start: \"1 сентября 1889 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 23,
+  "line": "musicians_1900-01_SP_p005 | e007 | STORED start: \"1 сентября 1900 г.\" | PRINTED start: \"1 сентября 1900 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 23,
+  "line": "musicians_1900-01_SP_p006 | e009 | STORED start: \"1 мая 1863 г.\" | PRINTED start: \"1 мая 1863 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 23,
+  "line": "musicians_1900-01_SP_p006 | e023 | STORED start: \"1 сентября 1886 г.\" | PRINTED start: \"1 сентября 1886 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 23,
+  "line": "musicians_1900-01_SP_p006 | e005 | STORED start: \"1 сентября 1883 г.\" | PRINTED start: \"1 сентября 1883 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 23,
+  "line": "musicians_1900-01_SP_p006 | e034 | STORED start: \"15 сентября 1897 г.\" | PRINTED start: \"15 сентября 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 24,
+  "line": "musicians_1901-02_MSK_p002 | e028 | STORED start: \"съ 10 октября 1878 г.\" | PRINTED start: \"съ 10 октября 1878 г. по 30 декабря 1880 г. и съ 19 сентября 1882 г.\" | MATCH (first of two tenure periods; stored takes first) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 24,
+  "line": "musicians_1901-02_MSK_p002 | e016 | STORED start: \"съ 1 апрѣля 1897 г.)\" | PRINTED start: \"съ 1 апрѣля 1897 г.\" | MATCH (stored has a stray closing paren) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 24,
+  "line": "musicians_1901-02_MSK_p003 | e040 | STORED start: \"14 апрѣля 1880 г.\" | PRINTED start: \"съ 14 апрѣля 1880 г. по 1 сентября 1882 г. и съ 1 сентября 1883 г.\" | MATCH (first of two tenure periods; the later 1883 start is the modal) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 24,
+  "line": "musicians_1901-02_MSK_p004 | e026 | STORED start: \"съ 23 сентября 1898 г.\" | PRINTED start: \"съ 23 сентября 1898 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 24,
+  "line": "musicians_1901-02_MSK_p004 | e034 | STORED start: \"съ 1 января 1894 г.\" | PRINTED start: \"съ 1 января 1894 г.\" | MATCH (the modal 1/9/1882 is the separate p005 Музыкальная библіотека entry \"съ 1 сентября 1882 г.\"; as orchestra alto the start is genuinely 1894) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p000 | e011 | STORED start: \"1 октября 1889 г.\" | PRINTED start: \"1 октября 1889 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p001 | e001 | STORED start: \"1 сентября 1882 г.\" | PRINTED start: \"1 сентября 1882 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p001 | e016 | STORED start: \"28 мая 1857 г.\" | PRINTED start: \"28 мая 1857 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p001 | e032 | STORED start: \"1 марта 1877 г.\" | PRINTED start: \"1 марта 1877 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p001 | e025 | STORED start: \"1 октября 1885 г.\" | PRINTED start: \"1 октября 1885 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p001 | e033 | STORED start: \"1 сентября 1897 г.\" | PRINTED start: \"1 сентября 1897 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p001 | e019 | STORED start: \"1 сентября 1896 г.\" | PRINTED start: \"1 сентября 1896 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p002 | e027 | STORED start: \"1 августа 1877 г.\" | PRINTED start: \"1 октября 1877 г.\" | DIFFERS | DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p002 | e038 | STORED start: \"21 октября 1874 г.\" | PRINTED start: \"21 октября 1874 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p003 | e006 | STORED start: \"1 сентября 1887 г.\" | PRINTED start: \"1 сентября 1887 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p003 | e024 | STORED start: \"1 апрѣля 1855 г.\" | PRINTED start: \"1 апрѣля 1855 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p003 | e031 | STORED start: \"1 сентября 1889 г.\" | PRINTED start: \"1 сентября 1889 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p003 | e034 | STORED start: \"15 сентября 1897 г.\" | PRINTED start: \"15 сентября 1897 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p004 | e037 | STORED start: \"1 іюня 1876 г.\" | PRINTED start: \"1 іюня 1876 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 25,
+  "line": "musicians_1901-02_SP_p004 | e032 | STORED start: \"1 сентября 1900 г.\" | PRINTED start: \"1 сентября 1900 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 26,
+  "line": "musicians_1901-02_SP_p005 | e006 | STORED start: \"1 августа 1880 г.\" | PRINTED start: \"15 августа 1880 г.\" | DIFFERS | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 26,
+  "line": "musicians_1901-02_SP_p005 | e012 | STORED start: \"1 сентября 1882 г.\" | PRINTED start: \"1 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 26,
+  "line": "musicians_1901-02_SP_p005 | e026 | STORED start: \"1 мая 1863 г.\" | PRINTED start: \"1 мая 1863 г.\" | MATCH | confidence: DIRECT(zoomed) (last digit clearly 3; not 1868)"
+ },
+ {
+  "group": 26,
+  "line": "musicians_1901-02_SP_p006 | e004 | STORED start: \"1 сентября 1886 г.\" | PRINTED start: \"1 сентября 1886 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 26,
+  "line": "musicians_1902-03_MSK_p001 | e032 | STORED start: \"10 сентября 1882 г.\" | PRINTED start: \"10 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 26,
+  "line": "musicians_1902-03_MSK_p002 | e010 | STORED start: \"10 октября 1878 г.\" | PRINTED start: \"10 октября 1878 г. по 30 декабря 1880 г. и съ 19 сентября 1882 г.\" (first period starts 10 октября 1878) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 27,
+  "line": "musicians_1902-03_MSK_p003 | e027 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"19 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 27,
+  "line": "musicians_1902-03_MSK_p003 | e031 | STORED start: \"14 апрѣля 1880 г.\" | PRINTED start: \"съ 14 апрѣля 1880 г. по 1 сентября 1882 г. и съ 1 сентября 1883 г.\" (two tenure periods; first start 14 апрѣля 1880) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 27,
+  "line": "musicians_1902-03_MSK_p004 | e013 | STORED start: \"съ 23 сентября 1898 г.\" | PRINTED start: \"съ 23 сентября 1898 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 27,
+  "line": "musicians_1902-03_MSK_p004 | e021 | STORED start: \"съ 1 января 1894 г.\" | PRINTED start: \"съ 1 января 1894 г.\" (orchestra entry); separate librarian entry e025 prints \"съ 1 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 27,
+  "line": "musicians_1902-03_SP_p000 | e008 | STORED start: \"1 февраля 1902 г.\" | PRINTED start: \"съ 1 февраля 1902 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 27,
+  "line": "musicians_1902-03_SP_p000 | e011 | STORED start: \"1 октября 1889 г.\" | PRINTED start: \"съ 1 октября 1889 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 27,
+  "line": "musicians_1902-03_SP_p000 | e018 | STORED start: \"1 сентября 1882 г.\" | PRINTED start: \"съ 1 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 27,
+  "line": "musicians_1902-03_SP_p001 | e013 | STORED start: \"28 мая 1857 г.\" | PRINTED start: \"съ 28 мая 1857 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 27,
+  "line": "musicians_1902-03_SP_p001 | e030 | STORED start: \"1 марта 1877 г.\" | PRINTED start: \"съ 1 марта 1877 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 27,
+  "line": "musicians_1902-03_SP_p001 | e022 | STORED start: \"1 октября 1885 г.\" | PRINTED start: \"съ 1 октября 1885 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 27,
+  "line": "musicians_1902-03_SP_p001 | e031 | STORED start: \"1 сентября 1897 г.\" | PRINTED start: \"съ 1 сентября 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 27,
+  "line": "musicians_1902-03_SP_p001 | e016 | STORED start: \"1 сентября 1896 г.\" | PRINTED start: \"съ 1 сентября 1896 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 28,
+  "line": "musicians_1902-03_SP_p003 | e002 | STORED start: \"21 октября 1874 г.\" | PRINTED start: \"21 октября 1874 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 28,
+  "line": "musicians_1902-03_SP_p003 | e011 | STORED start: \"1 сентября 1887 г.\" | PRINTED start: \"1 сентября 1887 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 28,
+  "line": "musicians_1902-03_SP_p003 | e029 | STORED start: \"1 апрѣля 1855 г.\" | PRINTED start: \"1 апрѣля 1855 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 28,
+  "line": "musicians_1902-03_SP_p003 | e036 | STORED start: \"1 сентября 1889 г.\" | PRINTED start: \"1 сентября 1889 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 28,
+  "line": "musicians_1902-03_SP_p003 | e039 | STORED start: \"15 сентября 1897 г.\" | PRINTED start: \"15 сентября 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 28,
+  "line": "musicians_1902-03_SP_p004 | e037 | STORED start: \"1 сентября 1900 г.\" | PRINTED start: \"1 сентября 1900 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 28,
+  "line": "musicians_1902-03_SP_p005 | e008 | STORED start: \"1 іюня 1876 г.\" | PRINTED start: \"1 іюня 1876 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 28,
+  "line": "musicians_1902-03_SP_p005 | e036 | STORED start: \"1 мая 1863 г.\" | PRINTED start: \"1 мая 1863 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 28,
+  "line": "musicians_1902-03_SP_p005 | e007 | STORED start: \"сентября 1892 г.\" | PRINTED start: \"сентября 1892 г.\" (no day number printed) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 28,
+  "line": "musicians_1902-03_SP_p006 | e028 | STORED start: \"1 сентября 1886 г.\" | PRINTED start: \"1 сентября 1886 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 28,
+  "line": "musicians_1903-04_MSK_p000 | e029 | STORED start: \"1 января 1877 г.\" | PRINTED start: \"1 января 1877 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 29,
+  "line": "musicians_1903-04_MSK_p001 | e031 | STORED start: \"съ 10 сентября 1882 г.\" | PRINTED start: \"съ 10 сентября 1882 г.\" | MATCH | DIRECT(zoomed) (modal 22/11/1882 belongs to other entries; this entry genuinely prints 10 Sept)"
+ },
+ {
+  "group": 29,
+  "line": "musicians_1903-04_MSK_p002 | e007 | STORED start: \"съ 10 октября 1878 г.\" | PRINTED start: \"съ 10 октября 1878 г. по 30 декабря 1880 г. и съ 19 сентября 1882 г.\" | MATCH (first interval start; entry has two service periods) | DIRECT(zoomed)"
+ },
+ {
+  "group": 29,
+  "line": "musicians_1903-04_MSK_p003 | e001 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"съ 19 сентября 1882 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 29,
+  "line": "musicians_1903-04_MSK_p003 | e039 | STORED start: \"16 августа 1904 г.\" | PRINTED start: \"съ 16 августа 1904 г.\" | MATCH | DIRECT(zoomed) (print date is later than the 1903-04 season, as printed)"
+ },
+ {
+  "group": 29,
+  "line": "musicians_1903-04_MSK_p004 | e009 | STORED start: \"23 сентября 1898 г.\" | PRINTED start: \"съ 23 сентября 1898 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 29,
+  "line": "musicians_1903-04_SP_p000 | e008 | STORED start: \"1 февраля 1902 г.\" | PRINTED start: \"съ 1 февраля 1902 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 29,
+  "line": "musicians_1903-04_SP_p000 | e002 | STORED start: \"28 ноября 1863 г.\" | PRINTED start: \"съ 28 ноября 1863 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 29,
+  "line": "musicians_1903-04_SP_p000 | e011 | STORED start: \"1 октября 1889 г.\" | PRINTED start: \"съ 1 октября 1889 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 30,
+  "line": "musicians_1903-04_SP_p001 | e001 | STORED start: \"28 мая 1857 г.\" | PRINTED start: \"28 мая 1857 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 30,
+  "line": "musicians_1903-04_SP_p001 | e017 | STORED start: \"1 марта 1877 г.\" | PRINTED start: \"1 марта 1877 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 30,
+  "line": "musicians_1903-04_SP_p001 | e009 | STORED start: \"1 октября 1885 г.\" | PRINTED start: \"1 октября 1885 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 30,
+  "line": "musicians_1903-04_SP_p001 | e019 | STORED start: \"1 марта 1896 г.\" | PRINTED start: \"1 марта 1896 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 30,
+  "line": "musicians_1903-04_SP_p002 | e037 | STORED start: \"1 сентября 1887 г.\" | PRINTED start: \"1 сентября 1887 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 30,
+  "line": "musicians_1903-04_SP_p003 | e017 | STORED start: \"1 апрѣля 1855 г.\" | PRINTED start: \"1 апрѣля 1855 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 30,
+  "line": "musicians_1903-04_SP_p003 | e024 | STORED start: \"1 сентября 1889 г.\" | PRINTED start: \"1 сентября 1889 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 30,
+  "line": "musicians_1903-04_SP_p003 | e037 | STORED start: \"1 сентября 1895 г.\" | PRINTED start: \"1 сентября 1895 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 30,
+  "line": "musicians_1903-04_SP_p003 | e027 | STORED start: \"1 августа 1895 г.\" | PRINTED start: \"1 августа 1895 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 30,
+  "line": "musicians_1903-04_SP_p004 | e032 | STORED start: \"1 іюня 1876 г.\" | PRINTED start: \"1 іюня 1876 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 30,
+  "line": "musicians_1903-04_SP_p004 | e036 | STORED start: \"1 октября 1893 г.\" | PRINTED start: \"1 октября 1893 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 30,
+  "line": "musicians_1903-04_SP_p005 | e022 | STORED start: \"1 мая 1863 г.\" | PRINTED start: \"1 мая 1863 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 30,
+  "line": "musicians_1903-04_SP_p005 | e037 | STORED start: \"1 сентября 1886 г.\" | PRINTED start: \"1 сентября 1886 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 31,
+  "line": "musicians_1904-05_MSK_p000 | e010 | STORED start: \"1 сентября 1869 г.\" | PRINTED start: \"съ 1 сентября 1869 г.\" (3rd digit partly smudged but reads 6) | MATCH | confidence: DIRECT(zoomed), 3rd digit slightly smudged; printed day is 1 not 16/12"
+ },
+ {
+  "group": 31,
+  "line": "musicians_1904-05_MSK_p000 | e025 | STORED start: \"1 октября 1904 г.\" | PRINTED start: \"съ 1 октября 1904 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 31,
+  "line": "musicians_1904-05_MSK_p001 | e002 | STORED start: \"съ 1 января 1877 г.\" | PRINTED start: \"съ 1 января 1877 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 31,
+  "line": "musicians_1904-05_MSK_p001 | e033 | STORED start: \"съ 10 сентября 1882 г.\" | PRINTED start: \"съ 10 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 31,
+  "line": "musicians_1904-05_MSK_p002 | e006 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"съ 19 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 31,
+  "line": "musicians_1904-05_MSK_p002 | e011 | STORED start: \"10 октября 1878 г.\" | PRINTED start: \"съ 10 октября 1878 г. по 30 декабря 1880 г. и съ 19 сентября 1882 г.\" | MATCH (first of two tenure periods) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 31,
+  "line": "musicians_1904-05_MSK_p003 | e026 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"съ 19 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_MSK_p004 | e011 | STORED start: \"съ 23 сентября 1898 г.\" | PRINTED start: \"съ 23 сентября 1898 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_MSK_p004 | e019 | STORED start: \"съ 26 августа 1904 г.\" | PRINTED start: \"съ 26 августа 1904 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_MSK_p004 | e023 | STORED start: \"съ 16 декабря 1904 г.\" | PRINTED start: \"съ 16 декабря 1904 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_MSK_p004 | e024 | STORED start: \"съ 1 сентября 1882 г.\" | PRINTED start: \"съ 1 сентября 1882 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_SP_p000 | e008 | STORED start: \"1 февраля 1902 г.\" | PRINTED start: \"съ 1 февраля 1902 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_SP_p000 | e002 | STORED start: \"28 ноября 1863 г.\" | PRINTED start: \"съ 28 ноября 1863 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_SP_p001 | e006 | STORED start: \"28 мая 1857 г.\" | PRINTED start: \"съ 28 мая 1857 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_SP_p001 | e023 | STORED start: \"1 марта 1877 г.\" | PRINTED start: \"съ 1 марта 1877 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_SP_p001 | e015 | STORED start: \"1 октября 1885 г.\" | PRINTED start: \"съ 1 октября 1885 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_SP_p001 | e025 | STORED start: \"1 марта 1896 г.\" | PRINTED start: \"съ 1 марта 1896 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_SP_p002 | e011 | STORED start: \"2 октября 1898 г.\" | PRINTED start: \"съ : октября 1898 г.\" (day glyph is a colon-like smudge, probably a damaged \"1\"; clearly not \"2\") | DIFFERS | UNCERTAIN"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_SP_p002 | e013 | STORED start: \"1 сентября 1894 г.\" | PRINTED start: \"съ 1 сентября 1894 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_SP_p003 | e002 | STORED start: \"1 сентября 1887 г.\" | PRINTED start: \"съ 1 сентября 1887 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_SP_p003 | e031 | STORED start: \"1 августа 1895 г.\" | PRINTED start: \"съ 1 августа 1895 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 32,
+  "line": "musicians_1904-05_SP_p003 | e015 | STORED start: \"1 октября 1903 г.\" | PRINTED start: \"съ 1 октября 1903 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "line": "musicians_1904-05_SP_p004 | e034 | STORED start: \"1 іюня 1876 г.\" | PRINTED start: \"съ 1 іюня 1876 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "line": "musicians_1904-05_SP_p004 | e037 | STORED start: \"1 октября 1893 г.\" | PRINTED start: \"съ 1 октября 1893 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "line": "musicians_1904-05_SP_p004 | e005 | STORED start: \"1 сентября 1895 г.\" | PRINTED start: \"съ 1 сентября 1895 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "line": "musicians_1904-05_SP_p005 | e035 | STORED start: \"съ 1 сентября 1886 г.\" | PRINTED start: \"съ 1 сентября 1886 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 33,
+  "line": "musicians_1905-06_MSK_p001 | e028 | STORED start: \"съ 1 января 1877 г.\" | PRINTED start: \"съ 1 января 1877 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 34,
+  "line": "musicians_1905-06_MSK_p002 | e039 | STORED start: \"10 октября 1878 г.\" | PRINTED start: \"10 октября 1878 по 30 декабря 1880 г. и съ 19 сентября 1882 г.\" | MATCH (first stint start; two stints printed) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 34,
+  "line": "musicians_1905-06_MSK_p002 | e024 | STORED start: \"10 сентября 1882 г.\" | PRINTED start: \"съ 10 сентября 1882 г.\" (line break сен-/тября) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 34,
+  "line": "musicians_1905-06_MSK_p002 | e035 | STORED start: \"1 іюня 1897 г.\" | PRINTED start: \"съ 1 іюня 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 34,
+  "line": "musicians_1905-06_MSK_p004 | e012 | STORED start: \"съ 19 сентября 1882 г.\" | PRINTED start: \"съ 19 сентября 1882 г.\" (list 120, line break сентя-/бря) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 34,
+  "line": "musicians_1905-06_MSK_p004 | e013 | STORED start: \"съ 10 сентября 1882 г.\" | PRINTED start: \"съ 10 сентября 1882 г.\" (list 121) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 34,
+  "line": "musicians_1905-06_MSK_p004 | e034 | STORED start: \"съ 23 сентября 1898 г.\" | PRINTED start: \"съ 23 сентября 1898 г.\" (list 11) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 34,
+  "line": "musicians_1905-06_MSK_p004 | e010 | STORED start: \"съ 16 августа 1901 г.\" | PRINTED start: \"съ 16 августа 190? г.\" last digit is a damaged glyph: only a vertical stem that descends below the baseline (ordinary 1s sit on the baseline), so it is probably a broken 4, i.e. 1904 | DIFFERS (probably) | confidence: UNCERTAIN"
+ },
+ {
+  "group": 34,
+  "line": "musicians_1905-06_MSK_p005 | e008 | STORED start: \"1 марта 1905 г.\" | PRINTED start: \"съ 1 марта 1905 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 34,
+  "line": "musicians_1905-06_SP_p000 | e002 | STORED start: \"съ 28 ноября 1863 г.\" | PRINTED start: \"съ 28 ноября 1863 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 35,
+  "line": "musicians_1905-06_SP_p001 | e004 | STORED start: \"1 февраля 1902 г.\" | PRINTED start: \"1 февраля 1902 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 35,
+  "line": "musicians_1905-06_SP_p001 | e029 | STORED start: \"28 мая 1857 г.\" | PRINTED start: \"28 мая 1857 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 35,
+  "line": "musicians_1905-06_SP_p001 | e038 | STORED start: \"1 октября 1885 г.\" | PRINTED start: \"1 октября 1885 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 35,
+  "line": "musicians_1905-06_SP_p002 | e008 | STORED start: \"1 марта 1877 г.\" | PRINTED start: \"1 марта 1877 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 35,
+  "line": "musicians_1905-06_SP_p002 | e010 | STORED start: \"1 марта 1896 г.\" | PRINTED start: \"1 марта 1896 г.\" | MATCH | confidence: DIRECT(zoomed) (leading \"1\" sits at the line start, clear)"
+ },
+ {
+  "group": 35,
+  "line": "musicians_1905-06_SP_p002 | e035 | STORED start: \"1 сентября 1894 г.\" | PRINTED start: \"1 сентября 1894 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 35,
+  "line": "musicians_1905-06_SP_p003 | e022 | STORED start: \"1 сентября 1887 г.\" | PRINTED start: \"1 сентября 1887 г.\" | MATCH | confidence: DIRECT(zoomed) (first \"1\" of 1887 slightly smudged but legible)"
+ },
+ {
+  "group": 35,
+  "line": "musicians_1905-06_SP_p003 | e035 | STORED start: \"1 октября 1898 г.\" | PRINTED start: \"1 октября 1898 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 35,
+  "line": "musicians_1905-06_SP_p003 | e036 | STORED start: \"1 октября 1903 г.\" | PRINTED start: \"1 октября 1903 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 35,
+  "line": "musicians_1905-06_SP_p004 | e023 | STORED start: \"1 сентября 1895 г.\" | PRINTED start: \"1 сентября 1895 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 35,
+  "line": "musicians_1905-06_SP_p004 | e011 | STORED start: \"1 августа 1895 г.\" | PRINTED start: \"1 августа 1895 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 35,
+  "line": "musicians_1905-06_SP_p005 | e030 | STORED start: \"1 іюня 1876 г.\" | PRINTED start: \"1 іюня 1876 г.\" | MATCH | confidence: DIRECT(zoomed) (paper blemish/stain around the \"1\" and і, letters still readable)"
+ },
+ {
+  "group": 35,
+  "line": "musicians_1905-06_SP_p005 | e033 | STORED start: \"1 октября 1893 г.\" | PRINTED start: \"1 октября 1893 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 36,
+  "line": "musicians_1906-07_MSK_p001 | e022 | STORED start: \"1 октября 1883 г.\" | PRINTED start: \"1 октября 1883 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 36,
+  "line": "musicians_1906-07_MSK_p002 | e028 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"19 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 36,
+  "line": "musicians_1906-07_MSK_p002 | e010 | STORED start: \"10 сентября 1882 г.\" | PRINTED start: \"10 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 36,
+  "line": "musicians_1906-07_MSK_p002 | e024 | STORED start: \"1 іюня 1897 г.\" | PRINTED start: \"1 іюня 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 36,
+  "line": "musicians_1906-07_MSK_p002 | e023 | STORED start: \"28 августа 1906 г.\" | PRINTED start: \"28 августа 1906 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 36,
+  "line": "musicians_1906-07_MSK_p002 | e016 | STORED start: \"23 сентября 1898 г.\" | PRINTED start: \"23 сентября 1898 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 36,
+  "line": "musicians_1906-07_MSK_p003 | e034 | STORED start: \"16 августа 1904 г.\" | PRINTED start: \"16 августа 1904 г.\" | MATCH | confidence: DIRECT(zoomed) | the 9 is slightly smudged but reads 1904"
+ },
+ {
+  "group": 36,
+  "line": "musicians_1906-07_MSK_p003 | e016 | STORED start: \"15 августа 1905 г.\" | PRINTED start: \"15 августа 1905 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 37,
+  "line": "musicians_1906-07_MSK_p004 | e010 | STORED start: \"21 сентября 1898 г.\" | PRINTED start: \"21 сентября 1898 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 37,
+  "line": "musicians_1906-07_MSK_p004 | e018 | STORED start: \"16 декабря 1905 г.\" | PRINTED start: \"16 декабря 1905 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 37,
+  "line": "musicians_1906-07_SP_p000 | e008 | STORED start: \"1 февраля 1902 г.\" | PRINTED start: \"1 февраля 1902 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 37,
+  "line": "musicians_1906-07_SP_p000 | e002 | STORED start: \"28 ноября 1863 г.\" | PRINTED start: \"28 ноября 1863 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 37,
+  "line": "musicians_1906-07_SP_p001 | e002 | STORED start: \"28 мая 1857 г.\" | PRINTED start: \"28 мая 1857 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 37,
+  "line": "musicians_1906-07_SP_p001 | e017 | STORED start: \"1 марта 1877 г.\" | PRINTED start: \"1 марта 1877 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 37,
+  "line": "musicians_1906-07_SP_p001 | e019 | STORED start: \"1 марта 1896 г.\" | PRINTED start: \"1 марта 1896 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 37,
+  "line": "musicians_1906-07_SP_p002 | e015 | STORED start: \"1 сентября 1888 г.\" | PRINTED start: \"1 сентября 1888 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 37,
+  "line": "musicians_1906-07_SP_p002 | e032 | STORED start: \"1 сентября 1887 г.\" | PRINTED start: \"1 сентября 1887 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 37,
+  "line": "musicians_1906-07_SP_p003 | e002 | STORED start: \"съ 31 марта 1802 г.\" | PRINTED start: \"съ 31 марта 1802 г.\" | MATCH | confidence: DIRECT(zoomed) | PRINT-TYPO? (1802 impossible; modal 1892)"
+ },
+ {
+  "group": 37,
+  "line": "musicians_1906-07_SP_p003 | e024 | STORED start: \"съ 1 августа 1895 г.\" | PRINTED start: \"съ 1 августа 1895 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 37,
+  "line": "musicians_1906-07_SP_p003 | e020 | STORED start: \"съ сентября 1898 г.\" | PRINTED start: \"съ сентября 1898 г.\" (no day printed) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "line": "musicians_1906-07_SP_p004 | e003 | STORED start: \"1 сентября 1895 г.\" | PRINTED start: \"съ 1 сентября 1895 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "line": "musicians_1906-07_SP_p005 | e004 | STORED start: \"1 сентября 1905 г.\" | PRINTED start: \"съ 1 сентября 1905 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "line": "musicians_1906-07_SP_p005 | e001 | STORED start: \"1 октября 1893 г.\" | PRINTED start: \"съ 1 октября 1893 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "line": "musicians_1906-07_SP_p005 | e016 | STORED start: \"1 ноября 1905 г.\" | PRINTED start: \"съ 1 ноября 1905 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "line": "musicians_1906-07_SP_p005 | e020 | STORED start: \"1 ноября 1905 г.\" | PRINTED start: \"съ 1 ноября 1905 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "line": "musicians_1907-08_MSK_p000 | e013 | STORED start: \"19 сентября 1883 г.\" | PRINTED start: \"съ 19 сентября 1883 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "line": "musicians_1907-08_MSK_p000 | e032 | STORED start: \"1 октября 1883 г.\" | PRINTED start: \"съ 1 октября 1883 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "line": "musicians_1907-08_MSK_p000 | e031 | STORED start: \"6 сентября 1891 г.\" | PRINTED start: \"съ 6 сентября 1891 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "line": "musicians_1907-08_MSK_p001 | e022 | STORED start: \"съ 10 сентября 1882 г.\" | PRINTED start: \"съ 10 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "line": "musicians_1907-08_MSK_p001 | e036 | STORED start: \"съ 1 іюня 1897 г.\" | PRINTED start: \"съ 1 іюня 1897 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "line": "musicians_1907-08_MSK_p001 | e035 | STORED start: \"съ 28 августа 1906 г.\" | PRINTED start: \"съ 28 августа 1906 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 38,
+  "line": "musicians_1907-08_MSK_p001 | e028 | STORED start: \"съ 23 сентября 1890 г.\" | PRINTED start: \"съ 23 сентября 1890 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 39,
+  "line": "musicians_1907-08_MSK_p002 | e002 | STORED start: \"19 сентября 1882 г.\" | PRINTED start: \"19 сентября 1882 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 39,
+  "line": "musicians_1907-08_MSK_p002 | e028 | STORED start: \"15 августа 1905 г.\" | PRINTED start: \"15 августа 1905 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 39,
+  "line": "musicians_1907-08_MSK_p003 | e024 | STORED start: \"21 сентября 1898 г.\" | PRINTED start: \"21 сентября 1898 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 39,
+  "line": "musicians_1907-08_MSK_p003 | e008 | STORED start: \"16 августа 1904 г.\" | PRINTED start: \"16 августа 1904 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 39,
+  "line": "musicians_1907-08_MSK_p003 | e032 | STORED start: \"1 декабря 1905 г.\" | PRINTED start: \"1 декабря 1905 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 39,
+  "line": "musicians_1907-08_SP_p000 | e009 | STORED start: \"1 февраля 1902 г.\" | PRINTED start: \"1 февраля 1902 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 39,
+  "line": "musicians_1907-08_SP_p000 | e002 | STORED start: \"28 ноября 1863 г.\" | PRINTED start: \"28 ноября 1863 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 39,
+  "line": "musicians_1907-08_SP_p001 | e020 | STORED start: \"1 марта 1896 г.\" | PRINTED start: \"1 марта 1896 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 39,
+  "line": "musicians_1907-08_SP_p002 | e040 | STORED start: \"1 октября 1903 г.\" | PRINTED start: \"1 октября 1903 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 40,
+  "line": "musicians_1907-08_SP_p003 | e028 | STORED start: \"съ 1 сентября 1895 г.\" | PRINTED start: \"съ 1 сентября 1895 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 40,
+  "line": "musicians_1907-08_SP_p003 | e017 | STORED start: \"съ 1 августа 1895 г.\" | PRINTED start: \"съ 1 августа 1895 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 40,
+  "line": "musicians_1907-08_SP_p004 | e014 | STORED start: \"1 октября 1893 г.\" | PRINTED start: \"съ 1 октября 1893 г.\" | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 40,
+  "line": "musicians_1908-09_MSK_p000 | e013 | STORED start: \"съ 1 октября 1907 г.\" | PRINTED start: \"съ 1 октября 1907 г.\" (the 9 is faintly printed) | MATCH | DIRECT(zoomed)"
+ },
+ {
+  "group": 41,
+  "line": "musicians_1908-09_MSK_p003 | e015 | STORED start: \"съ 16 августа 1891 г.\" | PRINTED start: \"съ 16 августа 1891 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 41,
+  "line": "musicians_1908-09_MSK_p003 | e035 | STORED start: \"съ 1 октября 1897 г.\" | PRINTED start: \"съ 1 октября 1897 г. по 1 января 1900 г. и 1 декабря 1902 г.\" (two stints; first starts 1 октября 1897) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 41,
+  "line": "musicians_1908-09_MSK_p003 | e026 | STORED start: \"съ 26 августа 1904 г.\" | PRINTED start: \"съ 26 августа 1904 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 41,
+  "line": "musicians_1908-09_SP_p000 | e008 | STORED start: \"съ 1 февраля 1902 г.\" | PRINTED start: \"съ 1 февраля 1902 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 41,
+  "line": "musicians_1908-09_SP_p000 | e002 | STORED start: \"съ 28 ноября 1863 г.\" | PRINTED start: \"съ 28 ноября 1863 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 41,
+  "line": "musicians_1908-09_SP_p003 | e020 | STORED start: \"съ сентября 1893 г.\" | PRINTED start: \"съ  сентября 1893 г.\" (no day number printed; a blank gap where the day would be) | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 41,
+  "line": "musicians_1908-09_SP_p003 | e002 | STORED start: \"съ 1 сентября 1905 г.\" | PRINTED start: \"съ 1 сентября 1905 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 42,
+  "line": "musicians_1908-09_SP_p004 | e010 | STORED start: \"съ 1 августа 1895 г.\" | PRINTED start: \"съ 1 августа 1895 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 42,
+  "line": "musicians_1909-10_MSK_p000 | e003 | STORED start: \"съ 13 сентября 1898 г.\" | PRINTED start: \"съ 13 сентября 1898 г.\" | MATCH | confidence: DIRECT(zoomed) (digits/month clear; \"съ\" at crop edge but legible on the page-level view)"
+ },
+ {
+  "group": 42,
+  "line": "musicians_1909-10_MSK_p001 | e005 | STORED start: \"съ 19 сентября 1892 г.\" | PRINTED start: \"съ 19 сентября 1892 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 42,
+  "line": "musicians_1909-10_MSK_p001 | e011 | STORED start: \"съ 26 сентября 1892 г.\" | PRINTED start: \"съ 26 сентября 1892 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 42,
+  "line": "musicians_1909-10_MSK_p002 | e001 | STORED start: \"23 сентября 1898 г.\" | PRINTED start: \"съ 23 сентября 1898 г.\" | MATCH on date (stored lacks the leading \"съ\" only) | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 42,
+  "line": "musicians_1909-10_MSK_p003 | e005 | STORED start: \"съ 16 августа 1891 г.\" | PRINTED start: \"съ 16 августа 1891 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 42,
+  "line": "musicians_1909-10_MSK_p003 | e015 | STORED start: \"съ 26 августа 1904 г.\" | PRINTED start: \"съ 26 августа 1904 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 43,
+  "line": "musicians_1909-10_SP_p000 | e002 | STORED start: \"съ 28 ноября 1863 г.\" | PRINTED start: \"28 ноября 1863 г.\" (printed \"(съ 28 ноября 1863 г.)\") | MATCH | confidence: DIRECT(zoomed)"
+ },
+ {
+  "group": 43,
+  "line": "musicians_1909-10_SP_p004 | e015 | STORED start: \"1 августа 1895 г.\" | PRINTED start: \"1 августа 1895 г.\" | MATCH | confidence: DIRECT(zoomed)"
+ }
+]

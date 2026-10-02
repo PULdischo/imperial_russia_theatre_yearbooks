@@ -1,0 +1,48 @@
+# VERIFICATION batch 17  (10 free-form items; read the whole printed entry verbatim)
+
+
+## PAGE musicians_1899-00_MSK_p002   scan: outputs/roster_images_full/images/musicians_1899-00_MSK_p002.png   stored-row bundle: /tmp/audit4/musicians_1899-00_MSK_p002.txt
+
+ITEM musicians_1899-00_MSK_p002|e024|freeform
+  stored row: e024 | 76. | Ромашковъ | 1-й | Капитонъ Андреевичъ | Контрабасъ | - | ORDINAL-IN-FIRSTNAME
+  (free-form item) transcribe verbatim the WHOLE printed entry: surname incl. any ordinal suffix 1-й/2-й/1-я, first name, patronymic, and whatever follows (cross-reference note etc.); say which words are first name vs patronymic.
+
+ITEM musicians_1899-00_MSK_p002|e025|freeform
+  stored row: e025 | 77. | Ромашковъ | 2-й | Павелъ Ѳёдоровичъ | Ударные инструменты | - | ORDINAL-IN-FIRSTNAME
+  (free-form item) transcribe verbatim the WHOLE printed entry: surname incl. any ordinal suffix 1-й/2-й/1-я, first name, patronymic, and whatever follows (cross-reference note etc.); say which words are first name vs patronymic.
+
+ITEM musicians_1899-00_MSK_p002|e026|freeform
+  stored row: e026 | 78. | Ромашковъ | 3-й | Григорій Ѳёдоровичъ | Альтъ | - | ORDINAL-IN-FIRSTNAME
+  (free-form item) transcribe verbatim the WHOLE printed entry: surname incl. any ordinal suffix 1-й/2-й/1-я, first name, patronymic, and whatever follows (cross-reference note etc.); say which words are first name vs patronymic.
+
+## PAGE musicians_1899-00_MSK_p003   scan: outputs/roster_images_full/images/musicians_1899-00_MSK_p003.png   stored-row bundle: /tmp/audit4/musicians_1899-00_MSK_p003.txt
+
+ITEM musicians_1899-00_MSK_p003|e018|freeform
+  stored row: e018 | 108. | Шмидтъ | І-й | Францъ | Фаготъ | - | ORDINAL-IN-FIRSTNAME
+  (free-form item) transcribe verbatim the WHOLE printed entry: surname incl. any ordinal suffix 1-й/2-й/1-я, first name, patronymic, and whatever follows (cross-reference note etc.); say which words are first name vs patronymic.
+
+ITEM musicians_1899-00_MSK_p003|e019|freeform
+  stored row: e019 | 109. | Шмидтъ | 2-й | Фридрихъ | Альтъ | - | ORDINAL-IN-FIRSTNAME
+  (free-form item) transcribe verbatim the WHOLE printed entry: surname incl. any ordinal suffix 1-й/2-й/1-я, first name, patronymic, and whatever follows (cross-reference note etc.); say which words are first name vs patronymic.
+
+ITEM musicians_1899-00_MSK_p003|e025|freeform
+  stored row: e025 | 115. | Эйхенвальдъ | 1-я | Ида | Арфа | - | ORDINAL-IN-FIRSTNAME
+  (free-form item) transcribe verbatim the WHOLE printed entry: surname incl. any ordinal suffix 1-й/2-й/1-я, first name, patronymic, and whatever follows (cross-reference note etc.); say which words are first name vs patronymic.
+
+ITEM musicians_1899-00_MSK_p003|e026|freeform
+  stored row: e026 | 116. | Эйхенвальдъ | 2-я | Надежда | Арфа | - | ORDINAL-IN-FIRSTNAME
+  (free-form item) transcribe verbatim the WHOLE printed entry: surname incl. any ordinal suffix 1-й/2-й/1-я, first name, patronymic, and whatever follows (cross-reference note etc.); say which words are first name vs patronymic.
+
+## PAGE musicians_1890-91_SP_p003   scan: outputs/roster_images_full/images/musicians_1890-91_SP_p003.png   stored-row bundle: /tmp/audit4/musicians_1890-91_SP_p003.txt
+
+ITEM musicians_1890-91_SP_p003|e005|freeform
+  stored row: e005 | 11. | Вальтеръ 2-й | - | - | Вторая скрипка | - | -
+  (free-form item) transcribe verbatim the WHOLE printed entry: surname incl. any ordinal suffix 1-й/2-й/1-я, first name, patronymic, and whatever follows (cross-reference note etc.); say which words are first name vs patronymic.
+
+ITEM musicians_1890-91_SP_p003|e044|freeform
+  stored row: e044 | 50. | Тарнке 1-й | - | - | Первая скрипка | - | -
+  (free-form item) transcribe verbatim the WHOLE printed entry: surname incl. any ordinal suffix 1-й/2-й/1-я, first name, patronymic, and whatever follows (cross-reference note etc.); say which words are first name vs patronymic.
+
+ITEM musicians_1890-91_SP_p003|e045|freeform
+  stored row: e045 | 51. | Тарнке 2-й | - | - | Вторая скрипка | - | -
+  (free-form item) transcribe verbatim the WHOLE printed entry: surname incl. any ordinal suffix 1-й/2-й/1-я, first name, patronymic, and whatever follows (cross-reference note etc.); say which words are first name vs patronymic.

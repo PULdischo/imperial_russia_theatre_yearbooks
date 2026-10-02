@@ -1,0 +1,29 @@
+ITEM musicians_1894-95_SP_p003|e012|family | READ: "Беско" | CHOICE: A | confidence: DIRECT | 3. Беско, Карлъ Ивановичъ; letters с-к-о clear at 5x
+ITEM musicians_1894-95_SP_p003|e017|family | READ: "Виргеліюшъ" | CHOICE: B | confidence: DIRECT | В-и-р-г-е-л-і-ю-ш-ъ, і then ю then ш clear
+ITEM musicians_1894-95_SP_p004|e003|family | READ: "Армсгеймеръ" | CHOICE: B | confidence: DIRECT | Армс-геймеръ, с visible before г
+ITEM musicians_1894-95_SP_p004|e007|instrument | READ: "Віолончель" | CHOICE: B | confidence: DIRECT | 6. Бизье entry; instrument printed with і
+ITEM musicians_1894-95_SP_p004|e024|instrument | READ: "Віолончель" | CHOICE: B | confidence: DIRECT | 23. Мацулевичъ 2-й; printed with і
+ITEM musicians_1894-95_SP_p004|e031|family | READ: "Рехакъ" | CHOICE: B | confidence: DIRECT | 30. Рехакъ, Альфредъ; ends -къ
+ITEM musicians_1895-96_MSK_p001|e032|list | READ: "34." | CHOICE: B | confidence: DIRECT | printed "34." (evident misprint for 54; follows 53. Кристель, precedes 55); surname Крутоголововъ
+ITEM musicians_1895-96_MSK_p001|e034|family | READ: "Кунстъ" | CHOICE: A | confidence: DIRECT | 56. Кунстъ, Іоганнъ; ends -стъ with ъ
+ITEM musicians_1895-96_MSK_p001|e049|family | READ: "Пащеевъ" | CHOICE: A | confidence: DIRECT | 71. Пащеевъ, Борисъ Ѳедоровичъ
+ITEM musicians_1895-96_MSK_p002|e025|family | READ: "Триньякъ" | CHOICE: A | confidence: DIRECT | 98. Триньякъ, Францъ; ends -якъ
+ITEM musicians_1895-96_MSK_p002|e028|family | READ: "Фриче" | CHOICE: B | confidence: DIRECT | 101. Фриче, Георгъ
+ITEM musicians_1895-96_MSK_p002|e042|family | READ: "Шпеккинъ" | CHOICE: B | confidence: DIRECT | 115. Шпеккинъ, Эрнестъ-Густавъ; double к clear
+ITEM musicians_1895-96_MSK_p002|e047|family | READ: "Эккертъ" | CHOICE: A | confidence: DIRECT | 120. Эккертъ, Фердинандъ Фердинандовичъ
+ITEM musicians_1895-96_MSK_p003|e023|family | READ: "Падель" | CHOICE: B | confidence: DIRECT | 24. Падель, Іоганнъ-Фридрихъ; letter after д is plain е (no ѣ crossbar/stem); a stray ink speck sits above д/е, not a ѣ
+ITEM musicians_1895-96_SP_p001|e016|family | READ: "Евстифѣевъ" | CHOICE: B | confidence: DIRECT | 33. Евстифѣевъ, Александръ Николаевичъ; ѣ clearly printed
+ITEM musicians_1895-96_SP_p001|e023|family | READ: "Инспрукеръ" | CHOICE: B | confidence: DIRECT | 40. Инспрукеръ, Августъ Мартыновичъ; ends -керъ
+ITEM musicians_1895-96_SP_p001|e034|first/patronymic | READ: "Фридрихъ-Эрнестъ" | CHOICE: FREEFORM | confidence: DIRECT | 51. Котте, Фридрихъ-Эрнестъ (съ 1 сентября 1893 г.). Фаготъ. Hyphenated single first name, no patronymic; confirms first reviewer
+ITEM musicians_1895-96_SP_p002|e011|family | READ: "Рехакъ" | CHOICE: B | confidence: DIRECT | 79. Рехакъ, Альфредъ Антоновичъ
+ITEM musicians_1895-96_SP_p002|e025|family | READ: "Теръ-Огановъ" | CHOICE: B | confidence: DIRECT | 93. Теръ-Огановъ, Артемій Антоновичъ; hard sign after р
+ITEM musicians_1895-96_SP_p002|e031|family | READ: "Хаакъ" | CHOICE: A | confidence: DIRECT | 99. Хаакъ, Яковъ Эдуардовичъ
+ITEM musicians_1895-96_SP_p002|e042|family | READ: "Шолларъ" | CHOICE: B | confidence: DIRECT | 110. Шолларъ, Францъ Францевичъ; no я before ръ
+ITEM musicians_1895-96_SP_p003|e039|family | READ: "Штаркъ" | CHOICE: A | confidence: DIRECT | NOTE stored row e039 is 37. Шмидтъ; the Штаркъ/Штарнъ question concerns printed entry 39 Штаркъ, Андрей Андреевичъ (stored as e041 Штарнъ). Printed ends -ркъ
+ITEM musicians_1895-96_SP_p004|e019|family | READ: "Маркузэ" | CHOICE: B | confidence: DIRECT | 22. Маркузэ, Людвигъ Юліевичъ; final letter э
+ITEM musicians_1896-97_MSK_p000|e010|instrument | READ: "Вальдгорнъ" | CHOICE: A | confidence: DIRECT | 6. Барсукъ-Самборскій; instrument ends in ъ (tall hard sign), not т
+ITEM musicians_1896-97_MSK_p001|e001|family | READ: "Губертъ" | CHOICE: B | confidence: DIRECT | 25. Губертъ, Матвѣй; ends -тъ with ъ
+ITEM musicians_1896-97_MSK_p001|e023|instrument | READ: "Вальдгорнъ" | CHOICE: B | confidence: DIRECT | 47. Котроба; instrument ends in ъ, not ь
+ITEM musicians_1896-97_MSK_p001|e028|family | READ: "Крутоголововъ" | CHOICE: B | confidence: DIRECT | 52. Крутоголововъ, Иванъ Никифоровичъ; К-р-у-т-о (т, not г)
+ITEM musicians_1896-97_MSK_p001|e045|family | READ: "Пащеевъ" | CHOICE: B | confidence: DIRECT | 69. Пащеевъ, Борисъ Ѳедоровичъ; two е only
+DONE 28 items

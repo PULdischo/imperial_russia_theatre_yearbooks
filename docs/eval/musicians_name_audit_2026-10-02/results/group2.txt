@@ -1,0 +1,39 @@
+PAGE SUMMARY
+musicians_1890-91_SP_p000 | entries read: 37 | entries with a discrepancy: 2
+musicians_1890-91_SP_p001 | entries read: 43 | entries with a discrepancy: 1
+musicians_1890-91_SP_p002 | entries read: 40 | entries with a discrepancy: 3
+musicians_1890-91_SP_p003 | entries read: 45 | entries with a discrepancy: 3
+musicians_1890-91_SP_p004 | entries read: 40 | entries with a discrepancy: 4
+DISCREPANCIES
+musicians_1890-91_SP_p000 | e004 | patronymic | STORED: "Франшевичъ" | PRINTED: "Францевичъ" | confidence: DIRECT(zoomed) | ц misread as ш
+musicians_1890-91_SP_p000 | e029 | family | STORED: "Грибень" | PRINTED: "Грибенъ" | confidence: DIRECT(zoomed) | hard sign (p003 e012 stores Грибенъ correctly)
+musicians_1890-91_SP_p001 | e023 | family | STORED: "Нахтигалъ" | PRINTED: "Нахтигаль" | confidence: DIRECT(zoomed) | printed with soft sign
+musicians_1890-91_SP_p002 | e005 | family | STORED: "Терь-Огановъ" | PRINTED: "Теръ-Огановъ" | confidence: DIRECT(zoomed) | hard sign, not soft
+musicians_1890-91_SP_p002 | e020 | family | STORED: "Шолларь" | PRINTED: "Шолларъ" | confidence: DIRECT(zoomed) | hard sign, not soft
+musicians_1890-91_SP_p002 | e025 | family | STORED: "Эйхгорнь" | PRINTED: "Эйхгорнъ" | confidence: DIRECT(zoomed) | hard sign, not soft
+musicians_1890-91_SP_p003 | e019 | ordinal | STORED: family "Ивановъ", first "1-й", patronymic "Василій" | PRINTED: "Ивановъ 1-й, Василій Андреевичъ" | confidence: DIRECT(zoomed) | ordinal in first-name field; first/patronymic shifted; patronymic "Андреевичъ" missing
+musicians_1890-91_SP_p003 | e020 | ordinal | STORED: family "Ивановъ", first "2-й", patronymic "Владиміръ" | PRINTED: "Ивановъ 2-й, Владиміръ Ивановичъ" (line break Ивано-/вичъ) | confidence: DIRECT(zoomed) | ordinal in first-name field; first/patronymic shifted; patronymic "Ивановичъ" missing
+musicians_1890-91_SP_p003 | e040 | family | STORED: "Пертелъ" | PRINTED: "Пертель" | confidence: DIRECT(zoomed) | printed with soft sign (p001 e030 stores Пертель)
+musicians_1890-91_SP_p004 | e016 | patronymic | STORED: "Сергеевичъ" | PRINTED: "Сергѣевичъ" | confidence: DIRECT(zoomed) | ѣ printed
+musicians_1890-91_SP_p004 | e024 | patronymic | STORED: "Людвиго-вичъ" | PRINTED: "Людвиго-/вичъ" (line break) -> "Людвиговичъ" | confidence: DIRECT(zoomed) | line-break hyphen artifact
+musicians_1890-91_SP_p004 | e029 | patronymic | STORED: "Сергеевичъ" | PRINTED: "Сергѣевичъ" (line break Сергѣ-/вичъ... printed "Сергѣе-/вичъ") | confidence: DIRECT(zoomed) | ѣ printed
+musicians_1890-91_SP_p004 | e034 | instrument | STORED: "Біолончель" | PRINTED: "Віолончель" (line break Віо-/лончель) | confidence: DIRECT(zoomed) | Б vs В; also flagged INSTR-VARIANT (confirmed)
+DATE-CHECK RESULTS
+musicians_1890-91_SP_p000 | e011 | STORED start: "24 ноября 1878 г." | PRINTED start: "24 ноября 1878 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p000 | e029 | STORED start: "15 августа 1873 г." | PRINTED start: "15 августа 1873 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p002 | e030 | STORED start: "1 сентября 1886 г." | PRINTED start: "1 сентября 1886 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p003 | e021 | STORED start: "съ 20 августа 1878 г." | PRINTED start: "съ 20 августа 1878 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p004 | e016 | STORED start: "1 октября 1888 г." | PRINTED start: "1 октября 1888 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p004 | e034 | STORED start: "1 октября 1888 г." | PRINTED start: "1 октября 1888 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p004 | e037 | STORED start: "1 сентября 1888 г." | PRINTED start: "1 сентября 1888 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p004 | e038 | STORED start: "15 января 1888 г." | PRINTED start: "15 января 1888 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p004 | e039 | STORED start: "15 апрѣля 1886 г." | PRINTED start: "15 апрѣля 1886 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1890-91_SP_p004 | e040 | STORED start: "1 января 1891 г." | PRINTED start: "1 января 1891 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- p000: patronymic inside first name pattern not present; first/patronymic fields are separate on all rows (no issue).
+- p002 e012 Цабель and e036 Ауэръ: printed "Солистъ Двора Его Императорскаго Величества" is stored with rank_or_title "-" (title not captured in bundle).
+- p000: section headings (Инспекторъ музыки, Начальникъ Нотной конторы, Старшій библіотекарь, Первый/Второй капельмейстеръ, Капельмейстеръ военной музыки) are not in rank_or_title for e001-e006 (all "-").
+- All printed list numbers match stored list numbers on all five pages (incl. p004 Малый=20, Лень=21 order).
+- Printed "Оставилъ службу" notes (p000 e021, e028; p001 e011, e023; p004 e036) are not part of the name fields; no discrepancy.
+- No stray spaces, Latin/foreign-alphabet letters or duplicated rows found in the bundles.
+- Also noted: Plescov on p003 e041 is printed without ordinal ("Плесковъ"), matches stored; p001 e032 prints "Плесковъ 2-й".

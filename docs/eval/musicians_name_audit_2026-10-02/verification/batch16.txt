@@ -1,0 +1,66 @@
+# VERIFICATION batch 16  (10 items on 4 pages)
+
+
+## PAGE musicians_1909-10_SP_p000   scan: outputs/roster_images_full/images/musicians_1909-10_SP_p000.png   stored-row bundle: /tmp/audit4/musicians_1909-10_SP_p000.txt
+
+ITEM musicians_1909-10_SP_p000|e007|family
+  stored row: e007 | Пахитоновъ | Даниилъ | - | Ильичъ | - | - | -
+  field in question: family
+  (free-form item) first reviewer note: STORED: "Даніилъ" in bundle (raw JSON family_name = "Даниилъ") | PRINTED: family "Пахитоновъ" | confidence: DIRECT(zoomed) | first name has been stored as family; raw json lacks i-dotted form (printed Даніилъ)
+
+ITEM musicians_1909-10_SP_p000|e007|first
+  stored row: e007 | Пахитоновъ | Даниилъ | - | Ильичъ | - | - | -
+  field in question: first
+  Option A: "Даніилъ"
+  Option B: "-"
+
+ITEM musicians_1909-10_SP_p000|e007|list
+  stored row: e007 | Пахитоновъ | Даниилъ | - | Ильичъ | - | - | -
+  field in question: list
+  (free-form item) first reviewer note: STORED: "Пахитоновъ" | PRINTED: (no list number; accompanist, unnumbered) | confidence: DIRECT(zoomed) | surname shifted into list-number column
+
+ITEM musicians_1909-10_SP_p000|e008|instrument
+  stored row: e008 | 1. | Лачиновъ | Владиміръ | Петровичъ | - | - | -
+  field in question: instrument
+  Option A: "Первая срипка"
+  Option B: "-"
+
+## PAGE musicians_1909-10_SP_p001   scan: outputs/roster_images_full/images/musicians_1909-10_SP_p001.png   stored-row bundle: /tmp/audit4/musicians_1909-10_SP_p001.txt
+
+ITEM musicians_1909-10_SP_p001|e016|first
+  stored row: e016 | 17. | Васильевъ | Евтіхій | Михайловичъ | Контрабасъ | - | -
+  field in question: first
+  Option A: "Евтихій"
+  Option B: "Евтіхій"
+
+ITEM musicians_1909-10_SP_p001|e029|first
+  stored row: e029 | 30. | Гейкель | Кануть | Карповичъ | Альтъ | - | -
+  field in question: first
+  Option A: "Канутъ"
+  Option B: "Кануть"
+
+## PAGE musicians_1909-10_SP_p002   scan: outputs/roster_images_full/images/musicians_1909-10_SP_p002.png   stored-row bundle: /tmp/audit4/musicians_1909-10_SP_p002.txt
+
+ITEM musicians_1909-10_SP_p002|e029|family
+  stored row: e029 | 65. | Людольфъ | Валентинъ | Ивановичъ | Контрабасъ | - | -
+  field in question: family
+  Option A: "Людольфъ"
+  Option B: "Людольфи"
+
+## PAGE musicians_1909-10_SP_p003   scan: outputs/roster_images_full/images/musicians_1909-10_SP_p003.png   stored-row bundle: /tmp/audit4/musicians_1909-10_SP_p003.txt
+
+ITEM musicians_1909-10_SP_p003|e010|instrument
+  stored row: e010 | 80. | Плотниковъ | Михаилъ | Александровичъ | Контрабасъ | - | -
+  field in question: instrument
+  (free-form item) first reviewer note: STORED: "Контрабасъ" | PRINTED: (no instrument printed; entry ends "(съ 1 сентября 1909 г.).") | confidence: DIRECT(zoomed) | list 80 Плотниковъ
+
+ITEM musicians_1909-10_SP_p003|e012|patronymic
+  stored row: e012 | 82. | Помазанскій | Иванъ | Александровичъ | Арфа | - | -
+  field in question: patronymic
+  Option A: "Александровичъ"
+  Option B: "Аленсандровичъ"
+
+ITEM musicians_1909-10_SP_p003|e028|patronymic
+  stored row: e028 | 98. | Стеличекъ | Мирославъ | Альтъ | Альтъ | - | -
+  field in question: patronymic
+  (free-form item) first reviewer note: STORED: "Альтъ" (instrument also "Альтъ") | PRINTED: no patronymic printed ("Стеличекъ, Мирославъ (съ 1 сентября 1904 г.). Альтъ.") | confidence: DIRECT(zoomed) | list 98; instrument word stored in patronymic field

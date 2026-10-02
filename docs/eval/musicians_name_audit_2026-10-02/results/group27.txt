@@ -1,0 +1,37 @@
+PAGE SUMMARY
+musicians_1902-03_MSK_p003 | entries read: 39 | entries with a discrepancy: 4
+musicians_1902-03_MSK_p004 | entries read: 26 | entries with a discrepancy: 1
+musicians_1902-03_SP_p000 | entries read: 22 | entries with a discrepancy: 0
+musicians_1902-03_SP_p001 | entries read: 37 | entries with a discrepancy: 0
+musicians_1902-03_SP_p002 | entries read: 39 | entries with a discrepancy: 1
+DISCREPANCIES
+musicians_1902-03_MSK_p003 | e007 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" (hard sign) | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed
+musicians_1902-03_MSK_p003 | e010 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" (hard sign) | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed
+musicians_1902-03_MSK_p003 | e019 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" (hard sign) | confidence: DIRECT(zoomed 2.4x; ending ъ clear) | AUTO-FLAG INSTR-VARIANT confirmed
+musicians_1902-03_MSK_p003 | e033 | instrument | STORED: "Вальдгорнь" | PRINTED: "Вальдгорнъ" (hard sign) | confidence: DIRECT(zoomed) | AUTO-FLAG INSTR-VARIANT confirmed
+musicians_1902-03_MSK_p004 | e020 | family | STORED: "Терентьевъ" | PRINTED: "Терёнтьевъ" (ё with diaeresis dots over 2nd е) | confidence: DIRECT(zoomed 7x)
+musicians_1902-03_SP_p002 | e021 | family | STORED: "Лукась" | PRINTED: "Лукасъ" (hard sign) | confidence: DIRECT(zoomed 8x)
+DATE-CHECK RESULTS
+musicians_1902-03_MSK_p003 | e027 | STORED start: "19 сентября 1882 г." | PRINTED start: "19 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_MSK_p003 | e031 | STORED start: "14 апрѣля 1880 г." | PRINTED start: "съ 14 апрѣля 1880 г. по 1 сентября 1882 г. и съ 1 сентября 1883 г." (two tenure periods; first start 14 апрѣля 1880) | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_MSK_p004 | e013 | STORED start: "съ 23 сентября 1898 г." | PRINTED start: "съ 23 сентября 1898 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_MSK_p004 | e021 | STORED start: "съ 1 января 1894 г." | PRINTED start: "съ 1 января 1894 г." (orchestra entry); separate librarian entry e025 prints "съ 1 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p000 | e008 | STORED start: "1 февраля 1902 г." | PRINTED start: "съ 1 февраля 1902 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p000 | e011 | STORED start: "1 октября 1889 г." | PRINTED start: "съ 1 октября 1889 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p000 | e018 | STORED start: "1 сентября 1882 г." | PRINTED start: "съ 1 сентября 1882 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p001 | e013 | STORED start: "28 мая 1857 г." | PRINTED start: "съ 28 мая 1857 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p001 | e030 | STORED start: "1 марта 1877 г." | PRINTED start: "съ 1 марта 1877 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p001 | e022 | STORED start: "1 октября 1885 г." | PRINTED start: "съ 1 октября 1885 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p001 | e031 | STORED start: "1 сентября 1897 г." | PRINTED start: "съ 1 сентября 1897 г." | MATCH | confidence: DIRECT(zoomed)
+musicians_1902-03_SP_p001 | e016 | STORED start: "1 сентября 1896 г." | PRINTED start: "съ 1 сентября 1896 г." | MATCH | confidence: DIRECT(zoomed)
+OTHER FINDINGS
+- No patronymic-inside-first-name pattern on any of these five pages.
+- MSK_p003: all four Вальдгорнъ rows (e007,e010,e019,e033) stored with ь; MSK_p004 e007/e011 and SP rows store Вальдгорнъ correctly, so this is a page-specific extractor error (all four are the only INSTR-VARIANT flags).
+- MSK_p004 e021: stored rank_or_title ends with ")" but print has no closing paren after "Музыкальной библіотеки" (printed "(онъ же и библіотекарь Музыкальной библіотеки (съ 1 января 1894 г.)") -- print irregularity, not a letter error.
+- MSK_p004 e021 and e025 are the same man (Фарскій) deliberately printed twice (orchestra list with start 1 января 1894; librarian entry with start 1 сентября 1882) -- genuine, explains the date disagreement.
+- MSK_p004 e025/e026 (Фарскій librarian, Орловъ assistant) are unnumbered, as printed; Орловъ printed start "1 января 1857 г. по 1 февраля 1897 г. и съ 1 іюня 1897 г." (по найму).
+- Stored soft-sign endings Ветцель (SP_p001 e008), Каукаль (SP_p002 e001), Пертель (SP_p002 e037) all printed with ь: correct. Пертель is printed followed by a period ("Пертель.") instead of comma.
+- SP_p001 e024 Гордонъ patronymic printed "Бернардовичъ" (matches store) while SP_p000 e008 Гордонъ prints "Бернгардовичъ" (matches store): genuine printed variation between the two entries (same man? different start dates 1890 vs 1902 - note orchestra entry vs military-music conductor).
+- Prints 1-й/2-й/2-я ordinals (Шмидтъ 1-й/2-й, Эйхенвальдъ 2-я, Вульфъ-Израэль 1-й/2-й, Михайловскій 1-й/2-й) all correctly stored in family field.
+- SP_p001 e043(Гуляевъ) print has "г )." (missing period) -- ignorable print quirk; no stored issue.
+- No missing or extra rows detected vs print on any of the five pages; list numbers all match print.

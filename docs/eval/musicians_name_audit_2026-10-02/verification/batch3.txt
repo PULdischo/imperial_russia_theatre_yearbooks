@@ -1,0 +1,201 @@
+# VERIFICATION batch 3  (30 items on 11 pages)
+
+
+## PAGE musicians_1892-93_MSK_p001   scan: outputs/roster_images_full/images/musicians_1892-93_MSK_p001.png   stored-row bundle: /tmp/audit4/musicians_1892-93_MSK_p001.txt
+
+ITEM musicians_1892-93_MSK_p001|e033|family
+  stored row: e033 | 66. | Рамбоусенъ | Іосифъ | - | Контрабасъ | - | -
+  field in question: family
+  Option A: "Рамбоусекъ"
+  Option B: "Рамбоусенъ"
+
+ITEM musicians_1892-93_MSK_p001|e034|first
+  stored row: e034 | 67. | Рессеръ | Марлохей | - | Скрипка | - | -
+  field in question: first
+  Option A: "Мардохей"
+  Option B: "Марлохей"
+
+ITEM musicians_1892-93_MSK_p001|e039|first
+  stored row: e039 | 72. | Слуцкій | Ипхекъ-Мейерь | - | Скрипка | - | -
+  field in question: first
+  Option A: "Ицхекъ-Мейеръ"
+  Option B: "Ипхекъ-Мейерь"
+
+ITEM musicians_1892-93_MSK_p001|e044|family
+  stored row: e044 | 77. | Триньянъ | Францъ | - | Вальдгорнъ | - | -
+  field in question: family
+  Option A: "Триньякъ"
+  Option B: "Триньянъ"
+
+## PAGE musicians_1892-93_MSK_p003   scan: outputs/roster_images_full/images/musicians_1892-93_MSK_p003.png   stored-row bundle: /tmp/audit4/musicians_1892-93_MSK_p003.txt
+
+ITEM musicians_1892-93_MSK_p003|e001|family
+  stored row: e001 | - | Арендъцъ | Генрихъ | - | - | - | -
+  field in question: family
+  Option A: "Арендъцъ"
+  Option B: "Арендсъ"
+
+ITEM musicians_1892-93_MSK_p003|e006|first
+  stored row: e006 | - | Фарскій | Адалъбертъ | Карловичъ | - | - | -
+  field in question: first
+  Option A: "Адальбертъ"
+  Option B: "Адалъбертъ"
+
+ITEM musicians_1892-93_MSK_p003|e017|family/first
+  stored row: e017 | 47. | Туровичъ | фонъ-Охота | - | Скрипка | - | -
+  field in question: family/first
+  (free-form item) first reviewer note: STORED: family "Туровичъ", first "фонъ-Охота" | PRINTED: bold "Туровичъ фонъ-Охота" (all bold = part of surname; no first name printed) | confidence: DIRECT(zoomed) | surname part stored in first-name field
+
+## PAGE musicians_1892-93_SP_p001   scan: outputs/roster_images_full/images/musicians_1892-93_SP_p001.png   stored-row bundle: /tmp/audit4/musicians_1892-93_SP_p001.txt
+
+ITEM musicians_1892-93_SP_p001|e010|family
+  stored row: e010 | 31. | Надлецъ | Андрей | Вячеславовичъ | Альтъ | - | -
+  field in question: family
+  Option A: "Надлецъ"
+  Option B: "Кадлецъ"
+
+ITEM musicians_1892-93_SP_p001|e011|family
+  stored row: e011 | 32. | Назаковъ | Сергѣй | Аѳанасьевичъ | Первая скрипка | - | -
+  field in question: family
+  Option A: "Казаковъ"
+  Option B: "Назаковъ"
+
+ITEM musicians_1892-93_SP_p001|e021|family
+  stored row: e021 | 42. | Нункели | Оскаръ | Альбертовичъ | Вторая скрипка | - | -
+  field in question: family
+  Option A: "Нункели"
+  Option B: "Кункели"
+
+ITEM musicians_1892-93_SP_p001|e035|family
+  stored row: e035 | 56. | Пертѣль | Эдуардъ | Егоровичъ | Контрабасъ | - | -
+  field in question: family
+  Option A: "Пертѣль"
+  Option B: "Пертель"
+
+## PAGE musicians_1892-93_SP_p002   scan: outputs/roster_images_full/images/musicians_1892-93_SP_p002.png   stored-row bundle: /tmp/audit4/musicians_1892-93_SP_p002.txt
+
+ITEM musicians_1892-93_SP_p002|e028|first/patronymic
+  stored row: e028 | 1. | Итцигсонъ | Мейеръ | Гиршъ | - | - | -
+  field in question: first/patronymic
+  (free-form item) first reviewer note: STORED: first "Мейеръ", patronymic "Гиршъ" | PRINTED: "Мейеръ-Гиршъ" (single hyphenated first name, no patronymic) | confidence: DIRECT(zoomed)
+
+ITEM musicians_1892-93_SP_p002|e029|first/patronymic
+  stored row: e029 | 2. | Мейеръ | Іоганъ | Фридрихъ | - | - | -
+  field in question: first/patronymic
+  (free-form item) first reviewer note: STORED: first "Іоганъ", patronymic "Фридрихъ" | PRINTED: "Іоганъ-Фридрихъ" (single hyphenated first name, no patronymic) | confidence: DIRECT(zoomed)
+
+## PAGE musicians_1892-93_SP_p003   scan: outputs/roster_images_full/images/musicians_1892-93_SP_p003.png   stored-row bundle: /tmp/audit4/musicians_1892-93_SP_p003.txt
+
+ITEM musicians_1892-93_SP_p003|e014|family
+  stored row: e014 | 32. | Кернешко | - | - | Контрабасъ | - | -
+  field in question: family
+  Option A: "Кернешко"
+  Option B: "Керкешко"
+
+ITEM musicians_1892-93_SP_p003|e031|family
+  stored row: e031 | 49. | Тарике 1-й | - | - | Первая скрипка | - | -
+  field in question: family
+  Option A: "Тарике 1-й"
+  Option B: "Тарнке 1-й"
+
+ITEM musicians_1892-93_SP_p003|e032|family
+  stored row: e032 | 50. | Тарике 2-й | - | - | Вторая скрипка | - | -
+  field in question: family
+  Option A: "Тарнке 2-й"
+  Option B: "Тарике 2-й"
+
+ITEM musicians_1892-93_SP_p003|e050|family
+  stored row: e050 | 2. | Анимовъ | Ѳедоръ | Фроловичъ | Барабанъ | - | -
+  field in question: family
+  Option A: "Анимовъ"
+  Option B: "Акимовъ"
+
+## PAGE musicians_1893-94_MSK_p001   scan: outputs/roster_images_full/images/musicians_1893-94_MSK_p001.png   stored-row bundle: /tmp/audit4/musicians_1893-94_MSK_p001.txt
+
+ITEM musicians_1893-94_MSK_p001|e050|family
+  stored row: e050 | 67. | Маривардтъ | Августъ | - | Корнетъ | - | -
+  field in question: family
+  Option A: "Маривардтъ"
+  Option B: "Марквардтъ"
+
+## PAGE musicians_1893-94_MSK_p002   scan: outputs/roster_images_full/images/musicians_1893-94_MSK_p002.png   stored-row bundle: /tmp/audit4/musicians_1893-94_MSK_p002.txt
+
+ITEM musicians_1893-94_MSK_p002|e007|family
+  stored row: e007 | 75. | Пащееевъ | Борисъ | Ѳедоровичъ | Скрипка | - | -
+  field in question: family
+  Option A: "Пащеевъ"
+  Option B: "Пащееевъ"
+
+ITEM musicians_1893-94_MSK_p002|e023|first
+  stored row: e023 | 91. | Слуцкій | Ипхекъ-Мейеръ | - | Скрипка | - | -
+  field in question: first
+  Option A: "Ицхекъ-Мейеръ"
+  Option B: "Ипхекъ-Мейеръ"
+
+## PAGE musicians_1893-94_MSK_p003   scan: outputs/roster_images_full/images/musicians_1893-94_MSK_p003.png   stored-row bundle: /tmp/audit4/musicians_1893-94_MSK_p003.txt
+
+ITEM musicians_1893-94_MSK_p003|e014|list
+  stored row: e014 | 14. | Клейнике | Альбертъ | - | Контрабасъ | - | -
+  field in question: list
+  Option A: "14."
+  Option B: "14"
+
+## PAGE musicians_1893-94_SP_p000   scan: outputs/roster_images_full/images/musicians_1893-94_SP_p000.png   stored-row bundle: /tmp/audit4/musicians_1893-94_SP_p000.txt
+
+ITEM musicians_1893-94_SP_p000|e012|patronymic
+  stored row: e012 | 2. | Ауэръ | Леопольдъ | Семёновичъ | Скрипка | - | -
+  field in question: patronymic
+  Option A: "Семёновичъ"
+  Option B: "Семеновичъ"
+
+## PAGE musicians_1893-94_SP_p001   scan: outputs/roster_images_full/images/musicians_1893-94_SP_p001.png   stored-row bundle: /tmp/audit4/musicians_1893-94_SP_p001.txt
+
+ITEM musicians_1893-94_SP_p001|e002|patronymic
+  stored row: e002 | 16. | Вейкманъ | Андрей | Геронимовичъ | Альтъ | - | -
+  field in question: patronymic
+  Option A: "Геронимовичъ"
+  Option B: "Іеронимовичъ"
+
+ITEM musicians_1893-94_SP_p001|e003|instrument
+  stored row: e003 | 17. | Векель | Германъ | Карловичъ | Вальдгорнь | - | INSTR-VARIANT
+  field in question: instrument
+  Option A: "Вальдгорнь"
+  Option B: "Вальдгорнъ"
+
+ITEM musicians_1893-94_SP_p001|e012|family
+  stored row: e012 | 26. | Гильдеобрандтъ | Рихардъ | Николаевичъ | Віолончель | - | -
+  field in question: family
+  Option A: "Гильдеобрандтъ"
+  Option B: "Гильдебрандтъ"
+
+ITEM musicians_1893-94_SP_p001|e032|family
+  stored row: e032 | 46. | Казановъ | Сергѣй | Аѳанасьевичъ | Первая скрипка | - | -
+  field in question: family
+  Option A: "Казановъ"
+  Option B: "Казаковъ"
+
+ITEM musicians_1893-94_SP_p001|e051|family
+  stored row: e051 | 65. | Маннопъ | Ѳедоръ | Ѳедоровичъ | Вторая скрипка | - | -
+  field in question: family
+  Option A: "Маннопъ"
+  Option B: "Манкопъ"
+
+## PAGE musicians_1893-94_SP_p002   scan: outputs/roster_images_full/images/musicians_1893-94_SP_p002.png   stored-row bundle: /tmp/audit4/musicians_1893-94_SP_p002.txt
+
+ITEM musicians_1893-94_SP_p002|e003|first
+  stored row: e003 | 68. | Набокинъ | Филипъ | Ѳедоровичъ | Тромбонъ | - | -
+  field in question: first
+  Option A: "Филипъ"
+  Option B: "Филиппъ"
+
+ITEM musicians_1893-94_SP_p002|e012|first
+  stored row: e012 | 77. | Плацатка | Іоифъ | Карловичъ | Фаготъ | - | -
+  field in question: first
+  Option A: "Іоифъ"
+  Option B: "Іосифъ"
+
+ITEM musicians_1893-94_SP_p002|e030|family
+  stored row: e030 | 95. | Терь-Огановъ | Артемій | Антоновичъ | Альтъ | - | -
+  field in question: family
+  Option A: "Терь-Огановъ"
+  Option B: "Теръ-Огановъ"
