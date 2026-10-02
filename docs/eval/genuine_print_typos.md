@@ -354,3 +354,11 @@ unambiguous -- the components genuinely don't sum to the stated total in the ori
   (3 and 2) are crisp; 3≠2.
 - **`balletartists_1909-10_MSK_p006`, Козловъ 2-й А.М.**: "Въ 13 балетахъ—43; въ 5 операхъ—34. Всего—83 раза." 43+34=77≠83.
 - **`balletartists_1909-10_MSK_p007`, Никитинъ 1-й В.Д.**: "Въ 10 балетахъ—37; въ 5 операхъ—40. Всего—67 раза." 37+40=77≠67.
+
+## Stray dagger (†) with no date (Musicians, added 2026-10-02, issue #130)
+
+- **`musicians_1906-07_SP_p006`, Новоселовъ А.И. (Старшій библіотекарь Центральной Музыкальной Библіотеки)**: the entry "(съ 1 августа 1882 г.)." is
+  followed on its own line by a lone **"†"** with no date. He is still listed alive in 1907-08, where the note reads "† 5 мая 1908 г." -- so the
+  1906-07 dagger is not a death notice for that season. RG's reading: the 1906-07 volume may have been in production after his death (1908), which would
+  explain a dagger being set in it. The scan does not settle it either way. Transcribed verbatim: "†" stays in `tenure_note_text`, but the row carries no
+  `end_type` (previously "died" with no date, now empty), so it no longer contradicts the 1907-08 record.

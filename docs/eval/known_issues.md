@@ -21640,3 +21640,7 @@ most common existing form; existing transfer rows remain inconsistent -- "left s
 likely a stray print mark (genuine-typo candidate); not changed. (2) The audit covered only the 30 pages carrying candidates; a notes-only audit of the other ~142 Musicians pages would give full assurance.
 (3) Цабель's "Солистъ Двора..." appears in rank_or_title in some seasons only (1893-94..1896-97, 1899-00, 1901-02) -- others unchecked. (4) 1903-04 MSK p000 Адамовъ note stored "Московскімъ", print reads
 "Московскимъ" (letter-level misread, in the name-misread batch).
+
+**Issue #130 batch 6 addendum -- Новоселовъ's stray † (2026-10-02, DONE, RG decision)**: `musicians_1906-07_SP_p006` Новоселовъ has a lone "†" under his entry (scan viewed at zoom with RG); he is alive in 1907-08 and dies
+5 мая 1908. Per RG: † kept verbatim in the raw data and tenure_note_text, end_type cleared (was "died", no date), logged in docs/eval/genuine_print_typos.md. person_entry unchanged; one service-table row
+(end_type died -> empty); live persons 3338, tombstones identical, orphans 0, flags 599, receipts sum unchanged. Backup: full_run_pre_promote_backup_2026-10-02_novoselov.
