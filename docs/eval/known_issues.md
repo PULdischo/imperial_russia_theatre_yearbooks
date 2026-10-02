@@ -21580,3 +21580,10 @@ recovered on musicians_1897-98_MSK_p002, 26 missing instruments were added, and 
 5. ~190 zoom-confirmed name/instrument misreads, ~30 dropped "Оставилъ службу"/† notes, junk list_number/patronymic fields, homoglyph characters (є, ο, Latin o/e/de, Arabic U+0686).
 6. Cosmetic normalization: dropped ъ in 1890-98 Moscow headings, "." vs " / " separators, bare vs tier-prefixed p000 sub-headings, "Оркестры"/"Оркестры." by volume.
 7. Genuine print typos to add to docs/eval/genuine_print_typos.md (e.g. "Тромбомъ", "Фрацъ", "Крушевекій", "Належда", "И. сб.", "18." for 28, "сентябрь 1888", "34." for 54).
+
+**Issue #130 secondary batch 1 -- missing conductor rows (2026-10-02, DONE)**: 14 unnumbered Капельмейстеръ/Дирижеръ rows that are printed
+directly under each theater-orchestra title but were absent from the data were inserted, spelling and tenure text verbatim from the scans (an agent re-read
+each line at 2.5-4x; spellings differ by year and were kept as printed: Богуславъ "Вечеславовичъ" 1890-91 vs "Вячеславовичъ" 1891-92; Келеръ "Федоровичъ"
+1899-00/1900-01 vs "Ѳедоровичъ" 1901-02; Шульцъ "Дирижеръ" 1903-07 vs "Капельмейстеръ" 1900-02). Appended at the end of each page's entries so entry_ids of existing
+rows (and their person links) are unchanged. Notes kept: 1899-00 SP p005 Келеръ also prints "Назначенъ капельмейстеромъ съ 1 декабря 1898 г" (no final period).
+Genuine print typo for the typo list: 1901-02 SP p005 Келеръ's tenure is printed "(съ 1 сентября 1881 г,)." with a comma, kept verbatim in tenure_note_text.

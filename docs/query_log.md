@@ -11631,3 +11631,28 @@ outputs/full_run_pre_promote_backup_2026-10-02_musicians_wave6/.
 SWEEP TOTALS: all 172 unverified Musicians pages scan-verified by report-only agents (29 agents, 6 waves); 136 pages edited
 (~4,380 entries across heading_path/institution/list_number plus 26 missing instruments), plus musicians_1897-98_MSK_p002
 re-extracted (+51 rows). The other 36 pages were correct as stored (modulo deferred cosmetic/secondary items).
+
+## 2026-10-02 — Library-row institution survey (for RG's decision)
+
+```sql
+SELECT season, city, page_id, entry_id, family_name, heading_path, institution FROM raw.person_entry
+WHERE entity_type='Musicians' AND (heading_path ILIKE '%библіот%' OR heading_path ILIKE '%библиот%'
+   OR institution ILIKE '%библіот%' OR institution ILIKE '%библиот%') ORDER BY 1,2,3,4;
+```
+
+Result: 53 library-related rows (Moscow: Фарскій, Орловъ, Львовъ, Миролюбовъ, Адельгеймъ; St. Petersburg: Тильпъ, Новоселовъ,
+Христофоровъ, Альбрехтъ/Кучера as inspectors; one Moscow drama "Библіотекарша"). Institution values: "Музыкальная библіотека." 14,
+"Оркестры." 11, "Императорское С.-Петербургское Театральное Училище" 11, "Списокъ лицъ, состоявшихъ на службѣ въ Императорскихъ театрахъ" 5,
+"Оркестръ Малаго театра." 3, "Центральная Музыкальная Библиотека" 3 (+1 with і), "Ежегодникъ Императорскихъ театровъ" 2,
+"Музыканты:" 1, "Списокъ музыкантовъ" 1, "МОСКВА. Русская драматическая труппа." 1 (drama librarian, unrelated).
+
+## 2026-10-02 — Missing conductor rows inserted (issue #130 secondary batch 1)
+
+Result: 14 printed, unnumbered theater-orchestra conductor rows were absent from the data (Богуславъ MSK 1890-91 p004; Рамзе SP 1890-91
+p005; Арендсъ MSK 1893-94 p003 and 1898-99 p003; Галкинъ SP 1898-99 p004 and 1903-04 p003; Келеръ SP 1899-00/1900-01/1901-02 p005; Шульцъ MSK 1900-01
+p004, 1901-02 p004, 1903-04 p003, 1904-05 p003, 1906-07 p004). An agent re-read each conductor line on the scan at 2.5-4x
+(findings: /tmp/conductors/findings.json, ephemeral) and confirmed none existed in the DB and none carries a list number. Rows were appended at the end of
+each page's raw entries (not in print position) so no existing entry_id shifts -- person_link is keyed by entry_id. person_entry 23224 -> 23238
+(+14, no existing row changed). All 14 link to existing live persons (no new person records survive: 6 Tier-1 records were auto-merged,
+tombstones 2239 -> 2245, all prior tombstones preserved; live persons 3343 unchanged); flags 599, receipts sum identical.
+Backup: outputs/full_run_pre_promote_backup_2026-10-02_conductors/.
