@@ -21565,3 +21565,18 @@ title ("Оркестры.") in 1908-09 MSK/SP, the running head in 1909-10 -- RG
 series' p000 form, no spelling normalization yet): the dropped ъ ("Оркестр"/"Оперный оркестр.") in 1890-98 Moscow headings, the
 "." vs " / " separator, bare vs tier-prefixed Репетиторы/Капельмейстеръ военной музыки rows in several p000s, and "Оркестры"
 vs "Оркестры." institution spellings by volume.
+
+**Issue #130 -- COMPLETE (2026-10-02), with a secondary worklist.** All 172 previously unverified Musicians pages were scan-verified
+(6 waves, 29 report-only agents; with #126's 43 pages that is all 215). 136 pages were edited (~4,380 entries), 51 missing rows were
+recovered on musicians_1897-98_MSK_p002, 26 missing instruments were added, and two parser overrides were adjusted. Quality flags 825 -> 599
+(the remaining 599 are credit_sum_mismatch 341, duplicate_person_on_page 179, institution_duplicated_in_heading_path 64, receipts_parse_failed 15).
+**Not yet done (needs RG decisions or its own verified batch):**
+1. Library-row institution (Новоселовъ / Фарскій / Тильпъ-style rows): the data holds "Училище", "Ежегодникъ...", "Центральная Музыкальная
+   Библиотека" (modernized), "Оркестры.", "Оркестръ Малаго театра." and "Музыкальная библіотека." by season; ~14 rows left untouched where the scan
+   prints no institution.
+2. 1908-10 series institutions: continuation pages hold the printed upper-case running head, p000s hold the section title.
+3. Row insertions: ~12 printed capellmeister/conductor rows missing from the data (Богуславъ, Рамзе, Келеръ x4, Галкинъ x3, Арендсъ x2, Шульцъ x4).
+4. Row removals: musicians_1908-09_MSK_p000 e001-e007 and 1909-10 p000s' ballet/French-troupe tails, musicians_1908-09_SP_p002 e035 (a note split into a fake row).
+5. ~190 zoom-confirmed name/instrument misreads, ~30 dropped "Оставилъ службу"/† notes, junk list_number/patronymic fields, homoglyph characters (є, ο, Latin o/e/de, Arabic U+0686).
+6. Cosmetic normalization: dropped ъ in 1890-98 Moscow headings, "." vs " / " separators, bare vs tier-prefixed p000 sub-headings, "Оркестры"/"Оркестры." by volume.
+7. Genuine print typos to add to docs/eval/genuine_print_typos.md (e.g. "Тромбомъ", "Фрацъ", "Крушевекій", "Належда", "И. сб.", "18." for 28, "сентябрь 1888", "34." for 54).

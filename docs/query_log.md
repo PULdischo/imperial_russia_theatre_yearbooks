@@ -11619,3 +11619,15 @@ rows under the military-band heading, and the "Завѣдывающій ..." tie
 (institution_duplicated_in_heading_path 73 -> 64, theater names no longer repeated in headings), entities.person 3343
 live / 2239 tombstoned (set identical), orphans 0, receipts sum identical, 2 bad-token rows = deferred library rows.
 Backup: outputs/full_run_pre_promote_backup_2026-10-02_musicians_wave5/.
+
+## 2026-10-02 — Musicians sweep wave 6 applied; sweep complete (issue #130)
+
+Result: wave 6 (21 last Tier C pages): 5 pages changed, 63 entries edited, 2 junk list_numbers nulled; column diff only
+heading_path (4), institution (59), list_number (2). Fixes: Александринскаго rows stamped Михайловскаго (1905-06 SP p005), missing
+institution period on the Александринскаго block (1904-05 SP p004), "Настройщики" heading (1904-05 MSK p000), the ballet-men tail
+headed "Оркестры" (1909-10 MSK p000 e027-e028 -> "Артисты"), 1909-10 SP p000 Малько under Капельмейстеры балета. Post-fix: flags 599,
+entities.person 3343 live / 2239 tombstoned (set identical), orphans 0, receipts sum identical. Backup:
+outputs/full_run_pre_promote_backup_2026-10-02_musicians_wave6/.
+SWEEP TOTALS: all 172 unverified Musicians pages scan-verified by report-only agents (29 agents, 6 waves); 136 pages edited
+(~4,380 entries across heading_path/institution/list_number plus 26 missing instruments), plus musicians_1897-98_MSK_p002
+re-extracted (+51 rows). The other 36 pages were correct as stored (modulo deferred cosmetic/secondary items).
