@@ -21609,3 +21609,11 @@ tenure notes, empty-vs-null patronymics, and one first name, Альфрѣдъ vs
 before the rebuild: 0 of 19 persons changed identity; live persons 3343, tombstones identical (2245), orphans 0, flags 599, Repertoire receipts sum unchanged. NOT removed (unique
 content, not duplicates): the French-troupe actor rows Terrier/Valbel/Violette (1908-09 SP p000 e001-e003) and Perret/Terrier/Valbel/Violette (1909-10 SP p000 e012-e015) -- awaiting
 RG's decision. Still open: the 1908-09 SP p002 e035 "Переведенъ изъ оркестра Михайловскаго театра" note merge.
+
+**Issue #130 secondary batch 5 -- French-troupe rows removed, stray transfer note merged (2026-10-02, DONE)**: per RG ("we don't need them at all"), removed the 7 French-troupe actor rows
+misfiled on the Musicians St. Petersburg pages -- Terrier/Valbel/Violette (1908-09 SP p000 e001-e003, list 17-19) and Perret/Terrier/Valbel/Violette (1909-10 SP p000 e012-e015, list 14-17).
+They existed nowhere else in the corpus, so this removes 4 live person records (Perret, Terrier, Valbel, Violette); the 1908-09 leading removal shifted e004-e017 -> e001-e014 and
+person_link was remapped first (14/14 identities unchanged). Also, 1908-09 SP p002 e035 ("Переведенъ изъ оркестра Михайловскаго театра съ 1 ноября 1905 г.") was scan-verified as an
+indented note printed under no. 70 Мнацагановъ (not a person); the extractor had emitted it as a stray last row. Merged into Мнацагановъ's tenure_note_text following the corpus convention for
+transfer notes ("съ 1 сентября 1902 г. Переведенъ ... съ 1 ноября 1905 г."); the phantom person is gone. person_entry 23184->23176 (-8); live persons 3343->3338 (-5: 4 French + 1 phantom);
+tombstones identical (2245), orphans 0, flags 599, receipts sum unchanged. Backup: full_run_pre_promote_backup_2026-10-02_removals2.

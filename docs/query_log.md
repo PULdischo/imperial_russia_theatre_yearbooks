@@ -11691,3 +11691,15 @@ select family_name from raw.person_entry where family_name in ('Terrier','Valbel
 
 Result: all 26 (1908-09) and 28 (1909-10) rows on each Musicians page matched a BalletArtists row on the same person; French-troupe rows appear only on the Musicians pages. After removing 54 rows
 and remapping person_link: live persons 3343, tombstone set identical (2245), orphan links 0, 19/19 renumbered links unchanged, receipts sum 2999096975 unchanged, quality flags 599.
+
+## 2026-10-02 -- Issue #130: French-troupe rows on Musicians SP pages -- do the persons appear anywhere else; verify e035 note on scan
+
+```sql
+select e.entry_id,e.family_name,e.first_name,pl.person_id from raw.person_entry e left join entities.person_link pl using(entry_id)
+where e.family_name in ('Terrier','Valbel','Violette','Perret') order by 1;
+select entry_id,family_name,tenure_note_text from raw.person_entry where tenure_note_text ilike '%Переведен%' or family_name ilike 'Переведен%';
+```
+
+Result: the four persons appear only on musicians_1908-09_SP_p000 / musicians_1909-10_SP_p000 (7 entries, 4 person_ids). 118 entries carry "переведен" in tenure_note_text (convention: note folded
+into the person's own tenure note); 1 row had it as family_name (the stray 1908-09 SP p002 e035). Scan check: note is printed under no. 70 Мнацагановъ. After rebuild: 23176 entries, live persons 3338,
+tombstones identical (2245), orphans 0, flags 599, receipts sum 2999096975 unchanged.
