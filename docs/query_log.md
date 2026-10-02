@@ -11728,3 +11728,14 @@ select count(*) from raw.person_entry where entry_id like 'musicians_%' and rege
 Result: 526 of 23176 links name-mismatched (many legitimate spelling variants; real shifted blocks on musicians_1891-92_MSK_p003 28, administration_1895-96_p001 27, administration_1894-95_p002 19, musicians_1894-95_MSK_p000 15,
 theaterschoolstaff_1896-97_p000 11 -- predating 2026-10-01). Month census before fixes: 2 note texts + 3 service dates with "июл/июн", 8 with dropped-і "юня", 6 with "апреля": all corrected against the scans.
 Final: person_entry 23178, live persons 3338, tombstones 2245 identical, orphans 0, flags 599, receipts sum 2999096975.
+
+## 2026-10-02 -- Issue #130 batch 8: classify Musicians transfer/appointment notes by direction and what end data they carry
+
+```sql
+select e.entry_id,e.tenure_note_text,list({'e':s.end_date_text,'t':s.end_type} order by s.period_order)
+from raw.person_entry e left join raw.person_entry_service s using(entry_id)
+where e.entry_id like 'musicians_%' and regexp_matches(e.tenure_note_text,'(?i)переведен|назначен') group by 1,2;
+```
+
+Result: 114 entries (65 transfer-out-looking, 30 in, 12 change, 7 appointment by the first-pass regexes; hand-corrected). Before: out = 24 other / 19-22 left service / 7+ none; in/change/appointment: 17 carried a spurious end. After applying
+RG's rule: all transfer-out rows with a printed date are end_type "other"; in/change/appointment rows have no end. Final: person_entry 23176, live persons 3336, tombstones 2245, orphans 0, flags 599, receipts sum 2999096975.

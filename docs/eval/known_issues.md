@@ -21674,3 +21674,15 @@ administration_1894-95_p002 19, musicians_1894-95_MSK_p000 15, theaterschoolstaf
 rows misfiled on Musicians SP pages like the French-troupe rows: Южинъ (1909-10 SP p004 e022, МОСКВА. Русская драматическая труппа, with a dropped alias "(Князь Сумбатовъ)" and a spurious end date) and Лошкарева (1908-09 SP p004) -- awaiting RG.
 (3) End-type semantics for transfers: transfer-OUT rows use left service / other / none inconsistently, and transfer-IN / instrument-change notes ("Переведенъ изъ ...", "Переведенъ на ... скрипку") often carry an end date although the person did not
 leave (Будаевъ, Штехертъ, Островскій, Фишеръ 1906-07, Леоновъ, Фельдтъ ...) -- needs one normalization pass once the rule is agreed.
+
+**Issue #130 batch 8 -- misfiled Moscow drama rows removed; transfer end-date normalization (2026-10-02, DONE, RG-approved)**:
+(a) Removed Южинъ (1909-10 SP p004 e022) and Лошкарева (1908-09 SP p004 e022), non-musician Moscow drama-troupe rows misfiled on Musicians pages (same class as the French-troupe rows removed in batch 5; both persons existed
+nowhere else). Mid-page removals: the following entries (5 and 3) were renumbered and entities.person_link remapped first (0 identity changes); person_entry 23178->23176, live persons 3338->3336, tombstones 2245 identical.
+**NOT removed, awaiting RG**: the rest of the same misfiled block -- 1908-09 SP p004 e017-e025 (Князь Сумбатовъ, Платонъ, Поповъ, Саламатовъ, Зайцевъ, Алексѣева, Монаховъ, Понизовскій) and 1909-10 SP p004 e022-e027 now
+e022-e026 (Платонъ, Айдаровъ, Поповъ, Носовъ, Саламатовъ).
+(b) **Transfer end-date normalization** per RG's rule: 114 Musicians notes containing "переведенъ/назначенъ" were classified by hand (transfer OUT / transfer IN / instrument or role change / appointment). **OUT -> end date kept, end_type
+"other"** (never "left service" or blank): 32 rows (22 were "left service", 10 had no type). **IN / instrument change / appointment -> no end date and no end_type**: 17 rows had a spurious end (Будаевъ x4, Штехертъ, Фишеръ,
+Тракалъ, Островскій, Лачиновъ, Леоновъ x2, Адамовъ 1902-03, Поповъ, Шолларъ, Кемеръ, Фельдтъ, Франке 1900-01, Шульцъ 1899-00). Only service-period end fields changed (asserted); note text, person_entry and entity links untouched.
+Reclassified by hand after reading all 114: Кротковъ 1894-95 and Келеръ 1898-99 (transfer to conduct another theatre's orchestra = OUT). Transfer-out notes with NO printed date (Ветцель 1902-03 SP p004, Липинъ 1903-04 SP p004, Елинекъ
+1903-04 SP p005) were left alone -- nothing to set. Rows with two service periods (Тракалъ, Фельдтъ, Будаевъ 1906-07) keep their odd second open period (structure not touched). Row list: docs/eval/musicians_notes_audit_2026-10-02/
+transfer_end_normalization_rows.json. Verification: 49 entries changed, live persons 3336, tombstones identical (2245), orphans 0, flags 599, receipts sum unchanged. Backups: ..._dramarows, ..._transfers (targeted: DB + parsed + touched raw).
