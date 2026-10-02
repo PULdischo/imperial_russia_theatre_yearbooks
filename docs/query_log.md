@@ -11818,3 +11818,13 @@ select count(*) from raw.person_entry where page_id like 'musicians_%' and rank_
 ```
 
 Result: 759 of 7639 rows end in a colon (9 distinct headings; "Музыканты:" 415, "Оркестр оперы и балета. Музыканты:" 147, "Оркестръ оперы и балета. Музыканты:" 123); 705 of them have a colon-free twin; 0 rows still hold the Фарскій alias in rank_or_title.
+
+## 2026-10-02 -- hard-sign-less "оркестр" in Musicians headings (issue #130 batch 9 addendum 3)
+
+```sql
+select page_id,count(*) from raw.person_entry where page_id like 'musicians_%' and (regexp_matches(heading_path,'Оркестр[^ъаыуо]') or regexp_matches(heading_path,'Оркестр$')) group by 1 order by 1;
+select heading_path,count(*) from raw.person_entry where page_id like 'musicians_%' group by 1 order by 1;   -- scanned all 104 distinct values by eye
+select count(*) from raw.person_entry where page_id like 'musicians_%' and regexp_matches(heading_path,'(Оркестр|оркестр)([^ъыовауи]|$)');
+```
+
+Result: 7 pages (1894-95/1896-97/1897-98 MSK p000-p002) had "Оркестр оперы и балета", and by the full heading listing 8 more (1890-93 MSK p000-p002) had "Оперный оркестр" -- 544 rows in all; scans of all six p000 pages print the hard sign. After the fix: 0 rows left.

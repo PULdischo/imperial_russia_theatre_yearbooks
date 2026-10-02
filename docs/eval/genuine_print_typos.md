@@ -395,3 +395,4 @@ correction belongs. Entry ids are `<page_id>__eNNN`.
   numeral (1906-07 MSK p002 e030; stored "Пекарскій 1"), "Карлъ·Вильгельмъ" with a middle dot (1892-93 MSK p000 e015), "Фридрихъ -Эрнестъ"/"Карлъ - Вильямъ" hyphen spacing,
   the misprinted list number "34." for 54 (1895-96 MSK p001 e032). Damaged-glyph cases resolved by corroboration (not typos): see known_issues #130 batch 9.
 - `musicians_1901-02_SP_p000` e014 Ауэръ: first name printed **Лоопольдъ** (Леопольдъ everywhere else); stored as printed (seen on the scan, 2026-10-02).
+- `musicians_1898-99_SP_p006` section heading "Старшій библіотекарь Центральной Музыкальной **Бблiотеки**." (first и dropped; seen at 4x zoom 2026-10-02); `musicians_1905-06_MSK_p001` heading "**И. сб.** 2-го капельмейстера балета" (сб. for об.). Both stored as printed.
