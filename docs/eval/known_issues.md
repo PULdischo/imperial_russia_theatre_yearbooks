@@ -21599,3 +21599,13 @@ inconsistent values ("Училище", "Ежегодникъ...", "Список�
 (UPPERCASE, partly lowercase) while every earlier season stores the section title. Per RG's rule (institution from the section title; headings reflect subsections) 464 orchestra rows now
 carry "Оркестры."; the section title was also stripped from 250 1909-10 headings where it duplicated the institution. Non-orchestra rows misfiled in these series (ballet tails, French-troupe
 actors, Moscow drama roster) were left as stored for the row-removal batch. Open cosmetic item surfaced: trailing colons in headings ("Музыканты:" vs "Музыканты") split role_normalized.
+
+**Issue #130 secondary batch 4 -- row removals, duplicated ballet/orchestra rows (2026-10-02, DONE)**: on 1908-09 and 1909-10 the Moscow section break falls mid-page (ballet troupe
+list ends, orchestra list begins on the same scan page), so both the BalletArtists and the Musicians extraction captured the whole page and each held the other's rows. Every removed
+row was verified to duplicate a row on the sibling page (list number + surname; Musicians' zoom-verified readings kept -- the BalletArtists copies differed only in a stray ")" on
+tenure notes, empty-vs-null patronymics, and one first name, Альфрѣдъ vs Альфредъ, 1909-10 no. 16). Kept on each page only its own section: Musicians 1908-09 MSK p000 26->19
+(removed ballet list 65-71), Musicians 1909-10 MSK p000 28->26 (removed Ѳедоровъ 1-й/2-й), BalletArtists 1908-09 MSK p007 26->7 and 1909-10 MSK p009 28->2 (removed orchestra rows).
+54 rows total; person_entry 23238->23184. The one leading removal (Musicians 1908-09 MSK p000) shifted entry_ids e008-e026 -> e001-e019, so entities.person_link was remapped
+before the rebuild: 0 of 19 persons changed identity; live persons 3343, tombstones identical (2245), orphans 0, flags 599, Repertoire receipts sum unchanged. NOT removed (unique
+content, not duplicates): the French-troupe actor rows Terrier/Valbel/Violette (1908-09 SP p000 e001-e003) and Perret/Terrier/Valbel/Violette (1909-10 SP p000 e012-e015) -- awaiting
+RG's decision. Still open: the 1908-09 SP p002 e035 "Переведенъ изъ оркестра Михайловскаго театра" note merge.

@@ -11678,3 +11678,16 @@ French-troupe actors, 1909-10 MSK p000 e027-e028 ballet tail) pending the row-re
 section title ("Оркестры. / Музыканты:", "Оркестры / Музыканты"), which now duplicated the institution (131 new institution_duplicated_in_heading_path flags); that redundant prefix was stripped
 from 250 heading_path values (1909-10 only), returning flags to 599. Column diffs: batch 3a institution only (464), 3b heading_path only (250). Remaining cosmetic: trailing colons split
 role_normalized ("Музыканты:" 127 vs "Музыканты" 119). Tombstone set identical, orphans 0, receipts sum identical. Backup: outputs/full_run_pre_promote_backup_2026-10-02_runninghead/.
+
+## 2026-10-02 -- Issue #130 row removals: are the Moscow ballet/orchestra page pairs true duplicates, and did person identity survive?
+
+```sql
+-- pair overlap + person_link agreement (1908-09 and 1909-10), then post-rebuild identity check
+select m.entry_id, m.list_number, m.family_name, b.entry_id, lm.person_id=lb.person_id
+from raw.person_entry m join raw.person_entry b on b.page_id=? and b.list_number=m.list_number and b.family_name=m.family_name
+left join entities.person_link lm on lm.entry_id=m.entry_id left join entities.person_link lb on lb.entry_id=b.entry_id where m.page_id=?;
+select family_name from raw.person_entry where family_name in ('Terrier','Valbel','Violette','Perret') and entry_id like '%190%';
+```
+
+Result: all 26 (1908-09) and 28 (1909-10) rows on each Musicians page matched a BalletArtists row on the same person; French-troupe rows appear only on the Musicians pages. After removing 54 rows
+and remapping person_link: live persons 3343, tombstone set identical (2245), orphan links 0, 19/19 renumbered links unchanged, receipts sum 2999096975 unchanged, quality flags 599.
