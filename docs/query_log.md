@@ -11606,3 +11606,16 @@ check); (b) _HEADING_PATH_RESTORE_FIXES entry for musicians_1894-95_MSK_p003 rem
 heading-only fixes, institutions left as stored per RG's "keep verbatim institutions" (series-level question logged).
 Post-fix: flags 608, entities.person 3343 live / 2239 tombstoned (set identical to pre-wave), orphans 0, Repertoire receipts
 sum identical; 3 bad-token rows remain = deferred librarian rows. Backup: outputs/full_run_pre_promote_backup_2026-10-02_musicians_wave4/.
+
+## 2026-10-02 — Musicians sweep wave 5 applied (issue #130)
+
+Result: wave 5 (30 Tier C pages, mostly p000 list-start pages, 1890-91 to 1900-01): 11 pages needed changes,
+215 entries edited, 3 junk list_numbers nulled, 13 instruments preserved via the raw instrument field. Column diff of
+parsed person_entry: only heading_path (185), institution (112), list_number (3) changed. Real errors found: the
+Малый/Александринскій labels stamped on the wrong rows (1892-93 MSK p003, SP p004), a sub-heading copied into
+institution (1897-98 MSK p003), an instrument word as heading (1893-94/1894-95 MSK p000 Бенда), 1898-99 SP p000 Репетиторы
+rows under the military-band heading, and the "Завѣдывающій ..." tier carried onto every row of three Moscow p000s
+(1893-94, 1895-96, 1896-97). The other 19 pages were correct as stored. Post-fix: flags 608 -> 599
+(institution_duplicated_in_heading_path 73 -> 64, theater names no longer repeated in headings), entities.person 3343
+live / 2239 tombstoned (set identical), orphans 0, receipts sum identical, 2 bad-token rows = deferred library rows.
+Backup: outputs/full_run_pre_promote_backup_2026-10-02_musicians_wave5/.

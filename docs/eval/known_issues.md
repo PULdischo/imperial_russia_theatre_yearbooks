@@ -21559,3 +21559,9 @@ list, duplicates of balletartists_1908-09_MSK_p007 e001-e007); French-troupe act
 musicians_1909-10_SP_p000 e012-e015; musicians_1909-10_MSK_p000 e027-e028 ballet tail; musicians_1908-09_SP_p002 e035 is a note split
 into a fake person row. Series-level question: 1908-09/1909-10 continuation pages hold the running head while p000 holds the section
 title ("Оркестры.") in 1908-09 MSK/SP, the running head in 1909-10 -- RG to decide whether institutions are normalized.
+
+**Issue #130, wave 5 (30 pages, Tier C list-start pages 1890-91..1900-01)**: much cleaner than waves 1-4 -- 11 pages changed
+(215 entries), 19 pages correct as stored. See query_log for the shapes. Cosmetic items deliberately NOT applied (RG: match each
+series' p000 form, no spelling normalization yet): the dropped ъ ("Оркестр"/"Оперный оркестр.") in 1890-98 Moscow headings, the
+"." vs " / " separator, bare vs tier-prefixed Репетиторы/Капельмейстеръ военной музыки rows in several p000s, and "Оркестры"
+vs "Оркестры." institution spellings by volume.
