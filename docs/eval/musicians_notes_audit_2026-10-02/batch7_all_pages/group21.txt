@@ -1,0 +1,17 @@
+PAGE SUMMARY
+musicians_1901-02_SP_p005 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1901-02_SP_p006 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1902-03_MSK_p000 | printed notes found: 5 | already correctly captured: 4 | discrepancies: 1
+musicians_1902-03_MSK_p001 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 0
+musicians_1902-03_MSK_p002 | printed notes found: 10 | already correctly captured: 9 | discrepancies: 1
+DISCREPANCIES
+musicians_1902-03_MSK_p000 | e013 | Адамовъ | PRINTED NOTE: "Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г." | STORED: "Переведенъ къ Московскімъ театрамъ съ 1 сентября 1903 г." | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | print has plain "Московскимъ" (no dotted і); stored has "Московскімъ"
+musicians_1902-03_MSK_p002 | e005 | Марквардтъ | PRINTED NOTE: "Оставилъ службу артиста-музыканта 1 іюля 1903 г." | STORED: "Оставилъ службу артиста-музыканта 1 июля 1903 г." (end_date_text "1 июля 1903 г.") | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | print has dotted "і" in "іюля"; stored modernized to "июля" in both tenure_note_text and end date
+OTHER FINDINGS
+- p005 (Notes counted: 3 "Оставилъ службу" for Беттенштедтъ e012 1 сентября 1901, Кнохъ e023 1 сентября 1901, Нервангъ e034 15 ноября 1901) all matched at zoom, each attached to the correct person.
+- p005 e025 Кулле: printed family name is "Кулле 2-й" (numeral suffix) but stored as "Кулле" only (name-level, not a note).
+- p006 Новоселовъ e015: printed heading "Старшій библіотекарь Центральной Музыкальной Библіотеки" is stored in heading_path (rank_or_title is empty); no note lost.
+- p001 e001: printed surname looks like "Гедике" (д with tail) but stored "Гелике" (name misread; UNCERTAIN, not zoomed beyond one crop).
+- p001 e002 Гейслеръ: transfer note and date "1 октября 1902 г." captured correctly, but end_type is empty ("-"), unlike Стрекаловъ (p002 e037, "other") and Адамовъ (p000 e013, "left service") for the same kind of transfer note: inconsistent end_type for transfers.
+- p002 e011 Пашеевъ: print looks like "Пащеевъ" (щ) at normal resolution; UNCERTAIN, name-level only.
+- p000 Бейдлеръ e004 (contract span with 1/14 and 8/21 dates), Барминъ e007 (span with two periods), p002 Литвиновъ e003 and Павловъ e010 (spans) all match print at zoom; spans stored as two rows each with one carrying the "по" end date (convention, not an error).

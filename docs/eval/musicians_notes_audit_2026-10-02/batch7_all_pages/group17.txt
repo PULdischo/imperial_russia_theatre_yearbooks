@@ -1,0 +1,14 @@
+PAGE SUMMARY
+musicians_1900-01_MSK_p002 | printed notes found: 5 | already correctly captured: 5 | discrepancies: 0
+musicians_1900-01_MSK_p003 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1900-01_MSK_p004 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1900-01_MSK_p005 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1900-01_SP_p000 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 0
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- MSK_p002 e034 Рессеръ: stored first name "Марлохей", print reads "Мардохей".
+- MSK_p003 e001/e003/e010/e019/e021/e033: stored instrument "Альть", print is "Альтъ".
+- MSK_p004 e025: stored family "Наккій", print reads "Нацкій".
+- SP_p000 e011: stored "Алексѣнко", print reads "Алексѣенко".
+- Notes counted: MSK_p002 = Кламротъ left service, Марквардтъ "онъ же и капельмейстеръ", Рамбоусекъ †, contract spans Литвиновъ and Павловъ; MSK_p003 = Швинкъ left service, Шиманъ †, Штернбергъ span; MSK_p004 = Замысловъ and Падель left service, Фарскій "онъ же и библіотекарь"; MSK_p005 = Орловъ span; SP_p000 = Направникъ rank, Адамовъ and Александровъ transfers, Ауэръ Солистъ Двора. All present, attached to the right person, dates verified at zoom (end dates and end_type correct).

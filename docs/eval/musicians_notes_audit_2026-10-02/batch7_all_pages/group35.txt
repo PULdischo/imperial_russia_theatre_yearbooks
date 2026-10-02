@@ -1,0 +1,19 @@
+PAGE SUMMARY
+musicians_1908-09_MSK_p003 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1908-09_SP_p000 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1908-09_SP_p001 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1908-09_SP_p002 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1908-09_SP_p003 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- MSK_p003 notes checked at zoom and all captured: e003 Сиборъ "Солистъ балета." (in rank_or_title), e032 Юмрихъ "Оставилъ службу 1 августа 1909 г." (end 1 августа 1909 г., left service), e035 Яницкій contract span "съ 1 октября 1897 г. по 1 января 1900 г. и 1 декабря 1902 г."
+- MSK_p003 e035 Яницкій is stored as TWO duplicate rows (identical tenure text; first has end_date 1 января 1900 г. with empty end_type, second has no end) -- a duplication, not a dropped note.
+- SP_p000 e002 Направникъ: "Заслуженный артистъ Императорскихъ театровъ" captured in rank_or_title (zoomed, matches). The printed French-troupe entries at page top (17 Terrier, 18 Valbel, 19 Violette, each with a "съ ... 1908/1880 г." tenure and a role list) are not in the bundle (consistent with earlier removal commit; no musicians notes involved).
+- SP_p001 e005 Будаевъ: "(Переведенъ изъ Михайловскаго театра съ 1 октября 1904 г.)" fully captured (rank_or_title + tenure_note_text), but service end_date is set to "1 октября 1904 г." with empty end_type; this is a transfer-IN, so the end date looks wrong/inconsistent (compare Мнацагановъ e029 SP_p002 with the same kind of note and no end).
+- SP_p002 e029 Мнацагановъ: indented line "Переведенъ изъ оркестра Михайловскаго театра съ 1 ноября 1905 г." captured verbatim in tenure_note_text; correctly attached; no end date (consistent with transfer-in).
+- SP_p003 e032 Фишеръ: indented note "Переведенъ изъ оркестра Александринскаго театра съ 1 сентября 1906 г." captured, but stored tenure text has a stray ")" ("съ 1 сентября 1899 г.). Переведенъ ...") whereas print has "г.), Труба."; and end_date "1 сентября 1906 г." with end_type "other" is set for what is a transfer-in (inconsistent with Мнацагановъ, which has no end).
+- SP_p001: a stray printed mark (a small section-sign-like glyph) follows "Вторая скрипка." of e013 Вагнеръ Конрадъ; not text, not stored; ignore unless wanted.
+- SP_p003 e020 Сольскій: print genuinely lacks the day ("съ сентября 1893 г."); stored matches (print gap, not extractor error).
+- SP_p002 e028: family stored as "Михайлова скій" (stray space; print is "Михайловскій").
+- No Оставилъ службу / † / appointment / "продолжаетъ участвовать" notes appear on the SP pages 000-003; all other entries carry only the plain "(съ ... г.)" tenure and instrument.

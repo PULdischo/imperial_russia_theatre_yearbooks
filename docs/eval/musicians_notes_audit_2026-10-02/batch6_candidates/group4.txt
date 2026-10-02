@@ -1,0 +1,9 @@
+musicians_1896-97_MSK_p000 | e006 Адольфи 1-й | "Оставилъ службу 1 января 1897 г." | DROPPED | DIRECT
+musicians_1896-97_MSK_p000 | e007 Адольфи 2-й | "Оставилъ службу 1 января 1897 г." | DROPPED | DIRECT
+musicians_1896-97_SP_p002 | e046 Штейнсъ | "Оставилъ службу 1 сентября 1896 г." (final period smudged) | DROPPED | DIRECT
+musicians_1896-97_SP_p002 | e044 Штаакъ "† 30 ноября 1896 г" (no period printed) ALREADY-CAPTURED
+musicians_1896-97_SP_p002 | e035 Цабель | "Солистъ Двора Его Императорскаго Величества." follows "Арфа." | DROPPED (new, not in sweep list) | DIRECT
+musicians_1897-98_MSK_p000 | e022 Гейнъ "Оставилъ службу 1 ноября 1897 г." ALREADY-CAPTURED(service end stored; note text absent from tenure_note_text)
+musicians_1897-98_MSK_p001 | e033 Кюне | "Оставила службу 4 сентября 1898 г." (feminine as printed) | DROPPED | DIRECT
+musicians_1897-98_MSK_p002 | e025 Триньякъ | NONE printed -> sweep suspect WRONG (no change); e026 Туровичъ "Оставилъ службу 1 апрѣля 1898 г." ALREADY-CAPTURED
+OTHER: names/instr list in agent message (Вальдгорнт, Геръ-Огановъ->Теръ-Огановъ, Кануть->Канутъ, Шолларь->Шолларъ, Виолончель->Віолончель, Кругоголововъ, Кунсть, Пащееевъ, Належда->Надежда(print typo), Тромбомъ print typo)

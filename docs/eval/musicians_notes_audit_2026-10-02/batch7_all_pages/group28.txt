@@ -1,0 +1,17 @@
+PAGE SUMMARY
+musicians_1904-05_SP_p004 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1904-05_SP_p005 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 0
+musicians_1904-05_SP_p006 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1905-06_MSK_p000 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1905-06_MSK_p002 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 1
+DISCREPANCIES
+musicians_1905-06_MSK_p002 | e025 | Крулевъ | PRINTED TENURE (not a note): "(съ 26 сентября 1902 г.)" | STORED: "съ 26 декабря 1902 г." | VERDICT: WRONG-DATE | confidence: DIRECT(zoomed) | month printed "сентября" (zoom of entry 55), stored "декабря"; day 26 and year 1902 match
+OTHER FINDINGS
+- musicians_1904-05_SP_p005 e035 Подгорбунскій: print reads "Оставилъ службу : февраля 1905 г." (day glyph is a colon-like mark, probably a damaged "1"; day UNCERTAIN); stored note text matches print literally, stored end_date_text "февраля 1905 г." (day mark dropped) with end_type "left service" -- no change recommended unless day is resolved elsewhere.
+- musicians_1904-05_SP_p005 e003 Штехертъ: printed "Переведенъ съ 1 сентября 1904 г. изъ оркестра Маріинскаго театра" is a transfer IN (start of service in this orchestra); stored in service end_date_text as "1 сентября 1904 г." with end_type empty -- a start/arrival date sitting in an end field; worth a convention check (note text itself is captured correctly).
+- musicians_1904-05_SP_p005 e008 Будаевъ and musicians_1904-05_SP_p006 e007 Тракалъ: transfers OUT to Маріинскій orchestra (1 октября 1904 / 15 октября 1904) captured verbatim; Тракалъ end_type "left service", Будаевъ end_type empty -- inconsistent end_type for the same kind of note.
+- musicians_1905-06_MSK_p002 e039 Павловъ: contract span "съ 10 октября 1878 по 30 декабря 1880 г. и съ 19 сентября 1882 г." captured on both split rows; first row has end_date_text 30 декабря 1880 г. but empty end_type (likely END-type gap, not a note loss).
+- musicians_1905-06_MSK_p002 e016: stored family "Квелнау", print reads "Кведнау" (name misread, zoomed).
+- musicians_1904-05_SP_p005 e009: stored family "ВиЛЬкенъ" has stray capitals; print is "Вилькенъ".
+- musicians_1904-05_SP_p005: stray lone "(" printed under entry 17 Лачиновъ (print artifact; not a note) -- the entry itself prints without its opening "(" ("съ 1 сентября 1897 г.)").
+- musicians_1904-05_SP_p004 and all other entries checked on all five pages (all tenure dates read at zoom on p002 MSK and p004); no other mismatches.

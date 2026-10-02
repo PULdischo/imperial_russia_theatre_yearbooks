@@ -1,0 +1,23 @@
+PAGE SUMMARY
+musicians_1901-02_MSK_p005 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1901-02_SP_p000 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1901-02_SP_p001 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1901-02_SP_p002 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1901-02_SP_p004 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- MSK_p005: notes captured = Орловъ contract span "съ 1 января 1857 г. по 1 февраля 1897 г. и съ 1 іюня 1897 г." (digits and "іюня" verified at zoom; end 1 февраля 1897 stored); Фарскій has only a plain tenure. e002 Орловъ is stored as two rows (one with end, one without) - presumably the two spans, not an error.
+- SP_p000: captured = Оглоблинъ "† 11 ноября 1901 г." (died, end date stored), Направникъ "Заслуженный артистъ Императорскихъ театровъ" (rank_or_title), Ауэръ "Солистъ Двора Его Императорскаго Величества" (rank_or_title).
+- SP_p001: captured = Гебгардъ (e021) "Оставилъ службу 1 сентября 1901 г" (print has no final period; end 1 сентября 1901 stored). No other notes on page.
+- SP_p002: no notes printed beyond tenure parentheses (all 41 entries checked at zoom).
+- SP_p004: captured = Келеръ (stored as "Кемеръ") e021 "1-го октября 1901 г. переведенъ на віолончель." (end 1 октября 1901 other) and Кондратьевъ e025 "Оставилъ службу 1 октября 1901 г." (end stored). Both correctly attached.
+- Name misread SP_p004 e021: stored "Кемеръ" but print "Келеръ, Альбертъ Федоровичъ".
+- Name misread SP_p004 e022: stored "Кеммеръ" but print "Кеммереръ".
+- Name misread SP_p004 e006: stored "Булановъ" but print "Будановъ".
+- Name misread SP_p004 e002: first name stored "Алольфъ" but print "Адольфъ".
+- Name misread SP_p001 e009: stored first name "Конраль" but print "Конрадъ".
+- Name misread SP_p001 e011: stored "Ваншейдль" but print "Ваншейдъ".
+- Name misread SP_p001 e004: stored "Болымъ" but print "Больмъ".
+- Name misread SP_p001 e006: stored "Брекертъ" but print "Брекеръ".
+- Name misread SP_p002 e019: stored "Людольфъ" but print "Людольфи".

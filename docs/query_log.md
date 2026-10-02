@@ -11715,3 +11715,16 @@ where e.page_id like 'musicians_%' and (e.tenure_note_text like '%Оставил
 
 Result: 3 rows after the batch (Плацатка 1897-98, Барсукъ-Самборскій 1903-04, Новоселовъ 1906-07). Two fixed (end dates set from the scan); Новоселовъ's lone "†" left (see known_issues #130 batch 6).
 Final state: musicians end_type counts None 7083 / left service 329 / died 72 / other 41; 23176 entries; live persons 3338; tombstones identical (2245); orphan links 0; flags 599; receipts sum 2999096975.
+
+## 2026-10-02 -- Issue #130 batch 7: global entity-link name-consistency check; month-spelling modernization census
+
+```sql
+-- links whose entry family name disagrees with the linked person's canonical family name (first 4 letters, normalized)
+select l.entry_id,e.family_name,p.canonical_family_name from entities.person_link l join raw.person_entry e using(entry_id) join entities.person p on p.person_id=l.person_id;
+-- month words modernized in Musicians dates (regexp_matches, NOT the ~ operator which is a full match in DuckDB)
+select count(*) from raw.person_entry where entry_id like 'musicians_%' and regexp_matches(tenure_note_text,'(^|[^і])ию[нл]');
+```
+
+Result: 526 of 23176 links name-mismatched (many legitimate spelling variants; real shifted blocks on musicians_1891-92_MSK_p003 28, administration_1895-96_p001 27, administration_1894-95_p002 19, musicians_1894-95_MSK_p000 15,
+theaterschoolstaff_1896-97_p000 11 -- predating 2026-10-01). Month census before fixes: 2 note texts + 3 service dates with "июл/июн", 8 with dropped-і "юня", 6 with "апреля": all corrected against the scans.
+Final: person_entry 23178, live persons 3338, tombstones 2245 identical, orphans 0, flags 599, receipts sum 2999096975.

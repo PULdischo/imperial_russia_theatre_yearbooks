@@ -1,0 +1,23 @@
+PAGE SUMMARY
+musicians_1903-04_SP_p006 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1904-05_MSK_p000 | printed notes found: 6 | already correctly captured: 5 | discrepancies: 1
+musicians_1904-05_MSK_p001 | printed notes found: 5 | already correctly captured: 5 | discrepancies: 0
+musicians_1904-05_MSK_p002 | printed notes found: 6 | already correctly captured: 6 | discrepancies: 0
+musicians_1904-05_MSK_p003 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 0
+DISCREPANCIES
+musicians_1904-05_MSK_p000 | e014 | Адамовъ | PRINTED NOTE: "Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г." | STORED: "Переведенъ къ Московскімъ театрамъ съ 1 сентября 1903 г." (end 1 сентября 1903 г., left service) | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | print has plain "Московскимъ" (и), stored has "Московскімъ" (і); date and attachment correct
+OTHER FINDINGS
+- p000 e013: printed surname "Адольфи" (Адольфи, Фердинандъ Вильгельмовичъ), stored "Адольфъ".
+- p000 e017: printed "Ардъ, Михаилъ Михайловичъ", stored "Ардль".
+- p000 e021: printed "Іоганнъ-Альбертъ", stored "Іоганнь-Альбертъ" (ь for ъ).
+- p000: Бейллеръ, Арёндсъ, Герберъ, Симонъ etc. have no instrument stored (correct, conductors); Барминъ/Козловъ/Фельдтъ † notes all correct and correctly attached.
+- p001 e002 Гейслеръ: transfer note "Переведенъ съ 1 октября 1902 г. въ Малый театръ" is captured with end date 1 октября 1902 г., but end_type is empty (should presumably be a transfer type like Strekalov/Veidenberg's "other").
+- p001 e019/e020/e021: printed "Золотаренко 1-й" (no. 37), "2-й" (38), "3-й" (39); the ordinal suffix 1-й/2-й/3-й is not in the stored family name (stored as plain "Золотаренко"); similar to p003 Шмидтъ where "1-й"/"2-й" were stored in the first-name field.
+- p002 e010: printed "Омэ, Генрихъ", stored "Омъ".
+- p002 e020: print "Рессеръ, Мардохей Земинъ Шломовичъ", stored first name "Марлохей" (misread; print reads Мардохей).
+- p003 e011 Тесситоре: printed instrument "Гобой", stored "Альтъ" (wrong instrument).
+- p003: stored instrument "Вальдгорнь" (ь) on e001, e009, e030, where print reads "Вальдгорнъ" (ъ) (p001 also uses ъ); orthography only.
+- p003 e004 Вейденбергъ and e005 Стрекаловъ: transfer notes correctly attached to their owners (rows are stored out of print order: 110, 1-3, then 96 etc.; list_no values are right).
+- p003 e024/e025 Шмидтъ: "1-й"/"2-й" printed after the surname, stored in first-name field.
+- SP p006 e013 Новоселовъ: printed a centered title line above his entry "Старшій библіотекарь Центральной Музыкальной Библіотеки"; rank_or_title stored as "-" (may live in heading_path, not checked).
+- SP p006: all 12 numbered entries plus Новоселовъ carry only the "(съ ... г.)" tenure and instrument; no notes printed, none stored; all dates read at zoom match.

@@ -1,0 +1,18 @@
+PAGE SUMMARY
+musicians_1903-04_SP_p001 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1903-04_SP_p002 | printed notes found: 3 | already correctly captured: 0 | discrepancies: 3
+musicians_1903-04_SP_p003 | printed notes found: 4 | already correctly captured: 3 | discrepancies: 1
+musicians_1903-04_SP_p004 | printed notes found: 5 | already correctly captured: 4 | discrepancies: 1
+musicians_1903-04_SP_p005 | printed notes found: 5 | already correctly captured: 5 | discrepancies: 0
+DISCREPANCIES
+musicians_1903-04_SP_p002 | e004 | Либштейнъ | PRINTED NOTE: "Оставилъ службу 1 сентября 1903 г." | STORED: NONE (tenure_note_text ends at "Гобой."; service end empty) | VERDICT: DROPPED | confidence: DIRECT(zoomed) | indented line printed under entry 68, before entry 69
+musicians_1903-04_SP_p002 | e005 | Липинъ | PRINTED NOTE: "Переведенъ изъ оркестра Александринскаго театра съ 1 сентября 1903 г." | STORED: NONE (tenure_note_text ends at "Первая скрипка.") | VERDICT: DROPPED | confidence: DIRECT(zoomed) | indented two-line note under entry 69 (wraps "Алексан-/дринскаго"); not stored on e005 or any neighbour
+musicians_1903-04_SP_p002 | e021 | Осиповъ | PRINTED NOTE: "Оставилъ службу 1 сентября 1903 г." | STORED: NONE (tenure_note_text ends at "Альтъ.") | VERDICT: DROPPED | confidence: DIRECT(zoomed) | indented line under entry 85 in right column, before entry 86
+musicians_1903-04_SP_p003 | e017 | Цабель | PRINTED NOTE: "Солистъ Двора Его Императорскаго Величества." | STORED: "Солистка Двора Его Императорскаго Величества." | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | print has masculine "Солистъ" (male, Эдуардъ); stored "Солистка" looks copied from the Чіарлоне line (e019), whose "Солистка" is correct
+musicians_1903-04_SP_p004 | e005 | Герасимовъ | PRINTED NOTE: "† 2 іюля 1904 г." | STORED: "† 2 июля 1904 г." (tenure_note_text and credit/end date text "2 июля 1904 г.") | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | print has dotted і in "іюля"; stored modernised to "июля" (death/end_type died is otherwise correct)
+OTHER FINDINGS
+- p1 e022 stored family "Каллецъ"; print looks like "Кадлецъ" (UNCERTAIN, seen at normal resolution only; not zoomed)
+- p2 e008 stored "Лукась"; print reads "Лукасъ" (zoomed, final letter ъ)
+- p4 e029 stored "Нелзейко"; print reads "Недзейко" (zoomed, 3rd letter д)
+- p4 e019 Леоновъ: transfer note captured; service end date "1 ноября 1903 г." stored with end_type empty (fine, not an end of service)
+- p2 e005 Липинъ and p4 e020 Липинъ are the same person (transfer from Alexandrinsky 1 Sep 1903 on p2, then to Mariinsky orchestra, p4); the p2 note is the one dropped

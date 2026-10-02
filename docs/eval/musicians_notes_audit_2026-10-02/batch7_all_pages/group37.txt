@@ -1,0 +1,23 @@
+PAGE SUMMARY
+musicians_1909-10_SP_p000 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1909-10_SP_p001 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1909-10_SP_p002 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1909-10_SP_p003 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1909-10_SP_p004 | printed notes found: 4 | already correctly captured: 2 | discrepancies: 2
+DISCREPANCIES
+musicians_1909-10_SP_p004 | e022 | Южинъ | PRINTED NOTE: "(съ 1 іюля 1882 г. въ должности съ 31 марта 1909 г.)" | STORED: tenure_note_text has the same text; but service period sp1 has end_date_text "31 марта 1909 г." (end_date_undate 1909-03-31) with empty end_type | VERDICT: WRONG-DATE | confidence: DIRECT(zoomed) | "съ 31 марта 1909 г." is the START of his post as управляющій, not an end of service; the stored end date is spurious (end should be empty)
+musicians_1909-10_SP_p004 | e022 | Южинъ | PRINTED NOTE: "(Князь Сумбатовъ)" (alias printed between surname and first name: "Южинъ (Князь Сумбатовъ), Александръ Ивановичъ.") | STORED: NONE (not in family/first/patronymic/rank/tenure_note_text) | VERDICT: DROPPED | confidence: DIRECT(zoomed) | printed alias/real-name parenthesis absent from every stored field of e022
+OTHER FINDINGS
+- p000 e008 Лачиновъ: print has "Первая срипка." (genuine print typo for скрипка); stored verbatim "Первая срипка." -- correct, keep (candidate for genuine_print_typos list).
+- p000 e007: stored first name "Даниилъ"; print "Даніилъ" (і) -- name misread.
+- p001 e016: stored first name "Евтіхій"; print "Евтихій" (и) -- name misread.
+- p001 e029: stored first name "Кануть"; print "Канутъ" -- name misread.
+- p001 e019: print surname spelled "Ветцель" with letters В-е-т-ц-е-л-ь; stored "Ветцель" -- no difference seen (no action).
+- p002 e002 Грюнертъ (no. 38): print has NO instrument after "(съ 1 января 1898 г.)." but stored instrument "Первая скрипка" (not printed, inferred) -- instrument NOT-PRINTED.
+- p002 e029: stored surname "Людольфъ"; print "Людольфи" -- name misread.
+- p002 e028: stored surname "Лукась"; print "Лукасъ" -- name misread.
+- p003 e010 Плотниковъ (no. 80): print has NO instrument after "(съ 1 сентября 1909 г.)." but stored instrument "Контрабасъ" -- instrument NOT-PRINTED (inferred).
+- p003 e012 Помазанскій: print patronymic is "Аленсандровичъ" (print typo for Александровичъ); not visible in bundle -- check stored patronymic keeps the typo.
+- p001/p002/p003/p004 (nos. 2-127): all tenure start dates (digits) zoom-verified against stored tenure_note_text; no mismatches found.
+- p004 e025 Поповъ Николай: "Оставилъ службу 1 мая 1909 г." correctly stored with end 1 мая 1909 г. / left service (printed without trailing period after "г").
+- p000 e002 Направникъ and e005 Дриго: "Заслуженный артистъ Императорскихъ театровъ" correctly stored in rank_or_title.

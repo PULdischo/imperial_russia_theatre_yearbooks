@@ -1,0 +1,18 @@
+PAGE SUMMARY
+musicians_1905-06_MSK_p003 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1905-06_MSK_p004 | printed notes found: 5 | already correctly captured: 4 | discrepancies: 1
+musicians_1905-06_MSK_p005 | printed notes found: 3 | already correctly captured: 2 | discrepancies: 1
+musicians_1905-06_SP_p000 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1905-06_SP_p001 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+DISCREPANCIES
+musicians_1905-06_MSK_p004 | e004 | Чіарлоне | PRINTED NOTE: "Оставила службу 1 сентября 1906 г." | STORED: "Оставилъ службу 1 сентября 1906 г." | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | print has feminine "Оставила" (no final ъ; she is Джанина, harp); stored masculine "Оставилъ"; date 1 сентября 1906 matches, end_type left service OK
+musicians_1905-06_MSK_p005 | e006 | Орловъ | PRINTED NOTE: "(съ 1 января 1857 г. по 1 февраля 1897 г. и съ 1 іюня 1897 г.)" | STORED: "(съ 1 января 1857 г. по 1 февраля 1897 г. и съ 1 юня 1897 г.)" | VERDICT: TEXT-DIFFERS | confidence: UNCERTAIN | zoomed 6x: print has an extra first letter before "юня" (i-like glyph, dot not clearly visible, almost certainly "і" -> "іюня"); stored drops it ("юня"); the rest of the span/date digits and "(По найму)" and "Оставилъ службу 1 марта 1905 г." match
+OTHER FINDINGS
+- MSK_p004 e020 Яницкій (contract span "по 1 января 1900 г. и съ 1 декабря 1902 г."): note text captured; two rows stored, first has end date 1 января 1900 g. with end_type "-" (second row empty) -- appears to be the span convention, not an error.
+- MSK_p005 e006 Орловъ: two rows; first has end 1 февраля 1897 г. with end_type "left service" (really a break in a contract span, not a departure); second row 1 марта 1905 left service is correct.
+- MSK_p004 e002 name misread: print "Цыбинъ", stored "Щыбинъ".
+- MSK_p003 e001 name misread: print "Пащеевъ", stored "Пашеевъ".
+- MSK_p004 e008/e009 Шмидтъ: first-name field holds "І-й"/"2-й" (ordinal) while print gives first names Францъ / Фридрихъ (the ordinals are printed after the surname as "Шмидтъ 1-й, Францъ" / "2-й, Фридрихъ").
+- SP_p001 e018 first name stored "Конраль", print appears "Конрадъ" (Вагнеръ); e025 stored "Виргеліошъ", print appears "Виргеліюшъ" (not zoomed, UNCERTAIN).
+- MSK_p004 e019-ish orchestra heading "Оркестръ Малаго театра" / Шульцъ Дирижеръ: stored e023 (no list no.) correct, no note.
+- SP_p000: headings (Завѣдывающій оркестрами, Второй капельмейстеръ оперы, Капельмейстеръ балета, И. об. помощника капельмейстера балета) are not in the row bundle columns; not evaluated as notes.

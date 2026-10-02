@@ -1,0 +1,9 @@
+MONTH CHECK
+1 | printed month word: "іюня" (dotted і; Данилевскій "съ 1 іюня 1875 г.") | confidence: DIRECT
+2 | printed month word: "ıюня" = single-stem і-shaped glyph with NO visible dot (not a two-stem и; not a dotted і); "съ 1 июня 1897 г.). (По найму). Оставилъ службу 1 марта 1905 г." | confidence: DIRECT (undotted single stem; dot absent at 8x)
+3 | printed month word: "іюня" (dotted і) | confidence: DIRECT
+4 | printed month word: "іюля" (dotted і; "† 2 іюля 1904 г.") | confidence: DIRECT
+5 | printed month word: "апрѣля" (ѣ; "Съ 1 апрѣля 1895 г. переведенъ въ оркестръ Александринскаго театра.") | confidence: DIRECT
+6 | printed month word: "апрѣля" (ѣ; start "съ 1 апрѣля 1897 г.") | confidence: DIRECT
+7 | printed month word: "апрѣля" (ѣ); text as printed "Съ 1 апрѣля 1901 г. переведенъ въ оркестръ Большого театра."; word "Большого" | confidence: DIRECT
+8 | printed word: "Московскимъ" (plain и, NO dot; "Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г.") | confidence: DIRECT

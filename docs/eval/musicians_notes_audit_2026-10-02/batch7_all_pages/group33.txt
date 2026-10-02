@@ -1,0 +1,14 @@
+PAGE SUMMARY
+musicians_1907-08_MSK_p000 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1907-08_MSK_p001 | printed notes found: 5 | already correctly captured: 5 | discrepancies: 0
+musicians_1907-08_MSK_p003 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 1
+musicians_1907-08_SP_p000 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1907-08_SP_p001 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 0
+DISCREPANCIES
+musicians_1907-08_MSK_p003 | (no eNNN; would sit between e019 Ямикъ and e020 Баулинъ) | Шульцъ | PRINTED NOTE: "Шульцъ, Августъ (съ 1 октября 1883 г.)." (whole entry, Дирижеръ, Оркестръ Малаго театра; no list number; not a trailing note) | STORED: NONE (no Шульцъ row on the page; only Шульцевъ, Николай e031) | VERDICT: DROPPED | confidence: DIRECT(zoomed) | whole conductor entry with its tenure date missing from the page's rows
+OTHER FINDINGS
+- musicians_1907-08_MSK_p003: the dropped Шульцъ, Августъ is the sole Дирижеръ of the Оркестръ Малаго театра; zoomed print reads "(съ 1 октября 1883 г.)" with no instrument.
+- musicians_1907-08_SP_p001: e035 family "Де-Лангe" and e037 "Лангe" have a LATIN "e" (U+0065) as last letter instead of Cyrillic е (homoglyph).
+- musicians_1907-08_MSK_p000: e006 family stored "Авъерино"; the print at normal resolution appears to read "Авьерино" (soft sign) - UNCERTAIN, not zoomed (my zoom crop missed the line).
+- musicians_1907-08_MSK_p001: all five notes (e001, e006, e015, e020, e022) verified at zoom, digits match; e006 Зингеръ transfer text "Переведенъ съ 20 августа 1906 г. въ Малый театръ." matches print.
+- musicians_1907-08_SP_p000: Направникъ "Заслуженный артистъ Императорскихъ театровъ" correctly in rank_or_title; no other notes on the page.

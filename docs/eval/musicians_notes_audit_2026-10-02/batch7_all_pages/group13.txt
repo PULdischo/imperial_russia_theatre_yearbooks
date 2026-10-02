@@ -1,0 +1,14 @@
+PAGE SUMMARY
+musicians_1898-99_MSK_p004 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1898-99_SP_p000 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1898-99_SP_p001 | printed notes found: 5 | already correctly captured: 5 | discrepancies: 0
+musicians_1898-99_SP_p002 | printed notes found: 2 | already correctly captured: 1 | discrepancies: 1
+musicians_1898-99_SP_p003 | printed notes found: 6 | already correctly captured: 6 | discrepancies: 0
+DISCREPANCIES
+musicians_1898-99_SP_p002 | e008 | Келеръ | PRINTED NOTE: "Переведенъ на мѣсто капельмейстера Михайловскаго театра 1 декабря 1898 г" | STORED: NONE for the note text (tenure_note_text is only "съ 1 сентября 1881 г."; rank_or_title and credit_summary_text empty); only the date survives as service end "1 декабря 1898 г." with end_type "other" | VERDICT: DROPPED | confidence: DIRECT(zoomed) | printed as an indented line under Келеръ (entry 50), correctly his own; the transfer wording is lost, the end date was extracted
+OTHER FINDINGS
+- SP_p002 e001: stored family "Логансонъ 2-й" but print is "Іогансонъ 2-й" (initial letter І, matches p001 e038 "Іогансонъ 1-й").
+- SP_p002 e032 (Нагорнюкъ): stored instrument "Вальторнъ" but print reads "Вальдгорнъ".
+- SP_p002 e017: stored family "ДеЛанге", print is "Де Ланге" (space).
+- MSK_p004 e016 / e010 (Фарскій): second Музыкальная библіотека entry stored correctly with "съ 1 сентября 1882 г."; "онъ же и библіотекарь Музыкальной библіотеки" correctly captured on e010.
+- Printed "Оставилъ службу ... г" and the Келеръ transfer line have no final period in the print; stored versions add one (convention, not an error).

@@ -1,0 +1,20 @@
+PAGE SUMMARY
+musicians_1903-04_MSK_p001 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1903-04_MSK_p002 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 0
+musicians_1903-04_MSK_p003 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1903-04_MSK_p004 | printed notes found: 4 | already correctly captured: 2 | discrepancies: 2
+musicians_1903-04_SP_p000 | printed notes found: 4 | already correctly captured: 3 | discrepancies: 1
+DISCREPANCIES
+musicians_1903-04_MSK_p004 | e003 | Колосовъ | PRINTED NOTE: "Съ 1 апрѣля 1901 г. переведенъ въ оркестръ Большого театра." | STORED: note text present and correct in tenure_note_text; end_date_text "1 апреля 1901 г." (ѣ modernized to е), end_type empty | VERDICT: END-MISSING (end_type blank; also end date text orthography differs: print "апрѣля") | confidence: DIRECT(zoomed) | transfer note captured but service end_type not set (cf. p003 e015 Вейденбергъ transfer stored as left service) and end date text modernized
+musicians_1903-04_MSK_p004 | e008 | Нацкій | PRINTED NOTE: "Переведенъ 1 ноября 1901 г. въ оркестръ Большого театра." | STORED: note text correct; end_date_text "1 ноября 1901 г."; end_type empty | VERDICT: END-MISSING (end_type blank) | confidence: DIRECT(zoomed) | note captured, end_type not set though date is
+musicians_1903-04_SP_p000 | e009 | Адамовъ | PRINTED NOTE: "Переведенъ съ 1 сентября 1903 г. къ Московскимъ театрамъ." | STORED: "Переведенъ съ 1 сентября 1903 г. къ Московскімъ театрамъ." | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | print has plain "Московскимъ" (final letters "-скимъ"); stored has dotted "і" ("Московскімъ"); date 1 сентября 1903 correct, end_type left service present
+OTHER FINDINGS
+- MSK_p001 e013 Зайцевъ: print genuinely reads "Оставилъ службу 1 сентября 1905 г." (zoomed, 1905 in a 1903-04 yearbook); stored matches the print, probable genuine print anomaly, no change.
+- MSK_p001 e019 Зюсъ: death date prints "† 11 декабря 190з г." with a З-shaped 3 glyph; stored 1903 is correct.
+- MSK_p002 e037 Сханилецъ: instrument stored "Вальдгорнь"; print has "Вальдгорнъ" (zoomed) -- instrument misread.
+- MSK_p002 e008 Пашеевъ: print reads "Пащеевъ" (щ, zoomed); stored "Пашеевъ" -- name misread.
+- SP_p000 e008 Гордонъ: print reads "Горлонъ" (zoomed; likely print typo or d/l ambiguity); stored "Гордонъ" -- possibly a genuine print typo, leave to separate batch.
+- SP_p000 e012 Аматфкъ: print "Аматнѣкъ" (zoomed); stored "Аматфкъ" -- name misread.
+- SP_p000 e021 Болымъ: print "Больмъ" (zoomed); stored "Болымъ" -- name misread.
+- SP_p000 e023 Вагнеръ Конралъ: print "Конралъ" (zoomed) matches stored; no issue.
+- MSK_p003/p004: orchestra page boundary sections (Оркестръ Малаго театра heading, Шульцъ conductor, Орловъ librarian with "(по найму)" and two-span contract) all captured correctly.

@@ -1,0 +1,18 @@
+PAGE SUMMARY
+musicians_1899-00_MSK_p002 | printed notes found: 5 | already correctly captured: 4 | discrepancies: 1
+musicians_1899-00_MSK_p003 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1899-00_MSK_p004 | printed notes found: 4 | already correctly captured: 2 | discrepancies: 2
+musicians_1899-00_SP_p000 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1899-00_SP_p001 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+DISCREPANCIES
+musicians_1899-00_MSK_p002 | e008 | Павловъ | PRINTED NOTE: "(съ 10 октября 1878 г. по 30 декабря 1880 и (съ 19 сентября 1882 г.)" | STORED: "(съ 10 октября 1878 г. по 30 декабря 1880 г. и съ 19 сентября 1882 г.)" | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | print has no "г." after "1880" and a second "(съ" before 19 сентября; stored adds "г." and drops the inner "(" (dates themselves all correct; minor)
+musicians_1899-00_MSK_p004 | e021 | Николаевъ | PRINTED NOTE: "(Шмулевичъ)" (parenthetical alias printed after the surname: "Николаевъ (Шмулевичъ), Александръ Михайловичъ") | STORED: NONE (not in rank_or_title, tenure_note_text or credit_summary_text in bundle) | VERDICT: DROPPED | confidence: DIRECT(zoomed) | zoomed row 21 shows the parenthetical clearly; family stored only as "Николаевъ"
+musicians_1899-00_MSK_p004 | e025 | Фарскій | PRINTED NOTE: "(онъ же и библіотекарь Музыкальной библіотеки)" | STORED: NONE (tenure_note_text is only "съ 1 января 1894 г.") | VERDICT: DROPPED | confidence: DIRECT(zoomed) | printed inline between name and tenure in entry 29; e030 (separate Библіотекарь entry, съ 1 сентября 1882 г.) is correctly the same man's other post but the cross-note is lost on e025
+OTHER FINDINGS
+- MSK_p003 e024 Штернбергъ: tenure text correct, but service end_date_text "1 сентября 1882 г." has end_type "-" (empty), whereas the analogous MSK_p002 e008 Павловъ span has end_type "other"; inconsistent (a mid-career gap, not an end).
+- MSK_p003 e034 Арендсъ: appointment note "1 августа 1900 г. назначенъ капельмейстеромъ балета" correctly stored (rank_or_title and tenure_note_text); no change needed.
+- MSK_p004 e028 Шульцъ appointment "1 августа 1900 г. назначенъ капельмейстеромъ Малаго театра" and e013 Литвинцевъ "Оставилъ службу 1 сентября 1900 г." confirmed at zoom and correctly stored.
+- MSK_p002 e004/e013 daggers and e010 Оставилъ службу 1 декабря 1899 г. confirmed at zoom, correctly stored.
+- SP_p001 e027 Іогансонъ 1-й "Оставилъ службу 16 апрѣля 1900 г." confirmed at zoom (correct, attached to right person); SP_p000 e011 Ауэръ "Солистъ Двора Его Императорскаго Величества" confirmed (note: print "Солистъ" with final ъ).
+
+- SP_p001 e029 (list no. 40): print is "Кадлецъ" (zoomed), stored family is "Каллецъ" -- name misread (separate batch).

@@ -1,0 +1,28 @@
+PAGE SUMMARY
+musicians_1900-01_SP_p006 | printed notes found: 5 | already correctly captured: 4 | discrepancies: 2
+musicians_1901-02_MSK_p000 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1901-02_MSK_p001 | printed notes found: 2 | already correctly captured: 1 | discrepancies: 1
+musicians_1901-02_MSK_p003 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1901-02_MSK_p004 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+DISCREPANCIES
+musicians_1901-02_MSK_p001 | e018 | Вейнаръ | PRINTED NOTE: "Оставилъ службу 1 октября 1901 г." | STORED: NONE (tenure_note_text is only "(съ 22 ноября 1882 г.). Альтъ."; service end empty; no end_type) | VERDICT: DROPPED | confidence: DIRECT(zoomed) | printed indented under entry 14 at the bottom of the left column, directly above page number 120; no other row carries it
+musicians_1900-01_SP_p006 | e029 | Франке | PRINTED NOTE: "(съ 1 ноября 1868 г.)" (tenure start, line break after "съ 1" / "ноября 1868 г.).") | STORED: "(съ ноября 1868 г.)" (day "1" missing from tenure_note_text) | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | the "1" sits at the end of the first printed line and was lost; 
+musicians_1900-01_SP_p006 | e029 | Франке | PRINTED NOTE: "Переведенъ изъ опернаго оркестра съ 1 сентября 1900 г" | STORED: "Переведенъ изъ оперного оркестра съ 1 сентября 1900 г." (end date 1 сентября 1900 г. present) | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | print has pre-reform genitive "опернаго", stored has modernized "оперного"; date/attachment correct
+OTHER FINDINGS
+- (see DISCREPANCIES) p006 e029 Франке: the printed transfer note reads "Переведенъ изъ опернаго оркестра съ 1 сентября 1900 г" (zoomed); stored tenure_note_text and the repeated fragment use modernized "изъ оперного оркестра" -- TEXT-DIFFERS on the note itself (орфографія "опернаго" -> "оперного"), DIRECT(zoomed).
+- p006 e007/e010/e029/e034: stored tenure_note_text contains the transfer-note text twice (full sentence, then a repeated trailing fragment, e.g. "... съ 1 сентября 1900 г. Переведенъ въ оперный оркестръ"); the fragment is a stored-text duplication, not printed. Content/date are right.
+- p006 e010 Лачиновъ: printed "Переведенъ на первую скрипку съ 1 сентября 1900 г." -- captured with stored-text duplication as above; all other stored dates on p006 were checked at zoom and match.
+- p006 e035 Новоселовъ: printed heading "Старшій библіотекарь Центральной Музыкальной Библіотеки." stored in rank_or_title -- correctly captured.
+- MSK_p000 e005 Герберъ: printed "И. об. 2-го капельмейстера балета." (indented line above the entry) is stored only in raw heading_path ("И. об. 2-го капельмейстера балета", final period dropped), rank_or_title is empty; counted as captured (title kept via heading_path). Other title headings on this page (Завѣдывающій дѣлами оркестровъ; Главный капельмейстеръ оперы; Капельмейстеры оперы; Главный капельмейстеръ балета) are likewise in heading_path with rank_or_title empty.
+- MSK_p001 e002: printed surname "Брындинъ" (zoomed), stored "Брындлинъ" -- name misread.
+- MSK_p001 e025: printed surname "Грецкій" (zoomed), stored "Гречкій" -- name misread.
+- MSK_p001 e001 Барминъ: contract span "съ 1 сентября 1864 г. по 1 сентября 1882 г. и съ 22 января 1885 г." correctly captured (end 1 сентября 1882 г. on one of two duplicate service rows; the other row has no end -- as expected for a two-period entry).
+- MSK_p001 e004 Марквардтъ: printed under heading "Капельмейстеръ военной музыки:"; stored with no rank_or_title (heading not checked here).
+- MSK_p003 e040 Штернбергъ: contract span "съ 14 апрѣля 1880 г. по 1 сентября 1882 г. и съ 1 сентября 1883 г." correctly captured (two service rows as on p001 e001).
+- MSK_p003 e002-e004: printed "Ромашковъ 1-й / 2-й / 3-й", "Шмидтъ 1-й / 2-й" -- stored family names lack the ordinal ("Ромашковъ", "Шмидтъ") on those rows; ordinals appear to be dropped (e036 Золотаренко 1-й/2-й/3-й on MSK_p001 and Куле 2-й on SP_p006 keep theirs).
+- MSK_p004 e001/e002: printed "Эйхенвальдъ 1-я" / "Эйхенвальдъ 2-я" -- stored family name lacks the ordinal.
+- MSK_p004 e001 Ида Эйхенвальдъ: "Оставила службу 1 декабря 1901 г." correctly captured with end date and end_type left service.
+- MSK_p004 e034 Фарскій: printed "(онъ же и библіотекарь Музыкальной библіотеки)" is correctly stored in rank_or_title, BUT the printed instrument "Альтъ" (after "(съ 1 января 1894 г.).") is not stored (instrument empty) -- dropped instrument.
+- MSK_p004 e038 Шульцъ: printed "Капельмейстеръ." heading above (Оркестръ Малаго театра); no note; stored OK.
+- All tenure dates on all five pages were read at zoom against stored tenure_note_text; the only date mismatch found is Франке (day "1" missing).
+- DB was locked by another process (could not query duckdb); rank/heading checks for p000 used outputs/full_run/parsed/person_entry.csv and raw JSON read-only.

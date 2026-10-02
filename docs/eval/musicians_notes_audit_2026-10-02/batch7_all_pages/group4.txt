@@ -1,0 +1,17 @@
+PAGE SUMMARY
+musicians_1891-92_SP_p000 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1891-92_SP_p002 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1891-92_SP_p003 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1892-93_MSK_p001 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1892-93_MSK_p002 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- Counts above are substantive notes only (death/left-service/Soloist); "(см. оперный оркестръ)" cross-references (4 on SP_p002, 37 on SP_p003, many on MSK_p002) are all stored and attached to the right row.
+- SP_p002 e018 Хаакъ: tenure stored "съ 15 октября 1871 г." but print reads "15 октября 1879 г." (zoomed, DIRECT) -- wrong digit.
+- SP_p002 e026 Шенкерль: print reads "Шенекерль" (zoomed, DIRECT).
+- SP_p002 e040 Каннегиссеръ: print reads "Канненгиссеръ" (zoomed, DIRECT).
+- SP_p003 e021 Назаковъ: print reads "Казаковъ" (normal-res read, UNCERTAIN); SP_p003 e008/e027 instrument "Виолончель" stored with plain и where print has "Віолончель" (e008 only; minor).
+- MSK_p001 e034 Рессеръ first name stored "Марлохей"; print reads "Мардохей" (normal-res, UNCERTAIN).
+- MSK_p001 e044 Триньянъ: print reads "Триньякъ" (normal-res, UNCERTAIN); e033 Рамбоусенъ: print reads "Рамбоусекъ" (normal-res, UNCERTAIN); e039 Слуцкій first name stored "Ипхекъ-Мейерь", print reads "Ицхекъ-Мейеръ" (normal-res, UNCERTAIN).
+- MSK_p001 e022 Медеръ: printed "Оставилъ службу 1 февраля 1893 г" has no final period (stored adds one; convention only). Ефимовъ "† 21 іюля 1893 г." with dotted і confirmed stored correctly.

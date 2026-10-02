@@ -362,3 +362,17 @@ unambiguous -- the components genuinely don't sum to the stated total in the ori
   1906-07 dagger is not a death notice for that season. RG's reading: the 1906-07 volume may have been in production after his death (1908), which would
   explain a dagger being set in it. The scan does not settle it either way. Transcribed verbatim: "†" stays in `tenure_note_text`, but the row carries no
   `end_type` (previously "died" with no date, now empty), so it no longer contradicts the 1907-08 record.
+
+## Musicians notes audit, 2026-10-02 (issue #130, batch 7) -- probable genuine print oddities
+
+All read at zoom by an audit agent; those marked * I also saw on the scan myself. Stored verbatim unless noted.
+- `musicians_1895-96_MSK_p003` Колосовъ: tenure "(съ 1 **декабри** 1894 г.)" (я -> и). Stored as "декабря" (normalized) -- left.
+- `musicians_1898-99_SP_p004` Ѳедоровъ Петръ and `musicians_1904-05_SP_p005` Подгорбунскій: "Оставилъ службу **:** сентября/февраля" -- the day digit is a colon-like damaged glyph.
+- `musicians_1909-10_MSK_p002` Петрушевъ: "18 **сентябрб** 1903 г." (б for я); stored normalized to "сентября".
+- `musicians_1906-07_SP_p003` Степановъ*: "съ 31 марта **1802** г." (presumably 1892); his 1905-06 entry is blotted but reads "31 ма?та 1892".
+- `musicians_1906-07_SP_p004` Алексѣевъ: "Вторая **скричка**"; `musicians_1909-10_SP_p000` Лачиновъ: "Первая **срипка**"; `musicians_1909-10_SP_p003` Помазанскій: "**Аленсандровичъ**".
+- `musicians_1903-04_MSK_p001` Зайцевъ: "Оставилъ службу 1 сентября **1905** г." in the 1903-04 volume (print anomaly).
+- `musicians_1899-00_SP_p005` Федоровъ: leave date "1 іюня 1889" precedes his start "1 сентября 1889".
+- `musicians_1903-04_MSK_p001` Зюсъ: death year printed "190з" (з-shaped 3), stored 1903. `musicians_1903-04_SP_p000` Гордонъ: print reads "Горлонъ"? (d/l ambiguity, unverified).
+- `musicians_1907-08_SP_p003` Хейкель: stray comma "Хейк,елъ". `musicians_1904-05_SP_p005`: a stray lone "(" under Лачиновъ. `musicians_1905-06_MSK_p005` Орловъ*: the "і" of "іюня" is printed undotted (worn type); transcribed as "іюня".
+- `musicians_1902-03_SP_p006` Напихъ: list number "18." for 28 (already known); `musicians_1906-07_MSK_p004` Стрекаловъ: printed number "7." duplicates Славинскій's; `musicians_1899-00_MSK_p002` Павловъ: contract span printed "по 30 декабря 1880 и (съ 19 сентября 1882 г.)" (no "г.", doubled paren).

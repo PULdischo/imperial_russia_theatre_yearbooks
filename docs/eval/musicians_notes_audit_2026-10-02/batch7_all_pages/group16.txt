@@ -1,0 +1,17 @@
+PAGE SUMMARY
+musicians_1899-00_SP_p002 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 1
+musicians_1899-00_SP_p003 | printed notes found: 6 | already correctly captured: 6 | discrepancies: 0
+musicians_1899-00_SP_p005 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1899-00_SP_p006 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1900-01_MSK_p000 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+DISCREPANCIES
+musicians_1899-00_SP_p002 | e012 | Лудольфи (stored Лудольфъ) | PRINTED NOTE: "(съ 1 сентября 1893 г.). Контрабасъ." | STORED: "(съ 1 сентября 1893 г.). Вторая скрипка." (instrument field itself is Контрабасъ) | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | trailing instrument word printed Контрабасъ; tenure_note_text carries wrong instrument Вторая скрипка (date correct)
+OTHER FINDINGS
+- p002 e012: printed surname is "Лудольфи" (63. Лудольфи, Валентинъ), stored "Лудольфъ".
+- p003 e004: stored family "Словаچевскій" contains a stray Arabic letter; print is "Словачевскій".
+- p003 e010 Торманъ (102): printed instrument "Туба", stored "Труба".
+- p005 e015 (no. 17): printed "Кречмаръ, Густавъ Георгіевичъ", stored "Кремарь".
+- p005 e016 (no. 18): printed "Куденгольдтъ, Вильгельмъ Генриховичъ", stored "Кулегольдтъ".
+- p005 e007 Федоровъ (no. 43): printed leave date "1 іюня 1889 г." precedes printed start "1 сентября 1889 г." -- stored verbatim, both zoomed (apparent print oddity, not an extraction error).
+- p005 e037 Келеръ: note "Назначенъ капельмейстеромъ съ 1 декабря 1898 г" captured (final period absent, ok); p006 e014 Новоселовъ: heading "Старшій библіотекарь Центральной Музыкальной Библіотеки" captured in heading_path (no tenure note).
+- MSK p000 Барминъ: contract span "по 1 сентября 1882 г. и съ 22 января 1885 г." captured in both duplicate e006 rows; first row has end date 1 сентября 1882 г. but end_type blank (not a note discrepancy).

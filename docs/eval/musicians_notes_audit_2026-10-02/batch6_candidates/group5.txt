@@ -1,0 +1,8 @@
+musicians_1897-98_SP_p003 | e014 Елизаровъ | "Оставилъ службу 1 января 1898 г." | DROPPED | DIRECT
+musicians_1897-98_SP_p003 | e043 Кротковъ | "Оставилъ службу 1 сентября 1898 г." | DROPPED | DIRECT
+musicians_1899-00_SP_p004 | e007 Веребрюсовъ | printed once; stored DUPLICATED x2 + stray "Вторая скрипка." -> dedupe | DIRECT
+musicians_1900-01_MSK_p001 | e016 Вейнаръ | NONE printed -> sweep suspect WRONG, no change
+musicians_1901-02_MSK_p002 | e029 Палице | "† 23 мая 1902 г" | DROPPED | DIRECT
+musicians_1901-02_SP_p003 | e018 Фогтъ | "Переведенъ изъ оркестра Михайловскаго театра съ 1 сентября 1901 г." stored in credit_summary_text, not tenure_note_text | MISFILED
+musicians_1901-02_SP_p003 | e024 Цабель, e026 Чіарлоне: Солистъ(ка) Двора... in rank_or_title (OK)
+OTHER: 1897-98_SP_p003 e013 "1 юня"->"1 іюня"; e009 Виргелюшъ->Виргеліюшъ; 1899-00 SP p004 e018 Ксемъ->Кеймъ; 1900-01 MSK p001 e007 Вальторнъ->Вальдгорнъ, e040 Квелнау->Кведнау; 1901-02 SP p003 e011 Ѳелоръ->Ѳедоръ, e031 Шоллартъ->Шолларъ; Литвиновъ/Павловъ interrupted-service end dates (not left-service)

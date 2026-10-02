@@ -1,0 +1,14 @@
+PAGE SUMMARY
+musicians_1896-97_SP_p004 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1897-98_MSK_p003 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1897-98_SP_p000 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1897-98_SP_p001 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1897-98_SP_p002 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- musicians_1896-97_SP_p004 e012: stored family "Креммаръ", print appears "Кречмаръ" (not zoomed, UNCERTAIN).
+- musicians_1897-98_SP_p001 e054: stored "Плацатна", print reads "Плацатка" (zoomed). e017: stored "Инспрунеръ", print appears "Инспрукеръ" (not zoomed, UNCERTAIN).
+- musicians_1897-98_SP_p002 e033: stored "Щабель", print "Цабель" (zoomed); e034: stored "Щиммерманъ", print appears "Циммерманъ" (not zoomed); e008: stored "Реханъ", print appears "Рехакъ" (not zoomed, UNCERTAIN); e029 not checked.
+- musicians_1897-98_SP_p002 e033/e036: "Солистъ/Солистка Двора Его Императорскаго Величества" is stored inside tenure_note_text, not rank_or_title (text present and correct, counts as captured).
+- musicians_1897-98_SP_p000 e008 Оглоблинъ (Капельмейстеръ военной музыки) and e001-e004 section titles are headings, not notes; stored without a title (convention).

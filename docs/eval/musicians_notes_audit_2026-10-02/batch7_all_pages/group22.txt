@@ -1,0 +1,16 @@
+PAGE SUMMARY
+musicians_1902-03_MSK_p003 | printed notes found: 5 | already correctly captured: 5 | discrepancies: 0
+musicians_1902-03_MSK_p004 | printed notes found: 11 | already correctly captured: 9 | discrepancies: 2
+musicians_1902-03_SP_p000 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 0
+musicians_1902-03_SP_p001 | printed notes found: 6 | already correctly captured: 6 | discrepancies: 0
+musicians_1902-03_SP_p002 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+DISCREPANCIES
+musicians_1902-03_MSK_p004 | e006 | Колосовъ | PRINTED NOTE: "Съ 1 апрѣля 1901 г. переведенъ въ оркестръ Большого театра." | STORED: "Съ 1 апрѣля 1901 г. переведенъ въ оркестръ Болъшого театра." (stray ъ inside "Большого"; end_date_text also stored as modernized "1 апреля 1901 г.") | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | print reads Большого (ь then ш, no ъ); stored has "Болъшого"
+musicians_1902-03_MSK_p004 | e012 | Нацкій | PRINTED NOTE: "Переведенъ 1 ноября 1901 г. въ оркестръ Большого театра." | STORED: "Переведенъ 1 ноября 1901 г. въ оркестръ Болъшого театра." (stray ъ inside "Большого") | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | print reads Большого; stored has "Болъшого"
+OTHER FINDINGS
+- MSK_p003 e004 Вейденбергъ: printed note reads "Переведенъ ... въ Большой театръ" (also correct); end_type "other" vs Колосовъ/Нацкій transfers on p004 stored as "left service" -- inconsistent end_type for the same kind of transfer note (not a content error).
+- MSK_p004 e006 Колосовъ: stored service end_date_text "1 апреля 1901 г." is modernized (print: "апрѣля"); tenure text itself keeps "апрѣля".
+- SP_p000 e009 Адамовъ: "Переведенъ на 1-й корнетъ съ 1 сентября 1902 г." is an instrument change (not a service end) but stored with end_date "1 сентября 1902 г." and empty end_type; check this is not treated as a tenure end. Same pattern is NOT applied to SP_p001 e016 Газенкампфъ (similar instrument change, no end date), so inconsistent.
+- MSK_p004 e021/e025: Фарскій appears twice (alto list no. 26 and Musical Library librarian), both with "† 31 августа 1903 г." -- both correctly captured, both printed.
+- MSK_p003 e037 Яницкій and MSK_p004 e026 Орловъ: contract-span second row has no end (correct).
+- No name/instrument misreads noticed on these five pages.

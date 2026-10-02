@@ -1,0 +1,22 @@
+PAGE SUMMARY
+musicians_1906-07_SP_p002 | printed notes found: 9 | already correctly captured: 9 | discrepancies: 0
+musicians_1906-07_SP_p003 | printed notes found: 10 | already correctly captured: 9 | discrepancies: 1
+musicians_1906-07_SP_p004 | printed notes found: 11 | already correctly captured: 9 | discrepancies: 2
+musicians_1906-07_SP_p005 | printed notes found: 11 | already correctly captured: 11 | discrepancies: 0
+musicians_1906-07_SP_p006 | printed notes found: 5 | already correctly captured: 5 | discrepancies: 0
+DISCREPANCIES
+musicians_1906-07_SP_p003 | e032 | Келеръ | PRINTED NOTE: "Переведенъ въ Александринскій театръ съ 1 сентября 1906 г." | STORED: "Переведенъ въ Александриинскій театръ съ 1 сентября 1906 г." (tenure_note_text; service end empty, end_type empty) | VERDICT: END-MISSING | confidence: DIRECT(zoomed) | transfer-out note present (stored text also has extra "и" in "Александриинскій"; print is "Александринскій") but no end date 1 сентября 1906 г. stored, unlike the other transfer-out entries on p004/p005
+musicians_1906-07_SP_p004 | e023 | Леоновъ | PRINTED NOTE: "Переведенъ съ 1 ноября 1903 г. на первую скрипку" | STORED: note text correct, but service end = "1 ноября 1903 г." with end_type empty | VERDICT: WRONG-DATE | confidence: DIRECT(zoomed) | note text captured and correct; but this is an in-orchestra change of instrument, not a service end, so the stored end date looks spurious (note text itself needs no change)
+musicians_1906-07_SP_p004 | e029 | Островскій | PRINTED NOTE: "Переведенъ изъ оркестра Михайловскаго театра съ 1 октября 1906 г." | STORED: note text correct, but service end = "1 октября 1906 г." with end_type empty | VERDICT: WRONG-DATE | confidence: DIRECT(zoomed) | transfer-IN date stored as a service end date; sibling transfer-in rows (p003 Фишеръ, Шредеръ; p002 Мнацагановъ; p004 Дмитріевъ) have no end set
+OTHER FINDINGS
+- p002 e036: family stored "Словаچевскій" contains an Arabic-script character; print is Словачевскій (name misread, separate batch).
+- p002 e003/e026/e033/e034: instrument stored "Біолончель"; print at zoom is "Віолончель" (В, not Б). p005 e002/e017/e029/e031 stored "Виолончель" (и); print is "Віолончель" (і).
+- p004 e001 Алексѣевъ: print has "Вторая скричка" (genuine print typo, scan-confirmed at zoom); stored "Вторая скрипка".
+- p003 e002 Степановъ: print reads "съ 31 марта 1802 г." at zoom (stored identically); 1802 is presumably a genuine print typo (likely 1892) -- keep verbatim.
+- p003 e016 Харитоновъ: print is "1 сентября 1907" with NO "г."; tenure_note_text matches that, but service end_date_text is "1 сентября 1907 г." (г. added, trivial).
+- p003 e027 Эйхгорнъ: print is "1 Сентября 1907 г." (capital С) and is stored that way -- correct as printed.
+- p005 e007/e020/e021/e028/e031 (transfers to Мариинскій): end_type "other", whereas p004 transfers to Мариинскій/Москву (e005, e010, e031, e034) use "left service" -- inconsistent end_type convention only.
+- p003 bundle lists e014, e025, e032 twice each (identical text, probably two service rows); not a printed-note issue.
+- p003 e031 Галкинъ: "† 8 мая 1906 г." correctly captured; p006 e008 Новоселовъ: a bare "†" with no date is printed (stored "†", no end) -- matches print (known genuine typo).
+- p005 Келеръ, Морисъ (Mikhailovsky Kapellmeister) correctly carries no transfer note; the transfer note is printed under the Alexandrinsky entry (p003 e032), consistent.
+- No dropped or misattached notes found on any of the 5 pages; every printed "Оставилъ службу" / "Переведенъ" / "†" note and its date digits matched at zoom.

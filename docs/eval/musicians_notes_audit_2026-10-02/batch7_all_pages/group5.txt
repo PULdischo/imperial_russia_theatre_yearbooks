@@ -1,0 +1,17 @@
+PAGE SUMMARY
+musicians_1892-93_MSK_p003 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1892-93_SP_p000 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1892-93_SP_p001 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1892-93_SP_p002 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1892-93_SP_p003 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- Counting convention: "(см. оперный оркестръ)" cross-references are NOT counted as notes above; all are captured as printed (MSK_p003 14/14, SP_p002 9/9, SP_p003 31/31); MSK_p003 e020 print reads "(см оперный оркестръ)" without period, stored identically.
+- Notes verified at zoom: SP_p001 e008 Ивановъ "Съ 1 ноября 1892 г. переведенъ въ Московскій оркестръ" (stored, end 1 ноября 1892 / left service); SP_p002 e008 Цабель "Солистъ Двора Его Императорскаго Величества"; SP_p002 e029 Мейеръ "† 28 марта 1893 г." (stored, end 28 марта 1893 / died); SP_p002 e032 Ауэръ "Солистъ Двора Его Императорскаго Величества". All correctly attached.
+- SP_p002 e002 Фишеръ / e003 Франке 1-й: tenure_note_text instrument words are swapped (e002 stored "...). Кларнетъ.", e003 stored "...). Віолончель."); print has Фишеръ = Віолончель, Франке 1-й = Кларнетъ; the instrument columns themselves are correct (instrument-in-note text only).
+- SP_p001 name misreads (normal-resolution read, not zoomed): e010 stored "Надлецъ" (print looks like Кадлецъ), e011 "Назаковъ" (print Казаковъ), e021 "Нункели" (print Кункели).
+- SP_p003 e031/e032 stored "Тарике 1-й/2-й"; print looks like "Тарнке" (UNCERTAIN, not zoomed).
+- MSK_p003 e001 stored "Арендъцъ"; print looks like "Арендсъ" (UNCERTAIN, not zoomed).
+- SP_p000 section headings (Инспекторъ музыки..., Старшій библіотекарь..., капельмейстеръ headings) are headings, not notes; no tenure notes on the page.
+- SP_p003 e048 Кротковъ "Капельмейстеръ" (stored in rank_or_title) is a section heading, fine.

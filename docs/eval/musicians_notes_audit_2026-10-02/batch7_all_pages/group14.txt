@@ -1,0 +1,14 @@
+PAGE SUMMARY
+musicians_1898-99_SP_p004 | printed notes found: 5 | already correctly captured: 5 | discrepancies: 0
+musicians_1898-99_SP_p005 | printed notes found: 5 | already correctly captured: 5 | discrepancies: 0
+musicians_1898-99_SP_p006 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1899-00_MSK_p000 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1899-00_MSK_p001 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- musicians_1898-99_SP_p004 e014 Ѳедоровъ Петръ: print (zoomed) shows "Оставилъ службу : сентября 1898 г." -- the day glyph is a colon-like mark, not a clear "1" (probably a damaged/mis-set "1"); stored "1 сентября 1898 г." is the reasonable reading but is a possible genuine print typo.
+- musicians_1899-00_MSK_p000 e018 Валеніусъ Альбинъ: print (zoomed) reads "Туба" (not "Труба"); stored instrument "Труба" -- instrument differs from print (probable print typo, verbatim would be "Туба").
+- musicians_1898-99_SP_p006 e030 Новоселовъ: printed heading "Старшій библіотекарь Центральной Музыкальной Бблiотеки." is stored in heading_path (as 'Бібліотеки' -- print reads "Бблiотеки"); rank_or_title empty; heading preserved, not a missing note.
+- musicians_1899-00_MSK_p001 e040 Литвиновъ: the contract span (съ 10 декабря 1879 г. по 20 октября 1880 г. и съ 19 сентября 1882 г.) is stored in full on two rows (one with end 20 октября 1880 г. "other", one with no end); dates verified at zoom; text OK.
+- musicians_1898-99_SP_p005 e002 Келеръ: "Назначенъ капельмейстеромъ съ 1 декабря 1898 г." verified at zoom, stored correctly, attached to the right person.

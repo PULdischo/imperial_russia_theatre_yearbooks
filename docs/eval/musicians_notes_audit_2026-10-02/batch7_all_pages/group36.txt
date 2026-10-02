@@ -1,0 +1,19 @@
+PAGE SUMMARY
+musicians_1908-09_SP_p004 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1909-10_MSK_p000 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1909-10_MSK_p001 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1909-10_MSK_p002 | printed notes found: 5 | already correctly captured: 5 | discrepancies: 0
+musicians_1909-10_MSK_p003 | printed notes found: 5 | already correctly captured: 5 | discrepancies: 0
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- SP_p004 e023 Алексѣева credit_summary_text stored "Всего—85 9 пьесахъ—48 разъ"; print (zoomed) is "Всего—въ 9 пьесахъ—48 разъ" ("въ" misread as "85"); also stored "Лѣсь (Аксюша — 5)" where print has "Лѣсъ".
+- SP_p004 note count = Поповъ's contract span "съ 15 сентября 1907 г. по 1 мая 1909 г." (stored tenure + end 1 мая 1909 / left service: OK). No other notes on the page.
+- MSK_p000 top of page has two ballet-artist entries (65. Ѳедоровъ 1-й Павелъ Викторовичъ with span "съ 1 сентября 1897 г. по 1 декабря 1900 г. и съ 8 сентября 1903 г." + credit text; 66. Ѳедоровъ 2-й Михаилъ Васильевичъ "съ 1 августа 1905 г." + credit text) that are not among the 26 stored Musicians rows; they belong to the ballet list (not a Musicians-page note issue; presumably stored on a balletartists page).
+- MSK_p001 e029 Мамонтовъ instrument/tenure text stored "Піанисть" (twice); print is "Піанистъ" (final ъ).
+- MSK_p002 e006 family stored "Пащее въ" (stray space); print is "Пащеевъ".
+- MSK_p002 e070 Петрушевъ: print literally reads "18 сентябрб 1903 г." (genuine print typo, б for я); stored normalized to "сентября" (candidate for genuine_print_typos list).
+- MSK_p002 e026 Сиборъ: "Солистъ балета" is stored inside tenure_note_text (rank_or_title empty) - counts as captured per convention.
+- MSK_p003 e025 Яницкій stored as two e025 rows (two stints); first row has end_date_text "1 января 1900 г." but end_type empty ("-") - span end, not a "left service" note; flagging only for awareness. Contract text "съ 16 октября 1897 г. по 1 января 1900 г. и съ 1 декабря 1902 г." matches print.
+- MSK_p003 e017 Шульцевъ: "Дирижеръ музыки на сценѣ" captured in instrument and rank_or_title.
+- All other dates on all five pages (tenure starts) match print at zoom; no dropped/misattached/wrong-date notes found.

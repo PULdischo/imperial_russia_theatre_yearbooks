@@ -1,0 +1,18 @@
+PAGE SUMMARY
+musicians_1890-91_SP_p000 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1890-91_SP_p001 | printed notes found: 2 | already correctly captured: 1 | discrepancies: 2
+musicians_1890-91_SP_p002 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1890-91_SP_p003 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1890-91_SP_p004 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+DISCREPANCIES
+musicians_1890-91_SP_p001 | e023 | Нахтигалъ | PRINTED NOTE: "Оставилъ службу 3 декабря 1890 г." (indented line under no. 54 Нахтигалъ, before no. 55 Нигофъ) | STORED: NONE (e023 has only "(съ 1 октября 1870 г.)."; no end date) | VERDICT: DROPPED (note was attached to e024 instead) | confidence: DIRECT(zoomed) | printed directly under 54 Нахтигалъ's "1870 г.). Гобой."; date digits 3 декабря 1890 read at 3x
+musicians_1890-91_SP_p001 | e024 | Нигофъ | PRINTED NOTE: none printed under no. 55 Нигофъ (entry reads "(съ 1 октября 1877 г.). Флейта." only) | STORED: "Оставилъ службу 3 декабря 1890 г." in tenure_note_text, end 3 декабря 1890 г. / left service | VERDICT: MISATTACHED(to e023) | confidence: DIRECT(zoomed) | the note sits above the 55 Нигофъ line, belonging to 54 Нахтигалъ; remove from e024 and give to e023
+OTHER FINDINGS
+- p000: both notes captured correctly: e021 Гайнотти "Оставилъ службу 1 октября 1890 г." and e028 Гомиліусъ "Оставилъ службу 1 сентября 1891 г." (zoomed; print spells Оставилъ with a final ъ, and the stored text and end dates match).
+- p001: e011 Краснокутскій "Оставилъ службу 1 сентября 1891 г." captured correctly on the right person (zoomed).
+- p002: e012 Цабель and e036 Ауэръ "Солистъ Двора Его Императорскаго Величества." both captured (zoomed, text identical).
+- p002: I did not count the "(см. оперный оркестръ)" cross-references as notes (p002 4 entries, p003 about 36 entries, p004 13 entries). All are present in tenure_note_text. On p002 e035/e037/e039/e040 the stored order is "Первая скрипка. (см. оперный оркестръ)" but the print is "(см. оперный оркестръ). Первая скрипка." (order only).
+- p003: no service-end or transfer notes, and no stored end dates (correct). e041 Плесковъ is printed "(см. оперный оркестръ). / ры). Альтъ." with a stray typographic fragment "ры)." (a genuine print oddity, zoomed); stored omits it. Genuine-print-typo candidate.
+- p004: e036 Малый "Оставилъ службу 1 марта 1891 г." captured correctly (zoomed).
+- p004: no other notes printed. Instrument misread: e008 Шмидтъ tenure text has "Біолончель." and e034 Кондратьевъ has "Біолончель" (instrument and tenure text); the print has "Віолончель" (zoomed both; Шмидтъ's instrument field has the right Віолончель, Кондратьевъ's does not).
+- p000: stored e001-e006 (heading-titled officials, no list no.) and e007-e037 have no further printed notes; page-bottom marker "5" at right of the page-bottom is a signature mark, not a note.

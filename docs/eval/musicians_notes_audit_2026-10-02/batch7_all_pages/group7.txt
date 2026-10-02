@@ -1,0 +1,16 @@
+PAGE SUMMARY
+musicians_1893-94_SP_p003 | printed notes found: 3 | already correctly captured: 1 | discrepancies: 2
+musicians_1893-94_SP_p004 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1894-95_MSK_p000 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1894-95_MSK_p002 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1894-95_SP_p000 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+DISCREPANCIES
+musicians_1893-94_SP_p003 | e010 | Акимовъ | PRINTED NOTE: "Оставилъ службу 1 мая 1894 г." | STORED: NONE (tenure_note_text only "съ 1 марта 1874 г."; no service end) | VERDICT: DROPPED | confidence: DIRECT(zoomed) | indented line printed under entry 2 Акимовъ (after "Ударные инструменты."), before entry 3 Беско; no end row stored
+musicians_1893-94_SP_p003 | e025 | Каминскій | PRINTED NOTE: "Оставилъ службу 1 мая 1894 г." | STORED: NONE (tenure_note_text only "съ 15 октября 1850 г."; no service end) | VERDICT: DROPPED | confidence: DIRECT(zoomed) | indented line under entry 17 Каминскій (top of right column), before entry 18; print here is blurry but "1 мая 1894 г." legible
+OTHER FINDINGS
+- musicians_1894-95_MSK_p002 e007: printed family "Рессеръ" (zoomed), stored "Рессертъ" (misread).
+- musicians_1894-95_MSK_p002 e052: printed "Виттигъ", stored "Витигъ"; e027/e028 printed "Чіарлоне" (with і), stored "Чарлоне" (reading at normal res, not zoomed).
+- musicians_1893-94_SP_p004 e009: stored first name "Гугο" contains Greek omicron (homoglyph) instead of Cyrillic "о".
+- musicians_1894-95_MSK_p000 e006/e007: printed "Адольфи 1-й" / "Адольфи 2-й", stored family just "Адольфи" (ordinal dropped, not zoomed).
+- musicians_1894-95_MSK_p000 e028 Гордонъ transfer note stored with end_type "left service" whereas SP_p003 e042 Торманъ transfer is end_type "other" (inconsistent convention; text itself captured correctly).
+- musicians_1894-95_SP_p000: section headings above Кучера/Тильпъ (Инспекторъ музыки и завѣдывающій Центральной Музыкальной Библіотекой / Старшій библіотекарь...) are not stored in rank_or_title (headings, not tenure notes; reported only for completeness).

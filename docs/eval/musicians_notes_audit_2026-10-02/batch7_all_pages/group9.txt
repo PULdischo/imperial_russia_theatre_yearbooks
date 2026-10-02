@@ -1,0 +1,14 @@
+PAGE SUMMARY
+musicians_1895-96_SP_p001 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1895-96_SP_p002 | printed notes found: 5 | already correctly captured: 5 | discrepancies: 0
+musicians_1895-96_SP_p003 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 0
+musicians_1895-96_SP_p004 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 0
+musicians_1896-97_MSK_p001 | printed notes found: 4 | already correctly captured: 3 | discrepancies: 1
+DISCREPANCIES
+musicians_1896-97_MSK_p001 | e004 | Дмитріева | PRINTED NOTE: "Оставила службу 1 августа 1896 г." | STORED: NONE (tenure_note_text is only "(съ 29 сентября 1881 г.). Арфа."; end_date_text/end_type empty) | VERDICT: DROPPED (also END-MISSING: service end 1 августа 1896 г., left service, should be set) | confidence: DIRECT(zoomed) | printed as indented line under entry 28 Дмитріева, feminine "Оставила"; not found on neighbouring rows e003/e005
+OTHER FINDINGS
+- MSK_p001: Марквардтъ (e038) note "(онъ же и капельмейстеръ военной музыки)" is captured but stored after "Труба."; in print it sits inline after the first name, before "(съ 19 сентября 1882 г.)" -- text correct, position differs (counted as captured).
+- MSK_p001: Лебедевъ (e033) printed "апрѣля" and stored "апрѣля": matches; Линднеръ † 13 октября 1896 matches.
+- Name/instrument misreads (not hunted): SP_p002 e005/e013/e017/e019/e025/e030/e038/e052 instrument stored "Альть", print "Альтъ"; SP_p004 e007 stored "Вилькень", print "Вилькенъ"; SP_p004 e019 stored "Маркузъ", print "Маркузэ"; SP_p001 e023 stored "Инспрукертъ", print "Инспрукеръ"; MSK_p001 instruments stored "Вальдгорнь" (print "Вальдгорнъ") at e006/e023/e028/e030, e028 "Кругоголововъ" (print "Крутоголовов-"), e029 "Кунсть" (print "Кунстъ"), e045 "Пащееевъ" (print "Пащеевъ"), e051 stored "Порубиновскій" vs print "Порубиновскій" (matches); MSK first names/patronymics fine.
+- SP_p003: Токаревичъ (e034) transfer note "Съ 1 сентября 1896 г. переведенъ въ оркестръ Михайловскаго театра." matches print exactly; end_type "other" is acceptable.
+- All SP_p003 / SP_p004 † and "Оставилъ службу" dates verified at zoom (Гебгардъ † 30 апрѣля 1896, Захаревскій † 3 мая 1896, Беско 1 сентября 1896, Бекке † 17 января 1896, Бочарскій † 28 мая 1896, Загорскій 1 сентября 1896, Маркузъ 1 августа 1896).

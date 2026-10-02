@@ -1,0 +1,10 @@
+musicians_1892-93_SP_p004 | e008 | Блась | PRINTED: "Оставилъ службу 1 декабря 1892 г." | STORED: service table only (end 1 декабря 1892 г./left service); tenure_note_text lacks it | ALREADY-CAPTURED(service) -> add to tenure_note_text | DIRECT
+musicians_1892-93_SP_p004 | e015 Дровинъ "† 3 октября 1892 г." OK; e045 Фрей "† 1 марта 1893 г." OK
+musicians_1893-94_MSK_p002 | e033 | Царскій | PRINTED: "Оставилъ службу 17 сентября 1893 г." | STORED: NONE | DROPPED | DIRECT
+musicians_1893-94_SP_p000 | e004 | Кучера | PRINTED: "Съ 1 февраля 1894 г. назначенъ инспекторомъ музыки и завѣдывающимъ Центральной Музыкальной Библіотекой." | STORED: NONE | DROPPED | DIRECT
+musicians_1893-94_SP_p000 | e001 Альбрехтъ "† 28 января 1894 г." OK; e006 Канненгиссеръ "Оставилъ службу 1 ноября 1893 г." OK; e019 Браунштейнъ "Оставилъ службу 1 января 1894 г." OK
+musicians_1893-94_SP_p002 | e032 | Фишеръ | PRINTED: "Оставилъ службу 1 января 1894 г." | STORED: NONE | DROPPED | DIRECT
+musicians_1894-95_MSK_p001 | e019 | Кажданъ | PRINTED: "Оставилъ службу 20 іюня 1895 г." | STORED: NONE (stored on e020 instead) | DROPPED+MISATTACHED | DIRECT
+musicians_1894-95_MSK_p001 | e020 | Канисъ | PRINTED: NONE | STORED: "Оставилъ службу 20 іюня 1895 г." end 20 іюня 1895 left service | NOT-PRINTED -> remove | DIRECT
+musicians_1894-95_MSK_p001 | e023 Клингихтъ "Оставилъ службу 1 октября 1894 г." OK
+OTHER: 1893-94_SP_p002 e012 Іоифъ->Іосифъ; 1893-94_MSK_p002 e007 Пащееевъ->Пащеевъ; e044 Шпейерь->Шпейеръ (not zoomed); 1893-94_SP_p000 e012 Семёновичъ->Семеновичъ (not zoomed); 1894-95_MSK_p001 e041 Марквардтъ note order differs (content present)

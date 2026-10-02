@@ -1,0 +1,19 @@
+PAGE SUMMARY
+musicians_1902-03_SP_p003 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 0
+musicians_1902-03_SP_p004 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 0
+musicians_1902-03_SP_p005 | printed notes found: 6 | already correctly captured: 6 | discrepancies: 0
+musicians_1902-03_SP_p006 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1903-04_MSK_p000 | printed notes found: 6 | already correctly captured: 4 | discrepancies: 3
+DISCREPANCIES
+musicians_1903-04_MSK_p000 | e011 | Адамовъ | PRINTED NOTE: "Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г." | STORED: "Переведенъ къ Московскімъ театрамъ съ 1 сентября 1903 г." | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | print has plain "Московскимъ" (и), stored has і ("Московскімъ"); date digits match
+musicians_1903-04_MSK_p000 | e011 | Адамовъ | PRINTED NOTE: "Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г." | STORED: note present in tenure_note_text, service end_date_text/end_type empty | VERDICT: END-MISSING | confidence: DIRECT(zoomed) | transfer out of this orchestra dated 1 сентября 1903 г.; no service end stored (the "г." and day/month read at zoom on the first line, 1903 read at page level)
+musicians_1903-04_MSK_p000 | e029 | Гейслеръ | PRINTED NOTE: "Переведенъ съ 1 октября 1902 г. въ Малый театръ." | STORED: "Переведенъ съ 1 октября 1902 г. въ Малый театръ." | VERDICT: END-MISSING | confidence: DIRECT(zoomed) | note text correct and attached to the right person (indented under 19. Гейслеръ) but service end empty
+OTHER FINDINGS
+- musicians_1902-03_SP_p004 e002 Щуровъ and e019 Данилевскій: tenure text stored "1 юня" but print (zoomed) is "1 іюня" (dotted і) in both.
+- musicians_1902-03_SP_p004 e001 Шуманъ: instrument stored "Вальдгорнь" (soft sign); print reads Вальдгорнъ (not zoomed, UNCERTAIN).
+- musicians_1903-04_MSK_p000 e008: stored family "Брындлинъ"; print (zoomed) reads "Брындинъ" (Корнелій Корнеліевичъ).
+- musicians_1902-03_SP_p003 e001 Поповъ and SP_p004 e015 Виргеліюшъ: transfer date stored as service end_date_text 1 сентября 1902 г. with end_type empty; SP_p005 e022 Будаевъ has the same kind of transfer note (to first violin, 1 сентября 1902 г.) with no end date -> inconsistent handling.
+- musicians_1902-03_SP_p005 e025 Геде and e035 Кулле 2-й: transfers to Мариинскій orchestra typed end_type "left service"; p004 e015 Виргеліюшъ (same kind of note) has end_type empty -> inconsistent.
+- musicians_1902-03_SP_p006 e013 Новоселовъ: printed title above the entry "Старшій библіотекарь Центральной Музыкальной Библіотеки" is not in rank_or_title (may live in heading_path; DB was locked so not checked).
+- musicians_1903-04_MSK_p000: printed role headings (Заведывающій дѣлами оркестровъ, Главный капельмейстеръ оперы, Капельмейстеръ оперы, И. об. капельмейстера оркестра для Вагнеровскихъ оперъ, Главный капельмейстеръ балета, И. об. 2-го капельмейстера балета, Репетиторы, Капельмейстеръ военной музыки, Настройщикъ) have rank_or_title "-" for e001-e010; not verified whether heading_path holds them.
+- musicians_1902-03_SP_p006 e021 Напихъ: printed list number is "18." (print typo for 28), stored 18 matches print.

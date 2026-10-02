@@ -1,0 +1,15 @@
+musicians_1891-92_MSK_p003 | e048 Шульцъ Карлъ | "Оставилъ службу 21 ноября 1891 г." in tenure_note_text; service end NULL -> SET end_date_text/end_type left service | DIRECT
+musicians_1891-92_MSK_p003 | e019 Богуславъ | "Оставилъ службу 1 мая 1892 г." in tenure_note_text; service end NULL -> SET end | DIRECT (not on suspect list)
+musicians_1891-92_SP_p001 | e039 Литтихъ | "Оставилъ службу 1 мая 1892 г." | DROPPED | DIRECT
+musicians_1891-92_SP_p001 | e042 Михельсонъ | "Оставилъ службу 1 мая 1892 г." | DROPPED | DIRECT
+musicians_1891-92_SP_p004 | e012 Гуляевъ | "Оставилъ службу 1 февраля 1892 г." | DROPPED | DIRECT
+musicians_1891-92_SP_p004 | e028 Нестеровъ | "Оставилъ службу 1 мая 1892 г" (no final period) | DROPPED | DIRECT
+musicians_1891-92_SP_p004 | e032 Поповъ 1-й | "Оставилъ службу 1 мая 1892 г." | DROPPED | DIRECT
+musicians_1891-92_SP_p004 | e041 Шестаковъ | "† 30 сентября 1891 г." | DROPPED | DIRECT
+musicians_1891-92_SP_p005 | e006 Брауэръ | "† 15 августа 1892 г." | DROPPED here; stored on e007 Вейнбергъ (service end 15 августа 1892/died) | DIRECT
+musicians_1891-92_SP_p005 | e007 Вейнбергъ | NONE printed | MISATTACHED -> remove died end | DIRECT
+musicians_1891-92_SP_p005 | e010 Головацкій | "† 6 февраля 1892 г." end stored; text absent from tenure_note_text | DIRECT
+musicians_1891-92_SP_p005 | e035 Шейнеръ OK
+musicians_1892-93_MSK_p000 | e008 Арендсъ | "Съ 1 октября 1892 г. назначенъ капельмейстеромъ оркестра Малаго театра." | DROPPED | DIRECT
+musicians_1892-93_MSK_p000 | e023 Гейнъ Юлій "† 6 октября 1892 г." OK
+OTHER: 1891-92_SP_p001 e003 Вальтеръ instr Первая->Вторая скрипка; MSK_p003 e028 Кржвицкій->Крживицкій; SP_p004 e007 Бѣлищій->Бѣлицкій, e027 Мощейкевичъ->Моцейкевичъ, patronymic Варооломеевичъ->Варѳоломеевичъ, e010 Виргеліошъ->Виргеліюшъ; SP_p005 e004 Болымъ->Больмъ, e003 Блась->Бласъ; SP_p001 e034 "Альбертсвичъ" print typo candidate (matches stored)

@@ -1,0 +1,21 @@
+PAGE SUMMARY
+musicians_1907-08_SP_p003 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 1
+musicians_1907-08_SP_p004 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1908-09_MSK_p000 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1908-09_MSK_p001 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1908-09_MSK_p002 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+DISCREPANCIES
+musicians_1907-08_SP_p003 | (no row; belongs after e023, under heading "Капельмейстеръ.") | Келеръ (Морисъ Ѳедоровичъ) | PRINTED NOTE: "Келеръ, Морисъ Ѳедоровичъ (съ 1 сентября 1881 г.)." | STORED: NONE (no Келеръ/Морисъ row on this page; DB has only Келеръ Морисъ on musicians_1906-07_SP_p005) | VERDICT: DROPPED (whole conductor entry incl. tenure, not just a trailing note) | confidence: DIRECT(zoomed) | printed at top of right column under "Оркестръ Александринскаго театра. / Капельмейстеръ." before "Музыканты:"; no row stored
+OTHER FINDINGS
+- p003 e003 Федегансъ: print is "Федергансъ" (101.), stored family name misses the р.
+- p003 e034 first name stored "Меводій": print is "Меѳодій" (Ѳ read as в).
+- p003 e009 Хейкель: print has a stray comma "Хейк,елъ" (genuine print glitch, stored cleanly; probably fine).
+- p003 e026 Алексѣевъ: print numbers it "3" without the period (stored "3." fine).
+- p004 e036 Новоселовъ: rank_or_title is "-"; print has heading "Старшій библіотекарь Центральной Музыкальной Библіотеки." above it (presumably held in heading_path; not checked).
+- p004 e009 Мокѣевъ and e036 Новоселовъ: stored tenure_note_text includes ")." after the date (convention); end dates and types correct (1 мая 1908 г. left service; 5 мая 1908 г. died).
+- MSK_p000 upper half of page (entries 65-71 Чурбановъ, Шокаровъ, Щегловъ, Щербининъ, Щипановъ, Ѳедоровъ 1-й, Ѳедоровъ 2-й, with their "по ... и съ ..." contract spans and ballet role lists) is NOT in the 19-row Musicians bundle (ballet/dancer section, outside this audit's scope; Щегловъ/Щипановъ/Ѳедоровъ 1-й carry contract-span notes worth a check by whoever audits the dancers page).
+- MSK_p001 e013 Домащунясть: print is "Домащунасъ" (32.), stored surname wrong (ясть vs асъ).
+- MSK_p002 e017 Пащее въ: print is "Пащеевъ" (stored has a stray space and the ѣ-less form differs only by spacing).
+- MSK_p002 e024 Потаповъ: instrument stored "Виолончель", print "Віолончель" (dotted і; all other cellists on these pages are stored with Віолончель).
+- MSK_p002 e006/e009 Органистъ и піанистъ: instrument and rank_or_title both filled (convention, fine).
+- All other tenure dates on all five pages (every "съ ... г.") were compared at zoom and match the stored values.

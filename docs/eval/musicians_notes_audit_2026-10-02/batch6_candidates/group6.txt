@@ -1,0 +1,14 @@
+musicians_1905-06_MSK_p001 | e008 Адамовъ | "Оставилъ службу 1 августа 1906 г." | end already stored (1 августа 1906 г./left service); note text missing from tenure_note_text | DIRECT
+musicians_1905-06_MSK_p001 | e019 Борхъ | "Оставилъ службу 16 августа 1906 г." | end stored; text missing | DIRECT
+musicians_1905-06_MSK_p001 | e023 Бюхнеръ | "Оставилъ службу 4 мая 1906 г." | end stored; text missing | DIRECT
+musicians_1905-06_MSK_p001 | e028 Гейслеръ | "Переведенъ съ 1 октября 1902 г. въ Малый театръ." | end stored 1 октября 1902 г. but end_type 'left service' (should be transfer 'other'); text missing | DIRECT
+musicians_1905-06_SP_p006 | e003 Майеръ-Пирко | "† 12 іюня 1906 г." | DROPPED (no end stored) | DIRECT
+musicians_1905-06_SP_p006 | e006 Мнацагановъ | "Переведенъ въ оркестръ Маріинскаго театра съ 1 ноября 1905 г." | DROPPED | DIRECT
+musicians_1905-06_SP_p006 | e021 Стеличекъ "Переведенъ въ оркестръ Маріинскаго театра съ 1 сентября 1905 г." OK
+musicians_1906-07_SP_p001 | e002 Воячекъ | "Оставилъ службу 1 сентября 1907 г." | end stored; text missing | DIRECT
+musicians_1907-08_MSK_p002 | e009 Подруцкій | "Оставилъ службу 1 августа 1906 г." | DROPPED (no end) | DIRECT
+musicians_1907-08_MSK_p002 | e010 Рессеръ | printed "Оставилъ службу 1 августа 1908 г." ; stored 1906 | WRONG-DATE (1908 read at 2.2x vs 1906 neighbours) | DIRECT
+musicians_1907-08_MSK_p002 | e012 Ривкиндъ "Оставилъ службу 1 сентября 1906 г." OK; e034 Томсонъ "† 3 іюня 1908 г." OK
+musicians_1907-08_MSK_p002 | e030 Сиборъ | "Солистъ балета." (rank descriptor after Скрипка.) dropped from rank_or_title/tenure -- NOT identity note
+musicians_1907-08_SP_p002 | e010 Мнацагановъ | "Переведенъ изъ оркестра Михайловскаго театра съ 1 ноября 1905 г." | DROPPED | DIRECT
+OTHER: 1905-06_MSK_p001 e012 Арабай instrument Фаготъ missing; e002 Соколовъ "репетиторъ Театральнаго училища" descriptor not stored; page-top fragment "И. об. 2-го капельмейстера балета." check; 1905-06_SP_p006 e001 Лихтенбергъ vs printed Лихтенбергеръ; 1906-07_SP_p001 e038 Лемось->Лемосъ; 1907-08 MSK p002 e003 Пащее въ; SP p002 e004 Лукась->Лукасъ, e005 Людольфъ->Людольфи, e006 Малыі->Малый, e040 Тракаль->Тракалъ

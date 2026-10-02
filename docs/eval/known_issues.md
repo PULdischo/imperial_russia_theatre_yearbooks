@@ -21645,7 +21645,7 @@ likely a stray print mark (genuine-typo candidate); not changed. (2) The audit c
 5 мая 1908. Per RG: † kept verbatim in the raw data and tenure_note_text, end_type cleared (was "died", no date), logged in docs/eval/genuine_print_typos.md. person_entry unchanged; one service-table row
 (end_type died -> empty); live persons 3338, tombstones identical, orphans 0, flags 599, receipts sum unchanged. Backup: full_run_pre_promote_backup_2026-10-02_novoselov.
 
-**Issue #130 batch 7 -- notes-only audit of the remaining Musicians pages (2026-10-02, IN PROGRESS)**: all 185 Musicians pages not covered by batch 6 (215 total; the "142" first quoted omitted 43 pages verified earlier for headings only) are being
+**Issue #130 batch 7 -- notes-only audit of the remaining Musicians pages (2026-10-02, DONE)**: all 185 Musicians pages not covered by batch 6 (215 total; the "142" first quoted omitted 43 pages verified earlier for headings only) are being
 audited entry-by-entry for printed notes by independent report-only agents (37 groups of 5 pages, bundles in /tmp/audit2, results in /tmp/audit2/results/group*.txt); every reported discrepancy is
 re-read by hand on the scan before being applied. Applied so far (groups 1-16 of 37): **1890-91 MSK p003: 27 "(см. оперный оркестръ)." cross-references restored** -- they had been destroyed by MY wave-1 heading
 fix (the old heading_path held the extractor's entry text including the cross-reference, and overwriting it lost it; checked all 20 backups: only these 27 rows were affected, no other wave); Нахтигалъ/Нигофъ
@@ -21655,3 +21655,22 @@ fix (the old heading_path held the extractor's entry text including the cross-re
 changes (person_link 0 changed; live 3338, tombstones 2245, flags 599). Backups: full_run_pre_promote_backup_2026-10-02_audit_w1 / _audit_w2. Probable genuine print oddities collected for the typo list when the audit
 finishes: Колосовъ 1895-96 MSK p003 "декабри"; Ѳедоровъ Петръ 1898-99 SP p004 day glyph a colon; Валеніусъ 1899-00 MSK p000 instrument "Туба"; Торманъ 1899-00 SP p003 "Туба"; Павловъ 1899-00 MSK p002 contract span
 "по 30 декабря 1880 и (съ 19 сентября 1882 г.)"; Федоровъ 1899-00 SP p005 leave date (1 іюня 1889) before start (1 сентября 1889).
+
+**Issue #130 batch 7 -- completion (2026-10-02)**: all 37 agent groups (185 pages) reported; every discrepancy re-read on the scan by hand before applying (3 waves, backups `..._audit_w1/_w2/_w3`).
+Wave 3 added: **dropped notes** Вейнаръ 1901-02 MSK p001 (the real home of the 1901 note the sweep had put on 1900-01), Либштейнъ + Осиповъ "Оставилъ службу 1 сентября 1903 г." and Липинъ's transfer in from the Александринскій
+orchestra (1903-04 SP p002); **missing ends** (Адамовъ, Гейслеръ 1903-04 MSK p000, Келеръ 1906-07 SP p003 + spurious duplicate period removed); **two whole conductor entries that had been dropped**: Шульцъ Августъ (Дирижеръ, Малый,
+1907-08 MSK p003) and Келеръ Морисъ Ѳедоровичъ (Капельмейстеръ, Александринскій, 1907-08 SP p003) -- inserted at the end of their pages' arrays, person_link PRE-SEEDED to the existing persons (without that, build_entities mints
+a fresh UUID for an unlinked entry and the Tier-1 merge then tombstones the long-lived person in favour of the new one: tombstones 2245->2247 and 20 links changed; caught by the verification recipe, rolled back, redone
+with seeded links: tombstones identical, only the 2 new links added); **tenure-start errors found by the audit**: Хаакъ 1891-92 SP p002 (1871->1879), Мейеръ 1904-05 SP p002 (1859->1869), Крулевъ 1905-06 MSK p002
+(декабря->сентября), Степановъ 1905-06 SP p003 (мая->марта, blotted letter, corroborated by his 1906-07 entry), Франке 1900-01 SP p006 (lost day digit "съ ноября" -> "съ 1 ноября"); **orthography**: "Московскімъ"->"Московскимъ" (4 rows,
+all Адамовъ), "Болъшого"->"Большого" (2), modernized month words restored to "іюня/іюля/апрѣля" (14 rows incl. the undotted-і print of Орловъ 1905-06 MSK p005), "Солистка"->"Солистъ" (Цабель 1903-04), "Оставилъ"->"Оставила"
+(Чіарлоне 1905-06), "оперного"->"опернаго", "Александриинскій", transfer fragments that were duplicated in Франке/Куденгольдтъ/Лачиновъ/Штейнсъ. Earlier waves: 27 "(см. оперный оркестръ)." cross-references on 1890-91 MSK p003 that
+MY OWN wave-1 heading fix had erased (restored; all 20 backups checked, no other wave affected); Дмитріева, Триньякъ 1898-99, Келеръ 1898-99, Фарскій 1899-00 "онъ же и библіотекарь", Николаевъ "(Шмулевичъ)", Нальхановъ "октѣбря".
+Totals this batch: person_entry 23176 -> 23178 (+2 conductors); live persons 3338; tombstones 2245 unchanged; flags 599; receipts sum unchanged. Audit evidence + the open misread worklist preserved in
+docs/eval/musicians_notes_audit_2026-10-02/.
+**OPEN, found by the audit -- NOT fixed**: (1) **person_link misalignment**: a global check (entry name vs linked person's canonical name) shows 526 mismatched links, many legitimate spelling variants but also whole shifted blocks that
+predate today's work (earliest backup 2026-10-01 already has them): musicians_1891-92_MSK_p003 28 (e.g. Шульцъ Карлъ is linked to Августъ's person, Августъ's own row to the unrelated person "Шефферъ, Фридрихъ"), administration_1895-96_p001 27,
+administration_1894-95_p002 19, musicians_1894-95_MSK_p000 15, theaterschoolstaff_1896-97_p000 11 -- looks like an old mid-array row insertion/removal shifting entry numbers under person_link. Needs its own issue. (2) Two non-musician
+rows misfiled on Musicians SP pages like the French-troupe rows: Южинъ (1909-10 SP p004 e022, МОСКВА. Русская драматическая труппа, with a dropped alias "(Князь Сумбатовъ)" and a spurious end date) and Лошкарева (1908-09 SP p004) -- awaiting RG.
+(3) End-type semantics for transfers: transfer-OUT rows use left service / other / none inconsistently, and transfer-IN / instrument-change notes ("Переведенъ изъ ...", "Переведенъ на ... скрипку") often carry an end date although the person did not
+leave (Будаевъ, Штехертъ, Островскій, Фишеръ 1906-07, Леоновъ, Фельдтъ ...) -- needs one normalization pass once the rule is agreed.

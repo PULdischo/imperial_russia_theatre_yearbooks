@@ -1,0 +1,14 @@
+PAGE SUMMARY
+musicians_1894-95_SP_p002 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1894-95_SP_p003 | printed notes found: 5 | already correctly captured: 5 | discrepancies: 0
+musicians_1895-96_MSK_p000 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1895-96_MSK_p003 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1895-96_SP_p000 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 0
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- musicians_1895-96_MSK_p003 e014 Колосовъ: print reads "(съ 1 декабри 1894 г.)" (genuine print typo "декабри", zoomed); stored "декабря" -- candidate for genuine_print_typos list, not an extractor error per se.
+- musicians_1894-95_SP_p002 e050: print surname "Штаркъ" (zoomed, DIRECT); stored "Штаръ".
+- musicians_1894-95_SP_p002 e051: print surname "Штейдль" (zoomed, DIRECT); stored "Штейль".
+- musicians_1894-95_SP_p002 e012: print appears "Плацатка" (half-res read only, UNCERTAIN); stored "Плацатиа".
+- musicians_1894-95_SP_p003 e009 Кротковъ: note correctly captured incl. "капельмейстеромъ оркестра Михайловскаго театра"; owner correct (Капельмейстеръ heading).

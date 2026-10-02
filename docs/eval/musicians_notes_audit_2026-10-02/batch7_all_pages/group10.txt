@@ -1,0 +1,19 @@
+PAGE SUMMARY
+musicians_1896-97_MSK_p002 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1896-97_MSK_p003 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 0
+musicians_1896-97_SP_p000 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1896-97_SP_p001 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1896-97_SP_p003 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- MSK_p002 e039 stored "Шпекинъ Фридрихъ" (no. 115); print reads "Шпейеръ, Фридрихъ" (name misread, seen at 3x zoom).
+- MSK_p002 e040 stored "Шпекинъ" (no. 116); print reads "Шпеккинъ" (double к, 3x zoom).
+- MSK_p002 e029 stored "Чыбинъ" (no. 105); print looks like "Цыбинъ, Николай Михайловичъ" (normal-res read only, UNCERTAIN).
+- MSK_p002 e023 stored "Триньянъ" (no. 99); print looks like "Триньякъ" (normal-res read only, UNCERTAIN).
+- MSK_p002 e003 stored first name "Марлохей" (no. 79); print looks like "Мардохей" (normal-res read only, UNCERTAIN).
+- MSK_p002 e050 Арендсъ and MSK_p003 e037 Фарскій (librarian section) carry only the ordinary tenure parenthesis; no extra notes printed. MSK_p003 e031 Фарскій "(онъ же и библіотекарь Музыкальной библіотеки)" stored correctly with "і" in both words.
+- SP_p003 e050 stored "Болымъ"; print at 3x zoom reads "Больмъ, Рудольфъ Кондратьевичъ" (name misread).
+- SP_p003 e020 stored "Аоанасій" (Кеймъ); print looks like "Аѳанасій" (normal-res read only, UNCERTAIN).
+- SP_p000: the section headings (Первый капельмейстеръ оперы, Капельмейстеръ военной музыки, etc.) are headings, not notes; Ауэръ "Солистъ Двора Его Императорскаго Величества" is stored in rank_or_title and matches the print (3x zoom).
+- SP_p001 and SP_p003 have no indented or trailing notes at all; every entry is a plain "(съ ... г.). Инструментъ." line. SP_p001 e001-e002 tenure_note_text lacks the leading "(" (format convention).

@@ -1,0 +1,19 @@
+PAGE SUMMARY
+musicians_1892-93_SP_p005 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1893-94_MSK_p000 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1893-94_MSK_p001 | printed notes found: 3 | already correctly captured: 0 | discrepancies: 3
+musicians_1893-94_MSK_p003 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1893-94_SP_p001 | printed notes found: 2 | already correctly captured: 0 | discrepancies: 2
+DISCREPANCIES
+musicians_1893-94_MSK_p001 | e003 | Витолло | PRINTED NOTE: "Оставилъ службу 16 декабря 1893 г." | STORED: NONE (tenure_note_text "съ 20 іюля 1872 г.", service end empty) | VERDICT: DROPPED | confidence: DIRECT(zoomed) | indented line under "20. Витолло ... Гобой." in left column, date digits read at 2.5x
+musicians_1893-94_MSK_p001 | e009 | Голласъ | PRINTED NOTE: "Оставилъ службу 16 декабря 1893 г." | STORED: NONE (tenure_note_text "съ 29 октября 1875 г.", service end empty) | VERDICT: DROPPED | confidence: DIRECT(zoomed) | indented line under "26. Голласъ ... Скрипка." in left column
+musicians_1893-94_MSK_p001 | e011 | Гофманъ | PRINTED NOTE: "† 16 ноября 1893 г." | STORED: NONE (tenure_note_text "съ 20 октября 1880 г.", service end empty) | VERDICT: DROPPED | confidence: DIRECT(zoomed) | indented line under "28. Гофманъ ... Скрипка." in left column
+musicians_1893-94_SP_p001 | e009 | Геншъ | PRINTED NOTE: "Оставилъ службу 20 ноября 1893 г." | STORED: NONE (tenure_note_text "съ 1 сентября 1873 г.", service end empty) | VERDICT: DROPPED | confidence: DIRECT(zoomed) | indented line under "23. Геншъ ... Тромбонъ." in left column
+musicians_1893-94_SP_p001 | e013 | Гоппе | PRINTED NOTE: "† 6 января 1894 г." | STORED: NONE (tenure_note_text "съ 1 сентября 1884 г.", service end empty) | VERDICT: DROPPED | confidence: DIRECT(zoomed) | indented line under "27. Гоппе ... Туба." in left column
+OTHER FINDINGS
+- musicians_1893-94_MSK_p000 e003 Золотаренко and e008 Адольфи 2-й: notes "Оставилъ службу 1 октября 1893 г." / "10 октября 1893 г." are captured only as service end (left service) -- tenure_note_text itself omits the note text, unlike e016 Большаковъ and SP_p005/MSK_p003 rows where the note sits in tenure_note_text (format inconsistency, not a content loss).
+- musicians_1893-94_MSK_p000: section headings above e001-e005 (Завѣдывающій дѣлами оркестровъ и первый капельмейстеръ оперы; Первый капельмейстеръ балета; Второй капельмейстеръ балета; Репетиторъ балета; Капельмейстеръ военной музыки) are not in rank_or_title (presumably heading_path; not checked).
+- musicians_1893-94_SP_p001 e003, e011, e025, e028: instrument stored "Вальдгорнь", print reads "Вальдгорнъ" (ь vs ъ).
+- musicians_1893-94_SP_p001 e012: stored "Гильдеобрандтъ"; print appears "Гильдебрандтъ" (UNCERTAIN, not zoomed).
+- musicians_1893-94_MSK_p003 e032/e036: Фарскій "(онъ же и библіотекарь Музыкальной библіотеки)" correctly in rank_or_title; library-section duplicate row e036 present.
+- musicians_1893-94_MSK_p001: no other printed notes on page; right column has none.

@@ -1,0 +1,18 @@
+PAGE SUMMARY
+musicians_1900-01_SP_p001 | printed notes found: 8 | already correctly captured: 8 | discrepancies: 0
+musicians_1900-01_SP_p002 | printed notes found: 6 | already correctly captured: 6 | discrepancies: 0
+musicians_1900-01_SP_p003 | printed notes found: 6 | already correctly captured: 6 | discrepancies: 0
+musicians_1900-01_SP_p004 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1900-01_SP_p005 | printed notes found: 7 | already correctly captured: 7 | discrepancies: 0
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- p004 e006 Шолларъ: note "Переведенъ на арфу съ 1 октября 1900 г." is captured, but service end_date_text is stored as "съ 1 октября 1900 г." (leading "съ" included) with end_type empty; instrument transfer, not an end of service, so probably correct to leave end_type empty -- only the stray "съ" in end_date_text is odd.
+- p001 e019 Ваншейль: print appears to read "Ваншейдъ" (read at normal resolution only, not zoomed) -- UNCERTAIN name misread.
+- p002 e026 Людольфъ: print reads "Людольфи" (normal-res read) -- UNCERTAIN name misread.
+- p003 e022 Словаچевскій: stored name contains a stray Arabic letter (چ); print is "Словачевскій".
+- p004 e027 Грюнертъ: stored first name "Альфрель"; print reads "Альфредъ" (patronymic "Альфредовичъ") -- name misread.
+- p004 e015 Юнкеръ: stored first name "Адолъфъ"; print reads "Адольфъ".
+- p005 e032 Вилькентъ: print reads "Вилькенъ" (normal-res read) -- UNCERTAIN name misread.
+- p005 e024 Армсгеймѣръ: print reads "Армсгеймеръ" (normal-res read) -- UNCERTAIN name misread.
+- p004 e017 / p005 e036 (Галкинъ, Келеръ Морицъ): printed under the heading "Капельмейстеръ:" with no instrument; stored rank_or_title is "-" (heading presumably carried in heading_path, not checked).

@@ -1,0 +1,16 @@
+PAGE SUMMARY
+musicians_1906-07_MSK_p001 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1906-07_MSK_p002 | printed notes found: 5 | already correctly captured: 5 | discrepancies: 0
+musicians_1906-07_MSK_p003 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1906-07_MSK_p004 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1906-07_SP_p000 | printed notes found: 8 | already correctly captured: 8 | discrepancies: 0
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- SP_p000 e020 Будаевъ: printed "Переведенъ изъ оркестра Михайловскаго театра съ 1 октября 1904 г." is captured in tenure_note_text, but it is a transfer INTO this orchestra, yet the bundle stores it as service end_date 1 октября 1904 г. / end_type "other" (and e020 appears as two rows, one with that end date, one without). Likely wrong end semantics plus duplicate row; DIRECT (zoomed) on the print text.
+- MSK_p003 e002/e003 Ромашковъ: print "Ромашковъ 1-й" (No.83) and "Ромашковъ 2-й" (No.84); stored family is bare "Ромашковъ" (designation dropped). Same for e011/e012 Соколовъ (print "Соколовъ 1-й", "Соколовъ 2-й") and e032/e033 Шмидтъ (print "Шмидтъ 1-й", "Шмидтъ 2-й"); compare p001 e034-36 Золотаренко 1-й/2-й/3-й and p002 e030/e031 Пекарскій 1/2 where the designation was kept in family.
+- MSK_p001 e026: stored family "Добрє" (Cyrillic є); print is "Добре" (name misread).
+- MSK_p002 e029: stored "Пащееъ"; print "Пащеевъ" (name misread, seen at normal resolution only).
+- MSK_p002 e007 Котрба: stored instrument "Валторнъ"; print looks like "Валторнъ" at normal resolution (not zoomed; UNCERTAIN whether it is a misread for Валторна).
+- MSK_p004 e013 Стрекаловъ: print itself numbers him "7." (duplicate of Славинскій's 7; next is 9) -- stored 7 matches print, genuine print typo.
+- MSK_p004: no printed notes on page (Малаго театра orchestra, conductor Шульцъ, library staff only have tenure parentheses); all stored rows carry only tenure + instrument.

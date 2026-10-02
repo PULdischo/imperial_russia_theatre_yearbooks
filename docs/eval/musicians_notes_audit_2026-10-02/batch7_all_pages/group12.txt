@@ -1,0 +1,18 @@
+PAGE SUMMARY
+musicians_1897-98_SP_p004 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1898-99_MSK_p000 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1898-99_MSK_p001 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 1
+musicians_1898-99_MSK_p002 | printed notes found: 1 | already correctly captured: 0 | discrepancies: 1
+musicians_1898-99_MSK_p003 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+DISCREPANCIES
+musicians_1898-99_MSK_p002 | e032 (printed no. 99) | Триньякъ | PRINTED NOTE: "Оставилъ службу 1 октября 1898 г." | STORED: NONE (tenure_note_text "съ 20 октября 1872 г.). Вальдгорнъ.", no end date, no end_type) | VERDICT: DROPPED | confidence: DIRECT(zoomed) | indented line under Триньякъ's entry (no. 99), col 2; digits 1 / октября / 1898 read at 3x; belongs to Триньякъ, not a neighbour.
+musicians_1898-99_MSK_p001 | e031 | Нальхановъ | PRINTED NOTE: "(съ 16 октября 1897 г.)" (tenure text) | STORED: "съ 16 октѣбря 1897 г." | VERDICT: TEXT-DIFFERS | confidence: DIRECT(zoomed) | print has plain "октября" (no ѣ); stored has spurious "октѣбря"; day 16 and year 1897 correct.
+OTHER FINDINGS
+- p001 e002 Ермоловъ Алексѣй: print instrument is "Альтъ" (no. 30), stored "Ударные инструменты" (instrument misread, DIRECT at normal res).
+- p001 e004 "Зоземъ": print reads "Зозель" (no. 32, normal res); e024 "Кусевичкій": print "Кусевицкій"; e025 "Лилтке": print "Лидтке" (all normal-res, UNCERTAIN until zoomed).
+- p000 e004 "Брындлинъ": print reads "Брындинъ" (normal res, UNCERTAIN).
+- p003 e005/e006 stored first names "І-й"/"2-й" for Шмидтъ: print is "Шмидтъ 1-й, Францъ" and "Шмидтъ 2-й, Фридрихъ"; e012/e013 Эйхенвальдъ stored first "1-я"/"2-я": print has "Ида" and "Надежда Александровна". e025 "Зальборнъ": print "Заальборнъ".
+- p004(SP) e004 "Елиненъ": print looks like "Елинекъ" (normal res, UNCERTAIN).
+- p001 e029 Марквардтъ: print order is "(онъ же и капельмейстеръ военной музыки) (съ 19 сентября 1882 г.)"; stored puts the "онъ же" parenthesis after the tenure date (content captured, order differs; not counted as discrepancy).
+- p001 e027 Литвиновъ, e035 Павловъ, p003 e011 Штернбергъ: two stored rows each for the two service spans; first row has end_date_text but end_type empty (convention, not flagged).
+- Section headings stored with no rank/title note: p000 Симонъ (Заведывающій дѣлами оркестровъ), Альтани (Капельмейстеръ оперы), Рябовъ (Капельмейстеръ балета), Марквардтъ (Капельмейстеръ военной музыки), p003 Арендсъ (Капельмейстеръ), SP_p004 Новоселовъ (Старшій библіотекарь Центральной Музыкальной Библіотеки); rank_or_title is "-" for all of these (heading_path may hold them; not checked).

@@ -1,0 +1,18 @@
+PAGE SUMMARY
+musicians_1890-91_SP_p005 | printed notes found: 4 | already correctly captured: 4 | discrepancies: 0
+musicians_1890-91_SP_p006 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1891-92_MSK_p000 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+musicians_1891-92_MSK_p001 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1891-92_MSK_p002 | printed notes found: 21 | already correctly captured: 21 | discrepancies: 0
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- p005 e024: surname stored "Баряининъ", print is "Барянинъ" (zoomed).
+- p005: the 4 notes are e009 rank "Пьянисть при драматическихъ спектакляхъ." (printed "Пьянистъ" -- stored rank has "Пьянисть" with ь, minor), e010 "† 4 октября 1890 г.", e011 "Оставилъ службу 1 ноября 1890 г.", e024 "Оставилъ службу 1 января 1891 г." (print has "Оставилъ" with a final ъ/ь-like glyph; all dates verified at zoom, end dates stored).
+- p006 e005/e010: stored "Майєръ-Пирко" and "Пертєль" use Ukrainian є; print has plain е (Майеръ, Пертель) (normal-res read, UNCERTAIN on exact glyph).
+- p006 e017 Тарновскій: note "Оставилъ службу 1 ноября 1890 г." captured (zoomed).
+- p001 e028: surname stored "Палище", print is "Палице" (zoomed). e008 stored "Канись", print "Канисъ" (normal res).
+- p001 e011/e020 (Конскій 1 августа 1892, Лихтенъ 1 мая 1892): captured, zoomed. Конскій tenure year 1852 has a smudge on the 5 (stored 1852, plausible).
+- p002 e003: surname stored "Шлейеръ", print is "Шпейеръ" (zoomed). e035 stored "Зюстъ", print "Зюсъ" (normal res). e004 print instrument "Контрабасъ" has a stray-glyph look ("Кєнтрабасъ"), stored fine. e032 stored "Зозелъ" vs print "Зозель" (normal res).
+- p002: the 21 "(см. оперный оркестръ)" cross-references (list nos 2,3,5,7-13,17,18,21,22,25,29,31,35-38) all stored on the correct people; no other notes on page. Ballet-orchestra conductor/rank rows (Рябовъ, Золотаренко П.П., Герберъ, Кленовскій) have no extra notes.
+- p000: no notes beyond tenure/instrument on any entry; all stored dates match print at normal res.

@@ -1,0 +1,21 @@
+PAGE SUMMARY
+musicians_1905-06_SP_p002 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 0
+musicians_1905-06_SP_p003 | printed notes found: 2 | already correctly captured: 2 | discrepancies: 1
+musicians_1905-06_SP_p004 | printed notes found: 1 | already correctly captured: 1 | discrepancies: 0
+musicians_1905-06_SP_p005 | printed notes found: 3 | already correctly captured: 3 | discrepancies: 0
+musicians_1906-07_MSK_p000 | printed notes found: 0 | already correctly captured: 0 | discrepancies: 0
+DISCREPANCIES
+musicians_1905-06_SP_p003 | e029 | Степановъ | PRINTED NOTE: "(съ 31 ма?та 1892 г.)" (tenure start; one letter blotted, 5-letter word = "марта") | STORED: "(съ 31 мая 1892 г.)" | VERDICT: WRONG-DATE | confidence: DIRECT(zoomed) | print has 5 letters "ма_та" with a blemish where "р" would be; "мая" cannot fit; no service end stored so only the tenure text is affected
+OTHER FINDINGS
+- p002 e004 Гримъ "† 9 марта 1906 г." and e022 Корнѣевъ "† 22 декабря 1905 г." both verified at zoom: text, dates and owner correct, died end dates stored.
+- p003 e002 Мнацагановъ and e028 Стеличекъ "Переведенъ изъ оркестра Михайловскаго театра съ 1 ноября 1905 г." / "съ 1 сентября 1905 г." captured on the correct person (Мнацагановъ date read at zoom; Стеличекъ date read at normal res "1 сентября 1905 г." - first line zoomed, note line only partly).
+- p003 e026: printed surname reads "Словачевскій" (print), stored "Словацевскій" (name misread, normal-res read only: UNCERTAIN).
+- p004 e018 Галкинъ: printed "† 8 мая 1906 г." captured, died end stored; the heading "Капельмейстеръ." above him (Alexandrinsky) is not stored in rank_or_title (rank "-"), likewise p005 e001 Келеръ (heading "Капельмейстеръ." Mikhailovsky) and p000 MSK e001 Симонъ ("Завѣдывающій оркестромъ"), e002-e003 ("Капельмейстеры оперы"), e004-e005 ("Капельмейстеры балета") - section headings, not printed notes.
+- p005 e002 Армсгеймеръ, e004 Бровкинъ ("Оставилъ службу 1 октября 1905 г.") and e036 Шнабель ("Оставилъ службу 1 марта 1906 г.") verified at zoom, correct owners, left-service end dates stored.
+- p005 e014: printed "Завѣтновскій", stored "Завъятновскій" (name misread, zoomed).
+- p005 e016/e029/e034: printed "Віолончель" (dotted і, seen at e016 normal res), stored "Виолончель" in instrument field (orthography modernized; e016 only normal-res read, UNCERTAIN for e029/e034).
+- p005 e024: printed "Недзейко", stored "Нелзейко" (name misread, zoomed).
+- p005 e018: printed surname looks like "Лещинскій", stored "Лешинскій" (normal-res, UNCERTAIN).
+- p000 MSK e006: printed "Авьерино", stored "Авѣрино" (name misread, normal-res).
+- p004 e003: printed "Канутъ", stored first name "Кануть" (name misread, normal-res).
+- Pages p002-p005 otherwise have no printed notes beyond those listed; no stored-but-not-printed notes found.
