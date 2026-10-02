@@ -11656,3 +11656,14 @@ each page's raw entries (not in print position) so no existing entry_id shifts -
 (+14, no existing row changed). All 14 link to existing live persons (no new person records survive: 6 Tier-1 records were auto-merged,
 tombstones 2239 -> 2245, all prior tombstones preserved; live persons 3343 unchanged); flags 599, receipts sum identical.
 Backup: outputs/full_run_pre_promote_backup_2026-10-02_conductors/.
+
+## 2026-10-02 — Library-row institution decision applied (issue #130 secondary batch 2)
+
+Decision (RG): institution comes from the section title ("Оркестры."); heading_path reflects the subsection, e.g. "Музыкальная библіотека / Библіотекарь".
+Result: 41 institution values and 18 heading_path values changed on 52 Musicians library rows (Moscow Фарскій/Орловъ/Львовъ/Миролюбовъ/Адельгеймъ 1890-91..1907-08;
+St. Petersburg Новоселовъ/Тильпъ 1896-97..1907-08) -- every row now has institution "Оркестры." (43) or the series' own no-period form "Оркестры" (9; 1896-97 SP,
+1898-99 MSK, 1903-04 and 1904-05 MSK, 1906-07 SP); Moscow headings are role-only rows prefixed with "Музыкальная библіотека / " and the two period variants ("Музыкальная
+библіотека. /") normalized to the no-period form; truncated St. Petersburg headings ("Старшій библіотекарь") extended to the printed phrase "Старшій библіотекарь Центральной Музыкальной
+Библіотеки." No other column changed (person_entry 23238 rows, flags 599, tombstone set identical, orphans 0, Repertoire receipts sum identical). The first pass missed two rows whose
+heading lacked the keyword (Орловъ "Помощникъ его" 1900-01/1901-02) and one with "Бібліотеки" (1898-99 SP p006 e030); all three fixed. Backup:
+outputs/full_run_pre_promote_backup_2026-10-02_library/.

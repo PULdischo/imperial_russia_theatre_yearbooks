@@ -21587,3 +21587,10 @@ each line at 2.5-4x; spellings differ by year and were kept as printed: Богу
 1899-00/1900-01 vs "Ѳедоровичъ" 1901-02; Шульцъ "Дирижеръ" 1903-07 vs "Капельмейстеръ" 1900-02). Appended at the end of each page's entries so entry_ids of existing
 rows (and their person links) are unchanged. Notes kept: 1899-00 SP p005 Келеръ also prints "Назначенъ капельмейстеромъ съ 1 декабря 1898 г" (no final period).
 Genuine print typo for the typo list: 1901-02 SP p005 Келеръ's tenure is printed "(съ 1 сентября 1881 г,)." with a comma, kept verbatim in tenure_note_text.
+
+**Issue #130 secondary batch 2 -- library rows (2026-10-02, DONE)**: RG's rule: *institution comes from the section title (Orchestra); heading paths reflect the
+subsections.* All 52 library-related Musicians rows now carry institution "Оркестры." (or the series' own no-period form) and heading_path "Музыкальная библіотека /
+<role>" (Moscow) or the printed phrase "Старшій библіотекарь Центральной Музыкальной Библіотеки." (St. Petersburg, where no title is printed). This replaces seven
+inconsistent values ("Училище", "Ежегодникъ...", "Списокъ лицъ...", "Оркестръ Малаго театра.", modernized "Центральная Музыкальная Библиотека", "Музыканты:",
+"Музыкальная библіотека."). The unrelated Moscow-drama "Библіотекарша" row is untouched. Left as stored: the printed typo "Бблiотеки" on 1898-99 SP p006 (the data reads
+"Бібліотеки"), trailing-period variants in SP headings.
