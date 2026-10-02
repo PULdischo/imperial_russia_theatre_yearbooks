@@ -1,0 +1,10 @@
+# wave5 agent24 (Tier C: 1896-97 SP p000, 1897-98 MSK p000/p002/p003, SP p000/p003) -- applied? pending wave5
+musicians_1896-97_SP_p000 | OK | 1897-98_SP_p000 | OK
+musicians_1897-98_MSK_p000 | FIX | e012-e024 | heading=Оркестр оперы и балета. Музыканты: | inst KEEP
+musicians_1897-98_MSK_p002 | KEEP all (recovered page verified: headings/inst correct); e046 first_name Належда->Надежда
+musicians_1897-98_MSK_p003 | FIX | e001-e033 | heading=Музыканты | inst=Оркестръ Малаго театра. ; e034 Фарскій library UNCERTAIN (DB inst "Музыканты:" wrong)
+musicians_1897-98_SP_p003 | FIX | e001-e042 heading=Музыканты ; e043 heading=Капельмейстеръ ; e044-e051 heading=Музыканты | inst KEEP
+OTHER FINDINGS
+- names: 1896-97_SP_p000 e016 Брайнь->Брайнъ; 1897-98_MSK_p003 e019 Аоанасьевичъ->Аѳанасьевичъ, e029 Шеффертъ->Шефферъ; 1897-98_SP_p003 e013 tenure "1 юня"->"1 іюня", dropped notes e014 Елизаровъ "Оставилъ службу 1 января 1898 г.", e043 Кротковъ "Оставилъ службу 1 сентября 1898 г."
+- genuine print typo: 1897-98_MSK_p002 e050 instrument "Тромбомъ"
+- lineage: 1896-97_MSK_p000-p002 non-standard long heading with Завѣдывающій; 1896-97_MSK_p002 Малый block inst Училище + heading "Оркестръ Малаго театра / Музыканты"

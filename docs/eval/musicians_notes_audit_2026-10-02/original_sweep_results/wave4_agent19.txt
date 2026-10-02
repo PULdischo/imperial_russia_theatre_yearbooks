@@ -1,0 +1,12 @@
+# wave4 agent19 (Tier B: 1893-94 MSK p002, SP p002, 1894-95 MSK p003, 1899-00 SP p002, 1908-09 MSK p000/p002) -- applied? NO
+musicians_1893-94_MSK_p002 | FIX | e001-e052 | heading=Оркестръ оперы и балета. Музыканты | inst=Оркестры.
+musicians_1893-94_SP_p002 | FIX | e001-e051 | heading=Музыканты | inst=Оркестры.
+musicians_1894-95_MSK_p003 | FIX | e001-e031 | heading=Музыканты | inst=Оркестръ Малаго театра.
+musicians_1894-95_MSK_p003 | LIBRARY e032 Фарскій UNCERTAIN inst (DB Училище wrong; printed title "Музыкальная библіотека.")
+musicians_1899-00_SP_p002 | FIX | e001-e041 | heading=Музыканты | inst=Оркестры.
+musicians_1908-09_MSK_p000 | e001-e007 NOT musicians: tail of Moscow ballet men's list (65-71) = duplicates of balletartists_1908-09_MSK_p007 e001-e007 -> row removal DEFERRED (shifts entry ids)
+musicians_1908-09_MSK_p000 | KEEP e008-e026
+musicians_1908-09_MSK_p002 | FIX | e001-e034 | heading=Музыканты | inst=KEEP running head (verbatim rule; agent said Оркестры.)
+OTHER FINDINGS
+- names: 1893-94_MSK_p002 e007 Пащееевъ->Пащеевъ, e023 Ипхекъ-Мейеръ->Ицхекъ-Мейеръ, e044 Шпейерь->Шпейеръ, e033 Царскій dropped note "Оставилъ службу 17 сентября 1893 г."; 1893-94_SP_p002 e012 Іоифъ->Іосифъ, e013 Плесковъ 2-й instr Арфа->Альтъ, e029 Тейхертъ start 1877->1878, e032 Фишеръ dropped note "Оставилъ службу 1 января 1894 г."; 1894-95_MSK_p003 e013 Крюгеръ dropped note "† 9 июля 1895 г."; 1899-00_SP_p002 e012 Лудольфъ->Лудольфи; 1908-09_MSK_p002 e017 Пащее въ->Пащеевъ, e024 Виолончель->Віолончель, e006/e009 rank duplicates instrument
+- not assigned: 1894-95_MSK_p002 e001-e046 heading "Музыканты" vs p000/p001 "Оркестр оперы и балета. Музыканты"; e047-e052 Малый block inst Училище -> Оркестръ Малаго театра.; balletartists_1908-09_MSK_p007 e008-e026 duplicates of musicians_1908-09_MSK_p000 e008-e026; balletartists_1908-09_MSK_p005-p007 "Артисты" continuation rows heading NULL; 1908-09_MSK_p001/p003 same bug; 1899-00_SP_p001 e009 heading NULL

@@ -1,0 +1,13 @@
+# wave4 agent17 (1906-07 SP p001/p005, 1907-08 MSK p002, SP p002/p004, 1908-09 MSK p001) -- applied? NO. Forms: 1906-07 SP "Музыканты"/"Оркестры" (NO period); 1907-08 SP "Оркестръ оперы и балета / Музыканты"/"Оркестры."; 1907-08 MSK "Музыканты"/"Оркестры."
+musicians_1906-07_SP_p001 | FIX | e001-e038 | heading=Музыканты | inst=Оркестры (no period)
+musicians_1906-07_SP_p005 | FIX | e001-e005 | heading=Оркестръ Александринскаго театра / Музыканты (p004's form; bare Музыканты equally ok) | inst=Оркестръ Александринскаго театра. ; KEEP e006-e032
+musicians_1907-08_MSK_p002 | FIX | e001-e038 | heading=Музыканты | inst=Оркестры.
+musicians_1907-08_SP_p002 | FIX | e001-e040 | heading=Оркестръ оперы и балета / Музыканты | inst=Оркестры.
+musicians_1907-08_SP_p004 | FIX | e001-e016 | heading=Оркестръ Александринскаго театра / Музыканты | inst=Оркестръ Александринскаго театра.
+musicians_1907-08_SP_p004 | FIX | e017-e035 | heading=Музыканты | inst=Бывшій оркестръ Михайловскаго театра. (printed "Бывшій оркестръ Михайловскаго театра.")
+musicians_1907-08_SP_p004 | e036 Новоселовъ: heading -> Старшій библіотекарь Центральной Музыкальной Библіотеки. (add printed period); inst UNCERTAIN (library)
+musicians_1908-09_MSK_p001 | FIX | e001-e033 | heading=Музыканты | inst=Оркестры. (agent) -- NB for 1908-10 pages RG "keep verbatim institutions": I apply HEADING ONLY and leave stored running-head institution; series-level institution question logged
+OTHER FINDINGS
+- dropped notes: 1906-07_SP_p001 e002 Воячекъ "Оставилъ службу 1 сентября 1907 г."; 1907-08_MSK_p002 e009 Подруцкій "Оставилъ службу 1 августа 1906 г.", e010 Рессеръ printed 1908 (DB 1906); 1907-08_SP_p002 e010 Мнацагановъ "Переведенъ изъ оркестра Михайловскаго театра съ 1 ноября 1905 г."
+- names/instr: 1906-07_SP_p005 e002,e017,e029,e031 Виолончель->Віолончель; 1906-07_SP_p002 e003,e026,e033,e034 Біолончель; 1907-08_MSK_p002 e003 Пащее въ->Пащеевъ; 1907-08_SP_p002 e004 Лукась->Лукасъ, e005 Людольфъ->Людольфи, e006 Малыі->Малый, e008/e009 1-й/2-й dropped; 1908-09_MSK_p001 e013 Домащунясть->Домащунасъ
+- not assigned: 1906-07_SP_p003 e031-e033 inst Ежегодникъ should be Оркестръ Александринскаго театра.; 1907-08_MSK_p003 Малый block + library rows inst Училище -> Оркестръ Малаго театра.; 1907-08_MSK_p001 heading "Музыканты:" colon (cosmetic); 1908-09_MSK_p000 e001-e007 (65-71 Чурбановъ..Ѳедоровъ 2-й) are NOT musicians (tail of ballet-artists list) -> misfiled; 1908-09_MSK_p002/p003 same running-head+NULL heading

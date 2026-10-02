@@ -1,0 +1,18 @@
+# wave3 agent14 (1903-04 SP p003-p006, 1904-05 MSK p001/p003) -- applied? NO. 1903-04 SP p000 form "Оркестръ оперы и балета / Музыканты"/"Оркестры."; 1904-05 MSK p000 "Музыканты:"/"Оркестры" (no period)
+musicians_1903-04_SP_p003 | FIX | e001-e034 | heading=Оркестръ оперы и балета / Музыканты | inst=Оркестры.
+musicians_1903-04_SP_p003 | FIX | e035-e038 | heading=Музыканты | inst=Оркестръ Александринскаго театра.
+musicians_1903-04_SP_p004 | FIX | e001-e038 | heading=Музыканты | inst=Оркестръ Александринскаго театра.
+musicians_1903-04_SP_p005 | FIX | e001-e003 | heading=Музыканты | inst=Оркестръ Александринскаго театра.
+musicians_1903-04_SP_p005 | KEEP | e004-e037
+musicians_1903-04_SP_p006 | FIX | e001-e012 | heading=Музыканты | inst=Оркестръ Михайловскаго театра. ; INSTRUMENTS missing on all 12 (34 Віолончель,35 Вторая скрипка,36 Віолончель,37 Вторая скрипка,38 Контрабасъ,39 Ударные инструменты,40 Первая скрипка,41 Вторая скрипка,42 Кларнетъ,43 Вторая скрипка,44 Тромбонъ,45 Ударные инструменты) -> set raw instrument
+musicians_1903-04_SP_p006 | LIBRARY e013 Новоселовъ UNCERTAIN (heading should carry full phrase "Старшій библіотекарь Центральной Музыкальной Библіотеки.")
+musicians_1904-05_MSK_p001 | FIX | e001-e038 | heading=Музыканты: | inst=Оркестры (no period)
+musicians_1904-05_MSK_p003 | FIX | e001 | heading=Музыканты: | inst=Оркестры
+musicians_1904-05_MSK_p003 | KEEP | e002-e004
+musicians_1904-05_MSK_p003 | FIX | e005-e036 | heading=Музыканты: | inst=Оркестры
+OTHER FINDINGS
+- MISSING ROWS: 1903-04_SP_p003 Галкинъ, Николай Владиміровичъ (съ 22 января 1877 г.) Капельмейстеръ inst Оркестръ Александринскаго театра.; 1904-05_MSK_p003 Шульцъ, Августъ (съ 1 октября 1883 г.) Дирижеръ inst Оркестръ Малаго театра.
+- names: 1903-04_SP_p004 e029 Нелзейко->Недзейко, e009 Меводій->Меѳодій; 1904-05_MSK_p003 e011 Тесситоре instr Альтъ->Гобой; 'Вальдгорнь' nos 100,110,122; 1904-05_MSK_p001 e038 Кусевичкій->Кусевицкій, e018 Зоэль->Зозель, e013 Дулычъ->Дудычъ, e019-e021 Золотаренко 1-й/2-й/3-й suffix dropped, e005 Голубевъ instrument inferred (not printed), e010 Де-Буръ "Вольдгорнъ" print typo (DB normalized)
+- 1904-05_MSK_p002 stores Музыканты / Оркестры. (period) vs p000 'Музыканты:' / 'Оркестры' -> harmonize (not in this agent's list; page is in a later group?)
+- 1904-05_MSK_p004 library rows (Адельгеймъ, Львовъ, Миролюбовъ, Орловъ) inst "Списокъ лицъ..." stuck
+- 1904-05_MSK_p000 probable misreads (not zoomed): no.1 Адольфи vs Адольфъ, no.5 Ардъ vs Ардль, no.7 Аспергеръ vs Аспергертъ

@@ -1,0 +1,19 @@
+# wave2 agent10 (1900-01 MSK p001/p003/p004, SP p001/p004/p005) -- applied? NO. MSK form: sub-headings plain under inst "Оркестры." (with period); SP "Музыканты"/"Оркестры."
+musicians_1900-01_MSK_p001 | FIX | e001-e002 | heading=Репетиторы | inst=Оркестры. | CONTINUITY (continues p000 Репетиторы list; DB had Музыканты)
+musicians_1900-01_MSK_p001 | FIX | e003 | heading=KEEP | inst=Оркестры.
+musicians_1900-01_MSK_p001 | FIX | e004-e040 | heading=KEEP | inst=Оркестры. | DIRECT
+musicians_1900-01_MSK_p003 | FIX | e001-e040 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1900-01_MSK_p004 | FIX | e001-e006 | heading=Музыканты | inst=Оркестры. | DIRECT
+musicians_1900-01_MSK_p004 | KEEP | e007-e038 | correct (Малый block)
+musicians_1900-01_MSK_p004 | ADD ROW between e006 and e007 | Шульцъ, Августъ, tenure "(съ 1 октября 1883 г.)", unnumbered, heading=Капельмейстеръ, inst=Оркестръ Малаго театра.
+musicians_1900-01_SP_p001 | FIX | e001-e037 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1900-01_SP_p004 | FIX | e001-e016 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1900-01_SP_p004 | KEEP | e017 | correct (Галкинъ)
+musicians_1900-01_SP_p004 | FIX | e018-e039 | heading=Музыканты (strip colon; cosmetic) | inst=KEEP
+musicians_1900-01_SP_p005 | FIX | e001-e021 | heading=Музыканты | inst=Оркестръ Александринскаго театра. | CONTINUITY
+musicians_1900-01_SP_p005 | ADD ROW between e021 and e022 | Келеръ, Мориць Федоровичъ, tenure "(съ 1 сентября 1881 г.)", unnumbered, heading=Капельмейстеръ, inst=Оркестръ Михайловскаго театра.
+musicians_1900-01_SP_p005 | KEEP | e022-e035 | correct
+OTHER FINDINGS
+- names: MSK_p001 e036 Квелнау->Кведнау; MSK_p003 e025 Цибинъ->Цыбинъ, e037 Шталлеръ->Штадлеръ; MSK_p004 e025 Наккій->Нацкій; SP_p001 e009 Ваншейль->Ваншейдъ; SP_p004 e027 first_name Альфрель->Альфредъ; SP_p005 e024 Армсгеймѣръ->Армсгеймеръ, e032 Вилькентъ->Вилькенъ, e005 Мокъевъ->Мокѣевъ
+- MSK_p003 instrument "Альть"->"Альтъ" on 8 rows; SP_p001 instrument "Виолончель"->"Віолончель" on e016,e018,e021
+- SP_p001 e015/e016/e037 name fields shifted (suffix 1-й/2-й in first_name, patronymic holds first name) 

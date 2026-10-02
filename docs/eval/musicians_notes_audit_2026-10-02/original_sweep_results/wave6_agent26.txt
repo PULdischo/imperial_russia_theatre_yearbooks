@@ -1,0 +1,4 @@
+# wave6 agent26 (1900-01 MSK p005, SP p000, 1901-02 MSK p000/p005, SP p000, 1902-03 MSK p000) -- applied? pending wave6
+OK/KEEP: 1900-01_MSK_p005 (library inst "Музыкальная библіотека." printed directly), 1900-01_SP_p000, 1901-02_MSK_p005, 1901-02_SP_p000 (e008 military-band tier prefix UNCERTAIN/cosmetic), 1902-03_MSK_p000
+FORM-ONLY (cosmetic, not applied): 1901-02_MSK_p000 e003-e005 lack "Оркестръ оперы и балета / " prefix
+OTHER FINDINGS (secondary batch): names/instr: 1900-01_SP_p000 e011 Алексѣнко->Алексѣенко; 1901-02_SP_p000 e015 instrument Віолончелъ->Віолончель; 1902-03_MSK_p000 e005 Тенрихъ->Генрихъ (Арендсъ), e013 Адамовъ instrument "Ударные инструменты" not printed -> NULL, e016 Аспергёръ->Аспергеръ; genuine print typo 1901-02_SP_p000 e003 "Крушевекій"; library inst inconsistent (1902-03_MSK_p004 Училище, 1901-02_SP_p006 Училище)

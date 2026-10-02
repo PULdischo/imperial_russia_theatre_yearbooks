@@ -1,0 +1,18 @@
+# wave2 agent8 (1898-99 MSK p003, SP p001/p003/p004/p005/p006) -- applied? NO. NB 1898-99 MSK series institution form is "Оркестры" (NO period) per its p000; SP is "Оркестры." 
+musicians_1898-99_MSK_p003 | FIX | e001-e019 | heading=Музыканты | inst=Оркестры (no period) | CONTINUITY
+musicians_1898-99_MSK_p003 | KEEP | e020-e039 | correct
+musicians_1898-99_SP_p001 | FIX | e001-e038 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1898-99_SP_p003 | FIX | e001-e039 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1898-99_SP_p004 | FIX | e001-e014 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1898-99_SP_p004 | FIX | e015-e036 | heading=KEEP | inst=Оркестръ Александринскаго театра. (period added) | DIRECT
+musicians_1898-99_SP_p005 | FIX | e001 | heading=Музыканты | inst=Оркестръ Александринскаго театра. | CONTINUITY
+musicians_1898-99_SP_p005 | KEEP | e002-e017 (e002 list_number "43." -> NULL)
+musicians_1898-99_SP_p005 | FIX | e018-e036 | heading=Музыканты | inst=Оркестръ Александринскаго театра. | CONTINUITY
+musicians_1898-99_SP_p006 | FIX | e001-e029 | heading=Музыканты | inst=Оркестръ Михайловскаго театра. | CONTINUITY
+musicians_1898-99_SP_p006 | UNCERTAIN | e030 Новоселовъ library: heading ok (printed typo "Бблiотеки"); inst Училище wrong, true value unknown; list_number junk "Н о в о с е л о в ъ" -> NULL
+LIST_NUMBER NULL: SP_p005 e002; SP_p006 e030
+OTHER FINDINGS
+- MISSING ROWS: SP_p004 Галкинъ, Николай Владиміровичъ (съ 22 января 1877 г.) Капельмейстеръ inst Оркестръ Александринскаго театра.; MSK_p003 Арендсъ, Генрихъ (съ 25 сентября 1883 г.) Капельмейстеръ inst Оркестръ Малаго театра.
+- names: SP_p001 e010 Ванштейдъ->Ваншейдъ; SP_p003 e031 Капутъ-Эмерикъ->Канутъ-Эмерикъ; SP_p004 e018 Булановъ->Будановъ, e033 Аеанасій->Аѳанасій; SP_p005 e020 Мокъевъ->Мокѣевъ; SP_p006 e013 Мелвѣдевъ->Медвѣдевъ; MSK_p003 e010 Шталлеръ->Штадлеръ, e025 Зальборнъ->Заальборнъ
+- genuine print typo: SP_p006 library heading printed "Бблiотеки" (DB has Бібліотеки)
+- adjacent not assigned: MSK_p004 rows 21-35 stored inst Оркестры. should be Оркестръ Малаго театра. (continuity from MSK_p003 Малый 20); MSK_p001 (29-67), MSK_p002 (68-107) running-header institutions + heading NULL -> Музыканты / Оркестры (no period)

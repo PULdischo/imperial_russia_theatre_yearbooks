@@ -1,0 +1,17 @@
+# wave1 agent5 (1894-95 MSK p001, SP p001/p002/p003, 1895-96 MSK p001/p002) -- reviewed by me? NO (pending). Series p000 forms followed: 1894-95 MSK heading 'Оркестр оперы и балета. Музыканты' (printed has ъ); 1894-95 SP 'Музыканты'; 1895-96 MSK 'Оркестръ оперы и балета. Музыканты:'
+musicians_1894-95_MSK_p001 | FIX | e001-e052 | heading=Оркестр оперы и балета. Музыканты (series p000 form; printed ъ) | inst=Оркестры. | CONTINUITY
+musicians_1894-95_SP_p001 | FIX | e001-e047 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1894-95_SP_p002 | FIX | e001-e052 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1894-95_SP_p003 | FIX | e001-e008 | heading=Музыканты | inst=Оркестры. | DIRECT+CONTINUITY
+musicians_1894-95_SP_p003 | KEEP | e009-e047 | correct (Александринскій block)
+musicians_1895-96_MSK_p001 | FIX | e001-e053 | heading=Оркестръ оперы и балета. Музыканты: | inst=Оркестры. | CONTINUITY
+musicians_1895-96_MSK_p002 | KEEP | e001-e002 | heading/inst correct (Арендсъ, Бергеръ) BUT e001 list_number '105' junk -> None
+musicians_1895-96_MSK_p002 | FIX | e003-e051 | heading=Оркестръ оперы и балета. Музыканты: | inst=Оркестры. | CONTINUITY
+OTHER FINDINGS
+- name misreads (zoomed): 1894-95_MSK_p001 e013 Зозелъ->Зозель, e017 Зюсь->Зюсъ; SP_p001 e034 Кернешко->Керкешко; SP_p002 e012 Плацатиа->Плацатка, e050 Штаръ->Штаркъ, e051 Штейль->Штейдль, (e048 Шолляръ->Шолларъ unverified); SP_p003 e012 Бесно->Беско, e017 Виргеліошъ->Виргеліюшъ; 1895-96_MSK_p001 e001 Гольдшмить->Гольдшмитъ, e049 Пащеечь->Пащеевъ; MSK_p002 e047 Эквертъ->Эккертъ, e042 Шпекинъ->Шпеккинъ, e025 Триньянъ->Триньякъ, e029 "Фрomanъ" Latin o->Фроманъ
+- 1894-95_MSK_p001: note "Оставилъ службу 20 іюня 1895 г." belongs to e019 (43 Кажданъ) not e020 (44 Канисъ)
+- missing notes: 1894-95_SP_p001 e002 (Галкинъ "Съ 10 декабря 1894 г. назначенъ капельмейстеромъ оркестра Александринскаго театра"), e004 (Гейне "Оставилъ службу 1 октября 1895 г."); 1895-96_MSK_p001 e033 (Кудике "Оставилъ службу 16 января 1896 г."); 1895-96_MSK_p002 e031 lacks note "Съ 1 іюня 1896 года переведена въ С.-Петербургскій оркестръ оперы и балета"
+- genuine print typo: 1895-96_MSK_p001 e032 printed "34." for 54 (DB normalized) -> genuine_print_typos.md
+- Віолончель misspelled "Виолончель" in DB on 1895-96_MSK_p002 e005,e023,e044,e045,e048
+- 1894-95_MSK_p000 (not assigned): heading missing ъ; e012 (8 Бенда) & e013 (9 Бесслеръ) heading ends 'Ударные инструменты' (instrument word) -> should match e005's
+- candidate buggy pages not yet covered: 1892-93 MSK p003; 1893-94 MSK p002; 1894-95 MSK p002 (Малый block labelled with Училище institution), 1894-95 MSK p003 (inst Училище, should be Малаго театра.)

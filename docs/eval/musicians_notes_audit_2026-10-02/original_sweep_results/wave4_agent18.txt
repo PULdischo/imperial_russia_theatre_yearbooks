@@ -1,0 +1,12 @@
+# wave4 agent18 (1908-09 MSK p003, SP p001/p004, 1909-10 MSK p001, SP p001/p002/p004) -- applied? see wave4 module. 1908-10 rule: heading only, institution as stored (verbatim running head), except orchestra rows stamped with the drama-troupe running head (SP p004 pages)
+musicians_1908-09_MSK_p003 | FIX | e001-e036 | heading=Музыканты | (inst stored lowercase running head kept)
+musicians_1908-09_SP_p001 | FIX | e001-e035 | heading=Музыканты | inst kept
+musicians_1908-09_SP_p004 | FIX | e001-e016 | heading=Музыканты | inst=Оркестры. (drama running head wrongly stamped); e022 heading Библіотекарша; e024-e025 heading Суфлеры; e017-e021, e023 KEEP; institution convention МОСКВА./Русская драматическая труппа UNCERTAIN across years
+musicians_1909-10_MSK_p001 | FIX | e001-e034 | heading=Оркестры / Музыканты
+musicians_1909-10_SP_p001 | FIX | e001-e035 | heading=Оркестры. / Музыканты:
+musicians_1909-10_SP_p002 | FIX | e001-e034 | heading=Оркестры. / Музыканты:
+musicians_1909-10_SP_p004 | FIX | e001-e021 | heading=Оркестры. / Музыканты: | inst=ПЕТЕРБУРГСКІЕ ОРКЕСТРЫ. ; e025 heading Русская драматическая труппа / Режиссеры ; e022-e024,e026-e027 KEEP
+OTHER FINDINGS
+- names: 1909-10_SP_p001 e016 Евтіхій->Евтихій, e029 Кануть->Канутъ; SP_p002 e012 Каукалъ->Каукаль, e025 Лемось->Лемосъ, e028 Лукась->Лукасъ, e029 Людольфъ->Людольфи, e002 Грюнертъ instrument fabricated -> NULL; MSK_p001 e029 Піанисть->Піанистъ (instrument + tenure); 1908-09_SP_p004 e023 credit text Лѣсь->Лѣсъ, "85 9 пьесахъ"->"въ 9 пьесахъ"
+- p000: 1908-09_SP_p000 e001-e003 & 1909-10_SP_p000 e012-e015 French-troupe actors spilled into orchestra series; 1908-09_SP_p000 e004-e007 junk list_number strings; 1909-10_SP_p000 e007 list_number "Пахитоновъ"; 1908-09_SP_p000 e010-e011 heading -> Оркестръ оперы и балета / Репетиторы балета (applied via agent20)
+- 1909-10_MSK_p000 e027-e028 (Ѳедоровъ 1-й/2-й) ballet tail; instruments Виолончель->Віолончель

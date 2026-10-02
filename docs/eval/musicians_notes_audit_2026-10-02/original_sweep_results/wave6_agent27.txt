@@ -1,0 +1,6 @@
+# wave6 agent27 (1902-03 SP p000, 1903-04 MSK/SP p000, 1904-05 MSK/SP p000, SP p004) -- applied? pending wave6
+REAL FIX: musicians_1904-05_SP_p004 | e001-e039 | heading KEEP | inst=Оркестръ Александринскаго театра. (period added) ; list_number NULL e001 (Галкинъ unnumbered)
+REAL FIX: musicians_1904-05_MSK_p000 | e012 | heading=Настройщикъ (DB "Настройщики") | inst KEEP
+OK: 1902-03_SP_p000, 1903-04_SP_p000; KEEP: 1903-04_MSK_p000 (e009-e010 prefix UNCERTAIN/cosmetic)
+OTHER FINDINGS (secondary batch)
+- names: 1903-04_MSK_p000 e008 Брындлинъ->Брындинъ, e011 tenure "Московскімъ"->"Московскимъ"; 1903-04_SP_p000 e012 Аматфкъ->Аматнѣкъ, e021 Болымъ->Больмъ, e023 Конралъ->Конрадъ, e025 patronymic Тригорьевичъ->Григорьевичъ, e009 tenure Московскімъ->Московскимъ; 1904-05_MSK_p000 e013 first name->Алольфи?, e017 Ардль->Ардъ, e019 Аспергертъ->Аспергеръ, e021 Іоганнь-Альбертъ->Іоганнъ-Альбертъ, e014 tenure Московскімъ; 1904-05_SP_p000 e024 Тригорьевичъ->Григорьевичъ; 1904-05_SP_p004 e014 Меволій->Меѳодій(Меѳолій), e028 Недзѣйко->Недзейко; possible print typo 1904-05_MSK_p000 e016 "Серіѣй"

@@ -1,0 +1,8 @@
+# wave5 agent23 (Tier C: 1894-95 MSK p000, SP p000, SP p004, 1895-96 MSK p000, SP p000, 1896-97 MSK p000) -- applied? pending wave5
+REAL FIX: musicians_1894-95_MSK_p000 | e012-e013 (Бенда, Бесслеръ) | heading=Оркестр оперы и балета. Музыканты (DB ends "... Ударные инструменты" = instrument word) | inst KEEP | DIRECT
+REAL FIX: musicians_1894-95_SP_p004 | e001 Рамзе list_number "1." -> NULL
+LIBRARY (UNCERTAIN, no change): 1894-95_SP_p000 e001-e002 (Кучера, Тильпъ), 1895-96_SP_p000 e001-e002
+COSMETIC (not applied, later pass): 1895-96_MSK_p000 e002-e004 and 1896-97_MSK_p000 e002-e004 & e005-e028 carry "Завѣдывающій дѣлами оркестровъ и капельмейстеръ оперы." prefix wrongly nested; 1895-96_SP_p000 e009 lacks "Оркестръ оперы и балета / " prefix; "Оркестр" without ъ on 1894-95/1896-97 MSK p000
+OTHER FINDINGS
+- names: 1894-95_MSK_p000 e019 Василевъ->Васильевъ; SP_p000 e017 Брайнь->Брайнъ; SP_p004 e003 Армегеймеръ->Армсгеймеръ, e030 Рехахъ->Рехакъ, e007 Бизье dropped note "Оставилъ службу 1 января 1895 г."; 1896-97_MSK_p000 e010 Вальдгорнт->Вальдгорнъ (+tenure), tenure_note_text contaminated e005-e028 (leaked instrument, missing opening paren), e006/e007 Адольфи 1-й/2-й dropped note "Оставилъ службу 1 января 1897 г."
+- lineage (other waves): 1894-95_MSK_p002 Малый block & p003 library, 1896-97_MSK_p002 Малый block inst Училище

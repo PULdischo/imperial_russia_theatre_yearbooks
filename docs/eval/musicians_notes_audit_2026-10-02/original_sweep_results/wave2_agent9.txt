@@ -1,0 +1,16 @@
+# wave2 agent9 (1899-00 MSK p001/p002, SP p001/p003/p005/p006) -- applied? NO
+musicians_1899-00_MSK_p001 | FIX | e001-e040 | heading=Оркестръ оперы и балета / Музыканты | inst=Оркестры. | CONTINUITY (MSK p000 form)
+musicians_1899-00_MSK_p002 | FIX | e001-e038 | heading=Оркестръ оперы и балета / Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1899-00_SP_p001 | FIX | e001-e040 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1899-00_SP_p003 | FIX | e001-e038 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1899-00_SP_p005 | FIX | e001-e007 | heading=Музыканты | inst=Оркестръ Александринскаго театра. | CONTINUITY
+musicians_1899-00_SP_p005 | FIX | e008-e027 | heading=Музыканты | inst=KEEP | DIRECT
+musicians_1899-00_SP_p005 | KEEP | e028-e036 | correct
+musicians_1899-00_SP_p005 | ADD ROW (missing) | Келеръ, Морицъ Федоровичъ (съ 1 сентября 1881 г.; Назначенъ капельмейстеромъ съ 1 декабря 1898 г.), unnumbered, heading=Капельмейстеръ, inst=Оркестръ Михайловскаго театра.
+musicians_1899-00_SP_p006 | FIX | e001-e013 | heading=Музыканты | inst=Оркестръ Михайловскаго театра. | CONTINUITY
+musicians_1899-00_SP_p006 | UNCERTAIN | e014 (Новоселовъ library) | heading KEEP; inst "Ежегодникъ..." wrong, true value unknown (library institution inconsistent across seasons: Училище 1898-99/1901-02/1902-03 vs Центральная Музыкальная Библиотека 1897-98/1903-04/1904-05) -> series-wide decision needed
+OTHER FINDINGS
+- names: SP_p001 no.25 Гильлебрандъ->Гильдебрандъ; no.40 Каллецъ->Кадлецъ; no.33 Захаровъ tenure 1879->1897; SP_p003 no.96 Словаچевскій (Arabic U+0686 + Cyrillic і U+0456)->Словачевскій; no.102 Торманъ instr Труба->Туба; SP_p005 no.17 Кремарь->Кречмаръ, no.18 Кулегольдтъ->Куденгольдтъ, no.3 Армстеймеръ->Армсгеймеръ; MSK_p001 no.34 Зюстъ->Зюсъ; MSK_p002 no.63 Пашеевъ->Пащеевъ, no.78 Ромашковъ 3-й Ѳёдоровичъ->Ѳедоровичъ
+- not assigned: SP_p002 same bug (heading None, inst Списокъ..., nos 52-92) [in wave 2 queue? check]; MSK_p003 e001-e033 inst Оркестры./heading Музыканты drops tier of p000 form, e034-e038 Малый block inst Училище should be Оркестръ Малаго театра.; SP_p004 e001 Галкинъ list_number "1." unnumbered in print
+- SP_p001-p006 tenure_note_text duplicates instrument (series-wide pattern, left)
+- DECISION: library (Новоселовъ/Фарскій) institution inconsistent across seasons

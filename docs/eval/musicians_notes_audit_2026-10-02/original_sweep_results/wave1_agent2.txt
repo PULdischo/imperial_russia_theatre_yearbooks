@@ -1,0 +1,20 @@
+# wave1 agent2 (1890-91 SP p005/p006, 1891-92 MSK p001/p002/p003, SP p001) -- reviewed by me? NO (pending)
+musicians_1890-91_SP_p005 | FIX | e001-e020 | heading=Музыканты | inst=Оркестръ Александринскаго театра. | CONTINUITY
+musicians_1890-91_SP_p005 | KEEP | e021-e039 | correct (Михайловскій block)
+musicians_1890-91_SP_p006 | FIX | e001-e022 | heading=Музыканты | inst=Оркестръ Михайловскаго театра. | CONTINUITY
+musicians_1891-92_MSK_p001 | FIX | e001-e054 | heading=Оперный оркестр. / Музыканты | inst=Оркестры. | CONTINUITY (canonical spelling "оркестр." vs "оркестръ." must be chosen first)
+musicians_1891-92_MSK_p002 | FIX | e001-e011 | heading=Оперный оркестр. / Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1891-92_MSK_p002 | FIX | e012 | heading=Балетный оркестръ / Главный капельмейстеръ | inst=Оркестры. | list_number->NULL (holds name 'Рябовъ') | DIRECT
+musicians_1891-92_MSK_p002 | FIX | e013-e015 | heading=KEEP | inst=Оркестры. | list_number->NULL (hold names) | DIRECT
+musicians_1891-92_MSK_p002 | FIX | e016-e053 | heading=KEEP | inst=Оркестры. | DIRECT
+musicians_1891-92_MSK_p003 | FIX | e001-e018 | heading=Балетный оркестръ / Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1891-92_MSK_p003 | KEEP | e019-e048 (Малый block), e049 (Фарскій library) | correct
+musicians_1891-92_SP_p001 | FIX | e001-e055 | heading=Музыканты | inst=Оркестры. | CONTINUITY (alt: "Оперный оркестръ / Музыканты" defensible -- RG choice)
+OTHER FINDINGS
+- SP_1890-91_p005: missing row Рамзе, Василій Васильевичъ (Капельмейстеръ, Оркестръ Михайловскаго театра., съ 1 сентября 1877 г.); e024 name Баряининъ->Барянинъ; e030 genuine print typo "сентябрь 1888" (DB normalized to сентября) -> genuine_print_typos.md, research-layer only
+- SP_1890-91_p006: є->е in 'Майєръ-Пирко'(e005), 'Пертєль'(e010); corpus-wide sweep for Ukrainian є in family_name worthwhile
+- MSK_1891-92_p002: e003 Шлейеръ->Шпейеръ, e035 Зюстъ->Зюсъ, e004 Шпеккинь->Шпеккинъ (zoom-confirmed); e004 instrument printed "Кснтрабасъ" genuine typo
+- MSK_1891-92_p003 e028 Кржвицкій probably Крживицкій (not zoomed)
+- SP_1891-92_p001: Литтихъ(e039), Михельсонъ(e042) "Оставилъ службу 1 мая 1892 г." missing in DB; MSK_p003 e048 Шульцъ note present in tenure_note but service end_date NULL; every tenure_note ends in unbalanced "г.)" (parse artifact)
+- CANONICAL FORM DECISION NEEDED: 1890-91/1891-92 MSK p000 heading "Оперный оркестр." drops printed ъ; 1890-91 MSK has both "Оперный оркестр." (15 rows) and "Оперный оркестръ." (35); 1892-93 uses third form w/o slash; SP_p000 uses plain "Музыканты" while MSK uses "Оперный оркестр. / Музыканты"
+- SP_1890-91_p004 e001-e015 same bug class (already in agent1 results)

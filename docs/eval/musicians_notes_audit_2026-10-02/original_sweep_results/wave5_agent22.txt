@@ -1,0 +1,15 @@
+# wave5 agent22 (Tier C: 1892-93 MSK p003, SP p000, SP p004, 1893-94 MSK p000, MSK p003, SP p000) -- applied? pending wave5
+musicians_1892-93_SP_p004 | FIX | e020-e049 | heading=KEEP | inst=Оркестръ Александринскаго театра. (continuation of Alx 1-7 on p003) ; list_number NULL e001 (Рамзе unnumbered); KEEP e002-e019
+musicians_1892-93_MSK_p003 | FIX | e001 | heading=Капельмейстеръ | inst=Оркестръ Малаго театра. ; list_number NULL; family_name Арендъцъ->Арендсъ (name fix deferred)
+musicians_1892-93_MSK_p003 | FIX | e002-e005 | heading=Музыканты | inst=Оркестръ Малаго театра.
+musicians_1892-93_MSK_p003 | FIX | e007-e026 | heading=Балетный оркестръ / Музыканты | inst=Оркестры. (continues ballet list p002 1-36; entries "(см. оперный оркестръ)")
+musicians_1892-93_MSK_p003 | FIX | e027-e050 | heading=Музыканты | inst=Оркестръ Малаго театра.
+musicians_1892-93_MSK_p003 | LIBRARY e006 Фарскій UNCERTAIN inst (DB Училище wrong; heading ok)
+musicians_1893-94_MSK_p000 | FIX | e002-e005 | drop spurious "Завѣдывающій дѣлами оркестровъ и первый капельмейстеръ оперы" nesting: headings "Оркестръ оперы и балета. Первый капельмейстеръ балета" / "Второй капельмейстеръ балета" / "Репетиторъ балета" / "Капельмейстеръ военной музыки"
+musicians_1893-94_MSK_p000 | FIX | e014 | heading=Оркестръ оперы и балета. Музыканты (fabricated "/ Ударные инструменты" sub-tier)
+KEEP: 1892-93_SP_p000 (tier-prefix question for e005-e026 UNCERTAIN/cosmetic), 1893-94_MSK_p003 e001-e035 (e036 library UNCERTAIN), 1893-94_SP_p000 (e010-e024 same tier question, KEEP)
+OTHER FINDINGS
+- MISSING ROW 1893-94_MSK_p003: Капельмейстеръ Арендсъ, Генрихъ (съ 25 сентября 1883 г.) inst Оркестръ Малаго театра.
+- names: 1892-93_MSK_p003 e001 Арендъцъ->Арендсъ, e006 Адалъбертъ->Адальбертъ, e017 Туровичъ/фонъ-Охота split; 1892-93_SP_p004 Блась note "Оставилъ службу 1 декабря 1892 г." absent from tenure_note_text (in service table); 1893-94_SP_p000 e004 Кучера dropped note "Съ 1 февраля 1894 г. назначенъ инспекторомъ музыки и завѣдывающимъ Центральной Музыкальной Библіотекой.", e012 Ауэръ Семёновичъ->Семеновичъ
+- 1892-93_MSK_p002 e016 heading "Балетный оркестръ / Музыканты / Музыканты" odd (unverified)
+- library rows: DB holds either "Музыкальная библіотека." + heading Библіотекарь (1891-92, 1895-96, 1896-97, 1898-99) or "Оркестръ Малаго театра." + heading "Музыкальная библіотека / Библіотекарь" (1890-91, 1893-94, 1899-00) -> RG decision

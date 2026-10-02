@@ -1,0 +1,17 @@
+# wave1 agent1 (1890-91 MSK p001/p003/p004, SP p001/p003/p004) -- reviewed by me? NO (pending)
+musicians_1890-91_MSK_p001 | FIX | e001-e043 | heading=Оперный оркестр. / Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1890-91_MSK_p003 | FIX | e001-e045 | heading=Балетный оркестръ / Музыканты | inst=Оркестры. | CONTINUITY (entries "(см. оперный оркестръ)"; DB heading holds entry text)
+musicians_1890-91_MSK_p004 | FIX | e001-e009 | heading=Балетный оркестръ / Музыканты | inst=Оркестры. | DIRECT
+musicians_1890-91_MSK_p004 | KEEP | e010-e017 | correct (Малый block, "Музыканты:")
+musicians_1890-91_MSK_p004 | FIX | e018-e034 | heading=Музыканты: | inst=KEEP | DIRECT
+musicians_1890-91_MSK_p004 | KEEP | e035 | Фарскій library entry, correct
+musicians_1890-91_MSK_p004 | ADD ROW | Богуславъ, Флорентій Вечеславовичъ, tenure "(съ 11 октября 1868 г.)", no list_number, heading=Капельмейстеръ, inst=Оркестръ Малаго театра. | DIRECT (missing capellmeister; no 1890-91 Богуславъ in DB)
+musicians_1890-91_SP_p001 | FIX | e001-e043 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1890-91_SP_p003 | FIX | e001-e045 | heading=Балетный оркестръ / Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1890-91_SP_p004 | FIX | e001-e015 | heading=Балетный оркестръ / Музыканты | inst=Оркестры. | DIRECT/CONTINUITY
+musicians_1890-91_SP_p004 | KEEP | e016 (Кротковъ), e017-e040 | correct
+OTHER FINDINGS
+- SP_p002 ballet rows (Дриго, Канненгиссеръ, репетиторы 1-3, музыканты 1-6) still inst "Императорское С.-Петербургское Театральное Училище" (I left them in #126 as uncertain); MSK p002 ballet rows have "Оркестры." -> likely should be "Оркестры."
+- MSK_p002 ballet Музыканты 1-2 (Альбрехтъ x2) heading "Музыканты" lacks "Балетный оркестръ /" prefix; align with p003/p004 form if adopted
+- MSK_p003 name misreads (zoomed): no.27 printed "Критсель" (DB Критселъ); no.42 printed "Рамбоусекъ" (DB Рамбоусенъ); MSK_p000 e009 "Аспергеръ Оскаръ" vs p003 "Аспернеръ" (not zoomed)
+- SP_p004: e034 (#18 Кондратьевъ), e008 (#59 Шмидтъ) instrument "Біолончель" should be "Віолончель" (also in e008 tenure text); e024 name has line-break hyphen carried into patronymic "Людвиго-вичъ"

@@ -1,0 +1,13 @@
+# wave1 agent4 (1892-93 SP p003/p005, 1893-94 MSK p001, SP p001/p003/p004) -- reviewed by me? NO (pending)
+musicians_1892-93_SP_p003 | FIX | e001-e047 | heading=Балетный оркестръ / Музыканты | inst=Оркестры. | CONTINUITY (inst alt "Балетный оркестръ." -- judgment call)
+musicians_1892-93_SP_p003 | FIX | e048 | heading=Капельмейстеръ | inst=Оркестръ Александринскаго театра. | DIRECT
+musicians_1892-93_SP_p003 | FIX | e049-e055 | heading=Музыканты | inst=Оркестръ Александринскаго театра. | DIRECT
+musicians_1892-93_SP_p005 | FIX | e001-e022 | heading=Музыканты | inst=Оркестръ Михайловскаго театра. | CONTINUITY
+musicians_1893-94_MSK_p001 | FIX | e001-e051 | heading=Оркестръ оперы и балета. Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1893-94_SP_p001 | FIX | e001-e051 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1893-94_SP_p003 | FIX | e001-e007 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1893-94_SP_p003 | KEEP | e008, e009-e046, e047 | correct
+musicians_1893-94_SP_p004 | FIX | e001-e039 | heading=Музыканты | inst=Оркестръ Михайловскаго театра. | DIRECT/CONTINUITY (DB has "Музыканты." in inst, heading None)
+OTHER FINDINGS
+- not assigned but same bug: 1892-93_SP_p004 (e020-e049 = Alexandrinsky rows 8-37 mislabeled Михайловскаго; Михайловскій block e001-e019; Рамзе e001 should be unnumbered; entry order odd), 1892-93_SP_p002 (inst "Валетный оркестръ" misread of printed "Балетный оркестръ."), 1892-93_SP_p001 (inst "Списокъ музыкантовъ..." heading None), 1893-94_SP_p002, 1893-94_MSK_p002 (same shape), 1893-94_MSK_p000 e014 (Бенда heading ends 'Ударные инструменты')
+- name/instr misreads (zoomed unless noted): 1892-93_SP_p003 e014 Кернешко->Керкешко, e031/e032 Тарике->Тарнке; 1893-94_MSK_p001 e006 Гейнь->Гейнъ, e001/e004/e008 Альть->Альтъ, (likely e050 Маривардтъ->Марквардтъ); 1893-94_SP_p001 e012 Гильдеобрандтъ->Гильдебрандтъ, e019 Грюнерть->Грюнертъ, e032 Казановъ->Казаковъ, e051 Маннопъ->Манкопъ, 'Вальдгорнь'->'Вальдгорнъ' (4 rows incl e003), (likely e002 Геронимовичъ->Іеронимовичъ); 1893-94_SP_p003 'Вальдгорнь' e001,e009,e036,e039; 1893-94_SP_p004 e009 Greek omicron 'Гугο'->Гуго, e029 Рендертъ->Рендеръ, e030 Реханъ->Рехакъ

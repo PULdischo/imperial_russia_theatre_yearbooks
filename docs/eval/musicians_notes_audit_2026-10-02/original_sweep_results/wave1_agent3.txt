@@ -1,0 +1,23 @@
+# wave1 agent3 (1891-92 SP p003/p005, 1892-93 MSK p001/p002, SP p001/p002) -- reviewed by me? NO (pending)
+musicians_1891-92_SP_p003 | FIX | e001-e059 | heading=Балетный оркестръ / Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1891-92_SP_p005 | FIX | e001-e039 | heading=Музыканты | inst=Оркестръ Михайловскаго театра. | CONTINUITY
+musicians_1892-93_MSK_p001 | FIX | e001-e053 | heading=Оперный оркестр. Музыканты (series p000 form) | inst=Оркестры. | CONTINUITY
+musicians_1892-93_MSK_p002 | FIX | e001-e011 | heading=Оперный оркестр. Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1892-93_MSK_p002 | FIX | e012 | heading=Балетный оркестръ / Главный капельмейстеръ | inst=Оркестры. | DIRECT
+musicians_1892-93_MSK_p002 | FIX | e013 | heading=Балетный оркестръ / Капельмейстеръ | inst=Оркестры.
+musicians_1892-93_MSK_p002 | FIX | e014 | heading=Балетный оркестръ / Репетиторъ балета | inst=Оркестры.
+musicians_1892-93_MSK_p002 | FIX | e015 | heading=Балетный оркестръ / Композиторъ балетной музыки | inst=Оркестры.
+musicians_1892-93_MSK_p002 | FIX | e016-e051 | heading=Балетный оркестръ / Музыканты | inst=Оркестры. | DIRECT
+musicians_1892-93_SP_p001 | FIX | e001-e053 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1892-93_SP_p002 | FIX | e001-e025 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1892-93_SP_p002 | FIX | e026 | heading=Балетный оркестръ / Первый капельмейстеръ | inst=Оркестры. | DIRECT
+musicians_1892-93_SP_p002 | FIX | e027 | heading=Балетный оркестръ / Второй капельмейстеръ | inst=Оркестры. | DIRECT
+musicians_1892-93_SP_p002 | FIX | e028-e030 | heading=Балетный оркестръ / Репетиторы | inst=Оркестры. | DIRECT
+musicians_1892-93_SP_p002 | FIX | e031-e048 | heading=Балетный оркестръ / Музыканты | inst=Оркестры. | DIRECT
+OTHER FINDINGS
+- names (DIRECT zoomed): 1891-92_SP_p003 e021 Назаковъ->Казаковъ; 1892-93_MSK_p001 e034 Марлохей->Мардохей, e039 Ипхекъ-Мейерь->Ицхекъ-Мейеръ, e044 Триньянъ->Триньякъ; 1892-93_SP_p001 e010 Надлецъ->Кадлецъ, e011 Назаковъ->Казаковъ, e021 Нункели->Кункели, e035 Пертѣль->Пертель; 1892-93_SP_p002 e008 Цабелъ->Цабель, e028 "Итцигсонъ Мейеръ Гиршъ" printed hyphen Мейеръ-Гиршъ
+- dropped notes 1891-92_SP_p005: e006 Брауэръ † 15 августа 1892, e010 Головацкій † 6 февраля 1892 missing from tenure; e035 Шейнеръ instrument Труба not printed
+- 1892-93_SP_p002 ballet rows' list structure: e026 Дриго etc.
+- 1892-93_MSK_p003 (not assigned, next waves): inst Училище on most rows, 44 rows bare heading "Оркестръ", row with list_number 'Арендъцъ, Генрихъ' (name pasted in wrong field)
+- 1890-91_MSK_p003: entry text in heading_path (different bug class; assigned to agent1: fix covers)
+- 1892-93_MSK_p000 headings "Оперный оркестр. ..." drop ъ and use ". " not " / " (spelling/format inconsistency across series)

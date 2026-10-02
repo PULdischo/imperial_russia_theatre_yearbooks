@@ -1,0 +1,7 @@
+# wave5 agent25 (Tier C: 1898-99 MSK p000, SP p000, 1899-00 MSK p000, SP p000, SP p004, 1900-01 MSK p000) -- applied? NO
+REAL FIX: musicians_1898-99_SP_p000 | e006-e007 (Константиновъ, Розенфельдъ, Репетиторы 2,3) | heading=Оркестръ оперы и балета / Репетиторы балета (DB wrongly Капельмейстеръ военной музыки) | inst KEEP
+FORM-ONLY (cosmetic pass, RG: match p000 forms/no spelling normalization now; not applied): 1898-99_MSK_p000 e004-e005 Репетиторы & e006 Капельмейстеръ военной музыки lack "Оркестръ оперы и балета /" prefix; 1898-99_SP_p000 e008 Оглоблинъ lacks prefix; 1900-01_MSK_p000 e004-e006 lack prefix
+OK: 1899-00_MSK_p000, 1899-00_SP_p000, 1899-00_SP_p004 (inst/headings correct)
+OTHER FINDINGS
+- names: 1898-99_MSK_p000 e004 Брындлинъ->Брындинъ; institution stored "Оркестры" vs printed "Оркестры." (spelling only; series mixed: p001-p003 bare, p004 with period); 1899-00_MSK_p000 e010 Барсукъ-Самборскій instr "Вальторнъ"->Вальдгорнъ (+tenure text) also 1900-01_MSK_p001 list 4; 1899-00_SP_p004 e018 Ксемъ->Кеймъ, e001 Галкинъ list_number "1." -> NULL, e007 tenure note duplicated "Оставилъ службу 20 октября 1899 г."; 1898-99_SP_p004 Кеймъ first name Аеанасій->Аѳанасій
+- nothing missing/spilled on these pages

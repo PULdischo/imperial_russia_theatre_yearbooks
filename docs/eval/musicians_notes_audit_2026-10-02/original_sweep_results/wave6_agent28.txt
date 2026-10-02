@@ -1,0 +1,7 @@
+# wave6 agent28 (1905-06 MSK p000, SP p000, SP p005, 1906-07 MSK p000, SP p000, 1907-08 MSK p000) -- applied? pending wave6
+REAL FIX: musicians_1905-06_SP_p005 | e019-e038 | heading KEEP (Музыканты) | inst=Оркестръ Александринскаго театра. (continuation of Alx 1-22 on p004) ; list_number NULL e001 (Келеръ unnumbered)
+FORM-ONLY (cosmetic, not applied): tier-prefix on 1905-06 MSK p000 e004-e006, 1905-06 SP p000 e003-e005; 1906-07 SP p000 institution period ("Оркестры." printed vs "Оркестры" stored in p000-p003; series-wide); 1906-07 SP p000 e009-e030 Музыканты prefix question
+OK: 1906-07_MSK_p000, 1907-08_MSK_p000
+OTHER FINDINGS (secondary batch)
+- names: 1905-06_SP_p005 e014 Завъятновскій->Завѣтновскій, e017 Лешинскій->Лещинскій, e024 Нелзейко->Недзейко, e029 Сальникова->Сальниковъ; 1906-07_MSK_p000 e006 Авѣрино->Авьерино; 1907-08_MSK_p000 e006 Авъерино->Авьерино; 1906-07_SP_p000 e010 Аматѣкъ->Аматнѣкъ, e028 Виргеліошъ->Виргеліюшъ
+- not mine: 1906-07 SP p003 Alx Капельмейстеръ & Музыканты 1 rows inst "Ежегодникъ"; 1907-08 SP p004 librarian inst "Ежегодникъ"; 1905-06_MSK_p004 e023-e037 and 1907-08_MSK_p003 Малый + library rows inst Училище; 1906-07_MSK_p003 3 rows (82-86) heading NULL; 1906-07_MSK_p004 one row (122) heading NULL

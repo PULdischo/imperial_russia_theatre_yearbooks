@@ -1,0 +1,16 @@
+# wave2 agent7 (1897-98 MSK p001, SP p001/p002/p004, 1898-99 MSK p001/p002) -- applied? NO. Forms: 1897-98 SP "Музыканты"/"Оркестры."; 1898-99 MSK "Музыканты"/"Оркестры" (no period); 1897-98 MSK 'Оркестр оперы и балета. Музыканты:'/"Оркестры."
+musicians_1897-98_MSK_p001 | FIX | e001-e052 | heading=Оркестр оперы и балета. Музыканты: | inst=Оркестры. | CONTINUITY
+musicians_1897-98_SP_p001 | FIX | e001-e054 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1897-98_SP_p002 | FIX | e001-e051 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1897-98_SP_p002 | KEEP | e052 Галкинъ
+musicians_1897-98_SP_p004 | FIX | e001-e034 | heading=Музыканты | inst=Оркестръ Михайловскаго театра. | CONTINUITY
+musicians_1897-98_SP_p004 | LIBRARY e035 Новоселовъ | heading printed "Старшій библіотекарь / Центральной Музыкальной Библіотеки." ; DB inst "Центральная Музыкальная Библиотека" (modernized); agent proposes inst=Оркестры. (CONTINUITY/ANALOGY) -> DEFERRED with the library decision
+musicians_1898-99_MSK_p001 | FIX | e001-e039 | heading=Музыканты | inst=Оркестры | CONTINUITY
+musicians_1898-99_MSK_p002 | FIX | e001-e040 | heading=Музыканты | inst=Оркестры | CONTINUITY
+OTHER FINDINGS
+- !!! MAJOR GAP: musicians_1897-98_MSK_p002 (printed p.103) -- scan has list 73-123 (51 musician rows ending Федоровъ Николай Александровичъ) + Малый block Капельмейстеръ Арендсъ; DB holds ONLY the Арендсъ row (list_number "— 103 —"). 51 rows missing outright (not on other 1897-98 pages). Needs re-extraction/transcription of that page.
+- musicians_1897-98_MSK_p003: all 33 numbered rows heading None, inst "Музыканты:" -> should be inst Оркестръ Малаго театра., heading Музыканты; e034 Фарскій library row same inst bug
+- musicians_1897-98_MSK_p000: Гейнъ e022 note "Оставилъ службу 1 ноября 1897 г." dropped; e012-e024 (list 8-20) bare tier string unlike e005-e007
+- musicians_1898-99_MSK_p003 e001-e019 -- covered by agent8
+- 1897-98_SP_p003: Александринскій rows 1-42 heading "Музыканты:" w/ colon; Михайловскій rows e044-e051 "Оркестръ Михайловскаго театра. / Музыканты:" -> should be Музыканты
+- names: MSK_p001 e029 Кругоголововъ->Крутоголововъ, e030 Кунсть->Кунстъ, e045 Пащееевъ->Пащеевъ, e033 Кюне note "Оставила службу 4 сентября 1898" dropped, e016 Зюсъ first name printed "Фрацъ" (genuine typo candidate); SP_p001 e017 Инспрунеръ->Инспрукеръ, e031 Latin "de"->Cyrillic "де Ланге", e054 Плацатна->Плацатка; SP_p002 e005 Радине->Радике, e008 Реханъ->Рехакъ, e029 Хаанъ->Хаакъ, e031 Кануть->Канутъ, e033 Щабель->Цабель, e034 Щиммерманъ->Циммерманъ; SP_p004 e004 Елиненъ->Елинекъ, e035 patronymic Илычъ->Ильичъ; 1898-99_MSK_p001 e002 Ермоловъ instr Ударные->Альтъ, e004 Зоземъ->Зозель, e009 Ивановъ instr Вторая->Первая скрипка, e024 Кусевичкій->Кусевицкій, e025 Лилтке->Лидтке, e031 tenure "октѣбря"->"октября", e032 Недбалъ->Недбаль, e038 Пашеевъ->Пащеевъ, e023 Васильеничъ (print typo candidate); MSK_p002 e032 Триньякъ note "Оставилъ службу 1 октября 1898 г." dropped

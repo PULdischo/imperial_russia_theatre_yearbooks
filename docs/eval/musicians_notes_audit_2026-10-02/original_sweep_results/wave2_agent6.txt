@@ -1,0 +1,13 @@
+# wave2 agent6 (1895-96 SP p001-p004, 1896-97 SP p002/p003) -- applied? NO. 1895-96 SP inst "Оркестры." ; 1896-97 SP inst "Оркестры" (NO period) per its p000
+musicians_1895-96_SP_p001 | FIX | e001-e051 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1895-96_SP_p002 | FIX | e001-e052 | heading=Музыканты | inst=Оркестры. | CONTINUITY
+musicians_1895-96_SP_p003 | FIX | e001 | heading=Музыканты | inst=Оркестры. | DIRECT
+musicians_1895-96_SP_p003 | KEEP | e002-e047
+musicians_1895-96_SP_p004 | FIX | e001-e037 | heading=Музыканты | inst=Оркестръ Михайловскаго театра. | CONTINUITY
+musicians_1896-97_SP_p002 | FIX | e001-e053 | heading=Музыканты | inst=Оркестры (no period) | CONTINUITY
+musicians_1896-97_SP_p003 | FIX | e001-e002 | heading=Музыканты | inst=Оркестры (no period) | DIRECT
+musicians_1896-97_SP_p003 | KEEP | e003-e050
+OTHER FINDINGS
+- names (zoomed): 1895-96_SP_p001 e016 Евстифьевъ->Евстифѣевъ, e023 Инспрукертъ->Инспрукеръ, e034 first name hyphen Фридрихъ-Эрнестъ; SP_p002 e025 Терь-Огановъ->Теръ-Огановъ, e031 Хаанъ->Хаакъ, instrument Альть->Альтъ on e005,e013,e017,e019,e025,e030,e038,e052 (also tenure text); SP_p003 e041 Штарнъ->Штаркъ; SP_p004 e010 Вилькень->Вилькенъ, e019 Маркузъ->Маркузэ; 1896-97_SP_p002 e025 Геръ-Огановъ->Теръ-Огановъ, e033 Кануть-Эмерикъ->Канутъ-Эмерикъ, e043 Шолларь->Шолларъ; SP_p003 e020 Аоанасій->Аѳанасій, e050 Болымъ->Больмъ
+- dropped note: 1896-97_SP_p002 e046 (115 Штейнсъ Іосифъ) "Оставилъ службу 1 сентября 1896 г."
+- not mine: 1895-96_SP_p000 e009 heading lacks 'Оркестръ оперы и балета / ' prefix; 1896-97_SP_p004 mixed institutions (in wave later)

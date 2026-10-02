@@ -1,0 +1,16 @@
+# wave3 agent15 (1904-05 SP p001/p002/p003/p005/p006, 1905-06 MSK p001) -- applied? NO. 1904-05 SP p000 form "Музыканты"/"Оркестры."; 1905-06 MSK p000 inst "Оркестры."
+musicians_1904-05_SP_p001 | FIX | e001-e039 | heading=Музыканты | inst=Оркестры.
+musicians_1904-05_SP_p002 | FIX | e001-e040 | heading=Музыканты | inst=Оркестры.
+musicians_1904-05_SP_p003 | FIX | e001-e038 | heading=Музыканты | inst=Оркестры.
+musicians_1904-05_SP_p005 | FIX | e001-e003 | heading=Музыканты | inst=Оркестръ Александринскаго театра.
+musicians_1904-05_SP_p005 | KEEP | e004-e037
+musicians_1904-05_SP_p006 | FIX | e001-e011 | heading=Музыканты | inst=Оркестръ Михайловскаго театра.
+musicians_1904-05_SP_p006 | LIBRARY e012 Новоселовъ UNCERTAIN (inst modernized "Центральная Музыкальная Библиотека")
+musicians_1905-06_MSK_p001 | FIX | e001-e036 | heading=KEEP | inst=Оркестры.
+musicians_1905-06_MSK_p001 | FIX | e037 | heading=И. сб. 2-го капельмейстера балета | inst=Оркестры. (Гербер; DB had heading None, him last; printed "сб." probable print typo)
+OTHER FINDINGS
+- names: SP_p001 e008,e010,e013,e037 instr Біолончель->Віолончель; e002 Виргеліошъ->Виргеліюшъ; e007/e008 Вульфъ-Израэль 1-й/2-й suffix; SP_p002 e018 tenure 1859->1869, e003 Кубанскъ->Кубанекъ, e007 Ле-Лангъ->Де-Ланге, e008 Лангъ->Ланге, e015 Людольфъ->Людольфи; SP_p003 e012 Тепъ->Тецъ, e031 Штейнъ->Штейнсъ, e037 Юнкертъ->Юнкеръ; SP_p005 e005 Армгеймеръ->Армсгеймеръ, e009 ВиЛЬкенъ->Вилькенъ, e033 patronymic Аеанасьевичъ->Аѳанасьевичъ
+- 1904-05_SP_p004 inst lacks period (scan prints period); e001 Галкинъ list_number "1." not printed
+- 1905-06_MSK_p001: e012 Арабай instrument None (printed Фаготъ); four dropped notes (e008 Адамовъ "Оставилъ службу 1 августа 1906 г.", e019 Борхъ "16 августа 1906 г.", e023 Бюхнеръ "4 мая 1906 г.", e028 Гейслеръ "Переведенъ съ 1 октября 1902 г. въ Малый театръ"); e001-e004 list numbers 1,2 (Репетиторы) 1,2 (Аккомпаніаторы) stored None
+- 1905-06_MSK_p002 same bug (heading Скрипачи, inst Списокъ артистовъ и служителей..., nos 31-69 -> Музыканты/Оркестры.)
+- genuine print typo: "И. сб." (vs "И. об." in 1903-04)

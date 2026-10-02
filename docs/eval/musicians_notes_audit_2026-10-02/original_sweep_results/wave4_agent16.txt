@@ -1,0 +1,14 @@
+# wave4 agent16 (1905-06 MSK p002, SP p001/p004/p006, 1906-07 MSK p003/p004) -- applied? NO
+musicians_1905-06_MSK_p002 | FIX | e001-e039 | heading=Музыканты | inst=Оркестры.
+musicians_1905-06_SP_p001 | FIX | e001-e003 heading=Репетиторы балета ; e004 heading KEEP (Капельмейстеръ военной музыки) ; e005-e038 heading=Музыканты | inst=Оркестры. all
+musicians_1905-06_SP_p004 | FIX | e001-e017 | heading=Музыканты | inst=Оркестры.
+musicians_1905-06_SP_p004 | FIX | e018-e040 | heading=KEEP | inst=Оркестръ Александринскаго театра. (period)
+musicians_1905-06_SP_p006 | FIX | e001-e028 | heading=Музыканты | inst=Оркестръ Михайловскаго театра.
+musicians_1905-06_SP_p006 | LIBRARY e029 UNCERTAIN inst
+musicians_1906-07_MSK_p003 | FIX | e001-e040 | heading=Музыканты | inst=Оркестры.
+musicians_1906-07_MSK_p004 | FIX | e001-e005 | heading=Музыканты | inst=Оркестры. ; KEEP e006-e017
+musicians_1906-07_MSK_p004 | FIX | e018 | heading=Библіотекарь | inst=Музыкальная библіотека. (printed title DIRECT) ; e019 | heading=Помощникъ библіотекаря | inst=Музыкальная библіотека.
+OTHER FINDINGS
+- MISSING ROW 1906-07_MSK_p004: Дирижеръ Шульцъ, Августъ (съ 1 октября 1883 г.) inst Оркестръ Малаго театра. (between e005 and e006)
+- names: 1905-06_MSK_p002 e016 Квелнау->Кведнау, e021 Котрбанъ instr Первая скрипка->Вальдгорнъ; SP_p001 e017 Булдаевъ->Будаевъ, e018 Конраль->Конрадъ, e025 Виргеліошъ->Виргеліюшъ; SP_p006 e001 Лихтенбергъ->Лихтенбергеръ; dropped notes SP_p006 e003 "† 12 іюня 1906", e006 "Переведенъ въ оркестръ Маріинскаго театра съ 1 ноября 1905"; SP_p004 e021 invented patronymic Іоганнъ -> NULL; 1906-07_MSK_p003 ordinals dropped (Ромашковъ e002/e003, Соколовъ e011/e012, Шмидтъ e032/e033)
+- ADJACENT: 1905-06_SP_p005 e019-e038 (23-42) stamped Михайловскаго should be Музыканты/Оркестръ Александринскаго театра.; p005 e029 Сальниковъ misread, e024 Нелзейко->Недзейко; 1905-06_MSK_p004 e023-e037 Малый block stamped Училище inst -> Оркестръ Малаго театра. (p004 is in later group?)

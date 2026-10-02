@@ -1,0 +1,18 @@
+# wave3 agent13 (1902-03 SP p003-p006, 1903-04 MSK p001/p003) -- applied? NO. 1902-03 SP p000 form: heading "Оркестръ оперы и балета / Музыканты", inst "Оркестры."; 1903-04 MSK: "Музыканты"/"Оркестры" (no period)
+musicians_1902-03_SP_p003 | FIX | e001-e040 | heading=Оркестръ оперы и балета / Музыканты | inst=Оркестры.
+musicians_1902-03_SP_p004 | FIX | e001-e007 | heading=Оркестръ оперы и балета / Музыканты | inst=Оркестры.
+musicians_1902-03_SP_p004 | FIX | e008-e038 | heading=KEEP | inst=Оркестръ Александринскаго театра. (period added) ; list_number NULL e008 (junk "Галкинъ")
+musicians_1902-03_SP_p005 | FIX | e001-e003 | heading=KEEP | inst=Оркестръ Михайловскаго театра. (period); list_number NULL e001 (junk "Келеръ, Морицъ Федоровичъ")
+musicians_1902-03_SP_p005 | FIX | e004-e018 | heading=KEEP | inst=Оркестръ Александринскаго театра. (CONTINUITY)
+musicians_1902-03_SP_p005 | FIX | e019-e036 | heading=KEEP | inst=Оркестръ Михайловскаго театра. (period)
+musicians_1902-03_SP_p006 | FIX | e001-e012 | heading=Музыканты | inst=Оркестръ Михайловскаго театра.
+musicians_1902-03_SP_p006 | LIBRARY e013 Новоселовъ | UNCERTAIN inst (school stamp wrong)
+musicians_1902-03_SP_p006 | FIX | e014-e028 | heading=Музыканты | inst=Оркестръ Михайловскаго театра.
+musicians_1903-04_MSK_p001 | FIX | e001-e039 | heading=Музыканты | inst=Оркестры
+musicians_1903-04_MSK_p003 | FIX | e001-e012 | heading=Музыканты | inst=Оркестры
+musicians_1903-04_MSK_p003 | KEEP | e013-e018 (Малый Музыканты 1-6)
+musicians_1903-04_MSK_p003 | FIX | e019-e039 | heading=Музыканты | inst=Оркестры
+OTHER FINDINGS
+- MISSING ROW 1903-04_MSK_p003: Дирижеръ: Шульцъ, Августъ (съ 1 октября 1883 г.), heading Дирижеръ, inst Оркестръ Малаго театра.
+- not assigned: 1903-04_MSK_p002 all 38 rows stuck inst/heading None (-> Музыканты/Оркестры); 1903-04_MSK_p004 e018 Орловъ library inst "Музыкальная библіотека." vs other years Малаго (library decision); 1902-03_SP_p001 still heading "Оркестръ" inst "Императорскія theatры" 37 rows (15-51) -> Оркестръ оперы и балета / Музыканты, Оркестры.
+- 1902-03_SP_p004 e001 instr Вальдгорнь->Вальдгорнъ; e002 tenure "юня"->"іюня" (e019 probably too); 1902-03_SP_p006 e021 list_number "18." printed (source typo for 28) -> genuine_print_typos

@@ -1,0 +1,11 @@
+# wave6 agent29 (1907-08 SP p000, 1909-10 MSK p000, 1909-10 SP p000) -- applied? pending wave6
+OK: musicians_1907-08_SP_p000 (all rows)
+musicians_1909-10_MSK_p000 | FIX | e027-e028 | heading=Артисты | inst KEEP | not orchestra rows (ballet men 65-66, duplicates of balletartists_1909-10_MSK_p009 e001-e002); rank_or_title "Солистъ Его Императорскаго Величества" not printed on this page; e027 credit text Авеньнь->Авенанъ; KEEP e001-e026
+musicians_1909-10_SP_p000 | FIX | e006 | heading=Оркестръ оперы и балета. / Капельмейстеры балета: (printed "2. Малько" continues Капельмейстеры балета list; DB "Оркестры. / Аккомпаніаторъ" wrong) | inst KEEP
+musicians_1909-10_SP_p000 | e007 Пахитоновъ: heading ok; list_number "Пахитоновъ"->NULL, first_name Даниилъ->Даніилъ
+musicians_1909-10_SP_p000 | UNCERTAIN e012-e015 (Perret 14, Terrier 15, Valbel 16, Violette 17: French dramatic troupe actors, not in DB elsewhere; pp.101-103 scans missing); e008-e011 tier prefix form UNCERTAIN (kept)
+OTHER FINDINGS
+- 1909-10_SP_p000 e008 Лачиновъ: printed "Первая срипка" (print typo), instrument NULL
+- scans for book pp. 101-103 (French troupe) not in image set
+- balletartists_1909-10_MSK_p009 e003-e028 are the same page's orchestra musicians filed as BalletArtists = duplicate of musicians_1909-10_MSK_p000 e001-e026 (first names differ: Альфрѣдъ vs Альфредъ)
+- 1908-09_SP_p000 e001-e003 same French actors

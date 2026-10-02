@@ -1,0 +1,17 @@
+# wave4 agent20 (Tier B: 1908-09 SP p000/p002/p003, 1909-10 MSK p002/p003, SP p003) -- applied? NO
+# NOTE 1908-10 series store institution = printed upper-case RUNNING HEAD ('ПЕТЕРБУРГСКІЕ ОРКЕСТРЫ.' / 'МОСКОВСКІЕ ОРКЕСТРЫ.') on continuation pages; 1908-09 SP p000 holds 'Оркестры.' (printed title). RG: "keep verbatim institutions" -> for these pages fix HEADING only, leave institution as stored; series-level institution question logged.
+musicians_1908-09_SP_p000 | UNCERTAIN | e001-e003 (Terrier, Valbel, Violette = French-troupe actors 17-19, wrongly under 'Завѣдывающій оркестрами'; correct heading unknowable, pp.97-99 not scanned)
+musicians_1908-09_SP_p000 | FIX | e010-e011 | heading=Оркестръ оперы и балета / Репетиторы балета | inst=KEEP | DIRECT
+musicians_1908-09_SP_p000 | KEEP | e004-e009, e012-e017 (alt faithful form 'Оркестръ оперы и балета / Музыканты' RG's call)
+musicians_1908-09_SP_p002 | FIX | e001-e034 | heading=Музыканты | inst=KEEP(agent said Оркестры.; I keep stored running head) | CONTINUITY
+musicians_1908-09_SP_p002 | FIX | e035 | NOT a person: note "Переведенъ изъ оркестра Михайловскаго театра съ 1 ноября 1905 г." belongs to e029 (70 Мнацагановъ); merge into e029 tenure note and drop row (row removal -> deferred secondary batch, shifts entry ids)
+musicians_1908-09_SP_p003 | FIX | e001-e035 | heading=Музыканты | inst=KEEP | CONTINUITY
+musicians_1909-10_MSK_p002 | FIX | e001-e033 | heading=Оркестры / Музыканты | inst=KEEP | CONTINUITY
+musicians_1909-10_MSK_p003 | FIX | e001-e026 | heading=Оркестры / Музыканты | inst=KEEP | CONTINUITY
+musicians_1909-10_SP_p003 | FIX | e001-e036 | heading=Оркестры. / Музыканты: | inst=KEEP | CONTINUITY
+OTHER FINDINGS
+- p000 problems (not assigned): 1909-10_MSK_p000 e027-e028 (65-66 Ѳедоровъ 1-й/2-й) are the end of the Moscow ballet section, not orchestra rows; 1909-10_SP_p000 e012-e015 (14-17 Perret, Terrier, Valbel, Violette) French-troupe actors not orchestra; balletartists_1908-09_SP_p008 e009 heading 'Артисты' printed "Артистки:", e012-e019 (73-80) ballet men stamped French-troupe inst/heading
+- 1908-09_SP_p004 (111-126) and 1909-10_SP_p004 (107-127) first rows orchestra continuation but stamped Moscow drama-troupe running head as institution
+- 1908-09_SP_p001, 1909-10_SP_p001/p002 heading NULL with running-head inst (same pattern)
+- names: SP_p002 e028 'Михайлова скій' stray space, e019 Лемось->Лемосъ, e022 Лукась->Лукасъ, e023 Людольфъ->Людольфи, e017 Де-Лангe Latin e; SP_p003 e003 Порманинъ & e021 Стеличевъ patronymic holds tenure text -> NULL, e029 Федергансь->Федергансъ; 1909-10_SP_p003 e028 Стеличекъ patronymic 'Альтъ' (instrument) -> NULL, e010 Плотниковъ instrument Контрабасъ not printed; MSK_p002 e006 'Пащее въ'->Пащеевъ, tenure notes inconsistent form; MSK_p003 e017 Шульцевъ instrument = title
+- genuine print typos: MSK 1909-10 p002 row 70 Петрушевъ "сентябрб 1903"; SP 1909-10 p003 row 82 Помазанскій patronymic "Аленсандровичъ"
