@@ -1,0 +1,41 @@
+VERDICT: (b) on all five pages looked at -- by typography "Главный гардеробъ." and "Мѣстные гардеробы." are a lower rank than "Отдѣлъ гардеробный." and are printed under it; no page has a new "Отдѣлъ ..." display heading between Парикмахеръ and Главный гардеробъ. Confidence: DIRECT for the typographic ranking and the placement; UNCERTAIN (moderate) only for the semantic reading, because the print uses no indentation, rules or numbering, only a size/weight step.
+
+TYPE TIERS (same on every page):
+ T1 = large light display serif, centred, fancy "Ꙋ/Р"-style О, with full stop: "Отдѣлъ освѣтительный." "Отдѣлъ бутафорскій." "Отдѣлъ гардеробный." "Отдѣлъ декораціонный." (also МОСКВА in huge letter-spaced caps above them = level 0)
+ T2 = smaller (about 70% of T1 height) medium/semi-bold serif, centred, full stop: "Главный гардеробъ." "Мѣстные гардеробы." (never T1; Мѣстные is a touch heavier than Главный)
+ T3 = letter-spaced small type, centred: "К о с т ю м е р ъ", "К о с т ю м е р ш а", "П а р и к м а х е р ъ", "Н а ч а л ь н и ц а", "Гардеробмейстеры:" (letter-spaced on 1894-95 p002 Moscow-less SPb part; unspaced on Moscow pages), "Смотрительницы отдѣловъ:"
+ T4 = small condensed bold/grotesque: "Отдѣлъ мужскихъ костюмовъ." "Отдѣлъ женскихъ костюмовъ." "Отдѣлъ головныхъ уборовъ, обуви и бѣлья." and theatre names ("Большой театръ." "Малый театръ.")
+
+TREES AS PRINTED
+productionteam_1894-95_p003 (Moscow; p.94; two columns, divider rule)
+ LEFT col: ...Малый театръ / Машинистъ (end of previous dept) ; [T1] Отдѣлъ освѣтительный. ; [T1] Отдѣлъ бутафорскій. (Бутафоры: -> Большой театръ., Малый театръ.) ; [T1] Отдѣлъ гардеробный. (foot of left column) ; [T3] К о с т ю м е р ъ -> Неменскій (last line of column, "Мужскіе костюмы всѣхъ труппъ").
+ RIGHT col top: [T3] К о с т ю м е р ш а. -> Вороненко ; [T3] П а р и к м а х е р ъ. -> Бьенвеню ; [T2] Главный гардеробъ. ; [T3] Н а ч а л ь н и ц а. -> Солини ; [T3] Смотрительницы отдѣловъ: ; [T4] Отдѣлъ мужскихъ костюмовъ. -> Якубовская ; [T4] Отдѣлъ женскихъ костюмовъ. -> Ильинская ; [T4] Отдѣлъ головныхъ уборовъ, обуви и бѣлья. -> Байкова ; [T2] Мѣстные гардеробы. ; [T3] Гардеробмейстеры: ; [T4] Большой театръ. -> Щеголевъ ; [T4] Малый театръ. -> Шаталовъ ; [T3] Гардеробмейстерши: ; [T4] Большой театръ. -> Спасская ; [T4] Малый театръ. -> фонъ-Фитингофъ-Шель.
+ Directly after the foot-of-column "Отдѣлъ гардеробный." comes (same column) T3 "К о с т ю м е р ъ" -- letter-spaced, smaller -- then the Неменскій entry. The right column opens with the continuation T3 "К о с т ю м е р ш а." (not a new department heading), and the first thing in the right column that is a T2 is "Главный гардеробъ." after Бьенвеню. So the right column's first headings are Отдѣлъ гардеробный's own subheadings; the column break just falls inside the department.
+ Tree: Отдѣлъ гардеробный [T1] > {Костюмеръ, Костюмерша, Парикмахеръ [T3]; Главный гардеробъ [T2] > {Начальница; Смотрительницы отдѣловъ: > 3 T4 отдѣлы}; Мѣстные гардеробы [T2] > {Гардеробмейстеры: ; Гардеробмейстерши: > theatres}}
+
+productionteam_1893-94_p003 (Moscow; p.106)
+ LEFT: ...Помощникъ завѣдывающаго освѣщеніемъ ; [T1] Отдѣлъ бутафорскій. ; [T1] Отдѣлъ гардеробный. > [T3] Костюмеръ (Неменскій), Костюмерша (Вороненко), Парикмахеръ (Бьенвеню) -- whole block fits in left column.
+ RIGHT (top): [T2] Главный гардеробъ. (first line of column, no Отдѣлъ heading above it) > Начальница > Смотрительницы отдѣловъ: > 3 x T4 ; [T2] Мѣстные гардеробы. > Гардеробмейстеры:/Гардеробмейстерши: > theatres.
+ Same tree; the department heading is simply not repeated at the column top.
+
+productionteam_1895-96_p003 (Moscow; p.110)
+ LEFT: [T1] Отдѣлъ бутафорскій. ; [T1] Отдѣлъ гардеробный. > Костюмеръ / Костюмерша / Парикмахеръ [T3] ; then, still in the LEFT column directly under Парикмахеръ/Бьенвеню: [T2] Главный гардеробъ. > Начальница (Солини).
+ RIGHT: Смотрительницы отдѣловъ: (continuation) > 3 x T4 ; [T2] Мѣстные гардеробы. > Гардеробмейстеры: / Гардеробмейстерши: > theatres.
+ Here Главный гардеробъ is in the same column, directly after Парикмахеръ with no T1 heading in between -- the clearest evidence.
+
+productionteam_1894-95_p002 (SPb, right part = lower-right of the SPb section; plus Moscow start)
+ Top of page (left col): [T2] Главный гардеробъ. (top line, no T1 above it) > Смотрительницы отдѣловъ: > T4 Отдѣлъ мужскихъ костюмовъ. / женскихъ костюмовъ. / головныхъ уборовъ, обуви и бѣлья. ; [T2] Мѣстные гардеробы. > Гардеробмейстеры: (letter-spaced here) > Маріинскій театръ, Александринскій театръ, Михайловскій театръ ; Гардеробмейстерши: > the same three theatres (right col).
+ Then ornament rule, [level 0] МОСКВА (huge letter-spaced caps), [T1] Отдѣлъ декораціонный. -- the first T1 after the wardrobe block.
+ This block is the continuation of Отдѣлъ гардеробный from p001 (next entry).
+
+productionteam_1894-95_p001 (SPb)
+ RIGHT col: [T1] Отдѣлъ бутафорскій. ; [T1] Отдѣлъ гардеробный. > [T3] К о с т ю м е р ы: , К о с т ю м е р ш и: , П а р и к м а х е р ы: (> Оперная / Балетная / Русская драматическая / Французская труппа T4) -- column and page end with Ефимовъ (last Парикмахеръ); the page turn is followed on p002 by [T2] Главный гардеробъ. with no new T1.
+
+ANSWER TO THE QUESTION: on all five pages Главный гардеробъ and Мѣстные гардеробы are (b) printed under Отдѣлъ гардеробный (rank T2 < T1; no T1 heading separates them from it; in 1895-96 and in SPb p001->p002 they follow Парикмахеры directly). They are NOT siblings of Отдѣлъ гардеробный at the Отдѣлъ-heading rank. Same result on every page examined.
+Caveat: the print shows no indentation or bracket; within the department there are two kinds of children: occupation headings (T3 letter-spaced Костюмеръ/Костюмерша/Парикмахеръ directly under T1) and the two named sub-sections Главный гардеробъ / Мѣстные гардеробы (T2, visually ABOVE the occupation headings in size, though printed after them). So they read as sub-departments (2nd tier) of Отдѣлъ гардеробный; one could equally render the tree as Отдѣлъ гардеробный > {Костюмеры/Костюмерши/Парикмахеры as one unnamed group; Главный гардеробъ; Мѣстные гардеробы}.
+
+OTHER
+- 1894-95_p003: the printed page-foot "Отдѣлъ гардеробный." is NOT a stray orphan heading -- three lines of its own content (Костюмеръ + Неменскій) follow it in the same column.
+- Weight of the T2 face varies a little by scan/page (Мѣстные bolder than Главный on 1894-95_p003), no change of rank.
+- On SPb 1894-95 p001/p002 Гардеробмейстеры letter-spacing differs from Moscow pages (spaced in SPb p002, unspaced in Moscow) -- not a rank change.
+- Crops: /tmp/audit17/crops/a/ (95_leftfoot.png, 95_righttop.png, 95_rightmid.png, p002_topleft.png, p001_gard.png, 9596_left.png, 9394_righttop.png, full_*.png).

@@ -1,0 +1,24 @@
+All 10 of 10 seasons (1890-91 ... 1899-00) support the stored nesting: in every one, "Парикмахеры" is a printed heading, set in the same small centred letter-spaced face and with the same colon as "Костюмеры:" / "Костюмерши:", and sits under the larger "Отдѣлъ гардеробный." and before "Главный гардеробъ." (checked at 2.5-3x zoom on every season's page; crops in /tmp/audit17/crops/b/).
+
+Common typography (SP page, every season): "Отдѣлъ гардеробный." = large light display face, centred, period. "Костюмеры:", "Костюмерши:", "Парикмахеры:" = small centred typewriter-like face, widely letter-spaced, not bold, trailing colon; same point size in all three. Troupe lines (Оперная труппа. / Балетная труппа. / Русская драматическая труппа. / Французская [драматическая] труппа.) + theatre lines = a smaller condensed face, a rank BELOW "Парикмахеры:". "Главный гардеробъ." = medium bold-ish display face with period, centred, clearly larger/heavier than the spaced sub-list headings but smaller than "Отдѣлъ ...".
+
+season | Парикмахеры heading as printed | heading above it | typographic rank vs Костюмеры vs Отдѣлъ гардеробный | supports stored nesting? y/n/UNCERTAIN
+1890-91 | "Парикмахеры:" letter-spaced, not bold (p001 right col, foot) | "Костюмерши:" (list of Иванова/Офицерова); dept heading "Отдѣлъ гардеробный." | same rank as Костюмеры:/Костюмерши:, below Отдѣлъ гардеробный. | y (list continues p002 row 1 Варламовъ, no heading at top of p002, Французская труппа heading is on p001; then "Главный гардеробъ.")
+1891-92 | "Парикмахеры:" letter-spaced, not bold (p001 right col) | "Костюмерши:" | same as Костюмеры:/Костюмерши:, below Отдѣлъ | y (all on p001; then "Главный гардеробъ.")
+1892-93 | "Парикмахеры:" letter-spaced, not bold (p002 left col; Отдѣлъ гардеробный. opens the same column) | "Костюмерши:" | same as Костюмеры:/Костюмерши:, below Отдѣлъ | y (list runs over column break; next col starts "2. Ефимовъ", then "Главный гардеробъ.")
+1893-94 | "Парикмахеры:" widely letter-spaced, not bold (p001 right col) | "Костюмерши:" | same | y (then "Главный гардеробъ.")
+1894-95 | "Парикмахеры:" widely letter-spaced, not bold (p001 right col, list ends at page foot) | "Костюмерши:" | same | y (p002 opens with "Главный гардеробъ." + "Смотрительницы отдѣловъ:")
+1895-96 | "Парикмахеры:" widely letter-spaced, not bold | "Костюмерши:" | same | y (then "Главный гардеробъ."; troupe line "Французская труппа.")
+1896-97 | "Парикмахеры:" letter-spaced, not bold | "Костюмерши:" | same | y (then "Главный гардеробъ.")
+1897-98 | "Парикмахеры:" letter-spaced, not bold (p001 right col, ends at page foot) | "Костюмерши:" | same | y (p002 opens with "Главный гардеробъ." + "Смотрительницы отдѣловъ:")
+1898-99 | "Парикмахеры:" letter-spaced, not bold (p001 right col, foot) | "Костюмерши:" | same | y (list continues p002 top: "2. Педдеръ", no heading at top of p002; then "Главный гардеробъ.")
+1899-00 | "Парикмахеры:" letter-spaced, not bold (p002 left col; Отдѣлъ гардеробный. opens that column) | "Костюмерши:" | same | y (list runs to top of right col, then "Главный гардеробъ.")
+
+Moscow one-row pages (singular): printed as "Парикмахеръ." (small spaced face, period, centred) under "Костюмерша." under "Костюмеръ." which sit under a printed "Отдѣлъ гардеробный." (МОСКВА section). Same rank as Костюмеръ./Костюмерша. -> governing heading is "Отдѣлъ гардеробный." with the "Парикмахеръ." sub-heading itself. Verified: 1890-91 p003, 1891-92 p003, 1892-93 p004 (2 rows: Бьенвеню Сильванъ † 11 февр. 1893, then Бьенвеню Александръ), 1893-94 p003, 1894-95 p003, 1895-96 p003, 1896-97 p003, 1897-98 p003, 1898-99 p003, 1899-00 p003 (list ends at page foot; p004 opens with "Главный гардеробъ." -> matches stored). Following heading: "Главный гардеробъ." (colon in 1890-91/1891-92 Moscow, period from 1892-93; SP is a period throughout). Stored Moscow chain "МОСКВА / Отдѣлъ гардеробный / Парикмахеръ" is therefore also correct.
+
+OTHER:
+- Nothing in these 10 seasons suggests Парикмахеры is a department of its own or belongs under Главный гардеробъ; Главный гардеробъ. is a separate, larger heading that follows the list.
+- In 1897-98, 1898-99, 1899-00 the print lists "Педдеръ, Георгій Ивановичъ ... Мужскіе парики" as No. 2 under Оперная труппа AND again (Мужскіе и женскіе парики) under Балетная труппа: a printed double listing, not a data error (only noting it in case the stored rows are being deduplicated).
+- Page-break continuations (1890-91 p001->p002; 1898-99 p001->p002) have no repeated troupe heading at the top of the next page; stored heading_path correctly carries the troupe from the previous page.
+- 1894-95 to 1899-00 troupe line is "Французская труппа." (no "драматическая"); 1890-91 to 1893-94 reads "Французская драматическая труппа." Check stored spellings if letter-exactness matters.
+- No UNCERTAIN cases.

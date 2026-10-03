@@ -12049,3 +12049,16 @@ from raw.person_entry e join entities.person_link l using(entry_id) where e.entr
 ```
 
 Result: specialty text in tenure_note_text on 204 rows, in rank_or_title on 43 (1 row both); 75 PT rows have any rank_or_title; 15 persons have it in tenure_note_text in some seasons and rank_or_title in others (Пипаръ 11/2, Жуляевъ 11/4, Ефимовъ 14/4, Варламовъ 14/4, Иванова 18/2 ...).
+
+## 2026-10-03 -- ProductionTeam: specialty derivation + wardrobe-nesting change, verification queries
+
+```sql
+select count(*) filter (where title_clean is not null), count(*) filter (where regexp_matches(coalesce(tenure_note_text_clean,''),'(Мужскіе|Женскіе|Парики)')) from analysis.person_entry where entity_type='ProductionTeam';
+select title_clean, count(*) from analysis.person_entry where entity_type='ProductionTeam' and title_clean is not null group by 1 order by 2 desc;
+select md5(string_agg(x,'|' order by x)) from (select concat_ws('~', <every analysis column>) x from analysis.person_entry where entity_type<>'ProductionTeam');   -- backup DB vs rebuilt DB
+select split_part(heading_path,' / ',2), count(*) from raw.person_entry where entry_id like 'productionteam%' group by 1 order by 2 desc;
+select count(*) from raw.person_entry where entry_id like 'productionteam%' and (heading_path like '%/ Главный гардеробъ%' or heading_path like '%/ Мѣстные гардеробы%') and heading_path not like '% / Отдѣлъ гардеробный / %';
+select entry_id, family_name, heading_path from raw.person_entry where entry_id like 'productionteam%' and split_part(heading_path,' / ',2) in ('Большой театръ','Мастерская по раскраскѣ тканей');
+```
+
+Result: title_clean on 261 ProductionTeam rows (75 before), 0 specialties left in tenure_note_text_clean; non-ProductionTeam analysis rows hash-identical to the backup; second path segment tally: Отдѣлъ декораціонный 917, гардеробный 739, освѣтительный 174, бутафорскій 134, Парикмахерскій отдѣлъ 18, декораціонно-машинный 7, Мастерская по раскраскѣ тканей 3, "Отдѣлъ бугафорскій" (print typo) 2; 0 Главный гардеробъ/Мѣстные гардеробы chains without the Отдѣлъ гардеробный parent; the 4 stray "Большой театръ" second segments (1900-01 p003 e015-e018) were fixed.

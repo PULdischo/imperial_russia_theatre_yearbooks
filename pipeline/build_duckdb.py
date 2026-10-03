@@ -543,9 +543,31 @@ def build_analysis_schema(con: duckdb.DuckDBPyConnection) -> None:
                 END AS _rank_or_title_class
             FROM step4
             )
-            SELECT * EXCLUDE (_rank_or_title_class),
+            -- ProductionTeam workshop specialty ("Мужскіе парики", "Женскіе костюмы
+            -- оперной и русской драматической труппъ", "Парики для всѣхъ труппъ"):
+            -- the raw extraction put it in rank_or_title on 43 rows but left it inside
+            -- tenure_note_text on 204 (15 people flip between the two across seasons;
+            -- docs/eval/known_issues.md #132). docs/schema.md calls a workshop
+            -- specialty a TITLE, so title_clean carries it for every ProductionTeam
+            -- row (trailing "." dropped so the values group), and it is removed from
+            -- tenure_note_text_clean. Raw is untouched. Other sentences in the
+            -- tenure text (appointments, "Оставилъ службу", transfers) stay.
+            SELECT * EXCLUDE (_rank_or_title_class)
+                REPLACE (
+                    CASE WHEN entity_type = 'ProductionTeam'
+                          AND regexp_matches(tenure_note_text_clean, '(Мужскіе|Женскіе|Парики)[^.;]*')
+                          AND (trim(coalesce(rank_or_title,'')) = '' OR regexp_matches(rank_or_title, '^(Мужскіе|Женскіе|Парики)'))
+                         THEN nullif(trim(regexp_replace(tenure_note_text_clean, '\s*(Мужскіе|Женскіе|Парики)[^.;]*\.?', '')), '')
+                         ELSE tenure_note_text_clean END AS tenure_note_text_clean),
                 CASE WHEN _rank_or_title_class = 'RANK' THEN rank_or_title ELSE NULL END AS rank_clean,
-                CASE WHEN _rank_or_title_class = 'TITLE' THEN rank_or_title ELSE NULL END AS title_clean,
+                CASE WHEN entity_type = 'ProductionTeam' AND _rank_or_title_class = 'TITLE'
+                          AND regexp_matches(rank_or_title, '^(Мужскіе|Женскіе|Парики)')
+                         THEN rtrim(trim(rank_or_title), '.')
+                     WHEN _rank_or_title_class = 'TITLE' THEN rank_or_title
+                     WHEN entity_type = 'ProductionTeam' AND _rank_or_title_class IS NULL
+                          AND regexp_matches(tenure_note_text, '(Мужскіе|Женскіе|Парики)[^.;]*')
+                         THEN rtrim(trim(regexp_extract(tenure_note_text, '((?:Мужскіе|Женскіе|Парики)[^.;]*)', 1)), '.')
+                     ELSE NULL END AS title_clean,
                 CASE _rank_or_title_class
                     WHEN 'EXCLUDED_ordinal' THEN 'name_disambiguation_ordinal'
                     WHEN 'EXCLUDED_note' THEN 'dual_role_or_crossref_note'
