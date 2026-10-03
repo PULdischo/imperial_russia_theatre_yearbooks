@@ -21938,3 +21938,42 @@ receipts sum unchanged, tombstones 2299 identical, live persons 3268, orphans 0,
 (онъ же и декораторъ) sits in rank_or_title on some seasons and in tenure_note_text on others (placement only; the analysis layer already relocates it to tenure_note_text_clean); 1890-91 p002 prints "Мѣстные гадеробы." (print typo, heading stored normalised).
 
 **Issue #131 phase 2 -- DONE with the start of the TheaterSchoolStaff audit (2026-10-03)**: RG folded the last shift block into the TheaterSchoolStaff audit. `theaterschoolstaff_1896-97_p000` e014..e024: every entry from e015 on carried the PREVIOUS entry's person (a row, e014 Сперанскій, had been inserted mid-array after the links existed, which minted a stray one-entry person for it and left the long-lived Сперанскій person on e015, and Добрынина's on e024 was linked to Виршо's person). Re-pointed by name, e014..e024 (script `relink_tss_1896_97.py`, dry run prints every entry -> person with a name-mismatch marker; 0 mismatches), the stray Сперанскій person (d4eaea) tombstoned into the long-lived one (1f77bdfc). `check_person_link_alignment.py`: 0 shift blocks (was 1), name-mismatched links 132 -> 122 (informational). raw/entries untouched (23159); tombstones 2299 -> 2300 (+ the stray), live persons 3268 -> 3267, orphans 0, receipts sum unchanged. Backup: full_run_pre_promote_backup_2026-10-03_relink131b. Issue #131 is now fully closed.
+
+### #133 step 2 (2026-10-03): creators linked to persons; Wikidata candidates out for RG's review
+
+`pipeline/link_production_creators.py` + two curated CSVs in
+`pipeline/entity_curation/` (design: docs/person_normalization.md, last
+section). The 165 printed forms resolve to 93 creators/persons (75 creator-only + 18 roster).
+"К. В." has no row of its own: it is linked to Вальцъ via a *proposed* form.
+All 1210 non-group credits are linked; 0 unmapped, 0 orphans.
+
+- **18 creators are roster persons** (330 credits): Петипа 142, Дриго 49,
+  Л. И. Ивановъ 38, Армсгеймеръ 19, Вальцъ 18 (4 of them via the proposed
+  "К. В."), Кротковъ 12, Горскій 12, Мендесъ 8, Симонъ 7, Лангаммеръ 7,
+  Кадлецъ 5, Всеволожскій 3 (Г⁂, RG-identified), Гердтъ 3, Келеръ 2,
+  Хлюстинъ 2, Фокинъ 1, Чекетти 1, Манохинъ 1.
+- **75 creator-only persons** in `entities.creator_person`.
+- **Same surname, NOT linked to the roster** (the initial differs):
+  Ю. Герберъ (the roster has Александръ Юліевичъ), Г. Э. Конюсъ (Юлій
+  Эдуардовичъ), К. А. Тарновскій (Николай Александровичъ), Г. Шиманъ
+  (Михаилъ Викторовичъ), Ц. Пуни (Николай Цезаревичъ).
+- **Two roster duplicates found** → `docs/eval/person_merge_candidates_batch.md`:
+  Петипа Маріусъ Ивановичъ (e04344 1890-1908 + 0f4adf 1908-10) and Чекетти
+  Энрико/Генрихъ Цезаревичъ (09350c + bfe3f9). Not merged (RG's end-of-project
+  batch).
+
+**Open for RG:**
+1. 5 proposed form identifications: Гершеля = Гертель (both printed for the same
+   two works), Мюльдорфера = Мюльендорферъ (the same Moscow Cinderella team),
+   Щимана = Шиманъ, К. В. = К. Ѳ. Вальцъ (the same ballet), "М. И. Чайковскаго"
+   = Модестъ (Калькабрино).
+2. 2 proposed roster links: А. Фридманъ = Фридманъ, Александръ Александровичъ
+   (BalletArtists 1890-94; Wikidata Q4492736 "composer and ballet dancer
+   1866-1909" supports it); П. П. Шенкъ = Шенкъ, Петръ Петровичъ
+   (Administrators, a civil official).
+3. П. П. Золотаренко: the roster has two П. П. (Павелъ Петровичъ 2-й; Петръ
+   Петровичъ, Капельмейстеръ). Not linked.
+4. The Wikidata sheet `docs/eval/production_creators_wikidata_review.csv`:
+   5 existing, 58 high, 10 medium, 2 low, 18 with no match. Search terms
+   were mine and labels/descriptions are as Wikidata gives them; nothing is
+   written to the DB until RG has reviewed it.

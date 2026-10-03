@@ -151,3 +151,43 @@ tenure merges — same non-destructive guarantee, same union-find handling
 if a QID is ever claimed by more than two records. All 4 pairs were
 confirmed and merged, bringing the running total to **676 person records
 merged into 526 survivors** across both signals combined.
+
+## Ballet-list creators: a second person source (issue #133)
+
+The ballet productions lists name each ballet's authors, composers, stagers and
+source authors (`analysis.production_entry_credit`, one row per printed name +
+role). Linking them is driven by two hand-curated files in git, not by
+automatic matching:
+
+- `pipeline/entity_curation/production_creators.csv`: one row per creator.
+  The `display_name` is nominative and pre-reform, and is set only for
+  creators who are not on the roster. Each row also carries an optional
+  `roster_person_id` with `roster_link_status` (`confirmed` = initials and job
+  agree with exactly one roster person; `rg_identified` = RG's
+  identification, e.g. Г⁂ = Всеволожскій; `proposed` = plausible but
+  unconfirmed), plus the evidence.
+- `pipeline/entity_curation/production_creator_forms.csv`: every printed form
+  mapped to its creator. `role_category` is set only where one printed form
+  is two people ("Перро" as author = Jules Perrot, as source = Charles
+  Perrault). `form_status` is `confirmed` (a case or initial variant on the
+  same works) or `proposed` (an identification RG hasn't ruled on: Гершеля =
+  Гертель?, Мюльдорферъ = Мюльендорферъ?, Щиманъ = Шиманъ?, К. В. = Вальцъ?,
+  "М. И." Чайковскій = Модестъ?).
+
+`pipeline/link_production_creators.py` builds:
+
+- `entities.creator_person`: creators NOT linked to a roster person.
+  `person_id` = uuid5("production_creator:<key>"), stable across runs.
+  Deliberately outside `entities.person`, which `build_entities.py` rebuilds
+  from roster entries only. `proposed_roster_person_id` records an
+  unconfirmed roster match without acting on it.
+- `entities.production_credit_link`: credit_id → person_id (a roster person
+  if confirmed or RG-identified, otherwise the creator_person), with
+  `link_source`, `form_status` and `roster_link_status`. Superseded roster
+  ids are followed to their survivor, and a vanished roster id is an error.
+  Group credits ("и др.", "разныхъ авторовъ") are not linked.
+
+Wikidata candidates for every creator are in
+`docs/eval/production_creators_wikidata_review.csv`, waiting for RG's
+cross-check (`rg_decision` column). Nothing from that sheet is written to the
+database until RG has reviewed it.

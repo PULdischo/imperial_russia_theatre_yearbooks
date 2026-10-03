@@ -12089,3 +12089,29 @@ select l.person_id::varchar like '0995a2%', e.heading_path, e.rank_or_title from
 ```
 
 Result: 7 non-numeric list_number rows (all 1901-02 p003 e003-e009), 5 rank_or_title rows that are heading text, 3 verb-gender hits of which 1 wrong (Романовъ), and the added Педдеръ row linked to the existing Педдеръ person (0995a2).
+
+## 2026-10-03 — Issue #133 step 2: creator → roster matching and link verification
+
+```sql
+-- surname-stem grouping of printed forms (read in full)
+select c.name_printed, c.role_category, e.season, e.city, e.title, c.honorific_printed
+from analysis.production_entry_credit c join raw.production_entry e using (production_entry_id) where not c.is_collective;
+-- roster candidates, one query per nominative surname stem (~80 stems)
+select p.person_id, p.display_name, p.first_attested_season, p.last_attested_season,
+       string_agg(distinct a.entity_type, '/'), string_agg(distinct coalesce(a.title, a.rank, ''), ' / ')
+from research.person p join research.person_appearance a using (person_id)
+where p.canonical_family_name ilike ? group by all order by 2;
+-- contexts for ambiguous forms (Тальони, Петипа, Иванова, Гершеля, Мюльдорфера, К. В., М. И. Чайковскаго, Щимана, …)
+select distinct e.season, e.city, e.title from analysis.production_entry_credit x join raw.production_entry e using (production_entry_id) where name_printed = ?;
+-- after link_production_creators.py
+select count(*) from entities.production_credit_link where link_source = 'roster' and person_id not in (select person_id from research.person);
+select count(*) from entities.production_credit_link where link_source = 'creator' and person_id not in (select person_id from entities.creator_person);
+select count(*) from entities.creator_person where person_id in (select person_id from entities.person);
+select count(*) from analysis.production_entry_credit c where not is_collective and credit_id not in (select credit_id from entities.production_credit_link);
+select p.display_name, count(*), string_agg(distinct x.role_category, ',') from entities.production_credit_link l
+  join research.person p using (person_id) join analysis.production_entry_credit x using (credit_id)
+  where l.link_source = 'roster' group by 1 order by 2 desc;
+select distinct p.display_name, p.wikidata_qid from entities.production_credit_link l join research.person p using (person_id) where l.link_source = 'roster';
+```
+
+Result: bare "Тальони" appears only on Флика и Флока (MSK 1890-94); "Тальони (отца)" only on Сильфида (SP 1891-93); bare "Петипа" on Дочь Фараона and others; "Иванова" once (Пробужденіе Флоры 1901-02). 1210 links, 330 to 18 roster persons, 75 creator_person rows; all four integrity checks are 0. 5 of the 18 roster creators already had QIDs (Петипа, Л. Ивановъ, Фокинъ, Хлюстинъ, Всеволожскій). The Wikidata candidate searches (public API, read-only) went to docs/eval/production_creators_wikidata_review.csv, not to the DB.
