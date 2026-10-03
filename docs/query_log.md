@@ -12035,3 +12035,17 @@ from raw.person_entry e join entities.person_link l using(entry_id) where e.entr
 ```
 
 Result: 5 PT service rows with a start text but no parsed date, 1 fixable (Жуляевъ 1898-99, stray period -> fixed) and 4 genuine partial dates; the Кунъ list showed 1890-91 p003 e013 under the Кунъ 1-й person while its two sister entries (Карловичъ) sat under another (moved); Зандинъ and Лебедевъ each sit under two person_ids split by a patronymic variant (Ивановичъ/Павловичъ; Васильевичъ/Афанасьевичъ), Бардюкъ/Бордюгъ already share one person_id.
+
+## 2026-10-03 -- ProductionTeam: where the workshop specialty text sits (tenure_note_text vs rank_or_title)
+
+```sql
+select count(*) filter (where regexp_matches(coalesce(tenure_note_text,''),'(парики|костюмы|Парики|Костюмы)')) in_tenure,
+ count(*) filter (where regexp_matches(coalesce(rank_or_title,''),'(парики|костюмы|Парики|Костюмы)')) in_title,
+ count(*) filter (where regexp_matches(coalesce(tenure_note_text,''),'(парики|костюмы|Парики|Костюмы)') and regexp_matches(coalesce(rank_or_title,''),'(парики|костюмы|Парики|Костюмы)')) both_
+from raw.person_entry where entry_id like 'productionteam%';
+select count(*) from raw.person_entry where entry_id like 'productionteam%' and rank_or_title is not null;
+select l.person_id, any_value(e.family_name), count(*) filter (where regexp_matches(coalesce(e.tenure_note_text,''),'(парики|костюмы)')) t, count(*) filter (where regexp_matches(coalesce(e.rank_or_title,''),'(парики|костюмы)')) r
+from raw.person_entry e join entities.person_link l using(entry_id) where e.entry_id like 'productionteam%' group by 1 having t>0 and r>0;
+```
+
+Result: specialty text in tenure_note_text on 204 rows, in rank_or_title on 43 (1 row both); 75 PT rows have any rank_or_title; 15 persons have it in tenure_note_text in some seasons and rank_or_title in others (Пипаръ 11/2, Жуляевъ 11/4, Ефимовъ 14/4, Варламовъ 14/4, Иванова 18/2 ...).
