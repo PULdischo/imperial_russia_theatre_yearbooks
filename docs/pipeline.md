@@ -157,9 +157,9 @@ prompt-fixable field-boundary confusions, not wholesale extraction failure.
 
 `pipeline/build_duckdb.py`. Loads Stage 3's CSVs into a `raw` schema
 (straight load, the reproducibility guarantee) and builds a small `analysis`
-schema on top via SQL (currently: `role_normalized` from the last segment of
-`heading_path`, `receipts_total_kopecks` computed from the rubles/kopecks
-split) — always additive, never overwriting `raw`.
+schema on top via SQL (currently: cleaned `*_clean` columns, `receipts_total_kopecks` computed from
+the rubles/kopecks split; a `role_normalized` column was dropped 2026-10-02,
+see known_issues #132) — always additive, never overwriting `raw`.
 
 ```
 python pipeline/build_duckdb.py --parsed-dir outputs/pilot/parsed \

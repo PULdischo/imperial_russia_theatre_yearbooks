@@ -246,7 +246,7 @@ below it):
   `source_pages`, `person_entry`, `person_entry_service`,
   `person_entry_credit`, `event_entry`, `event_entry_performance`.
 - **`analysis`** (`build_duckdb.py`, `validate_performance_dates.py`) —
-  derived columns/rows on top of `raw` via SQL only (e.g. `role_normalized`,
+  derived columns/rows on top of `raw` via SQL only (e.g. `heading_path_clean`,
   `theater_canonical`, the `not_captured` completeness-gap synthesis, the
   day-of-week-validated `corrected_date_undate`). No new facts, no
   hand-editing.

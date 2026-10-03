@@ -21764,3 +21764,12 @@ seasons, logged in genuine_print_typos.md. **Also applied** (variant-spelling zo
 Савутскій, Салатко-Петрищо (щ with tail), Бриліантова, Анихалова vs Апиханова, Хмѣлевскій with first name Владимиръ (1907-08). Verification: entries 23158 unchanged, tombstones 2298 identical, live persons 3268, orphans 0,
 flags 541, receipts sum unchanged. Backup: full_run_pre_promote_backup_2026-10-02_pt_stage2b. Evidence: stage2/apply/ (apply_stage2b.py, titles.json, phase7.py).
 
+
+**Issue #132 addendum -- `analysis.person_entry.role_normalized` dropped (2026-10-02, DONE, RG-approved)**: the column was the last segment of `heading_path_clean`. After stage 2 put theatres/troupes inside ProductionTeam
+chains (as printed), 484 of 1998 ProductionTeam rows ended on a theatre or troupe name instead of a role (Парикмахеры 156, Гардеробмейстеры 110, Гардеробмейстерши 107, Бутафоры 62 ...; also Administrators 56 of 1839, BalletArtists 8,
+TheaterSchoolStaff 1; Musicians and Graduates 0). Checked first: it existed only in the analysis layer -- not in `research.person_appearance`, the Datasette/HF export, the Excel workbook or the Obsidian vault -- and no pipeline stage read it,
+so RG chose to drop it rather than patch it. Removed from `pipeline/build_duckdb.py` (and its log line); `CLAUDE.md`, `docs/pipeline.md` and `pipeline/orthography.py` references updated. Verification (backup DB vs rebuilt): the only
+column difference in `analysis.person_entry` is `role_normalized`; a hash of every other column over all rows is identical; raw.person_entry 23158, tombstones 2298, research.person 3262 and the receipts sum unchanged.
+Backup: full_run_pre_promote_backup_2026-10-02_rolenorm (DB). **If a role value is wanted later**: derive it in the analysis layer from `heading_path` (raw is verbatim and unchanged). Design notes from this analysis: skip trailing
+theatre/troupe segments (name list: Маріинскій/Александринскій/Михайловскій/Большой/Малый/Новый театръ, *труппа, plus Administrators' "Полиціймейстеры театровъ VII кл.: <театръ>" shape), and prefer separate
+department / sub-list / theatre columns over a single label. `research_dataset.sqlite` was not rebuilt (it never contained the column).

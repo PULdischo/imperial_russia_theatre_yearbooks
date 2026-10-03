@@ -12,7 +12,7 @@ decided it. Two uses:
      rule usually settles it without a human. On the 200-page pilot this
      took the hard/soft-sign queue from 25 cases to 1.
   2. Later, a normalised field in the research layer, derived from raw the
-     way analysis.role_normalized is derived in the tabular pipeline.
+     way the analysis-layer *_clean columns are derived in the tabular pipeline.
 
 THE DISCIPLINE THAT MAKES THIS SAFE. A rule says what the language requires,
 not what the compositor set. This corpus demonstrably prints things the

@@ -93,12 +93,12 @@ def build_analysis_schema(con: duckdb.DuckDBPyConnection) -> None:
             ),
             step4 AS (
             SELECT *,
-                -- best-effort single "role" value, derived from the cleaned
-                -- breadcrumb rather than asking the model to split it (see
-                -- docs/schema.md's heading_path note on why that split was
-                -- collapsed after the roster extraction smoke test)
-                trim(list_extract(str_split(heading_path_clean, ' / '),
-                     len(str_split(heading_path_clean, ' / ')))) AS role_normalized,
+                -- (analysis.role_normalized -- the last segment of
+                -- heading_path_clean -- was dropped 2026-10-02, issue #132:
+                -- ProductionTeam chains now carry theatres/troupes as chain
+                -- levels, so the last segment is often not a role, and nothing
+                -- downstream read the column. Derive department / sub-list /
+                -- theatre from heading_path if an analysis needs them.)
                 -- docs/eval/known_issues.md #32: raw.person_entry.instrument
                 -- sometimes holds non-instrument text instead of (or as well
                 -- as) a real instrument -- a "(см. ...)" cross-reference note
@@ -555,7 +555,7 @@ def build_analysis_schema(con: duckdb.DuckDBPyConnection) -> None:
             FROM step5
         """)
         print("analysis.person_entry built (+ heading_path_clean, service_class_clean, "
-              "role_normalized, instrument_clean, tenure_note_text_clean, "
+              "instrument_clean, tenure_note_text_clean, "
               "rank_clean, title_clean, rank_or_title_excluded_reason, "
               "family_name_clean, first_name_clean, patronymic_clean)")
 
