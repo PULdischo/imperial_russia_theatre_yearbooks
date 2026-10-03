@@ -1,0 +1,163 @@
+[
+ {
+  "page": "productionteam_1892-93_p002",
+  "entry": "e017",
+  "row": {
+   "institution": "Отдѣлъ гардеробный.",
+   "heading_path": "Парикмахеры",
+   "tenure_note_text": "Французская драматическая труппа.",
+   "service_periods": []
+  }
+ },
+ {
+  "page": "productionteam_1892-93_p002",
+  "entry": "e014",
+  "row": {
+   "institution": "Отдѣлъ гардеробный.",
+   "heading_path": "Парикмахеры / Русская драматическая труппа",
+   "tenure_note_text": "Михайловскій театръ.",
+   "service_periods": []
+  }
+ },
+ {
+  "page": "productionteam_1892-93_p002",
+  "entry": "e011",
+  "row": {
+   "institution": "Отдѣлъ гардеробный.",
+   "heading_path": "Парикмахеры / Русская драматическая труппа",
+   "tenure_note_text": "Александринскій театръ.",
+   "service_periods": []
+  }
+ },
+ {
+  "page": "productionteam_1892-93_p002",
+  "entry": "e010",
+  "row": {
+   "institution": "Отдѣлъ гардеробный.",
+   "heading_path": "Парикмахеры",
+   "tenure_note_text": "Русская драматическая труппа.",
+   "service_periods": []
+  }
+ },
+ {
+  "page": "productionteam_1892-93_p002",
+  "entry": "e008",
+  "row": {
+   "institution": "Отдѣлъ гардеробный.",
+   "heading_path": "Парикмахеры",
+   "tenure_note_text": "Балетная труппа.",
+   "service_periods": []
+  }
+ },
+ {
+  "page": "productionteam_1892-93_p002",
+  "entry": "e005",
+  "row": {
+   "institution": "Отдѣлъ гардеробный.",
+   "heading_path": "Парикмахеры",
+   "tenure_note_text": "Оперная труппа.",
+   "service_periods": []
+  }
+ },
+ {
+  "page": "productionteam_1894-95_p001",
+  "entry": "e015",
+  "row": {
+   "institution": "Отдѣлъ освѣтительный.",
+   "heading_path": "Михайловскій театръ / Завѣдывающій освѣщеніемъ",
+   "family_name": "Съ 1 іюля 1895 г. назначенъ завѣдывающимъ освѣщеніемъ Маріинскаго театра.",
+   "service_periods": []
+  }
+ },
+ {
+  "page": "productionteam_1894-95_p001",
+  "entry": "e012",
+  "row": {
+   "institution": "Отдѣлъ освѣтительный.",
+   "heading_path": "Маріинскій театръ / Завѣдывающій освѣщеніемъ",
+   "family_name": "Съ 1 іюля 1895 г. назначенъ завѣдывающимъ освѣщеніемъ Александринскаго театра.",
+   "service_periods": []
+  }
+ },
+ {
+  "page": "productionteam_1894-95_p001",
+  "entry": "e008",
+  "row": {
+   "institution": "Машинисты и ихъ помощники:",
+   "heading_path": "Александринскій театръ / Помощники машиниста",
+   "family_name": "Съ 1 іюля 1895 г. назначенъ завѣдывающимъ освѣщеніемъ Михайловскаго театра.",
+   "service_periods": []
+  }
+ },
+ {
+  "page": "productionteam_1891-92_p002",
+  "entry": "e004",
+  "row": {
+   "institution": "Мѣстные гардеробы.",
+   "heading_path": "Гардеробмейстеры: / Михайловскій театръ",
+   "family_name": "Оствайлъ",
+   "tenure_note_text": "службу 1 сентября 1892 г.",
+   "service_periods": [
+    {
+     "start_date_text": "1 сентября 1892 г.",
+     "end_date_text": null,
+     "end_type": null
+    }
+   ]
+  }
+ },
+ {
+  "page": "productionteam_1904-05_p002",
+  "entry": "e005",
+  "row": {
+   "institution": "Костюмерши:",
+   "heading_path": "Парикмахеры: / Русская драматическая труппа",
+   "family_name": "Александринскій театръ",
+   "tenure_note_text": "",
+   "service_periods": []
+  }
+ },
+ {
+  "page": "productionteam_1905-06_p004",
+  "entry": "e002",
+  "row": {
+   "institution": "Списокъ Императорскихъ театровъ",
+   "heading_path": "Художникъ-консультантъ",
+   "family_name": "Сизовъ",
+   "first_name": "В. И.",
+   "tenure_note_text": "За смертью В. И. Сизова мѣсто свободно.",
+   "service_periods": []
+  }
+ },
+ {
+  "page": "productionteam_1906-07_p004",
+  "entry": "e002",
+  "row": {
+   "institution": "Костюмерша.",
+   "heading_path": "Художникъ-консультантъ",
+   "family_name": "Сизовъ",
+   "first_name": "В. И.",
+   "tenure_note_text": "За смертью В. И. Сизова мѣсто свободно.",
+   "service_periods": [
+    {
+     "start_date_text": null,
+     "end_date_text": null,
+     "end_type": "died"
+    }
+   ]
+  }
+ },
+ {
+  "page": "productionteam_1907-08_p004",
+  "entry": "e002",
+  "row": {
+   "institution": "Костюмерша.",
+   "heading_path": "Художникъ-консультантъ",
+   "family_name": "Сизовъ",
+   "first_name": "В. И.",
+   "patronymic": null,
+   "tenure_note_text": "За смертью В. И. Сизова мѣсто свободно.",
+   "service_periods": []
+  }
+ }
+]

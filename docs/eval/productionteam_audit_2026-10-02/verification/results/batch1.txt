@@ -1,0 +1,19 @@
+ITEM productionteam_1890-91_p002|e003|family | READ: "Суковская" | CHOICE: B | confidence: DIRECT | 5x zoom: С-у-к-о-в-с-к-а-я, no н after у
+ITEM productionteam_1893-94_p001|e024|family | READ: "Крюковской" | CHOICE: B | confidence: DIRECT | ends -ской (not -скій), 4x zoom
+ITEM productionteam_1893-94_p002|e024|family | READ: "Ѳеоктистовъ" | CHOICE: B | confidence: DIRECT | fita + е + о-к-т-и-с-т-о-в-ъ; stored "Ѳоктистовъ" drops е
+ITEM productionteam_1894-95_p001|e025|family | READ: "Педдеръ" | CHOICE: A | confidence: DIRECT | ends in hard sign ъ (not ь)
+ITEM productionteam_1894-95_p002|e028|family | READ: "Ѳеоктистовъ" | CHOICE: A | confidence: DIRECT | clearly -ктис-, not -нтис-
+ITEM productionteam_1894-95_p003|e014|family | READ: "Ильинская" | CHOICE: B | confidence: DIRECT | И-л-ь-и-н-с-к-а-я
+ITEM productionteam_1895-96_p001|e011|family | READ: "Иманъ" | CHOICE: A | confidence: DIRECT | ends in hard sign ъ
+ITEM productionteam_1895-96_p002|e002|family | READ: "Тимоѳеевъ" | CHOICE: A | confidence: DIRECT | fita (Ѳ) after Тимо, not В
+ITEM productionteam_1895-96_p003|e003|family | READ: "Брилліантовъ" | CHOICE: B | confidence: DIRECT | Б-р-и-л-л-і-а-н-т-о-в-ъ (double л, dotted і)
+ITEM productionteam_1896-97_p000|e018|family | READ: "Мѣщаниновъ" | CHOICE: B | confidence: DIRECT | yat ѣ clearly printed (М-ѣ-щ-а-н-и-н-о-в-ъ)
+ITEM productionteam_1896-97_p000|e024|patronymic | READ: "Ѳаддеевичъ" | CHOICE: A | confidence: DIRECT | Ѳ-а-д-д-е-е-в-и-ч-ъ; double д, fita initial
+ITEM productionteam_1897-98_p000|e004|family | READ: "Ламбинъ" | CHOICE: A | confidence: DIRECT | ends -инъ with hard sign, plain и (no dotted і)
+ITEM productionteam_1897-98_p001|e018|family | READ: "Пипаръ" | CHOICE: A | confidence: DIRECT | П-и-п-а-р-ъ; also Пипаръ in neighbouring years
+ITEM productionteam_1898-99_p001|e019|patronymic | READ: "Аѳанасьевичъ" | CHOICE: B | confidence: DIRECT | А-ѳ-а-н-а-с-ь-е-в-и-ч-ъ (fita), stored Леонасьевичъ is a misread
+ITEM productionteam_1898-99_p003|e007|patronymic | READ: "Никифоро-/вичъ" | CHOICE: B | confidence: DIRECT | line-break hyphenation after Никифоро-; "вичъ" opens next line; surname Ѳеоктистовъ
+ITEM productionteam_1898-99_p003|e016|family | READ: "Иващенко" | CHOICE: A | confidence: DIRECT | И-в-а-щ-е-н-к-о (щ not ш)
+ITEM productionteam_1899-00_p000|e013|family | READ: "Козеровскій" | CHOICE: A | confidence: DIRECT | letter-spaced К-о-з-е-р-о-в-с-к-і-й; з not в
+ITEM productionteam_1899-00_p001|e022|family | READ: "Семирадзкій" | CHOICE: A | confidence: DIRECT | С-е-м-и-р-а-д-з-к-і-й (д then з)
+DONE 17 items

@@ -11838,3 +11838,21 @@ select sum(receipts_total_kopecks) from event;  pragma integrity_check;  pragma 
 ```
 
 Result: new sqlite row counts equal duckdb research.* exactly (theater 6, work 3657, person 3274, event 31203, performance 29568, person_appearance 23151; the 28 Sep file had work 3518, person 2894, event 28966, performance 27587, person_appearance 21154); misread instrument spellings 112 -> 0; receipts sum 2999096975 in both; integrity ok, 0 foreign-key violations. Old file kept as outputs/full_run/research_dataset.sqlite.bak_2026-10-02.
+
+## 2026-10-02 -- ProductionTeam profile before the audit (issue #132)
+
+```sql
+select entity_type,count(*),count(distinct page_id) from raw.person_entry group by 1 order by 2 desc;
+select count(*),count(distinct page_id) from raw.person_entry e where e.entity_type='ProductionTeam' and regexp_matches(lower(coalesce(e.heading_path,'')||' '||coalesce(e.institution,'')),'декор');
+select count(distinct l.person_id) from raw.person_entry e join entities.person_link l using(entry_id) where e.entity_type='ProductionTeam' and regexp_matches(lower(coalesce(e.heading_path,'')||' '||coalesce(e.institution,'')),'декор');
+```
+
+Result: ProductionTeam 2003 rows on 94 pages; the decor department ("Отдѣлъ декораціонный") 605 rows on 42 pages, 98 live persons; flags on decor rows: institution_duplicated_in_heading_path 4, duplicate_person_on_page 1.
+
+## 2026-10-02 -- ProductionTeam after stage 1 (issue #132)
+
+```sql
+-- old (backup _pt_stage1) vs new: count(*) raw.person_entry; tombstones/live persons in entities.person; orphan / unlinked / tombstoned links; sum(receipts_total_kopecks) research.event
+```
+
+Result: person_entry 23163 -> 23158, tombstones 2292 -> 2297 (5 same-person merges), live persons 3280 -> 3269, 0 orphans / 0 unlinked entries / 0 links to tombstones, receipts sum identical, flags 598 -> 600.

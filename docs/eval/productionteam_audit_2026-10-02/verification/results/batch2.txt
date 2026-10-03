@@ -1,0 +1,19 @@
+ITEM productionteam_1899-00_p002|e010|family | READ: "Аѳанасьевъ" | CHOICE: A | confidence: DIRECT | Printed "Аѳанасьевъ, Павелъ Ивановичъ (съ 1 мая 1890 г.)"; second letter is clear Ѳ
+ITEM productionteam_1900-01_p001|e006|family | READ: "Раздобурдинъ" | CHOICE: A | confidence: DIRECT | Clear "Раздобурдинъ, Дмитрій Ивановичъ"; the stored "Разлобурлинъ" is a misread (з, д, д)
+ITEM productionteam_1900-01_p002|e004|family | READ: "Пипаръ" | CHOICE: A | confidence: DIRECT | "2. Пипаръ, Христіанъ Петровичъ (съ 26 августа 1869 г.)"; no ть ending
+ITEM productionteam_1901-02_p003|e010|family | READ: "Никифоровъ" | CHOICE: A | confidence: DIRECT | "4. Никифоровъ, Дмитрій"; letter after "и" is ф
+ITEM productionteam_1902-03_p001|e008|family | READ: "Галактіоновъ" | CHOICE: A | confidence: DIRECT | "Галактіоновъ, Павелъ Георгіевичъ (съ 11 января 1903 г.)"; initial Г, і in -тіон-
+ITEM productionteam_1903-04_p002|e008|family | READ: "Цисвицкая" | CHOICE: B | confidence: DIRECT | "Цисвицкая, Екатерина Ивановна (съ 1 октября 1894 г.)"; no Щ/е
+ITEM productionteam_1904-05_p000|e006|family | READ: "Безайсъ" | CHOICE: B | confidence: DIRECT | "1. Безайсъ, Николай Яковлевичъ (съ 1 марта 1897 г.)"; ends -съ, not -стъ
+ITEM productionteam_1904-05_p002|e002|family | READ: "Иващенко" | CHOICE: B | confidence: DIRECT | "2. Иващенко, Александра Федоровна"; clear щ
+ITEM productionteam_1904-05_p002|e007|family | READ: "Жуляевъ" | CHOICE: A | confidence: DIRECT | "2. Жуляевъ, Иванъ Даниловичъ (съ 19 мая 1869 г.)"; letters л-я, no і
+ITEM productionteam_1904-05_p003|e006|patronymic | READ: "Никифоровичъ" | CHOICE: A | confidence: DIRECT | "Ѳеоктистовъ, Иванъ Никифоровичъ (съ 20 мая 1870 г.)"
+ITEM productionteam_1905-06_p001|e010|family | READ: "Бергеръ" | CHOICE: B | confidence: DIRECT | "Бергеръ, Николай Александровичъ (съ 5 октября 1880 г.)"; no т after г
+ITEM productionteam_1905-06_p001|e018|patronymic | READ: "Павлсвичъ" | CHOICE: B | confidence: DIRECT | Printed "Павловъ, Александръ Павлсвичъ (назначенъ съ 20 февраля 1906 г.)"; the letter after л is an open с-shaped glyph, not о (genuine print typo, Павлсвичъ for Павловичъ); note: preserve as printed
+ITEM productionteam_1905-06_p003|e022|family | READ: "Науіокайтисъ" | CHOICE: A | confidence: DIRECT | "Науіокайтисъ, Іосифъ Павловичъ (съ 7 августа 1903 г.)"; dotted і present after у
+ITEM productionteam_1907-08_p003|e022|family | READ: "Науіокайтисъ" | CHOICE: A | confidence: DIRECT | "Науіокайтисъ, Іосифъ Павловичъ (съ 7 августа 1903 г.)"; dotted і present
+ITEM productionteam_1908-09_p002|e001|patronymic | READ: "Тимофѣевичъ" | CHOICE: B | confidence: DIRECT | "3. Коняевъ, Тимофей Тимофѣевичъ (съ 12 сентября 1900 г.)"; ф (not Ѳ) with ѣ; first name Тимофей with plain ф
+ITEM productionteam_1908-09_p002|e013|patronymic | READ: "Тимофеевичъ" | CHOICE: B | confidence: DIRECT | "Петровъ, Кириллъ Тимофеевичъ (съ 1 февраля 1895 г.)"; ф and plain е (not ѣ, not Ѳ)
+ITEM productionteam_1909-10_p001|e012|family | READ: "Коваличева" | CHOICE: B | confidence: DIRECT | "2. Коваличева, Марія Николаевна (съ 1 января 1883 г.)"
+ITEM productionteam_1909-10_p004|e017|patronymic | READ: "Пантелѣевна" | CHOICE: A | confidence: DIRECT | "1. Буровцева, Ольга Пантелѣевна (съ 16 октября 1890 г.)"; clear ѣ
+DONE 17 items

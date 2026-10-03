@@ -1,0 +1,142 @@
+# PT VERIFICATION batch 1
+
+
+## PAGE productionteam_1890-91_p002   scan: outputs/roster_images_full/images/productionteam_1890-91_p002.png   stored-row bundle: /tmp/audit7/productionteam_1890-91_p002.txt
+
+ITEM productionteam_1890-91_p002|e003|family
+  stored row: e003 | - | Сунковская | Александра | Павловна | - | (съ 1 сентября 1883 г.) | 1 сентября 1883 г.->None(None) | -
+  field in question: family
+  Option A: "Сунковская"
+  Option B: "Суковская"
+
+## PAGE productionteam_1893-94_p001   scan: outputs/roster_images_full/images/productionteam_1893-94_p001.png   stored-row bundle: /tmp/audit7/productionteam_1893-94_p001.txt
+
+ITEM productionteam_1893-94_p001|e024|family
+  stored row: e024 | 2. | Крюковскій | Козьма | Іоакимовичъ | - | (съ 29 сентября 1879 г.). Женскіе парики. Оставилъ службу 1 сентября 1894 г. | 29 сентября 1879 г.->1 сентября 1894 г.(left service) | -
+  field in question: family
+  Option A: "Крюковскій"
+  Option B: "Крюковской"
+
+## PAGE productionteam_1893-94_p002   scan: outputs/roster_images_full/images/productionteam_1893-94_p002.png   stored-row bundle: /tmp/audit7/productionteam_1893-94_p002.txt
+
+ITEM productionteam_1893-94_p002|e024|family
+  stored row: e024 | 4. | Ѳоктистовъ | Иванъ | Никіфоровичъ | - | съ 20 мая 1870 г. | 20 мая 1870 г.->None(None) | -
+  field in question: family
+  Option A: "Ѳоктистовъ"
+  Option B: "Ѳеоктистовъ"
+
+## PAGE productionteam_1894-95_p001   scan: outputs/roster_images_full/images/productionteam_1894-95_p001.png   stored-row bundle: /tmp/audit7/productionteam_1894-95_p001.txt
+
+ITEM productionteam_1894-95_p001|e025|family
+  stored row: e025 | - | Педдерь | Георгій | Ивановичъ | - | съ 1 марта 1879 г. | 1 марта 1879 г.->None(None) | -
+  field in question: family
+  Option A: "Педдеръ"
+  Option B: "Педдерь"
+
+## PAGE productionteam_1894-95_p002   scan: outputs/roster_images_full/images/productionteam_1894-95_p002.png   stored-row bundle: /tmp/audit7/productionteam_1894-95_p002.txt
+
+ITEM productionteam_1894-95_p002|e028|family
+  stored row: e028 | 4. | Ѳеонтистовъ | Иванъ | Никифоровичъ | - | съ 20 мая 1870 г.). | съ 20 мая 1870 г.->None(None) | -
+  field in question: family
+  Option A: "Ѳеоктистовъ"
+  Option B: "Ѳеонтистовъ"
+
+## PAGE productionteam_1894-95_p003   scan: outputs/roster_images_full/images/productionteam_1894-95_p003.png   stored-row bundle: /tmp/audit7/productionteam_1894-95_p003.txt
+
+ITEM productionteam_1894-95_p003|e014|family
+  stored row: e014 | - | Илынская | Елизавета | Ивановна | - | съ 1 октября 1883 г. | 1 октября 1883 г.->None(None) | -
+  field in question: family
+  Option A: "Илынская"
+  Option B: "Ильинская"
+
+## PAGE productionteam_1895-96_p001   scan: outputs/roster_images_full/images/productionteam_1895-96_p001.png   stored-row bundle: /tmp/audit7/productionteam_1895-96_p001.txt
+
+ITEM productionteam_1895-96_p001|e011|family
+  stored row: e011 | - | Имань | Юрій | Ивановичъ | - | (съ 1 сентября 1882 г.) | 1 сентября 1882 г.->None(None) | -
+  field in question: family
+  Option A: "Иманъ"
+  Option B: "Имань"
+
+## PAGE productionteam_1895-96_p002   scan: outputs/roster_images_full/images/productionteam_1895-96_p002.png   stored-row bundle: /tmp/audit7/productionteam_1895-96_p002.txt
+
+ITEM productionteam_1895-96_p002|e002|family
+  stored row: e002 | - | Тимовеевъ | Владиміръ | Егоровичъ | - | съ 5 ноября 1857 г. | съ 5 ноября 1857 г.->None(None) | -
+  field in question: family
+  Option A: "Тимоѳеевъ"
+  Option B: "Тимовеевъ"
+
+## PAGE productionteam_1895-96_p003   scan: outputs/roster_images_full/images/productionteam_1895-96_p003.png   stored-row bundle: /tmp/audit7/productionteam_1895-96_p003.txt
+
+ITEM productionteam_1895-96_p003|e003|family
+  stored row: e003 | - | Бріяліантовъ | Петръ | Егоровичъ | - | съ 1 декабря 1889 г.) | съ 1 декабря 1889 г.->None(None) | -
+  field in question: family
+  Option A: "Бріяліантовъ"
+  Option B: "Брилліантовъ"
+
+## PAGE productionteam_1896-97_p000   scan: outputs/roster_images_full/images/productionteam_1896-97_p000.png   stored-row bundle: /tmp/audit7/productionteam_1896-97_p000.txt
+
+ITEM productionteam_1896-97_p000|e018|family
+  stored row: e018 | 4. | Мъщаниновъ | Михаилъ | Петровичъ | - | (съ 1 октября 1894 г.). Оставилъ службу 1 сентября 1897 г. | 1 октября 1894 г.->1 сентября 1897 г.(left service) | -
+  field in question: family
+  Option A: "Мъщаниновъ"
+  Option B: "Мѣщаниновъ"
+
+ITEM productionteam_1896-97_p000|e024|patronymic
+  stored row: e024 | 12. | Табенскій | Антонъ | Ѳадлеевичъ | - | (съ 1 августа 1897 г.). | 1 августа 1897 г.->None(None) | -
+  field in question: patronymic
+  Option A: "Ѳаддеевичъ"
+  Option B: "Ѳадлеевичъ"
+
+## PAGE productionteam_1897-98_p000   scan: outputs/roster_images_full/images/productionteam_1897-98_p000.png   stored-row bundle: /tmp/audit7/productionteam_1897-98_p000.txt
+
+ITEM productionteam_1897-98_p000|e004|family
+  stored row: e004 | 4. | Ламбінь | Петръ | Борисовичъ | - | (съ 1 іюня 1885 г.) | 1 іюня 1885 г.->None(None) | -
+  field in question: family
+  Option A: "Ламбинъ"
+  Option B: "Ламбінь"
+
+## PAGE productionteam_1897-98_p001   scan: outputs/roster_images_full/images/productionteam_1897-98_p001.png   stored-row bundle: /tmp/audit7/productionteam_1897-98_p001.txt
+
+ITEM productionteam_1897-98_p001|e018|family
+  stored row: e018 | 2. | Пинаръ | Христіанъ | Петровичъ | - | съ 26 августа 1869 г. | 26 августа 1869 г.->None(None) | DATE-DIFFERS
+  field in question: family
+  Option A: "Пипаръ"
+  Option B: "Пинаръ"
+
+## PAGE productionteam_1898-99_p001   scan: outputs/roster_images_full/images/productionteam_1898-99_p001.png   stored-row bundle: /tmp/audit7/productionteam_1898-99_p001.txt
+
+ITEM productionteam_1898-99_p001|e019|patronymic
+  stored row: e019 | - | Рощинъ | Михаилъ | Леонасьевичъ | - | съ 19 февраля 1884 г. | 19 февраля 1884 г.->None(None) | -
+  field in question: patronymic
+  Option A: "Леонасьевичъ"
+  Option B: "Аѳанасьевичъ"
+
+## PAGE productionteam_1898-99_p003   scan: outputs/roster_images_full/images/productionteam_1898-99_p003.png   stored-row bundle: /tmp/audit7/productionteam_1898-99_p003.txt
+
+ITEM productionteam_1898-99_p003|e007|patronymic
+  stored row: e007 | 4. | Ѳеоктистовъ | Иванъ | Никитифоровичъ | - | (съ 20 мая 1870 г.) | 20 мая 1870 г.->None(None) | -
+  field in question: patronymic
+  Option A: "Никитифоровичъ"
+  Option B: "Никифоро-/вичъ"
+
+ITEM productionteam_1898-99_p003|e016|family
+  stored row: e016 | - | Ивашенко | Александра | Ѳедоровна | - | (съ 1 мая 1898 г.) | 1 мая 1898 г.->None(None) | -
+  field in question: family
+  Option A: "Иващенко"
+  Option B: "Ивашенко"
+
+## PAGE productionteam_1899-00_p000   scan: outputs/roster_images_full/images/productionteam_1899-00_p000.png   stored-row bundle: /tmp/audit7/productionteam_1899-00_p000.txt
+
+ITEM productionteam_1899-00_p000|e013|family
+  stored row: e013 | 7. | Коверовскій | Ромуальдъ | Александровичъ | - | (съ 3 февраля 1893 г.) | съ 3 февраля 1893 г.->None(None) | -
+  field in question: family
+  Option A: "Козеровскій"
+  Option B: "Коверовскій"
+
+## PAGE productionteam_1899-00_p001   scan: outputs/roster_images_full/images/productionteam_1899-00_p001.png   stored-row bundle: /tmp/audit7/productionteam_1899-00_p001.txt
+
+ITEM productionteam_1899-00_p001|e022|family
+  stored row: e022 | - | Семирадскій | Францъ | - | - | съ 16 января 1900 г. | 16 января 1900 г.->None(None) | -
+  field in question: family
+  Option A: "Семирадзкій"
+  Option B: "Семирадскій"

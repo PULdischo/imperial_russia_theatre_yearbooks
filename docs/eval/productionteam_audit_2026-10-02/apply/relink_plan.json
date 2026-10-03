@@ -1,0 +1,38 @@
+{
+ "remove": {
+  "productionteam_1894-95_p001": [
+   8,
+   12,
+   15
+  ],
+  "productionteam_1891-92_p002": [
+   4
+  ],
+  "productionteam_1904-05_p002": [
+   5
+  ],
+  "productionteam_1905-06_p004": [
+   2
+  ],
+  "productionteam_1906-07_p004": [
+   2
+  ],
+  "productionteam_1907-08_p004": [
+   2
+  ]
+ },
+ "add": [
+  {
+   "entry_id": "productionteam_1901-02_p001__e024",
+   "person_id": "3f1ba0c7-779c-4e10-8643-001af4015d86"
+  },
+  {
+   "entry_id": "productionteam_1901-02_p002__e023",
+   "person_id": "0995a2d1-df1e-48ac-a51b-a13bd6467af5"
+  },
+  {
+   "entry_id": "productionteam_1897-98_p002__e029",
+   "person_id": "4edaf0e2-d2e3-47c9-96cd-117595a9dbf3"
+  }
+ ]
+}

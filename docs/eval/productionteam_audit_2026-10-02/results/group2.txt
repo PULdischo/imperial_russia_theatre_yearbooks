@@ -1,0 +1,65 @@
+PAGE SUMMARY
+productionteam_1891-92_p001 | entries read: 29 | printed entries with no stored row: 0 | entries with a discrepancy: 5
+productionteam_1891-92_p002 | entries read: 28 printed (29 stored, e004 is not a person) | printed entries with no stored row: 0 | entries with a discrepancy: 5
+productionteam_1891-92_p003 | entries read: 15 | printed entries with no stored row: 0 | entries with a discrepancy: 2
+productionteam_1892-93_p000 | entries read: 13 | printed entries with no stored row: 0 | entries with a discrepancy: 0
+productionteam_1892-93_p001 | entries read: 30 | printed entries with no stored row: 0 | entries with a discrepancy: 3
+DISCREPANCIES
+productionteam_1891-92_p001 | e008 | tenure | STORED: "(съ 1 августа 1882 г.)" | PRINTED: "(съ 1 августа 1882 г.)" followed by a second paragraph "Съ 1 мая 1892 г. назначенъ завѣдывающимъ освѣщеніемъ въ Михайловскомъ театрѣ." | confidence: DIRECT(zoomed) | trailing note not stored
+productionteam_1891-92_p001 | e014 | family | STORED: "Наффи" | PRINTED: "Каффи" | confidence: DIRECT(zoomed)
+productionteam_1891-92_p001 | e018 | list | STORED: "-" | PRINTED: "1." | confidence: DIRECT(zoomed) | Дмитріева, Оперная труппа
+productionteam_1891-92_p001 | e021 | list | STORED: "-" | PRINTED: "1." | confidence: DIRECT(zoomed) | Жуляевъ, Александринскій театръ
+productionteam_1891-92_p001 | e024 | family | STORED: "Крюковскій" | PRINTED: "Крюковской" | confidence: DIRECT(zoomed)
+productionteam_1891-92_p002 | e002 | family | STORED: "Тимовеевъ" | PRINTED: "Тимоѳеевъ" | confidence: DIRECT(zoomed) | Ѳ rendered as в
+productionteam_1891-92_p002 | e003 | tenure | STORED: "съ 1 сентября 1889 г." | PRINTED: "(съ 1 сентября 1889 г.)" then line "Остваилъ службу 1 сентября 1892 г." | confidence: DIRECT(zoomed) | leaving note stored as a separate fake row e004; PRINT-TYPO? ("Остваилъ" for "Оставилъ")
+productionteam_1891-92_p002 | e021 | family | STORED: "Ѳектистовъ" | PRINTED: "Ѳеоктистовъ" | confidence: DIRECT(zoomed)
+productionteam_1891-92_p002 | e024 | first/patronymic/title | STORED: first "князь", patronymic "Григорій", tenure begins "Дмитріевичъ (съ 1 сентября 1887 г.)" | PRINTED: "Волконскій, князь Григорій Дмитріевичъ (съ 1 сентября 1887 г.)" | confidence: DIRECT(zoomed) | correct: title "князь", first "Григорій", patronymic "Дмитріевичъ"
+productionteam_1891-92_p002 | e029 | family | STORED: "Вивьень де-Шатобріанъ" | PRINTED: "Вивьенъ де-Шатобріанъ" | confidence: DIRECT(zoomed) | ь vs ъ
+productionteam_1891-92_p003 | e001 | ordinal | STORED: "Кунъ" | PRINTED: "Кунъ 2-й" | confidence: DIRECT(zoomed)
+productionteam_1891-92_p003 | e007 | family | STORED: "Бьвеневно" | PRINTED: "Бьенвеню" | confidence: DIRECT(zoomed)
+productionteam_1892-93_p001 | e015 | ordinal | STORED: "Петровъ" | PRINTED: "Петровъ 1-й" | confidence: DIRECT(zoomed)
+productionteam_1892-93_p001 | e019 | ordinal | STORED: "Петровъ" | PRINTED: "Петровъ 2-й" | confidence: DIRECT(zoomed)
+productionteam_1892-93_p001 | e020 | ordinal | STORED: "Петровъ" | PRINTED: "Петровъ 3-й" | confidence: DIRECT(zoomed) | printed list number is "2" with no period (stored "2.")
+SECTION PROBLEMS
+productionteam_1891-92_p001 | e001-e002 | STORED section: "Помощники машиниста: // None" | PRINTED section: "Помощники машиниста:" with no theater shown on this page (continued) | note: no theater; low priority
+productionteam_1891-92_p001 | e008 | STORED section: "Отдѣлъ освѣтительный. // Завѣдывающій освѣщеніемъ" | PRINTED section: "Помощникъ завѣдывающаго освѣщеніемъ" (Маріинскій театръ) | note: Калиновъ is under a different (Помощникъ) heading
+productionteam_1891-92_p001 | e006 | STORED section: "Маріинскій театръ" (heading_path) | PRINTED section: "Маріинскій театръ // Главный освѣтитель" | note: heading_path column is shifted by one from here (see e007, e008)
+productionteam_1891-92_p001 | e007 | STORED section: "Гл.авный освѣтитель" | PRINTED section: "Завѣдывающій освѣщеніемъ" (Панковъ, Маріинскій театръ) | note: shifted; also "Гл.авный" has a stray period (printed "Главный")
+productionteam_1891-92_p001 | e009 | STORED section: "Завѣдывающій освѣщеніемъ" | PRINTED section: "Александринскій театръ // Завѣдывающій освѣщеніемъ" | note: theater heading lost
+productionteam_1891-92_p001 | e010 | STORED section: "Завѣдывающій освѣщеніемъ" | PRINTED section: "Михайловскій театръ // Завѣдывающій освѣщеніемъ" | note: theater heading lost
+productionteam_1891-92_p001 | e011-e013 | STORED section: "Отдѣлъ бутафорскій. // Бутафоры" for all | PRINTED section: Бутафоры: / Маріинскій театръ (e011), Александринскій театръ (e012), Михайловскій театръ (e013) | note: theater headings lost
+productionteam_1891-92_p001 | e018 | STORED section: "Парижмахеры" | PRINTED section: "Парикмахеры: / Оперная труппа." | note: к misread as ж (DIRECT zoom); "Оперная труппа" heading missing
+productionteam_1891-92_p001 | e019 | STORED section: "Парижмахеры" | PRINTED section: "Парикмахеры: / Оперная труппа." | note: same
+productionteam_1891-92_p001 | e021 | STORED section: "Русская драматическая труппа" | PRINTED section: "Русская драматическая труппа. / Александринскій театръ." | note: theater lost
+productionteam_1891-92_p001 | e027 | STORED section: "Отдѣлъ гардеробный. // Главный гардеробъ" | PRINTED section: "Главный гардеробъ. / Смотрительницы отдѣловъ: / Отдѣлъ мужскихъ костюмовъ." | note: sub-headings missing
+productionteam_1891-92_p001 | e028 | STORED section: "Главный гардеробъ / Смотрительницы отдѣловъ / Отдѣлъ мужскихъ костюмовъ" | PRINTED section: "Отдѣлъ женскихъ костюмовъ." | note: wrong sub-heading (Петрова)
+productionteam_1891-92_p001 | e029 | STORED section: "Главный гардеробъ / Отдѣлъ женскихъ костюмовъ" | PRINTED section: "Отдѣлъ головныхъ уборовъ, обуви и бѣлья." | note: wrong sub-heading (Иванова)
+productionteam_1891-92_p002 | e004 | STORED section: "Гардеробмейстеры: / Михайловскій театръ" | PRINTED section: n/a | note: stray row (see EXTRA)
+productionteam_1891-92_p003 | e001 | STORED section: "Помощники завѣдывающаго освѣщеніемъ // Малый театръ" | PRINTED section: "Помощникъ завѣдывающаго освѣщеніемъ" with no theater printed on this page | note: theater "Малый театръ" not printed for this entry (continued from previous page); heading singular "Помощникъ", stored plural "Помощники"
+productionteam_1891-92_p003 | e005 | STORED section: "Костюмеръ / Малый театръ" | PRINTED section: "Отдѣлъ гардеробный. / Костюмеръ." | note: "Малый театръ" is not printed under Костюмеръ
+productionteam_1891-92_p003 | e006 | STORED section: "Костюмерша / Малый театръ" | PRINTED section: "Костюмерша." | note: same, theater not printed
+productionteam_1891-92_p003 | e007 | STORED section: "Парижмахеръ / Малый театръ" | PRINTED section: "Парикмахеръ." | note: к misread as ж, theater not printed
+productionteam_1891-92_p003 | e009-e011 | STORED section: institution "Смотрительницы отдѣловъ" without "Главный гардеробъ" | PRINTED section: "Главный гардеробъ: / Смотрительницы отдѣловъ:" | note: parent heading missing
+productionteam_1892-93_p000 | e001-e013 | STORED section: "Отдѣль декораціонный" | PRINTED section: "Отдѣлъ декораціонный." | note: stored heading has "ль" (soft sign) instead of "лъ" (hard sign); also e011-e013 (Декораторы, right column) are stored after e004-e010 (Помощники) although printed before
+productionteam_1892-93_p001 | e016-e018 | STORED section: "Александринскій театръ / Младшій помощникъ машиниста" | PRINTED section: "Маріинскій театръ / Младшіе помощники машиниста:" | note: DIRECT; Александринскій heading comes after Рейхель
+productionteam_1892-93_p001 | e019-e020 | STORED section: "Помощники машиниста / Михайловскій театръ / Машинистъ" | PRINTED section: "Александринскій театръ / Помощники машиниста:" (top of right column) | note: Петровъ 2-й and 3-й
+productionteam_1892-93_p001 | e021 | STORED section: "Михайловскій театръ / Старшій помощникъ машиниста" | PRINTED section: "Михайловскій театръ / Машинистъ." | note: Ашитковъ
+productionteam_1892-93_p001 | e022 | STORED section: "Михайловскій театръ / Младшій помощникъ машиниста" | PRINTED section: "Михайловскій театръ / Старшій помощникъ машиниста." | note: Липецкій
+productionteam_1892-93_p001 | e025 | STORED section: "Отдѣлъ освѣтительный / Александринскій театръ / Завѣдывающій освѣщеніемъ" | PRINTED section: "Маріинскій театръ / Завѣдывающій освѣщеніемъ." | note: Панковъ
+productionteam_1892-93_p001 | e026 | STORED section: "Отдѣлъ освѣтительный / Михайловскій театръ / Завѣдывающій освѣщеніемъ" | PRINTED section: "Александринскій театръ / Завѣдывающій освѣщеніемъ." | note: Степановъ
+MISSING OR EXTRA ROWS
+productionteam_1891-92_p002 | EXTRA e004: "Оствайлъ" is not a person; it is the printed leaving note "Оствaилъ службу 1 сентября 1892 г." (print typo for "Оставилъ службу") belonging to Яруцкій e003. It should be merged into e003 as a leaving note.
+DATE-CHECK RESULTS
+productionteam_1891-92_p001 | e021 | STORED start: "30 ноября 1872 г." | PRINTED start: "съ 30 ноября 1872 г." | MATCH | DIRECT(zoomed)
+productionteam_1891-92_p001 | e028 | STORED start: "1 мая 1891 г." | PRINTED start: "съ 1 мая 1891 г." | MATCH | DIRECT(zoomed)
+productionteam_1891-92_p002 | e001 | STORED start: "1 августа 1882 г." | PRINTED start: "съ 1 августа 1882 г." | MATCH | DIRECT(zoomed)
+productionteam_1892-93_p001 | e009 | STORED start: "15 февраля 1890 г." | PRINTED start: "съ 15 февраля 1890 г." | MATCH | DIRECT(zoomed)
+productionteam_1892-93_p001 | e013 | STORED start: "6 октября 1880 г." | PRINTED start: "съ 6 октября 1880 г." | MATCH | DIRECT(zoomed)
+OTHER FINDINGS
+- All start dates and all list numbers (other than those flagged) on all five pages matched at zoom.
+- 1891-92_p002/p003: stored tenure_note_text omits the printed parentheses "(съ ... г.)" (p002 e001-e023 and p003 all rows); systematic, cosmetic.
+- 1891-92_p003 e001: stored periods string starts with "съ 18 іюня 1882 г." (prefix "съ" inside the period) for all p003 rows.
+- 1892-93_p000: a printed footnote "*) При каждой фамиліи декоратора приведенъ мелкимъ шрифтомъ перечень новыхъ декорацій..." is present, correctly not a row; credit_summary_text values verified (8, 9, 4, 2, 1, 4).
+- 1891-92_p001 e006 (Волковъ) is stored with heading_path "Маріинскій театръ" only and e007 (Панковъ) with the mis-typed "Гл.авный освѣтитель": the heading column appears shifted by one row from e006 onward in this block.
+- 1891-92_p002 e017 Вальцъ has the "(онъ же и декораторъ)" alias correctly stored.
+- 1892-93_p001 e020: printed list number is "2" without the period.

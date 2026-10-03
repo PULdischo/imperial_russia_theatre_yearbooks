@@ -1,0 +1,182 @@
+# PT VERIFICATION batch 3 (free-form: transcribe verbatim; no options)
+
+
+ITEM productionteam_1890-91_p003|e012|freeform
+  scan: outputs/roster_images_full/images/productionteam_1890-91_p003.png
+  stored row: e012 | Кунъ 1-й | Альбертъ | - | Францевичъ | - | (съ 19 сентября 1882 г.) | 19 сентября 1882 г.->None(None) | -
+  read: whole entry (list/surname/ordinal/first/patronymic)
+
+ITEM productionteam_1890-91_p003|e013|freeform
+  scan: outputs/roster_images_full/images/productionteam_1890-91_p003.png
+  stored row: e013 | Кунъ 2-й | Альбертъ | - | Францевичъ | - | (съ 18 іюня 1882 г.) | 18 іюня 1882 г.->None(None) | -
+  read: whole entry
+
+ITEM productionteam_1892-93_p003|e023|freeform
+  scan: outputs/roster_images_full/images/productionteam_1892-93_p003.png
+  stored row: e023 | 1. | Кунъ | Альбертъ | Францевичъ | - | (съ 19 сентября 1882 г.) | съ 19 сентября 1882 г.->None(None) | -
+  read: whole entry
+
+ITEM productionteam_1892-93_p004|e001|freeform
+  scan: outputs/roster_images_full/images/productionteam_1892-93_p004.png
+  stored row: e001 | - | Кунъ | Альбертъ | Карловичъ | - | съ 18 іюня 1882 г.). † 2 октября 1892 г. | съ 18 іюня 1882 г.->2 октября 1892 г.(died) | HEADING-NULL
+  read: whole entry
+
+ITEM productionteam_1899-00_p000|e019|freeform
+  scan: outputs/roster_images_full/images/productionteam_1899-00_p000.png
+  stored row: e019 | Эммэ | Владиміръ | Владиміровичъ | - | - | (съ 1 ноября 1899 г.) | съ 1 ноября 1899 г.->None(None) | -
+  read: whole entry (surname/first/patronymic/list number)
+
+ITEM productionteam_1890-91_p003|e027|freeform
+  scan: outputs/roster_images_full/images/productionteam_1890-91_p003.png
+  stored row: e027 | - | Фитингофъ-Шель | - | Варвара | баронесса | (съ 19 сентября 1882 г.) | 19 сентября 1882 г.->None(None) | -
+  read: whole entry incl. title words
+
+ITEM productionteam_1890-91_p003|e017|freeform
+  scan: outputs/roster_images_full/images/productionteam_1890-91_p003.png
+  stored row: e017 | - | Неменскій | Исаакъ | Іосифовичъ | (съ 30 іюня 1881 г.) | (съ 30 іюня 1881 г.) | 30 іюня 1881 г.->None(None) | - | EXTRA:{'subject_taught': 'Мужскіе костюмы всѣхъ труппъ'}
+  read: whole entry (is any rank/title word printed?)
+
+ITEM productionteam_1890-91_p001|e017|freeform
+  scan: outputs/roster_images_full/images/productionteam_1890-91_p001.png
+  stored row: e017 | 1. | Никифоровъ | Михаилъ | Никифоровичъ | - | (съ 1 сентября 1861 г.) | 1 сентября 1861 г.->None(None) | -
+  read: everything after the tenure date incl. any † note
+
+ITEM productionteam_1890-91_p001|e025|freeform
+  scan: outputs/roster_images_full/images/productionteam_1890-91_p001.png
+  stored row: e025 | 1. | Кашликовъ | Николай | Егоровичъ | - | (съ 1 сентября 1856 г.) | 1 сентября 1856 г.->None(None) | -
+  read: everything after the tenure date incl. any † note
+
+ITEM productionteam_1890-91_p002|e003|freeform
+  scan: outputs/roster_images_full/images/productionteam_1890-91_p002.png
+  stored row: e003 | - | Сунковская | Александра | Павловна | - | (съ 1 сентября 1883 г.) | 1 сентября 1883 г.->None(None) | -
+  read: everything after the tenure date incl. Оставила службу
+
+ITEM productionteam_1894-95_p003|e005|freeform
+  scan: outputs/roster_images_full/images/productionteam_1894-95_p003.png
+  stored row: e005 | - | Воскресенскій | Михаилъ | Петровичъ | - | съ 15 апрѣля 1889 г. | 15 апрѣля 1889 г.->None(None) | -
+  read: everything after the tenure date incl. Оставилъ службу
+
+ITEM productionteam_1895-96_p000|e024|freeform
+  scan: outputs/roster_images_full/images/productionteam_1895-96_p000.png
+  stored row: e024 | 2. | Мининъ | Фердинандъ | Ивановичъ | - | съ 1 февраля 1892 г. | съ 1 февраля 1892 г.->None(None) | -
+  read: everything after the tenure date (and the line under it)
+
+ITEM productionteam_1895-96_p000|e025|freeform
+  scan: outputs/roster_images_full/images/productionteam_1895-96_p000.png
+  stored row: e025 | 3. | Мироновъ | Ѳедоръ | Николаевичъ | - | съ 1 января 1896 г. Оставилъ службу 8 ноября 1895 г. | съ 1 января 1896 г.->8 ноября 1895 г.(left service) | -
+  read: everything after the tenure date (and the line under it)
+
+ITEM productionteam_1897-98_p001|e009|freeform
+  scan: outputs/roster_images_full/images/productionteam_1897-98_p001.png
+  stored row: e009 | - | Ивченко | Анатолій | Яковлевичъ | - | съ 1 ноября 1895 г. | 1 ноября 1895 г.->None(None) | -
+  read: everything after the tenure date incl. Оставилъ службу
+
+ITEM productionteam_1897-98_p001|e027|freeform
+  scan: outputs/roster_images_full/images/productionteam_1897-98_p001.png
+  stored row: e027 | 2. | Игнатьевъ | Романъ | Васильевичъ | - | съ 1 мая 1892 г. | 1 мая 1892 г.->None(None) | -
+  read: everything after the tenure date incl. specialty and Оставилъ службу
+
+ITEM productionteam_1897-98_p003|e015|freeform
+  scan: outputs/roster_images_full/images/productionteam_1897-98_p003.png
+  stored row: e015 | - | Шаталовъ | Дмитрій | Ивановичъ | - | съ 22 января 1893 г. | 22 января 1893 г.->None(None) | DATE-DIFFERS
+  read: everything after the tenure date incl. †
+
+ITEM productionteam_1897-98_p003|e016|freeform
+  scan: outputs/roster_images_full/images/productionteam_1897-98_p003.png
+  stored row: e016 | - | Синицынъ | Василій | Ивановичъ | - | съ 5 сентября 1897 г.). † 4 сентября 1897 г. | 5 сентября 1897 г.->4 сентября 1897 г.(died) | DATE-DIFFERS
+  read: everything after the tenure date incl. †
+
+ITEM productionteam_1900-01_p000|e003|freeform
+  scan: outputs/roster_images_full/images/productionteam_1900-01_p000.png
+  stored row: e003 | 3. | Каменскій | Гавріилъ | Павловичъ | - | съ 1 августа 1882 г. по 1 декабря 1895 г. и съ 1 октября 1897 г. | 1 августа 1882 г.->1 декабря 1895 г.(None); 1 октября 1897 г.->None(None) | -
+  read: everything after the tenure date incl. Оставилъ службу
+
+ITEM productionteam_1900-01_p000|e016|freeform
+  scan: outputs/roster_images_full/images/productionteam_1900-01_p000.png
+  stored row: e016 | 8. | Львовъ | Викторъ | Константиновичъ | - | съ 1 февраля 1892 г. | 1 февраля 1892 г.->None(None) | -
+  read: everything after the tenure date incl. Оставилъ службу
+
+ITEM productionteam_1904-05_p001|e002|freeform
+  scan: outputs/roster_images_full/images/productionteam_1904-05_p001.png
+  stored row: e002 | - | Лапшинъ | Василій | Кирилловичъ | - | съ 1 января 1901 г.) | 1 января 1901 г.->None(None) | -
+  read: everything after the tenure date incl. Назначенъ
+
+ITEM productionteam_1904-05_p001|e012|freeform
+  scan: outputs/roster_images_full/images/productionteam_1904-05_p001.png
+  stored row: e012 | - | Щеголевъ | Василій | Дмитріевичъ | - | (съ 1 ноября 1902 г.) | 1 ноября 1902 г.->None(None) | -
+  read: everything after the tenure date incl. Назначенъ
+
+ITEM productionteam_1904-05_p002|e002|freeform
+  scan: outputs/roster_images_full/images/productionteam_1904-05_p002.png
+  stored row: e002 | 2. | Иваненко | Александра | Федоровна | - | (съ 1 мая 1898 г.). | 1 мая 1898 г.->None(None) | -
+  read: everything after the tenure date incl. specialty and Переведена
+
+ITEM productionteam_1892-93_p003|e012|freeform
+  scan: outputs/roster_images_full/images/productionteam_1892-93_p003.png
+  stored row: e012 | 3. | Галкинъ | Александръ | Николаевичъ | - | (съ 1 сентября 1882 г.) | съ 1 сентября 1882 г.->None(None) | DATE-DIFFERS
+  read: the printed start date, every digit
+
+ITEM productionteam_1893-94_p003|e011|freeform
+  scan: outputs/roster_images_full/images/productionteam_1893-94_p003.png
+  stored row: e011 | - | Байкова | Вѣра | Эдуардовна | - | (съ 16 октября 1883 г.) | 16 октября 1883 г.->None(None) | DATE-DIFFERS
+  read: the printed start date, every digit (damaged glyph?)
+
+ITEM productionteam_1908-09_p004|e013|freeform
+  scan: outputs/roster_images_full/images/productionteam_1908-09_p004.png
+  stored row: e013 | - | Спасская | Евдокія | Ивановна | - | съ 19 сентября 1882 г. | съ 19 сентября 1882 г.->None(None) | -
+  read: the printed start date, every digit (damaged glyph?)
+
+ITEM productionteam_1905-06_p002|e011|freeform
+  scan: outputs/roster_images_full/images/productionteam_1905-06_p002.png
+  stored row: e011 | - |  | - | - | - | (съ 1 іюля 1889 г.). | съ 1 іюля 1889 г.->None(None) | -
+  read: whole entry (surname, first name, patronymic) -- is the name printed as an entry?
+
+ITEM productionteam_1909-10_p002|e010|freeform
+  scan: outputs/roster_images_full/images/productionteam_1909-10_p002.png
+  stored row: e010 | - |  | - | - | - | (съ 1 мая 1888 г.). | 1 мая 1888 г.->None(None) | -
+  read: whole entry
+
+ITEM productionteam_1909-10_p002|e012|freeform
+  scan: outputs/roster_images_full/images/productionteam_1909-10_p002.png
+  stored row: e012 | - |  | - | - | - | (съ 1 февраля 1895 г.). | 1 февраля 1895 г.->None(None) | -
+  read: whole entry
+
+ITEM productionteam_1909-10_p002|e015|freeform
+  scan: outputs/roster_images_full/images/productionteam_1909-10_p002.png
+  stored row: e015 | - |  | - | - | - | (съ 1 сентября 1895 г.) | 1 сентября 1895 г.->None(None) | DATE-DIFFERS
+  read: whole entry
+
+ITEM productionteam_1909-10_p002|e016|freeform
+  scan: outputs/roster_images_full/images/productionteam_1909-10_p002.png
+  stored row: e016 | - |  | - | - | - | (съ 15 сентября 1887 г.) | 15 сентября 1887 г.->None(None) | -
+  read: whole entry
+
+ITEM productionteam_1899-00_p001|e016|freeform
+  scan: outputs/roster_images_full/images/productionteam_1899-00_p001.png
+  stored row: e016 | - | Петровъ | Алексѣй | Ивановичъ | - | съ 25 мая 1851 г. | 25 мая 1851 г.->None(None) | -
+  read: surname incl. ordinal, first name, patronymic
+
+ITEM productionteam_1899-00_p001|e017|freeform
+  scan: outputs/roster_images_full/images/productionteam_1899-00_p001.png
+  stored row: e017 | - | Петровъ | Анатолій | Алексѣевичъ | - | съ 1 октября 1880 г. | 1 октября 1880 г.->None(None) | -
+  read: surname incl. ordinal
+
+ITEM productionteam_1899-00_p001|e024|freeform
+  scan: outputs/roster_images_full/images/productionteam_1899-00_p001.png
+  stored row: e024 | - | Петровъ | Алексѣй | Алексѣевичъ | - | съ 5 октября 1888 г. | 5 октября 1888 г.->None(None) | -
+  read: surname incl. ordinal
+
+ITEM productionteam_1896-97_p001|e004|freeform
+  scan: outputs/roster_images_full/images/productionteam_1896-97_p001.png
+  stored row: e004 | - | Петровъ | Алексѣй | Ивановичъ | - | 1-й, (съ 25 мая 1851 г.) | 25 мая 1851 г.->None(None) | -
+  read: surname incl. ordinal, first name, patronymic, tenure
+
+ITEM productionteam_1896-97_p001|e005|freeform
+  scan: outputs/roster_images_full/images/productionteam_1896-97_p001.png
+  stored row: e005 | - | Петровъ | Анатолій | Алексѣевичъ | - | 2-й, (съ 1 октября 1880 г.) | 1 октября 1880 г.->None(None) | -
+  read: surname incl. ordinal and the rest of the entry
+
+ITEM productionteam_1896-97_p001|e010|freeform
+  scan: outputs/roster_images_full/images/productionteam_1896-97_p001.png
+  stored row: e010 | - | Петровъ | Алексѣй | Алексѣевичъ | - | 3-й, (съ 5 октября 1888 г.) | 5 октября 1888 г.->None(None) | -
+  read: surname incl. ordinal and the rest of the entry

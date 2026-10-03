@@ -396,3 +396,9 @@ correction belongs. Entry ids are `<page_id>__eNNN`.
   the misprinted list number "34." for 54 (1895-96 MSK p001 e032). Damaged-glyph cases resolved by corroboration (not typos): see known_issues #130 batch 9.
 - `musicians_1901-02_SP_p000` e014 Ауэръ: first name printed **Лоопольдъ** (Леопольдъ everywhere else); stored as printed (seen on the scan, 2026-10-02).
 - `musicians_1898-99_SP_p006` section heading "Старшій библіотекарь Центральной Музыкальной **Бблiотеки**." (first и dropped; seen at 4x zoom 2026-10-02); `musicians_1905-06_MSK_p001` heading "**И. сб.** 2-го капельмейстера балета" (сб. for об.). Both stored as printed.
+
+## ProductionTeam audit, 2026-10-02 (issue #132) -- print oddities stored as printed
+- `productionteam_1905-06_p001` e018 Павловъ: patronymic **Павлсвичъ** (с for о); `productionteam_1891-92_p002` e003 Яруцкій: leaving note **"Остваилъ службу 1 сентября 1892 г."**
+- Surname variants consistently printed: **Семирадзкій / Семирадзскій** (1899-00 p001, 1907-08 p001, 1909-10 p000), **Науіокайтисъ** (1903-1908), **Фонъ-Фитингофъ-Шеель** (1904-05, 1909-10).
+- Tenure text: `productionteam_1903-04_p001` e022 "къ къ С.-**Нетербургскимъ**" (stored normalised); `productionteam_1904-05_p002` e006 "г.,.)"; `productionteam_1908-09_p002` e006 doubled "(съ (съ"; `productionteam_1909-10_p001` e007 "(**сь** 25 октября"; `productionteam_1909-10_p002` e001 "Мужскіе па-" (cut at the column end, continuation not printed).
+- Headings printed with slips: "Мѣстные **гадеробы**." (1890-91 p002), "Гардеробм**ё**йстеры" (1893-94 p003), "**Костюмерта**" (1895-96 p003), "**Руская** драматическая труппа." (1895-96 p001), "Маріинскій **тэатръ**" (1896-97 p001), "Отдѣлъ **бугафорскій**" (1897-98 p003), "Парикмахеръ"-initial decoration (1909-10 p004 "Л/П").

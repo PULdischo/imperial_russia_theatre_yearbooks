@@ -1,0 +1,1604 @@
+{
+ "simple": [
+  {
+   "page": "productionteam_1890-91_p002",
+   "entry": "e003",
+   "field": "family",
+   "stored": "Сунковская",
+   "printed": "Суковская"
+  },
+  {
+   "page": "productionteam_1890-91_p002",
+   "entry": "e011",
+   "field": "family",
+   "stored": "Вивьень де-Шатобріанъ",
+   "printed": "Вивьенъ де-Шатобріанъ"
+  },
+  {
+   "page": "productionteam_1891-92_p000",
+   "entry": "e023",
+   "field": "family",
+   "stored": "Бергерь",
+   "printed": "Бергеръ"
+  },
+  {
+   "page": "productionteam_1891-92_p001",
+   "entry": "e014",
+   "field": "family",
+   "stored": "Наффи",
+   "printed": "Каффи"
+  },
+  {
+   "page": "productionteam_1891-92_p001",
+   "entry": "e024",
+   "field": "family",
+   "stored": "Крюковскій",
+   "printed": "Крюковской"
+  },
+  {
+   "page": "productionteam_1891-92_p002",
+   "entry": "e002",
+   "field": "family",
+   "stored": "Тимовеевъ",
+   "printed": "Тимоѳеевъ"
+  },
+  {
+   "page": "productionteam_1891-92_p002",
+   "entry": "e021",
+   "field": "family",
+   "stored": "Ѳектистовъ",
+   "printed": "Ѳеоктистовъ"
+  },
+  {
+   "page": "productionteam_1891-92_p002",
+   "entry": "e029",
+   "field": "family",
+   "stored": "Вивьень де-Шатобріанъ",
+   "printed": "Вивьенъ де-Шатобріанъ"
+  },
+  {
+   "page": "productionteam_1891-92_p003",
+   "entry": "e007",
+   "field": "family",
+   "stored": "Бьвеневно",
+   "printed": "Бьенвеню"
+  },
+  {
+   "page": "productionteam_1892-93_p002",
+   "entry": "e002",
+   "field": "family",
+   "stored": "Пипарь",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1892-93_p002",
+   "entry": "e028",
+   "field": "family",
+   "stored": "Вивьень де-Шатобріанъ",
+   "printed": "Вивьенъ де-Шатобріанъ"
+  },
+  {
+   "page": "productionteam_1893-94_p001",
+   "entry": "e015",
+   "field": "family",
+   "stored": "Пипарь",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1893-94_p001",
+   "entry": "e024",
+   "field": "family",
+   "stored": "Крюковскій",
+   "printed": "Крюковской"
+  },
+  {
+   "page": "productionteam_1893-94_p002",
+   "entry": "e004",
+   "field": "family",
+   "stored": "Аслинь",
+   "printed": "Аслинъ"
+  },
+  {
+   "page": "productionteam_1893-94_p002",
+   "entry": "e007",
+   "field": "family",
+   "stored": "Вивьень де-Шатобріанъ",
+   "printed": "Вивьенъ де-Шатобріанъ"
+  },
+  {
+   "page": "productionteam_1893-94_p002",
+   "entry": "e024",
+   "field": "family",
+   "stored": "Ѳоктистовъ",
+   "printed": "Ѳеоктистовъ"
+  },
+  {
+   "page": "productionteam_1893-94_p003",
+   "entry": "e014",
+   "field": "first",
+   "stored": "Евлокія",
+   "printed": "Евдокія"
+  },
+  {
+   "page": "productionteam_1894-95_p001",
+   "entry": "e020",
+   "field": "family",
+   "stored": "Пипарь",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1894-95_p001",
+   "entry": "e025",
+   "field": "family",
+   "stored": "Педдерь",
+   "printed": "Педдеръ"
+  },
+  {
+   "page": "productionteam_1894-95_p002",
+   "entry": "e025",
+   "field": "patronymic",
+   "stored": "Леонтъевичъ",
+   "printed": "Леонтьевичъ"
+  },
+  {
+   "page": "productionteam_1894-95_p002",
+   "entry": "e028",
+   "field": "family",
+   "stored": "Ѳеонтистовъ",
+   "printed": "Ѳеоктистовъ"
+  },
+  {
+   "page": "productionteam_1894-95_p003",
+   "entry": "e014",
+   "field": "family",
+   "stored": "Илынская",
+   "printed": "Ильинская"
+  },
+  {
+   "page": "productionteam_1895-96_p000",
+   "entry": "e023",
+   "field": "family",
+   "stored": "Евсеевскій",
+   "printed": "Евсевскій"
+  },
+  {
+   "page": "productionteam_1895-96_p001",
+   "entry": "e011",
+   "field": "family",
+   "stored": "Имань",
+   "printed": "Иманъ"
+  },
+  {
+   "page": "productionteam_1895-96_p001",
+   "entry": "e015",
+   "field": "family",
+   "stored": "Пипарь",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1895-96_p002",
+   "entry": "e002",
+   "field": "family",
+   "stored": "Тимовеевъ",
+   "printed": "Тимоѳеевъ"
+  },
+  {
+   "page": "productionteam_1895-96_p002",
+   "entry": "e003",
+   "field": "family",
+   "stored": "Аслинь",
+   "printed": "Аслинъ"
+  },
+  {
+   "page": "productionteam_1895-96_p002",
+   "entry": "e006",
+   "field": "family",
+   "stored": "Вивьень де-Шатобріанъ",
+   "printed": "Вивьенъ де-Шатобріанъ"
+  },
+  {
+   "page": "productionteam_1895-96_p003",
+   "entry": "e003",
+   "field": "family",
+   "stored": "Бріяліантовъ",
+   "printed": "Брилліантовъ"
+  },
+  {
+   "page": "productionteam_1896-97_p000",
+   "entry": "e015",
+   "field": "family",
+   "stored": "Безайсь",
+   "printed": "Безайсъ"
+  },
+  {
+   "page": "productionteam_1896-97_p000",
+   "entry": "e018",
+   "field": "family",
+   "stored": "Мъщаниновъ",
+   "printed": "Мѣщаниновъ"
+  },
+  {
+   "page": "productionteam_1896-97_p000",
+   "entry": "e024",
+   "field": "patronymic",
+   "stored": "Ѳадлеевичъ",
+   "printed": "Ѳаддеевичъ"
+  },
+  {
+   "page": "productionteam_1896-97_p001",
+   "entry": "e015",
+   "field": "family",
+   "stored": "Пипарь",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1896-97_p001",
+   "entry": "e016",
+   "field": "first",
+   "stored": "Евлокія",
+   "printed": "Евдокія"
+  },
+  {
+   "page": "productionteam_1896-97_p002",
+   "entry": "e007",
+   "field": "family",
+   "stored": "Вивьень де-Шатобріанъ",
+   "printed": "Вивьенъ де-Шатобріанъ"
+  },
+  {
+   "page": "productionteam_1897-98_p000",
+   "entry": "e004",
+   "field": "family",
+   "stored": "Ламбінь",
+   "printed": "Ламбинъ"
+  },
+  {
+   "page": "productionteam_1897-98_p000",
+   "entry": "e022",
+   "field": "family",
+   "stored": "Безайсь",
+   "printed": "Безайсъ"
+  },
+  {
+   "page": "productionteam_1897-98_p000",
+   "entry": "e023",
+   "field": "family",
+   "stored": "Евсеевскій",
+   "printed": "Евсевскій"
+  },
+  {
+   "page": "productionteam_1897-98_p001",
+   "entry": "e018",
+   "field": "family",
+   "stored": "Пинаръ",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1897-98_p001",
+   "entry": "e019",
+   "field": "first",
+   "stored": "Евлокія",
+   "printed": "Евдокія"
+  },
+  {
+   "page": "productionteam_1897-98_p002",
+   "entry": "e009",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1897-98_p002",
+   "entry": "e025",
+   "field": "patronymic",
+   "stored": "Никиторовичъ",
+   "printed": "Никифоровичъ"
+  },
+  {
+   "page": "productionteam_1898-99_p000",
+   "entry": "e013",
+   "field": "family",
+   "stored": "Андриашевъ",
+   "printed": "Андріашевъ"
+  },
+  {
+   "page": "productionteam_1898-99_p001",
+   "entry": "e006",
+   "field": "family",
+   "stored": "Бергерь",
+   "printed": "Бергеръ"
+  },
+  {
+   "page": "productionteam_1898-99_p001",
+   "entry": "e019",
+   "field": "patronymic",
+   "stored": "Леонасьевичъ",
+   "printed": "Аѳанасьевичъ"
+  },
+  {
+   "page": "productionteam_1898-99_p001",
+   "entry": "e022",
+   "field": "family",
+   "stored": "Пипарь",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1898-99_p002",
+   "entry": "e004",
+   "field": "family",
+   "stored": "Афанасьевъ",
+   "printed": "Аѳанасьевъ"
+  },
+  {
+   "page": "productionteam_1898-99_p002",
+   "entry": "e016",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1898-99_p002",
+   "entry": "e023",
+   "field": "family",
+   "stored": "Нормаркъ",
+   "printed": "Нордмаркъ"
+  },
+  {
+   "page": "productionteam_1898-99_p003",
+   "entry": "e007",
+   "field": "patronymic",
+   "stored": "Никитифоровичъ",
+   "printed": "Никифоро-/вичъ"
+  },
+  {
+   "page": "productionteam_1898-99_p003",
+   "entry": "e016",
+   "field": "family",
+   "stored": "Ивашенко",
+   "printed": "Иващенко"
+  },
+  {
+   "page": "productionteam_1898-99_p003",
+   "entry": "e025",
+   "field": "family",
+   "stored": "Фонъ-Фитинггофъ-Шель",
+   "printed": "Фонъ-Фитингофъ-Шель"
+  },
+  {
+   "page": "productionteam_1899-00_p000",
+   "entry": "e013",
+   "field": "family",
+   "stored": "Коверовскій",
+   "printed": "Козеровскій"
+  },
+  {
+   "page": "productionteam_1899-00_p001",
+   "entry": "e002",
+   "field": "family",
+   "stored": "Андриашевъ",
+   "printed": "Андріашевъ"
+  },
+  {
+   "page": "productionteam_1899-00_p001",
+   "entry": "e010",
+   "field": "family",
+   "stored": "Шарбё",
+   "printed": "Шарбе"
+  },
+  {
+   "page": "productionteam_1899-00_p001",
+   "entry": "e022",
+   "field": "family",
+   "stored": "Семирадскій",
+   "printed": "Семирадзкій"
+  },
+  {
+   "page": "productionteam_1899-00_p002",
+   "entry": "e006",
+   "field": "family",
+   "stored": "Пеллеръ",
+   "printed": "Педдеръ"
+  },
+  {
+   "page": "productionteam_1899-00_p002",
+   "entry": "e007",
+   "field": "family",
+   "stored": "Пеллеръ",
+   "printed": "Педдеръ"
+  },
+  {
+   "page": "productionteam_1899-00_p002",
+   "entry": "e010",
+   "field": "family",
+   "stored": "Леанасьевъ",
+   "printed": "Аѳанасьевъ"
+  },
+  {
+   "page": "productionteam_1899-00_p002",
+   "entry": "e021",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1899-00_p003",
+   "entry": "e007",
+   "field": "family",
+   "stored": "Нормаркъ",
+   "printed": "Нордмаркъ"
+  },
+  {
+   "page": "productionteam_1900-01_p001",
+   "entry": "e006",
+   "field": "family",
+   "stored": "Разлобурлинъ",
+   "printed": "Раздобурдинъ"
+  },
+  {
+   "page": "productionteam_1900-01_p002",
+   "entry": "e004",
+   "field": "family",
+   "stored": "Пипарть",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1900-01_p002",
+   "entry": "e008",
+   "field": "family",
+   "stored": "Пеллеръ",
+   "printed": "Педдеръ"
+  },
+  {
+   "page": "productionteam_1900-01_p002",
+   "entry": "e023",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1900-01_p003",
+   "entry": "e009",
+   "field": "family",
+   "stored": "Нормаркъ",
+   "printed": "Нордмаркъ"
+  },
+  {
+   "page": "productionteam_1900-01_p004",
+   "entry": "e017",
+   "field": "first",
+   "stored": "Евлокія",
+   "printed": "Евдокія"
+  },
+  {
+   "page": "productionteam_1901-02_p001",
+   "entry": "e001",
+   "field": "family",
+   "stored": "Андриашевъ",
+   "printed": "Андріашевъ"
+  },
+  {
+   "page": "productionteam_1901-02_p002",
+   "entry": "e005",
+   "field": "family",
+   "stored": "Афанасьевъ",
+   "printed": "Аѳанасьевъ"
+  },
+  {
+   "page": "productionteam_1901-02_p002",
+   "entry": "e020",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1901-02_p003",
+   "entry": "e001",
+   "field": "family",
+   "stored": "Кунтъ",
+   "printed": "Кунъ"
+  },
+  {
+   "page": "productionteam_1901-02_p003",
+   "entry": "e002",
+   "field": "family",
+   "stored": "Кунтъ",
+   "printed": "Кунъ"
+  },
+  {
+   "page": "productionteam_1901-02_p003",
+   "entry": "e010",
+   "field": "family",
+   "stored": "Никиторовъ",
+   "printed": "Никифоровъ"
+  },
+  {
+   "page": "productionteam_1901-02_p003",
+   "entry": "e011",
+   "field": "family",
+   "stored": "Нормаркъ",
+   "printed": "Нордмаркъ"
+  },
+  {
+   "page": "productionteam_1901-02_p003",
+   "entry": "e019",
+   "field": "patronymic",
+   "stored": "Никиторовичъ",
+   "printed": "Никифоровичъ"
+  },
+  {
+   "page": "productionteam_1902-03_p001",
+   "entry": "e008",
+   "field": "family",
+   "stored": "Талактіоновъ",
+   "printed": "Галактіоновъ"
+  },
+  {
+   "page": "productionteam_1902-03_p001",
+   "entry": "e021",
+   "field": "family",
+   "stored": "Пипарь",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1902-03_p002",
+   "entry": "e017",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1902-03_p003",
+   "entry": "e001",
+   "field": "family",
+   "stored": "Ѳсоктистовъ",
+   "printed": "Ѳеоктистовъ"
+  },
+  {
+   "page": "productionteam_1902-03_p003",
+   "entry": "e007",
+   "field": "patronymic",
+   "stored": "Леонтъевичъ",
+   "printed": "Леонтьевичъ"
+  },
+  {
+   "page": "productionteam_1903-04_p001",
+   "entry": "e002",
+   "field": "family",
+   "stored": "Бергерь",
+   "printed": "Бергеръ"
+  },
+  {
+   "page": "productionteam_1903-04_p002",
+   "entry": "e003",
+   "field": "family",
+   "stored": "Афанасьевъ",
+   "printed": "Аѳанасьевъ"
+  },
+  {
+   "page": "productionteam_1903-04_p002",
+   "entry": "e008",
+   "field": "family",
+   "stored": "Щесвицкая",
+   "printed": "Цисвицкая"
+  },
+  {
+   "page": "productionteam_1903-04_p002",
+   "entry": "e016",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1903-04_p003",
+   "entry": "e001",
+   "field": "family",
+   "stored": "Ѳсоктистовъ",
+   "printed": "Ѳеоктистовъ"
+  },
+  {
+   "page": "productionteam_1903-04_p003",
+   "entry": "e020",
+   "field": "first",
+   "stored": "Казимира",
+   "printed": "Казиміра"
+  },
+  {
+   "page": "productionteam_1904-05_p000",
+   "entry": "e006",
+   "field": "family",
+   "stored": "Безайстъ",
+   "printed": "Безайсъ"
+  },
+  {
+   "page": "productionteam_1904-05_p002",
+   "entry": "e002",
+   "field": "family",
+   "stored": "Иваненко",
+   "printed": "Иващенко"
+  },
+  {
+   "page": "productionteam_1904-05_p002",
+   "entry": "e003",
+   "field": "family",
+   "stored": "Педеръ",
+   "printed": "Педдеръ"
+  },
+  {
+   "page": "productionteam_1904-05_p002",
+   "entry": "e004",
+   "field": "family",
+   "stored": "Педеръ",
+   "printed": "Педдеръ"
+  },
+  {
+   "page": "productionteam_1904-05_p002",
+   "entry": "e006",
+   "field": "family",
+   "stored": "Афанасьевъ",
+   "printed": "Аѳанасьевъ"
+  },
+  {
+   "page": "productionteam_1904-05_p002",
+   "entry": "e007",
+   "field": "family",
+   "stored": "Жуліевъ",
+   "printed": "Жуляевъ"
+  },
+  {
+   "page": "productionteam_1904-05_p002",
+   "entry": "e020",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1904-05_p003",
+   "entry": "e006",
+   "field": "patronymic",
+   "stored": "Никитфоровичъ",
+   "printed": "Никифоровичъ"
+  },
+  {
+   "page": "productionteam_1905-06_p001",
+   "entry": "e010",
+   "field": "family",
+   "stored": "Бергертъ",
+   "printed": "Бергеръ"
+  },
+  {
+   "page": "productionteam_1905-06_p001",
+   "entry": "e018",
+   "field": "patronymic",
+   "stored": "Павловичъ",
+   "printed": "Павлсвичъ"
+  },
+  {
+   "page": "productionteam_1905-06_p002",
+   "entry": "e003",
+   "field": "family",
+   "stored": "Афанасьевъ",
+   "printed": "Аѳанасьевъ"
+  },
+  {
+   "page": "productionteam_1905-06_p002",
+   "entry": "e019",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1905-06_p003",
+   "entry": "e006",
+   "field": "patronymic",
+   "stored": "Никиторовичъ",
+   "printed": "Никифоровичъ"
+  },
+  {
+   "page": "productionteam_1905-06_p003",
+   "entry": "e022",
+   "field": "family",
+   "stored": "Науокайтисъ",
+   "printed": "Науіокайтисъ"
+  },
+  {
+   "page": "productionteam_1905-06_p004",
+   "entry": "e004",
+   "field": "first",
+   "stored": "Казимира",
+   "printed": "Казиміра"
+  },
+  {
+   "page": "productionteam_1905-06_p004",
+   "entry": "e012",
+   "field": "family",
+   "stored": "Фонъ-Фитинггофъ-Шель",
+   "printed": "Фонъ-Фитингофъ-Шель"
+  },
+  {
+   "page": "productionteam_1906-07_p000",
+   "entry": "e020",
+   "field": "family",
+   "stored": "Шарбё",
+   "printed": "Шарбе"
+  },
+  {
+   "page": "productionteam_1906-07_p004",
+   "entry": "e004",
+   "field": "first",
+   "stored": "Казимира",
+   "printed": "Казиміра"
+  },
+  {
+   "page": "productionteam_1907-08_p001",
+   "entry": "e010",
+   "field": "family",
+   "stored": "Семирадскій",
+   "printed": "Семирадзскій"
+  },
+  {
+   "page": "productionteam_1907-08_p002",
+   "entry": "e019",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1907-08_p003",
+   "entry": "e022",
+   "field": "family",
+   "stored": "Наюкайтисъ",
+   "printed": "Науіокайтисъ"
+  },
+  {
+   "page": "productionteam_1908-09_p002",
+   "entry": "e001",
+   "field": "patronymic",
+   "stored": "Тимоѳѣевичъ",
+   "printed": "Тимофѣевичъ"
+  },
+  {
+   "page": "productionteam_1908-09_p002",
+   "entry": "e013",
+   "field": "patronymic",
+   "stored": "Тимоѳѣевичъ",
+   "printed": "Тимофеевичъ"
+  },
+  {
+   "page": "productionteam_1908-09_p002",
+   "entry": "e016",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1908-09_p004",
+   "entry": "e003",
+   "field": "first",
+   "stored": "Казимира",
+   "printed": "Казиміра"
+  },
+  {
+   "page": "productionteam_1909-10_p000",
+   "entry": "e012",
+   "field": "family",
+   "stored": "Семирадскій",
+   "printed": "Семирадзскій"
+  },
+  {
+   "page": "productionteam_1909-10_p001",
+   "entry": "e012",
+   "field": "family",
+   "stored": "Ковалечева",
+   "printed": "Коваличева"
+  },
+  {
+   "page": "productionteam_1909-10_p004",
+   "entry": "e017",
+   "field": "patronymic",
+   "stored": "Пантелейевна",
+   "printed": "Пантелѣевна"
+  }
+ ],
+ "corro": [
+  {
+   "page": "productionteam_1890-91_p002",
+   "entry": "e011",
+   "field": "family",
+   "stored": "Вивьень де-Шатобріанъ",
+   "printed": "Вивьенъ де-Шатобріанъ"
+  },
+  {
+   "page": "productionteam_1891-92_p000",
+   "entry": "e023",
+   "field": "family",
+   "stored": "Бергерь",
+   "printed": "Бергеръ"
+  },
+  {
+   "page": "productionteam_1891-92_p001",
+   "entry": "e024",
+   "field": "family",
+   "stored": "Крюковскій",
+   "printed": "Крюковской"
+  },
+  {
+   "page": "productionteam_1891-92_p002",
+   "entry": "e002",
+   "field": "family",
+   "stored": "Тимовеевъ",
+   "printed": "Тимоѳеевъ"
+  },
+  {
+   "page": "productionteam_1891-92_p002",
+   "entry": "e029",
+   "field": "family",
+   "stored": "Вивьень де-Шатобріанъ",
+   "printed": "Вивьенъ де-Шатобріанъ"
+  },
+  {
+   "page": "productionteam_1892-93_p002",
+   "entry": "e002",
+   "field": "family",
+   "stored": "Пипарь",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1892-93_p002",
+   "entry": "e028",
+   "field": "family",
+   "stored": "Вивьень де-Шатобріанъ",
+   "printed": "Вивьенъ де-Шатобріанъ"
+  },
+  {
+   "page": "productionteam_1893-94_p001",
+   "entry": "e015",
+   "field": "family",
+   "stored": "Пипарь",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1893-94_p001",
+   "entry": "e024",
+   "field": "family",
+   "stored": "Крюковскій",
+   "printed": "Крюковской"
+  },
+  {
+   "page": "productionteam_1893-94_p002",
+   "entry": "e004",
+   "field": "family",
+   "stored": "Аслинь",
+   "printed": "Аслинъ"
+  },
+  {
+   "page": "productionteam_1893-94_p002",
+   "entry": "e007",
+   "field": "family",
+   "stored": "Вивьень де-Шатобріанъ",
+   "printed": "Вивьенъ де-Шатобріанъ"
+  },
+  {
+   "page": "productionteam_1893-94_p003",
+   "entry": "e014",
+   "field": "first",
+   "stored": "Евлокія",
+   "printed": "Евдокія"
+  },
+  {
+   "page": "productionteam_1894-95_p001",
+   "entry": "e020",
+   "field": "family",
+   "stored": "Пипарь",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1894-95_p002",
+   "entry": "e025",
+   "field": "patronymic",
+   "stored": "Леонтъевичъ",
+   "printed": "Леонтьевичъ"
+  },
+  {
+   "page": "productionteam_1895-96_p000",
+   "entry": "e023",
+   "field": "family",
+   "stored": "Евсеевскій",
+   "printed": "Евсевскій"
+  },
+  {
+   "page": "productionteam_1895-96_p001",
+   "entry": "e015",
+   "field": "family",
+   "stored": "Пипарь",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1895-96_p002",
+   "entry": "e002",
+   "field": "family",
+   "stored": "Тимовеевъ",
+   "printed": "Тимоѳеевъ"
+  },
+  {
+   "page": "productionteam_1895-96_p002",
+   "entry": "e003",
+   "field": "family",
+   "stored": "Аслинь",
+   "printed": "Аслинъ"
+  },
+  {
+   "page": "productionteam_1895-96_p002",
+   "entry": "e006",
+   "field": "family",
+   "stored": "Вивьень де-Шатобріанъ",
+   "printed": "Вивьенъ де-Шатобріанъ"
+  },
+  {
+   "page": "productionteam_1896-97_p000",
+   "entry": "e015",
+   "field": "family",
+   "stored": "Безайсь",
+   "printed": "Безайсъ"
+  },
+  {
+   "page": "productionteam_1896-97_p001",
+   "entry": "e015",
+   "field": "family",
+   "stored": "Пипарь",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1896-97_p001",
+   "entry": "e016",
+   "field": "first",
+   "stored": "Евлокія",
+   "printed": "Евдокія"
+  },
+  {
+   "page": "productionteam_1896-97_p002",
+   "entry": "e007",
+   "field": "family",
+   "stored": "Вивьень де-Шатобріанъ",
+   "printed": "Вивьенъ де-Шатобріанъ"
+  },
+  {
+   "page": "productionteam_1897-98_p000",
+   "entry": "e022",
+   "field": "family",
+   "stored": "Безайсь",
+   "printed": "Безайсъ"
+  },
+  {
+   "page": "productionteam_1897-98_p000",
+   "entry": "e023",
+   "field": "family",
+   "stored": "Евсеевскій",
+   "printed": "Евсевскій"
+  },
+  {
+   "page": "productionteam_1897-98_p001",
+   "entry": "e019",
+   "field": "first",
+   "stored": "Евлокія",
+   "printed": "Евдокія"
+  },
+  {
+   "page": "productionteam_1897-98_p002",
+   "entry": "e009",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1897-98_p002",
+   "entry": "e025",
+   "field": "patronymic",
+   "stored": "Никиторовичъ",
+   "printed": "Никифоровичъ"
+  },
+  {
+   "page": "productionteam_1898-99_p000",
+   "entry": "e013",
+   "field": "family",
+   "stored": "Андриашевъ",
+   "printed": "Андріашевъ"
+  },
+  {
+   "page": "productionteam_1898-99_p001",
+   "entry": "e006",
+   "field": "family",
+   "stored": "Бергерь",
+   "printed": "Бергеръ"
+  },
+  {
+   "page": "productionteam_1898-99_p001",
+   "entry": "e022",
+   "field": "family",
+   "stored": "Пипарь",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1898-99_p002",
+   "entry": "e004",
+   "field": "family",
+   "stored": "Афанасьевъ",
+   "printed": "Аѳанасьевъ"
+  },
+  {
+   "page": "productionteam_1898-99_p002",
+   "entry": "e016",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1898-99_p002",
+   "entry": "e023",
+   "field": "family",
+   "stored": "Нормаркъ",
+   "printed": "Нордмаркъ"
+  },
+  {
+   "page": "productionteam_1898-99_p003",
+   "entry": "e025",
+   "field": "family",
+   "stored": "Фонъ-Фитинггофъ-Шель",
+   "printed": "Фонъ-Фитингофъ-Шель"
+  },
+  {
+   "page": "productionteam_1899-00_p001",
+   "entry": "e002",
+   "field": "family",
+   "stored": "Андриашевъ",
+   "printed": "Андріашевъ"
+  },
+  {
+   "page": "productionteam_1899-00_p001",
+   "entry": "e010",
+   "field": "family",
+   "stored": "Шарбё",
+   "printed": "Шарбе"
+  },
+  {
+   "page": "productionteam_1899-00_p002",
+   "entry": "e006",
+   "field": "family",
+   "stored": "Пеллеръ",
+   "printed": "Педдеръ"
+  },
+  {
+   "page": "productionteam_1899-00_p002",
+   "entry": "e007",
+   "field": "family",
+   "stored": "Пеллеръ",
+   "printed": "Педдеръ"
+  },
+  {
+   "page": "productionteam_1899-00_p002",
+   "entry": "e021",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1899-00_p003",
+   "entry": "e007",
+   "field": "family",
+   "stored": "Нормаркъ",
+   "printed": "Нордмаркъ"
+  },
+  {
+   "page": "productionteam_1900-01_p002",
+   "entry": "e008",
+   "field": "family",
+   "stored": "Пеллеръ",
+   "printed": "Педдеръ"
+  },
+  {
+   "page": "productionteam_1900-01_p002",
+   "entry": "e023",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1900-01_p003",
+   "entry": "e009",
+   "field": "family",
+   "stored": "Нормаркъ",
+   "printed": "Нордмаркъ"
+  },
+  {
+   "page": "productionteam_1900-01_p004",
+   "entry": "e017",
+   "field": "first",
+   "stored": "Евлокія",
+   "printed": "Евдокія"
+  },
+  {
+   "page": "productionteam_1901-02_p001",
+   "entry": "e001",
+   "field": "family",
+   "stored": "Андриашевъ",
+   "printed": "Андріашевъ"
+  },
+  {
+   "page": "productionteam_1901-02_p002",
+   "entry": "e005",
+   "field": "family",
+   "stored": "Афанасьевъ",
+   "printed": "Аѳанасьевъ"
+  },
+  {
+   "page": "productionteam_1901-02_p002",
+   "entry": "e020",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1901-02_p003",
+   "entry": "e001",
+   "field": "family",
+   "stored": "Кунтъ",
+   "printed": "Кунъ"
+  },
+  {
+   "page": "productionteam_1901-02_p003",
+   "entry": "e002",
+   "field": "family",
+   "stored": "Кунтъ",
+   "printed": "Кунъ"
+  },
+  {
+   "page": "productionteam_1901-02_p003",
+   "entry": "e011",
+   "field": "family",
+   "stored": "Нормаркъ",
+   "printed": "Нордмаркъ"
+  },
+  {
+   "page": "productionteam_1901-02_p003",
+   "entry": "e019",
+   "field": "patronymic",
+   "stored": "Никиторовичъ",
+   "printed": "Никифоровичъ"
+  },
+  {
+   "page": "productionteam_1902-03_p001",
+   "entry": "e021",
+   "field": "family",
+   "stored": "Пипарь",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1902-03_p002",
+   "entry": "e017",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1902-03_p003",
+   "entry": "e001",
+   "field": "family",
+   "stored": "Ѳсоктистовъ",
+   "printed": "Ѳеоктистовъ"
+  },
+  {
+   "page": "productionteam_1902-03_p003",
+   "entry": "e007",
+   "field": "patronymic",
+   "stored": "Леонтъевичъ",
+   "printed": "Леонтьевичъ"
+  },
+  {
+   "page": "productionteam_1903-04_p001",
+   "entry": "e002",
+   "field": "family",
+   "stored": "Бергерь",
+   "printed": "Бергеръ"
+  },
+  {
+   "page": "productionteam_1903-04_p002",
+   "entry": "e003",
+   "field": "family",
+   "stored": "Афанасьевъ",
+   "printed": "Аѳанасьевъ"
+  },
+  {
+   "page": "productionteam_1903-04_p002",
+   "entry": "e016",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1903-04_p003",
+   "entry": "e001",
+   "field": "family",
+   "stored": "Ѳсоктистовъ",
+   "printed": "Ѳеоктистовъ"
+  },
+  {
+   "page": "productionteam_1903-04_p003",
+   "entry": "e020",
+   "field": "first",
+   "stored": "Казимира",
+   "printed": "Казиміра"
+  },
+  {
+   "page": "productionteam_1904-05_p002",
+   "entry": "e003",
+   "field": "family",
+   "stored": "Педеръ",
+   "printed": "Педдеръ"
+  },
+  {
+   "page": "productionteam_1904-05_p002",
+   "entry": "e004",
+   "field": "family",
+   "stored": "Педеръ",
+   "printed": "Педдеръ"
+  },
+  {
+   "page": "productionteam_1904-05_p002",
+   "entry": "e006",
+   "field": "family",
+   "stored": "Афанасьевъ",
+   "printed": "Аѳанасьевъ"
+  },
+  {
+   "page": "productionteam_1904-05_p002",
+   "entry": "e020",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1905-06_p002",
+   "entry": "e003",
+   "field": "family",
+   "stored": "Афанасьевъ",
+   "printed": "Аѳанасьевъ"
+  },
+  {
+   "page": "productionteam_1905-06_p002",
+   "entry": "e019",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1905-06_p003",
+   "entry": "e006",
+   "field": "patronymic",
+   "stored": "Никиторовичъ",
+   "printed": "Никифоровичъ"
+  },
+  {
+   "page": "productionteam_1905-06_p004",
+   "entry": "e004",
+   "field": "first",
+   "stored": "Казимира",
+   "printed": "Казиміра"
+  },
+  {
+   "page": "productionteam_1905-06_p004",
+   "entry": "e012",
+   "field": "family",
+   "stored": "Фонъ-Фитинггофъ-Шель",
+   "printed": "Фонъ-Фитингофъ-Шель"
+  },
+  {
+   "page": "productionteam_1906-07_p000",
+   "entry": "e020",
+   "field": "family",
+   "stored": "Шарбё",
+   "printed": "Шарбе"
+  },
+  {
+   "page": "productionteam_1906-07_p004",
+   "entry": "e004",
+   "field": "first",
+   "stored": "Казимира",
+   "printed": "Казиміра"
+  },
+  {
+   "page": "productionteam_1907-08_p001",
+   "entry": "e010",
+   "field": "family",
+   "stored": "Семирадскій",
+   "printed": "Семирадзскій"
+  },
+  {
+   "page": "productionteam_1907-08_p002",
+   "entry": "e019",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1908-09_p002",
+   "entry": "e016",
+   "field": "family",
+   "stored": "Зашукъ",
+   "printed": "Защукъ"
+  },
+  {
+   "page": "productionteam_1908-09_p004",
+   "entry": "e003",
+   "field": "first",
+   "stored": "Казимира",
+   "printed": "Казиміра"
+  },
+  {
+   "page": "productionteam_1909-10_p000",
+   "entry": "e012",
+   "field": "family",
+   "stored": "Семирадскій",
+   "printed": "Семирадзскій"
+  }
+ ],
+ "single": [
+  {
+   "page": "productionteam_1890-91_p002",
+   "entry": "e003",
+   "field": "family",
+   "stored": "Сунковская",
+   "printed": "Суковская"
+  },
+  {
+   "page": "productionteam_1891-92_p001",
+   "entry": "e014",
+   "field": "family",
+   "stored": "Наффи",
+   "printed": "Каффи"
+  },
+  {
+   "page": "productionteam_1891-92_p002",
+   "entry": "e021",
+   "field": "family",
+   "stored": "Ѳектистовъ",
+   "printed": "Ѳеоктистовъ"
+  },
+  {
+   "page": "productionteam_1891-92_p003",
+   "entry": "e007",
+   "field": "family",
+   "stored": "Бьвеневно",
+   "printed": "Бьенвеню"
+  },
+  {
+   "page": "productionteam_1893-94_p002",
+   "entry": "e024",
+   "field": "family",
+   "stored": "Ѳоктистовъ",
+   "printed": "Ѳеоктистовъ"
+  },
+  {
+   "page": "productionteam_1894-95_p001",
+   "entry": "e025",
+   "field": "family",
+   "stored": "Педдерь",
+   "printed": "Педдеръ"
+  },
+  {
+   "page": "productionteam_1894-95_p002",
+   "entry": "e028",
+   "field": "family",
+   "stored": "Ѳеонтистовъ",
+   "printed": "Ѳеоктистовъ"
+  },
+  {
+   "page": "productionteam_1894-95_p003",
+   "entry": "e014",
+   "field": "family",
+   "stored": "Илынская",
+   "printed": "Ильинская"
+  },
+  {
+   "page": "productionteam_1895-96_p001",
+   "entry": "e011",
+   "field": "family",
+   "stored": "Имань",
+   "printed": "Иманъ"
+  },
+  {
+   "page": "productionteam_1895-96_p003",
+   "entry": "e003",
+   "field": "family",
+   "stored": "Бріяліантовъ",
+   "printed": "Брилліантовъ"
+  },
+  {
+   "page": "productionteam_1896-97_p000",
+   "entry": "e018",
+   "field": "family",
+   "stored": "Мъщаниновъ",
+   "printed": "Мѣщаниновъ"
+  },
+  {
+   "page": "productionteam_1896-97_p000",
+   "entry": "e024",
+   "field": "patronymic",
+   "stored": "Ѳадлеевичъ",
+   "printed": "Ѳаддеевичъ"
+  },
+  {
+   "page": "productionteam_1897-98_p000",
+   "entry": "e004",
+   "field": "family",
+   "stored": "Ламбінь",
+   "printed": "Ламбинъ"
+  },
+  {
+   "page": "productionteam_1897-98_p001",
+   "entry": "e018",
+   "field": "family",
+   "stored": "Пинаръ",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1898-99_p001",
+   "entry": "e019",
+   "field": "patronymic",
+   "stored": "Леонасьевичъ",
+   "printed": "Аѳанасьевичъ"
+  },
+  {
+   "page": "productionteam_1898-99_p003",
+   "entry": "e007",
+   "field": "patronymic",
+   "stored": "Никитифоровичъ",
+   "printed": "Никифоро-/вичъ"
+  },
+  {
+   "page": "productionteam_1898-99_p003",
+   "entry": "e016",
+   "field": "family",
+   "stored": "Ивашенко",
+   "printed": "Иващенко"
+  },
+  {
+   "page": "productionteam_1899-00_p000",
+   "entry": "e013",
+   "field": "family",
+   "stored": "Коверовскій",
+   "printed": "Козеровскій"
+  },
+  {
+   "page": "productionteam_1899-00_p001",
+   "entry": "e022",
+   "field": "family",
+   "stored": "Семирадскій",
+   "printed": "Семирадзкій"
+  },
+  {
+   "page": "productionteam_1899-00_p002",
+   "entry": "e010",
+   "field": "family",
+   "stored": "Леанасьевъ",
+   "printed": "Аѳанасьевъ"
+  },
+  {
+   "page": "productionteam_1900-01_p001",
+   "entry": "e006",
+   "field": "family",
+   "stored": "Разлобурлинъ",
+   "printed": "Раздобурдинъ"
+  },
+  {
+   "page": "productionteam_1900-01_p002",
+   "entry": "e004",
+   "field": "family",
+   "stored": "Пипарть",
+   "printed": "Пипаръ"
+  },
+  {
+   "page": "productionteam_1901-02_p003",
+   "entry": "e010",
+   "field": "family",
+   "stored": "Никиторовъ",
+   "printed": "Никифоровъ"
+  },
+  {
+   "page": "productionteam_1902-03_p001",
+   "entry": "e008",
+   "field": "family",
+   "stored": "Талактіоновъ",
+   "printed": "Галактіоновъ"
+  },
+  {
+   "page": "productionteam_1903-04_p002",
+   "entry": "e008",
+   "field": "family",
+   "stored": "Щесвицкая",
+   "printed": "Цисвицкая"
+  },
+  {
+   "page": "productionteam_1904-05_p000",
+   "entry": "e006",
+   "field": "family",
+   "stored": "Безайстъ",
+   "printed": "Безайсъ"
+  },
+  {
+   "page": "productionteam_1904-05_p002",
+   "entry": "e002",
+   "field": "family",
+   "stored": "Иваненко",
+   "printed": "Иващенко"
+  },
+  {
+   "page": "productionteam_1904-05_p002",
+   "entry": "e007",
+   "field": "family",
+   "stored": "Жуліевъ",
+   "printed": "Жуляевъ"
+  },
+  {
+   "page": "productionteam_1904-05_p003",
+   "entry": "e006",
+   "field": "patronymic",
+   "stored": "Никитфоровичъ",
+   "printed": "Никифоровичъ"
+  },
+  {
+   "page": "productionteam_1905-06_p001",
+   "entry": "e010",
+   "field": "family",
+   "stored": "Бергертъ",
+   "printed": "Бергеръ"
+  },
+  {
+   "page": "productionteam_1905-06_p001",
+   "entry": "e018",
+   "field": "patronymic",
+   "stored": "Павловичъ",
+   "printed": "Павлсвичъ"
+  },
+  {
+   "page": "productionteam_1905-06_p003",
+   "entry": "e022",
+   "field": "family",
+   "stored": "Науокайтисъ",
+   "printed": "Науіокайтисъ"
+  },
+  {
+   "page": "productionteam_1907-08_p003",
+   "entry": "e022",
+   "field": "family",
+   "stored": "Наюкайтисъ",
+   "printed": "Науіокайтисъ"
+  },
+  {
+   "page": "productionteam_1908-09_p002",
+   "entry": "e001",
+   "field": "patronymic",
+   "stored": "Тимоѳѣевичъ",
+   "printed": "Тимофѣевичъ"
+  },
+  {
+   "page": "productionteam_1908-09_p002",
+   "entry": "e013",
+   "field": "patronymic",
+   "stored": "Тимоѳѣевичъ",
+   "printed": "Тимофеевичъ"
+  },
+  {
+   "page": "productionteam_1909-10_p001",
+   "entry": "e012",
+   "field": "family",
+   "stored": "Ковалечева",
+   "printed": "Коваличева"
+  },
+  {
+   "page": "productionteam_1909-10_p004",
+   "entry": "e017",
+   "field": "patronymic",
+   "stored": "Пантелейевна",
+   "printed": "Пантелѣевна"
+  }
+ ]
+}
