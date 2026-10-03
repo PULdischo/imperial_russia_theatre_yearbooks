@@ -19222,6 +19222,46 @@ identification belongs in the research layer's creator link, recorded as
    Not yet scan-checked.
 3. Production Stats pages (per-season performance counts) as a second audit.
 
+**Addendum (2026-10-02): blind, zoomed second read of the creator names, done ahead of
+turning them into person entities.** The lists will be the first person source outside
+the Roster (librettists, choreographers, composers). The first pass's main job was the
+dates, so the names got one more read. 8 readers, scan-only, using the PDFs' embedded
+full-res images (about 2x the renders). Each reader was given only the entry number and
+title, never the existing transcription; brief `second_read_names_2026-10-02/BRIEF.md`.
+All 480 entries were read, and the blind result is compared with `description_text` in
+`diffs.csv`, same folder.
+- **Agreement:** 457/480 identical. 3 differ only in punctuation or spacing. 7 (one
+  reader) are convention-only: that reader put the subtitle parentheticals with the title
+  rather than the description, against the convention above. The remaining 13 entries
+  had real differences.
+- **Name disagreements, each adjudicated against the zoomed scan:**
+  - Нюитера vs Нютера, 5 Коппелія entries: one reader made the same misread every time.
+    The current text is right.
+  - Сенъ vs "Сенв" (1903-04 SP #9): this face's italic ъ looks like в. Current is right.
+  - **2 fixes applied.** Both were promoted (reparse diff = exactly these 2 cells) and
+    logged in verify_logs:
+    - 1897-98 MSK #9 Бурімюллера -> **Бургмюллера**. The letter is a dotless italic г, the
+      same glyph as in Армсгеймера.
+    - 1904-05 SP #20 номера -> **нумера**. The print has "ну-|мера"; 1903-04 was already
+      fixed the same way.
+- **Left as is, low priority (RG, 2026-10-02):** "We don't need to over-worry about exact
+  spellings". RG will cross-check these creators with Wikidata and they're mostly
+  famous. This applies ONLY to the ballet-list creators; the Roster keeps letter-level
+  rigor.
+  - 1904-05 SP #29 Фея куколъ: RG's Sep 28 ruling is "и." (a slip for И.). The blind
+    read and my zoom both give "гг.": two separate, dotless, hook-topped strokes, whereas
+    italic и in this face is a joined "u". 1902-03 and 1903-04 print "гг." in the same
+    place.
+  - Дельдевеза (1903-04 #17, 1904-05 #20): RG ruled it a poorly printed а from reused
+    type. Two readers saw г/ъ; the glyph has no bowl.
+  - "Готъе" vs "Готье" (1901-02 SP #9, 1904-05 SP #10): one reader reads ъ.
+  - 1900-01 SP #22 "ваимствованъ" (logged genuine_print): my zoom is ambiguous between
+    з and в. It stays on RG's print-slip list.
+- **21 entries have names a reader marked uncertain.** Every best reading agrees with the
+  current text: two independent reads.
+- **Not in scope:** `pdf/Spiski_BalletProductions/` now also holds 1908-09, 1909-10 and
+  1910-11 lists (both cities). They have never been transcribed.
+
 ## Issue #100: `work_genre_candidate` balanced tier -- RG: "just go
 ## ahead and do the full scan-check treatment"; ~100 of 111 groups done
 

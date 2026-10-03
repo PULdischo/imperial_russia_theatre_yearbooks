@@ -11987,3 +11987,19 @@ from raw.person_entry e join entities.person_link l using(entry_id) where e.entr
 ```
 
 Result: 1223 (season, chain) groups, 283 numbered, 9 not 1..n (8-row city bug + genuine gaps); 21 rows with a non-majority city (8 = the 1898-99 p002 city bug, now fixed); 9 leaving-note and 3 † rows with later appearances, explained except Васильевъ (two men merged: SPb decorator † 1892 and Moscow costumer from 1904).
+
+## 2026-10-02 — Ballet-list creator-name second read: pre-promotion check and post-load verification
+
+```sql
+-- pre: row counts + snapshot (parquet backup) of raw.production_entry / _performance vs parsed_verified CSVs
+select * from raw.production_entry;  select * from raw.production_entry_performance;
+select description_text from raw.production_entry;  -- count 'Бурімюллера' / 'нѣкоторые номера'
+-- post (after load_productions.py):
+select count(*) from raw.production_entry; select count(*) from raw.production_entry_performance;
+select season, city, list_number, description_text from raw.production_entry
+ where description_text like '%Бургмюллера%' or description_text like '%нѣкоторые нумера%';
+select count(*) from raw.production_entry
+ where description_text like '%Бурімюллера%' or description_text like '%нѣкоторые номера%';
+```
+
+Result: pre: 480/1881 rows, the DB matched the CSVs, and each target was present once. Post: 480/1881 rows and 0 orphans. Бургмюллера is now in 1897-98 MSK #9, and "нѣкоторые нумера" is in all 5 Пахита entries (1900-01 through 1904-05). 0 old forms remain.
