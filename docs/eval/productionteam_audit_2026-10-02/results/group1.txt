@@ -1,0 +1,84 @@
+PAGE SUMMARY
+productionteam_1890-91_p000 | entries read: 23 | printed entries with no stored row: 0 | entries with a discrepancy: 0
+productionteam_1890-91_p001 | entries read: 25 | printed entries with no stored row: 0 | entries with a discrepancy: 13
+productionteam_1890-91_p002 | entries read: 30 | printed entries with no stored row: 0 | entries with a discrepancy: 4
+productionteam_1890-91_p003 | entries read: 27 | printed entries with no stored row: 0 | entries with a discrepancy: 5
+productionteam_1891-92_p000 | entries read: 28 | printed entries with no stored row: 0 | entries with a discrepancy: 1
+DISCREPANCIES
+productionteam_1890-91_p001 | e013 | tenure | STORED: "(съ 1 сентября 1883 г.)" | PRINTED: "(съ 1 сентября 1883 г.). Мужскіе костюмы балетной и французской труппъ." | confidence: DIRECT(zoomed) | specialty text missing
+productionteam_1890-91_p001 | e014 | tenure | STORED: "(съ 20 сентября 1873 г.)" | PRINTED: "(съ 20 сентября 1873 г.). Мужскіе костюмы оперной и русской драматической труппъ." | DIRECT | specialty missing
+productionteam_1890-91_p001 | e015 | tenure | STORED: "(съ 1 сентября 1882 г.)" | PRINTED: "(съ 1 сентября 1882 г.). Женскіе костюмы оперной и русской и французской драматическихъ труппъ." | DIRECT | specialty missing
+productionteam_1890-91_p001 | e016 | tenure | STORED: "(съ 1 мая 1863 г.)" | PRINTED: "(съ 1 мая 1863 г.). Женскіе костюмы балетной труппы." | DIRECT | specialty missing
+productionteam_1890-91_p001 | e017 | tenure | STORED: "(съ 1 сентября 1861 г.)" | PRINTED: "(съ 1 сентября 1861 г.). Мужскіе парики. † 18 января 1891 г." | DIRECT | specialty AND death date missing
+productionteam_1890-91_p001 | e018 | tenure | STORED: "(съ 1 мая 1880 г.)" | PRINTED: "(съ 1 мая 1880 г.). Мужскіе парики." | DIRECT | specialty missing
+productionteam_1890-91_p001 | e019 | tenure | STORED: "(съ 1 іюня 1883 г.)" | PRINTED: "(съ 1 іюня 1883 г.). Женскіе парики." | DIRECT | specialty missing
+productionteam_1890-91_p001 | e020 | tenure | STORED: "(съ 1 марта 1879 г.)" | PRINTED: "(съ 1 марта 1879 г.). Мужскіе и женскіе парики." | DIRECT | specialty missing
+productionteam_1890-91_p001 | e021 | tenure | STORED: "(съ 1 февраля 1875 г.)" | PRINTED: "(съ 1 февраля 1875 г.). Мужскіе парики въ Александринскомъ театрѣ." | DIRECT | specialty missing
+productionteam_1890-91_p001 | e022 | tenure | STORED: "(съ 1 мая 1890 г.)" | PRINTED: "(съ 1 мая 1890 г.). Мужскіе парики въ Михайловскомъ театрѣ." | DIRECT | specialty missing
+productionteam_1890-91_p001 | e023 | tenure | STORED: "(съ 30 ноября 1872 г.)" | PRINTED: "(съ 30 ноября 1872 г.). Женскіе парики въ Александринскомъ театрѣ." | DIRECT | specialty missing
+productionteam_1890-91_p001 | e024 | tenure | STORED: "(съ 29 сентября 1879 г.)" | PRINTED: "(съ 29 сентября 1879 г.). Женскіе парики въ Михайловскомъ театрѣ." | DIRECT | specialty missing
+productionteam_1890-91_p001 | e025 | tenure | STORED: "(съ 1 сентября 1856 г.)" | PRINTED: "(съ 1 сентября 1856 г.). Мужскіе парики. † 31 мая 1891 г." | DIRECT | specialty AND death date missing
+productionteam_1890-91_p002 | e001 | tenure | STORED: "(съ 15 сентября 1886 г.)" | PRINTED: "(съ 15 сентября 1886 г.). Женскіе парики." | DIRECT | specialty missing
+productionteam_1890-91_p002 | e003 | family | STORED: "Сунковская" | PRINTED: "Суковская" | DIRECT (zoom 4x) |
+productionteam_1890-91_p002 | e003 | tenure | STORED: "(съ 1 сентября 1883 г.)" | PRINTED: "(съ 1 сентября 1883 г.). Оставила службу 1 мая 1891 г." | DIRECT | leave-service note missing
+productionteam_1890-91_p002 | e011 | family | STORED: "Вивьень де-Шатобріанъ" | PRINTED: "Вивьенъ де-Шатобріанъ" | DIRECT (zoom 4x; final letter is hard sign) | space is genuinely printed
+productionteam_1890-91_p002 | e012 | list | STORED: "1." | PRINTED: (no number; Вальцъ is the only entry under Декораторы / Большой театръ) | DIRECT | extra list number
+productionteam_1890-91_p003 | e010 | first/patronymic/title | STORED: first "князь", patronymic "Григорій", rank_or_title "Дмитріевичъ" | PRINTED: "Волконскій, князь Григорій Дмитріевичъ" i.e. title "князь", first "Григорій", patronymic "Дмитріевичъ" | DIRECT | field shift
+productionteam_1890-91_p003 | e012 | family/ordinal/first/patronymic/list | STORED: list "Кунъ 1-й", family "Альбертъ", first "-", patronymic "Францевичъ" | PRINTED: "Кунъ 1-й, Альбертъ Францевичъ" (family Кунъ, ordinal 1-й, first Альбертъ, patronymic Францевичъ, no list number) | DIRECT | column shift
+productionteam_1890-91_p003 | e013 | family/ordinal/first/patronymic/list | STORED: list "Кунъ 2-й", family "Альбертъ", first "-", patronymic "Францевичъ" | PRINTED: "Кунъ 2-й, Альбертъ Францевичъ" | DIRECT | same column shift
+productionteam_1890-91_p003 | e017 | title | STORED: rank_or_title "(съ 30 іюня 1881 г.)" | PRINTED: no rank/title word printed after "Неменскій, Исаакъ Іосифовичъ" (only the tenure parenthesis and specialty "Мужскіе костюмы всѣхъ труппъ.") | DIRECT | tenure text duplicated into rank_or_title
+productionteam_1890-91_p003 | e027 | first/patronymic | STORED: first "-", patronymic "Варвара", rank "баронесса" | PRINTED: "Фитингофъ-Шель, баронесса Варвара Николаевна" (first Варвара, patronymic Николаевна) | DIRECT | patronymic Николаевна lost, first name in patronymic field
+productionteam_1891-92_p000 | e023 | family | STORED: "Бергерь" | PRINTED: "Бергеръ" | DIRECT (zoomed) | soft sign vs hard sign
+SECTION PROBLEMS
+productionteam_1890-91_p000 | e001-e018 (heading text) | STORED section: "Отдѣль декораціонный" | PRINTED section: "Отдѣлъ декораціонный" | stored heading has soft sign instead of hard sign
+productionteam_1890-91_p000 | e014-e018 | STORED section: "Отдѣль декораціонный / Декораторы" | PRINTED section: "Отдѣлъ декораціонный / Помощники декораторовъ" (numbering 6-10 continues the assistants list after e013) | wrong sub-list
+productionteam_1890-91_p001 | e001 | STORED section: "Михайловскій театръ / Машинисты" | PRINTED section: "Александринскій театръ / Помощники машиниста" (printed "2. Петровъ, Алексѣй Алексѣевичъ", continuing 1. Петровъ Анатолій of p000; SPb Монтировочная часть) | wrong theater and sub-list
+productionteam_1890-91_p001 | e005-e012 | STORED section: no "Отдѣлъ освѣтительный" for e005-e009; no "Отдѣлъ бутафорскій" for e010-e012 | PRINTED section: "Отдѣлъ освѣтительный" (e005-e009), "Отдѣлъ бутафорскій / Бутафоры:" (e010-e012) | headings omitted
+productionteam_1890-91_p001 | e011, e012 | STORED section: "Александринскій театръ" / "Михайловскій театръ" (no Бутафоры) | PRINTED section: "Отдѣлъ бутафорскій / Бутафоры / Александринскій театръ" and "... / Михайловскій театръ" | sub-heading omitted
+productionteam_1890-91_p001 | e019 | STORED section: "Парикмахеры / Балетная труппа" | PRINTED section: "Парикмахеры / Оперная труппа" (Дмитріева is no. 3 of the opera list, printed before the "Балетная труппа" heading) | wrong troupe
+productionteam_1890-91_p001 | e020 | STORED section: "Парикмахеры / Русская драматическая труппа" | PRINTED section: "Парикмахеры / Балетная труппа" (Педдеръ) | wrong troupe
+productionteam_1890-91_p001 | e001-e025 | STORED institution: "Списокъ лицъ, состоящихъ на службѣ въ Императорскихъ театрахъ" | PRINTED: no such heading on this page (page continues С.-ПЕТЕРБУРГЪ section of "Списокъ личнаго состава служащихъ по монтировочной части") | institution not printed here
+productionteam_1890-91_p002 | e001 | STORED section: "Александринскій театръ // Главный гардеробъ / Смотрительницы отдѣловъ / Отдѣлъ мужскихъ костюмовъ" | PRINTED section: "Отдѣлъ гардеробный / Парикмахеры / Французская драматическая труппа" (continues p001; "2. Варламовъ ... Женскіе парики.") | wrong section
+productionteam_1890-91_p002 | e002-e011 | STORED institution: "Александринскій театръ" | PRINTED: "Главный гардеробъ" and "Мѣстные гардеробы" are not under any theater heading | institution not printed
+productionteam_1890-91_p002 | e004 | STORED section: "Смотрительницы отдѣловъ / Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | PRINTED section: "Смотрительницы отдѣловъ / Отдѣлъ женскихъ костюмовъ" (Петрова follows Суковская under that heading) | wrong sub-section
+productionteam_1890-91_p002 | e006-e011 (heading text) | STORED section: "Мѣстные гардеробы" | PRINTED section: "Мѣстные гадеробы." (printed without the р) | PRINT-TYPO? stored heading is silently corrected
+productionteam_1890-91_p002 | e007 | STORED section: "Гардеробмейстеры / Михайловскій театръ" | PRINTED section: "Гардеробмейстеры / Александринскій театръ" (Тимоѳеевъ) | wrong theater
+productionteam_1890-91_p002 | e009, e010 | STORED section: "Гардеробмейстеры / Маріинскій театръ", "Гардеробмейстеры / Александринскій театръ" | PRINTED section: "Гардеробмейстерши / Маріинскій театръ" (Иванова Лариса), "Гардеробмейстерши / Александринскій театръ" (Гетманова) | feminine heading replaced by masculine
+productionteam_1890-91_p002 | e011 | STORED section: "Гардеробмейстеры / Михайловскій театръ" | PRINTED section: "Гардеробмейстерши / Михайловскій театръ" | masculine for feminine
+productionteam_1890-91_p002 | e020-e027 | STORED section: "МОСКВА. // Отдѣлъ декораціонный" (no sub-heading) | PRINTED section: "МОСКВА // Отдѣлъ декораціонный / Помощники декораторовъ / Большой театръ" (numbers 7-14 continue the Большой list) | sub-headings omitted
+productionteam_1890-91_p002 | e028-e030 | STORED section: "Отдѣлъ декораціонный / Малый театръ" | PRINTED section: "Отдѣлъ декораціонный / Помощники декораторовъ / Малый театръ" | "Помощники декораторовъ" omitted
+productionteam_1890-91_p003 | e001, e002 | STORED section: "Хозяйственное отдѣленіе / Машинисты и ихъ помощники / Большой театръ / Машинистъ" | PRINTED section: "МОСКВА // Отдѣлъ декораціонный / Помощники декораторовъ / Малый театръ" (4. Егоровъ, 5. Краюшкинъ continue p002's Малый list; they precede the "Машинисты и ихъ помощники" heading) | wrong section
+productionteam_1890-91_p003 | e001-e027 | STORED institution: "Списокъ лицъ, состоящихъ на службѣ въ Императорскихъ театрахъ"; "Хозяйственное отдѣленіе" (e001-e014) | PRINTED: neither heading appears on this page | headings not printed here (no МОСКВА heading either)
+productionteam_1890-91_p003 | e004-e007 | STORED section: "... / Помощники машиниста / 1." .. "/ 4." | PRINTED section: "Помощники машиниста:" (number is the entry's own list number) | list number leaked into heading (e004 "1.", e005 "2.", e006 "3.", e007 "4.")
+productionteam_1890-91_p003 | e012 | STORED section: "Отдѣлъ освѣтительный / Завѣдывающій освѣщеніемъ / Кунъ 1-й" | PRINTED section: "Отдѣлъ освѣтительный / Большой театръ / Завѣдывающій освѣщеніемъ" | person name leaked into heading; "Большой театръ" omitted
+productionteam_1890-91_p003 | e013 | STORED section: "Помощники завѣдывающаго освѣщеніемъ / Кунъ 2-й" | PRINTED section: "Большой театръ / Помощникъ завѣдывающаго освѣщеніемъ" (singular) | name leaked; plural vs printed singular "Помощникъ"; Большой театръ omitted
+productionteam_1890-91_p003 | e014 | STORED section: "Отдѣлъ освѣтительный / Завѣдывающій освѣщеніемъ" | PRINTED section: "Отдѣлъ освѣтительный / Малый театръ / Завѣдывающій освѣщеніемъ" | Малый театръ omitted
+productionteam_1890-91_p003 | e017 | STORED section: "Отдѣлъ гардеробный / Костюмеры" | PRINTED section: "Костюмеръ." (singular) | plural vs printed singular
+productionteam_1890-91_p003 | e018 | STORED section: "Отдѣлъ гардеробный / Костюмеры" | PRINTED section: "Отдѣлъ гардеробный / Костюмерша." (Вороненко is a woman under its own heading) | wrong sub-section
+productionteam_1890-91_p003 | e021-e023 | STORED section: "Отдѣлъ гардеробный / Смотрительницы отдѣловъ / ..." | PRINTED section: "Отдѣлъ гардеробный / Главный гардеробъ: / Смотрительницы отдѣловъ: / ..." | "Главный гардеробъ" level omitted
+productionteam_1891-92_p000 | e016-e022 | STORED section: "Отдѣлъ декораціонный / Декораторы" | PRINTED section: "Отдѣлъ декораціонный / Помощники декораторовъ" (numbers 9-15 continue the assistants list) | wrong sub-list
+MISSING OR EXTRA ROWS
+(none; every printed entry has a stored row and no stored row is unprinted or duplicated on any of the 5 pages; row counts 23/25/30/27/28 match print)
+DATE-CHECK RESULTS
+productionteam_1890-91_p000 | e003 | STORED start: "1 января 1891 г." | PRINTED start: "съ 1 января 1891 г." | MATCH | DIRECT
+productionteam_1890-91_p000 | e005 | STORED start: "15 марта 1875 г." | PRINTED start: "съ 15 марта 1875 г." | MATCH | DIRECT
+productionteam_1890-91_p000 | e006 | STORED start: "9 мая 1885 г." | PRINTED start: "съ 9 мая 1885 г." | MATCH | DIRECT (in 1891-92 the same person is printed "16 мая 1885")
+productionteam_1890-91_p000 | e016 | STORED start: "10 сентября 1865 г." | PRINTED start: "съ 10 сентября 1865 г." | MATCH | DIRECT (1891-92 prints "10 октября 1865")
+productionteam_1890-91_p000 | e019 | STORED start: "6 октября 1880 г." | PRINTED start: "съ 6 октября 1880 г." | MATCH | DIRECT
+productionteam_1890-91_p001 | e023 | STORED start: "30 ноября 1872 г." | PRINTED start: "съ 30 ноября 1872 г." | MATCH | DIRECT
+productionteam_1890-91_p002 | e004 | STORED start: "1 мая 1891 г." | PRINTED start: "съ 1 мая 1891 г." | MATCH | DIRECT
+productionteam_1890-91_p002 | e006 | STORED start: "1 августа 1882 г." | PRINTED start: "съ 1 августа 1882 г." | MATCH | DIRECT
+productionteam_1890-91_p002 | e015 | STORED start: "1 августа 1883 г." | PRINTED start: "съ 1 августа 1883 г." | MATCH | DIRECT
+productionteam_1890-91_p002 | e025 | STORED start: "1 августа 1884 г." | PRINTED start: "съ 1 августа 1884 г." | MATCH | DIRECT
+productionteam_1890-91_p003 | e006 | STORED start: "11 февраля 1880 г." | PRINTED start: "съ 11 февраля 1880 г." | MATCH | DIRECT
+productionteam_1891-92_p000 | e003 | STORED start: "1 января 1891 г." | PRINTED start: "съ 1 января 1891 г." | MATCH | DIRECT
+productionteam_1891-92_p000 | e022 | STORED start: "15 февраля 1890 г." | PRINTED start: "съ 15 февраля 1890 г." | MATCH | DIRECT
+productionteam_1891-92_p000 | e023 | STORED start: "6 октября 1880 г." | PRINTED start: "съ 6 октября 1880 г." | MATCH | DIRECT
+OTHER FINDINGS
+- 1890-91_p001 and p003 are physically continuations of page 1890-91_p000's "Списокъ личнаго состава служащихъ по монтировочной части" (SPb), then МОСКВА; stored institutions "Списокъ лицъ, состоящихъ на службѣ..." / "Хозяйственное отдѣленіе" appear nowhere in print on these pages.
+- 1890-91_p000 e014-e018 and 1891-92_p000 e016-e022 are the same bug: second column continues "Помощники декораторовъ" numbering but is stored under Декораторы.
+- 1890-91_p001: stored tenure omits all "† <date>" death notes (e017 † 18 января 1891 г., e025 † 31 мая 1891 г.) and 1890-91_p002 e003 "Оставила службу 1 мая 1891 г."; the "(съ ...)" parenthesis is the only tenure text stored. In 1891-92_p000 e003/e011 the stored tenure keeps the death date but with a stray ")." mid-string ("съ 1 января 1891 г.). † 12 марта 1892 г.").
+- 1890-91_p000 e013: Ламбинъ's year is partially damaged in print ("1?85", the 8 smudged); stored 1885 is the only plausible reading, UNCERTAIN on the middle digit.
+- 1890-91_p002 e026 Шульгинъ: last digit of "1889" is smudged ("188?", looks like 9); stored "1 сентября 1889" UNCERTAIN on last digit.
+- 1890-91_p003 stored e003 Вальцъ rank "(онъ же и декораторъ)" matches print. Stored e017-e019 subject_taught extras match print (Мужскіе/Женскіе костюмы всѣхъ труппъ; Парики для всѣхъ труппъ).
+- No hyphenation artifacts found in any stored name (Матвѣевичъ, Никифоровичъ, Владиміровичъ, Онуфріевна etc. all correctly joined). No letter-level differences found for other surnames, first names, patronymics, ordinals (Бочаровъ 1-й/2-й, Петровъ 1-й), list numbers or dates beyond those listed.

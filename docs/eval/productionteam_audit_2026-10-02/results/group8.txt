@@ -1,0 +1,65 @@
+PAGE SUMMARY
+productionteam_1898-99_p002 | entries read: 24 | printed entries with no stored row: 1 | entries with a discrepancy: 8
+productionteam_1898-99_p003 | entries read: 25 | printed entries with no stored row: 0 | entries with a discrepancy: 7
+productionteam_1899-00_p000 | entries read: 21 | printed entries with no stored row: 0 | entries with a discrepancy: 3
+productionteam_1899-00_p001 | entries read: 27 | printed entries with no stored row: 0 | entries with a discrepancy: 8
+productionteam_1899-00_p002 | entries read: 22 | printed entries with no stored row: 0 | entries with a discrepancy: 5
+DISCREPANCIES
+productionteam_1898-99_p002 | e004 | family | STORED: "Афанасьевъ" | PRINTED: "Аѳанасьевъ" (theta) | confidence: DIRECT(zoomed)
+productionteam_1898-99_p002 | e016 | family | STORED: "Зашукъ" | PRINTED: "Защукъ" (щ) | confidence: DIRECT(zoomed)
+productionteam_1898-99_p002 | e023 | family | STORED: "Нормаркъ" | PRINTED: "Нордмаркъ" | confidence: DIRECT(zoomed)
+productionteam_1898-99_p003 | e007 | patronymic | STORED: "Никитифоровичъ" | PRINTED: "Никифоро-/вичъ" = Никифоровичъ | confidence: DIRECT(zoomed)
+productionteam_1898-99_p003 | e016 | family | STORED: "Ивашенко" | PRINTED: "Иващенко" (щ) | confidence: DIRECT(zoomed)
+productionteam_1898-99_p003 | e025 | family | STORED: "Фонъ-Фитинггофъ-Шель" | PRINTED: "Фонъ-Фитингофъ-Шель" (one г) | confidence: DIRECT(zoomed)
+productionteam_1898-99_p003 | e015 | title | STORED rank_or_title: "(съ 30 іюня 1881 г.). Мужскіе костюмы всѣхъ труппъ" | PRINTED: tenure "(съ 30 іюня 1881 г.)" plus specialty "Мужскіе костюмы всѣхъ труппъ"; no rank/title printed | confidence: DIRECT(zoomed) | tenure+specialty text sits in rank_or_title
+productionteam_1899-00_p000 | e013 | family | STORED: "Коверовскій" | PRINTED: "Козеровскій" | confidence: DIRECT(zoomed)
+productionteam_1899-00_p000 | e019 | list/family/first/patronymic | STORED: list="Эммэ", family="Владиміръ", first="Владиміровичъ", patronymic=None | PRINTED: unnumbered "Эммэ, Владиміръ Владиміровичъ (съ 1 ноября 1899 г.)" i.e. family Эммэ, first Владиміръ, patronymic Владиміровичъ, no list number | confidence: DIRECT(zoomed) | fields shifted by one
+productionteam_1899-00_p000 | e006 | tenure | STORED: "(съ 1 сентября 1888 г.)" | PRINTED: "съ 1 сентября 1888 г.)." (no opening parenthesis) | confidence: DIRECT(zoomed) | PRINT-TYPO? stored adds the "("
+productionteam_1899-00_p001 | e002 | family | STORED: "Андриашевъ" | PRINTED: "Андріашевъ" (і) | confidence: DIRECT(zoomed)
+productionteam_1899-00_p001 | e010 | family | STORED: "Шарбё" | PRINTED: "Шарбе" (plain е) | confidence: DIRECT(zoomed)
+productionteam_1899-00_p001 | e016 | ordinal | STORED: family "Петровъ", no ordinal | PRINTED: "Петровъ 1-й, Алексѣй Ивановичъ" | confidence: DIRECT(zoomed)
+productionteam_1899-00_p001 | e017 | ordinal | STORED: family "Петровъ", no ordinal | PRINTED: "Петровъ 2-й, Анатолій Алексѣевичъ" | confidence: DIRECT(zoomed)
+productionteam_1899-00_p001 | e022 | family | STORED: "Семирадскій" | PRINTED: "Семирадзкій" (з) | confidence: DIRECT(zoomed)
+productionteam_1899-00_p001 | e024 | ordinal | STORED: family "Петровъ", no ordinal | PRINTED: "Петровъ 3-й, Алексѣй Алексѣевичъ" | confidence: DIRECT(zoomed)
+productionteam_1899-00_p001 | e006 | tenure | STORED: "съ 20 мая 1898 г.). Оставилъ службу 1 мая 1900 г." | PRINTED: "(съ 20 мая 1898 г.). Оставилъ службу 1 мая 1900 г." | confidence: DIRECT(zoomed) | parenthesis handling inconsistent with rest of page (other rows store no parens); minor
+productionteam_1899-00_p001 | e020 | tenure | STORED: "съ 1 сентября 1882 г.). † 8 іюня 1899 г." | PRINTED: "(съ 1 сентября 1882 г.). † 8 іюня 1899 г" | confidence: DIRECT(zoomed) | minor, same paren inconsistency
+productionteam_1899-00_p002 | e006 | family | STORED: "Пеллеръ" | PRINTED: "Педдеръ" | confidence: DIRECT(zoomed)
+productionteam_1899-00_p002 | e007 | family | STORED: "Пеллеръ" | PRINTED: "Педдеръ" | confidence: DIRECT(zoomed)
+productionteam_1899-00_p002 | e010 | family | STORED: "Леанасьевъ" | PRINTED: "Аѳанасьевъ" | confidence: DIRECT(zoomed)
+productionteam_1899-00_p002 | e021 | family | STORED: "Зашукъ" | PRINTED: "Защукъ" (щ) | confidence: DIRECT(zoomed)
+SECTION PROBLEMS
+productionteam_1898-99_p002 | e001 | STORED section: "Балетная труппа" | PRINTED section: entry printed at top of page BEFORE the heading "Балетная труппа." (continues previous page's section, probably Оперная труппа) | row belongs to preceding section; UNCERTAIN which (not printed on this page)
+productionteam_1898-99_p002 | e003 | STORED section: "Русская драматическая труппа / Михайловскій театръ" | PRINTED section: "Русская драматическая труппа. / Александринскій театръ." | Шляпниковъ is the 2nd entry under Александринскій
+productionteam_1898-99_p002 | e012 | STORED section: "Мѣстные гардеробы / Гардеробмейстеры / Михайловскій театръ" | PRINTED section: "Гардеробмейстеры / Александринскій театръ." | Ковалевъ (2.) belongs with Тимоѳеевъ (1.)
+productionteam_1898-99_p002 | e020-e024 | STORED section: "МОСКВА. / Отдѣлъ декораціонный" (no sub-heading) | PRINTED section: "МОСКВА. / Отдѣлъ декораціонный. / Помощники декораторовъ:" | list nos 2-6 continue the list started by 1. Барановъ (e019)
+productionteam_1898-99_p002 | e009 | STORED section: "Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | PRINTED section: "Главный гардеробъ. / Отдѣлъ головныхъ уборовъ, обуви и бѣлья." | missing parent Главный гардеробъ (compare p003 e021, which has it)
+productionteam_1898-99_p003 | e001-e002 | STORED section: "Большой театръ / Машинистъ" | PRINTED section: entries "7. Сергѣевъ", "8. Смирновъ" are printed at top of page, BEFORE "Большой театръ. / Машинистъ", continuing a numbered list from previous page | rows under the wrong section
+productionteam_1898-99_p003 | e010-e012 | STORED section: "Большой театръ / Завѣдывающій освѣщеніемъ" (etc., no department) | PRINTED section: "Отдѣлъ освѣтительный. / Большой театръ. / Завѣдывающій освѣщеніемъ." | department heading missing in heading_path (minor)
+productionteam_1898-99_p003 | e013-e014 | STORED section: "Большой театръ / Бутафоръ" and "Малый театръ" | PRINTED section: "Отдѣлъ бутафорскій. / Бутафоры: / Большой театръ." (Волосевичъ); top of right column "Малый театръ." (Брилліантовъ) continues Бутафоры | e014 lacks the Отдѣлъ бутафорскій / Бутафоры context; heading text "Бутафоръ" vs printed "Бутафоры:"
+productionteam_1898-99_p003 | e024-e025 | STORED section: "Гардеробмейстерши / Большой театръ|Малый театръ" | PRINTED section: "Мѣстные гардеробы. / Гардеробмейстерши: / ..." | parent "Мѣстные гардеробы" missing (e022-e023 have it)
+productionteam_1899-00_p000 | e011-e021 | STORED section: "Отдѣлъ декораціонный / Декораторы" | PRINTED section: "Помощники декораторовъ:" (right column is the continuation of the Помощники list, nos. 5-14 plus unnumbered Эммэ) | 11 rows under wrong section
+productionteam_1899-00_p001 | e017 | STORED section: "Михайловскій театръ / Машинистъ-механикъ" | PRINTED section: "Александринскій театръ / Помощникъ машиниста-механика." (heading at top of right column, before the Михайловскій heading) | Петровъ 2-й is an assistant at Александринскій; stored institution holds the printed heading text "Помощникъ машиниста-механика."
+productionteam_1899-00_p001 | e001-e010 | STORED section: "Ученики декораціонной живописи: // None" | PRINTED section: "Ученики декораціонной живописи:" | heading stored as institution, heading_path empty (known HEADING-NULL); not a content error
+productionteam_1899-00_p002 | e022 | STORED section: "Михайловскій театръ // None" | PRINTED section: entry is printed FIRST on the page under "Михайловскій театръ." continuing previous page's section (previous page ends with Бутафоры Александринскій театръ), so probably "Отдѣлъ бутафорскій / Бутафоры / Михайловскій театръ" | UNCERTAIN (previous section not on this page); also stored last (e022) although printed first
+MISSING OR EXTRA ROWS
+productionteam_1898-99_p002 | MISSING after eNNN e001: "Педдеръ, Георгій Ивановичъ (съ 1 марта 1879 г.). Мужскіе и женскіе парики." (printed under "Балетная труппа.") | stored e001 is the earlier entry "2. Педдеръ ... Мужскіе парики" printed BEFORE the Балетная heading
+DATE-CHECK RESULTS
+productionteam_1898-99_p002 | e002 | STORED start: "19. мая 1869 г." | PRINTED start: "19. мая 1869 г." (stray period after 19 printed) | MATCH | DIRECT
+productionteam_1898-99_p002 | e009 | STORED start: "9 августа 1886 г." | PRINTED start: "9 августа 1886 г." (split "9 ав-/густа") | MATCH | DIRECT
+productionteam_1898-99_p002 | e011 | STORED start: "3 ноября 1856 г." | PRINTED start: "3 ноября 1856 г." | MATCH | DIRECT
+productionteam_1898-99_p002 | e018 | STORED start: "12 декабря 1873 г." | PRINTED start: "12 декабря 1873 г." | MATCH | DIRECT
+productionteam_1898-99_p003 | e010 | STORED start: "18 сентября 1882 г." | PRINTED start: "18 сентября 1882 г." | MATCH | DIRECT
+productionteam_1898-99_p003 | e013 | STORED start: "1 октября 1883 г." | PRINTED start: "1 октября 1883 г." | MATCH | DIRECT
+productionteam_1898-99_p003 | e023 | STORED start: "5 сентября 1897 г." | PRINTED start: "5 сентября 1897 г." | MATCH | DIRECT
+productionteam_1899-00_p001 | e021 | STORED start: "2 августа 1882 г." | PRINTED start: "2 августа 1882 г." | MATCH | DIRECT
+productionteam_1899-00_p001 | e027 | STORED start: "19 февраля 1884 г." | PRINTED start: "19 февраля 1884 г." | MATCH | DIRECT
+productionteam_1899-00_p002 | e002 | STORED start: "26 августа 1869 г." | PRINTED start: "26 августа 1869 г." | MATCH | DIRECT
+productionteam_1899-00_p002 | e015 | STORED start: "9 августа 1886 г." | PRINTED start: "9 августа 1886 г." | MATCH | DIRECT
+OTHER FINDINGS
+- productionteam_1898-99_p003 e003 Вальцъ: printed tenure ends with a doubled period "г.).." (typographic; stored single); alias "(онъ же и декораторъ)" stored in rank_or_title, which is acceptable.
+- productionteam_1899-00_p000 e005 and p001 e020 / 1898-99 p002 e011: printed "† ... г" (no final period) vs stored with period; trivial.
+- productionteam_1899-00_p001 e012 Бекетовъ: printed е has a small ogonek/cedilla artifact under the letter (type damage), read as Бекетовъ; stored matches. Same for Табенскій (1899-00 p000 e016): printed н has a broken crossbar; read as Табенскій, stored matches.
+- productionteam_1899-00_p000 e007 / p001 e006: "Оставилъ службу" printed with final л, stored matches.
+- productionteam_1898-99_p002: printed "Мѣстные гардеробы / Гардеробмейстерши" order and Moscow headings otherwise match stored text.
+- Fonts: Защукъ in both 1898-99 p002 and 1899-00 p002 is confirmed щ; stored Зашукъ in both, so the same wrong spelling recurs across volumes (probably a systematic misread).
+- Педдеръ: print reads Педдеръ in both 1898-99 p002 (stored Педдеръ correct) and 1899-00 p002 (stored Пеллеръ incorrect), so the two years disagree in storage but not in print.

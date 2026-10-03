@@ -1,0 +1,73 @@
+PAGE SUMMARY
+productionteam_1893-94_p002 | entries read: 28 | printed entries with no stored row: 0 | entries with a discrepancy: 5
+productionteam_1893-94_p003 | entries read: 15 | printed entries with no stored row: 0 | entries with a discrepancy: 2
+productionteam_1894-95_p000 | entries read: 26 | printed entries with no stored row: 0 | entries with a discrepancy: 0
+productionteam_1894-95_p001 | entries read: 28 printed (31 stored rows; 3 are annotation lines) | printed entries with no stored row: 0 | entries with a discrepancy: 16
+productionteam_1894-95_p002 | entries read: 28 | printed entries with no stored row: 0 | entries with a discrepancy: 4
+DISCREPANCIES
+productionteam_1893-94_p002 | e004 | family | STORED: "Аслинь" | PRINTED: "Аслинъ" | confidence: DIRECT(zoomed) | final soft sign vs hard sign
+productionteam_1893-94_p002 | e007 | family | STORED: "Вивьень де-Шатобріанъ" | PRINTED: "Вивьенъ де-Шатобріанъ" | confidence: DIRECT(zoomed) | final soft sign vs hard sign in Вивьенъ
+productionteam_1893-94_p002 | e022 | family | STORED: "Мєтловъ" (Ukrainian є U+0454) | PRINTED: "Метловъ" (plain Cyrillic е) | confidence: DIRECT(zoomed) | homoglyph
+productionteam_1893-94_p002 | e024 | family | STORED: "Ѳоктистовъ" | PRINTED: "Ѳеоктистовъ" | confidence: DIRECT(zoomed) | dropped "ео" letters
+productionteam_1893-94_p002 | e027 | first/patronymic/title/tenure | STORED: first="князь", patronymic="Григорій", tenure_note_text="Дмитріевичъ (съ 1 сентября 1887 г.)" | PRINTED: "Волконскій, князь Григорій Дмитріевичъ (съ 1 сентября 1887 г.)" | confidence: DIRECT(zoomed) | columns shifted by one: first should be Григорій, patronymic Дмитріевичъ, "князь" is a title; tenure should be "съ 1 сентября 1887 г."
+productionteam_1893-94_p003 | e011 | date | STORED: "16 октября 1883 г." | PRINTED: "16 октября 188? г." last digit is a descending glyph with a detached flat top bar, i.e. a damaged 5 -> "1885" | confidence: UNCERTAIN (leans 1885; not the round-topped 3 used in 1883 on e010) | see DATE-CHECK
+productionteam_1893-94_p003 | e014 | first | STORED: "Евлокія" | PRINTED: "Евдокія" | confidence: DIRECT(zoomed) | л vs д
+productionteam_1894-95_p001 | e020 | family | STORED: "Пипарь" | PRINTED: "Пипаръ" | confidence: DIRECT(zoomed) | soft vs hard sign
+productionteam_1894-95_p001 | e025 | family | STORED: "Педдерь" | PRINTED: "Педдеръ" | confidence: DIRECT(zoomed) | soft vs hard sign
+productionteam_1894-95_p001 | e019 | title/specialty | STORED: tenure "съ 1 сентября 1883 г." (specialty dropped) | PRINTED: "(съ 1 сентября 1883 г.). Мужскіе костюмы балетной и французской труппъ." | confidence: DIRECT(zoomed) | printed specialty text not stored anywhere
+productionteam_1894-95_p001 | e020 | title/specialty | STORED: not stored | PRINTED: "Мужскіе костюмы оперной и русской драматической труппъ." | confidence: DIRECT(zoomed)
+productionteam_1894-95_p001 | e021 | title/specialty | STORED: not stored | PRINTED: "Женскіе костюмы оперной и русской драматической труппъ." | confidence: DIRECT(zoomed)
+productionteam_1894-95_p001 | e022 | title/specialty | STORED: not stored | PRINTED: "Женскіе костюмы балетной и французской труппъ." | confidence: DIRECT(zoomed)
+productionteam_1894-95_p001 | e023 | title/specialty | STORED: not stored | PRINTED: "Женскіе парики." | confidence: DIRECT(zoomed)
+productionteam_1894-95_p001 | e024 | title/specialty | STORED: not stored | PRINTED: "Мужскіе парики." | confidence: DIRECT(zoomed)
+productionteam_1894-95_p001 | e025 | title/specialty | STORED: not stored | PRINTED: "Мужскіе и женскіе парики." | confidence: DIRECT(zoomed)
+productionteam_1894-95_p001 | e026 | title/specialty | STORED: not stored | PRINTED: "Женскіе парики." | confidence: DIRECT(zoomed)
+productionteam_1894-95_p001 | e027 | title/specialty | STORED: not stored | PRINTED: "Мужскіе парики." | confidence: DIRECT(zoomed)
+productionteam_1894-95_p001 | e028 | title/specialty | STORED: not stored | PRINTED: "Мужскіе парики." | confidence: DIRECT(zoomed)
+productionteam_1894-95_p001 | e029 | title/specialty | STORED: not stored | PRINTED: "Женскіе парики." | confidence: DIRECT(zoomed)
+productionteam_1894-95_p001 | e030 | title/specialty | STORED: not stored | PRINTED: "Женскіе парики." | confidence: DIRECT(zoomed)
+productionteam_1894-95_p001 | e031 | title/specialty | STORED: not stored | PRINTED: "Мужскіе парики." | confidence: DIRECT(zoomed)
+productionteam_1894-95_p001 | e007 / e011 / e014 | tenure | STORED: "съ 5 октября 1888 г." / "съ 1 мая 1880 г." / "съ 1 августа 1882 г." (the printed follow-on note sits in separate pseudo-rows e008/e012/e015) | PRINTED: note belongs to the preceding person: "Съ 1 іюля 1895 г. назначенъ завѣдывающимъ освѣщеніемъ Михайловскаго / Александринскаго / Маріинскаго театра." | confidence: DIRECT(zoomed) | structural, see EXTRA rows
+productionteam_1894-95_p002 | e012 | tenure | STORED: "...назначенъ помощникомъ завѣдывающаго освѣщеніемъ Большого театра." | PRINTED: "...помощникомъ завѣдывающаго освѣщеніемъ Большаго театра." | confidence: DIRECT(zoomed) | modernised -аго -> -ого
+productionteam_1894-95_p002 | e025 | patronymic | STORED: "Леонтъевичъ" | PRINTED: "Леонтьевичъ" | confidence: DIRECT(zoomed) | ъ vs ь in the middle of the word
+productionteam_1894-95_p002 | e026 | family | STORED: "Мєтловъ" (Ukrainian є) | PRINTED: "Метловъ" | confidence: DIRECT(zoomed) | homoglyph
+productionteam_1894-95_p002 | e028 | family | STORED: "Ѳеонтистовъ" | PRINTED: "Ѳеоктистовъ" | confidence: DIRECT(zoomed) | dropped "к"; also stored patronymic "Никифоровичъ" matches print
+SECTION PROBLEMS
+productionteam_1893-94_p002 | e001 | STORED section: "Отдѣлъ головныхъ уборовъ, обуви и бѣлья. // Мѣстные гардеробы. / Гардеробмейстеры: / Маріинскій театръ" | PRINTED section: "Отдѣлъ головныхъ уборовъ, обуви и бѣлья." only (printed before the "Мѣстные гардеробы." heading; no sub-heading) | e001 is wrongly placed under Гардеробмейстеры / Маріинскій театръ
+productionteam_1893-94_p002 | e004 | STORED section: "Гардеробмейстерши: / Маріинскій театръ" | PRINTED section: "Мѣстные гардеробы. / Гардеробмейстеры: / Михайловскій театръ." (right column top, before the Гардеробмейстерши heading) | Аслинъ is a male wardrobe-master of the Михайловскій театръ, stored under the Гардеробмейстерши / Маріинскій block
+productionteam_1893-94_p002 | e004-e007 | STORED institution: "Михайловскій театръ." | PRINTED: "Мѣстные гардеробы." (right column starts with the theater name Михайловскій театръ, which is only a sub-heading) | institution wrongly set to a theater name; e002/e003 institution "Отдѣлъ головныхъ уборовъ, обуви и бѣлья." and e004-e007 institution disagree although same printed section
+productionteam_1893-94_p002 | e028 | STORED section: "Завѣдывающій освѣщеніемъ. / Большой театръ" | PRINTED section: "Большой театръ. / Завѣдывающій освѣщеніемъ." (order of the two lines swapped) | minor
+productionteam_1893-94_p003 | e001 | STORED section: "Помощникъ завѣдывающаго освѣщеніемъ. // Малый театръ" | PRINTED section: "Помощникъ завѣдывающаго освѣщеніемъ." (no theater printed above it on this page; "Малый театръ." is printed only after Воскресенскій, above Грасицкій) | theater wrongly assigned (continues Moscow Большой театръ from p002); role heading stored as institution
+productionteam_1893-94_p003 | e012-e013 | STORED section: "Гардеробмѣйстеры" | PRINTED section: "Гардеробмёйстеры:" (е with two dots, looks like ё; not ѣ) | PRINT-TYPO? (ё for е); stored ѣ is wrong either way
+productionteam_1893-94_p003 | e014-e015 | STORED section: "Гардеробмѣйстерши" | PRINTED section: "Гардеробмейстерши:" (plain е) | stored ѣ is wrong
+productionteam_1893-94_p003 | e001-e015 | no МОСКВА / city heading stored | PRINTED: page carries no city heading (continuation of МОСКВА from p002) | for information
+productionteam_1894-95_p000 | e014-e021 | STORED section: "Отдѣлъ декораціонный / Декораторы" | PRINTED section: "Помощники декораторовъ:" (list numbers 6-13 continue the Помощники list in the right column; Декораторы are only nos. 1-8 in the left column) | 8 rows (Козеровскій, Ланге, Лупановъ, Львовъ, Маловъ, Ширяевъ, Юргенсъ, Яковлевъ) under the wrong sub-section; their list numbers 6-13 follow Каменскій 5 of the helpers
+productionteam_1894-95_p001 | e019-e022 | STORED section: "Костюмеры / Маріинскій театръ" and "Костюмерши / Маріинскій театръ" | PRINTED section: "Костюмеры:" / "Костюмерши:" with NO theater heading (specialty text says trupp names) | "Маріинскій театръ" is not printed there
+productionteam_1894-95_p001 | e008, e012, e015 | STORED as separate rows with the note in the family field | PRINTED: annotation paragraph belonging to Петровъ 3-й / Панковъ / Калиновъ | see EXTRA
+productionteam_1894-95_p001 | e030-e031 | STORED section: "Русская драматическая труппа / Французская труппа" | PRINTED: "Французская труппа." printed at the same visual level as the theater names under "Русская драматическая труппа." | questionable nesting, lowest confidence
+productionteam_1894-95_p002 | e005-e010 | STORED institution: "Главный гардеробъ" | PRINTED: "Мѣстные гардеробы." (separate heading, bold, below "Отдѣлъ головныхъ уборовъ..." under Главный гардеробъ) | institution should be Мѣстные гардеробы; e005 heading_path includes it but e006, e007, e009, e010 only carry a theater name and lose "Гардеробмейстеры:" / "Гардеробмейстерши:" (e008 has the latter)
+productionteam_1894-95_p002 | e001-e003 | STORED section: "Смотрительницы отдѣловъ: Отдѣлъ мужскихъ костюмовъ" (e003: "Отдѣлъ женскихъ костюмовъ" without the Смотрительницы prefix) | PRINTED: "Смотрительницы отдѣловъ: / Отдѣлъ мужскихъ костюмовъ." (e001,e002), "Отдѣлъ женскихъ костюмовъ." (e003) | inconsistent prefix only
+productionteam_1894-95_p002 | e011-e019 | STORED institution: "МОСКВА", heading_path "Отдѣлъ декораціонный. Декораторы и ихъ помощники: Большой театръ. ..." | PRINTED: same | OK
+productionteam_1894-95_p002 | e020-e023 | STORED heading_path: "Малый театръ. Декораторъ / Помощники декоратора" | PRINTED: "Отдѣлъ декораціонный. / Декораторы и ихъ помощники: / Малый театръ. / Декораторъ" | upper headings lost, no error in the words
+productionteam_1894-95_p002 | e024-e028 | STORED heading_path: "Малый театръ. Машинисты и ихъ помощники: Большой театръ. Машинистъ / Помощники машиниста" | PRINTED: "Машинисты и ихъ помощники: / Большой театръ. / Машинистъ." (no Малый театръ above these) | "Малый театръ." leaked into the heading of 5 rows
+MISSING OR EXTRA ROWS
+productionteam_1894-95_p001 | EXTRA e008: pseudo-row with family="Съ 1 іюля 1895 г. назначенъ завѣдывающимъ освѣщеніемъ Михайловскаго театра." - it is an annotation printed under Петровъ 3-й (e007), not a person
+productionteam_1894-95_p001 | EXTRA e012: pseudo-row "…Александринскаго театра." - annotation under Панковъ (e011), not a person
+productionteam_1894-95_p001 | EXTRA e015: pseudo-row "…Маріинскаго театра." - annotation under Калиновъ (e014), not a person
+No printed entries without a stored row on any of the 5 pages.
+DATE-CHECK RESULTS
+productionteam_1893-94_p002 | e002 | STORED start: "1 августа 1882 г." | PRINTED start: "съ 1 августа 1882 г." | MATCH | DIRECT(zoomed); printed in the Мѣстные гардеробы block (Романовъ Маріинскій)
+productionteam_1893-94_p003 | e011 | STORED start: "16 октября 1883 г." | PRINTED start: "16 октября 188? г." (final digit damaged, reads as a 5 with a detached top bar) -> "1885" | DIFFERS (probable misread, stored 1883 should be 1885) | UNCERTAIN on the final digit but not 3 as on e010 "1883" (round top)
+productionteam_1894-95_p000 | e021 | STORED start: "15 февраля 1890 г." | PRINTED start: "съ 15 февраля 1890 г." | MATCH | DIRECT(zoomed)
+productionteam_1894-95_p001 | e001 | STORED start: "6 октября 1880 г." | PRINTED start: "съ 6 октября 1880 г." | MATCH | DIRECT(zoomed)
+productionteam_1894-95_p001 | e026 | STORED start: "30 ноября 1872 г." | PRINTED start: "съ 30 ноября 1872 г." | MATCH | DIRECT(zoomed)
+productionteam_1894-95_p002 | e003 | STORED start: "1 мая 1891 г." | PRINTED start: "съ 1 мая 1891 г." | MATCH | DIRECT(zoomed)
+productionteam_1894-95_p002 | e005 | STORED start: "1 августа 1882 г." | PRINTED start: "съ 1 августа 1882 г." | MATCH | DIRECT(zoomed)
+OTHER FINDINGS
+- 1894-95_p001 e020 "Пипарь" and e025 "Педдерь" with soft sign are in the raw JSON too (verified in outputs/full_run/raw), so the error originates in extraction, not in the bundle.
+- 1893-94_p002 e022 and 1894-95_p002 e026: the same Ukrainian є (U+0454) in "Мєтловъ" on two pages: likely a systematic homoglyph, worth a corpus-wide grep.
+- Same Ѳеоктистовъ person misread on both 1893-94_p002 (Ѳоктистовъ) and 1894-95_p002 (Ѳеонтистовъ) in different ways.
+- 1894-95_p001: 3 annotation paragraphs about 1 July 1895 appointments are stored as person rows, which shift later e-numbers relative to printed entry order (and would create phantom persons).
+- 1893-94_p003 e002 Грасицкій, e015 фонъ-Фитингофъ-Шель, e004 Брилліантовъ: letters match print.
+- 1894-95_p002 e004/e008 etc.: surnames and dates match print except those listed.
+- 1893-94_p002 DATE-CHECK printed start is in the printed print "съ 1 августа 1882 г." consistent with e005's 1 августа 1882 on 1894-95_p002; the "modal 1 октября 1882" for Романовъ in other years is not the printed value on these pages (both pages print 1 августа 1882).

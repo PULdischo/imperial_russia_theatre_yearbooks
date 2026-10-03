@@ -1,0 +1,65 @@
+PAGE SUMMARY
+productionteam_1903-04_p003 | entries read: 22 | printed entries with no stored row: 0 | entries with a discrepancy: 2
+productionteam_1903-04_p004 | entries read: 6 | printed entries with no stored row: 0 | entries with a discrepancy: 0
+productionteam_1904-05_p000 | entries read: 22 | printed entries with no stored row: 0 | entries with a discrepancy: 1
+productionteam_1904-05_p001 | entries read: 21 | printed entries with no stored row: 0 | entries with a discrepancy: 2
+productionteam_1904-05_p002 | entries read: 19 printed (20 stored) | printed entries with no stored row: 0 | entries with a discrepancy: 10
+DISCREPANCIES
+productionteam_1903-04_p003 | e001 | family | STORED: "Ѳсоктистовъ" | PRINTED: "Ѳеоктистовъ" | confidence: DIRECT(zoomed) | stored has Cyrillic с (U+0441) where е is printed
+productionteam_1903-04_p003 | e020 | first | STORED: "Казимира" | PRINTED: "Казиміра" | confidence: DIRECT(zoomed) | printed has і
+productionteam_1904-05_p000 | e006 | family | STORED: "Безайстъ" | PRINTED: "Безайсъ" | confidence: DIRECT(zoomed) | extra т in stored
+productionteam_1904-05_p001 | e002 | tenure | STORED: "съ 1 января 1901 г.)" | PRINTED: "(съ 1 января 1901 г.). Назначенъ помощникомъ декоратора съ 1 августа 1905 г" | confidence: DIRECT(zoomed) | appointment note after the date is missing from the stored row
+productionteam_1904-05_p001 | e012 | tenure | STORED: "(съ 1 ноября 1902 г.)" | PRINTED: "(съ 1 ноября 1902 г.). Назначенъ завѣдывающимъ освѣщеніемъ Александринскаго театра съ 1 мая 1905 г" | confidence: DIRECT(zoomed) | appointment note missing from the stored row
+productionteam_1904-05_p002 | e001 | tenure | STORED: "(съ 1 сентября 1882 г.)." | PRINTED: "(съ 1 сентября 1882 г.). Женскіе костюмы оперной и русской драматической труппъ." | confidence: DIRECT(zoomed) | specialty words absent from stored row (tenure_note_text and rank_or_title)
+productionteam_1904-05_p002 | e002 | family | STORED: "Иваненко" | PRINTED: "Иващенко" | confidence: DIRECT(zoomed) | щ printed, н stored
+productionteam_1904-05_p002 | e002 | tenure | STORED: "(съ 1 мая 1898 г.)." | PRINTED: "(съ 1 мая 1898 г.). Женскіе костюмы балетной и французской драматической труппъ. Переведена изъ Московскихъ къ С.-Петербургскимъ театрамъ съ 1 августа 1902 г" | confidence: DIRECT(zoomed) | specialty words and transfer note absent from stored row
+productionteam_1904-05_p002 | e003 | family | STORED: "Педеръ" | PRINTED: "Педдеръ" | confidence: DIRECT(zoomed) | double д printed
+productionteam_1904-05_p002 | e003 | tenure | STORED: "(съ 1 марта 1879 г.)." | PRINTED: "(съ 1 марта 1879 г.). Мужскіе и женскіе парики." | confidence: DIRECT(zoomed) | specialty words absent from stored row
+productionteam_1904-05_p002 | e004 | family | STORED: "Педеръ" | PRINTED: "Педдеръ" | confidence: DIRECT(zoomed) | double д printed
+productionteam_1904-05_p002 | e004 | tenure | STORED: "(съ 1 марта 1879 г.)." | PRINTED: "(съ 1 марта 1879 г.). Мужскіе и женскіе парики." | confidence: DIRECT(zoomed) | specialty words absent from stored row
+productionteam_1904-05_p002 | e006 | family | STORED: "Афанасьевъ" | PRINTED: "Аѳанасьевъ" | confidence: DIRECT(zoomed) | printed has Ѳ
+productionteam_1904-05_p002 | e006 | tenure | STORED: "(съ 1 мая 1890 г.)." | PRINTED: "(съ 1 мая 1890 г.,.). Мужскіе парики." | confidence: DIRECT(zoomed) | specialty words absent from stored row; PRINT-TYPO? (stray comma, "г.,.)")
+productionteam_1904-05_p002 | e007 | family | STORED: "Жуліевъ" | PRINTED: "Жуляевъ" | confidence: DIRECT(zoomed) | 
+productionteam_1904-05_p002 | e007 | tenure | STORED: "(съ 19 мая 1869 г.). Оставилъ службу 1 іюня 1905 г." | PRINTED: "(съ 19 мая 1869 г.). Женскіе парики. Оставилъ службу 1 іюня 1905 г" | confidence: DIRECT(zoomed) | specialty words "Женскіе парики." absent from stored row
+productionteam_1904-05_p002 | e009 | tenure | STORED: "(съ 1 февраля 1875 г.)." | PRINTED: "(съ 1 февраля 1875 г.). Мужскіе парики." | confidence: DIRECT(zoomed) | specialty words absent from stored row
+productionteam_1904-05_p002 | e010 | tenure | STORED: "(съ 15 сентября 1886 г.)." | PRINTED: "(съ 15 сентября 1886 г.). Женскіе парики." | confidence: DIRECT(zoomed) | specialty words absent from stored row
+productionteam_1904-05_p002 | e011 | tenure | STORED: "(съ 1 сентября 1889 г.)." | PRINTED: "(съ 1 сентября 1889 г.). Мужскіе парики." | confidence: DIRECT(zoomed) | specialty words absent from stored row
+productionteam_1904-05_p002 | e020 | family | STORED: "Зашукъ" | PRINTED: "Защукъ" | confidence: DIRECT(zoomed) | щ printed, ш stored
+SECTION PROBLEMS
+productionteam_1903-04_p003 | e001 | STORED section: "Малый театръ / Машинистъ-механикъ" | PRINTED section: (none on this page; entry "2. Ѳеоктистовъ" sits above the first heading and continues a list from the previous page) | wrongly assigned to the Малый театръ heading that is printed below it
+productionteam_1903-04_p003 | e002 | STORED section: "Малый театръ / Ст. помощникъ машиниста" | PRINTED section: "Малый театръ / Машинистъ-механикъ" | Коноплевъ is under Машинистъ-механикъ; Ст. помощникъ машиниста heading is printed after him and applies to e003 only
+productionteam_1903-04_p003 | e011 | STORED section: "Новый театръ / И. д. бутафора" | PRINTED section: "Отдѣлъ бутафорскій / Малый театръ / Старшій помощникъ бутафора." | Домашевъ is under the heading at the top of the right column, before "Новый театръ / И. д. бутафора"
+productionteam_1903-04_p003 | e012 | STORED section: "Новый театръ / И. д. бутафора" | PRINTED section: "Отдѣлъ бутафорскій / Новый театръ / И. д. бутафора." | parent Отдѣлъ бутафорскій missing
+productionteam_1903-04_p003 | e001-e022 | STORED institution: "Старшій помощникъ бутафора." | PRINTED: (that line is a sub-heading in the right column, not an institution; it applies only to e011) | institution field on every row on the page holds a leaked sub-heading
+productionteam_1903-04_p003 | e006 | STORED section: "Отдѣлъ освѣтительный / Большой театръ / Завѣдывающій освѣщеніемъ Малаго театра" | PRINTED section: "Отдѣлъ освѣтительный / Большой театръ / Завѣдывающій освѣщеніемъ Малаго театра." | printed as a sub-heading; possible that "Большой театръ" should not be a parent
+productionteam_1903-04_p003 | e007 | STORED section: "Отдѣлъ освѣтительный / Новый театръ" | PRINTED section: "Отдѣлъ освѣтительный / Новый театръ / Исп. д. завѣдывающаго освѣщеніемъ." | the third-level heading is dropped
+productionteam_1904-05_p000 | e015-e022 | STORED section: "Отдѣлъ декораціонный / Декораторы" | PRINTED section: "Отдѣлъ декораціонный / Помощники декораторовъ:" | list numbers 7 to 14 continue the Помощники list from the left column (1-6); no new Декораторы heading is printed before them
+productionteam_1904-05_p001 | e001 | STORED section: "Машинисты-механики и ихъ помощники / Маріинскій театръ" | PRINTED section: (continues "Помощники декораторовъ" list from the previous page, entry "4. Яковлевъ", above the first heading on this page) | not a machinist
+productionteam_1904-05_p001 | e002 | STORED section: "Машинисты-механики и ихъ помощники" | PRINTED section: "Живописецъ по тканямъ." | Лапшинъ falls under this heading, before Машинисты-механики
+productionteam_1904-05_p001 | e003 | STORED section: "Машинисты-механики и ихъ помощники" | PRINTED section: "Машинисты-механики и ихъ помощники / Маріинскій театръ / Машинистъ-механикъ." | theater missing
+productionteam_1904-05_p001 | e004 | STORED section: "Машинисты-механики и ихъ помощники / Маріинскій театръ" | PRINTED section: "... / Маріинскій театръ / Старшій помощникъ машиниста-механика." | sub-heading missing
+productionteam_1904-05_p001 | e007-e008 | STORED section: "Машинисты-механики и ихъ помощники" | PRINTED section: "Машинисты-механики и ихъ помощники / Александринскій театръ / (e007) Машинистъ-механикъ, (e008) Помощникъ машиниста-механика." | theater missing
+productionteam_1904-05_p001 | e010 | STORED section: "Машинисты-механики и ихъ помощники" | PRINTED section: "... / Михайловскій театръ / Помощникъ машиниста-механика." | theater missing
+productionteam_1904-05_p001 | e012 | STORED section: "Помощникъ завѣдывающаго освѣщеніемъ" | PRINTED section: "Отдѣлъ освѣтительный / Помощникъ завѣдывающаго освѣщеніемъ." | parent Отдѣлъ освѣтительный missing; theater not named
+productionteam_1904-05_p001 | e013 | STORED section: "Завѣдывающій электрическою станціею / Александринскій театръ" | PRINTED section: "Отдѣлъ освѣтительный / Завѣдывающій электрическою станціею." | Семирадзкій precedes the "Александринскій театръ" heading; wrong theater attached
+productionteam_1904-05_p002 | e001 | STORED section: "Главный гардеробъ / Смотрительницы отдѣловъ / Отдѣлъ мужскихъ костюмовъ" | PRINTED section: "Костюмерши:" (list 1) | Иванова Евдокія is a costumer, not a section supervisor (the Главный гардеробъ block starts in the right column)
+productionteam_1904-05_p002 | e002 | STORED section: "Главный гардеробъ / Смотрительницы отдѣловъ / Отдѣлъ женскихъ костюмовъ" | PRINTED section: "Костюмерши:" (list 2) | same
+productionteam_1904-05_p002 | e015, e018 | STORED section: "Мѣстные гардеробы / Гардеробмейстеры / Мариинскій театръ" and "... Гардеробмейстерши: / Мариинскій театръ" | PRINTED section: "Маріинскій театръ" | heading spelled with і in print (stored М-а-р-и-и)
+productionteam_1904-05_p002 | e005 | STORED section: "Парикмахеры: / Русская драматическая труппа" | PRINTED section: n/a | see EXTRA row
+MISSING OR EXTRA ROWS
+productionteam_1904-05_p002 | EXTRA e005: "Александринскій театръ" is a section heading stored as a person row (family field holds the heading, flags SPACE-IN-FAMILY, NO-TENURE)
+DATE-CHECK RESULTS
+productionteam_1903-04_p003 | e003 | STORED start: "іюля 1902 г." | PRINTED start: "(съ іюля 1902 г.)" (no day printed; "съ" at the line end, next line begins "іюля 1902 г.).") | MATCH | DIRECT(zoomed) | the day is genuinely absent from the print; other years print "1 іюля 1902 г."; PRINT-TYPO?
+productionteam_1904-05_p000 | e012 | STORED start: "16 сентября 1902 г." | PRINTED start: "съ 16 сентября 1902 г." | MATCH | DIRECT(zoomed) | printed "16" is unambiguous
+productionteam_1904-05_p001 | e007 | STORED start: "1 сентября 1882 г." | PRINTED start: "съ 1 сентября 1882 г." | MATCH | DIRECT(zoomed)
+productionteam_1904-05_p002 | e012 | STORED start: "1 октября 1894 г." | PRINTED start: "съ 1 октября 1894 г." | MATCH | UNCERTAIN on one digit | the third digit of "1894" is a worn, faint glyph; it reads as 9 (descender visible), so 1894
+OTHER FINDINGS
+- p003: e009 Чарскій: the print has no opening "(" ("съ 15 августа 1901 г.)."); stored tenure adds "(". The "Оставилъ службу ... 1904 г" and e014's "... 1904 г" have no final period in print (cosmetic).
+- p003 e015: "Науіокайтисъ" is printed with і (stored identically, matches). e014 "(онъ-же Хлоповъ)" matches.
+- p003: the scan shows heavy show-through of the facing page; zoomed reading was taken from the foreground text only.
+- p004: all 6 entries, headings and dates match. "Фонъ-Фитингофъ-Шель" matches.
+- p000: the page title "СПИСОКЪ личнаго состава служащихъ по монтировочной части" and "С.-ПЕТЕРБУРГЪ" are stored only as the institution; list numbers 1-5 / 1-6 / 1-3 on this page restart per sub-list as stored.
+- p000: e019 "Эммэ" (э) matches print; e015 Сальниковъ's "Назначенъ завѣдывающимъ красильной мастерской съ 1 августа 1905 г." is stored.
+- p001: e002 stored tenure has a stray closing ")" without the opening "(" ("съ 1 января 1901 г.)").
+- p001: e015 Петровъ Алексѣй: the day digit "5" in "5 октября 1888" sits at the line start and is slightly clipped; reads 5 (matches stored).
+- p002: all tenure_note_text values on this page omit the printed specialty words (Женскіе/Мужскіе костюмы/парики), unlike p001 e020/e021 where they are kept.

@@ -1,0 +1,64 @@
+PAGE SUMMARY
+productionteam_1896-97_p000 | entries read: 27 | printed entries with no stored row: 0 | entries with a discrepancy: 3
+productionteam_1896-97_p001 | entries read: 28 | printed entries with no stored row: 0 | entries with a discrepancy: 18
+productionteam_1896-97_p002 | entries read: 28 | printed entries with no stored row: 0 | entries with a discrepancy: 27
+productionteam_1896-97_p003 | entries read: 15 | printed entries with no stored row: 0 | entries with a discrepancy: 0
+productionteam_1897-98_p000 | entries read: 27 | printed entries with no stored row: 0 | entries with a discrepancy: 3
+DISCREPANCIES
+productionteam_1896-97_p000 | e015 | family | STORED: "Безайсь" | PRINTED: "Безайсъ" | confidence: DIRECT(zoomed)
+productionteam_1896-97_p000 | e018 | family | STORED: "Мъщаниновъ" | PRINTED: "Мѣщаниновъ" | confidence: DIRECT(zoomed)
+productionteam_1896-97_p000 | e024 | patronymic | STORED: "Ѳадлеевичъ" | PRINTED: "Ѳаддеевичъ" | confidence: DIRECT(zoomed)
+productionteam_1896-97_p001 | e001-e003 | tenure | STORED: "съ 1 сентября 1882 г.)" (etc.; opening paren missing) | PRINTED: "(съ 1 сентября 1882 г.)" | confidence: DIRECT(zoomed) | stored tenure text lacks leading "("
+productionteam_1896-97_p001 | e004 | ordinal | STORED: family "Петровъ", ordinal only inside tenure_note "1-й, (съ 25 мая 1851 г.)" | PRINTED: "Петровъ 1-й, Алексѣй Ивановичъ (съ 25 мая 1851 г.)" | confidence: DIRECT(zoomed) | ordinal printed after surname, stored in tenure_note_text
+productionteam_1896-97_p001 | e005 | ordinal | STORED: family "Петровъ", "2-й, (съ 1 октября 1880 г.)" in tenure | PRINTED: "Петровъ 2-й" | confidence: DIRECT(zoomed) | same storage issue
+productionteam_1896-97_p001 | e010 | ordinal | STORED: family "Петровъ", "3-й, (съ 5 октября 1888 г.)" in tenure | PRINTED: "Петровъ 3-й" | confidence: DIRECT(zoomed) | same storage issue
+productionteam_1896-97_p001 | e002,e003,e014,e015,e016,e017,e018,e019,e021,e022,e023,e024,e025,e026 | list | STORED: "-" | PRINTED: list numbers 1./2. within each sub-list (e002=1, e003=2, e014=1, e015=2, e016=1, e017=2, e018=1, e019=2, e021=1, e022=2, e023=1, e024=2, e025=1, e026=2) | confidence: DIRECT(zoomed) | list numbers not stored on this page (e001,e020,e027,e028 and e004-e013 correctly unnumbered)
+productionteam_1896-97_p001 | e014 | tenure | STORED: "... Мужскіе костюмы балетной и французской труппы." | PRINTED: "Мужскіе костюмы балетной и французской труппъ." | confidence: DIRECT(zoomed)
+productionteam_1896-97_p001 | e015 | family | STORED: "Пипарь" | PRINTED: "Пипаръ" | confidence: DIRECT(zoomed)
+productionteam_1896-97_p001 | e015 | tenure | STORED: "... оперной и русской драматической труппы." (труппы) | PRINTED: "Мужскіе костюмы оперной и русской драматической труппъ." | confidence: DIRECT(zoomed)
+productionteam_1896-97_p001 | e016 | first | STORED: "Евлокія" | PRINTED: "Евдокія" | confidence: DIRECT(zoomed)
+productionteam_1896-97_p001 | e016 | tenure | STORED: "... труппы." | PRINTED: "Женскіе костюмы оперной и русской драматической труппъ." | confidence: DIRECT(zoomed)
+productionteam_1896-97_p001 | e017 | tenure | STORED: "... труппы." | PRINTED: "Женскіе костюмы балетной и французской труппъ." | confidence: DIRECT(zoomed)
+productionteam_1896-97_p001 | e018 | date | STORED: "1 юня 1883 г." | PRINTED: "1 іюня 1883 г." | confidence: DIRECT(zoomed) | also in periods field
+productionteam_1896-97_p002 | e001-e019,e021-e026,e028 | tenure | STORED: "съ 9 сентября 1886 г.)" etc (opening paren missing) | PRINTED: "(съ 9 сентября 1886 г.)" | confidence: DIRECT(zoomed) | all rows except e020 and e027 lack "("
+productionteam_1896-97_p002 | e007 | family | STORED: "Вивьень де-Шатобріанъ" | PRINTED: "Вивьенъ де-Шатобріанъ" | confidence: DIRECT(zoomed) | final letter ъ not ь
+productionteam_1896-97_p002 | e027 | first | STORED: "князь" | PRINTED: "Григорій" | confidence: DIRECT(zoomed) | misplaced fields
+productionteam_1896-97_p002 | e027 | patronymic | STORED: "Григорій" | PRINTED: "Дмитріевичъ" | confidence: DIRECT(zoomed)
+productionteam_1896-97_p002 | e027 | title | STORED: "-" | PRINTED: "князь" | confidence: DIRECT(zoomed) | printed "Волконскій, князь Григорій Дмитріевичъ (съ 1 сентября 1887 г.)"; stored tenure_note begins "Дмитріевичъ (съ ..."
+productionteam_1897-98_p000 | e004 | family | STORED: "Ламбінь" | PRINTED: "Ламбинъ" | confidence: DIRECT(zoomed)
+productionteam_1897-98_p000 | e022 | family | STORED: "Безайсь" | PRINTED: "Безайсъ" | confidence: DIRECT(zoomed)
+productionteam_1897-98_p000 | e023 | family | STORED: "Евсеевскій" | PRINTED: "Евсевскій" | confidence: DIRECT(zoomed)
+SECTION PROBLEMS
+productionteam_1896-97_p000 | e001-e007 and e021-e027 and e008-e019 | STORED heading text: "Отдѣль декораціонный" | PRINTED: "Отдѣлъ декораціонный." | final ъ printed, stored ь (all rows under this heading; same on 1897-98_p000 e001-e027)
+productionteam_1896-97_p000 | e021-e027 | STORED section: "Отдѣль декораціонный / Декораторы" | PRINTED section: "Помощники декораторовъ" (right column continues the list 9.-15. after left-column 1.-6.,8.) | Львовъ..Яковлевъ are Помощники, not Декораторы
+productionteam_1896-97_p001 | e001 | STORED section: institution "Старшій помощникъ машиниста." heading None | PRINTED section: "Старшій помощникъ машиниста." under Машинисты и ихъ помощники (continued from p000, Маріинскій театръ) | no heading/city stored; HEADING-NULL
+productionteam_1896-97_p001 | e005 | STORED section: "С.-ПЕТЕРБУРГЪ. // Помощникъ машиниста." | PRINTED: "Александринскій театръ. / Помощникъ машиниста." | theater omitted
+productionteam_1896-97_p001 | e004 | STORED: "Александринскій театръ." | PRINTED: "Александринскій театръ. / Машинистъ." | role heading omitted
+productionteam_1896-97_p001 | e006 | STORED: "Михайловскій театръ." | PRINTED: "Михайловскій театръ. / Машинистъ." | role heading omitted
+productionteam_1896-97_p001 | e007 | STORED: "Помощникъ машиниста." | PRINTED: "Михайловскій театръ. / Помощникъ машиниста." | theater omitted
+productionteam_1896-97_p001 | e008 | STORED: "Отдѣлъ освѣтительный." | PRINTED: "Отдѣлъ освѣтительный. / Завѣдывающіе освѣщеніемъ: / Маріинскій тэатръ." | role and theater omitted (theater printed with э: "тэатръ")
+productionteam_1896-97_p001 | e009-e010 | STORED: "Александринскій театръ." / "Михайловскій театръ." | PRINTED: same plus "Завѣдывающіе освѣщеніемъ:" above | role heading omitted
+productionteam_1896-97_p001 | e011 | STORED: "Отдѣлъ бутафорскій." | PRINTED: "Отдѣлъ бутафорскій. / Бутафоры: / Маріинскій театръ." | theater omitted
+productionteam_1896-97_p002 | e027 | STORED: "Отдѣлъ освѣтительный. Начальникъ искусственнаго освѣщенія. Большой театръ" | PRINTED: "Отдѣлъ освѣтительный. / Начальникъ искусственнаго освѣщенія." (Большой театръ is printed only after Волконскій, above Кунъ) | "Большой театръ" wrongly added to e027
+productionteam_1896-97_p003 | e001 | STORED: institution "Помощникъ завѣдывающаго освѣщеніемъ." heading "Малый театръ" | PRINTED: "Помощникъ завѣдывающаго освѣщеніемъ." with no theater printed above Кандауровъ ("Малый театръ." is printed AFTER him, heading Завѣдывающій освѣщеніемъ) | theater wrongly assigned
+productionteam_1896-97_p003 | e004 | STORED: "Отдѣлъ гардеробный. // Малый театръ" | PRINTED: "Отдѣлъ бутафорскій. / Бутафоры: / Малый театръ." (Брилліантовъ is a бутафоръ) | wrong department; Отдѣлъ гардеробный begins only after him
+productionteam_1897-98_p000 | e001-e027 | STORED heading text: "Отдѣль декораціонный" | PRINTED: "Отдѣлъ декораціонный." | ъ vs ь
+productionteam_1897-98_p000 | e015-e021 | STORED section: "Ученики декораціонной живописи" | PRINTED section: "Помощники декораторовъ" (right column continues 7.-13. after left-column 1.-6.; Ученики begins after Яковлевъ) | Куметцъ, Лупановъ, Львовъ, Табенскій, Ширяевъ, Юргенсъ, Яковлевъ
+MISSING OR EXTRA ROWS
+(none on any of the five pages; all printed entries have exactly one stored row, no duplicates. p000: 27, p001: 28, p002: 28 (Вальцъ legitimately twice: decorator and machinist), p003: 15, 1897-98_p000: 27)
+DATE-CHECK RESULTS
+productionteam_1896-97_p000 | e027 | STORED start: "15 февраля 1890 г." | PRINTED start: "15 февраля 1890 г." | MATCH | DIRECT (this year prints only the latest period; modal 14 мая 1879 comes from other years' two-period text)
+productionteam_1896-97_p001 | e008 | STORED start: "2 августа 1882 г." | PRINTED start: "2 августа 1882 г." (line break ав-/густа) | MATCH | DIRECT (genuinely printed "2", differs from other years' "1 августа")
+productionteam_1896-97_p001 | e012 | STORED start: "19 февраля 1884 г." | PRINTED start: "19 февраля 1884 г." | MATCH | DIRECT (genuinely printed "19")
+productionteam_1896-97_p001 | e018 | STORED start: "1 юня 1883 г." | PRINTED start: "1 іюня 1883 г." | DIFFERS | DIRECT (stored lost the і)
+productionteam_1896-97_p001 | e021 | STORED start: "30 ноября 1872 г." | PRINTED start: "30 ноября 1872 г." | MATCH | DIRECT (genuinely printed)
+productionteam_1896-97_p001 | e028 | STORED start: "1 мая 1891 г." | PRINTED start: "1 мая 1891 г." | MATCH | DIRECT (genuinely printed)
+productionteam_1896-97_p002 | e002 | STORED start: "1 августа 1882 г." | PRINTED start: "1 августа 1882 г." (line break ав-/густа) | MATCH | DIRECT
+productionteam_1896-97_p002 | e008 | STORED start: "1 августа 1897 г." | PRINTED start: "1 августа 1897 г." | MATCH | DIRECT
+OTHER FINDINGS
+- p000 (1896-97): print numbers the Помощники list 1-6 then 8 (Козеровскій 8., no 7) - PRINT-TYPO? stored list 8 matches print.
+- p001: Маріинскій тэатръ heading printed with э (genuine print variant) under Завѣдывающіе освѣщеніемъ.
+- p002: Вальцъ appears twice (Декоратор, Большой and Машинистъ with "(онъ же и декораторъ)"); both stored and correct.
+- p002: Краюшкинъ patronymic printed "Владіміровичъ" matches stored.
+- stored tenure for p002 lacks "(" on 26 rows (see DISCREPANCIES), p001 e001-e003 as well.
+- p001 e004/e005/e010: ordinals live in tenure_note_text rather than family, so identity matching on family will conflate Петровъ 1-й/2-й/3-й.

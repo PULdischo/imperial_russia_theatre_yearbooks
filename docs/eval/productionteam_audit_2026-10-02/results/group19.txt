@@ -1,0 +1,45 @@
+PAGE SUMMARY
+productionteam_1909-10_p002 | entries read: 19 | printed entries with no stored row: 0 | entries with a discrepancy: 5
+productionteam_1909-10_p003 | entries read: 20 | printed entries with no stored row: 0 | entries with a discrepancy: 1
+productionteam_1909-10_p004 | entries read: 20 | printed entries with no stored row: 0 | entries with a discrepancy: 2
+productionteam_1909-10_p005 | entries read: 7 | printed entries with no stored row: 0 | entries with a discrepancy: 0
+DISCREPANCIES
+productionteam_1909-10_p002 | e001 | tenure | STORED: "(съ 1 сентября 1889 г.). Мужскіе па-" | PRINTED: "(съ 1 сентября 1889 г.). Мужскіе па-" | confidence: DIRECT(zoomed) | text matches print but ends in a hyphen at the column end; the continuation ("рики") is not printed on this page (print truncation? PRINT-TYPO?); stored value keeps the break hyphen
+productionteam_1909-10_p002 | e010 | family | STORED: "" (empty; name only in heading_path) | PRINTED: "Ковалевъ, Андрей Федоровичъ" | confidence: DIRECT(zoomed) | family/first/patronymic all empty, name stored in heading (Ковалевъ / Андрей / Федоровичъ)
+productionteam_1909-10_p002 | e012 | family | STORED: "" (empty; name only in heading_path) | PRINTED: "Петровъ, Кириллъ Тимофеевичъ" | confidence: DIRECT(zoomed) | family/first/patronymic empty, name in heading
+productionteam_1909-10_p002 | e015 | family | STORED: "" (empty; name only in heading_path) | PRINTED: "Давыдова, Елизавета Денисовна" | confidence: DIRECT(zoomed) | family/first/patronymic empty, name in heading
+productionteam_1909-10_p002 | e016 | family | STORED: "" (empty; name only in heading_path "Зашукъ, Анна Іосифовна") | PRINTED: "Защукъ, Анна Іосифовна" | confidence: DIRECT(zoomed) | name stored only in heading AND misspelled: printed Защ- (щ), stored Зашукъ (ш); first/patronymic also empty
+productionteam_1909-10_p003 | e002 | tenure | STORED: "съ 1 іюня 1898 г. съ 1 мая 1909 г. назначень главнымъ декораторомъ)" | PRINTED: "(съ 1 іюня 1898 г. съ 1 мая 1909 г. назначенъ главнымъ декораторомъ)." | confidence: DIRECT(zoomed) | stored "назначень" (ь) vs printed "назначенъ" (ъ; line-broken назна-/ченъ)
+productionteam_1909-10_p004 | e004 | tenure | STORED: "(съ 1 августа 1891 г.)" | PRINTED: "(съ 1 августа 1891 г )." | confidence: DIRECT(zoomed) | PRINT-TYPO? period missing after "г" in print; list number also printed "1" without period (stored "1" matches)
+productionteam_1909-10_p004 | e017 | patronymic | STORED: "Пантелейевна" | PRINTED: "Пантелѣевна" | confidence: DIRECT(zoomed) | stored "Пантелейевна" (ей) vs printed ѣ
+SECTION PROBLEMS
+productionteam_1909-10_p002 | e010 | STORED section: "Александринскій театръ // Ковалевъ, Андрей Федоровичъ" | PRINTED section: "Александринскій театръ." (entry then follows directly) | heading_path contains a person's name (entry text) instead of being empty
+productionteam_1909-10_p002 | e011 | STORED section: "Александринскій театръ // Ковалевъ, Андрей Федоровичъ / Помощникъ гардеробмейстера" | PRINTED section: "Александринскій театръ. / Помощникъ гардеробмейстера." | name of e010 leaked into heading_path
+productionteam_1909-10_p002 | e012 | STORED section: "Михайловскій театръ // Петровъ, Кириллъ Тимоѳеевичъ" | PRINTED section: "Михайловскій театръ." | person's name in heading; also stored "Тимоѳеевичъ" (ѳ) vs printed "Тимофеевичъ" (ф)
+productionteam_1909-10_p002 | e013 | STORED section: "Михайловскій театръ // Петровъ, Кириллъ Тимоѳеевичъ / Помощникъ гардеробмейстера" | PRINTED section: "Михайловскій театръ. / Помощникъ гардеробмейстера." | name leaked into heading_path (same ѳ/ф issue)
+productionteam_1909-10_p002 | e015 | STORED section: "Александринскій театръ // Давыдова, Елизавета Денисовна" | PRINTED section: "Александринскій театръ." | person's name in heading_path (entry under Гардеробмейстерши, not reflected)
+productionteam_1909-10_p002 | e016 | STORED section: "Михайловскій театръ // Зашукъ, Анна Іосифовна" | PRINTED section: "Михайловскій театръ." | person's name in heading_path, misspelled (Защукъ printed)
+productionteam_1909-10_p002 | e017-e019 | STORED section: "Михайловскій театръ // Зашукъ, Анна Іосифовна / Помощницы гардеробмейстершъ" | PRINTED section: "Михайловскій театръ. / Помощницы гардеробмейстершъ:" | person name (misspelled) leaked into heading_path
+productionteam_1909-10_p002 | e014 | STORED section: "Мариинскій театръ // Гардеробмейстерши" | PRINTED section: "Гардеробмейстерши: / Мариінскій театръ." | OK in substance (stored heading has parent order reversed: institution=Мариинскій, heading=Гардеробмейстерши; Мѣстные гардеробы parent missing)
+productionteam_1909-10_p002 | e005-e009 | STORED section: institution "Михайловскій театръ" | PRINTED section: "Главный гардеробъ." / "Мѣстные гардеробы." are major headings, not subsections of Михайловскій театръ (only Французская труппа falls under it); e008-e009 stored under Михайловскій but printed under Мариінскій театръ. | institution mis-assigned
+productionteam_1909-10_p003 | e016 | STORED section: "МОСКВА // Отдѣлъ гардеробный / Рисовальщица" | PRINTED section: "Рисовальница." | stored "Рисовальщица" (щ) vs printed "Рисовальница" (н); DIRECT zoom
+productionteam_1909-10_p003 | e010 | STORED section: "МОСКВА // Отдѣлъ освѣтительный / Помощники завѣд. освѣщеніемъ" | PRINTED section: "Помощникъ завѣд. освѣщеніемъ." | singular printed "Помощникъ", stored plural "Помощники"
+productionteam_1909-10_p004 | e019 | STORED section: "личный составъ // Ларикмахерскій отдѣлъ. Главные парикмахеры: Большой театръ." | PRINTED section: "Парикмахерскій отдѣлъ. / Главные парикмахеры: / Большой театръ." | stored "Ларикмахерскій" (Л) vs printed "Парикмахерскій" (decorative initial П)
+productionteam_1909-10_p004 | e020 | STORED section: "личный составъ // Ларикмахерскій отдѣлъ. Главные парикмахеры: Малый театръ." | PRINTED section: "Парикмахерскій отдѣлъ. / Главные парикмахеры: / Малый театръ." | same Л/П error
+productionteam_1909-10_p004 | e006 | STORED section: "личный составъ // Главный гардеробъ." | PRINTED section: "Главный гардеробъ. / Завѣдывающая главнымъ гардеробомъ." | printed sub-heading "Завѣдывающая главнымъ гардеробомъ." missing from stored heading_path
+productionteam_1909-10_p004 | e014 | STORED section: "личный составъ // Гардеробмейстеры: Большой театръ." | PRINTED section: "Гардеробмейстерши: / Большой театръ." | stored "Гардеробмейстеры", printed "Гардеробмейстерши" (female wardrobe mistresses; Спасская, Фонъ-Фитингофъ-Шеель, Бебингъ)
+productionteam_1909-10_p004 | e015-e016 | STORED section: "личный составъ // Малый театръ." | PRINTED section: "Гардеробмейстерши: / Малый театръ." | parent heading Гардеробмейстерши missing (shares stored heading with the Малый театръ block of the earlier Гардеробмейстеры list, e011)
+productionteam_1909-10_p004 | e017-e018 | STORED section: "личный составъ // Помощницы гардеробмейстерш:" | PRINTED section: "Помощницы гардеробмейстерши:" | stored lacks final "и" ("гардеробмейстерш" vs "гардеробмейстерши")
+productionteam_1909-10_p005 | e004-e005 | STORED section: "личный составъ // Помощники парикмахера: / Малый театръ" | PRINTED section: "Помощники парикмахера: / Большой театръ." (list continues 4. Панфилова, 5. Θокинъ in right column, before "Малый театръ." heading) | wrong theater: rows belong to Большой театръ (list nos 1-5), Малый starts at Карнѣева
+MISSING OR EXTRA ROWS
+(none on any of the four pages; all printed entries have a stored row, no extras: p002=19, p003=20, p004=20, p005=7)
+DATE-CHECK RESULTS
+productionteam_1909-10_p002 | e015 | STORED start: "1 сентября 1895 г." | PRINTED start: "съ 1 сентября 1895 г." (Давыдова, Елизавета Денисовна) | MATCH (stored = printed; differs only from the modal 15 іюня 1906 of the other linked entries, so a different date for this person or a different person is printed) | DIRECT(zoomed)
+OTHER FINDINGS
+- p002 e001 Ефимовъ: speciality text printed as "Мужскіе па-" cut off at column end; continuation not printed on this page.
+- p002: four rows (e010, e012, e015, e016) have family/first/patronymic empty with the name only in heading_path; the person-name is thereby a heading rather than the entry.
+- p003 e001/e002: both printed with list number "1." (Лавдовскій 1., Гейкблюмъ 1.); stored same. Лавдовскій first name printed with Θ (fita), stored Ѳеодосій OK.
+- p003 e017 Науіокайтисъ: stored і is Cyrillic U+0456, matches print.
+- p003/p004/p005: stored tenure drops the opening "(" (known pattern); p004 stored keeps it. Not listed.
+- p004 e015 Фонъ-Фитингофъ-Шеель: "Оставила службу 3 сентября 1909 г." matches print.
+- p004 Помощники heading e004-e005 (Науменко, Исаевъ) is directly under "Завѣдывающій мастерской по раскраскѣ тканей." block; printed as separate "Помощники:" heading; matches stored.

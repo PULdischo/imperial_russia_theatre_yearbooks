@@ -1,0 +1,34 @@
+PAGE SUMMARY
+productionteam_1906-07_p003 | entries read: 22 | printed entries with no stored row: 0 | entries with a discrepancy: 0
+productionteam_1906-07_p004 | entries read: 13 | printed entries with no stored row: 0 | entries with a discrepancy: 2
+productionteam_1907-08_p000 | entries read: 19 | printed entries with no stored row: 0 | entries with a discrepancy: 0
+productionteam_1907-08_p001 | entries read: 22 | printed entries with no stored row: 0 | entries with a discrepancy: 3
+productionteam_1907-08_p002 | entries read: 20 | printed entries with no stored row: 0 | entries with a discrepancy: 1
+DISCREPANCIES
+productionteam_1906-07_p004 | e004 | first | STORED: "Казимира" | PRINTED: "Казиміра" (Якубовская, Казиміра Петровна) | confidence: DIRECT(zoomed) | stored has Cyrillic и (U+0438), printed has і
+productionteam_1906-07_p004 | e002 | family | STORED: "Сизовъ" (first "В. И.") | PRINTED: "За смертью В. И. Сизова мѣсто свободно." (genitive "Сизова") | confidence: DIRECT(zoomed) | not a person entry: vacancy notice; stored family is a nominative reconstruction
+productionteam_1907-08_p001 | e010 | family | STORED: "Семирадскій" | PRINTED: "Семирадзскій" | confidence: DIRECT(zoomed) | PRINT-TYPO? extra з printed
+productionteam_1907-08_p001 | e019 | date | STORED: "съ 1 юня 1905 г.)." (period 1 юня 1905 г.) | PRINTED: "(съ 1 іюня 1905 г.)." | confidence: DIRECT(zoomed) | і dropped
+productionteam_1907-08_p001 | e021 | date | STORED: "съ 3 юня 1889 г." | PRINTED: "(съ 3 іюня 1889 г.)." | confidence: DIRECT(zoomed) | і dropped
+productionteam_1907-08_p002 | e019 | family | STORED: "Зашукъ" | PRINTED: "Защукъ" (Защукъ, Анна Іосифовна) | confidence: DIRECT(zoomed) | ш vs щ
+SECTION PROBLEMS
+productionteam_1907-08_p002 | e011 | STORED section: "Главный гардеробъ / Смотрительницы главнаго гардероба" | PRINTED section: "Главный гардеробъ / Смотрительницы главнаго гардероба. / Отдѣлъ мужскихъ костюмовъ." | sub-section omitted
+productionteam_1907-08_p002 | e012 | STORED section: "Главный гардеробъ / Отдѣлъ мужскихъ костюмовъ" | PRINTED section: "... / Отдѣлъ женскихъ костюмовъ." (Петрова) | WRONG sub-section; headings shifted by one
+productionteam_1907-08_p002 | e013 | STORED section: "Главный гардеробъ / Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | PRINTED: same, but under "Смотрительницы главнаго гардероба" | parent level missing
+productionteam_1907-08_p002 | e001 | STORED section: "Отдѣлъ бутафорскій. // Бутафоръ" | PRINTED section: "Отдѣлъ бутафорскій / Михайловскій театръ. / Бутафоръ." | theatre heading omitted
+productionteam_1906-07_p004 | e001 | STORED section: institution "Костюмерша." heading None | PRINTED section: "Костюмерша." is a role subheading (letterspaced), not an institution | heading missing / institution misassigned
+productionteam_1906-07_p004 | e006 | STORED section: "Костюмерша. // Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | PRINTED section: "Смотрительницы отдѣловъ: / Отдѣлъ головныхъ уборовъ, обуви и бѣлья." | parent "Смотрительницы отдѣловъ" omitted (present for e004/e005)
+productionteam_1906-07_p004 | e009-e010 | STORED: "Помощникъ гардеробмейстера" / "Новый театръ" | PRINTED: under "Гардеробмейстеры:" | parent omitted
+productionteam_1906-07_p003 | e012-e013 | STORED: "Завѣдывающій освѣщеніемъ Малаго театра" / "Новый театръ / Исп. д. завѣдывающаго освѣщеніемъ" | PRINTED: under "Отдѣлъ освѣтительный" | parent omitted; e012 stored institution МОСКВА. with the Малаго театра phrase as heading (no separate theatre heading printed)
+productionteam_1907-08_p001 | e012-e018 | STORED: "Александринскій / Михайловскій театръ / ..." | PRINTED: continuation of "Отдѣлъ освѣтительный" | parent omitted; e021-e022 omit "Отдѣлъ бутафорскій"
+MISSING OR EXTRA ROWS
+none on any assigned page (p000 stored order: Ученики e010-e013 precede Декораторы 4-9 e014-e019; printed order is Декораторы 4-9 first)
+DATE-CHECK RESULTS
+productionteam_1906-07_p003 | e003 | STORED start: "3 октября 1861 г." | PRINTED start: "съ 3 октября 1861 г." | MATCH | DIRECT(zoomed)
+productionteam_1906-07_p004 | e003 | STORED start: "17 іюля 1903 г." | PRINTED start: "съ 17 іюля 1903 г." | MATCH | DIRECT(zoomed)
+productionteam_1907-08_p002 | e002 | STORED start: "20 февраля 1906 г." | PRINTED start: "(съ 20 февраля 1906 г.)" | MATCH | DIRECT(zoomed)
+OTHER FINDINGS
+- All other names, patronymics, list numbers and every date digit on all five pages match print (zoomed); no non-Cyrillic homoglyphs in stored names.
+- 1907-08 p000/p001: "Оставилъ службу ... г" printed with no period after "г"; stored value has "г." (typographic only).
+- 1907-08 p000 e001 Головинъ: printed "съ 6 декабря 1902 г.)." has closing paren but no opening paren.
+- p000 e013 Наумовъ and e014 Максимовъ both list no. 4 (different sections: Ученики vs Декораторы), consistent with print.

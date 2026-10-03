@@ -1,0 +1,54 @@
+PAGE SUMMARY
+productionteam_1908-09_p003 | entries read: 20 | printed entries with no stored row: 0 | entries with a discrepancy: 0 (section heading problem only, see below)
+productionteam_1908-09_p004 | entries read: 20 | printed entries with no stored row: 0 | entries with a discrepancy: 14 (e008,e011,e012,e014,e015,e016,e017,e018,e019,e020 list numbers; e003 first; e013 date uncertain; e010,e013 section-only)
+productionteam_1908-09_p005 | entries read: 6 | printed entries with no stored row: 0 | entries with a discrepancy: 0 (section problems only)
+productionteam_1909-10_p000 | entries read: 14 | printed entries with no stored row: 0 | entries with a discrepancy: 1
+productionteam_1909-10_p001 | entries read: 22 | printed entries with no stored row: 0 | entries with a discrepancy: 4
+DISCREPANCIES
+productionteam_1908-09_p004 | e003 | first | STORED: "Казимира" | PRINTED: "Казиміра" | confidence: DIRECT(zoomed) | stored with plain и, print has і
+productionteam_1908-09_p004 | e008 | list | STORED: "-" | PRINTED: "1." (1. Каминская) | confidence: DIRECT(zoomed)
+productionteam_1908-09_p004 | e011 | list | STORED: "-" | PRINTED: "1." (1. Лукачевъ) | confidence: DIRECT(zoomed)
+productionteam_1908-09_p004 | e012 | list | STORED: "-" | PRINTED: "2." (2. Шматковъ) | confidence: DIRECT(zoomed)
+productionteam_1908-09_p004 | e014 | list | STORED: "-" | PRINTED: "2." (2. Горохова, Клавдія Филипповна, top of left column) | confidence: DIRECT(zoomed)
+productionteam_1908-09_p004 | e015 | list | STORED: "-" | PRINTED: "1." (1. Карнѣева) | confidence: DIRECT(zoomed)
+productionteam_1908-09_p004 | e016 | list | STORED: "-" | PRINTED: "2." (2. Сорокинъ) | confidence: DIRECT(zoomed)
+productionteam_1908-09_p004 | e017 | list | STORED: "-" | PRINTED: "2." (2. Конторщиковъ) | confidence: DIRECT(zoomed)
+productionteam_1908-09_p004 | e018 | list | STORED: "-" | PRINTED: "3." (3. Логинова) | confidence: DIRECT(zoomed)
+productionteam_1908-09_p004 | e019 | list | STORED: "-" | PRINTED: "4." (4. Панфилова) | confidence: DIRECT(zoomed)
+productionteam_1908-09_p004 | e020 | list | STORED: "-" | PRINTED: "5." (5. Ѳокинъ) | confidence: DIRECT(zoomed)
+productionteam_1908-09_p004 | e013 | date | STORED: "съ 19 сентября 1882 г." | PRINTED: "съ 19 сентября 188? г." (last digit is a damaged/broken type, looks like a broken 2) | confidence: UNCERTAIN | 1882 plausible (same date as Якубовская)
+productionteam_1909-10_p000 | e012 | family | STORED: "Семирадскій" | PRINTED: "Семирадзскій" | confidence: DIRECT(zoomed) | extra з printed after д
+productionteam_1909-10_p001 | e012 | family | STORED: "Ковалечева" | PRINTED: "Коваличева" | confidence: DIRECT(zoomed)
+productionteam_1909-10_p001 | e009 | tenure | STORED: "съ 1 сентября 1882 г." | PRINTED: "(съ 1 сентября 1882 г.). Женскіе костюмы оперной и русской драматической труппъ." | confidence: DIRECT(zoomed) | specialty text missing from stored value (not reported as a storage-pattern issue, because here it is entirely absent)
+productionteam_1909-10_p001 | e010 | tenure | STORED: "съ 1 мая 1898 г." | PRINTED: "(съ 1 мая 1898 г.). Женскіе костюмы балетной и французской драматической труппъ." | confidence: DIRECT(zoomed) | same, specialty text missing
+productionteam_1909-10_p001 | e007 | tenure | STORED: "съ 25 октября 1897 г." | PRINTED: "(сь 25 октября 1897 г.)" | confidence: DIRECT(zoomed) | PRINT-TYPO? soft sign instead of hard sign in "съ"
+SECTION PROBLEMS
+productionteam_1908-09_p003 | e010 | STORED section: "МОСКВА // Отдѣлъ освѣтительный / Помощники завѣд. освѣщен. Большого театра" | PRINTED section: "Помощникъ завѣд. освѣщен. Большого театра." (singular Помощникъ) | heading word differs
+productionteam_1908-09_p004 | e014 | STORED section: "личный составъ // Мастерская по раскраскѣ тканей / Завѣдывающій мастерской" | PRINTED section: continuation of "Помощницы костюмерши" (list 2. at top of page, carried over from p003; Отдѣлъ гардеробный) | wrong section
+productionteam_1908-09_p004 | e008 | STORED section: "Парикмахерскій отдѣлъ / Большой театръ / Помощники парикмахера" | PRINTED: same | OK
+productionteam_1908-09_p004 | e017-e020 | STORED section: "Мастерская по раскраскѣ тканей / Конторщикъ" (e017); "Мастерская по раскраскѣ тканей / Логинова" (e018); "... / Панфилова" (e019); "... / Іокинъ" (e020) | PRINTED section: "Парикмахерскій отдѣлъ / Большой театръ / Помощники парикмахера:" items 2.-5. continuing the list begun with 1. Каминская | surnames stored as headings, wrong section; e020 heading "Іокинъ" also misspells Ѳокинъ
+productionteam_1908-09_p004 | e015,e016 | STORED section: "Помощницы парикмахера / Малый театръ" | PRINTED section: "Малый театръ. / Помощники парикмахера:" (under Парикмахерскій отдѣлъ) | wrong word (Помощницы vs Помощники), heading order inverted, parent missing
+productionteam_1908-09_p004 | e010 | STORED section: "Мѣстные гардеробы / Малый театръ / Главный парикмахеръ" | PRINTED section: "Мѣстные гардеробы / Малый театръ." (no sub-heading; Синицынъ directly under it, then "Помощники гардеробмейстеровъ:") | spurious "Главный парикмахеръ" (likely meant Гардеробмейстеръ)
+productionteam_1908-09_p004 | e013 | STORED section: "Мѣстные гардеробы / Большой театръ / Гардеробмейтерши" | PRINTED section: "Гардеробмейстерши:" | stored heading drops с
+productionteam_1908-09_p004 | e009 | OK (Гардеробмейстеры:)
+productionteam_1908-09_p005 | e001 | STORED section: "Малый театръ // личный составъ" | PRINTED section: "Мѣстные гардеробы / Малый театръ." (continuing p004, Гардеробмейстерши list; entry has no sub-heading on this page) | heading_path missing
+productionteam_1908-09_p005 | e002-e003 | STORED section: "Малый театръ // личный составъ" | PRINTED section: "Помощницы гардеробмейстерши:" | sub-heading missing
+productionteam_1908-09_p005 | e004 | STORED section: "Малый театръ // личный составъ" | PRINTED section: "Мастерская по раскраскѣ тканей / Завѣдывающій мастерской" (heading at the bottom of p004, with no person under it there; Дьячковъ is the entry, at the top of the right column) | wrong section
+productionteam_1908-09_p005 | e005-e006 | STORED section: "Малый театръ // личный составъ" | PRINTED section: "Помощники завѣдыв ающаго мастерской:" (printed "Помощники завѣдывающаго мастерской") | sub-heading missing
+productionteam_1909-10_p000 | e003 | STORED section: "Отдѣлъ декораціонный / Исп. об. главного Декоратора" | PRINTED: "Исп. об. главнаго Декоратора." | heading spelling differs (главнаго)
+productionteam_1909-10_p000 | e004-e009 | STORED section: "Михайловскій театръ / Машинистъ-механикъ" etc. directly under the city | PRINTED: all machinist headings are under "Машинисты-механики и ихъ помощники." (inside Отдѣлъ декораціонный) | parent heading not stored (e004 Медеръ and e005 Граффъ are on the right column under Михайловскій)
+productionteam_1909-10_p001 | e002 | STORED section: "Маріинскій театръ / Отдѣлъ бутафорскій" | PRINTED section: "Отдѣлъ бутафорскій / Маріинскій театръ / Бутафоръ" | department and role swapped; e003,e004 lack the "Отдѣлъ бутафорскій" parent
+productionteam_1909-10_p001 | e005-e008 | STORED section: "Отдѣлъ гардеробный / Костюмеръ" (e005); "Помощники костюмера" (e006-8) | PRINTED: all under "Отдѣлъ гардеробный" | e006-e008 and later gardеробный rows lack the parent
+productionteam_1909-10_p001 | e015 | STORED section: "Парижмахеры / Оперная труппа" | PRINTED section: "Парикмахеры: / Оперная труппа." | stored "Парижмахеры" is wrong (к read as ж)
+productionteam_1909-10_p001 | e016-e018,e021,e022 | STORED section: "Помощники парижмахера" | PRINTED section: "Помощники парикмахера:" | same misspelling; also e016-e018 are under "Оперная труппа" and e021-e022 under "Русская драматическая труппа / Александринскій театръ", which are not stored
+MISSING OR EXTRA ROWS
+(none on any of the five pages; all printed entries have a stored row)
+productionteam_1909-10_p001 | EXTRA e019: not extra, it is a second printed Григорьевъ entry under "Балетная труппа" (same person as e015) | OK
+DATE-CHECK RESULTS
+productionteam_1909-10_p000 | e004 | STORED start: "1 февраля 1908 г." | PRINTED start: "съ 1 февраля 1908 г." (Медеръ, Михайловскій театръ) | MATCH | DIRECT(zoomed) | p001 e001 prints "съ 20 сентября 1905 г." for the same person
+productionteam_1909-10_p000 | e010 | STORED start: "1 октября 1887 г." | PRINTED start: "съ 1 октября 1887 г." (Щеголевъ) | MATCH | DIRECT(zoomed)
+OTHER FINDINGS
+- Stored order in 1909-10 p000 is out of print order (right-column Медеръ/Граффъ stored before left-column Бекетовъ etc.), harmless but explains e004 sequence.
+- 1908-09 p004 print has a bare heading "Завѣдывающій мастерской." with no person beneath on this page; the person (Дьячковъ) is first on p005.
+- 1908-09 p004 e008 Каминская's list is continued by e017-e020 (2.-5.): five items in one list, split across the column break, stored with none of the list numbers.
+- Pages carry faint verso show-through; ignored.

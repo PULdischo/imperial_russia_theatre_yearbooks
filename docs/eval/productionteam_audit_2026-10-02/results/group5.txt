@@ -1,0 +1,57 @@
+PAGE SUMMARY
+productionteam_1894-95_p003 | entries read: 19 | printed entries with no stored row: 0 | entries with a discrepancy: 4
+productionteam_1895-96_p000 | entries read: 27 | printed entries with no stored row: 0 | entries with a discrepancy: 11
+productionteam_1895-96_p001 | entries read: 29 | printed entries with no stored row: 0 | entries with a discrepancy: 20
+productionteam_1895-96_p002 | entries read: 28 | printed entries with no stored row: 0 | entries with a discrepancy: 4
+productionteam_1895-96_p003 | entries read: 14 | printed entries with no stored row: 0 | entries with a discrepancy: 4
+DISCREPANCIES
+productionteam_1894-95_p003 | e003 | first | STORED: "князь" | PRINTED: "князь" is a title printed before the first name; first name is "Григорій" | confidence: DIRECT(zoomed) | stored first="князь", patronymic="Григорій Дмитріевичъ" (shifted); should be rank/title "князь", first "Григорій", patronymic "Дмитріевичъ"
+productionteam_1894-95_p003 | e003 | patronymic | STORED: "Григорій Дмитріевичъ" | PRINTED: "Дмитріевичъ" | confidence: DIRECT(zoomed) | see previous line
+productionteam_1894-95_p003 | e005 | tenure | STORED: "съ 15 апрѣля 1889 г." | PRINTED: "(съ 15 апрѣля 1889 г.). Оставилъ службу 15 октября 1894 г." | confidence: DIRECT(zoomed) | departure line (separate line under entry) not stored
+productionteam_1894-95_p003 | e014 | family | STORED: "Илынская" | PRINTED: "Ильинская" | confidence: DIRECT(zoomed) | stored ы for ьи (other years store Ильинская)
+productionteam_1895-96_p000 | e023 | family | STORED: "Евсеевскій" | PRINTED: "Евсевскій" | confidence: DIRECT(zoomed) | extra "е" in stored (other years Евсевскій mostly)
+productionteam_1895-96_p000 | e024 | tenure | STORED: "съ 1 февраля 1892 г." | PRINTED: "(съ 1 февраля 1892 г.). Оставилъ службу 8 ноября 1895 г." | confidence: DIRECT(zoomed) | departure line is printed under Мининъ (No.2), not under Мироновъ
+productionteam_1895-96_p000 | e025 | tenure | STORED: "съ 1 января 1896 г. Оставилъ службу 8 ноября 1895 г." | PRINTED: "(съ 1 января 1896 г.)." (no departure note under No.3 Мироновъ) | confidence: DIRECT(zoomed) | departure note misattached from e024 (Мининъ); also creates impossible period 1896->1895
+productionteam_1895-96_p001 | e011 | family | STORED: "Имань" | PRINTED: "Иманъ" | confidence: DIRECT(zoomed) | soft sign for hard sign (other years Иманъ)
+productionteam_1895-96_p001 | e015 | family | STORED: "Пипарь" | PRINTED: "Пипаръ" | confidence: DIRECT(zoomed) | ь for ъ; other years vary, check
+productionteam_1895-96_p001 | e016 | first | STORED: "Евлокія" | PRINTED: "Евдокія" (glyph 4 reads as д with foot; zoom 7x) | confidence: UNCERTAIN | stored "Евлокія" appears in several years (1891-92, 1894-95..1897-98) vs "Евдокія" in others; same glyph on 1895-96_p003 Спасская "Евдокія" is clearly д
+productionteam_1895-96_p002 | e002 | family | STORED: "Тимовеевъ" | PRINTED: "Тимоѳеевъ" | confidence: DIRECT(zoomed) | в for ѳ
+productionteam_1895-96_p002 | e003 | family | STORED: "Аслинь" | PRINTED: "Аслинъ" | confidence: DIRECT(zoomed) | ь for ъ
+productionteam_1895-96_p002 | e006 | family | STORED: "Вивьень де-Шатобріанъ" | PRINTED: "Вивьенъ де-Шатобріанъ" | confidence: DIRECT(zoomed) | ь for ъ in first word; the space before "де-" is genuinely printed
+productionteam_1895-96_p002 | e026 | title | STORED: rank_or_title empty, first "Григорій" | PRINTED: "Волконскій, князь Григорій Дмитріевичъ" | confidence: DIRECT(zoomed) | the word "князь" is dropped entirely (should be rank_or_title)
+productionteam_1895-96_p003 | e003 | family | STORED: "Бріяліантовъ" | PRINTED: "Брилліантовъ" | confidence: DIRECT(zoomed) | stored р-і-я-л-і vs printed Б-р-и-л-л-і-а-н-т-о-в-ъ
+productionteam_1895-96_p003 | e006 | family | STORED: "Бьєнвеню" (U+0454 Ukrainian є) | PRINTED: "Бьенвеню" (plain е, U+0435) | confidence: DIRECT(zoomed) | homoglyph
+SECTION PROBLEMS
+productionteam_1894-95_p003 | e006 | STORED section: "Большой театръ // Завѣдывающій освѣщеніемъ / Помощникъ завѣдывающаго освѣщеніемъ" | PRINTED section: "Малый театръ. / Завѣдывающій освѣщеніемъ." (Грасицкій is the Малый театръ Завѣдывающій, own heading, not a Помощникъ) | wrong section
+productionteam_1894-95_p003 | e003 | STORED section: "Малый театр. // Отдѣлъ освѣтительный / Начальникъ искусственнаго освѣщенія" | PRINTED section: "Отдѣлъ освѣтительный. / Начальникъ искусственнаго освѣщенія." (no theatre heading printed before it; the preceding "Малый театръ." heading is for Машинистъ) | uncertain inherited institution
+productionteam_1895-96_p000 | e015-e022 | STORED section: "... Отдѣлъ декораціонный / Декораторы" | PRINTED section: "Помощники декораторовъ:" (Nos. 7-14 continue the Помощники list at the top of the right column; Кирилловъ is No.7) | 8 rows under wrong heading
+productionteam_1895-96_p001 | e001 | STORED section: institution "Старшій помощникъ машиниста." heading_path None | PRINTED section: "Старшій помощникъ машиниста." is a sub-heading (continuation of the Маріинскій театръ Машинисты section from previous page) | heading text stored as institution, no parent
+productionteam_1895-96_p001 | e005 | STORED section: "Михайловскій театръ. / Машинистъ." | PRINTED section: "Александринскій театръ. / Помощникъ машиниста." | Петровъ 2-й is Александринскій helper
+productionteam_1895-96_p001 | e007 | STORED section: heading_path = "Ковалевскій, Ѳедоръ Ѳедоровичъ (съ 1 сентября 1882 г.)." | PRINTED section: "Михайловскій театръ. / Помощникъ машиниста." | entry text leaked into heading
+productionteam_1895-96_p001 | e009-e010, e012-e013 | STORED section: bare "Александринскій театръ." / "Михайловскій театръ." | PRINTED section: "Отдѣлъ освѣтительный / Завѣдывающіе освѣщеніемъ:" (e009,e010) and "Отдѣлъ бутафорскій / Бутафоры:" (e012,e013) parents | parent headings missing
+productionteam_1895-96_p001 | e014-e019 | STORED section: "... К о с т ю м е р ы: / 1." etc., "Оперная труппа. / 1." | PRINTED section: "Костюмеры:" / "Костюмерши:" / "Парикмахеры: / Оперная труппа." | list numbers 1./2. leaked into headings (also e021-e026)
+productionteam_1895-96_p001 | e021-e026 | STORED section: "Отдѣлъ гардеробный. / Русская драматическая труппа. / Александринскій театръ. / 1." etc. | PRINTED section: "Парикмахеры: / Русская драматическая труппа. / Александринскій театръ." (e021,e022); "Парикмахеры: / Русская драматическая труппа. / Михайловскій театръ." (e023,e024); "Парикмахеры: / Французская труппа." (e025,e026) | list number leak; "Парикмахеры:" missing on e021-e026; e023-e024 stored without "Русская драматическая труппа" parent (stored as "Михайловскій театръ. / 1."), e025-e026 stored "Французская труппа. / 1."
+productionteam_1895-96_p001 | e028-e029 | STORED section: "Отдѣлъ гардеробный. / Отдѣлъ женскихъ костюмовъ." and "... / Отдѣлъ головныхъ уборовъ, обуви и бѣлья." | PRINTED section: "Главный гардеробъ / Смотрительницы отдѣловъ: / Отдѣлъ женскихъ костюмовъ." (and головныхъ уборовъ) | parents missing (e027 has them)
+productionteam_1895-96_p002 | e026 | STORED section: "... Начальникъ искусственнаго освѣщенія. Волконскій, князь Григорій Дмитріевичъ" | PRINTED section: "Отдѣлъ освѣтительный. / Начальникъ искусственнаго освѣщенія." | person's name leaked into heading_path
+productionteam_1895-96_p003 | e003 | STORED section: "Отдѣлъ гардеробный / Костюмеръ" | PRINTED section: "Отдѣлъ бутафорскій / Бутафоры: / Малый театръ." | Брилліантовъ is a prop man (бутафоръ), Малый театръ
+productionteam_1895-96_p003 | e013-e014 | STORED section: "Мѣстные гардеробы / Гардеробмейстеры / Большой театръ" (e013) and "... / Малый театръ" (e014) | PRINTED section: "Мѣстные гардеробы / Гардеробмейстерши: / Большой театръ." and "/ Малый театръ." | Спасская and фонъ-Фитингофъ-Шель are Гардеробмейстерши (women); stored as Гардеробмейстеры
+MISSING OR EXTRA ROWS
+(none on any of the five pages: all printed entries have exactly one stored row; counts 19/27/29/28/14 match print)
+DATE-CHECK RESULTS
+productionteam_1895-96_p000 | e022 | STORED start: "15 февраля 1890 г." | PRINTED start: "15 февраля 1890 г." (Яковлевъ, No.14) | MATCH | DIRECT(zoomed)
+productionteam_1895-96_p000 | e027 | STORED start: "6 октября 1880 г." | PRINTED start: "6 октября 1880 г." (Бергеръ) | MATCH | DIRECT(zoomed)
+productionteam_1895-96_p001 | e008 | STORED start: "2 августа 1882 г." | PRINTED start: "2 августа 1882 г." (Калиновъ) | MATCH | DIRECT(zoomed)
+productionteam_1895-96_p001 | e012 | STORED start: "19 февраля 1884 г." | PRINTED start: "19 февраля 1884 г." (Рощинъ) | MATCH | DIRECT(zoomed)
+productionteam_1895-96_p001 | e021 | STORED start: "30 ноября 1872 г." | PRINTED start: "30 ноября 1872 г." (Жуляевъ) | MATCH | DIRECT(zoomed)
+productionteam_1895-96_p001 | e028 | STORED start: "1 мая 1891 г." | PRINTED start: "1 мая 1891 г." (Петрова) | MATCH | DIRECT(zoomed)
+productionteam_1895-96_p002 | e001 | STORED start: "1 августа 1882 г." | PRINTED start: "1 августа 1882 г." (Романовъ) | MATCH | DIRECT(zoomed)
+OTHER FINDINGS
+- 1895-96_p003: all 14 tenure_note_text values begin "съ ..." but end with a stray ")" (e.g. "съ 1 сентября 1888 г.)"): opening parenthesis dropped, closing kept; other pages store plain "съ ... г."
+- 1895-96_p003: printed sub-heading reads "Костюмерта" (probable PRINT-TYPO for Костюмерша); stored heading normalised to "Костюмерша"
+- 1895-96_p001: printed heading "Руская драматическая труппа." (apparently one с missing, and possibly "драматическеая"; UNCERTAIN at zoom); stored heading normalised to "Русская драматическая труппа."
+- 1895-96_p002: headings are stored as run-together text with ":" and "." separators (e.g. "Декораторы и ихъ помощники: Большой театръ. Декораторъ") rather than " / " levels; e007-e013 print "Помощники декоратора:" for Большой театръ section ok. e028 heading omits "Большой театръ."
+- 1895-96_p002: e019 Вальцъ (онъ же и декораторъ) stored in tenure as printed; fine
+- 1895-96_p000: e014 and e017 (Лупановъ two periods) otherwise match print; e001 "† 15 іюня 1896 г." stored correctly
+- 1895-96_p000 e027: heading_path "Машинисты и ихъ помощники / Маріинскій театръ" lacks the "Машинистъ" sub-heading
+- 1894-95_p003: Воскресенскій printed "Оставилъ службу 15 октября 1894 г."; all other dates on the page match print
+- Family-name 'ь' vs 'ъ' swaps (Имань, Пипарь, Аслинь, Вивьень) look like a recurring VLM misread of word-final ъ; worth a corpus sweep for stored family names ending in ь where other years end in ъ

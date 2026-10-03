@@ -1,0 +1,50 @@
+PAGE SUMMARY
+productionteam_1899-00_p003 | entries read: 25 | printed entries with no stored row: 0 | entries with a discrepancy: 2 (+1 UNCERTAIN)
+productionteam_1899-00_p004 | entries read: 8 | printed entries with no stored row: 0 | entries with a discrepancy: 0
+productionteam_1900-01_p000 | entries read: 21 | printed entries with no stored row: 0 | entries with a discrepancy: 2
+productionteam_1900-01_p001 | entries read: 26 | printed entries with no stored row: 0 | entries with a discrepancy: 4
+productionteam_1900-01_p002 | entries read: 23 | printed entries with no stored row: 0 | entries with a discrepancy: 5
+DISCREPANCIES
+productionteam_1899-00_p003 | e007 | family | STORED: "Нормаркъ" | PRINTED: "Нордмаркъ" | confidence: DIRECT(zoomed) | missing д
+productionteam_1899-00_p003 | e025 | family | STORED: "Бьєнвеню" (U+0454 Ukrainian є) | PRINTED: "Бьенвеню" (plain е) | confidence: DIRECT(zoomed) | homoglyph
+productionteam_1899-00_p003 | e024 | patronymic | STORED: "Ѳедоровна" | PRINTED: "Ѳедоровна" (last letters smudged/overprinted, look like "Ѳедоровиъа") | confidence: UNCERTAIN | ink blot over final letters; stored reading is plausible
+productionteam_1900-01_p000 | e003 | tenure | STORED: "съ 1 августа 1882 г. по 1 декабря 1895 г. и съ 1 октября 1897 г." (second period open, no end) | PRINTED: "(съ 1 августа 1882 г. по 1 декабря 1895 г. и съ 1 октября 1897 г.). Оставилъ службу 1 іюня 1901 г." | confidence: DIRECT(zoomed) | trailing "Оставилъ службу 1 іюня 1901 г." line omitted; period 1 октября 1897 should end 1 іюня 1901 (left service)
+productionteam_1900-01_p000 | e016 | tenure | STORED: "съ 1 февраля 1892 г." | PRINTED: "(съ 1 февраля 1892 г.). Оставилъ службу 1 февраля 1901 г." | confidence: DIRECT(zoomed) | trailing "Оставилъ службу" line omitted; period end/left-service missing
+productionteam_1900-01_p001 | e006 | family | STORED: "Разлобурлинъ" | PRINTED: "Раздобурдинъ" | confidence: DIRECT(zoomed) | two letters (л->д at 3rd and 9th position)
+productionteam_1900-01_p001 | e010 | family | STORED: "Бергёръ" (ё U+0451) | PRINTED: "Бергеръ" (plain е, no diaeresis) | confidence: DIRECT(zoomed)
+productionteam_1900-01_p001 | e023 | list | STORED: "1." | PRINTED: no list number (printed "Петровъ 3-й, Алексѣй Алексѣевичъ", only ordinal suffix 3-й) | confidence: DIRECT(zoomed) | ordinal 3-й is not a list number; single entry in section
+productionteam_1900-01_p001 | e026 | list | STORED: "1." | PRINTED: no list number (printed "Петровъ 1-й, Алексѣй Ивановичъ", only ordinal suffix 1-й) | confidence: DIRECT(zoomed) | same pattern as e023
+productionteam_1900-01_p002 | e004 | family | STORED: "Пипарть" | PRINTED: "Пипаръ" | confidence: DIRECT(zoomed) | stored has extra ь/ть; printed ends in р + ъ (Пипаръ)
+productionteam_1900-01_p002 | e006 | family | STORED: "Офicerова" (Latin i, c, e, r mixed in) | PRINTED: "Офицерова" | confidence: DIRECT(zoomed) | mixed-script; Cyrillic ц expected
+productionteam_1900-01_p002 | e008 | family | STORED: "Пеллеръ" | PRINTED: "Педдеръ" | confidence: DIRECT(zoomed) | printed identical to e009 Педдеръ (same person); л->д twice
+productionteam_1900-01_p002 | e011 | family | STORED: "Жулєевъ" (Ukrainian є) | PRINTED: "Жуляевъ" | confidence: DIRECT(zoomed) | stored "уле" instead of "уля"
+productionteam_1900-01_p002 | e023 | family | STORED: "Зашукъ" | PRINTED: "Защукъ" | confidence: DIRECT(zoomed) | ш->щ
+SECTION PROBLEMS
+productionteam_1899-00_p003 | e017 | STORED section: "МОСКВА. // Малый театръ / Помощники машиниста" | PRINTED section: "Малый театръ / Помощникъ машиниста." (singular) | heading text plural vs printed singular
+productionteam_1899-00_p003 | e022 | STORED section: "Отдѣлъ бутафорскій / Малый театръ" | PRINTED section: "Отдѣлъ бутафорскій / Бутафоры: / Малый театръ." | "Бутафоры" level dropped for this row (kept for e021); minor
+productionteam_1900-01_p000 | e012-e021 | STORED section: "Отдѣлъ декораціонный / Декораторы" | PRINTED section: "Отдѣлъ декораціонный / Помощники декораторовъ:" | right column entries 4.-12., 14. continue the Помощники list (1.-3. Бочаровъ, Воробьевъ, Долговъ at bottom of left column); wrongly stored as Декораторы
+productionteam_1900-01_p000 | e007 | STORED section: "Отдѣлъ декораціонный" (no sub-heading) | PRINTED section: "Отдѣлъ декораціонный / И. д. декоратора." | printed sub-heading missing (Ширяевъ)
+productionteam_1900-01_p001 | e001-e009 | STORED section: "Помощникъ машиниста-механика" (no parent, no theater) | PRINTED section: "Отдѣлъ декораціонный / Ученики декораціонной живописи" (continuation from p000, numbering 2.-10. follows p000's "1. Александровъ"; entries 8,9 "Назначенъ помощникомъ декоратора") | wrong section entirely
+productionteam_1900-01_p001 | e015-e016 | STORED section: "Машинисты-механики... / Александринскій театръ / Машинистъ-механикъ" | PRINTED section: "Александринскій театръ / Помощникъ машиниста-механика." | Андроновъ and Петровъ 2-й are assistants; only Петровъ 1-й (e026) is Машинистъ-механикъ
+productionteam_1900-01_p002 | e005-e006 | STORED section: "Отдѣлъ гардеробный / Костюмеры" | PRINTED section: "Отдѣлъ гардеробный / Костюмерши:" | female costumers stored under male heading
+productionteam_1900-01_p002 | e007-e008 | STORED section: "Отдѣлъ гардеробный / Парикмахеры" | PRINTED section: "Парикмахеры: / Оперная труппа." | sub-heading "Оперная труппа" missing
+productionteam_1900-01_p002 | e009 | STORED section: "Отдѣлъ гардеробный / Балетная труппа" | PRINTED section: "Парикмахеры: / Балетная труппа." | parent "Парикмахеры" omitted (same for e010-e014: Русская драматическая труппа and Французская труппа sit under Парикмахеры)
+productionteam_1900-01_p002 | e001-e002 | STORED section: "Александринскій театръ / Михайловскій театръ // heading None" | PRINTED section: theater headings only; page begins mid-section (parent heading on previous page) | continuation, no parent heading printed here
+MISSING OR EXTRA ROWS
+(none on any of the five pages; all printed entries have a stored row, no extras/duplicates. Note: p000 e011 (Ученики) is stored before e012 though it prints last on page; p001 e026 prints bottom of left column but is stored last.)
+DATE-CHECK RESULTS
+productionteam_1899-00_p003 | e002 | STORED start: "12 декабря 1873 г." | PRINTED start: "12 декабря 1873 г." | MATCH | DIRECT
+productionteam_1899-00_p003 | e018 | STORED start: "18 сентября 1882 г." | PRINTED start: "18 сентября 1882 г." | MATCH | DIRECT
+productionteam_1899-00_p003 | e021 | STORED start: "1 октября 1883 г." | PRINTED start: "1 октября 1883 г." | MATCH | DIRECT
+productionteam_1899-00_p004 | e006 | STORED start: "5 сентября 1897 г." | PRINTED start: "5 сентября 1897 г." | MATCH | DIRECT
+productionteam_1900-01_p001 | e020 | STORED start: "2 августа 1882 г." | PRINTED start: "2 августа 1882 г." | MATCH | DIRECT
+productionteam_1900-01_p002 | e001 | STORED start: "19 февраля 1884 г." | PRINTED start: "19 февраля 1884 г." | MATCH | DIRECT
+productionteam_1900-01_p002 | e004 | STORED start: "26 августа 1869 г." | PRINTED start: "26 августа 1869 г." | MATCH | DIRECT
+productionteam_1900-01_p002 | e017 | STORED start: "9 августа 1886 г." | PRINTED start: "9 августа 1886 г." | MATCH | DIRECT
+OTHER FINDINGS
+- p000 e021: printed list numbers run 12 -> 14 (no 13); stored 14 matches print, no row missing.
+- p000 e009 Табенскій-line: printed "(съ 1 августа 1897 г )" lacks period after г (PRINT-TYPO?); stored e017 has "г." - trivial.
+- p004 e005 patronymic printed "Дмитрієвичъ" (zoomed: і then е, same е glyph as elsewhere); stored "Дмитріевичъ" matches.
+- p004 all 8 entries match the print including sections; p004 e008 printed "Фонъ-Фитингофъ-Шель" (hyphens with spacing), stored matches.
+- p001 e016 Петровъ 2-й: "Назначенъ машинистомъ-механикомъ 1 іюня 1901 г." stored OK; p001 e019 "† 8 іюня 1899 г." OK.
+- Crops in /tmp/audit7/crops/9/

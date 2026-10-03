@@ -1,0 +1,75 @@
+PAGE SUMMARY
+productionteam_1892-93_p002 | entries read: 24 printed persons (28 stored bundle rows, 6 of them are heading rows) | printed entries with no stored row: 0 | entries with a discrepancy: 12
+productionteam_1892-93_p003 | entries read: 23 | printed entries with no stored row: 0 | entries with a discrepancy: 8
+productionteam_1892-93_p004 | entries read: 18 | printed entries with no stored row: 0 | entries with a discrepancy: 7
+productionteam_1893-94_p000 | entries read: 25 | printed entries with no stored row: 0 | entries with a discrepancy: 2 (+ section-heading typo affecting 23 rows)
+productionteam_1893-94_p001 | entries read: 28 | printed entries with no stored row: 0 | entries with a discrepancy: 12
+DISCREPANCIES
+productionteam_1892-93_p002 | e002 | family | STORED: "Пипарь" | PRINTED: "Пипаръ" | confidence: DIRECT(zoomed) | stored ends in soft sign, printed hard sign
+productionteam_1892-93_p002 | e028 | family | STORED: "Вивьень де-Шатобріанъ" | PRINTED: "Вивьенъ де-Шатобріанъ" | confidence: DIRECT(zoomed) | soft sign for hard sign in first word (space is genuinely printed)
+productionteam_1892-93_p002 | e009 | list | STORED: "1." | PRINTED: (no list number; single entry under Балетная труппа) | confidence: DIRECT(zoomed)
+productionteam_1892-93_p002 | e020,e021,e022,e023,e024,e025,e026,e027,e028 | list | STORED: "1." | PRINTED: (no list number printed on any of these single entries) | confidence: DIRECT(zoomed)
+productionteam_1892-93_p003 | e012 | tenure | STORED: "(съ 1 сентября 1882 г.)" | PRINTED: "(съ 1 сентября 1886 г )" | confidence: DIRECT(zoomed) | year printed 1886 (period after "г" missing in print)
+productionteam_1892-93_p003 | e021 | first | STORED: "князь" | PRINTED: "Григорій" | confidence: DIRECT(zoomed) | printed "Волконскій, князь Григорій Дмитріевичъ"
+productionteam_1892-93_p003 | e021 | patronymic | STORED: "Григорій" | PRINTED: "Дмитріевичъ" | confidence: DIRECT(zoomed) | fields shifted
+productionteam_1892-93_p003 | e021 | tenure | STORED: "Дмитріевичъ (съ 1 сентября 1887 г.)" | PRINTED: "(съ 1 сентября 1887 г.)" | confidence: DIRECT(zoomed) | patronymic leaked into tenure; "князь" belongs in rank_or_title (stored "-")
+productionteam_1892-93_p003 | e023 | ordinal | STORED: (none; family "Кунъ") | PRINTED: "Кунъ 1-й" | confidence: DIRECT(zoomed)
+productionteam_1892-93_p003 | e023 | list | STORED: "1." | PRINTED: (no list number; the "1-й" is the surname ordinal) | confidence: DIRECT(zoomed)
+productionteam_1892-93_p003 | e001 | list | STORED: "1." | PRINTED: (no list number before Вальцъ) | confidence: DIRECT(zoomed)
+productionteam_1892-93_p003 | e009 | list | STORED: "1." | PRINTED: (no list number before Гельцеръ) | confidence: DIRECT(zoomed)
+productionteam_1892-93_p004 | e001 | ordinal | STORED: (none; family "Кунъ") | PRINTED: "Кунъ 2-й" | confidence: DIRECT(zoomed)
+productionteam_1892-93_p004 | e006 | tenure | STORED: "съ 30 іюня 1881 г.). Костюмерша." | PRINTED: "съ 30 іюня 1881 г.). Мужскіе костюмы всѣхъ труппъ." (then the centred section heading "Костюмерша.") | confidence: DIRECT(zoomed) | heading word leaked into e006 tenure_note_text
+productionteam_1893-94_p000 | e018 | list | STORED: "Бергеръ" | PRINTED: (no list number) | confidence: DIRECT(zoomed) | family name leaked into list field
+productionteam_1893-94_p000 | e019 | list | STORED: "Калашниковъ" | PRINTED: (no list number) | confidence: DIRECT(zoomed) | family name leaked into list field
+productionteam_1893-94_p001 | e015 | family | STORED: "Пипарь" | PRINTED: "Пипаръ" | confidence: DIRECT(zoomed)
+productionteam_1893-94_p001 | e024 | family | STORED: "Крюковскій" | PRINTED: "Крюковской" | confidence: DIRECT(zoomed) | printed "Крюковской" also on 1892-93 p002 (stored correctly there)
+SECTION PROBLEMS
+productionteam_1892-93_p002 | e019 | STORED section: "Отдѣлъ гардеробный. // Главный гардеробъ" | PRINTED section: "Отдѣлъ гардеробный / Парикмахеры / Французская драматическая труппа" | Ефимовъ (2.) is the continuation of the French-troupe wig list at top of right column, before the "Главный гардеробъ" heading
+productionteam_1892-93_p002 | e005,e008,e010,e011,e014,e017 | STORED section: stored as person-rows (family empty, note = "Оперная труппа."/"Балетная труппа."/"Русская драматическая труппа."/"Александринскій театръ."/"Михайловскій театръ."/"Французская драматическая труппа.") | PRINTED: sub-headings, not people | note: should be heading rows only (see MISSING OR EXTRA)
+productionteam_1892-93_p003 | e010,e011,e012,e013 | STORED section: "МОСКВА. // Отдѣлъ декораціонный / Помощники декоратора: / Большой театръ" | PRINTED section: "Помощники декоратора:" directly after Малый театръ / Декораторъ Гельцеръ, with no new theater heading, so these assistants belong to Малый театръ | stored theater "Большой театръ" is not printed there
+productionteam_1892-93_p004 | e007 | STORED section: "Отдѣлъ гардеробный. // Костюмеръ / Большой театръ" | PRINTED section: "Костюмерша." (separate sub-heading above Вороненко) | should be Костюмерша
+productionteam_1892-93_p004 | e008,e009 | STORED section: "Парижмахеръ / Большой театръ" | PRINTED section: "Парикмахеръ." | heading misspelt (ж for к)
+productionteam_1892-93_p004 | e017,e018 | STORED section: "Мѣстные гардеробы. // Гардеробмейстеры / Большой театръ|Малый театръ" | PRINTED section: "Гардеробмейстерши:" (Спасская under Большой театръ, фонъ-Фитингофъ-Шель under Малый театръ) | wrong gender heading
+productionteam_1892-93_p004 | e005 | STORED section: institution "Малый театръ." heading "Бутафоры / Малый театръ" | PRINTED section: under "Отдѣлъ бутафорскій." / "Бутафоры:" / "Малый театръ." | institution should be Отдѣлъ бутафорскій (as e004)
+productionteam_1892-93_p004 | e001,e002 | STORED section: institution "Помощникъ завѣдывающаго освѣщеніемъ." heading None | PRINTED section: "Помощникъ завѣдывающаго освѣщеніемъ." (top of page, continuing the Отдѣлъ освѣтительный of p003, Большой театръ implied) | heading_path empty (HEADING-NULL); role words stored as institution
+productionteam_1892-93_p004 | e011,e012,e013 | STORED section: institutions "Смотрительницы отдѣловъ:" / "Отдѣлъ головныхъ уборовъ, обуви и бѣлья." (duplicated as heading) | PRINTED section: "Главный гардеробъ. / Смотрительницы отдѣловъ: / Отдѣлъ мужскихъ|женскихъ костюмовъ|головныхъ уборовъ, обуви и бѣлья" | "Главный гардеробъ" omitted for these (kept only for e010); minor
+productionteam_1893-94_p000 | e001-e017,e020-e025 | STORED section: "Отдѣль декораціонный / ..." | PRINTED section: "Отдѣлъ декораціонный" | stored heading has "Отдѣль" (soft sign) instead of "Отдѣлъ"
+productionteam_1893-94_p001 | e020 | STORED section: "Отдѣлъ гардеробный. // Балетная труппа" | PRINTED section: "Парикмахеры: / Балетная труппа." | "Парикмахеры" missing (present for e018,e019)
+productionteam_1893-94_p001 | e021,e022 | STORED section: "... // Русская драматическая труппа / Александринскій театръ" | PRINTED section: "Парикмахеры: / Русская драматическая труппа. / Александринскій театръ." | "Парикмахеры" missing
+productionteam_1893-94_p001 | e023,e024 | STORED section: "Отдѣлъ гардеробный. // Михайловскій театръ" | PRINTED section: "Парикмахеры: / Русская драматическая труппа. / Михайловскій театръ." | Парикмахеры and Русская драматическая труппа missing
+productionteam_1893-94_p001 | e025,e026 | STORED section: "... // Французская драматическая труппа" | PRINTED section: "Парикмахеры: / Французская драматическая труппа." | "Парикмахеры" missing
+productionteam_1893-94_p001 | e028 | STORED section: "Главный гардеробъ / Отдѣлъ женскихъ костюмовъ" | PRINTED section: "Главный гардеробъ / Смотрительницы отдѣловъ: / Отдѣлъ женскихъ костюмовъ." | "Смотрительницы отдѣловъ" missing (present for e027)
+productionteam_1893-94_p001 | e001,e002 | STORED section: institution "Младшіе помощники машиниста:" heading None | PRINTED section: "Младшіе помощники машиниста:" at top of page (continues Маріинскій театръ context from p000) | heading_path empty (HEADING-NULL)
+MISSING OR EXTRA ROWS
+productionteam_1892-93_p002 | EXTRA e005: heading "Оперная труппа." stored as a person row (no name)
+productionteam_1892-93_p002 | EXTRA e008: heading "Балетная труппа." stored as a person row
+productionteam_1892-93_p002 | EXTRA e010: heading "Русская драматическая труппа." stored as a person row
+productionteam_1892-93_p002 | EXTRA e011: heading "Александринскій театръ." stored as a person row
+productionteam_1892-93_p002 | EXTRA e014: heading "Михайловскій театръ." stored as a person row
+productionteam_1892-93_p002 | EXTRA e017: heading "Французская драматическая труппа." stored as a person row
+(no printed entries missing on any assigned page; p003 e011 "Оставилъ службу 19 октября 1892 г." is stored in credit_summary_text and not in tenure/periods; p000 e022 Рудаковъ "† 5 февраля 1894 г." is in the periods only, both acceptable storage)
+DATE-CHECK RESULTS
+productionteam_1892-93_p002 | e006 | STORED start: "1 іюня 1883 г." | PRINTED start: "съ 1 іюня 1883 г." | MATCH | DIRECT
+productionteam_1892-93_p002 | e007 | STORED start: "1 мая 1880 г." | PRINTED start: "съ 1 мая 1880 г." | MATCH | DIRECT
+productionteam_1892-93_p002 | e009 | STORED start: "1 марта 1879 г." | PRINTED start: "съ 1 марта 1879 г." | MATCH | DIRECT
+productionteam_1892-93_p002 | e012 | STORED start: "30 ноября 1872 г." | PRINTED start: "съ 30 ноября 1872 г." | MATCH | DIRECT
+productionteam_1892-93_p002 | e013 | STORED start: "1 февраля 1875 г." | PRINTED start: "съ 1 февраля 1875 г." | MATCH | DIRECT
+productionteam_1892-93_p002 | e015 | STORED start: "1 мая 1890 г." | PRINTED start: "съ 1 мая 1890 г." | MATCH | DIRECT
+productionteam_1892-93_p002 | e016 | STORED start: "29 сентября 1879 г." | PRINTED start: "съ 29 сентября 1879 г." | MATCH | DIRECT
+productionteam_1892-93_p002 | e018 | STORED start: "15 сентября 1886 г." | PRINTED start: "съ 15 сентября 1886 г." | MATCH | DIRECT
+productionteam_1892-93_p002 | e019 | STORED start: "1 сентября 1889 г." | PRINTED start: "съ 1 сентября 1889 г." | MATCH | DIRECT
+productionteam_1892-93_p002 | e020 | STORED start: "1 сентября 1882 г." | PRINTED start: "съ 1 сентября 1882 г." | MATCH | DIRECT
+productionteam_1892-93_p002 | e021 | STORED start: "1 мая 1891 г." | PRINTED start: "съ 1 мая 1891 г." | MATCH | DIRECT
+productionteam_1892-93_p002 | e022 | STORED start: "9 сентября 1886 г." | PRINTED start: "съ 9 сентября 1886 г." | MATCH | DIRECT
+productionteam_1892-93_p003 | e012 | STORED start: "1 сентября 1882 г." | PRINTED start: "съ 1 сентября 1886 г )" | DIFFERS (stored year wrong; printed 1886, agrees with the person's other entries) | DIRECT
+productionteam_1893-94_p000 | e018 | STORED start: "6 октября 1880 г." | PRINTED start: "съ 6 октября 1880 г." | MATCH | DIRECT
+productionteam_1893-94_p000 | e025 | STORED start: "15 февраля 1890 г." | PRINTED start: "съ 15 февраля 1890 г." | MATCH | DIRECT
+productionteam_1893-94_p001 | e021 | STORED start: "30 ноября 1872 г." | PRINTED start: "съ 30 ноября 1872 г." | MATCH | DIRECT
+productionteam_1893-94_p001 | e028 | STORED start: "1 мая 1891 г." | PRINTED start: "съ 1 мая 1891 г." | MATCH | DIRECT
+OTHER FINDINGS
+- The "modal start" differences quoted in the p002 DATE-CHECK lines (e.g. Дмитріева vs 1 мая 1880) compare different people (modal belongs to the neighbouring person), so they signal an identity/name-link mix-up in the person table, not a print difference; every p002 start date matches print.
+- p003 e012 Галкинъ is the only genuine start-date error on these pages (1882 stored for printed 1886); the printed line also has no full stop after "г" before ")" (PRINT-TYPO? minor).
+- Пипаръ (printed with hard sign) is stored as "Пипарь" on both 1892-93 p002 and 1893-94 p001 (systematic reading).
+- p000 e002/e006: rank words "академикъ"/"профессоръ" correctly stored in rank_or_title; all other p000 names, patronymics, dates verified correct.
+- p004: all names and dates verified; only the ordinal on Кунъ 2-й and section/heading issues differ.
+- p001 e003 Петровъ 1-й / e004 Петровъ 2-й / e005 Петровъ 3-й: ordinals stored in family, correct.
