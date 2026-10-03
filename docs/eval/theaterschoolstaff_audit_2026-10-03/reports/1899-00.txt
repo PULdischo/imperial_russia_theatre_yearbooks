@@ -1,0 +1,78 @@
+Season 1899-00 audit is done (report only, no project files touched). I zoomed with PIL on every page and read every crop. The full text is also saved at /tmp/tss/results/1899-00.txt, and the crops are in /tmp/tss/crops/1899-00/.
+
+**Known suspect (p000 e001):** print reads "Рюминъ, Иванъ Ивановичъ, д. ст. сов., въ званіи гофмейстера (съ 27 мая 1887 г.). † 2 сентября 1899 г." under "Управляющій Училищемъ". Stored surname "Ивановичъ" is wrong. First name, patronymic, rank and tenure are right. The same man is printed on p003 as "4. Рюминъ, Иванъ Ивановичъ. † 2 сентября 1899 г.", and p003 e005 has the surname correct.
+
+**Biggest finding:** p004 is entirely the Moscow school, but every p004 row is stored under "Императорское С.-Петербургское Театральное Училище". On the scan, p004 continues the Moscow list from p003 (nos 11-23 of the ballet department, then "Учителя 1-го класса", then "б) Драматическіе курсы" nos 1-14).
+
+Printed page numbers are 133-137 for p000-p004.
+
+```
+PAGE SUMMARY
+theaterschoolstaff_1899-00_p000 | rows stored: 19 | crops made: 7 | field discrepancies: 1 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 2
+theaterschoolstaff_1899-00_p001 | rows stored: 35 | crops made: 12 | field discrepancies: 5 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 2
+theaterschoolstaff_1899-00_p002 | rows stored: 29 | crops made: 12 | field discrepancies: 27 rows (2 + 25 subject-in-rank_or_title) | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 2
+theaterschoolstaff_1899-00_p003 | rows stored: 32 | crops made: 16 | field discrepancies: 4 | missing rows: 0 | extra/non-person rows: 1 | section-map issues: 3
+theaterschoolstaff_1899-00_p004 | rows stored: 29 | crops made: 10 | field discrepancies: 6 (+ subject_taught empty on all 29 rows) | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 3
+FIELD DISCREPANCIES
+theaterschoolstaff_1899-00_p000 | e001 | surname | STORED: "Ивановичъ" | PRINTED: "Рюминъ" | DIRECT | first "Иванъ", patronymic "Ивановичъ", rank and tenure OK
+theaterschoolstaff_1899-00_p001 | e016 | tenure | STORED: "съ 1 сентября 1880 г." | PRINTED: "съ 11 сентября 1880 г." | DIRECT | Гердтъ; day is two glyphs "11"
+theaterschoolstaff_1899-00_p001 | e023 | surname | STORED: "Легатъ" | PRINTED: "Легатъ 1-й" | DIRECT | ordinal belongs to surname
+theaterschoolstaff_1899-00_p001 | e024 | surname | STORED: "Легатъ" | PRINTED: "Легатъ 2-й" | DIRECT | print has "2-й." with a period instead of a comma (print oddity)
+theaterschoolstaff_1899-00_p001 | e026 | surname | STORED: "Мелеръ" | PRINTED: "Медеръ" | DIRECT | Николай Богдановичъ, Географія; p003 prints "Медеръ" (Анна Николаевна)
+theaterschoolstaff_1899-00_p001 | e034 | first | STORED: "Янь" | PRINTED: "Янъ" | DIRECT | hard sign, not soft
+theaterschoolstaff_1899-00_p002 | e002 | surname | STORED: "Тернизвень" | PRINTED: "Тернизьенъ" | DIRECT |
+theaterschoolstaff_1899-00_p002 | e002 | first | STORED: "Эволь" | PRINTED: "Эводъ" | DIRECT |
+theaterschoolstaff_1899-00_p002 | e025 | shift | STORED: patronymic "Фавстовичъ (священникъ церкви Училища)" | PRINTED: patronymic "Фавстовичъ"; title "(священникъ церкви Училища)" | DIRECT | subject "Церковная исторія" is stored in rank_or_title
+theaterschoolstaff_1899-00_p002 | e001-e009 | rank/subject | STORED: rank_or_title = subject (Музыка, Французскій языкъ, Церковное пѣніе, Фехтованіе и военные пріемы, Танцы, Исторія, Репетиторъ танцевъ, Музыка, Русскій языкъ), subject_taught empty | PRINTED: subjects printed after the date, no rank | DIRECT | 9 rows
+theaterschoolstaff_1899-00_p002 | e014-e029 | rank/subject | STORED: rank_or_title = subject, subject_taught empty | PRINTED: subjects, no rank | DIRECT | 16 rows; e010-e013 print no subject, OK; tenure for these rows lacks the subject, unlike p001/p003
+theaterschoolstaff_1899-00_p003 | e016 | rank | STORED: "(штатный врачъ при Московскіхъ Императорскихъ театрахъ)." | PRINTED: "(штатный врачъ при Московскихъ Императорскихъ театрахъ)" | DIRECT | stored has і, print has plain и
+theaterschoolstaff_1899-00_p003 | e023 | rank/subject | STORED: rank_or_title "(надзиратель). Географія и математика.", subject empty | PRINTED: title "надзиратель"; subject "Географія и математика" | DIRECT | Бонковскій
+theaterschoolstaff_1899-00_p003 | e025 | shift | STORED: first "князь", patronymic "Григорій Дмитріевичъ" | PRINTED: title "князь", first "Григорій", patronymic "Дмитріевичъ" | DIRECT | Волконскій; "князь" should go in rank_or_title
+theaterschoolstaff_1899-00_p003 | e028 | rank/subject | STORED: rank_or_title "(дьяконъ церкви Училища). Законъ Божій.", subject empty | PRINTED: title "дьяконъ церкви Училища"; subject "Законъ Божій" | DIRECT | Дружининъ
+theaterschoolstaff_1899-00_p004 | e007 | tenure | STORED: "съ 1 сентября 1895 г." | PRINTED: "съ 1 сентября 1889 г." | DIRECT | Гельцеръ
+theaterschoolstaff_1899-00_p004 | e009 | tenure | STORED: "Практика драматического искусства." | PRINTED: "Практика драматическаго искусства." | DIRECT | Ленскій Александръ Павловичъ
+theaterschoolstaff_1899-00_p004 | e010 | tenure | STORED: "Практика драматического искусства." | PRINTED: "Практика драматическаго искусства." | DIRECT | Невскій
+theaterschoolstaff_1899-00_p004 | e012 | tenure | STORED: "Иностранныя литера тура." | PRINTED: "Иностранная литература." | DIRECT | Розановъ; stored also has a spurious space
+theaterschoolstaff_1899-00_p004 | e016 | surname | STORED: "Тютюникъ" | PRINTED: "Тютюнникъ" | DIRECT | double н
+theaterschoolstaff_1899-00_p004 | e017 | patronymic | STORED: "Анемпо-дистовичъ" | PRINTED: "Анемподистовичъ" | DIRECT | stored keeps the line-end hyphen
+theaterschoolstaff_1899-00_p004 | e001-e029 | subject | STORED: subject_taught empty on all 29 rows (subject only inside tenure_note_text) | PRINTED: subjects after the date on e003-e029 | DIRECT | systematic; e001-e002 print no subject
+MISSING / EXTRA ROWS
+theaterschoolstaff_1899-00_p003 | e013 | EXTRA/NON-PERSON: surname "Священникъ", no first name | it is the printed sub-heading "Священникъ." under "Причтъ церкви Училища:"; the person is e014 Никольскій
+(No printed entries are missing on any of the five pages. No duplicates.)
+SECTION MAP (printed headings, per run)
+theaterschoolstaff_1899-00_p000 | e001 | PRINTED chain: "Списокъ личнаго состава преподавателей и служащихъ въ Императорскихъ Театральныхъ Училищахъ / Императорское С.-Петербургское Театральное Училище / Управляющій Училищемъ" | stored: "СПб Театральное Училище // Управляющій Училищемъ" | OK (list title is not stored on any row)
+theaterschoolstaff_1899-00_p000 | e002-e009 | PRINTED chain: "СПб / Почетные члены конференціи" | stored: same | OK
+theaterschoolstaff_1899-00_p000 | e010 | PRINTED chain: "СПб / Инспекторъ" | stored: same | OK
+theaterschoolstaff_1899-00_p000 | e011 | PRINTED chain: "СПб / Инспектриса" | stored: "... // Инспекторса" | ISSUE: heading misspelled
+theaterschoolstaff_1899-00_p000 | e012 | PRINTED chain: "СПб / Помощникъ инспектора" | stored: same | OK
+theaterschoolstaff_1899-00_p000 | e013 | PRINTED chain: "СПб / Причтъ церкви Училища / Священникъ" | stored: "... // Причтъ церкви Училища" | ISSUE: sub-heading "Священникъ" missing (e014 has its "Дьяконъ" sub-heading, so inconsistent)
+theaterschoolstaff_1899-00_p000 | e014 | PRINTED chain: "СПб / Причтъ церкви Училища / Дьяконъ" | stored: same | OK
+theaterschoolstaff_1899-00_p000 | e015-e018 | PRINTED chain: "СПб / Врачъ при Училищѣ; Лекарскій помощникъ; Дѣлопроизводитель; Канцелярскій чиновникъ" | stored: same | OK
+theaterschoolstaff_1899-00_p000 | e019 | PRINTED chain: "СПб / Воспитатели" | stored: same | OK
+theaterschoolstaff_1899-00_p001 | e001-e003 | PRINTED chain: "СПб / Воспитатели" (nos 2-4, column-top continuation of p000; heading not printed on this page) | stored: "... // Классные дамы" | ISSUE: wrong section (also "Классные" vs printed "Классныя")
+theaterschoolstaff_1899-00_p001 | e004-e010 | PRINTED chain: "СПб / Классныя дамы" | stored: same | OK
+theaterschoolstaff_1899-00_p001 | e011 | PRINTED chain: "СПб / Классная дама при драматическихъ курсахъ" | stored: same | OK
+theaterschoolstaff_1899-00_p001 | e012-e017 | PRINTED chain: "СПб / Преподаватели: / а) Балетное отдѣленіе" | stored: same | OK
+theaterschoolstaff_1899-00_p001 | e018-e035 | PRINTED chain: "СПб / Преподаватели: / а) Балетное отдѣленіе" (right column continues the left, nos 7-24) | stored: "... // Классные дамы" | ISSUE: wrong section for 18 rows
+theaterschoolstaff_1899-00_p002 | e001-e009 | PRINTED chain: "СПб / Преподаватели: / а) Балетное отдѣленіе" (nos 25-33, column-top continuation of p001; heading not printed here) | stored: "... // Учителя приготовительныхъ классовъ" | ISSUE: wrong section
+theaterschoolstaff_1899-00_p002 | e010-e011 | PRINTED chain: "СПб / Учителя приготовительныхъ классовъ:" | stored: same | OK
+theaterschoolstaff_1899-00_p002 | e012-e013 | PRINTED chain: "СПб / Учительницы приготовительныхъ классовъ:" | stored: same | OK
+theaterschoolstaff_1899-00_p002 | e014-e029 | PRINTED chain: "СПб / б) Драматическіе курсы" (parent "Преподаватели:" inherited from p001) | stored: "... // б) Драматическіе курсы" | OK (parent not stored, minor)
+theaterschoolstaff_1899-00_p003 | e001 | PRINTED chain: "Императорское Московское Театральное Училище / Управляющій Училищемъ" | stored: same | OK
+theaterschoolstaff_1899-00_p003 | e002-e009 | PRINTED chain: "МТУ / Почетные члены конференціи" | stored: same | OK
+theaterschoolstaff_1899-00_p003 | e010-e011 | PRINTED chain: "МТУ / Инспекторъ; Помощникъ инспектора" | stored: same | OK
+theaterschoolstaff_1899-00_p003 | e012 | PRINTED chain: "МТУ / Инспектриса" | stored: "... // Инспекториса" | ISSUE: heading misspelled
+theaterschoolstaff_1899-00_p003 | e013-e014 | PRINTED chain: "МТУ / Причтъ церкви Училища: / Священникъ" | stored: "... // Причтъ церкви Училища" | ISSUE: "Священникъ" sub-heading missing; e013 is that heading stored as a person
+theaterschoolstaff_1899-00_p003 | e015 | PRINTED chain: "МТУ / Причтъ церкви Училища: / Дьяконъ" | stored: "... // Дьяконъ" | ISSUE: parent "Причтъ церкви Училища" missing (inconsistent with p000)
+theaterschoolstaff_1899-00_p003 | e016-e017 | PRINTED chain: "МТУ / Врачъ при Училищѣ; Фельдшерица" | stored: same | OK
+theaterschoolstaff_1899-00_p003 | e018-e022 | PRINTED chain: "МТУ / Старшій надзиратель (e018); Старшія классныя дамы (e019-e020); Классныя дамы (e021-e022)" | stored: same | OK
+theaterschoolstaff_1899-00_p003 | e023-e032 | PRINTED chain: "МТУ / Преподаватели: / а) Балетное отдѣленіе" | stored: same | OK
+theaterschoolstaff_1899-00_p004 | e001-e002 | PRINTED chain: "Московское Театральное Училище / Преподаватели: / Учителя 1-го класса:" (printed after nos 11-23 in the left column) | stored: "СПб ... // Учителя 1-го класса" | ISSUE: wrong school
+theaterschoolstaff_1899-00_p004 | e003-e016 | PRINTED chain: "МТУ / Преподаватели: / б) Драматическіе курсы" (right column, nos 1-14) | stored: "СПб ... // б) Драматическіе курсы" | ISSUE: wrong school, section name right
+theaterschoolstaff_1899-00_p004 | e017-e029 | PRINTED chain: "МТУ / Преподаватели: / а) Балетное отдѣленіе" (nos 11-23, column-top continuation of p003; heading not printed here) | stored: "СПб ... // None" | ISSUE: wrong school and empty heading_path
+OTHER FINDINGS
+- p004 stored order differs from print order. Print is the left column (nos 11-23, then Учителя 1-го класса 1-2), then the right column (drama 1-14). Stored is Учителя 1-го класса, drama 1-14, then nos 11-23.
+- Repeat names appear to be genuine separate appointments, not duplicates: Пигулевскій x3 (p000, p001 no.18, p002 no.12); Писнячевскій (p000, p001 no.19); Каменевъ (p003 no.9, p004 Учителя 1-го класса, p004 drama no.6); Поповъ Владиміръ Васильевичъ and Сизовъ twice each on p004 (balet and drama lists, different dates); Апушкинъ twice on p004; Бѣлова Екатерина and Гельцеръ on p003 and p004; Чевакинскій, Андреевъ, Ширяевъ, Зацимовскій twice on p001/p002.
+- Print oddities: p001 no.4 Гавронскій has a surname only; p002 "1 Аистовъ" has no period after the list number (stored "1."); p002 no.8 "Монаховъ,Григорій" has no space; p003 Теляковскій has a title but no tenure date; p004 no.1 Бороздина has no final period.
+- Verso show-through is visible on every page and was ignored.
+```

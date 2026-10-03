@@ -1,0 +1,101 @@
+Season 1903-04: all five pages audited. Crops are in /tmp/tss/crops/1903-04/; per-page crop counts are in PAGE SUMMARY. No printed entries are missing from the stored rows and there are no extra or non-person rows. The problems are field placement (subject stored in the wrong field, 89 rows across four pages), wrong school or heading assignment, and a few letter-level misreads.
+
+I wrote only a short summary to /tmp/tss/results/1903-04.txt, not this full report. Nothing else was edited.
+
+Systematic problems:
+1. Subject placement: p001 e016-e033 hold the subject in rank_or_title. p002 e006-e028 hold it in heading_path. p003 e023-e033 and p004 e001-e013 and e016-e029 hold it in tenure_note_text.
+2. School assignment: all of p002 e002-e028 and all of p004 are Moscow or Saint Petersburg stored under the wrong school. On p003 the institution field holds the section name and heading_path is mostly None.
+3. Two p001 teachers have a tenure date stored that is not in the print.
+
+PAGE SUMMARY
+theaterschoolstaff_1903-04_p000 | rows stored: 19 | crops made: 6 | field discrepancies: 1 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 1
+theaterschoolstaff_1903-04_p001 | rows stored: 35 | crops made: 10 | field discrepancies: 22 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 1
+theaterschoolstaff_1903-04_p002 | rows stored: 28 | crops made: 11 | field discrepancies: 28 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 5
+theaterschoolstaff_1903-04_p003 | rows stored: 33 | crops made: 10 | field discrepancies: 11 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 1
+theaterschoolstaff_1903-04_p004 | rows stored: 29 | crops made: 10 | field discrepancies: 29 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 3
+
+FIELD DISCREPANCIES
+(Each id below is prefixed theaterschoolstaff_1903-04_ in the stored files.)
+p000 | e002 | patronymic | STORED: "Александро-вичъ" | PRINTED: "Александровичъ" (line-break hyphen on "Александро-/вичъ") | DIRECT | hyphenation artifact kept in the field
+p001 | e016 | shift | STORED: rank="Ариѳметика", subject="" | PRINTED: subject "Ариѳметика" (after the date), no rank | DIRECT
+p001 | e017 | shift | STORED: rank="Исторія" | PRINTED: subject "Исторія" | DIRECT
+p001 | e018 | shift | STORED: rank="Танцы" | PRINTED: subject "Танцы" | DIRECT
+p001 | e019 | shift | STORED: rank="Танцы" | PRINTED: subject "Танцы" | DIRECT
+p001 | e020 | shift | STORED: rank="Танцы" | PRINTED: subject "Танцы" | DIRECT
+p001 | e021 | shift | STORED: rank="Музыка" | PRINTED: subject "Музыка" | DIRECT
+p001 | e022 | shift | STORED: rank="Музыка" | PRINTED: subject "Музыка" | DIRECT
+p001 | e023 | shift | STORED: rank="Выразительное чтеніе" | PRINTED: subject "Выразительное чтеніе" | DIRECT
+p001 | e024 | shift | STORED: rank="Законъ Божій (священникъ церкви Училища)" | PRINTED: subject "Законъ Божій"; "(священникъ церкви Училища)" is a parenthetical before the subject | DIRECT
+p001 | e024 | tenure | STORED: "съ 1 сентября 1888 г." | PRINTED: no date at all ("(священникъ церкви Училища). Законъ Божій.") | DIRECT | date not in print (also against p000 e011 "съ 20 декабря 1886 г.")
+p001 | e025 | shift | STORED: rank="Ариѳметика (инспекторъ Училища)" | PRINTED: subject "Ариѳметика", with "(инспекторъ Училища)" before it | DIRECT
+p001 | e025 | tenure | STORED: "съ 1 сентября 1888 г." | PRINTED: no date at all | DIRECT | date not in print (also against p000 e008 "съ 1 августа 1887 г.")
+p001 | e026 | shift | STORED: rank="Рисованіе и чистописаніе" | PRINTED: subject, same words | DIRECT
+p001 | e027 | shift | STORED: rank="Теорія музыки" | PRINTED: subject, same words | DIRECT
+p001 | e028 | shift | STORED: rank="Законъ Божій для учащихся евангелическо-лютеранскаго вѣроисповѣданія" | PRINTED: subject, same words | DIRECT
+p001 | e028 | first | STORED: "Янь" | PRINTED: "Янъ" | DIRECT | final letter is hard sign
+p001 | e029 | shift | STORED: rank="Русскій языкъ. Оставилъ службу 1 сентября 1903 г." | PRINTED: subject "Русскій языкъ"; "Оставилъ службу 1 сентября 1903 г." is a separate line | DIRECT | the leaving note is a tenure note; the stored tenure already carries it, so it is duplicated
+p001 | e030 | shift | STORED: rank="Законъ Божій для учащихся Римско-Католическаго вѣроисповѣданія" | PRINTED: subject, same words | DIRECT
+p001 | e030 | surname | STORED: "Сенкусь" | PRINTED: "Сенкусъ" | DIRECT | print gives no first name or patronymic, so the empty fields are right
+p001 | e031 | shift | STORED: rank="Теорія записыванія танцевъ" | PRINTED: subject "Теорія записыванія танцевъ" | DIRECT
+p001 | e032 | shift | STORED: rank="Музыка" | PRINTED: subject "Музыка" | DIRECT
+p001 | e033 | shift | STORED: rank="Законъ Божій для учащихся Римско-Католическаго вѣроисповѣданія. Оставилъ службу 1 сентября 1903 г." | PRINTED: subject "Законъ Божій для учащихся Римско-Католическаго вѣроисповѣданія"; leaving note is separate | DIRECT | print also gives no first name or patronymic for Стобницкій
+p002 | e001 | rank | STORED: "Управляющій Московской Контророй Императорскихъ театровъ" | PRINTED: "Управляющій Московской Конторой Императорскихъ театровъ" | DIRECT | stored has an extra "р"; this is a post, not a rank
+p002 | e003 | surname | STORED: "Зацымовскій" | PRINTED: "Зацимовскій" | DIRECT | print is "и"; the same man on p001 is stored correctly
+p002 | e007 | surname | STORED: "Тернизень" | PRINTED: "Тернизьенъ" | DIRECT | print has ь before е and a final ъ
+p002 | e007 | first | STORED: "Эволь" | PRINTED: "Эводъ" | DIRECT
+p002 | e026 | surname | STORED: "Полієвктовъ" (U+0454, Ukrainian є) | PRINTED: "Поліевктовъ" (і followed by е) | DIRECT | homoglyph
+p002 | e006 | shift | STORED: subject only inside heading_path "б) Драматическіе курсы. / 1. Фехтованіе" | PRINTED: subject "Фехтованіе"; list number 1 | DIRECT | subject_taught empty; list number leaked into the heading
+p002 | e007-e015 | shift | STORED: subject in heading_path as "27. Французскій языкъ", "28. Танцы", "29. Географія", "30. Исторія", "31. Репетиторъ танцевъ", "32. Музыка", "33. Русскій языкъ", "34. Музыка", "35. Русскій языкъ" | PRINTED: same subjects after the date; the numbers 27-35 are list numbers | DIRECT | subject_taught empty; list number leaked into the heading
+p002 | e016-e028 | shift | STORED: subject in heading_path as "N. <subject>": 2 Русская и иностранная литература, 3 Практика драматическаго искусства, 4 Бытовая исторія, 5 Практика драматическаго искусства, 6 Практика драматическаго искусства, 7 Рисованіе и гримъ, 8 Исторія драмы и театра, 9 Практика драматическаго искусства, 10 Практика драматическаго искусства, 11 Церковная исторія, 12 Бытовая исторія, 13 Практика драматическаго искусства, 14 Танцы | PRINTED: same subjects after the date | DIRECT | subject_taught empty; list number leaked into the heading
+p002 | e025 | rank | STORED: "священникъ церкви Училища" | PRINTED: "(священникъ церкви Училища)" in parentheses before the subject "Церковная исторія"; no date | DIRECT | the post note is stored in rank_or_title; reported for placement only
+p003 | e023 | shift | STORED: tenure "(съ 15 сентября 1897 г.). Фехтованіе.", subject empty | PRINTED: tenure "(съ 15 сентября 1897 г.)", subject "Фехтованіе" | DIRECT
+p003 | e024 | shift | STORED: tenure "... Музыка." | PRINTED: subject "Музыка" | DIRECT
+p003 | e025 | shift | STORED: tenure "... Исторія." | PRINTED: subject "Исторія" | DIRECT
+p003 | e026 | shift | STORED: tenure "... Французскій языкъ." | PRINTED: subject "Французскій языкъ" | DIRECT
+p003 | e027 | shift | STORED: tenure "... Танцы." | PRINTED: subject "Танцы" | DIRECT
+p003 | e028 | shift | STORED: tenure "... Мимика и пластика." | PRINTED: subject "Мимика и пластика" | DIRECT
+p003 | e029 | shift | STORED: tenure "... Танцы." | PRINTED: subject "Танцы" | DIRECT
+p003 | e030 | shift | STORED: tenure "... Французскій языкъ." | PRINTED: subject "Французскій языкъ" | DIRECT
+p003 | e031 | shift | STORED: tenure "... Танцы." | PRINTED: subject "Танцы" | DIRECT
+p003 | e032 | shift | STORED: tenure "... Игра на скрипкѣ." | PRINTED: subject "Игра на скрипкѣ" | DIRECT
+p003 | e033 | shift | STORED: tenure "(дьяконъ церкви Училища) (съ 20 февраля 1893 г.). Законъ Божій." | PRINTED: subject "Законъ Божій"; "(дьяконъ церкви Училища)" is a parenthetical before the date | DIRECT
+p004 | e001-e013 | shift | STORED: subject only inside tenure text, subject_taught empty. Printed subjects: e001 Музыка, e002 Законъ Божій, e003 Пѣніе, e004 Игра на скрипкѣ, e005 Рисованіе, e006 Танцы, e007 Географія, e008 Русскій языкъ и словесность, e009 Законъ Божій (with "(священникъ церкви Училища)" before it), e010 Танцы, e011 Танцы, e012 Танцы, e013 Географія и математика (with "(инспекторъ Училища)" before it) | DIRECT | e013 has no date in print and none stored, which is correct
+p004 | e016-e026, e028, e029 | shift | STORED: subject only inside tenure text, subject_taught empty. Printed subjects: e016 Фехтованіе, e017 Французскій языкъ, e018 Исторія русской литературы, e019 Пластика и танцы, e020 Классъ постановки и развитія голосовъ, e021 Исторія церкви, e022 Пѣніе, e023 Рисованіе и гримъ, e024 Практика драматическаго искусства, e025 Практика драматическаго искусства, e026 Иностранная литература, e028 Исторія драмы и театра, e029 Исторія драмы и театра | DIRECT
+p004 | e027 | shift | STORED: tenure "(съ 1 сентября 1888 г.). Вытвая исторія." | PRINTED: subject "Бытовая исторія" | DIRECT | "Вытвая" is a misread, and the subject sits in the tenure field
+p004 | e020 | surname | STORED: "Гутщейнъ" | PRINTED: "Гутшейнъ" | DIRECT | print is ш; stored has щ
+
+MISSING / EXTRA ROWS
+None on any of the five pages.
+
+SECTION MAP (printed headings, per run)
+p000 | e001-e007 | PRINTED chain: "Списокъ личнаго состава преподавателей и служащихъ въ Императорскихъ Театральныхъ Училищахъ / Императорское С.-Петербургское Театральное Училище / Почетные члены конференціи" | stored: "Императорское С.-Петербургское Театральное Училище // Почетные члены конференціи" | OK (the list title is not stored in any row; page-header only)
+p000 | e008-e010 | PRINTED chain: "... / Императорское С.-Петербургское Театральное Училище / Инспекторъ; Инспектриса; Помощникъ инспектора" | stored: matching | OK
+p000 | e011 | PRINTED chain: "... / Причтъ церкви Училища: / Священникъ" | stored: "... // Причтъ церкви Училища: Священникъ" | OK
+p000 | e012 | PRINTED chain: "... / Причтъ церкви Училища: / Дьяконъ" (the "Причтъ" heading is not repeated; it is in the left column) | stored: "... // Дьяконъ" | ISSUE: "Причтъ церкви Училища" level missing here; e011 carries it, e012 does not
+p000 | e013-e019 | PRINTED chain: "... / Врачи при Училищѣ; Лекарскій помощникъ; И. д. фельдшерицы; Письмоводитель; Воспитатели" | stored: matching | OK
+p001 | e001-e006 | PRINTED chain: "С.-Петербургское / Классныя дамы" | stored matching | OK
+p001 | e007 | PRINTED chain: "... / Классная дама при драматическихъ курсахъ" | stored matching | OK
+p001 | e008-e033 | PRINTED chain: "... / Преподаватели / а) Балетное отдѣленіе" | stored: "... // Преподаватели / а) Балетное отдѣленіе" | OK
+p001 | e034-e035 | PRINTED chain: "С.-Петербургское / Воспитатели" (top of left column; list numbers 3 and 4 continue from p000 e018-e019; this chain is inherited from the previous page) | stored: "Императорское С.-Петербургское Театральное Училище // None", placed after e033 | ISSUE: heading_path empty; the rows should read "Воспитатели", and in print order they come before e001
+p002 | e001 | PRINTED chain: "Императорское Московское Театральное Училище / Управляющій Училищемъ" | stored: "Императорское Московское Театральное Училище. // Управляющій Училищемъ" | OK (this row is the last thing on the page)
+p002 | e002-e003 | PRINTED chain: "С.-Петербургское / Учителя приготовительныхъ классовъ" | stored: "Императорское Московское Театральное Училище. // Учителя приготовительныхъ классовъ" | ISSUE: wrong school, these are Saint Petersburg
+p002 | e004-e005 | PRINTED chain: "С.-Петербургское / Учительницы приготовительныхъ классовъ" | stored: "Московское ... // Учительницы приготовительныхъ классовъ" | ISSUE: wrong school
+p002 | e006 | PRINTED chain: "С.-Петербургское / Преподаватели / б) Драматическіе курсы" | stored: "Московское ... // б) Драматическіе курсы. / 1. Фехтованіе" | ISSUE: wrong school; list number and subject in the heading
+p002 | e007-e015 | PRINTED chain: "С.-Петербургское / Преподаватели / а) Балетное отдѣленіе" (left-column top, continuing p001's list, numbers 27-35; inherited from the previous page) | stored: "Московское ... // 27. Французскій языкъ" ... "35. Русскій языкъ" | ISSUE: wrong school; no Преподаватели or Балетное отдѣленіе; number and subject in the heading
+p002 | e016-e028 | PRINTED chain: "С.-Петербургское / Преподаватели / б) Драматическіе курсы" (right column continuing e006; the heading is printed in the left column) | stored: "Московское ... // 2. Русская и иностранная литература" ... "14. Танцы" | ISSUE: wrong school; no section heading; number and subject in the heading
+p003 | e001-e033 | PRINTED chain: Moscow school, set on p002 (no school heading is printed on this page, so it is inherited from the foot of p002), then: Почетные члены конференціи (e001-e006); Инспекторъ; Помощникъ инспектора; Инспектриса; Письмоводитель; Причтъ церкви Училища / Священникъ, Дьяконъ; Врачъ при Училищѣ; Фельдшерицы; Воспитатели; Классныя дамы; Преподаватели / а) Балетное отдѣленіе (e023-e033) | stored: institution holds the section name ("Почетные члены конференціи:", "Воспитатели:", "Классныя дамы:", "Преподаватели:") and heading_path is "None" or holds only the sub-heading | ISSUE: school missing everywhere; section names sit in the institution field; Инспекторъ/Помощникъ инспектора/Инспектриса/Письмоводитель/Священникъ/Дьяконъ/Врачъ/Фельдшерицы are stored as heading_path under "Почетные члены конференціи:" (wrong section for e007-e015)
+p004 | e001-e013 | PRINTED chain: "Московское / Преподаватели / а) Балетное отдѣленіе" (numbers 12-24; continuation of p003 e033; inherited from the previous page) | stored: "Императорское С.-Петербургское Театральное Училище // Учителя" | ISSUE: wrong school (these are Moscow rows); wrong section "Учителя"; Преподаватели/Балетное отдѣленіе missing
+p004 | e014-e015 | PRINTED chain: "Московское / Учителя" | stored: "С.-Петербургское ... // Учителя" | ISSUE: wrong school
+p004 | e016-e029 | PRINTED chain: "Московское / Преподаватели / б) Драматическіе курсы" (the "Преподаватели" parent is inherited from p003) | stored: "С.-Петербургское ... // б) Драматическіе курсы" | ISSUE: wrong school; Преподаватели parent missing
+
+OTHER FINDINGS
+- The list title is printed once, at the top of p000. The Moscow school heading is printed only at the foot of p002; p003 and p004 inherit it.
+- Page break order: the Saint Petersburg ballet list runs p001 -> p002 (numbers 1-26, then 27-35); the Saint Petersburg drama list p002 (number 1) -> p002 right column (2-14). The Moscow ballet list runs p003 (1-11) -> p004 (12-24).
+- p002 stored order is scrambled: e001 (Moscow) comes first, then the Saint Petersburg preparatory teachers, then ballet numbers 27-35, then drama. p001's last two rows (e034-e035, Воспитатели) also come out of print order.
+- p001 teachers 17 (Пигулевскій) and 18 (Писнячевскій) have no date in print; stored dates "съ 1 сентября 1888 г." look copied from a neighbouring row. Their real tenure starts appear on p000 (e011, e008).
+- p004 e013 (Черемухинъ, inspector) and p002 e025 (Пигулевскій) also have no date in print; the stored rows correctly have none.
+- Same people recur across pages. Moscow: Дружининъ is deacon (p003 e012, "съ 1 февраля 1893 г.") and teacher (p003 e033, "съ 20 февраля 1893 г.", different date in print); Никольскій is priest (p003 e011) and teacher (p004 e009), same date; Черемухинъ is inspector (p003 e007) and teacher (p004 e013). Saint Petersburg: Пигулевскій, Писнячевскій, Петровъ, Ширяевъ, Андреевъ, Зацимовскій appear in several lists.
+- Surname spellings in print: "Всеволожской" on both p000 and p003 (stored as printed). Moscow Каменевъ appears three times (p004 e002, e015, e021) with the same tenure start. Moscow Бѣлова appears twice (Марія Васильевна, Екатерина Васильевна; two different people).
+- p002 e007: surname is printed with ь before е ("Тернизьенъ"), possibly the printed form of Тернизьенъ/Тернизенъ; reported as printed.
+- p001 has ghost bleed-through from the reverse side; ignored.
+- Printer spacing: p002 e008 Фокинъ has no period after ")" and e023 Озаровскій has none; cosmetic.

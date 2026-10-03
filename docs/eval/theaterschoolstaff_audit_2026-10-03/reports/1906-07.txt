@@ -1,0 +1,86 @@
+Season 1906-07 (pages p000-p004), report only, no project files edited. Results are also in /tmp/tss/results/1906-07.txt (that file has two small wording slips in OTHER FINDINGS and is otherwise the same as below). Crops are in /tmp/tss/crops/1906-07/.
+
+Main findings:
+- p000 e014 (the known suspect) is not a person. The print is a centred sub-heading "И. д. фельдшерицы." between "Лекарскій помощникъ." (Михайловъ) and Абрамова. Stored as surname "И." / first "д." / patronymic "фельдшерицы". No first name is printed anywhere.
+- p004 is entirely the Moscow school (continuation of p003's Moscow list), but all 32 rows are stored as St Petersburg.
+- Column-top continuation rows are stored last instead of first on p001 (e034 Скудновъ) and p003 (e030 Шаломытовъ), with wrong or None headings.
+- On p001 e016-e033, p002 and p004 the subject is stored in the wrong field (rank_or_title or tenure).
+- p001 e024 Пигулевскій has a tenure date stored but none printed.
+
+PAGE SUMMARY
+theaterschoolstaff_1906-07_p000 | rows stored: 20 | crops made: 4 | field discrepancies: 2 | missing rows: 0 | extra/non-person rows: 1 | section-map issues: 4
+theaterschoolstaff_1906-07_p001 | rows stored: 34 | crops made: 9 (8 strips + 1 5x zoom) | field discrepancies: 24 (3 spelling/date + 18 subject-in-rank + e024 rank/subject + e034 position/heading) | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 3
+theaterschoolstaff_1906-07_p002 | rows stored: 23 | crops made: 6 | field discrepancies: 4 spelling + 19 subject-in-tenure | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 3
+theaterschoolstaff_1906-07_p003 | rows stored: 30 | crops made: 9 (title strip + 8) | field discrepancies: 2 (+ e010 rank is a heading) | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 5
+theaterschoolstaff_1906-07_p004 | rows stored: 32 | crops made: 10 | field discrepancies: 1 spelling + 30 subject-in-tenure | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 3
+
+FIELD DISCREPANCIES
+p000 | e010 | rank | STORED: "Священникъ" | PRINTED: no rank; "Священникъ." is a centred sub-heading under "Причтъ церкви Училища:" | DIRECT | heading read as rank
+p000 | e014 | shift | STORED: surname "И." first "д." patronymic "фельдшерицы" | PRINTED: not a person. "И. д. фельдшерицы." is a centred sub-heading between "Лекарскій помощникъ." (Михайловъ) and Абрамова. No first name printed | DIRECT | see EXTRA row
+p001 | e015 | subject | STORED: "Аріѳметика" | PRINTED: "Ариѳметика" (и, not і; 5x zoom) | DIRECT |
+p001 | e026 | surname | STORED: "Пузьрева" | PRINTED: "Пузырева" | DIRECT |
+p001 | e027 | first | STORED: "Янь" | PRINTED: "Янъ" | DIRECT |
+p001 | e024 | tenure | STORED: "съ 1 сентября 1889 г." | PRINTED: no date at all ("Пигулевскій, Василій Фавстовичъ (священникъ церкви Училища). Законъ Божій.") | DIRECT | date stored but not printed; the same man has no date on p002 e021 either
+p001 | e024 | rank/subject | STORED: rank "(священникъ церкви Училища). Законъ Божій", subject "" | PRINTED: "(священникъ церкви Училища)" is a title; "Законъ Божій" is the subject | DIRECT | shift
+p001 | e016-e033 (18 rows: Жако, Жукова, Каттерфельдъ, Корню, Куличевская, Леоновъ, Обуховъ, Петровская, Пигулевскій, Поповъ, Пузьрева, Сандерсъ, Сенкусъ, Сергѣевъ, Смирнова, Тернизьенъ, Фокинъ, Хлапонинъ) | shift | STORED: subject in rank_or_title, subject_taught empty (e.g. e016 rank "Французскій языкъ") | PRINTED: subject after the date; no rank | DIRECT | e008-e015 have it correctly in subject_taught
+p001 | e034 | position | STORED: last row, heading None | PRINTED: FIRST entry of left column, "4. Скудновъ, Михаилъ Афанасьевичъ, ст. сов. (съ 1 сентября 1906 г.)." = continuation of p000's Воспитатели list, before "Классныя дамы:" | DIRECT | fields otherwise correct
+p002 | e014 | subject (in tenure) | STORED: "Практика драматического искусства." | PRINTED: "...драматическаго..." | DIRECT |
+p002 | e017 | subject (in tenure) | STORED: "...драматического..." | PRINTED: "...драматическаго..." | DIRECT |
+p002 | e018 | subject (in tenure) | STORED: "...драматического..." | PRINTED: "...драматическаго..." | DIRECT |
+p002 | e020 | subject (in tenure) | STORED: "...драматического..." | PRINTED: "...драматическаго..." | DIRECT |
+p002 | e001-e006, e011-e023 (19 rows) | shift | STORED: subject_taught empty, subject inside tenure_note_text | PRINTED: date in parentheses, then subject sentence | DIRECT | systematic; e007-e010 have no subject in print
+p003 | e001 | rank | STORED: "(Управляющій Московской Контророй Императорскихъ театровъ)." | PRINTED: "...Конторой..." | DIRECT |
+p003 | e010 | rank | STORED: "Священникъ." | PRINTED: no rank; sub-heading under "Причтъ церкви Училища:" | DIRECT | heading read as rank
+p003 | e020-e029 (10 rows) | tenure | STORED: tenure_note_text repeats the subject AND subject_taught holds it | PRINTED: subject printed once after the date | DIRECT | duplication
+p003 | e030 | position | STORED: last row, heading "Классены дамы:" | PRINTED: FIRST entry of right column "2. Шаломытовъ, Евгеній Васильевичъ (съ 1 ноября 1902 г.)." = continuation of Воспитатели | DIRECT | fields correct
+p004 | e011 | subject (in tenure) | STORED: "Рисованіе и примѣ." | PRINTED: "Рисованіе и гримъ." | DIRECT |
+p004 | e003-e032 (30 rows) | shift | STORED: subject inside tenure_note_text, subject_taught empty | PRINTED: subject after the date | DIRECT | systematic; e004/e013 also carry "Помощникъ преподавателя А.П. Ленскаго." / "А. А. Ѳедотова." (spacing cosmetic)
+
+MISSING / EXTRA ROWS
+(no missing rows on any page)
+p000 | e014 | EXTRA/NON-PERSON: "И. | д. | фельдшерицы" | printed sub-heading "И. д. фельдшерицы." (under Лекарскій помощникъ); Абрамова e015 sits under it
+
+SECTION MAP (printed headings, per run)
+p000 | e001-e006 | PRINTED chain: "Списокъ личнаго состава преподавателей и служащихъ въ Императорскихъ Театральныхъ Училищахъ / Императорское С.-Петербургское Театральное Училище / Почетные члены конференціи" | stored: "Императорское С.-Петербургское Театральное Училище // Почетные члены конференціи" | OK (list title not stored; printed on this page only)
+p000 | e007 | Инспекторъ | OK
+p000 | e008 | PRINTED "Инспектриса." | stored "Инспекториса" | ISSUE: heading misspelled
+p000 | e009 | Помощникъ инспектора | OK
+p000 | e010 | PRINTED "Причтъ церкви Училища: / Священникъ." | stored "Причтъ церкви Училища" | OK (but "Священникъ" went into rank)
+p000 | e011 | PRINTED "Причтъ церкви Училища: / Дьяконъ." | stored "Дьяконъ" | ISSUE: missing parent level "Причтъ церкви Училища"
+p000 | e012 | Врачъ при Училищѣ: | OK
+p000 | e013 | Лекарскій помощникъ. | OK
+p000 | e014-e015 | PRINTED "Лекарскій помощникъ. / И. д. фельдшерицы." | stored "Лекарскій помощникъ" for both | ISSUE: sub-heading stored as a person (e014) and missing from e015's chain
+p000 | e016-e017 | Письмоводитель. | OK
+p000 | e018-e020 | Воспитатели: | OK (p001 e034 continues this list)
+p001 | e034 (first in print) | PRINTED (inherited from p000, not printed on p001): "С.-Петербургское Училище / Воспитатели" | stored "Императорское С.-Петербургское Театральное Училище // None" | ISSUE: heading_path None; row also stored last instead of first
+p001 | e001-e006 | PRINTED "Классныя дамы:" | stored "Классные дамы" | ISSUE: spelling
+p001 | e007 | PRINTED "Классная дама при драматическихъ курсахъ." | OK
+p001 | e008-e033 | PRINTED "Преподаватели: / а) Балетное отдѣленіе:" | stored "Преподаватели / а) Балетное отдѣленіе" | OK
+p002 | e001-e006 (27-32) | PRINTED (inherited from p001): "С.-Петербургское Училище / Преподаватели / а) Балетное отдѣленіе" | stored "Учителя приготовительныхъ классовъ" | ISSUE: wrong section; they precede the printed heading "Учителя приготовительныхъ классовъ:", which begins at e007
+p002 | e007-e008 | Учителя приготовительныхъ классовъ: | OK
+p002 | e009-e010 | Учительницы приготовительныхъ классовъ: | OK
+p002 | e011-e023 | PRINTED "Преподаватели (inherited) / б) Драматическіе курсы." | stored "б) Драматическіе курсы" | ISSUE (minor): missing level "Преподаватели"; right-column e013-e023 inherits б) from the left column
+p003 | e001 | PRINTED "Императорское Московское Театральное Училище. / Управляющій Училищемъ." | OK
+p003 | e002-e005 | Почетные члены конференціи: | OK
+p003 | e006, e007, e009 | Инспекторъ / Помощникъ инспектора / Письмоводитель | OK
+p003 | e008 | PRINTED "Инспектриса." | stored "Инспекториса." | ISSUE: spelling
+p003 | e010 | PRINTED "Причтъ церкви Училища: / Священникъ." | stored "Причть церкви Училища:" | ISSUE: "Причть" for "Причтъ"; "Священникъ" went into rank
+p003 | e011 | PRINTED "Причтъ церкви Училища: / Дьяконъ." | stored "Дьяконъ" | ISSUE: missing parent
+p003 | e012, e013 | Врачъ при Училищѣ. / Фельдшерица. | OK
+p003 | e014 | Воспитатели: | OK
+p003 | e015-e019 | PRINTED "Классныя дамы:" | stored "Классены дамы:" | ISSUE: spelling
+p003 | e020-e029 | PRINTED "Преподаватели: / а) Балетное отдѣленіе:" | OK
+p003 | e030 | PRINTED (first in right column) "Воспитатели:" continuation | stored "Классены дамы:" | ISSUE: wrong section (and wrong position)
+p004 | e001-e032 | PRINTED: whole page is the MOSCOW school (continuation of p003: Преподаватели / а) Балетное отдѣленіе items 11-25; then "Учителя:"; then "б) Драматическіе курсы") | stored "Императорское С.-Петербургское Театральное Училище" for all 32 | ISSUE: wrong school (should be Императорское Московское Театральное Училище)
+p004 | e018-e032 (left col, items 11-25, first in print) | PRINTED (inherited from p003): "Московское Училище / Преподаватели / а) Балетное отдѣленіе" | stored "Учителя" | ISSUE: wrong section; also stored after e001-e017 although printed first
+p004 | e001-e002 | PRINTED "Учителя:" | stored "Учителя" | OK heading text; stored first but printed after item 25
+p004 | e003-e017 | PRINTED "б) Драматическіе курсы." (+ inherited Преподаватели) | stored "б) Драматическіе курсы" | OK / minor missing "Преподаватели"
+
+OTHER FINDINGS
+- p000 e014: "И. д. фельдшерицы" is a post sub-heading; Абрамова Александра Дмитріевна is that post-holder. Moscow p003 has the parallel "Фельдшерица." heading with Терлецкая.
+- Column-top continuation rows are stored at the end of p001 and p003 instead of first (p001 Скудновъ, p003 Шаломытовъ), and p002 27-32 and p004 11-25 are likewise continuations of the previous page's lists.
+- p004 is a Moscow page stored as St Petersburg; the people on it are Moscow staff (Каменевъ А.П., Ковалевскій И.Н., Кувакинъ К.С., Апушкинъ С.С. also appear on p003 Moscow as Апушкинъ).
+- Same person listed twice by design: Ширяевъ Александръ Викторовичъ (p002 e002 Репетиторъ танцевъ, 1891; e023 Танцы, 1899); Горскій Александръ Алексѣевичъ (p003 e027 Танцы 1902, e028 Мимика и пластика 1904); Каменевъ А.П. on p004 (e002 кол. асс.; e009 Исторія церкви, left 1 января 1906; e022 Законъ Божій), with different tenure dates per post.
+- Orthography variants in print, not to be normalised: p001 "Апполинарій" (double п) vs p002 "Аполлинарій"; p001 "Ариѳметика" spelled with и.
+- p004 e032 Черемухинъ (inspector of the Moscow school, p003 e006) is also listed as a teacher "(инспекторъ Училища). Географія и математика." with no tenure date.
+- Print oddities: p000 e016 "Оставилъ службу 30 августа 1906 г." is a continuation line under the tenure; p003 e019 has "† 28 іюня 1906 г.".

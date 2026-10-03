@@ -410,3 +410,7 @@ correction belongs. Entry ids are `<page_id>__eNNN`.
   `productionteam_1905-06_p003`..`1907-08_p003` e003/e003/e003 Гуняшевъ "съ 3 октября **1861**" (the date printed for Вальцъ just above him; his own is 1 октября 1897); `productionteam_1890-91_p003` e013 **Кунъ 2-й, Альбертъ Францевичъ** (the assistant is Карловичъ in 1891-93).
 - `productionteam_1908-09_p001` e006 **Бардюкъ** vs `productionteam_1909-10_p001` e006 **Бордюгъ** (same man, Николай Кирилловичъ); `productionteam_1898-99_p002` e002 stray period "(съ 19**.** мая 1869 г.)".
 - `productionteam_1909-10_p001` e007 Гартвигъ: "(**сь** 25 октября 1897 г.)" -- soft sign, now stored verbatim "сь" in tenure_note_text (blind sample 2026-10-03); `productionteam_1905-06_p004` / `productionteam_1906-07_p004`: printed vacancy note "Художникъ-консультантъ. За смертью В. И. Сизова мѣсто свободно." (no person, no row).
+
+## TheaterSchoolStaff audit, 2026-10-03 (issue #133) -- print typos stored verbatim
+- 1892-93 p000 e006 Потѣхинъ printed **Потѣхннъ**; 1900-01 p003 e017 "(съ 1 сентября 1900 **т.**)"; 1904-05 p002 e016 "(съ 1 октября 1896 **1.**)" (г read as 1.); 1905-06 p001 e005 "(съ 16 августа 1902 **.**)" (the г omitted); 1905-06 p002 e017 first name **Махаилъ**; 1908-09 p004 e005 **ВладимІръ** (capital І mid-word); 1909-10 p004 e016 **Геогрій**.
+- Seen and left as stored: Потѣхинъ/Погожевъ lines are different men; 1895-96 p001 e032 Степановъ's subject printed "зацисываніе" (reader: probably a damaged п of записываніе; stored as read, UNCERTAIN).

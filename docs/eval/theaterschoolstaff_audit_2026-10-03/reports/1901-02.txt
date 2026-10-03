@@ -1,0 +1,100 @@
+Season 1901-02 is fully read: all 141 stored rows compared with the scans at zoom, and the full text is also written to /tmp/tss/results/1901-02.txt. Crops are in /tmp/tss/crops/1901-02/. No project files were edited.
+
+Key structural findings:
+1. **Wrong school on p003 and p004.** Both pages are the Moscow school's list, a continuation of the Moscow section that starts at the foot of p002 (print p.136). The school heading is not reprinted on pp.137-138. The stored institution says "С.-Петербургское" for all 54 rows. Evidence: Казанскій is "штатный врачъ при Московскихъ Императорскихъ театрахъ", and Никольскій and Дружининъ are the Moscow priest and deacon.
+2. **Subject in the wrong field on p002, p003 and p004.**
+   - p002 (e014-e031) and p004 (e001-e006, e009-e022) hold the subject in rank_or_title.
+   - p003 (e015-e032) holds the subject glued into tenure_note_text.
+   - subject_taught is empty on those rows. Print pattern: "Surname, First Patr. (с DATE). SUBJECT."
+   - Parenthetical titles like "(священникъ церкви Училища)" belong in rank_or_title. They are stored in subject on p001 e025, and merged with the subject in rank on p002 e028 and p004 e001/e006.
+3. **Column-top rows with empty heading_path.** p001 e036 ("4. Петровъ", should be Воспитатели), p002 e015-e020 (should be Преподаватели / а) Балетное отдѣленіе) and p002 e021-e031 (should be б) Драматическіе курсы).
+
+Direct field errors (besides the systemic shift):
+- p000 e001 Боборыкинъ: tenure "съ 1 февраля 1897 г." is not printed. It looks copied from Сперанскій e012.
+- p001 e019/e020: stored "Легать"; printed "Легатъ 1-й" and "Легатъ 2-й" (ъ not ь, and the ordinal belongs to the surname).
+- p001 e034: first name stored "Эвold" with Latin letters; printed "Эводъ". It is the only mixed-script token on all five pages.
+- p002 e001: "Московскій" stored; printed "Московской". The parenthetical is a second post, stored in rank.
+- p002 e002 Боборыкинъ: the transfer note "Переведенъ тѣмъ же званіемъ въ С.-Петербургское училище" is stored in rank_or_title; it belongs in the tenure note.
+- p002 e021: "Гушинъ" stored; printed "Гущинъ".
+- p002 e027 Острогорскій: stored "(съ 1 апрѣля 1902 г.)"; printed "† 1 апрѣля 1902 г.".
+- p003 e001: rank "надв. сов." is stored in the tenure note.
+- p003 e019: stored surname Волконскій, first "князь", patronymic "Григорій", tenure starting "Дмитріевичъ (...)". Printed: rank "князь", first "Григорій", patronymic "Дмитріевичъ".
+- p004 e001 Никольскій: tenure "съ 1 сентября 1882 г." is not printed on this page.
+- p004 e006 Черемухинъ: tenure "съ 1 сентября 1888 г." is not printed on this page.
+- p004 e013 Гельцеръ: "съ 1 ноября 1889 г." stored; printed "1 сентября 1889".
+- p004 e018: "Иностранныя литера тура" stored; printed "Иностранная литература".
+
+No printed entries are missing and there are no extra or non-person rows. Row counts match the print on every page. Array order differs from print order on p001 (e036 is printed first) and p002 (Moscow rows are stored before the SPb ones).
+
+Other section-map issues:
+- Сперанскій (p000 e012) and Дружининъ (p003 e004) lack the parent "Причтъ церкви Училища".
+- Пигулевскій (p000 e011) and Никольскій (p003 e003) lack the sub-heading "Священникъ".
+- p003 e002 Львова is stored under "Инспекторы"; print says "Инспектриса".
+- p004 e001-e006 are items 19-24 of the Балетное отдѣленіе list, but are stored as "Учителя 1-го класса".
+
+Crops per page: p000 6, p001 11, p002 12, p003 12, p004 8.
+
+```
+PAGE SUMMARY
+theaterschoolstaff_1901-02_p000 | rows stored: 20 | crops made: 6 | field discrepancies: 1 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 2
+theaterschoolstaff_1901-02_p001 | rows stored: 36 | crops made: 11 | field discrepancies: 4 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 1
+theaterschoolstaff_1901-02_p002 | rows stored: 31 | crops made: 12 | field discrepancies: 23 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 4
+theaterschoolstaff_1901-02_p003 | rows stored: 32 | crops made: 12 | field discrepancies: 21 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 5
+theaterschoolstaff_1901-02_p004 | rows stored: 22 | crops made: 8 | field discrepancies: 24 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 3
+FIELD DISCREPANCIES
+theaterschoolstaff_1901-02_p000 | e001 | tenure | STORED: "съ 1 февраля 1897 г." | PRINTED: (none) | DIRECT | date copied from Сперанскій e012
+theaterschoolstaff_1901-02_p001 | e019 | surname | STORED: "Легать" | PRINTED: "Легатъ 1-й" | DIRECT | ъ not ь; ordinal missing
+theaterschoolstaff_1901-02_p001 | e020 | surname | STORED: "Легать" | PRINTED: "Легатъ 2-й" | DIRECT | same
+theaterschoolstaff_1901-02_p001 | e025 | shift | STORED: subject "Законъ Божій (священникъ церкви Училища)", rank "" | PRINTED: rank "(священникъ церкви Училища)", subject "Законъ Божій" | DIRECT |
+theaterschoolstaff_1901-02_p001 | e034 | first | STORED: "Эвold" | PRINTED: "Эводъ" | DIRECT | Latin letters "old", final ъ lost
+theaterschoolstaff_1901-02_p002 | e001 | rank | STORED: "(Управляющій Московскій Конторой Императорскихъ Театровъ)." | PRINTED: "(Управляющій Московской Конторой Императорскихъ Театровъ)." | DIRECT | second post, belongs in tenure note
+theaterschoolstaff_1901-02_p002 | e002 | shift | STORED: rank "Переведенъ тѣмъ же званіемъ въ С.-Петербургское училище." | PRINTED: transfer note under "1. Боборыкинъ, Петръ Дмитріевичъ." | DIRECT | move to tenure_note_text
+theaterschoolstaff_1901-02_p002 | e014-e031 | shift | STORED: subject text in rank_or_title, subject_taught empty (e014 Фехтованіе., e015 Географія., e016 Исторія., e017 Репетиторъ танцевъ., e018 Музыка., e019 Русскій языкъ., e020 Русскій языкъ., e021 Практика драматическаго искусства., e022 Практика драматическаго искусства., e023 Рисованіе и гримъ., e024 Бытовая исторія., e025 Исторія драмы и театра., e026 Практика драматическаго искусства., e027 Русская и иностранная литература., e029 Бытовая исторія., e030 Практика драматическаго искусства., e031 Танцы.) | PRINTED: all of these are the subject after the date | DIRECT |
+theaterschoolstaff_1901-02_p002 | e021 | surname | STORED: "Гушинъ" | PRINTED: "Гущинъ" | DIRECT |
+theaterschoolstaff_1901-02_p002 | e027 | tenure | STORED: "(съ 1 апрѣля 1902 г.)." | PRINTED: "† 1 апрѣля 1902 г." | DIRECT | dagger read as "съ"
+theaterschoolstaff_1901-02_p002 | e028 | shift | STORED: rank "(священникъ церкви Училища). Церковная исторія." | PRINTED: rank "(священникъ церкви Училища)", subject "Церковная исторія." | DIRECT |
+theaterschoolstaff_1901-02_p003 | e001 | shift | STORED: tenure "надв. сов. (съ 1 сентября 1888 г.)", rank "" | PRINTED: rank "надв. сов.", tenure "(съ 1 сентября 1888 г.)" | DIRECT |
+theaterschoolstaff_1901-02_p003 | e015-e032 | shift | STORED: subject glued into tenure_note_text, subject_taught empty (e015 Фехтованіе., e016 Исторія., e017 "(надзиратель). Географія и математика.", e018 Французскій языкъ., e019 Географія., e020 Мимика и пластика., e021 Музыка., e022 Французскій языкъ., e023 Танцы., e024 Игра на скрипкѣ., e025 "(дьяконъ церкви Училища). Законъ Божій.", e026 Музыка., e027 Законъ Божій., e028 Пѣніе., e029 Игра на скрипкѣ., e030 Рисованіе., e031 Танцы., e032 Русскій языкъ и словесность.) | PRINTED: subject after the date; "Оставилъ службу ..." stays in the tenure note (e016, e017, e019, e021) | DIRECT |
+theaterschoolstaff_1901-02_p003 | e019 | shift | STORED: surname "Волконскій", first "князь", patronymic "Григорій", tenure "Дмитріевичъ (съ 1 сентября 1888 г.). ..." | PRINTED: rank "князь", first "Григорій", patronymic "Дмитріевичъ" | DIRECT |
+theaterschoolstaff_1901-02_p004 | e001 | tenure | STORED: "съ 1 сентября 1882 г." | PRINTED: (none) | DIRECT | also rank holds title + subject
+theaterschoolstaff_1901-02_p004 | e006 | tenure | STORED: "съ 1 сентября 1888 г." | PRINTED: (none) | DIRECT | also rank holds title + subject
+theaterschoolstaff_1901-02_p004 | e002-e005, e009-e022 | shift | STORED: subject text in rank_or_title, subject_taught empty (e002 Исторія., e003-e005 Танцы., e009 Фехтованіе., e010 Французскій языкъ., e011 Исторія русской литературы., e012 Классъ постановки и развитія голосовъ., e013 Пластика и танцы., e014 Исторія церкви., e015-e016 Практика драматическаго искусства., e017 Рисованіе и гримъ., e019 Бытовая исторія., e020-e021 Исторія драмы и театра., e022 Пѣніе.) | PRINTED: subject after the date | DIRECT |
+theaterschoolstaff_1901-02_p004 | e013 | tenure | STORED: "съ 1 ноября 1889 г." | PRINTED: "(съ 1 сентября 1889 г.)" | DIRECT |
+theaterschoolstaff_1901-02_p004 | e018 | subject | STORED: "Иностранныя литера тура." | PRINTED: "Иностранная литература." | DIRECT | wrong word form and stray space; also in rank field
+MISSING / EXTRA ROWS
+(none; no missing, extra, duplicate or non-person rows; counts match the print)
+(order note) p001 e036 is printed first on p.135 but stored last; p002 Moscow rows are stored before the SPb rows although printed after them.
+SECTION MAP (printed headings, per run)
+theaterschoolstaff_1901-02_p000 | e001-e007 | PRINTED chain: "Списокъ личнаго состава ... Театральныхъ Училищахъ / Императорское С.-Петербургское Театральное Училище / Почетные члены конференціи" | stored: same | OK
+theaterschoolstaff_1901-02_p000 | e008-e010 | PRINTED chain: "... Училище / Инспекторъ" (e008), "Инспектриса" (e009), "Помощникъ инспектора" (e010) | stored: same | OK
+theaterschoolstaff_1901-02_p000 | e011 | PRINTED chain: "... Училище / Причтъ церкви Училища / Священникъ" | stored: "// Причть церкви Училища" | ISSUE: "Священникъ" missing
+theaterschoolstaff_1901-02_p000 | e012 | PRINTED chain: "... Училище / Причтъ церкви Училища / Дьяконъ" | stored: "// Дьяконъ" | ISSUE: parent "Причтъ церкви Училища" missing
+theaterschoolstaff_1901-02_p000 | e013-e017 | PRINTED chain: "... Училище / Врачъ при Училищѣ / Лекарскій помощникъ / И. д. фельдшерицы / Дѣлопроизводитель / Канцелярскій чиновникъ" (one heading each) | stored: same | OK
+theaterschoolstaff_1901-02_p000 | e018-e020 | PRINTED chain: "... Училище / Воспитатели" | stored: same | OK
+theaterschoolstaff_1901-02_p001 | e036 | PRINTED chain: "(inherited from p.134) С.-Петербургское Училище / Воспитатели" | stored: "// None" | ISSUE: heading_path empty
+theaterschoolstaff_1901-02_p001 | e001-e006 | PRINTED chain: "... Училище / Классныя дамы" | stored: same | OK
+theaterschoolstaff_1901-02_p001 | e007 | PRINTED chain: "... Училище / Классная дама при драматическихъ курсахъ" | stored: same | OK
+theaterschoolstaff_1901-02_p001 | e008-e035 | PRINTED chain: "... Училище / Преподаватели / а) Балетное отдѣленіе" | stored: same | OK
+theaterschoolstaff_1901-02_p002 | e001 | PRINTED chain: "Императорское Московское Театральное Училище / Управляющій Училищемъ" | stored: same | OK
+theaterschoolstaff_1901-02_p002 | e002-e009 | PRINTED chain: "Московское Училище / Почетные члены конференціи" (e006 Черемухинъ is under "Инспекторъ") | stored: same | OK
+theaterschoolstaff_1901-02_p002 | e010-e013 | PRINTED chain: "С.-Петербургское Училище / Учителя приготовительныхъ классовъ" (e010-e011), "Учительницы приготовительныхъ классовъ" (e012-e013); print does not say whether under Преподаватели | stored: same | OK
+theaterschoolstaff_1901-02_p002 | e014 | PRINTED chain: "SPb / (Преподаватели, inherited) / б) Драматическіе курсы" | stored: "// б) Драматическіе курсы" | OK
+theaterschoolstaff_1901-02_p002 | e015-e020 | PRINTED chain: "(inherited from p.135) SPb / Преподаватели / а) Балетное отдѣленіе" | stored: "// None" | ISSUE: heading_path empty
+theaterschoolstaff_1901-02_p002 | e021-e031 | PRINTED chain: "(inherited) SPb / Преподаватели / б) Драматическіе курсы" | stored: "// None" | ISSUE: heading_path empty
+theaterschoolstaff_1901-02_p003 | e001-e032 | PRINTED chain: "(inherited from p.136) Императорское Московское Театральное Училище / ..." | stored: "Императорское С.-Петербургское ..." | ISSUE: wrong school for the whole page
+theaterschoolstaff_1901-02_p003 | e002 | PRINTED chain: "Московское / Инспектриса" | stored: "// Инспекторы" | ISSUE: heading wrong
+theaterschoolstaff_1901-02_p003 | e003 | PRINTED chain: "Московское / Причтъ церкви Училища / Священникъ" | stored: "// Причть церкви Училища" | ISSUE: "Священникъ" missing
+theaterschoolstaff_1901-02_p003 | e004 | PRINTED chain: "Московское / Причтъ церкви Училища / Дьяконъ" | stored: "// Дьяконъ" | ISSUE: parent missing
+theaterschoolstaff_1901-02_p003 | e001, e005-e014 | PRINTED chain: "Московское / Помощникъ инспектора; Врачъ при Училищѣ; Фельдшерицы; Старшій надзиратель; Надзиратель; Старшія классныя дамы; Классныя дамы" | stored: same headings | OK apart from school
+theaterschoolstaff_1901-02_p003 | e015-e032 | PRINTED chain: "Московское / Преподаватели / а) Балетное отдѣленіе" | stored: same | OK apart from school
+theaterschoolstaff_1901-02_p004 | e001-e006 | PRINTED chain: "(inherited from p.137) Московское / Преподаватели / а) Балетное отдѣленіе" (items 19-24) | stored: "SPb // Учителя 1-го класса" | ISSUE: wrong school and wrong section
+theaterschoolstaff_1901-02_p004 | e007-e008 | PRINTED chain: "Московское / Учителя 1-го класса" | stored: "SPb // Учителя 1-го класса" | ISSUE: wrong school only
+theaterschoolstaff_1901-02_p004 | e009-e022 | PRINTED chain: "Московское / (Преподаватели) / б) Драматическіе курсы" | stored: "SPb // Драматическіе курсы" | ISSUE: wrong school
+OTHER FINDINGS
+- Гавронскій (p001 e012) is printed with surname only; stored empty correctly.
+- Ѳ forms (Ѳедоровичъ, Нелидовъ Ѳедоръ Ѳедоровичъ, Ариѳметика) are stored correctly.
+- p004 list number "23." is damaged in print ("2;.") but is 23.
+- Бѣлова Екатерина Васильевна: p003 e018 (Балетное, "съ 1 сентября 1892") and p004 e010 (Драм. курсы, "съ 1 сентября 1899") are the same person with two printed start dates, both stored as printed.
+- Many people appear in several lists with different posts (Андреевъ, Каменевъ, Кувакинъ, Сизовъ, Апушкинъ, Гельцеръ, Стороженко, Веселовскій, Черемухинъ, Никольскій, Пигулевскій, Зацимовскій, Ширяевъ); the stored dates match print apart from the errors above.
+- p002 e022 Давыдовъ and e025 Морозовъ: interrupted tenures ("по ... и съ ...") are stored correctly.
+```

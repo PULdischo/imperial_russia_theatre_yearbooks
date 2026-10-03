@@ -12115,3 +12115,18 @@ select distinct p.display_name, p.wikidata_qid from entities.production_credit_l
 ```
 
 Result: bare "Тальони" appears only on Флика и Флока (MSK 1890-94); "Тальони (отца)" only on Сильфида (SP 1891-93); bare "Петипа" on Дочь Фараона and others; "Иванова" once (Пробужденіе Флоры 1901-02). 1210 links, 330 to 18 roster persons, 75 creator_person rows; all four integrity checks are 0. 5 of the 18 roster creators already had QIDs (Петипа, Л. Ивановъ, Фокинъ, Хлюстинъ, Всеволожскій). The Wikidata candidate searches (public API, read-only) went to docs/eval/production_creators_wikidata_review.csv, not to the DB.
+
+## 2026-10-03 -- TheaterSchoolStaff audit: scoping, apply verification and cross-checks
+
+```sql
+select split_part(page_id,'_',2) s, count(distinct page_id) p, count(*) n from raw.person_entry where entry_id like 'theaterschoolstaff%' group by 1 order by 1;
+select institution, count(*) from raw.person_entry where entry_id like 'theaterschoolstaff%' group by 1 order by 2 desc;
+select heading_path, count(*) from raw.person_entry where entry_id like 'theaterschoolstaff%' group by 1 order by 2 desc;
+select e.entry_id, e.family_name, e.first_name, e.patronymic, substr(cast(l.person_id as varchar),1,6), p.display_name from raw.person_entry e join entities.person_link l using(entry_id)
+  join entities.person p on p.person_id = l.person_id where e.page_id = 'theaterschoolstaff_1896-97_p000' order by e.entry_id;   -- the #131 phase 2 block
+select count(*) from raw.person_entry where entry_id like 'theaterschoolstaff%' and patronymic is null and first_name like '% %';   -- 85 glued first+patronymic rows
+select subject_taught, count(*) from raw.person_entry where entry_id like 'theaterschoolstaff%' and subject_taught is not null group by 1 order by 2 desc limit 15;
+select rank_or_title, count(*) from raw.person_entry where entry_id like 'theaterschoolstaff%' and rank_or_title is not null group by 1 order by 2 desc limit 12;
+```
+
+Result: 99 pages / 2700 rows before the audit (2745 after stage 1), 22 distinct institution values and 193 distinct heading_path values before (2 institution titles + 128 heading paths for the 19 applied seasons after); the 1896-97 p000 block e014..e024 each carried the previous entry's person (fixed first); 85 rows had first name and patronymic glued; 627 rows had a rank_or_title that was often a subject (subjects: Танцы 38, Музыка 23 ...).

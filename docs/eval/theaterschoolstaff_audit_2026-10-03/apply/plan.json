@@ -1,0 +1,419 @@
+{
+ "remove": {
+  "theaterschoolstaff_1893-94_p002": [
+   11,
+   13
+  ],
+  "theaterschoolstaff_1895-96_p000": [
+   10,
+   12
+  ],
+  "theaterschoolstaff_1896-97_p000": [
+   11,
+   14
+  ],
+  "theaterschoolstaff_1899-00_p003": [
+   13
+  ],
+  "theaterschoolstaff_1902-03_p002": [
+   27
+  ],
+  "theaterschoolstaff_1904-05_p000": [
+   12,
+   14
+  ],
+  "theaterschoolstaff_1906-07_p000": [
+   14
+  ],
+  "theaterschoolstaff_1908-09_p000": [
+   9
+  ]
+ },
+ "add": [
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e015",
+   "family_name": "Гердтъ",
+   "first_name": "Павелъ",
+   "patronymic": "Андреевичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e016",
+   "family_name": "Дебогорій-Мокріевичъ",
+   "first_name": "Порфирій",
+   "patronymic": "Андреевичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e017",
+   "family_name": "Зацимовскій",
+   "first_name": "Николай",
+   "patronymic": "Станиславовичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e018",
+   "family_name": "Зрячковъ",
+   "first_name": "Николай",
+   "patronymic": "Яковлевичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e019",
+   "family_name": "Ивановъ",
+   "first_name": "Левъ",
+   "patronymic": "Ивановичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e020",
+   "family_name": "Іогансонъ",
+   "first_name": "Христіанъ",
+   "patronymic": "Петровичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e021",
+   "family_name": "Карсавинъ",
+   "first_name": "Платонъ",
+   "patronymic": "Константиновичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e022",
+   "family_name": "Латышевъ",
+   "first_name": "Василій",
+   "patronymic": "Николаевичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e023",
+   "family_name": "Леоновъ",
+   "first_name": "Александръ",
+   "patronymic": "Ѳедоровичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e024",
+   "family_name": "Мацкевичъ",
+   "first_name": "Иванъ",
+   "patronymic": "Ивановичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e025",
+   "family_name": "Облаковъ",
+   "first_name": "Александръ",
+   "patronymic": "Александровичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e026",
+   "family_name": "Озаровскій",
+   "first_name": "Георгій",
+   "patronymic": "Эрастовичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e027",
+   "family_name": "Павловскій",
+   "first_name": "Александръ",
+   "patronymic": "Филотеровичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e028",
+   "family_name": "Петипа",
+   "first_name": "Маріусъ",
+   "patronymic": "Ивановичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e029",
+   "family_name": "Петровская",
+   "first_name": "Вѣра",
+   "patronymic": "Ильинишна",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e030",
+   "family_name": "Пигулевскій",
+   "first_name": "Василій",
+   "patronymic": "Фавстовичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e031",
+   "family_name": "Писнячевскій",
+   "first_name": "Владиміръ",
+   "patronymic": "Порфирьевичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e032",
+   "family_name": "Піотровичъ",
+   "first_name": "",
+   "patronymic": "",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e033",
+   "family_name": "Поляковъ",
+   "first_name": "Филиппъ",
+   "patronymic": "Филипповичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e034",
+   "family_name": "Поповъ",
+   "first_name": "Михаилъ",
+   "patronymic": "Михайловичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e035",
+   "family_name": "Русскихъ",
+   "first_name": "Марія",
+   "patronymic": "Петровна",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e036",
+   "family_name": "Самойловъ",
+   "first_name": "Василій",
+   "patronymic": "Филипповичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e037",
+   "family_name": "Сандерсъ",
+   "first_name": "Янъ",
+   "patronymic": "Оттовичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e038",
+   "family_name": "Смирнова",
+   "first_name": "Екатерина",
+   "patronymic": "Павловна",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e039",
+   "family_name": "Тернизьенъ",
+   "first_name": "Эводъ",
+   "patronymic": "Алексѣевичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e040",
+   "family_name": "Шафрановъ",
+   "first_name": "Петръ",
+   "patronymic": "Александровичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e041",
+   "family_name": "Ширяевъ",
+   "first_name": "Александръ",
+   "patronymic": "Викторовичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1892-93_p001__e042",
+   "family_name": "Якубовъ",
+   "first_name": "Александръ",
+   "patronymic": "Евграфовичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1893-94_p002__e031",
+   "family_name": "Морозовъ",
+   "first_name": "Петръ",
+   "patronymic": "Осиповичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1893-94_p002__e032",
+   "family_name": "Острогорскій",
+   "first_name": "Викторъ",
+   "patronymic": "Петровичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1893-94_p002__e033",
+   "family_name": "Пилисье",
+   "first_name": "Павелъ",
+   "patronymic": "Андреевичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1893-94_p002__e034",
+   "family_name": "Цвѣтковскій",
+   "first_name": "Георгій",
+   "patronymic": "Георгіевичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1893-94_p002__e035",
+   "family_name": "Яковлевъ",
+   "first_name": "Степанъ",
+   "patronymic": "Ивановичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1893-94_p002__e036",
+   "family_name": "Ѳедотовъ",
+   "first_name": "Александръ",
+   "patronymic": "Филипповичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1894-95_p002__e025",
+   "family_name": "Ленскій",
+   "first_name": "Павелъ",
+   "patronymic": "Дмитріевичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1894-95_p002__e026",
+   "family_name": "Монаховъ",
+   "first_name": "Григорій",
+   "patronymic": "Осиповичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1894-95_p002__e027",
+   "family_name": "Морозовъ",
+   "first_name": "Петръ",
+   "patronymic": "Осиповичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1894-95_p002__e028",
+   "family_name": "Острогорскій",
+   "first_name": "Викторъ",
+   "patronymic": "Петровичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1894-95_p002__e029",
+   "family_name": "Пилисье",
+   "first_name": "Павелъ",
+   "patronymic": "Андреевичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1894-95_p002__e030",
+   "family_name": "Чевакинскій",
+   "first_name": "Николай",
+   "patronymic": "Ивановичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1894-95_p002__e031",
+   "family_name": "Шемаевъ",
+   "first_name": "Василій",
+   "patronymic": "Романовичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1894-95_p002__e032",
+   "family_name": "Цвѣтковскій",
+   "first_name": "Георгій",
+   "patronymic": "Георгіевичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1894-95_p002__e033",
+   "family_name": "Яковлевъ",
+   "first_name": "Степанъ",
+   "patronymic": "Ивановичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1894-95_p002__e034",
+   "family_name": "Ѳедотовъ",
+   "first_name": "Александръ",
+   "patronymic": "Филипповичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1894-95_p003__e040",
+   "family_name": "Бороздина",
+   "first_name": "Юлія",
+   "patronymic": "Владиміровна",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1894-95_p003__e041",
+   "family_name": "Каменевъ",
+   "first_name": "Александръ",
+   "patronymic": "Петровичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1896-97_p002__e027",
+   "family_name": "Монаховъ",
+   "first_name": "Григорій",
+   "patronymic": "Осиповичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1896-97_p002__e028",
+   "family_name": "Морозовъ",
+   "first_name": "Петръ",
+   "patronymic": "Осиповичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1896-97_p002__e029",
+   "family_name": "Острогорскій",
+   "first_name": "Викторъ",
+   "patronymic": "Петровичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1896-97_p002__e030",
+   "family_name": "Пигулевскій",
+   "first_name": "Василій",
+   "patronymic": "Фавстовичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1896-97_p002__e031",
+   "family_name": "Цвѣтковскій",
+   "first_name": "Георгій",
+   "patronymic": "Георгіевичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1896-97_p002__e032",
+   "family_name": "Чевакинскій",
+   "first_name": "Николай",
+   "patronymic": "Ивановичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1896-97_p002__e033",
+   "family_name": "Шемаевъ",
+   "first_name": "Василій",
+   "patronymic": "Романовичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1900-01_p003__e028",
+   "family_name": "Теляковскій",
+   "first_name": "Владиміръ",
+   "patronymic": "Аркадьевичъ",
+   "conf": "DIRECT"
+  },
+  {
+   "entry_id": "theaterschoolstaff_1908-09_p000__e019",
+   "family_name": "Смирновъ",
+   "first_name": "Михаилъ",
+   "patronymic": "Арсеньевичъ",
+   "conf": "DIRECT"
+  }
+ ]
+}

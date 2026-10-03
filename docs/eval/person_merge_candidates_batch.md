@@ -10,4 +10,8 @@ Splits of wrongly merged homonyms are different: those fix a factual error and w
 | Петипа, Маріусъ Ивановичъ (BalletArtists/TheaterSchoolStaff) | e04344 (1890-91..1907-08) + 0f4adf (1908-09..1909-10) | identical name and patronymic, consecutive seasons; found while linking ballet-list creators (issue #133, which links to e04344) | merge |
 | Чекетти, Энрико / Генрихъ Цезаревичъ | 09350c (Энрико, TheaterSchoolStaff "Танцы", 1893-94..1900-01) + bfe3f9 (Генрихъ, BalletArtists, 1890-91..1902-03) | same patronymic; Генрихъ is the usual Russian rendering of Enrico; one man in two lists (company + school), so the seasons overlap; found during issue #133 (which links to 09350c) | merge (RG to confirm Генрихъ = Энрико) |
 
+| Петипа Маріусъ Ивановичъ (TheaterSchoolStaff + ...) | two live person_ids with the same canonical name | surfaced when the 28 missing 1892-93 p001 rows were seeded (ambiguous, left unseeded); same name, same post (dancing teacher) | check and merge |
+| Ширяевъ Александръ Викторовичъ | three live person_ids with the same canonical name | surfaced at the same step; a dancing teacher printed in two lists per season (Танцы / Репетиторъ танцевъ); likely one man | check and merge |
+| Голяховскій Петръ (TheaterSchoolStaff 1904-05) | patronymic Власьевичъ (p001 no. 10) vs Васильевичъ (p002 no. 1) | print variant or two men; not merged | check |
+
 Not candidates (checked, already one person): Бардюкъ/Бордюгъ Николай Кирилловичъ (d8f03d), Каменскій/Неменскій Исаакъ Осиповичъ (1efe21).

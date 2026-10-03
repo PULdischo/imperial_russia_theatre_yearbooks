@@ -1,0 +1,100 @@
+Season 1892-93 audit is done: four pages, every page zoomed with PIL (crops listed in the summary below), report only, no project files touched. The full text is also in /tmp/tss/results/1892-93.txt, and the crops are in /tmp/tss/crops/1892-93/. Two of the four pages have structural problems, so the main points come first.
+
+**Main findings**
+1. **p001 is missing 28 rows.** Printed p.375 carries Petersburg Балетное отдѣленіе nos. 4-31 (Гердтъ through Якубовъ, both columns). Only the 14 rows from "Учителя приготовительныхъ классовъ" onward are stored. The full missing entries are listed below. They sit before stored e001, as a column-top continuation of p000's list (which ends after Ваземъ, no. 3).
+2. **p003 is entirely the Moscow school, but all 23 rows are stored as Petersburg.** Printed p.377 continues the Moscow list from p002.
+   - e001-e008 are Moscow Балетное отдѣленіе nos. 20-27, not "Учителя приготовительныхъ классовъ". That heading is printed only after no. 27.
+   - e009-e010 are Moscow Учителя приготовительныхъ классовъ nos. 1-2.
+   - e011-e023 are Moscow "б) Драматическіе курсы" nos. 1-13.
+   - Stored e009, e010 and e011 have list numbers leaked into heading_path ("/ 1.", "/ 2.").
+3. **p002 e037 and e038 (Румянцева, Теличкина) are stored under "Преподаватели".** They are Классныя дамы: Младшія, nos. 2 and 3, printed at the top of the right column before the "Преподаватели:" heading. p002 e009 (Оболенская) is under "Инспекторъ" in storage but under "Инспектриса" in print.
+4. **p002 has 24 field discrepancies, mostly subject-in-rank shifts.** The subject sits in rank_or_title and subject_taught is empty on e018-e019 and e021-e036 (e020 has no subject stored at all). Separate from those, the p002 field discrepancies are:
+   - e008 patronymic "Никіфоровичъ", printed "Никифоровичъ".
+   - e025 surname "Дюфортъ", printed "Дюфоръ".
+   - e032 surname "Мендесь", printed "Мендесъ".
+   - "кн." is stored in the first-name field on e009 and e021, and belongs in rank.
+   - e019 and e024 hold "(священникъ/дьяконъ церкви Училища). Законъ Божій" fused in rank.
+   - e020 (Бѣлова) has "Французскій языкъ" dropped entirely.
+   - e001 and e004 have position notes rather than civil ranks in rank_or_title (e001 is also duplicated into tenure).
+5. **p000 has 7 field discrepancies.**
+   - e028-e030 have the subject in rank (Танцы, Музыка, Танцы).
+   - e005 and e008 hold parenthetical position notes in rank_or_title. e007 does too, and also has "Московскій" for the printed "Московской".
+   - e005 surname is stored "Потѣхинъ", but the print has the typo "Потѣхннъ" (confirmed at 3x).
+   - The e010 heading is stored "Инспекториса", printed "Инспектриса".
+6. **Smaller points.**
+   - The list title "Списокъ личнаго состава ..." is missing from every p000 heading_path.
+   - p001's rows lack the "Преподаватели" level.
+   - p001 e001-e014 and p003 e001-e023 are otherwise clean on every name, subject and date digit. p003's "† 8 марта 1893 г" on Кудрявцевъ matches.
+
+**Missing p001 rows (all DIRECT, all under the Petersburg Преподаватели / а) Балетное отдѣленіе chain)**
+4 Гердтъ, Павелъ Андреевичъ (съ 11 сентября 1880 г.). Танцы. / 5 Дебогорій-Мокріевичъ, Порфирій Андреевичъ (помощникъ инспектора Училища). Географія. / 6 Зацимовскій, Николай Станиславовичъ (съ 1 сентября 1889). Исторія. / 7 Зрячковъ, Николай Яковлевичъ (1 сент. 1882). Рисованіе и чистописаніе. / 8 Ивановъ, Левъ Ивановичъ (19 ноября 1858). Танцы. / 9 Іогансонъ, Христіанъ Петровичъ (18 января 1869). Танцы. / 10 Карсавинъ, Платонъ Константиновичъ (1 сент. 1882). Танцы. / 11 Латышевъ, Василій Николаевичъ (7 января 1865). Музыка. / 12 Леоновъ, Александръ Ѳедоровичъ (1 сент. 1883). Музыка. / 13 Мацкевичъ, Иванъ Ивановичъ (1 сент. 1892). Фехтованіе и военные пріемы. / 14 Облаковъ, Александръ Александровичъ (1 сент. 1884). Танцы. / 15 Озаровскій, Георгій Эрастовичъ (1 сент. 1892). Выразительное чтеніе. / 16 Павловскій, Александръ Филотеровичъ (1 сент. 1887). Географія. / 17 Петипа, Маріусъ Ивановичъ (1 сент. 1855). Танцы. / 18 Петровская, Вѣра Ильинишна (1 сент. 1889). Музыка. / 19 Пигулевскій, Василій Фавстовичъ (священникъ церкви Училища). Законъ Божій. / 20 Писнячевскій, Владиміръ Порфирьевичъ (инспекторъ Училища). Ариѳметика. / 21 Піотровичъ, (съ 1 ноября 1888 г.). Законъ Божій для учащихся Римско-Католическаго вѣроисповѣданія. (no first name or patronymic printed) / 22 Поляковъ, Филиппъ Филипповичъ (1 сент. 1890). Церковное пѣніе. / 23 Поповъ, Михаилъ Михайловичъ (1 сент. 1888). Рисованіе и чистописаніе. / 24 Русскихъ, Марія Петровна (1 окт. 1888). Рукодѣліе. / 25 Самойловъ, Василій Филипповичъ (1 сент. 1887). Русскій языкъ. / 26 Сандерсъ, Янъ Оттовичъ (1 февр. 1891). Законъ Божій для учащихся Евангелическаго Лютеранскаго вѣроисповѣданія. / 27 Смирнова, Екатерина Павловна (1 сент. 1888). Музыка. / 28 Тернизьенъ, Эводъ Алексѣевичъ (1 дек. 1879). Французскій языкъ. / 29 Шафрановъ, Петръ Александровичъ (1 сент. 1888). Исторія. / 30 Ширяевъ, Александръ Викторовичъ (15 сент. 1891). Танцы. / 31 Якубовъ, Александръ Евграфовичъ (1 сент. 1888). Русскій языкъ.
+The full results file has these in the letter-exact form the brief asks for.
+
+**Other findings**
+- Many people appear in several lists across p000 and p002 (Рюминъ, Пчельниковъ, Дебогорій-Мокріевичъ, Пигулевскій, Писнячевскій, Богородскій, Дружининъ, Черемухинъ, Михайловскій, Зацимовскій), and Каменевъ Александръ Петровичъ appears three times in the Moscow lists. Names such as Сизовъ and Веселовскій recur between the Petersburg and Moscow dramatic courses. These are the same persons, not duplicates.
+- Print spells Дюфоръ in both Moscow lists.
+- Crops made: p000 14 (a1, L1-6, R1-6, zPot), p001 14 (L1-7, R1-7), p002 18 (H, L1-7, R1-7, zMend, zDuf, zCher), p003 8 (L1-4, R1-4).
+
+```
+PAGE SUMMARY
+theaterschoolstaff_1892-93_p000 | rows stored: 30 | crops made: 14 | field discrepancies: 7 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 2
+theaterschoolstaff_1892-93_p001 | rows stored: 14 | crops made: 14 | field discrepancies: 0 | missing rows: 28 | extra/non-person rows: 0 | section-map issues: 2
+theaterschoolstaff_1892-93_p002 | rows stored: 38 | crops made: 18 | field discrepancies: 24 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 3
+theaterschoolstaff_1892-93_p003 | rows stored: 23 | crops made: 8 | field discrepancies: 0 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 4
+FIELD DISCREPANCIES
+theaterschoolstaff_1892-93_p000 | e005 | surname | STORED: "Потѣхинъ" | PRINTED: "Потѣхннъ" | DIRECT | print typo, stored silently corrected
+theaterschoolstaff_1892-93_p000 | e005 | rank | STORED: "(управляющій С.-Петербургской Конторой Императорскихъ театровъ)" | PRINTED: same parenthetical | DIRECT | position note, not a rank
+theaterschoolstaff_1892-93_p000 | e007 | rank | STORED: "(управляющій Московскій Конторой Императорскихъ театровъ)" | PRINTED: "(управляющій Московской Конторой Императорскихъ театровъ)" | DIRECT | ending ой, not ій; position note
+theaterschoolstaff_1892-93_p000 | e008 | rank | STORED: "(управляющій С.-Петербургскимъ Театральнымъ Училищемъ)" | PRINTED: same | DIRECT | position note, not a rank
+theaterschoolstaff_1892-93_p000 | e028 | shift | STORED: rank "Танцы", subject "" | PRINTED: "(съ 1 сентября 1892 г.). Танцы." | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p000 | e029 | shift | STORED: rank "Музыка", subject "" | PRINTED: "Музыка." | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p000 | e030 | shift | STORED: rank "Танцы", subject "" | PRINTED: "Танцы." | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e001 | rank | STORED: rank and tenure both "управляющій Московской Конторой Императорскихъ театровъ" | PRINTED: one parenthetical | DIRECT | duplicated into two fields; not a civil rank
+theaterschoolstaff_1892-93_p002 | e004 | rank | STORED: "управляющій Императорскимъ С.-Петербургскимъ Театральнымъ Училищемъ" | PRINTED: same | DIRECT | position note, not a rank
+theaterschoolstaff_1892-93_p002 | e008 | patronymic | STORED: "Никіфоровичъ" | PRINTED: "Никифоровичъ" | DIRECT | і for и
+theaterschoolstaff_1892-93_p002 | e009 | shift | STORED: first "кн. Анна" | PRINTED: "Оболенская, кн. Анна Николаевна" | DIRECT | rank "кн.", first "Анна"
+theaterschoolstaff_1892-93_p002 | e018 | shift | STORED: rank "Рисованіе и чистописаніе", subject "" | PRINTED: "Рисованіе и чистописаніе." | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e019 | shift | STORED: rank "(священникъ церкви Училища). Законъ Божій", subject "" | PRINTED: same text | DIRECT | note and subject fused in rank; subject should be "Законъ Божій"
+theaterschoolstaff_1892-93_p002 | e020 | subject | STORED: rank "", subject "" | PRINTED: "Бѣлова, Екатерина Васильевна (съ 1 сентября 1892 г.). Французскій языкъ." | DIRECT | subject dropped
+theaterschoolstaff_1892-93_p002 | e021 | shift | STORED: first "кн. Григорій", rank "Географія" | PRINTED: "Волконскій, кн. Григорій Дмитріевичъ (...). Географія." | DIRECT | "кн." to rank; "Географія" to subject
+theaterschoolstaff_1892-93_p002 | e022 | shift | STORED: rank "Музыка" | PRINTED: "Музыка." | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e023 | shift | STORED: rank "Математика" | PRINTED: "Математика." | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e024 | shift | STORED: rank "(дьяконъ церкви Училища). Законъ Божій" | PRINTED: same | DIRECT | note and subject fused in rank
+theaterschoolstaff_1892-93_p002 | e025 | surname | STORED: "Дюфортъ" | PRINTED: "Дюфоръ" | DIRECT | extra т
+theaterschoolstaff_1892-93_p002 | e025 | shift | STORED: rank "Французскій языкъ" | PRINTED: same | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e026 | shift | STORED: rank "Танцы" | PRINTED: "Танцы." | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e027 | shift | STORED: rank "Исторія и географія" | PRINTED: same | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e028 | shift | STORED: rank "Географія" | PRINTED: same | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e029 | shift | STORED: rank "Исторія" | PRINTED: same | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e030 | shift | STORED: rank "Русскій языкъ" | PRINTED: same | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e031 | shift | STORED: rank "Пѣніе" | PRINTED: same | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e032 | surname | STORED: "Мендесь" | PRINTED: "Мендесъ" | DIRECT | ъ not ь, confirmed at 4x
+theaterschoolstaff_1892-93_p002 | e032 | shift | STORED: rank "Танцы" | PRINTED: "Танцы." | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e033 | shift | STORED: rank "Музыка" | PRINTED: same | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e034 | shift | STORED: rank "Исторія и географія" | PRINTED: same | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e035 | shift | STORED: rank "Рисованіе и чистописаніе" | PRINTED: same | DIRECT | subject in rank
+theaterschoolstaff_1892-93_p002 | e036 | shift | STORED: rank "Декламація" | PRINTED: same | DIRECT | subject in rank
+(p001 e001-e014 and p003 e001-e023: no field discrepancies)
+MISSING / EXTRA ROWS
+theaterschoolstaff_1892-93_p001 | after e000 (before e001) | MISSING: 28 rows, nos. 4 Гердтъ ... 31 Якубовъ (letter-exact text in the list above and in the results file), under Императорское С.-Петербургское Театральное Училище / Преподаватели / а) Балетное отдѣленіе | DIRECT
+(no extra/non-person rows)
+SECTION MAP (printed headings, per run)
+theaterschoolstaff_1892-93_p000 | e001-e030 | PRINTED chain: "Списокъ личнаго состава преподавателей и служащихъ въ Императорскихъ Театральныхъ Училищахъ / С.-Петербургское Театральное Училище / [section]" | stored: "С.-Петербургское Театральное Училище. // [section]" | ISSUE: list title missing in every p000 heading_path
+theaterschoolstaff_1892-93_p000 | e010 | PRINTED chain: "... / Инспектриса" | stored: "Инспекториса" | ISSUE: spelling
+theaterschoolstaff_1892-93_p000 | e028-e030 | PRINTED chain: "... / Преподаватели: / а) Балетное отдѣленіе" | stored: same | OK
+theaterschoolstaff_1892-93_p001 | e001-e004 | PRINTED chain: "[inherited: Преподаватели:] / Учителя (Учительницы) приготовительныхъ классовъ" | stored: "Императорское С.-Петербургское Театральное Училище // Учителя приготовительныхъ классовъ" | ISSUE: "Преподаватели" level and list title missing
+theaterschoolstaff_1892-93_p001 | e005-e014 | PRINTED chain: "[inherited: Преподаватели:] / б) Драматическіе курсы" | stored: "... // б) Драматическіе курсы" | ISSUE: "Преподаватели" level missing
+theaterschoolstaff_1892-93_p002 | e001-e008, e010-e036 | PRINTED chain: as stored | stored: as printed | OK
+theaterschoolstaff_1892-93_p002 | e009 | PRINTED chain: "Императорское Московское Театральное Училище / Инспектриса" | stored: "Инспекторъ" | ISSUE: wrong section
+theaterschoolstaff_1892-93_p002 | e037-e038 | PRINTED chain: "Классныя дамы: / Младшія" (column-top continuation, nos. 2-3) | stored: "Преподаватели" | ISSUE: wrong section
+theaterschoolstaff_1892-93_p003 | e001-e023 | PRINTED chain: Императорское Московское Театральное Училище (inherited from p002) | stored: "Императорское С.-Петербургское Театральное Училище // ..." | ISSUE: wrong school
+theaterschoolstaff_1892-93_p003 | e001-e008 | PRINTED chain: "[inherited: Московское ... / Преподаватели: /] а) Балетное отдѣленіе" | stored: "Учителя приготовительныхъ классовъ" | ISSUE: wrong sub-section (that heading prints only after no. 27)
+theaterschoolstaff_1892-93_p003 | e009-e010 | PRINTED chain: "Московское ... / Преподаватели: / Учителя приготовительныхъ классовъ" | stored: "... // Учителя приготовительныхъ классовъ / 1." and "/ 2." | ISSUE: list numbers leaked into heading_path
+theaterschoolstaff_1892-93_p003 | e011-e023 | PRINTED chain: "[Московское ... / Преподаватели:] / б) Драматическіе курсы" | stored: e011 "б) Драматическіе курсы / 1."; e012-e023 "б) Драматическіе курсы" | ISSUE: e011 "/ 1." leaked; "Преподаватели" level missing
+OTHER FINDINGS
+- p003 (printed p.377) is entirely the Moscow school, not Petersburg.
+- p001 and p003 print no school or list heading; both start mid-list as column-top continuations of p000 and p002 respectively.
+- Print typo: Потѣхннъ (p000 e005); stored silently corrected.
+- Piotrovich (Petersburg Балетное no. 21) has surname only in print.
+- Same persons recur across lists (Рюминъ, Пчельниковъ, Дебогорій-Мокріевичъ, Каменевъ, Сизовъ, Веселовскій and others); these are not duplicates.
+```

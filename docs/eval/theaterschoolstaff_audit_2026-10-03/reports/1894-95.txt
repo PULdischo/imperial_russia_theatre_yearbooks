@@ -1,0 +1,70 @@
+Season 1894-95 audit complete (report only, no project files touched). Full text is also in /tmp/tss/results/1894-95.txt. Crops are in /tmp/tss/crops/1894-95/. Every page was zoomed with PIL and every crop was read.
+
+Main findings:
+- **p002 is missing 10 printed rows.** The top of the page is the continuation of the SPb "Преподаватели / б) Драматическіе курсы" list, nos 6-15. They are in none of the four raw JSONs.
+- **p003 is the Moscow school page** (printed page 382, continuing the Moscow ballet list from p002). The stored rows are labelled St Petersburg, so the whole page has a wrong school.
+- **p003 is also missing two rows:** Бороздина and Каменевъ under "Учителя 1-го класса".
+- **p001 e001-e003** are continuation rows of "Классныя дамы" from p000. They are stored under the wrong heading, which is printed only after them.
+
+```
+PAGE SUMMARY
+theaterschoolstaff_1894-95_p000 | rows stored: 23 | crops made: 8 | field discrepancies: 0 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 0
+theaterschoolstaff_1894-95_p001 | rows stored: 46 | crops made: 11 | field discrepancies: 6 | missing rows: 0 | extra/non-person rows: 0 | section-map issues: 2
+theaterschoolstaff_1894-95_p002 | rows stored: 24 | crops made: 17 | field discrepancies: 2 | missing rows: 10 | extra/non-person rows: 0 | section-map issues: 1
+theaterschoolstaff_1894-95_p003 | rows stored: 39 | crops made: 10 | field discrepancies: 5 | missing rows: 2 | extra/non-person rows: 0 | section-map issues: 3
+FIELD DISCREPANCIES
+theaterschoolstaff_1894-95_p001 | e008 | shift | STORED: first "Законъ", patronymic "Божій для учащихся Римско-Католическаго вѣроисповѣданія" | PRINTED: "4. Гавронскій (съ 1 февраля 1895 г.). Законъ Божій для учащихся Римско-Католическаго вѣроисповѣданія." (no first name or patronymic printed; first and patronymic should be empty) | DIRECT | subject_taught already holds the subject correctly
+theaterschoolstaff_1894-95_p001 | e010 | surname | STORED: "Зацымовскій" | PRINTED: "Зацимовскій" | DIRECT
+theaterschoolstaff_1894-95_p001 | e039 | surname | STORED: "Зацымовскій" | PRINTED: "Зацимовскій" | DIRECT
+theaterschoolstaff_1894-95_p001 | e022 | surname | STORED: "Пилисъ" | PRINTED: "Пилисье" | DIRECT | also printed "Пилисье" on p002 (top, list no. 10)
+theaterschoolstaff_1894-95_p001 | e021 | rank/subject/tenure | STORED: rank "", subject "Законъ Божій (священникъ церкви Училища)", tenure "(священникъ церкви Училища). Законъ Божій" | PRINTED: "(священникъ церкви Училища). Законъ Божій." (office in parentheses, subject "Законъ Божій", no date) | DIRECT | subject should be "Законъ Божій" alone; tenure repeats the subject
+theaterschoolstaff_1894-95_p001 | e023 | tenure | STORED: "(инспекторъ Училища)" | PRINTED: "(инспекторъ Училища). Ариѳметика" | UNCERTAIN | convention question only: office-in-parentheses is stored in rank on p002 e022/e023 but in tenure here
+theaterschoolstaff_1894-95_p002 | e001 | rank/tenure | STORED: "управляющій Московской Контролей Императорскихъ театровъ" (also in tenure) | PRINTED: "(управляющій Московской Конторой Императорскихъ театровъ)" | DIRECT
+theaterschoolstaff_1894-95_p002 | e004 | rank | STORED: "управляющій С.-Петербургской Контролей Императорскихъ театровъ" | PRINTED: "(управляющій С.-Петербургской Конторой Императорскихъ театровъ)" | DIRECT
+theaterschoolstaff_1894-95_p003 | e015 | surname | STORED: "Менкинъ" | PRINTED: "Менжинъ" | DIRECT
+theaterschoolstaff_1894-95_p003 | e023 | patronymic | STORED: "Никіфоровичъ" | PRINTED: "Никифоровичъ" | DIRECT | p002 e009 stores it correctly
+theaterschoolstaff_1894-95_p003 | e029 | subject | STORED: "Исторія перкви" | PRINTED: "Исторія церкви" | DIRECT
+theaterschoolstaff_1894-95_p003 | e001 | rank | STORED: "" | PRINTED: "5. Волконскій, кн. Григорій Дмитріевичъ" | rank should be "кн." | DIRECT
+theaterschoolstaff_1894-95_p003 | e004 | rank/tenure | STORED: tenure "дьяконъ церкви Училища" | PRINTED: "(дьяконъ церкви Училища). Законъ Божій" | UNCERTAIN | same office-in-parentheses convention question
+MISSING / EXTRA ROWS
+theaterschoolstaff_1894-95_p002 | before e001 | MISSING (all under SPb / Преподаватели / б) Драматическіе курсы, inherited from p001): DIRECT
+  "6. Ленскій, Павелъ Дмитріевичъ (съ 15 октября 1893 г.). Практика драматическаго искусства."
+  "7. Монаховъ, Григорій Осиповичъ (съ 15 октября 1893 г.). Пѣніе."
+  "8. Морозовъ, Петръ Осиповичъ (съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.). Исторія драмы и театра."
+  "9. Острогорскій, Викторъ Петровичъ (съ 1 сентября 1888 г.). Русская и иностранная литература."
+  "10. Пилисье, Павелъ Андреевичъ (съ 1 сентября 1893 г.). Французскій языкъ."
+  "11. Чевакинскій, Николай Ивановичъ (съ 1 января 1894 г.). Фехтованіе."
+  "12. Шемаевъ, Василій Романовичъ (съ 1 сентября 1895 г.). Практика драматическаго искусства."
+  "13. Цвѣтковскій, Георгій Георгіевичъ (съ 1 сентября 1888 г.). Бытовая исторія."
+  "14. Яковлевъ, Степанъ Ивановичъ (съ 1 сентября 1893 г.). Практика драматическаго искусства."
+  "15. Ѳедотовъ, Александръ Филипповичъ (съ 1 сентября 1893 г.). Практика драматическаго искусства. † 11 февраля 1895 г."
+theaterschoolstaff_1894-95_p003 | after e025 | MISSING: "1. Бороздина, Юлія Владиміровна (съ 1 сентября 1888 г.)" under Императорское Московское Театральное Училище / Преподаватели / а) Балетное отдѣленіе / Учителя 1-го класса: | DIRECT
+theaterschoolstaff_1894-95_p003 | after e025 | MISSING: "2. Каменевъ, Александръ Петровичъ (съ 1 сентября 1888 г.)" same chain | DIRECT
+SECTION MAP (printed headings, per run)
+theaterschoolstaff_1894-95_p000 | e001 | PRINTED chain: "Списокъ личнаго состава преподавателей и служащихъ въ Императорскихъ Театральныхъ Училищахъ / С.-Петербургское Театральное Училище. / Управляющій Училищемъ" | stored: "С.-Петербургское Театральное Училище. // Управляющій Училищемъ" | OK (list title not stored)
+theaterschoolstaff_1894-95_p000 | e002-e007 | "... / Почетные члены конференціи:" | OK
+theaterschoolstaff_1894-95_p000 | e008-e010 | Инспекторъ. / Инспектриса. / Помощникъ инспектора. | OK
+theaterschoolstaff_1894-95_p000 | e011-e012 | "Причтъ церкви Училища: / Священникъ. ; Дьяконъ." | stored "Причтъ церкви Училища" only | OK (sub-heading held in rank)
+theaterschoolstaff_1894-95_p000 | e013-e016 | Врачъ при Училищѣ. / Лекарскій помощникъ. / Дѣлопроизводитель. / Канцелярскій чиновникъ. | OK
+theaterschoolstaff_1894-95_p000 | e017-e023 | Воспитатели: (e017-e020); Классныя дамы: (e021-e023, continues on p001 as nos 4-6) | OK
+theaterschoolstaff_1894-95_p001 | e001-e003 | PRINTED chain: inherited from p000, "С.-Петербургское Театральное Училище. / Классныя дамы:" (nos 4-6; no heading on p001) | stored: "Императорское С.-Петербургское Театральное Училище // Классеная дама при драматическихъ курсахъ" | ISSUE: wrong section; that heading is printed only after these rows (above Юргенсъ)
+theaterschoolstaff_1894-95_p001 | e004 | PRINTED chain: "... / Классная дама при драматическихъ курсахъ." | stored: "... // Классеная дама при драматическихъ курсахъ" | ISSUE: typo "Классеная" in stored heading (print "Классная")
+theaterschoolstaff_1894-95_p001 | e005-e037 | "Преподаватели: / а) Балетное отдѣленіе." | stored "Преподаватели / а) Балетное отдѣленіе" | OK
+theaterschoolstaff_1894-95_p001 | e038-e039 | Учителя приготовительныхъ классовъ: | OK
+theaterschoolstaff_1894-95_p001 | e040-e041 | Учительницы приготовительныхъ классовъ: | OK
+theaterschoolstaff_1894-95_p001 | e042-e046 | "Преподаватели / б) Драматическіе курсы." | stored "Преподаватели / б) Драматическіе курсы" | OK
+theaterschoolstaff_1894-95_p002 | (10 unstored rows at page top) | inherited from p001: SPb / Преподаватели / б) Драматическіе курсы | rows missing (see above)
+theaterschoolstaff_1894-95_p002 | e001 | PRINTED chain: "Императорское Московское Театральное Училище. / Управляющій Училищемъ." | OK
+theaterschoolstaff_1894-95_p002 | e002-e016 | Почетные члены конференціи: / Инспекторъ. / Инспектриса. / Причтъ церкви Училища: Священникъ., Дьяконъ. / Врачъ при Училищѣ. / Фельдшерица. / Старшій надзиратель. / Надзиратель. | OK
+theaterschoolstaff_1894-95_p002 | e017-e020 | Старшія классныя дамы: (e017-e018); Классныя дамы: (e019-e020) | OK
+theaterschoolstaff_1894-95_p002 | e021-e024 | "Преподаватели. / а) Балетное отдѣленіе." (list continues on p003) | OK
+theaterschoolstaff_1894-95_p003 | e001-e025 | PRINTED chain: no heading on p003; inherited from p002, "Императорское Московское Театральное Училище / Преподаватели / а) Балетное отдѣленіе" | stored: "Императорское С.-Петербургское Театральное Училище // Учителя 1-го класса" | ISSUE: wrong school (Moscow, not SPb); "Учителя 1-го класса" is printed only after row 29 (before Бороздина/Каменевъ), not above these rows
+theaterschoolstaff_1894-95_p003 | e026-e039 | PRINTED chain: "Императорское Московское Театральное Училище / Преподаватели / б) Драматическіе курсы." | stored: "Императорское С.-Петербургское Театральное Училище // Учителя 1-го класса / б) Драматическіе курсы" | ISSUE: wrong school; "Учителя 1-го класса" wrongly made a parent of б) (UNCERTAIN whether print nests it; layout suggests б) is a sibling of а) under Преподаватели)
+OTHER FINDINGS
+- p000 e018 Лаубергъ: tenure printed "съ 26 января 1896 г." (confirmed at 2.2x), later than the 1894-95 season. Print oddity, stored as printed.
+- Moscow identification of p003 is confirmed by the continuing list numbers (p002 ends at 4, p003 starts at 5) and by Moscow names (Ленскій А.П., Садовскій, Сизовъ, Смирновъ, Стороженко, Невскій, Веселовскій).
+- Same persons across pages: Пилисье (p001 e022 / p002 top), Дружининъ deacon (p002 e012 / p003 e004), Бонковскій (p002 e016 / e023), Богородскій (p002 e011 / e022), Михайловскій (p002 e015 / p003 e016), Черемухинъ (p002 e009 / p003 e023). Each is printed with the same spelling in both places (Никифоровичъ).
+- Office-in-parentheses convention is inconsistent: p002 e022/e023 store it in rank; p001 e021/e023 and p003 e004/e016/e023 store it in tenure or subject.
+- p000 e005 and e007 hold a parenthetical office description in rank_or_title, not a rank.
+- Stored institution says "Императорское С.-Петербургское Театральное Училище" on p001, but p000 prints the school as "С.-Петербургское Театральное Училище." with no "Императорское", and p001 prints no school heading.
+```
