@@ -1,0 +1,62 @@
+GROUP 2 -- ProductionTeam start-date audit (report only; all prints read from zoomed scans)
+
+PERSON 26052dfb Александровъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1903-04_p000__e020 | printed: "1. Александровъ, Александръ Александровичъ (съ 16 сентября 1902 г.)." | stored-vs-print: SAME
+  productionteam_1904-05_p000__e012 | printed: "1. Александровъ, Александръ Александровичъ (съ 16 сентября 1902 г.)." | stored-vs-print: SAME (stored text lacks the parentheses, print has them)
+  productionteam_1905-06_p000__e020 | printed: "1. Александровъ, Александръ Александровичъ (съ 6 сентября 1902 г.)." | stored-vs-print: SAME
+  productionteam_1906-07_p000__e011 | printed: "1. Александровъ, Александръ Александровичъ (съ 6 сентября 1902 г.)." | stored-vs-print: SAME
+  note: One man (same first name+patronymic, same post: Ученики декораціонной живописи, listed first; the other student is Владиміръ Андреевичъ). Printer changed 16 -> 6 September 1902 between 1904-05 and 1905-06 (1903-04 and 1904-05 print 16; 1905-06 and 1906-07 print 6). Stored values are faithful.
+
+PERSON bdc18292 Гельцеръ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1890-91_p002__e013 | printed: "Гельцеръ, Анатолій Ѳедоровичъ (съ 19 декабря 1873 г.)." (Малый театръ, Декоратор) | stored-vs-print: SAME
+  productionteam_1891-92_p002__e012 | printed: "Гельцеръ, Анатолій Ѳедоровичъ (съ 19 декабря 1873 г.)." | stored-vs-print: SAME (stored lacks parens)
+  productionteam_1897-98_p002__e011 | printed: "2. Гельцеръ, Анатолій Ѳедоровичъ (съ 12 декабря 1873 г.)." | stored-vs-print: SAME
+  productionteam_1898-99_p002__e018 | printed: "2. Гельцеръ, Анатолій Ѳедоровичъ (съ 12 декабря 1873 г.)." | stored-vs-print: SAME
+  productionteam_1899-00_p003__e002 | printed: "2. Гельцеръ, Анатолій Ѳедоровичъ (съ 12 декабря 1873 г.)." | stored-vs-print: SAME
+  productionteam_1900-01_p003__e002 | printed: "2. Гельцеръ, Анатолій Ѳедоровичъ (съ 12 декабря 1873 г.). Оставилъ службу 6 февраля 1901 г." | stored-vs-print: SAME
+  note: Same man (Moscow decorator, continuous career, leaves service Feb 1901). Raw JSON shows 19 декабря in 1890-91..1896-97 (the 1896-97 thumbnail also reads 19) and 12 декабря from 1897-98..1900-01; the switch is a printer's change at 1897-98, read clearly in print both ways. Which is the "true" day is not determinable from the print.
+
+PERSON 41d2d617 Защукъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1896-97_p002__e008 | printed: "Защукъ, Анна Іосифовна (съ 1 августа 1897 г.)." (Михайловскій театръ, Гардеробмейстерши; directly below Вивьенъ де-Шатобріанъ "Оставила службу 1 августа 1897 г.") | stored-vs-print: SAME (stored lacks the opening paren)
+  productionteam_1897-98_p002__e009 | printed: "Защукъ, Анна Іосифовна (съ 15 сентября 1887 г.)." | stored-vs-print: SAME
+  productionteam_1898-99_p002__e016 | printed: "Защукъ, Анна Іосифовна (съ 15 сентября 1887 г.)." | stored-vs-print: SAME
+  note: Same woman, same post, same predecessor-successor slot. 1896-97 gives 1 Aug 1897 (coincides with predecessor's leaving date -> looks like the date of appointment to the post); every later season (1897-98..1909-10, 13 entries) gives 15 Sept 1887 (looks like start of service). Not a second person. Cause of the printer's change not determinable (post-appointment date vs service-start date).
+
+PERSON f02f8256 Калиновъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1890-91_p001__e007 | printed: "Калиновъ, Леонтій Васильевичъ (съ 1 августа 1882 г.)" (Помощникъ завѣдывающаго освѣщеніемъ, Маріинскій) | stored-vs-print: SAME
+  productionteam_1891-92_p001__e008 | printed: "(съ 1 августа 1882 г.). Съ 1 мая 1892 г. назначенъ завѣдывающимъ освѣщеніемъ въ Михайловскомъ театрѣ." | stored-vs-print: SAME
+  productionteam_1895-96_p001__e008 | printed: "(съ 2 августа 1882 г.)." | stored-vs-print: SAME
+  productionteam_1896-97_p001__e008 | printed: "(съ 2 августа 1882 г.)." | stored-vs-print: SAME
+  productionteam_1897-98_p001__e011 | printed: "(съ 2 августа 1882 г.)." | stored-vs-print: SAME (stored lacks parens)
+  productionteam_1898-99_p001__e015 | printed: "(съ 2 августа 1882 г.)." | stored-vs-print: SAME (stored lacks parens)
+  productionteam_1899-00_p001__e021 | printed: "(съ 2 августа 1882 г.)." (day digit begins the line-2 after "(съ") | stored-vs-print: SAME (stored lacks parens)
+  productionteam_1900-01_p001__e020 | printed: "(съ 2 августа 1882 г.)." (same line break) | stored-vs-print: SAME (stored lacks parens)
+  productionteam_1901-02_p001__e014 | printed: "(съ 2 августа 1882 г.)." | stored-vs-print: SAME
+  productionteam_1902-03_p001__e011 | printed: "(съ 2 августа 1882 г.)." | stored-vs-print: SAME
+  note: Single continuous career (Маріинскій assistant -> Михайловскій 1892 -> Маріинскій завѣдывающій from 1 July 1895, per transfer notes). Printer: 1 августа in 1890-91..(stored 1894-95) and 1903-04.. (1907-08 also read on the scan: "съ 1 августа 1882 г."), 2 августа in 1895-96..1902-03 (all 8 read directly). Pure print variation, NOT two men. 1892-93..1894-95 and 1903-04..1906-07 not zoomed (stored only).
+
+PERSON ea76e8bf Лебедевъ | verdict: PRINT VARIANT | confidence DIRECT (print reading); identity inference from the 1907-08 entry
+  productionteam_1908-09_p001__e002 | printed: "Лебедевъ, Иванъ Афанасьевичъ (съ 1 іюня 1899 г.)" (Маріинскій, Бутафоръ) | stored-vs-print: SAME
+  productionteam_1909-10_p001__e002 | printed: "Лебедевъ, Иванъ Афанасьевичъ (съ 3 іюня 1889 г.)" | stored-vs-print: SAME
+  note: Same man, same post (Бутафоръ, Маріинскій). 1908-09 reads "1 іюня 1899" (both day and year differ); 1909-10 reads "3 іюня 1889", which also equals the 1907-08 entry (a different person_id) "Лебедевъ, Иванъ Васильевичъ (съ 3 іюня 1889 г.)" read on the scan. So 1908-09 is the odd one out (print slip), and the 1907-08 entry (patronymic Васильевичъ there vs Афанасьевичъ in 1908-09/1909-10) is almost surely the SAME man under a variant patronymic -> person split by patronymic (see OTHER FINDINGS).
+
+PERSON 0995a2d1 Педдеръ | verdict: RE-HIRE/ORDINARY (second concurrent post, not an error, not a different man) | confidence DIRECT
+  productionteam_1890-91_p001__e020 | printed: "Педдеръ, Георгій Ивановичъ (съ 1 марта 1879 г.). Мужскіе и женскіе парики." (Балетная труппа) | stored-vs-print: SAME
+  productionteam_1891-92_p001__e020 | printed: "(съ 1 марта 1879 г.). Мужскіе и женскіе парики." | stored-vs-print: SAME
+  productionteam_1905-06_p002__e004 | printed: "2. Педдеръ, Георгій Ивановичъ (назначенъ съ 1 августа 1906 г.). Мужскіе парики." (Александринскій театръ) | stored-vs-print: SAME
+  productionteam_1905-06_p002__e006 | printed: "4. Педдеръ, Георгій Ивановичъ (назначенъ съ 1 января 1906 г.). Женскіе парики." (Александринскій театръ) | stored-vs-print: SAME
+  productionteam_1906-07_p002__e005 | printed: "Педдеръ, Георгій Ивановичъ (съ 1 августа 1906 г.). Мужскіе парики; (съ 1 января 1906 г.) женскіе парики." | stored-vs-print: SAME
+  note: Same man (identical name/patronymic, Opera and Ballet entries on same page keep "1 марта 1879"). The 1906 dates are appointment dates to the additional Alexandrinsky Theatre post (men's wigs 1 Aug 1906; women's wigs 1 Jan 1906), listed separately in the same season; extractor's "first start" for those entries is just the earliest date in a post-specific note. Also 1908-09_p001__e021 (Alexandrinsky) printed "съ 1 августа 1906 г. Мужскіе и женскіе парики." = SAME as stored. Note: the 1905-06 volume mentions Aug 1906 (published late; Афанасьевъ "Оставилъ службу 1 августа 1906 г.").
+
+PERSON dcf064ac Цетельманъ | verdict: RE-HIRE/ORDINARY | confidence DIRECT (prints); UNCERTAIN only on cause of the gap
+  productionteam_1890-91_p002__e025 | printed: "12. Цетельманъ, Адольфъ Егоровичъ (съ 1 августа 1884 г.)." (Большой театръ, Помощники декораторовъ) | stored-vs-print: SAME
+  productionteam_1900-01_p003__e013 | printed: "11. Цетельманъ, Адольфъ Егоровичъ (съ 1 января 1899 г.)." | stored-vs-print: SAME (stored has a stray ')' pattern: "съ 1 января 1899 г.)." vs print "(съ ... г.)." paren on the next line)
+  productionteam_1901-02_p003__e015 | printed: "9. Цетельманъ, Адольфъ Егоровичъ (съ 1 января 1899 г.)." | stored-vs-print: SAME
+  note: Same name+patronymic, same post (помощникъ декоратора, Moscow). He is ABSENT from the corpus 1891-92..1899-00 (9 seasons) -- confirmed on the 1891-92 and 1899-00 scans' Moscow decorator-helper lists -- and reappears 1900-01..1907-08 consistently with "съ 1 января 1899". So: first period 1 Aug 1884 (printed 1890-91 only), leaves, re-engaged 1 Jan 1899. Print is consistent with a re-hire; no evidence of a different man. (He is nonetheless missing from the 1899-00 list although re-hired Jan 1899 -- possible omission in print or a late re-entry; not resolvable from scans.)
+
+OTHER FINDINGS
+- Лебедевъ: person split. productionteam_1907-08_p001__e021 "Лебедевъ, Иванъ Васильевичъ (съ 3 іюня 1889 г.)" (Маріинскій Бутафоръ) is on a different person_id; same post/start date as 1909-10's "Иванъ Афанасьевичъ ... 3 іюня 1889". Patronymic Васильевичъ (1907-08) vs Афанасьевичъ (1908-09, 1909-10), all clearly printed -- printer's variation; probable merge candidate.
+- Лебедевъ 1908-09: "1 іюня 1899" is the likely print slip (1909-10 and 1907-08 both "3 іюня 1889").
+- Same page 1908-09_p001 vs 1909-10_p001 other variations seen incidentally (not my persons): Холодовъ, Егоръ Егоровичъ "съ 1 декабря 1884" (1908-09) vs "съ 1 мая 1884" (1909-10); Алексѣевъ, Сергѣй Васильевичъ (Александринскій помощникъ парикмахера) "съ 9 сентября 1901" (1908-09) vs "съ 9 сентября 1906" (1909-10); Бардюкъ (1908-09) vs Бордюгъ (1909-10), Николай Кирилловичъ, "съ 25 ноября 1906". Worth including in the sweep.
+- Stored tenure text frequently drops the opening "(" (e.g. Калиновъ 1897-98..1900-01, Гельцеръ 1891-92, Защукъ 1896-97): cosmetic, dates unaffected.
+- 1905-06_p002 contains a "Лапускинъ, Александръ" listing and Афанасьевъ leaving "1 августа 1906" -- so the "1905-06" volume was printed after Aug 1906 (explains the 1906 dates in it).

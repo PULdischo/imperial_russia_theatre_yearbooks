@@ -1,0 +1,61 @@
+PERSON da9d9f0c Алексѣевъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1908-09_p001__e022 | printed: "1. Алексѣевъ, Сергѣй Васильевичъ (съ 9 сентября 1901 г.). Мужскіе парики." | stored-vs-print: SAME (start 9 Sept 1901; stored text omits the opening "(" and ")" only)
+  productionteam_1909-10_p001__e021 | printed: "1. Алексѣевъ, Сергѣй Васильевичъ (съ 9 сентября 1906 г.)." | stored-vs-print: SAME (6 Sept->9 Sept 1906 as printed; no specialty text printed this year)
+  note: Same man (same name+patronymic, same post Помощникъ парикмахера, Александринскій театръ, neighbour Гуменюкъ 2. in both). The print itself gives 1901 in 1908-09 and 1906 in 1909-10 -- digit clear in both scans. One of the two is a printer's error/correction; scan cannot say which.
+
+PERSON 6af8b97e Горохова | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1902-03_p003__e020 | printed: "2. Горохова, Анастасія Павловна (съ 1 іюня 1903 г.)." (Главный гардеробъ, Начальницы; no. 1 Солини left 1 іюня 1903) | stored-vs-print: SAME
+  productionteam_1903-04_p003__e019 | printed: "Горохова, Анастасія Павловна (съ 1 іюня 1903 г.)." (Начальница) | stored-vs-print: SAME
+  productionteam_1905-06_p004__e002 | printed: "Горохова, Анастасія Павловна (съ 17 іюля 1903 г.)." | stored-vs-print: SAME
+  productionteam_1906-07_p004__e002 | printed: "Горохова, Анастасія Павловна (съ 17 іюля 1903 г.)." | stored-vs-print: SAME
+  productionteam_1907-08_p004__e002 | printed: "Горохова, Анастасія Павловна (съ 17 іюля 1903 г.)." | stored-vs-print: SAME
+  note: Same woman, same post (head of Главный гардеробъ, Moscow). Print reads 1 іюня 1903 in the first two lists and 17 іюля 1903 from 1905-06 on (1904-05 not examined). Printer's own change (appointment 1 June, confirmed 17 July?), not a misread; all digits clear.
+
+PERSON e284cdee Дмитріевъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1908-09_p002__e010 | printed: "Дмитрієвъ, Николай Федоровичъ (съ 15 августа 1893 г.)." (Помощникъ гардеробмейстера, Маріинскій театръ) | stored-vs-print: SAME (surname printed with є: Дмитрієвъ; stored has і-spelling variant per raw -- not checked letter by letter; first line of date clear)
+  productionteam_1909-10_p002__e009 | printed: "Дмитрієвъ, Николай Федоровичъ (съ 15 января 1893 г.)." | stored-vs-print: SAME
+  note: Same man, same post, same page position in both books; the print gives 15 августа 1893 (1908-09) and 15 января 1893 (1909-10). Day and year agree; only the month differs. Both clearly legible. Printer's variation.
+
+PERSON 3df7e99d Матвѣевъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1890-91_p003__e006 | printed: "3. Матвѣевъ, Григорій Леонтьевичъ (съ 11 февраля 1880 г.)." (digits "1 1" clearly two І's at 4x zoom) | stored-vs-print: SAME
+  productionteam_1891-92_p002__e017 | printed: "1. Матвѣевъ, Григорій Леонтьевичъ (съ 18 февраля 1880 г.)." | stored-vs-print: SAME (stored omits the parentheses/period only)
+  productionteam_1892-93_p003__e015 | printed: "1. Матвѣевъ, Григорій Леонтьевичъ (съ 18 февраля 1880 г.)." | stored-vs-print: SAME
+  note: Same man (same post Помощникъ машиниста, Большой театръ, Moscow). The first (1890-91) list prints 11 февраля, every later list 18 февраля. 11 is clearly printed in 1890-91; a first-edition error corrected later.
+
+PERSON 0a79ad64 Медеръ | verdict: RE-HIRE/ORDINARY | confidence DIRECT
+  productionteam_1905-06_p001__e008 | printed: "Медеръ, Левъ Павловичъ (съ 20 сентября 1905 г.)." (Помощникъ завѣдывающаго освѣщеніемъ, Маріинскій) | stored-vs-print: SAME
+  productionteam_1906-07_p001__e011 | printed: "Медеръ, Левъ Павловичъ (съ 20 сентября 1905 г.). Назначенъ завѣдывающимъ освѣщеніемъ Михайловскаго театра 1 сентября 1906 г." | stored-vs-print: SAME
+  productionteam_1908-09_p000__e009 | printed: "Медеръ, Левъ Павловичъ (съ 1 февраля 1908 г.)." (Михайловскій театръ, Машинистъ-механикъ) | stored-vs-print: SAME
+  productionteam_1909-10_p000__e004 | printed: "Медеръ, Левъ Павловичъ (съ 1 февраля 1908 г.)." (Машинистъ-механикъ) | stored-vs-print: SAME
+  note: Same man, two different posts, each with its own start date. In raw: 1907-08 prints him twice -- machinist-mechanic ("съ 20 сентября 1905 г.). Онъ-же и освѣтитель") and завѣдывающій освѣщеніемъ ("...Онъ-же машинистъ"); the 1908-09 p001 / 1909-10 p001 lighting entries (e001 each) carry "съ 20 сентября 1905". So 1 Feb 1908 is the date of taking the machinist-mechanic post (printed as a start date), not the first service date (20 Sept 1905). Not an error; the first-start should be 1905-09-20 for this person.
+
+PERSON 65fd5c8d Пипаръ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1890-91_p001__e014 | printed: "2. Пипаръ, Христіанъ Петровичъ (съ 20 сентября 1873 г.). Мужскіе костюмы оперной и русской драматической труппъ." | stored-vs-print: SAME
+  productionteam_1891-92_p001__e015 | printed: "2. Пипаръ, Христіанъ Петровичъ (съ 20 сентября 1873 г.). Мужскіе костюмы оперной и русской драматической труппъ." | stored-vs-print: DIFFERENT -> stored ends "труппы."; print has "труппъ." (minor)
+  productionteam_1897-98_p001__e018 | printed: "2. Пипаръ, Христіанъ Петровичъ (съ 26 августа 1869 г.). Мужскіе костюмы оперной и русской драматической труппъ." | stored-vs-print: SAME (start); stored omits opening "("
+  productionteam_1898-99_p001__e022 | printed: "2. Пипаръ, Христіанъ Петровичъ (съ 26 августа 1869 г.). Мужскіе костюмы оперной и русской драматической труппъ." | stored-vs-print: SAME (start); stored omits opening "("
+  productionteam_1899-00_p002__e002 | printed: "2. Пипаръ, Христіанъ Петровичъ (съ 26 августа 1869 г.). Мужскіе костюмы оперной и русской драматической труппъ." | stored-vs-print: DIFFERENT -> stored text is only "съ 26 августа 1869 г." (specialty text "Мужскіе костюмы оперной и русской драматической труппъ." missing from tenure_note_text; start date same)
+  productionteam_1900-01_p002__e004 | printed: "2. Пипаръ, Христіанъ Петровичъ (съ 26 августа 1869 г.). Мужскіе костюмы оперной и русской драматической труппъ." | stored-vs-print: SAME (stored lacks final period only)
+  productionteam_1901-02_p001__e023 | printed: "2. Пипаръ, Христіанъ Петровичъ (съ 26 августа 1869 г.). Мужскіе костюмы оперной и русской драматической труппъ." | stored-vs-print: SAME
+  productionteam_1902-03_p001__e021 | printed: "2. Пипаръ, Христіанъ Петровичъ (съ 26 августа 1869 г.). Мужскіе костюмы оперной и русской драматической труппъ. Оставилъ службу 1 августа 1903 г." | stored-vs-print: SAME
+  note: One man (same name, patronymic, post Костюмеръ, same specialty text, one continuous career ending 1 Aug 1903). Print gives 20 сентября 1873 through 1892-93 (1892-93 p002 not in this list but seen on the page by other lists) and 26 августа 1869 from 1897-98 on (1893-94..1896-97 not examined). Printer's correction of the start date.
+
+PERSON 8bd20425 Романовъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1890-91_p002__e006 | printed: "Романовъ, Георгій Николаевичъ (съ 1 августа 1882 г.)." | stored-vs-print: SAME
+  productionteam_1891-92_p002__e001 | printed: "Романовъ, Георгій Николаевичъ (съ 1 августа 1882 г.)." | stored-vs-print: SAME (stored omits parens)
+  productionteam_1892-93_p002__e017 | printed: "Романовъ, Георгій Николаевичъ (съ 1 августа 1882 г.)." | stored-vs-print: SAME (stored omits parens)
+  productionteam_1893-94_p002__e002 | printed: "Романовъ, Георгій Николаевичъ (съ 1 августа 1882 г.)." | stored-vs-print: SAME (stored omits parens)
+  productionteam_1894-95_p002__e005 | printed: "Романовъ, Георгій Николаевичъ (съ 1 августа 1882 г.)." | stored-vs-print: SAME (stored omits opening paren)
+  productionteam_1895-96_p002__e001 | printed: "Романовъ, Георгій Николаевичъ (съ 1 августа 1882 г.)." | stored-vs-print: SAME (stored omits parens)
+  productionteam_1896-97_p002__e002 | printed: "Романовъ, Георгій Николаевичъ (съ 1 августа 1882 г.)." | stored-vs-print: SAME
+  productionteam_1897-98_p002__e004 | printed: "Романовъ, Георгій Николаевичъ (съ 1 октября 1882 г.)." | stored-vs-print: SAME
+  productionteam_1898-99_p002__e010 | printed: "Романовъ, Георгій Николаевичъ (съ 1 октября 1882 г.)." | stored-vs-print: SAME
+  note: Same man (Гардеробмейстеръ, Маріинскій театръ, Moscow-style list; continuous). Print says 1 августа 1882 through 1896-97 and 1 октября 1882 from 1897-98 (also seen on 1899-00 and 1900-01 scans). A change in the printer's data, not a misread; digit and month words clear.
+
+OTHER FINDINGS
+- Stored tenure_note_text frequently drops the opening "(" and/or closing ")." compared with the print (Романовъ 1891-96, Матвѣевъ 1891-92, Пипаръ 1897-99, Алексѣевъ 1908-09). Not date-affecting.
+- Пипаръ 1899-00 e002: specialty text missing from stored tenure_note_text.
+- Пипаръ 1891-92: stored "труппы" vs print "труппъ".
+- Дмитріевъ: print spelling is "Дмитрієвъ" (letters "рієвъ"); not checked whether stored family_name uses the same character.
+- Медеръ: in 1906-07 the chain/heading in the stored entry (Помощникъ, Маріинскій) is as printed (note about Назначенъ 1 сентября 1906 is part of the same entry).
+- Горохова: 1904-05 season was not in the input list; if it exists the switchover 1 іюня -> 17 іюля happens between 1903-04 and 1905-06.

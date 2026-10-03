@@ -1,0 +1,61 @@
+PERSON 79dd4e5a Волосевичъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1890-91_p003__e015 | printed: "Волосевичъ, Людвигъ Антоновичъ (съ 10 октября 1883 г.)." | stored-vs-print: SAME
+  productionteam_1891-92_p003__e003 | printed: "Волосевичъ, Людвигъ Антоновичъ (съ 10 октября 1883 г.)." | stored-vs-print: SAME
+  productionteam_1897-98_p003__e004 | printed: "Волосевичъ, Людвигъ Антоновичъ (съ 1 октября 1883 г.)." | stored-vs-print: SAME
+  productionteam_1898-99_p003__e013 | printed: "Волосевичъ, Людвигъ Антоновичъ (съ 1 октября 1883 г.)." | stored-vs-print: SAME
+  productionteam_1899-00_p003__e021 | printed: "Волосевичъ, Людвигъ Антоновичъ (съ 1 октября 1883 г.)." | stored-vs-print: SAME
+  productionteam_1900-01_p004__e001 | printed: "1. Волосевичъ, Людвигъ Антоновичъ (съ 1 октября 1883 г.). Оставилъ службу 1 февраля 1900 г." | stored-vs-print: SAME
+  note: same man (same name/patronymic, same post Бутафоръ Большой театръ, same year 1883). The print itself changes day 10 -> 1 October between 1891-92 and 1897-98 (by corpus: 1890-91..1896-97 = 10, 1897-98..1900-01 = 1); no misreads. 1900-01 prints leaving date 1 февраля 1900 (printed, not a misread).
+
+PERSON 6b4ca0ef Гренбергъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1908-09_p002__e006 | printed: "Гренбергъ, Софья Карловна (съ 20 іюля 1905 г.)." | stored-vs-print: SAME
+  productionteam_1909-10_p002__e005 | printed: "Гренбергъ, Софья Карловна (съ 20 іюня 1905 г.)." | stored-vs-print: SAME
+  note: same woman; the print differs іюля (1908-09) vs іюня (1909-10), both clearly legible; which is true cannot be told from the scans (UNCERTAIN as to the true month; the printed variants are certain).
+
+PERSON 6bb8c912 Гуняшевъ | verdict: PRINT VARIANT (probable carry-over error in 1905-08) | confidence UNCERTAIN (as to true date)
+  productionteam_1890-91_p002__e015 | printed: "2. Гуняшевъ, Петръ Тарасовичъ (съ 1 августа 1883 г.)." | stored-vs-print: SAME
+  productionteam_1900-01_p003__e004 | printed: "2. Гуняшевъ, Петръ Тарасовичъ (съ 1 октября 1897 г.)." | stored-vs-print: SAME
+  productionteam_1901-02_p002__e011 | printed: "1. Гуняшевъ, Петръ Тарасовичъ (съ 1 октября 1897 г.)." | stored-vs-print: SAME
+  productionteam_1905-06_p003__e003 | printed: "1. Гуняшевъ, Петръ Тарасовичъ (съ 3 октября 1861 г.)." | stored-vs-print: SAME
+  productionteam_1906-07_p003__e003 | printed: "1. Гуняшевъ, Петръ Тарасовичъ (съ 3 октября 1861 г.)." | stored-vs-print: SAME
+  productionteam_1907-08_p003__e003 | printed: "1. Гуняшевъ, Петръ Тарасовичъ (съ 3 октября 1861 г.)." | stored-vs-print: SAME
+  note: probably the same man (same name+patronymic, same post Помощникъ декоратора, Moscow Большой театръ). He appears in the corpus only in 1890-91 and again 1900-01..1907-08 (nothing 1891-92..1899-00), so 1883 -> 1897 could be a genuine RE-HIRE (1897 date printed 5 seasons). The 1861 date (1905-06..1907-08) is exactly the date printed for the department's Вальцъ, Карлъ Ѳедоровичъ ("съ 3 октября 1861 г.", listed right above him on the same page in every season) and so looks like a printer's carry-over/erratum; not resolvable from the print. No DIFFERENT-MEN evidence.
+
+PERSON 1064fcea Жуляевъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1890-91_p001__e023 | printed: "3. Жуляевъ, Иванъ Даниловичъ (съ 30 ноября 1872 г.). Женскіе парики въ Александринскомъ театрѣ." | stored-vs-print: SAME
+  productionteam_1891-92_p001__e021 | printed: "1. Жуляевъ, Иванъ Даниловичъ (съ 30 ноября 1872 г.). Женскіе парики." | stored-vs-print: SAME
+  productionteam_1897-98_p001__e024 | printed: "1. Жуляевъ, Иванъ Даниловичъ (съ 19 мая 1869 г.). Женскіе парики." | stored-vs-print: SAME
+  productionteam_1898-99_p002__e002 | printed: "1. Жуляевъ, Иванъ Даниловичъ (съ 19. мая 1869 г.). Женскіе парики." | stored-vs-print: SAME (stray period after 19 is printed; the stored None start is a parse failure, print gives 19 мая 1869)
+  productionteam_1899-00_p002__e008 | printed: "1. Жуляевъ, Иванъ Даниловичъ (съ 19 мая 1869 г.). Женскіе парики." | stored-vs-print: DIFFERENT -> stored text omits the printed "Женскіе парики." (and parentheses); date SAME
+  productionteam_1900-01_p002__e011 | printed: "2. Жуляевъ, Иванъ Даниловичъ (съ 19 мая 1869 г.). Женскіе парики." | stored-vs-print: SAME
+  productionteam_1901-02_p002__e006 | printed: "2. Жуляевъ, Иванъ Даниловичъ (съ 19 мая 1869 г.). Женскіе парики." | stored-vs-print: SAME
+  productionteam_1902-03_p002__e005 | printed: "2. Жуляевъ, Иванъ Даниловичъ (съ 19 мая 1869 г.). Женскіе парики." | stored-vs-print: DIFFERENT -> stored text omits the printed "Женскіе парики."; date SAME
+  productionteam_1903-04_p002__e004 | printed: "2. Жуляевъ, Иванъ Даниловичъ (съ 19 мая 1869 г.). Женскіе парики." | stored-vs-print: DIFFERENT -> stored text omits the printed "Женскіе парики."; date SAME
+  productionteam_1904-05_p002__e006 | printed: "2. Жуляевъ, Иванъ Даниловичъ (съ 19 мая 1869 г.). Женскіе парики. Оставилъ службу 1 іюня 1905 г." | stored-vs-print: SAME
+  note: same man throughout (same name/patronymic, Александринскій театръ, women's wigs). Print switches 30 ноября 1872 (1890-91..1896-97 by corpus) to 19 мая 1869 from 1897-98 onward, no misreads. Same pattern/season as Волосевичъ. Leaves 1 іюня 1905.
+
+PERSON 1db5addf Ивановъ | verdict: PRINT VARIANT | confidence UNCERTAIN (print DIRECT; meaning of the two dates unknown)
+  productionteam_1908-09_p000__e008 | printed: "Ивановъ, Семенъ Васильевичъ (съ 1 сентября 1908 г.)." | stored-vs-print: SAME
+  productionteam_1909-10_p000__e009 | printed: "Ивановъ, Семенъ Васильевичъ (съ 15 февраля 1908 г.)." | stored-vs-print: SAME
+  note: same man by name+patronymic+post (Помощникъ машиниста-механика / Помощникъ машиниста, Александринскій театръ); 1908-09 gives 1 сентября 1908 (appointment to the post), 1909-10 gives 15 февраля 1908 (earlier service start). No death/leaving note, nothing incompatible; neither is a misread. Classified PRINT VARIANT.
+
+PERSON ef013cd7 Синицынъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1897-98_p003__e016 | printed: "Синицынъ, Василій Ивановичъ (съ 5 сентября 1897 г.)." (directly after a predecessor's "† 4 сентября 1897 г.") | stored-vs-print: SAME
+  productionteam_1898-99_p003__e023 | printed: "Синицынъ, Василій Ивановичъ (съ 5 сентября 1897 г.)." | stored-vs-print: SAME
+  productionteam_1899-00_p004__e006 | printed: "Синицынъ, Василій Ивановичъ (съ 5 сентября 1897 г.)." | stored-vs-print: SAME
+  productionteam_1900-01_p004__e016 | printed: "Синицынъ, Василій Ивановичъ (съ 10 октября 1882 г.)." | stored-vs-print: SAME
+  productionteam_1901-02_p004__e009 | printed: "Синицынъ, Василій Ивановичъ (съ 10 октября 1882 г.)." | stored-vs-print: SAME
+  note: same man (same post Гардеробмейстеръ, Малый театръ, same name+patronymic, continuous). Print switches at 1900-01 from 5 Sep 1897 (the date of taking over the post, day after predecessor's death) to 10 Oct 1882 and keeps 1882 through 1909-10 (10 seasons); looks like a deliberate change of what the date denotes. Not a misread.
+
+PERSON aa7ff632 Хмѣлевскій | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1890-91_p003__e005 | printed: "2. Хмѣлевскій, Владиміръ Сергѣевичъ (съ 27 марта 1879 г.)." | stored-vs-print: SAME
+  productionteam_1891-92_p002__e019 | printed: "3. Хмѣлевскій, Владиміръ Сергѣевичъ (съ 27 марта 1879 г.)." | stored-vs-print: SAME
+  productionteam_1900-01_p003__e021 | printed: "Хмелевскій, Владиміръ Сергѣевичъ (съ 29 марта 1879 г.)." (surname spelled without ѣ; Новый театръ, И. д. машиниста-механика) | stored-vs-print: SAME (stored 29 is what is printed; stored surname Хмѣлевскій differs from printed Хмелевскій)
+  note: same man; one-off print variation 29 vs 27 марта in 1900-01 (clearly legible 29, clear 27 in the others); not a misread by transcription.
+
+OTHER FINDINGS
+- Гуняшевъ 1905-08 date "3 октября 1861" identical to Вальцъ's, listed immediately above; probable printer's carry-over (see person note).
+- Гуняшевъ absent from the corpus 1891-92..1899-00 (not checked on scans).
+- Жуляевъ stored tenure_note_text drops "Женскіе парики." in 1899-00, 1902-03, 1903-04 (specialty text missing in stored text); 1898-99 print has "19." with stray period.
+- Хмѣлевскій 1900-01 printed surname "Хмелевскій" (no ѣ), stored with ѣ.
+- Волосевичъ 1900-01: printed "Оставилъ службу 1 февраля 1900 г." (end date precedes the season; as printed).

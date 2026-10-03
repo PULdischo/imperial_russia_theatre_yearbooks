@@ -12021,3 +12021,17 @@ where l.person_id::varchar like 'cef4a3%' order by 1;   -- before the split
 ```
 
 Result: 43 PT persons with >1 distinct first start date (about half day-level, ~16 year-level, list in known_issues #132 addendum 3); the Васильевъ query returned one merged person linking SPb 1890-91/1891-92 and Moscow 1903-04..1907-08 before the split, two live persons after (cef4a353 1890-91..1891-92, e97dc496 1903-04..1907-08); a name-keyed Tier 1 cluster, no merge-log entry.
+
+## 2026-10-03 -- ProductionTeam start-date audit: follow-up queries (unparsed starts, Кунъ and patronymic-variant persons)
+
+```sql
+select s.entry_id, s.start_date_text, s.start_date_undate, s.end_date_text, substr(e.tenure_note_text,1,70)
+from raw.person_entry_service s join raw.person_entry e using(entry_id)
+where s.entry_id like 'productionteam%' and s.start_date_text is not null and s.start_date_undate is null;
+select e.entry_id, e.family_name, e.first_name, e.patronymic, substr(e.tenure_note_text,1,50), substr(cast(l.person_id as varchar),1,6), right(e.heading_path,40)
+from raw.person_entry e join entities.person_link l using(entry_id) where e.entry_id like 'productionteam%' and e.family_name like 'Кунъ%' order by 1;
+select e.entry_id, e.first_name, e.patronymic, substr(e.tenure_note_text,1,45), substr(cast(l.person_id as varchar),1,6), right(e.heading_path,35)
+from raw.person_entry e join entities.person_link l using(entry_id) where e.entry_id like 'productionteam_190%' and e.family_name in ('Бардюкъ','Бордюгъ','Зандинъ','Лебедевъ','Холодовъ') order by 1;
+```
+
+Result: 5 PT service rows with a start text but no parsed date, 1 fixable (Жуляевъ 1898-99, stray period -> fixed) and 4 genuine partial dates; the Кунъ list showed 1890-91 p003 e013 under the Кунъ 1-й person while its two sister entries (Карловичъ) sat under another (moved); Зандинъ and Лебедевъ each sit under two person_ids split by a patronymic variant (Ивановичъ/Павловичъ; Васильевичъ/Афанасьевичъ), Бардюкъ/Бордюгъ already share one person_id.

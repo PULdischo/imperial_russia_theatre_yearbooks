@@ -406,3 +406,6 @@ correction belongs. Entry ids are `<page_id>__eNNN`.
 
 - `productionteam_1903-04_p001` e019 **Каменскій** Исаакъ Осиповичъ (the costumer printed Неменскій in 1890-1903 and 1904-06; same start date 30 іюня 1881); read at 4x zoom 2026-10-03, stored as printed.
 - List numbering skips printed by the source (nothing missing): `productionteam_1896-97_p000` Помощники декораторовъ 6 -> 8; `productionteam_1900-01_p000` Помощники декораторовъ 12 -> 14.
+- Start-date printer slips (stored as printed, 2026-10-03 audit): `productionteam_1908-09_p002` e002 Ефимовъ "съ 1 сентября **1899**" (1889 in 18 other volumes); `productionteam_1908-09_p001` e002 Лебедевъ "съ 1 іюня **1899**" (3 іюня 1889 in 1907-08 and 1909-10); `productionteam_1908-09_p000` e004 Зандинъ "съ 1 мая **1887**" (1 мая 1907 in the other three volumes);
+  `productionteam_1905-06_p003`..`1907-08_p003` e003/e003/e003 Гуняшевъ "съ 3 октября **1861**" (the date printed for Вальцъ just above him; his own is 1 октября 1897); `productionteam_1890-91_p003` e013 **Кунъ 2-й, Альбертъ Францевичъ** (the assistant is Карловичъ in 1891-93).
+- `productionteam_1908-09_p001` e006 **Бардюкъ** vs `productionteam_1909-10_p001` e006 **Бордюгъ** (same man, Николай Кирилловичъ); `productionteam_1898-99_p002` e002 stray period "(съ 19**.** мая 1869 г.)".

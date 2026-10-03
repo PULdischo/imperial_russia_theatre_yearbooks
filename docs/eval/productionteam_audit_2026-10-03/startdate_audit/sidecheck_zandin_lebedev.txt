@@ -1,0 +1,14 @@
+productionteam_1906-07_p000 | e009 | Зандинъ / Михаилъ / Ивановичъ | (съ 1 мая 1907 г.). | y | high
+productionteam_1907-08_p000 | e007 | Зандинъ / Михаилъ / Ивановичъ | (съ 1 мая 1907 г.). | y | high
+productionteam_1908-09_p000 | e004 | Зандинъ / Михаилъ / Павловичъ | (съ 1 мая 1887 г.) (у Головина). | y (1887 read at 5x: 8,8,7 -- not 1907) | high
+productionteam_1909-10_p000 | e003 | Зандинъ / Михаилъ / Павловичъ | (съ 1 мая 1907 г.). | y | high
+productionteam_1907-08_p001 | e021 | Лебедевъ / Иванъ / Васильевичъ | (съ 3 іюня 1889 г.). | y | high
+productionteam_1908-09_p001 | e002 | Лебедевъ / Иванъ / Афанасьевичъ | (съ 1 іюня 1899 г.). | y (day 1, year 1899 at 5x) | high
+productionteam_1909-10_p001 | e002 | Лебедевъ / Иванъ / Афанасьевичъ | (съ 3 іюня 1889 г.). | y | high
+productionteam_1908-09_p001 | e006 | Бардюкъ / Николай / Кирилловичъ | (съ 25 ноября 1906 г.). | y (surname ends -юкъ) | high
+productionteam_1909-10_p001 | e006 | Бордюгъ / Николай / Кирилловичъ | (съ 25 ноября 1906 г.). | y (surname Бордюгъ, ends -югъ) | high
+productionteam_1908-09_p001 | e004 | Холодовъ / Егоръ / Егоровичъ | (съ 1 декабря 1884 г.). | y (month word декабря, day 1, 1884) | high
+productionteam_1909-10_p001 | e004 | Холодовъ / Егоръ / Егоровичъ | (съ 1 мая 1884 г.). | y (month word мая, 1884) | high
+Zandin (rows 1-4): Ивановичъ appears in 1906-07/1907-08 (both 1 мая 1907), Павловичъ in 1908-09 (1 мая 1887) and 1909-10 (1 мая 1907) -> printed patronymics differ (Иван- vs Павлов-), so the print supports either two different men or a patronymic printing error; the 1908-09 date 1887 conflicts with 1907 in all three other years, so the printed dates do not corroborate a Павловичъ with a 1887 start; no way to decide from print alone, but taken literally the print shows two names.
+Lebedev (rows 5-7): Васильевичъ (1907-08, 3 іюня 1889), Афанасьевичъ (1908-09, 1 іюня 1899; 1909-10, 3 іюня 1889) -> the 1907-08 and 1909-10 entries share the same date (3 іюня 1889) and Marinsky Butafor position but different patronymics; 1908-09 has a different day and year (1 іюня 1899), so the print is internally inconsistent: patronymic alone suggests two men, the shared 3 іюня 1889 date suggests one man (patronymic or date misprint in 1908-09).
+OTHER: all stored values match print letter-for-letter; list numbers in 1908-09/1909-10 p001 show none for Лебедевъ (heading Бутафоръ, unnumbered); in 1909-10 e006 the surname spelling Бордюгъ differs from 1908-09 Бардюкъ (both read at 4x, clear). Crops in /tmp/audit16/crops/ (r1-r10b, h1, h2, z3, r5b-r7b).

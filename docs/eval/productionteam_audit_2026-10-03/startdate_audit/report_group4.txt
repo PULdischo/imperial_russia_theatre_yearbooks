@@ -1,0 +1,63 @@
+PERSON 7c59334c Ефимовъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1891-92_p001__e026 | printed: "Ефимовъ, Александръ Васильевичъ (съ 1 сентября 1889 г.). Мужскіе парики." | stored-vs-print: SAME
+  productionteam_1892-93_p002__e013 | printed: "Ефимовъ, Александръ Васильевичъ (съ 1 сентября 1889 г.). Мужскіе парики." | stored-vs-print: SAME
+  productionteam_1908-09_p002__e002 | printed: "Ефимовъ, Александръ Васильевичъ (съ 1 сентября 1899 г.). Мужскіе парики." (Михайловскій театръ / Французская труппа) | stored-vs-print: SAME (print itself says 1899; 1889 in 18 other seasons incl. 1909-10)
+  note: same man (same name/patronymic/post/specialty, 1889 printed in 1891-92..1907-08 and 1909-10). 1908-09's "1899" is a genuine print typo (clearly legible), not a misread. Candidate for the genuine-print-typos list.
+
+PERSON 148d4f25 Кунъ 1-й | verdict: DIFFERENT MEN (e013 = Кунъ 2-й) ; remaining entries RE-HIRE/ORDINARY + PRINT VARIANT | confidence DIRECT
+  productionteam_1890-91_p003__e012 | printed: "Кунъ 1-й, Альбертъ Францевичъ (съ 19 сентября 1882 г.)" (Завѣдывающій освѣщеніемъ, Большой театръ) | stored-vs-print: SAME
+  productionteam_1890-91_p003__e013 | printed: "Кунъ 2-й, Альбертъ Францевичъ (съ 18 іюня 1882 г.)" (Помощникъ завѣдывающаго освѣщеніемъ, Большой театръ) | stored-vs-print: SAME (but a different man, see note)
+  productionteam_1891-92_p002__e025 | printed: "Кунъ 1-й, Альбертъ Францевичъ (съ 19 сентября 1882 г.)" | stored-vs-print: SAME
+  productionteam_1897-98_p003__e001 | printed: "Кунъ, Альбертъ Францевичъ (съ 18 сентября 1882 г.)" | stored-vs-print: SAME (print says 18)
+  productionteam_1898-99_p003__e010 | printed: "Кунъ, Альбертъ Францевичъ (съ 18 сентября 1882 г.)" | stored-vs-print: SAME
+  productionteam_1899-00_p003__e018 | printed: "Кунъ, Альбертъ Францевичъ (съ 18 сентября 1882 г.)" | stored-vs-print: SAME
+  productionteam_1900-01_p003__e022 | printed: "Кунъ, Альбертъ Францевичъ (съ 11 марта 1872 г. по 12 сентября 1880 г. и съ 19 сентября 1882 г.)." | stored-vs-print: SAME (stored first start 1872-03-11 is the first of two printed periods; genuine earlier period + re-hire)
+  productionteam_1901-02_p003__e001 | printed: "1. Кунъ, Альбертъ Францевичъ (съ 11 марта 1872 г. по 12 сентября 1880 г. и съ 19 сентября 1882 г.). † 11 октября 1901 г." | stored-vs-print: SAME
+  note: Entry e013 (1890-91, "Кунъ 2-й", съ 18 іюня 1882) belongs to a DIFFERENT MAN: the assistant Кунъ 2-й, printed "Альбертъ Карловичъ" in 1891-92 (p003 e001) and 1892-93 (p004 e001, † 2 окт 1892); the 1890-91 print's patronymic "Францевичъ" for 2-й is the printer's slip (same page also has Кунъ 1-й Францевичъ), which caused the wrong merge. All other listed entries (e012, 1891-92 e025, 1897-98 e001, 1898-99 e010, 1899-00 e018, 1900-01 e022, 1901-02 e001) = Кунъ 1-й, ONE man (successor Францъ Францевичъ съ 27 ноября 1901). Start-date variation within Кунъ 1-й: 19 сент. 1882 (1890-96 + 1900-02) vs 18 сент. 1882 printed in 1897-98, 1898-99, 1899-00 = print variant; 1872 start appears only 1900-01/1901-02 where the print adds an earlier service period (1872-03-11 to 1880-09-12) then re-hire 19 Sep 1882. The "first start" for 1-й should be 1872-03-11 only from 1900-01; earlier seasons print only the 1882 re-hire date.
+
+PERSON 4a751786 Левотъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1890-91_p000__e006 | printed: "6. Левотъ, Генрихъ (съ 9 мая 1885 г.)" (digit 9 clearly legible at 5x zoom) | stored-vs-print: SAME
+  productionteam_1891-92_p000__e005 | printed: "5. Левотъ, Генрихъ (съ 16 мая 1885 г.)" | stored-vs-print: SAME
+  productionteam_1892-93_p000__e011 | printed: "4. Левотъ, Генрихъ (съ 16 мая 1885 г.). [then small-print list of his decorations]" | stored-vs-print: SAME
+  note: same man (same name, no patronymic, Декораторы, СПб). 1890-91 prints 9 мая, all later seasons 16 мая; 9 is not a misread. Note Ширяевъ on the same 1890-91 page has "16 мая 1885" - possible slip in the 1890-91 printing.
+
+PERSON e5528287 Петрова | verdict: PRINT VARIANT (same woman, revised start date) | confidence DIRECT
+  productionteam_1890-91_p002__e004 | printed: "Петрова, Капитолина Васильевна (съ 1 мая 1891 г.)" (follows "Суковская ... Оставила службу 1 мая 1891 г.") | stored-vs-print: SAME
+  productionteam_1891-92_p001__e028 | printed: "(съ 1 мая 1891 г.)" | SAME
+  productionteam_1892-93_p002__e015 | printed: "(съ 1 мая 1891 г.)" | SAME
+  productionteam_1893-94_p001__e028 | printed: "(съ 1 мая 1891 г.)" | SAME
+  productionteam_1894-95_p002__e003 | printed: "(съ 1 мая 1891 г.)" | SAME
+  productionteam_1895-96_p001__e028 | printed: "(съ 1 мая 1891 г.)" | SAME
+  productionteam_1896-97_p001__e028 | printed: "(съ 1 мая 1891 г.)" | SAME
+  productionteam_1897-98_p002__e002 | printed: "Петрова, Капитолина Васильевна (съ 1 іюля 1889 г.)" | stored-vs-print: SAME
+  productionteam_1898-99_p002__e008 | printed: "Петрова, Капитолина Васильевна (съ 1 іюля 1889 г.)" | SAME
+  (1908-09_p002 e019 and 1909-10_p002 e019, Помощницы гардеробмейстершъ, Михайловскій: "Петрова, Капитолина Васильевна (съ 1 іюня 1889 г.)" - both read, 1 іюня, whereas 1897-98..1907-08 say 1 іюля)
+  note: same woman (same full name, same post "Смотрительница, Отдѣлъ женскихъ костюмовъ" continuous through 1907-08, then Помощница гардеробмейстерши). Print switches its start date from 1 мая 1891 (1890-97) to 1 іюля 1889 (1897-98 on) and to 1 іюня 1889 in 1908-10; earlier date presumably a revised/corrected record (earlier service). Not two men.
+
+PERSON 56f64059 Холодовъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1908-09_p001__e004 | printed: "Холодовъ, Егоръ Егоровичъ (съ 1 декабря 1884 г.)" (Бутафоръ, Михайловскій) | stored-vs-print: SAME
+  productionteam_1909-10_p001__e004 | printed: "Холодовъ, Егоръ Егоровичъ (съ 1 мая 1884 г.)" | stored-vs-print: SAME
+  note: same man (same name/patronymic/post/theater, only 2 entries in corpus). Print itself changes the month (декабря vs мая); both clearly legible. No other season lists him. Cannot say which is right from print.
+
+PERSON e9249681 Цисвицкая | verdict: PRINT VARIANT (same woman, revised start date) | confidence DIRECT
+  productionteam_1894-95_p002__e002 | printed: "Цисвицкая, Екатерина Ивановна (съ 1 февраля 1895 г.)" (same page: Шигорина "переведена въ счетчицы" съ 1 февраля 1895) | stored-vs-print: SAME
+  productionteam_1895-96_p001__e027 | printed: "(съ 1 февраля 1895 г.)" | SAME
+  productionteam_1903-04_p002__e008 | printed: "Цисвицкая, Екатерина Ивановна (съ 1 октября 1894 г.)." | SAME
+  productionteam_1904-05_p002__e011 | printed: "(съ 1 октября 1894 г.)." | SAME
+  productionteam_1905-06_p002__e010 | printed: "(съ 1 октября 1894 г.)." | SAME
+  productionteam_1906-07_p002__e009 | printed: "(съ 1 октября 1894 г.). Оставила службу 1 января 1907 г." | SAME
+  note: same woman, same post (Смотрительница отдѣла мужскихъ костюмовъ) throughout; print changes from 1 февр. 1895 (to 1902-03 at least) to 1 окт. 1894 from 1903-04 on.
+
+PERSON 640371d7 Щеголевъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1904-05_p001__e012 | printed: "Щеголевъ, Василій Дмитріевичъ (съ 1 ноября 1902 г.). Назначенъ завѣдывающимъ освѣщеніемъ Александринскаго театра съ 1 мая 1905 г." (Помощникъ завѣдывающаго освѣщеніемъ, Маріинскій) | stored-vs-print: SAME
+  productionteam_1905-06_p001__e001 | printed: "Щеголевъ, Василій Дмитріевичъ (съ 1 ноября 1902 г.)" (Завѣдывающій освѣщеніемъ, Александринскій) | stored-vs-print: SAME
+  productionteam_1909-10_p000__e010 | printed: "Щеголевъ, Василій Дмитріевичъ (съ 1 октября 1887 г.)" (Завѣдывающій освѣщеніемъ, Маріинскій; "1 октября 1887" clearly legible at 5x) | stored-vs-print: SAME
+  note: same man (same name+patronymic, continuous role progression Помощникъ -> Завѣдывающій). 1909-10 prints 1887 where 1902-03..1908-09 print 1 ноября 1902; not a misread (could be a printer's error or revised earlier service). Not the Moscow Алексѣй Дмитріевичъ Щеголевъ (22 сент. 1880, left 1 дек. 1902), who is a separate man.
+
+OTHER FINDINGS
+- Кунъ 2-й, 1890-91 (productionteam_1890-91_p003__e013): printed patronymic "Францевичъ" (clearly legible), but 1891-92 and 1892-93 print "Альбертъ Карловичъ"; the 1890-91 print repeats the patronymic of Кунъ 1-й, apparent printer's slip. This is what caused the person merge; entities should split e013 + 1891-92_p003__e001 + 1892-93_p004__e001 (Кунъ 2-й, Карловичъ) from Кунъ 1-й.
+- Левотъ 1890-91: 9 мая 1885 printed (not misread); Ширяевъ on the same page has 16 мая 1885.
+- 1908-09 Ефимовъ "1899" is a genuine print typo candidate.
+- 1909-10 Щеголевъ ("1 октября 1887") and Холодовъ ("1 мая 1884") single-season date differences likewise as printed.
+- Кунъ 1-й prints 19 сентября 1882 in 1890-96 and 1900-02 but 18 сентября 1882 in 1897-98, 1898-99, 1899-00 (print variant, each legible).
+- Not checked in detail: Кунъ pages 1892-93..1896-97 (stored 19 сентября, not in my listed entries).

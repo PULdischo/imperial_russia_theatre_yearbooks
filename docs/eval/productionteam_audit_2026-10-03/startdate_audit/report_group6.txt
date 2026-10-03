@@ -1,0 +1,60 @@
+PERSON 6acefcc3 Бриліантова | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1908-09_p003__e020 | printed: "1. Бриліантова, Варвара Николаевна (съ 1 ноября 1898 г.)." | stored-vs-print: SAME (stored text lacks the parentheses; start date same)
+  productionteam_1909-10_p004__e001 | printed: "1. Брилліантова, Варвара Николаевна (съ 16 іюля 1898 г.)." | stored-vs-print: SAME on date; DIFFERENT surname spelling: print has double л (Брилліантова), stored 1908-09 single (Бриліантова) is the print there
+  note: Same woman (same post "Помощницы костюмерши", Москва, same first name+patronymic, both 1898). Printer's variation: 1 ноября 1898 (1908-09) vs 16 іюля 1898 (1909-10). Both read directly. No other season lists her.
+
+PERSON 831b7197 Зандинъ | verdict: PRINT VARIANT (probable printer's error 1887 for 1907; patronymic also varies) | confidence DIRECT (readings); identity UNCERTAIN-leaning-same
+  productionteam_1908-09_p000__e004 | printed: "Зандинъ, Михаилъ Павловичъ (съ 1 мая 1887 г.) (у Головина)." under "Исп. об. главнаго Декоратора." | stored-vs-print: SAME
+  productionteam_1909-10_p000__e003 | printed: "Зандинъ, Михаилъ Павловичъ (съ 1 мая 1907 г.)." under "Исп. об. главнаго Декоратора." | stored-vs-print: SAME
+  note: Corpus also has 1906-07_p000 e009 and 1907-08_p000 e007 (checked on scan, not listed): "4./1. Зандинъ, Михаилъ Ивановичъ (съ 1 мая 1907 г.)" as Помощники декораторовъ, a new hire in 1907 -- patronymic ИВАНОВИЧЪ there, ПАВЛОВИЧЪ in 1908-09/1909-10. Same surname+first name, same day/month 1 мая, same department, role progression assistant -> acting chief decorator ("у Головина" = Golovin was the artist-consultant, 1907-08 p000). A 1887 start is incompatible with being newly hired in 1907. Most likely one man: 1908-09's "1887" = printer's typo for 1907, and patronymic Иванович/Павлович is a print/source variation. Cannot exclude two men on patronymic alone (no other evidence); UNCERTAIN on that point.
+
+PERSON afaf2922 Павловъ | verdict: RE-HIRE/ORDINARY (same man; Moscow service start vs later St Petersburg post-appointment date) | confidence DIRECT
+  productionteam_1900-01_p004__e006 | printed: "Павловъ, Александръ Павловичъ (съ 1 сентября 1888 г.)." (Помощникъ костюмера, Москва) | stored-vs-print: SAME
+  productionteam_1901-02_p004__e001 | printed: "Павловъ, Александръ Павловичъ (съ 1 сентября 1888 г.)." | stored-vs-print: SAME (stored lacks parens)
+  productionteam_1905-06_p001__e018 | printed: "2. Павловъ, Александръ Павлсвичъ (назначенъ съ 20 февраля 1906 г.)." (print has "Павлсвичъ", with с for о, a genuine print typo; the entry directly follows another man's "Оставилъ службу 20 февраля 1906 г." i.e. he replaced him) | stored-vs-print: SAME
+  productionteam_1906-07_p001__e019 | printed: "Павловъ, Александръ Павловичъ (назначенъ съ 20 февраля 1906 г.)." (Костюмеръ) | stored-vs-print: SAME
+  productionteam_1907-08_p002__e002 | printed: "Павловъ, Александръ Павловичъ (съ 20 февраля 1906 г.)." (Костюмеръ) | stored-vs-print: SAME
+  note: Same man: identical name+patronymic, Moscow wardrobe assistant 1888- (1900-05 raw: "Переведенъ къ С.-Петербургскимъ театрамъ съ 10 августа 1903 г." in 1902-03, per raw JSON, not scan-checked), then St Petersburg Костюмеръ. 20 февраля 1906 is the date of APPOINTMENT to the Костюмеръ post ("назначенъ"), not a hire; 1908-09/1909-10 raw (not scan-checked) give "съ 10 августа 1903 г." (SPb transfer). So three different anchor dates in print for one career: 1888 (Moscow), 1903 (transfer), 1906 (post). Not two men.
+
+PERSON 93455bce Рощинъ | verdict: PRINT VARIANT (16 vs 19 февраля 1884) | confidence DIRECT
+  productionteam_1890-91_p001__e011 | printed: "Рощинъ, Михаилъ Аѳанасьевичъ (съ 16 февраля 1884 г.)." | SAME
+  productionteam_1891-92_p001__e012 | printed: "(съ 16 февраля 1884 г.)." | SAME
+  productionteam_1892-93_p001__e029 | printed: "(съ 16 февраля 1884 г.)." | SAME
+  productionteam_1893-94_p001__e012 | printed: "(съ 16 февраля 1884 г.)." | SAME
+  productionteam_1894-95_p001__e014 | printed: "(съ 16 февраля 1884 г.)." with parentheses | stored-vs-print: SAME on date; stored text lacks the opening "(" and has no closing ")"
+  productionteam_1895-96_p001__e012 | printed: "(съ 19 февраля 1884 г.)." | SAME (date is 19, clearly read)
+  productionteam_1896-97_p001__e012 | printed: "(съ 19 февраля 1884 г.)." | SAME (19)
+  productionteam_1903-04_p001__e017 | printed: "Рощинъ, Михаилъ Афанасьевичъ (съ 16 февраля 1884 г.)." (Афанасьевичъ with ф) | stored-vs-print: SAME on date; stored text lacks parentheses
+  productionteam_1904-05_p001__e018 | printed: "Рощинъ, Михаилъ Афанасьевичъ (съ 16 февраля 1884 г.). Оставилъ службу 1 октября 1904 г." | SAME
+  note: One man (same post, Бутафоры, Александринскій театръ, 1884 start month/year constant, left 1 Oct 1904). Print shows 16 in 1890-95, 19 in 1895-96..1902-03 (per raw JSON for 1897-98..1902-03, not scan-checked; 1895-96 and 1896-97 checked on scan), 16 again 1903-05. Printer's own variation, not a misread. Note orthography change Аѳанасьевичъ -> Афанасьевичъ from 1902-03.
+
+PERSON 54a9d886 Тимоѳеевъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1890-91_p002__e007 | printed: "Тимоѳеевъ, Владиміръ Егоровичъ (съ 5 ноября 1857 г.)." | SAME
+  productionteam_1891-92_p002__e002 | printed: "(съ 5 ноября 1857 г.)." | SAME
+  productionteam_1897-98_p002__e005 | printed: "(съ 3 ноября 1856 г.)." | SAME (date 3 ноября 1856, digit "3" in an unusual form but legible)
+  productionteam_1898-99_p002__e011 | printed: "1. Тимоѳеевъ, Владиміръ Егоровичъ (съ 3 ноября 1856 г.). † 23 апрѣля 1899 г." | SAME
+  note: Same man (same post, Гардеробмейстеръ, Александринскій театръ; died 23 Apr 1899). Print gives 5.11.1857 in 1890-92 and 3.11.1856 in 1897-99 (both day and year differ); other seasons' scans not checked.
+
+PERSON 3dba5819 Унгебауэръ | verdict: PRINT VARIANT (10 сентября vs 10 октября 1865) | confidence DIRECT
+  productionteam_1890-91_p000__e016 | printed: "8. Унгебауэръ, Константинъ Александровичъ (съ 10 сентября 1865 г.)." | stored-vs-print: SAME
+  productionteam_1891-92_p000__e019 | printed: "12. Унгебауэръ, Константинъ Александровичъ (съ 10 октября 1865 г.)." | SAME
+  productionteam_1892-93_p001__e006 | printed: "13. Унгебауэръ, Константинъ Александровичъ (съ 10 октября 1865 г.). Оставилъ службу 1 сентября 1893 г." | SAME
+  note: Same man (same name, post, 10th of month, 1865). Only the month word differs (сентября in 1890-91, октября in 1891-93): printer's variation; only 1890-91 says сентября.
+
+PERSON ef610c56 Яковлевъ | verdict: RE-HIRE/ORDINARY (same man; earlier period printed only from 1897-98) | confidence DIRECT
+  productionteam_1891-92_p000__e022 | printed: "15. Яковлевъ, Григорій Артемьевичъ (съ 15 февраля 1890 г.)." | SAME
+  productionteam_1892-93_p001__e009 | printed: "16. ... (съ 15 февраля 1890 г.)." | SAME
+  productionteam_1893-94_p000__e025 | printed: "13. ... (съ 15 февраля 1890 г.)." | SAME
+  productionteam_1894-95_p000__e021 | printed: "13. ... (съ 15 февраля 1890 г.)." | SAME
+  productionteam_1895-96_p000__e022 | printed: "14. ... (съ 15 февраля 1890 г.)." | SAME
+  productionteam_1896-97_p000__e027 | printed: "15. ... (съ 15 февраля 1890 г.)." | SAME
+  productionteam_1897-98_p000__e021 | printed: "13. Яковлевъ, Григорій Артемьевичъ (съ 14 мая 1879 г. по 15 декабря 1884 г. и съ 15 февраля 1890 г.)." | SAME
+  productionteam_1898-99_p000__e023 | printed: "14. ... (съ 14 мая 1879 г. по 15 декабря 1884 г. и съ 15 февраля 1890 г.)." | SAME
+  note: Same man: identical name+patronymic+post (Помощникъ/Декораторъ, Отдѣлъ декораціонный); 1897-98 on the print adds the earlier first period 14.5.1879-15.12.1884 and the re-hire 15.2.1890 ("и съ"), so 1890 is the second period and 1879 the first. Genuine re-hire, no conflict. (1897-98 page reads "Яковлевъ" with spaced letters on the layout; still same.)
+
+OTHER FINDINGS
+- Бриліантова: surname spelled with single л in 1908-09 and double л in 1909-10 (both as printed). Unrelated Брилліантовъ Петръ Егоровичъ (Бутафоры, 1889-1902) is a different person.
+- Павловъ 1905-06: print reads "Павлсвичъ" (с for о), a print typo; the stored surname/patronymic in the raw is already "Павлсвичъ" (correct as verbatim).
+- Зандинъ: patronymic Ивановичъ in 1906-07/1907-08 vs Павловичъ in 1908-10 -- check whether entities merged them into one person (this block lists only Павловичъ entries).
+- Several stored tenure texts omit the printed parentheses (Бриліантова 1908-09, Рощинъ 1894-95, 1903-04, Павловъ 1901-02): cosmetic only.
+- Рощинъ: orthography changes Аѳанасьевичъ -> Афанасьевичъ (1902-03 on): not an error.

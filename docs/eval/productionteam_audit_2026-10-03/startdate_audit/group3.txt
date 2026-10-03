@@ -1,0 +1,60 @@
+PERSON 3f1ba0c7 Бергеръ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1890-91_p000__e019 | printed: "(съ 6 октября 1880 г.)." | stored-vs-print: SAME
+  productionteam_1891-92_p000__e023 | printed: "(съ 6 октября 1880 г.)." | stored-vs-print: SAME
+  productionteam_1892-93_p001__e013 | printed: "(съ 6 октября 1880 г.)." | stored-vs-print: SAME
+  productionteam_1893-94_p000__e018 | printed: "(съ 6 октября 1880 г.)." | stored-vs-print: SAME
+  productionteam_1894-95_p001__e001 | printed: "(съ 6 октября 1880 г.)." | stored-vs-print: SAME
+  productionteam_1895-96_p000__e027 | printed: "(съ 6 октября 1880 г.)." | stored-vs-print: SAME
+  productionteam_1896-97_p000__e020 | printed: "(съ 5 октября 1880 г.)." | stored-vs-print: SAME
+  productionteam_1897-98_p001__e001 | printed: "(съ 5 октября 1880 г.)." | stored-vs-print: SAME
+  productionteam_1906-07_p001__e002 | printed: "(съ 1 октября 1880 г.). Оставилъ службу 1 іюля 1907 г." | stored-vs-print: SAME
+  note: One man (Николай Александровичъ, Маріинскій театръ машинистъ, same post throughout). Printer's own drift: 6 (1890-96), 5 (1896-97 onward, thumbnails of 1898-99..1905-06 also show "5 октября"), 1 (1906-07). Digits are clear in every crop; no misread.
+
+PERSON 24da2c3a Давыдова | verdict: PRINT VARIANT | confidence DIRECT (cause of change UNCERTAIN)
+  productionteam_1905-06_p002__e018 | printed: "2. Давыдова, Елизавета Денисовна (съ 15 іюня 1906 г.)." | stored-vs-print: SAME
+  productionteam_1906-07_p002__e017 | printed: "Давыдова, Елизавета Денисовна (съ 15 іюня 1906 г.)." | stored-vs-print: SAME
+  productionteam_1909-10_p002__e015 | printed: "Давыдова, Елизавета Денисовна (съ 1 сентября 1895 г.)." | stored-vs-print: SAME (stored 1895-09-01 matches print; the odd one out is the PRINT, not the stored value)
+  note: Same man-equivalent (woman): same name/patronymic, same post (Александринскій театръ гардеробмейстерша; 1905-06 she follows Гетманова who left 1 Oct 1905). 1905-06 through 1908-09 (1908-09 not listed here, seen: "...іюня 1906 г.") print 15 іюня 1906; only 1909-10 prints 1 сентября 1895 (likely a re-dated/corrected service-entry date, not a misread; no contradictory same-season evidence). 1909-10 digits 1895 clear.
+
+PERSON da0356a1 Иванова (Марія Гавриловна) | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1890-91_p002__e005 | printed: "(съ 9 сентября 1886 г.)" (wrapped сен-/тября) | stored-vs-print: SAME
+  productionteam_1891-92_p001__e029 | printed: "(съ 9 сентября 1886 г.)" | stored-vs-print: SAME
+  productionteam_1897-98_p002__e003 | printed: "(съ 9 августа 1886 г.)" | stored-vs-print: SAME
+  productionteam_1898-99_p002__e009 | printed: "(съ 9 августа 1886 г.)" (wrapped ав-/густа) | stored-vs-print: SAME
+  productionteam_1899-00_p002__e015 | printed: "(съ 9 августа 1886 г.)" (wrapped ав-/густа) | stored-vs-print: SAME
+  productionteam_1900-01_p002__e017 | printed: "(съ 9 августа 1886 г.)" (wrapped ав-/густа) | stored-vs-print: SAME
+  productionteam_1901-02_p002__e014 | printed: "(съ 9 августа 1886 г.)" (wrapped ав-/густа) | stored-vs-print: SAME
+  productionteam_1902-03_p002__e011 | printed: "(съ 9 августа 1886 г.)" (wrapped ав-/густа) | stored-vs-print: SAME
+  note: Same woman throughout (Главный гардеробъ, Отдѣлъ головныхъ уборовъ, обуви и бѣлья). Print says "9 августа 1886" in six consecutive seasons 1897-98..1902-03 (all verified), "9 сентября 1886" before and after (1903-04..1907-08 per raw text). A printer's variant / correction block, not a misread.
+
+PERSON 734253c8 Ланге | verdict: PRINT VARIANT | confidence DIRECT (cause UNCERTAIN)
+  productionteam_1890-91_p000__e005 | printed: "5. Ланге, Иванъ Карловичъ (съ 15 / марта 1875 г.)." (under Декораторы) | stored-vs-print: SAME
+  productionteam_1891-92_p000__e014 | printed: "7. Ланге, Иванъ Карловичъ (съ 19 января 1868 г.)." (under Помощники декораторовъ) | stored-vs-print: SAME
+  productionteam_1892-93_p001__e001 | printed: "8. Ланге, Иванъ Карловичъ (съ 19 января 1868 г.)." (Помощники) | stored-vs-print: SAME
+  note: Same man (identical full name; one entry per season; he reappears 1895-96..1899-00 as Декоратор with 19 января 1868 and dies † 20 мая 1900). In 1890-91 he is listed under Декораторы with 15 марта 1875 and there is NO Ланге among that year's Помощники (checked p000 list: Ламбинъ, then Лупановъ). 1875 may be a post/promotion date or a printer's variant; the print itself gives both numbers. No incompatible same-season facts -> not DIFFERENT MEN.
+
+PERSON c0c4136c Петровъ (Анатолій Алексѣевичъ) | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1890-91_p000__e023 | printed: "1. Петровъ, Анатолій Алексѣевичъ (съ 1 октября 1880 г.)." | stored-vs-print: SAME
+  productionteam_1891-92_p001__e001 | printed: "1. Петровъ 2-й, Анатолій Алексѣевичъ (съ 1 октября 1880 г.)." | stored-vs-print: SAME (surname printed "Петровъ 2-й"; stored text omits it)
+  productionteam_1903-04_p001__e006 | printed: "Петровъ, Анатолій Алексѣевичъ (съ 1 сентября 1882 г.)." | stored-vs-print: SAME
+  productionteam_1904-05_p001__e007 | printed: "Петровъ, Анатолій Алексѣевичъ (съ 1 сентября 1882 г.)." | stored-vs-print: SAME
+  productionteam_1905-06_p001__e013 | printed: "Петровъ, Анатолій Алексѣевичъ (съ 1 сентября 1882 г.)." | stored-vs-print: SAME
+  productionteam_1906-07_p001__e006 | printed: "Петровъ, Анатолій Алексѣевичъ (съ 1 сентября 1882 г.). Оставилъ службу 1 сентября 1906 г." | stored-vs-print: SAME
+  note: One continuous career at the Александринскій театръ (Помощникъ машиниста 1890-1900 -> машинистъ-механикъ 1901-02: raw text "Назначенъ машинистомъ-механикомъ 1 іюня 1901 г." in 1900-01, then 1901-02 and 1902-03 still "1 октября 1880"). From 1903-04 the print gives "1 сентября 1882" (same words as the neighbouring Калашниковъ "съ 1 сентября 1882 г." in older lists, so possibly a typesetting slip that was then carried forward). Same man; the printed start date changes once, in 1903-04, with no break in post.
+
+PERSON 3ea7da1f Харкевичъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1908-09_p002__e008 | printed: "2. Харкевичъ, Екатерина Доминиковна (съ 10 октября 1890 г.)." | stored-vs-print: SAME
+  productionteam_1909-10_p002__e007 | printed: "2. Харкевичъ, Екатерина Доминиковна (съ 1 октября 1890 г.)." | stored-vs-print: SAME
+  note: Same woman (Главный гардеробъ, Помощницы смотрительницы, no. 2, identical name). 10 vs 1 октября 1890; both crops legible, digit "10" vs "1" clear. A one-digit printer variant between consecutive seasons; not a misread (would need independent source to say which is correct).
+
+PERSON af643eb8 Шаталовъ | verdict: PRINT VARIANT | confidence DIRECT
+  productionteam_1892-93_p004__e016 | printed: "Шаталовъ, Дмитрій Ивановичъ (съ 20 января 1893 г.)." (the "20" is set in visibly smaller type than the surrounding text) | stored-vs-print: SAME (stored text has a stray ")" placement "г.).", trivial)
+  productionteam_1893-94_p003__e013 | printed: "Шаталовъ, Дмитрій Ивановичъ (съ 20 января 1893 г.)" | stored-vs-print: SAME
+  productionteam_1897-98_p003__e015 | printed: "Шаталовъ, Дмитрій Ивановичъ (съ 22 января 1893 г.). † 4 сентября 1897 г." | stored-vs-print: SAME
+  note: Same man (Малый театръ, гардеробмейстеръ; dies 4 Sept 1897). 1892-93..1896-97 print 20 января 1893 (1894-95..1896-97 not re-opened here), 1897-98 prints 22 января 1893 (clear "22"). Printer variant; no misread. The smaller-type "20" in 1892-93 hints at a hand-corrected figure in that edition.
+
+OTHER FINDINGS
+  - 1891-92 and 1892-98 Анатолій Петровъ is printed "Петровъ 2-й" (and Алексѣй "Петровъ 3-й"); the raw family_name for 1891-92_p001__e001 is "Петровъ 2-й", consistent with the other entries; later seasons drop the numeral.
+  - Ланге 1890-91: only appearance under Декораторы in that year; in 1891-95 under Помощники; 1895-96..1899-00 again Декораторы. Not an error, but the heading_path differs by season.
+  - Давыдова: printed surname (Д-а-в-ы-д-о-в-а, with ы) matches stored in all four crops; no spelling discrepancy.
+  - Not re-verified: seasons not in the listed entries (e.g. 1898-1905 Berger "5 октября", Ивановa 1903-08 "9 сентября", Шаталовъ 1894-97 "20"); counts above come from raw text + thumbnails only for Berger.
