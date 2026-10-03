@@ -12062,3 +12062,18 @@ select entry_id, family_name, heading_path from raw.person_entry where entry_id 
 ```
 
 Result: title_clean on 261 ProductionTeam rows (75 before), 0 specialties left in tenure_note_text_clean; non-ProductionTeam analysis rows hash-identical to the backup; second path segment tally: Отдѣлъ декораціонный 917, гардеробный 739, освѣтительный 174, бутафорскій 134, Парикмахерскій отдѣлъ 18, декораціонно-машинный 7, Мастерская по раскраскѣ тканей 3, "Отдѣлъ бугафорскій" (print typo) 2; 0 Главный гардеробъ/Мѣстные гардеробы chains without the Отдѣлъ гардеробный parent; the 4 stray "Большой театръ" second segments (1900-01 p003 e015-e018) were fixed.
+
+## 2026-10-03 — Issue #133: building and verifying analysis.production_entry_credit
+
+```sql
+select description_text, count(*) n from raw.production_entry group by 1 order by 1;   -- 290 distinct strings, read in full
+-- after pipeline/build_production_credits.py:
+select count(*), count(distinct production_entry_id), count(distinct name_printed) from analysis.production_entry_credit;
+select count(*) from analysis.production_entry_credit c left join raw.production_entry e using (production_entry_id) where e.production_entry_id is null;
+select e.description_text from raw.production_entry e where not exists
+  (select 1 from analysis.production_entry_credit c where c.production_entry_id = e.production_entry_id);
+select is_pseudonym, is_collective, count(*) from analysis.production_entry_credit group by all order by all;
+select name_printed, role_category, count(*) from analysis.production_entry_credit where name_printed like '%Перро%' group by all order by all;
+```
+
+Result: 1215 rows, 478 entries, 167 distinct printed names, 0 orphans. The 2 entries with no credits print none ("Балетъ въ 1 д.", "(Les élèves de Dupré)."). There are 4 pseudonym rows and 5 group rows. Перро: source 25 (Perrault), author 4, plus Ж. Перро 13 and Ю. Перро 13 (both author, Perrot).

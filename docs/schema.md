@@ -210,8 +210,7 @@ single receipts figure (e.g. two one-act comedies).
 The per-season list of productions (списокъ пьесъ), "Балетъ" section,
 one list per season × city (known_issues.md #101). Verbatim tier: the
 printed description is NOT split into genre / acts / roles here — that
-belongs to the research layer (how to read "соч." as a role is RG's open
-question). CSVs: `outputs/<run>/parsed_verified/`, loaded into
+belongs to the research layer. CSVs: `outputs/<run>/parsed_verified/`, loaded into
 `raw.*` by `pipeline/load_productions.py`. The creator names are split
 out of `description_text` into `analysis.production_entry_credit`
 (below).
@@ -265,7 +264,7 @@ them to persons belongs in the entities layer.
 | `honorific_printed` | string, nullable | барона / князя / г-на / г. / гг. / лорда, as printed before the name |
 | `qualifier_printed` | string, nullable | words scoping the credit, e.g. "4-го д.", "«Оживленнаго сада»", "нѣкоторые нумера", "частью", "«Конекъ-Горбунокъ»" |
 | `role_text` | string, nullable | the printed role words, verbatim ("соч.", "музыка", "поставленъ балетмейстеромъ", "сюжетъ заимствованъ изъ сказки"…); null when the name follows the genre with no role word ("Балетъ Нюитера и С. Леона") |
-| `role_category` | string | coarse label derived from `role_text`: `author` (соч., or no role word; how to read "соч." as a role is left open), `libretto` (либретто / программа / сюжетъ + a person / составлен(ъ/а)), `music`, `instrumentation`, `staging` (постановка / поставленъ / танцы…), `source` (the author of the tale/poem/novel the ballet is based on) |
+| `role_category` | string | coarse label derived from `role_text`: `author` (соч., or no role word). "Соч." covers the ballet's authorship as a whole, scenario and choreography. These were often done by one person or shared between two (RG, 2026-10-03), so it is deliberately not split into librettist vs choreographer, `libretto` (либретто / программа / сюжетъ + a person / составлен(ъ/а)), `music`, `instrumentation`, `staging` (постановка / поставленъ / танцы…), `source` (the author of the tale/poem/novel the ballet is based on) |
 | `is_pseudonym` | bool | name contains ⁂ |
 | `is_collective` | bool | "и др.", "и друг.", "разныхъ авторовъ" — not a person |
 | `note` | string, nullable | parser notes on an individual reading |

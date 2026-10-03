@@ -21871,3 +21871,58 @@ follow it, the right column then runs Костюмерша, Парикмахер
 sentence in addendum 1 ("top-level") is superseded. Also fixed 4 Moscow rows (1900-01 p003 e015-e018, "Помощники-машиниста") that had never received their Отдѣлъ декораціонный parent (a regex slip of mine: the hyphenated print spelling escaped the rule).
 **(3) Парикмахеры parent -- confirmed.** All 20 SPb seasons print "Парикмахеры:" as a small centred letter-spaced heading in the same face and rank as "Костюмеры:"/"Костюмерши:", under the display "Отдѣлъ гардеробный." and before "Главный гардеробъ." -> the stored nesting "Отдѣлъ гардеробный / Парикмахеры" is right; Moscow's singular "Парикмахеръ." (1890-1900, 10 seasons) is the same rank under Отдѣлъ гардеробный; Moscow 1908-10 "Парикмахерскій отдѣлъ" is a display-face department of its own (stored as such, correct).
 Details noted by the readers (no data change): Педдеръ Георгій is genuinely printed twice (Оперная and Балетная труппа) in 1897-98..1899-00; the troupe line is "Французская драматическая труппа." 1890-91..1893-94 and "Французская труппа." from 1894-95 (stored as printed); 1908-09 p002 prints "Михайловскій театръ." ABOVE "Французская труппа." (theatre above troupe), the reverse of other years; 1909-10 p004/p005 print "Парикмахерскій отдѣлъ" with the position heading ("Главные парикмахеры:") ABOVE the theatre heading, 1908-09 the reverse.
+
+## Issue #133: ballet-list creator credits split into rows -- `analysis.production_entry_credit` (2026-10-03, DONE, step 1 of 3)
+
+The ballet productions lists (#101) are the first person source outside the
+Roster: they give the librettists, choreographers, composers and source
+authors of each ballet. Until now these existed only as free text in
+`raw.production_entry.description_text`. Step 1 splits that text into one
+row per (name, role) mention. Step 2 will link the names to persons and
+Wikidata (entities layer, in its own link table, not `entities.person_link`,
+which is keyed to Roster entries, #131). Step 3 is a research-layer
+person–work–role table.
+
+**Method:** `pipeline/build_production_credits.py` is a rule-based parser.
+Role-word triggers (соч., музыка, либретто/программа/сюжетъ + a person,
+инструментована, постановка/поставленъ/танцы, and the source phrases
+"сюжетъ заимствованъ/взятъ изъ…", "на сюжетъ романа", "составлено по")
+assign a role to the names that follow them. A name printed with no role word
+after the genre ("Балетъ Нюитера и С. Леона") is `author`. One override, for
+"К. В. и А. Н. Богданова", only adds a note: it is unclear whether these are
+two people or two Богдановы. Everything stays verbatim: case endings
+(Сенъ-Жоржа, Ивановымъ), honorifics (барона, князя, г-на, гг., лорда),
+qualifiers ("музыка 4-го д.", "«Оживленнаго сада»", "нѣкоторые нумера",
+"частью"), ⁂ / Г⁂, "К. В.", and the groups "и др.", "и друг.", "разныхъ авторовъ".
+"соч." is kept as `author` and deliberately NOT split into librettist vs
+choreographer. RG (2026-10-03): those roles were often filled by the same
+person or shared between two, so "соч." is joint authorship in its own right.
+
+**Verification:** I read the output for all 290 distinct description strings
+line by line. Two rounds of fixes:
+- a name dropped after a capitalised genre word ("Балетъ Нюитера");
+- qualifiers leaking from earlier names in a list (Т. Готье, Моренго, "и др.");
+- the «…» scope lost;
+- "Гюго—А. А. Горскимъ" (the librettist after the dash) read as a source;
+- "либретто (сюжетъ заимствованъ)" given the role text "сюжетъ";
+- the printed "и." of "сюжетъ и. Асрейтера" detached from its name;
+- capitalised role words blanked before the trigger search. This last fix
+  also recovered a "Ц. Пуни" that the first version had missed.
+
+There is also an automated coverage check: every capitalised word in every
+description (outside «…», leading subtitles and genre words) falls inside an
+extracted name. 0 uncovered.
+
+**Result (full_run):** 1215 credit rows from 478 of 480 entries. The 2 without
+credits print no creators: "(Les élèves de Dupré)." and "Балетъ въ 1 д.".
+167 distinct printed names; 0 orphans. Roles: music 534, author 512, source 83,
+libretto 55, staging 28, instrumentation 3. 4 pseudonym rows (Г⁂ ×3, ⁂ ×1) and
+5 group rows.
+
+Same printed surname, different people: "Перро" is `source` 25× (Charles
+Perrault's tales) and `author` 4× (Jules Perrot, as are Ж./Ю. Перро). Step 2
+must link on the role as well as the name.
+
+CSV copy: `outputs/ballet_productions_pilot/production_entry_credit.csv`.
+Re-run the script after any change to `raw.production_entry` (e.g. when the
+1908-09+ lists are added; RG is batching those once all scans are in).
