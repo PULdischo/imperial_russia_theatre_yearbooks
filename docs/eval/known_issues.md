@@ -21978,7 +21978,7 @@ All 1210 non-group credits are linked; 0 unmapped, 0 orphans.
    were mine and labels/descriptions are as Wikidata gives them; nothing is
    written to the DB until RG has reviewed it.
 
-## Issue #133: TheaterSchoolStaff (staff of the Imperial Theater Schools, 1890-91..1909-10) -- full audit, stage 1: 19 of 20 seasons applied (2026-10-03; evidence: docs/eval/theaterschoolstaff_audit_2026-10-03/)
+## Issue #134: TheaterSchoolStaff (staff of the Imperial Theater Schools, 1890-91..1909-10) -- full audit, stage 1: 19 of 20 seasons applied (2026-10-03; evidence: docs/eval/theaterschoolstaff_audit_2026-10-03/)
 **Scope and method.** 99 pages / 2700 rows. Twenty report-only readers (one per season, brief `apply/PROMPT.md`) compared every field of every row with zoomed crops of the scan (surname/first/patronymic letter by letter, rank, subject, every date digit, notes, list
 numbers, missing/extra rows) and mapped the PRINTED heading hierarchy; the 19 finished readers were then resumed to restate their findings as three strict tab-separated tables (`apply/STRICT.md`; `strict/<season>_struct|fix|missing.tsv`: one structure line per
 stored row, one field correction per line with the exact stored text, full text of each missing row). All 19 sets were validated against raw (`apply/validate.py`: every row covered, every quoted "stored" value equal to the raw value; one trivial "None" quirk) and applied by
