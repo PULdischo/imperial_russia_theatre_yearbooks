@@ -12003,3 +12003,21 @@ select count(*) from raw.production_entry
 ```
 
 Result: pre: 480/1881 rows, the DB matched the CSVs, and each target was present once. Post: 480/1881 rows and 0 orphans. Бургмюллера is now in 1897-98 MSK #9, and "нѣкоторые нумера" is in all 5 Пахита entries (1900-01 through 1904-05). 0 old forms remain.
+
+## 2026-10-03 -- ProductionTeam: persons whose entries disagree on first start date (homonym-merge / date-misread lead); Васильевъ split check
+
+```sql
+with first_start as (
+  select e.entry_id, l.person_id, e.family_name, split_part(e.entry_id,'_',2) season, min(s.start_date_undate) fs
+  from raw.person_entry e join entities.person_link l using(entry_id)
+  left join raw.person_entry_service s on s.entry_id=e.entry_id
+  where e.entry_id like 'productionteam%' group by all)
+select person_id, any_value(family_name), count(*), count(distinct fs), list(distinct fs order by fs), min(season), max(season)
+from first_start where fs is not null group by person_id having count(distinct fs)>1 order by 2;
+select person_id::varchar, display_name, first_attested_season, last_attested_season, superseded_by_person_id is null
+from entities.person where canonical_family_name='Васильевъ' and canonical_first_name='Василій' and canonical_patronymic='Васильевичъ';
+select e.entry_id,e.first_name,e.patronymic,e.tenure_note_text,l.match_method from raw.person_entry e join entities.person_link l using(entry_id)
+where l.person_id::varchar like 'cef4a3%' order by 1;   -- before the split
+```
+
+Result: 43 PT persons with >1 distinct first start date (about half day-level, ~16 year-level, list in known_issues #132 addendum 3); the Васильевъ query returned one merged person linking SPb 1890-91/1891-92 and Moscow 1903-04..1907-08 before the split, two live persons after (cef4a353 1890-91..1891-92, e97dc496 1903-04..1907-08); a name-keyed Tier 1 cluster, no merge-log entry.

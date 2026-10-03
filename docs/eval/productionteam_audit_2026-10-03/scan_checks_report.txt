@@ -1,0 +1,14 @@
+Summary: Task A = Каменскій (DIRECT, printed surname is К-а-м-е-н-с-к-і-й, not Неменскій); Task B(1) 1896-97 p000 = print itself jumps 6 -> 8 (no entry 7 between; e014 prints "8."); Task B(2) 1900-01 p000 = print itself jumps 12 -> 14 (no entry 13 between).
+
+Task A (productionteam_1903-04_p001, printed p.119, right column, Костюмеры):
+Printed: "1. К а м е н с к і й, Исаакъ Осиповичъ (съ 30 іюня 1881 г.). Мужскіе костюмы оперной и русской драматической труппъ. Переведенъ изъ Московскихъ къ Петербургскимъ театрамъ съ 20 іюля 1903 г."
+(surname letter-spaced; zoomed 4x: first letter К with the same glyph as in "костюмы"; then а, м, е, н, с, к, і, й; the 3rd letter is clearly м, 4th е.) First name Исаакъ, patronymic Осиповичъ. Stored e019 (= index 18, "1.") matches the print exactly.
+Verdict: Каменскій. Confidence DIRECT. (Other seasons' "Неменскій" would then be a mismatch to check there, not here.) Crops: /tmp/audit14/crops/a_name.png
+
+Task B(1) productionteam_1896-97_p000 (printed p.104), Помощники декораторовъ, left column:
+Printed ...4. Венигъ; 5. Долговъ; 6. Кирилловъ, Владиміръ Ивановичъ (съ 1 октября 1891 г.); then immediately "8. Козеровскій, Ромуальдъ Александровичъ (съ 3 февраля 1893 г.)" at the foot of the left column. No 7 between them; nothing is printed between 6 and 8 (zoom 2.5x). Stored e014 correctly prints "8." (not 7). The list continues at top of right column with "9. Львовъ" (stored e021). Note: the print itself jumps 6 -> 8 (an original printing omission/skipped number); stored numbering is faithful. (The Декораторы list above runs 1-7, Яновъ is 7 -- not a Помощники entry.)
+Verdict: no missing person; print jumps 6 -> 8. Confidence DIRECT. Crop: /tmp/audit14/crops/b1.png
+
+Task B(2) productionteam_1900-01_p000 (printed p.125), Помощники декораторовъ, right column:
+Printed "10. Экъ, Рудольфъ Ѳедоровичъ" ; "11. Эммэ, Владиміръ Владиміровичъ" ; "12. Юргенсъ, Николай Ивановичъ (съ 15 сентября 1888 г.)" ; then directly "14. Яковлевъ, Григорій Артемьевичъ (съ 14 мая 1879 г. по 15 декабря 1884 г. и съ 15 февраля 1890 г.)" followed by the heading "Ученики декораціонной живописи:". No 13 on the scan; the print itself jumps 12 -> 14. Stored e020/e021 match. (Extra observation: this page's whole Помощники list is physically split across columns, with Евсевскій 4 etc. at the top of the right column; the stored numbering 1..12,14 matches print.)
+Verdict: no missing person; print jumps 12 -> 14. Confidence DIRECT. Crop: /tmp/audit14/crops/b2.png

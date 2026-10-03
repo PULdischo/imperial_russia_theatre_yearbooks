@@ -404,3 +404,5 @@ correction belongs. Entry ids are `<page_id>__eNNN`.
 - Headings printed with slips: "Мѣстные **гадеробы**." (1890-91 p002), "Гардеробм**ё**йстеры" (1893-94 p003), "**Костюмерта**" (1895-96 p003), "**Руская** драматическая труппа." (1895-96 p001), "Маріинскій **тэатръ**" (1896-97 p001), "Отдѣлъ **бугафорскій**" (1897-98 p003), "Парикмахеръ"-initial decoration (1909-10 p004 "Л/П").
 - `productionteam_1892-93_p000` list title: "СПИСОКЪ личнаго состава служащихъ по монтировочной **части,**" -- ends in what looks like a comma rather than the period of the other 19 seasons (checked on the scan 2026-10-02, medium confidence); stored with the period.
 
+- `productionteam_1903-04_p001` e019 **Каменскій** Исаакъ Осиповичъ (the costumer printed Неменскій in 1890-1903 and 1904-06; same start date 30 іюня 1881); read at 4x zoom 2026-10-03, stored as printed.
+- List numbering skips printed by the source (nothing missing): `productionteam_1896-97_p000` Помощники декораторовъ 6 -> 8; `productionteam_1900-01_p000` Помощники декораторовъ 12 -> 14.
