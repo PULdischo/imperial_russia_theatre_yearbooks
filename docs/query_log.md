@@ -11973,3 +11973,17 @@ from analysis.person_entry group by 1 order by 1;
 ```
 
 Result: role_normalized exists only in analysis.person_entry (analysis.person_entry_credit has an unrelated role column); research.person_appearance has no role column (it carries the full heading_path). ProductionTeam: 484 of 1998 chains end in a theatre/troupe segment (Парикмахеры 156, Гардеробмейстеры 110, Гардеробмейстерши 107, Бутафоры 62, Помощники декораторовъ 19, Завѣдывающіе освѣщеніемъ 14, Помощники парикмахера 7, 7 others); by the broader regex ProductionTeam 493, Administrators 56 of 1839, BalletArtists 8, TheaterSchoolStaff 1, Musicians 0, Graduates 0.
+
+## 2026-10-02 -- ProductionTeam consistency checks after stage 2 (list-number contiguity, person city, leaving notes)
+
+```sql
+select entry_id, family_name, list_number, heading_path from raw.person_entry where entry_id like 'productionteam%' order by entry_id;   -- grouped by (season, heading_path) in Python; numbers vs 1..n
+select e.entry_id, l.person_id, split_part(e.heading_path,' / ',1) city, e.family_name, e.heading_path
+from raw.person_entry e join entities.person_link l using(entry_id) where e.entry_id like 'productionteam%';   -- persons whose city differs from their majority city
+select l.person_id, split_part(e.entry_id,'_',2), e.family_name, e.tenure_note_text, e.entry_id
+from raw.person_entry e join entities.person_link l using(entry_id) where e.entry_id like 'productionteam%';   -- leaving (Оставилъ службу) / † notes vs later appearances
+select e.entry_id, e.first_name, e.patronymic, substr(e.tenure_note_text,1,75), split_part(e.heading_path,' / ',1), right(e.heading_path,40), l.person_id
+from raw.person_entry e join entities.person_link l using(entry_id) where e.entry_id like 'productionteam%' and e.family_name = ?;   -- Иващенко, Васильевъ, Каменскій, Неменскій, Павловъ, Ковалевскій, Лупановъ
+```
+
+Result: 1223 (season, chain) groups, 283 numbered, 9 not 1..n (8-row city bug + genuine gaps); 21 rows with a non-majority city (8 = the 1898-99 p002 city bug, now fixed); 9 leaving-note and 3 † rows with later appearances, explained except Васильевъ (two men merged: SPb decorator † 1892 and Moscow costumer from 1904).

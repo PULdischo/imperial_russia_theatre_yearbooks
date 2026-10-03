@@ -1,0 +1,10 @@
+PAGE SUMMARY
+productionteam_1903-04_p001 | rows checked: 22 | rows wrong: 3
+productionteam_1907-08_p001 | rows checked: 22 | rows wrong: 0
+productionteam_1909-10_p004 | rows checked: 20 | rows wrong: 0
+productionteam_1908-09_p004 | rows checked: 20 | rows wrong: 0
+CORRECTIONS
+productionteam_1903-04_p001 | e016-e018 | STORED: "С.-ПЕТЕРБУРГЪ / Отдѣлъ бутафорскій / <Маріинскій|Александринскій|Михайловскій> театръ / Бутафоры" | CORRECT: "С.-ПЕТЕРБУРГЪ / Отдѣлъ бутафорскій / Бутафоры / <Маріинскій|Александринскій|Михайловскій> театръ" | confidence: DIRECT | print has "Бутафоры:" once above all three theatre headings (group level), theatre headings follow, no role heading below; stored has group word after the theatre (level order swapped)
+OTHER FINDINGS
+- 1908-09_p004: e014 (Горохова Клавдія, 2.) is raw-ordered mid-page but printed at the very top of the left column (continuation of Помощницы костюмерши); chain is correct.
+- 1908-09_p004: "Мастерская по раскраскѣ тканей / Завѣдывающій мастерской." is printed with no person under it; no row, nothing to fix.

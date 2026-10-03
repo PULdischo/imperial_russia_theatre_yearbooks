@@ -1,0 +1,13 @@
+PAGE SUMMARY
+productionteam_1890-91_p003 | rows checked: 27 | rows wrong: 0
+productionteam_1906-07_p003 | rows checked: 22 | rows wrong: 0
+productionteam_1899-00_p003 | rows checked: 25 | rows wrong: 0
+productionteam_1894-95_p001 | rows checked: 28 | rows wrong: 0
+CORRECTIONS
+(none)
+OTHER FINDINGS
+- productionteam_1894-95_p001 e018: given name stored "Евлокія" but print reads "Евдокія" (Иванова, Евдокія Трофимовна); surname and chain are right.
+- productionteam_1890-91_p003 e001-e002: page opens mid-list (4. Егоровъ, 5. Краюшкинъ) at column top with no printed city/department/theatre heading; "МОСКВА / Отдѣлъ декораціонный / Помощники декораторовъ / Малый театръ" cannot be confirmed from this page (inherited from previous page; consistent with print continuation).
+- productionteam_1894-95_p001 e001: page opens mid-section with no printed city heading; С.-ПЕТЕРБУРГЪ / Отдѣлъ декораціонный inherited from the previous page (consistent with the following rows).
+- productionteam_1906-07_p003 e012: printed as a single role line "Завѣдывающій освѣщеніемъ Малаго театра" at column top (no separate theatre heading); stored chain matches the print.
+- productionteam_1890-91_p003 e017/e018/e019 etc: printed trailing notes ("Мужскіе костюмы всѣхъ труппъ", "Парики для всѣхъ труппъ") are not chain levels and are correctly absent.

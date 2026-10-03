@@ -1,0 +1,11 @@
+PAGE SUMMARY
+productionteam_1891-92_p002 | rows checked: 28 | rows wrong: 0
+productionteam_1897-98_p002 | rows checked: 29 | rows wrong: 1
+productionteam_1901-02_p002 | rows checked: 23 | rows wrong: 0
+productionteam_1895-96_p002 | rows checked: 28 | rows wrong: 0
+CORRECTIONS
+productionteam_1897-98_p002 | e025 | STORED: surname "Ѳоктистовъ" (heading_path "МОСКВА / Отдѣлъ декораціонный / Машинисты и ихъ помощники / Большой театръ / Помощники машиниста" is correct) | CORRECT: surname "Ѳеоктистовъ" (printed "4. Ѳеоктистовъ, Иванъ Никифоровичъ"; same spelling in 1891-92 and 1895-96) | confidence: DIRECT | surname dropped "е"
+OTHER FINDINGS
+- 1897-98 e024 "Хмелевскій" matches print (no ѣ), left as-is.
+- 1897-98 e029 (Ковалевъ) is out of print order but its chain (Мѣстные гардеробы / Гардеробмейстеры / Михайловскій театръ) is correct.
+- 1901-02 e023 (Педдеръ, Балетная труппа) is out of order but chain is correct.
