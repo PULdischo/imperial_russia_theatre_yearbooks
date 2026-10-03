@@ -11,3 +11,8 @@ ordinals 9, date 7), 296 section/heading lines, 16 missing/extra-row lines, 131 
 All 19 groups reported (group 2 re-run). Blind second reads: verification/ (36 singleton name misreads: 36/36 agree; 36 free-form entries all confirmed).
 apply/: engine_pt.py + phase1..5 (strict expected-old assertions), run_all.py, relink_apply.py (person_link remap for removed rows), removed_rows.json (the 14 rows
 removed from raw, kept here verbatim), all_log.json (every edit). Section structure (institution/heading_path) is NOT touched yet -- stage 2.
+
+## Update: stage 2 applied (section structure; see docs/eval/known_issues.md, issue #132 stage 2)
+stage2/: PROMPT.md (section-verification brief), results/group1..19.txt (the agents' correction lines), apply/ (parse_sec.py -> corrections.json; final.py = manual specs + agent corrections + proposal -> final_chain.json;
+city_final.py -> city.json; apply_stage2.py = strict expected-old writer; stage2_log.json = every edit; proposal.json = the rule-based starting point the agents checked).
+

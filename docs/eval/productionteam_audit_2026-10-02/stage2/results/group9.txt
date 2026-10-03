@@ -1,0 +1,30 @@
+PAGE SUMMARY
+productionteam_1899-00_p003 | rows checked: 25 | rows with a wrong/incomplete proposed section: 2
+productionteam_1899-00_p004 | rows checked: 8 | rows with a wrong/incomplete proposed section: 1
+productionteam_1900-01_p000 | rows checked: 21 | rows with a wrong/incomplete proposed section: 11
+productionteam_1900-01_p001 | rows checked: 26 | rows with a wrong/incomplete proposed section: 11
+productionteam_1900-01_p002 | rows checked: 23 | rows with a wrong/incomplete proposed section: 13
+CORRECTIONS
+productionteam_1899-00_p003 | e017 | PROPOSED: "Малый театръ / Помощники машиниста" | CORRECT: "Малый театръ / Помощникъ машиниста" | confidence: DIRECT | printed singular (one person under it)
+productionteam_1899-00_p003 | e022 | PROPOSED: "Отдѣлъ бутафорскій / Малый театръ" | CORRECT: "Отдѣлъ бутафорскій / Бутафоры / Малый театръ" | confidence: DIRECT | Бутафоры heading governs both Большой and Малый театръ
+productionteam_1899-00_p004 | e004 | PROPOSED: "Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | CORRECT: "Смотрительницы отдѣловъ / Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | confidence: DIRECT | third sub-department under Смотрительницы отдѣловъ, same typographic level as the men's/women's costume departments (parent missing; proposal also correctly keeps it out of e002/e003 chain only)
+productionteam_1900-01_p000 | e007 | PROPOSED: "Отдѣлъ декораціонный" | CORRECT: "Отдѣлъ декораціонный / И. д. декоратора" | confidence: DIRECT | printed sub-heading "И. д. декоратора." above Ширяевъ (unnumbered); nesting under Декораторы vs parallel is a typographic judgment, parallel assumed
+productionteam_1900-01_p000 | e012-e021 | PROPOSED: "Отдѣлъ декораціонный / Декораторы" | CORRECT: "Отдѣлъ декораціонный / Помощники декораторовъ" | confidence: DIRECT | right column has no heading at top; numbers 4-14 continue the Помощники декораторовъ list (1-3 Бочаровъ/Воробьевъ/Долговъ end the left column); Декораторы list was only 1-6
+productionteam_1900-01_p001 | e001-e009 | PROPOSED: "Помощникъ машиниста-механика" | CORRECT: "Отдѣлъ декораціонный / Ученики декораціонной живописи" | confidence: DIRECT | top of left column continues numbered list 2-10 begun by Александровъ on previous page (p000); notes "Назначенъ помощникомъ декоратора 1 января 1901" fit pupils; the machinist heading appears only further down the column
+productionteam_1900-01_p001 | e015-e016 | PROPOSED: "Машинисты-механики и ихъ помощники / Александринскій театръ / Машинистъ-механикъ" | CORRECT: "Машинисты-механики и ихъ помощники / Александринскій театръ / Помощникъ машиниста-механика" | confidence: DIRECT | heading printed at top of right column (singular) above Андроновъ and Петровъ 2-й; Петровъ 1-й (e026, left column bottom) correctly stays Машинистъ-механикъ
+productionteam_1900-01_p002 | e001 | PROPOSED: "Александринскій театръ // None" | CORRECT: "Отдѣлъ бутафорскій / Бутафоры / Александринскій театръ" | confidence: DIRECT | page-top continuation of the Бутафоры list that began with Маріинскій театръ/Иманъ at the foot of p001
+productionteam_1900-01_p002 | e002 | PROPOSED: "Михайловскій театръ // None" | CORRECT: "Отдѣлъ бутафорскій / Бутафоры / Михайловскій театръ" | confidence: DIRECT | same continuation
+productionteam_1900-01_p002 | e005-e006 | PROPOSED: "Отдѣлъ гардеробный / Костюмеры" | CORRECT: "Отдѣлъ гардеробный / Костюмерши" | confidence: DIRECT | printed heading "Костюмерши:" above Иванова Евдокія and Офицерова
+productionteam_1900-01_p002 | e007-e008 | PROPOSED: "Отдѣлъ гардеробный / Парикмахеры" | CORRECT: "Отдѣлъ гардеробный / Парикмахеры / Оперная труппа" | confidence: DIRECT | troupe level missing
+productionteam_1900-01_p002 | e009 | PROPOSED: "Отдѣлъ гардеробный / Балетная труппа" | CORRECT: "Отдѣлъ гардеробный / Парикмахеры / Балетная труппа" | confidence: DIRECT | Парикмахеры parent missing
+productionteam_1900-01_p002 | e010-e011 | PROPOSED: "Русская драматическая труппа / Александринскій театръ" | CORRECT: "Отдѣлъ гардеробный / Парикмахеры / Русская драматическая труппа / Александринскій театръ" | confidence: DIRECT | department and Парикмахеры parents missing
+productionteam_1900-01_p002 | e012 | PROPOSED: "Русская драматическая труппа / Михайловскій театръ" | CORRECT: "Отдѣлъ гардеробный / Парикмахеры / Русская драматическая труппа / Михайловскій театръ" | confidence: DIRECT | same
+productionteam_1900-01_p002 | e013-e014 | PROPOSED: "Французская труппа" | CORRECT: "Отдѣлъ гардеробный / Парикмахеры / Французская труппа" | confidence: DIRECT | heading at top of right column; wigmakers (Женскіе/Мужскіе парики); Парикмахеры and department parents missing
+productionteam_1900-01_p002 | e017 | PROPOSED: "Главный гардеробъ / Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | CORRECT: "Главный гардеробъ / Смотрительницы отдѣловъ / Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | confidence: DIRECT | same pattern as 1899-00 p004 e004
+OTHER FINDINGS
+- p002 (1900-01): every proposed heading_path duplicates the institution (e.g. institution "Отдѣлъ гардеробный", path "Отдѣлъ гардеробный / ..."); and e001/e002 have institution = a theatre with path None -- structural, not just the chain.
+- 1899-00 p004: proposed paths carry a printed colon ("Гардеробмейстеры:", "Гардеробмейстерши:") unlike 1900-01 p002 ("Гардеробмейстеры"); typography, harmonize.
+- 1899-00 p003: no department heading is printed above Большой театръ/Машинистъ (nor above Малый театръ); proposal correctly adds none. Heading text "Помощники машиниста" (plural) is printed only for Большой театръ.
+- Name OCR/script issues spotted (not section matters): 1899-00 p003 e025 "Бьєнвеню" (Ukrainian є; scan Бьенвеню); 1900-01 p002 e006 "Офicerова" (Latin letters; scan Офицерова); e011 "Жулєевъ" (Ukrainian є; scan Жуляевъ).
+- 1900-01 p000: list number 13 is skipped (12 Юргенсъ, then 14 Яковлевъ) in the scan itself; likely source numbering gap, not a missing row.
+- 1900-01 p001 e026 (Петровъ 1-й) correctly belongs to Александринскій/Машинистъ-механикъ even though it is last in row order (printed at left-column foot).

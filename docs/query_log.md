@@ -11856,3 +11856,69 @@ Result: ProductionTeam 2003 rows on 94 pages; the decor department ("Отдѣл�
 ```
 
 Result: person_entry 23163 -> 23158, tombstones 2292 -> 2297 (5 same-person merges), live persons 3280 -> 3269, 0 orphans / 0 unlinked entries / 0 links to tombstones, receipts sum identical, flags 598 -> 600.
+
+## 2026-10-02 — Do all person entities come from the spiski (roster) pages?
+
+```sql
+-- schema check: raw.event_entry / raw.event_entry_performance columns
+select table_name, column_name from information_schema.columns
+where table_schema='raw' and table_name like 'event%';
+
+select sp.entity_type, count(*) links, count(distinct pl.person_id) persons
+from entities.person_link pl
+join raw.person_entry pe on pe.entry_id = pl.entry_id
+join raw.source_pages sp on sp.page_id = pe.page_id
+group by 1 order by 1;
+
+select count(*), count(*) filter (where entry_id not in (select entry_id from raw.person_entry))
+from entities.person_link;
+
+select count(*), count(*) filter (where person_id not in (select person_id from research.person_appearance))
+from research.person;
+
+select entity_type, count(*) from research.person_appearance group by 1 order by 1;
+```
+
+Result: Yes. Repertoire tables carry no person columns at all (title/genre/date/theater/receipts only). All 23,158 person_link rows resolve to raw.person_entry (0 unmatched); every link's page is a roster entity_type: Administrators 1839 links/269 persons, BalletArtists 8478/1149, Graduates 504/490, Musicians 7639/856, ProductionTeam 1998/300, TheaterSchoolStaff 2700/318. All 3,262 research.person rows have ≥1 person_appearance (0 orphans); appearances by type: Admin 1839, Ballet 8477, Grad 504, Musicians 7639, ProdTeam 1998, SchoolStaff 2689.
+
+## 2026-10-02 -- ProductionTeam stage 2 (issue #132): distinct section values before/after (backup DB vs rebuilt DB)
+
+```sql
+select count(distinct heading_path), count(distinct institution), count(*)
+from raw.person_entry where entry_id like 'productionteam%';
+select count(distinct role_normalized) from analysis.person_entry where entry_id like 'productionteam%';
+```
+
+Result: before (pt_stage2 backup) 558 distinct heading_path / 68 institution / 1998 rows, 220 distinct role_normalized; after 201 / 2 (С.-ПЕТЕРБУРГЪ 1255, МОСКВА 742, plus 1 stale row since fixed) / 1998, 95 role_normalized.
+
+## 2026-10-02 -- ProductionTeam stage 2: how many rows end with a theatre/troupe name as role_normalized
+
+```sql
+select count(*) from analysis.person_entry where entry_id like 'productionteam%' and role_normalized like '%театръ';
+select count(*) from analysis.person_entry where entry_id like 'productionteam%' and (role_normalized like '%театръ' or role_normalized like '%труппа');
+```
+
+Result: 389 and 484 of 1998 -- role_normalized (= last chain segment) is a theatre/troupe for these rows (open item in known_issues #132 stage 2).
+
+## 2026-10-02 -- ProductionTeam stage 2: surname spelling-variant sweep (ъ/ь/ѣ/і-normalised key groups)
+
+```sql
+select family_name, first_name, count(*) from raw.person_entry
+where page_id like 'productionteam%' group by 1, 2;   -- then grouped in Python by a normalised key
+select entry_id, family_name, first_name, patronymic, heading_path from raw.person_entry
+where entry_id like 'productionteam%' and family_name = any([<variant list>]) order by family_name, entry_id;
+```
+
+Result: 10 same-person groups with >1 spelling (Пипарь 4/Пипаръ 9, Педдерь 1/Педдеръ 34, Вивьень 1/Вивьенъ 6, Зыбінь 1/Зыбинъ 9, Аллегрі 1/Аллегри 17, Хмѣлевскій/Хмелевскій runs, Кунъ 1-й/2-й etc.) and ~25 near-miss pairs; 74 rows
+listed for a zoom re-read (worklist; result in the stage-1 residue note).
+
+## 2026-10-02 -- ProductionTeam stage 2: link alignment + institution flag after rebuild
+
+```sql
+-- pipeline/check_person_link_alignment.py --db outputs/full_run/imperial_theaters.duckdb  (read-only)
+select entry_id, family_name, institution, heading_path from raw.person_entry where institution like 'Михайловскій%';
+```
+
+Result: 23158 links checked, 1 shift block (theaterschoolstaff_1896-97_p000 e015..e024, the known #131 phase 2 item), none on ProductionTeam; the second query found the one stale ProductionTeam row (1895-96 p001 e007, from the
+hard-coded override in parse_and_validate.py) that is now retired.
+

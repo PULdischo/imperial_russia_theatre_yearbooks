@@ -217,10 +217,11 @@ _MISATTACHMENT_FIXES: dict[str, list[tuple]] = {
     # the real heading. p.108 of the scan shows he's listed directly under
     # "Михайловскій театръ. / Помощникъ машиниста." (the same theater as
     # Ашитковъ just above him, under a "Помощникъ машиниста" sub-role).
-    "productionteam_1895-96_p001": [
-        (7, "institution", "Михайловскій театръ."),
-        (7, "heading_path", "Михайловскій театръ. / Помощникъ машиниста."),
-    ],
+    # [2026-10-02, issue #132 stage 2: this override is retired -- the raw
+    # JSON now carries the correct section for this entry
+    # ("Отдѣлъ декораціонный / Машинисты и ихъ помощники / Михайловскій
+    # театръ / Помощникъ машиниста", institution С.-ПЕТЕРБУРГЪ), so the
+    # patch would only have re-introduced the old, unchained form.]
 }
 
 

@@ -1,0 +1,42 @@
+PAGE SUMMARY
+productionteam_1897-98_p001 | rows checked: 29 | rows with a wrong/incomplete proposed section: 4
+productionteam_1897-98_p002 | rows checked: 29 | rows with a wrong/incomplete proposed section: 26
+productionteam_1897-98_p003 | rows checked: 18 | rows with a wrong/incomplete proposed section: 4
+productionteam_1898-99_p000 | rows checked: 23 | rows with a wrong/incomplete proposed section: 10
+productionteam_1898-99_p001 | rows checked: 25 | rows with a wrong/incomplete proposed section: 5
+CORRECTIONS
+productionteam_1897-98_p001 | e015-e015 | PROPOSED: "Александринскій театръ" | CORRECT: "Отдѣлъ бутафорскій / Бутафоры / Александринскій театръ" | confidence: DIRECT | Рощинъ at top of right column = continuation of Бутафоры; theatre heading printed above him; department+group missing
+productionteam_1897-98_p001 | e016-e016 | PROPOSED: "Михайловскій театръ" | CORRECT: "Отдѣлъ бутафорскій / Бутафоры / Михайловскій театръ" | confidence: DIRECT | Андреевъ, same list
+productionteam_1897-98_p001 | e026-e027 | PROPOSED: "Парикмахеры / Михайловскій театръ" | CORRECT: "Парикмахеры / Русская драматическая труппа / Михайловскій театръ" | confidence: DIRECT | Михайловскій heading is a sibling of Александринскій under "Русская драматическая труппа"; Французская труппа follows as a separate troupe
+productionteam_1897-98_p002 | e001 | PROPOSED: "Смотрительницы отдѣловъ: Отдѣлъ мужскихъ костюмовъ" | CORRECT: "Смотрительницы отдѣловъ / Отдѣлъ мужскихъ костюмовъ" | confidence: DIRECT | levels fused with ":" instead of " / "; last segment must be the sub-list
+productionteam_1897-98_p002 | e002 | PROPOSED: "Смотрительницы отдѣловъ: Отдѣлъ женскихъ костюмовъ" | CORRECT: "Смотрительницы отдѣловъ / Отдѣлъ женскихъ костюмовъ" | confidence: DIRECT | same fusion
+productionteam_1897-98_p002 | e003 | PROPOSED: "Смотрительницы отдѣловъ: Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | CORRECT: "Смотрительницы отдѣловъ / Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | confidence: DIRECT | same fusion
+productionteam_1897-98_p002 | e004 | PROPOSED: "Мѣстные гардеробы. Гардеробмейстеры: Маріинскій театръ" | CORRECT: "Мѣстные гардеробы / Гардеробмейстеры / Маріинскій театръ" | confidence: DIRECT | three levels fused into one segment
+productionteam_1897-98_p002 | e005 | PROPOSED: "Александринскій театръ" | CORRECT: "Мѣстные гардеробы / Гардеробмейстеры / Александринскій театръ" | confidence: DIRECT | parent levels missing
+productionteam_1897-98_p002 | e006 | PROPOSED: "Михайловскій театръ" | CORRECT: "Мѣстные гардеробы / Гардеробмейстеры / Михайловскій театръ" | confidence: DIRECT | parent levels missing
+productionteam_1897-98_p002 | e007 | PROPOSED: "Гардеробмейстерши: Маріинскій театръ" | CORRECT: "Мѣстные гардеробы / Гардеробмейстерши / Маріинскій театръ" | confidence: DIRECT | "Мѣстные гардеробы" missing, levels fused
+productionteam_1897-98_p002 | e008 | PROPOSED: "Александринскій театръ" | CORRECT: "Мѣстные гардеробы / Гардеробмейстерши / Александринскій театръ" | confidence: DIRECT | parent levels missing
+productionteam_1897-98_p002 | e009 | PROPOSED: "Михайловскій театръ" | CORRECT: "Мѣстные гардеробы / Гардеробмейстерши / Михайловскій театръ" | confidence: DIRECT | parent levels missing
+productionteam_1897-98_p002 | e010-e011 | PROPOSED: "Отдѣлъ декораціонный. Декораторы" | CORRECT: "Отдѣлъ декораціонный / Декораторы" | confidence: DIRECT | department and group fused with "."
+productionteam_1897-98_p002 | e012-e020 | PROPOSED: "Отдѣлъ декораціонный. Помощники декораторовъ" | CORRECT: "Отдѣлъ декораціонный / Помощники декораторовъ" | confidence: DIRECT | same fusion
+productionteam_1897-98_p002 | e021 | PROPOSED: "Машинисты и ихъ помощники: Большой театръ. Машинистъ" | CORRECT: "Машинисты и ихъ помощники / Большой театръ / Машинистъ" | confidence: DIRECT | three levels fused
+productionteam_1897-98_p002 | e022-e025 | PROPOSED: "Машинисты и ихъ помощники: Большой театръ. Помощники машиниста" | CORRECT: "Машинисты и ихъ помощники / Большой театръ / Помощники машиниста" | confidence: DIRECT | fusion
+productionteam_1897-98_p002 | e026 | PROPOSED: "Малый театръ. Машинистъ" | CORRECT: "Машинисты и ихъ помощники / Малый театръ / Машинистъ" | confidence: DIRECT | parent "Машинисты и ихъ помощники" missing, theatre and role fused
+productionteam_1897-98_p002 | e027 | PROPOSED: "Малый театръ. Помощникъ машиниста" | CORRECT: "Машинисты и ихъ помощники / Малый театръ / Помощникъ машиниста" | confidence: DIRECT | same
+productionteam_1897-98_p002 | e028 | PROPOSED: "Отдѣлъ освѣтительный. Начальникъ искусственнаго освѣщенія" | CORRECT: "Отдѣлъ освѣтительный / Начальникъ искусственнаго освѣщенія" | confidence: DIRECT | fusion
+productionteam_1897-98_p002 | e029 | PROPOSED: "Михайловскій театръ" | CORRECT: "Мѣстные гардеробы / Гардеробмейстеры / Михайловскій театръ" | confidence: DIRECT | Ковалевъ Андрей is the 2nd gardeробмейстеръ under Михайловскій (after Аслинъ, before the Гардеробмейстерши heading); the row is stored LAST on the page, out of print order; proposed also wrong (not a "Главный гардеробъ" row)
+productionteam_1897-98_p003 | e001 | PROPOSED: "Завѣдывающій освѣщеніемъ" | CORRECT: "Отдѣлъ освѣтительный / Большой театръ / Завѣдывающій освѣщеніемъ" | confidence: DIRECT | page opens with continuation of Moscow "Отдѣлъ освѣтительный" (heading printed at foot of previous page); department missing (page convention keeps theatre in institution, so heading_path "Отдѣлъ освѣтительный / Завѣдывающій освѣщеніемъ" is acceptable)
+productionteam_1897-98_p003 | e002 | PROPOSED: "Помощникъ завѣдывающаго освѣщеніемъ" | CORRECT: "Отдѣлъ освѣтительный / Большой театръ / Помощникъ завѣдывающаго освѣщеніемъ" | confidence: DIRECT | same
+productionteam_1897-98_p003 | e003 | PROPOSED: "Завѣдывающій освѣщеніемъ" | CORRECT: "Отдѣлъ освѣтительный / Малый театръ / Завѣдывающій освѣщеніемъ" | confidence: DIRECT | same
+productionteam_1897-98_p003 | e013 | PROPOSED: "Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | CORRECT: "Смотрительницы отдѣловъ / Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | confidence: DIRECT | parent "Смотрительницы отдѣловъ" missing (e011-e012 have it)
+productionteam_1898-99_p000 | e014-e023 | PROPOSED: "Отдѣлъ декораціонный / Декораторы" | CORRECT: "Отдѣлъ декораціонный / Помощники декораторовъ" | confidence: DIRECT | right column opens with 5.-14. continuing the Помощники list (1-4 at foot of left column); Ученики decorative-painting list begins only after Яковлевъ(14) and is 1-2. Also note these 10 rows are stored AFTER the Ученики rows e012-e013 (out of print order)
+productionteam_1898-99_p001 | e001-e005 | PROPOSED: "Завѣдывающіе освѣщеніемъ / Маріинскій театръ" | CORRECT: "Отдѣлъ декораціонный / Ученики декораціонной живописи" | confidence: DIRECT | numbers 3-7 at top of left column continue Ученики (1-2 at foot of p000); the "Отдѣлъ освѣтительный" heading is at top of RIGHT column, after these entries; institution "Отдѣлъ освѣтительный" for these rows is also wrong
+OTHER FINDINGS
+- 1897-98_p001: institution "Машинисты и ихъ помощники:" is applied to all 29 rows, but e011-e029 are under Отдѣлъ освѣтительный / бутафорскій / гардеробный / Парикмахеры (own top-level headings); heading_path content for e011-e014, e017-e025, e028-e029 is otherwise right
+- 1897-98_p002: "Мѣстные гардеробы" is a top-level heading (same bold size as "Главный гардеробъ"); its rows e004-e009, e029 should have institution "Мѣстные гардеробы" (as on p003), not "Главный гардеробъ"
+- 1897-98_p002: e029 Ковалевъ Андрей stored last on the page; print order is after e006 Аслинъ
+- 1897-98_p003: heading printed "Отдѣлъ бугафорскій" (sic) is a genuine print typo, already preserved in proposal (e004, e005) - correct, leave; also "освѣщеніемъ" printed with і ("освѣщеніемъ") - proposal matches
+- 1897-98_p003 e004-e009, e014-e018: proposed sections right (theatre kept in institution field, with trailing "." on institution = typography)
+- 1898-99_p000: e012-e013 (Ученики декораціонной живописи) correct; e001-e011 correct
+- 1898-99_p001: institution "Отдѣлъ освѣтительный" is applied to all 25 rows but is correct only for e015-e017; e006-e014 (Машинисты и ихъ помощники, own heading, no department above), e018-e020 (Отдѣлъ бутафорскій), e021-e025 (Отдѣлъ гардеробный) have their own department headings (heading_path for these rows is right)
+- 1898-99_p001: all heading_path values for e006-e025 verified correct against the scan

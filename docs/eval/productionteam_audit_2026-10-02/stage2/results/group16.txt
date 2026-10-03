@@ -1,0 +1,45 @@
+PAGE SUMMARY
+productionteam_1906-07_p003 | rows checked: 22 | rows with a wrong/incomplete proposed section: 8
+productionteam_1906-07_p004 | rows checked: 12 | rows with a wrong/incomplete proposed section: 11
+productionteam_1907-08_p000 | rows checked: 19 | rows with a wrong/incomplete proposed section: 0
+productionteam_1907-08_p001 | rows checked: 22 | rows with a wrong/incomplete proposed section: 19
+productionteam_1907-08_p002 | rows checked: 20 | rows with a wrong/incomplete proposed section: 4
+CORRECTIONS
+productionteam_1906-07_p003 | e005-e007 | PROPOSED: "Большой театръ / <role>" | CORRECT: "Отдѣлъ декораціонный / Большой театръ / <role: Машинистъ-механикъ | Старшій помощникъ | Младшій помощникъ>" | confidence: DIRECT | no new department heading before Отдѣлъ освѣтительный, so machinists stay under Отдѣлъ декораціонный
+productionteam_1906-07_p003 | e008-e009 | PROPOSED: "Малый театръ / <role>" | CORRECT: "Отдѣлъ декораціонный / Малый театръ / <role: Машинистъ-механикъ | Ст. помощникъ машиниста>" | confidence: DIRECT | same
+productionteam_1906-07_p003 | e010 | PROPOSED: "Новый театръ / Машинистъ-механикъ" | CORRECT: "Отдѣлъ декораціонный / Новый театръ / Машинистъ-механикъ" | confidence: DIRECT | same
+productionteam_1906-07_p003 | e012 | PROPOSED: "Завѣдывающій освѣщеніемъ Малаго театра" | CORRECT: "Отдѣлъ освѣтительный / Завѣдывающій освѣщеніемъ Малаго театра" (printed as ONE heading line at top of right column; theatre not a separate heading) | confidence: DIRECT | Отдѣлъ освѣтительный parent missing; entry is continuation of that department from left column
+productionteam_1906-07_p003 | e013 | PROPOSED: "Новый театръ / Исп. д. завѣдывающаго освѣщеніемъ" | CORRECT: "Отдѣлъ освѣтительный / Новый театръ / Исп. д. завѣдывающаго освѣщеніемъ" | confidence: DIRECT | parent department missing
+productionteam_1906-07_p004 | e001 | PROPOSED: "None" (institution "Костюмерша.") | CORRECT: "Отдѣлъ гардеробный / Костюмерша" | confidence: DIRECT | top-of-page entry continues Отдѣлъ гардеробный from p003 (e021-e022); "Костюмерша" is the role heading, wrongly sitting in institution
+productionteam_1906-07_p004 | e003-e004 | PROPOSED: "Смотрительницы отдѣловъ / Отдѣлъ мужскихъ костюмовъ" (e004: женскихъ) | CORRECT: "Главный гардеробъ / Смотрительницы отдѣловъ / Отдѣлъ мужскихъ костюмовъ" (e004: "... / Отдѣлъ женскихъ костюмовъ") | confidence: DIRECT | Главный гардеробъ parent missing
+productionteam_1906-07_p004 | e005 | PROPOSED: "Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | CORRECT: "Главный гардеробъ / Смотрительницы отдѣловъ / Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | confidence: DIRECT | two parent levels missing
+productionteam_1906-07_p004 | e006-e007 | PROPOSED: "Гардеробмейстеры / Большой театръ" (e007 Малый театръ) | CORRECT: "Мѣстные гардеробы / Гардеробмейстеры / Большой театръ" (e007: "... / Малый театръ") | confidence: DIRECT | parent "Мѣстные гардеробы" printed bold; it is held only in institution field, absent from heading_path
+productionteam_1906-07_p004 | e008 | PROPOSED: "Помощникъ гардеробмейстера" | CORRECT: "Мѣстные гардеробы / Гардеробмейстеры / Малый театръ / Помощникъ гардеробмейстера" | confidence: DIRECT | heading printed inside the Малый театръ block (after Синицынъ, before Новый театръ); theatre attachment is positional, no separate theatre heading
+productionteam_1906-07_p004 | e009 | PROPOSED: "Новый театръ" | CORRECT: "Мѣстные гардеробы / Гардеробмейстеры / Новый театръ" | confidence: DIRECT | role and department missing
+productionteam_1906-07_p004 | e010-e012 | PROPOSED: "Гардеробмейстерши / Большой театръ|Малый театръ|Новый театръ" | CORRECT: "Мѣстные гардеробы / Гардеробмейстерши / <same theatre>" | confidence: DIRECT | parent "Мѣстные гардеробы" only in institution
+productionteam_1907-08_p001 | e001-e007 | PROPOSED: "<theatre> / <role>" | CORRECT: "Машинисты-механики и ихъ помощники / <theatre> / <role>" (Маріинскій / Александринскій / Михайловскій as proposed) | confidence: DIRECT | printed top heading omitted from heading_path; institution field holds it for ALL 22 rows including those in other departments (see other findings)
+productionteam_1907-08_p001 | e010, e013, e016 | PROPOSED: "... / Завѣдывающій электрическою станціей" | CORRECT: "... / Завѣдывающій электрическою станціею" | confidence: DIRECT | printed ending is -ею (станціею), proposal changed to -ей; e010 chain should also begin "Отдѣлъ освѣтительный / Маріинскій театръ" (already so); e013 "Отдѣлъ освѣтительный / Александринскій театръ"; e016 "Отдѣлъ освѣтительный / Михайловскій театръ"
+productionteam_1907-08_p001 | e012-e014 | PROPOSED: "Александринскій театръ / <role>" | CORRECT: "Отдѣлъ освѣтительный / Александринскій театръ / <Завѣдывающій освѣщеніемъ | Завѣдывающій электрическою станціею | Машинистъ электрической станціи>" | confidence: DIRECT | right column continues Отдѣлъ освѣтительный; no new department heading until Отдѣлъ бутафорскій
+productionteam_1907-08_p001 | e015-e018 | PROPOSED: "Михайловскій театръ / <role>" | CORRECT: "Отдѣлъ освѣтительный / Михайловскій театръ / <Завѣдывающій освѣщеніемъ | Завѣдывающій электрическою станціею | Машинисты электрической станціи>" | confidence: DIRECT | same
+productionteam_1907-08_p001 | e019-e020 | PROPOSED: "Отдѣлъ бутафорскій / Завѣдывающій бутафорскою мастерской" | CORRECT: "Отдѣлъ бутафорскій / Завѣдывающій бутафорской мастерской" | confidence: DIRECT | wrong word form: printed "бутафорской мастерской"
+productionteam_1907-08_p001 | e021-e022 | PROPOSED: "Маріинскій театръ / Бутафоръ" (e022 Александринскій театръ) | CORRECT: "Отдѣлъ бутафорскій / Маріинскій театръ / Бутафоръ" (e022: "... / Александринскій театръ / Бутафоръ") | confidence: DIRECT | Отдѣлъ бутафорскій parent missing
+productionteam_1907-08_p002 | e001 | PROPOSED: "Бутафоръ" (institution "Отдѣлъ бутафорскій.") | CORRECT: "Отдѣлъ бутафорскій / Михайловскій театръ / Бутафоръ" | confidence: DIRECT | Михайловскій театръ heading at top of page omitted (continues dept from p001)
+productionteam_1907-08_p002 | e011 | PROPOSED: "Главный гардеробъ / Смотрительницы главнаго гардероба" | CORRECT: "Главный гардеробъ / Смотрительницы главнаго гардероба / Отдѣлъ мужскихъ костюмовъ" | confidence: DIRECT | Гренбергъ is printed under the "Отдѣлъ мужскихъ костюмовъ" sub-heading; proposal stops one level short
+productionteam_1907-08_p002 | e012 | PROPOSED: "Главный гардеробъ / Отдѣлъ мужскихъ костюмовъ" | CORRECT: "Главный гардеробъ / Смотрительницы главнаго гардероба / Отдѣлъ женскихъ костюмовъ" | confidence: DIRECT | WRONG sub-list: Петрова is under "Отдѣлъ женскихъ костюмовъ" (zoom-confirmed), and the Смотрительницы parent is missing
+productionteam_1907-08_p002 | e013 | PROPOSED: "Главный гардеробъ / Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | CORRECT: "Главный гардеробъ / Смотрительницы главнаго гардероба / Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | confidence: DIRECT | Смотрительницы parent missing (same print structure as e011-e012)
+OTHER FINDINGS
+- p003 (1906-07): rows e003-e004 list heading is printed "Помощники декоратора" (singular), proposal matches; e014-e019 buta/fore chains fine; e021-e022 fine.
+- p004 (1906-07): first block "Художникъ-консультантъ. За смертью В. И. Сизова мѣсто свободно." (vacant) has no person row; fine if intentional.
+- p004: in e001-e005 the institution field holds a role/sub-heading ("Костюмерша."), and in e006-e012 it holds "Мѣстные гардеробы."; the institution value is wrong/stale for this page if the real institution is just the city (Москва) or the department.
+- p001 (1907-08): institution field = "Машинисты-механики и ихъ помощники." for all 22 rows, wrong for e008-e022 (lighting and buta/fore departments).
+- p001: in print Медеръ Левъ (e006 and e015) is one person listed twice ("Онъ-же и освѣтитель" / "Онъ-же машинистъ"); correct as two rows with different roles.
+- p002 (1907-08): e020 Сальниковъ "Завѣдывающій красильной мастерской" is printed right after the Михайловскій театръ гардеробмейстерша entry in the same letter-spaced style; proposal "Мѣстные гардеробы / Завѣдывающій красильной мастерской" is plausible (own role under Мѣстные гардеробы) but could also be nested under "Гардеробмейстерши / Михайловскій театръ" -- UNCERTAIN, left as proposed.
+- p002: e002 pre-institution "Отдѣлъ гардеробный" duplicated in both institution and heading_path (also e003-e010); fine as headings but institution field again holds a department.
+- p000 (1907-08): all 19 proposals correct, including the Декораторы 4-9 continuation and Ученики decorаціонной живописи split on the right column.
+MACHINE-READABLE
+PAGE SUMMARY
+productionteam_1906-07_p003 | rows checked: 22 | rows with a wrong/incomplete proposed section: 8
+productionteam_1906-07_p004 | rows checked: 12 | rows with a wrong/incomplete proposed section: 11
+productionteam_1907-08_p000 | rows checked: 19 | rows with a wrong/incomplete proposed section: 0
+productionteam_1907-08_p001 | rows checked: 22 | rows with a wrong/incomplete proposed section: 19
+productionteam_1907-08_p002 | rows checked: 20 | rows with a wrong/incomplete proposed section: 4
