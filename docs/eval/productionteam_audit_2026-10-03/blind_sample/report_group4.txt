@@ -1,0 +1,16 @@
+PAGE SUMMARY
+productionteam_1892-93_p000 | rows stored: 13 | rows checked: 13 | crops made: 5 (4 zooms + 1 overview) | discrepancies: 0
+productionteam_1900-01_p002 | rows stored: 23 | rows checked: 23 | crops made: 12 (11 zooms + 1 overview) | discrepancies: 1 (surname 0, first/patronymic 0, date/tenure 0, list-number 1, chain/city 0, missing/extra rows 0)
+productionteam_1906-07_p002 | rows stored: 18 | rows checked: 18 | crops made: 9 (8 zooms + 1 overview) | discrepancies: 1 (surname 0, first/patronymic 0, date/tenure 1, list-number 0, chain/city 0, missing/extra rows 0)
+productionteam_1903-04_p002 | rows stored: 22 | rows checked: 22 | crops made: 9 (8 zooms + 1 overview) | discrepancies: 2 (rank_or_title 2; surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+DISCREPANCIES
+productionteam_1900-01_p002 | e007 | list number | STORED: "-" (none) | PRINTED: "1." (1. Дмитріева, Марія Васильевна, Оперная труппа) | confidence DIRECT | e008 Педдеръ carries "2." so e007 is clearly number 1
+productionteam_1906-07_p002 | e012 | tenure_note_text | STORED: "(съ 1 октября 1882 г.). Оставила службу 1 августа 1907 г." | PRINTED: "Оставилъ службу 1 августа 1907 г" | confidence DIRECT | masculine verb form (Романовъ Георгій), stored with feminine -а
+productionteam_1903-04_p002 | e009 | rank_or_title | STORED: "Отдѣлъ головныхъ уборовъ, обуви и бѣлья" | PRINTED: no rank on Петрова's line; she sits under heading "Отдѣлъ женскихъ костюмовъ" | confidence DIRECT | wrong department text in the rank field (heading_path correctly says женскихъ костюмовъ)
+productionteam_1903-04_p002 | e008 | rank_or_title | STORED: "Отдѣлъ мужскихъ костюмовъ" | PRINTED: no rank on Цисвицкая's line; the text is the heading above her | confidence DIRECT | heading copied into rank field (heading_path already has it); same pattern as e009
+OTHER FINDINGS
+- 1892-93_p000: small-print decoration lists after each decorator are not in tenure_note_text; raw JSON keeps only the "Всего—N декорацій." totals as credit_summary_text (8, 9, 4, 2, 1, 4 all match print).
+- 1900-01_p002 and 1906-07_p002 are continuation pages, so first-segment chain levels (Бутафоры, Костюмерши) could only be checked against the neighbouring page, not against this scan.
+- 1906-07_p002 e011/1900-01_p002 e017: print itself differs between years (9 августа 1886 vs 9 сентября 1886 for Иванова Марія) -- source-side, stored matches each page.
+- 1906-07_p002: Иващенко (e001) number "2." printed at column top, continues Костюмерши list from previous page -- stored correctly.
+- No missing, extra, or duplicate rows on any of the four pages.

@@ -1,0 +1,19 @@
+PAGE SUMMARY
+productionteam_1893-94_p002 | rows stored: 28 | rows checked: 28 | crops made: 16 | discrepancies: 1 (surname 0, first/patronymic 1, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+productionteam_1901-02_p003 | rows stored: 23 | rows checked: 23 | crops made: 12 | discrepancies: 7 (surname 0, first/patronymic 0, date/tenure 0, list-number 7, chain/city 0, missing/extra rows 0)
+productionteam_1906-07_p004 | rows stored: 12 | rows checked: 12 | crops made: 8 | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+DISCREPANCIES
+productionteam_1893-94_p002 | e024 | patronymic | STORED: "Никіфоровичъ" | PRINTED: "Никифоровичъ" | confidence DIRECT | Феоктистовъ, Иванъ; plain ф in print (no і). Same man printed "Никифоровичъ" on 1901-02 p003 e019.
+productionteam_1901-02_p003 | e003 | list-number | STORED: "И. д." | PRINTED: (no number) | confidence DIRECT | Кандауровъ. "И. д." is the beginning of the printed heading "И. д. завѣдывающаго освѣщеніемъ Малаго театра:" (already in heading_path); no list number printed.
+productionteam_1901-02_p003 | e004 | list-number | STORED: "И. д." | PRINTED: (no number) | confidence DIRECT | Грасицкій. Print heading is plain "Завѣдывающій освѣщеніемъ:" (no И. д. at all); no number printed.
+productionteam_1901-02_p003 | e005 | list-number | STORED: "И. обв." | PRINTED: (no number) | confidence DIRECT | Брилліантовъ. Heading prints "И. обяз. завѣдывающаго бутафорской мастерской:" (stored abbreviation "обв." also differs from print "обяз."); no number printed.
+productionteam_1901-02_p003 | e006 | list-number | STORED: "И. д." | PRINTED: (no number) | confidence DIRECT | Чарскій. Heading is "Бутафоръ:"; no И. д., no number.
+productionteam_1901-02_p003 | e007 | list-number | STORED: "И. д." | PRINTED: (no number) | confidence DIRECT | Домашевъ. "И. д. бутафора:" is the printed heading (already in heading_path).
+productionteam_1901-02_p003 | e008 | list-number | STORED: "И. д." | PRINTED: (no number) | confidence DIRECT | Савурскій. "И. д. бутафора:" is the printed heading.
+productionteam_1901-02_p003 | e009 | list-number | STORED: "И. д." | PRINTED: (no number) | confidence DIRECT | Неменскій. "И. д. гл. костюмера:" is the printed heading.
+OTHER FINDINGS
+- 1906-07_p004: printed heading "Художникъ-консультантъ." followed by the vacancy note "За смертью В. И. Сизова мѣсто свободно." (left column, between Анихалова and Главный гардеробъ) has no stored row; it is not a person row, only a vacant post (possible annotation, no person to store).
+- 1901-02_p003 e003-e009: whether the "И. д."/"И. обв." in the list-number field is an accepted pipeline convention is unknown to me; judged against print alone they are unsupported.
+- 1893-94_p002: stored "Хмѣлевскій" (e023, ѣ) matches print; 1901-02 p003 e023 "Хмелевскій" (no ѣ) also matches print (print varies between pages, not a stored error).
+- 1893-94_p002 e020 Вальцъ: "(онъ же и декораторъ)" correctly in rank_or_title; 1901-02 p003 e016 stores it in tenure_note_text instead (the print there: "(онъ же и декораторъ) (съ 3 октября 1861 г.)") - inconsistency of field placement only, not a print deviation.
+- All dates (digits and month words), † notes, "Оставилъ службу" notes, names, theatres and chains on all 63 rows otherwise match the print. Page 1893-94_p002 has no printed list numbers for unnumbered single entries (stored "-"), consistent.

@@ -1,0 +1,16 @@
+PAGE SUMMARY
+productionteam_1891-92_p000 | rows stored: 28 | rows checked: 28 | crops made: 8 (+1 full-page overview) | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+productionteam_1900-01_p000 | rows stored: 21 | rows checked: 21 | crops made: 8 (+1 full-page overview) | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+productionteam_1905-06_p004 | rows stored: 12 | rows checked: 12 | crops made: 6 (+1 full-page overview) | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+productionteam_1902-03_p002 | rows stored: 23 | rows checked: 23 | crops made: 15 (+1 full-page overview) | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- 1905-06_p004: print has "Художникъ-консультантъ. За смертью В. И. Сизова мѣсто свободно." (vacancy note, between Аниxалова and Главный гардеробъ); no stored row (no person) -- check whether it is kept elsewhere if vacancy notes matter.
+- 1905-06_p004: e001 Аниxалова "Костюмерша" heading sits at column top, continuing from the previous page; chain "МОСКВА / Отдѣлъ гардеробный / Костюмерша" cannot be fully verified from this page alone (it precedes Главный гардеробъ, so not a child of it).
+- 1905-06_p004: e008 Шматковъ chain "... / Малый театръ / Помощникъ гардеробмейстера" -- the printed sub-heading is typeset like the theatre headings (same rank as Малый театръ/Новый театръ); stored as child of Малый театръ, which matches the print order (convention call, not an error).
+- 1902-03_p002: e009 Цисвицкая stores "Отдѣлъ мужскихъ костюмовъ" in rank_or_title as well as in heading_path, whereas e010/e011 (same list, other отдѣлъ headings) have empty rank_or_title -- internal inconsistency in storage, not in print.
+- 1902-03_p002: e022 Вальцъ rank_or_title "(онъ же и декораторъ)" is printed inside the name block, correct; two rows for Вальцъ (decorator + machinist-mechanic) correct.
+- 1900-01_p000: e011 Александровъ (Ученики декораціонной живописи, list no. 1) sits between e010 and e012 in raw order but is last in print (bottom of right column); chain is correct. List numbers 1-12 then 14 in Помощники (no 13) are the source's own.
+- 1891-92_p000: print has Яковлевъ at 15 and Юргенсъ 14, Екимовъ/Васильевъ † lines stored in tenure correctly; no checks failed.
+- No mixed-script (Latin/Cyrillic homoglyph) tokens in any of the four stored files; all Ѳ/ѳ vs Ф/ф instances in names match the print (Ѳедоръ Бекетовъ, Ѳаддеевичъ, Экъ Ѳедоровичъ, Ѳеодосій, Аѳанасьевъ; Ковалевъ Федоровичъ and Вальцъ Федоровичъ with Ф).

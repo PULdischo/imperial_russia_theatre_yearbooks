@@ -1,0 +1,15 @@
+PAGE SUMMARY
+productionteam_1890-91_p002 | rows stored: 30 | rows checked: 30 | crops made: 8 (+1 half-size overview) | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+productionteam_1895-96_p000 | rows stored: 27 | rows checked: 27 | crops made: 6 (+1 overview; left crops redone once to include margin) | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+productionteam_1905-06_p001 | rows stored: 22 | rows checked: 22 | crops made: 9 (8 strips + 1 4x close-up of Павлсвичъ; +1 overview) | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+productionteam_1898-99_p002 | rows stored: 24 | rows checked: 24 | crops made: 8 (+1 overview) | discrepancies: 1 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 1)
+DISCREPANCIES
+productionteam_1898-99_p002 | (no row; between e001 and e002) | MISSING ROW | STORED: (absent) | PRINTED: "Балетная труппа." heading, then "Педдеръ, Георгій Ивановичъ (съ 1 марта 1879 г.). Мужскіе и женскіе парики." (no list number) | confidence DIRECT | Педдеръ is printed twice in the left column: first as "2. Педдеръ ... Мужскіе парики." (stored e001, Оперная труппа continuation), then under the heading "Балетная труппа." with specialty "Мужскіе и женскіе парики." Only the first is stored. Expected chain: С.-ПЕТЕРБУРГЪ / Отдѣлъ гардеробный / Парикмахеры / Балетная труппа. Also "Балетная труппа" heading appears nowhere in stored heading_paths.
+OTHER FINDINGS
+- productionteam_1890-91_p002: the print itself spells the heading "Мѣстные гадеробы." (missing р); stored heading_path has "Мѣстные гардеробы" (print typo normalized; heading only, not a row field). The 1898-99 page prints it correctly.
+- productionteam_1890-91_p002 e001 Варламовъ (list no. 2, "Французская драматическая труппа") sits at the top of the page with no troupe heading printed on this page; chain is inherited from the previous page (cannot be confirmed from this page alone).
+- productionteam_1905-06_p001 e018: print reads "Павлсвичъ" (с in place of о, confirmed at 4x), stored "Павлсвичъ" matches the print; a genuine print typo, candidate for genuine_print_typos.md.
+- productionteam_1905-06_p001 e022 Яковлевъ (list 4) and 1890-91 e001 / 1898-99 e001 are column-top continuations whose headings are not on the page; stored chains are plausible.
+- productionteam_1895-96_p000 e027 Бергеръ: print "съ 6 октября 1880 г." matches stored; the 1905-06 page prints his date as "5 октября 1880" (source's own variation, stored as printed on each page).
+- productionteam_1895-96_p000 e001 Андреевъ: the "† 15 іюня 1896 г" line is printed on a separate line after the date and stored in tenure_note_text; ok. e024 Мининъ "Оставилъ службу 8 ноября 1895 г." ok.
+- productionteam_1898-99_p002 e002 Жуляевъ: print "(съ 19. мая 1869 г.)" with stray period after 19; stored as printed.

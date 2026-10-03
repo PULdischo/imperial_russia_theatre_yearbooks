@@ -1,0 +1,12 @@
+PAGE SUMMARY
+productionteam_1894-95_p000 | rows stored: 26 | rows checked: 26 | crops made: 13 | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+productionteam_1902-03_p003 | rows stored: 21 | rows checked: 21 | crops made: 13 | discrepancies: 1 (surname 0, first/patronymic 1, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+productionteam_1909-10_p001 | rows stored: 22 | rows checked: 22 | crops made: 11 | discrepancies: 1 (surname 0, first/patronymic 0, date/tenure 1, list-number 0, chain/city 0, missing/extra rows 0)
+DISCREPANCIES
+productionteam_1902-03_p003 | e021 | FIRST NAME | STORED: "Казимира" | PRINTED: "Казиміра" | confidence DIRECT | zoomed 5x; dotted і
+productionteam_1909-10_p001 | e007 | TENURE | STORED: "съ 25 октября 1897 г." | PRINTED: "(сь 25 октября 1897 г.)." | confidence DIRECT | zoomed 5x; printed with soft sign (genuine print typo, per genuine_print_typos list)
+OTHER FINDINGS
+- 1894-95_p000: Бочаровъ 1-й "академикъ" and Шишковъ "профессоръ" correctly in rank_or_title; dagger line and Долговъ appointment note verified; all і/ѣ/Ѳ checked.
+- 1902-03_p003: e001 (list no. 2 Ѳеоктистовъ) is a column-top continuation of the previous page; its heading (Большой театръ / Помощники машиниста) is not visible on this page, so unverifiable here.
+- 1902-03_p003: e014 "(онъ-же Хлоповъ)" printed between surname and first name; stored at start of tenure note (acceptable layout choice).
+- 1909-10_p001: e001 sits under a Михайловскій театръ heading whose department (Отдѣлъ освѣтительный) is printed on the previous page; not verifiable here. Grigoryev appears twice (Оперная and Балетная труппа), two rows as expected.

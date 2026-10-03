@@ -12077,3 +12077,15 @@ select name_printed, role_category, count(*) from analysis.production_entry_cred
 ```
 
 Result: 1215 rows, 478 entries, 167 distinct printed names, 0 orphans. The 2 entries with no credits print none ("Балетъ въ 1 д.", "(Les élèves de Dupré)."). There are 4 pseudonym rows and 5 group rows. Перро: source 25 (Perrault), author 4, plus Ж. Перро 13 and Ю. Перро 13 (both author, Perrot).
+
+## 2026-10-03 -- ProductionTeam blind sample: corpus-wide sweeps for the error classes found (list_number leaks, heading text in rank_or_title, verb gender) + check of the added row
+
+```sql
+select entry_id, family_name, list_number, right(heading_path,45) from raw.person_entry where entry_id like 'productionteam%' and list_number is not null and not regexp_matches(list_number,'^[0-9]+[.]?$') order by 1;
+select entry_id, family_name, rank_or_title, right(heading_path,40) from raw.person_entry where entry_id like 'productionteam%' and rank_or_title is not null and not regexp_matches(rank_or_title,'^(Мужскіе|Женскіе|Парики|князь|профессоръ|академикъ|баронесса|[(]онъ)') order by 1;
+select entry_id, family_name, first_name, substr(tenure_note_text,1,90) from raw.person_entry where entry_id like 'productionteam%'
+ and ((tenure_note_text like '%Оставила службу%' and regexp_matches(family_name,'(ъ|й|ь)( [0-9]-й)?$')) or (tenure_note_text like '%Оставилъ службу%' and regexp_matches(family_name,'(а|я)$'))) order by 1;
+select l.person_id::varchar like '0995a2%', e.heading_path, e.rank_or_title from raw.person_entry e join entities.person_link l using(entry_id) where e.entry_id='productionteam_1898-99_p002__e025';
+```
+
+Result: 7 non-numeric list_number rows (all 1901-02 p003 e003-e009), 5 rank_or_title rows that are heading text, 3 verb-gender hits of which 1 wrong (Романовъ), and the added Педдеръ row linked to the existing Педдеръ person (0995a2).

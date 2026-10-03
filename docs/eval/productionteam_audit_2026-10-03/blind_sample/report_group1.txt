@@ -1,0 +1,12 @@
+PAGE SUMMARY
+productionteam_1890-91_p000 | rows stored: 23 | rows checked: 23 | crops made: 6 | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+productionteam_1894-95_p002 | rows stored: 28 | rows checked: 28 | crops made: 10 | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+productionteam_1902-03_p004 | rows stored: 9 | rows checked: 9 | crops made: 4 | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+productionteam_1896-97_p002 | rows stored: 28 | rows checked: 28 | crops made: 8 | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, chain/city 0, missing/extra rows 0)
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- 1896-97_p002 prints Хмелевскій without ѣ; 1894-95_p002 prints Хмѣлевскій with ѣ; stored values match each print (source variation, not an error).
+- 1890-91_p000 stores e019/e022 (unnumbered machinists) with list no. "-" ; correct per print.
+- 1890-91_p000 e013 date digit "1885" has a blurred 8 in print; read as 1885, matches stored.
+- Female surnames print without final ъ (Шигорина, Иванова, Ильинская...) and stored the same.
