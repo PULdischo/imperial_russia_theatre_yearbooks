@@ -11922,3 +11922,40 @@ select entry_id, family_name, institution, heading_path from raw.person_entry wh
 Result: 23158 links checked, 1 shift block (theaterschoolstaff_1896-97_p000 e015..e024, the known #131 phase 2 item), none on ProductionTeam; the second query found the one stale ProductionTeam row (1895-96 p001 e007, from the
 hard-coded override in parse_and_validate.py) that is now retired.
 
+
+## 2026-10-02 — Where do the ballet production lists store their author/composer names?
+
+```sql
+select table_schema, table_name, column_name from information_schema.columns
+where table_name like 'production%' order by 1,2;
+
+select count(*), count(description_text), count(distinct description_text) from raw.production_entry;
+
+select season, city, title, description_text
+from raw.production_entry using sample 8 (reservoir, 42) order by season;
+```
+
+Result: raw.production_entry (+ _performance) exist only in the raw tier, with no person/author columns. The names are embedded in free-text description_text: 480 rows, all non-null, 291 distinct strings. Examples: "соч. Сенъ-Жоржа и М. И. Петипа, музыка Ц. Пуни."; "сюжетъ и. Асрейтера и Г. Гауль, музыка І. Байеръ." Names are printed in the genitive after соч./музыка/сюжетъ, with roles marked by these keywords. Nothing from these lists is in entities.person / research.person yet.
+
+## 2026-10-02 — Has raw.production_entry.description_text drifted from the scan-verified CSV?
+
+```sql
+select season, city, list_number, title, description_text from raw.production_entry;
+-- compared in pandas against outputs/ballet_productions_pilot/parsed_verified/production_entry.csv
+-- (set of distinct description_text values both ways), plus group by season, city for 1899-00
+```
+
+Result: 480 DB rows vs 480 CSV rows. 0 description_text values are in the DB but not the CSV, and 0 the other way round, so there's no drift since the load. 1899-00: Moscow has 13 entries (the interim Google Books stand-in) and SP has 26. Also, outside the DB, the verify_logs tally for description_text is: 216 misread, 11 structure, 7 genuine_print, 1 extra, 11 uncertain (10 resolved by RG, 1 still open: Бернаделли, 1896-97 SP #2).
+
+## 2026-10-02 -- ProductionTeam stage 2b: institution/heading_path after restoring the list title and city-first chain
+
+```sql
+select institution, count(*) from raw.person_entry where entry_id like 'productionteam%' group by 1 order by 1;
+select heading_path from raw.person_entry where entry_id in ('productionteam_1895-96_p001__e007','productionteam_1905-06_p003__e010','productionteam_1909-10_p004__e019');
+select family_name, count(*) from raw.person_entry where entry_id like 'productionteam%'
+  and family_name in ('Пипарь','Пипаръ','Педдерь','Зыбінь','Аллегрі','Вивьень де-Шатобріанъ','Семирадскій') group by 1;
+```
+
+Result: two institution values, "Списокъ личнаго состава служащихъ по монтировочной части." 1605 rows and "... по постановочной части." 393; the three chains start "С.-ПЕТЕРБУРГЪ / ..." or "МОСКВА / ..."; only Пипаръ (13) remains
+of the variant set (Пипарь, Педдерь, Зыбінь, Аллегрі, Вивьень, Семирадскій all 0).
+

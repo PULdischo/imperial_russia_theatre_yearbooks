@@ -21732,7 +21732,7 @@ second column filed under Декораторы/Ученики (~15 seasons), peo
 гардеробъ / Смотрительницы отдѣловъ, Мѣстные гардеробы, Парикмахеры), fused levels ("Гардеробмейстеры: Маріинскій театръ"), heading words wrong (Отдѣль, Парижмахеры, Ларикмахерскій, Вутафоры, Гардеробмейстеры for
 -шерши), invented/stale headings in `institution` (68 distinct values: "личный составъ", page titles, the previous list's heading, "Старшій помощникъ бутафора."), a row-level fabrication ("Конторщикъ" built from the
 surname Конторщиковъ, 1908-09 p004) and a stale code patch (see below). **Conventions fixed for the whole corpus** (each confirmed on the scans, listed so they are not rediscovered): `institution` = the CITY only
-(С.-ПЕТЕРБУРГЪ / МОСКВА; 1255/742 rows); `heading_path` = the chain of printed headings top->bottom, no city, no page title, trailing "."/":" and letter-spacing removed, pre-reform spelling kept; the LAST
+(С.-ПЕТЕРБУРГЪ / МОСКВА; 1255/742 rows) [SUPERSEDED the same day, see the addendum below -- it contradicted docs/schema.md]; `heading_path` = the chain of printed headings top->bottom, no city, no page title, trailing "."/":" and letter-spacing removed, pre-reform spelling kept; the LAST
 segment is the role/sub-list except where a theatre/troupe closes the chain (see open item); layout is two-column, a column-top continuation belongs to the previous list, list numbers continue across
 columns/pages; Главный гардеробъ and Мѣстные гардеробы are top-level departments (never under Отдѣлъ гардеробный); machinists sit under Отдѣлъ декораціонный (also in Moscow, where the group heading is not printed);
 Парикмахеры sit under Отдѣлъ гардеробный except Moscow's own "Парикмахерскій отдѣлъ" (1908-10); a theatre heading is a chain level (Мѣстные гардеробы / Гардеробмейстеры / Маріинскій театръ), printed order kept where
@@ -21749,4 +21749,18 @@ the full chain). **Verification**: person_entry 23158 unchanged, receipts sum un
 under Малый театръ, so their chain ends in the theatre. **OPEN (analysis layer, not raw)**: `analysis.person_entry.role_normalized` takes the LAST chain segment, which is a theatre or troupe name for 389-484 of
 the 1998 ProductionTeam rows (every "... / Гардеробмейстеры / Маріинскій театръ", "Парикмахеры / ... труппа / театръ", "Бутафоры / theatre"); a derived role that skips a trailing theatre/troupe segment (and
 columns for city/department/theatre) is the natural follow-up -- needs RG's call because role_normalized feeds the research layer. Variant-spelling worklist from the stage-1 residue: see the end-of-stage sweep note below.
+
+**Issue #132 stage 2 addendum -- institution restored to the printed list title; city moved into heading_path (2026-10-02, DONE, RG-confirmed)**: RG pointed out that `institution` should come from the name of the list. Right: docs/schema.md
+defines it as the top-level heading verbatim (other entity types hold e.g. "Списокъ личнаго состава театральнаго управленія."), and city-only was my own unchecked choice. A report-only agent read the title block of p000 of all 20
+seasons on the scans: the list is titled "СПИСОКЪ / личнаго состава служащихъ по монтировочной части." in 1890-91..1905-06 and "... по постановочной части." in 1906-07..1909-10 (letter-spaced capitals over a smaller second
+line, line breaks vary; no running head on p000 -- the mirrored "личный составъ" seen in 1908-10 is verso show-through), followed by a rule, then "С.-ПЕТЕРБУРГЪ." and, at the start of the Moscow section, "МОСКВА." (period missing in
+1897-98, 1907-08, 1908-09, 1909-10). The pre-stage-2 stored values had been inconsistent in every season (title only / title+city fused / city only / an invented "Императорское С.-Петербургское Театральное Училище" for 1902-03).
+**Now**: `institution` = "Списокъ личнаго состава служащихъ по монтировочной|постановочной части." on all 1998 rows (1605 / 393; trailing period kept; capitals/letter-spacing of the display line not reproduced, as for every other
+list title in the corpus); `heading_path` starts with the printed city heading ("С.-ПЕТЕРБУРГЪ / Отдѣлъ декораціонный / ...", "МОСКВА / ..."), because the city IS a heading between the title and the entry (schema rule) -- and RG's reason:
+roles can span both cities elsewhere in the corpus (esp. Administrators), so the city belongs in the chain, not in a field that implies one place. role_normalized (last segment) and its 95 distinct values unchanged.
+Print note: 1892-93's title ends in what looks like a comma, "монтировочной части," (agent: high confidence on the text, medium on comma vs period; the 13 rows had it stored with a comma) -- normalised to the period like the other
+seasons, logged in genuine_print_typos.md. **Also applied** (variant-spelling zoom worklist, 31 rows, 22 confirmed as printed): Аллегрі->Аллегри (1901-02 p000), Педдерь->Педдеръ (1890-91 p001), Вивьень->Вивьенъ (1894-95 p002),
+Зыбінь->Зыбинъ (1896-97 p001), Пипарь->Пипаръ x4 (1890-91, 1891-92, 1899-00, 1901-02), Семирадскій->Семирадзкій (1905-06 p001); confirmed-as-printed spellings left alone: Канлауровъ/Кондауровъ, Раздобурлинъ, Лавдавскій,
+Савутскій, Салатко-Петрищо (щ with tail), Бриліантова, Анихалова vs Апиханова, Хмѣлевскій with first name Владимиръ (1907-08). Verification: entries 23158 unchanged, tombstones 2298 identical, live persons 3268, orphans 0,
+flags 541, receipts sum unchanged. Backup: full_run_pre_promote_backup_2026-10-02_pt_stage2b. Evidence: stage2/apply/ (apply_stage2b.py, titles.json, phase7.py).
 

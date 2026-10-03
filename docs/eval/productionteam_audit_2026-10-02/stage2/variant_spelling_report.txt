@@ -1,0 +1,33 @@
+Of 31 rows: 22 CONFIRMED, 9 WRONG, 0 UNCERTAIN.
+productionteam_1901-02_p000 | e001 | Аллегрі | WRONG | Аллегри (final letter и, letter-spaced) | 
+productionteam_1890-91_p001 | e020 | Педдерь | WRONG | Педдеръ | bold; first name Георгій
+productionteam_1894-95_p002 | e010 | Вивьень де-Шатобріанъ | WRONG | Вивьенъ де-Шатобріанъ | first word ends ъ not ь; second word matches stored
+productionteam_1896-97_p001 | e003 | Зыбінь | WRONG | Зыбинъ | и not і, ъ not ь
+productionteam_1890-91_p001 | e014 | Пипарь | WRONG | Пипаръ |
+productionteam_1891-92_p001 | e015 | Пипарь | WRONG | Пипаръ |
+productionteam_1899-00_p002 | e002 | Пипарь | WRONG | Пипаръ | letter-spaced
+productionteam_1901-02_p001 | e023 | Пипарь | WRONG | Пипаръ | letter-spaced
+productionteam_1907-08_p003 | e010 | Хмѣлевскій | CONFIRMED | Хмѣлевскій | first name printed Владимиръ (stored Владимиръ CONFIRMED)
+productionteam_1903-04_p003 | e006 | Канлауровъ | CONFIRMED | Канлауровъ | н-л, letter-spaced
+productionteam_1904-05_p003 | e011 | Канлауровъ | CONFIRMED | Канлауровъ |
+productionteam_1908-09_p003 | e009 | Кондауровъ | CONFIRMED | Кондауровъ | о-н-д
+productionteam_1903-04_p000 | e011 | Раздобурлинъ | CONFIRMED | Раздобурлинъ | 4th letter д (with feet), 9th letter л (no feet)
+productionteam_1905-06_p003 | e002 | Лавдавскій | CONFIRMED | Лавдавскій |
+productionteam_1906-07_p003 | e002 | Лавдавскій | CONFIRMED | Лавдавскій |
+productionteam_1907-08_p003 | e002 | Лавдавскій | CONFIRMED | Лавдавскій |
+productionteam_1905-06_p003 | e020 | Савутскій | CONFIRMED | Савутскій | т clearly
+productionteam_1906-07_p003 | e020 | Савутскій | CONFIRMED | Савутскій |
+productionteam_1907-08_p003 | e020 | Савутскій | CONFIRMED | Савутскій |
+productionteam_1902-03_p003 | e008 | Салатко-Петрищо | CONFIRMED | Салатко-Петрищо | щ with descender tail at 7x zoom
+productionteam_1904-05_p003 | e012 | Салатко-Петрищо | CONFIRMED | Салатко-Петрищо | щ with tail at 7x
+productionteam_1908-09_p003 | e020 | Бриліантова | CONFIRMED | Бриліантова | single л, і
+productionteam_1905-06_p004 | e001 | Анихалова | CONFIRMED | Анихалова | н-и-х-а-л
+productionteam_1906-07_p004 | e001 | Анихалова | CONFIRMED | Анихалова |
+productionteam_1907-08_p004 | e001 | Анихалова | CONFIRMED | Анихалова |
+productionteam_1900-01_p004 | e008 | Апиханова | CONFIRMED | Апиханова | п-и-х-а-н
+productionteam_1901-02_p004 | e003 | Апиханова | CONFIRMED | Апиханова |
+productionteam_1902-03_p003 | e017 | Апиханова | CONFIRMED | Апиханова |
+productionteam_1903-04_p003 | e017 | Апиханова | CONFIRMED | Апиханова |
+productionteam_1904-05_p004 | e002 | Апиханова | CONFIRMED | Апиханова |
+productionteam_1905-06_p001 | e009 | Семирадскій | WRONG | Семирадзкій | з before к
+OTHER: crops in /tmp/audit10/crops/. Where the same surname was checked in several seasons (Пипаръ x4, Лавдавскій x3, Савутскій x3, Анихалова x3, Апиханова x5) the printing is identical across the checked seasons. All 9 WRONG corrections are in the direction of the "other seasons" spelling given in the task (Аллегри, Педдеръ, Вивьенъ, Зыбинъ, Пипаръ) except Семирадзкій, which matches the other-season variant Семирадзкій.
