@@ -11959,3 +11959,17 @@ select family_name, count(*) from raw.person_entry where entry_id like 'producti
 Result: two institution values, "Списокъ личнаго состава служащихъ по монтировочной части." 1605 rows and "... по постановочной части." 393; the three chains start "С.-ПЕТЕРБУРГЪ / ..." or "МОСКВА / ..."; only Пипаръ (13) remains
 of the variant set (Пипарь, Педдерь, Зыбінь, Аллегрі, Вивьень, Семирадскій all 0).
 
+
+## 2026-10-02 -- role_normalized: where it is used, and which ProductionTeam chains end in a theatre/troupe
+
+```sql
+describe research.person_appearance;   -- is role_normalized carried into the research layer?
+select table_schema, table_name from information_schema.columns
+where column_name ilike '%role%' and table_schema in ('research','analysis');
+select heading_path_clean from analysis.person_entry where entry_id like 'productionteam%';  -- grouped in Python: last non-theatre/troupe segment vs final segment
+select split_part(entry_id,'_',1) t, count(*) n,
+  count(*) filter (where regexp_matches(role_normalized,'(театръ|театра|труппа)[.]?$')) th
+from analysis.person_entry group by 1 order by 1;
+```
+
+Result: role_normalized exists only in analysis.person_entry (analysis.person_entry_credit has an unrelated role column); research.person_appearance has no role column (it carries the full heading_path). ProductionTeam: 484 of 1998 chains end in a theatre/troupe segment (Парикмахеры 156, Гардеробмейстеры 110, Гардеробмейстерши 107, Бутафоры 62, Помощники декораторовъ 19, Завѣдывающіе освѣщеніемъ 14, Помощники парикмахера 7, 7 others); by the broader regex ProductionTeam 493, Administrators 56 of 1839, BalletArtists 8, TheaterSchoolStaff 1, Musicians 0, Graduates 0.
