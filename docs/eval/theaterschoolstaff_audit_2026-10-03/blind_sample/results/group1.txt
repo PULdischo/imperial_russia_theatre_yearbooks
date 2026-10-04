@@ -1,0 +1,11 @@
+PAGE SUMMARY
+theaterschoolstaff_1890-91_p003 | rows stored: 20 | rows checked: 20 | crops made: 7 (+1 full-page view) | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+theaterschoolstaff_1894-95_p003 | rows stored: 41 | rows checked: 41 | crops made: 10 column strips (+4 extra zooms) | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+theaterschoolstaff_1898-99_p002 | rows stored: 30 | rows checked: 30 | crops made: 13 (+1 full-page view) | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+theaterschoolstaff_1904-05_p003 | rows stored: 25 | rows checked: 25 | crops made: 13 (+1 full-page view, +1 letter-level zoom on Лабзина) | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+DISCREPANCIES
+(none on any of the four pages)
+OTHER FINDINGS
+- Print variants checked and found stored exactly as printed: 1894-95 e035 Прововичъ; 1898-99 e001/e004 "Московской/С.-Петербургской Конторой"; 1904-05 e003 Всеволожской, e001 Фонъ Бооль, e022 Лабзина (print з confirmed against з in Безсонова); 1890-91 e004 Давыдовъ.
+- Heading chains, school switch (Moscow list start) and section sub-headings (Учителя 1-го класса, Учителя/Учительницы приготовительныхъ классовъ, Врачъ при Училищѣ, Причтъ церкви Училища / Священникъ / Дьяконъ) match the print on all four pages; no extra or missing rows found.
+- 1904-05 e006/e007 (deaths): stored PERIODS start==end==death date [died] (derived from NOTE, matches NOTE and print).

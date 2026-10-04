@@ -1,0 +1,23 @@
+=== theaterschoolstaff_1894-95_p002 (section written after check) ===
+rows stored 34, checked 34, crops 14 + 1 overview (13 text crops at 2x native)
+- e027 Морозовъ PERIODS: STORED "съ 1 сентября 1889 г.->None[None]" ; PRINTED NOTE "(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.)" -> two stints (1889->1 сент. 1892; 1 сент. 1893->None) (DIRECT; note e022 on 1903-04 page splits same text into two periods)
+- Cosmetic: e025-e034 PERIODS start carries "съ" prefix ("съ 15 октября 1893 г."), other rows do not.
+- All names/patronymics/subjects/list numbers/headings match print.
+
+=== theaterschoolstaff_1898-99_p000 ===
+rows stored 20, checked 20, crops 9 + 4 detail + 1 overview (scan blurry in right column lower half)
+- No discrepancies found. Print is out of focus for e017-e020 (Исаенко 1888, Лаубергъ/Орловъ/Петровъ patronymics): read consistent with stored, marked UNCERTAIN only as to legibility, no deviation seen.
+
+=== theaterschoolstaff_1903-04_p002 ===
+rows stored 28, checked 28, crops 13 + 1 overview. No discrepancies found (all names, patronymics, dates, subjects, list numbers 27-35 / 1-2 / 1-2 / 1-14, headings and Moscow start match print).
+
+PAGE SUMMARY
+theaterschoolstaff_1894-95_p002 | rows stored: 34 | rows checked: 34 | crops made: 14 | discrepancies: 1 (surname 0, first/patronymic 0, date/tenure 1, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+theaterschoolstaff_1898-99_p000 | rows stored: 20 | rows checked: 20 | crops made: 13 | discrepancies: 0
+theaterschoolstaff_1903-04_p002 | rows stored: 28 | rows checked: 28 | crops made: 13 | discrepancies: 0
+DISCREPANCIES
+theaterschoolstaff_1894-95_p002 | e027 | PERIODS | STORED: "съ 1 сентября 1889 г.->None[None]" | PRINTED: "(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.)" (Морозовъ, 8.) -> two stints | confidence DIRECT | NOTE matches print; PERIODS drops the 1892 end and the 1893 restart (same note is split into two periods on the 1903-04 page)
+OTHER FINDINGS
+- 1894-95_p002 e025-e034 (and e027): PERIODS start text carries a "съ " prefix ("съ 15 октября 1893 г."), unlike other rows; cosmetic.
+- 1898-99_p000: scan blurry on right column lower half (e017-e020); read consistent with stored, no deviation seen.
+- Row counts match print on all three pages; no missing/extra/duplicate rows; heading chains and schools correct.

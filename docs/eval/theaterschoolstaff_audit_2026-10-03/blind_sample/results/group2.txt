@@ -1,0 +1,40 @@
+=== theaterschoolstaff_1891-92_p000 (page 261; single column; 14 entries)
+All 14 stored rows compared against 5 zoomed crops (1.5x of 1950px-wide strips) plus a full-page view; no discrepancies found.
+PAGE SUMMARY
+theaterschoolstaff_1891-92_p000 | rows stored: 14 | rows checked: 14 | crops made: 5 | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+DISCREPANCIES
+none
+OTHER FINDINGS
+- none (e013 note "† 22 іюня 1892 г." printed on a separate indented line, stored correctly with died period)
+
+=== theaterschoolstaff_1895-96_p001 (page 466; two columns; 44 entries)
+Compared all 44 rows against 12 zoomed column strips (2.3x; 6 left col, 6 right col) plus a full-page view. All names, numbers, dates, subjects and headings match the print except one tenure error.
+PAGE SUMMARY
+theaterschoolstaff_1895-96_p001 | rows stored: 44 | rows checked: 44 | crops made: 12 | discrepancies: 1 (surname 0, first/patronymic 0, date/tenure 1, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+DISCREPANCIES
+theaterschoolstaff_1895-96_p001 | e033 | PERIODS (end date/end_type) | STORED: "съ 1 декабря 1879 г.->16 января 1896 г.[died]" (NOTE stored "съ 1 декабря 1879 г.") | PRINTED: "28. Тернизьенъ, Эводъ Алексѣевичъ (съ 1 декабря 1879 г.). Французскій языкъ." with NO end/† note | confidence DIRECT | the "† 16 января 1896 г." printed on its own line belongs to the preceding entry 27 Степановъ (e032, stored correctly); it has leaked into e033's PERIODS only. e033 should be ->None[None].
+OTHER FINDINGS
+- e032 SUBJ "Теорія и зацисываніе танцевъ" matches the print exactly (print reads "зацисываніе", apparent genuine print typo for "записываніе"); not a storage error.
+- e001-e004 (Классныя дамы, 3.-6.) are a column-top continuation from the previous page; heading "Классныя дамы" not visible on this page, so heading not verifiable here (stored plausibly).
+- e009 Гавронскій has no first name/patronymic in print; stored blank, correct.
+
+=== theaterschoolstaff_1898-99_p004 (page 139; two columns; 15 entries)
+Compared all 15 rows against 6 zoomed column strips (2.3x; 3 left, 3 right) plus a full-page view. No discrepancies.
+PAGE SUMMARY
+theaterschoolstaff_1898-99_p004 | rows stored: 15 | rows checked: 15 | crops made: 6 | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+DISCREPANCIES
+none
+OTHER FINDINGS
+- e001 (2. Каменевъ, column-top continuation) stored under "... / а) Балетное отдѣленіе / Учителя 1-го класса"; that sub-heading is on the previous page, not visible here, so unverifiable from this scan.
+- e006 † 16 іюля 1899 г. is on its own printed line, stored correctly as died.
+
+=== theaterschoolstaff_1906-07_p001 (page 74; two columns; 34 entries)
+Compared all 34 rows against 12 zoomed column strips (2.3x; 6 left, 6 right) plus a full-page view. One surname discrepancy.
+PAGE SUMMARY
+theaterschoolstaff_1906-07_p001 | rows stored: 34 | rows checked: 34 | crops made: 12 | discrepancies: 1 (surname 1, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+DISCREPANCIES
+theaterschoolstaff_1906-07_p001 | e003 | SURNAME | STORED: "Молась" | PRINTED: "Моласъ" (letter-spaced "М о л а с ъ", entry "3. Моласъ, Ольга Андреевна (съ 1 декабря 1888 г.)") | confidence DIRECT | final letter is ъ in the print (stored has ь, and no ъ); first/patronymic and date correct. Same person is printed "Моласъ" on 1895-96 p001 and stored there as "Моласъ".
+OTHER FINDINGS
+- e034 (4. Скудновъ, column-top continuation) stored under "... / Воспитатели"; that heading is on the previous page, so it cannot be verified from this scan.
+- e024 Пигулевскій stored PERIODS is empty string rather than "None->None[None]" (cosmetic, no dates printed).
+- e027/e028 SUBJ stored with lowercase "евангелическо-лютеранскаго"/"римско-католическаго" exactly as printed (print has spaced hyphen "евангелическо - лютеранскаго"; cosmetic).

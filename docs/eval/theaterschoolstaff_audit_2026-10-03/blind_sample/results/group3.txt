@@ -1,0 +1,38 @@
+=== theaterschoolstaff_1892-93_p000 ===
+PAGE SUMMARY
+theaterschoolstaff_1892-93_p000 | rows stored: 30 | rows checked: 30 | crops made: 11 | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- Print "Потѣхннъ" (e006) and "Мокріевичъ" (e011) are as stored; Рюминъ appears twice (Управляющій Училищемъ e001 and honorary member no. 7 e008) = two rows, correct.
+- Page ends with the 3rd entry of "а) Балетное отдѣленіе" (Ваземъ); nothing missing.
+
+=== theaterschoolstaff_1895-96_p003 ===
+PAGE SUMMARY
+theaterschoolstaff_1895-96_p003 | rows stored: 42 | rows checked: 42 | crops made: 12 | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- Page opens with "Преподаватели." / "а) Балетное отдѣленіе." and carries no school heading on this page; stored first segment "Императорское Московское Театральное Училище" cannot be confirmed from this page alone (continuation page, p. 468).
+- "Учителя 1-го класса:" (nos. 1-2 Бороздина, Каменевъ) is stored as a level under а) Балетное отдѣленіе; print shows it as a centred sub-heading between а) and б), consistent with that reading.
+- Каменевъ А. П. appears three times (no. 13, Учителя 1-го класса no. 2, драм. курсы no. 4) = three rows, correct; Дюфоръ twice (10, драм. 3), Постниковъ twice, Невскій twice, all stored.
+
+=== theaterschoolstaff_1900-01_p002 ===
+PAGE SUMMARY
+theaterschoolstaff_1900-01_p002 | rows stored: 31 | rows checked: 31 | crops made: 12 | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- Continuation page (p. 137): no school heading printed on it; stored "Императорское С.-Петербургское Театральное Училище" not verifiable from this page alone. Print shows nos. 28-39 (а) Балетное отдѣленіе continuation) first in the left column, then "Учителя приготовительныхъ классовъ:" (2 rows) and "Учительницы приготовительныхъ классовъ:" (2 rows), then right column "б) Драматическіе курсы" nos. 1-15; stored HP matches this. Raw order (e001-e019 then e020-e031) differs from print order, as expected.
+- Ширяевъ Александръ Викторовичъ appears twice (б) no. 15 Танцы, and а) no. 36 Репетиторъ танцевъ) = two rows, correct.
+- The scan shows faint show-through of the verso page; ignored.
+
+=== theaterschoolstaff_1908-09_p000 ===
+PAGE SUMMARY
+theaterschoolstaff_1908-09_p000 | rows stored: 19 | rows checked: 19 | crops made: 11 | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- Printed school heading "Императорское С.-Петербургское Театральное Училище." and list title confirmed on the page; heading chains (Причтъ церкви Училища / Священникъ and / Дьяконъ, Врачъ при Училищѣ, Лекарскій помощникъ, И. д. фельдшерицы, Письмоводитель, Воспитатели, Классныя дамы) match the print.
+- The deacon (Смирновъ, e019) is last in the raw array but prints in the left column after the priest; order difference only.
+- Page ends with Каттани (Классныя дамы no. 2), p. 137; nothing missing.

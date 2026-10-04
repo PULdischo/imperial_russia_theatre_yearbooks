@@ -1,0 +1,32 @@
+PAGE SUMMARY
+theaterschoolstaff_1893-94_p000 | rows stored: 26 | rows checked: 26 | crops made: 9 | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- none; all 26 printed entries present, headings, numbering (Почетные члены 1-6, Воспитатели 1-4, Классныя дамы 1-6) and dates match print.
+
+PAGE SUMMARY
+theaterschoolstaff_1896-97_p000 | rows stored: 23 | rows checked: 23 | crops made: 9 | discrepancies: 0 (surname 0, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+DISCREPANCIES
+(none)
+OTHER FINDINGS
+- All 23 printed entries present; school heading "Императорское С.-Петербургское Театральное Училище" and all section headings (incl. printed "Инспектрисса", Сперанскій printed under the same Дьяконъ heading) match; numbering matches; Іогансонъ (І) and Миронниковъ (нн) match print.
+- Cosmetic/non-print: on this page PERIODS start values carry the word "съ" (e.g. "съ 27 мая 1887 г.->None") and NOTE has no parentheses; same format on all dated rows of the page (the 1893-94 page stores PERIODS without "съ"). Not a print deviation.
+
+PAGE SUMMARY
+theaterschoolstaff_1901-02_p001 | rows stored: 36 | rows checked: 36 | crops made: 12 | discrepancies: 2 (surname 2, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+DISCREPANCIES
+theaterschoolstaff_1901-02_p001 | e019 | SURNAME | STORED: "Легатъ 1-й" | PRINTED: "Легатъ" followed by the letter-spaced ordinal "1-й" (list no. 12: "Легатъ 1-й, Николай Густавовичъ") | confidence DIRECT | note: per the stated convention the ordinal is not part of family_name; the stored surname includes it
+theaterschoolstaff_1901-02_p001 | e020 | SURNAME | STORED: "Легатъ 2-й" | PRINTED: "Легатъ" followed by ordinal "2-й" (list no. 13: "Легатъ 2-й, Сергѣй Густавовичъ") | confidence DIRECT | note: same as e019
+OTHER FINDINGS
+- All 36 printed entries present, none duplicated; print order = Воспитатели no.4 Петровъ (column-top continuation, stored last as e036 with correct list number 4 and HP Воспитатели), Классныя дамы 1-6, Классная дама при драматическихъ курсахъ (Юргенсъ, unnumbered), Преподаватели / а) Балетное отдѣленіе 1-28; list numbers, subjects (incl. Ариѳметика with ѳ, Рисованіе и чистописаніе, long Законъ Божій subjects), dates and (священникъ церкви Училища)/(инспекторъ Училища) post notes all match.
+- Гавронскій (no. 5) is printed with surname only (no first name/patronymic); stored with empty first/patronymic, correct.
+- Stored PERIODS start values carry "съ" (e.g. "съ 1 сентября 1888 г.->None"), and e025/e026 have no dates (print has none): cosmetic, not a print deviation.
+
+PAGE SUMMARY
+theaterschoolstaff_1909-10_p000 | rows stored: 19 | rows checked: 19 | crops made: 10 | discrepancies: 1 (surname 1, first/patronymic 0, date/tenure 0, list-number 0, subject 0, heading/school 0, missing/extra rows 0)
+DISCREPANCIES
+theaterschoolstaff_1909-10_p000 | e002 | SURNAME | STORED: "Всеволожскій" | PRINTED: "Всеволожской" (list no. 2 under Почетные члены конференціи: "Всеволожской, Иванъ Александровичъ. † 28 октября 1909 г.") | confidence DIRECT | note: print variant -ой ending (о, й clearly legible at 2.3x); stored form is the -скій spelling, i.e. the print variant was normalised
+OTHER FINDINGS
+- All 19 printed entries present; all headings (Почетные члены конференціи, Инспекторъ, Инспектриса, Помощникъ инспектора, Причтъ церкви Училища / Священникъ, Дьяконъ, Врачъ при Училищѣ, Лекарскій помощникъ, И. д. фельдшерицы, Письмоводитель, Воспитатели, Классныя дамы), numbering (1-4, 1-4, 1-2), ranks and dates match; † 28 октября 1909 г. and Каттани "по 1 октября 1909 г." correct; list title "Списокъ служащихъ при Императорскихъ Театральныхъ Училищахъ лицъ." matches.
+- Page ends at Каттани (no. 2) with the class-ladies list continuing on the next page; no Moscow list on this page.

@@ -12139,3 +12139,16 @@ json.load(open(f'outputs/full_run/raw/{pg}.raw.json'))['entries'][i-1]   # 4 ent
 ```
 
 Result: stored values Дебогорій-Мокріевичъ / Дмитріевичъ / Дмитріевичъ / Веселовскій; the only non-Cyrillic character is the hyphen-minus in the double surname. The scan crops (1891-92 p004, 1893-94 p001) show і+е, not є. Blind-read tally over 117 corrected fields: 108 agree, 1 uncertain-but-equal, 8 flagged and all explained (4 ordinal rows, 3 є misreadings, 1 previously reverted).
+
+## 2026-10-03 -- TheaterSchoolStaff blind sample follow-ups: stored values after the 32 fixes (issue #134)
+
+```sql
+select entry_id, family_name from raw.person_entry where entry_id like 'theaterschoolstaff%' and (family_name='Молась' or family_name='Всеволожскій') order by 1;
+select entry_id, family_name, start_date_text, end_date_text, end_type
+from raw.person_entry_service s join raw.person_entry using(entry_id)
+where entry_id in ('theaterschoolstaff_1895-96_p001__e033','theaterschoolstaff_1891-92_p002__e020','theaterschoolstaff_1894-95_p002__e027','theaterschoolstaff_1901-02_p002__e027') order by 1;
+select family_name, count(*), min(substr(entry_id,1,22)) from raw.person_entry where family_name ilike 'Легат%' group by 1 order by 2 desc;
+select family_name, count(*) from raw.person_entry where entry_id like 'theaterschoolstaff%' and family_name ilike 'Всеволож%' group by 1;
+```
+
+Result: after the fixes Молась has 0 rows and Всеволожскій only theaterschoolstaff_1908-09_p003__e002 (genuinely printed -скій). Before the fixes: Всеволожскій 4 rows / Всеволожской 16 rows in TheaterSchoolStaff; Легатъ ordinals ("Легатъ 1-й" etc.) are stored inside family_name in every table (26 bare Легатъ, 25 Легать, 11 Легатъ 1-й, 10 Легатъ 2-й ...). The raw-JSON sweeps (note dates vs service_periods; leaving/death markers vs period ends; Мола* spellings across all 99 TSS pages) were run with python over outputs/full_run/raw and found the 32 edits listed in docs/eval/theaterschoolstaff_audit_2026-10-03/blind_sample/blind_fixes_log.json.
