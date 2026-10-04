@@ -1,0 +1,38 @@
+theaterschoolstaff_1891-92_p004 | e003 | first_name | PRINTED: "Григорій" | confidence DIRECT |
+theaterschoolstaff_1891-92_p004 | e003 | patronymic | PRINTED: "Дмитрієвичъ" | confidence DIRECT |
+theaterschoolstaff_1891-92_p004 | e025 | patronymic | PRINTED: "Никифоровичъ" | confidence DIRECT |
+theaterschoolstaff_1893-94_p001 | e005 | family_name | PRINTED: "Дебогорій-Мокрієвичъ" | confidence DIRECT |
+theaterschoolstaff_1893-94_p001 | e018 | family_name | PRINTED: "Пилисье" | confidence DIRECT |
+theaterschoolstaff_1893-94_p001 | e028 | first_name | PRINTED: "Эводъ" | confidence DIRECT |
+theaterschoolstaff_1894-95_p001 | e010 | family_name | PRINTED: "Зацимовскій" | confidence DIRECT |
+theaterschoolstaff_1894-95_p001 | e022 | family_name | PRINTED: "Пилисье" | confidence DIRECT |
+theaterschoolstaff_1894-95_p001 | e039 | family_name | PRINTED: "Зацимовскій" | confidence DIRECT |
+theaterschoolstaff_1895-96_p003 | e005 | first_name | PRINTED: "Григорій" | confidence DIRECT |
+theaterschoolstaff_1895-96_p003 | e007 | patronymic | PRINTED: "Леонтьевичъ" | confidence DIRECT |
+theaterschoolstaff_1896-97_p003 | e003 | family_name | PRINTED: "Дюфоръ" | confidence DIRECT |
+theaterschoolstaff_1896-97_p003 | e009 | patronymic | PRINTED: "Анемподистовичъ" | confidence DIRECT | split across line break Анемподисто-/вичъ
+theaterschoolstaff_1896-97_p003 | e017 | patronymic | PRINTED: "Никифоровичъ" | confidence DIRECT |
+theaterschoolstaff_1896-97_p003 | e022 | family_name | PRINTED: "Дюфоръ" | confidence DIRECT |
+theaterschoolstaff_1897-98_p002 | e024 | first_name | PRINTED: "Григорій" | confidence DIRECT |
+theaterschoolstaff_1897-98_p002 | e024 | patronymic | PRINTED: "Дмитрієвичъ" | confidence DIRECT |
+theaterschoolstaff_1898-99_p001 | e004 | family_name | PRINTED: "Моласъ" | confidence DIRECT |
+theaterschoolstaff_1898-99_p001 | e031 | family_name | PRINTED: "Тернизьенъ" | confidence DIRECT |
+theaterschoolstaff_1899-00_p001 | e026 | family_name | PRINTED: "Медеръ" | confidence DIRECT |
+theaterschoolstaff_1899-00_p001 | e034 | first_name | PRINTED: "Янъ" | confidence DIRECT |
+theaterschoolstaff_1899-00_p004 | e016 | family_name | PRINTED: "Тютюнникъ" | confidence DIRECT |
+theaterschoolstaff_1900-01_p003 | e003 | family_name | PRINTED: "Всеволожской" | confidence DIRECT | ending -кой (not -кій), letter-spaced
+theaterschoolstaff_1900-01_p003 | e024 | family_name | PRINTED: "Медеръ" | confidence DIRECT | row is the unnumbered Анна Николаевна entry
+theaterschoolstaff_1901-02_p002 | e021 | family_name | PRINTED: "Гущинъ" | confidence DIRECT |
+theaterschoolstaff_1902-03_p002 | e003 | family_name | PRINTED: "Зацимовскій" | confidence DIRECT |
+theaterschoolstaff_1902-03_p002 | e017 | family_name | PRINTED: "Гущинъ" | confidence DIRECT |
+theaterschoolstaff_1903-04_p004 | e020 | family_name | PRINTED: "Гутшейнъ" | confidence DIRECT |
+theaterschoolstaff_1904-05_p002 | e003 | family_name | PRINTED: "Тернизьенъ" | confidence DIRECT |
+theaterschoolstaff_1904-05_p002 | e003 | first_name | PRINTED: "Эводъ" | confidence DIRECT |
+theaterschoolstaff_1904-05_p002 | e010 | family_name | PRINTED: "Щербацевичъ" | confidence DIRECT |
+theaterschoolstaff_1905-06_p002 | e007 | family_name | PRINTED: "Зацимовскій" | confidence DIRECT |
+theaterschoolstaff_1907-08_p000 | e002 | family_name | PRINTED: "Всеволожской" | confidence DIRECT | ending -кой, letter-spaced
+theaterschoolstaff_1907-08_p000 | e003 | patronymic | PRINTED: "Михаиловичъ" | confidence DIRECT | split Михаи-/ловичъ (и, not й)
+theaterschoolstaff_1907-08_p000 | e006 | patronymic | PRINTED: "Михаиловичъ" | confidence DIRECT | split Михаи-/ловичъ (и, not й)
+theaterschoolstaff_1907-08_p000 | e014 | patronymic | PRINTED: "Михаиловичъ" | confidence DIRECT | и, not й
+theaterschoolstaff_1907-08_p003 | e002 | family_name | PRINTED: "Всеволожской" | confidence DIRECT | ending -кой, letter-spaced
+theaterschoolstaff_1907-08_p003 | e004 | patronymic | PRINTED: "Михаиловичъ" | confidence DIRECT | split Михаи-/ловичъ (и, not й)

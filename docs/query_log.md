@@ -12130,3 +12130,12 @@ select rank_or_title, count(*) from raw.person_entry where entry_id like 'theate
 ```
 
 Result: 99 pages / 2700 rows before the audit (2745 after stage 1), 22 distinct institution values and 193 distinct heading_path values before (2 institution titles + 128 heading paths for the 19 applied seasons after); the 1896-97 p000 block e014..e024 each carried the previous entry's person (fixed first); 85 rows had first name and patronymic glued; 627 rows had a rank_or_title that was often a subject (subjects: Танцы 38, Музыка 23 ...).
+
+## 2026-10-03 -- TheaterSchoolStaff blind read: stored-value check on disputed name fields (issue #134)
+
+```python
+# raw JSON, not SQL: for each disputed (page, entry) print the stored family/first/patronymic and any non-Cyrillic code points
+json.load(open(f'outputs/full_run/raw/{pg}.raw.json'))['entries'][i-1]   # 4 entries: 1893-94 p001 e005, 1891-92 p004 e003, 1897-98 p002 e024, 1905-06 p003 e002
+```
+
+Result: stored values Дебогорій-Мокріевичъ / Дмитріевичъ / Дмитріевичъ / Веселовскій; the only non-Cyrillic character is the hyphen-minus in the double surname. The scan crops (1891-92 p004, 1893-94 p001) show і+е, not є. Blind-read tally over 117 corrected fields: 108 agree, 1 uncertain-but-equal, 8 flagged and all explained (4 ordinal rows, 3 є misreadings, 1 previously reverted).
