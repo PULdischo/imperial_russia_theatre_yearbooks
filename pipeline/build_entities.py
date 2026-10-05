@@ -197,6 +197,35 @@ _GENRE_SYNONYM_GROUPS = [
 _GENRE_CANON = {v: grp[0] for grp in _GENRE_SYNONYM_GROUPS for v in grp}
 
 
+def _work_art_form(canon: str | None) -> str | None:
+    """Art form of a canonical genre key (step 4, RG 2026-10-05: works of
+    different art forms are different works; similar genres are the same work).
+    opera / operetta / ballet / other (divertissement, concert) / spoken (every
+    play genre: comedy, drama, tragedy, vaudeville, scenes, tale, Lustspiel, ...).
+    "опер." is ambiguous between опера and оперетта in this print; it stays
+    with opera here (step 3's grouping) pending RG's call (group C)."""
+    if not canon:
+        return None
+    if re.match(r"(оперет|шут\.-оперет|оп\.-вод|опера-вод|operet|opérette|operette)", canon):
+        return "operetta"
+    if re.match(r"(оп\b|оп\.|опера|опер\b|оп,|op\b|op\.|oper|opéra|opera)", canon):
+        return "opera"
+    if re.match(r"(бал|ballet|аллег\. бал|фант\. бал|хореограф|pantom|mimodrame|spiel ohne wort)", canon):
+        return "ballet"
+    if re.match(r"(диверт|див\b|концерт)", canon):
+        return "other"
+    return "spoken"
+
+
+def _identity_genre(raw_fold: str | None) -> str | None:
+    """Work-identity key for a printed genre: art form + script. Language stays
+    a separating fact (ком. vs com.), as _fold_genre() always intended."""
+    canon = _canon_genre(raw_fold)
+    if not canon:
+        return None
+    return f"{_work_art_form(canon)}|{_genre_script(canon)}"
+
+
 def _canon_genre(fold: str | None) -> str | None:
     """Identity-level genre key: _fold_genre() output mapped through
     _GENRE_SYNONYM_GROUPS. Never displayed or stored as a genre."""
@@ -433,13 +462,27 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     # the start, per docs/work_normalization.md Problem #2: a title
     # shouldn't split into "different works" just because genre was
     # blank one printing and filled the next.
+    # Step 4 art-form overrides (RG, 2026-10-05): a printed genre that is a
+    # confirmed slip for the work's real art form (Коппелія "оп.") is treated as
+    # that art form for identity. The printed genre stays verbatim.
+    import csv as _csv0
+    _ovr_path = Path(__file__).parent / "entity_curation" / "work_artform_overrides.csv"
+    artform_override: dict[tuple[str, str | None], str] = {}
+    if _ovr_path.exists():
+        for r in _csv0.DictReader(open(_ovr_path, encoding="utf-8")):
+            artform_override[(_match_key(_title_key(_strip_genre_suffix(r["printed_title"]))),
+                              _fold_genre(r["printed_genre"]))] = r["treat_as_art_form"]
     by_title: dict[str, list[tuple[str, str, str, str | None]]] = defaultdict(list)
     for work_id, title, genre in rows:
         title_key = _title_key(_strip_genre_suffix(title))
         raw_fold = _fold_genre(genre)
         if title_key == _GIMN_TITLE_KEY and raw_fold in _GIMN_CONTAMINATED_GENRE_FOLDS:
             raw_fold = None  # Problem #3: another bill item's title, not a real genre
-        by_title[_match_key(title_key)].append((work_id, title, genre, _canon_genre(raw_fold), raw_fold))
+        ident = _identity_genre(raw_fold)
+        ovr = artform_override.get((_match_key(title_key), raw_fold))
+        if ovr and ident:
+            ident = f"{ovr}|{ident.split('|')[1]}"
+        by_title[_match_key(title_key)].append((work_id, title, genre, ident, raw_fold))
 
     def _dominant_raw_fold(members, canon: str | None) -> str | None:
         # The id uses the most common PRINTED genre fold among members sharing
@@ -482,7 +525,7 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     n_multi_variant = n_genre_merged = 0
 
     for title_key, members in by_title.items():
-        distinct_folds = {m[3] for m in members if m[3]}  # canonical (step 3) genre keys
+        distinct_folds = {m[3] for m in members if m[3]}  # identity keys: art form + script (step 4)
 
         if len(distinct_folds) <= 1:
             # Safe: at most one real genre in this title group (rest, if
@@ -571,10 +614,10 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
         elif len(candidates) > 1:
             excerpt_genre_raw = genre_word or canonical_genre
             excerpt_genre_raw = _GENITIVE_GENRE_TO_ABBREV.get(excerpt_genre_raw, excerpt_genre_raw)
-            excerpt_genre_fold = _canon_genre(_fold_genre(excerpt_genre_raw))
+            excerpt_genre_fold = _identity_genre(_fold_genre(excerpt_genre_raw))
             if excerpt_genre_fold:
                 same_genre = [c for c in candidates
-                              if _canon_genre(_fold_genre(next(g for u, _, g, _, _ in work_rows if u == c))) == excerpt_genre_fold]
+                              if _identity_genre(_fold_genre(next(g for u, _, g, _, _ in work_rows if u == c))) == excerpt_genre_fold]
                 if len(same_genre) == 1:
                     parent = same_genre[0]
         if parent:
@@ -607,12 +650,19 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     if curated_path.exists():
         by_title_genre: dict[tuple[str, str | None], list[str]] = defaultdict(list)
         by_title_only: dict[str, list[str]] = defaultdict(list)
-        for uid, t_, g_, _, _ in work_rows:
+        for uid, t_, g_, _, key_ in work_rows:
             by_title_genre[(t_, g_)].append(uid)
-            by_title_only[t_].append(uid)
+            if not str(key_).startswith("curated:"):
+                by_title_only[t_].append(uid)  # a curated parent is never an excerpt
         for row in _csv.DictReader(open(curated_path, encoding="utf-8")):
-            ex = (by_title_genre.get((row["excerpt_title"], row["excerpt_genre"]), [])
-                  if row.get("excerpt_genre") else by_title_only.get(row["excerpt_title"], []))
+            if row.get("excerpt_genre"):
+                # matched on title + identity key (art form + script), not the exact
+                # printed genre, so a row survives consolidation of genre variants
+                key = _identity_genre(_fold_genre(row["excerpt_genre"]))
+                ex = [u for u in by_title_only.get(row["excerpt_title"], [])
+                      if _identity_genre(_fold_genre(next(g for w, _, g, _, _ in work_rows if w == u))) == key]
+            else:
+                ex = by_title_only.get(row["excerpt_title"], [])
             par = by_title_genre.get((row["parent_title"], row["parent_genre"] or None), [])
             if len(ex) != 1 or len(par) != 1:
                 raise SystemExit(f"work_excerpt_links.csv: {row['excerpt_title']!r} -> {row['parent_title']!r} "
@@ -650,10 +700,10 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
             # "Коппелія"/"Лебединое озеро" both split into >1 real genre
             # (Problem #3), so the preceding performance's own printed
             # genre ("бал.") is what actually picks out the right one.
-            prev_genre_fold = _canon_genre(_fold_genre(prev_genre)) if prev_genre else None
+            prev_genre_fold = _identity_genre(_fold_genre(prev_genre)) if prev_genre else None
             if prev_genre_fold:
                 same_genre = [c for c in candidates
-                              if _canon_genre(_fold_genre(next(g for u, _, g, _, _ in work_rows if u == c))) == prev_genre_fold]
+                              if _identity_genre(_fold_genre(next(g for u, _, g, _, _ in work_rows if u == c))) == prev_genre_fold]
                 if len(same_genre) == 1:
                     target = same_genre[0]
         if target:
@@ -758,7 +808,7 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     work_lookup = {uid: (t, g, n) for uid, t, g, n, _ in work_rows}
     n_cross_language = 0
     for title_key, sub_groups, sub_uuids in genre_candidate_rows:
-        scripts = {_genre_script(fold) for fold in sub_groups if fold}
+        scripts = {fold.split("|")[1] for fold in sub_groups if fold}
         cross_lang = len(scripts) > 1
         if cross_lang:
             n_cross_language += 1
