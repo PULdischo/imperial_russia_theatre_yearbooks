@@ -48,7 +48,7 @@ name_printed,role_category,creator_key,form_status,evidence
 Г. Э. Конюса,,konius,confirmed,
 Гауль,,gaul,confirmed,
 Гертеля,,hertel,confirmed,
-Гершеля,,hertel,proposed,printed for the same works credited Гертеля/Г. Гертеля: Тщетная предосторожность (MSK 1903-05) and Приключенія Флика и Флока (MSK 1890-94); a print variant?
+Гершеля,,hertel,confirmed,"printed for the same works credited Гертеля/Г. Гертеля: Тщетная предосторожность (MSK 1903-05) and Приключенія Флика и Флока (MSK 1890-94); a print variant? Scan-checked 2026-10-05: all 6 ""Гершеля"" are printed with ш (open top, joined bottom), clearly unlike the m-shaped italic т of ""Гертеля"" (compared on the 1892-93 MSK page). 1890-91 is blurred but has the same letter shapes. RG, 2026-10-05 (review page): same person, a print variant; Peter Ludwig Hertel."
 Гофмана,,hoffmann,confirmed,
 Гримма,,grimm,confirmed,
 Г⁂,,vsevolozhsky,confirmed,
@@ -71,7 +71,7 @@ name_printed,role_category,creator_key,form_status,evidence
 И. Ю. Трубецкого,,trubetskoy,confirmed,
 Иванова,,ivanov_l,confirmed,
 К. А. Тарновскаго,,tarnovsky_ka,confirmed,
-К. В.,,valts,proposed,"Хрустальный башмачекъ (MSK): ""соч. К. В. и А. Н. Богданова"" 1890-91 and ""программа К. В."" 1892-95, but ""соч. К. Ѳ. Вальца"" for the same ballet 1895-97: К. В. = К. Вальцъ?"
+К. В.,,valts,proposed,"Хрустальный башмачекъ (MSK): ""соч. К. В. и А. Н. Богданова"" 1890-91 and ""программа К. В."" 1892-95, but ""соч. К. Ѳ. Вальца"" for the same ballet 1895-97: К. В. = К. Вальцъ? Scan-checked 2026-10-05: all 4 credits print exactly ""К. В."" (1890-91, 1892-93, 1893-94, 1894-95)."
 К. Вальца,,valts,confirmed,
 К. Даль'Арджинэ,,dallargine,confirmed,
 К. Лядова,,lyadov_k,confirmed,
@@ -92,7 +92,7 @@ name_printed,role_category,creator_key,form_status,evidence
 Лидіи Пашковой,,pashkova,confirmed,
 М. И Петипа,,petipa_m,confirmed,
 М. И. Петипа,,petipa_m,confirmed,
-М. И. Чайковскаго,,tchaikovsky_mod,proposed,"""программа М. И. Чайковскаго и М. И. Петипа"", Калькабрино 1892-93 SP; the same ballet prints ""Мод. И. Чайковскаго"" in 1890-92: М. = Модестъ, not П. (composer)?"
+М. И. Чайковскаго,,tchaikovsky_mod,confirmed,"""программа М. И. Чайковскаго и М. И. Петипа"", Калькабрино 1892-93 SP; the same ballet prints ""Мод. И. Чайковскаго"" in 1890-92: М. = Модестъ, not П. (composer)? Scan-checked 2026-10-05: 1892-93 prints ""М. И. Чайковскаго"" (a stray mark before the М). 1890-91, 1891-92 and 1894-95 print ""Мод. И."". RG, 2026-10-05 (review page): Модестъ."
 М. М. Иванова,,ivanov_mm,confirmed,
 М. М. Попелло-Давыдова,,popello,confirmed,
 М. Петипа,,petipa_m,confirmed,
@@ -105,7 +105,7 @@ name_printed,role_category,creator_key,form_status,evidence
 Мод. И. Чайковскаго,,tchaikovsky_mod,confirmed,
 Монплезира,,monplaisir,confirmed,
 Моренго,,morengo,confirmed,
-Мюльдорфера,,muhlendorfer,proposed,"Волшебный башмачекъ (Сандрильона), MSK 1899-1903, with the same team as Хрустальный башмачекъ (MSK 1890-97): К. Вальцъ + Шиманъ (4th act); the same composer under a variant spelling?"
+Мюльдорфера,,muhlendorfer,confirmed,"Волшебный башмачекъ (Сандрильона), MSK 1899-1903, with the same team as Хрустальный башмачекъ (MSK 1890-97): К. Вальцъ + Шиманъ (4th act); the same composer under a variant spelling? Scan-checked 2026-10-05, all 10: ""Мюльендорфера"" ×6 (1890-97) has a printed е every time: one word in 1890-91, split at a line end in the others (""Мюль-/ендорфера"" ×4, ""Мюльен-/дорфера"" ×1). ""Мюльдорфера"" ×4 (1899-1903) is one word each time, with no е. The print really uses two spellings. RG, 2026-10-05: same person as Мюльендорферъ = Wilhelm Carl Mühldorfer (Wikidata Q4310066)."
 Мюльендорфера,,muhlendorfer,confirmed,
 Н. Кроткова,,krotkov,confirmed,
 Н. С. Кроткова,,krotkov,confirmed,
@@ -153,7 +153,7 @@ name_printed,role_category,creator_key,form_status,evidence
 Шимана,,schiemann,confirmed,
 Шнейцгеффера,,schneitzhoeffer,confirmed,
 Штеймана,,steiman,confirmed,
-Щимана,,schiemann,proposed,"""музыка 4-го д. Щимана"", Волшебный башмачекъ (MSK 1900-01); Щ for Ш, a print slip?"
+Щимана,,schiemann,proposed,"""музыка 4-го д. Щимана"", Волшебный башмачекъ (MSK 1900-01); Щ for Ш, a print slip? Scan-checked 2026-10-05: printed Щ with a clear descender."
 Э. Гофмана,,hoffmann,confirmed,
 Э. Грабе,,grabe,confirmed,
 Э. Келеръ,,keller,confirmed,
