@@ -8,7 +8,7 @@ REAL = 'outputs/full_run/imperial_theaters.duckdb'
 DB = REAL if '--write' in sys.argv else '/tmp/dupmerge_dry.duckdb'
 if DB != REAL: shutil.copy2(REAL, DB)
 con = duckdb.connect(DB)
-APPLIED = {'68fa76', '0c1633'}   # survivors of merges already applied to production (skipped on re-run)
+APPLIED = {'68fa76', '0c1633', 'c11d62'}   # survivors of merges already applied to production (skipped on re-run)
 MERGES = [  # (survivor prefix, [loser prefixes], label, reason)
     ('68fa76', ['110f6d', '396ea1', '9327f4', '773570'], 'Волконскій Григорій Дмитріевичъ (князь)',
      'RG-approved 2026-10-05, labelled UNCERTAIN: lighting chief (ProductionTeam, since 1887-09-01, left 1898-09-01) and geography teacher in the ballet department of the Petersburg school (TheaterSchoolStaff, since 1888-09-01, left 1901-09-01); same name, rank, 20 entries, one line per list per year; the pairing of the two posts is unusual -- see uncertain_person_identities.md'),
@@ -16,6 +16,8 @@ MERGES = [  # (survivor prefix, [loser prefixes], label, reason)
      'RG-approved 2026-10-05: inspector of the Moscow school (съ 6 сентября 1887) who also teaches mathematics and geography in the ballet department; the teacher line prints "(инспекторъ Училища)" every year; 40 entries over 20 seasons'),
     ('c11d62', ['e1cac8', '50a743'], 'Петровъ Василій Ивановичъ',
      'RG-approved 2026-10-05: teacher of Выразительное чтеніе (ballet dept, 1894-1905) and Практика драматическаго искусства (drama courses, start 1 сентября 1902, 1902-1910); one line per season, identical start dates, no overlap'),
+    ('b53a76', ['8872b8', '0fd64e'], 'Потѣхинъ Алексѣй Антиповичъ',
+     'RG-approved 2026-10-05: honorary member of the school conference, one line every season 1890-91..1907-08, no overlap'),
 ]
 def full(p):
     r = con.execute("select person_id from entities.person where cast(person_id as varchar) like ? and superseded_by_person_id is null", [p + '%']).fetchall()

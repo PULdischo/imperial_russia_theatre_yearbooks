@@ -12274,3 +12274,13 @@ WHERE left(cast(l.person_id as varchar),6) IN ('c11d62','e1cac8','50a743') ORDER
 ```
 
 Result: 20 entries. 1894-95..1905-06 'Выразительное чтеніе' (ballet dept), 1902-03..1909-10 'Практика драматическаго искусства' (drama courses, "съ 1 сентября 1902"). After merge: one person, 1894-95..1909-10, 20 entries; live 3248 -> 3246, tombstones 2328 -> 2330, 0 orphans, 0 shift blocks, flags 546, receipts identical.
+
+## 2026-10-05 — Потѣхинъ Алексѣй Антиповичъ (TSS): three persons' entries, then merge verification
+
+```sql
+SELECT sp.season, right(l.entry_id,10), right(e.heading_path,30), e.subject_taught, e.rank_or_title, e.tenure_note_text, left(cast(l.person_id as varchar),6)
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('b53a76','8872b8','0fd64e') ORDER BY 1,2;
+```
+
+Result: 18 entries, all 'Почетные члены конференціи', one per season 1890-91..1907-08. After merge: one person, 18 entries; live 3246 -> 3244, tombstones 2330 -> 2332, 0 orphans, 0 shift blocks, flags 546, receipts identical.
