@@ -125,6 +125,83 @@ def _fold_genre(genre: str | None) -> str | None:
     g = re.sub(r"\s+", " ", genre.strip()).rstrip(".")
     return g.lower() or None
 
+# Work consolidation step 3 (RG, 2026-10-05; docs/work_normalization.md,
+# "Consolidation"): spellings of the SAME genre word in the SAME language --
+# abbreviation, inflection, a print/transcription slip -- count as one genre
+# for work IDENTITY only. Printed genres stay verbatim everywhere; different
+# genre words (ком. vs вод., бал. vs бал.-феерія) and different languages
+# (ком. vs com.) are NOT folded here. Each list's first element is the
+# canonical key (the most common printing). Ambiguous bare abbreviations
+# ("p", "v", "драмат", "к.-м") are deliberately left out.
+_GENRE_SYNONYM_GROUPS = [
+    # Russian
+    ["оп", "опер", "опера", "оп,"],
+    ["ком", "комедія", "ком,", "ксм"],
+    ["др", "драма", "драм"],
+    ["тр", "траг"],
+    ["ш", "шут", "шутка"],
+    ["сц", "сцены", "сцена"],
+    ["карт", "картины"],
+    ["фарсъ", "фарс", "ф"],
+    ["оперетта", "оперет", "оперетка"],
+    ["эт", "этюдъ", "этюд", "этюдь"],
+    ["хр", "хроника", "хрон"],
+    ["эп", "эпизодъ", "эпизоды", "эп,"],
+    ["ком.-вод", "ком-вод"],
+    ["ком.-шут", "ком.-шутка", "ком.-ш", "ком. шутка"],
+    ["представленіе", "предст", "представл"],
+    ["весенняя сказка", "вес. сказка"],
+    ["фант. сказка", "фантаст. сказка"],
+    ["лир. сказка", "лир. ск", "лирич. сказка"],
+    ["драм. поэма", "драмат. поэма", "др. поэма", "драматич. поэма"],
+    ["др. хрон", "драмат. хроника", "драматич. хроника", "драм.-хрон", "драм. хрон", "др. хр", "драм. хроника", "др.-хрон"],
+    ["драмат. легенда", "драм. легенда", "драм. лег", "др. легенда"],
+    ["др. эт", "драм. эт", "драмат. этюдъ", "др. этюдъ", "драм. этюдъ", "др этюдъ", "др. этюд", "драм. втюдъ"],
+    ["др. сц", "драм. сц", "драмат. сц", "др.-сц"],
+    ["историч. ком", "истор. ком", "историческая ком"],
+    ["ист. пьеса", "истор. пьеса", "историч. пьеса"],
+    ["семейная др", "семейная драма"],
+    ["опера-вод", "оп.-вод"],
+    ["опера-былина", "оп.-былина"],
+    ["шут.-оперет", "шут.-оперетта"],
+    ["бал.-феерія", "бал.-феерия", "бал. феерія"],
+    ["возм. случай", "возм. случаи", "возможный случай"],
+    ["лѣтн. сц", "лѣтняя сцена", "лѣт. сц"],
+    ["драмат. миніатюра", "драмат. миніат"],
+    ["драм. стих", "драмат. стихотв", "др. стихотв", "др. стих"],
+    ["карт.-вод", "карт.-водев"],
+    ["нар. пьеса", "народн. пьеса", "народ. п"],
+    ["тетрал", "тетр"],
+    ["соверш. невѣроят. событіе", "соверш. невѣроят. соб", "соверш. невѣроятное событіе",
+     "совершен. нев. событіе", "соверш. нев. событие", "соверш. невѣр. событие"],
+    ["пьеса", "цьеса"],
+    # French
+    ["com", "comedie"],
+    ["com. nouv", "com.-nouv", "com. n", "com, nouv"],
+    ["pièce nouv", "pièce-nouv"],
+    ["vaud", "vaudeville", "vand"],
+    ["vaud. nouv", "vaud nouv", "vaud. n"],
+    ["proverbe", "prov", "provere"],
+    ["opéra-comique", "opera-comique", "opéra-com"],
+    ["opéra-bouffe", "opéra, bouffe"],
+    # German
+    ["lustsp", "lustspiel", "lust", "lustp", "lustpiel", "lusispiel"],
+    ["schausp", "schauspiel"],
+    ["schwank", "schw", "schwauk", "sewank"],
+    ["komödie", "comödie", "gomödie", "kom"],
+    ["volksstück", "volksst"],
+    ["trauersp", "trauerspiel"],
+    ["dram. gedicht", "dr. gedicht", "dram. ged"],
+    ["dramat. plauder", "plauderei", "prauderei", "dramat. plauderei"],
+]
+_GENRE_CANON = {v: grp[0] for grp in _GENRE_SYNONYM_GROUPS for v in grp}
+
+
+def _canon_genre(fold: str | None) -> str | None:
+    """Identity-level genre key: _fold_genre() output mapped through
+    _GENRE_SYNONYM_GROUPS. Never displayed or stored as a genre."""
+    return _GENRE_CANON.get(fold, fold) if fold else fold
+
 
 _CYRILLIC_RE = re.compile(r"[а-яёіѣѳ]")
 _LATIN_RE = re.compile(r"[a-z]")
@@ -249,6 +326,15 @@ _EXCERPT_SUFFIX_RE = re.compile(
 
 
 def build_work(con: duckdb.DuckDBPyConnection) -> None:
+    # Previous run's links, for id continuity (below) and the crosswalk.
+    old_link: dict[str, str] = {}
+    old_title: dict[str, str] = {}
+    if _table_exists(con, "entities", "work_link"):
+        old_link = {r: str(w) for r, w in con.execute(
+            "SELECT raw_performance_id, work_id FROM entities.work_link").fetchall()}
+        old_title = {str(w): t for w, t in con.execute(
+            "SELECT work_id, canonical_title FROM entities.work").fetchall()}
+    used_ids: set[str] = set()
     rows = con.execute("""
         SELECT performance_id, performance_title, genre FROM raw.event_entry_performance
         WHERE performance_title IS NOT NULL AND trim(performance_title) <> ''
@@ -281,23 +367,43 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     by_title: dict[str, list[tuple[str, str, str, str | None]]] = defaultdict(list)
     for work_id, title, genre in rows:
         title_key = _title_key(_strip_genre_suffix(title))
-        genre_fold = _fold_genre(genre)
-        if title_key == _GIMN_TITLE_KEY and genre_fold in _GIMN_CONTAMINATED_GENRE_FOLDS:
-            genre_fold = None  # Problem #3: another bill item's title, not a real genre
-        by_title[_match_key(title_key)].append((work_id, title, genre, genre_fold))
+        raw_fold = _fold_genre(genre)
+        if title_key == _GIMN_TITLE_KEY and raw_fold in _GIMN_CONTAMINATED_GENRE_FOLDS:
+            raw_fold = None  # Problem #3: another bill item's title, not a real genre
+        by_title[_match_key(title_key)].append((work_id, title, genre, _canon_genre(raw_fold), raw_fold))
 
-    def _work_uuid(canonical_title: str, fold: str | None) -> str:
-        # Derived from the dominant printing's own title key (not the match
-        # key), so a work that merges no variants keeps exactly the id it
-        # had before match-key grouping, and a merged work keeps its most
-        # printed variant's id. entities.work_id_crosswalk records the rest.
-        return str(uuid.uuid5(NAMESPACE, f"work:{_title_key(_strip_genre_suffix(canonical_title))}|{fold or ''}"))
+    def _dominant_raw_fold(members, canon: str | None) -> str | None:
+        # The id uses the most common PRINTED genre fold among members sharing
+        # this canonical genre, so a work whose genre spellings don't merge
+        # anything keeps the id it had before step 3.
+        if canon is None:
+            return None
+        c = Counter(m[4] for m in members if m[3] == canon)
+        return max(c, key=lambda f: (c[f], f == canon)) if c else canon
+
+    def _work_uuid(canonical_title: str, fold: str | None, group_members=None) -> str:
+        # Id continuity, the same principle as person ids (entities.person_link):
+        # a work inherits the previous run's work_id that most of its raw
+        # performances were already linked to, so consolidation never mints a
+        # new id for an existing work -- a merged work keeps its largest
+        # predecessor's id, and the others go to entities.work_id_crosswalk.
+        # Only a work with no linked predecessor (new data, or a first build)
+        # gets the computed uuid5 of its dominant printing's title key + genre.
+        if group_members and old_link:
+            prev = Counter(old_link[m[0]] for m in group_members if m[0] in old_link)
+            for wid, _ in prev.most_common():
+                if wid not in used_ids:
+                    used_ids.add(wid)
+                    return wid
+        wid = str(uuid.uuid5(NAMESPACE, f"work:{_title_key(_strip_genre_suffix(canonical_title))}|{fold or ''}"))
+        used_ids.add(wid)
+        return wid
 
     def _pick_variant(members: list[tuple[str, str, str, str | None]]) -> tuple[str, str]:
         # Canonical display form = most common verbatim (title, genre) pair
         # actually printed in this group, not a normalized/modernized one.
         counts: dict[tuple[str, str], int] = {}
-        for _, title, genre, _ in members:
+        for _, title, genre, *_ in members:
             counts[(title, genre)] = counts.get((title, genre), 0) + 1
         (title, genre), _ = max(counts.items(), key=lambda kv: kv[1])
         return title, genre
@@ -307,21 +413,21 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     n_multi_variant = n_genre_merged = 0
 
     for title_key, members in by_title.items():
-        distinct_folds = {g for *_, g in members if g}
+        distinct_folds = {m[3] for m in members if m[3]}  # canonical (step 3) genre keys
 
         if len(distinct_folds) <= 1:
             # Safe: at most one real genre in this title group (rest, if
             # any, just missing) -- merge everything into one work.
             fold = next(iter(distinct_folds), None)
             canonical_title, canonical_genre = _pick_variant(members)
-            work_uuid = _work_uuid(canonical_title, fold)
-            if len({(t, g) for _, t, g, _ in members}) > 1:
+            work_uuid = _work_uuid(canonical_title, _dominant_raw_fold(members, fold), members)
+            if len({(t, g) for _, t, g, *_ in members}) > 1:
                 n_multi_variant += 1
-            if any(g is None for *_, g in members) and fold is not None:
+            if any(m[3] is None for m in members) and fold is not None:
                 n_genre_merged += 1
             work_rows.append((work_uuid, canonical_title, canonical_genre, len(members), title_key))
             title_key_to_work_ids[title_key].append(work_uuid)
-            for work_id, _, _, _ in members:
+            for work_id, *_ in members:
                 link_rows.append((work_id, work_uuid))
         else:
             # docs/work_normalization.md Open Questions: genuinely
@@ -336,11 +442,11 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
             sub_uuids = {}
             for fold, sub_members in sub_groups.items():
                 canonical_title, canonical_genre = _pick_variant(sub_members)
-                work_uuid = _work_uuid(canonical_title, fold)
+                work_uuid = _work_uuid(canonical_title, _dominant_raw_fold(sub_members, fold), sub_members)
                 sub_uuids[fold] = work_uuid
                 work_rows.append((work_uuid, canonical_title, canonical_genre, len(sub_members), title_key))
                 title_key_to_work_ids[title_key].append(work_uuid)
-                for work_id, _, _, _ in sub_members:
+                for work_id, *_ in sub_members:
                     link_rows.append((work_id, work_uuid))
             genre_candidate_rows.append((title_key, sub_groups, sub_uuids))
 
@@ -375,10 +481,10 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
         elif len(candidates) > 1:
             excerpt_genre_raw = m.group("genre") or canonical_genre
             excerpt_genre_raw = _GENITIVE_GENRE_TO_ABBREV.get(excerpt_genre_raw, excerpt_genre_raw)
-            excerpt_genre_fold = _fold_genre(excerpt_genre_raw)
+            excerpt_genre_fold = _canon_genre(_fold_genre(excerpt_genre_raw))
             if excerpt_genre_fold:
                 same_genre = [c for c in candidates
-                              if _fold_genre(next(g for u, _, g, _, _ in work_rows if u == c)) == excerpt_genre_fold]
+                              if _canon_genre(_fold_genre(next(g for u, _, g, _, _ in work_rows if u == c))) == excerpt_genre_fold]
                 if len(same_genre) == 1:
                     parent = same_genre[0]
         if parent:
@@ -416,10 +522,10 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
             # "Коппелія"/"Лебединое озеро" both split into >1 real genre
             # (Problem #3), so the preceding performance's own printed
             # genre ("бал.") is what actually picks out the right one.
-            prev_genre_fold = _fold_genre(prev_genre) if prev_genre else None
+            prev_genre_fold = _canon_genre(_fold_genre(prev_genre)) if prev_genre else None
             if prev_genre_fold:
                 same_genre = [c for c in candidates
-                              if _fold_genre(next(g for u, _, g, _, _ in work_rows if u == c)) == prev_genre_fold]
+                              if _canon_genre(_fold_genre(next(g for u, _, g, _, _ in work_rows if u == c))) == prev_genre_fold]
                 if len(same_genre) == 1:
                     target = same_genre[0]
         if target:
@@ -429,13 +535,6 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     # Drop the dependent table first -- entities.work_link's FK reference
     # blocks CREATE OR REPLACE on entities.work otherwise, which would
     # silently break re-running this script a second time.
-    old_link: dict[str, str] = {}
-    old_title: dict[str, str] = {}
-    if _table_exists(con, "entities", "work_link"):
-        old_link = {r: str(w) for r, w in con.execute(
-            "SELECT raw_performance_id, work_id FROM entities.work_link").fetchall()}
-        old_title = {str(w): t for w, t in con.execute(
-            "SELECT work_id, canonical_title FROM entities.work").fetchall()}
     con.execute("DROP TABLE IF EXISTS entities.work_link")
     con.execute("DROP TABLE IF EXISTS entities.work_genre_candidate")
     con.execute("""
@@ -490,8 +589,8 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     already = {(str(a), str(b)) for a, b in con.execute(
         "SELECT old_work_id, new_work_id FROM entities.work_id_crosswalk").fetchall()}
     xw = [(o, n, old_title.get(o), k) for (o, n), k in moved.items() if (o, n) not in already]
-    con.executemany("INSERT INTO entities.work_id_crosswalk VALUES (?, ?, ?, ?, current_date)", xw)
     if xw:
+        con.executemany("INSERT INTO entities.work_id_crosswalk VALUES (?, ?, ?, ?, current_date)", xw)
         print(f"  {len(xw)} retired work_id(s) recorded in entities.work_id_crosswalk")
 
     # entities.work_genre_candidate: every title split across >1 real

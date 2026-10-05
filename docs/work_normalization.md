@@ -401,3 +401,27 @@ goes in the append-only `entities.work_id_crosswalk` (old → new, with the old 
 and the number of performances that moved). That is derived from the
 raw-performance links before and after the rebuild, so anything citing an old
 published id can be followed.
+
+**Step 3, genre-abbreviation variants (applied 2026-10-05).** `_GENRE_SYNONYM_GROUPS` /
+`_canon_genre()` in build_entities.py treat spellings of the SAME genre word in the SAME
+language as one genre, for work identity only: оп./опера, шут./шутка/ш., тр./траг.,
+эт./этюдъ, Lustsp./Lustspiel, plus print slips such as ксм., vand., Schwauk. Kept
+apart: different genre words (ком. vs вод., бал. vs бал.-феерія; those belong to
+step 4, the art-form judgment) and different languages (ком. vs com.). Bare
+ambiguous abbreviations (p., v., драмат., к.-м.) are left out. The excerpt and
+same-billing-continuation genre tiebreaks compare canonical genres too. Result:
+3550 → 3383 works (169 merges into 125 works).
+List: docs/eval/work_consolidation_step3_merges.csv.
+
+**Id continuity (revised with step 3).** A work now inherits the previous run's
+work_id that most of its raw performances were already linked to. That is the
+person-id principle (entities.person_link), and it guarantees consolidation never
+mints a new id for an existing work. Only works with no linked predecessor (new data
+or a first build) get the computed uuid5. The first step-3 build ran before this fix,
+so 2 works got fresh ids (Птички пѣвчія [оперет.], Заварила кашу — расхлебывай [ф.]);
+their predecessors are in the crosswalk like every other retired id.
+
+**Process note.** Step 3 went live through a parallel session's rebuild, which
+loaded the in-progress code from the shared working tree before review. RG then
+approved keeping it (2026-10-05). Pipeline changes for this effort are now made in a
+separate git worktree and merged only after review.
