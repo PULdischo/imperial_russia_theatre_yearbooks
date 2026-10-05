@@ -12468,3 +12468,26 @@ Result: Варвара (1-я): 87c046 17 entries 1890-91..1907-08 (no 1904-05), 
 ## 2026-10-05 — Рыхлякова 2-я Наталья: merge verification (evidence in the cluster query above)
 
 Result: 760668 (5 entries), af49d5 (1904-05, misparsed fields) and 7bc39e (Graduates 1891-92) merged into 33e281 (12 entries) -> one person, 1891-92..1909-10. Counts in the verify output; 0 orphans, 0 shift blocks, flags 546.
+
+## 2026-10-05 — Sizing duplicate works in research.work (all genres, not just ballet)
+
+```sql
+select work_id, canonical_title, canonical_genre, appearance_count, excerpt_of_work_id from research.work;
+-- clustered in Python on a letters-only key: build_entities._title_key(_strip_genre_suffix(title)),
+-- ё->е, then every non-letter/digit removed (spaces, hyphens, dashes, commas, apostrophes)
+```
+
+Result: 3657 works; 408 clusters with more than 1 work_id under the letters-only key. 84 have the same (or blank) genre: pure punctuation/spacing variants (Изъ-за / Изъ за мышенка; Правда—хорошо / Правда хорошо; Донъ-Кихотъ / Донъ Кихотъ; Звѣзды / Звёзды; Chez l'Avocat / l’Avocat). 324 have differing genres: about 74 are only abbreviation variants (rough family match: оп./опера, бал./бал.-феерія), and about 250 involve genuinely different genre words. Most of those 250 are the same work with the genre printed differently (Шашки шут./ш./шутка/ком.; Коппелія бал. ×103 / оп. ×1); a minority are genuinely different works (Фаустъ оп. vs драм. поэма; Ромео и Джульетта оп. vs траг.; Карменъ оп. vs бал.; Снѣгурочка оп. vs весенняя сказка). Separately, 107 excerpt-looking works (276 appearances) are not linked to a parent (excerpt_of_work_id null).
+
+## 2026-10-05 — Рыхлякова Варвара (TSS 1909-10) merge verification, and the 1909-10 ballet-department teacher list
+
+```sql
+SELECT sp.season, right(l.entry_id,10), e.heading_path, e.subject_taught, e.tenure_note_text
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6)='5d6d24';
+SELECT sp.season, right(e.page_id,5), e.family_name, e.first_name, e.heading_path, e.subject_taught
+FROM raw.person_entry e JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE e.entity_type='TheaterSchoolStaff' AND sp.season='1909-10' AND e.subject_taught LIKE '%анц%';
+```
+
+Result: 5d6d24 = 1 entry (1909-10 p001 e024, SPb ballet department teachers, 'съ 1 ноября 1907', subject None); the other 1909-10 dance-subject lines are Андріановъ, Гавликовскій, Жукова, Куличевская, Обуховъ, Фокинъ etc. After merge: live 3228 -> 3227, 0 orphans, 0 shift blocks, flags 546.
