@@ -12499,3 +12499,13 @@ Result: 5d6d24 = 1 entry (1909-10 p001 e024, SPb ballet department teachers, 'с
 ```
 
 Result: entry 18 (e024) has subject_taught null; every neighbouring teacher has one. The scan (printed p. 146, no. 18) prints "Рыхлякова, Варвара Трофимовна (съ 1 ноября 1907 г.)." with nothing after the date, so the null is faithful to the print, not an extraction miss. The uncertain-list entry 11 text was corrected accordingly.
+
+## 2026-10-05 — Тихоміровъ Василій Дмитріевичъ: entries of 6d97a1 and ed66b3, then merge verification (also: Рыхлякова TSS merge actually applied)
+
+```sql
+SELECT sp.season, sp.city, right(l.entry_id,10), e.entity_type, left(e.heading_path,50), e.subject_taught, e.tenure_note_text
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('6d97a1','ed66b3') ORDER BY 1,2;
+```
+
+Result: 6d97a1 = 19 entries 1897-98..1907-08 (Moscow school dance teacher 'съ 1 октября 1896' + Moscow ballet artist 'съ 1 сентября 1893'), ed66b3 = 5 entries 1908-09, 1909-10 (same two lines). Correction to the 5d6d24 entry above: its run printed "3228 -> 3228" -- the merge had been silently skipped by the script's survivor-based "applied" filter (87c046 was already a survivor). The script now skips by loser; the next run applied 5d6d24 -> 87c046 and ed66b3 -> 6d97a1 together: live 3228 -> 3226, Рыхлякова Варвара person now 21 entries, Тихоміровъ 24 entries.
