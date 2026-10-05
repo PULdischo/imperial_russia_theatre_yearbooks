@@ -22046,3 +22046,29 @@ reading of it:
 
 The results were added to the evidence column in production_creator_forms.csv and
 to the review page (version 2). The identity questions stay with RG.
+
+### #133 step 3 (2026-10-05): research layer built
+
+`research.production` (480), `research.production_work` (516), `research.production_credit`
+(1210); `research.person` +73 creator-only persons, with new `person_source` and
+`wikidata_source` columns; exported to research_dataset.sqlite (build_datasette.py
+SCHEMAS updated). Design: docs/entity_centric_model.md. RG's review-page decisions so
+far are applied: Вальцъ (К. В.) and Фридманъ (roster link, "probably") are confirmed,
+Золотаренко is left unlinked, and 31 Wikidata QIDs are in
+`pipeline/entity_curation/production_creator_wikidata.csv` (none contradicts an
+existing roster link; Дриго, Гердтъ, Горскій and Чекетти gain QIDs).
+
+**Larger issue surfaced, NOT fixed here: duplicate works in entities.work.** 35 of the
+480 list entries match more than one work_id for what is plainly one ballet:
+- hyphen/spelling variants: Донъ Кихотъ / Донъ-Кихотъ / Донъ-Кихотъ-Ламанчскій,
+  Звѣзды / Звёзды, Синяя борода / Синяя-борода, Волшебныя / Волшебные грезы;
+- Repertoire misreads already listed as aliases: Паяда, Ваядерка, Пригалъ, Маркабомба;
+- excerpt rows not linked to their parent: "Актъ бал. Фіаметта", "Прологъ балета
+  Спящая красавица", "Танцы и группы изъ балета Талисманъ", and a merged
+  three-ballet title (1903-04 SP).
+
+research.production picks the best single work (an exact list-title match first, then
+the most dates) and production_work keeps every link. A work-consolidation pass over
+entities.work would fix this at the root and is worth scheduling separately. 2
+productions match no Repertoire date at all (1902-03 SP Донъ-Кихотъ Ламанчскій,
+1904-05 SP Дочь Фараона; known #101 audit leads), so their work_id is NULL.

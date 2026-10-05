@@ -120,6 +120,26 @@ row counts against the full corpus:
 | `research.performance` | 25,013 | one work performed within one session |
 | `research.person_appearance` | 20,715 | one roster listing, resolved to its person |
 
+### Ballet productions lists: production, production_work, production_credit (issue #133, 2026-10-05)
+
+Added after the counts above (which are the original v2 snapshot). These tables carry the
+creators named in the ballet productions lists: librettists, choreographers, composers,
+stagers and source authors.
+
+| Table | Grain |
+|---|---|
+| `research.production` | one list entry: a ballet as staged in one season and city (list number, premiere flag, the printed total, the verbatim description). `work_id` = its best-matching work, NULL when none of its dates matched the Repertoire |
+| `research.production_work` | every work that a production's dates matched, with the number of matched dates. It keeps all the links, because `research.work` still has several work_ids for some ballets (spelling variants, misreads, excerpt rows not linked to a parent) |
+| `research.production_credit` | one printed credit -> person: `role_category` (author = соч., joint authorship of scenario and choreography, deliberately not split; libretto, music, staging, instrumentation, source) + the printed role words, name, honorific and scope verbatim. `identification_status` is `proposed` where RG hasn't confirmed the reading of the printed form |
+
+**Person** gains two columns: `person_source` (`roster` | `production_list`) and
+`wikidata_source` (`link_wikidata` = the automatic pilot | `rg_review` = RG's review of
+the creators). Creators who are also on the roster stay ONE person (Петипа, Дриго,
+Л. Ивановъ…). Creators named only in the lists come from `entities.creator_person`;
+their `first_attested_season`/`last_attested_season` are the list seasons that credit
+them. Curated inputs: `pipeline/entity_curation/` (design in
+docs/person_normalization.md, last section).
+
 **Person**: no `superseded_by_person_id`, no `tier1_key`, no separate
 `person_merge_log`/`person_wikidata_link` tables — `wikidata_qid`,
 `wikidata_label`, and `wikidata_description` are inlined directly onto

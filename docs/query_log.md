@@ -12435,3 +12435,32 @@ WHERE left(cast(l.person_id as varchar),6) IN ('088ec9','224c50') ORDER BY 1,2;
 ```
 
 Result: 4 entries 1890-91..1893-94, all 'Законъ Божій для учащихся Римско-Католическаго (вѣро)исповѣданія', ballet dept, 'съ 1 ноября 1888', 'Оставилъ преподаваніе 1 сентября 1894' in 1893-94. After merge: live 3234 -> 3233, 0 orphans, 0 shift blocks, flags 546. Note: research.person reads 3306 since the ballet-creator thread's uncommitted build_research_model.py edits (production_list persons, 73) are now part of every rebuild.
+
+## 2026-10-05 — Issue #133 step 3: building and verifying the production research tables
+
+```sql
+-- list entries -> matched works (via build_research_model.ballet_list_matches), excerpts collapsed to parents
+-- => 443 one work, 35 several, 2 none
+select person_source, count(*), count(wikidata_qid) from research.person group by 1;
+select wikidata_source, count(*) from research.person group by 1;
+select count(*) - count(distinct person_id) from research.person;
+select season, city, list_title from research.production where work_id is null;
+select count(*) from research.production_credit pc left join research.person p using (person_id) where p.person_id is null;
+select count(*) from research.production pr left join research.work w using (work_id) where pr.work_id is not null and w.work_id is null;
+select identification_status, count(*) from research.production_credit group by 1;
+select p.display_name, pc.role_category, count(*), count(distinct pr.work_id) from research.production_credit pc
+  join research.person p using (person_id) join research.production pr using (production_id) group by 1, 2 order by 3 desc limit 8;
+-- sqlite export: Спящая красавица credits; Фокинъ's credits
+```
+
+Result: persons roster 3233 (32 with a QID) + production_list 73 (24 with a QID); wikidata_source link_wikidata 28 / rg_review 28; 0 duplicate ids, 0 orphan credits, 0 orphan works. 2 productions have no work (1902-03 SP Донъ-Кихотъ Ламанчскій, 1904-05 SP Дочь Фараона). identification_status: confirmed 1209, proposed 1 (Щимана). Top: Петипа author 115 credits / 30 works; Пуни music 103 / 13; Сенъ-Леонъ 68; Минкусъ 60; Дриго 49. Спящая красавица = Перро (source, Q128460), Чайковскій (music, Q7315), Петипа (author + staging, Q312320). person_appearance unchanged at 23203.
+
+## 2026-10-05 — Рыхлякова cluster (ballet artists + TSS + Graduates): all entries of 8 persons, scan check of the 1904-05 start date, then Варвара-dancer merge verification
+
+```sql
+SELECT sp.season, sp.city, right(l.entry_id,10), e.entity_type, e.family_name, e.first_name, e.patronymic, e.tenure_note_text
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('1150d3','87c046','023b1e','5d6d24','33e281','af49d5','760668','7bc39e') ORDER BY 1,2;
+```
+
+Result: Варвара (1-я): 87c046 17 entries 1890-91..1907-08 (no 1904-05), 023b1e 1904-05 (misparsed fields; scan no. 95 prints 'съ 1 сентября 1890'), 1150d3 1908-09/1909-10 ('съ 1 сентября 1890'), 5d6d24 TheaterSchoolStaff 1909-10 ('съ 1 ноября 1907'). Наталья (2-я): 33e281 12 entries, 760668 5, af49d5 1 (1904-05, misparsed), 7bc39e Graduates 1891-92. After merging 023b1e + 1150d3 into 87c046: live 3233 -> 3231, 0 orphans, 0 shift blocks, flags 546.
