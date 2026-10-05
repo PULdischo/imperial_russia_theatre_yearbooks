@@ -485,13 +485,16 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     # intended title. Matching only: the printed title stays verbatim everywhere.
     _alias_path = Path(__file__).parent / "entity_curation" / "work_title_aliases.csv"
     title_alias: dict[str, str] = {}
+    alias_genre: dict[str, str] = {}  # identity genre for a blank printed genre (optional column)
     if _alias_path.exists():
-        title_alias = {r["printed_title"]: r["match_as_title"]
-                       for r in _csv0.DictReader(open(_alias_path, encoding="utf-8"))}
+        for r in _csv0.DictReader(open(_alias_path, encoding="utf-8")):
+            title_alias[r["printed_title"]] = r["match_as_title"]
+            if r.get("as_genre_if_blank"):
+                alias_genre[r["printed_title"]] = r["as_genre_if_blank"]
     by_title: dict[str, list[tuple[str, str, str, str | None]]] = defaultdict(list)
     for work_id, title, genre in rows:
         title_key = _title_key(_strip_genre_suffix(title_alias.get(title.strip(), title)))
-        raw_fold = _fold_genre(genre)
+        raw_fold = _fold_genre(genre) or _fold_genre(alias_genre.get(title.strip()))
         if title_key == _GIMN_TITLE_KEY and raw_fold in _GIMN_CONTAMINATED_GENRE_FOLDS:
             raw_fold = None  # Problem #3: another bill item's title, not a real genre
         ident = _identity_genre(raw_fold)
