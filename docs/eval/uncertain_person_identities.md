@@ -83,6 +83,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** `theaterschoolstaff_1907-08_p000__e020` (last tutor line), `theaterschoolstaff_1908-09_p002__e003`, `theaterschoolstaff_1909-10_p002__e006`.
 - **Would resolve it:** Весь Петербургъ 1908-1910 (a school tutor or teacher named Петровъ Иванъ Степановичъ); a school staff register.
 
+## 10. Жукова Вѣра Васильевна -- the ballet artist "Жукова 1-я" and the later dance teacher: one woman or two?
+
+- **Status:** SPLIT (RG, 2026-10-05, "teachers merged; dancer separate, labelled uncertain"): the dancer is person c03d21... (1 entry, 1890-91); the dance teacher is 3e22b9... (9 entries, 1901-02 to 1909-10, merged from two records).
+- **What is uncertain:** "Жукова 1-я, Вѣра Васильевна" is a Petersburg ballet artist in the 1890-91 volume ("съ 22 іюля 1869 г.", "Оставила службу 1 марта 1891 года"). From 1901-02 a "Жукова, Вѣра Васильевна" teaches Танцы (from 1908-09 Классическіе танцы) in the Petersburg ballet department, "съ 1 сентября 1901 г.".
+- **For one woman:** identical name and patronymic; a retired dancer becoming a dance teacher ten years later is a normal path.
+- **For two women / against:** a ten-year gap; no volume prints a link between the two; the teacher's printed start date gives no earlier service; the "1-я" ordinal marks a surname shared by several dancers.
+- **Where to look:** `balletartists_1890-91_SP_p001__e023`; `theaterschoolstaff_1901-02_p001__e028` and later lines of person 3e22b9...
+- **Would resolve it:** a ballet-artists dictionary or the Mariinsky dancers' lists 1869-1891 for Жукова В. В.; Весь Петербургъ 1901-1910 (teacher at the Theater School).
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.

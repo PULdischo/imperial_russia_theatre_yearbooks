@@ -12405,3 +12405,13 @@ WHERE left(cast(l.person_id as varchar),6) IN ('7029d5','6f5c3c') ORDER BY 1,2;
 ```
 
 Result: 9 entries (1894-95..1902-03), all 'Законъ Божій для учащихся Римско-Католическаго вѣроисповѣданія', ballet dept, 'съ 1 февраля 1895', 'Оставилъ службу 1 сентября 1902' in 1902-03. After merge: live 3237 -> 3236, 0 orphans, 0 shift blocks, flags 546.
+
+## 2026-10-05 — Жукова Вѣра Васильевна: entries of c03d21, 3e22b9, 3732cd, then merge verification
+
+```sql
+SELECT sp.season, right(l.entry_id,10), e.entity_type, e.family_name, e.first_name, e.patronymic, right(e.heading_path,34), e.subject_taught, e.tenure_note_text
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('c03d21','3732cd','3e22b9') ORDER BY 1,2;
+```
+
+Result: c03d21 = 1 BalletArtists entry (1890-91 SP p001 e023, 'Жукова 1-я', 'съ 22 іюля 1869', 'Оставила службу 1 марта 1891'); 3e22b9 = 7 TSS entries 1901-02..1907-08 (Танцы), 3732cd = 2 TSS entries 1908-09, 1909-10 (Танцы / Классическіе танцы), all 'съ 1 сентября 1901'. After merging 3732cd into 3e22b9: live 3236 -> 3235, 0 orphans, 0 shift blocks, flags 546.
