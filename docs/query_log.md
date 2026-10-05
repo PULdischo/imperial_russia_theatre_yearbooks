@@ -12534,3 +12534,27 @@ SELECT entity_type, family_name, count(*) FROM raw.person_entry WHERE family_nam
 ```
 
 Result: before: 42 rows 'Легать*' (41 BalletArtists, 1 Graduates) vs 40 'Легатъ*'. After the 47-edit correction: only one 'Легать 2-я' (1890-91 SP p003 no. 64, genuine print) remains; BalletArtists 'Легатъ' 33, 'Легатъ 1-й' 11, '1-я' 7, '2-й' 9, '2-я' 6, '3-й' 6, '3-я' 1; Graduates 3; TheaterSchoolStaff 3+7+7. Live persons 3226, tombstones 2350 (unchanged).
+
+## 2026-10-05 — Work consolidation step 3 found already live in full_run (applied by a parallel session's rebuild)
+
+```sql
+select recorded_on, count(*), sum(n_performances) from entities.work_id_crosswalk group by 1;
+select count(*) from research.work; select count(*) from research.performance; select count(*) from entities.person;
+-- work_ids now in full_run that were not in the step-1 state (copy taken right after step 1)
+select x.old_work_id, x.new_work_id, x.old_canonical_title, x.n_performances, w.canonical_title, w.canonical_genre, w.appearance_count
+from entities.work_id_crosswalk x join entities.work w on w.work_id = x.new_work_id;  -- minus the step-1 pairs
+```
+
+Result: full_run has 3383 works (step 3 applied). The crosswalk has 276 rows / 927 performances: 107 from step 1 + 169 from step 3, recorded 2026-10-05. research.work is 3383 and research.performance is still 29568. 2 work_ids are new rather than inherited: Птички пѣвчія [оперет.] and Заварила кашу — расхлебывай [ф.]. The parallel session's ~12:21 rebuild ran build_entities.py while the step-3 code (before the id-inheritance fix) was on disk. Merge list (169 merges into 125 works): docs/eval/work_consolidation_step3_merges.csv.
+
+## 2026-10-05 — Legat family person records: timelines of the Сергѣй, Иванъ and Александра persons; Иванъ merge-log check
+
+```sql
+SELECT sp.season, sp.city, right(l.entry_id,10), e.entity_type, e.family_name, e.first_name, e.patronymic, e.tenure_note_text
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('714fca','2cdfb1','b21c8b','651c58','437e79','495cd4','4f0350','c26b2e') ORDER BY 1,2;
+SELECT left(cast(person_id_1 as varchar),6), left(cast(person_id_2 as varchar),6), status, match_reason FROM entities.person_merge_log
+WHERE left(cast(person_id_1 as varchar),6) IN ('437e79','495cd4','d54949') OR left(cast(person_id_2 as varchar),6) IN ('437e79','495cd4','d54949');
+```
+
+Result: Сергѣй Густавовичъ 21 entries over 4 persons (all 'съ 1 іюня 1894', TSS 'съ 1 сентября 1898', '† 18 октября 1905'); Иванъ 8 entries over 2 persons (explicit break/re-engagement printed 1897-00); Александра: Graduates 1906-07 (joined 1 іюня 1907) + BalletArtists 1907-08 (съ 1 іюня 1907). The Иванъ check found 495cd4 tombstoned into 437e79 with no log row of its own (backups: 495cd4 live); a manual row was inserted after RG confirmed. After the three merges: live 3226 -> 3221, tombstones 2350 -> 2355, 0 orphans, 0 shift blocks, flags 546, receipts identical.

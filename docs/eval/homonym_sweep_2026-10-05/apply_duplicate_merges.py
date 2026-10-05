@@ -47,6 +47,10 @@ MERGES = [  # (survivor prefix, [loser prefixes], label, reason)
      'RG decision 2026-10-05 (merge, labelled UNCERTAIN): the 1909-10 Petersburg school teacher line (съ 1 ноября 1907, no subject stored) joined to the ballet artist of the same name; dual dancer/teacher listing assumed'),
     ('6d97a1', ['ed66b3'], 'Тихоміровъ Василій Дмитріевичъ',
      'RG-approved 2026-10-05: Moscow ballet artist (since 1 сентября 1893, assistant ballet master from 22 Dec 1909) and Moscow school dance teacher (since 1 октября 1896); the same two lines every season 1897-98..1909-10, split at 1908-09'),
+    ('714fca', ['2cdfb1', 'b21c8b', '651c58'], 'Легатъ Сергѣй Густавовичъ',
+     'RG-approved 2026-10-05 (Legat check): ballet artist since 1 іюня 1894 (the 1893-94 graduate who joined the troupe then), school dance teacher since 1 сентября 1898, died 18 Oct 1905; printed ordinal 2-й/3-й follows Иванъ (2-й) leaving 1895-97; one line per season'),
+    ('c26b2e', ['4f0350'], 'Легатъ Александра Павловна',
+     'RG-approved 2026-10-05 (Legat check): the 1906-07 Graduates line (joined the troupe 1 іюня 1907) and the 1907-08 ballet-artist line (съ 1 іюня 1907); consecutive seasons, same first name'),
 ]
 def full(p):
     r = con.execute("select person_id from entities.person where cast(person_id as varchar) like ? and superseded_by_person_id is null", [p + '%']).fetchall()
