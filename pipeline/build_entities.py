@@ -110,8 +110,24 @@ def _match_key(title_key: str) -> str:
     return re.sub(r"[\W_]+", "", title_key.replace("ё", "е"))
 
 
+# Compound genre suffixes (RG, 2026-10-05): ", ком.-вод.", ", драмат. легенда.",
+# ", соверш. невѣроятное событіе". The first word must end in "." and every word is
+# lower-case, so a fused second title is never stripped as a "genre"
+# ("…, ком. Тяжба", "…, прологъ. Псковитянка"). Matching key only: the printed
+# title and genre stay verbatim on every performance.
+_COMPOUND_GENRE_SUFFIX_RE = re.compile(
+    r",\s*[а-яѣі]{1,10}\.(?:\s?[-—]?\s?[а-яѣіё]{1,12}\.?){1,2}\s*$")
+# Printings whose title text itself is doubtful: never strip, so they cannot merge
+# into an unrelated work. "Женихъ" + Gogol's subtitle for Женитьба is probably a
+# misprint or misread of "Женитьба" (scan check pending).
+_NO_SUFFIX_STRIP = {"Женихъ, соверш. невѣр. событіе"}
+
+
 def _strip_genre_suffix(title: str) -> str:
-    return _GENRE_SUFFIX_RE.sub("", title).strip()
+    if title.strip() in _NO_SUFFIX_STRIP:
+        return title.strip()
+    t = _GENRE_SUFFIX_RE.sub("", title).strip()
+    return _COMPOUND_GENRE_SUFFIX_RE.sub("", t).strip()
 
 
 def _fold_genre(genre: str | None) -> str | None:
