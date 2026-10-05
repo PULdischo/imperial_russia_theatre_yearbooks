@@ -12264,3 +12264,13 @@ WHERE person_id LIKE '0c1633%' GROUP BY 1;
 ```
 
 Result: one person, 'Черемухинъ, Михаилъ Никифоровичъ', 1890-91..1909-10, 40 entries; live persons 3250 -> 3248, tombstones 2326 -> 2328, 0 orphans, 0 shift blocks, quality flags 546 (unchanged), receipts identical.
+
+## 2026-10-05 — Петровъ Василій Ивановичъ (TSS): subjects/headings of the three persons, then merge verification
+
+```sql
+SELECT sp.season, right(l.entry_id,10), right(e.heading_path,24), e.subject_taught, left(cast(l.person_id as varchar),6)
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('c11d62','e1cac8','50a743') ORDER BY 1,2;
+```
+
+Result: 20 entries. 1894-95..1905-06 'Выразительное чтеніе' (ballet dept), 1902-03..1909-10 'Практика драматическаго искусства' (drama courses, "съ 1 сентября 1902"). After merge: one person, 1894-95..1909-10, 20 entries; live 3248 -> 3246, tombstones 2328 -> 2330, 0 orphans, 0 shift blocks, flags 546, receipts identical.
