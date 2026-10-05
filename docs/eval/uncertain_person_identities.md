@@ -42,20 +42,18 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** `musicians_1904-05_SP_p002__e013`, `musicians_1905-06_SP_p002__e035`, `musicians_1905-06_MSK_p002__e029`, `musicians_1906-07_MSK_p002__e014`, and later Moscow years. The printed "1894" is recorded in `docs/eval/genuine_print_typos.md`.
 - **Would resolve it:** a Moscow Bolshoi orchestra roster 1905; a record of a transfer from the Petersburg to the Moscow orchestra; Весь Петербургъ 1905.
 
-## 5. Ѳедорова Марія Дмитріевна (ballet, Petersburg) -- one woman re-listed, or two?
+## 5. Ѳедорова Марія Дмитріевна (ballet, Petersburg) -- printed leaving note in 1904-05, listed again 1905-08
 
-- **Status:** OPEN -- not decided; currently one person (2475a6...), 1890-91 to 1907-08.
-- **What is uncertain:** the 1904-05 volume (no. 114) prints "Федорова **1-я**, Марія Дмитріевна (съ 1 іюня 1885 г.)" with a separate line "Оставила службу 1 іюня 1905 г."; yet "Ѳедорова ... Марія Дмитріевна" is listed again in 1905-06, 1906-07 and 1907-08 with start "съ 12 мая 1885" (the same start date as in 1890-1903). The ordinal changes between volumes (1-я in 1896-97, 3-я in 1894-95), and the 1904-05 start date reads "1 іюня" where other years read "12 мая" (1903-04: "2 мая").
-- **For one woman:** same first name and patronymic, the same ballet list, 1885 start every year; the 1904-05 line may be a printer's slip, or she left and was re-engaged.
-- **For two:** the printed leaving note in 1904-05 contradicts later listings under the same start date; ordinals "1-я"/"3-я" can mark two different women.
-- **Where to look:** `balletartists_1904-05_SP_p005__e003` (no. 114) and the 1905-06 to 1907-08 entries of person 2475a6...
-- **Would resolve it:** ballet personnel lists 1905-1908; the ballet-school graduate lists; biographical sources on Petersburg ballet dancers named Федорова.
+- **Status:** MERGED, OPEN for research (RG, 2026-10-05: "keep merged, leave it OPEN"): one person (2475a6...), 1890-91 to 1907-08, 19 entries.
+- **What is uncertain:** the 1904-05 volume prints, under no. 114, "Федорова 1-я, Марія Дмитріевна (съ **1 іюня** 1885 г.) ... Оставила службу **1 іюня 1905** г." (zoomed 2x on the scan: both clear). Yet "Ѳедорова, Марія Дмитріевна (съ **12 мая** 1885 г.)" is listed again in 1905-06 (no. 119), 1906-07 (no. 102) and 1907-08 (no. 125), with the same start date as 17 other volumes. The ordinal changes across volumes (3-я 1890-95, 1-я 1896-97 and later). The 1904-05 start date (1 іюня) and the 1903-04 one (2 мая) are variants of the usual 12 мая.
+- **For one woman:** same name, patronymic, list and start date (12 мая 1885) in the later volumes; a return would be printed with a break, as for Цалисонъ on the same page ("по 1 января 1900 г. и съ 1 сентября 1902 г."); the same note "Оставила службу 1 іюня 1905 г." is printed under no. 125 Щедрина (start 12 мая 1885, absent after 1904-05), so the 1904-05 note may have been attached to the wrong woman.
+- **For two women / against:** the note is printed clearly under no. 114; the 1904-05 line carries its own statistics (8 ballets, 18 times); nothing printed explains a return.
+- **Where to look:** `balletartists_1904-05_SP_p005__e003` (no. 114) and `__e014` (no. 125 Щедрина); later lines of person 2475a6... (1905-06 p005 e008, 1906-07 p005 e006, 1907-08 p006 e001). The stored `service_periods` of the 1904-05 line keeps the printed "left service 1 июня 1905".
+- **Would resolve it:** ballet personnel lists 1905-1908; the 1905 retirement list of the Petersburg ballet; biographical sources on Petersburg ballet dancers named Федорова.
 
-## 6. Марквардтъ Августъ (Moscow Musicians) -- two persons, same man or two men?
+## 6. Марквардтъ Августъ (Moscow Musicians) -- RESOLVED, kept for reference
 
-- **Status:** OPEN -- not examined in detail; two live persons: 230477... (22 entries, 1890-91 to 1905-06; starts 1882-09-19 / 1884-08-15) and 8acb78... (8 entries, 1894-95 to 1902-03; start 1882-09-19), both Moscow Musicians, both cornet/trumpet, with overlapping seasons.
-- **What is uncertain:** a split of one man's entries over two records, or two men of the same name in the Moscow orchestra.
-- **Would resolve it:** the entries' printed instrument lines season by season; Moscow orchestra rosters.
+- **Status:** MERGED (RG, 2026-10-05; not uncertain): one person (230477...), 30 entries, 1890-91 to 1905-06. The two records held complementary seasons of one orchestra line, plus the bandmaster line ("Капельмейстеръ военной музыки", since 15 августа 1884); the orchestra line itself prints "(онъ же и капельмейстеръ военной музыки)" (since 19 сентября 1882, left 1 іюля 1903 per 1902-03; 1904-05 repeats the leaving note).
 
 ## 7. Шнейдеръ Карлъ Ѳедоровичъ (Petersburg Musicians) -- two persons, overlapping 1908-10
 
@@ -100,6 +98,15 @@ To add an entry: copy the template at the bottom.
 - **For two women / against:** no other volume lists her as a teacher; the teaching start (1907) is unrelated to her company start; the printed line gives no subject, so the post is not identified.
 - **Where to look:** `theaterschoolstaff_1909-10_p001__e024` (scan-checked: no subject printed); `balletartists_1909-10_SP_p004__e008`.
 - **Would resolve it:** Весь Петербургъ 1908-1910; a ballet-school staff list for 1907-08 and 1908-09 (the entry begins "1 ноября 1907", yet the 1907-08 and 1908-09 volumes list no such teacher).
+
+## 12. Шредеръ Карлъ (percussion) 1907-10 -- the patronymic and start date change to the trombonist's
+
+- **Status:** MOVED (RG, 2026-10-05, "most likely"): the three lines of 1907-08, 1908-09 and 1909-10 (`musicians_1907-08_SP_p003__e019`, `musicians_1908-09_SP_p004__e011`, `musicians_1909-10_SP_p004__e016`) were taken off the trombonist Шнейдеръ (019ed1...) and attached to the percussionist **Шредеръ Карлъ Августовичъ** (cd67fa...; 1903-04 to 1909-10, 7 entries).
+- **What is uncertain:** the percussionist prints "Шредеръ, Карлъ **Августовичъ** (съ 1 декабря **1894**)" every season to 1906-07 (1906-07 adds "Переведенъ изъ Михайловскаго театра съ 1 сентября 1906"). From 1907-08 the same chair, in the same alphabetical position (between Штейнсъ and Шуманъ), prints "Шредеръ, Карлъ **Ѳедоровичъ** (съ 1 сентября **1902**)", exactly the patronymic and start date of the trombonist **Шнейдеръ, Карлъ Ѳедоровичъ** (Mikhailovsky orchestra, since 1 Sept 1902; Mariinsky list from 1908-09 with "съ 1 сентября 1907"). All eleven lines were blind-read on the scans and confirmed as stored (`docs/eval/schneider_check_2026-10-05/`).
+- **For one percussionist:** continuous chair and list position; a trombone line and a percussion line print in the same list in 1908-10 (118 / 121 and 120 / 122), so the percussion lines cannot belong to the trombonist; the changed patronymic and date look like a yearbook slip that borrowed the trombonist's details when the Mikhailovsky orchestra was merged in 1907-08.
+- **For a different man:** a new percussionist Шредеръ Ѳедоровичъ (hired 1902 per the print) taking the chair from 1907, with Августовичъ gone exactly then; the print is taken at face value.
+- **Where to look:** the three entries above; `musicians_1906-07_SP_p003__e025` (last Августовичъ line); the trombonist's lines `musicians_1907-08_SP_p004__e035`, `musicians_1908-09_SP_p004__e008`, `musicians_1909-10_SP_p004__e014`.
+- **Would resolve it:** a Mariinsky orchestra roster 1907-1910 (Весь Петербургъ; staff lists of the Directorate) naming the percussionist (Шредеръ К. А. or К. Ѳ.).
 
 ## Related, decided (not uncertain), for reference
 
