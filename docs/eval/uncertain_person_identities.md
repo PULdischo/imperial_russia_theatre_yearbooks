@@ -65,6 +65,15 @@ To add an entry: copy the template at the bottom.
 
 ---
 
+## 8. Волконскій князь Григорій Дмитріевичъ -- one man in two unrelated posts, or two princes Волконскіе?
+
+- **Status:** MERGED (RG, 2026-10-05, "fine for now, label as uncertain"): five live persons joined into 68fa76... (20 entries, 1890-91 to 1901-02).
+- **What is uncertain:** the same name, rank and patronymic appears in two very different jobs: **Начальникъ искусственнаго освѣщенія** (head of artificial lighting; ProductionTeam, "съ 1 сентября 1887 г.", 1890-91 to 1897-98, "Оставилъ службу 1 сентября 1898 г.") and **teacher of Географія in the ballet department of the Petersburg school** (TheaterSchoolStaff, "Преподаватели / а) Балетное отдѣленіе", "съ 1 сентября 1888 г.", 1890-91 to 1901-02, "Оставилъ службу 1 сентября 1901 г.").
+- **For one man:** identical name, patronymic and title (кн. / князь) in both lists every year; start dates one year apart; exactly one line per list per year; no conflict or overlap; the person was split into five records only by the old "князь/кн." name scramble.
+- **For two men / against:** a lighting engineer teaching school geography is an unusual combination; the two posts end three years apart; no source says one prince held both.
+- **Where to look:** ProductionTeam lines `productionteam_1890-91_p003__e010` ... `productionteam_1897-98_p002__e028`; school lines `theaterschoolstaff_1890-91_p004__e011` ... `theaterschoolstaff_1901-02_p003__e019` (list numbers 3-5).
+- **Would resolve it:** a biography of the prince (Григорій Дмитріевичъ Волконскій, Imperial Theatres lighting department / Theater School); Весь Петербургъ 1894-1901 entries under Волконскій for his occupation and address.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
