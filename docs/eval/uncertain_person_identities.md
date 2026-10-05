@@ -95,10 +95,10 @@ To add an entry: copy the template at the bottom.
 ## 11. Рыхлякова 1-я Варвара Трофимовна -- the ballet artist and the 1909-10 school-teacher line: one woman?
 
 - **Status:** MERGED (RG, 2026-10-05, "merge, but add to the uncertain list"): the single TheaterSchoolStaff entry (1909-10, former record 5d6d24...) joined to the ballet artist 87c046... (21 entries, 1890-91 to 1909-10).
-- **What is uncertain:** `theaterschoolstaff_1909-10_p001__e024` lists "Рыхлякова, Варвара Трофимовна" among the Petersburg school's ballet-department teachers ("съ 1 ноября 1907 г."), with no subject stored; the ballet artist Рыхлякова 1-я of the same name and patronymic is in the Petersburg troupe that season (start "съ 1 іюня 1890", printed "1 сентября 1890" in 1904-05 and 1908-10).
+- **What is uncertain:** `theaterschoolstaff_1909-10_p001__e024` lists "Рыхлякова, Варвара Трофимовна" among the Petersburg school's ballet-department teachers ("съ 1 ноября 1907 г."), with no subject printed (scan-checked 2026-10-05, p. 146, no. 18: the line ends after the date; the 23 other teachers on that list all print a subject); the ballet artist Рыхлякова 1-я of the same name and patronymic is in the Petersburg troupe that season (start "съ 1 іюня 1890", printed "1 сентября 1890" in 1904-05 and 1908-10).
 - **For one woman:** same name, patronymic, city and season; rare surname; dual dancer/teacher listings are common (Преображенская Ольга has both in 1900-01).
-- **For two women / against:** no other volume lists her as a teacher; the teaching start (1907) is unrelated to her company start; the stored line has no subject, so the post is not identified.
-- **Where to look:** `theaterschoolstaff_1909-10_p001__e024` (and check the scan for the subject line, which the extraction may have dropped); `balletartists_1909-10_SP_p004__e008`.
+- **For two women / against:** no other volume lists her as a teacher; the teaching start (1907) is unrelated to her company start; the printed line gives no subject, so the post is not identified.
+- **Where to look:** `theaterschoolstaff_1909-10_p001__e024` (scan-checked: no subject printed); `balletartists_1909-10_SP_p004__e008`.
 - **Would resolve it:** Весь Петербургъ 1908-1910; a ballet-school staff list for 1907-08 and 1908-09 (the entry begins "1 ноября 1907", yet the 1907-08 and 1908-09 volumes list no such teacher).
 
 ## Related, decided (not uncertain), for reference

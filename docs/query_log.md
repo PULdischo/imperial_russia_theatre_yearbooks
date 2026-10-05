@@ -12491,3 +12491,11 @@ WHERE e.entity_type='TheaterSchoolStaff' AND sp.season='1909-10' AND e.subject_t
 ```
 
 Result: 5d6d24 = 1 entry (1909-10 p001 e024, SPb ballet department teachers, 'съ 1 ноября 1907', subject None); the other 1909-10 dance-subject lines are Андріановъ, Гавликовскій, Жукова, Куличевская, Обуховъ, Фокинъ etc. After merge: live 3228 -> 3227, 0 orphans, 0 shift blocks, flags 546.
+
+## 2026-10-05 — Рыхлякова TSS 1909-10: is the missing subject an extraction drop? (RG's question)
+
+```sql
+-- raw JSON, theaterschoolstaff_1909-10_p001 entries 19-30 (subject_taught per entry), plus the scan p. 146 zoomed
+```
+
+Result: entry 18 (e024) has subject_taught null; every neighbouring teacher has one. The scan (printed p. 146, no. 18) prints "Рыхлякова, Варвара Трофимовна (съ 1 ноября 1907 г.)." with nothing after the date, so the null is faithful to the print, not an extraction miss. The uncertain-list entry 11 text was corrected accordingly.
