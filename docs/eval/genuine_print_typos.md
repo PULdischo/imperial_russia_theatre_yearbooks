@@ -419,3 +419,10 @@ correction belongs. Entry ids are `<page_id>__eNNN`.
 - 1890-91 p002 e020 (TheaterSchoolStaff, p. 263) prints "31. Ширяевъ, Александръ **Васильевичъ**" (every other season and the ballet lists print Викторовичъ); same man (subject Танцы, start 15 сентября 1891), merged.
 - Голяховскій Петръ: patronymic printed **Васильевичъ** in 1901-02..1905-06 (p002 lists) and **Власьевичъ** elsewhere; the 1890-91..1893-94 volumes print the surname as **Галяховскій**. Same teacher (start 7 сентября 1888), merged.
 - Зандинъ Михаилъ prints Ивановичъ (1906-08) / Павловичъ (1908-10); Лебедевъ Иванъ (Бутафоръ) Васильевичъ (1907-08) / Афанасьевичъ (1908-10) -- open, see person_merge_candidates_batch.md.
+
+## Seen during the 2026-10-05 homonym sweep (stored verbatim)
+- 1909-10 SP/MSK ballet list (balletartists_1909-10_MSK_p006, No. 24 Козловъ 2-й Алексѣй): the leaving note prints "**Остлвилъ** службу 16 августа 1910 г." (л and в transposed for "Оставилъ").
+- balletartists_1902-03_SP_p002 No. 45: Кякштъ Лидія printed "Юрьевна" (1903-04 and later years: Георгіевна).
+- balletartists_1904-05_SP_p003 No. 80: Петипа 2-я Надежда printed "Васильевна" (all other years: Маріусовна).
+- productionteam_1900-01_p003 No. 3: Краюшкинъ Николай printed "† 20 ноября 1898 г." although the 1899-00 volume lists him as living (so the print is internally inconsistent; stored as printed).
+- balletartists_1904-05_SP_p005 No. 114: printed "Федорова **1-я**, Марія Дмитріевна (съ 1 іюня 1885 г.)" with "Оставила службу 1 іюня 1905"; the same name is listed again 1905-08 with start 12 мая 1885 (open, see the sweep README).

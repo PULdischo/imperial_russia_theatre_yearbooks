@@ -12192,3 +12192,17 @@ select person_id, display_name, canonical_first_name, wikidata_qid from research
 ```
 
 Result: Петипа Маріусъ Ивановичъ had 3 live persons (e04344 20 entries 1890-91..1907-08 incl. school rows to 1891-92; 0f4adf 2 entries 1908-09..1909-10 with "† 1 іюля 1910 г."; 6310e8 1 school row 1892-93 "съ 1 сентября 1855"); Чекетти 2 persons (09350c Энрико, 8 school entries 1893-94..1900-01, left 1 апрѣля 1901; bfe3f9 Генрихъ, 19 company entries 1890-91..1902-03, left 1 ноября 1902) plus his wife Жозефина (separate); Ширяевъ Александръ Викторовичъ had 6b54e5 (51 entries) plus 0c0f54 (the 1890-91 school row printing Васильевичъ -- scan-verified, p. 263); Голяховскій 7fd62c (17 entries) + dd0ff7 (5 entries 1901-06, Васильевичъ). Referenced downstream: Wikidata link on e04344 (Q312320) and 6b54e5 (Q4524496); production_credit_link 142 rows on e04344, 1 on 09350c. After applying: live persons 3250, 7 `confirmed_manual` log rows, research.person: Чекетти displayed "Чекетти, Энрико Цезаревичъ", Петипа 1890-91..1909-10 with Q312320, Ширяевъ 1890-91..1909-10 with Q4524496.
+
+## 2026-10-05 -- Homonym sweep (issue #134 follow-up)
+
+```sql
+-- per live person: all linked entries with season/city/type/first/patronymic/instrument/heading/note/start-end dates (docs/eval/homonym_sweep_2026-10-05/signal_scan.py, timeline.py)
+select l.person_id, l.entry_id, e.entity_type, sp.season, sp.city, a.family_name_clean, a.first_name_clean, a.patronymic_clean, ...
+from entities.person_link l join entities.person p on p.person_id=l.person_id and p.superseded_by_person_id is null join raw.person_entry e using(entry_id) join analysis.person_entry a using(entry_id) join raw.source_pages sp on sp.page_id=e.page_id;
+select entry_id, period_order, start_date_undate, end_date_undate, end_type from raw.person_entry_service;
+-- note vs period sweep: tenure_note_text / credit_summary_text dates vs raw.person_entry_service dates (all roster types)
+-- unmerged duplicates: live persons grouped by (canonical_family_name, canonical_first_name, canonical_patronymic, ordinal_suffix) with count > 1
+-- post-fix: entities.person live count; entities.person_link vs superseded persons; raw.person_entry_service for the 3 corrected entries
+```
+
+Result: 273 -> 264 flagged persons (after the relink repair: patronymic conflicts 30 -> 22, first-name 15 -> 5, start-date 209 -> 200, after-end 85, two-cities 13); 47 persons with a recorded end followed by later entries and no new start date, 42 with the end printed in an entry text, 5 not printed (Мосолова: transfer, date printed with a Cyrillic І; Ѳедорова: leaving line genuinely printed; Русецкій: promotion; Бакина 2-я and Николаева 3-я: spurious ends, scan-verified); 8 entries repeating the previous entry's end date (1 real: Бакина 2-я); 7 persons spanning Musicians with BalletArtists/ProductionTeam (6 genuine dual listings, 1 wrong merge Ивановъ); 94 live pairs with identical canonical name+patronymic+ordinal (59 likely same, 8 probable, 13 overlap, 14 check). After the repairs: live persons 3256, tombstones 2320, orphans 0, shift blocks 0 (person_link alignment), 119 informational name mismatches (was 129).

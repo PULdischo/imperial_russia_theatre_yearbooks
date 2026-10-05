@@ -14,8 +14,14 @@ a whole tail shifted by one.
 What it reports:
   SHIFT BLOCK (error, exit code 1): a run of >= MIN_RUN consecutive entries on
     one page where each entry's name does NOT match its own person but DOES
-    match the person linked to the next entry. That is the signature of the
-    bug above and means the links on that page are misaligned.
+    match the person linked to a NEIGHBOURING entry -- the next one (the
+    "inherits the previous row's person" signature of the bug above, i.e. a
+    row was removed or links were not renumbered) or the previous one (the
+    mirror image: each row carries the person of the row AFTER it, which is
+    what an insertion above the block, or a realign applied in the wrong
+    direction, leaves behind; found on theaterschoolstaff_1896-97_p000
+    e013-e022, 2026-10-05, because the first version of this check looked in
+    one direction only and reported 0 blocks).
   Other name mismatches (informational): spelling variants that were merged on
     purpose, or something else wrong -- worth a look, not necessarily a bug.
 
@@ -74,13 +80,15 @@ def load(con) -> dict[str, list[tuple]]:
     return pages
 
 
-def find_shift_blocks(rs: list[tuple]) -> list[tuple[int, int]]:
+def find_shift_blocks(rs: list[tuple], step: int = 1) -> list[tuple[int, int]]:
     """Return (start, end) index pairs of runs where entry i matches the person of
-    entry i+1 but not its own."""
+    entry i+step (step=+1: persons lag one row behind the entries; step=-1: persons
+    run one row ahead of the entries) but not its own."""
     flags = []
     for i, r in enumerate(rs):
         own = _sim(r[2], r[6]) >= NAME_MATCH
-        nxt = i + 1 < len(rs) and _sim(r[2], rs[i + 1][6]) >= NAME_MATCH
+        j = i + step
+        nxt = 0 <= j < len(rs) and _sim(r[2], rs[j][6]) >= NAME_MATCH
         flags.append((not own) and nxt)
     blocks, i = [], 0
     while i < len(flags):
@@ -89,7 +97,7 @@ def find_shift_blocks(rs: list[tuple]) -> list[tuple[int, int]]:
             while j + 1 < len(flags) and flags[j + 1]:
                 j += 1
             if j - i + 1 >= MIN_RUN:
-                blocks.append((i, j + 1))        # +1: the last entry has no person of its own
+                blocks.append((i, j + 1) if step > 0 else (i - 1, j))   # the entry with no person of its own sits at the far end
             i = j + 1
         else:
             i += 1
@@ -111,14 +119,16 @@ def main() -> int:
         for r in rs:
             if _sim(r[2], r[6]) < NAME_MATCH:
                 mismatches.append(r)
-        for s, e in find_shift_blocks(rs):
-            shift_blocks.append((page, rs[s][0], rs[e][0], e - s + 1))
+        for step in (1, -1):
+            for s, e in find_shift_blocks(rs, step):
+                s, e = max(s, 0), min(e, len(rs) - 1)
+                shift_blocks.append((page, rs[s][0], rs[e][0], e - s + 1))
 
     print(f"person_link: {n_links} links checked; {len(mismatches)} name-mismatched "
           f"(informational); {len(shift_blocks)} SHIFT BLOCK(S)")
     for page, first, last, n in shift_blocks:
         print(f"  ERROR shift block on {page}: {first.rsplit('__', 1)[1]}..{last.rsplit('__', 1)[1]} "
-              f"({n} entries each carrying the previous entry's person)")
+              f"({n} entries each carrying a neighbouring entry's person)")
     if args.out:
         with open(args.out, "w", newline="", encoding="utf-8") as fh:
             w = csv.writer(fh)

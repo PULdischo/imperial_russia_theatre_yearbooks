@@ -1,0 +1,2657 @@
+[
+ {
+  "a": "a7f1c261-f4f0-4689-abea-919fb8239926",
+  "b": "7799a37a-d1fc-4194-9f68-b497f89fac40",
+  "name": "Тарасовъ, Николай Григорьевичъ",
+  "cls": "CHECK (gap/type/city differ)",
+  "ta": [
+   "Administrators"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1892-93"
+  ],
+  "rb": [
+   "1904-05",
+   "1907-08"
+  ],
+  "na": 3,
+  "nb": 4,
+  "sa": [
+   "1855-12-01"
+  ],
+  "sb": [
+   "1903-09-01",
+   "1905-09-01"
+  ]
+ },
+ {
+  "a": "4af6a793-def7-4e32-9964-77c45295e473",
+  "b": "d543527c-0402-4306-b104-2b086c0f5f87",
+  "name": "Пчельниковъ, Павелъ Михайловичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "Administrators",
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 44,
+  "nb": 2,
+  "sa": [
+   "1882-06-16",
+   "1903-09-01"
+  ],
+  "sb": []
+ },
+ {
+  "a": "0b96035d-bea6-4291-826a-17c0eb41a201",
+  "b": "d0ad531e-4324-4977-a040-dc9ad0665264",
+  "name": "Казанскій, Левъ Ивановичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "Administrators",
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 35,
+  "nb": 2,
+  "sa": [
+   "1885-02-20",
+   "1885-04-20",
+   "1892-01-01"
+  ],
+  "sb": []
+ },
+ {
+  "a": "65a6d4c3-ceb9-4563-a8d3-ddd3b316a015",
+  "b": "9b899631-ef0d-4bc0-b06b-e8110b3b1306",
+  "name": "Находятся въ вѣдѣніи придворной медицинской части",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "Administrators"
+  ],
+  "tb": [
+   "Administrators"
+  ],
+  "ra": [
+   "1902-03",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1908-09"
+  ],
+  "na": 4,
+  "nb": 1,
+  "sa": [
+   "1902-12-06"
+  ],
+  "sb": [
+   "1902-12-06"
+  ]
+ },
+ {
+  "a": "a0a7ed0b-34f6-4769-811b-d25d25c0a81c",
+  "b": "19dc140d-4d97-4a81-8942-51cf0c051724",
+  "name": "Покровскій, Сергѣй Алексѣевичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "Administrators"
+  ],
+  "tb": [
+   "Administrators"
+  ],
+  "ra": [
+   "1904-05",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1908-09"
+  ],
+  "na": 3,
+  "nb": 1,
+  "sa": [
+   "1904-03-19"
+  ],
+  "sb": [
+   "1902-12-09"
+  ]
+ },
+ {
+  "a": "76d1b9b2-c5dc-4bb2-b6b1-25dbcc2167e5",
+  "b": "de05ca3f-ed22-45d2-8ba6-724a97ad61c5",
+  "name": "Преображенская, Ольга Іосифовна",
+  "cls": "CHECK (gap/type/city differ)",
+  "ta": [
+   "BalletArtists",
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1890-91",
+   "1909-10"
+  ],
+  "rb": [
+   "1908-09",
+   "1908-09"
+  ],
+  "na": 20,
+  "nb": 1,
+  "sa": [
+   "1889-06-01",
+   "1901-05-01"
+  ],
+  "sb": [
+   "1899-06-01"
+  ]
+ },
+ {
+  "a": "87c04647-edbe-41fb-8477-a44036f6e4c4",
+  "b": "5d6d24e5-4e70-4ac1-97d8-86ffcb10a542",
+  "name": "Рыхлякова, Варвара Трофимовна",
+  "cls": "CHECK (gap/type/city differ)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1907-08"
+  ],
+  "rb": [
+   "1909-10",
+   "1909-10"
+  ],
+  "na": 17,
+  "nb": 1,
+  "sa": [
+   "1890-06-01"
+  ],
+  "sb": [
+   "1907-11-01"
+  ]
+ },
+ {
+  "a": "d5f8387c-67c0-4035-be6b-833903795329",
+  "b": "3aa7d7af-d14d-4f01-bea0-9f961290e7ef",
+  "name": "Ивановъ 1-й, Иванъ Григорьевичъ",
+  "cls": "PROBABLE (gap 1 seasons)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1890-91",
+   "1906-07"
+  ],
+  "rb": [
+   "1908-09",
+   "1908-09"
+  ],
+  "na": 15,
+  "nb": 1,
+  "sa": [
+   "1886-06-01"
+  ],
+  "sb": [
+   "1899-06-01"
+  ]
+ },
+ {
+  "a": "32d4e149-46a5-4dd3-9dfd-9b484fdf618b",
+  "b": "7cb6e597-3f70-4fcb-a6df-f7215e930c04",
+  "name": "Смирновъ, Александръ Митрофановичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists",
+   "Graduates"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1890-91",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1908-09"
+  ],
+  "na": 18,
+  "nb": 1,
+  "sa": [
+   "1891-09-01"
+  ],
+  "sb": [
+   "1897-09-01"
+  ]
+ },
+ {
+  "a": "2b8ab086-9b73-4b96-ad21-f07a93f94b64",
+  "b": "0171d698-002a-46df-bc09-412040cf392a",
+  "name": "Боткина, Варвара Ивановна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1895-96",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 13,
+  "nb": 2,
+  "sa": [
+   "1895-09-01"
+  ],
+  "sb": [
+   "1905-09-01"
+  ]
+ },
+ {
+  "a": "85d4e851-d864-4bd8-8862-85141588f84b",
+  "b": "128bac7f-8b54-4ad4-ad5e-e5a75e6140ff",
+  "name": "Ефимовъ, Семенъ Михайловичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1896-97",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 12,
+  "nb": 2,
+  "sa": [
+   "1896-09-01"
+  ],
+  "sb": [
+   "1903-09-01"
+  ]
+ },
+ {
+  "a": "6d97a172-0307-4ef0-a006-81e105bbd6fe",
+  "b": "ed66b326-de8f-4baa-822f-177c0b52c36a",
+  "name": "Тихоміровъ, Василій Дмитріевичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists",
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "BalletArtists",
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1897-98",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 19,
+  "nb": 5,
+  "sa": [
+   "1893-09-01",
+   "1896-10-01"
+  ],
+  "sb": [
+   "1893-09-01",
+   "1896-10-01"
+  ]
+ },
+ {
+  "a": "80b10571-ee49-4b87-b4de-49af0cd2fc4f",
+  "b": "359da8a6-cdad-4811-b2d7-d824733ad7d9",
+  "name": "Пономаревъ, Сергѣй Ивановичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1901-02",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 11,
+  "nb": 2,
+  "sa": [
+   "1901-06-01",
+   "1904-10-09"
+  ],
+  "sb": [
+   "1901-06-01"
+  ]
+ },
+ {
+  "a": "e9f1d090-6261-4349-8d71-e3d64a87a48a",
+  "b": "5bb09b5c-5dc6-4d0d-a17f-d2bbca3f0864",
+  "name": "Бурина 2-я, Марія Александровна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1902-03",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 6,
+  "nb": 2,
+  "sa": [
+   "1901-09-01"
+  ],
+  "sb": [
+   "1903-09-01"
+  ]
+ },
+ {
+  "a": "1b58e5f9-ed5d-4d56-a078-5db5ebac172f",
+  "b": "bd673ae2-3cb8-4a31-9889-3b6131a2994a",
+  "name": "Карцевъ, Александръ Викторовичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1902-03",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 6,
+  "nb": 2,
+  "sa": [
+   "1901-09-01"
+  ],
+  "sb": [
+   "1903-09-01"
+  ]
+ },
+ {
+  "a": "a9ada536-1865-419b-b294-01c5d9523b47",
+  "b": "006a772b-46bf-44d5-a314-772253a247e4",
+  "name": "Грекова 2-я, Елена Александровна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1903-04",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 5,
+  "nb": 2,
+  "sa": [
+   "1901-09-01"
+  ],
+  "sb": [
+   "1902-09-01"
+  ]
+ },
+ {
+  "a": "9c6ccd00-f7e3-4ced-808c-70e9242290f1",
+  "b": "ead695bf-f586-4d97-8d88-8f6d59f03b55",
+  "name": "Печатниковъ, Николай Александровичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1903-04",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 4,
+  "nb": 2,
+  "sa": [
+   "1897-09-01"
+  ],
+  "sb": [
+   "1897-06-01"
+  ]
+ },
+ {
+  "a": "02818368-75fc-4021-a804-9481bf70a9bb",
+  "b": "455f57c9-8482-4fba-98b7-e98a5e69635e",
+  "name": "Барашъ, Людмила Павловна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1904-05",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 4,
+  "nb": 2,
+  "sa": [
+   "1905-06-01"
+  ],
+  "sb": [
+   "1903-05-23"
+  ]
+ },
+ {
+  "a": "379ae695-65e9-4e29-8511-545cbaa3e99f",
+  "b": "bb1b60fd-06b4-4c38-98c4-08230adfa657",
+  "name": "Болдырева, Елизавета Николаевна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1904-05",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 4,
+  "nb": 2,
+  "sa": [
+   "1904-06-01"
+  ],
+  "sb": [
+   "1902-03-29"
+  ]
+ },
+ {
+  "a": "80462c28-e543-4ed1-9370-de8d0f644744",
+  "b": "5ad6f1a5-7b76-48ef-8d2c-06794cd98d6b",
+  "name": "Вельсъ, Елизавета Константиновна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1904-05",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1908-09"
+  ],
+  "na": 4,
+  "nb": 1,
+  "sa": [
+   "1905-06-01"
+  ],
+  "sb": [
+   "1902-09-03"
+  ]
+ },
+ {
+  "a": "6fba4b64-7017-4ad2-b7d8-420ceccce1bd",
+  "b": "13d1cd90-9a6c-45e7-bc3b-8d880747f771",
+  "name": "Горшкова, Марія Николаевна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1904-05",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 4,
+  "nb": 2,
+  "sa": [
+   "1905-06-01"
+  ],
+  "sb": [
+   "1903-05-22"
+  ]
+ },
+ {
+  "a": "54e8bffe-2a8a-443f-aa8d-cdf254f5fe7a",
+  "b": "dd52d410-ad25-4b4c-9b88-c6209c7bb16c",
+  "name": "Константинова, Александра Петровна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1904-05",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 4,
+  "nb": 2,
+  "sa": [
+   "1905-06-01"
+  ],
+  "sb": [
+   "1903-05-07"
+  ]
+ },
+ {
+  "a": "0225d1c2-8172-4d8f-a73b-63afbe1a1720",
+  "b": "87d79b83-7e15-4345-b822-8d97dc032677",
+  "name": "Лушкина, Евгенія Михайловна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1904-05",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 4,
+  "nb": 2,
+  "sa": [
+   "1904-06-01"
+  ],
+  "sb": [
+   "1902-12-17"
+  ]
+ },
+ {
+  "a": "c21841f0-5f08-4795-8770-cc3bc22d6720",
+  "b": "df48c850-e634-4544-b68e-33fe0b8797d1",
+  "name": "Мацкевичъ, Раиса Васильевна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1904-05",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 4,
+  "nb": 2,
+  "sa": [
+   "1904-06-01",
+   "1905-06-01"
+  ],
+  "sb": [
+   "1903-06-01",
+   "1903-06-07"
+  ]
+ },
+ {
+  "a": "34a0e13e-6702-43b1-b7c3-ab87da703c85",
+  "b": "9a352542-f75a-494c-8bfd-0c73d58f3a75",
+  "name": "Карпова, Лидія Владиміровна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1905-06",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 3,
+  "nb": 2,
+  "sa": [
+   "1904-06-01"
+  ],
+  "sb": [
+   "1902-12-09"
+  ]
+ },
+ {
+  "a": "a9a9fa39-46f6-407f-8c12-3e79d7b6f721",
+  "b": "a7d55da6-8658-458f-a9e4-1bbc5b5fdbd8",
+  "name": "Фокина, Вѣра Петровна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1905-06",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 3,
+  "nb": 2,
+  "sa": [
+   "1904-06-01"
+  ],
+  "sb": [
+   "1902-07-21"
+  ]
+ },
+ {
+  "a": "08a1a5e8-e977-4845-9ed2-e1552b5f1958",
+  "b": "4dcddd48-73c4-4034-9b9e-0aaead868338",
+  "name": "Итцигсонъ, Мейеръ-Гиршъ",
+  "cls": "OVERLAP (check: two men or two posts)",
+  "ta": [
+   "BalletArtists",
+   "Musicians"
+  ],
+  "tb": [
+   "Musicians"
+  ],
+  "ra": [
+   "1890-91",
+   "1906-07"
+  ],
+  "rb": [
+   "1891-92",
+   "1907-08"
+  ],
+  "na": 3,
+  "nb": 16,
+  "sa": [
+   "1882-08-01"
+  ],
+  "sb": [
+   "1882-08-01"
+  ]
+ },
+ {
+  "a": "66231e52-8b5e-4f7b-b03a-2f5abe9aaa91",
+  "b": "a16ef23a-5d75-45af-89aa-e3fd43dadf2c",
+  "name": "Мелковъ, Иванъ Николаевичъ",
+  "cls": "PROBABLE (gap 1 seasons)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1906-07",
+   "1906-07"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 1,
+  "nb": 2,
+  "sa": [
+   "1905-01-01"
+  ],
+  "sb": [
+   "1889-08-01"
+  ]
+ },
+ {
+  "a": "06d212af-4276-4997-866f-5ef5f6528050",
+  "b": "6d67b87d-79c8-45ec-a1b2-1bc4f9949574",
+  "name": "Гиммельманъ, Елена Николаевна",
+  "cls": "PROBABLE (gap 1 seasons)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1906-07",
+   "1906-07"
+  ],
+  "rb": [
+   "1908-09",
+   "1908-09"
+  ],
+  "na": 1,
+  "nb": 1,
+  "sa": [
+   "1905-06-01"
+  ],
+  "sb": [
+   "1903-07-21"
+  ]
+ },
+ {
+  "a": "5440b556-b1a8-4536-981a-f15e5420a143",
+  "b": "4affbbbf-77a7-40aa-9782-bb0c34122479",
+  "name": "Домерщикова, Анна Платоновна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1906-07",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1908-09"
+  ],
+  "na": 2,
+  "nb": 1,
+  "sa": [
+   "1906-06-01"
+  ],
+  "sb": [
+   "1904-03-24"
+  ]
+ },
+ {
+  "a": "c104edb0-ffcb-4297-b6aa-31bcc41e68b0",
+  "b": "1875559e-2d34-4fae-b466-80b61c2ea02b",
+  "name": "Кандина, Антонина Ивановна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1906-07",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 2,
+  "nb": 2,
+  "sa": [
+   "1906-06-01"
+  ],
+  "sb": [
+   "1905-02-28"
+  ]
+ },
+ {
+  "a": "503ddf02-4cb3-435d-8364-db90ecd7e43e",
+  "b": "8c0c7496-c3a0-4304-96cf-7e3892f40791",
+  "name": "Клечковская, Лидія Альбиновна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1906-07",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1908-09"
+  ],
+  "na": 2,
+  "nb": 1,
+  "sa": [
+   "1906-06-01"
+  ],
+  "sb": [
+   "1904-06-17"
+  ]
+ },
+ {
+  "a": "00a17339-2808-4ee9-8c57-207454c908ac",
+  "b": "90a8798a-0c30-4d45-aae5-b7b0196b2a8f",
+  "name": "Лукашевичъ, Вѣра Адольфовна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1906-07",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 2,
+  "nb": 2,
+  "sa": [
+   "1906-06-01"
+  ],
+  "sb": [
+   "1904-09-24"
+  ]
+ },
+ {
+  "a": "17d025a7-58b0-4f89-a791-17d017ab6443",
+  "b": "f3f78f17-099c-4ef0-8597-7142d0187d66",
+  "name": "Миронникова, Зинаида Александровна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1906-07",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1908-09"
+  ],
+  "na": 2,
+  "nb": 1,
+  "sa": [
+   "1906-06-01"
+  ],
+  "sb": [
+   "1904-09-29"
+  ]
+ },
+ {
+  "a": "351c7086-b55e-4ee6-a4c3-091974f03984",
+  "b": "c3bf10a4-b622-439e-80f5-a04b22b72a6c",
+  "name": "Муромская, Марія Николаевна",
+  "cls": "PROBABLE (gap 1 seasons)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1906-07",
+   "1906-07"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 1,
+  "nb": 2,
+  "sa": [
+   "1906-06-01"
+  ],
+  "sb": [
+   "1904-04-02"
+  ]
+ },
+ {
+  "a": "474e7114-0229-4566-bbde-ca67cd83ff17",
+  "b": "9a7935ab-bb3f-4a94-b269-d6c8bacf835f",
+  "name": "Смирнова, Елена Александровна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1906-07",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 2,
+  "nb": 2,
+  "sa": [
+   "1906-06-01"
+  ],
+  "sb": [
+   "1904-04-24"
+  ]
+ },
+ {
+  "a": "4b3578d0-0a66-41bb-b932-9e88d58c4576",
+  "b": "37773d64-9ccc-440e-a11e-ecf256d7ea67",
+  "name": "Шолларъ, Людмила Францевна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1906-07",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 2,
+  "nb": 2,
+  "sa": [
+   "1906-06-01"
+  ],
+  "sb": [
+   "1904-02-22"
+  ]
+ },
+ {
+  "a": "4db6d080-294c-4902-b6a3-908f7865acda",
+  "b": "601b15dc-0fbd-4b2e-83a0-f0fb40fbadd6",
+  "name": "Исаевъ, Николай Александровичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1906-07",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 2,
+  "nb": 2,
+  "sa": [
+   "1906-06-01"
+  ],
+  "sb": [
+   "1896-06-01"
+  ]
+ },
+ {
+  "a": "51f0ca0b-bf8d-4945-8b92-48f7f213c387",
+  "b": "63a0c49e-2d5f-4555-846b-e617e1cbde6d",
+  "name": "Власова, Ольга Николаевна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1907-08",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 1,
+  "nb": 2,
+  "sa": [
+   "1907-06-01"
+  ],
+  "sb": [
+   "1905-08-10"
+  ]
+ },
+ {
+  "a": "912241ef-8c17-40b7-accc-189dda9e1ed5",
+  "b": "780e32f8-d7f2-41fc-8529-c2ea71eb8b7f",
+  "name": "Николаидисъ, Ольга Константиновна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1907-08",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 1,
+  "nb": 2,
+  "sa": [
+   "1907-06-01"
+  ],
+  "sb": [
+   "1905-07-05"
+  ]
+ },
+ {
+  "a": "e62512a8-d809-455a-a8b3-56daf5a7ed9c",
+  "b": "a09b4424-2814-4330-9529-d326d5cd6f8e",
+  "name": "Соболева, Лидія Родіоновна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1907-08",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 1,
+  "nb": 2,
+  "sa": [
+   "1907-06-01"
+  ],
+  "sb": [
+   "1905-02-18"
+  ]
+ },
+ {
+  "a": "c55ba90e-329f-45fc-83f6-97fcd6a5d2ca",
+  "b": "6d83e824-06b1-4097-b49d-b0d44540e368",
+  "name": "Ширяева, Лидія Александровна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1907-08",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 1,
+  "nb": 2,
+  "sa": [
+   "1907-06-01"
+  ],
+  "sb": [
+   "1905-03-17"
+  ]
+ },
+ {
+  "a": "2304773b-a36f-4db4-8b6f-a149324253b5",
+  "b": "8acb78f9-0a9f-4f66-a1d2-11677a006615",
+  "name": "Марквардтъ, Августъ",
+  "cls": "OVERLAP (check: two men or two posts)",
+  "ta": [
+   "Musicians"
+  ],
+  "tb": [
+   "Musicians"
+  ],
+  "ra": [
+   "1890-91",
+   "1905-06"
+  ],
+  "rb": [
+   "1894-95",
+   "1902-03"
+  ],
+  "na": 22,
+  "nb": 8,
+  "sa": [
+   "1882-09-19",
+   "1884-08-15"
+  ],
+  "sb": [
+   "1882-09-19"
+  ]
+ },
+ {
+  "a": "1f684e73-32f3-41d9-996e-cbdec93b2f38",
+  "b": "f7565fcd-565d-4722-bdb5-9cf3f06e2c9c",
+  "name": "Каминскій",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "Musicians"
+  ],
+  "tb": [
+   "Musicians"
+  ],
+  "ra": [
+   "1890-91",
+   "1890-91"
+  ],
+  "rb": [
+   "1891-92",
+   "1892-93"
+  ],
+  "na": 1,
+  "nb": 2,
+  "sa": [],
+  "sb": []
+ },
+ {
+  "a": "738f181e-529c-4a0d-b512-93787a73d3e1",
+  "b": "b20a5e5d-3919-4f40-add7-4f3c45756168",
+  "name": "Никитинъ, Алексѣй Никитичъ",
+  "cls": "OVERLAP (check: two men or two posts)",
+  "ta": [
+   "Musicians"
+  ],
+  "tb": [
+   "Musicians"
+  ],
+  "ra": [
+   "1890-91",
+   "1900-01"
+  ],
+  "rb": [
+   "1898-99",
+   "1909-10"
+  ],
+  "na": 11,
+  "nb": 11,
+  "sa": [
+   "1881-09-01",
+   "1888-09-01"
+  ],
+  "sb": [
+   "1898-09-21",
+   "1898-09-23"
+  ]
+ },
+ {
+  "a": "b6648427-7c95-4962-93ef-b2a20e73fe95",
+  "b": "013f6497-73cf-4938-a7f7-0e6502e3f931",
+  "name": "Чиборъ, Петръ Францевичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "Musicians"
+  ],
+  "tb": [
+   "Musicians"
+  ],
+  "ra": [
+   "1897-98",
+   "1897-98"
+  ],
+  "rb": [
+   "1898-99",
+   "1909-10"
+  ],
+  "na": 1,
+  "nb": 12,
+  "sa": [],
+  "sb": [
+   "1897-10-01",
+   "1897-10-16"
+  ]
+ },
+ {
+  "a": "58db3249-1e73-4d49-afcb-a6d6daad2182",
+  "b": "00c2fa83-a20f-4361-a78c-356200088d7a",
+  "name": "Цыбинъ, Владиміръ Николаевичъ",
+  "cls": "CHECK (gap/type/city differ)",
+  "ta": [
+   "Musicians"
+  ],
+  "tb": [
+   "Musicians"
+  ],
+  "ra": [
+   "1900-01",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 8,
+  "nb": 2,
+  "sa": [
+   "1897-04-01"
+  ],
+  "sb": [
+   "1907-09-01"
+  ]
+ },
+ {
+  "a": "1c7f9e66-9fa3-460f-af9f-93f8d85591b7",
+  "b": "33ecbfff-9d3a-4e92-8d5b-7aa1186cf97e",
+  "name": "Завѣтновскій, Викторъ Александровичъ",
+  "cls": "CHECK (gap/type/city differ)",
+  "ta": [
+   "Musicians"
+  ],
+  "tb": [
+   "Musicians"
+  ],
+  "ra": [
+   "1901-02",
+   "1902-03"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 2,
+  "nb": 2,
+  "sa": [
+   "1901-09-01"
+  ],
+  "sb": [
+   "1904-10-15"
+  ]
+ },
+ {
+  "a": "019ed1f5-3a5f-467b-bade-5244fa3efefc",
+  "b": "ce64899a-b28a-4f53-9a6c-fb103ebe4e14",
+  "name": "Шнейдеръ, Карлъ Ѳедоровичъ",
+  "cls": "OVERLAP (check: two men or two posts)",
+  "ta": [
+   "Musicians"
+  ],
+  "tb": [
+   "Musicians"
+  ],
+  "ra": [
+   "1902-03",
+   "1909-10"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 9,
+  "nb": 2,
+  "sa": [
+   "1902-09-01"
+  ],
+  "sb": [
+   "1907-09-01"
+  ]
+ },
+ {
+  "a": "c7feb2ac-5579-435e-ad36-76d7f6ae0557",
+  "b": "8e36e0d1-e882-451c-b199-112ae1fb8148",
+  "name": "Александеръ, Михаилъ Николаевичъ",
+  "cls": "PROBABLE (gap 1 seasons)",
+  "ta": [
+   "Musicians"
+  ],
+  "tb": [
+   "Musicians"
+  ],
+  "ra": [
+   "1903-04",
+   "1907-08"
+  ],
+  "rb": [
+   "1909-10",
+   "1909-10"
+  ],
+  "na": 5,
+  "nb": 1,
+  "sa": [
+   "1903-09-01"
+  ],
+  "sb": [
+   "1909-09-01"
+  ]
+ },
+ {
+  "a": "4240d1c7-8ceb-4445-967f-70fe7f988eb2",
+  "b": "408708fb-bb6e-4a95-bd15-92ffacabae00",
+  "name": "Логиновъ, Сергѣй Андреевичъ",
+  "cls": "OVERLAP (check: two men or two posts)",
+  "ta": [
+   "Musicians"
+  ],
+  "tb": [
+   "Musicians"
+  ],
+  "ra": [
+   "1904-05",
+   "1905-06"
+  ],
+  "rb": [
+   "1905-06",
+   "1909-10"
+  ],
+  "na": 2,
+  "nb": 5,
+  "sa": [
+   "1894-09-01"
+  ],
+  "sb": [
+   "1904-09-01"
+  ]
+ },
+ {
+  "a": "4a763dd6-799f-4ee0-a0a9-e8ee38f3fbd9",
+  "b": "9a439fbc-0ce1-4a64-89a7-c14d04d27a81",
+  "name": "Мамонтовъ, Сергѣй Ивановичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "Musicians"
+  ],
+  "tb": [
+   "Musicians"
+  ],
+  "ra": [
+   "1906-07",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 2,
+  "nb": 2,
+  "sa": [
+   "1906-08-16"
+  ],
+  "sb": [
+   "1906-08-01"
+  ]
+ },
+ {
+  "a": "a78ebf22-d61c-4d7f-9f4b-8bef28c16fc0",
+  "b": "4aa4abdc-8f0b-416b-9307-321a48ef8206",
+  "name": "Сиборъ, Борисъ Іосифовичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "Musicians"
+  ],
+  "tb": [
+   "Musicians"
+  ],
+  "ra": [
+   "1906-07",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 2,
+  "nb": 2,
+  "sa": [
+   "1906-10-01"
+  ],
+  "sb": [
+   "1906-10-23"
+  ]
+ },
+ {
+  "a": "cef4a353-3276-45cf-a972-60d0ccadb644",
+  "b": "e97dc496-1f0b-4027-8f8e-a1010b0c8bc3",
+  "name": "Васильевъ, Василій Васильевичъ",
+  "cls": "CHECK (gap/type/city differ)",
+  "ta": [
+   "ProductionTeam"
+  ],
+  "tb": [
+   "ProductionTeam"
+  ],
+  "ra": [
+   "1890-91",
+   "1891-92"
+  ],
+  "rb": [
+   "1903-04",
+   "1907-08"
+  ],
+  "na": 2,
+  "nb": 5,
+  "sa": [
+   "1891-01-01"
+  ],
+  "sb": [
+   "1904-03-01"
+  ]
+ },
+ {
+  "a": "1e2f501d-f5ab-4348-b9aa-7584dcf73fb3",
+  "b": "683ff070-78fd-4c5b-bb21-3dfb5792f6ed",
+  "name": "Ширяевъ, Василій Петровичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "ProductionTeam"
+  ],
+  "tb": [
+   "ProductionTeam"
+  ],
+  "ra": [
+   "1890-91",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1908-09"
+  ],
+  "na": 18,
+  "nb": 1,
+  "sa": [
+   "1885-05-16"
+  ],
+  "sb": [
+   "1885-06-16"
+  ]
+ },
+ {
+  "a": "e5528287-22ba-41d3-aac1-5005785a84bf",
+  "b": "6401c7d4-1543-4010-812e-636ecc970c0e",
+  "name": "Петрова, Капитолина Васильевна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "ProductionTeam"
+  ],
+  "tb": [
+   "ProductionTeam"
+  ],
+  "ra": [
+   "1890-91",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 18,
+  "nb": 2,
+  "sa": [
+   "1889-07-01",
+   "1891-05-01"
+  ],
+  "sb": [
+   "1889-06-01"
+  ]
+ },
+ {
+  "a": "68fa762e-f321-4aaf-93f4-c8702ab08de1",
+  "b": "396ea16b-5f93-4c07-bca3-43dcdfbcca26",
+  "name": "Волконскій, Григорій Дмитріевичъ",
+  "cls": "CHECK (gap/type/city differ)",
+  "ta": [
+   "ProductionTeam",
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "ProductionTeam",
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1901-02"
+  ],
+  "rb": [
+   "1894-95",
+   "1900-01"
+  ],
+  "na": 10,
+  "nb": 4,
+  "sa": [
+   "1887-09-01",
+   "1888-09-01"
+  ],
+  "sb": [
+   "1887-09-01",
+   "1888-09-01"
+  ]
+ },
+ {
+  "a": "68fa762e-f321-4aaf-93f4-c8702ab08de1",
+  "b": "110f6d3f-a28f-4576-99a9-2b925edf7b6d",
+  "name": "Волконскій, Григорій Дмитріевичъ",
+  "cls": "OVERLAP (check: two men or two posts)",
+  "ta": [
+   "ProductionTeam",
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "ProductionTeam",
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1901-02"
+  ],
+  "rb": [
+   "1890-91",
+   "1895-96"
+  ],
+  "na": 10,
+  "nb": 3,
+  "sa": [
+   "1887-09-01",
+   "1888-09-01"
+  ],
+  "sb": [
+   "1887-09-01",
+   "1888-09-01"
+  ]
+ },
+ {
+  "a": "68fa762e-f321-4aaf-93f4-c8702ab08de1",
+  "b": "9327f4a8-5ead-4ae2-9a1b-74a0c96afc32",
+  "name": "Волконскій, Григорій Дмитріевичъ",
+  "cls": "OVERLAP (check: two men or two posts)",
+  "ta": [
+   "ProductionTeam",
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1901-02"
+  ],
+  "rb": [
+   "1891-92",
+   "1891-92"
+  ],
+  "na": 10,
+  "nb": 1,
+  "sa": [
+   "1887-09-01",
+   "1888-09-01"
+  ],
+  "sb": [
+   "1888-09-01"
+  ]
+ },
+ {
+  "a": "68fa762e-f321-4aaf-93f4-c8702ab08de1",
+  "b": "7735708c-f56b-4dd3-a18a-044a3f285619",
+  "name": "Волконскій, Григорій Дмитріевичъ",
+  "cls": "OVERLAP (check: two men or two posts)",
+  "ta": [
+   "ProductionTeam",
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1901-02"
+  ],
+  "rb": [
+   "1892-93",
+   "1893-94"
+  ],
+  "na": 10,
+  "nb": 2,
+  "sa": [
+   "1887-09-01",
+   "1888-09-01"
+  ],
+  "sb": [
+   "1888-09-01"
+  ]
+ },
+ {
+  "a": "396ea16b-5f93-4c07-bca3-43dcdfbcca26",
+  "b": "110f6d3f-a28f-4576-99a9-2b925edf7b6d",
+  "name": "Волконскій, Григорій Дмитріевичъ",
+  "cls": "OVERLAP (check: two men or two posts)",
+  "ta": [
+   "ProductionTeam",
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "ProductionTeam",
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1894-95",
+   "1900-01"
+  ],
+  "rb": [
+   "1890-91",
+   "1895-96"
+  ],
+  "na": 4,
+  "nb": 3,
+  "sa": [
+   "1887-09-01",
+   "1888-09-01"
+  ],
+  "sb": [
+   "1887-09-01",
+   "1888-09-01"
+  ]
+ },
+ {
+  "a": "396ea16b-5f93-4c07-bca3-43dcdfbcca26",
+  "b": "9327f4a8-5ead-4ae2-9a1b-74a0c96afc32",
+  "name": "Волконскій, Григорій Дмитріевичъ",
+  "cls": "PROBABLE (gap 2 seasons)",
+  "ta": [
+   "ProductionTeam",
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1894-95",
+   "1900-01"
+  ],
+  "rb": [
+   "1891-92",
+   "1891-92"
+  ],
+  "na": 4,
+  "nb": 1,
+  "sa": [
+   "1887-09-01",
+   "1888-09-01"
+  ],
+  "sb": [
+   "1888-09-01"
+  ]
+ },
+ {
+  "a": "396ea16b-5f93-4c07-bca3-43dcdfbcca26",
+  "b": "7735708c-f56b-4dd3-a18a-044a3f285619",
+  "name": "Волконскій, Григорій Дмитріевичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "ProductionTeam",
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1894-95",
+   "1900-01"
+  ],
+  "rb": [
+   "1892-93",
+   "1893-94"
+  ],
+  "na": 4,
+  "nb": 2,
+  "sa": [
+   "1887-09-01",
+   "1888-09-01"
+  ],
+  "sb": [
+   "1888-09-01"
+  ]
+ },
+ {
+  "a": "110f6d3f-a28f-4576-99a9-2b925edf7b6d",
+  "b": "9327f4a8-5ead-4ae2-9a1b-74a0c96afc32",
+  "name": "Волконскій, Григорій Дмитріевичъ",
+  "cls": "CHECK (gap/type/city differ)",
+  "ta": [
+   "ProductionTeam",
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1895-96"
+  ],
+  "rb": [
+   "1891-92",
+   "1891-92"
+  ],
+  "na": 3,
+  "nb": 1,
+  "sa": [
+   "1887-09-01",
+   "1888-09-01"
+  ],
+  "sb": [
+   "1888-09-01"
+  ]
+ },
+ {
+  "a": "110f6d3f-a28f-4576-99a9-2b925edf7b6d",
+  "b": "7735708c-f56b-4dd3-a18a-044a3f285619",
+  "name": "Волконскій, Григорій Дмитріевичъ",
+  "cls": "CHECK (gap/type/city differ)",
+  "ta": [
+   "ProductionTeam",
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1895-96"
+  ],
+  "rb": [
+   "1892-93",
+   "1893-94"
+  ],
+  "na": 3,
+  "nb": 2,
+  "sa": [
+   "1887-09-01",
+   "1888-09-01"
+  ],
+  "sb": [
+   "1888-09-01"
+  ]
+ },
+ {
+  "a": "9327f4a8-5ead-4ae2-9a1b-74a0c96afc32",
+  "b": "7735708c-f56b-4dd3-a18a-044a3f285619",
+  "name": "Волконскій, Григорій Дмитріевичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1891-92",
+   "1891-92"
+  ],
+  "rb": [
+   "1892-93",
+   "1893-94"
+  ],
+  "na": 1,
+  "nb": 2,
+  "sa": [
+   "1888-09-01"
+  ],
+  "sb": [
+   "1888-09-01"
+  ]
+ },
+ {
+  "a": "0c6de30f-d35b-40a1-9762-38841e3dcde2",
+  "b": "144a7166-6e2c-4447-b4d6-bfc92f0a438d",
+  "name": "Савурскій, Павлинъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "ProductionTeam"
+  ],
+  "tb": [
+   "ProductionTeam"
+  ],
+  "ra": [
+   "1900-01",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1908-09"
+  ],
+  "na": 8,
+  "nb": 1,
+  "sa": [
+   "1899-12-01"
+  ],
+  "sb": [
+   "1895-10-01"
+  ]
+ },
+ {
+  "a": "afaf2922-d6e9-4261-82aa-4b798647ba48",
+  "b": "a782cf9b-1a30-41ba-97c8-ff8c5b931f32",
+  "name": "Павловъ, Александръ Павловичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "ProductionTeam"
+  ],
+  "tb": [
+   "ProductionTeam"
+  ],
+  "ra": [
+   "1900-01",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 8,
+  "nb": 2,
+  "sa": [
+   "1888-09-01",
+   "1906-02-20"
+  ],
+  "sb": [
+   "1903-08-10"
+  ]
+ },
+ {
+  "a": "a3cff9ce-fd06-4fa6-9f45-b9599fa62902",
+  "b": "6bd43d3d-aaa6-4f77-8765-c2e9c90d4e7a",
+  "name": "Улановъ, Сергѣй Ивановичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "ProductionTeam"
+  ],
+  "tb": [
+   "ProductionTeam"
+  ],
+  "ra": [
+   "1902-03",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 6,
+  "nb": 2,
+  "sa": [
+   "1903-01-01"
+  ],
+  "sb": [
+   "1903-01-07"
+  ]
+ },
+ {
+  "a": "1c8c5c58-bf11-43d1-9f6b-433afea9ce23",
+  "b": "8df9a7be-f551-4d55-aaf2-8c50c9c2f6cc",
+  "name": "Гужинъ, Егоръ Викторовичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "ProductionTeam"
+  ],
+  "tb": [
+   "ProductionTeam"
+  ],
+  "ra": [
+   "1902-03",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 6,
+  "nb": 2,
+  "sa": [
+   "1898-11-01"
+  ],
+  "sb": [
+   "1888-06-20"
+  ]
+ },
+ {
+  "a": "04efb14d-861d-49a3-b756-51dba096036c",
+  "b": "21f1adc5-e6d7-4416-9c5b-a7239e4f4865",
+  "name": "Кучеровъ, Александръ Матвѣевичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "ProductionTeam"
+  ],
+  "tb": [
+   "ProductionTeam"
+  ],
+  "ra": [
+   "1905-06",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 3,
+  "nb": 2,
+  "sa": [
+   "1892-12-06"
+  ],
+  "sb": [
+   "1890-09-01"
+  ]
+ },
+ {
+  "a": "24f7fc76-8af7-4907-94c1-9e6200276db1",
+  "b": "2f34649f-0dea-4c93-aea8-71a29df24681",
+  "name": "Рюминъ, Иванъ Ивановичъ",
+  "cls": "OVERLAP (check: two men or two posts)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1899-00"
+  ],
+  "rb": [
+   "1899-00",
+   "1899-00"
+  ],
+  "na": 22,
+  "nb": 1,
+  "sa": [
+   "1887-05-27"
+  ],
+  "sb": [
+   "1887-05-27"
+  ]
+ },
+ {
+  "a": "8872b843-9606-411a-8104-5346721633a8",
+  "b": "b53a76a6-780e-403a-86d1-fa2290d382f3",
+  "name": "Потѣхинъ, Алексѣй Антиповичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1890-91"
+  ],
+  "rb": [
+   "1891-92",
+   "1906-07"
+  ],
+  "na": 1,
+  "nb": 16,
+  "sa": [],
+  "sb": [
+   "1903-09-01"
+  ]
+ },
+ {
+  "a": "8872b843-9606-411a-8104-5346721633a8",
+  "b": "0fd64ead-c7ed-48f4-bef3-042fcd01a273",
+  "name": "Потѣхинъ, Алексѣй Антиповичъ",
+  "cls": "CHECK (gap/type/city differ)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1890-91"
+  ],
+  "rb": [
+   "1907-08",
+   "1907-08"
+  ],
+  "na": 1,
+  "nb": 1,
+  "sa": [],
+  "sb": []
+ },
+ {
+  "a": "b53a76a6-780e-403a-86d1-fa2290d382f3",
+  "b": "0fd64ead-c7ed-48f4-bef3-042fcd01a273",
+  "name": "Потѣхинъ, Алексѣй Антиповичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1891-92",
+   "1906-07"
+  ],
+  "rb": [
+   "1907-08",
+   "1907-08"
+  ],
+  "na": 16,
+  "nb": 1,
+  "sa": [
+   "1903-09-01"
+  ],
+  "sb": []
+ },
+ {
+  "a": "527973b6-806f-4b5e-b465-d09ef4159ee7",
+  "b": "0aeaf916-f1e1-4d4a-b15d-1e8441ddc7a8",
+  "name": "Петровъ, Иванъ Степановичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 18,
+  "nb": 2,
+  "sa": [
+   "1891-09-01"
+  ],
+  "sb": [
+   "1907-11-15"
+  ]
+ },
+ {
+  "a": "0ef17fa2-6558-4e34-b05c-00eb8dba094a",
+  "b": "d42d9ec1-a541-4290-83c5-0d07460a53bc",
+  "name": "Добрынина, Елена Андреевна",
+  "cls": "CHECK (gap/type/city differ)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1899-00"
+  ],
+  "rb": [
+   "1896-97",
+   "1896-97"
+  ],
+  "na": 9,
+  "nb": 1,
+  "sa": [
+   "1884-04-01"
+  ],
+  "sb": []
+ },
+ {
+  "a": "a550acb8-08cc-4f8c-9022-2419ead0a9d1",
+  "b": "750b992c-4c68-4518-8514-a8f4d085d4b8",
+  "name": "Габріель",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1890-91"
+  ],
+  "rb": [
+   "1891-92",
+   "1891-92"
+  ],
+  "na": 1,
+  "nb": 1,
+  "sa": [
+   "1890-09-01"
+  ],
+  "sb": [
+   "1890-09-01"
+  ]
+ },
+ {
+  "a": "088ec9e8-51f6-4644-a2ff-d26b8830c930",
+  "b": "224c50bd-3431-4c49-9b13-c779cc6057c9",
+  "name": "Піотровичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1892-93"
+  ],
+  "rb": [
+   "1893-94",
+   "1893-94"
+  ],
+  "na": 3,
+  "nb": 1,
+  "sa": [
+   "1888-11-01"
+  ],
+  "sb": [
+   "1888-11-01"
+  ]
+ },
+ {
+  "a": "c58d2480-a3f3-4e6a-853b-ef2f1a3f1c1c",
+  "b": "2329054f-2a0b-4bf0-b502-a655dca96f81",
+  "name": "Боборыкинъ, Петръ Дмитріевичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 21,
+  "nb": 2,
+  "sa": [
+   "1903-09-01"
+  ],
+  "sb": []
+ },
+ {
+  "a": "33535269-1692-422d-9142-2a7a5e5e5ab0",
+  "b": "0c163341-df64-4d82-8490-9c39f01f4b23",
+  "name": "Черемухинъ, Михаилъ Никифоровичъ",
+  "cls": "OVERLAP (check: two men or two posts)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1900-01"
+  ],
+  "rb": [
+   "1890-91",
+   "1909-10"
+  ],
+  "na": 2,
+  "nb": 37,
+  "sa": [
+   "1887-09-06"
+  ],
+  "sb": [
+   "1887-09-06"
+  ]
+ },
+ {
+  "a": "33535269-1692-422d-9142-2a7a5e5e5ab0",
+  "b": "8fc18b47-8a90-489b-9b9c-e08c7b4cfdf7",
+  "name": "Черемухинъ, Михаилъ Никифоровичъ",
+  "cls": "CHECK (gap/type/city differ)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1900-01"
+  ],
+  "rb": [
+   "1909-10",
+   "1909-10"
+  ],
+  "na": 2,
+  "nb": 1,
+  "sa": [
+   "1887-09-06"
+  ],
+  "sb": []
+ },
+ {
+  "a": "0c163341-df64-4d82-8490-9c39f01f4b23",
+  "b": "8fc18b47-8a90-489b-9b9c-e08c7b4cfdf7",
+  "name": "Черемухинъ, Михаилъ Никифоровичъ",
+  "cls": "OVERLAP (check: two men or two posts)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1890-91",
+   "1909-10"
+  ],
+  "rb": [
+   "1909-10",
+   "1909-10"
+  ],
+  "na": 37,
+  "nb": 1,
+  "sa": [
+   "1887-09-06"
+  ],
+  "sb": []
+ },
+ {
+  "a": "6f5c3c9a-6931-407b-90ed-1799d6ab3e5d",
+  "b": "7029d5e7-ea81-445a-8bf1-884c8c112adf",
+  "name": "Гавронскій",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1894-95",
+   "1895-96"
+  ],
+  "rb": [
+   "1896-97",
+   "1902-03"
+  ],
+  "na": 2,
+  "nb": 7,
+  "sa": [
+   "1895-02-01"
+  ],
+  "sb": [
+   "1895-02-01"
+  ]
+ },
+ {
+  "a": "c11d621e-e82d-4330-bf73-a2773bef96b9",
+  "b": "e1cac873-da37-4e63-9b8e-f7432927ceca",
+  "name": "Петровъ, Василій Ивановичъ",
+  "cls": "OVERLAP (check: two men or two posts)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1894-95",
+   "1907-08"
+  ],
+  "rb": [
+   "1902-03",
+   "1902-03"
+  ],
+  "na": 17,
+  "nb": 1,
+  "sa": [
+   "1893-09-01",
+   "1894-09-01",
+   "1902-09-01"
+  ],
+  "sb": [
+   "1902-09-01"
+  ]
+ },
+ {
+  "a": "c11d621e-e82d-4330-bf73-a2773bef96b9",
+  "b": "50a743ef-c063-4206-9ddb-f774efb998d0",
+  "name": "Петровъ, Василій Ивановичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1894-95",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 17,
+  "nb": 2,
+  "sa": [
+   "1893-09-01",
+   "1894-09-01",
+   "1902-09-01"
+  ],
+  "sb": [
+   "1902-09-01"
+  ]
+ },
+ {
+  "a": "e1cac873-da37-4e63-9b8e-f7432927ceca",
+  "b": "50a743ef-c063-4206-9ddb-f774efb998d0",
+  "name": "Петровъ, Василій Ивановичъ",
+  "cls": "CHECK (gap/type/city differ)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1902-03",
+   "1902-03"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 1,
+  "nb": 2,
+  "sa": [
+   "1902-09-01"
+  ],
+  "sb": [
+   "1902-09-01"
+  ]
+ },
+ {
+  "a": "3e22b923-cece-4c2e-9ffb-d221f52f366e",
+  "b": "3732cd5a-f05f-4eb9-bd21-771fb8bca288",
+  "name": "Жукова, Вѣра Васильевна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "TheaterSchoolStaff"
+  ],
+  "tb": [
+   "TheaterSchoolStaff"
+  ],
+  "ra": [
+   "1901-02",
+   "1907-08"
+  ],
+  "rb": [
+   "1908-09",
+   "1909-10"
+  ],
+  "na": 7,
+  "nb": 2,
+  "sa": [
+   "1901-09-01"
+  ],
+  "sb": [
+   "1901-09-01"
+  ]
+ },
+ {
+  "a": "8a33d0a9-bd65-4826-bd2d-5a8a124e9483",
+  "b": "1c2498b7-7ff3-4851-a98c-4afb481fb2a3",
+  "name": "Васильева, Анна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "Graduates"
+  ],
+  "tb": [
+   "Graduates"
+  ],
+  "ra": [
+   "1891-92",
+   "1891-92"
+  ],
+  "rb": [
+   "1892-93",
+   "1892-93"
+  ],
+  "na": 1,
+  "nb": 1,
+  "sa": [
+   "1892-06-01"
+  ],
+  "sb": [
+   "1893-06-01"
+  ]
+ },
+ {
+  "a": "202592fd-a280-47b9-9762-b2cfc0e9d6f9",
+  "b": "38054049-7c76-4cec-ba6e-2cf41dac9a7f",
+  "name": "Ильина, Елена",
+  "cls": "PROBABLE (gap 1 seasons)",
+  "ta": [
+   "Graduates"
+  ],
+  "tb": [
+   "Graduates"
+  ],
+  "ra": [
+   "1891-92",
+   "1891-92"
+  ],
+  "rb": [
+   "1893-94",
+   "1893-94"
+  ],
+  "na": 1,
+  "nb": 1,
+  "sa": [
+   "1892-06-01"
+  ],
+  "sb": [
+   "1894-06-01"
+  ]
+ },
+ {
+  "a": "bc2889d6-3ebb-499e-9c62-b9d852c0933d",
+  "b": "4c598c64-5cc9-4f26-bd8f-7dc04040d638",
+  "name": "Новикова, Екатерина",
+  "cls": "CHECK (gap/type/city differ)",
+  "ta": [
+   "Graduates"
+  ],
+  "tb": [
+   "Graduates"
+  ],
+  "ra": [
+   "1891-92",
+   "1891-92"
+  ],
+  "rb": [
+   "1899-00",
+   "1899-00"
+  ],
+  "na": 1,
+  "nb": 1,
+  "sa": [
+   "1892-09-01"
+  ],
+  "sb": []
+ },
+ {
+  "a": "b5b55e1f-6cdd-4b96-80d7-fecdcd51c254",
+  "b": "063fb283-b1d3-422c-9b41-b505e4eb96b2",
+  "name": "Симонова, Антонина",
+  "cls": "PROBABLE (gap 3 seasons)",
+  "ta": [
+   "Graduates"
+  ],
+  "tb": [
+   "Graduates"
+  ],
+  "ra": [
+   "1893-94",
+   "1893-94"
+  ],
+  "rb": [
+   "1897-98",
+   "1897-98"
+  ],
+  "na": 1,
+  "nb": 1,
+  "sa": [
+   "1894-09-01"
+  ],
+  "sb": [
+   "1898-05-01"
+  ]
+ },
+ {
+  "a": "15df6aca-dd78-4dfe-9c7b-7d25da8d905a",
+  "b": "b44347e2-fe80-4aeb-89e6-ee1d25be4703",
+  "name": "Добролюбова, Марія Сергѣевна",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "BalletArtists"
+  ],
+  "tb": [
+   "BalletArtists"
+  ],
+  "ra": [
+   "1908-09",
+   "1908-09"
+  ],
+  "rb": [
+   "1909-10",
+   "1909-10"
+  ],
+  "na": 1,
+  "nb": 1,
+  "sa": [
+   "1909-06-01"
+  ],
+  "sb": [
+   "1906-01-21"
+  ]
+ },
+ {
+  "a": "4faa819a-43b7-424a-929a-2cbe7648c30e",
+  "b": "c2519764-b3f7-47d0-8ca2-f0dc2ce725f0",
+  "name": "Гейкблюмъ, Борисъ Іосифовичъ",
+  "cls": "LIKELY SAME (adjacent seasons, same list/city)",
+  "ta": [
+   "ProductionTeam"
+  ],
+  "tb": [
+   "ProductionTeam"
+  ],
+  "ra": [
+   "1908-09",
+   "1908-09"
+  ],
+  "rb": [
+   "1909-10",
+   "1909-10"
+  ],
+  "na": 1,
+  "nb": 1,
+  "sa": [
+   "1896-06-01"
+  ],
+  "sb": [
+   "1898-06-01"
+  ]
+ }
+]
