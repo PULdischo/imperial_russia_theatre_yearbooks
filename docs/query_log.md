@@ -12668,6 +12668,19 @@ from analysis.event_entry e where e.season = ? and e.city = 'Moscow' and e.event
 Result: 3 performances, all Большой, all sole items, and all scan-confirmed as printed. "Карменъ, бал." on 28 Jan 1907, matinee, 971.01 р. (1906-07 p029); "Карменъ, бал." on 16 Sep 1907, matinee, 736.51 р. (1907-08 p003); "Карменъ, др." on 23 Sep 1908, evening, 3013.43 р. (1908-09 p006). Stats-page cross-check: see the counts printed alongside; season_stats_comparison.md has 1906-07 Moscow Repertoire 51 vs stats 49 ballet (Repertoire has more), and 1907-08 Moscow 47 vs 48 (= stats once Коппелія "оп." counts as ballet).
 Counts printed: 1906-07 Moscow 51 sessions with a бал.-genre work (1 is Карменъ); 1907-08 Moscow 46 (1 is Карменъ). The 1907-08 total here (46) does not reproduce season_stats_comparison.md's 47 (its counting rule differs), so the stats-page evidence on Карменъ is inconclusive.
 
+## 2026-10-05 — Карменъ "бал." at the Большой vs the Season Reviews (RG: is there a review that helps?)
+
+```sql
+select coalesce(dc.corrected_date_undate, e.date_undate), e.time_of_day, e.theater_canonical,
+       (select string_agg(p.performance_title || coalesce(', ' || p.genre, ''), ' | ' order by p.performance_order)
+          from raw.event_entry_performance p where p.event_id = e.event_id)
+from analysis.event_entry e left join analysis.event_entry_date_check dc using (event_id)
+where coalesce(dc.corrected_date_undate, e.date_undate) = ? and e.theater_canonical = 'Большой';
+-- for 1907-09-16, 1907-09-30, 1907-10-24, 1908-01-06, 1907-01-28
+```
+
+Result: "Карменъ" appears in neither the 1906-07 nor the 1907-08 Moscow ballet review. The 1907-08 review (scan-checked, folio 154) gives «Жизель» on "1907 г. сентября 16-го, 30-го, октября 24-го; 1908 г. января 6-го", with an Études divertissement. The Repertoire has "Жизель, бал. | Дивертиссементъ" on 30 Sep, 24 Oct and 6 Jan (evening), but on 16 Sep it has matinee "Карменъ, бал." and evening "Конекъ-Горбунокъ, бал." (no Жизель). 1907-01-28: matinee "Карменъ, бал.", evening "Тщетная предосторожность | Арлекинада". The 1906-07 review doesn't mention 28 Jan, and its Жизель revival was 18 Feb 1907, after that date.
+
 ## 2026-10-05 — Итцигсонъ, Цыбинъ, Завѣтновскій (check/overlap class of the duplicate pairs): timelines and verification
 
 ```sql

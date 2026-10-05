@@ -22104,3 +22104,16 @@ column, has 3 transcription errors (NOT fixed yet, RG to schedule):**
    excerpt marker is lost, so it looks like a full performance).
 3. The 25th's banner is transcribed "по-печения"; the print has "попеченія" (line-break
    hyphen; і).
+
+### repertoire_1905-06_p034 raw fix APPLIED (2026-10-05) + step-4 follow-ups C / Сельская честь / Карменъ "др."
+
+- **Raw fix, scan-confirmed (RG: "do this").** The 3 Маріинскій edits are applied to outputs/full_run/raw (field-level, on the current file):
+  - the bill moved from 25 to 26 Feb 1906;
+  - "4-е д. оп. Фаворитка" on 3 Mar;
+  - the banner corrected to "попеченія".
+
+  Re-parse diff: only event_entry s003 and the s003/s004/s009 performances changed; validation errors are unchanged (254 pre-existing). Full chain rebuilt (build_duckdb → validate_performance_dates → build_entities → build_research_model → build_datasette).
+- **RG agreed (2026-10-05)**, added to work_artform_overrides.csv: Сельская честь "бал." → opera; Карменъ "др." (1908) → opera; "опер." = оперетта for the drama-theatre curtain-raisers (Не бывать-бы счастью, Макаръ Алексѣевичъ Губкинъ, Русскія пѣсни въ лицахъ, Парики, Званый вечеръ съ итальянцами). Угнетенная невинность "опер." and Соломенная шляпка "оп.-вод." are merged with their usual spoken form. Works 3150 → 3140.
+- **Карменъ "бал." matinees stay as printed (RG).** The 1907-08 Moscow review (scan-checked, folio 154) lists Жизель on 16 Sep 1907, the day the Repertoire prints a "Карменъ, бал." matinee. That points to a Repertoire printing error that day. The 28 Jan 1907 matinee is unexplained.
+- **Млада (RG, 2026-10-05):** probably the same work or elements of it. No official decision; later, examine venues, seasons and the Season Reviews.
+- **Found, not yet applied:** compound genre suffixes (", ком.-вод.", ", драмат. легенда.") are not stripped from titles, leaving ~29 duplicate works. Exclude the fused titles ("…, ком. Тяжба", "…, прологъ. Псковитянка") and "Женихъ, соверш. невѣр. событіе" (probably Женитьба misread or misprinted: scan check first).
