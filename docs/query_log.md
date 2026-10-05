@@ -12521,3 +12521,16 @@ from entities.work_id_crosswalk x join entities.work w on w.work_id = x.new_work
 ```
 
 Result: works go 3657 → 3550; 107 work_ids retire into 3550 surviving ones (0 new ids, so every non-merged work keeps its id); 340 performances move; excerpt links unchanged at 179. Genre-split titles go 321 → 324 (variants that now group together); cross-language stays 2 (unchanged). Every merge is within one genre fold. Full list: docs/eval/work_consolidation_step1_merges.csv.
+
+## 2026-10-05 — Легат* surname spellings by list/season/person (BalletArtists "Легать" check)
+
+```sql
+SELECT e.entity_type, e.family_name, e.first_name, count(*), min(sp.season), max(sp.season)
+FROM raw.person_entry e JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE e.family_name LIKE 'Легат%' OR e.family_name LIKE 'Легать%' GROUP BY 1,2,3 ORDER BY 1,2,3;
+-- then per-row listing (season, page_id, entry_id, list_number, family_name, first_name) for the 42 'Легать%' rows,
+-- the persons holding Легат* entries (entities.person_link JOIN raw.person_entry), and after the fix:
+SELECT entity_type, family_name, count(*) FROM raw.person_entry WHERE family_name LIKE 'Легат%' OR family_name LIKE 'Легать%' GROUP BY 1,2 ORDER BY 1,2;
+```
+
+Result: before: 42 rows 'Легать*' (41 BalletArtists, 1 Graduates) vs 40 'Легатъ*'. After the 47-edit correction: only one 'Легать 2-я' (1890-91 SP p003 no. 64, genuine print) remains; BalletArtists 'Легатъ' 33, 'Легатъ 1-й' 11, '1-я' 7, '2-й' 9, '2-я' 6, '3-й' 6, '3-я' 1; Graduates 3; TheaterSchoolStaff 3+7+7. Live persons 3226, tombstones 2350 (unchanged).
