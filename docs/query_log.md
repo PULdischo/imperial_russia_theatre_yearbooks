@@ -12307,3 +12307,13 @@ WHERE left(cast(l.person_id as varchar),6) IN ('24f7fc','2f3464') ORDER BY 1,2;
 Result: 24 entries, 1890-91..1899-00: 'Управляющій Училищемъ' (съ 27 мая 1887) + 'Почетные члены конференціи' lines; 2f3464 = only the 1899-00 manager line with '† 2 сентября 1899 г.'. After merge: live 3244 -> 3243, 0 orphans, 0 shift blocks, flags 546.
 
 Correction to the entry above: the merged Рюминъ person has 23 entries (the "24" was a miscount; the listing printed 23 rows).
+
+## 2026-10-05 — Добрынина Елена Андреевна (TSS): entries of 0ef17f and d42d9e, then merge verification
+
+```sql
+SELECT sp.season, right(l.entry_id,10), right(e.heading_path,34), e.tenure_note_text, left(cast(l.person_id as varchar),6)
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('0ef17f','d42d9e') ORDER BY 1,2;
+```
+
+Result: 10 entries, 'Классныя дамы', one per season 1890-91..1899-00, start 'съ 1 апрѣля 1884' (1896-97 prints 'съ апрѣля 1884', on d42d9e), '† 27 октября 1899' in 1899-00. After merge: live 3243 -> 3242, 0 orphans, 0 shift blocks, flags 546.

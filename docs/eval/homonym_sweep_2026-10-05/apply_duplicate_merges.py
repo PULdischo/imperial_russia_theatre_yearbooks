@@ -8,7 +8,7 @@ REAL = 'outputs/full_run/imperial_theaters.duckdb'
 DB = REAL if '--write' in sys.argv else '/tmp/dupmerge_dry.duckdb'
 if DB != REAL: shutil.copy2(REAL, DB)
 con = duckdb.connect(DB)
-APPLIED = {'68fa76', '0c1633', 'c11d62', 'b53a76'}   # survivors of merges already applied to production (skipped on re-run)
+APPLIED = {'68fa76', '0c1633', 'c11d62', 'b53a76', '24f7fc'}   # survivors of merges already applied to production (skipped on re-run)
 MERGES = [  # (survivor prefix, [loser prefixes], label, reason)
     ('68fa76', ['110f6d', '396ea1', '9327f4', '773570'], 'Волконскій Григорій Дмитріевичъ (князь)',
      'RG-approved 2026-10-05, labelled UNCERTAIN: lighting chief (ProductionTeam, since 1887-09-01, left 1898-09-01) and geography teacher in the ballet department of the Petersburg school (TheaterSchoolStaff, since 1888-09-01, left 1901-09-01); same name, rank, 20 entries, one line per list per year; the pairing of the two posts is unusual -- see uncertain_person_identities.md'),
@@ -20,6 +20,8 @@ MERGES = [  # (survivor prefix, [loser prefixes], label, reason)
      'RG-approved 2026-10-05: honorary member of the school conference, one line every season 1890-91..1907-08, no overlap'),
     ('24f7fc', ['2f3464'], 'Рюминъ Иванъ Ивановичъ',
      'RG-approved 2026-10-05: manager of the Petersburg school from 27 May 1887, died 2 Sept 1899; the 1899-00 manager line carrying the death note was on a separate record'),
+    ('0ef17f', ['d42d9e'], 'Добрынина Елена Андреевна',
+     'RG-approved 2026-10-05: class lady (Классныя дамы) since 1 April 1884, one line per season 1890-91..1899-00, died 27 Oct 1899; the 1896-97 line printed the start date without the day ("съ апрѣля 1884"), so it had its own record'),
 ]
 def full(p):
     r = con.execute("select person_id from entities.person where cast(person_id as varchar) like ? and superseded_by_person_id is null", [p + '%']).fetchall()

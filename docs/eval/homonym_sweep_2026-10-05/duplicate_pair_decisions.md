@@ -7,3 +7,4 @@
 | 2026-10-05 | Петровъ Василій Ивановичъ | c11d62, e1cac8, 50a743 -> c11d62 | MERGED (RG: "Merge all three"); not uncertain | teacher of Выразительное чтеніе (ballet, 1894-1905) and Практика драматическаго искусства (drama courses, since 1 сентября 1902); 20 entries 1894-95..1909-10 |
 | 2026-10-05 | Потѣхинъ Алексѣй Антиповичъ | b53a76, 8872b8, 0fd64e -> b53a76 | MERGED (RG: "Merge all three"); not uncertain | honorary member of the school conference, one line every season 1890-91..1907-08; 18 entries |
 | 2026-10-05 | Рюминъ Иванъ Ивановичъ | 2f3464 -> 24f7fc | MERGED (RG); not uncertain | manager of the Petersburg school since 27 May 1887, died 2 Sept 1899; 23 entries 1890-91..1899-00 |
+| 2026-10-05 | Добрынина Елена Андреевна | d42d9e -> 0ef17f | MERGED (RG); not uncertain | class lady since 1 April 1884, 10 entries 1890-91..1899-00, died 27 Oct 1899; the 1896-97 line had the day missing from the start date |
