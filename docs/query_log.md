@@ -12339,3 +12339,5 @@ WHERE e.entity_type='TheaterSchoolStaff' AND e.family_name LIKE 'Петров%' 
 ```
 
 Result: 19 tutor entries 1890-91..1907-08 (Воспитатели, since 1 сентября 1891) and 2 'Учителя приготовительныхъ классовъ' entries 1908-09, 1909-10 (since 15 ноября 1907); no Петровъ Иванъ among 1908-10 Воспитатели. After merge: live 3242 -> 3241, 0 orphans, 0 shift blocks, flags 546.
+
+Correction to the Петровъ Иванъ Степановичъ entry above: 18 tutor entries (1890-91..1907-08), 20 in total after the merge; "19" was a miscount.
