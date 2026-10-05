@@ -13,6 +13,10 @@ up (see docs/eval/known_issues.md):
 - arithmetic inconsistency between category-total credits and their stated sum
 - duplicate rows (possible double-extraction)
 - inconsistent verbatim spelling of the same theater within one page
+- (roster lists with a school/city top level) a season whose per-segment row
+  count is far from every other season's, a page that falls back into a
+  segment or section that already ended -- the carry-forward errors a
+  page-local check cannot see (issue #134, 1898-99)
 
 None of these prove an error on their own -- a page can legitimately have no
 dark cells, or credit categories can legitimately not sum to the total if the
@@ -127,6 +131,150 @@ def check_roster(parsed_dir: Path) -> list[dict]:
                 pass  # non-numeric count -- a different problem, not this check's job
             block_components = []
 
+    return flags
+
+
+#: Roster entity types whose heading_path starts with a stable TOP-LEVEL segment
+#: (a school for TheaterSchoolStaff, a city for ProductionTeam) followed by
+#: sections, and whose lists run through the season's pages in print order
+#: (top segment 1 first, then top segment 2). The three checks below use only
+#: the stored rows, no scan, and exist because of a real error that every
+#: page-local check missed (docs/eval/known_issues.md, issue #134, 2026-10-05):
+#: theaterschoolstaff_1898-99 p003+p004 (48 rows) were stored under the
+#: Petersburg school although they are the CONTINUATION of the Moscow list --
+#: a continuation page prints no heading naming its school, so nothing on the
+#: page itself shows the mistake. Symptom in the data: 11 Moscow rows in that
+#: season against ~60 in every other.
+TOP_SEGMENT_TYPES = ("theaterschoolstaff", "productionteam")
+_PAGE_RE = re.compile(r"^(?P<kind>[a-z]+)_(?P<season>\d{4}-\d{2})_p(?P<n>\d+)$")
+
+
+def _segment_key(seg: str) -> str:
+    """Spelling-insensitive key for a top-level segment: 'Императорское Московское
+    Театральное Училище' and 'МОСКВА' both -> 'moscow'; the Petersburg spellings
+    (with or without 'Императорское') -> 'petersburg'."""
+    t = re.sub(r"[^а-яѣіѳa-z]", "", (seg or "").lower())
+    if "москв" in t or "московск" in t:
+        return "moscow"
+    if "петербург" in t:
+        return "petersburg"
+    return t.replace("императорское", "")
+
+
+def _top_segment_rows(parsed_dir: Path):
+    """{(kind, season): [(page_n, page_id, segment_key, section_path), ...]}"""
+    out = defaultdict(list)
+    for e in load(parsed_dir / "person_entry.csv"):
+        m = _PAGE_RE.match(e["page_id"])
+        if not m or m["kind"] not in TOP_SEGMENT_TYPES:
+            continue
+        top, _, rest = (e.get("heading_path") or "").partition(" / ")
+        if not top:
+            continue
+        out[(m["kind"], m["season"])].append((int(m["n"]), e["page_id"], _segment_key(top), rest))
+    return out
+
+
+def check_top_segment_rowcount(parsed_dir: Path, low: float = 0.4, high: float = 2.5,
+                               min_median: int = 15) -> list[dict]:
+    """Per (list, top-level segment): a season whose row count is far from the
+    median of the other seasons (or that lacks the segment altogether when
+    most seasons have it). A triage signal, not proof -- a list can genuinely
+    be shorter in a year -- but it is what exposed the 1898-99 misfiling."""
+    flags = []
+    counts = defaultdict(dict)  # (kind, segment) -> {season: n}
+    for (kind, season), rows in _top_segment_rows(parsed_dir).items():
+        c = defaultdict(int)
+        for _, _, seg, _ in rows:
+            c[seg] += 1
+        for seg, n in c.items():
+            counts[(kind, seg)][season] = n
+    seasons_of = defaultdict(set)
+    for (kind, season) in _top_segment_rows(parsed_dir):
+        seasons_of[kind].add(season)
+    for (kind, seg), by_season in counts.items():
+        for season in sorted(seasons_of[kind]):
+            others = sorted(n for s, n in by_season.items() if s != season)
+            if len(others) < 4:
+                continue
+            median = others[len(others) // 2]
+            n = by_season.get(season, 0)
+            if n == 0 and sum(1 for x in others if x) >= 0.8 * (len(seasons_of[kind]) - 1) and median >= min_median:
+                reason = f"segment absent (median of other seasons {median})"
+            elif median >= min_median and n < low * median:
+                reason = f"{n} rows vs median {median} of the other seasons"
+            elif median >= min_median and n > high * median:
+                reason = f"{n} rows vs median {median} of the other seasons"
+            else:
+                continue
+            flags.append(dict(page_id=f"{kind}_{season}_p000", table="person_entry", row_id=f"{kind}_{season}",
+                              flag="season_top_segment_rowcount_anomaly",
+                              detail=f"{seg}: {reason}"))
+    return flags
+
+
+def check_top_segment_page_order(parsed_dir: Path) -> list[dict]:
+    """Within a season the top-level segments run in page order (Petersburg
+    pages, then Moscow pages). Rank each segment by the first page it appears
+    on; a page whose LOWEST-ranked segment is lower than the highest rank seen
+    on any earlier page means a later page falls back into a segment that
+    already ended -- e.g. a pure-Petersburg page after a page that already
+    contained Moscow rows (1898-99 p003/p004). Page level only: array order
+    inside a page is not print order (missed rows are appended at the end)."""
+    flags = []
+    for (kind, season), rows in _top_segment_rows(parsed_dir).items():
+        pages = sorted({n for n, _, _, _ in rows})
+        segs_on = defaultdict(set)
+        for n, _, seg, _ in rows:
+            segs_on[n].add(seg)
+        first_page = {}
+        for n in pages:
+            for seg in segs_on[n]:
+                first_page.setdefault(seg, n)
+        rank = {seg: sorted(set(first_page.values())).index(fp) for seg, fp in first_page.items()}
+        page_id_of = {n: pid for n, pid, _, _ in rows}
+        hi = -1
+        for n in pages:
+            ranks = [rank[s] for s in segs_on[n]]
+            if hi > min(ranks):
+                back = [s for s in segs_on[n] if rank[s] < hi]
+                flags.append(dict(page_id=page_id_of[n], table="person_entry", row_id=page_id_of[n],
+                                  flag="page_top_segment_out_of_order",
+                                  detail=f"{', '.join(sorted(back))} rows on a page after an earlier page already reached a later segment"))
+            hi = max(hi, max(ranks))
+    return flags
+
+
+def check_section_page_order(parsed_dir: Path) -> list[dict]:
+    """The same carry-forward idea one level down: within a (season, top-level
+    segment) every section has a first and a last page; if section A starts
+    before section B, A must not continue past the page B starts on (they may
+    share that page). A violation means rows filed under an earlier section on
+    a later page -- the kind of error a page-local read cannot see, because a
+    continuation page prints no heading for the section it continues."""
+    flags = []
+    for (kind, season), rows in _top_segment_rows(parsed_dir).items():
+        spans = defaultdict(lambda: [10**6, -1])
+        pid = {}
+        for n, page_id, seg, path in rows:
+            if not path:
+                continue
+            sp = spans[(seg, path)]
+            sp[0], sp[1] = min(sp[0], n), max(sp[1], n)
+            pid[n] = page_id
+        by_seg = defaultdict(list)
+        for (seg, path), (a, b) in spans.items():
+            by_seg[seg].append((a, b, path))
+        for seg, items in by_seg.items():
+            items.sort()
+            for i, (a1, b1, p1) in enumerate(items):
+                later = [(a2, p2) for a2, b2, p2 in items[i + 1:] if a2 > a1 and b1 > a2]
+                if later:  # one flag per offending section, naming the first section it runs past
+                    a2, p2 = later[0]
+                    more = f" (+{len(later) - 1} more)" if len(later) > 1 else ""
+                    flags.append(dict(page_id=pid[b1], table="person_entry", row_id=f"{kind}_{season}",
+                                      flag="section_continues_past_later_section",
+                                      detail=f"{seg}: {p1!r} (pages {a1}-{b1}) continues past the start of {p2!r} (page {a2}){more}"))
     return flags
 
 
@@ -834,7 +982,9 @@ def main():
                           "--column-level's --out-dir), for the same check")
     args = ap.parse_args()
 
-    flags = (check_roster(args.parsed_dir) + check_repertoire(args.parsed_dir)
+    flags = (check_roster(args.parsed_dir) + check_top_segment_rowcount(args.parsed_dir)
+             + check_top_segment_page_order(args.parsed_dir) + check_section_page_order(args.parsed_dir)
+             + check_repertoire(args.parsed_dir)
              + check_repertoire_printed_page_sequence(args.parsed_dir)
              + check_repertoire_cross_page_duplicate(args.parsed_dir))
     if args.page_raw_dir or args.row_raw_dir or args.column_raw_dir:

@@ -120,6 +120,23 @@ session)` keys, a receipts_text that failed to parse, a whole multi-week
 Repertoire page with zero dark cells (a strong signal the model dropped
 blank cells this run), inconsistent theater-name spelling within one page.
 
+**Carry-forward checks for two-level roster lists** (added 2026-10-05, issue
+#134; roster lists whose `heading_path` starts with a school or a city --
+`TheaterSchoolStaff`, `ProductionTeam`; extend `TOP_SEGMENT_TYPES` to onboard
+another). A continuation page prints no heading naming the school/section it
+belongs to, so page-local checks and page-local blind reads cannot see a
+wrong assignment there (1898-99 p003/p004, 48 rows, were filed under the
+wrong school for weeks). Three checks use only the stored rows:
+`season_top_segment_rowcount_anomaly` (a season whose row count for a
+school/city is far from every other season's -- 11 Moscow rows against ~60),
+`page_top_segment_out_of_order` (a page falling back into a school/city that
+already ended), `section_continues_past_later_section` (the same one level
+down: a section running past the page where a later section starts). Page
+level only -- array order inside a page is not print order. Verified: 0 flags
+on the corrected data, and the pre-fix backup
+(`outputs/full_run_pre_promote_backup_2026-10-03_tss_stage2/parsed`) trips all
+three on 1898-99. Run them on every newly onboarded roster season.
+
 Flags are triage signals, not verdicts — e.g. a genuinely duplicate person
 (someone who really holds two listed roles) will trip the duplicate-entry
 check without being wrong. The point is to route a full run's limited human
