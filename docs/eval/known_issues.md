@@ -22024,3 +22024,25 @@ Both were caught by a similarity audit of all name corrections (low-similarity o
 **Issue #134 addendum -- single-season name outliers checked on the scan: 9 misreads corrected (2026-10-05; evidence: docs/eval/theaterschoolstaff_audit_2026-10-03/name_outliers/)**: 53 entries of TheaterSchoolStaff persons (>= 4 entries) whose spelling differed by a small edit from a >= 3-entry majority spelling; 48 not already read in the blind sample were read blind on the scan by three readers. 38 print as stored (genuine variants, left alone); **9 were misreads** (the print equals the majority spelling) and are corrected: Филотеровичъ, Зацимовскій, Анемподистовичъ, Рофастъ, Миронниковъ, Семенчиковъ, Легатъ 1-й/2-й (ъ not ь), Поліевктовъ (stray Ukrainian є). 19% of the reads were errors against 0.8% in the random sample, so this worklist is the efficient way to find unsampled misreads. Backup `..._2026-10-05_name_outliers`; entries 23204, tombstones/live persons unchanged, orphans 0, shift blocks 0. Follow-up flagged: BalletArtists stores 41 "Легать" (ь) against 33 "Легатъ" -- not yet checked on the scan.
 
 **Issue #134 addendum -- two-pass blind re-read of the section structure: confirmed, plus 6 surname misreads (2026-10-05; evidence: docs/eval/theaterschoolstaff_audit_2026-10-03/blind_sections/)**: all 99 TheaterSchoolStaff pages were mapped twice by independent readers (10 report-only readers; every printed row with its section, CONTINUED rows carried forward) and compared with the stored rows. 2,742/2,739 printed rows matched; **2,734 rows confirmed by both passes and the stored data, none wrong in both** -- the section assignment of every row, including continuation pages, holds (the 1898-99 school misfiling was the only structural error, fixed earlier today). No printed row missing from the stored data, no stored row absent from the print. The surname byproduct (both passes read the same spelling, differing from stored) gave 7 rows; a high-zoom blind read confirmed the hard sign: **Маннъ x3 and Тернизьенъ x3 corrected** (stored Маннь/Тернизьень were misreads); Потѣхннъ is a genuine print typo (kept). Together with the 9 name-outlier fixes and 2 Легатъ fixes earlier today, 17 TheaterSchoolStaff surname misreads corrected in the day (backups `..._2026-10-05_name_outliers`, `..._legat2`, `..._sections_surnames`); entries 23204, tombstones/live persons unchanged, orphans 0, shift blocks 0, quality_checks 546 flags unchanged (the new carry-forward checks add none).
+
+### #133 scan check of the spelling-based identity questions (2026-10-05)
+
+RG asked "are we sure this is what the scans say?" about Мюльдорферъ = Мюльендорферъ,
+and set a rule: double-check spelling issues against the scans before bringing them
+to her for arbitration. I zoomed every instance behind the five proposed form
+identifications on the full-resolution embedded scans. The transcription matches
+the print in all of them, so each question is about the print itself, not about our
+reading of it:
+- **Мюльендорфера ×6** (1890-97): the е is printed every time. It is one word in
+  1890-91 and split at a line end in the other five ("Мюль-/ендорфера" ×4,
+  "Мюльен-/дорфера" ×1 in 1892-93). **Мюльдорфера ×4** (1899-1903) is one word
+  each time, with no е.
+- **Гершеля ×6**: the ш is clear (open top, joined bottom), and distinct from the
+  m-shaped italic т of "Гертеля" on the same 1892-93 page. 1890-91 is blurred but
+  has the same shapes.
+- **Щимана**: Щ with a clear descender. **К. В. ×4**: exactly "К. В.".
+- **Калькабрино**: 1892-93 prints "М. И. Чайковскаго"; 1890-91, 1891-92 and
+  1894-95 print "Мод. И.".
+
+The results were added to the evidence column in production_creator_forms.csv and
+to the review page (version 2). The identity questions stay with RG.

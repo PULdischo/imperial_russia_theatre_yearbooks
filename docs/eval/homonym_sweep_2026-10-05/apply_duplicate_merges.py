@@ -8,14 +8,18 @@ REAL = 'outputs/full_run/imperial_theaters.duckdb'
 DB = REAL if '--write' in sys.argv else '/tmp/dupmerge_dry.duckdb'
 if DB != REAL: shutil.copy2(REAL, DB)
 con = duckdb.connect(DB)
+APPLIED = {'68fa76'}   # survivors of merges already applied to production (skipped on re-run)
 MERGES = [  # (survivor prefix, [loser prefixes], label, reason)
     ('68fa76', ['110f6d', '396ea1', '9327f4', '773570'], 'Волконскій Григорій Дмитріевичъ (князь)',
      'RG-approved 2026-10-05, labelled UNCERTAIN: lighting chief (ProductionTeam, since 1887-09-01, left 1898-09-01) and geography teacher in the ballet department of the Petersburg school (TheaterSchoolStaff, since 1888-09-01, left 1901-09-01); same name, rank, 20 entries, one line per list per year; the pairing of the two posts is unusual -- see uncertain_person_identities.md'),
+    ('0c1633', ['335352', '8fc18b'], 'Черемухинъ Михаилъ Никифоровичъ',
+     'RG-approved 2026-10-05: inspector of the Moscow school (съ 6 сентября 1887) who also teaches mathematics and geography in the ballet department; the teacher line prints "(инспекторъ Училища)" every year; 40 entries over 20 seasons'),
 ]
 def full(p):
     r = con.execute("select person_id from entities.person where cast(person_id as varchar) like ? and superseded_by_person_id is null", [p + '%']).fetchall()
     assert len(r) == 1, (p, r); return str(r[0][0])
 before = con.execute("select count(*) from entities.person where superseded_by_person_id is null").fetchone()[0]
+MERGES = [m for m in MERGES if m[0] not in APPLIED]
 for surv, losers, label, reason in MERGES:
     s = full(surv)
     for lp in losers:

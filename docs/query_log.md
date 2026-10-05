@@ -12241,3 +12241,26 @@ select family_name, count(*) from raw.person_entry where entity_type='TheaterSch
 ```
 
 Result: 2,742 / 2,739 printed rows matched to stored rows by pass C / D; 2,734 rows agree across both passes and the stored section; 0 rows wrong in both passes; 7 surname rows read identically by both passes but differing from stored (Маннь x3, Тернизьень x3, Головань/Потѣхннъ already settled); after the six hard-sign corrections the TSS family_name values Маннь and Тернизьень no longer occur.
+
+## 2026-10-05 — Issue #133: locating the spelling-question instances for a scan check
+
+```sql
+select e.page_id, e.list_number, e.season, e.title, x.name_printed, e.description_text
+from analysis.production_entry_credit x join raw.production_entry e using (production_entry_id)
+where x.name_printed like '%Мюль%' order by e.season;
+select e.page_id, e.list_number, e.title, x.name_printed
+from analysis.production_entry_credit x join raw.production_entry e using (production_entry_id)
+where x.name_printed in ('Гершеля','К. В.','М. И. Чайковскаго','Мод. И. Чайковскаго','А. Фридмана','П. П. Шенка','П. П. Золотаренко') order by 4, 1;
+```
+
+Result: Мюльендорфера ×6 (Хрустальный башмачекъ, MSK 1890-97) and Мюльдорфера ×4 (Волшебный башмачекъ, MSK 1899-1903); Гершеля ×6; К. В. ×4; М. И. Чайковскаго ×1 and Мод. И. ×3 (Калькабрино). Every instance was then zoomed on the full-resolution scan, and the transcription matches the print in every case (details in known_issues.md #133, 2026-10-05).
+
+## 2026-10-05 — Черемухинъ merge: verify result (3 persons -> 1)
+
+```sql
+SELECT family_name||', '||first_name||' '||patronymic, min(season), max(season), count(*)
+FROM entities.person_link pl JOIN raw.person_entry pe USING (entry_id)  -- via verify_pt.py / apply_duplicate_merges.py
+WHERE person_id LIKE '0c1633%' GROUP BY 1;
+```
+
+Result: one person, 'Черемухинъ, Михаилъ Никифоровичъ', 1890-91..1909-10, 40 entries; live persons 3250 -> 3248, tombstones 2326 -> 2328, 0 orphans, 0 shift blocks, quality flags 546 (unchanged), receipts identical.
