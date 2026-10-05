@@ -8,7 +8,7 @@ REAL = 'outputs/full_run/imperial_theaters.duckdb'
 DB = REAL if '--write' in sys.argv else '/tmp/dupmerge_dry.duckdb'
 if DB != REAL: shutil.copy2(REAL, DB)
 con = duckdb.connect(DB)
-APPLIED = {'68fa76', '0c1633', 'c11d62', 'b53a76', '24f7fc', '0ef17f', '527973', 'c58d24', '0b9603', '4af6a7'}   # survivors of merges already applied to production (skipped on re-run)
+APPLIED = {'68fa76', '0c1633', 'c11d62', 'b53a76', '24f7fc', '0ef17f', '527973', 'c58d24', '0b9603', '4af6a7', 'a550ac'}   # survivors of merges already applied to production (skipped on re-run)
 MERGES = [  # (survivor prefix, [loser prefixes], label, reason)
     ('68fa76', ['110f6d', '396ea1', '9327f4', '773570'], 'Волконскій Григорій Дмитріевичъ (князь)',
      'RG-approved 2026-10-05, labelled UNCERTAIN: lighting chief (ProductionTeam, since 1887-09-01, left 1898-09-01) and geography teacher in the ballet department of the Petersburg school (TheaterSchoolStaff, since 1888-09-01, left 1901-09-01); same name, rank, 20 entries, one line per list per year; the pairing of the two posts is unusual -- see uncertain_person_identities.md'),
@@ -32,6 +32,8 @@ MERGES = [  # (survivor prefix, [loser prefixes], label, reason)
      'RG-approved 2026-10-05: manager of the Moscow Office of the Imperial Theaters since 16 June 1882 (Administrators list) and manager of the Moscow school, honorary member of the school conference; the 1908-10 lines were on a separate record'),
     ('a550ac', ['750b99'], 'Габріель',
      'RG-approved 2026-10-05: French teacher in the Petersburg ballet department, since 1 сентября 1890; 1890-91 and 1891-92 lines (surname only), appears in no other volume'),
+    ('7029d5', ['6f5c3c'], 'Гавронскій',
+     'RG-approved 2026-10-05: teacher of Законъ Божій (Roman Catholic pupils), Petersburg ballet department, since 1 февраля 1895, 1894-95..1902-03 (left 1 сентября 1902); surname only'),
 ]
 def full(p):
     r = con.execute("select person_id from entities.person where cast(person_id as varchar) like ? and superseded_by_person_id is null", [p + '%']).fetchall()

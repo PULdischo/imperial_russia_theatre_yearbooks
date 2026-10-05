@@ -12395,3 +12395,13 @@ WHERE left(cast(l.person_id as varchar),6) IN ('750b99','a550ac') ORDER BY 1,2;
 ```
 
 Result: 2 entries — 1890-91 p001 e018 and 1891-92 p001 e017, 'Габріель', Французскій языкъ, Балетное отдѣленіе, 'съ 1 сентября 1890 г.'. After merge: live 3238 -> 3237, 0 orphans, 0 shift blocks, flags 546.
+
+## 2026-10-05 — Гавронскій (TSS): entries of 7029d5 and 6f5c3c, then merge verification
+
+```sql
+SELECT sp.season, right(l.entry_id,10), e.family_name, right(e.heading_path,34), e.subject_taught, e.tenure_note_text
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('7029d5','6f5c3c') ORDER BY 1,2;
+```
+
+Result: 9 entries (1894-95..1902-03), all 'Законъ Божій для учащихся Римско-Католическаго вѣроисповѣданія', ballet dept, 'съ 1 февраля 1895', 'Оставилъ службу 1 сентября 1902' in 1902-03. After merge: live 3237 -> 3236, 0 orphans, 0 shift blocks, flags 546.
