@@ -12152,3 +12152,28 @@ select family_name, count(*) from raw.person_entry where entry_id like 'theaters
 ```
 
 Result: after the fixes Молась has 0 rows and Всеволожскій only theaterschoolstaff_1908-09_p003__e002 (genuinely printed -скій). Before the fixes: Всеволожскій 4 rows / Всеволожской 16 rows in TheaterSchoolStaff; Легатъ ordinals ("Легатъ 1-й" etc.) are stored inside family_name in every table (26 bare Легатъ, 25 Легать, 11 Легатъ 1-й, 10 Легатъ 2-й ...). The raw-JSON sweeps (note dates vs service_periods; leaving/death markers vs period ends; Мола* spellings across all 99 TSS pages) were run with python over outputs/full_run/raw and found the 32 edits listed in docs/eval/theaterschoolstaff_audit_2026-10-03/blind_sample/blind_fixes_log.json.
+
+## 2026-10-05 -- Merge batch review, candidate 1: Зандинъ Михаилъ (issue #134 follow-up)
+
+```sql
+select p.person_id, l.entry_id, e.family_name, e.first_name, e.patronymic, e.rank_or_title, e.heading_path, e.tenure_note_text
+from entities.person_link l join entities.person p using(person_id) join raw.person_entry e using(entry_id)
+where p.superseded_by_person_id is null and p.canonical_family_name='Зандинъ' order by e.entry_id;
+```
+
+Result: 4 rows, 2 live persons -- a9d821 "Зандинъ, Михаилъ Ивановичъ" (productionteam 1906-07 p000 e009, 1907-08 p000 e007; Помощники декораторовъ; "съ 1 мая 1907 г.") and 831b71 "Зандинъ, Михаилъ Павловичъ" (1908-09 p000 e004 "съ 1 мая 1887 г.) (у Головина)"; 1909-10 p000 e003 "съ 1 мая 1907 г."; Исп. об. главнаго Декоратора). No season overlap.
+
+## 2026-10-05 -- Merge batch review, candidate 2: Лебедевъ Иванъ; discovery that person 1dd355 is three men
+
+```sql
+-- ProductionTeam Лебедевъ Иванъ rows and their persons
+select p.person_id, l.entry_id, e.first_name, e.patronymic, e.heading_path, e.tenure_note_text from entities.person_link l join entities.person p using(person_id) join raw.person_entry e using(entry_id) where p.superseded_by_person_id is null and p.canonical_family_name='Лебедевъ' and e.first_name='Иванъ' and e.entry_id like 'productionteam%' order by e.entry_id;
+-- everything attached to 1dd355
+select l.entry_id, e.first_name, e.patronymic, e.heading_path, e.tenure_note_text from entities.person_link l join entities.person p using(person_id) join raw.person_entry e using(entry_id) where cast(p.person_id as varchar) like '1dd355%' order by e.entry_id;
+-- persons tombstoned into 1dd355, and their merge-log rows
+select person_id, display_name, first_attested_season, last_attested_season from entities.person where cast(superseded_by_person_id as varchar) like '1dd355%';
+select * from entities.person_merge_log where person_id_1 or person_id_2 in the chain (652c2d, 7f0f33, ccfe76, e8c8d0);
+-- patronymic-conflict count over live persons (python wrapper around: count(distinct patronymic-or-second-word-of-first_name) >= 2 per person)
+```
+
+Result: 1dd355 held 22 entries: 10 MSK musicians (Григорьевичъ flautist + 2 ballet-orchestra cross-reference lines per year), 11 SP musicians (Константиновичъ clarinetist, since 1868, left 1900-09-01) and 1 ProductionTeam row (Васильевичъ, Бутафоръ, "съ 3 іюня 1889"). Four tombstoned persons point at it; the merge log has 4 confirmed `family_name_variant` rows (similarity 0.85, tenure_signal `unique_name_in_corpus`) chaining them. Patronymic-conflict count: 245 live persons with >= 2 distinct printed patronymics (mostly spelling variants). After the two splits: 4 live Лебедевъ Иванъ persons (1dd355 Константиновичъ 11 entries; 7ca78604 Григорьевичъ 10; 1134bfb0 Васильевичъ 1; ea76e8 Афанасьевичъ 2); live persons 3257, tombstones 2313, orphans 0.

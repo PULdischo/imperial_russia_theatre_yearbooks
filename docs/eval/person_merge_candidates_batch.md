@@ -15,3 +15,13 @@ Splits of wrongly merged homonyms are different: those fix a factual error and w
 | Голяховскій Петръ (TheaterSchoolStaff 1904-05) | patronymic Власьевичъ (p001 no. 10) vs Васильевичъ (p002 no. 1) | print variant or two men; not merged | check |
 
 Not candidates (checked, already one person): Бардюкъ/Бордюгъ Николай Кирилловичъ (d8f03d), Каменскій/Неменскій Исаакъ Осиповичъ (1efe21).
+
+## Decisions (review session 2026-10-05, one candidate at a time; merges are APPLIED TOGETHER after all seven are decided)
+
+| # | Candidate | RG's decision | Open note |
+|---|---|---|---|
+| 1 | Зандинъ Михаилъ (a9d821 + 831b71) | **MERGE** | RG: note for later investigation -- which patronymic is right (Ивановичъ 1906-08 vs Павловичъ 1908-10)? Decide the canonical patronymic when applying; both spellings stay verbatim in raw. |
+| 2 | Лебедевъ Иванъ (PT 1907-08 Васильевичъ + ea76e8 Афанасьевичъ) | **MERGE the two ProductionTeam rows**, after splitting person 1dd355 into three men (done 2026-10-05, see below) | RG: note the patronymic issue for later (Васильевичъ vs Афанасьевичъ on identical post and start date 3 іюня 1889). |
+
+**Split applied 2026-10-05 (factual fix, not a merge; backup outputs/full_run_pre_promote_backup_2026-10-05_split_lebedev):** person 1dd355 "Лебедевъ, Иванъ Константиновичъ" had absorbed, through a chain of confirmed `family_name_variant` merges flagged `unique_name_in_corpus` (the log still shows them), three different men: the Moscow flautist Иванъ Григорьевичъ (MSK Musicians 1890-91..1896-97, "съ 26 сентября 1885", left 1 апрѣля 1897; 10 entries incl. the "см. оперный оркестръ" ballet-orchestra lines) -> new person 7ca78604; the ProductionTeam Бутафоръ Иванъ Васильевичъ (1907-08, "съ 3 іюня 1889") -> new person 1134bfb0 (to be merged into ea76e8 with the batch); the Petersburg clarinetist Иванъ Константиновичъ (SP Musicians 1890-91..1900-01, "съ 1 сентября 1868", left 1 сентября 1900; 11 entries) stays on 1dd355. Live persons 3255 -> 3257, tombstones 2313 unchanged, orphans 0, shift blocks 0.
+**Follow-up this exposed (not done):** the same chain-merge pattern (name-variant merges marked `unique_name_in_corpus` joining men with different printed patronymics, overlapping seasons or different cities) may have wrongly merged other homonyms. A patronymic-conflict count over live persons gives 245 hits, but most are spelling variants/glued fields; real-looking ones to check first: Исаенко Григорій Григорьевичъ (0825c5: Васильевичъ/Григорьевичъ), Петровъ Иванъ Степановичъ (527973: Степановичъ/Ивановичъ), Алексѣевъ Александръ (49b93c). A proper sweep needs patronymic normalisation (ѳ/ф, і/и, glued first-name+patronymic) first.
