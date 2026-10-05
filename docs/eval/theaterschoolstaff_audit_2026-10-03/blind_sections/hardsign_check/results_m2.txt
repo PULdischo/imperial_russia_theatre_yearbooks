@@ -1,0 +1,8 @@
+theaterschoolstaff_1890-91_p000 | e004 | family_name | PRINTED: "Маннъ" | confidence DIRECT | word-final glyph is hard sign ъ, same as the ъ of the patronymic -ичъ on the same line; no word ending in ь found on the line to compare
+theaterschoolstaff_1891-92_p002 | e010 | family_name | PRINTED: "Тернизьенъ" | confidence DIRECT | letters Т-е-р-н-и-з-ь-е-н-ъ: soft sign ь is MEDIAL (after з), word-final is hard sign ъ (matches the ъ of Эводъ and -ичъ on the same line); name is not Тернизьень
+theaterschoolstaff_1892-93_p000 | e004 | family_name | PRINTED: "Маннъ" | confidence DIRECT | word-final glyph is hard sign ъ, same as the ъ of Ипполитъ/-ичъ on the line
+theaterschoolstaff_1892-93_p000 | e006 | family_name | PRINTED: "Потѣхннъ" | confidence DIRECT | letters П-о-т-ѣ-х-н-н-ъ; after х there are TWO identical plain vertical-stem-with-crossbar н glyphs, neither has the diagonal of an и (compare the и of Погожевъ-line/Ипполитъ, which has a diagonal); word-final is hard sign ъ (matches -ичъ on the line). So it is NOT Потѣхинъ; print reads Потѣхннъ (apparent print error for Потѣхинъ)
+theaterschoolstaff_1893-94_p001 | e028 | family_name | PRINTED: "Тернизьенъ" | confidence DIRECT | medial ь after з, word-final ъ (matches ъ of Эводъ and -ичъ on same line)
+theaterschoolstaff_1894-95_p000 | e004 | family_name | PRINTED: "Маннъ" | confidence DIRECT | word-final glyph is hard sign ъ, same as ъ of Ипполитъ/-ичъ on the line
+theaterschoolstaff_1894-95_p001 | e031 | family_name | PRINTED: "Тернизьенъ" | confidence DIRECT | medial ь after з, word-final ъ (matches ъ of Эводъ and -ичъ on same line)
+Rows read: 7

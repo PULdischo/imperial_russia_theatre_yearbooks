@@ -12230,3 +12230,14 @@ select sp.season, e.family_name, count(*) from raw.person_entry e join raw.sourc
 ```
 
 Result: 53 candidates (patronymic 22, family 23, first 8), 48 read on the scan, 9 corrected. Легатъ/Легать after the fixes: BalletArtists 33 Легатъ / 41 Легать; Graduates 2 / 1; TheaterSchoolStaff 15 / 2 (the two remaining are 1896-97 p001 e016 and 1905-06 p001 e019, sent to a blind read). Головань (ь): 1906-07, 1907-08, 1909-10; Голованъ (ъ): 1908-09.
+
+## 2026-10-05 -- TheaterSchoolStaff section structure: stored rows vs two blind page maps (issue #134)
+
+```sql
+-- stored section path per row (python over outputs/full_run/raw: heading_path minus the school segment, list_number, family_name, array position), all 99 TSS pages;
+-- compared with 198 reader page maps (/tmp/ss, archived in blind_sections/reader_results)
+select entry_id, heading_path, list_number, family_name from raw.person_entry where entity_type='TheaterSchoolStaff';
+select family_name, count(*) from raw.person_entry where entity_type='TheaterSchoolStaff' and family_name in ('Маннь','Маннъ','Тернизьень','Тернизьенъ') group by 1;
+```
+
+Result: 2,742 / 2,739 printed rows matched to stored rows by pass C / D; 2,734 rows agree across both passes and the stored section; 0 rows wrong in both passes; 7 surname rows read identically by both passes but differing from stored (Маннь x3, Тернизьень x3, Головань/Потѣхннъ already settled); after the six hard-sign corrections the TSS family_name values Маннь and Тернизьень no longer occur.

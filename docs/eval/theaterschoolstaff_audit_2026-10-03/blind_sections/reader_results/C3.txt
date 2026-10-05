@@ -1,0 +1,904 @@
+PAGE theaterschoolstaff_1890-91_p004
+COLUMN left   (single-column page; printed page no. 265)
+SECTION "Инспектриса."
+  unnumbered Оболенская
+SECTION "Причтъ церкви Училища:"
+SECTION "Священникъ." (letter-spaced sub-heading)
+  unnumbered Богородскій
+SECTION "Діаконъ." (letter-spaced sub-heading)
+  unnumbered Дружининъ
+SECTION "Надзиратели:"
+SECTION "Старшій." (sub-heading)
+  unnumbered Михайловскій
+SECTION "Классныя дамы:"
+SECTION "Старшія." (sub-heading)
+  1 Безсонова
+  2 Воробьева
+SECTION "Младшія." (sub-heading)
+  1 Головина
+  2 Теличкина
+SECTION "Преподаватели:"
+SECTION "а) Балетное отдѣленіе." (letter-spaced sub-heading)
+  1 Бакинъ
+  2 Богородскій
+  3 Волконскій
+  4 Герасимова
+  5 Добрынинъ
+  6 Дружининъ
+  7 Дюфоръ
+  8 Ермоловъ
+  9 Зенченко
+  10 Кашкадамова
+  11 Казачковъ
+  12 Ковалевскій
+  13 Межакова
+  14 Мендесъ
+  15 Менжинъ
+SCHOOL_HEADING_ON_PAGE: NONE
+CROPS: 3
+NOTE: Page ends at no. 15 (continues next page, presumably). Nested sub-headings (Причтъ > Священникъ/Діаконъ; Надзиратели > Старшій; Классныя дамы > Старшія/Младшія; Преподаватели > а) Балетное отдѣленіе). Entries 2 and 6 under Преподаватели are the same men as the priest and deacon above (parenthetical "священникъ церкви Училища" / "діаконъ церкви Училища"). Entry 2 wraps to a second line ("Законъ Божій.").
+
+PAGE theaterschoolstaff_1891-92_p002
+COLUMN left   (single-column page; printed page no. not read -- not asked)
+SECTION CONTINUED  (top of page: nos. 20-32 continue the numbered teachers list; heading on an earlier page, page itself does not name it)
+  20 Піотровичъ
+  21 Поляковъ
+  22 Поповъ
+  23 Русскихъ
+  24 Самойловъ
+  25 Сандерсъ
+  26 Смирнова
+  27 Соколовъ
+  28 Сосновскій
+  29 Тернизьенъ
+  30 Шафрановъ
+  31 Ширяевъ
+  32 Якубовъ
+SECTION "Учители приготовительныхъ классовъ:"
+  1 Галяховскій
+  2 Зацимовскій
+SECTION "Учительницы приготовительныхъ классовъ:"
+  1 Вукотичъ
+  2 Подобѣдъ
+SECTION "б) Драматическіе курсы." (letter-spaced)
+  1 Брагинъ
+  2 Васильева
+  3 Гердтъ
+  4 Давыдовъ
+  5 Далькевичъ
+  6 Морозовъ
+  7 Острогорскій
+  8 Писаревъ
+  9 Сазоновъ
+  10 Соколовъ
+  11 Цвѣтковскій
+SCHOOL_HEADING_ON_PAGE: NONE
+CROPS: 4 strips (about 1x) + 1 zoom of the "Учители" heading
+NOTE: Heading reads "Учители" (not "Учителя") at 2x zoom. Unnumbered service-end lines under 2 Васильева ("Оставила службу 1 сентября 1892 г.") and 9 Сазоновъ ("Оставилъ службу 15 ноября 1891 г.") are notes, not entries. Wrapped lines "вѣроисповѣданія", "искусства." are continuations. A decorative rule ends the list after 11 Цвѣтковскій; faint show-through of the Moscow school heading and other reverse text is visible mid-page and is NOT printed on this page.
+
+PAGE theaterschoolstaff_1892-93_p001
+COLUMN left   (printed page no. 375)
+SECTION CONTINUED  (top of column starts at no. 4; heading is on an earlier page -- the page itself does not name it)
+  4 Гердтъ
+  5 Дебогорій-Мокріевичъ
+  6 Зацимовскій
+  7 Зрячковъ
+  8 Ивановъ
+  9 Іогансонъ
+  10 Карсавинъ
+  11 Латышевъ
+  12 Леоновъ
+  13 Мацкевичъ
+  14 Облаковъ
+  15 Озаровскій
+  16 Павловскій
+  17 Петипа
+  18 Петровская
+  19 Пигулевскій
+  20 Писнячевскій
+  21 Піотровичъ
+  22 Поляковъ
+  23 Поповъ
+  24 Русскихъ
+  25 Самойловъ
+  26 Сандерсъ
+COLUMN right
+SECTION CONTINUED  (top of column: nos. 27-31 continue the same numbered teachers list from the left column)
+  27 Смирнова
+  28 Тернизьенъ
+  29 Шафрановъ
+  30 Ширяевъ
+  31 Якубовъ
+SECTION "Учителя приготовительныхъ классовъ:"
+  1 Галяховскій
+  2 Зацимовскій
+SECTION "Учительницы приготовительныхъ классовъ:" (wraps "клас-/совъ:")
+  1 Вукотичъ
+  2 Подобѣдъ
+SECTION "б) Драматическіе курсы."
+  1 Бардовскій
+  2 Брагинъ
+  3 Гердтъ
+  4 Давыдовъ
+  5 Далькевичъ
+  6 Мацкевичъ
+  7 Острогорскій
+  8 Писаревъ
+  9 Цвѣтковскій
+  10 Шемаевъ
+SCHOOL_HEADING_ON_PAGE: NONE
+CROPS: 6
+NOTE: Left column nos. 4-26 and right-column nos. 27-31 are one continuous numbered list (Преподаватели, presumably "а) Балетное отдѣленіе" from earlier page; page does not say). Nos. 19 Пигулевскій is priest (священникъ церкви Училища), 20 Писнячевскій inspector, 5 Дебогорій-Мокріевичъ assistant inspector -- all numbered in the teachers list. Page ends at no. 10 of Драматическіе курсы.
+
+PAGE theaterschoolstaff_1893-94_p002
+(page has a full-width top block ABOVE the school heading, then the two-column Moscow block; printed page no. 399)
+TOP BLOCK (above the school heading; two columns, no heading on this page)
+COLUMN left (top block)
+SECTION CONTINUED  (nos. 7-9 -- presumably "б) Драматическіе курсы" of the previous (Petersburg) school; page does not name it)
+  7 Морозовъ
+  8 Острогорскій
+  9 Пилисье
+COLUMN right (top block)
+SECTION CONTINUED  (same list)
+  10 Цвѣтковскій
+  11 Яковлевъ
+  12 Ѳедотовъ
+SCHOOL_HEADING_ON_PAGE: "Императорское Московское Театральное Училище." after Ѳедотовъ, 12 (preceded by a wavy rule; full-width, letter-spaced typewriter-style face)
+MAIN BLOCK (below the school heading)
+SECTION "Управляющій Училищемъ."
+  unnumbered Пчельниковъ
+COLUMN left
+SECTION "Почетные члены конференціи:"
+  1 Боборыкинъ
+  2 Веселовскій
+  3 Погожевъ
+  4 Рюминъ
+  5 Сизовъ
+  6 Стороженко
+  7 Флеровъ
+SECTION "Инспекторъ."
+  unnumbered Черемухинъ
+SECTION "Инспектриса."
+  unnumbered Оболенская
+SECTION "Причтъ церкви Училища:"
+SECTION "Священникъ." (sub-heading)
+  unnumbered Богородскій
+SECTION "Дьяконъ." (sub-heading)
+  unnumbered Дружининъ
+SECTION "Врачъ при Училищѣ."
+  unnumbered Казанскій
+SECTION "Фельдшерица."
+  unnumbered Карпова
+SECTION "Старшій надзиратель."
+  unnumbered Михайловскій
+COLUMN right
+SECTION "Надзиратель."
+  unnumbered Бонковскій
+SECTION "Старшія классныя дамы:"
+  1 фонъ-Бранденбургъ
+  2 Воробьева
+SECTION "Классныя дамы:"
+  1 Головина
+  2 Румянцева
+  3 Теличкина
+SECTION "Преподаватели."
+SECTION "а) Балетное отдѣленіе." (sub-heading)
+  1 Бакинъ
+  2 Богородскій
+  3 Бонковскій
+  4 Бѣлова
+  5 Волконскій
+  6 Герасимова
+  7 Добрынинъ
+  8 Дружининъ
+  9 Дюфоръ
+CROPS: 9 (top block, school heading, 3 left strips, 3 right strips; plus whole-page overview)
+NOTE: Source scan shows a thumb at the right margin (does not cover text). Under Теличкина (3) there is an unnumbered line "Оставила службу 1 января 1894 г."; under Добрынинъ (7) a cross line "† 8 іюня 1894 г." (death note, not an entry). Entries 2 (Богородскій) and 8 (Дружининъ) in the teachers list are the priest/deacon above (parenthetical). Entry 3 Бонковскій is the Надзиратель (parenthetical "надзиратель"). Left column: the section "Старшій надзиратель." (Михайловскій) is the last on the left; the right column starts with "Надзиратель." (Бонковскій). Page ends at no. 9 of the а) Балетное отдѣленіе list. Section "Причтъ церкви Училища:" heading is followed directly by "Священникъ." and "Дьяконъ." sub-headings. Left margin of left-column crops was cut ~20px; names verified from overview.
+
+PAGE theaterschoolstaff_1894-95_p003
+COLUMN left   (printed page no. 382)
+SECTION CONTINUED  (top of page starts at no. 5; heading on earlier page, probably "Преподаватели / а) Балетное отдѣленіе" -- page does not say)
+  5 Волконскій
+  6 Герасимова
+  7 Грасицкій
+  8 Дружининъ
+  9 Дубининъ
+  10 Дюфоръ
+  11 Ермоловъ
+  12 Зенченко
+  13 Казачковъ
+  14 Каменевъ
+  15 Кашкадамова
+  16 Ковалевскій
+  17 Мазингъ
+  18 Мендесъ
+  19 Менжинъ
+  20 Михайловскій
+  21 Михайловъ
+  22 Невскій
+  23 Нелидовъ
+  24 Никитинъ
+  25 Поляковъ
+COLUMN right
+SECTION CONTINUED  (same numbered teachers list continues: nos. 26-29)
+  26 Постниковъ
+  27 Черемухинъ
+  28 Чичаговъ
+  29 Ѳоминъ
+SECTION "Учителя 1-го класса:"
+  1 Бороздина
+  2 Каменевъ
+SECTION "б) Драматическіе курсы."
+  1 Веселовскій
+  2 Гельцеръ
+  3 Дюфоръ
+  4 Каменевъ
+  5 Ленскій
+  6 Невскій
+  7 Поповъ
+  8 Постниковъ
+  9 Розановъ
+  10 Садовскій
+  11 Сизовъ
+  12 Смирновъ
+  13 Стороженко
+  14 Тютюнникъ
+SCHOOL_HEADING_ON_PAGE: NONE
+CROPS: 6
+NOTE: No. 16 Ковалевскій is printed "16" without a full stop. Unnumbered notes "Оставилъ преподаваніе 1 сентября 1895 г." (under 13 Казачковъ), "Оставила преподаваніе 1 сентября 1895 г." (under 15 Кашкадамова and under 19 Менжинъ), "Оставилъ преподаваніе 1 октября 1895 г." (under 10 Садовскій) -- notes, not entries. 20 Михайловскій is "(старшій надзиратель)", 27 Черемухинъ is "(инспекторъ Училища)", 8 Дружининъ is "(дьяконъ церкви Училища)". "Учителя 1-го класса:" is a plain heading of the same weight as the lists around it, appearing after the numbered teachers and before "б) Драматическіе курсы." A thumb is visible at lower left of the scan (no text covered).
+
+PAGE theaterschoolstaff_1896-97_p000
+(first page of the list: big title block "СПИСОКЪ личнаго состава преподавателей и служащихъ въ Императорскихъ Театральныхъ Училищахъ." then school heading; printed page no. 449; footer "Ежегодникъ Имп. Т. 1896-1897 гг.")
+SCHOOL_HEADING_ON_PAGE: "Императорское С.-Петербургское Театральное Училище." (full width, above the first section, after the title block; nothing precedes it except the title)
+SECTION "Управляющій Училищемъ." (full-width, centred over both columns)
+  unnumbered Рюминъ  (printed full-width line, "д. ст. сов., въ званіи камергера (съ 27 мая 1887 г.)")
+COLUMN left
+SECTION "Почетные члены конференціи:"
+  1 Григоровичъ
+  2 Іогансонъ
+  3 Климченко
+  4 Погожевъ
+  5 Потѣхинъ
+  6 Пчельниковъ
+SECTION "Инспекторъ."
+  unnumbered Писнячевскій
+SECTION "Инспектрисса."
+  unnumbered Лихошерстова
+SECTION "Помощникъ инспектора."
+  unnumbered Облаковъ
+SECTION "Причтъ церкви Училища:"
+SECTION "Священникъ." (sub-heading)
+  unnumbered Пигулевскій
+SECTION "Дьяконъ." (sub-heading)
+  unnumbered Флоринскій
+COLUMN right
+SECTION CONTINUED (no heading printed; the first entry stands at top of the right column with no heading above it)
+  unnumbered Сперанскій
+SECTION "Врачъ при Училищѣ."
+  unnumbered Соловьевъ
+SECTION "Лекарскій помощникъ."
+  unnumbered Лейбовичъ
+SECTION "Дѣлопроизводитель."
+  unnumbered Артемьевъ
+SECTION "Канцелярскій чиновникъ."
+  unnumbered Миронниковъ
+SECTION "Воспитатели:"
+  1 Исаенко
+  2 Лаубергъ
+  3 Орловъ
+  4 Петровъ
+SECTION "Классныя дамы:"
+  1 Виршо
+  2 Добрынина
+CROPS: 7 (head block, 3 left strips, 3 right strips; plus whole-page overview)
+NOTE: AMBIGUOUS: Сперанскій, Василій Ивановичъ (съ 1 февраля 1897 г.) stands unnumbered at the top of the right column with no heading above it. By print order he follows the left column's last section (Дьяконъ. -- Флоринскій, who is annotated "Оставилъ службу 1 февраля 1897 г.", the same date as Сперанскій's start), so he is probably the new deacon continuing "Дьяконъ."; but he is level with the Управляющій/Почетные члены lines when the two columns are read side by side, and the page itself prints no heading for him. Under Флоринскій the unnumbered line "Оставилъ службу 1 февраля 1897 г." is a note, not an entry. Columns are separated by a wavy vertical rule.
+
+PAGE theaterschoolstaff_1897-98_p001
+COLUMN left   (printed page no. 424)
+SECTION CONTINUED  (nos. 3-6, a short numbered list of women with service from 1888-89; heading on an earlier page, presumably "Классныя дамы" -- the page does not name it)
+  3 Каттани
+  4 Моласъ
+  5 Попова
+  6 Стромилова
+SECTION "Классная дама при драматическихъ курсахъ." (wraps "драматическихъ / курсахъ.")
+  unnumbered Юргенсъ
+SECTION "Преподаватели:"
+SECTION "а) Балетное отдѣленіе." (sub-heading)
+  1 Беренштамъ
+  2 Быстровъ
+  3 Вердье
+  4 Гавронскій
+  5 Гердтъ
+  6 Гиллертъ
+  7 Горскій
+  8 Зацимовскій
+  9 Зрячковъ
+  10 Копыловъ
+  11 Легатъ
+  12 Леоновъ
+  13 Медеръ
+  14 Павловскій
+  15 Петровская
+  16 Пигулевскій
+  17 Писнячевскій
+  18 Петровъ
+COLUMN right
+SECTION CONTINUED  (same numbered teachers list, nos. 19-30)
+  19 Поповъ
+  20 Русскихъ
+  21 Сандерсъ
+  22 Семенчиковъ
+  23 Смирнова
+  24 Тернизьенъ
+  25 Чевакинскій
+  26 Чекетти
+  27 Шафрановъ
+  28 Ширяевъ
+  29 Штехертъ
+  30 Якубовъ
+SECTION "Учителя приготовительныхъ классовъ:"
+  1 Голяховскій
+  2 Зацимовскій
+SECTION "Учительницы приготовительныхъ классовъ:" (wraps "приготовительныхъ / классовъ:")
+  1 Вукотичъ
+  2 Третьякова
+SECTION "б) Драматическіе курсы."
+  1 Аистовъ
+  2 Беренштамъ
+  3 Вердье
+  4 Давыдовъ
+  5 Далькевичъ
+  6 Ивановъ
+SCHOOL_HEADING_ON_PAGE: NONE
+CROPS: 8
+NOTE: Wavy vertical rule separates columns. Left column sections here: top (nos. 3-6) is certainly NOT under "Преподаватели:" since its heading follows after Юргенсъ; it must be a women's list (классныя дамы) continuing from the earlier page. Unnumbered service-end notes (not entries): "Оставилъ службу 1 сентября 1898 г." under 1 Беренштамъ (а) and under 3 Вердье (а) and under 2 Беренштамъ (б); "Оставилъ службу 1 ноября 1898 г." under 10 Копыловъ. 16 Пигулевскій = "(священникъ церкви Училища)", 17 Писнячевскій = "(инспекторъ Училища)". Лeft-hand note: right-column nos. 19-30 are the continuation of the а) Балетное отдѣленіе list begun in the left column. Page ends at no. 6 Ивановъ of б) Драматическіе курсы.
+
+PAGE theaterschoolstaff_1898-99_p002
+(page has a two-column top block of the Petersburg school's lists, a short horizontal rule, then the Moscow school heading and its first sections; printed page no. 137, set small at lower right; surnames letter-spaced throughout)
+TOP BLOCK -- COLUMN left
+SECTION CONTINUED  (nos. 30-31: end of the numbered teachers list, heading on an earlier page; presumably "а) Балетное отдѣленіе")
+  30 Штехертъ
+  31 Якубовъ
+SECTION "Учителя приготовительныхъ классовъ:"
+  1 Голяховскій
+  2 Зацимовскій
+SECTION "Учительницы приготовительныхъ классовъ:" (wraps "приготовительныхъ / классовъ:")
+  1 Вукотичъ
+  2 Третьякова
+SECTION "б) Драматическіе курсы."
+  1 Аистовъ
+  2 Вердье
+  3 Давыдовъ
+TOP BLOCK -- COLUMN right
+SECTION CONTINUED  (same б) Драматическіе курсы list)
+  4 Далькевичъ
+  5 Ивановъ
+  6 Ленскій
+  7 Монаховъ
+  8 Морозовъ
+  9 Острогорскій
+  10 Пигулевскій
+  11 Цвѣтковскій
+  12 Чевакинскій
+  13 Шемаевъ
+SCHOOL_HEADING_ON_PAGE: "Императорское Московское Театральное Училище." after Шемаевъ, 13 (and the short rule at the foot of the two-column block); the heading is full-width.
+MOSTLY MOSCOW BLOCK
+SECTION "Управляющій Училищемъ." (full-width, centred)
+  unnumbered Теляковскій
+COLUMN left
+SECTION "Почетные члены конференціи:"
+  1 Боборыкинъ
+  2 Веселовскій
+  3 Погожевъ
+  4 Рюминъ
+  5 Сизовъ
+COLUMN right
+SECTION CONTINUED  (nos. 6-8 continue "Почетные члены конференціи:" from the left column)
+  6 Стороженко
+  7 Флеровъ
+  8 Пчельниковъ
+SECTION "Инспекторъ."
+  unnumbered Черемухинъ
+SECTION "Помощникъ инспектора."
+  unnumbered Михайловскій
+CROPS: 9 (6 strips for the top block, 1 school/Управляющій heading, 2 for the Moscow columns; plus whole-page overview)
+NOTE: Thumb visible at right margin of scan, no text covered. In the left column of the top block, both nos. 30-31 and the rest are unambiguously continuations of a numbered list from the previous page. 10 Пигулевскій is "(священникъ церкви Училища)" and teaches "Церковная исторія" in the drama courses. The Moscow Управляющій is Теляковскій (parenthetical: "управляющій Московской Конторой Императорскихъ Театровъ"). Moscow block ends at the Помощникъ инспектора (Михайловскій), unnumbered.
+
+PAGE theaterschoolstaff_1899-00_p002
+(printed page no. 135; surnames letter-spaced)
+COLUMN left
+SECTION CONTINUED  (nos. 25-33: end of the numbered teachers list; heading on an earlier page, presumably "а) Балетное отдѣленіе" -- page does not say)
+  25 Смирнова
+  26 Тернизьенъ
+  27 Хлѣбородовъ
+  28 Чевакинскій
+  29 Чекетти
+  30 Шафрановъ
+  31 Ширяевъ
+  32 Штехертъ
+  33 Якубовъ
+SECTION "Учителя приготовительныхъ классовъ:"
+  1 Голяховскій
+  2 Зацимовскій
+SECTION "Учительницы приготовительныхъ классовъ:" (wraps "приготовительныхъ / классовъ:")
+  1 Вукотичъ
+  2 Третьякова
+SECTION "б) Драматическіе курсы."
+  1 Аистовъ   (printed "1" without a full stop)
+  2 Андреевъ
+COLUMN right
+SECTION CONTINUED  (same б) Драматическіе курсы list)
+  3 Вердье
+  4 Давыдовъ
+  5 Далькевичъ
+  6 Ивановъ
+  7 Ленскій
+  8 Монаховъ
+  9 Морозовъ
+  10 Озаровскій
+  11 Острогорскій
+  12 Пигулевскій
+  13 Цвѣтковскій
+  14 Чевакинскій
+  15 Шемаевъ
+  16 Ширяевъ
+SCHOOL_HEADING_ON_PAGE: NONE
+CROPS: 6
+NOTE: Large blank area below the lists (lower third of the page) -- nothing printed below a short rule except the page number. Faint show-through of text from the reverse side is visible between the lines in several strips (e.g. what looks like "Помощникъ инспектора", "Врачъ при Училищѣ", "Инспекторъ", "Почетные члены конференціи") -- these are NOT printed on this page. Unnumbered notes under 28 Чевакинскій ("Оставилъ службу 1 сентября 1899 г."), 1 Аистовъ (same), 3 Вердье ("Оставилъ службу 1 мая 1899 г"), 7 Ленскій ("Оставилъ службу 1 сентября 1899 г."), 14 Чевакинскій (same) -- service-end notes, not entries. 12 Пигулевскій = "(священникъ церкви Училища)". Note that Чевакинскій appears twice (28 in the teachers list, 14 in the drama courses).
+
+PAGE theaterschoolstaff_1900-01_p002
+(printed page no. 137)
+COLUMN left
+SECTION CONTINUED  (nos. 28-39: end of the numbered teachers list; heading on an earlier page, presumably "а) Балетное отдѣленіе" -- page does not say)
+  28 Сергѣевъ
+  29 Смирнова
+  30 Тернизьенъ
+  31 Фокинъ
+  32 Хлѣбородовъ
+  33 Хлапонинъ
+  34 Чекетти
+  35 Шафрановъ
+  36 Ширяевъ
+  37 Штехертъ
+  38 Щербацевичъ
+  39 Якубовъ
+SECTION "Учителя приготовительныхъ классовъ:"
+  1 Голяховскій
+  2 Зацимовскій
+SECTION "Учительницы приготовительныхъ классовъ:" (wraps "приготовительныхъ / классовъ:")
+  1 Вукотичъ
+  2 Третьякова
+COLUMN right
+SECTION "б) Драматическіе курсы."
+  1 Андреевъ
+  2 Гущинъ
+  3 Давыдовъ
+  4 Далькевичъ
+  5 Ивановъ
+  6 Майковъ
+  7 Монаховъ
+  8 Морозовъ
+  9 Озаровскій
+  10 Острогорскій
+  11 Пигулевскій
+  12 Ретвихъ
+  13 Цвѣтковскій
+  14 Шемаевъ
+  15 Ширяевъ
+SCHOOL_HEADING_ON_PAGE: NONE
+CROPS: 6
+NOTE: Right column begins directly with its own heading "б) Драматическіе курсы." (heading precedes entry 1; no continued entries at top of right column). Heavy show-through of the reverse page is visible, including faint heading-like text ("Императорское Московское Театральное Училище", "Помощникъ инспектора", "Инспектриса", "Причтъ церкви Училища", "Дьяконъ", "Преподаватели", "а) Балетное отдѣленіе" etc.) -- NOT printed on this page. Service-end notes (unnumbered, not entries): under 32 Хлѣбородовъ ("Оставилъ службу 1 октября 1899 г"), 34 Чекетти ("... 1 апрѣля 1901 г"), 5 Ивановъ ("... 1 сентября 1900 г"), 7 Монаховъ (same), 13 Цвѣтковскій ("... 1 октября 1899 г"). 11 Пигулевскій = "(священникъ церкви Училища)". Large blank area below the lists; page number lower right.
+
+PAGE theaterschoolstaff_1901-02_p002
+(two-column top block of the Petersburg school's lists, short rule, then the Moscow school heading and its first sections; printed page no. 136, set small at the foot of the left Moscow column; surnames letter-spaced)
+TOP BLOCK -- COLUMN left
+SECTION CONTINUED  (nos. 29-34: end of the numbered teachers list; heading on an earlier page, presumably "а) Балетное отдѣленіе" -- page does not say)
+  29 Хлапонинъ
+  30 Шафрановъ
+  31 Ширяевъ
+  32 Штехертъ
+  33 Щербацевичъ
+  34 Якубовъ
+SECTION "Учителя приготовительныхъ классовъ:"
+  1 Голяховскій
+  2 Зацимовскій
+SECTION "Учительницы приготовительныхъ классовъ:" (wraps "приготовительныхъ / классовъ:")
+  1 Вукотичъ
+  2 Третьякова
+SECTION "б) Драматическіе курсы."
+  1 Андреевъ
+TOP BLOCK -- COLUMN right
+SECTION CONTINUED  (same б) Драматическіе курсы list)
+  2 Гущинъ
+  3 Давыдовъ
+  4 Далькевичъ
+  5 Майковъ
+  6 Морозовъ
+  7 Озаровскій
+  8 Острогорскій
+  9 Пигулевскій
+  10 Ретвихъ
+  11 Шемаевъ
+  12 Ширяевъ
+SCHOOL_HEADING_ON_PAGE: "Императорское Московское Театральное Училище." after Ширяевъ, 12 (preceded by a short horizontal rule; full-width)
+MOSCOW BLOCK
+SECTION "Управляющій Училищемъ." (full-width, centred)
+  unnumbered Аршеневскій
+COLUMN left
+SECTION "Почетные члены конференціи:"
+  1 Боборыкинъ
+  2 Веселовскій
+  3 Всеволожской
+  4 Погожевъ
+COLUMN right
+SECTION CONTINUED  (nos. 5-7 continue "Почетные члены конференціи:" from the left column)
+  5 Пчельниковъ
+  6 Сизовъ
+  7 Стороженко
+SECTION "Инспекторъ."
+  unnumbered Черемухинъ
+CROPS: 9 (6 strips for the top block, 1 school/Управляющій heading, 2 for the Moscow columns; plus whole-page overview)
+NOTE: Under 1 Боборыкинъ there is an unnumbered indented note "Переведенъ тѣмъ же званіемъ въ С.-Петербургское училище." (a transfer note, not an entry). The Управляющій is Аршеневскій (parenthetical "Управляющій Московской Конторой Императорскихъ Театровъ"). 9 Пигулевскій = "(священникъ церкви Училища)". Entry 8 Острогорскій bears an unclear date "... 1 апрѣля 1902 г." (the "† " cross mark noted at overview scale is probably a dagger before "1 апрѣля 1902 г." -- at 3x it reads as ". 1 апрѣля 1902 г." with the start of the entry cut by the crop edge; not entry-relevant). Large blank area above and below.
+
+PAGE theaterschoolstaff_1902-03_p002
+(two-column top block of the Petersburg school's lists, short rule, then the Moscow school heading and its Управляющій; printed page no. 131; surnames letter-spaced)
+TOP BLOCK -- COLUMN left
+SECTION CONTINUED  (nos. 26-35: end of the numbered teachers list; heading on an earlier page, presumably "а) Балетное отдѣленіе" -- page does not say)
+  26 Сергѣевъ
+  27 Смирнова
+  28 Тернизьенъ
+  29 Фокинъ
+  30 Хлапонинъ
+  31 Шафрановъ
+  32 Ширяевъ
+  33 Штехертъ
+  34 Щербацевичъ
+  35 Якубовъ
+SECTION "Учителя приготовительныхъ классовъ:"
+  1 Голяховскій
+  2 Зацимовскій
+SECTION "Учительницы приготовительныхъ классовъ:" (wraps "приготовительныхъ / классовъ:")
+  1 Вукотичъ
+  2 Третьякова
+SECTION "б) Драматическіе курсы."
+  1 Андреевъ
+TOP BLOCK -- COLUMN right
+SECTION CONTINUED  (same б) Драматическіе курсы list)
+  2 Гущинъ
+  3 Давыдовъ
+  4 Далькевичъ
+  5 Варнека
+  6 Морозовъ
+  7 Озаровскій
+  8 Арабажинъ
+  9 Пигулевскій
+  10 Поліевктовъ
+  11 Шемаевъ
+  12 Ширяевъ
+  13 Санинъ
+  14 Петровъ
+SCHOOL_HEADING_ON_PAGE: "Императорское Московское Театральное Училище." after Петровъ, 14 (preceded by a short horizontal rule; full-width)
+MOSCOW BLOCK
+SECTION "Управляющій Училищемъ." (full-width, centred)
+  unnumbered Фонъ Бооль
+CROPS: 7 (6 strips for the top block, 1 school heading/Управляющій; plus whole-page overview)
+NOTE: Right-column nos. 5 and 10 are out of alphabetical order (Варнека after Далькевичъ; Поліевктовъ before Шемаевъ) -- as printed. Under 11 Шемаевъ the unnumbered line "† 1902 г." (death note, not an entry). 9 Пигулевскій = "(священникъ церкви Училища)". The Moscow block on this page contains only the heading + Управляющій; no other Moscow section (Почетные члены etc.) begins on this page. Page number lower right is "131". Moscow Управляющій surname read at 3x zoom as letter-spaced "Фонъ Бооль" (final letter ь).
+
+PAGE theaterschoolstaff_1903-04_p002
+(two-column top block of the Petersburg school's lists, short rule, then the Moscow school heading and its Управляющій; printed page no. 130; surnames letter-spaced)
+TOP BLOCK -- COLUMN left
+SECTION CONTINUED  (nos. 27-35: end of the numbered teachers list; heading on an earlier page, presumably "а) Балетное отдѣленіе" -- page does not say)
+  27 Тернизьенъ
+  28 Фокинъ
+  29 Хлапонинъ
+  30 Шафрановъ
+  31 Ширяевъ
+  32 Штехертъ
+  33 Щербацевичъ
+  34 Эльманъ
+  35 Якубовъ
+SECTION "Учителя приготовительныхъ классовъ:"
+  1 Голяховскій
+  2 Зацимовскій
+SECTION "Учительницы приготовительныхъ классовъ:" (wraps "приготовительныхъ / классовъ:")
+  1 Вукотичъ
+  2 Третьякова
+SECTION "б) Драматическіе курсы."
+  1 Андреевъ
+TOP BLOCK -- COLUMN right
+SECTION CONTINUED  (same б) Драматическіе курсы list)
+  2 Арабажинъ
+  3 Броневскій-Боянусъ
+  4 Варнеке
+  5 Гущинъ
+  6 Давыдовъ
+  7 Далькевичъ
+  8 Морозовъ
+  9 Озаровскій
+  10 Петровъ
+  11 Пигулевскій
+  12 Поліевктовъ
+  13 Санинъ
+  14 Ширяевъ
+SCHOOL_HEADING_ON_PAGE: "Императорское Московское Театральное Училище." after Ширяевъ, 14 (preceded by a short horizontal rule; full-width)
+MOSCOW BLOCK
+SECTION "Управляющій Училищемъ." (full-width, centred)
+  unnumbered Фонъ Бооль
+CROPS: 7 (6 strips for the top block, 1 school heading/Управляющій; plus whole-page overview)
+NOTE: Right column begins with no. 2 (Арабажинъ), continuing the б) Драматическіе курсы list begun with no. 1 Андреевъ at the foot of the left column. Alphabetical order is restored in this season's drama list (Варнеке now no. 4). The Moscow block on this page is only the heading + Управляющій (page number 130 below it, left); nothing else of Moscow begins here. Spelling "Варнеке" here (cf. "Варнека" the previous year) -- as printed. Faint show-through of reverse text is visible in several strips (not printed on this page).
+
+PAGE theaterschoolstaff_1904-05_p002
+(printed page no. 78, set small at lower left; page contains ONLY the Petersburg school's lists, no school heading; surnames letter-spaced)
+COLUMN left
+SECTION CONTINUED  (nos. 25-36: end of the numbered teachers list; heading on an earlier page, presumably "а) Балетное отдѣленіе" -- page does not say)
+  25 Сергѣевъ
+  26 Смирнова
+  27 Тернизьенъ
+  28 Фокинъ
+  29 Хлапонинъ
+  30 Чекрыгинъ
+  31 Шафрановъ
+  32 Ширяевъ
+  33 Штехертъ
+  34 Щербацевичъ
+  35 Эльманъ
+  36 Якубовъ
+SECTION "Учителя приготовительныхъ классовъ:"
+  1 Голяховскій
+  2 Зацимовскій
+SECTION "Учительницы приготовительныхъ классовъ:" (wraps "приготовительныхъ / классовъ:")
+  1 Вукотичъ
+  2 Третьякова
+COLUMN right
+SECTION "б) Драматическіе курсы."  (right column begins directly with this heading)
+  1 Адамовъ
+  2 Андреевъ
+  3 Арабажинъ
+  4 Броневскій-Боянусъ
+  5 Воскресенскій
+  6 Гущинъ
+  7 Давыдовъ
+  8 Далькевичъ
+  9 Морозовъ
+  10 Петровъ
+  11 Пигулевскій
+  12 Поліевктовъ
+  13 Ширяевъ
+SCHOOL_HEADING_ON_PAGE: NONE
+CROPS: 8 (3 strips per column, 2 end-of-column strips; plus whole-page overview)
+NOTE: Thumb at lower left of the scan (does not cover text). Large blank area below the lists, short rule at foot of right column. Unnumbered service-end note under 8 Далькевичъ: "Оставилъ службу 1 сентября 1904 г." (not an entry). 11 Пигулевскій = "(священникъ церкви Училища)". In the right-column heading the word "Драматическіе" has a printed "і" in -кіе (the heading is set in a slightly different, heavier face than the entries).
+
+PAGE theaterschoolstaff_1905-06_p001
+(printed page no. 73; page contains ONLY the Petersburg school's lists, no school heading; surnames letter-spaced)
+COLUMN left
+SECTION "Классныя дамы:"  (first heading on the page, centred over the left column)
+  1 Виршо
+  2 Каттани
+  3 Моласъ
+  4 Попова
+  5 Сигристъ
+  6 Стромилова
+SECTION "Классная дама при драматическихъ курсахъ." (wraps "драматическихъ / курсахъ.")
+  unnumbered Юргенсъ
+SECTION "Преподаватели:"
+SECTION "а) Балетное отдѣленіе" (sub-heading, printed without final full stop)
+  1 Андреевъ
+  2 Андріановъ
+  3 Вербицкая
+  4 Воскресенскій
+  5 Гавликовскій
+  6 Гердтъ
+  7 Голяховскій
+  8 Жукова
+  9 Каттерфельдъ
+COLUMN right
+SECTION CONTINUED  (nos. 10-28 continue the numbered "а) Балетное отдѣленіе" list from the left column; no new heading at top of the right column)
+  10 Корнхо
+  11 Куличевская
+  12 Легатъ
+  13 Леоновъ
+  14 Обуховъ
+  15 Петровская
+  16 Петровъ
+  17 Пигулевскій
+  18 Поповъ
+  19 Пузырева
+  20 Сандерсъ
+  21 Сенкусъ
+  22 Сергѣевъ
+  23 Смирнова
+  24 Тернизьенъ
+  25 Фокинъ
+  26 Хлапонинъ
+  27 Чекрыгинъ
+  28 Шафрановъ
+SCHOOL_HEADING_ON_PAGE: NONE
+CROPS: 11 (4 strips per column plus 2 end-of-column strips; plus whole-page overview)
+NOTE: The page has no Управляющій / Почетные члены / Инспекторъ sections at all -- it opens with "Классныя дамы:" (the earlier Petersburg sections are on the previous page). Page ends at no. 28 Шафрановъ, list continues on next page. Unnumbered dagger note under 12 Легатъ: "† 18 октября 1905 г." (death note, not an entry). 6 Гердтъ is printed as "(съ 11 сентября 1880 г. по 1 сентября 1904 г.). Танцы и мимика (съ 1 ноября 1905 г.). Мимика." 17 Пигулевскій = "(священникъ церкви Училища)". Entry 21 Сенкусъ has no given name printed (only "(съ 1 сентября 1903 г.)"). Entry 8 Жукова and 9 Каттерфельдъ are the last two on the left column. Spelling check: no. 5 reads "Гавликовскій" at 3x zoom (letters Г-а-в-л-и-к-о-в-с-к-і-й).
+
+PAGE theaterschoolstaff_1906-07_p000
+(first page of the list: big title block "СПИСОКЪ личнаго состава преподавателей и служащихъ въ Императорскихъ Театральныхъ Училищахъ." then the school heading; printed page no. 73; footer "1906—1907 / 10")
+SCHOOL_HEADING_ON_PAGE: "Императорское С.-Петербургское Театральное Училище." (full width, directly above the two columns, after the title block; no Управляющій section is printed on this page)
+COLUMN left
+SECTION "Почетные члены конференціи:"
+  1 Боборыкинъ
+  2 Всеволожской
+  3 Климченко
+  4 Погожевъ
+  5 Потѣхинъ
+  6 Пчельниковъ
+SECTION "Инспекторъ."
+  unnumbered Мысовскій
+SECTION "Инспектриса."
+  unnumbered Лихошерстова
+SECTION "Помощникъ инспектора."
+  unnumbered Облаковъ
+SECTION "Причтъ церкви Училища:"
+SECTION "Священникъ." (sub-heading)
+  unnumbered Пигулевскій
+COLUMN right
+SECTION "Дьяконъ." (sub-heading, begins the right column; belongs with "Причтъ церкви Училища:" from the left column)
+  unnumbered Смирновъ
+SECTION "Врачъ при Училищѣ:"
+  unnumbered Генъ
+SECTION "Лекарскій помощникъ."
+  unnumbered Михайловъ
+SECTION "И. д. фельдшерицы."
+  unnumbered Абрамова
+SECTION "Письмоводитель."
+  1 Брюнинъ
+  2 Сперанскій
+SECTION "Воспитатели:"
+  1 Исаенко
+  2 Лаубергъ
+  3 Петровъ
+CROPS: 8 (head block, 3 left strips, 3 right strips; plus whole-page overview)
+NOTE: Under 1 Брюнинъ unnumbered note "Оставилъ службу 30 августа 1906 г." (not an entry). Помощникъ инспектора (Облаковъ), Врачъ (Генъ), Лекарскій помощникъ, И. д. фельдшерицы, Письмоводитель and Воспитатели are separate plain headings; Письмоводитель carries the numbers 1-2 for its two clerks. "Врачъ при Училищѣ:" ends with a colon here (other headings end in a full stop). The page ends at Воспитатели no. 3 Петровъ; the list continues on the next page.
+
+PAGE theaterschoolstaff_1907-08_p000
+(first page of the list: big title block "СПИСОКЪ личнаго состава преподавателей и служащихъ въ Императорскихъ Театральныхъ Училищахъ." then the school heading; printed page no. 69)
+SCHOOL_HEADING_ON_PAGE: "Императорское С.-Петербургское Театральное Училище." (full width, directly above the two columns, after the title block; no Управляющій section is printed on this page)
+COLUMN left
+SECTION "Почетные члены конференціи:"
+  1 Боборыкинъ
+  2 Всеволожской
+  3 Климченко
+  4 Погожевъ
+  5 Потѣхинъ
+  6 Пчельниковъ
+SECTION "Инспекторъ."
+  unnumbered Мысовскій
+SECTION "Инспектриса."
+  unnumbered Лихошерстова
+SECTION "Помощникъ инспектора."
+  unnumbered Облаковъ
+SECTION "Причтъ церкви Училища:"
+SECTION "Священникъ." (sub-heading)
+  unnumbered Пигулевскій
+COLUMN right
+SECTION "Дьяконъ." (sub-heading, begins the right column; belongs with "Причтъ церкви Училища:" from the left column)
+  unnumbered Смирновъ
+SECTION "Врачъ при Училищѣ:"
+  1 Генъ
+  2 Бруннеръ
+SECTION "Лекарскій помощникъ."
+  unnumbered Михайловъ
+SECTION "И. д. фельдшерицы."
+  unnumbered Абрамова
+SECTION "Письмоводитель."
+  1 Брюнинъ
+  2 Сперанскій
+SECTION "Воспитатели:"
+  1 Исаенко
+  2 Лаубергъ
+  3 Петровъ
+CROPS: 8 (head block, 3 left strips, 3 right strips; plus whole-page overview)
+NOTE: Layout identical to 1906-07 p000 except "Врачъ при Училищѣ:" now has TWO numbered entries (1 Генъ "(съ 6 декабря 1902 г.; † 1907 г.)", 2 Бруннеръ "(съ 1 ноября 1907 г.)"). Under 1 Брюнинъ unnumbered note "Оставилъ службу 30 августа 1906 г." (not an entry). Page ends at Воспитатели no. 3 Петровъ; the list continues on the next page.
+
+PAGE theaterschoolstaff_1908-09_p000
+(first page of the list: big title block "СПИСОКЪ личнаго состава преподавателей и служащихъ въ Императорскихъ Театральныхъ Училищахъ." then the school heading; printed page no. 137)
+SCHOOL_HEADING_ON_PAGE: "Императорское С.-Петербургское Театральное Училище." (full width, directly above the two columns, after the title block; no Управляющій section is printed on this page)
+COLUMN left
+SECTION "Почетные члены конференціи:"
+  1 Боборыкинъ
+  2 Всеволожской
+  3 Погожевъ
+  4 Давыдовъ
+SECTION "Инспекторъ."
+  unnumbered Мысовскій
+SECTION "Инспектриса."
+  unnumbered Лихошерстова
+SECTION "Помощникъ инспектора."
+  unnumbered Облаковъ
+SECTION "Причтъ церкви Училища:"
+SECTION "Священникъ." (sub-heading)
+  unnumbered Пигулевскій
+SECTION "Дьяконъ." (sub-heading)
+  unnumbered Смирновъ
+COLUMN right
+SECTION "Врачъ при Училищѣ" (no punctuation after it; begins the right column)
+  unnumbered Бруннеръ
+SECTION "Лекарскій помощникъ."
+  unnumbered Михайловъ
+SECTION "И. д. фельдшерицы."
+  unnumbered Абрамова
+SECTION "Письмоводитель."
+  unnumbered Сперанскій
+SECTION "Воспитатели:"
+  1 Бѣллевъ
+  2 Исаенко
+  3 Лаубергъ
+  4 Скудновъ
+SECTION "Классныя дамы:" (printed "Классныя дамы:" with colon; sits after the Воспитатели list at the foot of the right column)
+  1 Виршо
+  2 Каттани
+SCHOOL_HEADING (second): NONE
+CROPS: 8 (head, 3 left strips, 3 right strips; plus whole-page overview)
+NOTE: Thumb in the right margin of the scan (no text covered). Compared with 1907-08 the Почетные члены list is shorter (4 entries: Давыдовъ now no. 4 in place of Климченко/Потѣхинъ/Пчельниковъ), "Врачъ при Училищѣ" has a single unnumbered entry (Бруннеръ, Леонтій Федоровичъ), and "Письмоводитель." has a single unnumbered entry (Сперанскій, now "губ. секр."). In this season "Классныя дамы:" begins at the foot of the right column and runs on to the next page after no. 2 Каттани. Page ends there.
+
+PAGE theaterschoolstaff_1909-10_p000
+(first page of the list: title is SHORTER than in earlier years -- "СПИСОКЪ служащихъ при Императорскихъ Театральныхъ Училищахъ лицъ." -- then the school heading; printed page no. 145; footer "вып. V. / 10")
+SCHOOL_HEADING_ON_PAGE: "Императорское С.-Петербургское Театральное Училище." (full width, directly above the two columns, after the title block; no Управляющій section is printed on this page)
+COLUMN left
+SECTION "Почетные члены конференціи:"
+  1 Боборыкинъ
+  2 Всеволожской
+  3 Погожевъ
+  4 Давыдовъ
+SECTION "Инспекторъ."   (printed "Инспекторъ" -- final full stop not clearly visible at this scan quality)
+  unnumbered Мысовскій
+SECTION "Инспектриса."
+  unnumbered Лихошерстова
+SECTION "Помощникъ инспектора."
+  unnumbered Облаковъ
+SECTION "Причтъ церкви Училища:"
+SECTION "Священникъ." (sub-heading)
+  unnumbered Пигулевскій
+SECTION "Дьяконъ." (sub-heading)
+  unnumbered Смирновъ
+COLUMN right
+SECTION "Врачъ при Училищѣ" (no punctuation after it; begins the right column)
+  unnumbered Бруннеръ
+SECTION "Лекарскій помощникъ."
+  unnumbered Михайловъ
+SECTION "И. д. фельдшерицы."
+  unnumbered Абрамова
+SECTION "Письмоводитель."
+  unnumbered Сперанскій
+SECTION "Воспитатели:"
+  1 Бѣляевъ
+  2 Исаенко
+  3 Лаубергъ
+  4 Скудновъ
+SECTION "Классныя дамы:"
+  1 Виршо
+  2 Каттани
+CROPS: 8 (head, 3 left strips, 3 right strips; plus whole-page overview)
+NOTE: Under 2 Всеволожской an unnumbered line "† 28 октября 1909 г." (death note, not an entry). Under 2 Каттани the entry reads "(съ 1 октября 1889 г. по 1 октября 1909 г.)" -- no further Классныя дамы printed on this page. 1 Бѣляевъ here is "Бѣляевъ" (the previous year's page read "Бѣллевъ"; at 3x this page clearly reads Бѣляевъ). Page layout otherwise identical to 1908-09 p000. Page ends at Классныя дамы no. 2 Каттани; the list continues on the next page.
+
+PAGE theaterschoolstaff_1890-91_p000
+COLUMN left   (single-column page; first page of the list; title block "СПИСОК личнаго состава преподавателей и служащихъ."; surnames in bold; printed page no. 261)
+SCHOOL_HEADING_ON_PAGE: "Императорское С.-Петербургское Театральное Училище." (centred, wraps over two lines "…Театральное / Училище."; stands between the title block and the first section)
+SECTION "Управляющій Училищемъ." (printed "Управляющій Училищемъ")
+  unnumbered Рюминъ
+SECTION "Почетные члены конференціи:"
+  1 Григоровичъ
+  2 Климченко
+  3 Маннъ
+  4 Погожевъ
+  5 Потѣхинъ
+  6 Пчельниковъ
+  7 Рюминъ
+SECTION "Инспекторъ."
+  unnumbered Писнячевскій
+SECTION "Инспектриса."
+  unnumbered Бостремъ
+SECTION "Помощникъ инспектора."
+  unnumbered Дебогорій-Мокріевичъ
+SECTION "Причтъ церкви Училища:"
+SECTION "Священникъ." (sub-heading)
+  unnumbered Пигулевскій
+SECTION "Діаконъ." (sub-heading)
+  unnumbered Дьяконовъ
+CROPS: 5 (5 horizontal strips at about 1x; plus whole-page overview)
+NOTE: Full-width running lines, not two columns. Рюминъ appears twice: as unnumbered Управляющій and as no. 7 of the Почетные члены list. Погожевъ (4) = "управляющій С.-Петербургскою Конторою Императорскихъ театровъ"; Пчельниковъ (6) = "управляющій Московскою Конторою ..."; Рюминъ (7) = "управляющій С.-Петербургскимъ Театральнымъ Училищемъ". Faint show-through of reverse-page text is visible across the lower half (not printed on this page). Page ends at Діаконъ Дьяконовъ; the list continues on the next page.
