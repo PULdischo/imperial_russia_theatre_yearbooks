@@ -12425,3 +12425,13 @@ WHERE left(cast(l.person_id as varchar),6) IN ('76d1b9','de05ca') ORDER BY 1,2;
 ```
 
 Result: 76d1b9 = 20 entries (BalletArtists 1890-91..1907-08 and 1909-10, start 'съ 1 іюня 1889'; plus a 1900-01 TSS 'Танцы' line, 'съ 1 мая 1901') with no 1908-09 entry; de05ca = 1 entry, balletartists_1908-09_SP_p003 e006, 'съ 1 іюня 1899'. The scan (printed p. 91, no. 74, 2x enlargement of a full-resolution crop) prints 1899 -- a genuine print typo. After merge: 21 entries, live 3235 -> 3234, 0 orphans, 0 shift blocks, flags 546. (My question text said the start date reads 1889 "in 18 volumes"; it is 19 BalletArtists volumes.)
+
+## 2026-10-05 — Піотровичъ (TSS): entries of 088ec9 and 224c50, then merge verification
+
+```sql
+SELECT sp.season, right(l.entry_id,10), e.family_name, right(e.heading_path,34), e.subject_taught, e.tenure_note_text
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('088ec9','224c50') ORDER BY 1,2;
+```
+
+Result: 4 entries 1890-91..1893-94, all 'Законъ Божій для учащихся Римско-Католическаго (вѣро)исповѣданія', ballet dept, 'съ 1 ноября 1888', 'Оставилъ преподаваніе 1 сентября 1894' in 1893-94. After merge: live 3234 -> 3233, 0 orphans, 0 shift blocks, flags 546. Note: research.person reads 3306 since the ballet-creator thread's uncommitted build_research_model.py edits (production_list persons, 73) are now part of every rebuild.
