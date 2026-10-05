@@ -325,6 +325,75 @@ _EXCERPT_SUFFIX_RE = re.compile(
 )
 
 
+# Work consolidation step 2 (RG, 2026-10-05): a FALLBACK for excerpt titles the
+# two regexes above miss -- multi-act lists ("1, 2 и 3 акты балета Корсаръ"),
+# nested scene-of-act references ("1-я к. 3-го д. бал. Дочь фараона"), and
+# section words ("Актъ бал. Фіаметта", "Прологъ балета Спящая красавица",
+# "Сцена 3-го д. ком. Волки и овцы", "Танцы и группы изъ балета Талисманъ",
+# "Grand pas изъ балета Корсаръ", "Le petit Duc (2-me acte)"). Leading tokens
+# are stripped while they are excerpt vocabulary (numbers, act/scene words,
+# section words, conjunctions, "изъ", a genre word); what remains is the base
+# title. The caller links ONLY when that base matches an existing work's match
+# key exactly, so a title that merely starts with such a word ("Изъ огня да въ
+# полымя") can never be attached to a parent that doesn't exist.
+_EXCERPT_LEAD_TOKEN_RE = re.compile(
+    r"^(?:\d+(?:-?(?:й|е|я|го|ій|ая|ое|ый))?[,.]?"            # 1, 1-е, 3-го, 2,
+    r"|и\d*|и|изъ|,|—|-"
+    r"|д\.?|дд\.|дѣйств\w*\.?|актъ|акта|акты|акт\.|к\.|карт\.?|картины|картина|картинъ"
+    r"|сцена|сцены|сцену|сц\.|сцен\.|прологъ|прол\.|эпил\.|эпилогъ|увертюра|дуэтъ|дуэть"
+    r"|танцы|группы|grand|pas|балъ|сюита"
+    r"|бал\.|балета|оп\.|оперы|ком\.|комедіи|др\.|драмы|траг\.|тр\.|трагедіи|оперет\.|оперетты"
+    r"|водевиля|пьесы)[,.]?$",
+    re.IGNORECASE,
+)
+_EXCERPT_MARKER_WORD_RE = re.compile(
+    r"(?:\bд\.|дд\.|дѣйств|акт|\bк\.|карт|сцен|\bсц\.|прол|эпил|увертюра|дуэт|танцы|\bpas\b|\bбалъ\b|сюита)",
+    re.IGNORECASE,
+)
+_EXCERPT_FR_SUFFIX_RE = re.compile(r"^(?P<base>.+?)\s*\((?P<note>[^)]*\bacte\b[^)]*)\)\s*$", re.IGNORECASE)
+_EXCERPT_GENRE_TOKENS = {"бал.": "бал.", "балета": "бал.", "оп.": "оп.", "оперы": "оп.", "ком.": "ком.",
+                         "комедіи": "ком.", "др.": "др.", "драмы": "др.", "траг.": "траг.", "тр.": "траг.",
+                         "трагедіи": "траг.", "оперет.": "оперет.", "оперетты": "оперет.", "водевиля": "вод."}
+
+
+def _art_form(genre: str | None) -> str | None:
+    """Coarse art form of a printed genre, for the step-2 fallback's single-candidate
+    check only (RG: different art forms are different works). None = unknown."""
+    g = (genre or "").lower()
+    if not g:
+        return None
+    if g.startswith(("бал", "ballet")):
+        return "ballet"
+    if g.startswith(("оп", "оперет", "op")):
+        return "opera"
+    if g.startswith(("ком", "др", "траг", "тр", "вод", "ш", "сц", "карт", "пьес", "фарс", "com", "dr", "vaud", "pièce")):
+        return "spoken"
+    return None
+
+
+def _excerpt_fallback(title: str):
+    """(base, note, genre_word_or_None) for an excerpt title the main regexes
+    miss, or None. Pure text: whether `base` is a real work is the caller's check."""
+    m = _EXCERPT_FR_SUFFIX_RE.match(title)
+    if m:
+        return m.group("base").strip(), m.group("note").strip(), None
+    tokens = re.findall(r"„[^“]*“|«[^»]*»|\S+", title.replace("—", " — "))
+    i, genre = 0, None
+    while i < len(tokens) - 1 and _EXCERPT_LEAD_TOKEN_RE.match(tokens[i]):
+        if tokens[i].lower() == "балъ" and tokens[i + 1].lower() != "изъ":
+            break  # "Балъ изъ бал. Пахита" is a section; "Балъ маскарадъ" is a title
+        g = _EXCERPT_GENRE_TOKENS.get(tokens[i].lower().rstrip(","))
+        genre = g or genre
+        i += 1
+    if i == 0:
+        return None
+    note = " ".join(tokens[:i]).strip(" ,—")
+    if not _EXCERPT_MARKER_WORD_RE.search(note):
+        return None  # e.g. "Изъ огня…": only "изъ" stripped, no act/scene word
+    base = " ".join(tokens[i:]).strip(" .,„“«»")
+    return (base, note, genre) if base else None
+
+
 def build_work(con: duckdb.DuckDBPyConnection) -> None:
     # Previous run's links, for id continuity (below) and the crosswalk.
     old_link: dict[str, str] = {}
@@ -467,19 +536,40 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     # available was on the row, not inline in the title text.
     excerpt_links: dict[str, tuple[str, str]] = {}  # work_uuid -> (parent_work_id, note)
     n_excerpt_matched = n_excerpt_unmatched = 0
+    n_excerpt_fallback = 0
     for work_uuid, canonical_title, canonical_genre, _, title_key in work_rows:
         m = _EXCERPT_PREFIX_RE.match(canonical_title) or _EXCERPT_SUFFIX_RE.match(canonical_title)
-        if not m:
-            continue
-        base_key = _match_key(_title_key(m.group("base")))
+        fb = None
+        if m:
+            base_text, note_text, genre_word = m.group("base"), m.group("note"), m.group("genre")
+            base_key = _match_key(_title_key(base_text))
+            if not title_key_to_work_ids.get(base_key):
+                fb = _excerpt_fallback(canonical_title)  # main regex split the title in the wrong place
+        else:
+            fb = _excerpt_fallback(canonical_title)
+            if not fb:
+                continue
+        if fb:
+            fb_key = _match_key(_title_key(fb[0]))
+            if title_key_to_work_ids.get(fb_key):
+                base_text, note_text, genre_word = fb
+                base_key = fb_key
+            elif not m:
+                n_excerpt_unmatched += 1
+                continue
         if base_key == title_key or not base_key:
             continue  # guards against a degenerate/self match
         candidates = title_key_to_work_ids.get(base_key, [])
         parent = None
         if len(candidates) == 1:
             parent = candidates[0]
+            if fb and base_key == _match_key(_title_key(fb[0])) and genre_word:
+                parent_genre = next(g for u, _, g, _, _ in work_rows if u == parent)
+                a, b = _art_form(genre_word), _art_form(parent_genre)
+                if a and b and a != b:
+                    parent = None  # e.g. "Прологъ драмы Псковитянка" vs the opera: a different work
         elif len(candidates) > 1:
-            excerpt_genre_raw = m.group("genre") or canonical_genre
+            excerpt_genre_raw = genre_word or canonical_genre
             excerpt_genre_raw = _GENITIVE_GENRE_TO_ABBREV.get(excerpt_genre_raw, excerpt_genre_raw)
             excerpt_genre_fold = _canon_genre(_fold_genre(excerpt_genre_raw))
             if excerpt_genre_fold:
@@ -488,10 +578,48 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
                 if len(same_genre) == 1:
                     parent = same_genre[0]
         if parent:
-            excerpt_links[work_uuid] = (parent, m.group("note").strip())
+            excerpt_links[work_uuid] = (parent, note_text.strip())
             n_excerpt_matched += 1
+            if fb and base_key == _match_key(_title_key(fb[0])) and not (m and _match_key(_title_key(m.group("base"))) == base_key):
+                n_excerpt_fallback += 1
         else:
             n_excerpt_unmatched += 1
+
+    # Curated excerpt links (step 2, RG 2026-10-05): excerpts the matchers can't
+    # resolve (a genitive base title, an art form the context settles), each with
+    # its exact parent work and the basis. A row whose excerpt or parent doesn't
+    # match exactly one work is an error, never skipped.
+    import csv as _csv
+    # Curated parent works (step 2, RG 2026-10-05): a work attested in this corpus
+    # ONLY through excerpts, e.g. Pushkin's plays Борисъ Годуновъ / Каменный гость /
+    # Русалка, kept apart from the operas of the same name (RG's art-form rule).
+    # They have no performances of their own (appearance_count 0) and are NOT
+    # registered for automatic excerpt matching, so they can only be reached through
+    # work_excerpt_links.csv and can never capture an opera excerpt.
+    parents_path = Path(__file__).parent / "entity_curation" / "curated_parent_works.csv"
+    if parents_path.exists():
+        for row in _csv.DictReader(open(parents_path, encoding="utf-8")):
+            uid = str(uuid.uuid5(NAMESPACE, f"curated_work:{row['title']}|{row['genre']}"))
+            if uid not in used_ids:
+                work_rows.append((uid, row["title"], row["genre"] or None, 0, "curated:" + row["title"]))
+                used_ids.add(uid)
+    curated_path = Path(__file__).parent / "entity_curation" / "work_excerpt_links.csv"
+    if curated_path.exists():
+        by_title_genre: dict[tuple[str, str | None], list[str]] = defaultdict(list)
+        by_title_only: dict[str, list[str]] = defaultdict(list)
+        for uid, t_, g_, _, _ in work_rows:
+            by_title_genre[(t_, g_)].append(uid)
+            by_title_only[t_].append(uid)
+        for row in _csv.DictReader(open(curated_path, encoding="utf-8")):
+            ex = (by_title_genre.get((row["excerpt_title"], row["excerpt_genre"]), [])
+                  if row.get("excerpt_genre") else by_title_only.get(row["excerpt_title"], []))
+            par = by_title_genre.get((row["parent_title"], row["parent_genre"] or None), [])
+            if len(ex) != 1 or len(par) != 1:
+                raise SystemExit(f"work_excerpt_links.csv: {row['excerpt_title']!r} -> {row['parent_title']!r} "
+                                 f"[{row['parent_genre']}] matches {len(ex)} excerpt / {len(par)} parent works")
+            if ex[0] not in excerpt_links:
+                n_excerpt_matched += 1
+            excerpt_links[ex[0]] = (par[0], row["note"])
 
     # Resolve the bare-continuation rows pulled out above: each links
     # straight to whichever performance immediately precedes it in the
@@ -657,6 +785,7 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
           f"entities.work_genre_candidate ({len(genre_candidate_insert_rows)} rows) -- "
           f"{n_cross_language} are cross-language (already correctly resolved, no action needed), "
           f"{len(genre_candidate_rows) - n_cross_language} genuinely need a human review decision")
+    print(f"  ({n_excerpt_fallback} of the excerpt links below came from the step-2 fallback matcher)")
     print(f"  {n_excerpt_matched} excerpt/partial-performance titles linked to a parent work "
           f"({n_excerpt_unmatched} excerpt-shaped titles left unlinked -- ambiguous or garbled, "
           f"see docs/work_normalization.md)")

@@ -1,0 +1,21 @@
+excerpt_title,excerpt_genre,parent_title,parent_genre,note,basis
+2 сцены изъ Бориса Годунова,,Борисъ Годуновъ,траг.,2 сцены,"Pushkin's drama, not Mussorgsky's opera: 1899 Pushkin centenary gala, Александринскій (with Моцартъ и Сальери, Скупой рыцарь, Пиръ во время чумы). Title in the genitive."
+"Сцена у фонтана, изъ драмы Борисъ Годуновъ",,Борисъ Годуновъ,траг.,Сцена у фонтана,"Printed ""изъ драмы"": Pushkin's drama, not the opera."
+Сцена изъ Каменнаго гостя,,Каменный гость,др. сц.,Сцена,"Pushkin's little tragedy, not Dargomyzhsky's opera: 1899 Pushkin centenary gala, Александринскій. Genitive title."
+Сц. изъ Каменнаго гостя,,Каменный гость,др. сц.,Сц.,Same gala as above. Genitive title.
+3 сцены изъ Мертвыхъ душъ,,Мертвыя души,сц.,3 сцены,Genitive title.
+Отрывокъ изъ Мертвыхъ душъ (чтеніе),,Мертвыя души,сц.,Отрывокъ (чтеніе),Genitive title; a reading.
+1-я сцена изъ поэмы Мертвыя души,,Мертвыя души,сц.,1-я сцена изъ поэмы,"""изъ поэмы"" is not in the automatic matcher's vocabulary."
+Сцена изъ „Дмитрія Самозванца“,,Дмитрій Самозванецъ,хр.,Сцена,Genitive title; the only work printed exactly as «Дмитрій Самозванецъ».
+5-я сцена 1-й части драмат. хроники: Дмитрій Самозванецъ и Василій Шуйскій.,,Дмитрій Самозванецъ и Василій Шуйскій,др. хрон.,5-я сцена 1-й части драмат. хроники,Base title after a colon.
+"„Письмо Татьяны“, сц. изъ оп. Евгеній Онѣгинъ",,Евгеній Онѣгинъ,оп.,„Письмо Татьяны“,"Printed ""сц. изъ оп."": the opera."
+"Послѣдняя жертва, четыре дѣйствія комедіи.",,Послѣдняя жертва,ком.,четыре дѣйствія,Act reference printed after the title in words.
+"Послѣдняя жертва, четыре дѣйств. комедіи",,Послѣдняя жертва,ком.,четыре дѣйств.,Act reference printed after the title in words.
+"Жемчужина, 1, 3 д. и 2-я карт. 4 д. балета.",,Жемчужина,бал.,"1, 3 д. и 2-я карт. 4 д.",Act reference printed after the title.
+Борисъ Годуновъ,2 сцены,Борисъ Годуновъ,траг.,2 сцены,"1899 Pushkin centenary gala, Александринскій, 26 Apr (later nights print ""2 сцены изъ Бориса Годунова"")."
+Борисъ Годуновъ,сц.,Борисъ Годуновъ,траг.,сц.,"Михайловскій, 21 Jan 1908, printed as scenes."
+Корчма на Литовской границѣ изъ траг. Борисъ Годуновъ.,,Борисъ Годуновъ,траг.,Корчма на Литовской границѣ,"Printed ""изъ траг.""; 1899 Pushkin centenary gala (Малый); scene of Pushkin's play, see curated_parent_works.csv"
+"Каменный гость, сц.",,Каменный гость,др. сц.,сц.,"1899 Pushkin centenary gala (Малый); scene of Pushkin's play, see curated_parent_works.csv"
+"Русалка, 1-я сцена.",,Русалка,др.,1-я сцена,"1899 Pushkin centenary gala (Малый); scene of Pushkin's play, see curated_parent_works.csv"
+Русалка,1-я сцена,Русалка,др.,1-я сцена,"1899 Pushkin centenary gala (Малый); scene of Pushkin's play, see curated_parent_works.csv (26 Apr printing; title kept verbatim per #94)"
+1-я сцена изъ Русалки.,,Русалка,др.,1-я сцена,"1899 Pushkin centenary gala (Малый); scene of Pushkin's play, see curated_parent_works.csv (6 May, genitive title)"
