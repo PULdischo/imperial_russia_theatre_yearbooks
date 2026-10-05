@@ -1,0 +1,160 @@
+PAGE theaterschoolstaff_1890-91_p000
+TITLE_BLOCK: "СПИСОКЪ / личнаго состава преподавателей и служащихъ."
+SCHOOL_HEADING: "Императорское С.-Петербургское Театральное / Училище." | BEFORE: none (top of page; only the title block and a decorative rule above it) | AFTER: Рюминъ, Иванъ Ивановичъ (unnumbered, under "Управляющій Училищемъ.") | COLUMN: both (single centred column page)
+FIRST_ENTRY: Рюминъ, Иванъ Ивановичъ (unnumbered, "Управляющій Училищемъ") | BELONGS TO: Императорское С.-Петербургское Театральное Училище
+LAST_ENTRY: Дьяконовъ, Василій Ивановичъ (unnumbered, "Діаконъ") | BELONGS TO: Императорское С.-Петербургское Театральное Училище
+CROPS: 4
+NOTE: Single-column page, printed page number 261. Section headings (not reported): "Управляющій Училищемъ.", "Почетные члены конференціи:", "Инспекторъ.", "Инспектриса.", "Помощникъ инспектора.", "Причтъ церкви Училища:", "Священникъ.", "Діаконъ.". Heavy bleed-through of text from verso; binding visible at right.
+
+PAGE theaterschoolstaff_1890-91_p001
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Соловьевъ, Александръ Капитоновичъ (unnumbered, under "Врачъ при Училищѣ.") | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Корево, Николай Николаевичъ, no. 11 (under "Преподаватели" / "а) Балетное отдѣленіе") | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Printed page number 262. Section headings only (not reported): "Врачъ при Училищѣ.", "Дѣлопроизводитель.", "Канцелярскій чиновникъ.", "Воспитатели", "Классныя дамы:", "Классная дама при драматическихъ курсахъ.", "Преподаватели:", "а) Балетное отдѣленіе". Page continues the Petersburg school list begun on p000 (inferred from continuity only; no heading on this page).
+
+PAGE theaterschoolstaff_1890-91_p002
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Латышевъ, Василій Николаевичъ, no. 12 (under "Преподаватели", Балетное отдѣленіе numbering continued) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Подобѣдъ, Марія Мартиновна, no. 2 (under "Учительницы приготовительныхъ классовъ:") | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Printed page number 263. Section headings only (not reported): "Учителя приготовительныхъ классовъ:" (Галяховскій 1, Зацимовскій 2, Коноплевъ 3 with note "Оставилъ службу 1 Июля 1891 г."), "Учительницы приготовительныхъ классовъ:". List 12-32 continues the numbering from p001 (no new heading). Faint verso bleed-through near the lower-middle of the page appears to read something like "Императорское Московское ... Училище" (very faint, reversed, UNCERTAIN) -- it is show-through, not a printed heading on this page.
+
+PAGE theaterschoolstaff_1890-91_p003
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: "Императорское Московское Театральное Училище." | BEFORE: Цвѣтковскій, Георгій Георгіевичъ, no. 11 (last of the "б) Драматическіе курсы" list) | AFTER: Пчельниковъ, Павелъ Михайловичъ (unnumbered, under "Управляющій Училищемъ.") | COLUMN: both (single centred column page)
+FIRST_ENTRY: Брагинъ, Константинъ Александровичъ, no. 1 (under "б) Драматическіе курсы.") | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Черемухинъ, Михаилъ Никифоровичъ (unnumbered, under "Инспекторъ.") | BELONGS TO: Императорское Московское Театральное Училище
+CROPS: 5
+NOTE: Printed page number 264. Petersburg list ends with Цвѣтковскій no. 11 of the Драматическіе курсы section; Moscow list begins immediately below. Section headings only (not reported): "б) Драматическіе курсы.", "Управляющій Училищемъ.", "Почетные члены конференціи:" (Боборыкинъ 1 ... Ѳедоровъ 7), "Инспекторъ.". Note under no. 5 Штакеншнейдеръ: "Оставилъ службу 1 сентября 1891 г." Note Moscow heading has no "С.-Петербургское"-type qualifier and the Petersburg heading's name for Рюминъ/Пчельниковъ cross-listing appears in honorary members.
+
+PAGE theaterschoolstaff_1890-91_p004
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Оболенская, кн. Анна Николаевна (unnumbered, under "Инспектриса.") | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Менжинъ, Екатерина Ивановна, no. 15 (under "Преподаватели:" / "а) Балетное отдѣленіе.") | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Printed page number 265. Section headings only (not reported): "Инспектриса.", "Причтъ церкви Училища:", "Священникъ.", "Діаконъ.", "Надзиратели:", "Старшій.", "Классныя дамы:", "Старшія.", "Младшія.", "Преподаватели:", "а) Балетное отдѣленіе.". Continues Moscow school's list (inferred from continuity, no heading on this page).
+
+PAGE theaterschoolstaff_1890-91_p005
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Михайловскій, Викторъ Михайловичъ, no. 16 (balletic section numbering continued) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Правдинъ, Іосифъ Андреевичъ, no. 10 (under "б) драматическіе курсы") | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Printed page number 266. Section headings only (not reported): "Учители приготовительныхъ классовъ:" (Бороздина 1, Каменевъ 2), "б) драматическіе курсы." (lower-case initial as printed, letter-spaced). Note under no. 3 Грековъ: "Оставилъ службу 1 іюля 1891 г." Moscow list continues (inferred from continuity). Verso show-through is visible but not a heading.
+
+PAGE theaterschoolstaff_1890-91_p006
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Розановъ, Матвѣй Никаноровичъ, no. 11 (under "б) драматическіе курсы" continued) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Ѳедоровъ, Александръ Ѳедоровичъ, no. 14 | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Printed page number 267, plus a signature mark "17" at bottom right. Only 4 entries (11-14) at the top, then a printed decorative rule/flourish and the remaining ~2/3 of the page is blank except heavy verso show-through (a mirrored heading beginning approx. "Высочайше утвержденное С.-Петербургское филармоническое общество" is visible only as reversed ghost text -- it is show-through from the next page, NOT a heading on this page). End of the Moscow list / end of the season's school staff section.
+
+PAGE theaterschoolstaff_1891-92_p000
+TITLE_BLOCK: "СПИСОКЪ / личнаго состава преподавателей и служащихъ въ / Императорскихъ Театральныхъ Училищахъ."
+SCHOOL_HEADING: "С.-Петербургское Театральное Училище." | BEFORE: none (top of page; only the title block above it, then a decorative rule) | AFTER: Рюминъ, Иванъ Ивановичъ (unnumbered, under "Управляющій Училищемъ") | COLUMN: both (single centred column page)
+FIRST_ENTRY: Рюминъ, Иванъ Ивановичъ (unnumbered, "Управляющій Училищемъ") | BELONGS TO: С.-Петербургское Театральное Училище
+LAST_ENTRY: Соловьевъ, Александръ Капитоновичъ (unnumbered, under "Врачъ при Училищѣ.") | BELONGS TO: С.-Петербургское Театральное Училище
+CROPS: 4
+NOTE: Printed page number 261. This season's Petersburg heading has NO "Императорское" (unlike 1890-91 p000). Section headings only (not reported): "Управляющій Училищемъ", "Почетные члены конференціи:", "Инспекторъ.", "Инспектриса.", "Помощникъ инспектора.", "Причтъ церкви Училища.", "Священникъ.", "Дьяконъ.", "Врачъ при Училищѣ.". Under Дьяконовъ a line "† 22 іюня 1892 г." Verso show-through present.
+
+PAGE theaterschoolstaff_1891-92_p001
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Артемьевъ, Петръ Филимоновичъ (unnumbered, under "Дѣлопроизводитель") | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Писнячевскій, Владиміръ Порфирьевичъ, no. 19 (under "Преподаватели" / "а) Балетное отдѣленіе") | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Printed page number 262. Section headings only (not reported): "Дѣлопроизводитель", "Канцелярскій чиновникъ.", "Воспитатели:", "Классныя дамы:", "Классная дама при драматическихъ курсахъ.", "Преподаватели:", "а) Балетное отдѣленіе". Under Волковъ no. 3 a line "† 14 сентября 1891 г". Verso show-through (reversed title "...Императорскихъ Театральныхъ Училищахъ" and p000 text) is visible near the upper right but is not a heading on this page.
+
+PAGE theaterschoolstaff_1891-92_p002
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Піотровичъ, no. 20 (no given name printed; "Законъ Божій для учащихся Римско-Католическаго вѣроисповѣданія") | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Цвѣтковскій, Георгій Георгіевичъ, no. 11 (under "б) Драматическіе курсы.") | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Printed page number 263. Petersburg Balletic list 20-32 continues from p001; section headings only (not reported): "Учителя приготовительныхъ классовъ:", "Учительницы приготовительныхъ классовъ:", "б) Драматическіе курсы.". Notes "Оставила службу 1 сентября 1892 г." (under Васильева no. 2) and "Оставилъ службу 15 ноября 1891 г." (under Сазоновъ no. 9). The page ends with a decorative flourish after Цвѣтковскій no. 11 and then blank space: the Petersburg list ends here, and no Moscow heading is printed on this page (a faint reversed "Императорское Московское Театральное Училище" is verso show-through only, UNCERTAIN, not a heading on this page).
+
+PAGE theaterschoolstaff_1891-92_p003
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: "Императорское Московское Театральное Училище." | BEFORE: none (top of page; the previous page, p002, ends with Цвѣтковскій no. 11 of the Petersburg Драматическіе курсы) | AFTER: Пчельниковъ, Павелъ Михайловичъ (unnumbered, under "Управляющій Училищемъ") | COLUMN: both (single centred column page)
+FIRST_ENTRY: Пчельниковъ, Павелъ Михайловичъ (unnumbered, "Управляющій Училищемъ") | BELONGS TO: Императорское Московское Театральное Училище
+LAST_ENTRY: Румянцева, Александра Николаевна, no. 3 (under "Классныя дамы:" / "Младшія:") | BELONGS TO: Императорское Московское Театральное Училище
+CROPS: 4
+NOTE: Printed page number 264. Moscow heading at top of page, read from the 4-strip pass (no separate 3-4x crop made; the heading is large and clear at strip resolution). Section headings only (not reported): "Управляющій Училищемъ", "Почетные члены конференціи:" (Боборыкинъ 1 ... Ѳедоровъ 7, with "† 5 іюня 1892 г." under Ѳедоровъ), "Инспекторъ.", "Инспектриса.", "Причтъ церкви Училища:", "Священникъ.", "Дьяконъ.", "Врачъ при Училищѣ.", "Воспитатели:", "Старшій.", "Младшій.", "Классныя дамы:", "Старшія:", "Младшія:". Faint verso show-through of p002 text visible but is not a heading.
+
+PAGE theaterschoolstaff_1891-92_p004
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Бакинъ, Павелъ Всеволодовичъ, no. 1 (under "Преподаватели:" / "а) Балетное отдѣленіе.") | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Ленскій, Александръ Павловичъ, no. 5 (under "б) Драматическіе курсы") | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Printed page number 265. Section headings only (not reported): "Преподаватели:", "а) Балетное отдѣленіе.", "Учители приготовительныхъ классовъ:" (Бороздина 1, Каменевъ 2), "б) Драматическіе курсы". Under Ѳедоровъ no. 26: "† 5 іюня 1892 г." Continues the Moscow school list (inferred from continuity; Moscow heading is on p003).
+
+PAGE theaterschoolstaff_1891-92_p005
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Леонова, Дарья Михайловна, no. 6 (under "б) Драматическіе курсы", numbering continued) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Ѳедоровъ, Александръ Ѳедоровичъ, no. 14 (with "† 5 іюня 1892 г." beneath) | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Printed page number 266. Only entries 6-14 at the top, then a decorative flourish and the rest of the page is blank except heavy verso show-through (mirrored ghost text of the previous page's Moscow lists; not headings). Last page of the season's staff list; Moscow school list ends here.
+
+PAGE theaterschoolstaff_1892-93_p000
+TITLE_BLOCK: "СПИСОКЪ / личнаго состава преподавателей и служащихъ въ / Императорскихъ Театральныхъ Училищахъ."
+SCHOOL_HEADING: "С.-Петербургское Театральное Училище." | BEFORE: none (top of page; only the title block and a decorative rule above it) | AFTER: Рюминъ, Иванъ Ивановичъ (unnumbered, under "Управляющій Училищемъ") | COLUMN: both (centred across both columns)
+FIRST_ENTRY: Рюминъ, Иванъ Ивановичъ (unnumbered, "Управляющій Училищемъ", full-width line above the columns) | BELONGS TO: С.-Петербургское Театральное Училище
+LAST_ENTRY: Ваземъ, Екатерина Оттовна, no. 3 (last entry of the right column, under "Преподаватели" / "а) Балетное отдѣленіе"; the left column's last entry is Артемьевъ, Петръ Филимоновичъ, unnumbered, "Дѣлопроизводитель") | BELONGS TO: С.-Петербургское Театральное Училище
+CROPS: 4
+NOTE: Printed page number 374 (a thumb is visible at the bottom of the scan). This is the first two-column page (columns separated by a vertical rule below the "Управляющій Училищемъ" block). Left column: Почетные члены (Григоровичъ 1 ... Рюминъ 7), Инспекторъ (Писнячевскій), Инспектриса (Бострем), Помощникъ инспектора (Дебогорій-Мокріевичъ), Причтъ церкви Училища (Священникъ Пигулевскій; Дьяконъ Флоринскій), Врачъ при Училищѣ (Соловьевъ), Дѣлопроизводитель (Артемьевъ). Right column: Канцелярскій чиновникъ (Веселкинъ), Воспитатели (1-4), Классныя дамы (1-6), Классная дама при драматическихъ курсахъ (Каттани), Преподаватели / а) Балетное отдѣленіе (Аистовъ 1, Быстровъ 2, Ваземъ 3). All of these are section headings, not reported. Heading wording this season: no "Императорское", same as 1891-92 p000. Verso show-through visible.
+
+PAGE theaterschoolstaff_1892-93_p001
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Гердтъ, Павелъ Андреевичъ, no. 4 (top of left column, Балетное отдѣленіе numbering continued; the right column opens with Смирнова no. 27) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Шемаевъ, Василій Романовичъ, no. 10 (last of right column, under "б) Драматическіе курсы"; the left column's last entry is Сандерсъ, Янъ Оттовичъ, no. 26) | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Printed page number 375. Two columns with a vertical rule. Left column: Балетное отдѣленіе list continued, nos. 4-26. Right column: nos. 27-31, then "Учителя приготовительныхъ классовъ:" (Галяховскій 1, Зацимовскій 2), "Учительницы приготовительныхъ классовъ:" (Вукотичъ 1, Подобѣдъ 2), "б) Драматическіе курсы." (Бардовскій 1 ... Шемаевъ 10). A decorative rule follows and the rest of the page is blank. No school heading appears on this page; the Moscow heading is not on this page (Petersburg list apparently ends here with Шемаевъ no. 10, inferred only from the page's end).
+
+PAGE theaterschoolstaff_1892-93_p002
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: "Императорское Московское Театральное Училище." | BEFORE: none (top of page; previous page p001 ends with Шемаевъ no. 10 of the Petersburg Драматическіе курсы) | AFTER: Пчельниковъ, Павелъ Михайловичъ (unnumbered, under "Управляющій Училищемъ") | COLUMN: both (centred across both columns)
+FIRST_ENTRY: Пчельниковъ, Павелъ Михайловичъ (unnumbered, "Управляющій Училищемъ", full-width line above the columns) | BELONGS TO: Императорское Московское Театральное Училище
+LAST_ENTRY: Невскій, Александръ Максимовичъ, no. 19 (last of right column, under "Преподаватели" / "а) Балетное отдѣленіе"; the left column's last entry is Головина, Матильда Антоновна, no. 1 of "Младшія") | BELONGS TO: Императорское Московское Театральное Училище
+CROPS: 4
+NOTE: Printed page number 376 (thumb visible at bottom). Heading is large and clear at strip resolution (no separate 3-4x crop). Left column: Почетные члены конференціи (Боборыкинъ 1 ... Флеровъ 6), Инспекторъ (Черемухинъ), Инспектриса (Оболенская), Причтъ церкви Училища (Священникъ Богородскій; Дьяконъ Дружининъ), Врачъ при Училищѣ (Казанскій), Воспитатели (Старшій Михайловскій; Младшій Банковскій), Классныя дамы (Старшія: фонъ-Бранденбургъ 1, Воробьева 2; Младшія: Головина 1). Right column opens with Румянцева no. 2 and Теличкина no. 3 (continuing the Младшія list from the left column), then "Преподаватели:" / "а) Балетное отдѣленіе." (Бакинъ 1 ... Невскій 19). All these are section headings, not reported. Neither this page nor p003's lists carry a separate re-heading for Petersburg.
+
+PAGE theaterschoolstaff_1892-93_p003
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Нелидовъ, Ѳедоръ Ѳедоровичъ, no. 20 (top of left column, Балетное отдѣленіе numbering continued; the right column opens with Гельцеръ no. 2) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Стороженко, Николай Ильичъ, no. 13 (last of right column, under "б) Драматическія курсы"; the left column's last entry is Веселовскій, Алексѣй Николаевичъ, no. 1 of "б) Драматическіе курсы.") | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Printed page number 377 (thumb visible lower right). Two columns. Left column: Балетное list nos. 20-27 (Нелидовъ ... Фоминъ), "Учителя приготовительныхъ классовъ:" (Бороздина 1, Каменевъ 2), "б) Драматическіе курсы." (Веселовскій 1). Right column: Драматическіе курсы nos. 2-13 (Гельцеръ ... Стороженко), incl. note "† 8 марта 1893 г." under Кудрявцевъ no. 5. After the lists comes a large decorative ornament (not a heading) and a faint verso show-through; the rest of the page is blank. A faint background ornament is also visible behind the text. This is the last page of the 1892-93 staff list; no school heading on this page.
+
+PAGE theaterschoolstaff_1893-94_p000
+TITLE_BLOCK: "СПИСОКЪ / личнаго состава преподавателей и служащихъ въ / Императорскихъ Театральныхъ Училищахъ."
+SCHOOL_HEADING: "С.-Петербургское Театральное Училище." | BEFORE: none (top of page; only the title block and a decorative rule above it) | AFTER: Рюминъ, Иванъ Ивановичъ (unnumbered, under "Управляющій Училищемъ") | COLUMN: both (centred across both columns)
+FIRST_ENTRY: Рюминъ, Иванъ Ивановичъ (unnumbered, "Управляющій Училищемъ", full-width line above the columns) | BELONGS TO: С.-Петербургское Театральное Училище
+LAST_ENTRY: Стромилова, Анна Людвиговна, no. 6 (last of right column, under "Классныя дамы:"; the left column's last entry is Соловьевъ, Александръ Капитоновичъ, unnumbered, "Врачъ при Училищѣ.") | BELONGS TO: С.-Петербургское Театральное Училище
+CROPS: 4
+NOTE: Printed page number 397. Scan is narrower (1953 px wide) and has a finger visible at the right edge. Two columns below the Рюминъ line. Left column: Почетные члены конференціи (Григоровичъ 1 ... Пчельниковъ 6), Инспекторъ (Писнячевскій), Инспектриса (Бострем, with "† 8 марта 1894 г."), Помощникъ инспектора (Дебогорій-Мокріевичъ), Причтъ церкви Училища (Священникъ Пигулевскій; Дьяконъ Флоринскій), Врачъ при Училищѣ (Соловьевъ). Right column: Лекарскій помощникъ (Лейбовичъ), Дѣлопроизводитель (Артемьевъ), Канцелярскій чиновникъ (Веселкинъ, "Оставилъ службу 1 октября 1894 г."), Воспитатели (1-4), Классныя дамы (1-6; note under Лихошерстова no. 3: "Съ 8 марта 1894 г. назначена инспектрисой Училища."). Section headings, not reported. Heading wording: no "Императорское", same as 1891-92 and 1892-93.
+
+PAGE theaterschoolstaff_1893-94_p001
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Каттани, Софія Францевна (unnumbered, top of left column, under "Классная дама при драматическихъ курсахъ."; the right column opens with Самойловъ no. 22) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Монаховъ, Григорій Осиповичъ, no. 6 (last of right column, under "б) Драматическіе курсы."; the left column's last entry is Русскихъ, Марія Петровна, no. 21) | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Printed page number 398. A finger is visible at the left edge. Two columns. Left column: "Классная дама при драматическихъ курсахъ." (Каттани), "Преподаватели" / "а) Балетное отдѣленіе" (Быстровъ 1 ... Русскихъ 21; with "Оставилъ преподаваніе 1 сентября 1894 г" under Піотровичъ no. 19). Right column: Балетное list nos. 22-32 (Самойловъ ... Якубовъ; note "Оставилъ преподаваніе 1 сентября 1894 г" under Самойловъ no. 22), "Учителя перваго класса:" (Галяховскій 1, Зацимовскій 2), "Учительницы перваго класса:" (Вукотичъ 1, Подобѣдъ 2), "б) Драматическіе курсы." (Аистовъ 1 ... Монаховъ 6). All section headings, none reported. No school heading on this page; all entries continue the Petersburg list from p000 (inferred from continuity).
+
+PAGE theaterschoolstaff_1893-94_p002
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: "Императорское Московское Театральное Училище." | BEFORE: Ѳедотовъ, Александръ Филипповичъ, no. 12 (last entry of the right column of the Petersburg "б) Драматическіе курсы" list; a decorative wavy rule follows it) | AFTER: Пчельниковъ, Павелъ Михайловичъ (unnumbered, under "Управляющій Училищемъ") | COLUMN: both (centred across both columns)
+FIRST_ENTRY: Морозовъ, Петръ Осиповичъ, no. 7 (top of left column, Petersburg "б) Драматическіе курсы" numbering continued; the right column opens with Цвѣтковскій no. 10) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Дюфоръ, Юлій Ивановичъ, no. 9 (last of right column, under "Преподаватели." / "а) Балетное отдѣленіе"; the left column's last entry is Михайловскій, Владиміръ Александровичъ, unnumbered, under "Старшій надзиратель.") | BELONGS TO: Императорское Московское Театральное Училище
+CROPS: 4
+NOTE: Printed page number 399. A finger is visible at the right, and a library label ("...42 / 3 / 3/34") at the upper right of the scan. The top of the page carries the Petersburg lists: left column Морозовъ 7, Острогорскій 8, Пилисье 9; right column Цвѣтковскій 10, Яковлевъ 11, Ѳедотовъ 12. Then the Moscow heading, from the 4-strip pass (no separate 3-4x crop; the heading is large and clear). Moscow section: left column: Почетные члены конференціи (Боборыкинъ 1 ... Флеровъ 7), Инспекторъ (Черемухинъ), Инспектриса (Оболенская), Причтъ церкви Училища (Священникъ Богородскій; Дьяконъ Дружининъ), Врачъ при Училищѣ (Казанскій), Фельдшерица (Карпова), Старшій надзиратель (Михайловскій). Right column: Надзиратель (Бонковскій), Старшія классныя дамы (1-2), Классныя дамы (Головина 1, Румянцева 2, Теличкина 3 with "Оставила службу 1 января 1894 г."), "Преподаватели." / "а) Балетное отдѣленіе" (Бакинъ 1 ... Дюфоръ 9, with "† 8 іюня 1894 г." under Добрынинъ no. 7). All section headings, not reported. This season the Moscow list has no "Лекарскій помощникъ"/similar Petersburg-only blocks; its Moscow heading is mid-page, unlike earlier seasons where it sat at the top of a page (1891-92 p003, 1892-93 p002).
+

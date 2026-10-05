@@ -12206,3 +12206,16 @@ select entry_id, period_order, start_date_undate, end_date_undate, end_type from
 ```
 
 Result: 273 -> 264 flagged persons (after the relink repair: patronymic conflicts 30 -> 22, first-name 15 -> 5, start-date 209 -> 200, after-end 85, two-cities 13); 47 persons with a recorded end followed by later entries and no new start date, 42 with the end printed in an entry text, 5 not printed (Мосолова: transfer, date printed with a Cyrillic І; Ѳедорова: leaving line genuinely printed; Русецкій: promotion; Бакина 2-я and Николаева 3-я: spurious ends, scan-verified); 8 entries repeating the previous entry's end date (1 real: Бакина 2-я); 7 persons spanning Musicians with BalletArtists/ProductionTeam (6 genuine dual listings, 1 wrong merge Ивановъ); 94 live pairs with identical canonical name+patronymic+ordinal (59 likely same, 8 probable, 13 overlap, 14 check). After the repairs: live persons 3256, tombstones 2320, orphans 0, shift blocks 0 (person_link alignment), 119 informational name mismatches (was 129).
+
+## 2026-10-05 -- TheaterSchoolStaff school headings: per-page school sequence and 1898-99 verification (issue #134)
+
+```sql
+-- stored school per page (python over outputs/full_run/raw: first segment of heading_path, counts per page and sequence in array order), all 99 TSS pages
+-- which school(s) is each person on 1898-99 p003/p004 listed under in OTHER seasons?
+select split_part(e.heading_path,' / ',1), count(*) from entities.person_link l join raw.person_entry e using(entry_id) join raw.source_pages sp on sp.page_id=e.page_id
+where cast(l.person_id as varchar)=? and e.entity_type='TheaterSchoolStaff' and sp.season<>'1898-99' group by 1;
+-- after the fix
+select split_part(heading_path,' / ',1), count(*) from raw.person_entry where entry_id like 'theaterschoolstaff_1898-99%' group by 1;
+```
+
+Result: stored Moscow/Petersburg row counts per season were ~59-66 Moscow / 75-86 Petersburg everywhere except 1898-99 (11 / 123); all 48 persons on 1898-99 p003+p004 are listed only under the Moscow school in other seasons (48 of 48 "M-only"); after the fix 1898-99 has 59 Moscow and 75 Petersburg rows (raw and analysis.heading_path_clean agree).

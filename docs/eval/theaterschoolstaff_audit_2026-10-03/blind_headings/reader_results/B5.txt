@@ -1,0 +1,152 @@
+PAGE theaterschoolstaff_1906-07_p001
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Скудновъ, 4 (left column top; follows blank upper third of page) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Хлапонинъ, 26 (right column bottom; left column ends at Голяховскій, 8) | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Upper ~1/3 of page is blank. Section headings only (not school headings): "Классныя дамы:", "Классная дама при драматическихъ / курсахъ.", "Преподаватели:", "а) Балетное отдѣленіе:". Printed page number 74 at bottom left. Right column starts at 9 Жако (so numbering continues from an earlier page).
+
+PAGE theaterschoolstaff_1906-07_p002
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Шафрановъ, 27 (left column top) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Ширяевъ, 13 (right column bottom, under "б) Драматическіе курсы.") | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Upper ~1/3 of page blank. Section headings only: "Учителя приготовительныхъ классовъ:", "Учительницы приготовительныхъ / классовъ:", "б) Драматическіе курсы." (left column ends with Андреевъ 2 of the drama courses; right column continues 3 Арабажинъ ... 13 Ширяевъ). Right column's first entry is Арабажинъ, 3 (list numbering continues from the left column). Short rule below columns. Printed page number 75 at bottom.
+
+PAGE theaterschoolstaff_1906-07_p003
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: "Императорское Московское Театральное Училище." | BEFORE: none (top of page; upper ~1/3 of page is blank) | AFTER: Фонъ-Бооль, Николай Константиновичъ (unnumbered; sits under the section heading "Управляющій Училищемъ.") | COLUMN: both (centred across both columns)
+FIRST_ENTRY: Фонъ-Бооль, unnumbered (Управляющій Училищемъ) | BELONGS TO: Императорское Московское Театральное Училище.
+LAST_ENTRY: Гурьева, 10 (right column bottom, under "а) Балетное отдѣленіе:"; left column ends Воздвиженскій, 1 under "Воспитатели:") | BELONGS TO: Императорское Московское Театральное Училище.
+CROPS: 5
+NOTE: Section headings (not school headings): "Управляющій Училищемъ.", "Почетные члены конференціи:", "Инспекторъ.", "Помощникъ инспектора.", "Инспектриса.", "Письмоводитель.", "Причтъ церкви Училища:", "Священникъ.", "Дьяконъ.", "Врачъ при Училищѣ.", "Фельдшерица.", "Воспитатели:", "Классныя дамы:", "Преподаватели:", "а) Балетное отдѣленіе:". Right column starts with Шаломытовъ, 2 (honorary members continue from left col). Heading is in typewriter-like face. Printed page number 76 at bottom. The Petersburg list's last entry on the preceding page (p002) is not on this page.
+
+PAGE theaterschoolstaff_1906-07_p004
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Домашевъ, 11 (left column top) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Θедотовъ, 15 (right column bottom; left column ends Апушкинъ, 1 under "б) Драматическіе курсы.") | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Upper ~1/3 of page blank. Section headings only: "Учителя:", "б) Драматическіе курсы." Right column starts with Айдаровъ, 2. Decorative ornamental rule below the columns (end-of-section ornament), then printed page number 77.
+
+PAGE theaterschoolstaff_1907-08_p000
+TITLE_BLOCK: "СПИСОКЪ / личнаго состава преподавателей и служащихъ въ Императорскихъ / Театральныхъ Училищахъ."   (followed by a short wavy rule)
+SCHOOL_HEADING: "Императорское С.-Петербургское Театральное Училище." | BEFORE: none (top of page; the title block and a short wavy rule are above it) | AFTER: Боборыкинъ, 1 (left column, under section heading "Почетные члены конференціи:"; the right column begins with Смирновъ, unnumbered, under "Дьяконъ.") | COLUMN: both (centred across both columns)
+FIRST_ENTRY: Боборыкинъ, 1 | BELONGS TO: Императорское С.-Петербургское Театральное Училище.
+LAST_ENTRY: Петровъ, 3 (right column bottom, under "Воспитатели:"; left column ends Пигулевскій, unnumbered, under "Священникъ.") | BELONGS TO: Императорское С.-Петербургское Театральное Училище.
+CROPS: 6
+NOTE: Upper ~1/3 of page blank, with faint mirrored show-through of the reverse page's text visible in that area (not a heading). Title-block lettering uses a decorative face. Section headings only (not school headings): "Почетные члены конференціи:", "Инспекторъ.", "Инспектриса.", "Помощникъ инспектора.", "Причтъ церкви Училища:", "Священникъ.", "Дьяконъ.", "Врачъ при Училищѣ.", "Лекарскій помощникъ.", "И. д. фельдшерицы.", "Письмоводитель.", "Воспитатели:". Printed page number 69 at bottom.
+
+PAGE theaterschoolstaff_1907-08_p001
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Скудновъ, 4 (left column top) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Хлапонинъ, 26 (right column bottom; left column ends Голяховскій, 8) | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Upper ~1/3 of page blank. Section headings only: "Классныя дамы:", "Классная дама при драматическихъ / курсахъ.", "Преподаватели:", "а) Балетное отдѣленіе:". Right column starts at Жако, 9. Printed page number 70 at bottom left.
+
+PAGE theaterschoolstaff_1907-08_p002
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Шафрановъ, 27 (left column top) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Яковлевъ, 13 (right column bottom, under "б) Драматическіе курсы."; left column ends Андреевъ, 2) | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Upper ~1/3 blank. Section headings only: "Учителя приготовительныхъ классовъ:", "Учительницы приготовительныхъ / классовъ:", "б) Драматическіе курсы." Right column starts Арабажинъ, 3. Short rule below columns; printed page number 71.
+
+PAGE theaterschoolstaff_1907-08_p003
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: "Императорское Московское Театральное Училище." | BEFORE: none (top of page; upper ~half of page is blank) | AFTER: Фонъ-Бооль, Николай Константиновичъ (unnumbered; sits under the section heading "Управляющій Училищемъ.") | COLUMN: both (centred across both columns)
+FIRST_ENTRY: Фонъ-Бооль, unnumbered (Управляющій Училищемъ) | BELONGS TO: Императорское Московское Театральное Училище.
+LAST_ENTRY: Гурьева, 10 (right column bottom, under "а) Балетное отдѣленіе:"; left column ends Воздвиженскій, 1 under "Воспитатели:") | BELONGS TO: Императорское Московское Театральное Училище.
+CROPS: 4
+NOTE: Section headings only: "Управляющій Училищемъ.", "Почетные члены конференціи:", "Инспекторъ.", "Помощникъ инспектора.", "Инспектриса.", "Письмоводитель.", "Причтъ церкви Училища:", "Священникъ.", "Дьяконъ.", "Врачъ при Училищѣ.", "Фельдшерица.", "Воспитатели:", "Классныя дамы:", "Преподаватели:", "а) Балетное отдѣленіе:". Right column starts Шаломытовъ, 2 (honorary members here are numbered 1 Всеволожской, 2 Погожевъ, 3 Пчельниковъ in the left column, so Шаломытовъ's "2." is not in sequence with them; as printed). Faint show-through of reverse-side text visible near the heading line (not a heading). Printed page number 72 at bottom.
+
+PAGE theaterschoolstaff_1907-08_p004
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Домашевъ, 11 (left column top) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Θедотовъ, 15 (right column bottom; left column ends Апушкинъ, 1 under "б) Драматическіе курсы.") | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Upper ~1/3 blank. Section headings only: "Учителя:", "б) Драматическіе курсы." Right column starts Айдаровъ, 2. Ornamental rule at the end of the list; below it a signature/gathering mark "1907—1908 / 10" (bottom left, a printer's sheet mark, not a heading) and printed page number 73.
+
+PAGE theaterschoolstaff_1908-09_p000
+TITLE_BLOCK: "СПИСОКЪ / личнаго состава преподавателей и служащихъ въ Императорскихъ / Театральныхъ Училищахъ."   (followed by a short wavy rule)
+SCHOOL_HEADING: "Императорское С.-Петербургское Театральное Училище." | BEFORE: none (top of page; the title block and wavy rule are above it) | AFTER: Боборыкинъ, 1 (left column, under section heading "Почетные члены конференціи:"; right column begins with Бруннеръ, unnumbered, under "Врачъ при Училищѣ.") | COLUMN: both (centred across both columns)
+FIRST_ENTRY: Боборыкинъ, 1 | BELONGS TO: Императорское С.-Петербургское Театральное Училище.
+LAST_ENTRY: Каттани, 2 (right column bottom, under "Классныя дамы:"; left column ends Смирновъ, unnumbered, under "Дьяконъ.") | BELONGS TO: Императорское С.-Петербургское Театральное Училище.
+CROPS: 4
+NOTE: Strong show-through (mirrored, faint) of the reverse page's text across the upper half of the scan; a thumb/finger is visible at right edge of the scan. Neither is a heading. Section headings only: "Почетные члены конференціи:", "Инспекторъ.", "Инспектриса.", "Помощникъ инспектора.", "Причтъ церкви Училища:", "Священникъ.", "Дьяконъ.", "Врачъ при Училищѣ.", "Лекарскій помощникъ.", "И. д. фельдшерицы.", "Письмоводитель.", "Воспитатели:", "Классныя дамы:". Printed page number 137 at bottom right.
+
+PAGE theaterschoolstaff_1908-09_p001
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Македонская, 3 (left column top) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Штехертъ, 26 (right column bottom; left column ends Куличевская, 10) | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Above the columns, at the left, a small-caps running line "личный составъ." (a running head / catch-line, NOT a school heading). Faint show-through of the reverse page's text in the upper area. Section headings only: "Классная дама при драматическихъ / курсахъ.", "Преподаватели:", "а) Балетное отдѣленіе:". Right column starts Леоновъ, 11. Printed page number 138 at bottom left.
+
+PAGE theaterschoolstaff_1908-09_p002
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Эльманъ, 27 (left column top) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Яковлевъ, 11 (right column bottom, under "б) Драматическіе курсы."; left column ends Голованъ, 3) | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Running head "личный составъ." at top right above the right column (NOT a school heading). Heavy mirrored show-through of the reverse page's text (including a faint, backwards line that looks like a school-heading line, in the middle-right near the top of s0) is visible across the lower two-thirds of the scan; it is reverse-side bleed-through, not printed on this page, and I did not read it as a heading of this page. Thumb visible at right edge. Section headings only: "Учителя приготовительныхъ классовъ:", "Учительницы приготовительныхъ / классовъ:", "б) Драматическіе курсы." Right column starts Давыдовъ, 4. Ornamental rule below columns (end of Petersburg list's printed content on this page); printed page number 139.
+
+PAGE theaterschoolstaff_1908-09_p003
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: "Императорское Московское Театральное Училище." | BEFORE: none (top of page; upper ~1/3 blank, with faint show-through of reverse-side text) | AFTER: Фонъ Бооль, Николай Константиновичъ (unnumbered; sits under the section heading "Управляющій Училищемъ.") | COLUMN: both (centred across both columns)
+FIRST_ENTRY: Фонъ Бооль, unnumbered (Управляющій Училищемъ; printed with a space, no hyphen, on this page) | BELONGS TO: Императорское Московское Театральное Училище.
+LAST_ENTRY: Бородина, unnumbered (right column bottom, under "Штатная учительница."; left column ends Казанскій, unnumbered, under "Врачъ при Училищѣ.") | BELONGS TO: Императорское Московское Театральное Училище.
+CROPS: 4
+NOTE: Section headings only: "Управляющій Училищемъ.", "Почетные члены конференціи:", "Инспекторъ.", "Помощникъ инспектора.", "Инспектриса.", "Письмоводитель.", "Причтъ церкви Училища:", "Священникъ.", "Дьяконъ.", "Врачъ при Училищѣ.", "Фельдшерицы.", "Воспитатели:", "Классныя дамы:", "Драматическихъ курсовъ.", "Балетнаго отдѣленія:", "Штатный учитель.", "Штатная учительница." This page lists Moscow staff in a different layout than 1907-08 (no numbered teachers list). Printed page number 140 at bottom left. (In the 1906-07/1907-08 pages the same name was read "Фонъ-Бооль"; spelling here "Фонъ Бооль".)
+
+PAGE theaterschoolstaff_1908-09_p004
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Никольскій, 1 (left column top, under "Преподаватели:" / "Балетное отдѣленіе.") | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Айдаровъ, 2 (right column bottom, under "Драматическіе курсы"; left column ends Бекъ, 13) | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Running head "личный составъ." at top right above the right column (NOT a school heading). Section headings only: "Преподаватели:", "Балетное отдѣленіе.", "Репетиторы-музыканты при урокахъ / танцевъ:", "Драматическіе курсы". Right column starts Балдина, 14. Under "Репетиторы-музыканты" four entries (Кулыгинъ, Брындинъ, Соколовъ, Адольфи) are unnumbered-initial entries numbered 1-4. Ornamental rule at end of list; printed page number 141. Strong mirrored show-through of reverse-side text (a paragraph with a pupils' list) across the page; thumb visible at right edge; neither is a heading of this page.
+
+PAGE theaterschoolstaff_1909-10_p000
+TITLE_BLOCK: "СПИСОКЪ / служащихъ при Императорскихъ Театральныхъ Училищахъ лицъ."   (followed by a short wavy rule; note this title differs from earlier seasons, which read "личнаго состава преподавателей и служащихъ въ Императорскихъ Театральныхъ Училищахъ")
+SCHOOL_HEADING: "Императорское С.-Петербургское Театральное Училище." | BEFORE: none (top of page; the title block and wavy rule are above it) | AFTER: Боборыкинъ, 1 (left column, under section heading "Почетные члены конференціи:"; right column begins with Бруннеръ, unnumbered, under "Врачъ при Училищѣ.") | COLUMN: both (centred across both columns)
+FIRST_ENTRY: Боборыкинъ, 1 | BELONGS TO: Императорское С.-Петербургское Театральное Училище.
+LAST_ENTRY: Каттани, 2 (right column bottom, under "Классныя дамы:"; left column ends Смирновъ, unnumbered, under "Дьяконъ.") | BELONGS TO: Императорское С.-Петербургское Театральное Училище.
+CROPS: 5
+NOTE: Faint mirrored show-through of reverse-side text across the page (not a heading; it includes a backwards running head and list entries). Section headings only: "Почетные члены конференціи:", "Инспекторъ.", "Инспектриса.", "Помощникъ инспектора.", "Причтъ церкви Училища:", "Священникъ.", "Дьяконъ.", "Врачъ при Училищѣ.", "Лекарскій помощникъ.", "И. д. фельдшерицы.", "Письмоводитель.", "Воспитатели:", "Классныя дамы:". Entry 2 Всеволожской carries a death note "† 28 октября 1909 г". Bottom left a gathering mark "вып. V. / 10" (not a heading); printed page number 145 at bottom right.
+
+PAGE theaterschoolstaff_1909-10_p001
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Македонская, 3 (left column top) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Фокинъ, 24 (right column bottom; left column ends Жукова, 8) | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Running head "личный составъ." at top left above the left column (NOT a school heading). Section headings only: "Классная дама при Драматическихъ / курсахъ.", "Преподаватели:", "а) Балетное отдѣленіе:". Right column starts Куличевская, 9. Thumbs visible at left/bottom edge of scan. Printed page number 146 at bottom left.
+
+PAGE theaterschoolstaff_1909-10_p002
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Хлапонинъ, 25 (left column top) | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Яковлевъ, 13 (right column bottom; left column ends Голованъ, 3, under "б) Драматическіе курсы.") | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Running head "личный составъ." at top right above the right column (NOT a school heading). Mirrored show-through of the reverse page (a faint backwards line at mid-page that resembles a school-heading line, plus Moscow list entries in the lower half) is visible; it is bleed-through from the reverse side and is not printed on this page. Section headings only: "Учителя приготовительныхъ классовъ:", "Учительницы приготовительныхъ / классовъ:", "б) Драматическіе курсы." Right column starts Давыдовъ, 4. Ornamental rule below columns; printed page number 147; bottom-left gathering mark "10*" (not a heading); thumb visible at bottom right.
+
+PAGE theaterschoolstaff_1909-10_p003
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: "Императорское Московское Театральное Училище." | BEFORE: none (top of page; upper ~1/3 blank, with faint show-through of reverse-side text) | AFTER: Фонъ Бооль, Николай Константиновичъ (unnumbered; sits under the section heading "Управляющій Училищемъ.") | COLUMN: both (centred across both columns)
+FIRST_ENTRY: Фонъ Бооль, unnumbered (Управляющій Училищемъ) | BELONGS TO: Императорское Московское Театральное Училище.
+LAST_ENTRY: Бородина, unnumbered (right column bottom, under "Штатная учительница."; left column ends Казанскій, unnumbered, under "Врачъ при Училищѣ.") | BELONGS TO: Императорское Московское Театральное Училище.
+CROPS: 4
+NOTE: Section headings only: "Управляющій Училищемъ.", "Почетные члены конференціи:", "Инспекторъ.", "Помощникъ инспектора.", "Инспектриса.", "Письмоводитель.", "Причтъ церкви Училища:", "Священникъ.", "Дьяконъ.", "Врачъ при Училищѣ.", "Фельдшерицы", "Воспитатели:", "Классныя дамы:", "Драматическихъ курсовъ.", "Балетнаго отдѣленія:", "Штатный учитель.", "Штатная учительница." The honorary-members list under the school heading begins with number 2 (Погожевъ), then 3 (Пчельниковъ); no entry numbered 1 is printed in this list. Thumbs visible at bottom left of scan. Printed page number 148.
+
+PAGE theaterschoolstaff_1909-10_p004
+TITLE_BLOCK: NONE
+SCHOOL_HEADING: NONE
+FIRST_ENTRY: Никольскій, 1 (left column top, under "Преподаватели:" / "Балетное отдѣленіе.") | BELONGS TO: CONTINUATION (heading on an earlier page)
+LAST_ENTRY: Соколовъ, 3 (right column bottom, under "Репетиторы-музыканты при урокахъ / танцевъ:"; left column ends Домашевъ, 10) | BELONGS TO: CONTINUATION (heading on an earlier page)
+CROPS: 4
+NOTE: Running head "личный составъ." at top right above the right column (NOT a school heading). Mirrored show-through of reverse-side text is visible (including a faint backwards line near the top of the page that resembles a school-heading line, and a backwards list of pupils and a closing sentence near the bottom); it is bleed-through from the reverse side, not printed on this page. Section headings only: "Преподаватели:", "Балетное отдѣленіе.", "Репетиторы-музыканты при урокахъ / танцевъ:". Right column starts Бекъ, 11. Ornamental rule below the columns; printed page number 149; thumb visible at bottom right.
+
