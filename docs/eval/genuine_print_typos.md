@@ -426,3 +426,4 @@ correction belongs. Entry ids are `<page_id>__eNNN`.
 - balletartists_1904-05_SP_p003 No. 80: Петипа 2-я Надежда printed "Васильевна" (all other years: Маріусовна).
 - productionteam_1900-01_p003 No. 3: Краюшкинъ Николай printed "† 20 ноября 1898 г." although the 1899-00 volume lists him as living (so the print is internally inconsistent; stored as printed).
 - balletartists_1904-05_SP_p005 No. 114: printed "Федорова **1-я**, Марія Дмитріевна (съ 1 іюня 1885 г.)" with "Оставила службу 1 іюня 1905"; the same name is listed again 1905-08 with start 12 мая 1885 (open, see the sweep README).
+- musicians_1904-05_SP_p002 No. 72 and musicians_1905-06_SP_p002 No. 69: Логиновъ Сергѣй Андреевичъ printed "съ 1 сентября **1894** г." (digits read at 8-12x); probably a typo for 1904 (RG chose to treat him as one man hired 1904; the Moscow lists print 1904; he appears in no Petersburg list before 1904-05). Not certain -- noted as "possibly two men".
