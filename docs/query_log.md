@@ -12284,3 +12284,24 @@ WHERE left(cast(l.person_id as varchar),6) IN ('b53a76','8872b8','0fd64e') ORDER
 ```
 
 Result: 18 entries, all 'Почетные члены конференціи', one per season 1890-91..1907-08. After merge: one person, 18 entries; live 3246 -> 3244, tombstones 2330 -> 2332, 0 orphans, 0 shift blocks, flags 546, receipts identical.
+
+## 2026-10-05 — Issue #133: is the roster Шиманъ the ballet composer "Г. Шиманъ"?
+
+```sql
+select p.display_name, a.season, a.city, a.entity_type, a.institution, a.heading_path, a.instrument, a.rank, a.title, a.tenure_note_text
+from research.person p join research.person_appearance a using (person_id)
+where p.canonical_family_name ilike 'Шиман%' or p.canonical_family_name ilike 'Щиман%' or p.canonical_family_name ilike 'Шимон%'
+order by 1, 2;
+```
+
+Result: one roster person, Шиманъ, Михаилъ Викторовичъ: Moscow opera/ballet orchestra, violin (second violin from 1897-98), "съ 10 марта 1882 г.", 1890-91..1900-01, the last listing "† 7 декабря 1900 г.". The ballet credits are "Г. Шимана" ×5 and "Шимана" ×1 (Хрустальный башмачекъ, MSK 1890-97) and "Щимана" ×1 (Волшебный башмачекъ, MSK 1900-01). The initial Г. ≠ М., so they are not linked; it is open for RG.
+
+## 2026-10-05 — Рюминъ Иванъ Ивановичъ (TSS): entries of 24f7fc and 2f3464, then merge verification
+
+```sql
+SELECT sp.season, right(l.entry_id,10), right(e.heading_path,34), e.rank_or_title, e.tenure_note_text, left(cast(l.person_id as varchar),6)
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('24f7fc','2f3464') ORDER BY 1,2;
+```
+
+Result: 24 entries, 1890-91..1899-00: 'Управляющій Училищемъ' (съ 27 мая 1887) + 'Почетные члены конференціи' lines; 2f3464 = only the 1899-00 manager line with '† 2 сентября 1899 г.'. After merge: live 3244 -> 3243, 0 orphans, 0 shift blocks, flags 546.
