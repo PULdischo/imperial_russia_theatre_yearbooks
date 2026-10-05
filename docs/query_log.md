@@ -12611,3 +12611,26 @@ WHERE left(cast(l.person_id as varchar),6)='cd67fa' AND sp.season<='1903-04' ORD
 ```
 
 Result: stored start 'съ 1 декабря 1894' in 1894-95, 1895-96, 1903-04 and 'съ 1 декабря 1884' in 1896-97..1902-03; blind reader and my own view of three pages (1898-99, 1899-00, 1900-01) confirm 1884 is printed (декабря present; the reader's "missing декабря" claim was wrong). After merging 4396b9 into cd67fa: one percussionist, 16 entries 1894-95..1909-10; live 3219 -> 3218, tombstones 2357 -> 2358, 0 orphans, 0 shift blocks, flags 546.
+
+## 2026-10-05 — are the Season Reviews in the database, and what would mentions link to?
+
+RG asked what the process is for identifying people, works and events in the
+season reviews.
+
+```sql
+SELECT table_schema, table_name FROM information_schema.tables ORDER BY 1,2;
+SELECT count(*) FROM research.person;   -- and research.work, research.event
+DESCRIBE research.work;
+```
+
+Result: **no table in any schema has "review" in its name.** The season
+reviews are not in the DuckDB file at all — they exist only as
+`outputs/reviews/merged_full/review_block.csv` and the 41 Markdown reading
+files. There is therefore nowhere for a review mention to be stored, which
+is deferred item §12.5 of docs/season_reviews.md ("whether reviews enter the
+DuckDB file, and what those tables look like") and still undecided.
+
+Link targets that DO exist: research.person 3,290 rows, research.work 3,386,
+research.event 31,203. research.work carries canonical_title,
+canonical_genre, parent_genre, excerpt_of_work_id — but no composer column
+(see §12.11, composers deferred).
