@@ -1,0 +1,19 @@
+theaterschoolstaff_1890-91_p001 | e016 | patronymic | PRINTED: "Оттоновна" | confidence DIRECT | Вазем, Екатерина
+theaterschoolstaff_1891-92_p003 | e015 | family_name | PRINTED: "Банковскій" | confidence DIRECT | letter-spaced "Банковск ій"; Николай Александровичъ, мл. воспитатель
+theaterschoolstaff_1893-94_p003 | e016 | family_name | PRINTED: "Рофастъ" | confidence DIRECT | Густавъ Петровичъ
+theaterschoolstaff_1897-98_p003 | e008 | patronymic | PRINTED: "Анемподистовичъ" | confidence DIRECT | split "Анемподисто-/вичъ"; Михайловъ, Константинъ
+theaterschoolstaff_1897-98_p003 | e015 | family_name | PRINTED: "Тихомировъ" | confidence DIRECT | Василій Дмитріевичъ
+theaterschoolstaff_1901-02_p000 | e017 | family_name | PRINTED: "Миронниковъ" | confidence DIRECT | letter-spaced "М и р о н н и к о в ъ"; Александръ Васильевичъ
+theaterschoolstaff_1905-06_p001 | e017 | family_name | PRINTED: "Корнхо" | confidence DIRECT | letter-spaced "К о р н х о"; Луи Юльевичъ, list no. 10
+theaterschoolstaff_1907-08_p001 | e007 | patronymic | PRINTED: "Владимировна" | confidence DIRECT | Юргенсъ, Эмилія
+theaterschoolstaff_1907-08_p001 | e018 | first_name | PRINTED: "Владимиръ" | confidence DIRECT | Каттерфельдъ, no. 11
+theaterschoolstaff_1907-08_p001 | e020 | patronymic | PRINTED: "Михаиловна" | confidence DIRECT | split "Михаи-/ловна"; Куличевская, Клавдія, no. 13
+theaterschoolstaff_1907-08_p001 | e032 | patronymic | PRINTED: "Михаиловичъ" | confidence DIRECT | Фокинъ, Михаилъ, no. 25
+theaterschoolstaff_1907-08_p001 | e005 | patronymic | PRINTED: "Ѳедоровна" | confidence DIRECT | Сигристъ, Ольга, no. 5; initial glyph is Ѳ (fita)
+theaterschoolstaff_1907-08_p001 | e011 | patronymic | PRINTED: "Владимировичъ" | confidence DIRECT | Волковъ, Николай, no. 4
+theaterschoolstaff_1907-08_p004 | e001 | patronymic | PRINTED: "Владимировна" | confidence DIRECT | Бороздина, Юлія, Учителя no. 1
+theaterschoolstaff_1907-08_p004 | e026 | patronymic | PRINTED: "Михаиловичъ" | confidence DIRECT | split "Михаило-/вичъ"; Мордкинъ, Михаилъ, no. 19
+theaterschoolstaff_1907-08_p004 | e027 | patronymic | PRINTED: "Михаиловичъ" | confidence DIRECT | Мошковъ, Василій, no. 20
+theaterschoolstaff_1907-08_p004 | e030 | patronymic | PRINTED: "Владимировичъ" | confidence DIRECT | Орловъ, Алексѣй, no. 23
+theaterschoolstaff_1907-08_p004 | e013 | patronymic | PRINTED: "Владимировичъ" | confidence DIRECT | Носовъ, Сергѣй, no. 11 (right column)
+theaterschoolstaff_1908-09_p004 | e005 | first_name | PRINTED: "ВладимІръ" | confidence DIRECT | 5th letter-from-end glyph is a capital-height undotted І inside the lowercase word (contrast dotted lowercase і in "Михайловскій" same line); Михайловскій, Александровичъ, no. 5

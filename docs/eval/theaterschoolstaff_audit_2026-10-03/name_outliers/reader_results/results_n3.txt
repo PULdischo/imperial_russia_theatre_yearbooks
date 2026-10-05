@@ -1,0 +1,15 @@
+theaterschoolstaff_1891-92_p002 | e003 | patronymic | PRINTED: "Михаиловичъ" | confidence DIRECT | Поповъ, Михаилъ; list no. 22
+theaterschoolstaff_1891-92_p002 | e023 | patronymic | PRINTED: "Іосифовичъ" | confidence DIRECT | Морозовъ, Петръ; list no. 6 (initial letter is Cyrillic dotted І)
+theaterschoolstaff_1893-94_p001 | e010 | family_name | PRINTED: "Капыловъ" | confidence DIRECT | list no. 9, Александръ Александровичъ (with ы, not и)
+theaterschoolstaff_1897-98_p001 | e016 | family_name | PRINTED: "Легатъ" | confidence DIRECT | list no. 11, Николай Густавовичъ
+theaterschoolstaff_1900-01_p001 | e034 | family_name | PRINTED: "Семенчиковъ" | confidence DIRECT | list no. 27, Василій Васильевичъ; letter-spaced in print; ends in ъ
+theaterschoolstaff_1902-03_p002 | e025 | family_name | PRINTED: "Поліевктовъ" | confidence DIRECT | list no. 10, Михаилъ Александровичъ; 4th letter is dotted Cyrillic і (Поліевктовъ), letter-spaced in print
+theaterschoolstaff_1907-08_p000 | e003 | patronymic | PRINTED: "Михаиловичъ" | confidence DIRECT | Климченко, Андроникъ; split by line break "Михаи-/ловичъ."
+theaterschoolstaff_1907-08_p000 | e004 | first_name | PRINTED: "Владимиръ" | confidence DIRECT | Погожевъ, Владимиръ Петровичъ
+theaterschoolstaff_1907-08_p000 | e006 | patronymic | PRINTED: "Михаиловичъ" | confidence DIRECT | Пчельниковъ, Павелъ; split by line break "Михаи-/ловичъ."
+theaterschoolstaff_1907-08_p000 | e014 | patronymic | PRINTED: "Михаиловичъ" | confidence DIRECT | Михайловъ, Алексѣй (Лекарскій помощникъ), unnumbered; not split
+theaterschoolstaff_1907-08_p003 | e003 | first_name | PRINTED: "Владимиръ" | confidence DIRECT | Погожевъ, list no. 2
+theaterschoolstaff_1907-08_p003 | e004 | patronymic | PRINTED: "Михаиловичъ" | confidence DIRECT | Пчельниковъ, Павелъ, list no. 3; split "Михаи-/ловичъ."
+theaterschoolstaff_1907-08_p003 | e006 | first_name | PRINTED: "Владимиръ" | confidence DIRECT | Михайловскій, Помощникъ инспектора, unnumbered; patronymic Александровичъ split "Алексан-/дровичъ"
+theaterschoolstaff_1907-08_p003 | e001 | family_name | PRINTED: "Фонъ-Бооль" | confidence DIRECT | Николай Константиновичъ (Управляющій Училищемъ); hyphenated, letter-spaced, double о
+theaterschoolstaff_1908-09_p003 | e002 | family_name | PRINTED: "Всеволожскій" | confidence DIRECT | list no. 1, Иванъ Александровичъ; letter-spaced; ends -скій (і + й), unlike the 1907-08 pages which print "Всеволожской"

@@ -1,0 +1,14 @@
+theaterschoolstaff_1890-91_p002 | e011 | patronymic | PRINTED: "Михаиловичъ" | confidence DIRECT |
+theaterschoolstaff_1892-93_p002 | e014 | family_name | PRINTED: "Банковскій" | confidence DIRECT |
+theaterschoolstaff_1894-95_p001 | e014 | family_name | PRINTED: "Капыловъ" | confidence DIRECT |
+theaterschoolstaff_1898-99_p001 | e021 | patronymic | PRINTED: "Филотеровичъ" | confidence DIRECT | split across line break Филоте-/ровичъ
+theaterschoolstaff_1902-03_p001 | e024 | family_name | PRINTED: "Легатъ 1-й" | confidence DIRECT | surname is Легатъ (ъ, not ь); numeral suffix "1-й" printed after it (letter-spaced "Л е г а т ъ")
+theaterschoolstaff_1902-03_p001 | e025 | family_name | PRINTED: "Легатъ 2-й" | confidence DIRECT | surname is Легатъ (ъ, not ь); numeral suffix "2-й" printed after it
+theaterschoolstaff_1906-07_p003 | e001 | family_name | PRINTED: "Фонъ-Бооль" | confidence DIRECT | capital Ф, hyphenated, letter-spaced; ends ь
+theaterschoolstaff_1907-08_p002 | e016 | first_name | PRINTED: "Владимиръ" | confidence DIRECT | list no. 6 (Давыдовъ); no і
+theaterschoolstaff_1907-08_p002 | e005 | patronymic | PRINTED: "Ѳедоровичъ" | confidence DIRECT | list no. 31 (Эльманъ); split Ѳедоро-/вичъ; initial is Ѳ (barred)
+theaterschoolstaff_1907-08_p002 | e011 | patronymic | PRINTED: "Ѳедоровичъ" | confidence DIRECT | list no. 1 drama courses (Адамовъ); initial is Ѳ
+theaterschoolstaff_1907-08_p002 | e015 | first_name | PRINTED: "Владимиръ" | confidence DIRECT | list no. 5 (Головань); no і
+theaterschoolstaff_1908-09_p002 | e002 | family_name | PRINTED: "Зацимовскій" | confidence DIRECT | list no. 1 (Учителя приготовительных классовъ); letter-spaced, і before й
+theaterschoolstaff_1908-09_p002 | e008 | family_name | PRINTED: "Голованъ" | confidence DIRECT | list no. 3 drama courses; ends ъ (hard sign), not ь
+theaterschoolstaff_1909-10_p004 | e016 | first_name | PRINTED: "Геогрій" | confidence DIRECT | letters Г-е-о-г-р-і-й (о before г; NOT Георгій) -- apparent print typo, confirmed at 8x

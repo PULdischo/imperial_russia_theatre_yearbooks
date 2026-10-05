@@ -1,0 +1,434 @@
+[
+ {
+  "page": "theaterschoolstaff_1907-08_p000",
+  "e": "e003",
+  "field": "patronymic",
+  "stored": "Михаиловичъ",
+  "majority": "Михайловичъ",
+  "person": "Климченко, Андроникъ Михайловичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p000",
+  "e": "e004",
+  "field": "first_name",
+  "stored": "Владимиръ",
+  "majority": "Владиміръ",
+  "person": "Погожевъ, Владиміръ Петровичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p003",
+  "e": "e003",
+  "field": "first_name",
+  "stored": "Владимиръ",
+  "majority": "Владиміръ",
+  "person": "Погожевъ, Владиміръ Петровичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p000",
+  "e": "e006",
+  "field": "patronymic",
+  "stored": "Михаиловичъ",
+  "majority": "Михайловичъ",
+  "person": "Пчельниковъ, Павелъ Михайловичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p003",
+  "e": "e004",
+  "field": "patronymic",
+  "stored": "Михаиловичъ",
+  "majority": "Михайловичъ",
+  "person": "Пчельниковъ, Павелъ Михайловичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1890-91_p001",
+  "e": "e016",
+  "field": "patronymic",
+  "stored": "Оттоновна",
+  "majority": "Оттовна",
+  "person": "Ваземъ, Екатерина Оттовна",
+  "season": "1890-91"
+ },
+ {
+  "page": "theaterschoolstaff_1898-99_p001",
+  "e": "e021",
+  "field": "patronymic",
+  "stored": "Филотовичъ",
+  "majority": "Филотеровичъ",
+  "person": "Павловскій, Александръ Филотеровичъ",
+  "season": "1898-99"
+ },
+ {
+  "page": "theaterschoolstaff_1890-91_p002",
+  "e": "e011",
+  "field": "patronymic",
+  "stored": "Михаиловичъ",
+  "majority": "Михайловичъ",
+  "person": "Поповъ, Михаилъ Михайловичъ",
+  "season": "1890-91"
+ },
+ {
+  "page": "theaterschoolstaff_1891-92_p002",
+  "e": "e003",
+  "field": "patronymic",
+  "stored": "Михаиловичъ",
+  "majority": "Михайловичъ",
+  "person": "Поповъ, Михаилъ Михайловичъ",
+  "season": "1891-92"
+ },
+ {
+  "page": "theaterschoolstaff_1908-09_p002",
+  "e": "e002",
+  "field": "family_name",
+  "stored": "Зацімовскій",
+  "majority": "Зацимовскій",
+  "person": "Зацимовскій, Николай Станиславовичъ",
+  "season": "1908-09"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p002",
+  "e": "e016",
+  "field": "first_name",
+  "stored": "Владимиръ",
+  "majority": "Владиміръ",
+  "person": "Давыдовъ, Владиміръ Николаевичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1891-92_p002",
+  "e": "e023",
+  "field": "patronymic",
+  "stored": "Іосифовичъ",
+  "majority": "Осиповичъ",
+  "person": "Морозовъ, Петръ Осиповичъ",
+  "season": "1891-92"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p003",
+  "e": "e006",
+  "field": "first_name",
+  "stored": "Владимиръ",
+  "majority": "Владиміръ",
+  "person": "Михайловскій, Владиміръ Александровичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1908-09_p004",
+  "e": "e005",
+  "field": "first_name",
+  "stored": "ВладимІръ",
+  "majority": "Владиміръ",
+  "person": "Михайловскій, Владиміръ Александровичъ",
+  "season": "1908-09"
+ },
+ {
+  "page": "theaterschoolstaff_1897-98_p003",
+  "e": "e008",
+  "field": "patronymic",
+  "stored": "Анемполистовичъ",
+  "majority": "Анемподистовичъ",
+  "person": "Михайловъ, Константинъ Анемподистовичъ",
+  "season": "1897-98"
+ },
+ {
+  "page": "theaterschoolstaff_1893-94_p003",
+  "e": "e016",
+  "field": "family_name",
+  "stored": "Рофасть",
+  "majority": "Рофастъ",
+  "person": "Рофастъ, Густавъ Петровичъ",
+  "season": "1893-94"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p004",
+  "e": "e001",
+  "field": "patronymic",
+  "stored": "Владимировна",
+  "majority": "Владиміровна",
+  "person": "Бороздина, Юлія Владиміровна",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1891-92_p003",
+  "e": "e015",
+  "field": "family_name",
+  "stored": "Банковскій",
+  "majority": "Бонковскій",
+  "person": "Бонковскій, Николай Александровичъ",
+  "season": "1891-92"
+ },
+ {
+  "page": "theaterschoolstaff_1892-93_p002",
+  "e": "e014",
+  "field": "family_name",
+  "stored": "Банковскій",
+  "majority": "Бонковскій",
+  "person": "Бонковскій, Николай Александровичъ",
+  "season": "1892-93"
+ },
+ {
+  "page": "theaterschoolstaff_1893-94_p001",
+  "e": "e010",
+  "field": "family_name",
+  "stored": "Капыловъ",
+  "majority": "Копыловъ",
+  "person": "Копыловъ, Александръ Александровичъ",
+  "season": "1893-94"
+ },
+ {
+  "page": "theaterschoolstaff_1894-95_p001",
+  "e": "e014",
+  "field": "family_name",
+  "stored": "Капыловъ",
+  "majority": "Копыловъ",
+  "person": "Копыловъ, Александръ Александровичъ",
+  "season": "1894-95"
+ },
+ {
+  "page": "theaterschoolstaff_1901-02_p000",
+  "e": "e017",
+  "field": "family_name",
+  "stored": "Мирониковъ",
+  "majority": "Миронниковъ",
+  "person": "Миронниковъ, Александръ Васильевичъ",
+  "season": "1901-02"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p001",
+  "e": "e007",
+  "field": "patronymic",
+  "stored": "Владимировна",
+  "majority": "Владиміровна",
+  "person": "Юргенсъ, Эмилія Владиміровна",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1900-01_p001",
+  "e": "e034",
+  "field": "family_name",
+  "stored": "Семеничковъ",
+  "majority": "Семенчиковъ",
+  "person": "Семенчиковъ, Василій Васильевичъ",
+  "season": "1900-01"
+ },
+ {
+  "page": "theaterschoolstaff_1897-98_p001",
+  "e": "e016",
+  "field": "family_name",
+  "stored": "Легатъ",
+  "majority": "Легатъ 1-й",
+  "person": "Легатъ, Николай Густавовичъ",
+  "season": "1897-98"
+ },
+ {
+  "page": "theaterschoolstaff_1902-03_p001",
+  "e": "e024",
+  "field": "family_name",
+  "stored": "Легать 1-й",
+  "majority": "Легатъ 1-й",
+  "person": "Легатъ, Николай Густавовичъ",
+  "season": "1902-03"
+ },
+ {
+  "page": "theaterschoolstaff_1897-98_p003",
+  "e": "e015",
+  "field": "family_name",
+  "stored": "Тихомировъ",
+  "majority": "Тихоміровъ",
+  "person": "Тихоміровъ, Василій Дмитріевичъ",
+  "season": "1897-98"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p001",
+  "e": "e018",
+  "field": "first_name",
+  "stored": "Владимиръ",
+  "majority": "Владиміръ",
+  "person": "Каттерфельдъ, Владиміръ Богдановичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1902-03_p001",
+  "e": "e025",
+  "field": "family_name",
+  "stored": "Легать 2-й",
+  "majority": "Легатъ 2-й",
+  "person": "Легатъ 2-й, Сергѣй Густавовичъ",
+  "season": "1902-03"
+ },
+ {
+  "page": "theaterschoolstaff_1909-10_p004",
+  "e": "e016",
+  "field": "first_name",
+  "stored": "Геогрій",
+  "majority": "Георгій",
+  "person": "Домбре, Георгій Николаевичъ",
+  "season": "1909-10"
+ },
+ {
+  "page": "theaterschoolstaff_1908-09_p003",
+  "e": "e002",
+  "field": "family_name",
+  "stored": "Всеволожскій",
+  "majority": "Всеволожской",
+  "person": "Всеволожской, Иванъ Александровичъ",
+  "season": "1908-09"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p001",
+  "e": "e020",
+  "field": "patronymic",
+  "stored": "Михаиловна",
+  "majority": "Михайловна",
+  "person": "Куличевская, Клавдія Михайловна",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p001",
+  "e": "e032",
+  "field": "patronymic",
+  "stored": "Михаиловичъ",
+  "majority": "Михайловичъ",
+  "person": "Фокинъ, Михаилъ Михайловичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p004",
+  "e": "e026",
+  "field": "patronymic",
+  "stored": "Михаиловичъ",
+  "majority": "Михайловичъ",
+  "person": "Мордкинъ, Михаилъ Михайловичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p002",
+  "e": "e005",
+  "field": "patronymic",
+  "stored": "Ѳедоровичъ",
+  "majority": "Федоровичъ",
+  "person": "Эльманъ, Александръ Федоровичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p000",
+  "e": "e014",
+  "field": "patronymic",
+  "stored": "Михаиловичъ",
+  "majority": "Михайловичъ",
+  "person": "Михайловъ, Алексѣй Михайловичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p001",
+  "e": "e005",
+  "field": "patronymic",
+  "stored": "Ѳедоровна",
+  "majority": "Федоровна",
+  "person": "Сигристъ, Ольга Федоровна",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1906-07_p003",
+  "e": "e001",
+  "field": "family_name",
+  "stored": "Фонъ-Бооль",
+  "majority": "Фонъ Бооль",
+  "person": "Фонъ-Бооль, Николай Константиновичъ",
+  "season": "1906-07"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p003",
+  "e": "e001",
+  "field": "family_name",
+  "stored": "Фонъ-Бооль",
+  "majority": "Фонъ Бооль",
+  "person": "Фонъ-Бооль, Николай Константиновичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1902-03_p002",
+  "e": "e025",
+  "field": "family_name",
+  "stored": "Полієвктовъ",
+  "majority": "Поліевктовъ",
+  "person": "Поліевктовъ, Михаилъ Александровичъ",
+  "season": "1902-03"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p004",
+  "e": "e027",
+  "field": "patronymic",
+  "stored": "Михаиловичъ",
+  "majority": "Михайловичъ",
+  "person": "Мошковъ, Василій Михайловичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p004",
+  "e": "e030",
+  "field": "patronymic",
+  "stored": "Владимировичъ",
+  "majority": "Владиміровичъ",
+  "person": "Орловъ, Алексѣй Владиміровичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p001",
+  "e": "e011",
+  "field": "patronymic",
+  "stored": "Владимировичъ",
+  "majority": "Владиміровичъ",
+  "person": "Волковъ, Николай Владиміровичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p002",
+  "e": "e011",
+  "field": "patronymic",
+  "stored": "Ѳедоровичъ",
+  "majority": "Федоровичъ",
+  "person": "Адамовъ, Василій Федоровичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p004",
+  "e": "e013",
+  "field": "patronymic",
+  "stored": "Владимировичъ",
+  "majority": "Владиміровичъ",
+  "person": "Носовъ, Сергѣй Владиміровичъ",
+  "season": "1907-08"
+ },
+ {
+  "page": "theaterschoolstaff_1905-06_p001",
+  "e": "e017",
+  "field": "family_name",
+  "stored": "Корнхо",
+  "majority": "Корню",
+  "person": "Корню, Луи Юльевичъ",
+  "season": "1905-06"
+ },
+ {
+  "page": "theaterschoolstaff_1908-09_p002",
+  "e": "e008",
+  "field": "family_name",
+  "stored": "Голованъ",
+  "majority": "Головань",
+  "person": "Головань, Владиміръ Александровичъ",
+  "season": "1908-09"
+ },
+ {
+  "page": "theaterschoolstaff_1907-08_p002",
+  "e": "e015",
+  "field": "first_name",
+  "stored": "Владимиръ",
+  "majority": "Владиміръ",
+  "person": "Головань, Владиміръ Александровичъ",
+  "season": "1907-08"
+ }
+]

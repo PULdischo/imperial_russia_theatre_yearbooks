@@ -12219,3 +12219,14 @@ select split_part(heading_path,' / ',1), count(*) from raw.person_entry where en
 ```
 
 Result: stored Moscow/Petersburg row counts per season were ~59-66 Moscow / 75-86 Petersburg everywhere except 1898-99 (11 / 123); all 48 persons on 1898-99 p003+p004 are listed only under the Moscow school in other seasons (48 of 48 "M-only"); after the fix 1898-99 has 59 Moscow and 75 Petersburg rows (raw and analysis.heading_path_clean agree).
+
+## 2026-10-05 -- TheaterSchoolStaff name outliers and Легатъ/Головань spellings (issue #134)
+
+```sql
+-- per TSS person with >= 4 entries: entries whose family/first/patronymic occurs in <= 2 entries and is >= 70% similar to a spelling shared by >= 3 others
+select cast(l.person_id as varchar), l.entry_id, e.page_id, e.family_name, e.first_name, e.patronymic, sp.season, p.display_name from entities.person_link l join entities.person p on p.person_id=l.person_id and p.superseded_by_person_id is null join raw.person_entry e using(entry_id) join raw.source_pages sp on sp.page_id=e.page_id where e.entity_type='TheaterSchoolStaff';
+select e.entity_type, regexp_replace(e.family_name,' [0-9]-[йя]$','') f, count(*) from raw.person_entry e where e.family_name ilike 'Легат%' group by 1,2 order by 1,2;
+select sp.season, e.family_name, count(*) from raw.person_entry e join raw.source_pages sp on sp.page_id=e.page_id where e.entity_type='TheaterSchoolStaff' and e.family_name ilike 'Голован%' group by 1,2 order by 1;
+```
+
+Result: 53 candidates (patronymic 22, family 23, first 8), 48 read on the scan, 9 corrected. Легатъ/Легать after the fixes: BalletArtists 33 Легатъ / 41 Легать; Graduates 2 / 1; TheaterSchoolStaff 15 / 2 (the two remaining are 1896-97 p001 e016 and 1905-06 p001 e019, sent to a blind read). Головань (ь): 1906-07, 1907-08, 1909-10; Голованъ (ъ): 1908-09.
