@@ -8,3 +8,4 @@
 | 2026-10-05 | Потѣхинъ Алексѣй Антиповичъ | b53a76, 8872b8, 0fd64e -> b53a76 | MERGED (RG: "Merge all three"); not uncertain | honorary member of the school conference, one line every season 1890-91..1907-08; 18 entries |
 | 2026-10-05 | Рюминъ Иванъ Ивановичъ | 2f3464 -> 24f7fc | MERGED (RG); not uncertain | manager of the Petersburg school since 27 May 1887, died 2 Sept 1899; 23 entries 1890-91..1899-00 |
 | 2026-10-05 | Добрынина Елена Андреевна | d42d9e -> 0ef17f | MERGED (RG); not uncertain | class lady since 1 April 1884, 10 entries 1890-91..1899-00, died 27 Oct 1899; the 1896-97 line had the day missing from the start date |
+| 2026-10-05 | Петровъ Иванъ Степановичъ | 0aeaf9 -> 527973 | MERGED (RG), labelled UNCERTAIN (uncertain list entry 9) | tutor 1890-91..1907-08 (since 1891) then preparatory-class teacher 1908-10 (since 15 Nov 1907); start dates differ, no transfer printed |

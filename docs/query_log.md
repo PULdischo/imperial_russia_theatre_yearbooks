@@ -12317,3 +12317,25 @@ WHERE left(cast(l.person_id as varchar),6) IN ('0ef17f','d42d9e') ORDER BY 1,2;
 ```
 
 Result: 10 entries, 'Классныя дамы', one per season 1890-91..1899-00, start 'съ 1 апрѣля 1884' (1896-97 prints 'съ апрѣля 1884', on d42d9e), '† 27 октября 1899' in 1899-00. After merge: live 3243 -> 3242, 0 orphans, 0 shift blocks, flags 546.
+
+## 2026-10-05 — Issue #133: "Волшебный башмачекъ" title, as transcribed (for a scan check)
+
+```sql
+select page_id, list_number, season, city, title, left(description_text, 40) from raw.production_entry where title ilike '%башмач%' order by season;
+select distinct performance_title, count(*) from raw.event_entry_performance where performance_title ilike '%башмач%' group by 1 order by 2 desc;
+```
+
+Result: Хрустальный башмачекъ ×6 (MSK 1890-97). Волшебный башмачекъ ×4 (MSK 1899-1903): 1899-00 has the title "Волшебный башмачекъ (Сандрильона)", while 1900-03 put "(Сандрильона)." at the start of description_text. Repertoire: Хрустальный башмачекъ 21 (+2 excerpt rows), Волшебный башмачекъ 12. All 4 Волшебный titles were zoomed on the scans: "Волшебный башмачекъ" (letter-spaced, ъ ending) every time. "(Сандрильона)" is in regular type on all 4 pages.
+
+## 2026-10-05 — Петровъ Иванъ Степановичъ (TSS): the two persons' entries and the 1906-10 Петровъ lines, then merge verification
+
+```sql
+SELECT sp.season, right(l.entry_id,10), right(e.heading_path,34), e.rank_or_title, e.tenure_note_text, left(cast(l.person_id as varchar),6)
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('527973','0aeaf9') ORDER BY 1,2;
+SELECT sp.season, right(e.page_id,5), right(e.heading_path,40), e.subject_taught, e.family_name, e.first_name, e.tenure_note_text
+FROM raw.person_entry e JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE e.entity_type='TheaterSchoolStaff' AND e.family_name LIKE 'Петров%' AND sp.season IN ('1906-07','1907-08','1908-09','1909-10');
+```
+
+Result: 19 tutor entries 1890-91..1907-08 (Воспитатели, since 1 сентября 1891) and 2 'Учителя приготовительныхъ классовъ' entries 1908-09, 1909-10 (since 15 ноября 1907); no Петровъ Иванъ among 1908-10 Воспитатели. After merge: live 3242 -> 3241, 0 orphans, 0 shift blocks, flags 546.

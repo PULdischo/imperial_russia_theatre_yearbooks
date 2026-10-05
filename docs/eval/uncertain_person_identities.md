@@ -74,6 +74,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** ProductionTeam lines `productionteam_1890-91_p003__e010` ... `productionteam_1897-98_p002__e028`; school lines `theaterschoolstaff_1890-91_p004__e011` ... `theaterschoolstaff_1901-02_p003__e019` (list numbers 3-5).
 - **Would resolve it:** a biography of the prince (Григорій Дмитріевичъ Волконскій, Imperial Theatres lighting department / Theater School); Весь Петербургъ 1894-1901 entries under Волконскій for his occupation and address.
 
+## 9. Петровъ Иванъ Степановичъ (TheaterSchoolStaff) -- the tutor and the preparatory-class teacher: one man or two?
+
+- **Status:** MERGED (RG, 2026-10-05, "merge and add to the uncertain list"): two live persons joined into 527973... (21 entries, 1890-91 to 1909-10).
+- **What is uncertain:** a **Воспитатель** (tutor; "съ 1 сентября 1891 г."; rank кол. асс. 1898-1905, надв. сов. 1906-08; 19 entries, 1890-91 to 1907-08) and a teacher in **Учителя приготовительныхъ классовъ** ("съ 15 ноября 1907 г."; 1908-09 and 1909-10) share one name and patronymic.
+- **For one man:** same school, name and patronymic; the tutor line ends exactly where the teacher line begins; he is never in both lists in one season.
+- **For two men / against:** the start dates differ and no volume prints a transfer; the 1907-08 volume still lists him as tutor although the teacher post is dated 15 Nov 1907; Петровъ Иванъ is a very common name.
+- **Where to look:** `theaterschoolstaff_1907-08_p000__e020` (last tutor line), `theaterschoolstaff_1908-09_p002__e003`, `theaterschoolstaff_1909-10_p002__e006`.
+- **Would resolve it:** Весь Петербургъ 1908-1910 (a school tutor or teacher named Петровъ Иванъ Степановичъ); a school staff register.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
