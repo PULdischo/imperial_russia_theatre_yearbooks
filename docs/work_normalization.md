@@ -425,3 +425,20 @@ their predecessors are in the crosswalk like every other retired id.
 loaded the in-progress code from the shared working tree before review. RG then
 approved keeping it (2026-10-05). Pipeline changes for this effort are now made in a
 separate git worktree and merged only after review.
+
+**Step 2, unlinked excerpts (applied 2026-10-05).** Excerpt links go from 179 to 257 (76 new, 118 performances; 0 lost; no work_id changed).
+- A fallback matcher, `_excerpt_fallback()`, handles phrasings the two regexes miss: multi-act lists, nested scene-of-act references, and section words (Актъ / Прологъ / Сцена / Танцы и группы / Grand pas / Сюита / Балъ изъ). It strips leading excerpt vocabulary and links only when the remaining base title is an existing work. With a single candidate, it refuses to link when the excerpt's own genre word names a different art form ("Прологъ драмы Псковитянка" ≠ the opera).
+- Curated links are in `pipeline/entity_curation/work_excerpt_links.csv`: genitive titles, plus titles whose act reference is in words or follows a colon. Every row states its basis, and an unmatched row is a build error.
+- `curated_parent_works.csv` defines works attested ONLY through excerpts. These are Pushkin's plays Борисъ Годуновъ [траг.], Каменный гость [др. сц.] and Русалка [др.], kept apart from the operas of the same names. They have appearance_count 0 and are never offered to automatic matching. Their scenes come from:
+  - the 1899 Pushkin centenary galas (Александринскій and Малый, 26 April – 6 May 1899, printed with "Юбилейный спектакль въ память столѣтія…" / "Спектакль въ память А. С. Пушкина");
+  - Сцена у фонтана (Маріинскій 1904);
+  - Михайловскій 1908 [сц.].
+- Left unlinked: the Михайловскій 1891/1893 "драмы Русалка" (RG, 2026-09-26); "Евгеній Онѣгинъ (Письмо Татьяны) [сц.]" (6 May 1899, recited or sung? unknown); and non-excerpts (Дивертиссементъ, Сцена г. Горбунова, Изъ огня да въ полымя).
+- List: docs/eval/work_consolidation_step2_excerpt_links.csv.
+
+**AREA FOR EXTERNAL RESEARCH (RG, 2026-10-05): the 1899 Pushkin galas.** We read the gala scenes as Pushkin's plays, spoken, not opera excerpts. The basis is:
+- drama-theatre venues;
+- the printed genres ("др. сц." for the little tragedies, "изъ траг." for Корчма);
+- that Скупой рыцарь and Пиръ во время чумы probably had no opera version yet in 1899 (general knowledge, not checked).
+
+There is no 1898-99 Season Review in the scans. A contemporary newspaper report of the galas would settle it, and would also settle the Письмо Татьяны item.

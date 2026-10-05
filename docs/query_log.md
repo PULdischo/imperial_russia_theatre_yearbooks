@@ -12559,6 +12559,33 @@ WHERE left(cast(person_id_1 as varchar),6) IN ('437e79','495cd4','d54949') OR le
 
 Result: Сергѣй Густавовичъ 21 entries over 4 persons (all 'съ 1 іюня 1894', TSS 'съ 1 сентября 1898', '† 18 октября 1905'); Иванъ 8 entries over 2 persons (explicit break/re-engagement printed 1897-00); Александра: Graduates 1906-07 (joined 1 іюня 1907) + BalletArtists 1907-08 (съ 1 іюня 1907). The Иванъ check found 495cd4 tombstoned into 437e79 with no log row of its own (backups: 495cd4 live); a manual row was inserted after RG confirmed. After the three merges: live 3226 -> 3221, tombstones 2350 -> 2355, 0 orphans, 0 shift blocks, flags 546, receipts identical.
 
+## 2026-10-05 — Work consolidation step 2 (unlinked excerpts): survey and preview on a copy
+
+```sql
+select canonical_title, canonical_genre, appearance_count from research.work where excerpt_of_work_id is null order by canonical_title;
+-- filtered in Python for excerpt vocabulary => 118 excerpt-looking unlinked works / 379 performances
+-- preview: worktree build_work() with the step-2 fallback matcher on a copy of full_run
+select w.work_id, w.canonical_title, w.canonical_genre, w.appearance_count, w.excerpt_note, p.canonical_title, p.canonical_genre
+from entities.work w left join entities.work p on p.work_id = w.excerpt_of_work_id;
+```
+
+Result: 118 candidates split into ~75 real excerpts the regexes missed; non-excerpts (Дивертиссементъ 81, Сцена г. Горбунова 49, Изъ огня да въ полымя…); and titles with no usable base or only a genitive base. Preview: 56 new excerpt links (87 performances), 0 links lost, all work_ids unchanged; excerpt links 179 → 237. Two wrong links in the first preview were fixed before showing RG: "Сц. 4-го д. оп. Балъ маскарадъ" (now → Балъ-маскарадъ оп.), and "Прологъ драмы Псковитянка" (now left unlinked: drama vs opera). List: docs/eval/work_consolidation_step2_excerpt_links.csv.
+
+## 2026-10-05 — Step 2 curated excerpt links: performance context for genitive / art-form-ambiguous excerpts
+
+```sql
+-- for each excerpt title: season, city, theater, and the whole billing of its event
+select e.season, e.city, e.theater_canonical, eep.performance_title,
+       (select string_agg(p2.performance_title || coalesce(' [' || p2.genre || ']', ''), ' | ' order by p2.performance_order)
+          from raw.event_entry_performance p2 where p2.event_id = eep.event_id)
+from raw.event_entry_performance eep join analysis.event_entry e using (event_id)
+join entities.work_link wl on wl.raw_performance_id = eep.performance_id join entities.work w using (work_id)
+where w.canonical_title = ?;
+select canonical_title, canonical_genre, appearance_count from research.work where canonical_title ilike ? || '%' and excerpt_of_work_id is null;
+```
+
+Result: "2 сцены изъ Бориса Годунова" and "Сцена изъ Каменнаго гостя" are from the 1898-99 Александринскій Pushkin-centenary gala (Моцартъ и Сальери, Скупой рыцарь, Пиръ во время чумы), so they are Pushkin's dramas, not the operas. The Русалка gala scenes (1898-99 Малый) are left alone per RG's 2026-09-26 and #94 rulings. Preview with 13 curated links: 69 new excerpt links in total (104 performances), 0 lost, ids unchanged.
+
 ## 2026-10-05 — Ѳедорова Марія Дмитріевна, Марквардтъ Августъ, Шнейдеръ/Шредеръ Карлъ (uncertain-list items 5, 6, 7): timelines and verification
 
 ```sql
