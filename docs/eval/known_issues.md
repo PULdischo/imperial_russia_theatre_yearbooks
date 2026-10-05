@@ -22126,3 +22126,11 @@ column, has 3 transcription errors (NOT fixed yet, RG to schedule):**
 - **Follow-ups found (not done):**
   - "Снѣгурочка, весенняя сказка" (40, the subtitle inside the title, no genre) is still separate from "Снѣгурочка" [весенняя сказка] (59). Both are Ostrovsky's play; the subtitle-in-title needs handling.
   - Fused two-work titles to split in raw: "Боярыня Вѣра Шелога, прологъ. Псковитянка, оп." (Большой 6 Nov 1901: the prologue opera and Псковитянка printed on one line) and "Женская логика (Миссъ Гоббсъ), ком. Тяжба".
+- **Снѣгурочка merge + fused-line splits APPLIED (RG, 2026-10-05):**
+  - **Снѣгурочка:** every "Снѣгурочка, весенняя сказка" printing (any spelling) is at a drama house (Новый, Александринскій, 1900-05), so it is Ostrovsky's play. They are aliased to "Снѣгурочка" with identity genre "весенняя сказка" when no genre is printed (work_title_aliases.csv has a new as_genre_if_blank column). Result: the play has 99 performances, the opera stays 65.
+  - **Raw splits, scan-confirmed as two printed lines:**
+    - repertoire_1902-03_p013, Большой 18 and 21 Nov 1902: "Боярыня Вѣра Шелога, прологъ." / "Псковитянка, оп.";
+    - repertoire_1902-03_p005, Малый 2 Oct 1902: "Женская логика (Миссъ Гоббсъ), ком." / "Тяжба, ком.".
+
+    Re-parse diff: exactly those 3 events (+3 performances, 29568 → 29571). Works 3106 → 3103.
+- **Боярыня Вѣра Шелога, corrected reading (for RG).** All ~25 performances, 1901-06, are at the Большой or Маріинскій and billed as the prologue with "Псковитянка, оп." That is Rimsky-Korsakov's opera-prologue, not Mey's drama. The printed labels vary (прологъ / оп. / др.), so the work is currently split: "прологъ" (22) is classed as spoken, apart from the "оп."/"др." printings. Earlier "keep apart" advice was wrong; proposed: treat all as opera.
