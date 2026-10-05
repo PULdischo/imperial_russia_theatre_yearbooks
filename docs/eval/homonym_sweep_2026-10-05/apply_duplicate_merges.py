@@ -8,7 +8,7 @@ REAL = 'outputs/full_run/imperial_theaters.duckdb'
 DB = REAL if '--write' in sys.argv else '/tmp/dupmerge_dry.duckdb'
 if DB != REAL: shutil.copy2(REAL, DB)
 con = duckdb.connect(DB)
-APPLIED = {'68fa76', '0c1633', 'c11d62', 'b53a76', '24f7fc', '0ef17f', '527973', 'c58d24', '0b9603', '4af6a7', 'a550ac', '7029d5', '3e22b9', '76d1b9', '088ec9'}   # survivors of merges already applied to production (skipped on re-run)
+APPLIED = {'68fa76', '0c1633', 'c11d62', 'b53a76', '24f7fc', '0ef17f', '527973', 'c58d24', '0b9603', '4af6a7', 'a550ac', '7029d5', '3e22b9', '76d1b9', '088ec9', '87c046'}   # survivors of merges already applied to production (skipped on re-run)
 MERGES = [  # (survivor prefix, [loser prefixes], label, reason)
     ('68fa76', ['110f6d', '396ea1', '9327f4', '773570'], 'Волконскій Григорій Дмитріевичъ (князь)',
      'RG-approved 2026-10-05, labelled UNCERTAIN: lighting chief (ProductionTeam, since 1887-09-01, left 1898-09-01) and geography teacher in the ballet department of the Petersburg school (TheaterSchoolStaff, since 1888-09-01, left 1901-09-01); same name, rank, 20 entries, one line per list per year; the pairing of the two posts is unusual -- see uncertain_person_identities.md'),
@@ -42,6 +42,8 @@ MERGES = [  # (survivor prefix, [loser prefixes], label, reason)
      'RG-approved 2026-10-05: teacher of Законъ Божій (Roman Catholic pupils), Petersburg ballet department, since 1 ноября 1888, 1890-91..1893-94 (left 1 сентября 1894); surname only'),
     ('87c046', ['023b1e', '1150d3'], 'Рыхлякова 1-я Варвара Трофимовна',
      'RG-approved 2026-10-05: ballet artist Рыхлякова 1-я, 1890-91..1909-10; the 1904-05 line (fields misparsed, scan-verified start "1 сентября 1890") and the 1908-10 lines (start "1 сентября 1890") were on their own records; start date printed 1 іюня 1890 in the other volumes'),
+    ('33e281', ['760668', 'af49d5', '7bc39e'], 'Рыхлякова 2-я Наталья Трофимовна',
+     'RG-approved 2026-10-05: ballet artist Рыхлякова 2-я, joined the company 1 іюня 1892 (matches the 1891-92 Graduates line), one line per season 1892-93..1909-10 split over three records by the Наталья/Наталія spelling and a misparsed 1904-05 line'),
 ]
 def full(p):
     r = con.execute("select person_id from entities.person where cast(person_id as varchar) like ? and superseded_by_person_id is null", [p + '%']).fetchall()

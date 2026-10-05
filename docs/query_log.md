@@ -12464,3 +12464,7 @@ WHERE left(cast(l.person_id as varchar),6) IN ('1150d3','87c046','023b1e','5d6d2
 ```
 
 Result: Варвара (1-я): 87c046 17 entries 1890-91..1907-08 (no 1904-05), 023b1e 1904-05 (misparsed fields; scan no. 95 prints 'съ 1 сентября 1890'), 1150d3 1908-09/1909-10 ('съ 1 сентября 1890'), 5d6d24 TheaterSchoolStaff 1909-10 ('съ 1 ноября 1907'). Наталья (2-я): 33e281 12 entries, 760668 5, af49d5 1 (1904-05, misparsed), 7bc39e Graduates 1891-92. After merging 023b1e + 1150d3 into 87c046: live 3233 -> 3231, 0 orphans, 0 shift blocks, flags 546.
+
+## 2026-10-05 — Рыхлякова 2-я Наталья: merge verification (evidence in the cluster query above)
+
+Result: 760668 (5 entries), af49d5 (1904-05, misparsed fields) and 7bc39e (Graduates 1891-92) merged into 33e281 (12 entries) -> one person, 1891-92..1909-10. Counts in the verify output; 0 orphans, 0 shift blocks, flags 546.
