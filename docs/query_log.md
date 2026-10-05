@@ -12341,3 +12341,13 @@ WHERE e.entity_type='TheaterSchoolStaff' AND e.family_name LIKE 'Петров%' 
 Result: 19 tutor entries 1890-91..1907-08 (Воспитатели, since 1 сентября 1891) and 2 'Учителя приготовительныхъ классовъ' entries 1908-09, 1909-10 (since 15 ноября 1907); no Петровъ Иванъ among 1908-10 Воспитатели. After merge: live 3242 -> 3241, 0 orphans, 0 shift blocks, flags 546.
 
 Correction to the Петровъ Иванъ Степановичъ entry above: 18 tutor entries (1890-91..1907-08), 20 in total after the merge; "19" was a miscount.
+
+## 2026-10-05 — Боборыкинъ Петръ Дмитріевичъ (TSS): entries of c58d24 and 232905, school of the 1899-1903 lines, then merge verification
+
+```sql
+SELECT sp.season, right(l.entry_id,10), substr(e.heading_path,1,60), e.tenure_note_text, left(cast(l.person_id as varchar),6)
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('c58d24','232905') ORDER BY 1,2;
+```
+
+Result: 23 entries, all 'Почетные члены конференціи', 1890-91..1909-10; 1899-00 to 1901-02 listed under both the Moscow and the Petersburg school, the Moscow lines of 1900-01 and 1901-02 carrying 'Переведенъ тѣмъ же званіемъ въ С.-Петербургское училище.'. After merge: live 3241 -> 3240, 0 orphans, 0 shift blocks, flags 546.

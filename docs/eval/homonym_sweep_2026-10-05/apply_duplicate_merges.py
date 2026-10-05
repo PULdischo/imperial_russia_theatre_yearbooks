@@ -8,7 +8,7 @@ REAL = 'outputs/full_run/imperial_theaters.duckdb'
 DB = REAL if '--write' in sys.argv else '/tmp/dupmerge_dry.duckdb'
 if DB != REAL: shutil.copy2(REAL, DB)
 con = duckdb.connect(DB)
-APPLIED = {'68fa76', '0c1633', 'c11d62', 'b53a76', '24f7fc', '0ef17f'}   # survivors of merges already applied to production (skipped on re-run)
+APPLIED = {'68fa76', '0c1633', 'c11d62', 'b53a76', '24f7fc', '0ef17f', '527973'}   # survivors of merges already applied to production (skipped on re-run)
 MERGES = [  # (survivor prefix, [loser prefixes], label, reason)
     ('68fa76', ['110f6d', '396ea1', '9327f4', '773570'], 'Волконскій Григорій Дмитріевичъ (князь)',
      'RG-approved 2026-10-05, labelled UNCERTAIN: lighting chief (ProductionTeam, since 1887-09-01, left 1898-09-01) and geography teacher in the ballet department of the Petersburg school (TheaterSchoolStaff, since 1888-09-01, left 1901-09-01); same name, rank, 20 entries, one line per list per year; the pairing of the two posts is unusual -- see uncertain_person_identities.md'),
@@ -24,6 +24,8 @@ MERGES = [  # (survivor prefix, [loser prefixes], label, reason)
      'RG-approved 2026-10-05: class lady (Классныя дамы) since 1 April 1884, one line per season 1890-91..1899-00, died 27 Oct 1899; the 1896-97 line printed the start date without the day ("съ апрѣля 1884"), so it had its own record'),
     ('527973', ['0aeaf9'], 'Петровъ Иванъ Степановичъ',
      'RG decision 2026-10-05 (merge, labelled UNCERTAIN): tutor (Воспитатели, since 1 сентября 1891, 1890-91..1907-08) and teacher of preparatory classes (since 15 ноября 1907, 1908-10); the tutor line ends where the teacher line begins, but start dates differ and no transfer is printed'),
+    ('c58d24', ['232905'], 'Боборыкинъ Петръ Дмитріевичъ',
+     'RG-approved 2026-10-05: honorary member of the school conference (Moscow list to 1898-99, both lists 1899-00..1901-02 with the transfer note, Petersburg from 1902-03); the 1908-10 lines were on a separate record'),
 ]
 def full(p):
     r = con.execute("select person_id from entities.person where cast(person_id as varchar) like ? and superseded_by_person_id is null", [p + '%']).fetchall()
