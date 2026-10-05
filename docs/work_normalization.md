@@ -442,3 +442,36 @@ separate git worktree and merged only after review.
 - that Скупой рыцарь and Пиръ во время чумы probably had no opera version yet in 1899 (general knowledge, not checked).
 
 There is no 1898-99 Season Review in the scans. A contemporary newspaper report of the galas would settle it, and would also settle the Письмо Татьяны item.
+
+**Step 4, art forms (applied 2026-10-05).** Work identity is now title (match key) +
+**art form** + script. `_work_art_form()` classes every printed genre as opera, operetta,
+ballet, spoken (all play genres) or other; `_identity_genre()` adds the script, so ком. vs
+com. still separates. Genres of one art form merge (Шашки ш./ком.; Гамлетъ др./траг.).
+Different art forms stay apart: Фаустъ (Gounod / Goethe), Ромео и Джульетта, Отелло,
+Снѣгурочка (Rimsky / Ostrovsky), Карменъ, Волшебная флейта, Борисъ Годуновъ / Русалка
+(opera / Pushkin play).
+- `pipeline/entity_curation/work_artform_overrides.csv` holds 6 scan-confirmed genre slips
+  treated as the work's real art form: Коппелія / Конекъ-Горбунокъ / Баядерка / Раймонда
+  "оп." → ballet; Черевички "эп," and Евгеній Онѣгинъ "лир. сц." → opera. The printed
+  genre stays verbatim.
+- Curated excerpt rows now match on title + art form, and a curated parent is never an
+  excerpt candidate.
+
+Result: 3386 → 3149 works (237 merges into 203); excerpt links 257 → 261; titles still split
+by genre 238 → 44. Lists: docs/eval/work_consolidation_step4_merges.csv, and the ballet
+record RG asked for, docs/eval/ballets_sharing_title_with_other_art_forms.csv (Волшебная
+флейта, Карменъ, Млада, Сонъ въ лѣтнюю ночь, Сельская честь, Цыганка).
+
+**Still open (RG):**
+- C: "опер." in drama-theatre curtain-raisers (Не бывать-бы счастью, Парики, Макаръ
+  Алексѣевичъ Губкинъ, Русскія пѣсни въ лицахъ, Угнетенная невинность, Званый вечеръ съ
+  итальянцами, Соломенная шляпка "оп.-вод."). Is it оперетта?
+- D: 9 unclear titles (Снѣгурочка, весенняя сказка [оп.]; Царская невѣста [др.];
+  Джіоконда [траг.]; Китежъ [др.]; Злая сила [оп.]; Сельская честь [сц.]; Боярыня Вѣра
+  Шелога; Млада; Передъ свадьбой).
+- Сельская честь "бал." (Маріинскій 26 Feb 1906): the print is confirmed; probably the
+  opera on a charity triple bill. Proposed as an override, not yet applied.
+- Карменъ at the Большой: "бал." ×2 (Sunday matinees 28 Jan and 16 Sep 1907) and "др." ×1
+  (23 Sep 1908 evening), all scan-confirmed as printed. "др." looks like a slip for the
+  opera. "бал." is printed twice, eight months apart, and the stats-page evidence is
+  inconclusive. A Moscow Carmen ballet? RG to judge.

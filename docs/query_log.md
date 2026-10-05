@@ -12634,3 +12634,36 @@ Link targets that DO exist: research.person 3,290 rows, research.work 3,386,
 research.event 31,203. research.work carries canonical_title,
 canonical_genre, parent_genre, excerpt_of_work_id — but no composer column
 (see §12.11, composers deferred).
+
+## 2026-10-05 — Work consolidation step 4 (art forms): B/C performance context and preview on a copy
+
+```sql
+-- every performance behind the B slips and C titles: date, city, theater, printed title/genre, full bill
+select coalesce(dc.corrected_date_undate, e.date_undate), e.city, e.theater_canonical, eep.performance_title, eep.genre,
+       (select string_agg(p2.performance_title || coalesce(' [' || p2.genre || ']', ''), ' | ' order by p2.performance_order)
+          from raw.event_entry_performance p2 where p2.event_id = e.event_id)
+from raw.event_entry_performance eep join analysis.event_entry e using (event_id) left join analysis.event_entry_date_check dc using (event_id)
+join entities.work_link wl on wl.raw_performance_id = eep.performance_id join entities.work w using (work_id)
+where w.canonical_title = ? [and w.canonical_genre = ?] order by 1;
+-- preview: worktree build_work() (art-form identity + work_artform_overrides.csv) on a copy of full_run
+```
+
+Result:
+- B: Коппелія / Конекъ-Горбунокъ / Баядерка "оп." are each the sole item at the Большой (1907-08); Раймонда "оп." ×2 is the Маріинскій (1902, 1909); Черевички "эп," is the Маріинскій (1909); Евгеній Онѣгинъ "лир. сц." is the Маріинскій (1904). Сельская честь "бал." is on a Маріинскій 1906 mixed charity bill, not scan-checked, so it is held. Очарованный лѣсъ "изъ бал." (1907) is an excerpt.
+- C: every title is a drama-theatre curtain-raiser. Не бывать-бы счастью (SP Михайловскій/Александринскій 1891-93), Макаръ Алексѣевичъ Губкинъ (SP Александринскій 1892-93), Русскія пѣсни въ лицахъ (SP Александринскій 1894-95) and Парики (Moscow Малый 1895-99) each alternate "опер." and "оперетта". Угнетенная невинность (1890-93) is mostly ш./вод. Званый вечеръ съ итальянцами: 1904 Маріинскій gala and Александринскій, Moscow Большой 1908 (опер. / оперетта). Соломенная шляпка "оп.-вод." is the Moscow Новый, 1905.
+- Preview: works 3386 → 3149 (237 merges into 203 works; 0 new ids); excerpt links 257 → 261, 0 lost; titles split by genre 238 → 44. The ballet record lists 6 titles (Волшебная флейта, Карменъ, Млада, Сонъ въ лѣтнюю ночь, Сельская честь, Цыганка).
+
+## 2026-10-05 — Карменъ printed "бал." / "др." at the Большой: scan check and stats-page cross-check
+
+```sql
+-- the non-opera Карменъ performances
+select coalesce(dc.corrected_date_undate, e.date_undate), e.city, e.theater_canonical, e.page_id, e.date_text, eep.performance_title, eep.genre
+from raw.event_entry_performance eep join analysis.event_entry e using (event_id) left join analysis.event_entry_date_check dc using (event_id)
+where eep.performance_title ilike 'Карменъ%' and coalesce(eep.genre, '') not in ('оп.', 'оп');
+-- Moscow sessions with a бал.-genre work, 1906-07 and 1907-08, and how many are Карменъ
+select count(distinct e.event_id), count(distinct e.event_id) filter (where exists (... performance_title ilike 'Карменъ%'))
+from analysis.event_entry e where e.season = ? and e.city = 'Moscow' and e.event_status = 'performed' and exists (... genre ilike '%бал%');
+```
+
+Result: 3 performances, all Большой, all sole items, and all scan-confirmed as printed. "Карменъ, бал." on 28 Jan 1907, matinee, 971.01 р. (1906-07 p029); "Карменъ, бал." on 16 Sep 1907, matinee, 736.51 р. (1907-08 p003); "Карменъ, др." on 23 Sep 1908, evening, 3013.43 р. (1908-09 p006). Stats-page cross-check: see the counts printed alongside; season_stats_comparison.md has 1906-07 Moscow Repertoire 51 vs stats 49 ballet (Repertoire has more), and 1907-08 Moscow 47 vs 48 (= stats once Коппелія "оп." counts as ballet).
+Counts printed: 1906-07 Moscow 51 sessions with a бал.-genre work (1 is Карменъ); 1907-08 Moscow 46 (1 is Карменъ). The 1907-08 total here (46) does not reproduce season_stats_comparison.md's 47 (its counting rule differs), so the stats-page evidence on Карменъ is inconclusive.

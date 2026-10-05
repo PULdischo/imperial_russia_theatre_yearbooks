@@ -22089,3 +22089,18 @@ Details: docs/work_normalization.md, "Consolidation".
 - Step 2 (unlinked excerpts, fallback matcher + 20 curated links + 3 curated Pushkin-play parents): excerpt links 179 → 257, works 3386.
 
 Retired ids are in entities.work_id_crosswalk, and work ids now inherit across rebuilds. The 1899 Pushkin galas are flagged for external research (spoken or sung?). Step 4 is NEXT: an art-form exception list (merge similar genres; keep opera / ballet / spoken versions of a title apart).
+
+### Work consolidation step 4 applied (2026-10-05) + a raw bug found on repertoire_1905-06_p034
+
+Step 4 (art-form identity + 6 genre-slip overrides): 3386 → 3149 works. See docs/work_normalization.md.
+
+Found while scan-checking Сельская честь "бал.": **repertoire_1905-06_p034, Маріинскій
+column, has 3 transcription errors (NOT fixed yet, RG to schedule):**
+1. The bill "Сельская честь, бал. / Прекрасная Елена, оперетка / Севильскій цирюльникъ, оп."
+   is printed under **26 Воскрес.** (banner "Спектакль Общества по устройству дешевыхъ
+   квартиръ въ Галерной гавани"), but the data attaches it to 25 Суббота. In the print the
+   25th has only its banner and no works.
+2. 3 Пятница: the print reads "4-е д. оп. Фаворитка."; the data has "Фаворитка, оп." (the
+   excerpt marker is lost, so it looks like a full performance).
+3. The 25th's banner is transcribed "по-печения"; the print has "попеченія" (line-break
+   hyphen; і).
