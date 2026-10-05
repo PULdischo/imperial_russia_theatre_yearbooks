@@ -262,6 +262,105 @@ def load_receipts_corrections(con: duckdb.DuckDBPyConnection) -> int:
     return len(rows)
 
 
+def build_productions(con: duckdb.DuckDBPyConnection) -> None:
+    """The ballet productions lists as research tables (issue #133).
+
+    research.production        one row per list entry: a ballet as staged in one
+                               season and city (list number, premiere flag, the
+                               list's own printed total).
+    research.production_work   every work the entry's dates matched in the
+                               Repertoire (ballet_list_matches), with the number of
+                               matched dates. Kept because entities.work still holds
+                               several work_ids for some ballets (spelling variants,
+                               misreads, excerpt rows not linked to their parent);
+                               nothing here hides that.
+    research.production.work_id the best single match: an excerpt is credited to
+                               its parent, a work whose title equals the list title
+                               wins, then the most matched dates. NULL when no date
+                               matched.
+    research.production_credit one row per printed creator credit -> person, with
+                               the role and the printed form verbatim. Group
+                               credits ("и др.", "разныхъ авторовъ") are left out:
+                               they name no person.
+    """
+    from compare_productions_repertoire import norm
+    import collections
+    excerpt_parent = dict(con.execute(
+        "SELECT work_id::VARCHAR, excerpt_of_work_id::VARCHAR FROM entities.work").fetchall())
+    titles = dict(con.execute("SELECT work_id::VARCHAR, canonical_title FROM entities.work").fetchall())
+    matched = collections.defaultdict(collections.Counter)
+    for season, city, _d, title, _note, _eid, wid, parent in ballet_list_matches(con):
+        w = str(parent or wid)
+        matched[(season, city, title)][excerpt_parent.get(w) or w] += 1
+    entries = con.execute("""SELECT production_entry_id, season, city, title FROM raw.production_entry""").fetchall()
+    prod_work, best = [], {}
+    for pid, season, city, title in entries:
+        cnt = matched.get((season, city, title))
+        if not cnt:
+            continue
+        for w, n in cnt.items():
+            prod_work.append((pid, w, n))
+        best[pid] = max(cnt, key=lambda w: (norm(titles.get(w) or "") == norm(title), cnt[w]))
+
+    con.execute("""
+        CREATE TABLE research.production (
+            production_id VARCHAR PRIMARY KEY,
+            work_id UUID REFERENCES research.work(work_id),
+            season VARCHAR, city VARCHAR,
+            list_title VARCHAR, list_number VARCHAR, is_premiere BOOLEAN,
+            description_text VARCHAR,
+            printed_total INTEGER, n_dates INTEGER,
+            n_matched_works INTEGER,
+            printed_page_number VARCHAR, source_file VARCHAR
+        )""")
+    con.execute("CREATE OR REPLACE TEMP TABLE prod_best (production_id VARCHAR, work_id UUID)")
+    con.executemany("INSERT INTO prod_best VALUES (?, ?)", list(best.items()))
+    con.execute("CREATE OR REPLACE TEMP TABLE prod_work (production_id VARCHAR, work_id UUID, n_matched_dates INTEGER)")
+    con.executemany("INSERT INTO prod_work VALUES (?, ?, ?)", prod_work)
+    con.execute("""
+        INSERT INTO research.production
+        SELECT e.production_entry_id, b.work_id, e.season, e.city, e.title, e.list_number, e.is_premiere,
+               e.description_text, e.total_count, e.n_dates,
+               (SELECT count(*) FROM prod_work pw WHERE pw.production_id = e.production_entry_id),
+               e.printed_page_number, e.source_file
+        FROM raw.production_entry e LEFT JOIN prod_best b ON b.production_id = e.production_entry_id
+    """)
+    con.execute("""
+        CREATE TABLE research.production_work (
+            production_id VARCHAR REFERENCES research.production(production_id),
+            work_id UUID REFERENCES research.work(work_id),
+            n_matched_dates INTEGER,
+            PRIMARY KEY (production_id, work_id)
+        )""")
+    con.execute("INSERT INTO research.production_work SELECT * FROM prod_work")
+    con.execute("""
+        CREATE TABLE research.production_credit (
+            credit_id VARCHAR PRIMARY KEY,
+            production_id VARCHAR REFERENCES research.production(production_id),
+            person_id UUID REFERENCES research.person(person_id),
+            credit_order INTEGER,
+            role_category VARCHAR,
+            role_text VARCHAR,
+            name_printed VARCHAR,
+            honorific_printed VARCHAR,
+            qualifier_printed VARCHAR,
+            is_pseudonym BOOLEAN,
+            identification_status VARCHAR
+        )""")
+    con.execute("""
+        INSERT INTO research.production_credit
+        SELECT c.credit_id, c.production_entry_id, l.person_id, c.credit_order, c.role_category, c.role_text,
+               c.name_printed, c.honorific_printed, c.qualifier_printed, c.is_pseudonym,
+               l.form_status
+        FROM analysis.production_entry_credit c
+        JOIN entities.production_credit_link l USING (credit_id)
+    """)
+    orphans = con.execute("""SELECT count(*) FROM research.production_credit pc
+        LEFT JOIN research.person p USING (person_id) WHERE p.person_id IS NULL""").fetchone()[0]
+    if orphans:
+        raise SystemExit(f"research.production_credit: {orphans} credits point at no research.person")
+
+
 def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     con.execute("CREATE SCHEMA IF NOT EXISTS research")
 
@@ -274,7 +373,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # declared inline on CREATE TABLE, so each table is CREATEd with its
     # full schema first and populated via a separate INSERT INTO ... SELECT,
     # same two-step pattern build_entities.py already uses.
-    for t in ["performance", "event", "person_appearance", "person", "work", "theater"]:
+    for t in ["production_credit", "production_work", "production",
+              "performance", "event", "person_appearance", "person", "work", "theater"]:
         con.execute(f"DROP TABLE IF EXISTS research.{t}")
 
     con.execute("""
@@ -355,9 +455,17 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             last_attested_season VARCHAR,
             wikidata_qid VARCHAR,
             wikidata_label VARCHAR,
-            wikidata_description VARCHAR
+            wikidata_description VARCHAR,
+            person_source VARCHAR,
+            wikidata_source VARCHAR
         )
     """)
+    has_creators = con.execute("""SELECT count(*) FROM information_schema.tables
+        WHERE table_schema = 'entities' AND table_name = 'creator_person'""").fetchone()[0] > 0
+    if not has_creators:
+        con.execute("CREATE OR REPLACE TEMP TABLE cwl (person_id UUID, wikidata_qid VARCHAR, wikidata_label VARCHAR, wikidata_description VARCHAR)")
+    else:
+        con.execute("CREATE OR REPLACE TEMP VIEW cwl AS SELECT person_id, wikidata_qid, wikidata_label, wikidata_description FROM entities.creator_wikidata_link")
     non_person_list = ", ".join(f"'{pid}'" for pid in NON_PERSON_IDS)
     con.execute(f"""
         INSERT INTO research.person
@@ -365,12 +473,42 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             p.person_id, p.display_name, p.canonical_family_name,
             p.canonical_first_name, p.canonical_patronymic, p.ordinal_suffix,
             p.first_attested_season, p.last_attested_season,
-            wd.wikidata_qid, wd.wikidata_label, wd.wikidata_description
+            coalesce(wd.wikidata_qid, cw.wikidata_qid),
+            coalesce(wd.wikidata_label, cw.wikidata_label),
+            coalesce(wd.wikidata_description, cw.wikidata_description),
+            'roster' AS person_source,
+            CASE WHEN wd.wikidata_qid IS NOT NULL THEN 'link_wikidata'
+                 WHEN cw.wikidata_qid IS NOT NULL THEN 'rg_review' END AS wikidata_source
         FROM entities.person p
         LEFT JOIN entities.person_wikidata_link wd ON wd.person_id = p.person_id
+        LEFT JOIN cwl cw ON cw.person_id = p.person_id
         WHERE p.superseded_by_person_id IS NULL
           AND p.person_id NOT IN ({non_person_list})
     """)
+    if has_creators:
+        # Creators named only in the ballet productions lists (issue #133): not on
+        # the roster, so they come from entities.creator_person. Their attested
+        # seasons are the list seasons that credit them; the name parts are split
+        # from the curated nominative display_name; canonical_first_name only when a
+        # full first name is printed ("Адамъ, Адольфъ"), never initials or a title.
+        con.execute("""
+            INSERT INTO research.person
+            SELECT cp.person_id, cp.display_name,
+                   trim(split_part(cp.display_name, ',', 1)),
+                   CASE WHEN regexp_matches(trim(split_part(cp.display_name, ',', 2)), '^[А-ЯЁІѲѢ][а-яёіѳѣъь]+$')
+                         AND trim(split_part(cp.display_name, ',', 2)) NOT IN ('лордъ', 'князь', 'баронъ')
+                        THEN trim(split_part(cp.display_name, ',', 2)) END, NULL, NULL,
+                   min(e.season), max(e.season),
+                   cw.wikidata_qid, cw.wikidata_label, cw.wikidata_description,
+                   'production_list',
+                   CASE WHEN cw.wikidata_qid IS NOT NULL THEN 'rg_review' END
+            FROM entities.creator_person cp
+            JOIN entities.production_credit_link l ON l.person_id = cp.person_id
+            JOIN analysis.production_entry_credit c USING (credit_id)
+            JOIN raw.production_entry e USING (production_entry_id)
+            LEFT JOIN cwl cw ON cw.person_id = cp.person_id
+            GROUP BY ALL
+        """)
 
     for pid, (disp, first, _why) in RESEARCH_PERSON_DISPLAY_OVERRIDES.items():
         n = con.execute("SELECT count(*) FROM research.person WHERE person_id = ?", [pid]).fetchone()[0]
@@ -519,9 +657,15 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         WHERE pl.person_id NOT IN ({non_person_list})
     """)
 
+    if has_creators:
+        build_productions(con)
+
     counts = {
         t: con.execute(f"SELECT count(*) FROM research.{t}").fetchone()[0]
-        for t in ["theater", "work", "person", "event", "performance", "person_appearance"]
+        for t in ["theater", "work", "person", "event", "performance", "person_appearance",
+                  "production", "production_work", "production_credit"]
+        if con.execute("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'research' AND table_name = ?",
+                       [t]).fetchone()[0]
     }
     print("research schema built:")
     for t, n in counts.items():

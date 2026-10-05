@@ -42,7 +42,8 @@ def _stringify_uuids(df):
     return df
 
 
-TABLES = ["theater", "work", "person", "event", "performance", "person_appearance"]
+TABLES = ["theater", "work", "person", "event", "performance", "person_appearance",
+          "production", "production_work", "production_credit"]
 
 # Explicit CREATE TABLE per table, PRIMARY KEY + FOREIGN KEY declared --
 # pandas' to_sql(if_exists="replace") would otherwise create schema-less
@@ -68,7 +69,8 @@ SCHEMAS = {
             person_id TEXT PRIMARY KEY, display_name TEXT, canonical_family_name TEXT,
             canonical_first_name TEXT, canonical_patronymic TEXT, ordinal_suffix TEXT,
             first_attested_season TEXT, last_attested_season TEXT,
-            wikidata_qid TEXT, wikidata_label TEXT, wikidata_description TEXT
+            wikidata_qid TEXT, wikidata_label TEXT, wikidata_description TEXT,
+            person_source TEXT, wikidata_source TEXT
         )""",
     "event": """
         CREATE TABLE event (
@@ -90,6 +92,26 @@ SCHEMAS = {
             season TEXT, city TEXT, entity_type TEXT, institution TEXT,
             heading_path TEXT, "rank" TEXT, title TEXT, service_class TEXT,
             instrument TEXT, subject_taught TEXT, tenure_note_text TEXT
+        )""",
+    "production": """
+        CREATE TABLE production (
+            production_id TEXT PRIMARY KEY, work_id TEXT REFERENCES work(work_id),
+            season TEXT, city TEXT, list_title TEXT, list_number TEXT, is_premiere INTEGER,
+            description_text TEXT, printed_total INTEGER, n_dates INTEGER,
+            n_matched_works INTEGER, printed_page_number TEXT, source_file TEXT
+        )""",
+    "production_work": """
+        CREATE TABLE production_work (
+            production_id TEXT REFERENCES production(production_id),
+            work_id TEXT REFERENCES work(work_id), n_matched_dates INTEGER,
+            PRIMARY KEY (production_id, work_id)
+        )""",
+    "production_credit": """
+        CREATE TABLE production_credit (
+            credit_id TEXT PRIMARY KEY, production_id TEXT REFERENCES production(production_id),
+            person_id TEXT REFERENCES person(person_id), credit_order INTEGER,
+            role_category TEXT, role_text TEXT, name_printed TEXT, honorific_printed TEXT,
+            qualifier_printed TEXT, is_pseudonym INTEGER, identification_status TEXT
         )""",
 }
 

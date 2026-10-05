@@ -20,6 +20,12 @@ Outputs (entities schema, additive, CREATE OR REPLACE on these two tables only):
                                     would drop anyone it can't see.
     entities.production_credit_link one row per non-group credit -> person_id
                                     (a roster person, or a creator_person).
+    entities.creator_wikidata_link  RG's Wikidata decisions for creators, from
+                                    pipeline/entity_curation/production_creator_wikidata.csv
+                                    (written from the review page; only accepted /
+                                    corrected QIDs). A QID that contradicts a roster
+                                    person's existing entities.person_wikidata_link
+                                    is an error, never a silent override.
 
 Status values (never silently upgraded):
     form_status          confirmed: the printed form is a case or initial variant of
@@ -120,6 +126,31 @@ def main():
             form_status VARCHAR NOT NULL,      -- confirmed | proposed
             roster_link_status VARCHAR)""")
     con.executemany("INSERT INTO entities.production_credit_link VALUES (?, ?, ?, ?, ?, ?)", link_rows)
+
+    wd_rows = []
+    existing = dict(con.execute(
+        "SELECT person_id::VARCHAR, wikidata_qid FROM entities.person_wikidata_link").fetchall())
+    for w in csv.DictReader(open(CUR / "production_creator_wikidata.csv")):
+        k = w["creator_key"]
+        if k not in creator_pid:
+            raise SystemExit(f"production_creator_wikidata.csv: unknown creator_key {k!r}")
+        pid = creator_pid[k][0]
+        if existing.get(pid) and existing[pid] != w["wikidata_qid"]:
+            raise SystemExit(f"{k}: Wikidata {w['wikidata_qid']} contradicts roster link {existing[pid]}")
+        wd_rows.append((pid, k, w["wikidata_qid"], w["wikidata_label"] or None, w["wikidata_description"] or None,
+                        w["decided_by"], w["decided_on"], w["note"] or None))
+    con.execute("""
+        CREATE OR REPLACE TABLE entities.creator_wikidata_link (
+            person_id UUID PRIMARY KEY,
+            creator_key VARCHAR NOT NULL,
+            wikidata_qid VARCHAR NOT NULL,
+            wikidata_label VARCHAR,
+            wikidata_description VARCHAR,
+            decided_by VARCHAR,
+            decided_on VARCHAR,
+            note VARCHAR)""")
+    con.executemany("INSERT INTO entities.creator_wikidata_link VALUES (?, ?, ?, ?, ?, ?, ?, ?)", wd_rows)
+    print(f"entities.creator_wikidata_link: {len(wd_rows)} creators with an RG-reviewed Wikidata item")
 
     n_roster = sum(1 for r in link_rows if r[3] == "roster")
     print(f"entities.creator_person: {len(creator_rows)} creators not linked to the roster "
