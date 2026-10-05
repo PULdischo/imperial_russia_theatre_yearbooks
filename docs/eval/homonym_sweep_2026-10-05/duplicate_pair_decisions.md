@@ -33,3 +33,5 @@
 | 2026-10-05 | Итцигсонъ Мейеръ-Гиршъ | 4dcddd -> 08a1a5 | MERGED (RG); not uncertain | Petersburg ballet repetiteur since 1 Aug 1882, 1890-91..1907-08; 1906-07 printed in both the orchestra and ballet-troupe lists; 19 entries |
 | 2026-10-05 | Цыбинъ Владіміръ Николаевичъ | 00c2fa -> 58db32 | MERGED (RG), labelled UNCERTAIN (list entry 13) | Moscow flute since 1 Apr 1897 (to 1907-08), Petersburg flute since 1 Sept 1907 (1908-10); no transfer note; 10 entries |
 | 2026-10-05 | Завѣтновскій (Викторъ/Николай) | 33ecbf vs 2658b3 vs 1c7f9e | PARKED, OPEN (list entry 14); RG: "definitely not three separate men" | 1908-10 'Викторъ ... съ 15 октября 1904' = Николай's start date and instrument; no merge applied |
+| 2026-10-05 | Новикова Екатерина (1891-92 graduate) | bc2889 -> d321f3 | MERGED (RG: "definitely this one"); not uncertain | printed note: joined the Moscow troupe 1 Sept 1892 = d321f3's start date; 12 entries |
+| 2026-10-05 | Новикова Екатерина (1899-00 graduate) | 4c598c -> 41f0d4 | MERGED (RG: "probably"), labelled UNCERTAIN (list entry 15) | no troupe note printed on the graduate line; rests on school + 1 Sept 1900 start; 11 entries |

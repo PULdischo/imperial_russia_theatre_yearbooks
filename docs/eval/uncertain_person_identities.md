@@ -128,6 +128,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** `musicians_1908-09_SP_p002__e002` (no. 43), `musicians_1909-10_SP_p002__e008` (no. 44), `musicians_1907-08_SP_p001__e019` (Николай, no. 39), `musicians_1901-02_SP_p005__e022`, `musicians_1902-03_SP_p005__e032`.
 - **Would resolve it:** Petersburg orchestra rosters 1904-1910 (Весь Петербургъ; the Directorate's staff lists) naming the violinists Завѣтновскій; the 1904 hiring order.
 
+## 15. Новикова Екатерина (Moscow Graduates 1899-00) -- is she the dancer Екатерина Дмитріевна?
+
+- **Status:** MERGED (RG, 2026-10-05, "probably, but mark uncertain"): the 1899-00 graduate line (former record 4c598c...) attached to the Moscow dancer **Новикова Екатерина Дмитріевна** (41f0d4...; 11 entries, 1899-00 to 1909-10).
+- **What is uncertain:** `graduates_1899-00_p001__e008` (Moscow school, ballet pupils, no. 8) prints "Новикова, Екатерина" with no troupe note and no patronymic. The Moscow dancer Екатерина Дмитріевна is first listed in 1900-01 with "съ 1 сентября 1900 г." -- the date the 1899-00 class would join -- but no printed note links them.
+- **For:** same first name and surname; Moscow school; the dancer's start date is the 1 Sept after the graduation; she appears the year after, and no other Новикова Екатерина joins in 1900.
+- **Against:** no troupe note and no patronymic on the graduate line; Новикова Екатерина Александровна (d321f3) is in the same troupe, but she joined in 1892 and has her own graduate line (1891-92, attached with RG's yes).
+- **Where to look:** `graduates_1899-00_p001__e008`; `balletartists_1900-01_MSK_p003__e021` (Екатерина Дмитріевна's first line).
+- **Would resolve it:** the Moscow school's 1900 graduation list with the troupe engagements; a Moscow ballet personnel list for 1900-01.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.

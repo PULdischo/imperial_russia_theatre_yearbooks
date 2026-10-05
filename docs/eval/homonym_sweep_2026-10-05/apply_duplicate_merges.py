@@ -61,6 +61,10 @@ MERGES = [  # (survivor prefix, [loser prefixes], label, reason)
      'RG-approved 2026-10-05: Petersburg ballet repetiteur (Репетиторы), since 1 августа 1882, 1890-91..1907-08; the orchestra-list lines were split over two records; in 1906-07 he is printed in both the orchestra list and the ballet-troupe list'),
     ('58db32', ['00c2fa'], 'Цыбинъ Владіміръ Николаевичъ',
      'RG decision 2026-10-05 (merge, labelled UNCERTAIN, list entry 13): flautist in the Moscow orchestra since 1 апрѣля 1897 (1900-01..1907-08) and in the Petersburg orchestra since 1 сентября 1907 (1908-09, 1909-10); no transfer note'),
+    ('d321f3', ['bc2889'], 'Новикова Екатерина Александровна',
+     'RG-approved 2026-10-05: the 1891-92 Moscow-school graduate "Новикова, Екатерина" (printed note: съ 1-го сентября 1892 г. въ Московскую балетную труппу) attached to the Moscow dancer whose troupe start is 1 сентября 1892'),
+    ('41f0d4', ['4c598c'], 'Новикова Екатерина Дмитріевна',
+     'RG decision 2026-10-05 ("probably", labelled UNCERTAIN, list entry 15): the 1899-00 Moscow-school graduate "Новикова Екатерина" (no troupe note printed) attached to the Moscow dancer first listed 1900-01 with start 1 сентября 1900'),
 ]
 def full(p):
     r = con.execute("select person_id from entities.person where cast(person_id as varchar) like ? and superseded_by_person_id is null", [p + '%']).fetchall()

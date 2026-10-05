@@ -12692,3 +12692,15 @@ FROM raw.person_entry e JOIN raw.source_pages sp ON sp.page_id=e.page_id WHERE e
 ```
 
 Result: Итцигсонъ — 19 entries over two persons (Репетиторы, since 1 августа 1882, 1890-91..1907-08; 1906-07 in both the orchestra and ballet-troupe lists); merged. Цыбинъ — Moscow flute since 1 апрѣля 1897 (1900-01..1907-08) and Petersburg flute since 1 сентября 1907 (1908-09, 1909-10); merged, uncertain. Завѣтновскій — Викторъ 1901-02/1902-03 (left 1 Sept 1902), Николай 1904-05..1907-08 (since 15 октября 1904), Викторъ 1908-09/1909-10 (since 15 октября 1904; both scan-confirmed); parked. After the two merges: live persons 3218 -> 3216, tombstones 2358 -> 2360, 0 orphans, 0 shift blocks, flags 546, receipts identical.
+
+## 2026-10-05 — Новикова Екатерина: two Moscow graduate records vs the two Moscow dancers, then merge verification
+
+```sql
+SELECT sp.season, sp.city, right(l.entry_id,10), e.entity_type, e.family_name, e.first_name, e.patronymic, e.list_number, e.heading_path, e.tenure_note_text, left(cast(l.person_id as varchar),6)
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE e.family_name LIKE 'Новикова%' ORDER BY 1,2,3;
+SELECT e.page_id, e.entry_id, e.institution, e.heading_path, e.list_number, e.family_name, e.first_name, e.tenure_note_text
+FROM raw.person_entry e WHERE e.entry_id IN ('graduates_1899-00_p001__e008','graduates_1891-92_p002__e006');
+```
+
+Result: two Moscow-school graduate lines (1891-92 no. 6, note 'съ 1-го сентября 1892 г. въ Московскую балетную труппу'; 1899-00 no. 8, no note) and two Moscow dancers (Екатерина Александровна since 1 сентября 1892; Екатерина Дмитріевна since 1 сентября 1900). Both graduate lines attached (RG): live persons 3216 -> 3214, tombstones 2360 -> 2362, 0 orphans, 0 shift blocks, flags 546, receipts identical.
