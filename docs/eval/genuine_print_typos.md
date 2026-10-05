@@ -414,3 +414,8 @@ correction belongs. Entry ids are `<page_id>__eNNN`.
 ## TheaterSchoolStaff audit, 2026-10-03 (issue #134) -- print typos stored verbatim
 - 1892-93 p000 e006 Потѣхинъ printed **Потѣхннъ**; 1900-01 p003 e017 "(съ 1 сентября 1900 **т.**)"; 1904-05 p002 e016 "(съ 1 октября 1896 **1.**)" (г read as 1.); 1905-06 p001 e005 "(съ 16 августа 1902 **.**)" (the г omitted); 1905-06 p002 e017 first name **Махаилъ**; 1908-09 p004 e005 **ВладимІръ** (capital І mid-word); 1909-10 p004 e016 **Геогрій**.
 - Seen and left as stored: Потѣхинъ/Погожевъ lines are different men; 1895-96 p001 e032 Степановъ's subject printed "зацисываніе" (reader: probably a damaged п of записываніе; stored as read, UNCERTAIN).
+
+## Print variants seen during the 2026-10-05 merge-batch review (stored verbatim)
+- 1890-91 p002 e020 (TheaterSchoolStaff, p. 263) prints "31. Ширяевъ, Александръ **Васильевичъ**" (every other season and the ballet lists print Викторовичъ); same man (subject Танцы, start 15 сентября 1891), merged.
+- Голяховскій Петръ: patronymic printed **Васильевичъ** in 1901-02..1905-06 (p002 lists) and **Власьевичъ** elsewhere; the 1890-91..1893-94 volumes print the surname as **Галяховскій**. Same teacher (start 7 сентября 1888), merged.
+- Зандинъ Михаилъ prints Ивановичъ (1906-08) / Павловичъ (1908-10); Лебедевъ Иванъ (Бутафоръ) Васильевичъ (1907-08) / Афанасьевичъ (1908-10) -- open, see person_merge_candidates_batch.md.

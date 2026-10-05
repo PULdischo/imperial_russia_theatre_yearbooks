@@ -12177,3 +12177,18 @@ select * from entities.person_merge_log where person_id_1 or person_id_2 in the 
 ```
 
 Result: 1dd355 held 22 entries: 10 MSK musicians (Григорьевичъ flautist + 2 ballet-orchestra cross-reference lines per year), 11 SP musicians (Константиновичъ clarinetist, since 1868, left 1900-09-01) and 1 ProductionTeam row (Васильевичъ, Бутафоръ, "съ 3 іюня 1889"). Four tombstoned persons point at it; the merge log has 4 confirmed `family_name_variant` rows (similarity 0.85, tenure_signal `unique_name_in_corpus`) chaining them. Patronymic-conflict count: 245 live persons with >= 2 distinct printed patronymics (mostly spelling variants). After the two splits: 4 live Лебедевъ Иванъ persons (1dd355 Константиновичъ 11 entries; 7ca78604 Григорьевичъ 10; 1134bfb0 Васильевичъ 1; ea76e8 Афанасьевичъ 2); live persons 3257, tombstones 2313, orphans 0.
+
+## 2026-10-05 -- Merge batch review, candidates 3-7 and application (issue #134 follow-up)
+
+```sql
+-- Петипа / Чекетти / Ширяевъ / Голяховскій: live persons and every appearance (entities.person_link x raw.person_entry), by canonical_family_name
+select cast(person_id as varchar), display_name, first_attested_season, last_attested_season, (select count(*) from entities.person_link l where l.person_id=p.person_id) from entities.person p where canonical_family_name in ('Петипа','Чекетти','Ширяевъ') and superseded_by_person_id is null;
+select substr(cast(p.person_id as varchar),1,6), l.entry_id, e.first_name, e.patronymic, e.heading_path, e.tenure_note_text from entities.person_link l join entities.person p using(person_id) join raw.person_entry e using(entry_id) where p.superseded_by_person_id is null and p.canonical_family_name in ('Петипа','Чекетти','Ширяевъ','Голяховскій') order by 1, l.entry_id;
+-- downstream references to the persons being merged
+select 'person_wikidata_link', person_id from entities.person_wikidata_link; select 'production_credit_link', person_id, count(*) from entities.production_credit_link group by 1,2;
+-- post-apply checks
+select count(*) from entities.person where superseded_by_person_id is null;  select count(*) from entities.person_merge_log where status='confirmed_manual' and tenure_evidence like 'merge batch review 2026-10-05%';
+select person_id, display_name, canonical_first_name, wikidata_qid from research.person where canonical_family_name in ('Чекетти','Петипа','Ширяевъ','Зандинъ','Голяховскій');
+```
+
+Result: Петипа Маріусъ Ивановичъ had 3 live persons (e04344 20 entries 1890-91..1907-08 incl. school rows to 1891-92; 0f4adf 2 entries 1908-09..1909-10 with "† 1 іюля 1910 г."; 6310e8 1 school row 1892-93 "съ 1 сентября 1855"); Чекетти 2 persons (09350c Энрико, 8 school entries 1893-94..1900-01, left 1 апрѣля 1901; bfe3f9 Генрихъ, 19 company entries 1890-91..1902-03, left 1 ноября 1902) plus his wife Жозефина (separate); Ширяевъ Александръ Викторовичъ had 6b54e5 (51 entries) plus 0c0f54 (the 1890-91 school row printing Васильевичъ -- scan-verified, p. 263); Голяховскій 7fd62c (17 entries) + dd0ff7 (5 entries 1901-06, Васильевичъ). Referenced downstream: Wikidata link on e04344 (Q312320) and 6b54e5 (Q4524496); production_credit_link 142 rows on e04344, 1 on 09350c. After applying: live persons 3250, 7 `confirmed_manual` log rows, research.person: Чекетти displayed "Чекетти, Энрико Цезаревичъ", Петипа 1890-91..1909-10 with Q312320, Ширяевъ 1890-91..1909-10 with Q4524496.

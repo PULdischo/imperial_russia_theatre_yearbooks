@@ -131,6 +131,20 @@ RESEARCH_TITLE_CORRECTIONS = {
 }
 
 
+#: Research-layer display override for a person (RG, 2026-10-05): entities.person
+#: recomputes display_name by majority vote of the printed spellings on every
+#: build_entities run, so a hand-chosen form cannot live there. Raw stays verbatim.
+#: person_id -> (display_name, canonical_first_name, reason). The build fails if the
+#: id is not a live person, so a later merge/split cannot silently orphan an entry.
+RESEARCH_PERSON_DISPLAY_OVERRIDES = {
+    "09350cda-ddf5-44b3-8b3e-d0db2e5e1259": (
+        "Чекетти, Энрико Цезаревичъ", "Энрико",
+        "Enrico Cecchetti: the company lists (BalletArtists, 19 entries) print the Russianized "
+        "\"Генрихъ\", the school staff lists (8 entries) print \"Энрико\"; one man, merged 2026-10-05; "
+        "RG chose the Italian form, the one used in Wikidata and the literature"),
+}
+
+
 #: Parent genre (RG, 2026-09-30; the name may change). A work that the yearbook
 #: prints in its ballet productions lists ("Списокъ пьесъ … Балетъ", 1890-91 to
 #: 1904-05) has parent genre "ballet", whatever its printed genre -- e.g. Кольцо
@@ -357,6 +371,13 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         WHERE p.superseded_by_person_id IS NULL
           AND p.person_id NOT IN ({non_person_list})
     """)
+
+    for pid, (disp, first, _why) in RESEARCH_PERSON_DISPLAY_OVERRIDES.items():
+        n = con.execute("SELECT count(*) FROM research.person WHERE person_id = ?", [pid]).fetchone()[0]
+        if n != 1:
+            raise SystemExit(f"RESEARCH_PERSON_DISPLAY_OVERRIDES: {pid} is not a live research.person")
+        con.execute("UPDATE research.person SET display_name = ?, canonical_first_name = ? WHERE person_id = ?",
+                    [disp, first, pid])
 
     con.execute("""
         CREATE TABLE research.event (
