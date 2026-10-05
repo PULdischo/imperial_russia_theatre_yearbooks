@@ -117,15 +117,7 @@ def _match_key(title_key: str) -> str:
 # title and genre stay verbatim on every performance.
 _COMPOUND_GENRE_SUFFIX_RE = re.compile(
     r",\s*[а-яѣі]{1,10}\.(?:\s?[-—]?\s?[а-яѣіё]{1,12}\.?){1,2}\s*$")
-# Printings whose title text itself is doubtful: never strip, so they cannot merge
-# into an unrelated work. "Женихъ" + Gogol's subtitle for Женитьба is probably a
-# misprint or misread of "Женитьба" (scan check pending).
-_NO_SUFFIX_STRIP = {"Женихъ, соверш. невѣр. событіе"}
-
-
 def _strip_genre_suffix(title: str) -> str:
-    if title.strip() in _NO_SUFFIX_STRIP:
-        return title.strip()
     t = _GENRE_SUFFIX_RE.sub("", title).strip()
     return _COMPOUND_GENRE_SUFFIX_RE.sub("", t).strip()
 
@@ -488,9 +480,17 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
         for r in _csv0.DictReader(open(_ovr_path, encoding="utf-8")):
             artform_override[(_match_key(_title_key(_strip_genre_suffix(r["printed_title"]))),
                               _fold_genre(r["printed_genre"]))] = r["treat_as_art_form"]
+    # Curated title aliases (RG, 2026-10-05): a scan-confirmed print typo in a TITLE
+    # ("Женихъ, соверш. невѣр. событіе" for Gogol's Женитьба) is matched as the
+    # intended title. Matching only: the printed title stays verbatim everywhere.
+    _alias_path = Path(__file__).parent / "entity_curation" / "work_title_aliases.csv"
+    title_alias: dict[str, str] = {}
+    if _alias_path.exists():
+        title_alias = {r["printed_title"]: r["match_as_title"]
+                       for r in _csv0.DictReader(open(_alias_path, encoding="utf-8"))}
     by_title: dict[str, list[tuple[str, str, str, str | None]]] = defaultdict(list)
     for work_id, title, genre in rows:
-        title_key = _title_key(_strip_genre_suffix(title))
+        title_key = _title_key(_strip_genre_suffix(title_alias.get(title.strip(), title)))
         raw_fold = _fold_genre(genre)
         if title_key == _GIMN_TITLE_KEY and raw_fold in _GIMN_CONTAMINATED_GENRE_FOLDS:
             raw_fold = None  # Problem #3: another bill item's title, not a real genre
