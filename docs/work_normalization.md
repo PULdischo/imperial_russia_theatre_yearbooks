@@ -378,3 +378,26 @@ drama reviews season-by-season and could confirm which "Русалка"
 production(s), if any, played at Михайловскій in 1890-91 and 1893-94.
 Documented here rather than re-investigated, in case this comes up
 again.
+
+## Consolidation (2026-10-05): merge by default, curated exceptions
+
+RG's rule: "works from different art forms are not the same, but works with very
+similar genre types generally are; merge by default with a curated exception list."
+This was prompted by #133, where 35 ballet-list productions matched several work_ids
+for one ballet. Four kinds, done in this order: 1 punctuation/spacing → 3 genre
+abbreviations → 2 unlinked excerpts → 4 different genre words.
+
+**Step 1, punctuation/spacing (applied 2026-10-05).** Works now group on
+`_match_key()`: `_title_key()` plus ё→е, with every non-letter, non-digit character
+removed. "Изъ-за мышенка" / "Изъ за мышенка", "Правда—хорошо" / "Правда хорошо",
+"Донъ-Кихотъ" / "Донъ Кихотъ" and "Chez l'Avocat" / "Chez l’Avocat" are now one work.
+Genre splitting is unchanged at this step. Result: 3657 → 3550 works, with 340
+performances moving. List: docs/eval/work_consolidation_step1_merges.csv.
+
+**work_id stability.** A work's id is still uuid5 of its dominant printing's
+`_title_key` (not of the match key), so a work that merges nothing keeps its id and a
+merged work keeps its most-printed variant's id: 0 new ids in step 1. Each retired id
+goes in the append-only `entities.work_id_crosswalk` (old → new, with the old title
+and the number of performances that moved). That is derived from the
+raw-performance links before and after the rebuild, so anything citing an old
+published id can be followed.

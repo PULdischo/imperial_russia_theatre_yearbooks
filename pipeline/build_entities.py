@@ -98,6 +98,18 @@ def _title_key(title: str) -> str:
 _GENRE_SUFFIX_RE = re.compile(r",\s*[а-яА-Я\-]{1,10}\.?\s*$")
 
 
+def _match_key(title_key: str) -> str:
+    """Grouping key for works (RG, 2026-10-05; docs/work_normalization.md,
+    "Consolidation"): the title key with ё folded to е and every non-letter,
+    non-digit character removed, so spacing, hyphen/dash and internal
+    punctuation variants of one printed title ("Изъ-за мышенка" / "Изъ за
+    мышенка", "Правда—хорошо" / "Правда хорошо", "Chez l'Avocat" / "Chez
+    l’Avocat") group together. Matching only: canonical_title stays the most
+    common verbatim printing, and work_id is still derived from that
+    printing's _title_key (below), so works that don't merge keep their id."""
+    return re.sub(r"[\W_]+", "", title_key.replace("ё", "е"))
+
+
 def _strip_genre_suffix(title: str) -> str:
     return _GENRE_SUFFIX_RE.sub("", title).strip()
 
@@ -272,7 +284,14 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
         genre_fold = _fold_genre(genre)
         if title_key == _GIMN_TITLE_KEY and genre_fold in _GIMN_CONTAMINATED_GENRE_FOLDS:
             genre_fold = None  # Problem #3: another bill item's title, not a real genre
-        by_title[title_key].append((work_id, title, genre, genre_fold))
+        by_title[_match_key(title_key)].append((work_id, title, genre, genre_fold))
+
+    def _work_uuid(canonical_title: str, fold: str | None) -> str:
+        # Derived from the dominant printing's own title key (not the match
+        # key), so a work that merges no variants keeps exactly the id it
+        # had before match-key grouping, and a merged work keeps its most
+        # printed variant's id. entities.work_id_crosswalk records the rest.
+        return str(uuid.uuid5(NAMESPACE, f"work:{_title_key(_strip_genre_suffix(canonical_title))}|{fold or ''}"))
 
     def _pick_variant(members: list[tuple[str, str, str, str | None]]) -> tuple[str, str]:
         # Canonical display form = most common verbatim (title, genre) pair
@@ -294,8 +313,8 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
             # Safe: at most one real genre in this title group (rest, if
             # any, just missing) -- merge everything into one work.
             fold = next(iter(distinct_folds), None)
-            work_uuid = str(uuid.uuid5(NAMESPACE, f"work:{title_key}|{fold or ''}"))
             canonical_title, canonical_genre = _pick_variant(members)
+            work_uuid = _work_uuid(canonical_title, fold)
             if len({(t, g) for _, t, g, _ in members}) > 1:
                 n_multi_variant += 1
             if any(g is None for *_, g in members) and fold is not None:
@@ -314,14 +333,16 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
             sub_groups: dict[str | None, list] = defaultdict(list)
             for m in members:
                 sub_groups[m[3]].append(m)
+            sub_uuids = {}
             for fold, sub_members in sub_groups.items():
-                work_uuid = str(uuid.uuid5(NAMESPACE, f"work:{title_key}|{fold or ''}"))
                 canonical_title, canonical_genre = _pick_variant(sub_members)
+                work_uuid = _work_uuid(canonical_title, fold)
+                sub_uuids[fold] = work_uuid
                 work_rows.append((work_uuid, canonical_title, canonical_genre, len(sub_members), title_key))
                 title_key_to_work_ids[title_key].append(work_uuid)
                 for work_id, _, _, _ in sub_members:
                     link_rows.append((work_id, work_uuid))
-            genre_candidate_rows.append((title_key, sub_groups))
+            genre_candidate_rows.append((title_key, sub_groups, sub_uuids))
 
     # Problem #4: excerpt/partial-performance titles. Resolved as a second
     # pass over the now-deduplicated work rows, matching the excerpt's
@@ -344,7 +365,7 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
         m = _EXCERPT_PREFIX_RE.match(canonical_title) or _EXCERPT_SUFFIX_RE.match(canonical_title)
         if not m:
             continue
-        base_key = _title_key(m.group("base"))
+        base_key = _match_key(_title_key(m.group("base")))
         if base_key == title_key or not base_key:
             continue  # guards against a degenerate/self match
         candidates = title_key_to_work_ids.get(base_key, [])
@@ -385,7 +406,7 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
         if not prev or not prev[0]:
             continue
         prev_title, prev_genre = prev
-        prev_title_key = _title_key(_strip_genre_suffix(prev_title))
+        prev_title_key = _match_key(_title_key(_strip_genre_suffix(prev_title)))
         candidates = title_key_to_work_ids.get(prev_title_key, [])
         target = None
         if len(candidates) == 1:
@@ -408,6 +429,13 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     # Drop the dependent table first -- entities.work_link's FK reference
     # blocks CREATE OR REPLACE on entities.work otherwise, which would
     # silently break re-running this script a second time.
+    old_link: dict[str, str] = {}
+    old_title: dict[str, str] = {}
+    if _table_exists(con, "entities", "work_link"):
+        old_link = {r: str(w) for r, w in con.execute(
+            "SELECT raw_performance_id, work_id FROM entities.work_link").fetchall()}
+        old_title = {str(w): t for w, t in con.execute(
+            "SELECT work_id, canonical_title FROM entities.work").fetchall()}
     con.execute("DROP TABLE IF EXISTS entities.work_link")
     con.execute("DROP TABLE IF EXISTS entities.work_genre_candidate")
     con.execute("""
@@ -443,6 +471,28 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
         )
     """)
     con.executemany("INSERT INTO entities.work_link VALUES (?, ?)", link_rows)
+
+    # entities.work_id_crosswalk (append-only): every work_id that stopped
+    # existing because its printings were consolidated into another work,
+    # derived exactly from the raw performances that moved, so anyone holding
+    # an old id (e.g. from a published research_dataset) can follow it.
+    con.execute("""
+        CREATE TABLE IF NOT EXISTS entities.work_id_crosswalk (
+            old_work_id UUID, new_work_id UUID, old_canonical_title VARCHAR,
+            n_performances INTEGER, recorded_on DATE,
+            PRIMARY KEY (old_work_id, new_work_id))""")
+    new_ids = {uid for uid, *_ in work_rows}
+    moved: dict[tuple[str, str], int] = defaultdict(int)
+    for rid, new_w in link_rows:
+        old_w = old_link.get(rid)
+        if old_w and old_w != new_w and old_w not in new_ids:
+            moved[(old_w, new_w)] += 1
+    already = {(str(a), str(b)) for a, b in con.execute(
+        "SELECT old_work_id, new_work_id FROM entities.work_id_crosswalk").fetchall()}
+    xw = [(o, n, old_title.get(o), k) for (o, n), k in moved.items() if (o, n) not in already]
+    con.executemany("INSERT INTO entities.work_id_crosswalk VALUES (?, ?, ?, ?, current_date)", xw)
+    if xw:
+        print(f"  {len(xw)} retired work_id(s) recorded in entities.work_id_crosswalk")
 
     # entities.work_genre_candidate: every title split across >1 real
     # genre, for human review (docs/work_normalization.md's Open
@@ -480,13 +530,13 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     genre_candidate_insert_rows = []
     work_lookup = {uid: (t, g, n) for uid, t, g, n, _ in work_rows}
     n_cross_language = 0
-    for title_key, sub_groups in genre_candidate_rows:
+    for title_key, sub_groups, sub_uuids in genre_candidate_rows:
         scripts = {_genre_script(fold) for fold in sub_groups if fold}
         cross_lang = len(scripts) > 1
         if cross_lang:
             n_cross_language += 1
         for fold, sub_members in sub_groups.items():
-            work_uuid = str(uuid.uuid5(NAMESPACE, f"work:{title_key}|{fold or ''}"))
+            work_uuid = sub_uuids[fold]
             t, g, n = work_lookup[work_uuid]
             candidate_id = str(uuid.uuid5(NAMESPACE, f"work_genre_candidate:{work_uuid}"))
             genre_candidate_insert_rows.append((candidate_id, title_key, work_uuid, t, g, n, cross_lang))

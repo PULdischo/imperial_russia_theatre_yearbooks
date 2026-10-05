@@ -12509,3 +12509,15 @@ WHERE left(cast(l.person_id as varchar),6) IN ('6d97a1','ed66b3') ORDER BY 1,2;
 ```
 
 Result: 6d97a1 = 19 entries 1897-98..1907-08 (Moscow school dance teacher 'съ 1 октября 1896' + Moscow ballet artist 'съ 1 сентября 1893'), ed66b3 = 5 entries 1908-09, 1909-10 (same two lines). Correction to the 5d6d24 entry above: its run printed "3228 -> 3228" -- the merge had been silently skipped by the script's survivor-based "applied" filter (87c046 was already a survivor). The script now skips by loser; the next run applied 5d6d24 -> 87c046 and ed66b3 -> 6d97a1 together: live 3228 -> 3226, Рыхлякова Варвара person now 21 entries, Тихоміровъ 24 entries.
+
+## 2026-10-05 — Work consolidation step 1 (punctuation/spacing): preview on a copy of full_run
+
+```sql
+-- build_entities.build_work() with the new _match_key grouping, run on a COPY of full_run
+select count(*), count(excerpt_of_work_id) from entities.work;   -- before / after
+select count(distinct title_key), count(*), count(distinct title_key) filter (where likely_cross_language) from entities.work_genre_candidate;  -- full_run vs preview
+select x.old_canonical_title, x.n_performances, w.canonical_title, w.canonical_genre, w.appearance_count, x.old_work_id, x.new_work_id
+from entities.work_id_crosswalk x join entities.work w on w.work_id = x.new_work_id order by w.appearance_count desc;
+```
+
+Result: works go 3657 → 3550; 107 work_ids retire into 3550 surviving ones (0 new ids, so every non-merged work keeps its id); 340 performances move; excerpt links unchanged at 179. Genre-split titles go 321 → 324 (variants that now group together); cross-language stays 2 (unchanged). Every merge is within one genre fold. Full list: docs/eval/work_consolidation_step1_merges.csv.
