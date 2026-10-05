@@ -53,6 +53,10 @@ MERGES = [  # (survivor prefix, [loser prefixes], label, reason)
      'RG-approved 2026-10-05 (Legat check): the 1906-07 Graduates line (joined the troupe 1 іюня 1907) and the 1907-08 ballet-artist line (съ 1 іюня 1907); consecutive seasons, same first name'),
     ('230477', ['8acb78'], 'Марквардтъ Августъ',
      'RG-approved 2026-10-05: Moscow military-music bandmaster (Капельмейстеръ военной музыки, since 15 августа 1884) and orchestra cornet/trumpet player (since 19 сентября 1882, left 1 іюля 1903 per the 1902-03 line); the orchestra line prints "(онъ же и капельмейстеръ военной музыки)"; the two records hold complementary seasons, one orchestra line per season'),
+    ('019ed1', ['ce6489'], 'Шнейдеръ Карлъ Ѳедоровичъ (trombone)',
+     'RG decision 2026-10-05 (merge, labelled UNCERTAIN, list entry 7): trombonist in the Mikhailovsky orchestra since 1 сентября 1902 (to 1907-08) and in the combined Petersburg orchestras 1908-10 with start date 1 сентября 1907; start date changes with no transfer note'),
+    ('cd67fa', ['4396b9'], 'Шредеръ Карлъ (percussion)',
+     'RG-approved 2026-10-05: the Petersburg orchestra percussionist Шредеръ Карлъ, since 1 декабря 1894 (stored 1884 in 1896-1902, scan check pending), 1894-95..1906-07 and, by RG decision, the 1907-10 lines'),
 ]
 def full(p):
     r = con.execute("select person_id from entities.person where cast(person_id as varchar) like ? and superseded_by_person_id is null", [p + '%']).fetchall()

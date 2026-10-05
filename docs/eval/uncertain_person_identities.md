@@ -55,11 +55,14 @@ To add an entry: copy the template at the bottom.
 
 - **Status:** MERGED (RG, 2026-10-05; not uncertain): one person (230477...), 30 entries, 1890-91 to 1905-06. The two records held complementary seasons of one orchestra line, plus the bandmaster line ("Капельмейстеръ военной музыки", since 15 августа 1884); the orchestra line itself prints "(онъ же и капельмейстеръ военной музыки)" (since 19 сентября 1882, left 1 іюля 1903 per 1902-03; 1904-05 repeats the leaving note).
 
-## 7. Шнейдеръ Карлъ Ѳедоровичъ (Petersburg Musicians) -- two persons, overlapping 1908-10
+## 7. Шнейдеръ Карлъ Ѳедоровичъ (Petersburg Musicians, trombone) -- the 1902-08 and 1908-10 lines: one man?
 
-- **Status:** OPEN -- not examined in detail; two live persons: 019ed1... (9 entries, 1902-03 to 1909-10, start 1902-09-01) and ce6489... (2 entries, 1908-09 to 1909-10, start 1907-09-01), both SP Musicians. The larger person's stored instrument lines read trombone (1902-03 to 1907-08) and then percussion (1907-08 to 1909-10); the smaller person's instrument was not examined.
-- **What is uncertain:** one man with a start-date variant and a change of instrument, or two musicians (father/son or namesakes) in the orchestra at once.
-- **Would resolve it:** the printed instrument lines for 1908-10; Petersburg orchestra rosters.
+- **Status:** MERGED (RG, 2026-10-05, "merge, but add to the uncertain list"): one person (019ed1...), 8 entries, 1902-03 to 1909-10. (The earlier worry, a second "Шнейдеръ" overlapping in 1908-10, was in fact the percussionist Шредеръ's lines being attached to him -- see entry 12.)
+- **What is uncertain:** the trombonist prints "Шнейдеръ, Карлъ Ѳедоровичъ (съ 1 сентября **1902**)" in the Mikhailovsky orchestra list 1902-03 to 1907-08 (1907-08 is the last year of the "Бывшій оркестръ Михайловскаго театра") and "(съ 1 сентября **1907**)" in the combined Petersburg orchestras list in 1908-09 and 1909-10, with no transfer note.
+- **For one man:** same name, patronymic and instrument; one trombone line per season, no overlap; the new start date fits a transfer into the combined orchestra in 1907 (the percussionist's 1906 transfer from the same orchestra is printed as "Переведенъ изъ Михайловскаго театра съ 1 сентября 1906").
+- **For two men / against:** the start date changes 1902 -> 1907 with no printed transfer; two trombonists named Карлъ Ѳедоровичъ Шнейдеръ would be an odd coincidence, but the second could be a new hire.
+- **Where to look:** `musicians_1907-08_SP_p004__e035` (no. 19, last Mikhailovsky line), `musicians_1908-09_SP_p004__e008` (no. 118), `musicians_1909-10_SP_p004__e014` (no. 120).
+- **Would resolve it:** a Mariinsky orchestra roster 1907-1910; Весь Петербургъ; the 1907 order merging the Mikhailovsky orchestra into the Mariinsky one.
 
 ---
 

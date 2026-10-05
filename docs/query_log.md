@@ -12574,3 +12574,13 @@ WHERE e.entity_type='BalletArtists' AND sp.city='SP' AND (e.family_name LIKE 'Щ
 ```
 
 Result: Ѳедорова — 19 entries 1890-91..1907-08 on one person; 1904-05 no. 114 prints start 1 іюня 1885 and "Оставила службу 1 іюня 1905" (scan zoom), no. 125 Щедрина prints the same note (start 12 мая 1885, absent after 1904-05); 1905-06, 1906-07, 1907-08 list her again with 12 мая 1885. Марквардтъ — 230477 (bandmaster line every season 1890-91..1905-06 + orchestra line in 1890-94, 1895-96, 1904-05) and 8acb78 (orchestra line 1894-95, 1896-97..1902-03): complementary seasons; merged, 30 entries. Шнейдеръ/Шредеръ — blind read of 11 scan lines confirmed all stored values: percussionist Шредеръ Августовичъ (since 1 декабря 1894) to 1906-07; trombonist Шнейдеръ Ѳедоровичъ (since 1902, Mikhailovsky; Mariinsky list from 1908-09 'съ 1 сентября 1907'); 1907-10 percussion lines print Шредеръ Ѳедоровичъ, 1902 and were linked to the trombonist 019ed1 -> moved to cd67fa (RG). After both operations: live persons 3220, tombstones 2356, 0 orphans, 0 shift blocks, flags 546, receipts identical.
+
+## 2026-10-05 — Шредеръ Карлъ (percussion): start-date year per season (1884 vs 1894), then merge verification
+
+```sql
+SELECT e.page_id, e.list_number, sp.season, e.tenure_note_text
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6)='cd67fa' AND sp.season<='1903-04' ORDER BY sp.season;
+```
+
+Result: stored start 'съ 1 декабря 1894' in 1894-95, 1895-96, 1903-04 and 'съ 1 декабря 1884' in 1896-97..1902-03; blind reader and my own view of three pages (1898-99, 1899-00, 1900-01) confirm 1884 is printed (декабря present; the reader's "missing декабря" claim was wrong). After merging 4396b9 into cd67fa: one percussionist, 16 entries 1894-95..1909-10; live 3219 -> 3218, tombstones 2357 -> 2358, 0 orphans, 0 shift blocks, flags 546.
