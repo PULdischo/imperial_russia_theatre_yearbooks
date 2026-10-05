@@ -12385,3 +12385,13 @@ WHERE left(cast(l.person_id as varchar),6) IN ('4af6a7','d54352') ORDER BY 1,2;
 ```
 
 Result: 44 entries on 4af6a7 (Administrators 'Управляющій Конторою' since 16 июня 1882, 1890-91..1897-98; school 'Управляющій Училищемъ' to 1897-98; 'Почетные члены конференціи' every season) + 2 on d54352 (1908-09 p003 e004, 1909-10 p003 e003: 'Почетные члены конференціи'). My question text said d54352 held a Petersburg and a Moscow line; in fact it holds one line per season (both on p003). After merge: live 3239 -> 3238, 0 orphans, 0 shift blocks, flags 546.
+
+## 2026-10-05 — Габріель (TSS): the two single-entry persons, then merge verification
+
+```sql
+SELECT sp.season, right(l.entry_id,10), e.family_name, e.first_name, e.patronymic, right(e.heading_path,34), e.subject_taught, e.tenure_note_text
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('750b99','a550ac') ORDER BY 1,2;
+```
+
+Result: 2 entries — 1890-91 p001 e018 and 1891-92 p001 e017, 'Габріель', Французскій языкъ, Балетное отдѣленіе, 'съ 1 сентября 1890 г.'. After merge: live 3238 -> 3237, 0 orphans, 0 shift blocks, flags 546.

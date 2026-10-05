@@ -12,3 +12,4 @@
 | 2026-10-05 | Боборыкинъ Петръ Дмитріевичъ | 232905 -> c58d24 | MERGED (RG); not uncertain | honorary member of the school conference 1890-91..1909-10 (Moscow list, both lists 1899-02 with transfer note, then Petersburg); 23 entries |
 | 2026-10-05 | Казанскій Левъ Ивановичъ | d0ad53 -> 0b9603 | MERGED (RG); not uncertain | Moscow Directorate physician (since 20 April 1885) and doctor of the Moscow school; 37 entries 1890-91..1909-10 |
 | 2026-10-05 | Пчельниковъ Павелъ Михайловичъ | d54352 -> 4af6a7 | MERGED (RG); not uncertain | manager of the Moscow Office (since 16 June 1882) and of the Moscow school; honorary member of the school conference 1890-91..1909-10; 46 entries |
+| 2026-10-05 | Габріель | 750b99 -> a550ac | MERGED (RG); not uncertain | French teacher, Petersburg ballet department, since 1 Sept 1890; 1890-91 and 1891-92, surname only |
