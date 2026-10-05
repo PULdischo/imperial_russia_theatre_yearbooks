@@ -12361,3 +12361,27 @@ WHERE left(cast(l.person_id as varchar),6) IN ('0b9603','d0ad53') ORDER BY 1,2;
 ```
 
 Result: 37 entries: Moscow doctor lists (Дежурные врачи / Штатный врачъ / Старшій врачъ, 'съ 20 апрѣля 1885', later 'съ 20 февраля 1885') and 'Врачъ при Училищѣ' lines (1891-92..1909-10, '(старшій врачъ при Дирекціи Императорскихъ театровъ въ Москвѣ)'); d0ad53 = the 1908-09 and 1909-10 school-doctor lines. After merge: live 3240 -> 3239, 0 orphans, 0 shift blocks, flags 546.
+
+## 2026-10-05 — Issue #133: is А. Н. Богдановъ (co-author of Хрустальный башмачекъ) anywhere on the roster, incl. the Moscow Theatre School staff?
+
+```sql
+select sp.season, sp.city, sp.entity_type, pe.page_id, pe.family_name, pe.first_name, pe.patronymic, pe.heading_path
+from raw.person_entry pe join raw.source_pages sp using (page_id) where pe.family_name ilike '%огдан%' order by 1, 3;
+select sp.season, count(*) filter (where pe.institution ilike '%моск%' or pe.heading_path ilike '%моск%') msk, count(*) tot
+from raw.person_entry pe join raw.source_pages sp using (page_id) where sp.entity_type = 'TheaterSchoolStaff' group by 1 order by 1;
+select ... from raw.person_entry pe join raw.source_pages sp using (page_id)
+where concat_ws(' ', pe.institution, pe.heading_path, pe.rank_or_title, pe.subject_taught, pe.tenure_note_text, pe.credit_summary_text, pe.first_name) ilike '%огдан%';
+select distinct sp.season, pe.family_name, pe.first_name, pe.patronymic, pe.subject_taught, pe.heading_path ... -- Moscow school dance teachers, 1890-92
+```
+
+Result: no Алексѣй / А. Н. Богдановъ anywhere. Every Богдановъ is SP: Александра Александровна (BalletArtists 1890-97), Михаилъ Михайловичъ (BalletArtists 1890-94), Георгій Поликарповичъ (Graduates 1904-05, BalletArtists 1904-10). The Moscow school IS covered every season (41-70 Moscow rows out of 111-152 school-staff rows a year, 1890-1910). Its dance teachers in 1890-92 were Мендесъ Іосифъ, Ермоловъ Иванъ Алексѣевичъ, Никитинъ Иванъ Дмитріевичъ (Танцы) and Гельцеръ Василій Ѳедоровичъ (Пластика и танцы, drama courses). No other text field mentions Богданов except Михаилъ's own heading. NB: another session is working on the theater-school staff today; this reflects full_run at query time.
+
+## 2026-10-05 — Пчельниковъ Павелъ Михайловичъ (TSS + Administrators): entries of 4af6a7 and d54352, then merge verification
+
+```sql
+SELECT sp.season, right(l.entry_id,10), e.entity_type, substr(e.heading_path,1,12)||'..'||right(e.heading_path,30), e.rank_or_title, e.tenure_note_text
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('4af6a7','d54352') ORDER BY 1,2;
+```
+
+Result: 44 entries on 4af6a7 (Administrators 'Управляющій Конторою' since 16 июня 1882, 1890-91..1897-98; school 'Управляющій Училищемъ' to 1897-98; 'Почетные члены конференціи' every season) + 2 on d54352 (1908-09 p003 e004, 1909-10 p003 e003: 'Почетные члены конференціи'). My question text said d54352 held a Petersburg and a Moscow line; in fact it holds one line per season (both on p003). After merge: live 3239 -> 3238, 0 orphans, 0 shift blocks, flags 546.

@@ -11,3 +11,4 @@
 | 2026-10-05 | Петровъ Иванъ Степановичъ | 0aeaf9 -> 527973 | MERGED (RG), labelled UNCERTAIN (uncertain list entry 9) | tutor 1890-91..1907-08 (since 1891) then preparatory-class teacher 1908-10 (since 15 Nov 1907); start dates differ, no transfer printed |
 | 2026-10-05 | Боборыкинъ Петръ Дмитріевичъ | 232905 -> c58d24 | MERGED (RG); not uncertain | honorary member of the school conference 1890-91..1909-10 (Moscow list, both lists 1899-02 with transfer note, then Petersburg); 23 entries |
 | 2026-10-05 | Казанскій Левъ Ивановичъ | d0ad53 -> 0b9603 | MERGED (RG); not uncertain | Moscow Directorate physician (since 20 April 1885) and doctor of the Moscow school; 37 entries 1890-91..1909-10 |
+| 2026-10-05 | Пчельниковъ Павелъ Михайловичъ | d54352 -> 4af6a7 | MERGED (RG); not uncertain | manager of the Moscow Office (since 16 June 1882) and of the Moscow school; honorary member of the school conference 1890-91..1909-10; 46 entries |
