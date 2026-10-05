@@ -12415,3 +12415,13 @@ WHERE left(cast(l.person_id as varchar),6) IN ('c03d21','3732cd','3e22b9') ORDER
 ```
 
 Result: c03d21 = 1 BalletArtists entry (1890-91 SP p001 e023, 'Жукова 1-я', 'съ 22 іюля 1869', 'Оставила службу 1 марта 1891'); 3e22b9 = 7 TSS entries 1901-02..1907-08 (Танцы), 3732cd = 2 TSS entries 1908-09, 1909-10 (Танцы / Классическіе танцы), all 'съ 1 сентября 1901'. After merging 3732cd into 3e22b9: live 3236 -> 3235, 0 orphans, 0 shift blocks, flags 546.
+
+## 2026-10-05 — Преображенская Ольга Іосифовна: entries of 76d1b9 and de05ca, scan check of the 1908-09 start date, then merge verification
+
+```sql
+SELECT sp.season, sp.city, right(l.entry_id,10), e.entity_type, e.family_name, e.first_name, e.tenure_note_text
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('76d1b9','de05ca') ORDER BY 1,2;
+```
+
+Result: 76d1b9 = 20 entries (BalletArtists 1890-91..1907-08 and 1909-10, start 'съ 1 іюня 1889'; plus a 1900-01 TSS 'Танцы' line, 'съ 1 мая 1901') with no 1908-09 entry; de05ca = 1 entry, balletartists_1908-09_SP_p003 e006, 'съ 1 іюня 1899'. The scan (printed p. 91, no. 74, 2x enlargement of a full-resolution crop) prints 1899 -- a genuine print typo. After merge: 21 entries, live 3235 -> 3234, 0 orphans, 0 shift blocks, flags 546. (My question text said the start date reads 1889 "in 18 volumes"; it is 19 BalletArtists volumes.)

@@ -15,3 +15,4 @@
 | 2026-10-05 | Габріель | 750b99 -> a550ac | MERGED (RG); not uncertain | French teacher, Petersburg ballet department, since 1 Sept 1890; 1890-91 and 1891-92, surname only |
 | 2026-10-05 | Гавронскій | 6f5c3c -> 7029d5 | MERGED (RG); not uncertain | teacher of Законъ Божій (Roman Catholic pupils), Petersburg ballet dept, since 1 Feb 1895, 1894-95..1902-03; surname only; 9 entries |
 | 2026-10-05 | Жукова Вѣра Васильевна | 3732cd -> 3e22b9 (teachers) | MERGED (RG); dancer c03d21 left SEPARATE, labelled UNCERTAIN (list entry 10) | teacher of dance, since 1 Sept 1901, 9 entries 1901-02..1909-10; the 1890-91 ballet artist 'Жукова 1-я' (left 1 Mar 1891) kept apart |
+| 2026-10-05 | Преображенская Ольга Іосифовна | de05ca -> 76d1b9 | MERGED (RG, after a scan zoom); not uncertain | the 1908-09 ballet line (only season missing) prints start 1899 vs 1889 elsewhere -- genuine print typo (p. 91 no. 74), listed in genuine_print_typos.md; 21 entries |
