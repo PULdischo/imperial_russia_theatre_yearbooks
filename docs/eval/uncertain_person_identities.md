@@ -111,6 +111,23 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** the three entries above; `musicians_1906-07_SP_p003__e025` (last Августовичъ line); the trombonist's lines `musicians_1907-08_SP_p004__e035`, `musicians_1908-09_SP_p004__e008`, `musicians_1909-10_SP_p004__e014`.
 - **Would resolve it:** a Mariinsky orchestra roster 1907-1910 (Весь Петербургъ; staff lists of the Directorate) naming the percussionist (Шредеръ К. А. or К. Ѳ.).
 
+## 13. Цыбинъ Владіміръ Николаевичъ (Musicians, flute) -- Moscow 1897-1908, Petersburg 1907-10: one man?
+
+- **Status:** MERGED (RG, 2026-10-05, "merge, and add to the uncertain list"): one person (58db32...), 10 entries, 1900-01 to 1909-10.
+- **What is uncertain:** a flautist "Цыбинъ, Владіміръ Николаевичъ (съ 1 апрѣля 1897 г.)" is in the Moscow orchestra list 1900-01 to 1907-08; from 1908-09 a flautist of the same name and patronymic is in the Petersburg orchestras list with "(съ 1 сентября 1907 г.)". No transfer note is printed in either city.
+- **For one man:** identical name, patronymic and instrument; rare surname; consecutive seasons; a move to the Petersburg orchestra would explain the new start date.
+- **For two men / against:** the 1907-08 Moscow volume still lists him although the Petersburg start date is 1 Sept 1907; no printed transfer; the start date resets 1897 -> 1907 (the same pattern as entry 4, Логиновъ, in the opposite direction).
+- **Where to look:** `musicians_1907-08_MSK_p003__e001` (last Moscow line), `musicians_1908-09_SP_p003__e035` (first Petersburg line), `musicians_1909-10_SP_p004__e006`.
+- **Would resolve it:** the Moscow and Petersburg orchestra rosters for 1907; Весь Петербургъ 1908-1910 (a flautist Цыбинъ at the Mariinsky or the Mikhailovsky).
+
+## 14. Завѣтновскій (Petersburg Musicians, second violin) -- who is the "Викторъ" of 1908-10?
+
+- **Status:** OPEN, parked (RG, 2026-10-05; RG ruled out "three separate men"). Currently three live persons: 1c7f9e... (Викторъ, 1901-02 and 1902-03), 2658b3... (Николай, 1904-05 to 1907-08), 33ecbf... (Викторъ, 1908-09 and 1909-10). Nothing merged.
+- **What is uncertain:** 1c7f9e is "Завѣтновскій, Викторъ Александровичъ, Вторая скрипка (съ 1 сентября 1901 г.)", left 1 сентября 1902. 2658b3 is "Николай Александровичъ (съ 15 октября 1904 г.)", first then second violin. 33ecbf (1908-09 no. 43, 1909-10 no. 44, both read on the scans) is "Викторъ Александровичъ (съ **15 октября 1904** г.). Вторая скрипка." -- Николай's start date and instrument with Виктор's first name.
+- **Option A (merge into the Николай, 2658b3):** identical start date and instrument; list position continues 39, 43, 44; no Николай after 1907-08; the first name would be a print slip or change. **Option B (merge into the 1901-02 Викторъ, 1c7f9e):** the first name matches; but the 1904 start date, the absence in 1904-08 and Николай's identical date speak against a rehire. **Option C (three men):** ruled out by RG as an implausible coincidence of start dates.
+- **Where to look:** `musicians_1908-09_SP_p002__e002` (no. 43), `musicians_1909-10_SP_p002__e008` (no. 44), `musicians_1907-08_SP_p001__e019` (Николай, no. 39), `musicians_1901-02_SP_p005__e022`, `musicians_1902-03_SP_p005__e032`.
+- **Would resolve it:** Petersburg orchestra rosters 1904-1910 (Весь Петербургъ; the Directorate's staff lists) naming the violinists Завѣтновскій; the 1904 hiring order.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.

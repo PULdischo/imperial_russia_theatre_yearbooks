@@ -12667,3 +12667,15 @@ from analysis.event_entry e where e.season = ? and e.city = 'Moscow' and e.event
 
 Result: 3 performances, all Большой, all sole items, and all scan-confirmed as printed. "Карменъ, бал." on 28 Jan 1907, matinee, 971.01 р. (1906-07 p029); "Карменъ, бал." on 16 Sep 1907, matinee, 736.51 р. (1907-08 p003); "Карменъ, др." on 23 Sep 1908, evening, 3013.43 р. (1908-09 p006). Stats-page cross-check: see the counts printed alongside; season_stats_comparison.md has 1906-07 Moscow Repertoire 51 vs stats 49 ballet (Repertoire has more), and 1907-08 Moscow 47 vs 48 (= stats once Коппелія "оп." counts as ballet).
 Counts printed: 1906-07 Moscow 51 sessions with a бал.-genre work (1 is Карменъ); 1907-08 Moscow 46 (1 is Карменъ). The 1907-08 total here (46) does not reproduce season_stats_comparison.md's 47 (its counting rule differs), so the stats-page evidence on Карменъ is inconclusive.
+
+## 2026-10-05 — Итцигсонъ, Цыбинъ, Завѣтновскій (check/overlap class of the duplicate pairs): timelines and verification
+
+```sql
+SELECT sp.season, sp.city, right(l.entry_id,10), e.entity_type, e.family_name, e.first_name, e.patronymic, e.instrument, e.list_number, e.heading_path, e.tenure_note_text
+FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp ON sp.page_id=e.page_id
+WHERE left(cast(l.person_id as varchar),6) IN ('08a1a5','4dcddd','58db32','00c2fa','1c7f9e','33ecbf','2658b3') ORDER BY 1,2,3;
+SELECT sp.season, sp.city, e.page_id, e.list_number, e.first_name, e.patronymic, e.instrument, e.tenure_note_text
+FROM raw.person_entry e JOIN raw.source_pages sp ON sp.page_id=e.page_id WHERE e.family_name LIKE 'Завѣтнов%' OR e.family_name LIKE 'Заветнов%' ORDER BY 1;
+```
+
+Result: Итцигсонъ — 19 entries over two persons (Репетиторы, since 1 августа 1882, 1890-91..1907-08; 1906-07 in both the orchestra and ballet-troupe lists); merged. Цыбинъ — Moscow flute since 1 апрѣля 1897 (1900-01..1907-08) and Petersburg flute since 1 сентября 1907 (1908-09, 1909-10); merged, uncertain. Завѣтновскій — Викторъ 1901-02/1902-03 (left 1 Sept 1902), Николай 1904-05..1907-08 (since 15 октября 1904), Викторъ 1908-09/1909-10 (since 15 октября 1904; both scan-confirmed); parked. After the two merges: live persons 3218 -> 3216, tombstones 2358 -> 2360, 0 orphans, 0 shift blocks, flags 546, receipts identical.
