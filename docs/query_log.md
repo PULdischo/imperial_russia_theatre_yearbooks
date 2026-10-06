@@ -12803,3 +12803,14 @@ ProductionTeam, Repertoire and TheaterSchoolStaff are present every season. Grad
 has no pages in 1907-08. The ballet production lists have 0 entries for 1905-06,
 1906-07 and 1907-08, and there are no scans for those seasons in
 pdf/Spiski_BalletProductions.
+
+## 2026-10-06 — ballet-list creators with a Wikidata ID, after RG's 41 new accepts
+
+```sql
+SELECT count(DISTINCT pc.person_id), count(DISTINCT pc.person_id) FILTER (WHERE p.wikidata_qid IS NOT NULL)
+FROM research.production_credit pc JOIN research.person p USING (person_id);
+```
+
+Result: 108 creators, of whom 74 have a QID. That is 72 decided on the review page,
+plus roster-linked people whose QID came from person_wikidata_link.
+entities.creator_wikidata_link has 72 rows (31 before).
