@@ -145,9 +145,17 @@ def main() -> None:
                          f"input; sequence not checkable here")
                 else:
                     gap = folio - prev[0] - 1
-                    # docs/season_reviews.md §10: the gap must be exactly the
-                    # number of unpaginated scan pages sitting between them.
-                    if gap != unpaginated_since:
+                    # A tipped-in plate carries no folio AND consumes no
+                    # folio number, so consecutive folios across one are
+                    # correct. The data proves it: 1892-93_SP_opera folio 174
+                    # -> 175 with a plate between; had the plate taken a
+                    # number the next would read 176. A page that is part of
+                    # the gathering but simply unnumbered DOES consume one,
+                    # so anywhere from 0 to `unpaginated_since` is plausible
+                    # and only a gap LARGER than that leaves pages
+                    # unaccounted for. Flagging gap != unpaginated_since
+                    # produced 9 false positives of this shape (2026-10-06).
+                    if gap > unpaginated_since or gap < 0:
                         flag(p["page_id"], "missing_page",
                              f"{src}: folio {prev[0]} ({prev[1]}) -> {folio}; "
                              f"gap of {gap} with {unpaginated_since} "

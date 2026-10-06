@@ -840,6 +840,44 @@ misreads, each needs a scan), 25 cross-file duplicates (expected where two
 reviews share a page), 12 letter_spacing_leak, 33 zero_uncertainty, 3
 duplicate_folio, and the one degenerate caption (a plate caption, deferred).
 
+**FOLIO SWEEP 2026-10-06 — 37 gap flags worked down to 13.** Two distinct
+mechanisms behind the misreads, both now understood:
+
+- **The model reads the printer's GATHERING SIGNATURE instead of the folio.**
+  These volumes print a small signature number at the bottom LEFT and the
+  folio at the bottom RIGHT. `1900-01_MSK_ballet_p004` shows "34" left and
+  "265" right; the extraction recorded 34. Same for 25/193 on
+  `1899-00_MSK_all_p009`. Every wild "folio" in the corpus (13, 24, 25, 34,
+  99) is a signature number.
+- **A leading digit gets dropped.** `1901-02_SP_ballet_p033` prints 199 at
+  the foot; recorded as 99.
+
+Plus the plate/tailpiece fabrication already documented above: a page whose
+foot carries a decorative tailpiece instead of a number gets an invented
+folio, usually 194.
+
+Fixed, with provenance distinguished because this is a research dataset:
+3 scan-verified (193, 265, 199), 2 INFERRED from an unambiguous run with no
+legible folio on the scan (185, 115), 3 blanked as fabricated on last pages
+(all 194).
+
+**A check-logic bug accounted for 11 of the 37.** The folio check required
+`gap == number of unpaginated pages between`. But a tipped-in plate carries
+no folio AND consumes no folio number, so consecutive folios across one are
+CORRECT — proven by the data itself: 174 -> 175 with a plate between, where
+a paginated plate would have forced 176. Now only `gap > unpaginated` or a
+negative gap is flagged.
+
+**No page is missing from any PDF** — all 46 source files have contiguous
+scan-page indices — so every remaining gap is a folio misread, not a lost
+leaf, unless a PDF itself omits one.
+
+**13 still open**, each needing its own scan: four single-folio gaps
+(224->226, 192->194, 180->182, 248->250), the tangled
+`1900-01_SP_ballet` run around folios 174-182, `1899-00_MSK_all` around
+195-198, `1890-91_SP_all` 145->149, and `1900-01_SP_ballet_p000` claiming
+folio 20 where the review starts at 153.
+
 **ADDED 2026-10-06 — five issue-era reviews, +46 pages.** Prepared in a
 scratch folder by the "Adding additional Yearbooks" session and integrated
 here: 1908-09 Ballet SP (7 pp) and Moscow (5 pp); 1910-11 Ballet SP (8 pp),
