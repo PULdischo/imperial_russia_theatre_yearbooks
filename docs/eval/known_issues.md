@@ -22134,3 +22134,54 @@ column, has 3 transcription errors (NOT fixed yet, RG to schedule):**
 
     Re-parse diff: exactly those 3 events (+3 performances, 29568 → 29571). Works 3106 → 3103.
 - **Боярыня Вѣра Шелога, corrected reading (for RG).** All ~25 performances, 1901-06, are at the Большой or Маріинскій and billed as the prologue with "Псковитянка, оп." That is Rimsky-Korsakov's opera-prologue, not Mey's drama. The printed labels vary (прологъ / оп. / др.), so the work is currently split: "прологъ" (22) is classed as spoken, apart from the "оп."/"др." printings. Earlier "keep apart" advice was wrong; proposed: treat all as opera.
+
+### #133 1908-09..1910-11 ballet lists integrated (2026-10-06)
+
+The "Adding additional Yearbooks" session's scan-verified 1908-11 lists (111 entries,
+`outputs/ballet_productions_1908-11/parsed_verified`) were loaded together with the
+480 earlier entries (`outputs/ballet_productions_all_2026-10-06`, `load_productions.py`).
+Before loading, the combined file's 480 earlier entries and 1,881 dates were checked
+field by field against production: 0 differences.
+
+- **Parser** (`build_production_credits.py`): new 1908-11 phrasings ("Танцы и группы
+  сочинены и поставлены", "Оркестровка", "Сюита изъ произведеній", "Программа соч.",
+  "Сюжетъ соч.", "на музыку", "вновь обработано по соч.", "по роману", "муз."),
+  genre words added to the stop list, and the honorifics графа / гр. / г-жи. "соч" no
+  longer matches inside "сочинены". There is one OVERRIDE (Дочь фараона, Moscow 1908-09,
+  where "Брукша" is the source). All 290 pre-1908 descriptions parse identically.
+  Credits now total 1,500, of which 1,495 are linked to persons; the 1,215 old credits
+  and 1,210 old links are unchanged.
+- **Scan check:** a blind read covered the 17 entries with obscure or doubtful names,
+  zoomed at 3-5x. It agrees with the list transcription on 15 of them.
+  - "Нюнтера" (Коппелія MSK and Ручей SP, 1908-09) is a transcription misread; the
+    print has italic и. It is corrected to Нюитера in `raw_verified`, `parsed_verified`
+    and the combined CSV. `raw_full`, the model's own output, is kept as it was.
+  - "Адана" (Жизель MSK 1908-09) is genuinely printed; it is logged in
+    genuine_print_typos.md and the form maps to Adam.
+  - Маржецкаго (ц), Ѳ. А. Гартмана (fita), Щербачева, Стенбокъ-Фермора, Келера and
+    Арендса are all clear.
+- **Creators:** 15 new, 12 of them as `creator_person`:
+  Аренскій, Ильинскій А. А., Бенуа Александръ (distinct from `benoist`), Щербачевъ А. В.,
+  Стенбокъ-Ферморъ И. В., Черепнинъ, Шуманъ, Шопенъ, Флоберъ, Аксаковъ, Брукшъ and
+  Гартманъ Ѳ. А.
+- **Roster links:** three are linked to the roster as `confirmed`:
+  - П. А. Маржецкій: initials agree, and his own 1908-09 roster entry names Аленькій
+    цвѣточекъ.
+  - М. Келеръ: Морицъ Ѳедоровичъ, the SP Капельмейстеръ.
+  - А. Ф. Арендсъ: Андрей Федоровичъ, the Moscow Капельмейстеры балета.
+
+  The roster also holds an unmerged duplicate, Келеръ, **Морисъ** Ѳедоровичъ
+  (ad393322), not handled here.
+- **New forms:** 28, mostly case forms (Гауля, Леона Делиба, С. Жоржа, М. Фокинымъ,
+  Минкусомъ, …). Bare "⁂" is now role-scoped: as libretto (Волшебное зеркало, Moscow
+  1909-11, "Петипа и г. ⁂") it is Всеволожскій, the same credit as the SP printings' Г⁂;
+  as music it stays `asterism_shalosti`.
+- **Research layer:** `BALLET_LIST_TITLE_ALIASES` gains "Донъ-Кихотъ Ламанчскій" →
+  "Донъ-Кихотъ" and "Ѳетида и Пелей" → "Ѳемида и Пелей" (dates agree; the Repertoire's
+  spelling is not scan-checked). Every 1908-10 production now has a work. The 37
+  1910-11 productions have none yet, because 1910-11 Repertoire is not in production;
+  they will match once it is.
+- **Rebuild:** only `research.production*`, the new person rows, 11 works whose parent
+  genre became ballet (all genuine ballets) and `last_attested_season` changed. Events
+  and performances are unchanged.
+- **Wikidata:** candidates for the 15 new creators were added to the review page.

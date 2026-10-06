@@ -12704,3 +12704,42 @@ FROM raw.person_entry e WHERE e.entry_id IN ('graduates_1899-00_p001__e008','gra
 ```
 
 Result: two Moscow-school graduate lines (1891-92 no. 6, note 'съ 1-го сентября 1892 г. въ Московскую балетную труппу'; 1899-00 no. 8, no note) and two Moscow dancers (Екатерина Александровна since 1 сентября 1892; Екатерина Дмитріевна since 1 сентября 1900). Both graduate lines attached (RG): live persons 3216 -> 3214, tombstones 2360 -> 2362, 0 orphans, 0 shift blocks, flags 546, receipts identical.
+
+## 2026-10-06 — 1908-11 ballet lists: is the combined CSV identical to production for the 480 earlier entries?
+
+```sql
+SELECT * FROM raw.production_entry;  SELECT * FROM raw.production_entry_performance;
+-- compared field by field (NULL = '') in Python against outputs/ballet_productions_all_2026-10-06/*.csv
+```
+
+Result: 0 differing fields over 480 entries / 1,881 dates.
+
+## 2026-10-06 — after loading: did any pre-1908 credit or credit link change?
+
+```sql
+SELECT count(*) FROM (SELECT * FROM bk.analysis.production_entry_credit EXCEPT SELECT * FROM analysis.production_entry_credit);
+SELECT count(*) FROM (SELECT * FROM bk.entities.production_credit_link EXCEPT SELECT * FROM entities.production_credit_link);
+```
+
+Result: 0 and 0. Totals are now 1,500 credits and 1,495 links (1,215 and 1,210 before).
+
+## 2026-10-06 — research-layer diff against the pre-load backup
+
+```sql
+SELECT count(*) FROM (SELECT * FROM bk.research.<t> EXCEPT SELECT * FROM research.<t>);  -- and the reverse, per table
+```
+
+Result: event, performance, person_appearance and theater are unchanged. production
+gained 111 rows and production_credit 285. In work, 36 rows changed: parent_genre
+became ballet for 11 genuine ballets, and the parent_genre_note season lists grew. In
+person, 12 rows were added and 30 changed last_attested_season.
+
+## 2026-10-06 — which 1908-11 productions match no Repertoire work?
+
+```sql
+SELECT season, city, list_title FROM research.production WHERE season >= '1908-09' AND work_id IS NULL;
+```
+
+Result before the aliases: Донъ-Кихотъ Ламанчскій SP 1908-09 and 1909-10, Ѳетида и Пелей
+SP 1908-09, and all 37 entries for 1910-11, whose Repertoire is not yet in production.
+After the aliases, every 1908-10 production matches.
