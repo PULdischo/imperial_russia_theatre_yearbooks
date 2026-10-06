@@ -164,3 +164,31 @@ name_printed,role_category,creator_key,form_status,evidence
 Ю. Перро,,perrot,confirmed,
 и. Асрейтера,,asreiter,confirmed,
 ⁂,,asterism_shalosti,confirmed,
+А Аренскаго,,arensky,confirmed,print omits the period after the initial
+А. Аренскаго,,arensky,confirmed,
+А. А. Ильинскаго,,ilyinsky_aa,confirmed,
+А. Бенуа,,benois_alexandre,confirmed,Павильонъ Армиды 1908-09; 1909-11 printings give Александра Бенуа
+Александра Бенуа,,benois_alexandre,confirmed,
+А. В. Щербачева,,shcherbachev,confirmed,
+И. В. Стенбокъ-Фермора,,stenbock_fermor,confirmed,
+Н. Н. Черепнина,,cherepnin,confirmed,
+Р. Шумана,,schumann,confirmed,
+Ф. Шопена,,chopin,confirmed,
+Г. Флобера,,flaubert,confirmed,
+С. Т. Аксакова,,aksakov,confirmed,
+Брукша,,brugsch,confirmed,genitive of Брукшъ
+Ѳ. А. Гартмана,,hartmann_fa,confirmed,
+П. А. Маржецкаго,,marzhetsky,confirmed,
+М. Келера,,keller_m,confirmed,
+А. Ф. Арендса,,arends_af,confirmed,
+Гауля,,gaul,confirmed,"Фея куколъ, same work"
+Леона Делиба,,delibes,confirmed,"Ручей, same work"
+С. Жоржа,,saint_georges,confirmed,"Жизель, same work"
+М. М. Фокина,,fokin,confirmed,
+М. Фокинымъ,,fokin,confirmed,instrumental case
+Минкусомъ,,minkus,confirmed,instrumental case; Пахита
+А. С. Пушкина,,pushkin,confirmed,"Волшебное зеркало, ""сказокъ А. С. Пушкина и Гримма"""
+К. Тарновскаго,,tarnovsky_ka,confirmed,"Талисманъ, same work"
+П. П. Шенкъ,,schenk,confirmed,"Синяя борода, same work; printed undeclined"
+⁂,libretto,vsevolozhsky,confirmed,"Волшебное зеркало MSK 1909-11 ""Либретто составлено М. И. Петипа и г. ⁂"" = same credit as the SP printings' Г⁂ (RG identified as Всеволожскій). Bare ⁂ as music stays asterism_shalosti"
+Адана,,adam,confirmed,"Жизель MSK 1908-09 (music); genuine print typo for Адама, scan-checked 2026-10-06 (н crossbar clear)"
