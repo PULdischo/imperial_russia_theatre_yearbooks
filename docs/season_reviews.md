@@ -798,6 +798,29 @@ walls of text.
 7. Abbreviation expansion in a derived "cleaned" layer
 8. Whether разрядка / bold / italic / lang are rendered — decided by §11
 9. Running heads — none observed; revisit if any turn up
+**ADDED 2026-10-06 — five issue-era reviews, +46 pages.** Prepared in a
+scratch folder by the "Adding additional Yearbooks" session and integrated
+here: 1908-09 Ballet SP (7 pp) and Moscow (5 pp); 1910-11 Ballet SP (8 pp),
+Moscow (4 pp) and Opera SP (22 pp). Processed through the same pipeline
+(3 views, stitch, parse, merge, translate). Corpus is now **1,070 pages,
+4,672 blocks, 46 review files, 19 seasons 1890-91 .. 1910-11.**
+
+Two things found while integrating, both worth knowing:
+
+- **A translation hallucination on a byline.** `Э. А. СТАРКА (ЗИГФРИДА).`
+  came back as "E. A. Starka (Odette/Odile)". `Зигфридъ` is Stark's PEN
+  NAME; the translator replaced it with the Swan Lake ballerina roles, and
+  also kept the genitive `Старка` instead of the nominative Stark. Fixed to
+  "E. A. Stark (Siegfried)." Worth noting the shape: the model substituted a
+  more expected ballet term for a less expected one, which is the same
+  reach-for-the-commoner-form failure seen throughout the transcription work.
+- **A review can begin mid-way through its page.** `1910-11_SP_ballet_p000`
+  opens with the closing paragraph of the preceding OPERA review, because
+  both share printed page 133. The file therefore starts with text that does
+  not belong to it. Nothing splits a page between two reviews — a structural
+  gap, not a bug in this batch, and it will recur wherever an issue packs two
+  reviews onto one page.
+
 **STATUS 2026-09-28 — the corpus is extracted, merged and translated.**
 All 1,024 pages have been read at three views (full page + 2-band + 4-band),
 merged through the selector, and translated. 41 review files in
