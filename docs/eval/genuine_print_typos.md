@@ -442,3 +442,29 @@ correction belongs. Entry ids are `<page_id>__eNNN`.
 
 ## Seen during the 2026-10-06 ballet production lists, 1908-11 (issue #133; stored verbatim)
 - balletproductions_1908-09_MSK_p000 No. 4, Жизель или Виллисы (printed p. 70): "музыка **Адана**" for Адама (н crossbar clear at 4x; a blind reader agrees). Stored as printed; the creator form "Адана" maps to Adolphe Adam (production_creator_forms.csv).
+
+## 1900-01 Season Review, Ballet SP — folio 174 printed twice
+
+`review_1900-01_SP_ballet_p021` and `_p023` both print **174** at the foot.
+RG read both directly off the scans, 2026-10-06.
+
+Not a duplicate scan: the two pages differ in content, pixel dimensions
+(2832x3177 vs 2744x3173) and image hash. p021 carries a «Камарго» cast list,
+p023 a narrative passage.
+
+The volume is otherwise a clean run — folios 153 to 194 in order across 40
+pages, with unpaginated plates at p016, p025 (a two-page spread) and p033.
+
+Position evidence puts p023 somewhere in 176-178, not 174: p022 ends
+mid-word on a cast list ("Темза — г-жа Фо-") while p023 opens mid-narrative
+("уговорить ее поступить на сцену"), so they are not consecutive leaves; and
+p024 prints 179.
+
+Left verbatim in the raw layer per the standing rule on genuine print typos
+([[genuine-typo-q-marker-2026-09-25]]): the correction, if wanted, belongs
+in a research-layer fix, not in parsing.
+
+**Separate finding on the same pages: leaves are missing from the PDF.**
+The content discontinuity between p022 (folio 175) and p023 means the leaves
+carrying roughly 176-178 were never scanned. That is a scanning gap, not an
+extraction error — worth knowing if that passage matters.
