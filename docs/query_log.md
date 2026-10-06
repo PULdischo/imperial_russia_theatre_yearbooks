@@ -12790,3 +12790,16 @@ FROM entities.person_link l JOIN raw.person_entry e USING (entry_id) WHERE l.per
 
 Result: one flautist, start 1 декабря 1871, 1890-91..1906-07 with no overlap. After the
 merge there is one person (c5677456) with 17 entries; the diff is 1 person row and 5 links.
+
+## 2026-10-06 — coverage: pages per season per section, plus ballet-list entries
+
+```sql
+SELECT season, entity_type, count(*) FROM raw.source_pages GROUP BY ALL
+UNION ALL SELECT season, 'BalletProductionList', count(*) FROM raw.production_entry GROUP BY ALL;
+```
+
+Result: 21 seasons, 1890-91..1910-11. Administrators, BalletArtists, Musicians,
+ProductionTeam, Repertoire and TheaterSchoolStaff are present every season. Graduates
+has no pages in 1907-08. The ballet production lists have 0 entries for 1905-06,
+1906-07 and 1907-08, and there are no scans for those seasons in
+pdf/Spiski_BalletProductions.
