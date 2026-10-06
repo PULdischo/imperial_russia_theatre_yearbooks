@@ -485,3 +485,43 @@ not whose copy was scanned.
 
 Worth recording per volume going forward: it decides whether a questionable
 page can simply be re-checked, or needs another loan.
+
+### Provenance marks on the physical copies — and a FABRICATED copy_artifacts entry
+
+RG asked (2026-10-06) about the original Russian marks on the scanned copies.
+Both of the review corpus's only two stamp notes were checked against the
+scans. One is wrong, and wrong in an instructive way.
+
+**`1900-01_MSK_opera_p015` — recorded as:**
+`red circular library stamp at bottom right: «БИБЛІОТЕКА О. С. У. въ Кіевѣ»
+with date «1912»`
+
+**That is entirely fabricated.** The stamp is Czech, not Russian, and
+carries no date. Zoomed, it reads clearly:
+
+> rim: `Min. šk. a nár. osv. v Praze`  ·  centre: `Knihovna`
+
+= **Ministerstvo školství a národní osvěty v Praze — Knihovna**, the library
+of the Czechoslovak Ministry of Education and National Enlightenment. The
+model saw a circular red stamp with Latin letters and invented a plausible
+Russian library, a plausible city and a plausible year.
+
+So the volume (1900-01 Main, vol. 11 — an ILL loan from **UIllinois**, per
+the inventory's "Held by"/"Lender" columns) passed through a Czechoslovak
+government library at some point. Interwar Prague is the obvious context —
+Czechoslovakia's "Russian Action" support for Russian émigrés, and the
+Russian Foreign Historical Archive — but that is a lead to verify, not a
+conclusion from the stamp alone.
+
+**`1899-00_SP_ballet_p011` — recorded as:**
+`library stamp faintly visible at bottom-right: 'Лит И.Кадушина С.Б.П.'`
+
+Text is right, label is wrong. `Лит. И. Кадушина С.П.Б.` is the
+LITHOGRAPHER'S IMPRINT printed on the plate — "Lithography of I. Kadushin,
+St Petersburg" — not a library stamp or any provenance mark at all.
+
+**The lesson: `copy_artifacts` is unreliable as evidence.** Two of two
+entries examined were wrong — one wholly invented, one misclassified. It is
+a free-text field the model fills with no verification, so anything in it
+needs the scan before it is used for provenance research. The marks
+themselves are real and worth studying; the transcriptions are not.
