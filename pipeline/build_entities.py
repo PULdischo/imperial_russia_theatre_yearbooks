@@ -218,6 +218,11 @@ def _work_art_form(canon: str | None) -> str | None:
         return "operetta"
     if re.match(r"(оп\b|оп\.|опера|опер\b|оп,|op\b|op\.|oper|opéra|opera)", canon):
         return "opera"
+    # Qualified opera genres (2026-10-06, the opera twin of the ballet rule below):
+    # "лир. оп.", "лирич. оп.", "романт. оп." are opera. "комич. оп." is NOT caught
+    # (Корневильскіе колокола is an operetta; left for RG).
+    if re.match(r"(лир|лирич|романт)\.?\s*оп\b", canon):
+        return "opera"
     if re.match(r"(бал|ballet|аллег\. бал|фант\. бал|хореограф|pantom|mimodrame|spiel ohne wort)", canon):
         return "ballet"
     # RG, 2026-10-06: a qualified ballet genre ("волш. бал.", "фантастич. бал.",
@@ -1241,6 +1246,36 @@ def build_person_tier2_candidates(
                 consider(group[i], group[j], 2, "family_name_variant")  # index 2 = fam
 
     display = {p[0]: p[1] for p in parsed}
+
+    # A reviewed decision was keyed by the person ids current when it was made.
+    # A later rebuild can merge one side into a NEW survivor id, so look each
+    # side up through the supersede chain first -- otherwise the decision
+    # silently falls back to "pending" (2026-10-06: 5 rejected pairs lost this
+    # way, e.g. Гренбергъ Софья Павловна / Карловна).
+    sup = {str(a): (str(b) if b is not None else None) for a, b in con.execute(
+        "SELECT person_id, superseded_by_person_id FROM entities.person").fetchall()}
+
+    def _live(pid: str) -> str:
+        seen = set()
+        while sup.get(pid) and pid not in seen:
+            seen.add(pid)
+            pid = sup[pid]
+        return pid
+
+    resolved_status: dict[tuple[str, str], str] = {}
+    for (a, b), st in existing_status.items():
+        la, lb = _live(a), _live(b)
+        if la != lb:
+            k = (la, lb) if la < lb else (lb, la)
+            if st != "pending" or k not in resolved_status:
+                resolved_status[k] = st
+    # A reviewed decision beats "pending": a stale reviewed row (keyed by an id
+    # that has since been merged) and a fresh pending row for the same live pair
+    # can both be in the snapshot.
+    for k, st in existing_status.items():
+        if st != "pending" or k not in resolved_status:
+            resolved_status.setdefault(k, st) if st == "pending" else resolved_status.__setitem__(k, st)
+    existing_status = resolved_status
 
     rows = []
     for (id1, id2), (score, reason) in candidates.items():

@@ -22299,3 +22299,36 @@ match a work; Фіаметта SP 1910-11 does not (not investigated).
   consecutive with no overlap, and the split came from the printed ordinal. The script is
   `docs/eval/person_merge_keller_ernest_2026-10-06.py`. The diff is 1 person row and 5 entry links. (He is not
   Морицъ's brother: the patronymics differ, and "1-й/2-й" only numbers same-surname musicians on one list.)
+
+### Issue #135 follow-ups (RG: "work through these"), 2026-10-06 -- DONE and promoted
+
+1. **«Корсарь»**: the suspected 1898-99 instance was only in a Finder duplicate file (`… .raw 2.json`), not real data.
+   Two real ones found and zoom-checked: 1906-07 p026 (24 Jan 1907) and 1907-08 p002 (12 Sep 1907) both print
+   «Корсаръ, бал.» -- fixed. (1909-10 p043 was fixed in #135 itself.)
+2. **Disagreements list**: `ballet_list_repertoire_disagreements.md` gains A13-A16 (dates), C8 (Ѳетида / Ѳемида) and
+   D9-D10 (1909-10 SP gala excerpts not on the lists), all from #135's two-source scan check.
+3. **Full scan-read of the 1910-11 lists** (5 agents, every entry, 939 entries on 46 pages): ~1,070 field fixes in 645
+   entries; no entries missing or extra. Worst: Григорьевъ (SP p006) 7 invented credits replaced by the 5 printed at
+   the top of p007; Егорова (SP p001) credits cut off mid-word; MSK ballet p003 whole names packed into family_name;
+   musicians SP p002 instruments stored as headings; admin p003 Moscow Контора headings in `institution`; ~95 dropped
+   "(" on ProductionTeam/admin notes; start dates the print doesn't carry (3 honorary school members, Пигулевскій)
+   removed; silently corrected print forms restored (вктября, декября, Алексадровъ, Геогрій …). Uncertain: Потанинъ 44,
+   Щуко Степѣнъ/Степанъ, Пюманъ/Поманъ, Исаевъ "етрови чъ". Reports: `outputs/roster_1910-11/fullread/reports/`.
+4. **Qualified opera genres**: `_work_art_form` now treats "лир. оп.", "лирич. оп.", "романт. оп." as opera (Евгеній
+   Онѣгинъ, Карменъ, Лоэнгринъ merge into their operas). "комич. оп." (Корневильскіе колокола, an operetta) left for RG.
+5. **Shared-edge leaks in 1908-10 production**: removed entries that belong to the preceding list, with
+   entities.person_link renumbered first (0 shift blocks): 1908-09 MSK ballet p000 (17, the opera chorus nos. 33-49),
+   1909-10 MSK ballet p000 (28, same list nos. 21-48 -- one, Николаевъ, had been merged with the ProductionTeam
+   machinist of the same name, now undone), 1908-09 SP ballet p000 (4, nos. 47-50 of the preceding list, mis-filed under
+   «Балетмейстеръ»), and 1908-09 graduates p001 (9 Moscow drama-course graduates; RG: "ignore the drama graduates").
+
+**Found and fixed while verifying: reviewed person decisions were being lost.** `build_person_tier2_candidates` looked
+up a reviewed decision by the exact person ids it was made against; when a later rebuild merged one side into a new
+survivor, the decision stayed on a stale row and the live pair came back "pending" (6 rejections were already stale in
+production, e.g. Гренбергъ Софья Павловна / Карловна, Свѣтинская / Снѣжинская). It now resolves both ids through the
+supersede chain and lets a reviewed status win over "pending". All 27 distinct reviewed decisions carried forward
+(28 rows before = 27 pairs; Горохова/Горшкова was stored twice). Same root cause as #135's Wikidata fix.
+
+Production rebuilt in place (backup `outputs/full_run_pre_promote_backup_2026-10-06b_followups/`): research.event
+unchanged; 7 performances changed (2 Корсаръ + 5 opera-genre merges); person_entry 24097 -> 24039; QIDs 107 kept;
+0 tombstones revived; 0 link shift blocks; quality_flags unchanged at 576.

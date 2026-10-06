@@ -28,6 +28,10 @@ Sources: list page = `balletproductions_<season>_<city>_pNNN` (printed page); Re
 | A10 | 1901-02 SP | Волшебная флейта, #3 (p. 46) | декабря 19, 28 [1901] | 19 Dec, Маріинскій: Сильвія, бал. only. Волшебная флейта on 28 Dec morning (p018, p. 20) | The list's own Сильвія entry also gives 19 Dec, so the list implies a double bill that the Repertoire doesn't print | #106 item 18 |
 | A11 | 1903-04 SP | Волшебная флейта, #4 (p. 45) | ноября 30 [1903] | 30 Nov, Маріинскій: morning Фаустъ; evening Фея куколъ + 2-е д. бал. Фіаметта (p014, p. 16) | none | #106 item 21 |
 | A12 | 1904-05 SP | На перепутьи, #17 (p. 139) | декабря 12, 17 [1904] | На перепутьи on 12 Dec evening only (Ширяевъ benefit); 17 Dec Маріинскій: Валкирія only (p018, p. 108) | **Paired (#111):** the Repertoire prints Пробужденіе флоры / На перепутьи / Фея куколъ at the **27** Dec утро (p020, 1883 р. 19 к.); the list's Пробужденіе флоры and Фея куколъ entries both give 27 Dec | #106 item 23; #111 item 3 |
+| A13 | 1908-09 Moscow | Спящая красавица, #10 (p. 71) | октября 18 [1908] | 8 Oct, Большой: Спящая красавица, бал., 1040 р. 89 к. (p010, p. 11). 18 Oct, Большой: dash; Малый: Казенная квартира (p012, p. 13) | The list prints no октября 8; its 7 dates = Всего—7 | #135 lead 1 |
+| A14 | 1910-11 SP | Спящая красавица, #19 (p. 65) | февраля 17, 19 [1911] | 17 Feb утро, Маріинскій: Спящая красавица, бал.-феерія. (p037, p. 38). 19 Feb, Маріинскій: emancipation-jubilee bill, Кантата + Жизнь за царя; no ballet in any SP column | Context only: the Moscow Repertoire and the Moscow list both print Спящая красавица at the Большой on 19 Feb | #135 lead 4 |
+| A15 | 1910-11 SP | Шопеніана, #25 (p. 65) | марта 7, 9 [1911] | 7 Mar, Маріинскій: Эвника + Карнавалъ + Шопеніана, сюита. 9 Mar: Эвника + Карнавалъ only, 4653 р. 50 к. (p041, p. 42) | none | #135 lead 5 |
+| A16 | 1910-11 SP | Конекъ-горбунокъ или Царь-дѣвица, #11 (p. 64) | февраля 18 [1911] | 18 Feb, Маріинскій: Сказаніе о невидимомъ градѣ Китежѣ, 3463 р. 50 к.; no ballet in any SP column (p037, p. 38) | The list's 20 Feb "(2-я картина II-го дѣйствія)" matches the Repertoire's 20 Feb excerpt. Context only: the Moscow Большой prints the ballet on 17 Feb утро | #135 lead 6 |
 
 ## B. Works: the list names a ballet that the Repertoire cell doesn't name
 
@@ -49,6 +53,7 @@ list spelling was confirmed in the list verification (issue #101).
 | C5 | 1902-03 SP, 4 Dec 1902 | Фіаметта (#27, p. 45) | 2-е д. бал. Фіамметта (p014, p. 16) |
 | C6 | 1903-04 SP, 25 Jan 1904 | Фіаметта (#26, p. 46) | 2-е д. бал. Фіаметто (p024, p. 26) |
 | C7 | 1904-05 SP, 1 Dec 1904 | Граціелла (#6, p. 138) | Граціела (p016, p. 106) |
+| C8 | 1908-09 SP, 8 Apr 1909 | Ѳетида и Пелей (#26, p. 65; Миѳологическій балетъ) | Ѳемида и Пелей, бал. (p047, p. 48; zoom-checked 2026-10-06, issue #135) |
 
 ## D. Performances the Repertoire prints but the list leaves out (list internally consistent: its printed dates = its "Всего")
 
@@ -62,6 +67,8 @@ list spelling was confirmed in the list verification (issue #101).
 | D6 | 1903-04 SP | 2-е д. Лебединое озеро, #14 (p. 45) | 21 Feb 1904, Маріинскій: Red Cross benefit incl. "2-е д. бал. Лебединое озеро.", no receipts | "ноября 16 … января 18; февраля 4 (2-я картина 1-го дѣйствія). Всего—3 раза" | Charity bill | #111 item 15 |
 | D7 | 1903-04 SP | Волшебная флейта, #4 (p. 45) | 3 Apr 1904, Маріинскій: Гребловская школа charity bill, item "2) Волшебная флейта, бал.", no receipts (p032) | "сентября 28; ноября 30. 1904 г.—февраля 7. Всего 3 раза" | Charity bill | #111 item 8 |
 | D8 | 1903-04 SP | Фея куколъ, #25 (p. 46) | 10 Apr 1904, Маріинскій: sailors' families charity bill, item "5) Фея куколъ, бал.", no receipts (p032) | "1903 г.—ноября 30. Всего—1 разъ" | Charity bill | #111 item 7 |
+| D9 | 1909-10 SP | Раймонда, #13 (p. 66) | 6 Feb 1910, Маріинскій: flood-relief gala «въ пользу пестрадавшихъ отъ наводненія во Франціи» (sic), item "5) 3-е д. бал. Раймонда.", no receipts (p033, p. 34) | "1909 г.—сентября 12. 1910 г.—января 27. Всего—2 раза" | Charity bill | #135 lead 3 |
+| D10 | 1909-10 SP | Конекъ-горбунокъ, #8 (p. 65); Талисманъ, #16 (p. 66); Раймонда, #13 (p. 66) | 28 Feb 1910 вечеръ, Маріинскій: "1) 2-я карт. 2 д. бал. Конекъ-горбунокъ. 2) 2 д. бал. Талисманъ. 3) 3-е д. балета Раймонда.", 3523 р. 50 к. (p039, p. 40) | No февраля 28 under any of the three (Конекъ: окт. 4; фев. 27; апр. 2, 21 "(2 карт. 2 д.)", Всего—4; Талисманъ: Всего—5; Раймонда: Всего—2) | A receipted bill, unlike D3–D9 | #135 lead 3 |
 
 **Observed pattern (not a conclusion):** D3–D8 are all charity or benefit bills with no receipts printed, and in each the list omits the date. A checker noticed the same for Сынъ Мандарина on the 8 Apr 1903 Иверская bill (not a ballet; not yet checked).
 
