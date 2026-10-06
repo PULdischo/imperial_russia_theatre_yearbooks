@@ -1,0 +1,866 @@
+{
+ "graduates_1890-91_p000": {
+  "stored_persons": 0,
+  "stored_nonperson": [
+   [
+    "e001",
+    "Императорскія Театральныя Учил",
+    "Въ 1888 году, 21 августа, Высочайше утверждено пол"
+   ]
+  ],
+  "read_rows": 0,
+  "diffs": []
+ },
+ "graduates_1890-91_p001": {
+  "stored_persons": 0,
+  "stored_nonperson": [
+   [
+    "e001",
+    "Воспитанниковъ",
+    "26"
+   ],
+   [
+    "e002",
+    "воспитанницъ",
+    "47"
+   ],
+   [
+    "e003",
+    "учениковъ",
+    "22"
+   ],
+   [
+    "e004",
+    "ученицъ",
+    "27"
+   ],
+   [
+    "e005",
+    "Учениковъ",
+    "63"
+   ],
+   [
+    "e006",
+    "воспитанницъ",
+    "33"
+   ],
+   [
+    "e007",
+    "ученицъ",
+    "72"
+   ]
+  ],
+  "read_rows": 0,
+  "diffs": []
+ },
+ "graduates_1890-91_p002": {
+  "stored_persons": 21,
+  "stored_nonperson": [],
+  "read_rows": 21,
+  "diffs": [
+   [
+    "SURNAME",
+    "e007",
+    [
+     "Матвѣева",
+     "Наталья"
+    ],
+    [
+     "Матвѣева 3-я",
+     "Наталья"
+    ]
+   ],
+   [
+    "FIRST",
+    "e008",
+    [
+     "Уракова",
+     "АннаПетровна"
+    ],
+    [
+     "Уракова",
+     "Анна"
+    ]
+   ],
+   [
+    "SURNAME",
+    "e009",
+    [
+     "Эрлеръ",
+     "Анна"
+    ],
+    [
+     "Эрлеръ 1-я",
+     "Анна"
+    ]
+   ],
+   [
+    "SURNAME",
+    "e011",
+    [
+     "Легатъ",
+     "Иванъ"
+    ],
+    [
+     "Легатъ 2-й",
+     "Иванъ"
+    ]
+   ],
+   [
+    "SURNAME",
+    "e014",
+    [
+     "Солянниковъ",
+     "Николай"
+    ],
+    [
+     "Солянниковъ 2-й",
+     "Николай"
+    ]
+   ],
+   [
+    "FIRST",
+    "e018",
+    [
+     "Кочетовская",
+     "ЕкатеринаВладиміровна"
+    ],
+    [
+     "Кочетовская",
+     "Екатерина"
+    ]
+   ]
+  ]
+ },
+ "graduates_1890-91_p003": {
+  "stored_persons": 6,
+  "stored_nonperson": [],
+  "read_rows": 6,
+  "diffs": []
+ },
+ "graduates_1890-91_p005": {
+  "stored_persons": 18,
+  "stored_nonperson": [
+   [
+    "e007",
+    "Рыкъ (по театру Борисовъ)",
+    "съ 1 мая 1891 г."
+   ],
+   [
+    "e009",
+    "Билибина (по театру Корнева)",
+    "съ 1 мая 1891 г."
+   ]
+  ],
+  "read_rows": 20,
+  "diffs": [
+   [
+    "READ_ONLY",
+    "-",
+    null,
+    [
+     "Рыкъ (по театру Борисовъ)",
+     "Иванъ"
+    ]
+   ],
+   [
+    "READ_ONLY",
+    "-",
+    null,
+    [
+     "Билибина (по театру Корнева)",
+     "Вѣра"
+    ]
+   ]
+  ]
+ },
+ "graduates_1890-91_p006": {
+  "stored_persons": 7,
+  "stored_nonperson": [
+   [
+    "e003",
+    "Щернваль (по театру Таирова)",
+    ""
+   ]
+  ],
+  "read_rows": 8,
+  "diffs": [
+   [
+    "READ_ONLY",
+    "-",
+    null,
+    [
+     "Шернваль (по театру Таирова)",
+     "Нина"
+    ]
+   ]
+  ]
+ },
+ "graduates_1891-92_p000": {
+  "stored_persons": 18,
+  "stored_nonperson": [],
+  "read_rows": 18,
+  "diffs": []
+ },
+ "graduates_1891-92_p001": {
+  "stored_persons": 1,
+  "stored_nonperson": [],
+  "read_rows": 0,
+  "diffs": [
+   [
+    "STORED_ONLY",
+    "e001",
+    [
+     "Бекъ",
+     ""
+    ],
+    null
+   ]
+  ]
+ },
+ "graduates_1891-92_p002": {
+  "stored_persons": 15,
+  "stored_nonperson": [],
+  "read_rows": 15,
+  "diffs": [
+   [
+    "SURNAME",
+    "e010",
+    [
+     "Кульгинъ",
+     "Георгій"
+    ],
+    [
+     "Кулыгинъ",
+     "Георгій"
+    ]
+   ]
+  ]
+ },
+ "graduates_1892-93_p000": {
+  "stored_persons": 0,
+  "stored_nonperson": [
+   [
+    "e001",
+    "Ученицы",
+    "Въ 1892—1893 учебномъ году въ балетномъ отдѣленіи "
+   ]
+  ],
+  "read_rows": 0,
+  "diffs": []
+ },
+ "graduates_1892-93_p001": {
+  "stored_persons": 14,
+  "stored_nonperson": [],
+  "read_rows": 14,
+  "diffs": []
+ },
+ "graduates_1892-93_p002": {
+  "stored_persons": 0,
+  "stored_nonperson": [
+   [
+    "e001",
+    "Балетное отдѣленіе.",
+    ""
+   ]
+  ],
+  "read_rows": 0,
+  "diffs": []
+ },
+ "graduates_1892-93_p003": {
+  "stored_persons": 12,
+  "stored_nonperson": [],
+  "read_rows": 12,
+  "diffs": []
+ },
+ "graduates_1893-94_p000": {
+  "stored_persons": 0,
+  "stored_nonperson": [
+   [
+    "e001",
+    "ученицы",
+    "На женской половинѣ — 71 ученица, которая распредѣ"
+   ]
+  ],
+  "read_rows": 0,
+  "diffs": []
+ },
+ "graduates_1893-94_p001": {
+  "stored_persons": 17,
+  "stored_nonperson": [],
+  "read_rows": 17,
+  "diffs": []
+ },
+ "graduates_1893-94_p002": {
+  "stored_persons": 10,
+  "stored_nonperson": [],
+  "read_rows": 10,
+  "diffs": [
+   [
+    "SURNAME",
+    "e001",
+    [
+     "Галать",
+     "Надежда"
+    ],
+    [
+     "Галатъ",
+     "Надежда"
+    ]
+   ]
+  ]
+ },
+ "graduates_1894-95_p000": {
+  "stored_persons": 0,
+  "stored_nonperson": [
+   [
+    "e001",
+    "ученицы",
+    "Въ 1894—1895 учебномъ году въ балетномъ отдѣленіи "
+   ]
+  ],
+  "read_rows": 0,
+  "diffs": []
+ },
+ "graduates_1894-95_p001": {
+  "stored_persons": 6,
+  "stored_nonperson": [],
+  "read_rows": 6,
+  "diffs": []
+ },
+ "graduates_1894-95_p002": {
+  "stored_persons": 10,
+  "stored_nonperson": [],
+  "read_rows": 10,
+  "diffs": []
+ },
+ "graduates_1895-96_p000": {
+  "stored_persons": 0,
+  "stored_nonperson": [
+   [
+    "e001",
+    "ученицъ",
+    "Въ 1895—1896 учебномъ году въ балетномъ отдѣленіи "
+   ]
+  ],
+  "read_rows": 0,
+  "diffs": []
+ },
+ "graduates_1895-96_p001": {
+  "stored_persons": 10,
+  "stored_nonperson": [],
+  "read_rows": 10,
+  "diffs": []
+ },
+ "graduates_1895-96_p002": {
+  "stored_persons": 0,
+  "stored_nonperson": [
+   [
+    "e001",
+    "Ученицы",
+    "Въ 1895—1896 учебномъ году въ балетномъ отдѣленіи "
+   ],
+   [
+    "e002",
+    "Ученики",
+    "На мужской половинѣ — 44 ученика, которые распредѣ"
+   ],
+   [
+    "e003",
+    "Ученицы и ученики",
+    "Всего на обѣихъ половинахъ состояло 107 человѣкъ."
+   ],
+   [
+    "e004",
+    "Ученицы и ученики",
+    "Въ сезонѣ 1895—1896 гг. пріема въ балетное отдѣлен"
+   ],
+   [
+    "e005",
+    "Ученицы и ученики",
+    "Окончили курсъ весною 1896 года 13 человѣкъ — 7 уч"
+   ]
+  ],
+  "read_rows": 0,
+  "diffs": []
+ },
+ "graduates_1895-96_p003": {
+  "stored_persons": 13,
+  "stored_nonperson": [],
+  "read_rows": 13,
+  "diffs": []
+ },
+ "graduates_1896-97_p000": {
+  "stored_persons": 0,
+  "stored_nonperson": [
+   [
+    "e001",
+    "Ученицы",
+    "Въ 1896—1897 учебномъ году въ балетномъ отдѣленіи "
+   ]
+  ],
+  "read_rows": 0,
+  "diffs": []
+ },
+ "graduates_1896-97_p001": {
+  "stored_persons": 8,
+  "stored_nonperson": [],
+  "read_rows": 8,
+  "diffs": []
+ },
+ "graduates_1896-97_p002": {
+  "stored_persons": 0,
+  "stored_nonperson": [
+   [
+    "e001",
+    "ученицы",
+    "Въ 1896—1897 учебномъ году въ балетномъ отдѣленіи "
+   ],
+   [
+    "e002",
+    "ученика",
+    "На мужской половинѣ — 33 ученика, которые распредѣ"
+   ]
+  ],
+  "read_rows": 0,
+  "diffs": []
+ },
+ "graduates_1896-97_p003": {
+  "stored_persons": 12,
+  "stored_nonperson": [],
+  "read_rows": 12,
+  "diffs": [
+   [
+    "SURNAME",
+    "e011",
+    [
+     "Шипановъ",
+     "Михаилъ"
+    ],
+    [
+     "Щипановъ",
+     "Михаилъ"
+    ]
+   ]
+  ]
+ },
+ "graduates_1897-98_p000": {
+  "stored_persons": 0,
+  "stored_nonperson": [
+   [
+    "e001",
+    "номъ году въ балетномъ отдѣлен",
+    "На женской половинѣ—69 ученицъ, которыя распредѣля"
+   ]
+  ],
+  "read_rows": 0,
+  "diffs": []
+ },
+ "graduates_1897-98_p001": {
+  "stored_persons": 17,
+  "stored_nonperson": [],
+  "read_rows": 17,
+  "diffs": []
+ },
+ "graduates_1897-98_p002": {
+  "stored_persons": 15,
+  "stored_nonperson": [],
+  "read_rows": 15,
+  "diffs": []
+ },
+ "graduates_1898-99_p000": {
+  "stored_persons": 14,
+  "stored_nonperson": [],
+  "read_rows": 14,
+  "diffs": []
+ },
+ "graduates_1898-99_p001": {
+  "stored_persons": 0,
+  "stored_nonperson": [
+   [
+    "e001",
+    "Балетное отдѣленіе",
+    "Въ 1898—1899 учебномъ году въ балетномъ отдѣленіи "
+   ]
+  ],
+  "read_rows": 0,
+  "diffs": []
+ },
+ "graduates_1898-99_p002": {
+  "stored_persons": 12,
+  "stored_nonperson": [],
+  "read_rows": 12,
+  "diffs": []
+ },
+ "graduates_1899-00_p000": {
+  "stored_persons": 9,
+  "stored_nonperson": [],
+  "read_rows": 9,
+  "diffs": [
+   [
+    "STORED_ONLY",
+    "e004",
+    [
+     "Григорьевъ",
+     "Сергѣй"
+    ],
+    null
+   ],
+   [
+    "STORED_ONLY",
+    "e005",
+    [
+     "Петровъ",
+     "Павелъ"
+    ],
+    null
+   ],
+   [
+    "READ_ONLY",
+    "-",
+    null,
+    [
+     "Григорьевъ",
+     "Сергѣй"
+    ]
+   ],
+   [
+    "READ_ONLY",
+    "-",
+    null,
+    [
+     "Петровъ",
+     "Павелъ"
+    ]
+   ]
+  ]
+ },
+ "graduates_1899-00_p001": {
+  "stored_persons": 20,
+  "stored_nonperson": [],
+  "read_rows": 20,
+  "diffs": [
+   [
+    "FIRST",
+    "e020",
+    [
+     "Ѳеоктистовъ",
+     "Сергій"
+    ],
+    [
+     "Ѳеоктистовъ",
+     "Сергѣй"
+    ]
+   ]
+  ]
+ },
+ "graduates_1900-01_p000": {
+  "stored_persons": 8,
+  "stored_nonperson": [],
+  "read_rows": 8,
+  "diffs": []
+ },
+ "graduates_1900-01_p001": {
+  "stored_persons": 19,
+  "stored_nonperson": [],
+  "read_rows": 19,
+  "diffs": []
+ },
+ "graduates_1901-02_p000": {
+  "stored_persons": 13,
+  "stored_nonperson": [],
+  "read_rows": 13,
+  "diffs": [
+   [
+    "SURNAME",
+    "e001",
+    [
+     "Карсаѣина",
+     "Тамара"
+    ],
+    [
+     "Карсавина",
+     "Тамара"
+    ]
+   ],
+   [
+    "SURNAME",
+    "e002",
+    [
+     "Кляштъ",
+     "Лидія"
+    ],
+    [
+     "Кякштъ",
+     "Лидія"
+    ]
+   ]
+  ]
+ },
+ "graduates_1901-02_p001": {
+  "stored_persons": 3,
+  "stored_nonperson": [],
+  "read_rows": 3,
+  "diffs": []
+ },
+ "graduates_1902-03_p000": {
+  "stored_persons": 14,
+  "stored_nonperson": [],
+  "read_rows": 14,
+  "diffs": [
+   [
+    "SURNAME",
+    "e012",
+    [
+     "Леонтъевъ",
+     "Леонидъ"
+    ],
+    [
+     "Леонтьевъ",
+     "Леонидъ"
+    ]
+   ]
+  ]
+ },
+ "graduates_1903-04_p000": {
+  "stored_persons": 16,
+  "stored_nonperson": [],
+  "read_rows": 16,
+  "diffs": []
+ },
+ "graduates_1903-04_p001": {
+  "stored_persons": 0,
+  "stored_nonperson": [
+   [
+    "e001",
+    "ученицы",
+    "Въ 1903—1904 учебномъ году въ балетномъ отдѣленіи "
+   ]
+  ],
+  "read_rows": 0,
+  "diffs": []
+ },
+ "graduates_1904-05_p000": {
+  "stored_persons": 15,
+  "stored_nonperson": [],
+  "read_rows": 15,
+  "diffs": [
+   [
+    "FIRST",
+    "e008",
+    [
+     "Соболева",
+     "Надежда"
+    ],
+    [
+     "Соболева",
+     "Належда"
+    ]
+   ],
+   [
+    "FIRST",
+    "e010",
+    [
+     "Алексѣевъ",
+     "Александръ"
+    ],
+    [
+     "Алексѣевъ",
+     "Алексанлръ"
+    ]
+   ],
+   [
+    "FIRST",
+    "e013",
+    [
+     "Лукьяновъ",
+     "Іліодоръ"
+    ],
+    [
+     "Лукьяновъ",
+     "Иліодоръ"
+    ]
+   ]
+  ]
+ },
+ "graduates_1904-05_p001": {
+  "stored_persons": 10,
+  "stored_nonperson": [],
+  "read_rows": 10,
+  "diffs": []
+ },
+ "graduates_1905-06_p000": {
+  "stored_persons": 15,
+  "stored_nonperson": [],
+  "read_rows": 15,
+  "diffs": [
+   [
+    "FIRST",
+    "e003",
+    [
+     "Клечковская",
+     "Лилія"
+    ],
+    [
+     "Клечковская",
+     "Лидія"
+    ]
+   ],
+   [
+    "FIRST",
+    "e013",
+    [
+     "Ивановъ",
+     "Александръ"
+    ],
+    [
+     "Ивановъ",
+     "Алексанлръ"
+    ]
+   ],
+   [
+    "FIRST",
+    "e015",
+    [
+     "Потанинъ",
+     "Александръ"
+    ],
+    [
+     "Потанинъ",
+     "Алексанлръ"
+    ]
+   ]
+  ]
+ },
+ "graduates_1905-06_p001": {
+  "stored_persons": 12,
+  "stored_nonperson": [],
+  "read_rows": 12,
+  "diffs": []
+ },
+ "graduates_1906-07_p000": {
+  "stored_persons": 15,
+  "stored_nonperson": [],
+  "read_rows": 15,
+  "diffs": []
+ },
+ "graduates_1908-09_p000": {
+  "stored_persons": 16,
+  "stored_nonperson": [],
+  "read_rows": 16,
+  "diffs": []
+ },
+ "graduates_1908-09_p001": {
+  "stored_persons": 6,
+  "stored_nonperson": [],
+  "read_rows": 15,
+  "diffs": [
+   [
+    "READ_ONLY",
+    "-",
+    null,
+    [
+     "Георгіевская",
+     "Антонина"
+    ]
+   ],
+   [
+    "READ_ONLY",
+    "-",
+    null,
+    [
+     "Салина",
+     "Нина"
+    ]
+   ],
+   [
+    "READ_ONLY",
+    "-",
+    null,
+    [
+     "Андріевичъ",
+     "Клеопатра"
+    ]
+   ],
+   [
+    "READ_ONLY",
+    "-",
+    null,
+    [
+     "Вишневскій",
+     "Иванъ"
+    ]
+   ],
+   [
+    "READ_ONLY",
+    "-",
+    null,
+    [
+     "Кастальскій",
+     "Аркадій"
+    ]
+   ],
+   [
+    "READ_ONLY",
+    "-",
+    null,
+    [
+     "Тетеринъ",
+     "Александръ"
+    ]
+   ],
+   [
+    "READ_ONLY",
+    "-",
+    null,
+    [
+     "Ермолова",
+     "Евгенія"
+    ]
+   ],
+   [
+    "READ_ONLY",
+    "-",
+    null,
+    [
+     "Рейзенъ",
+     "Анна"
+    ]
+   ],
+   [
+    "READ_ONLY",
+    "-",
+    null,
+    [
+     "Георгіевскій",
+     "Владиміръ"
+    ]
+   ]
+  ]
+ },
+ "graduates_1909-10_p000": {
+  "stored_persons": 10,
+  "stored_nonperson": [],
+  "read_rows": 10,
+  "diffs": [
+   [
+    "FIRST",
+    "e010",
+    [
+     "Усачевъ",
+     "Алексѣй"
+    ],
+    [
+     "Усачевъ",
+     "Алексѣ"
+    ]
+   ]
+  ]
+ },
+ "graduates_1909-10_p001": {
+  "stored_persons": 11,
+  "stored_nonperson": [],
+  "read_rows": 11,
+  "diffs": []
+ }
+}

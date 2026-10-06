@@ -525,3 +525,10 @@ entries examined were wrong — one wholly invented, one misclassified. It is
 a free-text field the model fills with no verification, so anything in it
 needs the scan before it is used for provenance research. The marks
 themselves are real and worth studying; the transcriptions are not.
+
+## Graduates audit, 2026-10-06 (issue #136) -- seen on the scans (stored as noted)
+- `graduates_1909-10_p000` ballet list, boys no. 5: "Усачевъ, **Алексѣ.**" -- the first name is printed without its final "й" (two blind readers, zoomed); stored verbatim as "Алексѣ".
+- `graduates_1904-05_p000` and `graduates_1905-06_p000` (St Petersburg lists): the type for "д" is worn, printing a foot-less glyph that reads like "л" (Належда, Алексанлръ x3, and "Лидія" no. 3 of 1905-06); two blind readers agree the glyph is the same worn д as elsewhere on the page. Stored with the intended д (no change).
+- `graduates_1897-98_p002` (Moscow): the male-enrolment paragraph prints "въ I-мъ **кассѣ**" for "классѣ"; `graduates_1897-98_p001`: "всего **39** человѣкъ" printed against 14 + 15 new admissions (= 29). Not person data; recorded for the stats-page comparison.
+- `graduates_1900-01_p000` ballet list, girls no. 1: the surname prints "Алексне" (a misprint for an Алексѣ- surname); stored as read by the blind reader (not changed in this pass).
+- `graduates_1898-99_p000` boys no. 1: "Барышистовъ" (read once; probably a misprint of a Барышниковъ-type surname) -- stored as is.

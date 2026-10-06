@@ -1,0 +1,5 @@
+1910-11 Graduates (2 pages) excluded: already read in full by two readers in issue #135 (outputs/roster_1910-11/fullread).
+
+RG, 2026-10-06 (scope rulings):
+- The Graduates source is BALLET-department graduates only. Drama-course graduates (e.g. the Moscow Драматическіе курсы lists on graduates_1908-09_p001: Айдаровъ and Θедотовъ classes, 9 names) are out of scope by design (RG crops them out where she can; this page's scan still includes them). They are NOT missing rows.
+- Graduates_1903-04_p001 (Moscow: enrolment paragraph only, no names) and graduates_1901-02_p001 (Moscow: 3 women, no men's list, no posting sentence) are complete as printed: the Theater School reports sometimes omit information on their graduates (administrative gaps). Not scanning losses; do not chase.

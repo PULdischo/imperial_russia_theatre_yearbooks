@@ -1,0 +1,251 @@
+BLIND READ REPORT, bundle_5 (9 pages). All text read from enlarged crops. Orthography verbatim as printed.
+Conventions: ROW surname|first name|patronymic "-"|note "-" (no notes printed on any page of this bundle; every name line ends with a full stop after the first name, which I have not repeated). Numbers are printed "1)" unless stated.
+
+==================================================================
+PAGE | graduates_1900-01_p001 | 142 | Московское Театральное Училище (Балетное отдѣленіе) | season not printed as a heading; text says 1900—1901 учебный годъ, graduating spring 1901
+HEADING | Московское Театральное Училище.
+HEADING | Балетное отдѣленіе
+TEXT | Въ 1900—1901 учебномъ году въ балетномъ отдѣленіи состояло 52 ученицы и 29 уче- ... въ 5-мъ классѣ 13 ученицъ и 6 учениковъ. | enrolment paragraph (52 ученицы + 29 учениковъ = 81; class breakdown printed: 1-мъ мл. 16+11; "I-мъ" ст. 12+7; 2-мъ мл. 8+5; 4-мъ 3 ученицы; 5-мъ 13+6)
+NOTE: in the paragraph the senior-section first class is printed with a roman "I-мъ" ("въ I-мъ классѣ старшаго") whereas elsewhere "1-мъ"; no 3-мъ класс is listed in the breakdown (as printed); 2-мъ класс listed only for мл. отд.; the word "уче-/никовъ" hyphenated across lines 1-2.
+TEXT | Окончили курсъ весной 1901 г.—13 ученицъ и 6 учениковъ. | graduates count (printed "весной", not "весною")
+HEADING | Ученицы:
+ROW | 1 | Бурина | Марія | - | -
+ROW | 2 | Грекова | Елена | - | -
+ROW | 3 | Грабовская | Ольга | - | -
+ROW | 4 | Дмитріева | Надежда | - | -
+ROW | 5 | Домашева | Евдокія | - | -
+ROW | 6 | Дьяченко-Краткая | Елизавета | - | -
+ROW | 7 | Жвирблисъ | Марія | - | -
+ROW | 8 | Ленская | Лидія | - | -
+ROW | 9 | Николаева | Зинаида | - | -
+ROW | 10 | Павлова | Евгенія | - | -
+ROW | 11 | Соколова | Татьяна | - | -
+ROW | 12 | Шаломытова | Антонина | - | -
+ROW | 13 | Ѳеоктистова | Лидія | - | -
+NOTE: ученицы printed in two columns: 1-7 left, 8-13 right. Surname 13 begins with Ѳ (fita) as printed. Not alphabetical across the list (Грекова before Грабовская).
+HEADING | Ученики:
+ROW | 1 | Волининъ | Александръ | - | -
+ROW | 2 | Коноваловъ | Владиміръ | - | -
+ROW | 3 | Карцевъ | Александръ | - | -
+ROW | 4 | Орловъ | Алексѣй | - | -
+ROW | 5 | Фроловъ | Сергѣй | - | -
+ROW | 6 | Царманъ | Владиміръ | - | -
+NOTE: ученики two columns: 1-3 left, 4-6 right. First letter of Волининъ has a small stray mark above the В (looks like an apostrophe/ink fleck). Алексѣй and Сергѣй are printed with ѣ ("Алексѣй", "Сергѣй"), not е. Faint show-through of verso text in the background of the page; ignore.
+COUNT | rows=19 | text-blocks=2 | headings=4
+
+==================================================================
+PAGE | graduates_1901-02_p000 | 139 | Императорскія Театральныя Училища; С.-Петербургское Театральное Училище (Балетное отдѣленіе) | season text "1901—1902"
+HEADING | Императорскія Театральныя Училища.
+NOTE: a short wavy ornamental rule is printed below this heading.
+HEADING | С.-Петербургское Театральное Училище.
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1901—1902 уч. году въ балетномъ отдѣленіи состояло: | introductory line
+TEXT | На женской половинѣ—75 ученицъ, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: ... и въ 5 классѣ—7 ученицъ. | female enrolment (1 кл. 20, 2 кл. 26, 3 кл. 14, 4 кл. 8 [printed "4 классѣ - 8" with spaced dash], 5 кл. 7)
+TEXT | На мужской половинѣ — 52 ученика, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: ... и въ 5 классѣ—7 учениковъ. | male enrolment (1 кл. 15, 2 кл. 16, 3 кл. 7, 4 кл. 8, 5 кл. 7)
+NOTE: the male class numbers as printed (15+16+7+8+7) sum to 53 although "52 ученика" is printed; female numbers sum to 75 as printed. Reported only, not corrected.
+TEXT | Всего на обѣихъ половинахъ состояло 127 человѣкъ. | total
+TEXT | Изъ этого числа были вновь приняты осенью 1901 г. — 8 ученицъ и 8 учениковъ — всего—16 человѣкъ. | newly admitted
+TEXT | Окончили курсъ весною 1902 г.—13 человѣкъ (7 ученицъ и 6 учениковъ). | graduates count
+HEADING | Ученицы:
+ROW | 1 | Карсавина | Тамара | - | -
+ROW | 2 | Кякштъ | Лидія | - | -
+ROW | 3 | Лопухова | Евгенія | - | -
+ROW | 4 | Полякова | Елена | - | -
+ROW | 5 | Федорова | Александра | - | -
+ROW | 6 | Прудникова | Екатерина | - | -
+ROW | 7 | Чернятина | Александра | - | -
+NOTE: two columns: 1-4 left, 5-7 right. In Карсавина the letter в is printed darker/blotted; in Прудникова the final "на" is slightly blotted (letters legible: Карсавина, Прудникова). Surname 2 read as Кякштъ (letters к-я-к-ш-т-ъ).
+HEADING | Ученики:
+ROW | 1 | Адріановъ | Самуилъ | - | -
+ROW | 2 | Баклановъ | Петръ | - | -
+ROW | 3 | Іосафовъ | Николай | - | -
+ROW | 4 | Лазуко | Петръ | - | -
+ROW | 5 | Монаховъ | Александръ | - | -
+ROW | 6 | Чекрыгинъ | Александръ | - | -
+NOTE: two columns: 1-3 left, 4-6 right. Іосафовъ begins with the dotted capital "І" as printed.
+TEXT | Всѣ означенные окончившіе курсъ ученицы и ученики опредѣлены на службу, съ 1-го іюня 1902 г., въ С.-Петербургскую балетную труппу. | posting sentence (all graduates posted to the St Petersburg ballet troupe from 1 June 1902); the date numeral at the line start is printed "І-го"/"1-го"
+NOTE: page photographed with a dark gutter at right; faint show-through of verso text in the upper half. A wavy rule ornament below the first heading.
+COUNT | rows=13 | text-blocks=7 | headings=5
+
+==================================================================
+PAGE | graduates_1901-02_p001 | folio not visible (image is cropped at the bottom; no number seen) | Московское Театральное Училище (Балетное отдѣленіе) | season text "1901—1902"
+HEADING | Московское Театральное Училище.
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1901—1902 учебномъ году въ балетномъ отдѣленіи состояло 47 ученицъ и 26 уче- ... въ 5-мъ классѣ 3 ученицы. | enrolment paragraph (47 ученицъ + 26 учениковъ = 73; 1-мъ мл. 16+10; 1-мъ ст. 12+7; 2-мъ мл. 8+5; 2-мъ ст. 8+4; 5-мъ 3 ученицы)
+NOTE: "уче-/никовъ" hyphenated across lines 1-2; the line "...и 7 учениковъ; во 2-мъ классѣ..." has a semicolon printed as ":" -like punctuation (looks like a semicolon/colon, doubtful) after "7 учениковъ".
+TEXT | Окончили курсъ весною 1902 г. 3 ученицы: | graduates introductory line; no "Ученицы:" heading is printed, the three names follow directly
+ROW | 1 | Станиславская | Вѣра | - | -
+ROW | 2 | Хомякова | Александра | - | -
+ROW | 3 | Ячменева | Елизавета | - | -
+NOTE: names laid out 1-2 in left column, 3 in right column. The page image ends below the names; no folio and no ученики list or posting sentence visible on this scan (page is near-blank below the list).
+COUNT | rows=3 | text-blocks=2 | headings=2
+
+==================================================================
+PAGE | graduates_1902-03_p000 | 134 | Императорскія Театральныя Училища; С.-Петербургское Театральное Училище (Балетное отдѣленіе) | season text "1902—1903"
+HEADING | Императорскія Театральныя Училища.
+NOTE: wavy ornamental rule below this heading.
+HEADING | С.-Петербургское Театральное Училище.
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1902—1903 уч. году въ балетномъ отдѣленіи состояло: | introductory line
+TEXT | На женской половинѣ—68 ученицъ, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: ... и въ 5 классѣ—8 ученицъ. | female enrolment (1 кл. 13, 2 кл. 23 "ученицы", 3 кл. 13, 4 кл. 11, 5 кл. 8; sums to 68)
+TEXT | На мужской половинѣ—46 учениковъ, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: ... и въ 5 классѣ—9 учениковъ. | male enrolment (1 кл. 9, 2 кл. 18, 3 кл. 3 ученика, 4 кл. 7, 5 кл. 9; sums to 46)
+TEXT | Всего на обѣихъ половинахъ состояло 114 человѣкъ. | total
+TEXT | Изъ этого числа были вновь приняты осенью 1902 г. — 2 ученицы. | newly admitted
+TEXT | Окончили курсъ весною 1903 г.—14 человѣкъ (7 ученицъ и 7 учениковъ). | graduates count
+HEADING | Ученицы:
+ROW | 1 | Балдина | Александра | - | -
+ROW | 2 | Макарова | Марія | - | -
+ROW | 3 | Петипа | Вѣра | - | -
+ROW | 4 | Пуни | Леонтина | - | -
+ROW | 5 | Раманова | Марія | - | -
+ROW | 6 | Тупицына | Ксенія | - | -
+ROW | 7 | Яковлева | Ольга | - | -
+NOTE: two columns: 1-4 left, 5-7 right. Several surnames are letterspaced in print (Пуни, Раманова, Тупицына, Яковлева); others normal spacing (Балдина, Макарова, Петипа). Surname 3 read as Петипа.
+HEADING | Ученики:
+ROW | 1 | Бальму | Адольфъ | - | -
+ROW | 2 | Кобелевъ | Константинъ | - | -
+ROW | 3 | Кремневъ | Николай | - | -
+ROW | 4 | Кузнецовъ | Михаилъ | - | -
+ROW | 5 | Леонтьевъ | Леонидъ | - | -
+ROW | 6 | Рахмановъ | Викторъ | - | -
+ROW | 7 | Эрлеръ | Александръ | - | -
+NOTE: two columns: 1-4 left, 5-7 right; all letterspaced.
+TEXT | Всѣ означенные окончившіе курсъ ученицы и ученики опредѣлены на службу, съ 1-го іюня 1903 г., въ С.-Петербургскую балетную труппу. | posting sentence (the first line ends "съ", second begins "1-го"/"іюня")
+COUNT | rows=14 | text-blocks=7 | headings=5
+
+==================================================================
+PAGE | graduates_1903-04_p000 | 133 | Императорскія Театральныя Училища; С.-Петербургское Театральное Училище (Балетное отдѣленіе) | season text "1903—1904"
+HEADING | Императорскія Театральныя Училища.
+NOTE: wavy ornamental rule below this heading.
+HEADING | С.-Петербургское Театральное Училище.
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1903—1904 уч. году въ балетномъ отдѣленіи состояло: | introductory line
+TEXT | На женской половинѣ—60 ученицъ, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: ... и въ 5 классѣ—12 ученицъ. | female enrolment (1 кл. 5, 2 кл. 22 "ученицы", 3 кл. 12, 4 кл. 9, 5 кл. 12; sums to 60)
+TEXT | На мужской половинѣ—45 учениковъ, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: ... и въ 5 классѣ—9 учениковъ. | male enrolment (1 кл. 10, 2 кл. 15, 3 кл. 8, 4 кл. 3 ученика, 5 кл. 9; sums to 45)
+TEXT | Всего на обѣихъ половинахъ состояло 105 человѣкъ. | total
+TEXT | Изъ этого числа были приняты въ училище осенью 1903 г. — 6 учениковъ | newly admitted; NO closing period printed; (also: this sentence says учениковъ only, no ученицы)
+TEXT | Окончили курсъ весною 1904 г. 16 человѣкъ (10 ученицъ и 6 учениковъ). | graduates count (no dash before 16)
+HEADING | Ученицы:
+ROW | 1 | Александрова | Александра | - | -
+ROW | 2 | Болдырева | Елизавета | - | -
+ROW | 3 | Антонова | Вѣра | - | -
+ROW | 4 | Иванова | Ираида | - | -
+ROW | 5 | Карпова | Лидія | - | -
+ROW | 6 | Лушкина | Евгенія | - | -
+ROW | 7 | Людоговская | Софія | - | -
+ROW | 8 | Зейфартъ | Поликсенія | - | -
+ROW | 9 | Потапенко | Діонисія | - | -
+ROW | 10 | Черноруцкая | Викторія | - | -
+NOTE: two columns: 1-5 left, 6-10 right; surnames letterspaced. List is not alphabetical (Антонова after Болдырева; Зейфартъ after Людоговская). Surname 7 read as Людоговская (Л-ю-д-о-г-о-в-с-к-а-я). Given name of 4: read Ираида.
+HEADING | Ученики:
+ROW | 1 | Бочаровъ | Александръ | - | -
+ROW | 2 | Гончаровъ | Павелъ | - | -
+ROW | 3 | Дмитріевъ | Николай | - | -
+ROW | 4 | Матятинъ | Александръ | - | -
+ROW | 5 | Полянскій | Илья | - | -
+ROW | 6 | Александровъ | Михаилъ | - | -
+NOTE: two columns: 1-3 left, 4-6 right. Row 4's final period is printed heavy/bold.
+TEXT | Всѣ окончившіе курсъ ученицы и ученики опредѣлены на службу въ С.-Петер-бургскую балетную труппу съ 1-го іюня 1904 г. | posting sentence (word broken "С.-Петер-/бургскую" across lines)
+COUNT | rows=16 | text-blocks=7 | headings=5
+
+==================================================================
+PAGE | graduates_1903-04_p001 | folio not visible (image cropped; no number seen) | Московское Театральное Училище (Балетное отдѣленіе) | season text "1903—1904"
+HEADING | Московское Театральное Училище.
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1903—1904 учебномъ году въ балетномъ отдѣленіи состояло 58 ученицъ и 32 уче- ... и въ 4-мъ классѣ—6 ученицъ и 4 ученика. | enrolment paragraph (58 ученицъ + 32 ученика = 90; breakdown: 1-мъ мл. 16+11; 1-мъ ст. 11+7; 2-мъ мл. 7+5; 2-мъ ст. 7+4; 3-мъ 8+4; 4-мъ 6+4)
+NOTE: "уче-/ника" hyphenated across lines 1-2. The class numbers as printed sum to 55 ученицъ and 35 учениковъ, which does not equal the printed 58 and 32 (reported only). Near-blank page apart from this paragraph: no graduates paragraph and no name lists visible on this scan; image ends below the paragraph. Faint show-through of verso text above and below.
+COUNT | rows=0 | text-blocks=1 | headings=2
+
+==================================================================
+PAGE | graduates_1904-05_p000 | 82 | Императорскія Театральныя Училища; С.-Петербургское Театральное Училище (Балетное отдѣленіе) | season text "1904—1905"
+NOTE: page is a photograph of a bound volume (a thumb is visible at lower-left corner; dark gutter at left and right edges). Type is fainter/greyer than other pages.
+HEADING | Императорскія Театральныя Училища.
+NOTE: wavy ornamental rule below this heading.
+HEADING | С.-Петербургское Театральное Училище.
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1904—1905 уч. году въ балетномъ отдѣленіи состояло: | introductory line
+TEXT | На женской половинѣ—56 ученицъ, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: ... и въ 5 классѣ—9 ученицъ. | female enrolment (1 кл. 7, 2 кл. 17, 3 кл. 12, 4 кл. 11, 5 кл. 9; sums to 56)
+TEXT | На мужской половинѣ—44 ученика, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: ... и въ 5 классѣ—6 учениковъ. | male enrolment (1 кл. 10, 2 кл. 15, 3 кл. 6, 4 кл. 7, 5 кл. 6; sums to 44)
+TEXT | Всего на обѣихъ половинахъ состояло 100 человѣкъ. | total
+TEXT | Окончили курсъ весною 1905 г. 15 человѣкъ (9 ученицъ и 6 учениковъ). | graduates count
+HEADING | Ученицы:
+ROW | 1 | Балдина | Екатерина | - | -
+ROW | 2 | Барашъ | Людмила | - | -
+ROW | 3 | Вельсъ | Екатерина | - | -
+ROW | 4 | Гиммельманъ | Анна | - | -
+ROW | 5 | Горшкова | Марія | - | -
+ROW | 6 | Константинова | Александра | - | -
+ROW | 7 | Мацкевичъ | Раиса | - | -
+ROW | 8 | Соболева | Належда | - | -
+ROW | 9 | Федорова | Анна | - | -
+NOTE: two columns: 1-5 left, 6-9 right; surnames letterspaced. DOUBTFUL LETTERS (enlarged 3.5-4x): row 8 given name is printed with a л-shaped letter where д would be expected: "Належда" (letters Н-а-л-е-ж-л-а). Row 6 given name printed "Алексанлра" (the д is shaped like л, i.e. no descender feet). In both cases the д has the foot-less form (cf. the clear д in "Балдина" row 1 and "Богдановъ" below). I transcribe as printed, with д/л doubtful.
+HEADING | Ученики:
+ROW | 1 | Алексѣевъ | Алексанлръ | - | -
+ROW | 2 | Богдановъ | Георгій | - | -
+ROW | 3 | Лопуховъ | Федоръ | - | -
+ROW | 4 | Лукьяновъ | Иліодоръ | - | -
+ROW | 5 | Петровъ | Михаилъ | - | -
+ROW | 6 | Облаковъ | Николай | - | -
+NOTE: two columns: 1-3 left, 4-6 right. Row 1 given name is printed "Алексанлръ" (foot-less д looks like л; the final period is heavy/bold). Surname 1 has ѣ (Алексѣевъ). Row 4 given name read Иліодоръ.
+TEXT | Всѣ означенные окончившіе курсъ ученицы и ученики опредѣлены на службу съ 1-го іюня 1905 г. въ С.-Петербургскую балетную труппу. | posting sentence (no comma after "службу" or after "1905 г.")
+COUNT | rows=15 | text-blocks=6 | headings=5
+
+==================================================================
+PAGE | graduates_1904-05_p001 | folio not visible (image cropped at the bottom; no number seen) | Московское Театральное Училище (Балетное отдѣленіе) | season text "1904—1905"
+HEADING | Московское Театральное Училище.
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1904—1905 учебномъ году въ балетномъ отдѣленіи состояло 60 ученицъ и 37 уче- ... и въ 5-мъ классѣ—6 ученицъ и 4 ученика. | enrolment paragraph (60 ученицъ + 37 учениковъ = 97; breakdown: 1-мъ мл. 10+7; 1-мъ ст. 14+9; 2-мъ мл. 9+5; 2-мъ ст. 7+4; 3-мъ 6+4; 4-мъ 8+4; 5-мъ 6+4; sums agree)
+NOTE: printed date "1904—1905" has a double-dash-like glyph ("1904--1905", the dash looks doubled/typewriter-style); spacing irregular within the paragraph; "уче-/никовъ" hyphenated across lines 1-2.
+TEXT | Окончили курсъ весною 1905 г. 10 человѣкъ (6 ученицъ и 4 ученика). | graduates count
+HEADING | Ученицы:
+ROW | 1 | Балашова | Александра | - | -
+ROW | 2 | Волкова | Александра | - | -
+ROW | 3 | Долинская | Евгенія | - | -
+ROW | 4 | Мыльникова | Марія | - | -
+ROW | 5 | Черепанова | Анна | - | -
+ROW | 6 | Шелепина | Вѣра | - | -
+NOTE: numbering on this page is printed "1." "2." (full stop), not "1)". Two columns: 1-3 left, 4-6 right; surnames letterspaced.
+HEADING | Ученики:
+ROW | 1 | Козловъ | Алексѣй | - | -
+ROW | 2 | Костровской | Дмитрій | - | -
+ROW | 3 | Смирновъ | Викторъ | - | -
+ROW | 4 | Федоровъ | Михаилъ | - | -
+NOTE: numbering "1." style; two columns: 1-2 left, 3-4 right. The heading "Ученики:" has an italic-looking final "и:". A faint arc/pencil-like curved line is printed/drawn above row 1 (not text). The image ends right under the last row; no posting sentence or folio visible on this scan. Алексѣй printed with ѣ.
+COUNT | rows=10 | text-blocks=2 | headings=4
+
+==================================================================
+PAGE | graduates_1905-06_p000 | 78 | Императорскія Театральныя Училища; С.-Петербургское Театральное Училище (Балетное отдѣленіе) | season text "1905—1906"
+NOTE: photograph of a bound volume; dark gutter at left; faint show-through of verso text in the upper part.
+HEADING | Императорскія Театральныя Училища.
+NOTE: wavy ornamental rule below this heading.
+HEADING | С.-Петербургское Театральное Училище.
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1905—1906 уч. году въ балетномъ отдѣленіи состояло: | introductory line
+TEXT | На женской половинѣ—48 ученицъ, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: ... и въ 5 классѣ—11 ученицъ. | female enrolment (1 кл. 8, 2 кл. 10, 3 кл. 9, 4 кл. 10, 5 кл. 11; sums to 48). Printed "въ 3 классѣ — 9 уче-/ницъ" with spaced dash.
+TEXT | На мужской половинѣ—32 ученика, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: ... и въ 5 классѣ—5 учениковъ. | male enrolment (1 кл. 2 ученика [spaced dash], 2 кл. 11, 3 кл. 7, 4 кл. 7, 5 кл. 5; sums to 32)
+TEXT | Всего на обѣихъ половинахъ состояло 80 человѣкъ. | total
+TEXT | Окончили курсъ весною 1906 г. 15 человѣкъ (10 ученицъ и 5 учениковъ). | graduates count
+HEADING | Ученицы:
+ROW | 1 | Домерщикова | Анна | - | -
+ROW | 2 | Кандина | Антонина | - | -
+ROW | 3 | Клечковская | Лидія | - | -
+ROW | 4 | Лукашевичъ | Вѣра | - | -
+ROW | 5 | Миронникова | Зинаида | - | -
+ROW | 6 | Неслуховская | Инна | - | -
+ROW | 7 | Нестеровская | Антонина | - | -
+ROW | 8 | Смирнова | Елена | - | -
+ROW | 9 | Шолларъ | Людмила | - | -
+ROW | 10 | Чупятова | Лидія | - | -
+NOTE: two columns: 1-5 left, 6-10 right; surnames letterspaced. Surnames 6 and 7 are near-identical (Неслуховская / Нестеровская): 6 reads Н-е-с-л-у-х-о-в-с-к-а-я, 7 reads Н-е-с-т-е-р-о-в-с-к-а-я.
+HEADING | Ученики:
+ROW | 1 | Бабичъ | Георгій | - | -
+ROW | 2 | Бурманъ | Анатолій | - | -
+ROW | 3 | Ивановъ | Алексанлръ | - | -
+ROW | 4 | Исаевъ | Николай | - | -
+ROW | 5 | Потанинъ | Алексанлръ | - | -
+NOTE: two columns: 1-3 left, 4-5 right. DOUBTFUL LETTER: in rows 3 and 5 the given name looks like "Алексанлръ": the д is printed in a foot-less form that resembles л (enlarged 4x, both lines). Same worn/foot-less д as in 1904-05_p000. Row 3's final period is heavy/bold.
+TEXT | Всѣ означенные окончившіе курсъ ученицы и ученики опредѣлены на службу съ 1-го іюня 1906 г. въ С.-Петербургскую балетную труппу. | posting sentence (no commas, as in 1904-05)
+COUNT | rows=15 | text-blocks=6 | headings=5
+
+==================================================================
+END OF REPORT. Totals: 9 pages, 105 ROW lines (19+13+3+14+16+0+15+10+15); per-page COUNT lines govern.

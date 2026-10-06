@@ -1,0 +1,221 @@
+PAGE | graduates_1890-91_p000 | 253 (folio "— 253 —") | Императорскія Театральныя Училища (generic; С.-Петербургское and Московское named in text) | no season printed
+HEADING | Императорскія Театральныя Училища.
+TEXT | Въ 1888 году, 21 августа, Высочайше утверждено положеніе объ Императорскихъ С.-Петербургскомъ и Московскомъ театральныхъ училищахъ, ... въ балетномъ и драматическомъ искусствѣ. | statute preamble (2 lines hyphenated "Император-/скихъ")
+TEXT | Каждое училище состоитъ изъ двухъ отдѣленій: а) балетнаго съ приготовительными классами и б) драматическихъ курсовъ. | structure of each school
+TEXT | а) Балетное отдѣленіе подраздѣляется на двѣ половины—мужскую и женскую—и каждая изъ нихъ состоитъ изъ пяти классовъ: ... такимъ образомъ, курсъ ученія въ балетномъ отдѣленіи продолжается 7 лѣтъ. | ballet department: two halves (male/female), 5 classes each (2 preparatory of 2-year course "каждый *)" and 3 general of 1-year courses); 7-year total. "Балетное отдѣленіе" in bold
+TEXT | Въ балетное отдѣленіе училища принимаются дѣти обоего пола, отъ 9 до 11 лѣтъ, христіанскихъ вѣроисповѣданій, ... т. е. помѣщеніе, пищу, одежду, обувь, бѣлье и учебныя пособія. | admission rules (9-11 years; examination by ballet teachers and school doctor; accepted for one-year trial as приходящіе or своекоштные; своекоштные pay 300 рублей въ годъ)
+TEXT | *) Въ Московскомъ Театральномъ Училищѣ только одинъ приготовительный классъ. | footnote after short horizontal rule
+NOTE: heading is in a display typeface with decorative swash initials (И, Т, У). Running prose only; no pupil list. Fore-edge of the volume visible on the right.
+COUNT | rows=0 | text-blocks=5 | headings=1
+PAGE | graduates_1890-91_p001 | 254 (folio "— 254 —") | С.-Петербургское и Московское Театральное Училище (statistics; no heading before first paragraph) | 1890—91 учебный годъ (printed "Въ 1890—91 учебномъ году")
+TEXT | Предметы преподаванія въ балетномъ отдѣленіи слѣдующіе: 1) общеобразовательные (5 часовъ въ день; курсъ городскихъ училищъ ... военные пріемы (для мальчиковъ) и рукодѣліе (для дѣвицъ). | curriculum of ballet department: 1) general (5 h/day), 2) Специальные (2 h/day: dances balletic, ballroom and character; mime; performing ballets and divertissements), 3) Вспомогательные (music piano/violin, fencing, military drill for boys, needlework for girls). "общеобразовательные", "Специальные", "Вспомогательные" in italics; "чисто-/писаніе" and "характер-/ные" hyphenated
+TEXT | Обучающіеся въ балетномъ отдѣленіи раздѣляются на разряды: воспитанниковъ и воспитанницъ—живущихъ въ училищѣ и учениковъ и ученицъ—приходящихъ *). | categories of pupils; "*)" footnote call after "приходящихъ"
+TEXT | Воспитанники и воспитанницы, успѣшно окончившіе курсъ балетнаго отдѣленія училища, опредѣляются на дѣйствительную службу ... для Дирекціи необязателенъ. | boarders posted to service for 3 years; day pupils' posting optional
+TEXT | Переводъ изъ класса въ классъ и выпускъ по окончаніи курса обусловлены успѣхами обучающихся ... результаты годовыхъ испытаній. | promotion rules; public act around end of May ("годо-/выхъ")
+TEXT | Въ 1890—91 учебномъ году въ балетныхъ отдѣленіяхъ театральныхъ училищъ состояло: | intro to enrolment statistics (the dash in "1890—91" appears struck through by a printing artefact)
+HEADING | Въ С.-Петербургскомъ Театральномъ Училищѣ:
+TEXT | Воспитанниковъ 26, воспитанницъ 47, учениковъ 22 и ученицъ 27; всего 122 человѣка ... въ женскомъ отдѣленіи—I классъ—22, II классъ—16, III классъ—11, IV классъ—13 и V классъ—12. | SPb enrolment: boarders boys 26, girls 47; day boys 22, girls 27; total 122. Male dept: I—16, II—10, III—6, IV—8, V—8; female dept: I—22, II—16, III—11, IV—13, V—12
+HEADING | Въ Московскомъ Театральномъ Училищѣ:
+TEXT | Учениковъ 63, воспитанницъ 33 и ученицъ 72; всего 168 человѣкъ ... III классъ—22 и IV классъ—15. | Moscow enrolment: day boys 63, boarder girls 33, day girls 72; total 168. Male dept: I—33, II—11, III—6, IV—13; female dept: I—39, II—29, III—22, IV—15
+TEXT | *) Въ Московскомъ Театральномъ Училищѣ не полагается интерната для мужской половины балетнаго отдѣленія. | footnote (after short horizontal rule)
+NOTE: arithmetic of printed figures: SPb 26+47+22+27=122; male classes 16+10+6+8+8=48=26+22; female 22+16+11+13+12=74=47+27. Moscow 63+33+72=168; male 33+11+6+13=63; female 39+29+22+15=105=33+72.
+NOTE: no pupil names on this page. Pale show-through of the verso's text is visible in the right half.
+COUNT | rows=0 | text-blocks=8 | headings=2
+PAGE | graduates_1890-91_p002 | 255 (folio "— 255 —") | С.-Петербургъ (Театральное Училище, per photo caption), Москва | season not printed; graduating year "Въ 1891 г."
+TEXT | Въ 1891 г. окончили курсъ балетнаго отдѣленія: | intro line (printed "Въ 1891 г. окончили / курсъ балетнаго отдѣленія:")
+HEADING | Въ С.-Петербургѣ:
+HEADING | Ученицы:
+ROW | 1) | Голубева | Марія | Константиновна | -
+   NOTE: patronymic split "Кон-/стантиновна."; joined.
+ROW | 2) | Горская | Вѣра | Алексѣевна | -
+   NOTE: split "Алексѣ-/евна."; joined.
+ROW | 3) | Давыдова | Марія | Ѳедоровна | -
+   NOTE: split "Ѳедо-/ровна."; joined.
+ROW | 4) | Киль | Ольга | Александровна | -
+   NOTE: split "Алексан-/дровна."; joined.
+ROW | 5) | Лобанова | Лидія | Дмитріевна | -
+   NOTE: split "Дми-/тріевна."; joined.
+ROW | 6) | Маслова | Марія | Николаевна | -
+   NOTE: split "Нико-/лаевна."; joined.
+ROW | 7) | Матвѣева 3-я | Наталья | Николаевна | -
+ROW | 8) | Уракова | Анна | Петровна | -
+   NOTE: tight spacing "Уракова, Анна Петровна." (almost no space between "Анна" and "Петровна").
+ROW | 9) | Эрлеръ 1-я | Анна | Александровна | -
+   NOTE: split "Але-/ксандровна."; ordinal "1-я" is printed with the roman-type numeral that looks like "ı-я".
+TEXT | Учебный классъ въ С.-Петербургскомъ Театральномъ Училищѣ. | caption of a large photograph in the right two-thirds of the upper page (a classroom with blackboard and wall maps); the left narrow column holds the Ученицы list beside it
+HEADING | Ученики:
+ROW | 1) | Кякштъ | Георгій | Георгіевичъ | -
+ROW | 2) | Легатъ 2-й | Иванъ | Густавовичъ | -
+ROW | 3) | Новиковъ | Илья | Степановичъ | -
+ROW | 4) | Смирновъ | Дмитрій | Дмитріевичъ | -
+ROW | 5) | Солянниковъ 2-й | Николай | Александровичъ | -
+   NOTE: split "Алексан-/дровичъ."; joined. Ordinal printed "2-й" for the boys (cf. "-я" for girls). "Николай" printed with plain "й" (not "ій").
+ROW | 6) | Сосновскій | Сергѣй | Сергѣевичъ | -
+   NOTE: boys list in two columns (1-3 left, 4-6 right). The initial "К" of "Кякштъ" appears bold/blurred ("Г" like top) -- reading "Кякштъ" (doubtful: could be "Кякштъ" vs "Гякштъ"; the Cyrillic Г in "Георгій" prints with the same raised-stem shape).
+TEXT | Всѣ 15 человѣкъ опредѣлены на службу артистами въ Императорскую С.-Петербургскую балетную труппу ... а г. Легатъ—съ 1-го октября того же года. | posting statement: all 15 (9 girls + 6 boys) posted as artists to the Imperial St Petersburg ballet troupe from 1 June 1891 ("съ 1-го іюня 1891 г."), but Mr. Legat from 1 October of the same year
+HEADING | Въ Москвѣ:
+HEADING | Ученицы:
+   NOTE: this heading is letter-spaced with a damaged/ink-filled letter: printed "У ч е н и ц ы:" where the "ч" looks like a lower-case "п" ("Уп е н и ц ы") -- read as Ученицы.
+ROW | 1) | Берсеньева | Любовь | Ивановна | -
+ROW | 2) | Иванова | Александра | Ивановна | -
+ROW | 3) | Кочетовская | Екатерина | Владиміровна | -
+   NOTE: tight spacing "Екатерина Владиміровна" (space nearly absent).
+ROW | 4) | Струкова | Марія | Александровна | -
+ROW | 5) | Фатова | Любовь | Андреевна | -
+ROW | 6) | Френева | Ольга | Николаевна | -
+   NOTE: Moscow girls in two columns (1-3 left, 4-6 right). The Moscow "Ученики" list is not on this page; it opens p003.
+COUNT | rows=21 | text-blocks=3 | headings=5
+PAGE | graduates_1890-91_p003 | 256 (folio "— 256 —") | Москва (Московская балетная труппа); драматическіе курсы | season not printed (1891 posting date)
+HEADING | Ученики:
+ROW | 1) | Брыкинъ | Дмитрій | Константиновичъ | -
+ROW | 2) | Бѣлоусовъ | Филиппъ | Ивановичъ | -
+ROW | 3) | Воронцовъ | Владиміръ | Васильевичъ | -
+ROW | 4) | Ефимовъ | Иванъ | Михайловичъ | -
+ROW | 5) | Сидоровъ | Иванъ | Емельяновичъ | -
+ROW | 6) | Смирновъ | Александръ | Митрофановичъ | -
+   NOTE: item 6 patronymic hyphenated across lines "Митрофано-/вичъ."; joined. Six names in two columns (1-3 left, 4-6 right). This "Ученики:" is the Moscow boys' list continuing from p002 (Moscow "Ученицы" there).
+TEXT | Всѣ 12 человѣкъ съ 1 сентября 1891 г. опредѣлены на службу артистами въ Императорскую Московскую балетную труппу. | posting statement for the Moscow ballet graduates (6 girls p002 + 6 boys)
+TEXT | б) Обученіе на драматическихъ курсахъ продолжается три года, изъ которыхъ два первые назначаются ... а третій годъ исключительно для занятій практикой драматическаго искусства. | dramatic courses: 3-year course ("драматическихъ курсахъ" in bold)
+TEXT | На драматическіе курсы принимаются русскіе подданные, всѣхъ сословій, христіанскаго вѣроисповѣданія,—ученики не моложе 17 лѣтъ ... либо освобождаются отъ платы за обученіе на курсахъ. | admission rules to dramatic courses (age 17/16; 100 р. fee; Directorate scholars with 25 рублей въ мѣсяцъ or exemption)
+TEXT | Предметы преподаванія на драматическихъ курсахъ слѣдующіе: 1) общеобразовательные—исторія литературы русской и иностранной, исторія драмы и театра, | begins subjects list ("общеобра-/зовательные" italic); breaks off mid-sentence at page foot (ends with comma)
+NOTE: no school heading on this page; running text continues onto next page.
+COUNT | rows=6 | text-blocks=4 | headings=1
+PAGE | graduates_1890-91_p005 | 258 (folio "— 258 —") | С.-Петербургъ, Москва (Драматическіе курсы, dramatic courses, not ballet) | season not printed; graduating year 1891 ("Въ 1891 г. окончили драматическіе курсы")
+NOTE: page begins mid-section, without heading; bundle skips p004 so the statistics paragraph about dramatic courses enrolment starts here with no preceding context.
+TEXT | Въ С.-Петербургѣ—учениковъ 13, ученицъ 37; всего 50 человѣкъ,—распредѣленныхъ по курсамъ слѣдующимъ образомъ: ... на III курсѣ—учениковъ 4 и ученицъ 10. | St Petersburg dramatic-courses enrolment 13 boys + 37 girls = 50; I course 2 boys/16 girls, II course 7/11, III course 4/10 (printed "учениковъ"; the opening "Въ С.-Петербургѣ" is in italics)
+TEXT | Въ Москвѣ—учениковъ 24, ученицъ 44; всего 68 человѣкъ,—распредѣленныхъ по курсамъ слѣдующимъ образомъ: ... на III курсѣ—учениковъ 6 и ученицъ 14. | Moscow dramatic-courses enrolment 24 boys + 44 girls = 68; I course 10/18, II course 8/12, III course 6/14 (opening "Въ Москвѣ" in italics)
+TEXT | Въ 1891 г. окончили драматическіе курсы: | intro to graduate lists
+HEADING | Въ С.-Петербургѣ:
+HEADING | Съ аттестатами:
+HEADING | Ученицы:
+ROW | 1) | Бурмистрова 1-я | Александра | Ѳедоровна | -
+   NOTE: split Ѳедо-/ровна, joined; "1-я" printed with roman-type "ı-я".
+ROW | 2) | Бурмистрова 2-я | Ольга | Ѳедоровна | -
+ROW | 3) | Дюжикова | Елена | Павловна | -
+ROW | 4) | Градовская | Екатерина | Григорьевна | -
+ROW | 5) | Крылова | Александра | Сергѣевна | -
+   NOTE: two columns: 1-2 left, 3-5 right.
+HEADING | Ученики:
+ROW | 1) | Кравотынскій | Петръ | Силовичъ | -
+ROW | 2) | Рыкъ (по театру Борисовъ) | Иванъ | Генриховичъ | -
+   NOTE: stage name given in parentheses between surname and first name: "Рыкъ (по театру Борисовъ), Иванъ Генриховичъ."; patronymic wrapped to next line (Иванъ / Генриховичъ.)
+ROW | 3) | Усачевъ | Александръ | Артемьевичъ | -
+   NOTE: two columns: 1-2 left, 3 right.
+TEXT | Всѣ 8 человѣкъ опредѣлены на службу въ С.-Петербургскую русскую драматическую труппу съ 1 мая 1891 г. | posting statement: all 8 (5 girls + 3 boys) posted to Imperial St Petersburg Russian drama troupe from 1 May 1891 (word split дра-/матическую)
+HEADING | Со свидѣтельствами:
+HEADING | Ученицы:
+ROW | 1) | Билибина (по театру Корнева) | Вѣра | Павловна | -
+   NOTE: stage name in parentheses "(по театру Корнева)"; patronymic wrapped to next line.
+ROW | 2) | Групильонъ | Людмила | Ивановна | -
+ROW | 3) | Данилова | Вѣра | Ивановна | -
+ROW | 4) | Нальханова | Александра | Николаевна | -
+ROW | 5) | Штейнбергъ | Надежда | Александровна | -
+   NOTE: tight spacing "Штейнбергъ, Надежда Александровна."; two columns: 1-2 left, 3-5 right.
+HEADING | Ученикъ
+ROW | 1) | Дубынинъ | Илья | Кондратьевичъ | -
+   NOTE: heading printed "Ученикъ" (singular, no colon), single entry centred.
+TEXT | Изъ нихъ—г-жи Билибина и Нальханова опредѣлены на службу въ С.-Петербургскую русскую драматическую труппу съ 1-го ноября 1891 г. | note: of the "со свидѣтельствами" group, Mmes Bilibina and Nalkhanova posted to St Petersburg Russian drama troupe from 1 Nov 1891 (split С.-Петер-/бургскую)
+HEADING | Въ Москвѣ:
+HEADING | Съ аттестатами:
+HEADING | Ученицы:
+ROW | 1) | Бергманъ | Елена | Карловна | -
+ROW | 2) | Караулова | Надежда | Николаевна | -
+ROW | 3) | Любимова | Любовь | Ильинишна | -
+ROW | 4) | Лютецкая | Надежда | Александровна | -
+ROW | 5) | Нечаева | Серафима | Михайловна | -
+ROW | 6) | Ртищева | Вѣра | Ѳедоровна | -
+   NOTE: "Ильинишна" printed as such (not Ильинична). Two columns: 1-3 left, 4-6 right. List continues on next page (p006).
+COUNT | rows=20 | text-blocks=5 | headings=10
+PAGE | graduates_1890-91_p006 | 259 (folio "— 259 —") | С.-Петербургское Театральное Училище (photo caption), Москва | season not printed (1891 postings)
+NOTE: top ~45% of the page is a photograph, caption printed below it: "Церковь Императорскаго С.-Петербургскаго Театральнаго Училища." (church interior of the St Petersburg Theatre School).
+TEXT | Церковь Императорскаго С.-Петербургскаго Театральнаго Училища. | photograph caption
+NOTE: the list begins mid-list at item 7: continuation of the Moscow dramatic-courses "Съ аттестатами / Ученицы:" list that began on p005 (items 1-6 there). Two columns (7-8 left, 9 right).
+ROW | 7) | Турчанинова | Евдокія | Дмитріевна | -
+ROW | 8) | Харитонова | Екатерина | Аѳанасіевна | -
+   NOTE: patronymic printed with Ѳ (theta) after А: "Аѳанасіевна".
+ROW | 9) | Шернваль (по театру Таирова) | Нина | Робертовна | -
+   NOTE: stage name in parentheses; patronymic wrapped to second line "Нина / Робертовна."
+HEADING | Ученики:
+ROW | 1) | Корсакъ | Казимиръ | Валентиновичъ | -
+ROW | 2) | Носовъ | Сергѣй | Владиміровичъ | -
+ROW | 3) | Парамоновъ | Ѳедоръ | Андреевичъ | -
+ROW | 4) | Семеновъ | Валеріанъ | Валеріановичъ | -
+ROW | 5) | Уховъ | Ѳедоръ | Антоновичъ | -
+   NOTE: two columns (1-3 left, 4-5 right).
+TEXT | 11 человѣкъ, а именно: г-жи Бергманъ, Караулова, Любимова, Нечаева, Турчанинова, Харитонова, Шернваль и гг. Носовъ, Парамоновъ и Уховъ ... а г. Корсакъ съ того же числа—въ С.-Петербургскую драматическую труппу. | posting statement for those "съ аттестатами" in Moscow: 11 people (7 women: Bergman, Karaulova, Lyubimova, Nechaeva, Turchaninova, Kharitonova, Shernval; 3 men: Nosov, Paramonov, Ukhov) posted to the Moscow drama troupe from 1 Sept 1891 (printed "Сентября" with capital); Mr. Korsak same date to the St Petersburg drama troupe. Printed count "11" in roman-type numerals.
+TEXT | Обсужденіе вопросовъ, относящихся до пріема, испытаній, перевода изъ класса въ классъ ... 3) перемѣнныхъ—преподавателей наукъ и | conference-of-the-school paragraph; continues on next page (breaks mid-sentence "наукъ и" at foot); "почетныхъ", "постоянныхъ", "перемѣнныхъ" in italics
+NOTE: the "11 человѣкъ" paragraph begins the line with the figure 11 only; no verb count other than 7 women listed + 3 + Korsak = 11.
+COUNT | rows=8 | text-blocks=3 | headings=1
+PAGE | graduates_1891-92_p000 | 253 (folio "— 253 —") | Императорскія Театральныя Училища; С.-Петербургское Театральное Училище; Балетное отдѣленіе | 1891—1892 учебный годъ (printed "Въ 1891—1892 учебномъ году")
+HEADING | Императорскія Театральныя Училища.
+HEADING | С.-Петербургское Театральное Училище.
+   NOTE: display-type heading; printed "С.-Петербургское" with the full stop faint (reads like "С -Петербургское").
+HEADING | Балетное отдѣленіе.
+   NOTE: bold sans-style typeface.
+TEXT | Въ 1891—1892 учебномъ году въ балетномъ отдѣленіи состояло: | intro line
+TEXT | На женской половинѣ—74 ученицы, которыя распредѣлялись по классамъ слѣдующимъ образомъ: ... въ V-мъ классѣ—15 ученицъ. | female half: 74 pupils; I—21, II—16, III—11, IV—11, V—15 (21+16+11+11+15=74)
+TEXT | На мужской половинѣ—52 ученика, которые распредѣлялись по классамъ слѣдующимъ образомъ: ... въ V-мъ классѣ—8 учениковъ. | male half: 52 pupils; I—19, II—11, III—5, IV—9, V—8 (19+11+5+9+8=52)
+TEXT | Всего на обѣихъ половинахъ состояло 126 человѣкъ. | total 126 (74+52)
+TEXT | Изъ этого числа были вновь приняты осенью 1891 года 12 ученицъ и 14 учениковъ, а всего 26 человѣкъ. | newly admitted autumn 1891: 12 girls + 14 boys = 26
+TEXT | Окончили курсъ весною 1892 года 18 человѣкъ—11 ученицъ и 7 учениковъ: | graduates spring 1892: 18 = 11 girls + 7 boys (учени-/ковъ hyphenated)
+HEADING | Ученицы:
+ROW | 1) | Александрова | Антонина | - | -
+ROW | 2) | Васильева | Анна | - | -
+ROW | 3) | Ермолаева | Марія | - | -
+ROW | 4) | Иванова | Вѣра | - | -
+ROW | 5) | Ильина | Елена | - | -
+ROW | 6) | Лаврентьева | Ольга | - | -
+ROW | 7) | Ниманъ | Марія | - | -
+   NOTE: final letter is a hard sign (Ниманъ).
+ROW | 8) | Обухова | Евгенія | - | -
+ROW | 9) | Парфентьева | Прасковья | - | -
+ROW | 10) | Рыхлякова | Наталья | - | -
+ROW | 11) | Цалиссонъ | Полина | - | -
+   NOTE: two columns (1-6 left, 7-11 right). No patronymics printed in this list; no posting notes after names.
+HEADING | Ученики:
+ROW | 1) | Бекъ | Константинъ | - | -
+ROW | 2) | Никитинъ | Михаилъ | - | -
+ROW | 3) | Облаковъ | Андрей | - | -
+ROW | 4) | Пащенко | Евгеній | - | -
+ROW | 5) | Тихомировъ | Владиміръ | - | -
+ROW | 6) | Тихомировъ | Сергѣй | - | -
+ROW | 7) | Яковлевъ | Владиміръ | - | -
+   NOTE: two columns (1-4 left, 5-7 right). "Андрей" is printed with plain "й" and no ъ-sign issues; "Евгеній" with і.
+NOTE: no posting/engagement statement on this page; no enrolment table for Moscow on this page.
+COUNT | rows=18 | text-blocks=6 | headings=5
+PAGE | graduates_1891-92_p001 | no folio visible (image is a cropped strip, 1964x332 px, only one paragraph; presumably the top of p254) | school not named on this strip (continues the С.-Петербургское Театральное Училище ballet list from p000) | season not printed (1892 posting)
+TEXT | Всѣ окончившіе курсъ ученики и ученицы опредѣлены на службу съ 1-го іюня 1892 г. въ С.-Петербургскую балетную труппу, ... кромѣ ученика Бека, который зачисленъ въ Московскую балетную труппу. | posting statement: all graduates (boys and girls) posted from 1 June 1892 to the St Petersburg ballet troupe, except the pupil Bek, who is enrolled in the Moscow ballet troupe (word break "ко-/торый"; "іюня" printed with і)
+NOTE: image is only a fragment of a page (single paragraph of 3 lines, no folio, no heading). Left margin has a dark speck. Not a blank page but a partial scan.
+COUNT | rows=0 | text-blocks=1 | headings=0
+PAGE | graduates_1891-92_p002 | no folio visible (image ends just below the last paragraph, 2397x2048 px; presumably p254 or later) | Московское Театральное Училище; Балетное отдѣленіе | 1891—1892 учебный годъ
+HEADING | Московское Театральное Училище.
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1891—1892 учебномъ году въ балетномъ отдѣленіи состояло: | intro line
+TEXT | На женской половинѣ—106 ученицъ, которыя распредѣлялись по классамъ слѣдующимъ образомъ: ... и въ IV-мъ классѣ—15 ученицъ. | female half: 106 pupils; I—40, II—29 ("уче-/ницъ" hyphenated), III—22, IV—15 (40+29+22+15=106)
+TEXT | На мужской половинѣ—63 ученика, которые распредѣлялись по классамъ слѣдующимъ образомъ: ... и въ IV-мъ классѣ—12 учениковъ. | male half: 63 pupils; I—33, II—11, III—7, IV—12 (33+11+7+12=63)
+TEXT | Всего на обѣихъ половинахъ состояло 169 человѣкъ. | total 169 as printed (106+63=169)
+TEXT | Изъ этого числа были вновь приняты осенью 1891 года 23 ученицы и 15 учениковъ, а всего 38 человѣкъ. | newly admitted autumn 1891: 23 girls + 15 boys = 38
+TEXT | Окончили курсъ весною 1892 года 15 человѣкъ—7 ученицъ и 8 учениковъ: | graduates spring 1892: 15 = 7 girls + 8 boys (уче-/никовъ hyphenated)
+HEADING | Ученицы:
+ROW | 1) | Воронова | Варвара | - | -
+ROW | 2) | Грачевская | Екатерина | - | -
+ROW | 3) | Дьякъ | Марія | - | -
+ROW | 4) | Копьева | Евдокія | - | -
+ROW | 5) | Милютина | Александра | - | -
+ROW | 6) | Новикова | Екатерина | - | -
+ROW | 7) | Рославлева | Любовь | - | -
+   NOTE: two columns (1-4 left, 5-7 right). No patronymics.
+HEADING | Ученики:
+ROW | 1) | Бакинъ | Сергѣй | - | -
+ROW | 2) | Ивановъ | Евгеній | - | -
+ROW | 3) | Кулыгинъ | Георгій | - | -
+ROW | 4) | Лѣсновскій | Александръ | - | -
+ROW | 5) | Перешивкинъ | Михаилъ | - | -
+ROW | 6) | Терпиловскій | Александръ | - | -
+ROW | 7) | Чумаковъ | Александръ | - | -
+ROW | 8) | Шокоревъ | Дмитрій | - | -
+   NOTE: two columns (1-4 left, 5-8 right).
+TEXT | Всѣ окончившіе курсъ ученики и ученицы опредѣлены на службу съ 1-го сентября 1892 г. въ Московскую балетную труппу. | posting statement: all graduates (girls and boys) posted from 1 September 1892 to the Moscow ballet troupe
+NOTE: faint show-through of the verso text is visible in the right half of the upper page (not part of this page). Page footer/folio not captured (scan crops just below last paragraph).
+NOTE: printed arithmetic: Moscow 169 = 106 + 63 but SPb p000 total 126 = 74 + 52 (consistent).
+COUNT | rows=15 | text-blocks=6 | headings=4

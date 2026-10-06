@@ -1,0 +1,248 @@
+BUNDLE 4 REPORT (blind read, 9 pages). Convention: in every list row the printed form is "N) Фамилія, Имя." (period after the first name); I give the name without that trailing period and the note column is "-" because no note is printed after any name (list rows carry no posting/note text; the posting is stated once in the closing "Всѣ ... опредѣлены на службу" sentence, reported as TEXT). Two-column lists are read left column first, then right column.
+
+=====================================================================
+PAGE | graduates_1897-98_p000 | 416 (centred "— 416 —" at foot) | Императорскія Театральныя Училища; С.-Петербургское Театральное Училище (Балетное отдѣленіе) | 1897—1898 (in text)
+NOTE: Title page of the section: large engraved vignette (stage frame, round inset of a classroom, scroll with interior, a classroom view with artist's signature "Е. Коза..." lower right; signature not fully legible). Text starts only below the vignette and is wrapped around the picture; the first sentence is split across the picture ("учеб-" / "номъ году ...").
+HEADING | Императорскія Театральныя Училища.
+HEADING | С.-Петербургское Театральное Училище.
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1897—1898 учебномъ году въ балетномъ отдѣленіи состояло: | opening sentence (hyphenated "учеб-/номъ")
+TEXT | На женской половинѣ— 69 ученицъ, которыя распредѣлялись по классамъ слѣдующимъ образомъ: въ I-мъ классѣ—29 ученицъ, во II-мъ ... ... въ V-мъ классѣ—10 ученицъ. | enrolment, female half: 69 total; classes I 29, II 14, III 7, IV 9, V 10
+NOTE: Hyphenations: "распре-/дѣлялись", "слѣдую-/щимъ", "клас-/сѣ" (twice, I-мъ and II-мъ). Line "классѣ—9 ученицъ" is the IV-мъ class (the "IV-мъ" ends the previous line, "въ IV-мъ" then "классѣ—9").
+NOTE: The text breaks off after the female half; the male-half paragraph begins on the next page (p001). No list rows on this page. Note the sentence ends with "ученицъ." (no continuation marker).
+COUNT | rows=0 | text-blocks=2 | headings=3
+
+=====================================================================
+PAGE | graduates_1897-98_p001 | no printed folio visible (image ends just after the last text line; the folio is probably cropped off; page-order suggests 417) | no school heading on this page (continuation of С.-Петербургское Театральное Училище, Балетное отдѣленіе) | 1897—1898 (in text)
+TEXT | На мужской половинѣ — 67 учениковъ, которыя распредѣлялись по классамъ слѣдующимъ образомъ: ... въ V-мъ классѣ—9 учениковъ. | enrolment, male half: 67 total; classes I 28, II 17, III 8, IV 5, V 9 ("IV-мъ классѣ—" ends a line, "5 учениковъ" begins the next)
+TEXT | Всего на обѣихъ половинахъ состояло—136 человѣкъ. | total enrolment
+TEXT | Изъ этого числа были вновь приняты осенью 1897 года—14 ученицъ и 15 учениковъ, всего 39 человѣкъ. | new admissions
+NOTE: arithmetic as printed: 14+15=29 but "всего 39" is printed (also 136 = 69+67 is consistent). "39" legible (3 then 9), not 29.
+TEXT | Окончили курсъ весною 1898 года—17 человѣкъ: 9 ученицъ и 8 учениковъ: | graduates count, introduces lists
+HEADING | Ученицы: (letter-spaced "У ч е н и ц ы :")
+ROW | 1 | Галка | Ольга | - | -
+ROW | 2 | Гордова | Аполлинарія | - | -   (letters read А-п-о-л-л-и-н-а-р-і-я, single п, double л)
+ROW | 3 | Групильонъ | Нина | - | -
+ROW | 4 | Егорова | Любовь | - | -   (printed "Любовь" with ь at the end)
+ROW | 5 | Пороховникова | Марія | - | -
+ROW | 6 | Симонова | Антонина | - | -
+ROW | 7 | Степанова | Лидія | - | -
+ROW | 8 | Сѣдова | Юлія | - | -
+ROW | 9 | Чернецкая | Ольга | - | -
+HEADING | Ученики: (letter-spaced)
+ROW | 1 | Ивановъ | Николай | - | -
+ROW | 2 | Киселевъ | Василій | - | -   (К has a damaged/tailed form "Қ" in print; reads Киселевъ)
+ROW | 3 | Максимовъ | Александръ | - | -
+ROW | 4 | Обуховъ | Михаилъ | - | -
+ROW | 5 | Огневъ | Сергѣй | - | -
+ROW | 6 | Осиповъ | Сергѣй | - | -
+ROW | 7 | Смирновъ | Павелъ | - | -
+ROW | 8 | Ѳокинъ | Михаилъ | - | -   (initial letter is Ѳ fita, printed Ѳ)
+TEXT | Всѣ означенные окончившіе курсъ ученицы и ученики опредѣлены на службу, съ 1-го мая 1898 года, въ С.-Петербургскую балетную труппу. | posting sentence: all hired from 1 May 1898 into the St Petersburg ballet troupe
+NOTE: Two-column lists; women 1-5 left, 6-9 right; men 1-4 left, 5-8 right. "Сергѣй" (ѣ + й) printed with ѣ in both 5) and 6).
+NOTE: Count of printed graduates (9 women + 8 men = 17) matches the printed "17 человѣкъ: 9 ученицъ и 8 учениковъ".
+COUNT | rows=17 | text-blocks=5 | headings=2
+
+=====================================================================
+PAGE | graduates_1897-98_p002 | 419 (centred "— 419 —") | Московское Театральное Училище (Балетное отдѣленіе) | 1897—1898 (in text)
+HEADING | Московское Театральное Училище.
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1897—1898 учебномъ году въ балетномъ отдѣленіи состояло: | opening sentence
+TEXT | На женской половинѣ — 43 ученицы, которыя распредѣлялись по классамъ слѣдующимъ образомъ: въ I-мъ классѣ — не было ученицъ, во II-мъ классѣ — 4 ученицы, въ III-мъ классѣ — 26 ученицъ и въ IV-мъ классѣ—13 ученицъ. | female half: 43; I none, II 4, III 26, IV 13
+TEXT | На мужской половинѣ — 29 учениковъ, которыя распредѣлялись по классамъ слѣдующимъ образомъ: въ I-мъ кассѣ — не было учениковъ, во II-мъ классѣ — 3 ученика, въ III-мъ классѣ — 10 учениковъ и въ IV-мъ классѣ—16 учениковъ. | male half: 29; I none, II 3, III 10, IV 16
+NOTE: PRINT ERROR: "въ I-мъ кассѣ" (the letter л missing, "кассѣ" for "классѣ") in the male paragraph. (Word "учениковъ" read with final ъ.)
+NOTE: Arithmetic as printed: female 0+4+26+13=43 OK; male 0+3+10+16=29 OK.
+TEXT | Всего на обѣихъ половинахъ состояло—72 человѣка. | total enrolment
+TEXT | Въ сезонѣ 1897—1898 гг. пріема въ балетное отдѣленіе не было. | no admissions this season
+TEXT | Окончили курсъ весною 1898 года—15 человѣкъ: 7 ученицъ и 8 учениковъ: | graduates count
+HEADING | Ученицы: (letter-spaced)
+ROW | 1 | Денисова | Вѣра | - | -   (the numeral "1" is smudged/blotted but reads 1)
+ROW | 2 | Домашева | Анна | - | -
+ROW | 3 | Клинникова | Анастасія | - | -   (К with a tail "Қ", reads К)
+ROW | 4 | Лебедева | Клавдія | - | -
+ROW | 5 | Некрасова | Анна | - | -
+ROW | 6 | Парикова | Зинаида | - | -   (К printed "қ"-like, reads Парикова)
+ROW | 7 | Ѳедорова | Екатерина | - | -   (initial Ѳ)
+HEADING | Ученики: (letter-spaced)
+ROW | 1 | Голубинъ | Дмитрій | - | -
+ROW | 2 | Дмитріевъ | Дмитрій | - | -   (NOTE: no period after "Дмитрій" on this line, unlike the others)
+ROW | 3 | Дьякъ | Иванъ | - | -   (Д has a small mark; "Дьякъ" confirmed)
+ROW | 4 | Кузнецовъ | Владиміръ | - | -
+ROW | 5 | Лукьяновъ | Николай | - | -
+ROW | 6 | Никитинъ | Анатолій | - | -
+ROW | 7 | Николаевъ | Борисъ | - | -
+ROW | 8 | Рябцовъ | Владиміръ | - | -
+TEXT | Всѣ окончившіе курсъ ученицы и ученики опредѣлены на службу, съ 1-го сентября 1898 года, въ Московскую балетную труппу. | posting sentence: all hired from 1 Sept 1898 into the Moscow ballet troupe
+NOTE: Lists in two columns: women 1-4 left, 5-7 right; men 1-4 left, 5-8 right. Printed totals "15 человѣкъ: 7 ученицъ и 8 учениковъ" match 7+8.
+COUNT | rows=15 | text-blocks=7 | headings=4
+
+=====================================================================
+PAGE | graduates_1898-99_p000 | 140 (small numeral at bottom left) | Императорскія Театральныя Училища; С.-Петербургское Театральное Училище (Балетное отдѣленіе) | 1898—1899 (in text)
+NOTE: Reverse-side print shows through faintly across the whole page (ghost text of a list with "(съ ... сентября ... г.)"); it is not part of this page and was ignored. A thumb appears at the left margin.
+HEADING | Императорскія Театральныя Училища.
+NOTE: A short wavy rule printed beneath the first heading.
+HEADING | С.-Петербургское Театральное Училище.   (typewriter-style face in which the final "е" of "Театральное" looks like "э"; read as "Театральное")
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1898—1899 учебномъ году въ балетномъ отдѣленіи состояло: | opening sentence
+TEXT | На женской половинѣ — 69 ученицъ, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: въ I-мъ классѣ—28 ученицъ, во II-мъ классѣ—20 ученицъ, въ III-мъ классѣ— 6 ученицъ, въ IV-мъ классѣ—6 ученицъ и въ V-мъ классѣ—9 ученицъ. | female half: 69; I 28, II 20, III 6, IV 6, V 9
+TEXT | На мужской половинѣ—60 учениковъ, которые распредѣлялись по классамъ слѣдую-щимъ образомъ: въ I-мъ классѣ — 22 ученика, въ II-мъ классѣ — 19 учениковъ, въ III-мъ классѣ—9 учениковъ, въ IV-мъ классѣ—5 учениковъ и въ V-мъ классѣ—5 учениковъ. | male half: 60; I 22, II 19, III 9, IV 5, V 5
+NOTE: Male paragraph says "которые" (female paragraph says "которыя"). Hyphenations: "слѣдую-/щимъ" (twice), "III-мъ / классѣ" line break; "всего—30" begins a line ("в" of "всего" cut off by line start, i.e. "всего—30 человѣкъ").
+TEXT | Всего на обѣихъ половинахъ состояло 129 человѣкъ. | total (no dash before 129)
+TEXT | Изъ этого числа были вновь приняты осенью 1898 г. — 16 ученицъ и 14 учениковъ, всего—30 человѣкъ. | new admissions
+TEXT | Окончили курсъ весною 1899 г.—14 человѣкъ: 9 ученицъ и 5 учениковъ. | graduates count (ends with a period, not a colon)
+HEADING | Ученицы: (letter-spaced)
+ROW | 1 | Андріанова | Лариса | - | -
+ROW | 2 | Берестовская | Ольга | - | -
+ROW | 3 | Бурмистрова | Екатерина | - | -   (К printed "қ" with tail)
+ROW | 4 | Бѣлинская | Станислава | - | -
+ROW | 5 | Локтіонова | Татьяна | - | -
+ROW | 6 | Макарова | Елена | - | -
+ROW | 7 | Павлова | Анна | - | -
+ROW | 8 | Петипа | Любовь | - | -   (Любовь ends in ь)
+ROW | 9 | Петропавловская | Людмила | - | -
+HEADING | Ученики: (letter-spaced)
+ROW | 1 | Барышистовъ | Александръ | - | -   (as printed: Барышистовъ; see NOTE)
+ROW | 2 | Ивановъ | Иванъ | - | -
+ROW | 3 | Ивановъ | Константинъ | - | -
+ROW | 4 | Стуколкинъ | Василій | - | -
+ROW | 5 | Улановъ | Сергѣй | - | -
+TEXT | Всѣ означенные окончившіе курсъ ученицы и ученики опредѣлены на службу съ 1-го іюня 1899 года въ С.-Петербургскую балетную труппу. | posting sentence: 1 June 1899 into the St Petersburg ballet troupe (line break "съ 1-го / іюня")
+NOTE: Surname of men's No. 1: letters read Б-а-р-ы-ш-и-с-т-о-в-ъ ("Барышистовъ"); I could not verify against a "Барышниковъ"-type form and report only what is printed. Women in two columns (1-5 left, 6-9 right); men in two columns (1-3 left, 4-5 right). 9+5=14 matches the printed count.
+NOTE: Folio "140" at bottom left under the list/posting sentence (not centred).
+COUNT | rows=14 | text-blocks=7 | headings=5
+
+=====================================================================
+PAGE | graduates_1898-99_p001 | 142 (bottom left) | Московское Театральное Училище (Балетное отдѣленіе) | 1898—1899 (in text)
+NOTE: Faint reverse-side show-through (ghost text) visible between lines; ignored. No list rows on this page: the whole page is prose about school reorganisation and enrolment. (Folio jumps 140 -> 142 as printed; p001 itself shows 142.)
+HEADING | Московское Театральное Училище.
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1898—1899 учебномъ годѣ отдѣльные классы по научнымъ предметамъ на мужской и женской половинѣ балетнаго отдѣленія ... ... при нѣсколько расширенной программѣ упомянутыхъ предметовъ. | reorganisation: separate male/female classes merged into 5 joint classes by permission of the Minister of the Imperial Court of 15 Dec 1898
+NOTE: Opening word reads "Въ 1898—1899 учебномъ году" (year form "году"). Hyphenations in this paragraph: "муж-/ской", "уче-/ницъ", "расши-/ренной". Text contains "Императорскаго Двора отъ 15-го декабря 1898 года".
+TEXT | Для облегченія матеріальнаго положенія бѣдныхъ учащихся комплектъ казеннокоштныхъ воспитанницъ увеличенъ съ 15 до 25 человѣкъ и, кромѣ того, ... (изъ которыхъ 15 учениковъ и 5 ученицъ). | scholarship pupils increased 15 to 25; plus 20 half-boarders (15 male, 5 female) [hyphenations "казеннокошт-/ныхъ", "учени-/ковъ"]
+TEXT | Во избѣжаніе переполненія балетной труппы установленъ комплектъ учащихся въ 100 человѣкъ (изъ которыхъ 60 ученицъ и 40 учениковъ) въ томъ разсчетѣ, чтобы ежегодные выпуски въ балетную труппу не превышали 10 человѣкъ. | cap of 100 pupils (60 f / 40 m); yearly graduating class not to exceed 10 [hyphenation "ежегод-/ные"]
+TEXT | Въ виду необходимости надзора за полупенсіонерами произошли нѣкоторыя перемѣны въ личномъ составѣ служащихъ Училища, ... установлены должности старшаго и младшаго надзирателей. | staff changes: assistant inspector post created; senior and junior supervisors in the ballet department
+TEXT | Въ 1898—1899 учебномъ году въ балетномъ отдѣленіи состояло 54 ученицы и 34 ученика (всего 88 человѣкъ), которые по классамъ распредѣлялись слѣдующимъ образомъ: | total enrolment: 54 f + 34 m = 88 [hyphenation "уче-/ника"]
+TEXT | Въ I-мъ классѣ младшаго отдѣленія — 18 ученицъ и 14 учениковъ, въ 3-мъ классѣ младшаго отдѣленія—15 ученицъ и 3 ученика, въ IV-мъ классѣ младщаго отдѣленія—15 ученицъ и 9 учениковъ, въ V-мъ классѣ младшаго отдѣленія—6 ученицъ и 8 учениковъ. | class distribution: I 18f/14m; "3-мъ" 15f/3m; IV 15f/9m; V 6f/8m
+NOTE: Class numbering printed inconsistently: "I-мъ", then Arabic "3-мъ" (no 2nd class mentioned), then "IV-мъ", "V-мъ". The IV-мъ line prints "младщаго" (щ, not ш), the other three print "младшаго". Hyphenation "уче-/ницъ". Totals 18+15+15+6=54 f, 14+3+9+8=34 m, as printed.
+NOTE: The statistics are continued on the next page (p002 begins with graduates), no hand-off marker.
+COUNT | rows=0 | text-blocks=6 | headings=2
+
+=====================================================================
+PAGE | graduates_1898-99_p002 | no folio visible (image is cropped just below the posting sentence; no number seen) | no school heading on this page (continuation: Московское Театральное Училище, Балетное отдѣленіе) | 1899 (in text)
+NOTE: Short image (871 px high). Faint reverse-side show-through ghost text across the page; ignored.
+TEXT | Окончили курсъ весной 1899 года 6 ученицъ и 6 учениковъ. | graduates count (printed "весной", no dash before "6")
+HEADING | Ученицы: (letter-spaced)
+ROW | 1 | Бурина | Клавдія | - | -
+ROW | 2 | Голубина | Марія | - | -
+ROW | 3 | Токарева | Фелисата | - | -   (initial T has a defective, hooked top stroke "Ţ"; reads Т: Токарева)
+ROW | 4 | Хоцевичъ | Елена | - | -
+ROW | 5 | Чичелева | Елизавета | - | -
+ROW | 6 | Ѳедорова | Софья | - | -   (initial Ѳ)
+HEADING | Ученики: (letter-spaced)
+ROW | 1 | Костровской | Михаилъ | - | -   (surname ends -ской, as printed)
+ROW | 2 | Морозовъ | Сергѣй | - | -
+ROW | 3 | Семеновъ | Николай | - | -
+ROW | 4 | Тарасовъ | Иванъ | - | -
+ROW | 5 | Сигуля | Александръ | - | -   (position 5 in the right column)
+ROW | 6 | Тихоміровъ | Алексѣй | - | -
+TEXT | Всѣ окончившіе курсъ ученики и ученицы опредѣлены на службу съ 1 сентября 1899 года въ Московскую балетную труппу. | posting sentence: 1 Sept 1899 into the Moscow ballet troupe (here the order is "ученики и ученицы", "съ 1 сентября" without "-го")
+NOTE: Lists in two columns: women 1-3 left, 4-6 right; men 1-3 left, 4-6 right. Men's right column order as printed: 4 Тарасовъ, 5 Сигуля, 6 Тихоміровъ (not alphabetical). 6+6=12 matches the printed count.
+COUNT | rows=12 | text-blocks=2 | headings=2
+
+=====================================================================
+PAGE | graduates_1899-00_p000 | no folio visible (image ends just below the posting sentence) | Императорскія Театральныя Училища; С.-Петербургское Театральное Училище (Балетное отдѣленіе) | 1899—1900 (in text)
+NOTE: Reverse-side print shows through strongly in the upper half and along the right half of the page (ghost text of a list with numbered entries); ignored. Small ink mark at top.
+HEADING | Императорскія Театральныя Училища.
+NOTE: wavy rule below the first heading.
+HEADING | С.-Петербургское Театральное Училище.   (typewriter-style heading face; final "е" in "Театральное" resembles "э")
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1899—1900 уч. году въ балетномъ отдѣленіи состояло: | opening sentence (abbreviated "уч.")
+TEXT | На женской половинѣ—72 ученицы, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: въ 1 классѣ—32 ученицы, во 2 классѣ—23 ученицы, въ 3 классѣ—5 уче-ницъ, въ 4 классѣ—6 ученицъ и въ 5 классѣ—6 ученицъ. | female half: 72; classes 1: 32, 2: 23, 3: 5, 4: 6, 5: 6 (Arabic class numbers, no "-мъ")
+TEXT | На мужской половинѣ — 60 учениковъ, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: въ 1 классѣ—21 ученикъ, во 2 классѣ—19 учениковъ, въ 3 классѣ—9 уче-никовъ, въ 4 классѣ—7 учениковъ и въ 5 классѣ—4 ученика. | male half: 60; 1: 21, 2: 19, 3: 9, 4: 7, 5: 4 ("21 ученикъ" read with final къ)
+TEXT | Всего на обѣихъ половинахъ состояло 132 человѣка. | total
+TEXT | Изъ этого числа были вновь приняты осенью 1899 г.—16 ученицъ и 13 учениковъ— всего—29 человѣкъ. | new admissions (the dash at end of line then "всего—29")
+TEXT | Окончили курсъ весною 1900 г.—9 человѣкъ, 6 ученицъ и 3 ученика. | graduates count (printed "9 человѣкъ, 6 ученицъ и 3 ученика." with a comma, not colon)
+HEADING | Ученицы: (letter-spaced)
+ROW | 1 | Вилль | Елизавета | - | -
+ROW | 2 | Георгіевская | Зинаида | - | -
+ROW | 3 | Нестеровская | Лидія | - | -
+ROW | 4 | Прохорова | Александра | - | -
+ROW | 5 | Снѣткова | Евгенія | - | -
+ROW | 6 | Спрышинская | Целина | - | -
+HEADING | Ученики: (letter-spaced)
+ROW | 1 | Григорьевъ | Сергѣй | - | -
+ROW | 2 | Петровъ | Павелъ | - | -
+ROW | 3 | Дольстъ | Владиміръ | - | -   (in the right column, same line as No.1)
+TEXT | Всѣ означенные окончившія курсъ ученицы и ученики опредѣлены на службу, съ 1-го іюня 1900 г., въ С.-Петербургскую балетную труппу. | posting sentence: 1 June 1900 into the St Petersburg ballet troupe (note: printed "окончившія", with -ія, not -іе)
+NOTE: Women's list: 1-3 left column, 4-6 right column. Men's list: 1 and 2 in the left column, 3 on the right (Дольстъ). 6+3=9 matches the printed count. "Спрышинская": reads С-п-р-ы-ш-и-н-с-к-а-я.
+COUNT | rows=9 | text-blocks=7 | headings=5
+
+=====================================================================
+PAGE | graduates_1899-00_p001 | no folio visible (image truncated at the bottom, see NOTE) | Московское Театральное Училище (Балетное отдѣленіе) | 1899—1900 (in text)
+NOTE: At the very top edge there is a fragment of a horizontal rule (end of the previous page's decorative line / wavy rule) above the heading. Faint reverse-side show-through in places.
+HEADING | Московское Театральное Училище.
+HEADING | Балетное отдѣленіе.
+TEXT | Въ 1899—1900 учебномъ году въ балетномъ отдѣленіи состояло 55 ученицъ и 30 уче-никовъ (всего 85 человѣкъ), которыя по классамъ распредѣлялись слѣдующимъ образомъ: въ 1-мъ классѣ младшаго отдѣленія 16 ученицъ и 12 учениковъ; въ I-мъ классѣ старшаго отдѣленія 10 ученицъ и 6 учениковъ; въ 3-мъ классѣ—2 ученицы; въ 4-мъ классѣ—13 уче-ницъ и 6 учениковъ; въ 5-мъ классѣ—14 ученицъ и 6 учениковъ. | enrolment and distribution: 55 f + 30 m = 85; junior 1st class 16f/12m (Arabic "1-мъ"), senior I-мъ 10f/6m (Roman "I-мъ"), 3-мъ 2f, 4-мъ 13f/6m, 5-мъ 14f/6m
+NOTE: Mixed numeral styles: "1-мъ" (Arabic, junior) and "I-мъ" (Roman, senior) in the same paragraph; no 2nd class named. Hyphenations: "уче-/никовъ", "уче-/ницъ". Printed word "которыя" (not "которые").
+TEXT | Окончили курсъ весной 1900 г.—14 ученицъ и 6 учениковъ. | graduates count
+HEADING | Ученицы: (letter-spaced)
+ROW | 1 | Адамовичъ | Екатерина | - | -
+ROW | 2 | Гостемилова | Александра | - | -
+ROW | 3 | Грекова | Евгенія | - | -
+ROW | 4 | Егорова | Ольга | - | -
+ROW | 5 | Иванова | Надежда | - | -
+ROW | 6 | Крутицкая | Надежда | - | -
+ROW | 7 | Крочевская | Владислава | - | -
+ROW | 8 | Новикова | Екатерина | - | -   (К with tail in "Новикова")
+ROW | 9 | Поржицкая | Бронислава | - | -
+ROW | 10 | Сидорова | Наталья | - | -
+ROW | 11 | Тарасенко | Валентина | - | -
+ROW | 12 | Турчанинова | Марія | - | -
+ROW | 13 | Чумакова | Александра | - | -
+ROW | 14 | Ѳедорова | Ольга | - | -   (initial О of "Ольга" printed damaged: only the lower half-circle prints, so it looks like "U"; the intended letter is О, flagged: "О or U? damaged type"; initial of surname is Ѳ)
+HEADING | Ученики: (letter-spaced)
+ROW | 1 | Блохинъ | Иванъ | - | -
+ROW | 2 | Козловъ | Ѳедоръ | - | -
+ROW | 3 | Михайловскій | Александръ | - | -
+ROW | 4 | Мордкинъ | Михаилъ | - | -
+ROW | 5 | Остроградскій | Ѳедоръ | - | -
+ROW | 6 | Ѳеоктистовъ | Сергѣй | - | -
+NOTE: Women in two columns (1-7 left, 8-14 right). Men in two columns (1-3 left, 4-6 right). The image ends right under rows 3 and 6 of the men's list (bottom edge cut), so the page is truncated/cropped: there may be more men's rows (the printed count says 6 men: 14+6=20, which matches the 6 rows seen) and the posting sentence ("Всѣ ... опредѣлены на службу ... въ Московскую балетную труппу") is NOT on this page; it presumably follows on the next page.
+COUNT | rows=20 | text-blocks=2 | headings=4
+
+=====================================================================
+PAGE | graduates_1900-01_p000 | 140 (bottom left) | Императорскія Театральныя Училища; С.-Петербургское Театральное Училище (Балетное отдѣленіе) | 1900—1901 (in text)
+NOTE: Faint reverse-side show-through (ghost text of a two-column list with "(съ ... сентября ... г.)" entries) over the page; ignored. A dark binding shadow at the left edge. Folio "140" is the same numeral as on graduates_1898-99_p000 (different volume).
+HEADING | Императорскія Театральныя Училища.
+NOTE: wavy rule below the first heading.
+HEADING | С.-Петербургское Театральное Училище.   (typewriter-style heading face; "Театральное" final "е" looks like "э")
+HEADING | Балетное отдѣленіе   (no closing period printed, unlike the other pages)
+TEXT | Въ 1900—1901 уч. году въ балетномъ отдѣленіи состояло: | opening sentence
+TEXT | На женской половинѣ—74 ученицы, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: въ 1 классѣ—30 ученицъ, во 2 классѣ—22 ученицы, въ 3 классѣ—12 уче-ницъ, въ 4 классѣ—4 ученицы и въ 5 классѣ—6 ученицъ. | female half: 74; classes 1: 30, 2: 22, 3: 12, 4: 4, 5: 6
+TEXT | На мужской половинѣ — 63 ученика, которыя распредѣлялись по классамъ слѣдую-щимъ образомъ: въ 1 классѣ—24 ученика, во 2 классѣ—17 учениковъ, въ 3 классѣ—6 уче-никовъ, въ 4 классѣ—8 учениковъ и въ 5 классѣ—8 учениковъ. | male half: 63; 1: 24, 2: 17, 3: 6, 4: 8, 5: 8
+TEXT | Всего на обѣихъ половинахъ состояло 137 человѣкъ. | total
+TEXT | Изъ этого числа были вновь приняты осенью 1900 г.—15 ученицъ и 13 учениковъ— всего—28 человѣкъ. | new admissions (no final period printed after "человѣкъ")
+TEXT | Окончили курсъ весною 1901 г.— 8 человѣкъ (3 ученицы и 5 учениковъ). | graduates count
+HEADING | Ученицы: (letter-spaced)
+ROW | 1 | Алексне | Наталія | - | -   (as printed: "Алексне", probably a misprint for Алексѣева/Алексѣе-; report only what is printed)
+ROW | 2 | Карлсонъ | Евгенія | - | -
+ROW | 3 | Эдуардова | Евгенія | - | -   (right column, level with row 1)
+HEADING | Ученики: (letter-spaced)
+ROW | 1 | Берестовскій | Михаилъ | - | -
+ROW | 2 | Гольде | Юліусъ | - | -
+ROW | 3 | Михайловъ | Петръ | - | -
+ROW | 4 | Пономаревъ | Сергѣй | - | -   (NOTE: printed with NO comma between surname and name: "Пономаревъ Сергѣй.")
+ROW | 5 | Прѣсняковъ | Евгеній | - | -   (printed with ѣ after Пр)
+TEXT | Всѣ означенные окончившіе курсъ ученицы и ученики опредѣлены на службу, съ 1-го іюня 1901 г., въ С.-Петербургскую балетную труппу. | posting sentence: 1 June 1901 into the St Petersburg ballet troupe
+NOTE: Women: 1-2 left column, 3 in right column; men: 1-3 left column, 4-5 right column. 3+5=8 matches the printed count.
+COUNT | rows=8 | text-blocks=7 | headings=5
+
+=====================================================================
+SUMMARY OF NOTABLE ITEMS FOR THE REVIEWER (all reported above, restated briefly)
+- Print error "кассѣ" for "классѣ" in 1897-98 p002 (male paragraph, I-мъ class).
+- "Всего 39 человѣкъ" printed against 14+15 new admissions in 1897-98 p001 (as printed).
+- Pages graduates_1897-98_p001, 1898-99_p002, 1899-00_p000, 1899-00_p001 show no folio in the image; 1899-00_p001 is truncated at the bottom (no posting sentence).
+- Men's row "Дмитріевъ, Дмитрій" (1897-98 p002) lacks the closing period; 1900-01 men's row 4 "Пономаревъ Сергѣй." lacks the comma.
+- "Алексне, Наталія" (1900-01 p000) as printed; "Барышистовъ" (1898-99 p000) as printed; "Прѣсняковъ" with ѣ (1900-01 p000).
+- Damaged О in "Ольга" at 1899-00 p001 row 14 (women).
+- In 1898-99 p001 the IV-мъ class line prints "младщаго" (щ) while the others print "младшаго".

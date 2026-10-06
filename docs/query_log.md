@@ -12828,3 +12828,15 @@ Result: one Russian "комич. оп." in the whole Repertoire -- «Корне�
 the Малый were false matches.) The same work's only other appearance is printed «Корневильскіе колокола, оперетка» --
 Маріинскій 21 Feb 1906, charity bill (p. 116). Operetta printings overall: Александринскій, Михайловскій, Маріинскій,
 Малый (опер./оперетта/оперет.).
+
+## 2026-10-06 — Graduates audit (issue #136): scope, non-person rows, school labels, person counts
+
+```sql
+SELECT e.entity_type, count(*), count(distinct sp.season), max(sp.season) FROM raw.person_entry e JOIN raw.source_pages sp ON sp.page_id=e.page_id GROUP BY 1;
+SELECT sp.season, count(*), count(distinct e.page_id), sum((e.first_name IS NULL)::int), sum((e.tenure_note_text IS NOT NULL)::int), string_agg(distinct e.institution,' | ')
+FROM raw.person_entry e JOIN raw.source_pages sp ON sp.page_id=e.page_id WHERE e.entity_type='Graduates' GROUP BY 1 ORDER BY 1;
+-- suspect rows: lowercase/noun surname, numeric or >160-char note, no list number (Python filter over raw.person_entry JOIN entities.person_link)
+SELECT count(*), count(distinct l.person_id) FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) WHERE e.entity_type='Graduates';
+```
+
+Result: Graduates = 519 entries (20 seasons incl. 1910-11); 50 suspect rows of which 25 non-person (+3 stage-name rows the filter flags wrongly, 11 + 13 real 1910-11 rows without list numbers). Persons: before 505 on 519 entries (backup), after the audit 492 on 494 entries (-13 phantom persons). School labels: 36 rows of three Moscow continuation pages were stored under St Petersburg, 13 had none; 168 `institution` repairs in all. Raw entries 24,039 -> 24,014; live persons 3,199 -> 3,186; tombstones 3,197 unchanged; 0 orphan links; 0 shift blocks; quality flags 572 (none on Graduates).
