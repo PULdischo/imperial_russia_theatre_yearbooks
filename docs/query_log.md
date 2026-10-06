@@ -12840,3 +12840,14 @@ SELECT count(*), count(distinct l.person_id) FROM entities.person_link l JOIN ra
 ```
 
 Result: Graduates = 519 entries (20 seasons incl. 1910-11); 50 suspect rows of which 25 non-person (+3 stage-name rows the filter flags wrongly, 11 + 13 real 1910-11 rows without list numbers). Persons: before 505 on 519 entries (backup), after the audit 492 on 494 entries (-13 phantom persons). School labels: 36 rows of three Moscow continuation pages were stored under St Petersburg, 13 had none; 168 `institution` repairs in all. Raw entries 24,039 -> 24,014; live persons 3,199 -> 3,186; tombstones 3,197 unchanged; 0 orphan links; 0 shift blocks; quality flags 572 (none on Graduates).
+
+## 2026-10-06 — Drama-course graduates still stored in Graduates (removal check)
+
+```sql
+SELECT sp.season, e.page_id, right(e.entry_id,4), e.family_name, e.institution, e.heading_path, e.tenure_note_text, cast(l.person_id as varchar)
+FROM raw.person_entry e JOIN raw.source_pages sp ON sp.page_id=e.page_id JOIN entities.person_link l USING(entry_id)
+WHERE e.entity_type='Graduates' AND (lower(coalesce(e.heading_path,'')||' '||coalesce(e.institution,'')||' '||coalesce(e.tenure_note_text,'')) LIKE '%драмат%' OR e.page_id IN ('graduates_1890-91_p005','graduates_1890-91_p006'));
+-- then, for the 28 persons: links elsewhere; rows in entities.person_wikidata_link / production_credit_link / creator_person / person_merge_log
+```
+
+Result: 28 rows, all on graduates_1890-91 p005 (20) and p006 (8); 27 persons only on these rows (no Wikidata / credit / merge-log references), 1 (Носовъ Сергѣй Владиміровичъ, 794bb7) also on 4 Moscow-school staff lines. After the removal: entries 24,014 -> 23,986; live persons 3,186 -> 3,159; tombstones 3,197 unchanged; 0 orphan links; 0 shift blocks.
