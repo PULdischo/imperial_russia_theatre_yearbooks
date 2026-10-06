@@ -12814,3 +12814,17 @@ FROM research.production_credit pc JOIN research.person p USING (person_id);
 Result: 108 creators, of whom 74 have a QID. That is 72 decided on the review page,
 plus roster-linked people whose QID came from person_wikidata_link.
 entities.creator_wikidata_link has 72 rows (31 before).
+
+## 2026-10-06 — Where were comic operas (комич. оп. / opéra-comique) performed? (RG, re: Корневильскіе колокола)
+
+```sql
+select p.verbatim_title, p.verbatim_genre, t.canonical_name, min(e.season), max(e.season), count(*)
+from research.performance p join research.event e using(event_id) join research.theater t using(theater_id)
+where regexp_matches(lower(coalesce(p.verbatim_genre,'')||' '||p.verbatim_title),
+      '(комич\.?\s*оп|ком\.\s*оп|opéra.comique|opera.comique|opéra-com)') group by all;
+```
+Result: one Russian "комич. оп." in the whole Repertoire -- «Корневильскіе колокола, комич. оп.», Маріинскій, 1903-04
+(1 night). French "opéra-comique": La chanson de Fortunio, Михайловскій 1904-05 (3). (Two «Опавшіе листья, ком.» rows at
+the Малый were false matches.) The same work's only other appearance is printed «Корневильскіе колокола, оперетка» --
+Маріинскій 21 Feb 1906, charity bill (p. 116). Operetta printings overall: Александринскій, Михайловскій, Маріинскій,
+Малый (опер./оперетта/оперет.).
