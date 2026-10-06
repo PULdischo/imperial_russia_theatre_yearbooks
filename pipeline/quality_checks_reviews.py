@@ -87,6 +87,36 @@ def main() -> None:
     spans = list(csv.DictReader(open(args.parsed_dir / "review_span.csv",
                                      encoding="utf-8")))
 
+    # ---- which scans are two-page SPREADS --------------------------------
+    # Some review scans photograph two facing pages at once, so ONE scan page
+    # carries TWO folios and the parse records only the first. That looks
+    # exactly like a missing page. 1892-93_SP_ballet_p005 shows "- 224 -" and
+    # "- 225 -" side by side; four of the gap-of-1 flags were this
+    # (2026-10-06). Detected by aspect ratio against the review's own median,
+    # so it needs --images-dir; without it those pages still flag.
+    spread: set[str] = set()
+    if args.images_dir:
+        import statistics
+        from PIL import Image
+        ratios: dict[str, float] = {}
+        per_review = defaultdict(list)
+        for pid, m in manifest.items():
+            img = args.images_dir / Path(m.get("image_file", "")).name
+            if not img.exists():
+                continue
+            with Image.open(img) as im:
+                w, h = im.size
+            ratios[pid] = w / h
+            per_review[(m["season"], m["city"], m["genre"])].append(pid)
+        for key, pids in per_review.items():
+            vals = [ratios[q] for q in pids if q in ratios]
+            if len(vals) < 3:
+                continue
+            med = statistics.median(vals)
+            for q in pids:
+                if ratios.get(q, 0) > med * 1.35:
+                    spread.add(q)
+
     flags = []
 
     def flag(page_id, kind, detail):
@@ -155,7 +185,10 @@ def main() -> None:
                     # and only a gap LARGER than that leaves pages
                     # unaccounted for. Flagging gap != unpaginated_since
                     # produced 9 false positives of this shape (2026-10-06).
-                    if gap > unpaginated_since or gap < 0:
+                    # a spread scan carries two folios, so it legitimately
+                    # advances the count by one more than a single leaf
+                    allowance = unpaginated_since + (1 if prev[1] in spread else 0)
+                    if gap > allowance or gap < 0:
                         flag(p["page_id"], "missing_page",
                              f"{src}: folio {prev[0]} ({prev[1]}) -> {folio}; "
                              f"gap of {gap} with {unpaginated_since} "

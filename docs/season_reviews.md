@@ -872,11 +872,32 @@ negative gap is flagged.
 scan-page indices — so every remaining gap is a folio misread, not a lost
 leaf, unless a PDF itself omits one.
 
-**13 still open**, each needing its own scan: four single-folio gaps
-(224->226, 192->194, 180->182, 248->250), the tangled
-`1900-01_SP_ballet` run around folios 174-182, `1899-00_MSK_all` around
-195-198, `1890-91_SP_all` 145->149, and `1900-01_SP_ballet_p000` claiming
-folio 20 where the review starts at 153.
+**A THIRD mechanism, found while clearing the rest: some review scans are
+TWO-PAGE SPREADS.** `1892-93_SP_ballet_p005` photographs two facing pages and
+shows "— 224 —" and "— 225 —" side by side; the parse records only the first,
+which looks exactly like a missing page. All four remaining single-folio gaps
+were this. Spreads are detected by aspect ratio against the review's own
+median (>1.35x), so the check now needs `--images-dir`; without it those
+pages still flag. Note that enabling images also switches on the ink checks,
+which add ~132 `thin_page` flags — those fire on plate-heavy review pages and
+are pre-existing noise, not a new finding.
+
+Folios corrected with provenance, cumulative: **193, 265, 199, 153, 196**
+scan-verified; **185, 115** inferred from an unambiguous run with no legible
+folio; **6 blanked** as fabricated (plates and tailpiece last pages).
+
+Final state: **missing_page 37 -> 4, duplicate_folio 12 -> 1.**
+
+**What remains (5 flags, 2 reviews), genuinely needing the physical volume:**
+
+- `1900-01_SP_ballet` folios 174-182 — p021 and p023 both read 174 with
+  p022 at 175, which cannot all be right; p024 jumps to 179. Several crops
+  at different margins failed to render a legible folio on these scans.
+- `1899-00_MSK_all` 196 -> 198 across one unpaginated page.
+- `1890-91_SP_all` 145 -> 149 with 2 unpaginated pages between; this scan is
+  NOT a spread, so one folio is misread or a leaf is absent from the PDF.
+
+These are the only folio questions left in 1,070 pages.
 
 **ADDED 2026-10-06 — five issue-era reviews, +46 pages.** Prepared in a
 scratch folder by the "Adding additional Yearbooks" session and integrated
