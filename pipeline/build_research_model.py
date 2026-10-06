@@ -100,6 +100,19 @@ RESEARCH_PAGE_MONTH_OVERRIDES = {
 }
 
 
+#: Pages left out of the research layer entirely (raw/analysis keep them verbatim).
+#: Only for a page that is superfluous in the print itself, never for a page
+#: that is merely hard to read. page_id -> reason. The build warns if a page_id
+#: is not in analysis.event_entry, so a renamed page doesn't go unnoticed.
+RESEARCH_EXCLUDED_PAGES = {
+    "repertoire_1910-11_p056": (
+        "printed p. 57 repeats p. 56's heading «С.-Петербургскіе театры», theater names and "
+        "dates (10-19 May 1911) with every cell a dash, while p. 56 prints the real "
+        "Михайловскій performances; Moscow's own page for these dates is absent from the "
+        "volume. Superfluous print, kept verbatim in raw (RG, 2026-10-06)"),
+}
+
+
 #: Research-layer-only genre assignments by work title (RG, 2026-09-29, issue
 #: #114). The raw tier keeps the printed genre verbatim -- a ballet
 #: divertissement is printed with no genre abbreviation at all ("Балетный
@@ -469,6 +482,35 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     else:
         con.execute("CREATE OR REPLACE TEMP VIEW cwl AS SELECT person_id, wikidata_qid, wikidata_label, wikidata_description FROM entities.creator_wikidata_link")
     non_person_list = ", ".join(f"'{pid}'" for pid in NON_PERSON_IDS)
+    # A Wikidata link made against a person who has since been merged must follow
+    # the merge to the live survivor (entities.person.superseded_by_person_id chain),
+    # or the QID silently drops out of research.person (2026-10-06: 15 links had
+    # gone stale this way; the 1910-11 merges would have dropped 4 more QIDs --
+    # Полякова, Шолларъ, Кучера, Крушевскій). Two links reaching one survivor with
+    # different QIDs is a real conflict and stops the build rather than guess.
+    con.execute("""
+        CREATE OR REPLACE TEMP TABLE wd_live AS
+        WITH RECURSIVE ch(link_pid, cur, depth) AS (
+            SELECT person_id, person_id, 0 FROM entities.person_wikidata_link
+            UNION ALL
+            SELECT ch.link_pid, p.superseded_by_person_id, ch.depth + 1
+            FROM ch JOIN entities.person p ON p.person_id = ch.cur
+            WHERE p.superseded_by_person_id IS NOT NULL AND ch.depth < 50
+        ),
+        survivor AS (
+            SELECT link_pid, arg_max(cur, depth) AS live_pid FROM ch GROUP BY link_pid
+        )
+        SELECT s.live_pid AS person_id,
+               any_value(w.wikidata_qid) AS wikidata_qid,
+               any_value(w.wikidata_label) AS wikidata_label,
+               any_value(w.wikidata_description) AS wikidata_description,
+               count(DISTINCT w.wikidata_qid) AS n_qids
+        FROM entities.person_wikidata_link w JOIN survivor s ON s.link_pid = w.person_id
+        GROUP BY s.live_pid
+    """)
+    conflicts = con.execute("SELECT person_id FROM wd_live WHERE n_qids > 1").fetchall()
+    if conflicts:
+        raise SystemExit(f"person_wikidata_link: merged persons carry conflicting QIDs: {conflicts}")
     con.execute(f"""
         INSERT INTO research.person
         SELECT
@@ -482,7 +524,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             CASE WHEN wd.wikidata_qid IS NOT NULL THEN 'link_wikidata'
                  WHEN cw.wikidata_qid IS NOT NULL THEN 'rg_review' END AS wikidata_source
         FROM entities.person p
-        LEFT JOIN entities.person_wikidata_link wd ON wd.person_id = p.person_id
+        LEFT JOIN wd_live wd ON wd.person_id = p.person_id
         LEFT JOIN cwl cw ON cw.person_id = p.person_id
         WHERE p.superseded_by_person_id IS NULL
           AND p.person_id NOT IN ({non_person_list})
@@ -537,6 +579,14 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         )
     """)
     n_corr = load_receipts_corrections(con)
+    for p in RESEARCH_EXCLUDED_PAGES:
+        if not con.execute("SELECT 1 FROM analysis.event_entry WHERE page_id = ? LIMIT 1", [p]).fetchone():
+            # a warning, not a failure: a database built before the page's season
+            # was added must still build (parallel sessions rebuild production)
+            print(f"  WARNING: RESEARCH_EXCLUDED_PAGES: {p} not found in analysis.event_entry")
+    con.execute("CREATE OR REPLACE TEMP TABLE excluded_page (page_id VARCHAR)")
+    if RESEARCH_EXCLUDED_PAGES:
+        con.executemany("INSERT INTO excluded_page VALUES (?)", [(p,) for p in RESEARCH_EXCLUDED_PAGES])
     con.execute("CREATE OR REPLACE TEMP TABLE page_month_override (page_id VARCHAR, y INTEGER, m INTEGER)")
     if RESEARCH_PAGE_MONTH_OVERRIDES:
         con.executemany("INSERT INTO page_month_override VALUES (?, ?, ?)",
@@ -593,7 +643,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         LEFT JOIN receipts_correction rc
           ON rc.page_id = r.page_id AND rc.date_text = r.date_text AND rc.theater = r.theater
          AND rc.time_of_day = r.time_of_day AND rc.receipts_text_verbatim = r.receipts_text
-        WHERE NOT (
+        WHERE r.page_id NOT IN (SELECT page_id FROM excluded_page)
+          AND NOT (
             r.event_status = 'not_captured' AND EXISTS (
                 SELECT 1 FROM resolved x
                 WHERE x.event_status <> 'not_captured'
@@ -625,6 +676,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             eep.genre AS verbatim_genre
         FROM raw.event_entry_performance eep
         JOIN entities.work_link wl ON wl.raw_performance_id = eep.performance_id
+        WHERE eep.event_id NOT IN (SELECT e.event_id FROM analysis.event_entry e
+                                   JOIN excluded_page x USING (page_id))
     """)
 
     con.execute("""

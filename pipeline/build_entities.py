@@ -220,6 +220,18 @@ def _work_art_form(canon: str | None) -> str | None:
         return "opera"
     if re.match(r"(бал|ballet|аллег\. бал|фант\. бал|хореограф|pantom|mimodrame|spiel ohne wort)", canon):
         return "ballet"
+    # RG, 2026-10-06: a qualified ballet genre ("волш. бал.", "фантастич. бал.",
+    # "анакреонтическій бал.", "комич. бал.") is ballet too -- the
+    # word бал./балетъ anywhere in the genre, not only at its start. Without
+    # this, 1910-11's printings split Конекъ-горбунокъ, Лебединое озеро,
+    # Пробужденіе Флоры and Тщетная предосторожность into a ballet and a "play".
+    # Comedy-ballets ("ком.-бал.") are deliberately NOT caught here: whether a
+    # comédie-ballet is a play or a ballet is RG's open decision (research need:
+    # drama with ballet/dancers), so they keep their previous classification.
+    # Nor is "изъ бал." ("from the ballet"): an excerpt marker, curated as an
+    # excerpt of its parent in work_excerpt_links.csv (Очарованный лѣсъ, 1907).
+    if re.search(r"(?<![а-яё])бал(?:\.|етъ|ет\b|\b)", canon) and not re.match(r"(ком\.?-бал|изъ\s)", canon):
+        return "ballet"
     if re.match(r"(диверт|див\b|концерт)", canon):
         return "other"
     return "spoken"

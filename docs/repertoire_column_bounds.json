@@ -1201,5 +1201,31 @@
     "extrapolated": false,
     "source": "measured 2026-09-30: median of _detect_vertical_dividers over 14/29 odd (Petersburg) pages returning exactly 3 dividers, on the per-parity crop 1909-10:1 (x 0.12-1.00, copied from 1908-09 and re-verified clean at native resolution left/right edges for this season). Gaps ~0.21; std 0.034-0.040 (wider sway than parity 0, absorbed by _refine_dividers).",
     "evenly_spaced": true
+  },
+  "1910-11:0": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.182,
+      0.3856,
+      0.5935
+    ],
+    "n_pages_agreeing": 25,
+    "extrapolated": false,
+    "source": "measured 2026-10-06: median of _detect_vertical_dividers over 25/28 even (Moscow) pages returning exactly 3 dividers, on the per-parity crop 1910-11:0 (x 0.00-0.88, copied from 1909-10). The other 3 pages return a 4th divider at ~0.78-0.81, the table's own right border. Gaps ~0.204; std 0.017. Every page's crop checked for edge clipping (header strip, bottom strip, ink-to-edge margins): 56/56 clean, bottom-edge ink is thumbs/page numbers only.",
+    "evenly_spaced": true
+  },
+  "1910-11:1": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.2859,
+      0.4918,
+      0.7023
+    ],
+    "n_pages_agreeing": 21,
+    "extrapolated": false,
+    "source": "measured 2026-10-06: median over 21/28 odd (Petersburg) pages returning exactly 3 dividers, on the per-parity crop 1910-11:1 (x 0.12-1.00, copied from 1909-10). The other 7 return a 4th at ~0.88-0.91 (right border). Note the table sits ~0.05 further right than 1909-10's (divider[0] 0.286 vs 0.235): per-season calibration mattered again. Gaps ~0.206-0.211; std 0.009. Measured on crops because on uncropped renders only 16/56 pages give a clean 3-divider read (fingers, fore-edge).",
+    "evenly_spaced": true
   }
 }

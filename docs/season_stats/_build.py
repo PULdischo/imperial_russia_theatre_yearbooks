@@ -31,6 +31,7 @@ PAGES = {
     '1907-08': ('1907-08_ProductionStats.pdf', '126', 'Всего въ теченіе сезона 1907—1908 гг. было спектаклей:', '', 'counts_receipts_footnotes', 'file page 1 of 11 (pp. 2-11 are the season "Списокъ пьесъ", not transcribed here); no venue breakdown printed; footnotes but no heading footnote'),
     '1908-09': ('1908-09_ProductionStats.pdf', '56', 'Всего въ теченіе сезона 1908—1909 гг. было спектаклей:', '', 'counts_receipts_footnotes', 'no venue breakdown printed; footnotes but no heading footnote'),
     '1909-10': ('1909-10_ProductionStats.pdf', '58', 'Всего въ теченіе сезона 1909—1910 гг. было спектаклей:', '', 'counts_receipts_footnotes', 'no venue breakdown; after each city a dated list of jubilees and benefits (dated_notes.csv); German and Moscow Art Theatre lines print no receipts'),
+    '1910-11': ('1910-11_ProductionStats.pdf', '58', 'Всего въ теченіе сезона 1910—1911 гг. было спектаклей:', '', 'counts_receipts', 'no footnotes and no dated notes (unlike 1909-10); German and Moscow Art Theatre lines print no receipts'),
 }
 
 # Receipts whose rubles/kopecks MARKER is misprinted: the verbatim text stays as
@@ -357,6 +358,16 @@ LINES = [
     ('1909-10', M, 'category', 'Русскихъ драматическихъ', 'Русскихъ драматическихъ', '', '', 134, '266,240 р. 80 к.', '5', ''),
     ('1909-10', M, 'category', 'Русскихъ оперныхъ', 'Русскихъ оперныхъ', '', '', 168, '427,242 р. 67 к.', '6', ''),
     ('1909-10', M, 'category', 'Балетныхъ', 'Балетныхъ', '', '', 49, '110,363 р. 31 к.', '7', ''),
+    # --- 1910-11 --- (RG's scan of 1911 Vol VI, p. 58; figures zoom-checked 2026-10-06)
+    ('1910-11', S, 'category', 'Русскихъ драматическихъ', 'Русскихъ драматическихъ', '', '', 272, '345,789 р. 85 к.', '', ''),
+    ('1910-11', S, 'category', 'Русскихъ оперныхъ', 'Русскихъ оперныхъ', '', '', 167, '559,274 р. 77 к.', '', ''),
+    ('1910-11', S, 'category', 'Балетныхъ', 'Балетныхъ', '', '', 49, '177,956 р. 16 к.', '', ''),
+    ('1910-11', S, 'category', 'Французскихъ', 'Французскихъ', '', '', 99, '100,656 р. — к.', '', ''),
+    ('1910-11', S, 'category', 'Нѣмецкихъ', 'Нѣмецкихъ', '', '', 23, '', '', 'no receipts printed'),
+    ('1910-11', S, 'category', 'Московскаго художественнаго театра', 'Московскаго художественнаго театра', '', '', 45, '', '', 'no receipts printed; guest performances of the Moscow Art Theatre in Petersburg'),
+    ('1910-11', M, 'category', 'Русскихъ драматическихъ', 'Русскихъ драматическихъ', '', '', 240, '264,138 р. 84 к.', '', ''),
+    ('1910-11', M, 'category', 'Русскихъ оперныхъ', 'Русскихъ оперныхъ', '', '', 180, '456,541 р. 21 к.', '', ''),
+    ('1910-11', M, 'category', 'Балетныхъ', 'Балетныхъ', '', '', 51, '126,983 р. 90 к.', '', ''),
 ]
 
 # (season, footnote_no, text_verbatim, note)

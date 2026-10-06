@@ -12743,3 +12743,19 @@ SELECT season, city, list_title FROM research.production WHERE season >= '1908-0
 Result before the aliases: Донъ-Кихотъ Ламанчскій SP 1908-09 and 1909-10, Ѳетида и Пелей
 SP 1908-09, and all 37 entries for 1910-11, whose Repertoire is not yet in production.
 After the aliases, every 1908-10 production matches.
+
+## 2026-10-06 — Issue #135: 1910-11 onboarding checks (all against scratch/integration DBs, then production)
+
+- Ballet-genre performances 1908-11 not on any Ballet Production list (integration DB, lists from
+  outputs/ballet_productions_all_2026-10-06): 358 performances, 6 not on a list -- Донъ Кихотъ Ломанчскій (1908-09 MSK),
+  Ѳемида и Пелей (1908-09 SP; list prints Ѳетида), two Конекъ-горбунокъ act excerpts (1909-10), Балетный
+  дивертиссментъ x2. CSV: outputs/integration_1910-11/ballets_not_on_lists_1908-11.csv.
+- Every «Кихот/Quichotte» performance 1890-1911: all «бал.» (Большой, Маріинскій) except 1910-11 Большой «героич. ком.» x12
+  (Massenet's opera). No play of that name.
+- pipeline/compare_season_stats.py on the integration DB (outputs/integration_1910-11/season_stats_compare/): 1910-11
+  Moscow ballet 51 vs 52 sessions, receipts 126,983.90 both; Moscow opera 180 vs 160 (Донъ-Кихотъ героич. ком. 12,
+  Гугеноты excerpts 5, Валкирія/Карменъ 2); SP opera 167 vs 156.
+- pipeline/compare_productions_repertoire.py, 1908-11 lists vs Repertoire (outputs/ballet_list_check_1908-11/):
+  1908-09 MSK 53/55, SP 72/73; 1909-10 MSK 50/50, SP 64/65; 1910-11 MSK 52/52, SP 74/80 exact+excerpt.
+- Control vs production and integration vs control, table by table (EXCEPT queries): 0 changed rows except the 5
+  1909-10 performances fixed above. Production vs pre-promotion backup: research.person QIDs 56 -> 66, none lost.

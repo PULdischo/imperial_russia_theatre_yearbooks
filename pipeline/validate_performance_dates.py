@@ -120,6 +120,12 @@ _MANUAL_DATE_OVERRIDES: dict[tuple[str, str], tuple[str, str]] = {
     ('repertoire_1908-09_p022', '4 Пятница'): (
         '1908-12-05', 'scan-verified: book misprints day as "4" (should be "5"); known_issues.md #93',
     ),
+    # Printed p. 56, last row: "9 Четвергъ." directly after "18 Среда." --
+    # only consistent as the 19th (all 3 theaters). Zoomed: no trace of a
+    # "1"; the long weekday word fills the cell (RG confirmed 2026-10-06).
+    ('repertoire_1910-11_p055', '9 Четвергъ'): (
+        '1911-05-19', 'scan-verified: book prints day as "9" (should be "19"), no trace of a "1"; RG 2026-10-06',
+    ),
 }
 
 

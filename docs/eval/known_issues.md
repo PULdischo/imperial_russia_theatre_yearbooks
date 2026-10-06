@@ -22185,3 +22185,87 @@ field by field against production: 0 differences.
   genre became ballet (all genuine ballets) and `last_attested_season` changed. Events
   and performances are unchanged.
 - **Wikidata:** candidates for the 15 new creators were added to the review page.
+
+## Issue #135: new season 1910-11 (Repertoire + Roster lists) onboarded, audited and PROMOTED; research-layer fixes -- 2026-10-06
+
+RG: "start this" (1910-11 Repertoire, then the lists, then the new season reviews and ballet lists). Source: RG's scans of
+1911 Vols V-VII (Yale ILL), filed 2026-10-02 into `Yearbook Scans - Originals/1910-11 Yearbook/1911 Vol VI/` and copied
+to `pdf/`.
+
+**Repertoire 1910-11** (`outputs/repertoire_1910-11/`), same recipe as #93/#119: render; per-parity calibration
+(new `1910-11:0/1` in `docs/repertoire_crop_bounds.json` + `docs/repertoire_column_bounds.json` -- the table sits ~0.05
+further right than 1909-10); every page's crop checked for edge clipping before paying; 4 paid passes (headers 100K,
+baseline 437K, row-level 1.37M with 11 pages failing local row detection, column-wise) and `repair_columnwise_merge.py`
+(76 attempts: 33 recovered, 6 unrecovered). quality_checks 3-way: 1477 flags. **Full scan-verified sweep, 6 agents, all
+56 pages** (~680 sessions changed). Dominant bugs as in 1909-10: whole Новый columns missing (p010/p014/p020/p022/p024/
+p034), Маріинскій/Александринскій missing on p055, one-day column shifts (p018 Большой+Малый, p042 Малый, p028 Малый
+split on the wrong date, p046 Большой split on the wrong date, p033 Маріинскій: the 29 Jan earthquake-relief gala dropped
+and the column shifted), banners as works, fabricated genres. Two checkers stripped PRINTED periods from genres
+("пьеса", "pièce") to "normalize" -- caught by the consistency pass; a scan-by-scan recheck restored 115 periods (8
+genuinely period-less). After the sweep: 28 flags (27 = the superfluous p. 57, 1 = the print typo "901 с. 80 к."),
+dates 99.8% verified standalone.
+
+**Post-sweep audits** (RG: "run 1-3"):
+1. *Blind audit*, 6 random pages (p012/p033/p039/p040/p045/p049), blind read before seeing the transcription: 1,340
+   cells; p012 and p040 0 disagreements. Errors found and fixed season-wide: German genres left in the title at the
+   Михайловскій (34 entries split, matching the 1907-10 convention: title + "Lustspiel."/"Schwank."); a fabricated
+   "траг." on «Трагедія о Гамлетѣ, принцѣ Датскомъ.» (3 entries, p049/p051); «Женитьба» unsplit (p049); "оп," printed
+   with a comma on p033 (the sweep agent reported keeping it but had not saved it).
+2. *Season stats page* 1910-11 transcribed into `docs/season_stats/_build.py` (no footnotes/dated notes this year).
+   Moscow ballet receipts match to the kopeck (126,983 р. 90 к.). The opera shortfall is classification, not missing
+   rows: operas printed without "оп." (Massenet's «Донъ-Кихотъ, героич. ком.» at the Большой, «Китежъ» with no genre,
+   «Борисъ Годуновъ, народная музык. драма.», «Гугеноты» act excerpts).
+3. *Ballet lists 1908-11 vs Repertoire* (lists from #133's session): 1908-09/1909-10 Moscow fully matched; leads
+   scan-checked in BOTH sources (independence rule). Repertoire transcription errors fixed in production 1909-10:
+   «Корсарь» -> «Корсаръ» (p043) and the 6 Feb 1910 flood-relief gala, items 2-5 restored verbatim as act excerpts
+   («1 д. оп. Русланъ и Людмилы.», «2 д. ком. …», «2-я карт. 2-го д. оп. …», «3-е д. бал. Раймонда.»). Genuine
+   print disagreements between the two sources (both transcriptions match their scans): 1908-09 MSK Спящая красавица
+   list 18 Oct / Repertoire 8 Oct; 1910-11 SP Спящая красавица list 19 Feb / Rep 17 Feb; Шопеніана list 9 Mar / Rep 7 Mar;
+   Конекъ-горбунокъ list 18 Feb / Rep no ballet that day; 1909-10 SP gala excerpts 6/28 Feb not on the lists. Report:
+   `outputs/ballet_list_check_1908-11/leads_scan_check.md`. Not yet added to ballet_list_repertoire_disagreements.md.
+   Possible sibling: «Корсарь» in repertoire_1898-99_p021 (not scan-checked).
+
+**RG's decisions, applied in code/curation:**
+- Printed p. 57 (`repertoire_1910-11_p056`) repeats p. 56's SP heading and dates (10-19 May) with every cell a dash;
+  Moscow's page for those dates is absent from the volume. Kept verbatim in raw; excluded from the research layer via the
+  new `RESEARCH_EXCLUDED_PAGES` in `build_research_model.py`.
+- "9 Четвергъ." on p. 56 = 19 May 1911 (zoomed: no trace of a "1"): `_MANUAL_DATE_OVERRIDES` in
+  `validate_performance_dates.py`.
+- Ballet art form widened (`_work_art_form` in `build_entities.py`): бал./балетъ anywhere in the genre is ballet
+  ("волш. бал.", "фантастич. бал.", "анакреонтическій бал.", "комич. бал."), except comedy-ballets "ком.-бал." (RG's open
+  question) and the excerpt marker "изъ бал.". Merges the 1910-11 splits of Конекъ-горбунокъ, Лебединое озеро,
+  Пробужденіе Флоры, Тщетная предосторожность. Ballet performances 1908-11 not on any list: 6, all explained (print
+  spelling differences, act excerpts, section-F divertissements).
+- Art-form overrides (`work_artform_overrides.csv`, opera): «Карменъ, лирич. др.», «Валкирія, музык. др», «Борисъ
+  Годуновъ, народная/народн. музык. драма.», and «Донъ-Кихотъ, героич./гороич. ком.» = Massenet's opera (Большой, Шаляпинъ;
+  1911 Vol V plate list; no play of that name anywhere in the corpus).
+- Curated excerpt link (`work_excerpt_links.csv`): «Прол. и 2 карт. 2-го д. Донъ-Кихотъ.» (Маріинскій 27 Dec 1907) ->
+  the ballet, with the evidence; **not confirmed by a production list (none held for 1905-08) -- confirm if one is found.**
+- French drama troupe entries on shared pages removed from BalletArtists (RG: "ignore French drama artists"):
+  1908-09 SP p008 (11 entries) and 1909-10 SP p010 (11), with entities.person_link renumbered for the shifted 1908-09
+  rows BEFORE build_entities (check_person_link_alignment: 0 shift blocks).
+- Шредеръ/Шнейдеръ: the 1910-11 lines pre-seeded onto RG's 2026-10-05 split (no. 122 Шредеръ, percussion -> the
+  percussionist; no. 120 Шнейдеръ, trombone -> the trombonist).
+
+**Roster lists 1910-11** (`outputs/roster_1910-11/`): 46 pages, baseline extraction. All 23 flags scan-checked (13
+missing "въ кантатѣ" credit rows, 5 digit misreads incl. Потанинъ 41->44 (damaged digit, uncertain), a column-break
+credit misattribution, ProductionTeam/TheaterSchoolStaff heading_path/institution rebuilt for all 11 pages). 61 entries
+leaked from neighbouring lists on shared pages removed (SP ballet p000/p010, MSK ballet p008 = the orchestra, musicians
+SP p004 = Moscow drama troupe, musicians MSK p000 = ballet tail) -- shared edge pages also exist in 1908-10 production
+(only the French troupe was removed, per RG). 34 changed display names scan-checked: 4 misreads fixed (Легатъ, Гуммертъ,
+2 dropped ordinals), 30 printed as is (Ф/Ѳ and ordinals genuinely vary). Final: 915 entries, 2 flags (both confirmed
+real double posts). Print typo noted: Решке numbered "44." between 73 and 75 (MSK musicians, p. 136). Full
+scan-read of these lists (like #130) not done.
+
+**Integration + promotion.** Control (new code, no new data) vs production: 0 changed rows in every research table.
+Integration vs control: 0 changed existing events/raw rows; 5 performances changed = exactly the 1909-10 fixes above.
+PROMOTED 2026-10-06 (backup `outputs/full_run_pre_promote_backup_2026-10-06_1910-11/`); production rebuilt in place
+matches integration (raw/research tables 0 differing rows; person ids of newly minted survivors differ by design).
+full_run now 22 seasons: event_entry 29990, research.event 32907, research.work 3194, research.person 3350.
+**Found during verification and fixed:** research.person joined entities.person_wikidata_link by exact person_id, so a
+QID silently vanished once its person was merged (15 stale links already in production; the 1910-11 merges would have
+dropped 4 more: Полякова, Шолларъ, Кучера, Крушевскій). `build_research_model.py` now follows the supersede chain
+(wd_live) and fails on conflicting QIDs. research.person QIDs 56 -> 66 (all 56 kept + 10 recovered, incl. Направникъ,
+Преображенская, Петипа 2-я). HF/Cloud Run republish and link_wikidata.py not run.
+
+Season reviews (5 PDFs) handed to the Season Reviews thread; the 1908-11 ballet lists to People entities (#133).
