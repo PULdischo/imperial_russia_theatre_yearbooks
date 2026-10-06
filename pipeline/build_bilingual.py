@@ -43,6 +43,15 @@ CITY = {"SP": "St Petersburg", "MSK": "Moscow"}
 GENRE = {"Ballet": "Ballet", "Opera": "Opera", "All": "Ballet and Opera"}
 # blocks that belong to a photographic plate rather than the running review
 PLATE = {"figure"}
+# A review's own section heading. An issue often packs two reviews onto one
+# printed page, so a review's FIRST page can open with the tail of the
+# previous one -- 17 of 46 reviews do (opera roster changes before a ballet
+# review, drama criticism before another). Those paragraphs are dropped.
+# Only PARAGRAPHS: a plate caption before the heading usually belongs to the
+# review it introduces (1902-03 SP Opera opens with a Servilia plate), and a
+# heading before it is the parent title (1910-11 Moscow's
+# "ОБЗОРЪ СЕЗОНА 1910-1911 г.-МОСКВА"). Dropping those would lose real content.
+SECTION_HEADING = {"балетъ", "опера", "драма"}
 # blocks with no reading value in a translation file
 SKIP = {"byline"}
 
@@ -56,6 +65,16 @@ def reflow(text: str) -> str:
 def cell(text: str) -> str:
     """Make a string safe inside a Markdown table cell."""
     return text.replace("|", "\\|").replace("\n", " ").strip()
+
+
+def section_heading_index(blocks: list[dict]) -> int | None:
+    """Index of the review's own section heading, if present."""
+    for i, b in enumerate(blocks):
+        if b["block_type"] != "heading":
+            continue
+        if (b["text"] or "").strip().strip(".").strip().lower() in SECTION_HEADING:
+            return i
+    return None
 
 
 def page_no(page_id: str) -> int:
@@ -109,10 +128,21 @@ def build(parsed_dir: Path, out_dir: Path, translations: dict[str, str],
 
         plates: list[tuple[str, str, str]] = []
         n_blocks = 0
-        for pid in page_ids:
+        dropped_foreign = 0
+        for idx_page, pid in enumerate(page_ids):
             folio = (pages[pid].get("printed_folio") or "").strip()
             body, page_plates = [], []
-            for b in by_page[pid]:
+            page_blocks = by_page[pid]
+            skip_before = 0
+            if idx_page == 0:
+                h = section_heading_index(page_blocks)
+                if h:
+                    skip_before = h
+            for bi, b in enumerate(page_blocks):
+                if bi < skip_before and b["block_type"] not in PLATE \
+                        and b["block_type"] != "heading":
+                    dropped_foreign += 1
+                    continue
                 kind = b["block_type"]
                 if kind in SKIP:
                     continue
@@ -146,7 +176,7 @@ def build(parsed_dir: Path, out_dir: Path, translations: dict[str, str],
 
         name = f"{season}_{city}_{genre}.md"
         (out_dir / name).write_text("\n".join(lines), encoding="utf-8")
-        written.append((name, len(page_ids), n_blocks))
+        written.append((name, len(page_ids), n_blocks, dropped_foreign))
     return written
 
 
@@ -169,8 +199,13 @@ def main() -> None:
           f"-> {a.out_dir}")
     print(f"translations supplied for {len(tr)} blocks"
           + ("" if tr else "  (English columns will be empty)"))
-    for name, npages, nblocks in written:
-        print(f"  {name:34s} {npages:3d} pages  {nblocks:4d} blocks")
+    total_dropped = sum(w[3] for w in written)
+    if total_dropped:
+        print(f"{total_dropped} paragraph(s) belonging to the PREVIOUS review "
+              f"dropped from first pages")
+    for name, npages, nblocks, dropped in written:
+        tail = f"  (-{dropped} foreign)" if dropped else ""
+        print(f"  {name:34s} {npages:3d} pages  {nblocks:4d} blocks{tail}")
 
 
 if __name__ == "__main__":

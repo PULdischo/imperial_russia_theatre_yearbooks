@@ -814,12 +814,27 @@ Two things found while integrating, both worth knowing:
   "E. A. Stark (Siegfried)." Worth noting the shape: the model substituted a
   more expected ballet term for a less expected one, which is the same
   reach-for-the-commoner-form failure seen throughout the transcription work.
-- **A review can begin mid-way through its page.** `1910-11_SP_ballet_p000`
-  opens with the closing paragraph of the preceding OPERA review, because
-  both share printed page 133. The file therefore starts with text that does
-  not belong to it. Nothing splits a page between two reviews — a structural
-  gap, not a bug in this batch, and it will recur wherever an issue packs two
-  reviews onto one page.
+- **A review can begin mid-way through its page — FIXED 2026-10-06.** RG:
+  "let's not include the opera review text in these files." The peer session
+  flagged one page; checking the corpus found **17 of 46 reviews** opening
+  with the tail of the previous section — opera roster changes before a
+  ballet review, drama criticism before another. `build_bilingual.py` now
+  drops those: 40 paragraphs corpus-wide.
+
+  **The rule is PARAGRAPHS ONLY, and the exceptions are the point.** A
+  blanket "drop everything before the section heading" is wrong in four
+  reviews. Three open with a plate caption that belongs to the review it
+  INTRODUCES (1902-03 SP Opera's first block is a «Сервилія» plate, sitting
+  above the ОПЕРА heading), and 1910-11 Moscow Ballet would lose its own
+  parent title `ОБЗОРЪ СЕЗОНА 1910—1911 г.—МОСКВА`. So figures and headings
+  before the section heading are kept; only paragraphs are dropped.
+
+  This is a PRESENTATION-layer filter. `merged_full/review_block.csv` keeps
+  every block, so nothing is destroyed and the rule can be revised by
+  rebuilding. A first detection pass that matched any block *starting* with
+  the genre word produced false positives (`Балетъ «Наяда и рыбакъ…`
+  mid-paragraph); the check is on `block_type == heading` plus an exact
+  match on балетъ/опера/драма.
 
 **STATUS 2026-09-28 — the corpus is extracted, merged and translated.**
 All 1,024 pages have been read at three views (full page + 2-band + 4-band),
