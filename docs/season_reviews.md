@@ -798,6 +798,48 @@ walls of text.
 7. Abbreviation expansion in a derived "cleaned" layer
 8. Whether разрядка / bold / italic / lang are rendered — decided by §11
 9. Running heads — none observed; revisit if any turn up
+**AUDIT 2026-10-06 — quality_checks_reviews.py run on the full corpus for
+the first time, three checks added, 23 invented folios removed.**
+
+The existing checks had never been run against the merged corpus. Doing so,
+plus three new checks, took flags from an unknown number to 184 understood
+ones.
+
+**The find: the model invents a folio on plate pages.** 26 pages across 12
+seasons claimed folio **194** — easily the most common folio value in the
+corpus. It is the model's fallback guess when it cannot read one.
+
+**But 194 is also a REAL folio**, and that is the trap. Half of those 26 are
+ordinary text pages where it is genuine — `1894-95_SP_ballet_p000` prints
+"— 194 —" at the foot, verified on the scan. So the check must never key on
+the value. It keys on *a page with no running text whose folio breaks the
+sequence*: plates in these volumes are tipped in and unpaginated, so any
+folio on one is invented. Four spot-checks against scans confirmed it (blank
+margins, plate edge against the binding, no number anywhere).
+
+23 folios blanked, iterating to a fixed point because each removal shifts
+the sequence and exposes the next. Result:
+
+    missing_page     66 -> 37        duplicate_folio  12 -> 3
+    no_folio         50 -> 73  (correct: those pages have none)
+
+**Three checks added**, each calibrated against a false-positive trap:
+
+- `folio_on_plate_page` — above.
+- `degenerate_repetition` — a caption reading "Гроппіуса)." twelve times.
+  Keyed on unique/total words, NOT repeated substrings: a substring test
+  flagged 75 blocks, nearly all legitimate ("картина 3-го дѣйствія"
+  recurring across Acts 1, 2 and 4). The word-diversity test finds 1 in
+  4,603.
+- `duplicate_block_across_files` — the same text in two reviews. This is
+  what revealed that reviews run on at BOTH ends of a shared page, which
+  produced the trailing-section fix.
+
+**Still open, deliberately:** 37 missing_page (genuine gaps or folio
+misreads, each needs a scan), 25 cross-file duplicates (expected where two
+reviews share a page), 12 letter_spacing_leak, 33 zero_uncertainty, 3
+duplicate_folio, and the one degenerate caption (a plate caption, deferred).
+
 **ADDED 2026-10-06 — five issue-era reviews, +46 pages.** Prepared in a
 scratch folder by the "Adding additional Yearbooks" session and integrated
 here: 1908-09 Ballet SP (7 pp) and Moscow (5 pp); 1910-11 Ballet SP (8 pp),

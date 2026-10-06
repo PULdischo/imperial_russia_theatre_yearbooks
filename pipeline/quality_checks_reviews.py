@@ -23,6 +23,24 @@ thin_page             Far less text than the ink on the page suggests.
 no_folio              No printed folio captured.
 zero_uncertainty      A whole file with no uncertainty flags at all -- across
                       hundreds of pages that means confabulation, not success.
+folio_on_plate_page   A page with NO running text (a tipped-in plate) that
+                      nonetheless carries a folio breaking the sequence.
+                      Plates in these volumes are unpaginated, so the number
+                      was invented. Added 2026-10-06 after 26 pages across 12
+                      seasons all claimed folio 194 -- the model's fallback
+                      guess. Note 194 is ALSO a real folio: half of those 26
+                      are text pages where it is genuine, which is why this
+                      check keys on "plate page + breaks the run", never on
+                      the value.
+degenerate_repetition A block that is one phrase repeated -- a caption reading
+                      "Гроппіуса)." twelve times. Keyed on unique/total words,
+                      not on repeated substrings: a substring test flagged 75
+                      blocks of which nearly all were legitimate ("картина
+                      3-го дѣйствія" recurring across Acts 1, 2 and 4).
+duplicate_block_across_files
+                      The same text in two different reviews. Normal where
+                      two reviews share a printed page; this is what revealed
+                      that reviews run on at BOTH ends.
 
 Usage:
     python pipeline/quality_checks_reviews.py --parsed-dir outputs/reviews/parsed \
@@ -35,7 +53,7 @@ import argparse
 import csv
 import re
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -137,6 +155,47 @@ def main() -> None:
             prev = (folio, p["page_id"], idx)
             unpaginated_since = 0
 
+    # ---- plate pages carrying an invented folio -------------------------
+    blocks = list(csv.DictReader(open(args.parsed_dir / "review_block.csv",
+                                      encoding="utf-8")))
+    kinds = defaultdict(Counter)
+    for b in blocks:
+        kinds[b["page_id"]][b["block_type"]] += 1
+    broke_run = {f["page_id"] for f in flags if f["check"] == "missing_page"}
+    for p in pages:
+        pid = p["page_id"]
+        if not (p["printed_folio"] or "").strip():
+            continue
+        if kinds[pid].get("paragraph", 0):
+            continue                      # has running text; folio plausible
+        if pid in broke_run:
+            flag(pid, "folio_on_plate_page",
+                 f"plate page (no running text) claims folio "
+                 f"{p['printed_folio']} and breaks the sequence")
+
+    # ---- a block that is one phrase repeated ----------------------------
+    for b in blocks:
+        text = re.sub(r"\s+", " ",
+                      (b["text"] or b["caption_text"] or "")).strip()
+        words = text.split()
+        if len(words) >= 8 and len(set(words)) / len(words) < 0.34:
+            flag(b["page_id"], "degenerate_repetition",
+                 f"{len(set(words))} unique of {len(words)} words: "
+                 f"{text[:60]}")
+
+    # ---- the same text in two different reviews -------------------------
+    seen_text = defaultdict(list)
+    for b in blocks:
+        text = re.sub(r"\s+", " ",
+                      (b["text"] or b["caption_text"] or "")).strip()
+        if len(text) >= 60:
+            seen_text[text].append(b["page_id"])
+    for text, pids in seen_text.items():
+        uniq = sorted(set(pids))
+        if len(uniq) > 1:
+            flag(uniq[0], "duplicate_block_across_files",
+                 f"also on {', '.join(uniq[1:])}: {text[:60]}")
+
     # ---- zero uncertainty across a whole file ---------------------------
     unc_by_file = defaultdict(int)
     pages_by_file = defaultdict(int)
@@ -178,7 +237,6 @@ def main() -> None:
         w.writeheader()
         w.writerows(flags)
 
-    from collections import Counter
     print(f"{len(pages)} pages checked, {len(flags)} flags -> {args.out}")
     for k, v in sorted(Counter(f["check"] for f in flags).items()):
         print(f"  {k:22} {v}")
