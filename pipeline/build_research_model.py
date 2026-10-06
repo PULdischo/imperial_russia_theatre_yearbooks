@@ -171,6 +171,8 @@ BALLET_LIST_TITLE_ALIASES = {
     "Наяда и рыбакъ": ["Паяда и рыбакъ"],                               # awaits physical check
     "Баядерка": ["Ваядерка"],                                           # awaits physical check
     "Ученики Дюпрэ": ["Les élèves de Dupré"],                          # same work, Russian vs French title (1900-01 SP)
+    "Донъ-Кихотъ Ламанчскій": ["Донъ-Кихотъ"],                          # 1908-10 SP: list prints the full title, Маріинскій Repertoire the short one; dates agree
+    "Ѳетида и Пелей": ["Ѳемида и Пелей"],                               # 1908-09 SP, 8 Apr 1909; Repertoire spelling not scan-checked
 }
 
 

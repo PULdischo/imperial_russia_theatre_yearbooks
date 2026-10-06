@@ -439,3 +439,6 @@ correction belongs. Entry ids are `<page_id>__eNNN`.
 - repertoire_1905-06_p018, Александринскій, 12 Dec 1905: "Злая сила, **оп.**". The play is printed "др." on 8 and 15 Dec; the Александринскій staged no opera (scan-confirmed). Work identity treats it as the play (work_artform_overrides.csv).
 - repertoire_1904-05_p021, Малый, 28 Dec 1904: "**Женихъ**, соверш. невѣр. событіе." for Gogol's "Женитьба" (the subtitle is "совершенно невѣроятное событіе"; the Новый prints "Женитьба, соверш. невѣр. событіе" on 31 Dec). Scan-confirmed. Matched as Женитьба (work_title_aliases.csv).
 - Also scan-confirmed as genuinely printed, earlier the same day: Сельская честь "бал." (Маріинскій 26 Feb 1906), Карменъ "др." (Большой 23 Sep 1908) and "бал." ×2 (Большой matinees 28 Jan and 16 Sep 1907).
+
+## Seen during the 2026-10-06 ballet production lists, 1908-11 (issue #133; stored verbatim)
+- balletproductions_1908-09_MSK_p000 No. 4, Жизель или Виллисы (printed p. 70): "музыка **Адана**" for Адама (н crossbar clear at 4x; a blind reader agrees). Stored as printed; the creator form "Адана" maps to Adolphe Adam (production_creator_forms.csv).
