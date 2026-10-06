@@ -22294,3 +22294,8 @@ Side note, not chased: Келлеръ 2-й, Эрнестъ Іосифовичъ 
 
 After 1910-11 Repertoire was promoted (#135), 36 of 37 1910-11 ballet-list productions
 match a work; Фіаметта SP 1910-11 does not (not investigated).
+- **Follow-up, same day (RG: "fix"):** Келеръ, Эрнестъ Іосифовичъ (SP flute, start 1 декабря 1871, † 4 мая 1907)
+  was merged: 3df85e8e ("Келеръ/Келлеръ 2-й", 1893-98) into c5677456 (1890-93, 1898-1907). The volumes are
+  consecutive with no overlap, and the split came from the printed ordinal. The script is
+  `docs/eval/person_merge_keller_ernest_2026-10-06.py`. The diff is 1 person row and 5 entry links. (He is not
+  Морицъ's brother: the patronymics differ, and "1-й/2-й" only numbers same-surname musicians on one list.)

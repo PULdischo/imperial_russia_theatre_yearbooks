@@ -12780,3 +12780,13 @@ SELECT season, count(*) FILTER (WHERE work_id IS NULL), count(*) FROM research.p
 ```
 
 Result for 1910-11: 1 of 37 unmatched (Фіаметта, SP). 1908-09 and 1909-10: 0 unmatched.
+
+## 2026-10-06 — Келеръ Эрнестъ Іосифовичъ: two live records?
+
+```sql
+SELECT e.page_id, e.family_name, e.first_name, e.patronymic, e.instrument, e.tenure_note_text
+FROM entities.person_link l JOIN raw.person_entry e USING (entry_id) WHERE l.person_id IN (<3df85e8e>, <c5677456>);
+```
+
+Result: one flautist, start 1 декабря 1871, 1890-91..1906-07 with no overlap. After the
+merge there is one person (c5677456) with 17 entries; the diff is 1 person row and 5 links.
