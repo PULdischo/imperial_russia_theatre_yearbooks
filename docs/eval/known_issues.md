@@ -22269,3 +22269,28 @@ dropped 4 more: Полякова, Шолларъ, Кучера, Крушевск
 Преображенская, Петипа 2-я). HF/Cloud Run republish and link_wikidata.py not run.
 
 Season reviews (5 PDFs) handed to the Season Reviews thread; the 1908-11 ballet lists to People entities (#133).
+
+### #133 follow-up (2026-10-06): Келеръ, Морицъ Ѳедоровичъ merged (RG: "fix")
+
+The roster held three live records for one man, all with the same start date (1 сентября 1881):
+
+| Record | Seasons | Printed as | Post |
+|---|---|---|---|
+| 2884550f | 1890-93, 1898-1906 | Келеръ, Морицъ | SP first violin, then Михайловскій capellmeister from 1 Dec 1898, then Александринскій from 1 Sep 1906 |
+| ab138e8b | 1893-98 | "Келеръ/Келлеръ 1-й" | SP first violin |
+| ad393322 | 1906-07 p005 | "Морисъ" | Михайловскій |
+
+- 1906-07 prints him twice: under the Александринскій (transferred) and still under the
+  Михайловскій.
+- "Морисъ" (1906-07 p005, 1907-08 p003) was zoomed on the scans and is genuinely
+  printed с, so raw stays verbatim.
+- ab138e8b and ad393322 were merged into 2884550f, following the 2026-10-05 batch
+  precedent; the script is `docs/eval/person_merge_keller_2026-10-06.py`.
+- Only those 2 person rows and 6 entry links changed. The three Шопеніана
+  orchestration credits stay on him.
+
+Side note, not chased: Келлеръ 2-й, Эрнестъ Іосифовичъ also has two live records
+(3df85e8e "Келлеръ 2-й" and c5677456 "Келеръ").
+
+After 1910-11 Repertoire was promoted (#135), 36 of 37 1910-11 ballet-list productions
+match a work; Фіаметта SP 1910-11 does not (not investigated).

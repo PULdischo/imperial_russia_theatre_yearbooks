@@ -12759,3 +12759,24 @@ After the aliases, every 1908-10 production matches.
   1908-09 MSK 53/55, SP 72/73; 1909-10 MSK 50/50, SP 64/65; 1910-11 MSK 52/52, SP 74/80 exact+excerpt.
 - Control vs production and integration vs control, table by table (EXCEPT queries): 0 changed rows except the 5
   1909-10 performances fixed above. Production vs pre-promotion backup: research.person QIDs 56 -> 66, none lost.
+
+## 2026-10-06 — Келеръ Морицъ: how many live records, and what does each cover?
+
+```sql
+SELECT person_id, display_name, superseded_by_person_id FROM entities.person WHERE display_name ILIKE 'Кел%ръ%';
+SELECT e.page_id, e.family_name, e.first_name, e.patronymic, e.heading_path, e.instrument, e.tenure_note_text
+FROM entities.person_link l JOIN raw.person_entry e USING (entry_id) WHERE l.person_id IN (<2884550f>, <ab138e8b>, <ad393322>);
+```
+
+Result: three live records for one man, with the same start date (1 сентября 1881) and
+a continuous career. After the merge there is one person (2884550f) with 20 entries,
+1890-91..1907-08. The entities diff against the pre-merge backup is 2 person rows and
+6 person_link rows.
+
+## 2026-10-06 — 1910-11 ballet-list productions after #135
+
+```sql
+SELECT season, count(*) FILTER (WHERE work_id IS NULL), count(*) FROM research.production GROUP BY 1;
+```
+
+Result for 1910-11: 1 of 37 unmatched (Фіаметта, SP). 1908-09 and 1909-10: 0 unmatched.
