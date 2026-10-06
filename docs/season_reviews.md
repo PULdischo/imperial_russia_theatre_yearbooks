@@ -805,9 +805,19 @@ The existing checks had never been run against the merged corpus. Doing so,
 plus three new checks, took flags from an unknown number to 184 understood
 ones.
 
-**The find: the model invents a folio on plate pages.** 26 pages across 12
-seasons claimed folio **194** — easily the most common folio value in the
-corpus. It is the model's fallback guess when it cannot read one.
+**The find: 26 pages across 12 seasons claimed folio 194** — easily the most
+common folio value in the corpus.
+
+**CORRECTED 2026-10-06: this is not a hallucination.** The volumes carry a
+pencilled **"194"** in the margin — a cataloguer's or dealer's mark — on
+pages across at least six seasons, and `copy_artifacts` recorded it
+independently: "pencil mark on left margin: '194'" (1892-93 SP ballet x4,
+1894-95, 1895-96), "pencilled '194' in upper right corner" (1899-00 SP
+ballet x2, 1904-05 MSK ballet). On a page with no printed folio the model
+read the pencil mark instead. The original explanation here — "the model's
+fallback guess" — was wrong, and the real one is more useful: it is a
+property of these physical copies, so it will recur on any volume bearing
+the same mark.
 
 **But 194 is also a REAL folio**, and that is the trap. Half of those 26 are
 ordinary text pages where it is genuine — `1894-95_SP_ballet_p000` prints

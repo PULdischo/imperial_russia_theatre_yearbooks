@@ -468,3 +468,20 @@ in a research-layer fix, not in parsing.
 The content discontinuity between p022 (folio 175) and p023 means the leaves
 carrying roughly 176-178 were never scanned. That is a scanning gap, not an
 extraction error — worth knowing if that passage matters.
+
+
+### Provenance of the physical copies is NOT recorded anywhere
+
+RG asked (2026-10-06) whether the 1900-01 volume was a Princeton copy or an
+ILL loan. The repository cannot answer it. The only provenance note is
+"1911 Vols V-VII (Yale ILL)" in known_issues.md, covering the issue-era
+volumes.
+
+The library stamps `copy_artifacts` captured are all ORIGINAL Russian marks,
+not modern holdings: «БИБЛІОТЕКА О. С. У. въ Кіевѣ» dated 1912
+(1900-01_MSK_opera_p015), and a Kadushin lithography imprint
+(1899-00_SP_ballet_p011). They describe the book's pre-revolutionary life,
+not whose copy was scanned.
+
+Worth recording per volume going forward: it decides whether a questionable
+page can simply be re-checked, or needs another loan.
