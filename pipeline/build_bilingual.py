@@ -52,6 +52,11 @@ PLATE = {"figure"}
 # heading before it is the parent title (1910-11 Moscow's
 # "ОБЗОРЪ СЕЗОНА 1910-1911 г.-МОСКВА"). Dropping those would lose real content.
 SECTION_HEADING = {"балетъ", "опера", "драма"}
+# The mirror case: a review's LAST page can run on into the NEXT section,
+# because the same printed page was scanned into both PDFs. 1894-95 Moscow
+# Opera ends with 8 ballet blocks. Drop from the foreign section heading on.
+# Not applied to the combined "All" volumes, which legitimately hold both.
+OWN_HEADING = {"Ballet": "балетъ", "Opera": "опера"}
 # blocks with no reading value in a translation file
 SKIP = {"byline"}
 
@@ -73,6 +78,19 @@ def section_heading_index(blocks: list[dict]) -> int | None:
         if b["block_type"] != "heading":
             continue
         if (b["text"] or "").strip().strip(".").strip().lower() in SECTION_HEADING:
+            return i
+    return None
+
+
+def foreign_heading_index(blocks: list[dict], own: str | None) -> int | None:
+    """Index where a DIFFERENT section begins on this review's last page."""
+    if not own:
+        return None
+    for i, b in enumerate(blocks):
+        if b["block_type"] != "heading":
+            continue
+        t = (b["text"] or "").strip().strip(".").strip().lower()
+        if t in SECTION_HEADING and t != own:
             return i
     return None
 
@@ -138,7 +156,15 @@ def build(parsed_dir: Path, out_dir: Path, translations: dict[str, str],
                 h = section_heading_index(page_blocks)
                 if h:
                     skip_before = h
+            stop_at = len(page_blocks)
+            if idx_page == len(page_ids) - 1:
+                f = foreign_heading_index(page_blocks, OWN_HEADING.get(genre))
+                if f is not None:
+                    stop_at = f
             for bi, b in enumerate(page_blocks):
+                if bi >= stop_at:
+                    dropped_foreign += 1
+                    continue
                 if bi < skip_before and b["block_type"] not in PLATE \
                         and b["block_type"] != "heading":
                     dropped_foreign += 1
