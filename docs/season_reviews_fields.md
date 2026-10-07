@@ -505,3 +505,98 @@ restriction.
   the nearest preceding work mention in the block, which often is not there.
   Carrying the title down from the page's heading would help.
 - **Not promoted** to `outputs/full_run/`.
+
+---
+
+## The work side, 2026-10-07 — 362 -> 1,136 work entities
+
+I had attributed the work-side gap to missing page headings. **That was wrong,
+and the measurement says so.** Breaking the 1,939 assertions down first:
+
+| bucket | n (before) |
+|---|---|
+| work_id resolved | 362 |
+| work_surface found but **unresolved** | 675 |
+| no work_surface at all | 902 |
+
+The larger half was not a missing-title problem at all. It was 675 titles that
+the matcher *had* found and failed to resolve, and they were famous ballets --
+`Донъ-Кихота` 46x, `Золушка` 40x, `Спящая красавица` 29x, `Коппелія` 23x --
+which certainly exist in `research.work`.
+
+### Cause: a title was ambiguous against its own excerpt records
+
+`«Коппелія»` came back with 5 candidates: the work (106 appearances) and **four
+of its own act records** (`2-е д. бал. Коппелія`, `1-е и 2-е д., бал.
+Коппелія`, …). Self-inflicted: `title_forms()` strips a leading genre
+abbreviation to catch `«бал. Щелкунчикъ»`, and that same strip reduces an
+excerpt title to its parent's title.
+
+Three fixes, in order of how much they returned:
+
+1. **Index an excerpt row under its literal title only**, never its stripped
+   reduction. The parent already carries the bare title.
+2. **Detect excerpt shape from the title**, not only from
+   `excerpt_of_work_id` -- issue #88 linked most excerpts but left some
+   unlinked, and those unflagged rows (`6 и 7 март. бал. Конекъ-Горбунокъ`,
+   `2-е х. бал. Лебединое озеро`, `3-е и4-е д. бал. Конекъ-горбунокъ`) kept
+   their parents ambiguous. The robust test is an **inline genre abbreviation
+   with text before it**; enumerating act patterns missed `и4-е`, which has no
+   space after the conjunction.
+3. **Inside a ballet review, prefer the ballet candidate.** Different art forms
+   are deliberately different works here, so `Донъ-Кихотъ [бал.]` and
+   `Донъ-Кихотъ [героич. ком.]` are two rows, and `Волшебная флейта` is both
+   `бал.` and `оп.` A ballet review means the ballet.
+
+Work mentions resolved went **1,012 -> 2,802 of 3,692 (75.9%)**, still-ambiguous
+work mentions **1,505 -> 114**, and overall mention resolution 55.8% -> 62.4%.
+
+### Page inheritance helps, but much less than I claimed
+
+For the 902 assertions whose block names no title:
+
+| situation | n |
+|---|---|
+| no work mention earlier on the page at all | 464 |
+| exactly ONE resolved work earlier -> safe to inherit | 255 |
+| earlier mentions, none resolved | 72 |
+| **two or more** different resolved works earlier -> unsafe | 111 |
+
+So inheritance reaches about a quarter of the gap, not most of it. It is applied
+only when the page has settled on one work, and `work_source` records the
+provenance (`block` 991, `page-earlier-block` 301, `ambiguous-on-page` 111,
+none 536) so it can be filtered.
+
+**Validated rather than assumed**, by asking whether the spiski independently
+credit that performer on that work:
+
+| work_source | confirmed by spiski |
+|---|---|
+| `block` | 422/648 = **65.1%** |
+| `page-earlier-block` | 138/245 = **56.3%** |
+
+Inheritance is ~9 points less reliable. Neither figure is a ceiling: the spiski
+carry role rows for only some performers, so non-confirmation is not
+necessarily error.
+
+### Result
+
+**1,136 assertions carry a work entity, up from 362** (3.1x). The credit join
+also improved as a side effect (178 -> 196 resolutions), because
+`spiski-credit-work` needs a work to key on.
+
+### New side output: work-consolidation candidates
+
+`review_work_consolidation_candidates.csv`, 15 collision sets, split by verdict
+so the list is actionable:
+
+- **7 `spelling-variant?`** -- genuine duplicate work rows differing only in
+  orthography, same genre: `Аленькій / Аленъкій / Аленкій цвѣточекъ` (3 rows),
+  `Привалъ кавалеріи / Привалъ кавалерія` (59 appearances vs 1),
+  `Фея куколъ / Фея куколь` (54 vs 3), `Тангейзерь / Тангейзеръ`,
+  `Лѣсъ / Лѣсь`, `Конекъ-горбунокъ / Конекъ-Горбуночкъ`. For the
+  work-consolidation thread.
+- **8 `art-form split (deliberate)`** -- `Карменъ` as `оп.` (241) and `бал.`
+  (2), `Волшебная флейта` as `бал.` (40) and `оп.` (10). **Not** to be merged;
+  they are the policy. There are 36 such identical-title groups in
+  `research.work` overall.

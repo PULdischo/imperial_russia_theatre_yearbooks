@@ -168,6 +168,31 @@ def surname_forms(canonical: str) -> set[str]:
     return {f for f in out if len(f) >= 3}
 
 
+# A title that opens with an act, scene or date specification is an excerpt
+# record, whether or not `excerpt_of_work_id` was ever populated for it. Issue
+# #88 linked most excerpts but left some unlinked, and those unflagged rows made
+# their parent's bare title ambiguous: `6 и 7 март. бал. Конекъ-Горбунокъ` and
+# `2-е х. бал. Лебединое озеро` both carry excerpt_of_work_id = NULL.
+EXCERPT_SHAPE = re.compile(
+    r"^\s*(\d+[\s-]*(и|,)?\s*\d*\s*-?[ехя]?\s*"
+    r"(д|дѣйств|действ|карт|акт|сц|х|март|январ|феврал|апрѣл|ма[яй]|"
+    r"іюн|іюл|август|сентябр|октябр|ноябр|декабр)\w*\.?|"
+    r"изъ\s+(бал|оп)|отрывк|сюита\s+изъ|сцена\s+изъ|"
+    r"\d+-[ея]\s+(карт|д))", re.I)
+
+
+# The more robust test: an inline genre abbreviation with anything before it.
+# A parent work is titled `Конекъ-горбунокъ`; an excerpt record is titled
+# `3-е и4-е д. бал. Конекъ-горбунокъ`. Enumerating act patterns alone missed
+# that one, because `и4-е` has no space after the conjunction.
+INLINE_GENRE = re.compile(r"\S.*\b(бал|оп|ком|др|феер|траг)\.\s*\S", re.I)
+
+
+def excerpt_shaped(title: str) -> bool:
+    t = (title or "").strip()
+    return bool(EXCERPT_SHAPE.match(t) or INLINE_GENRE.match(t))
+
+
 SQUASH = re.compile(r"[\s\-–—'’.]+")
 
 
@@ -279,11 +304,22 @@ def build_lexicon(db: Path) -> Lexicon:
                                 "first_season": first, "last_season": last}
         lex.add(lex.person, surname_forms(fam), pid)
 
-    for wid, title, genre, parent in con.execute("""
-        select work_id, canonical_title, canonical_genre, parent_genre
+    for wid, title, genre, parent, is_excerpt in con.execute("""
+        select work_id, canonical_title, canonical_genre, parent_genre,
+               excerpt_of_work_id is not null
         from research.work where canonical_title is not null""").fetchall():
-        lex.work_meta[str(wid)] = {"title": title, "genre": genre, "parent": parent}
-        forms = title_forms(title)
+        lex.work_meta[str(wid)] = {
+            "title": title, "genre": genre, "parent": parent,
+            # the stored flag OR the title's own shape
+            "is_excerpt": bool(is_excerpt) or excerpt_shaped(title),
+        }
+        # An excerpt row is indexed under its LITERAL title only. Its
+        # genre/act-stripped reduction is by construction the parent's title --
+        # `2-е д. бал. Коппелія` reduces to `коппелія` -- so generating that
+        # form made every bare title ambiguous against its own excerpts:
+        # «Коппелія» came back with 5 candidates, 4 of them its own act records.
+        forms = ({key_of(title).strip(" .,;:!?«»„“\"'")}
+                 if lex.work_meta[str(wid)]["is_excerpt"] else title_forms(title))
         lex.add(lex.work, forms, wid)
         for f in forms:
             sq = squash(f)
@@ -455,13 +491,20 @@ STOP_CAPS = {"императорскихъ", "императорских", "ег
              "балетъ", "опера", "драма", "сезонъ", "сезон"}
 
 
+def is_ballet_work(meta: dict) -> bool:
+    if (meta.get("parent") or "") == "ballet":
+        return True
+    g = (meta.get("genre") or "").lower()
+    return g.startswith(("бал", "ballet"))
+
+
 def is_sentence_initial(text: str, start: int) -> bool:
     before = text[:start].rstrip()
     return not before or bool(SENT_END.search(before + " "))
 
 
 def scan_block(text: str, block_type: str, lex: Lexicon,
-               season: str = "") -> tuple[list[dict], list[dict]]:
+               season: str = "", genre: str = "") -> tuple[list[dict], list[dict]]:
     """Mentions and unknown-name flags for one block of reflowed text."""
     mentions: list[dict] = []
     unknown: list[dict] = []
@@ -475,6 +518,21 @@ def scan_block(text: str, block_type: str, lex: Lexicon,
         claimed.add((a, b))
         eid = ids[0] if len(ids) == 1 else ""
         why = ""
+        if kind == "work" and len(ids) > 1:
+            # a printed title names the work, not one of its act records
+            parents = [i for i in ids
+                       if not lex.work_meta.get(i, {}).get("is_excerpt")]
+            if len(parents) == 1:
+                eid, method, why = parents[0], method + "+parent-work", "parent-work"
+            elif len(parents) > 1 and genre == "Ballet":
+                # Different art forms are deliberately different works here, so
+                # `Донъ-Кихотъ [бал.]` and `Донъ-Кихотъ [героич. ком.]` are two
+                # rows -- and inside a ballet review the ballet is the one meant.
+                bal = [i for i in parents if is_ballet_work(lex.work_meta.get(i, {}))]
+                if len(bal) == 1:
+                    eid, method, why = bal[0], method + "+ballet-genre", "ballet-genre"
+                else:
+                    ids = parents
         if kind == "person" and len(ids) > 1:
             pick, margin, why = rank_candidates(ids, text[a:b], evidence, season, lex)
             # a decisive margin resolves; a tie leaves the candidate list standing
@@ -682,7 +740,8 @@ def main() -> None:
                 continue
             text = reflow(raw)
             n_blocks += 1
-            ms, us = scan_block(text, b["block_type"], lex, page["season"])
+            ms, us = scan_block(text, b["block_type"], lex, page["season"],
+                                page["genre"])
             ballet_ctx = bool(BALLET_CONTEXT.search(text))
             for m in ms:
                 m.update(page_id=b["page_id"], block_id=b["block_id"],
@@ -750,6 +809,40 @@ def main() -> None:
                     "similarity"])
         w.writerows(near)
 
+    # Work rows that a single printed title cannot choose between, and that
+    # differ only in spelling -- `Привалъ кавалеріи` / `Привалъ кавалерія`
+    # (59 appearances vs 1), `Фея куколъ` / `Фея куколь` (54 vs 3). These are
+    # consolidation questions for the entity layer, not matching questions, so
+    # they are reported rather than settled by a prominence guess.
+    dup_rows: list[tuple] = []
+    seen_sets: set[tuple] = set()
+    for r in rows:
+        if r["mention_type"] != "work" or r["entity_id"] or r["candidates_n"] < 2:
+            continue
+        ids = tuple(sorted(i for i in (r["candidate_ids"] or "").split("|") if i))
+        if not ids or ids in seen_sets:
+            continue
+        seen_sets.add(ids)
+        metas = [lex.work_meta.get(i, {}) for i in ids]
+        genres = [(m.get("genre") or "-") for m in metas]
+        # Candidates differing only in SPELLING are consolidation candidates;
+        # candidates differing in GENRE are the deliberate "different art forms
+        # are different works" policy (Карменъ is both оп. and бал.) and must
+        # not be merged. Saying which is which keeps this list actionable.
+        kind = ("spelling-variant?" if len(set(genres)) == 1
+                else "art-form split (deliberate)")
+        dup_rows.append((
+            r["surface"], kind, len(ids),
+            " | ".join(f"{m.get('title') or '?'} [{g}]"
+                       for m, g in zip(metas, genres)),
+            "|".join(ids)))
+    dup_path = a.out_dir / "review_work_consolidation_candidates.csv"
+    with open(dup_path, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["printed_in_review", "verdict", "n_candidates",
+                    "colliding_rows", "work_ids"])
+        w.writerows(sorted(dup_rows, key=lambda x: (x[1], -x[2])))
+
     by_type = collections.Counter(r["mention_type"] for r in rows)
     by_method = collections.Counter(r["link_method"] for r in rows)
     resolved = sum(1 for r in rows if r["entity_id"])
@@ -764,6 +857,8 @@ def main() -> None:
     print(f"\nunknown names: {len(agg):,} distinct forms, "
           f"{sum(e['n'] for e in agg.values()):,} occurrences "
           f"-> {a.out_dir / 'review_mention_unknown.csv'}")
+    print(f"work-consolidation candidates: {len(dup_rows):,} collision sets "
+          f"-> {dup_path}")
     print(f"candidate title misreads: {len(near):,} forms "
           f"({sum(n for n, *_ in near):,} occurrences) -> {side}")
     print("  NOT applied -- each needs checking against the scan")

@@ -268,8 +268,26 @@ def main() -> None:
             FROM entities.review_mention ORDER BY block_id, char_start""").fetchall():
         mentions[r[0]].append(r)
 
+    # Work mentions earlier on the same page, in reading order. A cast list in a
+    # paragraph often names no title because the title was given a block or two
+    # above. Inheriting is only safe when the page has settled on ONE work so
+    # far: measured over the gap, 255 assertions have exactly one resolved work
+    # earlier on their page, 464 have none at all, and 111 have two or more --
+    # so this recovers the first group and declines the rest rather than
+    # attaching a cast to the wrong ballet. Provenance is recorded in
+    # `work_source` either way.
+    page_works: dict[str, list[tuple[int, str, str]]] = collections.defaultdict(list)
+    for page_id, bidx, surface, eid in con.execute("""
+            SELECT m.page_id, b.block_index, m.surface, m.entity_id
+            FROM entities.review_mention m
+            JOIN raw.review_block b ON b.block_id = m.block_id
+            WHERE m.mention_type = 'work' AND m.entity_id IS NOT NULL
+            ORDER BY m.page_id, b.block_index, m.char_start""").fetchall():
+        page_works[page_id].append((bidx, surface, str(eid)))
+
     out: list[dict] = []
     n_pairs = resolved_by_credit = already = unresolved = 0
+    inherited = 0
     for block_id, page_id, _bidx, _btype, text, caption in blocks:
         page = pages.get(page_id)
         if not page or (a.genre and page["genre"] != a.genre):
@@ -316,6 +334,18 @@ def main() -> None:
             work_m = prior[-1] if prior else (works_here[0] if works_here else None)
             work_surface = work_m[4] if work_m else ""
             work_id = (work_m[5] or "") if work_m else ""
+            work_source = "block" if work_m else ""
+            if not work_id:
+                earlier = [w for w in page_works.get(page_id, []) if w[0] < _bidx]
+                distinct = {w[2] for w in earlier}
+                if len(distinct) == 1:
+                    work_id = earlier[-1][2]
+                    work_source = "page-earlier-block"
+                    if not work_surface:
+                        work_surface = earlier[-1][1]
+                    inherited += 1
+                elif len(distinct) > 1:
+                    work_source = work_source or "ambiguous-on-page"
 
             # --- the credit join ---
             # Gender still constrains it. Without this the join resolved
@@ -373,13 +403,14 @@ def main() -> None:
                 "link_method": method or "unresolved",
                 "grammar": grammar,
                 "work_surface": work_surface, "work_id": work_id,
+                "work_source": work_source,
             })
 
     a.out.parent.mkdir(parents=True, exist_ok=True)
     cols = ["page_id", "block_id", "season", "city", "printed_folio", "date_undate",
             "role_surface", "performer_surface", "performer_person_id",
             "performer_candidates_n", "performer_candidate_ids", "link_method",
-            "grammar", "work_surface", "work_id"]
+            "grammar", "work_surface", "work_id", "work_source"]
     with open(a.out, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols)
         w.writeheader()
@@ -403,7 +434,8 @@ def main() -> None:
             link_method             VARCHAR,
             grammar                 VARCHAR,
             work_surface            VARCHAR,
-            work_id                 VARCHAR
+            work_id                 VARCHAR,
+            work_source             VARCHAR
         )
     """)
     con.execute(f"""
@@ -414,7 +446,8 @@ def main() -> None:
                performer_surface, nullif(performer_person_id, ''),
                CAST(performer_candidates_n AS INTEGER),
                nullif(performer_candidate_ids, ''), link_method, grammar,
-               nullif(work_surface, ''), nullif(work_id, '')
+               nullif(work_surface, ''), nullif(work_id, ''),
+               nullif(work_source, '')
         FROM read_csv('{a.out.as_posix()}', header=true, all_varchar=true)
     """)
     dated = con.execute("""SELECT count(*) FROM research.review_assertion
@@ -429,7 +462,8 @@ def main() -> None:
     print(f"  NEWLY resolved by the spiski credit     : {resolved_by_credit:,}")
     print(f"  still unresolved                        : {unresolved:,}")
     print(f"\n  with a performer entity : {linked:,}")
-    print(f"  with a work entity      : {withwork:,}")
+    print(f"  with a work entity      : {withwork:,}"
+          f"  (of which {inherited:,} inherited from earlier on the page)")
     print(f"  with a resolved DATE    : {dated:,}")
     print(f"\n-> {a.out} and research.review_assertion")
     con.close()
