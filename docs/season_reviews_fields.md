@@ -391,3 +391,117 @@ the other groups.
    real denominator — unchanged from the original design note.
 4. **No table.** Output is CSV; the reviews still have no home in the DuckDB,
    deferred item §12.5.
+
+---
+
+## BUILT 2026-10-07 (same day) — the credit join and dated assertions
+
+`pipeline/build_reviews_duckdb.py`, then `pipeline/build_review_assertions.py`.
+RG picked this over the data-quality queues because it is the actual goal.
+
+```
+uv run python pipeline/build_reviews_duckdb.py \
+    --reviews-dir outputs/reviews/merged_full \
+    --mentions-dir outputs/reviews/mentions \
+    --db outputs/reviews/db/imperial_theaters_reviews.duckdb
+uv run python pipeline/build_review_assertions.py \
+    --reviews-dir outputs/reviews/merged_full \
+    --db outputs/reviews/db/imperial_theaters_reviews.duckdb \
+    --out outputs/reviews/mentions/review_assertion.csv
+```
+
+Built against a **scratch copy** of the production database, not
+`outputs/full_run/`, because a parallel session is active. Promoting it is a
+separate, deliberate step.
+
+### Closes §12.5 — the reviews are now queryable
+
+| table | layer | rows |
+|---|---|---|
+| `raw.review_page` | verbatim, page-centric | 1,070 |
+| `raw.review_block` | verbatim, one row per printed block | 4,672 |
+| `entities.review_mention` | linkage state, with candidate lists | 27,085 |
+| `research.review_assertion` | the research fact | 1,939 |
+
+A mention is linkage state, so it lives in `entities` beside `person_link`; an
+assertion is a research fact, so it lives in `research`. Nothing was
+hand-edited and every script is re-runnable.
+
+### The result
+
+**1,939 assertions**, 334 distinct performers, 1,449 distinct roles. 1,482
+carry a performer entity, 362 a work entity, **420 a date**. The spiski credit
+join newly resolved **178** performers that no amount of gender/season/ordinal
+ranking could separate.
+
+The payoff query — a performer's roles across the reviews, which neither source
+could answer alone:
+
+| performer | assertions | dated | distinct roles | span |
+|---|---|---|---|---|
+| Преображенская, Ольга Іосифовна | 83 | 29 | 73 | 1892-93 – 1907-08 |
+| Леньяни, Пьерина | 67 | 3 | 62 | 1893-94 – 1900-01 |
+| Трефилова, Вѣра Ивановна | 65 | 16 | 59 | 1894-95 – 1907-08 |
+| Петипа 1-я, Марія Маріусовна | 45 | 1 | 42 | 1892-93 – 1904-05 |
+| Карсавина, Тамара Платоновна | 23 | 7 | 22 | 1902-03 – 1910-11 |
+
+### Validated against the Repertoire, which is the real test
+
+**141 of 142 distinct extracted dates land on an actual `research.event` in the
+same city — 99.3%.** The works agree too: the review's 1890-11-21 Moscow
+«Эсмеральда» cast sits on a Repertoire night of `Эсмеральда / Воевода`, and the
+1891-01-20 «Кипрская статуя» cast on `… / Бенефисъ г-жи Бессонэ / Кипрская
+статуя / …` — which is precisely the benefit the review is describing. The one
+unmatched date, `1896-08-01` SP, is an August roster-appointment date, not a
+performance.
+
+### The cast-list grammar prints both orders, and the role is often lowercase
+
+Decided by surname membership rather than position, because the corpus does both:
+
+- `роль—performer` — `Клодъ Фроло—Гельцеръ`, `судья—Бондыревъ` (1,795)
+- `performer—роль` — `Составъ исполнителей былъ слѣдующій: Бессонэ — Галатея;
+  Гельцеръ — Пигмаліонъ` (168)
+
+Requiring a capital on the left, as the first version did, dropped **every
+descriptive common-noun role**: `бабушка—Матвѣева`, `нотаріусъ—г. Жуляевъ`,
+`его жена—г-жа Матвѣева`, `владѣлецъ деревни — Гельцеръ`. Loosening the role
+side is only safe because the performer side is pinned to the surname
+dictionary. Fixing this took the yield from 1,357 to 1,939 (+45%).
+
+### Three bugs worth remembering
+
+1. **Julian dates are not Gregorian dates.** `datetime.date()` rejects
+   29 February 1900 — a date this corpus genuinely contains, because imperial
+   Russia used the Julian calendar and 1900 is a Julian leap year.
+   `research.event` already holds 6 events on `1900-02-29`, which is also why
+   its `date_undate` is VARCHAR. The first version built dates through
+   `datetime` inside a try/except and dropped those **silently**.
+   `review_assertion.date_undate` is VARCHAR and named to match, so it joins
+   straight to `research.event.date_undate`.
+2. **The credit join needs the gender constraint too.** Without it `г-жа
+   Смирнова` resolved to `Смирновъ, Александръ Митрофановичъ`: the credit table
+   is keyed by person, so a same-surname relative of the other gender is a
+   perfectly good index hit and a wrong answer.
+3. **Role spans must not cross a sentence boundary**, and must be trimmed of a
+   preceding pair's performer. Before that, role values included
+   `Яковлевъ. Партію Германа пѣлъ г. Клементьевъ, графа Томскаго`,
+   `Московскихъ театровъ` (a fragment of "артистъ Императорскихъ Московскихъ
+   театровъ") and `Гельцеръ, Коленъ, молодой крестьянинъ…`.
+
+Also: **DuckDB refuses a foreign key across schemas** ("Creating foreign keys
+across different schemas or catalogs is not supported"), so
+`entities.review_mention.block_id` is a plain column with an explicit
+post-load referential check. One more entry for the DuckDB-constraint list in
+CLAUDE.md beside the missing `ALTER TABLE ADD FOREIGN KEY` and the `UPDATE`
+restriction.
+
+### Still open
+
+- **457 assertions have no performer entity**, mostly irreducibly: `Петипа`
+  admits 9 genuine family members and `Иванова` 52, and a prose mention with no
+  role has nothing to join on.
+- **Only 362 of 1,939 carry a work entity.** The governing title is taken as
+  the nearest preceding work mention in the block, which often is not there.
+  Carrying the title down from the page's heading would help.
+- **Not promoted** to `outputs/full_run/`.
