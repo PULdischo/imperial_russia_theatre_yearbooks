@@ -230,3 +230,45 @@ surface. Exactly the discovery RG described.
 
 Note Глинка is absent too; `research.person` holds only `Глинкинъ`, an
 unrelated surname.
+
+
+---
+
+## SCOPE, RG 2026-10-07: opera reviews are out for now
+
+> "Let's not work with opera reviews at this time. We will look at them
+> separately and for ballet mentions specifically."
+
+This followed directly from the discovery-queue finding: the seven
+"genuinely absent" people are an **opera artifact**, 293 occurrences in
+opera reviews against 10 in ballet ones. The entity database was built from
+ballet-priority sources, so opera composers were never in scope and their
+absence is expected, not a gap.
+
+| genre | pages | blocks | words |
+|---|---|---|---|
+| Ballet | 698 | 3,122 | 137,516 |
+| Opera | 262 | 1,059 | 50,621 |
+| All (combined) | 110 | 491 | 15,224 |
+
+**Dropping Opera leaves 152,740 words (75%) across 808 pages.**
+
+**But the two combined "All" volumes cannot be split by section.** They
+carry only 10 headings between them, none of which is a `балетъ` / `опера` /
+`драма` section marker — they use document titles instead (`ОБОЗРѢНІЕ`,
+`С.-Петербургъ.`, `ИМПЕРАТОРСКІЕ МОСКОВСКІЕ ТЕАТРЫ.`). So the
+heading-based filter that cleans the single-genre files has nothing to work
+with here, and those 15,224 words remain a ballet/opera/drama mixture.
+
+Three options when this matters, none chosen yet:
+1. treat Ballet-only as the working set (137,516 words, 698 pages) and
+   handle the combined volumes with the opera pass;
+2. keep the combined volumes in and accept the mixture;
+3. segment them by content rather than by heading.
+
+**When opera is picked up separately**, the useful filter is not "unknown
+name" but **"unknown name appearing in a ballet context"** — that is a short
+list and every entry is on topic. The 10 ballet-review occurrences of the
+opera composers (Глинка x4, Гуно x2, Римскій-Корсаковъ x2, Верди,
+Мейерберъ) are presumably mixed bills or divertissement music, and connect
+to the open "drama with ballet/dancers" thread.
