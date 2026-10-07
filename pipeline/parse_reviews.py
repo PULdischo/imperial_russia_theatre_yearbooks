@@ -91,15 +91,66 @@ def repair_json_escapes(text: str) -> tuple[str, int]:
 # Measured over the 600-response pilot: d->д 84x, g->г 16x, r->р 15x, v->в
 # 10x, plus the true homoglyphs. Deliberately EXCLUDED as ambiguous: s
 # (с/з/ш), h (н/х), b (в/ь), u (и/у) -- guessing those would invent readings.
+# NOTE: "c" is deliberately ABSENT. It is not an unambiguous counterpart --
+# it stands for с, ц or к depending on the word, and guessing one produced
+# real errors: `tancovaли` became `тансовали` (should be `танцовали`) and
+# `cапельмейстера` became `сапельмейстера` (should be `капельмейстера`, which
+# is still in the corpus from an earlier run). A word containing a stray `c`
+# now goes to the scan instead. Same reasoning as "s" (с/з/ш), "h" (н/х),
+# "b" (в/ь) and "u" (и/у), which were never in this map.
 LATIN_TO_CYRILLIC = {
-    "a": "а", "c": "с", "e": "е", "o": "о", "p": "р", "x": "х", "y": "у",
+    "a": "а", "e": "е", "o": "о", "p": "р", "x": "х", "y": "у",
     "k": "к", "t": "т", "n": "н", "m": "м", "d": "д", "g": "г", "v": "в",
     "z": "з", "r": "р", "i": "і", "l": "л", "f": "ф",
     "A": "А", "B": "В", "C": "С", "E": "Е", "H": "Н", "K": "К", "M": "М",
     "O": "О", "P": "Р", "T": "Т", "X": "Х", "Y": "У", "G": "Г", "D": "Д",
 }
+# Greek lookalikes. The model reaches for these less often than Latin ones, but
+# when it does they are invisible to a Latin-only test: `Тугоуховскій` came back
+# as `Тугουховскій` (omicron + upsilon) and `Конекъ-Горбунокъ` as
+# `Горбуноκъ` (kappa). Only unambiguous visual counterparts are listed; Greek
+# nu is omitted because it looks like Latin v, not Cyrillic н.
+GREEK_TO_CYRILLIC = {
+    "\u03b1": "а", "\u03b5": "е", "\u03b9": "і", "\u03ba": "к", "\u03bc": "м",
+    "\u03bf": "о", "\u03c1": "р", "\u03c4": "т", "\u03c5": "у", "\u03c7": "х",
+    "\u0391": "А", "\u0392": "В", "\u0395": "Е", "\u0397": "Н", "\u0399": "І",
+    "\u039a": "К", "\u039c": "М", "\u039f": "О", "\u03a1": "Р", "\u03a4": "Т",
+    "\u03a5": "У", "\u03a7": "Х",
+}
+
+FOREIGN_TO_CYRILLIC = {**LATIN_TO_CYRILLIC, **GREEK_TO_CYRILLIC}
+
+# Cyrillic letters with no Latin or Greek lookalike. One of these in a word is
+# proof the word is Russian, which is what the ratio test below cannot
+# establish on its own: `Чумаkova` is 4 Cyrillic against 4 Latin and fails any
+# ratio, yet `ч` settles it -- no French, Italian, German or Latin word
+# contains one. That matters because the romanisation is often a whole SUFFIX
+# (-kova, -dova, -ketti), not a stray letter.
+CYRILLIC_ONLY = set("бгджзийлпфцчшщъыьэюяѣѳѵБГДЖЗИЙЛПФЦЧШЩЪЫЬЭЮЯѢѲѴ")
+
+# Latin `i` is NOT an unambiguous counterpart: pre-reform Russian writes both
+# `і` and `и`, and the convention (і before a vowel or й) is a tendency this
+# corpus does not keep consistently -- the standing rule here is that a
+# pattern is a worklist, never a norm. Mapping it blindly to `і` produced
+# `Чекетті` and `Гримальді` where the print has `и`. So `i` counts as certain
+# only where the convention is unambiguous, and is referred to the scan
+# otherwise.
+I_BEFORE = set("аеиоуыэюяѣіaeiouy" + "й")
+
+
+def _i_is_certain(word: str, idx: int) -> bool:
+    nxt = word[idx + 1] if idx + 1 < len(word) else ""
+    return nxt.lower() in I_BEFORE and nxt != ""
+
 CYRILLIC_RE = re.compile(r"[\u0400-\u04FF]")
-LATIN_RE = re.compile(r"[A-Za-z]")
+LATIN_RE = re.compile(r"[A-Za-z\u0391-\u03c9]")
+# a word split by a printed line break: `Чума-\n kova`
+HYPHEN_BREAK_RE = re.compile(r"([^\s\u2014\u2013-]+)-(\s*\n\s*)([^\s\u2014\u2013-]+)")
+# two words run together across a script boundary, e.g. `HermitageЛ. Бакстъ`,
+# `М. ПетипаLouis XV`. Not a letter error -- a missing space -- so it is
+# reported and left alone rather than mangled into Cyrillic.
+SCRIPT_BOUNDARY_RE = re.compile(
+    r"(?:[a-z\u00e0-\u00ff]{3,}[\u0410-\u042F]|[\u0430-\u044F]{3,}[A-Z])")
 WORD_RE = re.compile(r"[^\s\u2014\u2013,;:.!?()\u00ab\u00bb\u201e\u201c]+")
 
 # RG's rule -- never mix the scripts inside one word -- has exactly ONE
@@ -134,6 +185,14 @@ def repair_mixed_script(text: str) -> tuple[str, list[str]]:
       unresolved -- mixed, but the fix is not obvious: a half-and-half word,
                     or a letter that could map several ways (s -> с/з/ш,
                     h -> н/х, b -> в/ь, u -> и/у). Text left alone.
+      split-*    -- the same three verdicts for a word the printed line
+                    break cut in half. Checked FIRST and separately, because
+                    neither half is mixed on its own (`Чума-` is clean
+                    Cyrillic, `kova` clean Latin) so the per-token pass is
+                    blind to them. 56 of the 77 found later were this shape.
+      boundary   -- two words run together across a script change
+                    (`HermitageЛ. Бакстъ`, `М. ПетипаLouis XV`). A missing
+                    space, not a letter error, so the text is left alone.
       roman      -- a Roman numeral with a Cyrillic suffix ("III-е", "II-й"),
                     which is correct: Roman numerals are Latin here by RG's
                     gold ruling, since Cyrillic І is glyph-identical but
@@ -156,15 +215,54 @@ def repair_mixed_script(text: str) -> tuple[str, list[str]]:
         if ROMAN_SUFFIXED.match(w):
             fixes.append(f"roman {w!r} -- left as printed, confirm")
             return w
-        certain = ((len(lat) == 1 and cyr >= 2) or cyr >= 3 * len(lat)) and \
-                  all(c in LATIN_TO_CYRILLIC for c in lat)
+        if SCRIPT_BOUNDARY_RE.search(w):
+            # two words run together, not one word with a stray letter
+            fixes.append(f"boundary {w!r} -- missing space, CHECK THIS PAGE")
+            return w
+        russian = any(c in CYRILLIC_ONLY for c in w)
+        amb_i = any(c in "iI" and not _i_is_certain(w, k)
+                    for k, c in enumerate(w))
+        certain = ((len(lat) == 1 and cyr >= 2) or cyr >= 3 * len(lat) or russian) \
+                  and all(c in FOREIGN_TO_CYRILLIC for c in lat) and not amb_i
         if not certain:
             fixes.append(f"unresolved {w!r} -- CHECK THIS PAGE")
             return w
-        out = "".join(LATIN_TO_CYRILLIC.get(c, c) for c in w)
+        out = "".join(FOREIGN_TO_CYRILLIC.get(c, c) for c in w)
         fixes.append(f"repaired {w!r} -> {out!r}")
         return out
 
+    # PASS 1 -- words the printed line break split in two. Run first, because
+    # neither half looks wrong on its own: `Чума-` is clean Cyrillic and `kova`
+    # is clean Latin, so the per-token pass below cannot see the problem at all.
+    # This was not a hypothetical: 56 of the 77 mixed-script words the review
+    # quality check later found were of exactly this shape, invisible here.
+    # The halves are repaired IN PLACE -- the hyphen and the line break stay,
+    # because the raw layer keeps the printed lineation and only the reading
+    # layer reflows.
+    def fix_split(m: re.Match) -> str:
+        head, gap, tail = m.group(1), m.group(2), m.group(3)
+        joined = head + tail
+        cyr = len(CYRILLIC_RE.findall(joined))
+        lat = LATIN_RE.findall(joined)
+        if not cyr or not lat:
+            return m.group(0)
+        if ROMAN_SUFFIXED.match(joined) or SCRIPT_BOUNDARY_RE.search(joined):
+            fixes.append(f"split-boundary {joined!r} -- CHECK THIS PAGE")
+            return m.group(0)
+        russian = any(c in CYRILLIC_ONLY for c in joined)
+        amb_i = any(c in "iI" and not _i_is_certain(joined, k)
+                    for k, c in enumerate(joined))
+        certain = ((len(lat) == 1 and cyr >= 2) or cyr >= 3 * len(lat) or russian) \
+                  and all(c in FOREIGN_TO_CYRILLIC for c in lat) and not amb_i
+        if not certain:
+            fixes.append(f"split-unresolved {joined!r} -- CHECK THIS PAGE")
+            return m.group(0)
+        fix = lambda part: "".join(FOREIGN_TO_CYRILLIC.get(c, c) for c in part)
+        out_h, out_t = fix(head), fix(tail)
+        fixes.append(f"split-repaired {joined!r} -> {out_h + out_t!r}")
+        return f"{out_h}-{gap}{out_t}"
+
+    text = HYPHEN_BREAK_RE.sub(fix_split, text)
     return WORD_RE.sub(fix_word, text), fixes
 
 
