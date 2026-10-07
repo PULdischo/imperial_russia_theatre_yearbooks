@@ -12851,3 +12851,43 @@ WHERE e.entity_type='Graduates' AND (lower(coalesce(e.heading_path,'')||' '||coa
 ```
 
 Result: 28 rows, all on graduates_1890-91 p005 (20) and p006 (8); 27 persons only on these rows (no Wikidata / credit / merge-log references), 1 (Носовъ Сергѣй Владиміровичъ, 794bb7) also on 4 Moscow-school staff lines. After the removal: entries 24,014 -> 23,986; live persons 3,186 -> 3,159; tombstones 3,197 unchanged; 0 orphan links; 0 shift blocks.
+
+## 2026-10-07 — how are roles handled in the artist spiski?
+
+RG asked this while designing the Season Reviews mention layer, to avoid
+inventing a parallel scheme.
+
+```sql
+SELECT table_schema, table_name, column_name FROM information_schema.columns
+ WHERE column_name ILIKE '%role%';
+SELECT credit_type, count(*) FROM raw.person_entry_credit GROUP BY 1;
+SELECT credit_type, label, role_name FROM raw.person_entry_credit
+ WHERE role_name IS NOT NULL AND role_name <> '' LIMIT 12;
+SELECT role_category, count(*) FROM research.production_credit GROUP BY 1;
+```
+
+Result: **the spiski already capture the performer -> work -> role triple.**
+`raw.person_entry_credit` has 35,603 rows in two kinds: `category_totals`
+(24,862) and `named_work` (10,741). Of these, **10,718 carry a `role_name`**,
+with `label` holding the work:
+
+| label (work) | role_name |
+|---|---|
+| Эсмеральда | Эсмеральда |
+| Донъ-Кихотъ | Жуанна |
+| Кипрская статуя | Галатея |
+| Эсмеральда | подруга Флеръ-де-Лисъ |
+
+Creator roles are modelled separately in `research.production_credit`
+(1,495 rows: music 648, author 607, source 113, libretto 90, staging 31,
+instrumentation 6), from the ballet production lists.
+
+**But the performer triple is NOT exposed in the research layer.** It lives
+only in `raw`/`analysis`. `research.person_appearance` (23,985 rows) carries
+rank, title, service_class, instrument, subject_taught — no role, no work.
+The only role columns in `research` are `production_credit.role_text` and
+`role_category`, i.e. creators.
+
+Consequence for the reviews: do not invent a `review_assertion` shape. The
+relation already has a model (`person_entry_credit`), and the missing
+research-layer table for it is a need the two tracks share.
