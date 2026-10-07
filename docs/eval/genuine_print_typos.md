@@ -537,5 +537,5 @@ themselves are real and worth studying; the transcriptions are not.
 - `administration_1904-05_p003`, "Дежурные врачи" no. 4: **Алольфовичъ** (patronymic of Борхманъ, Александръ) -- printed so; stored verbatim.
 - Worn type, stored with the intended letter: "Ромоцановскій" / "Рожлественскій" (a worn д read as л by the blind readers; same worn-д phenomenon as the Graduates pages).
 - Фонъ-Боолъ / Бооль: the surname prints differently by volume; each volume's own spelling is stored.
-- `administration_1908-09` Сухорученко: one blind verifier read "Константииъ" (second н as и), the first reader read "Константинъ"; not scan-confirmed, stored "Константинъ" unchanged. Worth one zoom if it matters.
+- `administration_1908-09_p002` (printed p. 135, "Чиновники XII кл." no. 3): Сухорученко, **Константииъ** Васильевичъ -- the н of Константинъ is printed as и. Scan-confirmed at 1200 dpi (two plain и before the ъ, no dot); stored verbatim as "Константииъ". The same person prints "Константинъ" in 1909-10 and 1910-11.
 - Headings and notes: "завѣлывающимъ", "неимѣщій", "Ховяйственное отдѣленіе" (a heading, 1909-10), "902 г." and "1903 т." (service dates), Алексне Наталія (1900-01), Барышистовъ (1898-99): printed so, stored as read.
