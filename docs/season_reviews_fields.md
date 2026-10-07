@@ -600,3 +600,63 @@ so the list is actionable:
   (2), `Волшебная флейта` as `бал.` (40) and `оп.` (10). **Not** to be merged;
   they are the policy. There are 36 such identical-title groups in
   `research.work` overall.
+
+---
+
+## PROMOTED to `outputs/full_run/` — 2026-10-07
+
+The reviews are in production. **Not by copying a file** — that is the mistake
+`promotion-race-with-parallel-sessions` records, where a whole-file copy
+clobbered a concurrent session. Promotion here means re-running the builders
+against the live database, so they pick up whatever the other sessions have
+changed:
+
+```
+uv run python pipeline/match_review_mentions.py \
+    --reviews-dir outputs/reviews/merged_full \
+    --db outputs/full_run/imperial_theaters.duckdb \
+    --out-dir outputs/reviews/mentions
+uv run python pipeline/build_reviews_duckdb.py \
+    --reviews-dir outputs/reviews/merged_full \
+    --mentions-dir outputs/reviews/mentions \
+    --db outputs/full_run/imperial_theaters.duckdb
+uv run python pipeline/build_review_assertions.py \
+    --reviews-dir outputs/reviews/merged_full \
+    --db outputs/full_run/imperial_theaters.duckdb \
+    --out outputs/reviews/mentions/review_assertion.csv
+```
+
+**Why now rather than after the data-quality queues:** production drifted
+*during this session* — `research.person` went from 3,243 to 3,219 while the
+work sat in a scratch copy. Issue #71 is the precedent: a fix built on
+2026-09-15 went unpromoted for three weeks, went stale, and had to be rebuilt
+from scratch. The re-run approach makes promotion cheap enough that there is no
+reason to let that happen again.
+
+### Verified, not assumed
+
+Snapshotted all 35 pre-existing tables before and after:
+
+- **0 pre-existing tables changed**, none removed, 4 added
+- `raw.review_page` 1,070 · `raw.review_block` 4,672 ·
+  `entities.review_mention` 27,082 · `research.review_assertion` 1,939
+- **0 dangling references** on all five integrity checks (mention -> block,
+  person mention -> research.person, work mention -> research.work, assertion
+  performer -> person, assertion work -> work)
+- dates still 141/142 against `research.event`; gender audit still 0 mismatches
+  in 6,945 checkable
+
+A pre-promotion backup is at
+`outputs/reviews/db/backup/imperial_theaters_pre_review_promotion_<ts>.duckdb`.
+The scratch copy was deleted: it is reproducible in seconds, and a second
+database carrying review tables is exactly the staleness hazard above.
+
+### Publishing consequence, not yet acted on
+
+`research` is the published layer, so **`research.review_assertion` will flow to
+Datasette and the HF dataset on the next publish**. `entities.review_mention`
+will not — CLAUDE.md marks `entities` as pipeline-internal and unpublished. If
+the assertions should stay private for now, `build_datasette.py`'s SCHEMAS list
+is where to exclude them. Worth a decision before the next publish; the table
+carries `link_method`, `link_confidence`, `work_source` and the full candidate
+list, so a consumer can filter rather than take everything at face value.
