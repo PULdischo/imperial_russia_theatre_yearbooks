@@ -27,7 +27,7 @@ Rebuild after any raw edit: `bash docs/eval/rebuild_after_raw_edit.sh` (it passe
 - Rule applied to the readers' stacks: "Врачебная часть" (or the mis-levelled "Старшій врачъ VI кл") only stays above medical positions; chancery grade lists that follow the medical part are nested under "Канцелярскіе чиновники Конторы" only where that list is directly continuing.
 - Result: 943 St-Petersburg rows, 758 Moscow, 133 Directorate. 193 St-Petersburg rows that the stored text had labelled Moscow (14 turn-over pages) are now St Petersburg.
 
-Known judgment points: the "Техникъ при С.-Петербургской Конторѣ" line (6 seasons) is printed in the Directorate block before the first office heading, so it carries the Directorate root with its position text naming the SPb office. Readers' heading levels are not uniform across pages (a few lists sit at level 2 on one page and level 3 on another); the chain was not forced to a single hierarchy.
+Known judgment points: the "Техникъ при С.-Петербургской Конторѣ" line (6 seasons) is printed in the Directorate block before the first office heading, so it carries the Directorate root with its position text naming the SPb office. RG ruling (2026-10-07): in the raw layer these stay as printed (Directorate root, SPb office named only in the position text); any SPb attribution belongs in the research layer, not here. Readers' heading levels are not uniform across pages (a few lists sit at level 2 on one page and level 3 on another); the chain was not forced to a single hierarchy.
 
 ## Verification (after rebuild)
 23,981 entries; live persons 3,135 / tombstones 3,217 (unchanged by the structure stage); receipts identical; 0 orphan links; 0 links to tombstoned persons; 0 entries without a link; 0 shift blocks; quality flags 566.
