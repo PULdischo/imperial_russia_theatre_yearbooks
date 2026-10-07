@@ -192,3 +192,41 @@ this season". The cast-list grammar supplies a relation:
    tokens that already match a database entity. A person with no entity is
    invisible to the measurement. A small hand-annotated sample is the only
    way to know the real denominator.
+
+
+---
+
+## Unknown names get flagged for investigation (RG, 2026-10-07)
+
+> "If in the process we find names that aren't in the database, we flag them
+> for investigation. They might be special guests, the tsar/family, or
+> something else."
+
+A by-product of matching, not a separate effort. The high-precision rule is
+**a token carrying an honorific or following an initial that matches no
+dictionary** — a person by grammar, unknown by lookup.
+
+First run of that rule: **1,585 distinct forms, 3,119 occurrences.** It
+needs two kinds of cleaning before it is a worklist, and the cleaning is
+more informative than the queue:
+
+**1. Stemmer failures, not absences.** Adjectival surnames in -скій/-ская
+decline differently (-аго, -ому, -имъ, -ой, -ую) and my noun-ending list
+missed all of them. Чайковск**аго** 126x, Горск**имъ** 73x, Кшесинск**ой**
+39x, Преображенск**ой** 24x — every one of them already in
+`research.person`. Adding the adjectival endings moves unmatched 30.4% ->
+28.9% (~950 tokens). Any production matcher needs both declension classes.
+
+**2. Hyphenation fragments.** пе-, ле-, кше-, пре-, чай-, гри-, преобра-,
+кшесин- — line-break splits that must be rejoined before matching. The
+bilingual builder already rejoins them for reading; the matcher does not.
+
+**What survives as genuinely absent** — and it is a coherent population:
+**Гуно, Бородинъ, Римскій-Корсаковъ, Верди, Мейерберъ, Бизе** (opera
+composers) and **Фигнеръ** (the tenor). The ballet-lists thread (#133)
+supplied BALLET creators — Минкусъ, Сенъ-Леонъ, Делибъ, Пуни, Дриго — but
+opera composers were never in scope, so the reviews are the first place they
+surface. Exactly the discovery RG described.
+
+Note Глинка is absent too; `research.person` holds only `Глинкинъ`, an
+unrelated surname.
