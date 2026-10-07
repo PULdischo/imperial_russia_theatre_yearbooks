@@ -108,7 +108,59 @@ Measured on the corpus, not assumed:
 | `candidates_n` | derived | how many entities the surname alone admits — 79% of surnames are ambiguous before context |
 | `evidence` | derived | the honorific, ordinal, marker word or guillemets that found it |
 
-### `review_assertion` — the thing RG actually wants
+### CORRECTION 2026-10-07: do not invent an assertion shape
+
+The spiski ALREADY model the performer -> work -> role triple:
+`raw.person_entry_credit`, `credit_type='named_work'`, **10,718 rows with a
+`role_name`** and `label` holding the work (Эсмеральда/Эсмеральда,
+Донъ-Кихотъ/Жуанна). Creator roles live separately in
+`research.production_credit` (1,495 rows). Query logged 2026-10-07.
+
+But the performer triple is **not exposed in `research`** — it exists only
+in raw/analysis, and `research.person_appearance` carries no role or work.
+That missing research table is a need BOTH tracks share; the Repertoire side
+has 10,718 rows waiting for it today, independent of the reviews.
+
+So the reviews should feed the existing shape. What they uniquely add is
+**dates**: spiski credits are season-scoped with no performance date, and
+the repertoire tables have dates but no roles. The reviews join the two.
+
+### Mention detection is CLOSED-VOCABULARY matching, not NER
+
+RG, 2026-10-07: *"there will be very few mentions of people who don't exist
+elsewhere in the Yearbooks."* That retires the open-NER framing and the
+hand-annotation recommendation with it — if the population is closed,
+measuring against the dictionary IS measuring against nearly all mentions.
+
+All four target types already have dictionaries:
+
+| type | source | distinct |
+|---|---|---|
+| people | `research.person.canonical_family_name` | 1,852 |
+| works | `research.work.canonical_title` | 3,152 |
+| roles | `raw.person_entry_credit.role_name` | 2,621 |
+| theatres | `research.theater` | 6 |
+
+**Measured coverage** of 38,216 capitalised non-sentence-initial tokens,
+using those dictionaries plus crude case-stripping: person 40.8%, work
+12.1%, role 7.0%, initials 7.0%, **unmatched 33.0%**.
+
+The unmatched third is mostly two fixable things:
+
+- **Institutions in inflected/adjectival form** — Императорскихъ, Маріинскомъ,
+  Московскаго, Его Величества. `research.theater` holds 6 canonical names
+  and no adjectival forms. A theatre/institution dictionary is the single
+  biggest remaining gain.
+- **A threshold bug in the test, not the data** — the indexer required 4+
+  characters, so Дочь->доч, Донъ->дон and Фея never matched, losing the
+  first words of «Дочь фараона» and «Донъ-Кихотъ».
+
+**Caution on roles.** The role vocabulary mixes proper names (Лиза, принцъ
+Шарманъ) with generic nouns (королева 53, офицеръ 55, цыганка 71, герцогиня
+50). Matched naively against running prose those will fire on ordinary
+words. Role matching needs the cast-list context, not free text.
+
+### `review_assertion` — superseded, see the correction above
 
 A mention alone does not answer "Pavlova 2 danced this role in this ballet
 this season". The cast-list grammar supplies a relation:
