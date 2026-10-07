@@ -174,3 +174,27 @@ rather than a genre reassignment.
 **Open, not started:** itemizing the 128 unnamed-programme events against the
 reviews. That is the concrete worklist this sweep produced, and it is where the
 remaining crossover is most likely to be hiding.
+
+## The cross-check generalises beyond mixed bills — two open items
+
+The reviews also state **per-work performance counts**, and those check out too
+(1903-04 SP: `Раймонда` 5 = 5; `Конекъ-Горбунокъ ... данный 6 разъ` = 4 full
+appearances + 2 excerpt appearances. 1904-05 Moscow: `Донъ-Кихотъ` 4 = 4,
+`Золотая рыбка` 7 = 7, `Конекъ-Горбунокъ` 7 = 7).
+
+Note the counting subtlety before automating this: the review's "6 times"
+folds full performances together with excerpt appearances. A naive comparison
+would read that as a discrepancy.
+
+**Two that did not reconcile, found 2026-10-07, NOT yet investigated** (logged
+per RG's rule on tangents, not chased):
+
+1. **`Гаарлемскій тюльпанъ`, 1903-04 SP** — the review says it had 4
+   performances (`4 представленія выдержалъ Гаарлемскій...`). No work matching
+   `%аарлемск%` is in `research.work` for that season. Either a spelling
+   variant the title match missed, or a genuinely absent work.
+2. **`Баядерка`, 1904-05 Moscow** — the review says 2 performances plus acts 1,
+   2 and 3 given once each; the database has 1.
+
+Both are candidate Repertoire gaps rather than review errors, on the strength
+of the eight exact matches above, but neither has been checked against a scan.
