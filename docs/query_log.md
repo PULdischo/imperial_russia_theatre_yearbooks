@@ -13001,3 +13001,53 @@ Two by-products, each needing a scan check and neither applied:
 This also closed an item logged earlier the same day: `Гаарлемскій тюльпанъ`
 (1903-04 SP) is **not** missing from `research.work` — it is there as
 `Гарлемскій тюльпанъ`, one «а», similarity 0.973.
+
+---
+
+## 2026-10-07 — the credit join, and validating its dates against the Repertoire
+
+```sql
+-- the disambiguating signal: which same-surname person was credited with this
+-- role, in this season, in the spiski?
+SELECT pl.person_id, c.label, c.role_name, sp.season
+FROM raw.person_entry_credit c
+JOIN raw.person_entry pe ON pe.entry_id = c.entry_id
+JOIN entities.person_link pl ON pl.entry_id = pe.entry_id
+JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+WHERE c.role_name IS NOT NULL AND c.role_name <> '';
+```
+Indexed to **5,826 (person, role) pairs and 4,190 (person, work) pairs**.
+Resolved **178** review performers that gender/season/ordinal ranking could not.
+
+Result: **1,939 assertions**, 334 distinct performers, 1,449 distinct roles;
+1,482 with a performer entity, 362 with a work entity, 420 with a date.
+
+The validation that matters — the dates are extracted from prose, so they have
+to be checked against the tabular layer, not trusted:
+
+```sql
+WITH d AS (SELECT DISTINCT date_undate dt, city
+           FROM research.review_assertion WHERE date_undate IS NOT NULL)
+SELECT count(*) AS review_dates,
+       sum(CASE WHEN EXISTS (SELECT 1 FROM research.event e
+                             WHERE e.date_undate = d.dt AND e.city = d.city)
+                THEN 1 ELSE 0 END) AS land_on_a_real_event
+FROM d;
+```
+**141 of 142 (99.3%).** The works agree on the night too: the 1890-11-21 Moscow
+«Эсмеральда» cast sits on a Repertoire programme of `Эсмеральда / Воевода`, and
+the 1891-01-20 «Кипрская статуя» cast on one including `Бенефисъ г-жи Бессонэ`,
+the benefit the review is describing. The one miss, `1896-08-01` SP, is an
+August roster-appointment date rather than a performance.
+
+Incidental but important:
+
+```sql
+SELECT date_undate, city, count(*) FROM research.event
+WHERE date_undate LIKE '%-02-29' GROUP BY 1,2;
+```
+**6 events on 1900-02-29** (3 SP, 3 Moscow) — plus 1892, 1896, 1904 and 1908.
+1900 is a leap year in the **Julian** calendar, which imperial Russia used until
+1918, and not in the Gregorian. `datetime.date()` rejects it. This is why
+`research.event.date_undate` is VARCHAR, and why
+`research.review_assertion.date_undate` is too.
