@@ -12891,3 +12891,67 @@ The only role columns in `research` are `production_credit.role_text` and
 Consequence for the reviews: do not invent a `review_assertion` shape. The
 relation already has a model (`person_entry_credit`), and the missing
 research-layer table for it is a need the two tracks share.
+
+---
+
+## 2026-10-07 — opera-ballet crossover: do the reviews' mixed-bill tallies hold?
+
+RG: *"Confirming that these types of opera-ballet mixes are vitally important
+to my research!"* The ballet reviews state, per season, how many performances
+were `смѣшанные спектакли` shared with opera. That number is independently
+derivable from the Repertoire tables, so it is a real cross-check rather than
+a restatement.
+
+```sql
+-- events whose programme holds both a ballet work and an opera work
+WITH pw AS (
+  SELECT e.season, e.city, e.event_id,
+    (w.parent_genre = 'ballet'
+       OR regexp_matches(lower(coalesce(w.canonical_genre,'')), '^(бал|ballet)')) AS is_bal,
+    (coalesce(w.parent_genre,'') <> 'ballet'
+       AND regexp_matches(lower(coalesce(p.verbatim_genre, w.canonical_genre, '')),
+                          '^(оп\.|опера|опер|op\.|opera|opéra|оп$)')) AS is_op
+  FROM research.event e
+  JOIN research.performance p ON p.event_id = e.event_id
+  JOIN research.work w ON w.work_id = p.work_id),
+ev AS (SELECT season, city, event_id, bool_or(is_bal) b, bool_or(is_op) o
+       FROM pw GROUP BY 1,2,3)
+SELECT season, city, count(*) FROM ev WHERE b AND o GROUP BY 1,2 ORDER BY 1,2;
+```
+
+Result: **26 season/city rows, 1891-92 to 1910-11.** Nine seasons have a review
+that states a ballet+opera count, and **eight match exactly**: 1891-92 SP 4,
+1892-93 SP 11, 1893-94 Moscow 2, 1894-95 Moscow 2, 1894-95 SP 4, 1895-96 Moscow
+13, 1896-97 Moscow 4, 1897-98 Moscow 3. Different source PDFs, different
+extraction method, different schema.
+
+The 1892-93 SP eleven, dated (all Маріинскій, `Іоланта + Щелкунчикъ`):
+6, 8, 11, 13, 14, 16, 17, 26 Dec 1892; 1, 12, 15 Jan 1893.
+
+**The ninth, 1893-94 SP, is short by one and that is the finding.** The review
+reports `балетъ и опера—2` plus a four-way bill including opera; the db finds 2.
+The missing bill is the Greek earthquake benefit, Михайловскій, 29 Apr 1894:
+`Жены [этюдъ] + Le petit Hôtel [com.] + Концертное отдѣленіе + 1-е и 2-е д.
+бал. Коппелія`. The opera troupe is inside `Концертное отдѣленіе`, which names
+no works, so no genre test can see it.
+
+```sql
+-- how often does the Repertoire decline to itemize a programme entry?
+SELECT lower(verbatim_title), count(*), count(DISTINCT e.season)
+FROM research.performance p JOIN research.event e ON e.event_id = p.event_id
+WHERE regexp_matches(lower(verbatim_title),
+      '(концертн|дивертиссемент|дивертисмент|divertissement|концерт)')
+GROUP BY 1 ORDER BY 2 DESC;
+```
+
+Result: **128 events.** `Дивертиссементъ` 82 (19 of the 21 seasons), `Балетный
+дивертиссементъ` 9, `Концертное отдѣленіе` 9, `Концертъ въ пользу инвалидовъ` 7,
+`Симфоническій концертъ` 5, plus singletons. The reviews itemize many of these.
+Verified on two 1901-02 SP cases — the Repertoire gives
+`1901-11-21 Маріинскій · 673,163 kop. · Пахита + Дивертиссементъ`, and the
+review names Bekefi's 25-year benefit, Замбелли's first Пахита, and item
+1) `Танцы изъ оперы „Жизнь за Царя“, муз. Глинки`. Join: season + city + date
++ theatre.
+
+Write-up: `docs/eval/ballet_in_opera_and_divertissement.md`.
+Re-runnable: `pipeline/find_opera_ballet_crossover.py`.
