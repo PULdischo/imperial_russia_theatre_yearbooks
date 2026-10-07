@@ -532,3 +532,10 @@ themselves are real and worth studying; the transcriptions are not.
 - `graduates_1897-98_p002` (Moscow): the male-enrolment paragraph prints "въ I-мъ **кассѣ**" for "классѣ"; `graduates_1897-98_p001`: "всего **39** человѣкъ" printed against 14 + 15 new admissions (= 29). Not person data; recorded for the stats-page comparison.
 - `graduates_1900-01_p000` ballet list, girls no. 1: the surname prints "Алексне" (a misprint for an Алексѣ- surname); stored as read by the blind reader (not changed in this pass).
 - `graduates_1898-99_p000` boys no. 1: "Барышистовъ" (read once; probably a misprint of a Барышниковъ-type surname) -- stored as is.
+
+## Administrators audit, 2026-10-07 (issue #137) -- seen on the scans (stored as noted)
+- `administration_1904-05_p003`, "Дежурные врачи" no. 4: **Алольфовичъ** (patronymic of Борхманъ, Александръ) -- printed so; stored verbatim.
+- Worn type, stored with the intended letter: "Ромоцановскій" / "Рожлественскій" (a worn д read as л by the blind readers; same worn-д phenomenon as the Graduates pages).
+- Фонъ-Боолъ / Бооль: the surname prints differently by volume; each volume's own spelling is stored.
+- `administration_1908-09` Сухорученко: one blind verifier read "Константииъ" (second н as и), the first reader read "Константинъ"; not scan-confirmed, stored "Константинъ" unchanged. Worth one zoom if it matters.
+- Headings and notes: "завѣлывающимъ", "неимѣщій", "Ховяйственное отдѣленіе" (a heading, 1909-10), "902 г." and "1903 т." (service dates), Алексне Наталія (1900-01), Барышистовъ (1898-99): printed so, stored as read.

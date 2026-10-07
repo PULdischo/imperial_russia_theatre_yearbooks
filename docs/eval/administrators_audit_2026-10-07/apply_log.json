@@ -1,0 +1,3081 @@
+[
+ {
+  "entry": "administration_1890-91_p001__e028",
+  "field": "family_name",
+  "old": "Борнштейнъ",
+  "new": "Борншейнъ",
+  "why": "A:V1.3"
+ },
+ {
+  "entry": "administration_1890-91_p001__e001",
+  "field": "first_name",
+  "old": "Модесть",
+  "new": "Модестъ",
+  "why": "A:V1.4"
+ },
+ {
+  "entry": "administration_1890-91_p001__e014",
+  "field": "family_name",
+  "old": "Гень",
+  "new": "Генъ",
+  "why": "A:V1.5"
+ },
+ {
+  "entry": "administration_1890-91_p001__e013",
+  "field": "first_name",
+  "old": "Тимофей",
+  "new": "Тимоѳей",
+  "why": "A:V1.6"
+ },
+ {
+  "entry": "administration_1890-91_p001__e017",
+  "field": "family_name",
+  "old": "Горнь",
+  "new": "Горнъ",
+  "why": "A:V1.7"
+ },
+ {
+  "entry": "administration_1890-91_p002__e008",
+  "field": "family_name",
+  "old": "Силинь",
+  "new": "Силинъ",
+  "why": "A:V1.8"
+ },
+ {
+  "entry": "administration_1891-92_p000__e014",
+  "field": "family_name",
+  "old": "Даничичъ",
+  "new": "Данчичъ",
+  "why": "A:V1.10"
+ },
+ {
+  "entry": "administration_1891-92_p000__e001",
+  "field": "family_name",
+  "old": "Всеволожскій",
+  "new": "Всеволожской",
+  "why": "A:V1.11"
+ },
+ {
+  "entry": "administration_1891-92_p000__e016",
+  "field": "first_name",
+  "old": "Албигнь",
+  "new": "Альбинъ",
+  "why": "A:V1.12"
+ },
+ {
+  "entry": "administration_1891-92_p001__e020",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V1.13"
+ },
+ {
+  "entry": "administration_1891-92_p001__e012",
+  "field": "first_name",
+  "old": "Тимофей",
+  "new": "Тимоѳей",
+  "why": "A:V1.14"
+ },
+ {
+  "entry": "administration_1891-92_p001__e018",
+  "field": "family_name",
+  "old": "Горнь",
+  "new": "Горнъ",
+  "why": "A:V1.15"
+ },
+ {
+  "entry": "administration_1891-92_p002__e018",
+  "field": "family_name",
+  "old": "Притковъ",
+  "new": "Прытковъ",
+  "why": "A:V1.17"
+ },
+ {
+  "entry": "administration_1892-93_p000__e001",
+  "field": "family_name",
+  "old": "Всеволожскій",
+  "new": "Всеволожской",
+  "why": "A:V1.19"
+ },
+ {
+  "entry": "administration_1892-93_p001__e033",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V1.20"
+ },
+ {
+  "entry": "administration_1892-93_p001__e026",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V1.21"
+ },
+ {
+  "entry": "administration_1892-93_p001__e018",
+  "field": "rank_or_title",
+  "old": "тип. сов.",
+  "new": "тит. сов.",
+  "why": "A:V1.22"
+ },
+ {
+  "entry": "administration_1892-93_p001__e017",
+  "field": "rank_or_title",
+  "old": "тип. сов.",
+  "new": "тит. сов.",
+  "why": "A:V1.23"
+ },
+ {
+  "entry": "administration_1892-93_p001__e010",
+  "field": "family_name",
+  "old": "Домерщикновъ",
+  "new": "Домерщиковъ",
+  "why": "A:V1.24"
+ },
+ {
+  "entry": "administration_1892-93_p001__e008",
+  "field": "first_name",
+  "old": "Аркалій",
+  "new": "Аркадій",
+  "why": "A:V1.25"
+ },
+ {
+  "entry": "administration_1892-93_p001__e020",
+  "field": "family_name",
+  "old": "Гень",
+  "new": "Генъ",
+  "why": "A:V1.26"
+ },
+ {
+  "entry": "administration_1892-93_p001__e019",
+  "field": "first_name",
+  "old": "Тимофей",
+  "new": "Тимоѳей",
+  "why": "A:V1.27"
+ },
+ {
+  "entry": "administration_1892-93_p001__e024",
+  "field": "family_name",
+  "old": "Горнь",
+  "new": "Горнъ",
+  "why": "A:V1.28"
+ },
+ {
+  "entry": "administration_1892-93_p001__e028",
+  "field": "family_name",
+  "old": "Лукинь",
+  "new": "Лукинъ",
+  "why": "A:V1.29"
+ },
+ {
+  "entry": "administration_1892-93_p002__e014",
+  "field": "tenure_note_text",
+  "old": "съ 19 сентября 1882 г.). Съ 15 марта 1893 г. назначенъ помощникомъ управляющаго С.-Петербургской Контророю.",
+  "new": "съ 19 сентября 1882 г.). Съ 15 марта 1893 г. назначенъ помощникомъ управляющаго С.-Петербургской Конторою.",
+  "why": "A:V1.32"
+ },
+ {
+  "entry": "administration_1892-93_p002__e012",
+  "field": "tenure_note_text",
+  "old": "съ 1 февраля 1891 г.). Съ 15 марта 1893 г. назначенъ дѣлопроизводителемъ распорядительнаго отдѣленія Контроры.",
+  "new": "съ 1 февраля 1891 г.). Съ 15 марта 1893 г. назначенъ дѣлопроизводителемъ распорядительнаго отдѣленія Конторы.",
+  "why": "A:V1.33"
+ },
+ {
+  "entry": "administration_1892-93_p002__e006",
+  "field": "family_name",
+  "old": "Поспѣвъ",
+  "new": "Поспѣевъ",
+  "why": "A:V1.35"
+ },
+ {
+  "entry": "administration_1892-93_p003__e009",
+  "field": "family_name",
+  "old": "Монгетти",
+  "new": "Монигетти",
+  "why": "A:V1.38"
+ },
+ {
+  "entry": "administration_1893-94_p000__e001",
+  "field": "family_name",
+  "old": "Всеволожскій",
+  "new": "Всеволожской",
+  "why": "A:V1.40"
+ },
+ {
+  "entry": "administration_1893-94_p001__e025",
+  "field": "tenure_note_text",
+  "old": "съ 21 февраля 1876 г.",
+  "new": "съ 21 февраля 1876 г. Оставилъ службу 20 марта 1894 г.",
+  "why": "A:V1.41"
+ },
+ {
+  "entry": "administration_1893-94_p001__e016",
+  "field": "tenure_note_text",
+  "old": "съ 1 ноября 1887 г.",
+  "new": "съ 1 ноября 1887 г. Съ 1 октября 1893 г. назначенъ старшимъ помощникомъ завѣдывающаго монтировочною частью.",
+  "why": "A:V1.42"
+ },
+ {
+  "entry": "administration_1893-94_p001__e014",
+  "field": "tenure_note_text",
+  "old": "съ 19 сентября 1882 г.",
+  "new": "съ 19 сентября 1882 г. Съ 1 октября 1893 г. назначенъ чиновникомъ особыхъ порученій при Конторѣ.",
+  "why": "A:V1.43"
+ },
+ {
+  "entry": "administration_1893-94_p001__e003",
+  "field": "tenure_note_text",
+  "old": "съ 19 сентября 1882 г.",
+  "new": "съ 19 сентября 1882 г. Оставилъ службу 1 октября 1893 г.",
+  "why": "A:V1.44"
+ },
+ {
+  "entry": "administration_1893-94_p001__e001",
+  "field": "tenure_note_text",
+  "old": "съ 20 апрѣля 1889 г.",
+  "new": "съ 20 апрѣля 1889 г. Съ 1 октября 1893 г. назначенъ дѣлопроизводителемъ Хозяйственнаго отдѣленія.",
+  "why": "A:V1.45"
+ },
+ {
+  "entry": "administration_1893-94_p001__e023",
+  "field": "family_name",
+  "old": "Гень",
+  "new": "Генъ",
+  "why": "A:V1.46"
+ },
+ {
+  "entry": "administration_1893-94_p002__e025",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V2.3"
+ },
+ {
+  "entry": "administration_1893-94_p002__e023",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V2.4"
+ },
+ {
+  "entry": "administration_1893-94_p002__e016",
+  "field": "family_name",
+  "old": "Поспѣвъ",
+  "new": "Поспѣевъ",
+  "why": "A:V2.5"
+ },
+ {
+  "entry": "administration_1893-94_p002__e018",
+  "field": "family_name",
+  "old": "Шарылинъ",
+  "new": "Шарыпинъ",
+  "why": "A:V2.6"
+ },
+ {
+  "entry": "administration_1893-94_p002__e005",
+  "field": "family_name",
+  "old": "Силинь",
+  "new": "Силинъ",
+  "why": "A:V2.8"
+ },
+ {
+  "entry": "administration_1893-94_p003__e006",
+  "field": "tenure_note_text",
+  "old": "съ 20 октѧбря 1860 г.",
+  "new": "съ 20 октября 1860 г.",
+  "why": "A:V2.9"
+ },
+ {
+  "entry": "administration_1893-94_p003__e007",
+  "field": "family_name",
+  "old": "Млодзѣвскій",
+  "new": "Млодзѣевскій",
+  "why": "A:V2.10"
+ },
+ {
+  "entry": "administration_1894-95_p000__e003",
+  "field": "tenure_note_text",
+  "old": "(съ 17 августа 1892 г.)",
+  "new": "(съ 17 августа 1892 г.) Оставилъ службу 22 августа 1895 г.",
+  "why": "A:V2.11"
+ },
+ {
+  "entry": "administration_1894-95_p001__e037",
+  "field": "rank_or_title",
+  "old": "немѣющій чина",
+  "new": "неимѣющій чина",
+  "why": "A:V2.12"
+ },
+ {
+  "entry": "administration_1894-95_p001__e007",
+  "field": "first_name",
+  "old": "Модесть",
+  "new": "Модестъ",
+  "why": "A:V2.13"
+ },
+ {
+  "entry": "administration_1894-95_p001__e019",
+  "field": "family_name",
+  "old": "Гень",
+  "new": "Генъ",
+  "why": "A:V2.14"
+ },
+ {
+  "entry": "administration_1894-95_p001__e024",
+  "field": "family_name",
+  "old": "Горнь",
+  "new": "Горнъ",
+  "why": "A:V2.15"
+ },
+ {
+  "entry": "administration_1894-95_p002__e026",
+  "field": "family_name",
+  "old": "Млодзѣвскій",
+  "new": "Млодзѣевскій",
+  "why": "A:V2.16"
+ },
+ {
+  "entry": "administration_1894-95_p002__e008",
+  "field": "family_name",
+  "old": "Силинь",
+  "new": "Силинъ",
+  "why": "A:V2.17"
+ },
+ {
+  "entry": "administration_1895-96_p000__e001",
+  "field": "family_name",
+  "old": "Всеволожскій",
+  "new": "Всеволожской",
+  "why": "A:V2.21"
+ },
+ {
+  "entry": "administration_1895-96_p001__e037",
+  "field": "rank_or_title",
+  "old": "немѣщій чина",
+  "new": "неимѣющій чина",
+  "why": "A:V2.22"
+ },
+ {
+  "entry": "administration_1895-96_p001__e033",
+  "field": "family_name",
+  "old": "Смолскій",
+  "new": "Смольскій",
+  "why": "A:V2.25"
+ },
+ {
+  "entry": "administration_1895-96_p001__e008",
+  "field": "first_name",
+  "old": "Аркалій",
+  "new": "Аркадій",
+  "why": "A:V2.26"
+ },
+ {
+  "entry": "administration_1895-96_p001__e019",
+  "field": "family_name",
+  "old": "Гень",
+  "new": "Генъ",
+  "why": "A:V2.27"
+ },
+ {
+  "entry": "administration_1895-96_p001__e024",
+  "field": "family_name",
+  "old": "Горнь",
+  "new": "Горнъ",
+  "why": "A:V2.28"
+ },
+ {
+  "entry": "administration_1895-96_p001__e007",
+  "field": "first_name",
+  "old": "Молесть",
+  "new": "Модестъ",
+  "why": "A:V2.29"
+ },
+ {
+  "entry": "administration_1895-96_p002__e024",
+  "field": "rank_or_title",
+  "old": "налв. сов.",
+  "new": "надв. сов.",
+  "why": "A:V2.30"
+ },
+ {
+  "entry": "administration_1895-96_p002__e023",
+  "field": "rank_or_title",
+  "old": "налв. сов.",
+  "new": "надв. сов.",
+  "why": "A:V2.31"
+ },
+ {
+  "entry": "administration_1895-96_p002__e020",
+  "field": "rank_or_title",
+  "old": "налв. сов.",
+  "new": "надв. сов.",
+  "why": "A:V2.32"
+ },
+ {
+  "entry": "administration_1895-96_p002__e010",
+  "field": "rank_or_title",
+  "old": "налв. сов.",
+  "new": "надв. сов.",
+  "why": "A:V2.33"
+ },
+ {
+  "entry": "administration_1895-96_p002__e008",
+  "field": "rank_or_title",
+  "old": "л. ст. сов.",
+  "new": "д. ст. сов.",
+  "why": "A:V2.34"
+ },
+ {
+  "entry": "administration_1895-96_p002__e003",
+  "field": "tenure_note_text",
+  "old": "съ 18 января 1883 г.",
+  "new": "съ 18 января 1883 г. Съ 18 сентября 1896 г. назначенъ помощникомъ бухгалтера.",
+  "why": "A:V2.35"
+ },
+ {
+  "entry": "administration_1895-96_p002__e027",
+  "field": "family_name",
+  "old": "Млодзевскій",
+  "new": "Млодзѣевскій",
+  "why": "A:V2.36"
+ },
+ {
+  "entry": "administration_1895-96_p002__e027",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V2.36"
+ },
+ {
+  "entry": "administration_1895-96_p002__e012",
+  "field": "family_name",
+  "old": "Силинь",
+  "new": "Силинъ",
+  "why": "A:V2.37"
+ },
+ {
+  "entry": "administration_1895-96_p002__e006",
+  "field": "family_name",
+  "old": "Шень",
+  "new": "Шенкъ",
+  "why": "A:V2.38"
+ },
+ {
+  "entry": "administration_1895-96_p002__e006",
+  "field": "tenure_note_text",
+  "old": "съ 1 юня 1888 г.",
+  "new": "съ 1 іюня 1888 г.",
+  "why": "A:V2.38"
+ },
+ {
+  "entry": "administration_1896-97_p000__e002",
+  "field": "tenure_note_text",
+  "old": "съ 15 октября 1892 г.)",
+  "new": "съ 15 октября 1892 г.) Оставилъ службу 21 декабря 1896 г.",
+  "why": "A:V2.40"
+ },
+ {
+  "entry": "administration_1896-97_p001__e031",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V2.42"
+ },
+ {
+  "entry": "administration_1896-97_p001__e015",
+  "field": "rank_or_title",
+  "old": "надл. сов.",
+  "new": "надв. сов.",
+  "why": "A:V2.43"
+ },
+ {
+  "entry": "administration_1896-97_p001__e006",
+  "field": "tenure_note_text",
+  "old": "(съ 1 августа 1882 г.). Съ 17 мая 1897 г. назначенъ помощникомъ управляющаго Московскію Конторою Императорскихъ театровъ.",
+  "new": "(съ 1 августа 1882 г.). Съ 17 мая 1897 г. назначенъ помошникомъ управляющаго Московскою Конторою Императорскихъ театровъ.",
+  "why": "A:V2.44"
+ },
+ {
+  "entry": "administration_1896-97_p001__e003",
+  "field": "rank_or_title",
+  "old": "л. ст. сов.",
+  "new": "д. ст. сов.",
+  "why": "A:V2.45"
+ },
+ {
+  "entry": "administration_1896-97_p001__e002",
+  "field": "rank_or_title",
+  "old": "л. ст. сов.",
+  "new": "д. ст. сов.",
+  "why": "A:V2.46"
+ },
+ {
+  "entry": "administration_1896-97_p001__e001",
+  "field": "rank_or_title",
+  "old": "надл. сов.",
+  "new": "надв. сов.",
+  "why": "A:V2.47"
+ },
+ {
+  "entry": "administration_1896-97_p001__e010",
+  "field": "family_name",
+  "old": "Поспѣвъ",
+  "new": "Поспѣевъ",
+  "why": "A:V2.48"
+ },
+ {
+  "entry": "administration_1896-97_p001__e029",
+  "field": "family_name",
+  "old": "Лилѣвъ",
+  "new": "Лилѣевъ",
+  "why": "A:V2.49"
+ },
+ {
+  "entry": "administration_1896-97_p001__e020",
+  "field": "family_name",
+  "old": "Гень",
+  "new": "Генъ",
+  "why": "A:V2.50"
+ },
+ {
+  "entry": "administration_1896-97_p001__e024",
+  "field": "family_name",
+  "old": "Горнь",
+  "new": "Горнъ",
+  "why": "A:V2.51"
+ },
+ {
+  "entry": "administration_1896-97_p002__e028",
+  "field": "tenure_note_text",
+  "old": "(съ 20 октября 1860 г.)",
+  "new": "(съ 20 октября 1860 г.) Оставилъ службу 8 ноября 1896 г.",
+  "why": "A:V3.1"
+ },
+ {
+  "entry": "administration_1896-97_p002__e017",
+  "field": "tenure_note_text",
+  "old": "(съ 18 октября 1893 г.)",
+  "new": "(съ 18 октября 1893 г.) Съ 28 мая 1897 г. назначенъ полиціймейстеромъ С.-Петербургскаго Маріинскаго театра.",
+  "why": "A:V3.2"
+ },
+ {
+  "entry": "administration_1896-97_p002__e016",
+  "field": "tenure_note_text",
+  "old": "(съ 16 сентября 1887 г.)",
+  "new": "(съ 16 сентября 1887 г.) Оставилъ службу 20 декабря 1896 г.",
+  "why": "A:V3.3"
+ },
+ {
+  "entry": "administration_1896-97_p002__e010",
+  "field": "rank_or_title",
+  "old": "л. ст. сов.",
+  "new": "д. ст. сов.",
+  "why": "A:V3.4"
+ },
+ {
+  "entry": "administration_1896-97_p002__e010",
+  "field": "tenure_note_text",
+  "old": "(съ 20 сентября 1886 г.)",
+  "new": "(съ 20 сентября 1886 г.) Оставилъ службу 30 марта 1897 г.",
+  "why": "A:V3.4"
+ },
+ {
+  "entry": "administration_1896-97_p002__e009",
+  "field": "rank_or_title",
+  "old": "л. ст. сов.",
+  "new": "д. ст. сов.",
+  "why": "A:V3.5"
+ },
+ {
+  "entry": "administration_1896-97_p002__e002",
+  "field": "tenure_note_text",
+  "old": "(съ 1 января 1883 г.)",
+  "new": "(съ 1 января 1883 г.) Съ 1 апрѣля 1897 г. назначенъ журналистомъ.",
+  "why": "A:V3.6"
+ },
+ {
+  "entry": "administration_1896-97_p002__e013",
+  "field": "family_name",
+  "old": "Силинь",
+  "new": "Силинъ",
+  "why": "A:V3.7"
+ },
+ {
+  "entry": "administration_1896-97_p003__e009",
+  "field": "rank_or_title",
+  "old": "надв. сов.",
+  "new": null,
+  "why": "A:V3.8"
+ },
+ {
+  "entry": "administration_1896-97_p003__e008",
+  "field": "rank_or_title",
+  "old": "л. ст. сов.",
+  "new": "д. ст. сов.",
+  "why": "A:V3.9"
+ },
+ {
+  "entry": "administration_1897-98_p000__e013",
+  "field": "tenure_note_text",
+  "old": "(съ 1 ноября 1893 г.)",
+  "new": "(съ 1 ноября 1893 г.) Съ 1 іюня 1898 г. назначенъ дѣлопроизводителемъ распорядительнаго отдѣленія.",
+  "why": "A:V3.10"
+ },
+ {
+  "entry": "administration_1897-98_p000__e008",
+  "field": "tenure_note_text",
+  "old": "(съ 11 мая 1882 г.)",
+  "new": "(съ 11 мая 1882 г.) Съ 27 ноября 1897 г. назначенъ управляющимъ дѣлами дирекціи.",
+  "why": "A:V3.11"
+ },
+ {
+  "entry": "administration_1897-98_p000__e005",
+  "field": "tenure_note_text",
+  "old": "(съ 1 января 1892 г.)",
+  "new": "(съ 1 января 1892 г.) Съ 1 ноября 1897 г. назначенъ завѣдывающимъ монтировочною частью С.-Петербургскихъ театровъ.",
+  "why": "A:V3.12"
+ },
+ {
+  "entry": "administration_1897-98_p000__e001",
+  "field": "family_name",
+  "old": "Всеволожскій",
+  "new": "Всеволожской",
+  "why": "A:V3.13"
+ },
+ {
+  "entry": "administration_1897-98_p001__e026",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V3.16"
+ },
+ {
+  "entry": "administration_1897-98_p001__e013",
+  "field": "tenure_note_text",
+  "old": "(съ 19 сентября 1882 г.)",
+  "new": "(съ 19 сентября 1882 г.) Оставилъ службу 1 ноября 1897 г.",
+  "why": "A:V3.17"
+ },
+ {
+  "entry": "administration_1897-98_p001__e008",
+  "field": "rank_or_title",
+  "old": "подполковникъ л.-гв. 4-го Стрѣлковаго Императорскаго Фамиліи баталіона",
+  "new": "подполковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона",
+  "why": "A:V3.18"
+ },
+ {
+  "entry": "administration_1897-98_p001__e030",
+  "field": "family_name",
+  "old": "Горанскій",
+  "new": "Горянскій",
+  "why": "A:V3.19"
+ },
+ {
+  "entry": "administration_1897-98_p001__e024",
+  "field": "family_name",
+  "old": "Гень",
+  "new": "Генъ",
+  "why": "A:V3.20"
+ },
+ {
+  "entry": "administration_1897-98_p001__e029",
+  "field": "family_name",
+  "old": "Горнь",
+  "new": "Горнъ",
+  "why": "A:V3.21"
+ },
+ {
+  "entry": "administration_1897-98_p001__e007",
+  "field": "first_name",
+  "old": "Альбінь",
+  "new": "Альбинъ",
+  "why": "A:V3.22"
+ },
+ {
+  "entry": "administration_1897-98_p002__e010",
+  "field": "tenure_note_text",
+  "old": "съ 16 іюня 1882 г.",
+  "new": "съ 16 іюня 1882 г. Оставилъ службу 11 апрѣля 1898 г.",
+  "why": "A:V3.23"
+ },
+ {
+  "entry": "administration_1897-98_p002__e003",
+  "field": "first_name",
+  "old": "Алексій",
+  "new": "Алексѣй",
+  "why": "A:V3.24"
+ },
+ {
+  "entry": "administration_1897-98_p002__e003",
+  "field": "rank_or_title",
+  "old": "колл. сов.",
+  "new": null,
+  "why": "A:V3.24"
+ },
+ {
+  "entry": "administration_1897-98_p002__e015",
+  "field": "family_name",
+  "old": "Силинь",
+  "new": "Силинъ",
+  "why": "A:V3.25"
+ },
+ {
+  "entry": "administration_1897-98_p003__e005",
+  "field": "patronymic",
+  "old": "Никиличъ",
+  "new": "Никитичъ",
+  "why": "A:V3.26"
+ },
+ {
+  "entry": "administration_1898-99_p000__e001",
+  "field": "family_name",
+  "old": "Всеволожскій",
+  "new": "Всеволожской",
+  "why": "A:V3.28"
+ },
+ {
+  "entry": "administration_1898-99_p002__e015",
+  "field": "family_name",
+  "old": "Лилѣвъ",
+  "new": "Лилѣевъ",
+  "why": "A:V3.29"
+ },
+ {
+  "entry": "administration_1898-99_p003__e017",
+  "field": "family_name",
+  "old": "Балахининъ",
+  "new": "Балахнинъ",
+  "why": "A:V3.30"
+ },
+ {
+  "entry": "administration_1898-99_p003__e006",
+  "field": "family_name",
+  "old": "Фонъ-Бооль",
+  "new": "Фонъ-Боолъ",
+  "why": "A:V3.32"
+ },
+ {
+  "entry": "administration_1899-00_p001__e003",
+  "field": "tenure_note_text",
+  "old": "съ 20 апрѣля 1889 г.). 24 февраля 1900 г. назначенъ помощникомъ управляющаго Московскаго Конторою.",
+  "new": "съ 20 апрѣля 1889 г.). 24 февраля 1900 г. назначенъ помощникомъ управляющаго Московскою Конторою.",
+  "why": "A:V3.34"
+ },
+ {
+  "entry": "administration_1899-00_p001__e010",
+  "field": "family_name",
+  "old": "Аламовичъ",
+  "new": "Адамовичъ",
+  "why": "A:V3.36"
+ },
+ {
+  "entry": "administration_1899-00_p001__e010",
+  "field": "first_name",
+  "old": "Модесть",
+  "new": "Модестъ",
+  "why": "A:V3.36"
+ },
+ {
+  "entry": "administration_1899-00_p002__e006",
+  "field": "family_name",
+  "old": "Лицкій",
+  "new": "Липскій",
+  "why": "A:V3.37"
+ },
+ {
+  "entry": "administration_1899-00_p003__e022",
+  "field": "rank_or_title",
+  "old": "ст",
+  "new": "съ",
+  "why": "A:V3.41"
+ },
+ {
+  "entry": "administration_1899-00_p003__e003",
+  "field": "family_name",
+  "old": "Бриліантовъ",
+  "new": "Брилліантовъ",
+  "why": "A:V3.42"
+ },
+ {
+  "entry": "administration_1900-01_p001__e006",
+  "field": "rank_or_title",
+  "old": "полполжковникъ л.-гв. Уланскаго полка",
+  "new": "подполковникъ л.-гв. Уланскаго полка",
+  "why": "A:V3.45"
+ },
+ {
+  "entry": "administration_1900-01_p001__e008",
+  "field": "first_name",
+  "old": "Модесть",
+  "new": "Модестъ",
+  "why": "A:V3.46"
+ },
+ {
+  "entry": "administration_1900-01_p001__e001",
+  "field": "family_name",
+  "old": "Щенкъ",
+  "new": "Шенкъ",
+  "why": "A:V3.47"
+ },
+ {
+  "entry": "administration_1900-01_p002__e021",
+  "field": "family_name",
+  "old": "Тогихесъ",
+  "new": "Іогихесъ",
+  "why": "A:V4.3"
+ },
+ {
+  "entry": "administration_1900-01_p002__e005",
+  "field": "patronymic",
+  "old": "Александровичъ",
+  "new": "Алексѣевичъ",
+  "why": "A:V4.5"
+ },
+ {
+  "entry": "administration_1900-01_p004__e004",
+  "field": "patronymic",
+  "old": "Тимоѳѣевичъ",
+  "new": "Тимофѣевичъ",
+  "why": "A:V4.10"
+ },
+ {
+  "entry": "administration_1901-02_p001__e005",
+  "field": "rank_or_title",
+  "old": "полпок-ковникъ л.-гв. Уланскаго полка",
+  "new": "подполковникъ л.-гв. Уланскаго полка",
+  "why": "A:V4.13"
+ },
+ {
+  "entry": "administration_1901-02_p001__e015",
+  "field": "family_name",
+  "old": "Полновъ",
+  "new": "Полѣновъ",
+  "why": "A:V4.15"
+ },
+ {
+  "entry": "administration_1901-02_p001__e023",
+  "field": "family_name",
+  "old": "Гень",
+  "new": "Генъ",
+  "why": "A:V4.16"
+ },
+ {
+  "entry": "administration_1901-02_p001__e010",
+  "field": "family_name",
+  "old": "Анпъ",
+  "new": "Анцъ",
+  "why": "A:V4.17"
+ },
+ {
+  "entry": "administration_1901-02_p001__e007",
+  "field": "first_name",
+  "old": "Молесть",
+  "new": "Модестъ",
+  "why": "A:V4.18"
+ },
+ {
+  "entry": "administration_1901-02_p001__e007",
+  "field": "rank_or_title",
+  "old": "полполковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона",
+  "new": "подполковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона",
+  "why": "A:V4.18"
+ },
+ {
+  "entry": "administration_1901-02_p002__e002",
+  "field": "tenure_note_text",
+  "old": "съ 20 апрѣля 1889 г.",
+  "new": "съ 20 апрѣля 1889 г. Назначенъ чиновникомъ особыхъ порученій VI класса при Дирекціи Императорскихъ театровъ, съ 15 марта 1902 г.",
+  "why": "A:V4.20"
+ },
+ {
+  "entry": "administration_1901-02_p002__e029",
+  "field": "family_name",
+  "old": "Щабель",
+  "new": "Цабель",
+  "why": "A:V4.23"
+ },
+ {
+  "entry": "administration_1901-02_p003__e023",
+  "field": "family_name",
+  "old": "Мендельфевъ",
+  "new": "Менделѣевъ",
+  "why": "A:V4.24"
+ },
+ {
+  "entry": "administration_1902-03_p000__e013",
+  "field": "tenure_note_text",
+  "old": "съ 1 ноября 1893 г.)",
+  "new": "съ 1 ноября 1893 г.) Назначенъ дѣлопроизводителемъ VI класса 6 декабря 1902 г.",
+  "why": "A:V4.27"
+ },
+ {
+  "entry": "administration_1902-03_p000__e012",
+  "field": "tenure_note_text",
+  "old": "съ 19 сентября 1882 г.)",
+  "new": "съ 19 сентября 1882 г.) Назначенъ помощникомъ начальника монтировочной части 6 декабря 1902 г.",
+  "why": "A:V4.28"
+ },
+ {
+  "entry": "administration_1902-03_p000__e011",
+  "field": "tenure_note_text",
+  "old": "съ 19 сентября 1882 г.)",
+  "new": "съ 19 сентября 1882 г.) Назначенъ чиновникомъ особыхъ порученій при дирекціи 6 декабря 1902 г.",
+  "why": "A:V4.29"
+ },
+ {
+  "entry": "administration_1902-03_p000__e008",
+  "field": "tenure_note_text",
+  "old": "съ 24 сентября 1899 г.)",
+  "new": "съ 24 сентября 1899 г.) Назначенъ техникомъ при С.-Петербургской Конторѣ Императорскихъ театровъ 6 декабря 1902 г.",
+  "why": "A:V4.30"
+ },
+ {
+  "entry": "administration_1902-03_p000__e002",
+  "field": "tenure_note_text",
+  "old": "съ 20 апрѣля 1889 г.)",
+  "new": "съ 20 апрѣля 1889 г.) Назначенъ помощникомъ управляющаго Конторою 6 декабря 1902 г.",
+  "why": "A:V4.31"
+ },
+ {
+  "entry": "administration_1902-03_p001__e019",
+  "field": "rank_or_title",
+  "old": "надл. асс.",
+  "new": "надв. асс.",
+  "why": "A:V4.32"
+ },
+ {
+  "entry": "administration_1902-03_p001__e018",
+  "field": "tenure_note_text",
+  "old": "съ 18 января 1880 г.",
+  "new": "съ 18 января 1880 г. Назначенъ помощникомъ начальника монтировочной части VII класса 6 декабря 1902 г.",
+  "why": "A:V4.33"
+ },
+ {
+  "entry": "administration_1902-03_p001__e017",
+  "field": "tenure_note_text",
+  "old": "съ 1 декабря 1900 г.",
+  "new": "съ 1 декабря 1900 г. Назначенъ помощникомъ начальника монтировочной части VIII класса 6 декабря 1902 г.",
+  "why": "A:V4.34"
+ },
+ {
+  "entry": "administration_1902-03_p001__e016",
+  "field": "tenure_note_text",
+  "old": "съ 10 ноября 1887 г.",
+  "new": "съ 10 ноября 1887 г. Назначенъ чиновникомъ особыхъ порученій при дирекціи 6 декабря 1902 г.",
+  "why": "A:V4.35"
+ },
+ {
+  "entry": "administration_1902-03_p001__e015",
+  "field": "tenure_note_text",
+  "old": "съ 16 февраля 1896 г.",
+  "new": "съ 16 февраля 1896 г. Назначенъ начальникомъ монтировочной части 6 декабря 1902 г.",
+  "why": "A:V4.36"
+ },
+ {
+  "entry": "administration_1902-03_p001__e014",
+  "field": "tenure_note_text",
+  "old": "съ 1 января 1883 г.",
+  "new": "съ 1 января 1883 г. Назначенъ регистраторомъ 6 декабря 1902 г.",
+  "why": "A:V4.37"
+ },
+ {
+  "entry": "administration_1902-03_p001__e013",
+  "field": "tenure_note_text",
+  "old": "съ 9 декабря 1880 г.",
+  "new": "съ 9 декабря 1880 г. Назначенъ помощникомъ дѣлопроизводителя VIII класса 6 декабря 1902 г. Оставилъ службу 5 апрѣля 1903 г.",
+  "why": "A:V4.38"
+ },
+ {
+  "entry": "administration_1902-03_p001__e001",
+  "field": "tenure_note_text",
+  "old": "съ 1 іюня 1888 г.",
+  "new": "съ 1 іюня 1888 г. Назначенъ помощникомъ дѣлопроизводителя VII класса 6 декабря 1902 г.",
+  "why": "A:V4.40"
+ },
+ {
+  "entry": "administration_1902-03_p002__e017",
+  "field": "tenure_note_text",
+  "old": "съ 1 января 1886 г.",
+  "new": "съ 1 января 1886 г. Назначенъ помощникомъ бухгалтера 1 февраля 1903 г.",
+  "why": "A:V4.45"
+ },
+ {
+  "entry": "administration_1902-03_p002__e016",
+  "field": "tenure_note_text",
+  "old": "съ 1 сентября 1887 г.",
+  "new": "съ 1 сентября 1887 г. Назначенъ помощникомъ дѣлопроизводителя VIII класса 1 мая 1903 г",
+  "why": "A:V4.46"
+ },
+ {
+  "entry": "administration_1902-03_p002__e013",
+  "field": "tenure_note_text",
+  "old": "съ 10 сентября 1887 г.",
+  "new": "съ 10 сентября 1887 г. Назначенъ дѣлопроизводителемъ монтировочнаго отдѣла съ 1 сентября 1902 г. и помощникомъ начальника монтировочной части VIII класса 6 декабря 1902 г.",
+  "why": "A:V4.47"
+ },
+ {
+  "entry": "administration_1902-03_p002__e012",
+  "field": "tenure_note_text",
+  "old": "съ 1 іюня 1898 г.",
+  "new": "съ 1 іюня 1898 г. Назначенъ чиновникомъ XII класса 6 декабря 1902 г.",
+  "why": "A:V4.48"
+ },
+ {
+  "entry": "administration_1902-03_p002__e011",
+  "field": "tenure_note_text",
+  "old": "съ 1 сентября 1902 г.",
+  "new": "съ 1 сентября 1902 г. Назначенъ чиновникомъ XII класса 6 декабря 1902 г.",
+  "why": "A:V4.49"
+ },
+ {
+  "entry": "administration_1902-03_p002__e010",
+  "field": "tenure_note_text",
+  "old": "съ 24 іюля 1876 г.",
+  "new": "съ 24 іюля 1876 г. Назначенъ чиновникомъ XII класса 6 декабря 1902 г. и X класса—1 іюня 1903 г. Оставилъ службу 1 сентября 1903 г.",
+  "why": "A:V4.50"
+ },
+ {
+  "entry": "administration_1902-03_p002__e009",
+  "field": "tenure_note_text",
+  "old": "съ 1 января 1889 г.",
+  "new": "съ 1 января 1889 г. Назначенъ чиновникомъ X класса 6 декабря 1902 г.",
+  "why": "A:V4.51"
+ },
+ {
+  "entry": "administration_1902-03_p002__e008",
+  "field": "tenure_note_text",
+  "old": "съ 15 января 1893 г.",
+  "new": "съ 15 января 1893 г. Назначенъ чиновникомъ X класса 6 декабря 1902 г.",
+  "why": "A:V4.52"
+ },
+ {
+  "entry": "administration_1902-03_p002__e003",
+  "field": "tenure_note_text",
+  "old": "съ 1 ноября 1879 г.",
+  "new": "съ 1 ноября 1879 г. Назначенъ помощникомъ начальника монтировочной части VIII класса 6 декабря 1902 г.",
+  "why": "A:V4.53"
+ },
+ {
+  "entry": "administration_1902-03_p002__e019",
+  "field": "tenure_note_text",
+  "old": "съ 1 августа 1887 г.",
+  "new": "съ 1 августа 1887 г. Оставилъ службу 31 декабря 1902 г.",
+  "why": "A:V4.54"
+ },
+ {
+  "entry": "administration_1902-03_p003__e023",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V5.3"
+ },
+ {
+  "entry": "administration_1902-03_p003__e021",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V5.4"
+ },
+ {
+  "entry": "administration_1902-03_p003__e019",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V5.5"
+ },
+ {
+  "entry": "administration_1902-03_p003__e013",
+  "field": "tenure_note_text",
+  "old": "съ 1 іюня 1901 г.)",
+  "new": "съ 1 іюня 1901 г.) Назначенъ помощникомъ начальника монтировочной части 6 декабря 1902 г.",
+  "why": "A:V5.6"
+ },
+ {
+  "entry": "administration_1902-03_p003__e012",
+  "field": "tenure_note_text",
+  "old": "съ 18 февраля 1874 г.)",
+  "new": "съ 18 февраля 1874 г.) Назначенъ помощникомъ начальника монтировочной части 6 декабря 1902 г.",
+  "why": "A:V5.7"
+ },
+ {
+  "entry": "administration_1902-03_p003__e011",
+  "field": "tenure_note_text",
+  "old": "съ 16 апрѣля 1902 г.",
+  "new": "съ 16 апрѣля 1902 г. Назначенъ начальникомъ монтировочной части 6 декабря 1902 г.",
+  "why": "A:V5.8"
+ },
+ {
+  "entry": "administration_1902-03_p003__e010",
+  "field": "tenure_note_text",
+  "old": "съ 3 февраля 1875 г.",
+  "new": "съ 3 февраля 1875 г. Назначенъ помощникомъ бухгалтера 6 декабря 1902 г.",
+  "why": "A:V5.9"
+ },
+ {
+  "entry": "administration_1902-03_p004__e032",
+  "field": "tenure_note_text",
+  "old": "съ 1 января 1903 г.",
+  "new": "съ 1 января 1903 г. Назначенъ чиновникомъ X класса 6 іюня 1903 т.",
+  "why": "A:V5.13"
+ },
+ {
+  "entry": "administration_1902-03_p004__e030",
+  "field": "tenure_note_text",
+  "old": "съ 1 августа 1900 г.",
+  "new": "съ 1 августа 1900 г. Назначенъ чиновникомъ XII класса 6 декабря 1902 г.",
+  "why": "A:V5.14"
+ },
+ {
+  "entry": "administration_1902-03_p004__e029",
+  "field": "tenure_note_text",
+  "old": "съ 1 сентября 1887 г.",
+  "new": "съ 1 сентября 1887 г. Назначенъ чиновникомъ XII класса 6 декабря 1902 г.",
+  "why": "A:V5.15"
+ },
+ {
+  "entry": "administration_1902-03_p004__e028",
+  "field": "tenure_note_text",
+  "old": "съ 31 декабря 1878 г.",
+  "new": "съ 31 декабря 1878 г. Назначенъ чиновникомъ X класса 6 декабря 1902 г.",
+  "why": "A:V5.16"
+ },
+ {
+  "entry": "administration_1902-03_p004__e027",
+  "field": "tenure_note_text",
+  "old": "съ 7 апрѣля 1881 г.",
+  "new": "съ 7 апрѣля 1881 г. Назначенъ чиновникомъ X класса 6 декабря 1902 г. Оставилъ службу 6 іюня 1903 г.",
+  "why": "A:V5.17"
+ },
+ {
+  "entry": "administration_1902-03_p004__e008",
+  "field": "patronymic",
+  "old": "Казимировичъ",
+  "new": "Казиміровичъ",
+  "why": "A:V5.18"
+ },
+ {
+  "entry": "administration_1902-03_p004__e012",
+  "field": "family_name",
+  "old": "Мендельфевъ",
+  "new": "Менделѣевъ",
+  "why": "A:V5.19"
+ },
+ {
+  "entry": "administration_1903-04_p000__e013",
+  "field": "tenure_note_text",
+  "old": "съ 1 іюня 1888 г.",
+  "new": "съ 1 іюня 1888 г. Завѣдывающій центральною библіотекою.",
+  "why": "A:V5.20"
+ },
+ {
+  "entry": "administration_1903-04_p002__e015",
+  "field": "rank_or_title",
+  "old": "по найму, личн. поч. граждан.",
+  "new": "по найму, личн. поч. гражд.",
+  "why": "A:V5.28"
+ },
+ {
+  "entry": "administration_1903-04_p003__e011",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V5.31"
+ },
+ {
+  "entry": "administration_1903-04_p003__e009",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V5.32"
+ },
+ {
+  "entry": "administration_1903-04_p003__e005",
+  "field": "tenure_note_text",
+  "old": "(съ 1 января 1903 г.). Состоить преподавателемъ при московскомъ художественномъ обществѣ училища живописи, ваянія и зодчества.",
+  "new": "(съ 1 января 1903 г.). Состоитъ преподавателемъ при московскомъ художественномъ обществѣ училища живописи, ваянія и зодчества.",
+  "why": "A:V5.33"
+ },
+ {
+  "entry": "administration_1903-04_p003__e001",
+  "field": "tenure_note_text",
+  "old": "(съ 16 апрѣля 1902 г.). Назначенъ помощникомъ Управляющаго Контролю 19 марта 1904 г.",
+  "new": "(съ 16 апрѣля 1902 г.). Назначенъ помощникомъ Управляющаго Конторою 19 марта 1904 г.",
+  "why": "A:V5.34"
+ },
+ {
+  "entry": "administration_1903-04_p003__e025",
+  "field": "family_name",
+  "old": "Мендельевъ",
+  "new": "Менделѣевъ",
+  "why": "A:V5.37"
+ },
+ {
+  "entry": "administration_1903-04_p004__e009",
+  "field": "family_name",
+  "old": "Вѣляевъ",
+  "new": "Бѣляевъ",
+  "why": "A:V5.38"
+ },
+ {
+  "entry": "administration_1904-05_p001__e011",
+  "field": "tenure_note_text",
+  "old": "съ 1 января 1903 г.",
+  "new": "съ 1 января 1903 г. Назначенъ инспекторомъ Спб. Театральнаго училища 1 сентября 1904 г.",
+  "why": "A:V5.40"
+ },
+ {
+  "entry": "administration_1904-05_p001__e006",
+  "field": "tenure_note_text",
+  "old": "съ 1 февраля 1897 г.",
+  "new": "съ 1 февраля 1897 г. Оставилъ службу 1 ноября 1904 г.",
+  "why": "A:V5.41"
+ },
+ {
+  "entry": "administration_1904-05_p001__e003",
+  "field": "tenure_note_text",
+  "old": "съ 2 апрѣля 1905 г.",
+  "new": "съ 2 апрѣля 1905 г. Назначенъ помощникомъ завѣдывающаго постановками 17 іюня 1905 г.",
+  "why": "A:V5.42"
+ },
+ {
+  "entry": "administration_1904-05_p001__e002",
+  "field": "tenure_note_text",
+  "old": "съ 1 января 1903 г.",
+  "new": "съ 1 января 1903 г. Назначенъ помощникомъ завѣдывающаго постановками 2 апрѣля 1905 г.",
+  "why": "A:V5.43"
+ },
+ {
+  "entry": "administration_1904-05_p001__e010",
+  "field": "first_name",
+  "old": "Модесть",
+  "new": "Модестъ",
+  "why": "A:V5.44"
+ },
+ {
+  "entry": "administration_1904-05_p001__e004",
+  "field": "family_name",
+  "old": "Трамбickiй",
+  "new": "Трамбицкій",
+  "why": "A:V5.46"
+ },
+ {
+  "entry": "administration_1904-05_p002__e013",
+  "field": "family_name",
+  "old": "Бруниеръ",
+  "new": "Бруннеръ",
+  "why": "A:V6.3"
+ },
+ {
+  "entry": "administration_1904-05_p002__e008",
+  "field": "family_name",
+  "old": "Головицъ",
+  "new": "Головинъ",
+  "why": "A:V6.4"
+ },
+ {
+  "entry": "administration_1904-05_p002__e011",
+  "field": "family_name",
+  "old": "Гень",
+  "new": "Генъ",
+  "why": "A:V6.5"
+ },
+ {
+  "entry": "administration_1904-05_p003__e025",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V6.6"
+ },
+ {
+  "entry": "administration_1904-05_p003__e024",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V6.7"
+ },
+ {
+  "entry": "administration_1904-05_p003__e023",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V6.8"
+ },
+ {
+  "entry": "administration_1904-05_p003__e021",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V6.9"
+ },
+ {
+  "entry": "administration_1904-05_p003__e019",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V6.10"
+ },
+ {
+  "entry": "administration_1904-05_p003__e015",
+  "field": "tenure_note_text",
+  "old": "(съ 1 января 1903 г.). Состоить преподавателемъ при московскомъ художественномъ обществѣ училища живописи, ваянія и зодчества.",
+  "new": "(съ 1 января 1903 г.). Состоитъ преподавателемъ при московскомъ художественномъ обществѣ училища живописи, ваянія и зодчества.",
+  "why": "A:V6.11"
+ },
+ {
+  "entry": "administration_1904-05_p003__e005",
+  "field": "rank_or_title",
+  "old": "подполковникъ гвард. запасного кавалерійскаго полка",
+  "new": "подполковникъ гвард. запаснаго кавалерійскаго полка",
+  "why": "A:V6.12"
+ },
+ {
+  "entry": "administration_1904-05_p004__e022",
+  "field": "family_name",
+  "old": "Струсевъ",
+  "new": "Струевъ",
+  "why": "A:V6.13"
+ },
+ {
+  "entry": "administration_1904-05_p004__e006",
+  "field": "patronymic",
+  "old": "Казимировичъ",
+  "new": "Казиміровичъ",
+  "why": "A:V6.14"
+ },
+ {
+  "entry": "administration_1904-05_p004__e004",
+  "field": "family_name",
+  "old": "Исперъ",
+  "new": "Исцеръ",
+  "why": "A:V6.15"
+ },
+ {
+  "entry": "administration_1905-06_p001__e021",
+  "field": "rank_or_title",
+  "old": "колл. асс.",
+  "new": "кол. асс.",
+  "why": "A:V6.19"
+ },
+ {
+  "entry": "administration_1905-06_p001__e012",
+  "field": "patronymic",
+  "old": "Фёдоровичъ",
+  "new": "Федоровичъ",
+  "why": "A:V6.20"
+ },
+ {
+  "entry": "administration_1905-06_p002__e001",
+  "field": "rank_or_title",
+  "old": "л. ст. сов.",
+  "new": "д. ст. сов.",
+  "why": "A:V6.22"
+ },
+ {
+  "entry": "administration_1905-06_p002__e018",
+  "field": "family_name",
+  "old": "Силинь",
+  "new": "Силинъ",
+  "why": "A:V6.23"
+ },
+ {
+  "entry": "administration_1905-06_p002__e011",
+  "field": "family_name",
+  "old": "Бѣлинскій",
+  "new": "Бѣлицкій",
+  "why": "A:V6.24"
+ },
+ {
+  "entry": "administration_1905-06_p003__e012",
+  "field": "rank_or_title",
+  "old": "сов.",
+  "new": null,
+  "why": "A:V6.25"
+ },
+ {
+  "entry": "administration_1905-06_p003__e011",
+  "field": "tenure_note_text",
+  "old": "(съ 1 января 1903 г.). Состоить преподавателемъ при московскомъ художественномъ обществѣ училища живописи, ваянія и зодчества.",
+  "new": "(съ 1 января 1903 г.). Состоитъ преподавателемъ при московскомъ художественномъ обществѣ училища живописи, ваянія и зодчества.",
+  "why": "A:V6.26"
+ },
+ {
+  "entry": "administration_1905-06_p003__e006",
+  "field": "rank_or_title",
+  "old": "коллежскій секретарь",
+  "new": "колежскій секретарь",
+  "why": "A:V6.27"
+ },
+ {
+  "entry": "administration_1905-06_p003__e001",
+  "field": "family_name",
+  "old": "Бестужевъ-Рюминъ",
+  "new": "Бестужевь-Рюминъ",
+  "why": "A:V6.28"
+ },
+ {
+  "entry": "administration_1906-07_p001__e011",
+  "field": "family_name",
+  "old": "Поспѣвъ",
+  "new": "Поспѣевъ",
+  "why": "A:V6.31"
+ },
+ {
+  "entry": "administration_1906-07_p001__e017",
+  "field": "first_name",
+  "old": "Карль",
+  "new": "Карлъ",
+  "why": "A:V6.32"
+ },
+ {
+  "entry": "administration_1906-07_p002__e001",
+  "field": "tenure_note_text",
+  "old": "съ 20 августа 1894 г.",
+  "new": "съ 20 августа 1904 г.",
+  "why": "A:V6.36"
+ },
+ {
+  "entry": "administration_1906-07_p002__e012",
+  "field": "family_name",
+  "old": "Силинь",
+  "new": "Силинъ",
+  "why": "A:V6.37"
+ },
+ {
+  "entry": "administration_1906-07_p004__e001",
+  "field": "tenure_note_text",
+  "old": "съ 1 апрѣля 1903 г.",
+  "new": null,
+  "why": "A:V6.44"
+ },
+ {
+  "entry": "administration_1907-08_p001__e010",
+  "field": "family_name",
+  "old": "Поспѣвъ",
+  "new": "Поспѣевъ",
+  "why": "A:V7.4"
+ },
+ {
+  "entry": "administration_1907-08_p002__e022",
+  "field": "tenure_note_text",
+  "old": "съ 1 юня 1903 г.",
+  "new": "съ 1 іюня 1903 г.",
+  "why": "A:V7.6"
+ },
+ {
+  "entry": "administration_1907-08_p002__e021",
+  "field": "tenure_note_text",
+  "old": "съ 1 юня 1898 г.",
+  "new": "съ 1 іюня 1898 г.",
+  "why": "A:V7.7"
+ },
+ {
+  "entry": "administration_1907-08_p002__e003",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "A:V7.10"
+ },
+ {
+  "entry": "administration_1907-08_p004__e001",
+  "field": "tenure_note_text",
+  "old": "съ 1 сентября 1901 г.",
+  "new": null,
+  "why": "A:V7.13"
+ },
+ {
+  "entry": "administration_1908-09_p000__e011",
+  "field": "rank_or_title",
+  "old": "колл. сов.",
+  "new": null,
+  "why": "A:V7.15"
+ },
+ {
+  "entry": "administration_1908-09_p000__e004",
+  "field": "tenure_note_text",
+  "old": "(съ 1 юня 1888 г.). Завѣдывающій центральною библіотекою.",
+  "new": "(съ 1 іюня 1888 г.). Завѣдывающій центральною библіотекою.",
+  "why": "A:V7.16"
+ },
+ {
+  "entry": "administration_1908-09_p001__e009",
+  "field": "first_name",
+  "old": "Валерьян",
+  "new": "Валерьянъ",
+  "why": "A:V7.19"
+ },
+ {
+  "entry": "administration_1908-09_p002__e001",
+  "field": "tenure_note_text",
+  "old": "съ 28 января 1908 г.",
+  "new": null,
+  "why": "A:V7.21"
+ },
+ {
+  "entry": "administration_1908-09_p003__e006",
+  "field": "patronymic",
+  "old": "Тимоѳеевичъ",
+  "new": "Тимофеевичъ",
+  "why": "A:V7.25"
+ },
+ {
+  "entry": "administration_1909-10_p000__e007",
+  "field": "rank_or_title",
+  "old": "колл. ас.",
+  "new": "кол. ас.",
+  "why": "A:V7.27"
+ },
+ {
+  "entry": "administration_1909-10_p000__e004",
+  "field": "family_name",
+  "old": "Посникова",
+  "new": "Посниковъ",
+  "why": "A:V7.28"
+ },
+ {
+  "entry": "administration_1909-10_p001__e021",
+  "field": "rank_or_title",
+  "old": "неимѣющій чина",
+  "new": "неимѣщій чина",
+  "why": "A:V7.31"
+ },
+ {
+  "entry": "administration_1909-10_p002__e013",
+  "field": "rank_or_title",
+  "old": "пот. поч. граждан. (по найму съ 7 января 1885 г.)",
+  "new": "пот. поч. гражд. (по найму съ 7 января 1885 г.)",
+  "why": "A:V7.35"
+ },
+ {
+  "entry": "administration_1909-10_p002__e013",
+  "field": "tenure_note_text",
+  "old": "(по найму съ 7 января 1885 г.)",
+  "new": null,
+  "why": "A:V7.35"
+ },
+ {
+  "entry": "administration_1909-10_p002__e012",
+  "field": "tenure_note_text",
+  "old": "(по найму съ 1 ноября 1906 г. по 1 января 1907 г., на службѣ съ 1 января 1907 г.)",
+  "new": null,
+  "why": "A:V7.36"
+ },
+ {
+  "entry": "administration_1909-10_p002__e011",
+  "field": "family_name",
+  "old": "Силинь",
+  "new": "Силинъ",
+  "why": "A:V7.38"
+ },
+ {
+  "entry": "administration_1892-93_p003__e008",
+  "field": "family_name",
+  "old": "Млюдзѣевскій",
+  "new": "Млодзѣевскій",
+  "why": "B:V1.39"
+ },
+ {
+  "entry": "administration_1892-93_p003__e008",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": null,
+  "why": "B:V1.39"
+ },
+ {
+  "entry": "administration_1897-98_p003__e006",
+  "field": "family_name",
+  "old": "Млодзѣвскій",
+  "new": "Млодзѣевскій",
+  "why": "B:V3.27"
+ },
+ {
+  "entry": "administration_1897-98_p003__e006",
+  "field": "rank_or_title",
+  "old": "налв. сов.",
+  "new": "надв. сов.",
+  "why": "B:V3.27"
+ },
+ {
+  "entry": "administration_1899-00_p003__e013",
+  "field": "family_name",
+  "old": "Фонъ-Бооль",
+  "new": "Фонъ-Боолъ",
+  "why": "B:V3.39"
+ },
+ {
+  "entry": "administration_1903-04_p003__e021",
+  "field": "patronymic",
+  "old": "Казимировичъ",
+  "new": "Казиміровичъ",
+  "why": "B:V5.35"
+ },
+ {
+  "entry": "administration_1895-96_p000__e003",
+  "field": "rank_or_title",
+  "old": "колл. секр.",
+  "new": "колл. секр., въ званіи камеръ-юнкера",
+  "why": "B:V2.20"
+ },
+ {
+  "entry": "administration_1895-96_p001__e010",
+  "field": "rank_or_title",
+  "old": "л. ст. сов.",
+  "new": "д. ст. сов.",
+  "why": "B:V2.24"
+ },
+ {
+  "entry": "administration_1900-01_p003__e024",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": "д. ст. сов.",
+  "why": "B:V4.8"
+ },
+ {
+  "entry": "administration_1904-05_p002__e005",
+  "field": "rank_or_title",
+  "old": "пот. поч. гражд.",
+  "new": "по найму, пот. поч. гражд.",
+  "why": "B:V6.1"
+ },
+ {
+  "entry": "administration_1907-08_p003__e026",
+  "field": "rank_or_title",
+  "old": "совѣтникъ",
+  "new": "ст. совѣтникъ",
+  "why": "B:V7.12"
+ },
+ {
+  "entry": "administration_1903-04_p001__e011",
+  "field": "patronymic",
+  "old": "Фёдоровичъ",
+  "new": "Федоровичъ",
+  "why": "B:V5.22"
+ },
+ {
+  "entry": "administration_1904-05_p001__e013",
+  "field": "patronymic",
+  "old": "Фёдоровичъ",
+  "new": "Федоровичъ",
+  "why": "B:V5.45"
+ },
+ {
+  "entry": "administration_1894-95_p002__e018",
+  "field": "family_name",
+  "old": "Бриліантовъ",
+  "new": "Брилліантовъ",
+  "why": "B:V2.18"
+ },
+ {
+  "entry": "administration_1906-07_p000__e013",
+  "field": "tenure_note_text",
+  "old": "(съ 1 іюня 1888 г.)",
+  "new": "(съ 1 іюня 1888 г.). Завѣдывающій центральною библіотекою.",
+  "why": "B:V6.30"
+ },
+ {
+  "entry": "administration_1894-95_p002__e018",
+  "field": "tenure_note_text",
+  "old": "съ 1 августа 1887 г.). Назначенъ чиновникомъ особыхъ порученій при Конторѣ 1 сентября 1895 г.",
+  "new": "съ 1 августа 1887 г.). Съ 1 сентября 1895 г. назначенъ чиновникомъ особыхъ порученій при Конторѣ.",
+  "why": "B:V2.18"
+ },
+ {
+  "entry": "administration_1895-96_p001__e023",
+  "field": "tenure_note_text",
+  "old": "(съ 4 декабря 1892 г.)",
+  "new": "(съ 4 декабря 1892 г.). Оставилъ службу 1 мая 1896 г.",
+  "why": "B:V2.23"
+ },
+ {
+  "entry": "administration_1899-00_p000__e012",
+  "field": "tenure_note_text",
+  "old": "(съ 19 сентября 1882 г.). 6 марта 1900 г. назначенъ чинов-",
+  "new": "(съ 19 сентября 1882 г.). 6 марта 1900 г. назначенъ чиновникомъ особыхъ порученій при Дирекціи.",
+  "why": "B:V3.33"
+ },
+ {
+  "entry": "administration_1904-05_p001__e014",
+  "field": "tenure_note_text",
+  "old": "съ 13 марта 1901 г.",
+  "new": "(съ 13 марта 1903 г.). Назначенъ помощникомъ завѣдывающаго постановками 2 апрѣля 1905 г.",
+  "why": "B:V5.39 (year 1903 from the volumes before and after; the 1904-05 digit is damaged)"
+ },
+ {
+  "entry": "administration_1902-03_p001__ri12",
+  "field": "RECOVERED ROW",
+  "old": {
+   "family_name": null,
+   "first_name": null,
+   "patronymic": null,
+   "heading_path": "Поспѣевъ, Дмитрій Александровичъ, тит. сов."
+  },
+  "new": {
+   "family_name": "Поспѣевъ",
+   "first_name": "Дмитрій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "тит. сов."
+  },
+  "why": "F:name was in heading_path"
+ },
+ {
+  "entry": "administration_1902-03_p002__ri21",
+  "field": "RECOVERED ROW",
+  "old": {
+   "family_name": null,
+   "first_name": null,
+   "patronymic": null,
+   "heading_path": "Графъ Бобринскій, Алексѣй Алексѣевичъ, тит. сов."
+  },
+  "new": {
+   "family_name": "Графъ Бобринскій",
+   "first_name": "Алексѣй",
+   "patronymic": "Алексѣевичъ",
+   "rank_or_title": "тит. сов."
+  },
+  "why": "F:name was in heading_path"
+ },
+ {
+  "entry": "administration_1890-91_p002__e017",
+  "field": "first_name",
+  "old": "графъ",
+  "new": "Ѳедоръ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1890-91_p002__e017",
+  "field": "patronymic",
+  "old": "Ѳедоръ",
+  "new": "Львовичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1890-91_p002__e017",
+  "field": "rank_or_title",
+  "old": "Львовичъ",
+  "new": "графъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1892-93_p000__e005",
+  "field": "first_name",
+  "old": "графъ Станиславъ",
+  "new": "Станиславъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1892-93_p000__e005",
+  "field": "rank_or_title",
+  "old": "колл. рег.",
+  "new": "графъ, колл. рег.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1893-94_p000__e005",
+  "field": "first_name",
+  "old": "графъ Станиславъ",
+  "new": "Станиславъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1893-94_p000__e005",
+  "field": "rank_or_title",
+  "old": "колл. рег.",
+  "new": "графъ, колл. рег.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1894-95_p000__e005",
+  "field": "first_name",
+  "old": "графъ Станиславъ",
+  "new": "Станиславъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1894-95_p000__e005",
+  "field": "rank_or_title",
+  "old": "колл. рег.",
+  "new": "графъ, колл. рег.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1895-96_p000__e002",
+  "field": "first_name",
+  "old": "баронъ",
+  "new": "Владиміръ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1895-96_p000__e002",
+  "field": "patronymic",
+  "old": "Владиміръ Алексѣевичъ",
+  "new": "Алексѣевичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1895-96_p000__e002",
+  "field": "rank_or_title",
+  "old": null,
+  "new": "баронъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1895-96_p000__e006",
+  "field": "first_name",
+  "old": "графъ",
+  "new": "Станиславъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1895-96_p000__e006",
+  "field": "patronymic",
+  "old": "Станиславъ Адамовичъ",
+  "new": "Адамовичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1895-96_p000__e006",
+  "field": "rank_or_title",
+  "old": "колл. рег.",
+  "new": "графъ, колл. рег.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1896-97_p000__e001",
+  "field": "first_name",
+  "old": "баронъ",
+  "new": "Владиміръ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1896-97_p000__e001",
+  "field": "patronymic",
+  "old": "Владиміръ Алексѣевичъ",
+  "new": "Алексѣевичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1896-97_p000__e001",
+  "field": "rank_or_title",
+  "old": "колл. асс.",
+  "new": "баронъ, колл. асс.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1896-97_p000__e005",
+  "field": "first_name",
+  "old": "графъ",
+  "new": "Станиславъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1896-97_p000__e005",
+  "field": "patronymic",
+  "old": "Станиславъ Адамовичъ",
+  "new": "Адамовичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1896-97_p000__e005",
+  "field": "rank_or_title",
+  "old": "колл. рег.",
+  "new": "графъ, колл. рег.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1897-98_p000__e004",
+  "field": "first_name",
+  "old": "баронъ",
+  "new": "Владиміръ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1897-98_p000__e004",
+  "field": "patronymic",
+  "old": "Владиміръ Алексѣевичъ",
+  "new": "Алексѣевичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1897-98_p000__e004",
+  "field": "rank_or_title",
+  "old": "надв. сов.",
+  "new": "баронъ, надв. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1897-98_p000__e007",
+  "field": "first_name",
+  "old": "графъ",
+  "new": "Станиславъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1897-98_p000__e007",
+  "field": "patronymic",
+  "old": "Станиславъ Адамовичъ",
+  "new": "Адамовичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1897-98_p000__e007",
+  "field": "rank_or_title",
+  "old": "колл. рег.",
+  "new": "графъ, колл. рег.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1898-99_p000__e002",
+  "field": "family_name",
+  "old": "Князь Волконскій",
+  "new": "Волконскій",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1898-99_p000__e002",
+  "field": "rank_or_title",
+  "old": "ст. сов., въ званіи камергера",
+  "new": "князь, ст. сов., въ званіи камергера",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1898-99_p000__e005",
+  "field": "first_name",
+  "old": "баронъ",
+  "new": "Владиміръ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1898-99_p000__e005",
+  "field": "patronymic",
+  "old": "Владиміръ Алексѣевичъ",
+  "new": "Алексѣевичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1898-99_p000__e005",
+  "field": "rank_or_title",
+  "old": "надв. сов.",
+  "new": "баронъ, надв. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1898-99_p000__e008",
+  "field": "first_name",
+  "old": "графъ",
+  "new": "Станиславъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1898-99_p000__e008",
+  "field": "patronymic",
+  "old": "Станиславъ Адамовичъ",
+  "new": "Адамовичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1898-99_p000__e008",
+  "field": "rank_or_title",
+  "old": "колл. рег.",
+  "new": "графъ, колл. рег.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1899-00_p000__e001",
+  "field": "first_name",
+  "old": "Князь",
+  "new": "Сергѣй",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1899-00_p000__e001",
+  "field": "patronymic",
+  "old": "Сергѣй Михайловичъ",
+  "new": "Михайловичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1899-00_p000__e001",
+  "field": "rank_or_title",
+  "old": "ст. сов., въ званіи камергера",
+  "new": "князь, ст. сов., въ званіи камергера",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1899-00_p000__e005",
+  "field": "first_name",
+  "old": "баронъ",
+  "new": "Владиміръ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1899-00_p000__e005",
+  "field": "patronymic",
+  "old": "Владиміръ Алексѣевичъ",
+  "new": "Алексѣевичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1899-00_p000__e005",
+  "field": "rank_or_title",
+  "old": "надв. сов.",
+  "new": "баронъ, надв. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1899-00_p000__e008",
+  "field": "first_name",
+  "old": "графъ",
+  "new": "Станиславъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1899-00_p000__e008",
+  "field": "patronymic",
+  "old": "Станиславъ Адамовичъ",
+  "new": "Адамовичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1899-00_p000__e008",
+  "field": "rank_or_title",
+  "old": "колл. рег.",
+  "new": "графъ, колл. рег.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1900-01_p000__e001",
+  "field": "first_name",
+  "old": "Князь",
+  "new": "Сергѣй",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1900-01_p000__e001",
+  "field": "patronymic",
+  "old": "Сергѣй Михайловичъ",
+  "new": "Михайловичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1900-01_p000__e001",
+  "field": "rank_or_title",
+  "old": "ст. сов.",
+  "new": "князь, ст. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1900-01_p000__e007",
+  "field": "first_name",
+  "old": "графъ Станиславъ Адамовичъ",
+  "new": "Станиславъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1900-01_p000__e007",
+  "field": "patronymic",
+  "old": null,
+  "new": "Адамовичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1900-01_p000__e007",
+  "field": "rank_or_title",
+  "old": "колл. рег.",
+  "new": "графъ, колл. рег.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1900-01_p001__e013",
+  "field": "first_name",
+  "old": "баронъ",
+  "new": "Владиміръ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1900-01_p001__e013",
+  "field": "patronymic",
+  "old": "Владиміръ Алексѣевичъ",
+  "new": "Алексѣевичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1900-01_p001__e013",
+  "field": "rank_or_title",
+  "old": null,
+  "new": "баронъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1900-01_p002__e005",
+  "field": "family_name",
+  "old": "Графъ Бобринскій",
+  "new": "Бобринскій",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1900-01_p002__e005",
+  "field": "rank_or_title",
+  "old": "колл. секр.",
+  "new": "графъ, колл. секр.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1901-02_p000__e006",
+  "field": "first_name",
+  "old": "графъ",
+  "new": "Станиславъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1901-02_p000__e006",
+  "field": "patronymic",
+  "old": "Станиславъ",
+  "new": "Адамовичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1901-02_p000__e006",
+  "field": "rank_or_title",
+  "old": "Адамовичъ, колл. рег.",
+  "new": "графъ, колл. рег.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1901-02_p001__e012",
+  "field": "first_name",
+  "old": "баронъ",
+  "new": "Владиміръ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1901-02_p001__e012",
+  "field": "patronymic",
+  "old": "Владиміръ",
+  "new": "Алексѣевичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1901-02_p001__e012",
+  "field": "rank_or_title",
+  "old": "Алексѣевичъ, надв. сов.",
+  "new": "баронъ, надв. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1901-02_p002__e005",
+  "field": "family_name",
+  "old": "Графъ Бобринскій",
+  "new": "Бобринскій",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1901-02_p002__e005",
+  "field": "rank_or_title",
+  "old": "колл. секр.",
+  "new": "графъ, колл. секр.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1902-03_p000__e006",
+  "field": "first_name",
+  "old": "свѣтлѣйшій",
+  "new": null,
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1902-03_p000__e006",
+  "field": "patronymic",
+  "old": "князь",
+  "new": null,
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1902-03_p000__e006",
+  "field": "rank_or_title",
+  "old": "въ званіи камеръ-юнкера",
+  "new": "свѣтлѣйшій князь, въ званіи камеръ-юнкера",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1902-03_p000__e007",
+  "field": "first_name",
+  "old": "графъ",
+  "new": "Станиславъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1902-03_p000__e007",
+  "field": "patronymic",
+  "old": "Станиславъ Адамовичъ",
+  "new": "Адамовичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1902-03_p000__e007",
+  "field": "rank_or_title",
+  "old": "колл. рег.",
+  "new": "графъ, колл. рег.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1902-03_p001__e015",
+  "field": "first_name",
+  "old": "баронъ Владиміръ",
+  "new": "Владиміръ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1902-03_p001__e015",
+  "field": "rank_or_title",
+  "old": "колл. сов.",
+  "new": "баронъ, колл. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1902-03_p002__e021",
+  "field": "family_name",
+  "old": "Графъ Бобринскій",
+  "new": "Бобринскій",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1902-03_p002__e021",
+  "field": "rank_or_title",
+  "old": "тит. сов.",
+  "new": "графъ, тит. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1903-04_p000__e007",
+  "field": "first_name",
+  "old": "свѣтлѣйшій князь",
+  "new": null,
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1903-04_p000__e007",
+  "field": "rank_or_title",
+  "old": "въ званіи камеръ-юнкера, колл. асс.",
+  "new": "свѣтлѣйшій князь, въ званіи камеръ-юнкера, колл. асс.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1903-04_p001__e014",
+  "field": "first_name",
+  "old": "баронъ",
+  "new": "Владиміръ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1903-04_p001__e014",
+  "field": "patronymic",
+  "old": "Владиміръ Алексѣевичъ",
+  "new": "Алексѣевичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1903-04_p001__e014",
+  "field": "rank_or_title",
+  "old": "колл. сов.",
+  "new": "баронъ, колл. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1903-04_p002__e013",
+  "field": "family_name",
+  "old": "Графъ Бобринскій",
+  "new": "Бобринскій",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1903-04_p002__e013",
+  "field": "rank_or_title",
+  "old": "тит. сов.",
+  "new": "графъ, тит. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1904-05_p000__e007",
+  "field": "first_name",
+  "old": "свѣтлѣйшій",
+  "new": null,
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1904-05_p000__e007",
+  "field": "patronymic",
+  "old": "князь",
+  "new": null,
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1904-05_p000__e007",
+  "field": "rank_or_title",
+  "old": "въ званіи камеръ-юнкера, колл. асс.",
+  "new": "свѣтлѣйшій князь, въ званіи камеръ-юнкера, колл. асс.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1904-05_p001__e017",
+  "field": "first_name",
+  "old": "баронъ",
+  "new": "Владиміръ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1904-05_p001__e017",
+  "field": "patronymic",
+  "old": "Владиміръ Алексѣевичъ",
+  "new": "Алексѣевичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1904-05_p001__e017",
+  "field": "rank_or_title",
+  "old": "колл. сов.",
+  "new": "баронъ, колл. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1904-05_p002__e003",
+  "field": "family_name",
+  "old": "Графъ Бобринскій",
+  "new": "Бобринскій",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1904-05_p002__e003",
+  "field": "rank_or_title",
+  "old": "тит. сов.",
+  "new": "графъ, тит. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1904-05_p002__e018",
+  "field": "first_name",
+  "old": "графъ",
+  "new": "Николай",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1904-05_p002__e018",
+  "field": "patronymic",
+  "old": "Николай Георгіевичъ",
+  "new": "Георгіевичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1904-05_p002__e018",
+  "field": "rank_or_title",
+  "old": "кол. секр.",
+  "new": "графъ, кол. секр.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1905-06_p000__e005",
+  "field": "first_name",
+  "old": "баронъ",
+  "new": "Владиміръ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1905-06_p000__e005",
+  "field": "patronymic",
+  "old": "Владиміръ",
+  "new": "Алексѣевичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1905-06_p000__e005",
+  "field": "rank_or_title",
+  "old": "Алексѣевичъ, ст. сов.",
+  "new": "баронъ, ст. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1905-06_p000__e006",
+  "field": "first_name",
+  "old": "свѣтлѣйшій",
+  "new": null,
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1905-06_p000__e006",
+  "field": "patronymic",
+  "old": "князь",
+  "new": null,
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1905-06_p000__e006",
+  "field": "rank_or_title",
+  "old": "въ званіи камеръ-юнкера, колл. асс.",
+  "new": "свѣтлѣйшій князь, въ званіи камеръ-юнкера, колл. асс.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1905-06_p000__e007",
+  "field": "first_name",
+  "old": "графъ",
+  "new": "Борисъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1905-06_p000__e007",
+  "field": "patronymic",
+  "old": "Борисъ",
+  "new": "Георгіевичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1905-06_p000__e007",
+  "field": "rank_or_title",
+  "old": "Георгіевичъ, тит. сов.",
+  "new": "графъ, тит. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1905-06_p002__e008",
+  "field": "first_name",
+  "old": "графъ",
+  "new": "Николай",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1905-06_p002__e008",
+  "field": "patronymic",
+  "old": "Николай Георгіевичъ",
+  "new": "Георгіевичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1905-06_p002__e008",
+  "field": "rank_or_title",
+  "old": "тит. сов.",
+  "new": "графъ, тит. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1905-06_p002__e016",
+  "field": "family_name",
+  "old": "Графъ Бобринскій",
+  "new": "Бобринскій",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1905-06_p002__e016",
+  "field": "rank_or_title",
+  "old": "тит. сов.",
+  "new": "графъ, тит. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1906-07_p002__e009",
+  "field": "family_name",
+  "old": "Графъ Бобринскій",
+  "new": "Бобринскій",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1906-07_p002__e009",
+  "field": "rank_or_title",
+  "old": "тит. сов.",
+  "new": "графъ, тит. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1907-08_p002__e009",
+  "field": "family_name",
+  "old": "Графъ Бобринскій",
+  "new": "Бобринскій",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1907-08_p002__e009",
+  "field": "rank_or_title",
+  "old": "тит. сов.",
+  "new": "графъ, тит. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1908-09_p000__e005",
+  "field": "first_name",
+  "old": "графъ",
+  "new": "Владиміръ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1908-09_p000__e005",
+  "field": "patronymic",
+  "old": "Владиміръ",
+  "new": "Ивановичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1908-09_p000__e005",
+  "field": "rank_or_title",
+  "old": "Ивановичъ",
+  "new": "графъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1908-09_p000__e006",
+  "field": "tenure_note_text",
+  "old": "ст. сов. (съ 16 февраля 1896 г.)",
+  "new": "(съ 16 февраля 1896 г.)",
+  "why": "C:title (rank slipped into the note)"
+ },
+ {
+  "entry": "administration_1908-09_p000__e006",
+  "field": "first_name",
+  "old": "баронъ",
+  "new": "Владиміръ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1908-09_p000__e006",
+  "field": "patronymic",
+  "old": "Владиміръ",
+  "new": "Алексѣевичъ",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1908-09_p000__e006",
+  "field": "rank_or_title",
+  "old": "Алексѣевичъ",
+  "new": "баронъ, ст. сов.",
+  "why": "C:title"
+ },
+ {
+  "entry": "administration_1893-94_p001__e003",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "съ 19 сентября 1882 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 19 сентября 1882 г.",
+    "end_date_text": "1 октября 1893 г.",
+    "end_type": "left service"
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1893-94_p001__e025",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "съ 21 февраля 1876 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 21 февраля 1876 г.",
+    "end_date_text": "20 марта 1894 г.",
+    "end_type": "left service"
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1893-94_p003__e006",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "20 октѧбря 1860 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 20 октября 1860 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1894-95_p000__e003",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "17 августа 1892 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "17 августа 1892 г.",
+    "end_date_text": "22 августа 1895 г.",
+    "end_type": "left service"
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1895-96_p001__e023",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "4 декабря 1892 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "4 декабря 1892 г.",
+    "end_date_text": "1 мая 1896 г.",
+    "end_type": "left service"
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1895-96_p002__e006",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "съ 1 юня 1888 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 1 іюня 1888 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1896-97_p000__e002",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "съ 15 октября 1892 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 15 октября 1892 г.",
+    "end_date_text": "21 декабря 1896 г.",
+    "end_type": "left service"
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1896-97_p002__e010",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "20 сентября 1886 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "20 сентября 1886 г.",
+    "end_date_text": "30 марта 1897 г.",
+    "end_type": "left service"
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1896-97_p002__e016",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "16 сентября 1887 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "16 сентября 1887 г.",
+    "end_date_text": "20 декабря 1896 г.",
+    "end_type": "left service"
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1896-97_p002__e028",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "20 октября 1860 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "20 октября 1860 г.",
+    "end_date_text": "8 ноября 1896 г.",
+    "end_type": "left service"
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1897-98_p001__e013",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "19 сентября 1882 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "19 сентября 1882 г.",
+    "end_date_text": "1 ноября 1897 г.",
+    "end_type": "left service"
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1897-98_p002__e010",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "съ 16 іюня 1882 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 16 іюня 1882 г.",
+    "end_date_text": "11 апрѣля 1898 г.",
+    "end_type": "left service"
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1902-03_p001__e013",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "съ 9 декабря 1880 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 9 декабря 1880 г.",
+    "end_date_text": "5 апрѣля 1903 г.",
+    "end_type": "left service"
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1902-03_p002__e010",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "съ 24 іюля 1876 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 24 іюля 1876 г.",
+    "end_date_text": "1 сентября 1903 г.",
+    "end_type": "left service"
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1902-03_p002__e019",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "съ 1 августа 1887 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 1 августа 1887 г.",
+    "end_date_text": "31 декабря 1902 г.",
+    "end_type": "left service"
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1902-03_p004__e027",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "съ 7 апрѣля 1881 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 7 апрѣля 1881 г.",
+    "end_date_text": "6 іюня 1903 г.",
+    "end_type": "left service"
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1904-05_p001__e014",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "съ 13 марта 1901 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 13 марта 1903 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1906-07_p002__e001",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "20 августа 1894 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 20 августа 1904 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1906-07_p004__e001",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "съ 1 апрѣля 1903 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1907-08_p002__e021",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "1 юня 1898 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 1 іюня 1898 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1907-08_p002__e022",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "1 юня 1903 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 1 іюня 1903 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1907-08_p004__e001",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "съ 1 сентября 1901 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1908-09_p000__e004",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "1 юня 1888 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [
+   {
+    "start_date_text": "съ 1 іюня 1888 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1908-09_p002__e001",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "съ 28 января 1908 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1909-10_p002__e012",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "1 ноября 1906 г.",
+    "end_date_text": "1 января 1907 г.",
+    "end_type": "other"
+   },
+   {
+    "start_date_text": "1 января 1907 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": "REVIEW (multi-period)",
+  "why": "P:skipped"
+ },
+ {
+  "entry": "administration_1909-10_p002__e013",
+  "field": "service_periods",
+  "old": [
+   {
+    "start_date_text": "7 января 1885 г.",
+    "end_date_text": null,
+    "end_type": null
+   }
+  ],
+  "new": [],
+  "why": "P:reconcile"
+ },
+ {
+  "entry": "administration_1896-97_p000__e013",
+  "field": "ADD ROW",
+  "old": null,
+  "new": "Всеволожской, Иванъ Александровичъ",
+  "why": "E:missing row"
+ },
+ {
+  "entry": "administration_1909-10_p002__e020",
+  "field": "ADD ROW",
+  "old": null,
+  "new": "Покровскій, Сергѣй Алексѣевичъ",
+  "why": "E:missing row"
+ },
+ {
+  "entry": "administration_1902-03_p002__e007",
+  "field": "REMOVE ROW",
+  "old": "Находятся въ вѣдѣніи придворной медицинской части",
+  "new": null,
+  "why": "D:note, not a person"
+ },
+ {
+  "entry": "administration_1903-04_p002__e002",
+  "field": "REMOVE ROW",
+  "old": "Находятся въ вѣдѣніи придворной медицинской части",
+  "new": null,
+  "why": "D:note, not a person"
+ },
+ {
+  "entry": "administration_1905-06_p002__e005",
+  "field": "REMOVE ROW",
+  "old": "Накладятся въ вѣдѣніи придворной медицинской части",
+  "new": null,
+  "why": "D:note, not a person"
+ },
+ {
+  "entry": "administration_1906-07_p002__e004",
+  "field": "REMOVE ROW",
+  "old": "Нaходятся въ вѣдѣніи придворной медицинской части",
+  "new": null,
+  "why": "D:note, not a person"
+ },
+ {
+  "entry": "administration_1907-08_p002__e004",
+  "field": "REMOVE ROW",
+  "old": "Находятся въ вѣдѣніи придворной медицинской части",
+  "new": null,
+  "why": "D:note, not a person"
+ },
+ {
+  "entry": "administration_1908-09_p002__e004",
+  "field": "REMOVE ROW",
+  "old": "Находятся въ вѣдѣніи придворной медицинской части",
+  "new": null,
+  "why": "D:note, not a person"
+ },
+ {
+  "entry": "administration_1909-10_p002__e019",
+  "field": "REMOVE ROW",
+  "old": "Называется въ вѣдѣніи придворной медицинской части",
+  "new": null,
+  "why": "D:note, not a person"
+ }
+]

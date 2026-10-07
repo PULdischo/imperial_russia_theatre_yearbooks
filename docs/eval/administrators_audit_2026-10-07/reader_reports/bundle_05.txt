@@ -1,0 +1,314 @@
+BLIND READER REPORT -- bundle_05 (administration_1897-98_p001..p003, administration_1898-99_p000..p003)
+Note: administration_1898-99 has p000-p003 (printed folios 131-134); 1897-98 pages carry folios 110-112 and surnames are set in bold in that season.
+
+PAGE | administration_1897-98_p001 | 110 (printed "— 110 —" at foot, centred-right) | no running title; continues the St Petersburg Office list from the previous page (no H1 on this page); first printed heading is "Хозяйственное отдѣленіе."
+NOTE: two columns separated by a wavy/zigzag ornamental rule. Surnames are printed in BOLD in this season's list (1897-98); everything else is regular roman. Heavy page curvature/finger at lower left; text is clear. Digit 1 printed as small-cap-like I; the left page edge shows a dark gutter.
+HEAD H2 | Хозяйственное отдѣленіе. | medium-large spaced sans-serif/roman, centred over the left column (initial Х with long swash)
+HEAD H3 | Дѣлопроизводитель. | small spaced typewriter-like sans-serif, centred
+ROW | - | Аршеневскій, Василій Николаевичъ, колл. сов. (съ 20 апрѣля 1889 г.). | Аршеневскій | - | Василій | Николаевичъ | колл. сов. | (съ 20 апрѣля 1889 г.) NOTE: surname in bold; "колл. / сов." split across lines.
+HEAD H3 | Архитекторы: | small sans-serif, centred, ending with colon
+ROW | 1 | 1. Гешвендъ, Александръ Романовичъ, д. ст. сов. (съ 1 января 1879 г.). | Гешвендъ | - | Александръ | Романовичъ | д. ст. сов. | (съ 1 января 1879 г.)
+ROW | 2 | 2. Шретеръ, Викторъ Александровичъ, д. ст. сов. (съ 9 августа 1882 г.). | Шретеръ | - | Викторъ | Александровичъ | д. ст. сов. | (съ 9 августа 1882 г.)
+HEAD H3 | Завѣдывающій механическою частью. | small sans-serif, centred
+ROW | - | Савельевъ, Николай Ѳедоровичъ, тит. сов. (съ 1 апрѣля 1897 г.). | Савельевъ | - | Николай | Ѳедоровичъ | тит. сов. | (съ 1 апрѣля 1897 г.)
+HEAD H3 | Завѣдывающій экипажнымъ заведеніемъ. | small sans-serif, centred; printed "заведеніемъ" with plain е (not ѣ)
+ROW | - | Кедринъ, Никаноръ Никаноровичъ (съ 1 февраля 1897 г.). | Кедринъ | - | Никаноръ | Никаноровичъ | - (no rank printed) | (съ 1 февраля 1897 г.)
+HEAD H3 | Полиціймейстеры театровъ: | small sans-serif, centred, with colon
+HEAD H3 | Маріинскій театръ. | smaller condensed sans-serif, centred (sub-heading under Полиціймейстеры театровъ)
+ROW | - | Лееръ, Евгеній Генриховичъ, подполковникъ л.-гв. Уланскаго полка (съ 18 октября 1893 г.). | Лееръ | - | Евгеній | Генриховичъ | подполковникъ л.-гв. Уланскаго полка (military rank/regiment) | (съ 18 октября 1893 г.) NOTE: line break "подполков-/никъ" joined; surname letter-spaced in bold.
+HEAD H3 | Александринскій театръ. | smaller condensed sans-serif, centred
+ROW | - | Клечковскій, Альбинъ Владиславовичъ, полковникъ л.-гв. Московскаго полка (съ 1 августа 1882 г.). | Клечковскій | - | Альбинъ | Владиславовичъ | полковникъ л.-гв. Московскаго полка (military rank/regiment) | (съ 1 августа 1882 г.)
+HEAD H3 | Михайловскій театръ. | smaller condensed sans-serif, centred
+ROW | - | Адамовичъ, Модестъ Станиславовичъ, подполковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона (съ 1 августа 1882 г.). | Адамовичъ | - | Модестъ | Станиславовичъ | подполковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона (military rank/unit) | (съ 1 августа 1882 г.)
+HEAD H2 | Счетное отдѣленіе. | medium spaced sans-serif, centred (initial С with decorative tail)
+HEAD H3 | Бухгалтеръ. | small sans-serif, centred
+ROW | - | Вальдштейнъ, Аркадій Логиновичъ, колл. сов. (съ 16 іюня 1867 г.). | Вальдштейнъ | - | Аркадій | Логиновичъ | колл. сов. | (съ 16 іюня 1867 г.)
+HEAD H3 | Помощникъ бухгалтера. | small sans-serif, centred
+ROW | - | Поспѣевъ, Дмитрій Александровичъ, губ. секр. (съ 18 января 1883 г.). | Поспѣевъ | - | Дмитрій | Александровичъ | губ. секр. | (съ 18 января 1883 г.)
+HEAD H3 | Экзекуторъ Конторы. | small sans-serif, centred
+ROW | - | Анцъ, Павелъ Христофоровичъ, надв. сов. (съ 9 декабря 1880 г.). | Анцъ | - | Павелъ | Христофоровичъ | надв. сов. | (съ 9 декабря 1880 г.)
+HEAD H3 | Журналистъ Конторы. | small sans-serif, centred
+ROW | - | Клементьевъ, Николай Степановичъ губ. секр. (съ 1 января 1883 г.). | Клементьевъ | - | Николай | Степановичъ | губ. секр. | (съ 1 января 1883 г.) NOTE: NO comma after the patronymic "Степановичъ" before "губ. секр." in print.
+HEAD H2 | Монтировочная часть. | medium sans-serif, centred (initial М with swash)
+HEAD H3 | Завѣдывающій монтировочною частью. | small sans-serif, centred
+ROW | - | Домерщиковъ, Платонъ Павловичъ, д. ст. сов. (съ 19 сентября 1882 г.). Оставилъ службу 1 ноября 1897 г | Домерщиковъ | - | Платонъ | Павловичъ | д. ст. сов. | (съ 19 сентября 1882 г.). Оставилъ службу 1 ноября 1897 г NOTE: the "Оставилъ службу 1 ноября 1897 г" line is a separate centred line under the entry, no final full stop after "г".
+HEAD H3 | Старшій помощникъ завѣдывающаго монтировочною частью. | small sans-serif, centred, set over two lines ("монти-/ровочною частью.")
+ROW | - | Молчановъ, Иванъ Николаевичъ, колл. сов. (съ 10 ноября 1887 г.). | Молчановъ | - | Иванъ | Николаевичъ | колл. сов. | (съ 10 ноября 1887 г.) NOTE: last entry of the left column.
+HEAD H3 | Помощники завѣдывающаго монтировочною частью: | small sans-serif, centred, two lines ("... монтировочною / частью:"), top of RIGHT column
+ROW | 1 | 1. Кржижановскій, Викторъ Викторовичъ, колл. асс. (съ 1 октября 1893 г.). | Кржижановскій | - | Викторъ | Викторовичъ | колл. асс. | (съ 1 октября 1893 г.)
+ROW | 2 | 2. Петровъ, Константинъ Андреевичъ, надв. сов. (съ 19 сентября 1882 г.). | Петровъ | - | Константинъ | Андреевичъ | надв. сов. | (съ 19 сентября 1882 г.)
+ROW | 3 | 3. Шишко, Николай Макаровичъ, надв. сов. (съ 18 января 1880 г.). | Шишко | - | Николай | Макаровичъ | надв. сов. | (съ 18 января 1880 г.)
+HEAD H3 | Художникъ и библіотекарь монтировочной библіотеки. | small sans-serif, centred, two lines
+ROW | - | Пономаревъ, Евгеній Петровичъ, тит. сов. (съ 1 февраля 1887 г.). | Пономаревъ | - | Евгеній | Петровичъ | тит. сов. | (съ 1 февраля 1887 г.)
+HEAD H3 | Помощникъ художника и библіотекаря монтировочной библіотеки. | small sans-serif, centred, two lines
+ROW | - | Воскресенскій, Аполлинарій Константиновичъ (съ 1 января 1898 г.). | Воскресенскій | - | Аполлинарій | Константиновичъ | - (no rank printed) | (съ 1 января 1898 г.) NOTE: hyphenated "Константино-/вичъ", joined.
+HEAD H3 | Скульпторъ и завѣдывающій бутафорской мастерской. | small sans-serif, centred, two lines
+ROW | - | Каменскій, Павелъ Павловичъ, тит. сов. (съ 1 августа 1888 г.). | Каменскій | - | Павелъ | Павловичъ | тит. сов. | (съ 1 августа 1888 г.)
+HEAD H3 | Помощникъ скульптора и завѣдывающаго бутафорской мастерской. | small sans-serif, centred, two lines
+ROW | - | Захарьинъ, Павелъ Ивановичъ (съ 1 декабря 1897 г.). | Захарьинъ | - | Павелъ | Ивановичъ | - (no rank printed) | (съ 1 декабря 1897 г.) NOTE: "де-/кабря" hyphenated, joined.
+HEAD H3 | Дѣлопроизводители монтировочнаго отдѣленія: | small sans-serif, centred, two lines
+ROW | 1 | 1. Андреевъ, Владиміръ Александровичъ, колл. секр. (съ 1 ноября 1879 г.). | Андреевъ | - | Владиміръ | Александровичъ | колл. секр. | (съ 1 ноября 1879 г.)
+ROW | 2 | 2. Тарасовъ, Ѳедоръ Лаврентьевичъ, колл. асс. (съ 19 іюля 1869 г.). | Тарасовъ | - | Ѳедоръ | Лаврентьевичъ | колл. асс. | (съ 19 іюля 1869 г.)
+HEAD H2 | Врачебная часть. | medium sans-serif, centred (initial В with swash)
+HEAD H3 | Штатные врачи: | small sans-serif, centred, colon
+ROW | 1 | 1. Генъ, Анатолій Александровичъ, ст. сов. (съ 17 сентября 1882 г.). | Генъ | - | Анатолій | Александровичъ | ст. сов. | (съ 17 сентября 1882 г.)
+ROW | 2 | 2. Липскій, Александръ Александровичъ, ст. сов. (съ 23 октября 1893 г.). | Липскій | - | Александръ | Александровичъ | ст. сов. | (съ 23 октября 1893 г.)
+ROW | 3 | 3. Сукова, Надежда Всеволодовна (съ 1 декабря 1897 г.). | Сукова | - | Надежда | Всеволодовна | - (no rank printed) | (съ 1 декабря 1897 г.) NOTE: woman; no rank.
+HEAD H3 | Дежурные врачи: | small sans-serif, centred, colon
+ROW | 1 | 1. Бобрицкій, Константинъ Ивановичъ, надв. сов. (съ 1 марта 1894 г.). | Бобрицкій | - | Константинъ | Ивановичъ | надв. сов. | (съ 1 марта 1894 г.)
+ROW | 2 | 2 Гладкій, Адольфъ Викентьевичъ, колл. сов. (съ 1 марта 1890 г.). | Гладкій | - | Адольфъ | Викентьевичъ | колл. сов. | (съ 1 марта 1890 г.) NOTE: NO full stop after the list number "2" in print.
+ROW | 3 | 3. Горнъ, Эмануилъ Эмануиловичъ, ст. сов. (съ 7 декабря 1879 г.). | Горнъ | - | Эмануилъ | Эмануиловичъ | ст. сов. | (съ 7 декабря 1879 г.)
+ROW | 4 | 4. Горянскій, Григорій Ивановичъ, колл. асс. (съ 10 ноября 1893 г.). | Горянскій | - | Григорій | Ивановичъ | колл. асс. | (съ 10 ноября 1893 г.)
+ROW | 5 | 5. Іогихесъ, Александръ Іосифовичъ, ст. сов. (съ 7 марта 1887 г.). | Іогихесъ | - | Александръ | Іосифовичъ | ст. сов. | (съ 7 марта 1887 г.) NOTE: dotted І in surname and patronymic.
+ROW | 6 | 6. Киселевъ, Николай Сергѣевичъ, надв. сов. (съ 24 декабря 1891 г.). | Киселевъ | - | Николай | Сергѣевичъ | надв. сов. | (съ 24 декабря 1891 г.)
+ROW | 7 | 7, Краевскій, Владиславъ Францевичъ, ст. сов. (съ 10 декабря 1869 г.) | Краевскій | - | Владиславъ | Францевичъ | ст. сов. | (съ 10 декабря 1869 г.) NOTE: number followed by a COMMA ("7,") instead of a full stop; NO closing full stop after the closing parenthesis. This is the last entry on the page: the Дежурные врачи list continues on the next page (administration_1897-98_p002), starting at number 8.
+COUNT | rows=33 | headings=26
+
+PAGE | administration_1897-98_p002 | 111 (printed "— 111 —" at foot) | no running title; continues the St Petersburg Office list (Дежурные врачи, Канцелярскіе чиновники) from the previous page and then begins the Moscow Office
+NOTE: two columns separated by a wavy rule; the St Petersburg part (top) is separated from the Moscow part (below) by a small ornament (diamond-dash-flower rule). Surnames are in BOLD (as on the previous page). Finger at lower right and dark gutter at right; text fully legible.
+TEXT | (none) ... | the left column at the top begins with number 8 of the "Дежурные врачи:" list started on the previous page (no heading repeated on this page).
+ROW | 8 | 8. Лилѣевъ, Ѳедоръ Николаевичъ, колл. сов. (съ 14 апрѣля 1895 г.). | Лилѣевъ | - | Ѳедоръ | Николаевичъ | колл. сов. | (съ 14 апрѣля 1895 г.)
+ROW | 9 | 9. Ненсбергъ, Иванъ Егоровичъ, ст. сов. (съ 12 октября 1878 г.). | Ненсбергъ | - | Иванъ | Егоровичъ | ст. сов. | (съ 12 октября 1878 г.)
+ROW | 10 | 10. Пассекъ, Алексѣй Помпеевичъ (съ 11 января 1895 г.). | Пассекъ | - | Алексѣй | Помпеевичъ | - (no rank printed) | (съ 11 января 1895 г.)
+ROW | 11 | 11. Петровъ, Николай Іоновичъ, колл. сов. (съ 1 іюля 1889 г.). | Петровъ | - | Николай | Іоновичъ | колл. сов. | (съ 1 іюля 1889 г.) NOTE: patronymic begins with dotted І (Іоновичъ).
+ROW | 12 | 12. Смольскій, Иванъ Ивановичъ, ст. сов. (съ 17 января 1885 г.). | Смольскій | - | Иванъ | Ивановичъ | ст. сов. | (съ 17 января 1885 г.)
+ROW | 13 | 13. Томашевскій, Леонтій Ивановичъ, д. ст. сов. (съ 17 декабря 1868 г.). | Томашевскій | - | Леонтій | Ивановичъ | д. ст. сов. | (съ 17 декабря 1868 г.)
+ROW | 14 | 14. Цабель, Оскаръ Альбертовичъ, надв. сов. (съ 19 января 1894 г.). | Цабель | - | Оскаръ | Альбертовичъ | надв. сов. | (съ 19 января 1894 г.)
+ROW | 15 | 15. Юркевичъ, Николай Васильевичъ, ст. сов. (съ 1 марта 1890 г.). | Юркевичъ | - | Николай | Васильевичъ | ст. сов. | (съ 1 марта 1890 г.)
+ROW | 16 | 16. Ягодинскій, Александръ Евгеньевичъ, надв. сов. (съ 26 октября 1896 г.). | Ягодинскій | - | Александръ | Евгеньевичъ | надв. сов. | (съ 26 октября 1896 г.)
+HEAD H3 | Канцелярскіе чиновники Конторы: | medium sans-serif (larger than the position headings), centred at top of right column; the last letter of "Канцелярскіе" looks like a ө/е with a break in the crossbar (damaged type?) -- read as е
+ROW | 1 | 1. Бартновскій, Петръ Осиповичъ, неимѣющій чина (съ 15 января 1893 г.). | Бартновскій | - | Петръ | Осиповичъ | неимѣющій чина | (съ 15 января 1893 г.) NOTE: "не-/имѣющій" hyphenated at line end, joined.
+ROW | 2 | 2. Мамошинъ, Осій Павловичъ, колл. рег. (съ 24 іюля 1876 г.). | Мамошинъ | - | Осій | Павловичъ | колл. рег. | (съ 24 іюля 1876 г.)
+ROW | 3 | 3. Мѣщаниновъ, Николай Петровичъ, неимѣющій чина (съ 1 января 1889 г.). | Мѣщаниновъ | - | Николай | Петровичъ | неимѣющій чина | (съ 1 января 1889 г.)
+ROW | 4 | 4. Робинзонъ, Александръ Александровичъ, неимѣющій чина (съ 1 іюня 1898 г.). | Робинзонъ | - | Александръ | Александровичъ | неимѣющій чина | (съ 1 іюня 1898 г.)
+ROW | 5 | 5. Рождественскій, Петръ Арсентьевичъ, колл. рег. (съ 10 сентября 1887 г.). | Рождественскій | - | Петръ | Арсентьевичъ | колл. рег. | (съ 10 сентября 1887 г.) NOTE: patronymic printed "Арсентьевичъ" (no ѣ/ь between н and т), read from enlarged crop.
+ROW | 6 | 6. Шарыпинъ, Константинъ Петровичъ, колл. рег. (съ 1 сентября 1887 г.). | Шарыпинъ | - | Константинъ | Петровичъ | колл. рег. | (съ 1 сентября 1887 г.)
+ROW | 7 | 7. Шенкъ, Петръ Петровичъ, тит. сов. (съ 1 іюня 1888 г.). | Шенкъ | - | Петръ | Петровичъ | тит. сов. | (съ 1 іюня 1888 г.) NOTE: followed by an indented separate paragraph, see TEXT line.
+TEXT | Съ 1 іюня 1898 г. назначенъ помощникомъ дѣлопроизводителя распорядительнаго отдѣленія. | indented note belonging to number 7 (Шенкъ): appointed from 1 June 1898 assistant clerk of the Распорядительное отдѣленіе (printed "помощникомъ дѣлопроизводителя распорядительнаго отдѣленія.")
+ROW | 8 | 8. Юрьевъ, Валеріанъ Ѳедоровичъ, неимѣющій чина (съ 1 января 1886 г.). | Юрьевъ | - | Валеріанъ | Ѳедоровичъ | неимѣющій чина | (съ 1 января 1886 г.)
+HEAD H1 | Московская Контора Императорскихъ театровъ. | large sans-serif, centred across both columns, below an ornamental rule (diamond/flower)
+HEAD H3 | Управляющій Конторою. | small typewriter-style sans-serif, centred in left column
+ROW | - | Пчельниковъ, Павелъ Михайловичъ, д. ст. сов. (съ 16 іюня 1882 г.). Оставилъ службу 11 апрѣля 1898 г. | Пчельниковъ | - | Павелъ | Михайловичъ | д. ст. сов. | (съ 16 іюня 1882 г.). Оставилъ службу 11 апрѣля 1898 г. NOTE: the "Оставилъ службу 11 апрѣля 1898 г." line is a separate indented line under the entry (the digit 8 of 1898 is printed slightly raised/damaged but legible).
+ROW | - | Теляковскій, Владиміръ Аркадьевичъ, полковникъ, состоящій по гвардейской кавалеріи (съ 2 мая 1898 г.). | Теляковскій | - | Владиміръ | Аркадьевичъ | полковникъ (military rank), состоящій по гвардейской кавалеріи | (съ 2 мая 1898 г.) NOTE: no heading between Пчельниковъ and Теляковскій (both under Управляющій Конторою).
+HEAD H3 | Помощникъ управляющаго Конторою. | small typewriter-style sans-serif, centred, left column
+ROW | - | Старженецкій-Лаппа, Владиміръ Павловичъ, колл. сов. (съ 1 августа 1882 г.). | Старженецкій-Лаппа | - | Владиміръ | Павловичъ | колл. сов. | (съ 1 августа 1882 г.)
+HEAD H3 | Чиновникъ особыхъ порученій при Конторѣ. | small typewriter-style sans-serif, centred, left column; SINGULAR "Чиновникъ" (one person)
+ROW | - | Брилліантовъ, Алексѣй Егоровичъ, надв. сов. (съ 1 августа 1887 г.). | Брилліантовъ | - | Алексѣй | Егоровичъ | надв. сов. | (съ 1 августа 1887 г.) NOTE: no list number (single holder this year)
+HEAD H2 | Распорядительное отдѣленіе. | medium sans-serif, centred in left column (initial Р with swash tail)
+HEAD H3 | Дѣлопроизводитель. | small typewriter-style sans-serif, centred
+ROW | - | Каковинъ, Михаилъ Константиновичъ, колл. асс. (съ 1 февраля 1891 г.). | Каковинъ | - | Михаилъ | Константиновичъ | колл. асс. | (съ 1 февраля 1891 г.)
+HEAD H3 | Помощникъ дѣлопроизводителя. | small typewriter-style sans-serif, centred
+ROW | - | Силинъ, Сергѣй Михайловичъ, колл. асс. (съ 1 октября 1867 г.). | Силинъ | - | Сергѣй | Михайловичъ | колл. асс. | (съ 1 октября 1867 г.)
+HEAD H2 | Хозяйственное отдѣленіе. | medium sans-serif, centred in left column (initial Х with swash)
+HEAD H3 | Дѣлопроизводитель. | small typewriter-style sans-serif, centred
+ROW | - | Кахановъ, Михаилъ Александровичъ, ст. сов. (съ 19 сентября 1882 г.). | Кахановъ | - | Михаилъ | Александровичъ | ст. сов. | (съ 19 сентября 1882 г.)
+HEAD H3 | Полиціймейстеръ театровъ. | small typewriter-style sans-serif, centred at top of RIGHT column (Moscow Office continues)
+ROW | - | Переяславцевъ, Петръ Андреевичъ, полковникъ, состоящій по гвардейской кавалеріи (съ 19 іюня 1897 г.). | Переяславцевъ | - | Петръ | Андреевичъ | полковникъ (military rank), состоящій по гвардейской кавалеріи | (съ 19 іюня 1897 г.) NOTE: surname letter-spacing irregular ("Переяславцевъ"); hyphenations "пол-/ковникъ", "кава-/леріи" joined.
+HEAD H2 | Счетное отдѣленіе. | medium sans-serif, centred (initial С with tail)
+HEAD H3 | Бухгалтеръ. | small typewriter-style sans-serif, centred
+ROW | - | Фогельзангъ, Рудольфъ Августовичъ, колл. сов. (съ 21 февраля 1891 г.). | Фогельзангъ | - | Рудольфъ | Августовичъ | колл. сов. | (съ 21 февраля 1891 г.)
+HEAD H3 | Экзекуторъ и журналистъ Конторы. | small typewriter-style sans-serif, centred
+ROW | - | Соколовъ, Сергѣй Гавриловичъ, колл. асс. (съ 3 февраля 1875 г.). | Соколовъ | - | Сергѣй | Гавриловичъ | колл. асс. | (съ 3 февраля 1875 г.)
+HEAD H2 | Монтировочная часть. | medium sans-serif, centred (initial М with swash)
+HEAD H3 | Завѣдывающій монтировочною частью. | small typewriter-style sans-serif, centred
+ROW | - | Бершовъ, Георгій Марковичъ, ст. сов. (съ 1 августа 1887 г.). | Бершовъ | - | Георгій | Марковичъ | ст. сов. | (съ 1 августа 1887 г.)
+HEAD H3 | Помощники завѣдывающаго монтировочною частью: | small typewriter-style sans-serif, centred, two lines
+ROW | 1 | 1. Нелидовъ, Владиміръ Александровичъ, колл. рег., въ званіи камеръ-юнкера (съ 15 марта 1893 г.). | Нелидовъ | - | Владиміръ | Александровичъ | колл. рег. | въ званіи камеръ-юнкера (съ 15 марта 1893 г.)
+TEXT | Съ 27 іюня 1898 г. назначенъ чиновникомъ особыхъ порученій при Конторѣ. | indented note under number 1 (Нелидовъ): appointed 27 June 1898 official for special commissions at the Office (hyphenated "чи-/новникомъ", "Кон-/торѣ")
+ROW | 2 | 2. Розовъ, Александръ Ѳедоровичъ, надв. сов. (съ 18 февраля 1874 г.). | Розовъ | - | Александръ | Ѳедоровичъ | надв. сов. | (съ 18 февраля 1874 г.)
+NOTE: folio "— 111 —" at foot. The Moscow list continues on administration_1897-98_p003 (Врачебная часть; Moscow Office continues, though p003 starts with "Врачебная часть" without a new Moscow heading). Left column of the Moscow part ends with Силинъ/Кахановъ; right column ends with Розовъ.
+COUNT | rows=30 | headings=17
+
+PAGE | administration_1897-98_p003 | 112 (printed "— 112 —" at foot) | no running title; continues the Moscow Office list from p002
+NOTE: two columns separated by a wavy rule; only the upper third of the page carries text; the middle of the page is filled by a large engraved printer's ornament (cherubs, satyr mask, cornucopias, scrolls) which marks the end of the list. Finger at lower left. Surnames in BOLD.
+HEAD H2 | Врачебная часть | medium sans-serif, centred over left column, initial В with swash; printed WITHOUT a final full stop. NOTE: continues the Moscow Office section (heading "Московская Контора ..." is on p002).
+HEAD H3 | Штатный врачъ. | small typewriter-style sans-serif, centred
+ROW | - | Казанскій, Левъ Ивановичъ, колл. сов. (съ 20 апрѣля 1885 г.). | Казанскій | - | Левъ | Ивановичъ | колл. сов. | (съ 20 апрѣля 1885 г.)
+HEAD H3 | Дежурные врачи: | small typewriter-style sans-serif, centred, colon
+ROW | 1 | 1. Александровскій, Петръ Николаевичъ, ст. сов. (съ 1 августа 1881 г.). | Александровскій | - | Петръ | Николаевичъ | ст. сов. | (съ 1 августа 1881 г.)
+ROW | 2 | 2. Борисовъ, Викторъ Васильевичъ, колл. сов. (съ 23 марта 1893 г.). | Борисовъ | - | Викторъ | Васильевичъ | колл. сов. | (съ 23 марта 1893 г.)
+ROW | 3 | 3. Глубоковскій, Матвѣй Никаноровичъ, колл. сов. (съ 17 ноября 1886 г.). | Глубоковскій | - | Матвѣй | Никаноровичъ | колл. сов. | (съ 17 ноября 1886 г.)
+ROW | 4 | 4. Горбачевъ, Викторъ Никитичъ, ст. сов. (съ 19 января 1887 г.). | Горбачевъ | - | Викторъ | Никитичъ | ст. сов. | (съ 19 января 1887 г.) NOTE: in print the period after "г" is missing or very faint ("1887 г )"); the closing parenthesis is present.
+ROW | 5 | 5. Млодзѣевскій, Викентій Корніліевичъ, надв. сов. (съ 30 іюня 1893 г.). | Млодзѣевскій | - | Викентій | Корніліевичъ | надв. сов. | (съ 30 іюня 1893 г.)
+ROW | 6 | 6. Монигетти, Иванъ Карловичъ, д. ст. сов. (съ 21 ноября 1881 г.). | Монигетти | - | Иванъ | Карловичъ | д. ст. сов. | (съ 21 ноября 1881 г.) NOTE: first line of the RIGHT column (list continues from left column); surname ends -етти here (-гетти: "Монигетти").
+ROW | 7 | 7. Никольскій, Петръ Петровичъ (съ 8 ноября 1896 г.). | Никольскій | - | Петръ | Петровичъ | - (no rank printed) | (съ 8 ноября 1896 г.)
+ROW | 8 | 8. Пузановъ, Александръ Николаевичъ, колл. сов. (съ 7 декабря 1892 г.). | Пузановъ | - | Александръ | Николаевичъ | колл. сов. | (съ 7 декабря 1892 г.)
+HEAD H3 | Канцелярскіе чиновники Конторы: | medium sans-serif, centred over right column; last letter of "Канцелярскіе" again looks like ө/е (read as е)
+ROW | 1 | 1. Балахнинъ, Викторъ Михайловичъ, колл. рег. (съ 7 апрѣля 1881 г.). | Балахнинъ | - | Викторъ | Михайловичъ | колл. рег. | (съ 7 апрѣля 1881 г.)
+ROW | 2 | 2. Захаровъ, Николай Константиновичъ колл. секр. (съ 1 сентября 1887 г.). | Захаровъ | - | Николай | Константиновичъ | колл. секр. | (съ 1 сентября 1887 г.) NOTE: NO comma after the patronymic before "колл. секр." in print.
+ROW | 3 | 3. Зловъ, Петръ Николаевичъ, губ. секр. (съ 31 декабря 1878 г.). | Зловъ | - | Петръ | Николаевичъ | губ. секр. | (съ 31 декабря 1878 г.)
+ROW | 4 | 4. де-Лазари, Иваръ Константиновичъ, колл. рег. (съ 1 іюня 1897 г.). | де-Лазари | - | Иваръ | Константиновичъ | колл. рег. | (съ 1 іюня 1897 г.) NOTE: hyphenated surname with lower-case "де-"; first name printed "Иваръ".
+NOTE: no remaining list text below; the engraved ornament and folio "— 112 —" follow. The page ends the 1897-98 list.
+COUNT | rows=13 | headings=4
+
+PAGE | administration_1898-99_p000 | 131 | title at top: "СПИСОКЪ / личнаго состава театральнаго управленія." (first page of the 1898-99 list)
+NOTE: page is a photograph of an open book with a thumb at the right edge; text is fully readable. Upper part is a single centred block (whole-Directorate officials); from the "С.-Петербургская Контора" heading downward the page is set in two columns separated by a vertical rule. Digit 1 is printed as an old-style small-cap-I glyph (transcribed here as 1). Faint show-through of the reverse side is visible around the title (not part of this page).
+HEAD H0 | СПИСОКЪ личнаго состава театральнаго управленія. | "СПИСОКЪ" in large spaced roman capitals; second line "личнаго состава театральнаго управленія." in medium sans-serif lowercase, centred; short wavy rule beneath
+HEAD H3 | Директоръ Императорскихъ театровъ. | small bold sans-serif, centred (position heading of the whole Directorate)
+ROW | - | Всеволожской, Иванъ Александровичъ, оберъ-гофмейстеръ (съ 3 сентября 1881 г.). Оставилъ службу 22 іюля 1899 г. | Всеволожской | - | Иванъ | Александровичъ | оберъ-гофмейстеръ (court rank) | (съ 3 сентября 1881 г.). Оставилъ службу 22 іюля 1899 г. NOTE: the "Оставилъ службу 22 іюля 1899 г" line is a separate centred line directly beneath the entry; it has NO final full stop after "г" (printed "22 іюля 1899 г"). Surname letter-spaced; spelled "Всеволожской" (ending -ой, not -ій).
+HEAD H3 | Въ должности директора Императорскихъ театровъ. | small bold sans-serif, centred
+ROW | - | Князь Волконскій, Сергѣй Михайловичъ, ст. сов., въ званіи камергера (съ 22 іюля 1899 г.). | Волконскій | Князь | Сергѣй | Михайловичъ | ст. сов. | въ званіи камергера (съ 22 іюля 1899 г.)
+HEAD H3 | Чиновники особыхъ порученій при директорѣ: | small bold sans-serif, centred, ending in a colon
+ROW | 1 | 1. Гельмерсенъ, Людвигъ Александровичъ, надв. сов. (съ 30 октября 1897 г.). | Гельмерсенъ | - | Людвигъ | Александровичъ | надв. сов. | (съ 30 октября 1897 г.)
+ROW | 2 | 2. Зыбинъ, Константинъ Сергѣевичъ, ст. сов., въ званіи камергера (съ 1 сентября 1897 г.). | Зыбинъ | - | Константинъ | Сергѣевичъ | ст. сов. | въ званіи камергера (съ 1 сентября 1897 г.)
+ROW | 3 | 3. Кусовъ, баронъ Владиміръ Алексѣевичъ, надв. сов. (съ 16 февраля 1896 г.). | Кусовъ | баронъ | Владиміръ | Алексѣевичъ | надв. сов. | (съ 16 февраля 1896 г.) NOTE: title "баронъ" is printed AFTER the surname (Кусовъ, баронъ Владиміръ ...), i.e. "Surname, title First-name".
+ROW | 4 | 4. Лопухинъ, Николай Николаевичъ, колл. секр., въ должности церемоніймейстера (съ 1 апрѣля 1899 г.). | Лопухинъ | - | Николай | Николаевичъ | колл. секр. | въ должности церемоніймейстера (съ 1 апрѣля 1899 г.)
+ROW | 5 | 5. Петровъ, Николай Николаевичъ, колл. асс. (съ 21 ноября 1890 г.). | Петровъ | - | Николай | Николаевичъ | колл. асс. | (съ 21 ноября 1890 г.)
+ROW | 6 | 6. Ржевусскій, графъ Станиславъ Адамовичъ, колл. рег. (съ 2 декабря 1885 г.). | Ржевусскій | графъ | Станиславъ | Адамовичъ | колл. рег. | (съ 2 декабря 1885 г.) NOTE: "графъ" printed after the surname, as with Кусовъ.
+ROW | 7 | 7. Хитрово, Георгій Михайловичъ, тит. сов., въ званіи камеръ-юнкера (съ 13 іюля 1899 г.). | Хитрово | - | Георгій | Михайловичъ | тит. сов. | въ званіи камеръ-юнкера (съ 13 іюля 1899 г.) NOTE: surname Хитрово has no final ъ (indeclinable).
+HEAD H1 | С.-Петербургская Контора Императорскихъ театровъ. | large bold sans-serif, spans both columns, centred
+HEAD H3 | Управляющій дѣлами Дирекціи и Конторою. | small bold sans-serif, centred over the left column (top of left column)
+ROW | - | Погожевъ, Владиміръ Петровичъ, д. ст. сов. (съ 11 мая 1882 г.). | Погожевъ | - | Владиміръ | Петровичъ | д. ст. сов. | (съ 11 мая 1882 г.)
+HEAD H3 | Помощникъ управляющаго Конторою. | small bold sans-serif, centred in left column
+ROW | - | Гершельманъ, Константинъ Романовичъ, ст. сов. (съ 19 сентября 1882 г.). | Гершельманъ | - | Константинъ | Романовичъ | ст. сов. | (съ 19 сентября 1882 г.)
+HEAD H3 | Чиновники особыхъ порученій при Конторѣ: | small bold sans-serif, centred in left column, ending in a colon
+ROW | 1 | 1. Вильеръ-де-Лиль-Адамъ, Александръ Фердинандовичъ, колл. сов. (съ 19 сентября 1882 г.). | Вильеръ-де-Лиль-Адамъ | - | Александръ | Фердинандовичъ | колл. сов. | (съ 19 сентября 1882 г.) NOTE: multi-part hyphenated surname; letter-spaced print; name hyphenated at line break "Але-/ксандръ", joined.
+ROW | 2 | 2. Петровъ, Владиміръ Андреевичъ, колл. сов. (съ 19 сентября 1882 г.). | Петровъ | - | Владиміръ | Андреевичъ | колл. сов. | (съ 19 сентября 1882 г.) NOTE: this is the first line of the RIGHT column, continuing list "Чиновники особыхъ порученій при Конторѣ" from the left column (number 2 follows number 1 at the foot of the left column).
+HEAD H2 | Распорядительное отдѣленіе. | medium sans-serif, centred in right column (initial Р with decorative tail)
+HEAD H3 | Дѣлопроизводитель. | small bold sans-serif, centred in right column
+ROW | - | Русецкій, Иванъ Сергѣевичъ, колл. секр. (съ 1 ноября 1893 г.). | Русецкій | - | Иванъ | Сергѣевичъ | колл. секр. | (съ 1 ноября 1893 г.)
+HEAD H3 | Помощникъ дѣлопроизводителя. | small bold sans-serif, centred in right column
+ROW | - | Шенкъ, Петръ Петровичъ, тит. сов. (съ 1 іюня 1888 г.). | Шенкъ | - | Петръ | Петровичъ | тит. сов. | (съ 1 іюня 1888 г.) NOTE: the final "г." of the date is printed in a bolder/heavier type than the rest of the line.
+NOTE: Folio 131 printed at lower right. The Распорядительное отдѣленіе continues on the next page (administration_1898-99_p001).
+COUNT | rows=15 | headings=11
+
+PAGE | administration_1898-99_p001 | 132 | no running title; continues the St Petersburg Office list from the previous page (administration_1898-99_p000); first heading on the page is "Хозяйственное отдѣленіе."
+NOTE: two columns separated by a vertical rule. Photograph of an open book with a thumb at lower left; text legible. Digit 1 is printed as a small-cap-like I glyph (transcribed as 1). Show-through of the verso is faintly visible.
+HEAD H2 | Хозяйственное отдѣленіе. | medium sans-serif, centred over the left column (initial Х with long swash)
+HEAD H3 | Дѣлопроизводитель. | small bold typewriter-style sans-serif, centred
+ROW | - | Аршеневскій, Василій Николаевичъ, колл. сов. (съ 20 апрѣля 1889 г.). | Аршеневскій | - | Василій | Николаевичъ | колл. сов. | (съ 20 апрѣля 1889 г.) NOTE: surname letter-spaced.
+HEAD H3 | Архитекторы: | small sans-serif, centred, colon
+ROW | 1 | 1. Гешвендъ, Александръ Романовичъ, д. ст. сов. (съ 1 января 1879 г.). Оставилъ службу 5 октября 1898 г. | Гешвендъ | - | Александръ | Романовичъ | д. ст. сов. | (съ 1 января 1879 г.). Оставилъ службу 5 октября 1898 г. NOTE: "Оставилъ службу 5 октября 1898 г." is a separate indented/centred line under the entry; the last "г" is followed by a full stop in this printing ("1898 г."). Hyphenation "Романо-/вичъ" joined.
+ROW | 2 | 2. Трамбицкій, Алексѣй Георгіевичъ колл. сов. (съ 5 октября 1898 г.). | Трамбицкій | - | Алексѣй | Георгіевичъ | колл. сов. | (съ 5 октября 1898 г.) NOTE: NO comma after the patronymic before "колл. сов." in print.
+ROW | 3 | 3. Шретеръ, Викторъ Александровичъ, д. ст. сов. (съ 9 августа 1882 г.). | Шретеръ | - | Викторъ | Александровичъ | д. ст. сов. | (съ 9 августа 1882 г.) NOTE: "Александро-/вичъ" joined.
+HEAD H3 | Завѣдывающій механическою частью. | small sans-serif, centred
+ROW | - | Савельевъ, Николай Ѳедоровичъ, тит. сов. (съ 1 апрѣля 1897 г.). | Савельевъ | - | Николай | Ѳедоровичъ | тит. сов. | (съ 1 апрѣля 1897 г.)
+HEAD H3 | Завѣдывающій экипажнымъ заведеніемъ. | small sans-serif, centred; printed "заведеніемъ" with plain е after в (not ѣ)
+ROW | - | Кедринъ, Никаноръ Никаноровичъ (съ 1 февраля 1897 г.). | Кедринъ | - | Никаноръ | Никаноровичъ | - (no rank printed) | (съ 1 февраля 1897 г.)
+HEAD H3 | Полиціймейстеры театровъ: | small sans-serif, centred, colon
+HEAD H3 | Маріинскій театръ. | smaller condensed sans-serif, centred (sub-heading under Полиціймейстеры театровъ; ranked H3 because it is the same size class as other position headings, but it is subordinate to the previous heading -- possibly H4)
+ROW | - | Лееръ, Евгеній Генриховичъ, подполковникъ л.-гв. Уланскаго полка (съ 18 октября 1893 г.). | Лееръ | - | Евгеній | Генриховичъ | подполковникъ л.-гв. Уланскаго полка (military rank/regiment) | (съ 18 октября 1893 г.) NOTE: line breaks "подпол-/ковникъ", "ок-/тября" joined.
+HEAD H3 | Александринскій театръ. | smaller condensed sans-serif, centred
+ROW | - | Клечковскій, Альбинъ Владиславовичъ, полковникъ л.-гв. Московскаго полка (съ 1 августа 1882 г.). | Клечковскій | - | Альбинъ | Владиславовичъ | полковникъ л.-гв. Московскаго полка (military rank/regiment) | (съ 1 августа 1882 г.)
+HEAD H3 | Михайловскій театръ. | smaller condensed sans-serif, centred
+ROW | - | Адамовичъ, Модестъ Станиславовичъ, подполковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона (съ 1 августа 1882 г.). | Адамовичъ | - | Модестъ | Станиславовичъ | подполковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона (military rank/unit) | (съ 1 августа 1882 г.)
+HEAD H2 | Счетное отдѣленіе. | medium sans-serif, centred (initial С with decorative tail)
+HEAD H3 | Бухгалтеръ. | small sans-serif, centred
+ROW | - | Вальдштейнъ, Аркадій Логиновичъ, колл. сов. (съ 16 іюня 1867 г.). | Вальдштейнъ | - | Аркадій | Логиновичъ | колл. сов. | (съ 16 іюня 1867 г.) NOTE: surname printed "Вальдштейнъ" (-ейнъ).
+HEAD H3 | Помощникъ бухгалтера. | small sans-serif, centred
+ROW | - | Поспѣевъ, Дмитрій Александровичъ, губ. секр. (съ 18 января 1883 г.). | Поспѣевъ | - | Дмитрій | Александровичъ | губ. секр. | (съ 18 января 1883 г.)
+HEAD H3 | Экзекуторъ Конторы. | small sans-serif, centred
+ROW | - | Анцъ, Павелъ Христофоровичъ, надв. сов. (съ 9 декабря 1880 г.) | Анцъ | - | Павелъ | Христофоровичъ | надв. сов. | (съ 9 декабря 1880 г.) NOTE: NO full stop after the closing parenthesis (last line of left column).
+HEAD H3 | Журналистъ Конторы. | small sans-serif, centred, first heading at top of RIGHT column
+ROW | - | Клементьевъ, Николай Степановичъ, колл. секр. (съ 1 января 1883 г.). | Клементьевъ | - | Николай | Степановичъ | колл. секр. | (съ 1 января 1883 г.)
+HEAD H2 | Монтировочная часть. | medium sans-serif, centred (initial М with swash)
+HEAD H3 | Завѣдывающій монтировочною частью. | small sans-serif, centred
+ROW | - | Молчановъ, Анатолій Евграфовичъ, ст. сов. (съ 1 января 1892 г.). | Молчановъ | - | Анатолій | Евграфовичъ | ст. сов. | (съ 1 января 1892 г.) NOTE: surname letter-spaced; two different Молчановъ on this page (see next).
+HEAD H3 | Старшій помощникъ завѣдывающаго монтировочною частью. | small sans-serif, centred, two lines ("монти-/ровочною частью.")
+ROW | - | Молчановъ, Иванъ Николаевичъ, колл. сов. (съ 10 ноября 1887 г.). | Молчановъ | - | Иванъ | Николаевичъ | колл. сов. | (съ 10 ноября 1887 г.)
+HEAD H3 | Помощники завѣдывающаго монтировочною частью: | small sans-serif, centred, two lines ("...монтировочною / частью:")
+ROW | 1 | 1. Кржижановскій, Викторъ Викторовичъ, колл. асс. (съ 1 октября 1893 г.). | Кржижановскій | - | Викторъ | Викторовичъ | колл. асс. | (съ 1 октября 1893 г.) NOTE: "Вик-/торовичъ" joined.
+ROW | 2 | 2. Петровъ, Константинъ Андреевичъ, надв. сов. (съ 19 сентября 1882 г.). | Петровъ | - | Константинъ | Андреевичъ | надв. сов. | (съ 19 сентября 1882 г.)
+ROW | 3 | 3. Шишко, Николай Макаровичъ, надв. сов. (съ 18 января 1880 г.). | Шишко | - | Николай | Макаровичъ | надв. сов. | (съ 18 января 1880 г.)
+HEAD H3 | Художникъ и библіотекарь монтировочной библіотеки. | small sans-serif, centred, two lines
+ROW | - | Пономаревъ, Евгеній Петровичъ, колл. асс. (съ 1 февраля 1887 г.). | Пономаревъ | - | Евгеній | Петровичъ | колл. асс. | (съ 1 февраля 1887 г.)
+HEAD H3 | Помощникъ художника и библіотекаря монтировочной библіотеки. | small sans-serif, centred, two lines
+ROW | - | Воскресенскій, Аполлинарій Константиновичъ (съ 1 января 1898 г.). | Воскресенскій | - | Аполлинарій | Константиновичъ | - (no rank printed) | (съ 1 января 1898 г.) NOTE: "Кон-/стантиновичъ" joined.
+HEAD H3 | Скульпторъ и завѣдывающій бутафорской мастерской. | small sans-serif, centred, two lines
+ROW | - | Каменскій, Павелъ Павловичъ, тит. сов. (съ 1 августа 1888 г.). | Каменскій | - | Павелъ | Павловичъ | тит. сов. | (съ 1 августа 1888 г.)
+HEAD H3 | Помощникъ скульптора и завѣдывающаго бутафорской мастерской. | small sans-serif, centred, two lines
+ROW | - | Захарьинъ, Павелъ Ивановичъ (съ 1 декабря 1897 г.). | Захарьинъ | - | Павелъ | Ивановичъ | - (no rank printed) | (съ 1 декабря 1897 г.) NOTE: "(съ 1 / декабря 1897 г.)": the "1" is left at the end of the line, date continues on next line.
+HEAD H3 | Дѣлопроизводители монтировочнаго отдѣленія: | small sans-serif, centred, two lines
+ROW | 1 | 1. Андреевъ, Владиміръ Александровичъ, тит. сов. (съ 1 ноября 1879 г.). | Андреевъ | - | Владиміръ | Александровичъ | тит. сов. | (съ 1 ноября 1879 г.)
+ROW | 2 | 2. Тарасовъ, Ѳедоръ Лаврентьевичъ, надв. сов. (съ 19 іюля 1869 г.). | Тарасовъ | - | Ѳедоръ | Лаврентьевичъ | надв. сов. | (съ 19 іюля 1869 г.)
+HEAD H2 | Врачебная часть | medium sans-serif, centred (initial В with swash), printed WITHOUT a final full stop
+HEAD H3 | Штатные врачи: | small sans-serif, centred, colon
+ROW | 1 | 1. Генъ, Анатолій Александровичъ, ст. сов. (съ 17 сентября 1882 г.). | Генъ | - | Анатолій | Александровичъ | ст. сов. | (съ 17 сентября 1882 г.)
+NOTE: last line of the right column is row 1 of "Штатные врачи:"; its numbered list continues on the next page (administration_1898-99_p002 begins with rows 2. and 3.). Page ends with a large blank area in the right column below row 1; folio 132 printed at lower left of the left column.
+COUNT | rows=25 | headings=25
+
+PAGE | administration_1898-99_p002 | 133 | no running title; continues the list from the previous page (St Petersburg Office medical staff in the left column; Moscow Office begins mid-page)
+NOTE: page is a two-column page. Left column top: rows "2." and "3." continue a list whose heading and row 1 are on the previous page (not seen here). The "Дежурные врачи:" list is numbered 1-11 in the left column and its numbering continues 12-16 at the top of the right column (no heading repeated). A horizontal rule separates the St Petersburg part from the Moscow part. Digit "1" is printed throughout in an old-style glyph that looks like small-cap "I" (transcribed here as 1). Page photographed with a thumb at the right edge; text itself is clear. Left edge: faint show-through of the reverse side.
+NOTE: no heading precedes rows 2.-3. (they belong to the heading of the previous page).
+ROW | 2 | 2. Липскій, Александръ Александровичъ, ст. сов. (съ 23 октября 1893 г.). | Липскій | - | Александръ | Александровичъ | ст. сов. | (съ 23 октября 1893 г.)
+ROW | 3 | 3. Сукова, Надежда Всеволодовна (съ 1 декабря 1897 г.). | Сукова | - | Надежда | Всеволодовна | - | (съ 1 декабря 1897 г.). NOTE: woman; no rank printed.
+HEAD H3 | Дежурные врачи: | small centred bold sans-serif/typewriter-like type, ending in colon
+ROW | 1 | 1. Бобрицкій, Константинъ Ивановичъ, надв. сов. (съ 1 марта 1894 г.). | Бобрицкій | - | Константинъ | Ивановичъ | надв. сов. | (съ 1 марта 1894 г.)
+ROW | 2 | 2. Гладкій, Адольфъ Викентьевичъ, колл. сов. (съ 1 марта 1890 г.). | Гладкій | - | Адольфъ | Викентьевичъ | колл. сов. | (съ 1 марта 1890 г.)
+ROW | 3 | 3. Горнъ, Эмануилъ Эмануиловичъ, ст. сов. (съ 7 декабря 1879 г.). | Горнъ | - | Эмануилъ | Эмануиловичъ | ст. сов. | (съ 7 декабря 1879 г.)
+ROW | 4 | 4. Горянскій, Григорій Ивановичъ, надв. сов. (съ 10 ноября 1893 г.). | Горянскій | - | Григорій | Ивановичъ | надв. сов. | (съ 10 ноября 1893 г.)
+ROW | 5 | 5. Іогихесъ, Александръ Іосифовичъ, ст. сов. (съ 7 марта 1887 г.). | Іогихесъ | - | Александръ | Іосифовичъ | ст. сов. | (съ 7 марта 1887 г.) NOTE: surname begins with Cyrillic dotted І (Іогихесъ); letter-spaced print.
+ROW | 6 | 6. Киселевъ, Николай Сергѣевичъ, надв. сов. (съ 24 декабря 1891 г.). | Киселевъ | - | Николай | Сергѣевичъ | надв. сов. | (съ 24 декабря 1891 г.) NOTE: surname spelled with plain е (Киселевъ), patronymic with ѣ.
+ROW | 7 | 7. Краевскій, Владиславъ Францевичъ, ст. сов. (съ 10 декабря 1869 г.). | Краевскій | - | Владиславъ | Францевичъ | ст. сов. | (съ 10 декабря 1869 г.)
+ROW | 8 | 8. Лилѣевъ, Ѳедоръ Николаевичъ, колл. сов. .(съ 14 апрѣля 1895 г.). | Лилѣевъ | - | Ѳедоръ | Николаевичъ | колл. сов. | (съ 14 апрѣля 1895 г.) NOTE: a stray full stop is printed before the opening parenthesis ("колл. сов. .(съ"); surname spelled with ѣ (Лилѣевъ) -- clear in the crop.
+ROW | 9 | 9. Ненсбергъ, Иванъ Егоровичъ, ст. сов. (съ 12 октября 1878 г.). | Ненсбергъ | - | Иванъ | Егоровичъ | ст. сов. | (съ 12 октября 1878 г.) NOTE: surname has "нсб" (Ненсбергъ), not Ненбергъ -- clear on the enlarged crop.
+ROW | 10 | 10. Пассекъ, Алексѣй Помпеевичъ, колл. асс. (съ 11 января 1895 г.). | Пассекъ | - | Алексѣй | Помпеевичъ | колл. асс. | (съ 11 января 1895 г.)
+ROW | 11 | 11. Петровъ, Николай Іоновичъ, ст. сов. съ 1 іюля 1889 г.). | Петровъ | - | Николай | Іоновичъ | ст. сов. | съ 1 іюля 1889 г.). NOTE: the OPENING parenthesis before "съ 1 іюля 1889 г." is missing in print (closing one present); patronymic begins with dotted І (Іоновичъ).
+ROW | 12 | 12. Смольскій, Иванъ Ивановичъ, ст сов. (съ 17 января 1885 г.). | Смольскій | - | Иванъ | Ивановичъ | ст сов. | (съ 17 января 1885 г.) NOTE: rank printed "ст сов." with NO period after "ст" (line-break "ст / сов."). First row of right column; numbering continues from left column.
+ROW | 13 | 13. Томашевскій, Леонтій Ивановичъ, тайн. сов. (съ 17 декабря 1868 г.). | Томашевскій | - | Леонтій | Ивановичъ | тайн. сов. | (съ 17 декабря 1868 г.)
+ROW | 14 | 14. Цабель, Оскаръ Альбертовичъ, надв. сов. (съ 19 января 1894 г.). | Цабель | - | Оскаръ | Альбертовичъ | надв. сов. | (съ 19 января 1894 г.)
+ROW | 15 | 15. Юркевичъ, Николай Васильевичъ, ст. сов. (съ 1 марта 1890 г.). | Юркевичъ | - | Николай | Васильевичъ | ст. сов. | (съ 1 марта 1890 г.)
+ROW | 16 | 16. Ягодинскій, Александръ Евгеньевичъ, колл. сов. (съ 26 октября 1896 г.). | Ягодинскій | - | Александръ | Евгеньевичъ | колл. сов. | (съ 26 октября 1896 г.)
+HEAD H3 | Канцелярскіе чиновники Конторы: | bold sans-serif, centred in the right column, larger than "Дежурные врачи:"
+ROW | 1 | 1. Бартновскій, Петръ Осиповичъ, неимѣющій чина (съ 15 января 1893 г.). | Бартновскій | - | Петръ | Осиповичъ | неимѣющій чина | (съ 15 января 1893 г.)
+ROW | 2 | 2. Глѣбовъ, Николай Петровичъ, неимѣющій чина (съ 1 января 1889 г.). | Глѣбовъ | - | Николай | Петровичъ | неимѣющій чина | (съ 1 января 1889 г.) NOTE: "не-/имѣющій" hyphenated at line break, joined.
+ROW | 3 | 3. Мамошинъ, Осій Павловичъ, колл. рег. (съ 24 іюля 1876 г.). | Мамошинъ | - | Осій | Павловичъ | колл. рег. | (съ 24 іюля 1876 г.)
+ROW | 4 | 4. Робинзонъ, Александръ Александровичъ, неимѣющій чина (съ 1 іюня 1898 г.). | Робинзонъ | - | Александръ | Александровичъ | неимѣющій чина | (съ 1 іюня 1898 г.)
+ROW | 5 | 5. Рождественскій, Петръ Арсеньевичъ, колл. рег. (съ 10 сентября 1887 г.). | Рождественскій | - | Петръ | Арсеньевичъ | колл. рег. | (съ 10 сентября 1887 г.)
+ROW | 6 | 6. Шарыпинъ, Константинъ Петровичъ, губ. секр. (съ 1 сентября 1887 г.). | Шарыпинъ | - | Константинъ | Петровичъ | губ. секр. | (съ 1 сентября 1887 г.)
+ROW | 7 | 7. Юрьевъ, Валеріанъ Ѳедоровичъ, неимѣющій чина (съ 1 января 1886 г.). | Юрьевъ | - | Валеріанъ | Ѳедоровичъ | неимѣющій чина | (съ 1 января 1886 г.)
+HEAD H1 | Московская Контора Императорскихъ театровъ. | large bold sans-serif, centred across both columns, below a short horizontal rule
+HEAD H3 | Управляющій Конторою. | small bold typewriter-style sans-serif, centred in left column
+ROW | - | Теляковскій, Владиміръ Аркадьевичъ, полковникъ, состоящій по гвардейской кавалеріи (съ 2 мая 1898 г.). | Теляковскій | - | Владиміръ | Аркадьевичъ | полковникъ (military rank), состоящій по гвардейской кавалеріи | (съ 2 мая 1898 г.) NOTE: no list number; surname letter-spaced.
+HEAD H3 | Помощникъ управляющаго Конторою. | small bold sans-serif, centred in left column
+ROW | - | Старженецкій-Лаппа, Владиміръ Павловичъ, колл. сов. (съ 1 августа 1882 г.). | Старженецкій-Лаппа | - | Владиміръ | Павловичъ | колл. сов. | (съ 1 августа 1882 г.) NOTE: double-barrelled surname with hyphen.
+HEAD H3 | Чиновники особыхъ порученій при Конторѣ. | small bold sans-serif, centred in left column (ends with a full stop, not a colon)
+ROW | 1 | 1. Брилліантовъ, Алексѣй Егоровичъ, колл. сов. (съ 1 августа 1887 г.). | Брилліантовъ | - | Алексѣй | Егоровичъ | колл. сов. | (съ 1 августа 1887 г.)
+ROW | 2 | 2. Нелидовъ, Владиміръ Александровичъ, колл. рег., въ званіи камеръ-юнкера (съ 15 марта 1893 г.). | Нелидовъ | - | Владиміръ | Александровичъ | колл. рег. | въ званіи камеръ-юнкера (съ 15 марта 1893 г.)
+HEAD H2 | Распорядительное отдѣленіе. | medium sans-serif, centred in right column (initial Р has a decorative descender)
+HEAD H3 | Дѣлопроизводитель. | small bold sans-serif, centred (right column)
+ROW | - | Каковинъ, Михаилъ Константиновичъ колл. асс. (съ 1 февраля 1891 г.). | Каковинъ | - | Михаилъ | Константиновичъ | колл. асс. | (съ 1 февраля 1891 г.) NOTE: NO comma after the patronymic "Константиновичъ" in print (line break before "колл. асс.").
+HEAD H3 | Помощникъ дѣлопроизводителя. | small bold sans-serif, centred
+ROW | - | Силинъ, Сергѣй Михайловичъ, колл. асс. (съ 1 октября 1867 г.). | Силинъ | - | Сергѣй | Михайловичъ | колл. асс. | (съ 1 октября 1867 г.)
+HEAD H2 | Хозяйственное отдѣленіе. | medium sans-serif, centred (right column)
+HEAD H3 | Дѣлопроизводитель. | small bold sans-serif, centred
+ROW | - | Кахановъ, Михаилъ Александровичъ, ст. сов. (съ 19 сентября 1882 г.). | Кахановъ | - | Михаилъ | Александровичъ | ст. сов. | (съ 19 сентября 1882 г.)
+NOTE: Folio 133 printed at lower right. The Moscow Office section continues on the next page (administration_1898-99_p003, folio 134). Surname "Каковинъ"/"Кахановъ": the К is printed with a notched stem in this face (looks like Қ) -- read as plain К.
+COUNT | rows=32 | headings=11
+
+PAGE | administration_1898-99_p003 | 134 | no running title; continues the Moscow Office section from the previous page (administration_1898-99_p002)
+NOTE: two columns separated by a vertical rule. A printer's ornament rule (short rule with scroll) closes the text below the left column / right column. Strong show-through of the reverse side (a "Московская Контора Императорскихъ театровъ" text from the verso) is visible in the lower half of both columns; not part of this page. Digit "1" printed as small-cap-like I.
+HEAD H3 | Архитекторъ. | small bold sans-serif, centred in left column (continuing the Moscow Office; no new H1 on this page)
+ROW | - | Ползиковъ, Сергѣй Александровичъ, колл. асс. (съ 3 марта 1899 г.). | Ползиковъ | - | Сергѣй | Александровичъ | колл. асс. | (съ 3 марта 1899 г.)
+HEAD H3 | Полиціймейстеръ театровъ. | small bold sans-serif, centred
+ROW | - | Переяславцевъ, Петръ Андреевичъ, полковникъ, состоящій по гвардейской кавалеріи (съ 19 іюня 1897 г.). | Переяславцевъ | - | Петръ | Андреевичъ | полковникъ (military rank), состоящій по гвардейской кавалеріи | (съ 19 іюня 1897 г.) NOTE: "кава-/леріи" hyphenated at line break, joined.
+HEAD H2 | Счетное отдѣленіе. | medium sans-serif, centred (initial С with decorative tail)
+HEAD H3 | Бухгалтеръ. | small bold sans-serif, centred
+ROW | - | Фогельзангъ, Рудольфъ Августовичъ, колл. сов. (съ 21 февраля 1891 г.). | Фогельзангъ | - | Рудольфъ | Августовичъ | колл. сов. | (съ 21 февраля 1891 г.)
+HEAD H3 | Экзекуторъ и журналистъ Конторы. | small bold sans-serif, centred
+ROW | - | Соколовъ, Сергѣй Гавриловичъ, надв. сов. (съ 3 февраля 1875 г.). | Соколовъ | - | Сергѣй | Гавриловичъ | надв. сов. | (съ 3 февраля 1875 г.)
+HEAD H2 | Монтировочная часть. | medium sans-serif, centred
+HEAD H3 | Завѣдывающій монтировочною частью. | small bold sans-serif, centred
+ROW | - | Бершовъ, Георгій Марковичъ, ст. сов. (съ 1 августа 1887 г.). | Бершовъ | - | Георгій | Марковичъ | ст. сов. | (съ 1 августа 1887 г.)
+HEAD H3 | Помощники завѣдывающаго монтировочною частью: | small bold sans-serif, centred, set over two lines ("...монтировочною / частью:")
+ROW | 1 | 1. Фонъ-Боолъ, Николай Константиновичъ, колл. асс. (съ 14 сентября 1898 г.). | Фонъ-Боолъ | - | Николай | Константиновичъ | колл. асс. | (съ 14 сентября 1898 г.) NOTE: surname with hyphenated particle "Фонъ-"; "Константи-/новичъ" hyphenated at line break, joined.
+ROW | 2 | 2. Розовъ, Александръ Ѳедоровичъ, надв. сов. (съ 18 февраля 1874 г.). | Розовъ | - | Александръ | Ѳедоровичъ | надв. сов. | (съ 18 февраля 1874 г.)
+HEAD H2 | Врачебная часть. | medium sans-serif, centred (initial В with decorative tail)
+HEAD H3 | Штатный врачъ. | small bold sans-serif, centred
+ROW | - | Казанскій, Левъ Ивановичъ, колл. сов. (съ 20 апрѣля 1885 г.). | Казанскій | - | Левъ | Ивановичъ | колл. сов. | (съ 20 апрѣля 1885 г.)
+HEAD H3 | Дежурные врачи: | small sans-serif, centred at top of RIGHT column
+ROW | 1 | 1. Александровскій, Петръ Николаевичъ, ст. сов. (съ 1 августа 1881 г.). | Александровскій | - | Петръ | Николаевичъ | ст. сов. | (съ 1 августа 1881 г.)
+ROW | 2 | 2. Борисовъ, Викторъ Васильевичъ, колл. сов. (съ 23 марта 1893 г.). | Борисовъ | - | Викторъ | Васильевичъ | колл. сов. | (съ 23 марта 1893 г.)
+ROW | 3 | 3. Глубоковскій, Матвѣй Никаноровичъ, колл. сов. (съ 17 ноября 1886 г.). | Глубоковскій | - | Матвѣй | Никаноровичъ | колл. сов. | (съ 17 ноября 1886 г.)
+ROW | 4 | 4. Горбачевъ, Викторъ Никитичъ, ст. сов. (съ 19 января 1887 г.). | Горбачевъ | - | Викторъ | Никитичъ | ст. сов. | (съ 19 января 1887 г.)
+ROW | 5 | 5. Млодзѣевскій, Викентій Корніліевичъ, надв. сов. (съ 30 іюня 1893 г.). | Млодзѣевскій | - | Викентій | Корніліевичъ | надв. сов. | (съ 30 іюня 1893 г.)
+ROW | 6 | 6. Монигети, Иванъ Карловичъ, д. ст. сов. (съ 21 ноября 1881 г.). | Монигети | - | Иванъ | Карловичъ | д. ст. сов. | (съ 21 ноября 1881 г.) NOTE: rank "д. ст. сов." (действительный статскій совѣтникъ).
+ROW | 7 | 7. Никольскій, Петръ Петровичъ (съ 8 ноября 1896 г.). | Никольскій | - | Петръ | Петровичъ | - (no rank printed) | (съ 8 ноября 1896 г.)
+ROW | 8 | 8. Пузановъ, Александръ Николаевичъ, колл. сов. (съ 7 декабря 1892 г.). | Пузановъ | - | Александръ | Николаевичъ | колл. сов. | (съ 7 декабря 1892 г.)
+HEAD H3 | Канцелярскіе чиновники Конторы: | bold sans-serif, centred in right column, larger than "Дежурные врачи:"
+ROW | 1 | 1. Балахнинъ, Викторъ Михайловичъ, колл. рег. (съ 7 апрѣля 1881 г.). | Балахнинъ | - | Викторъ | Михайловичъ | колл. рег. | (съ 7 апрѣля 1881 г.)
+ROW | 2 | 2. Захаровъ, Николай Константиновичъ, колл. секр. (съ 1 сентября 1887 г.). | Захаровъ | - | Николай | Константиновичъ | колл. секр. | (съ 1 сентября 1887 г.)
+ROW | 3 | 3. Зловъ, Петръ Николаевичъ, губ. секр. (съ 31 декабря 1878 г.). | Зловъ | - | Петръ | Николаевичъ | губ. секр. | (съ 31 декабря 1878 г.)
+ROW | 4 | 4. Де-Лазари, Иванъ Константиновичъ, губ. секр. (съ 1 іюня 1897 г.). | Де-Лазари | - | Иванъ | Константиновичъ | губ. секр. | (съ 1 іюня 1897 г.) NOTE: hyphenated surname.
+NOTE: Folio 134 printed at lower left. This page is the continuation of the Moscow Office (the heading "Московская Контора Императорскихъ театровъ." is on p002); the St Petersburg-style department names (Счетное отдѣленіе, Монтировочная часть, Врачебная часть) therefore belong to the Moscow Office here.
+COUNT | rows=20 | headings=12

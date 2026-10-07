@@ -1,0 +1,39 @@
+{
+ "remove": {
+  "administration_1902-03_p002": [
+   7
+  ],
+  "administration_1903-04_p002": [
+   2
+  ],
+  "administration_1905-06_p002": [
+   5
+  ],
+  "administration_1906-07_p002": [
+   4
+  ],
+  "administration_1907-08_p002": [
+   4
+  ],
+  "administration_1908-09_p002": [
+   4
+  ],
+  "administration_1909-10_p002": [
+   19
+  ]
+ },
+ "add": [
+  {
+   "entry_id": "administration_1896-97_p000__e013",
+   "family_name": "Всеволожской",
+   "first_name": "Иванъ",
+   "patronymic": "Александровичъ"
+  },
+  {
+   "entry_id": "administration_1909-10_p002__e019",
+   "family_name": "Покровскій",
+   "first_name": "Сергѣй",
+   "patronymic": "Алексѣевичъ"
+  }
+ ]
+}

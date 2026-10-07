@@ -13051,3 +13051,25 @@ WHERE date_undate LIKE '%-02-29' GROUP BY 1,2;
 1918, and not in the Gregorian. `datetime.date()` rejects it. This is why
 `research.event.date_undate` is VARCHAR, and why
 `research.review_assertion.date_undate` is too.
+
+## 2026-10-07 -- Administrators structure stage: what do institution/heading_path look like after the rebuild?
+
+```sql
+select count(*), count(distinct institution), count(distinct heading_path), count(distinct split_part(heading_path,' / ',1))
+from raw.person_entry where page_id like 'administration_%' and page_id not like '%1910-11%';
+select split_part(heading_path,' / ',1) o, count(*) from raw.person_entry where page_id like 'administration_%' and page_id not like '%1910-11%' group by 1 order by 2 desc;
+select count(*) from raw.person_entry where heading_path like '% /';
+```
+
+Result: 1,834 rows; 1 distinct institution; 186 distinct heading_path; 3 offices (St Petersburg 943, Moscow 758, Directorate 133). Dangling " /" paths: 67 before the parser fix, 0 after.
+
+## 2026-10-07 -- Administrators rebuild integrity vs the pre-structure backup
+
+```sql
+select count(*) from raw.person_entry e left join entities.person_link l on l.entry_id=e.entry_id where l.entry_id is null;
+select count(*) from entities.person where superseded_by_person_id is not null;
+select count(*) from entities.person where superseded_by_person_id is null;
+select sum(receipts_total_kopecks) from research.event;   -- compared with the backup file
+```
+
+Result: 0 unlinked entries; 3,217 tombstones and 3,135 live persons (both identical to the backup); receipts sum identical; 0 orphan links.

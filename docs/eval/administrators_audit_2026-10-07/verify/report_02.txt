@@ -1,0 +1,101 @@
+V2.1 | PRINTED ENTRY: Фогельзангъ, Рудольфъ Августовичъ, колл. сов. (съ 21 февраля 1891 г.). [Бухгалтеръ, Счетное отдѣленіе, Московская контора; 1893-94 p002, unnumbered] | DIFFERENCES: stored text and the first-read text (V2.2) are the same printed line (the stored copy and the first read are one entry, not two). Surname is Ф-о-г-е-л-ь-з-а-н-г-ъ, capital Ф (V2.2's lowercase "ф" is wrong); ends ъ. Rank "колл. сов." IS printed on this line (broken "колл." / "сов."). Date 21 февраля 1891. No Оставилъ/Назначенъ line. | CONFIDENCE high
+
+V2.2 | PRINTED ENTRY: same line as V2.1: Фогельзангъ, Рудольфъ Августовичъ, колл. сов. (съ 21 февраля 1891 г.). | DIFFERENCES: the line exists; it is the same line as V2.1 (it does exist as an entry on the page, there is no second Фогельзангъ). Capital Ф printed. Rank колл. сов. is printed on that line. | CONFIDENCE high
+
+V2.3 | PRINTED ENTRY: 8. Киселевъ, Николай Сергѣевичъ (съ 24 декабря 1891 г.). | DIFFERENCES: NO rank is printed on this line (stored "ст. сов." is not printed; after the patronymic comes directly "(съ 24 декабря 1891 г.)"). Name Сергѣевичъ with ѣ. Surname ends ъ. | CONFIDENCE high
+
+V2.4 | PRINTED ENTRY: 6. Горянскій, Григорій Ивановичъ (съ 10 ноября 1893 г.). | DIFFERENCES: NO rank is printed on this line (stored "ст. сов." is not printed). Date 10 ноября 1893 (line break "10" / "ноября"). Surname ends і-й. | CONFIDENCE high
+
+V2.5 | PRINTED ENTRY: 3. Поспѣевъ, Дмитрій Александровичъ, неимѣющій чина (съ 18 января 1883 г.). [Канцелярскіе чиновники Конторы; printed "не-/имѣющій чина"] | DIFFERENCES: surname letter by letter П-о-с-п-ѣ-е-в-ъ (ѣ followed by е; stored "Поспѣвъ" lacks the е). Rank phrase "неимѣющій чина" printed on this line. | CONFIDENCE high
+
+V2.6 | PRINTED ENTRY: 5. Шарыпинъ, Константинъ Петровичъ, неимѣющій чина (съ 1 сентября 1887 г.). | DIFFERENCES: surname Ш-а-р-ы-п-и-н-ъ: fifth letter is п (flat top, no peak), not л (stored "Шарылинъ" wrong; first read right). Ends ъ. "неимѣющій чина" printed on this line. | CONFIDENCE high
+
+V2.7 | PRINTED ENTRY: 1. Бриллiантовъ, Алексѣй Егоровичъ, колл. асс. (съ 1 августа 1887 г.). (Помощники завѣдывающаго монтировочною частью.) | DIFFERENCES: surname Б-р-и-л-л-і-а-н-т-о-в-ъ, i.e. two л then і (same as stored "Брилліантовъ"; the first read's "i" is the same letter in Latin form, so the two texts do not really differ in spelling). Rank колл. асс. printed on this line. | CONFIDENCE high
+
+V2.8 | PRINTED ENTRY: Силинъ, Сергѣй Михайловичъ, колл. асс. (съ 1 октября 1867 г.). [Помощникъ дѣлопроизводителя, Моск. контора; unnumbered on printed page] | DIFFERENCES: surname ends ъ not ь (С-и-л-и-н-ъ; stored "Силинь" wrong). Rank колл. асс. printed on this line. No list number printed (stored list_number 5 is not on this page). | CONFIDENCE high
+
+V2.9 | PRINTED ENTRY: 5. Колеговъ, Павелъ Александровичъ, ст. сов. (съ 20 октября 1860 г.). | DIFFERENCES: month is "октября" (stored "октѧбря" has a wrong letter ѧ; print has plain я). Rank ст. сов. printed on this line. List number 5 printed. Date IS present in the print (stored text keeps it without parentheses; no date is missing in print). Surname К-о-л-е-г-о-в-ъ. | CONFIDENCE high
+
+V2.10 | PRINTED ENTRY: 6. Млодзѣевскій, Викентій Корниліевичъ (съ 3 іюля 1893 г.). [the closing bracket looks like "}" ] | DIFFERENCES: surname М-л-о-д-з-ѣ-е-в-с-к-і-й (ѣ followed by е; stored "Млодзѣвскій" lacks the е). NO rank is printed on this line. Date 3 іюля 1893 with і. | CONFIDENCE high
+
+V2.11 | PRINTED ENTRY: 2. Гирсъ, Константинъ Николаевичъ, губ. секр., въ званіи камеръ-юнкера (съ 17 августа 1892 г.). Оставилъ службу 22 августа 1895 г. | DIFFERENCES: a separate centred second line "Оставилъ службу 22 августа 1895 г." IS printed (O-с-т-а-в-и-л-ъ); stored text lacks it. Rank "губ. секр." plus "въ званіи камеръ-юнкера" printed on the first line. Date "(съ 17 авгу-/ста 1892 г.)" broken across lines. | CONFIDENCE high
+
+V2.12 | PRINTED ENTRY: 1. Клементьевъ, Николай Степановичъ, неимѣющій чина (съ 1 января 1883 г.). [printed "не-/имѣющій чина"] | DIFFERENCES: "неимѣющій" (stored "немѣющій" is wrong: letters н-е-и-м-ѣ-ю-щ-і-й, the и is present across the line break); parentheses are printed around "(съ 1 января 1883 г.)". Rank "неимѣющій чина" printed on this line. Surname К-л-е-м-е-н-т-ь-е-в-ъ. | CONFIDENCE high
+
+V2.13 | PRINTED ENTRY: Адамовичъ, Модестъ Станиславовичъ, шт.-кап. л.-гв. 4 Стрѣлковаго Императорской Фамиліи баталіона (съ 1 августа 1882 г.). | DIFFERENCES: first name М-о-д-е-с-т-ъ (ends ъ; stored "Модесть" with ь is wrong). Rank "шт.-кап. л.-гв. 4 Стрѣлковаго ... баталіона" printed on this line ("4" without "-го" on this page). Unnumbered. | CONFIDENCE high
+
+V2.14 | PRINTED ENTRY: 1. Генъ, Анатолій Александровичъ, ст. сов. (съ 19 сентября 1882 г.). | DIFFERENCES: surname Г-е-н-ъ (ends ъ; stored "Гень" wrong). Rank ст. сов. printed on this line. | CONFIDENCE high
+
+V2.15 | PRINTED ENTRY: 4. Горнъ, Эмануилъ Эмануиловичъ, ст. сов. (съ 7 декабря 1879 г.). | DIFFERENCES: surname ends ъ (Г-о-р-н-ъ; stored "Горнь" wrong). Rank ст. сов. printed on this line. | CONFIDENCE high
+
+V2.16 | PRINTED ENTRY: 6. Млодзѣевскій, Викентій Корниліевичъ (съ 3 іюля 1893 г.). | DIFFERENCES: surname М-л-о-д-з-ѣ-е-в-с-к-і-й (stored lacks the е after ѣ). NO rank printed on this line. | CONFIDENCE high
+
+V2.17 | PRINTED ENTRY: Силинъ, Сергѣй Михайловичъ, колл. асс. (съ 1 октября 1867 г.). | DIFFERENCES: surname ends ъ not ь (stored "Силинь" wrong). Rank колл. асс. printed on this line. The "(съ" stands at the end of the first line. | CONFIDENCE high
+
+V2.18 | PRINTED ENTRY: 1. Бриллiантовъ, Алексѣй Егоровичъ, колл. асс. (съ 1 августа 1887 г.). Съ 1 сентября 1895 г. назначенъ чиновникомъ особыхъ порученій при Конторѣ. | DIFFERENCES: surname has TWO л (Б-р-и-л-л-і-а-н-т-о-в-ъ; stored "Бриліантовъ" with one л is wrong). Second line in print begins "Съ 1 сентября 1895 г. назначенъ ..." (date first, then "назначенъ"), not "Назначенъ ... 1 сентября 1895 г." as stored; first read's order is right. Stored has a stray ")" typed after the date. Rank колл. асс. printed. | CONFIDENCE high
+
+V2.19 | PRINTED ENTRY: 1. Вильеръ-де-Лиль-Адамъ, Александръ Фердинандовичъ, кол. сов. (съ 19 сентября 1882 г.). | DIFFERENCES: in THIS year's print the rank is "кол. сов." with a SINGLE л (stored "кол. сов." is what is printed; first read's "колл. сов." is not what this page prints). Surname В-и-л-ь-е-р-ъ. Printed "Александръ Фер-/диандовичъ" (break across lines). | CONFIDENCE high (rank spelling "кол." read at 2.4x, clear single л)
+
+V2.20 | PRINTED ENTRY: 2. Лопухинъ, Николай Николаевичъ, колл. секр., въ званіи камеръ-юнкера (съ 15 октября 1892 г.). | DIFFERENCES: print includes "въ званіи камеръ-юнкера" (stored omits it). Rank колл. секр. printed on this line. | CONFIDENCE high
+
+V2.21 | PRINTED ENTRY: Всеволожской, Иванъ Александровичъ, оберъ-гофмейстеръ (съ 3 сентября 1881 г.). | DIFFERENCES: surname ends "-ой" (Всеволожской; stored "Всеволожскій" wrong). Rank оберъ-гофмейстеръ printed (on the second line). | CONFIDENCE high
+
+V2.22 | PRINTED ENTRY: 1. Бартновскій, Петръ Осиповичъ, неимѣющій чина (съ 15 января 1893 г.). [printed "не-/имѣющій"] | DIFFERENCES: "неимѣющій" (stored "немѣщій" wrong). Rank phrase "неимѣющій чина" printed on this line. | CONFIDENCE high
+
+V2.23 | PRINTED ENTRY: 3. Гордонъ, Левъ Адамовичъ, колл. асс. (съ 4 декабря 1892 г.). Оставилъ службу 1 мая 1896 г. | DIFFERENCES: separate centred line "Оставилъ службу 1 мая 1896 г." IS printed (stored lacks it). Rank колл. асс. on first line. | CONFIDENCE high
+
+V2.24 | PRINTED ENTRY: Домерщиковъ, Платонъ Павловичъ, д. ст. сов. (съ 19 сентября 1882 г.). | DIFFERENCES: rank begins with "д." (д with two feet, then ст. сов.), not "л." as stored. Rank printed on this line. Unnumbered. | CONFIDENCE high
+
+V2.25 | PRINTED ENTRY: 13. Смольскій, Иванъ Ивановичъ, ст. сов. (съ 17 января 1885 г.). | DIFFERENCES: surname С-м-о-л-ь-с-к-і-й (has ь before с; stored "Смолскій" omits ь). Rank ст. сов. printed on this line. | CONFIDENCE high
+
+V2.26 | PRINTED ENTRY: Вальдштейнъ, Аркадій Логиновичъ, колл. сов. (съ 16 іюня 1867 г.). | DIFFERENCES: first name А-р-к-а-д-і-й (д with two feet; stored "Аркалій" wrong). Rank колл. сов. printed on this line (break "колл." / "сов."). | CONFIDENCE high
+
+V2.27 | PRINTED ENTRY: 1. Генъ, Анатолій Александровичъ, ст. сов. (съ 17 сентября 1882 г.). | DIFFERENCES: surname ends ъ not ь (stored "Гень" wrong). Rank ст. сов. printed. Date 17 сентября 1882. | CONFIDENCE high
+
+V2.28 | PRINTED ENTRY: 4. Горнъ, Эмануилъ Эмануиловичъ, ст. сов. (съ 7 декабря 1879 г.). | DIFFERENCES: surname ends ъ not ь (stored "Горнь" wrong). Rank ст. сов. printed on this line. | CONFIDENCE high
+
+V2.29 | PRINTED ENTRY: Адамовичъ, Модестъ Станиславовичъ, шт.-кап. л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона (съ 1 августа 1882 г.). | DIFFERENCES: first name М-о-д-е-с-т-ъ (stored "Молесть" wrong: д not л, ъ not ь). Rank "шт.-кап. л.-гв. 4-го Стрѣлковаго ... баталіона" printed on this line. | CONFIDENCE high
+
+V2.30 | PRINTED ENTRY: 3. Глубоковскій, Матвѣй Никаноровичъ, надв. сов. (съ 17 ноября 1886 г.). | DIFFERENCES: rank "надв. сов." (д, not л; stored "налв." wrong). Date in parentheses. | CONFIDENCE high
+
+V2.31 | PRINTED ENTRY: 2. Борисовъ, Викторъ Васильевичъ, надв. сов. (съ 23 марта 1893 г.). | DIFFERENCES: rank "надв. сов." (stored "налв." wrong). Parentheses printed. | CONFIDENCE high
+
+V2.32 | PRINTED ENTRY: 2. Розовъ, Александръ Ѳедоровичъ, надв. сов. (съ 18 февраля 1874 г.). | DIFFERENCES: rank "надв. сов." (stored "налв." wrong). Ѳ printed. Parentheses printed. | CONFIDENCE high
+
+V2.33 | PRINTED ENTRY: Брилліантовъ, Алексѣй Егоровичъ, надв. сов. (съ 1 августа 1887 г.). | DIFFERENCES: rank "надв. сов." (stored "налв." wrong). Surname Б-р-и-л-л-і-а-н-т-о-в-ъ (two л, і). Unnumbered (under "Чиновникъ особыхъ порученій при Конторѣ"). | CONFIDENCE high
+
+V2.34 | PRINTED ENTRY: Пчельниковъ, Павелъ Михайловичъ, д. ст. сов. (съ 16 іюня 1882 г.). | DIFFERENCES: rank begins "д." (д with feet; stored "л." wrong). Printed "1882" and "іюня" with і. | CONFIDENCE high
+
+V2.35 | PRINTED ENTRY: 4. Поспѣевъ, Дмитрій Александровичъ, неимѣющій чина (съ 18 января 1883 г.). Съ 18 сентября 1896 г. назначенъ помощникомъ бухгалтера. | DIFFERENCES: second line "Съ 18 сентября 1896 г. назначенъ помощникомъ бухгалтера." IS printed (stored lacks it). Rank "неимѣющій чина" printed. Parentheses around date. | CONFIDENCE high
+
+V2.36 | PRINTED ENTRY: 6. Млодзѣевскій, Викентій Корниліевичъ (съ 3 іюля 1893 г.). | DIFFERENCES: surname М-л-о-д-з-ѣ-е-в-с-к-і-й (stored "Млодзевскій" has plain е for ѣ and lacks the second е). NO rank is printed on this line (stored "ст. сов." not printed). | CONFIDENCE high
+
+V2.37 | PRINTED ENTRY: Силинъ, Сергѣй Михайловичъ, колл. асс. (съ 1 октября 1867 г.). | DIFFERENCES: surname ends ъ (stored "Силинь" wrong). Rank колл. асс. printed. | CONFIDENCE high
+
+V2.38 | PRINTED ENTRY: 7. Шенкъ, Петръ Петровичъ, колл. секр. (съ 1 іюня 1888 г.). | DIFFERENCES: surname Ш-е-н-к-ъ (stored "Шень" wrong: к then ъ). Date "1 іюня 1888" with і (stored "юня" omits і). Parentheses printed. Rank колл. секр. printed. | CONFIDENCE high
+
+V2.39 | PRINTED ENTRY: Всеволожской, Иванъ Александровичъ, оберъ-гофмейстеръ (съ 3 сентября 1881 г.). | DIFFERENCES: line exists on the page (Директоръ Императорскихъ театровъ), unnumbered; surname ends "-ой". Rank оберъ-гофмейстеръ printed. | CONFIDENCE high
+
+V2.40 | PRINTED ENTRY: 2. Лопухинъ, Николай Николаевичъ, колл. секр., въ званіи камеръ-юнкера (съ 15 октября 1892 г.). Оставилъ службу 21 декабря 1896 г. | DIFFERENCES: separate line "Оставилъ службу 21 декабря 1896 г." IS printed (ends "г." with period; stored lacks it). "(съ 15 октября 1892 г.)." has an opening bracket (stored has only closing). Rank колл. секр. + въ званіи камеръ-юнкера. | CONFIDENCE high
+
+V2.41 | PRINTED ENTRY: 1. Вильеръ-де-Лиль-Адамъ, Александръ Фердинандовичъ, колл. сов.(съ 19 сентября 1882 г.). | DIFFERENCES: surname letter by letter В-и-л-ь-е-р-ъ (Cyrillic е, not Ukrainian є as stored). "колл. сов." with two л printed on this line; "(съ" has no space before it; opening bracket printed. Date 19 сентября 1882. | CONFIDENCE high
+
+V2.42 | PRINTED ENTRY: 10. Пассекъ, Алексѣй Помпеевичъ (съ 11 января 1895 г.). | DIFFERENCES: NO rank is printed on this line (stored "ст. сов." is not printed). | CONFIDENCE high
+
+V2.43 | PRINTED ENTRY: 3. Шишко, Николай Макаровичъ, надв. сов. (съ 18 января 1880 г.). | DIFFERENCES: rank "надв. сов." (д, not л; stored "надл." wrong). | CONFIDENCE high
+
+V2.44 | PRINTED ENTRY: Старженецкій-Лаппа, Владиміръ Павловичъ, кап. л.-гв. Егерскаго полка (съ 1 августа 1882 г.). Съ 17 мая 1897 г. назначенъ помошникомъ управляющаго Московскою Конторою Императорскихъ театровъ. | DIFFERENCES: "помош-/никомъ": the letter before the hyphen is ш (no descender tail), not щ (stored "помощникомъ" wrong; compare "управляющаго" with a clear щ on the next line). "Московскою" (stored "Московскію" wrong). Rank кап. л.-гв. Егерскаго полка printed. | CONFIDENCE high (ш vs щ read at 9x, no tail)
+
+V2.45 | PRINTED ENTRY: 2. Шретеръ, Викторъ Александровичъ, д. ст. сов. (съ 9 августа 1882 г.). | DIFFERENCES: rank begins "д." (д with feet; stored "л." wrong). List number 2 IS printed (stored has none). | CONFIDENCE high
+
+V2.46 | PRINTED ENTRY: 1. Гешвендъ, Александръ Романовичъ, д. ст. сов. (съ 1 января 1879 г.). | DIFFERENCES: rank begins "д." (stored "л." wrong). List number 1 IS printed. | CONFIDENCE high
+
+V2.47 | PRINTED ENTRY: Анцъ, Павелъ Христофоровичъ, надв. сов. (съ 9 декабря 1880 г.). | DIFFERENCES: rank "надв. сов." (stored "надл." wrong). Unnumbered. | CONFIDENCE high
+
+V2.48 | PRINTED ENTRY: Поспѣевъ, Дмитрій Александровичъ, губ. секр. (съ 18 января 1883 г.). | DIFFERENCES: surname П-о-с-п-ѣ-е-в-ъ (stored "Поспѣвъ" lacks е). Rank губ. секр. printed on this line (break "губ." / "секр."). | CONFIDENCE high
+
+V2.49 | PRINTED ENTRY: 8. Лилѣевъ, Ѳедоръ Николаевичъ, колл. сов. (съ 14 апрѣля 1895 г.). | DIFFERENCES: surname Л-и-л-ѣ-е-в-ъ (ѣ followed by е; stored "Лилѣвъ" lacks е). Rank "колл." read at the end of the first line; "сов." begins the second line (its left edge was just outside my crop; read from the page-level view as "сов."), so the rank part "сов." is medium confidence. | CONFIDENCE medium-high
+
+V2.50 | PRINTED ENTRY: 1. Генъ, Анатолій Александровичъ, ст. сов. (съ 17 сентября 1882 г.). | DIFFERENCES: surname ends ъ not ь (stored "Гень" wrong). List number 1 IS printed (stored has none). Rank ст. сов. printed. | CONFIDENCE high
+
+V2.51 | PRINTED ENTRY: 3. Горнъ, Эмануилъ Эмануиловичъ, ст. сов. (съ 7 декабря 1879 г.). | DIFFERENCES: surname ends ъ not ь (stored "Горнь" wrong). Rank ст. сов. printed on the first line. | CONFIDENCE high

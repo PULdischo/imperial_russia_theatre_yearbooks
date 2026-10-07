@@ -2163,7 +2163,8 @@ def _repair_heading_path_rank_class(parsed: dict) -> int:
         if not m:
             continue
         e["service_class"] = m.group(1).strip()
-        e["heading_path"] = heading[:m.start()].rstrip()
+        # a grade that was a heading segment of its own ("... / Отдѣленіе / VII кл.") would leave a dangling " /" behind
+        e["heading_path"] = heading[:m.start()].rstrip().rstrip("/").rstrip()
         n_fixed += 1
     return n_fixed
 

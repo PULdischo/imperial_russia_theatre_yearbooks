@@ -1,0 +1,93 @@
+REPORT 05 (bundle_05, 46 items). Pages read from outputs/roster_images_full/images; doubtful letters read from 2-10x enlarged crops.
+
+V5.1 | PRINTED ENTRY: Бестужевъ-Рюминъ, Алексѣй Ивановичъ, ротмистръ гвард. запаснаго кавалерійскаго полка (съ 15 марта 1903 г.). [p003, bottom-left, under heading "И. д. полиціймейстера театровъ"; entry exists] | DIFFERENCES: only stored text given; it matches the print in letters (Бестужевъ-Рюминъ, ъ at the end of both parts; Алексѣй with ѣ; "кавалерійскаго" with і). Print has commas after surname, name and patronymic, and the date is in parentheses "(съ 15 марта 1903 г.)." No list number. Rank printed on THIS line: "ротмистръ" (military rank), not a civil rank. | CONFIDENCE high
+
+V5.2 | PRINTED ENTRY: Бестужевъ-Рюминъ, Алексѣй Ивановичъ, ротмистръ гвард. запаснаго кавалерійскаго полка (съ 15 марта 1903 г.). [same single printed entry as V5.1 on administration_1902-03_p003] | DIFFERENCES: only first-read text given; it matches the print. This is the same entry as V5.1 (not a second person; only one such line on the page). | CONFIDENCE high
+
+V5.3 | PRINTED ENTRY: 4. Борхманъ, Александръ Адольфовичъ (съ 15 ноября 1900 г.). [last entry of right column, Дежурные врачи] | DIFFERENCES: no rank is printed after the patronymic (stored "ст. сов." is NOT in the print; first read is right). Surname ends ъ. Date "(съ 15 ноября 1900 г.)". | CONFIDENCE high
+
+V5.4 | PRINTED ENTRY: 2. Безсоновъ, Юрій Николаевичъ (съ 1 апрѣля 1903 г.). [Дежурные врачи, right column] | DIFFERENCES: no rank is printed (stored "ст. сов." not in print). Surname Безсоновъ (з, с, о, н, о, в, ъ); Юрій with і; "(съ" at the end of the first line, "1 апрѣля 1903 г.)" on the second line. | CONFIDENCE high
+
+V5.5 | PRINTED ENTRY: 2. Соколовъ, Александръ Николаевичъ (съ 8 іюля 1899 г.). [Врачи, right column] | DIFFERENCES: no rank is printed (stored "ст. сов." not in print; the neighbour No.1 Борисовъ has "ст. сов." but this line has none). Date "(съ 8 іюля 1899 г.)" with і in іюля. | CONFIDENCE high
+
+V5.6 | PRINTED ENTRY: 2. Леммлейнъ, Григорій Рудольфовичъ, надв. сов. (съ 1 іюня 1901 г.). Назначенъ помощникомъ начальника монтировочной части 6 декабря 1902 г. | DIFFERENCES: second line "Назначенъ помощникомъ начальника монтировочной части 6 декабря 1902 г." IS printed (stored lacks it; stored also has a stray ")" at the end of the date line instead of ")."). Rank "надв. сов." is printed on THIS line. Both texts agree on the rest. | CONFIDENCE high
+
+V5.7 | PRINTED ENTRY: 1. Розовъ, Александръ Федоровичъ, надв. сов. (съ 18 февраля 1874 г.). Назначенъ помощникомъ начальника монтировочной части 6 декабря 1902 г. | DIFFERENCES: the "Назначенъ ... 6 декабря 1902 г." line IS printed (missing in stored). Rank "надв. сов." printed on THIS line. Patronymic Федоровичъ (Ф, not Ѳ). | CONFIDENCE high
+
+V5.8 | PRINTED ENTRY: Обуховъ, Сергѣй Трофимовичъ, тит. совѣт. (съ 16 апрѣля 1902 г.). Назначенъ начальникомъ монтировочной части 6 декабря 1902 г. [Завѣдывающій монтировочной частью] | DIFFERENCES: second line "Назначенъ начальникомъ монтировочной части 6 декабря 1902 г." IS printed (missing in stored). Rank printed on this line: "тит. совѣт." (ѣ in совѣт.). No list number. | CONFIDENCE high
+
+V5.9 | PRINTED ENTRY: Соколовъ, Сергѣй Гавриловичъ, надв. сов. (съ 3 февраля 1875 г.). Назначенъ помощникомъ бухгалтера 6 декабря 1902 г. [Экзекуторъ и журналистъ Конторы] | DIFFERENCES: second line "Назначенъ помощникомъ бухгалтера 6 декабря 1902 г." IS printed (missing in stored; "бухгал-/тера" hyphenated at line break). Rank "надв. сов." printed on THIS line. | CONFIDENCE high
+
+V5.10 | PRINTED ENTRY: Дворецъ-Дворецкій, Федоръ Федоровичъ, колл. рег. (съ 6 декабря 1902 г.). [Регистраторъ; split "Федоръ Фе-/доровичъ"] | DIFFERENCES: I can find no letter difference between the two texts' surname; print is Д-в-о-р-е-ц-ъ (ц, then ъ) - Д-в-о-р-е-ц-к-і-й (ц again, then к, і, й): "Дворецъ-Дворецкій". Print has rank "колл. рег." on this line (double л in колл.). | CONFIDENCE high
+
+V5.11 | PRINTED ENTRY: 24. Ромоцановскій, Александръ Сергѣевичъ (съ 1 апрѣля 1903 г.). [1902-03 p004, right column top; "Сер-/гѣевичъ"] | DIFFERENCES: only stored text has a clear surname; the 4th letter of the surname is ц (single stem with a descending tail on the right, NO two feet), so the print is Р-о-м-о-ц-а-н-о-в-с-к-і-й = "Ромоцановскій" (stored "Ромодановскій" with д is NOT what this page prints; the same man on the 1903-04 page is printed with д). No rank printed on this line. Surname ends -скій (і, й). | CONFIDENCE high
+
+V5.12 | PRINTED ENTRY: 24. Ромоцановскій, Александръ Сергѣевичъ (съ 1 апрѣля 1903 г.). [same entry as V5.11] | DIFFERENCES: first-read "Ромо?ановскій" - the doubtful letter is ц (not д; compared with д elsewhere on the page which has two feet). Same entry as V5.11. | CONFIDENCE high
+
+V5.13 | PRINTED ENTRY: 2. Бѣляевъ, Аркадій Ивановичъ, губ. секр. (съ 1 января 1903 г.). Назначенъ чиновникомъ X класса 6 іюня 1903 т. [1902-03 p004, right column bottom] | DIFFERENCES: second line "Назначенъ чиновникомъ X класса 6 іюня 1903 т." IS printed (missing in stored); it ends "т." (not "г.") - a misprint in the original. Rank "губ. секр." printed on THIS line. Surname Бѣляевъ (Б, ѣ). | CONFIDENCE high
+
+V5.14 | PRINTED ENTRY: 4. Поляковъ, Иванъ Тимофѣевичъ, неимѣющій чина (съ 1 августа 1900 г.). Назначенъ чиновникомъ XII класса 6 декабря 1902 г. | DIFFERENCES: second line "Назначенъ чиновникомъ XII класса 6 декабря 1902 г." IS printed (missing in stored). "неимѣющій чина" printed on this line (ѣ, ій). | CONFIDENCE high
+
+V5.15 | PRINTED ENTRY: 3. Захаровъ, Николай Константиновичъ, колл. секр. (съ 1 сентября 1887 г.). Назначенъ чиновникомъ XII класса 6 декабря 1902 г. [name "Константино-/вичъ"] | DIFFERENCES: second line "Назначенъ чиновникомъ XII класса 6 декабря 1902 г." IS printed (missing in stored). Rank "колл. секр." printed on THIS line. Name Николай (stored Николай; print Николай with й). | CONFIDENCE high
+
+V5.16 | PRINTED ENTRY: 2. Зловъ, Петръ Николаевичъ, тит. сов. (съ 31 декабря 1878 г.). Назначенъ чиновникомъ X класса 6 декабря 1902 г. | DIFFERENCES: second line "Назначенъ чиновникомъ X класса 6 декабря 1902 г." IS printed (missing in stored). Rank "тит. сов." printed on this line. | CONFIDENCE high
+
+V5.17 | PRINTED ENTRY: 1. Балахнинъ, Викторъ Михайловичъ, губ. секр. (съ 7 апрѣля 1881 г.). Назначенъ чиновникомъ X класса 6 декабря 1902 г. Оставилъ службу 6 іюня 1903 г. | DIFFERENCES: two further lines are printed and missing in stored: "Назначенъ чиновникомъ X класса 6 декабря 1902 г." and "Оставилъ службу 6 іюня 1903 г." (no full stop after the last "г"). Rank "губ. секр." on this line. | CONFIDENCE high
+
+V5.18 | PRINTED ENTRY: 12. Кликовичъ, Станиславъ Казиміровичъ, кол. сов. (съ 1 апрѣля 1903 г.). [name split "Казимі-/ровичъ"] | DIFFERENCES: patronymic is Казиміровичъ with і (stored "Казимировичъ" with и is wrong; first read right). Rank is "кол. сов." with ONE л (stored matches; first read here omits the rank in the candidate but the print has "кол. сов." on this line). | CONFIDENCE high
+
+V5.19 | PRINTED ENTRY: 16. Менделѣевъ, Дмитрій Ивановичъ, ст. сов. (съ 11 мая 1901 г.). | DIFFERENCES: surname is М-е-н-д-е-л-ѣ-е-в-ъ with ѣ (stored "Мендельфевъ" is wrong: no ь and no ф). Rank "ст. сов." printed on THIS line; Дмитрій with і. | CONFIDENCE high
+
+V5.20 | PRINTED ENTRY: 2. Шенкъ, Петръ Петровичъ, колл. асс. (съ 1 іюня 1888 г.). Завѣдывающій центральною библіотекою. [1903-04 p000, right column; "библіо-/текою"] | DIFFERENCES: the extra line "Завѣдывающій центральною библіотекою." IS printed (missing in stored); spelled б-и-б-л-і-о-т-е-к-о-ю (і in библіо-). Rank "колл. асс." printed on THIS line. | CONFIDENCE high
+
+V5.21 | PRINTED ENTRY: 1. Вильеръ-де-Лиль-Адамъ, Александръ Фердинандовичъ, колл. сов. (съ 19 сентября 1882 г.). [wraps "(съ 19 / сентября 1882 г.)"] | DIFFERENCES: no letter difference found in the surname: print is В-и-л-ь-е-р-ъ - д-е - Л-и-л-ь - А-д-а-м-ъ. Rank "колл. сов." printed on this line. | CONFIDENCE high
+
+V5.22 | PRINTED ENTRY: 2. Юрьевъ, Валерьянъ Ф?доровичъ, неимѣющій чина (съ 1 января 1886 г.). [1903-04 p001, bottom-left; "не-/имѣющій"] | DIFFERENCES: surname is Ю-р-ь-е-в-ъ (stored "Юрьевъ" correct). Patronymic: first letter is Ф (stem through a circle), the SECOND letter is a damaged/worn type that prints only as a small low "з"-like mark (looks like a broken е), then д-о-р-о-в-и-ч-ъ. It is NOT ё (stored "Фёдоровичъ" has ё: no diaeresis is printed). No rank is printed on this line. | CONFIDENCE medium (damaged glyph)
+
+V5.23 | PRINTED ENTRY: 5. Рожлественскій, Петръ Арсеньевичъ, колл. секр. (съ 10 сентября 1887 г.). [1903-04 p001, right column bottom of the top half; "Ар-/сеньевичъ"] | DIFFERENCES: only stored text given ("Рождественскій"). In the print the letters are Р-о-ж-л-е-с-т-в-е-н-с-к-і-й: the letter after ж is л (no feet, compared with д of "Андреевъ" on the same page, which has two feet), i.e. д is not printed (looks like a misprint in the original). Rest matches. Rank "колл. секр." printed on this line. | CONFIDENCE medium
+
+V5.24 | PRINTED ENTRY: 2. Юрьевъ, Валерьянъ Ф?доровичъ, неимѣющій чина (съ 1 января 1886 г.). [same entry as V5.22] | DIFFERENCES: first-read "Ф?доровичъ" - the "?" is a damaged glyph, a small "з"-shaped mark (probably a broken е); first letter is Ф not Ѳ. No rank printed. | CONFIDENCE medium
+
+V5.25 | PRINTED ENTRY: Находятся въ вѣдѣніи придворной медицинской части съ 6 декабря 1902 г. [1903-04 p002, right of "Дежурные врачи" heading, indented paragraph, no parentheses] | DIFFERENCES: only stored text given; matches the print (вѣдѣніи with ѣ, ѣ, і, и). Print has no brackets around the date. | CONFIDENCE high
+
+V5.26 | PRINTED ENTRY: Фонъ-Бооль, Николай Константиновичъ, надв. сов. (съ 14 сентября 1898 г.). [Московская Контора, "Константино-/вичъ"] | DIFFERENCES: stored matches the print (Ф-о-н-ъ-Б-о-о-л-ь, ь at the end). Rank "надв. сов." printed on this line. | CONFIDENCE high
+
+V5.27 | PRINTED ENTRY: Фонъ-Бооль, Николай Константиновичъ, надв. сов. (съ 14 сентября 1898 г.). [same entry as V5.26] | DIFFERENCES: first read matches the print; same entry as V5.26. | CONFIDENCE high
+
+V5.28 | PRINTED ENTRY: 1. Михайловъ, Георгій Ивановичъ, по найму, личн. поч. гражд. (съ 7 января 1885 г.). | DIFFERENCES: the abbreviation is "гражд." (г-р-а-ж-д-.), as in first read; stored "граждан." is NOT printed. Print has "по найму," and "личн. поч." as in both texts. No other civil rank is printed. | CONFIDENCE high
+
+V5.29 | PRINTED ENTRY: 4 Мамошинъ, Осій Павловичъ, губ. секр. (съ 24 іюля 1876 г.). Оставилъ службу 1 сентября 1903 г. | DIFFERENCES: list number is printed "4" with no full stop after it (only a faint speck). The service line ends "1903 г." with a full stop after г. (first read drops it; stored has it). Rank "губ. секр." printed on THIS line. | CONFIDENCE high
+
+V5.30 | PRINTED ENTRY: Бестужевъ-Рюминъ, Алексѣй Ивановичъ, ротмистръ гвард. запаснаго кавалерійскаго полка (съ 15 марта 1903 г.). [1903-04 p002, bottom right, "И. д. полиціймейстера театровъ"] | DIFFERENCES: surname is Бестужевъ-Рюминъ (Б-е-с-т-у-ж-е-в-ъ - Р-ю-м-и-н-ъ), same letters in both texts; only the comma after the surname differs. No civil rank; "ротмистръ" is printed. | CONFIDENCE high
+
+V5.31 | PRINTED ENTRY: 2. Безсоновъ, Юрій Николаевичъ (съ 1 апрѣля 1903 г.). [1903-04 p003, Дежурные врачи, left half of lower page] | DIFFERENCES: no rank is printed (stored "ст. сов." not in print). | CONFIDENCE high
+
+V5.32 | PRINTED ENTRY: 2. Соколовъ, Александръ Николаевичъ (съ 8 іюля 1899 г.). [Врачи] | DIFFERENCES: no rank is printed (stored "ст. сов." not in print). | CONFIDENCE high
+
+V5.33 | PRINTED ENTRY: Коровинъ, Константинъ Алексѣевичъ, неклассный художникъ, неимѣющій чина (съ 1 января 1903 г.). Состоитъ преподавателемъ при московскомъ художественномъ обществѣ училища живописи, ваянія и зодчества. | DIFFERENCES: "Состоитъ" ends with ъ (stored "Состоить" with ь is wrong; first read right). Rest identical in letters: "неклассный", "обществѣ", "ваянія". No list number. | CONFIDENCE high
+
+V5.34 | PRINTED ENTRY: 2. Обуховъ, Сергѣй Трофимовичъ, тит. совѣт. (съ 16 апрѣля 1902 г.). Назначенъ помощникомъ Управляющаго Конторою 19 марта 1904 г. | DIFFERENCES: the last word of the title is "Конторою" (К-о-н-т-о-р-о-ю), not "Контролю" (stored wrong). Date line ends "1904 г." Rank "тит. совѣт." on this line. | CONFIDENCE high
+
+V5.35 | PRINTED ENTRY: 12. Кликовичъ, Станиславъ Казиміровичъ, кол. сов. (съ 1 апрѣля 1903 г.). | DIFFERENCES: patronymic Казиміровичъ with і (stored "Казимировичъ" wrong). Rank is "кол. сов." with ONE л (stored right, first read's "колл." wrong). | CONFIDENCE high
+
+V5.36 | PRINTED ENTRY: 22. Ратомскій, Фелиціанъ Протовичъ (съ 1 апрѣля 1903 г.). | DIFFERENCES: forename is Ф-е-л-и-ц-і-а-н-ъ: е after Ф, и after л, і after ц (stored "Фелиціанъ" correct; first read "Феліціанъ" with і after л is wrong). No rank printed on this line. | CONFIDENCE high
+
+V5.37 | PRINTED ENTRY: 16. Менделѣевъ, Дмитрій Ивановичъ, ст. сов. (съ 11 мая 1901 г.). | DIFFERENCES: surname М-е-н-д-е-л-ѣ-е-в-ъ with ѣ (stored "Мендельевъ" has ь, wrong). Rank "ст. сов." printed on this line. | CONFIDENCE high
+
+V5.38 | PRINTED ENTRY: 2. Бѣляевъ, Аркадій Ивановичъ, губ. секр. (съ 1 января 1903 г.). [1903-04 p004, right column] | DIFFERENCES: first letter is Б (stored "Вѣляевъ" with В is wrong); then ѣ-л-я-е-в-ъ. Rank "губ. секр." printed on this line. No "Назначенъ" line in this year. | CONFIDENCE high
+
+V5.39 | PRINTED ENTRY: 1. Костровъ, Евстафій Евстафіевичъ, тит. сов. (съ 13 марта 190[damaged] г.). Назначенъ помощникомъ завѣдывающаго постановками 2 апрѣля 1905 г. [1904-05 p001, right column, Смотритель зданій; photograph page] | DIFFERENCES: the "Назначенъ ... 2 апрѣля 1905 г." line IS printed (missing in stored). The year in the date is "190" followed by a damaged last glyph (broken ink fragments, shaped like a split "з"/3 - not 1); the first three digits are 1-9-0. Stored "1901" and first-read "1903" differ in the last digit only: the last digit is NOT a clear 1 (a 1 here is a single plain vertical stroke, as in "1 января"), so it is most likely a worn 3. Rank "тит. сов." printed on this line. | CONFIDENCE medium (last digit damaged)
+
+V5.40 | PRINTED ENTRY: Мысовскій, Иванъ Мануиловичъ, колл. сов. (съ 1 января 1903 г.). Назначенъ инспекторомъ Спб. Театральнаго училища 1 сентября 1904 г. [1904-05 p001, bottom left, Бухгалтеръ VII кл.] | DIFFERENCES: the "Назначенъ инспекторомъ Спб. Театральнаго училища 1 сентября 1904 г." line IS printed (missing in stored). Rank "колл. сов." printed on THIS line. | CONFIDENCE high
+
+V5.41 | PRINTED ENTRY: Кедринъ, Никаноръ Никаноровичъ (съ 1 февраля 1897 г.). Оставилъ службу 1 ноября 1904 г. | DIFFERENCES: the line "Оставилъ службу 1 ноября 1904 г." IS printed (missing in stored). No rank is printed on this line. | CONFIDENCE high
+
+V5.42 | PRINTED ENTRY: 2. Рыдзевскій, Иванъ Георгіевичъ, поручикъ запаса гвард. пѣхоты (съ 2 апрѣля 1905 г.). Назначенъ помощникомъ завѣдывающаго постановками 17 іюня 1905 г. | DIFFERENCES: the "Назначенъ ... 17 іюня 1905 г." line IS printed (missing in stored). Military rank "поручикъ запаса гвард. пѣхоты" printed on this line. | CONFIDENCE high
+
+V5.43 | PRINTED ENTRY: 1. Мецнеръ, Левъ Даниловичъ, колл. секр. (съ 1 января 1903 г.). Назначенъ помощникомъ завѣдывающаго постановками 2 апрѣля 1905 г. | DIFFERENCES: the "Назначенъ ... 2 апрѣля 1905 г." line IS printed (missing in stored). Rank "колл. секр." printed on this line. | CONFIDENCE high
+
+V5.44 | PRINTED ENTRY: Адамовичъ, Модестъ Станиславовичъ, полковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона (съ 1 августа 1882 г.). | DIFFERENCES: forename is Модестъ ending ъ (stored "Модесть" ending ь is wrong; first read "Модестъ" with ъ is right). Military rank "полковникъ" printed. | CONFIDENCE high
+
+V5.45 | PRINTED ENTRY: 2. Юрьевъ, Валерьянъ Ф?доровичъ, неимѣющій чина (съ 1 января 1886 г.). [1904-05 p001, right column] | DIFFERENCES: first letter of the patronymic is Ф (stem through circle), NOT Ѳ (first read "Ѳедоровичъ" wrong) and the second letter is a damaged small "з"-shaped glyph (broken е), NOT ё (stored "Фёдоровичъ" with ё wrong: no diaeresis). The "р" of Юрьевъ is very faint in this print. No rank printed. | CONFIDENCE medium
+
+V5.46 | PRINTED ENTRY: 1. Трамбицкій, Алексѣй Георгіевичъ, ст. сов. (съ 5 октября 1898 г.). | DIFFERENCES: surname is Т-р-а-м-б-и-ц-к-і-й: the 6th letter is Cyrillic и, the 7th is ц (stored "Трамбickiй" has Latin-looking i, c, k - homoglyphs, wrong). Rank "ст. сов." printed on THIS line. | CONFIDENCE high

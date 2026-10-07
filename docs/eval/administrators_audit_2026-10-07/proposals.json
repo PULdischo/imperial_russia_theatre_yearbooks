@@ -1,0 +1,7052 @@
+{
+ "V1.3": {
+  "item": "V1.3",
+  "entry_id": "administration_1890-91_p001__e028",
+  "page": "administration_1890-91_p001",
+  "n": 28,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Борнштейнъ",
+   "first_name": "Адольфъ",
+   "patronymic": "Константиновичъ",
+   "rank_or_title": "колл. секр.",
+   "tenure_note_text": "(съ 1 ноября 1873 г.)"
+  },
+  "verifier": "Борншейнъ, Адольфъ Константиновичъ, колл. секр. (съ 1 ноября 1873 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Борнштейнъ",
+     "Борншейнъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.4": {
+  "item": "V1.4",
+  "entry_id": "administration_1890-91_p001__e001",
+  "page": "administration_1890-91_p001",
+  "n": 1,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Адамовичъ",
+   "first_name": "Модесть",
+   "patronymic": "Станиславовичъ",
+   "rank_or_title": "шт.-кап. л. гв. 4 Стрѣлковаго Императорской Фамиліи баталіона",
+   "tenure_note_text": "(съ 1 августа 1882 г.)"
+  },
+  "verifier": "Адамовичъ, Модестъ Станиславовичъ, шт.-кап. л. гв. 4 Стрѣлковаго Императорской Фамиліи баталіона (съ 1 августа 1882 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Модесть",
+     "Модестъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.5": {
+  "item": "V1.5",
+  "entry_id": "administration_1890-91_p001__e014",
+  "page": "administration_1890-91_p001",
+  "n": 14,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Гень",
+   "first_name": "Анатолій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 19 сентября 1882 г.)"
+  },
+  "verifier": "Генъ, Анатолій Александровичъ, ст. сов. (съ 19 сентября 1882 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Гень",
+     "Генъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.6": {
+  "item": "V1.6",
+  "entry_id": "administration_1890-91_p001__e013",
+  "page": "administration_1890-91_p001",
+  "n": 13,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Богомоловъ",
+   "first_name": "Тимофей",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 1 ноября 1889 г.)"
+  },
+  "verifier": "Богомоловъ, Тимоѳей Ивановичъ, ст. сов. (съ 1 ноября 1889 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Тимофей",
+     "Тимоѳей"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.7": {
+  "item": "V1.7",
+  "entry_id": "administration_1890-91_p001__e017",
+  "page": "administration_1890-91_p001",
+  "n": 17,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Горнь",
+   "first_name": "Эмануилъ",
+   "patronymic": "Эмануиловичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 7 декабря 1879 г.)"
+  },
+  "verifier": "Горнъ, Эмануилъ Эмануиловичъ, ст. сов. (съ 7 декабря 1879 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Горнь",
+     "Горнъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.8": {
+  "item": "V1.8",
+  "entry_id": "administration_1890-91_p002__e008",
+  "page": "administration_1890-91_p002",
+  "n": 8,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Силинь",
+   "first_name": "Сергѣй",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "тит. сов.",
+   "tenure_note_text": "съ 1 февраля 1883 г.)"
+  },
+  "verifier": "Силинъ, Сергѣй Михайловичъ, тит. сов. (съ 1 февраля 1883 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Силинь",
+     "Силинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.10": {
+  "item": "V1.10",
+  "entry_id": "administration_1891-92_p000__e014",
+  "page": "administration_1891-92_p000",
+  "n": 14,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Даничичъ",
+   "first_name": "Максимъ",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 1 іюня 1888 г."
+  },
+  "verifier": "Данчичъ, Максимъ Михайловичъ, колл. сов. (съ 1 іюня 1888 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Даничичъ",
+     "Данчичъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.11": {
+  "item": "V1.11",
+  "entry_id": "administration_1891-92_p000__e001",
+  "page": "administration_1891-92_p000",
+  "n": 1,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Всеволожскій",
+   "first_name": "Иванъ",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "тайн. сов.",
+   "tenure_note_text": "съ 3 сентября 1881 г."
+  },
+  "verifier": "Всеволожской, Иванъ Александровичъ, тайн. сов. (съ 3 сентября 1881 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Всеволожскій",
+     "Всеволожской"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.12": {
+  "item": "V1.12",
+  "entry_id": "administration_1891-92_p000__e016",
+  "page": "administration_1891-92_p000",
+  "n": 16,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Клечковскій",
+   "first_name": "Албигнь",
+   "patronymic": "Владиславовичъ",
+   "rank_or_title": "кап. л.-гв. Московскаго полка",
+   "tenure_note_text": "съ 1 августа 1882 г."
+  },
+  "verifier": "Клечковскій, Альбинъ Владиславовичъ, кап. л.-гв. Московскаго полка (съ 1 августа 1882 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Албигнь",
+     "Альбинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.13": {
+  "item": "V1.13",
+  "entry_id": "administration_1891-92_p001__e020",
+  "page": "administration_1891-92_p001",
+  "n": 20,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Киселевъ",
+   "first_name": "Николай",
+   "patronymic": "Сергѣевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 24 декабря 1891 г.)"
+  },
+  "verifier": "Киселевъ, Николай Сергѣевичъ (съ 24 декабря 1891 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.14": {
+  "item": "V1.14",
+  "entry_id": "administration_1891-92_p001__e012",
+  "page": "administration_1891-92_p001",
+  "n": 12,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Богомоловъ",
+   "first_name": "Тимофей",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 25 октября 1889 г.)"
+  },
+  "verifier": "Богомоловъ, Тимоѳей Ивановичъ, ст. сов. (съ 25 октября 1889 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Тимофей",
+     "Тимоѳей"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.15": {
+  "item": "V1.15",
+  "entry_id": "administration_1891-92_p001__e018",
+  "page": "administration_1891-92_p001",
+  "n": 18,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Горнь",
+   "first_name": "Эмануилъ",
+   "patronymic": "Эмануиловичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 7 декабря 1879 г.)"
+  },
+  "verifier": "Горнъ, Эмануилъ Эмануиловичъ, ст. сов. (съ 7 декабря 1879 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Горнь",
+     "Горнъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.17": {
+  "item": "V1.17",
+  "entry_id": "administration_1891-92_p002__e018",
+  "page": "administration_1891-92_p002",
+  "n": 18,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Притковъ",
+   "first_name": "Владиміръ",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "стат. сов.",
+   "tenure_note_text": "(съ 17 октября 1843 г.). Оставилъ службу 20 декабря 1891 г.)"
+  },
+  "verifier": "Прытковъ, Владиміръ Михайловичъ, стат. сов (съ 17 октября 1843 г.). Оставилъ службу 20 декабря 1891 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Притковъ",
+     "Прытковъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.19": {
+  "item": "V1.19",
+  "entry_id": "administration_1892-93_p000__e001",
+  "page": "administration_1892-93_p000",
+  "n": 1,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Всеволожскій",
+   "first_name": "Иванъ",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "тайн. сов.",
+   "tenure_note_text": "съ 3 сентября 1881 г."
+  },
+  "verifier": "Всеволожской, Иванъ Александровичъ, тайн. сов. (съ 3 сентября 1881 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Всеволожскій",
+     "Всеволожской"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.20": {
+  "item": "V1.20",
+  "entry_id": "administration_1892-93_p001__e033",
+  "page": "administration_1892-93_p001",
+  "n": 33,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Шредеръ",
+   "first_name": "Михаилъ",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 29 января 1893 г.). Оставилъ службу 27 іюля 1893 г."
+  },
+  "verifier": "Шредеръ, Михаилъ Николаевичъ (съ 29 января 1893 г.). Оставилъ службу 27 іюля 1893 г.",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.21": {
+  "item": "V1.21",
+  "entry_id": "administration_1892-93_p001__e026",
+  "page": "administration_1892-93_p001",
+  "n": 26,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Киселевъ",
+   "first_name": "Николай",
+   "patronymic": "Сергѣевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 24 декабря 1891 г.)"
+  },
+  "verifier": "Киселевъ, Николай Сергѣевичъ (съ 24 декабря 1891 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.22": {
+  "item": "V1.22",
+  "entry_id": "administration_1892-93_p001__e018",
+  "page": "administration_1892-93_p001",
+  "n": 18,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Тарасовъ",
+   "first_name": "Ѳедоръ",
+   "patronymic": "Лаврентьевичъ",
+   "rank_or_title": "тип. сов.",
+   "tenure_note_text": "(съ 19 іюля 1869 г.)"
+  },
+  "verifier": "Тарасовъ, Ѳедоръ Лаврентьевичъ, тит. сов. (съ 19 іюля 1869 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "тип.",
+     "тит."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.23": {
+  "item": "V1.23",
+  "entry_id": "administration_1892-93_p001__e017",
+  "page": "administration_1892-93_p001",
+  "n": 17,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Тарасовъ",
+   "first_name": "Николай",
+   "patronymic": "Григорьевичъ",
+   "rank_or_title": "тип. сов.",
+   "tenure_note_text": "(съ 1 декабря 1855 г.). † 20 февраля 1893 г."
+  },
+  "verifier": "Тарасовъ, Николай Григорьевичъ, тит. сов. (съ 1 декабря 1855 г.). † 20 февраля 1893 г.",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "тип.",
+     "тит."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.24": {
+  "item": "V1.24",
+  "entry_id": "administration_1892-93_p001__e010",
+  "page": "administration_1892-93_p001",
+  "n": 10,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Домерщикновъ",
+   "first_name": "Платонъ",
+   "patronymic": "Павловичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "(съ 19 сентября 1882 г.)"
+  },
+  "verifier": "Домерщиковъ, Платонъ Павловичъ, колл. сов. (съ 19 сентября 1882 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Домерщикновъ",
+     "Домерщиковъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.25": {
+  "item": "V1.25",
+  "entry_id": "administration_1892-93_p001__e008",
+  "page": "administration_1892-93_p001",
+  "n": 8,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Вальдштейнъ",
+   "first_name": "Аркалій",
+   "patronymic": "Логиновичъ",
+   "rank_or_title": "надв. сов.",
+   "tenure_note_text": "(съ 16 іюня 1867 г.)"
+  },
+  "verifier": "Вальдштейнъ, Аркадій Логиновичъ, надв. сов. (съ 16 іюня 1867 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Аркалій",
+     "Аркадій"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.26": {
+  "item": "V1.26",
+  "entry_id": "administration_1892-93_p001__e020",
+  "page": "administration_1892-93_p001",
+  "n": 20,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Гень",
+   "first_name": "Анатолій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 19 сентября 1882 г.)"
+  },
+  "verifier": "Генъ, Анатолій Александровичъ, ст. сов. (съ 19 сентября 1882 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Гень",
+     "Генъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.27": {
+  "item": "V1.27",
+  "entry_id": "administration_1892-93_p001__e019",
+  "page": "administration_1892-93_p001",
+  "n": 19,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Богомоловъ",
+   "first_name": "Тимофей",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 25 октября 1889 г.). Оставилъ службу 1 августа 1893 г."
+  },
+  "verifier": "Богомоловъ, Тимоѳей Ивановичъ, ст. сов. (съ 25 октября 1889 г.). Оставилъ службу 1 августа 1893 г.",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Тимофей",
+     "Тимоѳей"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.28": {
+  "item": "V1.28",
+  "entry_id": "administration_1892-93_p001__e024",
+  "page": "administration_1892-93_p001",
+  "n": 24,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Горнь",
+   "first_name": "Эмануилъ",
+   "patronymic": "Эмануиловичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 7 декабря 1879 г.)"
+  },
+  "verifier": "Горнъ, Эмануилъ Эмануиловичъ, ст. сов. (съ 7 декабря 1879 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Горнь",
+     "Горнъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.29": {
+  "item": "V1.29",
+  "entry_id": "administration_1892-93_p001__e028",
+  "page": "administration_1892-93_p001",
+  "n": 28,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Лукинь",
+   "first_name": "Евгеній",
+   "patronymic": "Алексѣевичъ",
+   "rank_or_title": "надв. сов.",
+   "tenure_note_text": "(съ 17 сентября 1890 г.). Оставилъ службу 5 января 1893 г."
+  },
+  "verifier": "Лукинъ, Евгеній Алексѣевичъ, надв. сов. (съ 17 сентября 1890 г.). Оставилъ службу 5 января 1893 г.",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Лукинь",
+     "Лукинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.32": {
+  "item": "V1.32",
+  "entry_id": "administration_1892-93_p002__e014",
+  "page": "administration_1892-93_p002",
+  "n": 14,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Гершельманъ",
+   "first_name": "Константинъ",
+   "patronymic": "Романовичъ",
+   "rank_or_title": "надв. сов.",
+   "tenure_note_text": "съ 19 сентября 1882 г.). Съ 15 марта 1893 г. назначенъ помощникомъ управляющаго С.-Петербургской Контророю."
+  },
+  "verifier": "Гершельманъ, Константинъ Романовичъ, надв. сов. (съ 19 сентября 1882 г.). Съ 15 марта 1893 г. назначенъ помощникомъ управляющаго С.-Петербургской Конторою.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "sub",
+     "Контророю.",
+     "Конторою."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.33": {
+  "item": "V1.33",
+  "entry_id": "administration_1892-93_p002__e012",
+  "page": "administration_1892-93_p002",
+  "n": 12,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Каковинъ",
+   "first_name": "Михаилъ",
+   "patronymic": "Константиновичъ",
+   "rank_or_title": "колл. секр.",
+   "tenure_note_text": "съ 1 февраля 1891 г.). Съ 15 марта 1893 г. назначенъ дѣлопроизводителемъ распорядительнаго отдѣленія Контроры."
+  },
+  "verifier": "Каковинъ, Михаилъ Константиновичъ, колл. секр. (съ 1 февраля 1891 г.). Съ 15 марта 1893 г. назначенъ дѣлопроизводителемъ распорядительнаго отдѣленія Конторы.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "sub",
+     "Контроры.",
+     "Конторы."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.35": {
+  "item": "V1.35",
+  "entry_id": "administration_1892-93_p002__e006",
+  "page": "administration_1892-93_p002",
+  "n": 6,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Поспѣвъ",
+   "first_name": "Дмитрій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "неимѣющій чина",
+   "tenure_note_text": "съ 18 января 1883 г.)."
+  },
+  "verifier": "Поспѣевъ, Дмитрій Александровичъ, неимѣющій чина (съ 18 января 1883 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Поспѣвъ",
+     "Поспѣевъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "medium-high"
+ },
+ "V1.38": {
+  "item": "V1.38",
+  "entry_id": "administration_1892-93_p003__e009",
+  "page": "administration_1892-93_p003",
+  "n": 9,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Монгетти",
+   "first_name": "Иванъ",
+   "patronymic": "Карловичъ",
+   "rank_or_title": "д. статск. сов.",
+   "tenure_note_text": "съ 21 ноября 1881 г.)."
+  },
+  "verifier": "Монигетти, Иванъ Карловичъ, д. статск. сов. (съ 21 ноября 1881 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Монгетти",
+     "Монигетти"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.39": {
+  "item": "V1.39",
+  "entry_id": "administration_1892-93_p003__e008",
+  "page": "administration_1892-93_p003",
+  "n": 8,
+  "kinds": [
+   "CHARS",
+   "NAME",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Млюдзѣевскій",
+   "first_name": "Викентій",
+   "patronymic": "Корниліевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 3 іюля 1893 г.)."
+  },
+  "verifier": "Млодзѣевскій, Викентій Корниліевичъ (съ 3 іюля 1893 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Млюдзѣевскій",
+     "Млодзѣевскій"
+    ]
+   ],
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.40": {
+  "item": "V1.40",
+  "entry_id": "administration_1893-94_p000__e001",
+  "page": "administration_1893-94_p000",
+  "n": 1,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Всеволожскій",
+   "first_name": "Иванъ",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "тайн. сов.",
+   "tenure_note_text": "(съ 3 сентября 1881 г.)"
+  },
+  "verifier": "Всеволожской, Иванъ Александровичъ, тайн. сов. (съ 3 сентября 1881 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Всеволожскій",
+     "Всеволожской"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.41": {
+  "item": "V1.41",
+  "entry_id": "administration_1893-94_p001__e025",
+  "page": "administration_1893-94_p001",
+  "n": 25,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Богушевскій",
+   "first_name": "Александръ",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 21 февраля 1876 г."
+  },
+  "verifier": "Богушевскій, Александръ Михайловичъ, ст. сов. (съ 21 февраля 1876 г.). Оставилъ службу 20 марта 1894 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Оставилъ службу 20 марта 1894 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.42": {
+  "item": "V1.42",
+  "entry_id": "administration_1893-94_p001__e016",
+  "page": "administration_1893-94_p001",
+  "n": 16,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Молчановъ",
+   "first_name": "Иванъ",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "надв. сов.",
+   "tenure_note_text": "съ 1 ноября 1887 г."
+  },
+  "verifier": "Молчановъ, Иванъ Николаевичъ, надв. сов. (съ 1 ноября 1887 г.). Съ 1 октября 1893 г. назначенъ старшимъ помощникомъ завѣдывающаго монтировочною частью.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Съ 1 октября 1893 г. назначенъ старшимъ помощникомъ завѣдывающаго монтировочною частью."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.43": {
+  "item": "V1.43",
+  "entry_id": "administration_1893-94_p001__e014",
+  "page": "administration_1893-94_p001",
+  "n": 14,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Петровъ",
+   "first_name": "Владиміръ",
+   "patronymic": "Андреевичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 19 сентября 1882 г."
+  },
+  "verifier": "Петровъ, Владиміръ Андреевичъ, колл. сов. (съ 19 сентября 1882 г.). Съ 1 октября 1893 г. назначенъ чиновникомъ особыхъ порученій при Конторѣ.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Съ 1 октября 1893 г. назначенъ чиновникомъ особыхъ порученій при Конторѣ."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.44": {
+  "item": "V1.44",
+  "entry_id": "administration_1893-94_p001__e003",
+  "page": "administration_1893-94_p001",
+  "n": 3,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Калашниковъ",
+   "first_name": "Петръ",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "надв. сов.",
+   "tenure_note_text": "съ 19 сентября 1882 г."
+  },
+  "verifier": "Калашниковъ, Петръ Ивановичъ, надв. сов. (съ 19 сентября 1882 г.). Оставилъ службу 1 октября 1893 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Оставилъ службу 1 октября 1893 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.45": {
+  "item": "V1.45",
+  "entry_id": "administration_1893-94_p001__e001",
+  "page": "administration_1893-94_p001",
+  "n": 1,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Аршеневскій",
+   "first_name": "Василій",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "надв. сов.",
+   "tenure_note_text": "съ 20 апрѣля 1889 г."
+  },
+  "verifier": "Аршеневскій, Василій Николаевичъ, надв. сов. (съ 20 апрѣля 1889 г.). Съ 1 октября 1893 г. назначенъ дѣлопроизводителемъ Хозяйственнаго отдѣленія.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Съ 1 октября 1893 г. назначенъ дѣлопроизводителемъ Хозяйственнаго отдѣленія."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V1.46": {
+  "item": "V1.46",
+  "entry_id": "administration_1893-94_p001__e023",
+  "page": "administration_1893-94_p001",
+  "n": 23,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Гень",
+   "first_name": "Анатолій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 19 сентября 1882 г."
+  },
+  "verifier": "Генъ, Анатолій Александровичъ, ст. сов. (съ 19 сентября 1882 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Гень",
+     "Генъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.3": {
+  "item": "V2.3",
+  "entry_id": "administration_1893-94_p002__e025",
+  "page": "administration_1893-94_p002",
+  "n": 25,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Киселевъ",
+   "first_name": "Николай",
+   "patronymic": "Сергѣевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 24 декабря 1891 г.)"
+  },
+  "verifier": "Киселевъ, Николай Сергѣевичъ (съ 24 декабря 1891 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.4": {
+  "item": "V2.4",
+  "entry_id": "administration_1893-94_p002__e023",
+  "page": "administration_1893-94_p002",
+  "n": 23,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Горянскій",
+   "first_name": "Григорій",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 10 ноября 1893 г.)"
+  },
+  "verifier": "Горянскій, Григорій Ивановичъ (съ 10 ноября 1893 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.5": {
+  "item": "V2.5",
+  "entry_id": "administration_1893-94_p002__e016",
+  "page": "administration_1893-94_p002",
+  "n": 16,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Поспѣвъ",
+   "first_name": "Дмитрій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "неимѣющій чина",
+   "tenure_note_text": "(съ 18 января 1883 г.)"
+  },
+  "verifier": "Поспѣевъ, Дмитрій Александровичъ, неимѣющій чина (съ 18 января 1883 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Поспѣвъ",
+     "Поспѣевъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.6": {
+  "item": "V2.6",
+  "entry_id": "administration_1893-94_p002__e018",
+  "page": "administration_1893-94_p002",
+  "n": 18,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Шарылинъ",
+   "first_name": "Константинъ",
+   "patronymic": "Петровичъ",
+   "rank_or_title": "неимѣющій чина",
+   "tenure_note_text": "(съ 1 сентября 1887 г.)"
+  },
+  "verifier": "Шарыпинъ, Константинъ Петровичъ, неимѣющій чина (съ 1 сентября 1887 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Шарылинъ",
+     "Шарыпинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.8": {
+  "item": "V2.8",
+  "entry_id": "administration_1893-94_p002__e005",
+  "page": "administration_1893-94_p002",
+  "n": 5,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Силинь",
+   "first_name": "Сергѣй",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "(съ 1 октября 1867 г.)"
+  },
+  "verifier": "Силинъ, Сергѣй Михайловичъ, колл. асс. (съ 1 октября 1867 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Силинь",
+     "Силинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.9": {
+  "item": "V2.9",
+  "entry_id": "administration_1893-94_p003__e006",
+  "page": "administration_1893-94_p003",
+  "n": 6,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Колеговъ",
+   "first_name": "Павелъ",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 20 октѧбря 1860 г."
+  },
+  "verifier": "Колеговъ, Павелъ Александровичъ, ст. сов. (съ 20 октября 1860 г.).",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "sub",
+     "октѧбря",
+     "октября"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.10": {
+  "item": "V2.10",
+  "entry_id": "administration_1893-94_p003__e007",
+  "page": "administration_1893-94_p003",
+  "n": 7,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Млодзѣвскій",
+   "first_name": "Викентій",
+   "patronymic": "Корниліевичъ",
+   "rank_or_title": null,
+   "tenure_note_text": "съ 3 іюля 1893 г."
+  },
+  "verifier": "Млодзѣевскій, Викентій Корниліевичъ (съ 3 іюля 1893 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Млодзѣвскій",
+     "Млодзѣевскій"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.11": {
+  "item": "V2.11",
+  "entry_id": "administration_1894-95_p000__e003",
+  "page": "administration_1894-95_p000",
+  "n": 3,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Гирсъ",
+   "first_name": "Константинъ",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "губ. секр., въ званіи камеръ-юнкера",
+   "tenure_note_text": "(съ 17 августа 1892 г.)"
+  },
+  "verifier": "Гирсъ, Константинъ Николаевичъ, губ. секр., въ званіи камеръ-юнкера (съ 17 августа 1892 г.). Оставилъ службу 22 августа 1895 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Оставилъ службу 22 августа 1895 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.12": {
+  "item": "V2.12",
+  "entry_id": "administration_1894-95_p001__e037",
+  "page": "administration_1894-95_p001",
+  "n": 37,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Клементьевъ",
+   "first_name": "Николай",
+   "patronymic": "Степановичъ",
+   "rank_or_title": "немѣющій чина",
+   "tenure_note_text": "съ 1 января 1883 г."
+  },
+  "verifier": "Клементьевъ, Николай Степановичъ, неимѣющій чина (съ 1 января 1883 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "немѣющій",
+     "неимѣющій"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.13": {
+  "item": "V2.13",
+  "entry_id": "administration_1894-95_p001__e007",
+  "page": "administration_1894-95_p001",
+  "n": 7,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Адамовичъ",
+   "first_name": "Модесть",
+   "patronymic": "Станиславовичъ",
+   "rank_or_title": "шт.-кап. л.-гв. 4 Стрѣлковаго Императорской Фамиліи баталіона",
+   "tenure_note_text": "съ 1 августа 1882 г."
+  },
+  "verifier": "Адамовичъ, Модестъ Станиславовичъ, шт.-кап. л.-гв. 4 Стрѣлковаго Императорской Фамиліи баталіона (съ 1 августа 1882 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Модесть",
+     "Модестъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.14": {
+  "item": "V2.14",
+  "entry_id": "administration_1894-95_p001__e019",
+  "page": "administration_1894-95_p001",
+  "n": 19,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Гень",
+   "first_name": "Анатолій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 19 сентября 1882 г."
+  },
+  "verifier": "Генъ, Анатолій Александровичъ, ст. сов. (съ 19 сентября 1882 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Гень",
+     "Генъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.15": {
+  "item": "V2.15",
+  "entry_id": "administration_1894-95_p001__e024",
+  "page": "administration_1894-95_p001",
+  "n": 24,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Горнь",
+   "first_name": "Эмануилъ",
+   "patronymic": "Эмануиловичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 7 декабря 1879 г."
+  },
+  "verifier": "Горнъ, Эмануилъ Эмануиловичъ, ст. сов. (съ 7 декабря 1879 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Горнь",
+     "Горнъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.16": {
+  "item": "V2.16",
+  "entry_id": "administration_1894-95_p002__e026",
+  "page": "administration_1894-95_p002",
+  "n": 26,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Млодзѣвскій",
+   "first_name": "Викентій",
+   "patronymic": "Корниліевичъ",
+   "rank_or_title": null,
+   "tenure_note_text": "съ 3 іюля 1893 г."
+  },
+  "verifier": "Млодзѣевскій, Викентій Корниліевичъ (съ 3 іюля 1893 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Млодзѣвскій",
+     "Млодзѣевскій"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.17": {
+  "item": "V2.17",
+  "entry_id": "administration_1894-95_p002__e008",
+  "page": "administration_1894-95_p002",
+  "n": 8,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Силинь",
+   "first_name": "Сергѣй",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "съ 1 октября 1867 г."
+  },
+  "verifier": "Силинъ, Сергѣй Михайловичъ, колл. асс. (съ 1 октября 1867 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Силинь",
+     "Силинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.18": {
+  "item": "V2.18",
+  "entry_id": "administration_1894-95_p002__e018",
+  "page": "administration_1894-95_p002",
+  "n": 18,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Бриліантовъ",
+   "first_name": "Алексѣй",
+   "patronymic": "Егоровичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "съ 1 августа 1887 г.). Назначенъ чиновникомъ особыхъ порученій при Конторѣ 1 сентября 1895 г."
+  },
+  "verifier": "Бриллiантовъ, Алексѣй Егоровичъ, колл. асс. (съ 1 августа 1887 г.). Съ 1 сентября 1895 г. назначенъ чиновникомъ особыхъ порученій при Конторѣ.",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Бриліантовъ",
+     "Бриллiантовъ"
+    ]
+   ],
+   "tenure_note_text": [
+    [
+     "del",
+     "1",
+     null
+    ],
+    [
+     "del",
+     "сентября",
+     null
+    ],
+    [
+     "del",
+     "1895",
+     null
+    ],
+    [
+     "del",
+     "г.",
+     null
+    ]
+   ]
+  },
+  "auto": false,
+  "conf": "high"
+ },
+ "V2.20": {
+  "item": "V2.20",
+  "entry_id": "administration_1895-96_p000__e003",
+  "page": "administration_1895-96_p000",
+  "n": 3,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Лопухинъ",
+   "first_name": "Николай",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "колл. секр.",
+   "tenure_note_text": "(съ 15 октября 1892 г.)"
+  },
+  "verifier": "Лопухинъ, Николай Николаевичъ, колл. секр., въ званіи камеръ-юнкера (съ 15 октября 1892 г.).",
+  "edits": {},
+  "auto": false,
+  "conf": "high"
+ },
+ "V2.21": {
+  "item": "V2.21",
+  "entry_id": "administration_1895-96_p000__e001",
+  "page": "administration_1895-96_p000",
+  "n": 1,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Всеволожскій",
+   "first_name": "Иванъ",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "оберъ-гофмейстеръ",
+   "tenure_note_text": "(съ 3 сентября 1881 г.)"
+  },
+  "verifier": "Всеволожской, Иванъ Александровичъ, оберъ-гофмейстеръ (съ 3 сентября 1881 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Всеволожскій",
+     "Всеволожской"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.22": {
+  "item": "V2.22",
+  "entry_id": "administration_1895-96_p001__e037",
+  "page": "administration_1895-96_p001",
+  "n": 37,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Бартновскій",
+   "first_name": "Петръ",
+   "patronymic": "Осиповичъ",
+   "rank_or_title": "немѣщій чина",
+   "tenure_note_text": "(съ 15 января 1893 г.)"
+  },
+  "verifier": "Бартновскій, Петръ Осиповичъ, неимѣющій чина (съ 15 января 1893 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "немѣщій",
+     "неимѣющій"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.23": {
+  "item": "V2.23",
+  "entry_id": "administration_1895-96_p001__e023",
+  "page": "administration_1895-96_p001",
+  "n": 23,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Гордонъ",
+   "first_name": "Левъ",
+   "patronymic": "Адамовичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "(съ 4 декабря 1892 г.)"
+  },
+  "verifier": "Гордонъ, Левъ Адамовичъ, колл. асс. (съ 4 декабря 1892 г.). Оставилъ службу 1 мая 1896 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Оставилъ службу 1 мая 1896 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.24": {
+  "item": "V2.24",
+  "entry_id": "administration_1895-96_p001__e010",
+  "page": "administration_1895-96_p001",
+  "n": 10,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Домерщиковъ",
+   "first_name": "Платонъ",
+   "patronymic": "Павловичъ",
+   "rank_or_title": "л. ст. сов.",
+   "tenure_note_text": "(съ 19 сентября 1882 г.)"
+  },
+  "verifier": "Домерщиковъ, Платонъ Павловичъ, д. ст. сов. (съ 19 сентября 1882 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "л.",
+     "д."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.25": {
+  "item": "V2.25",
+  "entry_id": "administration_1895-96_p001__e033",
+  "page": "administration_1895-96_p001",
+  "n": 33,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Смолскій",
+   "first_name": "Иванъ",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 17 января 1885 г.)"
+  },
+  "verifier": "Смольскій, Иванъ Ивановичъ, ст. сов. (съ 17 января 1885 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Смолскій",
+     "Смольскій"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.26": {
+  "item": "V2.26",
+  "entry_id": "administration_1895-96_p001__e008",
+  "page": "administration_1895-96_p001",
+  "n": 8,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Вальдштейнъ",
+   "first_name": "Аркалій",
+   "patronymic": "Логиновичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "(съ 16 іюня 1867 г.)"
+  },
+  "verifier": "Вальдштейнъ, Аркадій Логиновичъ, колл. сов. (съ 16 іюня 1867 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Аркалій",
+     "Аркадій"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.27": {
+  "item": "V2.27",
+  "entry_id": "administration_1895-96_p001__e019",
+  "page": "administration_1895-96_p001",
+  "n": 19,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Гень",
+   "first_name": "Анатолій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 17 сентября 1882 г.)"
+  },
+  "verifier": "Генъ, Анатолій Александровичъ, ст. сов. (съ 17 сентября 1882 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Гень",
+     "Генъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.28": {
+  "item": "V2.28",
+  "entry_id": "administration_1895-96_p001__e024",
+  "page": "administration_1895-96_p001",
+  "n": 24,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Горнь",
+   "first_name": "Эмануилъ",
+   "patronymic": "Эмануиловичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 7 декабря 1879 г.)"
+  },
+  "verifier": "Горнъ, Эмануилъ Эмануиловичъ, ст. сов. (съ 7 декабря 1879 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Горнь",
+     "Горнъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.29": {
+  "item": "V2.29",
+  "entry_id": "administration_1895-96_p001__e007",
+  "page": "administration_1895-96_p001",
+  "n": 7,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Адамовичъ",
+   "first_name": "Молесть",
+   "patronymic": "Станиславовичъ",
+   "rank_or_title": "шт.-кап. л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона",
+   "tenure_note_text": "(съ 1 августа 1882 г.)"
+  },
+  "verifier": "Адамовичъ, Модестъ Станиславовичъ, шт.-кап. л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона (съ 1 августа 1882 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Молесть",
+     "Модестъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.30": {
+  "item": "V2.30",
+  "entry_id": "administration_1895-96_p002__e024",
+  "page": "administration_1895-96_p002",
+  "n": 24,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Глубоковскій",
+   "first_name": "Матвѣй",
+   "patronymic": "Никаноровичъ",
+   "rank_or_title": "налв. сов.",
+   "tenure_note_text": "съ 17 ноября 1886 г."
+  },
+  "verifier": "Глубоковскій, Матвѣй Никаноровичъ, надв. сов. (съ 17 ноября 1886 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "налв.",
+     "надв."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.31": {
+  "item": "V2.31",
+  "entry_id": "administration_1895-96_p002__e023",
+  "page": "administration_1895-96_p002",
+  "n": 23,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Борисовъ",
+   "first_name": "Викторъ",
+   "patronymic": "Васильевичъ",
+   "rank_or_title": "налв. сов.",
+   "tenure_note_text": "съ 23 марта 1893 г."
+  },
+  "verifier": "Борисовъ, Викторъ Васильевичъ, надв. сов. (съ 23 марта 1893 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "налв.",
+     "надв."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.32": {
+  "item": "V2.32",
+  "entry_id": "administration_1895-96_p002__e020",
+  "page": "administration_1895-96_p002",
+  "n": 20,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Розовъ",
+   "first_name": "Александръ",
+   "patronymic": "Ѳедоровичъ",
+   "rank_or_title": "налв. сов.",
+   "tenure_note_text": "съ 18 февраля 1874 г."
+  },
+  "verifier": "Розовъ, Александръ Ѳедоровичъ, надв. сов. (съ 18 февраля 1874 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "налв.",
+     "надв."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.33": {
+  "item": "V2.33",
+  "entry_id": "administration_1895-96_p002__e010",
+  "page": "administration_1895-96_p002",
+  "n": 10,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Брилліантовъ",
+   "first_name": "Алексѣй",
+   "patronymic": "Егоровичъ",
+   "rank_or_title": "налв. сов.",
+   "tenure_note_text": "съ 1 августа 1887 г."
+  },
+  "verifier": "Брилліантовъ, Алексѣй Егоровичъ, надв. сов. (съ 1 августа 1887 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "налв.",
+     "надв."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.34": {
+  "item": "V2.34",
+  "entry_id": "administration_1895-96_p002__e008",
+  "page": "administration_1895-96_p002",
+  "n": 8,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Пчельниковъ",
+   "first_name": "Павелъ",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "л. ст. сов.",
+   "tenure_note_text": "съ 16 іюня 1882 г."
+  },
+  "verifier": "Пчельниковъ, Павелъ Михайловичъ, д. ст. сов. (съ 16 іюня 1882 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "л.",
+     "д."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.35": {
+  "item": "V2.35",
+  "entry_id": "administration_1895-96_p002__e003",
+  "page": "administration_1895-96_p002",
+  "n": 3,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Поспѣевъ",
+   "first_name": "Дмитрій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "неимѣющій чина",
+   "tenure_note_text": "съ 18 января 1883 г."
+  },
+  "verifier": "Поспѣевъ, Дмитрій Александровичъ, неимѣющій чина (съ 18 января 1883 г.). Съ 18 сентября 1896 г. назначенъ помощникомъ бухгалтера.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Съ 18 сентября 1896 г. назначенъ помощникомъ бухгалтера."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.36": {
+  "item": "V2.36",
+  "entry_id": "administration_1895-96_p002__e027",
+  "page": "administration_1895-96_p002",
+  "n": 27,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Млодзевскій",
+   "first_name": "Викентій",
+   "patronymic": "Корниліевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 3 іюля 1893 г."
+  },
+  "verifier": "Млодзѣевскій, Викентій Корниліевичъ (съ 3 іюля 1893 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Млодзевскій",
+     "Млодзѣевскій"
+    ]
+   ],
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.37": {
+  "item": "V2.37",
+  "entry_id": "administration_1895-96_p002__e012",
+  "page": "administration_1895-96_p002",
+  "n": 12,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Силинь",
+   "first_name": "Сергѣй",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "съ 1 октября 1867 г."
+  },
+  "verifier": "Силинъ, Сергѣй Михайловичъ, колл. асс. (съ 1 октября 1867 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Силинь",
+     "Силинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.38": {
+  "item": "V2.38",
+  "entry_id": "administration_1895-96_p002__e006",
+  "page": "administration_1895-96_p002",
+  "n": 6,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Шень",
+   "first_name": "Петръ",
+   "patronymic": "Петровичъ",
+   "rank_or_title": "колл. секр.",
+   "tenure_note_text": "съ 1 юня 1888 г."
+  },
+  "verifier": "Шенкъ, Петръ Петровичъ, колл. секр. (съ 1 іюня 1888 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Шень",
+     "Шенкъ"
+    ]
+   ],
+   "tenure_note_text": [
+    [
+     "sub",
+     "юня",
+     "іюня"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.40": {
+  "item": "V2.40",
+  "entry_id": "administration_1896-97_p000__e002",
+  "page": "administration_1896-97_p000",
+  "n": 2,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Лопухинъ",
+   "first_name": "Николай",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "колл. секр., въ званіи камеръ-юнкера",
+   "tenure_note_text": "съ 15 октября 1892 г.)"
+  },
+  "verifier": "Лопухинъ, Николай Николаевичъ, колл. секр., въ званіи камеръ-юнкера (съ 15 октября 1892 г.). Оставилъ службу 21 декабря 1896 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Оставилъ службу 21 декабря 1896 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.42": {
+  "item": "V2.42",
+  "entry_id": "administration_1896-97_p001__e031",
+  "page": "administration_1896-97_p001",
+  "n": 31,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Пассекъ",
+   "first_name": "Алексѣй",
+   "patronymic": "Помпеевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 11 января 1895 г.)"
+  },
+  "verifier": "Пассекъ, Алексѣй Помпеевичъ (съ 11 января 1895 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.43": {
+  "item": "V2.43",
+  "entry_id": "administration_1896-97_p001__e015",
+  "page": "administration_1896-97_p001",
+  "n": 15,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Шишко",
+   "first_name": "Николай",
+   "patronymic": "Макаровичъ",
+   "rank_or_title": "надл. сов.",
+   "tenure_note_text": "(съ 18 января 1880 г.)"
+  },
+  "verifier": "Шишко, Николай Макаровичъ, надв. сов. (съ 18 января 1880 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "надл.",
+     "надв."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.44": {
+  "item": "V2.44",
+  "entry_id": "administration_1896-97_p001__e006",
+  "page": "administration_1896-97_p001",
+  "n": 6,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Старженецкій-Лаппа",
+   "first_name": "Владиміръ",
+   "patronymic": "Павловичъ",
+   "rank_or_title": "кап. л.-гв. Егерскаго полка",
+   "tenure_note_text": "(съ 1 августа 1882 г.). Съ 17 мая 1897 г. назначенъ помощникомъ управляющаго Московскію Конторою Императорскихъ театровъ."
+  },
+  "verifier": "Старженецкій-Лаппа, Владиміръ Павловичъ, кап. л.-гв. Егерскаго полка (съ 1 августа 1882 г.). Съ 17 мая 1897 г. назначенъ помошникомъ управляющаго Московскою Конторою Императорскихъ театровъ.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "sub",
+     "помощникомъ",
+     "помошникомъ"
+    ],
+    [
+     "sub",
+     "Московскію",
+     "Московскою"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.45": {
+  "item": "V2.45",
+  "entry_id": "administration_1896-97_p001__e003",
+  "page": "administration_1896-97_p001",
+  "n": 3,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Шретеръ",
+   "first_name": "Викторъ",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "л. ст. сов.",
+   "tenure_note_text": "(съ 9 августа 1882 г.)"
+  },
+  "verifier": "Шретеръ, Викторъ Александровичъ, д. ст. сов. (съ 9 августа 1882 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "л.",
+     "д."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.46": {
+  "item": "V2.46",
+  "entry_id": "administration_1896-97_p001__e002",
+  "page": "administration_1896-97_p001",
+  "n": 2,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Гешвендъ",
+   "first_name": "Александръ",
+   "patronymic": "Романовичъ",
+   "rank_or_title": "л. ст. сов.",
+   "tenure_note_text": "(съ 1 января 1879 г.)"
+  },
+  "verifier": "Гешвендъ, Александръ Романовичъ, д. ст. сов. (съ 1 января 1879 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "л.",
+     "д."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.47": {
+  "item": "V2.47",
+  "entry_id": "administration_1896-97_p001__e001",
+  "page": "administration_1896-97_p001",
+  "n": 1,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Анцъ",
+   "first_name": "Павелъ",
+   "patronymic": "Христофоровичъ",
+   "rank_or_title": "надл. сов.",
+   "tenure_note_text": "(съ 9 декабря 1880 г.)"
+  },
+  "verifier": "Анцъ, Павелъ Христофоровичъ, надв. сов. (съ 9 декабря 1880 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "надл.",
+     "надв."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.48": {
+  "item": "V2.48",
+  "entry_id": "administration_1896-97_p001__e010",
+  "page": "administration_1896-97_p001",
+  "n": 10,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Поспѣвъ",
+   "first_name": "Дмитрій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "губ. секр.",
+   "tenure_note_text": "(съ 18 января 1883 г.)"
+  },
+  "verifier": "Поспѣевъ, Дмитрій Александровичъ, губ. секр. (съ 18 января 1883 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Поспѣвъ",
+     "Поспѣевъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.49": {
+  "item": "V2.49",
+  "entry_id": "administration_1896-97_p001__e029",
+  "page": "administration_1896-97_p001",
+  "n": 29,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Лилѣвъ",
+   "first_name": "Ѳедоръ",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "(съ 14 апрѣля 1895 г.)"
+  },
+  "verifier": "Лилѣевъ, Ѳедоръ Николаевичъ, колл. сов. (съ 14 апрѣля 1895 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Лилѣвъ",
+     "Лилѣевъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "medium-high"
+ },
+ "V2.50": {
+  "item": "V2.50",
+  "entry_id": "administration_1896-97_p001__e020",
+  "page": "administration_1896-97_p001",
+  "n": 20,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Гень",
+   "first_name": "Анатолій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 17 сентября 1882 г.)"
+  },
+  "verifier": "Генъ, Анатолій Александровичъ, ст. сов. (съ 17 сентября 1882 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Гень",
+     "Генъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V2.51": {
+  "item": "V2.51",
+  "entry_id": "administration_1896-97_p001__e024",
+  "page": "administration_1896-97_p001",
+  "n": 24,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Горнь",
+   "first_name": "Эмануилъ",
+   "patronymic": "Эмануиловичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 7 декабря 1879 г.)"
+  },
+  "verifier": "Горнъ, Эмануилъ Эмануиловичъ, ст. сов. (съ 7 декабря 1879 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Горнь",
+     "Горнъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.1": {
+  "item": "V3.1",
+  "entry_id": "administration_1896-97_p002__e028",
+  "page": "administration_1896-97_p002",
+  "n": 28,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Колеговъ",
+   "first_name": "Павелъ",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 20 октября 1860 г.)"
+  },
+  "verifier": "Колеговъ, Павелъ Александровичъ, ст. сов. (съ 20 октября 1860 г.). Оставилъ службу 8 ноября 1896 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Оставилъ службу 8 ноября 1896 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.2": {
+  "item": "V3.2",
+  "entry_id": "administration_1896-97_p002__e017",
+  "page": "administration_1896-97_p002",
+  "n": 17,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Лееръ",
+   "first_name": "Евгеній",
+   "patronymic": "Генриховичъ",
+   "rank_or_title": "подполковникъ л.-гв. Уланскаго полка",
+   "tenure_note_text": "(съ 18 октября 1893 г.)"
+  },
+  "verifier": "Лееръ, Евгеній Генриховичъ, подполковникъ л.-гв. Уланскаго полка (съ 18 октября 1893 г.). Съ 28 мая 1897 г. назначенъ полиціймейстеромъ С.-Петербургскаго Маріинскаго театра.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Съ 28 мая 1897 г. назначенъ полиціймейстеромъ С.-Петербургскаго Маріинскаго театра."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.3": {
+  "item": "V3.3",
+  "entry_id": "administration_1896-97_p002__e016",
+  "page": "administration_1896-97_p002",
+  "n": 16,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Гернетъ",
+   "first_name": "Эдуардъ",
+   "patronymic": "Карловичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "(съ 16 сентября 1887 г.)"
+  },
+  "verifier": "Гернетъ, Эдуардъ Карловичъ, колл. сов. (съ 16 сентября 1887 г.). Оставилъ службу 20 декабря 1896 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Оставилъ службу 20 декабря 1896 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.4": {
+  "item": "V3.4",
+  "entry_id": "administration_1896-97_p002__e010",
+  "page": "administration_1896-97_p002",
+  "n": 10,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Петровъ",
+   "first_name": "Николай",
+   "patronymic": "Андреевичъ",
+   "rank_or_title": "л. ст. сов.",
+   "tenure_note_text": "(съ 20 сентября 1886 г.)"
+  },
+  "verifier": "Петровъ, Николай Андреевичъ, д. ст. сов. (съ 20 сентября 1886 г.). Оставилъ службу 30 марта 1897 г.",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "л.",
+     "д."
+    ]
+   ],
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Оставилъ службу 30 марта 1897 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.5": {
+  "item": "V3.5",
+  "entry_id": "administration_1896-97_p002__e009",
+  "page": "administration_1896-97_p002",
+  "n": 9,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Пчельниковъ",
+   "first_name": "Павелъ",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "л. ст. сов.",
+   "tenure_note_text": "(съ 16 іюня 1882 г.)"
+  },
+  "verifier": "Пчельниковъ, Павелъ Михайловичъ, д. ст. сов. (съ 16 іюня 1882 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "л.",
+     "д."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.6": {
+  "item": "V3.6",
+  "entry_id": "administration_1896-97_p002__e002",
+  "page": "administration_1896-97_p002",
+  "n": 2,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Климентьевъ",
+   "first_name": "Николай",
+   "patronymic": "Степановичъ",
+   "rank_or_title": "губ. секр.",
+   "tenure_note_text": "(съ 1 января 1883 г.)"
+  },
+  "verifier": "Климентьевъ, Николай Степановичъ, губ. секр. (съ 1 января 1883 г.). Съ 1 апрѣля 1897 г. назначенъ журналистомъ.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Съ 1 апрѣля 1897 г. назначенъ журналистомъ."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.7": {
+  "item": "V3.7",
+  "entry_id": "administration_1896-97_p002__e013",
+  "page": "administration_1896-97_p002",
+  "n": 13,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Силинь",
+   "first_name": "Сергѣй",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "(съ 1 октября 1867 г.)"
+  },
+  "verifier": "Силинъ, Сергѣй Михайловичъ, колл. асс. (съ 1 октября 1867 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Силинь",
+     "Силинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.8": {
+  "item": "V3.8",
+  "entry_id": "administration_1896-97_p003__e009",
+  "page": "administration_1896-97_p003",
+  "n": 9,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Никольскій",
+   "first_name": "Петръ",
+   "patronymic": "Петровичъ",
+   "rank_or_title": "надв. сов.",
+   "tenure_note_text": "(съ 8 ноября 1896 г.)"
+  },
+  "verifier": "Никольскій, Петръ Петровичъ (съ 8 ноября 1896 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "надв.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.9": {
+  "item": "V3.9",
+  "entry_id": "administration_1896-97_p003__e008",
+  "page": "administration_1896-97_p003",
+  "n": 8,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Монигетти",
+   "first_name": "Иванъ",
+   "patronymic": "Карловичъ",
+   "rank_or_title": "л. ст. сов.",
+   "tenure_note_text": "(съ 21 ноября 1881 г.)"
+  },
+  "verifier": "Монигетти, Иванъ Карловичъ, д. ст. сов. (съ 21 ноября 1881 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "л.",
+     "д."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.10": {
+  "item": "V3.10",
+  "entry_id": "administration_1897-98_p000__e013",
+  "page": "administration_1897-98_p000",
+  "n": 13,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Русецкій",
+   "first_name": "Иванъ",
+   "patronymic": "Сергѣевичъ",
+   "rank_or_title": "колл. секр.",
+   "tenure_note_text": "(съ 1 ноября 1893 г.)"
+  },
+  "verifier": "Русецкій, Иванъ Сергѣевичъ, колл. секр. (съ 1 ноября 1893 г.). Съ 1 іюня 1898 г. назначенъ дѣлопроизводителемъ распорядительнаго отдѣленія.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Съ 1 іюня 1898 г. назначенъ дѣлопроизводителемъ распорядительнаго отдѣленія."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.11": {
+  "item": "V3.11",
+  "entry_id": "administration_1897-98_p000__e008",
+  "page": "administration_1897-98_p000",
+  "n": 8,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Погожевъ",
+   "first_name": "Владиміръ",
+   "patronymic": "Петровичъ",
+   "rank_or_title": "д. ст. сов.",
+   "tenure_note_text": "(съ 11 мая 1882 г.)"
+  },
+  "verifier": "Погожевъ, Владиміръ Петровичъ, д. ст. сов. (съ 11 мая 1882 г.). Съ 27 ноября 1897 г. назначенъ управляющимъ дѣлами дирекціи.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Съ 27 ноября 1897 г. назначенъ управляющимъ дѣлами дирекціи."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.12": {
+  "item": "V3.12",
+  "entry_id": "administration_1897-98_p000__e005",
+  "page": "administration_1897-98_p000",
+  "n": 5,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Молчановъ",
+   "first_name": "Анатолій",
+   "patronymic": "Евграфовичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 1 января 1892 г.)"
+  },
+  "verifier": "Молчановъ, Анатолій Евграфовичъ, ст. сов. (съ 1 января 1892 г.). Съ 1 ноября 1897 г. назначенъ завѣдывающимъ монтировочною частью С.-Петербургскихъ театровъ.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Съ 1 ноября 1897 г. назначенъ завѣдывающимъ монтировочною частью С.-Петербургскихъ театровъ."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.13": {
+  "item": "V3.13",
+  "entry_id": "administration_1897-98_p000__e001",
+  "page": "administration_1897-98_p000",
+  "n": 1,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Всеволожскій",
+   "first_name": "Иванъ",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "оберъ-гофмейстеръ",
+   "tenure_note_text": "(съ 3 сентября 1881 г.)"
+  },
+  "verifier": "Всеволожской, Иванъ Александровичъ, оберъ-гофмейстеръ (съ 3 сентября 1881 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Всеволожскій",
+     "Всеволожской"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.14": {
+  "item": "V3.14",
+  "entry_id": "administration_1897-98_p001__e033",
+  "page": "administration_1897-98_p001",
+  "n": 33,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Краевскій",
+   "first_name": "Владиславъ",
+   "patronymic": "Францевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 10 декабря 1869 г.)"
+  },
+  "verifier": "7, Краевскій, Владиславъ Францевичъ, ст. сов. (съ 10 декабря 1869 г.)",
+  "edits": {},
+  "auto": false,
+  "conf": "high"
+ },
+ "V3.15": {
+  "item": "V3.15",
+  "entry_id": "administration_1897-98_p001__e028",
+  "page": "administration_1897-98_p001",
+  "n": 28,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Гладкій",
+   "first_name": "Адольфъ",
+   "patronymic": "Викентьевичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "(съ 1 марта 1890 г.)"
+  },
+  "verifier": "2 Гладкій, Адольфъ Викентьевичъ, колл. сов. (съ 1 марта 1890 г.).",
+  "edits": {},
+  "auto": false,
+  "conf": "medium"
+ },
+ "V3.16": {
+  "item": "V3.16",
+  "entry_id": "administration_1897-98_p001__e026",
+  "page": "administration_1897-98_p001",
+  "n": 26,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Сукова",
+   "first_name": "Надежда",
+   "patronymic": "Всеволодовна",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 1 декабря 1897 г.)"
+  },
+  "verifier": "Сукова, Надежда Всеволодовна (съ 1 декабря 1897 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.17": {
+  "item": "V3.17",
+  "entry_id": "administration_1897-98_p001__e013",
+  "page": "administration_1897-98_p001",
+  "n": 13,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Домерщиковъ",
+   "first_name": "Платонъ",
+   "patronymic": "Павловичъ",
+   "rank_or_title": "д. ст. сов.",
+   "tenure_note_text": "(съ 19 сентября 1882 г.)"
+  },
+  "verifier": "Домерщиковъ, Платонъ Павловичъ, д. ст. сов. (съ 19 сентября 1882 г.). Оставилъ службу 1 ноября 1897 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Оставилъ службу 1 ноября 1897 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.18": {
+  "item": "V3.18",
+  "entry_id": "administration_1897-98_p001__e008",
+  "page": "administration_1897-98_p001",
+  "n": 8,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Адамовичъ",
+   "first_name": "Модестъ",
+   "patronymic": "Станиславовичъ",
+   "rank_or_title": "подполковникъ л.-гв. 4-го Стрѣлковаго Императорскаго Фамиліи баталіона",
+   "tenure_note_text": "(съ 1 августа 1882 г.)"
+  },
+  "verifier": "Адамовичъ, Модестъ Станиславовичъ, подполковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона (съ 1 августа 1882 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "Императорскаго",
+     "Императорской"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.19": {
+  "item": "V3.19",
+  "entry_id": "administration_1897-98_p001__e030",
+  "page": "administration_1897-98_p001",
+  "n": 30,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Горанскій",
+   "first_name": "Григорій",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "(съ 10 ноября 1893 г.)"
+  },
+  "verifier": "Горянскій, Григорій Ивановичъ, колл. асс. (съ 10 ноября 1893 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Горанскій",
+     "Горянскій"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.20": {
+  "item": "V3.20",
+  "entry_id": "administration_1897-98_p001__e024",
+  "page": "administration_1897-98_p001",
+  "n": 24,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Гень",
+   "first_name": "Анатолій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 17 сентября 1882 г.)"
+  },
+  "verifier": "Генъ, Анатолій Александровичъ, ст. сов. (съ 17 сентября 1882 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Гень",
+     "Генъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.21": {
+  "item": "V3.21",
+  "entry_id": "administration_1897-98_p001__e029",
+  "page": "administration_1897-98_p001",
+  "n": 29,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Горнь",
+   "first_name": "Эмануилъ",
+   "patronymic": "Эмануиловичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 7 декабря 1879 г.)"
+  },
+  "verifier": "Горнъ, Эмануилъ Эмануиловичъ, ст. сов. (съ 7 декабря 1879 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Горнь",
+     "Горнъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.22": {
+  "item": "V3.22",
+  "entry_id": "administration_1897-98_p001__e007",
+  "page": "administration_1897-98_p001",
+  "n": 7,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Клечковскій",
+   "first_name": "Альбінь",
+   "patronymic": "Владиславовичъ",
+   "rank_or_title": "полковникъ л.-гв. Московскаго полка",
+   "tenure_note_text": "(съ 1 августа 1882 г.)"
+  },
+  "verifier": "Клечковскій, Альбинъ Владиславовичъ, полковникъ л.-гв. Московскаго полка (съ 1 августа 1882 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Альбінь",
+     "Альбинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.23": {
+  "item": "V3.23",
+  "entry_id": "administration_1897-98_p002__e010",
+  "page": "administration_1897-98_p002",
+  "n": 10,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Пчельниковъ",
+   "first_name": "Павелъ",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "д. ст. сов.",
+   "tenure_note_text": "съ 16 іюня 1882 г."
+  },
+  "verifier": "Пчельниковъ, Павелъ Михайловичъ, д. ст. сов. (съ 16 іюня 1882 г.). Оставилъ службу 11 апрѣля 1898 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Оставилъ службу 11 апрѣля 1898 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.24": {
+  "item": "V3.24",
+  "entry_id": "administration_1897-98_p002__e003",
+  "page": "administration_1897-98_p002",
+  "n": 3,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Пассекъ",
+   "first_name": "Алексій",
+   "patronymic": "Помпеевичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 11 января 1895 г."
+  },
+  "verifier": "Пассекъ, Алексѣй Помпеевичъ (съ 11 января 1895 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Алексій",
+     "Алексѣй"
+    ]
+   ],
+   "rank_or_title": [
+    [
+     "del",
+     "колл.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.25": {
+  "item": "V3.25",
+  "entry_id": "administration_1897-98_p002__e015",
+  "page": "administration_1897-98_p002",
+  "n": 15,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Силинь",
+   "first_name": "Сергѣй",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "съ 1 октября 1867 г."
+  },
+  "verifier": "Силинъ, Сергѣй Михайловичъ, колл. асс. (съ 1 октября 1867 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Силинь",
+     "Силинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.26": {
+  "item": "V3.26",
+  "entry_id": "administration_1897-98_p003__e005",
+  "page": "administration_1897-98_p003",
+  "n": 5,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Горбачевъ",
+   "first_name": "Викторъ",
+   "patronymic": "Никиличъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 19 января 1887 г.)"
+  },
+  "verifier": "Горбачевъ, Викторъ Никитичъ, ст. сов. (съ 19 января 1887 г.).",
+  "edits": {
+   "patronymic": [
+    [
+     "sub",
+     "Никиличъ",
+     "Никитичъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.27": {
+  "item": "V3.27",
+  "entry_id": "administration_1897-98_p003__e006",
+  "page": "administration_1897-98_p003",
+  "n": 6,
+  "kinds": [
+   "CHARS",
+   "NAME",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Млодзѣвскій",
+   "first_name": "Викентій",
+   "patronymic": "Корниліевичъ",
+   "rank_or_title": "налв. сов.",
+   "tenure_note_text": "(съ 30 іюня 1893 г.)"
+  },
+  "verifier": "Млодзѣевскій, Викентій Корниліевичъ, надв. сов. (съ 30 іюня 1893 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Млодзѣвскій",
+     "Млодзѣевскій"
+    ]
+   ],
+   "rank_or_title": [
+    [
+     "sub",
+     "налв.",
+     "надв."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.28": {
+  "item": "V3.28",
+  "entry_id": "administration_1898-99_p000__e001",
+  "page": "administration_1898-99_p000",
+  "n": 1,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Всеволожскій",
+   "first_name": "Иванъ",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "оберъ-гофмейстеръ",
+   "tenure_note_text": "съ 3 сентября 1881 г.). Оставилъ службу 22 іюля 1899 г."
+  },
+  "verifier": "Всеволожской, Иванъ Александровичъ, оберъ-гофмейстеръ (съ 3 сентября 1881 г.). Оставилъ службу 22 іюля 1899 г.",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Всеволожскій",
+     "Всеволожской"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.29": {
+  "item": "V3.29",
+  "entry_id": "administration_1898-99_p002__e015",
+  "page": "administration_1898-99_p002",
+  "n": 15,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Лилѣвъ",
+   "first_name": "Ѳедоръ",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 14 апрѣля 1895 г."
+  },
+  "verifier": "Лилѣевъ, Ѳедоръ Николаевичъ, колл. сов. .(съ 14 апрѣля 1895 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Лилѣвъ",
+     "Лилѣевъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.30": {
+  "item": "V3.30",
+  "entry_id": "administration_1898-99_p003__e017",
+  "page": "administration_1898-99_p003",
+  "n": 17,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Балахининъ",
+   "first_name": "Викторъ",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "колл. рег.",
+   "tenure_note_text": "съ 7 апрѣля 1881 г."
+  },
+  "verifier": "Балахнинъ, Викторъ Михайловичъ, колл. рег. (съ 7 апрѣля 1881 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Балахининъ",
+     "Балахнинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.32": {
+  "item": "V3.32",
+  "entry_id": "administration_1898-99_p003__e006",
+  "page": "administration_1898-99_p003",
+  "n": 6,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Фонъ-Бооль",
+   "first_name": "Николай",
+   "patronymic": "Константиновичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "съ 14 сентября 1898 г."
+  },
+  "verifier": "Фонъ-Боолъ, Николай Константиновичъ, колл. асс. (съ 14 сентября 1898 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Фонъ-Бооль",
+     "Фонъ-Боолъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "medium"
+ },
+ "V3.33": {
+  "item": "V3.33",
+  "entry_id": "administration_1899-00_p000__e012",
+  "page": "administration_1899-00_p000",
+  "n": 12,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Гершельманъ",
+   "first_name": "Константинъ",
+   "patronymic": "Романовичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 19 сентября 1882 г.). 6 марта 1900 г. назначенъ чинов-"
+  },
+  "verifier": "Гершельманъ, Константинъ Романовичъ, ст. сов. (съ 19 сентября 1882 г.). 6 марта 1900 г. назначенъ чиновникомъ особыхъ порученій при Дирекціи.",
+  "edits": {},
+  "auto": false,
+  "conf": "high"
+ },
+ "V3.34": {
+  "item": "V3.34",
+  "entry_id": "administration_1899-00_p001__e003",
+  "page": "administration_1899-00_p001",
+  "n": 3,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Аршеневскій",
+   "first_name": "Василій",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 20 апрѣля 1889 г.). 24 февраля 1900 г. назначенъ помощникомъ управляющаго Московскаго Конторою."
+  },
+  "verifier": "Аршеневскій, Василій Николаевичъ, колл. сов. (съ 20 апрѣля 1889 г.). 24 февраля 1900 г. назначенъ помощникомъ управляющаго Московскою Конторою.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "sub",
+     "Московскаго",
+     "Московскою"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.36": {
+  "item": "V3.36",
+  "entry_id": "administration_1899-00_p001__e010",
+  "page": "administration_1899-00_p001",
+  "n": 10,
+  "kinds": [
+   "CHARS",
+   "NAME",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Аламовичъ",
+   "first_name": "Модесть",
+   "patronymic": "Станиславовичъ",
+   "rank_or_title": "подполковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона",
+   "tenure_note_text": "съ 1 августа 1882 г."
+  },
+  "verifier": "Адамовичъ, Модестъ Станиславовичъ, подполковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона (съ 1 августа 1882 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Аламовичъ",
+     "Адамовичъ"
+    ]
+   ],
+   "first_name": [
+    [
+     "sub",
+     "Модесть",
+     "Модестъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.37": {
+  "item": "V3.37",
+  "entry_id": "administration_1899-00_p002__e006",
+  "page": "administration_1899-00_p002",
+  "n": 6,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Лицкій",
+   "first_name": "Александръ",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 23 октября 1893 г.)"
+  },
+  "verifier": "Липскій, Александръ Александровичъ, ст. сов. (съ 23 октября 1893 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Лицкій",
+     "Липскій"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.39": {
+  "item": "V3.39",
+  "entry_id": "administration_1899-00_p003__e013",
+  "page": "administration_1899-00_p003",
+  "n": 13,
+  "kinds": [
+   "STORED_ONLY"
+  ],
+  "stored": {
+   "family_name": "Фонъ-Бооль",
+   "first_name": "Николай",
+   "patronymic": "Константиновичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "съ 14 сентября 1898 г."
+  },
+  "verifier": "Фонъ-Боолъ, Николай Константиновичъ, колл. асс. (съ 14 сентября 1898 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Фонъ-Бооль",
+     "Фонъ-Боолъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "medium"
+ },
+ "V3.41": {
+  "item": "V3.41",
+  "entry_id": "administration_1899-00_p003__e022",
+  "page": "administration_1899-00_p003",
+  "n": 22,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Никольскій",
+   "first_name": "Петръ",
+   "patronymic": "Петровичъ",
+   "rank_or_title": "ст",
+   "tenure_note_text": "8 ноября 1896 г."
+  },
+  "verifier": "Никольскій, Петръ Петровичъ (съ 8 ноября 1896 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "ст",
+     "съ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.42": {
+  "item": "V3.42",
+  "entry_id": "administration_1899-00_p003__e003",
+  "page": "administration_1899-00_p003",
+  "n": 3,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Бриліантовъ",
+   "first_name": "Алексѣй",
+   "patronymic": "Егоровичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 1 августа 1887 г."
+  },
+  "verifier": "Брилліантовъ, Алексѣй Егоровичъ, колл. сов. (съ 1 августа 1887 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Бриліантовъ",
+     "Брилліантовъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.45": {
+  "item": "V3.45",
+  "entry_id": "administration_1900-01_p001__e006",
+  "page": "administration_1900-01_p001",
+  "n": 6,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Лееръ",
+   "first_name": "Евгеній",
+   "patronymic": "Генриховичъ",
+   "rank_or_title": "полполжковникъ л.-гв. Уланскаго полка",
+   "tenure_note_text": "съ 18 октября 1893 г."
+  },
+  "verifier": "Лееръ, Евгеній Генриховичъ, подполковникъ л.-гв. Уланскаго полка (съ 18 октября 1893 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "полполжковникъ",
+     "подполковникъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.46": {
+  "item": "V3.46",
+  "entry_id": "administration_1900-01_p001__e008",
+  "page": "administration_1900-01_p001",
+  "n": 8,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Адамовичъ",
+   "first_name": "Модесть",
+   "patronymic": "Станиславовичъ",
+   "rank_or_title": "подполковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона",
+   "tenure_note_text": "съ 1 августа 1882 г."
+  },
+  "verifier": "Адамовичъ, Модестъ Станиславовичъ, подполковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона (съ 1 августа 1882 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Модесть",
+     "Модестъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V3.47": {
+  "item": "V3.47",
+  "entry_id": "administration_1900-01_p001__e001",
+  "page": "administration_1900-01_p001",
+  "n": 1,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Щенкъ",
+   "first_name": "Петръ",
+   "patronymic": "Петровичъ",
+   "rank_or_title": "тит. сов.",
+   "tenure_note_text": "съ 1 іюня 1888 г."
+  },
+  "verifier": "Шенкъ, Петръ Петровичъ, тит. сов. (съ 1 іюня 1888 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Щенкъ",
+     "Шенкъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.3": {
+  "item": "V4.3",
+  "entry_id": "administration_1900-01_p002__e021",
+  "page": "administration_1900-01_p002",
+  "n": 21,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Тогихесъ",
+   "first_name": "Александръ",
+   "patronymic": "Іосифовичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 7 марта 1887 г.)."
+  },
+  "verifier": "Іогихесъ, Александръ Іосифовичъ, ст. сов. (съ 7 марта 1887 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Тогихесъ",
+     "Іогихесъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.5": {
+  "item": "V4.5",
+  "entry_id": "administration_1900-01_p002__e005",
+  "page": "administration_1900-01_p002",
+  "n": 5,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Графъ Бобринскій",
+   "first_name": "Алексѣй",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "колл. секр.",
+   "tenure_note_text": "(съ 25 ноября 1899 г.)."
+  },
+  "verifier": "Графъ Бобринскій, Алексѣй Алексѣевичъ, колл. секр. (съ 25 ноября 1899 г.).",
+  "edits": {
+   "patronymic": [
+    [
+     "sub",
+     "Александровичъ",
+     "Алексѣевичъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.8": {
+  "item": "V4.8",
+  "entry_id": "administration_1900-01_p003__e024",
+  "page": "administration_1900-01_p003",
+  "n": 24,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Никольскій",
+   "first_name": "Петръ",
+   "patronymic": "Петровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 8 ноября 1896 г.)"
+  },
+  "verifier": "Никольскій, Петръ Петровичъ д. ст. сов. (съ 8 ноября 1896 г.).",
+  "edits": {},
+  "auto": false,
+  "conf": "high"
+ },
+ "V4.10": {
+  "item": "V4.10",
+  "entry_id": "administration_1900-01_p004__e004",
+  "page": "administration_1900-01_p004",
+  "n": 4,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Поляковъ",
+   "first_name": "Иванъ",
+   "patronymic": "Тимоѳѣевичъ",
+   "rank_or_title": null,
+   "tenure_note_text": "съ 1 августа 1900 г."
+  },
+  "verifier": "Поляковъ, Иванъ Тимофѣевичъ (съ 1 августа 1900 г.).",
+  "edits": {
+   "patronymic": [
+    [
+     "sub",
+     "Тимоѳѣевичъ",
+     "Тимофѣевичъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.13": {
+  "item": "V4.13",
+  "entry_id": "administration_1901-02_p001__e005",
+  "page": "administration_1901-02_p001",
+  "n": 5,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Лееръ",
+   "first_name": "Евгеній",
+   "patronymic": "Генриховичъ",
+   "rank_or_title": "полпок-ковникъ л.-гв. Уланскаго полка",
+   "tenure_note_text": "съ 18 октября 1893 г."
+  },
+  "verifier": "Лееръ, Евгеній Генриховичъ, подполковникъ л.-гв. Уланскаго полка (съ 18 октября 1893 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "полпок-ковникъ",
+     "подполковникъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.15": {
+  "item": "V4.15",
+  "entry_id": "administration_1901-02_p001__e015",
+  "page": "administration_1901-02_p001",
+  "n": 15,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Полновъ",
+   "first_name": "Константинъ",
+   "patronymic": "Дмитріевичъ",
+   "rank_or_title": "губ. секр.",
+   "tenure_note_text": "съ 10 марта 1900 г. Оставилъ службу 1 сентября 1901 г."
+  },
+  "verifier": "Полѣновъ, Константинъ Дмитріевичъ, губ. секр. (съ 10 марта 1900 г.). Оставилъ службу 1 сентября 1901 г.",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Полновъ",
+     "Полѣновъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.16": {
+  "item": "V4.16",
+  "entry_id": "administration_1901-02_p001__e023",
+  "page": "administration_1901-02_p001",
+  "n": 23,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Гень",
+   "first_name": "Анатолій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 17 сентября 1882 г."
+  },
+  "verifier": "Генъ, Анатолій Александровичъ, ст. сов. (съ 17 сентября 1882 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Гень",
+     "Генъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.17": {
+  "item": "V4.17",
+  "entry_id": "administration_1901-02_p001__e010",
+  "page": "administration_1901-02_p001",
+  "n": 10,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Анпъ",
+   "first_name": "Павелъ",
+   "patronymic": "Христофоровичъ",
+   "rank_or_title": "надв. сов.",
+   "tenure_note_text": "съ 9 декабря 1880 г."
+  },
+  "verifier": "Анцъ, Павелъ Христофоровичъ, надв. сов. (съ 9 декабря 1880 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Анпъ",
+     "Анцъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.18": {
+  "item": "V4.18",
+  "entry_id": "administration_1901-02_p001__e007",
+  "page": "administration_1901-02_p001",
+  "n": 7,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Адамовичъ",
+   "first_name": "Молесть",
+   "patronymic": "Станиславовичъ",
+   "rank_or_title": "полполковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона",
+   "tenure_note_text": "съ 1 августа 1882 г."
+  },
+  "verifier": "Адамовичъ, Модестъ Станиславовичъ, подполковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона (съ 1 августа 1882 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Молесть",
+     "Модестъ"
+    ]
+   ],
+   "rank_or_title": [
+    [
+     "sub",
+     "полполковникъ",
+     "подполковникъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.20": {
+  "item": "V4.20",
+  "entry_id": "administration_1901-02_p002__e002",
+  "page": "administration_1901-02_p002",
+  "n": 2,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Аршеневскій",
+   "first_name": "Василій",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 20 апрѣля 1889 г."
+  },
+  "verifier": "Аршеневскій, Василій Николаевичъ, колл. сов. (съ 20 апрѣля 1889 г.). Назначенъ чиновникомъ особыхъ порученій VI класса при Дирекціи Императорскихъ театровъ, съ 15 марта 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ чиновникомъ особыхъ порученій VI класса при Дирекціи Императорскихъ театровъ, съ 15 марта 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.23": {
+  "item": "V4.23",
+  "entry_id": "administration_1901-02_p002__e029",
+  "page": "administration_1901-02_p002",
+  "n": 29,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Щабель",
+   "first_name": "Оскаръ",
+   "patronymic": "Альбертовичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 19 января 1894 г."
+  },
+  "verifier": "Цабель, Оскаръ Альбертовичъ, колл. сов. (съ 19 января 1894 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Щабель",
+     "Цабель"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.24": {
+  "item": "V4.24",
+  "entry_id": "administration_1901-02_p003__e023",
+  "page": "administration_1901-02_p003",
+  "n": 23,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Мендельфевъ",
+   "first_name": "Дмитрій",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "(съ 11 мая 1901 г.)"
+  },
+  "verifier": "Менделѣевъ, Дмитрій Ивановичъ, колл. сов. (съ 11 мая 1901 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Мендельфевъ",
+     "Менделѣевъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.27": {
+  "item": "V4.27",
+  "entry_id": "administration_1902-03_p000__e013",
+  "page": "administration_1902-03_p000",
+  "n": 13,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Русецкій",
+   "first_name": "Иванъ",
+   "patronymic": "Сергѣевичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "съ 1 ноября 1893 г.)"
+  },
+  "verifier": "Русецкій, Иванъ Сергѣевичъ, колл. асс. (съ 1 ноября 1893 г.). Назначенъ дѣлопроизводителемъ VI класса 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ дѣлопроизводителемъ VI класса 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.28": {
+  "item": "V4.28",
+  "entry_id": "administration_1902-03_p000__e012",
+  "page": "administration_1902-03_p000",
+  "n": 12,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Петровъ",
+   "first_name": "Владиміръ",
+   "patronymic": "Андреевичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 19 сентября 1882 г.)"
+  },
+  "verifier": "Петровъ, Владиміръ Андреевичъ, колл. сов. (съ 19 сентября 1882 г.). Назначенъ помощникомъ начальника монтировочной части 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ помощникомъ начальника монтировочной части 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.29": {
+  "item": "V4.29",
+  "entry_id": "administration_1902-03_p000__e011",
+  "page": "administration_1902-03_p000",
+  "n": 11,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Вильеръ-де-Лиль-Адамъ",
+   "first_name": "Александръ",
+   "patronymic": "Фердинандовичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 19 сентября 1882 г.)"
+  },
+  "verifier": "Вильеръ-де-Лиль-Адамъ, Александръ Фердинандовичъ, колл. сов. (съ 19 сентября 1882 г.). Назначенъ чиновникомъ особыхъ порученій при дирекціи 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ чиновникомъ особыхъ порученій при дирекціи 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.30": {
+  "item": "V4.30",
+  "entry_id": "administration_1902-03_p000__e008",
+  "page": "administration_1902-03_p000",
+  "n": 8,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Свенторжецкій",
+   "first_name": "Людоміръ",
+   "patronymic": "Вацлавовичъ",
+   "rank_or_title": "полковн.",
+   "tenure_note_text": "съ 24 сентября 1899 г.)"
+  },
+  "verifier": "Свенторжецкій, Людоміръ Вацлавовичъ, полковн. (съ 24 сентября 1899 г.). Назначенъ техникомъ при С.-Петербургской Конторѣ Императорскихъ театровъ 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ техникомъ при С.-Петербургской Конторѣ Императорскихъ театровъ 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.31": {
+  "item": "V4.31",
+  "entry_id": "administration_1902-03_p000__e002",
+  "page": "administration_1902-03_p000",
+  "n": 2,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Аршеневскій",
+   "first_name": "Василій",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 20 апрѣля 1889 г.)"
+  },
+  "verifier": "Аршеневскій, Василій Николаевичъ, ст. сов. (съ 20 апрѣля 1889 г.). Назначенъ помощникомъ управляющаго Конторою 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ помощникомъ управляющаго Конторою 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.32": {
+  "item": "V4.32",
+  "entry_id": "administration_1902-03_p001__e019",
+  "page": "administration_1902-03_p001",
+  "n": 19,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Пономаревъ",
+   "first_name": "Евгеній",
+   "patronymic": "Петровичъ",
+   "rank_or_title": "надл. асс.",
+   "tenure_note_text": "съ 1 февраля 1887 г."
+  },
+  "verifier": "Пономаревъ, Евгеній Петровичъ, надв. асс. (съ 1 февраля 1887 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "надл.",
+     "надв."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.33": {
+  "item": "V4.33",
+  "entry_id": "administration_1902-03_p001__e018",
+  "page": "administration_1902-03_p001",
+  "n": 18,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Шишко",
+   "first_name": "Николай",
+   "patronymic": "Макаровичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 18 января 1880 г."
+  },
+  "verifier": "Шишко, Николай Макаровичъ, колл. сов. (съ 18 января 1880 г.). Назначенъ помощникомъ начальника монтировочной части VII класса 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ помощникомъ начальника монтировочной части VII класса 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.34": {
+  "item": "V4.34",
+  "entry_id": "administration_1902-03_p001__e017",
+  "page": "administration_1902-03_p001",
+  "n": 17,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Карамышевъ",
+   "first_name": "Иванъ",
+   "patronymic": "Арсеньевичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "съ 1 декабря 1900 г."
+  },
+  "verifier": "Карамышевъ, Иванъ Арсеньевичъ, колл. асс. (съ 1 декабря 1900 г.). Назначенъ помощникомъ начальника монтировочной части VIII класса 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ помощникомъ начальника монтировочной части VIII класса 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.35": {
+  "item": "V4.35",
+  "entry_id": "administration_1902-03_p001__e016",
+  "page": "administration_1902-03_p001",
+  "n": 16,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Молчановъ",
+   "first_name": "Иванъ",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 10 ноября 1887 г."
+  },
+  "verifier": "Молчановъ, Иванъ Николаевичъ, колл. сов. (съ 10 ноября 1887 г.). Назначенъ чиновникомъ особыхъ порученій при дирекціи 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ чиновникомъ особыхъ порученій при дирекціи 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.36": {
+  "item": "V4.36",
+  "entry_id": "administration_1902-03_p001__e015",
+  "page": "administration_1902-03_p001",
+  "n": 15,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Кусовъ",
+   "first_name": "баронъ Владиміръ",
+   "patronymic": "Алексѣевичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 16 февраля 1896 г."
+  },
+  "verifier": "Кусовъ, баронъ Владиміръ Алексѣевичъ, колл. сов. (съ 16 февраля 1896 г.). Назначенъ начальникомъ монтировочной части 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ начальникомъ монтировочной части 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.37": {
+  "item": "V4.37",
+  "entry_id": "administration_1902-03_p001__e014",
+  "page": "administration_1902-03_p001",
+  "n": 14,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Клементьевъ",
+   "first_name": "Николай",
+   "patronymic": "Степановичъ",
+   "rank_or_title": "тит. сов.",
+   "tenure_note_text": "съ 1 января 1883 г."
+  },
+  "verifier": "Клементьевъ, Николай Степановичъ, тит. сов. (съ 1 января 1883 г.). Назначенъ регистраторомъ 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ регистраторомъ 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.38": {
+  "item": "V4.38",
+  "entry_id": "administration_1902-03_p001__e013",
+  "page": "administration_1902-03_p001",
+  "n": 13,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Анцъ",
+   "first_name": "Павелъ",
+   "patronymic": "Христофоровичъ",
+   "rank_or_title": "надв. сов.",
+   "tenure_note_text": "съ 9 декабря 1880 г."
+  },
+  "verifier": "Анцъ, Павелъ Христофоровичъ, надв. сов. (съ 9 декабря 1880 г.). Назначенъ помощникомъ дѣлопроизводителя VIII класса 6 декабря 1902 г. Оставилъ службу 5 апрѣля 1903 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ помощникомъ дѣлопроизводителя VIII класса 6 декабря 1902 г. Оставилъ службу 5 апрѣля 1903 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.39": {
+  "item": "V4.39",
+  "entry_id": "administration_1902-03_p001__e012",
+  "page": "administration_1902-03_p001",
+  "n": 12,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": null,
+   "first_name": null,
+   "patronymic": null,
+   "rank_or_title": null,
+   "tenure_note_text": "съ 18 января 1883 г."
+  },
+  "verifier": "Поспѣевъ, Дмитрій Александровичъ, тит. сов. (съ 18 января 1883 г.).",
+  "edits": {},
+  "auto": false,
+  "conf": "high"
+ },
+ "V4.40": {
+  "item": "V4.40",
+  "entry_id": "administration_1902-03_p001__e001",
+  "page": "administration_1902-03_p001",
+  "n": 1,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Шенкъ",
+   "first_name": "Петръ",
+   "patronymic": "Петровичъ",
+   "rank_or_title": "колл. ассес.",
+   "tenure_note_text": "съ 1 іюня 1888 г."
+  },
+  "verifier": "Шенкъ, Петръ Петровичъ, колл. ассес. (съ 1 іюня 1888 г.). Назначенъ помощникомъ дѣлопроизводителя VII класса 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ помощникомъ дѣлопроизводителя VII класса 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.44": {
+  "item": "V4.44",
+  "entry_id": "administration_1902-03_p002__e021",
+  "page": "administration_1902-03_p002",
+  "n": 21,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": null,
+   "first_name": null,
+   "patronymic": null,
+   "rank_or_title": null,
+   "tenure_note_text": "съ 25 ноября 1899 г."
+  },
+  "verifier": "Графъ Бобринскій, Алексѣй Алексѣевичъ, тит. сов. (съ 25 ноября 1899 г.).",
+  "edits": {},
+  "auto": false,
+  "conf": "high"
+ },
+ "V4.45": {
+  "item": "V4.45",
+  "entry_id": "administration_1902-03_p002__e017",
+  "page": "administration_1902-03_p002",
+  "n": 17,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Юрьевъ",
+   "first_name": "Валеріанъ",
+   "patronymic": "Федоровичъ",
+   "rank_or_title": "неимѣющій чина",
+   "tenure_note_text": "съ 1 января 1886 г."
+  },
+  "verifier": "Юрьевъ, Валеріанъ Федоровичъ, неимѣющій чина (съ 1 января 1886 г.). Назначенъ помощникомъ бухгалтера 1 февраля 1903 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ помощникомъ бухгалтера 1 февраля 1903 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.46": {
+  "item": "V4.46",
+  "entry_id": "administration_1902-03_p002__e016",
+  "page": "administration_1902-03_p002",
+  "n": 16,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Шарыпинъ",
+   "first_name": "Константинъ",
+   "patronymic": "Петровичъ",
+   "rank_or_title": "колл. секр.",
+   "tenure_note_text": "съ 1 сентября 1887 г."
+  },
+  "verifier": "Шарыпинъ, Константинъ Петровичъ, колл. секр. (съ 1 сентября 1887 г.). Назначенъ помощникомъ дѣлопроизводителя VIII класса 1 мая 1903 г",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ помощникомъ дѣлопроизводителя VIII класса 1 мая 1903 г"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.47": {
+  "item": "V4.47",
+  "entry_id": "administration_1902-03_p002__e013",
+  "page": "administration_1902-03_p002",
+  "n": 13,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Рождественскій",
+   "first_name": "Петръ",
+   "patronymic": "Арсеньевичъ",
+   "rank_or_title": "губ. секр.",
+   "tenure_note_text": "съ 10 сентября 1887 г."
+  },
+  "verifier": "Рождественскій, Петръ Арсеньевичъ, губ. секр. (съ 10 сентября 1887 г.). Назначенъ дѣлопроизводителемъ монтировочнаго отдѣла съ 1 сентября 1902 г. и помощникомъ начальника монтировочной части VIII класса 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ дѣлопроизводителемъ монтировочнаго отдѣла съ 1 сентября 1902 г. и помощникомъ начальника монтировочной части VIII класса 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.48": {
+  "item": "V4.48",
+  "entry_id": "administration_1902-03_p002__e012",
+  "page": "administration_1902-03_p002",
+  "n": 12,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Робинзонъ",
+   "first_name": "Александръ",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "неимѣющій чина",
+   "tenure_note_text": "съ 1 іюня 1898 г."
+  },
+  "verifier": "Робинзонъ, Александръ Александровичъ, неимѣющій чина (съ 1 іюня 1898 г.). Назначенъ чиновникомъ XII класса 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ чиновникомъ XII класса 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.49": {
+  "item": "V4.49",
+  "entry_id": "administration_1902-03_p002__e011",
+  "page": "administration_1902-03_p002",
+  "n": 11,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Разумовскій",
+   "first_name": "Владиміръ",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": null,
+   "tenure_note_text": "съ 1 сентября 1902 г."
+  },
+  "verifier": "Разумовскій, Владиміръ Николаевичъ (съ 1 сентября 1902 г.). Назначенъ чиновникомъ XII класса 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ чиновникомъ XII класса 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.50": {
+  "item": "V4.50",
+  "entry_id": "administration_1902-03_p002__e010",
+  "page": "administration_1902-03_p002",
+  "n": 10,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Мамошинъ",
+   "first_name": "Осій",
+   "patronymic": "Павловичъ",
+   "rank_or_title": "губ секр.",
+   "tenure_note_text": "съ 24 іюля 1876 г."
+  },
+  "verifier": "Мамошинъ, Осій Павловичъ, губ секр. (съ 24 іюля 1876 г.). Назначенъ чиновникомъ XII класса 6 декабря 1902 г. и X класса—1 іюня 1903 г. Оставилъ службу 1 сентября 1903 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ чиновникомъ XII класса 6 декабря 1902 г. и X класса—1 іюня 1903 г. Оставилъ службу 1 сентября 1903 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.51": {
+  "item": "V4.51",
+  "entry_id": "administration_1902-03_p002__e009",
+  "page": "administration_1902-03_p002",
+  "n": 9,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Глѣбовъ",
+   "first_name": "Николай",
+   "patronymic": "Петровичъ",
+   "rank_or_title": "губ. секр.",
+   "tenure_note_text": "съ 1 января 1889 г."
+  },
+  "verifier": "Глѣбовъ, Николай Петровичъ, губ. секр. (съ 1 января 1889 г.). Назначенъ чиновникомъ X класса 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ чиновникомъ X класса 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.52": {
+  "item": "V4.52",
+  "entry_id": "administration_1902-03_p002__e008",
+  "page": "administration_1902-03_p002",
+  "n": 8,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Бартновскій",
+   "first_name": "Петръ",
+   "patronymic": "Осиповичъ",
+   "rank_or_title": "неимѣющій чина",
+   "tenure_note_text": "съ 15 января 1893 г."
+  },
+  "verifier": "Бартновскій, Петръ Осиповичъ, неимѣющій чина (съ 15 января 1893 г.). Назначенъ чиновникомъ X класса 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ чиновникомъ X класса 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.53": {
+  "item": "V4.53",
+  "entry_id": "administration_1902-03_p002__e003",
+  "page": "administration_1902-03_p002",
+  "n": 3,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Андреевъ",
+   "first_name": "Владиміръ",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "съ 1 ноября 1879 г."
+  },
+  "verifier": "Андреевъ, Владиміръ Александровичъ, колл. асс. (съ 1 ноября 1879 г.). Назначенъ помощникомъ начальника монтировочной части VIII класса 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ помощникомъ начальника монтировочной части VIII класса 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V4.54": {
+  "item": "V4.54",
+  "entry_id": "administration_1902-03_p002__e019",
+  "page": "administration_1902-03_p002",
+  "n": 19,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Брилліантовъ",
+   "first_name": "Алексѣй",
+   "patronymic": "Егоровичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 1 августа 1887 г."
+  },
+  "verifier": "Бриллiантовъ, Алексѣй Егоровичъ, колл. сов. (съ 1 августа 1887 г.). Оставилъ службу 31 декабря 1902 г.",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Брилліантовъ",
+     "Бриллiантовъ"
+    ]
+   ],
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Оставилъ службу 31 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.3": {
+  "item": "V5.3",
+  "entry_id": "administration_1902-03_p003__e023",
+  "page": "administration_1902-03_p003",
+  "n": 23,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Борхманъ",
+   "first_name": "Александръ",
+   "patronymic": "Адольфовичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 15 ноября 1900 г."
+  },
+  "verifier": "Борхманъ, Александръ Адольфовичъ (съ 15 ноября 1900 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.4": {
+  "item": "V5.4",
+  "entry_id": "administration_1902-03_p003__e021",
+  "page": "administration_1902-03_p003",
+  "n": 21,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Безсоновъ",
+   "first_name": "Юрій",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 1 апрѣля 1903 г."
+  },
+  "verifier": "Безсоновъ, Юрій Николаевичъ (съ 1 апрѣля 1903 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.5": {
+  "item": "V5.5",
+  "entry_id": "administration_1902-03_p003__e019",
+  "page": "administration_1902-03_p003",
+  "n": 19,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Соколовъ",
+   "first_name": "Александръ",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 8 іюля 1899 г."
+  },
+  "verifier": "Соколовъ, Александръ Николаевичъ (съ 8 іюля 1899 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.6": {
+  "item": "V5.6",
+  "entry_id": "administration_1902-03_p003__e013",
+  "page": "administration_1902-03_p003",
+  "n": 13,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Леммлейнъ",
+   "first_name": "Григорій",
+   "patronymic": "Рудольфовичъ",
+   "rank_or_title": "надв. сов.",
+   "tenure_note_text": "съ 1 іюня 1901 г.)"
+  },
+  "verifier": "Леммлейнъ, Григорій Рудольфовичъ, надв. сов. (съ 1 іюня 1901 г.). Назначенъ помощникомъ начальника монтировочной части 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ помощникомъ начальника монтировочной части 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.7": {
+  "item": "V5.7",
+  "entry_id": "administration_1902-03_p003__e012",
+  "page": "administration_1902-03_p003",
+  "n": 12,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Розовъ",
+   "first_name": "Александръ",
+   "patronymic": "Федоровичъ",
+   "rank_or_title": "надв. сов.",
+   "tenure_note_text": "съ 18 февраля 1874 г.)"
+  },
+  "verifier": "Розовъ, Александръ Федоровичъ, надв. сов. (съ 18 февраля 1874 г.). Назначенъ помощникомъ начальника монтировочной части 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ помощникомъ начальника монтировочной части 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.8": {
+  "item": "V5.8",
+  "entry_id": "administration_1902-03_p003__e011",
+  "page": "administration_1902-03_p003",
+  "n": 11,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Обуховъ",
+   "first_name": "Сергѣй",
+   "patronymic": "Трофимовичъ",
+   "rank_or_title": "тит. совѣт.",
+   "tenure_note_text": "съ 16 апрѣля 1902 г."
+  },
+  "verifier": "Обуховъ, Сергѣй Трофимовичъ, тит. совѣт. (съ 16 апрѣля 1902 г.). Назначенъ начальникомъ монтировочной части 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ начальникомъ монтировочной части 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.9": {
+  "item": "V5.9",
+  "entry_id": "administration_1902-03_p003__e010",
+  "page": "administration_1902-03_p003",
+  "n": 10,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Соколовъ",
+   "first_name": "Сергѣй",
+   "patronymic": "Гавриловичъ",
+   "rank_or_title": "надв. сов.",
+   "tenure_note_text": "съ 3 февраля 1875 г."
+  },
+  "verifier": "Соколовъ, Сергѣй Гавриловичъ, надв. сов. (съ 3 февраля 1875 г.). Назначенъ помощникомъ бухгалтера 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ помощникомъ бухгалтера 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.13": {
+  "item": "V5.13",
+  "entry_id": "administration_1902-03_p004__e032",
+  "page": "administration_1902-03_p004",
+  "n": 32,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Бѣляевъ",
+   "first_name": "Аркадій",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "губ. секр.",
+   "tenure_note_text": "съ 1 января 1903 г."
+  },
+  "verifier": "Бѣляевъ, Аркадій Ивановичъ, губ. секр. (съ 1 января 1903 г.). Назначенъ чиновникомъ X класса 6 іюня 1903 т.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ чиновникомъ X класса 6 іюня 1903 т."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.14": {
+  "item": "V5.14",
+  "entry_id": "administration_1902-03_p004__e030",
+  "page": "administration_1902-03_p004",
+  "n": 30,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Поляковъ",
+   "first_name": "Иванъ",
+   "patronymic": "Тимофѣевичъ",
+   "rank_or_title": "неимѣющій чина",
+   "tenure_note_text": "съ 1 августа 1900 г."
+  },
+  "verifier": "Поляковъ, Иванъ Тимофѣевичъ, неимѣющій чина (съ 1 августа 1900 г.). Назначенъ чиновникомъ XII класса 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ чиновникомъ XII класса 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.15": {
+  "item": "V5.15",
+  "entry_id": "administration_1902-03_p004__e029",
+  "page": "administration_1902-03_p004",
+  "n": 29,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Захаровъ",
+   "first_name": "Николай",
+   "patronymic": "Константиновичъ",
+   "rank_or_title": "колл. секр.",
+   "tenure_note_text": "съ 1 сентября 1887 г."
+  },
+  "verifier": "Захаровъ, Николай Константиновичъ, колл. секр. (съ 1 сентября 1887 г.). Назначенъ чиновникомъ XII класса 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ чиновникомъ XII класса 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.16": {
+  "item": "V5.16",
+  "entry_id": "administration_1902-03_p004__e028",
+  "page": "administration_1902-03_p004",
+  "n": 28,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Зловъ",
+   "first_name": "Петръ",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "тит. сов.",
+   "tenure_note_text": "съ 31 декабря 1878 г."
+  },
+  "verifier": "Зловъ, Петръ Николаевичъ, тит. сов. (съ 31 декабря 1878 г.). Назначенъ чиновникомъ X класса 6 декабря 1902 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ чиновникомъ X класса 6 декабря 1902 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.17": {
+  "item": "V5.17",
+  "entry_id": "administration_1902-03_p004__e027",
+  "page": "administration_1902-03_p004",
+  "n": 27,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Балахнинъ",
+   "first_name": "Викторъ",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "губ. секр.",
+   "tenure_note_text": "съ 7 апрѣля 1881 г."
+  },
+  "verifier": "Балахнинъ, Викторъ Михайловичъ, губ. секр. (съ 7 апрѣля 1881 г.). Назначенъ чиновникомъ X класса 6 декабря 1902 г. Оставилъ службу 6 іюня 1903 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ чиновникомъ X класса 6 декабря 1902 г. Оставилъ службу 6 іюня 1903 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.18": {
+  "item": "V5.18",
+  "entry_id": "administration_1902-03_p004__e008",
+  "page": "administration_1902-03_p004",
+  "n": 8,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Кликовичъ",
+   "first_name": "Станиславъ",
+   "patronymic": "Казимировичъ",
+   "rank_or_title": "кол. сов.",
+   "tenure_note_text": "съ 1 апрѣля 1903 г."
+  },
+  "verifier": "Кликовичъ, Станиславъ Казиміровичъ, кол. сов. (съ 1 апрѣля 1903 г.).",
+  "edits": {
+   "patronymic": [
+    [
+     "sub",
+     "Казимировичъ",
+     "Казиміровичъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.19": {
+  "item": "V5.19",
+  "entry_id": "administration_1902-03_p004__e012",
+  "page": "administration_1902-03_p004",
+  "n": 12,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Мендельфевъ",
+   "first_name": "Дмитрій",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 11 мая 1901 г."
+  },
+  "verifier": "Менделѣевъ, Дмитрій Ивановичъ, ст. сов. (съ 11 мая 1901 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Мендельфевъ",
+     "Менделѣевъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.20": {
+  "item": "V5.20",
+  "entry_id": "administration_1903-04_p000__e013",
+  "page": "administration_1903-04_p000",
+  "n": 13,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Шенкъ",
+   "first_name": "Петръ",
+   "patronymic": "Петровичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "съ 1 іюня 1888 г."
+  },
+  "verifier": "Шенкъ, Петръ Петровичъ, колл. асс. (съ 1 іюня 1888 г.). Завѣдывающій центральною библіотекою.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Завѣдывающій центральною библіотекою."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.28": {
+  "item": "V5.28",
+  "entry_id": "administration_1903-04_p002__e015",
+  "page": "administration_1903-04_p002",
+  "n": 15,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Михайловъ",
+   "first_name": "Георгій",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "по найму, личн. поч. граждан.",
+   "tenure_note_text": "(съ 7 января 1885 г.)"
+  },
+  "verifier": "Михайловъ, Георгій Ивановичъ, по найму, личн. поч. гражд. (съ 7 января 1885 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "граждан.",
+     "гражд."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.29": {
+  "item": "V5.29",
+  "entry_id": "administration_1903-04_p002__e006",
+  "page": "administration_1903-04_p002",
+  "n": 6,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Мамошинъ",
+   "first_name": "Осій",
+   "patronymic": "Павловичъ",
+   "rank_or_title": "губ. секр.",
+   "tenure_note_text": "(съ 24 іюля 1876 г.). Оставилъ службу 1 сентября 1903 г."
+  },
+  "verifier": "4 Мамошинъ, Осій Павловичъ, губ. секр. (съ 24 іюля 1876 г.). Оставилъ службу 1 сентября 1903 г.",
+  "edits": {},
+  "auto": false,
+  "conf": "high"
+ },
+ "V5.31": {
+  "item": "V5.31",
+  "entry_id": "administration_1903-04_p003__e011",
+  "page": "administration_1903-04_p003",
+  "n": 11,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Безсоновъ",
+   "first_name": "Юрій",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 1 апрѣля 1903 г.)"
+  },
+  "verifier": "Безсоновъ, Юрій Николаевичъ (съ 1 апрѣля 1903 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.32": {
+  "item": "V5.32",
+  "entry_id": "administration_1903-04_p003__e009",
+  "page": "administration_1903-04_p003",
+  "n": 9,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Соколовъ",
+   "first_name": "Александръ",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 8 іюля 1899 г.)"
+  },
+  "verifier": "Соколовъ, Александръ Николаевичъ (съ 8 іюля 1899 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.33": {
+  "item": "V5.33",
+  "entry_id": "administration_1903-04_p003__e005",
+  "page": "administration_1903-04_p003",
+  "n": 5,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Коровинъ",
+   "first_name": "Константинъ",
+   "patronymic": "Алексѣевичъ",
+   "rank_or_title": "неклассный художникъ, неимѣющій чина",
+   "tenure_note_text": "(съ 1 января 1903 г.). Состоить преподавателемъ при московскомъ художественномъ обществѣ училища живописи, ваянія и зодчества."
+  },
+  "verifier": "Коровинъ, Константинъ Алексѣевичъ, неклассный художникъ, неимѣющій чина (съ 1 января 1903 г.). Состоитъ преподавателемъ при московскомъ художественномъ обществѣ училища живописи, ваянія и зодчества.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "sub",
+     "Состоить",
+     "Состоитъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.34": {
+  "item": "V5.34",
+  "entry_id": "administration_1903-04_p003__e001",
+  "page": "administration_1903-04_p003",
+  "n": 1,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Обуховъ",
+   "first_name": "Сергѣй",
+   "patronymic": "Трофимовичъ",
+   "rank_or_title": "тит. совѣт.",
+   "tenure_note_text": "(съ 16 апрѣля 1902 г.). Назначенъ помощникомъ Управляющаго Контролю 19 марта 1904 г."
+  },
+  "verifier": "Обуховъ, Сергѣй Трофимовичъ, тит. совѣт. (съ 16 апрѣля 1902 г.). Назначенъ помощникомъ Управляющаго Конторою 19 марта 1904 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "sub",
+     "Контролю",
+     "Конторою"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.37": {
+  "item": "V5.37",
+  "entry_id": "administration_1903-04_p003__e025",
+  "page": "administration_1903-04_p003",
+  "n": 25,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Мендельевъ",
+   "first_name": "Дмитрій",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 11 мая 1901 г.)"
+  },
+  "verifier": "Менделѣевъ, Дмитрій Ивановичъ, ст. сов. (съ 11 мая 1901 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Мендельевъ",
+     "Менделѣевъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.38": {
+  "item": "V5.38",
+  "entry_id": "administration_1903-04_p004__e009",
+  "page": "administration_1903-04_p004",
+  "n": 9,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Вѣляевъ",
+   "first_name": "Аркадій",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "губ. секр.",
+   "tenure_note_text": "(съ 1 января 1903 г.)"
+  },
+  "verifier": "Бѣляевъ, Аркадій Ивановичъ, губ. секр. (съ 1 января 1903 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Вѣляевъ",
+     "Бѣляевъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.40": {
+  "item": "V5.40",
+  "entry_id": "administration_1904-05_p001__e011",
+  "page": "administration_1904-05_p001",
+  "n": 11,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Мысовскій",
+   "first_name": "Иванъ",
+   "patronymic": "Мануиловичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "съ 1 января 1903 г."
+  },
+  "verifier": "Мысовскій, Иванъ Мануиловичъ, колл. сов. (съ 1 января 1903 г.). Назначенъ инспекторомъ Спб. Театральнаго училища 1 сентября 1904 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ инспекторомъ Спб. Театральнаго училища 1 сентября 1904 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.41": {
+  "item": "V5.41",
+  "entry_id": "administration_1904-05_p001__e006",
+  "page": "administration_1904-05_p001",
+  "n": 6,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Кедринъ",
+   "first_name": "Никаноръ",
+   "patronymic": "Никаноровичъ",
+   "rank_or_title": null,
+   "tenure_note_text": "съ 1 февраля 1897 г."
+  },
+  "verifier": "Кедринъ, Никаноръ Никаноровичъ (съ 1 февраля 1897 г.). Оставилъ службу 1 ноября 1904 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Оставилъ службу 1 ноября 1904 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.42": {
+  "item": "V5.42",
+  "entry_id": "administration_1904-05_p001__e003",
+  "page": "administration_1904-05_p001",
+  "n": 3,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Рыдзевскій",
+   "first_name": "Иванъ",
+   "patronymic": "Георгіевичъ",
+   "rank_or_title": "поручикъ запаса гвард. пѣхоты",
+   "tenure_note_text": "съ 2 апрѣля 1905 г."
+  },
+  "verifier": "Рыдзевскій, Иванъ Георгіевичъ, поручикъ запаса гвард. пѣхоты (съ 2 апрѣля 1905 г.). Назначенъ помощникомъ завѣдывающаго постановками 17 іюня 1905 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ помощникомъ завѣдывающаго постановками 17 іюня 1905 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.43": {
+  "item": "V5.43",
+  "entry_id": "administration_1904-05_p001__e002",
+  "page": "administration_1904-05_p001",
+  "n": 2,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Мецнеръ",
+   "first_name": "Левъ",
+   "patronymic": "Даниловичъ",
+   "rank_or_title": "колл. секр.",
+   "tenure_note_text": "съ 1 января 1903 г."
+  },
+  "verifier": "Мецнеръ, Левъ Даниловичъ, колл. секр. (съ 1 января 1903 г.). Назначенъ помощникомъ завѣдывающаго постановками 2 апрѣля 1905 г.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "append",
+     null,
+     "Назначенъ помощникомъ завѣдывающаго постановками 2 апрѣля 1905 г."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.44": {
+  "item": "V5.44",
+  "entry_id": "administration_1904-05_p001__e010",
+  "page": "administration_1904-05_p001",
+  "n": 10,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Адамовичъ",
+   "first_name": "Модесть",
+   "patronymic": "Станиславовичъ",
+   "rank_or_title": "полковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона",
+   "tenure_note_text": "съ 1 августа 1882 г."
+  },
+  "verifier": "Адамовичъ, Модестъ Станиславовичъ, полковникъ л.-гв. 4-го Стрѣлковаго Императорской Фамиліи баталіона (съ 1 августа 1882 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Модесть",
+     "Модестъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V5.46": {
+  "item": "V5.46",
+  "entry_id": "administration_1904-05_p001__e004",
+  "page": "administration_1904-05_p001",
+  "n": 4,
+  "kinds": [
+   "CHARS",
+   "HOMOGLYPH",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Трамбickiй",
+   "first_name": "Алексѣй",
+   "patronymic": "Георгіевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 5 октября 1898 г."
+  },
+  "verifier": "Трамбицкій, Алексѣй Георгіевичъ, ст. сов. (съ 5 октября 1898 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Трамбickiй",
+     "Трамбицкій"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.1": {
+  "item": "V6.1",
+  "entry_id": "administration_1904-05_p002__e005",
+  "page": "administration_1904-05_p002",
+  "n": 5,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Михайловъ",
+   "first_name": "Георгій",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "пот. поч. гражд.",
+   "tenure_note_text": "съ 7 января 1885 г."
+  },
+  "verifier": "Михайловъ, Георгій Ивановичъ, по найму, пот. поч. гражд. (съ 7 января 1885 г.).",
+  "edits": {},
+  "auto": false,
+  "conf": "high"
+ },
+ "V6.3": {
+  "item": "V6.3",
+  "entry_id": "administration_1904-05_p002__e013",
+  "page": "administration_1904-05_p002",
+  "n": 13,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Бруниеръ",
+   "first_name": "Людвигъ",
+   "patronymic": "Христофоровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 20 августа 1904 г."
+  },
+  "verifier": "Бруннеръ, Людвигъ Христофоровичъ, ст. сов. (съ 20 августа 1904 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Бруниеръ",
+     "Бруннеръ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.4": {
+  "item": "V6.4",
+  "entry_id": "administration_1904-05_p002__e008",
+  "page": "administration_1904-05_p002",
+  "n": 8,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Головицъ",
+   "first_name": "Александръ",
+   "patronymic": "Яковлевичъ",
+   "rank_or_title": null,
+   "tenure_note_text": "съ 6 декабря 1902 г."
+  },
+  "verifier": "Головинъ, Александръ Яковлевичъ (съ 6 декабря 1902 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Головицъ",
+     "Головинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.5": {
+  "item": "V6.5",
+  "entry_id": "administration_1904-05_p002__e011",
+  "page": "administration_1904-05_p002",
+  "n": 11,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Гень",
+   "first_name": "Анатолій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 17 сентября 1882 г."
+  },
+  "verifier": "Генъ, Анатолій Александровичъ, ст. сов. (съ 17 сентября 1882 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Гень",
+     "Генъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.6": {
+  "item": "V6.6",
+  "entry_id": "administration_1904-05_p003__e025",
+  "page": "administration_1904-05_p003",
+  "n": 25,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Бурейко",
+   "first_name": "Василій",
+   "patronymic": "Васильевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 15 ноября 1900 г.)"
+  },
+  "verifier": "Бурейко, Василій Васильевичъ (съ 15 ноября 1900 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.7": {
+  "item": "V6.7",
+  "entry_id": "administration_1904-05_p003__e024",
+  "page": "administration_1904-05_p003",
+  "n": 24,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Булгаковъ",
+   "first_name": "Владиміръ",
+   "patronymic": "Венедиктовичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 1 апрѣля 1903 г.)"
+  },
+  "verifier": "Булгаковъ, Владиміръ Венедиктовичъ (съ 1 апрѣля 1903 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.8": {
+  "item": "V6.8",
+  "entry_id": "administration_1904-05_p003__e023",
+  "page": "administration_1904-05_p003",
+  "n": 23,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Борхманъ",
+   "first_name": "Александръ",
+   "patronymic": "Алольфовичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 15 ноября 1900 г.)"
+  },
+  "verifier": "Борхманъ, Александръ Алольфовичъ (съ 15 ноября 1900 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "medium"
+ },
+ "V6.9": {
+  "item": "V6.9",
+  "entry_id": "administration_1904-05_p003__e021",
+  "page": "administration_1904-05_p003",
+  "n": 21,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Безсоновъ",
+   "first_name": "Юрій",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 1 апрѣля 1903 г.)"
+  },
+  "verifier": "Безсоновъ, Юрій Николаевичъ (съ 1 апрѣля 1903 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.10": {
+  "item": "V6.10",
+  "entry_id": "administration_1904-05_p003__e019",
+  "page": "administration_1904-05_p003",
+  "n": 19,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Соколовъ",
+   "first_name": "Александръ",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 8 іюля 1899 г.)"
+  },
+  "verifier": "Соколовъ, Александръ Николаевичъ (съ 8 іюля 1899 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.11": {
+  "item": "V6.11",
+  "entry_id": "administration_1904-05_p003__e015",
+  "page": "administration_1904-05_p003",
+  "n": 15,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Коровинъ",
+   "first_name": "Константинъ",
+   "patronymic": "Алексѣевичъ",
+   "rank_or_title": "неклассный художникъ, неимѣющій чина",
+   "tenure_note_text": "(съ 1 января 1903 г.). Состоить преподавателемъ при московскомъ художественномъ обществѣ училища живописи, ваянія и зодчества."
+  },
+  "verifier": "Коровинъ, Константинъ Алексѣевичъ, неклассный художникъ, неимѣющій чина (съ 1 января 1903 г.). Состоитъ преподавателемъ при московскомъ художественномъ обществѣ училища живописи, ваянія и зодчества.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "sub",
+     "Состоить",
+     "Состоитъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "medium-high"
+ },
+ "V6.12": {
+  "item": "V6.12",
+  "entry_id": "administration_1904-05_p003__e005",
+  "page": "administration_1904-05_p003",
+  "n": 5,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Бестужевъ-Рюминъ",
+   "first_name": "Алексѣй",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "подполковникъ гвард. запасного кавалерійскаго полка",
+   "tenure_note_text": "(съ 15 марта 1903 г.)"
+  },
+  "verifier": "Бестужевъ-Рюминъ, Алексѣй Ивановичъ, подполковникъ гвард. запаснаго кавалерійскаго полка (съ 15 марта 1903 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "запасного",
+     "запаснаго"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.13": {
+  "item": "V6.13",
+  "entry_id": "administration_1904-05_p004__e022",
+  "page": "administration_1904-05_p004",
+  "n": 22,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Струсевъ",
+   "first_name": "Николай",
+   "patronymic": "Александровичъ",
+   "rank_or_title": null,
+   "tenure_note_text": "(съ 1 апрѣля 1903 г.)"
+  },
+  "verifier": "Струевъ, Николай Александровичъ (съ 1 апрѣля 1903 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Струсевъ",
+     "Струевъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.14": {
+  "item": "V6.14",
+  "entry_id": "administration_1904-05_p004__e006",
+  "page": "administration_1904-05_p004",
+  "n": 6,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Кликовичъ",
+   "first_name": "Станиславъ",
+   "patronymic": "Казимировичъ",
+   "rank_or_title": "кол. сов.",
+   "tenure_note_text": "(съ 1 апрѣля 1903 г.)"
+  },
+  "verifier": "Кликовичъ, Станиславъ Казиміровичъ, кол. сов. (съ 1 апрѣля 1903 г.).",
+  "edits": {
+   "patronymic": [
+    [
+     "sub",
+     "Казимировичъ",
+     "Казиміровичъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.15": {
+  "item": "V6.15",
+  "entry_id": "administration_1904-05_p004__e004",
+  "page": "administration_1904-05_p004",
+  "n": 4,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Исперъ",
+   "first_name": "Матвѣй",
+   "patronymic": "Филипповичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "(съ 1 апрѣля 1903 г.)"
+  },
+  "verifier": "Исцеръ, Матвѣй Филипповичъ, ст. сов. (съ 1 апрѣля 1903 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Исперъ",
+     "Исцеръ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.19": {
+  "item": "V6.19",
+  "entry_id": "administration_1905-06_p001__e021",
+  "page": "administration_1905-06_p001",
+  "n": 21,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Аттельмайеръ",
+   "first_name": "Карлъ",
+   "patronymic": "Оттоно́вичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "съ 1 марта 1906 г."
+  },
+  "verifier": "Аттельмайеръ, Карлъ Оттоновичъ кол. асс. (съ 1 марта 1906 г.),",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "колл.",
+     "кол."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.20": {
+  "item": "V6.20",
+  "entry_id": "administration_1905-06_p001__e012",
+  "page": "administration_1905-06_p001",
+  "n": 12,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Юрьевъ",
+   "first_name": "Валерьянъ",
+   "patronymic": "Фёдоровичъ",
+   "rank_or_title": "неимѣющій чина",
+   "tenure_note_text": "съ 1 января 1886 г."
+  },
+  "verifier": "Юрьевъ, Валерьянъ Федоровичъ, неимѣющій чина (съ 1 января 1886 г.).",
+  "edits": {
+   "patronymic": [
+    [
+     "sub",
+     "Фёдоровичъ",
+     "Федоровичъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "medium-high"
+ },
+ "V6.22": {
+  "item": "V6.22",
+  "entry_id": "administration_1905-06_p002__e001",
+  "page": "administration_1905-06_p002",
+  "n": 1,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Генъ",
+   "first_name": "Анатолій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "л. ст. сов.",
+   "tenure_note_text": "съ 17 сентября 1882 г."
+  },
+  "verifier": "Генъ, Анатолій Александровичъ, д. ст. сов. (съ 17 сентября 1882 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "л.",
+     "д."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.23": {
+  "item": "V6.23",
+  "entry_id": "administration_1905-06_p002__e018",
+  "page": "administration_1905-06_p002",
+  "n": 18,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Силинь",
+   "first_name": "Сергѣй",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": null,
+   "tenure_note_text": "съ 1 октября 1867 г."
+  },
+  "verifier": "Силинъ, Сергѣй Михайловичъ (съ 1 октября 1867 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Силинь",
+     "Силинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.24": {
+  "item": "V6.24",
+  "entry_id": "administration_1905-06_p002__e011",
+  "page": "administration_1905-06_p002",
+  "n": 11,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Бѣлинскій",
+   "first_name": "Николай",
+   "patronymic": "Андреевичъ",
+   "rank_or_title": null,
+   "tenure_note_text": "съ 1 марта 1905 г."
+  },
+  "verifier": "Бѣлицкій, Николай Андреевичъ (съ 1 марта 1905 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Бѣлинскій",
+     "Бѣлицкій"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.25": {
+  "item": "V6.25",
+  "entry_id": "administration_1905-06_p003__e012",
+  "page": "administration_1905-06_p003",
+  "n": 12,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Дворецъ-Дворецкій",
+   "first_name": "Федоръ",
+   "patronymic": "Федоровичъ",
+   "rank_or_title": "сов.",
+   "tenure_note_text": "(съ 6 декабря 1895 г.). Въ должности регистратора съ 6 декабря 1902 г."
+  },
+  "verifier": "Дворецъ-Дворецкій, Федоръ Федоровичъ (съ 6 декабря 1895 г.). Въ должности регистратора съ 6 декабря 1902 г.",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.26": {
+  "item": "V6.26",
+  "entry_id": "administration_1905-06_p003__e011",
+  "page": "administration_1905-06_p003",
+  "n": 11,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Коровинъ",
+   "first_name": "Константинъ",
+   "patronymic": "Алексѣевичъ",
+   "rank_or_title": "неклассный художникъ, неимѣющій чина",
+   "tenure_note_text": "(съ 1 января 1903 г.). Состоить преподавателемъ при московскомъ художественномъ обществѣ училища живописи, ваянія и зодчества."
+  },
+  "verifier": "Коровинъ, Константинъ Алексѣевичъ, неклассный художникъ, неимѣющій чина (съ 1 января 1903 г.). Состоитъ преподавателемъ при московскомъ художественномъ обществѣ училища живописи, ваянія и зодчества.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "sub",
+     "Состоить",
+     "Состоитъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.27": {
+  "item": "V6.27",
+  "entry_id": "administration_1905-06_p003__e006",
+  "page": "administration_1905-06_p003",
+  "n": 6,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Покровскій",
+   "first_name": "Сергѣй",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "коллежскій секретарь",
+   "tenure_note_text": "(съ 9 декабря 1905 г.)"
+  },
+  "verifier": "Покровскій, Сергѣй Александровичъ, колежскій секретарь (съ 9 декабря 1905 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "коллежскій",
+     "колежскій"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.28": {
+  "item": "V6.28",
+  "entry_id": "administration_1905-06_p003__e001",
+  "page": "administration_1905-06_p003",
+  "n": 1,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Бестужевъ-Рюминъ",
+   "first_name": "Алексѣй",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "ротмистръ гвард. запаснаго кавалерійскаго полка",
+   "tenure_note_text": "(съ 15 марта 1903 г.)"
+  },
+  "verifier": "Бестужевь-Рюминъ, Алексѣй Ивановичъ, ротмистръ гвард. запаснаго кавалерійскаго полка (съ 15 марта 1903 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Бестужевъ-Рюминъ",
+     "Бестужевь-Рюминъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "medium-high"
+ },
+ "V6.31": {
+  "item": "V6.31",
+  "entry_id": "administration_1906-07_p001__e011",
+  "page": "administration_1906-07_p001",
+  "n": 11,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Поспѣвъ",
+   "first_name": "Дмитрій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "съ 18 января 1883 г."
+  },
+  "verifier": "Поспѣевъ, Дмитрій Александровичъ, колл. асс. (съ 18 января 1883 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Поспѣвъ",
+     "Поспѣевъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.32": {
+  "item": "V6.32",
+  "entry_id": "administration_1906-07_p001__e017",
+  "page": "administration_1906-07_p001",
+  "n": 17,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Аттельмайеръ",
+   "first_name": "Карль",
+   "patronymic": "Оттоновичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "съ 1 марта 1906 г."
+  },
+  "verifier": "Аттельмайеръ, Карлъ Оттоновичъ, колл. асс. (съ 1 марта 1906 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Карль",
+     "Карлъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.36": {
+  "item": "V6.36",
+  "entry_id": "administration_1906-07_p002__e001",
+  "page": "administration_1906-07_p002",
+  "n": 1,
+  "kinds": [
+   "CHARS",
+   "DATE_DIFF"
+  ],
+  "stored": {
+   "family_name": "Бруннеръ",
+   "first_name": "Людвигъ",
+   "patronymic": "Христофоровичъ",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 20 августа 1894 г."
+  },
+  "verifier": "Бруннеръ, Людвигъ Христофоровичъ, ст. сов. (съ 20 августа 1904 г.).",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "sub",
+     "1894",
+     "1904"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.37": {
+  "item": "V6.37",
+  "entry_id": "administration_1906-07_p002__e012",
+  "page": "administration_1906-07_p002",
+  "n": 12,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Силинь",
+   "first_name": "Сергѣй",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "надв. сов.",
+   "tenure_note_text": "съ 1 октября 1867 г."
+  },
+  "verifier": "Силинъ, Сергѣй Михайловичъ, надв. сов. (съ 1 октября 1867 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Силинь",
+     "Силинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V6.44": {
+  "item": "V6.44",
+  "entry_id": "administration_1906-07_p004__e001",
+  "page": "administration_1906-07_p004",
+  "n": 1,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Милановъ",
+   "first_name": "Владиміръ",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": null,
+   "tenure_note_text": "съ 1 апрѣля 1903 г."
+  },
+  "verifier": "Милановъ, Владиміръ Николаевичъ.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "del",
+     "съ",
+     null
+    ],
+    [
+     "del",
+     "1",
+     null
+    ],
+    [
+     "del",
+     "апрѣля",
+     null
+    ],
+    [
+     "del",
+     "1903",
+     null
+    ],
+    [
+     "del",
+     "г.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.4": {
+  "item": "V7.4",
+  "entry_id": "administration_1907-08_p001__e010",
+  "page": "administration_1907-08_p001",
+  "n": 10,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Поспѣвъ",
+   "first_name": "Дмитрій",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "колл. асс.",
+   "tenure_note_text": "съ 18 января 1883 г."
+  },
+  "verifier": "Поспѣевъ, Дмитрій Александровичъ, колл. асс. (съ 18 января 1883 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Поспѣвъ",
+     "Поспѣевъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.6": {
+  "item": "V7.6",
+  "entry_id": "administration_1907-08_p002__e022",
+  "page": "administration_1907-08_p002",
+  "n": 22,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Розенбергъ",
+   "first_name": "Иванъ",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": null,
+   "tenure_note_text": "съ 1 юня 1903 г."
+  },
+  "verifier": "Розенбергъ, Иванъ Ивановичъ (съ 1 іюня 1903 г.).",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "sub",
+     "юня",
+     "іюня"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.7": {
+  "item": "V7.7",
+  "entry_id": "administration_1907-08_p002__e021",
+  "page": "administration_1907-08_p002",
+  "n": 21,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Робинзонъ",
+   "first_name": "Александръ",
+   "patronymic": "Александровичъ",
+   "rank_or_title": "неимѣющій чина",
+   "tenure_note_text": "съ 1 юня 1898 г."
+  },
+  "verifier": "Робинзонъ, Александръ Александровичъ, неимѣющій чина (съ 1 іюня 1898 г.).",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "sub",
+     "юня",
+     "іюня"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.10": {
+  "item": "V7.10",
+  "entry_id": "administration_1907-08_p002__e003",
+  "page": "administration_1907-08_p002",
+  "n": 3,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Сукова",
+   "first_name": "Надежда",
+   "patronymic": "Всеволодовна",
+   "rank_or_title": "ст. сов.",
+   "tenure_note_text": "съ 1 декабря 1897 г."
+  },
+  "verifier": "Сукова, Надежда Всеволодовна (съ 1 декабря 1897 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "ст.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.11": {
+  "item": "V7.11",
+  "entry_id": "administration_1907-08_p002__e001",
+  "page": "administration_1907-08_p002",
+  "n": 1,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Бруннеръ",
+   "first_name": "Людвигъ",
+   "patronymic": "Христофоровичъ",
+   "rank_or_title": "лейбъ-медикъ, ст. сов.",
+   "tenure_note_text": "съ 20 августа 1904 г."
+  },
+  "verifier": "Бруннеръ, лейбъ-медикъ, Людвигъ Христофоровичъ, ст. сов. (съ 20 августа 1904 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "лейбъ-медикъ,",
+     null
+    ]
+   ]
+  },
+  "auto": false,
+  "conf": "high"
+ },
+ "V7.12": {
+  "item": "V7.12",
+  "entry_id": "administration_1907-08_p003__e026",
+  "page": "administration_1907-08_p003",
+  "n": 26,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Исцеръ",
+   "first_name": "Матвѣй",
+   "patronymic": "Филипповичъ",
+   "rank_or_title": "совѣтникъ",
+   "tenure_note_text": "(съ 1 апрѣля 1903 г.)"
+  },
+  "verifier": "Исцеръ, Матвѣй Филипповичъ, ст. совѣтникъ (съ 1 апрѣля 1903 г.).",
+  "edits": {},
+  "auto": false,
+  "conf": "high"
+ },
+ "V7.13": {
+  "item": "V7.13",
+  "entry_id": "administration_1907-08_p004__e001",
+  "page": "administration_1907-08_p004",
+  "n": 1,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Милановъ",
+   "first_name": "Владимиръ",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": null,
+   "tenure_note_text": "съ 1 сентября 1901 г."
+  },
+  "verifier": "Милановъ, Владимиръ Николаевичъ.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "del",
+     "съ",
+     null
+    ],
+    [
+     "del",
+     "1",
+     null
+    ],
+    [
+     "del",
+     "сентября",
+     null
+    ],
+    [
+     "del",
+     "1901",
+     null
+    ],
+    [
+     "del",
+     "г.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.15": {
+  "item": "V7.15",
+  "entry_id": "administration_1908-09_p000__e011",
+  "page": "administration_1908-09_p000",
+  "n": 11,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Молчановъ",
+   "first_name": "Иванъ",
+   "patronymic": "Николаевичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "(съ 1 ноября 1887 г.)"
+  },
+  "verifier": "Молчановъ, Иванъ Николаевичъ, (съ 1 ноября 1887 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "del",
+     "колл.",
+     null
+    ],
+    [
+     "del",
+     "сов.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.16": {
+  "item": "V7.16",
+  "entry_id": "administration_1908-09_p000__e004",
+  "page": "administration_1908-09_p000",
+  "n": 4,
+  "kinds": [
+   "CHARS",
+   "DATE_MISSING"
+  ],
+  "stored": {
+   "family_name": "Шенкъ",
+   "first_name": "Петръ",
+   "patronymic": "Петровичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "(съ 1 юня 1888 г.). Завѣдывающій центральною библіотекою."
+  },
+  "verifier": "Шенкъ, Петръ Петровичъ, колл. сов. (съ 1 іюня 1888 г.). Завѣдывающій центральною библіотекою.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "sub",
+     "юня",
+     "іюня"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.19": {
+  "item": "V7.19",
+  "entry_id": "administration_1908-09_p001__e009",
+  "page": "administration_1908-09_p001",
+  "n": 9,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Юрьевъ",
+   "first_name": "Валерьян",
+   "patronymic": "Федоровичъ",
+   "rank_or_title": "неимѣющій чина",
+   "tenure_note_text": "(съ 1 января 1886 г.)"
+  },
+  "verifier": "Юрьевъ, Валерьянъ Федоровичъ, неимѣющій чина (съ 1 января 1886 г.).",
+  "edits": {
+   "first_name": [
+    [
+     "sub",
+     "Валерьян",
+     "Валерьянъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.21": {
+  "item": "V7.21",
+  "entry_id": "administration_1908-09_p002__e001",
+  "page": "administration_1908-09_p002",
+  "n": 1,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Брунеръ",
+   "first_name": "Людвигъ",
+   "patronymic": "Христофоровичъ",
+   "rank_or_title": "д. ст. сов., лейбъ-медикъ Высочайшаго Двора",
+   "tenure_note_text": "съ 28 января 1908 г."
+  },
+  "verifier": "Брунеръ, Людвигъ Христофоровичъ, д. ст. сов., лейбъ-медикъ Высочайшаго Двора.",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "del",
+     "съ",
+     null
+    ],
+    [
+     "del",
+     "28",
+     null
+    ],
+    [
+     "del",
+     "января",
+     null
+    ],
+    [
+     "del",
+     "1908",
+     null
+    ],
+    [
+     "del",
+     "г.",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.25": {
+  "item": "V7.25",
+  "entry_id": "administration_1908-09_p003__e006",
+  "page": "administration_1908-09_p003",
+  "n": 6,
+  "kinds": [
+   "CHARS",
+   "NAME"
+  ],
+  "stored": {
+   "family_name": "Поляковъ",
+   "first_name": "Иванъ",
+   "patronymic": "Тимоѳеевичъ",
+   "rank_or_title": "неимѣющій чина",
+   "tenure_note_text": "(съ 1 августа 1900 г.)"
+  },
+  "verifier": "Поляковъ, Иванъ Тимофеевичъ, неимѣющій чина (съ 1 августа 1900 г.).",
+  "edits": {
+   "patronymic": [
+    [
+     "sub",
+     "Тимоѳеевичъ",
+     "Тимофеевичъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.27": {
+  "item": "V7.27",
+  "entry_id": "administration_1909-10_p000__e007",
+  "page": "administration_1909-10_p000",
+  "n": 7,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Мецнеръ",
+   "first_name": "Левъ",
+   "patronymic": "Даниловичъ",
+   "rank_or_title": "колл. ас.",
+   "tenure_note_text": "(съ 1 января 1903 г.)"
+  },
+  "verifier": "Мецнеръ, Левъ Даниловичъ, кол. ас. (съ 1 января 1903 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "колл.",
+     "кол."
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.28": {
+  "item": "V7.28",
+  "entry_id": "administration_1909-10_p000__e004",
+  "page": "administration_1909-10_p000",
+  "n": 4,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Посникова",
+   "first_name": "Петръ",
+   "patronymic": "Павловичъ",
+   "rank_or_title": "колл. сов.",
+   "tenure_note_text": "(съ 25 ноября 1903 г.)"
+  },
+  "verifier": "Посниковъ, Петръ Павловичъ, колл. сов. (съ 25 ноября 1903 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Посникова",
+     "Посниковъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.31": {
+  "item": "V7.31",
+  "entry_id": "administration_1909-10_p001__e021",
+  "page": "administration_1909-10_p001",
+  "n": 21,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Принцъ",
+   "first_name": "Борисъ",
+   "patronymic": "Владиміровичъ",
+   "rank_or_title": "неимѣющій чина",
+   "tenure_note_text": "(съ 1 мая 1900 г.)"
+  },
+  "verifier": "Принцъ, Борисъ Владиміровичъ, неимѣщій чина (съ 1 мая 1900 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "неимѣющій",
+     "неимѣщій"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.32": {
+  "item": "V7.32",
+  "entry_id": "administration_1909-10_p001__e013",
+  "page": "administration_1909-10_p001",
+  "n": 13,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Менгденъ",
+   "first_name": "Николай",
+   "patronymic": "Георгіевичъ",
+   "rank_or_title": "графъ",
+   "tenure_note_text": "(съ 1 октября 1904 г.)"
+  },
+  "verifier": "Менгденъ, графъ, Николай Георгіевичъ, колл. ас. (съ 1 октября 1904 г.).",
+  "edits": {},
+  "auto": false,
+  "conf": "high"
+ },
+ "V7.35": {
+  "item": "V7.35",
+  "entry_id": "administration_1909-10_p002__e013",
+  "page": "administration_1909-10_p002",
+  "n": 13,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Михайловъ",
+   "first_name": "Георгій",
+   "patronymic": "Ивановичъ",
+   "rank_or_title": "пот. поч. граждан. (по найму съ 7 января 1885 г.)",
+   "tenure_note_text": "(по найму съ 7 января 1885 г.)"
+  },
+  "verifier": "Михайловъ, Георгій Ивановичъ, пот. поч. гражд. (по найму съ 7 января 1885 г.).",
+  "edits": {
+   "rank_or_title": [
+    [
+     "sub",
+     "граждан.",
+     "гражд."
+    ]
+   ],
+   "tenure_note_text": [
+    [
+     "del",
+     "(по",
+     null
+    ],
+    [
+     "del",
+     "найму",
+     null
+    ],
+    [
+     "del",
+     "съ",
+     null
+    ],
+    [
+     "del",
+     "7",
+     null
+    ],
+    [
+     "del",
+     "января",
+     null
+    ],
+    [
+     "del",
+     "1885",
+     null
+    ],
+    [
+     "del",
+     "г.)",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.36": {
+  "item": "V7.36",
+  "entry_id": "administration_1909-10_p002__e012",
+  "page": "administration_1909-10_p002",
+  "n": 12,
+  "kinds": [
+   "CHARS"
+  ],
+  "stored": {
+   "family_name": "Ганузинъ",
+   "first_name": "Меѳодій",
+   "patronymic": "Сафоновичъ",
+   "rank_or_title": "неимѣющій чина (по найму съ 1 ноября 1906 г. по 1 января 1907 г., на службѣ съ 1 января 1907 г.)",
+   "tenure_note_text": "(по найму съ 1 ноября 1906 г. по 1 января 1907 г., на службѣ съ 1 января 1907 г.)"
+  },
+  "verifier": "Ганузинъ, Меѳодій Сафоновичъ, неимѣющій чина (по найму съ 1 ноября 1906 г. по 1 января 1907 г., на службѣ съ 1 января 1907 г.).",
+  "edits": {
+   "tenure_note_text": [
+    [
+     "del",
+     "(по",
+     null
+    ],
+    [
+     "del",
+     "найму",
+     null
+    ],
+    [
+     "del",
+     "съ",
+     null
+    ],
+    [
+     "del",
+     "1",
+     null
+    ],
+    [
+     "del",
+     "ноября",
+     null
+    ],
+    [
+     "del",
+     "1906",
+     null
+    ],
+    [
+     "del",
+     "г.",
+     null
+    ],
+    [
+     "del",
+     "по",
+     null
+    ],
+    [
+     "del",
+     "1",
+     null
+    ],
+    [
+     "del",
+     "января",
+     null
+    ],
+    [
+     "del",
+     "1907",
+     null
+    ],
+    [
+     "del",
+     "г.,",
+     null
+    ],
+    [
+     "del",
+     "на",
+     null
+    ],
+    [
+     "del",
+     "службѣ",
+     null
+    ],
+    [
+     "del",
+     "съ",
+     null
+    ],
+    [
+     "del",
+     "1",
+     null
+    ],
+    [
+     "del",
+     "января",
+     null
+    ],
+    [
+     "del",
+     "1907",
+     null
+    ],
+    [
+     "del",
+     "г.)",
+     null
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ },
+ "V7.38": {
+  "item": "V7.38",
+  "entry_id": "administration_1909-10_p002__e011",
+  "page": "administration_1909-10_p002",
+  "n": 11,
+  "kinds": [
+   "CHARS",
+   "SURNAME"
+  ],
+  "stored": {
+   "family_name": "Силинь",
+   "first_name": "Сергѣй",
+   "patronymic": "Михайловичъ",
+   "rank_or_title": "надв. сов.",
+   "tenure_note_text": "(съ 1 октября 1867 г.)"
+  },
+  "verifier": "Силинъ, Сергѣй Михайловичъ, надв. сов. (съ 1 октября 1867 г.).",
+  "edits": {
+   "family_name": [
+    [
+     "sub",
+     "Силинь",
+     "Силинъ"
+    ]
+   ]
+  },
+  "auto": true,
+  "conf": "high"
+ }
+}
