@@ -32,6 +32,9 @@ folio_on_plate_page   A page with NO running text (a tipped-in plate) that
                       are text pages where it is genuine, which is why this
                       check keys on "plate page + breaks the run", never on
                       the value.
+mixed_script_word     A word mixing Cyrillic with Latin or Greek lookalikes
+                      (Чумаkova, Ѳеdorova, Млаda) -- a partial romanisation
+                      that makes the name unmatchable by the mention matcher.
 degenerate_repetition A block that is one phrase repeated -- a caption reading
                       "Гроппіуса)." twelve times. Keyed on unique/total words,
                       not on repeated substrings: a substring test flagged 75
@@ -60,6 +63,13 @@ sys.path.insert(0, str(Path(__file__).parent))
 from schemas.review import LETTER_SPACING_LEAK_RE
 
 FOLIO_RE = re.compile(r"\d+")
+
+
+_CYR = r"А-Яа-яЀ-ЏЪѢІѲѴъѣіѳѵ"
+# a word containing BOTH a Cyrillic letter and a Latin/Greek one
+MIXED_SCRIPT = re.compile(
+    rf"\b(?=[^\W\d_]*[{_CYR}])(?=[^\W\d_]*[A-Za-z\u0391-\u03c9])"
+    rf"[{_CYR}A-Za-z\u0391-\u03c9]{{3,}}\b")
 
 
 def ink_fraction(path: Path, thumb: int = 200) -> float:
@@ -223,6 +233,25 @@ def main() -> None:
             flag(b["page_id"], "degenerate_repetition",
                  f"{len(set(words))} unique of {len(words)} words: "
                  f"{text[:60]}")
+
+    # ---- a word that mixes Cyrillic with Latin or Greek lookalikes ------
+    # The model sometimes romanises part of a Cyrillic surname -- Чумаkova,
+    # Рыхляkova, Эдуарdova, Ѳеdorova, Носkova, Чеketti, Млаda. Found while
+    # building the mention matcher (pipeline/match_review_mentions.py), where
+    # the cost is concrete: a half-Latin surname matches no dictionary entry
+    # and the mention is lost silently. Same family of bug as the і/i homoglyph
+    # sweep on the Repertoire side (known_issues #90) and the homoglyph checker
+    # added for the Roster (#123). Line breaks are rejoined first so a word
+    # split across one is judged whole.
+    for b in blocks:
+        text = re.sub(r"([^\s-])-\s+", r"\1",
+                      (b["text"] or b["caption_text"] or ""))
+        for m in MIXED_SCRIPT.finditer(text):
+            w = m.group()
+            foreign = "".join(sorted({c for c in w
+                                      if re.match(r"[A-Za-z\u0391-\u03c9]", c)}))
+            flag(b["page_id"], "mixed_script_word",
+                 f"{w!r} mixes Cyrillic with {foreign!r}")
 
     # ---- the same text in two different reviews -------------------------
     seen_text = defaultdict(list)

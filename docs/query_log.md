@@ -12955,3 +12955,49 @@ review names Bekefi's 25-year benefit, Замбелли's first Пахита, an
 
 Write-up: `docs/eval/ballet_in_opera_and_divertissement.md`.
 Re-runnable: `pipeline/find_opera_ballet_crossover.py`.
+
+---
+
+## 2026-10-07 — mention matching over the ballet reviews
+
+Built `pipeline/match_review_mentions.py` and ran it over all 698 Ballet-review
+pages. Dictionaries came from the live database, so the counts are queries:
+
+```sql
+SELECT person_id, canonical_family_name, display_name, ordinal_suffix,
+       first_attested_season, last_attested_season
+FROM research.person WHERE canonical_family_name IS NOT NULL;      -- 3,243 rows
+SELECT work_id, canonical_title, canonical_genre, parent_genre
+FROM research.work WHERE canonical_title IS NOT NULL;              -- 3,190 rows
+SELECT DISTINCT role_name FROM raw.person_entry_credit
+WHERE role_name IS NOT NULL AND role_name <> '';                   -- 2,621 rows
+SELECT theater_id, canonical_name FROM research.theater;            -- 6 rows
+```
+
+Expanded by form generation into 14,734 person forms, 17,781 work forms and
+12,416 role forms.
+
+Result: **27,085 mentions, 15,117 (55.8%) resolved to one entity** — person
+21,503, work 3,695, role 1,119, theater 632, dance_number 136.
+
+Validation query, run against the output rather than assumed:
+
+```sql
+-- for every resolved person mention, does the entity's gender agree with the
+-- honorific that introduced it?
+```
+**6,945 resolutions checkable on both sides, 0 mismatches** after correcting the
+gender rule (an earlier version read a final `ъ` as masculine and produced 128,
+nearly all of them the rule's fault — `Ваземъ`, `Гейтенъ`, `Борхардтъ` are
+indeclinable and female here).
+
+Two by-products, each needing a scan check and neither applied:
+
+- **34 gender contradictions** — `Г-жа Галактіонова` where the database holds
+  only `Галактіоновъ`. Six checked by hand; all six were genuine roster gaps.
+- **40 candidate title misreads**, incl. `Камаріо`->`Камарго` (20x) and
+  `Балдерка`->`Баядерка` (7x).
+
+This also closed an item logged earlier the same day: `Гаарлемскій тюльпанъ`
+(1903-04 SP) is **not** missing from `research.work` — it is there as
+`Гарлемскій тюльпанъ`, one «а», similarity 0.973.

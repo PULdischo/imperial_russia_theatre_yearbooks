@@ -189,10 +189,13 @@ would read that as a discrepancy.
 **Two that did not reconcile, found 2026-10-07, NOT yet investigated** (logged
 per RG's rule on tangents, not chased):
 
-1. **`Гаарлемскій тюльпанъ`, 1903-04 SP** — the review says it had 4
-   performances (`4 представленія выдержалъ Гаарлемскій...`). No work matching
-   `%аарлемск%` is in `research.work` for that season. Either a spelling
-   variant the title match missed, or a genuinely absent work.
+1. ~~**`Гаарлемскій тюльпанъ`, 1903-04 SP**~~ — **CLOSED the same day.** It is
+   not missing: `research.work` holds it as `Гарлемскій тюльпанъ`, with one
+   «а» (similarity 0.973). My `%аарлемск%` pattern assumed the review's
+   spelling. Found by the mention matcher's candidate-misread output
+   (`pipeline/match_review_mentions.py`), which is exactly the class of thing
+   that output exists to catch. A reminder that a title-match miss is a
+   spelling question before it is a coverage question.
 2. **`Баядерка`, 1904-05 Moscow** — the review says 2 performances plus acts 1,
    2 and 3 given once each; the database has 1.
 

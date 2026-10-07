@@ -272,3 +272,122 @@ list and every entry is on topic. The 10 ballet-review occurrences of the
 opera composers (Глинка x4, Гуно x2, Римскій-Корсаковъ x2, Верди,
 Мейерберъ) are presumably mixed bills or divertissement music, and connect
 to the open "drama with ballet/dancers" thread.
+
+---
+
+## BUILT 2026-10-07 — `pipeline/match_review_mentions.py`
+
+Mention matching is no longer unbuilt. RG chose the whole ballet corpus over a
+dense-slice first pass, with a smoke test ahead of it to surface problems early.
+
+```
+uv run python pipeline/match_review_mentions.py \
+    --reviews-dir outputs/reviews/merged_full \
+    --db outputs/full_run/imperial_theaters.duckdb \
+    --out-dir outputs/reviews/mentions
+```
+
+Runs in 0.6 s over 698 pages — no API cost, so it can be re-run freely after any
+correction to the review text or any growth in the entity tables.
+
+### What it produced
+
+**698 pages / 3,118 blocks -> 27,085 mentions**, 15,117 (55.8%) resolved to a
+single entity.
+
+| type | n |
+|---|---|
+| person | 21,503 |
+| work | 3,695 |
+| role | 1,119 |
+| theater / institution | 632 |
+| dance_number | 136 |
+
+Three side outputs:
+
+- `review_mention_unknown.csv` — **855 distinct forms, 1,368 occurrences**, 564
+  of them in ballet context. RG's flag-for-investigation ask.
+- `review_title_candidate_misreads.csv` — **40 forms, 85 occurrences**: an
+  unresolved title within edit distance of a real work. Reported, never applied.
+- `mixed_script_word`, now a permanent check in `quality_checks_reviews.py`.
+
+### Forms are generated from the dictionary, not stemmed from the text
+
+Every canonical surname and title is expanded into its declined forms, folded,
+and indexed; matching is an exact lookup. Stemming arbitrary tokens failed in
+both directions in the exploratory pass. Generation makes each declension class
+an explicit, reviewable rule, and a missed form is then a missing rule rather
+than a silent threshold.
+
+Classes that had to be added, each found by the smoke test:
+
+| class | example | was failing |
+|---|---|---|
+| adjectival masc/fem | Чайковск**аго**, Кшесинск**ой** | the original known gap |
+| soft stem (ь) | Гертель -> Гертел**я** | 10x |
+| sibilant instrumental | Вальцъ -> Вальц**емъ** (not -омъ) | 19x |
+| declining `-и` | Гримальди -> Гримальд**ы** | 22x |
+| feminine `-я` | Фея -> Фе**и** | 15x |
+| declining titles | Жизель -> Жизел**и** | — |
+| both words declining | Лебедино**е** озер**о** -> Лебедина**го** озер**а** | — |
+
+### Three traps, all paid for once
+
+1. **Line breaks.** 7,173 words (3.7% of the corpus) are split across a printed
+   break, and ~3,000 of those are capitalised — exactly the mentions being
+   sought. Reflow first. A pattern failing across a break fails *silently*.
+2. **ь/ъ is unstable.** The corpus prints `Легать`/`Легатъ`,
+   `Сень-Леонъ`/`Сенъ-Леонъ`, `Мендесь`/`Мендесъ`. The lookup key treats a
+   component-final soft sign as a hard one, symmetrically on both sides. Worth
+   40+ mentions. Per the standing rule, this is a variant to absorb, not an
+   error to flag.
+3. **Gender cannot be read from a final hard sign.** An early ranker scored
+   `-ъ` as masculine and so penalised the correct candidate by 5 points. The
+   smoke test showed 128 gender mismatches, nearly all the *rule's* fault:
+   `Ваземъ`, `Гейтенъ`, `Борхардтъ`, `Эрлеръ`, `Бастманъ`, `Мендесъ` are
+   indeclinable and belong overwhelmingly to women here — Екатерина Ваземъ and
+   Лидія Гейтенъ were leading ballerinas. Gender is now inferred only from the
+   Slavic families that actually mark it (-овъ/-ова, -скій/-ская), and from the
+   honorific, which is unambiguous. **After the fix: 0 mismatches in 6,945
+   checkable resolutions.**
+
+### Season ranks, it does not gate
+
+As the design required. Candidates score on honorific gender (+4/-5), ordinal
+(+6/-4), and season coverage (+5/-2); a margin of 4 or more resolves, a tie
+leaves the full candidate list standing. This moved resolution from 20.9% to
+55.8% on the smoke-test seasons without excluding anything.
+
+### A new finding: gender contradiction marks a missing person
+
+A resolution whose gender contradicts the honorific is not a match — it is
+evidence that the family's *other* member is absent from `research.person`.
+`Г-жа Галактіонова` resolving to `Галактіоновъ, Павелъ Георгіевичъ` is a roster
+gap. **34 flagged.** Verified by hand on six: in every case the database held
+only the opposite-gender counterpart. This is a higher-quality signal than the
+raw unknown list, because the surname is known and only one family member is
+missing.
+
+### The unknown queue is coherent, not noise
+
+RG expected special guests and the imperial family. The largest group is
+neither: **pre-1890 historical ballerinas named in retrospectives** —
+Прихунова, Амосова 1-я/2-я, Андреянова, Мадаева, Гранцева. They predate the
+yearbook's own rosters, so no amount of roster coverage would reach them.
+`Гримальди` (a guest) and `Пожицкая`/`Рябцевъ`/`Кошева` (Moscow dancers) are
+the other groups.
+
+### Still open
+
+1. **20,172 mentions remain ambiguous** (>1 candidate, no decisive margin).
+   The margin rule is deliberately conservative; city is not yet a signal, and
+   `research.person` carries no city column.
+2. **767 quoted titles unresolved.** Some are genuinely absent works, some are
+   misreads (see the side file), some are French dance numbers now typed
+   separately.
+3. **Recall is still unmeasured** against *all* mentions. Every figure here
+   counts tokens that match a dictionary; a person with no entity is invisible
+   to the measurement. A hand-annotated sample remains the only way to know the
+   real denominator — unchanged from the original design note.
+4. **No table.** Output is CSV; the reviews still have no home in the DuckDB,
+   deferred item §12.5.
