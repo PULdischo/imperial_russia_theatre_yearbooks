@@ -13073,3 +13073,15 @@ select sum(receipts_total_kopecks) from research.event;   -- compared with the b
 ```
 
 Result: 0 unlinked entries; 3,217 tombstones and 3,135 live persons (both identical to the backup); receipts sum identical; 0 orphan links.
+
+## 2026-10-08 -- Pipeline coverage by season: which scanned material is not yet processed?
+
+```sql
+select season, entity_type, count(*) from raw.source_pages group by all order by 1,2;
+select season, string_agg(distinct city, ','), count(distinct page_id) from raw.production_entry group by 1 order by 1;
+select season, string_agg(distinct city||':'||genre, ', '), count(*) from raw.review_page group by 1 order by 1;
+```
+
+Compared with the files in `pdf/` (Reviews_Season, Spiski_BalletProductions, Spiski_Graduates, Spiski_ProductionStats) and `docs/season_stats/pages.csv`.
+
+Result: Repertoire and all six Roster list types are loaded for every season 1890-91..1910-11 (Graduates 0 pages for 1907-08: no graduates PDF exists for that season). Ballet production lists loaded for 1890-91..1904-05 and 1908-09..1910-11 (none for 1905-06..1907-08, matching the PDFs). Production stats transcribed 1891-92..1904-05, 1906-07..1910-11 (matching the PDFs; none for 1890-91, 1905-06). Season reviews loaded for every season except 1898-99 and 1909-10 (no PDFs). Season-review PDFs present but not loaded: 1908-09 OperaSP, OperaMoscow, MusicSP_Autumn1909; 1912-13 BalletSP, OperaSP. Nothing scanned yet for 1911-12, 1913-14 or 1914-15, and the 1912-13 Repertoire and spiski are not scanned.
