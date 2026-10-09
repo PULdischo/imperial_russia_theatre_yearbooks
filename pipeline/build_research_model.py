@@ -105,11 +105,19 @@ RESEARCH_PAGE_MONTH_OVERRIDES = {
 #: that is merely hard to read. page_id -> reason. The build warns if a page_id
 #: is not in analysis.event_entry, so a renamed page doesn't go unnoticed.
 RESEARCH_EXCLUDED_PAGES = {
+    # Why (scan-checked by RG; NOT a duplicate of p. 56). In 1910-11's May pages each date range runs
+    # as a St Petersburg page followed by a Moscow page: p. 54 = SP 1-9 May, p. 55 = Moscow 1-9 May
+    # (all dashes), p. 56 = SP 10-19 May. Moscow's 10-19 May page belongs at p. 57, but p. 57 carries
+    # the SP heading and columns with every cell a dash; its Mikhailovsky cells are empty where p. 56
+    # has performances on 10-15 May, and its typesetting differs from p. 56. Most likely it is Moscow's
+    # blank page printed from the SP form by mistake. Faint show-through from its back appears to be
+    # the season totals, so it is the last page of the tables. This is an INFERENCE from page order and
+    # layout, not something the print states.
     "repertoire_1910-11_p056": (
-        "printed p. 57 repeats p. 56's heading «С.-Петербургскіе театры», theater names and "
-        "dates (10-19 May 1911) with every cell a dash, while p. 56 prints the real "
-        "Михайловскій performances; Moscow's own page for these dates is absent from the "
-        "volume. Superfluous print, kept verbatim in raw (RG, 2026-10-06)"),
+        "printed p. 57: SP heading and columns, every cell a dash, Mikhailovsky empty where p. 56 has "
+        "performances on 10-15 May; most likely Moscow's blank 10-19 May page printed from the SP form "
+        "by mistake (inference from page order and layout; not a duplicate of p. 56). Kept verbatim "
+        "in raw (RG, 2026-10-06; reason re-recorded 2026-10-09)"),
 }
 
 

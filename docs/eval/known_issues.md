@@ -22226,9 +22226,15 @@ dates 99.8% verified standalone.
    Possible sibling: «Корсарь» in repertoire_1898-99_p021 (not scan-checked).
 
 **RG's decisions, applied in code/curation:**
-- Printed p. 57 (`repertoire_1910-11_p056`) repeats p. 56's SP heading and dates (10-19 May) with every cell a dash;
-  Moscow's page for those dates is absent from the volume. Kept verbatim in raw; excluded from the research layer via the
-  new `RESEARCH_EXCLUDED_PAGES` in `build_research_model.py`.
+- Printed p. 57 (`repertoire_1910-11_p056`, 30 events) is excluded from the research layer via the new
+  `RESEARCH_EXCLUDED_PAGES` in `build_research_model.py`; kept verbatim in raw. **Why (RG's scan check, recorded 2026-10-09;
+  this corrects the first wording, "repeats p. 56 ... Moscow's page is absent"):** p. 57 is NOT a duplicate of p. 56. In 1910-11's
+  May pages each date range runs as a St Petersburg page followed by a Moscow page: p. 54 is St Petersburg 1-9 May, p. 55 is
+  Moscow 1-9 May (all dashes), p. 56 is St Petersburg 10-19 May. Moscow's 10-19 May page belongs at p. 57, but p. 57 carries the
+  St Petersburg heading and columns with every cell a dash. Its Mikhailovsky cells are empty where p. 56 has performances on
+  10-15 May, and its typesetting differs from p. 56. Most likely it is Moscow's blank page printed from the St Petersburg form by
+  mistake. Faint show-through from its back appears to be the season totals, so it is the last page of the tables. This is an
+  inference from page order and layout, not something the print states.
 - "9 Четвергъ." on p. 56 = 19 May 1911 (zoomed: no trace of a "1"): `_MANUAL_DATE_OVERRIDES` in
   `validate_performance_dates.py`.
 - Ballet art form widened (`_work_art_form` in `build_entities.py`): бал./балетъ anywhere in the genre is ballet
