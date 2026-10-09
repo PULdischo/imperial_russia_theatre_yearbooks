@@ -346,6 +346,35 @@ def build_lexicon(db: Path) -> Lexicon:
         n_variant += 1
     lex.n_variant_spellings = n_variant
 
+    # Scan-verified spellings the ROSTERS never used, from
+    # docs/eval/review_person_variants.csv. The rosters' own variants are
+    # indexed above; this covers the other direction -- a review printing a
+    # form no roster carries. Keyed on the canonical SURNAME, not a person_id,
+    # because the review often gives no ordinal: `Соляниковъ` maps to
+    # `Солянниковъ`, where the rosters hold two men, and the ranker chooses.
+    #
+    # Deliberately curated rather than inferred. Spreading variants across a
+    # family automatically was tried and reverted: it fixed two cases and cost
+    # 70 resolutions elsewhere, because it admits every family member as a
+    # candidate for every mention.
+    variants_path = Path("docs/eval/review_person_variants.csv")
+    n_curated = 0
+    if variants_path.exists():
+        by_canon = collections.defaultdict(list)
+        for q, meta in lex.person_meta.items():
+            by_canon[(meta["family"] or "").strip()].append(q)
+        with open(variants_path, encoding="utf-8") as f:
+            for row in csv.DictReader(f):
+                printed = (row.get("printed_in_review") or "").strip()
+                canon = (row.get("roster_canonical_family_name") or "").strip()
+                if not printed or not canon:
+                    continue
+                for q in by_canon.get(canon, []):
+                    lex.add(lex.person, surname_forms(printed), q)
+                    n_curated += 1
+    lex.n_curated_variants = n_curated
+
+
 
     for wid, title, genre, parent, is_excerpt in con.execute("""
         select work_id, canonical_title, canonical_genre, parent_genre,
@@ -796,6 +825,8 @@ def main() -> None:
     lex = build_lexicon(a.db)
     n_forms = len(lex.person)
     print(f"  + {getattr(lex, 'n_variant_spellings', 0):,} roster variant spellings indexed")
+    print(f"  + {getattr(lex, 'n_curated_variants', 0):,} scan-verified review variants "
+          f"(docs/eval/review_person_variants.csv)")
     print(f"lexicon: {n_forms:,} person forms from {len(lex.person_meta):,} persons, "
           f"{len(lex.work):,} work forms from {len(lex.work_meta):,} works, "
           f"{len(lex.role):,} roles, {len(lex.theater):,} institution forms")

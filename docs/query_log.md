@@ -13242,6 +13242,16 @@ select p.printed_folio, b.text from raw.review_block b join raw.review_page p us
 
 Result: 1907-08 has 7 Repertoire ballet events without a list date (5 on charity bills with no receipts), all classified D/E/F in the disagreements doc; the 1909-10 Moscow 10 Feb 1910 row is a receipted flood-relief bill (9973 р. 15 к.). Карменъ: 241 `оп.` rows against 2 `бал.` (28 Jan 1907 and 16 Sep 1907, both Moscow Большой mornings); the 1907-08 Moscow review (folio 154) gives Жизель on 16, 30 Sep, 24 Oct, 6 Jan, while the list and the Repertoire give Жизель on 30 Sep, 24 Oct, 6 Jan only. Negative result: searching the ballet reviews for «Кармен» finds no ballet Carmen in 1906-07 or 1907-08.
 
+## 2026-10-09 — Season Review blocks mentioning jubilees, deaths, funerals or benefits (jubilee/obituary sweep)
+
+```sql
+select b.page_id, b.block_index, b.text from raw.review_block b
+where regexp_matches(lower(b.text), 'юбиле|скончал|кончин|некролог|памяти |умер|смерт|похорон|25-лѣт|25-лет|двадцатипятилѣт|пятидесятилѣт')
+-- second run added: |прощальн|бенефис
+```
+
+Result: 147 blocks on the narrower pattern; 346 with прощальн/бенефис added. Dumped for hand classification (most are expected to be plot deaths or ordinary benefits).
+
 ## 2026-10-09 -- Season production stats: printed totals vs the Repertoire (research.season_stat_check)
 
 ```sql

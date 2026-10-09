@@ -943,3 +943,64 @@ not, rule 7 has no defence. **Not fixed** — the obvious fix was tried above an
 was worse than the disease. Any future re-merge still carries roughly two dozen
 such differences, which is why `merged_full` is maintained by targeted repair
 and why a rebuild must be diffed rather than trusted.
+
+---
+
+## Curated review-person variants, and a Wikidata finding — 2026-10-09
+
+`docs/eval/review_person_variants.csv` maps a spelling the REVIEWS use that no
+roster carries, onto the roster's canonical surname. Two entries so far, both
+scan-verified. Keyed on the **surname**, not a person_id, because the review
+often gives no ordinal: `Соляниковъ` maps to `Солянниковъ`, where the rosters
+hold two men, and the ranker chooses between them.
+
+Curated rather than inferred: spreading variants across a family
+automatically was tried and reverted, since it fixed two cases and cost 70
+resolutions by admitting every family member as a candidate everywhere.
+
+### Голейзовскій = Галейзовскій, settled
+
+**Wikidata Q19974678**, Kasyan Goleizovsky (1892–1970). The patronymic
+objection dissolves: his Czech father **Ярославъ Матвеевичъ** was baptised
+**Карлъ-Ярославъ**, so the yearbook's `Карловичъ` and the usual `Ярославич`
+are both correct. The biography matches our records exactly — graduated the
+Petersburg school **1909** (our 1908-09 SP review lists him among the
+graduating `воспитанники`) and transferred to the Bolshoi **1 August 1909**
+(the Moscow roster picks him up in **1909-10**).
+
+The о/а split tracks the **city**, not two families: Petersburg sources (the
+1905-06 Graduates list, this review) print `Голейзовск-`, the Moscow rosters
+`Галейзовск-`.
+
+### The Wikidata scan is overdue, and its filter has a blind spot
+
+Two separate problems, found while checking the above.
+
+**1. The roster-side scan has not run since 15 August 2026.** Of 350
+pilot-eligible people, 334 are unlinked; 48 of those are in the August review
+queue (queried, no confident match) and **286 were never queried at all**.
+Among them: Николай Малько, Феликсъ Блуменфельдъ, Вѣра Фокина, Василій
+Тихомировъ, Николай фонъ Бооль.
+
+**2. More seriously, the notability filter cannot see the most famous
+dancers.** `NOTABLE_ROLE_KEYWORDS` matches the rank the yearbook printed **at
+the time** — Солистъ, Балерина, Балетмейстеръ — so anyone still in the corps
+or coryphée during the corpus window is never eligible, however famous they
+became. Confirmed not eligible, and unlinked:
+
+| | review mentions | Wikidata |
+|---|---|---|
+| **Павлова 2-я, Анна** | 99 | none |
+| **Кшесинская, Матильда Феликсовна** | 98 | none |
+| Карсавина, Тамара Платоновна | — | none |
+| Нижинскій, Вацлавъ Ѳомичъ | — | none |
+| Галейзовскій, Кассіанъ Карловичъ | 1 | none (Q19974678 identified by hand here) |
+
+**The review mention layer is a better notability signal than printed rank,**
+and it is now available. Ranked by mentions, the unlinked list reads:
+Трефилова 171, **Леньяни 150** (Pierina Legnani), Рославлева 134, Конецкая
+123, Гиллертъ 114, Сѣдова 105, **Павлова 99**, **Кшесинская 98**, Сланцова 95,
+Бекефи 93 — against linked ones like Гердтъ 332 and Преображенская 281, so the
+signal clearly separates. Proposed: add "appears N+ times in the reviews" as a
+second eligibility rule beside the rank keywords, then re-run. The Wikidata
+read API is public and unbilled; the only cost is time.
