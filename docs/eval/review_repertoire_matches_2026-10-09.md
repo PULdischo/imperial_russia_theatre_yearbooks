@@ -1,0 +1,25 @@
+# Matching the already-scanned opera/whole-theatre reviews' mixed bills and named evenings to Repertoire events (2026-10-09)
+
+Source passages: `docs/eval/review_dance_mentions_scanned_reviews.md` (RG's own scans, database text). Repertoire side: `raw.event_entry` / `raw.event_entry_performance`, events with performances of ballet together with opera or drama in one event. Nothing in the database was changed. (The HathiTrust-based matches for 1901-02, 1903-04 and 1905-06 are in the `review_check_*` folders.)
+
+## A. The reviews' own counts of mixed bills vs the Repertoire
+| Season, city | Review says | Repertoire has | Result |
+|---|---|---|---|
+| 1892-93 SP | 11 mixed (opera «Іоланта» + ballet «Щелкунчикъ») | 11 events «Іоланта» + «Щелкунчикъ» at the Маріинскій: 6, 8, 11, 13, 14, 16, 17, 26 Dec 1892; 1, 12, 15 Jan 1893 | **exact** |
+| 1893-94 SP | 2 mixed (both in memory of P. [Tchaikovsky]) | 17 and 22 Feb 1894, Маріинскій: «Орлеанская дѣва» + «Опричникъ» + «Пиковая дама» + «Лебединое озеро» | **exact** |
+| 1894-95 Moscow | 2 mixed (opera + ballet); ballet review: 3 mixed bills with ballets (2 with opera, 1 with Russian drama) | 4 Sep 1894 «Іоланта» + «Жизель»; 17 Apr 1895 «Паяцы» + 2nd scene of Act 3 of «Кипрская статуя»; and 19 Oct 1894 «Жизель» + two plays (the one with drama) | **exact** |
+| 1894-95 SP | 4 mixed with opera (2 per theatre); ballet part: 8 mixed bills with ballets, 4 with Russian drama and 4 with opera | Opera + ballet: Михайловскій 16 Sep («Сельская честь» + «Очарованный лѣсъ» + «Дивертиссементъ») and 18 Sep («Паяцы» + «Коппелія»); Маріинскій 7 Oct («Паяцы» + «Коппелія») and 14 Oct («Паяцы» + «Тщетная предосторожность») = 4. Drama + ballet at the Александринскій: 21 Sep, 25 Sep, 29 Sep 1894 and 5 Apr 1895 = 4, **if** the evenings with the comedy-ballet «Батюшкина дочка» (15 Sep, 13 Oct 1894, 11 Apr 1895) are not counted (the yearbook counts that piece as drama, as in the ballet stats) | **exact**, with that proviso |
+| 1899-00 Moscow | 2 mixed (ballets and operas) | only one found: 12 Apr 1900 «Лакме» + «Фея куколъ» | **1 of 2**; the second is not identified (to check against the Repertoire scan) |
+
+## B. Named evenings
+| Date and house | Review (folio) | Repertoire | Result |
+|---|---|---|---|
+| 21 Nov 1899, Большой, benefit of the chief conductor of the ballet Рябовъ (50 years' service) | «Наяда и рыбакъ» and «Карнавалъ» (a big divertissement) (205) | «Бенефисъ Г-на Рябова»: «Наяда и рыбакъ» (бал.), «Карнаваль» (дивертисментъ) | **exact** |
+| 17 Feb 1900, Большой, benefit of Рославлева | Act 1 «Раймонда», Act 2 «Корсаръ», «Парижскій рынокъ» | «Бенефисъ г. Рославлевой»: the same three items | **exact** |
+| 18 Feb 1900, Большой, benefit of the corps de ballet | «Раймонда» and «Парижскій рынокъ» | «Бенефисъ кордебалета»: the same | **exact** |
+| 8 Apr 1903, Большой, Red Cross (Iverskaya community) | Act 2 scene 2 of «Евгеній Онѣгинъ»; «Сынъ Мандарина» (9th time); scenes 7 and 11 of «Конекъ-Горбунокъ», the Tsar-Maiden danced by **Гельцеръ in scene 7 and Гримальди in scene 11** (219) | «Онѣгинъ», «Конекъ-горбунокъ», «Сынъ Мандарина», annotation lists the same scenes | **exact; the review adds who danced** |
+| 12 Apr 1903, Большой, artists' refuge | «Ревизоръ» with guest artists (Савина, Давыдовъ, Самойловъ), then a **«балетный дивертисментъ»** with Гельцеръ, Гримальди, Домашева, Мендесъ, Молчанова, Николаева 3-я, Павлова, Пожицкая, Соколова, Ѳедорова 2-я and 3-я, and Бекъ, Волининъ, Мордкинъ, Рябцовъ; numbers: Полонезъ (Шопенъ, Горскій, about 33 women), Варіація (Дриго, Петипа, Гримальди), Чардашъ (Брамсъ, Горскій), «Весною» вальсъ, «Танецъ Анитры», «Танецъ маріонетокъ», «Танецъ корсара» (220) | «Ревизоръ» + «Балетный дивертиссементъ» (no contents) | **match; the review supplies the divertissement's contents and dancers** |
+| 12 Apr 1903, SP, Гоголевская школа benefit arranged by Варламовъ | «Мертвыя души» scenes, Act 2 of «Карменъ», the ballet «Фея куколъ» (Кшесинская, Преображенская, Петина 1, Гердтъ), scene 1 of Act 1 of «Тщетная предосторожность» (**Варламовъ as Marcelline, Кшесинская as Lise, Андріе as Michaud**), and a closing divertissement (Преображенская, Карсавина, Кякштъ, Павлова; Ершовъ, Морской, Смирновъ, Бухтояровъ, Бекефи, Ширяевъ, Кякштъ) — **at the Маріинскій** (137) | an annotation-only event at the **Александринскій** («Спектакль, устраиваемый артистами Императорскихъ театровъ въ пользу школы имени Н. В. Гоголя», no performances); the **Маріинскій is dark** that day | **same evening, theatre conflict:** the review says Маріинскій, the Repertoire says Александринскій. To check on the Repertoire scan (which column holds the entry) before correcting anything; the review's programme is not in the Repertoire at all |
+
+## Summary
+Five seasons' mixed-bill tallies agree with the Repertoire exactly (one is 1 of 2); four named ballet evenings match exactly; two Repertoire entries with empty contents («Балетный дивертиссементъ» of 12 Apr 1903 Moscow; the annotation-only SP evening of the same date) are filled in by the reviews; one theatre conflict and one missing second mixed bill are to be checked on the scans.
