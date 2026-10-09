@@ -9,3 +9,11 @@ A running list of volumes to borrow again and what to scan from them. The master
 Notes
 - Only the opera sections are wanted from this volume. The Moscow Drama review (pp. 141-181) was read from HathiTrust and had nothing on ballet or dance.
 - Check the other volumes on this list against HathiTrust first (free triage) before borrowing again; see `docs/eval/known_issues.md`, "Issue #141 note 3".
+
+## Working rule (RG, 2026-10-09)
+HathiTrust (Google/Michigan) page images are for **finding things and deciding which volumes matter** (triage). Anything that is **cited or has names extracted from it** comes from RG's own scans. So a volume that the HathiTrust check shows to be worth it goes on the table above for a new loan and scan; the HathiTrust reads are recorded in `docs/eval/review_check_*` as leads, with the page/folio, not as the source. The HathiTrust colophon asks that the images/OCR not be re-hosted or redistributed (images are not stored in the repo).
+
+## Candidates from the HathiTrust checks (not yet requested; RG to decide)
+| Season / volume | Held by (per inventory) | Why it looks worth scanning (from the HathiTrust reads) |
+|---|---|---|
+| 1901-02, Main, Vol. 12 | ILL, UMich, returned | Moscow review: ballet divertissement of 20 Apr 1902 itemized with named dancers (folio 283). SP review: «Сонъ въ лѣтнюю ночь» with ballet and Theatre School pupils, dancers named in the drama «Фаустъ» and in the «Демонъ» revival of 23 Feb 1902, the plain Дивертиссементъ of 27 Apr 1902 called a ballet divertissement. Pages: Moscow Drama+Opera folios 224-284, SP Drama+Opera folios 17-165. |
