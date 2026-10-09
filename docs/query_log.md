@@ -13223,3 +13223,21 @@ select e.theater_id, e.date, pf.verbatim_title, w.canonical_title, pw.canonical_
 ```
 
 Result: production 591 -> 628, production_work 607 -> 645, production_credit 1,495 -> 1,587, person 3,218 -> 3,220, parent-ballet works 193 -> 200; all 37 new productions linked after the alias; SP Дон-Кихотъ matches 5 dates (4 + the prologue); the 27 Dec 1907 Маріинскій row «Прол. и 2 карт. 2-го д. Донъ-Кихотъ.» is an excerpt of Донъ-Кихотъ.
+
+## 2026-10-09 -- Repertoire ballet events not in the ballet lists (follow-up to the 1907-08 load)
+
+```sql
+-- compare_productions_repertoire.py output (list_dates_vs_repertoire.csv, repertoire_not_in_lists.csv): 56 events, by season/category
+select ae.event_id, ae.city, ae.theater, ae.date_text, ae.date_undate, ae.event_status, ae.time_of_day, eep.performance_order,
+       eep.performance_title, eep.genre, ae.receipts_text, ae.annotation, ae.printed_page_number
+from analysis.event_entry ae left join raw.event_entry_performance eep using(event_id)
+where ae.event_id in ('repertoire_1907-08_p036__s026','repertoire_1907-08_p043__s008','repertoire_1907-08_p032__s001',
+                      'repertoire_1907-08_p003__s007','repertoire_1907-08_p026__s005','repertoire_1907-08_p013__s009');
+select e.city, e.list_number, e.title, e.total_text, e.post_total_text from raw.production_entry e where e.season='1907-08';
+select ae.date_undate, ae.time_of_day, eep.genre from analysis.event_entry ae join raw.event_entry_performance eep using(event_id)
+ where ae.city='Moscow' and eep.performance_title like 'Кармен%' and ae.season in ('1905-06','1906-07','1907-08','1908-09');
+select p.printed_folio, b.text from raw.review_block b join raw.review_page p using(page_id)
+ where p.season='1907-08' and p.city='Moscow' and p.genre='Ballet' and b.text like '%Жизел%';
+```
+
+Result: 1907-08 has 7 Repertoire ballet events without a list date (5 on charity bills with no receipts), all classified D/E/F in the disagreements doc; the 1909-10 Moscow 10 Feb 1910 row is a receipted flood-relief bill (9973 р. 15 к.). Карменъ: 241 `оп.` rows against 2 `бал.` (28 Jan 1907 and 16 Sep 1907, both Moscow Большой mornings); the 1907-08 Moscow review (folio 154) gives Жизель on 16, 30 Sep, 24 Oct, 6 Jan, while the list and the Repertoire give Жизель on 30 Sep, 24 Oct, 6 Jan only. Negative result: searching the ballet reviews for «Кармен» finds no ballet Carmen in 1906-07 or 1907-08.

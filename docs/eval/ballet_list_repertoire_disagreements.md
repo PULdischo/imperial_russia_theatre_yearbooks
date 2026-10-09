@@ -140,3 +140,32 @@ mention one. Whether that difference is what decides inclusion is not assumed.
 - **Repertoire-side leads (as of #114):** 40 in `outputs/ballet_productions_pilot/compare/repertoire_not_in_lists.csv`:
   the 8 divertissements (section F), the 12 comedy-ballet (ком.-бал.) performances (Батюшкина дочка ×7, Мѣщанинъ во
   дворянствѣ ×5; RG's separate research need, drama performances with ballet or dancers), and the rest in A, D or E.
+
+## Addendum 2026-10-09 (issue #146): the 1907-08 lists, plus one 1909-10 row
+The 1907-08 lists were loaded in #145, which added 7 Repertoire ballet events with no matching list date; the whole-corpus comparison also shows one 1909-10 Moscow row not yet in this file. **Every Repertoire cell below was read on its own scan** (page images extracted from `pdf/RepertoireTables/ForUpload_<season>_Repertoire.pdf`); the list side is the blind-verified transcription of #145 (each list's printed dates = its Всего). Numbering continues sections D and E; "p." is the printed page.
+
+### D (continued): the list has an entry for the ballet, but not for this date
+| # | Season, city | Ballet (list entry) | Repertoire prints | List prints | Evidence in the yearbook |
+|---|---|---|---|---|---|
+| D11 | 1907-08 SP | Лебединое озеро, #12 (p. 131) | 19 Jan 1908, Маріинскій: "Благотворительный спектакль на усиленіе средствъ комитета имени генералъ-адъютанта М. Д. Скобелева для выдачи пенсій и пособій увѣчнымъ воинамъ." Сельская честь, оп. / Живыя картины / Лебединое озеро, бал., no receipts (p026, p. 102) | октября 3; ноября 25; 1908 г.—января 23; марта 9, 30. Всего—5 | Charity bill |
+| D12 | 1907-08 Moscow | Лебединое озеро, #10 (p. 136) | 10 Nov 1907, Большой: "Въ пользу потерпѣвшихъ отъ пожара Солодовниковскаго театра." 1-е д. оп. Гугеноты / 2-я карт. 4-го д. оп. Борисъ Годуновъ / 3-е д. оп. Садко / **3-е д. бал. Лебединое озеро**, no receipts (p013, p. 89) | 6 dates (2 Sep, 23 Sep, 21 Oct, 14 Nov, 27 Dec, 17 Feb), no part-performance note; Всего—6 | Charity bill; an act |
+| D13 | 1907-08 Moscow | Дочь фараона, #4 (p. 136) | 15 Apr 1908, Большой: "Спектакль въ пользу Иверской Общины сестеръ милосердія Краснаго Креста." Дочь фараона, бал., no receipts (p043, p. 119) | сентября 9; октября 14; декабря 26. Всего—3 | Charity bill (the same Iverskaya Community as D4, D5) |
+| D14 | 1909-10 Moscow | Конекъ-горбунокъ или Царь-дѣвица, #6 (p. 71) | 10 Feb 1910, Большой: "Въ пользу пострадавшихъ отъ наводненія во Франціи." 1) 3 и 4 д. оперы Садко 2) 5-я сцена 1-й части драмат. хроники: Дмитрій Самозванецъ и Василій Шуйскій 3) **5-е д. балета Конекъ-горбунокъ.**, **9973 р. 15 к.** (p036, p. 37) | 8 dates (14 Oct, 6 Dec, 13 Dec, 28 Dec, 14 Feb, 27 Feb, 4 Apr, 21 Apr); Всего—8 | Same flood-relief cause as D9 and D10 (SP, Feb 1910). **A receipted bill**, like D10 |
+
+### E (continued): ballets the Repertoire prints that have no entry at all in that season's list
+| # | Season, city | Repertoire prints | List | Checked |
+|---|---|---|---|---|
+| E6 | 1907-08 SP | 8 Mar 1908, Маріинскій: "Въ пользу школъ Императорскаго Женскаго Патріотическаго Общества." На бойкомъ мѣстѣ, ком. / Египетскія ночи, бал., no receipts (p036, p. 112) | pp. 131-132, entries 1-23: no Египетскія ночи, no марта 8 | #146 |
+| E7 | 1907-08 SP | 16 Feb 1908, Маріинскій: "Спектакль въ пользу общежитія бывшихъ смолянокъ и общества вспомоществованія бывшимъ воспитанницамъ вѣдомства учрежденія Императрицы Маріи." Стёпикъ и Манюрочка, ком. / **Евника, бал.** / Жавотта, бал. / Дивертиссементъ, no receipts (p032, p. 108) | Same list: no Евника | #146 |
+| E8 | 1907-08 SP | Same bill: **Жавотта, бал.** | Same list: no Жавотта | #146 |
+
+### F (continued)
+- **F9:** the same 16 Feb 1908 bill prints «Дивертиссементъ» (no genre, the last item). The 1907-08 SP list has no divertissement and no февраля 16.
+
+### Observations (not conclusions)
+- Of the 7 new 1907-08 rows, **5 are on charity bills with no receipts** (D11-D13, E6-E8), the same shape as D3-D9 and E1-E5. The 1909-10 row D14, like D10, is a **receipted** flood-relief bill, so "no receipts" does not by itself decide whether a list omits a date. All three February-1910 flood-relief galas (SP 6 Feb D9, SP 28 Feb D10, Moscow 10 Feb D14) are missing from the lists.
+- The two ballets the lists do not record at all in 1907-08 (Египетскія ночи, Евника/Жавотта) are given only on these charity bills.
+- 1907-08's other Repertoire ballet comparison is clean: 108 of 118 list dates exact, 5 excerpts, 4 spelling variants (Аленькій / Аленкій / Аленъкій, Фея куколъ / куколь), and the Don Quixote prologue (see #145). No list date falls on a day the Repertoire prints something else.
+
+### Karmen (not a new disagreement; adds the list's evidence to RG's #135 ruling)
+`Карменъ, бал.` is printed at the Moscow Большой on the **morning of 16 Sep 1907** (736 р. 51 к.; read on the scan at full resolution, p003, p. 79; the evening is Конекъ-Горбунокъ, бал.) and on 28 Jan 1907. RG's #135 decision stands (stay as printed). New evidence from the 1907-08 list: the Moscow list gives Жизель on 30 Sep, 24 Oct and 6 Jan only (Всего—3) and has no entry or date for a ballet on 16 Sep, while the Moscow ballet review (folio 154) gives four Жизель dates, **16 Sep, 30 Sep, 24 Oct, 6 Jan**. So on 16 Sep the Repertoire's genre «бал.» agrees with the review that a ballet was given, the title conflicts (Карменъ vs Жизель), and the list records neither. Not resolvable from the yearbook alone.
