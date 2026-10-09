@@ -33,7 +33,7 @@ Season, held-by from the inventory's Main volume (Opera/Drama sections not yet i
 Princeton-held volumes can be checked by RG on the physical copy as well as through the Princeton scan on HathiTrust (`njp.32101060036769` is the 1903-04 volume).
 
 ## 4. Already scanned and in the database (dance words can be mined at no cost)
-Opera or whole-theatre reviews already extracted (blocks with a ballet/dance word / blocks): 1890-91 SP (all) 28/313; 1892-93 SP 17/153; 1893-94 SP 10/133; 1894-95 Moscow 17/120, SP 9/108; 1899-00 Moscow (all) 14/74; 1900-01 Moscow 9/62; 1902-03 Moscow 3/66, SP 7/93; 1910-11 SP 3/79. Not in the database but scanned (PDFs exist): 1908-09 Opera SP and Moscow, 1912-13 Opera SP (check why). These can be read for named dancers and divertissements without any HathiTrust step.
+Opera or whole-theatre reviews already extracted (blocks with a ballet/dance word / blocks): 1890-91 SP (all) 28/313; 1892-93 SP 17/153; 1893-94 SP 10/133; 1894-95 Moscow 17/120, SP 9/108; 1899-00 Moscow (all) 14/74; 1900-01 Moscow 9/62; 1902-03 Moscow 3/66, SP 7/93; 1910-11 SP 3/79. Not in the database but scanned (PDFs exist): 1908-09 Opera SP and Moscow, 1912-13 Opera SP (check why). These can be read for named dancers and divertissements without any HathiTrust step. **Done 2026-10-09:** the dance passages of the ten city-seasons in the database were extracted into `docs/eval/review_dance_mentions_scanned_reviews.md` (39 substantive passages, including the reviews' own counts of mixed opera-ballet bills; the 1908-09 and 1912-13 opera PDFs are not in the database and were not covered).
 
 ## Caveats
 - Dance-page counts come from blind model readers and were checked by hand on the key pages only; treat them as a triage ranking, not data.
