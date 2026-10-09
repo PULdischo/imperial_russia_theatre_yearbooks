@@ -13085,3 +13085,28 @@ select season, string_agg(distinct city||':'||genre, ', '), count(*) from raw.re
 Compared with the files in `pdf/` (Reviews_Season, Spiski_BalletProductions, Spiski_Graduates, Spiski_ProductionStats) and `docs/season_stats/pages.csv`.
 
 Result: Repertoire and all six Roster list types are loaded for every season 1890-91..1910-11 (Graduates 0 pages for 1907-08: no graduates PDF exists for that season). Ballet production lists loaded for 1890-91..1904-05 and 1908-09..1910-11 (none for 1905-06..1907-08, matching the PDFs). Production stats transcribed 1891-92..1904-05, 1906-07..1910-11 (matching the PDFs; none for 1890-91, 1905-06). Season reviews loaded for every season except 1898-99 and 1909-10 (no PDFs). Season-review PDFs present but not loaded: 1908-09 OperaSP, OperaMoscow, MusicSP_Autumn1909; 1912-13 BalletSP, OperaSP. Nothing scanned yet for 1911-12, 1913-14 or 1914-15, and the 1912-13 Repertoire and spiski are not scanned.
+
+## 2026-10-09 -- Repertoire tables: status overview (events, performances, date confidence, gaps)
+
+```sql
+select season, count(*), count(distinct page_id), count(printed_page_number), count(date_undate) from raw.event_entry group by 1 order by 1;
+select (select count(*) from research.event), (select count(*) from research.performance);
+select date_confidence, count(*) from research.event group by 1 order by 2 desc;
+select event_status, count(*) from research.event group by 1 order by 2 desc;
+select page_id, count(*) from raw.event_entry where season='1908-09' and date_undate is null group by 1;
+select count(*) from research.event e where event_status='performed' and not exists (select 1 from research.performance p where p.event_id=e.event_id);
+select count(*) from analysis.event_entry where event_id not in (select event_id from research.event);
+```
+
+Result: raw.event_entry 29,990 rows over 21 seasons (1890-91..1910-11); raw.event_entry_performance 30,910; research.event 32,907 and research.performance 30,909. date_confidence: verified 29,506, synthesized_gap 2,947, intra_block_disagreement 364, corrected 37, corrected_manual 35, unresolved 18. Missing printed_page_number: 1892-93 pair002 (30), 1894-95 pair006 (8) and pair016 (30). Missing date_undate: 1908-09 p003 (20). 107 performed events have no performance row.
+
+## 2026-10-09 -- The 18 `unresolved` Repertoire events: which pages, what is printed, are the target dates already occupied?
+
+```sql
+select e.event_id, e.season, e.city, e.date_verbatim, e.date_undate, e.event_status, e.printed_page_number, a.page_id
+from research.event e left join analysis.event_entry a using(event_id) where e.date_confidence='unresolved' order by a.page_id, e.event_id;
+select date, city, date_confidence, count(*) from research.event where season='1898-99' and date in ('1898-12-16','1898-12-28') group by all;
+select date, city, date_confidence, count(*) from research.event where season='1899-00' and date in ('1900-05-04','1900-05-09') group by all;
+```
+
+Result: 18 events on 5 pages (1894-95 pair008 x5, 1898-99 p017 x3, 1899-00 p037 x3, 1905-06 p023 x4, 1906-07 p041 x3). Moscow has 3 `synthesized_gap` placeholders on 1898-12-16 and 3 on 1900-05-04 (no other events there); 1898-12-28 and 1900-05-09 have no verified Moscow events besides the unresolved ones (1898-12-28 has 6 verified Moscow events from pp. 018-019, unrelated). Scan zooms (2026-10-09): all five labels are printed exactly as stored.
