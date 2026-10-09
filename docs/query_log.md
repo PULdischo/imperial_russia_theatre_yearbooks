@@ -13143,3 +13143,16 @@ select e.date, e.date_confidence, count(*) from research.event e join analysis.e
 ```
 
 Result: null date_undate 20 -> 0 (all Маріинскій and Александринскій sessions, 8-17 Sep 1908); the page's 30 events now have one event per theater per day 1908-09-08..17; research dates identical (0 changed); date_confidence corrected_manual 53 -> 33, verified 29,506 -> 29,526; other classes unchanged.
+
+## 2026-10-09 -- Printed-page-range audit: which events change folio after the four boundary corrections
+
+```sql
+select event_id, printed_page_number from raw.event_entry;   -- old backup vs new, diffed
+select page_id, printed_page_number, min(date_undate), max(date_undate), count(*) from raw.event_entry
+ where page_id in ('repertoire_1892-93_pair024','repertoire_1897-98_pair024') group by all order by 1,2;
+select page_id, date_undate, printed_page_number, count(*) from raw.event_entry
+ where (page_id='repertoire_1892-93_pair024' and date_undate between '1893-04-30' and '1893-05-02')
+    or (page_id='repertoire_1897-98_pair024' and date_undate between '1898-04-15' and '1898-04-17') group by all order by 1,2;
+```
+
+Result: 10 events changed folio: 1892-93 pair024's 5 events of 1893-05-02 (25 -> 24) and 1897-98 pair024's 5 events of 1898-04-16 (24 -> 25). After: pair024 1892-93 p. 24 = 1893-04-22..05-02 (50), p. 25 = 05-03..05-14 (45); pair024 1897-98 p. 24 = 1898-04-09..04-15 (37), p. 25 = 04-16..04-25 (50). No null page numbers; research.event 32,901 and research.performance 30,909 unchanged.

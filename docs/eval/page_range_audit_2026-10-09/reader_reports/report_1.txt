@@ -1,0 +1,16 @@
+SPREAD repertoire_1890-91_pair004 | L header: 27 августа - 9 сентября | L cols: 27 Понед. ... 9 Воскр. | R header: 10 сентября - 21 сентября | R cols: 10 Понед. ... 21 Пятница | NOTE: -
+SPREAD repertoire_1890-91_pair016 | L header: 3 января - 14 января | L cols: 3 Четвергъ ... 14 Понед (partial) | R header: 15 января - 24 января | R cols: 15 Вторникъ ... 24 Четвергъ | NOTE: -
+SPREAD repertoire_1891-92_pair004 | L header: 11 сентября - 27 сентября | L cols: 11 Среда ... 27 Патн. | R header: 28 сентября - 7 октября | R cols: 28 Суббота ... 7 Понед. | NOTE: -
+SPREAD repertoire_1891-92_pair016 | L header: 22 января - 31 января | L cols: 22 Среда ... 31 Пятн. | R header: 1 февраля - 10 февраля | R cols: 1 Субб. ... 10 Понед. | NOTE: -
+SPREAD repertoire_1892-93_pair004 | L header: 10 сентября - 22 сентября | L cols: 10 Четвергъ ... 22 В? (partial, cut at seam) | R header: 23 сентября - 2 октября | R cols: 23 Среда ... 2 Пятница. | NOTE: -
+SPREAD repertoire_1892-93_pair016 | L header: 17 января - 26 января | L cols: 17 Воскресе ... 26 Вт? (partial, overlapped at seam) | R header: 27 января - 5 февраля | R cols: ? Среда (partial, day number obscured at seam; next col 28 Четвергъ) ... 5 Пятница | NOTE: -
+SPREAD repertoire_1893-94_pair004 | L header: 12 сентября - 23 сентября | L cols: 12 Воскресе ... 23 Четв? (partial) | R header: 24 сентября - 3 октября | R cols: 24 Пятница ... 3 Воскресе | NOTE: -
+SPREAD repertoire_1893-94_pair016 | L header: 15 января - 24 января | L cols: 15 Суббота ... 24 Понед (partial) | R header: 25 января - 3 февраля | R cols: 25 Вторникъ ... 3 Четвергъ | NOTE: -
+SPREAD repertoire_1894-95_pair004 | L header: 12 сентября - 23 сентября | L cols: 12 Понед. ... 23 Пятница (partial) | R header: 24 сентября - 3 октября | R cols: 24 Суббота ... 3 Понедѣльн. | NOTE: -
+SPREAD repertoire_1894-95_pair016 | L header: 11 апрѣля - 18 апрѣля | L cols: 11 Вторникъ ... 18 Вторн (partial) | R header: 19 апрѣля - 27 апрѣля | R cols: 19 Среда ... 27 Четвергъ | NOTE: -
+SPREAD repertoire_1895-96_pair012 | L header: 7 декабря - 16 декабря | L cols: 7 Четвергъ ... 16 Суббо (partial) | R header: 17 декабря - 29 декабря | R cols: 17 Воскрес. ... 29 Пятница | NOTE: -
+SPREAD repertoire_1895-96_pair024 | L header: 19 апрѣля - 28 апрѣля | L cols: 19 Пятница. ... 28 Воскре (partial) | R header: 29 апрѣля - 10 мая | R cols: 29 Понед. ... 10 Пятница | NOTE: -
+SPREAD repertoire_1896-97_pair012 | L header: 1 декабря - 8 декабря | L cols: 1 Воскресенье. ... 8 Воскрес. | R header: 9 декабря - 18 декабря | R cols: 9 Понед. ... 18 Среда | NOTE: -
+SPREAD repertoire_1896-97_pair024 | L header: 3 апрѣля - 21 апрѣля | L cols: 3 Четв. ... 21 Понед. | R header: 22 апрѣля - 2 мая | R cols: 22 Втор. ... 2 Пятн. | NOTE: -
+SPREAD repertoire_1897-98_pair012 | L header: 2 декабря - 10 декабря | L cols: 2 Вторникъ ... 10 Сред (partial) | R header: 11 декабря - 19 декабря | R cols: 11 Четвергъ ... 19 Пятница. | NOTE: -
+SPREAD repertoire_1897-98_pair024 | L header: 9 апрѣля - 15 апрѣля | L cols: 9 Четвергъ ... 15 Сред (partial) | R header: 16 апрѣля - 25 апрѣля | R cols: 16 Четвергъ ... 25 Суббота | NOTE: -
