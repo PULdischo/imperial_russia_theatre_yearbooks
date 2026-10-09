@@ -13121,3 +13121,14 @@ select date, city, date_confidence, count(*) from research.event where date in (
 ```
 
 Result: verified 29,506; synthesized_gap 2,941 (was 2,947); intra_block_disagreement 364; corrected_manual 53 (was 35); corrected 37; unresolved 0 (was 18). The 18 events carry 1895-01-25, 1898-12-16, 1900-05-04, 1906-01-01, 1907-04-06; Moscow on 16 Dec 1898 and 4 May 1900 now has 3 corrected_manual events each instead of 3 placeholders. Receipts sum and research.performance count identical to the backup; 0 orphan performances; 0 events lost besides the 6 placeholders.
+
+## 2026-10-09 -- The 68 Repertoire events with no printed_page_number: which pages, and after the range fix
+
+```sql
+select page_id, min(date_undate), max(date_undate), count(*), count(printed_page_number), min(printed_page_number), max(printed_page_number)
+from raw.event_entry where page_id in ('repertoire_1892-93_pair002','repertoire_1894-95_pair006','repertoire_1894-95_pair016') group by 1;
+select date_undate, printed_page_number, count(*) from raw.event_entry where page_id='repertoire_1892-93_pair002' and date_undate between '1892-08-25' and '1892-09-01' group by 1,2 order by 1;
+select count(*) from raw.event_entry where printed_page_number is null;   -- old backup vs new
+```
+
+Result: before, 68 events had no page number (1892-93 pair002: 30, dated 1892-09-02..09-09; 1894-95 pair006: 8, dated 1895-01-04; pair016: 30, dated 1895-04-22..04-27), each just past the end of its page's range in the reference CSV. After correcting four CSV rows and rebuilding: 0 events without a page number; 73 rows changed (30 -> p. 3, 8 -> p. 7, 30 -> p. 17, and the 5 events of 1892-08-27 moved p. 2 -> p. 3); per page: p. 2 = 16-26 Aug (50), p. 3 = 27 Aug-9 Sep (50), p. 7 = 14 Oct-4 Jan (58), p. 17 = 19-27 Apr (40).
