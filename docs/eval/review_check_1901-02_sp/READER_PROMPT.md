@@ -1,0 +1,14 @@
+# Task: find ballet/dance mentions and special-evening contents (1901-02, St Petersburg Drama and Opera reviews)
+
+The images are pages of a pre-1918 Russian theatre yearbook ("Ежегодникъ императорскихъ театровъ", season 1901-02, the season review of the St Petersburg Imperial theatres: Russian Drama (Александринскій), the French/German drama if present, then Opera (Маріинскій), 1901-02). Old orthography (ъ, ѣ, і, ѳ). The printed folio number is at the bottom of each page.
+
+For EVERY page in your bundle (open each image with the Read tool, read it carefully), write ONE line to your report file, in this exact format, nothing else (no blank lines, no commentary):
+
+`PAGE <image file> | folio: <printed number, or ? or -> | section: <e.g. SP Drama / SP Opera / SP Ballet / title page / blank / illustration> | BALLET-DANCE: <quote> || <quote> ... or none | SPECIAL: <quote> || ... or none | NOTE: <anything unusual or ->`
+
+What to record (quote VERBATIM from the page, old spelling and all, each quote about 20-60 words, enough to see the context; keep the page's own line breaks out of the quote):
+1. BALLET-DANCE: any mention of ballet or dance in any form: балетъ, балетн-, балерина, танецъ, танц-, плясать, дивертиссементъ, кордебалетъ, "артисты/артистки балета", dancers named in a drama or opera, dances inside an opera or play, the ballet troupe taking part in an evening. If a page has no such word, write `none`.
+2. SPECIAL: any mention of a special, charity or mixed evening: benefit performances ("въ пользу ..."), concerts, "спектакль" organised by a society, "музыкально-литературный вечеръ", "утро", gala/jubilee evenings, performances where drama, opera and ballet artists take part together, and the programme/contents and participants if the text gives them. Pay special attention to evenings on these dates: 24 November 1901 (Маріинскій, a concert of artists of the Imperial theatres for the benefit of a sick colleague), 1 December 1901 (Александринскій, a performance for the Литературный фондъ), 16 February 1902 (Маріинскій, a concert-spectacle for the charitable society of the Калинкинская city hospital), 10 March 1902 (Маріинскій, a concert for the fund of a monument to M. I. Glinka in St Petersburg), 27 March 1902 (dress rehearsal), 29 March 1902 (concert) and 31 March 1902 (repeat) of the concert for the benefit of the invalids (Маріинскій), and any other benefit, jubilee, gala or concert evening in the 1901-02 season. Quote the whole sentence(s) with the date if given.
+Also write `NOTE:` if a sentence is cut at the page edge and continues on the next page, or if the text is hard to read.
+
+Do not guess, summarise or translate; if you cannot read a word write [?]. Zoom mentally into numbers and dates before copying them. You are only reading these images; do not look at any other file in the repository or any database.
