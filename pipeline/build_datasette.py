@@ -43,7 +43,8 @@ def _stringify_uuids(df):
 
 
 TABLES = ["theater", "work", "person", "event", "performance", "person_appearance",
-          "production", "production_work", "production_credit"]
+          "production", "production_work", "production_credit",
+          "season_stat_check", "season_stat_line", "season_stat_footnote"]
 
 # Explicit CREATE TABLE per table, PRIMARY KEY + FOREIGN KEY declared --
 # pandas' to_sql(if_exists="replace") would otherwise create schema-less
@@ -112,6 +113,30 @@ SCHEMAS = {
             person_id TEXT REFERENCES person(person_id), credit_order INTEGER,
             role_category TEXT, role_text TEXT, name_printed TEXT, honorific_printed TEXT,
             qualifier_printed TEXT, is_pseudonym INTEGER, identification_status TEXT
+        )""",
+    "season_stat_check": """
+        CREATE TABLE season_stat_check (
+            season TEXT, city TEXT, stats_format TEXT, stats_printed_page TEXT,
+            printed_count INTEGER, printed_count_with_receipts INTEGER, printed_receipts_kopecks REAL,
+            repertoire_sessions INTEGER, repertoire_days INTEGER, repertoire_sessions_with_receipts INTEGER,
+            repertoire_receipts_kopecks INTEGER,
+            repertoire_charity_text_sessions INTEGER, repertoire_charity_text_receipts_kopecks INTEGER,
+            sessions_minus_printed INTEGER, days_minus_printed INTEGER,
+            receipts_minus_printed_kopecks REAL,
+            PRIMARY KEY (season, city)
+        )""",
+    "season_stat_line": """
+        CREATE TABLE season_stat_line (
+            season TEXT, city TEXT, line_no INTEGER, line_kind TEXT,
+            category_verbatim TEXT, category TEXT, venue_verbatim TEXT,
+            qualifier_verbatim TEXT, count INTEGER, receipts_verbatim TEXT,
+            receipts_kopecks REAL, footnote_refs TEXT, note TEXT,
+            PRIMARY KEY (season, city, line_no)
+        )""",
+    "season_stat_footnote": """
+        CREATE TABLE season_stat_footnote (
+            season TEXT, footnote_no INTEGER, text_verbatim TEXT, note TEXT,
+            PRIMARY KEY (season, footnote_no)
         )""",
 }
 

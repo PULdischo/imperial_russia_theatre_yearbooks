@@ -186,6 +186,21 @@ python pipeline/build_duckdb.py --parsed-dir outputs/pilot/parsed \
 Output is a single portable file — copy it off wherever it was built, no
 server needed to query it.
 
+**Printed season totals (loaded separately).** The yearbook's own "Всего въ
+теченіе сезона … было спектаклей" page is hand-transcribed to
+`docs/season_stats/` (edit `_build.py`, run it, then):
+
+```
+uv run python pipeline/load_season_stats.py --db outputs/<run>/imperial_theaters.duckdb
+uv run python pipeline/build_research_model.py --db outputs/<run>/imperial_theaters.duckdb
+```
+
+The loader writes `raw.season_stat_page/_line/_footnote/_dated_note` (verbatim;
+`build_duckdb.py` leaves them alone). `build_research_model.py` then builds
+`research.season_stat_check` (printed vs Repertoire counts and receipts per season and
+city), `season_stat_line` and `season_stat_footnote` whenever the raw tables exist.
+Schema: `docs/schema.md`.
+
 ## Stage 6 — Interface (not yet built)
 
 `app/streamlit_app.py` — a thin, read-only browsing/query layer over the

@@ -385,6 +385,99 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
         raise SystemExit(f"research.production_credit: {orphans} credits point at no research.person")
 
 
+def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
+    """The yearbook's printed season totals as research tables (loaded by
+    load_season_stats.py from the hand transcription in docs/season_stats/).
+
+    research.season_stat_check     one row per (season, city) with a printed totals page:
+                                   the printed counts and receipts next to the same figures
+                                   computed from research.event. A checksum on the Repertoire,
+                                   not a correction of it.
+    research.season_stat_line      the printed lines (category, theater, count, receipts), verbatim
+                                   plus the city as SP/Moscow.
+    research.season_stat_footnote  the printed footnotes, verbatim.
+
+    Counting rules (both sides, stated so a difference is read correctly):
+      printed_count      every printed line that carries a number EXCEPT the ruled subtotals
+                         (subtotals repeat their venue/part lines);
+      repertoire_sessions  performed events (a morning and an evening row count twice);
+      repertoire_days      distinct (theater, date) among performed events, to test how the
+                         yearbook counted a day with two performances;
+      receipts           printed: sum of the lines that print receipts; Repertoire: the sum of
+                         research.event.receipts_total_kopecks. From 1898-99 the page's own
+                         footnote says its receipts EXCLUDE charity performances, so the
+                         Repertoire receipts of events whose annotation says "въ пользу" are
+                         reported beside them (not subtracted: which events the yearbook treated
+                         as charity is not assumed).
+    The genre/theater-level comparison (families, ballet three ways) stays in
+    pipeline/compare_season_stats.py, because it needs judgment-based classification.
+    """
+    for t in ("season_stat_check", "season_stat_line", "season_stat_footnote"):
+        con.execute(f"DROP TABLE IF EXISTS research.{t}")
+    con.execute("""
+        CREATE TABLE research.season_stat_line (
+            season VARCHAR, city VARCHAR, line_no INTEGER, line_kind VARCHAR,
+            category_verbatim VARCHAR, category VARCHAR, venue_verbatim VARCHAR,
+            qualifier_verbatim VARCHAR, count INTEGER, receipts_verbatim VARCHAR,
+            receipts_kopecks DECIMAL(18, 1), footnote_refs VARCHAR, note VARCHAR,
+            PRIMARY KEY (season, city, line_no)
+        )""")
+    con.execute("""
+        INSERT INTO research.season_stat_line
+        SELECT season,
+               CASE city_verbatim WHEN 'С.-Петербургъ' THEN 'SP' WHEN 'Москва' THEN 'Moscow' END,
+               line_no, line_kind, category_verbatim, category, venue_verbatim, qualifier_verbatim,
+               count, receipts_verbatim, receipts_kopecks, footnote_refs, note
+        FROM raw.season_stat_line""")
+    bad = con.execute("SELECT count(*) FROM research.season_stat_line WHERE city IS NULL").fetchone()[0]
+    if bad:
+        raise SystemExit(f"research.season_stat_line: {bad} lines with a city that is not С.-Петербургъ / Москва")
+    con.execute("""
+        CREATE TABLE research.season_stat_footnote (
+            season VARCHAR, footnote_no INTEGER, text_verbatim VARCHAR, note VARCHAR,
+            PRIMARY KEY (season, footnote_no)
+        )""")
+    con.execute("INSERT INTO research.season_stat_footnote SELECT season, footnote_no, text_verbatim, note FROM raw.season_stat_footnote")
+    con.execute("""
+        CREATE TABLE research.season_stat_check (
+            season VARCHAR, city VARCHAR, stats_format VARCHAR, stats_printed_page VARCHAR,
+            printed_count INTEGER, printed_count_with_receipts INTEGER, printed_receipts_kopecks DECIMAL(18, 1),
+            repertoire_sessions INTEGER, repertoire_days INTEGER, repertoire_sessions_with_receipts INTEGER,
+            repertoire_receipts_kopecks BIGINT,
+            repertoire_charity_text_sessions INTEGER, repertoire_charity_text_receipts_kopecks BIGINT,
+            sessions_minus_printed INTEGER, days_minus_printed INTEGER,
+            receipts_minus_printed_kopecks DECIMAL(18, 1),
+            PRIMARY KEY (season, city)
+        )""")
+    con.execute("""
+        INSERT INTO research.season_stat_check
+        WITH printed AS (
+            SELECT season, city, sum(count) AS n,
+                   coalesce(sum(count) FILTER (WHERE receipts_kopecks IS NOT NULL), 0) AS n_rec,
+                   sum(receipts_kopecks) AS rec   -- NULL when the page prints no receipts (1891-93)
+            FROM research.season_stat_line WHERE line_kind <> 'subtotal' GROUP BY season, city
+        ), rep AS (
+            SELECT e.season, e.city, count(*) AS sessions,
+                   count(DISTINCT (e.theater_id, coalesce(e.date, e.event_id))) AS days,
+                   count(e.receipts_total_kopecks) AS sessions_rec,
+                   coalesce(sum(e.receipts_total_kopecks), 0) AS rec,
+                   count(*) FILTER (WHERE coalesce(regexp_matches(lower(a.annotation), 'въ пользу'), false)) AS ch_n,
+                   coalesce(sum(e.receipts_total_kopecks) FILTER
+                            (WHERE coalesce(regexp_matches(lower(a.annotation), 'въ пользу'), false)), 0) AS ch_rec
+            FROM research.event e LEFT JOIN analysis.event_entry a USING (event_id)
+            WHERE e.event_status = 'performed' GROUP BY e.season, e.city
+        )
+        SELECT p.season, p.city, pg.format, pg.printed_page,
+               p.n, p.n_rec, p.rec,
+               coalesce(r.sessions, 0), coalesce(r.days, 0), coalesce(r.sessions_rec, 0), coalesce(r.rec, 0),
+               coalesce(r.ch_n, 0), coalesce(r.ch_rec, 0),
+               coalesce(r.sessions, 0) - p.n, coalesce(r.days, 0) - p.n, coalesce(r.rec, 0) - p.rec  -- NULL with p.rec
+        FROM printed p
+        JOIN raw.season_stat_page pg USING (season)
+        LEFT JOIN rep r ON r.season = p.season AND r.city = p.city
+        ORDER BY p.season, p.city""")
+
+
 def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     con.execute("CREATE SCHEMA IF NOT EXISTS research")
 
@@ -397,7 +490,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # declared inline on CREATE TABLE, so each table is CREATEd with its
     # full schema first and populated via a separate INSERT INTO ... SELECT,
     # same two-step pattern build_entities.py already uses.
-    for t in ["production_credit", "production_work", "production",
+    for t in ["season_stat_check", "season_stat_line", "season_stat_footnote",
+              "production_credit", "production_work", "production",
               "performance", "event", "person_appearance", "person", "work", "theater"]:
         con.execute(f"DROP TABLE IF EXISTS research.{t}")
 
@@ -724,10 +818,16 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     if has_creators:
         build_productions(con)
 
+    # printed season totals: only when load_season_stats.py has populated the raw tables
+    if con.execute("""SELECT count(*) FROM information_schema.tables
+                      WHERE table_schema = 'raw' AND table_name = 'season_stat_line'""").fetchone()[0]:
+        build_season_stats(con)
+
     counts = {
         t: con.execute(f"SELECT count(*) FROM research.{t}").fetchone()[0]
         for t in ["theater", "work", "person", "event", "performance", "person_appearance",
-                  "production", "production_work", "production_credit"]
+                  "production", "production_work", "production_credit",
+                  "season_stat_check", "season_stat_line", "season_stat_footnote"]
         if con.execute("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'research' AND table_name = ?",
                        [t]).fetchone()[0]
     }

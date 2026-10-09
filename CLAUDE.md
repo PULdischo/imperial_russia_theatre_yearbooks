@@ -201,6 +201,13 @@ python pipeline/build_datasette.py --db outputs/<run>/imperial_theaters.duckdb \
     --out outputs/<run>/research_dataset.sqlite
 ```
 
+The yearbook's printed season totals (hand-transcribed to `docs/season_stats/`) load before
+`build_research_model.py` and become `research.season_stat_*` (printed vs Repertoire counts and receipts):
+
+```
+uv run python pipeline/load_season_stats.py --db outputs/<run>/imperial_theaters.duckdb
+```
+
 Optional parallel exports of the verbatim layer (`docs/verbatim_deliverables.md`):
 
 ```

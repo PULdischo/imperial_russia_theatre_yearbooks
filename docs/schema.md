@@ -199,9 +199,8 @@ single receipts figure (e.g. two one-act comedies).
 - Confirm Graduates fits the Spiski shape as-is (likely: institution = the
   theater school, position = graduating class/specialty, plus a graduation
   date instead of a tenure start).
-- ProductionStats structure is still unconfirmed — likely closer to the
-  Repertoire family (work × season aggregate) but needs a real sample page
-  before committing to `event_entry_performance`-shaped columns vs. something new.
+- ProductionStats: settled (2026-10-09, below). It is a season aggregate (a count and
+  receipts per category and theater), not an event table, so it has its own tables.
 
 ---
 
@@ -272,3 +271,52 @@ them to persons belongs in the entities layer.
 The same printed surname can be different people, and `role_category`
 keeps them apart: "сказки **Перро**" (`source`, Charles Perrault) vs
 "соч. Ж. **Перро**" (`author`, Jules Perrot).
+
+---
+
+## Season production stats — `season_stat_*` (raw) and `research.season_stat_*`
+
+The yearbook's printed totals page for each season ("Всего въ теченіе сезона … было
+спектаклей": counts, and from 1893-94 receipts and footnotes, per category and
+theater). 19 pages, 1891-92 to 1910-11, none for 1890-91 (the page type starts in
+1891-92) and none found for 1905-06. Hand-transcribed and checked on the scans
+(`docs/season_stats/`, edited in `_build.py`), loaded by `pipeline/load_season_stats.py`.
+These are season aggregates with no event key, so they sit beside the event tables and
+do not join into them.
+
+**Raw tier (verbatim):** `raw.season_stat_page` (season, printed page, heading, format),
+`raw.season_stat_line` (one row per printed line with a number: `line_kind` is `venue`,
+`part`, `subtotal` or `category`; `category_verbatim` as printed, `category` with the
+ditto resolved; `count`; `receipts_verbatim` and `receipts_kopecks`; `footnote_refs`),
+`raw.season_stat_footnote`, `raw.season_stat_dated_note` (jubilees and benefits listed by
+date, from 1909-10). A number the print gets wrong stays as printed, with a `note`.
+
+**Research tier:**
+
+| table | one row per | notes |
+|---|---|---|
+| `research.season_stat_line` | printed line | the raw lines with `city` as `SP`/`Moscow`; PK (season, city, line_no) |
+| `research.season_stat_footnote` | printed footnote | verbatim |
+| `research.season_stat_check` | (season, city) | printed figures beside the same figures computed from `research.event` (below) |
+
+`season_stat_check` columns: `printed_count` (every printed line with a number except the
+ruled subtotals, which repeat their venue/part lines); `printed_count_with_receipts`;
+`printed_receipts_kopecks` (sum of lines that print receipts; **NULL** in 1891-92 and
+1892-93, whose pages print no receipts); `repertoire_sessions` (performed events, a
+morning and an evening row counted separately); `repertoire_days` (distinct theater and
+date); `repertoire_sessions_with_receipts`; `repertoire_receipts_kopecks` (sum of
+`research.event.receipts_total_kopecks`); `repertoire_charity_text_sessions` and
+`..._receipts_kopecks` (events whose annotation says «въ пользу»: from 1898-99 the page's own
+footnote says its receipts EXCLUDE charity performances, so this is shown beside the
+receipts, not subtracted, because which events the yearbook treated as charity is not
+assumed); and the differences (Repertoire minus printed) `sessions_minus_printed`,
+`days_minus_printed`, `receipts_minus_printed_kopecks`.
+
+**How to read it.** This is a checksum on the Repertoire, not a correction of it, and a
+difference is not an error in either source until a row is checked on the scans. Plain
+sessions is the closest match to the printed counts (it beat both "days" and "only
+receipted sessions" over the 34 seasons with a count-and-receipts page); the printed
+count is usually within a few of it in the 1890s and drifts higher in the Repertoire
+from 1901-02. 1907-08 and 1908-09 print category totals only, with no per-theater lines.
+The genre- and theater-level comparison (families, ballet counted three ways) stays in
+`pipeline/compare_season_stats.py`, because it needs judgment-based classification.

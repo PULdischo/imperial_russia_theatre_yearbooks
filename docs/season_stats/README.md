@@ -10,7 +10,7 @@ free student performances and charity performances. Plan and pilot: RG approved,
 2026-09-29/30.
 
 **Coverage:**
-- Seasons 1891-92 to 1908-09.
+- 19 pages, 1891-92 to 1910-11 (303 lines, 125 footnotes, 10 dated notes).
 - 1890-91 has no such page (the page type starts in 1891-92).
 - No page has been found for 1905-06; that needs the physical volume.
 - Format stages (RG's observation, confirmed on the scans):
@@ -19,11 +19,11 @@ free student performances and charity performances. Plan and pilot: RG approved,
   - 1906-07 has counts + receipts and no footnotes;
   - 1908-09 has footnotes again.
 
-**Transcribed:** 18 pages (2026-09-30): every season 1891-92 to 1909-10 except
-1905-06. 1909-10 was added from RG's new scan; the Repertoire doesn't cover 1909-10 yet, so the
-comparison skips it. That comes to 285 lines and 118 footnotes. The data lives in `_build.py`: edit it
-there, then run `uv run python docs/season_stats/_build.py` to regenerate the CSVs and rerun
-every check.
+**In the database (2026-10-09, issue #147):** `uv run python pipeline/load_season_stats.py --db <db>`
+loads these CSVs into `raw.season_stat_*`; `build_research_model.py` then builds
+`research.season_stat_check`, `season_stat_line` and `season_stat_footnote` (docs/schema.md).
+The data lives in `_build.py`: edit it there, then run `uv run python docs/season_stats/_build.py`
+to regenerate the CSVs, rerun the loader and every check.
 
 **Format by season (observed on the scans):**
 - 1891-92, 1892-93: counts only.

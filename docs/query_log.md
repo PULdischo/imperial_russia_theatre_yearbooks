@@ -13241,3 +13241,20 @@ select p.printed_folio, b.text from raw.review_block b join raw.review_page p us
 ```
 
 Result: 1907-08 has 7 Repertoire ballet events without a list date (5 on charity bills with no receipts), all classified D/E/F in the disagreements doc; the 1909-10 Moscow 10 Feb 1910 row is a receipted flood-relief bill (9973 р. 15 к.). Карменъ: 241 `оп.` rows against 2 `бал.` (28 Jan 1907 and 16 Sep 1907, both Moscow Большой mornings); the 1907-08 Moscow review (folio 154) gives Жизель on 16, 30 Sep, 24 Oct, 6 Jan, while the list and the Repertoire give Жизель on 30 Sep, 24 Oct, 6 Jan only. Negative result: searching the ballet reviews for «Кармен» finds no ballet Carmen in 1906-07 or 1907-08.
+
+## 2026-10-09 -- Season production stats: printed totals vs the Repertoire (research.season_stat_check)
+
+```sql
+-- per season/city: printed lines (no subtotals) vs performed events
+select season, city, stats_format, printed_count, repertoire_sessions, repertoire_days, repertoire_sessions_with_receipts,
+       sessions_minus_printed, days_minus_printed, receipts_minus_printed_kopecks
+from research.season_stat_check order by 1, 2;
+select count(*), count(*) filter (where abs(sessions_minus_printed) <= 5), count(*) filter (where abs(sessions_minus_printed) <= 10),
+       count(*) filter (where sessions_minus_printed = 0) from research.season_stat_check;
+-- the 1909-10 Moscow outlier
+select th.canonical_name, count(*), count(e.receipts_total_kopecks), sum(e.receipts_total_kopecks)/100.0
+from research.event e join research.theater th using (theater_id)
+where e.season = '1909-10' and e.city = 'Moscow' and e.event_status = 'performed' group by 1;
+```
+
+Result: 38 rows; sessions equal the printed count in 2, within 5 in 21, within 10 in 27; total absolute gap 509 (sessions) vs 650 (receipted sessions only). 1909-10 Moscow: printed 351 (drama 134 + opera 168 + ballet 49) vs 458 sessions; Малый 235 sessions with 267,530 р. against printed drama receipts 266,240.80 р.; the printed 134 is very probably a misprint for 234 (1,138 р. per performance vs 1,987 р. at 134).
