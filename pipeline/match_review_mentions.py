@@ -318,6 +318,35 @@ def build_lexicon(db: Path) -> Lexicon:
                                 "first_season": first, "last_season": last}
         lex.add(lex.person, surname_forms(fam), pid)
 
+    # Every spelling the ROSTERS recorded for a person, not only the canonical
+    # one. Entity resolution merges variants correctly -- `Балашева` and
+    # `Балашова` are both Александра Балашова, printed both ways across the
+    # years -- but research.person keeps one canonical form, so a review
+    # printing the variant found nobody. Worse, the form generator then matched
+    # `Балашева` to the MALE `Балашевъ` through its cross-gender forms, which is
+    # exactly what the gender-contradiction check was catching: 20 of those 76
+    # flags were this one ballerina. 949 spellings across 594 people were
+    # invisible this way.
+    #
+    # An ordinal inside a variant (`Іогансонъ 1-й`) is stripped first, because
+    # the ranker scores ordinals separately.
+    n_variant = 0
+    for pid, variant in con.execute("""
+        select pl.person_id, pe.family_name
+        from raw.person_entry pe
+        join entities.person_link pl on pl.entry_id = pe.entry_id
+        join research.person p on p.person_id = pl.person_id
+        where pe.family_name is not null and pe.family_name <> ''
+          and pe.family_name <> p.canonical_family_name
+        group by 1, 2""").fetchall():
+        bare = re.sub(r"\s*\d+-[яйе][яй]?\s*$", "", (variant or "").strip(" .,")).strip()
+        if len(bare) < 3 or str(pid) not in lex.person_meta:
+            continue
+        lex.add(lex.person, surname_forms(bare), pid)
+        n_variant += 1
+    lex.n_variant_spellings = n_variant
+
+
     for wid, title, genre, parent, is_excerpt in con.execute("""
         select work_id, canonical_title, canonical_genre, parent_genre,
                excerpt_of_work_id is not null
@@ -569,11 +598,29 @@ def scan_block(text: str, block_type: str, lex: Lexicon,
             meta = lex.person_meta.get(eid)
             got_g = canon_gender((meta or {}).get("family") or "")
             if want_g and got_g and want_g != got_g:
-                unknown.append({
-                    "surface": text[a:b], "normalised": fold(text[a:b]),
-                    "evidence": f"{evidence} (db has {meta['family']})",
-                    "rule": "gender-contradiction"})
-                eid, why, conf = "", "gender-contradiction", "low"
+                # Inside an honorific LIST, a contradiction means the list has
+                # moved on to the other gender, not that someone is missing:
+                # the print writes `г-жи A, B, Медалинскій` and lets the
+                # honorific lapse. Медалинскій resolves correctly ~60 times
+                # under `гг.`/`г.` and was flagged exactly once, here. So the
+                # honorific is dropped as evidence and the match stands, rather
+                # than being reported as an absent person.
+                # ...but ONLY when the surface's own morphology agrees with
+                # the entity, so that just the honorific is out of step.
+                # `Медалинскій` is masculine by its ending and matches a
+                # masculine entity -- only `г-жи` disagrees, so the honorific
+                # lapsed. `Ефремова` is feminine by its ending AND by its
+                # honorific, and matches a masculine entity: that is a real
+                # contradiction and a genuinely absent woman, not a lapse.
+                surf_morph = canon_gender(text[a:b].strip())
+                if method.startswith("honorific-list") and surf_morph == got_g:
+                    why, conf = "honorific lapsed in list", "medium"
+                else:
+                    unknown.append({
+                        "surface": text[a:b], "normalised": fold(text[a:b]),
+                        "evidence": f"{evidence} (db has {meta['family']})",
+                        "rule": "gender-contradiction"})
+                    eid, why, conf = "", "gender-contradiction", "low"
         mentions.append({
             "mention_type": kind, "char_start": a, "char_end": b,
             "surface": text[a:b], "normalised": fold(text[a:b]),
@@ -728,6 +775,7 @@ def main() -> None:
 
     lex = build_lexicon(a.db)
     n_forms = len(lex.person)
+    print(f"  + {getattr(lex, 'n_variant_spellings', 0):,} roster variant spellings indexed")
     print(f"lexicon: {n_forms:,} person forms from {len(lex.person_meta):,} persons, "
           f"{len(lex.work):,} work forms from {len(lex.work_meta):,} works, "
           f"{len(lex.role):,} roles, {len(lex.theater):,} institution forms")

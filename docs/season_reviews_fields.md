@@ -813,3 +813,77 @@ the point. Person mentions joining `research.person` 12,819 -> 12,829; work
 2,836 -> 2,839; assertions with a work entity 1,136 -> 1,138. Gender audit 0
 mismatches in 6,955, dates 139/139, all referential checks 0. Bilingual files
 rebuilt (47 files, 1,074 pages); the 1912-13 pages remain untranslated.
+
+---
+
+## Gender contradictions worked — 2026-10-09
+
+**76 occurrences -> 55**, and the two largest causes turned out to be **my own
+matcher**, not missing people. The remaining 33 forms are in
+`docs/eval/review_people_not_in_rosters.csv`.
+
+### Cause 1: the matcher indexed only canonical names (20 of the 76)
+
+`Балашева` was flagged 20 times as an absent woman. She is not absent. Entity
+resolution had already merged her correctly: `Балашева` and `Балашова` are both
+**Александра Михайловна Балашова**, printed both ways across the years, and all
+27 raw `Балаш*` entries ARE linked. But `research.person` keeps one canonical
+spelling, so the review's variant matched nobody — and the form generator then
+reached the MALE `Балашевъ` through its cross-gender forms, which is what the
+gender check was catching.
+
+**949 roster spellings across 594 people were invisible this way** —
+`Югансонъ` for `Іогансонъ`, `Иосафовъ` for `Іосафовъ`, `Алольфи` for
+`Адольфи`. The matcher now indexes every spelling `entities.person_link`
+attaches to a person, with any ordinal stripped (the ranker scores those
+separately). `Балашева` -> Балашова and `Балашовъ` -> Балашевъ both resolve.
+
+### Cause 2: an honorific span running past the gender it governs
+
+`Медалинскій` resolves correctly about 60 times under `гг.`/`г.` and was
+flagged exactly once, under `г-жи`. The print writes `г-жи A, B, Медалинскій`
+and simply lets the honorific lapse when the list reaches a man; the scanner
+kept carrying it.
+
+A contradiction inside an honorific list is now read as the list moving on
+rather than as an absent person — **but only when the surface's own morphology
+agrees with the entity**. That distinction is the whole safety of the rule:
+
+- `Медалинскій` is masculine by its ending and matches a masculine entity, so
+  only `г-жи` is out of step -> the honorific lapsed, keep the match.
+- `Ефремова` is feminine by its ending AND by `г-жа`, and matches a masculine
+  entity -> a real contradiction, and a genuinely absent woman.
+
+Without that test the rule silently linked Ефремова to Ефремовъ. It was caught
+by checking, and the first version is not what shipped.
+
+The audit that reads honorific against entity therefore now reports **2
+mismatches rather than 0, by design** — `Бочкина` under a `Г.` that is an
+initial, and the one `Медалинскій`. Both carry
+`rank_reason = 'honorific lapsed in list'`, so they are distinguishable from a
+real mismatch.
+
+### What remains: 33 forms, 55 occurrences
+
+Genuinely absent from the rosters, which cover only certain companies and
+years. Each row names the same-family member who IS present, so the question is
+usually "is this his sister / her husband, and should they be a person?" —
+RG's call, not the pipeline's. Three look instead like spelling variants of
+someone already in the database and are flagged as such in the CSV:
+
+| printed | the database has | |
+|---|---|---|
+| `Соляниковъ` | `Солянниковъ` | single vs double н |
+| `Голейзовскій` | `Галейзовскій, Кассіанъ Карловичъ` | о vs а — this is Kasyan Goleizovsky |
+| `Балащева` | `Балашева`/`Балашова` | щ looks like a misread of ш |
+
+The Goleizovsky one is worth a decision rather than a guess: the roster spells
+him `Галейзовскій`, the review `Голейзовскій`, and the historical form is
+Голейзовский. That is a question about the ROSTER's spelling, so it wants the
+roster page, not the review page.
+
+### Effect
+
+Mentions 27,237 -> **27,409**; resolved 16,979 -> **17,135**; person mentions
+joining `research.person` 12,829 -> **12,985** (+156). Dates still 139/139, all
+referential checks 0.
