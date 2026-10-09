@@ -72,6 +72,14 @@ MIXED_SCRIPT = re.compile(
     rf"[{_CYR}A-Za-z\u0391-\u03c9]{{3,}}\b")
 
 
+# `Фре-\nФредерикъ`, `слиш- слиш-\nкомъ`: the head of a line-split word repeated
+# 3+ characters, not 2: a two-letter head gives false positives where the tail
+# legitimately begins with it -- `по-\nпойка` is `попойка`, correctly split.
+# The real cases are longer (`Фре-`, `Кше-`, `слиш-`).
+DUPLICATED_HEAD = re.compile(
+    r"(?<![^\s])([^\W\d_]{3,})-\s*\n?\s*\1(?:-|[^\W\d_])", re.UNICODE)
+
+
 def ink_fraction(path: Path, thumb: int = 200) -> float:
     """Fraction of the page that is non-white, at thumbnail scale. Cheap
     proxy for 'how much is printed here'."""
@@ -257,6 +265,21 @@ def main() -> None:
                                       if re.match(r"[A-Za-z\u0391-\u03c9]", c)}))
             flag(b["page_id"], "mixed_script_word",
                  f"{w!r} mixes Cyrillic with {foreign!r}")
+
+    # ---- a line-split word whose head got duplicated ---------------------
+    # `Фре-\nФредерикъ` (should be `Фре-\nдерикъ`) and `слиш- слиш-\nкомъ`.
+    # One view reads the halves of a word the printed line break split while
+    # another reads it whole, and the whole reading lands at the TAIL position,
+    # so the head appears twice. Four were in the corpus. Worth a standing
+    # check because a plausible-looking "repair" can also create them in bulk:
+    # preferring the longer of two readings at a tail position did exactly
+    # that here, 396 times, before it was reverted.
+    for b in blocks:
+        for col in ("text", "caption_text"):
+            t = b[col] or ""
+            for m in DUPLICATED_HEAD.finditer(t):
+                flag(b["page_id"], "duplicated_head_after_hyphen",
+                     repr(re.sub(r"\s+", " ", m.group()))[:60])
 
     # ---- the same text in two different reviews -------------------------
     seen_text = defaultdict(list)

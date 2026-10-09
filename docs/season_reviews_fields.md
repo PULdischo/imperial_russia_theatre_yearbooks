@@ -887,3 +887,59 @@ roster page, not the review page.
 Mentions 27,237 -> **27,409**; resolved 16,979 -> **17,135**; person mentions
 joining `research.person` 12,829 -> **12,985** (+156). Dates still 139/139, all
 referential checks 0.
+
+---
+
+## Selector churn investigated — 2026-10-09
+
+I said the 16 re-merge changes "contradict `select_reading`'s own first rule."
+**That was wrong, and reading the code settles it:** rule 1 covers *dropped*
+(empty) candidates, not truncations, so these fall through to rule 7, majority
+vote. Three distinct things were happening, and one of them was mine.
+
+### `«Galop»` was my bug, not the selector's
+
+No view reads `Галор`. It came from the mixed-script repair: the model wrote
+`«Gалor` for `«Galop`, the `л` satisfied the new `CYRILLIC_ONLY` test, and the
+word was "repaired" into Cyrillic — on a page printing `«Scène dansante»`,
+`«Pas des cerises»` and `«Galop»` in Latin all around it. **Scan-confirmed:
+the print reads `«Galop comique»`.**
+
+The premise `a Cyrillic-only letter proves the word is Russian` fails in one
+direction: a LATIN word the model partly Cyrillicised also contains Cyrillic
+letters. The rule now declines any word opening with a Latin capital, which is
+the shape of a foreign proper noun or title. Lowercase-initial romanisations
+(`dekoraцій`, `teатрѣ`, `tenоръ`) are unaffected. `Gалor` -> `Galop` is in the
+corrections table, and the corpus instance is fixed.
+
+### I had `Фредерикъ` backwards
+
+`merged_full` contains **`Фре- Фредерикъ;`** — the head duplicated. The
+re-merge producing `Фре-` + `дерикъ;` was therefore **correct**, and what I
+logged as a regression was a fix. The cause is a view reading a line-split word
+WHOLE and the whole reading landing at the tail position, so the head appears
+twice.
+
+Acting on the misdiagnosis, I added a selector rule preferring the longer of
+two readings at a position, and applied it to the corpus. **It created 396 of
+these duplications** — `повѣ-` + `ряетъ` became `повѣ-` + `повѣряетъ`. Caught
+by diffing before trusting, fully reverted, and the rule is gone from
+`select_reading.py` (self-test back to 13/13). The corpus was restored from the
+pre-change copy and verified clean.
+
+**Five genuine duplications that predate all of this were then fixed** —
+`Фре- Фредерикъ`, `Кше- Кшесинская`, `слиш- слиш- комъ`, and two more — and
+`duplicated_head_after_hyphen` is now a standing check. It requires a 3+
+character head, because a two-letter one gives false positives where the tail
+legitimately begins with it (`по-` + `пойка` is `попойка`).
+
+### What the churn actually is
+
+Correlated errors across views. On `review_1893-94_MSK_ballet_p010` the
+full-page and 4-band views agreed on a reading the 2-band view got right, so
+majority voting returned the wrong answer 2/3. The three views were measured at
+54% error overlap and assumed to decorrelate enough for a vote; where they do
+not, rule 7 has no defence. **Not fixed** — the obvious fix was tried above and
+was worse than the disease. Any future re-merge still carries roughly two dozen
+such differences, which is why `merged_full` is maintained by targeted repair
+and why a rebuild must be diffed rather than trusted.

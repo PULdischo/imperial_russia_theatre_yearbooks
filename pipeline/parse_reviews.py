@@ -128,6 +128,17 @@ FOREIGN_TO_CYRILLIC = {**LATIN_TO_CYRILLIC, **GREEK_TO_CYRILLIC}
 # (-kova, -dova, -ketti), not a stray letter.
 CYRILLIC_ONLY = set("бгджзийлпфцчшщъыьэюяѣѳѵБГДЖЗИЙЛПФЦЧШЩЪЫЬЭЮЯѢѲѴ")
 
+# ...but NOT when the word opens with a Latin capital. The premise above --
+# a Cyrillic-only letter proves the word is Russian -- fails in one direction:
+# a LATIN word the model partly Cyrillicised also contains Cyrillic letters.
+# `«Galop comique»` came back as `«Gалor`, whose `л` satisfied the rule, and it
+# was "repaired" to `«Галор`, a word that does not exist, on a page printing
+# `«Scène dansante»`, `«Pas des cerises»` and `«Galop»` in Latin around it.
+# A Latin capital at the head is the shape of a foreign proper noun or title,
+# so those go to the scan. Lowercase-initial romanisations (`dekoraцій`,
+# `teатрѣ`, `tenоръ`) are untouched by this and keep repairing.
+LATIN_CAPITAL_HEAD = re.compile(r"^[«\"'\u201e\u201c(]*[A-Z\u0391-\u03a9]")
+
 # Scan-verified corrections, one row per word, from
 # docs/eval/mixed_script_corrections.csv (and the reasoning in
 # docs/eval/mixed_script_scan_decisions.md). These are decisions taken by
@@ -286,7 +297,8 @@ def repair_mixed_script(text: str) -> tuple[str, list[str]]:
             # two words run together, not one word with a stray letter
             fixes.append(f"boundary {w!r} -- missing space, CHECK THIS PAGE")
             return w
-        russian = any(c in CYRILLIC_ONLY for c in w)
+        russian = (any(c in CYRILLIC_ONLY for c in w)
+                   and not LATIN_CAPITAL_HEAD.match(w))
         amb_i = any(c in "iI" and not _i_is_certain(w, k)
                     for k, c in enumerate(w))
         certain = ((len(lat) == 1 and cyr >= 2) or cyr >= 3 * len(lat) or russian) \
@@ -325,7 +337,8 @@ def repair_mixed_script(text: str) -> tuple[str, list[str]]:
         if ROMAN_SUFFIXED.match(joined) or SCRIPT_BOUNDARY_RE.search(joined):
             fixes.append(f"split-boundary {joined!r} -- CHECK THIS PAGE")
             return m.group(0)
-        russian = any(c in CYRILLIC_ONLY for c in joined)
+        russian = (any(c in CYRILLIC_ONLY for c in joined)
+                   and not LATIN_CAPITAL_HEAD.match(joined))
         amb_i = any(c in "iI" and not _i_is_certain(joined, k)
                     for k, c in enumerate(joined))
         certain = ((len(lat) == 1 and cyr >= 2) or cyr >= 3 * len(lat) or russian) \
