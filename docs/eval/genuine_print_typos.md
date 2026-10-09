@@ -539,3 +539,10 @@ themselves are real and worth studying; the transcriptions are not.
 - Фонъ-Боолъ / Бооль: the surname prints differently by volume; each volume's own spelling is stored.
 - `administration_1908-09_p002` (printed p. 135, "Чиновники XII кл." no. 3): Сухорученко, **Константииъ** Васильевичъ -- the н of Константинъ is printed as и. Scan-confirmed at 1200 dpi (two plain и before the ъ, no dot); stored verbatim as "Константииъ". The same person prints "Константинъ" in 1909-10 and 1910-11.
 - Headings and notes: "завѣлывающимъ", "неимѣщій", "Ховяйственное отдѣленіе" (a heading, 1909-10), "902 г." and "1903 т." (service dates), Алексне Наталія (1900-01), Барышистовъ (1898-99): printed so, stored as read.
+
+## Repertoire date labels, scan-confirmed 2026-10-09 (issue #138) -- printed exactly as stored; corrected only in the research layer
+- `repertoire_1898-99_p017` (printed p. 19), last row, all 3 Moscow theaters: "**28** Среда." for 16 December 1898 (the page header ends "16 декабря"; the 16th was a Wednesday).
+- `repertoire_1899-00_p037` (printed p. 39): "**9** Четвергъ" (Малый column "Четвергь.") for 4 May 1900, between "3 Среда." and "5 Пятница."; the 9 is unmistakable at 600 dpi.
+- `repertoire_1894-95_pair008` (printed p. 9): "25 **Суббота**." for 25 January 1895, a Wednesday (24 is Вторникъ; both the Moscow and the St Petersburg block print it).
+- `repertoire_1905-06_p023` (printed p. 107): "1 **Вторникъ**" for 1 January 1906, a Sunday (31 Суббота precedes, 2 Понед. follows).
+- `repertoire_1906-07_p041` (printed p. 125): "6 **Понед.**" for 6 April 1907, a Friday (5 Четвергъ precedes, 7 Суббота follows).

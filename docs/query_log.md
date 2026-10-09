@@ -13110,3 +13110,14 @@ select date, city, date_confidence, count(*) from research.event where season='1
 ```
 
 Result: 18 events on 5 pages (1894-95 pair008 x5, 1898-99 p017 x3, 1899-00 p037 x3, 1905-06 p023 x4, 1906-07 p041 x3). Moscow has 3 `synthesized_gap` placeholders on 1898-12-16 and 3 on 1900-05-04 (no other events there); 1898-12-28 and 1900-05-09 have no verified Moscow events besides the unresolved ones (1898-12-28 has 6 verified Moscow events from pp. 018-019, unrelated). Scan zooms (2026-10-09): all five labels are printed exactly as stored.
+
+## 2026-10-09 -- After the date overrides: confidence counts and the 18 events
+
+```sql
+select date_confidence, count(*) from research.event group by 1 order by 2 desc;   -- new vs backup
+select a.page_id, e.date, e.date_confidence, e.date_verbatim, count(*) from research.event e join analysis.event_entry a using(event_id)
+ where a.page_id in ('repertoire_1894-95_pair008','repertoire_1898-99_p017','repertoire_1899-00_p037','repertoire_1905-06_p023','repertoire_1906-07_p041') and e.date_confidence='corrected_manual' group by all;
+select date, city, date_confidence, count(*) from research.event where date in ('1898-12-16','1900-05-04') group by all;
+```
+
+Result: verified 29,506; synthesized_gap 2,941 (was 2,947); intra_block_disagreement 364; corrected_manual 53 (was 35); corrected 37; unresolved 0 (was 18). The 18 events carry 1895-01-25, 1898-12-16, 1900-05-04, 1906-01-01, 1907-04-06; Moscow on 16 Dec 1898 and 4 May 1900 now has 3 corrected_manual events each instead of 3 placeholders. Receipts sum and research.performance count identical to the backup; 0 orphan performances; 0 events lost besides the 6 placeholders.

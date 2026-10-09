@@ -126,6 +126,31 @@ _MANUAL_DATE_OVERRIDES: dict[tuple[str, str], tuple[str, str]] = {
     ('repertoire_1910-11_p055', '9 Четвергъ'): (
         '1911-05-19', 'scan-verified: book prints day as "9" (should be "19"), no trace of a "1"; RG 2026-10-06',
     ),
+    # 2026-10-09 (RG: "apply it"): the last 18 'unresolved' events, all scan-verified (zoomed) as printed exactly so.
+    # Printed p. 19 (1898-99), last row: "28 Среда." directly after "15 Вторн."; the page's own header range ends
+    # "16 декабря" -- the 16th was a Wednesday; Moscow had 3 empty placeholders on 16 Dec (all 3 theaters).
+    ('repertoire_1898-99_p017', '28 Среда'): (
+        '1898-12-16', 'scan-verified: book prints day as "28" (should be "16"; page header ends 16 декабря, 16 Dec 1898 was a Wednesday)',
+    ),
+    # Printed p. 39 (1899-00), "9 Четвергъ" between "3 Среда." and "5 Пятница." -> the 4th (Moscow had placeholders on 4 May).
+    # Printed with both Ъ and Ь endings ("Четвергь." in the Малый column) -- both spellings listed.
+    ('repertoire_1899-00_p037', '9 Четвергъ'): (
+        '1900-05-04', 'scan-verified: book prints day as "9" (should be "4"; between 3 Среда and 5 Пятница)',
+    ),
+    ('repertoire_1899-00_p037', '9 Четвергь'): (
+        '1900-05-04', 'scan-verified: book prints day as "9" (should be "4"; between 3 Среда and 5 Пятница)',
+    ),
+    # The three below have the right DATE and a wrong printed WEEKDAY (date_undate is already correct; recorded so the
+    # validator no longer reports them unresolved).
+    ('repertoire_1894-95_pair008', '25 Суббота'): (
+        '1895-01-25', 'scan-verified: book prints weekday "Суббота" for 25 January 1895, a Wednesday (24 is Вторникъ; page header ends 25 января)',
+    ),
+    ('repertoire_1905-06_p023', '1 Вторникъ'): (
+        '1906-01-01', 'scan-verified: book prints weekday "Вторникъ" for 1 January 1906, a Sunday (31 Суббота precedes, 2 Понед. follows)',
+    ),
+    ('repertoire_1906-07_p041', '6 Понед'): (
+        '1907-04-06', 'scan-verified: book prints weekday "Понед." for 6 April 1907, a Friday (5 Четвергъ precedes, 7 Суббота follows)',
+    ),
 }
 
 
