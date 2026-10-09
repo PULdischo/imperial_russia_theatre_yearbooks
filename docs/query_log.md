@@ -13206,3 +13206,20 @@ select split_part(heading_path,' / ',1), count(*) from raw.person_entry where pa
 ```
 
 Result: 69 stored rows vs 68 read (the extra row is a note stored as a person); after the fix 68 rows, entries 23,980, live persons 3,134, tombstones 3,217, 0 orphans; 1910-11 institution = one value, offices: Directorate 5, St Petersburg 35, Moscow 28.
+
+## 2026-10-09 -- 1907-08 ballet lists: load, research-layer rebuild, and the Don Quixote prologue
+
+```sql
+select count(*) from research.production;                                              -- 591 -> 628
+select count(*) from research.production where season='1907-08' and work_id is not null; -- 36, then 37 after the alias
+select production_id, city, list_title, n_dates, n_matched_works from research.production
+ where season='1907-08' and work_id is null;                                            -- the SP "и" Царь-дѣвица entry
+select pw.production_id, w.canonical_title, pw.n_matched_dates from research.production_work pw
+ join research.work w using(work_id) where pw.production_id='balletproductions_1907-08_SP_p000__e005';
+select e.theater_id, e.date, pf.verbatim_title, w.canonical_title, pw.canonical_title as parent
+ from research.event e join research.performance pf using(event_id)
+ left join research.work w on w.work_id=pf.work_id left join research.work pw on pw.work_id=w.excerpt_of_work_id
+ where e.date='1907-12-27' and pf.verbatim_title like '%Кихот%';
+```
+
+Result: production 591 -> 628, production_work 607 -> 645, production_credit 1,495 -> 1,587, person 3,218 -> 3,220, parent-ballet works 193 -> 200; all 37 new productions linked after the alias; SP Дон-Кихотъ matches 5 dates (4 + the prologue); the 27 Dec 1907 Маріинскій row «Прол. и 2 карт. 2-го д. Донъ-Кихотъ.» is an excerpt of Донъ-Кихотъ.

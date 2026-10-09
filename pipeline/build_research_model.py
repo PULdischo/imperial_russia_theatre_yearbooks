@@ -194,6 +194,7 @@ BALLET_LIST_TITLE_ALIASES = {
     "Ученики Дюпрэ": ["Les élèves de Dupré"],                          # same work, Russian vs French title (1900-01 SP)
     "Донъ-Кихотъ Ламанчскій": ["Донъ-Кихотъ"],                          # 1908-10 SP: list prints the full title, Маріинскій Repertoire the short one; dates agree
     "Ѳетида и Пелей": ["Ѳемида и Пелей"],                               # 1908-09 SP, 8 Apr 1909; Repertoire spelling not scan-checked
+    "Конекъ-горбунокъ и Царь-дѣвица": ["Конекъ-горбунокъ"],             # 1907-08 SP list prints "и" where every other year prints "или" (scan-confirmed, genuine print typo); the norm() "или" split doesn't fire
 }
 
 

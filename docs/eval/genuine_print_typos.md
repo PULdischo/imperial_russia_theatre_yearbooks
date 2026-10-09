@@ -559,3 +559,8 @@ All three added to `pipeline/research_corrections/receipts_print_typos.csv`; raw
 ## Administrators 1910-11 audit, 2026-10-09 (issue #144)
 - `administration_1910-11_p003` (printed p. 147), Коровинъ, Константинъ Алексѣевичъ: the rank prints "академикъ живописи, **над.** сов." (zoomed at full resolution; the usual abbreviation is «надв.»); stored verbatim.
 - `administration_1910-11_p001` (printed p. 145), Принцъ, Борисъ Владиміровичъ: the blind reader noted "**неимѣщій** чина" (without ю, unlike the other «неимѣющій» on the page); stored as printed (not zoomed by me).
+
+## Ballet productions lists 1907-08, scan-confirmed 2026-10-09 (issue #145) -- printed exactly as stored
+- `balletproductions_1907-08_MSK_p000` (printed p. 136), no. 5 Донъ-Кихотъ Ламанчскій: no punctuation between "декабря 30" and "1908 г." in the performance dates (both blind checkers and the extraction read it the same way); stored as printed.
+- `balletproductions_1907-08_SP_p001` (printed p. 132), no. 20 Тщетная предосторожность: the part-performance note reads "2-я картина 1-го дѣйствія балета исполнена 1907 г.--ноября 18." with **no colon** after «исполнена» (every other such note has one); stored as printed.
+- `balletproductions_1907-08_SP_p000` (printed p. 131), no. 9: the title prints «Конекъ-горбунокъ **и** Царь-дѣвица» (every other year prints «или»; zoomed on the scan, the "и" is unmistakable). Stored verbatim; the research layer matches it to Конекъ-горбунокъ through `BALLET_LIST_TITLE_ALIASES`, because `norm()` splits only on «или».
