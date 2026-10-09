@@ -148,6 +148,16 @@ _MANUAL_DATE_OVERRIDES: dict[tuple[str, str], tuple[str, str]] = {
     ('repertoire_1905-06_p023', '1 Вторникъ'): (
         '1906-01-01', 'scan-verified: book prints weekday "Вторникъ" for 1 January 1906, a Sunday (31 Суббота precedes, 2 Понед. follows)',
     ),
+    # 2026-10-09: printed p. 29 (1899-00), the page header reads "4 февраля ... 15 февраля" and the last two rows
+    # are labelled "25 Понед." and "26 Вторн." straight after "13 Воскрес." -- Monday/Tuesday = 14 and 15 Feb
+    # (all 3 Moscow theaters). The weekday-drift heuristic had "corrected" them to 28/29 Feb (+3 days),
+    # which is wrong: the page's own header range and the preceding Sunday fix the 14th and 15th.
+    ('repertoire_1899-00_p027', '25 Понед'): (
+        '1900-02-14', 'scan-verified: book prints day as "25" (should be "14"; page header ends 15 февраля, 13 Воскрес. precedes)',
+    ),
+    ('repertoire_1899-00_p027', '26 Вторн'): (
+        '1900-02-15', 'scan-verified: book prints day as "26" (should be "15"; page header ends 15 февраля, 14 Понед. precedes)',
+    ),
     ('repertoire_1906-07_p041', '6 Понед'): (
         '1907-04-06', 'scan-verified: book prints weekday "Понед." for 6 April 1907, a Friday (5 Четвергъ precedes, 7 Суббота follows)',
     ),

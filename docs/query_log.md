@@ -13182,3 +13182,15 @@ select receipts_source, count(*) from research.event group by 1;
 ```
 
 Result: 13 of the 16 flagged receipts already carried `corrected_print_typo`; 3 had no correction (1909-10 p016 s002, p050 s018; 1910-11 p023 s028). p055 = 32 events (8 performed), p056 = 30 events, all 30 `no_performance`. p055's 3 "9 Четвергъ." rows (a misprint for 19 May) and p053's real 9 May rows share raw date 1911-05-09. After adding the three corrections: receipts total 3,205,476,598 -> 3,205,956,026 kopecks (+479,428, as expected); `corrected_print_typo` 56 -> 59; no other receipts changed; research.event 32,901 and research.performance 30,909 unchanged.
+
+## 2026-10-09 -- Re-check of the not_captured audit (#87): contradictory gap rows, single-theater gaps
+
+```sql
+select e.season, a.page_id, count(*) from research.event e join analysis.event_entry a using(event_id)
+ where e.event_status='not_captured' and exists (select 1 from research.event x where x.city=e.city and x.theater_id=e.theater_id and x.date=e.date and x.event_status<>'not_captured')
+ group by 1,2;                                      -- before the fix
+select e.date, e.event_status, e.date_confidence, count(*) from research.event e where e.city='Moscow' and e.date between '1898-12-13' and '1898-12-31' group by all order by 1,2;
+select season, city, theater_id, date, event_status from research.event;   -- gap blocks of one theater not shared by its siblings, vs Julian Easter/Christmas windows
+```
+
+Result: 39 contradictory not_captured rows (24 on 1898-99 p017, 15 on 1899-00 p027); 75 invented gap rows in all (33 + 33 + 9 on p037) from three mistyped day labels; after the fix 0 contradictions, research.event 32,901 -> 32,826, synthesized_gap 2,941 -> 2,866. Residual single-theater gap blocks: 11 (10 single days, 1 three-day block already scan-verified in #87).

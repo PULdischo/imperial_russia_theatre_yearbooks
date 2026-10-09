@@ -642,10 +642,22 @@ def build_analysis_schema(con: duckdb.DuckDBPyConnection) -> None:
         # append "театръ"/"театр", and "Маріинскій" is sometimes spelled without
         # its pre-reform "і" ("Мариинскій") -- both handled by theater_canonical
         # below rather than by touching the verbatim raw.theater column.
+        # The not_captured grid below is built from each page's min/max date and which
+        # (date, theater) cells have a row, so a row whose PRINTED day number is wrong
+        # (scan-verified, validate_performance_dates._MANUAL_DATE_OVERRIDES) must enter it
+        # on its corrected date -- else the gap between the wrong and the right date is
+        # filled with invented 'not_captured' rows (issue #143: 1898-99 p017 "28 Среда" =
+        # 16 Dec, 1899-00 p037 "9 Четвергъ" = 4 May, 1899-00 p027 "25/26" = 14/15 Feb).
+        # date_undate itself stays exactly as printed.
+        from validate_performance_dates import _MANUAL_DATE_OVERRIDES
+        con.execute("CREATE OR REPLACE TEMP TABLE manual_date_override "
+                    "(mo_page_id VARCHAR, mo_date_text VARCHAR, mo_date DATE)")
+        con.executemany("INSERT INTO manual_date_override VALUES (?, ?, CAST(? AS DATE))",
+                        [(pid, dt, v[0]) for (pid, dt), v in _MANUAL_DATE_OVERRIDES.items()])
         con.execute(r"""
             CREATE OR REPLACE TABLE analysis.event_entry AS
             WITH base AS (
-                SELECT *,
+                SELECT r.*,
                        -- COALESCE on the kopecks side only: a session with a
                        -- real, legible rubles figure but no printed kopecks
                        -- digit ("239 р. -- к.", 720 rows, issue #89) still
@@ -663,7 +675,7 @@ def build_analysis_schema(con: duckdb.DuckDBPyConnection) -> None:
                        TRY_CAST(receipts_rubles AS INTEGER) * 100
                            + COALESCE(TRY_CAST(receipts_kopecks AS INTEGER), 0)
                            AS receipts_total_kopecks,
-                       TRY_CAST(date_undate AS DATE) AS date_parsed,
+                       COALESCE(m.mo_date, TRY_CAST(r.date_undate AS DATE)) AS date_parsed,
                        -- RG's 2026-08-24 venue-accuracy audit: on a day when
                        -- one specific theater (not its whole city) was dark,
                        -- `theater` is sometimes written as a compound
@@ -690,7 +702,9 @@ def build_analysis_schema(con: duckdb.DuckDBPyConnection) -> None:
                            WHEN contains(theater, 'Новый') THEN 'Новый'
                            ELSE NULL
                        END AS theater_canonical
-                FROM raw.event_entry
+                FROM raw.event_entry r
+                LEFT JOIN manual_date_override m
+                    ON m.mo_page_id = r.page_id AND m.mo_date_text = rtrim(r.date_text, '.')
             ),
             -- Which of the 6 known theaters existed for a given season --
             -- SP's 3 theaters run the whole 1890/91-1907/08 span; Moscow's
