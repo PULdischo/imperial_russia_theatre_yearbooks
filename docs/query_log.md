@@ -13194,3 +13194,15 @@ select season, city, theater_id, date, event_status from research.event;   -- ga
 ```
 
 Result: 39 contradictory not_captured rows (24 on 1898-99 p017, 15 on 1899-00 p027); 75 invented gap rows in all (33 + 33 + 9 on p037) from three mistyped day labels; after the fix 0 contradictions, research.event 32,901 -> 32,826, synthesized_gap 2,941 -> 2,866. Residual single-theater gap blocks: 11 (10 single days, 1 three-day block already scan-verified in #87).
+
+## 2026-10-09 -- 1910-11 Administration audit: stored rows vs the blind read, then the rebuild
+
+```sql
+select page_id, entry_id, list_number, family_name, first_name, patronymic, rank_or_title, tenure_note_text, institution, heading_path
+from raw.person_entry where page_id like 'administration_1910-11%' order by page_id, entry_id;
+select count(*) from raw.person_entry;                                  -- before / after
+select count(*) from entities.person where superseded_by_person_id is null;
+select split_part(heading_path,' / ',1), count(*) from raw.person_entry where page_id like 'administration_1910-11%' group by 1;
+```
+
+Result: 69 stored rows vs 68 read (the extra row is a note stored as a person); after the fix 68 rows, entries 23,980, live persons 3,134, tombstones 3,217, 0 orphans; 1910-11 institution = one value, offices: Directorate 5, St Petersburg 35, Moscow 28.

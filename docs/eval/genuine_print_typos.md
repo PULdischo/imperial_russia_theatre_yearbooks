@@ -555,3 +555,7 @@ themselves are real and worth studying; the transcriptions are not.
 - `repertoire_1909-10_p050` (printed p. 51), Малый театръ, 21 Apr 1910 (Очагъ / Путаница): "1425 **к.** 60 к." (intended 1425 р. 60 к.).
 - `repertoire_1910-11_p023` (printed p. 24), Михайловскій театръ, 19 Dec 1910 (Arsène Lupin): "901 **с.** 80 к." (intended 901 р. 80 к.).
 All three added to `pipeline/research_corrections/receipts_print_typos.csv`; raw stays verbatim.
+
+## Administrators 1910-11 audit, 2026-10-09 (issue #144)
+- `administration_1910-11_p003` (printed p. 147), Коровинъ, Константинъ Алексѣевичъ: the rank prints "академикъ живописи, **над.** сов." (zoomed at full resolution; the usual abbreviation is «надв.»); stored verbatim.
+- `administration_1910-11_p001` (printed p. 145), Принцъ, Борисъ Владиміровичъ: the blind reader noted "**неимѣщій** чина" (without ю, unlike the other «неимѣющій» on the page); stored as printed (not zoomed by me).
