@@ -13132,3 +13132,14 @@ select count(*) from raw.event_entry where printed_page_number is null;   -- old
 ```
 
 Result: before, 68 events had no page number (1892-93 pair002: 30, dated 1892-09-02..09-09; 1894-95 pair006: 8, dated 1895-01-04; pair016: 30, dated 1895-04-22..04-27), each just past the end of its page's range in the reference CSV. After correcting four CSV rows and rebuilding: 0 events without a page number; 73 rows changed (30 -> p. 3, 8 -> p. 7, 30 -> p. 17, and the 5 events of 1892-08-27 moved p. 2 -> p. 3); per page: p. 2 = 16-26 Aug (50), p. 3 = 27 Aug-9 Sep (50), p. 7 = 14 Oct-4 Jan (58), p. 17 = 19-27 Apr (40).
+
+## 2026-10-09 -- 1908-09 p003: the 20 events with no date_undate, before and after the header-text fix
+
+```sql
+select count(*) from raw.event_entry where date_undate is null;                       -- old backup vs new
+select city, theater, date_undate, count(*) from raw.event_entry where page_id='repertoire_1908-09_p003' group by all;
+select date_confidence, count(*) from research.event group by 1 order by 2 desc;     -- old vs new
+select e.date, e.date_confidence, count(*) from research.event e join analysis.event_entry a using(event_id) where a.page_id='repertoire_1908-09_p003' group by all;
+```
+
+Result: null date_undate 20 -> 0 (all Маріинскій and Александринскій sessions, 8-17 Sep 1908); the page's 30 events now have one event per theater per day 1908-09-08..17; research dates identical (0 changed); date_confidence corrected_manual 53 -> 33, verified 29,506 -> 29,526; other classes unchanged.

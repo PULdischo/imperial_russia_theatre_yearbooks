@@ -61,6 +61,19 @@ _PAGE_HEADER_MONTH_SWAP_FIX = {
 }
 
 
+# One page's printed header has a typographic gap INSIDE the month word --
+# repertoire_1908-09_p003 prints "8 сен тября. 1908 г. 17 сентября." (scan-
+# verified 2026-10-09; the same gap already had to be handled in
+# build_research_model.py's RESEARCH_PAGE_MONTH_OVERRIDES). The regex below
+# can't match a month word with a space in it, so the page was silently skipped
+# and its 20 Маріинскій/Александринскій sessions kept no date_undate. This only
+# repairs the text fed to the parser; page_header_dates.csv keeps the verbatim
+# header, same verbatim-in/derived-out split as _PAGE_HEADER_MONTH_SWAP_FIX.
+_PAGE_HEADER_TEXT_FIX = {
+    "repertoire_1908-09_p003": ("сен тября", "сентября"),
+}
+
+
 def load_page_headers(path: Path) -> dict[str, dict]:
     """Parses pipeline/extract_page_headers.py's output CSV into
     {page_id: {"start_month": ..., "end_month": ..., "year_text": ...,
@@ -82,6 +95,8 @@ def load_page_headers(path: Path) -> dict[str, dict]:
     for row in csv.DictReader(open(path, encoding="utf-8")):
         page_id = row["page_id"]
         text = (row.get("header_text") or "").strip()
+        if page_id in _PAGE_HEADER_TEXT_FIX:
+            text = text.replace(*_PAGE_HEADER_TEXT_FIX[page_id])
         m = _PAGE_HEADER_RE.match(text)
         if not m:
             continue
