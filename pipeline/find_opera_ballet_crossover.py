@@ -125,7 +125,12 @@ SEP = re.compile(r"\s+")
 OPAQUE = (r"концертн|дивертиссемент|дивертисмент|divertissement|концерт")
 
 
-HYPHEN = re.compile(r"([^\s-])-\s+")
+# A hyphen after a digit or a Roman numeral is a COMPOUND hyphen, not a
+# soft line-break one: the print reads `за XLV-` / `лѣтнюю службу`, and
+# joining it manufactures `XLVлѣтнюю`, which looked like a mixed-script error
+# and was not one. Latin I V X L C D M never end a Russian word, so the
+# lookbehind is safe.
+HYPHEN = re.compile(r"(?<![\dIVXLCDM])([^\s-])-\s+")
 WINDOW = 260
 
 

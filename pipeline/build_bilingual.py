@@ -62,8 +62,14 @@ SKIP = {"byline"}
 
 
 def reflow(text: str) -> str:
-    """Join the printed line breaks; drop an end-of-line hyphen from a split word."""
-    text = re.sub(r"([^\s-])-\n\s*", r"\1", text)
+    """Join the printed line breaks; drop an end-of-line hyphen from a split word.
+
+    A hyphen after a digit or a Roman numeral is kept: it is a COMPOUND hyphen,
+    not a soft one. The print reads `за XLV-` / `лѣтнюю службу`, and joining
+    that gives `XLVлѣтнюю`, which is not a word. Latin I V X L C D M never end
+    a Russian word, so the lookbehind is safe.
+    """
+    text = re.sub(r"(?<![\dIVXLCDM])([^\s-])-\n\s*", r"\1", text)
     return re.sub(r"\s*\n\s*", " ", text).strip()
 
 

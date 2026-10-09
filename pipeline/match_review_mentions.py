@@ -66,7 +66,12 @@ FOLD = str.maketrans({
     "Ъ": "", "Ѣ": "Е", "І": "И", "Ѳ": "Ф", "Ѵ": "И", "Ё": "Е",
 })
 CAP = re.compile(r"^[А-ЯЀ-ЏЪѢІѲѴ]")
-HYPHEN_BREAK = re.compile(r"([^\s-])-\s+")
+# A hyphen after a digit or a Roman numeral is a COMPOUND hyphen, not a
+# soft line-break one: the print reads `за XLV-` / `лѣтнюю службу`, and
+# joining it manufactures `XLVлѣтнюю`, which looked like a mixed-script error
+# and was not one. Latin I V X L C D M never end a Russian word, so the
+# lookbehind is safe.
+HYPHEN_BREAK = re.compile(r"(?<![\dIVXLCDM])([^\s-])-\s+")
 WS = re.compile(r"\s+")
 
 

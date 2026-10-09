@@ -128,6 +128,42 @@ FOREIGN_TO_CYRILLIC = {**LATIN_TO_CYRILLIC, **GREEK_TO_CYRILLIC}
 # (-kova, -dova, -ketti), not a stray letter.
 CYRILLIC_ONLY = set("бгджзийлпфцчшщъыьэюяѣѳѵБГДЖЗИЙЛПФЦЧШЩЪЫЬЭЮЯѢѲѴ")
 
+# Scan-verified corrections, one row per word, from
+# docs/eval/mixed_script_corrections.csv (and the reasoning in
+# docs/eval/mixed_script_scan_decisions.md). These are decisions taken by
+# LOOKING AT THE PAGE, not rules, and they exist because no character mapping
+# could reach them:
+#
+#   Aprilя     -> Апрѣля      the Latin `i` stands for ѣ
+#   tancovaли  -> танцовали   the Latin `c` stands for ц
+#   Парtii     -> Партіи      `i` -> і here, while Чекетти and Гримальди take и
+#   Рапаderos  -> Panaderos   the word is LATIN; the model read Pana as Рапа,
+#                             so the obvious repair would invent `Рападерос`
+#
+# `|` in a correction marks where the printed line break falls, so a word the
+# break split stays split and the raw layer keeps its lineation.
+CORRECTIONS_PATH = Path("docs/eval/mixed_script_corrections.csv")
+_PUNCT = "\u00ab\u00bb\u201e\u201c\u201d.,;:!?()[]\u2014\u2013\"'"
+
+
+def load_mixed_script_corrections(path: Path = CORRECTIONS_PATH) -> dict[str, str]:
+    if not path.exists():
+        return {}
+    with open(path, encoding="utf-8") as f:
+        return {r["extracted"]: r["corrected"] for r in csv.DictReader(f)
+                if r.get("extracted") and r.get("corrected")}
+
+
+MIXED_CORRECTIONS = load_mixed_script_corrections()
+
+# A Roman numeral written partly in Cyrillic. The two scripts are
+# GLYPH-IDENTICAL here, so no scan can tell them apart -- which is exactly why
+# RG's gold ruling makes Roman numerals Latin: a Cyrillic І leaves the text
+# unsearchable. `XIІІ` is the case in hand.
+CYR_ROMAN = {"\u0406": "I", "\u0425": "X", "\u0421": "C", "\u041c": "M",
+             "\u0412": "V", "\u0474": "V", "\u0410": "A"}
+ROMAN_ANY = re.compile(r"^[IVXLCDM\u0406\u0425\u0421\u041c\u0412\u0474]{2,}$")
+
 # Latin `i` is NOT an unambiguous counterpart: pre-reform Russian writes both
 # `і` and `и`, and the convention (і before a vowel or й) is a tendency this
 # corpus does not keep consistently -- the standing rule here is that a
@@ -185,6 +221,15 @@ def repair_mixed_script(text: str) -> tuple[str, list[str]]:
       unresolved -- mixed, but the fix is not obvious: a half-and-half word,
                     or a letter that could map several ways (s -> с/з/ш,
                     h -> н/х, b -> в/ь, u -> и/у). Text left alone.
+      curated    -- a scan-verified correction from
+                    docs/eval/mixed_script_corrections.csv. Taken by looking
+                    at the page, because no character mapping reaches them:
+                    `Aprilя`->`Апрѣля` (i stands for ѣ), `tancovaли`->
+                    `танцовали` (c stands for ц), `Рапаderos`->`Panaderos`
+                    (the word is Latin, and Cyrillicising invents a word).
+      roman-normalised -- a Roman numeral written partly in Cyrillic. The
+                    glyphs are identical so no scan can decide it; Latin wins
+                    by RG's gold ruling, which exists for that reason.
       split-*    -- the same three verdicts for a word the printed line
                     break cut in half. Checked FIRST and separately, because
                     neither half is mixed on its own (`Чума-` is clean
@@ -206,8 +251,30 @@ def repair_mixed_script(text: str) -> tuple[str, list[str]]:
     was silent, nothing would have surfaced the mistake."""
     fixes: list[str] = []
 
+    def split_punct(w: str) -> tuple[str, str, str]:
+        lead = w[:len(w) - len(w.lstrip(_PUNCT))]
+        trail = w[len(w.rstrip(_PUNCT)):]
+        return lead, w[len(lead):len(w) - len(trail) if trail else None], trail
+
+    def curated(w: str):
+        """The scan-verified correction for this word, if there is one."""
+        lead, core, trail = split_punct(w)
+        fix = MIXED_CORRECTIONS.get(core)
+        return (lead, core, fix, trail) if fix else None
+
     def fix_word(m: re.Match) -> str:
         w = m.group(0)
+        hit = curated(w)
+        if hit:
+            lead, core, fix, trail = hit
+            out = lead + fix.replace("|", "") + trail
+            fixes.append(f"curated {core!r} -> {fix.replace('|', '')!r}")
+            return out
+        if ROMAN_ANY.match(w) and any(c in CYR_ROMAN for c in w):
+            out = "".join(CYR_ROMAN.get(c, c) for c in w)
+            fixes.append(f"roman-normalised {w!r} -> {out!r} "
+                         f"(glyph-identical; Latin by RG's ruling)")
+            return out
         cyr = len(CYRILLIC_RE.findall(w))
         lat = LATIN_RE.findall(w)
         if not cyr or not lat:
@@ -242,6 +309,15 @@ def repair_mixed_script(text: str) -> tuple[str, list[str]]:
     def fix_split(m: re.Match) -> str:
         head, gap, tail = m.group(1), m.group(2), m.group(3)
         joined = head + tail
+        hit = curated(joined)
+        if hit:
+            lead, core, fix, trail = hit
+            if "|" in fix:
+                nh, nt = fix.split("|", 1)
+            else:
+                nh, nt = fix, ""
+            fixes.append(f"curated-split {core!r} -> {fix.replace('|', '')!r}")
+            return f"{lead}{nh}-{gap}{nt}{trail}" if nt else f"{lead}{nh}{trail}{gap}"
         cyr = len(CYRILLIC_RE.findall(joined))
         lat = LATIN_RE.findall(joined)
         if not cyr or not lat:

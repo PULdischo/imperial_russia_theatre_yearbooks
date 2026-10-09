@@ -735,3 +735,81 @@ audit 0 mismatches in 6,947; all referential checks 0.
 **Not done:** the new pages have no English. `translate_reviews.py` would be a
 separate billed run (~1,008 words), and the bilingual files are stale until it
 runs — they carry a `source-hash` that no longer matches.
+
+---
+
+## Mixed-script queue CLOSED — 2026-10-09
+
+**77 `mixed_script_word` flags -> 0.** Total review quality flags 233 -> 156.
+The 25 scan decisions are in `docs/eval/mixed_script_scan_decisions.md`; the
+machine-readable table is `docs/eval/mixed_script_corrections.csv`.
+
+### Applied POST-MERGE, deliberately, and why
+
+The obvious route — re-parse the three views and re-merge — **was tried and
+rejected on evidence.** A control merge of the unchanged views reproduces
+`merged_full` byte-identically, so the selector itself is stable. But once the
+views' text changes, the selector sees different candidate pools and picks
+differently in unrelated places. The re-merge produced **16 collateral changes
+that have nothing to do with mixed script**, several plainly wrong:
+
+| was | became |
+|---|---|
+| `Фредерикъ;` | `дерикъ;` |
+| `Кшесинская` | `синская` |
+| `3-я.` | `5-я.` |
+| `«Galop»` | `«Галор»` |
+| `Crimée` | `Сримéе` |
+
+So the repair is applied directly to `merged_full` instead. The diff is then
+exactly **81 word changes, 68 distinct, every one intended** — no collateral
+movement at all.
+
+**Consequence to know:** `merged_full` now carries a post-merge repair, so
+re-merging from the view directories will NOT reproduce it. Those directories
+are stale anyway — they hold 1,018 pages against the corpus's 1,074, predating
+the issue-era additions. Re-running the merge needs the re-parse
+(`view_*_parsed_new`) AND a fresh diff, not a blind rebuild.
+
+### OPEN: the selector can prefer a truncated token
+
+`Фредерикъ;` -> `дерикъ;` and `Кшесинская` -> `синская` are a full word losing
+to a fragment of itself, which contradicts `select_reading`'s own first rule
+("a dropped word never beats a read one"). `«Galop»` -> `«Галор»` and
+`Crimée` -> `Сримéе` are pure-Latin titles being Cyrillicised, which the
+mixed-script filter is explicitly supposed to leave alone. **Not investigated.**
+These surfaced only because the re-merge was diffed rather than trusted, and
+they are latent in any future re-merge.
+
+### What the corrections changed
+
+19 toward Cyrillic, 3 toward **Latin**, 3 separators — plus a Roman-numeral
+normalisation rule (`XIІІ` -> `XIII`; glyph-identical, so Latin by RG's ruling
+rather than by inspection).
+
+Four could not have come from any character mapping, which is the whole
+argument for checking scans one at a time rather than extending the heuristics:
+
+- `Aprilя` -> **Апрѣля** — the Latin `i` stands for **ѣ**
+- `tancovaли` -> **танцовали** — the Latin `c` stands for **ц**
+- `Парtii` -> **Партіи** takes `і`, while **Чекетти** and **Гримальди** take
+  `и`. Position decides; only the page can say.
+- `Рапаderos` -> **Panaderos**, the Raymonda dance. The model read Latin `Pana`
+  as Cyrillic `Рапа`, so the natural-looking repair would have invented
+  `Рападерос`.
+
+### A false positive of my own check, now fixed
+
+`XLVлѣтнюю` was never an error. The print reads `за XLV-` / `лѣтнюю службу`,
+and that is a **compound** hyphen, not a soft one. The reflow joined it and
+manufactured the flag. Every reflow in the pipeline now keeps a hyphen that
+follows a digit or a Roman numeral (`parse_reviews`, `quality_checks_reviews`,
+`match_review_mentions`, `build_bilingual`, `find_opera_ballet_crossover`).
+
+### Downstream
+
+Mentions **27,211 -> 27,237** — the repaired words are matchable now, which was
+the point. Person mentions joining `research.person` 12,819 -> 12,829; work
+2,836 -> 2,839; assertions with a work entity 1,136 -> 1,138. Gender audit 0
+mismatches in 6,955, dates 139/139, all referential checks 0. Bilingual files
+rebuilt (47 files, 1,074 pages); the 1912-13 pages remain untranslated.

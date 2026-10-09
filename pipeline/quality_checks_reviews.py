@@ -244,7 +244,12 @@ def main() -> None:
     # added for the Roster (#123). Line breaks are rejoined first so a word
     # split across one is judged whole.
     for b in blocks:
-        text = re.sub(r"([^\s-])-\s+", r"\1",
+        # A hyphen after a digit or a Roman numeral is a COMPOUND hyphen, not a
+        # soft line-break one: the print reads `за XLV-` / `лѣтнюю службу`, and
+        # joining it manufactures `XLVлѣтнюю`, which looked like a mixed-script error
+        # and was not one. Latin I V X L C D M never end a Russian word, so the
+        # lookbehind is safe.
+        text = re.sub(r"(?<![\dIVXLCDM])([^\s-])-\s+", r"\1",
                       (b["text"] or b["caption_text"] or ""))
         for m in MIXED_SCRIPT.finditer(text):
             w = m.group()
