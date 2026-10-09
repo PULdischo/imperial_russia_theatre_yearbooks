@@ -1,0 +1,13 @@
+PAGE 00000175.jpg | folio: - | section: title page / illustration (Московскихъ театровъ section title: "Обозрѣніе дѣятельности Московскихъ театровъ.") | BALLET-DANCE: none | SPECIAL: none | NOTE: -
+PAGE 00000176.jpg | folio: - | section: illustration (ornament with mask, otherwise blank) | BALLET-DANCE: none | SPECIAL: none | NOTE: -
+PAGE 00000177.jpg | folio: 141 | section: Moscow Drama (heading "Драма.", start of text) | BALLET-DANCE: none | SPECIAL: none | NOTE: season-opening performances only (30 Aug Малый and Новый театръ, "для открытія сезона 1905—1906 гг."), no charity/mixed evening
+PAGE 00000178.jpg | folio: 142 | section: Moscow Drama | BALLET-DANCE: none | SPECIAL: Представлена была комедія въ первый разъ на сценѣ Малаго театра, въ бенефисъ г. Вильде 1868 г., 6-го ноября. (historical 1868 benefit, not a 1905-06 evening) | NOTE: text cut at page edge ("...Нилъ Ѳедосѣевичъ Ма-") continues on next page
+PAGE 00000179.jpg | folio: 143 | section: Moscow Drama | BALLET-DANCE: none | SPECIAL: none | NOTE: text cut at page edge ("...и бывшую сперва") continues on next page; photograph on page
+PAGE 00000180.jpg | folio: - | section: illustration (rotated photograph, "На всякаго мудреца довольно простоты", Актъ I., no text) | BALLET-DANCE: none | SPECIAL: none | NOTE: photo page rotated 90 degrees, no folio
+PAGE 00000181.jpg | folio: 145 | section: Moscow Drama | BALLET-DANCE: none | SPECIAL: none | NOTE: text cut at page edge ("...глубоко") continues on next page; photo of "Мастеръ"
+PAGE 00000182.jpg | folio: 146 | section: Moscow Drama | BALLET-DANCE: none | SPECIAL: none | NOTE: text cut at page edge ("Роли ... Циммерера, бурго-") continues on next page
+PAGE 00000183.jpg | folio: 147 | section: Moscow Drama | BALLET-DANCE: none | SPECIAL: none | NOTE: portrait of Ѳ. П. Горевъ; text cut at page edge ("Про-") continues on next page
+PAGE 00000184.jpg | folio: 148 | section: Moscow Drama | BALLET-DANCE: none | SPECIAL: none | NOTE: text cut at page edge ("Карлъ Биль-") continues on next page
+PAGE 00000185.jpg | folio: 149 | section: Moscow Drama | BALLET-DANCE: none | SPECIAL: none | NOTE: text cut at page edge ("Это—драма") continues on next page; photo of "Отецъ"
+PAGE 00000186.jpg | folio: 150 | section: Moscow Drama | BALLET-DANCE: none | SPECIAL: none | NOTE: text cut at page edge ("банковскимъ чи-") continues on next page
+PAGE 00000187.jpg | folio: - | section: illustration (rotated photograph, "Авдотьина жизнь", пьеса С. А. Найденова, no text) | BALLET-DANCE: none | SPECIAL: none | NOTE: photo page rotated 90 degrees, no folio
