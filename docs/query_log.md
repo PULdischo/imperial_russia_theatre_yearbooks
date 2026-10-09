@@ -13156,3 +13156,15 @@ select page_id, date_undate, printed_page_number, count(*) from raw.event_entry
 ```
 
 Result: 10 events changed folio: 1892-93 pair024's 5 events of 1893-05-02 (25 -> 24) and 1897-98 pair024's 5 events of 1898-04-16 (24 -> 25). After: pair024 1892-93 p. 24 = 1893-04-22..05-02 (50), p. 25 = 05-03..05-14 (45); pair024 1897-98 p. 24 = 1898-04-09..04-15 (37), p. 25 = 04-16..04-25 (50). No null page numbers; research.event 32,901 and research.performance 30,909 unchanged.
+
+## 2026-10-09 -- The 107 performed research events with no performance row
+
+```sql
+select count(*) from research.event e where event_status='performed' and not exists (select 1 from research.performance p where p.event_id=e.event_id);
+select e.season, count(*) from research.event e where event_status='performed' and not exists (select 1 from research.performance p where p.event_id=e.event_id) group by 1 order by 1;
+select e.event_id, e.theater, e.date_text, e.receipts_text, e.annotation from raw.event_entry e
+ where e.event_status='performed' and not exists (select 1 from raw.event_entry_performance p where p.event_id=e.event_id);
+select * from raw.event_entry_performance where event_id='repertoire_1905-06_p015__s021';
+```
+
+Result: 107 in research, 106 in raw. All 106 raw events have an annotation and no performance row: 62 are the concerts for the benefit of the invalids (concert, dress rehearsal, repeat), 4 are А. Зилоти concerts, 40 are other benefit evenings/special performances (54 distinct annotation texts); only 4 carry receipts. 7 annotations name works inside the annotation text (1897-98 pair022 s006, 1898-99 p034 s022, 1900-01 p008 s006, 1901-02 p025 s010, 1902-03 p018 s026, 1903-04 p004 s005, 1903-04 p030 s012). The 107th, `repertoire_1905-06_p015__s021`, has a raw performance row with a null title (genre "ком."); research drops titleless rows; the scan prints no title (zoomed).

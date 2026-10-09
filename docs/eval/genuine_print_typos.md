@@ -546,3 +546,6 @@ themselves are real and worth studying; the transcriptions are not.
 - `repertoire_1894-95_pair008` (printed p. 9): "25 **Суббота**." for 25 January 1895, a Wednesday (24 is Вторникъ; both the Moscow and the St Petersburg block print it).
 - `repertoire_1905-06_p023` (printed p. 107): "1 **Вторникъ**" for 1 January 1906, a Sunday (31 Суббота precedes, 2 Понед. follows).
 - `repertoire_1906-07_p041` (printed p. 125): "6 **Понед.**" for 6 April 1907, a Friday (5 Четвергъ precedes, 7 Суббота follows).
+
+## Repertoire, scan-confirmed 2026-10-09 -- a title omitted from the print
+- `repertoire_1905-06_p015` (printed p. 99), Moscow, Малый театръ, "24 Четвергъ" (24 Nov 1905): the cell prints only ", ком." and the receipts "1218 р. 36 к." -- the play's title is missing in the print (zoomed at 500 dpi; nothing before the comma, only faint show-through from the back of the page). The raw layer keeps the row (genre "ком.", no title); the research layer leaves it out of `research.performance` because it has no title, so the event shows as performed with no performance. Identifying the play would need another source (a Moscow Малый театръ listing for that day).
