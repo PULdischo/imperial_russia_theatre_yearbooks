@@ -33,3 +33,11 @@ Her priorities:
 2. The EDITORIAL HISTORY of the Yearbooks: who edited/compiled it, contents decisions, contributors, articles, proofs, illustrations, printing, print runs, editorial correspondence.
 3. Sales/subscriptions/distribution (this file's main topic) — still useful, but below 1 and 2.
 Add two keys to every JSON line: "ballet" (true/false — does the page mention ballet, a ballet work, composer, dancer, or ballet music?) and "editorial" (true/false — does it bear on how the Yearbook was edited/compiled/produced?). Rate relevance "high" if either is true. When done with your range, go back and REWRITE any lines you wrote before this update so they also carry these two keys and the adjusted relevance (rewrite the whole file cleanly — one line per page, no duplicates).
+
+## Editorial sub-tags (added 2026-10-09)
+Alongside "editorial", add four booleans to every line. "editorial" is true exactly when at least one of them is:
+- "ed_contributors": who wrote for or contributed text to the Yearbook: named authors/contributors (сотрудники), copies given to contributors, payments or thanks to them.
+- "ed_illustrations": the Yearbook's illustrations: photographs (of productions, scenery, groups), photographers, artists/художники, illustration lists, clichés/plates.
+- "ed_print_finance": print runs and money: copies printed or acquired, stock counts and storage, printing-house (типографія) dealings, costs, revenue, shortfalls, prices. Routine subscriber or distribution tallies count only if they give print-run, stock or money figures.
+- "ed_editors": the editors and the editorial office: Молчановъ, Петровъ, Дризенъ, the Редакція acting, decisions about contents, copies allotted to the editor or редакція.
+A page may carry several or none. Distribution of copies with none of the above is none of these.

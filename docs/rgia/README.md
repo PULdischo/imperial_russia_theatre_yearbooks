@@ -48,8 +48,10 @@ to `marks`: that is RG's.
 - The photos are of a monitor. The enhanced copy (greyscale, moiré softened)
   helps at normal zoom but drops colour (red ruling, blue pencil, inks). Read
   names and numbers from a zoomed crop of the original.
-- "Ballet" is the narrow, reliable filter. "Editorial" was read broadly in
-  Д. 159: print runs, stock counts and illustration photographs all count.
+- "Editorial" is split into four sub-tags (contributors, illustrations, print
+  runs & finances, editors & office); "editorial" = any of them. Д. 159's
+  sub-tags were added afterwards from the summaries (pages checked against the
+  image are flagged in outputs/rgia_dela/159/editorial_subtags.jsonl).
 - Disk: an original runs ~110 MB and its enhanced copy ~150 MB. On 2026-10-09 the
   internal disk had 20 GB free, which is not enough for every дело twice over.
   Make enhanced PDFs only when needed, or keep PDFs on the backup drive.

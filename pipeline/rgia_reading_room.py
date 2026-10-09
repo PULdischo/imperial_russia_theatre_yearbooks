@@ -34,6 +34,7 @@ OUT = ROOT / "outputs" / "rgia_reading_room"
 
 CELL_W, CELL_H, COLS = 150, 190, 10   # sprite geometry; the page reads these from the дело doc
 CHUNK_BYTES = 200_000
+EDITORIAL_SUBTAGS = ("ed_contributors", "ed_illustrations", "ed_print_finance", "ed_editors")
 
 
 def sprite(delo, n_pages):
@@ -109,6 +110,7 @@ def main():
                 "n_high": sum(p.get("relevance") == "high" for p in pages),
                 "n_ballet": sum(bool(p.get("ballet")) for p in pages),
                 "n_editorial": sum(bool(p.get("editorial")) for p in pages),
+                **{f"n_{k}": sum(bool(p.get(k)) for p in pages) for k in EDITORIAL_SUBTAGS},
                 "sprite": sprite(delo, n_pdf),
                 "sprite_geom": {"w": CELL_W, "h": CELL_H, "cols": COLS},
             })
