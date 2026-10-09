@@ -191,3 +191,60 @@ Wikidata candidates for every creator are in
 `docs/eval/production_creators_wikidata_review.csv`, waiting for RG's
 cross-check (`rg_decision` column). Nothing from that sheet is written to the
 database until RG has reviewed it.
+
+---
+
+## Wikidata rescan with a review-mention rule — 2026-10-09
+
+`NOTABLE_ROLE_KEYWORDS` matches the rank the yearbook printed **at the time**,
+which systematically excluded anyone still in the corps during the corpus
+window, however famous they became. Анна Павлова, Кшесинская, Карсавина,
+Нижинскій and Голейзовскій were all ineligible and all unlinked — no number of
+re-runs would have reached them.
+
+`select_pilot_persons()` now takes a second rule: **anyone named at least 20
+times in the season reviews** (`--mention-threshold`, default 20, 0 disables).
+Mention frequency separates cleanly against the rank rule — linked Гердтъ 332
+and Преображенская 281 sat beside unlinked Трефилова 171, Леньяни 150 and
+Павлова 99.
+
+Pool 350 -> **466**. Of 450 queried, **34 auto-accepted**, taking
+`entities.person_wikidata_link` from 43 to **77**. The accept policy is
+unchanged and deliberately strict: one exact-label result, an
+occupation-consistent description, and dates that do not contradict the
+attested seasons.
+
+Linked by the new rule, none of them reachable before:
+
+| | mentions | |
+|---|---|---|
+| Кшесинская, Матильда Феликсовна | 98 | Q239246 |
+| Карсавина, Тамара Платоновна | 90 | Q231316 |
+| Петипа 1-я, Марія Маріусовна | 82 | Q1749273 |
+| Хлюстинъ, Иванъ Николаевичъ | 68 | Q4498325 (Ivan Clustine) |
+| Мордкинъ, Михаилъ Михайловичъ | 59 | Q1071719 |
+| **Ваганова, Агриппина Яковлевна** | 53 | Q236413 |
+| **Нижинскій, Вацлавъ Ѳомичъ** | 24 | Q194363 |
+
+Also newly linked by the old rule, simply because the scan had not run since
+**15 August 2026**: Блуменфельдъ Q1349550, Малько Q716305, Головинъ Q945505,
+Шолларъ Q15061014, Волининъ Q2834128, Каралли Q1974463.
+
+### Two gaps this exposed
+
+**The review queue has never been worked.** The August export held 221 rows
+with **0 decisions filled in**; the new one holds 139. Its top entries are
+straightforward calls that the strict policy correctly declined to make
+automatically:
+
+| | mentions | why it was held | the obvious answer |
+|---|---|---|---|
+| Павлова 2-я, Анна | 99 | 5 candidates, all labelled "Anna Pavlova" | **Q151874** |
+| Леньяни, Пьерина | 150 | description carries no occupation keyword | **Q270741** |
+| Сѣдова, Юлія Николаевна | 105 | same | **Q15210443** |
+| Горскій, Александръ Алексѣевичъ | 147 | 2 candidates | **Q980208** (the other is Plechtcheïev) |
+| Коровинъ, Константинъ Алексѣевичъ | 37 | same | **Q437792** |
+
+**There is no way to apply a decision.** The queue exports a blank
+`decision (QID or No)` column, and nothing reads it back. Filling the CSV in
+currently achieves nothing — which may be why it was never filled in.

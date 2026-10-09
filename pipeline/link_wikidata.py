@@ -120,19 +120,49 @@ def _wd_search(name: str) -> list[dict]:
     return []
 
 
-def select_pilot_persons(con: duckdb.DuckDBPyConnection) -> list[tuple]:
+# Second eligibility rule, added 2026-10-09: how often the SEASON REVIEWS name
+# the person. NOTABLE_ROLE_KEYWORDS matches the rank the yearbook printed AT
+# THE TIME, which systematically misses anyone still in the corps during the
+# corpus window however famous they became -- Анна Павлова, Кшесинская,
+# Карсавина, Нижинскій and Голейзовскій were all ineligible, and all unlinked.
+# Mention frequency separates cleanly against the rank rule: linked Гердтъ 332
+# and Преображенская 281 sit alongside unlinked Трефилова 171, Леньяни 150 and
+# Павлова 99.
+REVIEW_MENTION_THRESHOLD = 20
+
+
+def select_pilot_persons(con: duckdb.DuckDBPyConnection,
+                         mention_threshold: int = REVIEW_MENTION_THRESHOLD) -> list[tuple]:
     cond = " OR ".join(
         f"r.heading_path ILIKE '%{kw}%' OR r.rank_or_title ILIKE '%{kw}%'"
         for kw in NOTABLE_ROLE_KEYWORDS
     )
-    return con.execute(f"""
-        SELECT DISTINCT p.person_id, p.display_name, p.canonical_family_name,
-               p.canonical_first_name, p.canonical_patronymic,
-               p.first_attested_season, p.last_attested_season
+    has_reviews = con.execute("""
+        SELECT count(*) FROM information_schema.tables
+        WHERE table_schema = 'entities' AND table_name = 'review_mention'
+    """).fetchone()[0] > 0
+    by_rank = f"""
+        SELECT DISTINCT p.person_id
         FROM raw.person_entry r
         JOIN entities.person_link pl ON pl.entry_id = r.entry_id
         JOIN entities.person p ON p.person_id = pl.person_id
         WHERE p.superseded_by_person_id IS NULL AND ({cond})
+    """
+    by_mentions = f"""
+        UNION
+        SELECT m.entity_id
+        FROM entities.review_mention m
+        WHERE m.mention_type = 'person' AND m.entity_id IS NOT NULL
+        GROUP BY m.entity_id
+        HAVING count(*) >= {int(mention_threshold)}
+    """ if has_reviews else ""
+    return con.execute(f"""
+        SELECT DISTINCT p.person_id, p.display_name, p.canonical_family_name,
+               p.canonical_first_name, p.canonical_patronymic,
+               p.first_attested_season, p.last_attested_season
+        FROM entities.person p
+        WHERE p.superseded_by_person_id IS NULL
+          AND p.person_id IN ({by_rank}{by_mentions})
         ORDER BY p.display_name
     """).fetchall()
 
@@ -320,6 +350,9 @@ def main():
     ap.add_argument("--pilot", action="store_true",
                      help="restrict to notable-role people (see NOTABLE_ROLE_KEYWORDS) instead of everyone")
     ap.add_argument("--export-review-queue", type=Path, default=None)
+    ap.add_argument("--mention-threshold", type=int, default=REVIEW_MENTION_THRESHOLD,
+                     help="also treat anyone named at least this many times in the "
+                          "season reviews as notable (0 disables)")
     ap.add_argument("--limit", type=int, default=None, help="cap the number of people processed (for testing)")
     ap.add_argument("--merge-shared-qids", action="store_true",
                      help="merge entities.person records that resolved to the same Wikidata QID, then exit "
@@ -337,10 +370,11 @@ def main():
     if not args.pilot:
         raise SystemExit("Only --pilot is implemented so far; full-corpus linking needs a separate go-ahead.")
 
-    persons = select_pilot_persons(con)
+    persons = select_pilot_persons(con, args.mention_threshold)
     if args.limit:
         persons = persons[: args.limit]
-    print(f"pilot pool: {len(persons)} notable-role people")
+    print(f"pilot pool: {len(persons)} people "
+          f"(notable rank, or named >= {args.mention_threshold}x in the reviews)")
 
     auto_accepted, needs_review = link_persons(con, persons)
 
