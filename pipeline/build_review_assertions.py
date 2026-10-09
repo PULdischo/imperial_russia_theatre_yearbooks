@@ -235,6 +235,31 @@ def load_credits(con) -> tuple[dict, dict]:
     return by_role, by_work
 
 
+# A review's FIRST page often opens with the tail of the previous section,
+# because an issue packs two reviews onto one printed page -- 1912-13 SP opens
+# with the last paragraphs of the opera review. build_bilingual already drops
+# those for reading; the assertion builder has to as well, or it mines them.
+# It did: the only "assertion" the 1912-13 ballet review produced was
+# `представленій, посвященныхъ отечественнымъ авторамъ, и 16 %` -- `Вагнеру`,
+# parsed out of an opera statistics sentence.
+SECTION_HEADING = {"балетъ", "опера", "драма"}
+
+
+def first_page_skip(blocks: list[tuple]) -> int:
+    """`block_index` of the review's own section heading on its first page.
+
+    Returns the stored block_index, NOT the position in this list: block_index
+    is 1-based in the CSV, so comparing a list position against it silently
+    skips one block too few and let the 1912-13 opera tail through.
+    """
+    for b in blocks:
+        if b[3] != "heading":
+            continue
+        if (b[4] or "").strip().strip(".").strip().lower() in SECTION_HEADING:
+            return int(b[2])
+    return 0
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--reviews-dir", required=True, type=Path)
@@ -287,8 +312,27 @@ def main() -> None:
 
     out: list[dict] = []
     n_pairs = resolved_by_credit = already = unresolved = 0
-    inherited = 0
+    # the first block index to trust on each review's opening page
+    first_page: dict[tuple, str] = {}
+    for bid, pid, bidx, bt, tx, cap in blocks:
+        pg = pages.get(pid)
+        if not pg:
+            continue
+        key = (pg["season"], pg["city"], pg["genre"])
+        if key not in first_page or pid < first_page[key]:
+            first_page[key] = pid
+    skip_before: dict[str, int] = {}
+    by_page: dict[str, list[tuple]] = collections.defaultdict(list)
+    for row in blocks:
+        by_page[row[1]].append(row)
+    for pid in set(first_page.values()):
+        skip_before[pid] = first_page_skip(by_page[pid])
+
+    inherited = skipped_foreign = 0
     for block_id, page_id, _bidx, _btype, text, caption in blocks:
+        if _bidx < skip_before.get(page_id, 0):
+            skipped_foreign += 1
+            continue
         page = pages.get(page_id)
         if not page or (a.genre and page["genre"] != a.genre):
             continue
@@ -457,7 +501,8 @@ def main() -> None:
     withwork = con.execute("""SELECT count(*) FROM research.review_assertion
                               WHERE work_id IS NOT NULL""").fetchone()[0]
 
-    print(f"\n{n_pairs:,} role-performer pairs -> {len(out):,} assertions")
+    print(f"\n{skipped_foreign:,} block(s) skipped as the previous review's tail")
+    print(f"{n_pairs:,} role-performer pairs -> {len(out):,} assertions")
     print(f"  performer already linked by the matcher : {already:,}")
     print(f"  NEWLY resolved by the spiski credit     : {resolved_by_credit:,}")
     print(f"  still unresolved                        : {unresolved:,}")

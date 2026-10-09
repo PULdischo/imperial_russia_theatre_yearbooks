@@ -660,3 +660,78 @@ the assertions should stay private for now, `build_datasette.py`'s SCHEMAS list
 is where to exclude them. Worth a decision before the next publish; the table
 carries `link_method`, `link_confidence`, `work_source` and the full candidate
 list, so a consumer can filter rather than take everything at face value.
+
+---
+
+## New season 1912-13 SP Ballet — added 2026-10-09
+
+RG approved the run. The corpus is now **1,074 pages / 20 seasons**, extending
+past its previous 1910-11 endpoint.
+
+4 pages, 3 views, **28 vision calls, 167K tokens, 0 errors**. Scoped manifests
+were used throughout so only the new pages were billed; the four other
+unprocessed PDFs (1908-09 Opera SP/Moscow, 1912-13 Opera SP, 1908-09 Music SP)
+were left alone, opera being deferred.
+
+```
+render_reviews.py --pdf-dir <one-pdf dir> --out-dir outputs/reviews  # then merge the manifest
+make_bands.py --bands 2 / --bands 4                                   # then merge those manifests
+run_reviews.py x3  (full / bands2 / bands4)   -> 4 + 8 + 16 calls
+stitch_bands.py x2 ; parse_reviews.py x3 ; merge_views.py             # all free
+```
+
+**Quality: 0 flags on all 4 pages.** Folios 140-143, consecutive. Selector
+changed 4 of 1,008 words (0.40%), the corpus norm. Text spot-checked against
+the scan and exact: Karsavina as Nikiya in «Баядерка», 49 performances, 20
+ballets, the per-work date lists, Направникъ and Коутсъ conducting.
+
+### The later reviews are a different genre, and the assertion layer feels it
+
+This is **А. Левинсонъ**'s criticism, not a cast list. It gives statistics and
+dates in prose — `«Баядерка» 4 раза (2-го, 5-го и 9-го сентября съ участіемъ
+г-жи Карсавиной…)` — work, date and performer, but **no role**, so the
+`Role—Performer` grammar finds nothing. 1912-13 contributes **0 assertions** and
+that is correct, not a miss. Worth knowing before extending into the
+1910s: the performer→role→work extractor is tuned to the 1890s cast-list
+convention and will return progressively less as the reviews become essays.
+
+It still yields mentions: 65 person, 58 work, 6 theatre. Only 16 of the 65
+person mentions resolve (25%, against 62% corpus-wide) because the
+Diaghilev-era names are simply not in `research.person`, which is built from
+rosters ending at 1910-11. The unknown queue for this season is exactly that
+cohort — **Бакстъ, Анисфельдъ, Коутсъ, Бронская, Ланская, Карали,
+Рождественская, Зеестъ** — and `Дягилевъ` himself DID resolve.
+
+### Two bugs the new season exposed, both fixed
+
+1. **A work title generated feminine forms and swallowed a surname.**
+   `Дубровская` (a dancer absent from `research.person`) matched the opera
+   `Дубровскій`, because `title_forms` declines a title's final word through
+   `surname_forms`, which adds BOTH genders. Right for a person — the same
+   family name occurs as Горскій and Горская — and wrong for a work, which
+   appears as `Дубровскаго`, never `Дубровская`. Titles now index with
+   `both_genders=False`.
+2. **The assertion builder mined the previous review's tail.** An issue packs
+   two reviews onto one printed page, so a review's first page often opens with
+   the end of the last one; `build_bilingual` drops those paragraphs, and the
+   assertion builder did not. The only "assertion" 1912-13 produced was
+   `представленій, посвященныхъ отечественнымъ авторамъ, и 16 %` — `Вагнеру`,
+   parsed out of an opera statistics sentence. Now skipped, 48 blocks
+   corpus-wide.
+
+   Note the off-by-one that hid it at first: `first_page_skip` returned the
+   list position where it had to return the stored `block_index`, which is
+   1-based.
+
+**Side effect worth recording:** removing that bleed took the date validation
+from 141/142 to **139/139, 100%**. The one date that had never landed on a real
+`research.event` — `1896-08-01` — was a roster-appointment date from exactly
+this kind of bled-in paragraph. The anomaly was a symptom of the bug.
+
+Corpus after: `raw.review_page` 1,074 · `raw.review_block` 4,697 ·
+`entities.review_mention` 27,211 · `research.review_assertion` 1,936. Gender
+audit 0 mismatches in 6,947; all referential checks 0.
+
+**Not done:** the new pages have no English. `translate_reviews.py` would be a
+separate billed run (~1,008 words), and the bilingual files are stale until it
+runs — they carry a `source-hash` that no longer matches.

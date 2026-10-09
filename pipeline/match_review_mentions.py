@@ -118,7 +118,7 @@ VOWEL_YA = ["я", "и", "е", "ю", "ей"]
 INDECL_TAIL = ("о", "у", "э", "ю")
 
 
-def surname_forms(canonical: str) -> set[str]:
+def surname_forms(canonical: str, both_genders: bool = True) -> set[str]:
     """Plausible declined forms of a surname, folded.
 
     Deliberately slightly over-generative: a spurious form costs a candidate in
@@ -138,16 +138,25 @@ def surname_forms(canonical: str) -> set[str]:
     if base.endswith(("ский", "цкий", "ской", "цкой", "ый", "ий")):
         stem = base[:-2] if base.endswith(("ий", "ый")) else base[:-2]
         add(stem, ADJ_M)
-        add(stem, ADJ_F)          # the same surname occurs in both genders
+        # The same SURNAME occurs in both genders, so a person's forms span
+        # both. A WORK title does not: the opera `Дубровскій` appears as
+        # `Дубровскаго`, never as `Дубровская` -- and generating the feminine
+        # made that title match the dancer Дубровская, who is simply absent
+        # from research.person. Callers indexing titles pass both_genders=False.
+        if both_genders:
+            add(stem, ADJ_F)
     elif base.endswith(("ская", "цкая", "ая")):
         add(base[:-2], ADJ_F)
-        add(base[:-2], ADJ_M)
+        if both_genders:
+            add(base[:-2], ADJ_M)
     elif base.endswith(("ова", "ева", "ина", "ына")):
         add(base[:-1], POSS_F)
-        add(base[:-1], POSS_M)    # the masculine of the same family name
+        if both_genders:
+            add(base[:-1], POSS_M)
     elif base.endswith(("ов", "ев", "ин", "ын")):
         add(base, POSS_M)
-        add(base, POSS_F)
+        if both_genders:
+            add(base, POSS_F)
     elif soft:
         add(base, SOFT_M)          # Гертель -> Гертеля, Гертелемъ
     elif base.endswith(INDECL_TAIL):
@@ -246,7 +255,7 @@ def title_forms(title: str) -> set[str]:
     for f in list(out):
         head, _, tail = f.rpartition(" ")
         if len(tail) >= 4:
-            for d in surname_forms(tail):
+            for d in surname_forms(tail, both_genders=False):
                 declined.add((head + " " + d).strip() if head else d)
     return {f for f in out | declined if len(f) >= 3}
 
