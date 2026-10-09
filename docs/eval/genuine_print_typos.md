@@ -549,3 +549,9 @@ themselves are real and worth studying; the transcriptions are not.
 
 ## Repertoire, scan-confirmed 2026-10-09 -- a title omitted from the print
 - `repertoire_1905-06_p015` (printed p. 99), Moscow, Малый театръ, "24 Четвергъ" (24 Nov 1905): the cell prints only ", ком." and the receipts "1218 р. 36 к." -- the play's title is missing in the print (zoomed at 500 dpi; nothing before the comma, only faint show-through from the back of the page). The raw layer keeps the row (genre "ком.", no title); the research layer leaves it out of `research.performance` because it has no title, so the event shows as performed with no performance. Identifying the play would need another source (a Moscow Малый театръ listing for that day).
+
+## Repertoire receipts markers, scan-confirmed 2026-10-09 (issue #142) -- a letter printed where the rubles marker "р." belongs
+- `repertoire_1909-10_p016` (printed p. 17), Большой театръ, evening of 8 Nov 1909 (Лебединое озеро): "2466 **о.** 88 к." (intended 2466 р. 88 к.).
+- `repertoire_1909-10_p050` (printed p. 51), Малый театръ, 21 Apr 1910 (Очагъ / Путаница): "1425 **к.** 60 к." (intended 1425 р. 60 к.).
+- `repertoire_1910-11_p023` (printed p. 24), Михайловскій театръ, 19 Dec 1910 (Arsène Lupin): "901 **с.** 80 к." (intended 901 р. 80 к.).
+All three added to `pipeline/research_corrections/receipts_print_typos.csv`; raw stays verbatim.

@@ -319,7 +319,12 @@ def check_repertoire(parsed_dir: Path) -> list[dict]:
             # cases this excludes -- 1901-02_p012__s030, 1906-07_p020__s004,
             # 1905-06_p004__s034, 1905-06_p010__s007).
             if (receipts_text and any(c.isdigit() for c in receipts_text)
-                    and not r.get("receipts_rubles", "").strip()):
+                    and not r.get("receipts_rubles", "").strip()
+                    # a confirmed print typo with a curated research-layer correction is
+                    # explained, not open (raw stays verbatim; issue #109/#142): skip it so
+                    # this flag keeps meaning "a figure nobody has looked at yet"
+                    and (page_id, r["date_text"], r["theater"], r["time_of_day"],
+                         receipts_text) not in _curated_receipts_typo_keys()):
                 flags.append(dict(page_id=page_id, table="event_entry", row_id=r["event_id"],
                                    flag="receipts_parse_failed",
                                    detail=f"receipts_text={r['receipts_text']!r} but receipts_rubles is empty"))
@@ -374,6 +379,26 @@ def check_repertoire_printed_page_sequence(parsed_dir: Path) -> list[dict]:
     return flags
 
 
+_CURATED_RECEIPTS_KEYS: set | None = None
+
+
+def _curated_receipts_typo_keys() -> set:
+    """(page_id, date_text, theater, time_of_day, receipts_text) of every row in
+    pipeline/research_corrections/receipts_print_typos.csv (the scan-confirmed
+    receipts print typos corrected in the research layer; see build_research_model.py)."""
+    global _CURATED_RECEIPTS_KEYS
+    if _CURATED_RECEIPTS_KEYS is None:
+        path = Path(__file__).parent / "research_corrections" / "receipts_print_typos.csv"
+        keys = set()
+        if path.exists():
+            with open(path, encoding="utf-8", newline="") as f:
+                for r in csv.DictReader(f):
+                    keys.add((r["page_id"], r["date_text"], r["theater"], r["time_of_day"],
+                              r["receipts_text_verbatim"]))
+        _CURATED_RECEIPTS_KEYS = keys
+    return _CURATED_RECEIPTS_KEYS
+
+
 def check_repertoire_cross_page_duplicate(parsed_dir: Path) -> list[dict]:
     """Flags any (theater, date_undate, time_of_day) triple claimed by
     more than one page_id. Every Repertoire page_id owns a distinct,
@@ -400,11 +425,23 @@ def check_repertoire_cross_page_duplicate(parsed_dir: Path) -> list[dict]:
         perf_by_event[p["event_id"]].append(
             (p.get("performance_title", ""), p.get("genre", "")))
 
+    # Two documented, scan-verified situations make a collision expected rather than wrong
+    # (issue #142, 2026-10-09 -- all 27 flags this check raised on the production data were these):
+    #  * a page the research layer leaves out entirely (RESEARCH_EXCLUDED_PAGES: 1910-11's
+    #    printed p. 57 is a page of dashes that coincides with p. 56's dates), and
+    #  * a row whose PRINTED day number is wrong and has a scan-verified correction
+    #    (_MANUAL_DATE_OVERRIDES: p. 56's "9 Четвергъ." is 19 May), where the raw date_undate
+    #    still says the printed day. Compare on the corrected date, as the research layer does.
+    from build_research_model import RESEARCH_EXCLUDED_PAGES
+    from validate_performance_dates import _MANUAL_DATE_OVERRIDES
+
     by_key: dict[tuple, list[dict]] = defaultdict(list)
     for r in events:
-        if not r.get("date_undate"):
+        if not r.get("date_undate") or r["page_id"] in RESEARCH_EXCLUDED_PAGES:
             continue
-        key = (r["theater"].strip(), r["date_undate"], r["time_of_day"])
+        override = _MANUAL_DATE_OVERRIDES.get((r["page_id"], (r.get("date_text") or "").rstrip(".")))
+        date_for_key = override[0] if override else r["date_undate"]
+        key = (r["theater"].strip(), date_for_key, r["time_of_day"])
         by_key[key].append(r)
 
     for (theater, date_undate, time_of_day), rows in by_key.items():

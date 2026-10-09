@@ -13168,3 +13168,17 @@ select * from raw.event_entry_performance where event_id='repertoire_1905-06_p01
 ```
 
 Result: 107 in research, 106 in raw. All 106 raw events have an annotation and no performance row: 62 are the concerts for the benefit of the invalids (concert, dress rehearsal, repeat), 4 are А. Зилоти concerts, 40 are other benefit evenings/special performances (54 distinct annotation texts); only 4 carry receipts. 7 annotations name works inside the annotation text (1897-98 pair022 s006, 1898-99 p034 s022, 1900-01 p008 s006, 1901-02 p025 s010, 1902-03 p018 s026, 1903-04 p004 s005, 1903-04 p030 s012). The 107th, `repertoire_1905-06_p015__s021`, has a raw performance row with a null title (genre "ком."); research drops titleless rows; the scan prints no title (zoomed).
+
+## 2026-10-09 -- The 43 Repertoire quality flags: which receipts have no research-layer correction, what the duplicate flags actually contain
+
+```sql
+select a.receipts_text, a.receipts_rubles, e.receipts_total_kopecks, e.receipts_source, e.receipts_correction_note
+from analysis.event_entry a left join research.event e using(event_id) where a.event_id = <each of the 16 flagged rows>;
+select page_id, count(*), min(date_undate), max(date_undate), sum((event_status='performed')::int), sum((event_status='no_performance')::int)
+from raw.event_entry where page_id in ('repertoire_1910-11_p055','repertoire_1910-11_p056') group by 1;
+select page_id, theater, date_text, event_status from raw.event_entry where date_undate='1911-05-09' and page_id in ('repertoire_1910-11_p053','repertoire_1910-11_p055');
+select sum(receipts_total_kopecks) from research.event;      -- before vs after the three corrections
+select receipts_source, count(*) from research.event group by 1;
+```
+
+Result: 13 of the 16 flagged receipts already carried `corrected_print_typo`; 3 had no correction (1909-10 p016 s002, p050 s018; 1910-11 p023 s028). p055 = 32 events (8 performed), p056 = 30 events, all 30 `no_performance`. p055's 3 "9 Четвергъ." rows (a misprint for 19 May) and p053's real 9 May rows share raw date 1911-05-09. After adding the three corrections: receipts total 3,205,476,598 -> 3,205,956,026 kopecks (+479,428, as expected); `corrected_print_typo` 56 -> 59; no other receipts changed; research.event 32,901 and research.performance 30,909 unchanged.
