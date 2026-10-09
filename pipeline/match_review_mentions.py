@@ -482,8 +482,27 @@ def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
     guest artists, roster gaps and ordinal mismatches are all common.
     """
     want_g = surface_gender(surface, honorific)
+    # Compare the NUMBER only. `Павловой 2-й` is the oblique of the feminine
+    # `Павлова 2-я`, so the literal suffix `2-й` looks masculine and an exact
+    # string match penalised Anna Pavlova on her own mentions. Gender is scored
+    # separately and separates `Легатъ 1-й` from `Легатъ 1-я` on its own.
     m = SURFACE_ORDINAL.search(surface)
-    want_ord = f"{m.group(1)}-{m.group(2)}" if m else None
+    want_ord = m.group(1) if m else None
+
+    # An ordinal is the roster's OWN disambiguator -- it exists precisely to
+    # separate same-surname people -- so when the print gives one and exactly
+    # one candidate carries it, that settles it. Scoring could not: Anna
+    # Pavlova is attested in research.person for 1907-08 only, because that is
+    # where the rosters place her, so on her mentions in every other season a
+    # longer-serving Павлова drew level on the season bonus. 79 of her own
+    # mentions were unresolved for that reason.
+    if want_ord:
+        exact = [pid for pid in ids
+                 if re.sub(r"\D", "", (lex.person_meta.get(pid, {}).get("ordinal") or "")) == want_ord]
+        if len(exact) == 1:
+            g = canon_gender((lex.person_meta.get(exact[0], {}).get("family") or ""))
+            if not (want_g and g and want_g != g):
+                return exact[0], 99, "ordinal is unique among candidates"
 
     scored = []
     for pid in ids:
@@ -492,16 +511,17 @@ def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
             scored.append((0, pid, ""))
             continue
         score, why = 0, []
-        if want_ord and meta.get("ordinal"):
-            if meta["ordinal"].strip() == want_ord:
+        meta_ord = re.sub(r"\D", "", meta.get("ordinal") or "") or None
+        if want_ord and meta_ord:
+            if meta_ord == want_ord:
                 score += 6
                 why.append("ordinal")
             else:
                 score -= 4
-        elif want_ord and not meta.get("ordinal"):
+        elif want_ord and not meta_ord:
             score -= 1
             why.append("ordinal-absent")
-        elif not want_ord and meta.get("ordinal"):
+        elif not want_ord and meta_ord:
             score -= 2            # the print gives an ordinal when one is needed
         g = canon_gender(meta["family"] or "")
         if want_g and g:
