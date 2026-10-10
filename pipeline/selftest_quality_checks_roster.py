@@ -124,6 +124,20 @@ def main() -> int:
     # --- the optional dash in the #23 repair, and its known limit (first occurrence of a label)
     expect("repair without a dash", q.repaired_credit_count(credit("операхъ", 9, production=9), "Въ 11 балетахъ—42; въ 9 операхъ 31. Всего—73 раза."), "31.")
 
+    # --- two-city entries (issue #150): the Nth row with a label belongs to the Nth sentence with that label
+    two_city = ("Въ 6 балетахъ—18; въ 1 оперѣ—1. Всего—19 разъ. Въ томъ числѣ: Баядерка (Никія—3). "
+                "Кромѣ того въ С.-Петербургѣ: въ 3 балетахъ—6. Всего—6 разъ.")
+    expect("two-city, first block repaired from ITS sentence",
+           q.repaired_credit_count(credit("балетахъ", 6, production=6), two_city, 0), "18")
+    expect("two-city, second block NOT repaired from the first block's numbers",
+           q.repaired_credit_count(credit("балетахъ", 6, production=3), two_city, 1), "6")
+    expect("no Nth sentence: falls back to the first (old behaviour)",
+           q.repaired_credit_count(credit("балетахъ", 6, production=6), "Въ 6 балетахъ—18.", 3), "18.")
+    sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+    from schemas.roster import _parse_production_counts
+    expect("parser keeps every block's production count in text order",
+           _parse_production_counts(two_city), {"балетахъ": [6, 3], "оперѣ": [1]})
+
     for f in failures:
         print("FAIL", f)
     print(f"{'FAILED' if failures else 'all cases pass'} ({len(failures)} failure(s))")

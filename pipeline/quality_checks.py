@@ -138,22 +138,30 @@ def _num(s) -> float | None:
         return None
 
 
-def repaired_credit_count(row: dict, summary: str) -> str:
+def repaired_credit_count(row: dict, summary: str, occurrence: int = 0) -> str:
     """The credit count as analysis.person_entry_credit.category_credit_count_clean has it.
 
     Known extraction quirk (known_issues.md #23): for a sentence "Въ N балетахъ—X" the model's
     structured count sometimes holds N (productions) where X (performances) belongs. build_duckdb.py
     repairs it, from the entry's own verbatim credit_summary_text, in the *analysis* column only;
-    this is the same rule on the parsed CSVs (parity with the SQL column checked on all 24,862
-    category_totals rows, 2026-10-10), so the check below does not flag rows that are already repaired
-    downstream. Numeric comparison on purpose: the captured X can carry the sentence's final period. The dash is optional (2026-10-10: one entry prints «въ 9 операхъ 31»). KNOWN LIMIT: the FIRST occurrence of the label in the text is used, so a second block with the same label (a two-city entry, «Кромѣ того, въ С.-Петербургѣ въ 3 балетахъ—6») is repaired from the first block's numbers; issue #150."""
+    this is the same rule on the parsed CSVs (parity with the SQL column checked on every
+    category_totals row), so the check below does not flag rows that are already repaired
+    downstream. Numeric comparison on purpose: the captured X can carry the sentence's final period.
+    The dash is optional (one entry prints «въ 9 операхъ 31»).
+
+    `occurrence` is the 0-based position of this row among the entry's category rows with the same
+    label: a two-city entry repeats a label («Въ 6 балетахъ—18 ... Кромѣ того, въ С.-Петербургѣ: въ 3
+    балетахъ—6»), and the Nth row is matched to the Nth sentence (issue #150). With no Nth sentence the
+    first is used, as before."""
     count = row.get("category_credit_count", "")
     if row.get("credit_type") != "category_totals":
         return count
-    m = re.search(r"[Вв]ъ\s+(\d+)\s+" + re.escape(row.get("label", "")) + r"\s*[—-]?\s*([\d.]+)", summary or "")
-    if (m and _num(count) is not None and _num(m[1]) is not None and _num(m[2]) is not None
-            and _num(count) == _num(m[1]) != _num(m[2])):
-        return m[2]
+    found = re.findall(r"[Вв]ъ\s+(\d+)\s+" + re.escape(row.get("label", "")) + r"\s*[—-]?\s*([\d.]+)", summary or "")
+    if not found:
+        return count
+    n, x = found[occurrence] if occurrence < len(found) else found[0]
+    if _num(count) is not None and _num(n) is not None and _num(x) is not None and _num(count) == _num(n) != _num(x):
+        return x
     return count
 
 
@@ -281,6 +289,12 @@ def check_roster(parsed_dir: Path) -> list[dict]:
         # still live in the analysis layer. The remaining mismatches are classified against the
         # entry's own printed text (classify_credit_mismatch).
         carries_category = bool(_TOTAL_CARRIES_CATEGORY_RE.search(summary))
+        occ: dict[int, int] = {}            # id(row) -> 0-based occurrence of its label within the entry
+        _seen: dict[str, int] = defaultdict(int)
+        for r in rows:
+            if r["credit_type"] == "category_totals":
+                occ[id(r)] = _seen[r["label"]]
+                _seen[r["label"]] += 1
         block_components: list[dict] = []
         for r in rows:
             if r["credit_type"] != "category_totals":
@@ -289,8 +303,8 @@ def check_roster(parsed_dir: Path) -> list[dict]:
                 block_components.append(r)
                 continue
             try:
-                component_values = [int(float(repaired_credit_count(c, summary))) for c in block_components
-                                    if repaired_credit_count(c, summary)]
+                component_values = [int(float(repaired_credit_count(c, summary, occ[id(c)]))) for c in block_components
+                                    if repaired_credit_count(c, summary, occ[id(c)])]
                 component_sum = sum(component_values)
                 stated = int(r["category_credit_count"])
                 if block_components and component_sum != stated and not carries_category:

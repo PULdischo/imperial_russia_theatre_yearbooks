@@ -29,10 +29,15 @@ CreditType = Literal["category_totals", "named_work"]
 _PRODUCTION_COUNT_RE = re.compile(r"[Вв]ъ\s+(\d+)\s+([^\s,;.]+)\s*[—-]\s*([\d.]+)")
 
 
-def _parse_production_counts(credit_summary_text: Optional[str]) -> dict[str, int]:
-    counts = {}
+def _parse_production_counts(credit_summary_text: Optional[str]) -> dict[str, list[int]]:
+    """label -> the production counts of every "Въ N <label>—X" sentence, IN TEXT ORDER.
+
+    A two-city entry repeats a label ("Въ 6 балетахъ—18 ... Кромѣ того, въ С.-Петербургѣ: въ 3 балетахъ—6"),
+    so the Nth category row with a label takes the Nth sentence (issue #150, 2026-10-10). A plain
+    label -> count dict let the LAST block overwrite the first (4 entries in the corpus)."""
+    counts: dict[str, list[int]] = {}
     for prod, label, _cnt in _PRODUCTION_COUNT_RE.findall(credit_summary_text or ""):
-        counts[label] = int(prod)
+        counts.setdefault(label, []).append(int(prod))
     return counts
 
 
@@ -99,6 +104,7 @@ def flatten_roster_page(page_id: str, entity_type: str, page: RosterPage) -> dic
                 "end_type": p.end_type or "",
             })
         production_counts = _parse_production_counts(e.credit_summary_text)
+        seen_labels: dict[str, int] = {}
         for k, c in enumerate(e.credits, start=1):
             if c.count is None:
                 count_out = ""
@@ -106,7 +112,13 @@ def flatten_roster_page(page_id: str, entity_type: str, page: RosterPage) -> dic
                 count_out = str(int(c.count))
             else:
                 count_out = str(c.count)
-            production_count = production_counts.get(c.label)
+            production_count = None
+            if c.credit_type == "category_totals" and c.label in production_counts:
+                nth = seen_labels.get(c.label, 0)
+                seen_labels[c.label] = nth + 1
+                found = production_counts[c.label]
+                # more rows than sentences (an extraction duplicate): keep the old behaviour, the last one
+                production_count = found[nth] if nth < len(found) else found[-1]
             credits.append({
                 "credit_id": f"{entry_id}__cr{k}", "entry_id": entry_id,
                 "credit_type": c.credit_type, "label": c.label,

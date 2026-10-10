@@ -598,18 +598,33 @@ def build_analysis_schema(con: duckdb.DuckDBPyConnection) -> None:
         # pair in its own entry's credit_summary_text AND the stored count
         # equals N rather than X (so a coincidental N==X, or a row whose
         # label doesn't appear in this exact phrasing, is left alone).
+        # Block-aware (issue #150): a two-city entry repeats a label ("Въ 6 балетахъ—18 ... Кромѣ того, въ
+        # С.-Петербургѣ: въ 3 балетахъ—6"), so the Nth category row with a label is matched to the Nth sentence
+        # with that label (row order = credit_id's numeric suffix = text order). Taking the first sentence for
+        # every row "repaired" the second block's 6 to the first block's 18. A row with no Nth sentence falls
+        # back to the first one, the old behaviour.
         con.execute(r"""
             CREATE OR REPLACE TABLE analysis.person_entry_credit AS
-            WITH joined AS (
-                SELECT c.*,
-                    regexp_extract(e.credit_summary_text,
-                        '[Вв]ъ\s+(\d+)\s+' || c.label || '\s*[—-]?\s*([\d.]+)', 1) AS _n_extracted,
-                    regexp_extract(e.credit_summary_text,
-                        '[Вв]ъ\s+(\d+)\s+' || c.label || '\s*[—-]?\s*([\d.]+)', 2) AS _x_extracted
+            WITH ranked AS (
+                SELECT c.*, e.credit_summary_text AS _txt,
+                    row_number() OVER (PARTITION BY c.entry_id, c.label
+                        ORDER BY TRY_CAST(regexp_extract(c.credit_id, '__cr(\d+)$', 1) AS INTEGER)) AS _k
                 FROM raw.person_entry_credit c
                 JOIN raw.person_entry e ON c.entry_id = e.entry_id
+            ), joined AS (
+                SELECT *,
+                    regexp_extract_all(_txt,
+                        '[Вв]ъ\s+(\d+)\s+' || label || '\s*[—-]?\s*([\d.]+)', 1) AS _ns,
+                    regexp_extract_all(_txt,
+                        '[Вв]ъ\s+(\d+)\s+' || label || '\s*[—-]?\s*([\d.]+)', 2) AS _xs
+                FROM ranked
+            ), picked AS (
+                SELECT *,
+                    coalesce(list_extract(_ns, _k), list_extract(_ns, 1), '') AS _n_extracted,
+                    coalesce(list_extract(_xs, _k), list_extract(_xs, 1), '') AS _x_extracted
+                FROM joined
             )
-            SELECT * EXCLUDE (_n_extracted, _x_extracted),
+            SELECT * EXCLUDE (_txt, _k, _ns, _xs, _n_extracted, _x_extracted),
                 CASE WHEN credit_type = 'category_totals'
                           AND _n_extracted <> '' AND _x_extracted <> ''
                           AND TRY_CAST(category_credit_count AS DOUBLE) = TRY_CAST(_n_extracted AS DOUBLE)
@@ -617,7 +632,7 @@ def build_analysis_schema(con: duckdb.DuckDBPyConnection) -> None:
                      THEN _x_extracted
                      ELSE category_credit_count
                 END AS category_credit_count_clean
-            FROM joined
+            FROM picked
         """)
         n_corrected = con.execute("""
             SELECT count(*) FROM analysis.person_entry_credit

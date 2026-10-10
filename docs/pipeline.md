@@ -158,7 +158,8 @@ and distinctions the rest of the pipeline already applies:
 Scan-checked entries whose printed total does not add up are listed, with their exact summary text, in
 `pipeline/entity_curation/credit_totals_scan_verified.csv` and are not flagged again (the exemption lapses, and
 is flagged `credit_verified_entry_changed`, if the text is edited). The #23 repair takes an optional dash
-(«въ 9 операхъ 31») and uses the first occurrence of a label (known limit, issue #150).
+(«въ 9 операхъ 31») and is block-aware: the Nth category row with a label is matched to the Nth sentence with that
+label, in the parser, the SQL and the check (two-city entries, issue #150).
 `pipeline/selftest_quality_checks_roster.py` runs these rules on synthetic rows.
 
 Flags are triage signals, not verdicts — e.g. a genuinely duplicate person

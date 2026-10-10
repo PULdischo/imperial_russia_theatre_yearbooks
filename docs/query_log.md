@@ -13306,3 +13306,14 @@ select count(*) from analysis.person_entry_credit where category_credit_count_cl
 ```
 
 Result: 7,995 non-empty BalletArtists summaries; 103 mixed-script words in 102 entries before the fix, 0 after; 75 word forms occur with both an ь and an ъ ending (664 ь-form against 8,562 ъ-form occurrences). 181 entries read on the scan, 165 summaries and 270 credit-row fields corrected; quality flags 118 -> 50 in this pass (523 at the start of the day).
+
+## 2026-10-10 -- two-city credit entries: which entries repeat a category label, and what changes when rows are matched block by block?
+
+```sql
+select entry_id, credit_id, credit_type, label, category_production_count, category_credit_count from raw.person_entry_credit where entry_id like 'balletartists%';   -- entries with a repeated category label: 4
+select credit_id, category_credit_count_clean from analysis.person_entry_credit where credit_type = 'category_totals';                                          -- parity with the check's repair: 24,859 rows, 0 differences
+select count(*) from analysis.person_entry_credit where category_credit_count_clean <> category_credit_count;                                                  -- 372 -> 371
+select label, category_production_count, category_credit_count from raw.person_entry_credit where entry_id = 'balletartists_1907-08_SP_p009__e008' and credit_type = 'category_totals';   -- 5/7, 7/19
+```
+
+Result: 4 entries repeat a row label and 3 more repeat a sentence label; 7 `category_production_count` values changed, nothing else among 35,599 credit rows; one wrong repair removed (1901-02 MSK p000 e023, second block 6 no longer becomes 18); flags unchanged at 50.
