@@ -13548,3 +13548,68 @@ FROM research.production_credit pc JOIN research.person p USING (person_id);
 Result: 110 creators, 85 with a QID (75 before). The only research change is 10 person
 rows (the wikidata columns of Шенкъ, Щербачевъ, Оге, Гартманъ, Шель, Симонъ, Герберъ,
 Тарновскій, Лангаммеръ and Пашкова).
+
+## 2026-10-10 — the 40 candidate title misreads, worked (RG: "go ahead")
+
+Two different things were tangled in that list, and the split matters:
+
+**~16 of the 40 are not misreads at all** — they are oblique case forms the
+matcher's form generation cannot reach: `Конька-горбунка`/`Конькѣ-Горбункѣ`
+(fleeting vowel, 15 occurrences), `Египетскихъ ночахъ`, `Раймондой`,
+`Царя Кандавла`, `Дочери Фараона`, `Оживленномъ саду`, `Феѣ куколъ`.
+`stem_key`'s 4-character truncation is too long for short words — the
+inflection lands inside the stem (`ночи`/`ноча`, `сад`/`саду`,
+`царь`/`царя`). Left unfixed: every cheaper stem collides, and for
+*linking* purposes a declension and a misread both point at the same work
+anyway.
+
+**The two big ones are genuine transcription errors, and every instance was
+checked against the scan** (20 pages, 34 instances):
+
+```sql
+SELECT block_id, page_id, block_type, text, caption_text
+FROM raw.review_block WHERE caption_text LIKE '%Камаріо%' OR text LIKE '%Балдерка%';
+```
+`Камаріо` 27 occurrences / 15 pages and `Балдерка` 7 / 5 pages, **all in
+`figure` captions**. The print reads `Камарго` and `Баядерка` on every one.
+Corroboration before the scans: the same reviews' body text prints Камарго
+20x and баядерки/Баядерка throughout, and `research.work` holds `Камарго`
+(бал.) with 4 Repertoire performances in 1900-01 SP, Jan–Apr 1901 — the
+exact season.
+
+Applied via a new re-runnable step (`pipeline/apply_review_text_corrections.py`
++ `docs/eval/review_text_corrections.csv`), 36 replacements, idempotent on a
+second run. This also closes the structural weakness recorded on 2026-10-07,
+that post-merge repairs do not survive a re-merge.
+
+After rebuilding mentions → `raw.review_block` → assertions:
+
+| | before | after |
+|---|---|---|
+| `entities.review_mention` | 27,410 | 27,422 |
+| candidate title misreads | 40 forms / ~90 occ | 38 forms / 58 occ |
+| work-consolidation collision sets | — | 13 |
+| `research.review_assertion` | 1,952 | 1,952 |
+
+```sql
+SELECT m.surface, count(*), count(m.entity_id) FROM entities.review_mention m
+WHERE m.mention_type='work' AND (m.surface LIKE '%амарго%' OR m.surface LIKE '%аядерк%')
+GROUP BY 1;
+```
+Result: `Баядерка` 64/64 resolved, `Камарго` 42/42, `Баядеркѣ` 3/3,
+`Баядерку` 1/1. Zero residue of the old spellings in `raw.review_block`.
+
+**The finding underneath this**, measured rather than assumed:
+
+```sql
+-- impossible honorific forms (1-жа, в-жа, і. + capital) vs correct ones, by block kind
+```
+**caption 68 bad / 226 good = 23.1%; paragraph 15 / 8,455 = 0.2%.** Figure
+captions are ~100x worse than body text, they are where performer→role→work
+triples live, and they feed 2,035 mentions (7.4%) but only 27 assertions
+(1.4%). Written up in `docs/eval/review_caption_quality.md`.
+
+Two things the scans caught that must NOT be "fixed": `Талорачва` (p005
+caption) against `Толорагва` (p020 body), and `Мадгавая` (p017 body)
+against `Магдавая` (p020 body) — the same roles spelled two ways *in the
+print*.
