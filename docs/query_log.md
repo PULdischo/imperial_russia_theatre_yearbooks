@@ -13841,3 +13841,33 @@ select block_type, text, caption_text from raw.review_block where page_id = '<pa
 ```
 
 Result: 3,790 blocks with text (1,403,335 characters), split into 14 chunks and read in full. 188 flags (docs/jubilees_obituaries/first_read/review_full_read/); 64 not already in the catalogue; 14 rows added to docs/jubilees_obituaries/first_read/R2_reviews_wider_search.csv.
+
+## 2026-10-10 — what seasons the 16 unrostered dancers are from (RG asked)
+
+```sql
+SELECT p.season, p.city, count(*) FROM entities.review_mention m
+JOIN raw.review_page p USING (page_id) WHERE m.surface = ? GROUP BY 1,2;
+```
+run per name over the 16 bucket-D rows of
+`docs/eval/review_people_not_in_rosters.csv`.
+
+**Span 1892-93 to 1912-13; 10 Moscow, 6 St Petersburg.** By season (a
+dancer counted once per season she appears in): 1892-93 ×2, 1893-94 ×1,
+1895-96 ×1, 1896-97 ×1, 1897-98 ×1, 1900-01 ×1, 1901-02 ×2, 1902-03 ×2,
+1903-04 ×3, 1904-05 ×1, 1905-06 ×5, 1906-07 ×1, 1910-11 ×1, 1912-13 ×1.
+**1905-06 Moscow is the cluster** — 5 of the 16 (Барковская, Титова,
+Терентьева, Ячменевъ, Громовъ 1-й), all from two adjacent pages, p019 and
+p020, which are one long corps list.
+
+**The CSV is stale and undercounts.** It was written before today's matcher
+re-runs, and three rows are materially wrong:
+
+| name | CSV says | live |
+|---|---|---|
+| Воскресенская | 1896-97, 1897-98 (5) | 1893-94 ×2, 1896-97 ×3, 1897-98 ×2 — **7, and starts 3 seasons earlier** |
+| Шульгина | 1903-04 (2) | 1900-01 SP ×3, 1903-04 SP ×2 — **5 over 4 seasons** |
+| Лядова | 1895-96 (1) | 1895-96 SP, 1902-03 SP, 1903-04 **Moscow**, 1904-05 SP, 1906-07 SP — **5 over 12 years, and one of them is the other city** |
+
+That changes the judgment on at least two of them: Лядова and Шульгина are
+not one-off walk-ons. Лядова's 1903-04 Moscow occurrence against four SP
+ones may well be a second person entirely.
