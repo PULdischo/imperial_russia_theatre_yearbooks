@@ -13817,3 +13817,16 @@ text we have; the rest is not recoverable without more scans.
 
 Written up with every passage in `docs/eval/unnamed_programmes_itemised.md`;
 machine-readable in `outputs/reviews/unnamed_programme_matches.csv`.
+
+## 2026-10-10 — after the creators walkthrough with RG: what changed in research, and how many creators have a QID
+
+```sql
+SELECT count(*) FROM (SELECT * FROM bk.research.<t> EXCEPT SELECT * FROM research.<t>);  -- and the reverse, per research table
+SELECT count(DISTINCT pc.person_id), count(DISTINCT pc.person_id) FILTER (WHERE p.wikidata_qid IS NOT NULL)
+FROM research.production_credit pc JOIN research.person p USING (person_id);
+```
+
+Result: the only changes are 11 person rows (new QIDs for Богдановъ А. Н., Давыдовъ А. А.,
+Вицентини, Фридманъ, Грабе, Соколовъ С. П., Крозе, Шмидтъ, Бернаделли, Гриммъ and Келеръ
+Эрнестъ) and 1 production_credit row (Шмидта, role author -> music). 110 creators, 96 with
+a QID (85 before).

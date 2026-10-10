@@ -22607,3 +22607,25 @@ Not pushed.
 - **Checked 2026-10-10 (RG asked):** Маржецкій's start date is a genuine print variation (1889 on five pages, 1888 on fourteen; blind read plus my own view of three pages), now in genuine_print_typos.md. His "Балетмейстеры" heading is a stuck heading: the blind reader found NO section heading printed on any of his 19 pages. Scope: 10 BalletArtists pages carry `heading_path` "Балетмейстеры" on whole mid-list runs (221 entries): 1890-91 SP p008, 1891-92 SP p007, 1896-97 SP p006-p007, 1897-98 MSK p002, 1900-01 SP p007, 1901-02 MSK p006, 1903-04 SP p008, 1906-07 SP p009, 1907-08 SP p001. NOT fixed: each page needs its real heading from the scan, as in #126.
 - **Шиманъ (2026-10-10):** recorded as a PROPOSED link to the Moscow violinist Шиманъ, Михаилъ Викторовичъ († 7 декабря 1900); RG: follow up, do not assume. uncertain_person_identities.md #21.
 - **Померанцевъ, Ю. Н. (side finding, 2026-10-10):** Груцынова's article says he joined the Bolshoi as ballet capellmeister on 1 April 1910; the 1910-11 MSK reviews have "г. Померанцевъ" conducting, but no Померанцевъ is in our 1910-11 Moscow Musicians roster. Not checked on the scan (source gap or ours).
+
+### #133: creators walkthrough with RG, all 25 undecided creators (2026-10-10) -- APPLIED
+
+One creator at a time, with the yearbook lists, the review text and outside sources (Petipa
+Society, IMSLP, German / Russian / Belarusian Wikipedia, Груцынова's article).
+
+- **Accepted (11), loaded:** Вицентини (Albert Vizentini), Соколовъ С. П., Крозе, Грабе, Шмидтъ
+  (Hermann Schmidt; role corrected author -> music via `ROLE_FIXES`), Давыдовъ А. А. (Alexei
+  Davidov), Фридманъ, Келеръ Эрнестъ (Ernesto Köhler), Бернаделли (Fortunato Bernardelli),
+  Богдановъ А. Н. and Гриммъ (the Brothers Grimm as one person, RG). `production_creator_wikidata.csv`
+  has 93 rows; **96 of 110 creators have a QID**.
+- **"Not sure", in `uncertain_person_identities.md` #16-#24:** Трубецкой (Ivan vs the Petipa
+  Society's "Nikita", perhaps a nickname: RG), Стенбокъ-Ферморъ, Маренго, Аржини (= Даль-Аржине?),
+  Венанси, Шиманъ and Золотаренко (PROPOSED roster links only), Острембингеръ, the ⁂ of Шалости
+  сверчка.
+- **Identified, but no Wikidata item exists:** Келеръ Морицъ (the "Maurice Keller" of Chopiniana),
+  Маржецкій, Померанцевъ (Юрий Николаевич, b. 1878; Bolshoi ballet conductor 1910-19),
+  Попелло-Давыдовъ (Михаил Михайлович, journalist and musician). **No identification:** Штейманъ.
+- **RG's rulings to carry forward:** capital Г. is usually an initial but not a hard rule; a credited
+  librettist or composer need not have been in Russia or alive (librettos reused, scores reworked).
+- The verification diff against a pre-apply backup: 11 person rows and 1 production_credit row
+  changed in research, nothing else.
