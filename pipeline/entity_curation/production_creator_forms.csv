@@ -194,5 +194,5 @@ name_printed,role_category,creator_key,form_status,evidence
 Адана,,adam,confirmed,"Жизель MSK 1908-09 (music); genuine print typo for Адама, scan-checked 2026-10-06 (н crossbar clear)"
 Горскаго,libretto,gorsky,confirmed,"Золотая рыбка (MSK 1907-08) ""Либретто (сюжетъ заимствованъ) г. Горскаго"" -- same ballet and role as А. А. Горскаго in 1903-05 and 1910-11; the 1907-08 list omits the initials"
 Оге,libretto,auguste,confirmed,"Два вора (MSK 1907-08) ""Сюжетъ г. Оге""; the title line gives ""(Робертъ и Бертрамъ)"", where Г. Оге is the printed author in 1892-94; initials omitted in 1907-08"
-Шмидта,author,schmidt,confirmed,"Два вора (MSK 1907-08) ""соч. Шмидта и другихъ"""
+Шмидта,music,schmidt,confirmed,"Два вора (MSK 1907-08) ""соч. Шмидта и другихъ""; role corrected to music (ROLE_FIXES), RG 2026-10-10"
 А. А. Давыдова,music,davydov_aa,confirmed,Принцъ-садовникъ (SP 1907-08)

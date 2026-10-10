@@ -120,6 +120,16 @@ OVERRIDES: dict[str, list[tuple[str, str, str, str]]] = {
 }
 
 
+#: Role corrections for single credits the rules parse correctly as names but
+#: label with the wrong role. Keyed by (exact description_text, name_printed) ->
+#: (role_category, note). Everything else about the credit stays as parsed.
+ROLE_FIXES: dict[tuple[str, str], tuple[str, str]] = {
+    ("(Робертъ и Бертрамъ). Балетъ въ 3 д. и 6 карт. Сюжетъ г. Оге, соч. Шмидта и другихъ.", "Шмидта"): (
+        "music", "printed 'соч. Шмидта' after 'Сюжетъ г. Оге': he is the composer (reviews 1905-07: "
+                 "'муз. соч. Шмидта'; Hermann Schmidt wrote Hoguet's Robert und Bertrand, Berlin 1841). RG, 2026-10-10"),
+}
+
+
 def strip_noise(text: str, stop_words: bool = True) -> str:
     """Blank out spans that never contain creator names, keeping offsets."""
     def blank(m):
@@ -179,6 +189,10 @@ def parse(desc: str) -> list[dict]:
                             role_text=rt, role_category=cat, is_pseudonym="⁂" in nm,
                             is_collective=coll, note=note))
         prev_end = e
+    for r in out:
+        fix = ROLE_FIXES.get((desc, r["name_printed"]))
+        if fix:
+            r["role_category"], r["note"] = fix
     return out
 
 
