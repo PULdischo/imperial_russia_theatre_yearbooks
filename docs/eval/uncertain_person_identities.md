@@ -210,6 +210,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** `raw.production_entry` rows for Робертъ и Бертрамъ (1892-93, 1893-94) and Два вора (1907-08); `review_1892-93_MSK_ballet_p010__b003`; `review_1905-06_MSK_ballet_p019__b001`.
 - **Would resolve it:** the 1893 Moscow poster or libretto; a history of the Bolshoi ballet repertoire; Viennese theatre directories of the 1870s-80s.
 
+## 24. ⁂ (Шалости сверчка, Moscow 1897-98) -- who is the anonymous composer?
+
+- **Status:** OPEN, unidentified (RG, 2026-10-05 and again 2026-10-10). `asterism_shalosti` stays as printed. A lead for outside research, not an identification.
+- **What is printed:** the 1897-98 Moscow list has "Балетъ въ 2 д. и 3 карт., соч. К. Ѳ. Вальца, музыка ⁂" (premiere, 3 performances). The 1897-98 review also withholds the name: "съ музыкой * *" (13 February 1898, Джури's benefit; staged by Mendes; repeated at his farewell benefit on 15 February).
+- **The pattern (a lead only):** an asterisk signature in these lists has twice turned out to be a titled or official amateur who did not sign at first: "Г⁂", the librettist of Волшебное зеркало = И. А. Всеволожскій (RG's identification), and the "⁂" librettist of Эвника in the 1906-07 review, named in 1908-09 as гр. Стенбокъ-Ферморъ. So this composer is probably a Moscow amateur of rank. Nothing identifies him.
+- **Not the same person as** the Г⁂ of Волшебное зеркало (a librettist, Petersburg, 1902-03 onward); the two are kept apart by role.
+- **Where to look:** `balletproductions_1897-98_MSK_*` (Шалости сверчка); `review_1897-98_MSK_ballet_p019__b011`, `p019__b012`. Side note: that review prints the librettist as "К. О. Вальца" (lists: К. Ѳ.); not zoomed.
+- **Would resolve it:** Moscow press notices of 13-15 February 1898; the Bolshoi poster or a printed libretto; К. Ѳ. Вальцъ's memoirs («65 лет в театре»), since he wrote the scenario.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
