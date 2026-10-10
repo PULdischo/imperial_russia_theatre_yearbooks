@@ -13871,3 +13871,13 @@ re-runs, and three rows are materially wrong:
 That changes the judgment on at least two of them: Лядова and Шульгина are
 not one-off walk-ons. Лядова's 1903-04 Moscow occurrence against four SP
 ones may well be a second person entirely.
+
+## 2026-10-10 -- the 411 receipt-less performed sessions with no annotation (issue #151 follow-up 11)
+
+```sql
+select count(*) from analysis.event_entry where event_status = 'performed' and receipts_total_kopecks is null;   -- 2,933 -> 2,927 after the 6 added figures
+select count(*), sum(receipts_total_kopecks) from analysis.event_entry where event_status = 'performed' and receipts_total_kopecks is not null;   -- 19,210 / 32,032,286.75 rub -> 19,216 / 32,040,628.50 rub
+select e.event_id, e.date_text, c.date_confidence, e.date_undate from raw.event_entry e join analysis.event_entry_date_check c using(event_id) where e.page_id = 'repertoire_1897-98_pair020' and e.date_text like '2 Понед%';   -- 5 relabelled sessions, all verified, 1898-03-02
+```
+
+Result: see known_issues.md #151 follow-up 11.
