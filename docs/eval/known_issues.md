@@ -22549,3 +22549,7 @@ Of 110 ballet-list creators, 75 have a Wikidata ID and 35 do not. The review tex
     libretto to a pseudonym, "⁂".
 - **Open lead for RG:** the 1900-01 MSK review credits Волшебный башмачекъ to "Мюльдорфера и
   А. Симона", which supports reading the lists' "Щимана/Шиманъ" as Симонъ.
+- **Correction (same day):** of the 17, only 9 are new candidates: Шель, Трубецкой, Крозе, Вицентини,
+  Грабе, Соколовъ, Гартманъ, Шмидтъ and Давыдовъ А. А. The other 8 were already on the page with the same
+  item at medium or low confidence, and the review evidence raised them to high: Пашкова, Лангаммеръ,
+  Симонъ, Шенкъ, Оге, Герберъ, Щербачевъ and Тарновскій. Review page v7 adds a "From reviews" filter and tag.
