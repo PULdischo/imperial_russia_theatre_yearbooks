@@ -1,0 +1,9 @@
+item,half_read,receipts,lines,note
+Q404,undivided,NO RECEIPTS FIGURE PRINTED,"Братья Карамазовы, отрывки изъ романа (2-я часть).","Page 56 (10-19 мая 1911 г.), Михайловскій театръ column. Cell is undivided; nothing printed below the text line before the row rule (no figure, no dash, no note); cell otherwise blank."
+Q405,undivided,NO RECEIPTS FIGURE PRINTED,"Дядя Ваня, сцены изъ деревенской жизни. (hyphenated деревен- / ской)","No figure, dash or note below the text; blank to the row rule."
+Q406,undivided,NO RECEIPTS FIGURE PRINTED,"У жизни въ лапахъ, пьеса.","No figure, dash or note below the text; blank to the row rule."
+Q407,undivided,NO RECEIPTS FIGURE PRINTED,"У жизни въ лапахъ, пьеса","No final period after пьеса on this line; no figure, dash or note below; blank to the row rule."
+Q408,morning,NO RECEIPTS FIGURE PRINTED,"Дядя Ваня, сцены изъ дер. жизни.","Split cell: УТРО half. No figure under the half; blank to the half rule. Abbreviated «дер.» as printed."
+Q409,evening,NO RECEIPTS FIGURE PRINTED,"Братья Карамазовы, отрывки изъ романа (1-я часть).","Split cell: ВЕЧЕРЪ half. No figure under the half; blank to the cell rule."
+Q410,morning,NO RECEIPTS FIGURE PRINTED,"Вишневый садъ, пьеса.","Split cell: УТРО half. No figure under the half; blank to the half rule."
+Q411,evening,NO RECEIPTS FIGURE PRINTED,"Братья Карамазовы, отрывки изъ романа (2-я часть).","Split cell: ВЕЧЕРЪ half. No figure under the half; blank to the cell rule."

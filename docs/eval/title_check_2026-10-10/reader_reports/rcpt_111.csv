@@ -1,0 +1,13 @@
+item,half_read,receipts,lines,note
+Q130,undivided,1922 р. 34 к.,"Побѣда, сц.","Digits read at 6x: '19 22' has a small gap between 19 and 22 (printed spacing), no digit missing. Day '2 Четвергъ.' is the last row (January 1903), p.20."
+Q131,undivided,876 к. 18 к.,"Снѣгурочка, весенняя сказка.","Figure printed with «к.» in the roubles position («876 к. 18 к.») - not «р.»; read at 3x, as printed. Cell is the 1 Среда row (January) under the Январь heading, p.21."
+Q132,morning,NO RECEIPTS FIGURE PRINTED,"Конекъ-Горбунокъ, бал.","Morning half of 12 Среда, under the heading «Безплатные спектакли для воспитанниковъ столичныхъ учебныхъ заведеній.» (free performances); no figure beneath; the figure under the next row belongs to the evening half (Вражья сила, 1832 р. 48 к.)."
+Q133,morning,NO RECEIPTS FIGURE PRINTED,"Буйный вѣтеръ, др. стихотв.","Morning half of 12 Среда, free-performance heading; no figure printed beneath (blank)."
+Q134,morning,NO RECEIPTS FIGURE PRINTED,"Бронзовый конь, оп.","Morning half of 12 Среда, free-performance heading; no figure printed beneath (blank). Figure 491 р. 62 к. under Воспитатель Флаксманъ belongs to the evening half."
+Q135,undivided,736 к. 49 к.,"Одинокой тропой, др.","Figure printed with «к.» in the roubles position («736 к. 49 к.») - read at 3x, as printed. Day 19 Вторн. (October 1904), p.99."
+Q136,morning,403 р. 01 к.,"Дѣвичій переполохъ, ком.","Morning half (УТРО) of 25 Пятница; read at 3x. Same figure 403 р. 01 к. printed in the 26 and 27 morning cells too. Day sits under the heading «Безплатные спектакли...» on this page, p.123."
+Q137,morning,403 р. 01 к.,"Въ старомъ Гейдельбергѣ, ком.",Morning half (УТРО) of 26 Суббота; read at 3x; same figure printed for 25 and 27 morning cells.
+Q138,morning,403 р. 01 к.,"Ревизоръ, ком.",Morning half (УТРО) of 27 Воскрес.; read at 3x; same figure printed for 25 and 26 morning cells.
+Q139,evening,NO RECEIPTS FIGURE PRINTED,"Травіата, оп.","Evening (ВЕЧЕРЪ) half of 19 Вторн., Большой; whole row under heading «Спектакли въ пользу Иверской Общины Краснаго Креста.»; blank space under Травіата, no figure and no dash. Morning half is Волшебное зеркало, бал. (also no figure). Малый evening half Ольгинъ день, ком. likewise no figure."
+Q140,undivided,NO RECEIPTS FIGURE PRINTED,"La loi de pardon, pièce nouv.","Single line, blank under it (no figure, no dash); the 745 р. 25 к. above belongs to the 7 Пятница cell. Day 8 Суббота. (October 1905), p.90."
+Q141,morning,NO RECEIPTS FIGURE PRINTED,"Фиделіо, оп.","Morning (УТРО) half of 30 Воскрес.: the figure template «р.   к.» is printed with NO digits in either position (blank slot); evening half is Спящая красавица, бал. with 2807 р. 70 к. (not this cell's). p.94."
