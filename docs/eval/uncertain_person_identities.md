@@ -183,6 +183,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** `raw.production_entry` rows for Индія (`balletproductions_1890-91_MSK_*`, `1891-92_MSK_*`).
 - **Would resolve it:** the Ricordi archive record itself (dates, works); the 1890 Moscow libretto or poster of Индія; an Italian libretto of the ballet Mendes reworked.
 
+## 21. Шиманъ / Щимана (Moscow ballet lists) -- the orchestra violinist Михаилъ Викторовичъ, or (in 1900-01) А. Ю. Симонъ?
+
+- **Status:** OPEN; a PROPOSED roster link only (RG, 2026-10-10: "as long as we follow up on this later and don't assume it's correct"). `schiemann` stays its own creator; `production_creators.csv` records the roster person 6dbf9f as proposed, which the pipeline does not act on.
+- **What is uncertain:** who the second composer of Хрустальный башмачекъ / Волшебный башмачекъ is. Lists: "музыка Мюльендорфера и Шимана" (1890-91); "музыка Г. Мюльендорфера и Г. Шимана" (1892-93..1896-97); "музыка Мюльдорфера, музыка 4-го д. Щимана" (1900-01; the Щ is scan-confirmed). The 1899-00, 1901-02 and 1902-03 lists name only Мюльдорферъ.
+- **For the roster violinist** (Шиманъ, Михаилъ Викторовичъ, Moscow opera and ballet orchestra, from 10 марта 1882, "† 7 декабря 1900 г."): same surname and theatre; the credits run exactly over his years of service and stop after his death; the Г. before both names is the honorific (Мюльендорферъ is Wilhelm Carl Mühldorfer), so the earlier objection "different initial" does not hold; house musicians supplying ballet numbers is a pattern (Фридманъ, Э. Келеръ, М. Келеръ).
+- **Against / alternative:** nothing in the yearbook says the violinist composed. For 1900-01 the season review prints "музыка Мюльдорфера и А. Симона"; Симонъ was head of the Moscow orchestras from 1 Sept 1898 and wrote ballet music there, so the list's "Щимана" may be a garbled Симона, or the reviewer may have substituted the better-known name.
+- **Where to look:** `raw.production_entry` rows for the two titles; `review_1900-01_MSK_ballet_p001__b003`; `musicians_1900-01_MSK_p003` (no. 106). The roster also has a second, unmerged record "Шиманъ, Михаилъ" (941091, 1890-91, no patronymic printed).
+- **Would resolve it:** the Moscow posters or librettos of 1890 and 1899-1900; a history of the Bolshoi ballet repertoire naming the composers of the added music; an obituary of М. В. Шиманъ (December 1900).
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.

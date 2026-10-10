@@ -600,3 +600,6 @@ Each was flagged by a reader and then zoomed on the scan by me; the type is cris
 
 ## Repertoire, scan-confirmed 2026-10-10 (issue #151 follow-up 7)
 - `repertoire_1904-05_p011` (printed p. 101), the Moscow row for Friday 5 Nov 1904 is printed «**23** Пятница.» between «4 Четв.» and «6 Суббота.» (all three Moscow theaters; read blind, 3 cells). A slip for 5. (The row is also missing from the data, see known_issues #151 follow-up 7.)
+
+## Seen during the 2026-10-10 creators walkthrough (stored verbatim)
+- Маржецкій, Павелъ Александровичъ (SP BalletArtists): the start date prints "съ 1 іюня **1889** г." in 1890-91, 1891-92, 1892-93, 1893-94 and 1904-05, and "съ 1 іюня **1888** г." in the other fourteen volumes 1894-95..1908-09. Blind-read at 4x on all 19 pages (every digit clear), and I viewed 1893-94, 1903-04 and 1904-05 myself: the old-style 9 drops below the line, the 8 does not. Which year is right is unknown; stored as printed. One man throughout.
