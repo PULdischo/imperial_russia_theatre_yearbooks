@@ -13975,3 +13975,42 @@ institution ("Балетная труппа.", 8,760 entries) and 53 headings: �
 Артисты: 3,324, Артистки. 281, the rest staff posts and three guest headings; 0 blank.
 research.person_appearance: 8,412 rows changed, all BalletArtists, in heading_path (8,007),
 institution (7,861) and instrument (1); no other research table changed.
+
+## 2026-10-10 — scan checks on the unrostered dancers (RG: "this"); 10 of 12 done
+
+Checked each name against its page scan. **The bucket-D label did not
+survive contact with the scans for half of them.**
+
+| name | scan verdict |
+|---|---|
+| **Ячменевъ** | real man — `Карлъ, сынъ ихъ — г. Ячменевъ`, named role. Keep D. |
+| **Громовъ 1-й** | real man — inside a `гг.` list. Keep D. |
+| **Галактіонова** | real woman — plate caption `«Граціелла» … Г-жа Галактіонова`. Keep D. |
+| **Шеншина** | real woman — vertical caption `Г-жа Шеншина, Ермолова, …`. Keep D. |
+| **Лопухина** | real woman, current season — 5 Oct 1903 «Гаарлемскій тюльпанъ», among Трефилова/Виль. Keep D. *But the DB holds `Лопухова, Евгенія` (1901-02) and the print may be a slip for her — open.* |
+| **Рождественская** | **NOT a missing dancer.** `балетное училище окончили … О. Рождественская … Весь выпускъ принятъ на ИМПЕРАТОРСКУЮ С.-Петербургскую сцену` — a 1912-13 **graduate** (the class with О. А. Спесивцева and Ф. Дубровская). Reclassify. |
+| **Петровскій** | **drama-review bleed.** He is in the Tolstoy/Meyerhold tail *above* the `ОБЗОРЪ СЕЗОНА 1910—1911 — БАЛЕТЪ` heading on `review_1910-11_MSK_ballet_p000`. Bucket C. |
+| **Кусковъ** | **genuine print typo.** Scan plainly reads `гг. Кусковъ, Васильевъ`, and the SAME page lower down prints `гг. Бекефи, Н. Легатъ, Кусовъ, Васильевъ`. `Кусовъ` has 67 mentions over 13 seasons and three men in the DB; `Кусковъ` has one. Not a person — belongs in `docs/eval/genuine_print_typos.md`. |
+| **Шульгина** | **retrospective.** The 1903-04 SP occurrences sit in a history of «Наяда» (1843) with Carlotta Grisi, Perrot, Andreyanova — "и прочіе кордебалетные танцовщицы". Bucket B. |
+| **Лядова** | **retrospective.** `Далѣе хроникеръ очень хвалитъ…` — an older «Конекъ-горбунокъ» with Леньяни, Сенъ-Леонъ, Роллеръ & Вагнеръ. Real woman, but not current-season. Bucket B. |
+| Харитонова, Зыбина | **not yet checked** (1892-93 Moscow). |
+
+### A residual shared-page bleed bug
+
+```sql
+WITH hd AS (SELECT page_id, min(block_index) hi FROM raw.review_block
+  WHERE block_type='heading' AND regexp_matches(text,'ОБЗОР.? СЕЗОНА.*[0-9]{4}') GROUP BY 1)
+SELECT ... FROM raw.review_block b JOIN hd USING (page_id) WHERE b.block_index < hd.hi;
+```
+**1 page, 4 mentions**: `review_1910-11_MSK_ballet_p000` blocks b2–b6 are the
+previous drama review's tail but are attributed to 1910-11 Moscow Ballet.
+The 2026-10-06 bleed cleanup caught everything else. (Note: DuckDB has no
+`~` regex operator — an earlier version of this query silently returned 0.)
+
+### Net effect on RG's decision
+
+Of the 16 in bucket D, **5 are now out** (1 graduate, 1 drama bleed, 1 print
+typo, 2 retrospectives) and 5 are confirmed real current-season dancers.
+Tier A (Воскресенская, Барковская, Титова, Терентьева) is additionally
+corroborated: the 1905-06 Moscow p020 scan shows Титова, Барковская and
+Терентьева together in one `г-жи` list.
