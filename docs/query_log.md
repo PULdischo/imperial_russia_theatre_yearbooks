@@ -13406,3 +13406,11 @@ select count(*) from raw.person_entry;   -- 23,980 before and after
 ```
 
 Result: of 49 flagged entries (47 read blind, 2 already read), 15 were real misreads (numbers differ and add up), 34 are printed that way (2 with damaged digits); 24 summaries and 37 credit-row fields corrected, one row label; quality flags 50 -> 1.
+
+## 2026-10-10 — Printed folios of the Season Review pages that carry jubilee/farewell/death notices
+
+```sql
+select page_id, printed_folio from raw.review_page where page_id in (<the 79 page_ids in docs/jubilees_obituaries/first_read/R_reviews.csv>) order by 1
+```
+
+Result: one row per page_id, saved as docs/jubilees_obituaries/build/review_page_folios.csv for the catalogue build.
