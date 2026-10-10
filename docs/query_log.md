@@ -13458,3 +13458,24 @@ select count(*) from research.work; select count(*) from research.performance; s
 ```
 
 Result: one raw title corrected on the scan evidence (2 readers x 4 performances); the two works remain separate by genre.
+
+## 2026-10-10 — Audit of the jubilee/obituary catalogue: roster death daggers and review-sweep recall
+
+```sql
+select regexp_extract(page_id,'\d{4}-\d{2}') season, entity_type, family_name, first_name, patronymic, tenure_note_text, page_id
+from raw.person_entry
+where tenure_note_text like '%†%' or lower(tenure_note_text) like '%умер%' or lower(tenure_note_text) like '%сконч%';
+
+select b.page_id, b.block_index, b.text from raw.review_block b join raw.review_page p using (page_id)
+where p.season = '<season>' and b.text like '%<surname stem>%'
+  and regexp_matches(lower(b.text), 'умер|сконч|кончин|смерт|памят|†|утрат|потер|покойн');   -- 12 roster-only ballet deaths
+
+select page_id, block_index, text from raw.review_block
+where (text like '%†%' or lower(text) like '%покойн%'
+       or regexp_matches(lower(text), 'въ послѣдній разъ|простил|годовщин|чествован|лѣтія|-лѣтн(яго|ій) |въ память'))
+  and not regexp_matches(lower(text), '<the original sweep pattern>');
+
+select season, city, genre, count(*) from raw.review_page group by all;
+```
+
+Result: 192 roster rows carry a death mark (Musicians 77, TheaterSchoolStaff 44, ProductionTeam 28, BalletArtists 23, Administrators 20). Of the 23 ballet artists, 10 are in the catalogue and 13 are not (Брыкинъ, Морозова Е. М., Скорсюкъ, Шебергъ, Ячменева 1900-01; Симонова 1902-03; Александровъ, Рославлева, Тройниковъ 1904-05; Иванова 2-я, Константиновъ, Рябовъ А. П. 1906-07; Петипа М. И. † 1 іюля 1910 г., 1909-10). None of the 12 before 1909-10 is mentioned as dead in that season's reviews (0 rows each; the one Симонов hit is unrelated). The 1894-95 roster row reads «Доровеевъ» where obituary and review print Дороѳеевъ. The wider review pattern returned 40 blocks the original sweep could not match; real notices among them: Яковлевъ 2-й († 9 августа 1892 г.; 1891-92 SP ballet p017), Кламротъ's send-off on leaving service (1900-01 MSK opera p007), Салина 15 years (1902-03 MSK opera p013), Римскій-Корсаковъ 30 years (1900-01 MSK opera p013), last appearances of the guests Дель-Эра (1892-93) and Замбелли (1901-02), the Bolshoi 75th anniversary (1899-00). Reviews in the database: 47 season/city/genre sets, 1890-91 to 1912-13; no 1898-99, 1909-10 or 1911-12.

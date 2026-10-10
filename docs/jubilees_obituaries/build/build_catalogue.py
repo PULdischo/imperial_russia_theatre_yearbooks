@@ -50,6 +50,8 @@ for f in sorted(glob.glob(ROOT + '/first_read/[A-HJ]*.csv')):
             if d['season'] == season and surname in d['name_verbatim'] and d['relevance'] == 'mentions':
                 d['relevance'] = 'core'; d['tier_basis'] = 'RG ruling 2026-10-10: ' + why
         d['source_file'] = re.sub(r'(_p\d+(-p\d+)?)?\.(png|pdf)( \.\. p\d+)?$', '', d['source_file']) + '.pdf'
+        m = re.match(r'(\d{4})_Vol_([IVX-]+)__(.+)$', d['source_file'])     # render name -> real path under the season folder
+        if m: d['source_file'] = f"{m.group(1)} Vol {m.group(2)}/{m.group(3)}"
         rows.append(d)
 
 for d in rows: d['source_type'] = 'section'; d['see_also'] = ''

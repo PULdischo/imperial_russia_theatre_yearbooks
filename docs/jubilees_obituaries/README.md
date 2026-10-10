@@ -11,6 +11,7 @@ with the ballet-relevant ones pulled out.
 | `catalogue.csv` | Every entry: 353 person entries from the scanned section pages and stand-alone articles (`source_type` = `section`), 71 notices embedded in the Season Reviews (`source_type` = `review`), plus 27 section-heading and other-article rows. |
 | `ballet_entries.csv` | The subset with `relevance` = `core` or `mentions`. |
 | `unscanned_worth_getting.md` | Jubilee, obituary and memorial items the Yearbooks contain that are not in the scans, ranked. |
+| `AUDIT_2026-10-10.md` | What has been verified, how far, and the known gaps. |
 | `first_read/` | The per-section first readings (A–H), the Season Review notices (`R_reviews.csv`), the contents-page listings (`T1`, `T2`) and the reader briefs. |
 | `blind_second_read/` | An independent second reading of every heading name and date (V1–V5). |
 | `build/` | `compare_readings.py` (first vs second read → `reading_comparison.csv`) and `build_catalogue.py` (writes the two CSVs above). |
