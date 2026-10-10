@@ -164,6 +164,42 @@ _MANUAL_DATE_OVERRIDES: dict[tuple[str, str], tuple[str, str]] = {
 }
 
 
+def check_manual_overrides_match(present: set) -> int:
+    """Fail loudly when a scan-verified override no longer matches anything.
+
+    _MANUAL_DATE_OVERRIDES is applied by exact lookup on (page_id, printed date_text
+    without its trailing period), so an override whose key stops matching -- a page
+    re-extracted with a different date_text, a page renamed or dropped -- would simply
+    stop applying, with no error, and the printed wrong date would come back into the
+    analysis and research layers. (Contrast pipeline/research_corrections/
+    receipts_print_typos.csv, whose build fails if a row doesn't match exactly one entry.)
+
+    `present` = the set of (page_id, date_text.rstrip('.')) that exist in the run.
+    A key is STALE, and raises SystemExit, when its page is in the run (or its season
+    is, so a renamed/dropped page is caught) but the key is not. A key whose whole
+    season is absent is only counted: the pipeline is routinely run on scratch subsets.
+    Returns the number of keys that matched."""
+    pages = {p for p, _ in present}
+    seasons = {p.split('_')[1] for p in pages if p.count('_') >= 2}
+    matched, stale, absent = 0, [], 0
+    for key in _MANUAL_DATE_OVERRIDES:
+        page_id, date_text = key
+        if key in present:
+            matched += 1
+        elif page_id in pages or page_id.split('_')[1] in seasons:
+            stale.append(key)
+        else:
+            absent += 1
+    if stale:
+        raise SystemExit(
+            "_MANUAL_DATE_OVERRIDES: %d override(s) no longer match any event, so they would silently "
+            "stop applying: %s. Re-check the page's printed date_text (docs/eval/known_issues.md #69, #138) "
+            "and fix the key, or remove the override if the page no longer needs it."
+            % (len(stale), "; ".join("(%s, %r)" % k for k in stale)))
+    print(f"manual date overrides: {matched} matched, {absent} on pages outside this run")
+    return matched
+
+
 def _parse_dow_word(word: str) -> int | None:
     # A stray internal space ("Пя тница", "Суббо та" -- confirmed OCR
     # noise on several pages, docs/eval/known_issues.md #69) breaks a
@@ -341,6 +377,7 @@ def validate_and_correct(con: duckdb.DuckDBPyConnection) -> dict:
     # all of that. Trailing-period presence on date_text varies by which
     # theater's column an entry came from even for the same printed date,
     # so match on the period-stripped form.
+    check_manual_overrides_match({(page_id, (date_text or '').rstrip('.')) for _e, page_id, date_text, _d in rows})
     for event_id, page_id, date_text, _date_undate in rows:
         override = _MANUAL_DATE_OVERRIDES.get((page_id, (date_text or '').rstrip('.')))
         if override is None:

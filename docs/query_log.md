@@ -13268,3 +13268,14 @@ where e.season = '1909-10' and e.city = 'Moscow' and e.event_status = 'performed
 ```
 
 Result: 38 rows; sessions equal the printed count in 2, within 5 in 21, within 10 in 27; total absolute gap 509 (sessions) vs 650 (receipted sessions only). 1909-10 Moscow: printed 351 (drama 134 + opera 168 + ballet 49) vs 458 sessions; Малый 235 sessions with 267,530 р. against printed drama receipts 266,240.80 р.; the printed 134 is very probably a misprint for 234 (1,138 р. per performance vs 1,987 р. at 134).
+
+## 2026-10-10 -- manual date overrides: do all 13 still match the raw rows?
+
+```sql
+select distinct page_id, date_text from raw.event_entry;   -- compared with _MANUAL_DATE_OVERRIDES keys (page_id, date_text without trailing period)
+select page_id, rtrim(date_text, '.') as d, count(*) from raw.event_entry group by 1, 2;   -- rows covered per override
+select event_id, date_confidence, corrected_date_undate, drift_days, note from analysis.event_entry_date_check order by 1;   -- scratch rebuild vs production
+select event_id, date_undate, event_status from analysis.event_entry order by 1;                                            -- scratch rebuild vs production
+```
+
+Result: 13 of 13 override keys match; each covers 1-5 event rows; the scratch rebuild's date-check table (29,990 rows) and `analysis.event_entry` (32,856 rows) are identical to production.

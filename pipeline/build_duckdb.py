@@ -649,7 +649,10 @@ def build_analysis_schema(con: duckdb.DuckDBPyConnection) -> None:
         # filled with invented 'not_captured' rows (issue #143: 1898-99 p017 "28 Среда" =
         # 16 Dec, 1899-00 p037 "9 Четвергъ" = 4 May, 1899-00 p027 "25/26" = 14/15 Feb).
         # date_undate itself stays exactly as printed.
-        from validate_performance_dates import _MANUAL_DATE_OVERRIDES
+        from validate_performance_dates import _MANUAL_DATE_OVERRIDES, check_manual_overrides_match
+        # a stale override key would silently stop applying and re-invent the gap rows (see above)
+        check_manual_overrides_match({(p, (d or "").rstrip("."))
+                                      for p, d in con.execute("SELECT DISTINCT page_id, date_text FROM raw.event_entry").fetchall()})
         con.execute("CREATE OR REPLACE TEMP TABLE manual_date_override "
                     "(mo_page_id VARCHAR, mo_date_text VARCHAR, mo_date DATE)")
         con.executemany("INSERT INTO manual_date_override VALUES (?, ?, CAST(? AS DATE))",
