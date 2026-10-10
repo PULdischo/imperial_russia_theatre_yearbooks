@@ -22526,3 +22526,26 @@ Not pushed.
 - **«Зигфридъ» genre (1893-94 p. 17, Большой, 27 Четвергъ, benefit of г. Барцалъ):** three readers read «Зигфридъ, оп.»; the genre, stored null, is filled (`fix_siegfried_genre.py`); the row now joins the «Зигфридъ» opera work (38 appearances). research.work stays 3,107.
 - **Sizing the missing утро/вечеръ halves, PARTIAL.** Design: the data cannot say which cells are printed split, so (a) the 38 dates whose stored sessions are odd (a lone `evening`/`morning`, or a mix with `unspecified`) and (b) a seeded stratified random sample of 150 of the 25,172 single-`unspecified`-session dates (spread vs single-page format x Sunday vs other day; population 1,173 / 6,745 spread, 2,453 / 14,672 single-page) were each looked at on the scan by one blind reader (`BRIEF_SPLIT.md`, chunks 40-55, `split_sample_private.csv`; 3 pages photographed by hand, outside the PDFs, are excluded). Finished: chunks 43, 45, 48, 49, 50, 53, 54, 55 = 94 of 188 cells (68 of the 150 sample cells, 26 of the 38 odd dates). **Interim result:** of the 68 sample cells, 1 is printed split (S178, 1898-99 p. 30 Александринскій, Tuesday, a judgement call: the утро/вечеръ labels sit in the neighbouring Мариинскій column, «Женитьба» / «Сердце не камень»), 24 are dashes (dark days, stored as events) and 43 are single undivided cells: 1/68 (95% CI about 0.04%-8%). The odd dates are mostly labelling, not gaps: the lone `evening` events of 1893-96 are undivided cells (the label is wrong, nothing is missing; 6 of 6), the 1898-99, 1908-09 and 1910-11 mixed/lone ones are genuine splits with both halves stored, except `repertoire_1908-09_p027__s005` (Маріинскій 3 Jan 1909: only an утро half is printed, «Пиковая дама»). Not yet read: chunks 40, 41, 42, 44, 46, 47, 51, 52 (the other 82 sample cells and 12 odd dates, killed mid-way when the session paused). **So the class looks rare (single-digit percent at most, probably well under 1%), but the interval is still too wide to give a count: finishing the 8 chunks would roughly halve it.** The two known cases (1902-03 p. 20, 28 Dec; 1893-94 p. 10, 21 Nov) are still the only confirmed missing morning sessions.
 Not pushed.
+
+### #133 follow-up (2026-10-10): 17 Wikidata candidates from the Season Reviews' evidence
+
+Of 110 ballet-list creators, 75 have a Wikidata ID and 35 do not. The review text
+(`raw.review_block`) names 31 of the 35, often with detail the lists lack ("барона Б. Шеля",
+"Оге, балетмейстера Берлинскаго театра", "Эмиля Грабе", "инспектора музыки г. Гербера",
+"гр. Стенбокъ-Ферморомъ и г. Щербачевымъ").
+
+- **Candidates proposed:** 17, added to the review page (v6, tagged "REVIEWS") and saved in
+  `docs/eval/creator_wikidata_candidates_from_reviews_2026-10-10.csv` with the quotes. They are
+  PROPOSED only: nothing is in `production_creator_wikidata.csv` until RG decides.
+  - High: Шель, Симонъ А. Ю., Оге (Hoguet), Гартманъ, Щербачевъ, Пашкова, Тарновскій,
+    Лангаммеръ, Герберъ, Соколовъ С. П., Вицентини, Шенкъ.
+  - Medium: Трубецкой, Шмидтъ, Грабе, Крозе, Давыдовъ А. А.
+- **Correction:** Ѳ. А. Гартманъ is Ѳома (Thomas de Hartmann), not "Фёдор" as assumed on 2026-10-06.
+- **Not added (weak):**
+  - Маренго/Моренго: Romualdo Marenco?
+  - Венанси: Angelo Venanzi?
+  - Аржини: probably Даль-Аржине, since the reviews name Costantino Dall'Argine for Брама.
+  - Стенбокъ-Ферморъ: the reviews confirm "гр." only. The 1906-07 review gives the Эвника
+    libretto to a pseudonym, "⁂".
+- **Open lead for RG:** the 1900-01 MSK review credits Волшебный башмачекъ to "Мюльдорфера и
+  А. Симона", which supports reading the lists' "Щимана/Шиманъ" as Симонъ.
