@@ -587,3 +587,9 @@ Not applied, unresolved (a reader and the arbiter could not settle the letter): 
 - `balletartists_1904-05_MSK_p006` (printed p. 58), no. 30 Карцевъ, scan-confirmed 2026-10-10 (zoomed; crisp): «Спящая красавица (Опринцъ Фортюнэ—5)» (italic О before принцъ; the name ends in э) and «Всего—12 раза» against 41 + 61 = 102 in the same sentence. Stored as printed.
 - Damaged type, nothing asserted (scan-read 2026-10-10): `balletartists_1904-05_SP_p003` no. 78 «въ 11 операхъ—5’» and `balletartists_1907-08_SP_p006` no. 8 «Въ 7 балетахъ — 2▒»; see issue #150.
 - INFERRED/unreadable, not a confirmed misprint (2026-10-10, issue #150 follow-up 5): `balletartists_1904-05_SP_p006` no. 20 Гиллертъ prints «Пахи:а» (damaged т) and a role «м?ръ» whose second glyph is э-shaped; stored as «Пахита» and «мэръ». Damaged type is not a printer's slip; the intended letter is kept.
+
+## Jubilees and obituaries, scan-confirmed 2026-10-10 -- printer's slips, stored as printed
+Each was flagged by a reader and then zoomed on the scan by me; the type is crisp in all three. These pages are not in the database; they are cited by scan file and printed page (`docs/jubilees_obituaries/catalogue.csv`).
+- `1895-96_Obituaries.pdf` p. 21 (printed p. 504), Станкевичъ, Владиміръ Александровичъ: «скончался въ **сезенѣ** 1895—1896 гг., въ городѣ Симбирскѣ» (е for о in сезонѣ).
+- `1895-96_Obituaries.pdf` p. 15 (printed p. 498), Константиновъ, Николай Ивановичъ: «съ 1-го **сенября** 1891 года состоялъ на службѣ Дирекціи» (т dropped from сентября).
+- `1908-09_Jubilees.pdf` p. 28 (1909 Vol VI–VII, printed p. 169), О. О. Преображенская, list of her 33 ballets: ««Вол-/шебная **фрейта**» (Лиза)» (р for л in флейта; the word is broken across the line after «Вол-»).
