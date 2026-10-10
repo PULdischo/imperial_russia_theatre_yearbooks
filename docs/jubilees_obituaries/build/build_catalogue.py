@@ -172,7 +172,8 @@ for i, d in enumerate(people):
     d['see_also'] = '; '.join(dict.fromkeys(refs))
 
 for d in rows:                                           # a roster-only death of someone the catalogue already has as core
-    if d['source_type'] == 'roster' and d['relevance'] in ('undecided', 'mentions') and d.pop('_core_link', False):
+    linked = d.pop('_core_link', False)
+    if d['source_type'] == 'roster' and d['relevance'] in ('undecided', 'mentions') and linked:
         d['relevance'], d['tier_basis'] = 'core', 'same person as a core entry (see_also)'
 
 def key(d):
@@ -194,5 +195,5 @@ people = [d for d in rows if d['kind'] in ('obituary', 'jubilee', 'farewell', 'm
 print('rows', len(rows), '| person entries', len(people), collections.Counter(d['relevance'] for d in people))
 print('by source:', collections.Counter((d['source_type'], d['relevance']) for d in people))
 print('by kind (core+mentions):', collections.Counter((d['kind'], d['relevance']) for d in people if d['relevance'] != 'none'))
-print('ruled core:', [(d['season'], d['name_verbatim']) for d in rows if d['tier_basis'].startswith('RG')])
+print('tier set by an RG ruling:', [(d['season'], d['name_verbatim']) for d in rows if d['tier_basis'].startswith('RG')])
 print('mixed-script words:', bad or 'none')
