@@ -13448,3 +13448,13 @@ select count(*) from research.person; select count(*) from research.person_appea
 ```
 
 Result: see the comments; 71 of the 76 minority performances print the majority spelling on the scan, 5 print the minority spelling (Адвокатъ Пателенъ x4, Карлъ Смѣлый x1) and their 11 stored-ь siblings print ъ too.
+
+## 2026-10-10 -- the Карнаваль/Карнавалъ pair (issue #151 follow-up 1)
+
+```sql
+select canonical_title, canonical_genre, appearance_count from research.work where canonical_title like 'Карнавал%';   -- before: Карнаваль/дивертисментъ 1 and Карнавалъ/пантомима-бал. 3; after the raw fix: Карнавалъ/дивертисментъ 1 and Карнавалъ/пантомима-бал. 3
+select count(*) from research.work; select count(*) from research.performance; select count(*) from research.person;   -- 3,172 / 30,909 / 3,218 unchanged
+-- final ь/ъ title-group scan over research.work (fold final ь->ъ, ё->ѣ): 0 groups left
+```
+
+Result: one raw title corrected on the scan evidence (2 readers x 4 performances); the two works remain separate by genre.
