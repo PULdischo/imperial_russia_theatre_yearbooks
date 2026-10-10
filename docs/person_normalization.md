@@ -248,3 +248,40 @@ automatically:
 **There is no way to apply a decision.** The queue exports a blank
 `decision (QID or No)` column, and nothing reads it back. Filling the CSV in
 currently achieves nothing — which may be why it was never filled in.
+
+### The queue, worked — 2026-10-09
+
+`pipeline/apply_wikidata_decisions.py` reads the `decision (QID or No)` column
+back. Accepts go to `entities.person_wikidata_link`; **rejections go to a new
+`entities.wikidata_decision`**, and `link_wikidata.py` now consults it. That
+second half matters as much as the first: the linker skipped people already
+linked but had no memory of a rejection, so every re-run re-queried the same
+people and re-offered the same wrong candidate.
+
+The 139 rows were worked by fetching each candidate from Wikidata and judging
+it on real claims — `P31` human, `P106` occupation, `P569`/`P570` dates against
+the person's attested seasons — rather than on the search snippet:
+
+| | |
+|---|---|
+| accept, sole plausible candidate | 28 |
+| accept, dance occupation over theatre-adjacent | 1 |
+| reject, occupation or dates contradict | 35 |
+| **held for RG** | 8 (13 rows) |
+
+`entities.person_wikidata_link` 43 -> **106**; `research.person` carrying a QID
+107 -> **155**.
+
+**Anna Pavlova is the case for doing it this way.** The linker saw five
+candidates all labelled "Anna Pavlova" and correctly refused to choose. Only
+**Q151874** is a ballet dancer whose dates (1882–1931) fit her attested
+seasons; the rest fail on occupation or birth year. The claims decide what a
+label cannot.
+
+**Held, not rejected, where Wikidata simply records no occupation.** A blank
+`P106` is absence of evidence, not evidence against, and rejecting on it would
+have thrown away **Вальцъ, Карлъ Ѳедоровичъ** (81 mentions — Q18044289, Karl
+Waltz, 1846–1929, the Bolshoi machinist) and **Кшесинская 1-я, Юлія
+Феликсовна** (43 — Q105530534, 1866–1969). Both look right and both need a
+human to say so. The other six held are administrators with name-and-date-only
+Wikidata entries.
