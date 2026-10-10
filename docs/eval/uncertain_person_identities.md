@@ -137,6 +137,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** `graduates_1899-00_p001__e008`; `balletartists_1900-01_MSK_p003__e021` (Екатерина Дмитріевна's first line).
 - **Would resolve it:** the Moscow school's 1900 graduation list with the troupe engagements; a Moscow ballet personnel list for 1900-01.
 
+## 16. Трубецкой, князь И. Ю. (ballet lists + reviews) -- is he Иван Юрьевич Трубецкой (1841-1915), and why does the Petipa Society say "Nikita"?
+
+- **Status:** OPEN (RG, 2026-10-10, "not sure" on the creators review page). The creator stays as printed (`trubetskoy`, no Wikidata link).
+- **What is uncertain:** whether the composer-librettist "князь И. Ю. Трубецкой" is the Wikidata person Ivan Yuryevich Trubetskoy, [Q107119063](https://www.wikidata.org/wiki/Q107119063) (born Paris 29 Dec 1841, died 9 June 1915). That item is a genealogy record with no occupation and no Wikipedia article.
+- **For:** the yearbook prints "И. Ю." twelve times, for two works: Кипрская статуя (Moscow ballet lists 1890-91..1897-98; reviews 1890-91, 1891-92) and the opera Мелузина (Moscow, 10 Jan 1895, text by Ш. Нюитеръ; 1894-95 opera review). Name, patronymic and dates of the Wikidata person fit.
+- **Against / conflict:** the Petipa Society page [Pygmalion, or The Statue of Cyprus](https://petipasociety.com/pygmalion-or-the-statue-of-cyprus/) (premiere 11 Dec 1883 O.S., Petersburg) credits music and libretto to "Prince **Nikita** Trubetskoi", with no patronymic, dates or sources. Nothing on Wikidata ties Q107119063 to music. IMSLP has no Trubetskoy composer category (checked 2026-10-10), and a web search found no source either way.
+- **Where to look:** `raw.production_entry` rows for Кипрская статуя; `review_1890-91_MSK_ballet_p000__b007`, `review_1891-92_MSK_ballet_p000__b005`, `review_1894-95_MSK_opera_p000__b003`, `review_1894-95_MSK_opera_p004__b006`.
+- **Would resolve it:** a reference giving the composer of Пигмаліонъ / Кипрская статуя or of Мелузина with a full first name and patronymic or life dates (a music encyclopedia; the libretto or score title page of *Mélusine*); Nadine Meisner, *Marius Petipa, The Emperor's Ballet Master* (2019), which the Petipa Society cites, to see what she prints for the first name.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
