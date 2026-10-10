@@ -8,8 +8,8 @@ with the ballet-relevant ones pulled out.
 
 | File | What it is |
 |---|---|
-| `catalogue.csv` | Every entry: 353 person entries from the scanned sections and stand-alone articles (`source_type` = `section`), 71 notices from the Season Reviews (`review`), 101 roster-only death marks (`roster`), plus 28 section-heading and other-article rows. |
-| `ballet_entries.csv` | The subset with `relevance` = `core` or `mentions`. |
+| `jubilees_obituaries_all_entries.csv` | Every entry: 353 person entries from the scanned sections and stand-alone articles (`source_type` = `section`), 71 notices from the Season Reviews (`review`), 101 roster-only death marks (`roster`), plus 28 section-heading and other-article rows. |
+| `jubilees_obituaries_ballet_only.csv` | The subset with `relevance` = `core` or `mentions`. |
 | `unscanned_worth_getting.md` | Jubilee, obituary and memorial items the Yearbooks contain that are not in the scans, ranked. |
 | `AUDIT_2026-10-10.md` | What has been verified, how far, and the known gaps. |
 | `roster_deaths_matched.csv` | Every roster death mark and whether the catalogue has the person. |
@@ -52,7 +52,7 @@ Not second-read: roles, evidence quotes, and the `none` verdicts themselves.
 ## Notices from the Season Reviews
 
 The reviews report jubilee benefits, farewell performances and memorial performances that often have
-no article of their own. These are in `catalogue.csv` with `source_type` = `review`: `source_file` is
+no article of their own. These are in `jubilees_obituaries_all_entries.csv` with `source_type` = `review`: `source_file` is
 the review `page_id`, `pdf_page` the block number, `printed_page` the review page's printed folio.
 `name_verbatim` is the name as printed, usually in an oblique case; the nominative is in `notes`.
 Kinds: `jubilee`, `farewell`, `memorial_feature`, and `death_notice` for death-list names that have
@@ -67,7 +67,7 @@ e.g. a jubilee notice in a review and the obituary years later. It is a pointer,
 The printed rosters mark a death with a dagger and date («† 4 іюня 1891 г.»). `roster_deaths_matched.csv`
 (from `build/match_roster_deaths.py`) checks all 192 such rows — 170 people — against the catalogue:
 71 rows match an obituary or death notice, 121 rows (101 people) do not, almost all in seasons whose
-volumes print no obituaries. Those 101 are in `catalogue.csv` as `kind` = `death_mark`,
+volumes print no obituaries. Those 101 are in `jubilees_obituaries_all_entries.csv` as `kind` = `death_mark`,
 `source_type` = `roster`, with the name and date as stored in the database (not re-read here).
 
 Their tier comes from the roster section. `core`: ballet troupe, dance teachers, designers and

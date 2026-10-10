@@ -1,4 +1,4 @@
-"""Build catalogue.csv (every jubilee/obituary entry) and ballet_entries.csv (core + mentions)
+"""Build jubilees_obituaries_all_entries.csv (every jubilee/obituary entry) and jubilees_obituaries_ballet_only.csv (core + mentions)
 from first_read/A–H, applying the blind-second-read corrections and RG's tier rulings.
 
 Run:  uv run python docs/jubilees_obituaries/build/build_catalogue.py
@@ -180,7 +180,7 @@ def key(d):
     m = re.search(r'\d+', d['printed_page']); return (d['season'], d['source_file'], int(m.group()) if m else 0)
 rows.sort(key=key)
 out_cols = ['source_type'] + COLS[:12] + ['tier_basis'] + COLS[12:] + ['see_also']
-for name, keep in (('catalogue.csv', lambda d: True), ('ballet_entries.csv', lambda d: d['relevance'] in ('core', 'mentions', 'undecided'))):
+for name, keep in (('jubilees_obituaries_all_entries.csv', lambda d: True), ('jubilees_obituaries_ballet_only.csv', lambda d: d['relevance'] in ('core', 'mentions', 'undecided'))):
     with open(os.path.join(ROOT, name), 'w', newline='', encoding='utf-8') as f:
         w = csv.DictWriter(f, out_cols, extrasaction='ignore'); w.writeheader(); w.writerows(d for d in rows if keep(d))
 

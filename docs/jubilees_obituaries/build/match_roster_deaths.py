@@ -1,5 +1,5 @@
 """Cross-check the rosters' printed death marks («† 4 іюня 1891 г.» in raw.person_entry.tenure_note_text)
-against the obituaries and death notices in catalogue.csv.
+against the obituaries and death notices in jubilees_obituaries_all_entries.csv.
 
 Step 1 (needs the database):  uv run python docs/jubilees_obituaries/build/match_roster_deaths.py --export
         writes build/roster_death_marks.csv, a snapshot of the roster rows.
@@ -46,7 +46,7 @@ def cat_key(d):
     ini = re.search(r'[А-ЯІѲ]', rest.replace(s, ' ', 1))
     return stem(s.split()[0] if s.split() else s), (ini.group(0) if ini else '')
 
-C = [d for d in csv.DictReader(open(ROOT + '/catalogue.csv', encoding='utf-8'))
+C = [d for d in csv.DictReader(open(ROOT + '/jubilees_obituaries_all_entries.csv', encoding='utf-8'))
      if d['kind'] in ('obituary', 'death_notice', 'memorial_feature') and d['source_type'] != 'roster']
 CK = [cat_key(d) for d in C]
 rows = list(csv.DictReader(open(SNAP, encoding='utf-8')))

@@ -1,11 +1,11 @@
 """Match the death lists printed in the Season Reviews (first_read/R_reviews.csv, kind=obituary)
-to the obituary entries in catalogue.csv; names with no scanned obituary carry the roster finding
+to the obituary entries in jubilees_obituaries_all_entries.csv; names with no scanned obituary carry the roster finding
 (queries logged in docs/query_log.md, 2026-10-10). Writes review_deaths_matched.csv.
 """
 import csv, difflib, os, re
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 R = [r for r in csv.DictReader(open(ROOT + '/first_read/R_reviews.csv', encoding='utf-8')) if r['kind'] == 'obituary']
-C = [r for r in csv.DictReader(open(ROOT + '/catalogue.csv', encoding='utf-8')) if r['kind'] == 'obituary']
+C = [r for r in csv.DictReader(open(ROOT + '/jubilees_obituaries_all_entries.csv', encoding='utf-8')) if r['kind'] == 'obituary']
 
 def surname(n):
     n = re.sub(r'\b[А-ЯІѲ][а-яѣіѳ]{0,4}\.\s*', '', n)
