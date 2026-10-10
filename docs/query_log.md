@@ -13516,3 +13516,23 @@ select printed_folio from raw.review_page where page_id = '<page>';
 ```
 
 Result: 87 further blocks, almost all «заслуженный артистъ» in cast lists or plot text; one new notice (Сѣдова, 10 years, 20 Apr 1908). Nine notices kept in all from the second and third searches (docs/jubilees_obituaries/first_read/R2_reviews_wider_search.csv). review_1900-01_MSK_opera_p007 block 3 stores «¼ года» where the page prints «44 года».
+
+## 2026-10-10 — ballet-list creators still without a Wikidata ID, and what the reviews say about them
+
+```sql
+SELECT count(DISTINCT pc.person_id), count(DISTINCT pc.person_id) FILTER (WHERE p.wikidata_qid IS NOT NULL)
+FROM research.production_credit pc JOIN research.person p USING (person_id);
+SELECT l.creator_key, any_value(p.display_name), count(*), min(pe.season), max(pe.season)
+FROM entities.production_credit_link l JOIN analysis.production_entry_credit pc USING (credit_id)
+JOIN raw.production_entry pe USING (production_entry_id) JOIN research.person p ON p.person_id = l.person_id
+WHERE p.wikidata_qid IS NULL GROUP BY 1;
+SELECT block_id, text FROM raw.review_block WHERE text IS NOT NULL;  -- regex-searched in Python for each surname stem
+```
+
+Result: 110 creators, 75 with a QID, 35 without. The review text names 31 of the 35;
+there are no hits for Венанси or Острембингеръ, and the hits for Шиманъ and Богдановъ
+are other people. New identifying details from the reviews: "барона Б. Шеля"; "Оге,
+балетмейстера Берлинскаго театра"; "Эмиля Грабе"; "Эрнеста Келера"; "артистомъ балетной
+труппы А. А. Фридманомъ"; кн. И. Ю. Трубецкой as composer of the opera Мелузина; А. Ю.
+Симонъ as composer of the opera Ролла; "гр. Стенбокъ-Ферморомъ и г. Щербачевымъ" (Эвника,
+after Quo vadis?); "инспектора музыки г. Гербера"; С. П. Соколовъ dancing Степанъ in 1877.
