@@ -13269,6 +13269,61 @@ where e.season = '1909-10' and e.city = 'Moscow' and e.event_status = 'performed
 
 Result: 38 rows; sessions equal the printed count in 2, within 5 in 21, within 10 in 27; total absolute gap 509 (sessions) vs 650 (receipted sessions only). 1909-10 Moscow: printed 351 (drama 134 + opera 168 + ballet 49) vs 458 sessions; Малый 235 sessions with 267,530 р. against printed drama receipts 266,240.80 р.; the printed 134 is very probably a misprint for 234 (1,138 р. per performance vs 1,987 р. at 134).
 
+---
+
+## 2026-10-10 — resume-state check (RG: "what's up for resuming here?")
+
+Nothing new built; every figure below re-derived against
+`outputs/full_run/imperial_theaters.duckdb` rather than carried over from the
+previous session's notes.
+
+```sql
+SELECT count(*) FROM raw.review_page;           -- 1,074
+SELECT count(*) FROM raw.review_block;          -- 4,697
+SELECT count(*) FROM entities.review_mention;   -- 27,410
+SELECT count(*) FROM research.review_assertion; -- 1,952
+SELECT count(*) FROM entities.person_wikidata_link; -- 108
+```
+
+Review layer is exactly as promoted on 2026-10-09. `research.person` 3,220,
+`research.work` 3,190, `research.event` 32,826.
+
+**The "7 duplicate work rows" figure was too low, and the earlier probe was
+too narrow.** Re-run with orthographic folding (ъ→'', ѣ→е, і→и, ѳ→ф, ѵ→и,
+punctuation stripped) over `research.work.canonical_title`:
+
+```sql
+SELECT work_id, canonical_title, canonical_genre, appearance_count
+FROM research.work;
+-- then group in Python on the folded title
+```
+
+Result: **47 folded-title groups holding 96 rows.** Most are *deliberate* under
+the work-consolidation policy (RG, 2026-10-05: different art forms are different
+works) — `Фаустъ` оп./драм. поэма, `Карменъ` оп./бал., `Отелло` тр./оп.,
+`Млада` бал./оп. and so on. The genuine near-duplicate candidates are the
+groups whose rows share an art form and differ only by a slip: `Frêle/Frèle et
+forte`, `Аленъкій/Аленкій цвѣточекъ`, `Бояринъ/Боярин Нечай-Ногаевъ`, `За
+обѣдомъ/За объѣдомъ`, `Ирининская община/Ирининская, община`, `вдругъ/вдруг
+алтынь`, `Передъ/Передь свадьбой` (two genres each, 4 rows), `Полъ-Петербурга/
+Полпетербурга`, `Принцесса Греза/Принцесса, Греза`, `Спорный вопросъ/вопрос`,
+`Уголокъ/Уголок Москвы`, `Tête-à-tête` ком./com., and `Шопеніана`/`сюита`
+twice over — the one exact (title, genre) duplicate in the table. **~13 groups,
+each needing its own scan check**: a dropped final ъ is itself common in the
+later seasons' printing, so this is a worklist, not a rule.
+
+```sql
+-- does research.review_assertion publish?
+```
+No — `pipeline/build_datasette.py`'s `TABLES` list does not include it, so the
+open question from 2026-10-09 is already answered by the code as it stands: the
+assertion layer stays out of the Datasette/HF export unless it is added.
+
+1912-13 SP Ballet: `raw.review_page` holds all 4 pages, and
+`outputs/reviews/bilingual/1912-13_SP_Ballet.md` has all 4 with an **empty
+English column** — the translation pass is what is outstanding, not the
+extraction.
+
 ## 2026-10-10 -- manual date overrides: do all 13 still match the raw rows?
 
 ```sql
@@ -13327,3 +13382,17 @@ select count(*) from raw.person_entry;   -- 23,980, unchanged
 ```
 
 Result: after the row fixes the rows read 48 / 60 / 1 / 109 (production counts 14, 13) and 20 / 3 / 9 / 32 (production counts 7, 3); neither entry is flagged without an exemption; repair parity 24,861 rows, 0 differences; flags unchanged at 50.
+
+## 2026-10-10 — Roster check of Season Review death-list names with no scanned obituary (jubilee/obituary catalogue)
+
+```sql
+select regexp_extract(page_id,'\d{4}-\d{2}') season, entity_type, family_name, first_name, patronymic, tenure_note_text, page_id
+from raw.person_entry
+where starts_with(family_name, '<stem>') and starts_with(coalesce(first_name,''), '<initial>') and starts_with(coalesce(patronymic,''), '<initial>')
+  and regexp_extract(page_id,'\d{4}-\d{2}') between '1890-91' and '1908-09'
+-- stems/initials: Разуев Н А; Троицк Н Н; Ахмаков К А; Литавкин С С; Дмитріев М А; Гиллерт; Кондараки; Анненков А В; Ламбер; Смирнова Е
+-- follow-up, BalletArtists 1893-94..1896-97: Пуни; Никитинъ С%; Смирнова Евгенія
+select page_id, block_index, text from raw.review_block where <name> and <review page>   -- Пуни, Никитинъ, Казаковъ, Смирнова death lists
+```
+
+Result: six are in the BalletArtists rosters — Разуевъ Николай Александровичъ and Троицкая Надежда Николаевна (to 1896-97), Ахмакова Клавдія Александровна († 16 августа 1897 г.; the 1890-91 row reads Калерія), Литавкинъ Сергѣй Спиридоновичъ († 17 марта 1898 г.), Дмитріевъ Михаилъ Андреевичъ (1897-98 only), Гиллертъ Станиславъ Феликсовичъ († 19 декабря 1907 г.). Кондараки, Анненкова, Ламберъ: 0 rows. Rosters print Пуни Николай Цезаревичъ and Смирнова Евгенія Кирилловна (съ 19 декабря 1878 г.), against the review's «Н. П. Пуни» and the obituary's «Евгенія Дмитріевна». Review text confirms 16 сентября 1892 (Казаковъ) and 24-го іюля 1896 (Никитинъ) against the obituaries' 17th and 23rd.

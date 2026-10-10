@@ -36,10 +36,23 @@ disagreed across the 316 entries where both readings give one.
 
 Not second-read: roles, evidence quotes, and the `none` verdicts themselves.
 
+## Review death lists
+
+`review_deaths_matched.csv` (from `build/match_review_deaths.py`) pairs the 53 names in the Season
+Reviews' "Умерли: …" lists with the obituaries. 43 have an obituary in the catalogue; 6 fall in seasons
+with no scanned obituary section and are confirmed as ballet artists from the rosters (Разуевъ,
+Троицкая, Ахмакова, Литавкинъ С. С., Дмитріевъ М. А., Гиллертъ); 2 are in no roster (Кондараки,
+Анненкова); 2 are Imperial family deaths. Every name the first pass called ballet only from its
+position in a ballet review is now confirmed.
+
+Four places where the review and the obituary disagree in print:
+Смирнова (review and rosters Е. К. / Евгенія Кирилловна, obituary «Евгенія Дмитріевна»),
+Пуни (review «Н. П.», obituary and rosters Николай Цезаревичъ),
+Никитинъ (review 24 July 1896, obituary 23 July), Казаковъ (review 16 Sept 1892, obituary 17 Sept).
+
 ## Not yet done
 
-- The Season Review notices (`first_read/R_reviews.csv`) are not merged in; 25 death-list names
-  there have no job stated and need matching to the obituaries and rosters.
+- The Season Review jubilee and farewell notices (`first_read/R_reviews.csv`) are not merged in.
 - Unscanned items found in the contents pages (`T1`, `T2`) are not yet turned into a scan list.
 - Coverage is limited to what was scanned: e.g. 1894-95 jubilee pp. 333-367 and
   1907-08 obituary pp. 287-291 are not in the scans.

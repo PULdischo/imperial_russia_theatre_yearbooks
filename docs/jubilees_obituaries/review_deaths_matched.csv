@@ -1,0 +1,54 @@
+season,review_page_id,name_in_review,date_in_review,obituary_name,obituary_printed_page,obituary_dates,basis,relevance,notes
+1890-91,review_1890-91_MSK_ballet_p000,Бутенко,died season 1890-91,"Бутенко, Иванъ Филипповичъ",284-285,b. 1852; Bolshoi debut 30 Aug 1885; d. 6 Feb 1891 (diphtheria),obituary,none,
+1890-91,review_1890-91_MSK_ballet_p000,Селезневъ,died season 1890-91,"Селезневъ, Алексѣй Алексѣевичъ",296-297,b. 1853 Moscow; entered 21 Sep 1878; drowned 20 May 1891 near Bogorodskoe,obituary,none,
+1890-91,review_1890-91_MSK_ballet_p006,Бондыревъ,died season 1890-91,"Бондыревъ, Алексѣй Никитичъ",284,b. 7 Mar 1849 Moscow; entered 10 May 1869; d. 4 Feb 1891 Moscow,obituary,core,
+1890-91,review_1890-91_SP_all_p084,Казаковъ,died season 1890-91,"Казаковъ, Александръ Дмитріевичъ",288,d. 16 Mar 1891 aged 54,obituary,none,
+1890-91,review_1890-91_SP_all_p084,Славинъ,died season 1890-91,"Славинъ, Александръ Александровичъ",297,b. 9 Jan 1864; entered 16 May 1882; d. 28 Jan 1891 SP (consumption),obituary,none,
+1890-91,review_1890-91_SP_all_p084,Васильевъ 2-й,died season 1890-91,"Васильевъ, Василій Михайловичъ",285-286,b. 19 Dec 1837; served from 27 Mar 1857 (34 years); d. 8 Apr 1891 SP (apoplexy),obituary,none,
+1890-91,review_1890-91_SP_all_p084,Карпова,died season 1890-91,"Карпова, Марія Ивановна",288,b. 1844; entered 15 Dec 1870; d. 17 Apr 1891 SP,obituary,none,
+1890-91,review_1890-91_SP_all_p084,Недремская,died season 1890-91,"Недремская, Александра Григорьевна",291-292,b. 6 Mar 1863 SP; entered 26 May 1881; d. 9 Jun 1891 Pargolovo (heart rupture),obituary,core,
+1890-91,review_1890-91_SP_all_p084,Алексѣева 2-я,died season 1890-91,"Алексѣева, Наталья Александровна",283,b. 4 Nov 1865 Moscow; d. 25 May 1891 (consumption); service from 1883,obituary,core,
+1890-91,review_1890-91_SP_all_p084,Лицъ 1-я,died season 1890-91,"Лицъ, Марія Семеновна",290,b. 1 Aug 1864 Peterhof; entered 16 May 1882; sick leave 30 Sep 1890; d. 18 Oct 1890 Voronezh,obituary,core,
+1890-91,review_1890-91_SP_all_p084,Ламберъ,died season 1890-91,"Ламберъ-Робине, Жозефъ-Александръ (Lambert-Robinet, Joseph-Alexandre)",289,entered 1 Sep 1866; 25-year benefit 22 Apr 1891; d. 2 May 1891 aged 68,obituary,none,Obituary heading is the double surname Ламберъ-Робине.
+1891-92,review_1891-92_MSK_ballet_p006,Доброва,2 Aug 1892,"Доброва, Любовь Николаевна",477-478,"b. 30 Nov 1870, Moscow; graduated Moscow Theatre School 1889; d. 2 Aug 1892, Ростовъ на Дону (cholera)",obituary,core,
+1891-92,review_1891-92_SP_ballet_p000,Ильинъ,6 Dec 1891,"Ильинъ, Михаилъ Александровичъ",481,b. 17 Sept 1858; in service from 1 Nov 1877; d. 6 Dec 1891,obituary,none,
+1891-92,review_1891-92_SP_ballet_p000,Колчинъ,15 Apr 1892,"Колчинъ, Владиміръ Александровичъ",481,b. 1861; in service from 1 Aug 1885; d. 15 April 1892,obituary,none,
+1892-93,review_1892-93_SP_ballet_p019,П. П. Солнцевъ,15 May 1893,"Солнцевъ, Прохоръ Павловичъ",522,"b. 24 July 1860; d. 15 May 1893, Tsarskoe Selo",obituary,core,
+1892-93,review_1892-93_SP_opera_p000,П. М. Свободинъ,9 Oct 1892,"Свободинъ, Павелъ Матвѣевичъ",518-521,"b. 14 Dec 1850; d. 9 Oct 1892, SP (on stage, Alexandrinsky)",obituary,none,
+1892-93,review_1892-93_SP_opera_p000,С. А. Шеинъ,28 Oct 1892,"Шеинъ, Сергѣй Аристіоновичъ",524-525,b. 25 Dec 1861; d. 28 Oct 1892,obituary,none,
+1892-93,review_1892-93_SP_opera_p000,С. Н. Дмитріевъ,4 Jan 1893,"Дмитріевъ, Сергѣй Николаевичъ",505-506,"b. 1859; d. night of 3/4 Jan 1893, SP",obituary,none,
+1892-93,review_1892-93_SP_opera_p057,М. Н. Казаковъ,16 Sep 1892,"Казаковъ, Михаилъ Николаевичъ",507,"b. 1851; d. 17 Sep 1892, SP",obituary,none,SOURCE CONFLICT: review prints 16 сентября 1892; obituary prints 17-го сентября 1892 (both obituary readings agree).
+1892-93,review_1892-93_SP_opera_p057,М. В. Безсоновъ,23 Dec 1892,"Безсоновъ, Михаилъ Васильевичъ",503,"d. 23 Dec 1892, SP",obituary,none,
+1892-93,review_1892-93_SP_opera_p057,Е. К. Моландеръ 1-я,2 Jun 1893,"Моландеръ, Елена Карловна",511,b. 1854; d. 2 June 1893,obituary,none,
+1893-94,review_1893-94_MSK_ballet_p012,П. Е. Сергѣевъ,5 Mar 1894,"Сергѣевъ (Ефимовъ), Павелъ Ефимовичъ",459,d. 5 Mar 1894; b. 16 May 1865,obituary,core,
+1893-94,review_1893-94_MSK_ballet_p012,А. П. Виноградовъ,9 May 1894,"Виноградовъ, Александръ Павловичъ",452,d. 9 May 1894; b. 29 Sept 1863,obituary,core,
+1893-94,review_1893-94_SP_ballet_p025,Великой Княгини Екатерины Михайловны,before 1 May 1894,,,,not theatre staff,mentions,Imperial family death that closed the theatres; not an obituary subject.
+1893-94,review_1893-94_SP_ballet_p025,Пучковъ,4 Sep 1893,"Пучковъ, Сергѣй Ивановичъ",459,d. 4 Sept 1893; b. 7 Oct 1860,obituary,core,
+1893-94,review_1893-94_SP_ballet_p025,Михайлова 1-я,12 Dec 1893,"Михайлова 1-я (Мозгова, по мужу Кротикова), Александра Михайловна",457-458,d. night of 11/12 Dec 1893; b. 23 Mar 1865 (Moscow),obituary,core,
+1893-94,review_1893-94_SP_opera_p041,Степановъ,31 Oct 1893,"Степановъ, Петръ Григорьевичъ",459-460,d. 31 Oct 1893; b. 1841,obituary,none,
+1893-94,review_1893-94_SP_opera_p041,Акимова,13 Jan 1894,"Акимова, Любовь Хрисанфовна (по мужу Михайлова)",447,d. 13 Jan 1894; b. 16 Aug 1854,obituary,none,
+1894-95,review_1894-95_MSK_opera_p034,И. И. Ивановъ,10 May 1895,"Ивановъ (Барцалъ), Иванъ Ивановичъ",404,† 10-го мая 1895 г.; in service from 18 Aug 1881,obituary,mentions,
+1894-95,review_1894-95_MSK_ballet_p008,Н. И. Татариновъ,27 Jan 1895,"Татариновъ, Николай Ивановичъ",416-417,† 27-го января 1895 г.; b. 30 Sept 1859; in service from 7 June 1879 (seniority 30 Sept 1875),obituary,core,
+1894-95,review_1894-95_SP_ballet_p021,Т. А. Стуколкинъ,18 Sep 1894,"Стуколкинъ 1-й, Тимоѳей Алексѣевичъ",414-415,† 18-го сентября 1894 г.; b. 24 April 1829; in service from 21 March 1848 (seniority 26 April 1845); 50-year jubilee planned for spring 1895,obituary,core,
+1894-95,review_1894-95_SP_ballet_p021,І. А. Дороѳеевъ,28 Nov 1894,"Дороѳеевъ, Іосифъ Александровичъ",402,† 28-го ноября 1894 г. (Gatchina); b. 31 March 1864; in service from 1883 (seniority from 31 March 1880),obituary,core,
+1894-95,review_1894-95_SP_ballet_p021,Е. К. Смирнова,17 Apr 1895,"Смирнова (Бѣляева), Евгенія Дмитріевна",412-413,† 17-го апрѣля 1895 года; b. 19 Dec 1862; in service from 19 Dec 1878 (graduated 1880),obituary,core,"SOURCE CONFLICT: review and the 1893-95 ballet rosters print Е. К. / Евгенія Кирилловна; the obituary heading prints «Евгенія Дмитріевна» (checked on the scan). Same person: service date 19 декабря 1878 agrees. The obituary directly above is Сергѣева, Анна Дмитріевна."
+1894-95,review_1894-95_SP_ballet_p021,В. В. Волковъ,20 Aug 1895,"Волковъ, Василій Васильевичъ",400-401,† 20-го августа 1895 года; b. 24 Dec 1872; in service from 1 June 1890,obituary,core,
+1894-95,review_1894-95_SP_opera_p000,Е. И. Карпова,20 Nov 1894,"Карпова (Нестеровская), Евдокія Илларіоновна",404-405,† 20-го ноября 1894 г.; b. 24 Feb 1845; in service from 28 March 1865,obituary,none,
+1894-95,review_1894-95_SP_opera_p000,А. Ф. Ѳедотовъ,11 Feb 1895,"Ѳедотовъ, Александръ Филипповичъ",418-421,† 11-го февраля 1895 г.; b. 4 Nov 1841,obituary,none,
+1894-95,review_1894-95_SP_opera_p000,Ж. А. Михайловская,22 Mar 1895,"Михайловская (Лейброкъ), Жозефина Августовна",408-409,† 22-го марта 1895 г.; b. 1842; opera 13 Nov 1863 - 13 Nov 1871; drama from 1 July 1882,obituary,none,
+1895-96,review_1895-96_MSK_ballet_p000,А. А. Арсеньевъ,7 Mar 1896,"Арсеньевъ, Алексѣй Александровичъ",488,† 7-го марта 1896 г. (Moscow); born 1850,obituary,none,
+1895-96,review_1895-96_MSK_ballet_p014,О. Г. Бочкина,11 Feb 1896,"Бочкина, Ольга Григорьевна",489-490,† 11-го февраля 1896 г. (Moscow); born 9 July 1865,obituary,core,
+1895-96,review_1895-96_MSK_ballet_p014,С. Г. Никитинъ,24 Jul 1896,"Никитинъ, Сергѣй Герасимовичъ",503,"† 23-го іюля 1896 г. (Moscow), 35 лѣтъ отъ роду",obituary,core,SOURCE CONFLICT: review prints 24-го іюля 1896; obituary prints † 23-го іюля 1896 (both obituary readings agree).
+1895-96,review_1895-96_SP_ballet_p027,В. И. Степановъ,16 Jan 1896,"Степановъ, Владиміръ Ивановичъ",504-505,"† 16-го января 1896 г. (Moscow, Mariinskaya hospital); born 17 June 1866",obituary,core,
+1895-96,review_1895-96_SP_ballet_p027,В. А. Корсакъ,19 Feb 1896,"Корсакъ (Рейхель), Вѣра Алексѣевна",498,† 19-го февраля 1896 г. (SP); born 7 June 1869,obituary,core,
+1895-96,review_1895-96_SP_ballet_p027,Н. П. Пуни,7 Jun 1896,"Пуни, Николай Цезаревичъ",504,† 7-го іюня 1896 г. (SP); born 28 Dec 1863,obituary,core,SOURCE CONFLICT: review prints «Н. П.»; obituary and the 1893-96 rosters print Николай Цезаревичъ.
+1895-96,review_1895-96_SP_ballet_p027,М. Н. Мессарошъ,20 Jun 1896,"Мессарошъ, Марія Николаевна",502,† 20-го іюня 1896 г. (Shuvalovo); born 15 Nov 1877,obituary,core,
+1896-97,review_1896-97_MSK_ballet_p015,Н. А. Разуевъ,19 Dec 1896,,,,roster,core,"Разуевъ, Николай Александровичъ — ballet roster 1890-91..1896-97"
+1896-97,review_1896-97_SP_ballet_p028,Н. Н. Троицкая,26 Sep 1896,,,,roster,core,"Троицкая, Надежда Николаевна — ballet roster 1890-91..1896-97"
+1896-97,review_1896-97_SP_ballet_p028,К. А. Ахмакова,16 Aug 1897,,,,roster,core,"Ахмакова, Клавдія Александровна — SP ballet roster to 1897-98, printed ""† 16 августа 1897 г."" (1890-91 roster row reads Калерія)"
+1897-98,review_1897-98_SP_ballet_p000,К. А. Кондараки,28 Aug 1898,,,,unmatched,none,"not in any roster section in the database (rosters cover ballet, orchestra, school, administration, production team)"
+1897-98,review_1897-98_SP_ballet_p000,А. В. Анненкова,12 Dec 1897,,,,unmatched,none,not in any roster section in the database
+1897-98,review_1897-98_SP_ballet_p040,С. С. Литавкинъ,17 Mar 1898,,,,roster,core,"Литавкинъ, Сергѣй Спиридоновичъ — SP ballet roster to 1897-98, printed ""† 17 марта 1898 г."""
+1897-98,review_1897-98_SP_ballet_p040,М. А. Дмитріевъ,28 Mar 1898,,,,roster,core,"Дмитріевъ, Михаилъ Андреевичъ — ballet roster 1897-98 (one season only)"
+1907-08,review_1907-08_SP_ballet_p015,Гиллертъ,season 1907-08,,,,roster,core,"Гиллертъ, Станиславъ Феликсовичъ — SP ballet roster to 1907-08, printed ""† 19 декабря 1907 г."""
+1908-09,review_1908-09_SP_ballet_p003,Великій Князь Владиміръ Александровичъ,4 Feb 1909,,,,not theatre staff,mentions,Imperial family death that closed the theatres; not an obituary subject.
