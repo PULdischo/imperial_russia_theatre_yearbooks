@@ -13317,3 +13317,13 @@ select label, category_production_count, category_credit_count from raw.person_e
 ```
 
 Result: 4 entries repeat a row label and 3 more repeat a sentence label; 7 `category_production_count` values changed, nothing else among 35,599 credit rows; one wrong repair removed (1901-02 MSK p000 e023, second block 6 no longer becomes 18); flags unchanged at 50.
+
+## 2026-10-10 -- two entries left from the two-city fix: what do their rows hold, and do they pass the check unaided?
+
+```sql
+select credit_id, label, category_production_count, category_credit_count, category_credit_count_clean from analysis.person_entry_credit
+ where entry_id in ('balletartists_1897-98_MSK_p005__e010', 'balletartists_1895-96_MSK_p003__e021') and credit_type = 'category_totals';
+select count(*) from raw.person_entry;   -- 23,980, unchanged
+```
+
+Result: after the row fixes the rows read 48 / 60 / 1 / 109 (production counts 14, 13) and 20 / 3 / 9 / 32 (production counts 7, 3); neither entry is flagged without an exemption; repair parity 24,861 rows, 0 differences; flags unchanged at 50.

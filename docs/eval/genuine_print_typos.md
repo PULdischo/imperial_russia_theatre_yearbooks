@@ -580,3 +580,5 @@ Each was zoomed on the scan by me after two blind readers had read it; the type 
 - `balletartists_1904-05_SP_p001`, no. 20 Вертинская: «Въ 11 **балегахъ**—32» (г for т, with a gap in the word).
 Read the same way by two blind readers but NOT zoomed by me, stored as read: «Крощка» (щ for ш; `balletartists_1900-01_MSK_p001` no. Востокова), «переидъ» (`balletartists_1897-98_MSK_p004`, Шарпантье).
 Not applied, unresolved (a reader and the arbiter could not settle the letter): «жемчужина»/«жемчужнна» (`balletartists_1895-96_MSK_p003`, no. 95 Рославлева) and «Лунаа»/«Луиза» (`balletartists_1897-98_MSK_p004`).
+
+- INFERRED, not a confirmed misprint (added 2026-10-10): `balletartists_1897-98_MSK_p005` (printed p. 97), no. 16 Воронцовъ prints «Въ 14 балетахъ — 48; въ **13 балетахъ** — 60; въ 1 драмѣ--1. Всего — 109 разъ.» (zoomed): «балетахъ» twice; the sum 48 + 60 + 1 = 109 holds either way, and a second ballet count is odd next to «драмѣ», so «операхъ» is the likely intent. Stored as printed.
