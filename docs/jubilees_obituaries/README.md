@@ -8,11 +8,21 @@ with the ballet-relevant ones pulled out.
 
 | File | What it is |
 |---|---|
-| `catalogue.csv` | Every entry: 347 person entries from the 273 scanned section pages (`source_type` = `section`), 71 notices embedded in the Season Reviews (`source_type` = `review`), plus 27 section-heading and other-article rows. |
+| `catalogue.csv` | Every entry: 353 person entries from the scanned section pages and stand-alone articles (`source_type` = `section`), 71 notices embedded in the Season Reviews (`source_type` = `review`), plus 27 section-heading and other-article rows. |
 | `ballet_entries.csv` | The subset with `relevance` = `core` or `mentions`. |
+| `unscanned_worth_getting.md` | Jubilee, obituary and memorial items the Yearbooks contain that are not in the scans, ranked. |
 | `first_read/` | The per-section first readings (A–H), the Season Review notices (`R_reviews.csv`), the contents-page listings (`T1`, `T2`) and the reader briefs. |
 | `blind_second_read/` | An independent second reading of every heading name and date (V1–V5). |
 | `build/` | `compare_readings.py` (first vs second read → `reading_comparison.csv`) and `build_catalogue.py` (writes the two CSVs above). |
+
+## Stand-alone articles on one person
+
+Six scanned articles are not under a «Юбилеи» or «Некрологи» heading in the Yearbook but share the
+form (portrait flanked by the years or «XXV», service record, roles): Іогансонъ (1891-92), Камышевъ
+(1892-93), Манохинъ (1895-96), Петипа (1896-97) — each written for a jubilee — and Всеволожской
+(1899-00, a sketch of his work as a designer) and Волконскій (1901-02, on his leaving the
+directorship). They are in the catalogue with `kind` = `biographical_feature`; the occasion is in
+`notes`. Read once (`first_read/J_features.csv`), with no blind second read.
 
 ## Relevance tiers
 
@@ -65,6 +75,6 @@ Four places where the review and the obituary disagree in print:
 
 ## Not yet done
 
-- Unscanned items found in the contents pages (`T1`, `T2`) are not yet turned into a scan list.
+- The supplements have not been checked for obituaries (deferred; see `unscanned_worth_getting.md`).
 - Coverage is limited to what was scanned: e.g. 1894-95 jubilee pp. 333-367 and
   1907-08 obituary pp. 287-291 are not in the scans.

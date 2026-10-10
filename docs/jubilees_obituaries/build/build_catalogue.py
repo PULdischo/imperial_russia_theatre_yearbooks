@@ -25,10 +25,11 @@ CORE_BY_RULING = {
     ('1893-94', 'Гофманъ'): 'combined opera-and-ballet orchestra',
     ('1894-95', 'Морозовъ'): 'combined opera-and-ballet orchestra',
     ('1894-95', 'Гельвигъ'): 'combined opera-and-ballet orchestra',
+    ('1908-09', 'Всеволожскій'): 'administrator over the ballet (Director of the Imperial Theatres)',
 }
 
 rows = []
-for f in sorted(glob.glob(ROOT + '/first_read/[A-H]*.csv')):
+for f in sorted(glob.glob(ROOT + '/first_read/[A-HJ]*.csv')):
     for r in csv.reader(open(f, encoding='utf-8')):
         if r[0] == 'season': continue
         if len(r) == 18: r = r[:11] + r[12:]            # G: section-title row has one stray cell
@@ -40,6 +41,11 @@ for f in sorted(glob.glob(ROOT + '/first_read/[A-H]*.csv')):
             for a, b in LATIN_FIXES.items(): d['name_latin'] = d['name_latin'].replace(a, b)
             d['notes'] = (d['notes'] + ' ' if d['notes'] else '') + '[Name corrected from the blind second read, confirmed on the scan.]'
         d['tier_basis'] = 'reader' if d['relevance'] in ('core', 'mentions') else ''
+        if '_Feature_' in d['source_file'] and 'Memories' not in d['source_file'] and 'Miscellaneous' not in d['source_file'] and d['name_verbatim'] and 'plate' not in d['printed_page'][:16]:
+            # Single-person articles the Yearbook does not label as jubilees or obituaries (RG 2026-10-10).
+            occasion = {'jubilee': 'a jubilee', 'other': 'no jubilee or death'}.get(d['kind'], d['kind'])
+            d['notes'] = f"[Printed as a stand-alone article, not under a Юбилеи/Некрологи heading; occasion: {occasion}.] " + d['notes']
+            d['kind'] = 'biographical_feature'
         for (season, surname), why in CORE_BY_RULING.items():
             if d['season'] == season and surname in d['name_verbatim'] and d['relevance'] == 'mentions':
                 d['relevance'] = 'core'; d['tier_basis'] = 'RG ruling 2026-10-10: ' + why
@@ -82,13 +88,13 @@ def _sur(d):
         s = w[-1] if w else n; rest = n
     s = re.sub(r'\s*\d-[йя].*$', '', s.strip()).split()[0] if s.strip() else ''
     ini = ''.join(w[0] for w in re.findall(r'[А-ЯІѲ][а-яѣіѳ]*', (rest.replace(s, ' ', 1) if s else rest).replace('г-жа', ' ')))[:2]
-    return re.sub(r'(ъ|а|ой|аго|ымъ)$', '', s.lower()).replace('сс', 'с'), ini
+    return re.sub(r'(ъ|а|ой|ій|аго|ымъ)$', '', s.lower()).replace('сс', 'с'), ini
 # Same surname and initials, different people.
 NOT_SAME = {frozenset(p) for p in (
     ('Сампелевъ, Александръ Николаевичъ', 'Сампелевъ, Алексѣй Николаевичъ (Николаевъ, по театру Сампелевъ)'),
     ('М. И. Петипа', 'Маріи Петипа'),
 )}
-people = [d for d in rows if d['kind'] in ('obituary', 'jubilee', 'farewell', 'memorial_feature', 'death_notice') and d['name_verbatim']]
+people = [d for d in rows if d['kind'] in ('obituary', 'jubilee', 'farewell', 'memorial_feature', 'death_notice', 'biographical_feature') and d['name_verbatim']]
 keys = [_sur(d) for d in people]
 for i, d in enumerate(people):
     refs = []
@@ -118,7 +124,7 @@ for d in rows:
         for wd in re.findall(r'\w+', v):
             if re.search('[Ѐ-ӿ]', wd) and re.search('[A-Za-zͰ-Ͽ]', wd): bad.add(wd)
 import collections
-people = [d for d in rows if d['kind'] in ('obituary', 'jubilee', 'farewell', 'memorial_feature', 'death_notice')]
+people = [d for d in rows if d['kind'] in ('obituary', 'jubilee', 'farewell', 'memorial_feature', 'death_notice', 'biographical_feature')]
 print('rows', len(rows), '| person entries', len(people), collections.Counter(d['relevance'] for d in people))
 print('by source:', collections.Counter((d['source_type'], d['relevance']) for d in people))
 print('by kind (core+mentions):', collections.Counter((d['kind'], d['relevance']) for d in people if d['relevance'] != 'none'))
