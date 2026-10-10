@@ -13613,3 +13613,14 @@ Two things the scans caught that must NOT be "fixed": `Талорачва` (p005
 caption) against `Толорагва` (p020 body), and `Мадгавая` (p017 body)
 against `Магдавая` (p020 body) — the same roles spelled two ways *in the
 print*.
+
+## 2026-10-10 -- the four missing-session gaps added (issue #151 follow-up 8)
+
+```sql
+select count(*) from raw.event_entry; select count(*) from raw.event_entry_performance; select count(*) from research.event; select count(*) from research.performance;   -- 29,990 -> 29,996; 30,835 -> 30,844; 32,826 -> 32,829; 30,834 -> 30,843
+select count(*) from analysis.event_entry where event_status = 'not_captured';   -- 2,866 -> 2,863
+select season, city, repertoire_sessions, receipts_minus_printed_kopecks from research.season_stat_check;   -- 1902-03 SP -40,921 -> +65; 1904-05 Moscow -229,711 -> +8,482; 1893-94 SP -2,219,137 -> -2,170,677; 1898-99 SP +421,430 -> +586,800
+select event_id, date_text, time_of_day, receipts_text, date_confidence, corrected_date_undate from raw.event_entry ... where event_id in (<the 9 sessions>);   -- the 3 Moscow sessions: corrected_manual 1904-11-05
+```
+
+Result: see known_issues.md #151 follow-up 8.
