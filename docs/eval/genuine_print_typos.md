@@ -593,3 +593,7 @@ Each was flagged by a reader and then zoomed on the scan by me; the type is cris
 - `1895-96_Obituaries.pdf` p. 21 (printed p. 504), Станкевичъ, Владиміръ Александровичъ: «скончался въ **сезенѣ** 1895—1896 гг., въ городѣ Симбирскѣ» (е for о in сезонѣ).
 - `1895-96_Obituaries.pdf` p. 15 (printed p. 498), Константиновъ, Николай Ивановичъ: «съ 1-го **сенября** 1891 года состоялъ на службѣ Дирекціи» (т dropped from сентября).
 - `1908-09_Jubilees.pdf` p. 28 (1909 Vol VI–VII, printed p. 169), О. О. Преображенская, list of her 33 ballets: ««Вол-/шебная **фрейта**» (Лиза)» (р for л in флейта; the word is broken across the line after «Вол-»).
+
+## Repertoire, scan-confirmed 2026-10-10 (issue #151 follow-up 3) -- read blind on the scan, printed exactly as stored or as noted
+- `repertoire_1906-07_p016` (printed p. 100), 26 Воскр. evening, Александринскій: the heading prints «Безплатный **спектанль** для георгіевскихъ кавалеровъ» (нь for кл; zoomed 3x by the reader, unmistakable); the work line under it is «Правда хорошо, а счастье лучше, ком.». Stored in the annotation as printed.
+- `repertoire_1893-94_pair014__s060` (Большой, 2 Воскр. evening, benefit of г. Хлюстинъ): the ballet is printed «**Конскъ**-горбунокъ» (с for е; the 26 Dec printing and every other one read «Конекъ-горбунокъ»); the raw title keeps the normalised «Конекъ-горбунокъ» the model gave, so this slip is not in the data (logged here, one reader).

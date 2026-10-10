@@ -13489,3 +13489,18 @@ from raw.person_entry where tenure_note_text like '%†%' order by 1, 2, 3
 ```
 
 Result: 192 rows (Musicians 77, TheaterSchoolStaff 44, ProductionTeam 28, BalletArtists 23, Administrators 20), 170 distinct people; saved as docs/jubilees_obituaries/build/roster_death_marks.csv. Matched against the catalogue: 71 rows have an obituary or death notice (66 with the same date, 3 with a different printed date, 2 not comparable), 121 rows / 101 people do not.
+
+## 2026-10-10 -- banner lines in works, works in annotations, two surnames (issue #151 follow-ups 2-4)
+
+```sql
+select performance_title, genre, count(*) from raw.event_entry_performance where (genre is null or genre='') group by 1 order by 3 desc;   -- 1,303 genre-less rows; 98 banner-like (pattern бенефис|въ пользу|спектакль|вокально|концертъ ... ), 85 in 85 sessions after dropping the program items
+select event_id, annotation from raw.event_entry where annotation is not null and annotation <> '';   -- 1,688 annotations; 305 start «Бенефисъ»; 16 end like a titled work (8 genuine strandings, 8 repeating the stored works)
+select count(*) from raw.event_entry_performance; select count(*) from research.work; select count(*) from research.performance; select count(*) from research.event;   -- 30,910 -> 30,835; 3,172 -> 3,107; 30,909 -> 30,834; 32,826 unchanged
+select count(*) from research.event e where not exists (select 1 from research.performance p where p.event_id = e.event_id);   -- 10,796 -> 10,809
+select canonical_title, canonical_genre, appearance_count from research.work where canonical_title ilike 'Бенефис%' or ... ;   -- 0 rows left (was 2 fused rows + the 83)
+select count(*) from raw.event_entry where annotation ilike 'Бенефис%';   -- 305 -> 351
+-- research.season_stat_check before/after: only repertoire_charity_text_sessions (12 city-seasons) and its receipts column changed
+select person_id, display_name, first_attested_season, last_attested_season from entities.person where family_name like 'Гельцеръ%' or family_name like 'Бекъ%';   -- 48 / 26 entries, unchanged persons
+```
+
+Result: see issue #151 follow-ups 2-4 in known_issues.md.
