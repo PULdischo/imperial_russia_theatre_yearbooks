@@ -24,13 +24,20 @@ uv run python pipeline/rgia_request_tracker.py note --dela 160 --text "<n> PDF p
 uv run python pipeline/rgia_delo_intake.py --pdf <path>.pdf --delo 160 [--enhanced-pdf <path>_enhanced.pdf]
 ```
 
-Then split the PDF pages across ~4 reading agents using
-`docs/rgia/triage_instructions.md` (substitute the дело number and title), merge
-their part files into `docs/rgia/dela/160.jsonl` (one line per page, sorted,
-every line with `"delo": "160"`, `ballet` and `editorial` keys; check no page is
-missing), and rebuild:
+Then split the PDF pages across reading agents (~30 pages each) using
+`docs/rgia/triage_instructions.md`; each writes
+`outputs/rgia_dela/<delo>/triage/partK.jsonl`. Merge and check coverage:
 
 ```
+uv run python pipeline/rgia_merge_triage.py --dela 160
+```
+
+Different agents apply tags and ratings unevenly, so follow with one text-only
+consistency pass per дело (`docs/rgia/consistency_rules.md`), which writes
+`outputs/rgia_dela/<delo>/consistency_patch.jsonl`, and apply it:
+
+```
+uv run python pipeline/rgia_apply_patch.py --dela 160
 uv run python pipeline/rgia_reading_room.py
 ```
 
@@ -52,6 +59,9 @@ to `marks`: that is RG's.
   runs & finances, editors & office); "editorial" = any of them. Д. 159's
   sub-tags were added afterwards from the summaries (pages checked against the
   image are flagged in outputs/rgia_dela/159/editorial_subtags.jsonl).
+- Pages of source material supplied to the редакція for the contents (staff lists,
+  committee data) fit none of the four editorial tags; in Д. 163 pp. 9-10, 15, 23-28
+  were put back to high by hand after the consistency pass. A fifth tag is the fix.
 - Disk: an original runs ~110 MB and its enhanced copy ~150 MB. On 2026-10-09 the
   internal disk had 20 GB free, which is not enough for every дело twice over.
   Make enhanced PDFs only when needed, or keep PDFs on the backup drive.
