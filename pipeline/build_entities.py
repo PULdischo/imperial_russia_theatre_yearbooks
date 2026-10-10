@@ -273,6 +273,11 @@ _GENRE_SYNONYM_GROUPS = [
     ["proverbe", "prov", "provere"],
     ["opéra-comique", "opera-comique", "opéra-com"],
     ["opéra-bouffe", "opéra, bouffe"],
+    # Cross-language, ballet only (RG, 2026-10-10): a ballet has no language of
+    # performance, so the French billing "ballet" is the same genre as "бал.".
+    # (Plays keep the ком./com. split: there the script marks the troupe's language.)
+    # One printing in the corpus: "Les élèves de Dupré, ballet" (Михайловскій, 2 March 1901).
+    ["бал", "ballet"],
     # German
     ["lustsp", "lustspiel", "lust", "lustp", "lustpiel", "lusispiel"],
     ["schausp", "schauspiel"],

@@ -13881,3 +13881,18 @@ select e.event_id, e.date_text, c.date_confidence, e.date_undate from raw.event_
 ```
 
 Result: see known_issues.md #151 follow-up 11.
+
+## 2026-10-10 — side-finding fixes: what changed in research
+
+```sql
+SELECT count(*) FROM (SELECT * FROM bk.research.<t> EXCEPT SELECT * FROM research.<t>);  -- and the reverse, per table
+SELECT count(*) FROM research.person_appearance a JOIN bk.research.person_appearance b USING (appearance_id)
+WHERE a.heading_path IS DISTINCT FROM b.heading_path OR a.institution IS DISTINCT FROM b.institution;
+SELECT heading_path, count(*) FROM raw.person_entry WHERE entity_type='BalletArtists' AND heading_path ILIKE '%Балетмейстер%' GROUP BY 1;
+```
+
+Result: 221 person_appearance rows changed heading/institution (plus 1 reassigned to the
+merged Эдуардова); person -1; work 3 rows -> 1 (Приказъ короля, now 6 performances);
+2 performance rows, 1 production, 1 production_work and 3 review_assertion rows repointed.
+The 75 remaining "…балетмейстер…" headings are staff posts. 16 event rows and 4
+season_stat_check rows also differ: a parallel session's Repertoire edits, not this fix.

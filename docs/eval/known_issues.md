@@ -22637,3 +22637,36 @@ Society, IMSLP, German / Russian / Belarusian Wikipedia, Груцынова's ar
 - **A date label the extraction invented** (`1897-98_pair020`, printed pp. 20-21; `fix_date_label_1897_98_p20.py`): five sessions were labelled «1 Воскресенье.» but the sheet has no such column; after «28 Суббота.» come the month cell «мартъ.» and «2 П…» (the rest hidden by the crease), and the page's margin label ends the left page at «2 марта.». Corrected to «2 Понедѣльникъ.» (the weekday word completed from the calendar); the five events (2 performing, 3 dark) move from 1898-03-01 to 1898-03-02.
 - **Not changed, for the record:** `research.work` fell 3,107 -> 3,068 between my earlier build and this one; that is another thread's change (work consolidation / alias files), not these edits (the pre-change backup already had 3,068).
 Not pushed.
+
+### Side findings fixed (RG, 2026-10-10: "fix all these") -- APPLIED
+
+- **Stuck "Балетмейстеры" heading, 10 BalletArtists pages, 221 entries: FIXED** (`docs/eval/balletartists_heading_fix_2026-10-10/apply.py`).
+  No heading is printed on these continuation pages. `heading_path` is now the heading the run stands under, in that
+  season's own printed form: "Артисты" / "Артисты:" on eight men's pages, "Артистки" / "Артистки:" on two women's pages
+  (1897-98 MSK p002, 1907-08 SP p001), decided from the surnames and the numbering. `institution` is now the list title
+  printed on that season's p000, "Балетная труппа.". Only those two fields changed (parsed diff: 221 rows, 2 columns,
+  10 pages); person links are untouched (alignment check: 0 shift blocks before and after). The 75 remaining
+  "…балетмейстер…" headings are real staff posts on p000.
+- **NOT fixed, and bigger than the 10 pages: the whole BalletArtists section's `heading_path` / `institution`.** It never
+  had the section audit that Musicians (#130), ProductionTeam (#132), TheaterSchoolStaff (#134) and Administrators (#137)
+  had. Continuation pages carry `None` or invented headings ("Балетный классъ", "Учащіяся балетнаго класса", "Балерины",
+  "Балетъ", whole entry lines on 1903-04 SP p006, "Артисты / 1." on 1896-97 SP p005) and invented institutions
+  ("Императорское С.-Петербургское Театральное Училище", even on Moscow pages; "Ежегодникъ Императорскихъ театровъ";
+  "Списокъ артистовъ Императорскихъ театровъ"). The true structure looks simple (p000: list title + staff posts +
+  "Артистки"; the men's list starts where the numbering restarts at 1 under "Артисты"), so a rule-based rebuild with a
+  scan check of each season's heading pages is feasible. Waiting for RG's go-ahead.
+- **Эдуардова, Евгенія Платоновна: MERGED** (`docs/eval/person_merge_eduardova_2026-10-10.py`): the 1900-01 graduate
+  record (f2b9f4e5) into the SP dancer (7e0939fb); one person, 1900-01..1910-11, 12 entries, Wikidata link kept.
+- **Приказъ короля = Ученики Дюпрэ = Les élèves de Dupré: ONE WORK** (RG). Three rows in `work_title_aliases.csv`
+  (matching only; printed titles stay verbatim) plus one genre synonym in `build_entities.py`: "ballet" = "бал."
+  (a ballet has no language of performance; plays keep the ком./com. split). The only printing with genre "ballet" in
+  the corpus is this one. entities.work 3069 -> 3067; the work now has 6 performances (1891-1907) and all four list
+  productions. The 12 review mentions and 3 review assertions that pointed at the two retired ids were repointed by
+  hand (SQL) to the surviving id 6f78dcc1.
+- **Померанцевъ and the 1910-11 Moscow roster: NOT AN ERROR.** Scan-checked `musicians_1910-11_MSK_p000`: the section
+  is headed "Оркестры." and begins directly with "Музыканты: 1. Адамовъ"; no capellmeisters are printed in it. The
+  1908-09..1910-11 Moscow orchestra lists print no conductors at all, so none are in the data.
+- **Маржецкій's start date:** a genuine print variation (above); nothing to change.
+- A parallel session was editing Repertoire raw files during this rebuild; its changes (5 date rows on
+  `repertoire_1897-98_pair020`, 16 research events, 4 season_stat_check rows) are in the rebuilt database and are not
+  part of this fix.
