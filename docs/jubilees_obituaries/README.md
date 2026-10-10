@@ -8,10 +8,12 @@ with the ballet-relevant ones pulled out.
 
 | File | What it is |
 |---|---|
-| `catalogue.csv` | Every entry: 353 person entries from the scanned section pages and stand-alone articles (`source_type` = `section`), 71 notices embedded in the Season Reviews (`source_type` = `review`), plus 27 section-heading and other-article rows. |
+| `catalogue.csv` | Every entry: 353 person entries from the scanned sections and stand-alone articles (`source_type` = `section`), 71 notices from the Season Reviews (`review`), 101 roster-only death marks (`roster`), plus 28 section-heading and other-article rows. |
 | `ballet_entries.csv` | The subset with `relevance` = `core` or `mentions`. |
 | `unscanned_worth_getting.md` | Jubilee, obituary and memorial items the Yearbooks contain that are not in the scans, ranked. |
 | `AUDIT_2026-10-10.md` | What has been verified, how far, and the known gaps. |
+| `roster_deaths_matched.csv` | Every roster death mark and whether the catalogue has the person. |
+| `review_deaths_matched.csv` | The reviews' death lists paired with obituaries and rosters. |
 | `first_read/` | The per-section first readings (A–H), the Season Review notices (`R_reviews.csv`), the contents-page listings (`T1`, `T2`) and the reader briefs. |
 | `blind_second_read/` | An independent second reading of every heading name and date (V1–V5). |
 | `build/` | `compare_readings.py` (first vs second read → `reading_comparison.csv`) and `build_catalogue.py` (writes the two CSVs above). |
@@ -59,6 +61,26 @@ These rows rest on the database's existing review transcription and were read on
 
 `see_also` lists other entries that look like the same person (same surname and matching initials),
 e.g. a jubilee notice in a review and the obituary years later. It is a pointer, not an identity claim.
+
+## Death marks in the rosters
+
+The printed rosters mark a death with a dagger and date («† 4 іюня 1891 г.»). `roster_deaths_matched.csv`
+(from `build/match_roster_deaths.py`) checks all 192 such rows — 170 people — against the catalogue:
+71 rows match an obituary or death notice, 121 rows (101 people) do not, almost all in seasons whose
+volumes print no obituaries. Those 101 are in `catalogue.csv` as `kind` = `death_mark`,
+`source_type` = `roster`, with the name and date as stored in the database (not re-read here).
+
+Their tier comes from the roster section: ballet troupe, dance teachers, designers and machinists,
+and the ballet or opera-and-ballet orchestra are `core`; doctors, clerks, drama-course teachers and
+the drama-theatre orchestras are `none`; the rest are `undecided` (44: orchestra players whose
+orchestra the roster data does not state, non-dance staff of the school, wardrobe and lighting
+staff). `ballet_entries.csv` includes the undecided rows.
+
+Printed date conflicts found, each read on the scans on both sides:
+Соловьевъ (roster † 4 октября 1890, obituary 9 октября); Мейеръ (roster † 28 марта 1893, obituary
+25-го марта, twice); Всеволожскій (roster † 28 октября 1909, obituary † 29 октября);
+Константиновъ П. А. (ballet roster † 25 декабря 1906, orchestra roster † 27 декабря, same volume).
+The roster also supplies the year the obituary omits for Шенекерль (9 декабря 1895).
 
 ## Review death lists
 

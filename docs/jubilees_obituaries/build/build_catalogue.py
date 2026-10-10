@@ -77,6 +77,60 @@ for r in csv.DictReader(open(ROOT + '/first_read/R_reviews.csv', encoding='utf-8
                  'evidence_english': r['evidence_english'], 'author': '', 'portrait': 'no', 'notes': notes,
                  'source_type': 'review', 'see_also': ''})
 
+# --- death marks printed in the rosters, for people with no obituary or review notice --------------------
+# (roster_deaths_matched.csv, from build/match_roster_deaths.py). One row per person.
+def roster_tier(r):
+    path = (r['heading_path'] or '').lower(); subj = (r['instrument_or_subject'] or '').lower(); ros = r['roster']
+    if ros == 'BalletArtists': return 'core', 'roster: ballet troupe'
+    if ros == 'Musicians':
+        if 'балет' in path: return 'core', 'roster: ballet or opera-and-ballet orchestra (RG ruling 2026-10-10)'
+        if 'александринск' in path or 'михайловск' in path or 'военной' in path: return 'none', ''
+        return 'undecided', 'orchestra not stated in the roster data'
+    if ros == 'TheaterSchoolStaff':
+        if 'танц' in subj: return 'core', 'roster: dance teacher'
+        if 'балетное' in path: return 'undecided', 'non-dance teacher in the ballet department'
+        if 'классныя дамы' in path or 'почетные' in path: return 'undecided', 'school staff'
+        return 'none', ''
+    if ros == 'ProductionTeam':
+        if 'декоратор' in path or 'машинист' in path or 'художник' in path: return 'core', 'roster: designer or machinist (RG ruling 2026-10-10)'
+        return 'undecided', 'production staff other than designers and machinists'
+    if 'художникъ' in path: return 'core', 'roster: artist of the production office (RG ruling 2026-10-10: designers)'
+    return 'none', ''
+ROSTER_NAME = {'BalletArtists': 'ballet troupe', 'Musicians': 'orchestras', 'TheaterSchoolStaff': 'theatre school staff',
+               'ProductionTeam': 'production department', 'Administrators': 'administration'}
+if os.path.exists(ROOT + '/roster_deaths_matched.csv'):
+    seen = {}
+    for r in csv.DictReader(open(ROOT + '/roster_deaths_matched.csv', encoding='utf-8')):
+        if r['status'] != 'not in catalogue': continue
+        k = (r['family_name'], r['first_name'], r['patronymic'])
+        tier, basis = roster_tier(r)
+        if k in seen:                                    # same person, another roster section or season
+            d = seen[k]; d['notes'] += f" Also {r['season']} {ROSTER_NAME[r['roster']]} ({r['roster_page_id']}): {r['heading_path']}."
+            if r['death_mark'] != d['dates']:
+                if len(d['dates']) < 3: d['dates'] = r['death_mark']            # earlier row had a bare dagger
+                elif len(r['death_mark']) >= 3:
+                    d['notes'] += f" [SOURCE CONFLICT as stored: {r['roster_page_id']} has «{r['death_mark']}», {d['source_file']} has «{d['dates']}»." + (' Both read on the scans 2026-10-10 (pp. 15 and 29 of the 1906-07 lists): a print conflict within one volume.]' if r['family_name'] == 'Константиновъ' else ' Not checked on the scans.]')
+            order = ['none', 'undecided', 'core']
+            if order.index(tier) > order.index(d['relevance']): d['relevance'], d['tier_basis'] = tier, basis
+            continue
+        name = r['family_name'] + ', ' + ' '.join(x for x in (r['first_name'], r['patronymic']) if x)
+        d = {'source_type': 'roster', 'season': r['season'], 'source_file': r['roster_page_id'], 'pdf_page': '', 'printed_page': '',
+             'kind': 'death_mark', 'name_verbatim': name.strip(', '), 'name_latin': '', 'role': ' / '.join(x for x in (r['rank_or_title'], r['instrument_or_subject']) if x),
+             'troupe_city': ROSTER_NAME[r['roster']], 'dates': r['death_mark'], 'length': 'death mark in roster', 'relevance': tier, 'tier_basis': basis,
+             'evidence_verbatim': r['heading_path'], 'evidence_english': '', 'author': '', 'portrait': 'no',
+             'notes': 'Name and date as stored in the database (raw.person_entry); not re-read for this catalogue.', 'see_also': ''}
+        seen[k] = d; rows.append(d)
+
+# Printed date conflicts between a roster death mark and the obituary; both sides zoomed on the scans 2026-10-10.
+ROSTER_CONFLICT = {
+    ('1890-91', 'Соловьевъ, Илья Епифановичъ'): 'Roster (musicians_1890-91_SP_p005, p. 80) prints «† 4 октября 1890 г.»; this obituary prints «9 октября 1890 г. скончался».',
+    ('1892-93', 'Мейеръ, Іоганъ-Фридрихъ (Iohan Meyer)'): 'Roster (musicians_1892-93_SP_p002, p. 71) prints «† 28 марта 1893 г.»; this obituary prints 25-го марта 1893 twice (caption and text).',
+    ('1908-09', 'Всеволожскій, Иванъ Александровичъ'): 'Roster (theaterschoolstaff_1909-10_p000, p. 145) prints «Всеволожской … † 28 октября 1909 г.»; this obituary prints «† 29 октября 1909 г.» in heading and text.',
+}
+for d in rows:
+    c = ROSTER_CONFLICT.get((d['season'], d['name_verbatim']))
+    if c and d['kind'] == 'obituary': d['notes'] = (d['notes'] + ' ' if d['notes'] else '') + '[SOURCE CONFLICT: ' + c + ']'
+
 # --- see_also: other entries that look like the same person (surname + first initial where both print one) ---
 def _sur(d):
     n = d['name_verbatim']
@@ -96,7 +150,7 @@ NOT_SAME = {frozenset(p) for p in (
     ('Сампелевъ, Александръ Николаевичъ', 'Сампелевъ, Алексѣй Николаевичъ (Николаевъ, по театру Сампелевъ)'),
     ('М. И. Петипа', 'Маріи Петипа'),
 )}
-people = [d for d in rows if d['kind'] in ('obituary', 'jubilee', 'farewell', 'memorial_feature', 'death_notice', 'biographical_feature') and d['name_verbatim']]
+people = [d for d in rows if d['kind'] in ('obituary', 'jubilee', 'farewell', 'memorial_feature', 'death_notice', 'death_mark', 'biographical_feature') and d['name_verbatim']]
 keys = [_sur(d) for d in people]
 for i, d in enumerate(people):
     refs = []
@@ -108,14 +162,20 @@ for i, d in enumerate(people):
         o1, o2 = (re.search(r'(\d)-[йя]', z['name_verbatim']) for z in (d, e))
         if o1 and o2 and o1.group(1) != o2.group(1): continue
         if (e['source_file'], e['pdf_page']) == (d['source_file'], d['pdf_page']): continue
+        DEATH = ('obituary', 'death_notice', 'death_mark')
+        if d['kind'] in DEATH and e['kind'] in DEATH and abs(int(d['season'][:4]) - int(e['season'][:4])) > 1: continue   # two deaths years apart = two people
         refs.append(f"{e['season']} {e['kind']} p. {e['printed_page']}" + (' (review)' if e['source_type'] == 'review' else ''))
     d['see_also'] = '; '.join(dict.fromkeys(refs))
+
+for d in rows:                                           # a roster-only death of someone the catalogue already has as core
+    if d['source_type'] == 'roster' and d['relevance'] == 'undecided' and d['see_also']:
+        d['relevance'], d['tier_basis'] = 'core', 'same person as a core entry (see_also)'
 
 def key(d):
     m = re.search(r'\d+', d['printed_page']); return (d['season'], d['source_file'], int(m.group()) if m else 0)
 rows.sort(key=key)
 out_cols = ['source_type'] + COLS[:12] + ['tier_basis'] + COLS[12:] + ['see_also']
-for name, keep in (('catalogue.csv', lambda d: True), ('ballet_entries.csv', lambda d: d['relevance'] in ('core', 'mentions'))):
+for name, keep in (('catalogue.csv', lambda d: True), ('ballet_entries.csv', lambda d: d['relevance'] in ('core', 'mentions', 'undecided'))):
     with open(os.path.join(ROOT, name), 'w', newline='', encoding='utf-8') as f:
         w = csv.DictWriter(f, out_cols); w.writeheader(); w.writerows(d for d in rows if keep(d))
 
@@ -126,7 +186,7 @@ for d in rows:
         for wd in re.findall(r'\w+', v):
             if re.search('[Ѐ-ӿ]', wd) and re.search('[A-Za-zͰ-Ͽ]', wd): bad.add(wd)
 import collections
-people = [d for d in rows if d['kind'] in ('obituary', 'jubilee', 'farewell', 'memorial_feature', 'death_notice', 'biographical_feature')]
+people = [d for d in rows if d['kind'] in ('obituary', 'jubilee', 'farewell', 'memorial_feature', 'death_notice', 'death_mark', 'biographical_feature')]
 print('rows', len(rows), '| person entries', len(people), collections.Counter(d['relevance'] for d in people))
 print('by source:', collections.Counter((d['source_type'], d['relevance']) for d in people))
 print('by kind (core+mentions):', collections.Counter((d['kind'], d['relevance']) for d in people if d['relevance'] != 'none'))
