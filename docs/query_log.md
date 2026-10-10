@@ -13536,3 +13536,15 @@ are other people. New identifying details from the reviews: "барона Б. Ш
 труппы А. А. Фридманомъ"; кн. И. Ю. Трубецкой as composer of the opera Мелузина; А. Ю.
 Симонъ as composer of the opera Ролла; "гр. Стенбокъ-Ферморомъ и г. Щербачевымъ" (Эвника,
 after Quo vadis?); "инспектора музыки г. Гербера"; С. П. Соколовъ dancing Степанъ in 1877.
+
+## 2026-10-10 — after RG's 10 review-evidence accepts: creators with a Wikidata ID
+
+```sql
+SELECT count(DISTINCT pc.person_id), count(DISTINCT pc.person_id) FILTER (WHERE p.wikidata_qid IS NOT NULL)
+FROM research.production_credit pc JOIN research.person p USING (person_id);
+-- plus research.* EXCEPT against the pre-apply backup, per table
+```
+
+Result: 110 creators, 85 with a QID (75 before). The only research change is 10 person
+rows (the wikidata columns of Шенкъ, Щербачевъ, Оге, Гартманъ, Шель, Симонъ, Герберъ,
+Тарновскій, Лангаммеръ and Пашкова).

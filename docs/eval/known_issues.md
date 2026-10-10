@@ -22553,3 +22553,8 @@ Of 110 ballet-list creators, 75 have a Wikidata ID and 35 do not. The review tex
   Грабе, Соколовъ, Гартманъ, Шмидтъ and Давыдовъ А. А. The other 8 were already on the page with the same
   item at medium or low confidence, and the review evidence raised them to high: Пашкова, Лангаммеръ,
   Симонъ, Шенкъ, Оге, Герберъ, Щербачевъ and Тарновскій. Review page v7 adds a "From reviews" filter and tag.
+- **Applied 2026-10-10:** RG accepted 10 of the 17: Оге, Герберъ, Гартманъ, Лангаммеръ, Пашкова, Шель,
+  Шенкъ, Щербачевъ, Симонъ and Тарновскій. `production_creator_wikidata.csv` now has 82 rows, and 85 of
+  110 creators have a QID. Her notes: Оге's "Г." could be an honorific; the French title of «Аленькій
+  цвѣточекъ» is La Fleurette Rouge. She marked Трубецкой "not sure" and answered the Шиманъ = Симонъ
+  question "Not sure". Крозе, Вицентини, Грабе, Соколовъ, Шмидтъ and Давыдовъ are undecided.
