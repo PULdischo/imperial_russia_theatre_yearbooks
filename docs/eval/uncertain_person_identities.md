@@ -147,6 +147,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** `raw.production_entry` rows for Кипрская статуя; `review_1890-91_MSK_ballet_p000__b007`, `review_1891-92_MSK_ballet_p000__b005`, `review_1894-95_MSK_opera_p000__b003`, `review_1894-95_MSK_opera_p004__b006`.
 - **Would resolve it:** a reference giving the composer of Пигмаліонъ / Кипрская статуя or of Мелузина with a full first name and patronymic or life dates (a music encyclopedia; the libretto or score title page of *Mélusine*); Nadine Meisner, *Marius Petipa, The Emperor's Ballet Master* (2019), which the Petipa Society cites, to see what she prints for the first name.
 
+## 17. Стенбокъ-Ферморъ, графъ И. В. (ballet lists + reviews) -- is the librettist of Эвника the Duma member Иван Васильевич (1859-1916)?
+
+- **Status:** OPEN (RG, 2026-10-10, "not sure": "we may be able to find corroborating information elsewhere"). The creator stays as printed (`stenbock_fermor`, no Wikidata link).
+- **What is uncertain:** whether "графъ И. В. Стенбокъ-Ферморъ", co-author of the libretto of Евника / Эвника (SP 1908-09..1910-11), is Count Ivan Vasilyevich Stenbock-Fermor, [Q4441633](https://www.wikidata.org/wiki/Q4441633) (1859-1916).
+- **For:** title, surname and both initials match. He was a Petersburg court figure in these years (chamberlain 1909, member of the Third Duma from 1907, later State Council; first chairman of the Imperial All-Russian Aero Club, 1908). The 1906-07 review prints the same libretto as by "⁂" ("Программа балета соч. ⁂, музыка А. В. Щербачева"), which fits a titled official not signing at first; the 1908-09 review names "гр. Стенбокъ-Ферморомъ и г. Щербачевымъ" (after Sienkiewicz's Quo vadis?).
+- **Against:** his Russian Wikipedia article says nothing about ballet, theatre or writing; the match is on name and title alone. His son was also Иван (born 1887), but would be И. И., so the printed patronymic points to the father. The family tree has not been checked for another count with the initials И. В.
+- **Where to look:** `raw.production_entry` rows for Евника / Эвника; `review_1906-07_SP_ballet_p007__b004`; `review_1908-09_SP_ballet_p004__b004`.
+- **Would resolve it:** the printed libretto or programme of Эвника (1907 or 1909); a Fokine source (his memoirs or a biography) naming the librettist in full; press notices of the 1907 charity performance.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
