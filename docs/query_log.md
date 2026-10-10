@@ -13671,3 +13671,17 @@ JOIN raw.review_block b USING (block_id) WHERE b.block_type='figure' GROUP BY 1;
 ```
 Caption mentions resolve at `bare` 358/716 and `honorific-list` 75/247,
 against 63.7% overall.
+
+## 2026-10-10 -- what remains to work on in the Repertoire tables (RG: "what needs working on with the repertoire tables?")
+
+```sql
+select season, city, printed_count, repertoire_sessions, sessions_minus_printed, receipts_minus_printed_kopecks, repertoire_charity_text_receipts_kopecks from research.season_stat_check order by abs(receipts_minus_printed_kopecks) desc;   -- 12 of 38 city-seasons off by >=10 sessions; largest: 1909-10 Moscow +31,748 rub (charity text 30,465), 1897-98 SP -23,818, 1893-94 SP -21,707, 1893-94 Moscow -21,122, 1910-11 SP +19,412 (charity 16,864), 1904-05 SP +17,874
+select date_confidence, count(*) from analysis.event_entry_date_check group by 1;   -- verified 29,559; intra_block_disagreement 364; corrected_manual 42; corrected 31
+select event_status, count(*) from analysis.event_entry group by 1;   -- performed 22,143; no_performance 7,853; not_captured 2,863
+select count(*) from analysis.event_entry where event_status = 'performed' and receipts_total_kopecks is null;   -- 2,933
+select count(*) from raw.event_entry e where not exists (select 1 from raw.event_entry_performance p where p.event_id = e.event_id) and e.annotation is not null and e.annotation <> '';   -- 124 annotation-only events
+select count(distinct title_key) from entities.work_genre_candidate;   -- 37 titles printed in more than one genre
+select count(*) from entities.work where excerpt_of_work_id is null and (canonical_title ilike '%д. %' or canonical_title ilike '%карт.%' or canonical_title ilike '%сцена%');   -- 29 excerpt-shaped titles not linked to a parent (275 linked)
+```
+
+Result: see the answer given to RG; no data changed.
