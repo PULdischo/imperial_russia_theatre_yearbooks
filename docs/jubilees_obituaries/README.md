@@ -69,7 +69,8 @@ brief and the flags). Of 188 flags, 124 were already in the catalogue; I read th
 context. Added from them: Ауэръ's last participation (22 Oct 1906), the second Чайковскій memorial
 performance (22 Feb 1894), the Чайковскій monument-fund performance in Moscow (7 Apr 1895), and the
 ballet's wreath at Барцаль's jubilee (which moves him to `mentions`). Two further kinds were added
-for things the read turned up that are not jubilees or farewells in the strict sense:
+for things the read turned up that are not jubilees or farewells in the strict sense (kept at RG's
+decision, 2026-10-11):
 
 - `departure` — a leaving noted in passing, with no farewell: Кякштъ (1908), Гримальди (1906),
   Кшесинская's withdrawal (1912-13), Стрепетова (1890).
