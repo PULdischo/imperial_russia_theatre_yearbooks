@@ -343,11 +343,13 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
     con.executemany("INSERT INTO prod_work VALUES (?, ?, ?)", prod_work)
     con.execute("""
         INSERT INTO research.production
-        SELECT e.production_entry_id, b.work_id, e.season, e.city, e.title, e.list_number, e.is_premiere,
+        SELECT e.production_entry_id, coalesce(m.to_id, b.work_id), e.season, e.city, e.title, e.list_number, e.is_premiere,
                e.description_text, e.total_count, e.n_dates,
                (SELECT count(*) FROM prod_work pw WHERE pw.production_id = e.production_entry_id),
                e.printed_page_number, e.source_file
-        FROM raw.production_entry e LEFT JOIN prod_best b ON b.production_id = e.production_entry_id
+        FROM raw.production_entry e
+        LEFT JOIN prod_best b ON b.production_id = e.production_entry_id
+        LEFT JOIN work_merge m ON m.from_id = b.work_id
     """)
     con.execute("""
         CREATE TABLE research.production_work (
@@ -356,7 +358,15 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
             n_matched_dates INTEGER,
             PRIMARY KEY (production_id, work_id)
         )""")
-    con.execute("INSERT INTO research.production_work SELECT * FROM prod_work")
+    # production_work's PK is (production_id, work_id), so a merge can make
+    # two rows collide -- sum their matched dates rather than failing.
+    con.execute("""
+        INSERT INTO research.production_work
+        SELECT pw.production_id, coalesce(m.to_id, pw.work_id) AS work_id,
+               sum(pw.n_matched_dates)
+        FROM prod_work pw LEFT JOIN work_merge m ON m.from_id = pw.work_id
+        GROUP BY 1, 2
+    """)
     con.execute("""
         CREATE TABLE research.production_credit (
             credit_id VARCHAR PRIMARY KEY,
@@ -545,11 +555,51 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         n = con.execute("SELECT count(*) FROM entities.work WHERE canonical_title = ?", [verbatim]).fetchone()[0]
         if n == 0:
             raise SystemExit(f"RESEARCH_TITLE_CORRECTIONS: {verbatim!r} matches no entities.work row")
+
+    # A title correction renames a work; it must also MERGE it. "Шоиеніана"
+    # is a genuine print typo for "Шопеніана" (docs/eval/genuine_print_typos.md),
+    # so the raw layer keeps the typo and this layer shows the real title --
+    # but before 2026-10-10 the corrected row kept its own work_id, so
+    # research.work held TWO 'Шопеніана' rows and a researcher joining
+    # through either got 11 performances or 1, never all 12. Identity has to
+    # follow the title.
+    #
+    # Scoped deliberately to collisions a correction CREATES: entities.work
+    # has no exact (title, genre) duplicates of its own, and merging
+    # near-duplicate spellings is a separate, scan-checked judgment call, not
+    # something a build script should decide.
+    con.execute("""
+        CREATE OR REPLACE TEMP TABLE work_merge AS
+        SELECT w.work_id AS from_id, t.work_id AS to_id
+        FROM entities.work w
+        JOIN title_correction tc ON tc.verbatim_title = w.canonical_title
+        JOIN entities.work t
+          ON t.canonical_title = tc.corrected_title
+         AND t.canonical_genre IS NOT DISTINCT FROM w.canonical_genre
+         AND t.work_id <> w.work_id
+    """)
+    merges = con.execute("SELECT count(*) FROM work_merge").fetchone()[0]
+    if merges:
+        for f, t, title in con.execute("""
+                SELECT m.from_id, m.to_id, w.canonical_title FROM work_merge m
+                JOIN entities.work w ON w.work_id = m.to_id""").fetchall():
+            print(f"  title correction merges {f} -> {t} ({title})")
+    # A work must not be merged away AND be a merge target.
+    if con.execute("""SELECT count(*) FROM work_merge a JOIN work_merge b
+                      ON a.to_id = b.from_id""").fetchone()[0]:
+        raise SystemExit("work_merge is chained; resolve the chain before building")
     con.execute("""
         INSERT INTO research.work
         SELECT w.work_id, coalesce(tc.corrected_title, w.canonical_title) AS canonical_title,
                coalesce(g.genre, w.canonical_genre) AS canonical_genre,
-               w.appearance_count, w.excerpt_of_work_id, w.excerpt_note,
+               w.appearance_count + coalesce(
+                   (SELECT sum(mw.appearance_count) FROM work_merge m
+                    JOIN entities.work mw ON mw.work_id = m.from_id
+                    WHERE m.to_id = w.work_id), 0) AS appearance_count,
+               coalesce((SELECT m.to_id FROM work_merge m
+                         WHERE m.from_id = w.excerpt_of_work_id),
+                        w.excerpt_of_work_id) AS excerpt_of_work_id,
+               w.excerpt_note,
                CASE WHEN g.genre IS NOT NULL THEN 'research_rule'
                     WHEN w.canonical_genre IS NOT NULL THEN 'printed' END AS genre_source,
                g.note AS genre_note,
@@ -559,6 +609,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         LEFT JOIN genre_rule g ON regexp_matches(w.canonical_title, g.pattern)
         LEFT JOIN parent_genre_ballet pg ON pg.work_id = w.work_id
         LEFT JOIN title_correction tc ON tc.verbatim_title = w.canonical_title
+        WHERE w.work_id NOT IN (SELECT from_id FROM work_merge)
     """)
 
     con.execute("""
@@ -773,12 +824,13 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         SELECT
             eep.performance_id,
             eep.event_id,
-            wl.work_id,
+            coalesce(m.to_id, wl.work_id) AS work_id,
             eep.performance_order,
             eep.performance_title AS verbatim_title,
             eep.genre AS verbatim_genre
         FROM raw.event_entry_performance eep
         JOIN entities.work_link wl ON wl.raw_performance_id = eep.performance_id
+        LEFT JOIN work_merge m ON m.from_id = wl.work_id
         WHERE eep.event_id NOT IN (SELECT e.event_id FROM analysis.event_entry e
                                    JOIN excluded_page x USING (page_id))
     """)

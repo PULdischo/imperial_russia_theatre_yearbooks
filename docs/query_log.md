@@ -13685,3 +13685,78 @@ select count(*) from entities.work where excerpt_of_work_id is null and (canonic
 ```
 
 Result: see the answer given to RG; no data changed.
+
+## 2026-10-10 — near-duplicate works: 15 same-art-form collisions -> 2 (RG: "do both")
+
+Grouped `research.work` on an orthographically folded title (ъ/ь dropped,
+ѣ→е, і→и, ѳ→ф, punctuation stripped) and kept only groups whose rows share
+a *genre family*, so the deliberate art-form splits (`Фаустъ` оп./драм.
+поэма, `Карменъ` оп./бал., `Отелло` тр./оп.) are excluded by construction:
+**15 groups.** Three distinct causes, each fixed at its own layer.
+
+**1. A title correction renamed without merging.** `Шоиеніана` is a
+confirmed genuine print typo for `Шопеніана`
+(`docs/eval/genuine_print_typos.md`), so raw keeps it and
+`RESEARCH_TITLE_CORRECTIONS` relabels at the research layer — but the
+corrected row kept its own `work_id`:
+
+```sql
+SELECT work_id, canonical_title, appearance_count FROM research.work
+WHERE canonical_title = 'Шопеніана';          -- TWO rows: 11 and 1
+```
+So a researcher joining through either got 11 performances or 1, never 12.
+`build_research_model.py` now builds a `work_merge` table from the
+corrections and maps `research.work`, `performance`, `production` and
+`production_work` through it. After: one row, `appearance_count` 12, and
+all 12 performances (1908-09 ×6, 1909-10 ×3, 1910-11 ×3) on it. Raw and
+entities still hold `Шоиеніана` verbatim.
+
+**2. The genre-suffix stripper ate real title words.** `_GENRE_SUFFIX_RE`
+matches any short comma-tailed Cyrillic token, which is right for
+`Жизнь за Царя, оп.` and wrong for `Ирининская, община` and
+`Принцесса, Греза`, where the comma is a slip inside a two-word title —
+each was split into two works. Requiring a trailing period would have
+broken 3 correct strips to fix 2 wrong ones (25 titles strip today, only
+20 end in a period). Instead the stripper now checks the token against the
+genres the corpus actually prints:
+
+```sql
+SELECT DISTINCT genre FROM raw.event_entry_performance;   -- 260 after length filter
+```
+`прологъ`, `пьеса`, `оперетта` are printed genres; `община` and `Греза`
+are not. All six test cases behave.
+
+**3. Title identity ignored ъ/ь and Latin accents.** `_match_key` now
+folds both. Measured before applying, and every group inspected:
+
+- **ъ/ь: 11 groups**, all one play — `Уголокъ`/`Уголок Москвы`,
+  `Бояринъ`/`Боярин Нечай-Ногаевъ`, `Надо разводиться`/`разводится`,
+  `Закать`/`Закатъ`, `Лѣсь`/`Лѣсъ`, `Ирэнь`/`Ирэнъ`.
+- **Latin diacritics: 20 groups**, all French — `Le Bésigue`/`Le Besigue`,
+  `L'étrangère`/`L'Etrangère`, `Frèle`/`Frêle et forte`.
+- **Deliberately NOT folded:** a blanket NFD strip also turns Cyrillic `й`
+  into `и` and would have merged `Маіорша`/`Майорша` and
+  `не идетъ`/`нейдетъ`. Those may be the same works, but that is a
+  judgment about Russian spelling, not an accent. Latin-only.
+
+`entities.work` 3,107 → 3,069; **38 merges, every one listed and checked
+by eye** against the pre-change backup. (Two odd-looking rows in the
+crosswalk — `Бенефисъ г-жи Никулиной`→`Ложь`,
+`Въ пользу инвалидовъ. Евгеній Онѣгинъ`→`Евгеній Онѣгинъ` — are
+**pre-existing** merges the crosswalk re-dated, not caused by this change;
+confirmed by diffing against the backup.)
+
+| | before | after |
+|---|---|---|
+| same-art-form title collisions | 15 | **2** |
+| exact (title, genre) duplicates | 1 | **0** |
+| `research.work` | 3,107 | 3,068 |
+| review work-consolidation collision sets | 13 | 11 |
+| work mentions joining `research.work` | 2,921 | 2,927 |
+
+The 2 that remain are both correct: `Очарованный лѣсъ` бал./изъ бал. is a
+properly linked excerpt (`excerpt_of_work_id` set), and `Tête-à-tête`
+ком./com. is the documented language-of-performance distinction that
+`_fold_genre` refuses to fold. Dangling references after the rebuild:
+`performance`→`work` 0, `production_work`→`work` 0,
+`review_assertion`→`work` 0, `review_mention`→`work` 0.

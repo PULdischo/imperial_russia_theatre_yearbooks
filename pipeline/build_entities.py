@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import unicodedata
 import uuid
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -98,6 +99,27 @@ def _title_key(title: str) -> str:
 _GENRE_SUFFIX_RE = re.compile(r",\s*[а-яА-Я\-]{1,10}\.?\s*$")
 
 
+def _is_latin(ch: str) -> bool:
+    return "LATIN" in unicodedata.name(ch, "")
+
+
+def _deaccent_latin_only(s: str) -> str:
+    """Strip combining marks from Latin letters; leave Cyrillic composed.
+
+    A blanket NFD+strip would decompose Cyrillic й into и + breve and throw
+    the breve away, quietly merging "Маіорша" with "Майорша". Only the
+    Latin side of this corpus has the accent-inconsistency problem.
+    """
+    out = []
+    for ch in s:
+        d = unicodedata.normalize("NFD", ch)
+        if len(d) > 1 and _is_latin(d[0]):
+            out.append(d[0])
+        else:
+            out.append(ch)
+    return "".join(out)
+
+
 def _match_key(title_key: str) -> str:
     """Grouping key for works (RG, 2026-10-05; docs/work_normalization.md,
     "Consolidation"): the title key with ё folded to е and every non-letter,
@@ -106,8 +128,27 @@ def _match_key(title_key: str) -> str:
     мышенка", "Правда—хорошо" / "Правда хорошо", "Chez l'Avocat" / "Chez
     l’Avocat") group together. Matching only: canonical_title stays the most
     common verbatim printing, and work_id is still derived from that
-    printing's _title_key (below), so works that don't merge keep their id."""
-    return re.sub(r"[\W_]+", "", title_key.replace("ё", "е"))
+    printing's _title_key (below), so works that don't merge keep their id.
+
+    Also folded, added 2026-10-10 after 15 same-art-form title collisions
+    surfaced in research.work:
+
+    * **ъ and ь are dropped.** They split one play into two works over a
+      single slip -- "Уголокъ"/"Уголок Москвы", "Бояринъ"/"Боярин
+      Нечай-Ногаевъ", "Надо разводиться"/"разводится", "Кто любить"/"Кто
+      любитъ миръ". All 11 groups this merges were checked by eye and every
+      one is a single play. The raw and entities layers still carry each
+      printing verbatim; this is identity only.
+    * **Latin diacritics are stripped, Cyrillic is left alone.** The French
+      repertoire is printed inconsistently accented -- "Le Bésigue"/"Le
+      Besigue", "L'étrangère"/"L'Etrangère", "Frèle"/"Frêle et forte", 20
+      groups. Restricted to Latin on purpose: a blanket NFD fold also turns
+      Cyrillic й into и (via its combining breve), which would silently
+      merge "Маіорша"/"Майорша" and "не идетъ"/"нейдетъ". Those may well be
+      the same works, but that is a judgment call about Russian spelling,
+      not an accent, and it is not this function's to make."""
+    k = re.sub(r"[\W_]+", "", title_key.replace("ё", "е"))
+    return _deaccent_latin_only(k.replace("ъ", "").replace("ь", ""))
 
 
 # Compound genre suffixes (RG, 2026-10-05): ", ком.-вод.", ", драмат. легенда.",
@@ -117,9 +158,49 @@ def _match_key(title_key: str) -> str:
 # title and genre stay verbatim on every performance.
 _COMPOUND_GENRE_SUFFIX_RE = re.compile(
     r",\s*[а-яѣі]{1,10}\.(?:\s?[-—]?\s?[а-яѣіё]{1,12}\.?){1,2}\s*$")
+#: Printed genre words, lowercased and de-dotted, loaded from the data by
+#: load_printed_genres(). Until it is called, the suffix stripper falls back
+#: to requiring a trailing period, which is the conservative reading.
+_PRINTED_GENRES: set[str] = set()
+
+
+def load_printed_genres(con) -> None:
+    """Populate the genre vocabulary the suffix stripper consults.
+
+    _GENRE_SUFFIX_RE matches ANY short comma-tailed Cyrillic token, which is
+    right for "Жизнь за Царя, оп." and wrong for "Ирининская, община" and
+    "Принцесса, Греза" -- there the comma is a transcription slip inside a
+    real two-word title, and stripping it split each play into two works
+    (found 2026-10-10). Checking the token against the genres the corpus
+    actually prints separates the two cleanly: прологъ, пьеса and оперетта
+    are printed genres, община and Греза are not.
+    """
+    global _PRINTED_GENRES
+    # Read from raw, not entities.work: raw is always present (entities.work
+    # is the PREVIOUS run's output and is absent on a first build) and it is
+    # the actual printed-genre source.
+    _PRINTED_GENRES = {
+        (g or "").strip().rstrip(".").lower()
+        for (g,) in con.execute(
+            "SELECT DISTINCT genre FROM raw.event_entry_performance").fetchall()
+        if g and len(g.strip()) <= 12
+    }
+
+
+def _suffix_is_genre(m: re.Match) -> bool:
+    tok = m.group(0).lstrip(",").strip()
+    return tok.endswith(".") or tok.rstrip(".").lower() in _PRINTED_GENRES
+
+
 def _strip_genre_suffix(title: str) -> str:
-    t = _GENRE_SUFFIX_RE.sub("", title).strip()
-    return _COMPOUND_GENRE_SUFFIX_RE.sub("", t).strip()
+    t = title
+    m = _GENRE_SUFFIX_RE.search(t)
+    if m and _suffix_is_genre(m):
+        t = t[:m.start()].strip()
+    m = _COMPOUND_GENRE_SUFFIX_RE.search(t)
+    if m:
+        t = t[:m.start()].strip()
+    return t.strip()
 
 
 def _fold_genre(genre: str | None) -> str | None:
@@ -449,6 +530,7 @@ def _excerpt_fallback(title: str):
 
 
 def build_work(con: duckdb.DuckDBPyConnection) -> None:
+    load_printed_genres(con)
     # Previous run's links, for id continuity (below) and the crosswalk.
     old_link: dict[str, str] = {}
     old_title: dict[str, str] = {}
