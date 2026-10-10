@@ -8,7 +8,7 @@ with the ballet-relevant ones pulled out.
 
 | File | What it is |
 |---|---|
-| `catalogue.csv` | Every entry on the 273 scanned pages: 347 person entries (obituaries, jubilees, memorial features) plus 27 section-heading and other-article rows. |
+| `catalogue.csv` | Every entry: 347 person entries from the 273 scanned section pages (`source_type` = `section`), 71 notices embedded in the Season Reviews (`source_type` = `review`), plus 27 section-heading and other-article rows. |
 | `ballet_entries.csv` | The subset with `relevance` = `core` or `mentions`. |
 | `first_read/` | The per-section first readings (A–H), the Season Review notices (`R_reviews.csv`), the contents-page listings (`T1`, `T2`) and the reader briefs. |
 | `blind_second_read/` | An independent second reading of every heading name and date (V1–V5). |
@@ -36,6 +36,19 @@ disagreed across the 316 entries where both readings give one.
 
 Not second-read: roles, evidence quotes, and the `none` verdicts themselves.
 
+## Notices from the Season Reviews
+
+The reviews report jubilee benefits, farewell performances and memorial performances that often have
+no article of their own. These are in `catalogue.csv` with `source_type` = `review`: `source_file` is
+the review `page_id`, `pdf_page` the block number, `printed_page` the review page's printed folio.
+`name_verbatim` is the name as printed, usually in an oblique case; the nominative is in `notes`.
+Kinds: `jubilee`, `farewell`, `memorial_feature`, and `death_notice` for death-list names that have
+no obituary in the scanned sections. Death-list names that do have an obituary are not repeated.
+These rows rest on the database's existing review transcription and were read once.
+
+`see_also` lists other entries that look like the same person (same surname and matching initials),
+e.g. a jubilee notice in a review and the obituary years later. It is a pointer, not an identity claim.
+
 ## Review death lists
 
 `review_deaths_matched.csv` (from `build/match_review_deaths.py`) pairs the 53 names in the Season
@@ -52,7 +65,6 @@ Four places where the review and the obituary disagree in print:
 
 ## Not yet done
 
-- The Season Review jubilee and farewell notices (`first_read/R_reviews.csv`) are not merged in.
 - Unscanned items found in the contents pages (`T1`, `T2`) are not yet turned into a scan list.
 - Coverage is limited to what was scanned: e.g. 1894-95 jubilee pp. 333-367 and
   1907-08 obituary pp. 287-291 are not in the scans.
