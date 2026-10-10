@@ -13830,3 +13830,14 @@ Result: the only changes are 11 person rows (new QIDs for Богдановъ А.
 Вицентини, Фридманъ, Грабе, Соколовъ С. П., Крозе, Шмидтъ, Бернаделли, Гриммъ and Келеръ
 Эрнестъ) and 1 production_credit row (Шмидта, role author -> music). 110 creators, 96 with
 a QID (85 before).
+
+## 2026-10-11 — Full read of the review text for jubilee/farewell/death notices
+
+```sql
+select p.season, b.page_id, b.block_index, b.block_type, b.text
+from raw.review_block b join raw.review_page p using (page_id)
+where b.text is not null and length(trim(b.text)) > 0 order by b.page_id, b.block_index;
+select block_type, text, caption_text from raw.review_block where page_id = '<page>' and block_index = <n>;   -- 23 candidate passages read in context
+```
+
+Result: 3,790 blocks with text (1,403,335 characters), split into 14 chunks and read in full. 188 flags (docs/jubilees_obituaries/first_read/review_full_read/); 64 not already in the catalogue; 14 rows added to docs/jubilees_obituaries/first_read/R2_reviews_wider_search.csv.

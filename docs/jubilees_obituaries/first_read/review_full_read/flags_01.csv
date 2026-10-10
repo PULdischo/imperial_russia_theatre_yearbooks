@@ -1,0 +1,20 @@
+page_id,block_index,kind,name_as_printed,quote_verbatim,why
+1890-91_MSK_ballet_p000,1,death,Бутенко,"Въ истекшемъ сезонѣ умерли: пѣвецъ Бутенко и хористъ Селезневъ. Оста- вили службу: Орловская,",singer died during the season
+1890-91_MSK_ballet_p000,1,death,Селезневъ,"Въ истекшемъ сезонѣ умерли: пѣвецъ Бутенко и хористъ Селезневъ. Оста- вили службу: Орловская,",chorister died during the season
+1890-91_MSK_ballet_p006,3,death,Бондыревъ,"Въ теченіи сезона умеръ танцовщикъ Бондыревъ. Оставили службу: Андрея- нова 1-я,",dancer died during the season
+1890-91_SP_all_p030,2,unsure,А. П. Бородинъ,23 октября дана была первая новинка въ русской оперѣ—произведеніе покойнаго А. П. Бородина—«Князь Игорь». Смерть помѣшала композитору вполнѣ закончить названную,"""покойнаго"" + death prevented finishing the opera; Borodin died 1887, not this season - flagged in case posthumous premiere counts as memorial"
+1890-91_SP_all_p047,2,unsure,Стрепетова,"Вскорѣ пьеса сошла съ репертуара, такъ какъ г-жа Стрепетова оставила службу.",left the service mid-season right after appearing in Pisarev benefit; no farewell ceremony stated
+1890-91_SP_all_p075,5,farewell,Жукова 1-я,прощальные бенефисы г-жи Жуковой 1-й (20 февраля) и г. Карсавина (2 марта).,farewell benefit 20 February (Kalkabrino 3rd perf.)
+1890-91_SP_all_p075,5,farewell,Карсавинъ,прощальные бенефисы г-жи Жуковой 1-й (20 февраля) и г. Карсавина (2 марта).,farewell benefit 2 March (Kalkabrino 4th perf.)
+1890-91_SP_all_p083,1,jubilee,Ламберъ,"которая была дана 22 апрѣля, въ бенефисъ суфлера Ламбера, данный ему за 25-лѣтнюю службу.","benefit given to prompter for 25 years of service, 22 April"
+1890-91_SP_all_p084,3,death,Казаковъ,Въ теченіи сезона скончались артисты русской драматической труппы: Каза- ковъ и Славинъ.,drama troupe artist died during the season
+1890-91_SP_all_p084,3,death,Славинъ,Въ теченіи сезона скончались артисты русской драматической труппы: Каза- ковъ и Славинъ.,drama troupe artist died during the season
+1890-91_SP_all_p084,4,death,Васильевъ 2-й,"Изъ оперныхъ артистовъ умерли: Васильевъ 2-й и хористка Карпова. Оста- вили службу: Фриде,",opera artist died during the season
+1890-91_SP_all_p084,4,death,Карпова,"Изъ оперныхъ артистовъ умерли: Васильевъ 2-й и хористка Карпова. Оста- вили службу: Фриде,",chorister died during the season
+1890-91_SP_all_p084,5,death,Недремская,"Изъ балетнаго персонала умерли: Недремская, Алексѣева 2-я и Лицъ 1-я.",ballet personnel died during the season
+1890-91_SP_all_p084,5,death,Алексѣева 2-я,"Изъ балетнаго персонала умерли: Недремская, Алексѣева 2-я и Лицъ 1-я.",ballet personnel died during the season
+1890-91_SP_all_p084,5,death,Лицъ 1-я,"Изъ балетнаго персонала умерли: Недремская, Алексѣева 2-я и Лицъ 1-я.",ballet personnel died during the season
+1890-91_SP_all_p084,6,death,Ламберъ,"Во французской труппѣ умеръ суфлеръ Ламберъ. Оставили службу: Ан- ріо,",French troupe prompter died (same man whose 25-year benefit was 22 April)
+1891-92_MSK_ballet_p006,8,death,Доброва,Умерла г-жа Доброва (2 августа 1892 г.).,died 2 August 1892
+1891-92_SP_ballet_p000,5,death,Ильинъ,Умерли: хористы Ильинъ (6 декабря 1891 г.) и Колчинъ (15 апрѣля 1892 г.).,chorister died 6 December 1891
+1891-92_SP_ballet_p000,5,death,Колчинъ,Умерли: хористы Ильинъ (6 декабря 1891 г.) и Колчинъ (15 апрѣля 1892 г.).,chorister died 15 April 1892

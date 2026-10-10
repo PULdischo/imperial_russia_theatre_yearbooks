@@ -60,7 +60,8 @@ for d in rows: d['source_type'] = 'section'; d['see_also'] = ''
 FOLIO = {r['page_id']: r['printed_folio'] for r in csv.DictReader(open(HERE + '/review_page_folios.csv', encoding='utf-8'))}
 MATCHED = {(r['review_page_id'], r['name_in_review']): r for r in csv.DictReader(open(ROOT + '/review_deaths_matched.csv', encoding='utf-8'))} \
     if os.path.exists(ROOT + '/review_deaths_matched.csv') else {}
-KIND = {'jubilee': 'jubilee', 'farewell': 'farewell', 'memorial': 'memorial_feature', 'obituary': 'death_notice'}
+KIND = {'jubilee': 'jubilee', 'farewell': 'farewell', 'memorial': 'memorial_feature', 'obituary': 'death_notice',
+        'departure': 'departure', 'work_milestone': 'work_milestone'}
 REVIEW_ROWS = [r for f in ('R_reviews.csv', 'R2_reviews_wider_search.csv') for r in csv.DictReader(open(ROOT + '/first_read/' + f, encoding='utf-8'))]
 for r in REVIEW_ROWS:
     notes, rel, basis = r['notes'], r['relevance'], 'reader'
@@ -71,6 +72,11 @@ for r in REVIEW_ROWS:
             rel = m['relevance']; basis = 'roster' if m['basis'] == 'roster' else 'reader'
             notes = (m['notes'] + ' ' + notes).strip()
     city = 'Moscow' if '_MSK_' in r['page_id'] else 'SP'
+    if r['page_id'] == 'review_1900-01_MSK_opera_p020' and 'Барцаль' in r['name_verbatim']:
+        # full read 2026-10-11: the ceremony continues on p021 #1-#3, where the ballet presents a wreath
+        rel, basis = 'mentions', 'full read of the reviews'
+        r = dict(r, evidence_verbatim=r['evidence_verbatim'] + ' […] Императорскій балетъ, въ лицѣ г. Горскаго, поднесъ юбиляру вѣнокъ.',
+                 evidence_english=r['evidence_english'] + ' The Imperial ballet, in the person of Gorskii, presented the jubilarian with a wreath (p021 #1 and #3; a figure caption sits between them).')
     rows.append({'season': r['season'], 'source_file': r['page_id'], 'pdf_page': 'block ' + r['block_index'],
                  'printed_page': FOLIO.get(r['page_id'], ''), 'kind': KIND[r['kind']], 'name_verbatim': r['name_verbatim'],
                  'name_latin': r['name_latin'], 'role': r['role'], 'troupe_city': city, 'dates': r['dates'], 'length': 'notice in season review',
@@ -154,7 +160,7 @@ NOT_SAME = {frozenset(p) for p in (
     ('Сампелевъ, Александръ Николаевичъ', 'Сампелевъ, Алексѣй Николаевичъ (Николаевъ, по театру Сампелевъ)'),
     ('М. И. Петипа', 'Маріи Петипа'),
 )}
-people = [d for d in rows if d['kind'] in ('obituary', 'jubilee', 'farewell', 'memorial_feature', 'death_notice', 'death_mark', 'biographical_feature') and d['name_verbatim']]
+people = [d for d in rows if d['kind'] in ('obituary', 'jubilee', 'farewell', 'memorial_feature', 'death_notice', 'death_mark', 'biographical_feature', 'departure') and d['name_verbatim']]
 keys = [_sur(d) for d in people]
 for i, d in enumerate(people):
     refs = []
@@ -192,7 +198,7 @@ for d in rows:
         for wd in re.findall(r'\w+', v):
             if re.search('[Ѐ-ӿ]', wd) and re.search('[A-Za-zͰ-Ͽ]', wd): bad.add(wd)
 import collections
-people = [d for d in rows if d['kind'] in ('obituary', 'jubilee', 'farewell', 'memorial_feature', 'death_notice', 'death_mark', 'biographical_feature')]
+people = [d for d in rows if d['kind'] in ('obituary', 'jubilee', 'farewell', 'memorial_feature', 'death_notice', 'death_mark', 'biographical_feature', 'departure')]
 print('rows', len(rows), '| person entries', len(people), collections.Counter(d['relevance'] for d in people))
 print('by source:', collections.Counter((d['source_type'], d['relevance']) for d in people))
 print('by kind (core+mentions):', collections.Counter((d['kind'], d['relevance']) for d in people if d['relevance'] != 'none'))

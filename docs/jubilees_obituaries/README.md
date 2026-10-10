@@ -8,7 +8,7 @@ with the ballet-relevant ones pulled out.
 
 | File | What it is |
 |---|---|
-| `jubilees_obituaries_all_entries.csv` | Every entry: 353 person entries from the scanned sections and stand-alone articles (`source_type` = `section`), 80 notices from the Season Reviews (`review`), 101 roster-only death marks (`roster`), plus 28 section-heading and other-article rows. |
+| `jubilees_obituaries_all_entries.csv` | Every entry: 353 person entries from the scanned sections and stand-alone articles (`source_type` = `section`), 94 notices from the Season Reviews (`review`), 101 roster-only death marks (`roster`), plus 28 section-heading and other-article rows. |
 | `jubilees_obituaries_ballet_only.csv` | The subset with `relevance` = `core` or `mentions`. |
 | `unscanned_worth_getting.md` | Jubilee, obituary and memorial items the Yearbooks contain that are not in the scans, ranked. |
 | `AUDIT_2026-10-10.md` | What has been verified, how far, and the known gaps. |
@@ -62,6 +62,26 @@ These rows rest on the database's existing review transcription and were read on
 The first sweep was a keyword search (jubilee, death, funeral, farewell, benefit words). Two wider
 searches during the audit (last appearances, «чествованіе», «-лѣтіе», daggers, wreaths and addresses)
 added nine more notices, kept separately in `first_read/R2_reviews_wider_search.csv`.
+
+Finally every block of review text in the database (3,790 blocks, 1.4 million characters) was read
+through by 14 readers, flagging by meaning and not by wording (`first_read/review_full_read/`: the
+brief and the flags). Of 188 flags, 124 were already in the catalogue; I read the other 64 in
+context. Added from them: Ауэръ's last participation (22 Oct 1906), the second Чайковскій memorial
+performance (22 Feb 1894), the Чайковскій monument-fund performance in Moscow (7 Apr 1895), and the
+ballet's wreath at Барцаль's jubilee (which moves him to `mentions`). Two further kinds were added
+for things the read turned up that are not jubilees or farewells in the strict sense:
+
+- `departure` — a leaving noted in passing, with no farewell: Кякштъ (1908), Гримальди (1906),
+  Кшесинская's withdrawal (1912-13), Стрепетова (1890).
+- `work_milestone` — an anniversary or round-number performance of a work, not a person: the 200th
+  «Дочь Фараона» (1901), the 100th «Спящая Красавица» (1903), the 50th «Щелкунчикъ» (1905), 50 years
+  of «Конекъ-Горбунокъ» (1912), and three opera ones. These are not counted as person entries.
+
+Read and left out: composers called «покойный» long after their deaths; anecdotes from decades
+earlier (Андреянова 1848, Прихунова 1856, Лебедева); charity evenings for the artists' home and for
+monument funds other than Чайковскій's; state occasions (Alexander III, the emancipation jubilee);
+Толстой; a veiled allusion to Моттль's death; М. И. Петипа's benefit of 9 Feb 1903 (no anniversary
+stated); the 75 years of «Жизнь за Царя» and 25 of «Евгеній Онѣгинъ» mentioned in passing.
 
 `see_also` lists other entries that look like the same person (same surname and matching initials),
 e.g. a jubilee notice in a review and the obituary years later. It is a pointer, not an identity claim.
