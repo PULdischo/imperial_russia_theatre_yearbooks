@@ -98,6 +98,12 @@ _MIN_RUN_AGREEMENT = 2
 # on the page -- the misprint is one shared row label, not a per-theater
 # difference.
 _MANUAL_DATE_OVERRIDES: dict[tuple[str, str], tuple[str, str]] = {
+    # Printed p. 101 (1904-05), the Moscow row between "4 Четв." and "6 Суббота." is printed "23 Пятница." -- only consistent as the 5th
+    # (all 3 Moscow theaters; read blind on the scan, 2026-10-10). The 3 cells were also MISSING from the raw data and were added from the
+    # scan the same day (known_issues.md #151 follow-up 8); date_text keeps the printed "23".
+    ('repertoire_1904-05_p011', '23 Пятница'): (
+        '1904-11-05', 'scan-verified: book misprints day as "23" (should be "5"); known_issues.md #151',
+    ),
     # Book prints "28 Понед." directly after "28 Воскрес." with no "29" --
     # the run (27 Суббота -> 28 Воскрес -> [this row] -> 30 Вторникъ) is
     # only internally consistent if this row is the 29th.
