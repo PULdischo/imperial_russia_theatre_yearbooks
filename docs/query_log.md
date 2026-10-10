@@ -13760,3 +13760,60 @@ properly linked excerpt (`excerpt_of_work_id` set), and `Tête-à-tête`
 `_fold_genre` refuses to fold. Dangling references after the rebuild:
 `performance`→`work` 0, `production_work`→`work` 0,
 `review_assertion`→`work` 0, `review_mention`→`work` 0.
+
+## 2026-10-10 — the 128 unnamed-programme events, worked (RG: "do both")
+
+```sql
+-- every review block, reflowed, keyed by season+city; then for each of the 128
+-- events look for its Julian day+month printed in that season's prose
+SELECT b.block_id, p.season, p.city, p.genre, coalesce(b.text, b.caption_text)
+FROM raw.review_block b JOIN raw.review_page p USING (page_id);
+```
+
+`pipeline/match_unnamed_programmes.py`. Dates are matched as printed —
+`date_undate` is already Julian, so no conversion. Two things the first
+pass got wrong and the second fixed:
+
+1. **Date runs.** The reviews list a production's performances as
+   `(2-го, 5-го и 9-го сентября)`; a regex requiring the month immediately
+   after the day sees only the last. Now a run is parsed as a whole. Worth
+   +1 here but it is the reviews' normal idiom, so it matters elsewhere.
+2. **Reflow before matching**, since `21-го но-\nября` is three tokens on
+   the page and one date in the prose.
+
+**Result: 37 of 128 matched, 28 of those corroborated** — corroborated
+meaning one of the event's *own* named works also appears in the passage,
+which guards against a date that happens to carry a different evening (the
+first match found, 1891-02-17 `Концертъ русской оперы`, is exactly that
+trap: right date, passage about Калькабрино).
+
+| outcome | all | corroborated |
+|---|---|---|
+| itemised (≥3 programme items) | 10 | **8** |
+| partial | 19 | 15 |
+| mentioned only | 8 | 5 |
+| no review passage | 91 | — |
+
+The 8 itemised-and-corroborated are the real yield. e.g. 1893-94 Moscow,
+26 Feb 1894, Большой — the Repertoire prints `Бенефисъ г. Мендеса + Гимнъ
++ Жизель + Дивертиссементъ`; the review gives *«большой разнохарактерный
+дивертиссементъ, состоявшій изъ слѣдующихъ танцевъ: 1) «Маршъ»; 2)
+«Mandolinata» — г-жи Бакеркина, Егорова, Крылова 2-я…»*, cast by cast.
+
+**Why the other 91 cannot be matched**, which is the more useful finding:
+
+- **26** are at drama houses (Малый, Александринскій) or are charity and
+  symphony concerts. Only ballet and some opera reviews are scanned, so
+  nothing covers those evenings. Scanning scope, not matching failure.
+- **65** are at ballet/opera houses whose review exists but never names the
+  date. The reviews are selective, not a chronicle:
+
+```sql
+-- distinct (month, day) pairs the 1903-04 SP ballet review prints at all
+```
+**27 for the whole season**, against 6 wanted there, of which 1 present.
+So ~37 is close to the ceiling for date-exact matching against the review
+text we have; the rest is not recoverable without more scans.
+
+Written up with every passage in `docs/eval/unnamed_programmes_itemised.md`;
+machine-readable in `outputs/reviews/unnamed_programme_matches.csv`.
