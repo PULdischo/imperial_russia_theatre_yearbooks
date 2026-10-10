@@ -1,0 +1,13 @@
+item,split,morning_first_line,evening_first_line,note
+S160,dash,,,"22 Вторн. Малый театръ on page 41: single dash (faint show-through of the next page's text behind it)"
+S114,dash,,,"5 Суббота. Большой театръ on page 43: single dash; Малый has Поле брани that day"
+S024,yes,Мѣсяцъ въ деревнѣ,Братья Карамазовы,"9 Понед. Михайловскій: утро (rotated label) Мѣсяцъ въ деревнѣ, ком.; вечеръ Братья Карамазовы, отрывки изъ романа (1-я часть)"
+S025,yes,Мѣсяцъ въ деревнѣ,Братья Карамазовы,"same cell as S024"
+S146,dash,,,"7 Суббота. Александринскій театръ on page 54: single dash; the Михайловскій cell that day is a single undivided Братья Карамазовы"
+S026,dash,,,"Page 56 last row (day label printed '9 Четвергъ.' - evidently 19): Михайловскій cell is a single dash"
+S027,yes,Дядя Ваня,Братья Карамазовы,"14 Суббота. Михайловскій page 56: утро Дядя Ваня, сцены изъ дер. жизни; вечеръ Братья Карамазовы, отрывки изъ романа (1-я часть)"
+S028,yes,Дядя Ваня,Братья Карамазовы,"same cell as S027"
+S030,yes,Вишневый садъ,Братья Карамазовы,"15 Воскр. Михайловскій page 56: утро Вишневый садъ, пьеса; вечеръ Братья Карамазовы (2-я часть)"
+S031,yes,Вишневый садъ,Братья Карамазовы,"same cell as S030"
+S029,dash,,,"Page 57 (image 1910-11_056.jpg): 14 Суббота. Михайловскій is a single dash; the whole page 57 table is dashes (the split Дядя Ваня/Карамазовы cell is on page 56)"
+S032,dash,,,"Page 57: 15 Воскрес. Михайловскій is a single dash (page 57 all dashes; the split Вишневый садъ/Карамазовы cell is on page 56)"

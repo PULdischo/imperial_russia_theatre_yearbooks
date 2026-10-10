@@ -1,0 +1,13 @@
+item,split,morning_first_line,evening_first_line,note
+S116,no,,"Le refuge, pièce nouv.",Michailovsky cell 21 Суббота; undivided; two-line cell
+S155,no,,"Царь природы, ком.",undivided cell
+S181,dash,-,-,whole cell is a dash
+S011,no,,"Передъ зарею, карт. старыхъ дней.","undivided single cell (no утро/веч. labels) although the input says time_of_day=morning; the 21 Воскрес. row below is the split one"
+S127,dash,-,-,whole cell is a dash
+S161,no,,"Передъ зарею, карт. старыхъ дней.",undivided cell
+S145,dash,-,-,whole cell is a dash (6 Суббота Большой)
+S168,no,,"Лакмэ, оп.",undivided cell
+S141,dash,-,-,whole cell is a dash (4 Суббота Маріинскій)
+S133,no,,"Поле брани, пьеса.",undivided cell
+S183,dash,-,-,whole cell is a dash (18 Вторн. Новый; page covers 10-19 January 1911)
+S170,dash,-,-,whole cell is a dash (4 Пятница Новый)
