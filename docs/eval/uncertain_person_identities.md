@@ -192,6 +192,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** `raw.production_entry` rows for the two titles; `review_1900-01_MSK_ballet_p001__b003`; `musicians_1900-01_MSK_p003` (no. 106). The roster also has a second, unmerged record "Шиманъ, Михаилъ" (941091, 1890-91, no patronymic printed).
 - **Would resolve it:** the Moscow posters or librettos of 1890 and 1899-1900; a history of the Bolshoi ballet repertoire naming the composers of the added music; an obituary of М. В. Шиманъ (December 1900).
 
+## 22. Золотаренко, П. П. (Moscow ballet lists + reviews) -- Петръ Петровичъ the ballet capellmeister, or Павелъ Петровичъ the violinist?
+
+- **Status:** OPEN; a PROPOSED roster link to Петръ Петровичъ (07ab6b) only (RG, 2026-10-10; she answered "Not sure" on 2026-10-05). `zolotarenko_pp` stays its own creator; the pipeline does not act on a proposed link.
+- **What is uncertain:** which of two Moscow musicians with the initials П. П. composed for the ballet. Lists (Кольцо любви, 1892-93, 1893-94): "музыка частью П. П. Золотаренко, частью заимствована". Reviews: 1892-93 the same, with the borrowed composers named (Мендельсонъ, Тома, Пуньо, Берліозъ, Делибъ); 1893-94 credits him with a «Польскій танецъ» and a «Лезгинка» in a divertissement. No first name is ever printed.
+- **For Петръ Петровичъ** (Капельмейстеръ of the ballet orchestra, "Второй капельмейстеръ балета" in 1893-94; from 6 марта 1873; on the roster 1890-91..1893-94): compiling a ballet score and writing dances to order is a ballet capellmeister's work; his credits fall in his last two seasons and none appears after he leaves the roster.
+- **For Павелъ Петровичъ** (violin, opera orchestra, later first violin; from 19 сентября 1882; on the roster to 1907-08): same initials and theatre; orchestra players did write ballet numbers. Against: fourteen more years of service with no further credit.
+- **Where to look:** `raw.production_entry` rows for Кольцо любви; `review_1892-93_MSK_ballet_p002__b001`, `review_1893-94_MSK_ballet_p008__b002`; `musicians_189x_MSK` capellmeister entries.
+- **Would resolve it:** the 1892 Moscow poster or libretto of Кольцо любви; any printed music by a Золотаренко with a first name; a Bolshoi orchestra history.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
