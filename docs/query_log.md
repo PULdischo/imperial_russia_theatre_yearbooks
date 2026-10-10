@@ -13295,3 +13295,14 @@ select count(distinct c.entry_id) from raw.person_entry_credit c join raw.person
 ```
 
 Result: 340 credit flags -> 117 (51 `credit_digit_misread_candidate`, 49 `credit_summary_not_additive`, 17 `credit_sum_mismatch`) after applying the #23 repair (358 rows) and skipping the 1908-09 "Всего—въ N балетахъ" format; 183 `duplicate_person_on_page` -> 1 (Исаева); the four real #124 bugs are still flagged from their pre-fix raw JSON. 1891-92 MSK p001 Бюхнеръ read on the scan: printed 38, stored 88. 103 mixed-script words in 102 summary texts; 14 entries on 1908-09 SP p006 have credit rows and an empty summary.
+
+## 2026-10-10 -- BalletArtists credit summaries: do the stored texts and rows match the print?
+
+```sql
+select entry_id, credit_summary_text from raw.person_entry where entry_id like 'balletartists%' and credit_summary_text is not null and credit_summary_text <> '';
+select credit_id, entry_id, credit_type, label, role_name, category_credit_count from raw.person_entry_credit where entry_id like 'balletartists%';
+select credit_id, category_credit_count_clean from analysis.person_entry_credit where credit_type = 'category_totals';   -- parity with the check's repair: 24,859 rows, 0 differences
+select count(*) from analysis.person_entry_credit where category_credit_count_clean <> category_credit_count;             -- 372 (358 before the optional dash and the raw fixes)
+```
+
+Result: 7,995 non-empty BalletArtists summaries; 103 mixed-script words in 102 entries before the fix, 0 after; 75 word forms occur with both an ь and an ъ ending (664 ь-form against 8,562 ъ-form occurrences). 181 entries read on the scan, 165 summaries and 270 credit-row fields corrected; quality flags 118 -> 50 in this pass (523 at the start of the day).

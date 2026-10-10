@@ -1,0 +1,1394 @@
+{
+ "1890-91_MSK_p001_e021_i1": {
+  "entry_id": "balletartists_1890-91_MSK_p001__e021",
+  "A": "stored",
+  "B": "reader",
+  "stored": "13 Все 10",
+  "reader": "18 Всего",
+  "kind": "structure"
+ },
+ "1890-91_MSK_p003_e015_i1": {
+  "entry_id": "balletartists_1890-91_MSK_p003__e015",
+  "A": "reader",
+  "B": "stored",
+  "stored": "балетахъ",
+  "reader": "балетахь",
+  "kind": "letters"
+ },
+ "1890-91_MSK_p003_e015_i2": {
+  "entry_id": "balletartists_1890-91_MSK_p003__e015",
+  "A": "reader",
+  "B": "stored",
+  "stored": "кушчиха",
+  "reader": "купчиха",
+  "kind": "letters"
+ },
+ "1890-91_MSK_p003_e016_i1": {
+  "entry_id": "balletartists_1890-91_MSK_p003__e016",
+  "A": "stored",
+  "B": "reader",
+  "stored": "по друга",
+  "reader": "подруга",
+  "kind": "structure"
+ },
+ "1890-91_MSK_p005_e008_i1": {
+  "entry_id": "balletartists_1890-91_MSK_p005__e008",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Рале",
+  "reader": "Раале",
+  "kind": "letters"
+ },
+ "1891-92_SP_p004_e012_i1": {
+  "entry_id": "balletartists_1891-92_SP_p004__e012",
+  "A": "reader",
+  "B": "stored",
+  "stored": "82",
+  "reader": "32",
+  "kind": "digit"
+ },
+ "1892-93_MSK_p002_e017_i1": {
+  "entry_id": "balletartists_1892-93_MSK_p002__e017",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Рамизы",
+  "reader": "Рамизъ",
+  "kind": "letters"
+ },
+ "1892-93_MSK_p002_e017_i2": {
+  "entry_id": "balletartists_1892-93_MSK_p002__e017",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Коппель",
+  "reader": "Конекъ",
+  "kind": "letters"
+ },
+ "1892-93_MSK_p002_e017_i3": {
+  "entry_id": "balletartists_1892-93_MSK_p002__e017",
+  "A": "reader",
+  "B": "stored",
+  "stored": "купиha",
+  "reader": "купчиха",
+  "kind": "letters"
+ },
+ "1892-93_MSK_p002_e017_i4": {
+  "entry_id": "balletartists_1892-93_MSK_p002__e017",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "kind": "letters"
+ },
+ "1892-93_MSK_p002_e017_i5": {
+  "entry_id": "balletartists_1892-93_MSK_p002__e017",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Приключенія",
+  "reader": "Приключевія",
+  "kind": "letters"
+ },
+ "1892-93_MSK_p003_e032_i1": {
+  "entry_id": "balletartists_1892-93_MSK_p003__e032",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Алонза Гонделорінъ",
+  "reader": "Ало ‹ ? › за Гонделорія",
+  "kind": "structure"
+ },
+ "1892-93_MSK_p006_e019_i1": {
+  "entry_id": "balletartists_1892-93_MSK_p006__e019",
+  "A": "stored",
+  "B": "reader",
+  "stored": "раза",
+  "reader": "разъ",
+  "kind": "letters"
+ },
+ "1892-93_MSK_p006_e019_i2": {
+  "entry_id": "balletartists_1892-93_MSK_p006__e019",
+  "A": "reader",
+  "B": "stored",
+  "stored": "скорohoдъ",
+  "reader": "скороходъ",
+  "kind": "letters"
+ },
+ "1894-95_MSK_p003_e012_i1": {
+  "entry_id": "balletartists_1894-95_MSK_p003__e012",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Сандрільона",
+  "reader": "Сандрильона",
+  "kind": "letters"
+ },
+ "1894-95_MSK_p003_e012_i2": {
+  "entry_id": "balletartists_1894-95_MSK_p003__e012",
+  "A": "stored",
+  "B": "reader",
+  "stored": "65",
+  "reader": "въ",
+  "kind": "letters"
+ },
+ "1894-95_SP_p005_e022_i1": {
+  "entry_id": "balletartists_1894-95_SP_p005__e022",
+  "A": "reader",
+  "B": "stored",
+  "stored": "коммиссарь",
+  "reader": "комиссаръ",
+  "kind": "letters"
+ },
+ "1894-95_SP_p005_e022_i2": {
+  "entry_id": "balletartists_1894-95_SP_p005__e022",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Парикский",
+  "reader": "Парижскій",
+  "kind": "letters"
+ },
+ "1894-95_SP_p005_e022_i3": {
+  "entry_id": "balletartists_1894-95_SP_p005__e022",
+  "A": "reader",
+  "B": "stored",
+  "stored": "nota piycъ",
+  "reader": "нотаріусъ",
+  "kind": "structure"
+ },
+ "1895-96_MSK_p003_e021_i1": {
+  "entry_id": "balletartists_1895-96_MSK_p003__e021",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Ацись",
+  "reader": "Ацисъ",
+  "kind": "letters"
+ },
+ "1895-96_MSK_p003_e021_i2": {
+  "entry_id": "balletartists_1895-96_MSK_p003__e021",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Данта",
+  "reader": "Даита",
+  "kind": "letters"
+ },
+ "1895-96_MSK_p003_e021_i3": {
+  "entry_id": "balletartists_1895-96_MSK_p003__e021",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Данта",
+  "reader": "Даита",
+  "kind": "letters"
+ },
+ "1895-96_MSK_p003_e021_i4": {
+  "entry_id": "balletartists_1895-96_MSK_p003__e021",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Капрізы",
+  "reader": "Капризы",
+  "kind": "letters"
+ },
+ "1895-96_MSK_p003_e021_i5": {
+  "entry_id": "balletartists_1895-96_MSK_p003__e021",
+  "A": "stored",
+  "B": "reader",
+  "stored": "жемчужина",
+  "reader": "жемчуж ‹ ? › на",
+  "kind": "structure"
+ },
+ "1895-96_MSK_p003_e021_i6": {
+  "entry_id": "balletartists_1895-96_MSK_p003__e021",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Сандриаіона",
+  "reader": "Сандриліона",
+  "kind": "letters"
+ },
+ "1895-96_MSK_p005_e018_i1": {
+  "entry_id": "balletartists_1895-96_MSK_p005__e018",
+  "A": "stored",
+  "B": "reader",
+  "stored": "торгoveцъ",
+  "reader": "торговецъ",
+  "kind": "letters"
+ },
+ "1895-96_MSK_p005_e018_i2": {
+  "entry_id": "balletartists_1895-96_MSK_p005__e018",
+  "A": "stored",
+  "B": "reader",
+  "stored": "nota prius",
+  "reader": "нотаріусъ",
+  "kind": "structure"
+ },
+ "1896-97_SP_p005_e019_i1": {
+  "entry_id": "balletartists_1896-97_SP_p005__e019",
+  "A": "stored",
+  "B": "reader",
+  "stored": "кунецъ",
+  "reader": "купецъ",
+  "kind": "letters"
+ },
+ "1896-97_SP_p005_e019_i2": {
+  "entry_id": "balletartists_1896-97_SP_p005__e019",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Дросселмейеръ",
+  "reader": "Дроссельмейеръ",
+  "kind": "letters"
+ },
+ "1896-97_SP_p006_e018_i1": {
+  "entry_id": "balletartists_1896-97_SP_p006__e018",
+  "A": "reader",
+  "B": "stored",
+  "stored": "сулья",
+  "reader": "судья",
+  "kind": "letters"
+ },
+ "1896-97_SP_p006_e018_i2": {
+  "entry_id": "balletartists_1896-97_SP_p006__e018",
+  "A": "reader",
+  "B": "stored",
+  "stored": "копьеноносецъ",
+  "reader": "копьеносецъ",
+  "kind": "letters"
+ },
+ "1896-97_SP_p006_e018_i3": {
+  "entry_id": "balletartists_1896-97_SP_p006__e018",
+  "A": "reader",
+  "B": "stored",
+  "stored": "гуsarскій",
+  "reader": "гусарскій",
+  "kind": "letters"
+ },
+ "1897-98_MSK_p004_e018_i1": {
+  "entry_id": "balletartists_1897-98_MSK_p004__e018",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Рамаев",
+  "reader": "Рамзея",
+  "kind": "letters"
+ },
+ "1897-98_MSK_p004_e018_i2": {
+  "entry_id": "balletartists_1897-98_MSK_p004__e018",
+  "A": "reader",
+  "B": "stored",
+  "stored": "повели тельница",
+  "reader": "повелительница",
+  "kind": "structure"
+ },
+ "1897-98_MSK_p004_e018_i3": {
+  "entry_id": "balletartists_1897-98_MSK_p004__e018",
+  "A": "stored",
+  "B": "reader",
+  "stored": "куколь",
+  "reader": "куколъ",
+  "kind": "letters"
+ },
+ "1897-98_MSK_p004_e018_i4": {
+  "entry_id": "balletartists_1897-98_MSK_p004__e018",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Лунаа",
+  "reader": "Луиза",
+  "kind": "letters"
+ },
+ "1897-98_MSK_p004_e019_i1": {
+  "entry_id": "balletartists_1897-98_MSK_p004__e019",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Сванцельды",
+  "reader": "Сванильды",
+  "kind": "letters"
+ },
+ "1897-98_MSK_p004_e019_i2": {
+  "entry_id": "balletartists_1897-98_MSK_p004__e019",
+  "A": "reader",
+  "B": "stored",
+  "stored": "куколь",
+  "reader": "куколъ",
+  "kind": "letters"
+ },
+ "1897-98_MSK_p005_e024_i1": {
+  "entry_id": "balletartists_1897-98_MSK_p005__e024",
+  "A": "reader",
+  "B": "stored",
+  "stored": "nota priusъ",
+  "reader": "нотаріусъ",
+  "kind": "structure"
+ },
+ "1897-98_MSK_p005_e024_i2": {
+  "entry_id": "balletartists_1897-98_MSK_p005__e024",
+  "A": "reader",
+  "B": "stored",
+  "stored": "куколь",
+  "reader": "куколъ",
+  "kind": "letters"
+ },
+ "1897-98_MSK_p005_e024_i3": {
+  "entry_id": "balletartists_1897-98_MSK_p005__e024",
+  "A": "stored",
+  "B": "reader",
+  "stored": "приказчикъ",
+  "reader": "прикащикъ",
+  "kind": "letters"
+ },
+ "1897-98_SP_p006_e020_i1": {
+  "entry_id": "balletartists_1897-98_SP_p006__e020",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Метивой",
+  "reader": "Мстивой",
+  "kind": "letters"
+ },
+ "1897-98_SP_p006_e020_i2": {
+  "entry_id": "balletartists_1897-98_SP_p006__e020",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Инigo",
+  "reader": "Иниго",
+  "kind": "letters"
+ },
+ "1898-99_MSK_p002_e025_i1": {
+  "entry_id": "balletartists_1898-99_MSK_p002__e025",
+  "A": "stored",
+  "B": "reader",
+  "stored": "двоянная",
+  "reader": "двойная",
+  "kind": "letters"
+ },
+ "1898-99_MSK_p002_e025_i2": {
+  "entry_id": "balletartists_1898-99_MSK_p002__e025",
+  "A": "reader",
+  "B": "stored",
+  "stored": "куколь",
+  "reader": "куколъ",
+  "kind": "letters"
+ },
+ "1899-00_SP_p007_e005_i1": {
+  "entry_id": "balletartists_1899-00_SP_p007__e005",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Фронтень",
+  "reader": "Фронтенъ",
+  "kind": "letters"
+ },
+ "1899-00_SP_p009_e017_i1": {
+  "entry_id": "balletartists_1899-00_SP_p009__e017",
+  "A": "reader",
+  "B": "stored",
+  "stored": "пauкъ",
+  "reader": "паукъ",
+  "kind": "letters"
+ },
+ "1900-01_MSK_p001_e012_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p001__e012",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Джіанна",
+  "reader": "Джіанина",
+  "kind": "letters"
+ },
+ "1900-01_MSK_p001_e012_i2": {
+  "entry_id": "balletartists_1900-01_MSK_p001__e012",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Крошкa",
+  "reader": "Крощка",
+  "kind": "letters"
+ },
+ "1900-01_MSK_p002_e010_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p002__e010",
+  "A": "reader",
+  "B": "stored",
+  "stored": "дивертисементѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "1900-01_MSK_p007_e009_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e009",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертиcементѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "1900-01_MSK_p007_e014_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e014",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертиcементѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "1900-01_MSK_p007_e014_i2": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e014",
+  "A": "reader",
+  "B": "stored",
+  "stored": "преподаватель",
+  "reader": "предводитель",
+  "kind": "letters"
+ },
+ "1900-01_MSK_p009_e004_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p009__e004",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертиissementѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "1900-01_MSK_p009_e008_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p009__e008",
+  "A": "reader",
+  "B": "stored",
+  "stored": "дивертиissementѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "1900-01_MSK_p009_e011_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p009__e011",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертиissementѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "1900-01_SP_p002_e001_i1": {
+  "entry_id": "balletartists_1900-01_SP_p002__e001",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертисементахъ",
+  "reader": "дивертиссементахъ",
+  "kind": "letters"
+ },
+ "1900-01_SP_p005_e005_i1": {
+  "entry_id": "balletartists_1900-01_SP_p005__e005",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "kind": "letters"
+ },
+ "1900-01_SP_p005_e005_i2": {
+  "entry_id": "balletartists_1900-01_SP_p005__e005",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Кротка",
+  "reader": "Крошка",
+  "kind": "letters"
+ },
+ "1900-01_SP_p007_e002_i1": {
+  "entry_id": "balletartists_1900-01_SP_p007__e002",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Фіаметта",
+  "reader": "Фіамметта",
+  "kind": "letters"
+ },
+ "1901-02_MSK_p000_e023_i1": {
+  "entry_id": "balletartists_1901-02_MSK_p000__e023",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертисементахъ",
+  "reader": "дивертиссементахъ",
+  "kind": "letters"
+ },
+ "1901-02_MSK_p000_e023_i2": {
+  "entry_id": "balletartists_1901-02_MSK_p000__e023",
+  "A": "stored",
+  "B": "reader",
+  "stored": "горбу нокъ",
+  "reader": "горбунокъ",
+  "kind": "structure"
+ },
+ "1901-02_MSK_p000_e023_i3": {
+  "entry_id": "balletartists_1901-02_MSK_p000__e023",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Балдерка",
+  "reader": "Баядерка",
+  "kind": "letters"
+ },
+ "1901-02_MSK_p000_e023_i4": {
+  "entry_id": "balletartists_1901-02_MSK_p000__e023",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Нинія",
+  "reader": "Никія",
+  "kind": "letters"
+ },
+ "1901-02_MSK_p006_e001_i1": {
+  "entry_id": "balletartists_1901-02_MSK_p006__e001",
+  "A": "stored",
+  "B": "reader",
+  "stored": "корсарь",
+  "reader": "корсаръ",
+  "kind": "letters"
+ },
+ "1901-02_SP_p001_e005_i1": {
+  "entry_id": "balletartists_1901-02_SP_p001__e005",
+  "A": "stored",
+  "B": "reader",
+  "stored": "80",
+  "reader": "89",
+  "kind": "digit"
+ },
+ "1901-02_SP_p001_e005_i2": {
+  "entry_id": "balletartists_1901-02_SP_p001__e005",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Донъ",
+  "reader": "Дочь",
+  "kind": "letters"
+ },
+ "1901-02_SP_p001_e005_i3": {
+  "entry_id": "balletartists_1901-02_SP_p001__e005",
+  "A": "stored",
+  "B": "reader",
+  "stored": "байдерка",
+  "reader": "баядерка",
+  "kind": "letters"
+ },
+ "1902-03_MSK_p001_e018_i1": {
+  "entry_id": "balletartists_1902-03_MSK_p001__e018",
+  "A": "reader",
+  "B": "stored",
+  "stored": "разъ",
+  "reader": "раза",
+  "kind": "letters"
+ },
+ "1902-03_MSK_p001_e018_i2": {
+  "entry_id": "balletartists_1902-03_MSK_p001__e018",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Сванільды",
+  "reader": "Сванильды",
+  "kind": "letters"
+ },
+ "1902-03_MSK_p006_e002_i1": {
+  "entry_id": "balletartists_1902-03_MSK_p006__e002",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Конекъ",
+  "reader": "Копекъ",
+  "kind": "letters"
+ },
+ "1902-03_MSK_p006_e002_i2": {
+  "entry_id": "balletartists_1902-03_MSK_p006__e002",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Фролло",
+  "reader": "Фр ‹ ? › лло",
+  "kind": "structure"
+ },
+ "1902-03_MSK_p008_e007_i1": {
+  "entry_id": "balletartists_1902-03_MSK_p008__e007",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Тормерю",
+  "reader": "Торшерю",
+  "kind": "letters"
+ },
+ "1902-03_MSK_p008_e007_i2": {
+  "entry_id": "balletartists_1902-03_MSK_p008__e007",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Кузень",
+  "reader": "Кузенъ",
+  "kind": "letters"
+ },
+ "1902-03_MSK_p008_e010_i1": {
+  "entry_id": "balletartists_1902-03_MSK_p008__e010",
+  "A": "stored",
+  "B": "reader",
+  "stored": "раза",
+  "reader": "разъ",
+  "kind": "letters"
+ },
+ "1902-03_MSK_p008_e012_i1": {
+  "entry_id": "balletartists_1902-03_MSK_p008__e012",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Ламанскій",
+  "reader": "Ламанчскій",
+  "kind": "letters"
+ },
+ "1902-03_MSK_p008_e012_i2": {
+  "entry_id": "balletartists_1902-03_MSK_p008__e012",
+  "A": "stored",
+  "B": "reader",
+  "stored": "гламатай",
+  "reader": "глашатай",
+  "kind": "letters"
+ },
+ "1902-03_MSK_p008_e016_i1": {
+  "entry_id": "balletartists_1902-03_MSK_p008__e016",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Ламанскій",
+  "reader": "Ламанчскій",
+  "kind": "letters"
+ },
+ "1902-03_MSK_p008_e016_i2": {
+  "entry_id": "balletartists_1902-03_MSK_p008__e016",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Ламанскій",
+  "reader": "Ламанчскій",
+  "kind": "letters"
+ },
+ "1902-03_MSK_p008_e016_i3": {
+  "entry_id": "balletartists_1902-03_MSK_p008__e016",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "kind": "letters"
+ },
+ "1902-03_MSK_p008_e016_i4": {
+  "entry_id": "balletartists_1902-03_MSK_p008__e016",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Клопень",
+  "reader": "Клопенъ",
+  "kind": "letters"
+ },
+ "1902-03_SP_p006_e014_i1": {
+  "entry_id": "balletartists_1902-03_SP_p006__e014",
+  "A": "reader",
+  "B": "stored",
+  "stored": "дивертисементѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "1902-03_SP_p006_e014_i2": {
+  "entry_id": "balletartists_1902-03_SP_p006__e014",
+  "A": "stored",
+  "B": "reader",
+  "stored": "скорohoдъ",
+  "reader": "скороходъ",
+  "kind": "letters"
+ },
+ "1902-03_SP_p007_e011_i1": {
+  "entry_id": "balletartists_1902-03_SP_p007__e011",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Балдерка",
+  "reader": "Баядерка",
+  "kind": "letters"
+ },
+ "1903-04_MSK_p005_e002_i1": {
+  "entry_id": "balletartists_1903-04_MSK_p005__e002",
+  "A": "stored",
+  "B": "reader",
+  "stored": "сайной",
+  "reader": "слѣпой",
+  "kind": "letters"
+ },
+ "1904-05_SP_p001_e001_i1": {
+  "entry_id": "balletartists_1904-05_SP_p001__e001",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Клемансь",
+  "reader": "Клемансъ",
+  "kind": "letters"
+ },
+ "1904-05_SP_p001_e001_i2": {
+  "entry_id": "balletartists_1904-05_SP_p001__e001",
+  "A": "reader",
+  "B": "stored",
+  "stored": "красавица",
+  "reader": "красавмца",
+  "kind": "letters"
+ },
+ "1904-05_SP_p001_e001_i3": {
+  "entry_id": "balletartists_1904-05_SP_p001__e001",
+  "A": "reader",
+  "B": "stored",
+  "stored": "фея",
+  "reader": "фся",
+  "kind": "letters"
+ },
+ "1904-05_SP_p001_e001_i4": {
+  "entry_id": "balletartists_1904-05_SP_p001__e001",
+  "A": "stored",
+  "B": "reader",
+  "stored": "капарескъ",
+  "reader": "канарескъ",
+  "kind": "letters"
+ },
+ "1904-05_SP_p001_e001_i5": {
+  "entry_id": "balletartists_1904-05_SP_p001__e001",
+  "A": "reader",
+  "B": "stored",
+  "stored": "блыла",
+  "reader": "бѣлая",
+  "kind": "letters"
+ },
+ "1904-05_SP_p001_e004_i1": {
+  "entry_id": "balletartists_1904-05_SP_p001__e004",
+  "A": "stored",
+  "B": "reader",
+  "stored": "балетахъ",
+  "reader": "балегахъ",
+  "kind": "letters"
+ },
+ "1904-05_SP_p006_e011_i1": {
+  "entry_id": "balletartists_1904-05_SP_p006__e011",
+  "A": "stored",
+  "B": "reader",
+  "stored": "пua",
+  "reader": "пуа",
+  "kind": "letters"
+ },
+ "1904-05_SP_p006_e011_i2": {
+  "entry_id": "balletartists_1904-05_SP_p006__e011",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Ганнімедъ",
+  "reader": "Ганимедъ",
+  "kind": "letters"
+ },
+ "1904-05_SP_p008_e007_i1": {
+  "entry_id": "balletartists_1904-05_SP_p008__e007",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертисментахъ",
+  "reader": "дивертиссментахъ",
+  "kind": "letters"
+ },
+ "1904-05_SP_p008_e007_i2": {
+  "entry_id": "balletartists_1904-05_SP_p008__e007",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Кoney",
+  "reader": "Конекъ",
+  "kind": "letters"
+ },
+ "1904-05_SP_p008_e007_i3": {
+  "entry_id": "balletartists_1904-05_SP_p008__e007",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "kind": "letters"
+ },
+ "1905-06_MSK_p003_e001_i1": {
+  "entry_id": "balletartists_1905-06_MSK_p003__e001",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертисментахъ",
+  "reader": "дивертиссментахъ",
+  "kind": "letters"
+ },
+ "1905-06_MSK_p005_e012_i1": {
+  "entry_id": "balletartists_1905-06_MSK_p005__e012",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Кloydъ",
+  "reader": "Клодъ",
+  "kind": "letters"
+ },
+ "1905-06_MSK_p007_e001_i1": {
+  "entry_id": "balletartists_1905-06_MSK_p007__e001",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертисментахъ",
+  "reader": "дивертиссментахъ",
+  "kind": "letters"
+ },
+ "1905-06_MSK_p008_e012_i1": {
+  "entry_id": "balletartists_1905-06_MSK_p008__e012",
+  "A": "reader",
+  "B": "stored",
+  "stored": "продающее",
+  "reader": "продавецъ",
+  "kind": "letters"
+ },
+ "1905-06_MSK_p008_e012_i2": {
+  "entry_id": "balletartists_1905-06_MSK_p008__e012",
+  "A": "stored",
+  "B": "reader",
+  "stored": "зеркаль",
+  "reader": "зеркалъ",
+  "kind": "letters"
+ },
+ "1905-06_MSK_p008_e012_i3": {
+  "entry_id": "balletartists_1905-06_MSK_p008__e012",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Кloyd",
+  "reader": "Клодъ",
+  "kind": "letters"
+ },
+ "1905-06_MSK_p008_e012_i4": {
+  "entry_id": "balletartists_1905-06_MSK_p008__e012",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Кондина",
+  "reader": "Кондинэ",
+  "kind": "letters"
+ },
+ "1905-06_MSK_p008_e012_i5": {
+  "entry_id": "balletartists_1905-06_MSK_p008__e012",
+  "A": "stored",
+  "B": "reader",
+  "stored": "поварь",
+  "reader": "поваръ",
+  "kind": "letters"
+ },
+ "1905-06_MSK_p008_e012_i6": {
+  "entry_id": "balletartists_1905-06_MSK_p008__e012",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Копекъ",
+  "reader": "Конекъ",
+  "kind": "letters"
+ },
+ "1905-06_MSK_p008_e012_i7": {
+  "entry_id": "balletartists_1905-06_MSK_p008__e012",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Руссо",
+  "reader": "Русо",
+  "kind": "letters"
+ },
+ "1905-06_SP_p007_e001_i1": {
+  "entry_id": "balletartists_1905-06_SP_p007__e001",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "kind": "letters"
+ },
+ "1906-07_MSK_p005_e016_i1": {
+  "entry_id": "balletartists_1906-07_MSK_p005__e016",
+  "A": "stored",
+  "B": "reader",
+  "stored": "свita",
+  "reader": "свита",
+  "kind": "letters"
+ },
+ "1906-07_MSK_p008_e004_i1": {
+  "entry_id": "balletartists_1906-07_MSK_p008__e004",
+  "A": "reader",
+  "B": "stored",
+  "stored": "",
+  "reader": "29 Всего",
+  "kind": "structure"
+ },
+ "1906-07_MSK_p008_e004_i2": {
+  "entry_id": "balletartists_1906-07_MSK_p008__e004",
+  "A": "reader",
+  "B": "stored",
+  "stored": "гофмаршаль",
+  "reader": "гофмаршалъ",
+  "kind": "letters"
+ },
+ "1906-07_MSK_p008_e004_i3": {
+  "entry_id": "balletartists_1906-07_MSK_p008__e004",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Ra",
+  "reader": "Ра",
+  "kind": "letters"
+ },
+ "1906-07_SP_p005_e021_i1": {
+  "entry_id": "balletartists_1906-07_SP_p005__e021",
+  "A": "stored",
+  "B": "reader",
+  "stored": "раза",
+  "reader": "разъ",
+  "kind": "letters"
+ },
+ "1906-07_SP_p005_e021_i2": {
+  "entry_id": "balletartists_1906-07_SP_p005__e021",
+  "A": "reader",
+  "B": "stored",
+  "stored": "куколь",
+  "reader": "куколъ",
+  "kind": "letters"
+ },
+ "1906-07_SP_p006_e009_i1": {
+  "entry_id": "balletartists_1906-07_SP_p006__e009",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Кoney",
+  "reader": "Конекъ",
+  "kind": "letters"
+ },
+ "1906-07_SP_p006_e009_i2": {
+  "entry_id": "balletartists_1906-07_SP_p006__e009",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Кукшарь",
+  "reader": "Кукшаръ",
+  "kind": "letters"
+ },
+ "1906-07_SP_p009_e013_i1": {
+  "entry_id": "balletartists_1906-07_SP_p009__e013",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Русей",
+  "reader": "Ручей",
+  "kind": "letters"
+ },
+ "1906-07_SP_p009_e013_i2": {
+  "entry_id": "balletartists_1906-07_SP_p009__e013",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Каталабіотъ",
+  "reader": "Каталабютъ",
+  "kind": "letters"
+ },
+ "1906-07_SP_p009_e013_i3": {
+  "entry_id": "balletartists_1906-07_SP_p009__e013",
+  "A": "reader",
+  "B": "stored",
+  "stored": "nota piycъ",
+  "reader": "нотаріусъ",
+  "kind": "structure"
+ },
+ "1906-07_SP_p009_e013_i4": {
+  "entry_id": "balletartists_1906-07_SP_p009__e013",
+  "A": "stored",
+  "B": "reader",
+  "stored": "куколь",
+  "reader": "куколъ",
+  "kind": "letters"
+ },
+ "1906-07_SP_p009_e013_i5": {
+  "entry_id": "balletartists_1906-07_SP_p009__e013",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Плупнетемеръ",
+  "reader": "Плумпетемеръ",
+  "kind": "letters"
+ },
+ "1906-07_SP_p009_e013_i6": {
+  "entry_id": "balletartists_1906-07_SP_p009__e013",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Клопень",
+  "reader": "Клопенъ",
+  "kind": "letters"
+ },
+ "1907-08_MSK_p001_e001_i1": {
+  "entry_id": "balletartists_1907-08_MSK_p001__e001",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Сваннильды",
+  "reader": "Сванильды",
+  "kind": "letters"
+ },
+ "1908-09_SP_p006_e004_i1": {
+  "entry_id": "balletartists_1908-09_SP_p006__e004",
+  "A": "stored",
+  "B": "reader",
+  "stored": "",
+  "reader": "Времена года Сатиръ 2 Всего въ 1 балетъ 2 раза",
+  "kind": "structure"
+ },
+ "1908-09_SP_p006_e005_i1": {
+  "entry_id": "balletartists_1908-09_SP_p006__e005",
+  "A": "reader",
+  "B": "stored",
+  "stored": "",
+  "reader": "Баядерка кшатвій 3 Испытаніе Дамиса гость графини 2 Всего въ 2 балетахъ 5 разъ",
+  "kind": "structure"
+ },
+ "1908-09_SP_p006_e006_i1": {
+  "entry_id": "balletartists_1908-09_SP_p006__e006",
+  "A": "stored",
+  "B": "reader",
+  "stored": "",
+  "reader": "Раймонда Беранже 1 Аленькій цвѣточекъ Орсино дель Сарто 2 Тщетная предосторожность Коленъ 2 Всего въ 3 балетахъ 5 разъ",
+  "kind": "structure"
+ },
+ "1908-09_SP_p006_e007_i1": {
+  "entry_id": "balletartists_1908-09_SP_p006__e007",
+  "A": "reader",
+  "B": "stored",
+  "stored": "",
+  "reader": "Раймонда Жанъ де Бріенъ 2 Тщетная предосторожность Коленъ 1 Жизель графъ Альбертъ 1 Царь Кандавлъ Шгесъ 3 Лебединое озеро принцъ Зигфридъ 1 Ручей Джемиль 1 Эсмеральда Пьеръ Гренгуаръ 1 Дочь фараона Лордъ Вильсонъ 3 Таоръ 3 Донъ Кихотъ Базиль 1 Всего въ 9 балетахъ 17 разъ",
+  "kind": "structure"
+ },
+ "1908-09_SP_p006_e008_i1": {
+  "entry_id": "balletartists_1908-09_SP_p006__e008",
+  "A": "reader",
+  "B": "stored",
+  "stored": "",
+  "reader": "Евника негръ 4 Пробужденіе флоры Меркурій 3 Времена года Фавнъ 2 Всего въ 3 балетахъ 9 разъ",
+  "kind": "structure"
+ },
+ "1908-09_SP_p006_e009_i1": {
+  "entry_id": "balletartists_1908-09_SP_p006__e009",
+  "A": "stored",
+  "B": "reader",
+  "stored": "",
+  "reader": "Конекъ горбунокъ мелочной торговецъ 2 Фея куколъ почтальонъ 2 Всего въ 2 балетахъ 4 раза",
+  "kind": "structure"
+ },
+ "1908-09_SP_p006_e013_i1": {
+  "entry_id": "balletartists_1908-09_SP_p006__e013",
+  "A": "stored",
+  "B": "reader",
+  "stored": "",
+  "reader": "Времена года сатиръ 3 Всего въ 1 балетъ 2 раза",
+  "kind": "structure"
+ },
+ "1908-09_SP_p006_e016_i1": {
+  "entry_id": "balletartists_1908-09_SP_p006__e016",
+  "A": "reader",
+  "B": "stored",
+  "stored": "",
+  "reader": "Испытаніе Дамиса гость графини 2 Раймонда кавалеръ изъ свиты де Бріенъ 3 Конекъ горбунокъ Гаврило 2 Ручей начальникъ гвардіи 1 Дочь фараона цридворный царя Нубійскаго 3 Донъ Кихотъ герцогъ 3 Всего въ 6 балетахъ 14 разъ",
+  "kind": "structure"
+ },
+ "1908-09_SP_p006_e017_i1": {
+  "entry_id": "balletartists_1908-09_SP_p006__e017",
+  "A": "stored",
+  "B": "reader",
+  "stored": "",
+  "reader": "Корсаръ Бирбанто 2 Пахита Иниго 2 Спящая красавица принцъ Шарманъ 4 Жизель Гансъ 2 Всего въ 4 балетахъ 10 разъ",
+  "kind": "structure"
+ },
+ "1908-09_SP_p006_e018_i1": {
+  "entry_id": "balletartists_1908-09_SP_p006__e018",
+  "A": "stored",
+  "B": "reader",
+  "stored": "",
+  "reader": "Павильонъ армиды слуга маркизы 4 Аленькій цвѣточекъ капитанъ корабля 2 Тщетная предосторожность трактирщикъ 1 Конекъ горбунокъ Петръ 2 Донъ Кихотъ хозяинъ кабачка 3 Всего въ 5 балетахъ 12 разъ",
+  "kind": "structure"
+ },
+ "1908-09_SP_p006_e020_i1": {
+  "entry_id": "balletartists_1908-09_SP_p006__e020",
+  "A": "reader",
+  "B": "stored",
+  "stored": "",
+  "reader": "Спящая красавица принцъ Шери 5 Всего въ 1 балетъ 5 разъ",
+  "kind": "structure"
+ },
+ "1908-09_SP_p006_e021_i1": {
+  "entry_id": "balletartists_1908-09_SP_p006__e021",
+  "A": "reader",
+  "B": "stored",
+  "stored": "",
+  "reader": "Павильонъ Армиды главный рабъ Армиды 4 Аленькій цвѣточекъ принцъ 1 Египетскія ночи рабъ Клеопатры 6 Всего въ 3 балетахъ 11 разъ",
+  "kind": "structure"
+ },
+ "1909-10_SP_p005_e004_i1": {
+  "entry_id": "balletartists_1909-10_SP_p005__e004",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Аkteя",
+  "reader": "Актея",
+  "kind": "letters"
+ },
+ "1909-10_SP_p006_e012_i1": {
+  "entry_id": "balletartists_1909-10_SP_p006__e012",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "kind": "letters"
+ },
+ "1909-10_SP_p006_e012_i2": {
+  "entry_id": "balletartists_1909-10_SP_p006__e012",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Кандавль",
+  "reader": "Кандавлъ",
+  "kind": "letters"
+ },
+ "1909-10_SP_p007_e006_i1": {
+  "entry_id": "balletartists_1909-10_SP_p007__e006",
+  "A": "stored",
+  "B": "reader",
+  "stored": "зavrъ",
+  "reader": "звѣрь",
+  "kind": "letters"
+ },
+ "r2_1899-00_MSK_p004_e009_i1": {
+  "entry_id": "balletartists_1899-00_MSK_p004__e009",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Мекора",
+  "reader": "Медора",
+  "kind": "letters"
+ },
+ "r2_1899-00_MSK_p004_e009_i2": {
+  "entry_id": "balletartists_1899-00_MSK_p004__e009",
+  "A": "reader",
+  "B": "stored",
+  "stored": "королёвна",
+  "reader": "королевна",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p004_e006_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p004__e006",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Феи",
+  "reader": "Фея",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p004_e006_i2": {
+  "entry_id": "balletartists_1900-01_MSK_p004__e006",
+  "A": "stored",
+  "B": "reader",
+  "stored": "куколь",
+  "reader": "куколъ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p004_e006_i3": {
+  "entry_id": "balletartists_1900-01_MSK_p004__e006",
+  "A": "reader",
+  "B": "stored",
+  "stored": "піонка",
+  "reader": "японка",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p004_e010_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p004__e010",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p004_e010_i2": {
+  "entry_id": "balletartists_1900-01_MSK_p004__e010",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e001_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e001",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертиcементѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e001_i2": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e001",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e002_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e002",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертиcементѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e002_i2": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e002",
+  "A": "stored",
+  "B": "reader",
+  "stored": "почтальонъ",
+  "reader": "почталіонъ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e005_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e005",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертиcементѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e005_i2": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e005",
+  "A": "stored",
+  "B": "reader",
+  "stored": "корсарь",
+  "reader": "корсаръ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e011_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e011",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертиcементѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e015_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e015",
+  "A": "reader",
+  "B": "stored",
+  "stored": "дивертиcементѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e018_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e018",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертиcементѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e018_i2": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e018",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Бріень",
+  "reader": "Бріенъ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e018_i3": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e018",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Колянь",
+  "reader": "Колэнъ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e019_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e019",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертиcементѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e021_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e021",
+  "A": "stored",
+  "B": "reader",
+  "stored": "дивертиcементѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e021_i2": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e021",
+  "A": "reader",
+  "B": "stored",
+  "stored": "корсарь",
+  "reader": "корсаръ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e022_i1": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e022",
+  "A": "reader",
+  "B": "stored",
+  "stored": "дивертиcементѣ",
+  "reader": "дивертиссементѣ",
+  "kind": "letters"
+ },
+ "r2_1900-01_MSK_p007_e022_i2": {
+  "entry_id": "balletartists_1900-01_MSK_p007__e022",
+  "A": "reader",
+  "B": "stored",
+  "stored": "корсарь",
+  "reader": "корсаръ",
+  "kind": "letters"
+ },
+ "r2_1900-01_SP_p004_e026_i1": {
+  "entry_id": "balletartists_1900-01_SP_p004__e026",
+  "A": "reader",
+  "B": "stored",
+  "stored": "операхъ",
+  "reader": "опехахъ",
+  "kind": "letters"
+ },
+ "r2_1901-02_MSK_p006_e018_i1": {
+  "entry_id": "balletartists_1901-02_MSK_p006__e018",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Ламанскій",
+  "reader": "Ламанчскій",
+  "kind": "letters"
+ },
+ "r2_1901-02_MSK_p006_e018_i2": {
+  "entry_id": "balletartists_1901-02_MSK_p006__e018",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Люсень",
+  "reader": "Люсьенъ",
+  "kind": "letters"
+ },
+ "r2_1901-02_MSK_p006_e018_i3": {
+  "entry_id": "balletartists_1901-02_MSK_p006__e018",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Орвиля",
+  "reader": "Эрвильи",
+  "kind": "letters"
+ },
+ "r2_1901-02_MSK_p006_e018_i4": {
+  "entry_id": "balletartists_1901-02_MSK_p006__e018",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Калевъ",
+  "reader": "Калэнъ",
+  "kind": "letters"
+ },
+ "r2_1901-02_MSK_p006_e021_i1": {
+  "entry_id": "balletartists_1901-02_MSK_p006__e021",
+  "A": "reader",
+  "B": "stored",
+  "stored": "корсарь",
+  "reader": "корсаръ",
+  "kind": "letters"
+ },
+ "r2_1901-02_MSK_p006_e022_i1": {
+  "entry_id": "balletartists_1901-02_MSK_p006__e022",
+  "A": "reader",
+  "B": "stored",
+  "stored": "корсарь",
+  "reader": "корсаръ",
+  "kind": "letters"
+ },
+ "r2_1902-03_MSK_p007_e003_i1": {
+  "entry_id": "balletartists_1902-03_MSK_p007__e003",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Шатопарь",
+  "reader": "Шатопэръ",
+  "kind": "letters"
+ },
+ "r2_1906-07_MSK_p004_e002_i1": {
+  "entry_id": "balletartists_1906-07_MSK_p004__e002",
+  "A": "stored",
+  "B": "reader",
+  "stored": "біолантъ",
+  "reader": "віолантъ",
+  "kind": "letters"
+ },
+ "r2_1906-07_MSK_p004_e019_i1": {
+  "entry_id": "balletartists_1906-07_MSK_p004__e019",
+  "A": "stored",
+  "B": "reader",
+  "stored": "Перетта",
+  "reader": "Пьеретта",
+  "kind": "letters"
+ },
+ "r2_1906-07_MSK_p004_e019_i2": {
+  "entry_id": "balletartists_1906-07_MSK_p004__e019",
+  "A": "reader",
+  "B": "stored",
+  "stored": "Селестень",
+  "reader": "Селестенъ",
+  "kind": "letters"
+ },
+ "r2_1906-07_MSK_p005_e006_i1": {
+  "entry_id": "balletartists_1906-07_MSK_p005__e006",
+  "A": "reader",
+  "B": "stored",
+  "stored": "дивертиcментѣ",
+  "reader": "дивертиссментѣ",
+  "kind": "letters"
+ },
+ "r2_1906-07_MSK_p005_e006_i2": {
+  "entry_id": "balletartists_1906-07_MSK_p005__e006",
+  "A": "stored",
+  "B": "reader",
+  "stored": "альвазиль",
+  "reader": "альвазилъ",
+  "kind": "letters"
+ }
+}

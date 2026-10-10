@@ -146,11 +146,11 @@ def repaired_credit_count(row: dict, summary: str) -> str:
     repairs it, from the entry's own verbatim credit_summary_text, in the *analysis* column only;
     this is the same rule on the parsed CSVs (parity with the SQL column checked on all 24,862
     category_totals rows, 2026-10-10), so the check below does not flag rows that are already repaired
-    downstream. Numeric comparison on purpose: the captured X can carry the sentence's final period."""
+    downstream. Numeric comparison on purpose: the captured X can carry the sentence's final period. The dash is optional (2026-10-10: one entry prints «въ 9 операхъ 31»). KNOWN LIMIT: the FIRST occurrence of the label in the text is used, so a second block with the same label (a two-city entry, «Кромѣ того, въ С.-Петербургѣ въ 3 балетахъ—6») is repaired from the first block's numbers; issue #150."""
     count = row.get("category_credit_count", "")
     if row.get("credit_type") != "category_totals":
         return count
-    m = re.search(r"[Вв]ъ\s+(\d+)\s+" + re.escape(row.get("label", "")) + r"\s*[—-]\s*([\d.]+)", summary or "")
+    m = re.search(r"[Вв]ъ\s+(\d+)\s+" + re.escape(row.get("label", "")) + r"\s*[—-]?\s*([\d.]+)", summary or "")
     if (m and _num(count) is not None and _num(m[1]) is not None and _num(m[2]) is not None
             and _num(count) == _num(m[1]) != _num(m[2])):
         return m[2]
@@ -218,8 +218,21 @@ def classify_credit_mismatch(summary: str, component_sum: int, stated: int,
     return "credit_sum_mismatch", base + f"; printed text {printed_sum} vs {printed_total}, matches neither the rows nor itself"
 
 
+#: Entries whose credit totals were read on the scan (issue #150): the flag was right but is settled. Keyed by
+#: entry_id AND the exact summary text, so the exemption lapses if the text is ever edited (a stale entry is
+#: itself flagged, `credit_verified_entry_changed`), the same discipline as the date overrides.
+CREDIT_VERIFIED_CSV = Path(__file__).parent / "entity_curation" / "credit_totals_scan_verified.csv"
+
+
+def load_credit_verified() -> dict[str, dict]:
+    if not CREDIT_VERIFIED_CSV.exists():
+        return {}
+    return {r["entry_id"]: r for r in csv.DictReader(open(CREDIT_VERIFIED_CSV, encoding="utf-8"))}
+
+
 def check_roster(parsed_dir: Path) -> list[dict]:
     flags = []
+    verified = load_credit_verified()
     entries = load(parsed_dir / "person_entry.csv")
     credits = load(parsed_dir / "person_entry_credit.csv")
     credits_by_entry = defaultdict(list)
@@ -283,12 +296,21 @@ def check_roster(parsed_dir: Path) -> list[dict]:
                 if block_components and component_sum != stated and not carries_category:
                     page_id = rows[0]["entry_id"].split("__e")[0]
                     flag, detail = classify_credit_mismatch(summary, component_sum, stated, component_values)
+                    v = verified.get(entry_id)
+                    if v is not None and v["summary_text"] == summary:
+                        continue            # scan-verified (credit_totals_scan_verified.csv)
                     flags.append(dict(page_id=page_id, table="person_entry_credit", row_id=entry_id,
                                        flag=flag, detail=detail))
             except (ValueError, KeyError):
                 pass  # non-numeric count -- a different problem, not this check's job
             block_components = []
 
+    for entry_id, v in verified.items():
+        if entry_id in summary_by_entry and summary_by_entry[entry_id] != v["summary_text"]:
+            flags.append(dict(page_id=entry_id.split("__e")[0], table="person_entry_credit", row_id=entry_id,
+                               flag="credit_verified_entry_changed",
+                               detail="its summary text changed since the scan check recorded in "
+                                      "credit_totals_scan_verified.csv; re-check it on the scan"))
     return flags
 
 

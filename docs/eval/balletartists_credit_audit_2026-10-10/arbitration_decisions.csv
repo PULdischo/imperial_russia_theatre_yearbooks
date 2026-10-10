@@ -1,0 +1,139 @@
+item_id,entry_id,kind,stored,reader,decision,answer,note
+1890-91_MSK_p001_e021_i1,balletartists_1890-91_MSK_p001__e021,structure,13 Все 10,18 Всего,reader,B,clear 18 then line-break Все-/го; A not printed
+1890-91_MSK_p003_e015_i1,balletartists_1890-91_MSK_p003__e015,letters,балетахъ,балетахь,reader,A,"final sign is ь (no hard-sign bar) in балетахь, unlike Въ nearby"
+1890-91_MSK_p003_e015_i2,balletartists_1890-91_MSK_p003__e015,letters,кушчиха,купчиха,reader,A,купчиха-5 clear
+1890-91_MSK_p003_e016_i1,balletartists_1890-91_MSK_p003__e016,structure,по друга,подруга,reader,B,printed with line break по-/друга = подруга
+1890-91_MSK_p005_e008_i1,balletartists_1890-91_MSK_p005__e008,letters,Рале,Раале,reader,A,Ра-/але across line break = Раале; А with double а
+1891-92_SP_p004_e012_i1,balletartists_1891-92_SP_p004__e012,digit,82,32,reader,A,first digit 3 with ball terminals; dash ink smears into it; not closed 8
+1892-93_MSK_p002_e017_i1,balletartists_1892-93_MSK_p002__e017,letters,Рамизы,Рамизъ,reader,B,"Рамизъ-5, final ъ"
+1892-93_MSK_p002_e017_i2,balletartists_1892-93_MSK_p002__e017,letters,Коппель,Конекъ,reader,A,Ко-/некъ-горбунокъ across line break = Конекъ
+1892-93_MSK_p002_e017_i3,balletartists_1892-93_MSK_p002__e017,letters,купиha,купчиха,reader,A,купчиха-5 clear
+1892-93_MSK_p002_e017_i4,balletartists_1892-93_MSK_p002__e017,letters,Корсарь,Корсаръ,reader,A,Корсаръ final ъ with bar
+1892-93_MSK_p002_e017_i5,balletartists_1892-93_MSK_p002__e017,letters,Приключенія,Приключевія,reader,B,printed Приключевія: glyph before і is solid-topped в-like not н (worn; small residual doubt)
+1892-93_MSK_p003_e032_i1,balletartists_1892-93_MSK_p003__e032,structure,Алонза Гонделорінъ,Ало ‹ ? › за Гонделорія,OTHER,OTHER:Алонза Гонделорія,letter after Ало is н (H-shape) then за; ends -ія not -інъ
+1892-93_MSK_p006_e019_i1,balletartists_1892-93_MSK_p006__e019,letters,раза,разъ,reader,B,italic разъ with ъ
+1892-93_MSK_p006_e019_i2,balletartists_1892-93_MSK_p006__e019,letters,скорohoдъ,скороходъ,reader,A,скороходъ-3 clear
+1894-95_MSK_p003_e012_i1,balletartists_1894-95_MSK_p003__e012,letters,Сандрільона,Сандрильона,reader,A,Сандрильона with ь not і
+1894-95_MSK_p003_e012_i2,balletartists_1894-95_MSK_p003__e012,letters,65,въ,reader,B,italic Всего—въ 2 балетахъ
+1894-95_SP_p005_e022_i1,balletartists_1894-95_SP_p005__e022,letters,коммиссарь,комиссаръ,OTHER,OTHER:коммиссаръ,printed ком-/миссаръ = double м and final ъ; neither option
+1894-95_SP_p005_e022_i2,balletartists_1894-95_SP_p005__e022,letters,Парикский,Парижскій,reader,A,Парижскій clear
+1894-95_SP_p005_e022_i3,balletartists_1894-95_SP_p005__e022,structure,nota piycъ,нотаріусъ,reader,A,нота-/ріусъ across line break; Cyrillic final ъ
+1895-96_MSK_p003_e021_i1,balletartists_1895-96_MSK_p003__e021,letters,Ацись,Ацисъ,reader,A,Ацисъ final ъ
+1895-96_MSK_p003_e021_i2,balletartists_1895-96_MSK_p003__e021,letters,Данта,Даита,stored,A,Данта: third letter н (H with bar) in both occurrences
+1895-96_MSK_p003_e021_i3,balletartists_1895-96_MSK_p003__e021,letters,Данта,Даита,stored,A,Данта: н in role name too
+1895-96_MSK_p003_e021_i4,balletartists_1895-96_MSK_p003__e021,letters,Капрізы,Капризы,reader,A,Капризы with и
+1895-96_MSK_p003_e021_i5,balletartists_1895-96_MSK_p003__e021,structure,жемчужина,жемчуж ‹ ? › на,OTHER,OTHER:жемчужнна,print has ж-н-н-а (н where и expected); not жемчужина
+1895-96_MSK_p003_e021_i6,balletartists_1895-96_MSK_p003__e021,letters,Сандриаіона,Сандриліона,reader,B,Сандриліона with л and і
+1895-96_MSK_p005_e018_i1,balletartists_1895-96_MSK_p005__e018,letters,торгoveцъ,торговецъ,reader,B,тор-/говецъ across line break; Cyrillic
+1895-96_MSK_p005_e018_i2,balletartists_1895-96_MSK_p005__e018,structure,nota prius,нотаріусъ,reader,B,нота-/ріусъ across line break; Cyrillic
+1896-97_SP_p005_e019_i1,balletartists_1896-97_SP_p005__e019,letters,кунецъ,купецъ,reader,B,ку-/пецъ across line break
+1896-97_SP_p005_e019_i2,balletartists_1896-97_SP_p005__e019,letters,Дросселмейеръ,Дроссельмейеръ,reader,B,"Дроссельмейеръ: сс, ь after л, final ъ"
+1896-97_SP_p006_e018_i1,balletartists_1896-97_SP_p006__e018,letters,сулья,судья,reader,A,судья with д
+1896-97_SP_p006_e018_i2,balletartists_1896-97_SP_p006__e018,letters,копьеноносецъ,копьеносецъ,reader,A,копьеносецъ
+1896-97_SP_p006_e018_i3,balletartists_1896-97_SP_p006__e018,letters,гуsarскій,гусарскій,reader,A,гу-/сарскій across line break; Cyrillic
+1897-98_MSK_p004_e018_i1,balletartists_1897-98_MSK_p004__e018,letters,Рамаев,Рамзея,reader,B,Рамзея
+1897-98_MSK_p004_e018_i2,balletartists_1897-98_MSK_p004__e018,structure,повели тельница,повелительница,reader,A,повели-/тельница across line break = повелительница
+1897-98_MSK_p004_e018_i3,balletartists_1897-98_MSK_p004__e018,letters,куколь,куколъ,reader,B,куколъ: final has top-left bar like ъ in переидъ; moderate confidence vs ь
+1897-98_MSK_p004_e018_i4,balletartists_1897-98_MSK_p004__e018,letters,Лунаа,Луиза,UNREADABLE,UNREADABLE,Лу?за: 3rd letter H-like (н?) vs и not resolvable; з and final а clear so A's аа not printed
+1897-98_MSK_p004_e019_i1,balletartists_1897-98_MSK_p004__e019,letters,Сванцельды,Сванильды,reader,A,"Сванильды: ь then ды, no ц, clear at high zoom"
+1897-98_MSK_p004_e019_i2,balletartists_1897-98_MSK_p004__e019,letters,куколь,куколъ,reader,A,"куколъ ends in ъ, clear"
+1897-98_MSK_p005_e024_i1,balletartists_1897-98_MSK_p005__e024,structure,nota priusъ,нотаріусъ,reader,A,нота-ріусъ across line break; word printed нотаріусъ with ъ
+1897-98_MSK_p005_e024_i2,balletartists_1897-98_MSK_p005__e024,letters,куколь,куколъ,reader,A,куколъ final ъ clear
+1897-98_MSK_p005_e024_i3,balletartists_1897-98_MSK_p005__e024,letters,приказчикъ,прикащикъ,reader,B,"прикащикъ printed (щ, not зч); ъ final"
+1897-98_SP_p006_e020_i1,balletartists_1897-98_SP_p006__e020,letters,Метивой,Мстивой,reader,B,Мстивой: second letter open с (same as с in числѣ) not е; clear at 16x
+1897-98_SP_p006_e020_i2,balletartists_1897-98_SP_p006__e020,letters,Инigo,Иниго,reader,B,Иниго in Latin-free Cyrillic; clear
+1898-99_MSK_p002_e025_i1,balletartists_1898-99_MSK_p002__e025,letters,двоянная,двойная,reader,B,двойная (7 letters with й); scan blurry but not двоянная
+1898-99_MSK_p002_e025_i2,balletartists_1898-99_MSK_p002__e025,letters,куколь,куколъ,reader,A,куколъ; blurry scan but final glyph has ъ upper-left tick not ь
+1899-00_SP_p007_e005_i1,balletartists_1899-00_SP_p007__e005,letters,Фронтень,Фронтенъ,reader,B,Фронтенъ final ъ clear
+1899-00_SP_p009_e017_i1,balletartists_1899-00_SP_p009__e017,letters,пauкъ,паукъ,reader,A,паукъ all Cyrillic; final ъ clear
+1900-01_MSK_p001_e012_i1,balletartists_1900-01_MSK_p001__e012,letters,Джіанна,Джіанина,reader,B,Джіанина (і then а н и н а) clear
+1900-01_MSK_p001_e012_i2,balletartists_1900-01_MSK_p001__e012,letters,Крошкa,Крощка,reader,A,Крощка printed with щ (not ш); clear at 12x
+1900-01_MSK_p002_e010_i1,balletartists_1900-01_MSK_p002__e010,letters,дивертисементѣ,дивертиссементѣ,reader,A,ди-/вертиссементѣ with double с; line-broken
+1900-01_MSK_p007_e009_i1,balletartists_1900-01_MSK_p007__e009,letters,дивертиcементѣ,дивертиссементѣ,reader,B,дивертиссементѣ double с; all Cyrillic
+1900-01_MSK_p007_e014_i1,balletartists_1900-01_MSK_p007__e014,letters,дивертиcементѣ,дивертиссементѣ,reader,B,ди-/вертиссементѣ double с all Cyrillic (line-broken after ди)
+1900-01_MSK_p007_e014_i2,balletartists_1900-01_MSK_p007__e014,letters,преподаватель,предводитель,reader,A,предводитель охоты clear
+1900-01_MSK_p009_e004_i1,balletartists_1900-01_MSK_p009__e004,letters,дивертиissementѣ,дивертиссементѣ,reader,B,дивертиссементѣ double с all Cyrillic
+1900-01_MSK_p009_e008_i1,balletartists_1900-01_MSK_p009__e008,letters,дивертиissementѣ,дивертиссементѣ,reader,A,дивертиссементѣ double с all Cyrillic
+1900-01_MSK_p009_e011_i1,balletartists_1900-01_MSK_p009__e011,letters,дивертиissementѣ,дивертиссементѣ,reader,B,дивертиссементѣ double с all Cyrillic
+1900-01_SP_p002_e001_i1,balletartists_1900-01_SP_p002__e001,letters,дивертисементахъ,дивертиссементахъ,reader,B,ди-/вертиссементахъ double с; line-broken
+1900-01_SP_p005_e005_i1,balletartists_1900-01_SP_p005__e005,letters,Корсарь,Корсаръ,reader,A,Корсаръ final ъ clear
+1900-01_SP_p005_e005_i2,balletartists_1900-01_SP_p005__e005,letters,Кротка,Крошка,reader,A,Крошка (ш) clear
+1900-01_SP_p007_e002_i1,balletartists_1900-01_SP_p007__e002,letters,Фіаметта,Фіамметта,reader,B,Фіамметта double м and double т
+1901-02_MSK_p000_e023_i1,balletartists_1901-02_MSK_p000__e023,letters,дивертисементахъ,дивертиссементахъ,reader,B,дивер-/тиссементахъ double с; line-broken
+1901-02_MSK_p000_e023_i2,balletartists_1901-02_MSK_p000__e023,structure,горбу нокъ,горбунокъ,reader,B,printed горбу-/нокъ across line break; word is горбунокъ (hyphen at line end; no space)
+1901-02_MSK_p000_e023_i3,balletartists_1901-02_MSK_p000__e023,letters,Балдерка,Баядерка,reader,A,Баядерка clear
+1901-02_MSK_p000_e023_i4,balletartists_1901-02_MSK_p000__e023,letters,Нинія,Никія,reader,A,Никія (к then і) clear
+1901-02_MSK_p006_e001_i1,balletartists_1901-02_MSK_p006__e001,letters,корсарь,корсаръ,reader,B,корсаръ final ъ clear (lowercase second occurrence)
+1901-02_SP_p001_e005_i1,balletartists_1901-02_SP_p001__e005,digit,80,89,reader,B,"Всего—89; second digit 9 with closed loop and tail, not 0"
+1901-02_SP_p001_e005_i2,balletartists_1901-02_SP_p001__e005,letters,Донъ,Дочь,reader,B,Дочь Фараона; ь final clear
+1901-02_SP_p001_e005_i3,balletartists_1901-02_SP_p001__e005,letters,байдерка,баядерка,reader,B,баядер-/ка line-broken; я present
+1902-03_MSK_p001_e018_i1,balletartists_1902-03_MSK_p001__e018,letters,разъ,раза,reader,A,Всего — 83 раза ends in а
+1902-03_MSK_p001_e018_i2,balletartists_1902-03_MSK_p001__e018,letters,Сванільды,Сванильды,reader,B,Сванильды with ь not і; clear
+1902-03_MSK_p006_e002_i1,balletartists_1902-03_MSK_p006__e002,letters,Конекъ,Копекъ,reader,A,"Копекъ-Горбунокъ: 3rd letter is п (no crossbar), contrast н in Горбунокъ"
+1902-03_MSK_p006_e002_i2,balletartists_1902-03_MSK_p006__e002,structure,Фролло,Фр ‹ ? › лло,stored,A,letters 3-4 of Фролло worn (partial о bowl and a dot); slot count and context fit Фролло; damaged print
+1902-03_MSK_p008_e007_i1,balletartists_1902-03_MSK_p008__e007,letters,Тормерю,Торшерю,reader,B,Торшерю with ш clearly (not м)
+1902-03_MSK_p008_e007_i2,balletartists_1902-03_MSK_p008__e007,letters,Кузень,Кузенъ,reader,A,Кузенъ-7 ends in ъ
+1902-03_MSK_p008_e010_i1,balletartists_1902-03_MSK_p008__e010,letters,раза,разъ,reader,B,after 91 italic: разъ with ъ
+1902-03_MSK_p008_e012_i1,balletartists_1902-03_MSK_p008__e012,letters,Ламанскій,Ламанчскій,reader,A,Ламанчскій: clear ч
+1902-03_MSK_p008_e012_i2,balletartists_1902-03_MSK_p008__e012,letters,гламатай,глашатай,reader,B,глашатай: ш clear
+1902-03_MSK_p008_e016_i1,balletartists_1902-03_MSK_p008__e016,letters,Ламанскій,Ламанчскій,reader,B,Ламанчскій clear ч (both occurrences)
+1902-03_MSK_p008_e016_i2,balletartists_1902-03_MSK_p008__e016,letters,Ламанскій,Ламанчскій,reader,B,Ламанчскій clear ч
+1902-03_MSK_p008_e016_i3,balletartists_1902-03_MSK_p008__e016,letters,Корсарь,Корсаръ,reader,B,Корсаръ final ъ
+1902-03_MSK_p008_e016_i4,balletartists_1902-03_MSK_p008__e016,letters,Клопень,Клопенъ,reader,A,Клопенъ final ъ
+1902-03_SP_p006_e014_i1,balletartists_1902-03_SP_p006__e014,letters,дивертисементѣ,дивертиссементѣ,reader,A,"дивертиссементѣ: double с, ѣ final"
+1902-03_SP_p006_e014_i2,balletartists_1902-03_SP_p006__e014,letters,скорohoдъ,скороходъ,reader,B,скоро-/ходъ across line break; ходъ with ъ
+1902-03_SP_p007_e011_i1,balletartists_1902-03_SP_p007__e011,letters,Балдерка,Баядерка,reader,A,Баядерка with я
+1903-04_MSK_p005_e002_i1,balletartists_1903-04_MSK_p005__e002,letters,сайной,слѣпой,reader,B,"слѣпой: ѣ visible, slightly blurry"
+1904-05_SP_p001_e001_i1,balletartists_1904-05_SP_p001__e001,letters,Клемансь,Клемансъ,reader,B,Клемансъ final ъ
+1904-05_SP_p001_e001_i2,balletartists_1904-05_SP_p001__e001,letters,красавица,красавмца,reader,A,"красавмца: letter after в has м shape (V middle), not и; fairly clear"
+1904-05_SP_p001_e001_i3,balletartists_1904-05_SP_p001__e001,letters,фея,фся,reader,A,"фся: ф-с-я, not фея"
+1904-05_SP_p001_e001_i4,balletartists_1904-05_SP_p001__e001,letters,капарескъ,канарескъ,reader,B,канарескъ: н with crossbar
+1904-05_SP_p001_e001_i5,balletartists_1904-05_SP_p001__e001,letters,блыла,бѣлая,reader,A,бѣлая with ѣ clear
+1904-05_SP_p001_e004_i1,balletartists_1904-05_SP_p001__e004,letters,балетахъ,балегахъ,reader,B,балегахъ: letter after е is г (printer's slip)
+1904-05_SP_p006_e011_i1,balletartists_1904-05_SP_p006__e011,letters,пua,пуа,reader,B,де-пуа (hyphenated) with у
+1904-05_SP_p006_e011_i2,balletartists_1904-05_SP_p006__e011,letters,Ганнімедъ,Ганимедъ,reader,A,Ган-/медъ: 4 letters before hyphen Г а н и (и worn like п); fits Ганимедъ not Ганнімедъ
+1904-05_SP_p008_e007_i1,balletartists_1904-05_SP_p008__e007,letters,дивертисментахъ,дивертиссментахъ,reader,B,"дивертиссментахъ: double с then мент, no е"
+1904-05_SP_p008_e007_i2,balletartists_1904-05_SP_p008__e007,letters,Кoney,Конекъ,reader,B,Ко-/некъ-Горбунокъ: н with crossbar so Конекъ
+1904-05_SP_p008_e007_i3,balletartists_1904-05_SP_p008__e007,letters,Корсарь,Корсаръ,reader,B,Корсаръ final ъ
+1905-06_MSK_p003_e001_i1,balletartists_1905-06_MSK_p003__e001,letters,дивертисментахъ,дивертиссментахъ,reader,B,"дивертиссментахъ: double с, no е"
+1905-06_MSK_p005_e012_i1,balletartists_1905-06_MSK_p005__e012,letters,Кloydъ,Клодъ,reader,A,Клодъ-1 final ъ
+1905-06_MSK_p007_e001_i1,balletartists_1905-06_MSK_p007__e001,letters,дивертисментахъ,дивертиссментахъ,reader,B,"дивертиссментахъ: double с, no е"
+1905-06_MSK_p008_e012_i1,balletartists_1905-06_MSK_p008__e012,letters,продающее,продавецъ,reader,A,про-/давецъ = продавецъ
+1905-06_MSK_p008_e012_i2,balletartists_1905-06_MSK_p008__e012,letters,зеркаль,зеркалъ,reader,B,зеркалъ final ъ
+1905-06_MSK_p008_e012_i3,balletartists_1905-06_MSK_p008__e012,letters,Кloyd,Клодъ,reader,B,Клодъ final ъ
+1905-06_MSK_p008_e012_i4,balletartists_1905-06_MSK_p008__e012,letters,Кондина,Кондинэ,reader,A,Кондинэ ends in э
+1905-06_MSK_p008_e012_i5,balletartists_1905-06_MSK_p008__e012,letters,поварь,поваръ,reader,B,поваръ-4 final ъ
+1905-06_MSK_p008_e012_i6,balletartists_1905-06_MSK_p008__e012,letters,Копекъ,Конекъ,reader,A,Ко-/некъ: н with crossbar
+1905-06_MSK_p008_e012_i7,balletartists_1905-06_MSK_p008__e012,letters,Руссо,Русо,stored,B,Рус-/со across line break = Руссо (double с)
+1905-06_SP_p007_e001_i1,balletartists_1905-06_SP_p007__e001,letters,Корсарь,Корсаръ,reader,B,Корсаръ with final ъ clearly
+1906-07_MSK_p005_e016_i1,balletartists_1906-07_MSK_p005__e016,letters,свita,свита,reader,B,свита (hyphenated сви-та хана) all Cyrillic
+1906-07_MSK_p008_e004_i1,balletartists_1906-07_MSK_p008__e004,structure,,29 Всего,reader,A,"printed ""—29. Всего—29 разъ"": 29 then Всего present"
+1906-07_MSK_p008_e004_i2,balletartists_1906-07_MSK_p008__e004,letters,гофмаршаль,гофмаршалъ,reader,A,оберъ-гофмаршалъ final ъ clear
+1906-07_MSK_p008_e004_i3,balletartists_1906-07_MSK_p008__e004,letters,Ra,Ра,reader,B,Аммона-Ра printed in Cyrillic Р-а
+1906-07_SP_p005_e021_i1,balletartists_1906-07_SP_p005__e021,letters,раза,разъ,reader,B,italic разъ; final glyph ъ-form not а
+1906-07_SP_p005_e021_i2,balletartists_1906-07_SP_p005__e021,letters,куколь,куколъ,reader,A,куколъ final ъ clear (ку-/колъ)
+1906-07_SP_p006_e009_i1,balletartists_1906-07_SP_p006__e009,letters,Кoney,Конекъ,reader,A,Ко-/некъ-горбунокъ Cyrillic Конекъ
+1906-07_SP_p006_e009_i2,balletartists_1906-07_SP_p006__e009,letters,Кукшарь,Кукшаръ,reader,B,Кукшаръ final ъ
+1906-07_SP_p009_e013_i1,balletartists_1906-07_SP_p009__e013,letters,Русей,Ручей,reader,A,Ручей clear
+1906-07_SP_p009_e013_i2,balletartists_1906-07_SP_p009__e013,letters,Каталабіотъ,Каталабютъ,reader,A,Ката-/лабютъ final ъ; no і
+1906-07_SP_p009_e013_i3,balletartists_1906-07_SP_p009__e013,structure,nota piycъ,нотаріусъ,reader,A,нота-/ріусъ final ъ
+1906-07_SP_p009_e013_i4,balletartists_1906-07_SP_p009__e013,letters,куколь,куколъ,reader,B,куколъ final ъ
+1906-07_SP_p009_e013_i5,balletartists_1906-07_SP_p009__e013,letters,Плупнетемеръ,Плумпетемеръ,reader,B,Плумпетемеръ final ъ clear
+1906-07_SP_p009_e013_i6,balletartists_1906-07_SP_p009__e013,letters,Клопень,Клопенъ,reader,B,Клопенъ final ъ clear
+1907-08_MSK_p001_e001_i1,balletartists_1907-08_MSK_p001__e001,letters,Сваннильды,Сванильды,reader,A,Сванильды single н
+1908-09_SP_p006_e004_i1,balletartists_1908-09_SP_p006__e004,structure,,Времена года Сатиръ 2 Всего въ 1 балетъ 2 раза,reader,B,summary line printed: Всего—въ 1 балетѣ—2 раза
+1908-09_SP_p006_e005_i1,balletartists_1908-09_SP_p006__e005,structure,,Баядерка кшатвій 3 Испытаніе Дамиса гость графини 2 Всего въ 2 балетахъ 5 разъ,reader,A,summary line printed: Всего—въ 2 балетахъ—5 разъ
+1908-09_SP_p006_e006_i1,balletartists_1908-09_SP_p006__e006,structure,,Раймонда Беранже 1 Аленькій цвѣточекъ Орсино дель Сарто 2 Тщетная предосторожность Коленъ 2 Всего въ 3 балетахъ 5 разъ,reader,B,summary line printed: Всего—въ 3 балетахъ—5 разъ
+1908-09_SP_p006_e007_i1,balletartists_1908-09_SP_p006__e007,structure,,Раймонда Жанъ де Бріенъ 2 Тщетная предосторожность Коленъ 1 Жизель графъ Альбертъ 1 Царь Кандавлъ Шгесъ 3 Лебединое озеро принцъ Зигфридъ 1 Ручей Джемиль 1 Эсмеральда Пьеръ Гренгуаръ 1 Дочь фараона Лордъ Вильсонъ 3 Таоръ 3 Донъ Кихотъ Базиль 1 Всего въ 9 балетахъ 17 разъ,reader,A,summary line printed: Всего—въ 9 балетахъ—17 разъ
+1908-09_SP_p006_e008_i1,balletartists_1908-09_SP_p006__e008,structure,,Евника негръ 4 Пробужденіе флоры Меркурій 3 Времена года Фавнъ 2 Всего въ 3 балетахъ 9 разъ,reader,A,summary line printed: Всего—въ 3 балетахъ—9 разъ
+1908-09_SP_p006_e009_i1,balletartists_1908-09_SP_p006__e009,structure,,Конекъ горбунокъ мелочной торговецъ 2 Фея куколъ почтальонъ 2 Всего въ 2 балетахъ 4 раза,reader,B,summary line printed: Всего—въ 2 балетахъ—4 раза
+1908-09_SP_p006_e013_i1,balletartists_1908-09_SP_p006__e013,structure,,Времена года сатиръ 3 Всего въ 1 балетъ 2 раза,reader,B,summary line printed: Всего—въ 1 балетѣ—2 раза
+1908-09_SP_p006_e016_i1,balletartists_1908-09_SP_p006__e016,structure,,Испытаніе Дамиса гость графини 2 Раймонда кавалеръ изъ свиты де Бріенъ 3 Конекъ горбунокъ Гаврило 2 Ручей начальникъ гвардіи 1 Дочь фараона цридворный царя Нубійскаго 3 Донъ Кихотъ герцогъ 3 Всего въ 6 балетахъ 14 разъ,reader,A,summary line printed: Всего—въ 6 балетахъ—14 разъ
+1908-09_SP_p006_e017_i1,balletartists_1908-09_SP_p006__e017,structure,,Корсаръ Бирбанто 2 Пахита Иниго 2 Спящая красавица принцъ Шарманъ 4 Жизель Гансъ 2 Всего въ 4 балетахъ 10 разъ,reader,B,summary line printed: Всего—въ 4 балетахъ—10 разъ
+1908-09_SP_p006_e018_i1,balletartists_1908-09_SP_p006__e018,structure,,Павильонъ армиды слуга маркизы 4 Аленькій цвѣточекъ капитанъ корабля 2 Тщетная предосторожность трактирщикъ 1 Конекъ горбунокъ Петръ 2 Донъ Кихотъ хозяинъ кабачка 3 Всего въ 5 балетахъ 12 разъ,reader,B,summary line printed: Всего—въ 5 балетахъ—12 разъ
+1908-09_SP_p006_e020_i1,balletartists_1908-09_SP_p006__e020,structure,,Спящая красавица принцъ Шери 5 Всего въ 1 балетъ 5 разъ,reader,A,summary line printed: Всего—въ 1 балетѣ—5 разъ
+1908-09_SP_p006_e021_i1,balletartists_1908-09_SP_p006__e021,structure,,Павильонъ Армиды главный рабъ Армиды 4 Аленькій цвѣточекъ принцъ 1 Египетскія ночи рабъ Клеопатры 6 Всего въ 3 балетахъ 11 разъ,reader,A,summary line printed: Всего—въ 3 балетахъ—11 разъ
+1909-10_SP_p005_e004_i1,balletartists_1909-10_SP_p005__e004,letters,Аkteя,Актея,reader,A,Актея Cyrillic (Актея—2)
+1909-10_SP_p006_e012_i1,balletartists_1909-10_SP_p006__e012,letters,Корсарь,Корсаръ,reader,B,Корсаръ final ъ
+1909-10_SP_p006_e012_i2,balletartists_1909-10_SP_p006__e012,letters,Кандавль,Кандавлъ,reader,A,Кандавлъ final ъ (slightly dim)
+1909-10_SP_p007_e006_i1,balletartists_1909-10_SP_p007__e006,letters,зavrъ,звѣрь,reader,B,звѣрь final ь clear

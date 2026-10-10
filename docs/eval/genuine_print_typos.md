@@ -570,3 +570,13 @@ This is not in the confirmed list above. The scan only confirms what the page pr
 - `docs/season_stats/` 1909-10 (printed p. 58), Москва, «Русскихъ драматическихъ»: the page prints **134** (266,240 р. 80 к.). The figure and the receipts are read as printed (scan zoomed; the Moscow opera 168 and ballet 49 on the same page read normally).
 - Why it is flagged: the Repertoire has 235 performed sessions at the Малый that season, with receipts totalling 267,530 р., within 0.5% of the printed receipts. 266,240 р. over 134 performances is about 1,990 р. each; over 234 it is about 1,140 р. For comparison, the other 17 seasons' printed Moscow drama receipts per performance run from 525 to 1,206 р.
 - Open: whether the 134 is a misprint (for 234 or otherwise) or the page counts something narrower than the Repertoire is not established from the yearbook alone.
+
+## BalletArtists credit summaries, scan-confirmed 2026-10-10 (issue #150) -- printer's slips, stored as printed
+Each was zoomed on the scan by me after two blind readers had read it; the type is crisp (not worn), the letters legible.
+- `balletartists_1890-91_MSK_p003` (printed p. 101), no. 63 Матвѣева: «Въ **балетахь**—35. Всего—35 разъ.» (final **ь** where the same line prints ъ in «Въ» and «разъ»).
+- `balletartists_1892-93_MSK_p002` (printed p. 91), no. 61 Матвѣева: «Приключе**в**і(я) Флика и Флока» (в for н).
+- `balletartists_1900-01_SP_p004` (printed p. 76), no. 113 Степанова 3-я: «въ 8 **опехахъ**—48» (for операхъ).
+- `balletartists_1904-05_SP_p001` (printed p. 17), no. 17 Ваганова: «Спящая **красавмца** (**фся** канарескъ—5)» (for красавица and фея; the same page prints «Жемчужина (бѣлая жемчужина»).
+- `balletartists_1904-05_SP_p001`, no. 20 Вертинская: «Въ 11 **балегахъ**—32» (г for т, with a gap in the word).
+Read the same way by two blind readers but NOT zoomed by me, stored as read: «Крощка» (щ for ш; `balletartists_1900-01_MSK_p001` no. Востокова), «переидъ» (`balletartists_1897-98_MSK_p004`, Шарпантье).
+Not applied, unresolved (a reader and the arbiter could not settle the letter): «жемчужина»/«жемчужнна» (`balletartists_1895-96_MSK_p003`, no. 95 Рославлева) and «Лунаа»/«Луиза» (`balletartists_1897-98_MSK_p004`).

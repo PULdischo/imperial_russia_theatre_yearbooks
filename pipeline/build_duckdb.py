@@ -603,9 +603,9 @@ def build_analysis_schema(con: duckdb.DuckDBPyConnection) -> None:
             WITH joined AS (
                 SELECT c.*,
                     regexp_extract(e.credit_summary_text,
-                        '[Вв]ъ\s+(\d+)\s+' || c.label || '\s*[—-]\s*([\d.]+)', 1) AS _n_extracted,
+                        '[Вв]ъ\s+(\d+)\s+' || c.label || '\s*[—-]?\s*([\d.]+)', 1) AS _n_extracted,
                     regexp_extract(e.credit_summary_text,
-                        '[Вв]ъ\s+(\d+)\s+' || c.label || '\s*[—-]\s*([\d.]+)', 2) AS _x_extracted
+                        '[Вв]ъ\s+(\d+)\s+' || c.label || '\s*[—-]?\s*([\d.]+)', 2) AS _x_extracted
                 FROM raw.person_entry_credit c
                 JOIN raw.person_entry e ON c.entry_id = e.entry_id
             )

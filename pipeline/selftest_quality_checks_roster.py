@@ -93,6 +93,37 @@ def main() -> int:
     expect("Latin look-alike inside a word does not hide a part",
            flag in ("credit_summary_not_additive", "credit_digit_misread_candidate"), True)
 
+    # --- scan-verified exemptions (issue #150): a verified entry is not flagged; a changed text is
+    import csv, tempfile
+    from pathlib import Path
+    with tempfile.TemporaryDirectory() as d:
+        d = Path(d)
+        with open(d / "person_entry.csv", "w", newline="", encoding="utf-8") as fh:
+            w = csv.writer(fh); w.writerow(["entry_id", "page_id", "credit_summary_text", "family_name", "first_name", "patronymic", "heading_path", "institution", "service_class", "list_number"])
+            w.writerow(["a__e001", "a", "Въ балетахъ—88; въ операхъ—22. Всего—60 разъ.", "И", "И", "И", "", "", "", "1."])
+        with open(d / "person_entry_credit.csv", "w", newline="", encoding="utf-8") as fh:
+            w = csv.writer(fh); w.writerow(["credit_id", "entry_id", "credit_type", "label", "role_name", "category_production_count", "category_credit_count"])
+            for i, (lab, n) in enumerate([("балетахъ", 88), ("операхъ", 22), ("Всего", 60)], 1):
+                w.writerow([f"a__e001__cr{i}", "a__e001", "category_totals", lab, "", "", n])
+        saved = q.CREDIT_VERIFIED_CSV
+        try:
+            q.CREDIT_VERIFIED_CSV = d / "none.csv"
+            expect("unverified entry is flagged", [f["flag"] for f in q.check_roster(d)], ["credit_digit_misread_candidate"])
+            with open(d / "v.csv", "w", newline="", encoding="utf-8") as fh:
+                w = csv.writer(fh); w.writerow(["entry_id", "summary_text", "status", "note"])
+                w.writerow(["a__e001", "Въ балетахъ—88; въ операхъ—22. Всего—60 разъ.", "print_not_additive", "x"])
+            q.CREDIT_VERIFIED_CSV = d / "v.csv"
+            expect("verified entry is not flagged", q.check_roster(d), [])
+            with open(d / "v.csv", "w", newline="", encoding="utf-8") as fh:
+                w = csv.writer(fh); w.writerow(["entry_id", "summary_text", "status", "note"])
+                w.writerow(["a__e001", "Въ балетахъ—38; въ операхъ—22. Всего—60 разъ.", "print_not_additive", "x"])
+            expect("exemption lapses when the text differs", [f["flag"] for f in q.check_roster(d)],
+                   ["credit_digit_misread_candidate", "credit_verified_entry_changed"])
+        finally:
+            q.CREDIT_VERIFIED_CSV = saved
+    # --- the optional dash in the #23 repair, and its known limit (first occurrence of a label)
+    expect("repair without a dash", q.repaired_credit_count(credit("операхъ", 9, production=9), "Въ 11 балетахъ—42; въ 9 операхъ 31. Всего—73 раза."), "31.")
+
     for f in failures:
         print("FAIL", f)
     print(f"{'FAILED' if failures else 'all cases pass'} ({len(failures)} failure(s))")

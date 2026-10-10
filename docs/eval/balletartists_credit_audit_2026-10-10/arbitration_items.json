@@ -1,0 +1,1244 @@
+[
+ {
+  "entry_id": "balletartists_1890-91_MSK_p001__e021",
+  "kind": "structure",
+  "stored": "13 Все 10",
+  "reader": "18 Всего",
+  "context": "46 въ операхъ 18 Всего 64 раза",
+  "reader_adds": "True",
+  "note": "Entry printed as no. 22 Гаврилова 2-я. Second figure 18 read at zoom (closed lower loop); line break inside word Все-го [line break inside word]."
+ },
+ {
+  "entry_id": "balletartists_1890-91_MSK_p003__e015",
+  "kind": "letters",
+  "stored": "балетахъ",
+  "reader": "балетахь",
+  "context": "Въ балетахь 35 Всего 35",
+  "reader_adds": "True",
+  "note": "Entry no. 63 Матвѣева. No opera count printed. Printed «балетахь» with final soft sign ь (not ъ) in the first line. No space between «горбунокъ» and «(купчиха». [line break inside word] трактир-щица, "
+ },
+ {
+  "entry_id": "balletartists_1890-91_MSK_p003__e015",
+  "kind": "letters",
+  "stored": "кушчиха",
+  "reader": "купчиха",
+  "context": "2 Конекъ горбунокъ купчиха 5 Коппелія трактирщица",
+  "reader_adds": "True",
+  "note": "Entry no. 63 Матвѣева. No opera count printed. Printed «балетахь» with final soft sign ь (not ъ) in the first line. No space between «горбунокъ» and «(купчиха». [line break inside word] трактир-щица, "
+ },
+ {
+  "entry_id": "balletartists_1890-91_MSK_p003__e016",
+  "kind": "structure",
+  "stored": "по друга",
+  "reader": "подруга",
+  "context": "Сафиръ 7 Эсмеральда подруга Флеръ де Лисъ",
+  "reader_adds": "True",
+  "note": "Entry no. 64 Михайлова. [line break inside word] Все-го."
+ },
+ {
+  "entry_id": "balletartists_1890-91_MSK_p005__e008",
+  "kind": "letters",
+  "stored": "Рале",
+  "reader": "Раале",
+  "context": "томъ числѣ Индія Раале 11 Кипрская статуя",
+  "reader_adds": "True",
+  "note": "Entry no. 108 Черепова 1-я. [line break inside word] Все-го, Ра-але, Хрусталь-ный."
+ },
+ {
+  "entry_id": "balletartists_1891-92_SP_p004__e012",
+  "kind": "digit",
+  "stored": "82",
+  "reader": "32",
+  "context": "Въ балетахъ 32 въ операхъ 25",
+  "reader_adds": "True",
+  "note": "Entry no. 133 Троицкая. First digit of the ballet count is partly overlaid by ink/smudge at its upper left, adjoining the dash; shape read as 3 (not certain it is not 8). Read from the shape only, not"
+ },
+ {
+  "entry_id": "balletartists_1892-93_MSK_p002__e017",
+  "kind": "letters",
+  "stored": "Рамизы",
+  "reader": "Рамизъ",
+  "context": "Кипрская статуя прислужница Рамизъ 5 Конекъ горбунокъ",
+  "reader_adds": "True",
+  "note": "Entry no. 61 Матвѣева. «Приключевія»: the printed letter where н is expected looks like в (apparent type fault) and the final glyph is a small я/и; transcribed as it appears. «Коппелія» is blurred aro"
+ },
+ {
+  "entry_id": "balletartists_1892-93_MSK_p002__e017",
+  "kind": "letters",
+  "stored": "Коппель",
+  "reader": "Конекъ",
+  "context": "прислужница Рамизъ 5 Конекъ горбунокъ купчиха 5",
+  "reader_adds": "True",
+  "note": "Entry no. 61 Матвѣева. «Приключевія»: the printed letter where н is expected looks like в (apparent type fault) and the final glyph is a small я/и; transcribed as it appears. «Коппелія» is blurred aro"
+ },
+ {
+  "entry_id": "balletartists_1892-93_MSK_p002__e017",
+  "kind": "letters",
+  "stored": "купиha",
+  "reader": "купчиха",
+  "context": "5 Конекъ горбунокъ купчиха 5 Коппелія трактирщица",
+  "reader_adds": "True",
+  "note": "Entry no. 61 Матвѣева. «Приключевія»: the printed letter where н is expected looks like в (apparent type fault) and the final glyph is a small я/и; transcribed as it appears. «Коппелія» is blurred aro"
+ },
+ {
+  "entry_id": "balletartists_1892-93_MSK_p002__e017",
+  "kind": "letters",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "context": "Коппелія трактирщица 2 Корсаръ негритянка 1 Приключевія",
+  "reader_adds": "True",
+  "note": "Entry no. 61 Матвѣева. «Приключевія»: the printed letter where н is expected looks like в (apparent type fault) and the final glyph is a small я/и; transcribed as it appears. «Коппелія» is blurred aro"
+ },
+ {
+  "entry_id": "balletartists_1892-93_MSK_p002__e017",
+  "kind": "letters",
+  "stored": "Приключенія",
+  "reader": "Приключевія",
+  "context": "Корсаръ негритянка 1 Приключевія Флика и Флока",
+  "reader_adds": "True",
+  "note": "Entry no. 61 Матвѣева. «Приключевія»: the printed letter where н is expected looks like в (apparent type fault) and the final glyph is a small я/и; transcribed as it appears. «Коппелія» is blurred aro"
+ },
+ {
+  "entry_id": "balletartists_1892-93_MSK_p003__e032",
+  "kind": "structure",
+  "stored": "Алонза Гонделорінъ",
+  "reader": "Ало ‹ ? › за Гонделорія",
+  "context": "Лючія 3 Эсмеральда Ало ‹ ? › за Гонделорія 2",
+  "reader_adds": "",
+  "note": "Entry no. 108 Черепова 1-я. The 2nd digit of the ballet count (21) is a narrow, slanted glyph that reads 1 (conceivably 4; the printed figures would then add up, but it is transcribed as it reads). In"
+ },
+ {
+  "entry_id": "balletartists_1892-93_MSK_p006__e019",
+  "kind": "letters",
+  "stored": "раза",
+  "reader": "разъ",
+  "context": "40 Всего 87 разъ Въ томъ числѣ",
+  "reader_adds": "True",
+  "note": "Entry no. 69 Чудиновъ. [line break inside word] Кипр-ская. Line break after the dash in работникъ—/4)."
+ },
+ {
+  "entry_id": "balletartists_1892-93_MSK_p006__e019",
+  "kind": "letters",
+  "stored": "скорohoдъ",
+  "reader": "скороходъ",
+  "context": "4 Хрустальный башмачекъ скороходъ 3",
+  "reader_adds": "True",
+  "note": "Entry no. 69 Чудиновъ. [line break inside word] Кипр-ская. Line break after the dash in работникъ—/4)."
+ },
+ {
+  "entry_id": "balletartists_1894-95_MSK_p003__e012",
+  "kind": "letters",
+  "stored": "Сандрільона",
+  "reader": "Сандрильона",
+  "context": "2 Хрустальный башмачекъ Сандрильона 1 Всего въ",
+  "reader_adds": "",
+  "note": "Entry no. 72 Нелидова. No «Въ ... балетахъ» sentence printed; the list starts directly with the roles and ends with Всего—въ 2 балетахъ—3 раза. [line break inside word] баш-мачекъ. «Аспиччія» printed "
+ },
+ {
+  "entry_id": "balletartists_1894-95_MSK_p003__e012",
+  "kind": "letters",
+  "stored": "65",
+  "reader": "въ",
+  "context": "Сандрильона 1 Всего въ 2 балетахъ 3",
+  "reader_adds": "",
+  "note": "Entry no. 72 Нелидова. No «Въ ... балетахъ» sentence printed; the list starts directly with the roles and ends with Всего—въ 2 балетахъ—3 раза. [line break inside word] баш-мачекъ. «Аспиччія» printed "
+ },
+ {
+  "entry_id": "balletartists_1894-95_SP_p005__e022",
+  "kind": "letters",
+  "stored": "коммиссарь",
+  "reader": "комиссаръ",
+  "context": "числѣ Волшебная флейта комиссаръ 1 Гарлемскій тюльпанъ",
+  "reader_adds": "True",
+  "note": "Entry no. 9 Булгаковъ. [line break inside word] ком-миссаръ, бурго-мистръ, Пробуж-деніе, нота-ріусъ. Line breaks after dashes in бургомистръ—/1 and Ротбардтъ—/6."
+ },
+ {
+  "entry_id": "balletartists_1894-95_SP_p005__e022",
+  "kind": "letters",
+  "stored": "Парикский",
+  "reader": "Парижскій",
+  "context": "фонъ Ротбардтъ 6 Парижскій рынокъ Скарамушъ 1",
+  "reader_adds": "True",
+  "note": "Entry no. 9 Булгаковъ. [line break inside word] ком-миссаръ, бурго-мистръ, Пробуж-деніе, нота-ріусъ. Line breaks after dashes in бургомистръ—/1 and Ротбардтъ—/6."
+ },
+ {
+  "entry_id": "balletartists_1894-95_SP_p005__e022",
+  "kind": "structure",
+  "stored": "nota piycъ",
+  "reader": "нотаріусъ",
+  "context": "3 Тщетная предосторожность нотаріусъ 3",
+  "reader_adds": "True",
+  "note": "Entry no. 9 Булгаковъ. [line break inside word] ком-миссаръ, бурго-мистръ, Пробуж-деніе, нота-ріусъ. Line breaks after dashes in бургомистръ—/1 and Ротбардтъ—/6."
+ },
+ {
+  "entry_id": "balletartists_1895-96_MSK_p003__e021",
+  "kind": "letters",
+  "stored": "Ацись",
+  "reader": "Ацисъ",
+  "context": "Въ томъ числѣ Ацисъ и Галатея Галатея",
+  "reader_adds": "",
+  "note": "Entry no. 95 Рославлева. In this small bold type и and н are hard to tell apart at this scan resolution: «Даита», «Куанонъ» transcribed as they appear; the first «жемчужнна» (at a line start, before t"
+ },
+ {
+  "entry_id": "balletartists_1895-96_MSK_p003__e021",
+  "kind": "letters",
+  "stored": "Данта",
+  "reader": "Даита",
+  "context": "Галатея Галатея 1 Даита Даита 3 Куанонъ 2",
+  "reader_adds": "",
+  "note": "Entry no. 95 Рославлева. In this small bold type и and н are hard to tell apart at this scan resolution: «Даита», «Куанонъ» transcribed as they appear; the first «жемчужнна» (at a line start, before t"
+ },
+ {
+  "entry_id": "balletartists_1895-96_MSK_p003__e021",
+  "kind": "letters",
+  "stored": "Данта",
+  "reader": "Даита",
+  "context": "Галатея Галатея 1 Даита Даита 3 Куанонъ 2",
+  "reader_adds": "",
+  "note": "Entry no. 95 Рославлева. In this small bold type и and н are hard to tell apart at this scan resolution: «Даита», «Куанонъ» transcribed as they appear; the first «жемчужнна» (at a line start, before t"
+ },
+ {
+  "entry_id": "balletartists_1895-96_MSK_p003__e021",
+  "kind": "letters",
+  "stored": "Капрізы",
+  "reader": "Капризы",
+  "context": "3 Куанонъ 2 Капризы бабочки бабочка 3",
+  "reader_adds": "",
+  "note": "Entry no. 95 Рославлева. In this small bold type и and н are hard to tell apart at this scan resolution: «Даита», «Куанонъ» transcribed as they appear; the first «жемчужнна» (at a line start, before t"
+ },
+ {
+  "entry_id": "balletartists_1895-96_MSK_p003__e021",
+  "kind": "structure",
+  "stored": "жемчужина",
+  "reader": "жемчуж ‹ ? › на",
+  "context": "Сванильда 8 Прелестная жемчуж ‹ ? › на розовая жемчужина 2",
+  "reader_adds": "",
+  "note": "Entry no. 95 Рославлева. In this small bold type и and н are hard to tell apart at this scan resolution: «Даита», «Куанонъ» transcribed as they appear; the first «жемчужнна» (at a line start, before t"
+ },
+ {
+  "entry_id": "balletartists_1895-96_MSK_p003__e021",
+  "kind": "letters",
+  "stored": "Сандриаіона",
+  "reader": "Сандриліона",
+  "context": "2 Хрустальный башмачекъ Сандриліона 4",
+  "reader_adds": "",
+  "note": "Entry no. 95 Рославлева. In this small bold type и and н are hard to tell apart at this scan resolution: «Даита», «Куанонъ» transcribed as they appear; the first «жемчужнна» (at a line start, before t"
+ },
+ {
+  "entry_id": "balletartists_1895-96_MSK_p005__e018",
+  "kind": "letters",
+  "stored": "торгoveцъ",
+  "reader": "торговецъ",
+  "context": "горбунокъ Шоджа 9 торговецъ 5 Тщетная предосторожность",
+  "reader_adds": "True",
+  "note": "Entry no. 25 Жуляевъ. [line break inside word] не-вольникъ, тор-говецъ, нота-ріусъ, придвор-ный."
+ },
+ {
+  "entry_id": "balletartists_1895-96_MSK_p005__e018",
+  "kind": "structure",
+  "stored": "nota prius",
+  "reader": "нотаріусъ",
+  "context": "5 Тщетная предосторожность нотаріусъ 1 Хрустальный башмачекъ",
+  "reader_adds": "True",
+  "note": "Entry no. 25 Жуляевъ. [line break inside word] не-вольникъ, тор-говецъ, нота-ріусъ, придвор-ный."
+ },
+ {
+  "entry_id": "balletartists_1896-97_SP_p005__e019",
+  "kind": "letters",
+  "stored": "кунецъ",
+  "reader": "купецъ",
+  "context": "3 Конекъ горбунокъ купецъ 9 Коппелія бургомистръ",
+  "reader_adds": "True",
+  "note": "Entry 9 Булгаковъ. Detail items sum to 43, not 54, as printed. Final letter of 'Тщетная' and of 'Синяя' is ink-blobbed but reads я. Line breaks inside words (Зо-лушка, ку-пецъ, Си-няя, ла-кей) joined;"
+ },
+ {
+  "entry_id": "balletartists_1896-97_SP_p005__e019",
+  "kind": "letters",
+  "stored": "Дросселмейеръ",
+  "reader": "Дроссельмейеръ",
+  "context": "нотаріусъ 4 Щелкунчикъ Дроссельмейеръ 1",
+  "reader_adds": "True",
+  "note": "Entry 9 Булгаковъ. Detail items sum to 43, not 54, as printed. Final letter of 'Тщетная' and of 'Синяя' is ink-blobbed but reads я. Line breaks inside words (Зо-лушка, ку-пецъ, Си-няя, ла-кей) joined;"
+ },
+ {
+  "entry_id": "balletartists_1896-97_SP_p006__e018",
+  "kind": "letters",
+  "stored": "сулья",
+  "reader": "судья",
+  "context": "числѣ Волшебная флейта судья 2 Конекъ горбунокъ",
+  "reader_adds": "True",
+  "note": "Entry 36 Лукьяновъ. Line breaks inside words: ста-рый, гу-сарскій (joined); line break inside word."
+ },
+ {
+  "entry_id": "balletartists_1896-97_SP_p006__e018",
+  "kind": "letters",
+  "stored": "копьеноносецъ",
+  "reader": "копьеносецъ",
+  "context": "9 Млада старый копьеносецъ 8 Привалъ кавалеріи",
+  "reader_adds": "True",
+  "note": "Entry 36 Лукьяновъ. Line breaks inside words: ста-рый, гу-сарскій (joined); line break inside word."
+ },
+ {
+  "entry_id": "balletartists_1896-97_SP_p006__e018",
+  "kind": "letters",
+  "stored": "гуsarскій",
+  "reader": "гусарскій",
+  "context": "8 Привалъ кавалеріи гусарскій полковникъ 2 Спящая",
+  "reader_adds": "True",
+  "note": "Entry 36 Лукьяновъ. Line breaks inside words: ста-рый, гу-сарскій (joined); line break inside word."
+ },
+ {
+  "entry_id": "balletartists_1897-98_MSK_p004__e018",
+  "kind": "letters",
+  "stored": "Рамаев",
+  "reader": "Рамзея",
+  "context": "2 Дочь фараона Рамзея 3 Звѣзды Діана",
+  "reader_adds": "True",
+  "note": "Entry 122 printed 'Шарпантье'. Line breaks inside words: Ката-рина, повели-тельница, Са-танилла, Цы-ганка (joined); line break inside word. 'Катарина -4' printed with a short dash/hyphen before 4. 'пе"
+ },
+ {
+  "entry_id": "balletartists_1897-98_MSK_p004__e018",
+  "kind": "structure",
+  "stored": "повели тельница",
+  "reader": "повелительница",
+  "context": "4 Конекъ горбунокъ повелительница переидъ 9 Пери",
+  "reader_adds": "True",
+  "note": "Entry 122 printed 'Шарпантье'. Line breaks inside words: Ката-рина, повели-тельница, Са-танилла, Цы-ганка (joined); line break inside word. 'Катарина -4' printed with a short dash/hyphen before 4. 'пе"
+ },
+ {
+  "entry_id": "balletartists_1897-98_MSK_p004__e018",
+  "kind": "letters",
+  "stored": "куколь",
+  "reader": "куколъ",
+  "context": "Лилія 7 Фея куколъ японка 5 Цыганка",
+  "reader_adds": "True",
+  "note": "Entry 122 printed 'Шарпантье'. Line breaks inside words: Ката-рина, повели-тельница, Са-танилла, Цы-ганка (joined); line break inside word. 'Катарина -4' printed with a short dash/hyphen before 4. 'пе"
+ },
+ {
+  "entry_id": "balletartists_1897-98_MSK_p004__e018",
+  "kind": "letters",
+  "stored": "Лунаа",
+  "reader": "Луиза",
+  "context": "японка 5 Цыганка Луиза 1 Эсмеральда Флеръ",
+  "reader_adds": "True",
+  "note": "Entry 122 printed 'Шарпантье'. Line breaks inside words: Ката-рина, повели-тельница, Са-танилла, Цы-ганка (joined); line break inside word. 'Катарина -4' printed with a short dash/hyphen before 4. 'пе"
+ },
+ {
+  "entry_id": "balletartists_1897-98_MSK_p004__e019",
+  "kind": "letters",
+  "stored": "Сванцельды",
+  "reader": "Сванильды",
+  "context": "1 Коппелія подруга Сванильды 3 Пери германка",
+  "reader_adds": "True",
+  "note": "Entry 123 printed 'Шишко'. Line breaks inside words: Эсме-ральда, гер-манка (joined); line break inside word. Digits verified at high zoom."
+ },
+ {
+  "entry_id": "balletartists_1897-98_MSK_p004__e019",
+  "kind": "letters",
+  "stored": "куколь",
+  "reader": "куколъ",
+  "context": "германка 1 Фея куколъ тиролька 10 Эсмеральда",
+  "reader_adds": "True",
+  "note": "Entry 123 printed 'Шишко'. Line breaks inside words: Эсме-ральда, гер-манка (joined); line break inside word. Digits verified at high zoom."
+ },
+ {
+  "entry_id": "balletartists_1897-98_MSK_p005__e024",
+  "kind": "structure",
+  "stored": "nota priusъ",
+  "reader": "нотаріусъ",
+  "context": "7 Тщетная предосторожность нотаріусъ 4 Фея куколъ",
+  "reader_adds": "True",
+  "note": "Entry 30. Line breaks inside words: не-вольникъ, горбу-нокъ, нота-ріусъ (joined); line break inside word. Entry is followed by a separate note 'Оставилъ службу 1 сентября 1898 г.' not included."
+ },
+ {
+  "entry_id": "balletartists_1897-98_MSK_p005__e024",
+  "kind": "letters",
+  "stored": "куколь",
+  "reader": "куколъ",
+  "context": "нотаріусъ 4 Фея куколъ главный прикащикъ 10",
+  "reader_adds": "True",
+  "note": "Entry 30. Line breaks inside words: не-вольникъ, горбу-нокъ, нота-ріусъ (joined); line break inside word. Entry is followed by a separate note 'Оставилъ службу 1 сентября 1898 г.' not included."
+ },
+ {
+  "entry_id": "balletartists_1897-98_MSK_p005__e024",
+  "kind": "letters",
+  "stored": "приказчикъ",
+  "reader": "прикащикъ",
+  "context": "Фея куколъ главный прикащикъ 10",
+  "reader_adds": "True",
+  "note": "Entry 30. Line breaks inside words: не-вольникъ, горбу-нокъ, нота-ріусъ (joined); line break inside word. Entry is followed by a separate note 'Оставилъ службу 1 сентября 1898 г.' not included."
+ },
+ {
+  "entry_id": "balletartists_1897-98_SP_p006__e020",
+  "kind": "letters",
+  "stored": "Метивой",
+  "reader": "Мстивой",
+  "context": "ханъ 4 Млада Мстивой 6 Пахита Иниго",
+  "reader_adds": "True",
+  "note": "Entry 30 Кшесинскій 1-й. 'XIV' printed in Latin letters (X, I, V). Line breaks inside words: кава-леріи, краса-вица (joined); line break inside word."
+ },
+ {
+  "entry_id": "balletartists_1897-98_SP_p006__e020",
+  "kind": "letters",
+  "stored": "Инigo",
+  "reader": "Иниго",
+  "context": "Мстивой 6 Пахита Иниго 3 Привалъ кавалеріи",
+  "reader_adds": "True",
+  "note": "Entry 30 Кшесинскій 1-й. 'XIV' printed in Latin letters (X, I, V). Line breaks inside words: кава-леріи, краса-вица (joined); line break inside word."
+ },
+ {
+  "entry_id": "balletartists_1898-99_MSK_p002__e025",
+  "kind": "letters",
+  "stored": "двоянная",
+  "reader": "двойная",
+  "context": "томъ числѣ Звѣзды двойная звѣзда 13 Коппелія",
+  "reader_adds": "True",
+  "note": "Entry 57 printed 'Мендесъ 1-я'. Source scan is blurry; digits verified at high zoom (48, 2, 50, 13, 1, 13, 7). Line break inside word: бара-банщица (joined)."
+ },
+ {
+  "entry_id": "balletartists_1898-99_MSK_p002__e025",
+  "kind": "letters",
+  "stored": "куколь",
+  "reader": "куколъ",
+  "context": "Крошка 13 Фея куколъ барабанщица 7",
+  "reader_adds": "True",
+  "note": "Entry 57 printed 'Мендесъ 1-я'. Source scan is blurry; digits verified at high zoom (48, 2, 50, 13, 1, 13, 7). Line break inside word: бара-банщица (joined)."
+ },
+ {
+  "entry_id": "balletartists_1899-00_SP_p007__e005",
+  "kind": "letters",
+  "stored": "Фронтень",
+  "reader": "Фронтенъ",
+  "context": "1 Испытаніе Дамиса Фронтенъ 3 Маркобомба Леонъ",
+  "reader_adds": "True",
+  "note": "Entry 17 Гавликовскій. Line breaks inside words: дра-мѣ, Волшеб-ная, Про-бужденіе (joined); line break inside word. Items add to 12, total 66 as printed."
+ },
+ {
+  "entry_id": "balletartists_1899-00_SP_p009__e017",
+  "kind": "letters",
+  "stored": "пauкъ",
+  "reader": "паукъ",
+  "context": "4 Капризы бабочки паукъ 2",
+  "reader_adds": "True",
+  "note": "Entry 70 Стуколкинъ. Line breaks inside words: дра-мѣ, фа-раона (joined); line break inside word."
+ },
+ {
+  "entry_id": "balletartists_1900-01_MSK_p001__e012",
+  "kind": "letters",
+  "stored": "Джіанна",
+  "reader": "Джіанина",
+  "context": "Наяда и рыбакъ Джіанина 1 Привалъ кавалеріи",
+  "reader_adds": "True",
+  "note": "Entry 15 Востокова. 'Крощка' printed with щ (verified at high zoom) - kept as printed, not 'Крошка'. Line breaks inside words: ди-вертиссементѣ, кава-леріи (joined); line break inside word."
+ },
+ {
+  "entry_id": "balletartists_1900-01_MSK_p001__e012",
+  "kind": "letters",
+  "stored": "Крошкa",
+  "reader": "Крощка",
+  "context": "Спящая красавица фея Крощка 9 Фея куколъ",
+  "reader_adds": "True",
+  "note": "Entry 15 Востокова. 'Крощка' printed with щ (verified at high zoom) - kept as printed, not 'Крошка'. Line breaks inside words: ди-вертиссементѣ, кава-леріи (joined); line break inside word."
+ },
+ {
+  "entry_id": "balletartists_1900-01_MSK_p002__e010",
+  "kind": "letters",
+  "stored": "дивертисементѣ",
+  "reader": "дивертиссементѣ",
+  "context": "25 въ 1 дивертиссементѣ 1 Всего 72",
+  "reader_adds": "True",
+  "note": "ди-/вертиссементѣ split across lines [line break inside word]"
+ },
+ {
+  "entry_id": "balletartists_1900-01_MSK_p007__e009",
+  "kind": "letters",
+  "stored": "дивертиcементѣ",
+  "reader": "дивертиссементѣ",
+  "context": "1 въ 1 дивертиссементѣ 1 Всего 56",
+  "reader_adds": "True",
+  "note": "Printed 'драмѣ- 1' has a short hyphen rather than a long dash, kept as printed."
+ },
+ {
+  "entry_id": "balletartists_1900-01_MSK_p007__e014",
+  "kind": "letters",
+  "stored": "дивертиcементѣ",
+  "reader": "дивертиссементѣ",
+  "context": "57 въ 1 дивертиссементѣ 3 Всего 100",
+  "reader_adds": "True",
+  "note": "ди-/вертиссементѣ split across lines [line break inside word]. In Антоніо the second н is partly ink-filled and looks like a ч-shaped glyph; read as н (Антоніо)."
+ },
+ {
+  "entry_id": "balletartists_1900-01_MSK_p007__e014",
+  "kind": "letters",
+  "stored": "преподаватель",
+  "reader": "предводитель",
+  "context": "томъ числѣ Звѣзды предводитель охоты 2 Наяда",
+  "reader_adds": "True",
+  "note": "ди-/вертиссементѣ split across lines [line break inside word]. In Антоніо the second н is partly ink-filled and looks like a ч-shaped glyph; read as н (Антоніо)."
+ },
+ {
+  "entry_id": "balletartists_1900-01_MSK_p009__e004",
+  "kind": "letters",
+  "stored": "дивертиissementѣ",
+  "reader": "дивертиссементѣ",
+  "context": "1 въ 1 дивертиссементѣ 1 Всего 70",
+  "reader_adds": "False",
+  "note": "Printed 'балетахъ--45' has a short double dash, kept as two hyphens. дра-/мѣ split across lines [line break inside word]"
+ },
+ {
+  "entry_id": "balletartists_1900-01_MSK_p009__e008",
+  "kind": "letters",
+  "stored": "дивертиissementѣ",
+  "reader": "дивертиссементѣ",
+  "context": "1 въ 1 дивертиссементѣ 2 Всего 103",
+  "reader_adds": "True",
+  "note": "A small stray dot sits between the dash and 103 in 'Всего—·103', treated as a speck."
+ },
+ {
+  "entry_id": "balletartists_1900-01_MSK_p009__e011",
+  "kind": "letters",
+  "stored": "дивертиissementѣ",
+  "reader": "дивертиссементѣ",
+  "context": "1 въ 1 дивертиссементѣ 2 Всего 96",
+  "reader_adds": "True",
+  "note": "дра-/мѣ split across lines [line break inside word]"
+ },
+ {
+  "entry_id": "balletartists_1900-01_SP_p002__e001",
+  "kind": "letters",
+  "stored": "дивертисементахъ",
+  "reader": "дивертиссементахъ",
+  "context": "19 въ 2 дивертиссементахъ 2 Всего 58",
+  "reader_adds": "True",
+  "note": "ди-/вертиссементахъ split across lines [line break inside word]"
+ },
+ {
+  "entry_id": "balletartists_1900-01_SP_p005__e005",
+  "kind": "letters",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "context": "Коппелія Сванильда 1 Корсаръ Гюльмара 1 Привалъ кавалеріи",
+  "reader_adds": "True",
+  "note": "'Гюльмара -- 1' printed with a short double dash, kept as two hyphens."
+ },
+ {
+  "entry_id": "balletartists_1900-01_SP_p005__e005",
+  "kind": "letters",
+  "stored": "Кротка",
+  "reader": "Крошка",
+  "context": "Спящая красавица фея Крошка 3",
+  "reader_adds": "True",
+  "note": "'Гюльмара -- 1' printed with a short double dash, kept as two hyphens."
+ },
+ {
+  "entry_id": "balletartists_1900-01_SP_p007__e002",
+  "kind": "letters",
+  "stored": "Фіаметта",
+  "reader": "Фіамметта",
+  "context": "Въ томъ числѣ Фіамметта другъ Стернгольдта 1",
+  "reader_adds": "True",
+  "note": "Стерн-/гольдта split across lines [line break inside word]"
+ },
+ {
+  "entry_id": "balletartists_1901-02_MSK_p000__e023",
+  "kind": "letters",
+  "stored": "дивертисементахъ",
+  "reader": "дивертиссементахъ",
+  "context": "оперѣ 1 въ дивертиссементахъ 3 Всего 22",
+  "reader_adds": "True",
+  "note": "Words split across lines [line break inside word]: дивер-/тиссементахъ, Те-/реза, Рай-/монда, Конекъ-горбу-/нокъ (compound split after 'горбу-'); 'Донъ-/Кихотъ' split at the hyphen. Printed name is Ге"
+ },
+ {
+  "entry_id": "balletartists_1901-02_MSK_p000__e023",
+  "kind": "structure",
+  "stored": "горбу нокъ",
+  "reader": "горбунокъ",
+  "context": "Китри 3 Конекъ горбунокъ царь дѣвица 4",
+  "reader_adds": "True",
+  "note": "Words split across lines [line break inside word]: дивер-/тиссементахъ, Те-/реза, Рай-/монда, Конекъ-горбу-/нокъ (compound split after 'горбу-'); 'Донъ-/Кихотъ' split at the hyphen. Printed name is Ге"
+ },
+ {
+  "entry_id": "balletartists_1901-02_MSK_p000__e023",
+  "kind": "letters",
+  "stored": "Балдерка",
+  "reader": "Баядерка",
+  "context": "Въ томъ числѣ Баядерка Никія 3 Привалъ кавалеріи",
+  "reader_adds": "True",
+  "note": "Words split across lines [line break inside word]: дивер-/тиссементахъ, Те-/реза, Рай-/монда, Конекъ-горбу-/нокъ (compound split after 'горбу-'); 'Донъ-/Кихотъ' split at the hyphen. Printed name is Ге"
+ },
+ {
+  "entry_id": "balletartists_1901-02_MSK_p000__e023",
+  "kind": "letters",
+  "stored": "Нинія",
+  "reader": "Никія",
+  "context": "Въ томъ числѣ Баядерка Никія 3 Привалъ кавалеріи",
+  "reader_adds": "True",
+  "note": "Words split across lines [line break inside word]: дивер-/тиссементахъ, Те-/реза, Рай-/монда, Конекъ-горбу-/нокъ (compound split after 'горбу-'); 'Донъ-/Кихотъ' split at the hyphen. Printed name is Ге"
+ },
+ {
+  "entry_id": "balletartists_1901-02_MSK_p006__e001",
+  "kind": "letters",
+  "stored": "корсарь",
+  "reader": "корсаръ",
+  "context": "Корсаръ 4 й корсаръ 7 Лебединое озеро",
+  "reader_adds": "True",
+  "note": "дивер-/тиссементахъ split across lines [line break inside word]"
+ },
+ {
+  "entry_id": "balletartists_1901-02_SP_p001__e005",
+  "kind": "digit",
+  "stored": "80",
+  "reader": "89",
+  "context": "операхъ 18 Всего 89 разъ Въ томъ",
+  "reader_adds": "False",
+  "note": "баядер-/ка split across lines [line break inside word]"
+ },
+ {
+  "entry_id": "balletartists_1901-02_SP_p001__e005",
+  "kind": "letters",
+  "stored": "Донъ",
+  "reader": "Дочь",
+  "context": "Въ томъ числѣ Дочь Фараона баядерка 1",
+  "reader_adds": "False",
+  "note": "баядер-/ка split across lines [line break inside word]"
+ },
+ {
+  "entry_id": "balletartists_1901-02_SP_p001__e005",
+  "kind": "letters",
+  "stored": "байдерка",
+  "reader": "баядерка",
+  "context": "числѣ Дочь Фараона баядерка 1",
+  "reader_adds": "False",
+  "note": "баядер-/ка split across lines [line break inside word]"
+ },
+ {
+  "entry_id": "balletartists_1902-03_MSK_p001__e018",
+  "kind": "letters",
+  "stored": "разъ",
+  "reader": "раза",
+  "context": "дивертиссементахъ 7 Всего 83 раза Въ томъ числѣ",
+  "reader_adds": "True",
+  "note": "[line break inside word] ди-/вертиссементахъ; also чи-/слѣ is NOT broken here (числѣ on one line). Totals add up."
+ },
+ {
+  "entry_id": "balletartists_1902-03_MSK_p001__e018",
+  "kind": "letters",
+  "stored": "Сванільды",
+  "reader": "Сванильды",
+  "context": "1 Коппелія подруга Сванильды 3 Спящая красавица",
+  "reader_adds": "True",
+  "note": "[line break inside word] ди-/вертиссементахъ; also чи-/слѣ is NOT broken here (числѣ on one line). Totals add up."
+ },
+ {
+  "entry_id": "balletartists_1902-03_MSK_p006__e002",
+  "kind": "letters",
+  "stored": "Конекъ",
+  "reader": "Копекъ",
+  "context": "Въ томъ числѣ Копекъ Горбунокъ ханъ 12",
+  "reader_adds": "",
+  "note": "[line break inside word] чи-/слѣ and Бир-/банто. Title spelled Копекъ (п, no crossbar) as printed, not Конекъ. In Фр‹?›лло the letter after Фр is damaged by a print flaw (only a faint left arc visible"
+ },
+ {
+  "entry_id": "balletartists_1902-03_MSK_p006__e002",
+  "kind": "structure",
+  "stored": "Фролло",
+  "reader": "Фр ‹ ? › лло",
+  "context": "4 Эсмеральда Клодъ Фр ‹ ? › лло 4",
+  "reader_adds": "",
+  "note": "[line break inside word] чи-/слѣ and Бир-/банто. Title spelled Копекъ (п, no crossbar) as printed, not Конекъ. In Фр‹?›лло the letter after Фр is damaged by a print flaw (only a faint left arc visible"
+ },
+ {
+  "entry_id": "balletartists_1902-03_MSK_p008__e007",
+  "kind": "letters",
+  "stored": "Тормерю",
+  "reader": "Торшерю",
+  "context": "3 Эсмеральда Пьеръ Торшерю 7 Генріе Кузенъ",
+  "reader_adds": "True",
+  "note": "Totals add up. Names read at about 3.4x: Торшерю and Генріе as printed; Коппеліусъ printed with і."
+ },
+ {
+  "entry_id": "balletartists_1902-03_MSK_p008__e007",
+  "kind": "letters",
+  "stored": "Кузень",
+  "reader": "Кузенъ",
+  "context": "Торшерю 7 Генріе Кузенъ 7",
+  "reader_adds": "True",
+  "note": "Totals add up. Names read at about 3.4x: Торшерю and Генріе as printed; Коппеліусъ printed with і."
+ },
+ {
+  "entry_id": "balletartists_1902-03_MSK_p008__e010",
+  "kind": "letters",
+  "stored": "раза",
+  "reader": "разъ",
+  "context": "46 Всего 91 разъ Въ томъ числѣ",
+  "reader_adds": "True",
+  "note": "Line breaks between words only ('слуга—' / '4;'). Totals add up."
+ },
+ {
+  "entry_id": "balletartists_1902-03_MSK_p008__e012",
+  "kind": "letters",
+  "stored": "Ламанскій",
+  "reader": "Ламанчскій",
+  "context": "3 Донъ Кихотъ Ламанчскій хозяинъ театра 3",
+  "reader_adds": "True",
+  "note": "Totals add up."
+ },
+ {
+  "entry_id": "balletartists_1902-03_MSK_p008__e012",
+  "kind": "letters",
+  "stored": "гламатай",
+  "reader": "глашатай",
+  "context": "театра 3 Конекъ Горбунокъ глашатай 15 Эсмеральда кардиналъ",
+  "reader_adds": "True",
+  "note": "Totals add up."
+ },
+ {
+  "entry_id": "balletartists_1902-03_MSK_p008__e016",
+  "kind": "letters",
+  "stored": "Ламанскій",
+  "reader": "Ламанчскій",
+  "context": "3 Донъ Кихотъ Ламанчскій Донъ Кихотъ Ламанчскій",
+  "reader_adds": "True",
+  "note": "[line break inside word] чи-/слѣ, Фло-/рестанъ, Труль-/ефу (joined as Трульефу). 'XIV' is printed in Latin capitals (roman numeral); 'Ламанчскій—' then '3)' on the next line."
+ },
+ {
+  "entry_id": "balletartists_1902-03_MSK_p008__e016",
+  "kind": "letters",
+  "stored": "Ламанскій",
+  "reader": "Ламанчскій",
+  "context": "Ламанчскій Донъ Кихотъ Ламанчскій 3 Конекъ Горбунокъ",
+  "reader_adds": "True",
+  "note": "[line break inside word] чи-/слѣ, Фло-/рестанъ, Труль-/ефу (joined as Трульефу). 'XIV' is printed in Latin capitals (roman numeral); 'Ламанчскій—' then '3)' on the next line."
+ },
+ {
+  "entry_id": "balletartists_1902-03_MSK_p008__e016",
+  "kind": "letters",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "context": "Горбунокъ старинушка 13 Корсаръ смотритель гарема 2",
+  "reader_adds": "True",
+  "note": "[line break inside word] чи-/слѣ, Фло-/рестанъ, Труль-/ефу (joined as Трульефу). 'XIV' is printed in Latin capitals (roman numeral); 'Ламанчскій—' then '3)' on the next line."
+ },
+ {
+  "entry_id": "balletartists_1902-03_MSK_p008__e016",
+  "kind": "letters",
+  "stored": "Клопень",
+  "reader": "Клопенъ",
+  "context": "XIV 4 Эсмеральда Клопенъ Трульефу 7",
+  "reader_adds": "True",
+  "note": "[line break inside word] чи-/слѣ, Фло-/рестанъ, Труль-/ефу (joined as Трульефу). 'XIV' is printed in Latin capitals (roman numeral); 'Ламанчскій—' then '3)' on the next line."
+ },
+ {
+  "entry_id": "balletartists_1902-03_SP_p006__e014",
+  "kind": "letters",
+  "stored": "дивертисементѣ",
+  "reader": "дивертиссементѣ",
+  "context": "10 въ 1 дивертиссементѣ 1 Всего 63",
+  "reader_adds": "True",
+  "note": "[line break inside word] дра-/мѣ, скоро-/ходъ, Мерку-/рій (all joined). Totals add up."
+ },
+ {
+  "entry_id": "balletartists_1902-03_SP_p006__e014",
+  "kind": "letters",
+  "stored": "скорohoдъ",
+  "reader": "скороходъ",
+  "context": "числѣ Волшебная флейта скороходъ маркиза 5 Пробужденіе",
+  "reader_adds": "True",
+  "note": "[line break inside word] дра-/мѣ, скоро-/ходъ, Мерку-/рій (all joined). Totals add up."
+ },
+ {
+  "entry_id": "balletartists_1902-03_SP_p007__e011",
+  "kind": "letters",
+  "stored": "Балдерка",
+  "reader": "Баядерка",
+  "context": "Въ томъ числѣ Баядерка кшатрій 2",
+  "reader_adds": "True",
+  "note": "[line break inside word] ди-/вертиссементѣ (printed 'ди-' end of line). Totals add up."
+ },
+ {
+  "entry_id": "balletartists_1903-04_MSK_p005__e002",
+  "kind": "letters",
+  "stored": "сайной",
+  "reader": "слѣпой",
+  "context": "томъ числѣ Эсмеральда слѣпой 1",
+  "reader_adds": "False",
+  "note": "36+37=73 vs printed 78. Last digit of the total is a heavy glyph, read as a closed 8 (it has the upper-left closure an 8 has, unlike the open 3 in 36 and 37) but a 3 cannot be fully excluded. 'раза' p"
+ },
+ {
+  "entry_id": "balletartists_1904-05_SP_p001__e001",
+  "kind": "letters",
+  "stored": "Клемансь",
+  "reader": "Клемансъ",
+  "context": "томъ числѣ Раймонда Клемансъ 2 Спящая красавмца",
+  "reader_adds": "True",
+  "note": "[line break inside word] Жемчу-/жина. Print is blurred/worn here: I read 'красавмца', 'фся', 'канарескъ' as they appear (probably worn type for красавица / фея / канарейкъ?) - transcribed as seen, not"
+ },
+ {
+  "entry_id": "balletartists_1904-05_SP_p001__e001",
+  "kind": "letters",
+  "stored": "красавица",
+  "reader": "красавмца",
+  "context": "Клемансъ 2 Спящая красавмца фся канарескъ 5 Жемчужина бѣлая",
+  "reader_adds": "True",
+  "note": "[line break inside word] Жемчу-/жина. Print is blurred/worn here: I read 'красавмца', 'фся', 'канарескъ' as they appear (probably worn type for красавица / фея / канарейкъ?) - transcribed as seen, not"
+ },
+ {
+  "entry_id": "balletartists_1904-05_SP_p001__e001",
+  "kind": "letters",
+  "stored": "фея",
+  "reader": "фся",
+  "context": "Клемансъ 2 Спящая красавмца фся канарескъ 5 Жемчужина бѣлая",
+  "reader_adds": "True",
+  "note": "[line break inside word] Жемчу-/жина. Print is blurred/worn here: I read 'красавмца', 'фся', 'канарескъ' as they appear (probably worn type for красавица / фея / канарейкъ?) - transcribed as seen, not"
+ },
+ {
+  "entry_id": "balletartists_1904-05_SP_p001__e001",
+  "kind": "letters",
+  "stored": "капарескъ",
+  "reader": "канарескъ",
+  "context": "Клемансъ 2 Спящая красавмца фся канарескъ 5 Жемчужина бѣлая",
+  "reader_adds": "True",
+  "note": "[line break inside word] Жемчу-/жина. Print is blurred/worn here: I read 'красавмца', 'фся', 'канарескъ' as they appear (probably worn type for красавица / фея / канарейкъ?) - transcribed as seen, not"
+ },
+ {
+  "entry_id": "balletartists_1904-05_SP_p001__e001",
+  "kind": "letters",
+  "stored": "блыла",
+  "reader": "бѣлая",
+  "context": "канарескъ 5 Жемчужина бѣлая жемчужина 1",
+  "reader_adds": "True",
+  "note": "[line break inside word] Жемчу-/жина. Print is blurred/worn here: I read 'красавмца', 'фся', 'канарескъ' as they appear (probably worn type for красавица / фея / канарейкъ?) - transcribed as seen, not"
+ },
+ {
+  "entry_id": "balletartists_1904-05_SP_p001__e004",
+  "kind": "letters",
+  "stored": "балетахъ",
+  "reader": "балегахъ",
+  "context": "Въ 11 балегахъ 32 въ 12 операхъ",
+  "reader_adds": "True",
+  "note": "Fifth letter of 'балегахъ' appears as г (or a damaged т) in the blurred print; transcribed as seen. Digits 11, 32, 12, 65, 97 verified at zoom (32+65=97)."
+ },
+ {
+  "entry_id": "balletartists_1904-05_SP_p006__e011",
+  "kind": "letters",
+  "stored": "пua",
+  "reader": "пуа",
+  "context": "красавица флеръ де пуа 5 волкъ 2",
+  "reader_adds": "True",
+  "note": "Name printed Больмъ (list number printed '12.' with a blot before the 2). [line break inside word] Гани-/медъ. 'флеръ-/де-пуа' hyphen at line end is part of the compound. Digits verified at zoom (25+1"
+ },
+ {
+  "entry_id": "balletartists_1904-05_SP_p006__e011",
+  "kind": "letters",
+  "stored": "Ганнімедъ",
+  "reader": "Ганимедъ",
+  "context": "2 Пробужденіе Флоры Ганимедъ 1 Испытаніе Дамиса",
+  "reader_adds": "True",
+  "note": "Name printed Больмъ (list number printed '12.' with a blot before the 2). [line break inside word] Гани-/медъ. 'флеръ-/де-пуа' hyphen at line end is part of the compound. Digits verified at zoom (25+1"
+ },
+ {
+  "entry_id": "balletartists_1904-05_SP_p008__e007",
+  "kind": "letters",
+  "stored": "дивертисментахъ",
+  "reader": "дивертиссментахъ",
+  "context": "23 въ 2 дивертиссментахъ 2 въ 1",
+  "reader_adds": "True",
+  "note": "[line break inside word] Ко-/некъ, слу-/га, предосто-/рожность, ста-/рикъ. 'дивертиссментахъ' printed without the second е (as seen). Digits verified at zoom (23+2+3=28)."
+ },
+ {
+  "entry_id": "balletartists_1904-05_SP_p008__e007",
+  "kind": "letters",
+  "stored": "Кoney",
+  "reader": "Конекъ",
+  "context": "Въ томъ числѣ Конекъ Горбунокъ еврей 5",
+  "reader_adds": "True",
+  "note": "[line break inside word] Ко-/некъ, слу-/га, предосто-/рожность, ста-/рикъ. 'дивертиссментахъ' printed without the second е (as seen). Digits verified at zoom (23+2+3=28)."
+ },
+ {
+  "entry_id": "balletartists_1904-05_SP_p008__e007",
+  "kind": "letters",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "context": "перепутьи слуга 4 Корсаръ купецъ 4 Тщетная",
+  "reader_adds": "True",
+  "note": "[line break inside word] Ко-/некъ, слу-/га, предосто-/рожность, ста-/рикъ. 'дивертиссментахъ' printed without the second е (as seen). Digits verified at zoom (23+2+3=28)."
+ },
+ {
+  "entry_id": "balletartists_1905-06_MSK_p003__e001",
+  "kind": "letters",
+  "stored": "дивертисментахъ",
+  "reader": "дивертиссментахъ",
+  "context": "25 въ 2 дивертиссментахъ 2 въ 2",
+  "reader_adds": "True",
+  "note": "[line break inside word] краса-/вица. 'дивертиссментахъ' printed without the second е (as seen). Digits verified at zoom (25+2+7=34). Name printed Мосолова Вѣра Владиміровна (list no. 59)."
+ },
+ {
+  "entry_id": "balletartists_1905-06_MSK_p005__e012",
+  "kind": "letters",
+  "stored": "Кloydъ",
+  "reader": "Клодъ",
+  "context": "Карабасъ 3 Эсмеральда Клодъ 1",
+  "reader_adds": "True",
+  "note": "Departure note 'Оставилъ службу 1 сентября 1906 г.' excluded. Third letter of 'Конекъ' checked at high zoom (has the crossbar of н). Digits verified (4+3+1=8)."
+ },
+ {
+  "entry_id": "balletartists_1905-06_MSK_p007__e001",
+  "kind": "letters",
+  "stored": "дивертисментахъ",
+  "reader": "дивертиссментахъ",
+  "context": "33 въ 2 дивертиссментахъ 2 въ 4",
+  "reader_adds": "True",
+  "note": "'дивертиссментахъ' printed without the second е (checked at high zoom). Digits verified (33+2+13=48)."
+ },
+ {
+  "entry_id": "balletartists_1905-06_MSK_p008__e012",
+  "kind": "letters",
+  "stored": "продающее",
+  "reader": "продавецъ",
+  "context": "числѣ Волшебное зеркало продавецъ зеркалъ 4 король 1",
+  "reader_adds": "True",
+  "note": "[line break inside word] про-/давецъ, боже-/ство, Ко-/некъ, Рус-/со (printed Рус-со, read as Русо; one с at line end then со), 'Рус-/со—3' is the joined form I give. The '—30' for Лебединое озеро veri"
+ },
+ {
+  "entry_id": "balletartists_1905-06_MSK_p008__e012",
+  "kind": "letters",
+  "stored": "зеркаль",
+  "reader": "зеркалъ",
+  "context": "числѣ Волшебное зеркало продавецъ зеркалъ 4 король 1",
+  "reader_adds": "True",
+  "note": "[line break inside word] про-/давецъ, боже-/ство, Ко-/некъ, Рус-/со (printed Рус-со, read as Русо; one с at line end then со), 'Рус-/со—3' is the joined form I give. The '—30' for Лебединое озеро veri"
+ },
+ {
+  "entry_id": "balletartists_1905-06_MSK_p008__e012",
+  "kind": "letters",
+  "stored": "Кloyd",
+  "reader": "Клодъ",
+  "context": "1 Два вора Клодъ Кондинэ 2 Дочь фараона",
+  "reader_adds": "True",
+  "note": "[line break inside word] про-/давецъ, боже-/ство, Ко-/некъ, Рус-/со (printed Рус-со, read as Русо; one с at line end then со), 'Рус-/со—3' is the joined form I give. The '—30' for Лебединое озеро veri"
+ },
+ {
+  "entry_id": "balletartists_1905-06_MSK_p008__e012",
+  "kind": "letters",
+  "stored": "Кондина",
+  "reader": "Кондинэ",
+  "context": "1 Два вора Клодъ Кондинэ 2 Дочь фараона",
+  "reader_adds": "True",
+  "note": "[line break inside word] про-/давецъ, боже-/ство, Ко-/некъ, Рус-/со (printed Рус-со, read as Русо; one с at line end then со), 'Рус-/со—3' is the joined form I give. The '—30' for Лебединое озеро veri"
+ },
+ {
+  "entry_id": "balletartists_1905-06_MSK_p008__e012",
+  "kind": "letters",
+  "stored": "поварь",
+  "reader": "поваръ",
+  "context": "3 Золотая рыбка поваръ 4 Конекъ горбунокъ",
+  "reader_adds": "True",
+  "note": "[line break inside word] про-/давецъ, боже-/ство, Ко-/некъ, Рус-/со (printed Рус-со, read as Русо; one с at line end then со), 'Рус-/со—3' is the joined form I give. The '—30' for Лебединое озеро veri"
+ },
+ {
+  "entry_id": "balletartists_1905-06_MSK_p008__e012",
+  "kind": "letters",
+  "stored": "Копекъ",
+  "reader": "Конекъ",
+  "context": "рыбка поваръ 4 Конекъ горбунокъ городничій 3",
+  "reader_adds": "True",
+  "note": "[line break inside word] про-/давецъ, боже-/ство, Ко-/некъ, Рус-/со (printed Рус-со, read as Русо; one с at line end then со), 'Рус-/со—3' is the joined form I give. The '—30' for Лебединое озеро veri"
+ },
+ {
+  "entry_id": "balletartists_1905-06_MSK_p008__e012",
+  "kind": "letters",
+  "stored": "Руссо",
+  "reader": "Русо",
+  "context": "борода 2 Эсмеральда Русо 3 Тортерю 3",
+  "reader_adds": "True",
+  "note": "[line break inside word] про-/давецъ, боже-/ство, Ко-/некъ, Рус-/со (printed Рус-со, read as Русо; one с at line end then со), 'Рус-/со—3' is the joined form I give. The '—30' for Лебединое озеро veri"
+ },
+ {
+  "entry_id": "balletartists_1905-06_SP_p007__e001",
+  "kind": "letters",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "context": "Пахита Иниго 1 Корсаръ Бирбанто 1",
+  "reader_adds": "True",
+  "note": "Digits verified (8+1=9)."
+ },
+ {
+  "entry_id": "balletartists_1906-07_MSK_p005__e016",
+  "kind": "letters",
+  "stored": "свita",
+  "reader": "свита",
+  "context": "числѣ Конекъ Горбунокъ свита хана 1",
+  "reader_adds": "True",
+  "note": "[line break inside word] сви-/та. Digits verified (21+3=24)."
+ },
+ {
+  "entry_id": "balletartists_1906-07_MSK_p008__e004",
+  "kind": "structure",
+  "stored": "",
+  "reader": "29 Всего",
+  "context": "Въ 8 балетахъ 29 Всего 29 разъ Въ",
+  "reader_adds": "True",
+  "note": "'XIV' is printed in Latin letters (Roman numeral); everything else Cyrillic. Line-end hyphens Донъ-/Кихотъ and Аммо-/на-Ра: both are real hyphenated names ('Аммона-Ра' keeps its own hyphen). Role coun"
+ },
+ {
+  "entry_id": "balletartists_1906-07_MSK_p008__e004",
+  "kind": "letters",
+  "stored": "гофмаршаль",
+  "reader": "гофмаршалъ",
+  "context": "Волшебное зеркало оберъ гофмаршалъ 6 Два вора",
+  "reader_adds": "True",
+  "note": "'XIV' is printed in Latin letters (Roman numeral); everything else Cyrillic. Line-end hyphens Донъ-/Кихотъ and Аммо-/на-Ра: both are real hyphenated names ('Аммона-Ра' keeps its own hyphen). Role coun"
+ },
+ {
+  "entry_id": "balletartists_1906-07_MSK_p008__e004",
+  "kind": "letters",
+  "stored": "Ra",
+  "reader": "Ра",
+  "context": "6 Дочь фараона Аммона Ра 6 Конекъ горбунокъ",
+  "reader_adds": "True",
+  "note": "'XIV' is printed in Latin letters (Roman numeral); everything else Cyrillic. Line-end hyphens Донъ-/Кихотъ and Аммо-/на-Ра: both are real hyphenated names ('Аммона-Ра' keeps its own hyphen). Role coun"
+ },
+ {
+  "entry_id": "balletartists_1906-07_SP_p005__e021",
+  "kind": "letters",
+  "stored": "раза",
+  "reader": "разъ",
+  "context": "операхъ 36 Всего 81 разъ Въ томъ числѣ",
+  "reader_adds": "True",
+  "note": "[line break inside word] слу-/жанка, авто-/матъ, ку-/колъ. No closing full stop is printed after the final ')'. Digits verified (45+36=81)."
+ },
+ {
+  "entry_id": "balletartists_1906-07_SP_p005__e021",
+  "kind": "letters",
+  "stored": "куколь",
+  "reader": "куколъ",
+  "context": "дама 3 Фея куколъ служанка 1 Эсмеральда",
+  "reader_adds": "True",
+  "note": "[line break inside word] слу-/жанка, авто-/матъ, ку-/колъ. No closing full stop is printed after the final ')'. Digits verified (45+36=81)."
+ },
+ {
+  "entry_id": "balletartists_1906-07_SP_p006__e009",
+  "kind": "letters",
+  "stored": "Кoney",
+  "reader": "Конекъ",
+  "context": "гость графини 1 Конекъ горбунокъ Кукшаръ 2",
+  "reader_adds": "True",
+  "note": "[line break inside word] Ко-/некъ. Digits verified (44+60=104)."
+ },
+ {
+  "entry_id": "balletartists_1906-07_SP_p006__e009",
+  "kind": "letters",
+  "stored": "Кукшарь",
+  "reader": "Кукшаръ",
+  "context": "1 Конекъ горбунокъ Кукшаръ 2 Спящая красавица",
+  "reader_adds": "True",
+  "note": "[line break inside word] Ко-/некъ. Digits verified (44+60=104)."
+ },
+ {
+  "entry_id": "balletartists_1906-07_SP_p009__e013",
+  "kind": "letters",
+  "stored": "Русей",
+  "reader": "Ручей",
+  "context": "Раймонда Сенешаль 5 Ручей Синдіаръ 3 Спящая",
+  "reader_adds": "True",
+  "note": "Entry runs from the foot of the left column onto the top of the right column; split falls between 'Времена' and 'года' (two words). [line break inside word] жан-/дармскій, Ката-/лабютъ, нота-/ріусъ. A"
+ },
+ {
+  "entry_id": "balletartists_1906-07_SP_p009__e013",
+  "kind": "letters",
+  "stored": "Каталабіотъ",
+  "reader": "Каталабютъ",
+  "context": "3 Спящая красавица Каталабютъ 1 Тщетная предосторожность",
+  "reader_adds": "True",
+  "note": "Entry runs from the foot of the left column onto the top of the right column; split falls between 'Времена' and 'года' (two words). [line break inside word] жан-/дармскій, Ката-/лабютъ, нота-/ріусъ. A"
+ },
+ {
+  "entry_id": "balletartists_1906-07_SP_p009__e013",
+  "kind": "structure",
+  "stored": "nota piycъ",
+  "reader": "нотаріусъ",
+  "context": "1 Тщетная предосторожность нотаріусъ 1 Ученики Дюпре",
+  "reader_adds": "True",
+  "note": "Entry runs from the foot of the left column onto the top of the right column; split falls between 'Времена' and 'года' (two words). [line break inside word] жан-/дармскій, Ката-/лабютъ, нота-/ріусъ. A"
+ },
+ {
+  "entry_id": "balletartists_1906-07_SP_p009__e013",
+  "kind": "letters",
+  "stored": "куколь",
+  "reader": "куколъ",
+  "context": "церемоніймейстеръ 1 Фея куколъ мистеръ Плумпетемеръ 2",
+  "reader_adds": "True",
+  "note": "Entry runs from the foot of the left column onto the top of the right column; split falls between 'Времена' and 'года' (two words). [line break inside word] жан-/дармскій, Ката-/лабютъ, нота-/ріусъ. A"
+ },
+ {
+  "entry_id": "balletartists_1906-07_SP_p009__e013",
+  "kind": "letters",
+  "stored": "Плупнетемеръ",
+  "reader": "Плумпетемеръ",
+  "context": "Фея куколъ мистеръ Плумпетемеръ 2 Эсмеральда Клопенъ",
+  "reader_adds": "True",
+  "note": "Entry runs from the foot of the left column onto the top of the right column; split falls between 'Времена' and 'года' (two words). [line break inside word] жан-/дармскій, Ката-/лабютъ, нота-/ріусъ. A"
+ },
+ {
+  "entry_id": "balletartists_1906-07_SP_p009__e013",
+  "kind": "letters",
+  "stored": "Клопень",
+  "reader": "Клопенъ",
+  "context": "Плумпетемеръ 2 Эсмеральда Клопенъ Трульфу 2",
+  "reader_adds": "True",
+  "note": "Entry runs from the foot of the left column onto the top of the right column; split falls between 'Времена' and 'года' (two words). [line break inside word] жан-/дармскій, Ката-/лабютъ, нота-/ріусъ. A"
+ },
+ {
+  "entry_id": "balletartists_1907-08_MSK_p001__e001",
+  "kind": "letters",
+  "stored": "Сваннильды",
+  "reader": "Сванильды",
+  "context": "числѣ Коппелія подруга Сванильды 4",
+  "reader_adds": "True",
+  "note": "Printed «дивертиссментахъ» (no е before м). Italic final ъ printed in a b-like italic glyph; transcribed as ъ."
+ },
+ {
+  "entry_id": "balletartists_1908-09_SP_p006__e004",
+  "kind": "structure",
+  "stored": "",
+  "reader": "Времена года Сатиръ 2 Всего въ 1 балетъ 2 раза",
+  "context": "Времена года Сатиръ 2 Всего въ 1 балетъ 2 раза",
+  "reader_adds": "",
+  "note": "No Въ-list in this season's format; roles only. Italic ъ in въ/балетъ printed in b-like italic glyph; transcribed as ъ."
+ },
+ {
+  "entry_id": "balletartists_1908-09_SP_p006__e005",
+  "kind": "structure",
+  "stored": "",
+  "reader": "Баядерка кшатвій 3 Испытаніе Дамиса гость графини 2 Всего въ 2 балетахъ 5 разъ",
+  "context": "Баядерка кшатвій 3 Испытаніе Дамиса гость графини 2 Всего въ 2 балетахъ 5 разъ",
+  "reader_adds": "",
+  "note": "Printed «кшатвій»: the letter after т looks like в (probably a damaged р; other entries print кшатрій) - transcribed as printed. «Всего --» printed with a double hyphen. Italic final ъ printed in a b-"
+ },
+ {
+  "entry_id": "balletartists_1908-09_SP_p006__e006",
+  "kind": "structure",
+  "stored": "",
+  "reader": "Раймонда Беранже 1 Аленькій цвѣточекъ Орсино дель Сарто 2 Тщетная предосторожность Коленъ 2 Всего въ 3 балетахъ 5 разъ",
+  "context": "Раймонда Беранже 1 Аленькій цвѣточекъ Орсино дель Сарто 2 Тщетная предосторожность Коленъ 2 Всего въ 3 балетахъ 5 разъ",
+  "reader_adds": "",
+  "note": "[line break inside word] предосторож-ность (the hyphen mark at the line end is printed as a raised dot). Italic final ъ printed in a b-like italic glyph; transcribed as ъ."
+ },
+ {
+  "entry_id": "balletartists_1908-09_SP_p006__e007",
+  "kind": "structure",
+  "stored": "",
+  "reader": "Раймонда Жанъ де Бріенъ 2 Тщетная предосторожность Коленъ 1 Жизель графъ Альбертъ 1 Царь Кандавлъ Шгесъ 3 Лебединое озеро принцъ Зигфридъ 1 Ручей Джемиль 1 Эсмеральда Пьеръ Гренгуаръ 1 Дочь фараона Лордъ Вильсонъ 3 Таоръ 3 Донъ Кихотъ Базиль 1 Всего въ 9 балетахъ 17 разъ",
+  "context": "Раймонда Жанъ де Бріенъ 2 Тщетная предосторожность Коленъ 1 Жизель графъ Альбертъ 1 Царь Кандавлъ Шгесъ 3 Лебединое озеро принцъ Зигфридъ 1 Ручей Джемиль 1 Эсмеральда Пьеръ Гренгуаръ 1 Дочь фараона Лордъ Вильсонъ 3 Таоръ 3 Донъ Кихотъ Базиль 1 Всего въ 9 балетахъ 17 разъ",
+  "reader_adds": "",
+  "note": "[line break inside word] предо-сторожность, Аль-бертъ, фа-раона. Line-end hyphens in Джемиль—/1 and Донъ-/Кихотъ are not breaks inside a word (dash; compound hyphen kept). Italic final ъ printed in a "
+ },
+ {
+  "entry_id": "balletartists_1908-09_SP_p006__e008",
+  "kind": "structure",
+  "stored": "",
+  "reader": "Евника негръ 4 Пробужденіе флоры Меркурій 3 Времена года Фавнъ 2 Всего въ 3 балетахъ 9 разъ",
+  "context": "Евника негръ 4 Пробужденіе флоры Меркурій 3 Времена года Фавнъ 2 Всего въ 3 балетахъ 9 разъ",
+  "reader_adds": "",
+  "note": "[line break inside word] Мерку-рій. Italic final ъ printed in a b-like italic glyph; transcribed as ъ."
+ },
+ {
+  "entry_id": "balletartists_1908-09_SP_p006__e009",
+  "kind": "structure",
+  "stored": "",
+  "reader": "Конекъ горбунокъ мелочной торговецъ 2 Фея куколъ почтальонъ 2 Всего въ 2 балетахъ 4 раза",
+  "context": "Конекъ горбунокъ мелочной торговецъ 2 Фея куколъ почтальонъ 2 Всего въ 2 балетахъ 4 раза",
+  "reader_adds": "",
+  "note": "[line break inside word] бале-тахъ. Ends «раза» (not разъ). Italic ъ in въ/балетахъ printed in b-like italic glyph; transcribed as ъ."
+ },
+ {
+  "entry_id": "balletartists_1908-09_SP_p006__e013",
+  "kind": "structure",
+  "stored": "",
+  "reader": "Времена года сатиръ 3 Всего въ 1 балетъ 2 раза",
+  "context": "Времена года сатиръ 3 Всего въ 1 балетъ 2 раза",
+  "reader_adds": "",
+  "note": "Italic ъ in въ/балетъ printed in b-like italic glyph; transcribed as ъ."
+ },
+ {
+  "entry_id": "balletartists_1908-09_SP_p006__e016",
+  "kind": "structure",
+  "stored": "",
+  "reader": "Испытаніе Дамиса гость графини 2 Раймонда кавалеръ изъ свиты де Бріенъ 3 Конекъ горбунокъ Гаврило 2 Ручей начальникъ гвардіи 1 Дочь фараона цридворный царя Нубійскаго 3 Донъ Кихотъ герцогъ 3 Всего въ 6 балетахъ 14 разъ",
+  "context": "Испытаніе Дамиса гость графини 2 Раймонда кавалеръ изъ свиты де Бріенъ 3 Конекъ горбунокъ Гаврило 2 Ручей начальникъ гвардіи 1 Дочь фараона цридворный царя Нубійскаго 3 Донъ Кихотъ герцогъ 3 Всего въ 6 балетахъ 14 разъ",
+  "reader_adds": "",
+  "note": "Printed «цридворный» (first letter is ц with descender, zoom-checked; not п). [line break inside word] гвар-дія, Нубій-скаго; Конекъ-гор-/бунокъ. Entry number printed «42» without the full stop. Itali"
+ },
+ {
+  "entry_id": "balletartists_1908-09_SP_p006__e017",
+  "kind": "structure",
+  "stored": "",
+  "reader": "Корсаръ Бирбанто 2 Пахита Иниго 2 Спящая красавица принцъ Шарманъ 4 Жизель Гансъ 2 Всего въ 4 балетахъ 10 разъ",
+  "context": "Корсаръ Бирбанто 2 Пахита Иниго 2 Спящая красавица принцъ Шарманъ 4 Жизель Гансъ 2 Всего въ 4 балетахъ 10 разъ",
+  "reader_adds": "",
+  "note": "[line break inside word] Спя-щая. In «красавица» the second letter has an odd closed a-like (э-like) glyph - read as а, probable type damage. The 0 of «10» has an odd shape but is read as 0. Italic fi"
+ },
+ {
+  "entry_id": "balletartists_1908-09_SP_p006__e018",
+  "kind": "structure",
+  "stored": "",
+  "reader": "Павильонъ армиды слуга маркизы 4 Аленькій цвѣточекъ капитанъ корабля 2 Тщетная предосторожность трактирщикъ 1 Конекъ горбунокъ Петръ 2 Донъ Кихотъ хозяинъ кабачка 3 Всего въ 5 балетахъ 12 разъ",
+  "context": "Павильонъ армиды слуга маркизы 4 Аленькій цвѣточекъ капитанъ корабля 2 Тщетная предосторожность трактирщикъ 1 Конекъ горбунокъ Петръ 2 Донъ Кихотъ хозяинъ кабачка 3 Всего въ 5 балетахъ 12 разъ",
+  "reader_adds": "",
+  "note": "[line break inside word] Алень-кій. Line-end hyphen in Конекъ-/горбунокъ is the compound hyphen (kept). Italic final ъ printed in a b-like italic glyph; transcribed as ъ."
+ },
+ {
+  "entry_id": "balletartists_1908-09_SP_p006__e020",
+  "kind": "structure",
+  "stored": "",
+  "reader": "Спящая красавица принцъ Шери 5 Всего въ 1 балетъ 5 разъ",
+  "context": "Спящая красавица принцъ Шери 5 Всего въ 1 балетъ 5 разъ",
+  "reader_adds": "",
+  "note": "Printed with a comma (not a full stop) after «5)». Italic ъ in въ/балетъ/разъ printed in b-like italic glyph; transcribed as ъ."
+ },
+ {
+  "entry_id": "balletartists_1908-09_SP_p006__e021",
+  "kind": "structure",
+  "stored": "",
+  "reader": "Павильонъ Армиды главный рабъ Армиды 4 Аленькій цвѣточекъ принцъ 1 Египетскія ночи рабъ Клеопатры 6 Всего въ 3 балетахъ 11 разъ",
+  "context": "Павильонъ Армиды главный рабъ Армиды 4 Аленькій цвѣточекъ принцъ 1 Египетскія ночи рабъ Клеопатры 6 Всего въ 3 балетахъ 11 разъ",
+  "reader_adds": "",
+  "note": "[line break inside word] бале-тахъ. Italic final ъ printed in a b-like italic glyph; transcribed as ъ."
+ },
+ {
+  "entry_id": "balletartists_1909-10_SP_p005__e004",
+  "kind": "letters",
+  "stored": "Аkteя",
+  "reader": "Актея",
+  "context": "томъ числѣ Эвника Актея 2",
+  "reader_adds": "True",
+  "note": "Italic final ъ printed in a b-like italic glyph; transcribed as ъ."
+ },
+ {
+  "entry_id": "balletartists_1909-10_SP_p006__e012",
+  "kind": "letters",
+  "stored": "Корсарь",
+  "reader": "Корсаръ",
+  "context": "горбунокъ ханъ 2 Корсаръ Конрадъ 2 Лебединое",
+  "reader_adds": "True",
+  "note": "Printed «Гамашъ—3):» with a colon (not semicolon) after the bracket. «Абдеррахманъ—2»: the dash looks short/doubled (--) in print. Dash before Акдаръ/герцогъ looks shorter than elsewhere (en-dash like"
+ },
+ {
+  "entry_id": "balletartists_1909-10_SP_p006__e012",
+  "kind": "letters",
+  "stored": "Кандавль",
+  "reader": "Кандавлъ",
+  "context": "Мишо 2 Царь Кандавлъ царь 2 Щелкунчикъ",
+  "reader_adds": "True",
+  "note": "Printed «Гамашъ—3):» with a colon (not semicolon) after the bracket. «Абдеррахманъ—2»: the dash looks short/doubled (--) in print. Dash before Акдаръ/герцогъ looks shorter than elsewhere (en-dash like"
+ },
+ {
+  "entry_id": "balletartists_1909-10_SP_p007__e006",
+  "kind": "letters",
+  "stored": "зavrъ",
+  "reader": "звѣрь",
+  "context": "числѣ Спящая красавица звѣрь 5",
+  "reader_adds": "True",
+  "note": "Ends «раза». The 6 of «26» zoom-checked (26+17=43)."
+ }
+]
