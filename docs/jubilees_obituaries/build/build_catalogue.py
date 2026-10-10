@@ -61,7 +61,8 @@ FOLIO = {r['page_id']: r['printed_folio'] for r in csv.DictReader(open(HERE + '/
 MATCHED = {(r['review_page_id'], r['name_in_review']): r for r in csv.DictReader(open(ROOT + '/review_deaths_matched.csv', encoding='utf-8'))} \
     if os.path.exists(ROOT + '/review_deaths_matched.csv') else {}
 KIND = {'jubilee': 'jubilee', 'farewell': 'farewell', 'memorial': 'memorial_feature', 'obituary': 'death_notice'}
-for r in csv.DictReader(open(ROOT + '/first_read/R_reviews.csv', encoding='utf-8')):
+REVIEW_ROWS = [r for f in ('R_reviews.csv', 'R2_reviews_wider_search.csv') for r in csv.DictReader(open(ROOT + '/first_read/' + f, encoding='utf-8'))]
+for r in REVIEW_ROWS:
     notes, rel, basis = r['notes'], r['relevance'], 'reader'
     if r['kind'] == 'obituary':
         m = MATCHED.get((r['page_id'], r['name_verbatim']))

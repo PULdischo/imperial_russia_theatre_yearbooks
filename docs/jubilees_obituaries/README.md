@@ -8,7 +8,7 @@ with the ballet-relevant ones pulled out.
 
 | File | What it is |
 |---|---|
-| `jubilees_obituaries_all_entries.csv` | Every entry: 353 person entries from the scanned sections and stand-alone articles (`source_type` = `section`), 71 notices from the Season Reviews (`review`), 101 roster-only death marks (`roster`), plus 28 section-heading and other-article rows. |
+| `jubilees_obituaries_all_entries.csv` | Every entry: 353 person entries from the scanned sections and stand-alone articles (`source_type` = `section`), 80 notices from the Season Reviews (`review`), 101 roster-only death marks (`roster`), plus 28 section-heading and other-article rows. |
 | `jubilees_obituaries_ballet_only.csv` | The subset with `relevance` = `core` or `mentions`. |
 | `unscanned_worth_getting.md` | Jubilee, obituary and memorial items the Yearbooks contain that are not in the scans, ranked. |
 | `AUDIT_2026-10-10.md` | What has been verified, how far, and the known gaps. |
@@ -58,6 +58,10 @@ the review `page_id`, `pdf_page` the block number, `printed_page` the review pag
 Kinds: `jubilee`, `farewell`, `memorial_feature`, and `death_notice` for death-list names that have
 no obituary in the scanned sections. Death-list names that do have an obituary are not repeated.
 These rows rest on the database's existing review transcription and were read once.
+
+The first sweep was a keyword search (jubilee, death, funeral, farewell, benefit words). Two wider
+searches during the audit (last appearances, «чествованіе», «-лѣтіе», daggers, wreaths and addresses)
+added nine more notices, kept separately in `first_read/R2_reviews_wider_search.csv`.
 
 `see_also` lists other entries that look like the same person (same surname and matching initials),
 e.g. a jubilee notice in a review and the obituary years later. It is a pointer, not an identity claim.

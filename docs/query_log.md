@@ -13504,3 +13504,15 @@ select person_id, display_name, first_attested_season, last_attested_season from
 ```
 
 Result: see issue #151 follow-ups 2-4 in known_issues.md.
+
+## 2026-10-10 — Third, wider search of the reviews for jubilee/farewell wording; full text of the candidate passages
+
+```sql
+select page_id, block_index, text from raw.review_block
+where regexp_matches(lower(text), 'исполнилось|лѣті[еюя]|лѣтн(яго|ей|юю|ему)|вѣнк|вѣнок|адрес|подношен|при открытомъ занавѣс|покинул|прощал|оставля(лъ|ла|вш)|послѣдн(ій|ее) (выходъ|появлен)|заслуженн|депутац|траур')
+  and not regexp_matches(lower(text), '<first sweep pattern>') and not regexp_matches(lower(text), '<second pattern>');
+select text from raw.review_block where page_id = '<page>' and block_index = <n>;      -- 13 candidate passages, then the 9 kept
+select printed_folio from raw.review_page where page_id = '<page>';
+```
+
+Result: 87 further blocks, almost all «заслуженный артистъ» in cast lists or plot text; one new notice (Сѣдова, 10 years, 20 Apr 1908). Nine notices kept in all from the second and third searches (docs/jubilees_obituaries/first_read/R2_reviews_wider_search.csv). review_1900-01_MSK_opera_p007 block 3 stores «¼ года» where the page prints «44 года».
