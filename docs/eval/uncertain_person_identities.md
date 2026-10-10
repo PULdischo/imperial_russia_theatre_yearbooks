@@ -174,6 +174,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** `raw.production_entry` rows for Индія and Брама; `review_1895-96_MSK_ballet_p002__b006`, `review_1896-97_MSK_ballet_p003__b006`.
 - **Would resolve it:** the 1890 Moscow libretto or poster of Индія; a study of Mendes's Moscow repertoire; an Italian source for a ballet on this subject with music by Dall'Argine and Venanzi. See also #20 (Венанси).
 
+## 20. Венанси (ballet lists) -- is the co-composer of Индія Angelo Venanzi?
+
+- **Status:** OPEN (RG, 2026-10-10, "not sure"). `venanzi` stays as printed, with no Wikidata link. Decide together with #19 (Аржини).
+- **What is uncertain:** everything but the surname. The Moscow lists for Индія (1890-91, 1891-92) print "музыка гг. Аржини и Венанси", with no initial. The name appears nowhere in the review text.
+- **For Angelo Venanzi** ([Q102287046](https://www.wikidata.org/wiki/Q102287046)): the surname fits; the item calls him a composer and orchestra conductor and carries a Ricordi historical-archive person id, i.e. the Italian theatre-music milieu Mendes drew on.
+- **Against:** the item has no dates, place or works, so it cannot even be shown that he was active before 1890; a web search for him as a ballet composer found nothing.
+- **Where to look:** `raw.production_entry` rows for Индія (`balletproductions_1890-91_MSK_*`, `1891-92_MSK_*`).
+- **Would resolve it:** the Ricordi archive record itself (dates, works); the 1890 Moscow libretto or poster of Индія; an Italian libretto of the ballet Mendes reworked.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
