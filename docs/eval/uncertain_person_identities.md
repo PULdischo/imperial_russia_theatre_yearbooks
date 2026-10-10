@@ -165,6 +165,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** `raw.production_entry` rows for Приключенія Флика и Флока; `review_1890-91_MSK_ballet_p002__b001`.
 - **Would resolve it:** the 1891 Moscow libretto or poster; a study of Mendes's Moscow stagings; an Italian libretto of *Flik e Flok* that names added music.
 
+## 19. Аржини (ballet lists) -- is the co-composer of Индія the same man as Даль-Аржине (Costantino Dall'Argine)?
+
+- **Status:** OPEN, kept SEPARATE (RG, 2026-10-10: "we may be able to corroborate later"). `argini` stays his own creator with no Wikidata link; `dallargine` is accepted as Costantino Dall'Argine, [Q16552227](https://www.wikidata.org/wiki/Q16552227) (1842-1877).
+- **What is uncertain:** the Moscow lists for Индія (1890-91, 1891-92; "соч. І. Мендеса, музыка гг. Аржини и Венанси") give no initial or first name. The reviews mention Индія often but never name its composers.
+- **For one man:** the composer of Брама is printed four ways (Даль-Аржине, К. Даль'Арджинэ, К. Даль-Арджине, Константина Даль'Арджино), so the spelling is unstable and "Аржини" is one vowel from "Аржине"; both ballets were staged in Moscow by Mendes from the Italian repertoire; the co-composer Венанси looks Italian too.
+- **Against:** no printing of Индія has "Даль-"; Dall'Argine died in 1877, so Индія would have to reuse older music or rework an older Italian ballet, which has not been identified; a web search for the Moscow Индія found nothing.
+- **Where to look:** `raw.production_entry` rows for Индія and Брама; `review_1895-96_MSK_ballet_p002__b006`, `review_1896-97_MSK_ballet_p003__b006`.
+- **Would resolve it:** the 1890 Moscow libretto or poster of Индія; a study of Mendes's Moscow repertoire; an Italian source for a ballet on this subject with music by Dall'Argine and Venanzi. See also #20 (Венанси).
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
