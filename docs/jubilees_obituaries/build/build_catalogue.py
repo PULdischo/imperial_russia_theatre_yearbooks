@@ -49,7 +49,7 @@ for f in sorted(glob.glob(ROOT + '/first_read/[A-HJ]*.csv')):
         for (season, surname), why in CORE_BY_RULING.items():
             if d['season'] == season and surname in d['name_verbatim'] and d['relevance'] == 'mentions':
                 d['relevance'] = 'core'; d['tier_basis'] = 'RG ruling 2026-10-10: ' + why
-        d['source_file'] = re.sub(r'(_p\d+)?\.(png|pdf)( \.\. p\d+)?$', '', d['source_file']) + '.pdf'
+        d['source_file'] = re.sub(r'(_p\d+(-p\d+)?)?\.(png|pdf)( \.\. p\d+)?$', '', d['source_file']) + '.pdf'
         rows.append(d)
 
 for d in rows: d['source_type'] = 'section'; d['see_also'] = ''
