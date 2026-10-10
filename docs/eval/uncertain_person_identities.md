@@ -201,6 +201,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** `raw.production_entry` rows for Кольцо любви; `review_1892-93_MSK_ballet_p002__b001`, `review_1893-94_MSK_ballet_p008__b002`; `musicians_189x_MSK` capellmeister entries.
 - **Would resolve it:** the 1892 Moscow poster or libretto of Кольцо любви; any printed music by a Золотаренко with a first name; a Bolshoi orchestra history.
 
+## 23. Острембингеръ (Moscow ballet lists + review) -- who wrote the 1893 Moscow score of Робертъ и Бертрамъ?
+
+- **Status:** OPEN, no candidate (RG, 2026-10-10). `ostrembinger` stays as printed.
+- **What is uncertain:** the Moscow lists for 1892-93 and 1893-94 credit "музыка Г. Острембингера"; the 1892-93 review prints "съ музыкой Острёмбингера" (staged by Mendes, 31 March 1893). From 1905-06 the same ballet is credited to Шмидтъ (accepted as Hermann Schmidt, [Q1612622](https://www.wikidata.org/wiki/Q1612622)), "частью г. Пуни".
+- **Evidence found:** none for the name, in Wikidata or on the web, in Cyrillic or Latin. The Vienna State Opera archive gives the standard credits for *Robert und Bertrand*: Hoguet, adapted by Paul Taglioni, music by Hermann Schmidt. Not on our roster. The "Г." is probably the honorific (it stands before Оге too).
+- **A guess, not evidence:** Mendes's staging may have used a different or added score by a (Viennese?) theatre musician, and Gorsky's 1906 revival went back to crediting the original composer.
+- **Where to look:** `raw.production_entry` rows for Робертъ и Бертрамъ (1892-93, 1893-94) and Два вора (1907-08); `review_1892-93_MSK_ballet_p010__b003`; `review_1905-06_MSK_ballet_p019__b001`.
+- **Would resolve it:** the 1893 Moscow poster or libretto; a history of the Bolshoi ballet repertoire; Viennese theatre directories of the 1870s-80s.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
