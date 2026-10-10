@@ -13435,3 +13435,16 @@ select label, role_name, category_credit_count from raw.person_entry_credit wher
 ```
 
 Result: entries 23,980; quality flags 1 (Исаева); person_link 23,980 links, 0 shift blocks; no mixed-script word in the 48 changed texts; named_work rows equal the roles in the text for all 48. Corpus grep for the Ручей role: «Моцдокъ» 5 times (+ «Мондошъ» 2), used for the 3rd-letter reading.
+
+## 2026-10-10 -- ь/ъ title groups and person pairs: after the scan-checked fixes (issue #151)
+
+```sql
+select count(*) from research.work;    -- 3,190 before -> 3,172 after the 82 raw title fixes (exactly the 18 groups)
+select count(*) from research.performance; select count(*) from research.event;   -- 30,909 and 32,826, unchanged
+select canonical_title, canonical_genre, appearance_count from research.work where canonical_title in (<the 34 spellings>);   -- each group is now one work: Закатъ 63, Лѣсъ 164, Тангейзеръ 94, Фея куколъ 57, Балъ-маскарадъ 28, Ирэнъ 20, Не было ни гроша, да вдругъ алтынъ 19, Сосѣдъ и сосѣдка 19, Шутъ Тантрисъ 16, Онъ въ отставкѣ 16, Адвокатъ Пателенъ 13, Передъ свадьбой 13 (ком.) + 3 (оперетта), Сенъ-Марсъ 13, Омутъ 11, Свѣтитъ, да не грѣетъ 11, Добрый баринъ 5, Карлъ Смѣлый 3
+select * from research.work where fold(canonical_title) groups with a differing final ь/ъ;   -- 1 left: Карнаваль (1) / Карнавалъ (3), different genres
+select person_id, display_name from research.person where display_name like 'Оголей%' or display_name like 'Галат%' or display_name like 'Галать%';   -- 4 persons (Оголейть 1-я/2-я/3-я, Галать): the two pairs are merged
+select count(*) from research.person; select count(*) from research.person_appearance;   -- 3,220 -> 3,218; 23,979 unchanged
+```
+
+Result: see the comments; 71 of the 76 minority performances print the majority spelling on the scan, 5 print the minority spelling (Адвокатъ Пателенъ x4, Карлъ Смѣлый x1) and their 11 stored-ь siblings print ъ too.

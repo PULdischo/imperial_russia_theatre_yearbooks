@@ -38,3 +38,7 @@ Not candidates (checked, already one person): Бардюкъ/Бордюгъ Ни
 
 - **Зандинъ Михаилъ: Ивановичъ (1906-08) vs Павловичъ (1908-10)** and **Лебедевъ Иванъ: Васильевичъ (1907-08) vs Афанасьевичъ (1908-10)**: decide which patronymic is right. Until then the person's display patronymic is a tie of the printed forms and may flip between rebuilds (Зандинъ showed Павловичъ in the dry run, Ивановичъ after the rebuild; Лебедевъ shows Афанасьевичъ). Raw keeps both printings verbatim.
 - **Chain-merge sweep**: person 1dd355 had absorbed three different men through `family_name_variant` merges flagged `unique_name_in_corpus` (see the 2026-10-05 query_log entries and issue #134's follow-up). Other homonyms may have been joined the same way; a sweep needs patronymic normalisation first. Real-looking suspects: Исаенко Григорій Григорьевичъ (0825c5: Васильевичъ/Григорьевичъ), Петровъ Иванъ Степановичъ (527973: Степановичъ/Ивановичъ), Алексѣевъ Александръ (49b93c).
+
+## 2026-10-10 -- two ь/ъ pairs merged (issue #151, RG asked for them explicitly)
+
+Оголейтъ/Оголейть Марія Германовна (9455596b -> 383eea63) and Галатъ/Галать Надежда (4f799a33 -> 35f5810e): scan-read, same name and the same service start; `docs/eval/title_check_2026-10-10/apply_person_merges.py`. Not part of the 2026-10-05 batch.

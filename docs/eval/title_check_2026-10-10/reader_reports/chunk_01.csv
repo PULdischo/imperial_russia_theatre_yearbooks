@@ -1,0 +1,9 @@
+item,printed_title,printed_genre,cell_contents,note
+T01,Не было ни гроша да вдругъ алтынъ,ком.,"Не было ни гроша да вдругъ алтынъ, ком. | Бѣда отъ нѣжнаго сердца, вод.","Title wraps over two lines (line break falls between words, not inside a word). Final ъ of вдругъ and алтынъ clear."
+T02,Добрый баринъ,ш.,"Божья коровка, ком. | Добрый баринъ, ш.",Cell has two works. Final ъ of баринъ clear.
+T03,Балъ-маскарадъ,оп.,"Балъ-маскарадъ, оп.","Both Балъ and маскарадъ end in ъ, clear."
+T04,Балъ-маскарадъ,оп.,"Балъ-маскарадъ, оп.","Both Балъ and маскарадъ end in ъ, clear."
+T05,Передъ свадьбой,оперетта.,"Отрава жизни, ком. | Передъ свадьбой, оперетта.","Genre printed in full as оперетта. Type of line 1 (Отрава жизни) slightly blotched but legible. Final of Передъ is ъ, clear."
+T06,Балъ-маскарадъ,оп.,"Балъ-маскарадъ, оп.","Both Балъ and маскарадъ end in ъ, clear."
+T07,Балъ-маскарадъ,оп.,"Балъ-маскарадъ, оп.","Both Балъ and маскарадъ end in ъ, clear."
+T08,Ирэнъ,ком.,"Бенефисъ г. Горева. | Якобиты, др. | Ирэнъ, ком. | 3422 р. 90 к.","Counting titles only (benefit line is a header, not a work with genre) Ирэнъ is the 2nd work; it is the 3rd printed line. Third letter is э (reversed-C form), not е. Final ъ clear. Cell also prints receipts 3422 р. 90 к."
