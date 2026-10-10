@@ -12,6 +12,11 @@ Two things happen here, and the second matters as much as the first:
 linker's own auto-accepts land in, so `build_research_model.py` picks them up
 into `research.person.wikidata_qid` with no further change.
 
+**Deferred** rows (`defer`) are held: not linked, but the candidate QID is
+kept so the question can be reopened when outside evidence arrives. Used for
+the Imperial Theatres administrators, whose Wikidata items are name-and-date
+stubs that only an archive can confirm.
+
 **Rejected** rows are RECORDED, in `entities.wikidata_decision`. The linker
 skips anyone already linked but had no memory of a rejection, so every re-run
 re-queried the same people and re-offered the same wrong candidate. A "No" is
@@ -76,7 +81,7 @@ def main() -> None:
                con.execute("SELECT person_id, decision FROM entities.wikidata_decision").fetchall()}
     today = datetime.date.today().isoformat()
 
-    accepted = rejected = skipped = 0
+    accepted = rejected = skipped = deferred = 0
     for r in rows:
         pid = (r.get("person_id") or "").strip()
         d = (r.get(DECISION_COL) or "").strip()
@@ -86,6 +91,19 @@ def main() -> None:
             skipped += 1
             continue
         note = (r.get("reason") or "")
+        if d.lower() in ("defer", "rgia", "pending"):
+            # NOT a rejection. RG, 2026-10-09, on the four Imperial Theatres
+            # administrators: "let's keep these unmatched for now, with the
+            # understanding that perhaps something in the RGIA archival
+            # materials might confirm." A `No` would bury the candidate and the
+            # linker would never raise it again; `defer` keeps the QID on
+            # record as a revisit worklist while still suppressing re-queries.
+            if not a.dry_run:
+                con.execute("INSERT INTO entities.wikidata_decision VALUES (?,?,?,?,?)",
+                            [pid, r.get("candidate_qid"), "defer", today,
+                             f"pending external evidence (RGIA); {note}"])
+            deferred += 1
+            continue
         if d.lower() in ("no", "none", "n"):
             if not a.dry_run:
                 con.execute("INSERT INTO entities.wikidata_decision VALUES (?,?,?,?,?)",
@@ -118,6 +136,9 @@ def main() -> None:
     verb = "would be" if a.dry_run else ""
     print(f"{accepted} link(s) {verb} accepted -> entities.person_wikidata_link")
     print(f"{rejected} rejection(s) {verb} recorded -> entities.wikidata_decision")
+    if deferred:
+        print(f"{deferred} deferral(s) {verb} recorded (candidate kept, revisit when "
+              f"external evidence arrives)")
     if skipped:
         print(f"{skipped} row(s) already applied, left alone")
     if not a.dry_run and accepted:

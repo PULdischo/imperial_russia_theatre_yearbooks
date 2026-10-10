@@ -200,14 +200,15 @@ def link_persons(con: duckdb.DuckDBPyConnection, persons: list[tuple]) -> tuple[
     already_linked = {
         str(r[0]) for r in con.execute("SELECT person_id FROM entities.person_wikidata_link").fetchall()
     }
-    # A rejection recorded in the review queue is a real finding and has to
-    # persist: without this every re-run re-queried the same people and
+    # A rejection or deferral recorded in the review queue is a real finding
+    # and has to persist: without this every re-run re-queried the same people and
     # re-offered the same wrong candidate. apply_wikidata_decisions.py writes
     # the table; it may not exist on an older database.
     try:
         already_linked |= {
             str(r[0]) for r in con.execute(
-                "SELECT person_id FROM entities.wikidata_decision WHERE decision = 'No'").fetchall()
+                "SELECT person_id FROM entities.wikidata_decision "
+                "WHERE decision IN ('No', 'defer')").fetchall()
         }
     except duckdb.CatalogException:
         pass
