@@ -1,0 +1,13 @@
+item,split,morning_first_line,evening_first_line,note
+S162,no,,Лѣсъ,single undivided cell: Лѣсъ ком.
+S137,dash,,,whole cell is a dash; neighbouring day 14 is split but 15 Суббота is dash in all three Moscow theaters
+S135,no,,La course du flambeau,single undivided cell; Marіinsky and Alexandrinsky cells that day are dashes
+S128,dash,,,whole cell is a dash; some show-through from the reverse page visible but cell itself is a single dash
+S174,no,,Der Kammersänger,single undivided cell (two lines: Der Kammersänger | Eine Frau ohne Bedeutung); Mariinsky cell that day is a dash
+S131,dash,,,whole cell is a dash (all three SP theaters dash on 11 Суббота)
+S165,no,,Mes beaux pères,single undivided cell of three lines (Mes beaux pères | Le portefeuille | Bataille de dames)
+S184,dash,,,whole cell is a dash (all three Moscow theaters dash on 20 Среда)
+S124,dash,,,whole cell is a dash (Alexandrinsky 13 Суббота; Mariinsky also dash; Mikhailovsky plays)
+S004,yes,Дубровскій,Конекъ-Горбунокъ,two labelled halves УТРО / ВЕЧ.; morning Дубровскій оп. evening Конекъ-Горбунокъ бал.
+S005,yes,Дубровскій,Конекъ-Горбунокъ,same cell as S004 (28 Воскрес. Mariinsky); two labelled halves УТРО / ВЕЧ.
+S006,no,,Борисъ Годуновъ,"single undivided cell; the row label is printed «28 Понед.» (second row headed 28 on the page, following 28 Воскрес.) - day number repeated as printed"
