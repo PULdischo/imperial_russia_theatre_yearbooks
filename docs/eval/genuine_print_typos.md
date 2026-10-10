@@ -582,3 +582,7 @@ Read the same way by two blind readers but NOT zoomed by me, stored as read: «�
 Not applied, unresolved (a reader and the arbiter could not settle the letter): «жемчужина»/«жемчужнна» (`balletartists_1895-96_MSK_p003`, no. 95 Рославлева) and «Лунаа»/«Луиза» (`balletartists_1897-98_MSK_p004`).
 
 - INFERRED, not a confirmed misprint (added 2026-10-10): `balletartists_1897-98_MSK_p005` (printed p. 97), no. 16 Воронцовъ prints «Въ 14 балетахъ — 48; въ **13 балетахъ** — 60; въ 1 драмѣ--1. Всего — 109 разъ.» (zoomed): «балетахъ» twice; the sum 48 + 60 + 1 = 109 holds either way, and a second ballet count is odd next to «драмѣ», so «операхъ» is the likely intent. Stored as printed.
+
+- `balletartists_1900-01_SP_p003` (printed p. 75), no. 69 Мосолова, scan-confirmed 2026-10-10 (zoomed; crisp): «Раймонда (Генрі**с**тта — 1)» (с for е in Генріетта). Stored as printed.
+- `balletartists_1904-05_MSK_p006` (printed p. 58), no. 30 Карцевъ, scan-confirmed 2026-10-10 (zoomed; crisp): «Спящая красавица (Опринцъ Фортюнэ—5)» (italic О before принцъ; the name ends in э) and «Всего—12 раза» against 41 + 61 = 102 in the same sentence. Stored as printed.
+- Damaged type, nothing asserted (scan-read 2026-10-10): `balletartists_1904-05_SP_p003` no. 78 «въ 11 операхъ—5’» and `balletartists_1907-08_SP_p006` no. 8 «Въ 7 балетахъ — 2▒»; see issue #150.

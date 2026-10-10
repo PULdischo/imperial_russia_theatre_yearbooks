@@ -13396,3 +13396,13 @@ select page_id, block_index, text from raw.review_block where <name> and <review
 ```
 
 Result: six are in the BalletArtists rosters — Разуевъ Николай Александровичъ and Троицкая Надежда Николаевна (to 1896-97), Ахмакова Клавдія Александровна († 16 августа 1897 г.; the 1890-91 row reads Калерія), Литавкинъ Сергѣй Спиридоновичъ († 17 марта 1898 г.), Дмитріевъ Михаилъ Андреевичъ (1897-98 only), Гиллертъ Станиславъ Феликсовичъ († 19 декабря 1907 г.). Кондараки, Анненкова, Ламберъ: 0 rows. Rosters print Пуни Николай Цезаревичъ and Смирнова Евгенія Кирилловна (съ 19 декабря 1878 г.), against the review's «Н. П. Пуни» and the obituary's «Евгенія Дмитріевна». Review text confirms 16 сентября 1892 (Казаковъ) and 24-го іюля 1896 (Никитинъ) against the obituaries' 17th and 23rd.
+
+## 2026-10-10 -- the 49 "not additive" BalletArtists credit entries: which are misreads and which are printed that way?
+
+```sql
+select entry_id, credit_summary_text from raw.person_entry where entry_id like 'balletartists%' and credit_summary_text is not null and credit_summary_text <> '';
+select credit_id, label, role_name, category_credit_count from raw.person_entry_credit where entry_id like 'balletartists%';
+select count(*) from raw.person_entry;   -- 23,980 before and after
+```
+
+Result: of 49 flagged entries (47 read blind, 2 already read), 15 were real misreads (numbers differ and add up), 34 are printed that way (2 with damaged digits); 24 summaries and 37 credit-row fields corrected, one row label; quality flags 50 -> 1.

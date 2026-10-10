@@ -47,6 +47,8 @@ ROW_MAP = {
     (E + "1908-09_SP_p006__e016", "role_name", "кавалеръ изъ свиты де-Бріень"): "кавалеръ изъ свиты де-Бріенъ",
     (E + "1908-09_SP_p006__e017", "role_name", "Гансь"): "Гансъ",
     (E + "1908-09_SP_p006__e020", "label", "балетѣ"): "балетъ",
+    # round 3: the row for «въ 4 дивертиссментахъ—4» had been labelled «драмѣ»
+    (E + "1907-08_MSK_p006__e024", "label", "драмѣ"): "дивертиссментахъ",
 }
 #: Text edits: a single reader saw worn type; the intended letter is kept (project convention).
 TEXT_MAP = {
@@ -82,7 +84,9 @@ def main() -> int:
                     continue
                 rows = [r for r in e.get("credits") or [] if r.get(f) == old]
                 if len(rows) < 1:
-                    problems.append((eid, f, old, "row not found (already synced?)")); continue
+                    if any(r.get(f) == new for r in e.get("credits") or []):
+                        continue                      # already synced
+                    problems.append((eid, f, old, "row not found and the new value is not there either")); continue
                 if norm(new) not in norm(text):
                     problems.append((eid, f, old, f"new value {new!r} not in the summary text")); continue
                 for r in rows:

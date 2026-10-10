@@ -46,7 +46,14 @@ def adds_up(text: str) -> bool | None:
 
 
 def main() -> int:
-    work = {r["entry_id"]: r for r in csv.DictReader(open(HERE / "worklist.csv", encoding="utf-8"))}
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--worklists", nargs="+", default=["worklist.csv"])
+    ap.add_argument("--out", default="comparison.csv")
+    args = ap.parse_args()
+    work = {}
+    for wl in args.worklists:
+        work.update({r["entry_id"]: r for r in csv.DictReader(open(HERE / wl, encoding="utf-8"))})
     reads = {}
     for f in sorted(glob.glob(str(HERE / "reader_reports" / "chunk_*.csv"))):
         for r in csv.DictReader(open(f, encoding="utf-8")):
@@ -76,7 +83,7 @@ def main() -> int:
         out.append(dict(entry_id=eid, verdict=verdict, why=w["why"], stored=stored, read=read, note=note,
                         reader_adds_up=adds_up(read) if read and verdict != "NOT_USABLE" else "",
                         stored_adds_up=adds_up(stored)))
-    with open(HERE / "comparison.csv", "w", newline="", encoding="utf-8") as fh:
+    with open(HERE / args.out, "w", newline="", encoding="utf-8") as fh:
         wr = csv.DictWriter(fh, fieldnames=list(out[0]))
         wr.writeheader()
         wr.writerows(out)

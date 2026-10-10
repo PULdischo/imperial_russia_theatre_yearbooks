@@ -49,6 +49,10 @@ WHOLE_TEXT = {
 OTHER_REPLACEMENTS = {
     ("balletartists_1892-93_MSK_p003__e032", "Алонза Гонделорінъ"): "Алонза Гонделорія",
     ("balletartists_1894-95_SP_p005__e022", "коммиссарь"): "коммиссаръ",
+    # round 3 (the 47 «not additive» entries): arbiter reading, each zoomed by me as well
+    ("balletartists_1900-01_SP_p003__e005", "Генріетта"): "Генрістта",        # printer's slip, crisp (с for е)
+    ("balletartists_1904-05_MSK_p006__e012", "Фортюно"): "Фортюнэ",           # printed so
+    ("balletartists_1904-05_SP_p006__e019", "Газлифронъ"): "Галлифронъ",      # Гал-/лифронъ across a line break
 }
 #: Readings that give a non-word and that I checked myself at zoom (2026-10-10): all are printer's slips, legible and
 #: crisp, not worn type, so they are applied AS PRINTED and logged in docs/eval/genuine_print_typos.md. (Had one been
@@ -88,17 +92,19 @@ def load_decisions():
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--write", action="store_true")
+    ap.add_argument("--worklists", nargs="+", default=["worklist.csv", "worklist2.csv"])
+    ap.add_argument("--comparison", default="comparison.csv")
     args = ap.parse_args()
 
     stored, reader_text, reader_note = {}, {}, {}
-    for wl in ("worklist.csv", "worklist2.csv"):
+    for wl in args.worklists:
         for r in csv.DictReader(open(HERE / wl, encoding="utf-8")):
             stored[r["entry_id"]] = r["stored_summary"]
     for f in sorted(glob.glob(str(HERE / "reader_reports" / "chunk_*.csv"))):
         for r in csv.DictReader(open(f, encoding="utf-8")):
             reader_text[r["entry_id"]] = (r["printed_summary"] or "").strip()
             reader_note[r["entry_id"]] = r.get("note") or ""
-    adds = {r["entry_id"]: r["reader_adds_up"] for r in csv.DictReader(open(HERE / "comparison.csv", encoding="utf-8"))}
+    adds = {r["entry_id"]: r["reader_adds_up"] for r in csv.DictReader(open(HERE / args.comparison, encoding="utf-8"))}
     decisions, missing = load_decisions()
     if missing:
         print("WARNING: no arbiter answer yet for", len(missing), "items:", missing[:3])
@@ -186,7 +192,8 @@ def main() -> int:
             plan[eid] = dict(new_text=new_text, subs=subs, digit_subs=dsubs, whole=False)
 
     for eid in CLEAR_ENTRIES:
-        plan[eid] = dict(new_text=None, subs=[], digit_subs=[], whole=False, clear=True)
+        if eid in stored:                      # only for entries in the active worklists
+            plan[eid] = dict(new_text=None, subs=[], digit_subs=[], whole=False, clear=True)
     # ---- apply
     by_page = collections.defaultdict(list)
     for eid in plan:
