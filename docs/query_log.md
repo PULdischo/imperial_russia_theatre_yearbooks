@@ -13624,3 +13624,50 @@ select event_id, date_text, time_of_day, receipts_text, date_confidence, correct
 ```
 
 Result: see known_issues.md #151 follow-up 8.
+
+## 2026-10-10 — caption re-extraction pilot: hypothesis falsified (RG: "go ahead with the pilot")
+
+Cropped the caption band off the located plate, upscaled 3-4x, read it with
+a caption-specific prompt in three different crops. 93 calls over the 20
+pages hand-verified earlier the same day. **$0.06** (247,302 prompt /
+5,657 completion tokens), against a $0.07 estimate.
+
+```sql
+-- objective metric: impossible honorific tokens (1-жа, в-жа, і. + capital),
+-- current corpus captions on those pages vs each re-extracted view
+```
+| | impossible tokens, 29 captions |
+|---|---|
+| current corpus | **17** |
+| tight crop (4x) | 27 |
+| wide crop (3x) | 25 |
+| deep crop (3x) | 26 |
+
+Title word across 63 readings of captions whose print says `Камарго`:
+`Камаріо` 60, `Камарю` 2, `Камарго` 1. (`Баядерка` 15 vs `Балдерка` 6 —
+better, but unreliable.)
+
+**The crop is worse than what we already have**, so the full 897-caption
+pass is not worth buying. Not a resolution problem: at 4x a human reads
+these easily. The model cannot read this italic face at any scale, and it
+ignored an explicit prompt instruction that the honorific is never a digit.
+
+**Correction to this log's 2026-10-10 caption entry above.** The 23.1%
+figure is the share of *honorific tokens in captions* that are malformed:
+
+```sql
+SELECT count(*) FROM raw.review_block WHERE coalesce(caption_text,'')<>'';   -- 897
+-- of which, blocks carrying >=1 impossible honorific: 61; total tokens: 74
+```
+So **74 tokens over 61 of 897 caption blocks (6.8%)**, not 23% of captions.
+The proxy is a lower bound either way — the 34 title misreads fixed earlier
+carried no honorific and never entered the count.
+
+Also measured, and the reason the free option is the interesting one:
+
+```sql
+SELECT m.link_method, count(*), count(m.entity_id) FROM entities.review_mention m
+JOIN raw.review_block b USING (block_id) WHERE b.block_type='figure' GROUP BY 1;
+```
+Caption mentions resolve at `bare` 358/716 and `honorific-list` 75/247,
+against 63.7% overall.

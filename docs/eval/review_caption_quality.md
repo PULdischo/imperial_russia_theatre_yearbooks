@@ -20,9 +20,18 @@ over `outputs/reviews/merged_full/review_block.csv`:
 | heading / footnote / personnel_news | 0 | 37 | 0.0% | — |
 
 **A caption is ~100x more likely to carry a garbled honorific than a
-paragraph.** The honorific is only a proxy — it is simply the one error
-class that is mechanically detectable, because `1-жа` cannot be a word.
-The surrounding names fail at a similar rate.
+paragraph.** Read that ratio carefully, though: 23.1% is the share of
+*honorific tokens appearing in captions* that are malformed, which is **74
+tokens spread over 61 of the 897 caption blocks (6.8%)** — not 23% of
+captions. An earlier draft of this file blurred the two; the corrected
+figures are here.
+
+The honorific is only a proxy — it is the one error class that is
+mechanically detectable, because `1-жа` cannot be a word. It is a lower
+bound, not a total: the 34 title misreads fixed on 2026-10-10
+(`Камаріо`/`Балдерка`) carried no honorific at all and would never show up
+in this count. The true caption error rate is higher than 6.8% and is not
+known.
 
 ## Why it matters more than the ratio suggests
 
@@ -79,3 +88,59 @@ The captions were extracted by the same single pass as the body. A
 caption-specific re-extraction pass — cropping the caption band and
 prompting for small-italic text — is the structural fix, and it is a
 billed Vision run. Not started; needs RG's go and a cost estimate first.
+
+
+## The re-extraction was tried, and it does not work (2026-10-10)
+
+Hypothesis: `run_reviews.py` does no client-side resizing, but a page costs
+~5,170 prompt tokens, so the service downscales it and the small italic
+falls below legibility. Cropping the caption band should buy back ~10x the
+effective resolution for the same tokens.
+
+**Falsified.** `pipeline/caption_reextract.py` + `pipeline/platefind.py`
+cropped the caption band from a located plate, upscaled 3-4x, and read it
+with a caption-specific prompt in three different crops. 93 calls over the
+20 pages hand-verified earlier that day, $0.06.
+
+| | impossible honorific tokens, 29 captions |
+|---|---|
+| current corpus text | **17** |
+| re-extracted, tight crop (4x) | 27 |
+| re-extracted, wide crop (3x) | 25 |
+| re-extracted, deep crop (3x) | 26 |
+
+The crop is **worse than what we already have**. On the title word, across
+63 readings of a caption whose print demonstrably says `Камарго`:
+`Камаріо` 60, `Камарю` 2, `Камарго` 1. `Баядерка` did better — 15 right
+against 6 `Балдерка` — but unreliably.
+
+Two things worth recording:
+
+1. The prompt explicitly said *"the honorific is NEVER a digit; if a mark
+   looks like `1-жа` it is `г-жа`"*. The model emitted `1-жа` anyway, in
+   every view. Instruction did not reach it.
+2. The crop introduced **new** errors absent from the corpus: `Пѣтина` for
+   Петипа, `Слѣдова`/`Спѣдова` for Сѣдова, `Бекефі`/`Бекефн` for Бекефи,
+   `Летатъ`/`Лелятъ`/`Лєгатъ` for Легатъ. The wider crops also pulled body
+   text from below the plate into the caption.
+
+So this is not a resolution problem. At 4x zoom on a tight crop a human
+reads these captions easily; the model cannot read this italic face at any
+scale we can give it. **Do not buy the full 897-caption pass** — the $2.33
+would make the corpus worse. The pilot cost 6 cents and settled it.
+
+### What is left
+
+- **A different model.** Untested. There is no `ANTHROPIC_API_KEY` in
+  `.env`, so Claude would need a key added; `qwen3-vl-max` is reachable on
+  the existing DashScope key and would cost ~$0.20 for the same 29
+  captions.
+- **Fix the matching, not the text** (free). RG's purpose is linking, not
+  a verbatim caption. `1-жа` has exactly one possible reading, so the
+  matcher can normalise it at match time — recovering the honorific path,
+  and with it gender and list membership, for ~74 names — without editing
+  a single character of the stored text. Caption mentions currently
+  resolve poorly (`bare` 358/716, `honorific-list` 75/247) against 63.7%
+  overall, so there is room here.
+- **Hand transcription** of the 897 captions. Reliable, and the only route
+  to a correct caption layer, but it is real time rather than money.
