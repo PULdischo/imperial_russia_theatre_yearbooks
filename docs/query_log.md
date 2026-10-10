@@ -13414,3 +13414,14 @@ select page_id, printed_folio from raw.review_page where page_id in (<the 79 pag
 ```
 
 Result: one row per page_id, saved as docs/jubilees_obituaries/build/review_page_folios.csv for the catalogue build.
+
+## 2026-10-10 -- soft-sign (ь/ъ) exposure in the research layer, and truncated credit summaries
+
+```sql
+select table_name, column_name from information_schema.columns where table_schema = 'research' and (column_name ilike '%credit%' or column_name ilike '%summary%');   -- only production_credit.credit_id / credit_order
+select work_id, canonical_title, canonical_genre, appearance_count from research.work;      -- titles equal after folding a final ь to ъ: 18 groups, 36 works, 76 performances in minority spellings
+select person_id, display_name, canonical_family_name, canonical_first_name from entities.person where superseded_by_person_id is null;   -- 2 pairs differing only by a final ь/ъ
+select entry_id, credit_summary_text from raw.person_entry where entry_id like 'balletartists%' and credit_summary_text is not null and credit_summary_text <> '';   -- 62 end mid-sentence, 27 of them among the last 3 entries on their page
+```
+
+Result: no credit text or rows in `research.*`; 568 performances in the 18 ь/ъ title groups, 76 of them (0.25%) in the minority spelling; 62 of 7,995 summaries truncated. Entry 40 (Мордкинъ, 1907-08 MSK p006) completed on both scans; flags 1.
