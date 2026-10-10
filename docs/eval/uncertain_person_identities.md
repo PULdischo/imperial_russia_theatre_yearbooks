@@ -156,6 +156,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** `raw.production_entry` rows for Евника / Эвника; `review_1906-07_SP_ballet_p007__b004`; `review_1908-09_SP_ballet_p004__b004`.
 - **Would resolve it:** the printed libretto or programme of Эвника (1907 or 1909); a Fokine source (his memoirs or a biography) naming the librettist in full; press notices of the 1907 charity performance.
 
+## 18. Моренго / Маренго (ballet lists + review) -- is the co-composer of Приключенія Флика и Флока Romualdo Marenco?
+
+- **Status:** OPEN (RG, 2026-10-10, "not sure"). The creator stays as printed (`morengo`, no Wikidata link).
+- **What is uncertain:** who "Моренго" is. The Moscow lists 1890-91..1893-94 print "музыка Гершеля, Моренго и Адама"; the 1890-91 Moscow review prints "музыка написана Гершелемъ и Маренго". No first name or initial anywhere. Neither spelling has been zoomed on the scans yet.
+- **For Romualdo Marenco** ([Q1052446](https://www.wikidata.org/wiki/Q1052446), Italian ballet composer, 1841-1907): the surname fits the review's spelling; the Moscow version was Mendes's own staging with three composers, so interpolated numbers by an Italian ballet composer would be ordinary practice.
+- **Against:** no source links Marenco to this ballet. The original (Berlin 1858, Paul Taglioni) is Hertel's score, and an Italian libretto of 1871 (Duke University Libraries) credits Hertel alone. VIAF lists Marenco among names associated with Paul Taglioni's works, with no title or role.
+- **Where to look:** `raw.production_entry` rows for Приключенія Флика и Флока; `review_1890-91_MSK_ballet_p002__b001`.
+- **Would resolve it:** the 1891 Moscow libretto or poster; a study of Mendes's Moscow stagings; an Italian libretto of *Flik e Flok* that names added music.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
