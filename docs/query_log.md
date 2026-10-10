@@ -13425,3 +13425,13 @@ select entry_id, credit_summary_text from raw.person_entry where entry_id like '
 ```
 
 Result: no credit text or rows in `research.*`; 568 performances in the 18 ь/ъ title groups, 76 of them (0.25%) in the minority spelling; 62 of 7,995 summaries truncated. Entry 40 (Мордкинъ, 1907-08 MSK p006) completed on both scans; flags 1.
+
+## 2026-10-10 -- checks after completing the 62 truncated BalletArtists summaries (issue #150 follow-up 5)
+
+```sql
+select credit_summary_text is null, length(credit_summary_text) from raw.person_entry where entry_id = ?;      -- the five hand-fixed entries, each rebuilt
+select entry_id, credit_summary_text from raw.person_entry where entry_id in (<worklist4 ids>);               -- 48 changed, 13 unchanged, 1 null; only Балашева ends in a comma (as printed)
+select label, role_name, category_credit_count from raw.person_entry_credit where entry_id = ? and credit_type = 'named_work';   -- vs the roles parsed from each of the 48 new texts (order-insensitive): 0 differing
+```
+
+Result: entries 23,980; quality flags 1 (Исаева); person_link 23,980 links, 0 shift blocks; no mixed-script word in the 48 changed texts; named_work rows equal the roles in the text for all 48. Corpus grep for the Ручей role: «Моцдокъ» 5 times (+ «Мондошъ» 2), used for the 3rd-letter reading.
