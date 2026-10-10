@@ -27,10 +27,14 @@ not confident about; never alter gist, names, dates or any reading.
   In a letter-book of the editor's own outgoing drafts, most pages should be false.
 
 ## Relevance rule (replaces "editorial means high")
-- high: substantive ballet content, OR substantive evidence for the Yearbook's
+- high: substantive ballet content (a work, ballet music, a composer, named dancers,
+  an article or survey about ballet), OR substantive evidence for the Yearbook's
   editorial history (any ed_* tag where the page carries the real content: names,
   decisions, figures).
-- medium: routine sales/subscription/shipment business; or a second/overlapping
+- medium: routine sales/subscription/shipment business, INCLUDING pages where the
+  ballet troupe appears only as subscribers (troupe tallies, subscription circulars)
+  with no work, composer or dancer named: keep ballet=true, rate medium unless the
+  page is high on editorial grounds (RG, 2026-10-09); or a second/overlapping
   photo of a page whose content is already on its neighbour (unless this view is
   the more complete or legible one, in which case rate it like the content).
 - low: covers, blanks, address slips, unreadable fragments.
