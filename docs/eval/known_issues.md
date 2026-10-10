@@ -22670,3 +22670,13 @@ Not pushed.
 - A parallel session was editing Repertoire raw files during this rebuild; its changes (5 date rows on
   `repertoire_1897-98_pair020`, 16 research events, 4 season_stat_check rows) are in the rebuilt database and are not
   part of this fix.
+
+## Issue #152: BalletArtists section audit -- heading_path / institution rebuilt for all 392 pages, 2026-10-10 (RG: "rebuild the whole ballet company section")
+
+Full write-up: `docs/eval/balletartists_section_audit_2026-10-10/README.md`. All 392 pages were read blind for their
+printed headings (8 readers); a script attached each heading to its entry and carried it forward; numbering and
+surname cross-checks pass on all 42 lists. `institution` is "Балетная труппа." on all 8,760 entries (32 values
+before); `heading_path` is the printed staff post, "Артистки:" / "Артисты:", or (1909-11) a guest heading
+(164 distinct values -> 53; 8,007 entries changed; none left blank). Only those two fields changed. Open content
+findings (not fixed): men's entries 78-82 missing from 1907-08 SP; Замбелли's shifted fields; a note stored as a
+person on 1899-00 SP p000; four Є-for-Ѳ surnames on 1902-03 MSK p005.

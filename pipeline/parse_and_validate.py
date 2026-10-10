@@ -226,7 +226,10 @@ _MISATTACHMENT_FIXES: dict[str, list[tuple]] = {
     # credit line, wrongly read as a page header) -- there's no real
     # institution/running-header text visible anywhere on this page in the
     # scan, so the correct value is blank, not a guessed theater name.
-    "balletartists_1903-04_MSK_p002": [(None, "institution", "")],
+    # [2026-10-10, BalletArtists section audit: this override is retired -- the
+    # raw JSON now carries the list title printed on the list's first page
+    # ("Балетная труппа.") for every entry, so blanking it here would undo
+    # that. Left as a comment so the history of the page is not lost.]
     # productionteam_1895-96_p001, entry 7 (Ковалевскій, Ѳедоръ Ѳедоровичъ):
     # institution/heading_path both duplicated his own name+date instead of
     # the real heading. p.108 of the scan shows he's listed directly under

@@ -13960,3 +13960,18 @@ keeping: a surname in `-ова`/`-ина` is a feminine nominative OR a masculin
 genitive, and in a corpus full of "music by X" and "sets by X" the genitive
 is common.** Any future gender check on a bare surface has to establish
 which before calling anything an error.
+
+## 2026-10-10 — BalletArtists section audit: before/after
+
+```sql
+SELECT institution, count(*) FROM raw.person_entry WHERE entity_type='BalletArtists' GROUP BY 1;
+SELECT heading_path, count(*), count(DISTINCT page_id) FROM raw.person_entry WHERE entity_type='BalletArtists' GROUP BY 1;
+SELECT count(*) FROM research.person_appearance a JOIN bk.research.person_appearance b USING (appearance_id)
+WHERE a.heading_path IS DISTINCT FROM b.heading_path OR a.institution IS DISTINCT FROM b.institution;  -- by entity_type
+```
+
+Result: before, 32 institution values and 164 headings (242 pages with none). After, one
+institution ("Балетная труппа.", 8,760 entries) and 53 headings: Артистки: 4,863,
+Артисты: 3,324, Артистки. 281, the rest staff posts and three guest headings; 0 blank.
+research.person_appearance: 8,412 rows changed, all BalletArtists, in heading_path (8,007),
+institution (7,861) and instrument (1); no other research table changed.
