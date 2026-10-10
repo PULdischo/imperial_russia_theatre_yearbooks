@@ -79,7 +79,10 @@ for r in csv.DictReader(open(ROOT + '/first_read/R_reviews.csv', encoding='utf-8
 
 # --- death marks printed in the rosters, for people with no obituary or review notice --------------------
 # (roster_deaths_matched.csv, from build/match_roster_deaths.py). One row per person.
+ORCH = {(x['season'], x['family_name']): x for x in csv.DictReader(open(HERE + '/roster_orchestra_lookup.csv', encoding='utf-8'))}
 def roster_tier(r):
+    o = ORCH.get((r['season'], r['family_name']))
+    if o: return o['tier'], f"{o['orchestra']}: {o['basis']}" + (' (RG ruling 2026-10-10: opera-and-ballet orchestra)' if o['tier'] == 'core' else '')
     path = (r['heading_path'] or '').lower(); subj = (r['instrument_or_subject'] or '').lower(); ros = r['roster']
     if ros == 'BalletArtists': return 'core', 'roster: ballet troupe'
     if ros == 'Musicians':
@@ -88,12 +91,12 @@ def roster_tier(r):
         return 'undecided', 'orchestra not stated in the roster data'
     if ros == 'TheaterSchoolStaff':
         if 'танц' in subj: return 'core', 'roster: dance teacher'
-        if 'балетное' in path: return 'undecided', 'non-dance teacher in the ballet department'
-        if 'классныя дамы' in path or 'почетные' in path: return 'undecided', 'school staff'
+        if 'балетное' in path: return 'mentions', 'RG 2026-10-10: non-dance teacher in the ballet department'
+        if 'классныя дамы' in path or 'почетные' in path: return 'mentions', 'RG 2026-10-10: theatre school staff'
         return 'none', ''
     if ros == 'ProductionTeam':
         if 'декоратор' in path or 'машинист' in path or 'художник' in path: return 'core', 'roster: designer or machinist (RG ruling 2026-10-10)'
-        return 'undecided', 'production staff other than designers and machinists'
+        return 'mentions', 'RG 2026-10-10: wardrobe, lighting and other production staff'
     if 'художникъ' in path: return 'core', 'roster: artist of the production office (RG ruling 2026-10-10: designers)'
     return 'none', ''
 ROSTER_NAME = {'BalletArtists': 'ballet troupe', 'Musicians': 'orchestras', 'TheaterSchoolStaff': 'theatre school staff',
@@ -110,7 +113,7 @@ if os.path.exists(ROOT + '/roster_deaths_matched.csv'):
                 if len(d['dates']) < 3: d['dates'] = r['death_mark']            # earlier row had a bare dagger
                 elif len(r['death_mark']) >= 3:
                     d['notes'] += f" [SOURCE CONFLICT as stored: {r['roster_page_id']} has «{r['death_mark']}», {d['source_file']} has «{d['dates']}»." + (' Both read on the scans 2026-10-10 (pp. 15 and 29 of the 1906-07 lists): a print conflict within one volume.]' if r['family_name'] == 'Константиновъ' else ' Not checked on the scans.]')
-            order = ['none', 'undecided', 'core']
+            order = ['none', 'undecided', 'mentions', 'core']
             if order.index(tier) > order.index(d['relevance']): d['relevance'], d['tier_basis'] = tier, basis
             continue
         name = r['family_name'] + ', ' + ' '.join(x for x in (r['first_name'], r['patronymic']) if x)
@@ -164,11 +167,12 @@ for i, d in enumerate(people):
         if (e['source_file'], e['pdf_page']) == (d['source_file'], d['pdf_page']): continue
         DEATH = ('obituary', 'death_notice', 'death_mark')
         if d['kind'] in DEATH and e['kind'] in DEATH and abs(int(d['season'][:4]) - int(e['season'][:4])) > 1: continue   # two deaths years apart = two people
+        if e['relevance'] == 'core' and e['source_type'] != 'roster': d['_core_link'] = True
         refs.append(f"{e['season']} {e['kind']} p. {e['printed_page']}" + (' (review)' if e['source_type'] == 'review' else ''))
     d['see_also'] = '; '.join(dict.fromkeys(refs))
 
 for d in rows:                                           # a roster-only death of someone the catalogue already has as core
-    if d['source_type'] == 'roster' and d['relevance'] == 'undecided' and d['see_also']:
+    if d['source_type'] == 'roster' and d['relevance'] in ('undecided', 'mentions') and d.pop('_core_link', False):
         d['relevance'], d['tier_basis'] = 'core', 'same person as a core entry (see_also)'
 
 def key(d):
@@ -177,7 +181,7 @@ rows.sort(key=key)
 out_cols = ['source_type'] + COLS[:12] + ['tier_basis'] + COLS[12:] + ['see_also']
 for name, keep in (('catalogue.csv', lambda d: True), ('ballet_entries.csv', lambda d: d['relevance'] in ('core', 'mentions', 'undecided'))):
     with open(os.path.join(ROOT, name), 'w', newline='', encoding='utf-8') as f:
-        w = csv.DictWriter(f, out_cols); w.writeheader(); w.writerows(d for d in rows if keep(d))
+        w = csv.DictWriter(f, out_cols, extrasaction='ignore'); w.writeheader(); w.writerows(d for d in rows if keep(d))
 
 # mixed-script guard: no word may mix Cyrillic with Latin or Greek letters
 bad = set()

@@ -70,11 +70,15 @@ The printed rosters mark a death with a dagger and date («† 4 іюня 1891 �
 volumes print no obituaries. Those 101 are in `catalogue.csv` as `kind` = `death_mark`,
 `source_type` = `roster`, with the name and date as stored in the database (not re-read here).
 
-Their tier comes from the roster section: ballet troupe, dance teachers, designers and machinists,
-and the ballet or opera-and-ballet orchestra are `core`; doctors, clerks, drama-course teachers and
-the drama-theatre orchestras are `none`; the rest are `undecided` (44: orchestra players whose
-orchestra the roster data does not state, non-dance staff of the school, wardrobe and lighting
-staff). `ballet_entries.csv` includes the undecided rows.
+Their tier comes from the roster section. `core`: ballet troupe, dance teachers, designers and
+machinists, and the ballet or opera-and-ballet orchestra. `mentions` (RG, 2026-10-10): staff of the
+theatre school who did not teach dance, wardrobe and lighting staff, and the music librarians.
+`none`: doctors, clerks, drama-course teachers and the drama-theatre orchestras.
+
+For 25 orchestra players the stored heading is only «Музыканты». `build/roster_orchestra_lookup.csv`
+gives the orchestra for each, found by following the list's headings and numbering back through the
+roster pages: 17 are in the opera-and-ballet orchestra, 6 in the Alexandrinsky, Mikhailovsky or Maly
+orchestras, 2 are librarians of the Central Music Library.
 
 Printed date conflicts found, each read on the scans on both sides:
 Соловьевъ (roster † 4 октября 1890, obituary 9 октября); Мейеръ (roster † 28 марта 1893, obituary
