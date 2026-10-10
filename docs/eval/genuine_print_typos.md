@@ -597,3 +597,6 @@ Each was flagged by a reader and then zoomed on the scan by me; the type is cris
 ## Repertoire, scan-confirmed 2026-10-10 (issue #151 follow-up 3) -- read blind on the scan, printed exactly as stored or as noted
 - `repertoire_1906-07_p016` (printed p. 100), 26 Воскр. evening, Александринскій: the heading prints «Безплатный **спектанль** для георгіевскихъ кавалеровъ» (нь for кл; zoomed 3x by the reader, unmistakable); the work line under it is «Правда хорошо, а счастье лучше, ком.». Stored in the annotation as printed.
 - `repertoire_1893-94_pair014__s060` (Большой, 2 Воскр. evening, benefit of г. Хлюстинъ): the ballet is printed «**Конскъ**-горбунокъ» (с for е; the 26 Dec printing and every other one read «Конекъ-горбунокъ»); the raw title keeps the normalised «Конекъ-горбунокъ» the model gave, so this slip is not in the data (logged here, one reader).
+
+## Repertoire, scan-confirmed 2026-10-10 (issue #151 follow-up 7)
+- `repertoire_1904-05_p011` (printed p. 101), the Moscow row for Friday 5 Nov 1904 is printed «**23** Пятница.» between «4 Четв.» and «6 Суббота.» (all three Moscow theaters; read blind, 3 cells). A slip for 5. (The row is also missing from the data, see known_issues #151 follow-up 7.)

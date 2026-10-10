@@ -1,0 +1,31 @@
+item,page,day,theater,g_sessions,p_sessions,g_works,p_works,p_event_ids,g_idx
+M001,repertoire_1899-00_p012,15,мариинскии,morning|evening,unspecified,"[[""Конекъ-Горбунокъ""], [""Сарацинъ""]]","[[""Сарацинъ""]]",repertoire_1899-00_p012__s003,2|3
+M002,repertoire_1899-00_p027,5,новыи,morning|evening,unspecified,"[[""Сонь въ лѣтнюю ночь""], [""Бронзовый конь""]]",[[]],repertoire_1899-00_p027__s040,28|29
+M003,repertoire_1900-01_p006,22,александринскии,morning|evening,unspecified,"[[], [""Джентльмэнъ""]]","[[""Джентльмэнъ""]]",repertoire_1900-01_p006__s027,25|26
+M004,repertoire_1900-01_p026,8,александринскии,morning|evening,unspecified,"[[""Кручины""], [""На крапиву—морозъ"", ""Паціентка"", ""Волшебный вальсъ""]]","[[""На крапиву—морозъ"", ""Паціентка"", ""Волшебный вальсъ""]]",repertoire_1900-01_p026__s022,21|22
+M005,repertoire_1901-02_p011,10,малыи,morning|evening,unspecified,"[[""Джіоконда""], [""Гамлетъ""]]","[[""Джіоконда""]]",repertoire_1901-02_p011__s021,21|22
+M006,repertoire_1901-02_p019,27,малыи,утро|вечеръ,unspecified,"[[""Бенефисъ г-жи Никулиной"", ""Въ отвѣтъ"", ""Одинъ изъ честныхъ"", ""Благотворительница""], [""Кашперская старина""]]","[[""Въ отвѣтѣ"", ""Одинъ изъ честныхъ"", ""Благотворительница""]]",repertoire_1901-02_p019__s037,37|38
+M007,repertoire_1901-02_p020,1,александринскии,morning|evening,unspecified,"[[""Снѣгурочка""], [""Въ отвѣтъ"", ""Virtus antiqua""]]","[[""Идеальная жена"", ""Virtus antiqua""]]",repertoire_1901-02_p020__s018,17|18
+M008,repertoire_1901-02_p020,4,александринскии,morning|evening,unspecified,"[[""Лишеннный правъ""], [""Чародѣйка""]]","[[""Чародѣйка""]]",repertoire_1901-02_p020__s021,21|22
+M009,repertoire_1901-02_p021,1,малыи,morning|evening,unspecified,"[[""Свѣтить, да не грѣсть""], [""Въ отвѣтъ"", ""Одинъ изъ честныхъ""]]","[[""Волки и овцы""]]",repertoire_1901-02_p021__s018,17|18
+M010,repertoire_1901-02_p021,9,малыи,morning|evening,unspecified,"[[""Въ отвѣтъ"", ""Благотворительница""], [""Ирининская община""]]","[[""Ирининская община""]]",repertoire_1901-02_p021__s025,25|26
+M011,repertoire_1902-03_p015,30,новыи,morning|evening,unspecified,"[[""Снѣгурочка""], [""Бронзовый конь""]]",[[]],repertoire_1902-03_p015__s036,27|28
+M012,repertoire_1903-04_p012,23,михаиловскии,morning|evening,unspecified,"[[""L’auréole""], [""L’auréole""]]","[[""L’auréole""]]",repertoire_1903-04_p012__s024,23|24
+M013,repertoire_1903-04_p016,7,михаиловскии,morning|evening,unspecified,"[[""Au bénéfice de M-elle Alice Bernard. L'assommoir""], [""L'assommoir""]]","[[""L'assommoir""]]",repertoire_1903-04_p016__s031,30|31
+M014,repertoire_1904-05_p011,23,болшои,unspecified,,"[[""Гугеноты""]]",[],,8
+M015,repertoire_1904-05_p011,23,малыи,unspecified,,"[[""Упразднители""]]",[],,19
+M016,repertoire_1904-05_p011,23,новыи,unspecified,,"[[""Потокъ"", ""Изъ-за мышенка""]]",[],,30
+M017,repertoire_1904-05_p038,2,михаиловскии,morning|evening,unspecified,"[[""Le marché"", ""Que Suzanne n'en sache rien""], [""Le sous-préfet"", ""On n'oublie pas, pièce nouv."", ""Les deux timides""]]","[[""Le marché"", ""Que Suzanne n'en sache rien""]]",repertoire_1904-05_p038__s029,29|30
+M018,repertoire_1905-06_p016,4,александринскии,morning|evening,unspecified,"[[""Божій цвѣтникъ""], [""Горячее сердце""]]","[[""Горячее сердце""]]",repertoire_1905-06_p016__s023,23|24
+M019,repertoire_1905-06_p031,8,малыи,morning|evening,unspecified,"[[""Буря""], [""Лѣсъ""]]","[[""Лѣсъ""]]",repertoire_1905-06_p031__s017,17|18
+M020,repertoire_1907-08_p011,28,новыи,morning|evening,unspecified,"[[], []]",[[]],repertoire_1907-08_p011__s029,29|30
+M021,repertoire_1907-08_p021,15,болшои,morning|evening,unspecified,"[[""Аида""], [""Баядерка""]]",[[]],repertoire_1907-08_p021__s008,1|2
+M022,repertoire_1907-08_p021,16,малыи,morning|evening,unspecified,"[[""Молодежь""], [""Джентльменъ""]]","[[""Молодежь""]]",repertoire_1907-08_p021__s014,14|15
+M023,repertoire_1907-08_p029,27,новыи,morning|evening,unspecified,"[[], []]",[[]],repertoire_1907-08_p029__s026,26|27
+M024,repertoire_1907-08_p029,3,новыи,morning|evening,unspecified,"[[], []]",[[]],repertoire_1907-08_p029__s033,34|35
+M025,repertoire_1907-08_p031,10,новыи,morning|evening,unspecified,"[[], []]",[[]],repertoire_1907-08_p031__s030,30|31
+M026,repertoire_1907-08_p041,29,болшои,morning|evening,unspecified,"[[""Евгеній Онѣгинъ""], [""Два вора"", ""Фея куколъ""]]",[[]],repertoire_1907-08_p041__s035,2|3
+M027,repertoire_1907-08_p041,30,малыи,morning|evening,unspecified,"[[""На всякаго мудреца довольно простоты""], [""Просители"", ""На покоѣ""]]","[[""На всякаго мудреца довольно простоты""]]",repertoire_1907-08_p041__s014,15|16
+M028,repertoire_1907-08_p043,15,болшои,morning|evening,unspecified,"[[], [""Дочь фараона""]]","[[""Дочь фараона""]]",repertoire_1907-08_p043__s008,8|9
+M029,repertoire_1907-08_p043,15,малыи,morning|evening,unspecified,"[[], [""Безъ вины—виноватые""]]","[[""Безъ вины—виноватые""]]",repertoire_1907-08_p043__s018,19|20
+M030,repertoire_1907-08_p043,15,новыи,morning|evening,unspecified,"[[], []]",[[]],repertoire_1907-08_p043__s028,30|31
