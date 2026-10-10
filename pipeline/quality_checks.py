@@ -69,6 +69,155 @@ def by_page(rows: list[dict]) -> dict[str, list[dict]]:
     return d
 
 
+def _norm_field(v) -> str:
+    return (v or "").strip().rstrip(".").strip().casefold()
+
+
+#: Fields that tell two rows of the same person apart when they sit under the same heading.
+_POSTING_FIELDS = ("subject_taught", "instrument", "rank_or_title", "service_class")
+#: Everything a row says about the post and its dates, for "identical content".
+_CONTENT_FIELDS = _POSTING_FIELDS + ("tenure_note_text", "credit_summary_text")
+#: A printed list number: "8.", "24", "12)", or a roman numeral ("I.").
+_REAL_LIST_NUMBER_RE = re.compile(r"^(?:\d+|[IVXLC]+)\s*[.)]?$")
+
+
+def distinct_postings(a: dict, b: dict) -> bool:
+    """True when two rows with the same person key are evidently two different printed entries
+    (two posts held by one person), not one entry extracted twice or split.
+
+    Evidence of two postings: different heading_path (a different section of the list), or a field
+    that names the post (subject_taught, instrument, rank_or_title, service_class) that is filled in
+    on BOTH rows and differs. Issue #124 (2026-10-01) scan-verified all 183 flags this check raised
+    then: 179 were exactly this (a teacher with two subjects, a clergyman who also teaches, an
+    «онъ же и …» cross-reference, an administrator with two appointments), and the 4 real bugs were
+    one entry split into a second row (a continuation note) under the SAME heading with no post
+    field of its own, which this test still leaves flagged."""
+    # A row whose list_number is note text instead of a number ("Съ 1 сентября 1895 г.",
+    # "† 7 марта 1895 г.") is a continuation note the model split off as its own entry: the very
+    # shape of all 4 real bugs in #124 (Нелидовъ, Бриліантовъ, Гордонъ, Бесслеръ), whose stored
+    # post fields even DIFFER from the first row's because the note text landed in rank_or_title.
+    # Checked first so those stay flagged whatever else differs.
+    for r in (a, b):
+        ln = (r.get("list_number") or "").strip()
+        if ln and not _REAL_LIST_NUMBER_RE.match(ln):
+            return False
+    if _norm_field(a.get("heading_path")) != _norm_field(b.get("heading_path")):
+        return True
+    if any(_norm_field(a.get(f)) and _norm_field(b.get(f)) and _norm_field(a.get(f)) != _norm_field(b.get(f))
+           for f in _POSTING_FIELDS):
+        return True
+    # Two separately numbered printed entries under one heading whose content differs
+    # (Педдеръ's «Мужскіе парики» and «Женскіе парики», #124) are two postings; identical content
+    # (Исаева printed twice, #124) is a duplicate.
+    both_numbered = all(_REAL_LIST_NUMBER_RE.match((r.get("list_number") or "").strip()) for r in (a, b))
+    return both_numbered and any(_norm_field(a.get(f)) != _norm_field(b.get(f)) for f in _CONTENT_FIELDS)
+
+
+def find_duplicate_persons(entries: list[dict]) -> list[tuple[dict, dict]]:
+    """(earlier, later) row pairs on one page that share (family, first, patronymic) and are NOT
+    distinct_postings. `entries` in printed order."""
+    seen: dict[str, dict[tuple, list[dict]]] = defaultdict(lambda: defaultdict(list))
+    out = []
+    for e in entries:
+        key = ((e.get("family_name") or "").strip(), (e.get("first_name") or "").strip(),
+               (e.get("patronymic") or "").strip())
+        if not key[0]:
+            continue
+        for prev in seen[e["page_id"]][key]:
+            if not distinct_postings(prev, e):
+                out.append((prev, e))
+                break
+        seen[e["page_id"]][key].append(e)
+    return out
+
+
+def _num(s) -> float | None:
+    try:
+        return float(s)
+    except (TypeError, ValueError):
+        return None
+
+
+def repaired_credit_count(row: dict, summary: str) -> str:
+    """The credit count as analysis.person_entry_credit.category_credit_count_clean has it.
+
+    Known extraction quirk (known_issues.md #23): for a sentence "Въ N балетахъ—X" the model's
+    structured count sometimes holds N (productions) where X (performances) belongs. build_duckdb.py
+    repairs it, from the entry's own verbatim credit_summary_text, in the *analysis* column only;
+    this is the same rule on the parsed CSVs (parity with the SQL column checked on all 24,862
+    category_totals rows, 2026-10-10), so the check below does not flag rows that are already repaired
+    downstream. Numeric comparison on purpose: the captured X can carry the sentence's final period."""
+    count = row.get("category_credit_count", "")
+    if row.get("credit_type") != "category_totals":
+        return count
+    m = re.search(r"[Вв]ъ\s+(\d+)\s+" + re.escape(row.get("label", "")) + r"\s*[—-]\s*([\d.]+)", summary or "")
+    if (m and _num(count) is not None and _num(m[1]) is not None and _num(m[2]) is not None
+            and _num(count) == _num(m[1]) != _num(m[2])):
+        return m[2]
+    return count
+
+
+#: Some printed summaries put the category INSIDE the total sentence: "Всего—въ 5 балетахъ—15 разъ."
+#: (1908-09: "total, in 5 ballets, 15 times"; the model wrote «въ» as «всѣ»/«вв» or dropped it). The
+#: stored 'балетахъ' row then holds the number of PRODUCTIONS (5), not a part of the 15, so "components
+#: sum to the total" does not apply to that entry at all.
+#: Word classes are script-agnostic ([^\W\d_]) on purpose: a Latin look-alike inside a Cyrillic word
+#: (1899-00 and 1901-02 print «дивертиcсементѣ» with a Latin c in the stored text) must not make the
+#: part drop out of the sum. "Все\S{0,6}" tolerates the model's garbled «Всего» (1908-09: «Все-ю—вв 1 балетъ—2»).
+_TOTAL_CARRIES_CATEGORY_RE = re.compile(
+    r"Все\S{0,6}\s*[—-]\s*(?:[^\W\d_]{1,4}\s+)?\d+\s+[^\W\d_]+\s*[—-]\s*\d+")
+_PRINTED_PART_RE = re.compile(r"[Вв]ъ\s+(?:\d+\s+)?[^\W\d_]+\s*[—-]?\s*(\d+)")
+_PRINTED_TOTAL_RE = re.compile(r"Всего\s*[—-]?\s*(\d+)")
+
+
+#: Digits a printed 3/8, 5/6, 1/7... can be mistaken for; used only to RANK mismatches, never to correct one.
+_LOOKALIKE_DIGITS = {"3": "8", "8": "3690", "6": "58", "5": "683", "1": "7", "7": "1", "0": "86", "9": "48", "4": "9", "2": "7"}
+
+
+def _lookalike_variants(n: int) -> list[int]:
+    s = str(n)
+    return [int(s[:i] + r + s[i + 1:]) for i, ch in enumerate(s) for r in _LOOKALIKE_DIGITS.get(ch, "")]
+
+
+def lookalike_digit_fixes(components: list[int], stated: int) -> list[str]:
+    """Single-digit look-alike changes to one number that would make the parts add up to the total,
+    e.g. ['part1 88->38']. A hint for triage: on 2026-10-10 the first one checked on the scan
+    (1891-92 Moscow, Бюхнеръ, printed «Въ балетахъ—38; въ операхъ—22. Всего—60» and stored 88) was a
+    real misread of 3 as 8."""
+    hits = [f"part{i} {v}->{w}" for i, v in enumerate(components, 1)
+            for w in _lookalike_variants(v) if sum(components) - v + w == stated]
+    hits += [f"total {stated}->{w}" for w in _lookalike_variants(stated) if w == sum(components)]
+    return hits
+
+
+def classify_credit_mismatch(summary: str, component_sum: int, stated: int,
+                             components: list[int] | None = None) -> tuple[str, str]:
+    """Cross-check a mismatching block against the entry's own printed summary text.
+
+    Returns (flag, detail). 'credit_sum_mismatch' = something to fix or look at:
+    the stored rows disagree with a printed text that does add up, or the text could not be read.
+    'credit_summary_not_additive' = the stored rows match the printed text and the text itself does
+    not add up: a print slip, a total that counts something else, or a digit the model misread, and
+    only a scan can say which, so it is kept apart from the first kind.
+    'credit_digit_misread_candidate' = the same, and changing ONE digit to a look-alike would make it
+    add up (51 of the first 100): the most likely misreads, first in line for a scan check."""
+    head = (summary or "").split("Всего")[0]
+    parts = [int(x) for x in _PRINTED_PART_RE.findall(head)]
+    total = _PRINTED_TOTAL_RE.search(summary or "")
+    base = f"components sum to {component_sum}, stated Всего={stated}"
+    if not parts or not total:
+        return "credit_sum_mismatch", base + "; summary text not parseable"
+    printed_sum, printed_total = sum(parts), int(total[1])
+    if printed_sum == printed_total:
+        return "credit_sum_mismatch", base + f"; the printed text adds up ({printed_sum}={printed_total}), the stored rows do not"
+    if printed_sum == component_sum and printed_total == stated:
+        fixes = lookalike_digit_fixes(components, stated) if components else []
+        if fixes:
+            return "credit_digit_misread_candidate", base + "; one look-alike digit would make it add up: " + ", ".join(fixes)
+        return "credit_summary_not_additive", base + "; stored rows match the printed text, which itself does not add up"
+    return "credit_sum_mismatch", base + f"; printed text {printed_sum} vs {printed_total}, matches neither the rows nor itself"
+
+
 def check_roster(parsed_dir: Path) -> list[dict]:
     flags = []
     entries = load(parsed_dir / "person_entry.csv")
@@ -76,8 +225,14 @@ def check_roster(parsed_dir: Path) -> list[dict]:
     credits_by_entry = defaultdict(list)
     for c in credits:
         credits_by_entry[c["entry_id"]].append(c)
+    summary_by_entry = {e["entry_id"]: e.get("credit_summary_text") or "" for e in entries}
 
-    seen_in_page = defaultdict(set)  # page_id -> {(family, first, patronymic)}
+    for prev, e in find_duplicate_persons(entries):
+        key = ((e.get("family_name") or "").strip(), (e.get("first_name") or "").strip(),
+               (e.get("patronymic") or "").strip())
+        flags.append(dict(page_id=e["page_id"], table="person_entry", row_id=e["entry_id"],
+                           flag="duplicate_person_on_page",
+                           detail=f"{key}; same heading as {prev['entry_id']} and no post field tells them apart"))
     for e in entries:
         page_id, entry_id = e["page_id"], e["entry_id"]
         heading_path, institution = e.get("heading_path", ""), e.get("institution", "")
@@ -93,11 +248,6 @@ def check_roster(parsed_dir: Path) -> list[dict]:
                                flag="rank_class_left_in_heading_path",
                                detail=f"heading_path={heading_path!r}"))
 
-        key = (family.strip(), first.strip(), patr.strip())
-        if family.strip() and key in seen_in_page[page_id]:
-            flags.append(dict(page_id=page_id, table="person_entry", row_id=entry_id,
-                               flag="duplicate_person_on_page", detail=str(key)))
-        seen_in_page[page_id].add(key)
 
     for entry_id, rows in credits_by_entry.items():
         # Sequential block-scan, not a label->row dict (docs/eval/known_issues.md
@@ -111,6 +261,13 @@ def check_roster(parsed_dir: Path) -> list[dict]:
         # number entirely rather than checking each block against its own
         # total, which is what produced most of the originally-flagged
         # false-positive credit_sum_mismatch entries.
+        summary = summary_by_entry.get(entry_id, "")
+        # 2026-10-10 (step-back audit): components are compared AFTER the known #23 repair, and an
+        # entry whose total sentence carries its own category is skipped -- together these were
+        # 198 of the 340 flags this check used to raise, none of them an extraction error that is
+        # still live in the analysis layer. The remaining mismatches are classified against the
+        # entry's own printed text (classify_credit_mismatch).
+        carries_category = bool(_TOTAL_CARRIES_CATEGORY_RE.search(summary))
         block_components: list[dict] = []
         for r in rows:
             if r["credit_type"] != "category_totals":
@@ -119,14 +276,15 @@ def check_roster(parsed_dir: Path) -> list[dict]:
                 block_components.append(r)
                 continue
             try:
-                component_sum = sum(int(c["category_credit_count"]) for c in block_components
-                                     if c["category_credit_count"])
+                component_values = [int(float(repaired_credit_count(c, summary))) for c in block_components
+                                    if repaired_credit_count(c, summary)]
+                component_sum = sum(component_values)
                 stated = int(r["category_credit_count"])
-                if block_components and component_sum != stated:
+                if block_components and component_sum != stated and not carries_category:
                     page_id = rows[0]["entry_id"].split("__e")[0]
+                    flag, detail = classify_credit_mismatch(summary, component_sum, stated, component_values)
                     flags.append(dict(page_id=page_id, table="person_entry_credit", row_id=entry_id,
-                                       flag="credit_sum_mismatch",
-                                       detail=f"components sum to {component_sum}, stated Всего={stated}"))
+                                       flag=flag, detail=detail))
             except (ValueError, KeyError):
                 pass  # non-numeric count -- a different problem, not this check's job
             block_components = []

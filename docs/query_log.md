@@ -13279,3 +13279,19 @@ select event_id, date_undate, event_status from analysis.event_entry order by 1;
 ```
 
 Result: 13 of 13 override keys match; each covers 1-5 event rows; the scratch rebuild's date-check table (29,990 rows) and `analysis.event_entry` (32,856 rows) are identical to production.
+
+## 2026-10-10 -- Roster checker noise: what are the 523 flags, and which survive the repairs?
+
+```sql
+-- credit_sum_mismatch: do the stored credit rows agree with their own verbatim summary text?
+select c.entry_id, c.label, c.category_production_count, c.category_credit_count, e.credit_summary_text
+from raw.person_entry_credit c join raw.person_entry e using (entry_id) where c.credit_type = 'category_totals';
+-- parity of the quality-check repair with the analysis column (24,862 rows, 0 differences)
+select credit_id, category_credit_count_clean from analysis.person_entry_credit where credit_type = 'category_totals';
+-- mixed-script words in credit_summary_text; entries with credit rows but no summary text
+select entry_id, credit_summary_text from raw.person_entry where credit_summary_text is not null and credit_summary_text <> '';
+select count(distinct c.entry_id) from raw.person_entry_credit c join raw.person_entry e using (entry_id)
+ where c.entry_id like 'balletartists_1908-09_SP_p006%' and coalesce(e.credit_summary_text, '') = '';
+```
+
+Result: 340 credit flags -> 117 (51 `credit_digit_misread_candidate`, 49 `credit_summary_not_additive`, 17 `credit_sum_mismatch`) after applying the #23 repair (358 rows) and skipping the 1908-09 "Всего—въ N балетахъ" format; 183 `duplicate_person_on_page` -> 1 (Исаева); the four real #124 bugs are still flagged from their pre-fix raw JSON. 1891-92 MSK p001 Бюхнеръ read on the scan: printed 38, stored 88. 103 mixed-script words in 102 summary texts; 14 entries on 1908-09 SP p006 have credit rows and an empty summary.

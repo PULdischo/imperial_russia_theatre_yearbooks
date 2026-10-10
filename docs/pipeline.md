@@ -137,6 +137,26 @@ on the corrected data, and the pre-fix backup
 (`outputs/full_run_pre_promote_backup_2026-10-03_tss_stage2/parsed`) trips all
 three on 1898-99. Run them on every newly onboarded roster season.
 
+**Roster credit and duplicate checks, as of 2026-10-10 (issue #149).** On the production data
+they went from 523 flags to 118, because the old logic read the parsed CSVs without the repairs
+and distinctions the rest of the pipeline already applies:
+- `credit_sum_mismatch` / `credit_digit_misread_candidate` / `credit_summary_not_additive`
+  (BalletArtists «Въ балетахъ—N; въ операхъ—M. Всего—T»). The check now (1) applies the #23
+  repair (a production count stored where the performance count belongs; the same rule as
+  `analysis.person_entry_credit.category_credit_count_clean`, parity checked on every row),
+  (2) skips a total sentence that carries its own category («Всего—въ 5 балетахъ—15 разъ», 1908-09),
+  and (3) cross-checks what is left against the entry's own printed text. `credit_digit_misread_candidate`
+  = the stored rows match the printed text and ONE look-alike digit would make it add up (the flag
+  names the fix; the first one checked on the scan was a real 3-read-as-8); `credit_summary_not_additive`
+  = the text itself does not add; `credit_sum_mismatch` = the printed text adds up but the stored rows
+  do not, or the text is unreadable (act on these first).
+- `duplicate_person_on_page` flags a repeated person only when the rows are NOT evidently two
+  postings: a later row whose `list_number` is note text (a continuation split off, the shape of all
+  4 real #124 bugs) is always flagged; otherwise a different heading, a different post field, or two
+  separately numbered entries with different content count as two postings. 183 -> 1 (Исаева, a
+  known genuine print duplicate).
+`pipeline/selftest_quality_checks_roster.py` runs these rules on synthetic rows.
+
 Flags are triage signals, not verdicts — e.g. a genuinely duplicate person
 (someone who really holds two listed roles) will trip the duplicate-entry
 check without being wrong. The point is to route a full run's limited human
