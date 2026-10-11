@@ -25,11 +25,11 @@ ROSTER = {
     'К. А. Кондараки': 'not in any roster section in the database (rosters cover ballet, orchestra, school, administration, production team)',
     'А. В. Анненкова': 'not in any roster section in the database',
 }
-NOTES = {
-    'Е. К. Смирнова': 'SOURCE CONFLICT: review and the 1893-95 ballet rosters print Е. К. / Евгенія Кирилловна; the obituary heading prints «Евгенія Дмитріевна» (checked on the scan). Same person: service date 19 декабря 1878 agrees. The obituary directly above is Сергѣева, Анна Дмитріевна.',
-    'Н. П. Пуни': 'SOURCE CONFLICT: review prints «Н. П.»; obituary and the 1893-96 rosters print Николай Цезаревичъ.',
-    'С. Г. Никитинъ': 'SOURCE CONFLICT: review prints 24-го іюля 1896; obituary prints † 23-го іюля 1896 (both obituary readings agree).',
-    'М. Н. Казаковъ': 'SOURCE CONFLICT: review prints 16 сентября 1892; obituary prints 17-го сентября 1892 (both obituary readings agree).',
+NOTES = {   # review side read on the review scans 2026-10-12, obituary side read twice
+    'Е. К. Смирнова': 'PRINT CONFLICT (both sides read on the scans): review and the 1893-95 ballet rosters print Е. К. / Евгенія Кирилловна; the obituary heading prints «Евгенія Дмитріевна». Same person: service date 19 декабря 1878 agrees. The obituary directly above is Сергѣева, Анна Дмитріевна.',
+    'Н. П. Пуни': 'NOT a conflict: the review page prints «Н. Ц. Пуни» (scan read 2026-10-12), agreeing with the obituary and rosters (Николай Цезаревичъ); «Н. П.» is a misread in the stored review text.',
+    'С. Г. Никитинъ': 'PRINT CONFLICT (both sides read on the scans): review prints 24-го іюля 1896; obituary prints † 23-го іюля 1896.',
+    'М. Н. Казаковъ': 'PRINT CONFLICT (both sides read on the scans): review prints 16 сентября 1892; obituary prints 17-го сентября 1892.',
     'Ламберъ': 'Obituary heading is the double surname Ламберъ-Робине.',
 }
 out = []

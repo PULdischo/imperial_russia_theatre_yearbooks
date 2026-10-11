@@ -167,10 +167,11 @@ with no scanned obituary section and are confirmed as ballet artists from the ro
 Анненкова); 2 are Imperial family deaths. Every name the first pass called ballet only from its
 position in a ballet review is now confirmed.
 
-Four places where the review and the obituary disagree in print:
+Three places where the review and the obituary disagree in print, each read on both scans:
 Смирнова (review and rosters Е. К. / Евгенія Кирилловна, obituary «Евгенія Дмитріевна»),
-Пуни (review «Н. П.», obituary and rosters Николай Цезаревичъ),
 Никитинъ (review 24 July 1896, obituary 23 July), Казаковъ (review 16 Sept 1892, obituary 17 Sept).
+A fourth, Пуни, was not a conflict: the review page prints «Н. Ц. Пуни», as the obituary and rosters do;
+«Н. П.» was a misread in the stored review text.
 
 ## Not yet done
 
