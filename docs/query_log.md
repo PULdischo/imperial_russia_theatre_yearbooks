@@ -14046,3 +14046,46 @@ the CSV.
 database holds `Лопухова, Евгенія` (1901-02) and the 1903-04 context puts
 her among Трефилова and Виль. The print may be a slip for Лопухова rather
 than a separate woman. Mixed evidence, so not decided here.
+
+## 2026-10-11 — the 9 review-only dancers created (RG: "continue")
+
+A third people source, after the rosters and the ballet production lists.
+`pipeline/build_review_persons.py` → `entities.review_person`, and
+`build_research_model.py` carries them into `research.person` with
+`person_source = 'review'`, mirroring the `creator_person` →
+`'production_list'` path built for issue #133.
+
+Checked first, because the obvious failure mode is capturing a masculine
+genitive (`декораціи Титова`) as a woman:
+
+```sql
+SELECT count(*), count(entity_id) FROM entities.review_mention
+WHERE mention_type='person' AND surface = ?;    -- per name
+```
+Each of the nine surfaces occurs *only* in the counted mentions — Титова 3,
+all three in a `г-жи` list on the p020 scan — so there is no genitive
+exposure. Nothing else in the corpus uses those surfaces.
+
+```sql
+SELECT person_source, count(*) FROM research.person GROUP BY 1;
+```
+| source | people |
+|---|---|
+| roster | 3,130 |
+| production_list | 87 |
+| **review** | **9** |
+
+After re-running the matcher and rebuilding, **all 20 of their mentions
+resolve**: Воскресенская 7, Барковская 3, Титова 3, Терентьева 2, and one
+each for Галактіонова, Шеншина, Лопухина, Ячменевъ, Громовъ 1-й. Person
+mentions joining `research.person` 13,249 → 13,268; `review_mention`
+27,422 and `review_assertion` 1,952 unchanged.
+
+The script **refuses to run** on any row whose `scan_checked` is not `yes`.
+That guard is the point: seven of the sixteen the worklist proposed were a
+graduate, drama bleed, a print typo or a retrospective, so building off
+the CSV unchecked would have invented seven dancers.
+
+These are thin records by necessity — surname plus ordinal where printed,
+no first name or patronymic, because the reviews print none. They will not
+merge with a roster person later without new evidence.

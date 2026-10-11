@@ -708,6 +708,27 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             GROUP BY ALL
         """)
 
+    has_review_people = con.execute("""SELECT count(*) FROM information_schema.tables
+        WHERE table_schema = 'entities' AND table_name = 'review_person'""").fetchone()[0] > 0
+    if has_review_people:
+        # A third people source: dancers the ballet reviews name whom no people
+        # list in the corpus carries (pipeline/build_review_persons.py). Every
+        # one was checked against the page scan -- seven of the sixteen the
+        # worklist proposed turned out to be a graduate, drama bleed, a print
+        # typo or a retrospective, so this list is deliberately short.
+        #
+        # Thin records by necessity: the reviews print a surname and sometimes
+        # an ordinal, never a first name or patronymic. display_name is the
+        # printed form, so a reader can see exactly what the source said.
+        con.execute("""
+            INSERT INTO research.person
+            SELECT rp.person_id, rp.printed_form, rp.canonical_family_name,
+                   NULL, NULL, rp.ordinal_suffix,
+                   rp.first_attested_season, rp.last_attested_season,
+                   NULL, NULL, NULL, 'review', NULL
+            FROM entities.review_person rp
+        """)
+
     for pid, (disp, first, _why) in RESEARCH_PERSON_DISPLAY_OVERRIDES.items():
         n = con.execute("SELECT count(*) FROM research.person WHERE person_id = ?", [pid]).fetchone()[0]
         if n != 1:
