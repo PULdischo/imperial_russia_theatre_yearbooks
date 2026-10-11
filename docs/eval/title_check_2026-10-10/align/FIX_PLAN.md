@@ -21,7 +21,7 @@ and the affected columns read row by row. Scripts: `compare_structure.py`, `tria
    26, 1902-03 pp. 14-15, 1903-04 p013.
 7. **A half-performance with its own figure missing from the stored data altogether** (about 16 cells, listed below).
 
-## Stage A (applied by `apply_structure_fixes.py`; dry run passes all before-state checks; NOT yet written)
+## Stage A (APPLIED 2026-10-11 by `apply_structure_fixes.py`; rebuilt; backup outputs/full_run_pre_promote_backup_2026-10-11_structure)
 69 operations on 30 pages: 25 session relabels in group 1, 18 in group 2 (3 columns), 13 deletes of duplicates/empties,
 3 theater fixes, 5 merges, 11 splits. Adds no work title or figure that is not already stored except one morning figure
 (1900-01 p026 МИХ 4, «625 р. 50 к.», two readers agreed). Net sessions 13 fewer, 10 more.

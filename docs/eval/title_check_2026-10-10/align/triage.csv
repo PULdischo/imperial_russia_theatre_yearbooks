@@ -3,7 +3,6 @@ C_dark,repertoire_1890-91_pair004,Александринскій,8,1,dash,"s043:
 C_dark,repertoire_1890-91_pair004,Мариинскій,8,1,dash,"s041:morning,s042:evening",no_performance/no_performance,0/0,None/None, // ,
 C_dark,repertoire_1890-91_pair004,Михайловскій,8,1,dash,"s045:morning,s046:evening",no_performance/no_performance,0/0,None/None, // ,
 D_other,repertoire_1890-91_pair018,Александринскій,2,2,split_labelled,s002:unspecified,no_performance,0,None,,утро/веч labels printed once at right edge of row; rule runs across all theaters
-C_content,repertoire_1890-91_pair020,Малый,17,1,single,"s074:morning,s075:evening",performed/performed,1/1,None/None,Горе отъ ума // Святки,
 D_halfdash,repertoire_1890-91_pair024,Александринскій,27,2,split_labelled,s022:unspecified,performed,2,None,На Бойкомъ мѣстѣ | На Пескахъ,утро: two works; вечеръ half dash
 D_halfdash,repertoire_1890-91_pair024,Мариинскій,27,2,split_labelled,s021:unspecified,performed,1,None,Отелло,утро: Отелло; вечеръ half dash
 D_halfdash,repertoire_1890-91_pair024,Михайловскій,27,2,split_labelled,s023:unspecified,performed,2,None,La Course aux Jupons | C'est la Faute au Ministère,утро half dash; вечеръ two works
@@ -11,17 +10,14 @@ D_halfdash,repertoire_1891-92_pair012,Большой,28,2,split_labelled,s098:un
 D_halfdash,repertoire_1891-92_pair012,Малый,28,2,split_labelled,s105:unspecified,performed,1,None,Имогена,УТРО/ВЕЧ labels inside this cell; lower half is a dash
 D_halfdash,repertoire_1891-92_pair012,Мариинскій,28,2,split_labelled,s092:unspecified,performed,2,None,Коппелія | 2-е д. бал. Фіаметта,УТРО/ВЕЧ labels printed at the edges; lower half is a dash
 D_halfdash,repertoire_1891-92_pair014,Большой,4,2,split_labelled,s039:unspecified,performed,1,None,Фаустъ,УТРО/ВЕЧ labels printed at right of Malyi cell; ВЕЧ half is a dash
-C_content,repertoire_1891-92_pair016,Михайловскій,9,1,single,"s097:morning,s098:evening",no_performance/performed,0/1,None/None, // L'Article 47,one undivided cell (L'Article 47) although rule runs across the other theaters
 C_dark,repertoire_1892-93_pair006,Александринскій,17,1,dash,"s075:morning,s076:evening",no_performance/no_performance,0/0,None/None, // ,Александринскій cell undivided; УТРО/ВЕЧ labels printed only at Мариинскій and М
 D_halfdash,repertoire_1892-93_pair010,Большой,14,2,split_labelled,s005:unspecified,performed,2,None,Гимнъ | Пиковая дама,banner above; lower half dash
 D_halfdash,repertoire_1892-93_pair010,Большой,21,2,split_labelled,s020:unspecified,performed,1,770 р. 10 к.,Русалка,labels УТРО/ВЕЧ printed at edge of row beside Малый; lower half dash
 D_halfdash,repertoire_1892-93_pair010,Малый,21,2,split_labelled,s085:evening,no_performance,0,None,,labels УТРО/ВЕЧ printed at edge of row; lower half dash
-C_content,repertoire_1892-93_pair012,Михайловскій,26,1,single,"s103:morning,s104:evening",performed/no_performance,2/0,1705 р. 50 к./None,Monsieur chasse | L’Absent // ,one undivided cell (no rule seen at the row where other columns split into УТРО/
-D_halfdash,repertoire_1892-93_pair014,Большой,2,2,split_labelled,s121:unspecified,performed,1,1589 р. 88 к.,Кольцо любви,labels УТРО/ВЕЧ printed at edge of row beside Малый; lower half dash
+D_halfdash,repertoire_1892-93_pair014,Большой,2,2,split_labelled,s119:unspecified,performed,1,1589 р. 88 к.,Кольцо любви,labels УТРО/ВЕЧ printed at edge of row beside Малый; lower half dash
 D_halfdash,repertoire_1892-93_pair014,Малый,2,2,split_labelled,s008:unspecified,performed,1,1389 р. 20 к.,Марія Стюартъ,УТРО/ВЕЧ labels at own cell edge; lower half dash
 D_other,repertoire_1893-94_pair018,Александринскій,13,2,split_labelled,s007:unspecified,performed,1,273 р. 88 к.,Плоды просвѣщенія,УТРО/ВЕЧ strip at right edge; ВЕЧ half cut off at page fold
 D_halfdash,repertoire_1894-95_pair008,Большой,7,2,split_labelled,s073:unspecified,performed,1,3909 р. 60 к.,Орлеанская дѣва,УТРО performance (Спектакль въ пользу фонда...); ВЕЧ half is a dash
-D_other,repertoire_1894-95_pair008,Малый,22,2,split_labelled,s056:unspecified,performed,3,3353 р. 80 к.,Рись г. Максеева | Кая судьбина | Вѣтріе,УТРО/ВЕЧЕРЪ printed beside this cell
 D_halfdash,repertoire_1895-96_pair006,Малый,21,2,split_labelled,s048:unspecified,performed,2,1378 р. 12 к.,Гимнъ | Онѣгинъ,УТРО half is Гимнъ + Евгеній Онѣгинъ; ВЕЧЕРЪ half is a dash
 C_dark,repertoire_1895-96_pair008,Большой,14,1,dash,"s093:morning,s094:evening",no_performance/no_performance,0/0,None/None, // ,"banner above; undivided dash, rule does not run across Большой"
 D_other,repertoire_1896-97_pair014,Большой,28,2,split_labelled,s047:unspecified,performed,1,1186 р. 41 к.,Аида,УТРО/ВЕЧ labels printed once at right edge of row (beside Малый/Александринскій)
@@ -40,52 +36,28 @@ D_halfdash,repertoire_1898-99_p021,Большой,2,2,split_labelled,s010:unspec
 D_halfdash,repertoire_1898-99_p021,Малый,2,2,split_labelled,s011:unspecified,performed,1,287 р. 78 к.,Разгромъ,labels printed beside first theater; rule runs across; second half dash
 D_other,repertoire_1899-00_p014,Александринскій,28,2,split_labelled,s017:unspecified,performed,1,1483 р. 25 к.,Биронъ,rule across; labels at Мариинскій edge
 D_other,repertoire_1899-00_p024,Александринскій,30,2,split_labelled,s034:unspecified,performed,2,508 р. 65 к.,Недоросль | Воздушные замки,УТРО/ВЕЧ labels printed beside first theater only; rule runs across contiguous c
-D_other,repertoire_1899-00_p026,Александринскій,13,2,split_labelled,s010:unspecified,performed,2,1652 р. — к.,Девятый валъ | Шашки,УТРО/ВЕЧ labels printed beside first theater only; rule runs across contiguous c
-D_other,repertoire_1900-01_p006,Мариинскій,15,2,split_labelled,s006:unspecified,performed,2,2876 р. 70 к.,Щелкунчикъ | Привалъ кавалеріи,
 D_other,repertoire_1900-01_p008,Михайловскій,29,2,split_labelled,s031:unspecified,performed,1,666 р. 63 к.,Les deux orphelines,УТРО/ВЕЧ labels printed at row edge beside first theater cell; rule runs across 
 D_other,repertoire_1900-01_p010,Александринскій,5,2,split_labelled,s015:unspecified,performed,1,274 р. 34 к.,Накипь,УТРО/ВЕЧ labels printed at row edge beside first theater cell; rule runs across 
-D_other,repertoire_1900-01_p012,Михайловскій,14,2,split_labelled,s028:unspecified,performed,3,1214 р. 02½ к.,Плоды просвѣщенія | Gringoire | Trois femmes pour un mari,banner above; УТРО/ВЕЧ labels printed at row edge beside first theater cell; rul
-D_other,repertoire_1900-01_p016,Александринскій,6,2,split_labelled,s014:unspecified,performed,2,1607 р. 17 к.,Биронъ | Буреломъ,banner above; labels printed once at left edge; rule runs across
-D_other,repertoire_1900-01_p016,Михайловскій,6,2,split_labelled,s026:unspecified,performed,2,1022 р. 63 к.,Le Misanthrope | Коварство и любовь,banner above; labels printed once at left edge; rule runs across
-D_other,repertoire_1900-01_p016,Михайловскій,10,2,split_labelled,s030:unspecified,performed,2,627 р. — к.,Andromaque | Les plaideurs,labels printed once at left edge; rule runs across
-D_other,repertoire_1900-01_p017,Большой,6,2,split_unlabelled,s012:unspecified,performed,2,2493 р. 08 к.,Жизнь за Царя | Донъ-Кихотъ Ламанчскій,banner above
+D_other,repertoire_1900-01_p016,Михайловскій,10,2,split_labelled,s032:unspecified,performed,2,627 р. — к.,Andromaque | Les plaideurs,labels printed once at left edge; rule runs across
 D_other,repertoire_1900-01_p017,Малый,6,2,split_unlabelled,s001:unspecified,performed,1,1166 р. 13 к.,Ромео и Джульетта,banner above
-D_other,repertoire_1900-01_p017,Новый,6,2,split_unlabelled,s023:unspecified,performed,2,938 р. 08 к.,Другъ Фритцъ | Травіата,banner above
 D_other,repertoire_1900-01_p018,Михайловскій,17,2,split_labelled,s034:unspecified,performed,1,613 р. — к.,Комикъ XVII столѣтія,labels printed once at left edge; rule runs across
 D_halfdash,repertoire_1900-01_p019,Малый,30,2,split_labelled,s027:unspecified,performed,1,773 р. 11 к.,Ревизоръ,УТРО Ревизоръ; ВЕЧ half dash; labels printed only beside Большой; rule runs acro
 D_halfdash,repertoire_1900-01_p019,Новый,30,2,split_labelled,s042:unspecified,performed,1,481 р. 65 к.,Севильскій цирюльникъ,УТРО Севильскій цирюльникъ; ВЕЧ half dash
-C_content,repertoire_1900-01_p020,Александринскій,1,1,single,"s019:morning,s020:evening",performed/performed,1/2,1652 р. 65 к./1646 р. 99 к.,"Волки и овцы // Дикарка | Не бывать-бы счастью, да несчастье помогло, оперет",
-D_other,repertoire_1900-01_p020,Александринскій,31,2,split_labelled,s018:unspecified,performed,1,563 р. 26 к.,Коварство и любовь,rule runs across all theaters
 D_other,repertoire_1900-01_p022,Александринскій,14,2,split_labelled,s003:unspecified,performed,1,1643 р. 92 к.,Царь Борисъ,labels printed once at left edge; rule runs across
-D_other,repertoire_1900-01_p026,Михайловскій,4,2,split_labelled,s030:unspecified,performed,3,648 р. 85 к.,Le barbier de Séville | Fidèle | Le coup de fouet,УТРО/ВЕЧ labels printed only beside first theater; rule runs across
-D_other,repertoire_1900-01_p026,Михайловскій,7,2,split_labelled,s033:unspecified,performed,2,1451 р. 88 к.,Le barbier de Seville | Джентльмэнъ,"banner above; УТРО/ВЕЧ labels beside first theater, rule runs across"
 D_other,repertoire_1900-01_p027,Новый,9,2,split_labelled,s035:unspecified,performed,1,1146 р. 36 к.,Каширская старина,УТРО/ВЕЧ labels printed only beside first theater; rule runs across
 D_other,repertoire_1901-02_p020,Александринскій,30,2,split_labelled,s015:unspecified,performed,1,1621 р. 83 к.,Сонъ въ лѣтнюю ночь,labels printed only beside Мариинскій; rule runs across
 D_other,repertoire_1901-02_p021,Малый,30,2,split_labelled,s015:unspecified,performed,1,636 р. 31 к.,Лѣсъ,labels printed only beside Большой; rule runs across
-D_other,repertoire_1902-03_p014,Михайловскій,6,2,split_labelled,s036:unspecified,performed,2,1271 р. 13 к.,"Les femmes savantes, com. | Зарница, ком.","УТРО/ВЕЧ labels printed once at left beside first theater, rule runs across; ban"
-D_other,repertoire_1902-03_p015,Малый,6,2,split_labelled,s022:unspecified,performed,2,1174 р. 04 к.,Виндзорскія проказницы | Волки и овцы,banner above; labels printed once at row edge; rule runs across
 D_halfdash,repertoire_1902-03_p019,Малый,28,2,split_labelled,s040:unspecified,performed,1,563 р. 46 к.,Волки и овцы,labels printed once at row edge; rule runs across; evening half is a dash
 D_other,repertoire_1903-04_p006,Александринскій,19,2,split_labelled,s033:unspecified,performed,1,789 р. 55 к.,Венеціанскій купецъ (Шейлокъ),labels at Мариинскій cell; rule runs across Александринскій (Спектакль для учаще
-D_other,repertoire_1903-04_p013,Малый,14,2,split_labelled,s012:unspecified,performed,2,776 р. 83 к.,Сильные и слабые | Бѣдность не порокъ,banner above; rule runs across
-D_other,repertoire_1903-04_p013,Новый,14,2,split_labelled,s022:unspecified,performed,2,357 р. 27 к.,Трубадуръ | Женитьба Бѣлугина,banner above; rule runs across
-D_other,repertoire_1903-04_p017,Большой,6,2,split_labelled,s025:unspecified,performed,2,None,"1-е, 2-е и 3-е д. Корсаръ | Привалъ кавалеріи",banner above (Безплатные спектакли ...); УТРО half has work; ВЕЧ. half appears t
+D_other,repertoire_1903-04_p017,Большой,6,2,split_labelled,s024:unspecified,performed,2,None,"1-е, 2-е и 3-е д. Корсаръ | Привалъ кавалеріи",banner above (Безплатные спектакли ...); УТРО half has work; ВЕЧ. half appears t
 D_halfdash,repertoire_1903-04_p017,Малый,6,2,split_labelled,s001:unspecified,performed,1,None,Старый закалъ,banner above; УТРО half has work; ВЕЧ. half appears to be a dash
-C_content,repertoire_1903-04_p017,Малый,7,1,single,"s002:morning,s003:evening",no_performance/performed,0/1,None/874 р. 11 к., // Лѣсъ,
-D_halfdash,repertoire_1903-04_p017,Новый,6,2,split_labelled,s013:unspecified,performed,1,None,Фра-Діаволо,banner above; УТРО half has work; ВЕЧ. half appears to be a dash
-D_other,repertoire_1903-04_p017,Новый,14,2,split_labelled,s022:unspecified,performed,2,2213 р. — к.,Сельская честь | Сынъ мандарина,
+D_halfdash,repertoire_1903-04_p017,Новый,6,2,split_labelled,s012:unspecified,performed,1,None,Фра-Діаволо,banner above; УТРО half has work; ВЕЧ. half appears to be a dash
 D_other,repertoire_1903-04_p018,Александринскій,26,2,split_labelled,s024:unspecified,performed,1,930 р. 14 к.,Снѣгурочка,
-D_other,repertoire_1903-04_p022,Мариинскій,18,2,split_labelled,s007:unspecified,performed,1,2839 р. 45 к.,Лебединое озеро,
-D_other,repertoire_1903-04_p025,Новый,2,2,split_labelled,s034:unspecified,performed,2,1170 р. 79 к.,Пустоцвѣтъ | У елки,
-D_other,repertoire_1904-05_p010,Мариинскій,7,2,split_labelled,s034:unspecified,performed,1,2892 р. 20 к.,Спящая красавица,
-D_other,repertoire_1904-05_p010,Мариинскій,31,2,split_labelled,s027:unspecified,performed,1,2886 р. 45 к.,Конекъ-Горбунокъ,
-C_content,repertoire_1904-05_p022,Михайловскій,9,1,single,"s032:morning,s033:evening",performed/no_performance,2/0,381 р. 40 к./None,L'acquitté | La gueule du loup. // ,
+D_halfdash,repertoire_1903-04_p025,Новый,1,2,split_labelled,s032:morning,performed,1,345 р. 20 к.,Женитьба Бѣлугина,evening half is a dash
 C_dark,repertoire_1905-06_p000,Михайловскій,1,1,dash,"s026:morning,s027:evening",no_performance/no_performance,0/0,None/None, // ,month header Сентябрь above row
 C_dark,repertoire_1905-06_p000,Михайловскій,4,1,dash,"s030:morning,s031:evening",no_performance/no_performance,0/0,None/None, // ,
 C_dark,repertoire_1905-06_p002,Михайловскій,11,1,dash,"s026:morning,s027:evening",no_performance/no_performance,0/0,None/None, // ,
 C_dark,repertoire_1905-06_p002,Михайловскій,18,1,dash,"s034:morning,s035:evening",no_performance/no_performance,0/0,None/None, // ,
-D_other,repertoire_1905-06_p013,Новый,6,2,split_labelled,s025:unspecified,performed,1,678 р. 60 к.,Искатели жемчуга,own УТРО/ВЕЧЕРЪ labels
-C_content,repertoire_1905-06_p021,Малый,27,1,single,"s033:morning,s034:evening",performed/performed,1/1,442 р. 76 к./723 р. 53 к.,На всякаго мудреца довольно простоты // Буря,
-D_other,repertoire_1905-06_p029,Новый,2,2,split_labelled,s031:unspecified,performed,1,1199 р. 33 к.,Корридорная система,
 C_dark,repertoire_1905-06_p035,Большой,2,1,banner_only,"s008:morning,s009:evening",no_performance/performed,0/0,None/None, // ,"only occasion line printed (Спектакль товарищества взаимопомощи Гвардіи, Арміи и"
 C_dark,repertoire_1905-06_p035,Малый,2,1,dash,"s020:morning,s021:evening",no_performance/no_performance,0/0,None/None, // ,
 C_dark,repertoire_1905-06_p035,Новый,2,1,dash,"s032:morning,s033:evening",no_performance/no_performance,0/0,None/None, // ,
@@ -119,14 +91,12 @@ C_dark,repertoire_1906-07_p035,Новый,5,1,dash,"s035:morning,s036:evening",n
 C_dark,repertoire_1906-07_p035,Новый,6,1,dash,"s041:morning,s042:evening",no_performance/no_performance,0/0,None/None, // ,
 C_dark,repertoire_1906-07_p035,Новый,7,1,dash,"s047:morning,s048:evening",no_performance/no_performance,0/0,None/None, // ,
 C_dark,repertoire_1906-07_p035,Новый,8,1,dash,"s053:morning,s054:evening",no_performance/no_performance,0/0,None/None, // ,
-D_other,repertoire_1907-08_p025,Малый,13,2,split_labelled,s023:unspecified,performed,1,1254 р. 35 к.,Молодежь,
 C_dark,repertoire_1907-08_p035,Новый,24,1,dash,"s013:morning,s014:evening",no_performance/no_performance,0/0,None/None, // ,
 C_dark,repertoire_1907-08_p037,Новый,9,1,dash,"s028:morning,s029:evening",no_performance/no_performance,0/0,None/None, // ,
 C_dark,repertoire_1907-08_p041,Новый,30,1,dash,"s025:morning,s026:evening",no_performance/no_performance,0/0,None/None, // ,
 C_dark,repertoire_1907-08_p045,Новый,20,1,dash,"s003:morning,s004:evening",no_performance/no_performance,0/0,None/None, // ,
 D_other,repertoire_1908-09_p009,Александринскій,12,2,split_labelled,s016:unspecified,performed,1,1835 р. 95 к.,Горячее сердце,УТРО/ВЕЧЕРЪ labels printed in this theater's cell
 C_dark,repertoire_1909-10_p001,Михайловскій,6,1,dash,"s019:morning,s020:evening",no_performance/no_performance,0/0,None/None, // ,
-D_other,repertoire_1909-10_p020,Большой,29,2,split_labelled,s003:unspecified,performed,1,2841 р. 91 к.,Коппелія,
 C_dark,repertoire_1909-10_p022,Новый,13,1,dash,"s019:morning,s020:evening",no_performance/no_performance,0/0,None/None, // ,
 C_dark,repertoire_1909-10_p028,Новый,3,1,dash,"s027:morning,s028:evening",no_performance/no_performance,0/0,None/None, // ,
 C_dark,repertoire_1909-10_p028,Новый,10,1,dash,"s035:morning,s036:evening",no_performance/no_performance,0/0,None/None, // ,

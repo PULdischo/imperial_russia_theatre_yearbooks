@@ -14402,3 +14402,18 @@ A random sample of eight initials-resolved mentions: Кшесинская →
 The dead genitive code was removed rather than left in place; the reasoning
 survives as the comment above `NAME_INITIALS`, because the collision is
 real even though it was not the blocker.
+
+## 2026-10-11 — column-structure read: rebuild after Stage A, counts and spot checks (issue #151 follow-up 15)
+
+```sql
+SELECT count(*) FROM raw.event_entry;   -- also raw.event_entry_performance, research.event, research.performance, research.work, research.person
+SELECT date_confidence, count(*) FROM research.event GROUP BY 1;
+SELECT e.event_id, e.date_text, e.time_of_day, e.receipts_text, v.date, v.date_confidence
+FROM raw.event_entry e JOIN research.event v USING (event_id) WHERE e.page_id = ? AND e.theater LIKE ? ORDER BY e.event_id;
+```
+
+Result: raw.event_entry 29,993 -> 29,991; raw.event_entry_performance 30,840 -> 30,833; research.event 32,826 -> 32,842;
+research.performance 30,839 -> 30,832; research.work 3,065 -> 3,064; research.person 3,225 unchanged; synthesized_gap 2,863 -> 2,881;
+verified 29,526 -> 29,554. Spot checks: 1904-05 p010 Мариинскій 31 Oct and 7 Nov each morning+evening with the figures printed there;
+1907-08 p025 Малый 6-14 Jan each carrying the figure printed on that row; 1902-03 p018 Александринскій 22/26/27/28 Dec morning+evening.
+Structure comparison after the fix: 134 -> 104 differing rows, C_content 9 -> 2, D_other 46 -> 22 (the remainder are the Stage B cells).
