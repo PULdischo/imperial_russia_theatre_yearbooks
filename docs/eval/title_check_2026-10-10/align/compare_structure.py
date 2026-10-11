@@ -57,13 +57,19 @@ def main():
     pages = sorted({r["page_id"] for _, r in reads})
     con = duckdb.connect(str(ROOT / "outputs/full_run/imperial_theaters.duckdb"), read_only=True)
     stored = defaultdict(list)  # (page, theater) -> [(label, event_id, time_of_day)]
-    # the tail of a spread was stored under its own page id when the page was photographed separately
-    ALIAS = {"repertoire_1890-91_p015": "repertoire_1890-91_pair014", "repertoire_1890-91_p023": "repertoire_1890-91_pair024"}
-    want = set(pages) | set(ALIAS)
-    for pid, th, dt, ev, tod in con.execute(
-        "select page_id, theater, date_text, event_id, time_of_day from raw.event_entry where page_id in (select unnest(?)) order by event_id",
+    # pages photographed separately were stored under their own page id; their dates belong to the printed spread
+    # image that carries them (1890-91: p015 = 28 Dec-2 Jan of pair014; p023 = 24-29 Mar of pair022, 30 Mar-12 Apr of pair024)
+    def alias(pid, date):
+        if pid == "repertoire_1890-91_p015":
+            return "repertoire_1890-91_pair014"
+        if pid == "repertoire_1890-91_p023":
+            return "repertoire_1890-91_pair022" if str(date) <= "1891-03-29" else "repertoire_1890-91_pair024"
+        return pid
+    want = set(pages) | {"repertoire_1890-91_p015", "repertoire_1890-91_p023"}
+    for pid, th, dt, ev, tod, du in con.execute(
+        "select page_id, theater, date_text, event_id, time_of_day, date_undate from raw.event_entry where page_id in (select unnest(?)) order by event_id",
         [sorted(want)]).fetchall():
-        stored[(ALIAS.get(pid, pid), theater(th))].append((norm_label(dt), ev, tod))
+        stored[(alias(pid, du), theater(th))].append((norm_label(dt), ev, tod))
     read = defaultdict(list)
     for fn, r in reads:
         try:

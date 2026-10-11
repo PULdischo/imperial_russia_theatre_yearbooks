@@ -4,33 +4,9 @@ repertoire_1890-91_pair004,Мариинскій,8,1,1,2,dash,"s041:morning,s042:
 repertoire_1890-91_pair004,Михайловскій,8,1,1,2,dash,"s045:morning,s046:evening",
 repertoire_1890-91_pair018,Александринскій,2,1,2,1,split_labelled,s002:unspecified,утро/веч labels printed once at right edge of row; rule runs across all theaters
 repertoire_1890-91_pair020,Малый,17,1,1,2,single,"s074:morning,s075:evening",
-repertoire_1890-91_pair024,Александринскій,24,1,1,2,dash,"s002:unspecified,s012:unspecified",
-repertoire_1890-91_pair024,Александринскій,25,1,1,2,dash,"s007:unspecified,s017:unspecified",
-repertoire_1890-91_pair024,Александринскій,26,1,,1,,s012:unspecified,
-repertoire_1890-91_pair024,Александринскій,28,1,1,2,single,"s022:unspecified,s028:unspecified",
-repertoire_1890-91_pair024,Александринскій,29,1,1,2,single,"s027:unspecified,s033:unspecified",
-repertoire_1890-91_pair024,Большой,24,1,1,2,single,"s004:unspecified,s014:unspecified",
-repertoire_1890-91_pair024,Большой,25,1,1,2,single,"s009:unspecified,s019:unspecified",
-repertoire_1890-91_pair024,Большой,26,1,,1,,s014:unspecified,
-repertoire_1890-91_pair024,Большой,27,1,2,3,split_labelled,"s019:unspecified,s024:morning,s025:evening","утро/веч labels printed at right of this cell; rule runs across Мариинскій, Алек"
-repertoire_1890-91_pair024,Большой,28,1,1,2,single,"s024:unspecified,s030:unspecified",
-repertoire_1890-91_pair024,Большой,29,1,1,2,single,"s029:unspecified,s035:unspecified",
-repertoire_1890-91_pair024,Малый,24,1,1,2,single,"s005:unspecified,s015:unspecified",
-repertoire_1890-91_pair024,Малый,25,1,1,2,single,"s010:unspecified,s020:unspecified",
-repertoire_1890-91_pair024,Малый,26,1,,1,,s015:unspecified,
-repertoire_1890-91_pair024,Малый,27,1,1,2,dash,"s020:unspecified,s026:unspecified","single undivided dash cell, no rule through it (checked at zoom)"
-repertoire_1890-91_pair024,Малый,28,1,1,2,single,"s025:unspecified,s031:unspecified",
-repertoire_1890-91_pair024,Малый,29,1,1,2,single,"s030:unspecified,s036:unspecified",
-repertoire_1890-91_pair024,Мариинскій,24,1,1,2,dash,"s001:unspecified,s011:unspecified",
-repertoire_1890-91_pair024,Мариинскій,25,1,1,2,dash,"s006:unspecified,s016:unspecified",
-repertoire_1890-91_pair024,Мариинскій,26,1,,1,,s011:unspecified,
-repertoire_1890-91_pair024,Мариинскій,28,1,1,2,single,"s021:unspecified,s027:unspecified",
-repertoire_1890-91_pair024,Мариинскій,29,1,1,2,single,"s026:unspecified,s032:unspecified",
-repertoire_1890-91_pair024,Михайловскій,24,1,1,2,dash,"s003:unspecified,s013:unspecified",
-repertoire_1890-91_pair024,Михайловскій,25,1,1,2,dash,"s008:unspecified,s018:unspecified",
-repertoire_1890-91_pair024,Михайловскій,26,1,,1,,s013:unspecified,
-repertoire_1890-91_pair024,Михайловскій,28,1,1,2,single,"s023:unspecified,s029:unspecified",
-repertoire_1890-91_pair024,Михайловскій,29,1,1,2,single,"s028:unspecified,s034:unspecified",
+repertoire_1890-91_pair024,Александринскій,27,1,2,1,split_labelled,s022:unspecified,утро: two works; вечеръ half dash
+repertoire_1890-91_pair024,Мариинскій,27,1,2,1,split_labelled,s021:unspecified,утро: Отелло; вечеръ half dash
+repertoire_1890-91_pair024,Михайловскій,27,1,2,1,split_labelled,s023:unspecified,утро half dash; вечеръ two works
 repertoire_1891-92_pair012,Большой,28,1,2,1,split_labelled,s098:unspecified,УТРО/ВЕЧ labels printed at the edges; lower half is a dash
 repertoire_1891-92_pair012,Малый,28,1,2,1,split_labelled,s105:unspecified,УТРО/ВЕЧ labels inside this cell; lower half is a dash
 repertoire_1891-92_pair012,Мариинскій,28,1,2,1,split_labelled,s092:unspecified,УТРО/ВЕЧ labels printed at the edges; lower half is a dash
