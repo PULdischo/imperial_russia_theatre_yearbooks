@@ -199,6 +199,41 @@ for d in rows:
         what = 'no date is printed for the event itself' if re.match(r'NO ', r['date_as_read'], flags=re.I) else 'agrees'
         d['repertoire_check'] = ((d['repertoire_check'] + '; ') if d['repertoire_check'] else '') + f"re-read blind on the review scan 2026-10-11: {what}"
 
+# Blind second read of the tiers of every section entry (first_read/tier_second_read/tier_comparison.csv).
+TIER2 = {(r['season'], r['name']): r for r in csv.DictReader(open(ROOT + '/first_read/tier_second_read/tier_comparison.csv', encoding='utf-8'))}
+# Both readers report the same fact; RG's rulings of 2026-10-10 make it core (designer on a ballet; ballet-orchestra player).
+UPGRADE = {('1891-92', 'Васильевъ, Василій Васильевичъ'): 'designer: sets for the ballet «Царь Кандавлъ»',
+           ('1891-92', 'Эзеръ, Карлъ Ѳедоровичъ'): 'solo cellist of the Moscow ballet orchestra',
+           ('1892-93', 'Дровинъ (Тробинъ), Антонъ-Карлъ'): 'in the ballet orchestra 1886-88',
+           ('1893-94', 'Помазанскій, Иванъ Александровичъ'): 'placed first in the ballet orchestra',
+           ('1894-95', 'Вейкманъ Іеронимъ (Hieronymus Weickmann)'): 'first viola of the St Petersburg ballet orchestra 1855-59'}
+# RG ruled on 2026-10-10 that theatre-school staff who did not teach dance, including honorary members of its
+# conference, are "mentions"; that covers these six (two were already "mentions").
+SCHOOL = {'Бостремъ': 'inspectress of the St Petersburg Theatre School', 'Маннъ': "honorary member of the St Petersburg Theatre School's conference",
+          'Боборыкинъ': "honorary member of the Moscow Theatre School's conference", 'Спиро': 'temporarily inspector of externs at the Moscow Theatre School (1862)',
+          'Ришардъ': 'chief supervisor at the St Petersburg Theatre School; daughter of a dancer', 'Орловъ, Иванъ': 'chief supervisor and acting assistant manager of the St Petersburg Theatre School'}
+OFFICE = ('Бегичевъ', 'Кистеръ', 'Правдинъ')        # still for RG: office over the theatres, or head of the school's drama classes
+for d in rows:
+    t = TIER2.get((d['season'], d['name_verbatim'])) if d['source_type'] == 'section' else None
+    d['tier_check'] = ''
+    if not t: continue
+    first = t['first_tier']
+    if (d['season'], d['name_verbatim']) in UPGRADE:
+        d['relevance'] = 'core'; d['tier_basis'] = 'RG ruling 2026-10-10 applied after the second read: ' + UPGRADE[(d['season'], d['name_verbatim'])]
+        d['tier_check'] = f"second read: core (first read: {first}); both report the same fact"
+    elif t['second_tier'] == first: d['tier_check'] = 'second read agrees'
+    elif any(k in d['name_verbatim'] for k in SCHOOL):
+        k = next(k for k in SCHOOL if k in d['name_verbatim'])
+        d['tier_check'] = f"second read: {t['second_tier']} (first read: {first}); school post, no ballet or dance named in the text"
+        d['relevance'] = 'mentions'; d['tier_basis'] = 'RG ruling 2026-10-10 (non-dance staff of the theatre school): ' + SCHOOL[k]
+    elif any(k in d['name_verbatim'] for k in OFFICE):
+        d['tier_check'] = f"second read: {t['second_tier']} — on office or school post alone, no ballet named in the text; tier left as first read pending RG"
+    else: d['tier_check'] = f"second read: {t['second_tier']} — {t['second_remark'][:160]}"
+    if not t['read_whole'].lower().startswith('yes'): d['tier_check'] += ' (entry cut off in the scan)'
+for d in rows:   # the same man's jubilee notice names only the opera orchestra; his last appearance was in a ballet bill
+    if d['season'] == '1908-09' and d['name_verbatim'].startswith('Ауэръ') and d['kind'] == 'jubilee' and d['relevance'] == 'none':
+        d['relevance'] = 'core'; d['tier_basis'] = 'same person as a core entry (1906-07 farewell); this notice itself names only the Russian opera orchestra'
+
 # --- see_also: other entries that look like the same person (surname + first initial where both print one) ---
 def _sur(d):
     n = d['name_verbatim']
@@ -244,7 +279,7 @@ for d in rows:                                           # a roster-only death o
 def key(d):
     m = re.search(r'\d+', d['printed_page']); return (d['season'], d['source_file'], int(m.group()) if m else 0)
 rows.sort(key=key)
-out_cols = ['source_type'] + COLS[:12] + ['tier_basis'] + COLS[12:] + ['see_also', 'date_check']
+out_cols = ['source_type'] + COLS[:12] + ['tier_basis'] + COLS[12:] + ['see_also', 'date_check', 'tier_check']
 for name, keep in (('jubilees_obituaries_all_entries.csv', lambda d: True), ('jubilees_obituaries_ballet_only.csv', lambda d: d['relevance'] in ('core', 'mentions', 'undecided'))):
     with open(os.path.join(ROOT, name), 'w', newline='', encoding='utf-8') as f:
         w = csv.DictWriter(f, out_cols, extrasaction='ignore'); w.writeheader(); w.writerows(dict(d, date_check=d.get('repertoire_check', '')) for d in rows if keep(d))

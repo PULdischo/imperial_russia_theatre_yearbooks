@@ -48,7 +48,20 @@ how much of the heading was copied (bracketed aliases, titles for names), except
 second read: Борншейнъ, Платонова Юлія Ѳедоровна, Пфейферъ Ѳедоръ. No death or jubilee date
 disagreed across the 316 entries where both readings give one.
 
-Not second-read: roles, evidence quotes, and the `none` verdicts themselves.
+**The tiers were then read a second time** (2026-10-11/12). Every one of the 347 section entries was
+re-read in full by a reader who was not shown the first verdict (`first_read/tier_second_read/`:
+brief, worklists, outputs, `tier_comparison.csv`). 332 verdicts agree. No entry the first read called
+`none` turned out to have ballet content in its text. The 15 differences are all about how to class
+a fact both readers saw: five moved to `core` under RG's rulings (a ballet set by Васильевъ В. В.;
+ballet-orchestra service by Эзеръ, Дровинъ, Помазанскій, Вейкманъ); four school posts moved to or stay
+at `mentions` under the school-staff ruling (Бостремъ, Маннъ, Боборыкинъ, Спиро; Ришардъ and Орловъ
+were there already); three await RG (Бегичевъ and Кистеръ, heads of the theatres with no ballet named;
+Правдинъ, head of the school's drama classes); Куликовъ's list of plays stays `mentions` on a comedy
+titled «Представленіе Эсмеральды въ провинціи», which the second reader took for a look-alike.
+The result for each entry is in the `tier_check` column. Three entries are cut off in the scan and
+tiered on what is visible (Панчинъ, Бларамбергъ, Лентовскій).
+
+Read once only: roles, the English glosses, and the six stand-alone articles.
 
 ## Notices from the Season Reviews
 
