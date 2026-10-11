@@ -535,7 +535,7 @@ def season_covers(first: str | None, last: str | None, season: str) -> bool | No
 
 
 def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
-                    lex: "Lexicon") -> tuple[str, int, str]:
+                    lex: "Lexicon", initials: str = "") -> tuple[str, int, str]:
     """Best candidate, its margin, and why. NEVER gates: a zero-scoring
     candidate set still returns the full list to the caller untouched.
 
@@ -592,6 +592,16 @@ def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
                 why.append("gender")
             else:
                 score -= 5
+        # The print's own disambiguator, like the ordinal: when it names
+        # initials, they are there to tell same-surname people apart.
+        if initials:
+            mine = initials_of(meta.get("display") or "")
+            if mine:
+                if mine.startswith(initials) or initials.startswith(mine):
+                    score += 7
+                    why.append("initials")
+                else:
+                    score -= 4
         cov = season_covers(meta.get("first_season"), meta.get("last_season"), season)
         if cov is True:
             score += 5
@@ -628,6 +638,37 @@ def is_sentence_initial(text: str, start: int) -> bool:
     return not before or bool(SENT_END.search(before + " "))
 
 
+# --------------------------------------------------------------- initials
+# A surname in -ова/-ева/-ина/-ына is a feminine NOMINATIVE or a masculine
+# GENITIVE: the genitive ending is -а, and on a stem in -овъ that spells
+# exactly the feminine form. The corpus is full of the second -- "музыка
+# А. К. Глазунова", "декорація академика М. И. Бочарова", "по рисункамъ
+# художника Е. П. Пономарева".
+#
+# A first attempt generated the masculine nominative and looked it up. That
+# was the wrong diagnosis and the code never fired once: `surname_forms`
+# already produces the feminine form from every roster `-овъ`, so the key
+# was in the lexicon all along. The mentions were not unmatched -- they were
+# AMBIGUOUS, tied across 2, 7 and 9 men of the same surname.
+#
+# What actually separates them is the thing the print puts right in front:
+# the initials. `Пономаревъ` has nine candidates and `Е. П.` picks Евгеній
+# Петровичъ out of them on its own.
+NAME_INITIALS = re.compile(r"((?:[А-ЯЀ-ЏІѲѴ]\.\s*){1,3})$")
+
+
+def initials_before(text: str, a: int) -> str:
+    """Initials printed immediately before a surname, as bare letters."""
+    m = NAME_INITIALS.search(text[max(0, a - 14):a])
+    return re.sub(r"[^А-ЯЀ-ЏІѲѴ]", "", m.group(1)) if m else ""
+
+
+def initials_of(display: str) -> str:
+    """Initials of a person's given names, from `Family, Имя Отчество`."""
+    _, _, given = (display or "").partition(",")
+    return "".join(w[0] for w in re.findall(r"[А-ЯЀ-ЏІѲѴ][\w.]*", given))
+
+
 def scan_block(text: str, block_type: str, lex: Lexicon,
                season: str = "", genre: str = "") -> tuple[list[dict], list[dict]]:
     """Mentions and unknown-name flags for one block of reflowed text."""
@@ -659,7 +700,8 @@ def scan_block(text: str, block_type: str, lex: Lexicon,
                 else:
                     ids = parents
         if kind == "person" and len(ids) > 1:
-            pick, margin, why = rank_candidates(ids, text[a:b], evidence, season, lex)
+            pick, margin, why = rank_candidates(ids, text[a:b], evidence, season,
+                                                lex, initials_before(text, a))
             # a decisive margin resolves; a tie leaves the candidate list standing
             if margin >= 4:
                 eid, method = pick, method + "+ranked"

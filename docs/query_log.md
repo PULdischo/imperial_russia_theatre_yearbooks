@@ -14355,3 +14355,50 @@ Result: raw.event_entry 29,995 -> 29,993; raw.event_entry_performance 30,844 -> 
 research.performance 30,843 -> 30,839; research.work 3,065 and research.person 3,225 unchanged. p012 Михайловскій: 11 events,
 15 Понед. 605 р. — к. ... 20 Суббота 2026 р. 50 к., 21 Воскр. 600 р. 50 к., all date_confidence verified. p018 Александринскій:
 16 events, 18 Суббота has no figure, 19-29 each carry the figure printed on that row, all verified. person_link 0 shift blocks.
+
+## 2026-10-11 — the genitive collision, and what actually fixed it (RG: "let's do this")
+
+RG confirmed the grammar: the genitive ending is `-а`, so a masculine stem
+in `-овъ` takes `-ова` — spelled identically to the feminine nominative.
+That much of the premise was right.
+
+**My first fix was aimed at the wrong thing and never fired once.** I
+generated the masculine nominative from a feminine-looking surface and
+looked it up. But `surname_forms` already produces `Глазунова` from every
+roster `Глазуновъ`, so the key was in the lexicon the whole time:
+
+```sql
+-- link_method of the four names' mentions, before any change
+```
+`bare` with an empty `entity_id` and `rank_reason = tie(margin=0)` — not
+*unmatched*, **ambiguous**. `Глазуновъ` has 2 candidates in the database,
+`Бочаровъ` 7, `Лукьяновъ` 7, `Пономаревъ` **9**.
+
+**What separates them is the thing the print puts right in front: the
+initials.** `Е. П. Пономарева` picks Евгеній Петровичъ out of nine on its
+own. So `rank_candidates` now scores initials the way it already scores the
+ordinal — both are the source's own disambiguators, printed precisely to
+tell same-surname people apart. +7 when they agree, −4 when they conflict.
+
+| | before | after |
+|---|---|---|
+| mentions resolved | 17,482 (64.0%) | **18,229 (66.7%)** |
+| person mentions joining `research.person` | 13,268 | **14,015** |
+| assertions with a performer | 1,558 | 1,572 |
+
+**1,205 mentions corpus-wide now resolve on an initials signal**, and the
+four target names land on the right men, checked rather than assumed:
+
+- `Глазунова` ×46 → **Глазуновъ, А. К.** (the composer)
+- `Бочарова` ×12 → **Бочаровъ 1-й, Михаилъ Ильичъ** (the scene painter)
+- `Пономарева` ×11 → **Пономаревъ, Евгеній Петровичъ** (the costume designer)
+- `Лукьянова` 0 of 4 — `бенефисъ г-на Лукьянова` prints no initials, so
+  there is no signal. Correctly still unresolved.
+
+A random sample of eight initials-resolved mentions: Кшесинская →
+Кшесинская, Матильда Феликсовна; Чайковскаго → Чайковскій, П. И.; Петипа →
+Петипа, Маріусъ Ивановичъ; Перро → Перро, Ж.
+
+The dead genitive code was removed rather than left in place; the reasoning
+survives as the comment above `NAME_INITIALS`, because the collision is
+real even though it was not the blocker.
