@@ -14301,3 +14301,43 @@ if the matcher read the construction. New bucket **G**.
 Two of these carry a *feminine* honorific on a masculine surname
 (`Лукьяновъ`, `Пономаревъ`) purely because the detector read the ending;
 their contexts are plainly masculine cast lists.
+
+## 2026-10-11 — Comedy-ballets (ком.-бал.): did ballet dancers perform in them, and which volumes are they in?
+
+```sql
+-- the 12 performances
+SELECT e.date, t.name, p.verbatim_title, p.verbatim_genre FROM research.performance p
+JOIN research.event e USING (event_id) JOIN research.theater t USING (theater_id)
+WHERE p.verbatim_genre ILIKE '%ком%бал%' ORDER BY 1;
+-- dancers credited in them
+SELECT e.page_id, e.family_name, e.credit_summary_text FROM raw.person_entry e
+WHERE e.page_id LIKE 'balletartists_%' AND e.credit_summary_text ILIKE '%Батюшкина дочка%';
+SELECT c.label, c.category_production_count, c.category_credit_count, count(*) FROM raw.person_entry_credit c
+JOIN raw.person_entry e USING (entry_id)
+WHERE e.page_id LIKE 'balletartists_1899-00_MSK%' AND c.label ILIKE '%драм%' GROUP BY ALL;
+SELECT block_id, text FROM raw.review_block
+WHERE block_id LIKE 'review_1899-00_MSK_all_p008__b00%' OR block_id LIKE 'review_1899-00_MSK_all_p009__b00%';
+```
+
+Result: 12 performances. Батюшкина дочка, Александринскій: 27 Jan, 10 and 21 Feb 1894; 15 Sep and 13 Oct 1894, 11 Apr 1895;
+22 Jan 1896. Мѣщанинъ во дворянствѣ, Moscow: 6 Jan 1900 (Большой), 7, 11, 18, 28 Jan 1900 (Новый). The two "комич. бал."
+Тщетная предосторожность (1911) are ordinary ballets. The SP ballet company lists name the dancers in Батюшкина дочка
+(printed "ком. Батюшкина дочка—въ бал. Своенравная жена", with roles): 14 dancers in 1893-94, 14 in 1894-95, 10 in 1895-96.
+No Moscow dancer's 1899-00 summary names Мѣщанинъ; 79 of 202 print an unnamed drama count ("въ 1 драмѣ—N" etc.), which
+does not identify the play. The 1899-00 Moscow review gives only the drama cast (учитель танцевъ—г. Васенинъ; no dancers).
+The review corpus has no SP drama review for 1893-96. Inventory (read-only): 1893-94, 1894-95, 1895-96 main volumes are
+held by Princeton; 1899-1900 is ILL (UIllinois, returned).
+
+## 2026-10-11 — Two list/Repertoire disagreements checked against the ballet reviews (G1 Фіаметта 1910-11, B1 Дочь Фараона 1904-05)
+
+```sql
+SELECT block_id, text FROM raw.review_block WHERE block_id LIKE 'review_1910-11_SP%' AND regexp_matches(text, 'аметт|биле|13-го февраля');
+SELECT block_id, text FROM raw.review_block WHERE block_id LIKE 'review_1904-05_SP%' AND regexp_matches(text, 'кордебалет|13-го февраля|Фараон');
+SELECT * FROM raw.event_entry WHERE page_id = 'repertoire_1904-05_p030' AND date_undate = '1905-02-13';
+SELECT * FROM research.production WHERE season = '1904-05' AND city = 'SP' AND list_title ILIKE '%Фараон%';
+```
+
+Result: G1: review_1910-11_SP_ballet_p006__b003 prints "2-е дѣйствіе «Фіаметты»", agreeing with the list against the
+Repertoire's "3-е д.". B1: review_1904-05_SP_ballet_p012__b004 says the corps-de-ballet benefit of 13 Feb 1905 was the 207th
+„Дочь Фараона“, agreeing with the list; the Repertoire event (Маріинскій evening, 8750 р. 70 к.) has the benefit heading and
+no works; research.production row has work_id NULL, n_matched_works 0.

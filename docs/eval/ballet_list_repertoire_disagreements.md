@@ -37,7 +37,7 @@ Sources: list page = `balletproductions_<season>_<city>_pNNN` (printed page); Re
 
 | # | Season, city | Ballet (list entry) | List prints | Repertoire prints | Checked |
 |---|---|---|---|---|---|
-| B1 | 1904-05 SP | Дочь Фараона, #7 (p. 138) | февраля 13 [1905] | 13 Feb, Маріинскій evening: only the heading "Бенефисъ кордебалетныхъ артистовъ и артистокъ." and 8750 р. 70 к., with no work titles (p030, p. 120) | #106 item 24 |
+| B1 | 1904-05 SP | Дочь Фараона, #7 (p. 138) | февраля 13 [1905] | 13 Feb, Маріинскій evening: only the heading "Бенефисъ кордебалетныхъ артистовъ и артистокъ." and 8750 р. 70 к., with no work titles (p030, p. 120) | #106 item 24. **Third source, 2026-10-11:** the 1904-05 SP ballet review (`review_1904-05_SP_ballet_p012__b004`) says that on 13 February, at the benefit of the corps de ballet, „Дочь Фараона“ was given for the 207th time (Кшесинская as Аспичія), and lists the dancers. List and review agree; the Repertoire cell simply omits the programme. The production stays unmatched in `research.production` until RG decides whether the research layer may supply a work from another source |
 
 ## C. Titles: both sources name the same performance but spell the title differently
 
@@ -175,7 +175,7 @@ The 1907-08 lists were loaded in #145, which added 7 Repertoire ballet events wi
 ### G. Excerpts: the list and the Repertoire name different acts of the same ballet on the same date
 | # | Season, city | Ballet (list entry) | List prints | Repertoire prints | Evidence in the yearbook |
 |---|---|---|---|---|---|
-| G1 | 1910-11 SP | Фіаметта, #23 (p. 65) | "Фіаметта. **2-е дѣйствіе** балета, соч. Сенъ-Леона, музыка Л. Минкуса. Исполненъ: 1911 г.—феваля 13. Всего—1 разъ." | 13 Feb 1911, Маріинскій, evening: "Юбилейный спектакль за 20-ти-лѣтнюю службу М. Ф. Кшесинской. 1)-е 1 д. бал. «Донъ-Кихотъ», 2) 3-е д. бал. «Пахита», 3) **3-е д.** бал. «Фіаметта»." 3592 р. 50 к. (p035, p. 36) | Same date, same ballet, one performance on each side; only the act number differs. Both printings are clear at 3-6x. Nothing else in the 1910-11 volume read so far says which act was given. |
+| G1 | 1910-11 SP | Фіаметта, #23 (p. 65) | "Фіаметта. **2-е дѣйствіе** балета, соч. Сенъ-Леона, музыка Л. Минкуса. Исполненъ: 1911 г.—феваля 13. Всего—1 разъ." | 13 Feb 1911, Маріинскій, evening: "Юбилейный спектакль за 20-ти-лѣтнюю службу М. Ф. Кшесинской. 1)-е 1 д. бал. «Донъ-Кихотъ», 2) 3-е д. бал. «Пахита», 3) **3-е д.** бал. «Фіаметта»." 3592 р. 50 к. (p035, p. 36) | Same date, same ballet, one performance on each side; only the act number differs. Both printings are clear at 3-6x. **Third source, 2026-10-11:** the 1910-11 SP ballet review (`review_1910-11_SP_ballet_p006__b003`) describes the jubilee bill as "1-е дѣйствіе «Донъ-Кихота», 3-й актъ «Пахиты» и 2-е дѣйствіе «Фіаметты»". It agrees with the list: act 2. The Repertoire's "3-е д." stands alone (likely a slip after the "3-е д." of Пахита printed just before it). Raw stays verbatim. |
 
 - Not a disagreement about the date: the list's month is printed "феваля" (no р), a print typo; the day and year agree with the Repertoire.
 - The Repertoire cell itself has a printer's transposition, "1)-е 1 д." for "1) 1-е д.".
