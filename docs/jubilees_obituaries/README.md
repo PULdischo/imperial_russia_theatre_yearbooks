@@ -121,7 +121,7 @@ these 1,755 annotated events against the catalogue in both directions.
 - **`repertoire_date_check.csv`** — each dated jubilee, farewell and memorial notice already in the
   catalogue against what the Repertoire prints that day. 58 are confirmed by an annotation naming the
   person on the same date (46 of them core ballet); the result is in the catalogue's
-  `repertoire_check` column. Where it is blank the Repertoire simply has no annotation that day
+  `date_check` column. Where it is blank the Repertoire simply has no annotation that day
   (the early seasons annotate little), which is not a contradiction.
 - **Two dates corrected from it.** Крутикова's farewell: the stored review text has 25 January 1901;
   the review page prints 23-го января (the typeface's 3 looks like a 5) and so does the Repertoire.
@@ -138,6 +138,11 @@ these 1,755 annotated events against the catalogue in both directions.
   («Лебединое озеро», act 3) and two institutional jubilees. The rest are drama, opera and
   French-troupe occasions, tier `none`.
 - The season-statistics footnotes were checked too: they name nothing the annotations do not.
+- **The 25 ballet-relevant review notices the Repertoire could not confirm by name** were then re-read
+  on the review scans by a reader who was not shown the date on file
+  (`first_read/review_date_recheck/`). All 25 agree. Five of them print no date for the event itself
+  (Гиллертъ's death, the departures of Кякштъ, Гримальди and Кшесинская, the Grand Duchess's death);
+  the catalogue already gives those as a season or a governing date.
 
 ## Review death lists
 

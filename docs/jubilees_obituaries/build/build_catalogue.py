@@ -191,6 +191,14 @@ for d in rows:
     if d['repertoire_check'].startswith('DATE DIFFERS') and 'Глазунов' in d['name_verbatim']:
         d['repertoire_check'] = d['repertoire_check'].replace('DATE DIFFERS', 'one day apart (the article prints «27-го января» for the celebration; the Repertoire and the ballet review have the performance on 28 January 1907)')
 
+# Review dates the Repertoire could not confirm, re-read blind on the review scans (first_read/review_date_recheck/).
+RECHK = {(r['page_id'], r['block'], r['name_in_catalogue']): r for r in csv.DictReader(open(ROOT + '/first_read/review_date_recheck/review_dates_blind_reread.csv', encoding='utf-8'))}
+for d in rows:
+    r = RECHK.get((d['source_file'], d['pdf_page'].replace('block ', ''), d['name_verbatim']))
+    if r:
+        what = 'no date is printed for the event itself' if re.match(r'NO ', r['date_as_read'], flags=re.I) else 'agrees'
+        d['repertoire_check'] = ((d['repertoire_check'] + '; ') if d['repertoire_check'] else '') + f"re-read blind on the review scan 2026-10-11: {what}"
+
 # --- see_also: other entries that look like the same person (surname + first initial where both print one) ---
 def _sur(d):
     n = d['name_verbatim']
@@ -236,10 +244,10 @@ for d in rows:                                           # a roster-only death o
 def key(d):
     m = re.search(r'\d+', d['printed_page']); return (d['season'], d['source_file'], int(m.group()) if m else 0)
 rows.sort(key=key)
-out_cols = ['source_type'] + COLS[:12] + ['tier_basis'] + COLS[12:] + ['see_also', 'repertoire_check']
+out_cols = ['source_type'] + COLS[:12] + ['tier_basis'] + COLS[12:] + ['see_also', 'date_check']
 for name, keep in (('jubilees_obituaries_all_entries.csv', lambda d: True), ('jubilees_obituaries_ballet_only.csv', lambda d: d['relevance'] in ('core', 'mentions', 'undecided'))):
     with open(os.path.join(ROOT, name), 'w', newline='', encoding='utf-8') as f:
-        w = csv.DictWriter(f, out_cols, extrasaction='ignore'); w.writeheader(); w.writerows(d for d in rows if keep(d))
+        w = csv.DictWriter(f, out_cols, extrasaction='ignore'); w.writeheader(); w.writerows(dict(d, date_check=d.get('repertoire_check', '')) for d in rows if keep(d))
 
 # mixed-script guard: no word may mix Cyrillic with Latin or Greek letters
 bad = set()
