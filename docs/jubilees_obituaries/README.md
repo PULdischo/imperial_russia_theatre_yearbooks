@@ -55,8 +55,9 @@ brief, worklists, outputs, `tier_comparison.csv`). 332 verdicts agree. No entry 
 a fact both readers saw: five moved to `core` under RG's rulings (a ballet set by Васильевъ В. В.;
 ballet-orchestra service by Эзеръ, Дровинъ, Помазанскій, Вейкманъ); four school posts moved to or stay
 at `mentions` under the school-staff ruling (Бостремъ, Маннъ, Боборыкинъ, Спиро; Ришардъ and Орловъ
-were there already); three await RG (Бегичевъ and Кистеръ, heads of the theatres with no ballet named;
-Правдинъ, head of the school's drama classes); Куликовъ's list of plays stays `mentions` on a comedy
+were there already); RG ruled on the rest on 2026-10-12 — posts that touched the ballet where the notice never names it:
+Кистеръ and Бегичевъ (heads of the theatres) `core`; Альбрехтъ (Inspector of Music) and Юмашевъ
+(assistant head of productions) `mentions`; Правдинъ (head of the school's drama classes) `none`; Куликовъ's list of plays stays `mentions` on a comedy
 titled «Представленіе Эсмеральды въ провинціи», which the second reader took for a look-alike.
 The result for each entry is in the `tier_check` column. Three entries are cut off in the scan and
 tiered on what is visible (Панчинъ, Бларамбергъ, Лентовскій).

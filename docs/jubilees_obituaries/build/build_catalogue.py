@@ -212,7 +212,13 @@ UPGRADE = {('1891-92', 'Васильевъ, Василій Васильевич�
 SCHOOL = {'Бостремъ': 'inspectress of the St Petersburg Theatre School', 'Маннъ': "honorary member of the St Petersburg Theatre School's conference",
           'Боборыкинъ': "honorary member of the Moscow Theatre School's conference", 'Спиро': 'temporarily inspector of externs at the Moscow Theatre School (1862)',
           'Ришардъ': 'chief supervisor at the St Petersburg Theatre School; daughter of a dancer', 'Орловъ, Иванъ': 'chief supervisor and acting assistant manager of the St Petersburg Theatre School'}
-OFFICE = ('Бегичевъ', 'Кистеръ', 'Правдинъ')        # still for RG: office over the theatres, or head of the school's drama classes
+# RG, 2026-10-12, on posts that touched the ballet where the notice itself never names ballet or dance.
+OFFICE_RULED = {('1893-94', 'Кистеръ'): ('core', 'head of the Imperial Theatres, 1875-81'),
+                ('1891-92', 'Бегичевъ'): ('core', 'manager of the Moscow Imperial Theatres, 1881-82'),
+                ('1893-94', 'Альбрехтъ, Евгеній'): ('mentions', 'Inspector of Music, in charge of all the St Petersburg orchestras'),
+                ('1908-09', 'Юмашевъ'): ('mentions', 'assistant head of productions, Moscow office, from 1904'),
+                ('1908-09', 'Правдинъ'): ('none', 'head of the drama classes at the theatre school')}
+OFFICE = ()
 for d in rows:
     t = TIER2.get((d['season'], d['name_verbatim'])) if d['source_type'] == 'section' else None
     d['tier_check'] = ''
@@ -230,6 +236,11 @@ for d in rows:
         d['tier_check'] = f"second read: {t['second_tier']} — on office or school post alone, no ballet named in the text; tier left as first read pending RG"
     else: d['tier_check'] = f"second read: {t['second_tier']} — {t['second_remark'][:160]}"
     if not t['read_whole'].lower().startswith('yes'): d['tier_check'] += ' (entry cut off in the scan)'
+    for (season, key), (tier, why) in OFFICE_RULED.items():
+        if d['season'] == season and d['name_verbatim'].startswith(key):
+            d['tier_check'] = f"second read: {t['second_tier']} (first read: {first}); post only, no ballet or dance named in the text"
+            d['relevance'] = tier; d['tier_basis'] = (f'RG ruling 2026-10-12: {why}' if tier != 'none' else '')
+            if tier == 'none': d['tier_check'] += f'; RG 2026-10-12: none ({why})'
 for d in rows:   # the same man's jubilee notice names only the opera orchestra; his last appearance was in a ballet bill
     if d['season'] == '1908-09' and d['name_verbatim'].startswith('Ауэръ') and d['kind'] == 'jubilee' and d['relevance'] == 'none':
         d['relevance'] = 'core'; d['tier_basis'] = 'same person as a core entry (1906-07 farewell); this notice itself names only the Russian opera orchestra'
