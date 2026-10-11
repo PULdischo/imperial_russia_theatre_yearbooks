@@ -22680,3 +22680,4 @@ before); `heading_path` is the printed staff post, "Артистки:" / "Арт
 (164 distinct values -> 53; 8,007 entries changed; none left blank). Only those two fields changed. Open content
 findings (not fixed): men's entries 78-82 missing from 1907-08 SP; Замбелли's shifted fields; a note stored as a
 person on 1899-00 SP p000; four Є-for-Ѳ surnames on 1902-03 MSK p005.
+- **#152 follow-up (2026-10-11): the 1907-08 SP "missing" men 78-82 are a print numbering jump, not missing dancers.** The uncropped original scan shows p. 25 beginning with "83. Христіансонъ" directly after p. 24's "77. Фокинъ"; the neighbouring seasons have nobody between those names, and the head-count is steady (82 / 83 / 80). Nothing to fix; logged in genuine_print_typos.md.

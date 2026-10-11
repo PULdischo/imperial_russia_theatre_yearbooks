@@ -56,8 +56,9 @@ rest on a single reading. Every such page was covered by the numbering and surna
 disagreed.
 
 ## Found on the way, NOT fixed (content, not headings)
-- **1907-08 SP: men's entries 78-82 are on no image** (p009 ends at 77; p010, a cropped strip, starts at 83).
-  Five dancers may be missing from the data.
+- ~~1907-08 SP: men's entries 78-82 missing~~ **RESOLVED 2026-10-11: not missing.** The printed numbering jumps from
+  77 (foot of p. 24) to 83 (top of p. 25); checked on the uncropped original scan and against the 1906-07 and
+  1908-09 lists. Logged in genuine_print_typos.md.
 - `1901-02_SP_p001` idx 17: the guest Замбелли, Карлотта is stored with list_number "Замбели" and family_name
   "Карлотта" (fields shifted).
 - `1899-00_SP_p000` idx 7: a note ("Прикомандированъ къ Монтіровочной части …") stored as a person.
