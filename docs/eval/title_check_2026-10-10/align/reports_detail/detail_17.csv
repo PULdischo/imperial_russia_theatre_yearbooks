@@ -1,0 +1,8 @@
+page_id,theater,date_label,subcell,label,receipts,lines,note
+repertoire_1903-04_p006,Александринскій,19,1,утро,789 р. 55 к.,"Спектакль для учащейся молодежи. | Венеціанскій купецъ (Шейлокъ), ком.",
+repertoire_1903-04_p006,Александринскій,19,2,вечеръ,1716 р. 64 к.,"Пустоцвѣтъ, ком.",labels УТРО./ВЕЧ. are printed at the left edge of the row beside the Mariinsky column; rule runs across this column between the two blocks
+repertoire_1903-04_p018,Александринскій,26,1,утро,930 р. 14 к.,"Снѣгурочка, весенняя сказка.",labels УТРО./ВЕЧ. are printed at the left edge of the row beside the Mariinsky column; rule runs across this column between the two blocks
+repertoire_1903-04_p018,Александринскій,26,2,вечеръ,1806 р. 32 к.,"Плоды просвѣщенія, ком.",
+repertoire_1905-06_p021,Малый,26,1,,442 р. 76 к.,"На всякаго мудреца довольно про-стоты, ком.",one undivided block
+repertoire_1905-06_p021,Малый,27,1,,723 р. 53 к.,"Буря, др.",one undivided block; no rule through this column although Большой and Новый columns are split утро/вечеръ
+repertoire_1905-06_p021,Малый,28,1,,,—,row 28 is not on this page: table ends with row 27 (page number 105 below); no row labelled 28 visible

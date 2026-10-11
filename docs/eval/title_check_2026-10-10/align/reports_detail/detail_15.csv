@@ -1,0 +1,10 @@
+page_id,theater,date_label,subcell,label,receipts,lines,note
+repertoire_1907-08_p025,Малый,6,1,,1318 р. 20 к.,"Ревизоръ, ком.",undivided block; no rule through Малый cell; утро/вечеръ labels printed only at left edge against Большой column
+repertoire_1908-09_p001,Мариинскій,5,1,,2226 р. 35 к.,"Русланъ и Людмила, оп.",
+repertoire_1908-09_p001,Мариинскій,6,1,,,—,dash only; no receipts
+repertoire_1898-99_p019,Новый,27,1,,389 р. 46 к.,"Севильскій цирюльникъ, ком. | Счастливый день, сц.","two stacked blocks divided by a rule; no утро/вечеръ label printed beside the Новый blocks (labels УТРО./ВЕЧ. sit only beside the Малый column); page photographed slightly tilted so Новый rules sit ~13px higher than the date-column rules"
+repertoire_1898-99_p019,Новый,27,2,,1414 р. 39 к.,"Риголетто, оп.",lower half of row; no label printed beside it
+repertoire_1899-00_p024,Александринскій,30,1,утро,508 р. 65 к.,"Недоросль, ком. | Воздушные замки, ком.",УТРО. label printed at left edge of row (beside Мариинскій column); rule runs across Александринскій cell
+repertoire_1899-00_p024,Александринскій,30,2,вечеръ,1650 р. 89 к.,"Накипь, ком.",ВЕЧ. label printed at left edge of row (beside Мариинскій column)
+repertoire_1900-01_p010,Александринскій,5,1,утро,274 р. 34 к.,"Повторение юбилейнаго спектакля въ память П. С. Мочалова.",УТРО. label printed at left edge of row (beside Мариинскій column); rule runs across Александринскій cell
+repertoire_1900-01_p010,Александринскій,5,2,вечеръ,1632 р. 96 к.,"Накипь, ком.",ВЕЧ. label printed at left edge of row (beside Мариинскій column)

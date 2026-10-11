@@ -78,10 +78,14 @@ def main():
     for f in sorted(glob.glob(str(HERE / "chunks_detail" / "detail_*.csv"))):
         for r in csv.DictReader(open(f, encoding="utf-8")):
             cells.append((Path(f).name.replace(".csv", ""), r["page_id"], r["theater"], r["date_label"]))
-    reads = defaultdict(list)
+    reads_by_file = defaultdict(lambda: defaultdict(list))   # cell -> report file -> sub-cell rows
     for f in sorted(glob.glob(str(HERE / "reports_detail" / "detail_*.csv"))):
         for r in csv.DictReader(open(f, encoding="utf-8")):
-            reads[(r["page_id"], th_key(r["theater"]), re.match(r"\s*(\d+)", r["date_label"]).group(1))].append(r)
+            reads_by_file[(r["page_id"], th_key(r["theater"]), re.match(r"\s*(\d+)", r["date_label"]).group(1))][Path(f).name].append(r)
+    reads = {k: v[sorted(v)[0]] for k, v in reads_by_file.items()}          # first read decides the verdict
+
+    def sig(rows):
+        return sorted((str(money(r["receipts"])), tuple(sorted({stem(x) for x in (r["lines"] or "").split("|") if stem(x)}))) for r in rows)
     out = []
     for chunk, pid, th, label in cells:
         day = re.match(r"\s*(\d+)", label).group(1)
@@ -131,6 +135,12 @@ def main():
             if sc["rc"] and not any(sc["rc"] == st["rc"] for st in sts):
                 hits = [h for h in page_figures(pid).get(sc["rc"], [])]
                 where.append(f"{sc['rct']} -> " + ("; ".join(f"{h[0]} '{h[1]}' {h[2][:5]}" for h in hits) if hits else "NOT ON PAGE"))
+        files = reads_by_file[(pid, th_key(th), day)]
+        agree = "single read"
+        if len(files) >= 2:
+            sigs = [sig(v) for _, v in sorted(files.items())]
+            agree = "reads agree" if all(x == sigs[0] for x in sigs[1:]) else "READS DISAGREE"
+        verdict = verdict + " | " + agree
         out.append((chunk, pid, th, label, verdict, n_p, n_s,
                     " // ".join(f"[{sc['label'] or '-'}] {sc['rct'] or '-'} :: {' | '.join(sc['lines'])[:70]}" for sc in subs),
                     " // ".join(f"{st['ev'].split('__')[-1]}:{st['tod']} {st['rct'] or '-'} :: {' | '.join(st['titles'])[:60]}" for st in sts),
