@@ -1,0 +1,8 @@
+page_id,theater,date_label,subcell,label,receipts,lines,note
+repertoire_1900-01_p010,Александринскій,5,1,утро,274 р. 34 к.,"Повтореніе юбилейнаго спектакля | въ память П. С. Мочалова.","УТРО label is printed once at the left edge of the row (beside Мариинскій column); rule between the two halves runs across the Александринскій cell"
+repertoire_1900-01_p010,Александринскій,5,2,вечеръ,1632 р. 96 к.,"Накипь, ком.","ВЕЧ. label printed at the left edge of the row (beside Мариинскій column)"
+repertoire_1898-99_p014,Александринскій,29,1,утро,853 р. 30 к.,"Джентльмэнъ, ком.","УТРО label printed once at the left edge of the row (beside Мариинскій column)"
+repertoire_1898-99_p014,Александринскій,29,2,вечеръ,1438 р. 71 к.,"Наталья Борисовна Шереметева, др. | Воробышекъ, ком.","ВЕЧ. label printed at the left edge of the row (beside Мариинскій column)"
+repertoire_1898-99_p014,Александринскій,30,1,,1647 р. — к.,"Борцы, ком.",
+repertoire_1898-99_p019,Новый,27,1,,389 р. 46 к.,"Севильскій цирюльникъ, ком. | Счастливый день, сц.","No label printed in the Новый column for this row; the УТРО/ВЕЧ. labels on this row sit at the left of the Малый column. Rule separates this half from the next"
+repertoire_1898-99_p019,Новый,27,2,,1414 р. 39 к.,"Риголетто, оп.","No label printed in the Новый column; lower half of the 27 row (the rule below it is the boundary to 28)"

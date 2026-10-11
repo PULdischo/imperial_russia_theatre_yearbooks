@@ -26,7 +26,7 @@ and the affected columns read row by row. Scripts: `compare_structure.py`, `tria
 3 theater fixes, 5 merges, 11 splits. Adds no work title or figure that is not already stored except one morning figure
 (1900-01 p026 МИХ 4, «625 р. 50 к.», two readers agreed). Net sessions 13 fewer, 10 more.
 
-## Stage B (adds content; each needs two agreeing blind reads before it is written)
+## Stage B (APPLIED 2026-10-11 by `apply_dropped_halves.py`: 17 sessions, each with 2-3 agreeing reads; see known_issues #151 follow-up 16)
 | cell | what the print has that the stored data lacks | reads |
 |---|---|---|
 | 1899-00 p014 АЛЕК 27/28 | 28 morning «Шутники, ком.» 445 р. 10 к.; the figure was attached to 27's «Женитьба Бѣлугина» (printed with no figure) | read + my own look |

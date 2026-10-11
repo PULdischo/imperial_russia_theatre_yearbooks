@@ -14417,3 +14417,16 @@ research.performance 30,839 -> 30,832; research.work 3,065 -> 3,064; research.pe
 verified 29,526 -> 29,554. Spot checks: 1904-05 p010 Мариинскій 31 Oct and 7 Nov each morning+evening with the figures printed there;
 1907-08 p025 Малый 6-14 Jan each carrying the figure printed on that row; 1902-03 p018 Александринскій 22/26/27/28 Dec morning+evening.
 Structure comparison after the fix: 134 -> 104 differing rows, C_content 9 -> 2, D_other 46 -> 22 (the remainder are the Stage B cells).
+
+## 2026-10-11 — Stage B (17 added half-performances): counts and the printed-season-totals check (issue #151 follow-up 16)
+
+```sql
+SELECT count(*) FROM raw.event_entry;  -- also raw.event_entry_performance, research.event, research.performance, research.work, research.person
+SELECT season, city, sessions_minus_printed, receipts_minus_printed_kopecks FROM research.season_stat_check ORDER BY 1, 2;   -- before and after
+```
+
+Result: raw.event_entry 29,991 -> 30,008; raw.event_entry_performance 30,833 -> 30,849; research.event 32,842 -> 32,859;
+research.performance 30,832 -> 30,848; research.work 3,064 and research.person 3,225 unchanged; date_confidence verified 29,554 -> 29,571.
+receipts_minus_printed (rub): 1898-99 Moscow -2,646.69 -> -1,232.30; 1898-99 SP +5,868 -> +7,515; 1899-00 SP -81.02 -> +1,569.87;
+1900-01 Moscow +4,431.81 -> +5,147.51; 1900-01 SP -10,394.71 -> -7,924.75; 1901-02 Moscow -3,401.24 -> -1,869.41; 1901-02 SP +9,954.53 -> +11,973.51;
+1903-04 SP -614.79 -> +2,908.16. Other city-seasons unchanged.
