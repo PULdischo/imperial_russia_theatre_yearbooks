@@ -1,0 +1,11 @@
+page_id,theater,date_label,subcell,label,receipts,lines,note
+repertoire_1898-99_p019,Новый,27,1,,389 р. 46 к.,Севильскій цирюльникъ, ком. | Счастливый день, сц.,"no утро/вечеръ label printed in the Новый column on this row; Малый column has утро/вечеръ labels for the same row; horizontal rule divides this block from the one below (skewed upward on the right of the page)"
+repertoire_1898-99_p019,Новый,27,2,,1414 р. 39 к.,"Риголетто, оп.","no label printed in the Новый column; the 27 row appears to hold two stacked blocks here (Малый has утро/вечеръ), the next block below (Василиса Мелентьева, 272 р. 18 к.) belongs to the 28 row"
+repertoire_1899-00_p014,Александринскій,28,1,,445 р. 10 к.,"Шутники, ком.",label утро printed at the left edge of the row in the Мариинскій column only; rule divides it from block below and runs across Александринскій
+repertoire_1899-00_p014,Александринскій,28,2,,1483 р. 25 к.,"Биронъ, ист. пьеса.",label вечеръ (ВЕЧ.) printed at the left edge of the row in the Мариинскій column only
+repertoire_1899-00_p024,Александринскій,30,1,,508 р. 65 к.,"Недоросль, ком. | Воздушные замки, ком.",label утро printed at the left edge of the row in the Мариинскій column only
+repertoire_1899-00_p024,Александринскій,30,2,,1650 р. 89 к.,"Накипь, ком.",label вечеръ (ВЕЧ.) printed at the left edge of the row in the Мариинскій column only
+repertoire_1899-00_p026,Александринскій,13,1,,789 р. 24 к.,"Борцы, ком.",label утро printed at the left edge of the row in the Мариинскій column only; rule divides it from block below
+repertoire_1899-00_p026,Александринскій,13,2,,1652 р. — к.,"Девятый валъ, др. | Шашки, шут.",label вечеръ printed at the left edge of the row in the Мариинскій column only; no kopeck figure after dash (printed as — к.)
+repertoire_1900-01_p006,Мариинскій,15,1,утро,2210 р 45 к.,"Фаустъ, оп.",no period printed after р in the receipts figure (2210 р 45 к.)
+repertoire_1900-01_p006,Мариинскій,15,2,вечеръ,2876 р. 70 к.,"Щелкунчикъ, бал. | Привалъ кавалеріи, бал.",label printed as ВЕЧ.

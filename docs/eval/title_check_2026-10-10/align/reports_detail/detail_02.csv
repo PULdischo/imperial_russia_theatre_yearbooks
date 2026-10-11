@@ -1,0 +1,11 @@
+page_id,theater,date_label,subcell,label,receipts,lines,note
+repertoire_1894-95_pair008,Малый,22,1,утро,334 р. 20 к.,"На порогѣ къ дѣлу, сц. | Вѣеръ, ком.",
+repertoire_1894-95_pair008,Малый,22,2,вечеръ,3353 р. 80 к.,"Бенефисъ г. Макшеева. | Горькая судьбина, др. | Повѣтріе, ком.-ш.",
+repertoire_1896-97_pair014,Большой,28,1,утро,1186 р. 41 к.,"Аида, оп.",УТРО label printed only once at the right edge of the row (beside Малый); rule below this block runs across Большой
+repertoire_1896-97_pair014,Большой,28,2,,,—,lower half is a dash; no вечеръ label printed for this half
+repertoire_1897-98_pair022,Мариинскій,22,1,утро,,Vorstellung zu wohlthätigen Zwecken. | 2-ter Akt (1-es Bild) aus der Oper Fidelio. | Vorspiel und Charfreitagszauber aus der Oper Parsifal. | Scenen aus der Op. Die lustigen Weiber von Windsor. | Concert-Abtheilung.,no receipts figure printed in the утро block
+repertoire_1897-98_pair022,Мариинскій,22,2,вечеръ,5785 р. 10 к.,"A basso Porto, Oper. | 3-ter Akt aus der Oper Die Walküre.",
+repertoire_1897-98_pair024,Александринскій,11,1,утро,,"Спектакль въ пользу Общества попеченія о слабосильныхъ и выздоравливающихъ. | Отъ преступленія къ преступленію, ш. | Собачкинъ, отрывъ. | Музыкальное отдѣленіе.",no receipts figure printed in the утро block
+repertoire_1897-98_pair024,Александринскій,11,2,вечеръ,,—,
+repertoire_1898-99_p014,Александринскій,29,1,утро,853 р. 30 к.,"Джентльмэнъ, ком.",утро/вечеръ labels printed only at the left edge (beside Мариинскій); rule runs through Александринскій
+repertoire_1898-99_p014,Александринскій,29,2,вечеръ,1438 р. 71 к.,"Наталья Борисовна Шереметева, др. | Воробышекъ, ком.",

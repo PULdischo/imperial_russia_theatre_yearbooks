@@ -1,0 +1,9 @@
+page_id,theater,date_label,subcell,label,receipts,lines,note
+repertoire_1904-05_p010,Мариинскій,31,1,утро,1870 р. 53 к.,"Пиковая дама, оп.",
+repertoire_1904-05_p010,Мариинскій,31,2,вечеръ,2886 р. 45 к.,"Конекъ-Горбунокъ, бал.",
+repertoire_1904-05_p022,Михайловскій,9,1,,381 р. 40 к.,"L'acquitté, com. nouv. | La gueule du loup., com.",undivided block spanning the whole row; no rule and no утро/вечеръ label printed in this column
+repertoire_1905-06_p013,Новый,6,1,утро,256 р. 14 к.,"Женитьба Бѣлугина, ком.",
+repertoire_1905-06_p013,Новый,6,2,вечеръ,678 р. 60 к.,"Искатели жемчуга, оп.",
+repertoire_1905-06_p021,Малый,27,1,,723 р. 53 к.,"Буря, др.",undivided block; no rule through this cell although the Большой and Новый cells are divided
+repertoire_1905-06_p029,Новый,2,1,утро,— р. — к.,"Чужое добро въ прокъ не идетъ, др.",receipts printed as dashes
+repertoire_1905-06_p029,Новый,2,2,вечеръ,1199 р. 33 к.,"Корридорная система, ком.",

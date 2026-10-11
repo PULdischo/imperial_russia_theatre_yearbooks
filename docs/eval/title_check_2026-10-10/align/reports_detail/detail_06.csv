@@ -1,0 +1,13 @@
+page_id,theater,date_label,subcell,label,receipts,lines,note
+repertoire_1900-01_p022,Александринскій,14,1,утро,,"Безплатный спектакль для воспитанниковъ учебныхъ заведеній. | Царь Борисъ, траг.",label printed only once at the row's left edge (in the Маріинскій column); no receipts figure printed in this sub-cell
+repertoire_1900-01_p022,Александринскій,14,2,вечеръ,1643 р. 92 к.,"Выгодное предпріятіе, ком.",label printed only once at the row's left edge (ВЕЧ. in the Маріинскій column)
+repertoire_1900-01_p026,Михайловскій,4,1,утро,625 р. 50 к.,"Спектакль для учащейся молодежи. | Le barbier de Séville, com.",label printed at the row's left edge (УТРО in the Маріинскій column)
+repertoire_1900-01_p026,Михайловскій,4,2,вечеръ,648 р. 85 к.,"Fidèle, com. | Le coup de fouet, vaud.",label printed at the row's left edge (ВЕЧЕРЪ in the Маріинскій column)
+repertoire_1900-01_p026,Михайловскій,7,1,утро,,"Le barbier de Seville, com.",no receipts figure printed in this sub-cell; row opens with a full-width banner across all theaters: Безплатные спектакли для воспитанниковъ столичныхъ учебныхъ заведеній. (italic; not repeated in lines); label at row's left edge
+repertoire_1900-01_p026,Михайловскій,7,2,вечеръ,1451 р. 88 к.,"Джентльмэнъ, ком.",label printed at the row's left edge (ВЕЧ.)
+repertoire_1900-01_p027,Новый,9,1,утро,715 р. 70 к.,"Снѣгурочка, весенняя сказка.",label printed at the row's left edge (УТРО in the Большой column)
+repertoire_1900-01_p027,Новый,9,2,вечеръ,1146 р. 36 к.,"Кашмирская старина, др.",label printed at the row's left edge (ВЕЧЕРЪ in the Большой column)
+repertoire_1901-02_p020,Александринскій,30,1,утро,1621 р. 83 к.,"Сонъ въ лѣтнюю ночь, ком.",label printed at the row's left edge (УТРО in the Маріинскій column)
+repertoire_1901-02_p020,Александринскій,30,2,вечеръ,2018 р. 98 к.,"Комета, эпизодъ.",label printed at the row's left edge (ВЕЧ.)
+repertoire_1901-02_p021,Малый,30,1,утро,636 р. 31 к.,"Лѣсъ, ком.",label printed at the row's left edge (УТРО in the Большой column)
+repertoire_1901-02_p021,Малый,30,2,вечеръ,1531 р. 83 к.,"Нефтяной фонтанъ, ком.",label printed at the row's left edge (ВЕЧ.)
