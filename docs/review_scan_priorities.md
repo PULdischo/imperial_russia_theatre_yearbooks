@@ -35,6 +35,20 @@ Princeton-held volumes can be checked by RG on the physical copy as well as thro
 ## 4. Already scanned and in the database (dance words can be mined at no cost)
 Opera or whole-theatre reviews already extracted (blocks with a ballet/dance word / blocks): 1890-91 SP (all) 28/313; 1892-93 SP 17/153; 1893-94 SP 10/133; 1894-95 Moscow 17/120, SP 9/108; 1899-00 Moscow (all) 14/74; 1900-01 Moscow 9/62; 1902-03 Moscow 3/66, SP 7/93; 1910-11 SP 3/79. Not in the database but scanned (PDFs exist): 1908-09 Opera SP and Moscow, 1912-13 Opera SP (check why). These can be read for named dancers and divertissements without any HathiTrust step. **Done 2026-10-09:** the dance passages of the ten city-seasons in the database were extracted into `docs/eval/review_dance_mentions_scanned_reviews.md` (39 substantive passages, including the reviews' own counts of mixed opera-ballet bills; the 1908-09 and 1912-13 opera PDFs are not in the database and were not covered).
 
+## 5. Follow-up, low priority: drama reviews for the comedy-ballets (RG, 2026-10-11)
+
+RG wants to scan the relevant drama-review pages if they say more about the comedy-ballets (ком.-бал.), which are in no
+Ballet Production list. Not urgent. Check the page on HathiTrust or the physical copy first; scan only if it adds detail.
+
+| Work | Performances | Volume | Held by | What we already have |
+|---|---|---|---|---|
+| Батюшкина дочка (Александринскій) | 27 Jan, 10 and 21 Feb 1894 | Vol. 4 (1893-94) | Princeton | Ballet company lists name the dancers and roles in the inserted ballet «Своенравная жена» (14 dancers) |
+| | 15 Sep, 13 Oct 1894; 11 Apr 1895 | Vol. 5 (1894-95) | Princeton | Same (14 dancers) |
+| | 22 Jan 1896 | Vol. 6 (1895-96) | Princeton | Same (10 dancers) |
+| Мѣщанинъ во дворянствѣ (Moscow) | 6 Jan 1900 (Большой); 7, 11, 18, 28 Jan 1900 (Новый) | Vol. 10 (1899-1900) | ILL UIllinois (returned) | Moscow review already scanned: drama cast only, no dancers named. Whether dancers took part is still open |
+
+Queries: `docs/query_log.md`, 2026-10-11.
+
 ## Caveats
 - Dance-page counts come from blind model readers and were checked by hand on the key pages only; treat them as a triage ranking, not data.
 - Season-by-season cost of the page-reading checks was 0.6-1.3 million tokens per city-season; a keyword triage on the HathiTrust text is untested.
