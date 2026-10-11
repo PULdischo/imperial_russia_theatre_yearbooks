@@ -14190,3 +14190,14 @@ Result: 628 productions in 19 seasons (none for 1905-06 or 1906-07). 2 have no w
 "феваля 13" and did not parse). 19 productions match more than one work. 2 of 2,374 list
 dates have no parsed date ("декабря 38", 1897-98; "феваля 13", 1910-11). 110 creators, 96
 with a QID; 14 without.
+
+## 2026-10-11 — Фіаметта SP 1910-11 after the research-layer date fix
+
+```sql
+SELECT p.season, p.city, p.list_title, w.canonical_title FROM research.production p LEFT JOIN research.work w USING (work_id)
+WHERE p.list_title = 'Фіаметта' AND p.season = '1910-11';
+SELECT season, city, list_title FROM research.production WHERE work_id IS NULL;
+```
+
+Result: the production now has the work Фіаметта. One production is left without a work:
+Дочь Фараона, SP 1904-05.

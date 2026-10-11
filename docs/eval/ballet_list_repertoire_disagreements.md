@@ -169,3 +169,13 @@ The 1907-08 lists were loaded in #145, which added 7 Repertoire ballet events wi
 
 ### Karmen (not a new disagreement; adds the list's evidence to RG's #135 ruling)
 `Карменъ, бал.` is printed at the Moscow Большой on the **morning of 16 Sep 1907** (736 р. 51 к.; read on the scan at full resolution, p003, p. 79; the evening is Конекъ-Горбунокъ, бал.) and on 28 Jan 1907. RG's #135 decision stands (stay as printed). New evidence from the 1907-08 list: the Moscow list gives Жизель on 30 Sep, 24 Oct and 6 Jan only (Всего—3) and has no entry or date for a ballet on 16 Sep, while the Moscow ballet review (folio 154) gives four Жизель dates, **16 Sep, 30 Sep, 24 Oct, 6 Jan**. So on 16 Sep the Repertoire's genre «бал.» agrees with the review that a ballet was given, the title conflicts (Карменъ vs Жизель), and the list records neither. Not resolvable from the yearbook alone.
+
+## Addendum 2026-10-11: Фіаметта, Petersburg 1910-11 (both scans read)
+
+### G. Excerpts: the list and the Repertoire name different acts of the same ballet on the same date
+| # | Season, city | Ballet (list entry) | List prints | Repertoire prints | Evidence in the yearbook |
+|---|---|---|---|---|---|
+| G1 | 1910-11 SP | Фіаметта, #23 (p. 65) | "Фіаметта. **2-е дѣйствіе** балета, соч. Сенъ-Леона, музыка Л. Минкуса. Исполненъ: 1911 г.—феваля 13. Всего—1 разъ." | 13 Feb 1911, Маріинскій, evening: "Юбилейный спектакль за 20-ти-лѣтнюю службу М. Ф. Кшесинской. 1)-е 1 д. бал. «Донъ-Кихотъ», 2) 3-е д. бал. «Пахита», 3) **3-е д.** бал. «Фіаметта»." 3592 р. 50 к. (p035, p. 36) | Same date, same ballet, one performance on each side; only the act number differs. Both printings are clear at 3-6x. Nothing else in the 1910-11 volume read so far says which act was given. |
+
+- Not a disagreement about the date: the list's month is printed "феваля" (no р), a print typo; the day and year agree with the Repertoire.
+- The Repertoire cell itself has a printer's transposition, "1)-е 1 д." for "1) 1-е д.".

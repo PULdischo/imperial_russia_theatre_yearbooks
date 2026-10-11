@@ -198,6 +198,17 @@ BALLET_LIST_TITLE_ALIASES = {
 }
 
 
+#: List dates whose printed month is a confirmed print typo, so the raw tier (which
+#: keeps the print verbatim) has no parsed date for them. The intended date is
+#: supplied here, in the research layer only (RG's rule for genuine print typos).
+#: production_performance_id -> (ISO date, what the scan prints).
+LIST_DATE_PRINT_TYPOS = {
+    "balletproductions_1910-11_SP_p001__e009__d001": (
+        "1911-02-13", "printed «Исполненъ: 1911 г.—феваля 13.» (no р; scan-checked 2026-10-11). "
+        "Фіаметта, SP 1910-11; the Repertoire prints the same bill on 13 February 1911"),
+}
+
+
 def ballet_list_matches(con: duckdb.DuckDBPyConnection) -> list:
     """Every (list date, Repertoire performance) pair that names the same ballet.
 
@@ -213,6 +224,15 @@ def ballet_list_matches(con: duckdb.DuckDBPyConnection) -> list:
         FROM raw.production_entry_performance p JOIN raw.production_entry e USING (production_entry_id)
         WHERE p.date IS NOT NULL
     """).fetchall()
+    for perf_id, (iso, _why) in LIST_DATE_PRINT_TYPOS.items():
+        row = con.execute("""
+            SELECT e.season, e.city, e.title, p.note, p.date
+            FROM raw.production_entry_performance p JOIN raw.production_entry e USING (production_entry_id)
+            WHERE p.production_performance_id = ?""", [perf_id]).fetchone()
+        if row is None:
+            print(f"  WARNING: LIST_DATE_PRINT_TYPOS: {perf_id} not found in raw.production_entry_performance")
+        elif row[4] is None:          # still unparsed in raw: supply the intended date
+            lst.append((row[0], row[1], row[2], iso, row[3]))
     rep = con.execute("""
         SELECT ae.city, coalesce(dc.corrected_date_undate, ae.date_undate) AS d, eep.event_id,
                wl.work_id, eep.performance_title, w.canonical_title, w.excerpt_of_work_id, pw.canonical_title
