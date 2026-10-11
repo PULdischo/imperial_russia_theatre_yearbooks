@@ -138,6 +138,7 @@ repertoire_1905-06_p000,Михайловскій,4,1,1,2,dash,"s030:morning,s031
 repertoire_1905-06_p002,Михайловскій,11,1,1,2,dash,"s026:morning,s027:evening",
 repertoire_1905-06_p002,Михайловскій,18,1,1,2,dash,"s034:morning,s035:evening",
 repertoire_1905-06_p013,Новый,6,1,2,1,split_labelled,s025:unspecified,own УТРО/ВЕЧЕРЪ labels
+repertoire_1905-06_p021,Малый,27,1,1,2,single,"s033:morning,s034:evening",
 repertoire_1905-06_p029,Новый,2,1,2,1,split_labelled,s031:unspecified,
 repertoire_1905-06_p035,Большой,2,1,1,2,banner_only,"s008:morning,s009:evening","only occasion line printed (Спектакль товарищества взаимопомощи Гвардіи, Арміи и"
 repertoire_1905-06_p035,Малый,2,1,1,2,dash,"s020:morning,s021:evening",
@@ -172,6 +173,9 @@ repertoire_1906-07_p035,Новый,5,1,1,2,dash,"s035:morning,s036:evening",
 repertoire_1906-07_p035,Новый,6,1,1,2,dash,"s041:morning,s042:evening",
 repertoire_1906-07_p035,Новый,7,1,1,2,dash,"s047:morning,s048:evening",
 repertoire_1906-07_p035,Новый,8,1,1,2,dash,"s053:morning,s054:evening",
+repertoire_1907-08_p025,Малый,13,1,2,1,split_labelled,s023:unspecified,
 repertoire_1907-08_p035,Новый,24,1,1,2,dash,"s013:morning,s014:evening",
 repertoire_1907-08_p037,Новый,9,1,1,2,dash,"s028:morning,s029:evening",
 repertoire_1907-08_p041,Новый,30,1,1,2,dash,"s025:morning,s026:evening",
+repertoire_1907-08_p045,Новый,20,1,1,2,dash,"s003:morning,s004:evening",
+repertoire_1908-09_p009,Александринскій,12,1,2,1,split_labelled,s016:unspecified,УТРО/ВЕЧЕРЪ labels printed in this theater's cell

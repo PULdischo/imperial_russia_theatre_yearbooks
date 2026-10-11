@@ -8,7 +8,7 @@ cannot see. Method and brief: `BRIEF_ALIGN.md`; crops: `outputs/title_check_2026
 first titles, 04-26 spreads then singles, 66 = 1890-91 pair008 re-read).
 
 ## State at the pause
-* **Reports written** (`reports/align_NN.csv`): see `ls reports`. In flight when paused: 35, 40, 41, 46-56 (they write their own
+* **Reports written** (`reports/align_NN.csv`): see `ls reports`. In flight when paused: 53-56 (they write their own
   reports when they finish; a report that is not on disk was not finished). **Never launched: 57-65.**
 * Each reader costs ~100-140k tokens per chunk (10 single pages or 4 spreads). 57-65 is nine more chunks, ~1.2M tokens.
 * `compare_structure.py` diffs all reports on disk against `raw.event_entry` -> `discrepancies.csv`, `discrepant_columns.csv`.
