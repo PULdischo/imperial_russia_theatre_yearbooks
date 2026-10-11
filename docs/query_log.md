@@ -14254,3 +14254,50 @@ two-block cells (fine), 3 genuine errors (F042 1899-00 p018 ALX 18 Dec, F266 189
 F354 1899-00 p012 MIH 21 Nov); the first and last each shift a whole theater column by one slot (14 and 8 sessions).
 Also: 261 stored morning/evening sessions have no works (mostly 1890-91 blank cells; not informative);
 488 sister-theater (MAR/ALX, BOL/MAL) split-count mismatches on 248 pages (too noisy to use).
+
+## 2026-10-11 — the unclassified worklist triaged (RG: "let's look at the 23 unclassified")
+
+Regenerating first dropped 14 names, every drop correct: 8 now resolve to
+the review-sourced people created yesterday, `Лопухина` to Лопухова, and
+**five — Баулина, Бѣляева, Захарова, Петровскій, Соколовскій — have zero
+mentions left**, because the shared-page bleed fix removed their blocks.
+Three of those five were unclassified; the bleed fix triaged them for free.
+
+That leaves 21, now all given a verdict from context.
+
+### The biggest class is not people at all: 4 names, 46 mentions
+
+A surname in `-ова` is a feminine nominative **or** a masculine genitive,
+and this corpus is full of "music by X" and "sets by X":
+
+| printed | the construction | who it really is |
+|---|---|---|
+| `Глазунова` ×17 | `музыка А. К. Глазунова` | **Glazunov** the composer — in the db as `Глазуновъ, А. К.` |
+| `Пономарева` ×14 | `по рисункамъ художника Е. П. Пономарева` | **Ponomarev** the costume designer — *not* the rosters' Сергѣй Ивановичъ; a missing designer |
+| `Бочарова` ×12 | `декорація академика М. И. Бочарова` | **Bocharov** the scene painter — in the db as `Бочаровъ 1-й, Михаилъ Ильичъ` |
+| `Лукьянова` ×3 | `бенефисъ г-на Лукьянова за 25-лѣтнюю службу` | a **man**, `г-нъ` governs it |
+
+No scan check is needed for these: the evidence is grammatical, not
+orthographic — an initial pair, or `художника` / `академика` / `г-на`
+immediately before. Two of the four would resolve to the right man today
+if the matcher read the construction. New bucket **G**.
+
+### The rest
+
+- **C, bleed (2 more):** `Полянская` — an alternate cast in «Кольцо любви»,
+  the same Krylov *féerie* that produced Харитонова and Зыбина;
+  `Юрьева` — in `Оставили службу: Орловская, Дмитріева, … Юрьева…`, the
+  personnel-news list, same bleed as Орловская.
+- **E, student (1):** `Кандаурова` — `танецъ «Ману» — г-жа Балдина и
+  **воспитанница** Кандаурова`. A school pupil, so absent from the company
+  roster by definition.
+- **D, probable dancers (14):** the Пѣшковъ family (plain, 1-й, 2-й, 3-й —
+  all in `гг.` lists), Лапшина, Фролова, Балашева, Литавкина 2-я,
+  Никифорова, Лукьяновъ, Пономаревъ, Вишневскій, Ильинъ, Леонтъевъ.
+  Marked **CONTEXT ONLY — NOT YET SCAN-CHECKED**, so
+  `build_review_persons.py` refuses them: its guard is on `scan_checked`,
+  not on the verdict.
+
+Two of these carry a *feminine* honorific on a masculine surname
+(`Лукьяновъ`, `Пономаревъ`) purely because the detector read the ending;
+their contexts are plainly masculine cast lists.
