@@ -14014,3 +14014,35 @@ typo, 2 retrospectives) and 5 are confirmed real current-season dancers.
 Tier A (Воскресенская, Барковская, Титова, Терентьева) is additionally
 corroborated: the 1905-06 Moscow p020 scan shows Титова, Барковская and
 Терентьева together in one `г-жи` list.
+
+## 2026-10-11 — the last two scan checks; bucket D closes at 9 of 16
+
+`Харитонова` and `Зыбина` (1892-93 Moscow) both check out as printed, and
+both are in the cast of **«Кольцо любви», феерія В. А. Крылова** — a drama
+cast (Яблочкина 2-я, Арбенинъ, Ленскій 2-й, Рыжевъ), continued from p006
+to p007. Not dancers. Bucket C.
+
+**All 12 scan checks are done.** Final disposition of the original 16:
+
+| leaves bucket D | why |
+|---|---|
+| Рождественская | 1912-13 **graduate** (the Спесивцева / Дубровская class) |
+| Петровскій | **drama-review bleed** above the ballet heading |
+| Кусковъ | **genuine print typo** for Кусовъ |
+| Шульгина | **retrospective** — «Наяда» 1843, Grisi and Perrot |
+| Лядова | **retrospective** — an older «Конекъ-горбунокъ» |
+| Харитонова, Зыбина | **féerie/drama cast**, «Кольцо любви» |
+
+**9 remain, all scan-confirmed real and current-season:** Воскресенская,
+Барковская, Титова, Терентьева (tier A — the 1905-06 Moscow p020 scan
+shows the last three together in one `г-жи` list), Галактіонова, Шеншина,
+Лопухина, Ячменевъ, Громовъ 1-й.
+
+Seven of sixteen were not what the hand-built worklist said they were,
+which is the argument for the scan pass rather than minting entities off
+the CSV.
+
+**One open question for RG:** Лопухина is confirmed as *printed*, but the
+database holds `Лопухова, Евгенія` (1901-02) and the 1903-04 context puts
+her among Трефилова and Виль. The print may be a slip for Лопухова rather
+than a separate woman. Mixed evidence, so not decided here.
