@@ -8,10 +8,11 @@ with the ballet-relevant ones pulled out.
 
 | File | What it is |
 |---|---|
-| `jubilees_obituaries_all_entries.csv` | Every entry: 353 person entries from the scanned sections and stand-alone articles (`source_type` = `section`), 94 notices from the Season Reviews (`review`), 101 roster-only death marks (`roster`), plus 28 section-heading and other-article rows. |
+| `jubilees_obituaries_all_entries.csv` | Every entry (698 rows, 651 of them person entries). `source_type` says where each comes from: `section` (353: the scanned sections and stand-alone articles), `review` (87 + 7 work milestones), `roster` (101 death marks), `repertoire` (112 + 10 institutional or event anniversaries). |
 | `jubilees_obituaries_ballet_only.csv` | The subset with `relevance` = `core` or `mentions`. |
 | `unscanned_worth_getting.md` | Jubilee, obituary and memorial items the Yearbooks contain that are not in the scans, ranked. |
 | `AUDIT_2026-10-10.md` | What has been verified, how far, and the known gaps. |
+| `repertoire_date_check.csv`, `repertoire_annotations_matched.csv` | The Repertoire's annotations against the catalogue, both directions. |
 | `roster_deaths_matched.csv` | Every roster death mark and whether the catalogue has the person. |
 | `review_deaths_matched.csv` | The reviews' death lists paired with obituaries and rosters. |
 | `first_read/` | The per-section first readings (A–H), the Season Review notices (`R_reviews.csv`), the contents-page listings (`T1`, `T2`) and the reader briefs. |
@@ -110,6 +111,33 @@ Printed date conflicts found, each read on the scans on both sides:
 25-го марта, twice); Всеволожскій (roster † 28 октября 1909, obituary † 29 октября);
 Константиновъ П. А. (ballet roster † 25 декабря 1906, orchestra roster † 27 декабря, same volume).
 The roster also supplies the year the obituary omits for Шенекерль (9 декабря 1895).
+
+## The Repertoire's annotations
+
+The Repertoire tables print a line above some performances: «Бенефисъ г-жи …», «Прощальный бенефисъ …»,
+«… за 25-ти-лѣтнюю службу», «Спектакль въ память …». `build/match_repertoire_annotations.py` checks
+these 1,755 annotated events against the catalogue in both directions.
+
+- **`repertoire_date_check.csv`** — each dated jubilee, farewell and memorial notice already in the
+  catalogue against what the Repertoire prints that day. 58 are confirmed by an annotation naming the
+  person on the same date (46 of them core ballet); the result is in the catalogue's
+  `repertoire_check` column. Where it is blank the Repertoire simply has no annotation that day
+  (the early seasons annotate little), which is not a contradiction.
+- **Two dates corrected from it.** Крутикова's farewell: the stored review text has 25 January 1901;
+  the review page prints 23-го января (the typeface's 3 looks like a 5) and so does the Repertoire.
+  Палечекъ's farewell: the review text has 14 February 1910; the Repertoire has 14 February 1911.
+- **`repertoire_annotations_matched.csv`** — the 172 annotations with jubilee, farewell or memorial
+  wording (Russian and French) and whether the catalogue already has the occasion. The 122 that it
+  did not are added with `source_type` = `repertoire`; for these `name_verbatim` is the annotation
+  itself, except on the ballet-relevant rows. New for ballet:
+  **Леньяни's farewell benefit** (28 Jan 1901, «Камарго»), **Трефилова's farewell performance**
+  (24 Jan 1910, «Лебединое озеро»; also in the 1909-10 season-stats notes) and the 25-year benefit
+  of the Mariinsky machinist-mechanic **Н. А. Бергеръ** (27 Dec 1905) — all three read on the
+  Repertoire scans. `mentions` where a ballet was on the bill: the opera singer Власовъ's farewell
+  («Жизель»), the Шаховской memorial (a comedy-ballet), the Чайковскій 10-year memorial in Moscow
+  («Лебединое озеро», act 3) and two institutional jubilees. The rest are drama, opera and
+  French-troupe occasions, tier `none`.
+- The season-statistics footnotes were checked too: they name nothing the annotations do not.
 
 ## Review death lists
 

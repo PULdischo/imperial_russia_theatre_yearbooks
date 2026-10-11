@@ -14089,3 +14089,18 @@ the CSV unchecked would have invented seven dancers.
 These are thin records by necessity — surname plus ordinal where printed,
 no first name or patronymic, because the reviews print none. They will not
 merge with a roster person later without new evidence.
+
+## 2026-10-11 — Repertoire annotations and season-stat notes against the jubilee/obituary catalogue
+
+```sql
+select e.event_id, e.page_id, e.printed_page_number, e.season, e.city, e.theater, e.date_undate, e.time_of_day, e.annotation,
+       string_agg(p.performance_title || coalesce(' (' || p.genre || ')', ''), '; ' order by p.performance_order) works
+from raw.event_entry e left join raw.event_entry_performance p using (event_id)
+where e.annotation is not null and trim(e.annotation) <> '' group by all order by e.season, e.date_undate, e.event_id;
+select season, footnote_no, text_verbatim from raw.season_stat_footnote;
+select season, note_no, text_verbatim from raw.season_stat_dated_note;
+select date_undate, theater, annotation from raw.event_entry
+where season = '1900-01' and city ilike 'Mos%' and date_undate between '1901-01-22' and '1901-01-26' and theater ilike 'Больш%';
+```
+
+Result: 1,755 annotated events (822 distinct annotations), saved as docs/jubilees_obituaries/build/repertoire_annotations.csv; 172 carry jubilee, farewell or memorial wording. 58 dated catalogue notices are confirmed by an annotation naming the person on the same date; 122 annotated occasions were not in the catalogue. The Bolshoi row for 23 Jan 1901 reads «Прощальный бенефисъ г-жи Крутиковой.» (the stored review text has 25 January; the review scan prints 23). Season-stat notes: none names an occasion the annotations lack; the 1909-10 notes give «24 января—прощальный спектакль балерины Трефиловой» and «11 января 1909 г.» for Кюи where the Repertoire has 11 Jan 1910.

@@ -141,6 +141,56 @@ for d in rows:
     c = ROSTER_CONFLICT.get((d['season'], d['name_verbatim']))
     if c and d['kind'] == 'obituary': d['notes'] = (d['notes'] + ' ' if d['notes'] else '') + '[SOURCE CONFLICT: ' + c + ']'
 
+# --- occasions printed in the Repertoire's annotations and found nowhere else ------------------------------
+# (repertoire_annotations_matched.csv, from build/match_repertoire_annotations.py). One row per season and annotation.
+REP_CORE = {'Леньяни': 'ballerina', 'Трефилов': 'ballerina', 'Бергера': 'machinist-mechanic (RG ruling 2026-10-10: machinists)'}
+REP_KIND = {'farewell': 'farewell', 'jubilee': 'jubilee', 'memorial': 'memorial_feature', 'for widow or family': 'memorial_feature',
+            'anniversary (institution, work or event)': 'other'}
+REP_NAME = {'Леньяни': 'г-жи Леньяни', 'Трефилов': 'балерины В. Трефиловой', 'Бергера': 'Н. А. Бергера', 'г. Власова': 'г. Власова',
+            'Шаховского': 'князя А. А. Шаховского', 'кончины П. И. Чайковскаго': 'П. И. Чайковскаго'}
+def rep_name(t):
+    """the person where it is one of the ballet-relevant rows; otherwise the annotation itself, as printed"""
+    return next((v for k, v in REP_NAME.items() if k in t), t.rstrip('.'))
+if os.path.exists(ROOT + '/repertoire_annotations_matched.csv'):
+    grp = {}
+    for r in csv.DictReader(open(ROOT + '/repertoire_annotations_matched.csv', encoding='utf-8')):
+        if not r['status'].startswith('NOT'): continue
+        grp.setdefault((r['season'], r['kind'], re.sub(r'\W+', '', r['annotation'].lower())), []).append(r)
+    for (season, kind, _), rs in grp.items():
+        r = rs[0]; works = '; '.join(dict.fromkeys(x['works'] for x in rs if x['works']))
+        core = next((why for k, why in REP_CORE.items() if k in r['annotation']), None)
+        ballet_on_bill = bool(re.search(r'\(бал|бал\.|ком\.-бал', works))
+        rel = 'core' if core else ('mentions' if ballet_on_bill else 'none')
+        basis = ('Repertoire annotation: ' + core) if core else ('a ballet was on the bill' if ballet_on_bill else '')
+        rows.append({'source_type': 'repertoire', 'season': season, 'source_file': '; '.join(dict.fromkeys(x['repertoire_page_id'] for x in rs)), 'pdf_page': '',
+                     'printed_page': '; '.join(dict.fromkeys(x['printed_page'] for x in rs if x['printed_page'])), 'kind': REP_KIND[kind],
+                     'name_verbatim': rep_name(r['annotation']), 'name_latin': '', 'role': '', 'troupe_city': f"{r['city']}, {r['theater']}",
+                     'dates': '; '.join(dict.fromkeys(x['date'] for x in rs)) + ' (Repertoire date, old style)', 'length': 'annotation in the Repertoire table',
+                     'relevance': rel, 'tier_basis': basis, 'evidence_verbatim': r['annotation'], 'evidence_english': '', 'author': '', 'portrait': 'no',
+                     'notes': ('Kind of occasion: ' + kind + '. ' if REP_KIND[kind] in ('other', 'memorial_feature') else '') + 'On the bill: ' + (works or 'not stated') + '.', 'see_also': ''})
+
+# What the Repertoire prints for each dated notice already in the catalogue (repertoire_date_check.csv).
+REPCHK = {}
+if os.path.exists(ROOT + '/repertoire_date_check.csv'):
+    for r in csv.DictReader(open(ROOT + '/repertoire_date_check.csv', encoding='utf-8')):
+        v = {'annotation names the person on that date': 'confirmed', 'person named on a DIFFERENT date': 'DATE DIFFERS',
+             'event annotated that date, person not named': 'not named', 'no annotated Repertoire event for that date': ''}[r['status']]
+        if v: REPCHK[(r['season'], r['name_in_catalogue'], r['dates_in_catalogue'])] = f"{v}: Repertoire {r['repertoire_date']}, {r['theater']}: «{r['annotation']}»"
+DATE_FIX = {   # the review's date as the database stores it, against the review scan and the Repertoire
+    ('1900-01', 'А. П. Крутикова'): ('23 Jan 1901', 'The database review text reads «25-го января»; the review page prints «23-го января» (scan read 2026-10-11; the typeface\'s 3 resembles a 5) and the Repertoire has the benefit on 23 January.'),
+    ('1910-11', 'О. О. Палечека'): ('14 Feb 1911', 'The review text reads «14 февраля 1910 г.»; the Repertoire has the farewell benefit on 14 February 1911, inside the season under review. Review scan not checked.'),
+}
+for d in rows:
+    d['repertoire_check'] = REPCHK.get((d['season'], d['name_verbatim'], d['dates']), '')
+    if d['source_type'] == 'repertoire': d['repertoire_check'] = 'source'
+    fx = DATE_FIX.get((d['season'], d['name_verbatim']))
+    if fx and d['source_type'] == 'review':
+        d['notes'] = (d['notes'] + ' ' if d['notes'] else '') + '[DATE CORRECTED from «' + d['dates'] + '»: ' + fx[1] + ']'; d['dates'] = fx[0]
+        d['repertoire_check'] = d['repertoire_check'].replace('DATE DIFFERS', 'confirmed after correction')
+    if d['repertoire_check'].startswith('DATE DIFFERS') and 'Верди' in d['name_verbatim']: d['repertoire_check'] = ''   # 1901 memorial concerts, not the 1911 remark
+    if d['repertoire_check'].startswith('DATE DIFFERS') and 'Глазунов' in d['name_verbatim']:
+        d['repertoire_check'] = d['repertoire_check'].replace('DATE DIFFERS', 'one day apart (the article prints «27-го января» for the celebration; the Repertoire and the ballet review have the performance on 28 January 1907)')
+
 # --- see_also: other entries that look like the same person (surname + first initial where both print one) ---
 def _sur(d):
     n = d['name_verbatim']
@@ -186,7 +236,7 @@ for d in rows:                                           # a roster-only death o
 def key(d):
     m = re.search(r'\d+', d['printed_page']); return (d['season'], d['source_file'], int(m.group()) if m else 0)
 rows.sort(key=key)
-out_cols = ['source_type'] + COLS[:12] + ['tier_basis'] + COLS[12:] + ['see_also']
+out_cols = ['source_type'] + COLS[:12] + ['tier_basis'] + COLS[12:] + ['see_also', 'repertoire_check']
 for name, keep in (('jubilees_obituaries_all_entries.csv', lambda d: True), ('jubilees_obituaries_ballet_only.csv', lambda d: d['relevance'] in ('core', 'mentions', 'undecided'))):
     with open(os.path.join(ROOT, name), 'w', newline='', encoding='utf-8') as f:
         w = csv.DictWriter(f, out_cols, extrasaction='ignore'); w.writeheader(); w.writerows(d for d in rows if keep(d))
