@@ -8,7 +8,7 @@ with the ballet-relevant ones pulled out.
 
 | File | What it is |
 |---|---|
-| `jubilees_obituaries_all_entries.csv` | Every entry (698 rows, 651 of them person entries). `source_type` says where each comes from: `section` (353: the scanned sections and stand-alone articles), `review` (87 + 7 work milestones), `roster` (101 death marks), `repertoire` (112 + 10 institutional or event anniversaries). |
+| `jubilees_obituaries_all_entries.csv` | Every entry (702 rows, 655 of them person entries). `source_type` says where each comes from: `section` (357: the scanned sections, stand-alone articles and other files), `review` (87 + 7 work milestones), `roster` (101 death marks), `repertoire` (112 + 10 institutional or event anniversaries). Check columns: `date_check`, `tier_check`. |
 | `jubilees_obituaries_ballet_only.csv` | The subset with `relevance` = `core` or `mentions`. |
 | `unscanned_worth_getting.md` | Jubilee, obituary and memorial items the Yearbooks contain that are not in the scans, ranked. |
 | `AUDIT_2026-10-10.md` | What has been verified, how far, and the known gaps. |
@@ -120,6 +120,11 @@ gives the orchestra for each, found by following the list's headings and numberi
 roster pages: 17 are in the opera-and-ballet orchestra, 6 in the Alexandrinsky, Mikhailovsky or Maly
 orchestras, 2 are librarians of the Central Music Library.
 
+The 52 core roster-only deaths were then re-read on the roster scans by readers who were not shown
+the stored date (`first_read/roster_death_recheck/`; 59 roster rows, plus three 1910-11 rows read by the
+main session). Every date agrees. Three names gain an ordinal the database row lacks (Ячменева 1-я,
+Брыкинъ 1-й, Александровъ 2-й). The `mentions` and `none` roster rows were not re-read.
+
 Printed date conflicts found, each read on the scans on both sides:
 Соловьевъ (roster † 4 октября 1890, obituary 9 октября); Мейеръ (roster † 28 марта 1893, obituary
 25-го марта, twice); Всеволожскій (roster † 28 октября 1909, obituary † 29 октября);
@@ -157,6 +162,19 @@ these 1,755 annotated events against the catalogue in both directions.
   (`first_read/review_date_recheck/`). All 25 agree. Five of them print no date for the event itself
   (Гиллертъ's death, the departures of Кякштъ, Гримальди and Кшесинская, the Grand Duchess's death);
   the catalogue already gives those as a season or a governing date.
+
+## Other files searched
+
+Read in full on 2026-10-12 for deaths, jubilees, farewells and commemorations
+(`first_read/other_files_search/`): the Theatre School reports for every season (95 pages), the two
+reports of the Society of Russian Dramatic Writers and Opera Composers, Bessel's memoir of
+Tchaikovsky (1896-97, Supplement 1) and Карнѣевъ's «Двѣ забытыя русскія танцовщицы» (1909, issue IV).
+The school reports are statistics and graduate lists and carry no such notices; the only deaths are
+daggers on Theatre-Literary Committee pages filed with them (Григоровичъ and Стороженко, already in
+the catalogue from the rosters, and Кирпичниковъ, added). The Society reports print no list of dead
+members. Three stand-alone pieces were added as `biographical_feature` (`first_read/K_other_files.csv`):
+Карнѣевъ's sketches of Н. К. Богданова and Е. И. Андреянова (`core`; a historical article marking no
+anniversary) and Bessel's memoir (`mentions`; it never names a ballet).
 
 ## Review death lists
 

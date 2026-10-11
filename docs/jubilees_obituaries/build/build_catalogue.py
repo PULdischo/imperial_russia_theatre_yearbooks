@@ -29,7 +29,7 @@ CORE_BY_RULING = {
 }
 
 rows = []
-for f in sorted(glob.glob(ROOT + '/first_read/[A-HJ]*.csv')):
+for f in sorted(glob.glob(ROOT + '/first_read/[A-HJK]*.csv')):
     for r in csv.reader(open(f, encoding='utf-8')):
         if r[0] == 'season': continue
         if len(r) == 18: r = r[:11] + r[12:]            # G: section-title row has one stray cell
@@ -244,6 +244,22 @@ for d in rows:
 for d in rows:   # the same man's jubilee notice names only the opera orchestra; his last appearance was in a ballet bill
     if d['season'] == '1908-09' and d['name_verbatim'].startswith('Ауэръ') and d['kind'] == 'jubilee' and d['relevance'] == 'none':
         d['relevance'] = 'core'; d['tier_basis'] = 'same person as a core entry (1906-07 farewell); this notice itself names only the Russian opera orchestra'
+
+# Roster death marks re-read on the roster scans (first_read/roster_death_recheck/); ordinals the database row lacks.
+ROSTER_ORDINAL = {'Ячменева, Марія Сергѣевна': 'Ячменева 1-я, Марія Сергѣевна', 'Брыкинъ, Николай Константиновичъ': 'Брыкинъ 1-й, Николай Константиновичъ',
+                  'Александровъ, Михаилъ Михайловичъ': 'Александровъ 2-й, Михаилъ Михайловичъ'}
+RR = collections.defaultdict(list) if 'collections' in globals() else None
+import collections as _c
+RR = _c.defaultdict(list)
+for r in csv.DictReader(open(ROOT + '/first_read/roster_death_recheck/roster_deaths_blind_reread.csv', encoding='utf-8')): RR[r['name_in_catalogue']].append(r)
+for d in rows:
+    if d['source_type'] != 'roster' or d['name_verbatim'] not in RR: continue
+    rr = RR[d['name_verbatim']]
+    blind = not any('not blind' in r['confidence'] for r in rr)
+    d['repertoire_check'] = ('re-read blind on the roster scan 2026-10-12: date agrees' if blind else 'read on the roster scan 2026-10-12 (not blind): date agrees') + (f' ({len(rr)} roster pages)' if len(rr) > 1 else '')
+    if d['name_verbatim'] in ROSTER_ORDINAL:
+        d['notes'] += f" The roster prints the ordinal, which the database row lacks: «{ROSTER_ORDINAL[d['name_verbatim']]}»."; d['name_verbatim'] = ROSTER_ORDINAL[d['name_verbatim']]
+    d['notes'] = d['notes'].replace('Name and date as stored in the database (raw.person_entry); not re-read for this catalogue.', 'Name and date as stored in the database (raw.person_entry), confirmed on the roster scan.')
 
 # --- see_also: other entries that look like the same person (surname + first initial where both print one) ---
 def _sur(d):

@@ -35,6 +35,30 @@ as ¼; other digits stored from those pages may deserve a look.
   read from the row; `build/roster_orchestra_lookup.csv` has the orchestra for those 25, worked out
   from the list headings and numbering.
 
+- Three ballet-roster rows lack the ordinal the page prints (read on the scans): «Ячменева 1-я» and
+  «Брыкинъ 1-й» (`balletartists_1900-01_MSK_p005`, `_p006`), «Александровъ 2-й» (`balletartists_1904-05_SP_p006`).
+- М. И. Петипа's service start is printed «14 мая 1847» in the 1909-10 SP ballet roster and «24 мая 1847 г.»
+  in the 1906-07 one (the second seen at overview scale only).
+- М. Ѳ. Козловъ's service start is printed «съ 16 декабря 1869 г.» in `musicians_1902-03_MSK_p000` and
+  «съ 1 сентября 1869 г.» in `musicians_1904-05_MSK_p000` (the 6 is weakly inked there).
+- `balletartists_1900-01_MSK`: the printed numbering jumps from 127 (Шебергъ) to 158 (Штихлингъ) in one column.
+- Deaths reprinted in a later volume's list, as printed: Ковалевскій († 8 іюня 1899) in 1899-00 and 1900-01;
+  Барановъ († 30 сентября 1899) and Краюшкинъ († 20 ноября 1898) in 1900-01; Козловъ († 5 ноября 1902) in
+  1902-03 and 1904-05.
+
+## Theatre School reports (scans)
+
+- `1893-94_TheaterSchoolReport.pdf` has three pages covering the ballet departments only; pages 2-3 are
+  partial-page crops with no folio.
+- `1904-05_TheaterSchoolReport.pdf` page 2 is a partial crop (Moscow ballet only); `1906-07` has the
+  St Petersburg school only.
+- `1899-00` p. 6, `1902-03` p. 4 and `1905-06` p. 4 of these files are the opening page of the
+  Theatre-Literary Committee list, not school-report pages.
+- 1894-95 (printed p. 378): Moscow drama placements are dated «съ 1-го сентября 1894 года» for the
+  spring-1895 graduates, probably a slip for 1895.
+- 1910-11 (printed p. 153), ballet side: the pupil Монаховъ, Евг. left at his own request; the graduate
+  Безкоровайная was not placed in the troupe because she was ill.
+
 ## Season statistics (`raw.season_stat_dated_note`)
 
 - 1909-10, note 4: «11 января 1909 г.—50-ти лѣтіе музык. дѣятельности Ц. А. Кюи»; the Repertoire has the
