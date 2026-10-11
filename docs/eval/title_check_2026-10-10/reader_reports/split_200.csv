@@ -1,0 +1,12 @@
+item,split,morning_first_line,evening_first_line,note
+F304,yes,Бѣдность не порокъ,Въ старые годы,
+F260,yes,Спящая красавица,Пиковая дама,split labels утро/веч. printed in the date header only; cell halves aligned via the other theater rows (26 утро column)
+F267,yes,Спящая красавица,Фаустъ,split labels утро/веч. printed in the date header only; page is slightly tilted
+F294,yes,Дѣвичій переполохъ,Перекати-поле,"утро/веч. labels printed inside the body cell only, not in the date header"
+F280,yes,Доходное мѣсто,Городъ упраздняется,"cell cut at the fold on the scan, but both halves labelled утро/веч. are visible"
+F262,yes,Гимнъ,Гимнъ,"banner above «Безплатные утренние спектакли для воспитанниковъ учебныхъ заведеній»; each half opens with Гимнъ (утро: then Горе отъ ума, ком.; вечеръ: then Жрица искусства, сц.)"
+F281,yes,Балъ-маскарадъ,Бенефисъ г. Манохина.,"evening half opens with a benefit line, then Приключенія Флика и Флока, бал."
+F285,yes,Гимнъ,Гимнъ,"утро: then Жизнь за Царя, оп.; вечеръ: then Приключенія Флика и Флока, бал."
+F297,yes,Хрущевскіе помѣщики,Ваалъ,"утро label printed «УТРО.», evening «ВЕЧ.»"
+F303,yes,Гимнъ,Гимнъ,"banner above (Безплатные утренние спектакли...); утро: Гимнъ then Коппелія, бал. then 2-е д. бал. Фіаметта; вечеръ: Гимнъ then Русалка, оп."
+F273,yes,Горе отъ ума,Отрава жизни,labels «УТРО.» / «ВЕЧ.»

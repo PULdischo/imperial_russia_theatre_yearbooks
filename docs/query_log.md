@@ -14237,3 +14237,20 @@ unchanged.
 
 That is two of the sixteen original bucket-D names — Кусковъ and Лопухина —
 that would have become phantom dancers without the scan.
+
+## 2026-10-11 — false-split sizing: stored-data signatures and the date-shift detector (issue #151 follow-up 13)
+
+```sql
+-- sample: every cell was read on the scan; no database query decides it. Stored-data side:
+-- python docs/eval/title_check_2026-10-10/detect_shift_candidates.py   (reads outputs/full_run/raw/repertoire_*.raw.json)
+-- DUP: consecutive sessions of the same theater on a page, same receipts_text (not '— к.') and same works list
+-- BANNER: session in ('morning','evening') with no works and a non-empty annotation
+```
+
+Result: 688 Repertoire page files scanned. DUP 6 pages (1892-93 pair012, 1893-94 pair006, 1893-94 pair016,
+1899-00 p012, 1910-11 p009, 1910-11 p041); BANNER 8 sessions on 7 pages (1899-00 p018 and p028, 1900-01 p020 x2,
+1904-05 p030, 1905-06 p033 and p035, 1909-10 p049). Scan check of 376 sampled split cells: 365 split, 8 unlabelled
+two-block cells (fine), 3 genuine errors (F042 1899-00 p018 ALX 18 Dec, F266 1891-92 pair012 ALX 18 Среда,
+F354 1899-00 p012 MIH 21 Nov); the first and last each shift a whole theater column by one slot (14 and 8 sessions).
+Also: 261 stored morning/evening sessions have no works (mostly 1890-91 blank cells; not informative);
+488 sister-theater (MAR/ALX, BOL/MAL) split-count mismatches on 248 pages (too noisy to use).

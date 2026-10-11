@@ -1,0 +1,13 @@
+item,split,morning_first_line,evening_first_line,note
+F347,yes,"Жизнь за Царя, оп.","Донъ-Кихотъ, бал.","labels утро / веч. printed rotated at left edge of the row"
+F376,yes,"Недоросль, ком.","Комета, эпизодъ","no label inside this column; the утро/веч. labels sit at the left edge of the row and the cell is divided by a rule with a separate receipt line in each half (398 р. 95 к. / 1890 р. 19 к.)"
+F313,yes,"Спектакль для учащейся молодежи. (banner-like first line; the next line is Недоросль, ком.)","Комета, эпизодъ","labels утро / веч. at left edge of row; утро half holds banner line then Недоросль, ком.; evening line printed «Комета, эпизодъ,»"
+F330,yes,"Гроза, др.","Галька, оп.","labels утро / вечеръ printed rotated inside the cell"
+F240,yes,"Жавотта, бал.","Сервилія, оп.","утро half holds two works (Жавотта, бал. | Пробужденіе Флоры, бал.); banner above the row: Безплатные спектакли для воспитанниковъ столичныхъ учебныхъ заведеній"
+F241,yes,"Ревизоръ, ком.","Дмитрій Самозванецъ и Василій Шуйскій, др. хрон.","labels at left edge of row; title wraps onto a second line; banner above the row: Безплатные спектакли для воспитанниковъ столичныхъ учебныхъ заведеній"
+F242,yes,"Les femmes savantes, com.","De 1 h., à 3 h., (genre printed «ccm.»)","labels at left edge of row; evening half also holds La petite amie, pièce.; banner above the row: Безплатные спектакли для воспитанниковъ столичныхъ учебныхъ заведеній"
+F243,yes,"Лебединое озеро, бал.","Жизнь за Царя, оп.","labels утро / веч. rotated at left of row; banner above the row: Безплатные спектакли для воспитанниковъ столичныхъ учебныхъ заведеній"
+F244,yes,"Мертвыя души, сц.","Женская логика, ком.","labels at left edge of row; evening half holds two works (Женская логика, ком. | Шашки, шут.); banner above the row"
+F245,yes,"Бронзовый конь, оп.","Старый закалъ, др.","labels at left edge of row; banner above the row"
+F323,yes,"Жизнь за Царя, оп.","Донъ-Кихотъ, бал.","labels утро / вечеръ rotated at left of row"
+F355,yes,"Спектакль для учащейся молодежи. (banner-like first line; the next line is Ревизоръ, ком.)","Миссъ Гоббсъ, ком.","labels at left edge of row; evening half holds two works (Миссъ Гоббсъ, ком. | Наканунѣ, возможный случай.)"

@@ -1,0 +1,10 @@
+item,split,morning_first_line,evening_first_line,note
+F278,yes,Недоросль,Свои люди—сочтемся,"labels утро / веч. printed as small rotated words at cell edge; each half has one work line (ком. / ком.; evening also lists Гувернантка)"
+F306,yes,Гимнъ,Гимнъ,"labels утро / вечеръ at cell edge; both halves open with Гимнъ then a work (morning: Гроза; evening: Родина | Троеженецъ)"
+F284,yes,Горе отъ ума,Гамлетъ,"labels утро / веч. at cell edge"
+F293,yes,Лѣсъ,Выгодное предпріятіе,"labels утро / вечеръ at cell edge; evening half holds two works (Выгодное предпріятіе | Призраки горя)"
+F129,yes,Гимнъ,Гимнъ,"day column 14 Четвергъ is a free-performance day (banner «Безплатные спектакли для воспитанниковъ учебныхъ заведеній»); column header carries утро / вечеръ and cell is two stacked halves separated by a rule; no per-cell label on this row. Morning: Гимнъ | Лебединое озеро; evening: Гимнъ | Отелло"
+F130,yes,Гимнъ,Гимнъ,"same banner day; two stacked halves, labels only in the header; no per-cell label. Morning: Гимнъ | Паяцы | Даита; evening: Гимнъ | Жизнь за Царя"
+F131,yes,Гимнъ,Гимнъ,"same banner day; two stacked halves, no per-cell label. Morning: Гимнъ(punctuation after it looks like a damaged period, printed as ;) | Свадьба Кречинскаго; evening: Гимнъ | Димитрій Самозванецъ"
+F132,yes,Гимнъ,Гимнъ,"same banner day; labels утро / вечеръ printed at cell edge. Morning: Гимнъ | Недоросль | Женитьба; evening: Гимнъ | Ревизоръ"
+F133,yes,Hymne,Hymne,"same banner day; titles printed in Latin letters (French); two stacked halves, no per-cell label. Morning: Hymne | Le Voyage de M-r Perrichon; evening: Hymne | Le Modèle | Permettez Madame!"
