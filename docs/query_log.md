@@ -14117,3 +14117,16 @@ Result: before, 28 raw fields on 17 pages (found by scanning the raw JSON); afte
 balletartists_1899-00_SP_p000 every entry is linked to the person of its own name after the
 stray row was removed (e007 Петровъ, e008 Усачевъ, e009 Ѳомичевъ, e010 Аистова …); the phantom
 person 37dd8b11 no longer exists. raw.person_entry 23,979 rows.
+
+## 2026-10-11 — «Равенскій боецъ»: how many printings, and is any Є left in the Repertoire?
+
+```sql
+SELECT p.performance_title, p.genre, e.theater, e.date_undate FROM raw.event_entry_performance p JOIN raw.event_entry e USING (event_id)
+WHERE p.performance_title ILIKE '%Равен%' ORDER BY 4;
+SELECT canonical_title, canonical_genre, appearance_count FROM entities.work WHERE canonical_title ILIKE 'Равенскій бо%';
+SELECT count(*) FROM raw.event_entry_performance WHERE performance_title SIMILAR TO '.*[Єє].*';
+```
+
+Result: 16 printings (Малый 1894; Михайловскій and Александринскій 1909-11); 15 were stored
+"боецъ" and one "боєцъ" (17 Feb 1910). After the fix: one work, 16 performances; 0 titles
+contain Є/є.
