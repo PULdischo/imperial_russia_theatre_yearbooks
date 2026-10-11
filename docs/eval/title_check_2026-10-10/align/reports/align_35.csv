@@ -1,0 +1,328 @@
+page_id,theater,date_label,subcells,kind,note
+repertoire_1903-04_p019,Большой,17 Среда.,1,single,
+repertoire_1903-04_p019,Малый,17 Среда.,1,single,
+repertoire_1903-04_p019,Новый,17 Среда.,1,single,"double bill, one cell"
+repertoire_1903-04_p019,Большой,18 Четвергъ.,1,single,
+repertoire_1903-04_p019,Малый,18 Четвергъ.,1,single,
+repertoire_1903-04_p019,Новый,18 Четвергъ.,1,single,
+repertoire_1903-04_p019,Большой,19 Пятница.,1,single,
+repertoire_1903-04_p019,Малый,19 Пятница.,1,single,
+repertoire_1903-04_p019,Новый,19 Пятница.,1,single,
+repertoire_1903-04_p019,Большой,20 Суббота.,1,banner_only,"benefit evening for the asylum for aged artists, musical-literary evening; no work title"
+repertoire_1903-04_p019,Малый,20 Суббота.,0,dash,
+repertoire_1903-04_p019,Новый,20 Суббота.,0,dash,
+repertoire_1903-04_p019,Большой,21 Воскрес.,1,single,
+repertoire_1903-04_p019,Малый,21 Воскрес.,1,single,"two works, one cell"
+repertoire_1903-04_p019,Новый,21 Воскрес.,2,split_labelled,
+repertoire_1903-04_p019,Большой,22 Понед.,1,single,
+repertoire_1903-04_p019,Малый,22 Понед.,1,single,
+repertoire_1903-04_p019,Новый,22 Понед.,1,single,
+repertoire_1903-04_p019,Большой,26 Пятница.,1,single,
+repertoire_1903-04_p019,Малый,26 Пятница.,1,single,
+repertoire_1903-04_p019,Новый,26 Пятница.,2,split_labelled,
+repertoire_1903-04_p019,Большой,27 Суббота.,2,split_labelled,evening half is a dash
+repertoire_1903-04_p019,Малый,27 Суббота.,0,dash,
+repertoire_1903-04_p019,Новый,27 Суббота.,2,split_labelled,evening half is a dash
+repertoire_1903-04_p019,Большой,28 Воскрес.,2,split_labelled,
+repertoire_1903-04_p019,Малый,28 Воскрес.,1,single,
+repertoire_1903-04_p019,Новый,28 Воскрес.,2,split_labelled,
+repertoire_1903-04_p019,Большой,29 Понед.,2,split_labelled,
+repertoire_1903-04_p019,Малый,29 Понед.,1,single,
+repertoire_1903-04_p019,Новый,29 Понед.,2,split_labelled,
+repertoire_1903-04_p019,Большой,30 Втор.,2,split_labelled,
+repertoire_1903-04_p019,Малый,30 Втор.,1,single,
+repertoire_1903-04_p019,Новый,30 Втор.,2,split_labelled,
+repertoire_1903-04_p020,Мариинскій,31 Среда.,2,split_labelled,
+repertoire_1903-04_p020,Александринскій,31 Среда.,2,split_labelled,labels printed once at left edge beside first theater; rule runs across
+repertoire_1903-04_p020,Михайловскій,31 Среда.,1,single,
+repertoire_1903-04_p020,Мариинскій,1 Четв.,1,single,
+repertoire_1903-04_p020,Александринскій,1 Четв.,1,single,
+repertoire_1903-04_p020,Михайловскій,1 Четв.,1,single,"three works, one cell"
+repertoire_1903-04_p020,Мариинскій,2 Пятница.,1,single,
+repertoire_1903-04_p020,Александринскій,2 Пятница.,1,single,
+repertoire_1903-04_p020,Михайловскій,2 Пятница.,1,single,
+repertoire_1903-04_p020,Мариинскій,3 Суббота.,0,dash,
+repertoire_1903-04_p020,Александринскій,3 Суббота.,0,dash,
+repertoire_1903-04_p020,Михайловскій,3 Суббота.,1,single,"occasion line (benefit) then two works, one cell"
+repertoire_1903-04_p020,Мариинскій,4 Воскрес.,2,split_labelled,
+repertoire_1903-04_p020,Александринскій,4 Воскрес.,2,split_labelled,labels printed once at left edge beside Мариинскій; rule runs across; first half has occasion line
+repertoire_1903-04_p020,Михайловскій,4 Воскрес.,1,single,
+repertoire_1903-04_p020,Мариинскій,6 Вторн.,1,single,
+repertoire_1903-04_p020,Александринскій,6 Вторн.,1,single,
+repertoire_1903-04_p020,Михайловскій,6 Вторн.,1,single,
+repertoire_1903-04_p020,Мариинскій,7 Среда.,1,single,
+repertoire_1903-04_p020,Александринскій,7 Среда.,1,single,
+repertoire_1903-04_p020,Михайловскій,7 Среда.,1,single,
+repertoire_1903-04_p020,Мариинскій,8 Четв.,1,single,
+repertoire_1903-04_p020,Александринскій,8 Четв.,1,single,
+repertoire_1903-04_p020,Михайловскій,8 Четв.,1,single,
+repertoire_1903-04_p020,Мариинскій,9 Пятница.,1,single,
+repertoire_1903-04_p020,Александринскій,9 Пятница.,1,single,
+repertoire_1903-04_p020,Михайловскій,9 Пятница.,1,single,
+repertoire_1903-04_p020,Мариинскій,10 Суббота.,1,single,cell prints occasion line and programme (romances and melodeclamation); no work title/genre
+repertoire_1903-04_p020,Александринскій,10 Суббота.,0,dash,
+repertoire_1903-04_p020,Михайловскій,10 Суббота.,1,single,"occasion line (benefit) then three works, one cell"
+repertoire_1903-04_p020,Мариинскій,11 Воскрес.,2,split_labelled,
+repertoire_1903-04_p020,Александринскій,11 Воскрес.,2,split_labelled,labels printed once at left edge beside Мариинскій; rule runs across; first half has occasion line
+repertoire_1903-04_p020,Михайловскій,11 Воскрес.,1,single,
+repertoire_1903-04_p021,Большой,31 Среда.,2,split_labelled,
+repertoire_1903-04_p021,Малый,31 Среда.,1,single,
+repertoire_1903-04_p021,Новый,31 Среда.,2,split_labelled,
+repertoire_1903-04_p021,Большой,1 Четвергъ.,1,single,
+repertoire_1903-04_p021,Малый,1 Четвергъ.,1,single,
+repertoire_1903-04_p021,Новый,1 Четвергъ.,2,split_labelled,
+repertoire_1903-04_p021,Большой,2 Пятница.,1,single,
+repertoire_1903-04_p021,Малый,2 Пятница.,1,single,
+repertoire_1903-04_p021,Новый,2 Пятница.,2,split_labelled,
+repertoire_1903-04_p021,Большой,3 Суббота.,0,dash,
+repertoire_1903-04_p021,Малый,3 Суббота.,0,dash,
+repertoire_1903-04_p021,Новый,3 Суббота.,2,split_labelled,evening half is a dash
+repertoire_1903-04_p021,Большой,4 Воскрес.,1,single,
+repertoire_1903-04_p021,Малый,4 Воскрес.,1,single,
+repertoire_1903-04_p021,Новый,4 Воскрес.,2,split_labelled,
+repertoire_1903-04_p021,Большой,6 Вторн.,1,single,
+repertoire_1903-04_p021,Малый,6 Вторн.,1,single,
+repertoire_1903-04_p021,Новый,6 Вторн.,2,split_labelled,
+repertoire_1903-04_p021,Большой,7 Среда.,1,single,
+repertoire_1903-04_p021,Малый,7 Среда.,1,single,
+repertoire_1903-04_p021,Новый,7 Среда.,1,single,
+repertoire_1903-04_p021,Большой,8 Четвергъ.,1,single,
+repertoire_1903-04_p021,Малый,8 Четвергъ.,1,single,
+repertoire_1903-04_p021,Новый,8 Четвергъ.,1,single,"two works, one cell"
+repertoire_1903-04_p021,Большой,9 Пятница.,1,single,
+repertoire_1903-04_p021,Малый,9 Пятница.,1,single,
+repertoire_1903-04_p021,Новый,9 Пятница.,1,single,
+repertoire_1903-04_p021,Большой,10 Суббота.,0,dash,
+repertoire_1903-04_p021,Малый,10 Суббота.,0,dash,
+repertoire_1903-04_p021,Новый,10 Суббота.,0,dash,
+repertoire_1903-04_p021,Большой,11 Воскрес.,1,single,
+repertoire_1903-04_p021,Малый,11 Воскрес.,1,single,
+repertoire_1903-04_p021,Новый,11 Воскрес.,2,split_labelled,
+repertoire_1903-04_p022,Мариинскій,12 Понед.,1,single,
+repertoire_1903-04_p022,Александринскій,12 Понед.,1,single,
+repertoire_1903-04_p022,Михайловскій,12 Понед.,1,single,
+repertoire_1903-04_p022,Мариинскій,13 Вторникъ.,1,single,
+repertoire_1903-04_p022,Александринскій,13 Вторникъ.,1,single,
+repertoire_1903-04_p022,Михайловскій,13 Вторникъ.,1,single,"three works, one cell"
+repertoire_1903-04_p022,Мариинскій,14 Среда.,1,single,
+repertoire_1903-04_p022,Александринскій,14 Среда.,1,single,
+repertoire_1903-04_p022,Михайловскій,14 Среда.,1,single,
+repertoire_1903-04_p022,Мариинскій,15 Четвергъ.,1,single,
+repertoire_1903-04_p022,Александринскій,15 Четвергъ.,1,single,"two works, one cell"
+repertoire_1903-04_p022,Михайловскій,15 Четвергъ.,1,single,"three works, one cell"
+repertoire_1903-04_p022,Мариинскій,16 Пятница.,1,single,
+repertoire_1903-04_p022,Александринскій,16 Пятница.,1,single,
+repertoire_1903-04_p022,Михайловскій,16 Пятница.,1,single,"three works, one cell"
+repertoire_1903-04_p022,Мариинскій,17 Суббота.,0,dash,
+repertoire_1903-04_p022,Александринскій,17 Суббота.,0,dash,
+repertoire_1903-04_p022,Михайловскій,17 Суббота.,1,single,"occasion line (benefit) then two works, one cell"
+repertoire_1903-04_p022,Мариинскій,18 Воскрес.,2,split_labelled,
+repertoire_1903-04_p022,Александринскій,18 Воскрес.,2,split_labelled,labels printed once at left edge beside Мариинскій; rule runs across
+repertoire_1903-04_p022,Михайловскій,18 Воскрес.,1,single,"two works, one cell"
+repertoire_1903-04_p022,Мариинскій,19 Понед.,1,single,
+repertoire_1903-04_p022,Александринскій,19 Понед.,1,single,
+repertoire_1903-04_p022,Михайловскій,19 Понед.,1,single,
+repertoire_1903-04_p022,Мариинскій,20 Втори.,1,single,
+repertoire_1903-04_p022,Александринскій,20 Втори.,1,single,
+repertoire_1903-04_p022,Михайловскій,20 Втори.,1,single,"two works, one cell"
+repertoire_1903-04_p022,Мариинскій,21 Среда.,1,single,
+repertoire_1903-04_p022,Александринскій,21 Среда.,1,single,
+repertoire_1903-04_p022,Михайловскій,21 Среда.,1,single,
+repertoire_1903-04_p022,Мариинскій,22 Четв.,1,single,
+repertoire_1903-04_p022,Александринскій,22 Четв.,1,single,
+repertoire_1903-04_p022,Михайловскій,22 Четв.,1,single,"two works, one cell"
+repertoire_1903-04_p022,Мариинскій,23 Пятница.,1,single,
+repertoire_1903-04_p022,Александринскій,23 Пятница.,1,single,
+repertoire_1903-04_p022,Михайловскій,23 Пятница.,1,single,"two works, one cell"
+repertoire_1903-04_p024,Мариинскій,24 Суббота.,1,single,occasion line (benefit for literary fund) followed by programme of items; one cell
+repertoire_1903-04_p024,Александринскій,24 Суббота.,0,dash,dash at top of cell
+repertoire_1903-04_p024,Михайловскій,24 Суббота.,1,single,"occasion line (benefit) then two works, one cell"
+repertoire_1903-04_p024,Мариинскій,25 Воскрес.,2,split_labelled,
+repertoire_1903-04_p024,Александринскій,25 Воскрес.,1,single,
+repertoire_1903-04_p024,Михайловскій,25 Воскрес.,2,split_labelled,
+repertoire_1903-04_p024,Мариинскій,26 Понед.,1,single,"occasion line (benefit of the chorus) then work, one cell; receipts 15071 р. — к."
+repertoire_1903-04_p024,Александринскій,26 Понед.,1,single,
+repertoire_1903-04_p024,Михайловскій,26 Понед.,1,single,
+repertoire_1903-04_p024,Мариинскій,27 Вторн.,1,single,
+repertoire_1903-04_p024,Александринскій,27 Вторн.,1,single,
+repertoire_1903-04_p024,Михайловскій,27 Вторн.,1,single,"two works, one cell"
+repertoire_1903-04_p024,Мариинскій,28 Среда.,1,single,
+repertoire_1903-04_p024,Александринскій,28 Среда.,1,single,
+repertoire_1903-04_p024,Михайловскій,28 Среда.,1,single,"two works, one cell"
+repertoire_1903-04_p024,Мариинскій,29 Четвергъ.,1,single,"prologue + opera, one cell"
+repertoire_1903-04_p024,Александринскій,29 Четвергъ.,1,single,
+repertoire_1903-04_p024,Михайловскій,29 Четвергъ.,1,single,"two works, one cell"
+repertoire_1903-04_p024,Мариинскій,30 Пятница.,1,single,
+repertoire_1903-04_p024,Александринскій,30 Пятница.,1,single,
+repertoire_1903-04_p024,Михайловскій,30 Пятница.,1,single,
+repertoire_1903-04_p024,Мариинскій,31 Суббота.,1,single,occasion line (Imperial Russian Theatrical Society patronage) then one opera; no receipts figure printed
+repertoire_1903-04_p024,Александринскій,31 Суббота.,0,dash,
+repertoire_1903-04_p024,Михайловскій,31 Суббота.,1,single,"two works, one cell"
+repertoire_1903-04_p024,Мариинскій,1 Воскрес.,2,split_labelled,утро Кармень; вечеръ half is a dash
+repertoire_1903-04_p024,Александринскій,1 Воскрес.,2,split_labelled,labels printed once at left edge beside Мариинскій; утро Эдипъ въ Колонѣ; second half is a dash
+repertoire_1903-04_p024,Михайловскій,1 Воскрес.,0,dash,single undivided dash; no rule
+repertoire_1903-04_p024,Мариинскій,2 Понед.,1,single,
+repertoire_1903-04_p024,Александринскій,2 Понед.,1,single,"occasion line (benefit) then work, one cell"
+repertoire_1903-04_p024,Михайловскій,2 Понед.,1,single,"occasion line (benefit) then two works, one cell"
+repertoire_1903-04_p024,Мариинскій,3 Вторникъ.,1,single,
+repertoire_1903-04_p024,Александринскій,3 Вторникъ.,1,single,
+repertoire_1903-04_p024,Михайловскій,3 Вторникъ.,1,single,"two works, one cell"
+repertoire_1903-04_p025,Большой,24 Суббота.,0,dash,dash is faint
+repertoire_1903-04_p025,Малый,24 Суббота.,0,dash,
+repertoire_1903-04_p025,Новый,24 Суббота.,0,dash,
+repertoire_1903-04_p025,Большой,25 Воскрес.,1,single,"occasion line (benefit) then work, one cell"
+repertoire_1903-04_p025,Малый,25 Воскрес.,1,single,
+repertoire_1903-04_p025,Новый,25 Воскрес.,2,split_labelled,
+repertoire_1903-04_p025,Большой,26 Понед.,1,single,
+repertoire_1903-04_p025,Малый,26 Понед.,1,single,
+repertoire_1903-04_p025,Новый,26 Понед.,1,single,"two works, one cell"
+repertoire_1903-04_p025,Большой,27 Вторникъ,1,single,
+repertoire_1903-04_p025,Малый,27 Вторникъ,1,single,
+repertoire_1903-04_p025,Новый,27 Вторникъ,1,single,
+repertoire_1903-04_p025,Большой,28 Среда.,1,single,
+repertoire_1903-04_p025,Малый,28 Среда.,1,single,
+repertoire_1903-04_p025,Новый,28 Среда.,1,single,
+repertoire_1903-04_p025,Большой,29 Четвергъ.,1,single,
+repertoire_1903-04_p025,Малый,29 Четвергъ.,1,single,
+repertoire_1903-04_p025,Новый,29 Четвергъ.,1,single,
+repertoire_1903-04_p025,Большой,30 Пятница.,1,single,
+repertoire_1903-04_p025,Малый,30 Пятница.,1,single,
+repertoire_1903-04_p025,Новый,30 Пятница.,1,single,
+repertoire_1903-04_p025,Большой,31 Суббота.,0,dash,"dash faint, partly obscured by show-through from reverse"
+repertoire_1903-04_p025,Малый,31 Суббота.,0,dash,
+repertoire_1903-04_p025,Новый,31 Суббота.,0,dash,
+repertoire_1903-04_p025,Большой,1 Воскрес.,0,dash,"dash faint, partly obscured by show-through from reverse"
+repertoire_1903-04_p025,Малый,1 Воскрес.,0,dash,
+repertoire_1903-04_p025,Новый,1 Воскрес.,2,split_labelled,evening half is a dash
+repertoire_1903-04_p025,Большой,2 Понед.,1,single,
+repertoire_1903-04_p025,Малый,2 Понед.,1,single,
+repertoire_1903-04_p025,Новый,2 Понед.,2,split_labelled,
+repertoire_1903-04_p025,Большой,3 Вторн.,1,single,
+repertoire_1903-04_p025,Малый,3 Вторн.,1,single,
+repertoire_1903-04_p025,Новый,3 Вторн.,2,split_labelled,
+repertoire_1903-04_p026,Мариинскій,4 Среда.,2,split_labelled,banner above
+repertoire_1903-04_p026,Александринскій,4 Среда.,2,split_labelled,labels printed once at left edge beside Мариинскій; rule runs across; banner above
+repertoire_1903-04_p026,Михайловскій,4 Среда.,2,split_labelled,labels printed once at left edge beside Мариинскій; rule runs across; banner above
+repertoire_1903-04_p026,Мариинскій,5 Четв.,2,split_labelled,
+repertoire_1903-04_p026,Александринскій,5 Четв.,2,split_labelled,labels printed once at left edge beside first theater; rule runs across
+repertoire_1903-04_p026,Михайловскій,5 Четв.,1,single,"two works, one cell"
+repertoire_1903-04_p026,Мариинскій,6 Пятница.,2,split_labelled,
+repertoire_1903-04_p026,Александринскій,6 Пятница.,2,split_labelled,labels printed once at left edge beside first theater; rule runs across
+repertoire_1903-04_p026,Михайловскій,6 Пятница.,1,single,"two works, one cell"
+repertoire_1903-04_p026,Мариинскій,7 Суббота.,2,split_labelled,
+repertoire_1903-04_p026,Александринскій,7 Суббота.,2,split_labelled,labels printed once at left edge beside first theater; rule runs across
+repertoire_1903-04_p026,Михайловскій,7 Суббота.,1,single,"occasion line (benefit) then two works, one cell"
+repertoire_1903-04_p026,Мариинскій,8 Воскрес.,2,split_labelled,
+repertoire_1903-04_p026,Александринскій,8 Воскрес.,2,split_labelled,labels printed once at left edge beside first theater; rule runs across
+repertoire_1903-04_p026,Михайловскій,8 Воскрес.,1,single,"two works, one cell"
+repertoire_1903-04_p026,Мариинскій,16 Понед.,1,banner_only,concert for the benefit of music-teacher societies and Red Cross; no work title
+repertoire_1903-04_p026,Александринскій,16 Понед.,1,single,
+repertoire_1903-04_p026,Михайловскій,16 Понед.,1,single,"two works, one cell"
+repertoire_1903-04_p026,Мариинскій,17 Вторн.,0,dash,
+repertoire_1903-04_p026,Александринскій,17 Вторн.,1,single,
+repertoire_1903-04_p026,Михайловскій,17 Вторн.,1,single,"occasion line (benefit) then work, one cell"
+repertoire_1903-04_p026,Мариинскій,18 Среда.,0,dash,
+repertoire_1903-04_p026,Александринскій,18 Среда.,1,single,
+repertoire_1903-04_p026,Михайловскій,18 Среда.,1,single,"two works, one cell"
+repertoire_1903-04_p026,Мариинскій,19 Четв.,0,dash,
+repertoire_1903-04_p026,Александринскій,19 Четв.,1,single,"two works, one cell"
+repertoire_1903-04_p026,Михайловскій,19 Четв.,1,single,
+repertoire_1903-04_p026,Мариинскій,20 Пятница.,0,dash,
+repertoire_1903-04_p026,Александринскій,20 Пятница.,1,single,"two works, one cell"
+repertoire_1903-04_p026,Михайловскій,20 Пятница.,1,single,
+repertoire_1903-04_p027,Большой,4 Среда.,2,split_labelled,banner above; evening half has occasion line (benefit) then work
+repertoire_1903-04_p027,Малый,4 Среда.,2,split_labelled,banner above; labels printed once at left edge beside Большой; rule runs across
+repertoire_1903-04_p027,Новый,4 Среда.,2,split_labelled,banner above; labels printed once at left edge beside Большой; rule runs across
+repertoire_1903-04_p027,Большой,5 Четвергъ.,2,split_labelled,
+repertoire_1903-04_p027,Малый,5 Четвергъ.,2,split_labelled,labels printed once at left edge beside first theater; rule runs across
+repertoire_1903-04_p027,Новый,5 Четвергъ.,2,split_labelled,labels printed once at left edge beside first theater; rule runs across
+repertoire_1903-04_p027,Большой,6 Пятница.,2,split_labelled,
+repertoire_1903-04_p027,Малый,6 Пятница.,2,split_labelled,labels printed once at left edge beside first theater; rule runs across
+repertoire_1903-04_p027,Новый,6 Пятница.,2,split_labelled,labels printed once at left edge beside first theater; rule runs across
+repertoire_1903-04_p027,Большой,7 Суббота.,2,split_labelled,
+repertoire_1903-04_p027,Малый,7 Суббота.,2,split_labelled,labels printed once at left edge beside first theater; rule runs across
+repertoire_1903-04_p027,Новый,7 Суббота.,2,split_labelled,labels printed once at left edge beside first theater; rule runs across
+repertoire_1903-04_p027,Большой,8 Воскрес.,2,split_labelled,
+repertoire_1903-04_p027,Малый,8 Воскрес.,2,split_labelled,labels printed once at left edge beside first theater; rule runs across
+repertoire_1903-04_p027,Новый,8 Воскрес.,2,split_labelled,labels printed once at left edge beside first theater; rule runs across
+repertoire_1903-04_p027,Большой,16 Понед.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p027,Малый,16 Понед.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p027,Новый,16 Понед.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p027,Большой,17 Вторникъ.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p027,Малый,17 Вторникъ.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p027,Новый,17 Вторникъ.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p027,Большой,18 Среда.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p027,Малый,18 Среда.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p027,Новый,18 Среда.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p027,Большой,19 Четвергъ.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p027,Малый,19 Четвергъ.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p027,Новый,19 Четвергъ.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p027,Большой,20 Пятница.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p027,Малый,20 Пятница.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p027,Новый,20 Пятница.,0,dash,"dash faint, with show-through from reverse"
+repertoire_1903-04_p028,Мариинскій,21 Суббота.,1,single,"occasion line (benefit, Red Cross) then list of excerpts; one cell; no receipts printed"
+repertoire_1903-04_p028,Александринскій,21 Суббота.,1,single,
+repertoire_1903-04_p028,Михайловскій,21 Суббота.,1,single,"occasion line (benefit) then work, one cell"
+repertoire_1903-04_p028,Мариинскій,22 Воскрес.,1,single,occasion line (benefit) then numbered programme; one cell; no receipts printed
+repertoire_1903-04_p028,Александринскій,22 Воскрес.,1,single,
+repertoire_1903-04_p028,Михайловскій,22 Воскрес.,2,split_labelled,
+repertoire_1903-04_p028,Мариинскій,23 Понед.,0,dash,
+repertoire_1903-04_p028,Александринскій,23 Понед.,1,single,"two works, one cell"
+repertoire_1903-04_p028,Михайловскій,23 Понед.,1,single,
+repertoire_1903-04_p028,Мариинскій,24 Вторникъ.,0,dash,
+repertoire_1903-04_p028,Александринскій,24 Вторникъ.,1,single,
+repertoire_1903-04_p028,Михайловскій,24 Вторникъ.,1,single,
+repertoire_1903-04_p028,Мариинскій,25 Среда.,0,dash,
+repertoire_1903-04_p028,Александринскій,25 Среда.,1,single,"two works, one cell"
+repertoire_1903-04_p028,Михайловскій,25 Среда.,1,single,"two works, one cell"
+repertoire_1903-04_p028,Мариинскій,26 Четвергъ.,0,dash,
+repertoire_1903-04_p028,Александринскій,26 Четвергъ.,1,single,
+repertoire_1903-04_p028,Михайловскій,26 Четвергъ.,1,single,
+repertoire_1903-04_p028,Мариинскій,27 Пятница.,0,dash,
+repertoire_1903-04_p028,Александринскій,27 Пятница.,1,single,
+repertoire_1903-04_p028,Михайловскій,27 Пятница.,1,single,
+repertoire_1903-04_p028,Мариинскій,7 Воскрес.,1,single,"occasion line (benefit, Evgenia community) then work, one cell; no receipts printed"
+repertoire_1903-04_p028,Александринскій,7 Воскрес.,1,single,
+repertoire_1903-04_p028,Михайловскій,7 Воскрес.,0,dash,
+repertoire_1903-04_p028,Мариинскій,8 Понед.,1,single,"occasion line (benefit) then work, one cell; no receipts printed"
+repertoire_1903-04_p028,Александринскій,8 Понед.,1,single,"two works, one cell"
+repertoire_1903-04_p028,Михайловскій,8 Понед.,0,dash,
+repertoire_1903-04_p028,Мариинскій,9 Вторникъ.,0,dash,
+repertoire_1903-04_p028,Александринскій,9 Вторникъ.,1,single,"two works, one cell"
+repertoire_1903-04_p028,Михайловскій,9 Вторникъ.,1,single,"occasion line (benefit, farewell) then work, one cell"
+repertoire_1903-04_p033,Большой,31 Среда.,1,single,
+repertoire_1903-04_p033,Малый,31 Среда.,1,single,
+repertoire_1903-04_p033,Новый,31 Среда.,2,split_labelled,
+repertoire_1903-04_p033,Большой,1 Четвергъ.,1,single,
+repertoire_1903-04_p033,Малый,1 Четвергъ.,1,single,
+repertoire_1903-04_p033,Новый,1 Четвергъ.,2,split_labelled,
+repertoire_1903-04_p033,Большой,2 Пятница.,1,single,
+repertoire_1903-04_p033,Малый,2 Пятница.,1,single,
+repertoire_1903-04_p033,Новый,2 Пятница.,2,split_labelled,
+repertoire_1903-04_p033,Большой,3 Суббота.,0,dash,dash faint
+repertoire_1903-04_p033,Малый,3 Суббота.,0,dash,dash faint
+repertoire_1903-04_p033,Новый,3 Суббота.,2,split_labelled,evening half is a dash
+repertoire_1903-04_p033,Большой,4 Воскрес.,1,single,
+repertoire_1903-04_p033,Малый,4 Воскрес.,1,single,
+repertoire_1903-04_p033,Новый,4 Воскрес.,2,split_labelled,
+repertoire_1903-04_p033,Большой,5 Понед.,1,single,
+repertoire_1903-04_p033,Малый,5 Понед.,1,single,
+repertoire_1903-04_p033,Новый,5 Понед.,1,single,
+repertoire_1903-04_p033,Большой,6 Втор.,1,single,
+repertoire_1903-04_p033,Малый,6 Втор.,1,single,
+repertoire_1903-04_p033,Новый,6 Втор.,1,single,"two works, one cell"
+repertoire_1903-04_p033,Большой,7 Среда.,1,single,
+repertoire_1903-04_p033,Малый,7 Среда.,1,single,
+repertoire_1903-04_p033,Новый,7 Среда.,1,single,
+repertoire_1903-04_p033,Большой,8 Четв.,1,single,
+repertoire_1903-04_p033,Малый,8 Четв.,1,single,
+repertoire_1903-04_p033,Новый,8 Четв.,1,single,"two works, one cell"
+repertoire_1903-04_p033,Большой,9 Пятница.,1,single,
+repertoire_1903-04_p033,Малый,9 Пятница.,1,single,
+repertoire_1903-04_p033,Новый,9 Пятница.,1,single,"two works, one cell"
+repertoire_1903-04_p033,Большой,10 Суббота.,0,dash,
+repertoire_1903-04_p033,Малый,10 Суббота.,0,dash,
+repertoire_1903-04_p033,Новый,10 Суббота.,0,dash,
+repertoire_1903-04_p033,Большой,11 Воскрес.,1,single,
+repertoire_1903-04_p033,Малый,11 Воскрес.,1,single,
+repertoire_1903-04_p033,Новый,11 Воскрес.,2,split_labelled,

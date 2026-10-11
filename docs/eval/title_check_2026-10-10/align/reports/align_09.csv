@@ -1,0 +1,396 @@
+page_id,theater,date_label,subcells,kind,note
+repertoire_1892-93_pair010,Мариинскій,13 Пят.,1,single,
+repertoire_1892-93_pair010,Александринскій,13 Пят.,1,single,
+repertoire_1892-93_pair010,Михайловскій,13 Пят.,1,single,
+repertoire_1892-93_pair010,Большой,13 Пят.,1,single,
+repertoire_1892-93_pair010,Малый,13 Пят.,1,single,
+repertoire_1892-93_pair010,Мариинскій,14 Суббота,2,split_labelled,banner above; labels УТРО/ВЕЧ printed at edge of row beside Малый; lower half dash
+repertoire_1892-93_pair010,Александринскій,14 Суббота,2,split_labelled,banner above; lower half dash
+repertoire_1892-93_pair010,Михайловскій,14 Суббота,2,split_labelled,banner above; lower half has own Гимнъ + works
+repertoire_1892-93_pair010,Большой,14 Суббота,2,split_labelled,banner above; lower half dash
+repertoire_1892-93_pair010,Малый,14 Суббота,2,split_labelled,banner above; lower half dash
+repertoire_1892-93_pair010,Мариинскій,15 Воскрес.,1,single,
+repertoire_1892-93_pair010,Александринскій,15 Воскрес.,2,split_labelled,УТРО/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair010,Михайловскій,15 Воскрес.,1,single,
+repertoire_1892-93_pair010,Большой,15 Воскрес.,1,single,
+repertoire_1892-93_pair010,Малый,15 Воскрес.,1,single,
+repertoire_1892-93_pair010,Мариинскій,16 Понед.,1,single,
+repertoire_1892-93_pair010,Александринскій,16 Понед.,1,single,
+repertoire_1892-93_pair010,Михайловскій,16 Понед.,1,single,
+repertoire_1892-93_pair010,Большой,16 Понед.,1,single,
+repertoire_1892-93_pair010,Малый,16 Понед.,1,single,
+repertoire_1892-93_pair010,Мариинскій,17 Вторн.,1,single,
+repertoire_1892-93_pair010,Александринскій,17 Вторн.,1,single,
+repertoire_1892-93_pair010,Михайловскій,17 Вторн.,1,single,
+repertoire_1892-93_pair010,Большой,17 Вторн.,1,single,
+repertoire_1892-93_pair010,Малый,17 Вторн.,1,single,
+repertoire_1892-93_pair010,Мариинскій,18 Сред.,1,single,
+repertoire_1892-93_pair010,Александринскій,18 Сред.,1,single,
+repertoire_1892-93_pair010,Михайловскій,18 Сред.,1,single,
+repertoire_1892-93_pair010,Большой,18 Сред.,1,single,
+repertoire_1892-93_pair010,Малый,18 Сред.,1,single,
+repertoire_1892-93_pair010,Мариинскій,19 Четв.,1,single,
+repertoire_1892-93_pair010,Александринскій,19 Четв.,1,single,
+repertoire_1892-93_pair010,Михайловскій,19 Четв.,1,single,
+repertoire_1892-93_pair010,Большой,19 Четв.,1,single,
+repertoire_1892-93_pair010,Малый,19 Четв.,1,single,
+repertoire_1892-93_pair010,Мариинскій,21 Суббота,0,dash,no row printed for 20 between 19 and 21; single dash cell
+repertoire_1892-93_pair010,Александринскій,21 Суббота,0,dash,single dash cell
+repertoire_1892-93_pair010,Михайловскій,21 Суббота,1,single,
+repertoire_1892-93_pair010,Большой,21 Суббота,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый; lower half dash
+repertoire_1892-93_pair010,Малый,21 Суббота,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row; lower half dash
+repertoire_1892-93_pair010,Мариинскій,22 Воскрес.,1,single,
+repertoire_1892-93_pair010,Александринскій,22 Воскрес.,2,split_labelled,УТРО/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair010,Михайловскій,22 Воскрес.,1,single,
+repertoire_1892-93_pair010,Большой,22 Воскрес.,1,single,
+repertoire_1892-93_pair010,Малый,22 Воскрес.,1,single,
+repertoire_1892-93_pair010,Мариинскій,23 Понед.,1,single,
+repertoire_1892-93_pair010,Александринскій,23 Понед.,1,single,benefit occasion line
+repertoire_1892-93_pair010,Михайловскій,23 Понед.,1,single,
+repertoire_1892-93_pair010,Большой,23 Понед.,1,single,
+repertoire_1892-93_pair010,Малый,23 Понед.,1,single,
+repertoire_1892-93_pair010,Мариинскій,24 Вторник.,1,single,
+repertoire_1892-93_pair010,Александринскій,24 Вторник.,1,single,
+repertoire_1892-93_pair010,Михайловскій,24 Вторник.,1,single,
+repertoire_1892-93_pair010,Большой,24 Вторник.,1,single,
+repertoire_1892-93_pair010,Малый,24 Вторник.,1,single,
+repertoire_1892-93_pair010,Мариинскій,25 Среда,1,single,
+repertoire_1892-93_pair010,Александринскій,25 Среда,1,single,
+repertoire_1892-93_pair010,Михайловскій,25 Среда,1,single,
+repertoire_1892-93_pair010,Большой,25 Среда,1,single,
+repertoire_1892-93_pair010,Малый,25 Среда,1,single,
+repertoire_1892-93_pair010,Мариинскій,26 Четверг,1,single,
+repertoire_1892-93_pair010,Александринскій,26 Четверг,1,single,occasion line first (Безплатный спектакль для Георгіевскихъ кавалеровъ)
+repertoire_1892-93_pair010,Михайловскій,26 Четверг,1,single,
+repertoire_1892-93_pair010,Большой,26 Четверг,1,single,
+repertoire_1892-93_pair010,Малый,26 Четверг,1,single,
+repertoire_1892-93_pair010,Мариинскій,27 Пятница,1,single,
+repertoire_1892-93_pair010,Александринскій,27 Пятница,1,single,
+repertoire_1892-93_pair010,Михайловскій,27 Пятница,1,single,
+repertoire_1892-93_pair010,Большой,27 Пятница,1,single,
+repertoire_1892-93_pair010,Малый,27 Пятница,1,single,
+repertoire_1892-93_pair010,Мариинскій,28 Суббота,0,dash,
+repertoire_1892-93_pair010,Александринскій,28 Суббота,0,dash,
+repertoire_1892-93_pair010,Михайловскій,28 Суббота,1,single,benefit occasion line
+repertoire_1892-93_pair010,Большой,28 Суббота,0,dash,
+repertoire_1892-93_pair010,Малый,28 Суббота,0,dash,
+repertoire_1892-93_pair010,Мариинскій,29 Воскрес.,1,single,
+repertoire_1892-93_pair010,Александринскій,29 Воскрес.,2,split_labelled,УТРО/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair010,Михайловскій,29 Воскрес.,1,single,
+repertoire_1892-93_pair010,Большой,29 Воскрес.,1,single,
+repertoire_1892-93_pair010,Малый,29 Воскрес.,1,single,
+repertoire_1892-93_pair010,Мариинскій,30 Понед.,1,single,
+repertoire_1892-93_pair010,Александринскій,30 Понед.,1,single,
+repertoire_1892-93_pair010,Михайловскій,30 Понед.,1,single,
+repertoire_1892-93_pair010,Большой,30 Понед.,1,single,
+repertoire_1892-93_pair010,Малый,30 Понед.,1,single,
+repertoire_1892-93_pair010,Мариинскій,1 Вторн.,1,single,
+repertoire_1892-93_pair010,Александринскій,1 Вторн.,1,single,
+repertoire_1892-93_pair010,Михайловскій,1 Вторн.,1,single,
+repertoire_1892-93_pair010,Большой,1 Вторн.,1,single,
+repertoire_1892-93_pair010,Малый,1 Вторн.,1,single,
+repertoire_1892-93_pair010,Мариинскій,2 Среда,1,single,
+repertoire_1892-93_pair010,Александринскій,2 Среда,1,single,
+repertoire_1892-93_pair010,Михайловскій,2 Среда,1,single,
+repertoire_1892-93_pair010,Большой,2 Среда,1,single,
+repertoire_1892-93_pair010,Малый,2 Среда,1,single,
+repertoire_1892-93_pair010,Мариинскій,3 Четверг,1,single,
+repertoire_1892-93_pair010,Александринскій,3 Четверг,1,single,
+repertoire_1892-93_pair010,Михайловскій,3 Четверг,1,single,
+repertoire_1892-93_pair010,Большой,3 Четверг,1,single,
+repertoire_1892-93_pair010,Малый,3 Четверг,1,single,
+repertoire_1892-93_pair014,Мариинскій,27 Воскресенье,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair014,Александринскій,27 Воскресенье,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair014,Михайловскій,27 Воскресенье,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair014,Большой,27 Воскресенье,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair014,Малый,27 Воскресенье,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair014,Мариинскій,28 Понед.,2,split_labelled,УТРО/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair014,Александринскій,28 Понед.,1,single,
+repertoire_1892-93_pair014,Михайловскій,28 Понед.,1,single,
+repertoire_1892-93_pair014,Большой,28 Понед.,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair014,Малый,28 Понед.,2,split_labelled,УТР/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair014,Мариинскій,29 Вторникъ,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый; no label at own cell
+repertoire_1892-93_pair014,Александринскій,29 Вторникъ,2,split_labelled,УТРО/ВЕЧЕРЪ labels at own cell edge
+repertoire_1892-93_pair014,Михайловскій,29 Вторникъ,1,single,
+repertoire_1892-93_pair014,Большой,29 Вторникъ,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair014,Малый,29 Вторникъ,2,split_labelled,УТРО/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair014,Мариинскій,30 Сред.,1,single,
+repertoire_1892-93_pair014,Александринскій,30 Сред.,2,split_labelled,УТРО/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair014,Михайловскій,30 Сред.,1,single,
+repertoire_1892-93_pair014,Большой,30 Сред.,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair014,Малый,30 Сред.,2,split_labelled,УТРО/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair014,Мариинскій,31 Четвергъ,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair014,Александринскій,31 Четвергъ,2,split_labelled,УТРО/ВЕЧЕРЪ labels at own cell edge
+repertoire_1892-93_pair014,Михайловскій,31 Четвергъ,1,single,
+repertoire_1892-93_pair014,Большой,31 Четвергъ,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair014,Малый,31 Четвергъ,2,split_labelled,УТРО/ВЕЧЕРЪ labels at own cell edge
+repertoire_1892-93_pair014,Мариинскій,1 Пятн.,1,single,month header ЯНВАРЬ
+repertoire_1892-93_pair014,Александринскій,1 Пятн.,1,single,
+repertoire_1892-93_pair014,Михайловскій,1 Пятн.,1,single,
+repertoire_1892-93_pair014,Большой,1 Пятн.,1,single,
+repertoire_1892-93_pair014,Малый,1 Пятн.,1,single,
+repertoire_1892-93_pair014,Мариинскій,2 Суббота,0,dash,
+repertoire_1892-93_pair014,Александринскій,2 Суббота,2,split_labelled,УТРО/ВЕЧ labels at own cell edge; lower half dash
+repertoire_1892-93_pair014,Михайловскій,2 Суббота,1,single,benefit occasion line
+repertoire_1892-93_pair014,Большой,2 Суббота,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый; lower half dash
+repertoire_1892-93_pair014,Малый,2 Суббота,2,split_labelled,УТРО/ВЕЧ labels at own cell edge; lower half dash
+repertoire_1892-93_pair014,Мариинскій,3 Воскрес.,1,single,benefit occasion line
+repertoire_1892-93_pair014,Александринскій,3 Воскрес.,2,split_labelled,УТРО/ВЕЧЕРЪ labels at own cell edge
+repertoire_1892-93_pair014,Михайловскій,3 Воскрес.,1,single,
+repertoire_1892-93_pair014,Большой,3 Воскрес.,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый; second half benefit occasion line
+repertoire_1892-93_pair014,Малый,3 Воскрес.,2,split_labelled,УТР/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair014,Мариинскій,4 Понед.,1,single,
+repertoire_1892-93_pair014,Александринскій,4 Понед.,1,single,
+repertoire_1892-93_pair014,Михайловскій,4 Понед.,1,single,
+repertoire_1892-93_pair014,Большой,4 Понед.,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair014,Малый,4 Понед.,2,split_labelled,УТР/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair014,Мариинскій,6 Срд.,1,single,row compressed at binding fold; receipts partly obscured; no row for 5
+repertoire_1892-93_pair014,Александринскій,6 Срд.,1,single,row compressed at binding fold; receipts partly obscured; no row for 5
+repertoire_1892-93_pair014,Михайловскій,6 Срд.,1,single,row compressed at binding fold; receipts partly obscured; no row for 5
+repertoire_1892-93_pair014,Большой,6 Срд.,1,single,row compressed at binding fold; receipts partly obscured; no row for 5
+repertoire_1892-93_pair014,Малый,6 Срд.,1,single,row compressed at binding fold; receipts partly obscured; no row for 5
+repertoire_1892-93_pair014,Мариинскій,7 Четвергъ,1,single,
+repertoire_1892-93_pair014,Александринскій,7 Четвергъ,1,single,
+repertoire_1892-93_pair014,Михайловскій,7 Четвергъ,1,single,
+repertoire_1892-93_pair014,Большой,7 Четвергъ,1,single,
+repertoire_1892-93_pair014,Малый,7 Четвергъ,1,single,
+repertoire_1892-93_pair014,Мариинскій,8 Пятниц.,1,single,
+repertoire_1892-93_pair014,Александринскій,8 Пятниц.,1,single,
+repertoire_1892-93_pair014,Михайловскій,8 Пятниц.,1,single,
+repertoire_1892-93_pair014,Большой,8 Пятниц.,1,single,
+repertoire_1892-93_pair014,Малый,8 Пятниц.,1,single,
+repertoire_1892-93_pair014,Мариинскій,9 Суббота,0,dash,
+repertoire_1892-93_pair014,Александринскій,9 Суббота,0,dash,
+repertoire_1892-93_pair014,Михайловскій,9 Суббота,1,single,benefit occasion line
+repertoire_1892-93_pair014,Большой,9 Суббота,0,dash,
+repertoire_1892-93_pair014,Малый,9 Суббота,0,dash,
+repertoire_1892-93_pair014,Мариинскій,10 Воскрес.,1,single,benefit occasion line
+repertoire_1892-93_pair014,Александринскій,10 Воскрес.,2,split_labelled,УТР/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair014,Михайловскій,10 Воскрес.,1,single,
+repertoire_1892-93_pair014,Большой,10 Воскрес.,1,single,
+repertoire_1892-93_pair014,Малый,10 Воскрес.,1,single,
+repertoire_1892-93_pair014,Мариинскій,11 Понед.,1,single,
+repertoire_1892-93_pair014,Александринскій,11 Понед.,1,single,
+repertoire_1892-93_pair014,Михайловскій,11 Понед.,1,single,
+repertoire_1892-93_pair014,Большой,11 Понед.,1,single,
+repertoire_1892-93_pair014,Малый,11 Понед.,1,single,
+repertoire_1892-93_pair014,Мариинскій,12 Вторникъ,1,single,
+repertoire_1892-93_pair014,Александринскій,12 Вторникъ,1,single,
+repertoire_1892-93_pair014,Михайловскій,12 Вторникъ,1,single,
+repertoire_1892-93_pair014,Большой,12 Вторникъ,1,single,
+repertoire_1892-93_pair014,Малый,12 Вторникъ,1,single,
+repertoire_1892-93_pair014,Мариинскій,13 Среда,1,single,
+repertoire_1892-93_pair014,Александринскій,13 Среда,1,single,
+repertoire_1892-93_pair014,Михайловскій,13 Среда,1,single,
+repertoire_1892-93_pair014,Большой,13 Среда,1,single,
+repertoire_1892-93_pair014,Малый,13 Среда,1,single,
+repertoire_1892-93_pair014,Мариинскій,14 Четвергъ,1,single,
+repertoire_1892-93_pair014,Александринскій,14 Четвергъ,1,single,
+repertoire_1892-93_pair014,Михайловскій,14 Четвергъ,1,single,
+repertoire_1892-93_pair014,Большой,14 Четвергъ,1,single,
+repertoire_1892-93_pair014,Малый,14 Четвергъ,1,single,
+repertoire_1892-93_pair014,Мариинскій,15 Пятница,1,single,
+repertoire_1892-93_pair014,Александринскій,15 Пятница,1,single,
+repertoire_1892-93_pair014,Михайловскій,15 Пятница,1,single,
+repertoire_1892-93_pair014,Большой,15 Пятница,1,single,
+repertoire_1892-93_pair014,Малый,15 Пятница,1,single,
+repertoire_1892-93_pair014,Мариинскій,16 Суббота,0,dash,
+repertoire_1892-93_pair014,Александринскій,16 Суббота,0,dash,
+repertoire_1892-93_pair014,Михайловскій,16 Суббота,1,single,benefit occasion line
+repertoire_1892-93_pair014,Большой,16 Суббота,0,dash,
+repertoire_1892-93_pair014,Малый,16 Суббота,0,dash,
+repertoire_1892-93_pair016,Мариинскій,17 Воскрес.,1,single,
+repertoire_1892-93_pair016,Александринскій,17 Воскрес.,1,single,
+repertoire_1892-93_pair016,Михайловскій,17 Воскрес.,1,single,
+repertoire_1892-93_pair016,Большой,17 Воскрес.,1,single,
+repertoire_1892-93_pair016,Малый,17 Воскрес.,1,single,
+repertoire_1892-93_pair016,Мариинскій,18 Понед.,1,single,
+repertoire_1892-93_pair016,Александринскій,18 Понед.,1,single,
+repertoire_1892-93_pair016,Михайловскій,18 Понед.,1,single,
+repertoire_1892-93_pair016,Большой,18 Понед.,1,single,
+repertoire_1892-93_pair016,Малый,18 Понед.,1,single,
+repertoire_1892-93_pair016,Мариинскій,19 Вторн.,1,single,
+repertoire_1892-93_pair016,Александринскій,19 Вторн.,1,single,
+repertoire_1892-93_pair016,Михайловскій,19 Вторн.,1,single,
+repertoire_1892-93_pair016,Большой,19 Вторн.,1,single,
+repertoire_1892-93_pair016,Малый,19 Вторн.,1,single,
+repertoire_1892-93_pair016,Мариинскій,20 Сред.,1,single,
+repertoire_1892-93_pair016,Александринскій,20 Сред.,1,single,
+repertoire_1892-93_pair016,Михайловскій,20 Сред.,1,single,
+repertoire_1892-93_pair016,Большой,20 Сред.,1,single,
+repertoire_1892-93_pair016,Малый,20 Сред.,1,single,
+repertoire_1892-93_pair016,Мариинскій,21 Четвергъ,1,single,
+repertoire_1892-93_pair016,Александринскій,21 Четвергъ,1,single,
+repertoire_1892-93_pair016,Михайловскій,21 Четвергъ,1,single,
+repertoire_1892-93_pair016,Большой,21 Четвергъ,1,single,
+repertoire_1892-93_pair016,Малый,21 Четвергъ,1,single,
+repertoire_1892-93_pair016,Мариинскій,22 Пятн.,1,single,
+repertoire_1892-93_pair016,Александринскій,22 Пятн.,1,single,
+repertoire_1892-93_pair016,Михайловскій,22 Пятн.,1,single,
+repertoire_1892-93_pair016,Большой,22 Пятн.,1,single,
+repertoire_1892-93_pair016,Малый,22 Пятн.,1,single,
+repertoire_1892-93_pair016,Мариинскій,23 Суббота,0,dash,
+repertoire_1892-93_pair016,Александринскій,23 Суббота,0,dash,
+repertoire_1892-93_pair016,Михайловскій,23 Суббота,1,single,benefit occasion line
+repertoire_1892-93_pair016,Большой,23 Суббота,0,dash,
+repertoire_1892-93_pair016,Малый,23 Суббота,0,dash,
+repertoire_1892-93_pair016,Мариинскій,24 Воскресенье,1,single,
+repertoire_1892-93_pair016,Александринскій,24 Воскресенье,2,split_labelled,УТРО/ВЕЧЕРЪ labels at own cell edge
+repertoire_1892-93_pair016,Михайловскій,24 Воскресенье,1,single,
+repertoire_1892-93_pair016,Большой,24 Воскресенье,1,single,
+repertoire_1892-93_pair016,Малый,24 Воскресенье,1,single,
+repertoire_1892-93_pair016,Мариинскій,25 Понед.,1,single,
+repertoire_1892-93_pair016,Александринскій,25 Понед.,1,single,
+repertoire_1892-93_pair016,Михайловскій,25 Понед.,1,single,
+repertoire_1892-93_pair016,Большой,25 Понед.,1,single,
+repertoire_1892-93_pair016,Малый,25 Понед.,1,single,
+repertoire_1892-93_pair016,Мариинскій,26 Вторн.,1,single,printed label partly legible; receipts hidden by binding fold
+repertoire_1892-93_pair016,Александринскій,26 Вторн.,1,single,printed label partly legible; receipts hidden by binding fold
+repertoire_1892-93_pair016,Михайловскій,26 Вторн.,1,single,printed label partly legible; receipts hidden by binding fold
+repertoire_1892-93_pair016,Большой,26 Вторн.,1,single,printed label partly legible; receipts hidden by binding fold
+repertoire_1892-93_pair016,Малый,26 Вторн.,1,single,printed label partly legible; receipts hidden by binding fold
+repertoire_1892-93_pair016,Мариинскій,27 Среда,1,single,top of row overprinted by binding fold; Малый cell overlaps row above
+repertoire_1892-93_pair016,Александринскій,27 Среда,1,single,top of row overprinted by binding fold; Малый cell overlaps row above
+repertoire_1892-93_pair016,Михайловскій,27 Среда,1,single,top of row overprinted by binding fold; Малый cell overlaps row above
+repertoire_1892-93_pair016,Большой,27 Среда,1,single,top of row overprinted by binding fold; Малый cell overlaps row above
+repertoire_1892-93_pair016,Малый,27 Среда,1,single,top of row overprinted by binding fold; Малый cell overlaps row above
+repertoire_1892-93_pair016,Мариинскій,28 Четвергъ,1,single,
+repertoire_1892-93_pair016,Александринскій,28 Четвергъ,1,single,
+repertoire_1892-93_pair016,Михайловскій,28 Четвергъ,1,single,
+repertoire_1892-93_pair016,Большой,28 Четвергъ,1,single,
+repertoire_1892-93_pair016,Малый,28 Четвергъ,1,single,
+repertoire_1892-93_pair016,Мариинскій,29 Пятн.,1,single,
+repertoire_1892-93_pair016,Александринскій,29 Пятн.,1,single,
+repertoire_1892-93_pair016,Михайловскій,29 Пятн.,1,single,
+repertoire_1892-93_pair016,Большой,29 Пятн.,1,single,
+repertoire_1892-93_pair016,Малый,29 Пятн.,1,single,
+repertoire_1892-93_pair016,Мариинскій,30 Суббота,0,dash,
+repertoire_1892-93_pair016,Александринскій,30 Суббота,0,dash,
+repertoire_1892-93_pair016,Михайловскій,30 Суббота,1,single,benefit occasion line
+repertoire_1892-93_pair016,Большой,30 Суббота,0,dash,
+repertoire_1892-93_pair016,Малый,30 Суббота,0,dash,
+repertoire_1892-93_pair016,Мариинскій,31 Воскрес.,1,single,
+repertoire_1892-93_pair016,Александринскій,31 Воскрес.,2,split_labelled,УТР/ВЕЧЕРЪ labels at own cell edge
+repertoire_1892-93_pair016,Михайловскій,31 Воскрес.,1,single,
+repertoire_1892-93_pair016,Большой,31 Воскрес.,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair016,Малый,31 Воскрес.,2,split_labelled,УТР/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair016,Мариинскій,1 Пон.,1,single,month header февр.
+repertoire_1892-93_pair016,Александринскій,1 Пон.,1,single,
+repertoire_1892-93_pair016,Михайловскій,1 Пон.,1,single,
+repertoire_1892-93_pair016,Большой,1 Пон.,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair016,Малый,1 Пон.,2,split_labelled,УТР/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair016,Мариинскій,2 Вторникъ,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый; no label at own cell
+repertoire_1892-93_pair016,Александринскій,2 Вторникъ,2,split_labelled,УТР/ВЕЧЕРЪ labels at own cell edge
+repertoire_1892-93_pair016,Михайловскій,2 Вторникъ,1,single,
+repertoire_1892-93_pair016,Большой,2 Вторникъ,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair016,Малый,2 Вторникъ,2,split_labelled,УТР/ВЕЧЕРЪ labels at own cell edge
+repertoire_1892-93_pair016,Мариинскій,3 Среда,1,single,
+repertoire_1892-93_pair016,Александринскій,3 Среда,2,split_labelled,УТР/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair016,Михайловскій,3 Среда,1,single,
+repertoire_1892-93_pair016,Большой,3 Среда,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row beside Малый
+repertoire_1892-93_pair016,Малый,3 Среда,2,split_labelled,УТР/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair016,Мариинскій,4 Четвергъ,2,split_labelled,banner above; labels УТРО/ВЕЧ printed at edge of row; morning half has no receipts
+repertoire_1892-93_pair016,Александринскій,4 Четвергъ,2,split_labelled,banner above; УТРО/ВЕЧЕРЪ labels at own cell edge; morning half no receipts
+repertoire_1892-93_pair016,Михайловскій,4 Четвергъ,2,split_labelled,banner above; no label at own cell; morning half no receipts
+repertoire_1892-93_pair016,Большой,4 Четвергъ,2,split_labelled,banner above; morning half no receipts
+repertoire_1892-93_pair016,Малый,4 Четвергъ,2,split_labelled,banner above; УТРО/ВЕЧЕРЪ labels at own cell edge
+repertoire_1892-93_pair016,Мариинскій,5 Пятница,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row
+repertoire_1892-93_pair016,Александринскій,5 Пятница,2,split_labelled,УТРО/ВЕЧЕРЪ labels at own cell edge
+repertoire_1892-93_pair016,Михайловскій,5 Пятница,1,single,
+repertoire_1892-93_pair016,Большой,5 Пятница,2,split_labelled,2nd half benefit occasion line
+repertoire_1892-93_pair016,Малый,5 Пятница,2,split_labelled,УТР/ВЕЧ labels at own cell edge
+repertoire_1892-93_pair018,Мариинскій,6 Суббота,2,split_labelled,labels УТРО/ВЕЧ printed at edge of row at Александринскій and Малый edges
+repertoire_1892-93_pair018,Александринскій,6 Суббота,2,split_labelled,УТРО/ВЕЧЕРЪ labels at own cell edge
+repertoire_1892-93_pair018,Михайловскій,6 Суббота,1,single,benefit occasion line
+repertoire_1892-93_pair018,Большой,6 Суббота,2,split_labelled,2nd half benefit occasion line
+repertoire_1892-93_pair018,Малый,6 Суббота,2,split_labelled,УТРО/ВЕЧЕРЪ labels at own cell edge
+repertoire_1892-93_pair018,Мариинскій,7 Воскресенье,2,split_labelled,no label at own cell; labels at Малый edge
+repertoire_1892-93_pair018,Александринскій,7 Воскресенье,2,split_labelled,УТРО/ВЕЧЕРЪ labels at own cell edge
+repertoire_1892-93_pair018,Михайловскій,7 Воскресенье,1,single,
+repertoire_1892-93_pair018,Большой,7 Воскресенье,2,split_labelled,labels at Малый edge
+repertoire_1892-93_pair018,Малый,7 Воскресенье,2,split_labelled,УТРО/ВЕЧЕРЪ labels at own cell edge
+repertoire_1892-93_pair018,Мариинскій,14 Воскрес.,0,dash,no rows printed for 8-13
+repertoire_1892-93_pair018,Александринскій,14 Воскрес.,1,single,
+repertoire_1892-93_pair018,Михайловскій,14 Воскрес.,1,single,
+repertoire_1892-93_pair018,Большой,14 Воскрес.,0,dash,
+repertoire_1892-93_pair018,Малый,14 Воскрес.,0,dash,
+repertoire_1892-93_pair018,Мариинскій,15 Понед.,1,single,symphony concert
+repertoire_1892-93_pair018,Александринскій,15 Понед.,1,single,
+repertoire_1892-93_pair018,Михайловскій,15 Понед.,0,dash,
+repertoire_1892-93_pair018,Большой,15 Понед.,0,dash,
+repertoire_1892-93_pair018,Малый,15 Понед.,0,dash,
+repertoire_1892-93_pair018,Мариинскій,16 Вторникъ,0,dash,
+repertoire_1892-93_pair018,Александринскій,16 Вторникъ,1,single,
+repertoire_1892-93_pair018,Михайловскій,16 Вторникъ,1,single,
+repertoire_1892-93_pair018,Большой,16 Вторникъ,0,dash,
+repertoire_1892-93_pair018,Малый,16 Вторникъ,0,dash,
+repertoire_1892-93_pair018,Мариинскій,17 Среда,1,single,symphony concert
+repertoire_1892-93_pair018,Александринскій,17 Среда,1,single,
+repertoire_1892-93_pair018,Михайловскій,17 Среда,1,single,
+repertoire_1892-93_pair018,Большой,17 Среда,0,dash,
+repertoire_1892-93_pair018,Малый,17 Среда,0,dash,
+repertoire_1892-93_pair018,Мариинскій,18 Четвергъ,0,dash,
+repertoire_1892-93_pair018,Александринскій,18 Четвергъ,1,single,
+repertoire_1892-93_pair018,Михайловскій,18 Четвергъ,1,single,
+repertoire_1892-93_pair018,Большой,18 Четвергъ,0,dash,
+repertoire_1892-93_pair018,Малый,18 Четвергъ,0,dash,
+repertoire_1892-93_pair018,Мариинскій,19 Пятн.,0,dash,
+repertoire_1892-93_pair018,Александринскій,19 Пятн.,1,single,
+repertoire_1892-93_pair018,Михайловскій,19 Пятн.,1,single,
+repertoire_1892-93_pair018,Большой,19 Пятн.,0,dash,
+repertoire_1892-93_pair018,Малый,19 Пятн.,0,dash,
+repertoire_1892-93_pair018,Мариинскій,20 Суб.,0,dash,
+repertoire_1892-93_pair018,Александринскій,20 Суб.,1,single,row squeezed at binding fold; receipts hidden
+repertoire_1892-93_pair018,Михайловскій,20 Суб.,1,single,benefit occasion line; row squeezed at binding fold; third work and receipts hidden
+repertoire_1892-93_pair018,Большой,20 Суб.,0,dash,
+repertoire_1892-93_pair018,Малый,20 Суб.,0,dash,
+repertoire_1892-93_pair018,Мариинскій,21 Воскрес.,0,dash,
+repertoire_1892-93_pair018,Александринскій,21 Воскрес.,1,single,
+repertoire_1892-93_pair018,Михайловскій,21 Воскрес.,1,single,
+repertoire_1892-93_pair018,Большой,21 Воскрес.,0,dash,
+repertoire_1892-93_pair018,Малый,21 Воскрес.,0,dash,
+repertoire_1892-93_pair018,Мариинскій,22 Понед.,0,dash,
+repertoire_1892-93_pair018,Александринскій,22 Понед.,1,single,
+repertoire_1892-93_pair018,Михайловскій,22 Понед.,0,dash,
+repertoire_1892-93_pair018,Большой,22 Понед.,0,dash,
+repertoire_1892-93_pair018,Малый,22 Понед.,0,dash,
+repertoire_1892-93_pair018,Мариинскій,23 Вторникъ,0,dash,
+repertoire_1892-93_pair018,Александринскій,23 Вторникъ,1,single,
+repertoire_1892-93_pair018,Михайловскій,23 Вторникъ,1,single,
+repertoire_1892-93_pair018,Большой,23 Вторникъ,0,dash,
+repertoire_1892-93_pair018,Малый,23 Вторникъ,0,dash,
+repertoire_1892-93_pair018,Мариинскій,24 Среда,0,dash,
+repertoire_1892-93_pair018,Александринскій,24 Среда,1,single,
+repertoire_1892-93_pair018,Михайловскій,24 Среда,1,single,
+repertoire_1892-93_pair018,Большой,24 Среда,0,dash,
+repertoire_1892-93_pair018,Малый,24 Среда,0,dash,
+repertoire_1892-93_pair018,Мариинскій,25 Четвергъ,0,dash,
+repertoire_1892-93_pair018,Александринскій,25 Четвергъ,1,single,
+repertoire_1892-93_pair018,Михайловскій,25 Четвергъ,1,single,
+repertoire_1892-93_pair018,Большой,25 Четвергъ,0,dash,
+repertoire_1892-93_pair018,Малый,25 Четвергъ,0,dash,
+repertoire_1892-93_pair018,Мариинскій,26 Пятница,0,dash,
+repertoire_1892-93_pair018,Александринскій,26 Пятница,1,single,Гимнъ first line
+repertoire_1892-93_pair018,Михайловскій,26 Пятница,1,single,Гимнъ first line
+repertoire_1892-93_pair018,Большой,26 Пятница,0,dash,
+repertoire_1892-93_pair018,Малый,26 Пятница,0,dash,
+repertoire_1892-93_pair018,Мариинскій,27 Суббота,0,dash,
+repertoire_1892-93_pair018,Александринскій,27 Суббота,1,single,
+repertoire_1892-93_pair018,Михайловскій,27 Суббота,1,single,benefit occasion line
+repertoire_1892-93_pair018,Большой,27 Суббота,0,dash,
+repertoire_1892-93_pair018,Малый,27 Суббота,0,dash,
+repertoire_1892-93_pair018,Мариинскій,28 Воскрес.,0,dash,
+repertoire_1892-93_pair018,Александринскій,28 Воскрес.,1,single,
+repertoire_1892-93_pair018,Михайловскій,28 Воскрес.,1,single,
+repertoire_1892-93_pair018,Большой,28 Воскрес.,0,dash,
+repertoire_1892-93_pair018,Малый,28 Воскрес.,0,dash,
+repertoire_1892-93_pair018,Мариинскій,2 Вторн.,0,dash,month header март; no row for 1
+repertoire_1892-93_pair018,Александринскій,2 Вторн.,1,single,Гимнъ first line
+repertoire_1892-93_pair018,Михайловскій,2 Вторн.,1,single,Гимнъ first line
+repertoire_1892-93_pair018,Большой,2 Вторн.,0,dash,
+repertoire_1892-93_pair018,Малый,2 Вторн.,0,dash,
+repertoire_1892-93_pair018,Мариинскій,3 Среда,0,dash,
+repertoire_1892-93_pair018,Александринскій,3 Среда,1,single,
+repertoire_1892-93_pair018,Михайловскій,3 Среда,1,single,
+repertoire_1892-93_pair018,Большой,3 Среда,0,dash,
+repertoire_1892-93_pair018,Малый,3 Среда,0,dash,
