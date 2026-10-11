@@ -52,8 +52,13 @@ from match_review_mentions import key_of                  # noqa: E402
 
 csv.field_size_limit(10 ** 9)
 
-WORKLIST = Path("docs/eval/review_people_not_in_rosters.csv")
-KEEP_VERDICT = "D current-season dancer, absent"
+#: The APPROVED list, append-only and persistent. Deliberately NOT the
+#: triage worklist: the moment a person is created their mentions resolve,
+#: so they drop off that worklist -- and a second run would then delete
+#: them. (Found the hard way on 2026-10-11, when re-running cut the eight
+#: existing dancers down to three.) The worklist decides WHO qualifies; this
+#: file records who was approved, and the facts come from the database.
+APPROVED = Path("docs/eval/review_person_approved.csv")
 ORDINAL = re.compile(r"\s*(\d+)\s*-?\s*([ейя])\s*$")
 
 
@@ -68,32 +73,31 @@ def split_name(printed: str) -> tuple[str, str | None]:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--db", required=True)
-    ap.add_argument("--worklist", default=WORKLIST, type=Path)
+    ap.add_argument("--approved", default=APPROVED, type=Path)
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
 
-    rows = [r for r in csv.DictReader(open(a.worklist, encoding="utf-8"))
-            if r["verdict"] == KEEP_VERDICT]
-    unchecked = [r["printed_in_review"] for r in rows if r.get("scan_checked") != "yes"]
-    if unchecked:
-        raise SystemExit("refusing to mint people who have not been checked "
-                         f"against the scan: {unchecked}")
+    names = [(r["printed_in_review"], r["evidence"])
+             for r in csv.DictReader(open(a.approved, encoding="utf-8"))
+             if r.get("printed_in_review")]
 
     con = duckdb.connect(a.db, read_only=a.dry_run)
     out = []
-    for r in rows:
-        printed = r["printed_in_review"]
+    for printed, evidence in names:
         fam, ordinal = split_name(printed)
         key = key_of(printed)
         pid = str(uuid.uuid5(NAMESPACE, f"review_person:{key}"))
-        seasons = sorted(r["seasons"].split())
-        # season_city is "1905-06 Moscowx3; 1906-07 SPx1" -- take the city,
-        # dropping the "xN" occurrence count glued to it.
-        cities = sorted({re.sub(r"x\d+$", "", sc.split()[1])
-                         for sc in r["season_city"].split(";") if sc.strip()})
-        out.append((pid, key, printed, fam, ordinal, seasons[0], seasons[-1],
-                    "|".join(cities), int(r["occurrences"]), r["pages"],
-                    r["same_family_in_db"], r["note"]))
+        facts = con.execute("""
+            SELECT min(season), max(season), string_agg(DISTINCT city, '|'),
+                   count(*), string_agg(DISTINCT page_id, '|')
+            FROM entities.review_mention
+            WHERE mention_type = 'person' AND surface = ?
+        """, [printed]).fetchone()
+        if not facts or facts[3] == 0:
+            raise SystemExit(f"{printed!r} has no mentions -- refusing to mint a "
+                             f"person with no evidence in the corpus")
+        out.append((pid, key, printed, fam, ordinal, facts[0], facts[1],
+                    facts[2], facts[3], facts[4], "", evidence))
 
     if a.dry_run:
         print(f"{len(out)} review-only person(s) would be created:\n")

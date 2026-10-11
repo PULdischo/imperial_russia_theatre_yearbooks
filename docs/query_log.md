@@ -14430,3 +14430,51 @@ research.performance 30,832 -> 30,848; research.work 3,064 and research.person 3
 receipts_minus_printed (rub): 1898-99 Moscow -2,646.69 -> -1,232.30; 1898-99 SP +5,868 -> +7,515; 1899-00 SP -81.02 -> +1,569.87;
 1900-01 Moscow +4,431.81 -> +5,147.51; 1900-01 SP -10,394.71 -> -7,924.75; 1901-02 Moscow -3,401.24 -> -1,869.41; 1901-02 SP +9,954.53 -> +11,973.51;
 1903-04 SP -614.79 -> +2,908.16. Other city-seasons unchanged.
+
+## 2026-10-11 — the last 14 scan-checked: only 3 are new people
+
+Of the 14 carrying "D … NOT YET SCAN-CHECKED", **11 were not new dancers**:
+
+**Seven are retrospectives** — the reviews quote premiere casts from decades
+before, and the framing is explicit every time:
+
+| name | the framing on the page |
+|---|---|
+| `Фролова` | «Жертвы Амуру» *"поставленъ впервые 22-го іюля **1886** года … составъ артистовъ … былъ ТОГДА слѣдующій"* |
+| `Лапшина` | *"Составъ ПЕРВЫХЪ исполнителей «Конька-горбунка»"*, page citing Русская Сцена **1864** |
+| `Пѣшковъ` | «Жизель» *"исполненъ впервые 15-го сентября **1844** года"* |
+| `Пѣшковъ 1-й` | the «Конекъ-горбунокъ» first-production cast — the next paragraphs are *"при первой постановкѣ"* then *"при нынѣшнемъ возобновленіи"* |
+| `Ильинъ` | *"возобновлялся для дебюта М. М. Петипа въ **1875** г."* |
+| `Вишневскій` | the cast before *"При возобновленіи … въ бенефисъ г. Іогансона"*; `г. Троицкій`, already B, is in the same list |
+| `Литавкина 2-я` | «Сатанилла» *"появился впервые … 19-го января **1849** года"* — the same list also holds `г. Пѣшковъ` and `г. Карасевъ`, both already B |
+
+**Four were already in the database**, found by loosening the family stem
+before reading any scan:
+
+- `Балашева` → **Балашова, Александра Михайловна** (rosters 1905-06..1910-11).
+  Already resolves 21 of 23, 12/12 in 1906-07. The stemmer split
+  `Балашев-` from `Балашов-`.
+- `Лукьяновъ` → four men of that name; the surface resolves 30 times already.
+- `Пономаревъ` → **nine** men; 0 of 38 resolve because they tie.
+- `Леонтъевъ` → **Леонтьевъ, Леонидъ Сергѣевичъ** — a ъ/ь variant.
+
+**Three are real:** `Пѣшковъ 2-й`, `Пѣшковъ 3-й`, `Никифорова` — all
+1905-06 Moscow, all in gendered corps lists on p019/p020, the same cluster
+as Барковская, Титова and Терентьева.
+
+### A bug of my own, found by running the thing twice
+
+`build_review_persons.py` read the triage worklist. But creating a person
+makes their mentions resolve, which drops them off that worklist — so the
+second run cut the eight existing dancers down to three. Fixed: the script
+now reads an append-only `docs/eval/review_person_approved.csv` and takes
+every fact from the database, so it is idempotent. It also refuses any
+approved name with zero mentions rather than minting an evidence-free
+person.
+
+**11 review-sourced people, 27 mentions resolving to them.** `research.person`
+roster 3,130 / production_list 87 / review 11. Mentions 27,333, resolved
+18,235 (66.7%), no dangling references.
+
+**Running total: of the 30 names the worklist proposed across both rounds,
+11 are real.** The scan pass removed nearly two thirds.
