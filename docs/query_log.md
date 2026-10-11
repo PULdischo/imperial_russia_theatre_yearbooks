@@ -14201,3 +14201,39 @@ SELECT season, city, list_title FROM research.production WHERE work_id IS NULL;
 
 Result: the production now has the work Фіаметта. One production is left without a work:
 Дочь Фараона, SP 1904-05.
+
+## 2026-10-11 — Лопухина: scan-checked, and she is a print typo (RG: "check with scans")
+
+Zoomed `review_1903-04_SP_ballet_p002` to **8x**: the print reads
+**Л-о-п-у-х-и-н-а**, the `и` and `н` unmistakable against `о` and `в`. The
+transcription is correct — so this is the print's own error, not ours.
+
+What makes it a typo rather than a second woman:
+
+```sql
+SELECT family_name, first_name, sp.season, sp.city, sp.entity_type
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id)
+WHERE pe.family_name LIKE 'Лопух%';
+```
+- **Евгенія Лопухова is in the 1903-04 SP BalletArtists roster** — the exact
+  season of the mention.
+- The same season's reviews print `Лопухова` five more times (p009, p012,
+  p013, p016, p017), all resolving.
+- `Лопухина` occurs **once in the entire corpus**.
+- No Лопухина appears in any ballet list. The only `Лопухинъ` is Николай
+  Николаевичъ, an **Administrator** — a different family entirely.
+
+So she is **not** a person. Demoted to bucket F and routed through the
+existing curated-variant table (`docs/eval/review_person_variants.csv`,
+keyed on the surname so the ranker picks the season-appropriate woman)
+rather than minting an entity. Added to `docs/eval/genuine_print_typos.md`
+alongside `Кусковъ`/`Кусовъ`, which is the identical pattern.
+
+After rebuilding: `research.person` source `review` **9 → 8**; the
+`Лопухина` mention now resolves to **Лопухова, Евгенія Васильевна** via
+`honorific-list+ranked`; no `Лопухина` person entity remains; the other
+eight still resolve 19 of 19. Mentions 27,333 and assertions 1,952
+unchanged.
+
+That is two of the sixteen original bucket-D names — Кусковъ and Лопухина —
+that would have become phantom dancers without the scan.
