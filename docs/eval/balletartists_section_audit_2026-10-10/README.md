@@ -81,3 +81,10 @@ disagreed.
   scan-checked here).
 - Merge candidates now visible (not merged): Огневъ, Сергѣй / Огневъ, Сергѣй Владиміровичъ; the two spacings of
   Вильеръ-де-Лиль-Адамъ, Александръ Фердинандовичъ.
+
+## Backups (moved 2026-10-11)
+
+The pre-edit copies of the raw page files that `apply.py` / `fix_content.py` (and the earlier
+`balletartists_heading_fix_2026-10-10/apply.py`) saved under `backup/` and `backup_content/` were moved out of the repo to
+`outputs/backups/balletartists_2026-10-10/` (`heading_fix_backup` 10 files, `section_audit_backup` 392,
+`section_audit_backup_content` 19). `outputs/` is not tracked. They can be deleted once the rebuild has stood for a while.
