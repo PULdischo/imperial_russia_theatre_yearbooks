@@ -14172,3 +14172,21 @@ every block and this is a read-time filter.
 carries 0 mentions; the 9 review-sourced dancers still resolve 20 of 20;
 no dangling references. The refactor is behaviour-preserving —
 regenerating the bilingual files gives byte-identical output.
+
+## 2026-10-11 — what is outstanding in the ballet production lists
+
+```sql
+SELECT season, count(*) FILTER (WHERE city='SP'), count(*) FILTER (WHERE city='Moscow') FROM research.production GROUP BY 1;
+SELECT season, city, list_title, n_dates FROM research.production WHERE work_id IS NULL;
+SELECT count(*) FROM research.production WHERE n_matched_works > 1;
+SELECT e.season, e.city, e.title, p.year_text, p.month_text, p.day_text FROM raw.production_entry_performance p
+JOIN raw.production_entry e USING (production_entry_id) WHERE p.date IS NULL;
+SELECT count(DISTINCT pc.person_id), count(DISTINCT pc.person_id) FILTER (WHERE p.wikidata_qid IS NOT NULL)
+FROM research.production_credit pc JOIN research.person p USING (person_id);
+```
+
+Result: 628 productions in 19 seasons (none for 1905-06 or 1906-07). 2 have no work: Дочь
+Фараона SP 1904-05 (one date, 13 Feb 1905) and Фіаметта SP 1910-11 (its one date is stored
+"феваля 13" and did not parse). 19 productions match more than one work. 2 of 2,374 list
+dates have no parsed date ("декабря 38", 1897-98; "феваля 13", 1910-11). 110 creators, 96
+with a QID; 14 without.
