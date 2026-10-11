@@ -67,3 +67,17 @@ disagreed.
   1900-01 SP; 65 twice in 1900-01 MSK men; "60." for 70 and one woman printed twice (31 and 38) in 1908-09 SP;
   77 twice in 1893-94 SP; two "15." in 1906-07 SP men; Ѳ-surnames placed last in 1903-04 SP and 1905-06, but
   printed with Ф in both 1904-05 lists.
+
+## Content fixes applied 2026-10-11 (`fix_content.py`, blind reading in `content_blind_reading.json`)
+- **Є / є removed from the roster data**: 28 fields on 17 pages (15 BalletArtists, 2 Administration). The letter stood in
+  for different printed letters, so each word was read at 5-6x: Ѳедорова x3 and Ѳеоктистова (fita); Сергѣевна (a speck
+  in the bowl of the С); Огневъ x5, Вильеръ-де-Лиль-Адамъ x2, Граціенко; and seven role / title words in credit
+  summaries (Бріенъ, де-Бріенъ, Жанъ-де-Бріенъ, Люсьенъ, Граціелла, Генріэтта, Лье). Text and parsed credit rows fixed.
+- **Замбелли, Карлотта** (1901-02 SP p001): list_number null, family_name "Замбелли", first_name "Карлотта".
+- **1899-00 SP p000**: the "Прикомандированъ къ Монтировочной части …" note is printed under "3. Петровъ, Николай
+  Ивановичъ"; it is now in his tenure_note_text and the stray row is removed (person_entry 23,980 -> 23,979). The later
+  entries on the page were renumbered in entities.person_link in the same run; alignment check 0 shift blocks.
+- Left for the Repertoire thread: one Є in a Repertoire title, `repertoire_1909-10_p035__s021` «Равенскій боєцъ» (not
+  scan-checked here).
+- Merge candidates now visible (not merged): Огневъ, Сергѣй / Огневъ, Сергѣй Владиміровичъ; the two spacings of
+  Вильеръ-де-Лиль-Адамъ, Александръ Фердинандовичъ.

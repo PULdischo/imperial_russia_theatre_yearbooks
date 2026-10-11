@@ -1,0 +1,178 @@
+[
+ {
+  "id": "administration_1892-93_p000__7__family_name__0",
+  "reading": "Вильеръ-де-Лиль-Адамъ",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/administration_1892-93_p000__7__family_name__0.png",
+  "note": "bold, hyphenated; no fita/ѣ in it"
+ },
+ {
+  "id": "administration_1896-97_p000__7__family_name__0",
+  "reading": "Вильеръ-де-Лиль-Адамъ",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/administration_1896-97_p000__7__family_name__0.png",
+  "note": ""
+ },
+ {
+  "id": "balletartists_1896-97_MSK_p001__11__family_name__0",
+  "reading": "Граціенко",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1896-97_MSK_p001__11__family_name__0.png",
+  "note": "5th letter is dotted і"
+ },
+ {
+  "id": "balletartists_1897-98_SP_p007__1__credit_summary_text__123",
+  "reading": "Бріенъ—7);",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1897-98_SP_p007__1__credit_summary_text__123.png",
+  "note": "printed 'Жанъ де Бріенъ—' at line end, '7);' on next line; space (no hyphen) between де and Бріенъ"
+ },
+ {
+  "id": "balletartists_1900-01_SP_p008__7__family_name__0",
+  "reading": "Огневъ",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1900-01_SP_p008__7__family_name__0.png",
+  "note": "letter-spaced; plain е, not ѣ; no dots over е"
+ },
+ {
+  "id": "balletartists_1901-02_SP_p005__2__credit_summary_text__48",
+  "reading": "Граціелла",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1901-02_SP_p005__2__credit_summary_text__48.png",
+  "note": ""
+ },
+ {
+  "id": "balletartists_1901-02_SP_p007__7__credit_summary_text__225",
+  "reading": "де-Бріенъ—2);",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1901-02_SP_p007__7__credit_summary_text__225.png",
+  "note": "here WITH hyphen: '(Жанъ де-Бріенъ—2);'"
+ },
+ {
+  "id": "balletartists_1901-02_SP_p008__0__family_name__0",
+  "reading": "Огневъ",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1901-02_SP_p008__0__family_name__0.png",
+  "note": "entry number printed 47."
+ },
+ {
+  "id": "balletartists_1902-03_MSK_p001__11__credit_summary_text__295",
+  "reading": "Лье",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1902-03_MSK_p001__11__credit_summary_text__295.png",
+  "note": "printed 'Лье' at the line end with NO hyphen visible, continued on next line as 'нарда—7).' (see _line2 crop); i.e. Лье|нарда"
+ },
+ {
+  "id": "balletartists_1902-03_MSK_p005__19__family_name__0",
+  "reading": "Ѳедорова",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1902-03_MSK_p005__19__family_name__0.png",
+  "note": "initial is fita (oval with full-width bar); printed 'Ѳедорова 1-я'"
+ },
+ {
+  "id": "balletartists_1902-03_MSK_p005__20__family_name__0",
+  "reading": "Ѳедорова",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1902-03_MSK_p005__20__family_name__0.png",
+  "note": "initial fita; bar slightly fainter but complete"
+ },
+ {
+  "id": "balletartists_1902-03_MSK_p005__21__family_name__0",
+  "reading": "Ѳедорова",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1902-03_MSK_p005__21__family_name__0.png",
+  "note": "initial fita"
+ },
+ {
+  "id": "balletartists_1902-03_MSK_p005__22__family_name__0",
+  "reading": "Ѳеоктистова",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1902-03_MSK_p005__22__family_name__0.png",
+  "note": "initial fita; Ѳ-е-о-к-т-и-с-т-о-в-а"
+ },
+ {
+  "id": "balletartists_1902-03_SP_p008__13__family_name__0",
+  "reading": "Огневъ",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1902-03_SP_p008__13__family_name__0.png",
+  "note": "entry number printed '52' followed by a comma-like mark rather than a full stop"
+ },
+ {
+  "id": "balletartists_1904-05_SP_p008__0__credit_summary_text__113",
+  "reading": "(Жанъ-де-Бріенъ",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1904-05_SP_p008__0__credit_summary_text__113.png",
+  "note": "hyphenated both sides: '(Жанъ-де-Бріенъ — 5);'. Incidental, same entry: the Пахита role just before reads 'Люсьевъ' (penultimate letter looks like в, could be a worn н) -- see _aux_pakhita crop"
+ },
+ {
+  "id": "balletartists_1906-07_SP_p009__20__credit_summary_text__136",
+  "reading": "(Люсьенъ",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1906-07_SP_p009__20__credit_summary_text__136.png",
+  "note": "'Пахита (Люсьенъ — 1);' sans-serif face, н unambiguous"
+ },
+ {
+  "id": "balletartists_1908-09_SP_p003__21__patronymic__0",
+  "reading": "Сергѣевна",
+  "confidence": "clear",
+  "doubtful_letters": "С",
+  "crop_file": "crops/balletartists_1908-09_SP_p003__21__patronymic__0.png",
+  "note": "initial С has a brown speck/stain inside the bowl that makes it resemble Є/Е at low zoom; no printed bar -- it is С. ѣ clear"
+ },
+ {
+  "id": "balletartists_1908-09_SP_p007__0__family_name__0",
+  "reading": "Огневъ",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1908-09_SP_p007__0__family_name__0.png",
+  "note": "page opens with the tail of the previous entry's credits; first headed entry is '49. Огневъ'"
+ },
+ {
+  "id": "balletartists_1909-10_SP_p001__16__credit_summary_text__247",
+  "reading": "(Генріэт-та—2);",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1909-10_SP_p001__16__credit_summary_text__247.png",
+  "note": "word broken across lines: '(Генріэт-' / 'та—2);' = Генріэтта, with dotted і then э (reversed-curve э, not е)"
+ },
+ {
+  "id": "balletartists_1909-10_SP_p008__9__family_name__0",
+  "reading": "Огневъ",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/balletartists_1909-10_SP_p008__9__family_name__0.png",
+  "note": "entry number 47, top of right column"
+ },
+ {
+  "id": "TASK_B_zambelli",
+  "reading": "Замбелли, Карлотта (съ 1 октября по 1 декабря 1901 г.).  [credits, small type:] Въ 3 балетахъ—8. Всего—8 разъ. Въ томъ числѣ: Жизель (Жизель—3); Коппелія (Сванильда—3); Пахита (Пахита—2).",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/TASK_B.png",
+  "note": "NO list number is printed: the surname (letter-spaced) starts at the normal paragraph indent where a number would be. Right column, between '33. Ефимова' and '34. Ильина 1-я'. No patronymic. In the credits 'балетахъ' has a broken б (looks like 'оалетахъ')."
+ },
+ {
+  "id": "TASK_C_assistants",
+  "reading": "LEFT COLUMN, heading 'Помощники режиссера:' -- 1. Блау, Василій Александровичъ (съ 27 декабря 1853 г.). / [centred note line under entry 1:] † 19 ноября 1899 г. -- 2. Камышевъ, Александръ Михайловичъ (съ 19 ноября 1867 г.). -- 3. Петровъ, Николай Ивановичъ (съ 16 сентября 1881 г.). / [note, 4 lines, printed directly under entry 3, deeper indent than the entry text:] Прикомандированъ къ Монтировочной части для исполненія обязанностей помощника машиниста Маріинскаго театра 1 февраля 1899 г.  ||  RIGHT COLUMN (top), next group, heading 'И. об. помощниковъ режиссера:' -- 1. Усачевъ, Александръ Кузьмичъ (съ 6 іюня 1881 г.). -- 2. Ѳомичевъ, Александръ Павловичъ (съ 14 іюня 1879 г. по 1 іюля 1899 г. и съ 1 декабря 1899 г.).  [then heading 'Артистки:']",
+  "confidence": "clear",
+  "doubtful_letters": "",
+  "crop_file": "crops/TASK_C.png",
+  "note": "The 'Прикомандированъ...' note is under entry 3 (Петровъ): it follows his date line with no gap, is the last thing in the left column, and entry 2 (Камышевъ) is separated from it by a blank line and all of entry 3. The '† 19 ноября 1899 г.' line is under entry 1 (Блау). No note under entry 2. Line breaks of the note: Монтировоч-/ной ... обязанно-/стей ... Маріин-/скаго. Ѳомичевъ begins with fita. Crops: TASK_C.png (left), TASK_C_right.png, TASK_C_fomichev5x.png"
+ }
+]

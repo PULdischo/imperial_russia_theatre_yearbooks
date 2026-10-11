@@ -14104,3 +14104,16 @@ where season = '1900-01' and city ilike 'Mos%' and date_undate between '1901-01-
 ```
 
 Result: 1,755 annotated events (822 distinct annotations), saved as docs/jubilees_obituaries/build/repertoire_annotations.csv; 172 carry jubilee, farewell or memorial wording. 58 dated catalogue notices are confirmed by an annotation naming the person on the same date; 122 annotated occasions were not in the catalogue. The Bolshoi row for 23 Jan 1901 reads «Прощальный бенефисъ г-жи Крутиковой.» (the stored review text has 25 January; the review scan prints 23). Season-stat notes: none names an occasion the annotations lack; the 1909-10 notes give «24 января—прощальный спектакль балерины Трефиловой» and «11 января 1909 г.» for Кюи where the Repertoire has 11 Jan 1910.
+
+## 2026-10-11 — the letter Є/є in roster data, before and after the fix
+
+```sql
+SELECT count(*) FROM raw.person_entry WHERE family_name SIMILAR TO '.*[Єє].*' OR patronymic SIMILAR TO '.*[Єє].*' OR credit_summary_text SIMILAR TO '.*[Єє].*';
+SELECT l.entry_id, e.family_name, p.display_name FROM entities.person_link l JOIN raw.person_entry e USING (entry_id)
+JOIN entities.person p ON p.person_id = l.person_id WHERE e.page_id = 'balletartists_1899-00_SP_p000' ORDER BY 1;
+```
+
+Result: before, 28 raw fields on 17 pages (found by scanning the raw JSON); after, 0. On
+balletartists_1899-00_SP_p000 every entry is linked to the person of its own name after the
+stray row was removed (e007 Петровъ, e008 Усачевъ, e009 Ѳомичевъ, e010 Аистова …); the phantom
+person 37dd8b11 no longer exists. raw.person_entry 23,979 rows.
