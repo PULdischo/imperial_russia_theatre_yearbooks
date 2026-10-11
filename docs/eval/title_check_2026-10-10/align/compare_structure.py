@@ -57,10 +57,13 @@ def main():
     pages = sorted({r["page_id"] for _, r in reads})
     con = duckdb.connect(str(ROOT / "outputs/full_run/imperial_theaters.duckdb"), read_only=True)
     stored = defaultdict(list)  # (page, theater) -> [(label, event_id, time_of_day)]
+    # the tail of a spread was stored under its own page id when the page was photographed separately
+    ALIAS = {"repertoire_1890-91_p015": "repertoire_1890-91_pair014", "repertoire_1890-91_p023": "repertoire_1890-91_pair024"}
+    want = set(pages) | set(ALIAS)
     for pid, th, dt, ev, tod in con.execute(
         "select page_id, theater, date_text, event_id, time_of_day from raw.event_entry where page_id in (select unnest(?)) order by event_id",
-        [pages]).fetchall():
-        stored[(pid, theater(th))].append((norm_label(dt), ev, tod))
+        [sorted(want)]).fetchall():
+        stored[(ALIAS.get(pid, pid), theater(th))].append((norm_label(dt), ev, tod))
     read = defaultdict(list)
     for fn, r in reads:
         try:
