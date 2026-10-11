@@ -14130,3 +14130,45 @@ SELECT count(*) FROM raw.event_entry_performance WHERE performance_title SIMILAR
 Result: 16 printings (Малый 1894; Михайловскій and Александринскій 1909-11); 15 were stored
 "боецъ" and one "боєцъ" (17 Feb 1910). After the fix: one work, 16 performances; 0 titles
 contain Є/є.
+
+## 2026-10-11 — shared-page bleed in the mention layer (RG: "address")
+
+It was **81 mentions over 52 blocks in 11 reviews**, not the 4 I reported
+yesterday. My earlier query looked for a *dated* season heading
+(`ОБЗОРЪ СЕЗОНА … 1910`) and so found only the one page that has one. The
+real rule — the one `build_bilingual.py` has used since 2026-10-06 — keys
+on the plain section heading `балетъ` / `опера` / `драма`.
+
+```sql
+SELECT p.season, p.city, p.genre, count(*) FROM entities.review_mention m
+JOIN raw.review_page p USING (page_id) WHERE m.block_id = any(?) GROUP BY 1,2,3;
+```
+1895-96 Moscow 12, 1891-92 SP 12, 1894-95 SP 11, 1910-11 SP 9, 1897-98 SP 8,
+1912-13 SP 8, 1895-96 SP 6, 1893-94 Moscow 5, 1910-11 Moscow 4,
+1894-95 Moscow 3, 1892-93 Moscow 3.
+
+**The rule existed and was correct; it just lived in one script.** The
+presentation layer dropped these paragraphs while the mention layer went on
+attributing their names to the wrong review — `Г. Петровскій въ роли
+судебнаго слѣдователя`, out of a Tolstoy/Meyerhold drama notice, counted as
+a 1910-11 Moscow *ballet* person. Moved to `pipeline/review_sections.py`;
+`build_bilingual.py` and `match_review_mentions.py` now share one
+definition.
+
+Kept exactly as written, exceptions and all: **paragraphs only**, because
+three reviews open with a plate caption belonging to the review it
+introduces and 1910-11 Moscow Ballet would otherwise lose its own parent
+title. Nothing is destroyed — `merged_full/review_block.csv` still holds
+every block and this is a read-time filter.
+
+| | before | after |
+|---|---|---|
+| `entities.review_mention` | 27,422 | **27,333** |
+| blocks scanned | 3,143 | 3,109 (34 skipped) |
+| resolved | 63.8% | **64.0%** |
+| `research.review_assertion` | 1,952 | 1,952 |
+
+`Петровскій` 1 → 0; the drama tail of `review_1910-11_MSK_ballet_p000`
+carries 0 mentions; the 9 review-sourced dancers still resolve 20 of 20;
+no dangling references. The refactor is behaviour-preserving —
+regenerating the bilingual files gives byte-identical output.

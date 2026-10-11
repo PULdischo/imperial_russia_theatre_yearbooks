@@ -75,6 +75,9 @@ HYPHEN_BREAK = re.compile(r"(?<![\dIVXLCDM])([^\s-])-\s+")
 WS = re.compile(r"\s+")
 
 
+from review_sections import foreign_block_indices  # noqa: E402
+
+
 def fold(s: str) -> str:
     """Orthography-fold and lowercase, for dictionary lookup only."""
     return unicodedata.normalize("NFC", s).translate(FOLD).lower()
@@ -283,6 +286,36 @@ ROLE_PERF = re.compile(r"([А-ЯЀ-ЏІѲѴ][^—–\n;]{1,60}?)\s*[—–]\s*"
                        r"[А-ЯЀ-ЏІѲѴ][\wА-Яа-яЀ-Џъѣіѳѵ'’-]+(?:\s+\d+-[яй])?)")
 # a list keeps going across these
 LIST_GLUE = re.compile(r"^\s*(,|и|и\s|;|\s)+$")
+
+
+
+def foreign_block_ids(reviews_dir: Path) -> set[str]:
+    """block_ids that belong to the review on the other side of a shared page."""
+    with open(reviews_dir / "review_page.csv", encoding="utf-8") as f:
+        pages = {r["page_id"]: r for r in csv.DictReader(f)}
+    by_page: dict[str, list[dict]] = collections.defaultdict(list)
+    with open(reviews_dir / "review_block.csv", encoding="utf-8") as f:
+        for b in csv.DictReader(f):
+            by_page[b["page_id"]].append(b)
+    for pid in by_page:
+        by_page[pid].sort(key=lambda b: int(b["block_index"]))
+
+    def pno(p: str) -> int:
+        m = re.search(r"_p(\d+)$", p)
+        return int(m.group(1)) if m else 0
+
+    reviews: dict[tuple, list[str]] = collections.defaultdict(list)
+    for pid, p in pages.items():
+        reviews[(p["season"], p["city"], p["genre"])].append(pid)
+    out: set[str] = set()
+    for (_s, _c, genre), pids in reviews.items():
+        pids = sorted(pids, key=pno)
+        for i, pid in enumerate(pids):
+            for bi in foreign_block_indices(
+                    by_page[pid], is_first_page=(i == 0),
+                    is_last_page=(i == len(pids) - 1), genre=genre):
+                out.add(by_page[pid][bi]["block_id"])
+    return out
 
 
 class Lexicon:
@@ -840,13 +873,25 @@ def main() -> None:
     if a.limit_pages:
         keep = dict(sorted(keep.items())[:a.limit_pages])
 
+    # Blocks belonging to the review on the OTHER side of a shared printed
+    # page. The bilingual layer has dropped these since 2026-10-06; the
+    # mention layer had not, so names from a drama notice sitting above a
+    # ballet heading were being attributed to the ballet review's season and
+    # genre -- "Г. Петровскій въ роли судебнаго слѣдователя", out of the
+    # Tolstoy/Meyerhold column, counted as a 1910-11 Moscow ballet person.
+    # One rule now, in pipeline/review_sections.py.
+    foreign_blocks = foreign_block_ids(a.reviews_dir)
+
     rows: list[dict] = []
     unknowns: list[dict] = []
-    n_blocks = 0
+    n_blocks = n_foreign = 0
     with open(a.reviews_dir / "review_block.csv", encoding="utf-8") as f:
         for b in csv.DictReader(f):
             page = keep.get(b["page_id"])
             if not page:
+                continue
+            if b["block_id"] in foreign_blocks:
+                n_foreign += 1
                 continue
             raw = b["text"] or b["caption_text"] or ""
             if not raw.strip():
@@ -962,6 +1007,9 @@ def main() -> None:
     ambiguous = sum(1 for r in rows if r["candidates_n"] > 1)
     unres = sum(1 for r in rows if r["candidates_n"] == 0)
     print(f"\n{len(keep):,} pages | {n_blocks:,} blocks -> {len(rows):,} mentions")
+    if n_foreign:
+        print(f"  ({n_foreign} block(s) skipped as a neighbouring review's "
+              f"run-on across a shared page)")
     print(f"  resolved to one entity : {resolved:,} ({100*resolved/max(len(rows),1):.1f}%)")
     print(f"  ambiguous (>1 candidate): {ambiguous:,}")
     print(f"  unresolved (0)         : {unres:,}")
