@@ -14341,3 +14341,17 @@ Result: G1: review_1910-11_SP_ballet_p006__b003 prints "2-е дѣйствіе «
 Repertoire's "3-е д.". B1: review_1904-05_SP_ballet_p012__b004 says the corps-de-ballet benefit of 13 Feb 1905 was the 207th
 „Дочь Фараона“, agreeing with the list; the Repertoire event (Маріинскій evening, 8750 р. 70 к.) has the benefit heading and
 no works; research.production row has work_id NULL, n_matched_works 0.
+
+## 2026-10-11 — after the shift-cascade fix: counts and the three pages (issue #151 follow-up 14)
+
+```sql
+SELECT count(*) FROM raw.event_entry;            -- and raw.event_entry_performance, research.event, research.performance, research.work, research.person
+SELECT r.event_id, r.date_text, r.time_of_day, r.receipts_text, e.date, e.date_confidence
+FROM raw.event_entry r JOIN research.event e USING (event_id)
+WHERE r.page_id = ? AND r.theater LIKE ? ORDER BY r.event_id;   -- (p012, Михайловскій%), (p018, Александринскій%)
+```
+
+Result: raw.event_entry 29,995 -> 29,993; raw.event_entry_performance 30,844 -> 30,840; research.event 32,828 -> 32,826;
+research.performance 30,843 -> 30,839; research.work 3,065 and research.person 3,225 unchanged. p012 Михайловскій: 11 events,
+15 Понед. 605 р. — к. ... 20 Суббота 2026 р. 50 к., 21 Воскр. 600 р. 50 к., all date_confidence verified. p018 Александринскій:
+16 events, 18 Суббота has no figure, 19-29 each carry the figure printed on that row, all verified. person_link 0 shift blocks.
