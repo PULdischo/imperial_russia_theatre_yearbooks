@@ -251,3 +251,13 @@ Every posting sentence in print, and the individual exceptions inside them:
   «Ѳеодоровна», Семеновъ «Прохоровичъ» -- that volume is careless with names.
 - **Left in the queue for RG (12 pairs, 9 groups):** Адамовъ, Михаилъ; Аѳанасьева, Вѣра; Чичелева, Елизавета; Иманъ
   Юрій/Юлій; Межакова/Лежакова; Дюжикова, Римма; Розай, Георгій; Грибенъ; Голласъ.
+
+## PAUSED 2026-10-12 (session limit) -- where to resume
+The nine queue cases are being taken one at a time with RG, each with page evidence.
+- 1. Адамовъ, Михаилъ: MERGED (transfer to Moscow printed; `person_merge_manual.py`).
+- 2. Аѳанасьева, Вѣра: evidence presented (query_log 2026-10-12), recommendation merge + uncertain-list note; **RG has not answered**.
+- 3-9 not yet presented: Чичелева, Елизавета; Иманъ Юрій/Юлій; Межакова/Лежакова; Дюжикова, Римма; Розай, Георгій; Грибенъ; Голласъ.
+Tools: `docs/eval/person_merge_manual.py <survivor> <losers> "<reason>" [--write]`, then `docs/eval/rebuild_after_person_merge.sh`.
+State: 2,564 live persons; 10 pairs pending; 70 graduate-only records (24 are the class of 1910-11).
+Open besides the queue: the three surname-only Petersburg guest records (Гельцеръ x2, Балашова); «Гримальди, Генріэтта» SP 1899-00;
+9 unmatched Petersburg graduates of 1909; the M8/M9 worklists were never triaged; research_dataset.sqlite not rebuilt, nothing published to HF/Cloud Run.
