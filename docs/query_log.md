@@ -14733,3 +14733,26 @@ carry their own link as well, and all 11 agree on the QID — no conflicts.
 A link pointing at a superseded person is the **normal, expected** state
 after a merge: the link records who was identified, the chain resolves who
 that is now. Nothing to repoint, nothing to fix.
+
+## 2026-10-12 — two of the four closing items (RG: "yes go ahead")
+
+**The degenerate page is fixed, and needed no billed call.**
+`review_1894-95_MSK_opera_p032` (printed p. 312) carries **two** plates with
+two different captions; the model looped on the first one's tail, emitting
+`Гроппіуса).` twelve times as block 2. So block 2 was real content, not a
+spurious duplicate. Read off the scan at 3x and supplied through
+`docs/eval/review_text_corrections.csv`:
+
+> Сцена 2-й картины 5-го дѣйствія оперы Дж. Мейербера—«Гугеноты».
+> (Декорація К. Ѳ. Вальца).
+
+Karl Fyodorovich Walz on the second plate, against Gropius on the first.
+`degenerate_repetition` should now be 0.
+
+**The duplicate folio is the print's own.** `review_1900-01_SP_ballet_p021`
+and `p023` both print **174** at the foot — p023 zoomed to 9x, digits
+unmistakable, not 176. p022 between them prints 175, so the printed
+sequence is 174, 175, 174, and the next numbered page is 179. **Both
+transcriptions are correct**; nothing to fix. Logged in
+`docs/eval/genuine_print_typos.md`, and the `duplicate_folio` flag is a
+true positive about the printing that should be accepted.
