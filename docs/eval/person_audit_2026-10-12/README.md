@@ -73,3 +73,42 @@ have no company record; the Graduates lists also carry drama and opera pupils, s
 
 ## Not done
 No scan reading beyond what is cited; no merges, splits or raw corrections; M8 and M9 not triaged.
+
+## Follow-up, same day (RG: yes to all three recommendations)
+
+**Applied.** `build_entities.py` gained `build_shared_start_candidates` and `_keep_apart_pairs`;
+`merge_duplicate_persons` is now pairwise, logs its merges (`confirmed_duplicate`) and refuses a group that a hand
+split keeps apart; `_repoint_all_superseded` also repoints production-credit links.
+- Никитинъ, Алексѣй Никитичъ is two men again (`docs/eval/person_resplit_nikitin_2026-10-12.py`) and survives a rebuild.
+- 296 pairs auto-confirmed, 295 records absorbed: entities.person 3060 -> 2765, research.person 2863.
+  Listed in `auto_confirmed_shared_start_dryrun.csv`. In 57 the first names differ by a letter (Софія/Софья,
+  Лидія/Лилія, Надежда/Належда); in none do two printed patronymics differ. Not scan-checked.
+- Queue for RG: 176 pending pairs in 159 groups (`outputs/full_run/person_candidate_review.csv`): 90 with a shared
+  start date that did not fit cleanly, 86 graduates matched by name and graduation year only.
+- Backup `outputs/full_run/imperial_theaters.pre_sharedstart_pass_2026-10-12.duckdb`. Receipts, appearances and
+  Wikidata links (176) unchanged; 0 orphan links, 0 shift blocks; review mentions resolved 21,307 -> 21,403.
+
+**Corrections to the report above.**
+- Section 1c said the unlinked graduates include "drama and opera pupils". Wrong (RG): every Graduates entry is a
+  ballet pupil of the Petersburg or Moscow school. And 213 was inflated: this audit read RAW name fields, and
+  three classes (1891-92, 1893-94, 1897-98) have «Surname, Name.» glued into the surname field. The pipeline pass
+  reads the cleaned names. Now: 465 people have a Graduates entry, 293 are joined to a company record, 100 have a
+  pending candidate, 72 have none (24 are the class of 1910-11, with no later volume; 19 are 1900-01; 9 are 1908-09).
+- The Petersburg classes of 1897 and 1898 are printed «съ 1-го мая» in the Graduates list and «съ 1 іюня» in the
+  company list (Фокинъ, Егорова, Обуховъ, Гордова), so they share no date and are matched by year, pending.
+- The two splits RG reverted: Николаевъ, Иванъ Николаевичъ now holds only three ProductionTeam rows (1908-11).
+  The 1909-10 Moscow ballet row that raised the question no longer exists as a Николаевъ entry (that page was
+  re-read in a later audit; what replaced it was not traced), so uncertain-list entry 3 is stale. Логиновъ is
+  unchanged: one record, listed in both cities in 1905-06, start «1894» in Petersburg and «1904» in Moscow.
+
+**Scan checks (item 3).**
+| Row | Print | Finding |
+|---|---|---|
+| Кякштъ, Лидія, SP 1902-03 no. 45 | «Кякштъ, Лидія Юрьевна (съ 1 іюня 1902 г.)» (reduced size) | print variant: Юрьевна for Георгіевна (Юрій = Георгій) |
+| Петипа 2-я, Надежда, SP 1904-05 no. 80 | «Петипа 2-я, Надежда Васильевна (съ 1 сентября 1892 г.)» (full zoom) | genuine print error for Маріусовна; raw had dropped «2-я» (fixed) |
+| Мендесъ, Джульетта, Moscow 1907-08 no. 53 | «Мендесъ, Джульетта Іосифовна (съ 1 октября 1896 г.)» (reduced size) | one woman; earlier rows carry her ordinal in the patronymic field |
+| «Гельцеръ, (Китри)», SP 1909-10 | a section «Танцовала на Петербургской сценѣ Императорскаго театра: Гельцеръ. Донъ-Кихотъ (Китри—1)» (reduced size) | a guest listing; the role was in the patronymic field (fixed). Three such surname-only guest records stay separate people: Гельцеръ 1909-10, Гельцеръ and Балашова 1910-11 |
+| Эрлеръ, "Александръ", SP 1904-05 no. 93 | «Эрлеръ, Александръ Александровичъ» with specks beside the name (reduced size) | quotation marks were specks (fixed) |
+| Бурина 1 я, Moscow 1909-10 no. 9 | «Бурина 1 я, Клавдія Александровна» (full zoom) | printed without the hyphen; left verbatim |
+| Исаева, Татьяна Михайловна, SP 1908-09 | nos. 31 AND 38 both print «Исаева, Татьяна Михайловна (съ 1 іюня 1894 г.)» (full zoom) | the volume lists her twice; no. 38 stands in the К's |
+Raw fixes: `docs/eval/raw_fix_audit_rows_2026-10-12.py` (3 rows, backup `outputs/full_run_pre_promote_backup_2026-10-12_audit_rawfix/`).

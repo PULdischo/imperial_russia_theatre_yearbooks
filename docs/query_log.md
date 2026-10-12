@@ -15998,3 +15998,37 @@ WHERE canonical_title IN ('Der Clavierlehrer','Le bonheur qui passe','Die siebze
 ```
 
 Result: entities.work 3,022 -> 3,000 (22 gone, 0 new, 31 changed in title, genre or count), research.work 3,021 -> 2,999, crosswalk 675 -> 697; all other table counts equal to the backup; live persons 3,059 and the full person list identical; receipts sum 3,207,899,755 kopecks unchanged; flags 1. 14 Latin-script works still end in a genre, all with a different value in the genre field (e.g. «Les Fresnay, com. nouv.» [com.] 4, «Die Rabensteinerin, Schausp.» [dr.] 2). Der Clavierlehrer 3, Die siebzehnhährigen 3, Le bonheur qui passe 4, Vous n'avez rien à déclarer 8, Le coeur d'Angélique 4 and «Le coeur d'Angélique com.» 1.
+
+## 2026-10-12 — After the shared-start pass: verification, graduates, the two reverted splits
+
+```sql
+ATTACH 'outputs/full_run/imperial_theaters.pre_sharedstart_pass_2026-10-12.duckdb' AS bak (READ_ONLY);
+SELECT count(*) FROM entities.person WHERE superseded_by_person_id IS NULL;           -- and bak.
+SELECT count(*) FROM research.person WHERE wikidata_qid IS NOT NULL;                  -- and bak.
+SELECT sum(receipts_total_kopecks) FROM research.event;                               -- and bak.
+SELECT match_reason, status, count(*) FROM entities.person_candidate GROUP BY ALL;
+SELECT status, match_reason, count(*) FROM entities.person_merge_log
+WHERE match_reason IN ('name_variant_shared_start','same_name') GROUP BY ALL;
+SELECT count(*) FROM research.production_credit pc LEFT JOIN research.person p USING (person_id)
+WHERE p.person_id IS NULL;
+
+-- graduates
+SELECT pe.heading_path, pe.institution, count(*) FROM raw.person_entry pe
+WHERE pe.entity_type = 'Graduates' GROUP BY ALL;
+SELECT pl.person_id FROM entities.person_link pl JOIN raw.person_entry pe USING (entry_id)
+GROUP BY 1 HAVING bool_and(pe.entity_type = 'Graduates');
+SELECT sp.season, s.start_date_text, count(*) FROM raw.person_entry pe
+JOIN raw.source_pages sp ON sp.page_id = pe.page_id LEFT JOIN raw.person_entry_service s USING (entry_id)
+WHERE sp.entity_type = 'Graduates' AND sp.season IN ('1896-97','1897-98','1900-01','1908-09') GROUP BY ALL;
+
+-- the reverted splits
+-- timelines of 4240d1 (Логиновъ) and 29c456 (Николаевъ); entries balletartists_1909-10_MSK_p000__e0%
+```
+
+Result: live persons 3059 -> 2765 (296 pairs confirmed_tenure, 295 absorbed; Никитинъ re-split adds one);
+Wikidata-linked 176 and receipts unchanged; no orphaned credit. Queue: 90 name_variant_shared_start and 86
+graduate_year_match pending. Every Graduates heading is a ballet department list of the Petersburg or Moscow
+school. 465 people have a Graduates entry; 172 are graduate-only, 100 of those with a pending candidate.
+The 1897-98 Petersburg class is stored «съ 1-го мая 1898 года» against company rows «1 іюня 1898 г.».
+Николаевъ, Иванъ Николаевичъ (29c456) has three ProductionTeam rows only; balletartists_1909-10_MSK_p000 now
+holds Горскій and Тихоміровъ at e001-e002 and no Николаевъ. Логиновъ: 8 rows, both cities in 1905-06.

@@ -1758,8 +1758,11 @@ def build_shared_start_candidates(con: duckdb.DuckDBPyConnection,
         status = prior_status.get(str(cid), "pending")
         out.append((str(cid), a, b, ea["disp"], eb["disp"], 1.0, "name_variant_shared_start", status,
                     "shared_start_date" if corroborated else "shared_start_date_needs_review", sd))
-    # Graduates whose class has NO printed start date (the Moscow lists often
-    # give none; 96 graduate-only records on 2026-10-12). There is no shared
+    # Graduates with no shared-date partner. Either the class has NO printed
+    # start date (the Moscow lists often give none), or the Graduates list and
+    # the company list print different days: the Petersburg classes of 1897
+    # and 1898 leave school "съ 1-го мая" and stand in the company list "съ
+    # 1 іюня" -- Фокинъ, Егорова and Обуховъ among them. There is no shared
     # date to find, so the nearest thing is asked for instead: the same name,
     # a company record that first appears that season or the next, and a
     # start date in the year the class left school. Never auto-confirmed --
@@ -1770,7 +1773,7 @@ def build_shared_start_candidates(con: duckdb.DuckDBPyConnection,
     n_grad = 0
     paired = {x for pair in raw_pairs for x in pair}
     for g, eg in info.items():
-        if eg["starts"] or company(eg) or not eg["first"]:
+        if company(eg) or not eg["first"] or g in paired:
             continue
         grad = max(x for v in eg["lists"].values() for x in v)
         year = str(int(seasons[grad][:4]) + 1)
@@ -1789,8 +1792,8 @@ def build_shared_start_candidates(con: duckdb.DuckDBPyConnection,
             if pair in already or pair in decided or pair in apart:
                 continue
             a, b = (g, c) if g < c else (c, g)
-            cid = uuid.uuid5(NAMESPACE, f"graduate_no_date:{a}|{b}")
-            out.append((str(cid), a, b, info[a]["disp"], info[b]["disp"], 1.0, "graduate_no_date",
+            cid = uuid.uuid5(NAMESPACE, f"graduate_year_match:{a}|{b}")
+            out.append((str(cid), a, b, info[a]["disp"], info[b]["disp"], 1.0, "graduate_year_match",
                         prior_status.get(str(cid), "pending"), "start_year_matches_graduation", year))
             n_grad += 1
     if out:
@@ -1798,7 +1801,7 @@ def build_shared_start_candidates(con: duckdb.DuckDBPyConnection,
             "INSERT INTO entities.person_candidate VALUES (?,?,?,?,?,?,?,?,?,?)", out)
     print(f"  + {len(out) - n_grad} shared-start-date pair(s) Tier 2 never compares: {n_ok} fit together and "
           f"are corroborated, {len(out) - n_grad - n_ok} left pending for review; "
-          f"+ {n_grad} undated graduate(s) matched to a company record by name and year, all pending")
+          f"+ {n_grad} graduate(s) with no shared date matched to a company record by name and year, all pending")
 
 
 def apply_tenure_corroboration(con: duckdb.DuckDBPyConnection) -> None:
