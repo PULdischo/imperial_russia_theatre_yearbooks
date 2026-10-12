@@ -16184,3 +16184,44 @@ Result: one later Moscow candidate each (Гримальди, Генріетта;
 Викторовичъ is last listed 1897-98; Щегловъ, Василій Семеновичъ). Live persons 2765 -> 2727 -> 2724. After the
 raw fix 22 entries and 22 service rows differ from the backup, 0 links; every restored date parses; the page's
 only undated rows are the four bare surnames. Receipts unchanged.
+
+## 2026-10-12 — After the divertissement cell check: the two corrected cells, parent genre, totals
+
+```sql
+SELECT p.verbatim_title, p.verbatim_genre FROM research.performance p JOIN research.event e USING(event_id) JOIN research.theater t USING(theater_id)
+WHERE e.date='1905-04-20' AND t.canonical_name='Маріинскій' ORDER BY p.performance_order;
+SELECT w.canonical_title, w.canonical_genre, w.appearance_count, p.canonical_title, p.canonical_genre
+FROM research.work w LEFT JOIN research.work p ON p.work_id=w.excerpt_of_work_id WHERE w.canonical_title LIKE '%Виноградная лоза%';
+SELECT w.canonical_title, w.canonical_genre, w.parent_genre, w.excerpt_of_work_id IS NOT NULL, w.appearance_count FROM research.work w
+WHERE w.canonical_title IN ('2-е д. бал. Коппелія','Концертный и балетный дивертиссемент');
+SELECT w.canonical_genre, count(*) FROM research.performance p JOIN research.work w USING(work_id) WHERE lower(w.canonical_title) LIKE '%дивертис%' GROUP BY 1;
+SELECT parent_genre, count(*) FROM research.work GROUP BY 1;
+```
+
+Result: 20 Apr 1905 Маріинскій is now Парижскій рынокъ [бал.], Ацисъ и Галатея [бал.], Дивертиссементъ. «2-я карт. 1-го д. бал. Виноградная лоза» (1 performance) is an excerpt of the curated parent «Виноградная лоза» [бал.] (0 performances of its own). «2-е д. бал. Коппелія» has 4 performances and is linked as an excerpt (parent genre ballet). «Концертный и балетный дивертиссемент»: no genre, parent genre ballet. Divertissement performances by research genre: бал. 63, бал.-феерія 1, none 40. Parent genre ballet on 201 works. Snapshot comparison across the rebuild: research.performance 30,850 -> 30,849 (the removed «Фаустъ»), entities.work row count unchanged at the cell fix and +1 for the curated parent, live persons 2,724 and the person list identical, receipts sum 3,207,899,755 kopecks, flags 1, person_link 0 shift blocks.
+
+## 2026-10-12 — How are concerts recorded in the research layer?
+
+```sql
+SELECT canonical_title, canonical_genre, appearance_count FROM research.work
+WHERE lower(canonical_title) LIKE '%концерт%' OR lower(coalesce(canonical_genre,'')) LIKE '%концерт%' ORDER BY 3 DESC;
+SELECT count(*), sum(appearance_count) FROM research.work
+WHERE lower(canonical_title) LIKE '%концерт%' OR lower(coalesce(canonical_genre,'')) LIKE '%концерт%';
+SELECT count(*) FILTER (WHERE EXISTS (SELECT 1 FROM raw.event_entry_performance p WHERE p.event_id=e.event_id)), count(*)
+FROM analysis.event_entry e WHERE lower(annotation) LIKE '%концерт%';
+```
+
+Result: 10 works, 23 performances, have «концерт» in the title (Концертное отдѣленіе 9, Симфоническій концертъ 5, Концертъ 2, seven one-off titles incl. «Концертный и балетный дивертиссемент»); none has a genre, and no work has a concert genre. 92 events have «концерт» in the annotation; 83 of them have no work at all (annotation-only).
+
+## 2026-10-12 — The graduate_year_match queue: evidence, decisions, verification
+
+Queries (inline scripts, read-only): for each pending graduate_year_match pair, the graduate's class, school and
+printed class date; the company record's first season, list and start dates in the graduation year; how many
+candidates each side has; per class, graduates linked / queued / neither. Saved as
+docs/eval/person_audit_2026-10-12/Q_graduate_year_match.csv. Then the entries of Семеновъ, Николай; Мосолова,
+Зинаида; Бекъ; Сергѣева, Наталія; and every Сергѣева in the 1909-11 lists.
+
+Result: 86 pairs; 80 with one candidate each and nothing flagged beyond the May/June day; 6 pairs in four cases.
+After the merges: live persons 2639, research.person 2737; 70 graduate-only records; 88 pairs pending, all
+name_variant_shared_start; receipts 3,207,899,755 over 32,806 events and 176 Wikidata links, unchanged; 0 shift
+blocks; review mentions resolved 21,400. The only Сергѣева in the 1909-11 lists is the Moscow Наталія Никифоровна.

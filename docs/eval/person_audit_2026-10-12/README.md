@@ -195,3 +195,17 @@ the matches rest on surname, class and the «съ 1 сентября 1901 г.» 
   The four rows still undated on that page are the bare surnames, which print none.
 - After all of it: 174 pairs pending (88 shared-start, 86 graduate year-match); 154 graduate-only records;
   receipts and Wikidata links unchanged; 0 orphans, 0 shift blocks; review mentions resolved 21,393.
+
+### The graduate queue (86 pairs), decided 2026-10-12
+`Q_graduate_year_match.csv` holds the evidence table. RG: merge the 80 clean pairs
+(`person_merge_graduates_year_match_2026-10-12.py`); Семеновъ, Николай -> Николай Прокопьевичъ, the Petersburg
+musician rejected; Мосолова, Зинаида + «Зинаида Алексѣевна» -> Мосолова 2-я, Зинаида Александровна
+(`person_merge_semenov_mosolova_2026-10-12.py`); Бекъ (transfer printed) and Сергѣева (likely transfer, uncertain
+list #31) (`person_merge_bek_sergeeva_2026-10-12.py`). Live persons 2724 -> 2639. Graduate-only records 154 -> 70.
+- Scans read: the Petersburg class pages of 1897 and 1898 really print «съ 1-го мая»; the company lists have
+  «съ 1 іюня» (extraction). 1891-92 p001 carries Бекъ's transfer; 1908-09 p000 has no transfer for anyone.
+- Queue now: 88 name_variant_shared_start pairs. The graduate queue is empty.
+- Seen, not done: «Ѳокинъ, Михаилъ Федоровичъ» 1908-09..1910-11 is a separate record from Фокинъ, Михаилъ
+  Михайловичъ; «Семеновъ, Николай Прохоровичъ» (Moscow 1908-09) fills the one gap in Николай Прокопьевичъ's run;
+  9 of the 16 Petersburg graduates of 1909 have no company record by any rule; a production database write by
+  another session happened mid-afternoon (lock at 14:00), backups retaken after it.
