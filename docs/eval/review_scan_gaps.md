@@ -38,18 +38,23 @@ exactly one number. Every `+1` discontinuity in the corpus is one of these:
 | `review_1890-91_SP_all_p027` | 146–147 | *(blank)* | procession list |
 | `review_1892-93_SP_ballet_p005` | 224–225 | 224 | yes |
 | `review_1893-94_SP_opera_p004` | 192–193 | 192 | yes |
-| `review_1894-95_SP_opera_p014` | 180–181 | 180 | **thin — see below** |
+| `review_1894-95_SP_opera_p014` | 180–181 | 180 | one inset paragraph — double-page engraving, checked |
 | `review_1896-97_SP_ballet_p018` | 248–249 | 248 | yes |
 | `review_1900-01_SP_ballet_p025` | 180–181 | *(blank)* | none — double-page engraving |
 
-Both leaves' text is present in all but one case, so these are **not**
-content gaps. Treat a spread as two folios before calling anything missing.
+Both leaves' text is present in every case, so these are **not** content
+gaps. Treat a spread as two folios before calling anything missing.
 
-**Open worklist item (not chased):** `review_1894-95_SP_opera_p014` holds
-only 222 characters of prose for two printed pages, against a median of
-1,444 for a *single* page. The boundary flows, so nothing is lost at the
-page turn, but the middle of the spread looks under-captured. Worth a scan
-check; it needs no new scanning.
+**Checked and closed 2026-10-12:** `review_1894-95_SP_opera_p014` holds only
+222 characters of prose for two printed pages, against a median of 1,444 for
+a *single* page — which looked under-captured. It is not. The spread is a
+single double-page engraving, «Вѣковой лѣсъ», Perminov's act 2 décor for
+«Дубровскій», with one short paragraph inset into the middle of the picture,
+and those 222 characters are the whole of it. Both folios (`— 180 —`,
+`— 181 —`) are printed at the feet and the two-line caption is complete.
+**The lesson is about the heuristic:** characters-per-page says nothing on a
+spread that is mostly illustration, so do not treat a thin spread as a
+capture defect without looking at it.
 
 ## Confirmed content gap — 1
 
