@@ -14990,3 +14990,163 @@ is present on the `p018` spread (`— 248 —` and `— 249 —` both visible at
 foot), so the UMich request is cancelled; 1890-91 was already cleared. Only
 1900-01 (UIllinois) stands, and for **two** pages (176–177) rather than
 three. Full writeup: `docs/eval/review_scan_gaps.md`.
+
+## 2026-10-12 — Season review folios: recovery, and the spread-scan artefact
+
+Against `outputs/reviews/merged_full/` (CSV, pre-DB), plus the page images.
+
+**1. How many review pages lack a usable `printed_folio`, and do they have text?**
+
+```python
+# merged_full/review_page.csv x review_block.csv
+blank = [p for p in pages if not (p["printed_folio"] or "").strip()]
+with_text = [p for p in blank if any(b["block_type"] in
+             ("paragraph","enumerated_list","cast_list") and b["text"].strip()
+             for b in blocks[p["page_id"]])]
+```
+
+Before: 1074 pages, **77** with no usable folio (76 blank + one dirty
+`'248 —'`), of which **17 had text**. After the six scan-verified recoveries
+and the normalisation: **70** blank, **8** with text; filled 994 → **1004**.
+
+**2. Folio discontinuities not explained by unnumbered leaves.** Walk each
+(season, city, genre) in page order; flag where `next − prev − 1` ≠ the
+number of unnumbered leaves between them. Before the fix: 9. After: 9, but
+every `+1` resolved to a **two-page spread scan**.
+
+**3. Which scans are spreads?** Aspect ratio against the corpus median
+(0.801); a spread runs 1.44–1.78.
+
+Result: **6** — `1890-91_SP_all_p027`, `1892-93_SP_ballet_p005`,
+`1893-94_SP_opera_p004`, `1894-95_SP_opera_p014`, `1896-97_SP_ballet_p018`,
+`1900-01_SP_ballet_p025`. These account for **all six** `+1` jumps, so each
+is two folios on one leaf, not a missing page.
+
+**4. Does the mechanical text-flow test find the known gaps?** No — this is
+why the folio check is the one that matters. Run over all consecutive page
+pairs it produced **125** flags, essentially all false (Russian capitalised
+surnames and em-dash role separators), and **neither** real gap appeared.
+Restricted to a true word-break hyphen it gave 8, of which 7 were benign
+(`Донъ-Кихотъ`, `Сень-Леонъ`, and continuations sitting a few blocks lower).
+Flow confirms a gap; it does not find one.
+
+**Net effect on the re-request list: three volumes → one.** 1896-97 p. 249
+is present on the `p018` spread (`— 248 —` and `— 249 —` both visible at the
+foot), so the UMich request is cancelled; 1890-91 was already cleared. Only
+1900-01 (UIllinois) stands, and for **two** pages (176–177) rather than
+three. Full writeup: `docs/eval/review_scan_gaps.md`.
+
+## 2026-10-12 — Ивановъ Иванъ: service notes, jubilee/obituary catalogue, review text
+
+```sql
+SELECT sp.season, pe.page_id, pe.heading_path, pe.family_name, pe.patronymic, pe.rank_or_title,
+       s.period_order, s.start_date_text, s.end_date_text, s.end_type, pe.tenure_note_text
+FROM entities.person_link pl
+JOIN raw.person_entry pe ON pe.entry_id = pl.entry_id
+JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+WHERE substr(cast(pl.person_id AS varchar),1,6) IN ('d5f838','7dd0bc','3aa7d7')
+  AND sp.season >= '1902-03' ORDER BY 1, 3;
+
+SELECT page_id, substr(text, greatest(1, position('Иванов' in text)-150), 420)
+FROM raw.review_block
+WHERE page_id LIKE '%SP_ballet%'
+  AND (regexp_matches(text, 'Иванов[ъаоу][^.]{0,80}(Григорьевич|помощник|режиссер)')
+       OR regexp_matches(text, '(помощник[ъаоу]? режиссера)[^.]{0,80}Иванов'));
+```
+
+Result: the 1904-05 artists' row for Иванъ Николаевичъ carries the note
+«(Онъ же помощникъ режиссера балетной труппы съ 24 февраля 1904 г.)».
+Григорьевичъ's last artists' row (1903-04) has no end date or leaving note.
+The review search returns one block, about Л. Ивановъ's ballet, not either
+man. `grep '"Ивановъ[ ,]'` on jubilees_obituaries_all_entries.csv finds no
+entry for Иванъ Григорьевичъ or Иванъ Николаевичъ. Scan of
+balletartists_1906-07_SP_p000 at full zoom: «1. Мартьяновъ, Александръ
+Александровичъ (съ 1 іюня 1893 г.). 2. Ивановъ 1-й, Иванъ Григорьевичъ
+(съ 1 іюня 1886 г.).»
+
+## 2026-10-12 — Does Иванъ Григорьевичъ Ивановъ have a leaving note? How common are silent gaps?
+
+```sql
+WITH e AS (
+  SELECT pl.person_id, sp.season,
+         bool_or(s.end_date_text IS NOT NULL OR pe.tenure_note_text ILIKE '%остав%'
+                 OR pe.tenure_note_text LIKE '%†%' OR pe.tenure_note_text ILIKE '%перевед%'
+                 OR pe.tenure_note_text ILIKE '%уволен%') has_end
+  FROM entities.person_link pl JOIN raw.person_entry pe ON pe.entry_id = pl.entry_id
+  JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+  LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+  WHERE sp.entity_type = 'BalletArtists' AND sp.city = 'SP' GROUP BY ALL),
+l AS (SELECT person_id, max(season) last_season FROM e GROUP BY 1)
+SELECT e.has_end, count(*) FROM l JOIN e ON e.person_id = l.person_id AND e.season = l.last_season
+WHERE l.last_season BETWEEN '1895-96' AND '1907-08' GROUP BY 1;
+
+SELECT pe.first_name, pe.patronymic, list(DISTINCT sp.season ORDER BY sp.season)
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+WHERE sp.entity_type = 'BalletArtists' AND sp.city = 'SP' AND pe.family_name LIKE 'Ивановъ%'
+  AND sp.season BETWEEN '1902-03' AND '1907-08' GROUP BY ALL ORDER BY 1, 2;
+```
+
+Result: of SP ballet person records whose last season falls 1895-96..1907-08,
+97 end with a leaving/death/transfer note and 158 do not (inflated by
+fragmented records, so only indicative). Ивановъ men by season: Александръ
+Николаевичъ and Николай Константиновичъ are absent in 1904-05 and back in
+1905-06; Константинъ Константиновичъ is absent in 1905-06 and back in
+1906-07; Иванъ Николаевичъ is absent in 1906-07 only; Иванъ Григорьевичъ is
+absent 1904-05 and 1905-06, present 1906-07. Scans (reduced size):
+1903-04 p006 no. 23 Григорьевичъ, 32 appearances, no leaving note; 1904-05
+p007 prints only two Ивановъ men (nos. 26-27).
+
+## 2026-10-12 — Every Чіарлоне entry in the corpus
+
+```sql
+SELECT substr(cast(pl.person_id AS varchar),1,6), sp.season, sp.city, pe.page_id, pe.list_number,
+       pe.family_name, pe.first_name, pe.patronymic, pe.instrument, pe.rank_or_title,
+       s.start_date_text, s.end_date_text, pe.tenure_note_text
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+LEFT JOIN entities.person_link pl ON pl.entry_id = pe.entry_id
+WHERE pe.family_name LIKE 'Ч_арлон%' OR pe.family_name LIKE 'Чиарлон%' OR pe.family_name LIKE 'Чарлон%'
+ORDER BY 2, 3, 5;
+```
+
+Result: 31 entries, two harpists, both «съ 1 апрѣля 1886 г.». Виргинія is
+«1-я» in Moscow 1890-91..1895-96 (4e6cf9); her 1895-96 row carries «Съ 1
+іюня 1896 года переведена въ С.-Петербургскій оркестръ оперы и балета»; she
+is Виргинія Михайловна in SP 1896-97..1904-05 (974ba5), Солистка Двора from
+1897-98, «Оставила службу 1 ноября 1904 г.». Джанина / Джаннина («2-я»
+until 1895-96) stays in Moscow to 1905-06 and is split over two records
+(b7652f, 671bc6) by the spelling of her first name.
+
+## 2026-10-12 — Season review quality-flag census, after the folio fixes
+
+```
+uv run python pipeline/quality_checks_reviews.py \
+    --parsed-dir outputs/reviews/merged_full \
+    --manifest outputs/reviews/manifest.csv \
+    --images-dir outputs/reviews/images --out <flags.csv>
+```
+
+**`--images-dir` is not optional.** Without it, spread detection is off and
+the run reports 151 flags with `missing_page` 8; with it, 282 flags with
+`missing_page` 2. The extra 131 are two image-only checks (`thin_page` 132,
+`no_text_but_inked` 6) that simply do not run otherwise. The 1896-97 "missing
+p. 249" came from a run without it.
+
+1,074 pages, 282 flags after fixing the unnumbered-spread allowance:
+
+| check | n | status |
+|---|---|---|
+| `thin_page` | 132 | documented noise (`docs/season_reviews.md`); 129 are plate pages with no prose block |
+| `no_folio` | 70 | 62 plates (correct — unnumbered inserts), 8 with text |
+| `zero_uncertainty` | 33 | documented, accepted |
+| `duplicate_block_across_files` | 26 | the shared-page bleed, handled |
+| `letter_spacing_leak` | 12 | documented baseline |
+| `no_text_but_inked` | 6 | **untriaged** — all 6 plate pages, "check for a sideways caption" |
+| `missing_page` | 2 | both the one real gap (1900-01 folios 176–177) |
+| `duplicate_folio` | 1 | the same gap: folio 174 printed twice |
+| `folio_on_plate_page` | 0 | cleared by the fix |
+
+Of the 8 `no_folio`-with-text: `1890-91_SP_all_p027` is the known 146-147
+double-page plate, so it is explained. The other 7 are mostly review-section
+opening pages, which commonly carry no folio — not audited one by one.
