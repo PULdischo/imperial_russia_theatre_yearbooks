@@ -14695,3 +14695,17 @@ not others.
 **Pre-existing, not caused by this and not fixed here:** 19
 `person_wikidata_link` rows point at a superseded person. Same count before
 and after.
+
+## 2026-10-12 — printed-season-totals residuals across all seasons; where would a figure re-read pay? (issue #151 follow-up 19)
+
+```sql
+SELECT season, city, printed_count, printed_count_with_receipts, repertoire_sessions, repertoire_days, repertoire_sessions_with_receipts,
+       receipts_minus_printed_kopecks, repertoire_charity_text_receipts_kopecks FROM research.season_stat_check ORDER BY 1, 2;
+SELECT season, city, count(*), count(*) FILTER (WHERE annotation IS NULL OR annotation='') FROM analysis.event_entry
+ WHERE event_status='performed' AND receipts_total_kopecks IS NULL AND EXISTS (SELECT 1 FROM raw.event_entry_performance p WHERE p.event_id=analysis.event_entry.event_id) GROUP BY 1,2;
+-- exact subset-sum of stored figures (1-2 of any session, 3-4 of annotated sessions) against each |residual| >= 400
+```
+
+Result: counts track sessions (printed - sessions within +-3 in 1891-98; days far lower everywhere). Figure-less performed sessions == printed figure shortfall
+in 1893-94..1897-98 (e.g. 1893-94 SP 24/24, Moscow 14/14; 1895-96 Moscow 28/28); fold-obscured list: 92 cells, 1892-93 29, 1893-94 24,
+1894-95 11, 1895-96 15, 1897-98 11, 1901-02 1, 1906-07 1. Exact subset match found only for 1898-99 SP +7,515.00 (three Михайловскій benefits).
