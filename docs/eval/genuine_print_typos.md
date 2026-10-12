@@ -369,6 +369,7 @@ All read at zoom by an audit agent; those marked * I also saw on the scan myself
 - `musicians_1895-96_MSK_p003` Колосовъ: tenure "(съ 1 **декабри** 1894 г.)" (я -> и). Stored as "декабря" (normalized) -- left.
 - `musicians_1898-99_SP_p004` Ѳедоровъ Петръ and `musicians_1904-05_SP_p005` Подгорбунскій: "Оставилъ службу **:** сентября/февраля" -- the day digit is a colon-like damaged glyph.
 - `musicians_1909-10_MSK_p002` Петрушевъ: "18 **сентябрб** 1903 г." (б for я); stored normalized to "сентября".
+- `musicians_1898-99_SP_p006` (printed foot of the right column), the heading over Новоселовъ: "Старшій библіотекарь Центральной Музыкальной **Ббліотеки**." (the и dropped; the line above has "библіотекарь" in full). Stored as printed; scan read 2026-10-12.
 - `musicians_1906-07_SP_p003` Степановъ*: "съ 31 марта **1802** г." (presumably 1892); his 1905-06 entry is blotted but reads "31 ма?та 1892".
 - `musicians_1906-07_SP_p004` Алексѣевъ: "Вторая **скричка**"; `musicians_1909-10_SP_p000` Лачиновъ: "Первая **срипка**"; `musicians_1909-10_SP_p003` Помазанскій: "**Аленсандровичъ**".
 - `musicians_1903-04_MSK_p001` Зайцевъ: "Оставилъ службу 1 сентября **1905** г." in the 1903-04 volume (print anomaly).

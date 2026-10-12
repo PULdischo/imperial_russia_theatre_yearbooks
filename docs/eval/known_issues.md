@@ -24,6 +24,115 @@ goal is catching and triaging them cheaply every run, not eliminating them.
 - **needs source check** — plausibly a real model error, but not confirmed
   against the scanned page yet
 
+## Status index (as of 2026-10-12)
+
+The `Status:` lines on the early entries (roughly #1-#67) were written when
+each issue was found and were mostly not updated; the closures are recorded in
+later entries. This index is the current list of what is still outstanding.
+Anything not listed here is closed or superseded. Built by tracing every
+open/deferred/not-fixed marker forward through the ledger; items marked
+*(checked)* were also verified against `outputs/full_run` on 2026-10-12
+(queries in `docs/query_log.md`, same date). Update this list when an item
+closes, and add new open items here as well as in their own entry.
+
+**Waiting on RG's decision**
+
+- #141: the 7 annotations that name works. Deferred by RG (2026-10-09) to the
+  research-layer stage, to decide with all excerpt/gala/mixed-event questions.
+- #114/#146: comedy-ballets («ком.-бал.», 12 rows) and plain «Дивертиссементъ»:
+  which section they belong in.
+- `entities.person_candidate`: 0 pending, 19 rejected *(checked after the
+  2026-10-12 rebuild)*. The five pairs pending that morning (#125 Девильеръ,
+  Фонъ-Бооль, Раманова, Воронцовъ, Боронцовъ) were worked by a parallel
+  session the same day; Боронцовъ is parked until the 1911-12 volume.
+- #132 Зандинъ Михаилъ: still two live records, Ивановичъ (1906-07..1909-10)
+  and Павловичъ (1910-11) *(checked)*. Лебедевъ Иванъ and Бардюкъ/Бордюгъ from
+  the same note are merged.
+- #45: Васильева Анна and Симонова Антонина, each two no-patronymic Graduates
+  records not linked to either dancer of that name *(checked)*. Ильина Елена
+  and Новикова Екатерина are merged.
+- Жукова Вѣра Васильевна (#45): two live TheaterSchoolStaff records, 1901-02..
+  1909-10 and 1910-11 *(checked)*; looks like an unmerged 1910-11 duplicate.
+  The 1890-91 dancer «Жукова 1-я» is a third record.
+- #134: Ѳедорова 3-я, Марія Дмитріевна kept merged, left open *(checked)*.
+- #133: Шиманъ is a proposed roster link only (uncertain_person_identities.md
+  #21); Давыдовъ/Давидовъ on the 1907-08 SP ballet list not zoomed.
+- #101: `docs/eval/ballet_productions_review.md`: the uncertain readings and
+  print slips still wait for RG's confirmation.
+- #25: `docs/eval/confirmed_credit_corrections.csv` (50 rows) was never applied
+  as a batch and no script reads it. 33 of the 50 now hold the corrected value
+  anyway (via #150) *(checked, rough match)*; 5 look uncorrected in the credit
+  row (Константиновъ 1893-94 SP p006, Нелидова 1894-95 MSK p003, Чудиновъ
+  1897-98 MSK p007, Лѣсновская 1899-00 MSK p003, Пахомова 1904-05 SP p003);
+  the other 12 not confirmed either way.
+- #137/#150: stray `* 2.json` duplicate files in `outputs/full_run/raw/`
+  (ignored by the pipeline, not deleted).
+
+**Needs the physical volume**
+
+- #151: the 92 fold-hidden receipts cells
+  (`rcpt_fold_obscured_cells.csv`; Binding Fold Log).
+- #151 fu 12: 6 Jan 1893 Moscow Малый, «1?80 р. 31 к.» (1380 or 1880).
+- #115: Пахита, 1897-98 p012, act digit (2 or 3).
+- #93: 1908-09 p009 Александринскій 11 Суббота, «15?2 р. 34 к.».
+- #151 fu 21: 1899-00 p024 Маріинскій 2 Dec, damaged glyph (2839/2859).
+- #118: spellings Паяда/Наяда, Ваядерка/Баядерка, Пригалъ/Привалъ.
+
+**Workable from the scans, not done**
+
+- Genre carried in `performance_title` and not yet separated, after the two
+  2026-10-12 passes (entry at the end of this file): about 76 Cyrillic titles
+  with an empty genre field («весенняя сказка», «возможный случай», «принцѣ
+  Датскомъ»: often part of the title, left on purpose) and 138 titles whose
+  ending differs from the genre field (about 76 by a final period only; the
+  rest real disagreements such as «com. nouv.» / «com.», «Schausp.» / «dr.»).
+  14 Latin-script works still display with the genre in the title for that
+  reason («Les Fresnay, com. nouv.» [com.]). **PARKED (RG, 2026-10-12):** not
+  important now, since none of these are ballets; to be fixed eventually, and
+  each class will need a rule from RG then.
+- #150: 203 credit rows whose label or role does not occur in their own
+  summary text (not examined); 33 summaries with unbalanced parentheses
+  *(checked)*; the ь/ъ word-ending rate in credit summaries unmeasured. None
+  of these fields reaches a `research.*` table.
+- #151 fu 16-21: small receipts residuals against the printed season totals
+  (1899-00, 1903-04; benefit nights of 1904-05 SP, 1906-07 Moscow, 1901-02
+  SP); the 7 Apr 1904 Михайловскій session the yearbook leaves out.
+- #151: `performance_order` counts an annotation-first or benefit-heading line
+  as work 1, so it is not always the order of the titled works.
+- #112: 1903-04 p012 Александринскій: 8 of 14 titles still carry the genre in
+  the title text (FIXED 2026-10-12); 1904-05 p038 `month_text` «Мартъ» where the
+  header prints «марта» (cosmetic: «Мартъ» is stored 201 times corpus-wide and
+  the date does not depend on it; left).
+- #40/#42: start-date conflicts with no further avenue: Тивольская (1877 vs
+  1887), Леонтьевъ Леонидъ Сергѣевичъ (1894 vs 1903), Поливановъ Василій
+  Егоровичъ (1868 / 1886 / 1889) *(checked: all still in the data)*.
+- #30: 41 BalletArtists rows carry a parenthesised alias or stage name inside
+  a name field *(checked)*; never given its own treatment.
+- #98-#100: `entities.work_genre_candidate` (74 rows, 37 title groups
+  *(checked)*) is open-ended by design.
+
+**Parked or never decided (methodology)**
+
+- #50/#51: row-boundary detection, on hold since 2026-08-27; not needed since
+  column-wise extraction and the full sweeps (#69, #79, #82).
+- #4: verbatim punctuation convention between gold and model, never decided.
+- #21: `eval_against_gold.py` compares roster rows by position, not identity.
+- #53: `_refresh_canonical_fields()` majority-vote logic.
+
+**Confirmed closed on 2026-10-12, although an earlier entry leaves them open**
+*(all checked)*: non-person rows and «см.»/«Оставилъ службу» stubs in the name
+fields (#26/#28/#29: 0 rows); ordinal alone in `first_name` (#35/#45: 75 raw
+rows, 0 after the analysis-layer clean); the misfiled Moscow drama block and
+the note-as-row on Musicians 1908-09 SP (#130); library-row institutions
+(#130: all 62 rows under «Оркестры»); the 49 `credit_summary_not_additive`
+flags (#150: `quality_flags.csv` holds 1 flag, Исаева); the capellmeister /
+conductor rows (#130: Богуславъ, Рамзе, Келеръ, Галкинъ, Арендсъ and Шульцъ
+all have rows under a Капельмейстеръ/Дирижеръ heading) and the 1908-10
+running-head institutions (#130 secondary batch 3, DONE); the two-city
+`category_credit_count_clean` repair (#150: `build_duckdb.py` is block-aware); the
+mixed-script words in Roster name fields (#150: 44 fields, fixed 2026-10-12,
+0 left).
+
 ---
 
 ## 1. Non-deterministic recall on dark/blank cells (Repertoire)
@@ -22767,3 +22876,18 @@ The list's one date is printed "феваля 13" (a genuine print typo, scan-che
   - *The fold-hidden list re-keyed (`rekey_fold_cells.py`, rewrites `rcpt_fold_obscured_cells.csv`).* Each of the 92 rows is re-matched on its page by first title (or old id), date within a day, and an empty or partly-read figure; exactly one session qualifies for every row. 8 event ids changed. The file now carries the stable key (`page_id`, `date_text`, `theater`, `time_of_day`) beside the current `event_id`, the stored works and figure, and `in_fold_log`. 90 cells have no stored figure; 2 have a figure with one unread digit (1901-02 p021 Большой 30 Dec 1901 «1?31 р. 35 к.», 1906-07 p030 Михайловскій 6 Feb 1907 «11?7 р. 08 к.»; damaged type, not folds).
   - *Binding Fold Log brought up to the list.* 62 of the 92 cells were already in the log; the other **30 cells were added as 15 new cards** (1892-93: 16 cells on pair002, pair006, pair014, pair016, pair018, pair024; 1893-94: 4; 1894-95: 2; 1895-96: 1; 1897-98: 6; 1901-02: 1). No existing card or saved entry was changed (the log is now 49 cards, 101 cell entries); `in_fold_log` is `yes` for all 92. (The audit's "24 not in the log" was the count among the 74 cells that matched automatically; the full count is 30.)
   - *Trap, for any list keyed on `__sNNN`:* the id is the session's position in the page's array and moves whenever a session is deleted or inserted above it. Key worklists on page + date + theater + first title.
+
+## Genre repeated at the end of Repertoire titles removed (861 titles, 74 pages); Roster mixed-script name fields fixed (44) -- APPLIED, 2026-10-12 (RG: "let's do option 1" / "go ahead")
+
+Script `docs/eval/raw_fix_mixed_script_names_2026-10-12.py` (dry run first; field edits only, no entry or session added, removed or moved). Backup `outputs/full_run_pre_promote_backup_2026-10-12_genresuffix` (DB, parsed, flags, the 103 raw files). Queries in `docs/query_log.md`, 2026-10-12.
+
+- **Genre suffix.** Where `work_title` ended with ", " + exactly the text of the `genre` field, the suffix was removed (the print has the genre once; the model had put it in both fields). 861 titles on 74 pages, 16 seasons. `build_entities` already stripped a one-word Cyrillic genre from the matching key, so most of these were on the right work already; the gain is in Latin-script and multi-word genres. `entities.work` 3,064 -> 3,022 (46 records gone, 4 new; 49 crosswalk rows), `research.work` 3,063 -> 3,021; no work is left whose display title ends in its own genre (was 89). Merged, for example: «Le Trait du Parthe» 6 + 43 = 49, «Привидѣнія» 5 + 15 (now 19 + one-off fused rows), «Fidèle», «Divorçons», «Heimath». Events, performances, work links, receipts sum (3,207,899,755 kopecks) and every other table count unchanged.
+- **Display genre changed on 6 merged works** (majority printed form after the merge): La griffe com. nouv. -> pièce, Mouton com. nouv. -> com. (4 + 4 merged), Geneviève com. -> com.-vaud., Сафо тр. -> траг., На премію сц. -> ком., Парики оперетта -> оперетта. (period only).
+- **Curation file touched:** `work_excerpt_links.csv` keyed one row on the suffixed title («Каменный гость, сц.»), which stopped `build_entities`; the row is now title «Каменный гость» + excerpt genre «сц.» and links the same 4 performances to Pushkin's play as before.
+- **Side effect, NOT fixed:** 4 works that had shared a record with a suffixed twin are now apart from it, because their own rows carry the genre in the title with an EMPTY genre field, which the strip does not touch: «Der Clavierlehrer, Lustsp.» (2), «Le bonheur qui passe, com.» (3), «Die siebzehnhährigen, Schausp.» (2), «Vous n'avez rien à declarer, vaud.» (2); also «Le coeur d'Angélique com.» (1, no comma). The class is larger than these: 155 titles on 54 pages carry a genre with the genre field empty, and 138 carry one that differs from the genre field (see the status index).
+- **Roster.** The 44 mixed-script fields (issue #150 open item 5): eight names read on the scan (Тистрова, Гавликовскій, Спрышинская, Грекова 1-я and 2-я, Алексне, Никифоровна, Антиповна), 17 script-only (Latin a / c / I for the identical Cyrillic letter: Милютина, Чернятина, Матятина, Кандина, Августина, Іосифъ), 20 note words taken from the same entry's credit summary (read in #150). «Ббліотеки» (`musicians_1898-99_SP_p006`) is the print's own slip, now in genuine_print_typos.md. Two misreads seen on the same crops: «Жуліевъ» -> «Жуляевъ» (1897-98 MSK p005), Гердтъ's start year 1866 -> 1860 (1903-04 SP p006). No mixed-script word is left in these fields. Persons unchanged (3,059 live, same records and entry counts; the affected rows were already linked to the right person), person_link 0 shift blocks, quality flags 1.
+- Not re-read: 1906-07 MSK p005 Бычковъ's note now has «дивертиссментѣ» from his credit summary, where his neighbours have «дивертисментѣ».
+- `rebuild_after_raw_edit.sh` stops silently after `build_duckdb` when `build_entities` exits early (its `grep` finds nothing under `set -e`); run `build_entities` by hand to see the message.
+- `research_dataset.sqlite`, HF and Cloud Run not rebuilt. Not committed.
+
+**Follow-up, same day (RG: "yes"): Latin-script genre moved out of the title where the genre field was empty -- APPLIED.** Script `docs/eval/raw_fix_genre_in_title_latin_2026-10-12.py` (dry run with `-v` lists every title). Rule: genre empty; the title ends ", <token>"; the token is all Latin script and is a genre the corpus prints in a genre field elsewhere; the token goes into `genre` as printed. 79 titles on 13 pages (pièce nouv. 19, com. 18, com. nouv. 12, Schausp. 5, vaud. nouv. 5, pièce. 5, and smaller). Backup `outputs/full_run_pre_promote_backup_2026-10-12_genrelatin` (DB + the 13 raw files). `entities.work` 3,022 -> 3,000 (22 records joined to their twins, none new; crosswalk 675 -> 697), `research.work` 3,021 -> 2,999. The four works the first pass had left apart are one record each again: «Der Clavierlehrer» 3, «Die siebzehnhährigen» 3, «Le bonheur qui passe» 4, «Vous n'avez rien à déclarer» 8. One display title changed case with its merge («Une Visite de Noces» -> «Une visite de noces», 8 + 2). Persons identical record for record, receipts sum, events, performances, links, candidate queue and every other table count unchanged; quality flags 1. Not touched: the Cyrillic endings and the titles whose genre field holds something else (status index). «Le coeur d'Angélique com.» (no comma, 1 performance) is still its own work. Not committed; sqlite / HF / Cloud Run not rebuilt.

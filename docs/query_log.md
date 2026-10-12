@@ -15967,3 +15967,34 @@ Result: 3,059 live people audited. 298 clusters share a name and a printed start
 them. One mis-merge regression confirmed (Никитинъ, Алексѣй Никитичъ: the 2026-10-05 split undone by
 merge_duplicate_persons); 10 of 13 logged splits hold, 2 were reverted on RG's decision. Counts per signal
 and what was and was not triaged: docs/eval/person_audit_2026-10-12/README.md.
+
+## 2026-10-12 — Before/after check of the genre-suffix strip and the Roster mixed-script fixes
+
+Snapshots before and after the rebuild (table counts, live persons, receipts sum, every `entities.work` row, every live person with its entry count), compared row by row; the backup DB compared table by table.
+
+```sql
+select count(*) from <each of raw.person_entry, raw.event_entry, raw.event_entry_performance, entities.work, entities.person, entities.person_link, entities.work_link, research.event, research.performance, research.work, research.person, research.person_appearance>;
+select count(*) from entities.person where superseded_by_person_id is null;
+select sum(receipts_total_kopecks) from research.event;
+select work_id, canonical_title, coalesce(canonical_genre,''), appearance_count from entities.work order by 1;
+select p.person_id, p.display_name, (select count(*) from entities.person_link l where l.person_id=p.person_id) from entities.person p where superseded_by_person_id is null order by 1;
+SELECT count(*) FROM raw.event_entry_performance WHERE genre IS NOT NULL AND length(genre)>1 AND performance_title LIKE '%, ' || genre;
+SELECT count(*), sum(appearance_count) FROM entities.work WHERE canonical_genre IS NOT NULL AND canonical_title LIKE '%, ' || canonical_genre;
+SELECT start_date_undate FROM raw.person_entry_service WHERE entry_id='balletartists_1903-04_SP_p006__e009';
+SELECT w.canonical_title, w.canonical_genre, w.appearance_count FROM entities.work w WHERE w.canonical_genre IS NULL AND regexp_matches(w.canonical_title, ', (com|vaud|pièce|Schausp|Lustsp|Schwank|Comödie)[^,]*$') ORDER BY 3 DESC;
+```
+
+Result: entities.work 3,064 -> 3,022 (46 gone, 4 new), research.work 3,063 -> 3,021, work_id_crosswalk 629 -> 675 (49 dated 2026-10-12); every other table in raw/analysis/entities/research has the same row count as the backup. Live persons 3,059 before and after, no person record or entry count changed. Receipts sum 3,207,899,755 kopecks both times. Titles ending in their own genre: 861 -> 0; works displayed with their own genre as suffix: 89 -> 0. Гердтъ 1903-04 start date now 1860-11-22. Mixed-script name/heading/note fields: 44 -> 0. 33 Latin-script works have no genre and a genre-like title ending (largest: «La veille du bonheur, com. nouv.» 5). person_candidate: 19 rejected, 0 pending. Quality flags 1.
+
+## 2026-10-12 — Before/after check of the Latin genre-in-title move (79 titles, 13 pages)
+
+Same snapshot comparison as the previous entry (table counts, live persons, receipts sum, every `entities.work` row, every live person), plus:
+
+```sql
+SELECT w.canonical_title, w.canonical_genre, w.appearance_count FROM entities.work w
+WHERE regexp_matches(w.canonical_title, ', (com|vaud|pièce|Schausp|Lustsp|Schwank|Comödie)[^,]*$') ORDER BY 3 DESC;
+SELECT canonical_title, canonical_genre, appearance_count FROM entities.work
+WHERE canonical_title IN ('Der Clavierlehrer','Le bonheur qui passe','Die siebzehnhährigen') OR canonical_title LIKE 'Vous n''avez rien%' OR canonical_title LIKE 'Le coeur d''Ang%';
+```
+
+Result: entities.work 3,022 -> 3,000 (22 gone, 0 new, 31 changed in title, genre or count), research.work 3,021 -> 2,999, crosswalk 675 -> 697; all other table counts equal to the backup; live persons 3,059 and the full person list identical; receipts sum 3,207,899,755 kopecks unchanged; flags 1. 14 Latin-script works still end in a genre, all with a different value in the genre field (e.g. «Les Fresnay, com. nouv.» [com.] 4, «Die Rabensteinerin, Schausp.» [dr.] 2). Der Clavierlehrer 3, Die siebzehnhährigen 3, Le bonheur qui passe 4, Vous n'avez rien à déclarer 8, Le coeur d'Angélique 4 and «Le coeur d'Angélique com.» 1.
