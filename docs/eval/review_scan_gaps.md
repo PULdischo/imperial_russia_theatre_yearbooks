@@ -93,3 +93,32 @@ alone), **1908-09** 12, **1910-11** 34.
 reviews are scanned (expected the week of 2026-10-19), so the billed
 translation run happens once, over the whole set.** Do not propose it
 piecemeal before then.
+
+## The `no_folio` flags are not all "correct" — two extraction defects
+
+`docs/season_reviews_fields.md` says of `printed_folio`: *"76 blanks are
+correct — plates and tailpiece pages carry none."* Checked 2026-10-12, that
+is not right.
+
+Of the 77 pages with no usable folio:
+
+- **17 have TEXT**, not just a plate. A text page normally carries a folio.
+- **49 sit inside a folio gap** — i.e. the numbering jumps across them, so
+  each is silently credited with a number it may not hold. That is what lets
+  a real missing page hide: the gap arithmetic balances.
+- only **14** sit between consecutive folios, which is the genuinely
+  unnumbered-insert case the doc describes.
+
+Two distinct causes found:
+
+1. **Rotated pages.** `review_1890-91_SP_all_p028` is a sideways plate that
+   **does** print 148 at the foot; capture missed it because the page is
+   rotated 90°.
+2. **Dirty values.** `review_1896-97_SP_ballet_p018` stores
+   `printed_folio = '248 —'`, with a trailing em-dash, so every numeric
+   test treats it as absent.
+
+Neither is a scanning problem — the numbers are on the page in the scans we
+already hold. Fixing them is a parser change, and until it is made, folio
+arithmetic over these reviews understates how many pages are unaccounted
+for.
