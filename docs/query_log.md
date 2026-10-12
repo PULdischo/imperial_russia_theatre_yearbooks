@@ -15484,3 +15484,226 @@ only «Екатерина Львовна» in the whole corpus. Ten Moscow balle
 list with 1 Aug 1898. No Graduates page exists for 1907-08, so her class
 cannot be checked. One review mention: review_1910-11_MSK_ballet_p001,
 «г-жи Ѳедорова 2-я и Девильеръ» in Баядерка.
+
+## 2026-10-12 — Known-issues status check: are the ledger's unconfirmed open items still open in the data?
+
+Read-only verification batch run while building the status index at the top of `docs/eval/known_issues.md`. One query per item.
+
+**Q1 person_candidate status**
+
+```sql
+SELECT status, count(*) FROM entities.person_candidate GROUP BY 1 ORDER BY 1
+```
+
+Result: pending 5, rejected 19.
+
+**Q2 pending pairs**
+
+```sql
+SELECT display_1, display_2, match_reason FROM entities.person_candidate WHERE status='pending'
+```
+
+Result: Девильеръ/Давильеръ Екатерина Львовна; Фонъ-Бооль/Фонъ Бооль Николай Константиновичъ (listed in both directions); Раманова/Бажанова Марія; Воронцовъ/Боронцовъ Владиміръ.
+
+**Q3 Зандинъ/Лебедевъ Иванъ/Бардюкъ live persons**
+
+```sql
+SELECT p.person_id, p.display_name, p.first_attested_season, p.last_attested_season, p.superseded_by_person_id IS NOT NULL AS tombstone, (SELECT count(*) FROM entities.person_link l WHERE l.person_id=p.person_id) AS n_entries
+FROM entities.person p WHERE (p.canonical_family_name='Зандинъ') OR (p.canonical_family_name='Лебедевъ' AND p.canonical_first_name='Иванъ') OR p.canonical_family_name IN ('Бардюкъ','Бордюгъ') ORDER BY 2,3
+```
+
+Result: Зандинъ: two live records, Михаилъ Ивановичъ (1906-07..1909-10, 4 entries) and Михаилъ Павловичъ (1910-11, 1 entry). Лебедевъ Иванъ Васильевичъ is a tombstone; Афанасьевичъ is live with 4 entries (1907-08..1910-11), i.e. merged. Бардюкъ is a tombstone; Бордюгъ live with 3 entries, i.e. merged.
+
+**Q4 Graduates common-name pairs**
+
+```sql
+SELECT p.person_id, p.display_name, p.first_attested_season, p.last_attested_season, p.superseded_by_person_id IS NOT NULL AS tombstone,
+ (SELECT string_agg(DISTINCT e.entity_type, ',') FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) WHERE l.person_id=p.person_id) AS types,
+ (SELECT count(*) FROM entities.person_link l WHERE l.person_id=p.person_id) AS n
+FROM entities.person p WHERE (p.canonical_family_name,p.canonical_first_name) IN (('Васильева','Анна'),('Ильина','Елена'),('Новикова','Екатерина'),('Симонова','Антонина'),('Жукова','Вѣра')) ORDER BY 2,3
+```
+
+Result: Васильева Анна: two live one-entry Graduates records (1891-92, 1892-93) beside the dancers Анна Гордѣевна and Анна Николаевна -- still unlinked. Симонова Антонина: two live one-entry Graduates records (1893-94, 1897-98) beside Антонина Александровна and Антонина Петровна -- still unlinked. Ильина Елена and Новикова Екатерина: the no-patronymic Graduates records are tombstones (merged). Жукова Вѣра Васильевна: 'Жукова 1-я' BalletArtists 1890-91 (1 entry) is separate, and there are TWO live TheaterSchoolStaff records (1901-02..1909-10, 9 entries; 1910-11, 1 entry).
+
+**Q5 ordinal-only first_name (Павлова 2-я shape)**
+
+```sql
+SELECT entry_id, family_name, first_name, patronymic FROM raw.person_entry WHERE regexp_matches(first_name, '^[0-9]+-[йя]$') ORDER BY 1
+```
+
+Result: 75 raw rows still have an ordinal alone in first_name (verbatim model output).
+
+**Q5b same in analysis clean**
+
+```sql
+SELECT count(*) FROM analysis.person_entry WHERE regexp_matches(first_name_clean, '^[0-9]+-[йя]$')
+```
+
+Result: 0 -- the analysis layer cleans all of them.
+
+**Q6 non-person rows: Оставилъ службу / † / см. in name fields**
+
+```sql
+SELECT entity_type, count(*) FROM raw.person_entry WHERE family_name ILIKE 'Оставил%' OR family_name LIKE '†%' OR first_name ILIKE 'см.%' OR family_name ILIKE 'см.%' OR first_name ILIKE '%Оставил%' GROUP BY 1
+```
+
+Result: 0 rows.
+
+**Q6b rows**
+
+```sql
+SELECT entry_id, family_name, first_name, patronymic FROM raw.person_entry WHERE family_name ILIKE 'Оставил%' OR family_name LIKE '†%' OR first_name ILIKE 'см.%' OR family_name ILIKE 'см.%' OR first_name ILIKE '%Оставил%' LIMIT 20
+```
+
+Result: 0 rows.
+
+**Q7 rows with empty family_name by type**
+
+```sql
+SELECT entity_type, count(*) FROM raw.person_entry WHERE family_name IS NULL OR trim(family_name)='' GROUP BY 1 ORDER BY 2 DESC
+```
+
+Result: 0 rows.
+
+**Q8 parenthesised alias/stage name in name fields**
+
+```sql
+SELECT entity_type, count(*) FROM raw.person_entry WHERE family_name LIKE '%(%' OR first_name LIKE '%(%' OR patronymic LIKE '%(%' GROUP BY 1 ORDER BY 2 DESC
+```
+
+Result: BalletArtists 41, Musicians 1.
+
+**Q9 Musicians 1908-09 SP p004 e017-e025 + p002 e035**
+
+```sql
+SELECT entry_id, institution, heading_path, family_name, first_name FROM raw.person_entry WHERE entry_id BETWEEN 'musicians_1908-09_SP_p004__e015' AND 'musicians_1908-09_SP_p004__e027' OR entry_id IN ('musicians_1908-09_SP_p002__e034','musicians_1908-09_SP_p002__e035') ORDER BY 1
+```
+
+Result: p004 now ends at e016 (Юркевичъ) and p002 at e034: the misfiled block and the note-as-row are gone.
+
+**Q10 Musicians library rows**
+
+```sql
+SELECT sp.season, e.entry_id, e.institution, e.heading_path, e.family_name FROM raw.person_entry e JOIN raw.source_pages sp USING(page_id) WHERE e.entity_type='Musicians' AND (e.heading_path ILIKE '%библіотек%' OR e.institution ILIKE '%библ%' OR e.rank_or_title ILIKE '%библіотек%' OR e.tenure_note_text ILIKE '%библіотекар%') ORDER BY 1,2
+```
+
+Result: 62 rows; every librarian row now has institution 'Оркестры.' or 'Оркестры'. One heading_path has a Latin i ('Бблiотеки', 1898-99 SP p006 e030).
+
+**Q11 Repertoire 1904-05 p038/p042 month_text**
+
+```sql
+SELECT page_id, month_text, count(*) FROM raw.event_entry WHERE page_id IN ('repertoire_1904-05_p038','repertoire_1904-05_p042') GROUP BY 1,2 ORDER BY 1,2
+```
+
+Result: p038: Мартъ 13, Апрѣль 9, null 10. p042: апрѣля 9, Май 1, null 20. The 'Мартъ' on p042 is gone; p038 still has it.
+
+**Q11b month_text spellings corpus**
+
+```sql
+SELECT month_text, count(*) FROM raw.event_entry WHERE month_text ILIKE 'март%' GROUP BY 1 ORDER BY 2 DESC
+```
+
+Result: марта 456, Марта 204, Мартъ 201, мартъ 112, plus forms with a period.
+
+**Q12 1903-04 p012 Александринскій titles**
+
+```sql
+SELECT e.date_text, p.performance_title, p.genre FROM raw.event_entry e JOIN raw.event_entry_performance p USING(event_id) WHERE e.page_id='repertoire_1903-04_p012' AND e.theater ILIKE 'Александрин%' ORDER BY e.event_id, p.performance_order
+```
+
+Result: 14 performances; 8 still carry the genre inside performance_title (e.g. 'Мѣсяцъ въ деревнѣ, ком.').
+
+**Q13 mixed-script name fields (Latin letter inside a Cyrillic word)**
+
+```sql
+SELECT entity_type,
+ count(*) FILTER (WHERE regexp_matches(family_name,'[А-Яа-яѣѢіІѳѲѵ][A-Za-z]|[A-Za-z][А-Яа-яѣѢіІѳѲѵ]')) AS family,
+ count(*) FILTER (WHERE regexp_matches(first_name,'[А-Яа-яѣѢіІѳѲѵ][A-Za-z]|[A-Za-z][А-Яа-яѣѢіІѳѲѵ]')) AS first,
+ count(*) FILTER (WHERE regexp_matches(patronymic,'[А-Яа-яѣѢіІѳѲѵ][A-Za-z]|[A-Za-z][А-Яа-яѣѢіІѳѲѵ]')) AS patr,
+ count(*) FILTER (WHERE regexp_matches(heading_path,'[А-Яа-яѣѢіІѳѲѵ][A-Za-z]|[A-Za-z][А-Яа-яѣѢіІѳѲѵ]')) AS heading,
+ count(*) FILTER (WHERE regexp_matches(tenure_note_text,'[А-Яа-яѣѢіІѳѲѵ][A-Za-z]|[A-Za-z][А-Яа-яѣѢіІѳѲѵ]')) AS note
+FROM raw.person_entry GROUP BY 1 ORDER BY 1
+```
+
+Result: BalletArtists: family_name 19, first_name 2, patronymic 2, tenure_note_text 20. Musicians: heading_path 1. All other types 0.
+
+**Q14 Тивольская/Леонтьевъ/Поливановъ start dates**
+
+```sql
+SELECT p.display_name, s.start_date_undate, count(*) n, min(sp.season), max(sp.season) FROM entities.person p JOIN entities.person_link l USING(person_id) JOIN raw.person_entry_service s USING(entry_id) JOIN raw.person_entry e USING(entry_id) JOIN raw.source_pages sp USING(page_id)
+WHERE p.superseded_by_person_id IS NULL AND ((p.canonical_family_name='Тивольская') OR (p.canonical_family_name='Леонтьевъ' AND p.canonical_first_name='Леонидъ') OR (p.canonical_family_name='Поливановъ')) AND s.period_order=1 GROUP BY 1,2 ORDER BY 1,2
+```
+
+Result: Тивольская 1877-01-17 (1890-91..1893-94) vs 1887-01-17 (1894-95..1896-97); Леонтьевъ Леонидъ Сергѣевичъ 1903-06-01 (6) vs 1894-06-01 (2), plus a separate live 'Леонтьевъ, Леонидъ' (1902-03); Поливановъ Василій Егоровичъ 1868-12-23 (15) vs 1889-09-01 (1907-08) vs 1886-12-23 (1908-09), plus a live 'Василій Ивановичъ' (2 entries).
+
+**Q15 work_genre_candidate size**
+
+```sql
+SELECT count(*), count(DISTINCT title_key) FROM entities.work_genre_candidate
+```
+
+Result: 74 rows, 37 title groups.
+
+**Q16 Федорова Марія Дмитріевна**
+
+```sql
+SELECT p.person_id, p.display_name, p.first_attested_season, p.last_attested_season, (SELECT count(*) FROM entities.person_link l WHERE l.person_id=p.person_id) n FROM entities.person p WHERE p.canonical_family_name IN ('Ѳедорова','Федорова') AND p.canonical_first_name='Марія' AND p.superseded_by_person_id IS NULL
+```
+
+Result: One live record, 'Ѳедорова 3-я, Марія Дмитріевна', 1890-91..1907-08, 18 entries (still merged).
+
+**Q17 quality_flags.csv by check** (file read, not SQL: `outputs/full_run/quality_flags.csv`, count of rows per `check`)
+
+Result: 1 flag in total, `duplicate_person_on_page`. The 49 `credit_summary_not_additive` flags of issue #150 are gone.
+
+**Q18 the 50 rows of docs/eval/confirmed_credit_corrections.csv against current raw credits** (per CSV row)
+
+```sql
+SELECT e.entry_id, e.credit_summary_text, list(c.label || '=' || coalesce(CAST(c.category_credit_count AS VARCHAR),'') || '/' || coalesce(CAST(c.category_production_count AS VARCHAR),''))
+FROM raw.person_entry e LEFT JOIN raw.person_entry_credit c USING(entry_id)
+WHERE e.page_id=? AND e.family_name=? GROUP BY 1,2
+```
+
+Result: a rough match on label prefix and number. 33 of 50 now hold the corrected value in the credit row and the summary text; 2 entries were not found by surname (Матятина 1900-01 SP p003, Гиллертъ 1904-05 SP p006); the other 15 could not be confirmed by this matcher. Five of those look uncorrected in the row: Константиновъ 1893-94 SP p006, Нелидова 1894-95 MSK p003, Чудиновъ 1897-98 MSK p007, Лѣсновская 1899-00 MSK p003 (text correct, row still the old number) and Пахомова 1904-05 SP p003 (text and row both the old number). None of the 15 was checked by eye.
+
+**Q19 Musicians rows for the conductors named in issue #130's missing-rows list**
+
+```sql
+SELECT e.family_name, count(*), min(sp.season), max(sp.season), count(DISTINCT sp.season)
+FROM raw.person_entry e JOIN raw.source_pages sp USING(page_id)
+WHERE e.entity_type='Musicians' AND e.family_name IN ('Богуславъ','Рамзе','Галкинъ','Арендсъ','Келеръ','Шульцъ') GROUP BY 1 ORDER BY 1
+```
+
+Result: Арендсъ 17 rows / 16 seasons; Богуславъ 2 / 2; Галкинъ 17 / 17; Келеръ 31 / 13; Рамзе 5 / 5; Шульцъ 20 / 18. Row counts alone do not show whether the ~12 missing printed rows were added.
+
+**Q20 BalletArtists credit summaries with unbalanced parentheses**
+
+```sql
+SELECT count(*) FROM raw.person_entry WHERE entity_type='BalletArtists' AND credit_summary_text IS NOT NULL
+AND (length(credit_summary_text)-length(replace(credit_summary_text,'(','')))<>(length(credit_summary_text)-length(replace(credit_summary_text,')','')))
+```
+
+Result: 33 (same as issue #150 follow-up 4 reported).
+
+## 2026-10-12 — Фонъ-Бооль merged (three records): verification
+
+```sql
+SELECT display_name, first_attested_season, last_attested_season, wikidata_qid
+FROM research.person WHERE display_name LIKE 'Фонъ%Бооль%';
+
+SELECT sp.entity_type, sp.season, s.end_date_text
+FROM entities.person_link pl JOIN entities.person p USING (person_id)
+JOIN raw.person_entry pe USING (entry_id) JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+JOIN raw.person_entry_service s USING (entry_id)
+WHERE p.display_name LIKE 'Фонъ%Бооль%' AND s.end_date_text IS NOT NULL;
+
+SELECT sum(receipts_total_kopecks) FROM research.event;
+```
+
+Result: one person, «Фонъ-Бооль, Николай Константиновичъ», 1898-99..1910-11,
+22 entries, no Wikidata link. Both leaving dates are present on his record:
+Administrators 1910-11 «1 декабря 1910 г.» and TheaterSchoolStaff 1910-11
+«1 февраля 1910 г.». Receipts unchanged (3,207,899,755). Live persons 3062;
+2 candidate pairs still pending (Воронцовъ/Боронцовъ, Раманова/Бажанова).
+The same checks after the Девильеръ merge earlier: one person, 1908-09..
+1910-11, 3 entries; her one review mention resolves to her.
