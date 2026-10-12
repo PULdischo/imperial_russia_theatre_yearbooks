@@ -1,0 +1,58 @@
+# Missing pages in the Season Review scans, and who holds the volumes
+
+Established 2026-10-12, after RG pointed out that the scans have missing
+pages and I had filed the `missing_page` quality flags as "limits of the
+source" without reading them. The check had caught every one of these.
+
+## How each gap was tested
+
+Does the prose flow across it? An unnumbered plate leaf leaves the sentence
+intact; a missing page breaks it. (A trailing hyphen means the word *should*
+continue, so the question is whether the next page completes it — a first
+mechanical pass had that backwards.)
+
+## Confirmed content gaps — 2
+
+| review | missing printed pages | what is on them | volume | held by |
+|---|---|---|---|---|
+| **1900-01 SP Ballet** | **176–178** | the rest of the «Дочь фараона» *Grand pas des fleuves* cast — p022 stops mid-name on `Темза — г-жа Фо-` — and the opening of the «Камарго» synopsis: its heading, premiere details and the start of scene 1, since p023 picks up mid-sentence inside it | Main, vol. 11 | **ILL — UIllinois** |
+| **1896-97 SP Ballet** | **249** | p018 stops mid-sentence on `Является «Любопытство» и начинаетъ`; p019 opens on `Animation, groupes et danses—г-жи Ленъяни…` | Main, vol. 7 | **ILL — UMich** |
+
+## Uncertain — 1
+
+**1890-91 SP All**, folios 145 → 149. Two unnumbered plate pages sit
+between, leaving one of 146-148 unaccounted. The text plausibly runs on
+(`…Польскій.` then `Pas de quatre:`, consecutive items of the same
+divertissement), so this may be numbering rather than loss. Volume 1,
+**ILL — UMich**. Wants a look at the scans before anything is requested.
+
+## No content lost — 5
+
+The prose runs straight across an unnumbered plate: 1892-93 SP Ballet
+(`…за прежними исполнителями:` / `г. Кшесинскимъ 1-мъ`), 1893-94 SP Opera
+(`…г-жа` / `Брайнина`), 1894-95 SP Opera (`…атаманомъ имъ` / `будетъ
+Антонъ`), and two inside 1900-01 SP Ballet — 174→179 (clean sentence end,
+then `Въ 3-й картинѣ`) and 179→182 (`…письмо, въ` / `которомъ`, across the
+double-page engraving).
+
+## Consequences
+
+**All three affected volumes are ILL, none of them Princeton.** Re-checking
+means a fresh request from **UIllinois** (1900-01) and **UMich** (1896-97,
+1890-91) — not a walk to the shelf like the 1890-91 pages RG photographed
+in September.
+
+**Every Main volume's inventory scanning status reads `Complete!`**,
+including these. At least two of them are not. Correcting
+`Imperial Yearbook Inventory.xlsx` needs RG's per-change permission and has
+not been done.
+
+## Corpus-wide context
+
+Folio arithmetic over all 47 reviews (page count against printed-folio span,
+less the unnumbered pages) leaves **5 folios unaccounted**, in 1890-91 SP
+All, 1892-93 SP Ballet, 1894-95 SP Opera and 1900-01 SP Ballet. The measure
+is rough — several reviews come out *negative*, meaning more pages than the
+folio span allows, because the same printed page is scanned into two PDFs
+(the shared-page bleed) and because 1900-01 prints folio 174 twice. The
+text-flow test above is the authoritative one.
