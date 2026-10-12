@@ -148,6 +148,18 @@ appointment date and the date service actually began, perhaps — rather
 than something to silently correct. Full detail, including the exact
 page citations, is in `docs/eval/source_document_anomalies.md`.
 
+**Ruling (RG, 2026-10-12).** Raw keeps what each page prints: 1 May on the
+Graduates rows, 1 June on the company rows. The research layer should show
+**1 June** for these graduates, as the working value until further research
+settles it. Scope, checked row by row that day: the classes of 1897 (8
+graduates) and 1898 (17). The class of 1896 is NOT affected: its Graduates
+page and its company rows both print 1 May 1896.
+NOT YET IMPLEMENTED: the research layer has no start-date column at all
+(`research.person_appearance.tenure_note_text` is the printed note and
+nothing else), so there is nowhere to put the 1 June value until a
+structured service-start field is added.
+
+
 The remaining 7 disagreements are individual cases. Most look like
 common-surname mismatches rather than genuine disagreements about the
 same person — e.g. a graduate whose only same-named BalletArtists match
