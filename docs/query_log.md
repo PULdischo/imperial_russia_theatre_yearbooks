@@ -14566,3 +14566,58 @@ split by an ordinal that CHANGED over time (Сергѣй was 2-й while Иван
 who else is in the company that season, so they are not stable identity
 keys.** No `person_candidate` pair was ever proposed for this family. That
 is an entity-layer question, not a matcher one.
+
+## 2026-10-12 — ordinal-shift splits in entities.person (RG confirmed the rule)
+
+RG: ordinals are **not** stable, they are relative to who else is in the
+company that season — a rule baked in during design. The consequence is
+visible in the data, and the design already anticipated half of it:
+
+> *"the printed ordinal suffix ("1-й") only appears in years there was an
+> actual homonym in print to disambiguate from — the same real person can
+> appear with and without it across different yearbooks, which Tier 1 (by
+> design) never folds together"* — `docs/person_normalization.md`
+
+**Why no candidate was ever proposed.** Tier 2 blocks on `(fam, first,
+ordinal)` and `(first, pat, ordinal)` — **both keys contain the ordinal**,
+so two records of one person differing only in ordinal are never compared.
+The documented remedy is a shared Wikidata QID (`--merge-shared-qids`),
+which corps dancers will never have.
+
+**But the corpus carries its own corroborator, and the project already
+trusts it:** the printed start date. That is how `Романовъ`/`Рахмановъ`
+merged (`match_reason=shared_start_date`, `status=confirmed_tenure`).
+
+```sql
+SELECT p.person_id, p.canonical_family_name, p.canonical_first_name,
+       p.canonical_patronymic, p.ordinal_suffix, s.start_date_undate
+FROM research.person p
+JOIN entities.person_link pl USING (person_id)
+JOIN raw.person_entry pe ON pe.entry_id = pl.entry_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id;
+```
+Every `Пономаревъ, Сергѣй Ивановичъ` record — no ordinal, `2-й`, and `1-й`
+— carries **`съ 1 іюня 1901 г.`**; both `Владиміръ` records carry
+**`съ 1 іюня 1910 г.`**.
+
+**Scope.** Pairs differing only in the ordinal and sharing a printed start
+date: **7** requiring the patronymic to match exactly, **61** once a blank
+patronymic on one side is allowed (the Graduates lists print no patronymic,
+the company lists do). 61 is the real figure.
+
+Most are ordinal-present vs ordinal-absent and look safe —
+`Пекарскій, Давидъ` == `Пекарскій 1-й, Давидъ Исаевичъ`, same start date.
+A handful are ordinal-vs-**different**-ordinal, which is RG's phenomenon
+proper: `Степанова 2-я, Елизавета Ѳедоровна` == `Степанова 1-я, Елизавета`
+(1885-05-12), `Иванова 2-я, Наталья Евдокимовна` == `Иванова 3-я, Наталья`
+(1897-09-01), `Пономаревъ 2-й` == `Пономаревъ 1-й`.
+
+**One shape that must NOT be merged blind.** `Иванова 4-я, Надежда`
+(patronymic blank) shares a start date with `Иванова 3-я, Надежда
+Михайловна` (1900-09-01) **and** with `Иванова 2-я, Надежда Сергѣевна`
+(1907-08-01) — two different women, two different patronymics. Relaxing
+the patronymic buys the 61 and also admits this. So these belong in the
+`person_candidate` review queue with the tenure evidence attached, not in
+an automatic merge — the same discipline the shared-QID merges were held
+to, which `person_normalization.md` records as *"the researcher confirmed
+it explicitly first"*.
