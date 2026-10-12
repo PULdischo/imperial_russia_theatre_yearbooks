@@ -17,7 +17,7 @@ with the ballet-relevant ones pulled out.
 | `review_deaths_matched.csv` | The reviews' death lists paired with obituaries and rosters. |
 | `first_read/` | The per-section first readings (A–H), the Season Review notices (`R_reviews.csv`), the contents-page listings (`T1`, `T2`) and the reader briefs. |
 | `blind_second_read/` | An independent second reading of every heading name and date (V1–V5). |
-| `build/` | `compare_readings.py` (first vs second read → `reading_comparison.csv`) and `build_catalogue.py` (writes the two CSVs above). |
+| `build/` | `compare_readings.py` (first vs second read → `reading_comparison.csv`) and `build_catalogue.py` (writes the two CSVs above); `build_obsidian_notes.py` (the Russian/English reading notes, see below). |
 
 ## Stand-alone articles on one person
 
@@ -199,6 +199,25 @@ Three places where the review and the obituary disagree in print, each read on b
 Никитинъ (review 24 July 1896, obituary 23 July), Казаковъ (review 16 Sept 1892, obituary 17 Sept).
 A fourth, Пуни, was not a conflict: the review page prints «Н. Ц. Пуни», as the obituary and rosters do;
 «Н. П.» was a misread in the stored review text.
+
+## Reading notes in Obsidian (Russian and English)
+
+`build/build_obsidian_notes.py` writes one note for every ballet-relevant entry (`core` or `mentions`)
+that has a full text: 79 obituaries, 27 jubilees and 12 articles and memorials, 118 notes. One-line
+notices from the reviews, rosters and Repertoire get no note. The notes live in the Obsidian vault under
+`Jubilees and obituaries/`, with an index note listing them by season.
+
+**They are for reading, not citing.** The Russian is a single machine reading of each page
+(`pipeline/run_reviews.py`, 220 pages, not checked against the scans) and the English is a machine
+translation of it (`pipeline/translate_reviews.py`). Quote from the scan.
+
+Each note carries the catalogue's fields as properties, the text as a two-column table
+(Русскій | English), the catalogue's print conflicts and corrections where there are any, the person's
+other notices, and a `## My notes` section. Everything under `## My notes` is kept on every rebuild;
+the rest is regenerated, so do not edit it by hand. To rebuild (steps in the script's header):
+`--segment`, then the translator (it only translates new blocks), then `--build --vault <folder>`.
+If `--segment` changes how an entry is cut, its block numbers shift: delete that entry's rows from
+`outputs/jubilees_obituaries/translations.csv` before translating again.
 
 ## Not yet done
 

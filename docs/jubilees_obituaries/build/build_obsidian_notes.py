@@ -37,7 +37,13 @@ def reflow(t: str) -> str:
 
 
 def load_page(path: Path) -> dict | None:
-    j = json.load(open(path, encoding='utf-8'))
+    s = open(path, encoding='utf-8').read()
+    try: j = json.loads(s)
+    except json.JSONDecodeError:
+        # the model sometimes writes a bare backslash where it meant a line break ("Seig-\gneur"); the raw file is left as it is
+        s = re.sub(r'(?<!\\)((?:\\\\)*)\\(?!["\\/bfnrtu])', lambda m: m.group(1) + ('\\n' if s[m.start() - 1] == '-' else ''), s)
+        try: j = json.loads(s)
+        except json.JSONDecodeError: return None
     if 'blocks' not in j:
         raw = j.get('raw_text') or j.get('content') or ''
         try: j = json.loads(re.sub(r'^```(?:json)?|```$', '', raw.strip(), flags=re.M))
@@ -73,35 +79,50 @@ def name_keys(d: dict) -> list[str]:
     """strings an entry's opening is expected to start with or contain, most specific first"""
     n = re.sub(r'\[\?\]', '', d['name_verbatim'])
     n = re.sub(r'\([^)]*\)', ' ', n)
+    n = re.sub(r'\[[^\]]*\]', ' ', n)
     words = [w for w in re.findall(r'[А-Яа-яѣіѳѵІѲѢA-Za-z-]+', n) if len(w) > 2]
     if ',' in n:                                   # "Surname, Given Patronymic"
         sur = re.findall(r'[А-Яа-яѣіѳѵІѲѢ-]+', n.split(',')[0])
         keys = [norm(' '.join(sur[:1] + words[len(sur):len(sur) + 1])), norm(sur[0]) if sur else '']
     else:                                          # "Given Patronymic Surname" or "И. О. Surname"
-        keys = [norm(' '.join(words)), norm(words[-1]) if words else '']
-    return [k for k in keys if len(k) >= 4]
+        keys = [norm(n), norm(' '.join(words)), norm(words[-1]) if words else '']
+    return [k for k in dict.fromkeys(keys) if len(k) >= 3]          # 3: Кюи
 
 
 def read_catalogue() -> list[dict]:
     return list(csv.DictReader(open(CAT, encoding='utf-8')))
 
 
+def heading_names(b: list, keys: list[str]) -> bool:
+    """headings print the name in either order and sometimes in the genitive ("произведеній Н. И. Куликова")"""
+    h = norm(b[3])
+    stem = lambda k: re.sub(r'(ій|ый|ой|ая|ъ|ь|а|я)$', '', k)
+    return b[2] == 'heading' and any(k in h or (len(k) > 5 and stem(k) in h) for k in keys[-1:] + keys[:-1])
+
+
 def segment() -> None:
-    cat = [d for d in read_catalogue() if d['source_type'] == 'section' and d['kind'] in TEXT_KINDS]
-    by_file = collections.defaultdict(list)
-    for d in cat: by_file[d['source_file']].append(d)
+    sections = [d for d in read_catalogue() if d['source_type'] == 'section']
+    by_file, by_season = collections.defaultdict(list), collections.defaultdict(list)
+    for d in sections:
+        by_file[d['source_file']].append(d)
+        if d['name_verbatim'].strip(): by_season[d['season']].append(d)
+    wanted = lambda e: e['kind'] in TEXT_KINDS and e['relevance'] in ('core', 'mentions')
     rows, report = [], []
     for sf, entries in sorted(by_file.items()):
-        if not any(e['relevance'] in ('core', 'mentions') for e in entries): continue
+        if not any(wanted(e) for e in entries): continue
         stem = page_stem(sf)
         blocks = []                                # (page, idx, type, text, folio)
-        pages_have = set()
+        pages_have, tops, loaded = set(), collections.Counter(), {}
         for p in sorted({p for e in entries for p in pages_of(e)}):
             f = OUT / 'raw' / f'jo_{stem}_p{p:02d}.raw.json'
             if not f.exists(): continue
             pg = load_page(f)
             if pg is None: report.append((sf, p, 'UNPARSEABLE PAGE')); continue
-            pages_have.add(p)
+            pages_have.add(p); loaded[p] = pg
+            top = next((block_text(b) for b in pg.get('blocks', []) if block_text(b)), '')
+            if len(top) < 60: tops[norm(top)] += 1
+        for p, pg in loaded.items():
+            first = True
             for i, b in enumerate(pg.get('blocks', [])):
                 t = block_text(b)
                 bt = b.get('block_type') or b.get('type') or 'paragraph'
@@ -109,56 +130,65 @@ def segment() -> None:
                     cap = b.get('caption_text') or b.get('caption') or b.get('caption_spans') or t
                     if isinstance(cap, list): cap = ' '.join((c.get('text', '') if isinstance(c, dict) else str(c)) for c in cap)
                     t = reflow(cap)
-                if t: blocks.append([p, i, bt, t, pg.get('printed_folio') or ''])
+                if not t: continue
+                if first and p > 1 and tops[norm(t)] > 1: first = False; continue      # a running head: the same line heads several pages
+                first = False
+                blocks.append([p, i, bt, t, pg.get('printed_folio') or ''])
         # where does each entry start?  first block on its first page whose opening matches its name
         starts = {}
-        for ei, e in enumerate(sorted(entries, key=lambda e: (pages_of(e)[:1] or [0])[0])):
+        ordered = sorted(entries, key=lambda e: (pages_of(e)[:1] or [0])[0])
+        for ei, e in enumerate(ordered):
             pp = pages_of(e)
-            if not pp: continue
+            if not pp or not e['name_verbatim'].strip(): continue
             cands = [bi for bi, b in enumerate(blocks) if b[0] in (pp[0], pp[0] + 1) and b[2] != 'figure' and bi not in starts.values()]
-            hit = None
-            for key in name_keys(e):
-                for bi in cands:
-                    head = norm(blocks[bi][3])[:len(key) + 12]
-                    if head.startswith(key) or (blocks[bi][2] == 'heading' and key in norm(blocks[bi][3])):
-                        hit = bi; break
-                if hit is not None: break
-            if hit is None:                       # fuzzy: best opening match on the first page
-                best = (0, None)
-                for bi in cands:
-                    k = name_keys(e)[-1] if name_keys(e) else ''
-                    r = difflib.SequenceMatcher(None, k, norm(blocks[bi][3])[:len(k)]).ratio() if k else 0
-                    if r > best[0]: best = (r, bi)
-                if best[0] >= 0.8: hit = best[1]
+            keys = name_keys(e)
+            hit = next((bi for bi in cands if heading_names(blocks[bi], keys)), None)
+            if hit is None:
+                hit = next((bi for key in keys for bi in cands if blocks[bi][2] != 'footnote' and norm(blocks[bi][3])[:len(key) + 12].startswith(key)), None)
+            if hit is None and ei > 0:              # a numbered part of an article with no name in its opening ("II.")
+                hit = next((bi for bi in cands if blocks[bi][0] == pp[0] and re.fullmatch(r'[IVX]+\.?', blocks[bi][3])), None)
+            if hit is None and keys:                # fuzzy: best opening match on the first page
+                k = keys[-1]
+                r, bi = max(((difflib.SequenceMatcher(None, k, norm(blocks[bi][3])[:len(k)]).ratio(), bi) for bi in cands), default=(0, None))
+                if r >= 0.8: hit = bi
             if hit is not None: starts[id(e)] = hit
-        order = sorted((bi, e) for e in entries for bi in [starts.get(id(e))] if bi is not None)
-        single = len(entries) == 1                 # a stand-alone article: the whole file is the entry
+            elif not wanted(e) and pp[0] in pages_have and '[tail' not in e['name_verbatim']: report.append((sf, e['name_verbatim'], 'start of a neighbouring entry not found: its text may run on from the entry before'))
+        order = sorted(starts.values())
+        # in a file of its own, other people's notices can share the page: their headings end the entry
+        foreign = [bi for bi, b in enumerate(blocks) if b[2] == 'heading' and bi not in order and (
+            any(heading_names(b, name_keys(o)) for o in by_season[entries[0]['season']] if o['source_file'] != sf)
+            or (bi + 1 < len(blocks) and norm(blocks[bi + 1][3]).startswith('поповоду')))]
         for e in entries:
-            if e['relevance'] not in ('core', 'mentions'): continue
-            if single: lo, hi = 0, len(blocks)
-            elif id(e) in starts:
-                lo = starts[id(e)]
-                later = [bi for bi, _ in order if bi > lo]
-                hi = later[0] if later else len(blocks)
-                # a caption or portrait sitting just above the heading belongs to this entry
-                while lo > 0 and blocks[lo - 1][2] == 'figure' and blocks[lo - 1][0] == blocks[lo][0] and (lo - 1) not in starts.values(): lo -= 1
-            else:
-                report.append((sf, e['name_verbatim'], 'START NOT FOUND' if pages_have & set(pages_of(e)) else 'pages not read')); continue
+            if not wanted(e): continue
+            pp = set(pages_of(e))
+            lo = starts.get(id(e))
+            if len(entries) == 1 and (lo is None or blocks[lo][2] != 'heading'): lo = 0      # a stand-alone article: the whole file
+            if lo is None:
+                report.append((sf, e['name_verbatim'], 'START NOT FOUND' if pages_have & pp else 'pages not read')); continue
+            hi = min([bi for bi in order + foreign if bi > lo] + [len(blocks)])
+            if e is ordered[0] and blocks and blocks[lo][0] == blocks[0][0] and not [bi for bi in order + foreign if bi < lo]:
+                lo = 0                             # the first entry of an article opens with the article's own title
+            # a portrait, its caption or a section numeral just above the heading belongs to this entry
+            while lo > 0 and (lo - 1) not in order and (blocks[lo - 1][2] in ('figure', 'other') or re.fullmatch(r'[IVX]+\.?', blocks[lo - 1][3])) and blocks[lo][0] - blocks[lo - 1][0] <= 1: lo -= 1
+            while hi > lo + 1 and (blocks[hi - 1][2] in ('figure', 'other') or re.fullmatch(r'[IVX]+\.?', blocks[hi - 1][3])) and hi < len(blocks): hi -= 1     # ...and so not to the one before
             eid = hashlib.sha1(f"{e['season']}|{sf}|{e['name_verbatim']}".encode()).hexdigest()[:10]
+            n = 0
             for bi in range(lo, hi):
                 p, i, bt, t, folio = blocks[bi]
-                rows.append({'block_id': f'{eid}_{bi - lo:03d}', 'entry_id': eid, 'season': e['season'], 'source_file': sf,
+                if p not in pp and not (bi < starts.get(id(e), lo) and bt in ('figure', 'other')): continue       # the catalogue's page range is the outer limit
+                rows.append({'block_id': f'{eid}_{n:03d}', 'entry_id': eid, 'season': e['season'], 'source_file': sf,
                              'name_verbatim': e['name_verbatim'], 'pdf_page': p, 'printed_folio': folio,
                              'block_type': 'figure' if bt == 'figure' else bt, 'text': '' if bt == 'figure' else t,
                              'caption_text': t if bt == 'figure' else ''})
+                n += 1
+            if not n: report.append((sf, e['name_verbatim'], 'NO TEXT INSIDE ITS PAGES'))
     (OUT / 'parsed').mkdir(parents=True, exist_ok=True)
     with open(OUT / 'parsed' / 'review_block.csv', 'w', newline='', encoding='utf-8') as f:
         w = csv.DictWriter(f, list(rows[0].keys())); w.writeheader(); w.writerows(rows)
     ents = collections.Counter(r['entry_id'] for r in rows)
     print(f'{len(ents)} entries, {len(rows)} blocks, {sum(len(r["text"] or r["caption_text"]) for r in rows):,} characters')
     for r in report: print('  !', *r)
-    short = [(r['name_verbatim'], n) for eid, n in ents.items() for r in [next(x for x in rows if x['entry_id'] == eid)] if n == 1]
-    print('single-block entries:', len(short))
+    print('single-block entries:', sum(1 for n in ents.values() if n == 1))
 
 
 # ----------------------------------------------------------------------------------------------
@@ -214,7 +244,8 @@ def person_name(d: dict) -> str:
 # Names with an established Latin spelling, or printed in the Yearbook with their own Latin form.
 FAMILIAR = {'Перро': 'Perrot, Jules-Joseph', 'Чайковск': 'Tchaikovsky, P. I.', 'Чекетти': 'Cecchetti, Enrico', 'Дель-Эра': "Dell'Era, Antonietta",
             'Замбелли': 'Zambelli, Carlotta', 'Леньяни': 'Legnani, Pierina', 'Кюи': 'Cui, César Antonovich', 'Глинк': 'Glinka, M. I.',
-            'Ауэр': 'Auer, Leopold Semenovich', 'Мендес': 'Mendes, José', 'Гримальди': 'Grimaldi, Enrichetta'}
+            'Ауэр': 'Auer, Leopold Semenovich', 'Мендес': 'Mendes, José', 'Гримальди': 'Grimaldi, Enrichetta',
+            'Всеволожск': 'Vsevolozhsky, Ivan Aleksandrovich', 'Кшес': 'Kshesinskaya, M. F.', 'Вейкманъ': 'Weickmann, Hieronymus'}
 KIND_LABEL = {'obituary': 'Obituary', 'jubilee': 'Jubilee', 'memorial_feature': 'Memorial', 'biographical_feature': 'Article', 'farewell': 'Farewell',
               'death_notice': 'Death notice', 'death_mark': 'Death mark', 'departure': 'Departure', 'work_milestone': 'Work milestone', 'other': 'Occasion'}
 SOURCE_LABEL = {'section': 'Yearbook section or article', 'review': 'Season review', 'roster': 'Roster (death mark)', 'repertoire': 'Repertoire table (annotation)'}
