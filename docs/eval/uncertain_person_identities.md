@@ -264,11 +264,11 @@ To add an entry: copy the template at the bottom.
 - **Would resolve it:** the Moscow school's 1908 graduation list or her service record.
 
 ## 30. Боронцовъ, Владиміръ (SP Graduates 1910-11) -- PARKED until the 1911-12 volume is scanned
-- **Status:** OPEN, parked (RG, 2026-10-12). The candidate pair Воронцовъ, Владиміръ / Боронцовъ, Владиміръ stays `pending` in entities.person_candidate on purpose.
+- **Status:** OPEN, parked (RG, 2026-10-12). The candidate pair that raised him has lapsed: its other side (the Moscow 1910-11 row) was merged into Воронцовъ, Владиміръ Васильевичъ the same day, and the queue is now empty. THIS ENTRY is the reminder; nothing in entities.person_candidate will raise him again.
 - **What is uncertain:** whether his surname is Боронцовъ or a misprint for Воронцовъ. The same page prints «Вольшакова, Лидія», so the initials В and Б may have been exchanged (genuine_print_typos.md).
 - **What is settled:** he is NOT the Moscow dancer Воронцовъ, Владиміръ Васильевичъ (Moscow graduate 1891, artist 1891-98 and 1901-08, acting assistant regisseur 1908-11). He graduates from the Petersburg school in spring 1911, assigned to the Petersburg troupe from 1 іюня 1911.
 - **Where to look:** graduates_1910-11_p000 (printed p. 153; full zoom 2026-10-12). When 1911-12 is onboarded: the Petersburg BalletArtists list, men, for a Воронцовъ or Боронцовъ «съ 1 іюня 1911 г.», and the women for Большакова or Вольшакова, Лидія.
-- **Also waiting on RG, same family:** the Moscow rows 1901-02 (surname only, record d8902c) and 1910-11 Артисты no. 8 (no patronymic, record 865c93) look like Владиміръ Васильевичъ; not merged. Two of his notes are extracted as «съ 1 сентября 1901 г. по 1 ноября 1898 г.» (1902-03, 1903-04), not checked on the scan.
+- **Same family, done 2026-10-12:** the Moscow rows 1901-02 (Артисты no. 14, printed «Воронцовъ,» and nothing more -- full zoom) and 1910-11 (Артисты no. 8, no patronymic) are merged into Воронцовъ, Владиміръ Васильевичъ (docs/eval/person_merge_vorontsov_2026-10-12.py). His break is in print: 1898-99 «Оставилъ службу 1 ноября 1898 г.», absent 1899-00 and 1900-01, and from 1904-05 «(съ 1 сентября 1891 г. по 1 ноября 1898 г. и съ 1 сентября 1901 г.)» (both read on the scan at reduced size). Not checked: the 1902-03 and 1903-04 notes, extracted as «съ 1 сентября 1901 г. по 1 ноября 1898 г.».
 
 ## Related, decided (not uncertain), for reference
 

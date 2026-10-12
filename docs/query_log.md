@@ -15851,3 +15851,29 @@ and nothing more before the credits (10 ballets 39, 12 operas 47,
 divertissements 2, 88 in all; скороходъ in Волшебный башмачекъ, другъ принца
 in Лебединое озеро, two parts in Спящая красавица). «12. Валининъ,» two rows
 above is printed the same way. The extraction is faithful.
+
+## 2026-10-12 — Воронцовъ, Владиміръ Васильевичъ: his break, and the merge of two stray rows
+
+```sql
+SELECT sp.season, pe.list_number, pe.family_name FROM raw.person_entry pe
+JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+WHERE sp.city = 'Moscow' AND sp.entity_type = 'BalletArtists' AND sp.season IN ('1899-00','1900-01')
+  AND pe.heading_path LIKE 'Артисты%'
+  AND cast(regexp_extract(pe.list_number,'[0-9]+') AS int) BETWEEN 9 AND 14 ORDER BY 1, 2;
+
+SELECT list(sp.season ORDER BY sp.season) FROM entities.person_link pl
+JOIN entities.person p USING (person_id) JOIN raw.person_entry pe USING (entry_id)
+JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+WHERE p.display_name LIKE 'Воронцовъ, Владиміръ В%';
+
+SELECT display_1, display_2, status FROM entities.person_candidate WHERE status = 'pending';
+SELECT season, count(*), count(*) FILTER (entity_id <> '') FROM entities.review_mention
+WHERE normalised LIKE 'воронцов%' GROUP BY 1 ORDER BY 1;
+```
+
+Result: in 1899-00 and 1900-01 the Moscow men's list runs Волковъ ->
+Гавриловъ with no Воронцовъ between. After the merge he has 20 entries:
+every season 1890-91..1898-99 and 1901-02..1910-11 (two in 1910-11), none
+in 1899-00 or 1900-01. No candidate pair is pending. All 23 review mentions
+of «Воронцовъ» resolve, including the 1901-02 one. Live persons 3059;
+receipts unchanged; review mentions resolved 21,308.
