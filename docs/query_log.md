@@ -14847,3 +14847,47 @@ pages **176–178**, none of which has a page in the PDF. Two pages missing if
 p023's printed 174 is a misprint for 178, three if the 174 is simply wrong.
 Either way the ask for the physical volume is specific: **1900-01 Ежегодникъ,
 SP Ballet review, printed pages 176-178.**
+
+## 2026-10-12 — the 8 `missing_page` flags, actually read (RG: "I'm surprised you didn't catch that I had missing pages in this scan")
+
+Fair. **The check caught it and I didn't read it.** Three of the eight flags
+sit on exactly the 1900-01 spot — p023, p024, p026 — with details reading
+*"folio 175 → 174; gap of -2"*, *"174 → 179; gap of 4"*, *"179 → 182; gap of
+2"*, plus the `duplicate_folio`. I filed all eight under "limits of the
+source, not work items" because the two *largest* flag classes (`no_folio`,
+`zero_uncertainty`) are documented as accepted, and generalised from those
+to the whole file. I then ran a non-monotonic-steps query over that very
+folio sequence and explained the gaps away as plate leaves without checking.
+
+HathiTrust is behind a bot wall and not reachable from here (RG confirmed).
+
+### Reading all eight properly
+
+The test: does the prose flow across the gap? An unnumbered plate leaf
+leaves the sentence intact; a missing page breaks it. (A first mechanical
+pass got this backwards — a trailing hyphen means the word *should*
+continue, so the question is whether the next page completes it.)
+
+**Genuine content gaps — 2**
+
+| where | evidence |
+|---|---|
+| **1900-01 SP Ballet**, folio 175 → the second 174 | p022 stops mid-name on `Темза — г-жа Фо-`; p023 opens inside the «Камарго» synopsis. Printed pages **176-178**. |
+| **1896-97 SP Ballet**, folio 248 → 250 | p018 stops mid-sentence on `Является «Любопытство» и начинаетъ`; p019 opens on `Animation, groupes et danses—г-жи Ленъяни…`. Printed page **249**. |
+
+**No content lost — 5.** The prose runs straight across an unnumbered plate:
+1892-93 SP Ballet (`…за прежними исполнителями:` / `г. Кшесинскимъ 1-мъ`),
+1893-94 SP Opera (`…г-жа` / `Брайнина`), 1894-95 SP Opera (`…атаманомъ имъ`
+/ `будетъ Антонъ`), 1900-01 SP Ballet 174→179 (clean sentence end, then
+`Въ 3-й картинѣ`), 1900-01 SP Ballet 179→182 (`…письмо, въ` / `которомъ`,
+across the double-page engraving).
+
+**Uncertain — 1.** 1890-91 SP All, folio 145 → 149: two unnumbered plate
+pages sit between, leaving one of 146-148 unaccounted. The text plausibly
+runs on (`…Польскій.` then `Pas de quatre:`, consecutive items of the same
+divertissement), so it may be numbering rather than loss. Wants a look at
+the scans.
+
+**So: 2 confirmed gaps, 5 clean, 1 to check — not 8 "limits of the
+source".** The 1900-01 volume is **ILL from UIllinois** and its inventory
+scanning status reads *"Complete!"*, which is wrong.
