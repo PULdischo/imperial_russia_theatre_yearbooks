@@ -14945,3 +14945,48 @@ intact): 1890-91's note now records the gap as checked and accounted for,
 and a conditional-formatting rule on L2:L99 renders `Missing Pages` in red,
 reusing **dxfId 6** — the same plain-red font the Requested/On-loan rule
 uses.
+
+## 2026-10-12 — Season review folios: recovery, and the spread-scan artefact
+
+Against `outputs/reviews/merged_full/` (CSV, pre-DB), plus the page images.
+
+**1. How many review pages lack a usable `printed_folio`, and do they have text?**
+
+```python
+# merged_full/review_page.csv x review_block.csv
+blank = [p for p in pages if not (p["printed_folio"] or "").strip()]
+with_text = [p for p in blank if any(b["block_type"] in
+             ("paragraph","enumerated_list","cast_list") and b["text"].strip()
+             for b in blocks[p["page_id"]])]
+```
+
+Before: 1074 pages, **77** with no usable folio (76 blank + one dirty
+`'248 —'`), of which **17 had text**. After the six scan-verified recoveries
+and the normalisation: **70** blank, **8** with text; filled 994 → **1004**.
+
+**2. Folio discontinuities not explained by unnumbered leaves.** Walk each
+(season, city, genre) in page order; flag where `next − prev − 1` ≠ the
+number of unnumbered leaves between them. Before the fix: 9. After: 9, but
+every `+1` resolved to a **two-page spread scan**.
+
+**3. Which scans are spreads?** Aspect ratio against the corpus median
+(0.801); a spread runs 1.44–1.78.
+
+Result: **6** — `1890-91_SP_all_p027`, `1892-93_SP_ballet_p005`,
+`1893-94_SP_opera_p004`, `1894-95_SP_opera_p014`, `1896-97_SP_ballet_p018`,
+`1900-01_SP_ballet_p025`. These account for **all six** `+1` jumps, so each
+is two folios on one leaf, not a missing page.
+
+**4. Does the mechanical text-flow test find the known gaps?** No — this is
+why the folio check is the one that matters. Run over all consecutive page
+pairs it produced **125** flags, essentially all false (Russian capitalised
+surnames and em-dash role separators), and **neither** real gap appeared.
+Restricted to a true word-break hyphen it gave 8, of which 7 were benign
+(`Донъ-Кихотъ`, `Сень-Леонъ`, and continuations sitting a few blocks lower).
+Flow confirms a gap; it does not find one.
+
+**Net effect on the re-request list: three volumes → one.** 1896-97 p. 249
+is present on the `p018` spread (`— 248 —` and `— 249 —` both visible at the
+foot), so the UMich request is cancelled; 1890-91 was already cleared. Only
+1900-01 (UIllinois) stands, and for **two** pages (176–177) rather than
+three. Full writeup: `docs/eval/review_scan_gaps.md`.

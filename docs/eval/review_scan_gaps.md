@@ -4,70 +4,100 @@ Established 2026-10-12, after RG pointed out that the scans have missing
 pages and I had filed the `missing_page` quality flags as "limits of the
 source" without reading them. The check had caught every one of these.
 
+**Revised later the same day**, after the folio parser was fixed. The
+revision matters: one of the two "confirmed" gaps turned out not to be a
+gap at all. See *The two-page spread, and why it fakes a missing page*.
+
 ## How each gap was tested
 
-Does the prose flow across it? An unnumbered plate leaf leaves the sentence
-intact; a missing page breaks it. (A trailing hyphen means the word *should*
-continue, so the question is whether the next page completes it — a first
-mechanical pass had that backwards.)
+Two instruments, and they do different jobs:
 
-## Confirmed content gaps — 2
+- **Folio arithmetic** is what *finds* candidates — it is the only check
+  that notices a page nobody transcribed.
+- **The text-flow test** is what *confirms* them: does the prose run across
+  the boundary? An unnumbered plate leaves the sentence intact; a missing
+  page breaks it.
+
+Flow must be read semantically, not mechanically. Two mechanical rules
+failed here. A trailing hyphen means the word *should* continue (a first
+pass had that backwards). And "the next page starts with a capital, so the
+text broke" is wrong in Russian prose, which is full of capitalised
+surnames: `…г-жа` / `Брайнина` is one name across a page turn, not a gap.
+Run mechanically on the whole corpus, the flow test produced 125 flags of
+which essentially all were false, and **it did not detect either real gap**.
+
+## The two-page spread, and why it fakes a missing page
+
+**Six scans in the corpus are double-page spreads** — one image holding two
+printed leaves, roughly twice as wide as a normal page. The page table
+records one `page_id` with one folio, so the folio sequence appears to skip
+exactly one number. Every `+1` discontinuity in the corpus is one of these:
+
+| spread `page_id` | folios | recorded | prose |
+|---|---|---|---|
+| `review_1890-91_SP_all_p027` | 146–147 | *(blank)* | procession list |
+| `review_1892-93_SP_ballet_p005` | 224–225 | 224 | yes |
+| `review_1893-94_SP_opera_p004` | 192–193 | 192 | yes |
+| `review_1894-95_SP_opera_p014` | 180–181 | 180 | **thin — see below** |
+| `review_1896-97_SP_ballet_p018` | 248–249 | 248 | yes |
+| `review_1900-01_SP_ballet_p025` | 180–181 | *(blank)* | none — double-page engraving |
+
+Both leaves' text is present in all but one case, so these are **not**
+content gaps. Treat a spread as two folios before calling anything missing.
+
+**Open worklist item (not chased):** `review_1894-95_SP_opera_p014` holds
+only 222 characters of prose for two printed pages, against a median of
+1,444 for a *single* page. The boundary flows, so nothing is lost at the
+page turn, but the middle of the spread looks under-captured. Worth a scan
+check; it needs no new scanning.
+
+## Confirmed content gap — 1
 
 | review | missing printed pages | what is on them | volume | held by |
 |---|---|---|---|---|
-| **1900-01 SP Ballet** | **176–178** | the rest of the «Дочь фараона» *Grand pas des fleuves* cast — p022 stops mid-name on `Темза — г-жа Фо-` — and the opening of the «Камарго» synopsis: its heading, premiere details and the start of scene 1, since p023 picks up mid-sentence inside it | Main, vol. 11 | **ILL — UIllinois** |
-| **1896-97 SP Ballet** | **249** | p018 stops mid-sentence on `Является «Любопытство» и начинаетъ`; p019 opens on `Animation, groupes et danses—г-жи Ленъяни…` | Main, vol. 7 | **ILL — UMich** |
+| **1900-01 SP Ballet** | **176–177** (2 pages) | the rest of the «Дочь фараона» *Grand pas des fleuves* cast — p022 stops mid-name on `Темза — г-жа Фо-` — and the opening of the «Камарго» synopsis: its heading, premiere details and the start of scene 1, since the next surviving leaf picks up mid-sentence inside it | Main, vol. 11 | **ILL — UIllinois** |
 
-## Checked and cleared — the 1890-91 case is NOT a gap
+Revised from "176–178, three pages". `review_1900-01_SP_ballet_p023` **is**
+one of those three leaves and is physically present: it carries the end of
+that synopsis and runs cleanly into folio 179. It is missing from the
+arithmetic only because **the volume misprints its folio as `174`**, a
+number already used by `p021` three leaves earlier — both verified at the
+foot of the scans. Since p023 runs straight into 179, it is folio **178**,
+leaving **176 and 177** unaccounted.
 
-**1890-91 SP All**, folios 145 → 149, resolved 2026-10-12 against the scans
-already held:
+## Cleared — not gaps after all
 
-- `p027` is an **unnumbered double-page plate** (4954 px wide) — the
-  «Шествіе волшебныхъ сказокъ» procession from Спящая красавица, signed
-  Е. Пономаревъ. It occupies folios **146-147**.
-- `p028` is a sideways plate («Мальчикъ-съ-пальчикъ» и его братья) and it
-  **does print its folio, 148**, at the foot — our extraction recorded it as
-  `no folio` only because the page is rotated 90°.
+**1896-97 SP Ballet p. 249 — NOT missing. No re-request needed.**
+Previously listed as a confirmed gap on the strength of a 248→250 jump.
+The jump is an artefact: `review_1896-97_SP_ballet_p018` is a **two-page
+spread**, and the scan plainly shows `— 248 —` at the foot of the left leaf
+and `— 249 —` at the foot of the right. The folio was stored as the dirty
+string `'248 —'` (number plus the flanking rule), so every numeric test read
+the leaf as carrying one folio instead of two. Both pages' text is in the
+corpus. **The UMich 1896-97 request is cancelled.**
 
-145, [146-147 spread], 148, 149: every folio accounted for. **No page is
-missing and no re-request is needed for 1890-91.**
+**1890-91 SP All, folios 145 → 149 — not a gap** (unchanged):
+`p027` is an unnumbered double-page plate occupying **146–147** — the
+«Шествіе волшебныхъ сказокъ» procession from Спящая красавица, signed
+Е. Пономаревъ. `p028` is a sideways plate that **does** print its folio,
+148, at the foot. 145, [146–147 spread], 148, 149: all accounted for.
 
-**Worth noting beyond this case:** folio capture fails on rotated plate
-pages. That inflates the `no_folio` count (76) and could in principle mask a
-real gap elsewhere, since a page recorded as unnumbered is treated as
-accounting for a folio it may not hold.
-
-## No content lost — 5
-
-The prose runs straight across an unnumbered plate: 1892-93 SP Ballet
-(`…за прежними исполнителями:` / `г. Кшесинскимъ 1-мъ`), 1893-94 SP Opera
-(`…г-жа` / `Брайнина`), 1894-95 SP Opera (`…атаманомъ имъ` / `будетъ
-Антонъ`), and two inside 1900-01 SP Ballet — 174→179 (clean sentence end,
-then `Въ 3-й картинѣ`) and 179→182 (`…письмо, въ` / `которомъ`, across the
+**Four more single-folio jumps, all spreads, all flowing:** 1892-93 SP
+Ballet (`…за прежними исполнителями:` / `г. Кшесинскимъ 1-мъ`), 1893-94 SP
+Opera (`…г-жа` / `Брайнина`), 1894-95 SP Opera (`…атаманомъ имъ` / `будетъ
+Антонъ`), 1900-01 SP Ballet 179→182 (`…письмо, въ` / `которомъ`, across the
 double-page engraving).
 
 ## Consequences
 
-**All three affected volumes are ILL, none of them Princeton.** Re-checking
-means a fresh request from **UIllinois** (1900-01) and **UMich** (1896-97,
-1890-91) — not a walk to the shelf like the 1890-91 pages RG photographed
-in September.
+**One re-request, not three.** Only **1900-01 (Main vol. 11, ILL —
+UIllinois)** needs re-checking, for pages **176–177**. The UMich requests
+for 1896-97 and 1890-91 are both cancelled — in each case the pages are
+present in scans already held.
 
-**Every Main volume's inventory scanning status reads `Complete!`**,
-including these. At least two of them are not. Correcting
-`Imperial Yearbook Inventory.xlsx` needs RG's per-change permission and has
-not been done.
-
-## Corpus-wide context
-
-Folio arithmetic over all 47 reviews (page count against printed-folio span,
-less the unnumbered pages) leaves **5 folios unaccounted**, in 1890-91 SP
-All, 1892-93 SP Ballet, 1894-95 SP Opera and 1900-01 SP Ballet. The measure
-is rough — several reviews come out *negative*, meaning more pages than the
-folio span allows, because the same printed page is scanned into two PDFs
-(the shared-page bleed) and because 1900-01 prints folio 174 twice. The
-text-flow test above is the authoritative one.
+**Inventory:** every Main volume's scanning status reads `Complete!`. For
+1900-01 that is wrong. Correcting `Imperial Yearbook Inventory.xlsx` needs
+RG's per-change permission.
 
 ## Seasons with no review in the corpus at all (2026-10-12)
 
@@ -94,31 +124,27 @@ reviews are scanned (expected the week of 2026-10-19), so the billed
 translation run happens once, over the whole set.** Do not propose it
 piecemeal before then.
 
-## The `no_folio` flags are not all "correct" — two extraction defects
+## The `no_folio` flags — fixed 2026-10-12
 
-`docs/season_reviews_fields.md` says of `printed_folio`: *"76 blanks are
-correct — plates and tailpiece pages carry none."* Checked 2026-10-12, that
-is not right.
+`docs/season_reviews_fields.md` said of `printed_folio`: *"76 blanks are
+correct — plates and tailpiece pages carry none."* That was not right, and
+the parser has since been fixed.
 
-Of the 77 pages with no usable folio:
+Six folios were recovered, all verified directly on the scans, plus one
+dirty value normalised. They live in `docs/review_folio_corrections.csv`
+(read by `parse_reviews.py --folio-corrections` at parse time, and
+re-asserted on the merged table by
+`apply_review_text_corrections.py --pages`, because the view that can see
+the folio is not always the view the merge keeps).
 
-- **17 have TEXT**, not just a plate. A text page normally carries a folio.
-- **49 sit inside a folio gap** — i.e. the numbering jumps across them, so
-  each is silently credited with a number it may not hold. That is what lets
-  a real missing page hide: the gap arithmetic balances.
-- only **14** sit between consecutive folios, which is the genuinely
-  unnumbered-insert case the doc describes.
+The defect was never scanning and never the model's reading. **In these
+volumes the folio is printed at the *foot* of the leaf**, alternating
+right/left by recto/verso and sitting directly under the text block — not
+at the head, which is where capture looked. That is why it failed on exactly
+the pages with no text to anchor to: full-page plates. Plates here **are**
+foliated, including rotated ones and pure half-tones that yield no text
+blocks at all.
 
-Two distinct causes found:
-
-1. **Rotated pages.** `review_1890-91_SP_all_p028` is a sideways plate that
-   **does** print 148 at the foot; capture missed it because the page is
-   rotated 90°.
-2. **Dirty values.** `review_1896-97_SP_ballet_p018` stores
-   `printed_folio = '248 —'`, with a trailing em-dash, so every numeric
-   test treats it as absent.
-
-Neither is a scanning problem — the numbers are on the page in the scans we
-already hold. Fixing them is a parser change, and until it is made, folio
-arithmetic over these reviews understates how many pages are unaccounted
-for.
+Result: blank folios **77 → 70**, and text-bearing pages with no folio
+**17 → 8**. Folio arithmetic over the corpus now leaves **no** unexplained
+discontinuity except the 1900-01 gap above.

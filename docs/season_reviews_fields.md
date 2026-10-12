@@ -15,7 +15,7 @@ against the live corpus (1,070 pages / 4,672 blocks / 4,760 spans /
 |---|---|---|
 | `page_id` | 1070/1070 | `review_<season>_<city>_<genre>_pNNN` |
 | `season` `city` `genre` | 1070 | 19 seasons; SP/Moscow; Ballet/Opera/All |
-| `printed_folio` | 994 | 76 blanks are correct — plates and tailpiece pages carry none |
+| `printed_folio` | 1004 | 70 blanks. Corrected 2026-10-12: the earlier note ("76 blanks are correct — plates carry none") was wrong. Folios here print at the **foot**, alternating right/left by recto/verso, and plates **are** foliated — including rotated ones and pure half-tones with no text. Six were recovered from the scans and one dirty value (`'248 —'`) normalised; see `docs/review_folio_corrections.csv`. Of the 70 remaining blanks, 8 have text. |
 | `tailpiece_present` | 1070 | |
 | `no_text` | 1070 | |
 | `copy_artifacts` | 217 | **free text, not evidence** — see below |

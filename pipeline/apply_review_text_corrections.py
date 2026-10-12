@@ -18,8 +18,16 @@ normalises away a spelling the print really carries. (`Талорачва` in a
 p005 caption against `Толорагва` in the p020 body is genuine source
 variation and is deliberately absent from the table.)
 
+It also restores the hand-verified `printed_folio` values, for the same
+reason and from the same kind of table. `parse_reviews.py` already applies
+docs/review_folio_corrections.csv at parse time, but the merged page table
+is assembled from several views after that, and the view that can actually
+see the folio is not always the one the selector keeps -- so the correction
+has to be re-asserted here too.
+
     uv run python pipeline/apply_review_text_corrections.py \
-        --blocks outputs/reviews/merged_full/review_block.csv
+        --blocks outputs/reviews/merged_full/review_block.csv \
+        --pages  outputs/reviews/merged_full/review_page.csv
 """
 from __future__ import annotations
 
@@ -32,6 +40,8 @@ from pathlib import Path
 csv.field_size_limit(10 ** 9)
 
 CORRECTIONS = Path("docs/eval/review_text_corrections.csv")
+# Same file parse_reviews.py reads, so a folio is stated in exactly one place.
+FOLIOS = Path("docs/review_folio_corrections.csv")
 FIELDS = ("text", "caption_text")
 
 
@@ -40,12 +50,67 @@ def load(path: Path) -> list[dict]:
         return list(csv.DictReader(f))
 
 
+def apply_folios(pages: Path, corrections: Path, dry_run: bool) -> int:
+    """Re-assert scan-verified printed_folio values on the merged page table.
+
+    An empty `printed_folio` in the CSV is a real value meaning "this leaf
+    carries no printed folio", so it is applied like any other -- that is the
+    correction for a plate whose number the model invented from a caption.
+    """
+    rules = {r["page_id"]: r["printed_folio"].strip() for r in load(corrections)}
+    with open(pages, encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        cols, rows = reader.fieldnames, list(reader)
+
+    changed, already, missing = 0, 0, sorted(rules)
+    for r in rows:
+        want = rules.get(r["page_id"])
+        if want is None:
+            continue
+        missing.remove(r["page_id"])
+        have = (r.get("printed_folio") or "").strip()
+        if have == want:
+            already += 1
+            continue
+        print(f"  {r['page_id']}  {have or '(blank)'!r} -> {want or '(blank)'!r}")
+        if not dry_run:
+            r["printed_folio"] = want
+        changed += 1
+
+    for page_id in missing:
+        print(f"  WARNING: {page_id} is not in {pages} -- correction unused")
+
+    print(f"  folios: {changed} changed, {already} already correct, "
+          f"{len(missing)} unmatched")
+    if changed and not dry_run:
+        shutil.copy2(pages, pages.with_suffix(".csv.bak"))
+        with open(pages, "w", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, fieldnames=cols)
+            w.writeheader()
+            w.writerows(rows)
+        print(f"  written to {pages} (previous copy at {pages.with_suffix('.csv.bak')})")
+    return changed
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--blocks", required=True, type=Path)
+    ap.add_argument("--blocks", type=Path)
+    ap.add_argument("--pages", type=Path,
+                    help="merged review_page.csv; re-asserts printed_folio")
     ap.add_argument("--corrections", default=CORRECTIONS, type=Path)
+    ap.add_argument("--folio-corrections", default=FOLIOS, type=Path)
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
+
+    if not a.blocks and not a.pages:
+        ap.error("pass --blocks, --pages, or both")
+
+    if a.pages:
+        print(f"folio corrections -> {a.pages}")
+        apply_folios(a.pages, a.folio_corrections, a.dry_run)
+        if not a.blocks:
+            return 0
+        print()
 
     rules = load(a.corrections)
     with open(a.blocks, encoding="utf-8") as f:
