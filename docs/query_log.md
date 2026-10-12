@@ -14756,3 +14756,24 @@ sequence is 174, 175, 174, and the next numbered page is 179. **Both
 transcriptions are correct**; nothing to fix. Logged in
 `docs/eval/genuine_print_typos.md`, and the `duplicate_folio` flag is a
 true positive about the printing that should be accepted.
+
+## 2026-10-12 — follow-up 20: closed-day pairs collapsed, half-dash slots, one missing morning (issue #151)
+
+```sql
+-- the added morning session and its dark evening
+SELECT e.event_id, e.theater, e.date_text, e.time_of_day, e.event_status, e.receipts_text, v.date, v.date_confidence,
+  (SELECT string_agg(p.performance_title,' | ') FROM raw.event_entry_performance p WHERE p.event_id=e.event_id)
+FROM raw.event_entry e JOIN research.event v USING(event_id)
+WHERE e.page_id='repertoire_1892-93_pair010' AND e.theater LIKE 'Малый%' AND e.date_text LIKE '21 %';
+-- layer counts after the rebuild
+SELECT count(*) FROM raw.event_entry;  SELECT count(*) FROM research.event;  SELECT count(*) FROM research.performance;  SELECT count(*) FROM research.work;
+SELECT time_of_day, count(*) FROM raw.event_entry GROUP BY 1 ORDER BY 2 DESC;
+SELECT event_status, count(*) FROM raw.event_entry GROUP BY 1 ORDER BY 2 DESC;
+SELECT date_confidence, count(*) FROM analysis.event_entry_date_check GROUP BY 1 ORDER BY 2 DESC;
+-- slot + date + figure of each of the 26 half-dash sessions (-> align/halfdash_slots.csv)
+SELECT e.event_id, e.page_id, e.theater, e.date_text, v.date, e.time_of_day, e.receipts_text,
+  (SELECT string_agg(p.performance_title,' | ' ORDER BY p.performance_order) FROM raw.event_entry_performance p WHERE p.event_id=e.event_id)
+FROM raw.event_entry e JOIN research.event v USING(event_id) WHERE e.event_id = ?;   -- 25 ids from triage.csv D_halfdash + pair010__s085
+```
+
+Result: the inserted row is `repertoire_1892-93_pair010__s085`, Малый, 21 Суббота., morning, performed, 827 р. 42 к., 1892-11-21 verified, «Графъ де Ризоръ»; s086 is the empty evening (no_performance). `raw.event_entry` 29,955 (was 30,008); `research.event` 32,806 (32,859); `research.performance` 30,849 (30,848); `research.work` 3,065 (3,064). `time_of_day`: unspecified 25,237, morning 2,368, evening 2,350; `event_status`: performed 22,164, no_performance 7,791. Date check: verified 29,519, intra_block_disagreement 363, corrected_manual 42, corrected 31 (of 29,955). Half-dash list: 26 sessions, 24 morning + 2 evening. After `compare_structure.py` + `triage_structure.py`: C_dark 0, D_halfdash 25 (23 morning, 2 evening stored; the 26th is the added session), D_other 5, C_content 2. Collapsed closed-day sessions in the raw JSON (exact `_fix_note` match): 54 on 18 pages (53 dark/unannotated, 1 annotation-only).

@@ -1,0 +1,15 @@
+page_id,theater,date_label,subcell,label,receipts,lines,note
+repertoire_1890-91_pair024,Александринскій,27,1,,,"На Бойкомъ мѣстѣ, ком. | На Пескахъ, карт.","Row 27 is split by a horizontal rule across the St Petersburg columns; no утро/вечеръ labels printed in this cell. The only labels (утро/веч.) sit at the right edge beside Большой. Upper half holds the performance."
+repertoire_1890-91_pair024,Александринскій,27,2,,,—,"Lower half is a dash; label not printed in this cell (see upper half)."
+repertoire_1890-91_pair024,Мариинскій,27,1,,,"Отелло, оп.","Row 27 split by rule; no label printed in this cell; labels утро/веч. printed only at the edge beside Большой. Upper half holds the performance."
+repertoire_1890-91_pair024,Мариинскій,27,2,,,—,"Lower half is a dash; no label printed."
+repertoire_1890-91_pair024,Михайловскій,27,1,,,—,"Row 27 split by rule; no label printed in this cell; labels only at the edge beside Большой. Upper half is a dash."
+repertoire_1890-91_pair024,Михайловскій,27,2,,,"La Course aux Jupons, com. | C'est la Faute au Ministère, com.","Lower half holds the performance; no label printed in this cell."
+repertoire_1891-92_pair012,Большой,28,1,,,"Демонъ, оп.","Row 28 split by rule; no label printed inside this cell; утро/веч. labels sit at the right edge of the neighbouring Малый cell (and Александринскій). Upper half holds the performance."
+repertoire_1891-92_pair012,Большой,28,2,,,—,"Lower half is a dash; no label printed in this cell."
+repertoire_1891-92_pair012,Малый,28,1,утро,,"Имогена, др.",
+repertoire_1891-92_pair012,Малый,28,2,вечеръ,,—,"Label printed as ВЕЧ."
+repertoire_1891-92_pair012,Мариинскій,28,1,,,"Коппелія, бал. | 2-е д. бал. Фіаметта.","Row 28 split by rule; no label printed in this cell; утро/веч. labels sit at the edge beside Александринскій and Малый. Upper half holds the performance."
+repertoire_1891-92_pair012,Мариинскій,28,2,,,—,"Lower half is a dash; no label printed in this cell."
+repertoire_1891-92_pair014,Большой,4,1,,,"Фаустъ, оп.","Row 4 split by rule; no label printed inside this cell; утро/веч. labels sit at the right edge of the neighbouring Малый cell. Upper half holds the performance."
+repertoire_1891-92_pair014,Большой,4,2,,,—,"Lower half is a dash; no label printed in this cell."

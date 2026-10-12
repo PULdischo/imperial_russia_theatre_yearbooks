@@ -1,0 +1,11 @@
+page_id,theater,date_label,subcell,label,receipts,lines,note
+repertoire_1900-01_p019,Новый,30,1,утро,481 р. 65 к.,"Севильскій цирюльникъ, оп.","Labels утро/вечеръ printed only once at the row edge beside Большой театръ; upper half = утро, lower half = вечеръ; the upper half holds the performance"
+repertoire_1900-01_p019,Новый,30,2,вечеръ,,—,dash only; label printed at Большой edge
+repertoire_1902-03_p019,Малый,28,1,утро,563 р. 46 к.,"Волки и овцы, ком.","Labels утро/вечеръ printed only once at the row edge beside Большой театръ; upper half = утро, lower half = вечеръ; the upper half holds the performance"
+repertoire_1902-03_p019,Малый,28,2,вечеръ,,—,dash only; label ВЕЧЕРЪ printed at Большой edge
+repertoire_1903-04_p017,Малый,6,1,утро,,"Старый закалъ, др.","no receipts figure printed; Labels утро/вечеръ printed only once at the row edge beside Большой театръ; upper half = утро, lower half = вечеръ; the upper half holds the performance"
+repertoire_1903-04_p017,Малый,6,2,вечеръ,,—,dash only; label printed at Большой edge
+repertoire_1903-04_p017,Новый,6,1,утро,,"Фра-Діаволо, оп.","no receipts figure printed; Labels утро/вечеръ printed only once at the row edge beside Большой театръ; upper half = утро, lower half = вечеръ; the upper half holds the performance"
+repertoire_1903-04_p017,Новый,6,2,вечеръ,,—,dash only (faint); label printed at Большой edge
+repertoire_1903-04_p025,Новый,1,1,утро,345 р. 20 к.,"Женитьба Бѣлугина, ком.",УТРО label printed in the Новый column own edge
+repertoire_1903-04_p025,Новый,1,2,вечеръ,,—,dash only; ВЕЧ. label printed in the Новый column own edge

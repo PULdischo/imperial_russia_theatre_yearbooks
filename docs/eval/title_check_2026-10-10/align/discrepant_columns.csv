@@ -1,7 +1,4 @@
 page_id,theater,n_rows_differ,labels
-repertoire_1890-91_pair004,Александринскій,1,8
-repertoire_1890-91_pair004,Мариинскій,1,8
-repertoire_1890-91_pair004,Михайловскій,1,8
 repertoire_1890-91_pair018,Александринскій,1,2
 repertoire_1890-91_pair024,Александринскій,1,27
 repertoire_1890-91_pair024,Мариинскій,1,27
@@ -10,66 +7,26 @@ repertoire_1891-92_pair012,Большой,1,28
 repertoire_1891-92_pair012,Малый,1,28
 repertoire_1891-92_pair012,Мариинскій,1,28
 repertoire_1891-92_pair014,Большой,1,4
-repertoire_1892-93_pair006,Александринскій,1,17
 repertoire_1892-93_pair010,Большой,2,14 | 21
-repertoire_1892-93_pair010,Малый,1,21
 repertoire_1892-93_pair014,Большой,1,2
 repertoire_1892-93_pair014,Малый,1,2
-repertoire_1893-94_pair018,Александринскій,1,13
 repertoire_1894-95_pair008,Большой,1,7
 repertoire_1895-96_pair006,Малый,1,21
-repertoire_1895-96_pair008,Большой,1,14
 repertoire_1896-97_pair014,Большой,1,28
-repertoire_1897-98_pair002,Александринскій,2,17 | 21
-repertoire_1897-98_pair022,Большой,1,27
-repertoire_1897-98_pair022,Мариинскій,1,22
 repertoire_1897-98_pair024,Александринскій,1,11
 repertoire_1898-99_p013,Малый,1,21
 repertoire_1898-99_p013,Новый,1,21
-repertoire_1898-99_p014,Александринскій,1,29
 repertoire_1898-99_p018,Александринскій,1,26
-repertoire_1898-99_p019,Новый,2,27 | 29
+repertoire_1898-99_p019,Новый,1,29
 repertoire_1898-99_p021,Большой,1,2
 repertoire_1898-99_p021,Малый,1,2
-repertoire_1899-00_p014,Александринскій,1,28
-repertoire_1899-00_p024,Александринскій,1,30
-repertoire_1900-01_p008,Михайловскій,1,29
-repertoire_1900-01_p010,Александринскій,1,5
-repertoire_1900-01_p016,Михайловскій,1,10
-repertoire_1900-01_p017,Малый,1,6
-repertoire_1900-01_p018,Михайловскій,1,17
 repertoire_1900-01_p019,Малый,1,30
 repertoire_1900-01_p019,Новый,1,30
-repertoire_1900-01_p022,Александринскій,1,14
-repertoire_1900-01_p027,Новый,1,9
-repertoire_1901-02_p020,Александринскій,1,30
-repertoire_1901-02_p021,Малый,1,30
 repertoire_1902-03_p019,Малый,1,28
-repertoire_1903-04_p006,Александринскій,1,19
 repertoire_1903-04_p017,Большой,1,6
 repertoire_1903-04_p017,Малый,1,6
 repertoire_1903-04_p017,Новый,1,6
-repertoire_1903-04_p018,Александринскій,1,26
 repertoire_1903-04_p025,Новый,1,1
-repertoire_1905-06_p000,Михайловскій,2,1 | 4
-repertoire_1905-06_p002,Михайловскій,2,11 | 18
-repertoire_1905-06_p035,Большой,1,2
-repertoire_1905-06_p035,Малый,1,2
-repertoire_1905-06_p035,Новый,1,2
-repertoire_1906-07_p034,Александринскій,5,1 | 5 | 6 | 7 | 8
-repertoire_1906-07_p034,Мариинскій,5,1 | 5 | 6 | 7 | 8
-repertoire_1906-07_p034,Михайловскій,5,1 | 5 | 6 | 7 | 8
-repertoire_1906-07_p035,Большой,5,1 | 5 | 6 | 7 | 8
-repertoire_1906-07_p035,Малый,5,1 | 5 | 6 | 7 | 8
-repertoire_1906-07_p035,Новый,5,1 | 5 | 6 | 7 | 8
-repertoire_1907-08_p035,Новый,1,24
-repertoire_1907-08_p037,Новый,1,9
-repertoire_1907-08_p041,Новый,1,30
-repertoire_1907-08_p045,Новый,1,20
 repertoire_1908-09_p009,Александринскій,1,12
-repertoire_1909-10_p001,Михайловскій,1,6
-repertoire_1909-10_p022,Новый,1,13
-repertoire_1909-10_p028,Новый,2,3 | 10
 repertoire_1909-10_p033,Александринскій,1,31
 repertoire_1909-10_p033,Мариинскій,1,31
-repertoire_1909-10_p038,Новый,1,21
