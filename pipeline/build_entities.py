@@ -1566,6 +1566,241 @@ def build_ordinal_shift_candidates(con: duckdb.DuckDBPyConnection,
 
 
 
+def _fold_name(text: str | None) -> str:
+    """A looser key than `_name_key`, for COMPARING two printings of a name:
+    pre-reform letter pairs, hard/soft signs and doubled letters are all
+    things one volume prints one way and the next another (Софія/Софья,
+    Агриппина/Агрипина, Левинсонъ/Левенсонъ). Never used to build an
+    identity key -- only to decide whether two records are worth a look."""
+    s = (text or "").lower()
+    for a, b in (("ѳ", "ф"), ("і", "и"), ("ѣ", "е"), ("ё", "е"), ("ѵ", "и"), ("й", "и")):
+        s = s.replace(a, b)
+    s = re.sub(r"[ъь]", "", s)
+    s = re.sub(r"[^а-яa-z]", "", s)
+    return re.sub(r"(.)\1", r"\1", s)
+
+
+def _keep_apart_pairs(con: duckdb.DuckDBPyConnection) -> set[frozenset]:
+    """Pairs a human SPLIT and that are still two live people. Nothing
+    automatic may join them again. A split whose two sides now resolve to
+    one survivor was reverted on purpose and is no longer a constraint.
+
+    Exists because `Никитинъ, Алексѣй Никитичъ` -- a Petersburg second
+    violinist and a Moscow trombonist, split on 2026-10-05 -- was silently
+    rejoined by `merge_duplicate_persons`, which knew nothing of the split
+    (found by the 2026-10-12 audit)."""
+    if not _table_exists(con, "entities", "person_merge_log"):
+        return set()
+    sup = {str(a): str(b) for a, b in con.execute(
+        "SELECT person_id, superseded_by_person_id FROM entities.person "
+        "WHERE superseded_by_person_id IS NOT NULL").fetchall()}
+
+    def live(x: str) -> str:
+        seen = set()
+        while x in sup and x not in seen:
+            seen.add(x)
+            x = sup[x]
+        return x
+
+    out = set()
+    for a, b in con.execute("SELECT person_id_1, person_id_2 FROM entities.person_merge_log "
+                            "WHERE status = 'split_manual'").fetchall():
+        la, lb = live(str(a)), live(str(b))
+        if la != lb:
+            out.add(frozenset((la, lb)))
+    return out
+
+
+def build_shared_start_candidates(con: duckdb.DuckDBPyConnection,
+                                  prior_status: dict | None = None) -> None:
+    """Pairs that print the same service start date under names Tier 1 and
+    Tier 2 never compare.
+
+    The 2026-10-12 audit (docs/eval/person_audit_2026-10-12/) found 298
+    clusters of live people sharing a name and a printed start date. Tier 1
+    wants the whole name equal; Tier 2 compares records differing in ONE
+    field and both its keys hold the first name and the ordinal. Left out:
+    a first-name variant (Софія/Софья), two fields varying at once, and an
+    ordinal-less graduate against an ordinal-less company record (the
+    Graduates lists print no patronymic). `build_ordinal_shift_candidates`
+    covers only pairs whose ordinals differ.
+
+    Emitted as candidates. A pair is marked corroborated -- and so
+    auto-confirmed by `apply_tenure_corroboration` -- only when, beyond the
+    shared date (RG, 2026-10-12: propose them all, auto-confirm only what
+    fits the patterns):
+      - the surnames are the same printing-for-printing (`_fold_name`), the
+        first names within one letter, the patronymics equal or one blank;
+      - no season has both in the same list;
+      - and the two records FIT TOGETHER: a graduate whose company record
+        starts that season or the next, or a short record lying inside or
+        beside the seasons of a longer one in the same list;
+      - and nothing else in the pair's cluster disagrees (a second
+        patronymic, a same-list overlap, a differing surname).
+    Everything else waits for a human with `shared_start_date_needs_review`.
+    """
+    seasons = [r[0] for r in con.execute(
+        "SELECT DISTINCT season FROM raw.source_pages WHERE season IS NOT NULL ORDER BY 1").fetchall()]
+    si = {s: i for i, s in enumerate(seasons)}
+    rows = con.execute("""
+        SELECT p.person_id, p.canonical_family_name, coalesce(p.canonical_first_name, ''),
+               coalesce(p.canonical_patronymic, ''), p.display_name,
+               sp.season, coalesce(sp.city, ''), sp.entity_type, s.start_date_undate
+        FROM entities.person p
+        JOIN entities.person_link pl ON pl.person_id = p.person_id
+        JOIN raw.person_entry pe ON pe.entry_id = pl.entry_id
+        JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+        LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+        WHERE p.superseded_by_person_id IS NULL AND p.canonical_family_name IS NOT NULL
+          AND sp.season IS NOT NULL
+    """).fetchall()
+    info: dict = {}
+    for pid, fam, first, pat, disp, season, city, etype, sd in rows:
+        e = info.setdefault(str(pid), {
+            "fam": _fold_name(fam), "first": _fold_name(first.split()[0] if first.split() else ""),
+            "pat": _fold_name(pat), "disp": disp, "lists": defaultdict(set), "starts": set()})
+        e["lists"][(city, etype)].add(si[season])
+        if sd:
+            e["starts"].add(sd)
+
+    def company(e: dict) -> dict:
+        return {k: v for k, v in e["lists"].items() if k[1] != "Graduates"}
+
+    def overlap(a: dict, b: dict) -> bool:
+        ca, cb = company(a), company(b)
+        return any(ca[k] & cb[k] for k in set(ca) & set(cb))
+
+    def pat_ok(a: dict, b: dict) -> bool:
+        return (not a["pat"] or not b["pat"] or a["pat"] == b["pat"]
+                or _levenshtein(a["pat"], b["pat"]) <= 2)
+
+    def fits(a: dict, b: dict) -> bool:
+        ca, cb = company(a), company(b)
+        if not ca or not cb:                      # one side is a graduate only
+            g, c = (a, b) if not ca else (b, a)
+            cc = company(c)
+            if not cc or company(g):
+                return False
+            grad = max(s for v in g["lists"].values() for s in v)
+            first_company = min(s for v in cc.values() for s in v)
+            return first_company - grad in (0, 1)
+        small, big = (ca, cb) if sum(map(len, ca.values())) <= sum(map(len, cb.values())) else (cb, ca)
+        if not set(small) <= set(big):            # a second post in another list: a human's call
+            return False
+        return all(min(big[k]) - 1 <= s <= max(big[k]) + 1 for k, ss in small.items() for s in ss)
+
+    by_start: dict = defaultdict(list)
+    for pid, e in info.items():
+        for sd in e["starts"]:
+            by_start[sd].append(pid)
+    raw_pairs: dict = {}
+    for sd, pids in by_start.items():
+        for i in range(len(pids)):
+            for j in range(i + 1, len(pids)):
+                a, b = info[pids[i]], info[pids[j]]
+                d = 0 if a["fam"] == b["fam"] else _levenshtein(a["fam"], b["fam"])
+                if d > 2 or (d and min(len(a["fam"]), len(b["fam"])) < 5):
+                    continue
+                if a["first"] and b["first"] and a["first"] != b["first"] \
+                        and _levenshtein(a["first"], b["first"]) > 1:
+                    continue
+                if not pat_ok(a, b):
+                    continue
+                key = (pids[i], pids[j]) if pids[i] < pids[j] else (pids[j], pids[i])
+                raw_pairs.setdefault(key, sd)
+
+    already = {frozenset((str(a), str(b))) for a, b in con.execute(
+        "SELECT person_id_1, person_id_2 FROM entities.person_candidate").fetchall()}
+    decided = {frozenset((str(a), str(b))) for a, b in con.execute(
+        "SELECT person_id_1, person_id_2 FROM entities.person_merge_log "
+        "WHERE status = 'rejected'").fetchall()} if _table_exists(con, "entities", "person_merge_log") else set()
+    apart = _keep_apart_pairs(con)
+
+    # A cluster is only as good as its worst pair: `Хасперъ, Михаилъ` the
+    # graduate shares a start date with Михаилъ Павловичъ AND Михаилъ Ивановичъ.
+    parent: dict = {}
+
+    def find(x):
+        parent.setdefault(x, x)
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    for a, b in raw_pairs:
+        parent[find(a)] = find(b)
+    members: dict = defaultdict(list)
+    for x in list(parent):
+        members[find(x)].append(x)
+    clean_cluster: dict = {}
+    for root, mem in members.items():
+        ok = True
+        for i in range(len(mem)):
+            for j in range(i + 1, len(mem)):
+                a, b = info[mem[i]], info[mem[j]]
+                if a["fam"] != b["fam"] or not pat_ok(a, b) or overlap(a, b) \
+                        or frozenset((mem[i], mem[j])) in apart or frozenset((mem[i], mem[j])) in decided:
+                    ok = False
+        clean_cluster[root] = ok
+
+    prior_status = prior_status or {}
+    out, n_ok = [], 0
+    for (a, b), sd in raw_pairs.items():
+        pair = frozenset((a, b))
+        if pair in already or pair in decided or pair in apart:
+            continue
+        ea, eb = info[a], info[b]
+        corroborated = bool(
+            clean_cluster[find(a)] and ea["fam"] == eb["fam"]
+            and ea["first"] and eb["first"] and not overlap(ea, eb) and fits(ea, eb))
+        n_ok += corroborated
+        cid = uuid.uuid5(NAMESPACE, f"shared_start:{a}|{b}")
+        status = prior_status.get(str(cid), "pending")
+        out.append((str(cid), a, b, ea["disp"], eb["disp"], 1.0, "name_variant_shared_start", status,
+                    "shared_start_date" if corroborated else "shared_start_date_needs_review", sd))
+    # Graduates whose class has NO printed start date (the Moscow lists often
+    # give none; 96 graduate-only records on 2026-10-12). There is no shared
+    # date to find, so the nearest thing is asked for instead: the same name,
+    # a company record that first appears that season or the next, and a
+    # start date in the year the class left school. Never auto-confirmed --
+    # there is no second independent signal here, only a consistent story.
+    by_fam: dict = defaultdict(list)
+    for pid, e in info.items():
+        by_fam[e["fam"]].append(pid)
+    n_grad = 0
+    paired = {x for pair in raw_pairs for x in pair}
+    for g, eg in info.items():
+        if eg["starts"] or company(eg) or not eg["first"]:
+            continue
+        grad = max(x for v in eg["lists"].values() for x in v)
+        year = str(int(seasons[grad][:4]) + 1)
+        for c in by_fam[eg["fam"]]:
+            ec = info[c]
+            cc = company(ec)
+            if c == g or not cc or ("", "Graduates") in ec["lists"] or not ec["first"]:
+                continue
+            if ec["first"] != eg["first"] and _levenshtein(ec["first"], eg["first"]) > 1:
+                continue
+            if min(x for v in cc.values() for x in v) - grad not in (0, 1):
+                continue
+            if not any(d[:4] == year for d in ec["starts"]):
+                continue
+            pair = frozenset((g, c))
+            if pair in already or pair in decided or pair in apart:
+                continue
+            a, b = (g, c) if g < c else (c, g)
+            cid = uuid.uuid5(NAMESPACE, f"graduate_no_date:{a}|{b}")
+            out.append((str(cid), a, b, info[a]["disp"], info[b]["disp"], 1.0, "graduate_no_date",
+                        prior_status.get(str(cid), "pending"), "start_year_matches_graduation", year))
+            n_grad += 1
+    if out:
+        con.executemany(
+            "INSERT INTO entities.person_candidate VALUES (?,?,?,?,?,?,?,?,?,?)", out)
+    print(f"  + {len(out) - n_grad} shared-start-date pair(s) Tier 2 never compares: {n_ok} fit together and "
+          f"are corroborated, {len(out) - n_grad - n_ok} left pending for review; "
+          f"+ {n_grad} undated graduate(s) matched to a company record by name and year, all pending")
+
+
 def apply_tenure_corroboration(con: duckdb.DuckDBPyConnection) -> None:
     """Auto-confirms (without individual human sign-off) any still-pending
     pair whose tenure_signal is 'shared_start_date' -- an explicit,
@@ -1702,6 +1937,18 @@ def _repoint_all_superseded(con: duckdb.DuckDBPyConnection) -> None:
         ) AS seasons
         WHERE p.person_id = seasons.person_id
     """)
+    # Other tables that hold a roster person_id must follow a merge too.
+    # build_research_model.py stops the build if a production credit points
+    # at no research.person, and a merge whose survivor is picked by id
+    # order (every automatic one) can tombstone the linked record.
+    for table, col in (("production_credit_link", "person_id"),
+                       ("creator_person", "proposed_roster_person_id")):
+        if _table_exists(con, "entities", table):
+            con.execute(f"""
+                UPDATE entities.{table} t SET {col} = fs.final_id
+                FROM _final_survivor fs
+                WHERE t.{col} = fs.person_id AND fs.person_id != fs.final_id
+            """)
     con.execute("DROP TABLE _final_survivor")
 
     n_stale = con.execute("""
@@ -1850,56 +2097,87 @@ def merge_duplicate_persons(con: duckdb.DuckDBPyConnection) -> int:
             frozenset(start_dates or []),
         ))
 
+    # Pairwise, not group-wide (2026-10-12). The gates used to be satisfied
+    # by ANY two members of a same-name group: one shared start date
+    # somewhere, one entity type common to all. A new 1910-11 Moscow row for
+    # the trombonist `Никитинъ, Алексѣй Никитичъ` shared a date with the
+    # trombonist's record, and the Petersburg violinist of the same name --
+    # deliberately split off on 2026-10-05, listed in the same three seasons
+    # in another city -- was carried into the merge with them. Now two
+    # records join only if THEY share a list type and a start date; a group
+    # is refused if any two of its members overlap in a season and city, or
+    # were split apart by hand. And every merge is logged: these used to
+    # leave no trace in person_merge_log at all.
+    apart = _keep_apart_pairs(con)
+    display = {str(pid): d for pid, d in con.execute(
+        "SELECT person_id, display_name FROM entities.person").fetchall()}
     absorbed: dict[str, str] = {}
+    log_rows: list[tuple] = []
     n_cross_type_skipped = 0
     n_overlap_skipped = 0
     n_no_shared_date_skipped = 0
+    n_kept_apart = 0
     for key, members in by_key.items():
         if len(members) < 2:
             continue
-        # Gate 1: every member must share at least one entity_type with
-        # every other member (the group's full intersection is non-empty) --
-        # NOT that every member's type SET is identical. A person whose
-        # linked entries already span two types (e.g. a school Graduates
-        # record plus a BalletArtists career, already combined into one
-        # person by an earlier Tier 1 pass) is still the same kind of
-        # match as a person recorded under BalletArtists alone -- requiring
-        # the full sets to match exactly (the original version of this
-        # check) wrongly excluded exactly the cases this gate exists to
-        # allow, confirmed against 25 real examples this session.
-        common_types = frozenset.intersection(*(etypes for _, etypes, _, _ in members))
-        if not common_types:
-            n_cross_type_skipped += 1
-            continue
-        overlap = False
-        shared_date = False
+        parent = {m[0]: m[0] for m in members}
+
+        def find(x: str) -> str:
+            while parent[x] != x:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+
+        any_type = any_date = False
+        shared: dict[frozenset, str] = {}
         for i in range(len(members)):
             for j in range(i + 1, len(members)):
-                if members[i][2] & members[j][2]:
-                    overlap = True
-                if members[i][3] & members[j][3]:
-                    shared_date = True
-        if overlap:
-            n_overlap_skipped += 1
-            continue
-        if not shared_date:
-            n_no_shared_date_skipped += 1
-            continue
-        ids = sorted(pid for pid, _, _, _ in members)
-        survivor = ids[0]
-        for loser in ids[1:]:
-            absorbed[loser] = survivor
+                mi, mj = members[i], members[j]
+                if mi[1] & mj[1]:
+                    any_type = True
+                    dates = mi[3] & mj[3]
+                    if dates:
+                        any_date = True
+                        shared[frozenset((mi[0], mj[0]))] = sorted(dates)[0]
+                        parent[find(mi[0])] = find(mj[0])
+        comps: dict[str, list] = defaultdict(list)
+        for m in members:
+            comps[find(m[0])].append(m)
+        merged_any = False
+        for comp in comps.values():
+            if len(comp) < 2:
+                continue
+            ids = sorted(m[0] for m in comp)
+            if any(comp[i][2] & comp[j][2] for i in range(len(comp)) for j in range(i + 1, len(comp))):
+                n_overlap_skipped += 1
+                continue
+            if any(frozenset((x, y)) in apart for x in ids for y in ids if x < y):
+                n_kept_apart += 1
+                continue
+            survivor = ids[0]
+            for loser in ids[1:]:
+                absorbed[loser] = survivor
+                date = next((d for pair, d in shared.items() if loser in pair), None)
+                log_rows.append((str(uuid.uuid4()), survivor, loser, display.get(survivor), display.get(loser),
+                                 1.0, "same_name", "confirmed_duplicate", "shared_start_date", date))
+            merged_any = True
+        if not merged_any:
+            if not any_type:
+                n_cross_type_skipped += 1
+            elif not any_date:
+                n_no_shared_date_skipped += 1
 
     if absorbed:
         con.executemany(
             "UPDATE entities.person SET superseded_by_person_id = ? WHERE person_id = ?",
             [(root, loser) for loser, root in absorbed.items()],
         )
+        con.executemany("INSERT INTO entities.person_merge_log VALUES (?,?,?,?,?,?,?,?,?,?)", log_rows)
     print(f"entities.person: {len(absorbed)} duplicate record(s) merged into "
           f"{len(set(absorbed.values()))} surviving record(s) "
           f"({n_cross_type_skipped} cross-entity-type, {n_overlap_skipped} "
-          f"season/city-overlap, and {n_no_shared_date_skipped} no-shared-date "
-          f"matches left for human review)")
+          f"season/city-overlap, {n_no_shared_date_skipped} no-shared-date and "
+          f"{n_kept_apart} split-by-hand matches left alone)")
     return len(absorbed)
 
 
@@ -2069,6 +2347,7 @@ def main():
         # After the tenure annotation, so it cannot overwrite the signal
         # these rows set for themselves.
         build_ordinal_shift_candidates(con, candidate_status)
+        build_shared_start_candidates(con, candidate_status)
         apply_tenure_corroboration(con)
         if args.apply_decisions and not decisions_applied:
             apply_person_merges(con, args.apply_decisions)
