@@ -127,6 +127,18 @@ closes, and add new open items here as well as in their own entry.
   a name field *(checked)*; never given its own treatment.
 - #98-#100: `entities.work_genre_candidate` (74 rows, 37 title groups
   *(checked)*) is open-ended by design.
+- Free matinees with a missing banner (found 2026-10-12, entry «Two Moscow
+  1906-07 matinee cells» near the end of this file): only the two pages in
+  that entry were fixed. Sweep the Repertoire for morning sessions with no
+  receipts and no annotation, and read each cell on the scan; a benefit or
+  charity heading attached to the wrong session of the day is the sibling
+  error to look for on the same cells.
+- 12 Sep 1904 Маріинскій (`repertoire_1904-05`, printed p. 92): stored as
+  «Жемчужина, 1, 3 д. и 2-я карт. 4 д. балета.» + «Волшебное зеркало». The SP
+  1904-05 ballet list enters «Волшебное зеркало» as «(1-е, 3-е д. и 2-я карт.
+  4-го д.)» with one date, so the act list probably belongs to «Волшебное
+  зеркало» and the title is split in the wrong place. Not viewed on the scan,
+  not fixed.
 
 **Parked or never decided (methodology)**
 
