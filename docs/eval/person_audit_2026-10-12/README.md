@@ -141,3 +141,44 @@ class are in the Moscow 1901-02 list.
   «1-я»). 2 entries changed, 0 links moved.
 So the bare-surname rows of that list number 24 with this one, 17 of them the class of 1901; and each of the 19
 graduates has a graduate record, a 1901-02 row and a named record from 1902-03 or 1903-04.
+
+### The 1901-02 Moscow ballet list read on the scans (2026-10-12) -- proposal for RG, nothing merged
+
+All nine pages read at reduced size (the bare rows are large type and legible); p000 rows 9-11 and p005 rows
+12-14 at full zoom. 25 rows are printed as a bare surname, plus «39. Жвирблисъ, Марія (съ 1 сентября 1901 г.)»
+with a first name and no patronymic. Machine-readable: `moscow_1901-02_bare_rows.json`.
+
+| 1901-02 row | Graduate of 1901 | Named record (start 1 Sept 1901 unless noted) |
+|---|---|---|
+| 10. Бурина 2-я | Бурина, Марія | Бурина 2-я, Марія Александровна, 1902-03.. |
+| 22. Грабовская | Грабовская, Ольга | Грабовская, Ольга Васильевна, 1902-03.. |
+| 26. Грекова 2-я | Грекова, Елена | «Трекова 2-я, Елена Александровна» 1902-03 + Грекова 2-я, Елена Александровна 1903-04.. |
+| 31. Домашева | Домашева, Евдокія | Домашева, Евдокія Петровна, 1902-03.. |
+| 32. Дмитріева | Дмитріева, Надежда | Дмитріева, Надежда Николаевна, 1902-03.. |
+| 35. Дьяченко-Краткая | Дьяченко-Краткая, Елизавета | Дьяченко-Краткая, Елизавета Яковлевна, 1902-03.. |
+| 39. Жвирблисъ, Марія | (same record) | Жвирблицъ, Марія Ивановна, 1902-03 (queued pair) |
+| 55. Ленская | Ленская, Лидія | Ленская, Лидія Ивановна, 1902-03 only |
+| 71. Николаева 3-я | Николаева, Зинаида | Николаева, Зинаида Николаевна, 1902-03.. |
+| 75. Павлова | Павлова, Евгенія | Павлова, Евгенія Ивановна, 1902-03.. |
+| 98. Соколова | Соколова, Татьяна | Соколова, Татьяна Александровна, 1902-03.. |
+| 114. Шаломытова | Шаломытова, Антонина | Шаломытова, Антонина Михайловна, 1902-03.. |
+| 122. Ѳеоктистова | Ѳеоктистова, Лидія | Ѳеоктистова, Лидія Васильевна, 1902-03.. |
+| 12. Валининъ | Волининъ, Александръ | Волининъ, Александръ Емельяновичъ, 1902-03.. |
+| 31. Карцевъ | Карцевъ, Александръ | Карцевъ, Александръ Викторовичъ, 1902-03.. |
+| 33. Коноваловъ | Коноваловъ, Владиміръ | Коноваловъ, Владиміръ Дмитріевичъ, 1902-03.. |
+| 49. Орловъ | Орловъ, Алексѣй | Орловъ, Алексѣй Владиміровичъ, 1902-03.. |
+| 70. Фроловъ | Фроловъ, Сергѣй | Фроловъ, Сергѣй Александровичъ, 1902-03.. |
+| 75. Царманъ 2-й | Царманъ, Владиміръ | Царманъ 2-й, Владиміръ Александровичъ, 1902-03.. |
+
+Bare rows that are not the class:
+- 27. Гримальди -> Гримальди, Генріетта (1902-03..1905-06, съ 1 сентября 1901; 3 roles in common). Not a graduate of
+  the school: she arrives that month.
+- 51. Пановъ -> Пановъ, Александръ Викторовичъ (1895-96..1898-99, then 1902-03.. with a second start 1 сентября 1901).
+- 83. Щегловъ -> Щегловъ, Василій Семеновичъ (1896-97..1898-99, then 1902-03.. with a second start 16 ноября 1901).
+- 14. Воронцовъ and 100. Струкова are already on their people.
+- 42. Иванова and 89. Рѣпина: no single candidate. Left alone.
+
+Found on the way: (a) the 1902-03 list really prints «26. Трекова 2-я» (full zoom, a Т beside the Г of row 25) --
+a print error; raw dropped its «2-я»; (b) rows 76-99 of 1901-02 p003 are stored with no start date although the
+print gives one for each -- 20 rows to re-read; (c) the bare rows' named parts carry over in six cases only, so
+the matches rest on surname, class and the «съ 1 сентября 1901 г.» date, not on roles.

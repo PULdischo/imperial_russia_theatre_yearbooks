@@ -16111,3 +16111,16 @@ Result: «26. Грекова 2-я» is in the 1901-02 list (ordinal stored in fi
 Евгенія Фердинандовна (съ 1 сентября 1888 г.)» duplicated row 11, Бюхнеръ, Евгенія Фердинандовна, who is the
 only Евгенія Фердинандовна in the corpus (1890-91..1907-08); the scan prints «10. Бурина 2-я.» After the raw
 correction: 2 entries differ from the backup, 0 links, 2,765 live people, 176 pairs pending.
+
+## 2026-10-12 — The 1901-02 Moscow bare-surname rows matched to graduates and named records
+
+Query: for each 1901-02 Moscow BalletArtists row with no first name (or an ordinal in first_name) and no
+patronymic, every live person whose folded surname is within one letter, split into (a) graduate-only records
+of 1900-01 and (b) Moscow ballet people in the same section who are absent in 1901-02 and present in 1900-01,
+1902-03 or 1903-04, with their start dates and shared role names (script inline in the session; output saved
+as docs/eval/person_audit_2026-10-12/moscow_1901-02_bare_rows.json).
+
+Result: 25 bare rows. 18 match exactly one 1901 graduate and one named record (Грекова: two named records);
+Жвирблисъ is the 19th of the class, printed with her first name. Three more match one returning or arriving
+dancer (Гримальди, Пановъ, Щегловъ); two are already linked (Воронцовъ, Струкова); two have no single
+candidate (Иванова, Рѣпина).
