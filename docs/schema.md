@@ -194,6 +194,37 @@ single receipts figure (e.g. two one-act comedies).
 
 ---
 
+## Research-layer event and performance columns added 2026-10-12
+
+Built by `build_research_model.py` (`build_art_forms`, `EVENT_FLAG_RES`); nothing here changes
+`raw` or `analysis`. Rulings and open points: `docs/eval/known_issues.md`, entries of 2026-10-12.
+
+**`research.event`**
+
+| Column | Meaning |
+|---|---|
+| `time_of_day` | `morning` / `evening` / `unspecified`, as in `event_entry.time_of_day`. The yearbook labels a session only when a theater had two on one day, so `unspecified` is the single session of its day, not "unknown" |
+| `receipts_verbatim` | the receipts as printed (`receipts_text`), beside the parsed `receipts_total_kopecks` |
+| `annotation` | the printed heading or note of the cell (`event_entry.annotation`), verbatim |
+| `is_benefit`, `is_charity`, `is_free`, `is_student_performance`, `is_reduced_price` | wording classes of the annotation (benefit / «въ пользу», «благотворительный» / «безплатный» / «для учащейся молодежи» / «по уменьшеннымъ цѣнамъ», with their French and German forms). They record what the annotation says and are not a judgement about prices. `is_benefit` is also set by a «Bénéfice de …» line stored as a performance title. A cell whose banner was not transcribed has all five false |
+| `has_anthem` | the bill includes the anthem |
+| `n_works` | performances on the bill, not counting the anthem and heading lines stored as titles |
+| `art_forms` | the distinct art forms on the bill, in the fixed order below, joined by `; ` (`ballet; opera`). NULL when no performance on the bill has one |
+
+**`research.performance`**
+
+| Column | Meaning |
+|---|---|
+| `art_form` | `ballet`, `opera`, `Russian drama`, `French drama`, `visiting troupe`, or NULL. By company, not by printed genre label (RG, 2026-10-12): a troupe is "visiting" when the yearbook prints no productions list for it, which covers the German-language performances of the whole period, the Italian and German opera seasons, and guests named in an annotation. Operettas go with the company that performs them (opera at the Маріинскій and Большой, Russian drama elsewhere). Comedy-ballets («ком.-бал.») are Russian drama. A work whose record has no genre takes, per performance, the genre printed on that performance, or else the genre printed for the same work in the same season (RG: "as long as they are in the same season"); the basis says so. NULL = deliberately unassigned: the anthem, a title with no genre printed that season, a divertissement outside ballet, a cantata |
+| `art_form_basis` | the rule that decided, in words. Read it before relying on an edge case; `docs/eval/art_form_review_2026-10-12.csv` lists the unassigned and doubtful ones |
+| `includes_dance`, `includes_dance_basis` | a performance that is not a ballet but belongs to a work known to contain dancers (RG, 2026-10-12): the comedy-ballets, and the operas listed in `pipeline/entity_curation/works_with_dancers.csv` from named roles in the ballet rosters and from the season reviews. A performance is marked only in a season and city for which there is evidence (RG: "we can assume that all the performances of a production in one season were similar, but not beyond that"). The basis starts `direct:` when the source names that very performance or the printed genre is «ком.-бал.», and `season:` when dancers are attested in the work in that season and city. Excerpt rows are not marked. **The value is yes or blank, never no** (RG): blank means "not known", because the rosters credit dancers with 10 to 25 operas a season but name only a handful of them |
+| `performance_source`, `performance_source_note` | `repertoire` for every performance the Repertoire prints. `supplied: …` for a performance the Repertoire cell does not name but another part of the same yearbook does (`pipeline/research_corrections/supplied_performances.csv`; RG, 2026-10-12). A supplied row has no `verbatim_title`, no `performance_order`, and is not counted in `work.appearance_count`; the note gives the evidence. Filter on `performance_source = 'repertoire'` for what the tables alone print |
+| `is_ceremonial` | the anthem («Гимнъ», «Hymne»): "not a work, per se, but a ceremonial item" (RG). Still linked to its `work_id` |
+
+A guest who performs in Russian or French looks like the house troupe unless the annotation names
+the troupe; guest soloists appearing with a house troupe («Спектакль съ участіемъ …») are
+classed with that troupe.
+
 ## Open questions to revisit once Graduates/ProductionStats are sourced
 
 - Confirm Graduates fits the Spiski shape as-is (likely: institution = the

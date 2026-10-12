@@ -80,13 +80,20 @@ SCHEMAS = {
             season TEXT, city TEXT, date_verbatim TEXT, date_undate TEXT,
             date TEXT, date_confidence TEXT, event_status TEXT,
             receipts_total_kopecks INTEGER, receipts_source TEXT,
-            receipts_correction_note TEXT, printed_page_number TEXT
+            receipts_correction_note TEXT, printed_page_number TEXT,
+            time_of_day TEXT, receipts_verbatim TEXT, annotation TEXT,
+            is_benefit INTEGER, is_charity INTEGER, is_free INTEGER,
+            is_student_performance INTEGER, is_reduced_price INTEGER,
+            has_anthem INTEGER, n_works INTEGER, art_forms TEXT
         )""",
     "performance": """
         CREATE TABLE performance (
             performance_id TEXT PRIMARY KEY, event_id TEXT REFERENCES event(event_id),
             work_id TEXT REFERENCES work(work_id), performance_order TEXT,
-            verbatim_title TEXT, verbatim_genre TEXT
+            verbatim_title TEXT, verbatim_genre TEXT,
+            art_form TEXT, art_form_basis TEXT, is_ceremonial INTEGER, includes_dance INTEGER,
+            includes_dance_basis TEXT,
+            performance_source TEXT, performance_source_note TEXT
         )""",
     "person_appearance": """
         CREATE TABLE person_appearance (
