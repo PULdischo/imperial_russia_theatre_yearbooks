@@ -14478,3 +14478,20 @@ roster 3,130 / production_list 87 / review 11. Mentions 27,333, resolved
 
 **Running total: of the 30 names the worklist proposed across both rounds,
 11 are real.** The scan pass removed nearly two thirds.
+
+## 2026-10-12 — 1899-00 SP and 1903-04 SP printed-season-totals check, line by line (issue #151 follow-up 17)
+
+```sql
+SELECT * FROM research.season_stat_check WHERE season IN ('1899-00','1903-04') AND city='SP';
+SELECT * FROM research.season_stat_line WHERE season IN ('1899-00','1903-04') AND city='SP' ORDER BY season, line_no;
+SELECT e.theater_canonical, count(*), sum(e.receipts_total_kopecks)/100.0 FROM analysis.event_entry e
+ WHERE e.season=? AND e.city='SP' GROUP BY 1;   -- by theater, split by Cyrillic / Latin-only titles (Russian / French-or-German)
+SELECT ... FROM analysis.event_entry WHERE season=? AND city='SP' AND lower(annotation) LIKE '%въ пользу%';   -- charity-text sessions
+-- pipeline/compare_season_stats.py --db ... --out-dir ... (family_totals.csv, city_totals.csv) for the per-line cross-check
+```
+
+Result: every printed receipts figure is italic and bracketed on both stat pages (charity excluded). 1899-00 SP +1,569.87 =
+Александринскій +1,642.35 (Weinberg benefit 1,669.35 excluded in print; −27.00 residual) − opera 60.00 − French 12.48; ballet,
+Михайловскій Russian, Мариинскій Russian, German and concerts exact. 1903-04 SP +2,908.16 = Александринскій +2,582.10 (charity
+2,602.50 excluded; −20.40 residual) + Михайловскій +329.00 (one session, 7 Apr 1904) − opera 9.99 + French 9.69 − German 2.64;
+ballet exact. comparator output agrees on every line it classifies the same way.
