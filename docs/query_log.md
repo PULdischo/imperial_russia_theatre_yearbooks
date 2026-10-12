@@ -14909,3 +14909,14 @@ Result (known_issues.md, issue #151 follow-up 21): 2 of the 7 were half-dash cel
 (unspecified 25,235 / morning 2,370 / evening 2,350); the other 5 need no change; the 3 pages match the stored structure;
 «Панцы» corrected to «Паяцы» in 3 cells (`research.work` 3,065 -> 3,064; «Паяцы» оп. 67 performances). Every other table's
 row count and the receipts sum are unchanged.
+
+## 2026-10-12 — «Проступка/Простушка и воспитанная» and the fold-hidden list (RG: "yes and yes")
+
+- `raw.event_entry_performance` where `performance_title like 'Проступ%'`, joined to `raw.event_entry`: 13 cells on 11 pages,
+  with each cell's row position among its page's dates (to find it on the scan). All 13 read «Простушка» on the scans.
+- `performance_title like 'Всякому сво%'`: 2 before the fix (form «Всякому свое», ком.), 3 after.
+- For each of the 92 rows of `rcpt_fold_obscured_cells.csv`: all sessions of its page (`raw.event_entry` + titles), matched by
+  first title or old id, date within a day, empty or «?» figure. One match per row; 8 ids changed; 90 with no figure, 2 partly read.
+- Before/after the rebuild: `count(*)` of all 50 base tables. Changes: `raw.event_entry_performance` 30,850 -> 30,851,
+  `research.performance` 30,849 -> 30,850, `research.work` 3,064 -> 3,063, `entities.work` 3,065 -> 3,064,
+  `entities.work_link` 30,849 -> 30,850, `entities.work_id_crosswalk` 627 -> 629. «Простушка и воспитанная» вод.: 52 performances.
