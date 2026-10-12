@@ -14920,3 +14920,28 @@ row count and the receipts sum are unchanged.
 - Before/after the rebuild: `count(*)` of all 50 base tables. Changes: `raw.event_entry_performance` 30,850 -> 30,851,
   `research.performance` 30,849 -> 30,850, `research.work` 3,064 -> 3,063, `entities.work` 3,065 -> 3,064,
   `entities.work_link` 30,849 -> 30,850, `entities.work_id_crosswalk` 627 -> 629. «Простушка и воспитанная» вод.: 52 performances.
+
+## 2026-10-12 — 1890-91 checked: not a gap (RG: "do this")
+
+Resolved against scans already held, no loan needed.
+
+`review_1890-91_SP_all_p027` is an **unnumbered double-page plate** (4954 px
+wide) — the «Шествіе волшебныхъ сказокъ» procession from Спящая красавица,
+signed Е. Пономаревъ — so it occupies folios **146-147**.
+`p028` is a sideways plate and **does print its folio, 148**; our extraction
+recorded it as `no folio` purely because the page is rotated 90°.
+
+So 145, [146-147], 148, 149 — complete. **1890-91 drops off the re-request
+list**, which is now two volumes: 1900-01 (UIllinois, pp. 176-178) and
+1896-97 (UMich, p. 249).
+
+**A finding beyond this case:** folio capture fails on rotated plate pages.
+That inflates `no_folio` (76 flags) and could mask a real gap, since a page
+recorded as unnumbered is treated as accounting for a folio it may not hold.
+
+Inventory updated with RG's permission (backup
+`…backup-2026-10-12b.xlsx`, one zip entry changed, threaded comments
+intact): 1890-91's note now records the gap as checked and accounted for,
+and a conditional-formatting rule on L2:L99 renders `Missing Pages` in red,
+reusing **dxfId 6** — the same plain-red font the Requested/On-loan rule
+uses.

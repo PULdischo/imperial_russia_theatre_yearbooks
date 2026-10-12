@@ -18,13 +18,25 @@ mechanical pass had that backwards.)
 | **1900-01 SP Ballet** | **176–178** | the rest of the «Дочь фараона» *Grand pas des fleuves* cast — p022 stops mid-name on `Темза — г-жа Фо-` — and the opening of the «Камарго» synopsis: its heading, premiere details and the start of scene 1, since p023 picks up mid-sentence inside it | Main, vol. 11 | **ILL — UIllinois** |
 | **1896-97 SP Ballet** | **249** | p018 stops mid-sentence on `Является «Любопытство» и начинаетъ`; p019 opens on `Animation, groupes et danses—г-жи Ленъяни…` | Main, vol. 7 | **ILL — UMich** |
 
-## Uncertain — 1
+## Checked and cleared — the 1890-91 case is NOT a gap
 
-**1890-91 SP All**, folios 145 → 149. Two unnumbered plate pages sit
-between, leaving one of 146-148 unaccounted. The text plausibly runs on
-(`…Польскій.` then `Pas de quatre:`, consecutive items of the same
-divertissement), so this may be numbering rather than loss. Volume 1,
-**ILL — UMich**. Wants a look at the scans before anything is requested.
+**1890-91 SP All**, folios 145 → 149, resolved 2026-10-12 against the scans
+already held:
+
+- `p027` is an **unnumbered double-page plate** (4954 px wide) — the
+  «Шествіе волшебныхъ сказокъ» procession from Спящая красавица, signed
+  Е. Пономаревъ. It occupies folios **146-147**.
+- `p028` is a sideways plate («Мальчикъ-съ-пальчикъ» и его братья) and it
+  **does print its folio, 148**, at the foot — our extraction recorded it as
+  `no folio` only because the page is rotated 90°.
+
+145, [146-147 spread], 148, 149: every folio accounted for. **No page is
+missing and no re-request is needed for 1890-91.**
+
+**Worth noting beyond this case:** folio capture fails on rotated plate
+pages. That inflates the `no_folio` count (76) and could in principle mask a
+real gap elsewhere, since a page recorded as unnumbered is treated as
+accounting for a folio it may not hold.
 
 ## No content lost — 5
 
