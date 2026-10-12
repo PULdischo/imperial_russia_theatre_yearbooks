@@ -16375,3 +16375,12 @@ Scans (reduced size, legible): Moscow 1902-03 «2. Адамовъ, Михаил�
 Московскимъ театрамъ съ 1 сентября 1903 г.»; Moscow 1905-06 «2. Адамовъ, Михаилъ Прокофьевичъ ... Корнетъ.
 Оставилъ службу 1 августа 1906 г.»; Moscow 1910-11 «1. Адамовъ, Михаилъ Ерофѣевичъ (съ 1 сентября 1898 г.).
 Труба.» The only other Адамовъ is Василій Федоровичъ, a school teacher.
+
+## 2026-10-12 — Адамовъ, Михаилъ: the Moscow rows of 1906-07..1909-10 read on the scans
+
+No new SQL. Scans, reduced size, large legible type: musicians_1906-07_MSK_p000 «2. Адамовъ, Михаилъ
+Прокофьевичъ (съ 1 сентября 1898 г.). Корнетъ.»; 1907-08 p000 the same, no. 2; 1908-09 p000 «1. ... Труба.»;
+1909-10 p000 «1. ... Труба.» None has a rehire or leaving note. So the «Оставилъ службу 1 августа 1906 г.»
+printed under him in 1905-06 is contradicted by the next four volumes. Noticed on the 1907-08 page: «27.
+Гуревичъ, Евсей Лейбовичъ ... Гобой. Оставилъ службу 1 августа 1906 г.», the same date; in 1905-06 Гуревичъ
+(no. 29) carries no note.
