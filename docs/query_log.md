@@ -16384,3 +16384,20 @@ No new SQL. Scans, reduced size, large legible type: musicians_1906-07_MSK_p000 
 printed under him in 1905-06 is contradicted by the next four volumes. Noticed on the 1907-08 page: «27.
 Гуревичъ, Евсей Лейбовичъ ... Гобой. Оставилъ службу 1 августа 1906 г.», the same date; in 1905-06 Гуревичъ
 (no. 29) carries no note.
+
+## 2026-10-12 — Адамовъ merged; Аѳанасьева, Вѣра (queue case 2 of 9)
+
+```sql
+SELECT pl.person_id, sp.season, sp.city, sp.entity_type, pe.page_id, pe.list_number, pe.family_name,
+       pe.first_name, pe.patronymic, pe.tenure_note_text, pe.credit_summary_text
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+JOIN entities.person_link pl USING (entry_id) WHERE pe.family_name LIKE 'А_анасьева%' ORDER BY 2, 3;
+```
+
+Result: after the Адамовъ merge, live persons 2564, 10 pairs pending, receipts and Wikidata count unchanged.
+Аѳанасьева: one Moscow graduate of 1895 (съ 1 сентября 1895); «Вѣра Михайловна» in the Moscow list in nine
+seasons 1895-96..1905-06 (none stored for 1898-99, 1901-02, 1902-03); «Вѣра Леонидовна» 1906-07 and 1907-08,
+same start date, the latter with «Оставила службу 16 августа 1908 г.». No other Аѳанасьева in the corpus.
+Scans (reduced size): 1905-06 «3. Аѳанасьева, Вѣра Михайловна (съ 1 сентября 1895 г.)»; 1906-07 «4. Аѳанасьева,
+Вѣра Леонидовна (съ 1 сентября 1895 г.)»; 1907-08 «4. Афанасьева, Вѣра Леонидовна (съ 1 сентября 1895 г.) ...
+Оставила службу 16 августа 1908 г.»
