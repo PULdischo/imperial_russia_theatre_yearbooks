@@ -343,12 +343,22 @@ def build_lexicon(db: Path) -> Lexicon:
     con = duckdb.connect(str(db), read_only=True)
     lex = Lexicon()
 
+    # Which roster sections a person is attested in. A ballet review names
+    # dancers, but also designers, composers and administrators, so this is
+    # a tie-breaker rather than a filter -- see rank_candidates.
+    sections: dict[str, set[str]] = collections.defaultdict(set)
+    for pid, et in con.execute("""
+        select person_id, entity_type from research.person_appearance
+        where entity_type is not null group by 1, 2""").fetchall():
+        sections[str(pid)].add(et)
+
     for pid, fam, disp, ordn, first, last in con.execute("""
         select person_id, canonical_family_name, display_name, ordinal_suffix,
                first_attested_season, last_attested_season
         from research.person where canonical_family_name is not null""").fetchall():
         lex.person_meta[str(pid)] = {"family": fam, "display": disp, "ordinal": ordn,
-                                "first_season": first, "last_season": last}
+                                "first_season": first, "last_season": last,
+                                "sections": sections.get(str(pid), set())}
         lex.add(lex.person, surname_forms(fam), pid)
 
     # Every spelling the ROSTERS recorded for a person, not only the canonical
@@ -535,7 +545,8 @@ def season_covers(first: str | None, last: str | None, season: str) -> bool | No
 
 
 def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
-                    lex: "Lexicon", initials: str = "") -> tuple[str, int, str]:
+                    lex: "Lexicon", initials: str = "",
+                    genre: str = "") -> tuple[str, int, str]:
     """Best candidate, its margin, and why. NEVER gates: a zero-scoring
     candidate set still returns the full list to the caller untouched.
 
@@ -613,6 +624,38 @@ def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
     scored.sort(key=lambda x: -x[0])
     best = scored[0]
     margin = best[0] - (scored[1][0] if len(scored) > 1 else -99)
+
+    # Everything else being equal, a ballet review means the dancer. Before
+    # this, `Пономаревъ` in a cast list tied at margin 0 on all 38 of its
+    # mentions, between Иванъ Ивановичъ of the ballet company and Евгеній
+    # Петровичъ of the Administration -- both cover the season, so season,
+    # gender and ordinal all score identically and nothing else spoke.
+    #
+    # Applied ONLY to a dead tie at the top, and only when exactly one tied
+    # candidate is on the ballet roster. As a score bonus this would have
+    # had to be worth 4 to clear the resolution threshold, and at 4 it would
+    # start cancelling the initials signal (+7) that correctly picks the
+    # composer in `музыка А. К. Глазунова`. A tie-break cannot disturb any
+    # mention that already resolves.
+    if genre == "Ballet" and margin == 0:
+        tied = [pid for sc, pid, _ in scored if sc == best[0]]
+        # `surface_gender` deliberately ignores an `-ова` ending, because it
+        # is also the masculine genitive -- so on a bare surname gender does
+        # not score at all, and without this guard the tie-break ran
+        # unopposed and sent `Панова`, inside a `г-жи` list, to Пановъ,
+        # Николай Викторовичъ. The looser ending test is still worth
+        # consulting HERE: it cannot resolve a mention on its own, but it
+        # can veto a candidate of the wrong gender.
+        surf_g = canon_gender(SURFACE_ORDINAL.sub("", surface).strip())
+        dancers = [
+            pid for pid in tied
+            if "BalletArtists" in (lex.person_meta.get(pid, {}).get("sections") or ())
+            and not (surf_g and (g2 := canon_gender(
+                (lex.person_meta.get(pid, {}).get("family") or ""))) and surf_g != g2)
+        ]
+        if len(dancers) == 1:
+            why = (best[2] + "+ballet-roster").lstrip("+")
+            return dancers[0], 99, why
     return best[1], margin, best[2]
 
 
@@ -701,7 +744,7 @@ def scan_block(text: str, block_type: str, lex: Lexicon,
                     ids = parents
         if kind == "person" and len(ids) > 1:
             pick, margin, why = rank_candidates(ids, text[a:b], evidence, season,
-                                                lex, initials_before(text, a))
+                                                lex, initials_before(text, a), genre)
             # a decisive margin resolves; a tie leaves the candidate list standing
             if margin >= 4:
                 eid, method = pick, method + "+ranked"

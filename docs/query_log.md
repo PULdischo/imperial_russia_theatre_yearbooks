@@ -14495,3 +14495,74 @@ Result: every printed receipts figure is italic and bracketed on both stat pages
 Михайловскій Russian, Мариинскій Russian, German and concerts exact. 1903-04 SP +2,908.16 = Александринскій +2,582.10 (charity
 2,602.50 excluded; −20.40 residual) + Михайловскій +329.00 (one session, 7 Apr 1904) − opera 9.99 + French 9.69 − German 2.64;
 ballet exact. comparator output agrees on every line it classifies the same way.
+
+## 2026-10-12 — the Пономаревъ ranking gap (RG: "let's look at")
+
+Not a ranking problem in the end, and not nine candidates either.
+
+```sql
+SELECT surface, season, candidates_n, rank_reason, count(*)
+FROM entities.review_mention WHERE surface LIKE 'Пономарев%' AND entity_id IS NULL
+GROUP BY ALL;
+```
+`candidates_n = 9` but `tie(margin=0)` — and only **two** of the nine cover
+any given season: `Пономаревъ, Иванъ Ивановичъ` (BalletArtists, 1890-91 to
+1907-08) and `Пономаревъ, Евгеній Петровичъ` (**Administrators**, 1890-91 to
+1905-06, the costume designer). Both score identically on season, gender and
+ordinal, and nothing else spoke. A two-way tie, 38 times.
+
+**The missing signal was which roster section a person comes from.** A bare
+surname in a ballet cast list is a dancer, not an administrator.
+
+```sql
+SELECT person_id, entity_type FROM research.person_appearance GROUP BY 1,2;
+```
+Measured first: **1,414** unresolved ballet-review mentions with 2-4
+candidates have some candidate on the ballet roster and some not; 853 of
+them sit in the honorific/performer grammar.
+
+Implemented as a **tie-break at margin 0**, not a score bonus. A bonus would
+have had to be worth 4 to clear the `margin >= 4` resolution threshold, and
+at 4 it starts cancelling the initials signal (+7) that correctly picks
+`А. К. Глазунова` and `М. И. Бочарова`. A tie-break cannot disturb a
+mention that already resolves. Tried the bonus first at +3: it moved 12
+mentions, which is how the threshold interaction surfaced.
+
+**One guard, added after the first run put `Панова` — inside a `г-жи` list —
+onto Пановъ, Николай Викторовичъ.** `surface_gender` deliberately ignores an
+`-ова` ending because it is also the masculine genitive, so on a bare
+surname gender never scores and the tie-break ran unopposed. The looser
+ending test cannot resolve a mention on its own but it can *veto* a
+wrong-gender candidate. Adding that guard **raised** resolution, because
+filtering leaves exactly one dancer more often.
+
+| | before | after |
+|---|---|---|
+| resolved | 18,235 (66.7%) | **20,625 (75.5%)** |
+| person mentions joining `research.person` | 14,021 | **16,411** |
+| assertions with a performer | 1,572 | **1,650** |
+
+2,389 resolved by the tie-break; **0** land on a gender-conflicting person.
+`Пономаревъ` now splits 19 Иванъ Ивановичъ / 15 Сергѣй 2-й / 6 Сергѣй 1-й,
+with the 11 `Пономарева` genitives still going to Евгеній Петровичъ via
+initials. Глазунова 46/46 and Бочарова 12/12 are untouched.
+
+### A sample check that looked wrong and was not
+
+`Романовъ` (1904-05) resolving to **Рахмановъ, Викторъ Павловичъ** is
+correct: `balletartists_1908-09_SP_p007` entry 62 prints "РОМАНОВЪ, Викторъ
+Павловичъ (съ 1 іюня 1903 г.)" — the same man the 1903-07 rosters print as
+Рахмановъ, tied by the shared 1 June 1903 start date, already merged by
+entity resolution. The only other Романовъ covering 1904-05 is Георгій
+Николаевичъ, who is **ProductionTeam**, not a dancer. Logged in
+`docs/eval/genuine_print_typos.md`.
+
+### Still open
+
+`research.person` holds **nine** Пономаревъ rows where the rosters show
+**four** men: Сергѣй Ивановичъ appears four times and Владиміръ twice,
+split by an ordinal that CHANGED over time (Сергѣй was 2-й while Иванъ was
+1-й, and became 1-й after Иванъ left in 1907-08). **Ordinals are relative to
+who else is in the company that season, so they are not stable identity
+keys.** No `person_candidate` pair was ever proposed for this family. That
+is an entity-layer question, not a matcher one.
