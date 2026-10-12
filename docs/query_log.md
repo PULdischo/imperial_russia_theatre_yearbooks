@@ -16358,3 +16358,20 @@ WHERE w.canonical_title IN ('Дивертиссементъ','Дивертисс
 ```
 
 Result: Дивертиссементъ бал. 44, parent genre ballet (no genre) 2, nothing 37; Дивертиссментъ бал. 3, nothing 2; Дивертиссементъ (Etudes) бал. 1. Totals: бал. 48, parent genre only 2, nothing 39. The 16 Sep 1894 Михайловскій divertissement has no genre and no parent genre. Events 32,806 and receipts sum 3,207,899,755 kopecks unchanged.
+
+## 2026-10-12 — Адамовъ, Михаилъ (queue case 1 of 9)
+
+```sql
+SELECT pl.person_id, sp.season, sp.city, pe.page_id, pe.list_number, pe.family_name, pe.first_name,
+       pe.patronymic, pe.instrument, pe.tenure_note_text, pe.heading_path
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+JOIN entities.person_link pl USING (entry_id) WHERE pe.family_name LIKE 'Адамовъ%' ORDER BY 2, 3;
+```
+
+Result: Михаилъ Прокофьевичъ, trumpet/cornet, съ 1 сентября 1898: SP 1898-99..1903-04, Moscow 1905-06..1909-10.
+The bare «Адамовъ, Михаилъ» rows (Moscow 1902-03..1904-05) and the SP 1903-04 row all carry «Переведенъ къ
+Московскимъ театрамъ съ 1 сентября 1903 г.». Moscow 1910-11 has «Михаилъ Ерофѣевичъ», same date, trumpet.
+Scans (reduced size, legible): Moscow 1902-03 «2. Адамовъ, Михаилъ (съ 1 сентября 1898 г.). Переведенъ къ
+Московскимъ театрамъ съ 1 сентября 1903 г.»; Moscow 1905-06 «2. Адамовъ, Михаилъ Прокофьевичъ ... Корнетъ.
+Оставилъ службу 1 августа 1906 г.»; Moscow 1910-11 «1. Адамовъ, Михаилъ Ерофѣевичъ (съ 1 сентября 1898 г.).
+Труба.» The only other Адамовъ is Василій Федоровичъ, a school teacher.
