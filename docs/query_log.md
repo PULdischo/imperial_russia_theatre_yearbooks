@@ -16401,3 +16401,116 @@ same start date, the latter with «Оставила службу 16 август
 Scans (reduced size): 1905-06 «3. Аѳанасьева, Вѣра Михайловна (съ 1 сентября 1895 г.)»; 1906-07 «4. Аѳанасьева,
 Вѣра Леонидовна (съ 1 сентября 1895 г.)»; 1907-08 «4. Афанасьева, Вѣра Леонидовна (съ 1 сентября 1895 г.) ...
 Оставила службу 16 августа 1908 г.»
+
+## 2026-10-12 (evening) — Status index re-verified against the current database
+
+**candidate queue**
+
+```sql
+SELECT status, match_reason, count(*) FROM entities.person_candidate GROUP BY 1,2 ORDER BY 1,3 DESC
+```
+
+Result: pending 10 (name_variant_shared_start); rejected 12 (10 family_name_variant, 2 patronymic_variant).
+
+**live persons**
+
+```sql
+SELECT count(*) FILTER (WHERE superseded_by_person_id IS NULL), count(*) FROM entities.person
+```
+
+Result: 2,564 live of 6,350 records.
+
+**Зандинъ**
+
+```sql
+SELECT p.display_name, p.first_attested_season, p.last_attested_season,
+ (SELECT string_agg(DISTINCT e.entity_type, ',') FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) WHERE l.person_id=p.person_id) AS types,
+ (SELECT count(*) FROM entities.person_link l WHERE l.person_id=p.person_id) AS n
+FROM entities.person p WHERE p.superseded_by_person_id IS NULL AND p.canonical_family_name='Зандинъ' ORDER BY 2
+```
+
+Result: two live records: Михаилъ Ивановичъ (1906-07..1909-10, 4 entries), Михаилъ Павловичъ (1910-11, 1).
+
+**Graduates pairs + Жукова**
+
+```sql
+SELECT p.display_name, p.first_attested_season, p.last_attested_season,
+ (SELECT string_agg(DISTINCT e.entity_type, ',') FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) WHERE l.person_id=p.person_id) AS types,
+ (SELECT count(*) FROM entities.person_link l WHERE l.person_id=p.person_id) AS n
+FROM entities.person p WHERE p.superseded_by_person_id IS NULL AND (p.canonical_family_name,p.canonical_first_name) IN (('Васильева','Анна'),('Симонова','Антонина'),('Жукова','Вѣра')) ORDER BY 1,2
+```
+
+Result: Васильева Анна Гордѣевна (BalletArtists + Graduates, 18) and Анна Николаевна (Graduates + BalletArtists, 2); Симонова Антонина Александровна (6) and Антонина Петровна (18), each with a Graduates entry: the bare graduate records are joined. Жукова Вѣра Васильевна: one TheaterSchoolStaff record 1901-02..1910-11 (10 entries); «Жукова 1-я» 1890-91 dancer separate.
+
+**Ѳедорова Марія**
+
+```sql
+SELECT p.display_name, p.first_attested_season, p.last_attested_season,
+ (SELECT string_agg(DISTINCT e.entity_type, ',') FROM entities.person_link l JOIN raw.person_entry e USING(entry_id) WHERE l.person_id=p.person_id) AS types,
+ (SELECT count(*) FROM entities.person_link l WHERE l.person_id=p.person_id) AS n
+FROM entities.person p WHERE p.superseded_by_person_id IS NULL AND p.canonical_family_name IN ('Ѳедорова','Федорова') AND p.canonical_first_name='Марія' ORDER BY 1
+```
+
+Result: Ѳедорова 3-я, Марія Дмитріевна 1890-91..1907-08, 18 entries (still merged); Марія Логиновна 9.
+
+**date conflicts**
+
+```sql
+SELECT p.display_name, s.start_date_undate, count(*) FROM entities.person p JOIN entities.person_link l USING(person_id) JOIN raw.person_entry_service s USING(entry_id)
+WHERE p.superseded_by_person_id IS NULL AND s.period_order=1 AND (p.canonical_family_name='Тивольская' OR (p.canonical_family_name='Леонтьевъ' AND p.canonical_first_name='Леонидъ') OR p.canonical_family_name='Поливановъ') GROUP BY 1,2 ORDER BY 1,2
+```
+
+Result: Тивольская 1877-01-17 (4) / 1887-01-17 (3); Леонтьевъ Леонидъ Сергѣевичъ 1894-06-01 (2) / 1903-06-01 (7); Поливановъ Василій Егоровичъ 1868-12-23 (15) / 1886-12-23 (1) / 1889-09-01 (1), plus Василій Ивановичъ (2).
+
+**aliases**
+
+```sql
+SELECT entity_type, count(*) FROM raw.person_entry WHERE family_name LIKE '%(%' OR first_name LIKE '%(%' OR patronymic LIKE '%(%' GROUP BY 1
+```
+
+Result: BalletArtists 40, Musicians 1.
+
+**genre queue**
+
+```sql
+SELECT count(*), count(DISTINCT title_key) FROM entities.work_genre_candidate
+```
+
+Result: 74 rows, 37 title groups.
+
+**unbalanced parens**
+
+```sql
+SELECT count(*) FROM raw.person_entry WHERE entity_type='BalletArtists' AND credit_summary_text IS NOT NULL AND (length(credit_summary_text)-length(replace(credit_summary_text,'(','')))<>(length(credit_summary_text)-length(replace(credit_summary_text,')','')))
+```
+
+Result: 33.
+
+**genre in title, empty genre / differing**
+
+```sql
+SELECT count(*) FILTER (WHERE genre IS NULL), count(*) FILTER (WHERE genre IS NOT NULL) FROM raw.event_entry_performance p
+WHERE regexp_matches(performance_title, ',\s*[^,]{1,22}$') AND lower(rtrim(trim(regexp_extract(performance_title, ',\s*([^,]{1,22})$', 1)),'.')) IN (SELECT DISTINCT lower(rtrim(trim(genre),'.')) FROM raw.event_entry_performance WHERE genre IS NOT NULL)
+AND (genre IS NULL OR trim(regexp_extract(performance_title, ',\s*([^,]{1,22})$', 1)) <> genre)
+```
+
+Result: 76 with an empty genre field, 138 with a different one.
+
+**5 credit rows**
+
+```sql
+SELECT e.page_id, e.family_name, e.credit_summary_text, list(c.label||'='||coalesce(CAST(c.category_credit_count AS VARCHAR),'')) FROM raw.person_entry e LEFT JOIN raw.person_entry_credit c USING(entry_id)
+WHERE (e.page_id,e.family_name) IN (('balletartists_1893-94_SP_p006','Константиновъ'),('balletartists_1894-95_MSK_p003','Нелидова'),('balletartists_1897-98_MSK_p007','Чудиновъ'),('balletartists_1899-00_MSK_p003','Лѣсновская'),('balletartists_1904-05_SP_p003','Пахомова')) AND c.credit_type='category_totals' GROUP BY ALL
+```
+
+Result: the raw rows hold 2, 2, 2, 5, 5; the summary text has the right count for four (—5, —3, —7, —18) and «5¹» for Пахомова.
+
+**the five credit rows in the analysis layer**
+
+```sql
+SELECT e.page_id, e.family_name, c.label, c.category_credit_count, c.category_credit_count_clean
+FROM raw.person_entry e JOIN analysis.person_entry_credit c USING(entry_id)
+WHERE (e.page_id,e.family_name,c.label) IN (('balletartists_1893-94_SP_p006','Константиновъ','операхъ'),('balletartists_1894-95_MSK_p003','Нелидова','балетахъ'),('balletartists_1897-98_MSK_p007','Чудиновъ','операхъ'),('balletartists_1899-00_MSK_p003','Лѣсновская','операхъ'),('balletartists_1904-05_SP_p003','Пахомова','операхъ')) AND c.credit_type='category_totals';
+```
+
+Result: clean values «5.», «3», «7.», «18.» for the first four (right count; three keep a trailing period) and «5» for Пахомова (unrepaired; the CSV's scan reading is 51). Stray `* 2.json` files in outputs/full_run/raw: 1,552 (file count).

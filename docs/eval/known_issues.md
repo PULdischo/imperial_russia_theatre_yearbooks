@@ -24,7 +24,7 @@ goal is catching and triaging them cheaply every run, not eliminating them.
 - **needs source check** — plausibly a real model error, but not confirmed
   against the scanned page yet
 
-## Status index (as of 2026-10-12)
+## Status index (as of 2026-10-12, re-verified that evening)
 
 The `Status:` lines on the early entries (roughly #1-#67) were written when
 each issue was found and were mostly not updated; the closures are recorded in
@@ -49,33 +49,31 @@ closes, and add new open items here as well as in their own entry.
   findable as a concert too. Proposed, not built: a work-level art-form table
   allowing two values; best designed together with the gala / mixed-evening
   decisions (#141) so works and events share one scheme.
-- Side effect to re-check: `compare_season_stats.py` counts an evening with a
-  parent-genre-ballet work as a ballet evening, so the 7 Jan 1906 charity
-  evening now counts toward 1905-06 SP ballet. Comparison not re-run.
-- `entities.person_candidate`: 0 pending, 19 rejected *(checked after the
-  2026-10-12 rebuild)*. The five pairs pending that morning (#125 Девильеръ,
-  Фонъ-Бооль, Раманова, Воронцовъ, Боронцовъ) were worked by a parallel
-  session the same day; Боронцовъ is parked until the 1911-12 volume.
+- `compare_season_stats.py` has not been re-run since the parent-genre
+  changes of 2026-10-12. It counts an evening with a parent-genre-ballet work
+  as a ballet evening, so it will now add 21 and 29 Sep 1894 Александринскій
+  (which the 1894-95 statistics do count as drama + ballet) and 7 Jan 1906
+  Маріинскій (no printed support).
+- `entities.person_candidate`: 10 pending (all `name_variant_shared_start`),
+  12 rejected; 2,564 live persons *(checked, evening)*. A parallel
+  person-audit session is working this queue and merged several hundred
+  records during the day.
 - #132 Зандинъ Михаилъ: still two live records, Ивановичъ (1906-07..1909-10)
-  and Павловичъ (1910-11) *(checked)*. Лебедевъ Иванъ and Бардюкъ/Бордюгъ from
-  the same note are merged.
-- #45: Васильева Анна and Симонова Антонина, each two no-patronymic Graduates
-  records not linked to either dancer of that name *(checked)*. Ильина Елена
-  and Новикова Екатерина are merged.
-- Жукова Вѣра Васильевна (#45): two live TheaterSchoolStaff records, 1901-02..
-  1909-10 and 1910-11 *(checked)*; looks like an unmerged 1910-11 duplicate.
-  The 1890-91 dancer «Жукова 1-я» is a third record.
+  and Павловичъ (1910-11) *(checked, evening)*.
 - #134: Ѳедорова 3-я, Марія Дмитріевна kept merged, left open *(checked)*.
 - #133: Шиманъ is a proposed roster link only (uncertain_person_identities.md
   #21); Давыдовъ/Давидовъ on the 1907-08 SP ballet list not zoomed.
 - #101: `docs/eval/ballet_productions_review.md`: the uncertain readings and
   print slips still wait for RG's confirmation.
 - #25: `docs/eval/confirmed_credit_corrections.csv` (50 rows) was never applied
-  as a batch and no script reads it. 33 of the 50 now hold the corrected value
-  anyway (via #150) *(checked, rough match)*; 5 look uncorrected in the credit
-  row (Константиновъ 1893-94 SP p006, Нелидова 1894-95 MSK p003, Чудиновъ
-  1897-98 MSK p007, Лѣсновская 1899-00 MSK p003, Пахомова 1904-05 SP p003);
-  the other 12 not confirmed either way.
+  as a batch and no script reads it; most rows were overtaken by #150. Of the
+  five that looked uncorrected, four are the #23 pattern (the raw row holds the
+  number of productions; `category_credit_count_clean` already gives the right
+  count) *(checked)*. One is still wrong: Пахомова, 1904-05 SP p003, stored
+  «въ 11 операхъ—5¹» (count 5) where the CSV's scan reading is 51 (38 + 51 =
+  the printed 89). 12 other rows not confirmed either way.
+- Small bug seen while checking: `category_credit_count_clean` keeps the
+  sentence's final period on some repaired values («5.», «7.», «18.»).
 - #137/#150: stray `* 2.json` duplicate files in `outputs/full_run/raw/`
   (ignored by the pipeline, not deleted).
 
@@ -110,14 +108,20 @@ closes, and add new open items here as well as in their own entry.
   SP); the 7 Apr 1904 Михайловскій session the yearbook leaves out.
 - #151: `performance_order` counts an annotation-first or benefit-heading line
   as work 1, so it is not always the order of the titled works.
-- #112: 1903-04 p012 Александринскій: 8 of 14 titles still carry the genre in
-  the title text (FIXED 2026-10-12); 1904-05 p038 `month_text` «Мартъ» where the
-  header prints «марта» (cosmetic: «Мартъ» is stored 201 times corpus-wide and
-  the date does not depend on it; left).
+- Divertissements (entry at the end of this file): the 39 plain ones left
+  without a genre and the 2 «Большой дивертиссементъ» have not been read on
+  the scan (only the 3 that had carried «др.»); all ballet-assigned ones have.
+- Possible invented genres elsewhere: 5 titles / 8 rows where a genre appears
+  on a title usually printed without one («Апоѳеозъ» [Кантата.], «Наканунѣ,
+  возможный случай» x4, «Снѣгурочка, весенняя сказка» [сказка], «2-е д. бал.
+  Фіаметта» [бал.], «1, 2, 3 и 4 д. оп. Гугеноты» [оп.]). Not read on the scan.
+- #112: 1904-05 p038 `month_text` «Мартъ» where the header prints «марта»
+  (cosmetic: «Мартъ» is stored 201 times corpus-wide and the date does not
+  depend on it; left).
 - #40/#42: start-date conflicts with no further avenue: Тивольская (1877 vs
   1887), Леонтьевъ Леонидъ Сергѣевичъ (1894 vs 1903), Поливановъ Василій
-  Егоровичъ (1868 / 1886 / 1889) *(checked: all still in the data)*.
-- #30: 41 BalletArtists rows carry a parenthesised alias or stage name inside
+  Егоровичъ (1868 / 1886 / 1889) *(checked, evening: all still in the data)*.
+- #30: 40 BalletArtists rows (and 1 Musicians row) carry a parenthesised alias or stage name inside
   a name field *(checked)*; never given its own treatment.
 - #98-#100: `entities.work_genre_candidate` (74 rows, 37 title groups
   *(checked)*) is open-ended by design.
@@ -142,7 +146,10 @@ all have rows under a Капельмейстеръ/Дирижеръ heading) and
 running-head institutions (#130 secondary batch 3, DONE); the two-city
 `category_credit_count_clean` repair (#150: `build_duckdb.py` is block-aware); the
 mixed-script words in Roster name fields (#150: 44 fields, fixed 2026-10-12,
-0 left).
+0 left); the #45 graduates Васильева Анна and Симонова
+Антонина (each now joined to a dancer of that name) and the duplicate
+TheaterSchoolStaff record of Жукова Вѣра Васильевна (one record, 1901-02..
+1910-11): merged by the person-audit session, checked that evening.
 
 ---
 
