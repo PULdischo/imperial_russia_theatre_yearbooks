@@ -14808,3 +14808,42 @@ there isn't one.
 
 So the entry stands — 174 is printed twice, both transcriptions correct —
 with the scan gap recorded alongside it.
+
+## 2026-10-12 — what the missing 1900-01 SP Ballet page(s) contain (RG: "any chance we can figure out where it goes?")
+
+Yes, precisely, from the text either side.
+
+**p022 (folio 175)** ends inside the **«Дочь фараона»** divertissement — the
+review is covering its 200th performance (*"балета … М. Петипа, въ 1862 г.
+… 4-хъ дѣйствій и 9-ти картинъ"*). Its last words:
+
+> …Pas des pêcheurs égyptiens — г-жа Трефилова и г. Легатъ 3-й; Pas fellah —
+> г-жа Кшесинская 2-я; гг. Гердтъ и Лукьяновъ, **Grand pas des fleuves —
+> Гвадалквириръ — г-жа Борхардтъ; Темза — г-жа Фо-**
+
+cut off mid-name, partway through the Act III river variations.
+
+**p023 (the second 174)** opens mid-sentence inside the **«Камарго»**
+synopsis, already in its **first** scene:
+
+> уговорить ее поступить на сцену, несмотря на предубѣжденія того времени.
+> Послѣ ухода гостей, молодые люди уговариваютъ сестеръ ѣхать съ ними на
+> костюмированный балъ…
+
+and only then reaches *"2-я картина происходитъ въ громадной оранжереѣ"*.
+p024 (179) continues *"Въ 3-й картинѣ"*.
+
+**So the missing leaf or leaves carry exactly two things:**
+
+1. the **rest of the «Дочь фараона» Grand pas des fleuves** cast — the
+   dancer whose name begins `Фо-` (Ѳедорова?) and the remaining rivers —
+   plus whatever closed that performance's account;
+2. the **opening of the «Камарго» synopsis**: its heading and premiere
+   details, and the start of the 1st scene up to *"…молодые люди стараются
+   [уговорить]"*.
+
+**Where it goes:** between folio 175 and the page printed 174, i.e. printed
+pages **176–178**, none of which has a page in the PDF. Two pages missing if
+p023's printed 174 is a misprint for 178, three if the 174 is simply wrong.
+Either way the ask for the physical volume is specific: **1900-01 Ежегодникъ,
+SP Ballet review, printed pages 176-178.**
