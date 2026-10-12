@@ -14621,3 +14621,17 @@ the patronymic buys the 61 and also admits this. So these belong in the
 an automatic merge — the same discipline the shared-QID merges were held
 to, which `person_normalization.md` records as *"the researcher confirmed
 it explicitly first"*.
+
+## 2026-10-12 — figure-level re-read of 1899-00 SP and 1903-04 SP; corrections and the season check after (issue #151 follow-up 18)
+
+```sql
+SELECT page_id, theater, date_text, time_of_day, event_id, receipts_text FROM raw.event_entry
+WHERE season IN ('1899-00','1903-04') AND city='SP' AND page_id LIKE 'repertoire_%';        -- 1,199 figures vs the blind read
+SELECT season, city, sessions_minus_printed, receipts_minus_printed_kopecks FROM research.season_stat_check WHERE city='SP';
+SELECT event_id, theater, date_text, receipts_text FROM raw.event_entry WHERE season='1903-04' AND receipts_text LIKE '2602%';
+```
+
+Result: read and stored agree on 1,193 of 1,199 figures; 5 corrected (see known_issues follow-up 18); one damaged glyph left (1899-00 p024
+МАР 2 Dec). 2602 р. 50 к. occurred on three 1903-04 sessions: Михайловскій 6 Dec (s030, genuine), Михайловскій 27 Dec (s041, genuine)
+and the Александринскій charity block of 27 Dec (p018 s027, spurious, removed). research.season_stat_check after: 1899-00 SP
+receipts_minus_printed +1,629.87 (was +1,569.87); 1903-04 SP +305.66 (was +2,908.16); sessions unchanged (+12, +23).
