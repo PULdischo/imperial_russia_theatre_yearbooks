@@ -182,3 +182,16 @@ Found on the way: (a) the 1902-03 list really prints «26. Трекова 2-я»
 a print error; raw dropped its «2-я»; (b) rows 76-99 of 1901-02 p003 are stored with no start date although the
 print gives one for each -- 20 rows to re-read; (c) the bare rows' named parts carry over in six cases only, so
 the matches rest on surname, class and the «съ 1 сентября 1901 г.» date, not on roles.
+
+### Applied 2026-10-12 (RG)
+- **The class of 1901: 19 people merged** (38 records absorbed), `docs/eval/person_merge_moscow_class_1901_2026-10-12.py`,
+  backup `outputs/full_run/imperial_theaters.pre_class1901_merge_2026-10-12.duckdb`. Live persons 2765 -> 2727.
+- **Гримальди, Пановъ, Щегловъ merged** on RG's condition that only one later candidate exists; checked across the
+  whole corpus (`person_merge_moscow_1901-02_bare_rows_2026-10-12.py`, backup `...pre_bare_rows_merge_2026-10-12.duckdb`).
+  Live 2724. Not merged, seen in passing: «Гримальди, Генріэтта», Petersburg 1899-00 (съ 1 сентября 1899), probably the same woman.
+- **21 start dates restored** on `balletartists_1901-02_MSK_p003` (nos. 76-99), each read at full zoom; «Поржицкая»
+  (was Поржипкая); «Трекова 2-я» regains its ordinal (`raw_fix_msk_1901-02_p003_dates_2026-10-12.py`, backup
+  `outputs/full_run_pre_promote_backup_2026-10-12_msk0102_dates/`). 22 entries and 22 service rows differ, 0 links.
+  The four rows still undated on that page are the bare surnames, which print none.
+- After all of it: 174 pairs pending (88 shared-start, 86 graduate year-match); 154 graduate-only records;
+  receipts and Wikidata links unchanged; 0 orphans, 0 shift blocks; review mentions resolved 21,393.

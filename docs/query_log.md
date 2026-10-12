@@ -16124,3 +16124,63 @@ Result: 25 bare rows. 18 match exactly one 1901 graduate and one named record (�
 Жвирблисъ is the 19th of the class, printed with her first name. Three more match one returning or arriving
 dancer (Гримальди, Пановъ, Щегловъ); two are already linked (Воронцовъ, Струкова); two have no single
 candidate (Иванова, Рѣпина).
+
+## 2026-10-12 — Divertissements: printed genres, the per-performance ballet assignment, and a probe for invented genres
+
+```sql
+SELECT e.page_id, e.date_text, e.theater, e.time_of_day, p.performance_order, p.performance_title, p.genre, e.receipts_text, e.annotation, e.printed_page_number
+FROM raw.event_entry_performance p JOIN raw.event_entry e USING(event_id)
+WHERE lower(p.performance_title) LIKE '%дивертис%' AND p.genre IS NOT NULL ORDER BY e.page_id;
+```
+
+Result (before the fix): 8 rows. Seven with «др.» (1900-01 p026, 1901-02 p009, 1902-03 p009, 1905-06 p020, p031, p042, 1907-08 p010) and the fused «Щелкунчикъ, бал.-феерія. Дивертиссементъ.» (1909-10 p021). After the fix: 1 row (the fused title).
+
+```sql
+SELECT w.canonical_title, w.canonical_genre, w.genre_source, w.appearance_count, count(p.performance_id)
+FROM research.work w LEFT JOIN research.performance p USING(work_id)
+WHERE lower(w.canonical_title) LIKE '%дивертис%' GROUP BY ALL ORDER BY 1,2;
+select count(*) from research.performance p left join research.work w using(work_id) where w.work_id is null;
+```
+
+Result (after the rebuild): Дивертиссементъ бал. 47 and no genre 35; Дивертиссментъ бал. 3 and no genre 2; Дивертиссементъ (Etudes) бал. 1; Большой дивертиссементъ 2 (no genre); Концертный и балетный дивертиссемент 1 (no genre); Балетный дивертиссементъ 9 and Балетный дивертиссментъ 3 (бал.); the fused Щелкунчикъ title 1. Every stored count equals the number of performances; 0 performances without a work.
+
+```sql
+WITH t AS (SELECT performance_title, count(*) n, count(genre) g, string_agg(DISTINCT genre, ' / ') gs FROM raw.event_entry_performance GROUP BY 1)
+SELECT performance_title, n, g, gs FROM t WHERE n>=6 AND g>0 AND g <= 0.25*n ORDER BY n DESC;
+```
+
+Result: 5 titles, 8 rows: «Снѣгурочка, весенняя сказка» 31 / 1 [сказка]; «Апоѳеозъ» 24 / 1 [Кантата.]; «Наканунѣ, возможный случай» 17 / 4 [драм., др.]; «2-е д. бал. Фіаметта» 11 / 1 [бал.]; «1, 2, 3 и 4 д. оп. Гугеноты» 7 / 1 [оп.].
+
+```sql
+SELECT p.performance_order, p.performance_title, p.genre FROM raw.event_entry_performance p JOIN raw.event_entry e USING(event_id)
+WHERE e.page_id='repertoire_1905-06_p042' AND e.date_text='8 Суббота.' AND e.theater LIKE 'Маріин%' ORDER BY 1;
+```
+
+Result: Стёпикъ и Манюрочка [ком.], Виноградная лоза [бал.], Коппелія [бал.], Дивертиссементъ. The scan prints the two ballets as «2-я карт. 1-го д. бал. Виноградная лоза.» and «2-е д. бал. Коппелія.».
+
+Before/after snapshot of the rebuild (same comparison as the earlier entries today): research.work 2,999 -> 3,001; entities.work unchanged except «Большой дивертиссементъ» losing its genre; live persons 2,765 and the full person list identical; receipts sum 3,207,899,755 kopecks; candidate queue 176 pending / 16 rejected both times; flags 1.
+
+## 2026-10-12 — Class of 1901 and three bare rows merged; 21 start dates restored: verification
+
+```sql
+-- rivals for the three bare rows: every person with the surname, by list, city and season
+SELECT pl.person_id, p.display_name, sp.city, sp.entity_type, min(sp.season), max(sp.season), count(*),
+       list(DISTINCT s.start_date_text)
+FROM entities.person_link pl JOIN entities.person p USING (person_id)
+JOIN raw.person_entry pe USING (entry_id) JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s USING (entry_id)
+WHERE pe.family_name LIKE ? GROUP BY ALL;       -- 'Гримальд%', 'Панов%', 'Щеглов%'
+
+ATTACH '<backup>' AS bak (READ_ONLY);
+SELECT count(*) FROM (SELECT * FROM raw.person_entry EXCEPT SELECT * FROM bak.raw.person_entry);
+SELECT count(*) FROM (SELECT * EXCLUDE(period_id) FROM raw.person_entry_service
+                      EXCEPT SELECT * EXCLUDE(period_id) FROM bak.raw.person_entry_service);
+SELECT pe.list_number, pe.family_name FROM raw.person_entry pe
+LEFT JOIN raw.person_entry_service s USING (entry_id)
+WHERE pe.page_id = 'balletartists_1901-02_MSK_p003' AND s.entry_id IS NULL;
+```
+
+Result: one later Moscow candidate each (Гримальди, Генріетта; Пановъ, Александръ Викторовичъ -- Николай
+Викторовичъ is last listed 1897-98; Щегловъ, Василій Семеновичъ). Live persons 2765 -> 2727 -> 2724. After the
+raw fix 22 entries and 22 service rows differ from the backup, 0 links; every restored date parses; the page's
+only undated rows are the four bare surnames. Receipts unchanged.
