@@ -16288,3 +16288,30 @@ SELECT count(*) FROM (SELECT entry_id, person_id FROM entities.person_link
 Result: his Graduates row now has the note «зачисленъ въ Московскую балетную труппу.» and no start date; exactly
 one service row was removed and none added; 0 link differences; he remains one person, 1891-92..1910-11.
 docs/ballet_graduates_tenure.csv: one row changed (source not_stated_in_report), CRLF line endings preserved.
+
+## 2026-10-12 — Divertissements after RG's revisions (three Большой evenings withdrawn, two 1894 evenings parent genre ballet, fused Щелкунчикъ title split)
+
+```sql
+SELECT w.canonical_title, w.canonical_genre, w.parent_genre, count(p.performance_id)
+FROM research.work w LEFT JOIN research.performance p USING(work_id) WHERE lower(w.canonical_title) LIKE '%дивертис%' GROUP BY ALL ORDER BY 1,2,3;
+SELECT canonical_title, canonical_genre, appearance_count FROM research.work WHERE canonical_title LIKE 'Щелкунчикъ%';
+```
+
+Result: Балетный дивертиссементъ 9 and Балетный дивертиссментъ 3 (бал.); Дивертиссементъ бал. 45, parent genre ballet (no genre) 2, nothing 36; Дивертиссментъ бал. 3, nothing 2; Дивертиссементъ (Etudes) бал. 1; Большой дивертиссементъ 2 (nothing); Концертный и балетный дивертиссемент 1 (parent genre ballet). The fused Щелкунчикъ work no longer exists; «Щелкунчикъ» [бал.] has 57 performances. Table-by-table comparison with the pre-fix backup: raw.event_entry_performance 30,850 -> 30,851 and research.performance 30,849 -> 30,850 (the split), entities.work 3,001 -> 3,000, research.work 3,003 -> 3,002, research.production_work 646 -> 645 (the fused work's own list link folded into Щелкунчикъ); everything else equal; live persons 2,638 both; receipts sum 3,207,899,755 kopecks both.
+
+## 2026-10-12 — The 90 pending pairs grouped and flagged
+
+Query (inline script, read-only): the pending rows of entities.person_candidate grouped into connected groups;
+for each member, its lists with season ranges, start dates, majority surname / first name / patronymic and
+instruments; flags for a differing surname, first name or patronymic, a season in which two members stand in
+the same list, different lists, and unrelated instruments. Saved as
+docs/eval/person_audit_2026-10-12/Q_shared_start_groups.csv. Plus the entries of Чумакова Ольга 1892-95,
+Чичелева 1898-1903, Стеличекъ 1905-06, Елинекъ 1903-04, and four Moscow 1908-09 rows.
+
+Result: 90 pairs in 74 groups. 25 with no flag (the later record adds a patronymic or runs past the earlier
+one), 8 first-name variants, 13 surname variants, 6 with two patronymics, 5 with surname and patronymic both
+differing, 7 with a same-list overlap, the rest mixed. Елинекъ (1903-04) and Стеличекъ (1905-06) overlap
+because each is printed in two Petersburg orchestras with a transfer note. Чумакова, Ольга: the graduate record
+holds two graduates (Moscow 1893, Petersburg 1894). Scan, reduced size: the Moscow 1908-09 list prints
+«37. Канишевская, Александра Ѳеодоровна», «41. Куришенская, Александра Вильгельмовна», «47. Семеновъ, Николай
+Прохоровичъ», «60. Хасперъ, Михаилъ Ивановичъ».
