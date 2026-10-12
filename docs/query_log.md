@@ -16271,3 +16271,20 @@ graduates_1898-99_p002 (table 1899-09-01, database null). Printed individual exc
 Тихомировъ 1893, Жуковъ 1909, Безкоровайная 1911. After the fix the 12 rows carry 1899-09-01 and Безкоровайная
 none; 12 service rows differ from the backup; receipts unchanged; live persons 2638. «Ѳокинъ, Михаилъ
 Федоровичъ» has three ProductionTeam rows (Большой театръ, Помощники парикмахера, съ 16 августа 1901).
+
+## 2026-10-12 — Бекъ, Константинъ: the Report's 1 June 1892 removed from his row (RG: he is the exception to "all")
+
+```sql
+ATTACH 'outputs/full_run_pre_promote_backup_2026-10-12_bek/imperial_theaters.duckdb' AS bak (READ_ONLY);
+SELECT pe.family_name, pe.tenure_note_text, s.start_date_undate FROM raw.person_entry pe
+LEFT JOIN raw.person_entry_service s USING (entry_id)
+WHERE pe.page_id = 'graduates_1891-92_p000' AND pe.family_name LIKE 'Бекъ%';
+SELECT count(*) FROM (SELECT entry_id, start_date_undate FROM bak.raw.person_entry_service
+                      EXCEPT SELECT entry_id, start_date_undate FROM raw.person_entry_service);
+SELECT count(*) FROM (SELECT entry_id, person_id FROM entities.person_link
+                      EXCEPT SELECT entry_id, person_id FROM bak.entities.person_link);
+```
+
+Result: his Graduates row now has the note «зачисленъ въ Московскую балетную труппу.» and no start date; exactly
+one service row was removed and none added; 0 link differences; he remains one person, 1891-92..1910-11.
+docs/ballet_graduates_tenure.csv: one row changed (source not_stated_in_report), CRLF line endings preserved.

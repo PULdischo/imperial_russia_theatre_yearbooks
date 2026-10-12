@@ -92,6 +92,9 @@ the same event.
 | St. Petersburg, graduated spring 1898 (14 people incl. Галка, Ольга) | "съ 1-го мая 1898 года" (1 May 1898) | "1 іюня 1898 г." (1 June 1898) — identical across all 10 seasons Галка appears, 1898-99 through 1907-08 | `pdf/Spiski_Graduates/ForUpload_1897-98_TheaterSchoolReport.pdf`, p.1 (text-level match to the same pattern; this specific page image not independently re-viewed) |
 | St. Petersburg, graduated spring 1892, individually assigned to the Moscow troupe (Бекъ, Константинъ) | "съ 1-го іюня 1892 г." (1 June 1892) | "1 сентября 1892 г." (1 September 1892) — identical across all 15 seasons he appears, 1892-93 through 1907-08 | `pdf/Spiski_Graduates/ForUpload_1891-92_TheaterSchoolReport.pdf`, p.0 (verified directly against the scanned page). Same shape as the two rows above but a 3-month gap rather than 1 month, and involves a graduate transferring cities (his own class's other 17 graduates all entered the St. Petersburg troupe on the June date the Report gives) |
 
+**Correction, 2026-10-12 (RG):** the Бекъ row above is withdrawn. The Report's sentence is «Всѣ окончившіе курсъ ученики и ученицы опредѣлены на службу съ 1-го іюня 1892 г. въ С.-Петербургскую балетную труппу, кромѣ ученика Бека, который зачисленъ въ Московскую балетную труппу.» -- he is the exception to "all", so the 1 June date is not his and the Report gives him no date. There is no discrepancy with the roster's 1 September 1892.
+
+
 Both readings are internally consistent and well-attested on their own
 side — the Report's "мая" is unambiguous and legible on the page, and
 the BalletArtists date is corroborated by a decade of identical repeated

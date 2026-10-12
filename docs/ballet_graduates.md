@@ -134,10 +134,12 @@ pattern across three cohorts:
   seasons Vaganova's name appears in it.
 - **1897-98, 14 graduates** — same pattern, one month apart (May vs.
   June 1898).
-- **Бекъ, Константинъ (1892)** — an individual exception within an
-  otherwise St. Petersburg cohort, sent to the Moscow troupe: the
-  Report says **1 June 1892**, BalletArtists says **1 September 1892**,
-  identically across all 15 seasons he appears in that roster.
+- **Бекъ, Константинъ (1892)** — NO LONGER COUNTED HERE (RG, 2026-10-12).
+  He is the individual exception within a St. Petersburg cohort, sent to
+  the Moscow troupe. The Report dates the Petersburg posting (1 June 1892)
+  and excepts him from it without giving him a date, so the Report states
+  none for him; BalletArtists has **1 September 1892** in every season.
+  This row used to be read as "Report 1 June vs. roster 1 September".
 
 Both readings were checked directly against their scanned pages. Neither
 looks like a misreading of the other — the month words don't resemble
