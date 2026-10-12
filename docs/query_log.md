@@ -16225,3 +16225,49 @@ Result: 86 pairs; 80 with one candidate each and nothing flagged beyond the May/
 After the merges: live persons 2639, research.person 2737; 70 graduate-only records; 88 pairs pending, all
 name_variant_shared_start; receipts 3,207,899,755 over 32,806 events and 176 Wikidata links, unchanged; 0 shift
 blocks; review mentions resolved 21,400. The only Сергѣева in the 1909-11 lists is the Moscow Наталія Никифоровна.
+
+## 2026-10-12 — How do divertissements fit into the yearbook's printed season totals?
+
+```sql
+SELECT season, city, category_verbatim, venue_verbatim, qualifier_verbatim, count, receipts_verbatim, footnote_refs FROM research.season_stat_line
+WHERE lower(coalesce(category_verbatim,'')||coalesce(qualifier_verbatim,'')||coalesce(note,'')) LIKE '%дивертис%';
+SELECT season, footnote_no, text_verbatim FROM research.season_stat_footnote WHERE lower(text_verbatim) LIKE '%дивертис%';
+SELECT season, city_verbatim, text_verbatim FROM raw.season_stat_dated_note WHERE lower(text_verbatim) LIKE '%дивертис%';
+SELECT category, count(*) lines, count(DISTINCT season) seasons, sum(count) FROM research.season_stat_line WHERE line_kind<>'subtotal' GROUP BY 1 ORDER BY 4 DESC;
+```
+
+Result: no statistics line, footnote or dated note mentions a divertissement (0 rows each). The printed categories count evenings by kind: Русскихъ драматическихъ 9,319; Русскихъ оперныхъ 3,728; Французскихъ 2,393; Балетныхъ 1,771; Оперныхъ 1,637; Нѣмецкихъ 506; Смѣшанныхъ 72; Концертовъ 32; and smaller ones.
+
+```sql
+SELECT e.season, e.city, CAST(e.date AS VARCHAR), t.canonical_name, string_agg(o.verbatim_title, ' / ' ORDER BY o.performance_order)
+FROM research.event e JOIN research.theater t USING(theater_id) JOIN research.performance o USING(event_id)
+WHERE e.event_id IN (SELECT p.event_id FROM research.performance p JOIN research.work w USING(work_id)
+        WHERE lower(w.canonical_title) LIKE '%дивертис%' AND (w.canonical_genre LIKE 'бал%' OR w.parent_genre='ballet'))
+  AND NOT EXISTS (SELECT 1 FROM research.performance o2 JOIN research.work ow USING(work_id) WHERE o2.event_id=e.event_id
+        AND lower(ow.canonical_title) NOT LIKE '%дивертис%'
+        AND (ow.parent_genre='ballet' OR EXISTS (SELECT 1 FROM research.work pw WHERE pw.work_id=ow.excerpt_of_work_id AND pw.parent_genre='ballet')))
+GROUP BY ALL ORDER BY 3;
+```
+
+Result: 17 evenings where a ballet-tagged divertissement is the ONLY ballet element on the bill (no ballet from the production lists): 12 «Балетный дивертиссементъ» evenings, the three plain ones RG assigned by inference (21 Nov 1896, 2 and 25 Jan 1908, Большой), «Концертный и балетный дивертиссемент» (7 Jan 1906) and the fused Щелкунчикъ title (13 Dec 1909, an artefact of the fused title). On every other ballet-tagged divertissement evening a listed ballet is on the bill too. Existing comparison file `outputs/season_stats_compare/ballet_counts.csv` (built earlier, not re-run): 1896-97 Moscow stats 57 = list 57 = Repertoire 57 without the 21 Nov 1896 evening.
+
+## 2026-10-12 — Graduation-page notes checked against the data
+
+```sql
+SELECT pe.page_id, count(*), list(DISTINCT coalesce(pe.tenure_note_text,'<none>')),
+       list(DISTINCT coalesce(s.start_date_undate,'-')), any_value(pe.institution)
+FROM raw.person_entry pe LEFT JOIN raw.person_entry_service s USING (entry_id)
+WHERE pe.entity_type = 'Graduates' GROUP BY 1 ORDER BY 1;
+
+SELECT pe.entry_id, s.start_date_undate, pe.family_name FROM raw.person_entry pe
+LEFT JOIN raw.person_entry_service s USING (entry_id) WHERE pe.entity_type = 'Graduates';
+-- compared in Python with docs/ballet_graduates_tenure.csv by entry_id
+
+-- the rows of Ѳокинъ/Фокинъ, Михаилъ from 1907-08 and Семеновъ, Николай Про- 1907-10 (entry listing as above)
+```
+
+Result: 466 Graduates rows on 37 pages; the tenure table (399 rows) and the database disagreed on 12, all on
+graduates_1898-99_p002 (table 1899-09-01, database null). Printed individual exceptions: Легатъ 1891, Бекъ 1892,
+Тихомировъ 1893, Жуковъ 1909, Безкоровайная 1911. After the fix the 12 rows carry 1899-09-01 and Безкоровайная
+none; 12 service rows differ from the backup; receipts unchanged; live persons 2638. «Ѳокинъ, Михаилъ
+Федоровичъ» has three ProductionTeam rows (Большой театръ, Помощники парикмахера, съ 16 августа 1901).

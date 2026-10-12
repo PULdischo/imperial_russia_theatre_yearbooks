@@ -209,3 +209,29 @@ list #31) (`person_merge_bek_sergeeva_2026-10-12.py`). Live persons 2724 -> 2639
   Михайловичъ; «Семеновъ, Николай Прохоровичъ» (Moscow 1908-09) fills the one gap in Николай Прокопьевичъ's run;
   9 of the 16 Petersburg graduates of 1909 have no company record by any rule; a production database write by
   another session happened mid-afternoon (lock at 14:00), backups retaken after it.
+
+### The notes on the Theatre School graduation pages (RG, 2026-10-12: "make sure we've carefully examined them")
+
+Sources: the complete blind transcription of all 51 pages of 1890-91..1909-10 (`docs/eval/graduates_audit_2026-10-06/reader_reports/`),
+the hand-verified table `docs/ballet_graduates_tenure.csv` (399 rows), the 1910-11 pages (read in issue #135), and
+the scans re-read today for 1891-92 p000/p001, 1896-97 p001, 1897-98 p001, 1899-00 p001, 1900-01 p001, 1908-09 p000.
+
+Every posting sentence in print, and the individual exceptions inside them:
+| Class | Print | In the data |
+|---|---|---|
+| SP 1891 | all 15 from 1 June 1891, «а г. Легатъ—съ 1-го октября того же года» | Легатъ 2-й, Иванъ: 1 Oct 1891. Correct |
+| SP 1892 | all from 1 June 1892 to the Petersburg troupe «кромѣ ученика Бека, который зачисленъ въ Московскую балетную труппу» | Бекъ carries 1 June 1892. The sentence gives NO date for him; the Moscow list has 1 Sept 1892. OPEN, see below |
+| SP 1893 | all from 1 June 1893 «кромѣ ученика Тихомирова, который зачисленъ съ 1-го сентября 1893 года въ Московскую балетную труппу» | Тихомировъ, Василій: 1 Sept 1893, Moscow. Correct |
+| SP 1896, 1897, 1898 | «съ 1-го мая» | 1 May; the company lists print 1 June (already documented in docs/ballet_graduates.md) |
+| Moscow 1899 | «опредѣлены на службу съ 1 сентября 1899 года» | was unparsed for all 12 (a period "from spring 1899 to 1 Sept"). FIXED today |
+| Moscow 1909 | «1. Жуковъ, Леонидъ (при услов. сдачи одного экзам.)» | note kept on his row. Correct |
+| SP 1911 | all from 1 June 1911 «за исключеніемъ больной г-жи Безкоровайной» | she carried the class date. FIXED today: no start date, note kept |
+| Moscow 1900, 1901, 1902, 1905, 1906, 1910, 1911 | no posting sentence printed | no date. Correct -- with one doubt: the 1899-00 Moscow page (`graduates_1899-00_p001`) is a CROPPED scan that ends under the men's list, so a sentence below it cannot be ruled out. The 1900-01 page is whole (folio 142) and has none |
+
+- The table and the database agreed on every date except those 12 rows. The table does not cover the 67 rows of 1908-09..1910-11.
+- Fix: `docs/eval/raw_fix_graduates_notes_2026-10-12.py` (backup `outputs/full_run_pre_promote_backup_2026-10-12_graduates_notes/`): 12 service rows changed.
+- **Бекъ, open for RG:** `docs/ballet_graduates.md` records "the Report says 1 June 1892, BalletArtists says 1 September 1892" as a discrepancy. Read
+  strictly, the Report dates the Petersburg posting and excepts him from it without giving his date, so there may be no discrepancy at all.
+- Also done: «Семеновъ, Николай Прохоровичъ» merged into Николай Прокопьевичъ (`person_merge_semenov_prokhorovich_2026-10-12.py`).
+  NOT merged: «Ѳокинъ, Михаилъ Федоровичъ» is an assistant hairdresser at the Bolshoi (ProductionTeam 1908-11, съ 16 августа 1901), not the dancer.
+- Queue: 89 shared-start pairs and 1 ordinal_shift pair, new since the 1899 class dates began to parse.
