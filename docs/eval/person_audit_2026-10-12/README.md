@@ -235,3 +235,19 @@ Every posting sentence in print, and the individual exceptions inside them:
 - Also done: «Семеновъ, Николай Прохоровичъ» merged into Николай Прокопьевичъ (`person_merge_semenov_prokhorovich_2026-10-12.py`).
   NOT merged: «Ѳокинъ, Михаилъ Федоровичъ» is an assistant hairdresser at the Bolshoi (ProductionTeam 1908-11, съ 16 августа 1901), not the dancer.
 - Queue: 89 shared-start pairs and 1 ordinal_shift pair, new since the 1899 class dates began to parse.
+
+### The shared-start queue (90 pairs, 74 groups), decided 2026-10-12
+`Q_shared_start_groups.csv` is the evidence table. RG: merge 63 groups, reject Шефферъ/Шпейеръ, split Чумакова
+(`person_merge_shared_start_groups_2026-10-12.py`, backup `outputs/full_run/imperial_theaters.pre_shared_start_groups_2026-10-12.duckdb`).
+72 records absorbed: live persons 2638 -> 2566, research.person 2664. Receipts and Wikidata links (176) unchanged,
+0 orphans, 0 shift blocks; review mentions resolved 21,424.
+- **Чумакова, Ольга: two women, both classes read on the scans.** Moscow, spring 1893, «10) Чумакова, Ольга», class
+  posted to the Moscow troupe from 1 Sept 1893 = Ольга Дмитріевна (Moscow 1893-94..1907-08; a Чумаковъ, Александръ
+  Дмитріевичъ is in the same company). Petersburg, spring 1894, «11) Чумакова, Ольга», class posted to the Petersburg
+  troupe from 1 June 1894 = Ольга Савельевна (SP 1894-95..1909-10). Company rows from the extraction.
+- The one new same-heading double on a survivor, Штейнсъ, Іосифъ 1900-01, is a printed transfer between two
+  Petersburg orchestras (both rows carry the note).
+- Scan, reduced size: the Moscow 1908-09 list prints Хасперъ «Ивановичъ», Куришенская «Вильгельмовна», Канишевская
+  «Ѳеодоровна», Семеновъ «Прохоровичъ» -- that volume is careless with names.
+- **Left in the queue for RG (12 pairs, 9 groups):** Адамовъ, Михаилъ; Аѳанасьева, Вѣра; Чичелева, Елизавета; Иманъ
+  Юрій/Юлій; Межакова/Лежакова; Дюжикова, Римма; Розай, Георгій; Грибенъ; Голласъ.

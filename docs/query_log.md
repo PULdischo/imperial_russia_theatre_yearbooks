@@ -16315,3 +16315,37 @@ because each is printed in two Petersburg orchestras with a transfer note. Чу�
 holds two graduates (Moscow 1893, Petersburg 1894). Scan, reduced size: the Moscow 1908-09 list prints
 «37. Канишевская, Александра Ѳеодоровна», «41. Куришенская, Александра Вильгельмовна», «47. Семеновъ, Николай
 Прохоровичъ», «60. Хасперъ, Михаилъ Ивановичъ».
+
+## 2026-10-12 — Where does the 16 Sep 1894 Михайловскій evening (opera + ballet + Дивертиссементъ) sit in the printed 1894-95 SP totals?
+
+```sql
+SELECT line_no, category_verbatim, venue_verbatim, qualifier_verbatim, count, receipts_verbatim, footnote_refs FROM research.season_stat_line
+WHERE season='1894-95' AND city='SP' AND (category_verbatim LIKE '%Балет%' OR coalesce(qualifier_verbatim,'') LIKE '%балет%' OR category_verbatim LIKE '%мѣшан%') ORDER BY line_no;
+
+SELECT CAST(e.date AS VARCHAR), t.canonical_name, e.receipts_total_kopecks/100.0, string_agg(p.verbatim_title || coalesce(' ['||p.verbatim_genre||']',''), ' / ' ORDER BY p.performance_order)
+FROM research.event e JOIN research.theater t USING(theater_id) JOIN research.performance p USING(event_id)
+WHERE e.season='1894-95' AND e.city='SP' AND e.event_status='performed'
+GROUP BY ALL HAVING bool_or(p.verbatim_genre LIKE 'оп%' OR p.verbatim_title LIKE '% оп. %') AND bool_or(p.verbatim_genre LIKE 'бал%' OR p.verbatim_title LIKE '% бал. %') ORDER BY 1;
+
+SELECT CAST(e.date AS VARCHAR), e.receipts_total_kopecks/100.0, string_agg(p.verbatim_title || coalesce(' ['||p.verbatim_genre||']',''), ' / ' ORDER BY p.performance_order)
+FROM research.event e JOIN research.theater t USING(theater_id) JOIN research.performance p USING(event_id)
+WHERE e.season='1894-95' AND e.city='SP' AND e.event_status='performed' AND t.canonical_name='Михайловскій'
+GROUP BY ALL HAVING bool_or(p.verbatim_genre LIKE 'бал%' OR p.verbatim_title LIKE '% бал. %') ORDER BY 1;
+```
+
+Result: printed lines: Балетныхъ въ Маріинскомъ 17 (44,984 р. 11 к.), въ Михайловскомъ 3 (4,644 р. 30 к.); Смѣшанныхъ «русская драма и балетъ» 4 (9,015 р. 98 к.), «опера и балетъ» 4 (11,719 р. 75 к.). The Repertoire has exactly four opera + ballet evenings: 16 Sep Михайловскій (Сельская честь / Очарованный лѣсъ / Дивертиссементъ, 2,206.75), 18 Sep Михайловскій (Паяцы / Коппелія, 2,316.00), 7 Oct and 14 Oct Маріинскій (3,598.50 each); sum 11,719.75 р. = the printed «опера и балетъ» line exactly. The three pure-ballet Михайловскій evenings (31 Aug, 4 Sep, 11 Sep) sum to 4,644.30 р. = the printed Михайловскій ballet line exactly.
+
+## 2026-10-12 — Shared-start batch applied; the two Чумакова, Ольга graduates
+
+```sql
+SELECT sp.season, sp.city, sp.entity_type, pe.page_id, pe.list_number, pe.family_name, pe.first_name,
+       pe.patronymic, pe.tenure_note_text, pe.credit_summary_text
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+WHERE pe.family_name LIKE 'Чумаков%' AND sp.season BETWEEN '1892-93' AND '1895-96' ORDER BY 1, 2;
+-- verification against the backup: receipts, Wikidata count, orphan links, pending pairs (as in earlier entries)
+```
+
+Result: a Чумакова, Ольга is in the Moscow Graduates list of 1892-93 (съ 1 сентября 1893) and another in the
+Petersburg list of 1893-94 (съ 1 іюня 1894); Ольга Дмитріевна is in the Moscow company from 1893-94 and Ольга
+Савельевна in the Petersburg company from 1894-95, both listed in 1894-95 and 1895-96. After the batch: live
+persons 2566; 12 pairs pending; receipts and 176 Wikidata links unchanged.
