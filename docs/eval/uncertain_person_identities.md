@@ -254,6 +254,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** balletartists_1906-07_SP_p000 (full zoom 2026-10-12); balletartists_1908-09_SP_p000 (full zoom); balletartists_1904-05_SP_p007 no. 26; balletartists_1903-04_SP_p006 no. 23.
 - **Would resolve it:** either man's service record (RGIA f. 497); «Весь Петербургъ» 1906-07.
 
+## 29. Девильеръ / Давильеръ, Екатерина Львовна (Moscow BalletArtists) -- one woman, two spellings and two start years in print
+- **Status:** MERGED (RG, 2026-10-12: "merge, just note the issues"; c82bb1 Давильеръ -> 1272e3 Девильеръ; applied 2026-10-12, docs/eval/person_merge_devilier_2026-10-12.py).
+- **What is uncertain:** which surname spelling is hers, and her start year. 1908-09 prints «24. Давильеръ, Екатерина Львовна (съ 1 августа 1898 г.)»; 1909-10 prints «23. Девильеръ, Екатерина Львовна (съ 1 августа 1908 г.)»; 1910-11 is extracted the same as 1909-10.
+- **For one woman:** the only «Екатерина Львовна» in the whole corpus; the same slot in the list each year (between Грекова 2-я and Денисова); no other similar surname except the administrator Вильеръ-де-Лиль-Адамъ; consecutive seasons.
+- **On the date:** 1 августа 1908 is an intake date (ten Moscow ballet entries in 1908-09 carry it) and hers is the only 1 августа 1898 in any Moscow ballet list; she is not in the lists before 1908-09. 1898 is very probably a misprint.
+- **Against / not checked:** there is no Graduates page for 1907-08 in the data, so her class cannot be checked.
+- **Where to look:** balletartists_1908-09_MSK_p001 no. 24 and balletartists_1909-10_MSK_p002 no. 23 (both full zoom 2026-10-12); balletartists_1910-11_MSK_p001 no. 24 (extraction only); review_1910-11_MSK_ballet_p001, «г-жи Ѳедорова 2-я и Девильеръ» in «Баядерка».
+- **Would resolve it:** the Moscow school's 1908 graduation list or her service record.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.

@@ -15432,3 +15432,55 @@ and repointed 0 (20,598 -> 21,298); with the text corrections the total is
 27,333 mentions, 21,307 resolved. A first version without the ballet-roster
 and gender guards gained 861 but included wrong picks (38 «Степанова» to an
 orchestra Степановъ, 36 «Никитина» to Никитинъ) and was not kept.
+
+## 2026-10-12 — The five pending family_name_variant candidate pairs
+
+```sql
+SELECT candidate_id, person_id_1, person_id_2, display_1, display_2, similarity_score,
+       tenure_signal, tenure_evidence
+FROM entities.person_candidate WHERE status = 'pending' ORDER BY display_1;
+
+-- per person_id on either side
+SELECT sp.season, sp.city, sp.entity_type, pe.page_id, pe.list_number, pe.family_name,
+       pe.first_name, pe.patronymic, pe.instrument, pe.rank_or_title, s.start_date_text, s.end_date_text
+FROM entities.person_link pl JOIN raw.person_entry pe USING (entry_id)
+JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+WHERE pl.person_id = ? ORDER BY 1, 3;
+
+-- context: Воронцовъ in the Moscow ballet lists from 1907-08; Романова Марія in SP 1903-05;
+-- any Большаков-/Вольшаков-/Боронцов- entry
+```
+
+Result: five pairs. (1) Воронцовъ Владиміръ (Moscow artist, съ 1 сентября
+1891) / Боронцовъ Владиміръ (SP graduate 1911): two men. (2) Девильеръ /
+Давильеръ Екатерина Львовна, Moscow 1908-11, one slot in the list. (3)
+Раманова Марія (SP graduate 1903) / Бажанова Марія (Moscow graduate 1911):
+two women. (4, 5) Фонъ-Бооль / Фонъ Бооль Николай Константиновичъ:
+Administrators 1898-1911 and the Moscow school list. Context: the Moscow
+1910-11 row with no patronymic has the start date of Воронцовъ, Владиміръ
+Васильевичъ; Романова, Марія Федоровна joins the SP list in 1903-04 «съ 1
+іюня 1903 г.»; no Вольшакова or Боронцовъ exists outside the 1910-11
+Graduates page. Scan readings are in the chat summary; nothing applied.
+
+## 2026-10-12 — Other candidates for Девильеръ / Давильеръ, Екатерина Львовна?
+
+```sql
+-- each run as the WHERE clause of the entry listing used above
+regexp_matches(pe.family_name, '^(Д[аеэ][ -]?[Вв]и[лл]|Вилье|Д[аеэ]в[иі]л|де[ -]В)')
+pe.first_name LIKE 'Екатерин%' AND pe.patronymic LIKE 'Львовн%'
+sp.city='Moscow' AND sp.entity_type='BalletArtists' AND sp.season='1908-09' AND s.start_date_undate='1908-08-01'
+sp.city='Moscow' AND sp.entity_type='BalletArtists' AND s.start_date_undate='1898-08-01'
+sp.entity_type='Graduates' AND sp.season IN ('1906-07','1907-08','1908-09')   -- Moscow rows
+
+SELECT page_id FROM raw.review_block
+WHERE text LIKE '%Давильер%' OR text LIKE '%Девильер%' OR text LIKE '%Де-Вильер%';
+```
+
+Result: the only similar surname is the administrator Вильеръ-де-Лиль-Адамъ,
+Александръ Фердинандовичъ (1890-1907). The three rows under review are the
+only «Екатерина Львовна» in the whole corpus. Ten Moscow ballet entries in
+1908-09 start on 1 Aug 1908; hers is the only entry in any Moscow ballet
+list with 1 Aug 1898. No Graduates page exists for 1907-08, so her class
+cannot be checked. One review mention: review_1910-11_MSK_ballet_p001,
+«г-жи Ѳедорова 2-я и Девильеръ» in Баядерка.

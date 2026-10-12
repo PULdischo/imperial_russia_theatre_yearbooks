@@ -103,3 +103,16 @@ The same crop confirms Виргинія's transfer note on the scan (1895-96, no
   - The nine Мартыновъ-type review spellings, read at full zoom: eight are transcription misreads of «Мартьяновъ» (two broken across lines as «Мартья-/новъ») and are corrected through `docs/eval/review_text_corrections.csv`; one, `review_1901-02_SP_ballet_p039`, really prints «Мартыновъ» and is recorded as a print variant in `docs/eval/review_person_variants.csv`. All nine resolve to him again.
   - Final: 27,333 mentions, 21,307 resolved to one entity (78.0%); 17,093 person mentions join research.person (16,437 after the merges).
   - Seen, not done: the Petersburg lists of 1909-11 carry ordinal-less guest rows («Гельцеръ», «Балашова») that are separate person records from the Moscow dancers they evidently are; a bare «Павлова» in Petersburg still ties between Анна Матвѣевна and Варвара Павловна, which is a real ambiguity.
+
+## The five pending `family_name_variant` pairs (looked at 2026-10-12)
+
+None is an extraction error: each spelling is what the print has (scan readings in docs/query_log.md and the session summary).
+
+| Pair | Status |
+|---|---|
+| Девильеръ / Давильеръ, Екатерина Львовна (1272e3 + c82bb1) | **MERGED** (RG, 2026-10-12), survivor 1272e3; note in uncertain_person_identities.md #29. Live persons 3065 -> 3064. Backup `outputs/full_run/imperial_theaters.pre_devilier_merge_2026-10-12.duckdb`. |
+| Воронцовъ, Владиміръ (Moscow artist, съ 1 сентября 1891) / Боронцовъ, Владиміръ (SP graduate 1911) | recommended REJECT (two men); RG's decision pending |
+| Раманова, Марія (SP graduate 1903) / Бажанова, Марія (Moscow graduate 1911) | recommended REJECT (two women); RG's decision pending |
+| Фонъ-Бооль / Фонъ Бооль, Николай Константиновичъ (2 pairs, 3 records: 420cb6, 054608, aa74c2) | recommended MERGE (hyphen in the administration list, space in the school list); RG's decision pending |
+
+Beside them, also pending with RG: merge the 1903 graduate «Раманова» into Романова, Марія Федоровна (съ 1 іюня 1903 г.); merge the patronymic-less Moscow 1910-11 Воронцовъ row into Воронцовъ, Владиміръ Васильевичъ; fix «Фонъ-Боолъ» in administration_1898-99_p003 (scan: Фонъ-Бооль; 1899-00 not yet zoomed); record the probable Вольшакова/Боронцовъ initial swap on graduates_1910-11_p000 as a print typo; Фонъ-Бооль's leaving date («1 февраля 1910 г.» in the 1910-11 school list vs 1 декабря 1910 in the administration list).
