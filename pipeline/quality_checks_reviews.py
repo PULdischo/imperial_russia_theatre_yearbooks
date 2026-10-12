@@ -160,11 +160,14 @@ def main() -> None:
         seen = {}
         prev = None            # (folio, page_id, source_page_index)
         unpaginated_since = 0
+        spread_since = 0       # spreads among those unpaginated pages
         for idx, p in items:
             m = FOLIO_RE.search(p["printed_folio"] or "")
             if not m:
                 flag(p["page_id"], "no_folio", "no printed folio captured")
                 unpaginated_since += 1
+                if p["page_id"] in spread:
+                    spread_since += 1
                 continue
             folio = int(m.group(0))
             if folio in seen:
@@ -203,9 +206,17 @@ def main() -> None:
                     # and only a gap LARGER than that leaves pages
                     # unaccounted for. Flagging gap != unpaginated_since
                     # produced 9 false positives of this shape (2026-10-06).
-                    # a spread scan carries two folios, so it legitimately
-                    # advances the count by one more than a single leaf
-                    allowance = unpaginated_since + (1 if prev[1] in spread else 0)
+                    # A spread scan carries two folios, so it legitimately
+                    # advances the count by one more than a single leaf. That
+                    # holds whether the spread is the page CARRYING the last
+                    # folio (prev) or an unnumbered one sitting inside the gap
+                    # -- the second case was missed until 2026-10-12 and left
+                    # two standing false positives, 1890-91_SP_all_p028
+                    # (the 146-147 procession plate) and 1900-01_SP_ballet_p026
+                    # (the 180-181 engraving), both of which read as a real
+                    # missing page and one of which went into a re-request list.
+                    allowance = (unpaginated_since + spread_since
+                                 + (1 if prev[1] in spread else 0))
                     if gap > allowance or gap < 0:
                         flag(p["page_id"], "missing_page",
                              f"{src}: folio {prev[0]} ({prev[1]}) -> {folio}; "
@@ -213,6 +224,7 @@ def main() -> None:
                              f"unpaginated page(s) between")
             prev = (folio, p["page_id"], idx)
             unpaginated_since = 0
+            spread_since = 0
 
     # ---- plate pages carrying an invented folio -------------------------
     blocks = list(csv.DictReader(open(args.parsed_dir / "review_block.csv",
