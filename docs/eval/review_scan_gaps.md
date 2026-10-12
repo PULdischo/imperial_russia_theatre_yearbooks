@@ -68,3 +68,28 @@ is rough — several reviews come out *negative*, meaning more pages than the
 folio span allows, because the same printed page is scanned into two PDFs
 (the shared-page bleed) and because 1900-01 prints folio 174 twice. The
 text-flow test above is the authoritative one.
+
+## Seasons with no review in the corpus at all (2026-10-12)
+
+Separate from the missing-leaf gaps above: four seasons have **no review
+page whatsoever**.
+
+```sql
+SELECT season, count(*) FROM raw.review_page GROUP BY 1 ORDER BY 1;
+```
+20 seasons held, 1,074 pages. Absent: **1898-99, 1909-10, 1911-12,
+1913-14.**
+
+- **1898-99** — the inventory note on Main vol. 9 (ILL, NYPL) reads *"This
+  issue is truncated (no prose, just …)"*, so there may be no review to
+  scan.
+- **1909-10, 1911-12, 1913-14** — genuine gaps in what has been scanned.
+
+Thin seasons worth a look in the same pass, since the issue-era volumes
+split the review across numbers: **1912-13** holds only 4 pages (SP Ballet
+alone), **1908-09** 12, **1910-11** 34.
+
+**RG, 2026-10-12: the 1912-13 translation waits until all remaining season
+reviews are scanned (expected the week of 2026-10-19), so the billed
+translation run happens once, over the whole set.** Do not propose it
+piecemeal before then.
