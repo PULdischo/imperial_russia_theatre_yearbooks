@@ -219,6 +219,41 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** `balletproductions_1897-98_MSK_*` (Шалости сверчка); `review_1897-98_MSK_ballet_p019__b011`, `p019__b012`. Side note: that review prints the librettist as "К. О. Вальца" (lists: К. Ѳ.); not zoomed.
 - **Would resolve it:** Moscow press notices of 13-15 February 1898; the Bolshoi poster or a printed libretto; К. Ѳ. Вальцъ's memoirs («65 лет в театре»), since he wrote the scenario.
 
+## 25. Эрлеръ, Алексѣй Александровичъ (SP BalletArtists) -- why is he missing from the 1907-08 list?
+- **Status:** MERGE decided (RG, 2026-10-12; graduate 5f9001 + «Эрлеръ 2-й» 5cf33f; applied 2026-10-12, see person_merge_candidates_batch.md). Noted at RG's request because of the gap, not because the identity is in doubt.
+- **What is uncertain:** he graduates in 1907 (Graduates 1906-07, съ 1 іюня 1907 г.) but is not in the 1907-08 company list; he first appears in 1908-09.
+- **For one man:** same surname, first name and start date; printed «Эрлеръ 2-й, Алексѣй Александровичъ (съ 1 іюня 1907 г.)» 1908-09..1910-11; Александръ Эрлеръ becomes «1-й» the year he arrives.
+- **For two men / against:** nothing positive; only the unexplained missing season. His classmates (Христіансонъ, Бочаровъ, Гончаровъ Леонидъ) are all in the 1907-08 list.
+- **Where to look:** graduates_1906-07_p000; balletartists_1907-08_SP_p010 (scan-checked 2026-10-12: only «87. Эрлеръ, Александръ Александровичъ (съ 1 іюня 1903 г.)» is printed, no ordinal); balletartists_1908-09_SP_p008.
+- **Would resolve it:** his service record (RGIA f. 497) or a 1907 order admitting, deferring or seconding him.
+
+## 26. Тихомировъ, Василій (Moscow BalletArtists + school staff) -- why does the artists' list print Ивановичъ for seven seasons?
+- **Status:** MERGE decided (RG, 2026-10-12: "he's a merge, just note the discrepancy"; graduate 75d4f2 + 58c4eb Ивановичъ + 6d97a1 / 690831 / 974a69 Дмитріевичъ; applied 2026-10-12, see person_merge_candidates_batch.md).
+- **What is uncertain:** the Moscow artists' list prints «Василій Ивановичъ» 1893-94..1899-00 and «Василій Дмитріевичъ» from 1900-01, while the school staff list prints Дмитріевичъ from 1897-98. RG finds it odd that he would not have had the error fixed for so many years.
+- **For one man:** start date 1 сентября 1893 in every artists' entry under both patronymics, matching the 1892-93 graduate; one artists' entry per season, never both; five of the seven roles named under Ивановичъ in 1899-00 (принцъ Дезире, Маріо, Маттео, the Привалъ кавалеріи role, Бернаръ де Вантадуръ) are named under Дмитріевичъ in 1900-01; Францъ (Коппелія) runs 1896-97..1910-11 across both. «Тихоміровъ 2-й, Алексѣй Дмитріевичъ (съ 1 сентября 1899 г.)» joins in 1899-00 on the row below him, the year before the patronymic changes (that they are brothers is an inference).
+- **For two men / against:** nothing positive. For three seasons (1897-98..1899-00) one volume prints Ивановичъ in the artists' list and Дмитріевичъ in the school list.
+- **Where to look:** balletartists_1893-94_MSK_p007 no. 66 and balletartists_1899-00_MSK_p008 no. 65 (Ивановичъ; scan-checked 2026-10-12, the latter at full zoom: «65. Тихоміровъ 1-й, Василій Ивановичъ (съ 1 сентября 1893 г.)»); balletartists_1900-01_MSK_p008 no. 67 and the theaterschoolstaff rows (Дмитріевичъ; from the extraction, not re-read). Role names are as extracted.
+- **Outside source (Russian Wikipedia, «Тихомиров, Василий Дмитриевич», read 2026-10-12; its own sources not checked):** born 1876; Moscow school 1885-91, then the Petersburg school, graduating 1893; Bolshoi debut 4 Sept 1893; taught at the Moscow school from 1896. The page says «Имя Василий Дмитриевич Тихомиров было придумано в качестве сценического», gives his birth name as Михайлов, says early records have him as Василий Никитин and Василий Потапов, and that his father was "probably" Дмитрий Михайлов. If so, the patronymic was not settled in his early years, which would bear on the Ивановичъ printing. It names no brother, so the Алексѣй Дмитріевичъ inference above has no outside support.
+- **RG, 2026-10-12:** still one person; the varying patronymics suggest an interesting story worth following up.
+- **Would resolve it:** his service record (RGIA f. 497) or any 1890s document giving his patronymic.
+
+## 27. Сергѣевъ, Николай (SP BalletArtists + school staff) -- Григорьевичъ, and «1-й, Николай Георгіевичъ» in 1909-11
+- **Status:** MERGE decided (RG, 2026-10-12: merge with notes, provided there is no obvious second candidate -- there is none; graduate 5a9a14 + 154c0f Григорьевичъ + 53235d Георгіевичъ; applied 2026-10-12, see person_merge_candidates_batch.md).
+- **What is uncertain:** the artists' list of 1909-10 and 1910-11 prints «Сергѣевъ 1-й, Николай Георгіевичъ (съ 1 іюня 1894 г.)» while the same volumes print the Режиссеръ as Николай Григорьевичъ.
+- **For one man:** same start date as the 1893-94 graduate under both patronymics; the «1-й» row appears only once Аркадій Васильевичъ Сергѣевъ (съ 1 іюня 1908 г.) is «2-й»; no other Сергѣевъ Николай, and no other Сергѣевъ with a 1 June 1894 start, anywhere in the corpus (all lists and cities, query_log 2026-10-12); the 1893-94 Graduates list has one Сергѣевъ, Николай.
+- **For two men / against:** the patronymic; no artists' row for him 1905-06..1908-09.
+- **Where to look:** balletartists_1909-10_SP_p009 no. 61 (full zoom 2026-10-12: «Георгіе-вичъ»); balletartists_1910-11_SP_p009 no. 59 and the Григорьевичъ rows (extraction only, bar 1908-09 p000 at reduced size).
+- **RG, 2026-10-12:** Георгіевичъ "really does seem like a spelling error, the names are so similar". Both Wikipedia articles on Николай Григорьевич Сергеев (the régisseur of the Stepanov notations; graduated 1894, régisseur 1903/04) give Григорьевич only.
+- **Would resolve it:** his service record (RGIA f. 497).
+
+## 28. Ивановъ, Иванъ (SP ballet, Помощникъ режиссера) -- whose is the 1906-07 row «Ивановъ 1-й, Иванъ Григорьевичъ (съ 1 іюня 1886 г.)»?
+- **Status:** LEFT AS PRINTED, with Иванъ Григорьевичъ (d5f838) (RG, 2026-10-12: come back to it only if it proves important). The 1908-09 row «1-й, Иванъ Григорьевичъ (съ 1 іюня 1899 г.)» (3aa7d7) and the 1899 graduate (7a10e6) MERGE into Иванъ Николаевичъ (7dd0bc); applied 2026-10-12.
+- **What is uncertain:** Иванъ Николаевичъ (graduate 1899) is assistant régisseur from 24 Feb 1904 (his 1904-05 artists' row says «Онъ же помощникъ режиссера балетной труппы съ 24 февраля 1904 г.») and holds the post in 1904-05, 1905-06, 1907-08, 1909-10, 1910-11. In 1906-07 the post is printed with Григорьевичъ's patronymic and his 1886 date, and Николаевичъ has no row at all.
+- **For a mis-set Николаевичъ:** 1906-07 is the one early volume that prints company start dates for the assistant régisseurs (Мартьяновъ gets 1 іюня 1893 instead of 30 января 1904), so a lookup of «Ивановъ 1-й» could have pulled the older man's details; 1908-09 then has the wrong patronymic with the right date, 1909-10 both right.
+- **For a real Григорьевичъ:** nothing printed on the row is Николаевичъ's; Григорьевичъ has no leaving note after 1903-04; other Ивановъ men drop out for one season and return without a note (Александръ Николаевичъ and Николай Константиновичъ absent 1904-05, Константинъ Константиновичъ absent 1905-06), so Николаевичъ may simply have been away in 1906-07 with the senior man covering.
+- **Where to look:** balletartists_1906-07_SP_p000 (full zoom 2026-10-12); balletartists_1908-09_SP_p000 (full zoom); balletartists_1904-05_SP_p007 no. 26; balletartists_1903-04_SP_p006 no. 23.
+- **Would resolve it:** either man's service record (RGIA f. 497); «Весь Петербургъ» 1906-07.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.

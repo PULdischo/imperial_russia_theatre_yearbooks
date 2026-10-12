@@ -14946,50 +14946,237 @@ and a conditional-formatting rule on L2:L99 renders `Missing Pages` in red,
 reusing **dxfId 6** — the same plain-red font the Requested/On-loan rule
 uses.
 
-## 2026-10-12 — Season review folios: recovery, and the spread-scan artefact
+## 2026-10-12 — Review prep for the 42 pending ordinal_shift person_candidate pairs
 
-Against `outputs/reviews/merged_full/` (CSV, pre-DB), plus the page images.
+```sql
+SELECT match_reason, status, count(*) FROM entities.person_candidate GROUP BY ALL;
 
-**1. How many review pages lack a usable `printed_folio`, and do they have text?**
+SELECT candidate_id, person_id_1, person_id_2, display_1, display_2, tenure_evidence
+FROM entities.person_candidate
+WHERE match_reason = 'ordinal_shift' AND status = 'pending' ORDER BY display_1;
 
-```python
-# merged_full/review_page.csv x review_block.csv
-blank = [p for p in pages if not (p["printed_folio"] or "").strip()]
-with_text = [p for p in blank if any(b["block_type"] in
-             ("paragraph","enumerated_list","cast_list") and b["text"].strip()
-             for b in blocks[p["page_id"]])]
+-- run once per person_id on either side of a pair
+SELECT sp.season, sp.city, sp.entity_type, pe.page_id, pe.list_number,
+       pe.family_name, pe.first_name, pe.patronymic, pe.rank_or_title,
+       s.start_date_undate, pe.heading_path
+FROM entities.person_link pl
+JOIN raw.person_entry pe ON pe.entry_id = pl.entry_id
+JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+WHERE pl.person_id = ? ORDER BY 1, 3;
+
+-- family context: every live person sharing (family, first name) with a
+-- queued record, compared in Python after folding ѳ/ф and і/и
+SELECT p.person_id, p.display_name, p.canonical_family_name, p.canonical_first_name,
+       sp.season, sp.city, sp.entity_type, s.start_date_undate
+FROM entities.person p
+JOIN entities.person_link pl ON pl.person_id = p.person_id
+JOIN raw.person_entry pe ON pe.entry_id = pl.entry_id
+JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+WHERE p.superseded_by_person_id IS NULL;
+
+SELECT sp.season, pe.page_id, pe.list_number, pe.family_name, pe.first_name,
+       pe.patronymic, s.start_date_undate, pe.heading_path
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+WHERE sp.entity_type = 'BalletArtists' AND sp.city = 'SP'
+  AND s.start_date_undate = '1893-06-01' AND pe.family_name LIKE 'М%';
 ```
 
-Before: 1074 pages, **77** with no usable folio (76 blank + one dirty
-`'248 —'`), of which **17 had text**. After the six scan-verified recoveries
-and the normalisation: **70** blank, **8** with text; filled 994 → **1004**.
+Result: person_candidate holds 67 rows; 42 are ordinal_shift/pending (plus 5
+family_name_variant pending, 20 rejected). 37 of the 42 pair a one-line
+Graduates record (no patronymic, no ordinal) with a company record; 34 of
+those are the only same-name graduate/company match on that start date. Two
+queued records each hold two different people and need splitting first:
+8bb688 «Иванова 4-я, Надежда» (1901-02 entry starts 1 Sept 1900, 1907-08
+entry starts 1 Aug 1907) and graduate 38a3db «Ивановъ, Александръ» (1895-96
+and 1905-06 lists). Family context found 9 further same-person records
+outside the queue (Бакинъ 0c2699, Гончаровъ ba3854, Панова 8fb4d1, Ѳедорова
+71546a, Ильина 380540/3a0568, Иванова 924313, Тихомировъ 58c4eb/6d97a1,
+Сергѣевъ 154c0f). The last query shows Мартьяновъ Александръ Александровичъ
+is printed every season 1893-94..1910-11 under four surname spellings
+(Мартяновъ/Мартыновъ/Мартъяновъ/Мартьяновъ as extracted), so he is spread
+over more person records than the two in the queue.
 
-**2. Folio discontinuities not explained by unnumbered leaves.** Walk each
-(season, city, genre) in page order; flag where `next − prev − 1` ≠ the
-number of unnumbered leaves between them. Before the fix: 9. After: 9, but
-every `+1` resolved to a **two-page spread scan**.
+## 2026-10-12 — Correction to the ordinal_shift review-prep entry above
 
-**3. Which scans are spreads?** Aspect ratio against the corpus median
-(0.801); a spread runs 1.44–1.78.
+No new SQL; a recount of the same output. 38 of the 42 pairs (not 37) have a
+Graduates record on one side; the other four are 9, 10 (Иванова 4-я), 24
+(Павлова) and 37 (Чіарлоне). 30 pairs are a plain one-graduate-to-one-company
+match with nothing else attached; the remaining 12 are the cases itemised
+above (two-in-one records, two partners, or a third record outside the queue).
 
-Result: **6** — `1890-91_SP_all_p027`, `1892-93_SP_ballet_p005`,
-`1893-94_SP_opera_p004`, `1894-95_SP_opera_p014`, `1896-97_SP_ballet_p018`,
-`1900-01_SP_ballet_p025`. These account for **all six** `+1` jumps, so each
-is two folios on one leaf, not a missing page.
+## 2026-10-12 — Ordinal-shift review: Барановичъ, Эрлеръ Алексѣй, and the 1906 graduate Ивановъ Александръ
 
-**4. Does the mechanical text-flow test find the known gaps?** No — this is
-why the folio check is the one that matters. Run over all consecutive page
-pairs it produced **125** flags, essentially all false (Russian capitalised
-surnames and em-dash role separators), and **neither** real gap appeared.
-Restricted to a true word-break hyphen it gave 8, of which 7 were benign
-(`Донъ-Кихотъ`, `Сень-Леонъ`, and continuations sitting a few blocks lower).
-Flow confirms a gap; it does not find one.
+```sql
+SELECT sp.season, sp.city, sp.entity_type, pe.page_id, pe.list_number, pe.family_name,
+       pe.first_name, pe.patronymic, s.start_date_undate, pe.heading_path
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+WHERE pe.family_name LIKE 'Баранович%' ORDER BY 1, 3;
 
-**Net effect on the re-request list: three volumes → one.** 1896-97 p. 249
-is present on the `p018` spread (`— 248 —` and `— 249 —` both visible at the
-foot), so the UMich request is cancelled; 1890-91 was already cleared. Only
-1900-01 (UIllinois) stands, and for **two** pages (176–177) rather than
-three. Full writeup: `docs/eval/review_scan_gaps.md`.
+SELECT pe.family_name, pe.first_name, pe.patronymic, pe.page_id
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+WHERE s.start_date_undate = '1910-06-01' AND sp.season = '1909-10';
+
+SELECT pe.family_name, pe.first_name, sp.season, sp.entity_type, s.start_date_undate, pe.page_id
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+WHERE pe.family_name LIKE 'Эрлеръ%' AND pe.first_name LIKE 'Алекс%' ORDER BY 3;
+
+SELECT sp.season, pe.page_id, pe.list_number, pe.family_name, pe.first_name, pe.patronymic,
+       s.start_date_undate, pe.heading_path
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+WHERE sp.entity_type = 'BalletArtists' AND sp.city = 'SP'
+  AND sp.season IN ('1905-06','1906-07','1907-08','1908-09')
+  AND pe.family_name LIKE 'Ивановъ%' ORDER BY 1, 2, 3;
+
+SELECT sp.season, pe.page_id, pe.family_name, pe.first_name, pe.patronymic, sp.entity_type
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+WHERE s.start_date_undate = '1906-06-01' AND sp.season IN ('1905-06','1906-07','1907-08');
+```
+
+Result: 9 of the 10 graduates in the 1909-10 Graduates list are also in the
+1909-10 SP BalletArtists list with start 1 June 1910 (all but Эльманъ Марія),
+so Барановичъ appearing in both is a feature of that volume. Эрлеръ Алексѣй
+(graduate 1906-07, start 1 June 1907) has no 1907-08 entry; scan of
+balletartists_1907-08_SP_p010 confirms only Александръ is printed. The 1906
+graduate Ивановъ Александръ has no entry in 1906-07 or 1907-08, while 12 of
+his classmates do. Scans read: 1906-07 p007 «24. Ивановъ 2-й, Александръ
+Николаевичъ (съ 1 мая 1896 г.)»; 1907-08 p007 «26. Ивановъ 4-й, Александръ
+Николаевичъ (съ 1 мая 1896 г.)»; 1908-09 p005 «23. Ивановъ 4-й, Александръ
+Гавриловичъ (съ 1 іюня 1906 г.)». Николаевичъ's last entry is 1907-08 and
+Гавриловичъ's first is 1908-09, in the same «4-й» slot. Referred to RG.
+
+## 2026-10-12 — Ordinal-shift review: the outside-queue records and the Мартьяновъ spellings
+
+```sql
+-- run with each of seven WHERE clauses (Бакинъ 1907-10; Гончаровъ Леонидъ;
+-- Панова Елизавета; Ѳедорова/Федорова Екатерина 1903-06; Ильина Елена
+-- 1893-95; Иванова Надежда 1899-1902; family_name LIKE 'Март%' AND
+-- first_name LIKE 'Александр%')
+SELECT substr(cast(pl.person_id AS varchar),1,6) pid, p.display_name, sp.season, pe.page_id,
+       pe.list_number, pe.family_name, pe.first_name, pe.patronymic,
+       s.start_date_undate, s.end_date_undate
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+LEFT JOIN entities.person_link pl ON pl.entry_id = pe.entry_id
+LEFT JOIN entities.person p ON p.person_id = pl.person_id
+WHERE <clause> ORDER BY sp.season, pe.page_id;
+```
+
+Result: Мартьяновъ is three records, not many: graduate 94b516, 222cec
+(20 entries 1893-94..1910-11, display «Мартыновъ, Александръ
+Александровичъ») and e452c2 (one 1910-11 entry). The four surname spellings
+are all inside 222cec and the scans print «Мартьяновъ» wherever checked, so
+they are extraction misreads. The other six records each sit beside the
+person they belong to; scan readings are tabulated in
+docs/eval/person_merge_candidates_batch.md.
+
+## 2026-10-12 — Тихомировъ Василій: roles and posts by season, under both patronymics
+
+```sql
+SELECT sp.season, sp.entity_type, pe.heading_path, pe.family_name, pe.patronymic,
+       pe.rank_or_title, pe.subject_taught, pe.credit_summary_text, pe.entry_id
+FROM entities.person_link pl
+JOIN raw.person_entry pe ON pe.entry_id = pl.entry_id
+JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+WHERE substr(cast(pl.person_id AS varchar),1,6) IN ('58c4eb','6d97a1','690831','974a69')
+ORDER BY 1, 2, 3;
+
+-- per entry
+SELECT credit_type, label, role_name, category_production_count, category_credit_count
+FROM raw.person_entry_credit WHERE entry_id = ? ORDER BY credit_id;
+```
+
+Result: 34 entries. Artists' list: Ивановичъ 1893-94..1899-00, Дмитріевичъ
+1900-01..1910-11, one entry per season, no season with both. Five of the
+seven named roles under Ивановичъ in 1899-00 (принцъ Дезире, Маріо, Маттео,
+the Привалъ кавалеріи role, Бернаръ де Вантадуръ) are named again under
+Дмитріевичъ in 1900-01; Францъ in Коппелія runs from 1896-97 to 1910-11
+across both. School staff list: Дмитріевичъ, Танцы, 1897-98..1910-11.
+Помощникъ балетмейстера 1908-09..1910-11. Role names are as extracted, not
+re-read on the scans.
+
+## 2026-10-12 — Сергѣевъ Николай: ballet-list entries under Григорьевичъ and Георгіевичъ
+
+```sql
+SELECT sp.season, pe.heading_path, pe.family_name, pe.patronymic, s.start_date_undate,
+       pe.credit_summary_text
+FROM entities.person_link pl
+JOIN raw.person_entry pe ON pe.entry_id = pl.entry_id
+JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+WHERE substr(cast(pl.person_id AS varchar),1,6) IN ('154c0f','53235d')
+  AND sp.entity_type = 'BalletArtists' ORDER BY 1, 2;
+
+SELECT sp.season, pe.page_id, pe.list_number, pe.family_name, pe.first_name, pe.patronymic,
+       s.start_date_undate
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+WHERE sp.entity_type = 'BalletArtists' AND sp.city = 'SP'
+  AND pe.family_name LIKE 'Сергѣевъ%' AND sp.season >= '1905-06' ORDER BY 1, 2;
+```
+
+Result: Григорьевичъ is in Артисты 1894-95..1904-05 (start 1 June 1894) and
+is Режиссеръ 1904-05..1910-11 (start printed as 6 Oct 1903 in three volumes,
+1 June 1894 in four). No artists' row for him 1905-06..1908-09. «Сергѣевъ
+1-й, Николай Георгіевичъ», start 1 June 1894, appears in Артисты in 1909-10
+and 1910-11 only, the two seasons after Аркадій Васильевичъ Сергѣевъ
+(start 1 June 1908) joins and becomes «2-й».
+
+## 2026-10-12 — Is there a second Сергѣевъ Николай anywhere in the corpus?
+
+```sql
+SELECT substr(cast(pl.person_id AS varchar),1,6) pid, sp.entity_type, sp.city, pe.family_name,
+       pe.first_name, pe.patronymic, min(sp.season), max(sp.season), count(*),
+       list(DISTINCT s.start_date_undate)
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+LEFT JOIN entities.person_link pl ON pl.entry_id = pe.entry_id
+WHERE pe.family_name LIKE 'Серг_ев%'
+  AND (pe.first_name LIKE 'Никол%' OR pe.patronymic LIKE 'Никол%'
+       OR pe.first_name LIKE 'Н.%' OR pe.patronymic LIKE 'Георг%')
+GROUP BY ALL ORDER BY 7;
+
+SELECT count(*) FROM raw.person_entry pe
+JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+WHERE s.start_date_undate = '1894-06-01' AND pe.family_name LIKE 'Серг%';
+```
+
+Result: four groups only, all the three records under review (graduate
+5a9a14; 154c0f in BalletArtists and TheaterSchoolStaff; 53235d). 18 entries
+carry a 1 June 1894 start with a Серг- surname and all belong to those three
+records. No second candidate.
+
+## 2026-10-12 — Ивановъ Иванъ (SP ballet): Николаевичъ and Григорьевичъ rows from 1903-04
+
+```sql
+SELECT sp.season, pe.heading_path, pe.list_number, pe.family_name, pe.patronymic,
+       s.start_date_undate, pe.credit_summary_text
+FROM entities.person_link pl
+JOIN raw.person_entry pe ON pe.entry_id = pl.entry_id
+JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+WHERE substr(cast(pl.person_id AS varchar),1,6) IN ('7dd0bc','3aa7d7','d5f838','7a10e6')
+  AND sp.season >= '1903-04' ORDER BY 1, 2;
+
+SELECT list(sp.season ORDER BY sp.season)
+FROM entities.person_link pl JOIN raw.person_entry pe ON pe.entry_id = pl.entry_id
+JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+WHERE substr(cast(pl.person_id AS varchar),1,6) = 'd5f838';
+```
+
+Result: the Помощникъ режиссера post held by an Ивановъ Иванъ is printed
+Николаевичъ (24 Feb 1904) in 1904-05, 1905-06, 1907-08; «1-й, Григорьевичъ»
+with 1 June 1886 in 1906-07; «1-й, Григорьевичъ» with 1 June 1899 in
+1908-09; «1-й, Николаевичъ» with 1 June 1899 in 1909-10 and 1910-11.
+Григорьевичъ (d5f838) is in Артисты every season 1890-91..1903-04 and then
+only in that one 1906-07 row.
 
 ## 2026-10-12 — Season review folios: recovery, and the spread-scan artefact
 
@@ -15150,3 +15337,73 @@ p. 249" came from a run without it.
 Of the 8 `no_folio`-with-text: `1890-91_SP_all_p027` is the known 146-147
 double-page plate, so it is explained. The other 7 are mostly review-section
 opening pages, which commonly carry no folio — not audited one by one.
+
+## 2026-10-12 — Ordinal-shift review applied to production: verification against the backup
+
+```sql
+ATTACH 'outputs/full_run/imperial_theaters.pre_ordinalshift_review_2026-10-12.duckdb' AS bak (READ_ONLY);
+SELECT count(*) FROM entities.person WHERE superseded_by_person_id IS NULL;      -- and bak.
+SELECT count(*) FROM research.person;                                            -- and bak.
+SELECT match_reason, status, count(*) FROM entities.person_candidate GROUP BY ALL;
+SELECT sum(receipts_total_kopecks), count(*) FROM research.event;                -- and bak.
+SELECT count(*) FROM research.person_appearance;                                 -- and bak.
+SELECT count(*) FROM research.person WHERE wikidata_qid IS NOT NULL;             -- and bak.
+SELECT display_name, first_attested_season, last_attested_season, wikidata_qid,
+       (SELECT count(*) FROM research.person_appearance a WHERE a.person_id = p.person_id)
+FROM research.person p WHERE display_name LIKE ?;   -- the people decided today
+```
+
+Result: live persons 3116 -> 3065; research.person 3214 -> 3163; person
+candidates: 0 ordinal_shift left (5 family_name_variant pending, 19
+rejected); receipts 3,207,899,755 kopecks over 32,806 events, identical to
+the backup; 23,979 appearances both; Wikidata-linked persons 177 -> 175
+(three Тихомировъ records shared one QID). Spot checks: Павлова, Анна
+Матвѣевна 1898-99..1909-10, 13 appearances, Q151874; Тихоміровъ, Василій
+Дмитріевичъ 1892-93..1910-11, 36, Q4458555; Сергѣевъ, Николай Григорьевичъ
+1893-94..1910-11, 32, no QID; Ивановъ, Иванъ Николаевичъ 13 and Ивановъ 1-й,
+Иванъ Григорьевичъ 15 (keeps the 1906-07 row); Ивановъ 2-й, Александръ
+Николаевичъ 13 and Ивановъ 4-й, Александръ Гавриловичъ 4; Иванова 3-я,
+Надежда Михайловна 12 and Иванова 2-я, Надежда Сергѣевна 4.
+
+Review-mention matcher (`match_review_mentions.py`, counts printed by the
+script, compared mention by mention with a run against the backup state):
+resolved 20,723 -> 20,651; 86 lost, 14 gained, 9 followed a merge. An
+experimental matcher change (Graduates year excluded from season cover;
+a season listed without an ordinal treated as no ordinal) gave 20,468 on
+the pre-merge database and 20,398 after, and was reverted.
+
+## 2026-10-12 — Raw corrections from the ordinal-shift review, and Сергѣевъ's Wikidata link: verification
+
+```sql
+ATTACH 'outputs/full_run_pre_promote_backup_2026-10-12_ordinalshift_rawfix/imperial_theaters.duckdb' AS bak (READ_ONLY);
+SELECT count(*) FROM (SELECT * FROM raw.person_entry EXCEPT SELECT * FROM bak.raw.person_entry);
+SELECT count(*) FROM (SELECT * EXCLUDE(period_id) FROM raw.person_entry_service
+                      EXCEPT SELECT * EXCLUDE(period_id) FROM bak.raw.person_entry_service);
+SELECT count(*) FROM (SELECT * EXCLUDE(credit_id) FROM raw.person_entry_credit
+                      EXCEPT SELECT * EXCLUDE(credit_id) FROM bak.raw.person_entry_credit);
+SELECT count(*) FROM (SELECT * FROM raw.event_entry EXCEPT SELECT * FROM bak.raw.event_entry);
+SELECT count(*) FROM (SELECT entry_id, person_id FROM entities.person_link
+                      EXCEPT SELECT entry_id, person_id FROM bak.entities.person_link);
+SELECT sum(receipts_total_kopecks), count(*) FROM research.event;   -- and bak.
+-- row counts, here and in bak, of: entities.review_mention, review_person, person_wikidata_link,
+-- production_credit_link, person_candidate, person_merge_log; research.review_assertion,
+-- production, season_stat_line; raw.review_block
+SELECT family_name, first_name, patronymic, s.start_date_undate, s.end_date_undate, s.end_type
+FROM raw.person_entry pe LEFT JOIN raw.person_entry_service s USING (entry_id)
+WHERE page_id = 'balletartists_1908-09_MSK_p004' AND family_name LIKE 'Бакинъ%';
+SELECT display_name, first_attested_season, last_attested_season, wikidata_qid, wikidata_label, wikidata_source
+FROM research.person WHERE display_name LIKE 'Сергѣевъ, Николай%';
+SELECT count(*) FROM research.person WHERE wikidata_qid IS NOT NULL;
+```
+
+Result: 33 person_entry rows and 1 service row differ from the backup (the
+33 corrected entries; Бакинъ Александръ now has end date 1908-11-10, "left
+service"); 0 credit, 0 event_entry and 0 person_link differences; receipts
+3,207,899,755 kopecks over 32,806 events, unchanged; all listed tables have
+the same row counts as the backup. One display name changed: «Бакинъ 3-й,
+Александръ Всеволодовичъ» (was without ordinal). Сергѣевъ, Николай
+Григорьевичъ now carries Q1762062; Wikidata-linked persons 176. Review
+matcher after the corrections: 27,324 mentions (9 fewer: review spellings
+Мартыновъ/Мартяновъ/Мартъяновъ no longer match a roster variant), 20,598
+resolved; the mention-level changes are 49 «Павлова»/«Павлова 1-я»/«Бакинъ
+2-й»/«Иванова 3-я» mentions now tied and 5 gained.
