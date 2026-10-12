@@ -27,7 +27,8 @@ first titles, 04-26 spreads then singles, 66 = 1890-91 pair008 re-read).
    Whole-row differences common to all five theaters of one date (e.g. 1890-91 pair014 28 Dec-2 Jan, pair024 6-12 Apr)
    are not cascades: they mean the stored data has no session for printed rows (Christmas/Lent closures read as splits or
    dashes) or the reader labelled rows differently; check once, then dismiss.
-4. Pages with no PDF image (not read): `repertoire_1890-91_p015`, `repertoire_1890-91_p023` (hand-photographed).
+4. **Closed 2026-10-12 (follow-up 21): all three pages below are read and match the stored structure** (p015 = right-hand page
+   of the `pair014` read, p023 = `pair024` read + PDF index 10, 1895-96 p026 = PDF index 12). Original note: pages with no PDF image (not read): `repertoire_1890-91_p015`, `repertoire_1890-91_p023` (hand-photographed).
    `repertoire_1895-96_p026` also hand-photographed (14 cells unread). Stored banner/empty morning-evening sessions exist
    on 1890-91 p015, which was why the stored-data detector listed it.
 5. Image-mapping trap: for 1890-91 the PDF has two scans of 1-20 Nov (idx 3 and 4) and no Oct 12-31 spread; pair008 uses

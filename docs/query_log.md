@@ -14891,3 +14891,21 @@ the scans.
 **So: 2 confirmed gaps, 5 clean, 1 to check — not 8 "limits of the
 source".** The 1900-01 volume is **ILL from UIllinois** and its inventory
 scanning status reads *"Complete!"*, which is wrong.
+
+## 2026-10-12 — the open ends of the column-structure read (RG's list: 7 unexamined differences, 3 unread pages)
+
+Queries, all against `outputs/full_run/imperial_theaters.duckdb`:
+
+- The stored sessions behind each of the 7 `D_other` / `C_content` rows of `align/triage.csv`:
+  `raw.event_entry` joined to `raw.event_entry_performance` by `event_id`, filtered on `page_id` and the day number.
+- Every stored session of `repertoire_1890-91_p015` (55), `repertoire_1890-91_p023` (76) and `repertoire_1895-96_p026` (50),
+  in session order, to compare cell by cell with the scans.
+- `performance_title like '%Панцы%'`: 3 rows (1 Jan 1896 and 20 Feb 1897 Маріинскій, 19 May 1896 Большой);
+  `research.work` had a separate work «Панцы» оп. beside «Паяцы» оп.
+- Before/after each rebuild: `count(*)` of all 50 base tables, `time_of_day` counts in `raw.event_entry`,
+  `sum(receipts_total_kopecks)` on `research.event`.
+
+Result (known_issues.md, issue #151 follow-up 21): 2 of the 7 were half-dash cells and are now `morning`
+(unspecified 25,235 / morning 2,370 / evening 2,350); the other 5 need no change; the 3 pages match the stored structure;
+«Панцы» corrected to «Паяцы» in 3 cells (`research.work` 3,065 -> 3,064; «Паяцы» оп. 67 performances). Every other table's
+row count and the receipts sum are unchanged.

@@ -13,7 +13,7 @@ D_halfdash,repertoire_1892-93_pair014,Большой,2,2,split_labelled,s119:mor
 D_halfdash,repertoire_1892-93_pair014,Малый,2,2,split_labelled,s008:morning,performed,1,1389 р. 20 к.,Марія Стюартъ,УТРО/ВЕЧ labels at own cell edge; lower half dash
 D_halfdash,repertoire_1894-95_pair008,Большой,7,2,split_labelled,s073:morning,performed,1,3909 р. 60 к.,Орлеанская дѣва,УТРО performance (Спектакль въ пользу фонда...); ВЕЧ half is a dash
 D_halfdash,repertoire_1895-96_pair006,Малый,21,2,split_labelled,s048:morning,performed,2,1378 р. 12 к.,Гимнъ | Онѣгинъ,УТРО half is Гимнъ + Евгеній Онѣгинъ; ВЕЧЕРЪ half is a dash
-D_other,repertoire_1896-97_pair014,Большой,28,2,split_labelled,s047:unspecified,performed,1,1186 р. 41 к.,Аида,УТРО/ВЕЧ labels printed once at right edge of row (beside Малый/Александринскій)
+D_other,repertoire_1896-97_pair014,Большой,28,2,split_labelled,s047:morning,performed,1,1186 р. 41 к.,Аида,УТРО/ВЕЧ labels printed once at right edge of row (beside Малый/Александринскій)
 D_other,repertoire_1897-98_pair024,Александринскій,11,2,split_labelled,s034:morning,performed,3,None,Отъ преступленія къ преступленію | Собачкинъ | Музыкальное о,УТРО/ВЕЧ labels at right edge of this cell; occasion line first (Спектакль въ по
 D_halfdash,repertoire_1898-99_p013,Малый,21,2,split_labelled,s025:morning,performed,1,1578 р. 28 к.,Марія Стюартъ,evening half is a dash; labels printed beside Большой only; no row for 20 printe
 D_halfdash,repertoire_1898-99_p013,Новый,21,2,split_labelled,s026:morning,performed,1,693 р. 81 к.,Каширская старина,evening half is a dash; labels printed beside Большой only; no row for 20 printe
@@ -24,7 +24,7 @@ D_halfdash,repertoire_1898-99_p021,Малый,2,2,split_labelled,s011:morning,pe
 D_halfdash,repertoire_1900-01_p019,Малый,30,2,split_labelled,s027:morning,performed,1,773 р. 11 к.,Ревизоръ,УТРО Ревизоръ; ВЕЧ half dash; labels printed only beside Большой; rule runs acro
 D_halfdash,repertoire_1900-01_p019,Новый,30,2,split_labelled,s042:morning,performed,1,481 р. 65 к.,Севильскій цирюльникъ,УТРО Севильскій цирюльникъ; ВЕЧ half dash
 D_halfdash,repertoire_1902-03_p019,Малый,28,2,split_labelled,s040:morning,performed,1,563 р. 46 к.,Волки и овцы,labels printed once at row edge; rule runs across; evening half is a dash
-D_other,repertoire_1903-04_p017,Большой,6,2,split_labelled,s024:unspecified,performed,2,None,"1-е, 2-е и 3-е д. Корсаръ | Привалъ кавалеріи",banner above (Безплатные спектакли ...); УТРО half has work; ВЕЧ. half appears t
+D_other,repertoire_1903-04_p017,Большой,6,2,split_labelled,s024:morning,performed,2,None,"1-е, 2-е и 3-е д. Корсаръ | Привалъ кавалеріи",banner above (Безплатные спектакли ...); УТРО half has work; ВЕЧ. half appears t
 D_halfdash,repertoire_1903-04_p017,Малый,6,2,split_labelled,s001:morning,performed,1,None,Старый закалъ,banner above; УТРО half has work; ВЕЧ. half appears to be a dash
 D_halfdash,repertoire_1903-04_p017,Новый,6,2,split_labelled,s012:morning,performed,1,None,Фра-Діаволо,banner above; УТРО half has work; ВЕЧ. half appears to be a dash
 D_halfdash,repertoire_1903-04_p025,Новый,1,2,split_labelled,s032:morning,performed,1,345 р. 20 к.,Женитьба Бѣлугина,evening half is a dash
