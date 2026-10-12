@@ -59,6 +59,8 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import csv
+import uuid
 from pathlib import Path
 
 import duckdb
@@ -134,6 +136,31 @@ RESEARCH_GENRE_RULES = [
     (r"^Балетный дивертисс?е?ментъ?\.?$", "бал.",
      "ballet divertissement: printed without a genre; ballet assigned in the research layer (RG, issue #114)"),
 ]
+
+
+#: Research-layer genres decided PER PERFORMANCE, for a title too generic for
+#: a title rule. A plain "Дивертиссементъ" is printed without a genre and is
+#: one entities.work row, but it is a ballet number on a ballet evening and
+#: something unknown on a drama bill (RG, 2026-10-12, with the review
+#: evidence in docs/query_log.md). Each row of the CSV names one printed
+#: performance (season, city, date, theater, time of day, verbatim title) and
+#: the genre it gets. The listed performances move to a second research.work
+#: row with the same title and that genre (genre_source 'research_rule');
+#: the unlisted ones stay on the original row, still without a genre. Raw is
+#: untouched. The build fails if a row does not match exactly one performance.
+#: Works that get parent genre "ballet" by RG's decision although they are in
+#: no ballet productions list: (entities.work.canonical_title, note). The
+#: genre itself is left as printed (here: none), so the work turns up in
+#: ballet searches without being claimed as purely ballet. The build fails if
+#: a title matches no work.
+PARENT_GENRE_BALLET_TITLES = {
+    "Концертный и балетный дивертиссемент":
+        "the printed title names ballet and concert together (Маріинскій, 7 Jan 1906, charity evening); "
+        "no single genre assigned, parent genre ballet (RG, 2026-10-12)",
+}
+
+PERFORMANCE_GENRE_PATH = Path(__file__).parent / "entity_curation" / "research_performance_genre.csv"
+PERFORMANCE_GENRE_NAMESPACE = uuid.UUID("5f0d3c1e-7a44-5b0e-9d5b-2c6f6b0a9e11")
 
 
 #: Research-layer-only work-title corrections for confirmed genuine print
@@ -568,6 +595,12 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     con.execute("CREATE OR REPLACE TEMP TABLE parent_genre_ballet (work_id UUID, note VARCHAR)")
     con.executemany("INSERT INTO parent_genre_ballet VALUES (?, ?)",
                     [(w, PARENT_GENRE_BALLET_NOTE.format(seasons=", ".join(s))) for w, s in listed.items()])
+    for title, note in PARENT_GENRE_BALLET_TITLES.items():
+        ids = [r[0] for r in con.execute("SELECT work_id FROM entities.work WHERE canonical_title = ?", [title]).fetchall()]
+        if not ids:
+            raise SystemExit(f"PARENT_GENRE_BALLET_TITLES: {title!r} matches no entities.work row")
+        con.executemany("INSERT INTO parent_genre_ballet VALUES (?, ?)",
+                        [(w, note) for w in ids if w not in listed])
     con.execute("CREATE OR REPLACE TEMP TABLE title_correction (verbatim_title VARCHAR, corrected_title VARCHAR, note VARCHAR)")
     con.executemany("INSERT INTO title_correction VALUES (?, ?, ?)",
                     [(verbatim, corrected, note) for verbatim, (corrected, note) in RESEARCH_TITLE_CORRECTIONS.items()])
@@ -850,6 +883,69 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         )
     """)
 
+    # Per-performance research genres (PERFORMANCE_GENRE_PATH). Done here,
+    # after research.event exists and BEFORE research.performance is created:
+    # the base work's appearance_count is lowered with an UPDATE, which DuckDB
+    # rejects once a table references research.work.
+    con.execute("""CREATE OR REPLACE TEMP TABLE perf_split
+                   (performance_id VARCHAR, base_work_id UUID, split_work_id UUID, genre VARCHAR, parent_genre VARCHAR, basis VARCHAR)""")
+    if PERFORMANCE_GENRE_PATH.exists():
+        split_rows = []
+        for row in csv.DictReader(open(PERFORMANCE_GENRE_PATH, encoding="utf-8")):
+            hits = con.execute("""
+                SELECT eep.performance_id, coalesce(m.to_id, wl.work_id)
+                FROM research.event e
+                JOIN research.theater t USING (theater_id)
+                JOIN analysis.event_entry a ON a.event_id = e.event_id
+                JOIN raw.event_entry_performance eep ON eep.event_id = e.event_id
+                JOIN entities.work_link wl ON wl.raw_performance_id = eep.performance_id
+                LEFT JOIN work_merge m ON m.from_id = wl.work_id
+                WHERE e.season = ? AND e.city = ? AND CAST(e.date AS VARCHAR) = ? AND t.canonical_name = ?
+                  AND a.time_of_day = ? AND eep.performance_title = ?""",
+                [row["season"], row["city"], row["date"], row["theater"], row["time_of_day"],
+                 row["verbatim_title"]]).fetchall()
+            if len(hits) != 1:
+                raise SystemExit(f"research_performance_genre.csv: {row['date']} {row['theater']} "
+                                 f"{row['verbatim_title']!r} matches {len(hits)} performances")
+            perf_id, base = hits[0]
+            genre = row["research_genre"] or None
+            parent = row.get("research_parent_genre") or None
+            if not genre and not parent:
+                raise SystemExit(f"research_performance_genre.csv: {row['date']} {row['theater']} assigns nothing")
+            # the key keeps the genre-only form it had before parent genres were added, so those ids are stable
+            split = uuid.uuid5(PERFORMANCE_GENRE_NAMESPACE,
+                               f"{base}|{genre}" if not parent else f"{base}|{genre or ''}|parent:{parent}")
+            split_rows.append((perf_id, base, split, genre, parent, row["basis"]))
+        con.executemany("INSERT INTO perf_split VALUES (?, ?, ?, ?, ?, ?)", split_rows)
+        con.execute("""
+            INSERT INTO research.work
+            SELECT s.split_work_id, w.canonical_title, s.genre, count(*), NULL, NULL,
+                   CASE WHEN s.genre IS NOT NULL THEN 'research_rule' END,
+                   CASE WHEN s.genre IS NOT NULL THEN
+                       'genre assigned per performance (' || count(*) || ' of ' || w.appearance_count ||
+                       ' printings of this title): pipeline/entity_curation/research_performance_genre.csv' END,
+                   s.parent_genre,
+                   CASE WHEN s.parent_genre IS NOT NULL THEN
+                       'parent genre assigned per performance (' || count(*) || ' of ' || w.appearance_count ||
+                       ' printings of this title): pipeline/entity_curation/research_performance_genre.csv' END
+            FROM perf_split s JOIN research.work w ON w.work_id = s.base_work_id
+            GROUP BY s.split_work_id, w.canonical_title, s.genre, s.parent_genre, w.appearance_count
+        """)
+        con.execute("""
+            UPDATE research.work SET appearance_count = appearance_count -
+                (SELECT count(*) FROM perf_split s WHERE s.base_work_id = research.work.work_id)
+            WHERE work_id IN (SELECT base_work_id FROM perf_split)
+        """)
+        # A base row whose every printing moved is left with no performance: drop it
+        # (unless it is an excerpt parent), so the title is not listed twice.
+        con.execute("""
+            DELETE FROM research.work
+            WHERE work_id IN (SELECT base_work_id FROM perf_split) AND appearance_count = 0
+              AND work_id NOT IN (SELECT excerpt_of_work_id FROM research.work WHERE excerpt_of_work_id IS NOT NULL)
+        """)
+        print(f"  per-performance genres: {len(split_rows)} performances moved to "
+              f"{len({r[2] for r in split_rows})} research-rule work row(s)")
+
     con.execute("""
         CREATE TABLE research.performance (
             performance_id VARCHAR PRIMARY KEY,
@@ -865,13 +961,14 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         SELECT
             eep.performance_id,
             eep.event_id,
-            coalesce(m.to_id, wl.work_id) AS work_id,
+            coalesce(ps.split_work_id, m.to_id, wl.work_id) AS work_id,
             eep.performance_order,
             eep.performance_title AS verbatim_title,
             eep.genre AS verbatim_genre
         FROM raw.event_entry_performance eep
         JOIN entities.work_link wl ON wl.raw_performance_id = eep.performance_id
         LEFT JOIN work_merge m ON m.from_id = wl.work_id
+        LEFT JOIN perf_split ps ON ps.performance_id = eep.performance_id
         WHERE eep.event_id NOT IN (SELECT e.event_id FROM analysis.event_entry e
                                    JOIN excluded_page x USING (page_id))
     """)

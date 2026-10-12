@@ -16349,3 +16349,12 @@ Result: a Чумакова, Ольга is in the Moscow Graduates list of 1892-9
 Petersburg list of 1893-94 (съ 1 іюня 1894); Ольга Дмитріевна is in the Moscow company from 1893-94 and Ольга
 Савельевна in the Petersburg company from 1894-95, both listed in 1894-95 and 1895-96. After the batch: live
 persons 2566; 12 pairs pending; receipts and 176 Wikidata links unchanged.
+
+## 2026-10-12 — Plain divertissements after withdrawing 16 Sep 1894 Михайловскій
+
+```sql
+SELECT w.canonical_title, w.canonical_genre, w.parent_genre, count(p.performance_id) FROM research.work w LEFT JOIN research.performance p USING(work_id)
+WHERE w.canonical_title IN ('Дивертиссементъ','Дивертиссментъ','Дивертиссементъ (Etudes)') GROUP BY ALL ORDER BY 1,2,3;
+```
+
+Result: Дивертиссементъ бал. 44, parent genre ballet (no genre) 2, nothing 37; Дивертиссментъ бал. 3, nothing 2; Дивертиссементъ (Etudes) бал. 1. Totals: бал. 48, parent genre only 2, nothing 39. The 16 Sep 1894 Михайловскій divertissement has no genre and no parent genre. Events 32,806 and receipts sum 3,207,899,755 kopecks unchanged.
