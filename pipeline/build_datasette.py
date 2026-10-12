@@ -44,7 +44,8 @@ def _stringify_uuids(df):
 
 TABLES = ["theater", "work", "person", "event", "performance", "person_appearance",
           "production", "production_work", "production_credit",
-          "season_stat_check", "season_stat_line", "season_stat_footnote"]
+          "season_stat_check", "season_stat_line", "season_stat_footnote",
+          "review_assertion"]
 
 # Explicit CREATE TABLE per table, PRIMARY KEY + FOREIGN KEY declared --
 # pandas' to_sql(if_exists="replace") would otherwise create schema-less
@@ -137,6 +138,26 @@ SCHEMAS = {
         CREATE TABLE season_stat_footnote (
             season TEXT, footnote_no INTEGER, text_verbatim TEXT, note TEXT,
             PRIMARY KEY (season, footnote_no)
+        )""",
+    # What a season review ASSERTS: this performer danced this role, in
+    # this work, on this date. RG 2026-10-12: include it in the published
+    # dataset. performer_person_id/work_id are nullable on purpose -- an
+    # unresolved mention is still evidence (302 and 737 respectively are
+    # unresolved). Checked for dangling references to person and work
+    # before declaring the FKs: zero of each.
+    # page_id/block_id point into the raw layer, which is NOT published,
+    # so they stay plain columns -- citations back to the scan, not links.
+    "review_assertion": """
+        CREATE TABLE review_assertion (
+            assertion_id INTEGER PRIMARY KEY,
+            page_id TEXT, block_id TEXT, season TEXT, city TEXT,
+            printed_folio TEXT, date_undate TEXT,
+            role_surface TEXT, performer_surface TEXT,
+            performer_person_id TEXT REFERENCES person(person_id),
+            performer_candidates_n INTEGER, performer_candidate_ids TEXT,
+            link_method TEXT, grammar TEXT,
+            work_surface TEXT, work_id TEXT REFERENCES work(work_id),
+            work_source TEXT
         )""",
 }
 

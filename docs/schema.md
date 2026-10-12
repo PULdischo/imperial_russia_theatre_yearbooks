@@ -320,3 +320,35 @@ count is usually within a few of it in the 1890s and drifts higher in the Repert
 from 1901-02. 1907-08 and 1908-09 print category totals only, with no per-theater lines.
 The genre- and theater-level comparison (families, ballet counted three ways) stays in
 `pipeline/compare_season_stats.py`, because it needs judgment-based classification.
+
+## Season review evidence — `research.review_assertion`
+
+One row per **assertion a season review makes**: this performer danced this role,
+in this work, on this date. Built by `pipeline/build_review_assertions.py` from
+`entities.review_mention`; 1,952 rows over 19 seasons.
+
+**Published.** RG, 2026-10-12: include it in the Datasette/HF dataset. It is in
+`build_datasette.py`'s `TABLES`, so it exports to `research_dataset.sqlite` with
+real foreign keys and Datasette renders the links.
+
+| column | notes |
+|---|---|
+| `assertion_id` | PK |
+| `page_id`, `block_id` | citation back into the **raw** layer, which is NOT published — plain columns, deliberately not FKs |
+| `season`, `city`, `printed_folio`, `date_undate` | where and when; `date_undate` is the review's own date, Julian as printed |
+| `role_surface`, `performer_surface`, `work_surface` | verbatim as printed, pre-reform orthography, inflected as the sentence has them |
+| `performer_person_id` → `research.person` | **nullable**: 302 of 1,952 are unresolved |
+| `performer_candidates_n`, `performer_candidate_ids` | the ambiguity itself, kept rather than hidden; ids are `|`-delimited, so this is not an FK |
+| `work_id` → `research.work` | **nullable**: 737 unresolved |
+| `link_method` | how the performer was resolved — `already-linked` 1,531, `unresolved` 302, `spiski-credit-role-season` 67, `spiski-credit-work` 30, `spiski-credit-role` 22 |
+| `grammar` | the construction the mention was read out of (e.g. `role-performer`) |
+| `work_source` | where the work came from (e.g. `block`) |
+
+**The nulls are the point, not a defect.** An unresolved mention is still evidence
+that the review names someone in a role; dropping those rows would silently narrow
+the record. Verified before declaring the FKs: **zero dangling references** to
+`person` or `work`.
+
+**Do not join this to `research.performance` as if it were the same fact.** A
+review asserts a casting; the Repertoire records a performance. They agree often
+and disagree sometimes, and the disagreement is research material.
