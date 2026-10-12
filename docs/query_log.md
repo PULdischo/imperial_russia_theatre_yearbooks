@@ -15407,3 +15407,28 @@ matcher after the corrections: 27,324 mentions (9 fewer: review spellings
 Мартыновъ/Мартяновъ/Мартъяновъ no longer match a roster variant), 20,598
 resolved; the mention-level changes are 49 «Павлова»/«Павлова 1-я»/«Бакинъ
 2-й»/«Иванова 3-я» mentions now tied and 5 gained.
+
+## 2026-10-12 — City tie-break in the review matcher; the nine Мартыновъ-type review mentions
+
+```sql
+SELECT display_name, first_attested_season, last_attested_season FROM research.person
+WHERE canonical_family_name LIKE 'Мартынов%' OR canonical_family_name LIKE 'Мартянов%';
+
+SELECT m.season, m.surface, p.display_name, m.link_method
+FROM entities.review_mention m
+LEFT JOIN entities.person p ON cast(p.person_id AS varchar) = m.entity_id
+WHERE m.normalised LIKE 'март%нов%' AND m.page_id IN (<the nine pages>) ORDER BY 1;
+
+SELECT count(*), count(entity_id) FILTER (entity_id <> '')
+FROM entities.review_mention WHERE mention_type = 'person';
+```
+
+Result: no Мартыновъ or Мартяновъ person exists. After the text corrections
+and the print-variant record all nine mentions resolve to Мартьяновъ,
+Александръ Александровичъ. 21,701 person mentions, 17,093 with an entity.
+Matcher output (script's own counts, compared mention by mention with the
+run before the change): the city tie-break gained 700 resolutions, lost 0
+and repointed 0 (20,598 -> 21,298); with the text corrections the total is
+27,333 mentions, 21,307 resolved. A first version without the ballet-roster
+and gender guards gained 861 but included wrong picks (38 «Степанова» to an
+orchestra Степановъ, 36 «Никитина» to Никитинъ) and was not kept.

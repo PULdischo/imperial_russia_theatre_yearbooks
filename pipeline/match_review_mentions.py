@@ -369,17 +369,32 @@ def build_lexicon(db: Path) -> Lexicon:
     # IN 1908-09, and not the one who was 2-й a decade earlier.
     ord_by_season: dict[tuple[str, str], str] = {}
     ordinals: dict[str, set[str]] = collections.defaultdict(set)
-    for pid, fam, season in con.execute("""
-        select pl.person_id, pe.family_name, sp.season
+    # Which city's lists a person stands in, by season. The company lists are
+    # printed per city, and a review is of one city's season: `г-жа Павлова`
+    # in a Petersburg review is Анна Матвѣевна, not Moscow's Евгенія Ивановна.
+    # Nothing else in the ranking knew that -- season, gender and ordinal are
+    # all identical for the two -- and until 2026-10-12 the Petersburg
+    # mentions resolved to the Moscow dancer on an accident of extraction.
+    # School, production and administration lists carry no city, so a person
+    # known only from those has no entry here.
+    city_by_season: dict[tuple[str, str], set[str]] = collections.defaultdict(set)
+    cities: dict[str, set[str]] = collections.defaultdict(set)
+    for pid, fam, season, city in con.execute("""
+        select pl.person_id, pe.family_name, sp.season, sp.city
         from raw.person_entry pe
         join entities.person_link pl on pl.entry_id = pe.entry_id
         join raw.source_pages sp on sp.page_id = pe.page_id
         where pe.family_name is not null""").fetchall():
+        if city:
+            cities[str(pid)].add(city)
+            city_by_season[(str(pid), season)].add(city)
         m = re.search(r"(\d+)\s*-\s*[ейя]", str(fam))
         if m:
             ordinals[str(pid)].add(m.group(1))
             ord_by_season[(str(pid), season)] = m.group(1)
     lex.ordinal_by_season = ord_by_season
+    lex.city_by_season = city_by_season
+    lex.cities = cities
 
     for pid, fam, disp, ordn, first, last in con.execute("""
         select person_id, canonical_family_name, display_name, ordinal_suffix,
@@ -581,7 +596,7 @@ def season_covers(first: str | None, last: str | None, season: str) -> bool | No
 
 def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
                     lex: "Lexicon", initials: str = "",
-                    genre: str = "") -> tuple[str, int, str]:
+                    genre: str = "", city: str = "") -> tuple[str, int, str]:
     """Best candidate, its margin, and why. NEVER gates: a zero-scoring
     candidate set still returns the full list to the caller untouched.
 
@@ -609,12 +624,47 @@ def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
         o = getattr(lex, "ordinal_by_season", {}).get((pid, season))
         return {o} if o else (lex.person_meta.get(pid, {}).get("ordinals") or set())
 
+    def cities_for(pid: str) -> set[str]:
+        """The city lists this person stood in THIS season, else in any."""
+        c = getattr(lex, "city_by_season", {}).get((pid, season))
+        return c or getattr(lex, "cities", {}).get(pid) or set()
+
+    def only_one_here(pids: list[str]) -> str | None:
+        """The one candidate in the review's city -- when every candidate has
+        a city at all. A person known only from the school or production
+        lists has none, and absence of a city is not evidence of another."""
+        if not city or len(pids) < 2 or not all(cities_for(p) for p in pids):
+            return None
+        here = [p for p in pids if city in cities_for(p)]
+        if len(here) != 1:
+            return None
+        meta = lex.person_meta.get(here[0], {})
+        # Two guards, both from wrong picks seen when this was first tried.
+        # In a ballet review the city may choose between dancers, not hand a
+        # bare `Степановъ` to the one Степановъ in that city's orchestra.
+        if genre == "Ballet" and "BalletArtists" not in (meta.get("sections") or ()):
+            return None
+        # And never across gender: `Никитина` is not Никитинъ, Алексѣй
+        # Никитичъ. Same looser ending test as the ballet-roster tie-break.
+        surf_g = canon_gender(SURFACE_ORDINAL.sub("", surface).strip())
+        g = canon_gender(meta.get("family") or "")
+        if surf_g and g and surf_g != g:
+            return None
+        return here[0]
+
     if want_ord:
         exact = [pid for pid in ids if want_ord in ordinals_for(pid)]
+        # Each city numbers its own homonyms, so `Павлова 1-я` is one woman in
+        # Petersburg and another in Moscow.
+        via_city = ""
+        if len(exact) > 1:
+            here = only_one_here(exact)
+            if here:
+                exact, via_city = [here], " in this city"
         if len(exact) == 1:
             g = canon_gender((lex.person_meta.get(exact[0], {}).get("family") or ""))
             if not (want_g and g and want_g != g):
-                return exact[0], 99, "ordinal is unique among candidates"
+                return exact[0], 99, "ordinal is unique among candidates" + via_city
 
     scored = []
     for pid in ids:
@@ -696,6 +746,12 @@ def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
         if len(dancers) == 1:
             why = (best[2] + "+ballet-roster").lstrip("+")
             return dancers[0], 99, why
+    # Last, and for the same reason a tie-break and not a score: among
+    # candidates nothing else separates, the one in the review's own city.
+    if margin == 0:
+        here = only_one_here([pid for sc, pid, _ in scored if sc == best[0]])
+        if here:
+            return here, 99, (best[2] + "+city").lstrip("+")
     return best[1], margin, best[2]
 
 
@@ -753,7 +809,8 @@ def initials_of(display: str) -> str:
 
 
 def scan_block(text: str, block_type: str, lex: Lexicon,
-               season: str = "", genre: str = "") -> tuple[list[dict], list[dict]]:
+               season: str = "", genre: str = "",
+               city: str = "") -> tuple[list[dict], list[dict]]:
     """Mentions and unknown-name flags for one block of reflowed text."""
     mentions: list[dict] = []
     unknown: list[dict] = []
@@ -784,7 +841,8 @@ def scan_block(text: str, block_type: str, lex: Lexicon,
                     ids = parents
         if kind == "person" and len(ids) > 1:
             pick, margin, why = rank_candidates(ids, text[a:b], evidence, season,
-                                                lex, initials_before(text, a), genre)
+                                                lex, initials_before(text, a), genre,
+                                                city)
             # a decisive margin resolves; a tie leaves the candidate list standing
             if margin >= 4:
                 eid, method = pick, method + "+ranked"
@@ -1024,7 +1082,7 @@ def main() -> None:
             text = reflow(raw)
             n_blocks += 1
             ms, us = scan_block(text, b["block_type"], lex, page["season"],
-                                page["genre"])
+                                page["genre"], page["city"])
             ballet_ctx = bool(BALLET_CONTEXT.search(text))
             for m in ms:
                 m.update(page_id=b["page_id"], block_id=b["block_id"],
