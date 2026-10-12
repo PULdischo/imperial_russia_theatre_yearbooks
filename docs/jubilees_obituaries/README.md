@@ -28,6 +28,15 @@ form (portrait flanked by the years or «XXV», service record, roles): Іога
 directorship). They are in the catalogue with `kind` = `biographical_feature`; the occasion is in
 `notes`. Read once (`first_read/J_features.csv`), with no blind second read.
 
+## Obsidian reading notes (in progress, 2026-10-12)
+
+`build/build_obsidian_notes.py` makes one Russian/English note per ballet-relevant entry that has a
+full text, with the catalogue's metadata as properties and a "My notes" section that survives
+rebuilds. The Russian is a single machine reading of each page (`pipeline/run_reviews.py`, one pass)
+and the English a machine translation (`pipeline/translate_reviews.py`); both live under
+`outputs/jubilees_obituaries/`, which is not in git. Reading copies only — quote from the scan.
+The steps are in the script's header.
+
 ## Relevance tiers
 
 - `core` — a career in ballet: dancers, ballet masters, régisseurs, teachers, ballet composers and
