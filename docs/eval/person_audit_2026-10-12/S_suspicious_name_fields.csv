@@ -1,0 +1,907 @@
+﻿signal,id,person,season,page,no,family_name,first_name,patronymic
+Latin letter inside a Cyrillic name,15fc30,"Алексне, Наталія Петровна",1905-06,balletartists_1905-06_SP_p000,3.,Алекcне,Наталія,Петровна
+Latin letter inside a Cyrillic name,027616,"Гавликовскій, Николай Людвиговичъ",1903-04,balletartists_1903-04_SP_p006,16.,Гавликowsкій,Николай,Людвиговичъ
+Latin letter inside a Cyrillic name,338843,"Грекова 1-я, Евгенія Александровна",1905-06,balletartists_1905-06_MSK_p001,28.,Гrekова 1-я,Евгенія,Александровна
+Latin letter inside a Cyrillic name,006a77,"Грекова 2-я, Елена Александровна",1905-06,balletartists_1905-06_MSK_p001,29.,Гrekова 2-я,Елена,Александровна
+Latin letter inside a Cyrillic name,187555,"Кандина, Антонина Ивановна",1907-08,balletartists_1907-08_SP_p002,30.,Кандинa,Антонина,Ивановна
+Latin letter inside a Cyrillic name,0c5087,"Матятина, Вѣра Александровна",1899-00,balletartists_1899-00_SP_p003,67.,Матятинa,Вѣра,Александровна
+Latin letter inside a Cyrillic name,0c5087,"Матятина, Вѣра Александровна",1903-04,balletartists_1903-04_SP_p002,55.,Матятинa,Вѣра,Александровна
+Latin letter inside a Cyrillic name,9c2540,"Мендесъ, Іосифъ",1892-93,balletartists_1892-93_MSK_p000,,Мендесъ,Iосифъ,
+Latin letter inside a Cyrillic name,18f5f3,"Милютина, Александра Дмитріевна",1894-95,balletartists_1894-95_MSK_p003,64.,Милютинa,Александра,Дмитріевна
+Latin letter inside a Cyrillic name,18f5f3,"Милютина, Александра Дмитріевна",1899-00,balletartists_1899-00_MSK_p003,58.,Милютинa,Александра,Дмитріевна
+Latin letter inside a Cyrillic name,18f5f3,"Милютина, Александра Дмитріевна",1901-02,balletartists_1901-02_MSK_p002,58.,Милютинa,Александра,Дмитріевна
+Latin letter inside a Cyrillic name,18f5f3,"Милютина, Александра Дмитріевна",1909-10,balletartists_1909-10_MSK_p003,43.,Милютинa,Александра,Дмитріевна
+Latin letter inside a Cyrillic name,27a3bb,"Оголейть 1-я, Августина Германовна",1893-94,balletartists_1893-94_SP_p003,88.,Оголейтъ 1-я,Августинa,Германовна
+Latin letter inside a Cyrillic name,0ad5b3,"Спрышинская, Целина Владиславовна",1904-05,balletartists_1904-05_SP_p004,105.,Спрышиńskaя,Целина,Владиславовна
+Latin letter inside a Cyrillic name,625c46,"Тистрова, Марія Ѳедоровна",1893-94,balletartists_1893-94_SP_p005,135.,Тиistroва,Марія,Ѳедоровна
+Latin letter inside a Cyrillic name,29cd4f,"Центерова, Елена Антиповна",1892-93,balletartists_1892-93_MSK_p003,107.,Центерова,Елена,Антипovна
+Latin letter inside a Cyrillic name,1aee5b,"Чернятина, Александра Семеновна",1902-03,balletartists_1902-03_SP_p005,109.,Чернятинa,Александра,Семеновна
+Latin letter inside a Cyrillic name,1aee5b,"Чернятина, Александра Семеновна",1903-04,balletartists_1903-04_SP_p005,110.,Чернятинa,Александра,Семеновна
+Latin letter inside a Cyrillic name,1aee5b,"Чернятина, Александра Семеновна",1905-06,balletartists_1905-06_SP_p004,109.,Чернятинa,Александра,Семеновна
+Latin letter inside a Cyrillic name,1aee5b,"Чернятина, Александра Семеновна",1906-07,balletartists_1906-07_SP_p005,111.,Чернятинa,Александра,Семеновна
+Latin letter inside a Cyrillic name,1aee5b,"Чернятина, Александра Семеновна",1907-08,balletartists_1907-08_SP_p005,114.,Чернятинa,Александра,Семеновна
+Latin letter inside a Cyrillic name,1aee5b,"Чернятина, Александра Семеновна",1909-10,balletartists_1909-10_SP_p005,101.,Чернятинa,Александра,Семеновна
+Latin letter inside a Cyrillic name,1e64bb,"Ѳеоктистова, Анна Никифоровна",1890-91,balletartists_1890-91_MSK_p005,116.,Ѳеоктистова,Анна,Никifoровна
+bracket or quote in a name field,15b886,"Висковская, Анастасія Викторовна",1907-08,balletartists_1907-08_MSK_p001,15.,Висковская (Калинникова),Анастасія,Викторовна
+bracket or quote in a name field,0179c0,"Гаврилова (Воскресенская), Евдокія Помпеевна",1892-93,balletartists_1892-93_MSK_p001,18.,Гаврилова (Воскресенская),Евдокія,Помпеевна
+bracket or quote in a name field,0179c0,"Гаврилова (Воскресенская), Евдокія Помпеевна",1893-94,balletartists_1893-94_MSK_p001,19.,Гаврилова (Воскресенская),Евдокія,Помпее́вна
+bracket or quote in a name field,0179c0,"Гаврилова (Воскресенская), Евдокія Помпеевна",1894-95,balletartists_1894-95_MSK_p001,19.,Гаврилова (Воскресенская),Евдокія,Помпеевна
+bracket or quote in a name field,0179c0,"Гаврилова (Воскресенская), Евдокія Помпеевна",1895-96,balletartists_1895-96_MSK_p001,21.,Гаврилова (Воскресенская),Евдокія,Помпее́вна
+bracket or quote in a name field,0179c0,"Гаврилова (Воскресенская), Евдокія Помпеевна",1896-97,balletartists_1896-97_MSK_p001,18.,Гаврилова (Воскресенская),Евдокія,Помпеевна
+bracket or quote in a name field,0179c0,"Гаврилова (Воскресенская), Евдокія Помпеевна",1898-99,balletartists_1898-99_MSK_p001,15.,Гаврилова (Воскресенская),Евдокія,Помпеевна
+bracket or quote in a name field,0179c0,"Гаврилова (Воскресенская), Евдокія Помпеевна",1899-00,balletartists_1899-00_MSK_p001,16.,Гаврилова,(Воскресенская),Евдокія
+bracket or quote in a name field,0179c0,"Гаврилова (Воскресенская), Евдокія Помпеевна",1900-01,balletartists_1900-01_MSK_p001,16.,Гаврилова (Воскресенская),Евдокія,Помпеевна
+bracket or quote in a name field,0179c0,"Гаврилова (Воскресенская), Евдокія Помпеевна",1903-04,balletartists_1903-04_MSK_p001,15.,Гаврилова (Воскресенская),Евдокія,Помпеевна
+bracket or quote in a name field,faf538,"Гельцеръ, (Китри)",1909-10,balletartists_1909-10_SP_p005,,Гельцеръ,,(Китри)
+bracket or quote in a name field,03fcb5,"Дмитріева 2-я (Ѳедорова), Пелагея Васильевна",1892-93,balletartists_1892-93_MSK_p001,33.,Дмитріева 2-я (Ѳедорова),Пелагея,Васильевна
+bracket or quote in a name field,03fcb5,"Дмитріева 2-я (Ѳедорова), Пелагея Васильевна",1893-94,balletartists_1893-94_MSK_p001,35.,Дмитріева 2-я (Ѳедорова),Пелагея,Васильевна
+bracket or quote in a name field,03fcb5,"Дмитріева 2-я (Ѳедорова), Пелагея Васильевна",1895-96,balletartists_1895-96_MSK_p001,38.,Дмитріева 2-я (Ѳедорова),Пелагея,Васильевна
+bracket or quote in a name field,03fcb5,"Дмитріева 2-я (Ѳедорова), Пелагея Васильевна",1896-97,balletartists_1896-97_MSK_p001,34.,Дмитріева 2-я (Ѳедорова),Пелагея,Васильевна
+bracket or quote in a name field,03fcb5,"Дмитріева 2-я (Ѳедорова), Пелагея Васильевна",1898-99,balletartists_1898-99_MSK_p001,28.,Дмитріева 2-я (Ѳедорова),Пелагея,Васильевна
+bracket or quote in a name field,03fcb5,"Дмитріева 2-я (Ѳедорова), Пелагея Васильевна",1899-00,balletartists_1899-00_MSK_p001,28.,Дмитріева,(Федорова),Пелагея Васильевна
+bracket or quote in a name field,1b667b,"Кучинскій, Анатолій Михайловичъ",1907-08,balletartists_1907-08_SP_p007,34.,Кучинскій (Бурманъ),Анатолій,Михайловичъ
+bracket or quote in a name field,03f431,"Никифорова (Стравинская), Ольга Сергѣевна",1891-92,balletartists_1891-92_MSK_p002,67.,Никифорова (Стравинская),Ольга,Сергѣевна
+bracket or quote in a name field,03f431,"Никифорова (Стравинская), Ольга Сергѣевна",1893-94,balletartists_1893-94_MSK_p002,72.,Никифорова (Стравинская),Ольга,Сергѣевна
+bracket or quote in a name field,03f431,"Никифорова (Стравинская), Ольга Сергѣевна",1894-95,balletartists_1894-95_MSK_p003,73.,Никифорова (Стравинская),Ольга,Сергѣевна
+bracket or quote in a name field,03f431,"Никифорова (Стравинская), Ольга Сергѣевна",1895-96,balletartists_1895-96_MSK_p003,75.,Никифорова (Стравинская),Ольга,Сергѣевна
+bracket or quote in a name field,03f431,"Никифорова (Стравинская), Ольга Сергѣевна",1896-97,balletartists_1896-97_MSK_p003,75.,Никифорова (Стравинская),Ольга,Сергѣевна
+bracket or quote in a name field,03f431,"Никифорова (Стравинская), Ольга Сергѣевна",1897-98,balletartists_1897-98_MSK_p002,71.,Никитфорова (Стравинская),Ольга,Сергѣевна
+bracket or quote in a name field,bd0620,"Нольте (фонъ), Иванъ Константиновичъ",1905-06,musicians_1905-06_MSK_p002,67.,Нольте (фонъ),Иванъ,Константиновичъ
+bracket or quote in a name field,087a9f,"Струкова, Марія Александровна",1898-99,balletartists_1898-99_MSK_p001,19.,Горская (Струкова),Марія,Александровна
+bracket or quote in a name field,087a9f,"Струкова, Марія Александровна",1899-00,balletartists_1899-00_MSK_p001,21.,Горская,(Струкова),Марія Александровна
+bracket or quote in a name field,087a9f,"Струкова, Марія Александровна",1903-04,balletartists_1903-04_MSK_p001,20.,Горская (Струкова),Марія,Александровна
+bracket or quote in a name field,087a9f,"Струкова, Марія Александровна",1905-06,balletartists_1905-06_MSK_p001,23.,Горская (Струкова),Марія,Александровна
+bracket or quote in a name field,087a9f,"Струкова, Марія Александровна",1906-07,balletartists_1906-07_MSK_p001,24.,Горская (Струкова),Марія,Александровна
+bracket or quote in a name field,2f21f7,"Филиппова (Шиллингъ), Любовь Филипповна",1891-92,balletartists_1891-92_MSK_p003,98.,Филиппова (Шиллингъ),Любовь,Филипповна
+bracket or quote in a name field,2f21f7,"Филиппова (Шиллингъ), Любовь Филипповна",1892-93,balletartists_1892-93_MSK_p003,101.,Филиппова (Шиллингъ),Любовь,Филипповна
+bracket or quote in a name field,2f21f7,"Филиппова (Шиллингъ), Любовь Филипповна",1893-94,balletartists_1893-94_MSK_p004,108.,Филиппова (Шиллингъ),Любовь,Филипповна
+bracket or quote in a name field,2f21f7,"Филиппова (Шиллингъ), Любовь Филипповна",1894-95,balletartists_1894-95_MSK_p004,112.,Филиппова (Шиллинг),Любовь,Филипповна
+bracket or quote in a name field,2f21f7,"Филиппова (Шиллингъ), Любовь Филипповна",1895-96,balletartists_1895-96_MSK_p004,115.,Филиппова (Шиллингъ),Любовь,Филипповна
+bracket or quote in a name field,35300a,"Эльпе (Петропавловская), Людмила Васильевна",1899-00,balletartists_1899-00_SP_p004,88.,Петропавловская (Эльпе),Людмила,Васильевна
+bracket or quote in a name field,35300a,"Эльпе (Петропавловская), Людмила Васильевна",1900-01,balletartists_1900-01_SP_p005,160.,Эльпе (Петропавловская),Людмила,Васильевна
+bracket or quote in a name field,35300a,"Эльпе (Петропавловская), Людмила Васильевна",1902-03,balletartists_1902-03_SP_p005,114.,Эльпе (Петропавловская),Людмила,Васильевна
+bracket or quote in a name field,35300a,"Эльпе (Петропавловская), Людмила Васильевна",1903-04,balletartists_1903-04_SP_p005,115.,Эльпе (Петропавловская),Людмила,Васильевна
+bracket or quote in a name field,35300a,"Эльпе (Петропавловская), Людмила Васильевна",1905-06,balletartists_1905-06_SP_p005,113.,Эльпе (Петропавловская),Людмила,Васильевна
+bracket or quote in a name field,35300a,"Эльпе (Петропавловская), Людмила Васильевна",1906-07,balletartists_1906-07_SP_p005,116.,Эльпе (Петропавловская),Людмила,Васильевна
+bracket or quote in a name field,35300a,"Эльпе (Петропавловская), Людмила Васильевна",1907-08,balletartists_1907-08_SP_p005,120.,Эльпе (Петропавловская),Людмила,Васильевна
+bracket or quote in a name field,f402cc,"Эрлеръ, ""Александръ"" Александровичъ",1904-05,balletartists_1904-05_SP_p010,93.,Эрлеръ,"""Александръ""",Александровичъ
+first-name field holds two words,27eea9,"Альбрехтъ, Людвигъ Карловичъ",1891-92,musicians_1891-92_MSK_p002,1.,Альбрехтъ,Людвигъ Карловичъ,
+first-name field holds two words,27eea9,"Альбрехтъ, Людвигъ Карловичъ",1892-93,musicians_1892-93_MSK_p002,1.,Альбрехтъ,Людвигъ Карловичъ,
+first-name field holds two words,5789b2,"Афанасьевъ, Н. Н.",1901-02,administration_1901-02_p003,,Афанасьевъ,Н. Н.,
+first-name field holds two words,0c5613,"Баулинъ, Александръ Никитичъ",1900-01,musicians_1900-01_MSK_p004,1.,Баулинъ,Александръ Никитичъ,
+first-name field holds two words,08b9a5,"Бруцинъ, Сергѣй Александровичъ",1900-01,musicians_1900-01_MSK_p004,2.,Бруцинъ,Сергѣй Александровичъ,
+first-name field holds two words,a22add,"Вильеръ-де-Лиль-Адамъ, Александръ Фердинандовичъ",1900-01,administration_1900-01_p000,1.,Вильеръ-де-Лиль-Адамъ,Александръ Фердинандовичъ,
+first-name field holds two words,38b253,"Гельмерсенъ, Людвигъ Александровичъ",1900-01,administration_1900-01_p000,1.,Гельмерсенъ,Людвигъ Александровичъ,
+first-name field holds two words,297dbe,"Герберъ, Александръ Юліевичъ",1891-92,musicians_1891-92_MSK_p002,,Герберъ,Александръ Юліевичъ,
+first-name field holds two words,297dbe,"Герберъ, Александръ Юліевичъ",1892-93,musicians_1892-93_MSK_p002,,Герберъ,Александръ Юліевичъ,
+first-name field holds two words,4640f2,"Гершельманъ, Константинъ Романовичъ",1900-01,administration_1900-01_p000,,Гершельманъ,Константинъ Романовичъ,
+first-name field holds two words,4326a4,"Голласъ, Антонъ Францевичъ",1890-91,musicians_1890-91_MSK_p001,25.,Голласъ,Антонъ Францевичъ,
+first-name field holds two words,043900,"Голубевъ, Николай Григорьевичъ",1904-05,musicians_1904-05_MSK_p001,23.,Голубевъ,Николай Григорьевичъ,
+first-name field holds two words,54d838,"Гольдшмитъ, Іосифъ Януаріевичъ",1899-00,musicians_1899-00_MSK_p001,19.,Гольдшмитъ,Іосифъ Януаріевичъ,
+first-name field holds two words,54d838,"Гольдшмитъ, Іосифъ Януаріевичъ",1904-05,musicians_1904-05_MSK_p001,22.,Гольдшмитъ,Іосифъ Януаріевичъ,
+first-name field holds two words,0a5f0f,"Гордонъ, Александръ Бернардовичъ",1890-91,musicians_1890-91_MSK_p001,26.,Гордонъ,Александръ Бернгардовичъ,
+first-name field holds two words,f7702f,"Горшковъ, Викторъ Адріановичъ",1890-91,musicians_1890-91_MSK_p001,27.,Горшковъ,Викторъ Адріановичъ,
+first-name field holds two words,1100cf,"Грецкій, Аполлонъ Адальбертовичъ",1890-91,musicians_1890-91_MSK_p001,29.,Грецкій,Аполлонъ Адалъбертовичъ,
+first-name field holds two words,1100cf,"Грецкій, Аполлонъ Адальбертовичъ",1899-00,musicians_1899-00_MSK_p001,20.,Грецкій,Аполлонъ Адальбертовичъ,
+first-name field holds two words,061f07,"Григорьевъ, Василій Игнатьевичъ",1896-97,musicians_1896-97_MSK_p003,6.,Григорьевъ,Василій Игнатьевичъ,
+first-name field holds two words,061f07,"Григорьевъ, Василій Игнатьевичъ",1900-01,musicians_1900-01_MSK_p004,5.,Григорьевъ,Василій Игнатьевичъ,
+first-name field holds two words,032120,"Григорьевъ, Дмитрій Григорьевичъ",1890-91,musicians_1890-91_MSK_p001,30.,Григорьевъ,Дмитрій Григорьевичъ,
+first-name field holds two words,032120,"Григорьевъ, Дмитрій Григорьевичъ",1899-00,musicians_1899-00_MSK_p001,21.,Григорьевъ,Дмитрій Григорьевичъ,
+first-name field holds two words,032120,"Григорьевъ, Дмитрій Григорьевичъ",1904-05,musicians_1904-05_MSK_p001,24.,Григорьевъ,Дмитрій Григорьевичъ,
+first-name field holds two words,58287b,"Гробе, Альбертъ Фердинандовичъ",1904-05,musicians_1904-05_MSK_p001,25.,Гробе,Альбертъ Фердинандовичъ,
+first-name field holds two words,3a07a5,"Гуревичъ, Евсей Лейбовичъ",1891-92,musicians_1891-92_MSK_p002,15.,Гуревичъ,Евсей Лейбовичъ,
+first-name field holds two words,3a07a5,"Гуревичъ, Евсей Лейбовичъ",1892-93,musicians_1892-93_MSK_p002,15.,Гуревичъ,Евсей Лейбовичъ,
+first-name field holds two words,3a07a5,"Гуревичъ, Евсей Лейбовичъ",1899-00,musicians_1899-00_MSK_p001,23.,Гуревичъ,Евсей Лейбовичъ,
+first-name field holds two words,3a07a5,"Гуревичъ, Евсей Лейбовичъ",1904-05,musicians_1904-05_MSK_p001,26.,Гуревичъ,Евсей Лейбовичъ,
+first-name field holds two words,8e17a6,"Данильченко, Петръ Антоновичъ",1890-91,musicians_1890-91_MSK_p001,31.,Данильченко,Петръ Антоновичъ,
+first-name field holds two words,8e17a6,"Данильченко, Петръ Антоновичъ",1899-00,musicians_1899-00_MSK_p001,24.,Данильченко,Петръ Антоновичъ,
+first-name field holds two words,8e17a6,"Данильченко, Петръ Антоновичъ",1904-05,musicians_1904-05_MSK_p001,27.,Данильченко,Петръ Антоновичъ,
+first-name field holds two words,9509b1,"Дворниковъ, Сергѣй Васильевичъ",1904-05,musicians_1904-05_MSK_p001,29.,Дворниковъ,Сергѣй Васильевичъ,
+first-name field holds two words,2cf44d,"Дмитріева, Елизавета Васильевна",1890-91,musicians_1890-91_MSK_p001,32.,Дмитріева,Елизавета Васильевна,
+first-name field holds two words,00397b,"Домбре, Георгій Николаевичъ",1890-91,musicians_1890-91_MSK_p001,33.,Домбре,Георгій Николаевичъ,
+first-name field holds two words,00397b,"Домбре, Георгій Николаевичъ",1899-00,musicians_1899-00_MSK_p001,25.,Домбре,Георгій Николаевичъ,
+first-name field holds two words,00397b,"Домбре, Георгій Николаевичъ",1904-05,musicians_1904-05_MSK_p001,30.,Домбре,Георгій Николаевичъ,
+first-name field holds two words,5533e4,"Дудзичъ, Антонъ Васильевичъ",1891-92,musicians_1891-92_MSK_p002,16.,Дудзичъ,Антонъ Васильевичъ,
+first-name field holds two words,5533e4,"Дудзичъ, Антонъ Васильевичъ",1892-93,musicians_1892-93_MSK_p002,16.,Дудзичъ,Антонъ Васильевичъ,
+first-name field holds two words,5533e4,"Дудзичъ, Антонъ Васильевичъ",1899-00,musicians_1899-00_MSK_p001,26.,Дудзичъ,Антонъ Васильевичъ,
+first-name field holds two words,5533e4,"Дудзичъ, Антонъ Васильевичъ",1904-05,musicians_1904-05_MSK_p001,31.,Дудычъ,Антонъ Васильевичъ,
+first-name field holds two words,88aa33,"Дягилевъ, Сергѣй Павловичъ",1900-01,administration_1900-01_p000,2.,Дягилевъ,Сергѣй Павловичъ,
+first-name field holds two words,7f8518,"Еременко, Александръ Матвѣевичъ",1890-91,musicians_1890-91_MSK_p001,34.,Еременко,Александръ Матвѣевичъ,
+first-name field holds two words,7f8518,"Еременко, Александръ Матвѣевичъ",1899-00,musicians_1899-00_MSK_p001,27.,Еременко,Александръ Матвѣевичъ,
+first-name field holds two words,7f8518,"Еременко, Александръ Матвѣевичъ",1904-05,musicians_1904-05_MSK_p001,32.,Еременко,Александръ Матвѣевичъ,
+first-name field holds two words,21e41e,"Ермоловъ, Алексѣй Ивановичъ",1899-00,musicians_1899-00_MSK_p001,28.,Ермоловъ,Алексѣй Ивановичъ,
+first-name field holds two words,21e41e,"Ермоловъ, Алексѣй Ивановичъ",1904-05,musicians_1904-05_MSK_p001,33.,Ермоловъ,Алексѣй Ивановичъ,
+first-name field holds two words,5ec999,"Ефимовъ, Василій Ивановичъ",1890-91,musicians_1890-91_MSK_p001,35.,Ефимовъ,Василій Ивановичъ,
+first-name field holds two words,263779,"Замысловъ, Василій Ивановичъ",1896-97,musicians_1896-97_MSK_p003,9.,Замысловъ,Василій Ивановичъ,
+first-name field holds two words,263779,"Замысловъ, Василій Ивановичъ",1900-01,musicians_1900-01_MSK_p004,8.,Замысловъ,Василій Ивановичъ,
+first-name field holds two words,6749f5,"Зингеръ, Викторъ Викторовичъ",1899-00,musicians_1899-00_MSK_p001,29.,Зингеръ,Викторъ Викторовичъ,
+first-name field holds two words,6749f5,"Зингеръ, Викторъ Викторовичъ",1904-05,musicians_1904-05_MSK_p001,35.,Зингеръ,Викторъ Викторовичъ,
+first-name field holds two words,0d4024,"Золотаренко 1-й, Иванъ Петровичъ",1891-92,musicians_1891-92_MSK_p002,19.,Золотаренко,Иванъ Петровичъ,
+first-name field holds two words,0d4024,"Золотаренко 1-й, Иванъ Петровичъ",1892-93,musicians_1892-93_MSK_p002,19.,Золотаренко,Иванъ Петровичъ,
+first-name field holds two words,0d4024,"Золотаренко 1-й, Иванъ Петровичъ",1899-00,musicians_1899-00_MSK_p001,31.,Золотаренко 1-й,Иванъ Петровичъ,
+first-name field holds two words,0d4024,"Золотаренко 1-й, Иванъ Петровичъ",1904-05,musicians_1904-05_MSK_p001,37.,Золотаренко 1-й,Иванъ Петровичъ,
+first-name field holds two words,3f67a7,"Золотаренко 2-й, Павелъ Петровичъ",1890-91,musicians_1890-91_MSK_p001,37.,Золотаренко,Павелъ Петровичъ,
+first-name field holds two words,3f67a7,"Золотаренко 2-й, Павелъ Петровичъ",1899-00,musicians_1899-00_MSK_p001,32.,Золотаренко 2-й,Павелъ Петровичъ,
+first-name field holds two words,3f67a7,"Золотаренко 2-й, Павелъ Петровичъ",1904-05,musicians_1904-05_MSK_p001,38.,Золотаренко 2-й,Павелъ Петровичъ,
+first-name field holds two words,3f5c86,"Золотаренко 3-й, Василій Петровичъ",1899-00,musicians_1899-00_MSK_p001,33.,Золотаренко 3-й,Василій Петровичъ,
+first-name field holds two words,3f5c86,"Золотаренко 3-й, Василій Петровичъ",1904-05,musicians_1904-05_MSK_p001,39.,Золотаренко 3-й,Василій Петровичъ,
+first-name field holds two words,07ab6b,"Золотаренко, Петръ Петровичъ",1891-92,musicians_1891-92_MSK_p002,,Золотаренко,Петръ Петровичъ,
+first-name field holds two words,07ab6b,"Золотаренко, Петръ Петровичъ",1892-93,musicians_1892-93_MSK_p002,,Золотаренко,Петръ Петровичъ,
+first-name field holds two words,9c15b2,"Ивановъ, Иванъ Ивановичъ",1896-97,musicians_1896-97_MSK_p003,10.,Ивановъ,Иванъ Ивановичъ,
+first-name field holds two words,1934b2,"Ивановъ, Иванъ Ѳедоровичъ",1899-00,musicians_1899-00_MSK_p001,35.,Ивановъ,Иванъ Ѳедоровичъ,
+first-name field holds two words,1934b2,"Ивановъ, Иванъ Ѳедоровичъ",1904-05,musicians_1904-05_MSK_p001,40.,Ивановъ,Иванъ Ѳедоровичъ,
+first-name field holds two words,5822b7,"Игнатовъ, Василій Васильевичъ",1896-97,musicians_1896-97_MSK_p003,11.,Игнатовъ,Василій Васильевичъ,
+first-name field holds two words,4a0b36,"Кажданъ, Николай Меѳодіевичъ",1890-91,musicians_1890-91_MSK_p001,38.,Кажданъ,Николай Меѳодіевичъ,
+first-name field holds two words,13a84e,"Каминскій, Александръ Николаевичъ",1904-05,musicians_1904-05_MSK_p001,41.,Каминскій,Александръ Николаевичъ,
+first-name field holds two words,10764e,"Кармазинскій, Сергѣй Александровичъ",1904-05,musicians_1904-05_MSK_p001,43.,Кармазинскій,Сергѣй Александровичъ,
+first-name field holds two words,387317,"Касаткина, Таисія Николаевна",1893-94,balletartists_1893-94_SP_p002,45.,Касаткина,Таисія Николаевна,
+first-name field holds two words,26419b,"Кенигсбергъ, Яковъ Константиновичъ",1904-05,musicians_1904-05_MSK_p001,45.,Кенигсбергъ,Яковъ Константиновичъ,
+first-name field holds two words,1fe949,"Киль, Ольга Александровна",1893-94,balletartists_1893-94_SP_p002,46.,Киль,Ольга Александровна,
+first-name field holds two words,644525,"Кламротъ, Карлъ Антоновичъ",1899-00,musicians_1899-00_MSK_p001,38.,Кламротъ,Карлъ Антоновичъ,
+first-name field holds two words,7c3422,"Кленовскій, Николай Семеновичъ",1891-92,musicians_1891-92_MSK_p002,,Кленовскій,Николай Семеновичъ,
+first-name field holds two words,7c3422,"Кленовскій, Николай Семеновичъ",1892-93,musicians_1892-93_MSK_p002,,Кленовскій,Николай Семеновичъ,
+first-name field holds two words,226d47,"Климашевская 1-я, Ольга Николаевна",1893-94,balletartists_1893-94_SP_p002,47.,Климашевская 1-я,Ольга Николаевна,
+first-name field holds two words,484b11,"Климашевская 2-я, Анна Николаевна",1893-94,balletartists_1893-94_SP_p002,48.,Климашевская 2-я,Анна Николаевна,
+first-name field holds two words,c00f39,"Колаковскій, Алексѣй Антоновичъ",1891-92,musicians_1891-92_MSK_p002,24.,Колаковскій,Алексѣй Антоновичъ,
+first-name field holds two words,c00f39,"Колаковскій, Алексѣй Антоновичъ",1892-93,musicians_1892-93_MSK_p002,24.,Колаковскій,Алексѣй Антоновичъ,
+first-name field holds two words,10964e,"Колосовъ, Александръ Кирилловичъ",1896-97,musicians_1896-97_MSK_p003,15.,Колосовъ,Александръ Кирилловичъ,
+first-name field holds two words,10964e,"Колосовъ, Александръ Кирилловичъ",1900-01,musicians_1900-01_MSK_p004,12.,Колосовъ,Александръ Кирилловичъ,
+first-name field holds two words,3b4d45,"Конецкая, Матрена Дмитріевна",1893-94,balletartists_1893-94_SP_p002,49.,Конецкая,Матрена Дмитріевна,
+first-name field holds two words,18d601,"Конскій, Григорій Яковлевичъ",1890-91,musicians_1890-91_MSK_p001,42.,Конскій,Григорій Яковлевичъ,
+first-name field holds two words,092903,"Константинова, Александра Петровна",1905-06,balletartists_1905-06_SP_p002,39.,Константинова,Александра Петровна,
+first-name field holds two words,001368,"Коробковъ, Василій Ивановичъ",1890-91,musicians_1890-91_MSK_p001,43.,Коробковъ,Василій Ивановичъ,
+first-name field holds two words,001368,"Коробковъ, Василій Ивановичъ",1899-00,musicians_1899-00_MSK_p001,39.,Коробковъ,Василій Ивановичъ,
+first-name field holds two words,001368,"Коробковъ, Василій Ивановичъ",1904-05,musicians_1904-05_MSK_p001,46.,Коробковъ,Василій Ивановичъ,
+first-name field holds two words,2b062b,"Корсакъ, Вѣра Александровна",1893-94,balletartists_1893-94_SP_p002,50.,Корсакъ,Вѣра Александровна,
+first-name field holds two words,0e6f40,"Костлянъ, Иванъ Іосифовичъ",1904-05,musicians_1904-05_MSK_p001,47.,Костлянъ,Иванъ Іосифовичъ,
+first-name field holds two words,0da2a9,"Крейнъ, Давидъ Сергѣевичъ",1899-00,musicians_1899-00_MSK_p001,42.,Крейнъ,Давидъ Сергѣевичъ,
+first-name field holds two words,0da2a9,"Крейнъ, Давидъ Сергѣевичъ",1904-05,musicians_1904-05_MSK_p001,50.,Крейнъ,Давидъ Сергѣевичъ,
+first-name field holds two words,0fa017,"Крживицкій, Петръ Михайловичъ",1896-97,musicians_1896-97_MSK_p003,12.,Крживицкій,Петръ Михайловичъ,
+first-name field holds two words,0fa017,"Крживицкій, Петръ Михайловичъ",1900-01,musicians_1900-01_MSK_p004,9.,Крживицкій,Петръ Михайловичъ,
+first-name field holds two words,1fb876,"Крулевъ, Алексѣй Михайловичъ",1904-05,musicians_1904-05_MSK_p001,52.,Крулевъ,Алексѣй Михайловичъ,
+first-name field holds two words,472b30,"Крутоголововъ, Иванъ Никифоровичъ",1891-92,musicians_1891-92_MSK_p002,28.,Крутоголововъ,Иванъ Никифоровичъ,
+first-name field holds two words,472b30,"Крутоголововъ, Иванъ Никифоровичъ",1892-93,musicians_1892-93_MSK_p002,28.,Крутоголововъ,Иванъ Никифоровичъ,
+first-name field holds two words,472b30,"Крутоголововъ, Иванъ Никифоровичъ",1899-00,musicians_1899-00_MSK_p001,46.,Крутоголововъ,Иванъ Никифоровичъ,
+first-name field holds two words,472b30,"Крутоголововъ, Иванъ Никифоровичъ",1904-05,musicians_1904-05_MSK_p001,53.,Крутоголововъ,Иванъ Никифоровичъ,
+first-name field holds two words,7c76ea,"Крюгеръ, Елизавета Карловна",1893-94,balletartists_1893-94_SP_p002,51.,Крюгеръ,Елизавета Карловна,
+first-name field holds two words,41c430,"Крючковъ, Василій Марковичъ",1896-97,musicians_1896-97_MSK_p003,17.,Крючковъ,Василій Марковичъ,
+first-name field holds two words,63fc8a,"Кубацкій, Левъ Викентьевичъ",1896-97,musicians_1896-97_MSK_p003,18.,Кубацкій,Левъ Викентьевичъ,
+first-name field holds two words,63fc8a,"Кубацкій, Левъ Викентьевичъ",1900-01,musicians_1900-01_MSK_p004,14.,Кубацкій,Левъ Викентьевичъ,
+first-name field holds two words,48a9f4,"Кудряшовъ, Николай Васильевичъ",1899-00,musicians_1899-00_MSK_p001,48.,Кудряшовъ,Николай Васильевичъ,
+first-name field holds two words,48a9f4,"Кудряшовъ, Николай Васильевичъ",1904-05,musicians_1904-05_MSK_p001,55.,Кудряшовъ,Николай Васильевичъ,
+first-name field holds two words,847dbe,"Кузьмина 1-я, Анна Николаевна",1893-94,balletartists_1893-94_SP_p002,52.,Кузьмина,Анна Николаевна,
+first-name field holds two words,76522d,"Кузьмина, Антонина Петровна",1905-06,balletartists_1905-06_SP_p002,40.,Кузьмина,Антонина Петровна,
+first-name field holds two words,3bc92d,"Куличевская, Клавдія Михайловна",1893-94,balletartists_1893-94_SP_p002,53.,Куличевская,Клавдія Михайловна,
+first-name field holds two words,2c855e,"Куницкая, Александра Александровна",1893-94,balletartists_1893-94_SP_p002,54.,Куницкая,Александра Александровна,
+first-name field holds two words,2c855e,"Куницкая, Александра Александровна",1905-06,balletartists_1905-06_SP_p002,41.,Куницкая,Александра Александровна,
+first-name field holds two words,080b72,"Курбанова, Любовь Михайловна",1893-94,balletartists_1893-94_SP_p002,55.,Курбанова,Любовь Михайловна,
+first-name field holds two words,45c0a8,"Курочкина, Ольга Александровна",1893-94,balletartists_1893-94_SP_p002,56.,Курочкина,Ольга Александровна,
+first-name field holds two words,7699bb,"Кусевицкій, Сергѣй Сергѣевичъ",1899-00,musicians_1899-00_MSK_p001,49.,Кусевицкій,Сергѣй Сергѣевичъ,
+first-name field holds two words,7699bb,"Кусевицкій, Сергѣй Сергѣевичъ",1904-05,musicians_1904-05_MSK_p001,56.,Кусевицкій,Сергѣй Сергѣевичъ,
+first-name field holds two words,00dbf2,"Кускова, Елизавета Аполлоновна",1893-94,balletartists_1893-94_SP_p002,57.,Куснова,Елизавета Аполлоновна,
+first-name field holds two words,00dbf2,"Кускова, Елизавета Аполлоновна",1905-06,balletartists_1905-06_SP_p002,43.,Кускова,Елизавета Аполлоновна,
+first-name field holds two words,4fe43a,"Кустереръ, Альбертина Альбертовна",1893-94,balletartists_1893-94_SP_p002,58.,Кустереръ,Альбертина Альбертовна,
+first-name field holds two words,4fe43a,"Кустереръ, Альбертина Альбертовна",1905-06,balletartists_1905-06_SP_p002,42.,Кустереръ,Альбертина Альбертовна,
+first-name field holds two words,2e2947,"Кшесинская 1-я, Юлія Феликсовна",1893-94,balletartists_1893-94_SP_p002,59.,Кшесинская 1-я,Юлія Феликсовна,
+first-name field holds two words,416829,"Кшесинская, Матильда Феликсовна",1893-94,balletartists_1893-94_SP_p002,60.,Кшесинская 2-я,Матильда Феликсовна,
+first-name field holds two words,115204,"Кякштъ, Лидія Георгіевна",1905-06,balletartists_1905-06_SP_p002,44.,Кякштъ,Лидія Георгіевна,
+first-name field holds two words,8e5923,"Лабунская, Марія Николаевна",1893-94,balletartists_1893-94_SP_p002,61.,Лабунская,Марія Николаевна,
+first-name field holds two words,bf5772,"Лаврентьева, Ольга Семеновна",1893-94,balletartists_1893-94_SP_p002,62.,Лаврентьева,Ольга Семеновна,
+first-name field holds two words,08eb50,"Лазаревъ, Георгій Артемьевичъ",1896-97,musicians_1896-97_MSK_p003,19.,Лазаревъ,Георгій Артемьевичъ,
+first-name field holds two words,08eb50,"Лазаревъ, Георгій Артемьевичъ",1900-01,musicians_1900-01_MSK_p004,15.,Лазаревъ,Георгій Артемьевичъ,
+first-name field holds two words,7ca786,"Лебедевъ, Иванъ Григорьевичъ",1890-91,musicians_1890-91_MSK_p001,48.,Лебедевъ,Иванъ Григорьевичъ,
+first-name field holds two words,1a2edd,"Левенсонъ 1-я, Анна Ѳедоровна",1893-94,balletartists_1893-94_SP_p002,63.,Левенсонъ 1-я,Анна Ѳедоровна,
+first-name field holds two words,18e82a,"Левенсонъ 2-я, Ольга Ѳедоровна",1893-94,balletartists_1893-94_SP_p002,64.,Левенсонъ 2-я,Ольга Ѳедоровна,
+first-name field holds two words,6e8318,"Левина, Таисія Алексѣевна",1893-94,balletartists_1893-94_SP_p002,65.,Левина,Таисія Алексѣевна,
+first-name field holds two words,14c9b5,"Левинсонъ, Анна Ѳедоровна",1905-06,balletartists_1905-06_SP_p002,46.,Левинсонъ,Анна Ѳедоровна,
+first-name field holds two words,9ba202,"Левинсонъ, Ольга Ѳедоровна",1905-06,balletartists_1905-06_SP_p002,47.,Левинсонъ,Ольга Ѳедоровна,
+first-name field holds two words,260491,"Левинъ, Арій Лейбовичъ",1896-97,musicians_1896-97_MSK_p003,20.,Левинъ,Арій Лейбовичъ,
+first-name field holds two words,260491,"Левинъ, Арій Лейбовичъ",1900-01,musicians_1900-01_MSK_p004,16.,Левинъ,Арій Лейбовичъ,
+first-name field holds two words,2a6531,"Легатъ, Евгенія Густавовна",1905-06,balletartists_1905-06_SP_p002,48.,Легатъ,Евгенія Густавовна,
+first-name field holds two words,57dacf,"Леонова, Анна Николаевна",1905-06,balletartists_1905-06_SP_p002,50.,Леонова,Анна Николаевна,
+first-name field holds two words,0fdedb,"Леонова, Ольга Николаевна",1893-94,balletartists_1893-94_SP_p002,69.,Леонова,Ольга Николаевна,
+first-name field holds two words,0fdedb,"Леонова, Ольга Николаевна",1905-06,balletartists_1905-06_SP_p002,49.,Леонова,Ольга Николаевна,
+first-name field holds two words,1ce880,"Леоновъ, Василій Васильевичъ",1900-01,musicians_1900-01_MSK_p004,17.,Леоновъ,Василій Васильевичъ,
+first-name field holds two words,59e1ea,"Либецкій, Іосифъ Антоновичъ",1896-97,musicians_1896-97_MSK_p003,21.,Либецкій,Іосифъ Антоновичъ,
+first-name field holds two words,0f98db,"Лидтке, Готчильдъ Францъ",1899-00,musicians_1899-00_MSK_p001,50.,Лидтке,Готчильдъ Францъ,
+first-name field holds two words,0a786d,"Липаевъ, Иванъ Васильевичъ",1899-00,musicians_1899-00_MSK_p001,51.,Липаевъ,Иванъ Васильевичъ,
+first-name field holds two words,84cf89,"Литвинцевъ, Николай Васильевичъ",1896-97,musicians_1896-97_MSK_p003,22.,Литвинцевъ,Николай Васильевичъ,
+first-name field holds two words,73bd09,"Лихтенъ, Зальма Гиршевичъ",1890-91,musicians_1890-91_MSK_p001,50.,Лихтенъ,Зальма Гиршевичъ,
+first-name field holds two words,4c2495,"Лицъ, Надежда Семеновна",1893-94,balletartists_1893-94_SP_p002,70.,Лицъ,Надежда Семеновна,
+first-name field holds two words,5bb977,"Лобанова, Лидія Дмитріевна",1893-94,balletartists_1893-94_SP_p002,71.,Лобанова,Лидія Дмитріевна,
+first-name field holds two words,5bb977,"Лобанова, Лидія Дмитріевна",1905-06,balletartists_1905-06_SP_p002,51.,Лобанова,Лидія Дмитріевна,
+first-name field holds two words,ec751e,"Лойко, Иванъ Фелиціановичъ",1890-91,musicians_1890-91_MSK_p001,51.,Лойко,Иванъ Фелиціановичъ,
+first-name field holds two words,44f74a,"Локтіонова, Татьяна Илларіоновна",1905-06,balletartists_1905-06_SP_p002,45.,Лактіонова,Татьяна Илларіоновна,
+first-name field holds two words,c4b1c8,"Лопухинъ, Николай Николаевичъ",1900-01,administration_1900-01_p000,3.,Лопухинъ,Николай Николаевичъ,
+first-name field holds two words,092eca,"Лопухова, Евгенія Васильевна",1905-06,balletartists_1905-06_SP_p002,52.,Лопухова,Евгенія Васильевна,
+first-name field holds two words,0225d1,"Лушкина, Евгенія Михайловна",1905-06,balletartists_1905-06_SP_p002,53.,Лушкина,Евгенія Михайловна,
+first-name field holds two words,c9919e,"Макарова, Елена Александровна",1905-06,balletartists_1905-06_SP_p002,54.,Макарова,Елена Александровна,
+first-name field holds two words,441be6,"Макарова, Марія Александровна",1905-06,balletartists_1905-06_SP_p002,55.,Макарова,Марія Александровна,
+first-name field holds two words,825de0,"Маслова, Марія Николаевна",1893-94,balletartists_1893-94_SP_p002,72.,Маслова,Марія Николаевна,
+first-name field holds two words,87f7d8,"Матвѣева 1-я, Александра Васильевна",1893-94,balletartists_1893-94_SP_p002,73.,Матвѣева 1-я,Александра Васильевна,
+first-name field holds two words,1f67cf,"Матвѣева, Наталья Николаевна",1905-06,balletartists_1905-06_SP_p002,56.,Матвѣева,Наталья Николаевна,
+first-name field holds two words,57e4e0,"Матвѣева, Ольга Васильевна",1893-94,balletartists_1893-94_SP_p002,74.,Матвѣева 2-я,Ольга Васильевна,
+first-name field holds two words,0c5087,"Матятина, Вѣра Александровна",1905-06,balletartists_1905-06_SP_p002,57.,Матятина,Вѣра Александровна,
+first-name field holds two words,4a39d5,"Махотина, Евгенія Васильевна",1905-06,balletartists_1905-06_SP_p002,58.,Махотина,Евгенія Васильевна,
+first-name field holds two words,c21841,"Мацкевичъ, Раиса Васильевна",1905-06,balletartists_1905-06_SP_p002,59.,Мацкевичъ,Раиса Васильевна,
+first-name field holds two words,2b42da,"Михайлова, Александра Карповна",1905-06,balletartists_1905-06_SP_p002,60.,Михайлова,Александра Карповна,
+first-name field holds two words,1f8a12,"Мясинъ, Ѳедоръ Аѳанасьевичъ",1896-97,musicians_1896-97_MSK_p003,23.,Мясинъ,Ѳедоръ Аѳанасьевичъ,
+first-name field holds two words,1f8a12,"Мясинъ, Ѳедоръ Аѳанасьевичъ",1900-01,musicians_1900-01_MSK_p004,18.,Мясинъ,Ѳедоръ Аѳанасьевичъ,
+first-name field holds two words,3d96cf,"Нагорнюкъ, Николай Михайловичъ",1891-92,musicians_1891-92_MSK_p002,33.,Нагорнюкъ,Николай Михайловичъ,
+first-name field holds two words,3d96cf,"Нагорнюкъ, Николай Михайловичъ",1892-93,musicians_1892-93_MSK_p002,33.,Нагорнюкъ,Николай Михайловичъ,
+first-name field holds two words,517d67,"Натарова, Александра Петровна",1905-06,balletartists_1905-06_SP_p002,61.,Натарова,Александра Петровна,
+first-name field holds two words,187745,"Нацкій, Петръ Андреевичъ",1896-97,musicians_1896-97_MSK_p003,24.,Нацкій,Петръ Андреевичъ,
+first-name field holds two words,187745,"Нацкій, Петръ Андреевичъ",1900-01,musicians_1900-01_MSK_p004,19.,Нацкій,Петръ Андреевичъ,
+first-name field holds two words,9fee1e,"Нестеровская, Лидія Рафаиловна",1905-06,balletartists_1905-06_SP_p002,62.,Нестеровская,Лидія Рафаиловна,
+first-name field holds two words,4ef695,"Никитина 2-я, Екатерина Ивановна",1908-09,balletartists_1908-09_MSK_p003,58.,Никитина 2-я,Екатерина Ивановна,
+first-name field holds two words,636532,"Никитинъ, Алексѣй Никитичъ",1900-01,musicians_1900-01_MSK_p004,20.,Никитинъ,Алексѣй Никитичъ,
+first-name field holds two words,067275,"Николаева 2-я, Анна Михайловна",1908-09,balletartists_1908-09_MSK_p003,60.,Николаева 2-я,Анна Михайловна,
+first-name field holds two words,312b5e,"Николаева, Зинаида Николаевна",1908-09,balletartists_1908-09_MSK_p003,61.,Николаева 3-я,Зинаида Николаевна,
+first-name field holds two words,36ea9a,"Николаева, Марія Алексѣевна",1908-09,balletartists_1908-09_MSK_p003,59.,Николаева 1-я,Марія Алексѣевна,
+first-name field holds two words,0a2e7f,"Николаевъ, Александръ Михайловичъ",1900-01,musicians_1900-01_MSK_p004,21.,Николаевъ,Александръ Михайловичъ,
+first-name field holds two words,2058f5,"Ниманъ, Марія Михайловна",1905-06,balletartists_1905-06_SP_p002,63.,Ниманъ,Марія Михайловна,
+first-name field holds two words,320bcd,"Новикова, Екатерина Дмитріевна",1908-09,balletartists_1908-09_MSK_p003,62.,Новикова,Екатерина Дмитріевна,
+first-name field holds two words,acb167,"Ортнеръ, Николай Францевичъ",1891-92,musicians_1891-92_MSK_p002,34.,Ортнеръ,Николай Францевичъ,
+first-name field holds two words,acb167,"Ортнеръ, Николай Францевичъ",1892-93,musicians_1892-93_MSK_p002,34.,Ортнеръ,Николай Францевичъ,
+first-name field holds two words,2185ef,"Павлова, Евгенія Ивановна",1908-09,balletartists_1908-09_MSK_p003,65.,Павлова,Евгенія Ивановна,
+first-name field holds two words,4eb189,"Павловъ, Михаилъ Львовичъ",1890-91,musicians_1890-91_MSK_p001,56.,Павловъ,Михаилъ Львовичъ,
+first-name field holds two words,0aaac6,"Палице, Іосифъ Ивановичъ",1890-91,musicians_1890-91_MSK_p001,57.,Палице,Іосифъ Ивановичъ,
+first-name field holds two words,168c72,"Парикова, Зинаида Николаевна",1908-09,balletartists_1908-09_MSK_p003,63.,Парикова,Зинаида Николаевна,
+first-name field holds two words,0870c0,"Паули, Анатолій Карловичъ",1890-91,musicians_1890-91_MSK_p001,58.,Паули,Анатолій Карловичъ,
+first-name field holds two words,53e028,"Петровъ, Владиміръ Андреевичъ",1900-01,administration_1900-01_p000,2.,Петровъ,Владиміръ Андреевичъ,
+first-name field holds two words,197245,"Петровъ, Николай Николаевичъ",1900-01,administration_1900-01_p000,4.,Петровъ,Николай Николаевичъ,
+first-name field holds two words,30e9d0,"Поржицкая, Бронислава Августовна",1908-09,balletartists_1908-09_MSK_p003,64.,Пажицкая,Бронислава Августовна,
+first-name field holds two words,ac8dc2,"Рагузина, Валентина Николаевна",1908-09,balletartists_1908-09_MSK_p003,66.,Рагузина,Валентина Николаевна,
+first-name field holds two words,ee4aed,"Рессеръ, Мардохей Земинъ Шліомовичъ",1902-03,musicians_1902-03_MSK_p002,75.,Рессеръ,Мардохей Земинъ,Шліомовичъ
+first-name field holds two words,ee4aed,"Рессеръ, Мардохей Земинъ Шліомовичъ",1903-04,musicians_1903-04_MSK_p002,76.,Рессеръ,Мардохей Земинъ,Шліомовичъ
+first-name field holds two words,ee4aed,"Рессеръ, Мардохей Земинъ Шліомовичъ",1904-05,musicians_1904-05_MSK_p002,76.,Рессеръ,Мардохей Земинъ,Шломовичъ
+first-name field holds two words,9f5da4,"Рессеръ, Мордохей Земинъ Шліомовичъ",1905-06,musicians_1905-06_MSK_p003,78.,Рессеръ,Мордохей Земинъ,Шліомовичъ
+first-name field holds two words,084cc8,"Романова, Ольга Кондратьевна",1908-09,balletartists_1908-09_MSK_p003,67.,Романова,Ольга Кондратьевна,
+first-name field holds two words,36847d,"Русецкій, Иванъ Сергѣевичъ",1900-01,administration_1900-01_p000,,Русецкій,Иванъ Сергѣевичъ,
+first-name field holds two words,2d11a5,"Рябовъ, Степанъ Яковлевичъ",1891-92,musicians_1891-92_MSK_p002,,Рябовъ,Степанъ Яковлевичъ,
+first-name field holds two words,2d11a5,"Рябовъ, Степанъ Яковлевичъ",1892-93,musicians_1892-93_MSK_p002,,Рябовъ,Степанъ Яковлевичъ,
+first-name field holds two words,1bab22,"Рязанцевъ, Сергѣй Ильичъ",1896-97,musicians_1896-97_MSK_p003,26.,Рязанцевъ,Сергѣй Ильичъ,
+first-name field holds two words,1bab22,"Рязанцевъ, Сергѣй Ильичъ",1900-01,musicians_1900-01_MSK_p004,23.,Рязанцевъ,Сергѣй Ильичъ,
+first-name field holds two words,1d5c4f,"Свенторжецкій, Людоміръ Вацлавовичъ",1900-01,administration_1900-01_p000,,Свенторжецкій,Людоміръ Вацлавовичъ,
+first-name field holds two words,003c4b,"Сидорова, Наталья Емельяновна",1908-09,balletartists_1908-09_MSK_p003,68.,Сидорова,Наталья Емельяновна,
+first-name field holds two words,5a6a04,"Симонова, Антонина Петровна",1908-09,balletartists_1908-09_MSK_p003,69.,Симонова,Антонина Петровна,
+first-name field holds two words,38d2fe,"Славинскій, Болеславъ Феликсовичъ",1896-97,musicians_1896-97_MSK_p003,27.,Славинскій,Болеславъ Феликсовичъ,
+first-name field holds two words,38d2fe,"Славинскій, Болеславъ Феликсовичъ",1900-01,musicians_1900-01_MSK_p004,24.,Славинскій,Болеславъ Феликсовичъ,
+first-name field holds two words,44615e,"Слѣпуховъ, Никифоръ Кузьмичъ",1896-97,musicians_1896-97_MSK_p003,28.,Слѣпуховъ,Никіфоръ Кузьмичъ,
+first-name field holds two words,44615e,"Слѣпуховъ, Никифоръ Кузьмичъ",1900-01,musicians_1900-01_MSK_p004,25.,Слѣпуховъ,Никіфоръ Кузьмичъ,
+first-name field holds two words,a3ab4e,"Снѣжинская, Марія Александровна",1908-09,balletartists_1908-09_MSK_p003,70.,Снѣжинская,Марія Александровна,
+first-name field holds two words,afeef8,"Соболевъ, Александръ Алексѣевичъ",1896-97,musicians_1896-97_MSK_p003,29.,Соболевъ,Александръ Алексѣевичъ,
+first-name field holds two words,afeef8,"Соболевъ, Александръ Алексѣевичъ",1900-01,musicians_1900-01_MSK_p004,26.,Соболевъ,Александръ Алексѣевичъ,
+first-name field holds two words,5127e0,"Соколова, Татьяна Александровна",1908-09,balletartists_1908-09_MSK_p003,71.,Соколова,Татьяна Александровна,
+first-name field holds two words,15a825,"Станиславская, Вѣра Аркадьевна",1908-09,balletartists_1908-09_MSK_p003,72.,Станиславская,Вѣра Аркадьевна,
+first-name field holds two words,36f423,"Старженецкій-Лаппа, Владиміръ Павловичъ",1900-01,administration_1900-01_p000,,Старженецкій-Лаппа,Владиміръ Павловичъ,
+first-name field holds two words,2bc295,"Столяровъ, Семенъ Ивановичъ",1896-97,musicians_1896-97_MSK_p003,30.,Столяровъ,Семенъ Ивановичъ,
+first-name field holds two words,2bc295,"Столяровъ, Семенъ Ивановичъ",1900-01,musicians_1900-01_MSK_p004,27.,Столяровъ,Семенъ Ивановичъ,
+first-name field holds two words,30e726,"Терентьевъ, Владиміръ Степановичъ",1896-97,musicians_1896-97_MSK_p003,31.,Терентьевъ,Владиміръ Степановичъ,
+first-name field holds two words,30e726,"Терентьевъ, Владиміръ Степановичъ",1900-01,musicians_1900-01_MSK_p004,28.,Терентьевъ,Владиміръ Степановичъ,
+first-name field holds two words,272157,"Тренинская, Анна Ѳедоровна",1908-09,balletartists_1908-09_MSK_p003,73.,Тренинская,Анна Федоровна,
+first-name field holds two words,775cc0,"Фарскій, Альбертъ Карловичъ",1896-97,musicians_1896-97_MSK_p003,33.,Фарскій,Альбертъ Карловичъ,
+first-name field holds two words,775cc0,"Фарскій, Альбертъ Карловичъ",1896-97,musicians_1896-97_MSK_p003,,Фарскій,Альбертъ Карловичъ,
+first-name field holds two words,775cc0,"Фарскій, Альбертъ Карловичъ",1900-01,musicians_1900-01_MSK_p004,29.,Фарскій,Альбертъ Карловичъ,
+first-name field holds two words,363c8a,"Хитрово, Георгій Михайловичъ",1900-01,administration_1900-01_p000,6.,Хитрово,Георгій Михайловичъ,
+first-name field holds two words,9884d2,"Хоцевичъ, Елена Ивановна",1908-09,balletartists_1908-09_MSK_p003,74.,Хоцевичъ,Елена Ивановна,
+first-name field holds two words,1d41c0,"Черепанова, Анна Андреевна",1908-09,balletartists_1908-09_MSK_p003,75.,Черепанова,Анна Андреевна,
+first-name field holds two words,155e89,"Чернобаева, Нина Сергѣевна",1908-09,balletartists_1908-09_MSK_p003,76.,Чернобаева,Нина Сергѣевна,
+first-name field holds two words,6592bf,"Чичелева, Елизавета Васильевна",1908-09,balletartists_1908-09_MSK_p003,77.,Чичелева,Елизавета Васильевна,
+first-name field holds two words,4628ae,"Чумакова, Анна Дмитріевна",1908-09,balletartists_1908-09_MSK_p003,78.,Чумакова,Анна Дмитріевна,
+first-name field holds two words,55e4ba,"Шаломытова, Антонина Михайловна",1908-09,balletartists_1908-09_MSK_p003,79.,Шаломытова,Антонина Михайловна,
+first-name field holds two words,3593df,"Шелепина 2-я, Александра Ивановна",1908-09,balletartists_1908-09_MSK_p003,81.,Шелепина 2-я,Александра Ивановна,
+first-name field holds two words,2cec96,"Шелепина, Вѣра Ивановна",1908-09,balletartists_1908-09_MSK_p003,80.,Шелепина 1-я,Вѣра Ивановна,
+first-name field holds two words,2308d3,"Шидловская, Вѣра Николаевна",1908-09,balletartists_1908-09_MSK_p003,82.,Шидловская,Вѣра Николаевна,
+first-name field holds two words,31883d,"Штернбергъ, Василій Васильевичъ",1891-92,musicians_1891-92_MSK_p002,93.,Штернбергъ,Василій Васильевичъ,
+first-name field holds two words,31883d,"Штернбергъ, Василій Васильевичъ",1892-93,musicians_1892-93_MSK_p002,92.,Штернбергъ,Василій Васильевичъ,
+first-name field holds two words,303c46,"Шульцевъ, Николай Константиновичъ",1896-97,musicians_1896-97_MSK_p003,36.,Шульцевъ,Николай Константиновичъ,
+first-name field holds two words,303c46,"Шульцевъ, Николай Константиновичъ",1900-01,musicians_1900-01_MSK_p004,31.,Шульцевъ,Николай Константиновичъ,
+first-name field holds two words,1bde89,"Эккертъ, Фердинандъ Фердинандовичъ",1900-01,musicians_1900-01_MSK_p004,116.,Эккертъ,Фердинандъ Фердинандовичъ,
+first-name field holds two words,1ccb76,"Эрдели, Ксенія Александровна",1900-01,musicians_1900-01_MSK_p004,117.,Эрдели,Ксенія Александровна,
+first-name field holds two words,2f1271,"Ямикъ, Николай Густавовичъ",1896-97,musicians_1896-97_MSK_p003,38.,Ямикъ,Николай Густавовичъ,
+first-name field holds two words,2f1271,"Ямикъ, Николай Густавовичъ",1900-01,musicians_1900-01_MSK_p004,32.,Ямикъ,Николай Густавовичъ,
+first-name field holds two words,2f9d99,"Яншиновъ, Алексѣй Ивановичъ",1891-92,musicians_1891-92_MSK_p002,97.,Яншиновъ,Алексѣй Ивановичъ,
+first-name field holds two words,2f9d99,"Яншиновъ, Алексѣй Ивановичъ",1892-93,musicians_1892-93_MSK_p002,96.,Яншиновъ,Алексѣй Ивановичъ,
+first-name field holds two words,2f9d99,"Яншиновъ, Алексѣй Ивановичъ",1900-01,musicians_1900-01_MSK_p004,120.,Яньшиновъ,Алексѣй Ивановичъ,
+first-name field holds two words,74f144,"Ячменева, Софья Сергѣевна",1908-09,balletartists_1908-09_MSK_p003,83.,Ячменева,Софья Сергѣевна,
+first-name field holds two words,10f2ec,"фонъ-Нольте, Иванъ Константиновичъ",1890-91,musicians_1890-91_MSK_p001,55.,фонъ-Нольте,Иванъ Константиновичъ,
+first-name field holds two words,05d905,"Ѳедорова 2-я, Софья Васильевна",1908-09,balletartists_1908-09_MSK_p003,85.,Ѳедорова 2-я,Софья Васильевна,
+first-name field holds two words,430a7a,"Ѳедоровъ, Николай Александровичъ",1891-92,musicians_1891-92_MSK_p002,98.,Ѳедоровъ,Николай Александровичъ,
+first-name field holds two words,430a7a,"Ѳедоровъ, Николай Александровичъ",1892-93,musicians_1892-93_MSK_p002,97.,Ѳедоровъ,Николай Александровичъ,
+first-name field holds two words,430a7a,"Ѳедоровъ, Николай Александровичъ",1900-01,musicians_1900-01_MSK_p004,121.,Ѳедоровъ,Николай Александровичъ,
+no first name,4671b1,"Алексѣенко, Иванъ Васильевичъ",1890-91,musicians_1890-91_SP_p002,1.,Алексѣенко,,
+no first name,4671b1,"Алексѣенко, Иванъ Васильевичъ",1891-92,musicians_1891-92_SP_p002,1.,Алексѣенко,,
+no first name,4671b1,"Алексѣенко, Иванъ Васильевичъ",1892-93,musicians_1892-93_SP_p002,1.,Алексѣенко,,
+no first name,348cd1,"Альбрехтъ, Эдуардъ",1890-91,musicians_1890-91_MSK_p002,2.,Альбрехтъ,,
+no first name,348cd1,"Альбрехтъ, Эдуардъ",1891-92,musicians_1891-92_MSK_p002,2.,Альбрехтъ,,
+no first name,348cd1,"Альбрехтъ, Эдуардъ",1892-93,musicians_1892-93_MSK_p002,2.,Альбрехтъ,,
+no first name,26692a,"Аспергеръ, Оскаръ",1890-91,musicians_1890-91_MSK_p003,3.,Аспернеръ,,
+no first name,26692a,"Аспергеръ, Оскаръ",1891-92,musicians_1891-92_MSK_p002,3.,Аспергеръ,,
+no first name,26692a,"Аспергеръ, Оскаръ",1892-93,musicians_1892-93_MSK_p002,3.,Аспергеръ,,
+no first name,700824,Балашова,1910-11,balletartists_1910-11_SP_p005,2.,Балашова,,
+no first name,4d09ab,"Барковскій, Оттонъ Романовичъ",1890-91,musicians_1890-91_SP_p002,3.,Барковскій,,
+no first name,4d09ab,"Барковскій, Оттонъ Романовичъ",1891-92,musicians_1891-92_SP_p002,3.,Барковскій,,
+no first name,4d09ab,"Барковскій, Оттонъ Романовичъ",1892-93,musicians_1892-93_SP_p002,3.,Барковскій,,
+no first name,39d878,"Берръ, Францъ Францевичъ",1890-91,musicians_1890-91_SP_p002,5.,Берръ,,
+no first name,39d878,"Берръ, Францъ Францевичъ",1891-92,musicians_1891-92_SP_p002,5.,Берръ,,
+no first name,39d878,"Берръ, Францъ Францевичъ",1892-93,musicians_1892-93_SP_p002,5.,Берръ,,
+no first name,d594ac,"Биндеръ, Генрихъ Антоновичъ",1890-91,musicians_1890-91_SP_p002,6.,Биндеръ,,
+no first name,d594ac,"Биндеръ, Генрихъ Антоновичъ",1891-92,musicians_1891-92_SP_p002,6.,Биндеръ,,
+no first name,d594ac,"Биндеръ, Генрихъ Антоновичъ",1892-93,musicians_1892-93_SP_p002,6.,Биндеръ,,
+no first name,c793d5,"Большаковъ, Іосифъ Владиміровичъ",1890-91,musicians_1890-91_MSK_p003,5.,Большаковъ,,
+no first name,c793d5,"Большаковъ, Іосифъ Владиміровичъ",1891-92,musicians_1891-92_MSK_p002,5.,Большаковъ,,
+no first name,c793d5,"Большаковъ, Іосифъ Владиміровичъ",1892-93,musicians_1892-93_MSK_p002,5.,Большаковъ,,
+no first name,01bc4e,"Бѣлкинъ, Сергѣй Сергѣевичъ",1890-91,musicians_1890-91_SP_p003,9.,Бѣлкинъ,,
+no first name,01bc4e,"Бѣлкинъ, Сергѣй Сергѣевичъ",1891-92,musicians_1891-92_SP_p003,9.,Бѣлкинъ,,
+no first name,01bc4e,"Бѣлкинъ, Сергѣй Сергѣевичъ",1892-93,musicians_1892-93_SP_p002,9.,Бѣлкинъ,,
+no first name,6b1ba5,"Бѣлявскій, Гвидонъ Ивановичъ",1890-91,musicians_1890-91_SP_p003,10.,Бѣлявскій,,
+no first name,6b1ba5,"Бѣлявскій, Гвидонъ Ивановичъ",1891-92,musicians_1891-92_SP_p003,10.,Бѣлявскій,,
+no first name,6b1ba5,"Бѣлявскій, Гвидонъ Ивановичъ",1892-93,musicians_1892-93_SP_p002,10.,Бѣлявскій,,
+no first name,ccef34,Валининъ,1901-02,balletartists_1901-02_MSK_p005,12.,Валининъ,,
+no first name,0096a4,"Вальтеръ 2-й, Петръ Ивановичъ",1890-91,musicians_1890-91_SP_p003,11.,Вальтеръ 2-й,,
+no first name,0096a4,"Вальтеръ 2-й, Петръ Ивановичъ",1891-92,musicians_1891-92_SP_p003,11.,Вальтеръ 2-й,,
+no first name,0096a4,"Вальтеръ 2-й, Петръ Ивановичъ",1892-93,musicians_1892-93_SP_p002,11.,Валтеръ 2-й,,
+no first name,00d680,"Вихера, Іосифъ",1890-91,musicians_1890-91_MSK_p003,7.,Вихера,,
+no first name,00d680,"Вихера, Іосифъ",1891-92,musicians_1891-92_MSK_p002,7.,Вихера,,
+no first name,00d680,"Вихера, Іосифъ",1892-93,musicians_1892-93_MSK_p002,7.,Вихера,,
+no first name,4b9294,"Воронцовъ, Владиміръ Васильевичъ",1901-02,balletartists_1901-02_MSK_p005,14.,Воронцовъ,,
+no first name,a550ac,Габріель,1890-91,theaterschoolstaff_1890-91_p001,4.,Габріель,,
+no first name,a550ac,Габріель,1891-92,theaterschoolstaff_1891-92_p001,4.,Габріель,,
+no first name,7029d5,Гавронскій,1894-95,theaterschoolstaff_1894-95_p001,4.,Гавронскій,,
+no first name,7029d5,Гавронскій,1895-96,theaterschoolstaff_1895-96_p001,4.,Гавронскій,,
+no first name,7029d5,Гавронскій,1896-97,theaterschoolstaff_1896-97_p001,4.,Гавронскій,,
+no first name,7029d5,Гавронскій,1897-98,theaterschoolstaff_1897-98_p001,4.,Гавронскій,,
+no first name,7029d5,Гавронскій,1898-99,theaterschoolstaff_1898-99_p001,2.,Гавронскій,,
+no first name,7029d5,Гавронскій,1899-00,theaterschoolstaff_1899-00_p001,4.,Гавронскій,,
+no first name,7029d5,Гавронскій,1900-01,theaterschoolstaff_1900-01_p001,5.,Гавронскій,,
+no first name,7029d5,Гавронскій,1901-02,theaterschoolstaff_1901-02_p001,5.,Гавронскій,,
+no first name,7029d5,Гавронскій,1902-03,theaterschoolstaff_1902-03_p001,5.,Гавронскій,,
+no first name,00aa28,"Гейнъ, Юлій",1890-91,musicians_1890-91_MSK_p003,8.,Гейнъ,,
+no first name,00aa28,"Гейнъ, Юлій",1891-92,musicians_1891-92_MSK_p002,8.,Гейнъ,,
+no first name,00aa28,"Гейнъ, Юлій",1892-93,musicians_1892-93_MSK_p002,8.,Гейнъ,,
+no first name,434cb5,"Гейслеръ, Венцель",1890-91,musicians_1890-91_MSK_p003,9.,Гейслеръ,,
+no first name,434cb5,"Гейслеръ, Венцель",1891-92,musicians_1891-92_MSK_p002,9.,Гейслеръ,,
+no first name,434cb5,"Гейслеръ, Венцель",1892-93,musicians_1892-93_MSK_p002,9.,Гейслеръ,,
+no first name,677ad3,Гельцеръ,1910-11,balletartists_1910-11_SP_p005,1.,Гельцеръ,,
+no first name,faf538,"Гельцеръ, (Китри)",1909-10,balletartists_1909-10_SP_p005,,Гельцеръ,,(Китри)
+no first name,05e341,"Гильбертъ, Рудольфъ-Эдуардъ",1890-91,musicians_1890-91_MSK_p003,10.,Гильбертъ,,
+no first name,05e341,"Гильбертъ, Рудольфъ-Эдуардъ",1891-92,musicians_1891-92_MSK_p002,10.,Гильбертъ,,
+no first name,05e341,"Гильбертъ, Рудольфъ-Эдуардъ",1892-93,musicians_1892-93_MSK_p002,10.,Гильбертъ,,
+no first name,233bd1,"Гильдебрандтъ, Рихардъ Николаевичъ",1890-91,musicians_1890-91_SP_p003,15.,Гильдебрандтъ,,
+no first name,233bd1,"Гильдебрандтъ, Рихардъ Николаевичъ",1891-92,musicians_1891-92_SP_p003,15.,Гильдебрандтъ,,
+no first name,233bd1,"Гильдебрандтъ, Рихардъ Николаевичъ",1892-93,musicians_1892-93_SP_p002,15.,Гильдебрандтъ,,
+no first name,19b066,Голласъ,1890-91,musicians_1890-91_MSK_p003,11.,Голласъ,,
+no first name,19b066,Голласъ,1891-92,musicians_1891-92_MSK_p002,11.,Голласъ,,
+no first name,19b066,Голласъ,1892-93,musicians_1892-93_MSK_p002,11.,Голласъ,,
+no first name,7e3d60,"Гофманъ, Іосифъ",1890-91,musicians_1890-91_MSK_p003,12.,Гофманъ,,
+no first name,7e3d60,"Гофманъ, Іосифъ",1891-92,musicians_1891-92_MSK_p002,12.,Гофманъ,,
+no first name,7e3d60,"Гофманъ, Іосифъ",1892-93,musicians_1892-93_MSK_p002,12.,Гофманъ,,
+no first name,12bd1e,Грабовская,1901-02,balletartists_1901-02_MSK_p001,22.,Грабовская,,
+no first name,1100cf,"Грецкій, Аполлонъ Адальбертовичъ",1890-91,musicians_1890-91_MSK_p003,13.,Грецкій,,
+no first name,1100cf,"Грецкій, Аполлонъ Адальбертовичъ",1891-92,musicians_1891-92_MSK_p002,13.,Грецкій,,
+no first name,1100cf,"Грецкій, Аполлонъ Адальбертовичъ",1892-93,musicians_1892-93_MSK_p002,13.,Грецкій,,
+no first name,3d3d25,Грибенъ,1890-91,musicians_1890-91_SP_p003,18.,Грибенъ,,
+no first name,3d3d25,Грибенъ,1891-92,musicians_1891-92_SP_p003,18.,Грибенъ,,
+no first name,3d3d25,Грибенъ,1892-93,musicians_1892-93_SP_p002,18.,Грибенъ,,
+no first name,34abdf,Гримальди,1901-02,balletartists_1901-02_MSK_p001,27.,Гримальди,,
+no first name,92bf91,"Гуманъ, Вильгельмъ Васильевичъ",1890-91,musicians_1890-91_SP_p003,20.,Гуманъ,,
+no first name,92bf91,"Гуманъ, Вильгельмъ Васильевичъ",1891-92,musicians_1891-92_SP_p003,20.,Гуманъ,,
+no first name,92bf91,"Гуманъ, Вильгельмъ Васильевичъ",1892-93,musicians_1892-93_SP_p003,20.,Гуманъ,,
+no first name,ba786d,Дмитріева,1901-02,balletartists_1901-02_MSK_p001,32.,Дмитріева,,
+no first name,3f13d9,"Добровъ, Петръ Матвѣевичъ",1890-91,musicians_1890-91_SP_p003,21.,Добровъ,,
+no first name,3f13d9,"Добровъ, Петръ Матвѣевичъ",1891-92,musicians_1891-92_SP_p003,21.,Добровъ,,
+no first name,3f13d9,"Добровъ, Петръ Матвѣевичъ",1892-93,musicians_1892-93_SP_p003,21.,Добровъ,,
+no first name,bcb331,Домашева,1901-02,balletartists_1901-02_MSK_p001,31.,Домашева,,
+no first name,3e54a0,Дьяченко-Краткая,1901-02,balletartists_1901-02_MSK_p001,35.,Дьяченко-Краткая,,
+no first name,31128c,"Зозель, Павелъ",1890-91,musicians_1890-91_MSK_p003,17.,Зозель,,
+no first name,31128c,"Зозель, Павелъ",1891-92,musicians_1891-92_MSK_p002,17.,Зозель,,
+no first name,31128c,"Зозель, Павелъ",1892-93,musicians_1892-93_MSK_p002,17.,Зозель,,
+no first name,3f67a7,"Золотаренко 2-й, Павелъ Петровичъ",1890-91,musicians_1890-91_MSK_p003,18.,Золотаренко,,
+no first name,3f67a7,"Золотаренко 2-й, Павелъ Петровичъ",1891-92,musicians_1891-92_MSK_p002,18.,Золотаренко,,
+no first name,3f67a7,"Золотаренко 2-й, Павелъ Петровичъ",1892-93,musicians_1892-93_MSK_p002,18.,Золотаренко,,
+no first name,5e7560,Иванова,1901-02,balletartists_1901-02_MSK_p001,42.,Иванова,,
+no first name,4a0b36,"Кажданъ, Николай Меѳодіевичъ",1890-91,musicians_1890-91_MSK_p003,21.,Кажданъ,,
+no first name,4a0b36,"Кажданъ, Николай Меѳодіевичъ",1891-92,musicians_1891-92_MSK_p002,21.,Кажданъ,,
+no first name,4a0b36,"Кажданъ, Николай Меѳодіевичъ",1892-93,musicians_1892-93_MSK_p002,21.,Кажданъ,,
+no first name,40c1f2,"Казаковъ, Сергѣй Аѳанасьевичъ",1890-91,musicians_1890-91_SP_p003,28.,Казаковъ,,
+no first name,40c1f2,"Казаковъ, Сергѣй Аѳанасьевичъ",1891-92,musicians_1891-92_SP_p003,28.,Казаковъ,,
+no first name,40c1f2,"Казаковъ, Сергѣй Аѳанасьевичъ",1892-93,musicians_1892-93_SP_p003,28.,Казаковъ,,
+no first name,1f684e,Каминскій,1890-91,musicians_1890-91_SP_p003,29.,Каминскій,,
+no first name,f7565f,Каминскій,1891-92,musicians_1891-92_SP_p003,29.,Каминскій,,
+no first name,f7565f,Каминскій,1892-93,musicians_1892-93_SP_p003,29.,Каминскій,,
+no first name,f09c50,Карцевъ,1901-02,balletartists_1901-02_MSK_p006,31.,Карцевъ,,
+no first name,6146f8,"Кведнау, Фридрихъ",1890-91,musicians_1890-91_MSK_p003,22.,Кведнау,,
+no first name,6146f8,"Кведнау, Фридрихъ",1891-92,musicians_1891-92_MSK_p002,22.,Кведнау,,
+no first name,6146f8,"Кведнау, Фридрихъ",1892-93,musicians_1892-93_MSK_p002,22.,Кведнау,,
+no first name,11d1ea,"Керкешко, Ѳедоръ Игнатьевичъ",1890-91,musicians_1890-91_SP_p003,32.,Керкешко,,
+no first name,11d1ea,"Керкешко, Ѳедоръ Игнатьевичъ",1891-92,musicians_1891-92_SP_p003,32.,Керкешко,,
+no first name,11d1ea,"Керкешко, Ѳедоръ Игнатьевичъ",1892-93,musicians_1892-93_SP_p003,32.,Керкешко,,
+no first name,bcb7c2,Коноваловъ,1901-02,balletartists_1901-02_MSK_p006,33.,Коноваловъ,,
+no first name,cf5582,"Кремеръ, Августъ",1890-91,musicians_1890-91_MSK_p003,25.,Кремеръ,,
+no first name,cf5582,"Кремеръ, Августъ",1891-92,musicians_1891-92_MSK_p002,25.,Кремеръ,,
+no first name,cf5582,"Кремеръ, Августъ",1892-93,musicians_1892-93_MSK_p002,25.,Кремеръ,,
+no first name,d627fa,"Кудике, Августъ",1890-91,musicians_1890-91_MSK_p003,29.,Кудике,,
+no first name,d627fa,"Кудике, Августъ",1891-92,musicians_1891-92_MSK_p002,29.,Кудике,,
+no first name,d627fa,"Кудике, Августъ",1892-93,musicians_1892-93_MSK_p002,29.,Кудике,,
+no first name,964eb7,Кузнецовъ 2-й,1910-11,balletartists_1910-11_MSK_p005,30.,Кузнецовъ 2-й,,
+no first name,0434c2,"Кункели, Оскаръ Альбертовичъ",1890-91,musicians_1890-91_SP_p003,33.,Кункели,,
+no first name,0434c2,"Кункели, Оскаръ Альбертовичъ",1891-92,musicians_1891-92_SP_p003,33.,Кункели,,
+no first name,0434c2,"Кункели, Оскаръ Альбертовичъ",1892-93,musicians_1892-93_SP_p003,33.,Кункели,,
+no first name,7ca786,"Лебедевъ, Иванъ Григорьевичъ",1890-91,musicians_1890-91_MSK_p003,31.,Лебедевъ,,
+no first name,7ca786,"Лебедевъ, Иванъ Григорьевичъ",1891-92,musicians_1891-92_MSK_p002,31.,Лебедевъ,,
+no first name,7ca786,"Лебедевъ, Иванъ Григорьевичъ",1892-93,musicians_1892-93_MSK_p002,31.,Лебедевъ,,
+no first name,438cef,"Леманъ, Густавъ Августовичъ",1890-91,musicians_1890-91_SP_p003,34.,Леманъ,,
+no first name,438cef,"Леманъ, Густавъ Августовичъ",1891-92,musicians_1891-92_SP_p003,34.,Леманъ,,
+no first name,438cef,"Леманъ, Густавъ Августовичъ",1892-93,musicians_1892-93_SP_p003,34.,Леманъ,,
+no first name,0f9cd6,Ленская,1901-02,balletartists_1901-02_MSK_p002,55.,Ленская,,
+no first name,2bac3e,Ливенъ,1902-03,administration_1902-03_p000,3.,Ливенъ,,
+no first name,a5defb,Ливенъ,1903-04,administration_1903-04_p000,3.,Ливенъ,,
+no first name,2bac3e,Ливенъ,1904-05,administration_1904-05_p000,3.,Ливенъ,,
+no first name,2bac3e,Ливенъ,1905-06,administration_1905-06_p000,2.,Ливенъ,,
+no first name,362ca9,"Литтихъ, Людвигъ Людвиговичъ",1890-91,musicians_1890-91_SP_p003,36.,Литтихъ,,
+no first name,362ca9,"Литтихъ, Людвигъ Людвиговичъ",1891-92,musicians_1891-92_SP_p003,36.,Литтихъ,,
+no first name,1d19a4,"Манкопъ, Ѳедоръ Ѳедоровичъ",1890-91,musicians_1890-91_SP_p003,38.,Манкопъ,,
+no first name,1d19a4,"Манкопъ, Ѳедоръ Ѳедоровичъ",1891-92,musicians_1891-92_SP_p003,38.,Манкопъ,,
+no first name,1d19a4,"Манкопъ, Ѳедоръ Ѳедоровичъ",1892-93,musicians_1892-93_SP_p003,37.,Манкопъ,,
+no first name,12fa89,"Мейеръ, Валентинъ Іосифовичъ",1890-91,musicians_1890-91_SP_p003,39.,Мейеръ,,
+no first name,12fa89,"Мейеръ, Валентинъ Іосифовичъ",1891-92,musicians_1891-92_SP_p003,39.,Мейеръ,,
+no first name,12fa89,"Мейеръ, Валентинъ Іосифовичъ",1892-93,musicians_1892-93_SP_p003,38.,Мейеръ,,
+no first name,30de89,"Морозовъ, Сергѣй Яковлевичъ",1890-91,musicians_1890-91_SP_p003,40.,Морозовъ,,
+no first name,30de89,"Морозовъ, Сергѣй Яковлевичъ",1891-92,musicians_1891-92_SP_p003,40.,Морозовъ,,
+no first name,30de89,"Морозовъ, Сергѣй Яковлевичъ",1892-93,musicians_1892-93_SP_p003,39.,Морозовъ,,
+no first name,2c7c75,"Нигофъ, Андрей Андреевичъ",1890-91,musicians_1890-91_SP_p003,41.,Нигофъ,,
+no first name,2c7c75,"Нигофъ, Андрей Андреевичъ",1891-92,musicians_1891-92_SP_p003,41.,Нигофъ,,
+no first name,2c7c75,"Нигофъ, Андрей Андреевичъ",1892-93,musicians_1892-93_SP_p003,40.,Нигофъ,,
+no first name,873191,Николаева 3-я,1901-02,balletartists_1901-02_MSK_p002,71.,Николаева 3-я,,
+no first name,237c01,"Орловскій, Карлъ Карловичъ",1890-91,musicians_1890-91_SP_p003,42.,Орловскій,,
+no first name,237c01,"Орловскій, Карлъ Карловичъ",1891-92,musicians_1891-92_SP_p003,42.,Орловскій,,
+no first name,237c01,"Орловскій, Карлъ Карловичъ",1892-93,musicians_1892-93_SP_p003,41.,Орловскій,,
+no first name,50d744,Орловъ,1901-02,balletartists_1901-02_MSK_p007,49.,Орловъ,,
+no first name,384640,"Осиповъ, Александръ Іосифовичъ",1890-91,musicians_1890-91_SP_p003,43.,Осиповъ,,
+no first name,384640,"Осиповъ, Александръ Іосифовичъ",1891-92,musicians_1891-92_SP_p003,43.,Осиповъ,,
+no first name,384640,"Осиповъ, Александръ Іосифовичъ",1892-93,musicians_1892-93_SP_p003,42.,Осиповъ,,
+no first name,1be0c9,"Очиневъ, Михаилъ Ивановичъ",1890-91,musicians_1890-91_SP_p003,44.,Очиневъ,,
+no first name,1be0c9,"Очиневъ, Михаилъ Ивановичъ",1891-92,musicians_1891-92_SP_p003,44.,Очиневъ,,
+no first name,1be0c9,"Очиневъ, Михаилъ Ивановичъ",1892-93,musicians_1892-93_SP_p003,43.,Очиневъ,,
+no first name,f4f8dd,Павлова,1901-02,balletartists_1901-02_MSK_p003,75.,Павлова,,
+no first name,4eb189,"Павловъ, Михаилъ Львовичъ",1890-91,musicians_1890-91_MSK_p003,35.,Павловъ,,
+no first name,4eb189,"Павловъ, Михаилъ Львовичъ",1891-92,musicians_1891-92_MSK_p002,35.,Павловъ,,
+no first name,4eb189,"Павловъ, Михаилъ Львовичъ",1892-93,musicians_1892-93_MSK_p002,35.,Павловъ,,
+no first name,2e44c8,Пановъ,1901-02,balletartists_1901-02_MSK_p007,51.,Пановъ,,
+no first name,a997ad,"Пашъ, Леопольдъ",1890-91,musicians_1890-91_MSK_p003,36.,Пашъ,,
+no first name,a997ad,"Пашъ, Леопольдъ",1891-92,musicians_1891-92_MSK_p002,36.,Пашъ,,
+no first name,0087f3,"Пекарскій, Давидъ Исаевичъ",1890-91,musicians_1890-91_MSK_p003,37.,Пекарскій,,
+no first name,0087f3,"Пекарскій, Давидъ Исаевичъ",1891-92,musicians_1891-92_MSK_p002,37.,Пекарскій,,
+no first name,0087f3,"Пекарскій, Давидъ Исаевичъ",1892-93,musicians_1892-93_MSK_p002,36.,Пекарскій,,
+no first name,0cfed2,"Пертель, Эдуардъ Егоровичъ",1890-91,musicians_1890-91_SP_p003,46.,Пертель,,
+no first name,0cfed2,"Пертель, Эдуардъ Егоровичъ",1891-92,musicians_1891-92_SP_p003,46.,Пертель,,
+no first name,0cfed2,"Пертель, Эдуардъ Егоровичъ",1892-93,musicians_1892-93_SP_p003,45.,Пертель,,
+no first name,3efcd2,"Петровъ, Василій Венедиктовичъ",1890-91,musicians_1890-91_MSK_p003,38.,Петровъ,,
+no first name,3efcd2,"Петровъ, Василій Венедиктовичъ",1891-92,musicians_1891-92_MSK_p002,38.,Петровъ,,
+no first name,3efcd2,"Петровъ, Василій Венедиктовичъ",1892-93,musicians_1892-93_MSK_p003,37.,Петровъ,,
+no first name,623ba1,"Плесковъ, Александръ Ивановичъ",1890-91,musicians_1890-91_SP_p003,47.,Плесковъ,,
+no first name,623ba1,"Плесковъ, Александръ Ивановичъ",1891-92,musicians_1891-92_SP_p003,47.,Плесковъ,,
+no first name,623ba1,"Плесковъ, Александръ Ивановичъ",1892-93,musicians_1892-93_SP_p003,46.,Плесковъ,,
+no first name,6593cf,"Подруцкій, Александръ Панфиловичъ",1890-91,musicians_1890-91_MSK_p003,39.,Подруцкій,,
+no first name,6593cf,"Подруцкій, Александръ Панфиловичъ",1891-92,musicians_1891-92_MSK_p003,39.,Подруцкій,,
+no first name,6593cf,"Подруцкій, Александръ Панфиловичъ",1892-93,musicians_1892-93_MSK_p003,38.,Подруцкій,,
+no first name,6a1253,"Преображенскій, Павелъ Ивановичъ",1890-91,musicians_1890-91_SP_p003,48.,Преображенскій,,
+no first name,6a1253,"Преображенскій, Павелъ Ивановичъ",1891-92,musicians_1891-92_SP_p003,48.,Преображенскій,,
+no first name,6a1253,"Преображенскій, Павелъ Ивановичъ",1892-93,musicians_1892-93_SP_p003,47.,Преображенскій,,
+no first name,088ec9,Піотровичъ,1890-91,theaterschoolstaff_1890-91_p002,20.,Піотровичъ,,
+no first name,088ec9,Піотровичъ,1891-92,theaterschoolstaff_1891-92_p002,20.,Піотровичъ,,
+no first name,088ec9,Піотровичъ,1892-93,theaterschoolstaff_1892-93_p001,21.,Піотровичъ,,
+no first name,088ec9,Піотровичъ,1893-94,theaterschoolstaff_1893-94_p001,19.,Піотровичъ,,
+no first name,167513,"Рамбоусекъ, Іосифъ",1890-91,musicians_1890-91_MSK_p003,42.,Рамбоусекъ,,
+no first name,167513,"Рамбоусекъ, Іосифъ",1891-92,musicians_1891-92_MSK_p003,42.,Рамбоусекъ,,
+no first name,167513,"Рамбоусекъ, Іосифъ",1892-93,musicians_1892-93_MSK_p003,41.,Рамбоусекъ,,
+no first name,bbf249,"Ромашковъ 1-й, Капитонъ Андреевичъ",1890-91,musicians_1890-91_MSK_p003,43.,Ромашковъ,,
+no first name,bbf249,"Ромашковъ 1-й, Капитонъ Андреевичъ",1891-92,musicians_1891-92_MSK_p003,43.,Ромашковъ,,
+no first name,bbf249,"Ромашковъ 1-й, Капитонъ Андреевичъ",1892-93,musicians_1892-93_MSK_p003,42.,Ромашковъ,,
+no first name,1cb2a0,"Руссъ, Іосифъ",1890-91,musicians_1890-91_MSK_p003,44.,Руссъ,,
+no first name,1cb2a0,"Руссъ, Іосифъ",1891-92,musicians_1891-92_MSK_p003,44.,Руссъ,,
+no first name,1cb2a0,"Руссъ, Іосифъ",1892-93,musicians_1892-93_MSK_p003,43.,Руссъ,,
+no first name,0779e5,Рѣпина,1901-02,balletartists_1901-02_MSK_p003,89.,Рѣпина,,
+no first name,c2510f,"Свобода, Венцель",1890-91,musicians_1890-91_MSK_p003,45.,Свобода,,
+no first name,c2510f,"Свобода, Венцель",1891-92,musicians_1891-92_MSK_p003,45.,Свобода,,
+no first name,c2510f,"Свобода, Венцель",1892-93,musicians_1892-93_MSK_p003,44.,Свобода,,
+no first name,28890d,Сенкусъ,1903-04,theaterschoolstaff_1903-04_p001,23.,Сенкусъ,,
+no first name,28890d,Сенкусъ,1904-05,theaterschoolstaff_1904-05_p001,24.,Сенкусъ,,
+no first name,28890d,Сенкусъ,1905-06,theaterschoolstaff_1905-06_p001,21.,Сенкусъ,,
+no first name,28890d,Сенкусъ,1906-07,theaterschoolstaff_1906-07_p001,21.,Сенкусъ,,
+no first name,28890d,Сенкусъ,1907-08,theaterschoolstaff_1907-08_p001,21.,Сенкусъ,,
+no first name,28890d,Сенкусъ,1908-09,theaterschoolstaff_1908-09_p001,19.,Сенкусъ,,
+no first name,28890d,Сенкусъ,1909-10,theaterschoolstaff_1909-10_p001,20.,Сенкусъ,,
+no first name,50af4a,Сенкусъ,1910-11,theaterschoolstaff_1910-11_p001,20.,Сенкусъ,,
+no first name,6f3aa9,"Слуцкій, Ицхекъ-Мейеръ",1890-91,musicians_1890-91_MSK_p003,46.,Слуцкій,,
+no first name,6f3aa9,"Слуцкій, Ицхекъ-Мейеръ",1891-92,musicians_1891-92_MSK_p003,46.,Слуцкій,,
+no first name,6f3aa9,"Слуцкій, Ицхекъ-Мейеръ",1892-93,musicians_1892-93_MSK_p003,45.,Слуцкій,,
+no first name,e3d044,"Снѣтковъ, Петръ Николаевичъ",1890-91,musicians_1890-91_SP_p003,49.,Снѣтковъ,,
+no first name,e3d044,"Снѣтковъ, Петръ Николаевичъ",1891-92,musicians_1891-92_SP_p003,49.,Снѣтковъ,,
+no first name,e3d044,"Снѣтковъ, Петръ Николаевичъ",1892-93,musicians_1892-93_SP_p003,48.,Снѣтковъ,,
+no first name,9e7b0c,Соколова,1901-02,balletartists_1901-02_MSK_p003,98.,Соколова,,
+no first name,a3fdae,Стобницкій,1902-03,theaterschoolstaff_1902-03_p001,6.,Стобницкій,,
+no first name,a3fdae,Стобницкій,1903-04,theaterschoolstaff_1903-04_p001,26.,Стобницкій,,
+no first name,087a9f,"Струкова, Марія Александровна",1901-02,balletartists_1901-02_MSK_p003,100.,Струкова,,
+no first name,09dddb,"Сѣмашко, Маріанъ Ромуальдовичъ",1892-93,musicians_1892-93_MSK_p003,46.,Сѣмашко,,
+no first name,62d2e6,"Тарнке 1-й, Густавъ Карловичъ",1890-91,musicians_1890-91_SP_p003,50.,Тарнке 1-й,,
+no first name,62d2e6,"Тарнке 1-й, Густавъ Карловичъ",1891-92,musicians_1891-92_SP_p003,50.,Тарнке 1-й,,
+no first name,62d2e6,"Тарнке 1-й, Густавъ Карловичъ",1892-93,musicians_1892-93_SP_p003,49.,Тарнке 1-й,,
+no first name,1a2112,"Тарнке 2-й, Ѳедоръ Карловичъ",1890-91,musicians_1890-91_SP_p003,51.,Тарнке 2-й,,
+no first name,1a2112,"Тарнке 2-й, Ѳедоръ Карловичъ",1891-92,musicians_1891-92_SP_p003,51.,Тарнке 2-й,,
+no first name,1a2112,"Тарнке 2-й, Ѳедоръ Карловичъ",1892-93,musicians_1892-93_SP_p003,50.,Тарнке 2-й,,
+no first name,5d5c98,"Туровичъ фонъ-Охота, Францъ-Феликсъ",1890-91,musicians_1890-91_MSK_p003,47.,Туровичъ фонъ Охота,,
+no first name,c83c92,"Туровичъ, фонъ-Охота",1892-93,musicians_1892-93_MSK_p003,47.,Туровичъ фонъ-Охота,,
+no first name,f38922,Фроловъ,1901-02,balletartists_1901-02_MSK_p008,70.,Фроловъ,,
+no first name,87998a,"Харитоновъ, Георгій Константиновичъ",1890-91,musicians_1890-91_SP_p004,54.,Харитоновъ,,
+no first name,87998a,"Харитоновъ, Георгій Константиновичъ",1891-92,musicians_1891-92_SP_p003,54.,Харитоновъ,,
+no first name,87998a,"Харитоновъ, Георгій Константиновичъ",1892-93,musicians_1892-93_SP_p003,53.,Харитоновъ,,
+no first name,76c2c7,"Хилле, Оскаръ Ѳедоровичъ",1890-91,musicians_1890-91_SP_p004,55.,Хилле,,
+no first name,76c2c7,"Хилле, Оскаръ Ѳедоровичъ",1891-92,musicians_1891-92_SP_p003,55.,Хилле,,
+no first name,76c2c7,"Хилле, Оскаръ Ѳедоровичъ",1892-93,musicians_1892-93_SP_p003,54.,Хилле,,
+no first name,20141e,"Цабель, Эдуардъ Альбертовичъ",1890-91,musicians_1890-91_SP_p004,56.,Цабель,,
+no first name,20141e,"Цабель, Эдуардъ Альбертовичъ",1891-92,musicians_1891-92_SP_p003,56.,Цабель,,
+no first name,20141e,"Цабель, Эдуардъ Альбертовичъ",1892-93,musicians_1892-93_SP_p003,55.,Цабель,,
+no first name,02b697,Царманъ 2-й,1901-02,balletartists_1901-02_MSK_p008,75.,Царманъ 2-й,,
+no first name,b3d3f6,"Царскій, Владиміръ Александровичъ",1890-91,musicians_1890-91_MSK_p004,50.,Царскій,,
+no first name,b3d3f6,"Царскій, Владиміръ Александровичъ",1891-92,musicians_1891-92_MSK_p003,50.,Царскій,,
+no first name,b3d3f6,"Царскій, Владиміръ Александровичъ",1892-93,musicians_1892-93_MSK_p003,50.,Царскій,,
+no first name,46e85f,"Цимбергъ, Александръ Артамоновичъ",1890-91,musicians_1890-91_SP_p004,57.,Цимбергъ,,
+no first name,46e85f,"Цимбергъ, Александръ Артамоновичъ",1891-92,musicians_1891-92_SP_p003,57.,Цимбергъ,,
+no first name,46e85f,"Цимбергъ, Александръ Артамоновичъ",1892-93,musicians_1892-93_SP_p003,56.,Цимбергъ,,
+no first name,16940f,"Циммерманъ, Василій Ивановичъ",1890-91,musicians_1890-91_SP_p004,58.,Циммерманъ,,
+no first name,16940f,"Циммерманъ, Василій Ивановичъ",1891-92,musicians_1891-92_SP_p003,58.,Циммерманъ,,
+no first name,16940f,"Циммерманъ, Василій Ивановичъ",1892-93,musicians_1892-93_SP_p003,57.,Циммерманъ,,
+no first name,f3d3c2,Шаломытова,1901-02,balletartists_1901-02_MSK_p004,114.,Шаломытова,,
+no first name,4924fd,"Шмидтъ, Иванъ Михайловичъ",1890-91,musicians_1890-91_SP_p004,59.,Шмидтъ,,
+no first name,4924fd,"Шмидтъ, Иванъ Михайловичъ",1891-92,musicians_1891-92_SP_p003,59.,Шмидтъ,,
+no first name,4924fd,"Шмидтъ, Иванъ Михайловичъ",1892-93,musicians_1892-93_SP_p003,58.,Шмидтъ,,
+no first name,044861,"Шнейдеръ, Германъ",1890-91,musicians_1890-91_MSK_p004,53.,Шнейдеръ,,
+no first name,044861,"Шнейдеръ, Германъ",1891-92,musicians_1891-92_MSK_p003,53.,Шнейдеръ,,
+no first name,044861,"Шнейдеръ, Германъ",1892-93,musicians_1892-93_MSK_p003,53.,Шнейдеръ,,
+no first name,6b2749,"Штаакъ, Константинъ Ѳедоровичъ",1890-91,musicians_1890-91_SP_p004,60.,Штаакъ,,
+no first name,6b2749,"Штаакъ, Константинъ Ѳедоровичъ",1891-92,musicians_1891-92_SP_p003,60.,Штаакъ,,
+no first name,6b2749,"Штаакъ, Константинъ Ѳедоровичъ",1892-93,musicians_1892-93_SP_p003,59.,Штаакъ,,
+no first name,0cec38,"Штадлеръ, Іосифъ",1890-91,musicians_1890-91_MSK_p004,54.,Штадлеръ,,
+no first name,0cec38,"Штадлеръ, Іосифъ",1891-92,musicians_1891-92_MSK_p003,54.,Штадлеръ,,
+no first name,0cec38,"Штадлеръ, Іосифъ",1892-93,musicians_1892-93_MSK_p003,54.,Штадлеръ,,
+no first name,0bb206,"Штаркъ, Андрей Андреевичъ",1890-91,musicians_1890-91_SP_p004,61.,Штаркъ,,
+no first name,0bb206,"Штаркъ, Андрей Андреевичъ",1891-92,musicians_1891-92_SP_p003,61.,Штаркъ,,
+no first name,0bb206,"Штаркъ, Андрей Андреевичъ",1892-93,musicians_1892-93_SP_p003,60.,Штаркъ,,
+no first name,31883d,"Штернбергъ, Василій Васильевичъ",1890-91,musicians_1890-91_MSK_p004,55.,Штернбергъ,,
+no first name,31883d,"Штернбергъ, Василій Васильевичъ",1891-92,musicians_1891-92_MSK_p003,55.,Штернбергъ,,
+no first name,31883d,"Штернбергъ, Василій Васильевичъ",1892-93,musicians_1892-93_MSK_p003,55.,Штернбергъ,,
+no first name,1ed836,"Штехертъ, Лебрехтъ Лебрехтовичъ",1890-91,musicians_1890-91_SP_p004,62.,Штехертъ,,
+no first name,1ed836,"Штехертъ, Лебрехтъ Лебрехтовичъ",1891-92,musicians_1891-92_SP_p003,62.,Штехертъ,,
+no first name,1ed836,"Штехертъ, Лебрехтъ Лебрехтовичъ",1892-93,musicians_1892-93_SP_p003,61.,Штехертъ,,
+no first name,042dd3,Щегловъ,1901-02,balletartists_1901-02_MSK_p008,83.,Щегловъ,,
+no first name,5252bf,"Энгель, Рейнгольдъ Ѳедоровичъ",1890-91,musicians_1890-91_SP_p004,65.,Энгель,,
+no first name,5252bf,"Энгель, Рейнгольдъ Ѳедоровичъ",1891-92,musicians_1891-92_SP_p003,65.,Энгель,,
+no first name,5252bf,"Энгель, Рейнгольдъ Ѳедоровичъ",1892-93,musicians_1892-93_SP_p003,64.,Энгель,,
+no first name,93f127,"Эрбъ, Константинъ Эдуардовичъ",1890-91,musicians_1890-91_SP_p004,66.,Эрбъ,,
+no first name,93f127,"Эрбъ, Константинъ Эдуардовичъ",1891-92,musicians_1891-92_SP_p003,66.,Эрбъ,,
+no first name,93f127,"Эрбъ, Константинъ Эдуардовичъ",1892-93,musicians_1892-93_SP_p003,65.,Эрбъ,,
+no first name,04f947,"Юмерихъ, Августъ",1890-91,musicians_1890-91_MSK_p004,56.,Юмерихъ,,
+no first name,04f947,"Юмерихъ, Августъ",1891-92,musicians_1891-92_MSK_p003,56.,Юмерихъ,,
+no first name,04f947,"Юмерихъ, Августъ",1892-93,musicians_1892-93_MSK_p003,56.,Юмерихъ,,
+no first name,e2884a,Ѳеоктистова,1901-02,balletartists_1901-02_MSK_p004,122.,Ѳеоктистова,,
+ordinal or digit in first name / patronymic,ef6b8c,"Александрова 1-я, Евгенія Михайловна",1892-93,balletartists_1892-93_SP_p000,2.,Александрова,1-я,Евгенія
+ordinal or digit in first name / patronymic,ef6b8c,"Александрова 1-я, Евгенія Михайловна",1904-05,balletartists_1904-05_SP_p000,1.,Александрова,1-я,Евгенія
+ordinal or digit in first name / patronymic,6273a1,"Александрова 2-я, Антонина Николаевна",1892-93,balletartists_1892-93_SP_p000,3.,Александрова,2-я,Антонина
+ordinal or digit in first name / patronymic,6273a1,"Александрова 2-я, Антонина Николаевна",1904-05,balletartists_1904-05_SP_p000,2.,Александрова,2-я,Антонина
+ordinal or digit in first name / patronymic,e9f2f0,"Александрова 3-я, Александра",1904-05,balletartists_1904-05_SP_p000,3.,Александрова,3-я,Александра
+ordinal or digit in first name / patronymic,7f212e,"Алексѣева 1-я, Вѣра Николаевна",1892-93,balletartists_1892-93_SP_p000,4.,Алексѣева,1-я,Вѣра
+ordinal or digit in first name / patronymic,53d334,"Алексѣева, Людмила Андреевна",1892-93,balletartists_1892-93_SP_p000,5.,Алексѣева,2-я,Людмила
+ordinal or digit in first name / patronymic,49b93c,"Алексѣевъ 2-й, Александръ Алексѣевичъ",1904-05,balletartists_1904-05_SP_p006,4.,Алексѣевъ,Александръ,2-й
+ordinal or digit in first name / patronymic,097408,"Бакеркина 2-я, Марія Алексѣевна",1904-05,balletartists_1904-05_SP_p000,8.,Бакеркина,2-я,Марія
+ordinal or digit in first name / patronymic,b66402,"Бакеркина, Надежда Алексѣевна",1904-05,balletartists_1904-05_SP_p000,7.,Бакеркина,1-я,Надежда
+ordinal or digit in first name / patronymic,3a04f3,"Брыкинъ, Дмитрій Константиновичъ",1891-92,balletartists_1891-92_MSK_p004,6.,Брыкинъ,2-й,Дмитрій
+ordinal or digit in first name / patronymic,53d20b,"Брыкинъ, Николай Константиновичъ",1891-92,balletartists_1891-92_MSK_p004,5.,Брыкинъ,1-й,Николай
+ordinal or digit in first name / patronymic,49135e,"Бѣлоусовъ, Геннадій Ивановичъ",1891-92,balletartists_1891-92_MSK_p004,8.,Бѣлоусовъ,1-й,Геннадій
+ordinal or digit in first name / patronymic,49135e,"Бѣлоусовъ, Геннадій Ивановичъ",1899-00,balletartists_1899-00_MSK_p006,10.,Бѣлоусовъ,1-й,Геннадій Ивановичъ
+ordinal or digit in first name / patronymic,29503f,"Бѣлоусовъ, Филиппъ Ивановичъ",1891-92,balletartists_1891-92_MSK_p004,9.,Бѣлоусовъ,2-й,Филиппъ
+ordinal or digit in first name / patronymic,29503f,"Бѣлоусовъ, Филиппъ Ивановичъ",1899-00,balletartists_1899-00_MSK_p006,11.,Бѣлоусовъ,2-й,Филиппъ Ивановичъ
+ordinal or digit in first name / patronymic,48edbc,"Воронковъ 1-й, Николай Ивановичъ",1894-95,balletartists_1894-95_SP_p005,14.,Воронковъ,1-й,Николай
+ordinal or digit in first name / patronymic,48edbc,"Воронковъ 1-й, Николай Ивановичъ",1896-97,balletartists_1896-97_SP_p005,13.,Воронковъ,"1-й, Николай",Ивановичъ
+ordinal or digit in first name / patronymic,1d7074,"Воронковъ 2-й, Иванъ Ивановичъ",1894-95,balletartists_1894-95_SP_p005,15.,Воронковъ,2-й,Иванъ
+ordinal or digit in first name / patronymic,1d7074,"Воронковъ 2-й, Иванъ Ивановичъ",1896-97,balletartists_1896-97_SP_p005,14.,Воронковъ,"2-й, Иванъ",Ивановичъ
+ordinal or digit in first name / patronymic,30dd21,"Воронковъ, Константинъ Ивановичъ",1896-97,balletartists_1896-97_SP_p005,15.,Воронковъ,"3-й, Константинъ",Ивановичъ
+ordinal or digit in first name / patronymic,82520e,"Голубинъ, Дмитрій Ивановичъ",1899-00,balletartists_1899-00_MSK_p006,17.,Голубинъ,2-й,Дмитрій Ивановичъ
+ordinal or digit in first name / patronymic,098757,"Голубинъ, Николай Ивановичъ",1899-00,balletartists_1899-00_MSK_p006,16.,Голубинъ,1-й,Николай Ивановичъ
+ordinal or digit in first name / patronymic,ffd292,"Грачевская 1-я, Марія Ивановна",1899-00,balletartists_1899-00_MSK_p001,23.,Грачевская,1-я,Марія Ивановна
+ordinal or digit in first name / patronymic,b62d1f,"Грачевская 2-я, Екатерина Ивановна",1899-00,balletartists_1899-00_MSK_p001,24.,Грачевская,2-я,Екатерина Ивановна
+ordinal or digit in first name / patronymic,b62d1f,"Грачевская 2-я, Екатерина Ивановна",1901-02,balletartists_1901-02_MSK_p001,24.,Грачевская,2-я,Екатерина
+ordinal or digit in first name / patronymic,338843,"Грекова 1-я, Евгенія Александровна",1901-02,balletartists_1901-02_MSK_p001,25.,Грекова,1-я,Евгенія
+ordinal or digit in first name / patronymic,49a2ff,Грекова 2-я,1901-02,balletartists_1901-02_MSK_p001,26.,Грекова,2-я,
+ordinal or digit in first name / patronymic,0a107d,"Гулинъ, Александръ Ѳедоровичъ",1899-00,balletartists_1899-00_MSK_p006,19.,Гулинъ,2-й,Александръ Федоровичъ
+ordinal or digit in first name / patronymic,0a107d,"Гулинъ, Александръ Ѳедоровичъ",1907-08,balletartists_1907-08_MSK_p006,18.,Гулинъ,"2-й, Александръ",Ѳедоровичъ
+ordinal or digit in first name / patronymic,18e4db,"Гулинъ, Ѳедоръ Ѳедоровичъ",1899-00,balletartists_1899-00_MSK_p006,18.,Гулинъ,1-й,Федоръ Федоровичъ
+ordinal or digit in first name / patronymic,18e4db,"Гулинъ, Ѳедоръ Ѳедоровичъ",1907-08,balletartists_1907-08_MSK_p006,17.,Гулинъ,"1-й, Ѳедоръ",Ѳедоровичъ
+ordinal or digit in first name / patronymic,20b336,"Евлановъ 1-й, Петръ Павловичъ",1891-92,balletartists_1891-92_MSK_p004,19.,Евлановъ,1-й,Петръ
+ordinal or digit in first name / patronymic,1ab943,"Евлановъ, Николай Павловичъ",1891-92,balletartists_1891-92_MSK_p004,20.,Евлановъ,2-й,Николай
+ordinal or digit in first name / patronymic,850e27,"Ефимовъ, Иванъ Михайловичъ",1899-00,balletartists_1899-00_MSK_p006,26.,Ефимовъ,1-й,Иванъ Михайловичъ
+ordinal or digit in first name / patronymic,850e27,"Ефимовъ, Иванъ Михайловичъ",1907-08,balletartists_1907-08_MSK_p006,21.,Ефимовъ,"1-й, Иванъ",Михайловичъ
+ordinal or digit in first name / patronymic,128bac,"Ефимовъ, Семенъ Михайловичъ",1899-00,balletartists_1899-00_MSK_p006,27.,Ефимовъ,2-й,Семенъ Михайловичъ
+ordinal or digit in first name / patronymic,128bac,"Ефимовъ, Семенъ Михайловичъ",1907-08,balletartists_1907-08_MSK_p006,22.,Ефимовъ,"2-й, Семенъ",Михайловичъ
+ordinal or digit in first name / patronymic,599e50,"Иванова, Наталья Евдокимовна",1901-02,balletartists_1901-02_MSK_p001,40.,Иванова,3-я,Наталья
+ordinal or digit in first name / patronymic,6491f7,"Ивановъ 1-й, Николай Акимовичъ",1891-92,balletartists_1891-92_MSK_p004,26.,Ивановъ,1-й,Николай
+ordinal or digit in first name / patronymic,6491f7,"Ивановъ 1-й, Николай Акимовичъ",1894-95,balletartists_1894-95_MSK_p006,27.,Ивановъ,1-й,Николай
+ordinal or digit in first name / patronymic,6491f7,"Ивановъ 1-й, Николай Акимовичъ",1899-00,balletartists_1899-00_MSK_p006,28.,Ивановъ,1-й,Николай Акимовичъ
+ordinal or digit in first name / patronymic,ea28fc,"Ивановъ 2-й, Константинъ Ефремовичъ",1891-92,balletartists_1891-92_MSK_p004,27.,Ивановъ,2-й,Константинъ
+ordinal or digit in first name / patronymic,ea28fc,"Ивановъ 2-й, Константинъ Ефремовичъ",1894-95,balletartists_1894-95_MSK_p006,28.,Ивановъ,2-й,Константинъ
+ordinal or digit in first name / patronymic,ea28fc,"Ивановъ 2-й, Константинъ Ефремовичъ",1899-00,balletartists_1899-00_MSK_p006,29.,Ивановъ,2-й,Константинъ Ефремовичъ
+ordinal or digit in first name / patronymic,4dbf44,"Ивановъ, Василій Еремѣевичъ",1896-97,balletartists_1896-97_MSK_p006,31.,Ивановъ,4-й,Василій Еремѣевичъ
+ordinal or digit in first name / patronymic,4dbf44,"Ивановъ, Василій Еремѣевичъ",1907-08,balletartists_1907-08_MSK_p006,24.,Ивановъ,"2-й, Василій",Еремѣевичъ
+ordinal or digit in first name / patronymic,0f7ceb,"Ивановъ, Евгеній Михайловичъ",1894-95,balletartists_1894-95_MSK_p006,29.,Ивановъ,3-й,Евгеній
+ordinal or digit in first name / patronymic,0f7ceb,"Ивановъ, Евгеній Михайловичъ",1899-00,balletartists_1899-00_MSK_p006,30.,Ивановъ,3-й,Евгеній Михайловичъ
+ordinal or digit in first name / patronymic,0f7ceb,"Ивановъ, Евгеній Михайловичъ",1907-08,balletartists_1907-08_MSK_p006,23.,Ивановъ,"1-й, Евгеній",Михайловичъ
+ordinal or digit in first name / patronymic,3547a4,"Ивановъ, Сергѣй Еремѣевичъ",1907-08,balletartists_1907-08_MSK_p006,25.,Ивановъ,"3-й, Сергѣй",Еремѣевичъ
+ordinal or digit in first name / patronymic,32a64c,"Козловъ 2-й, Алексѣй Михайловичъ",1907-08,balletartists_1907-08_MSK_p006,28.,Козловъ,"2-й, Алексѣй",Михайловичъ
+ordinal or digit in first name / patronymic,aafddf,"Козловъ, Ѳедоръ Михайловичъ",1907-08,balletartists_1907-08_MSK_p006,27.,Козловъ,"1-й, Ѳедоръ",Михайловичъ
+ordinal or digit in first name / patronymic,3617b9,"Костровской 1-й, Михаилъ Романовичъ",1907-08,balletartists_1907-08_MSK_p006,30.,Костровскій,"1-й, Михаилъ",Романовичъ
+ordinal or digit in first name / patronymic,009621,"Костровской 2-й, Дмитрій Романовичъ",1907-08,balletartists_1907-08_MSK_p006,31.,Костровской,"2-й, Дмитрій",Романовичъ
+ordinal or digit in first name / patronymic,7b3d68,"Кочетовская 1-я, Ольга Владиміровна",1901-02,balletartists_1901-02_MSK_p001,47.,Кочетовская,1-я,Ольга
+ordinal or digit in first name / patronymic,7f96a9,"Литавкинъ 1-й, Михаилъ Спиридоновичъ",1894-95,balletartists_1894-95_MSK_p006,35.,Литавкинъ,1-й,Михаилъ
+ordinal or digit in first name / patronymic,7f96a9,"Литавкинъ 1-й, Михаилъ Спиридоновичъ",1896-97,balletartists_1896-97_MSK_p006,37.,Литавкинъ,1-й,Михаилъ Спиридоновичъ
+ordinal or digit in first name / patronymic,442c82,"Литавкинъ, Дмитрій Спиридоновичъ",1894-95,balletartists_1894-95_MSK_p006,36.,Литавкинъ,2-й,Дмитрій
+ordinal or digit in first name / patronymic,442c82,"Литавкинъ, Дмитрій Спиридоновичъ",1896-97,balletartists_1896-97_MSK_p006,38.,Литавкинъ,2-й,Дмитрій Спиридоновичъ
+ordinal or digit in first name / patronymic,91c824,"Мендесъ 1-я, Анжелика",1896-97,balletartists_1896-97_MSK_p002,64.,Мендесъ,Анжелика,1-я
+ordinal or digit in first name / patronymic,91c824,"Мендесъ 1-я, Анжелика",1899-00,balletartists_1899-00_MSK_p003,56.,Мендесъ,Анжелика,1-я
+ordinal or digit in first name / patronymic,91c824,"Мендесъ 1-я, Анжелика",1900-01,balletartists_1900-01_MSK_p003,57.,Мендесъ,Анжелика,1-я
+ordinal or digit in first name / patronymic,723f64,"Мендесъ, Джульетта",1896-97,balletartists_1896-97_MSK_p002,65.,Мендесъ,Джульетта,2-я
+ordinal or digit in first name / patronymic,723f64,"Мендесъ, Джульетта",1898-99,balletartists_1898-99_MSK_p003,58.,Мендесъ,Джульетта,2-я
+ordinal or digit in first name / patronymic,723f64,"Мендесъ, Джульетта",1899-00,balletartists_1899-00_MSK_p003,57.,Мендесъ,Джульетта,2-я
+ordinal or digit in first name / patronymic,723f64,"Мендесъ, Джульетта",1900-01,balletartists_1900-01_MSK_p003,58.,Мендесъ,Джульетта,2-я
+ordinal or digit in first name / patronymic,11d2b0,"Мосолова 1-я, Вѣра Ильинишна",1907-08,balletartists_1907-08_MSK_p003,57.,Мосолова,1-я,Вѣра
+ordinal or digit in first name / patronymic,2b4912,"Мосолова 2-я, Зинаида Александровна",1907-08,balletartists_1907-08_MSK_p003,58.,Мосолова,2-я,Зинаида
+ordinal or digit in first name / patronymic,1a7d3e,"Некрасова, Анна Владиміровна",1907-08,balletartists_1907-08_MSK_p003,62.,Некрасова,1-я,Анна
+ordinal or digit in first name / patronymic,1f4a6c,"Некрасова, Ольга Владиміровна",1907-08,balletartists_1907-08_MSK_p003,63.,Некрасова,2-я,Ольга
+ordinal or digit in first name / patronymic,4ef695,"Никитина 2-я, Екатерина Ивановна",1907-08,balletartists_1907-08_MSK_p003,65.,Никитина,2-я,Екатерина
+ordinal or digit in first name / patronymic,308081,"Никитина, Анна Дмитріевна",1907-08,balletartists_1907-08_MSK_p003,64.,Никитина,1-я,Анна
+ordinal or digit in first name / patronymic,067275,"Николаева 2-я, Анна Михайловна",1907-08,balletartists_1907-08_MSK_p003,67.,Николаева,2-я,Анна
+ordinal or digit in first name / patronymic,312b5e,"Николаева, Зинаида Николаевна",1907-08,balletartists_1907-08_MSK_p003,68.,Николаева,3-я,Зинаида
+ordinal or digit in first name / patronymic,36ea9a,"Николаева, Марія Алексѣевна",1907-08,balletartists_1907-08_MSK_p003,66.,Николаева,1-я,Марія
+ordinal or digit in first name / patronymic,0f1e45,"Пановъ, Александръ Викторовичъ",1896-97,balletartists_1896-97_MSK_p006,46.,Пановъ,2-й,Александръ Викторовичъ
+ordinal or digit in first name / patronymic,168b66,"Пановъ, Николай Викторовичъ",1896-97,balletartists_1896-97_MSK_p006,45.,Пановъ,1-й,Николай Викторовичъ
+ordinal or digit in first name / patronymic,1955fd,"Пономаревъ, Сергѣй Ивановичъ",1904-05,balletartists_1904-05_SP_p000,3.,Пономаревъ,2-й,Сергѣй
+ordinal or digit in first name / patronymic,33e281,"Рыхлякова 2-я, Наталья Трофимовна",1904-05,balletartists_1904-05_SP_p004,96.,Рыхлякова,2-я,Наталія
+ordinal or digit in first name / patronymic,33e281,"Рыхлякова 2-я, Наталья Трофимовна",1909-10,balletartists_1909-10_SP_p004,81.,Рыхлякова,"2-я, Наталья",Трофимовна
+ordinal or digit in first name / patronymic,2bf4d5,"Рыхлякова, Варвара Трофимовна",1909-10,balletartists_1909-10_SP_p004,80.,Рыхлякова,"1-я, Варвара",Трофимовна
+ordinal or digit in first name / patronymic,12b26e,"Рябовъ 1-й, Петръ Петровичъ",1894-95,balletartists_1894-95_MSK_p006,48.,Рябовъ,1-й,Петръ
+ordinal or digit in first name / patronymic,780b96,"Рябовъ, Александръ Петровичъ",1894-95,balletartists_1894-95_MSK_p006,49.,Рябовъ,2-й,Александръ
+ordinal or digit in first name / patronymic,50c372,"Свѣтинскій 1-й, Николай Александровичъ",1894-95,balletartists_1894-95_MSK_p006,52.,Свѣтинскій,1-й,Николай
+ordinal or digit in first name / patronymic,50c372,"Свѣтинскій 1-й, Николай Александровичъ",1896-97,balletartists_1896-97_MSK_p006,55.,Свѣтинскій,1-й,Николай Александровичъ
+ordinal or digit in first name / patronymic,475006,"Смирновъ 2-й, Викторъ",1904-05,balletartists_1904-05_MSK_p007,64.,Смирновъ,Викторъ,2-й
+ordinal or digit in first name / patronymic,59671b,"Степанова 2-я, Елизавета Ѳедоровна",1904-05,balletartists_1904-05_SP_p004,106.,Степанова,1-я,Елизавета
+ordinal or digit in first name / patronymic,5b32df,"Степанова 3-я, Марія Ѳедоровна",1904-05,balletartists_1904-05_SP_p004,107.,Степанова,2-я,Марія
+ordinal or digit in first name / patronymic,408f61,"Степанова, Лидія Петровна",1904-05,balletartists_1904-05_SP_p004,108.,Степанова,3-я,Лидія
+ordinal or digit in first name / patronymic,317236,"Шелепина 2-я, Александра",1909-10,balletartists_1909-10_MSK_p004,77.,Шелепина,2-я,Александра
+ordinal or digit in first name / patronymic,2cec96,"Шелепина, Вѣра Ивановна",1909-10,balletartists_1909-10_MSK_p004,76.,Шелепина,1-я,Вѣра
+ordinal or digit in first name / patronymic,632f99,"Эрлеръ 1-я, Анна Александровна",1894-95,balletartists_1894-95_SP_p005,142.,Эрлеръ,1-я,Анна
+ordinal or digit in first name / patronymic,632f99,"Эрлеръ 1-я, Анна Александровна",1896-97,balletartists_1896-97_SP_p005,137.,Эрлеръ,"1-я, Анна",Александровна
+ordinal or digit in first name / patronymic,309250,"Эрлеръ 2-я, Марія Александровна",1894-95,balletartists_1894-95_SP_p005,143.,Эрлеръ,2-я,Марія
+ordinal or digit in first name / patronymic,309250,"Эрлеръ 2-я, Марія Александровна",1896-97,balletartists_1896-97_SP_p005,138.,Эрлеръ,"2-я, Марія",Александровна
+ordinal or digit in first name / patronymic,26b1ee,"Яковлева, Александра Ефимовна",1894-95,balletartists_1894-95_SP_p005,145.,Яковлева,2-я,Александра
+ordinal or digit in first name / patronymic,26b1ee,"Яковлева, Александра Ефимовна",1896-97,balletartists_1896-97_SP_p005,140.,Яковлева,"2-я, Александра",Ефимовна
+ordinal or digit in first name / patronymic,503bae,"Яковлева, Антонина Николаевна",1894-95,balletartists_1894-95_SP_p005,144.,Яковлева,1-я,Антонина
+ordinal or digit in first name / patronymic,503bae,"Яковлева, Антонина Николаевна",1896-97,balletartists_1896-97_SP_p005,139.,Яковлева,"1-я, Антонина",Николаевна
+ordinal or digit in first name / patronymic,8c980d,"Ѳедорова 1-я, Александра Ивановна",1894-95,balletartists_1894-95_SP_p005,146.,Ѳедорова,1-я,Александра
+ordinal or digit in first name / patronymic,17a2ae,"Ѳедорова 2-я, Ольга Николаевна",1894-95,balletartists_1894-95_SP_p005,147.,Ѳедорова,2-я,Ольга
+ordinal or digit in first name / patronymic,2475a6,"Ѳедорова 3-я, Марія Дмитріевна",1894-95,balletartists_1894-95_SP_p005,148.,Ѳедорова,3-я,Марія
+ordinal or digit in first name / patronymic,2475a6,"Ѳедорова 3-я, Марія Дмитріевна",1896-97,balletartists_1896-97_SP_p005,141.,Ѳедорова,"1-я, Марія",Дмитріевна
+ordinal or digit in first name / patronymic,36348a,"Ѳедорова 4-я, Лидія Ѳедоровна",1894-95,balletartists_1894-95_SP_p005,149.,Ѳедорова,4-я,Лидія
+ordinal or digit in first name / patronymic,36348a,"Ѳедорова 4-я, Лидія Ѳедоровна",1896-97,balletartists_1896-97_SP_p005,142.,Ѳедорова,"2-я, Лидія",Ѳедоровна
+patronymic field does not look like a patronymic,ab035a,"Адольфи, С. К.",1908-09,theaterschoolstaff_1908-09_p004,4.,Адольфи,С.,К.
+patronymic field does not look like a patronymic,ef6b8c,"Александрова 1-я, Евгенія Михайловна",1892-93,balletartists_1892-93_SP_p000,2.,Александрова,1-я,Евгенія
+patronymic field does not look like a patronymic,ef6b8c,"Александрова 1-я, Евгенія Михайловна",1904-05,balletartists_1904-05_SP_p000,1.,Александрова,1-я,Евгенія
+patronymic field does not look like a patronymic,6273a1,"Александрова 2-я, Антонина Николаевна",1892-93,balletartists_1892-93_SP_p000,3.,Александрова,2-я,Антонина
+patronymic field does not look like a patronymic,6273a1,"Александрова 2-я, Антонина Николаевна",1904-05,balletartists_1904-05_SP_p000,2.,Александрова,2-я,Антонина
+patronymic field does not look like a patronymic,e9f2f0,"Александрова 3-я, Александра",1904-05,balletartists_1904-05_SP_p000,3.,Александрова,3-я,Александра
+patronymic field does not look like a patronymic,7f212e,"Алексѣева 1-я, Вѣра Николаевна",1892-93,balletartists_1892-93_SP_p000,4.,Алексѣева,1-я,Вѣра
+patronymic field does not look like a patronymic,53d334,"Алексѣева, Людмила Андреевна",1892-93,balletartists_1892-93_SP_p000,5.,Алексѣева,2-я,Людмила
+patronymic field does not look like a patronymic,49b93c,"Алексѣевъ 2-й, Александръ Алексѣевичъ",1904-05,balletartists_1904-05_SP_p006,4.,Алексѣевъ,Александръ,2-й
+patronymic field does not look like a patronymic,7fa950,"Афанасьевъ, Н. Н.",1900-01,administration_1900-01_p003,1.,Афанасьевъ,Н.,Н.
+patronymic field does not look like a patronymic,097408,"Бакеркина 2-я, Марія Алексѣевна",1904-05,balletartists_1904-05_SP_p000,8.,Бакеркина,2-я,Марія
+patronymic field does not look like a patronymic,b66402,"Бакеркина, Надежда Алексѣевна",1904-05,balletartists_1904-05_SP_p000,7.,Бакеркина,1-я,Надежда
+patronymic field does not look like a patronymic,158331,"Болъмъ, Адолльфъ Эмиль",1905-06,balletartists_1905-06_SP_p005,11.,Болъмъ,Адолльфъ,Эмиль
+patronymic field does not look like a patronymic,2776d3,"Болъмъ, Адольфъ Эмилъ",1908-09,balletartists_1908-09_SP_p005,9.,Болъмъ,Адольфъ,Эмилъ
+patronymic field does not look like a patronymic,e2aed3,"Больмъ, Адольфъ Эмиль",1906-07,balletartists_1906-07_SP_p006,11.,Больмъ,Адольфъ,Эмиль
+patronymic field does not look like a patronymic,e2aed3,"Больмъ, Адольфъ Эмиль",1907-08,balletartists_1907-08_SP_p006,11.,Болмъ,Адольфъ,Эмиль
+patronymic field does not look like a patronymic,3a04f3,"Брыкинъ, Дмитрій Константиновичъ",1891-92,balletartists_1891-92_MSK_p004,6.,Брыкинъ,2-й,Дмитрій
+patronymic field does not look like a patronymic,53d20b,"Брыкинъ, Николай Константиновичъ",1891-92,balletartists_1891-92_MSK_p004,5.,Брыкинъ,1-й,Николай
+patronymic field does not look like a patronymic,af2e5b,"Брындинъ, К. К.",1908-09,theaterschoolstaff_1908-09_p004,2.,Брындинъ,К.,К.
+patronymic field does not look like a patronymic,af2e5b,"Брындинъ, К. К.",1909-10,theaterschoolstaff_1909-10_p004,2.,Брындинъ,К.,К.
+patronymic field does not look like a patronymic,49135e,"Бѣлоусовъ, Геннадій Ивановичъ",1891-92,balletartists_1891-92_MSK_p004,8.,Бѣлоусовъ,1-й,Геннадій
+patronymic field does not look like a patronymic,29503f,"Бѣлоусовъ, Филиппъ Ивановичъ",1891-92,balletartists_1891-92_MSK_p004,9.,Бѣлоусовъ,2-й,Филиппъ
+patronymic field does not look like a patronymic,346065,"Ваксманъ, Альфредъ Луи",1905-06,musicians_1905-06_MSK_p001,21.,Вакеманъ,Альфредъ,Луи
+patronymic field does not look like a patronymic,346065,"Ваксманъ, Альфредъ Луи",1906-07,musicians_1906-07_MSK_p001,20.,Ваксманъ,Альфредъ,Луи
+patronymic field does not look like a patronymic,346065,"Ваксманъ, Альфредъ Луи",1907-08,musicians_1907-08_MSK_p000,20.,Ваксманъ,Альфредъ,Луи
+patronymic field does not look like a patronymic,346065,"Ваксманъ, Альфредъ Луи",1908-09,musicians_1908-09_MSK_p000,17.,Ваксманъ,Альфредъ,Луи
+patronymic field does not look like a patronymic,346065,"Ваксманъ, Альфредъ Луи",1909-10,musicians_1909-10_MSK_p000,16.,Ваксманъ,Альфредъ,Луи
+patronymic field does not look like a patronymic,346065,"Ваксманъ, Альфредъ Луи",1910-11,musicians_1910-11_MSK_p000,16.,Васкманъ,Альфредъ,Луи
+patronymic field does not look like a patronymic,48edbc,"Воронковъ 1-й, Николай Ивановичъ",1894-95,balletartists_1894-95_SP_p005,14.,Воронковъ,1-й,Николай
+patronymic field does not look like a patronymic,1d7074,"Воронковъ 2-й, Иванъ Ивановичъ",1894-95,balletartists_1894-95_SP_p005,15.,Воронковъ,2-й,Иванъ
+patronymic field does not look like a patronymic,0179c0,"Гаврилова (Воскресенская), Евдокія Помпеевна",1899-00,balletartists_1899-00_MSK_p001,16.,Гаврилова,(Воскресенская),Евдокія
+patronymic field does not look like a patronymic,faf538,"Гельцеръ, (Китри)",1909-10,balletartists_1909-10_SP_p005,,Гельцеръ,,(Китри)
+patronymic field does not look like a patronymic,b62d1f,"Грачевская 2-я, Екатерина Ивановна",1901-02,balletartists_1901-02_MSK_p001,24.,Грачевская,2-я,Екатерина
+patronymic field does not look like a patronymic,6de49d,"Грачевская, г-жа Марія",1901-02,balletartists_1901-02_MSK_p001,23.,Грачевская,г-жа,Марія
+patronymic field does not look like a patronymic,338843,"Грекова 1-я, Евгенія Александровна",1901-02,balletartists_1901-02_MSK_p001,25.,Грекова,1-я,Евгенія
+patronymic field does not look like a patronymic,10dbce,"Джури, Адель",1898-99,balletartists_1898-99_MSK_p001,26.,Джурі,Адель,Джурі
+patronymic field does not look like a patronymic,20b336,"Евлановъ 1-й, Петръ Павловичъ",1891-92,balletartists_1891-92_MSK_p004,19.,Евлановъ,1-й,Петръ
+patronymic field does not look like a patronymic,1ab943,"Евлановъ, Николай Павловичъ",1891-92,balletartists_1891-92_MSK_p004,20.,Евлановъ,2-й,Николай
+patronymic field does not look like a patronymic,599e50,"Иванова, Наталья Евдокимовна",1901-02,balletartists_1901-02_MSK_p001,40.,Иванова,3-я,Наталья
+patronymic field does not look like a patronymic,6491f7,"Ивановъ 1-й, Николай Акимовичъ",1891-92,balletartists_1891-92_MSK_p004,26.,Ивановъ,1-й,Николай
+patronymic field does not look like a patronymic,6491f7,"Ивановъ 1-й, Николай Акимовичъ",1894-95,balletartists_1894-95_MSK_p006,27.,Ивановъ,1-й,Николай
+patronymic field does not look like a patronymic,ea28fc,"Ивановъ 2-й, Константинъ Ефремовичъ",1891-92,balletartists_1891-92_MSK_p004,27.,Ивановъ,2-й,Константинъ
+patronymic field does not look like a patronymic,ea28fc,"Ивановъ 2-й, Константинъ Ефремовичъ",1894-95,balletartists_1894-95_MSK_p006,28.,Ивановъ,2-й,Константинъ
+patronymic field does not look like a patronymic,0f7ceb,"Ивановъ, Евгеній Михайловичъ",1894-95,balletartists_1894-95_MSK_p006,29.,Ивановъ,3-й,Евгеній
+patronymic field does not look like a patronymic,5afa1b,"Исаевъ, Иванъ Петровичъ",1910-11,productionteam_1910-11_p004,2.,Исаевъ,Иванъ,етрови чъ
+patronymic field does not look like a patronymic,c9bb90,"Котте, Фридрихъ Эрнестъ",1908-09,musicians_1908-09_SP_p002,51.,Котте,Фридрихъ,Эрнестъ
+patronymic field does not look like a patronymic,c9bb90,"Котте, Фридрихъ Эрнестъ",1909-10,musicians_1909-10_SP_p002,52.,Котте,Фридрихъ,Эрнестъ
+patronymic field does not look like a patronymic,c9bb90,"Котте, Фридрихъ Эрнестъ",1910-11,musicians_1910-11_SP_p001,52.,Котте,Фридрихъ,Эрнестъ
+patronymic field does not look like a patronymic,7b3d68,"Кочетовская 1-я, Ольга Владиміровна",1901-02,balletartists_1901-02_MSK_p001,47.,Кочетовская,1-я,Ольга
+patronymic field does not look like a patronymic,bb6034,"Кулыгинъ, Г. С.",1908-09,theaterschoolstaff_1908-09_p004,1.,Кулыгинъ,Г.,С.
+patronymic field does not look like a patronymic,bb6034,"Кулыгинъ, Г. С.",1909-10,theaterschoolstaff_1909-10_p004,1.,Кулыгинъ,Г.,С.
+patronymic field does not look like a patronymic,a6bf42,"Кшесинскій, Гій Феликсъ",1901-02,balletartists_1901-02_SP_p007,29.,Кшесинскій,Гій,Феликсъ
+patronymic field does not look like a patronymic,279f1d,"Лидтке, Готгильдъ Францъ",1898-99,musicians_1898-99_MSK_p001,53.,Лидтке,Готгильдъ,Францъ
+patronymic field does not look like a patronymic,279f1d,"Лидтке, Готгильдъ Францъ",1900-01,musicians_1900-01_MSK_p002,51.,Лидтке,Готгильдъ,Францъ
+patronymic field does not look like a patronymic,279f1d,"Лидтке, Готгильдъ Францъ",1901-02,musicians_1901-02_MSK_p002,53.,Лидтке,Готгильдъ,Францъ
+patronymic field does not look like a patronymic,279f1d,"Лидтке, Готгильдъ Францъ",1902-03,musicians_1902-03_MSK_p002,56.,Лидтке,Готгильдъ,Францъ
+patronymic field does not look like a patronymic,279f1d,"Лидтке, Готгильдъ Францъ",1903-04,musicians_1903-04_MSK_p001,59.,Лидтке,Готтильдъ,Францъ
+patronymic field does not look like a patronymic,279f1d,"Лидтке, Готгильдъ Францъ",1904-05,musicians_1904-05_MSK_p002,58.,Лидтке,Готгильдъ,Францъ
+patronymic field does not look like a patronymic,279f1d,"Лидтке, Готгильдъ Францъ",1905-06,musicians_1905-06_MSK_p002,61.,Лидтке,Готгильдъ,Францъ
+patronymic field does not look like a patronymic,7f96a9,"Литавкинъ 1-й, Михаилъ Спиридоновичъ",1894-95,balletartists_1894-95_MSK_p006,35.,Литавкинъ,1-й,Михаилъ
+patronymic field does not look like a patronymic,442c82,"Литавкинъ, Дмитрій Спиридоновичъ",1894-95,balletartists_1894-95_MSK_p006,36.,Литавкинъ,2-й,Дмитрій
+patronymic field does not look like a patronymic,91c824,"Мендесъ 1-я, Анжелика",1896-97,balletartists_1896-97_MSK_p002,64.,Мендесъ,Анжелика,1-я
+patronymic field does not look like a patronymic,91c824,"Мендесъ 1-я, Анжелика",1899-00,balletartists_1899-00_MSK_p003,56.,Мендесъ,Анжелика,1-я
+patronymic field does not look like a patronymic,91c824,"Мендесъ 1-я, Анжелика",1900-01,balletartists_1900-01_MSK_p003,57.,Мендесъ,Анжелика,1-я
+patronymic field does not look like a patronymic,723f64,"Мендесъ, Джульетта",1896-97,balletartists_1896-97_MSK_p002,65.,Мендесъ,Джульетта,2-я
+patronymic field does not look like a patronymic,723f64,"Мендесъ, Джульетта",1898-99,balletartists_1898-99_MSK_p003,58.,Мендесъ,Джульетта,2-я
+patronymic field does not look like a patronymic,723f64,"Мендесъ, Джульетта",1899-00,balletartists_1899-00_MSK_p003,57.,Мендесъ,Джульетта,2-я
+patronymic field does not look like a patronymic,723f64,"Мендесъ, Джульетта",1900-01,balletartists_1900-01_MSK_p003,58.,Мендесъ,Джульетта,2-я
+patronymic field does not look like a patronymic,11d2b0,"Мосолова 1-я, Вѣра Ильинишна",1907-08,balletartists_1907-08_MSK_p003,57.,Мосолова,1-я,Вѣра
+patronymic field does not look like a patronymic,2b4912,"Мосолова 2-я, Зинаида Александровна",1907-08,balletartists_1907-08_MSK_p003,58.,Мосолова,2-я,Зинаида
+patronymic field does not look like a patronymic,1a7d3e,"Некрасова, Анна Владиміровна",1907-08,balletartists_1907-08_MSK_p003,62.,Некрасова,1-я,Анна
+patronymic field does not look like a patronymic,1f4a6c,"Некрасова, Ольга Владиміровна",1907-08,balletartists_1907-08_MSK_p003,63.,Некрасова,2-я,Ольга
+patronymic field does not look like a patronymic,4ef695,"Никитина 2-я, Екатерина Ивановна",1907-08,balletartists_1907-08_MSK_p003,65.,Никитина,2-я,Екатерина
+patronymic field does not look like a patronymic,308081,"Никитина, Анна Дмитріевна",1907-08,balletartists_1907-08_MSK_p003,64.,Никитина,1-я,Анна
+patronymic field does not look like a patronymic,067275,"Николаева 2-я, Анна Михайловна",1907-08,balletartists_1907-08_MSK_p003,67.,Николаева,2-я,Анна
+patronymic field does not look like a patronymic,312b5e,"Николаева, Зинаида Николаевна",1907-08,balletartists_1907-08_MSK_p003,68.,Николаева,3-я,Зинаида
+patronymic field does not look like a patronymic,36ea9a,"Николаева, Марія Алексѣевна",1907-08,balletartists_1907-08_MSK_p003,66.,Николаева,1-я,Марія
+patronymic field does not look like a patronymic,032f7f,"Новоселовъ, Александръ Ильичъ",1897-98,musicians_1897-98_SP_p004,,Новоселовъ,Александръ,Илычъ
+patronymic field does not look like a patronymic,1955fd,"Пономаревъ, Сергѣй Ивановичъ",1904-05,balletartists_1904-05_SP_p000,3.,Пономаревъ,2-й,Сергѣй
+patronymic field does not look like a patronymic,05aaa2,"Пуни, Леонтина-Констанція",1905-06,balletartists_1905-06_SP_p003,80.,Пуни,Леонтина,Констанція
+patronymic field does not look like a patronymic,05aaa2,"Пуни, Леонтина-Констанція",1910-11,balletartists_1910-11_SP_p004,68.,Пуни,Леонтина,Констанція
+patronymic field does not look like a patronymic,33e281,"Рыхлякова 2-я, Наталья Трофимовна",1904-05,balletartists_1904-05_SP_p004,96.,Рыхлякова,2-я,Наталія
+patronymic field does not look like a patronymic,2bf4d5,"Рыхлякова, Варвара Трофимовна",1904-05,balletartists_1904-05_SP_p004,95.,Рыхлякова,І-я,Варвара
+patronymic field does not look like a patronymic,12b26e,"Рябовъ 1-й, Петръ Петровичъ",1894-95,balletartists_1894-95_MSK_p006,48.,Рябовъ,1-й,Петръ
+patronymic field does not look like a patronymic,780b96,"Рябовъ, Александръ Петровичъ",1894-95,balletartists_1894-95_MSK_p006,49.,Рябовъ,2-й,Александръ
+patronymic field does not look like a patronymic,50c372,"Свѣтинскій 1-й, Николай Александровичъ",1894-95,balletartists_1894-95_MSK_p006,52.,Свѣтинскій,1-й,Николай
+patronymic field does not look like a patronymic,bdf963,"Сигуля, Александръ Макарычъ",1908-09,balletartists_1908-09_MSK_p006,48.,Сигуля,Александръ,Макарычъ
+patronymic field does not look like a patronymic,475006,"Смирновъ 2-й, Викторъ",1904-05,balletartists_1904-05_MSK_p007,64.,Смирновъ,Викторъ,2-й
+patronymic field does not look like a patronymic,d87ca1,"Соколовъ, Н. С.",1908-09,theaterschoolstaff_1908-09_p004,3.,Соколовъ,Н.,С.
+patronymic field does not look like a patronymic,d87ca1,"Соколовъ, Н. С.",1909-10,theaterschoolstaff_1909-10_p004,3.,Соколовъ,Н.,С.
+patronymic field does not look like a patronymic,59671b,"Степанова 2-я, Елизавета Ѳедоровна",1904-05,balletartists_1904-05_SP_p004,106.,Степанова,1-я,Елизавета
+patronymic field does not look like a patronymic,5b32df,"Степанова 3-я, Марія Ѳедоровна",1904-05,balletartists_1904-05_SP_p004,107.,Степанова,2-я,Марія
+patronymic field does not look like a patronymic,408f61,"Степанова, Лидія Петровна",1904-05,balletartists_1904-05_SP_p004,108.,Степанова,3-я,Лидія
+patronymic field does not look like a patronymic,30dcfa,"Таротинъ, Михаилъ Васильевичъ",1910-11,musicians_1910-11_SP_p003,100.,Таротинъ,Михаилъ,Васильевмчъ
+patronymic field does not look like a patronymic,130196,"Фонъ-Нольте, Іоганъ Константинъ",1904-05,musicians_1904-05_MSK_p002,65.,Фонъ-Нольте,Іоганъ,Константинъ
+patronymic field does not look like a patronymic,317236,"Шелепина 2-я, Александра",1909-10,balletartists_1909-10_MSK_p004,77.,Шелепина,2-я,Александра
+patronymic field does not look like a patronymic,2cec96,"Шелепина, Вѣра Ивановна",1909-10,balletartists_1909-10_MSK_p004,76.,Шелепина,1-я,Вѣра
+patronymic field does not look like a patronymic,632f99,"Эрлеръ 1-я, Анна Александровна",1894-95,balletartists_1894-95_SP_p005,142.,Эрлеръ,1-я,Анна
+patronymic field does not look like a patronymic,309250,"Эрлеръ 2-я, Марія Александровна",1894-95,balletartists_1894-95_SP_p005,143.,Эрлеръ,2-я,Марія
+patronymic field does not look like a patronymic,26b1ee,"Яковлева, Александра Ефимовна",1894-95,balletartists_1894-95_SP_p005,145.,Яковлева,2-я,Александра
+patronymic field does not look like a patronymic,503bae,"Яковлева, Антонина Николаевна",1894-95,balletartists_1894-95_SP_p005,144.,Яковлева,1-я,Антонина
+patronymic field does not look like a patronymic,8c980d,"Ѳедорова 1-я, Александра Ивановна",1894-95,balletartists_1894-95_SP_p005,146.,Ѳедорова,1-я,Александра
+patronymic field does not look like a patronymic,17a2ae,"Ѳедорова 2-я, Ольга Николаевна",1894-95,balletartists_1894-95_SP_p005,147.,Ѳедорова,2-я,Ольга
+patronymic field does not look like a patronymic,2475a6,"Ѳедорова 3-я, Марія Дмитріевна",1894-95,balletartists_1894-95_SP_p005,148.,Ѳедорова,3-я,Марія
+patronymic field does not look like a patronymic,36348a,"Ѳедорова 4-я, Лидія Ѳедоровна",1894-95,balletartists_1894-95_SP_p005,149.,Ѳедорова,4-я,Лидія
+punctuation left on the surname,562ee0,"Іосафовъ, Николай",1901-02,graduates_1901-02_p000,3),"Іосафовъ, Николай.",,
+punctuation left on the surname,d5acfb,"Адріановъ, Самуилъ",1901-02,graduates_1901-02_p000,1),"Адріановъ, Самуилъ.",,
+punctuation left on the surname,6273a1,"Александрова 2-я, Антонина Николаевна",1891-92,graduates_1891-92_p000,1),"Александрова, Антонина.",,
+punctuation left on the surname,c85061,"Бакинъ, Сергѣй",1891-92,graduates_1891-92_p002,1),"Бакинъ, Сергѣй.",,
+punctuation left on the surname,b787c1,"Баклановъ, Петръ",1901-02,graduates_1901-02_p000,2),"Баклановъ, Петръ.",,
+punctuation left on the surname,63cc6f,"Бекъ, Константинъ",1891-92,graduates_1891-92_p000,1),"Бекъ, Константинъ.",,
+punctuation left on the surname,5c78b2,"Бычковъ, Александръ",1893-94,graduates_1893-94_p002,1),"Бычковъ, Александръ.",,
+punctuation left on the surname,9affe2,"Ваганова, Агриппина",1896-97,graduates_1896-97_p001,1),"Ваганова, Агриппина.",,
+punctuation left on the surname,8a33d0,"Васильева, Анна",1891-92,graduates_1891-92_p000,2),"Васильева, Анна.",,
+punctuation left on the surname,c5a0a6,"Воронова, Варвара",1891-92,graduates_1891-92_p002,1),"Воронова, Варвара.",,
+punctuation left on the surname,35f581,"Галать, Надежда Петровна",1893-94,graduates_1893-94_p002,1),"Галатъ, Надежда.",,
+punctuation left on the surname,c56c69,"Гельцеръ, Екатерина",1893-94,graduates_1893-94_p002,2),"Гельцеръ, Екатерина.",,
+punctuation left on the surname,2701b9,"Голубинъ, Дмитрій",1897-98,graduates_1897-98_p002,1),"Голубинъ, Дмитрій.",,
+punctuation left on the surname,b62d1f,"Грачевская 2-я, Екатерина Ивановна",1891-92,graduates_1891-92_p002,2),"Грачевская, Екатерина.",,
+punctuation left on the surname,32b9b2,"Денисова, Вѣра",1897-98,graduates_1897-98_p002,1),"Денисова, Вѣра.",,
+punctuation left on the surname,cfc30a,"Дмитріевъ, Михаилъ",1896-97,graduates_1896-97_p001,1),"Дмитріевъ, Михаилъ.",,
+punctuation left on the surname,99c3b1,"Домашева, Анна",1897-98,graduates_1897-98_p002,2),"Домашева, Анна.",,
+punctuation left on the surname,5e7920,"Дьякъ, Иванъ",1897-98,graduates_1897-98_p002,3),"Дьякъ, Иванъ.",,
+punctuation left on the surname,9f2d2a,"Дьякъ, Марія",1891-92,graduates_1891-92_p002,3),"Дьякъ, Марія.",,
+punctuation left on the surname,9cd4d9,"Ермолаева, Марія",1891-92,graduates_1891-92_p000,3),"Ермолаева, Марія.",,
+punctuation left on the surname,b69f76,"Иванова, Вѣра",1891-92,graduates_1891-92_p000,4),"Иванова, Вѣра.",,
+punctuation left on the surname,c83167,"Ивановъ, Евгеній",1891-92,graduates_1891-92_p002,2),"Ивановъ, Евгеній.",,
+punctuation left on the surname,1ab20c,"Ильина 2-я, Елена Васильевна",1891-92,graduates_1891-92_p000,5),"Ильина, Елена.",,
+punctuation left on the surname,f74387,"Карсавина, Тамара",1901-02,graduates_1901-02_p000,1),"Карсавина, Тамара.",,
+punctuation left on the surname,4b8b2e,"Клинникова, Анастасія",1897-98,graduates_1897-98_p002,3),"Клинникова, Анастасія.",,
+punctuation left on the surname,7a0d0d,"Копьева, Евдокія",1891-92,graduates_1891-92_p002,4),"Копьева, Евдокія.",,
+punctuation left on the surname,cc734b,"Кузнецовъ, Владиміръ",1897-98,graduates_1897-98_p002,4),"Кузнецовъ, Владиміръ.",,
+punctuation left on the surname,109c3e,"Кулыгинъ, Георгій",1891-92,graduates_1891-92_p002,3),"Кулыгинъ, Георгій.",,
+punctuation left on the surname,d769b3,"Кякштъ, Лидія",1901-02,graduates_1901-02_p000,2),"Кякштъ, Лидія.",,
+punctuation left on the surname,6e26c3,"Лаврентьева, Ольга",1891-92,graduates_1891-92_p000,6),"Лаврентьева, Ольга.",,
+punctuation left on the surname,b844c6,"Лазуко, Петръ",1901-02,graduates_1901-02_p000,4),"Лазуко, Петръ.",,
+punctuation left on the surname,7eb75a,"Лебедева, Клавдія",1897-98,graduates_1897-98_p002,4),"Лебедева, Клавдія.",,
+punctuation left on the surname,726e11,"Лопухова, Евгенія",1901-02,graduates_1901-02_p000,3),"Лопухова, Евгенія.",,
+punctuation left on the surname,6332fb,"Лукьяновъ, Николай",1897-98,graduates_1897-98_p002,5),"Лукьяновъ, Николай.",,
+punctuation left on the surname,33c83e,"Лѣсновскій, Александръ",1891-92,graduates_1891-92_p002,4),"Лѣсновскій, Александръ.",,
+punctuation left on the surname,91bc03,"Матятина, Вѣра",1896-97,graduates_1896-97_p001,2),"Матятина, Вѣра.",,
+punctuation left on the surname,1d5182,"Медалинскій, Александръ",1896-97,graduates_1896-97_p001,2),"Медалинскій, Александръ.",,
+punctuation left on the surname,0c9253,"Милютина, Александра",1891-92,graduates_1891-92_p002,5),"Милютина, Александра.",,
+punctuation left on the surname,85199d,"Михайлова, Любовь",1893-94,graduates_1893-94_p002,3),"Михайлова, Любовь.",,
+punctuation left on the surname,c4fa13,"Монаховъ, Александръ",1901-02,graduates_1901-02_p000,5),"Монаховъ, Александръ.",,
+punctuation left on the surname,bfeb56,"Нарышкина, Александра",1893-94,graduates_1893-94_p002,4),"Нарышкина, Александра.",,
+punctuation left on the surname,ab79c9,"Некрасова, Анна",1897-98,graduates_1897-98_p002,5),"Некрасова, Анна.",,
+punctuation left on the surname,36763e,"Никитинъ 2-й, Анатолій Дмитріевичъ",1897-98,graduates_1897-98_p002,6),"Никитинъ, Анатолій.",,
+punctuation left on the surname,3b63fd,"Никитинъ, Михаилъ",1891-92,graduates_1891-92_p000,2),"Никитинъ, Михаилъ.",,
+punctuation left on the surname,628d50,"Николаевъ, Борисъ",1897-98,graduates_1897-98_p002,7),"Николаевъ, Борисъ.",,
+punctuation left on the surname,6f3938,"Ниманъ, Марія",1891-92,graduates_1891-92_p000,7),"Ниманъ, Марія.",,
+punctuation left on the surname,d321f3,"Новикова, Екатерина Александровна",1891-92,graduates_1891-92_p002,6),"Новикова, Екатерина.",,
+punctuation left on the surname,8e6ab5,"Облаковъ, Андрей",1891-92,graduates_1891-92_p000,3),"Облаковъ, Андрей.",,
+punctuation left on the surname,67696b,"Обухова, Евгенія",1891-92,graduates_1891-92_p000,8),"Обухова, Евгенія.",,
+punctuation left on the surname,7323e8,"Парикова, Зинаида",1897-98,graduates_1897-98_p002,6),"Парикова, Зинаида.",,
+punctuation left on the surname,34a99f,"Парфентьева, Прасковья",1891-92,graduates_1891-92_p000,9),"Парфентьева, Прасковья.",,
+punctuation left on the surname,8d56a9,"Пащенко, Евгеній",1891-92,graduates_1891-92_p000,4),"Пащенко, Евгеній.",,
+punctuation left on the surname,5b7381,"Перешивкинъ, Михаилъ",1891-92,graduates_1891-92_p002,5),"Перешивкинъ, Михаилъ.",,
+punctuation left on the surname,e66fc9,"Петрова 2-я, Вѣра Ивановна",1893-94,graduates_1893-94_p002,5),"Петрова, Вѣра.",,
+punctuation left on the surname,a042ea,"Печатниковъ, Николай",1896-97,graduates_1896-97_p001,3),"Печатниковъ, Николай.",,
+punctuation left on the surname,29f3e0,"Полякова, Елена",1901-02,graduates_1901-02_p000,4),"Полякова, Елена.",,
+punctuation left on the surname,05bfb6,"Пржебылецкая, Анна",1896-97,graduates_1896-97_p001,3),"Пржебылецкая, Анна.",,
+punctuation left on the surname,8aebe1,"Прудникова, Екатерина",1901-02,graduates_1901-02_p000,6),"Прудникова, Екатерина.",,
+punctuation left on the surname,995fb5,"Рославлева, Любовь",1891-92,graduates_1891-92_p002,7),"Рославлева, Любовь.",,
+punctuation left on the surname,33e281,"Рыхлякова 2-я, Наталья Трофимовна",1891-92,graduates_1891-92_p000,10),"Рыхлякова, Наталья.",,
+punctuation left on the surname,fb5331,"Рябцовъ, Владиміръ",1897-98,graduates_1897-98_p002,8),"Рябцовъ, Владиміръ.",,
+punctuation left on the surname,b436fa,"Рѣпина, Софія",1896-97,graduates_1896-97_p001,4),"Рѣпина, Софія.",,
+punctuation left on the surname,b5b55e,"Симонова, Антонина",1893-94,graduates_1893-94_p002,6),"Симонова, Антонина.",,
+punctuation left on the surname,660313,"Смирнова, Марія",1893-94,graduates_1893-94_p002,7),"Смирнова, Марія.",,
+punctuation left on the surname,166961,"Степановъ, Сергѣй",1893-94,graduates_1893-94_p002,2),"Степановъ, Сергѣй.",,
+punctuation left on the surname,da5539,"Терпиловскій, Александръ",1891-92,graduates_1891-92_p002,6),"Терпиловскій, Александръ.",,
+punctuation left on the surname,5fd9cb,"Тихомировъ 1-й, Владиміръ Михайловичъ",1891-92,graduates_1891-92_p000,5),"Тихомировъ, Владиміръ.",,
+punctuation left on the surname,a08c53,"Тихомировъ, Сергѣй",1891-92,graduates_1891-92_p000,6),"Тихомировъ, Сергѣй.",,
+punctuation left on the surname,5d9d22,"Тройниковъ, Константинъ",1893-94,graduates_1893-94_p002,3),"Тройниковъ, Константинъ.",,
+punctuation left on the surname,e63497,"Федорова 1-я, Александра Александровна",1901-02,graduates_1901-02_p000,5),"Федорова, Александра.",,
+punctuation left on the surname,88d0fd,"Цалиссонъ, Полина",1891-92,graduates_1891-92_p000,11),"Цалиссонъ, Полина.",,
+punctuation left on the surname,076cab,"Чекрыгинъ 2-й, Александръ Ивановичъ",1901-02,graduates_1901-02_p000,6),"Чекрыгинъ, Александръ.",,
+punctuation left on the surname,4b4c44,"Чекрыгинъ, Иванъ",1896-97,graduates_1896-97_p001,4),"Чекрыгинъ, Иванъ.",,
+punctuation left on the surname,f93d2d,"Чернятина, Александра",1901-02,graduates_1901-02_p000,7),"Чернятина, Александра.",,
+punctuation left on the surname,bcd797,"Чумаковъ, Александръ",1891-92,graduates_1891-92_p002,7),"Чумаковъ, Александръ.",,
+punctuation left on the surname,cd9b03,"Шокоревъ, Дмитрій",1891-92,graduates_1891-92_p002,8),"Шокоревъ, Дмитрій.",,
+punctuation left on the surname,931f40,"Яковлевъ, Владиміръ",1891-92,graduates_1891-92_p000,7),"Яковлевъ, Владиміръ.",,
+punctuation left on the surname,1d7a9b,"Ѳедорова 1-я, Екатерина Никифоровна",1897-98,graduates_1897-98_p002,7),"Ѳедорова, Екатерина.",,
+surname starts lower-case,17cb68,"Де-Лазари, Иванъ Константиновичъ",1896-97,administration_1896-97_p003,5.,де-Лазари,Иванъ,Константиновичъ
+surname starts lower-case,028008,"Де-Ланге, Людвигъ Михайловичъ",1897-98,musicians_1897-98_SP_p001,51.,де Ланге,Людвигъ,Михайловичъ
+surname starts lower-case,028008,"Де-Ланге, Людвигъ Михайловичъ",1909-10,musicians_1909-10_SP_p002,59.,де-Ланге,Людвигъ,Михайловичъ
+surname starts lower-case,028008,"Де-Ланге, Людвигъ Михайловичъ",1910-11,musicians_1910-11_SP_p002,59.,де-Ланге,Людвигъ,Михайловичъ
+surname starts lower-case,520a8a,"Фонъ-Фитингофъ-Шель, Варвара Николаевна",1891-92,productionteam_1891-92_p003,,фонъ-Фитингофъ-Шель,Варвара,Николаевна
+surname starts lower-case,520a8a,"Фонъ-Фитингофъ-Шель, Варвара Николаевна",1892-93,productionteam_1892-93_p004,,фонъ-Фитингофъ-Шель,Варвара,Николаевна
+surname starts lower-case,520a8a,"Фонъ-Фитингофъ-Шель, Варвара Николаевна",1893-94,productionteam_1893-94_p003,,фонъ-Фитингофъ-Шель,Варвара,Николаевна
+surname starts lower-case,520a8a,"Фонъ-Фитингофъ-Шель, Варвара Николаевна",1894-95,productionteam_1894-95_p003,,фонъ-Фитингофъ-Шель,Варвара,Николаевна
+surname starts lower-case,520a8a,"Фонъ-Фитингофъ-Шель, Варвара Николаевна",1895-96,productionteam_1895-96_p003,,фонъ-Фитингофъ-Шель,Варвара,Николаевна
+surname starts lower-case,520a8a,"Фонъ-Фитингофъ-Шель, Варвара Николаевна",1896-97,productionteam_1896-97_p003,,фонъ-Фитингофъ-Шель,Варвара,Николаевна
+surname starts lower-case,520a8a,"Фонъ-Фитингофъ-Шель, Варвара Николаевна",1897-98,productionteam_1897-98_p003,,фонъ-Фитингофъ-Шель,Варвара,Николаевна
+surname starts lower-case,c50a3a,"де-Лазари, Иваръ Константиновичъ",1897-98,administration_1897-98_p003,4.,де-Лазари,Иваръ,Константиновичъ
+surname starts lower-case,bb8439,"фонъ-Бранденбургъ, Фелисата Сергѣевна",1891-92,theaterschoolstaff_1891-92_p003,1.,фонъ-Бранденбургъ,Фелисата,Сергѣевна
+surname starts lower-case,bb8439,"фонъ-Бранденбургъ, Фелисата Сергѣевна",1892-93,theaterschoolstaff_1892-93_p002,1.,фонъ-Бранденбургъ,Фелисата,Сергѣевна
+surname starts lower-case,bb8439,"фонъ-Бранденбургъ, Фелисата Сергѣевна",1893-94,theaterschoolstaff_1893-94_p002,1.,фонъ-Бранденбургъ,Фелисата,Сергѣевна
+surname starts lower-case,8d82b2,"фонъ-Бранденбургъ, Фелицата Сергѣевна",1895-96,theaterschoolstaff_1895-96_p002,1.,фонъ-Бранденбургъ,Фелицата,Сергѣевна
+surname starts lower-case,8d82b2,"фонъ-Бранденбургъ, Фелицата Сергѣевна",1896-97,theaterschoolstaff_1896-97_p002,1.,фонъ-Бранденбургъ,Фелицата,Сергѣевна
+surname starts lower-case,aee79c,"фонъ-Мензенкампфъ, Сергѣй Эдуардовичъ",1890-91,administration_1890-91_p002,5.,фонъ-Мензенкампфъ,Сергѣй,Эдуардовичъ
+surname starts lower-case,aee79c,"фонъ-Мензенкампфъ, Сергѣй Эдуардовичъ",1891-92,administration_1891-92_p001,5.,фонъ-Мензенкампфъ,Сергѣй,Эдуардовичъ
+surname starts lower-case,aee79c,"фонъ-Мензенкампфъ, Сергѣй Эдуардовичъ",1892-93,administration_1892-93_p002,5.,фонъ-Мензенкампфъ,Сергѣй,Эдуардовичъ
+surname starts lower-case,10f2ec,"фонъ-Нольте, Иванъ Константиновичъ",1890-91,musicians_1890-91_MSK_p001,55.,фонъ-Нольте,Иванъ Константиновичъ,
+surname starts lower-case,10f2ec,"фонъ-Нольте, Иванъ Константиновичъ",1891-92,musicians_1891-92_MSK_p001,59.,фонъ-Нольте,Иванъ,Константиновичъ
+surname starts lower-case,10f2ec,"фонъ-Нольте, Иванъ Константиновичъ",1892-93,musicians_1892-93_MSK_p001,58.,фонъ-Нольте,Иванъ,Константиновичъ
+surname starts lower-case,10f2ec,"фонъ-Нольте, Иванъ Константиновичъ",1893-94,musicians_1893-94_MSK_p002,71.,фонъ-Нольте,Иванъ,Константиновичъ
+surname starts lower-case,10f2ec,"фонъ-Нольте, Иванъ Константиновичъ",1894-95,musicians_1894-95_MSK_p001,69.,фонъ-Нольте,Иванъ,Константиновичъ
+surname starts lower-case,10f2ec,"фонъ-Нольте, Иванъ Константиновичъ",1895-96,musicians_1895-96_MSK_p001,67.,фонъ-Нольте,Иванъ,Константиновичъ
+surname starts lower-case,10f2ec,"фонъ-Нольте, Иванъ Константиновичъ",1896-97,musicians_1896-97_MSK_p001,65.,фонъ-Нольте,Иванъ,Константиновичъ
+surname starts lower-case,10f2ec,"фонъ-Нольте, Иванъ Константиновичъ",1897-98,musicians_1897-98_MSK_p001,61.,фонъ-Нольте,Иванъ,Константиновичъ
+two words glued together,2adac7,"Михайловскій, Владиміръ Александровичъ",1908-09,theaterschoolstaff_1908-09_p004,5.,Михайловскій,ВладимІръ,Александровичъ
+two words glued together,05aaa2,"Пуни, Леонтина-Констанція",1903-04,balletartists_1903-04_SP_p003,77.,Пуни,ЛеонтинаКонстанція,

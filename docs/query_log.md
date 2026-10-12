@@ -15877,3 +15877,93 @@ every season 1890-91..1898-99 and 1901-02..1910-11 (two in 1910-11), none
 in 1899-00 or 1900-01. No candidate pair is pending. All 23 review mentions
 of «Воронцовъ» resolve, including the 1901-02 one. Live persons 3059;
 receipts unchanged; review mentions resolved 21,308.
+
+## 2026-10-12 — Genre repeated at the end of Repertoire titles: does it split works?
+
+**totals**
+
+```sql
+WITH t AS (SELECT p.performance_id, p.performance_title, p.genre, w.work_id, w.canonical_title, w.canonical_genre, w.appearance_count, e.season, e.page_id,
+  left(p.performance_title, length(p.performance_title)-length(p.genre)-2) AS bare
+ FROM raw.event_entry_performance p JOIN raw.event_entry e USING(event_id) JOIN entities.work_link l ON l.raw_performance_id=p.performance_id JOIN entities.work w USING(work_id)
+ WHERE p.genre IS NOT NULL AND length(p.genre)>1 AND p.performance_title LIKE '%, ' || p.genre) SELECT count(*), count(DISTINCT page_id), count(DISTINCT work_id) FROM t
+```
+
+Result: 861 performances, 74 pages, 369 works.
+
+**by season**
+
+```sql
+WITH t AS (SELECT p.performance_id, p.performance_title, p.genre, w.work_id, w.canonical_title, w.canonical_genre, w.appearance_count, e.season, e.page_id,
+  left(p.performance_title, length(p.performance_title)-length(p.genre)-2) AS bare
+ FROM raw.event_entry_performance p JOIN raw.event_entry e USING(event_id) JOIN entities.work_link l ON l.raw_performance_id=p.performance_id JOIN entities.work w USING(work_id)
+ WHERE p.genre IS NOT NULL AND length(p.genre)>1 AND p.performance_title LIKE '%, ' || p.genre) SELECT season, count(*) n, count(DISTINCT page_id) pages FROM t GROUP BY 1 ORDER BY 1
+```
+
+Result: 16 seasons, 1891-92..1909-10; most in 1898-99 (113), 1909-10 (110), 1895-96 (104), 1893-94 (87).
+
+**works whose display title keeps the suffix**
+
+```sql
+WITH t AS (SELECT p.performance_id, p.performance_title, p.genre, w.work_id, w.canonical_title, w.canonical_genre, w.appearance_count, e.season, e.page_id,
+  left(p.performance_title, length(p.performance_title)-length(p.genre)-2) AS bare
+ FROM raw.event_entry_performance p JOIN raw.event_entry e USING(event_id) JOIN entities.work_link l ON l.raw_performance_id=p.performance_id JOIN entities.work w USING(work_id)
+ WHERE p.genre IS NOT NULL AND length(p.genre)>1 AND p.performance_title LIKE '%, ' || p.genre) , s AS (SELECT DISTINCT work_id, canonical_title, canonical_genre, appearance_count, bare FROM t WHERE canonical_title LIKE '%, ' || genre)
+SELECT count(*) suffix_works, sum(appearance_count) perfs,
+ count(*) FILTER (WHERE appearance_count=1) singletons,
+ count(*) FILTER (WHERE EXISTS (SELECT 1 FROM entities.work b WHERE b.canonical_title=s.bare)) has_bare_twin FROM s
+```
+
+Result: 84 works, 216 performances; 29 are one-performance works; 42 have a second work with the same title without the suffix.
+
+**twins**
+
+```sql
+WITH t AS (SELECT p.performance_id, p.performance_title, p.genre, w.work_id, w.canonical_title, w.canonical_genre, w.appearance_count, e.season, e.page_id,
+  left(p.performance_title, length(p.performance_title)-length(p.genre)-2) AS bare
+ FROM raw.event_entry_performance p JOIN raw.event_entry e USING(event_id) JOIN entities.work_link l ON l.raw_performance_id=p.performance_id JOIN entities.work w USING(work_id)
+ WHERE p.genre IS NOT NULL AND length(p.genre)>1 AND p.performance_title LIKE '%, ' || p.genre) , s AS (SELECT DISTINCT work_id, canonical_title, canonical_genre, appearance_count, bare FROM t WHERE canonical_title LIKE '%, ' || genre)
+SELECT s.canonical_title, s.canonical_genre, s.appearance_count, b.canonical_title, b.canonical_genre, b.appearance_count FROM s JOIN entities.work b ON b.canonical_title=s.bare ORDER BY s.appearance_count DESC, 1 LIMIT 25
+```
+
+Result: Mostly Latin-script titles (Le Trait du Parthe 6 + 43, Le Rêve de ma Femme 5 + 21, Divorçons 4 + 10, Fidèle 4 + 16, Heimath 3 + 3) and compound genres (Привидѣнія, семейная др. 5 + 15). A few twins differ in genre (Mouton com. / com. nouv.; Каменный гость сц. / оп. / др. сц.; La griffe pièce / com. nouv.).
+
+**top suffix display titles**
+
+```sql
+WITH t AS (SELECT p.performance_id, p.performance_title, p.genre, w.work_id, w.canonical_title, w.canonical_genre, w.appearance_count, e.season, e.page_id,
+  left(p.performance_title, length(p.performance_title)-length(p.genre)-2) AS bare
+ FROM raw.event_entry_performance p JOIN raw.event_entry e USING(event_id) JOIN entities.work_link l ON l.raw_performance_id=p.performance_id JOIN entities.work w USING(work_id)
+ WHERE p.genre IS NOT NULL AND length(p.genre)>1 AND p.performance_title LIKE '%, ' || p.genre) , s AS (SELECT DISTINCT work_id, canonical_title, canonical_genre, appearance_count FROM t WHERE canonical_title LIKE '%, ' || genre)
+SELECT canonical_title, canonical_genre, appearance_count FROM s ORDER BY 3 DESC LIMIT 8
+```
+
+Result: Король Генрихъ VIII, др. хрон. (9); Джамилэ, оп. (6); Le Trait du Parthe, com. (6); Вьюга, ком. (5).
+
+**all works with a genre-suffixed display title (any source)**
+
+```sql
+SELECT count(*), sum(appearance_count) FROM entities.work WHERE canonical_genre IS NOT NULL AND (canonical_title LIKE '%, ' || canonical_genre OR canonical_title LIKE '%, ' || canonical_genre || '.')
+```
+
+Result: 89 works, 236 performances.
+
+**Мѣсяцъ въ деревнѣ**
+
+```sql
+SELECT canonical_title, canonical_genre, appearance_count FROM entities.work WHERE canonical_title LIKE 'Мѣсяцъ въ деревнѣ%'
+```
+
+Result: One work, «Мѣсяцъ въ деревнѣ», ком., 59 performances: NOT split (corrects the example given earlier the same day).
+
+## 2026-10-12 — End-to-end audit of entities.person
+
+Queries: `docs/eval/person_audit_2026-10-12/audit.py` and `cluster.py` (read-only; the SQL is in the scripts:
+every live person's linked entries with season, city, list, heading, name fields, instrument and service
+periods; the rejected pairs and the split rows of entities.person_merge_log).
+
+Result: 3,059 live people audited. 298 clusters share a name and a printed start date without being joined
+(263 clean, 35 needing a look; 324 records would be absorbed), 163 of the 376 graduate-only records among
+them. One mis-merge regression confirmed (Никитинъ, Алексѣй Никитичъ: the 2026-10-05 split undone by
+merge_duplicate_persons); 10 of 13 logged splits hold, 2 were reverted on RG's decision. Counts per signal
+and what was and was not triaged: docs/eval/person_audit_2026-10-12/README.md.
