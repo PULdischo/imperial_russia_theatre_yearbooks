@@ -15707,3 +15707,18 @@ Administrators 1910-11 «1 декабря 1910 г.» and TheaterSchoolStaff 1910
 2 candidate pairs still pending (Воронцовъ/Боронцовъ, Раманова/Бажанова).
 The same checks after the Девильеръ merge earlier: one person, 1908-09..
 1910-11, 3 entries; her one review mention resolves to her.
+
+## 2026-10-12 — «Фонъ-Боолъ» corrected on two rows: verification
+
+```sql
+ATTACH 'outputs/full_run_pre_promote_backup_2026-10-12_fonbool_rawfix/imperial_theaters.duckdb' AS bak (READ_ONLY);
+SELECT count(*) FROM (SELECT * FROM raw.person_entry EXCEPT SELECT * FROM bak.raw.person_entry);
+SELECT count(*) FROM (SELECT entry_id, person_id FROM entities.person_link
+                      EXCEPT SELECT entry_id, person_id FROM bak.entities.person_link);
+SELECT DISTINCT pe.family_name FROM entities.person_link pl JOIN entities.person p USING (person_id)
+JOIN raw.person_entry pe USING (entry_id) WHERE p.display_name LIKE 'Фонъ%Бооль%';
+```
+
+Result: 2 entries differ from the backup, 0 links; his rows now carry only
+«Фонъ-Бооль» and «Фонъ Бооль»; live persons 3062, receipts unchanged,
+Wikidata-linked 176, review mentions resolved 21,307.
