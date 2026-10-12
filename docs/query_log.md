@@ -15748,3 +15748,90 @@ regisseur 1908-09..1910-11, with the note «съ 1 сентября 1891 г. п�
 Боронцовъ, Владиміръ: one row, the Petersburg Graduates list of 1910-11,
 assigned to the Petersburg troupe from 1 June 1911; nothing after, because
 1910-11 is the last season in the data.
+
+## 2026-10-12 — Раманова, Марія and Бажанова, Марія: who they are
+
+```sql
+-- each as the WHERE clause of the entry listing (season, city, list, number, name, note, credits)
+pe.family_name LIKE 'Р_манова%' AND pe.first_name LIKE 'Марі%'
+pe.family_name LIKE 'Бажанов%' OR pe.family_name LIKE 'Божанов%'
+sp.city='SP' AND sp.entity_type='BalletArtists' AND sp.season='1903-04' AND pe.tenure_note_text LIKE '%1 іюня 1903%'
+sp.city='SP' AND sp.entity_type='BalletArtists' AND pe.family_name LIKE 'Р_манов%' AND sp.season BETWEEN '1902-03' AND '1904-05'
+```
+
+Result: «Раманова, Марія» is one row, no. 5 of the seven women in the
+Petersburg class of 1903. The 1903-04 Petersburg list has 14 entries «съ 1
+іюня 1903 г.», matching the class of 14 one for one; the six other women are
+all there under their graduate-list names, and the seventh is «80. Романова,
+Марія Федоровна», listed every season to 1910-11 (Жизель: Зюльме, Мирта,
+Монна). No other Романова or Раманова enters the Petersburg list then.
+«Бажанова, Марія» is one row, the Moscow class of spring 1911, with no start
+date; no other Бажанова exists (the nearest name is Божановская, Елена
+Владиміровна, Moscow 1893-98).
+
+## 2026-10-12 — Follow-up checks for the "workable from the scans" list in known_issues.md
+
+```sql
+SELECT status, count(*) FROM entities.person_candidate GROUP BY 1;
+```
+
+Result: pending 2, rejected 19 (was pending 5 earlier the same day; a parallel session merged Девильеръ and Фонъ-Бооль in between).
+
+```sql
+SELECT sp.season, sp.city, e.entry_id, e.heading_path, e.family_name
+FROM raw.person_entry e JOIN raw.source_pages sp USING(page_id)
+WHERE e.entity_type='Musicians' AND e.family_name IN ('Богуславъ','Рамзе','Галкинъ','Арендсъ','Келеръ','Шульцъ')
+  AND (e.heading_path ILIKE '%апельмейстер%' OR e.heading_path ILIKE '%дирижер%') ORDER BY e.family_name, sp.season;
+```
+
+Result: 51 rows. Богуславъ 1890-91 and 1891-92; Рамзе 1890-91..1894-95; Галкинъ 1895-96..1906-07; Келеръ 1898-99..1907-08; Шульцъ 1900-01..1907-08; Арендсъ 1892-93..1907-08 except 1904-05 and 1905-06.
+
+```sql
+SELECT count(*), count(DISTINCT e.page_id) FROM raw.event_entry_performance p JOIN raw.event_entry e USING(event_id)
+WHERE p.genre IS NOT NULL AND length(p.genre)>1 AND (p.performance_title LIKE '%, ' || p.genre OR p.performance_title LIKE '%, ' || rtrim(p.genre,'.'));
+
+WITH t AS (SELECT p.performance_id, p.performance_title, p.genre, w.canonical_title
+ FROM raw.event_entry_performance p JOIN entities.work_link l ON l.raw_performance_id=p.performance_id JOIN entities.work w USING(work_id)
+ WHERE p.genre IS NOT NULL AND length(p.genre)>1 AND p.performance_title LIKE '%, ' || p.genre)
+SELECT count(*), count(*) FILTER (WHERE canonical_title LIKE '%, ' || genre), count(DISTINCT canonical_title) FROM t;
+```
+
+Result: 863 performances on 76 pages carry the genre at the end of the title; of the 861 with an exact match, 184 link to a work whose canonical title keeps the suffix (369 distinct work titles in all).
+
+```sql
+SELECT e.family_name, count(*), min(sp.season), max(sp.season) FROM raw.person_entry e JOIN raw.source_pages sp USING(page_id)
+WHERE e.entity_type='BalletArtists' AND (e.family_name LIKE 'Алек_не%' OR e.family_name LIKE 'Жул%евъ' OR e.family_name LIKE 'Куляевъ') GROUP BY 1 ORDER BY 1;
+
+SELECT sp.season, e.entry_id, s.start_date_text FROM raw.person_entry e JOIN raw.source_pages sp USING(page_id)
+JOIN raw.person_entry_service s USING(entry_id) WHERE e.family_name='Гердтъ' AND e.first_name='Павелъ' AND s.period_order=1 ORDER BY 1;
+```
+
+Result: Алексне 8 rows (1901-02..1910-11) and «Алекcне» (Latin c) 1; Жуляевъ 7 rows (1890-91..1896-97) and «Жуліевъ» 1 (1897-98). Гердтъ's BalletArtists start date is «22 ноября 1860 г.» in every season except 1903-04, stored «1866».
+
+## 2026-10-12 — Any other candidate for «Раманова, Марія»? Merge applied
+
+```sql
+SELECT pe.family_name, pe.first_name, pe.patronymic, sp.city, sp.entity_type,
+       min(sp.season), max(sp.season), count(*)
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+JOIN raw.person_entry_service s USING (entry_id)
+WHERE s.start_date_undate = '1903-06-01' GROUP BY ALL ORDER BY 1, 6;
+
+SELECT pe.family_name, pe.first_name, pe.patronymic, sp.city, sp.entity_type,
+       min(sp.season), max(sp.season), list(DISTINCT s.start_date_undate)
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s USING (entry_id)
+WHERE regexp_matches(pe.family_name, '^Р[аоя]х?ман') AND pe.first_name LIKE 'Мар%' GROUP BY ALL;
+
+SELECT display_name, first_attested_season, last_attested_season, wikidata_qid
+FROM research.person WHERE display_name LIKE 'Р_манова, Марія%' OR display_name LIKE 'Бажанова%';
+```
+
+Result: every person with a 1 June 1903 start is one of the 14 graduates of
+1903 under their own name, plus three unrelated rows (a ProductionTeam
+woman, an administrator, and one 1908-09 row for Мацкевичъ, Раиса). The only
+Р-манова with the first name Марія anywhere is the graduate and Романова,
+Марія Федоровна. After the merge: «Романова, Марія Федоровна», 1902-03..
+1910-11, 9 entries, Q4397230; «Бажанова, Марія» unchanged. Live persons
+3061; one candidate pair left pending (Воронцовъ/Боронцовъ, parked).
+Receipts and the Wikidata count (176) unchanged.
