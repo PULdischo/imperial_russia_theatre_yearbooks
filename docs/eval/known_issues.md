@@ -49,6 +49,8 @@ closes, and add new open items here as well as in their own entry.
   findable as a concert too. Proposed, not built: a work-level art-form table
   allowing two values; best designed together with the gala / mixed-evening
   decisions (#141) so works and events share one scheme.
+  Alternative from RG (2026-10-12, "just a thought for the future"): a parent
+  genre value "gala" or "mixed" for such items, in place of two art forms.
 - `compare_season_stats.py` has not been re-run since the parent-genre
   changes of 2026-10-12. It counts an evening with a parent-genre-ballet work
   as a ballet evening, so it will now add 21 and 29 Sep 1894 Александринскій
