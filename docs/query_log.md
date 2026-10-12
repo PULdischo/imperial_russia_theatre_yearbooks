@@ -14777,3 +14777,34 @@ FROM raw.event_entry e JOIN research.event v USING(event_id) WHERE e.event_id = 
 ```
 
 Result: the inserted row is `repertoire_1892-93_pair010__s085`, Малый, 21 Суббота., morning, performed, 827 р. 42 к., 1892-11-21 verified, «Графъ де Ризоръ»; s086 is the empty evening (no_performance). `raw.event_entry` 29,955 (was 30,008); `research.event` 32,806 (32,859); `research.performance` 30,849 (30,848); `research.work` 3,065 (3,064). `time_of_day`: unspecified 25,237, morning 2,368, evening 2,350; `event_status`: performed 22,164, no_performance 7,791. Date check: verified 29,519, intra_block_disagreement 363, corrected_manual 42, corrected 31 (of 29,955). Half-dash list: 26 sessions, 24 morning + 2 evening. After `compare_structure.py` + `triage_structure.py`: C_dark 0, D_halfdash 25 (23 morning, 2 evening stored; the 26th is the added session), D_other 5, C_content 2. Collapsed closed-day sessions in the raw JSON (exact `_fix_note` match): 54 on 18 pages (53 dark/unannotated, 1 annotation-only).
+
+## 2026-10-12 — the duplicate folio, checked properly (RG: "are these truly adjacent pages in the same volume?")
+
+Right question. Checked three ways:
+
+1. **Same volume, adjacent positions.** Both from
+   `1900-01_SeasonReview_BalletSP.pdf`, `source_page_index` 21 and 23, with
+   different content.
+2. **The digit is a 4, not a 6.** Compared against known 6s in the same
+   volume — `186` (p030) and `156` (p003). Their 6 is a closed loop with a
+   tall ascending curve; p023's digit has the open triangular counter,
+   crossbar and descending stem of a 4, identical to p021's. So the
+   sequence really does print 174 twice.
+3. **The volume's run is otherwise strictly monotonic:** 153-175, then this
+   174, then 179-194. The only gaps (169, 176-178, 180-181) are unnumbered
+   plate leaves, and p016/p025/p033 carry no folio at all.
+
+**But the question turned up something I had missed.** The text does **not**
+flow from p022 into p023:
+
+- p021 ends `…на-` → p022 begins `чальникъ охоты` ✓
+- p022 ends `Гвадалквириръ — г-жа Борхардтъ; Темза — г-жа Фо-` → p023 begins
+  `уговорить ее поступить на сцену` ✗
+
+No page in the PDF continues `Фо-`. So **a page is missing from the scan
+between 175 and the second 174**, independent of the numbering. Checked
+every neighbouring page's first and last paragraph to find the continuation;
+there isn't one.
+
+So the entry stands — 174 is printed twice, both transcriptions correct —
+with the scan gap recorded alongside it.
