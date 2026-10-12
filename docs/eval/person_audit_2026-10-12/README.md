@@ -129,3 +129,15 @@ graduation list, not one. By name, every one of the 19 has exactly one named Mos
 (Орловъ and Грекова from 1903-04); 17 have a bare 1901-02 row found by surname (Валининъ for Волининъ, Николаева
 3-я, Царманъ 2-й among them); Бурина's and Грекова's bare rows were not found by this query. Жвирблисъ is the one
 already queued. Nothing merged; from the extraction, not the scans, apart from the two rows named above.
+
+**Correction, same day (RG: "so these are the only ones that go missing?").** Neither goes missing. All 19 of the
+class are in the Moscow 1901-02 list.
+- Грекова, Елена: «26. Грекова 2-я» is there; the earlier query missed it because the ordinal sits in the
+  first-name field. She is then «Трекова, Елена Александровна» in the 1902-03 data (not read on the scan) and
+  «Грекова 2-я, Елена Александровна» from 1903-04.
+- Бурина, Марія: the print has «10. Бурина 2-я.», a bare surname (full zoom). The extraction had filled that row
+  with the name, start date and credits of row 11, Бюхнеръ, Евгенія Фердинандовна, inventing a «Бурина, Евгенія
+  Фердинандовна». Corrected from the scan (`docs/eval/raw_fix_burina_1901-02_2026-10-12.py`; row 9 also regains
+  «1-я»). 2 entries changed, 0 links moved.
+So the bare-surname rows of that list number 24 with this one, 17 of them the class of 1901; and each of the 19
+graduates has a graduate record, a 1901-02 row and a named record from 1902-03 or 1903-04.

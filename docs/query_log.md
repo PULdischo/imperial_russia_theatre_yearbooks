@@ -16090,3 +16090,24 @@ GROUP BY ALL;
 Result: the 19 are the whole Moscow class of spring 1901 (no start date printed). The Moscow 1901-02 list has
 23 bare-surname rows, 16 of them this class. Each graduate has exactly one named Moscow record with «съ 1
 сентября 1901 г.», first listed 1902-03 (two from 1903-04). Details in the audit README.
+
+## 2026-10-12 — Do Бурина and Грекова of the Moscow class of 1901 go missing in 1901-02?
+
+```sql
+SELECT sp.season, pe.page_id, pe.list_number, pe.family_name, pe.first_name, pe.patronymic,
+       pe.tenure_note_text, pl.person_id, p.display_name, pe.credit_summary_text
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+JOIN entities.person_link pl USING (entry_id) JOIN entities.person p USING (person_id)
+WHERE sp.city = 'Moscow' AND sp.entity_type = 'BalletArtists'
+  AND (pe.family_name LIKE 'Бурина%' OR pe.family_name LIKE '_рекова%')
+  AND sp.season BETWEEN '1900-01' AND '1903-04' ORDER BY 4, 1;
+
+SELECT sp.season, sp.city, pe.page_id, pe.list_number, pe.family_name, pe.first_name, pe.patronymic
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+WHERE pe.patronymic LIKE 'Фердинанд%' AND pe.first_name LIKE 'Евген%' ORDER BY 1;
+```
+
+Result: «26. Грекова 2-я» is in the 1901-02 list (ordinal stored in first_name). The 1901-02 row «10. Бурина,
+Евгенія Фердинандовна (съ 1 сентября 1888 г.)» duplicated row 11, Бюхнеръ, Евгенія Фердинандовна, who is the
+only Евгенія Фердинандовна in the corpus (1890-91..1907-08); the scan prints «10. Бурина 2-я.» After the raw
+correction: 2 entries differ from the backup, 0 links, 2,765 live people, 176 pairs pending.
