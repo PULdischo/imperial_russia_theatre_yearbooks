@@ -263,6 +263,13 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** balletartists_1908-09_MSK_p001 no. 24 and balletartists_1909-10_MSK_p002 no. 23 (both full zoom 2026-10-12); balletartists_1910-11_MSK_p001 no. 24 (extraction only); review_1910-11_MSK_ballet_p001, «г-жи Ѳедорова 2-я и Девильеръ» in «Баядерка».
 - **Would resolve it:** the Moscow school's 1908 graduation list or her service record.
 
+## 30. Боронцовъ, Владиміръ (SP Graduates 1910-11) -- PARKED until the 1911-12 volume is scanned
+- **Status:** OPEN, parked (RG, 2026-10-12). The candidate pair Воронцовъ, Владиміръ / Боронцовъ, Владиміръ stays `pending` in entities.person_candidate on purpose.
+- **What is uncertain:** whether his surname is Боронцовъ or a misprint for Воронцовъ. The same page prints «Вольшакова, Лидія», so the initials В and Б may have been exchanged (genuine_print_typos.md).
+- **What is settled:** he is NOT the Moscow dancer Воронцовъ, Владиміръ Васильевичъ (Moscow graduate 1891, artist 1891-98 and 1901-08, acting assistant regisseur 1908-11). He graduates from the Petersburg school in spring 1911, assigned to the Petersburg troupe from 1 іюня 1911.
+- **Where to look:** graduates_1910-11_p000 (printed p. 153; full zoom 2026-10-12). When 1911-12 is onboarded: the Petersburg BalletArtists list, men, for a Воронцовъ or Боронцовъ «съ 1 іюня 1911 г.», and the women for Большакова or Вольшакова, Лидія.
+- **Also waiting on RG, same family:** the Moscow rows 1901-02 (surname only, record d8902c) and 1910-11 Артисты no. 8 (no patronymic, record 865c93) look like Владиміръ Васильевичъ; not merged. Two of his notes are extracted as «съ 1 сентября 1901 г. по 1 ноября 1898 г.» (1902-03, 1903-04), not checked on the scan.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.

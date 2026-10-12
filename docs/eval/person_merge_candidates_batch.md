@@ -111,7 +111,7 @@ None is an extraction error: each spelling is what the print has (scan readings 
 | Pair | Status |
 |---|---|
 | Девильеръ / Давильеръ, Екатерина Львовна (1272e3 + c82bb1) | **MERGED** (RG, 2026-10-12), survivor 1272e3; note in uncertain_person_identities.md #29. Live persons 3065 -> 3064. Backup `outputs/full_run/imperial_theaters.pre_devilier_merge_2026-10-12.duckdb`. |
-| Воронцовъ, Владиміръ (Moscow artist, съ 1 сентября 1891) / Боронцовъ, Владиміръ (SP graduate 1911) | recommended REJECT (two men); RG's decision pending |
+| Воронцовъ, Владиміръ (Moscow artist, съ 1 сентября 1891) / Боронцовъ, Владиміръ (SP graduate 1911) | **PARKED** (RG, 2026-10-12) until the 1911-12 scans arrive; the pair stays pending. Two different men either way: uncertain_person_identities.md #30. |
 | Раманова, Марія (SP graduate 1903) / Бажанова, Марія (Moscow graduate 1911) | recommended REJECT (two women); RG's decision pending |
 | Фонъ-Бооль / Фонъ Бооль, Николай Константиновичъ (2 pairs, 3 records: 420cb6, 054608, aa74c2) | **MERGED** (RG, 2026-10-12: "obviously keep both [dates], but it's the same person"), survivor 420cb6, `docs/eval/person_merge_fon_bool_2026-10-12.py`. Live persons 3064 -> 3062. Both printed leaving dates stay verbatim in raw: «1 декабря 1910 г.» (administration list) and «1 февраля 1910 г.» (1910-11 Moscow school list). Backup `outputs/full_run/imperial_theaters.pre_fonbool_merge_2026-10-12.duckdb`. |
 

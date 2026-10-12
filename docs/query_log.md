@@ -15722,3 +15722,29 @@ JOIN raw.person_entry pe USING (entry_id) WHERE p.display_name LIKE 'Фонъ%Б
 Result: 2 entries differ from the backup, 0 links; his rows now carry only
 «Фонъ-Бооль» and «Фонъ Бооль»; live persons 3062, receipts unchanged,
 Wikidata-linked 176, review mentions resolved 21,307.
+
+## 2026-10-12 — Воронцовъ and Боронцовъ across the seasons
+
+```sql
+SELECT substr(cast(pl.person_id AS varchar),1,6), sp.season, sp.city, sp.entity_type, pe.page_id,
+       pe.heading_path, pe.list_number, pe.family_name, pe.first_name, pe.patronymic,
+       pe.tenure_note_text, pe.credit_summary_text
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN entities.person_link pl USING (entry_id)
+WHERE pe.family_name LIKE '_оронцов%'
+  AND sp.entity_type IN ('BalletArtists','Graduates','TheaterSchoolStaff') ORDER BY 2, 3, 4, 5;
+
+SELECT season, city, surface, count(*) FROM entities.review_mention
+WHERE normalised LIKE '_оронцов%' GROUP BY ALL ORDER BY 1;
+```
+
+Result: Воронцовъ, Владиміръ Васильевичъ: Moscow graduate 1890-91; Moscow
+artist 1891-92..1898-99 («Оставилъ службу 1 ноября 1898»); absent 1899-00
+and 1900-01; back from 1901-02 (that row extracted with surname only, a
+separate record d8902c); artists' list to 1907-08; acting assistant
+regisseur 1908-09..1910-11, with the note «съ 1 сентября 1891 г. по 1 ноября
+1898 г. и съ 1 сентября 1901 г.»; and a second 1910-11 row in Артисты, no.
+8, without patronymic (865c93). 23 review mentions, all Moscow, 1894-1907.
+Боронцовъ, Владиміръ: one row, the Petersburg Graduates list of 1910-11,
+assigned to the Petersburg troupe from 1 June 1911; nothing after, because
+1910-11 is the last season in the data.
