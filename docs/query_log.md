@@ -14635,3 +14635,63 @@ Result: read and stored agree on 1,193 of 1,199 figures; 5 corrected (see known_
 МАР 2 Dec). 2602 р. 50 к. occurred on three 1903-04 sessions: Михайловскій 6 Dec (s030, genuine), Михайловскій 27 Dec (s041, genuine)
 and the Александринскій charity block of 27 Dec (p018 s027, spurious, removed). research.season_stat_check after: 1899-00 SP
 receipts_minus_printed +1,629.87 (was +1,569.87); 1903-04 SP +305.66 (was +2,908.16); sessions unchanged (+12, +23).
+
+## 2026-10-12 — ordinal-shift merges built (RG: "1. Queue, 2. yes, but only if they have corroboration elsewhere")
+
+`build_ordinal_shift_candidates()` in `build_entities.py`: a third blocking
+pass that **drops the ordinal**, pairs records differing only in it, and
+requires a shared printed service start date. Emitted as candidates, never
+as merges.
+
+**Auto-confirm needs a second, independent signal**, per RG. Measured what
+is actually available across the 61 pairs:
+
+| signal | pairs |
+|---|---|
+| seasons disjoint | 56/61 |
+| same roster section + city | 18/61 |
+| both patronymics present and equal | 5/61 |
+| shared end date / shared QID | 0 |
+
+`seasons disjoint` is near-universal, so it is a *precondition*, not
+evidence. Auto-confirm therefore = seasons disjoint **and** (patronymic
+agrees **or** same section+city), **and** neither record is ambiguous.
+
+**The ambiguity guard matters.** `Иванова 4-я, Надежда` (patronymic blank)
+shares a start date with `Иванова 3-я, Надежда Михайловна` *and*
+`Иванова 2-я, Надежда Сергѣевна` — two women. Any record whose partners
+disagree about the patronymic is barred from auto-confirm. It caught three:
+that one, `Ивановъ, Александръ` (Гавриловичъ vs Николаевичъ) and
+`Ивановъ, Иванъ` (Григорьевичъ vs Николаевичъ).
+
+**Result: 61 pairs, 15 auto-confirmed, 46 queued.** 14 records merged into
+12 survivors; `entities.person` 3,130 → 3,116. Every `Пономаревъ, Сергѣй
+Ивановичъ` is now ONE record spanning 1901-02 to 1910-11 (was four).
+
+### The merge broke ordinal matching, and fixing it properly paid for itself
+
+A survivor carries a single `ordinal_suffix`, so a review's `Пономаревъ 2-й`
+matched nothing for the years he was printed the other way: resolution fell
+20,625 → 20,588. Replacing the scalar with a SET of every ordinal he ever
+had was **worse** (20,493) — it matches more candidates and discriminates
+less. Keying by **season** is the correct reading of RG's rule and beats
+both:
+
+| | resolved |
+|---|---|
+| before the merges | 20,625 (75.5%) |
+| after the merges, scalar ordinal | 20,588 (75.3%) |
+| after the merges, set of ordinals | 20,493 (75.0%) |
+| after the merges, **ordinal per season** | **20,723 (75.8%)** |
+
+Person mentions joining `research.person`: 16,374 → **16,509**.
+
+`Пономаревъ` itself now resolves 29 where it resolved 51, and that is
+**right**: with Сергѣй a single record spanning 1901-11, a bare
+`Пономаревъ` in those years is genuinely ambiguous between two ballet
+dancers — which is exactly why the print used ordinals in those years and
+not others.
+
+**Pre-existing, not caused by this and not fixed here:** 19
+`person_wikidata_link` rows point at a superseded person. Same count before
+and after.

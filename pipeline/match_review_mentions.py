@@ -352,11 +352,46 @@ def build_lexicon(db: Path) -> Lexicon:
         where entity_type is not null group by 1, 2""").fetchall():
         sections[str(pid)].add(et)
 
+    # EVERY ordinal a person was printed under, not just the canonical one.
+    # An ordinal is relative to who else is in the company that season (RG,
+    # 2026-10-12), so one person legitimately carries several across the
+    # years: Сергѣй Ивановичъ Пономаревъ is `2-й` while Иванъ Ивановичъ is
+    # there and `1-й` after he leaves. Once entity resolution merges those
+    # records -- which it now does, on a shared printed start date -- the
+    # survivor has a single `ordinal_suffix`, and matching a review's
+    # `Пономаревъ 2-й` against that scalar failed for all the years he was
+    # printed the other way. Collected from the raw entries, through the
+    # supersede chain, so a merge ADDS ordinals rather than losing them.
+    # Keyed by SEASON, because that is what the ordinal is relative to. A
+    # set of "every ordinal he ever had" is strictly worse than the scalar
+    # it replaced -- it matches more candidates and discriminates less.
+    # `Пономаревъ 2-й` in a 1908-09 review should match the man who was 2-й
+    # IN 1908-09, and not the one who was 2-й a decade earlier.
+    ord_by_season: dict[tuple[str, str], str] = {}
+    ordinals: dict[str, set[str]] = collections.defaultdict(set)
+    for pid, fam, season in con.execute("""
+        select pl.person_id, pe.family_name, sp.season
+        from raw.person_entry pe
+        join entities.person_link pl on pl.entry_id = pe.entry_id
+        join raw.source_pages sp on sp.page_id = pe.page_id
+        where pe.family_name is not null""").fetchall():
+        m = re.search(r"(\d+)\s*-\s*[ейя]", str(fam))
+        if m:
+            ordinals[str(pid)].add(m.group(1))
+            ord_by_season[(str(pid), season)] = m.group(1)
+    lex.ordinal_by_season = ord_by_season
+
     for pid, fam, disp, ordn, first, last in con.execute("""
         select person_id, canonical_family_name, display_name, ordinal_suffix,
                first_attested_season, last_attested_season
         from research.person where canonical_family_name is not null""").fetchall():
+        own = set(ordinals.get(str(pid), set()))
+        if ordn:
+            m = re.search(r"\d+", ordn)
+            if m:
+                own.add(m.group(0))
         lex.person_meta[str(pid)] = {"family": fam, "display": disp, "ordinal": ordn,
+                                "ordinals": own,
                                 "first_season": first, "last_season": last,
                                 "sections": sections.get(str(pid), set())}
         lex.add(lex.person, surname_forms(fam), pid)
@@ -569,9 +604,13 @@ def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
     # where the rosters place her, so on her mentions in every other season a
     # longer-serving Павлова drew level on the season bonus. 79 of her own
     # mentions were unresolved for that reason.
+    def ordinals_for(pid: str) -> set[str]:
+        """The ordinal this person carried in THIS season, else all of them."""
+        o = getattr(lex, "ordinal_by_season", {}).get((pid, season))
+        return {o} if o else (lex.person_meta.get(pid, {}).get("ordinals") or set())
+
     if want_ord:
-        exact = [pid for pid in ids
-                 if re.sub(r"\D", "", (lex.person_meta.get(pid, {}).get("ordinal") or "")) == want_ord]
+        exact = [pid for pid in ids if want_ord in ordinals_for(pid)]
         if len(exact) == 1:
             g = canon_gender((lex.person_meta.get(exact[0], {}).get("family") or ""))
             if not (want_g and g and want_g != g):
@@ -584,9 +623,10 @@ def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
             scored.append((0, pid, ""))
             continue
         score, why = 0, []
-        meta_ord = re.sub(r"\D", "", meta.get("ordinal") or "") or None
-        if want_ord and meta_ord:
-            if meta_ord == want_ord:
+        meta_ords = ordinals_for(pid)
+        meta_ord = sorted(meta_ords)[0] if meta_ords else None
+        if want_ord and meta_ords:
+            if want_ord in meta_ords:
                 score += 6
                 why.append("ordinal")
             else:

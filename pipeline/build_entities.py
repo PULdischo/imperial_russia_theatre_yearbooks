@@ -1458,6 +1458,114 @@ def _annotate_tenure_signal(con: duckdb.DuckDBPyConnection) -> None:
     con.execute("DROP TABLE _pc_dates")
 
 
+def build_ordinal_shift_candidates(con: duckdb.DuckDBPyConnection,
+                                   prior_status: dict | None = None) -> None:
+    """Pairs that are one person whose printed ORDINAL changed between years.
+
+    RG, confirmed 2026-10-12: an ordinal is relative to who else is in the
+    company that season, never a stable identifier. When a senior
+    same-surname colleague leaves, everyone below shifts up -- Сергѣй
+    Ивановичъ Пономаревъ is `2-й` while Иванъ Ивановичъ is `1-й`, and
+    becomes `1-й` once Иванъ goes. The Graduates lists print no ordinal at
+    all, so the same person arrives ordinal-less and acquires one.
+
+    Tier 1 keys identity on the ordinal by design, and BOTH Tier 2 blocking
+    keys contain it, so these records are never even compared -- which is
+    why `research.person` held NINE Пономаревъ rows for four real men and
+    no candidate pair was ever proposed. docs/person_normalization.md
+    already describes the phenomenon; its remedy is a shared Wikidata QID,
+    which a corps dancer will never have.
+
+    The corpus supplies its own corroborator and this pipeline already
+    trusts it: the printed service start date. Every Сергѣй Ивановичъ
+    record, ordinal-less and `2-й` and `1-й` alike, prints
+    `съ 1 іюня 1901 г.`.
+
+    Emitted as candidates, NOT merges. Only the pairs that also clear a
+    second, independent signal get `tenure_signal='shared_start_date'`,
+    which is what `apply_tenure_corroboration` auto-confirms (RG: queue
+    them, "and only [auto-confirm] if they have corroboration elsewhere").
+    The rest carry `shared_start_date_ordinal_only`, which that rule does
+    not match, so they wait for a human.
+    """
+    rows = con.execute("""
+        SELECT p.person_id, p.canonical_family_name,
+               coalesce(p.canonical_first_name, ''), coalesce(p.canonical_patronymic, ''),
+               coalesce(p.ordinal_suffix, ''), p.display_name,
+               sp.season, sp.city, sp.entity_type, s.start_date_undate
+        FROM entities.person p
+        JOIN entities.person_link pl ON pl.person_id = p.person_id
+        JOIN raw.person_entry pe ON pe.entry_id = pl.entry_id
+        JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+        LEFT JOIN raw.person_entry_service s ON s.entry_id = pe.entry_id
+        WHERE p.superseded_by_person_id IS NULL
+          AND p.canonical_family_name IS NOT NULL
+    """).fetchall()
+    info: dict = {}
+    for pid, fam, first, pat, ordn, disp, season, city, etype, sd in rows:
+        e = info.setdefault(str(pid), {
+            "fam": fam, "first": first, "pat": pat, "ord": ordn, "disp": disp,
+            "seasons": set(), "cities": set(), "sections": set(), "starts": set()})
+        e["seasons"].add(season); e["cities"].add(city); e["sections"].add(etype)
+        if sd:
+            e["starts"].add(sd)
+
+    by_name: dict = defaultdict(list)
+    for pid, e in info.items():
+        by_name[(e["fam"], e["first"])].append(pid)
+
+    def patronymic_compatible(a: dict, b: dict) -> bool:
+        # One side blank is the Graduates case, which prints no patronymic.
+        return a["pat"] == b["pat"] or not a["pat"] or not b["pat"]
+
+    raw_pairs = []
+    for pids in by_name.values():
+        for i in range(len(pids)):
+            for j in range(i + 1, len(pids)):
+                a, b = info[pids[i]], info[pids[j]]
+                if a["ord"] == b["ord"] or not patronymic_compatible(a, b):
+                    continue
+                shared = a["starts"] & b["starts"]
+                if shared:
+                    raw_pairs.append((pids[i], pids[j], sorted(shared)[0]))
+
+    # A blank-patronymic record whose partners disagree about the patronymic
+    # cannot be auto-confirmed with either: `Иванова 4-я, Надежда` shares a
+    # start date with Надежда Михайловна AND Надежда Сергѣевна, two women.
+    partner_pats: dict = defaultdict(set)
+    for a, b, _ in raw_pairs:
+        if info[b]["pat"]:
+            partner_pats[a].add(info[b]["pat"])
+        if info[a]["pat"]:
+            partner_pats[b].add(info[a]["pat"])
+    ambiguous = {pid for pid, pats in partner_pats.items() if len(pats) > 1}
+
+    prior_status = prior_status or {}
+    out, n_corroborated = [], 0
+    for a, b, date in raw_pairs:
+        ea, eb = info[a], info[b]
+        disjoint = not (ea["seasons"] & eb["seasons"])
+        pat_agree = bool(ea["pat"] and eb["pat"] and ea["pat"] == eb["pat"])
+        same_ctx = bool(ea["sections"] & eb["sections"] and ea["cities"] & eb["cities"])
+        corroborated = (disjoint and (pat_agree or same_ctx)
+                        and a not in ambiguous and b not in ambiguous)
+        n_corroborated += corroborated
+        key = (a, b) if a < b else (b, a)
+        cid = uuid.uuid5(NAMESPACE, f"ordinal_shift:{key[0]}|{key[1]}")
+        status = prior_status.get(str(cid), "pending")
+        out.append((str(cid), key[0], key[1], info[key[0]]["disp"], info[key[1]]["disp"],
+                    1.0, "ordinal_shift", status,
+                    "shared_start_date" if corroborated else "shared_start_date_ordinal_only",
+                    date))
+    if out:
+        con.executemany(
+            "INSERT INTO entities.person_candidate VALUES (?,?,?,?,?,?,?,?,?,?)", out)
+    print(f"  + {len(out)} ordinal-shift pair(s): {n_corroborated} corroborated by a second "
+          f"signal (season-disjoint plus patronymic or roster context), "
+          f"{len(out) - n_corroborated} left pending for review")
+
+
+
 def apply_tenure_corroboration(con: duckdb.DuckDBPyConnection) -> None:
     """Auto-confirms (without individual human sign-off) any still-pending
     pair whose tenure_signal is 'shared_start_date' -- an explicit,
@@ -1958,6 +2066,9 @@ def main():
     for iteration in range(1, MAX_TIER2_ITERATIONS + 1):
         build_person_tier2_candidates(con, candidate_status)
         _annotate_tenure_signal(con)
+        # After the tenure annotation, so it cannot overwrite the signal
+        # these rows set for themselves.
+        build_ordinal_shift_candidates(con, candidate_status)
         apply_tenure_corroboration(con)
         if args.apply_decisions and not decisions_applied:
             apply_person_merges(con, args.apply_decisions)
