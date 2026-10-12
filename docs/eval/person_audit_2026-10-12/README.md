@@ -226,7 +226,7 @@ Every posting sentence in print, and the individual exceptions inside them:
 | Moscow 1899 | «опредѣлены на службу съ 1 сентября 1899 года» | was unparsed for all 12 (a period "from spring 1899 to 1 Sept"). FIXED today |
 | Moscow 1909 | «1. Жуковъ, Леонидъ (при услов. сдачи одного экзам.)» | note kept on his row. Correct |
 | SP 1911 | all from 1 June 1911 «за исключеніемъ больной г-жи Безкоровайной» | she carried the class date. FIXED today: no start date, note kept |
-| Moscow 1900, 1901, 1902, 1905, 1906, 1910, 1911 | no posting sentence printed | no date. Correct -- with one doubt: the 1899-00 Moscow page (`graduates_1899-00_p001`) is a CROPPED scan that ends under the men's list, so a sentence below it cannot be ruled out. The 1900-01 page is whole (folio 142) and has none |
+| Moscow 1900, 1901, 1902, 1905, 1906, 1910, 1911 | no posting sentence printed | no date. Correct. The 1899-00 Moscow page (`graduates_1899-00_p001`) is a cropped scan ending under the men's list; RG, who scanned it, confirms nothing further is printed there (2026-10-12) |
 
 - The table and the database agreed on every date except those 12 rows. The table does not cover the 67 rows of 1908-09..1910-11.
 - Fix: `docs/eval/raw_fix_graduates_notes_2026-10-12.py` (backup `outputs/full_run_pre_promote_backup_2026-10-12_graduates_notes/`): 12 service rows changed.
