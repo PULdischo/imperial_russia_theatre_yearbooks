@@ -15835,3 +15835,19 @@ woman, an administrator, and one 1908-09 row for Мацкевичъ, Раиса)
 1910-11, 9 entries, Q4397230; «Бажанова, Марія» unchanged. Live persons
 3061; one candidate pair left pending (Воронцовъ/Боронцовъ, parked).
 Receipts and the Wikidata count (176) unchanged.
+
+## 2026-10-12 — The 1901-02 Moscow «Воронцовъ» row
+
+```sql
+SELECT pe.page_id, pe.entry_id FROM raw.person_entry pe
+JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+WHERE sp.season = '1901-02' AND sp.city = 'Moscow' AND sp.entity_type = 'BalletArtists'
+  AND pe.family_name = 'Воронцовъ';
+```
+
+Result: balletartists_1901-02_MSK_p005__e011, list no. 14, stored with the
+surname only. Scan at full zoom: the print itself gives «14. Воронцовъ,»
+and nothing more before the credits (10 ballets 39, 12 operas 47,
+divertissements 2, 88 in all; скороходъ in Волшебный башмачекъ, другъ принца
+in Лебединое озеро, two parts in Спящая красавица). «12. Валининъ,» two rows
+above is printed the same way. The extraction is faithful.
