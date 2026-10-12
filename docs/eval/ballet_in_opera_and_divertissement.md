@@ -171,9 +171,15 @@ printed genre stays verbatim. These cases are the inverse -- ballet activity
 attached to works whose genre is opera -- and may need their own treatment
 rather than a genre reassignment.
 
-**Open, not started:** itemizing the 128 unnamed-programme events against the
-reviews. That is the concrete worklist this sweep produced, and it is where the
-remaining crossover is most likely to be hiding.
+**DONE 2026-10-10** (`docs/eval/unnamed_programmes_itemised.md`,
+`pipeline/match_unnamed_programmes.py`): of the 128, **37 matched a review
+passage and 28 are corroborated** by one of the event's own named works
+appearing in it; 10 passages itemize three or more programme items, 8 of
+those corroborated. The remaining 91 are not recoverable from the scans we
+hold — 26 are at drama houses or are charity and symphony concerts that no
+scanned review covers, and 65 are at ballet or opera houses whose review
+exists but never names the date, because the reviews are selective rather
+than a chronicle.
 
 ## The cross-check generalises beyond mixed bills — two open items
 
