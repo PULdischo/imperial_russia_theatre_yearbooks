@@ -14709,3 +14709,27 @@ SELECT season, city, count(*), count(*) FILTER (WHERE annotation IS NULL OR anno
 Result: counts track sessions (printed - sessions within +-3 in 1891-98; days far lower everywhere). Figure-less performed sessions == printed figure shortfall
 in 1893-94..1897-98 (e.g. 1893-94 SP 24/24, Moscow 14/14; 1895-96 Moscow 28/28); fold-obscured list: 92 cells, 1892-93 29, 1893-94 24,
 1894-95 11, 1895-96 15, 1897-98 11, 1901-02 1, 1906-07 1. Exact subset match found only for 1898-99 SP +7,515.00 (three Михайловскій benefits).
+
+## 2026-10-12 — correction: the 19 "orphaned" Wikidata links are not lost
+
+I flagged 19 `person_wikidata_link` rows pointing at a superseded person and
+said their QIDs were not reaching `research.person`. **The second half of
+that was wrong.**
+
+`build_research_model.py` already walks the supersede chain — `wd_live`, a
+recursive CTE that follows `superseded_by_person_id` to the live survivor
+and attributes the link there, raising if two links reach one survivor with
+*different* QIDs. Its own comment names four of these very people
+(Полякова, Шолларъ, Кучера, Крушевскій) as the reason it exists.
+
+```sql
+SELECT w.wikidata_qid FROM entities.person_wikidata_link w
+WHERE NOT EXISTS (SELECT 1 FROM research.person p WHERE p.wikidata_qid = w.wikidata_qid);
+```
+**0 rows.** All 19 QIDs are present in `research.person`; the same query
+over `entities.creator_wikidata_link` is also 0. Of the 19, 11 survivors
+carry their own link as well, and all 11 agree on the QID — no conflicts.
+
+A link pointing at a superseded person is the **normal, expected** state
+after a merge: the link records who was identified, the chain resolves who
+that is now. Nothing to repoint, nothing to fix.
