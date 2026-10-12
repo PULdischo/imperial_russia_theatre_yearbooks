@@ -16032,3 +16032,61 @@ school. 465 people have a Graduates entry; 172 are graduate-only, 100 of those w
 The 1897-98 Petersburg class is stored «съ 1-го мая 1898 года» against company rows «1 іюня 1898 г.».
 Николаевъ, Иванъ Николаевичъ (29c456) has three ProductionTeam rows only; balletartists_1909-10_MSK_p000 now
 holds Горскій and Тихоміровъ at e001-e002 and no Николаевъ. Логиновъ: 8 rows, both cities in 1905-06.
+
+## 2026-10-12 — Plain «Дивертиссементъ» (not "Балетный"): how many, where, and on what kind of bill?
+
+```sql
+SELECT w.canonical_title, w.canonical_genre, w.genre_source, w.parent_genre, count(p.performance_id) n
+FROM research.work w LEFT JOIN research.performance p USING(work_id)
+WHERE lower(w.canonical_title) LIKE '%дивертис%' GROUP BY 1,2,3,4 ORDER BY 5 DESC;
+```
+
+Result: Дивертиссементъ 82 (no genre), Балетный дивертиссементъ 9 and Балетный дивертиссментъ 3 (бал., research_rule), Дивертиссментъ 5 (no genre), Большой дивертиссементъ 2 (др., printed), Дивертиссементъ (Etudes) 1, Концертный и балетный дивертиссемент 1, and one fused title «Щелкунчикъ, бал.-феерія. Дивертиссементъ.» 1.
+
+```sql
+WITH d AS (SELECT p.performance_id, p.event_id, p.verbatim_title, p.verbatim_genre, e.season, e.city, e.date, t.canonical_name AS theater, e.receipts_total_kopecks
+  FROM research.performance p JOIN research.work w USING(work_id) JOIN research.event e USING(event_id) JOIN research.theater t USING(theater_id)
+  WHERE w.canonical_title IN ('Дивертиссементъ','Дивертиссментъ','Большой дивертиссементъ','Дивертиссементъ (Etudes)','Концертный и балетный дивертиссемент'))
+SELECT d.performance_id, d.season, d.city, CAST(d.date AS VARCHAR), d.theater, d.verbatim_title, d.verbatim_genre,
+  count(*) FILTER (WHERE o.performance_id<>d.performance_id AND ow.canonical_title<>'Гимнъ') AS others,
+  count(*) FILTER (WHERE o.performance_id<>d.performance_id AND ow.canonical_title<>'Гимнъ' AND (lower(coalesce(ow.canonical_genre,'')) LIKE '%бал%' OR coalesce(ow.parent_genre,'') ILIKE '%бал%' OR coalesce(ow.parent_genre,'')='ballet')) AS ballets,
+  count(*) FILTER (WHERE o.performance_id<>d.performance_id AND (lower(coalesce(ow.canonical_genre,'')) LIKE 'оп.%' OR lower(coalesce(ow.canonical_genre,'')) LIKE '%опер%')) AS operas,
+  string_agg(CASE WHEN o.performance_id<>d.performance_id THEN o.verbatim_title END, ' | ' ORDER BY o.performance_order) AS rest
+FROM d JOIN research.performance o ON o.event_id=d.event_id JOIN research.work ow ON ow.work_id=o.work_id GROUP BY ALL ORDER BY 4;
+```
+
+Result (classified in Python from the counts; «Гимнъ» ignored when judging the bill; review matches from outputs/reviews/unnamed_programme_matches.csv joined on date + theater): 91 performances. Ballet-only bill 46 (Новый 17, Большой 16, Маріинскій 13; 28 matched to a review passage, 23 corroborated). Mixed bill with a ballet 7 (Маріинскій 6, Михайловскій 1; 1 corroborated). With opera and no ballet 10 (Большой 4, Маріинскій 4, Малый 1, Михайловскій 1; none matched). Drama bill with no ballet or opera 28 (Александринскій 13, Малый 10, Маріинскій 2, Михайловскій 2, Большой 1; 2 matched, none corroborated). Printed genre: none on 84, «др.» on 7. By season the most are 1901-02 (16), 1895-96 (12), 1907-08 (11).
+
+```sql
+SELECT count(*) FROM raw.production_entry WHERE lower(title) LIKE '%дивертис%' OR lower(section_heading) LIKE '%дивертис%';
+```
+
+Result: 0. The ballet production lists have no entry or section named for a divertissement.
+
+## 2026-10-12 — Why the class of 1900-01 has 19 unlinked graduates
+
+```sql
+SELECT pe.page_id, pe.entry_id, pe.institution, pe.heading_path, pe.list_number, pe.family_name,
+       pe.first_name, s.start_date_text, pl.person_id, p.display_name
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+LEFT JOIN raw.person_entry_service s USING (entry_id)
+JOIN entities.person_link pl USING (entry_id) JOIN entities.person p USING (person_id)
+WHERE sp.entity_type = 'Graduates' AND sp.season = '1900-01' ORDER BY pe.entry_id;
+
+SELECT pe.page_id, pe.list_number, pe.family_name, pe.heading_path, pl.person_id
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+JOIN entities.person_link pl USING (entry_id)
+WHERE sp.season = '1901-02' AND sp.city = 'Moscow' AND sp.entity_type = 'BalletArtists'
+  AND pe.first_name IS NULL;
+
+SELECT pl.person_id, p.display_name, min(sp.season), max(sp.season), count(*)
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+JOIN raw.person_entry_service s USING (entry_id)
+JOIN entities.person_link pl USING (entry_id) JOIN entities.person p USING (person_id)
+WHERE sp.city = 'Moscow' AND sp.entity_type = 'BalletArtists' AND s.start_date_undate = '1901-09-01'
+GROUP BY ALL;
+```
+
+Result: the 19 are the whole Moscow class of spring 1901 (no start date printed). The Moscow 1901-02 list has
+23 bare-surname rows, 16 of them this class. Each graduate has exactly one named Moscow record with «съ 1
+сентября 1901 г.», first listed 1902-03 (two from 1903-04). Details in the audit README.

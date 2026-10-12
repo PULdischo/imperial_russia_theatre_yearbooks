@@ -112,3 +112,20 @@ split keeps apart; `_repoint_all_superseded` also repoints production-credit lin
 | Бурина 1 я, Moscow 1909-10 no. 9 | «Бурина 1 я, Клавдія Александровна» (full zoom) | printed without the hyphen; left verbatim |
 | Исаева, Татьяна Михайловна, SP 1908-09 | nos. 31 AND 38 both print «Исаева, Татьяна Михайловна (съ 1 іюня 1894 г.)» (full zoom) | the volume lists her twice; no. 38 stands in the К's |
 Raw fixes: `docs/eval/raw_fix_audit_rows_2026-10-12.py` (3 rows, backup `outputs/full_run_pre_promote_backup_2026-10-12_audit_rawfix/`).
+
+## The Moscow class of 1901 (RG asked why 19 graduates of 1900-01 have no candidate)
+
+They are one class: all 19 pupils of the Moscow school's ballet department who left in spring 1901
+(`graduates_1900-01_p001`; the Petersburg class of 8 on p000 is linked, bar Гольде, Юліусъ).
+The Moscow list prints no start date for the class, and the volume that should show them joining, the Moscow
+ballet list of 1901-02, prints 23 people as a BARE SURNAME with their credits and nothing else (scan-confirmed
+for «12. Валининъ,» and «14. Воронцовъ,»). 16 of the 23 are this class; the other seven are people who also carry
+«съ 1 сентября 1901 г.» later or returned that month (Воронцовъ, Пановъ, Щегловъ, Гримальди, Иванова, Рѣпина,
+Струкова). From 1902-03 the class is listed with full names and «съ 1 сентября 1901 г.».
+
+So each of them is held as up to THREE records: the graduate (1900-01), the bare surname (1901-02), the named
+dancer (1902-03 on). The year-match rule missed them because the named record starts two seasons after the
+graduation list, not one. By name, every one of the 19 has exactly one named Moscow record starting 1 Sept 1901
+(Орловъ and Грекова from 1903-04); 17 have a bare 1901-02 row found by surname (Валининъ for Волининъ, Николаева
+3-я, Царманъ 2-й among them); Бурина's and Грекова's bare rows were not found by this query. Жвирблисъ is the one
+already queued. Nothing merged; from the extraction, not the scans, apart from the two rows named above.
