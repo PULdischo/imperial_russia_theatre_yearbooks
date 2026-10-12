@@ -16514,3 +16514,95 @@ WHERE (e.page_id,e.family_name,c.label) IN (('balletartists_1893-94_SP_p006','К
 ```
 
 Result: clean values «5.», «3», «7.», «18.» for the first four (right count; three keep a trailing period) and «5» for Пахомова (unrepaired; the CSV's scan reading is 51). Stray `* 2.json` files in outputs/full_run/raw: 1,552 (file count).
+
+## 2026-10-12 — All performances of «Волшебное зеркало» (The Magic Mirror): city, stage, season, dates, receipts
+
+```sql
+select work_id,canonical_title,canonical_genre,parent_genre,appearance_count,excerpt_of_work_id,excerpt_note
+from research.work where canonical_title ilike '%зеркал%';
+
+select e.season,e.city,t.canonical_name,e.date_verbatim,e.date_undate,e.date,e.date_confidence,e.event_status,
+       p.performance_order,p.verbatim_title,p.verbatim_genre,e.receipts_total_kopecks,e.receipts_source,e.printed_page_number,
+       (select string_agg(p2.verbatim_title,' | ' order by p2.performance_order) from research.performance p2
+         where p2.event_id=e.event_id and p2.performance_id<>p.performance_id) as others
+from research.performance p join research.event e using(event_id)
+left join research.theater t using(theater_id) left join research.work w using(work_id)
+where p.verbatim_title ilike '%зеркал%' or w.canonical_title ilike '%зеркал%'
+order by e.date, e.date_undate;
+```
+
+Result: 6 work rows (the ballet + 5 excerpt works linked to it). 35 performance rows, 1903-02-09 to 1911-01-02,
+all date_confidence = verified: 4 at the Маріинскій (SP, 1902-03 to 1904-05), 31 at the Большой (Moscow, 1904-05 to
+1910-11; none in 1908-09). 27 carry the bare title, 8 are printed as excerpts. 5 events have null receipts.
+The 1904-09-12 Маріинскій row carries the bare title but its co-listed row reads «Жемчужина, 1, 3 д. и 2-я карт.
+4 д. балета.» — the act list looks like it belongs to Волшебное зеркало (a title-split problem, not checked on the scan).
+
+## 2026-10-12 — Follow-up: why five «Волшебное зеркало» events have no receipts (print vs extraction)
+
+```sql
+select e.* from raw.event_entry e join raw.event_entry_performance p using(event_id)
+where p.performance_title ilike '%зеркал%'
+  and e.date_undate in ('1905-04-19','1906-12-06','1907-01-10','1907-02-28','1910-02-24') order by e.date_undate;
+
+-- for each of the five: every session on the same page and date
+select date_undate,time_of_day,theater,event_status,receipts_text,annotation
+from raw.event_entry where page_id=? and date_undate=? order by theater;
+
+select season,count(*),sum((receipts_text is null or receipts_text='')::int) from raw.event_entry
+where theater ilike '%Больш%' and city='Moscow' and event_status='performed' and season>='1904-05' group by 1 order by 1;
+
+select time_of_day,count(*),sum((receipts_text is not null)::int) from raw.event_entry
+where city='Moscow' and event_status='performed' and season>='1904-05' group by 1;
+```
+
+Result: all five have receipts_text NULL in raw. Scan check (pages rendered from pdf/RepertoireTables, printed
+pp. 131, 103, 109, 119, 39): no figure is printed in any of the five cells — two charity performances
+(19 Apr 1905, 10 Jan 1907) and three free matinees for pupils (6 Dec 1906, 28 Feb 1907, 24 Feb 1910). Not an
+extraction loss. Bolshoi null-receipt counts per season 1904-05..1910-11: 10/170, 6/149, 10/220, 9/221, 3/218,
+4/223, 6/233. Moscow receipts present: morning 386/429, evening 419/424, unspecified 2529/2564.
+Two annotation errors seen on the scans, NOT fixed: (1) repertoire_1906-07_p019, 6 Dec 1906 — the printed banner
+«Безплатные спектакли для воспитанниковъ и воспитанницъ столичныхъ учебныхъ заведеній» is missing from all three
+morning rows; (2) repertoire_1906-07_p035, 28 Feb 1907 — the Bolshoi morning row carries «Прощальный бенефисъ
+г. Власова.», which is printed in the evening cell (Русланъ и Людмила); the morning rows lack the free-performance banner.
+
+## 2026-10-12 — Creators credited for «Волшебное зеркало» in the season production lists
+
+```sql
+select pr.production_id,pr.season,pr.city,pr.list_title,pr.list_number,pr.is_premiere,pr.printed_total,pr.n_dates,
+       pr.printed_page_number,pr.description_text
+from research.production pr
+where pr.production_id in (select production_id from research.production_work pw join research.work w using(work_id)
+                           where w.canonical_title ilike '%зеркал%')
+   or pr.description_text ilike '%Волшебное зеркало%' order by season;
+
+select pr.season,pr.city,cr.credit_order,cr.role_category,cr.role_text,cr.honorific_printed,cr.name_printed,
+       cr.qualifier_printed,cr.identification_status,p.*
+from research.production_credit cr join research.production pr using(production_id)
+left join research.person p using(person_id)
+where production_id in (<the 7 ids above>) order by pr.season,cr.credit_order;
+
+select season,city,count(*) from research.production where season between '1902-03' and '1910-11' group by all order by 1,2;
+```
+
+Result: 7 production-list entries (SP 1902-03, 1903-04, 1904-05; Moscow 1904-05, 1907-08, 1909-10, 1910-11), 32 credits,
+all identification_status = confirmed. Six entries credit: source Пушкинъ (Q7200) and Гриммъ (Q2793); libretto
+М. И. Петипа (Q312320) and Г⁂ = Всеволожской, Иванъ Александровичъ (Q2074555); music А. Н. Корещенко (Q456917).
+The Moscow 1904-05 entry prints only «соч. М. Петипа, музыка А. Корещенко». No choreographer/stager role is printed
+in any entry. The SP 1904-05 entry is labelled «(1-е, 3-е д. и 2-я карт. 4-го д.)» with 1 date — independent support
+that the 12 Sep 1904 Маріинскій performance was an excerpt. Third query: see counts per season/city for which
+seasons have a production list at all.
+
+## 2026-10-12 — After the matinee-banner fix: compare every table with the pre-fix database
+
+```sql
+attach 'outputs/full_run/imperial_theaters.pre_banner_fix_2026-10-12.duckdb' as old (read_only);
+-- for each of the 48 base tables <s>.<t>, both directions:
+select count(*) from (select * from imperial_theaters.<s>.<t> except all select * from old.<s>.<t>);
+
+select date_undate,time_of_day,theater,receipts_text,annotation from raw.event_entry
+where date_undate in ('1906-12-06','1907-02-28') and city='Moscow' order by 1,3,2;
+```
+
+Result: same 48 tables in both; only raw.event_entry and analysis.event_entry differ, 7 rows each way. The six morning
+sessions of 6 Dec 1906 and 28 Feb 1907 now carry the free-matinee banner; «Прощальный бенефисъ г. Власова.» is on the
+Большой evening session of 28 Feb 1907 (4422 р. 05 к.).
