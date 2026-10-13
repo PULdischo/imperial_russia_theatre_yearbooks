@@ -11,7 +11,6 @@ excerpt_title,excerpt_genre,parent_title,parent_genre,note,basis
 "„Письмо Татьяны“, сц. изъ оп. Евгеній Онѣгинъ",,Евгеній Онѣгинъ,оп.,„Письмо Татьяны“,"Printed ""сц. изъ оп."": the opera."
 "Послѣдняя жертва, четыре дѣйствія комедіи.",,Послѣдняя жертва,ком.,четыре дѣйствія,Act reference printed after the title in words.
 "Послѣдняя жертва, четыре дѣйств. комедіи",,Послѣдняя жертва,ком.,четыре дѣйств.,Act reference printed after the title in words.
-"Жемчужина, 1, 3 д. и 2-я карт. 4 д. балета.",,Жемчужина,бал.,"1, 3 д. и 2-я карт. 4 д.",Act reference printed after the title.
 Борисъ Годуновъ,2 сцены,Борисъ Годуновъ,траг.,2 сцены,"1899 Pushkin centenary gala, Александринскій, 26 Apr (later nights print ""2 сцены изъ Бориса Годунова"")."
 Борисъ Годуновъ,сц.,Борисъ Годуновъ,траг.,сц.,"Михайловскій, 21 Jan 1908, printed as scenes."
 Корчма на Литовской границѣ изъ траг. Борисъ Годуновъ.,,Борисъ Годуновъ,траг.,Корчма на Литовской границѣ,"Printed ""изъ траг.""; 1899 Pushkin centenary gala (Малый); scene of Pushkin's play, see curated_parent_works.csv"
@@ -22,3 +21,12 @@ excerpt_title,excerpt_genre,parent_title,parent_genre,note,basis
 Очарованный лѣсъ,изъ бал.,Очарованный лѣсъ,бал.,изъ бал.,"Printed genre ""изъ бал."" = from the ballet; Маріинскій 29 Apr 1907, all-ballet bill. Excerpt, not a separate work."
 Прол. и 2 карт. 2-го д. Донъ-Кихотъ.,,Донъ-Кихотъ,бал.,Прол. и 2 карт. 2-го д.,"RG 2026-10-06: ballet, not Massenet's opera «Донъ-Кихотъ, героич. ком.» (Большой, Moscow, first given 1910-11). Маріинскій, morning of 27 Dec 1907 (holiday matinee), billed with «Павильонъ Армиды, бал.»; the 1907-08 SP ballet review describes the ballet as «въ 4-хъ дѣйствіяхъ и 7-ми картинахъ, съ прологомъ» (Petipa/Minkus), matching «Прол. и 2 карт. 2-го д.», and it was given at the Маріинскій on 2 Sep, 17 Oct, 14 Nov 1907. NOT confirmed by a production list: none is held for 1905-08 -- confirm if one is found."
 2-я карт. 1-го д. бал. Виноградная лоза,,Виноградная лоза,бал.,2-я карт. 1-го д.,"Маріинскій, 8 Apr 1906; the only printing of this ballet in the Repertoire, see curated_parent_works.csv"
+2-е д. бал. Папоротникъ,,Папоротникъ или Ночь на Ивана Купала,бал.,2-е д.,The 1892-93 Moscow ballet list gives the full title and the same date (3 Jan 1893).
+1-е д. бал. Пери,,Пери,бал.,1-е д.,The 1897-98 Moscow ballet list gives this ballet on the same date (12 Feb 1898).
+1)-е 1 д. бал. «Донъ-Кихотъ»,,Донъ-Кихотъ,бал.,1-е д.,"Printed so («1)-е 1 д.» for «1) 1-е д.»), Маріинскій 13 Feb 1911, first of three numbered items; scan read 2026-10-13. The 1910-11 SP ballet list gives Донъ-Кихотъ (1-е дѣйствіе) on that date."
+3-е и4-е д. бал. Конекъ-горбунокъ,,Конекъ-горбунокъ,бал.,3-е и 4-е д.,"Stored without the space after «и» (Большой, 9 Dec 1892; not re-read on the scan)."
+"1, 3 д. и 2-я карт. 4 д. балета. Волшебное зеркало",бал.,Волшебное зеркало,бал.,"1, 3 д. и 2-я карт. 4 д.","Маріинскій 12 Sep 1904: the act list is printed on its own line above the title (scan read 2026-10-13); the 1904-05 SP ballet list enters Волшебное зеркало as «(1-е, 3-е д. и 2-я карт. 4-го д.)»."
+1-я карт. 3-го акта бал. Конекъ-Горбунокъ,,Конекъ-горбунокъ,бал.,1-я карт. 3-го акта,"Маріинскій 25 Jan 1904, first item of a three-item line split 2026-10-13 (RG). The 1903-04 SP ballet list gives Конекъ-Горбунокъ on that date with the note «1-я картина 3 го акта»."
+2-е д. бал. Фіаметто,,Фіаметта,бал.,2-е д.,"Маріинскій 25 Jan 1904, third item of the same line; «Фіаметто» is the print's spelling (scan-confirmed, issue #105 and 2026-10-13). The 1903-04 SP ballet list gives Фіаметта on that date."
+Танцы и группы изъ 2 акта бал. Талисманъ,,Талисманъ,бал.,Танцы и группы изъ 2 акта,Маріинскій 6 Sep 1898: one item printed across two lines (scan read 2026-10-13); the 1898-99 SP ballet list gives Талисманъ on that date.
+Корсаръ (Le jardin animé),,Корсаръ,бал.,Le jardin animé,"Маріинскій 29 Apr 1907, second of four ballet items. RG, 2026-10-13: ""Corsair can be connected to its parent work."""
