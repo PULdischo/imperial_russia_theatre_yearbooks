@@ -278,8 +278,6 @@ erDiagram
         string excerpt_note
         string genre_source
         string genre_note
-        string parent_genre
-        string parent_genre_note
     }
     person {
         uuid person_id PK
@@ -299,6 +297,15 @@ erDiagram
         int receipts_total_kopecks
         string receipts_source
         string receipts_correction_note
+        string time_of_day
+        string annotation
+        bool is_benefit
+        bool is_charity
+        bool is_free
+        bool has_anthem
+        int n_works
+        string art_forms
+        string item_kinds
     }
     performance {
         string performance_id PK
@@ -306,6 +313,10 @@ erDiagram
         uuid work_id FK
         string verbatim_title
         string verbatim_genre
+        string art_form
+        string item_kind
+        bool includes_dance
+        bool is_ceremonial
     }
     person_appearance {
         string appearance_id PK
