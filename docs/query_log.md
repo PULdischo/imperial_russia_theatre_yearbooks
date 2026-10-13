@@ -17199,3 +17199,322 @@ where p.art_form is distinct from b.art_form;
 Result: opera in every season (1906-07: 4, 1907-08: 13, 1908-09: 6, 1910-11: 10). 4 performances
 changed art form against the backup. Art forms now: Russian drama 15,524, opera 6,297, French drama
 4,876, ballet 2,691, visiting troupe 937, none 475.
+
+## 2026-10-12 — When and where «Млада» was performed (opera and ballet)
+
+```sql
+select work_id,canonical_title,canonical_genre,parent_genre,appearance_count,excerpt_of_work_id,excerpt_note,genre_note
+from research.work where canonical_title ilike '%млад%';
+
+select e.season,e.city,t.canonical_name,e.date_verbatim,e.date,e.date_confidence,e.event_status,p.performance_order,
+       p.verbatim_title,p.verbatim_genre,w.canonical_title,w.canonical_genre,e.receipts_total_kopecks,e.printed_page_number,
+       re.time_of_day,re.annotation,
+       (select string_agg(p2.verbatim_title,' | ' order by p2.performance_order) from research.performance p2
+         where p2.event_id=e.event_id and p2.performance_id<>p.performance_id) as others
+from research.performance p join research.event e using(event_id) left join research.theater t using(theater_id)
+left join research.work w using(work_id) left join raw.event_entry re on re.event_id=e.event_id
+where p.verbatim_title ilike '%млад%' or w.canonical_title ilike '%млад%' order by e.date, e.date_undate;
+
+select production_id,season,city,list_title,list_number,is_premiere,printed_total,n_dates,printed_page_number,description_text
+from research.production where list_title ilike '%млад%' or description_text ilike '%Млад%' order by season;
+
+select pr.season,pr.city,cr.credit_order,cr.role_category,cr.role_text,cr.name_printed,p.display_name,p.wikidata_qid
+from research.production_credit cr join research.production pr using(production_id)
+left join research.person p using(person_id) where pr.list_title ilike '%млад%' order by 1,2,3;
+```
+
+Result: two works called «Млада», both only at the Маріинскій (SP). Opera («оп.»): 3-е д. in three «Симфоническій
+концертъ» evenings 2, 4, 5 Mar 1892, then 6 full performances 20 Oct 1892 - 29 Jan 1893 (three of them with
+date_confidence intra_block_disagreement). Ballet («бал.»): 14 full performances 25 Sep 1896 - 11 Oct 1898 plus
+«2-е д. бал. Млада.» on 2 Nov 1897 with «Коппелія». Ballet lists 1896-97 (8), 1897-98 (6), 1898-99 (1) agree with the
+Repertoire counts; credits соч. М. И. Петипа, музыка Л. Минкуса. The ilike also matched «Фромонъ младшій и Рислеръ
+старшій» (7 rows, unrelated).
+
+## 2026-10-12 — «Млада»: why some performances are opera and some ballet (dancer role credits; review passages)
+
+```sql
+select sp.season,sp.city,pe.entity_type,c.credit_type,count(*) n,count(distinct pe.entry_id) people,
+       string_agg(distinct c.role_name,'; ') roles
+from raw.person_entry_credit c join raw.person_entry pe using(entry_id) join raw.source_pages sp using(page_id)
+where c.label ilike '%Млад%' and c.label not ilike '%младш%' group by all order by 1,2;
+
+select c.label,count(*) from raw.person_entry_credit c
+where c.label ilike '%Млад%' and c.label not ilike '%младш%' group by 1;
+
+select rp.season,rp.city,rp.genre,rp.printed_folio,b.block_id,
+       substr(b.text, greatest(1,position('Млад' in b.text)-300), 900)
+from raw.review_block b join raw.review_page rp using(page_id)
+where b.text like '%Млад%' and b.text not like '%Младш%' order by 1,2,4;
+```
+
+Result: ballet-roster role credits naming «Млада»: 1892-93 SP 2 dancers (тѣнь Млады; Клеопатра -- the opera's two
+danced roles), 1896-97 18, 1897-98 20, 1898-99 15 (the ballet's cast: Мстивой, Войслава, Яромиръ, тѣнь княжны Млады,
+Морена, Чернобогъ ...). Labels: «Млада» 54, «оп. Млада» 1. Reviews (text as extracted, not re-read on the scan):
+1892-93 SP Opera ff. 167-181 -- «Млада», опера-балетъ въ 4-хъ дѣйствіяхъ и 7-ми картинахъ, музыка Н. А.
+Римскаго-Корсакова, сюжетъ и сценаріумъ С. А. Гедеонова, first given 20 Oct 1892, with synopsis and cast (тѣнь
+княжны Млады -- г-жа Петипа 1-я, тѣнь царицы Клеопатры -- г-жа Скорсюкъ). 1896-97 SP Ballet ff. 233-236 --
+фантастическій балетъ «Млада» въ 4-хъ дѣйствіяхъ и 6-ти картинахъ, соч. М. И. Петипа, музыка Л. Минкуса, revived
+25 Sep 1896, first staged 2 Dec 1879 at the Большой театръ (SPb), with synopsis and both casts.
+
+## 2026-10-12 — Was there singing in the ballet «Млада» (1896-97 review, read in full)?
+
+```sql
+select b.page_id,rp.printed_folio,b.block_index,b.block_type,b.text,b.caption_text
+from raw.review_block b join raw.review_page rp using(page_id)
+where b.page_id in ('review_1896-97_SP_ballet_p003', ... ,'review_1896-97_SP_ballet_p008') order by 1,3;
+
+select b.page_id,substr(b.text,1,200) from raw.review_block b
+where b.page_id like 'review_189%_SP_ballet%' and b.text like '%Млад%'
+  and (b.text ilike '%хор%' or b.text ilike '%пѣн%' or b.text ilike '%пѣв%');
+
+select pe.entity_type,count(*) from raw.person_entry_credit c join raw.person_entry pe using(entry_id) group by 1;
+```
+
+Result: the ballet review (ff. 233-237) gives programme, 1879 and 1896 casts and a dance-by-dance list of performers;
+no chorus, singer or sung number is named (the only «хор» hit is the dance «Хороводъ»). f. 234: no new sets were
+painted for the revival; those made in 1892 for Римскій-Корсаковъ's opera «по той же программѣ» were used (Бочаровъ,
+Андреевъ). Role credits exist only for BalletArtists (35,818 of 35,831), so the rosters cannot show singers in a
+ballet. Extracted text, not re-read on the scan. Nothing in the database describes the music itself.
+
+## 2026-10-12 — Do the yearbooks record Горскій's Moscow reworking of «Волшебное зеркало»? (connected-but-distinct productions)
+
+```sql
+select rp.season,rp.city,rp.genre,rp.printed_folio,b.block_id,
+       substr(b.text, greatest(1,position('зеркал' in b.text)-350), 800)
+from raw.review_block b join raw.review_page rp using(page_id)
+where b.text ilike '%Волшебн%зеркал%' order by 1,2,4;
+
+select role_category,count(*) from research.production_credit group by 1 order by 2 desc;
+select count(*), count(distinct work_id) from research.production_work;
+select rp.season,rp.city,count(*) from raw.review_block b join raw.review_page rp using(page_id)
+where b.text ilike '%для московской сцены%' group by all order by 1;
+select pr.season,pr.city,pr.list_title,cr.role_text,cr.name_printed from research.production_credit cr
+join research.production pr using(production_id) where cr.role_category='staging' order by 1,2;
+select count(*) from (select pw.work_id from research.production_work pw join research.production p using(production_id)
+                      group by pw.work_id having count(distinct p.city)>1);
+```
+
+Result: SP 1902-03 review f. 154: «Поставленъ балетъ и танцы сочинены ... М. И. Петипа», first given 9 Feb 1903 (Петипа's
+benefit). Moscow 1904-05 review f. 202 and 1905-06 f. 209: «Сцены и танцы для Московской сцены сочинены и поставлены
+балетмейстеромъ ... А. А. Горскимъ»; 1907-08 f. 158: «Поставленъ онъ былъ на московской сценѣ ... Горскимъ». Production
+credits by role: music 688, author 641, source 123, libretto 98, staging 31, instrumentation 6. See the counts printed
+for the phrase «для московской сцены» and for works listed in both cities. Review text as extracted, not re-read on the
+scan. Review dates that differ from the Repertoire, not checked: Moscow first performance «15-го февраля» (Repertoire
+13 Feb 1905); 1905-06 «октября 11, 25» (Repertoire 11 and 25 Sep 1905); 1907-08 lists a fifth date, 13 Feb 1908.
+
+## 2026-10-12 — Three review dates for «Волшебное зеркало» against the Repertoire and the ballet lists
+
+```sql
+select pe.season,pe.city,pe.performed_text,pe.total_text,
+       string_agg(coalesce(pp.date::varchar,'?')||coalesce(' ['||pp.note||']',''),', ' order by pp.date_order)
+from raw.production_entry pe join raw.production_entry_performance pp using(production_entry_id)
+where pe.title ilike '%зеркал%' and pe.city='Moscow' group by all order by 1;
+
+select e.page_id,e.printed_page_number,e.date_text,e.date_undate,e.time_of_day,e.event_status,e.receipts_text,e.annotation,
+       (select string_agg(performance_title||coalesce(', '||genre,''),' | ' order by performance_order)
+          from raw.event_entry_performance p where p.event_id=e.event_id)
+from raw.event_entry e where e.city='Moscow' and e.theater ilike 'Больш%'
+  and e.date_undate in ('1905-02-13','1905-02-14','1905-02-15','1905-09-11','1905-09-25','1905-10-11','1905-10-25',
+                        '1908-02-13','1908-02-20') order by e.date_undate,e.time_of_day;
+
+select b.block_id,rp.printed_folio,substr(b.text,1,400) from raw.review_block b join raw.review_page rp using(page_id)
+where rp.season='1907-08' and rp.city='Moscow' and rp.genre='Ballet'
+  and (b.text ilike '%Золот%рыбк%' or b.text ilike '%феврал%') order by 1;
+
+select pe.title,pe.performed_text,pe.total_text from raw.production_entry pe
+where pe.season='1907-08' and pe.city='Moscow' and (pe.title ilike '%рыбк%' or pe.title ilike '%зеркал%');
+
+-- Большой 1907-08, every performed session with Золотая рыбка or Волшебное зеркало (and 10 Feb 1908)
+-- after the fix: all 48 tables compared with imperial_theaters.pre_review_datefix_2026-10-12.duckdb (except all, both ways)
+```
+
+Result: ballet lists: Moscow 1904-05 «февраля 13, 26, 27; апрѣля 19» (4); 1907-08 «января 9, 20; февраля 20; марта 5» (4),
+«Золотая рыбка» «сентября 19; ноября 7; декабря 28 … февраля 3, 13, 21» (6). Repertoire: 13 Feb 1905 Волшебное зеркало
+(Бенефисъ кордебалета, 6345 р. 12 к.), 15 Feb 1905 Карменъ; 11 and 25 Sep 1905 Волшебное зеркало, 11 Oct 1905 Травіата,
+25 Oct 1905 closed; 13 Feb 1908 Золотая рыбка (814 р. 76 к.). Scans: f. 202 prints 13-го февраля (misread, fixed);
+f. 233 prints октября (print error; f. 209 prints 11-го сентября); f. 158 prints февраля 13-го (review against two
+sources). After the fix: raw.review_block 1 row, research.review_assertion 6 rows (2 dates 1905-02-15 -> 1905-02-13),
+entities.review_mention 127 rows in candidate_ids only.
+
+## 2026-10-13 — Ballet excerpt cells: state before, and the diff after the fix
+
+```sql
+-- ballet works that look like excerpts but have no parent
+select w.canonical_title, e.date, t.canonical_name, p.verbatim_title from research.performance p
+join research.work w using(work_id) join research.event e using(event_id) join research.theater t using(theater_id)
+where p.art_form='ballet' and w.excerpt_of_work_id is null
+  and regexp_matches(w.canonical_title,'(^[0-9])|д\.|карт|[Пп]рол|сцен|[Ии]зъ |акт');
+select pe.title, p.date, p.note from raw.production_entry pe join raw.production_entry_performance p using(production_entry_id)
+where pe.title ilike '%Папорот%' or pe.title ilike 'Пери%' or (pe.season='1904-05' and pe.city='SP' and (pe.title ilike '%зеркал%' or pe.title ilike '%Жемчуж%'));
+-- after: every table against the backup, both directions; works gone / new / changed; then
+select count(*) filter (where w.excerpt_of_work_id is not null), count(*) from research.performance p
+join research.work w using(work_id) where p.art_form='ballet';
+select count(*) from research.review_assertion ra where ra.work_id is not null
+  and cast(ra.work_id as varchar) not in (select cast(work_id as varchar) from research.work);
+```
+
+Result: before, 8 unlinked titles (listed in known_issues). The ballet lists give «Папоротникъ или Ночь
+на Ивана Купала» on 3 Jan 1893 and «Пери» on 12 Feb 1898, «Волшебное зеркало» and «Жемчужина» both on
+12 Sep 1904. After: 1 unlinked (the fused 25 Jan 1904 line); linked excerpts 208 of 2,691 ballet
+performances; research.work 2,969; only work / work_link / crosswalk, 5 raw performance rows, 5
+research performance rows and the production match tables differ; 0 review links point at a missing
+work; ballet events 2,066, shared 99; receipts sum and persons unchanged.
+
+## 2026-10-13 — The fused ballet line of 25 Jan 1904: before and after the split
+
+```sql
+select pe.title, pe.list_number, p.date, p.note from raw.production_entry pe
+join raw.production_entry_performance p using(production_entry_id)
+where pe.season='1903-04' and pe.city='SP' and p.date='1904-01-25';
+-- after: every table against the backup; then
+select p.performance_order, p.verbatim_title, p.verbatim_genre, p.art_form,
+       (select canonical_title from research.work x where x.work_id=w.excerpt_of_work_id), e.n_works, e.art_forms
+from research.performance p join research.work w using(work_id) join research.event e using(event_id)
+join research.theater t using(theater_id)
+where e.date='1904-01-25' and t.canonical_name='Маріинскій' and e.time_of_day='evening' order by 1;
+select count(*) filter (where w.excerpt_of_work_id is not null), count(*) from research.performance p
+join research.work w using(work_id) where p.art_form='ballet';
+```
+
+Result: the list gives, for 25 Jan 1904, Конекъ-Горбунокъ («1-я картина 3 го акта»), Пахита («3-е
+дѣйствіе») and Фіаметта (no note). After the split the event has three ballet performances: the
+Конекъ excerpt (-> Конекъ-горбунокъ), «Пахита» [бал.] as a whole work, «2-е д. бал. Фіаметто» (->
+Фіаметта). Linked excerpts 210 of 2,693 ballet performances; 0 excerpt-looking ballet titles without
+a parent; Пахита 42; ballet events 2,066, shared 99; receipts sum unchanged.
+
+## 2026-10-13 — Audit of the 24 Jan 1904 Маріинскій gala cell, and the scope of a "concert" category
+
+```sql
+select e.event_id, e.date, e.date_verbatim, e.date_confidence, e.time_of_day, e.event_status, e.annotation,
+       e.receipts_verbatim, e.is_benefit, e.is_charity, e.is_free, e.has_anthem, e.n_works, e.art_forms, e.printed_page_number
+from research.event e join research.theater t using(theater_id) where e.date='1904-01-24' and t.canonical_name='Маріинскій';
+select p.performance_order, p.verbatim_title, p.verbatim_genre, w.canonical_title,
+       (select canonical_title from research.work x where x.work_id=w.excerpt_of_work_id), p.art_form, p.art_form_basis
+from research.performance p join research.work w using(work_id) join research.event e using(event_id)
+join research.theater t using(theater_id) where e.date='1904-01-24' and t.canonical_name='Маріинскій' order by 1;
+select b.block_id from raw.review_block b where b.page_id like 'review_1903-04_SP%'
+  and (b.text ilike '%24-го января%' or b.text ilike '%24 января%' or b.text ilike '%литературнаго фонда%');
+-- concert scope: R = '(концерт|симфонич|музыкальн|реквіем|месса|кантат|concert|вокальн)'
+select p.verbatim_title, p.art_form, count(*) from research.performance p where regexp_matches(lower(p.verbatim_title), R) group by all;
+select t.canonical_name, count(*), count(e.receipts_total_kopecks) from research.event e join research.theater t using(theater_id)
+where e.event_status='performed' and e.n_works=0 and regexp_matches(lower(coalesce(e.annotation,'')), R || '|вечеръ') group by 1;
+```
+
+Result: the event is stored as printed (annotation, 4 works, no receipts, charity yes, art_forms
+«opera; Russian drama»); «Балетное отдѣленіе» and «Концертное отдѣленіе» have no art form. No review
+block mentions the evening. Concert-type titled items: about 38 performances on 36 events (Концертное
+отдѣленіе 9, Симфоническій концертъ 5, Музыкальное отдѣленіе 3, Кантата 3, Реквіемъ 4, the Зилоти and
+Колоннъ concerts 5, musical-literary evenings 3, others), all without an art form; 6 of those events
+include a ballet. Concert evenings with a heading and no titled work: Маріинскій 67, Большой 29,
+Михайловскій 1 (5 with receipts). The pattern also catches «Аррія и Мессалина» and «Кавардакъ въ
+музыкальномъ магазинѣ», which are plays and would be left out.
+
+## 2026-10-13 — After the Пахита act-3 override, «Балетное отдѣленіе» as ballet, and the concert art form
+
+```sql
+select canonical_title, appearance_count from research.work where canonical_title in ('Пахита','3-е д. бал. Пахита');
+select performance_source, count(*) from research.performance group by 1;
+select p.verbatim_title, p.verbatim_genre, b.art_form, p.art_form, count(*) from research.performance p
+join bak.research.performance b using(performance_id) where p.art_form is distinct from b.art_form group by all;
+select b.art_forms, e.art_forms, count(*) from research.event e join bak.research.event b using(event_id)
+where e.art_forms is distinct from b.art_forms group by all;
+select art_form, count(*) from research.performance group by 1;
+select count(*) filter (where n_works=0), count(*) from research.event where art_forms='concert';
+select count(*), count(*) filter (where art_forms like '%;%'), count(*) filter (where art_forms='ballet; concert')
+from research.event where art_forms like 'ballet%';
+```
+
+Result: Пахита 41, 3-е д. бал. Пахита 12; sources: repertoire 30,800, «repertoire; work from ballet
+productions list» 1, supplied 1. 39 performances changed art form (38 to concert, «Балетное
+отдѣленіе» to ballet). Art forms: Russian drama 15,524, opera 6,297, French drama 4,876, ballet 2,694,
+visiting troupe 937, concert 38, none 436. Events reading «concert» alone 106, of which 93 have no
+titled work. Ballet events 2,067, with another art form 102, of which «ballet; concert» 2. The 24 Jan
+1904 Маріинскій gala: «ballet; opera; Russian drama; concert».
+
+## 2026-10-13 — Breakdown of the performances with no art form (RG: "give me a breakdown of the None")
+
+```sql
+select art_form_basis, count(*), count(distinct work_id), count(distinct event_id)
+from research.performance where art_form is null group by 1 order by 2 desc;
+select w.canonical_title, count(*) n, string_agg(distinct t.canonical_name, ', '), min(e.season), max(e.season),
+       count(*) filter (where e.art_forms like '%ballet%') on_ballet_bill
+from research.performance p join research.work w using(work_id) join research.event e using(event_id)
+join research.theater t using(theater_id) where p.art_form is null and not p.is_ceremonial group by 1 order by 2 desc;
+select t.canonical_name, count(*) from research.performance p join research.event e using(event_id)
+join research.theater t using(theater_id) where p.art_form is null and not p.is_ceremonial group by 1;
+select count(distinct e.event_id) filter (where e.art_forms is null),
+       count(distinct e.event_id) filter (where e.art_forms like '%ballet%'), count(distinct e.event_id)
+from research.performance p join research.event e using(event_id) where p.art_form is null and not p.is_ceremonial;
+```
+
+Result: 436 = anthem 195 + no genre printed 239 + divertissement by label 2. The 241 non-anthem
+rows are 67 titles on 225 events (Александринскій 96, Михайловскій 44, Маріинскій 43, Малый 34,
+Большой 17, Новый 7); 19 of those events have a ballet on the bill; 17 have no art form at all.
+Largest: Сцена г. Горбунова 48, Дивертиссементъ 37, Сцена г. Вейнберга 25, Апоѳеозъ 23, Трагедія о
+Гамлетѣ, принцѣ Датскомъ 10, 1-е д. ком. Нахлѣбникъ 9, Живая картина 6, Донъ-Жуанъ, музыка къ драм.
+поэмѣ 5, Двѣ сцены изъ поэмы Мертвыя души 5. Ballet-looking items among them: «Танцы и группы изъ 2
+акта бал.», «Корсаръ (Le jardin animé)», «Балетъ», «чтеніе, пляска.», «Балетоманъ» (1 each).
+
+## 2026-10-13 — «чтеніе, пляска.» (RG: "what is this?")
+
+```sql
+select e.event_id, a.page_id, e.date, t.canonical_name, e.time_of_day, e.annotation, e.receipts_verbatim, e.art_forms, e.printed_page_number
+from research.performance p join research.event e using(event_id) join analysis.event_entry a using(event_id)
+join research.theater t using(theater_id) where p.verbatim_title='чтеніе, пляска.';
+select performance_order, verbatim_title, verbatim_genre, art_form from research.performance
+where event_id='repertoire_1903-04_p028__s002' order by 1;
+```
+
+Result: Маріинскій, 22 Feb 1904 (printed p. 30), «Спектакль спб. Общества попеченія о душевно-больныхъ,
+съ отчисленіемъ части сбора въ распоряженіе Высочайше утвержденнаго комитета по усиленію военнаго
+флота.», no receipts. Five numbered items: 1) чтеніе, пляска. 2) 2-е д. оп. Карменъ. 3) 1-я карт. 4-го
+д. оп. Аида. 4) Балетный дивертиссементъ 5) сцена изъ 4-го д. оп. Гугеноты. Event art_forms «ballet;
+opera». PDF page read the same day: the cell prints exactly «1) чтеніе, пляска.» as its first item.
+
+## 2026-10-13 — Audit of the Маріинскій cells of 21 and 22 Feb 1904, and charity headings the flag misses
+
+```sql
+select e.event_id, e.date, e.date_verbatim, e.date_confidence, t.canonical_name, e.time_of_day, e.event_status, e.annotation,
+       e.receipts_verbatim, e.is_benefit, e.is_charity, e.is_free, e.n_works, e.art_forms, e.printed_page_number
+from research.event e join research.theater t using(theater_id) where e.date in ('1904-02-21','1904-02-22') and e.city='SP';
+select p.performance_order, p.verbatim_title, p.verbatim_genre, w.canonical_title, p.art_form, p.art_form_basis
+from research.performance p join research.work w using(work_id) join research.event e using(event_id)
+join research.theater t using(theater_id) where e.date='1904-02-21' and t.canonical_name='Маріинскій' order by 1;
+select pe.title, p.date, p.note from raw.production_entry pe join raw.production_entry_performance p using(production_entry_id)
+where pe.city='SP' and p.date in ('1904-02-21','1904-02-22');
+select left(annotation,110), count(*) from research.event where event_status='performed' and annotation is not null
+  and not (is_benefit or is_charity or is_free or is_student_performance or is_reduced_price)
+  and regexp_matches(lower(annotation),'обществ|попечительств|отчисленіем|на усиленіе|фонд|пріют|раненых|инвалид|памятник') group by 1;
+```
+
+Result: 7 SP events on the two days, all matching the scan. 21 Feb Маріинскій: charity yes, 6 works,
+«ballet; opera; Russian drama», no receipts; 22 Feb Маріинскій: 5 works, «ballet; opera», is_charity
+false. No ballet-list date and no review block for either day. 21 unflagged headings name a society,
+a fund or a monument (about 17 of them fund-raising; the rest are commemorations).
+
+## 2026-10-13 — Unnamed ballet items and the widened charity flag: before and after
+
+```sql
+select e.event_id, e.date, t.canonical_name, e.annotation, e.receipts_verbatim, e.art_forms,
+ (select string_agg(p2.performance_order||') '||p2.verbatim_title||' ['||coalesce(p2.verbatim_genre,'')||']',' | '
+         order by p2.performance_order) from research.performance p2 where p2.event_id=e.event_id)
+from research.performance p join research.event e using(event_id) join research.theater t using(theater_id)
+where p.verbatim_title in ('Танцы и группы изъ 2 акта бал.','Корсаръ (Le jardin animé)','Балетъ','Балетоманъ');
+select pe.season, pe.city, pe.title, p.date, p.note from raw.production_entry pe
+join raw.production_entry_performance p using(production_entry_id)
+where cast(p.date as varchar) in ('1898-09-06','1907-04-29','1907-12-22');
+-- after: every table against the backup; then
+select e.date, t.canonical_name, e.annotation, e.receipts_verbatim, e.art_forms from research.event e
+join bak.research.event b using(event_id) join research.theater t on t.theater_id=e.theater_id
+where e.is_charity and not b.is_charity order by 1;
+select art_form, count(*) from research.performance group by 1;
+select count(*), count(*) filter (where art_forms like '%;%'), count(*) filter (where art_forms='ballet; concert')
+from research.event where art_forms like 'ballet%';
+```
+
+Result: 6 Sep 1898 was stored as four works (Привалъ кавалеріи; 1-е д. бал. Дочь Микадо; Танцы и
+группы изъ 2 акта бал.; Талисманъ); the list gives Дочь Микадо, Привалъ кавалеріи and Талисманъ that
+day. The lists give nothing for 29 Apr 1907 or 22 Dec 1907. After: 3 performances become ballet;
+Талисманъ 16; 14 events newly charity (377 in all); art forms Russian drama 15,524, opera 6,297, French
+drama 4,876, ballet 2,696, visiting troupe 937, concert 38, none 433; ballet events 2,068, with
+another art form 103, ballet + concert only 2.
