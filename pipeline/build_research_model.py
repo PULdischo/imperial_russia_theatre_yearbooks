@@ -135,6 +135,12 @@ RESEARCH_EXCLUDED_PAGES = {
 RESEARCH_GENRE_RULES = [
     (r"^Балетный дивертисс?е?ментъ?\.?$", "бал.",
      "ballet divertissement: printed without a genre; ballet assigned in the research layer (RG, issue #114)"),
+    (r"^Балетное отдѣленіе\.?$", "бал.",
+     "the ballet section of a mixed gala (Маріинскій, 24 Jan 1904): printed without a genre; ballet assigned "
+     "in the research layer (RG, 2026-10-13)"),
+    (r"^Балетъ\.?$", "бал.",
+     "an unnamed ballet item on a charity bill (Маріинскій, 22 Dec 1907): labelled ballet although the work is "
+     "not known (RG, 2026-10-13)"),
 ]
 
 
@@ -168,7 +174,19 @@ PARENT_GENRE_BALLET_TITLES = {
 #: given by a house troupe and by a guest. A performance that fits none stays
 #: NULL (RG: "we can review these later"); art_form_basis says which rule
 #: decided, so every value can be traced and challenged. Raw is untouched.
-ART_FORMS = ["ballet", "opera", "Russian drama", "French drama", "visiting troupe"]
+ART_FORMS = ["ballet", "opera", "Russian drama", "French drama", "visiting troupe", "concert"]
+
+#: "concert" is the sixth value (RG, 2026-10-13: "Maybe we do need a 'concert'
+#: genre", then "yes"). It is the one value that names a kind of item and not a
+#: company. A performance gets it when its printed title is a concert item and
+#: nothing else has classed it (lower-cased title, CONCERT_TITLE_RE) or its
+#: printed genre is «Кантата»; an evening with a heading and no titled work gets
+#: it at the event level when the heading names a concert (CONCERT_EVENT_RE).
+#: «Литературное отдѣленіе» / «Отдѣленіе поэзіи» are not concerts and stay blank.
+CONCERT_TITLE_RE = (r"^(концертное отдѣленіе|симфоническій концертъ|музыкальное( и декламаціонное)? отдѣленіе|"
+                    r"концертъ( русской оперы)?\.?$|[0-9]+-й концертъ |реквіемъ|месса[- ]реквіемъ|кантата|"
+                    r"музыкально-литературный вечеръ)")
+CONCERT_EVENT_RE = r"концерт|музыкально-литературн|литературно-музыкальн|вокально-инструментально"
 
 #: The anthem is "not a work, per se, but a ceremonial item" (RG, 2026-10-12):
 #: it gets no art form and is left out of event.n_works / event.art_forms.
@@ -245,7 +263,11 @@ OPERA_TITLE_OVERRIDES = {
 #: record what the annotation SAYS; they are not a judgement about prices.
 EVENT_FLAG_RES = {
     "is_benefit": r"бенефис|bénéfice|benefi[sz]",
-    "is_charity": r"[вб]ъ пользу|благотворит|au profit|zum besten|wohlth[aä]tig|zu gunsten",
+    # widened 2026-10-13 (RG: "yes"): fund-raising headings that name the beneficiary without «въ пользу»
+    "is_charity": (r"[вб]ъ? пользу|благотворит|au profit|zum besten|wohlth[aä]tig|zu gunsten|"
+                   r"для образованія фонда|на (усиленіе|основаніе|образованіе) (фонда|капиталовъ|средствъ)|"
+                   r"съ отчисленіемъ части сбора|на памятникъ|pour élever un monument|"
+                   r"попечительства о бѣдныхъ|общества попеченія|общества по устройству"),
     "is_free": r"безплатн|бесплатн",
     "is_student_performance": r"для учащ",
     "is_reduced_price": r"уменьшенн|prix r[ée]duits",
@@ -671,6 +693,56 @@ def load_supplied_performances(con: duckdb.DuckDBPyConnection) -> int:
     return len(out)
 
 
+#: Performances whose WORK the research layer takes from another part of the
+#: yearbook although the Repertoire names one (RG, 2026-10-13, first case: the
+#: Repertoire prints «бал. Пахита» on a three-item bill, the ballet list says
+#: «3-е дѣйствіе», "the research layer should show the 3rd act only"). One row
+#: per performance: the event, the title as the Repertoire prints it, and the
+#: research.work title it is shown under. Raw keeps the printed wording, and so
+#: does research.performance.verbatim_title; performance_source says the work
+#: was taken from elsewhere. The build fails unless a row matches exactly one
+#: performance and one work.
+PERFORMANCE_WORK_OVERRIDES_CSV = Path(__file__).parent / "research_corrections" / "performance_work_overrides.csv"
+
+
+def load_performance_work_overrides(con: duckdb.DuckDBPyConnection) -> int:
+    """Temp table perf_rework + the appearance counts of the two works. Must run
+    after the per-performance genre splits and before research.performance is
+    created (research.work is UPDATEd)."""
+    con.execute("""CREATE OR REPLACE TEMP TABLE perf_rework
+                   (performance_id VARCHAR, base_work_id UUID, target_work_id UUID, source VARCHAR, basis VARCHAR)""")
+    if not PERFORMANCE_WORK_OVERRIDES_CSV.exists():
+        return 0
+    out = []
+    for row in csv.DictReader(open(PERFORMANCE_WORK_OVERRIDES_CSV, encoding="utf-8")):
+        hits = con.execute("""
+            SELECT eep.performance_id, coalesce(ps.split_work_id, m.to_id, wl.work_id)
+            FROM research.event e
+            JOIN research.theater t USING (theater_id)
+            JOIN raw.event_entry_performance eep ON eep.event_id = e.event_id
+            JOIN entities.work_link wl ON wl.raw_performance_id = eep.performance_id
+            LEFT JOIN work_merge m ON m.from_id = wl.work_id
+            LEFT JOIN perf_split ps ON ps.performance_id = eep.performance_id
+            WHERE e.season = ? AND e.city = ? AND CAST(e.date AS VARCHAR) = ? AND t.canonical_name = ?
+              AND e.time_of_day = ? AND eep.performance_title = ?""",
+            [row["season"], row["city"], row["date"], row["theater"], row["time_of_day"],
+             row["verbatim_title"]]).fetchall()
+        target = con.execute("SELECT work_id FROM research.work WHERE canonical_title = ?",
+                             [row["research_work_title"]]).fetchall()
+        if len(hits) != 1 or len(target) != 1:
+            raise SystemExit(f"performance_work_overrides.csv: {row['date']} {row['theater']} "
+                             f"{row['verbatim_title']!r} matches {len(hits)} performances, "
+                             f"{row['research_work_title']!r} matches {len(target)} works")
+        out.append((hits[0][0], hits[0][1], target[0][0], row["source"], row["basis"]))
+    if out:
+        con.executemany("INSERT INTO perf_rework VALUES (?, ?, ?, ?, ?)", out)
+        con.execute("""UPDATE research.work SET appearance_count = appearance_count
+                           - (SELECT count(*) FROM perf_rework r WHERE r.base_work_id = research.work.work_id)
+                           + (SELECT count(*) FROM perf_rework r WHERE r.target_work_id = research.work.work_id)
+                       WHERE work_id IN (SELECT base_work_id FROM perf_rework UNION SELECT target_work_id FROM perf_rework)""")
+    return len(out)
+
+
 def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
     """Temp table perf_art: one row per research performance with its art form
     (see ART_FORMS above), then the event-level summary columns. Must run after
@@ -713,7 +785,8 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         JOIN entities.work_link wl ON wl.raw_performance_id = eep.performance_id
         LEFT JOIN work_merge m ON m.from_id = wl.work_id
         LEFT JOIN perf_split ps ON ps.performance_id = eep.performance_id
-        JOIN research.work w ON w.work_id = coalesce(ps.split_work_id, m.to_id, wl.work_id)
+        LEFT JOIN perf_rework pr ON pr.performance_id = eep.performance_id
+        JOIN research.work w ON w.work_id = coalesce(pr.target_work_id, ps.split_work_id, m.to_id, wl.work_id)
         LEFT JOIN research.work par ON par.work_id = w.excerpt_of_work_id
         LEFT JOIN opera_title ot ON ot.title = w.canonical_title
         LEFT JOIN opera_title pot ON pot.title = par.canonical_title
@@ -760,8 +833,11 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
          "'ballet'", "CASE WHEN parent_ballet THEN 'parent genre ballet' ELSE 'printed genre ' || g END"),
         (f"g = {lit(COMEDY_BALLET_GENRE)}", "'Russian drama'",
          "'comedy-ballet (ком.-бал.): a drama with dancers, given by the drama company (RG, 2026-10-12)'"),
-        ("regexp_matches(lower(coalesce(g, '')), '^(диверт|кантат)')",
-         "NULL", "'divertissement or cantata: no art form assigned'"),
+        (f"regexp_matches(lower(coalesce(title, '')), {lit(CONCERT_TITLE_RE)}) AND (g IS NULL OR lower(g) LIKE 'кантат%')",
+         "'concert'", "'concert item by its printed title (RG, 2026-10-13)'"),
+        ("lower(coalesce(g, '')) LIKE 'кантат%'", "'concert'", "'printed genre ' || g || ': a cantata, classed as concert'"),
+        ("regexp_matches(lower(coalesce(g, '')), '^диверт')",
+         "NULL", "'divertissement: no art form assigned'"),
         (f"NOT cyr AND lat AND regexp_matches(coalesce(vg, ''), {lit(GERMAN_GENRE_RE)})",
          "'visiting troupe'", "'German-language performance (printed genre ' || vg || ')'"),
         ("NOT cyr AND lat AND (vg = 'op.' OR regexp_matches(lower(title), 'atto di op'))",
@@ -847,10 +923,16 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                bool_or(title_benefit) AS title_benefit
         FROM perf_art p GROUP BY event_id
     """)
-    con.execute("""
+    con.execute(f"""
         UPDATE research.event SET
             n_works = coalesce((SELECT n_works FROM event_art x WHERE x.event_id = research.event.event_id), 0),
-            art_forms = (SELECT art_forms FROM event_art x WHERE x.event_id = research.event.event_id),
+            art_forms = coalesce(
+                (SELECT art_forms FROM event_art x WHERE x.event_id = research.event.event_id),
+                -- a concert evening the Repertoire gives as a heading only, with no titled work
+                CASE WHEN event_status = 'performed'
+                      AND NOT EXISTS (SELECT 1 FROM event_art x WHERE x.event_id = research.event.event_id AND x.n_works > 0)
+                      AND regexp_matches(lower(coalesce(annotation, '')), '{CONCERT_EVENT_RE}')
+                     THEN 'concert' END),
             has_anthem = coalesce((SELECT has_anthem FROM event_art x WHERE x.event_id = research.event.event_id), false),
             is_benefit = is_benefit OR coalesce(
                 (SELECT title_benefit FROM event_art x WHERE x.event_id = research.event.event_id), false)
@@ -1298,6 +1380,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         print(f"  per-performance genres: {len(split_rows)} performances moved to "
               f"{len({r[2] for r in split_rows})} research-rule work row(s)")
 
+    n_reworked = load_performance_work_overrides(con)
+    print(f"  performances shown under a work taken from another part of the yearbook: {n_reworked}")
     n_supplied = load_supplied_performances(con)
     build_art_forms(con)
 
@@ -1323,19 +1407,21 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         SELECT
             eep.performance_id,
             eep.event_id,
-            coalesce(ps.split_work_id, m.to_id, wl.work_id) AS work_id,
+            coalesce(pr.target_work_id, ps.split_work_id, m.to_id, wl.work_id) AS work_id,
             eep.performance_order,
             eep.performance_title AS verbatim_title,
             eep.genre AS verbatim_genre,
             pa.art_form, pa.art_form_basis, coalesce(pa.is_ceremonial, false),
             -- TRUE or NULL, never FALSE: blank means "not known" (RG, 2026-10-12: "the options are yes or blank")
             CASE WHEN pa.includes_dance THEN true END, pa.includes_dance_basis,
-            'repertoire', NULL
+            CASE WHEN pr.performance_id IS NOT NULL THEN 'repertoire; work from ' || pr.source ELSE 'repertoire' END,
+            pr.basis
         FROM raw.event_entry_performance eep
         JOIN entities.work_link wl ON wl.raw_performance_id = eep.performance_id
         LEFT JOIN work_merge m ON m.from_id = wl.work_id
         LEFT JOIN perf_split ps ON ps.performance_id = eep.performance_id
         LEFT JOIN perf_art pa ON pa.performance_id = eep.performance_id
+        LEFT JOIN perf_rework pr ON pr.performance_id = eep.performance_id
         WHERE eep.event_id NOT IN (SELECT e.event_id FROM analysis.event_entry e
                                    JOIN excluded_page x USING (page_id))
     """)
