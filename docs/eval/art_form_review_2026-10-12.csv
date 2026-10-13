@@ -1,8 +1,6 @@
 art_form,art_form_basis,theater,first_season,last_season,verbatim_title,verbatim_genre,n_performances
-(none),divertissement or cantata: no art form assigned,Александринскій,1910-11,1910-11,Апоѳеозъ,Кантата.,1
-(none),divertissement or cantata: no art form assigned,Большой,1899-00,1899-00,Карнавалъ,дивертисментъ,1
-(none),divertissement or cantata: no art form assigned,Малый,1910-11,1910-11,Апоѳеозъ.,,1
-(none),divertissement or cantata: no art form assigned,Маріинскій,1904-05,1904-05,Маскарадъ,диверт.,1
+(none),divertissement: no art form assigned,Большой,1899-00,1899-00,Карнавалъ,дивертисментъ,1
+(none),divertissement: no art form assigned,Маріинскій,1904-05,1904-05,Маскарадъ,диверт.,1
 (none),no genre printed: art form not assigned,Александринскій,1894-95,1894-95,1-е д. водевиля Андрей Степановичъ Бука,,1
 (none),no genre printed: art form not assigned,Александринскій,1893-94,1893-94,1-е д. ком. Андрей Степановичъ Бука,,1
 (none),no genre printed: art form not assigned,Александринскій,1906-07,1906-07,2 послѣднія дѣйствія трагедіи Дмитрій Донской,,1
@@ -19,11 +17,7 @@ art_form,art_form_basis,theater,first_season,last_season,verbatim_title,verbatim
 (none),no genre printed: art form not assigned,Александринскій,1896-97,1900-01,Живая картина,,3
 (none),no genre printed: art form not assigned,Александринскій,1896-97,1896-97,Живая картина.,,1
 (none),no genre printed: art form not assigned,Александринскій,1903-04,1903-04,"Какъ они бросили курить, басня-шаржъ",,1
-(none),no genre printed: art form not assigned,Александринскій,1901-02,1901-02,Концертное отдѣленіе,,1
-(none),no genre printed: art form not assigned,Александринскій,1896-97,1896-97,Концертное отдѣленіе.,,1
 (none),no genre printed: art form not assigned,Александринскій,1905-06,1905-06,"Лиса Патрикѣевна, оперетта",,1
-(none),no genre printed: art form not assigned,Александринскій,1904-05,1904-05,Музыкальное и декламаціонное отдѣленіе,,1
-(none),no genre printed: art form not assigned,Александринскій,1896-97,1897-98,Музыкальное отдѣленіе,,3
 (none),no genre printed: art form not assigned,Александринскій,1902-03,1902-03,"Наканунѣ, возможный случай",,4
 (none),no genre printed: art form not assigned,Александринскій,1898-99,1898-99,Ночное сц.,,1
 (none),no genre printed: art form not assigned,Александринскій,1895-96,1895-96,"Памяти Н. А. Полевого, лекція проф. И. А. Шляпкина.",,1
@@ -44,15 +38,7 @@ art_form,art_form_basis,theater,first_season,last_season,verbatim_title,verbatim
 (none),no genre printed: art form not assigned,Большой,1896-97,1907-08,Дивертиссементъ,,5
 (none),no genre printed: art form not assigned,Большой,1892-93,1892-93,"Донъ Жуанъ, музыка къ драм. поэмѣ",,2
 (none),no genre printed: art form not assigned,Большой,1910-11,1910-11,Живая картина.,,1
-(none),no genre printed: art form not assigned,Большой,1904-05,1910-11,Кантата.,,2
-(none),no genre printed: art form not assigned,Большой,1901-02,1907-08,Концертное отдѣленіе,,2
-(none),no genre printed: art form not assigned,Большой,1908-09,1908-09,Концертъ,,1
 (none),no genre printed: art form not assigned,Большой,1906-07,1906-07,Литературное отдѣленіе,,1
-(none),no genre printed: art form not assigned,Большой,1904-05,1904-05,Музыкально-литературный вечеръ,,1
-(none),no genre printed: art form not assigned,Большой,1895-96,1895-96,Музыкально-литературный вечеръ съ живыми картинами.,,1
-(none),no genre printed: art form not assigned,Большой,1896-97,1896-97,Музыкально-литературный вечеръ.,,1
-(none),no genre printed: art form not assigned,Большой,1892-93,1892-93,Симфоническій концертъ,,2
-(none),no genre printed: art form not assigned,Большой,1910-11,1910-11,Симфоническій концертъ.,,1
 (none),no genre printed: art form not assigned,Малый,1897-98,1897-98,1-е д. изъ ком. Нахлѣбникъ,,1
 (none),no genre printed: art form not assigned,Малый,1895-96,1896-97,1-е д. ком. Нахлѣбникъ,,4
 (none),no genre printed: art form not assigned,Малый,1895-96,1895-96,1-е д. ком. Нахлѣбникъ.,,2
@@ -61,41 +47,26 @@ art_form,art_form_basis,theater,first_season,last_season,verbatim_title,verbatim
 (none),no genre printed: art form not assigned,Малый,1898-99,1901-02,Апоѳеозъ,,7
 (none),no genre printed: art form not assigned,Малый,1891-92,1895-96,Дивертиссементъ,,11
 (none),no genre printed: art form not assigned,Малый,1910-11,1910-11,Живая картина.,,1
-(none),no genre printed: art form not assigned,Малый,1905-06,1905-06,Концертное отдѣленіе,,1
 (none),no genre printed: art form not assigned,Малый,1910-11,1910-11,Отдѣленіе литературное.,,1
 (none),no genre printed: art form not assigned,Малый,1910-11,1910-11,Отдѣленіе поэзіи.,,1
 (none),no genre printed: art form not assigned,Малый,1890-91,1890-91,Сцена г. Горбунова.,,3
 (none),no genre printed: art form not assigned,Малый,1908-09,1908-09,Театральный разъѣздъ послѣ представленія новой комедіи,,1
 (none),no genre printed: art form not assigned,Маріинскій,1909-10,1909-10,1 д. оп. Русланъ и Людмилы.,,1
-(none),no genre printed: art form not assigned,Маріинскій,1899-00,1899-00,1-й концертъ подъ управленіемъ Э. Колоннъ,,1
-(none),no genre printed: art form not assigned,Маріинскій,1899-00,1899-00,2-й концертъ подъ управленіемъ Э. Колоннъ,,1
 (none),no genre printed: art form not assigned,Маріинскій,1906-07,1906-07,2-я карт. 2-го акта и 1-я карт.,,1
-(none),no genre printed: art form not assigned,Маріинскій,1907-08,1907-08,4-й концертъ А. Зилоти,,1
-(none),no genre printed: art form not assigned,Маріинскій,1907-08,1907-08,6-й концертъ А. Зилоти,,1
-(none),no genre printed: art form not assigned,Маріинскій,1907-08,1907-08,7-й концертъ А. Зилоти,,1
 (none),no genre printed: art form not assigned,Маріинскій,1898-99,1898-99,Апоѳеозъ,,2
 (none),no genre printed: art form not assigned,Маріинскій,1906-07,1906-07,"Бабушка, отрывокъ изъ жизни",,1
-(none),no genre printed: art form not assigned,Маріинскій,1903-04,1903-04,Балетное отдѣленіе,,1
 (none),no genre printed: art form not assigned,Маріинскій,1904-05,1904-05,Балетоманъ,,1
 (none),no genre printed: art form not assigned,Маріинскій,1907-08,1907-08,Балетъ,,1
 (none),no genre printed: art form not assigned,Маріинскій,1902-03,1907-08,Дивертиссементъ,,10
 (none),no genre printed: art form not assigned,Маріинскій,1891-92,1891-92,"Донъ-Жуанъ, музыка къ драм. поэмѣ",,3
 (none),no genre printed: art form not assigned,Маріинскій,1902-03,1907-08,Живыя картины,,2
-(none),no genre printed: art form not assigned,Маріинскій,1910-11,1910-11,Кантата.,,1
 (none),no genre printed: art form not assigned,Маріинскій,1900-01,1900-01,Кинематографическій спектакль,,1
 (none),no genre printed: art form not assigned,Маріинскій,1904-05,1904-05,Кинематографъ,,1
-(none),no genre printed: art form not assigned,Маріинскій,1897-98,1907-08,Концертное отдѣленіе,,3
-(none),no genre printed: art form not assigned,Маріинскій,1907-08,1907-08,Концертъ,,1
-(none),no genre printed: art form not assigned,Маріинскій,1890-91,1890-91,Концертъ русской оперы,,1
 (none),no genre printed: art form not assigned,Маріинскій,1906-07,1906-07,Корсаръ (Le jardin animé),,1
-(none),no genre printed: art form not assigned,Маріинскій,1900-01,1900-01,Месса Реквіемъ,,1
-(none),no genre printed: art form not assigned,Маріинскій,1900-01,1900-01,Месса-Реквіемъ,,1
 (none),no genre printed: art form not assigned,Маріинскій,1909-10,1909-10,Миранда (послѣдняя борьба),,2
 (none),no genre printed: art form not assigned,Маріинскій,1902-03,1902-03,Обозрѣніе,,1
 (none),no genre printed: art form not assigned,Маріинскій,1905-06,1905-06,Праздникъ у Плутона (Орфей въ аду),,1
 (none),no genre printed: art form not assigned,Маріинскій,1900-01,1900-01,Прологъ драмы Псковитянка,,1
-(none),no genre printed: art form not assigned,Маріинскій,1905-06,1905-06,Реквіемъ,,2
-(none),no genre printed: art form not assigned,Маріинскій,1892-93,1892-93,Симфоническій концертъ,,2
 (none),no genre printed: art form not assigned,Маріинскій,1898-99,1898-99,Танцы и группы изъ 2 акта бал.,,1
 (none),no genre printed: art form not assigned,Маріинскій,1910-11,1910-11,Увертюра изъ оп. «Динора».,,1
 (none),no genre printed: art form not assigned,Маріинскій,1891-92,1891-92,Финалъ оп. Лорелей,,3
@@ -112,7 +83,6 @@ art_form,art_form_basis,theater,first_season,last_season,verbatim_title,verbatim
 (none),no genre printed: art form not assigned,Михайловскій,1894-95,1906-07,Дивертиссементъ,,2
 (none),no genre printed: art form not assigned,Михайловскій,1907-08,1907-08,Дивертиссементъ.,,1
 (none),no genre printed: art form not assigned,Михайловскій,1908-09,1908-09,Дивертиссментъ,,1
-(none),no genre printed: art form not assigned,Михайловскій,1893-94,1893-94,Концертное отдѣленіе,,1
 (none),no genre printed: art form not assigned,Михайловскій,1890-91,1890-91,Сцена г. Вейнберга,,10
 (none),no genre printed: art form not assigned,Михайловскій,1890-91,1890-91,Сцена г. Вейнберга.,,2
 (none),no genre printed: art form not assigned,Михайловскій,1890-91,1894-95,Сцена г. Горбунова,,18
@@ -155,14 +125,40 @@ Russian drama,"Cyrillic title, printed genre др.; the genre is printed for thi
 Russian drama,"Cyrillic title, printed genre драм.; the genre is printed for this work elsewhere in the same season, not on this performance",Александринскій,1904-05,1904-05,"Наканунѣ, возможный случай",,2
 Russian drama,"Cyrillic title, printed genre ист.-быт. сц.; the genre is printed for this work elsewhere in the same season, not on this performance",Александринскій,1902-03,1902-03,"Ломоносовъ, ист.-был. сцены",,1
 Russian drama,"Cyrillic title, printed genre ист.-быт. сц.; the genre is printed for this work elsewhere in the same season, not on this performance",Александринскій,1902-03,1902-03,"Ломоносовъ, истор.-быт. сцены",,2
-Russian drama,"Cyrillic title, printed genre ком.",Александринскій,1896-97,1896-97,Г-жа Вѣстникова съ семьею,ком.,1
-Russian drama,"Cyrillic title, printed genre ком.",Александринскій,1896-97,1896-97,Госпожа Вѣстникова съ семьею,ком.,1
-Russian drama,"Cyrillic title, printed genre ком.",Александринскій,1896-97,1896-97,Передняя знатнаго боярина,ком.,2
 Russian drama,"Cyrillic title, printed genre ком.",Михайловскій,1906-07,1906-07,Жеманницы,ком.,1
 Russian drama,"Cyrillic title, printed genre ком.-шут.; the genre is printed for this work elsewhere in the same season, not on this performance",Малый,1902-03,1902-03,Да здравствуетъ жизнь! др.,,3
 Russian drama,"Cyrillic title, printed genre пьеса",Михайловскій,1901-02,1901-02,Волшебная сказка,пьеса,1
 Russian drama,"Cyrillic title, printed genre шут.; the genre is printed for this work elsewhere in the same season, not on this performance",Александринскій,1898-99,1898-99,Пьеса для разъѣзда,,1
 Russian drama,"Cyrillic title, printed genre эпизоды; the genre is printed for this work elsewhere in the same season, not on this performance",Малый,1909-10,1909-10,"Вожди, эпизоды изъ жизни",,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Александринскій,1901-02,1901-02,Концертное отдѣленіе,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Александринскій,1896-97,1896-97,Концертное отдѣленіе.,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Александринскій,1904-05,1904-05,Музыкальное и декламаціонное отдѣленіе,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Александринскій,1896-97,1897-98,Музыкальное отдѣленіе,,3
+concert,"concert item by its printed title (RG, 2026-10-13)",Большой,1904-05,1910-11,Кантата.,,2
+concert,"concert item by its printed title (RG, 2026-10-13)",Большой,1901-02,1907-08,Концертное отдѣленіе,,2
+concert,"concert item by its printed title (RG, 2026-10-13)",Большой,1908-09,1908-09,Концертъ,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Большой,1904-05,1904-05,Музыкально-литературный вечеръ,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Большой,1895-96,1895-96,Музыкально-литературный вечеръ съ живыми картинами.,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Большой,1896-97,1896-97,Музыкально-литературный вечеръ.,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Большой,1892-93,1892-93,Симфоническій концертъ,,2
+concert,"concert item by its printed title (RG, 2026-10-13)",Большой,1910-11,1910-11,Симфоническій концертъ.,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Малый,1905-06,1905-06,Концертное отдѣленіе,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Маріинскій,1899-00,1899-00,1-й концертъ подъ управленіемъ Э. Колоннъ,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Маріинскій,1899-00,1899-00,2-й концертъ подъ управленіемъ Э. Колоннъ,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Маріинскій,1907-08,1907-08,4-й концертъ А. Зилоти,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Маріинскій,1907-08,1907-08,6-й концертъ А. Зилоти,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Маріинскій,1907-08,1907-08,7-й концертъ А. Зилоти,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Маріинскій,1910-11,1910-11,Кантата.,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Маріинскій,1897-98,1907-08,Концертное отдѣленіе,,3
+concert,"concert item by its printed title (RG, 2026-10-13)",Маріинскій,1907-08,1907-08,Концертъ,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Маріинскій,1890-91,1890-91,Концертъ русской оперы,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Маріинскій,1900-01,1900-01,Месса Реквіемъ,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Маріинскій,1900-01,1900-01,Месса-Реквіемъ,,1
+concert,"concert item by its printed title (RG, 2026-10-13)",Маріинскій,1905-06,1905-06,Реквіемъ,,2
+concert,"concert item by its printed title (RG, 2026-10-13)",Маріинскій,1892-93,1892-93,Симфоническій концертъ,,2
+concert,"concert item by its printed title (RG, 2026-10-13)",Михайловскій,1893-94,1893-94,Концертное отдѣленіе,,1
+concert,"printed genre Кантата.: a cantata, classed as concert",Александринскій,1910-11,1910-11,Апоѳеозъ,Кантата.,1
+concert,"printed genre Кантата.: a cantata, classed as concert; the genre is printed for this work elsewhere in the same season, not on this performance",Малый,1910-11,1910-11,Апоѳеозъ.,,1
 opera,"Rimsky-Korsakov's opera; printed «оп.» in 1907-08, 1908-09 and 1910-11 but with no genre in its premiere season 1906-07, so classed by title (exception allowed by RG, 2026-10-12); the genre is printed for this work elsewhere in the same season, not on this performance",Большой,1907-08,1907-08,Сказаніе о невидимомъ градѣ Китежѣ и дѣвѣ Февроніи,,5
 opera,"Rimsky-Korsakov's opera; printed «оп.» in 1907-08, 1908-09 and 1910-11 but with no genre in its premiere season 1906-07, so classed by title (exception allowed by RG, 2026-10-12); the genre is printed for this work elsewhere in the same season, not on this performance",Маріинскій,1907-08,1910-11,Сказаніе о невидимомъ градѣ Китежѣ и дѣвѣ Февроніи,,9
 opera,"Rimsky-Korsakov's opera; printed «оп.» in 1907-08, 1908-09 and 1910-11 but with no genre in its premiere season 1906-07, so classed by title (exception allowed by RG, 2026-10-12); the genre is printed for this work elsewhere in the same season, not on this performance",Маріинскій,1907-08,1910-11,Сказаніе о невидимомъ градѣ Китежѣ и дѣвѣ Февроніи.,,4
