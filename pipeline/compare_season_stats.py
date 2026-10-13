@@ -62,7 +62,9 @@ Level 3 -- ballet performances per season-city, three ways (2026-09-30):
     ballets, capped at the number of list rows for the date. (b) only decides
     whether entries sharing a date are one double bill or a matinée plus an
     evening; the cap means it can never add a performance the list doesn't print;
-  - Repertoire: performed sessions that include a work with parent_genre ballet.
+  - Repertoire: performed sessions that include a performance of item_kind ballet
+    (research.work.parent_genre was dropped on 2026-10-13; item_kind ballet is the
+    same set plus the few ballets printed «бал.» that are in no ballet list).
   Matching of list dates to Repertoire sessions is build_research_model.ballet_list_matches.
 
 Usage:
@@ -286,7 +288,7 @@ def ballet_counts(con, out_dir):
         FROM research.event e JOIN research.theater t USING (theater_id)
         JOIN analysis.event_entry a USING (event_id) JOIN research.performance p USING (event_id)
         JOIN research.work w USING (work_id)
-        WHERE e.event_status = 'performed' AND w.parent_genre = 'ballet' GROUP BY ALL""").fetchall():
+        WHERE e.event_status = 'performed' AND p.item_kind = 'ballet' GROUP BY ALL""").fetchall():
         rep_by_date[(season, city, d)].append(f"{th} {tod}: {titles}")
     st = defaultdict(lambda: [0, 0, 0, 0])
     for r in csv.DictReader(open(STATS_DIR / "lines.csv", encoding="utf-8")):
