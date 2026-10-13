@@ -63,8 +63,7 @@ SCHEMAS = {
         CREATE TABLE work (
             work_id TEXT PRIMARY KEY, canonical_title TEXT, canonical_genre TEXT,
             appearance_count INTEGER, excerpt_of_work_id TEXT REFERENCES work(work_id),
-            excerpt_note TEXT, genre_source TEXT, genre_note TEXT,
-            parent_genre TEXT, parent_genre_note TEXT
+            excerpt_note TEXT, genre_source TEXT, genre_note TEXT
         )""",
     "person": """
         CREATE TABLE person (
@@ -84,7 +83,7 @@ SCHEMAS = {
             time_of_day TEXT, receipts_verbatim TEXT, annotation TEXT,
             is_benefit INTEGER, is_charity INTEGER, is_free INTEGER,
             is_student_performance INTEGER, is_reduced_price INTEGER,
-            has_anthem INTEGER, n_works INTEGER, art_forms TEXT
+            has_anthem INTEGER, n_works INTEGER, art_forms TEXT, item_kinds TEXT
         )""",
     "performance": """
         CREATE TABLE performance (
@@ -93,7 +92,8 @@ SCHEMAS = {
             verbatim_title TEXT, verbatim_genre TEXT,
             art_form TEXT, art_form_basis TEXT, is_ceremonial INTEGER, includes_dance INTEGER,
             includes_dance_basis TEXT,
-            performance_source TEXT, performance_source_note TEXT
+            performance_source TEXT, performance_source_note TEXT,
+            item_kind TEXT, item_kind_basis TEXT
         )""",
     "person_appearance": """
         CREATE TABLE person_appearance (

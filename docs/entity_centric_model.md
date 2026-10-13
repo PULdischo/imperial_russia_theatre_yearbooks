@@ -181,7 +181,9 @@ misprint "дивертиссментъ") gets "бал.". A plain "Диверти
 (NULL when there is no genre), and `genre_note` gives the rule's reason. The
 build fails if a rule matches no work.
 
-**Parent genre (issue #118, 2026-09-30; RG may rename it)**: RG's rule is that a work printed in the
+**Parent genre: COLUMN DROPPED 2026-10-13** (RG: "let's get rid of the parent genre label. we don't seem to need it"). `research.work.parent_genre` and `parent_genre_note` no longer exist; `research.performance.art_form` (= `ballet`) and `item_kind` carry the result. The rule described below still decides which works are ballet, as an internal step of `build_research_model.py` (temp table `work_ballet`). The paragraph is kept for the rule, not for the column.
+
+**The rule (issue #118, 2026-09-30)**: RG's rule is that a work printed in the
 ballet productions lists (and the season's ballet review) has parent genre ballet, whatever its printed genre.
 `research.work.parent_genre` = `ballet` for every work with a Repertoire performance on one of the list's dates, in
 the same city, under the list's title: the same title after `norm()`, or an excerpt of it. Nothing fuzzy is used;

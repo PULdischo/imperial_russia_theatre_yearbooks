@@ -616,7 +616,7 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
         c = Counter(m[4] for m in members if m[3] == canon)
         return max(c, key=lambda f: (c[f], f == canon)) if c else canon
 
-    def _work_uuid(canonical_title: str, fold: str | None, group_members=None) -> str:
+    def _work_uuid(canonical_title: str, fold: str | None, group_members=None, group_key=None) -> str:
         # Id continuity, the same principle as person ids (entities.person_link):
         # a work inherits the previous run's work_id that most of its raw
         # performances were already linked to, so consolidation never mints a
@@ -624,13 +624,25 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
         # predecessor's id, and the others go to entities.work_id_crosswalk.
         # Only a work with no linked predecessor (new data, or a first build)
         # gets the computed uuid5 of its dominant printing's title key + genre.
+        #
+        # An old id goes only to the group that holds MOST of the performances
+        # previously linked to it (id_owner, computed below before the loop).
+        # Without that, a single retitled line could take a whole work's id --
+        # 2026-10-13: «Волшебное зеркало» retitled «1, 3 д. … Волшебное зеркало»
+        # became an excerpt group of one, inherited the parent's id, and the
+        # parent then fell back to its computed id, the same one: duplicate key.
         if group_members and old_link:
             prev = Counter(old_link[m[0]] for m in group_members if m[0] in old_link)
             for wid, _ in prev.most_common():
-                if wid not in used_ids:
+                if wid not in used_ids and id_owner.get(wid, (0, group_key))[1] == group_key:
                     used_ids.add(wid)
                     return wid
-        wid = str(uuid.uuid5(NAMESPACE, f"work:{_title_key(_strip_genre_suffix(canonical_title))}|{fold or ''}"))
+        base = f"work:{_title_key(_strip_genre_suffix(canonical_title))}|{fold or ''}"
+        wid = str(uuid.uuid5(NAMESPACE, base))
+        n = 1
+        while wid in used_ids:  # never hand out an id twice, whatever the cause
+            n += 1
+            wid = str(uuid.uuid5(NAMESPACE, f"{base}|{n}"))
         used_ids.add(wid)
         return wid
 
@@ -647,6 +659,24 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     title_key_to_work_ids: dict[str, list[str]] = defaultdict(list)
     n_multi_variant = n_genre_merged = 0
 
+    # Which group may inherit each old work id: the one with the most performances
+    # previously linked to it (first such group on a tie). Same grouping as the loop below.
+    id_owner: dict[str, tuple[int, object]] = {}
+    if old_link:
+        for title_key, members in by_title.items():
+            folds = {m[3] for m in members if m[3]}
+            if len(folds) <= 1:
+                groups = [((title_key, "__all__"), members)]
+            else:
+                sub: dict[str | None, list] = defaultdict(list)
+                for m in members:
+                    sub[m[3]].append(m)
+                groups = [((title_key, f), sm) for f, sm in sub.items()]
+            for gkey, gm in groups:
+                for wid, cnt in Counter(old_link[m[0]] for m in gm if m[0] in old_link).items():
+                    if cnt > id_owner.get(wid, (0, None))[0]:
+                        id_owner[wid] = (cnt, gkey)
+
     for title_key, members in by_title.items():
         distinct_folds = {m[3] for m in members if m[3]}  # identity keys: art form + script (step 4)
 
@@ -655,7 +685,8 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
             # any, just missing) -- merge everything into one work.
             fold = next(iter(distinct_folds), None)
             canonical_title, canonical_genre = _pick_variant(members)
-            work_uuid = _work_uuid(canonical_title, _dominant_raw_fold(members, fold), members)
+            work_uuid = _work_uuid(canonical_title, _dominant_raw_fold(members, fold), members,
+                                   (title_key, "__all__"))
             if len({(t, g) for _, t, g, *_ in members}) > 1:
                 n_multi_variant += 1
             if any(m[3] is None for m in members) and fold is not None:
@@ -677,7 +708,8 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
             sub_uuids = {}
             for fold, sub_members in sub_groups.items():
                 canonical_title, canonical_genre = _pick_variant(sub_members)
-                work_uuid = _work_uuid(canonical_title, _dominant_raw_fold(sub_members, fold), sub_members)
+                work_uuid = _work_uuid(canonical_title, _dominant_raw_fold(sub_members, fold), sub_members,
+                                       (title_key, fold))
                 sub_uuids[fold] = work_uuid
                 work_rows.append((work_uuid, canonical_title, canonical_genre, len(sub_members), title_key))
                 title_key_to_work_ids[title_key].append(work_uuid)

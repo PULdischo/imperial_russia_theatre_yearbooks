@@ -129,10 +129,11 @@ closes, and add new open items here as well as in their own entry.
 - Divertissements (entry at the end of this file): the 39 plain ones left
   without a genre and the 2 «Большой дивертиссементъ» have not been read on
   the scan (only the 3 that had carried «др.»); all ballet-assigned ones have.
-- Possible invented genres elsewhere: 5 titles / 8 rows where a genre appears
+- Possible invented genres elsewhere: 4 titles / 7 rows where a genre appears
   on a title usually printed without one («Апоѳеозъ» [Кантата.], «Наканунѣ,
-  возможный случай» x4, «Снѣгурочка, весенняя сказка» [сказка], «2-е д. бал.
-  Фіаметта» [бал.], «1, 2, 3 и 4 д. оп. Гугеноты» [оп.]). Not read on the scan.
+  возможный случай» x4, «Снѣгурочка, весенняя сказка» [сказка], «1, 2, 3 и 4 д.
+  оп. Гугеноты» [оп.]). Not read on the scan. («2-е д. бал. Фіаметта» [бал.],
+  2 Jan 1905, was read and fixed on 2026-10-13: the genre was not in the print.)
 - #112: 1904-05 p038 `month_text` «Мартъ» where the header prints «марта»
   (cosmetic: «Мартъ» is stored 201 times corpus-wide and the date does not
   depend on it; left).
@@ -143,6 +144,7 @@ closes, and add new open items here as well as in their own entry.
   a name field *(checked)*; never given its own treatment.
 - #98-#100: `entities.work_genre_candidate` (74 rows, 37 title groups
   *(checked)*) is open-ended by design.
+- DONE 2026-10-13 (entry «Free-performance banners and small scan readings»): corpus sweep, 33 mornings restored, 21 paid evenings and 8 later-day sessions cleared.
 - Free matinees with a missing banner (found 2026-10-12, entry «Two Moscow
   1906-07 matinee cells» near the end of this file): only the two pages in
   that entry were fixed. Sweep the Repertoire for morning sessions with no
@@ -158,6 +160,13 @@ closes, and add new open items here as well as in their own entry.
   Not swept: every date containing a 5 in those two reviews (and any other
   review set in that face) should be compared with the Repertoire and, where
   they differ, read on the scan.
+
+**Planned investigation (RG, 2026-10-13): dramas and plays with dancers in them**
+
+- RG: "We'll do a whole investigation later of dramas/plays with dancers in them." Not started.
+  Starting points are collected in the entry «Dramas and plays with dancers: leads for the later
+  investigation» at the end of this file. First candidate flagged: «Снѣгурочка, весенняя сказка»
+  (99 performances, Александринскій and Новый, 1900-05), which has no `includes_dance` marker.
 
 **Parked or never decided (methodology)**
 
@@ -23456,3 +23465,297 @@ headings, where the print does not say the takings went to a cause.
 State: ballet performances 2,696 (213 linked excerpts); ballet evenings 2,068, 103 with another art
 form (2 of them a concert item only); no art form 433; works 2,970; receipts sum and persons
 unchanged. Rebuild steps run by hand with full output; every other work keeps its id.
+
+**Concert titles APPROVED (RG, 2026-10-13): "these can all be labeled as with the 'concert' genre."**
+The 38 performances classed as concert by printed title stand as built, including the requiems, the
+cantatas, the two «Апоѳеозъ» performances printed «Кантата.» and the «Музыкально-литературный вечеръ»
+rows. No change to the database. The dress rehearsals of the invalids' concert («Генеральная репетиція концерта…», about 14 evenings),
+classed concert at the event level from their heading, stay concert as well: RG, same day, "people
+probably attended these dress rehearsals, so let's label them as concerts too." Research layer only;
+raw carries no genre for any of these.
+
+---
+
+## Titles with no art form, first pass, 2026-10-13 (RG) -- BUILT
+
+RG "yes" to the two groups that are clear from the title, and: «Маскарадъ» and «Карнавалъ» "can be
+labeled ballets, since they definitely involved dancers. Leave the rest blank" (the plain
+divertissements).
+
+- **Excerpts that name their genre and work: linked to a parent** (18 excerpt titles, 34
+  performances; `work_excerpt_links.csv`). Seven parents did not exist because the work is never
+  given whole, and were added to `curated_parent_works.csv`: «Нахлѣбникъ» [ком.], «Дмитрій Донской»
+  [траг.], «Лорелей» [оп.], «Андрей Степановичъ Бука» [ком.], «Воевода» [оп.] (the opera, beside the
+  play «Воевода» [сц.]), «Динора» [оп.], «Псковитянка» [др.] (the drama, beside the opera). Three
+  links rest on a title variant not re-read on the scan: «Свои семьи» -> «Своя семья», «Затѣмъ
+  пойдешь…» -> «За чѣмъ пойдешь…», «Димитрій» -> «Дмитрій Донской».
+- **Plays with the genre inside the title: Russian drama** (9 titles, 22 performances), through the
+  new `pipeline/research_corrections/art_form_by_title.csv` (title + genre -> art form, basis):
+  «Трагедія о Гамлетѣ, принцѣ Датскомъ» 10, «Наканунѣ, возможный случай» 4, the four «Ночное…»
+  wordings 4, «Въ глупии, пьеса» 2, «Шашки шут» 1, «Какъ они бросили курить, басня-шаржъ» 1. The
+  works are NOT merged with «Гамлетъ», «Ночное», «Шашки» etc.; only the art form is set.
+- **«Маскарадъ» [диверт.] and «Карнавалъ» [дивертисментъ]: ballet**, same file (1 performance each,
+  both on all-ballet bills).
+
+Result: 58 performances gain an art form (Russian drama 49, opera 7, ballet 2); no art form 433 ->
+375 (anthem 195 + 180). `research.work` 2,970 -> 2,977 (the seven parents); no existing work changed
+id, title or count. Ballet performances 2,698; ballet evenings 2,068, 103 with another art form.
+Backup `imperial_theaters.pre_excerpt_links2_2026-10-13.duckdb`.
+
+**Apotheoses and tableaux (31 performances, still blank): none is on an all-ballet programme.** They
+sit on Russian drama bills (19), opera bills (5) and mixed bills (7); the one beside a ballet is
+«Живыя картины», Маріинскій 19 Jan 1908, between «Сельская честь» and «Лебединое озеро».
+
+**Follow-up (RG, 2026-10-13: "yes drama"):** the solo storytelling numbers «Сцена г. Горбунова» (48)
+and «Сцена г. Вейнберга» (25) are Russian drama, through `art_form_by_title.csv`. 73 performances;
+no art form 375 -> 302 (anthem 195 + 107). Backup `imperial_theaters.pre_storytelling_2026-10-13.duckdb`.
+
+**Follow-up (RG, 2026-10-13: "concert"):** «Донъ-Жуанъ, музыка къ драм. поэмѣ» (5), «Цыганскія пѣсни»
+(3), «Цыганскія пѣсни въ лицахъ» (2) and «Цыганскіе романсы» (1) are concert, through
+`art_form_by_title.csv`. 11 performances; concert 38 -> 49; no art form 302 -> 291 (anthem 195 + 96).
+8 evenings gain «concert» in their art forms, one of them a ballet + opera evening. Backup
+`imperial_theaters.pre_music_concert_2026-10-13.duckdb`.
+
+Left with no art form after both follow-ups (96 performances): the plain divertissements 41 and the
+apotheoses and tableaux 31 (blank by RG's decision); lectures and readings 8; cinema 3; one-off
+titles 8 («Миранда (послѣдняя борьба)» 2, «Обозрѣніе», «Праздникъ у Плутона (Орфей въ аду)»,
+«Театральный разъѣздъ…», ««Слава»!», «Бабушка, отрывокъ изъ жизни», «Лиса Патрикѣевна, оперетта»);
+the fragments «2-я карт. 2-го акта и 1-я карт.» and «1-я карт.» (not yet read on the scan); «чтеніе,
+пляска.» and «Балетоманъ».
+
+---
+
+## Dramas and plays with dancers: leads for the later investigation (RG, 2026-10-13) -- NOT STARTED
+
+RG: "We'll do a whole investigation later of dramas/plays with dancers in them. Flag this as part of
+that." Nothing is to be decided or marked before then. What exists to start from:
+
+- **What is marked today.** `research.performance.includes_dance` is TRUE on 130 performances of 16
+  works, almost all operas; the only dramas are the two comedy-ballets («Батюшкина дочка»,
+  «Мѣщанинъ во дворянствѣ», 12 performances, by printed genre). Evidence file:
+  `pipeline/entity_curation/works_with_dancers.csv`; rules in the entries of 2026-10-12.
+- **How much there is to find.** The ballet rosters credit individual dancers with appearances «въ
+  драмѣ» / «въ драмахъ»: about 1,200 category-total rows, and a largest per-dancer count of 1 to 7
+  dramas a season (SP 1893-94 to 1903-04; Moscow 1893-94 to 1903-04, 1909-10, 1910-11). The rosters
+  give counts, not titles.
+- **Candidates by label, no evidence yet.** Spoken works printed as fairy tales or legends, 256
+  performances, none marked: «Снѣгурочка, весенняя сказка» 99, «Измѣна, драмат. легенда» 58,
+  «Разрывъ-трава, фант. сказка» 31, «Синяя птица, сказка» 23, «Вій, др. сказка» 10, «Месть Амура, лир.
+  сказка» 6, and the French and German ones (query log, 2026-10-13). «Снѣгурочка» is the one RG's
+  question started from.
+- **Named roles of dancers in non-ballet titles** (roster credits): «Батюшкина дочка» (6 credits,
+  1893-94) is the only drama found; «Моцартъ и Сальери» «слѣпой скрипачъ» (Moscow 1901-02) was taken
+  as the opera and should be re-examined, since a play of that title was also given.
+- **Mixed bills.** `research.event.art_forms` gives every evening on which ballet shares the bill
+  with Russian or French drama (about 40), and the 32 crossover passages of the season reviews are
+  in `docs/eval/ballet_in_opera_and_divertissement.md`.
+- **Sources not yet used:** drama season reviews (only ballet and some opera reviews are scanned),
+  librettos and programmes, RGIA Ф. 497.
+- **Rule already agreed for marking:** yes or blank, only in a season (and city) for which a source
+  shows dancers; a season's performances are assumed alike, not beyond.
+
+---
+
+## A second axis: the kind of item (`item_kind`), 2026-10-13 (RG) -- BUILT
+
+RG, on recitations: "I'm just thinking how someone might want to look at what was happening on the
+stage." Art form answers who gave an item (the company); it cannot also say what the item was. So
+`research.performance.item_kind` (with `item_kind_basis`) and `research.event.item_kinds` were added.
+Rulings, asked one at a time with the evidence (query log, same date):
+
+1. **Lecture is its own kind** (4: three «лекція проф. И. А. Шляпкина» and a «Рефератъ», all on
+   Александринскій memorial evenings; an invited scholar, not a troupe actor).
+2. **Pantomime is its own kind** (11: «De la lune au Japon» 6, «La main» 4, «Le cœur de la marquise»
+   1; company French drama).
+3. **Comedy-ballet is its own kind** (12; company Russian drama; dancers marker stays).
+4. **Concert and cinema move out of art form into kind.** Art form is back to the five companies;
+   the 49 concert items have no company. Cinema: «Кинематографъ», «Кинематографическій спектакль»,
+   «Фотографія въ натуральныхъ цвѣтахъ» (3 items, 2 Маріинскій charity evenings, 1901 and 1905).
+5. **«чтеніе, пляска.»** is recitation / reading, and `includes_dance` is TRUE for it («direct: the
+   printed title names a dance»). Dancers marker now 131 performances.
+Also settled in passing: fairy-tale and legend labels are plays (none is a ballet beyond the four
+titles already ballet); «Лиса Патрикѣевна, оперетта» is operetta by its title.
+
+Counts (performances): play 21,158; opera 6,374; ballet 2,632; anthem 195; operetta 136 (Russian
+drama 85, French drama 23, opera 22, visiting troupe 5, no company 1); divertissement 107 (ballet 66,
+no company 41); recitation / reading 79; concert 49; tableau / apotheosis 31; comedy-ballet 12;
+pantomime 11; lecture 4; cinema 3; no kind 10 («Миранда (послѣдняя борьба)» 2, «Обозрѣніе»,
+«Праздникъ у Плутона (Орфей въ аду)», «Театральный разъѣздъ…», ««Слава»!», «Бабушка, отрывокъ изъ
+жизни», «Балетоманъ», and the fragments «1-я карт.» and «2-я карт. 2-го акта и 1-я карт.»).
+
+Evenings: 106 read «concert» alone (93 from the heading, no titled work); 2 read «cinema». By
+company, 2,068 evenings include the ballet company and 101 of them share the bill with another
+company (it was 103 while concert counted as an art form). 2,114 evenings have a ballet or a
+divertissement among their kinds.
+
+Caution carried over: 42 of the operetta rows rest on the abbreviation «опер.» at the drama houses,
+read as operetta and not checked on the scans. Code: `ITEM_KINDS` and the `*_RE` constants in
+`build_research_model.py`; columns in `docs/schema.md`. Backup
+`imperial_theaters.pre_item_kind_2026-10-13.duckdb`; against it, only the concert art form (49
+performances, 139 events) and the one dancers marker changed in the existing columns.
+
+**«Балетоманъ», Маріинскій 23 Apr 1905: left without a kind; to be looked for (RG, 2026-10-13).** RG:
+"we can't label this, but I will want to see if future research or other parts of the Yearbook
+mention it. It would be neat if it was a comic sketch!" It is the second of five items on the charity
+bill «Спектакль въ пользу Общества попеченія о Гребловской школѣ имени Н. В. Гоголя.» (printed p. 132):
+«Письмо Татьяны», сц. изъ оп. Евгеній Онѣгинъ / Балетоманъ / Сонъ въ лѣтнюю ночь, бал. / Дивертиссементъ
+/ Свадьба, сц.; no receipts. Searched the same day with no result: the title occurs nowhere else in
+the Repertoire, in no annotation, in no roster credit and in no ballet list; the 1904-05 SP ballet
+review (56 blocks) does not mention it or the evening. The word occurs once in the reviews, in the
+1905-06 SP ballet review (`review_1905-06_SP_ballet_p009__b002`), in a different connection. Places
+still to look: the 1904-05 opera and drama reviews (not scanned), programmes, RGIA Ф. 497, the press.
+
+**The items with no kind, walked through with RG, 2026-10-13 -- five resolved, five left.**
+- RG "agree": «Праздникъ у Плутона (Орфей въ аду)» (Маріинскій, 3 Mar 1906) linked to «Орфей въ аду»
+  [оперет.] (kind operetta; company opera, by the house); «Бабушка, отрывокъ изъ жизни» (Маріинскій,
+  27 Jan 1907, Стрѣльская's benefit) and «Театральный разъѣздъ послѣ представленія новой комедіи»
+  (Малый, 28 Apr 1909) are plays of the Russian drama company (`art_form_by_title.csv`).
+- Two fragments were one item printed across two lines, stored as two works (PDF pages read): 9 Dec
+  1898, Новый, «1-я карт. 2-го д. оп. Волшебный стрѣлокъ.»; 22 Oct 1906 evening, Маріинскій, «2-я карт.
+  2-го акта и 1-я карт. 3 акта бал. Конекъ-Горбунокъ.». Joined in raw
+  (`docs/eval/raw_fix_split_excerpt_lines_2026-10-13.py`), each an excerpt of its work. These two
+  were corrected on the scan reading without a separate go-ahead from RG; reported to her.
+- Left without a kind: «Балетоманъ» (flagged above); ««Слава»!» (Малый, 4 Jan 1895, Грибоѣдовъ
+  memorial); «Обозрѣніе» (Маріинскій, 11 Jan 1903, charity, alone); «Миранда (послѣдняя борьба)»
+  (Маріинскій, 23 and 26 Feb 1910, alone, 3358 р. and 3106 р. 50 к.), which is probably Н. И.
+  Казанли's opera (my identification from outside the yearbook; waiting for RG to confirm).
+
+Rebuild by hand with full output; backup `outputs/full_run_pre_promote_backup_2026-10-13_splitlines`.
+Three fragment work records gone, none new, every other work keeps its id; performances 30,801 ->
+30,799; works 2,977 -> 2,974; no kind 10 -> 5; ballet evenings 2,068 (101 shared), receipts sum and
+persons unchanged.
+
+**«Миранда (послѣдняя борьба)» stays without art form or kind (RG, 2026-10-13):** "It probably is
+[Казанли's opera], but the only way we can confirm is from scans of the opera production spiski."
+Not classed on outside knowledge. Added, with «Балетоманъ», to `docs/review_scan_priorities.md`
+section 6 as a page to look for (the 1909-10 SP opera productions list).
+
+---
+
+## Three ballet-related corrections and the end of `parent_genre`, 2026-10-13 (RG)
+
+- **«2-е д. бал. Фіаметта», Маріинскій 2 Jan 1905 evening** (RG: "fix this"). PDF page read (printed p.
+  112): «Тщетная предосторожность, бал.» / «2-е д. бал. Фіаметта.», nothing after the title. The
+  stored genre «бал.» was not in the print; removed
+  (`docs/eval/raw_fix_fiametta_genre_1905-01-02_2026-10-13.py`). One raw row changed; the work was
+  and is «2-е д. бал. Фіаметта», 13 performances, excerpt of «Фіаметта».
+- **«Конекъ-Горбуночкъ», Маріинскій 26 Apr 1906** (RG: "and do this"). PDF page read (printed p. 128):
+  the print has «Конекъ-Горбунокъ, бал.», 2592 р. 45 к.; «Горбуночкъ» was a misreading
+  (`docs/eval/raw_fix_konek_title_1906-04-26_2026-10-13.py`). The stray one-performance work is gone
+  and «Конекъ-горбунокъ» has 223 whole performances (was 222).
+- **«Прекрасная Галатея, бал.», Маріинскій 3 Mar 1906**: read on the same pass (printed p. 118). The
+  print really has «бал.» after the title, on the charity bill between «4-е д. оп. Фаворитка.» and
+  «Праздникъ у Плутона (Орфей въ аду).». Stays ballet as printed, although the title is that of
+  Suppé's operetta; not in any ballet list (1905-06 has none).
+- **`research.work.parent_genre` and `parent_genre_note` are dropped** (RG: "let's get rid of the
+  parent genre label. we don't seem to need it"). The rule that a work in a ballet productions list
+  (or ruled ballet by RG) is ballet is unchanged and now lives only inside `build_research_model.py`
+  (temp table `work_ballet`); `art_form_basis` words it as «in the ballet productions lists or ruled
+  ballet (the work or its parent)». `compare_season_stats.py`, `find_opera_ballet_crossover.py` and
+  `match_review_mentions.py` now read `research.performance` (`item_kind` / `art_form`) instead; none
+  of the three was re-run. Check after the rebuild: no art form, item kind or dancers marker
+  changed, and no other table differs. `docs/entity_centric_model.md` updated.
+
+Backups: `outputs/full_run_pre_promote_backup_2026-10-13_fiametta`, `…_konek`,
+`imperial_theaters.pre_drop_parent_genre_2026-10-13.duckdb`. State: works 2,973; performances 30,799;
+ballet evenings 2,068 (101 shared); receipts sum and persons unchanged.
+
+---
+
+## Entity-build duplicate work id, and the silent rebuild script -- FIXED 2026-10-13
+
+The trap described under «Ballet excerpt cells and links, 2026-10-13» (RG: "did we fix that earlier
+entity-build crash?" -- not until now; it had only been worked around by hand).
+
+- **`pipeline/build_entities.py`, `build_work`.** An old work id is now inherited only by the group
+  that holds the most performances previously linked to it (`id_owner`, computed in a pass before the
+  main loop), so a single retitled line can no longer take a whole work's id. The computed fallback
+  id is also checked against the ids already handed out and salted if it is taken, so a duplicate
+  key cannot be inserted whatever the cause.
+- **`docs/eval/rebuild_after_raw_edit.sh`.** Each step now writes its full output to a log; a step
+  that fails prints the end of its log and stops the script with exit 1 (`set -euo pipefail`).
+  Before, a traceback was filtered out by `grep` and the script just stopped.
+
+Tested on scratch copies of the production database: (a) an unchanged rebuild leaves `entities.work`,
+`work_link`, `work_id_crosswalk`, `person` and `person_link` identical; (b) the crash scenario
+(the «1, 3 д. … Волшебное зеркало» line linked back to its parent's id) now builds: the parent keeps
+its id with 26 performances, the excerpt gets its own, no work differs from production, no duplicate.
+The rewritten script was then run once against production as a smoke test (backup
+`imperial_theaters.pre_script_smoketest_2026-10-13.duckdb`): 48 tables compared, 0 differ.
+The stale-link clean-up by hand is no longer needed for this kind of edit; diffing work ids against
+the backup after a raw edit is still the rule.
+
+## Free-performance banners and small scan readings, 2026-10-13 (RG: "work on these", "and get these fixed") -- FIXED
+
+Scripts: `docs/eval/raw_fix_free_matinee_banner_sweep_2026-10-13.py` (34 sessions) and
+`docs/eval/raw_fix_small_readings_2026-10-13.py` (62 changes on 22 pages). Every change was read on the scan
+(PDF pages; spread seasons from the bands in `outputs/title_check_2026-10-10/align_crops` or the PDF). Backup:
+`outputs/full_run_pre_promote_backup_2026-10-13_readings/`. Rebuilt, diffed against the backup (37 of 48 tables
+identical; `entities.person_link` identical), sqlite export rebuilt.
+
+**Banners.** The yearbook prints one banner across a city's row on a free-performance day. Three kinds of error:
+- missing on a morning that prints no receipts: 33 mornings on 15 pages now carry it (list in the sweep script);
+- stored on the day's paid evening as well: removed from 21 labelled evenings with receipts (14 Nov and 6 Dec 1896,
+  24 Feb 1899, 14 Nov 1900, 14 Nov 1901 Маріинскій, 24 Feb 1905, 14 Nov 1906). 202 of 227 evenings on banner days
+  already carried none, so this is the corpus convention, not a new one;
+- copied onto later days: `repertoire_1898-99_p028` had the 24 Feb 1899 banner on every session of 24-26 Feb. It now
+  sits on the three 24 Feb mornings only. This touched ballet: «Дочь Фараона» (25 Feb morning, 2218 р. 70 к.) and
+  «Корсаръ» (26 Feb morning, 3058 р. 50 к.) were flagged free and are not; «Корсаръ» on 24 Feb morning is.
+Sessions with a free banner AND printed receipts: 39 -> 5. The five left are as printed or ruled: 26 Nov 1898
+(«— р. — к.»), 14 Nov 1901 Александринскій and Михайловскій (unlabelled two-programme cells, RG 2026-10-12: leave),
+4 Feb 1909 Большой and Малый mornings (516 р. 50 к., 331 р. 35 к.; NOT re-read on the scan -- open).
+Also open: `repertoire_1908-09_p033` stores the 4 Feb 1909 banner as «учебныхъ аведеній» (p034 has «заведеній»); not re-read.
+
+**Георгіевскіе кавалеры (26 November).** These were on the list as "possible unlabelled two-session cells". They are not:
+26 Nov 1892 and 26 Nov 1897 (Александринскій) print no receipts at all; the stored figures were the neighbouring
+cell's (Михайловскій's 761 р. 7 к.; 27 Nov's 1583 р. 50 к.). 26 Nov 1896: the banner is printed on the evening
+(«Старый закалъ, др.», no receipts) and had been stored on 25 Nov. 26 Nov 1893 was already right.
+
+**May 1896, Moscow (coronation).** «Всѣ послѣдующіе спектакли до конца сезона — безплатные.» is printed once per column
+(Малый 15 May, Большой 19 May). Raw keeps it on that one cell. Research layer: `pipeline/research_corrections/free_period_notes.csv`
+sets `is_free` on the performed sessions without receipts in the period (17 events; ballet among them: «Лебединое озеро»
+21 May, «Пробужденіе Флоры» 22 May, «Прелестная жемчужина» 23 May, «Даита» 19 and 26 May).
+
+**Genres that were not printed.** A genre repeated from inside the title, where the print has no separate label, set to
+empty: «Наканунѣ, возможный случай» x5, «Снѣгурочка, весенняя сказка» x4 (Новый, 1901-02), «1, 2, 3 и 4 д. оп. Гугеноты» x2,
+«1-е и 2-е д. опер. Орфей въ аду» x1. «Апоѳеозъ, Кантата.» (19 Feb 1911) is printed so and stays.
+
+**1901-02 p015, Новый.** «Снѣгурочка» is the Sunday УТРО on 25 Nov and 2 Dec 1901 (it was stored on the Saturdays, which
+print a dash); the Sunday bills are the ВЕЧЕРЪ. Two dark Saturday sessions appended at the end of the page.
+
+**Cells.** 23 Nov 1893 Александринскій: «У своихъ, ком.» and «Не пойманъ—не воръ, посл.» were inside the annotation; now works,
+with «Дядя Беккеръ подшутилъ, опер.». 15 Jan 1895 Малый: evening is «Сіятельный зять, ком.» + «Парики, опер.» (was one work
+«Большой зять, ком.»), morning «Трудовой хлѣбъ, сц.» (was «Новой хлѣбъ»). 24 Feb 1899: «Девятый валъ, др.», «Ночное, сц.».
+Titles: «3-е и 4-е д. бал. Конекъ-горбунокъ» (9 Dec 1892), «2-е д. ком. Своя семья» and «5-е д. траг. Димитрій Донской»
+(30 Aug 1893), «…пьесы Зачѣмъ пойдешь, то и найдешь» (17 Apr 1897); `work_excerpt_links.csv` follows.
+
+**Confirmed as printed, no change.** «Viola tricolor, ком.» (3), «Virtus antiqua, сказка» (3), «Miserere, лирич. драма» (6),
+the two «Димитрій Донской» lines of 30 Aug and 8 Sep 1906. «опер.» is the print's own abbreviation for an operetta in drama
+bills («Макаръ Алексѣевичъ Губкинъ, опер.», «Парики, опер.», «Званый вечеръ съ итальянцами, опер.»; 15 Dec 1901 prints
+«оперет.» and «опер.» in one cell).
+
+**Vienna operetta.** The visiting-troupe rule knew only «Вѣнской Опереточной Труппы». «Вѣнская оперетка» (20 Jan 1901) and
+«Спектакль Вѣнской оперетты» (22, 25 Feb 1901) now match too: 3 performances moved from opera to visiting troupe.
+
+**Work ids.** Gone: «Дядя Беккеръ подшутить», «Большой зять, ком.», «Новой хлѣбъ», «Ночное сц.» (all misreads). «5-е д. траг.
+Дмитрій Донской» (12 Sep 1893, not re-read) got a new id, the old one went to the «Димитрій» spelling.
+
+**Verification re-runs after the `parent_genre` drop (RG: "let's do these").** `compare_season_stats.py`,
+`find_opera_ballet_crossover.py` and `match_review_mentions.py` all run on the repointed columns (scratch output, nothing
+written to the database). Ballet counts against the 30 Sep baseline: three season-cities changed, each from a deliberate
+change of today -- 1892-93 Moscow 54 -> 56 («Сюита изъ бал. Щелкунчикъ» in two symphony concerts, 7 and 9 Mar 1893, now linked
+to the ballet; the yearbook's own total and the ballet list both give 54, i.e. do NOT count them -- OPEN, RG to rule),
+1903-04 SP 53 -> 54 («Балетное отдѣленіе», 24 Jan 1904), 1904-05 SP 47 -> 49. `performance_order`: contiguous from 1 in every
+event in raw and research; the one exception is the supplied «Дочь фараона» (13 Feb 1905), which has no printed order.
+No review or production row points at a work id that no longer exists.
+
+**Worklist (not done).** «Девятый вальс, др.» is still stored 8 times (Александринскій Jan-Oct 1899, Михайловскій 15 Jan 1901)
+beside 15 «Девятый валъ»: probably the same misread, each needs the scan. Kind of «Бокаччіо» (opera) and
+«2-е д. оперет. Цыганскій баронъ» (play) in the Vienna troupe bills.
+
+
+**Ruling, 2026-10-13 (RG: "yes, concerts linked to parent works").** «Сюита изъ бал. Щелкунчикъ» (Большой, 7 and 9 Mar 1893,
+symphony concerts) is a concert item, still linked to «Щелкунчикъ» as its parent work. Built: a row in
+`pipeline/research_corrections/art_form_by_title.csv`, and a title curated as concert now outranks the ballet rule in
+`build_art_forms`. The general rule for later cases: a concert performance of music from a stage work is kind concert, linked
+to the work. Moscow 1892-93 ballet sessions are 54 again (stats = list = Repertoire).

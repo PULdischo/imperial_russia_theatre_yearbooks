@@ -49,6 +49,17 @@ Ballet Production list. Not urgent. Check the page on HathiTrust or the physical
 
 Queries: `docs/query_log.md`, 2026-10-11.
 
+## 6. Follow-up, low priority: two identifications that need pages not yet scanned (RG, 2026-10-13)
+
+Neither touches a ballet count. Check HathiTrust or the physical copy first.
+
+| Item in the Repertoire | Question | Where the answer would be |
+|---|---|---|
+| «Миранда (послѣдняя борьба)», Маріинскій, 23 and 26 Feb 1910, alone on the bill, 3358 р. and 3106 р. 50 к.; no genre printed, so it has no art form and no kind | Is it the opera (probably Н. И. Казанли's)? RG: "It probably is, but the only way we can confirm is from scans of the opera production spiski." | The St Petersburg opera productions list for 1909-10 (the opera counterpart of the ballet lists), in the 1909-10 yearbook issues |
+| «Балетоманъ», Маріинскій, 23 Apr 1905, second of five items on the Гоголь school charity bill | What was it (RG hopes a comic sketch)? Nothing else in the database mentions it | The 1904-05 St Petersburg opera and drama reviews; failing that, programmes, the press, RGIA Ф. 497 |
+
+Details: `docs/eval/known_issues.md`, entries of 2026-10-13.
+
 ## Caveats
 - Dance-page counts come from blind model readers and were checked by hand on the key pages only; treat them as a triage ranking, not data.
 - Season-by-season cost of the page-reading checks was 0.6-1.3 million tokens per city-season; a keyword triage on the HathiTrust text is untested.
