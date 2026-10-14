@@ -23795,4 +23795,7 @@ Binding Fold Log. `docs/eval/fold_log/readings_1893-94.csv` (export, with event_
   performance title, 1 work_id, 0 person_id changes; research receipts total +4,347,833 kopecks.
 - RG's open lead from this season: the 14 Понед. column (1894-02-14, first column of p. 19, the right-hand side of the same
   gutter) has titles "also somewhat obscured" -- the right page's first column is not on the log yet.
+  CLOSED same day: RG asked for this one column only (not every right-hand first column); card
+  `1893-94_pair018_1894-02-14_rightgutter` added, checked in the volume: all five cells match the stored titles and figures
+  ("All good!"), nothing to apply.
 
