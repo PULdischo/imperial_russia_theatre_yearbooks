@@ -23806,3 +23806,24 @@ Binding Fold Log. `docs/eval/fold_log/readings_1893-94.csv` (export, with event_
   1131 р. 83 к. (`fix_1893_94_ballet_digit.py`; one raw cell, rebuild diff clean). Moscow now −60.10. Open: the two Moscow
   −30 leads (124 and 84 single-digit candidates) and the SP residuals, which no single slip explains.
 
+
+## Binding Fold Log, 1892-93 applied, 2026-10-14 (RG: "did 1892-93 ... noticed and marked some missing titles and other errors. no obscured text. check it.")
+
+RG read all 13 cards (every gutter-column performance + earlier fold cards) in the Princeton volume. None was actually
+illegible in the volume; most of the blanks are cells the scan couldn't show ("Not sure why these weren't caught, they
+aren't fold obscured"). `readings_1892-93.csv` -> `apply_fold_log.py 1892-93 --write` -> rebuild -> build_datasette.
+- 32 blank receipts filled; 3 stored figures corrected on 13 Воскресенье (p. 12, the page-12/13 seam cells that were
+  read at moderate confidence): Маріинскій 4098 -> 4038 р. 40 к., Александринскій evening 1679 -> 1678 р. 50 к.,
+  Михайловскій 579 -> 573 р. 55 к.
+- 3 works missing from fold cells (only letter tops, or nothing, on the scan), read by RG in the volume and appended after
+  the stored works (no performance id shifts; each links to an existing work): 20 Субб. (p. 18) Михайловскій «La Soucoupe,
+  com.»; 13 Суббота (p. 20) Михайловскій «Ma Femme est troublée, com.»; 11 апрѣля (p. 22) Малый «Чудовище, ком.».
+  `apply_fold_log.py` gained ADD_WORKS for this.
+- Rebuild diff against `outputs/backups/foldlog_1892-93_2026-10-14/`: 35 raw.event_entry rows, 3 new performances, 0 work_id
+  changes, works 2970 = 2970.
+- Not a data problem: the merged 13 Воскресенье card still carried a stale Михайловскій «Актъ и Фертъ» evening entry
+  (the dataset already has one Михайловскій event and «Азъ и Фертъ» at the Александринскій evening), and the p. 24 card is
+  headed «2 Вторн.», the pre-correction weekday of 2 Воскресенье (genuine_print_typos.md).
+- 1892-93's stats page prints counts but no receipts, so there is no receipts checksum for this season.
+- RG's note on 3 Четвергъ (p. 11) Михайловскій: the receipts (1452 р. 57 к., as stored) are visible in the volume;
+  "recommend taking a look at this from scan later".

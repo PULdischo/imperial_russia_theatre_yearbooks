@@ -17946,3 +17946,14 @@ select city,receipts_minus_printed_kopecks/100.0 from research.season_stat_check
 ```
 
 Result: Moscow −60.10 (was −360.10: Малый drama −30, opera −30, Italian/mixed −0.10 remain); SP −498.68 unchanged.
+
+## 2026-10-14 — 1892-93 after the fold-log apply: stats-page check
+
+```sql
+select city,printed_receipts_kopecks,repertoire_receipts_kopecks/100.0,repertoire_sessions_with_receipts,repertoire_sessions from research.season_stat_check where season='1892-93';
+select city,line_no,category_verbatim,count,receipts_verbatim from research.season_stat_line where season='1892-93' order by 1,2;
+```
+
+Result: printed receipts NULL for both cities (the 1892-93 stats page prints counts only). Repertoire receipts Moscow
+469,210.78 (371 of 376 sessions with a figure), SP 919,364.11 (596 of 606). Sessions 376 vs 375 printed (Moscow), 606 vs
+603 (SP).
