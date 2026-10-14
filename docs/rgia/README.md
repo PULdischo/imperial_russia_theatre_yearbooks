@@ -62,6 +62,9 @@ to `marks`: that is RG's.
 - Pages of source material supplied to the редакція for the contents (staff lists,
   committee data) fit none of the four editorial tags; in Д. 163 pp. 9-10, 15, 23-28
   were put back to high by hand after the consistency pass. A fifth tag is the fix.
+- `docs/rgia/glossary.json` is the Reading Room's glossary (published with the page
+  as `glossary.json`): English glosses shown after Russian terms, plus a Glossary
+  panel. Add terms there and republish with `files: {"glossary.json": ...}`.
 - Disk: an original runs ~110 MB and its enhanced copy ~150 MB. On 2026-10-09 the
   internal disk had 20 GB free, which is not enough for every дело twice over.
   Make enhanced PDFs only when needed, or keep PDFs on the backup drive.

@@ -1,0 +1,1282 @@
+{
+ "_about": "English glosses for recurring terms in the RGIA дела and their page summaries, shown in the Reading Room. 'match' = word stems (pre-reform and modern spellings) matched at the start of a word; a space joins stems of a phrase. 'abbr' = match the exact abbreviation. Sense given is the one usual in these Directorate papers.",
+ "terms": [
+  {
+   "group": "Kinds of document",
+   "ru": "требовательная вѣдомость",
+   "en": "payroll / requisition sheet",
+   "match": [
+    "требовательн вѣдомост",
+    "требовательн ведомост"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "вѣдомость",
+   "en": "register, statement (a tabulated list)",
+   "match": [
+    "вѣдомост",
+    "ведомост"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "отпускъ",
+   "en": "office copy of an outgoing letter",
+   "match": [
+    "отпуск"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "рапортъ",
+   "en": "report to a superior",
+   "match": [
+    "рапорт"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "донесеніе",
+   "en": "report",
+   "match": [
+    "донесені",
+    "донесени"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "отношеніе",
+   "en": "official letter between offices",
+   "match": [
+    "отношені",
+    "отношени"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "предписаніе",
+   "en": "order to a subordinate",
+   "match": [
+    "предписані",
+    "предписани"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "распоряженіе",
+   "en": "order, directive",
+   "match": [
+    "распоряжені",
+    "распоряжени"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "приказъ",
+   "en": "formal order",
+   "match": [
+    "приказ"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "выписка",
+   "en": "extract, certified excerpt",
+   "match": [
+    "выписк"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "копія",
+   "en": "copy of a document",
+   "match": [
+    "копі",
+    "копия",
+    "копии"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "заявленіе",
+   "en": "statement, application",
+   "match": [
+    "заявлені",
+    "заявлени"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "прошеніе",
+   "en": "petition",
+   "match": [
+    "прошені",
+    "прошени"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "счетъ",
+   "en": "bill, invoice; account",
+   "match": [
+    "счетъ",
+    "счета",
+    "счетовъ",
+    "счетов"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "квитанція",
+   "en": "receipt (printed form)",
+   "match": [
+    "квитанці",
+    "квитанци"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "росписка / расписка",
+   "en": "signed receipt",
+   "match": [
+    "росписк",
+    "расписк"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "смѣта",
+   "en": "budget, estimate",
+   "match": [
+    "смѣт",
+    "смет"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "журналъ входящихъ бумагъ",
+   "en": "register of incoming papers",
+   "match": [
+    "журнал входящ"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "журналъ исходящихъ бумагъ",
+   "en": "register of outgoing papers",
+   "match": [
+    "журнал исходящ"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "журналъ (комиссіи)",
+   "en": "minutes of a commission; also a periodical",
+   "match": [
+    "журнал"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "подписной листъ",
+   "en": "subscription sheet",
+   "match": [
+    "подписн лист"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "объявленіе",
+   "en": "announcement, advertisement",
+   "match": [
+    "объявлені",
+    "объявлени"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "проспектъ",
+   "en": "prospectus",
+   "match": [
+    "проспект"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "циркуляръ",
+   "en": "circular",
+   "match": [
+    "циркуляр"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "резолюція",
+   "en": "written decision, on a document",
+   "match": [
+    "резолюці",
+    "резолюци"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "удостовѣреніе",
+   "en": "certificate",
+   "match": [
+    "удостовѣрені",
+    "удостоверени"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "накладная",
+   "en": "waybill, consignment note",
+   "match": [
+    "накладн"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "ассигновка",
+   "en": "payment order",
+   "match": [
+    "ассигновк"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "авансовый отчетъ",
+   "en": "advance account: expenses against an advance",
+   "match": [
+    "авансов"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "условіе",
+   "en": "contract, agreement",
+   "match": [
+    "условіе",
+    "условія",
+    "условій",
+    "условие",
+    "условия",
+    "условий"
+   ]
+  },
+  {
+   "group": "Kinds of document",
+   "ru": "опись",
+   "en": "inventory; archival finding aid",
+   "match": [
+    "опись",
+    "описи"
+   ]
+  },
+  {
+   "group": "In letters and on documents",
+   "ru": "входящій (вх., вход.)",
+   "en": "incoming (register number)",
+   "match": [
+    "входящ"
+   ]
+  },
+  {
+   "group": "In letters and on documents",
+   "ru": "вх. / вход.",
+   "en": "incoming no.",
+   "abbr": [
+    "вх.",
+    "вход."
+   ]
+  },
+  {
+   "group": "In letters and on documents",
+   "ru": "исходящій (исх., исход.)",
+   "en": "outgoing (register number)",
+   "match": [
+    "исходящ"
+   ]
+  },
+  {
+   "group": "In letters and on documents",
+   "ru": "исх. / исход.",
+   "en": "outgoing no.",
+   "abbr": [
+    "исх.",
+    "исход."
+   ]
+  },
+  {
+   "group": "In letters and on documents",
+   "ru": "сего мѣсяца / с. г.",
+   "en": "of this month / this year",
+   "match": [
+    "сего мѣсяц",
+    "сего месяц",
+    "сего год"
+   ],
+   "abbr": [
+    "с. г."
+   ]
+  },
+  {
+   "group": "In letters and on documents",
+   "ru": "получилъ",
+   "en": "received (signed acknowledgement)",
+   "match": [
+    "получил"
+   ]
+  },
+  {
+   "group": "In letters and on documents",
+   "ru": "уплатить",
+   "en": "to pay",
+   "match": [
+    "уплат"
+   ]
+  },
+  {
+   "group": "In letters and on documents",
+   "ru": "выдано",
+   "en": "issued, handed out; issue, payment",
+   "match": [
+    "выдано",
+    "выдан",
+    "выдач"
+   ]
+  },
+  {
+   "group": "In letters and on documents",
+   "ru": "отправлено",
+   "en": "dispatched",
+   "match": [
+    "отправлен"
+   ]
+  },
+  {
+   "group": "In letters and on documents",
+   "ru": "поступило",
+   "en": "received, came in",
+   "match": [
+    "поступил"
+   ]
+  },
+  {
+   "group": "In letters and on documents",
+   "ru": "начато / кончено",
+   "en": "begun / ended: dates on a file cover",
+   "match": [
+    "начато",
+    "кончено",
+    "окончено"
+   ]
+  },
+  {
+   "group": "In letters and on documents",
+   "ru": "Его Императорскаго Величества (Е. И. В.)",
+   "en": "of His Imperial Majesty",
+   "match": [
+    "величества"
+   ]
+  },
+  {
+   "group": "Archive",
+   "ru": "дѣло",
+   "en": "file, archival unit",
+   "match": [
+    "дѣло",
+    "дѣла",
+    "дѣлу"
+   ]
+  },
+  {
+   "group": "Archive",
+   "ru": "листъ (л.)",
+   "en": "leaf, folio",
+   "match": [
+    "листъ",
+    "листа",
+    "листовъ",
+    "листов"
+   ]
+  },
+  {
+   "group": "Archive",
+   "ru": "об. (оборотъ)",
+   "en": "verso, back of the leaf",
+   "abbr": [
+    "об."
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "Контора (Императорскихъ театровъ)",
+   "en": "the Office: the theatres' administrative office, St Petersburg or Moscow",
+   "match": [
+    "контор"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "Дирекція",
+   "en": "the Directorate of the Imperial Theatres",
+   "match": [
+    "дирекці",
+    "дирекци"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "управленіе",
+   "en": "administration, office",
+   "match": [
+    "управлені",
+    "управлени"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "отдѣленіе / отдѣлъ",
+   "en": "department, section",
+   "match": [
+    "отдѣлені",
+    "отделени",
+    "отдѣл",
+    "отдел"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "часть",
+   "en": "department, as in монтировочная часть",
+   "match": [
+    "часть",
+    "части"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "монтировочная часть",
+   "en": "staging department: sets, costumes, props",
+   "match": [
+    "монтировочн отдѣлені",
+    "монтировочн отделени",
+    "монтировочн част",
+    "монтировочн",
+    "монтиров"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "постановочное отдѣленіе",
+   "en": "production department",
+   "match": [
+    "постановочн отдѣлені",
+    "постановочн отделени",
+    "постановочн част",
+    "постановочн"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "хозяйственное отдѣленіе / комитетъ",
+   "en": "business department / committee",
+   "match": [
+    "хозяйственн отдѣлені",
+    "хозяйственн отделени",
+    "хозяйственн комитет",
+    "хозяйственн"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "счетное отдѣленіе",
+   "en": "accounts department",
+   "match": [
+    "счетн отдѣлені",
+    "счетн отделени",
+    "счетн"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "бухгалтерія",
+   "en": "bookkeeping department",
+   "match": [
+    "бухгалтері",
+    "бухгалтери"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "канцелярія",
+   "en": "chancery, office",
+   "match": [
+    "канцелярі",
+    "канцеляри"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "Кабинетъ Его Величества",
+   "en": "His Majesty's Cabinet: the Court's finance office",
+   "match": [
+    "кабинет"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "Министерство Императорскаго Двора",
+   "en": "Ministry of the Imperial Court",
+   "match": [
+    "министерств императорск двора",
+    "министерств двора",
+    "министерств",
+    "двора"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "Контроль",
+   "en": "the Court Ministry's audit office",
+   "match": [
+    "контроль",
+    "контроля",
+    "контролю"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "Смѣтная комиссія",
+   "en": "Budget Commission",
+   "match": [
+    "смѣтн комисс",
+    "смѣтн коммисс",
+    "сметн комисс"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "комитетъ",
+   "en": "committee",
+   "match": [
+    "комитет"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "комиссія",
+   "en": "commission (a body)",
+   "match": [
+    "комиссі",
+    "комиссия",
+    "коммиссі"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "редакція",
+   "en": "editorial office",
+   "match": [
+    "редакці",
+    "редакци"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "Центральная Библіотека",
+   "en": "the theatres' Central Library",
+   "match": [
+    "центральн библіотек",
+    "центральн библиотек",
+    "библіотек",
+    "библиотек"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "типографія",
+   "en": "printing house",
+   "match": [
+    "типографі",
+    "типографи",
+    "типогр."
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "Главное Управленіе Удѣловъ",
+   "en": "Chief Administration of Appanages (its press printed the Yearbook)",
+   "match": [
+    "удѣлов",
+    "уделов"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "Главное Управленіе почтъ и телеграфовъ",
+   "en": "Chief Administration of Posts and Telegraphs",
+   "match": [
+    "почтъ",
+    "телеграф"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "переплетная",
+   "en": "bindery",
+   "match": [
+    "переплетн"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "фотографія",
+   "en": "photographic studio; photograph",
+   "match": [
+    "фотографі",
+    "фотографи"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "касса",
+   "en": "box office; cash office",
+   "match": [
+    "касс"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "складъ / кладовая",
+   "en": "storeroom, warehouse",
+   "match": [
+    "склад",
+    "кладов"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "бутафорская мастерская",
+   "en": "props workshop",
+   "match": [
+    "бутафорск"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "гардеробъ",
+   "en": "wardrobe, costume store",
+   "match": [
+    "гардероб"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "Театральное училище",
+   "en": "Theatre School",
+   "match": [
+    "училищ"
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "губернскій",
+   "en": "provincial",
+   "match": [
+    "губернск",
+    "губ."
+   ]
+  },
+  {
+   "group": "Offices and bodies",
+   "ru": "Товарищество",
+   "en": "company, partnership, firm",
+   "match": [
+    "товариществ"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "управляющій (Конторою)",
+   "en": "manager, head of the Office",
+   "match": [
+    "управляющ"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "завѣдывающій",
+   "en": "head, person in charge",
+   "match": [
+    "завѣдывающ",
+    "заведывающ",
+    "зав."
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "и. д. (исправляющій должность)",
+   "en": "acting (holder of a post)",
+   "match": [
+    "исправляющ"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "дѣлопроизводитель",
+   "en": "clerk in charge of a department's papers",
+   "match": [
+    "дѣлопроизводител",
+    "делопроизводител"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "письмоводитель",
+   "en": "clerk, copyist",
+   "match": [
+    "письмоводител"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "экзекуторъ",
+   "en": "superintendent of premises and supplies",
+   "match": [
+    "экзекутор"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "контролеръ",
+   "en": "auditor",
+   "match": [
+    "контролер"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "секретарь",
+   "en": "secretary",
+   "match": [
+    "секретар"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "разсыльный",
+   "en": "messenger",
+   "match": [
+    "разсыльн",
+    "рассыльн"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "факторъ (типографіи)",
+   "en": "print-shop foreman",
+   "match": [
+    "фактор"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "сотрудникъ",
+   "en": "contributor",
+   "match": [
+    "сотрудник"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "подписчикъ",
+   "en": "subscriber",
+   "match": [
+    "подписчик"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "коммиссіонеръ",
+   "en": "commission agent",
+   "match": [
+    "коммиссіонер",
+    "комиссионер"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "продажа / продавецъ",
+   "en": "sale / seller",
+   "match": [
+    "продав"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "переплетчикъ",
+   "en": "bookbinder",
+   "match": [
+    "переплетчик"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "художникъ",
+   "en": "artist, painter",
+   "match": [
+    "художник"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "декораторъ",
+   "en": "scene painter",
+   "match": [
+    "декоратор"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "костюмеръ",
+   "en": "costumer",
+   "match": [
+    "костюмер"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "гардеробмейстеръ",
+   "en": "wardrobe master",
+   "match": [
+    "гардеробмейстер"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "бутафоръ",
+   "en": "props maker",
+   "match": [
+    "бутафор"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "портной",
+   "en": "tailor",
+   "match": [
+    "портн"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "капельмейстеръ",
+   "en": "conductor",
+   "match": [
+    "капельмейстер"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "балетмейстеръ",
+   "en": "ballet master, choreographer",
+   "match": [
+    "балетмейстер"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "режиссеръ",
+   "en": "stage manager, régisseur",
+   "match": [
+    "режиссер",
+    "режиссёр"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "хормейстеръ",
+   "en": "chorus master",
+   "match": [
+    "хормейстер"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "суфлеръ",
+   "en": "prompter",
+   "match": [
+    "суфлер",
+    "суфлёр"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "аккомпаніаторъ",
+   "en": "accompanist",
+   "match": [
+    "аккомпані",
+    "аккомпани"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "полиціймейстеръ",
+   "en": "chief of the theatre police",
+   "match": [
+    "полиціймейстер",
+    "полицеймейстер"
+   ]
+  },
+  {
+   "group": "People and posts",
+   "ru": "труппа",
+   "en": "company, troupe",
+   "match": [
+    "трупп"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "выпускъ (вып.)",
+   "en": "issue of the Yearbook",
+   "match": [
+    "выпуск",
+    "вып."
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "книга приложеній",
+   "en": "supplement book",
+   "match": [
+    "книг приложені",
+    "книг приложени"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "приложеніе",
+   "en": "supplement; enclosure with a letter",
+   "match": [
+    "приложені",
+    "приложени"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "экземпляръ (экз.)",
+   "en": "copy of a book",
+   "match": [
+    "экземпляр",
+    "экз."
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "оттискъ",
+   "en": "offprint",
+   "match": [
+    "оттиск"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "печатный листъ",
+   "en": "printed sheet (16 pages)",
+   "match": [
+    "печатн лист"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "наборъ",
+   "en": "typesetting",
+   "match": [
+    "набор"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "печать",
+   "en": "printing; also a seal",
+   "match": [
+    "печать",
+    "печати"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "корректура",
+   "en": "proofs, proofreading",
+   "match": [
+    "корректур"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "брошюровка",
+   "en": "stitching into paper covers",
+   "match": [
+    "брошюровк"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "переплетъ",
+   "en": "hard-cover binding",
+   "match": [
+    "переплет"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "обложка",
+   "en": "cover of a book or file",
+   "match": [
+    "обложк"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "веленевая бумага",
+   "en": "vellum paper, for deluxe copies",
+   "match": [
+    "веленев"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "стопа",
+   "en": "ream of paper",
+   "match": [
+    "стопа",
+    "стопы",
+    "стопъ"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "писчебумажная фабрика",
+   "en": "paper mill",
+   "match": [
+    "писчебумажн"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "клише",
+   "en": "printing block, plate",
+   "match": [
+    "клише"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "цинкографія",
+   "en": "zincography, line block",
+   "match": [
+    "цинкограф"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "фототипія",
+   "en": "collotype",
+   "match": [
+    "фототипі",
+    "фототипи"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "геліогравюра",
+   "en": "photogravure",
+   "match": [
+    "геліогравюр",
+    "гелиогравюр"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "снимокъ",
+   "en": "photograph, shot",
+   "match": [
+    "снимк",
+    "снимок"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "бандероль",
+   "en": "postal wrapper for printed matter",
+   "match": [
+    "бандерол"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "гонораръ",
+   "en": "author's fee",
+   "match": [
+    "гонорар"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "тиражъ",
+   "en": "print run",
+   "match": [
+    "тираж"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "подписка",
+   "en": "subscription",
+   "match": [
+    "подписк"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "на коммиссію",
+   "en": "on commission (sale or return)",
+   "match": [
+    "коммисі",
+    "комиссию"
+   ]
+  },
+  {
+   "group": "Publishing",
+   "ru": "безплатно",
+   "en": "free of charge",
+   "match": [
+    "безплатн",
+    "бесплатн"
+   ]
+  },
+  {
+   "group": "Money and pay",
+   "ru": "руб. (рубль)",
+   "en": "roubles",
+   "abbr": [
+    "руб."
+   ]
+  },
+  {
+   "group": "Money and pay",
+   "ru": "коп. (копѣйка)",
+   "en": "kopecks",
+   "abbr": [
+    "коп."
+   ]
+  },
+  {
+   "group": "Money and pay",
+   "ru": "въ разсрочку",
+   "en": "in instalments",
+   "match": [
+    "разсрочк",
+    "рассрочк"
+   ]
+  },
+  {
+   "group": "Money and pay",
+   "ru": "удержать / вычетъ",
+   "en": "to deduct, from pay / deduction",
+   "match": [
+    "удерж",
+    "вычет"
+   ]
+  },
+  {
+   "group": "Money and pay",
+   "ru": "жалованье / содержаніе",
+   "en": "salary, pay",
+   "match": [
+    "жалован",
+    "содержані",
+    "содержани"
+   ]
+  },
+  {
+   "group": "Money and pay",
+   "ru": "задѣльная плата",
+   "en": "piece-rate pay",
+   "match": [
+    "задѣльн",
+    "задельн"
+   ]
+  },
+  {
+   "group": "Money and pay",
+   "ru": "поденный",
+   "en": "day labour, paid by the day",
+   "match": [
+    "поденн"
+   ]
+  },
+  {
+   "group": "Money and pay",
+   "ru": "вольнонаемный",
+   "en": "hired, not on the permanent staff",
+   "match": [
+    "вольнонаемн",
+    "вольнонаёмн"
+   ]
+  },
+  {
+   "group": "Money and pay",
+   "ru": "приходъ",
+   "en": "receipts, income: copies or money",
+   "match": [
+    "приход"
+   ]
+  },
+  {
+   "group": "Money and pay",
+   "ru": "расходъ",
+   "en": "expenditure, issue",
+   "match": [
+    "расход"
+   ]
+  },
+  {
+   "group": "Money and pay",
+   "ru": "итого / всего",
+   "en": "total",
+   "match": [
+    "итого"
+   ]
+  },
+  {
+   "group": "Money and pay",
+   "ru": "кредитъ",
+   "en": "credit, funds allocated",
+   "match": [
+    "кредит"
+   ]
+  },
+  {
+   "group": "Money and pay",
+   "ru": "перерасходъ",
+   "en": "overspend",
+   "match": [
+    "перерасход"
+   ]
+  },
+  {
+   "group": "Money and pay",
+   "ru": "недочетъ",
+   "en": "shortfall, deficit",
+   "match": [
+    "недочет",
+    "недочёт"
+   ]
+  }
+ ]
+}
