@@ -17916,3 +17916,20 @@ where e.season='1893-94' and e.event_status='performed' and e.receipts_total_kop
 Result: 17 rows (5 Moscow, 12 SP), every one a free performance (free school matinées 14 Nov 1893 / 26 Feb 1894, the
 St George cavaliers' night) or a charity event (Patriotic Society schools, the invalids' concert, its dress rehearsal and
 repeat). None is a fold cell; no receipts are printed for them.
+
+## 2026-10-14 — 1893-94: Repertoire receipts vs the printed season totals by category (after the fold-log apply)
+
+Run: `pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir <scratch>` (its SQL over
+research.event / research.performance / research.season_stat_line, families by the script's classify_work rules), then
+`pipeline/season_stats_receipt_candidates.py` on its family_totals.csv.
+
+Result (1893-94, Repertoire minus printed):
+Moscow — ballet 43=43, −300.00; Малый drama 191=191, −30.00; Большой drama 8=8, 0; opera 118=118, −30.00; féerie 5=5, 0;
+Italian opera 23 vs 25 (−9,852.00) and mixed 4 vs 2 (+9,851.90): two Italian-opera bills the script classes mixed
+(foreign_opera+french); combined −0.10. Sum −360.10.
+SP — opera 119=119, +30.45; ballet Маріинскій 41=41, −2.96; Михайловскій ballet 2=2, 0; Михайловскій drama 74=74, 0;
+Александринскій drama 185 vs 188 (−7,028.37), German 33 vs 34 (−2,481.75), mixed 8 vs 4 (+9,476.35), French 135=135
+(−492.40): Repertoire mixed holds ballet+drama 4 (printed 1), french+german 1 etc.; drama+German+mixed+French together
+435 = 435 events, −526.17 (the 7 «?» Александринскій kopecks count as 0, at most −6.93 of it). Sum −498.68.
+Single-slip candidates (counts equal, one digit wrong): Moscow ballet −300 → 30 cells; Moscow drama/Малый −30 → 124;
+Moscow opera −30 → 84; the SP leads (opera +30.45, ballet −2.96) have no single-slip candidate.
