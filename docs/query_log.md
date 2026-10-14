@@ -17957,3 +17957,12 @@ select city,line_no,category_verbatim,count,receipts_verbatim from research.seas
 Result: printed receipts NULL for both cities (the 1892-93 stats page prints counts only). Repertoire receipts Moscow
 469,210.78 (371 of 376 sessions with a figure), SP 919,364.11 (596 of 606). Sessions 376 vs 375 printed (Moscow), 606 vs
 603 (SP).
+
+## 2026-10-14 — 1892-93 performances still without a receipts figure
+
+```sql
+select e.city,e.printed_page_number,e.date_verbatim,t.canonical_name,e.time_of_day,e.is_free,e.is_charity,e.annotation
+from research.event e join research.theater t using(theater_id)
+where e.season='1892-93' and e.event_status='performed' and e.receipts_total_kopecks is null order by e.city,e.date_undate;
+```
+Result: 15 rows, all free (school matinées 14 Nov 1892 and 4 Mar 1893, the St George cavaliers) or charity (the invalids' concert, its dress rehearsal and repeat). No unexplained blanks left in 1892-93.
