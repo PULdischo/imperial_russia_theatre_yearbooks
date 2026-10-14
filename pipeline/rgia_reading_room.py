@@ -20,6 +20,7 @@ ArtifactData `list` on `marks` before relying on them anywhere else.
 import csv
 import glob
 import json
+import os
 import re
 from pathlib import Path
 
@@ -83,6 +84,8 @@ def main():
             "requested": row["date_requested"],
             "received": row["date_received"],
             "notes": row["notes"],
+            # where RG keeps the PDF, from the tracker's "file at <path>" notes (latest wins)
+            "pdf": os.path.expanduser((re.findall(r"file at (\S+\.pdf)", row["notes"]) or [""])[-1]),
             "triaged": False,
         }
         tf = TRIAGE / f"{delo}.jsonl"
