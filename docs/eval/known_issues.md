@@ -23759,3 +23759,40 @@ symphony concerts) is a concert item, still linked to «Щелкунчикъ» a
 `pipeline/research_corrections/art_form_by_title.csv`, and a title curated as concert now outranks the ballet rule in
 `build_art_forms`. The general rule for later cases: a concert performance of music from a stage work is kind concert, linked
 to the work. Moscow 1892-93 ballet sessions are 54 again (stats = list = Repertoire).
+
+## Issue #153: fold-column cell filled with a copy of the previous day -- FIXED with the 1893-94 fold-log apply, 2026-10-14
+
+RG, checking the physical volume with the Binding Fold Log: on 1893-94 p. 16 (`repertoire_1893-94_pair016`), the Большой cell
+of **24 Понед.** (`__s046`) is stored as «Нижегородцы, оп.» / «2240 р. 4 к.» -- character for character the content of
+**23 Воскрес.** (`__s041`). 24 Понед. is the last date column of the left page, against the binding: the reader could not see
+the cell and duplicated its neighbour. RG's reading from the volume: **«Жизнь за Царя, оп.» / «2168 р. 23 к.»**. Not yet
+applied; it goes in with the rest of the fold-log readings.
+
+Corpus scan for the same signature (same theater and session, identical works AND identical receipts, 1-2 days apart; the
+1900-02-29 Julian date needs `try_cast`): 28 pairs. This is the only one on a fold. 24 are Ring cycles / sell-outs at the
+Маріинскій and Большой (capacity figures repeat, genuine) or «— р. — к.» pairs. Two outside the fold are unchecked and worth a
+scan look some time: Маріинскій 1892-93 9 -> 10 Четв. («Русланъ и Людмила», 2946 р. 20 к.; a subscription-night figure that
+does recur weekly, so plausibly genuine) and Михайловскій 1910-11 9 Суббота -> 10 Воскр. (1006 р. 75 к., two plays).
+Equal figures alone mean nothing (1,072 pairs within 7 days, mostly subscription nights); the works must match too.
+
+**How it got there:** the raw session already carried `"_source": "human:kept_top"` and
+`"_fix_note": "wrong value did not match scan; true day-24 content supplied directly"` -- an earlier hand fix that
+supplied the 23rd's content as the 24th's. A cell the scan cannot show must not be "supplied" from a neighbour.
+
+**1893-94 fold-log apply, 2026-10-14 (RG: "I've finished 1893-94 ... take a look").** RG read every performance in the
+eleven gutter columns of 1893-94 (last date column of each even page) in the Princeton volume; 54 cells, all saved in the
+Binding Fold Log. `docs/eval/fold_log/readings_1893-94.csv` (export, with event_id and the figure stored at export) ->
+`docs/eval/fold_log/apply_fold_log.py 1893-94 --write` -> `docs/eval/rebuild_after_raw_edit.sh` -> `build_datasette.py`.
+- 21 cells matched the stored figure. 33 changed: 24 blanks filled; 9 stored figures corrected (all fold reads that had
+  guessed from digit tops: 13 Среда Малый 1156 р. 27 -> 1156 р. 97 к., Маріинскій 2992 р. 20 к. -> 2069 р. 20 к.;
+  22 Пон. Большой 3642 р. 52 к. -> 2649 р. 52 к.; 3 Понед. Малый evening 1386 -> 1286 р. 74 к.; 24 Понед. Михайловскій
+  295 -> 365 р. 50 к.; two Александринскій kopeck digits now «?0»; and this issue's cell, works and figure).
+- Seven Александринскій figures keep «?» for kopecks hidden by the binding thread (RG: "anything missing is from the
+  Alexandrinsky theaters and is only kopeks"); status in the log "Not legible in this copy -- try another", i.e. may be
+  recoverable from another library's copy. receipts_total_kopecks counts their kopecks as 0 (build_duckdb's COALESCE), so
+  those totals are low by under a ruble each. «1208 р.» (22 Пон. Михайловскій) is printed without kopecks.
+- Rebuild diff against the backup (`outputs/backups/foldlog_1893-94_2026-10-14/`): exactly 33 raw.event_entry rows, 1
+  performance title, 1 work_id, 0 person_id changes; research receipts total +4,347,833 kopecks.
+- RG's open lead from this season: the 14 Понед. column (1894-02-14, first column of p. 19, the right-hand side of the same
+  gutter) has titles "also somewhat obscured" -- the right page's first column is not on the log yet.
+
