@@ -23798,4 +23798,11 @@ Binding Fold Log. `docs/eval/fold_log/readings_1893-94.csv` (export, with event_
   CLOSED same day: RG asked for this one column only (not every right-hand first column); card
   `1893-94_pair018_1894-02-14_rightgutter` added, checked in the volume: all five cells match the stored titles and figures
   ("All good!"), nothing to apply.
+- **Season-stats follow-up, same day (RG: "go ahead and check those").** After the apply, 1893-94 was 360 р. 10 к. short in
+  Moscow and 498 р. 68 к. in SP. By category (compare_season_stats.py): Moscow ballet −300, Малый drama −30, opera −30,
+  Italian opera + mixed −0.10; SP drama + German + French + mixed together −526.17 (435 = 435 events once the yearbook's
+  filing of mixed bills is allowed for), opera +30.45, Маріинскій ballet −2.96. The ballet −300 was one misread digit, found
+  on the scan among the candidate cells: 3 Воскрес. 1893 Большой «Хрустальный башмачекъ» prints 1431 р. 83 к., stored
+  1131 р. 83 к. (`fix_1893_94_ballet_digit.py`; one raw cell, rebuild diff clean). Moscow now −60.10. Open: the two Moscow
+  −30 leads (124 and 84 single-digit candidates) and the SP residuals, which no single slip explains.
 

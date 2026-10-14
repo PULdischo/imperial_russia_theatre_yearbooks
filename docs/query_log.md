@@ -17933,3 +17933,16 @@ SP — opera 119=119, +30.45; ballet Маріинскій 41=41, −2.96; Мих
 435 = 435 events, −526.17 (the 7 «?» Александринскій kopecks count as 0, at most −6.93 of it). Sum −498.68.
 Single-slip candidates (counts equal, one digit wrong): Moscow ballet −300 → 30 cells; Moscow drama/Малый −30 → 124;
 Moscow opera −30 → 84; the SP leads (opera +30.45, ballet −2.96) have no single-slip candidate.
+
+## 2026-10-14 — 1893-94 Moscow ballet −300 р.: candidate cells checked on the scan; city gap after the fix
+
+Candidates from `season_stats_receipt_candidates.py` (30; 3 already confirmed in the volume by RG today). Read on the scan
+(ForUpload_1893-94_Repertoire.pdf, spreads rotated, Большой column at 5x): 1 Среда 683 р. 50 к. and 8 Среда 1348 р. 47 к.
+(p. 3), 12 Воскрес. 1027 р. 43 к. and 22 Среда 338 р. 96 к. (p. 4) match; **3 Воскрес. (p. 5) prints 1431 р. 83 к., stored
+1131 р. 83 к.** — exactly the 300 р.; remaining candidates not needed. Fixed (docs/eval/fold_log/fix_1893_94_ballet_digit.py).
+
+```sql
+select city,receipts_minus_printed_kopecks/100.0 from research.season_stat_check where season='1893-94';
+```
+
+Result: Moscow −60.10 (was −360.10: Малый drama −30, opera −30, Italian/mixed −0.10 remain); SP −498.68 unchanged.
