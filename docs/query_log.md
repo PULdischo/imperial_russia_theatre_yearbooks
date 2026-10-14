@@ -17890,3 +17890,29 @@ select count(distinct event_id) from research.performance where art_form = 'ball
 
 Result: 2 performances (7, 9 Mar 1893), now art form empty, kind concert, parent «Щелкунчикъ». Ballet performances by
 company 2,698 -> 2,696; kind ballet 2,632 -> 2,630, concert 49 -> 51; ballet evenings 2,068 -> 2,066, 101 shared (unchanged).
+
+## 2026-10-14 — 1893-94: Repertoire receipts vs the printed season totals, before and after the fold-log apply
+
+```sql
+-- current db vs backup outputs/backups/foldlog_1893-94_2026-10-14/imperial_theaters.duckdb attached as old
+select n.city,n.printed_count,n.printed_count_with_receipts,n.printed_receipts_kopecks/100.0 printed_rub,
+ n.repertoire_sessions,n.repertoire_sessions_with_receipts,
+ o.repertoire_receipts_kopecks/100.0 before_rub, n.repertoire_receipts_kopecks/100.0 now_rub,
+ o.receipts_minus_printed_kopecks/100.0 gap_before, n.receipts_minus_printed_kopecks/100.0 gap_now
+from research.season_stat_check n join old.research.season_stat_check o using(season,city) where n.season='1893-94';
+select city,line_no,category_verbatim,venue_verbatim,count,receipts_verbatim from research.season_stat_line where season='1893-94' order by city,line_no;
+```
+
+Result: Moscow printed 652,684 р. 97 к.; Repertoire 631,562.94 before -> 652,324.87 now; gap -21,122.03 -> -360.10.
+SP printed 991,788 р. 77 к.; Repertoire 968,573.69 before -> 991,290.09 now; gap -23,215.08 -> -498.68.
+Sessions: Moscow 393 (388 with receipts) vs 392 printed; SP 600 (588 with receipts) vs 597 printed. 21 printed category lines.
+
+```sql
+select e.city,e.printed_page_number,e.date_verbatim,e.date_undate,t.canonical_name,e.time_of_day,e.receipts_verbatim,e.annotation,e.is_charity,e.is_free
+from research.event e join research.theater t using(theater_id)
+where e.season='1893-94' and e.event_status='performed' and e.receipts_total_kopecks is null order by e.city,e.date_undate;
+```
+
+Result: 17 rows (5 Moscow, 12 SP), every one a free performance (free school matinées 14 Nov 1893 / 26 Feb 1894, the
+St George cavaliers' night) or a charity event (Patriotic Society schools, the invalids' concert, its dress rehearsal and
+repeat). None is a fold cell; no receipts are printed for them.
