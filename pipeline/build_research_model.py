@@ -380,14 +380,21 @@ BALLET_LIST_TITLE_ALIASES = {
 }
 
 
-#: List dates whose printed month is a confirmed print typo, so the raw tier (which
-#: keeps the print verbatim) has no parsed date for them. The intended date is
-#: supplied here, in the research layer only (RG's rule for genuine print typos).
+#: List dates that are confirmed print typos (a misprinted month, an impossible day,
+#: or a wrong digit that still parses). The raw tier keeps the print verbatim; the
+#: intended date is supplied here, in the research layer only (RG's rule for genuine
+#: print typos), and replaces the parsed one where raw has a date.
 #: production_performance_id -> (ISO date, what the scan prints).
 LIST_DATE_PRINT_TYPOS = {
     "balletproductions_1910-11_SP_p001__e009__d001": (
         "1911-02-13", "printed «Исполненъ: 1911 г.—феваля 13.» (no р; scan-checked 2026-10-11). "
         "Фіаметта, SP 1910-11; the Repertoire prints the same bill on 13 February 1911"),
+    "balletproductions_1897-98_SP_p000__e002__d002": (
+        "1897-11-14", "printed «ноября … 24» between 9 and 16 (scan-read twice, 2026-09-28); the Repertoire has "
+        "«Дочь микадо» on 14 Nov 1897 (morning) and not on the 24th; one-digit slip (RG, 2026-10-15)"),
+    "balletproductions_1897-98_SP_p000__e002__d006": (
+        "1897-12-28", "printed «декабря 38» (impossible day; scan-read twice, 2026-09-28); the Repertoire has "
+        "«Дочь микадо» on 28 Dec 1897 (evening); one-digit slip (RG, 2026-10-15)"),
 }
 
 
@@ -413,7 +420,11 @@ def ballet_list_matches(con: duckdb.DuckDBPyConnection) -> list:
             WHERE p.production_performance_id = ?""", [perf_id]).fetchone()
         if row is None:
             print(f"  WARNING: LIST_DATE_PRINT_TYPOS: {perf_id} not found in raw.production_entry_performance")
-        elif row[4] is None:          # still unparsed in raw: supply the intended date
+        else:                         # unparsed in raw, or parsed from the misprint: use the intended date
+            if row[4] is not None:
+                printed = (row[0], row[1], row[2], row[4].strftime('%Y-%m-%d'), row[3])
+                if printed in lst:
+                    lst.remove(printed)
             lst.append((row[0], row[1], row[2], iso, row[3]))
     rep = con.execute("""
         SELECT ae.city, coalesce(dc.corrected_date_undate, ae.date_undate) AS d, eep.event_id,

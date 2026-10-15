@@ -81,8 +81,12 @@ closes, and add new open items here as well as in their own entry.
 - #134: Ѳедорова 3-я, Марія Дмитріевна kept merged, left open *(checked)*.
 - #133: Шиманъ is a proposed roster link only (uncertain_person_identities.md
   #21); Давыдовъ/Давидовъ on the 1907-08 SP ballet list not zoomed.
-- #101: `docs/eval/ballet_productions_review.md`: the uncertain readings and
-  print slips still wait for RG's confirmation.
+- #101: `docs/eval/ballet_productions_review.md`, reviewed 2026-10-15: every
+  uncertain reading and date problem is resolved (Дочь микадо «24»/«38» ruled
+  print slips for 14 Nov / 28 Dec; Золотая рыбка consistent; Бернаделли
+  closed; «Рустикальный» fixed); the section 3 printing slips moved to
+  genuine_print_typos.md (RG). CLOSED except section 6, whose items are on
+  the physical-volume list.
 - #25: `docs/eval/confirmed_credit_corrections.csv` (50 rows) was never applied
   as a batch and no script reads it; most rows were overtaken by #150. Of the
   five that looked uncorrected, four are the #23 pattern (the raw row holds the

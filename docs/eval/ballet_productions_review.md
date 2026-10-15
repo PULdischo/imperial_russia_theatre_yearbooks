@@ -16,12 +16,12 @@ Per-change detail for every item: `outputs/ballet_productions_pilot/verify_logs/
 
 | # | Where | Entry | What's printed | Why it doesn't add up |
 |---|---|---|---|---|
-| 1 | 1897-98 SP (pp. 32–33 spread) | #2 Дочь микадо | "декабря 38"; also "ноября 9, 24, 16, 19" | impossible day; ноября dates out of order. 9 dates = Всего—9 |
+| 1 | 1897-98 SP (pp. 32–33 spread) | #2 Дочь микадо | "декабря 38"; also "ноября 9, 24, 16, 19" | impossible day; ноября dates out of order. 9 dates = Всего—9. **RESOLVED — RG, 2026-10-15:** print slips for **14 Nov** and **28 Dec** (the Repertoire has both and no 24 Nov); raw verbatim, research layer `LIST_DATE_PRINT_TYPOS`; in genuine_print_typos.md |
 | 2 | 1897-98 Moscow p001 (p. 40) | #9 Пери | "Исполнено: 1897 г.—февраля 12" | Printed year differs from the season; the date is taken from the season: **12 Feb 1898**. Confirmed by the Repertoire (Домашевъ benefit, "1-е д. бал. Пери") |
 | 3 | 1899-00 SP p000 (p. 46) | #6 Дочь Микадо | "…1899 г.—… апрѣля 19" (no new year printed) | Date from the season: **19 Apr 1900**. Confirmed by the Repertoire ("1-е д. бал. Дочь Микадо") |
 | 4 | 1902-03 SP p001 (p. 45) | #14 Коппелія | "1903 г.—ноября 6. 1903 г.—февраля 15" | Date from the season: **6 Nov 1902**. Confirmed by the Repertoire (Коппелія + Волшебная флейта) |
 | 5 | 1902-03 SP p001 (p. 45) | #25 Тщетная предосторожность | "1904 г.—апрѣля 27" | Date from the season: **27 Apr 1903** |
-| 6 | 1904-05 Moscow p000 (p. 145) | #4 Золотая рыбка | 6 dates, "Всего—7 разъ"; ноября 14 note "2 раза: утромъ и вечеромъ" | the only dates-vs-Всего mismatch in the whole corpus; probably consistent (14 Nov counted twice) |
+| 6 | 1904-05 Moscow p000 (p. 145) | #4 Золотая рыбка | 6 dates, "Всего—7 разъ"; ноября 14 note "2 раза: утромъ и вечеромъ" | the only dates-vs-Всего mismatch in the whole corpus; probably consistent (14 Nov counted twice) | **RESOLVED 2026-10-15:** consistent; 6 dates + the second performance on 14 Nov = 7, and the Repertoire has those 7 sessions (morning and evening on 14 Nov).
 
 **Dates (RG, 2026-09-28):** a list belongs to its season by provenance, so every calendar date is taken from the season (Aug–Dec = first year, Jan–Jul = second). Rows 2–5 print a year that differs from the season; the year stays verbatim in `year_text` and is flagged (`year_printed_matches_season = false`), and the date is still the season's.
 
@@ -44,7 +44,7 @@ dates vs 1779 total across all 467 entries; the difference is #6).
 | 12 | 1890-91 SP p001 | #12 Шалость Амура | февраля **28** | 26 | **RESOLVED — RG, original volume, 2026-09-28:** 28 |
 | 13 | 1892-93 Moscow p001 (p. 39) | #10 Приключенія Флика и Флока | Морен**г**о | Морен**і**о | **RESOLVED — RG, original volume, 2026-09-28:** Моренго |
 | 14 | 1896-97 Moscow p001 (p. 40) | #13 Хрустальный башмачекъ | ~~"Мюлъ-ендорфера"~~ → **Мюльендорфера** | — | **RESOLVED — RG, 2026-09-28:** ь, and the hyphen is only the line break |
-| 15 | 1896-97 SP p000 (p. 33) | #2 Волшебная флейта | Бернад**е**лли (RG's reading, from the scan) | Бернад**ѣ**лли / Бернад**ь**лли (checker) | **Still flagged** — RG "pretty sure" it's е; confirm in the 1896-97 volume. Cross-check: the ballet lists 1892-93, 1893-94, 1894-95 and 1895-96 all print "соч. Бернаделли", as do the season reviews (1892-93 SP ballet, on this ballet's history; 1894-95 SP ballet, "г-жи Бернаделли … г. Бернаделли", visiting artists from Vienna). Only 1897-98 has "Бернарделли". He is in no staff roster (query_log 2026-09-28) |
+| 15 | 1896-97 SP p000 (p. 33) | #2 Волшебная флейта | Бернад**е**лли (RG's reading, from the scan) | Бернад**ѣ**лли / Бернад**ь**лли (checker) | **Still flagged** — RG "pretty sure" it's е; confirm in the 1896-97 volume. Cross-check: the ballet lists 1892-93, 1893-94, 1894-95 and 1895-96 all print "соч. Бернаделли", as do the season reviews (1892-93 SP ballet, on this ballet's history; 1894-95 SP ballet, "г-жи Бернаделли … г. Бернаделли", visiting artists from Vienna). Only 1897-98 has "Бернарделли". He is in no staff roster (query_log 2026-09-28) | **CLOSED 2026-10-15:** stored «Бернаделли» (е) in all five seasons that credit him (1892-93..1896-97); creator spellings are low-stakes (RG).
 | 16 | 1897-98 SP spread | #5 Конекъ-горбунокъ | hyphen | — | **RESOLVED — RG, from the scan, 2026-09-28:** a faint/misprinted hyphen; kept as "-" |
 | 17 | 1901-02 SP p001 | #21 Пробужденіе Флоры | "Всего—2 раза." | no final period | **RESOLVED — RG, from the scan, 2026-09-28:** a faint period; kept "раза." (a period normally ends these lines) |
 | 18 | 1902-03 SP p000 (p. 44) | #4 | "Г***," | "Г***" | **RESOLVED 2026-09-28:** three asterisks in a triangle (asterism = withheld name), recorded as **Г⁂**; close-up shows no comma here (1903-04 and 1904-05 do have one). RG: the person is Всеволожскій → research layer, not the transcription |
@@ -54,7 +54,7 @@ dates vs 1779 total across all 467 entries; the difference is #6).
 | 22 | 1904-05 SP p001 (p. 139) | #29 Фея куколъ | "сюжетъ **и.** Асрейтера" | **н.** | **RESOLVED — RG, from the scan, 2026-09-28:** printed "и.", a lowercase slip for the initial "И." (Josef Hassreiter); kept as printed |
 | 23 | 1890-91 SP p001 (p. 32) | #13 Эсмеральда | ~~П.~~ → "музыка **Ц.** Пуни" | — | **RESOLVED — RG, original volume, 2026-09-28:** Ц. (the checker's П. was wrong) |
 
-## 3. Printing slips and typesetting quirks (candidates for `genuine_print_typos.md` once you've confirmed them)
+## 3. Printing slips and typesetting quirks — **MOVED to genuine_print_typos.md (RG, 2026-10-15)**
 
 - 1896-97 Moscow p001 #10 Сатанилла: "(Le diable amour**ea**ux)"
 - 1897-98 Moscow p001 #11 Тщетная предосторожность: "(La Fil**i**e mal gardée)"
@@ -72,7 +72,7 @@ dates vs 1779 total across all 467 entries; the difference is #6).
 
 ## 4. For the Repertoire audit (not a list problem)
 
-- The Repertoire data has "**Рустикальный** башмачекъ" at the Большой on 1890-11-11; the list prints Хрустальный башмачекъ on ноября 11 — very likely a Repertoire misread. To be picked up in the list-vs-Repertoire comparison.
+- The Repertoire data has "**Рустикальный** башмачекъ" at the Большой on 1890-11-11; the list prints Хрустальный башмачекъ on ноября 11 — very likely a Repertoire misread. **FIXED** (no «Рустикальный» left in the Repertoire, checked 2026-10-15).
 
 ## 5. Interim source: 1899-00 Moscow (stand-in copy)
 

@@ -154,6 +154,7 @@ one:
   class automatically (a run of ≥2 consecutive pages/rows agreeing on
   one consistent day-shift) and corrects the derived calendar date
   without touching the verbatim `date_text`.
+- **1897-98 SP ballet productions list (pp. 32–33), #2 «Дочь микадо»:** «ноября 9, 24, 16, 19» and «декабря 14, 38». The Repertoire has the ballet on 14 Nov (morning) and 28 Dec (evening), and on no 24 Nov; «24» for 14 (which also restores the order) and «38» for 28. Raw keeps both as printed; the research layer reads them as 14 Nov and 28 Dec (`LIST_DATE_PRINT_TYPOS`, RG 2026-10-15).
 
 ## Wrong weekday word entirely (date_undate correct, printed word isn't)
 
@@ -646,3 +647,21 @@ Each was flagged by a reader and then zoomed on the scan by me; the type is cris
 - **`1)-е 1 д. бал. «Донъ-Кихотъ»`** for «1) 1-е д.». `repertoire_1910-11_p035` (printed p. 36), Маріинскій, 13 Feb 1911 evening, the Кшесинская jubilee bill: the first of three numbered items has the ordinal ending attached to the item number, while the next two read «2) 3-е д. бал. «Пахита»» and «3) 3-е д. бал. «Фіаметта»» (PDF page, 2026-10-13; clear). Stored verbatim.
 - **`Баядерка, оп.`** for бал. `repertoire_1907-08_p025` (printed p. 101), Большой, 13 Jan 1908 evening, 2769 р. 71 к. (PDF page, 2026-10-13, clear). Stored as printed; the research layer has it as a ballet. The same volume prints «Конекъ-Горбунокъ, оп.» four weeks later.
 - **`Зачѣмъ пойдешь, то и найдешь`** for «За чѣмъ», one word. `repertoire_1896-97_pair024`, Александринскій, 17 Apr 1897 (benefit of г. Давыдовъ): «2-я и 3-я карт. пьесы Зачѣмъ пойдешь, то и найдешь.» (PDF page at high zoom, 2026-10-13, clear). A spelling variant more than an error; listed for the record.
+
+## Ballet productions lists (1890-91 – 1904-05): printing slips (added 2026-10-15, RG confirmed)
+
+Each read twice on the scan (checking agent and a close zoom, 2026-09-28) and kept verbatim in `raw.production_entry`; from `docs/eval/ballet_productions_review.md` section 3.
+
+- 1896-97 Moscow p001 #10 Сатанилла: "(Le diable amour**ea**ux)"
+- 1897-98 Moscow p001 #11 Тщетная предосторожность: "(La Fil**i**e mal gardée)"
+- 1900-01 SP p001 #22 Щелкунчикъ: "**в**аимствованъ" (заимствованъ)
+- 1901-02 Moscow p000 #3 Донъ-Кихотъ: "сентябр**и** 9"
+- 1901-02 SP p000 #9 Жизель: "По**сг**авленъ" (Поставленъ)
+- 1901-02 SP p001 #16 Наяда и рыбакъ: "октябр**и** 10" and "**Вв**его—1 разъ"
+- 1898-99 Moscow p001 #8 Наяда и рыбакъ: "1899 г.—г.—января 3" (doubled "г.—")
+- 1893-94 Moscow p000 #11 Эсмеральда: "ноября 7 14 декабря 30" (comma and semicolon missing)
+- Missing periods / dashes: 1893-94 Moscow #10 "1893 г —"; 1894-95 Moscow #5 "въ 4 д и 8"; 1895-96 Moscow p001 #8 "4 карт ,"; 1898-99 SP p001 #17 "Всего 1 разъ"; 1899-00 SP #21 "1900 г. апрѣля"; 1901-02 SP #9 "2 д, соч."
+- Пахита, 1903-04 SP #17 and 1904-05 SP #20: the same damaged "а" in "Дельдевеза" in both years (entry wording identical; the type was probably reused)
+- 1904-05 SP p001 #29 Фея куколъ: "сюжетъ **и.** Асрейтера", lowercase "и." for the initial "И." (Josef Hassreiter; RG confirmed)
+- 1897-98 SP p. 32 #5 Конекъ-горбунокъ: the hyphen in the title printed as a short raised dot (faint/misprinted hyphen, RG confirmed)
+- 1899-00 SP p000 #3 Волшебная флейта: "актѣ.," and "Всего—1 разъ,"; 1899-00 SP p001 Эсмеральда "Всего--7 разъ."
