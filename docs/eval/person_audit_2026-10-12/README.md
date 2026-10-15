@@ -294,3 +294,7 @@ Open besides the queue: the three surname-only Petersburg guest records (Гел�
   (Moscow school 1893, Moscow troupe, Petersburg 1896-1902 by printed transfer, Moscow again). Patronymic change unexplained,
   uncertain list #36. Her 1907-08 row (ordinal in first_name) fixed first (`docs/eval/raw_fix_mosolova_1907-08_2026-10-15.py`);
   ~95 more rows carry that shift (not fixed; proposed as its own task). Live persons 2551 (after the Межакова teacher merge too).
+- Tangent Поливановъ, Василій: MERGED 2026-10-15 (RG): 8cf4ec «Ивановичъ» (1903-04, 1905-06, each time under «Перешивкинъ,
+  Михаилъ Ивановичъ») -> 1072bf «Егоровичъ». Uncertain list #37, which also holds the open start-year question (1868 in 16 volumes;
+  1908-09 prints 23 декабря 1886 – 1 апрѣля 1889 and again from 1 сентября 1889). Live persons 2550; receipts and Wikidata (177) unchanged.
+  Both 2026-10-15 tangents are now closed.

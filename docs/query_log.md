@@ -18494,3 +18494,34 @@ Result: prod had 2552 live (a parallel session merged the Межакова teach
 After --write and rebuild_after_person_merge.sh: «Мосолова, Вѣра Владиміровна» 1892-93..1910-11, 21 links; live 2551;
 research.person 2649; receipts 3216919085, Wikidata 177 (both unchanged), orphans 0, pending 0, 0 shift blocks. The 1907-08 fix
 was still in raw before the merge.
+
+## 2026-10-15 — Поливановъ, Василій: «Егоровичъ» (1072bf) vs «Ивановичъ» (8cf4ec), evidence for RG
+
+```sql
+SELECT sp.season, pe.page_id, pe.list_number, pe.family_name, pe.first_name, pe.patronymic, pe.heading_path,
+       string_agg(pes.start_date_text,' | '), left(cast(pl.person_id as varchar),6), pe.entry_id
+FROM raw.person_entry pe JOIN raw.source_pages sp USING(page_id) LEFT JOIN raw.person_entry_service pes USING(entry_id)
+LEFT JOIN entities.person_link pl USING(entry_id) WHERE pe.family_name LIKE 'Поливанов%' GROUP BY ALL ORDER BY 1;
+SELECT season, page_id, list_number, family_name, first_name, patronymic FROM raw.person_entry JOIN raw.source_pages USING(page_id)
+WHERE page_id LIKE 'balletartists%MSK%' AND season IN ('1902-03'..'1906-07') AND patronymic IN ('Ивановичъ','Егоровичъ') AND heading_path NOT LIKE '%Артистки%';
+SELECT entity_type, count(*) FROM raw.person_entry WHERE family_name LIKE 'Поливан%' GROUP BY 1;
+SELECT ... WHERE first_name='Василій' AND patronymic LIKE 'Иванович%' AND page_id LIKE 'balletartists%MSK%' AND season BETWEEN '1902-03' AND '1906-07';
+SELECT entry_id, period_order, start_date_text, end_date_text FROM raw.person_entry_service ... WHERE family_name LIKE 'Поливан%' AND page_id LIKE '%1908-09%';
+```
+
+Result: 19 rows, all Moscow BalletArtists. 1072bf «Егоровичъ» 1890-91..1902-03, 1904-05, 1906-07..1908-09; 8cf4ec «Ивановичъ»
+1903-04 (no. 52) and 1905-06 (no. 52) only. Start «23 декабря 1868» every season to 1906-07; 1907-08 «1 сентября 1889»; 1908-09 two
+periods «23 декабря 1886 – 1 апрѣля 1889» and «съ 1 сентября 1889» (1886, not 1868). The entry directly above him every year
+1902-03..1906-07 is «Перешивкинъ, Михаилъ Ивановичъ» (nos. 50/51/53/51/48); in 1903-04 and 1905-06 both are nos. 51-52. No other
+Поливановъ in any list and no other Василій Ивановичъ in the Moscow ballet 1902-03..1906-07.
+
+## 2026-10-15 — Поливановъ merge (RG: yes): 8cf4ec -> 1072bf, before/after checks
+
+```sql
+SELECT sum(receipts_total_kopecks) FROM research.event;  -- + Wikidata count, live persons, research.person, before and after
+SELECT display_name, first_attested_season, last_attested_season FROM entities.person WHERE person_id LIKE '1072bf%';
+```
+
+Result: before: receipts 3216919085, Wikidata 177, live 2551, research.person 2649. Dry run, then --write and
+rebuild_after_person_merge.sh: «Поливановъ, Василій Егоровичъ» 1890-91..1908-09, 19 links; live 2550; receipts 3216919085 and
+Wikidata 177 unchanged; orphans 0, pending 0, 0 shift blocks.
