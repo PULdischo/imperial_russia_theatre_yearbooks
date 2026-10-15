@@ -294,6 +294,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** productionteam_1895-96_p001 (printed p. 108) and productionteam_1896-97_p001 (p. 105), both read zoomed on the full-resolution PDF images, 2026-10-15; 1890-91 p. 112 and 1906-07 p. 64 at page size. Query log 2026-10-15.
 - **Would resolve it:** his service record, or the Directorate's staff registers.
 
+## 34. Межакова / Лежакова, Марія Александровна (Moscow ProductionTeam, wardrobe) -- «Межакова» to 1904-05, «Лежакова» from 1905-06; and is she the school's French teacher of 1890-92?
+- **Status:** MERGED for the wardrobe run (RG, 2026-10-15; 9eadf7 «Лежакова» -> 77e27a «Межакова»; `docs/eval/person_merge_manual.py`). The display name follows the majority form, «Межакова». The French-teacher record ec0f78 is NOT merged: OPEN, to be put to RG separately.
+- **What is uncertain:** the surname changes by one letter: «Межакова, Марья Александровна (съ 1 сентября 1892 г.)» 1900-01..1904-05, «Лежакова, Марія Александровна (съ 1 сентября 1892 г.)» 1905-06..1907-08, under «МОСКВА / Отдѣлъ гардеробный / Главный гардеробъ / Смотрительницы отдѣловъ / Отдѣлъ головныхъ уборовъ, обуви и бѣлья». Nothing in print explains it.
+- **For one woman:** same post and start every year; «Лежакова» begins the season after the last «Межакова»; no other woman of either surname in the corpus; no name beginning Л- on the 1905-06 page to copy from; she enters the post in 1900-01 directly under the previous holder Бойкова, Вѣра Эдуардовна («† 26 марта 1899 г.»). A one-letter change in a rare surname fits RG's reading of these lists as hand copies of the RGIA files (2026-10-15).
+- **For two women / against:** only the surname.
+- **The open part:** «13. Межакова, Марія Александровна (съ 1 сентября 1890 г.). Французскій языкъ.», ballet department of the Moscow Theatre School, 1890-91 and 1891-92 (ec0f78). For: same full name, rare surname, same city. Against: different post, different start (1890, not 1892), and she is in no list 1892-93..1899-00.
+- **Where to look:** productionteam_1904-05_p004 (p. 70) and productionteam_1905-06_p004 (p. 66), both read zoomed on the full-resolution PDF images, 2026-10-15; 1900-01 p. 129, 1907-08 p. 63, theaterschoolstaff_1890-91_p004 (p. 265) at page size. Query log 2026-10-15.
+- **Would resolve it:** her service record, which would give the posts held from 1890 and 1892.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.

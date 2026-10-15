@@ -18225,3 +18225,31 @@ Scans (full-resolution PDF images): 1895-96 p.108 «Иманъ, Юрій Ива�
 **Merged (RG, 2026-10-15)** 689025 -> 455bef via `person_merge_manual.py` + `rebuild_after_person_merge.sh`: 455bef holds
 17 rows, 1890-91..1906-07; live persons 2559; pending pairs 5; research.person 2657; receipts 3,216,919,085 and Wikidata
 176 unchanged; 0 orphans, 0 shift blocks. Reasons: uncertain_person_identities.md #33.
+
+## 2026-10-15 — Межакова / Лежакова, Марія Александровна (queue case 5 of 9)
+
+```sql
+SELECT pl.person_id, sp.season, sp.entity_type, pe.page_id, pe.list_number, pe.heading_path, pe.family_name,
+       pe.first_name, pe.patronymic, pe.tenure_note_text
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id)
+WHERE pe.family_name SIMILAR TO '[МЛ][еѣ]ж[ае]к[оа]в.*' ORDER BY 2;
+-- plus: every row under «МОСКВА / ... / Отдѣлъ головныхъ уборовъ, обуви и бѣлья», and every Марія/Марья Александровна
+--       with a 1890 or 1892 start
+```
+
+Result: three records. The queue pair, both ProductionTeam, «МОСКВА / Отдѣлъ гардеробный / Главный гардеробъ /
+Смотрительницы отдѣловъ / Отдѣлъ головныхъ уборовъ, обуви и бѣлья», both «съ 1 сентября 1892 г.»: 77e27a «Межакова, Марья»
+1900-01..1904-05 (5), 9eadf7 «Лежакова, Марія» 1905-06..1907-08 (3). The post's holder before her is Байкова/Бойкова, Вѣра
+Эдуардовна, 1890-91..1900-01 (the 1900-01 row carries «† 26 марта 1899 г.»); after 1907-08 the heading is gone (1908-09 lists
+no one for that department; Каракалпакова is «Смотрительница главнаго гардероба» from 1908-09). A third record, ec0f78
+«Межакова, Марія Александровна», teacher of French in the ballet department of the Moscow Theatre School, «съ 1 сентября
+1890 г.», 1890-91 and 1891-92 only (TheaterSchoolStaff). No other Межакова/Лежакова in the corpus; she is in no list 1892-93..1899-00.
+Scans (full-resolution PDF images): 1904-05 p.70 «Межакова, Марья Александровна (съ 1 сентября 1892 г.)» and 1905-06 p.66
+«Лежакова, Марія Александровна (съ 1 сентября 1892 г.)», both zoomed; 1900-01 p.129 «2. Межакова, Марья Александровна (съ
+1 сентября 1892 г.)» (directly under Бойкова), 1907-08 p.63 «Лежакова, Марія Александровна (съ 1 сентября 1892 г.)» and 1890-91
+p.265 «13. Межакова, Марія Александровна (съ 1 сентября 1890 г.). Французскій языкъ.» at page size. No name beginning Л- on the
+1905-06 page that the surname could have been copied from.
+
+**Merged (RG, 2026-10-15)** 9eadf7 -> 77e27a via `person_merge_manual.py` + `rebuild_after_person_merge.sh`: 77e27a holds 8
+rows, 1900-01..1907-08; ec0f78 (school French teacher) left separate; live persons 2558; pending pairs 4; research.person 2656;
+receipts 3,216,919,085 and Wikidata 176 unchanged; 0 orphans, 0 shift blocks. Reasons: uncertain_person_identities.md #34.
