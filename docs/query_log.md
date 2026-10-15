@@ -18353,3 +18353,49 @@ p.109 «11. Голласъ (см. оперный оркестръ). Скрипк
 1890-91..1893-94; live persons 2553; pending pairs 0 (queue closed); rejected candidates 11 -- the twelfth, Лежакова 9eadf7 / school
 French teacher ec0f78 (family_name_variant, conflicting_dates), dropped out of person_candidate when 9eadf7 was merged and stays in
 person_merge_log as 'rejected'; research.person 2651; receipts 3,216,919,085 and Wikidata 176 unchanged; 0 orphans, 0 shift blocks.
+
+## 2026-10-15 — Wikidata check for the persons decided in the person-audit queue today
+
+```sql
+SELECT person_id, display_name, first_attested_season, last_attested_season, canonical_family_name, canonical_first_name,
+       canonical_patronymic FROM entities.person WHERE superseded_by_person_id IS NULL AND person_id IN (<10 survivors>);
+-- plus entities.person_wikidata_link and entities.wikidata_decision for each; then Wikidata wbsearchentities (ru) on
+-- «first patronymic family», «family first», «family» (modernized spelling, link_wikidata._modernize) and wbgetentities for
+-- P31 / P106 / P569 / P570 on every human hit
+```
+
+Result: none of the ten (7dff57 Афанасьева; 6592bf Чичелева; 455bef Иманъ; 77e27a and ec0f78 Межакова; 0ff007 Дюжикова; c50c1f
+Розай; 1ed184 and 11088e Грибенъ; 19b066 Голласъ) had a link or a stored decision. One match: c50c1f Розай -> **Q18634922**
+«Розай, Георгий Альфредович», P106 артист балета (Q805221), born 1887, died 27 August 1917, ruwiki article; he graduated in 1907
+at about 20 and is attested to 1910-11. No candidate for the others: the hits are unrelated people (Афанасьева: a mathematician
+b. 1876, a teacher b. 1939, a politician b. 1975; Иманъ: a model, a Lebanese poet; Межакова: «Дарья Александровна» with no data,
+a footballer b. 1987); Дюжикова's only hit is Антонина Михайловна (Q106596778), a drama actress 1853-1918 -- different first name,
+patronymic and company, not her. Чичелева, Грибенъ, Голласъ: no human hits. Nothing written.
+
+**Applied (RG, 2026-10-15)** Розай c50c1f -> Q18634922 via `pipeline/apply_wikidata_decisions.py --queue
+docs/eval/wikidata_decisions_rozai_2026-10-15.csv` (backup outputs/full_run/imperial_theaters.pre_wikidata_rozai_2026-10-15.duckdb),
+then `rebuild_after_person_merge.sh`: research.person.wikidata_qid filled; Wikidata-linked research persons 176 -> 177; receipts
+3,216,919,085 unchanged; 0 orphans, 0 shift blocks.
+
+## 2026-10-15 — Is the school French teacher Межакова (ec0f78, 1890-92) the wardrobe supervisor Межакова (77e27a, 1900-08)?
+
+```sql
+-- 1. every Moscow Theatre School French teacher 1890-91..1896-97 (raw.person_entry.subject_taught LIKE '%ранцуз%')
+-- 2. every surname like '%ж[аеѣо]к[оа]в%' / 'Меж%' / 'Мѣж%' in any list; every Марія/Марья Александровна in Moscow 1892-93..1899-00
+-- 3. people in 2+ lists (entity_type, Graduates excluded): modal printed start date per list
+-- 4. Moscow ProductionTeam rows of 1900-01 whose person is not in the 1899-00 Moscow ProductionTeam list
+```
+
+Result: (1) Межакова teaches French in the ballet department 1890-91 and 1891-92 («съ 1 сентября 1890 г.»; no leaving note); in
+1892-93 she is gone and a new French teacher appears, «3. Бѣлова, Екатерина Васильевна (съ 1 сентября 1892 г.)» -- the same day as
+the wardrobe Межакова's «съ 1 сентября 1892 г.» (Дюфоръ and Рофастъ, the other French teachers, continue). (2) No other
+Межакова/Лежакова or near spelling anywhere; no Марія Александровна in any Moscow list 1892-93..1899-00 who could be her (only
+dancers Борисова, Свѣтинская, Струкова/Горская, each with her own start). (3) Start dates are per post: of 62 people in two or more
+lists, 53 have a different printed start in each (e.g. Горскій ballet 1 іюня 1889 / school 16 января 1896; Бекъ ballet 1892 / school
+1904), so 1890 vs 1892 is not a conflict of dates. (4) The 1900-01 Moscow production list adds staff it never printed before, with
+older starts: Павловъ 1888 (помощникъ костюмера), Домашевъ 1890, Апиханова 1890 (помощница), Межакова 1892 -- the 1892-1900 gap is the
+list's coverage, not her absence. The earlier automatic REJECTION of Лежакова / ec0f78 (person_merge_log a1506152, tenure_signal
+'conflicting_dates') rested on the 1890-vs-1892 start difference.
+Scans (full-resolution PDF images, page size): 1891-92 p.265 «13. Межакова, Марія Александровна (съ 1 сентября 1890 г.). Французскій
+языкъ.»; 1892-93 p.376 (no Межакова; «3. Бѣлова, Екатерина Васильевна (съ 1 сентября 1892 г.). Французскій языкъ.»); 1899-00 p.128
+(the hats/shoes/linen department lists Бойкова only).
