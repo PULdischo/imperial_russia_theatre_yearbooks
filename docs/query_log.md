@@ -18274,6 +18274,53 @@ Scans (full-resolution PDF images): 1895-96 p.62 «32. Дюжикова, Раи�
 службу 1 сентября 1901 г.», all zoomed; 1896-97 p.58, 1897-98 p.59, 1898-99 p.76 «Раиса Павловна» and the graduates page
 (1895-96 p.459) «2) Дюжикова, Римма.» at page size.
 
+## 2026-10-15 — Name-slip clustering: entry population for within-person name variation (read-only)
+
+```sql
+SELECT l.person_id, e.entry_id, e.page_id, s.season, s.entity_type, s.city, e.list_number,
+       e.family_name_clean, e.first_name_clean, e.patronymic_clean, e.heading_path_clean, s.printed_page_number
+FROM analysis.person_entry e JOIN entities.person_link l USING(entry_id)
+JOIN entities.person p ON p.person_id=l.person_id AND p.superseded_by_person_id IS NULL
+JOIN raw.source_pages s USING(page_id);
+```
+
+Result: 23,979 entries, 2,559 live persons, 2,307 with 2+ seasons. Consecutive-appearance comparison in Python
+(docs/eval/name_slip_clustering_2026-10/an.py): 20,515 transitions; 724 substantive (653 letter-level, 71 different), ~2,070 orthographic only, ~895 one side missing.
+
+## 2026-10-15 — Name-slip clustering: season/list/volume/page tables, same-page test (derived from the previous result, no new SQL)
+
+```sql
+-- same population as above; aggregation in tab.py / st.py: counts of substantive changes at the later season by entity_type,
+-- exposure = entries of persons with an earlier season; neighbours = other person within ±3 entry positions on the page
+```
+
+Result: Ballet 50, Musicians 29, ProductionTeam 18, Administrators 14, SchoolStaff 17 per 1,000 re-listed; season chi2 168/20 df; volume chi2 489/139 df;
+same-page ±3: 64/724 (8.8%), page-wide 93 (12.8%).
+
+## 2026-10-15 — Name-slip clustering: pending name_variant candidates and the unmerged Мосолова / Поливановъ records
+
+```sql
+SELECT match_reason,status,count(*) FROM entities.person_candidate GROUP BY 1,2;
+SELECT candidate_id,person_id_1,person_id_2,display_1,display_2,similarity_score,match_reason,status,tenure_signal
+FROM entities.person_candidate WHERE match_reason LIKE 'name_variant%';
+SELECT cast(l.person_id as varchar), s.season, s.entity_type, e.family_name_clean, e.first_name_clean, e.patronymic_clean, e.tenure_note_text_clean
+FROM analysis.person_entry e JOIN entities.person_link l USING(entry_id) JOIN raw.source_pages s USING(page_id)
+WHERE cast(l.person_id as varchar) LIKE '8cf4ec%' OR ... LIKE '1773bf%' OR ... LIKE '11d2b0%' ORDER BY 1,2;
+```
+
+Result: 4 pending name_variant_shared_start (Дюжикова, Розай, Голласъ, Грибенъ: short vs long record); 9 family_name_variant + 2 patronymic_variant rejected.
+Мосолова 1773bf9c 1892-93..1905-06 (Владиміровна) / 11d2b00a 1906-07..1910-11 (Ильинишна, 1-я), same start 1 сентября 1893. Поливановъ 8cf4ecef: one record, 1903-04 and 1905-06, both Ивановичъ.
+
+## 2026-10-15 — Name-slip clustering: scan check Пржебылецкая (full-resolution PDF image)
+
+```sql
+SELECT entry_id,list_number,family_name,first_name FROM raw.person_entry
+WHERE family_name LIKE 'Пржб%' OR family_name LIKE 'Прже%';
+```
+
+Result: 1897-98 no. 90 Пржебылецкая; 1898-99 no. 85 Пржебылецкая; 1899-00 no. 93 Пржбелецкая; 1900-01 no. 89 Пржбылецкая; 1901-02 no. 82 Пржбелецкая; 1902-03 no. 76, 1903-04 no. 74 Пржебылецкая.
+Scans: 1899-00 p.75 no. 93 «Пржбелецкая» confirmed; 1900-01 p.76 no. 89 reads «Пржбылецая/Пржбылецкая», к not letter-confirmed.
+
 **Merged (RG, 2026-10-15)** a4f311 + 52a7f8 -> 0ff007 via `person_merge_manual.py` + `rebuild_after_person_merge.sh`: 0ff007
 holds 7 rows, 1895-96..1900-01, displayed «Дюжикова, Раиса Павловна» (majority vote, 4 of 7); live persons 2556; pending pairs 3;
 research.person 2654; review mentions resolved 21,434 (+1); receipts 3,216,919,085 and Wikidata 176 unchanged; 0 orphans,
@@ -18372,38 +18419,6 @@ b. 1876, a teacher b. 1939, a politician b. 1975; Иманъ: a model, a Lebanes
 a footballer b. 1987); Дюжикова's only hit is Антонина Михайловна (Q106596778), a drama actress 1853-1918 -- different first name,
 patronymic and company, not her. Чичелева, Грибенъ, Голласъ: no human hits. Nothing written.
 
-**Applied (RG, 2026-10-15)** Розай c50c1f -> Q18634922 via `pipeline/apply_wikidata_decisions.py --queue
-docs/eval/wikidata_decisions_rozai_2026-10-15.csv` (backup outputs/full_run/imperial_theaters.pre_wikidata_rozai_2026-10-15.duckdb),
-then `rebuild_after_person_merge.sh`: research.person.wikidata_qid filled; Wikidata-linked research persons 176 -> 177; receipts
-3,216,919,085 unchanged; 0 orphans, 0 shift blocks.
-
-## 2026-10-15 — Is the school French teacher Межакова (ec0f78, 1890-92) the wardrobe supervisor Межакова (77e27a, 1900-08)?
-
-```sql
--- 1. every Moscow Theatre School French teacher 1890-91..1896-97 (raw.person_entry.subject_taught LIKE '%ранцуз%')
--- 2. every surname like '%ж[аеѣо]к[оа]в%' / 'Меж%' / 'Мѣж%' in any list; every Марія/Марья Александровна in Moscow 1892-93..1899-00
--- 3. people in 2+ lists (entity_type, Graduates excluded): modal printed start date per list
--- 4. Moscow ProductionTeam rows of 1900-01 whose person is not in the 1899-00 Moscow ProductionTeam list
-```
-
-Result: (1) Межакова teaches French in the ballet department 1890-91 and 1891-92 («съ 1 сентября 1890 г.»; no leaving note); in
-1892-93 she is gone and a new French teacher appears, «3. Бѣлова, Екатерина Васильевна (съ 1 сентября 1892 г.)» -- the same day as
-the wardrobe Межакова's «съ 1 сентября 1892 г.» (Дюфоръ and Рофастъ, the other French teachers, continue). (2) No other
-Межакова/Лежакова or near spelling anywhere; no Марія Александровна in any Moscow list 1892-93..1899-00 who could be her (only
-dancers Борисова, Свѣтинская, Струкова/Горская, each with her own start). (3) Start dates are per post: of 62 people in two or more
-lists, 53 have a different printed start in each (e.g. Горскій ballet 1 іюня 1889 / school 16 января 1896; Бекъ ballet 1892 / school
-1904), so 1890 vs 1892 is not a conflict of dates. (4) The 1900-01 Moscow production list adds staff it never printed before, with
-older starts: Павловъ 1888 (помощникъ костюмера), Домашевъ 1890, Апиханова 1890 (помощница), Межакова 1892 -- the 1892-1900 gap is the
-list's coverage, not her absence. The earlier automatic REJECTION of Лежакова / ec0f78 (person_merge_log a1506152, tenure_signal
-'conflicting_dates') rested on the 1890-vs-1892 start difference.
-Scans (full-resolution PDF images, page size): 1891-92 p.265 «13. Межакова, Марія Александровна (съ 1 сентября 1890 г.). Французскій
-языкъ.»; 1892-93 p.376 (no Межакова; «3. Бѣлова, Екатерина Васильевна (съ 1 сентября 1892 г.). Французскій языкъ.»); 1899-00 p.128
-(the hats/shoes/linen department lists Бойкова only).
-
-**Merged, TENTATIVE (RG, 2026-10-15)** ec0f78 -> 77e27a via `person_merge_manual.py` + `rebuild_after_person_merge.sh`: 77e27a holds
-10 rows, 1890-91..1907-08; live persons 2552; research.person 2650; receipts 3,216,919,085 and Wikidata 177 unchanged; 0 orphans,
-0 shift blocks. RG: tenuous, wants RGIA confirmation; uncertain_person_identities.md #34.
-
 ## 2026-10-15 — Мосолова, Вѣра: one dancer held as two records? (evidence for RG)
 
 ```sql
@@ -18439,6 +18454,29 @@ Result: no other Вѣра Ильинишна anywhere; the only other Moscow-bal
 docs/eval/wikidata_decisions_rozai_2026-10-15.csv` (backup outputs/full_run/imperial_theaters.pre_wikidata_rozai_2026-10-15.duckdb),
 then `rebuild_after_person_merge.sh`: research.person.wikidata_qid filled; Wikidata-linked research persons 176 -> 177; receipts
 3,216,919,085 unchanged; 0 orphans, 0 shift blocks.
+
+## 2026-10-15 — Is the school French teacher Межакова (ec0f78, 1890-92) the wardrobe supervisor Межакова (77e27a, 1900-08)?
+
+```sql
+-- 1. every Moscow Theatre School French teacher 1890-91..1896-97 (raw.person_entry.subject_taught LIKE '%ранцуз%')
+-- 2. every surname like '%ж[аеѣо]к[оа]в%' / 'Меж%' / 'Мѣж%' in any list; every Марія/Марья Александровна in Moscow 1892-93..1899-00
+-- 3. people in 2+ lists (entity_type, Graduates excluded): modal printed start date per list
+-- 4. Moscow ProductionTeam rows of 1900-01 whose person is not in the 1899-00 Moscow ProductionTeam list
+```
+
+Result: (1) Межакова teaches French in the ballet department 1890-91 and 1891-92 («съ 1 сентября 1890 г.»; no leaving note); in
+1892-93 she is gone and a new French teacher appears, «3. Бѣлова, Екатерина Васильевна (съ 1 сентября 1892 г.)» -- the same day as
+the wardrobe Межакова's «съ 1 сентября 1892 г.» (Дюфоръ and Рофастъ, the other French teachers, continue). (2) No other
+Межакова/Лежакова or near spelling anywhere; no Марія Александровна in any Moscow list 1892-93..1899-00 who could be her (only
+dancers Борисова, Свѣтинская, Струкова/Горская, each with her own start). (3) Start dates are per post: of 62 people in two or more
+lists, 53 have a different printed start in each (e.g. Горскій ballet 1 іюня 1889 / school 16 января 1896; Бекъ ballet 1892 / school
+1904), so 1890 vs 1892 is not a conflict of dates. (4) The 1900-01 Moscow production list adds staff it never printed before, with
+older starts: Павловъ 1888 (помощникъ костюмера), Домашевъ 1890, Апиханова 1890 (помощница), Межакова 1892 -- the 1892-1900 gap is the
+list's coverage, not her absence. The earlier automatic REJECTION of Лежакова / ec0f78 (person_merge_log a1506152, tenure_signal
+'conflicting_dates') rested on the 1890-vs-1892 start difference.
+Scans (full-resolution PDF images, page size): 1891-92 p.265 «13. Межакова, Марія Александровна (съ 1 сентября 1890 г.). Французскій
+языкъ.»; 1892-93 p.376 (no Межакова; «3. Бѣлова, Екатерина Васильевна (съ 1 сентября 1892 г.). Французскій языкъ.»); 1899-00 p.128
+(the hats/shoes/linen department lists Бойкова only).
 
 ## 2026-10-15 — Мосолова, Вѣра: the 1907-08 ordinal-shift row, and her Petersburg years (RG asked for both)
 
@@ -18515,17 +18553,6 @@ periods «23 декабря 1886 – 1 апрѣля 1889» and «съ 1 сент
 1902-03..1906-07 is «Перешивкинъ, Михаилъ Ивановичъ» (nos. 50/51/53/51/48); in 1903-04 and 1905-06 both are nos. 51-52. No other
 Поливановъ in any list and no other Василій Ивановичъ in the Moscow ballet 1902-03..1906-07.
 
-## 2026-10-15 — Поливановъ merge (RG: yes): 8cf4ec -> 1072bf, before/after checks
-
-```sql
-SELECT sum(receipts_total_kopecks) FROM research.event;  -- + Wikidata count, live persons, research.person, before and after
-SELECT display_name, first_attested_season, last_attested_season FROM entities.person WHERE person_id LIKE '1072bf%';
-```
-
-Result: before: receipts 3216919085, Wikidata 177, live 2551, research.person 2649. Dry run, then --write and
-rebuild_after_person_merge.sh: «Поливановъ, Василій Егоровичъ» 1890-91..1908-09, 19 links; live 2550; receipts 3216919085 and
-Wikidata 177 unchanged; orphans 0, pending 0, 0 shift blocks.
-
 ## 2026-10-15 — BalletArtists ordinal shift: worklist (follow-up to the Мосолова 1907-08 fix)
 
 ```sql
@@ -18544,6 +18571,17 @@ analysis.*_clean already puts the ordinal on the surname and the first name righ
 patronymic_clean NULL on the 54 where the patronymic sits in tenure_note_text; for the 111 tenure rows it drops the ordinal
 altogether (three Пукирева sisters in 1892-93 all display as «Пукирева»). Worklist: docs/eval/ordinal_shift_worklist_2026-10-15.tsv
 (dry run of docs/eval/raw_fix_ordinal_shift_balletartists_2026-10-15.py), shapes A 52 / A0 2 / B 19 / C 22 / D 9 / E 111 / N 1.
+
+## 2026-10-15 — Поливановъ merge (RG: yes): 8cf4ec -> 1072bf, before/after checks
+
+```sql
+SELECT sum(receipts_total_kopecks) FROM research.event;  -- + Wikidata count, live persons, research.person, before and after
+SELECT display_name, first_attested_season, last_attested_season FROM entities.person WHERE person_id LIKE '1072bf%';
+```
+
+Result: before: receipts 3216919085, Wikidata 177, live 2551, research.person 2649. Dry run, then --write and
+rebuild_after_person_merge.sh: «Поливановъ, Василій Егоровичъ» 1890-91..1908-09, 19 links; live 2550; receipts 3216919085 and
+Wikidata 177 unchanged; orphans 0, pending 0, 0 shift blocks.
 
 ## 2026-10-15 — After the BalletArtists ordinal-shift raw fix (issue #154): diff against outputs/full_run_pre_promote_backup_2026-10-15_ordinalshift
 
