@@ -24,7 +24,7 @@ goal is catching and triaging them cheaply every run, not eliminating them.
 - **needs source check** — plausibly a real model error, but not confirmed
   against the scanned page yet
 
-## Status index (as of 2026-10-12, re-verified that evening)
+## Status index (as of 2026-10-15)
 
 The `Status:` lines on the early entries (roughly #1-#67) were written when
 each issue was found and were mostly not updated; the closures are recorded in
@@ -42,15 +42,13 @@ closes, and add new open items here as well as in their own entry.
 - #114/#146 comedy-ballets: **DECIDED 2026-10-12** (entry at the end of this
   file: Russian drama, marked `includes_dance`). Plain «Дивертиссементъ» was
   decided and scan-checked the same day.
-- A "concert" art form in the research layer: **PARKED (RG, 2026-10-12, less
-  pressing).** No concert category exists: 10 works (23 performances) have
-  «концерт» only in the title and 83 concert events are annotation-only. RG
-  wants «Концертный и балетный дивертиссемент» (now parent genre ballet) to be
-  findable as a concert too. Proposed, not built: a work-level art-form table
-  allowing two values; best designed together with the gala / mixed-evening
-  decisions (#141) so works and events share one scheme.
-  Alternative from RG (2026-10-12, "just a thought for the future"): a parent
-  genre value "gala" or "mixed" for such items, in place of two art forms.
+- Concert: SUPERSEDED 2026-10-13. Concert is now a kind of item
+  (`research.performance.item_kind`), not a company; 51 concert items. Their
+  company stays blank unless a source names it: 2026-10-15 the two concert
+  sections the season statistics count as "opera" got company opera
+  (`research_corrections/art_form_by_performance.csv`). Still open with #141:
+  RG's thought (2026-10-12) of a "gala" or "mixed" category for whole
+  evenings.
 - Connecting works and productions without equating them (RG, 2026-10-12:
   "we'll need to start figuring out ways of connecting productions without
   equating them"). Her examples: «Млада» (Римскій-Корсаковъ's opera-ballet of
@@ -67,11 +65,13 @@ closes, and add new open items here as well as in their own entry.
   Material in hand: 31 staging credits in the ballet lists, 28 works listed in
   both cities, the review formulas. Whether the two «Млада» are one work is
   still RG's open question (note of 2026-10-05). To be decided with #141.
-- `compare_season_stats.py` has not been re-run since the parent-genre
-  changes of 2026-10-12. It counts an evening with a parent-genre-ballet work
-  as a ballet evening, so it will now add 21 and 29 Sep 1894 Александринскій
-  (which the 1894-95 statistics do count as drama + ballet) and 7 Jan 1906
-  Маріинскій (no printed support).
+- Fold log and season-stats receipts (separate thread, paused 2026-10-14):
+  1892-93 and 1893-94 readings applied; next seasons for RG in the Princeton
+  volumes 1894-95, 1895-96, 1897-98. 1893-94 still off: Moscow −60.10 (two
+  −30 leads), SP −498.68 (no single-slip explanation); about 91 kopeck-less
+  receipts in those two seasons, 316 corpus-wide. (The comparison script now
+  counts ballet by `item_kind`, so the parent-genre side effect noted on
+  2026-10-12 no longer applies.)
 - `entities.person_candidate`: 10 pending (all `name_variant_shared_start`),
   12 rejected; 2,564 live persons *(checked, evening)*. A parallel
   person-audit session is working this queue and merged several hundred
@@ -126,9 +126,10 @@ closes, and add new open items here as well as in their own entry.
   SP); the 7 Apr 1904 Михайловскій session the yearbook leaves out.
 - #151: `performance_order` counts an annotation-first or benefit-heading line
   as work 1, so it is not always the order of the titled works.
-- Divertissements (entry at the end of this file): the 39 plain ones left
-  without a genre and the 2 «Большой дивертиссементъ» have not been read on
-  the scan (only the 3 that had carried «др.»); all ballet-assigned ones have.
+- Divertissements: the 41 with no company (2026-10-15 entry) were checked
+  against reviews, dancers' tallies and the printed statistics; nothing
+  places any of them, so they stay unassigned. Their cells have not been read
+  on the scan (only the 3 that had carried «др.»).
 - Possible invented genres elsewhere: 4 titles / 7 rows where a genre appears
   on a title usually printed without one («Апоѳеозъ» [Кантата.], «Наканунѣ,
   возможный случай» x4, «Снѣгурочка, весенняя сказка» [сказка], «1, 2, 3 и 4 д.
