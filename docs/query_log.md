@@ -18278,3 +18278,25 @@ Scans (full-resolution PDF images): 1895-96 p.62 «32. Дюжикова, Раи�
 holds 7 rows, 1895-96..1900-01, displayed «Дюжикова, Раиса Павловна» (majority vote, 4 of 7); live persons 2556; pending pairs 3;
 research.person 2654; review mentions resolved 21,434 (+1); receipts 3,216,919,085 and Wikidata 176 unchanged; 0 orphans,
 0 shift blocks. Reasons: uncertain_person_identities.md #35.
+
+## 2026-10-15 — Розай, Георгій (queue case 7 of 9)
+
+```sql
+SELECT pl.person_id, sp.season, sp.city, sp.entity_type, pe.page_id, pe.list_number, pe.family_name, pe.first_name,
+       pe.patronymic, pe.tenure_note_text
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id)
+WHERE pe.family_name SIMILAR TO 'Р[оа]з[аэе][йи].*' ORDER BY 2;
+-- plus: the 1907 Petersburg class and each member's later seasons; SP men's list 1907-08 / 1908-09, П-С; research.person QIDs
+```
+
+Result: two records. c2e41d graduate «4) Розай, Георгій.» (SP class of spring 1907, 15 pupils, all «опредѣлены на службу въ
+С.-Петербургскую балетную труппу съ 1-го іюня 1907 г.»); c50c1f «Розай, Георгій Альфредовичъ (съ 1 іюня 1907 г.)» SP
+BalletArtists 1908-09 no. 60, 1909-10 no. 58, 1910-11 no. 56. No other Розай; no other Георгій with a June 1907 start. He is NOT in
+the 1907-08 list, which most of his class are in (Бочаровъ, Гончаровъ, Хрисхайсонъ, Власова, ...): no. 65 Рахмановъ is followed
+directly by no. 66 Рыхляковъ (balletartists_1907-08_SP_p009, p. 24, read on the scan). Neither record has a Wikidata link.
+Scans (full-resolution PDF images, page size, all legible): graduates_1906-07_p000 (p. 78), 1907-08 p. 24, 1908-09 p. 95, 1909-10 and
+1910-11 p. 99.
+
+**Merged (RG, 2026-10-15)** c2e41d -> c50c1f via `person_merge_manual.py` + `rebuild_after_person_merge.sh`: c50c1f holds 4 rows,
+1906-07..1910-11; live persons 2555; pending pairs 2; research.person 2653; receipts 3,216,919,085 and Wikidata 176 unchanged;
+0 orphans, 0 shift blocks.

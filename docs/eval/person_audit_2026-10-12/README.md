@@ -268,7 +268,9 @@ The nine queue cases are being taken one at a time with RG, each with page evide
   Live persons 2558, 4 pairs pending.
 - 6. Дюжикова, Римма/Раиса Павловна: MERGED 2026-10-15 (RG): three records (the queue pair + 52a7f8 «Раиса», 1895-96..1898-99)
   -> 0ff007; uncertain list #35. Display name reads «Раиса Павловна» by majority vote. Live persons 2556, 3 pairs pending.
-- 7-9 not yet presented: Розай, Георгій; Грибенъ; Голласъ.
+- 7. Розай, Георгій: MERGED 2026-10-15 (RG): c2e41d (1907 graduate) -> c50c1f «Георгій Альфредовичъ» 1908-09..1910-11. Not printed
+  in 1907-08 (with several classmates): a source gap. No Wikidata link yet (seen, not pursued). Live persons 2555, 2 pairs pending.
+- 8-9 not yet presented: Грибенъ; Голласъ.
 Tools: `docs/eval/person_merge_manual.py <survivor> <losers> "<reason>" [--write]`, then `docs/eval/rebuild_after_person_merge.sh`.
 State: 2,564 live persons; 10 pairs pending; 70 graduate-only records (24 are the class of 1910-11).
 Open besides the queue: the three surname-only Petersburg guest records (Гельцеръ x2, Балашова); «Гримальди, Генріэтта» SP 1899-00;
