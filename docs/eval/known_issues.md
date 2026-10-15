@@ -23827,3 +23827,19 @@ aren't fold obscured"). `readings_1892-93.csv` -> `apply_fold_log.py 1892-93 --w
 - 1892-93's stats page prints counts but no receipts, so there is no receipts checksum for this season.
 - RG's note on 3 Четвергъ (p. 11) Михайловскій: the receipts (1452 р. 57 к., as stored) are visible in the volume;
   "recommend taking a look at this from scan later".
+
+## 1893-94 Маріинскій receipts with dropped kopecks, 2026-10-15 (RG: apply the ballet ones and the opera ones already read) -- PARTLY FIXED
+
+After the fold-log applies, 1892-93 and 1893-94 still hold 99 receipts with no kopeck part (30 + 69; 316 corpus-wide, nearly
+all spread seasons). Some are printed so (16 Nov 1893 «2901 р.», 22 Nov Михайловскій «1208 р.»); others were cut short.
+Read on the scan crops (`outputs/title_check_2026-10-10/align_crops`) and fixed with `docs/eval/fold_log/fix_1893_94_dropped_kopecks.py`:
+- ballet: 24 Oct 1893 2147 р. 95 к. (stored «2147 р. 9»), 17 Nov 2239 р. 45 к., 5 Dec 3473 р. 70 к., 6 Feb 1894 2783 р. 95 к.
+  Together 2 р. 96 к.: the Маріинскій ballet receipts now equal the printed season total exactly (99,168 р. 43 к.).
+- opera: 18 Nov 1893 2946 р. 20 к. (stored «2946 р. 2»), 3 Dec 2879 р. 20 к., 6 Dec 2939 р. 70 к., 4 Feb 1894 3535 р. 50 к.
+Backup `outputs/backups/kopecks_1893-94_2026-10-15/`; rebuild diff: exactly 8 raw.event_entry / research.event rows, +4 р. 54 к.
+SP opera is now 32 р. 03 к. OVER the printed total (was 30 р. 45 к.), so the opera surplus is a different error (a digit read
+too high), not truncation. OPEN, for a fresh session (RG, usage): the other ~91 kopeck-less figures of these two seasons need a
+scan look each; the opera +32.03 and Moscow −60.10 leads; the two Малый title misreads «Предраасудки» (8 Oct 1893) and
+«Гуръчъ Сипичкинъ» (10 Oct 1893). The 9 -> 10 Dec 1892 Маріинскій «Русланъ» 2946 р. 20 к. pair (issue #153 scan) is printed
+twice: seen on the 1892-93 pair012 crop 2026-10-13, genuine. The date checker's 173 unconfirmed events in these seasons are a
+parser gap (month name in the label), the dates themselves are right.

@@ -17966,3 +17966,46 @@ from research.event e join research.theater t using(theater_id)
 where e.season='1892-93' and e.event_status='performed' and e.receipts_total_kopecks is null order by e.city,e.date_undate;
 ```
 Result: 15 rows, all free (school matinées 14 Nov 1892 and 4 Mar 1893, the St George cavaliers) or charity (the invalids' concert, its dress rehearsal and repeat). No unexplained blanks left in 1892-93.
+
+## 2026-10-15 — What is left to audit in 1892-93 and 1893-94 after the fold-log applies
+
+```sql
+-- performed events with no receipts that are neither free nor charity (1892-93, 1893-94)
+select e.season, e.date, t.canonical_name, e.time_of_day, e.annotation, e.receipts_verbatim from research.event e join research.theater t using (theater_id)
+where e.season in ('1892-93','1893-94') and e.event_status = 'performed' and e.receipts_total_kopecks is null and not (is_free or is_charity);
+-- receipts still holding «?»
+select season, date, receipts_verbatim from research.event where season in ('1892-93','1893-94') and receipts_verbatim like '%?%';
+-- date-check status for the two seasons, and the flagged dates' printed weekday against the Julian calendar (Python, +12 days)
+select e.season, coalesce(a.date_confidence, '(none)'), count(*) from research.event e left join analysis.event_entry_date_check a using (event_id)
+where e.season in ('1892-93','1893-94') group by 1, 2;
+-- performed events with no performance that has an art form
+select e.season, e.date, t.canonical_name, e.annotation from research.event e join research.theater t using (theater_id)
+where e.season in ('1892-93','1893-94') and e.event_status = 'performed'
+  and not exists (select 1 from research.performance p where p.event_id = e.event_id and p.art_form is not null);
+-- receipts stored with no kopeck part, by season, and the 99 rows for these two seasons
+select e.season, count(*) from raw.event_entry e where e.receipts_text is not null and e.receipts_text not like '%к%' and e.receipts_text not like '%—%' group by 1;
+```
+
+Also run: `compare_season_stats.py` (scratch output).
+
+Result: 0 performed events without receipts outside free/charity; 7 «?» kopeck figures (all Александринскій 1893-94, the ones RG
+marked "try another copy"). Date check: 157 + 16 events flagged `intra_block_disagreement`, but every flagged date prints the
+weekday the Julian calendar gives (2 print none) -- the validator does not parse a date label that includes the month name
+(«16 Августа. Воскр.» -> None); the dates are right. Events with no art form: two symphony concerts and eight invalids'
+concerts, as expected. Ballet counts: all agree in both seasons and cities. Receipts with no kopeck part: 30 in 1892-93,
+69 in 1893-94 (316 corpus-wide, nearly all spread seasons). Scan check of the 1893-94 Маріинскій ballet ones: 24 Oct «2147 р. 95 к.»
+(stored «2147 р. 9»), 17 Nov «2239 р. 45 к.», 5 Dec «3473 р. 70 к.», 6 Feb «2783 р. 95 к.» (all stored without kopecks):
+together 2 р. 96 к., exactly the Маріинскій ballet gap against the printed season total. Opera cells seen on the same crops
+are truncated the same way (18 Nov «2946 р. 20 к.» stored «2 к.», 3 Dec «2879 р. 20 к.», 6 Dec «2939 р. 70 к.», 4 Feb
+«3535 р. 50 к.»); 16 Nov «2901 р.» is printed without kopecks. Nothing changed in the database.
+
+## 2026-10-15 — After the 1893-94 dropped-kopeck fix (8 Маріинскій cells)
+
+```sql
+-- every table against outputs/backups/kopecks_1893-94_2026-10-15, both ways; and
+select (select sum(receipts_total_kopecks) from research.event) - (select sum(receipts_total_kopecks) from b.research.event);
+```
+
+Also run: `compare_season_stats.py`. Result: 8 rows changed in raw.event_entry / analysis.event_entry / research.event, 1 in
+research.season_stat_check; +454 kopecks. 1893-94 SP ballet: 99,168.43 = printed 99,168.43 (Маріинскій), category diff 0.00;
+SP opera +32.03 (was +30.45); SP total −494.14 (was −498.68); Moscow unchanged −60.10.
