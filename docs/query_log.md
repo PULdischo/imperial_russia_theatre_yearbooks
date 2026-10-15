@@ -18202,3 +18202,26 @@ patronymic printed; «Сергѣевна» is an extraction error (the Ячме�
 person_link rows moved (the rebuild itself folded 434364 into 32c88c, names now identical); works 2970, events 32808, receipts
 3,216,919,085 unchanged. Then `person_merge_manual.py 6592bf 32c88c` + `rebuild_after_person_merge.sh`: 6592bf holds 13 rows,
 1898-99..1910-11; live persons 2560; pending pairs 6; research.person 2658; Wikidata 176; 0 orphans; 0 shift blocks.
+
+## 2026-10-15 — Иманъ, Юрій / Юлій Ивановичъ (queue case 4 of 9)
+
+```sql
+SELECT pl.person_id, sp.season, pe.page_id, pe.institution, pe.heading_path, pe.family_name, pe.first_name,
+       pe.patronymic, pe.tenure_note_text
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id)
+WHERE pe.family_name LIKE 'Иман%' ORDER BY 2;
+-- plus: every Юлій/Юрій Ивановичъ, and every ProductionTeam row «съ 1 сентября 1882»
+```
+
+Result: two records, ProductionTeam only, every row «С.-ПЕТЕРБУРГЪ / Отдѣлъ бутафорскій / Бутафоры / Маріинскій театръ»
+and «съ 1 сентября 1882 г.»: 689025 «Юрій Ивановичъ» 1890-91..1895-96 (6), 455bef «Юлій Ивановичъ» 1896-97..1906-07 (11),
+the last «Оставилъ службу 1 сентября 1907 г.». No other Иманъ in the corpus. The other Юлій Ивановичи (Дюфоръ, school staff
+from 1889, † 1898-99; Федергансъ, flautist from 1897) do not fit; the other 1882 ProductionTeam starts are different people.
+Each year he is the only бутафоръ printed for the Маріинскій.
+Scans (full-resolution PDF images): 1895-96 p.108 «Иманъ, Юрій Ивановичъ (съ 1 сентября 1882 г.)» and 1896-97 p.105
+«Иманъ, Юлій Ивановичъ (съ 1 сентября 1882 г.)», both zoomed; 1890-91 p.112 «Юрій» and 1906-07 p.64 «Юлій ... Оставилъ
+службу 1 сентября 1907 г.» at page size.
+
+**Merged (RG, 2026-10-15)** 689025 -> 455bef via `person_merge_manual.py` + `rebuild_after_person_merge.sh`: 455bef holds
+17 rows, 1890-91..1906-07; live persons 2559; pending pairs 5; research.person 2657; receipts 3,216,919,085 and Wikidata
+176 unchanged; 0 orphans, 0 shift blocks. Reasons: uncertain_person_identities.md #33.

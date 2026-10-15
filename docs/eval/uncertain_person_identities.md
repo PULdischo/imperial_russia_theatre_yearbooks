@@ -286,6 +286,14 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** balletartists_1905-06_MSK_p000 no. 3, balletartists_1906-07_MSK_p000 no. 4, balletartists_1907-08_MSK_p001 no. 4 (all read zoomed on the full-resolution PDF images, 2026-10-15); graduates_1894-95_p002; surname printed Аѳ-/Аф-/Афо- by year. Query log 2026-10-15.
 - **Would resolve it:** her service record (формулярный списокъ), or a marriage/name record.
 
+## 33. Иманъ, Юрій / Юлій Ивановичъ (SP ProductionTeam, бутафоръ, Маріинскій) -- «Юрій» to 1895-96, «Юлій» from 1896-97
+- **Status:** MERGED (RG, 2026-10-15; 689025 «Юрій» -> 455bef «Юлій»; `docs/eval/person_merge_manual.py`). The display name follows the majority form, «Юлій» (11 of 17 seasons); which name is right is not known.
+- **What is uncertain:** the first name changes, not its spelling: «Иманъ, Юрій Ивановичъ (съ 1 сентября 1882 г.)» 1890-91..1895-96, «Иманъ, Юлій Ивановичъ (съ 1 сентября 1882 г.)» 1896-97..1906-07 (the last «Оставилъ службу 1 сентября 1907 г.»). Nothing in print explains it.
+- **For one man:** every row has the same start, 1 September 1882, and the same heading (С.-Петербургъ / Отдѣлъ бутафорскій / Бутафоры / Маріинскій театръ); he is the only бутафоръ printed for the Маріинскій each year; «Юлій» begins the season after the last «Юрій»; no other Иманъ in the corpus; the names differ by one letter (р/л).
+- **For two men / against:** Юрій and Юлій are different names, not spellings of one. The other Юлій Ивановичи (Дюфоръ, school staff 1889-1898/99; Федергансъ, flautist from 1897) do not fit.
+- **Where to look:** productionteam_1895-96_p001 (printed p. 108) and productionteam_1896-97_p001 (p. 105), both read zoomed on the full-resolution PDF images, 2026-10-15; 1890-91 p. 112 and 1906-07 p. 64 at page size. Query log 2026-10-15.
+- **Would resolve it:** his service record, or the Directorate's staff registers.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
