@@ -18033,3 +18033,75 @@ Script change only (no database change): `classify_work` now files a performance
 Re-run against production. Result: 1892-93 Moscow «Балетныхъ» 41 = 41 and «Концертовъ» 2 = 2 (the two «Сюита изъ бал.
 Щелкунчикъ» evenings, 3,075 р. 05 к.); also now matching on count: 1895-96 Moscow concerts 2 vs 1 (was 0), 1896-97 Moscow 1 = 1
 (was 0), 1900-01 SP 5 vs 2 (was 0). Exact family rows 69 -> 72. Ballet counts and city totals unchanged.
+
+## 2026-10-15 — The plain divertissements with no art form: what evidence is there for who performed them?
+
+```sql
+SELECT w.canonical_title, w.canonical_genre, p.art_form, p.item_kind, count(*) FROM research.performance p JOIN research.work w USING(work_id)
+WHERE lower(w.canonical_title) LIKE '%дивертис%' GROUP BY ALL ORDER BY 1,2,3,4;
+
+SELECT e.season, e.city, CAST(e.date AS VARCHAR), t.canonical_name, e.time_of_day, e.receipts_total_kopecks, e.annotation, e.is_charity, e.is_benefit, p.verbatim_title,
+ (SELECT string_agg(o.verbatim_title || coalesce(' ['||o.verbatim_genre||']',''), ' / ' ORDER BY o.performance_order) FROM research.performance o WHERE o.event_id=e.event_id AND o.performance_id<>p.performance_id)
+FROM research.performance p JOIN research.event e USING(event_id) JOIN research.theater t USING(theater_id)
+WHERE p.item_kind='divertissement' AND p.art_form IS NULL ORDER BY 3;
+
+SELECT season, city, category_verbatim, qualifier_verbatim, count, receipts_verbatim FROM research.season_stat_line
+WHERE line_kind<>'subtotal' AND (lower(coalesce(qualifier_verbatim,'')) LIKE '%балет%' OR category_verbatim LIKE 'Смѣшан%');
+
+-- dancers' own tallies: "въ N дивертиссементахъ—X" in BalletArtists credit summaries, per season and city (parsed in Python)
+SELECT sp.season, sp.city, e.family_name, e.credit_summary_text FROM raw.person_entry e JOIN raw.source_pages sp USING(page_id)
+WHERE e.entity_type='BalletArtists' AND e.credit_summary_text ILIKE '%дивертис%';
+SELECT e.season, e.city, coalesce(p.art_form,'unassigned'), t.canonical_name, count(DISTINCT e.event_id)
+FROM research.performance p JOIN research.event e USING(event_id) JOIN research.theater t USING(theater_id)
+WHERE p.item_kind='divertissement' AND e.event_status='performed' GROUP BY ALL;
+```
+
+Result: 41 divertissement performances have no art form (37 «Дивертиссементъ», 2 «Дивертиссментъ», 2 «Большой дивертиссементъ»); all have item_kind 'divertissement'. 10 are a run at the Малый, 18 Oct–23 Nov 1895 (Старый закалъ x6 and four others), regular paid evenings; about 21 are charity or benefit evenings 1900–1908, almost all printed without receipts; 6 are a short opera + divertissement (Малый 1895 Паяцы, Большой 1896 and Jan 1908 x2, Маріинскій 1902, 1906, Большой 1907 benefit). Only two have a review passage on the date, neither about the divertissement. The printed season statistics have no line that could hold any of them except 1894-95 SP (16 Sep 1894 is in «опера и балетъ», because of Очарованный лѣсъ) and possibly 1896-97 Moscow «опера и драма» 2 / 1897-98 SP «русская драма, опера и балетъ» 1 (not tested). Dancers' tallies: BalletArtists summaries count divertissements in some seasons (e.g. 1904-05 SP: 81 dancers, up to 4 each; 1900-01 SP up to 2; 1907-08 SP one dancer, 1), but in 1895-96 SP Леньяни has 3 while the Repertoire prints only 2 divertissement evenings in Petersburg that season, so the tallies include divertissements outside the Repertoire's rows and cannot be tied to particular evenings.
+
+## 2026-10-15 — Testing the two untested mixed lines against the unassigned divertissements; 1904-05 SP dancers' summaries
+
+```sql
+SELECT line_no, category_verbatim, venue_verbatim, qualifier_verbatim, count, receipts_verbatim, footnote_refs FROM research.season_stat_line
+WHERE (season='1896-97' AND city='Moscow') OR (season='1897-98' AND city='SP') ORDER BY season, line_no;
+SELECT season, footnote_no, text_verbatim FROM research.season_stat_footnote WHERE season IN ('1896-97','1897-98');
+-- evenings mixing art forms (anthem ignored) or carrying a divertissement, per season and city
+SELECT CAST(e.date AS VARCHAR), t.canonical_name, e.time_of_day, e.receipts_total_kopecks/100.0, e.annotation,
+  string_agg(p.verbatim_title||coalesce(' ['||p.verbatim_genre||']','')||' {'||coalesce(p.art_form,'-')||'/'||coalesce(p.item_kind,'-')||'}',' / ' ORDER BY p.performance_order)
+FROM research.event e JOIN research.theater t USING(theater_id) JOIN research.performance p USING(event_id)
+WHERE e.season='1896-97' AND e.city='Moscow' AND e.event_status='performed'
+GROUP BY ALL HAVING bool_or(p.art_form='opera') AND bool_or(coalesce(p.art_form,'')<>'opera' AND NOT coalesce(p.is_ceremonial,false)) ORDER BY 1;
+-- (same shape for 1897-98 SP with: count(DISTINCT art_form) >= 2 OR bool_or(item_kind='divertissement'))
+SELECT e.entry_id, e.family_name, e.credit_summary_text FROM raw.person_entry e JOIN raw.source_pages sp USING(page_id)
+WHERE e.entity_type='BalletArtists' AND sp.season='1904-05' AND sp.city='SP' AND e.credit_summary_text ILIKE '%дивертис%';
+```
+
+Result. 1896-97 Moscow: «опера и балетъ» 4 / 6,253.23 = 15 Sep (2,639.58) + 29 Sep (1,851.83) + 14 Oct (1,761.82), each opera + ballet, + the free student matinée of 14 Nov (footnote 9), exactly. «опера и драма» 2 / 3,527.98 = the two «О время! / Ѳедулъ съ дѣтьми» evenings, 24 Nov (2,643.52) and 26 Nov (894.46), which sum to 3,537.98: 10.00 р. more than the print (a one-digit difference somewhere, not checked on the scan). The 21 Nov 1896 «Гензель и Гретель» + Дивертиссементъ evening (1,591.96) is in neither line, so it was counted as opera. 1897-98 SP: «русская драма, опера, французская драма и балетъ» 1 = 1 Feb 1898 Маріинскій (footnote 7, Русское Театральное Общество; Женитьба / Le Diplomate / Гугеноты duet / Золушка act); «русская драма, опера и балетъ» 1 = 5 May 1898 Маріинскій (footnote 8, famine relief; Женитьба / Концертное отдѣленіе / Пахита act), so the yearbook calls the concert section "opera" here. The 23 Oct 1897 Нильскій benefit (drama + Дивертиссементъ) is in neither, so it was counted as Russian drama. 1904-05 SP: 81 of 233 dancers' summaries count divertissements; none names one by occasion; every work their «Въ томъ числѣ» lists name is an ordinary ballet in the Repertoire and the ballet list (На перепутьи, Путешествующая танцовщица, Брама...).
+
+## 2026-10-15 — Receipts fix check (26 Nov 1896) and the statistics' classification of concert sections
+
+```sql
+select sum(receipts_total_kopecks), count(*) from research.event;   -- before (backup) and after
+select receipts_total_kopecks from research.event e join research.theater t using(theater_id) where e.date='1896-11-26' and t.canonical_name='Большой';
+-- every evening with a concert item, with its season's printed mixed / concert lines and footnotes (joined in Python)
+SELECT e.season, e.city, CAST(e.date AS VARCHAR), t.canonical_name, e.receipts_total_kopecks/100.0, e.annotation,
+ string_agg(p.verbatim_title||' {'||coalesce(p.art_form,p.item_kind)||'}',' / ' ORDER BY p.performance_order)
+FROM research.event e JOIN research.theater t USING(theater_id) JOIN research.performance p USING(event_id)
+WHERE e.event_id IN (SELECT event_id FROM research.performance WHERE item_kind='concert') AND e.event_status='performed' GROUP BY ALL ORDER BY 3;
+SELECT season, city, category_verbatim, qualifier_verbatim, count, receipts_verbatim, footnote_refs FROM research.season_stat_line
+WHERE line_kind<>'subtotal' AND (category_verbatim LIKE 'Смѣшан%' OR category_verbatim LIKE '»%' OR category_verbatim LIKE 'Концерт%' OR category_verbatim LIKE 'Музыкально%');
+SELECT p.art_form, p.art_form_basis, count(*) FROM research.performance p WHERE p.item_kind='concert' GROUP BY ALL;
+```
+
+Result: receipts sum 3,216,920,085 -> 3,216,919,085 kopecks (−10.00 р.), events 32,808 both; the cell is now 884.46. Concert items: 51, all with art_form blank. Two evenings place a concert section in a mixed line naming opera, with no opera item on the bill: 29 Apr 1894 Михайловскій (2,886.90 = «русская драма, опера, балетъ и французская драма» 1, footnote 8 Greek earthquake relief) and 5 May 1898 Маріинскій («русская драма, опера и балетъ» 1, footnote 8 famine relief). 1902-04-20 Большой (opera, drama, concert, ballet) = an unqualified «Смѣшанныхъ 1, 3,286.36», which says nothing about the concert section.
+
+## 2026-10-15 — After setting company = opera on the two concert sections
+
+```sql
+SELECT CAST(e.date AS VARCHAR), t.canonical_name, p.verbatim_title, p.art_form, p.item_kind, e.art_forms, e.item_kinds
+FROM research.performance p JOIN research.event e USING(event_id) JOIN research.theater t USING(theater_id)
+WHERE p.item_kind='concert' AND p.art_form IS NOT NULL;
+SELECT count(*) FILTER (WHERE art_form IS NULL), count(*) FROM research.performance WHERE item_kind='concert';
+select sum(receipts_total_kopecks), count(*) from research.event;
+```
+
+Result: 29 Apr 1894 Михайловскій and 5 May 1898 Маріинскій «Концертное отдѣленіе»: art_form opera, item_kind concert; event art_forms «ballet; opera; Russian drama; French drama» and «ballet; opera; Russian drama». 49 of 51 concert items still have no company. Receipts 3,216,919,085 kopecks, 32,808 events (unchanged).

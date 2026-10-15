@@ -202,6 +202,7 @@ at the level of layout and page-planning rather than spelling.
   re-scanning recovers this — the original bound volume itself doesn't
   contain it. First flagged 2026-09-24, reasoning corrected 2026-09-25
   after being asked to double-check the "blank margin" detail directly.
+- `repertoire_1896-97_pair010`, 26 Nov 1896 Большой («О время! / Ѳедулъ съ дѣтьми»): receipts print «8?4 р. 46 к.», the middle digit inked only in its upper loop. The 1896-97 Moscow statistics line «опера и драма 2 — 3,527 р. 98 к.» needs 884 (2,643.52 + 884.46). Stored as 884 (2026-10-15, viewed at 900 dpi).
 
 ## A whole misprinted date-range header
 

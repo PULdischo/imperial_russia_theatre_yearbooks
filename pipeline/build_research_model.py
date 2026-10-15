@@ -220,6 +220,12 @@ CONCERT_TITLE_RE = (r"^(концертное отдѣленіе|симфонич
 #: and ballet rules and before every label rule.
 #: The build fails if a title matches no work or the art form is not in ART_FORMS.
 ART_FORM_BY_TITLE_CSV = Path(__file__).parent / "research_corrections" / "art_form_by_title.csv"
+#: Company for ONE printed performance, where a source says who gave it although
+#: the title does not (e.g. the season statistics count a gala's concert section as
+#: "opera"). Keyed on the raw cell (page_id, date_text, theater, title); applied after
+#: the concert step, so item_kind is untouched. The build fails if a row matches no
+#: performance or names an art form outside ART_FORMS.
+ART_FORM_BY_PERFORMANCE_CSV = Path(__file__).parent / "research_corrections" / "art_form_by_performance.csv"
 CONCERT_EVENT_RE = r"концерт|музыкально-литературн|литературно-музыкальн|вокально-инструментально"
 
 #: The anthem is "not a work, per se, but a ceremonial item" (RG, 2026-10-12):
@@ -1018,6 +1024,19 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
     con.execute("""UPDATE perf_art SET art_form = NULL,
                           art_form_basis = 'concert item: a kind of item, not a company (see item_kind)'
                    WHERE art_form = 'concert'""")
+    if ART_FORM_BY_PERFORMANCE_CSV.exists():
+        for row in csv.DictReader(open(ART_FORM_BY_PERFORMANCE_CSV, encoding="utf-8")):
+            if row["art_form"] not in ART_FORMS:
+                raise SystemExit(f"art_form_by_performance.csv: {row['art_form']!r} is not in ART_FORMS")
+            ids = [r[0] for r in con.execute("""
+                SELECT p.performance_id FROM raw.event_entry_performance p JOIN raw.event_entry e USING (event_id)
+                WHERE e.page_id = ? AND e.date_text = ? AND e.theater = ? AND p.performance_title = ?""",
+                [row["page_id"], row["date_text"], row["theater"], row["performance_title"]]).fetchall()]
+            if len(ids) != 1:
+                raise SystemExit(f"art_form_by_performance.csv: {row['page_id']} {row['date_text']} "
+                                 f"{row['performance_title']!r} matches {len(ids)} performances")
+            con.execute("UPDATE perf_art SET art_form = ?, art_form_basis = ? WHERE performance_id = ?",
+                        [row["art_form"], row["basis"], ids[0]])
     order_case = "CASE art_form " + " ".join(f"WHEN {lit(a)} THEN {i}" for i, a in enumerate(ART_FORMS)) + " END"
     korder_case = "CASE item_kind " + " ".join(f"WHEN {lit(k)} THEN {i}" for i, k in enumerate(ITEM_KINDS)) + " END"
     con.execute(f"""
