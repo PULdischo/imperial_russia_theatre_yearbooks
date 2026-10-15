@@ -303,6 +303,14 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** productionteam_1904-05_p004 (p. 70) and productionteam_1905-06_p004 (p. 66), both read zoomed on the full-resolution PDF images, 2026-10-15; 1900-01 p. 129, 1907-08 p. 63, theaterschoolstaff_1890-91_p004 (p. 265) at page size. Query log 2026-10-15.
 - **Would resolve it:** her service record, which would give the posts held from 1890 and 1892.
 
+## 35. Дюжикова, Римма / Раиса Павловна (SP BalletArtists, class of 1896) -- «Раиса» in the lists 1895-96..1898-99, «Римма» before and after
+- **Status:** MERGED (RG, 2026-10-15; a4f311 graduate «Римма» and 52a7f8 «Раиса Павловна» -> 0ff007 «Римма Павловна»; `docs/eval/person_merge_manual.py`). The display name is computed by majority vote, so it reads «Дюжикова, Раиса Павловна» (4 of 7 rows) although «Римма» is the form on the graduation page and in her last two seasons; there is no per-person display-name override yet.
+- **What is uncertain:** the first name changes, not its spelling: «2) Дюжикова, Римма.» (Report 1895-96 p. 459); «Дюжикова, Раиса Павловна (съ 1 мая 1896 г.)» in the Petersburg lists 1895-96..1898-99; «Дюжикова, Римма Павловна (съ 1 мая 1896 г.)» 1899-00 and 1900-01, the last «Оставила службу 1 сентября 1901 г.». Nothing in print explains it. Which name is right is not known, though «Раиса» sits inside a «Римма» run.
+- **For one woman:** all three records start 1 May 1896, the posting date of the class of spring 1896 (all ten of whom are in the 1899-00 list); no other Дюжикова and no other Римма in the corpus; the other Раисы (Гурьева, school staff; Мацкевичъ, class of 1905) do not fit; Раиса and Римма begin alike and are the same length, RG's "similar names" type of copying slip (2026-10-15).
+- **For two women / against:** Раиса and Римма are different names.
+- **Where to look:** balletartists_1895-96_SP_p002 (p. 62), balletartists_1899-00_SP_p001 (p. 72), balletartists_1900-01_SP_p001, all read zoomed on the full-resolution PDF images, 2026-10-15; 1896-97 p. 58, 1897-98 p. 59, 1898-99 p. 76 and graduates_1895-96_p001 (p. 459) at page size. Query log 2026-10-15.
+- **Would resolve it:** her service record or the Theatre School's register.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.

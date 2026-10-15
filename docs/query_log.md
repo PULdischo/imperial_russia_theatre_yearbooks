@@ -18253,3 +18253,28 @@ p.265 «13. Межакова, Марія Александровна (съ 1 се
 **Merged (RG, 2026-10-15)** 9eadf7 -> 77e27a via `person_merge_manual.py` + `rebuild_after_person_merge.sh`: 77e27a holds 8
 rows, 1900-01..1907-08; ec0f78 (school French teacher) left separate; live persons 2558; pending pairs 4; research.person 2656;
 receipts 3,216,919,085 and Wikidata 176 unchanged; 0 orphans, 0 shift blocks. Reasons: uncertain_person_identities.md #34.
+
+## 2026-10-15 — Дюжикова, Римма / Раиса Павловна (queue case 6 of 9)
+
+```sql
+SELECT pl.person_id, sp.season, sp.city, sp.entity_type, pe.page_id, pe.list_number, pe.family_name, pe.first_name,
+       pe.patronymic, pe.tenure_note_text
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id)
+WHERE pe.family_name SIMILAR TO 'Д[юу]ж[иеѣ]к.*' OR pe.first_name LIKE 'Римм%' ORDER BY 2;
+-- plus: every Раиса/Римма in the corpus; the SP 1899-00 rows «съ 1 мая 1896»; the 1895-96 graduates page
+```
+
+Result: THREE records, not the two in the queue, all «съ 1 мая 1896 г.», Petersburg: a4f311 graduate «Дюжикова, Римма»
+(class of spring 1896, ten pupils, all posted «съ 1-го мая 1896 года, въ С.-Петербургскую балетную труппу»); 52a7f8 «Дюжикова,
+Раиса Павловна» SP BalletArtists 1895-96..1898-99 (4); 0ff007 «Дюжикова, Римма Павловна» 1899-00, 1900-01, the latter
+«Оставила службу 1 сентября 1901 г.» (captured in credit_summary_text and service_periods). No other Дюжикова; the only other
+Раисы are Гурьева (school staff) and Мацкевичъ (class of 1905); no other Римма. All ten of the 1896 class are in the SP list of 1899-00.
+Scans (full-resolution PDF images): 1895-96 p.62 «32. Дюжикова, Раиса Павловна (съ 1 мая 1896 г.)», 1899-00 p.72
+«32. Дюжикова, Римма Павловна (съ 1 мая 1896 г.)», 1900-01 «31. Дюжикова, Римма Павловна (съ 1 мая 1896 г.) ... Оставила
+службу 1 сентября 1901 г.», all zoomed; 1896-97 p.58, 1897-98 p.59, 1898-99 p.76 «Раиса Павловна» and the graduates page
+(1895-96 p.459) «2) Дюжикова, Римма.» at page size.
+
+**Merged (RG, 2026-10-15)** a4f311 + 52a7f8 -> 0ff007 via `person_merge_manual.py` + `rebuild_after_person_merge.sh`: 0ff007
+holds 7 rows, 1895-96..1900-01, displayed «Дюжикова, Раиса Павловна» (majority vote, 4 of 7); live persons 2556; pending pairs 3;
+research.person 2654; review mentions resolved 21,434 (+1); receipts 3,216,919,085 and Wikidata 176 unchanged; 0 orphans,
+0 shift blocks. Reasons: uncertain_person_identities.md #35.

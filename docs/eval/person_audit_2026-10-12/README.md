@@ -266,7 +266,9 @@ The nine queue cases are being taken one at a time with RG, each with page evide
 - 5. Межакова/Лежакова, Марія Александровна: MERGED 2026-10-15 (RG): the Moscow wardrobe supervisor 1900-01..1907-08, 9eadf7 -> 77e27a;
   uncertain list #34. Still OPEN there: whether the school French teacher of 1890-92 (ec0f78, «съ 1 сентября 1890») is the same woman.
   Live persons 2558, 4 pairs pending.
-- 6-9 not yet presented: Дюжикова, Римма; Розай, Георгій; Грибенъ; Голласъ.
+- 6. Дюжикова, Римма/Раиса Павловна: MERGED 2026-10-15 (RG): three records (the queue pair + 52a7f8 «Раиса», 1895-96..1898-99)
+  -> 0ff007; uncertain list #35. Display name reads «Раиса Павловна» by majority vote. Live persons 2556, 3 pairs pending.
+- 7-9 not yet presented: Розай, Георгій; Грибенъ; Голласъ.
 Tools: `docs/eval/person_merge_manual.py <survivor> <losers> "<reason>" [--write]`, then `docs/eval/rebuild_after_person_merge.sh`.
 State: 2,564 live persons; 10 pairs pending; 70 graduate-only records (24 are the class of 1910-11).
 Open besides the queue: the three surname-only Petersburg guest records (Гельцеръ x2, Балашова); «Гримальди, Генріэтта» SP 1899-00;
