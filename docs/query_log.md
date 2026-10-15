@@ -18300,3 +18300,31 @@ Scans (full-resolution PDF images, page size, all legible): graduates_1906-07_p0
 **Merged (RG, 2026-10-15)** c2e41d -> c50c1f via `person_merge_manual.py` + `rebuild_after_person_merge.sh`: c50c1f holds 4 rows,
 1906-07..1910-11; live persons 2555; pending pairs 2; research.person 2653; receipts 3,216,919,085 and Wikidata 176 unchanged;
 0 orphans, 0 shift blocks.
+
+## 2026-10-15 — Грибенъ (queue case 8 of 9)
+
+```sql
+SELECT pl.person_id, sp.season, sp.entity_type, pe.page_id, pe.list_number, pe.institution, pe.heading_path,
+       pe.family_name, pe.first_name, pe.patronymic, pe.tenure_note_text
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id)
+WHERE pe.family_name SIMILAR TO 'Гр[иы]б[еѣ]н.*' ORDER BY 2;
+-- plus: how the 1891-92 ballet-orchestra «(см. оперный оркестръ)» rows are linked (74 rows, each to the opera-orchestra person)
+```
+
+Result: two men, SP Musicians, and three records that do not match them. Августъ Ѳедоровичъ, «съ 1 мая 1862 г.», timpani /
+percussion, «† 17 марта 1896 г.»; Ѳедоръ Ѳедоровичъ, «съ 15 августа 1873 г.», percussion, «Оставилъ службу 1 октября 1894 г.,
+но продолжаетъ участвовать въ оркестрѣ на поспектакльной платѣ», back «съ 1 августа 1897 г.» (piano; «Переведенъ изъ Музыкальной
+библіотеки 15 октября 1899 г.») to 1910-11. Records: 1ed184 = Августъ in the Михайловскій orchestra 1890-91..1892-93 + the opera
+orchestra 1895-96 (4); 11088e = Ѳедоръ, opera orchestra 1890-91..1894-95 and 1900-01..1910-11 (16); 3d3d25 (5) = the bare
+ballet-orchestra cross-reference «Грибенъ (см. оперный оркестръ)» 1890-91, 1891-92, 1892-93 PLUS «Грибенъ 1-й, Августъ
+Ѳедоровичъ (съ 1 мая 1862 г.)» of the opera orchestra 1893-94 and 1894-95 -- hence the "same list, same season" flag.
+Scans (full-resolution PDF images): 1890-91 p.75 opera orchestra «23. Грибенъ, Ѳедоръ Ѳедоровичъ (съ 15 августа 1873 г.). Ударные
+инструменты.» (the only Грибенъ there); p.78 ballet orchestra «18. Грибенъ (см. оперный оркестръ). Ударные инструменты.» (zoomed);
+p.80 Михайловскій orchestra «16. Грибенъ, Августъ Ѳедоровичъ (съ 1 мая 1862 г.). Литавры.»; 1892-93 p.71 ballet orchestra «18.
+Грибенъ (см. оперный оркестръ). Ударные инструменты.»; 1893-94 p.72 opera orchestra «29. Грибенъ 1-й, Августъ Ѳедоровичъ (съ 1 мая
+1862 г.)» and «30. Грибенъ 2-й, Ѳедоръ Ѳедоровичъ (съ 15 августа 1873 г.)», both «Ударные инструменты». Page size except as noted.
+
+**Applied (RG, 2026-10-15)** `docs/eval/person_resplit_griben_2026-10-15.py --write` (3 cross-references 3d3d25 -> 11088e,
+split_manual 1ed184 / 11088e), then `person_merge_manual.py 1ed184 3d3d25` + `rebuild_after_person_merge.sh`. Result after the full
+build_entities rebuild: 1ed184 Августъ 6 rows 1890-91..1895-96; 11088e Ѳедоръ 19 rows 1890-91..1910-11; 3d3d25 superseded; live
+persons 2554; pending pairs 1; research.person 2652; receipts 3,216,919,085 and Wikidata 176 unchanged; 0 orphans, 0 shift blocks.

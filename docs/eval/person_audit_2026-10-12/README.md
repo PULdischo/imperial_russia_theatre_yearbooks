@@ -270,7 +270,13 @@ The nine queue cases are being taken one at a time with RG, each with page evide
   -> 0ff007; uncertain list #35. Display name reads «Раиса Павловна» by majority vote. Live persons 2556, 3 pairs pending.
 - 7. Розай, Георгій: MERGED 2026-10-15 (RG): c2e41d (1907 graduate) -> c50c1f «Георгій Альфредовичъ» 1908-09..1910-11. Not printed
   in 1907-08 (with several classmates): a source gap. No Wikidata link yet (seen, not pursued). Live persons 2555, 2 pairs pending.
-- 8-9 not yet presented: Грибенъ; Голласъ.
+- 8. Грибенъ: NOT a merge -- two men, Августъ Ѳедоровичъ (съ 1 мая 1862, † 17 марта 1896) and Ѳедоръ Ѳедоровичъ (съ 15 августа
+  1873; again съ 1 августа 1897). Record 3d3d25 mixed them. RG 2026-10-15: the three bare ballet-orchestra cross-references
+  «Грибенъ (см. оперный оркестръ)» 1890-93 moved to Ѳедоръ 11088e (the only Грибенъ in the opera orchestra those years), the
+  1893-95 «Грибенъ 1-й, Августъ» rows merged into Августъ 1ed184, split_manual logged between the two
+  (`docs/eval/person_resplit_griben_2026-10-15.py`, then `person_merge_manual.py 1ed184 3d3d25`). Held through a full
+  build_entities rebuild. Live persons 2554, 1 pair pending.
+- 9 not yet presented: Голласъ.
 Tools: `docs/eval/person_merge_manual.py <survivor> <losers> "<reason>" [--write]`, then `docs/eval/rebuild_after_person_merge.sh`.
 State: 2,564 live persons; 10 pairs pending; 70 graduate-only records (24 are the class of 1910-11).
 Open besides the queue: the three surname-only Petersburg guest records (Гельцеръ x2, Балашова); «Гримальди, Генріэтта» SP 1899-00;
