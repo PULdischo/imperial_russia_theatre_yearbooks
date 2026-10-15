@@ -18176,3 +18176,29 @@ Result: «Рустикальный» 0 rows. Дочь микадо, Repertoire 1
 `rebuild_after_person_merge.sh`. Result: 7dff57 holds 14 rows, 1894-95..1907-08; live persons 2562; pending pairs 8;
 research.person 2660; receipts 3,216,919,085 and Wikidata 176 unchanged; 0 orphans, 0 shift blocks; review mentions
 resolved 21,433. Reasons: uncertain_person_identities.md #32.
+
+## 2026-10-15 — Чичелева, Елизавета (queue case 3 of 9)
+
+```sql
+SELECT pl.person_id, sp.season, sp.city, sp.entity_type, pe.page_id, pe.list_number, pe.family_name,
+       pe.first_name, pe.patronymic, pe.tenure_note_text
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+JOIN entities.person_link pl USING (entry_id) WHERE pe.family_name SIMILAR TO 'Ч[иеѣ]ч[еѣи]л[еѣо]в.*' ORDER BY 2, 3;
+-- plus: every Елизавета with «1 сентября 1899» or patronymic Сергѣевна, and the 1899 Moscow class's later rows
+```
+
+Result: three live records, all «съ 1 сентября 1899 г.», Moscow BalletArtists throughout: 434364 (graduate, Moscow class
+of spring 1899, «5) Чичелева, Елизавета», + 1900-01, 1901-02 with no patronymic); 32c88c («Сергѣевна», 1899-00 only);
+6592bf («Васильевна», 1902-03..1910-11, 9 seasons). No male Чичелевъ in any list; the only other Елизавета Сергѣевна is
+Ячменева 1-я (from 1902). A Чичелева, Елена is among the 1910-11 graduates (graduates_1910-11_p001, c3b834), a different woman.
+Scans (full-resolution PDF images, zoomed): 1899-00 p.115 «111. Чичелева, Елизавета (съ 1 сентября 1899 г.)» -- NO
+patronymic printed; «Сергѣевна» is an extraction error (the Ячменева sisters, «Сергѣевна», are on the same page).
+1900-01 «115. Чичелева, Елизавета (съ 1 сентября 1899 г.)»; 1901-02 «111. Чичелева, Елизавета (съ 1 сентя-»;
+1902-03 «107. Чичелева, Елизавета Васильевна (съ 1 сентября 1899 г)»; 1910-11 «74. Чичилева, Елизавета Васильевна
+(съ 1 сентября 1899 г.)» (surname so printed); 1908-09 «77. Чичелева, Елизавета Васильевна» read at page size.
+
+**Applied (RG, 2026-10-15).** Raw fix: 1899-00 no. 111 patronymic «Сергѣевна» -> null
+(`docs/eval/raw_fix_chicheleva_patronymic_2026-10-15.py`), then `rebuild_after_raw_edit.sh`; against the backup only 3
+person_link rows moved (the rebuild itself folded 434364 into 32c88c, names now identical); works 2970, events 32808, receipts
+3,216,919,085 unchanged. Then `person_merge_manual.py 6592bf 32c88c` + `rebuild_after_person_merge.sh`: 6592bf holds 13 rows,
+1898-99..1910-11; live persons 2560; pending pairs 6; research.person 2658; Wikidata 176; 0 orphans; 0 shift blocks.

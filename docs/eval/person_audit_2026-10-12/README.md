@@ -257,7 +257,11 @@ The nine queue cases are being taken one at a time with RG, each with page evide
 - 1. Адамовъ, Михаилъ: MERGED (transfer to Moscow printed; `person_merge_manual.py`).
 - 2. Аѳанасьева, Вѣра: MERGED 2026-10-15 (RG): one Moscow dancer, patronymic Михайловна -> Леонидовна in 1906-07 unexplained; reasons in uncertain_person_identities.md #32. The 12 Oct note of three missing seasons was wrong (printed «Афонасьева»). Live persons 2562, 8 pairs pending.
   Tangents seen, not pursued: Мосолова, Вѣра Владиміровна/Ильинишна and Поливановъ, Василій Егоровичъ/«Ивановичъ» (1903-04, 1905-06) are each held as two records (query_log 2026-10-15).
-- 3-9 not yet presented: Чичелева, Елизавета; Иманъ Юрій/Юлій; Межакова/Лежакова; Дюжикова, Римма; Розай, Георгій; Грибенъ; Голласъ.
+- 3. Чичелева, Елизавета: MERGED 2026-10-15 (RG): 434364 (1899 Moscow graduate + 1900-01, 1901-02) and 32c88c (1899-00)
+  -> 6592bf («Васильевна» 1902-03..1910-11). No real patronymic conflict: the scan of 1899-00 no. 111 prints no patronymic,
+  the extracted «Сергѣевна» was nulled (`docs/eval/raw_fix_chicheleva_patronymic_2026-10-15.py`, backup
+  `outputs/full_run_pre_promote_backup_2026-10-15_chicheleva/`). 1910-11 prints the surname «Чичилева». Live persons 2560, 6 pairs pending.
+- 4-9 not yet presented: Иманъ Юрій/Юлій; Межакова/Лежакова; Дюжикова, Римма; Розай, Георгій; Грибенъ; Голласъ.
 Tools: `docs/eval/person_merge_manual.py <survivor> <losers> "<reason>" [--write]`, then `docs/eval/rebuild_after_person_merge.sh`.
 State: 2,564 live persons; 10 pairs pending; 70 graduate-only records (24 are the class of 1910-11).
 Open besides the queue: the three surname-only Petersburg guest records (Гельцеръ x2, Балашова); «Гримальди, Генріэтта» SP 1899-00;
