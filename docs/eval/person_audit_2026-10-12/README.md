@@ -276,7 +276,16 @@ The nine queue cases are being taken one at a time with RG, each with page evide
   1893-95 «Грибенъ 1-й, Августъ» rows merged into Августъ 1ed184, split_manual logged between the two
   (`docs/eval/person_resplit_griben_2026-10-15.py`, then `person_merge_manual.py 1ed184 3d3d25`). Held through a full
   build_entities rebuild. Live persons 2554, 1 pair pending.
-- 9 not yet presented: Голласъ.
+- 9. Голласъ, Антонъ Францевичъ: MERGED 2026-10-15 (RG): 4326a4 (the 1890-91 opera-orchestra row, split off because the
+  extraction put the patronymic in first_name) -> 19b066. Live persons 2553.
+
+### Queue closed 2026-10-15
+All nine cases decided with RG: 7 merges, 1 three-way merge (Дюжикова), 1 reassignment + split (Грибенъ). Pending candidate pairs 0;
+live persons 2564 -> 2553; receipts and Wikidata links (176) unchanged throughout. Uncertain identities #32-35 added.
+Still open from these cases: whether «Межакова, Марія Александровна», school French teacher 1890-92 (ec0f78), is the wardrobe
+supervisor (uncertain list #34; an earlier automatic rejection of Лежакова/ec0f78 on conflicting dates is in person_merge_log);
+display-name override (Дюжикова reads «Раиса» by majority; RG 2026-10-15: leave it); tangents Мосолова, Вѣра and Поливановъ, Василій
+(two records each); Розай has no Wikidata link. The name-slip clustering study is docs/eval/name_slip_clustering_2026-10.md.
 Tools: `docs/eval/person_merge_manual.py <survivor> <losers> "<reason>" [--write]`, then `docs/eval/rebuild_after_person_merge.sh`.
 State: 2,564 live persons; 10 pairs pending; 70 graduate-only records (24 are the class of 1910-11).
 Open besides the queue: the three surname-only Petersburg guest records (Гельцеръ x2, Балашова); «Гримальди, Генріэтта» SP 1899-00;

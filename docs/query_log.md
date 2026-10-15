@@ -18328,3 +18328,28 @@ p.80 Михайловскій orchestra «16. Грибенъ, Августъ Ѳ�
 split_manual 1ed184 / 11088e), then `person_merge_manual.py 1ed184 3d3d25` + `rebuild_after_person_merge.sh`. Result after the full
 build_entities rebuild: 1ed184 Августъ 6 rows 1890-91..1895-96; 11088e Ѳедоръ 19 rows 1890-91..1910-11; 3d3d25 superseded; live
 persons 2554; pending pairs 1; research.person 2652; receipts 3,216,919,085 and Wikidata 176 unchanged; 0 orphans, 0 shift blocks.
+
+## 2026-10-15 — Голласъ, Антонъ Францевичъ (queue case 9 of 9)
+
+```sql
+SELECT pl.person_id, sp.season, sp.city, pe.page_id, pe.list_number, pe.heading_path, pe.family_name, pe.first_name,
+       pe.patronymic, pe.tenure_note_text
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id)
+WHERE pe.family_name SIMILAR TO 'Г[оа]л+[аяе]с.*' ORDER BY 2;
+-- plus: the 1890-91 Moscow opera-orchestra page's rows with name + patronymic in first_name, and which of them are singletons
+```
+
+Result: one man, Moscow Musicians, «съ 29 октября 1875 г.», violin, «Оставилъ службу 16 декабря 1893 г.»; no other Голласъ. Two
+records: 4326a4 = the 1890-91 opera-orchestra row alone (first_name «Антонъ Францевичъ», patronymic null in raw; the analysis clean
+columns split it correctly); 19b066 = the bare ballet-orchestra cross-reference «Голласъ (см. оперный оркестръ)» 1890-91..1892-93 +
+the opera-orchestra rows 1891-92..1893-94. 22 rows on musicians_1890-91_MSK_p001 carry the patronymic inside first_name; only 4 are
+singleton persons, and the other three (Гемпель, left 1 Feb 1891; Горшковъ, † 12 Aug 1891; Лойко, † 4 June 1891) are genuinely
+one-season.
+Scans (full-resolution PDF images, page size): 1890-91 p.107 «25. Голласъ, Антонъ Францевичъ (съ 29 октября 1875 г.). Скрипка.»;
+p.109 «11. Голласъ (см. оперный оркестръ). Скрипка.»; 1893-94 p.100 «26. Голласъ, Антонъ Францевичъ (съ 29 октября 1875 г.).
+Скрипка. Оставилъ службу 16 декабря 1893 г.»
+
+**Merged (RG, 2026-10-15)** 4326a4 -> 19b066 via `person_merge_manual.py` + `rebuild_after_person_merge.sh`: 19b066 holds 7 rows,
+1890-91..1893-94; live persons 2553; pending pairs 0 (queue closed); rejected candidates 11 -- the twelfth, Лежакова 9eadf7 / school
+French teacher ec0f78 (family_name_variant, conflicting_dates), dropped out of person_candidate when 9eadf7 was merged and stays in
+person_merge_log as 'rejected'; research.person 2651; receipts 3,216,919,085 and Wikidata 176 unchanged; 0 orphans, 0 shift blocks.
