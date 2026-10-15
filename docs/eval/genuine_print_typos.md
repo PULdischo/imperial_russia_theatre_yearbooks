@@ -665,3 +665,10 @@ Each read twice on the scan (checking agent and a close zoom, 2026-09-28) and ke
 - 1904-05 SP p001 #29 Фея куколъ: "сюжетъ **и.** Асрейтера", lowercase "и." for the initial "И." (Josef Hassreiter; RG confirmed)
 - 1897-98 SP p. 32 #5 Конекъ-горбунокъ: the hyphen in the title printed as a short raised dot (faint/misprinted hyphen, RG confirmed)
 - 1899-00 SP p000 #3 Волшебная флейта: "актѣ.," and "Всего—1 разъ,"; 1899-00 SP p001 Эсмеральда "Всего--7 разъ."
+
+## BalletArtists ordinals printed oddly (added 2026-10-15, issue #154; stored verbatim)
+
+- 1905-06 Moscow p. 51 no. 65: «Никитина **2 я**», no hyphen (every other ordinal on the page has one); stored «Никитина 2 я».
+- 1909-10 Moscow p. 126 no. 76: «Шелепина**,** 1-я Вѣра Ивановна», comma before the ordinal (no. 77 prints «Шелепина 2-я,
+  Александра Ивановна»); stored with the ordinal on the surname, «Шелепина 1-я», like every other entry.
+

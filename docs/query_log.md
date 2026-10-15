@@ -18525,3 +18525,41 @@ SELECT display_name, first_attested_season, last_attested_season FROM entities.p
 Result: before: receipts 3216919085, Wikidata 177, live 2551, research.person 2649. Dry run, then --write and
 rebuild_after_person_merge.sh: «Поливановъ, Василій Егоровичъ» 1890-91..1908-09, 19 links; live 2550; receipts 3216919085 and
 Wikidata 177 unchanged; orphans 0, pending 0, 0 shift blocks.
+
+## 2026-10-15 — BalletArtists ordinal shift: worklist (follow-up to the Мосолова 1907-08 fix)
+
+```sql
+SELECT r.entry_id, r.page_id, r.list_number, r.family_name, r.first_name, r.patronymic, r.tenure_note_text,
+       a.family_name_clean, a.first_name_clean, a.patronymic_clean
+FROM raw.person_entry r LEFT JOIN analysis.person_entry a USING (entry_id)
+WHERE regexp_matches(r.first_name, '^[0-9]+-[яй]');                                   -- 96 rows
+SELECT count(*), string_agg(DISTINCT split_part(page_id,'_',1), ',') FROM raw.person_entry
+WHERE regexp_matches(patronymic, '[0-9]+-[яй]');                                       -- 9 rows
+SELECT count(*), ... WHERE regexp_matches(tenure_note_text, '^[0-9]+-[яй]');           -- 110 rows (+1 «2 я», looser regex on raw JSON)
+SELECT ... same columns ... WHERE regexp_matches(r.patronymic,'[0-9]+-[яй]') OR regexp_matches(r.tenure_note_text,'^[0-9]+-[яй]');
+```
+
+Result: 216 rows, all BalletArtists 1891-92..1909-10, all printed «Фамилія N-я, Имя Отчество» (33 pages read on the full-res scans).
+analysis.*_clean already puts the ordinal on the surname and the first name right for the 96 first_name rows, but leaves
+patronymic_clean NULL on the 54 where the patronymic sits in tenure_note_text; for the 111 tenure rows it drops the ordinal
+altogether (three Пукирева sisters in 1892-93 all display as «Пукирева»). Worklist: docs/eval/ordinal_shift_worklist_2026-10-15.tsv
+(dry run of docs/eval/raw_fix_ordinal_shift_balletartists_2026-10-15.py), shapes A 52 / A0 2 / B 19 / C 22 / D 9 / E 111 / N 1.
+
+## 2026-10-15 — After the BalletArtists ordinal-shift raw fix (issue #154): diff against outputs/full_run_pre_promote_backup_2026-10-15_ordinalshift
+
+```sql
+ATTACH 'outputs/full_run_pre_promote_backup_2026-10-15_ordinalshift/imperial_theaters.duckdb' AS b (READ_ONLY);
+SELECT entry_id, family_name, first_name, patronymic, tenure_note_text FROM raw.person_entry EXCEPT SELECT ... FROM b.raw.person_entry;
+SELECT * EXCLUDE (family_name, first_name, patronymic, tenure_note_text) FROM raw.person_entry EXCEPT ...;   -- and analysis.person_entry
+SELECT entry_id, person_id FROM entities.person_link EXCEPT SELECT entry_id, person_id FROM b.entities.person_link;  -- both directions
+SELECT work_id, canonical_title FROM research.work EXCEPT SELECT work_id, canonical_title FROM b.research.work;      -- both directions
+SELECT * FROM research.person EXCEPT SELECT * FROM b.research.person;   -- + research.event, research.person_appearance (per-column)
+SELECT sum(receipts_total_kopecks) FROM research.event; -- + Wikidata, live persons, row counts, shift count (three regexes)
+-- dropped-ordinal leads: bare BalletArtists surname whose neighbouring entry (entry index ±1, same page) has the same surname + ordinal
+```
+
+Baseline before (after the Поливановъ merge): receipts 3216919085, live persons 2550, research.person 2648, Wikidata 177, works
+2970, events 32808, appearances 23979, alignment 0 shift blocks / 109 informational. After: raw and analysis person_entry exactly
+216 rows changed (no other columns); person_link 0, work ids 0, events 0 diffs; all baseline numbers unchanged; research.person 10
+rows (display_name + ordinal_suffix, one canonical_patronymic); person_appearance 163 rows (tenure_note_text only); shift count
+216 -> 0; alignment 0 shift blocks / 109. Dropped-ordinal leads: 21 rows (4 confirmed on today's scans, see known_issues #154).

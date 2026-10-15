@@ -111,6 +111,11 @@ closes, and add new open items here as well as in their own entry.
 
 **Workable from the scans, not done**
 
+- #154 follow-up: BalletArtists ordinals dropped altogether (the printed «Бѣлоусовъ 1-й» stored as plain
+  «Бѣлоусовъ»). 21 leads: a bare surname directly next to the same surname with an ordinal on the same page
+  (query in `docs/query_log.md`, 2026-10-15). Four of them were seen on the scans during #154 with the ordinal printed:
+  1896-97 MSK no. 30 (Ивановъ 3-й), 1897-98 MSK no. 12 (Бѣлоусовъ 1-й), 1904-05 MSK no. 63 (Смирновъ 1-й),
+  1904-05 SP no. 3 (Алексѣевъ 1-й). The other 17 need the scan; some bare surnames may be printed bare.
 - Genre carried in `performance_title` and not yet separated, after the two
   2026-10-12 passes (entry at the end of this file): about 76 Cyrillic titles
   with an empty genre field («весенняя сказка», «возможный случай», «принцѣ
@@ -23867,4 +23872,31 @@ parser gap (month name in the label), the dates themselves are right.
 - **The two untested mixed lines, tested by receipts.** 1896-97 Moscow: «опера и балетъ» 4 = three opera + ballet evenings + one free matinée, exact; «опера и драма» 2 = the two «О время! / Ѳедулъ съ дѣтьми» evenings (24 and 26 Nov). The «Гензель и Гретель» + Дивертиссементъ evening (21 Nov 1896) is in neither, so the yearbook counted it as opera. 1897-98 SP: both mixed lines are identified by their footnotes (1 Feb 1898 Русское Театральное Общество; 5 May 1898 famine relief); Нильскій's benefit of 23 Oct 1897 (drama + Дивертиссементъ) is in neither, so it was counted as drama. With 1895-96 SP, three seasons count a drama/opera + divertissement evening by its main work; only 1894-95 SP counts one as drama + ballet.
 - **Fixed: 26 Nov 1896 Большой receipts 894 р. 46 к. -> 884 р. 46 к.** (`docs/eval/raw_fix_receipts_1896-11-26_2026-10-15.py`). The middle digit is damaged in the print (upper loop only, 900 dpi); 884 makes the «опера и драма» line exact (2,643.52 + 884.46 = 3,527.98). Receipts sum −10.00 р.; no table count changed; persons unchanged. In genuine_print_typos.md (material constraints). Backup `outputs/full_run_pre_promote_backup_2026-10-15_receipts1896`.
 - **Concert sections counted as "opera" in the statistics (finding, not applied).** Two gala bills with a «Концертное отдѣленіе» and no opera item sit in a mixed line that names opera: 29 Apr 1894 Михайловскій (Женя / Le petit Hôtel / Концертное отдѣленіе / Коппелія) = «русская драма, опера, балетъ и французская драма» 1, 2,886 р. 90 к., footnote 8 «въ пользу пострадавшихъ отъ землетрясенія въ Греціи», exact; 5 May 1898 Маріинскій (Женитьба / Концертное отдѣленіе / Пахита act) = «русская драма, опера и балетъ» 1, footnote 8 famine relief. So the yearbook treated those concert sections as given by the opera. **RG (2026-10-15): company = opera for these two; item_kind stays concert.** APPLIED through a new per-performance list, `pipeline/research_corrections/art_form_by_performance.csv` (keyed on the raw cell; `build_research_model.py` applies it after the concert step and fails on a row that matches nothing). The two evenings' `art_forms` now read «ballet; opera; Russian drama; French drama» and «ballet; opera; Russian drama», the same companies as the printed lines. The other 49 concert items keep a blank company. Receipts and counts unchanged.
+
+## Issue #154: BalletArtists ordinal in the wrong field -- 216 rows FIXED, 2026-10-15 (RG: "apply all 216")
+
+Follow-up to the Мосолова 1907-08 no. 57 fix of the same day. The lists print sisters and brothers as «Фамилія 1-я, Имя
+Отчество». Extraction put the ordinal in the wrong field on 216 rows (BalletArtists, 1891-92..1909-10, 33 pages) in seven shapes:
+first_name «1-й» with the patronymic pushed into tenure_note_text (52) or lost (2, Шелепина 1909-10 MSK nos. 76-77); first_name
+«1-й» with «Имя Отчество» in patronymic (19); first_name «1-я, Анна» (22); patronymic «1-я» where none is printed (9, Мендесъ
+etc.); ordinal at the front of tenure_note_text, «1-я, съ ...» (111); «26. Грекова 2-я.» with nothing else printed (1).
+analysis.*_clean had already repaired the first_name/surname of the 96 first_name rows, but left patronymic_clean NULL where the
+patronymic sat in tenure and dropped the ordinal entirely for the 111 tenure rows (the three Пукирева sisters of 1892-93 all
+displayed as «Пукирева»).
+
+Every row was read on the full-resolution scans (pdf/Spiski_BalletArtists, extract_image) and restored with the ordinal on the
+surname («Брыкинъ 1-й»), as in the Мосолова fix. Tenure text otherwise as extracted. Three edits beyond moving text, each zoomed:
+Шелепина nos. 76-77 patronymic «Ивановна» restored (no. 76 prints «Шелепина, 1-я Вѣра Ивановна», stored as «Шелепина 1-я»);
+1905-06 MSK no. 65 prints «Никитина 2 я» with no hyphen, kept verbatim; 1907-08 MSK no. 30 surname misread «Костровскій» -> printed
+«Костровской». Both print oddities added to genuine_print_typos.md.
+
+Script `docs/eval/raw_fix_ordinal_shift_balletartists_2026-10-15.py` (field edits only, no entries added or removed); worklist
+`docs/eval/ordinal_shift_worklist_2026-10-15.tsv`; backup `outputs/full_run_pre_promote_backup_2026-10-15_ordinalshift/`
+(duckdb + the 33 raw pages). Rebuilt with `rebuild_after_raw_edit.sh`. Diff against the backup: raw.person_entry and
+analysis.person_entry exactly 216 rows, no other column touched; person_link 0 diffs; work ids 0 diffs; events 0 diffs; receipts
+3,216,919,085, Wikidata 177, live persons 2,550, research.person 2,648 unchanged; 10 research.person display names gain the printed
+ordinal or patronymic (e.g. «Некрасова 1-я, Анна Владиміровна», «Александрова 3-я, Александра Матвѣевна»); 163
+person_appearance tenure_note_text values lose the stray patronymic/ordinal. person_link alignment 0 shift blocks before and
+after (109 informational mismatches, unchanged). Shift count (ordinal in first_name, in patronymic, or opening tenure_note_text):
+216 -> 0. Open follow-up: ordinals dropped altogether (status index, "Workable from the scans").
 
