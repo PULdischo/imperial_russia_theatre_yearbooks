@@ -255,7 +255,8 @@ Every posting sentence in print, and the individual exceptions inside them:
 ## PAUSED 2026-10-12 (session limit) -- where to resume
 The nine queue cases are being taken one at a time with RG, each with page evidence.
 - 1. Адамовъ, Михаилъ: MERGED (transfer to Moscow printed; `person_merge_manual.py`).
-- 2. Аѳанасьева, Вѣра: evidence presented (query_log 2026-10-12), recommendation merge + uncertain-list note; **RG has not answered**.
+- 2. Аѳанасьева, Вѣра: MERGED 2026-10-15 (RG): one Moscow dancer, patronymic Михайловна -> Леонидовна in 1906-07 unexplained; reasons in uncertain_person_identities.md #32. The 12 Oct note of three missing seasons was wrong (printed «Афонасьева»). Live persons 2562, 8 pairs pending.
+  Tangents seen, not pursued: Мосолова, Вѣра Владиміровна/Ильинишна and Поливановъ, Василій Егоровичъ/«Ивановичъ» (1903-04, 1905-06) are each held as two records (query_log 2026-10-15).
 - 3-9 not yet presented: Чичелева, Елизавета; Иманъ Юрій/Юлій; Межакова/Лежакова; Дюжикова, Римма; Розай, Георгій; Грибенъ; Голласъ.
 Tools: `docs/eval/person_merge_manual.py <survivor> <losers> "<reason>" [--write]`, then `docs/eval/rebuild_after_person_merge.sh`.
 State: 2,564 live persons; 10 pairs pending; 70 graduate-only records (24 are the class of 1910-11).

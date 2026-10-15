@@ -18121,3 +18121,58 @@ FROM m ORDER BY m.d;
 ```
 
 Result: 38 sessions, each the only bare morning in its city that day. 37 at the Михайловскій, 16 Apr 1908 – 15 May 1911: the Moscow Art Theatre's spring tours (Брандъ, Синяя птица, Вишневый садъ, Дядя Ваня, Братья Карамазовы ...), stored as morning + evening pairs, with the banner «Спектакли Московскаго Художественнаго театра.» on the first session of each run; 1 is 26 Oct 1897 Александринскій, «Représentation de M-me Réjane. Sapho». No free-day banner on any of their dates.
+
+## 2026-10-15 — Аѳанасьева, Вѣра (queue case 2 of 9), re-checked before RG's decision
+
+```sql
+SELECT pl.person_id, sp.season, sp.city, sp.entity_type, pe.page_id, pe.list_number, pe.family_name,
+       pe.first_name, pe.patronymic, pe.tenure_note_text
+FROM raw.person_entry pe JOIN raw.source_pages sp ON sp.page_id = pe.page_id
+JOIN entities.person_link pl USING (entry_id)
+WHERE pe.family_name LIKE 'А_анасьев%' OR pe.family_name LIKE 'А_онасьев%' ORDER BY 2, 3;
+```
+
+Result: CORRECTS the 2026-10-12 entry. The «Михайловна» record (7dff57) covers all eleven seasons 1895-96..1905-06; the
+three seasons the earlier query missed (1898-99, 1901-02, 1902-03) are printed «Афонасьева», which `'А_анасьева%'` did
+not match. «Леонидовна» (a472cb) 1906-07, 1907-08; graduate record (ae997f) 1894-95. Every row «съ 1 сентября 1895 г.».
+No other woman of this surname in any list; the only other «Вѣра ... Леонидовна» in the corpus is this one.
+Live persons 2564; queue pending 10.
+
+```sql
+-- Moscow BalletArtists: same first name + start date + surname stem, patronymic differs, 1905-06 vs 1906-07
+```
+
+Result: 9 pairs, 7 of them spelling only (Ѳ/Ф, і/и). Whole-patronymic changes: Мосолова, Зинаида (Алексѣевна ->
+Александровна, already merged) and Поливановъ, Василій (Ивановичъ in 1905-06 only). Separately: Мосолова, Вѣра goes
+from «Владиміровна» (1893-94..1905-06) to «Ильинишна» (1906-07..1910-11) with the same start, and is held as two records
+(1773bf.. / 11d2b0..); Поливановъ, Василій «Ивановичъ» 1903-04 and 1905-06 is held as a separate record (8cf4ec..). Both
+logged as tangents, not pursued.
+
+Scans (full-resolution images extracted from the PDFs, zoomed): 1905-06 «3. Аѳанасьева, Вѣра Михайловна (съ 1 сентября
+1895 г.)»; 1906-07 «4. Аѳанасьева, Вѣра Леонидовна (съ 1 сентября 1895 г.)»; 1907-08 «4. Афанасьева, Вѣра Леонидовна
+(съ 1 сентября 1895 г). ... Оставила службу 16 августа 1908 г.»; 1901-02 «2. Афонасьева, Вѣра Михайловна». 1895-96..1904-05
+read at page size, «Михайловна» in each (1904-05 zoom crop ends at «Ми...»). 1894-95 Report p.375: Moscow class of
+spring 1895, «1) Аѳанасьева, Вѣра.», whole class posted «съ 1-го сентября 1895 года въ Московскую балетную труппу». No
+transfer or name-change note in any year.
+
+## 2026-10-15 — Ballet productions review list (#101): checking the open items against the data
+
+```sql
+SELECT count(*) FROM raw.event_entry_performance WHERE performance_title ILIKE '%Рустикальн%';
+SELECT CAST(e.date AS VARCHAR), e.time_of_day, p.verbatim_title FROM research.performance p JOIN research.event e USING(event_id)
+WHERE e.season='1897-98' AND e.city='SP' AND p.verbatim_title ILIKE '%микадо%' ORDER BY 1;
+SELECT pe.list_number, pe.title, pp.month_text, pp.day_text, pp.date FROM raw.production_entry pe JOIN raw.production_entry_performance pp USING(production_entry_id)
+WHERE pe.season='1897-98' AND pe.city='SP' AND pe.title ILIKE '%микадо%' ORDER BY pp.date_order;
+SELECT CAST(e.date AS VARCHAR), e.time_of_day, p.verbatim_title FROM research.performance p JOIN research.event e USING(event_id)
+WHERE e.season='1904-05' AND e.city='Moscow' AND p.verbatim_title ILIKE '%Золотая рыбка%' ORDER BY 1;
+SELECT pp.month_text, pp.day_text, pp.note, pe.total_text FROM raw.production_entry pe JOIN raw.production_entry_performance pp USING(production_entry_id)
+WHERE pe.season='1904-05' AND pe.city='Moscow' AND pe.title ILIKE '%Золотая рыбка%' ORDER BY pp.date_order;
+SELECT pe.season, pe.city, c.name_printed FROM analysis.production_entry_credit c JOIN raw.production_entry pe USING(production_entry_id) WHERE c.name_printed ILIKE 'Бернад%';
+```
+
+Result: «Рустикальный» 0 rows. Дочь микадо, Repertoire 1897-98 SP: 9, 14 (morning), 16, 19 Nov; 14, 28 Dec; 4 Jan; 19, 22 Apr. The list prints ноября 9, 24, 16, 19; декабря 14, 38; января 4; апрѣля 19, 22 (date of «38» unparsed). Золотая рыбка 1904-05 Moscow: Repertoire 7 sessions (12 Sep, 10 Oct, 14 Nov morning and evening, 5 Dec, 28 Dec morning, 23 Jan); list 6 dates with «2 раза: утромъ и вечеромъ» on 14 Nov, «Всего—7 разъ». Бернаделли: stored with е in 1892-93..1896-97 SP. After adding the two dates to LIST_DATE_PRINT_TYPOS, build_research_model.ballet_list_matches pairs all nine 1897-98 Дочь микадо list dates with a Repertoire session (14 Nov -> pair010 s061, 28 Dec -> pair014 s054).
+
+**Merged (RG, 2026-10-15)** a472cb + ae997f -> 7dff57 via `docs/eval/person_merge_manual.py`, then
+`rebuild_after_person_merge.sh`. Result: 7dff57 holds 14 rows, 1894-95..1907-08; live persons 2562; pending pairs 8;
+research.person 2660; receipts 3,216,919,085 and Wikidata 176 unchanged; 0 orphans, 0 shift blocks; review mentions
+resolved 21,433. Reasons: uncertain_person_identities.md #32.

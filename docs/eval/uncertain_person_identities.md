@@ -278,6 +278,14 @@ To add an entry: copy the template at the bottom.
 - **Contrast:** Бекъ, Константинъ (class of 1892), merged the same day, HAS a note: «кромѣ ученика Бека, который зачисленъ въ Московскую балетную труппу» (graduates_1891-92_p001, scan). Not uncertain.
 - **Would resolve it:** her service record, or the 1909 order moving Petersburg graduates to Moscow.
 
+## 32. Аѳанасьева, Вѣра (Moscow BalletArtists) -- «Михайловна» to 1905-06, «Леонидовна» from 1906-07
+- **Status:** MERGED (RG, 2026-10-15; a472cb «Леонидовна» and ae997f the 1895 graduate -> 7dff57; `docs/eval/person_merge_manual.py`). RG: "the patronymic shift is definitely unusual, but if there are no other candidates for her first/last name, and the dates line up, it's gotta be her."
+- **What is uncertain:** the whole patronymic changes, not its spelling: «Вѣра Михайловна» in eleven Moscow lists 1895-96..1905-06, «Вѣра Леонидовна» in 1906-07 and 1907-08 (the latter «Оставила службу 16 августа 1908 г.»). Nothing in print explains it.
+- **For one woman:** every entry, in both forms, prints «съ 1 сентября 1895 г.», the posting date of the Moscow class of spring 1895 («1) Аѳанасьева, Вѣра.», Report 1894-95 p. 375); she stays at the head of the list (nos. 1-4) throughout; the «Леонидовна» run begins the season after the last «Михайловна»; no other Аѳанасьева/Афанасьева/Афонасьева woman in any list and no other «Вѣра Леонидовна» in the corpus; Moscow in every year, so no transfer note is expected.
+- **For two women / against:** only the patronymic. The 1906-07 Moscow list does rewrite some patronymics: Мосолова, Зинаида (Алексѣевна -> Александровна, merged) and Мосолова, Вѣра (Владиміровна -> Ильинишна from 1906-07, same start; still two records, not yet reviewed).
+- **Where to look:** balletartists_1905-06_MSK_p000 no. 3, balletartists_1906-07_MSK_p000 no. 4, balletartists_1907-08_MSK_p001 no. 4 (all read zoomed on the full-resolution PDF images, 2026-10-15); graduates_1894-95_p002; surname printed Аѳ-/Аф-/Афо- by year. Query log 2026-10-15.
+- **Would resolve it:** her service record (формулярный списокъ), or a marriage/name record.
+
 ## Related, decided (not uncertain), for reference
 
 Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
