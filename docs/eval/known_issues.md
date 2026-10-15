@@ -146,12 +146,24 @@ closes, and add new open items here as well as in their own entry.
 - #98-#100: `entities.work_genre_candidate` (74 rows, 37 title groups
   *(checked)*) is open-ended by design.
 - DONE 2026-10-13 (entry «Free-performance banners and small scan readings»): corpus sweep, 33 mornings restored, 21 paid evenings and 8 later-day sessions cleared.
-- Free matinees with a missing banner (found 2026-10-12, entry «Two Moscow
-  1906-07 matinee cells» near the end of this file): only the two pages in
-  that entry were fixed. Sweep the Repertoire for morning sessions with no
-  receipts and no annotation, and read each cell on the scan; a benefit or
-  charity heading attached to the wrong session of the day is the sibling
-  error to look for on the same cells.
+- Free matinees with a missing banner: CLOSED 2026-10-15. The 2026-10-13
+  sweep took days where two or more theaters had a bare morning; the rest
+  (single bare mornings with no receipts and no annotation, 1892-93 on) are
+  38 sessions: 37 are the Moscow Art Theatre's spring tours at the
+  Михайловскій (1908-11, matinee + evening days, banner printed once at the
+  start of each run) and 1 is Réjane's 26 Oct 1897 matinee, both visiting
+  troupes whose receipts the yearbook does not print. No free matinee among
+  them. Still open from the 13 Oct entry: 4 Feb 1909 Большой and Малый
+  mornings (banner and receipts both stored, not re-read) and «учебныхъ
+  аведеній» on p033.
+- NEW 2026-10-15 (lead, not chased): the Moscow Art Theatre's spring tours at
+  the Михайловскій (1908-11) carry their banner on the first session of each
+  run only, and most of their performances have art_form «Russian drama»
+  rather than «visiting troupe» (rough count, Михайловскій sessions without
+  receipts from late March: 1907-08 38 drama; 1908-09 45 drama / 1 visiting;
+  1909-10 35 / 16; 1910-11 44 / 11). Performance counts by company are
+  affected, receipts are not (none printed). Needs the run boundaries read
+  from the pages and the company set for the whole run.
 - 12 Sep 1904 Маріинскій, «Жемчужина» / «Волшебное зеркало»: **FIXED
   2026-10-13** (scan read; entry at the end of this file).
 - Old-style «3» read as «5» in review dates (found 2026-10-12, entry «Three

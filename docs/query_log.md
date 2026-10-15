@@ -18105,3 +18105,19 @@ select sum(receipts_total_kopecks), count(*) from research.event;
 ```
 
 Result: 29 Apr 1894 Михайловскій and 5 May 1898 Маріинскій «Концертное отдѣленіе»: art_form opera, item_kind concert; event art_forms «ballet; opera; Russian drama; French drama» and «ballet; opera; Russian drama». 49 of 51 concert items still have no company. Receipts 3,216,919,085 kopecks, 32,808 events (unchanged).
+
+## 2026-10-15 — Bare morning sessions left after the 13 Oct free-banner sweep
+
+```sql
+WITH m AS (SELECT e.event_id, e.season, e.city, CAST(e.date AS VARCHAR) d, t.canonical_name th, a.page_id
+  FROM research.event e JOIN research.theater t USING(theater_id) JOIN analysis.event_entry a USING(event_id)
+  WHERE e.time_of_day='morning' AND e.event_status='performed' AND e.receipts_total_kopecks IS NULL AND e.receipts_verbatim IS NULL
+    AND e.annotation IS NULL AND e.season NOT IN ('1890-91','1891-92'))
+SELECT m.season, m.city, m.d, m.th, m.page_id,
+  (SELECT string_agg(o.verbatim_title,' / ' ORDER BY o.performance_order) FROM research.performance o WHERE o.event_id=m.event_id),
+  (SELECT count(*) FROM m m2 WHERE m2.city=m.city AND m2.d=m.d),
+  (SELECT count(*) FROM research.event e2 WHERE e2.city=m.city AND CAST(e2.date AS VARCHAR)=m.d AND e2.is_free)
+FROM m ORDER BY m.d;
+```
+
+Result: 38 sessions, each the only bare morning in its city that day. 37 at the Михайловскій, 16 Apr 1908 – 15 May 1911: the Moscow Art Theatre's spring tours (Брандъ, Синяя птица, Вишневый садъ, Дядя Ваня, Братья Карамазовы ...), stored as morning + evening pairs, with the banner «Спектакли Московскаго Художественнаго театра.» on the first session of each run; 1 is 26 Oct 1897 Александринскій, «Représentation de M-me Réjane. Sapho». No free-day banner on any of their dates.
