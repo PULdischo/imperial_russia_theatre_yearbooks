@@ -18403,3 +18403,94 @@ Scans (full-resolution PDF images, page size): 1891-92 p.265 «13. Межако�
 **Merged, TENTATIVE (RG, 2026-10-15)** ec0f78 -> 77e27a via `person_merge_manual.py` + `rebuild_after_person_merge.sh`: 77e27a holds
 10 rows, 1890-91..1907-08; live persons 2552; research.person 2650; receipts 3,216,919,085 and Wikidata 177 unchanged; 0 orphans,
 0 shift blocks. RG: tenuous, wants RGIA confirmation; uncertain_person_identities.md #34.
+
+## 2026-10-15 — Мосолова, Вѣра: one dancer held as two records? (evidence for RG)
+
+```sql
+SELECT sp.season, pe.page_id, pe.list_number, pe.family_name, pe.first_name, pe.patronymic, pe.heading_path,
+       string_agg(pes.start_date_text,' | ') sd, left(cast(pl.person_id as varchar),6) pid, pe.entry_id
+FROM raw.person_entry pe JOIN raw.source_pages sp USING(page_id)
+LEFT JOIN raw.person_entry_service pes USING(entry_id) LEFT JOIN entities.person_link pl USING(entry_id)
+WHERE pe.family_name LIKE 'Мос%лова%' GROUP BY ALL ORDER BY sp.season, pe.page_id, pe.list_number;
+```
+
+Result: 27 rows. Вѣра: 1773bf («Владиміровна») = 1892-93 graduate + BalletArtists 1893-94..1905-06 (SP-volume pages
+1896-97..1901-02, Moscow pages 1901-02..1905-06), start «1 сентября 1893» except «5 сентября 1893» in 1902-03, 1903-04, 1905-06;
+11d2b0 («Мосолова 1-я, Вѣра Ильинишна») = Moscow 1906-07..1910-11, «съ 1 сентября 1893» every year. The 1907-08 row
+(balletartists_1907-08_MSK_p003__e007) is mis-extracted: first_name='1-я', patronymic='Вѣра'. Зинаида (2b4912) prints
+Алексѣевна in 1905-06, Александровна from 1906-07 (already merged by RG 2026-10-12).
+
+```sql
+SELECT season, page_id, list_number, family_name, first_name, patronymic FROM raw.person_entry JOIN raw.source_pages USING(page_id)
+WHERE patronymic LIKE 'Ильин%' AND page_id LIKE 'balletartists%MSK%';             -- other Ильинишна in Moscow ballet
+SELECT ... WHERE page_id IN ('balletartists_1906-07_MSK_p003','balletartists_1905-06_MSK_p003')
+  AND (patronymic LIKE 'Ильин%' OR patronymic LIKE 'Владим%');                      -- same-page sources
+SELECT ... WHERE family_name LIKE 'Ильин%' AND page_id LIKE 'balletartists%MSK%';   -- a «Вѣра Ильина»?
+SELECT count(*) FROM raw.person_entry JOIN raw.source_pages USING(page_id) WHERE patronymic LIKE 'Ильин%' AND season='1906-07';
+SELECT * FROM entities.person_candidate / entities.person_merge_log  -- rows for 1773bf, 11d2b0, 1072bf, 8cf4ec
+```
+
+Result: no other Вѣра Ильинишна anywhere; the only other Moscow-ballet Ильинишна is Алексѣева, Анна (1908-09 on). 1906-07 has 3
+Ильин- patronymics in all, none on Мосолова's page. «Ильина, Вѣра Константиновна» is in the same Moscow list every season
+1897-98..1910-11 (1906-07 no. 42, the page before Мосолова's no. 56). No pending candidate and no logged decision for
+1773bf/11d2b0 or 1072bf/8cf4ec; neither has a Wikidata link.
+
+**Applied (RG, 2026-10-15)** Розай c50c1f -> Q18634922 via `pipeline/apply_wikidata_decisions.py --queue
+docs/eval/wikidata_decisions_rozai_2026-10-15.csv` (backup outputs/full_run/imperial_theaters.pre_wikidata_rozai_2026-10-15.duckdb),
+then `rebuild_after_person_merge.sh`: research.person.wikidata_qid filled; Wikidata-linked research persons 176 -> 177; receipts
+3,216,919,085 unchanged; 0 orphans, 0 shift blocks.
+
+## 2026-10-15 — Мосолова, Вѣра: the 1907-08 ordinal-shift row, and her Petersburg years (RG asked for both)
+
+```sql
+SELECT * FROM analysis.person_entry WHERE entry_id IN ('balletartists_1907-08_MSK_p003__e006','balletartists_1907-08_MSK_p003__e007');
+SELECT page_id, list_number, family_name, first_name, patronymic FROM raw.person_entry
+WHERE regexp_matches(first_name, '^[0-9]+-[яй]');                    -- how common is the ordinal-in-first_name shift?
+SELECT page_id, source_file, source_page_index FROM raw.source_pages WHERE season=? AND page_id LIKE 'balletartists%SP_p00[23]';
+SELECT ... FROM raw.person_entry WHERE page_id LIKE 'balletartists_1896-97_MSK%' AND family_name LIKE 'М%';
+SELECT pe.entry_id, pe.institution, pe.heading_path, pe.tenure_note_text, pe.credit_summary_text
+FROM raw.person_entry pe JOIN entities.person_link pl USING(entry_id) WHERE pl.person_id LIKE '1773bf%';
+SELECT sum(receipts_total_kopecks) FROM research.event; ... -- baseline before the rebuild
+```
+
+Result: analysis repairs the 1907-08 surname («Мосолова 1-я») but leaves patronymic_clean NULL. The ordinal-in-first_name shift
+is not a one-off: ~95 raw rows corpus-wide (BalletArtists 1891-92..1909-10, e.g. 1907-08_MSK_p003 nos. 57-58 and 62-68,
+1894-95_SP_p005, 1896-97_SP_p005, 1907-08_MSK_p006). Мосолова is absent from the 1896-97 Moscow list (Морозова no. 70,
+Мятижевская no. 71); her 16 rows on 1773bf print the career: 1892-93 Moscow school graduate; Moscow troupe 1893-94..1895-96, where 1895-96 prints
+«Съ 1 сентября 1896 г. переведена въ С.-Петербургскую балетную труппу»; Petersburg troupe 1896-97..1901-02; SP 1901-02 «Съ 1
+декабря 1901 г. командирована къ Московскимъ театрамъ»; SP 1902-03 «1 декабря 1902 г. переведена къ Московскимъ театрамъ»; Moscow
+from 1901-02 on. Baseline before the raw-fix rebuild: receipts 3216919085, Wikidata 177, live persons 2553, research.person 2651,
+works 2970, events 32808, appearances 23979; person_link alignment 0 shift blocks.
+
+## 2026-10-15 — After the Мосолова 1907-08 raw fix: diff against outputs/full_run_pre_promote_backup_2026-10-15_mosolova
+
+```sql
+ATTACH 'outputs/full_run_pre_promote_backup_2026-10-15_mosolova/imperial_theaters.duckdb' AS b (READ_ONLY);
+SELECT ... FROM raw.person_entry EXCEPT SELECT ... FROM b.raw.person_entry;           -- and analysis.person_entry, research.person
+SELECT entry_id, person_id FROM entities.person_link EXCEPT SELECT entry_id, person_id FROM b.entities.person_link;
+SELECT work_id, canonical_title FROM research.work EXCEPT SELECT work_id, canonical_title FROM b.research.work;
+SELECT sum(receipts_total_kopecks) FROM research.event; -- + Wikidata, live persons, row counts, orphans
+```
+
+Result: only balletartists_1907-08_MSK_p003__e007 changed (raw and analysis: «Мосолова 1-я / Вѣра / Владиміровна»). person_link 0
+diffs, work ids 0 diffs, research.person 0 diffs (11d2b0 still displays «Ильинишна», 4 printings vs 1). Receipts 3216919085,
+Wikidata 177, live 2553, research.person 2651, works 2970, events 32808, appearances 23979 — all unchanged; 0 orphans; 0 shift blocks.
+
+**Merged, TENTATIVE (RG, 2026-10-15)** ec0f78 -> 77e27a via `person_merge_manual.py` + `rebuild_after_person_merge.sh`: 77e27a holds
+10 rows, 1890-91..1907-08; live persons 2552; research.person 2650; receipts 3,216,919,085 and Wikidata 177 unchanged; 0 orphans,
+0 shift blocks. RG: tenuous, wants RGIA confirmation; uncertain_person_identities.md #34.
+
+## 2026-10-15 — Мосолова merge (RG: yes): 11d2b0 -> 1773bf, before/after checks
+
+```sql
+SELECT count(*) FROM entities.person WHERE superseded_by_person_id IS NULL;   -- prod vs dry-run copy
+SELECT status, count(*) FROM entities.person_candidate GROUP BY 1;
+SELECT a.person_id, a.display_name FROM dry.entities.person a JOIN prod.entities.person b USING(person_id)
+WHERE a.superseded_by_person_id IS NOT NULL AND b.superseded_by_person_id IS NULL;
+SELECT display_name, first_attested_season, last_attested_season FROM research.person WHERE person_id LIKE '1773bf%';
+```
+
+Result: prod had 2552 live (a parallel session merged the Межакова teacher, commit 0d8e679); the dry run differed only by 11d2b0.
+After --write and rebuild_after_person_merge.sh: «Мосолова, Вѣра Владиміровна» 1892-93..1910-11, 21 links; live 2551;
+research.person 2649; receipts 3216919085, Wikidata 177 (both unchanged), orphans 0, pending 0, 0 shift blocks. The 1907-08 fix
+was still in raw before the merge.

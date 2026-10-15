@@ -290,3 +290,7 @@ Tools: `docs/eval/person_merge_manual.py <survivor> <losers> "<reason>" [--write
 State: 2,564 live persons; 10 pairs pending; 70 graduate-only records (24 are the class of 1910-11).
 Open besides the queue: the three surname-only Petersburg guest records (Гельцеръ x2, Балашова); «Гримальди, Генріэтта» SP 1899-00;
 9 unmatched Petersburg graduates of 1909; the M8/M9 worklists were never triaged; research_dataset.sqlite not rebuilt, nothing published to HF/Cloud Run.
+- Tangent Мосолова, Вѣра: MERGED 2026-10-15 (RG): 11d2b0 «Мосолова 1-я, Вѣра Ильинишна» 1906-07..1910-11 -> 1773bf «Владиміровна»
+  (Moscow school 1893, Moscow troupe, Petersburg 1896-1902 by printed transfer, Moscow again). Patronymic change unexplained,
+  uncertain list #36. Her 1907-08 row (ordinal in first_name) fixed first (`docs/eval/raw_fix_mosolova_1907-08_2026-10-15.py`);
+  ~95 more rows carry that shift (not fixed; proposed as its own task). Live persons 2551 (after the Межакова teacher merge too).
