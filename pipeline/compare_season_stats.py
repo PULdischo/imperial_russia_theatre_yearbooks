@@ -141,9 +141,11 @@ GERMAN_GENRE = re.compile(r"lustsp|schausp|schwank|comöd|komöd|posse|trauersp|
 GERMAN_WORD = re.compile(r"\b(der|die|das|und|ein|eine|im|vom|zum|zur|dem|den)\b|[äöüß]", re.I)
 
 
-def classify_work(title, genre):
+def classify_work(title, genre, item_kind=None):
     title, g = title or "", (genre or "").lower().strip()
-    if "концерт" in title.lower():
+    # research.performance.item_kind 'concert' covers concert items the title doesn't name, e.g. a
+    # ballet suite played in a symphony concert (RG, 2026-10-13: concert, linked to its parent work)
+    if "концерт" in title.lower() or item_kind == "concert":
         return "concert"
     # A Cyrillic genre decides the family even for a Latin title ("Viola tricolor,
     # ком." at the Малый, "Virtus antiqua, сказка" at the Александринскій are
@@ -192,7 +194,7 @@ def classify_event(fams):
 
 LEVEL2_SQL = """
 select e.event_id, e.season, e.city, t.canonical_name, e.receipts_total_kopecks,
-       p.verbatim_title, coalesce(w.canonical_genre, p.verbatim_genre)
+       p.verbatim_title, coalesce(w.canonical_genre, p.verbatim_genre), p.item_kind
 from research.event e join research.theater t using (theater_id)
 left join research.performance p using (event_id) left join research.work w using (work_id)
 where e.event_status = 'performed'
@@ -201,10 +203,10 @@ where e.event_status = 'performed'
 
 def level2(con, out_dir):
     ev = {}
-    for eid, season, city, th, k, title, genre in con.execute(LEVEL2_SQL).fetchall():
+    for eid, season, city, th, k, title, genre, kind in con.execute(LEVEL2_SQL).fetchall():
         e = ev.setdefault(eid, {"season": season, "city": city, "theater": th, "k": k, "fams": []})
         if title is not None:
-            e["fams"].append(classify_work(title, genre))
+            e["fams"].append(classify_work(title, genre, kind))
     rep = {}
     for e in ev.values():
         cls = classify_event(e["fams"])

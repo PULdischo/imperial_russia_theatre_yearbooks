@@ -18025,3 +18025,11 @@ Result: 1893-94 Moscow «Балетныхъ» 43 = 43, 43,731 р. 41 к. = print
 1892-93: the stats page prints no receipts, so no money check; counts agree (54). All Moscow ballet is at the Большой
 (54 evenings / 51,318 р. 79 к. in 1892-93; 50 / 53,314 р. 76 к. in 1893-94). The comparison's family view still files the two
 «Сюита изъ бал. Щелкунчикъ» concerts (Mar 1893) as ballet (41 vs 43, concerts 2 vs 0): a filing rule in the script, not the data.
+
+## 2026-10-15 — compare_season_stats.py: concert items by item_kind (RG: "ok can we fix that?")
+
+Script change only (no database change): `classify_work` now files a performance whose `research.performance.item_kind` is
+`concert` as a concert, as well as titles containing «концерт»; `season_stats_receipt_candidates.py` passes the kind too.
+Re-run against production. Result: 1892-93 Moscow «Балетныхъ» 41 = 41 and «Концертовъ» 2 = 2 (the two «Сюита изъ бал.
+Щелкунчикъ» evenings, 3,075 р. 05 к.); also now matching on count: 1895-96 Moscow concerts 2 vs 1 (was 0), 1896-97 Moscow 1 = 1
+(was 0), 1900-01 SP 5 vs 2 (was 0). Exact family rows 69 -> 72. Ballet counts and city totals unchanged.
