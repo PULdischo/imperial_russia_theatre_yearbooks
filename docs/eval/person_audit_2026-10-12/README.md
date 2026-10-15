@@ -282,8 +282,8 @@ The nine queue cases are being taken one at a time with RG, each with page evide
 ### Queue closed 2026-10-15
 All nine cases decided with RG: 7 merges, 1 three-way merge (Дюжикова), 1 reassignment + split (Грибенъ). Pending candidate pairs 0;
 live persons 2564 -> 2553; receipts and Wikidata links (176) unchanged throughout. Uncertain identities #32-35 added.
-Still open from these cases: whether «Межакова, Марія Александровна», school French teacher 1890-92 (ec0f78), is the wardrobe
-supervisor (uncertain list #34; an earlier automatic rejection of Лежакова/ec0f78 on conflicting dates is in person_merge_log);
+Межакова, school French teacher 1890-92 (ec0f78): MERGED into the wardrobe supervisor 77e27a 2026-10-15 as TENTATIVE (RG: "tenuous";
+wants RGIA confirmation of the career change; uncertain list #34). Live persons 2552. Also open:
 display-name override (Дюжикова reads «Раиса» by majority; RG 2026-10-15: leave it); tangents Мосолова, Вѣра and Поливановъ, Василій
 (two records each); Розай has no Wikidata link. The name-slip clustering study is docs/eval/name_slip_clustering_2026-10.md.
 Tools: `docs/eval/person_merge_manual.py <survivor> <losers> "<reason>" [--write]`, then `docs/eval/rebuild_after_person_merge.sh`.

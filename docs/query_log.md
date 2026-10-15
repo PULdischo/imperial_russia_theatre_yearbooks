@@ -18399,3 +18399,7 @@ list's coverage, not her absence. The earlier automatic REJECTION of Лежак�
 Scans (full-resolution PDF images, page size): 1891-92 p.265 «13. Межакова, Марія Александровна (съ 1 сентября 1890 г.). Французскій
 языкъ.»; 1892-93 p.376 (no Межакова; «3. Бѣлова, Екатерина Васильевна (съ 1 сентября 1892 г.). Французскій языкъ.»); 1899-00 p.128
 (the hats/shoes/linen department lists Бойкова only).
+
+**Merged, TENTATIVE (RG, 2026-10-15)** ec0f78 -> 77e27a via `person_merge_manual.py` + `rebuild_after_person_merge.sh`: 77e27a holds
+10 rows, 1890-91..1907-08; live persons 2552; research.person 2650; receipts 3,216,919,085 and Wikidata 177 unchanged; 0 orphans,
+0 shift blocks. RG: tenuous, wants RGIA confirmation; uncertain_person_identities.md #34.
