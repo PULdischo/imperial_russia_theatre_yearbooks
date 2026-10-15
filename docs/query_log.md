@@ -18009,3 +18009,19 @@ select (select sum(receipts_total_kopecks) from research.event) - (select sum(re
 Also run: `compare_season_stats.py`. Result: 8 rows changed in raw.event_entry / analysis.event_entry / research.event, 1 in
 research.season_stat_check; +454 kopecks. 1893-94 SP ballet: 99,168.43 = printed 99,168.43 (Маріинскій), category diff 0.00;
 SP opera +32.03 (was +30.45); SP total −494.14 (was −498.68); Moscow unchanged −60.10.
+
+## 2026-10-15 — Do the Большой ballet receipts match the printed totals (1892-93, 1893-94)?
+
+```sql
+-- compare_season_stats.py family_totals.csv rows for Moscow ballet / feerie / mixed, plus:
+select e.season, t.canonical_name, count(distinct e.event_id), sum(receipts) / 100.0 from (
+  select distinct e.event_id, e.season, e.theater_id, e.receipts_total_kopecks receipts from research.event e join research.performance p using (event_id)
+  where e.season in ('1892-93','1893-94') and e.city = 'Moscow' and p.art_form = 'ballet' and e.event_status = 'performed') e
+join research.theater t using (theater_id) group by 1, 2;
+```
+
+Result: 1893-94 Moscow «Балетныхъ» 43 = 43, 43,731 р. 41 к. = printed, exact (after 6878a25); «Феерій» 5 = 5, 3,556 р. 80 к. exact;
+«Смѣшанныхъ (опера и балетъ)» 2 printed vs 4 in the comparison's filing (2 Italian-opera + French bills land there; not ballet).
+1892-93: the stats page prints no receipts, so no money check; counts agree (54). All Moscow ballet is at the Большой
+(54 evenings / 51,318 р. 79 к. in 1892-93; 50 / 53,314 р. 76 к. in 1893-94). The comparison's family view still files the two
+«Сюита изъ бал. Щелкунчикъ» concerts (Mar 1893) as ballet (41 vs 43, concerts 2 vs 0): a filing rule in the script, not the data.
