@@ -18942,3 +18942,5 @@ and men's costumes of the ballet and French troupes, held «съ 1 сентяб�
 13 seasons) and «Каффи, Дмитрій Іосифовичъ» 1903-04, 1904-05 (1adf00; «Оставилъ службу 1 апрѣля 1905 г.» in 1904-05, which IS his,
 scan p.67). No other Каффи anywhere in the corpus; the other Иванъ Іосифовичи (Колюмна-Гаттовскій, Костлянъ, Сапожниковъ) are other
 people. No merge or rejection on record for the pair. With the copied 1903 note gone, nothing in print says Иванъ left.
+
+**2026-10-19 — Каффи Иванъ / Дмитрій: KEPT APART (RG, "keep apart but note"; may revisit):** no merge; uncertain list #40.

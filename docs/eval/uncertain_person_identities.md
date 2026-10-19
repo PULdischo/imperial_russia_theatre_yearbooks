@@ -342,6 +342,14 @@ To add an entry: copy the template at the bottom.
 - **Would resolve it:** RGIA f. 497 personnel дела; staff orders for the departure dates (1 Nov 1890, 1 May 1898, 1 June 1905, 1 June 1908, 15 Aug 1909); for Егорова, any 1898-99 programme or review naming her.
 - **Added 2026-10-19 (RG):** Адамовъ, Михаилъ (1906; earlier ruled an unconfirmed printed leaving) -- continuing service 1902-03..1910-11 (Moscow). The Адольфи brothers (#38) -- see that entry.
 
+## 40. Каффи, Иванъ / Дмитрій Іосифовичъ (SP ProductionTeam, костюмеръ, men's costumes of the ballet and French troupes) -- «Иванъ» to 1902-03, «Дмитрій» from 1903-04
+- **Status:** KEPT APART, OPEN (RG, 2026-10-19: "keep apart but note"; 2c3118 «Иванъ», 1adf00 «Дмитрій"). RG may revisit.
+- **What is uncertain:** «Каффи, Иванъ Іосифовичъ (съ 1 сентября 1883 г.). Мужскіе костюмы балетной и французской труппъ» 1890-91..1902-03 (13 seasons); «Каффи, Дмитрій Іосифовичъ», same start, same post, 1903-04 and 1904-05, «Оставилъ службу 1 апрѣля 1905 г.» (his own; p. 67).
+- **For one man:** same post, patronymic and start; «Дмитрій» begins the season after the last «Иванъ»; no other Каффи in the corpus; nothing printed says Иванъ left -- the 1902-03 «Оставилъ службу 1 августа 1903 г.» on his row was copied by the extraction from no. 2 Пипаръ and removed 2026-10-19 (`docs/eval/raw_fix_kaffi_misattributed_2026-10-19.py`). Fits RG's similar-name scribal-slip pattern (cf. #33 Иманъ Юрій/Юлій, merged).
+- **For two men / against:** Иванъ and Дмитрій are different names; a brother or son taking over the post is possible, though a start date normally belongs to the person's own service.
+- **Where to look:** productionteam_1902-03_p001 (p. 120) and productionteam_1903-04_p001 (p. 119), zoomed; 1904-05 p. 67. Query log 2026-10-19.
+- **Would resolve it:** RGIA f. 497 personnel дело(а) for Каффи; the 1903 wardrobe staff papers.
+
 ## Related, decided (not uncertain), for reference
 
 Грибенъ, Августъ Ѳедоровичъ vs Ѳедоръ Ѳедоровичъ (SP percussionists; SPLIT 2026-10-15, the 1890-93 ballet-orchestra cross-references «Грибенъ (см. оперный оркестръ)» assigned to Ѳедоръ, the only Грибенъ in the opera orchestra then; scans 1890-91 pp. 75/78/80); Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
