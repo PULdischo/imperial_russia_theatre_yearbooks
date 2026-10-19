@@ -19024,3 +19024,21 @@ p.114 «75. Павлова.» + tally, no date). Scans: Гулинъ 1-й 1897-9
 (backup outputs/full_run_pre_promote_backup_2026-10-19_dup_credit/), rebuild_after_raw_edit.sh. Against the backup: 913 tenure notes changed
 (raw and research.person_appearance), no other field; tenure null 380 -> 385; credits 35834, service end types, receipts, live persons 2548,
 Wikidata 177, research.person 2646, tenure notes 19 all unchanged; 0 person_link moved, 0 shift blocks.
+
+## 2026-10-19 — «перемоніймейстеръ» misread fixed on the remaining 10 entries
+
+```sql
+SELECT cr.entry_id, pe.family_name, cr.label, cr.role_name FROM raw.person_entry_credit cr JOIN raw.person_entry pe USING (entry_id)
+WHERE cr.role_name LIKE '%еремоні%' ORDER BY 1;          -- before: 11 «пере...» on 10 entries, 46 «цере...»
+```
+
+Result: all 10 read on the full-resolution PDF images, zoomed (read-only agent; 1891-92 SP p.55, 1899-00 SP and 1904-05 MSK p.57 re-read
+by me): Ц with its descender every time. Applied `docs/eval/raw_fix_ceremoniymeyster_2026-10-19.py` (backup
+outputs/full_run_pre_promote_backup_2026-10-19_ceremoniymeyster/) + rebuild_after_raw_edit.sh: 24 replacements (note, credit line, role
+names); also Булгаковъ 1891-92 «альгван-лӧвъ» -> «альгвазиловъ» (print «альгвази-|ловъ»). 1904-05 MSK Брыкинъ: damaged print («цер·мовій-»),
+only п -> ц applied. Now 0 «пере...», 57 «цере...». Against the backup: 11 credit rows and 10 entries changed, nothing else; credits 35834,
+works 2968, receipts, live persons 2548, Wikidata 177, tenure notes 19 unchanged; 0 person_link moved, 0 shift blocks.
+Seen, NOT fixed (other misreads in the same 10 tally lines, per the agent): «Шелякуничъ» for Щелкунчикъ and «дакей» for лакей (1899-00 SP,
+confirmed by me), «пыгать» for цыганъ and «оруженоносецъ» (1903-04 SP), «Копекъ» for Конекъ (1904-05 SP), «тью-хранитель», «Копеллія»,
+«Корсарь», «швейцарь» (1898-99 MSK), «сарадинскій», «куколь» (1900-01 MSK), «кунецъ, оруженосяцъ», «коммиссарь» (1892-93 SP), «дивертисементахъ»
+(1901-02 MSK). Work-title misreads in labels (Шелякуничъ, Копекъ, Копеллія) may affect credit -> work linking.
