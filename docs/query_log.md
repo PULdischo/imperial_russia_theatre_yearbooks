@@ -18985,3 +18985,21 @@ Result: tenure notes 8 -> 17 (continuing 7, open one-extra-listing 4, open Ад�
 note: 913 rows remain (a corpus-wide extraction pattern; analysis.tenure_note_text_clean keeps it too). Receipts, live persons 2548,
 Wikidata 177, research.person 2646, service end types, person_link all unchanged; 0 shift blocks. «44. Решке» (for 74, 1910-11 p.136)
 was already stored as printed; added to genuine_print_typos.md.
+
+## 2026-10-19 — M9 group 4: Баклановъ, Петръ and Ѳедорова 2-я, Лидія (scans zoomed by me)
+
+```sql
+SELECT sp.season, pe.page_id, pe.list_number, pe.family_name, pe.first_name, pe.tenure_note_text, pe.credit_summary_text, <service periods>
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id) WHERE pl.person_id = ?;
+-- plus: others with the same leaving date; review mentions; the 1904-05 SP list nos. 113-116
+```
+
+Result:
+- Баклановъ (4443cb, SP ballet «съ 1 іюня 1902 г.»): 1907-08 p.21 no. 7 «... Спящая красавица (принцъ Шарманъ—5). Оставилъ службу 1 августа
+  1908 г.» printed under him (zoomed; stored in service_periods, not in the note text). Nobody else has that date. Listed 1908-09 (p.92 no. 5,
+  13 performances), 1909-10, 1910-11, same start, no return note. Reviews: 1902-03..1907-08 only; none after (no review volume for 1909-10).
+- Ѳедорова 2-я, Лидія Ѳедоровна (36348a, SP ballet «съ 12 мая 1885 г.»): 1901-02 p.77 no. 127 «Оставила службу 1 января 1902 г.»; 1902-03 p.72
+  no. 120 «Оставила службу 1 января 1901 г.» (both zoomed: two different years). Listed again 1903-04 (37 performances), NOT in 1904-05 (nos.
+  114 Федорова 1-я Марія, 115 «Федорова 2-я, Александра Александровна (съ 1 іюня 1902 г.)», 116 Фонарева: the 2-я ordinal has passed to
+  Александра), back 1905-06..1907-08 (17, 57, 54 performances), same 1885 start. Review mentions of «Федорова 2-я» in 1903-04/1904-05 are
+  ambiguous between Лидія and Александра.
