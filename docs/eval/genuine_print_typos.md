@@ -695,3 +695,5 @@ Each read twice on the scan (checking agent and a close zoom, 2026-09-28) and ke
   Мосолова, Вѣра Владиміровна (linked to her record 1773bf); zoomed. Stored as printed (raw had the misread «Молодова»).
 - 1896-97 Administrators p001 «Съ 17 мая 1897 г. назначенъ помо**ш**-никомъ управляющаго Московскою Конторою» (Старженецкій-Лаппа):
   ш for щ; zoomed. Stored as printed.
+- 1903-04 ProductionTeam p001 (p. 119) «1. **Каменскій**, Исаакъ Осиповичъ (съ 30 іюня 1881 г.) ... Переведенъ изъ Московскихъ къ
+  Петербургскимъ театрамъ съ 20 іюля 1903 г.» for **Неменскій** (every other season); zoomed. Stored as printed; the row is linked to his record.

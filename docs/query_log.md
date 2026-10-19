@@ -18897,3 +18897,21 @@ leavings: Софія Ѳедорова 5 mentions in 1910-11 (all hers, read in c
 (a cast list, after her last company listing -- unresolved whose); Потанинъ, Тарновскій, Ѳедорова 1-я, Адамовъ, Адольфи: none.
 research.person_tenure_note: 5 rows (4 continuing service, Егорова 1-я two periods); last_attested_season already ran to the last
 listing for all five (1910-11, 1896-97, 1907-08, 1910-11, 1900-01). Receipts 3,216,919,085, research.person 2646, Wikidata 177 unchanged.
+
+## 2026-10-19 — Каффи 1902-03 note checked; Каффи Иванъ / Дмитрій; «Каменскій» = Неменскій
+
+```sql
+SELECT pl.person_id, sp.season, pe.page_id, pe.list_number, pe.heading_path, pe.family_name, pe.first_name, pe.patronymic,
+       pe.tenure_note_text, <end date / type>
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id)
+WHERE pe.family_name LIKE 'Каффи%' OR pe.family_name LIKE 'Пипар%' ORDER BY 6, 7, 2;
+```
+
+Result: «Каффи, Иванъ Іосифовичъ (съ 1 сентября 1883 г.). Мужскіе костюмы балетной и французской труппъ», SP костюмеръ, no. 1,
+1890-91..1902-03 (2c3118); from 1903-04 «Каффи, Дмитрій Іосифовичъ», same start, same post, no. 2, 1903-04 and 1904-05 (1adf00, left
+1 апрѣля 1905). The stored 1902-03 «Оставилъ службу 1 августа 1903 г.» on Иванъ is printed under no. 2 Пипаръ, Христіанъ Петровичъ
+(whose row also has it): a third misattribution of the Иванова / Неменскій kind. On 1903-04 p.119, no. 1 is printed «Каменскій, Исаакъ
+Осиповичъ (съ 30 іюня 1881 г.) ... Переведенъ изъ Московскихъ къ Петербургскимъ театрамъ съ 20 іюля 1903 г.» -- Неменскій under a
+misprinted surname (row already linked to his record 1efe21).
+Scans (full-resolution PDF images, zoomed): productionteam_1902-03_p001 p.120 «1. Каффи, Иванъ Іосифовичъ ...» / «2. Пипаръ ... Оставилъ
+службу 1 августа 1903 г.»; productionteam_1903-04_p001 p.119 «1. Каменскій ...» / «2. Каффи, Дмитрій Іосифовичъ (съ 1 ...».
