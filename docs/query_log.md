@@ -19042,3 +19042,26 @@ Seen, NOT fixed (other misreads in the same 10 tally lines, per the agent): «Ш
 confirmed by me), «пыгать» for цыганъ and «оруженоносецъ» (1903-04 SP), «Копекъ» for Конекъ (1904-05 SP), «тью-хранитель», «Копеллія»,
 «Корсарь», «швейцарь» (1898-99 MSK), «сарадинскій», «куколь» (1900-01 MSK), «кунецъ, оруженосяцъ», «коммиссарь» (1892-93 SP), «дивертисементахъ»
 (1901-02 MSK). Work-title misreads in labels (Шелякуничъ, Копекъ, Копеллія) may affect credit -> work linking.
+
+## 2026-10-19 — Misreads in the seven tally lines fixed; how credit titles are used
+
+```sql
+SELECT label, count(*) FROM raw.person_entry_credit WHERE label LIKE 'Копек%' OR label LIKE 'Копел%' OR label LIKE '%Шелякун%' GROUP BY 1;
+-- plus before/after diffs against the backup; review assertions newly linked after the refresh
+```
+
+Result: credit titles are not linked to research.work; they are used only by build_review_assertions.py to pick a review's performer
+(role, then work, matched through key_of, which already treats a word-final ь as ъ -- so «Корсарь», «куколь» never cost a match; a
+misread title like «Шелякуничъ» or «Копекъ-…» simply fails to match). Read on the full-resolution PDF images, zoomed, by me: 1892-93 SP p.61
+(коммиссаръ, купецъ, оруженосецъ, альгвази-|ловъ; «Каль-|кабрино» -- stored «Калькабрино» is right), 1898-99 MSK p.121, 1899-00 SP, 1900-01
+MSK p.116, 1901-02 MSK p.116, 1903-04 SP p.76, 1904-05 SP p.25. Applied `docs/eval/raw_fix_tally_misreads_2026-10-19.py` (backup
+outputs/full_run_pre_promote_backup_2026-10-19_tally_misreads/): 39 replacements on 7 entries -- Шелякуничъ->Щелкунчикъ, Копеллія->Коппелія,
+Копекъ-Горбунокъ->Конекъ-Горбунокъ, тью-хранитель->тѣлохранитель, дакей->лакей, пыгать->цыганъ, оруженоносецъ/оруженосяцъ->оруженосецъ,
+кунецъ->купецъ, сарадинскій->сарацинскій, дивертисементахъ->дивертиссементахъ, коммиссарь/Корсарь/корсарь/швейцарь/куколь->ъ, and the
+line-break hyphens Лебеди-ное, альгвази-ловъ. Against the backup: 16 credit rows and 7 entries changed; credits 35834, works 2968, receipts,
+live persons 2548, Wikidata 177 unchanged; 0 person_link moved. The review tables were refreshed (rebuild_after_person_merge.sh): performer
+links 1732 -> 1747, resolved mentions 21,434 -> 21,518 -- all 16 new assertion links are 'already-linked' mentions picked up from earlier
+raw changes (restored ordinals), none involves the 7 corrected people.
+Still in the corpus, not checked: «Копекъ-горбунокъ/-Горбунокъ/-Горбуночь» ~38 credit titles elsewhere, «Копелія» 8, «Копелкъ-горбунокъ» 2.
+Tangent, NOT checked: several of the 16 new links pair different ordinals (review «Смирнова 2-я» -> Смирнова 4-я; «Воронковъ 2-й» ->
+Воронковъ 3-й; «Иванова 3-я» -> Иванова 2-я; «Новикова 2-я» -> Новикова) -- may be right (ordinals shift by season) or wrong; worth a look.
