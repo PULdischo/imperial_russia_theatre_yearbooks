@@ -18720,3 +18720,78 @@ scattered 94. M9 134 notes -> note_reprinted 59, reengaged 30, left_one_of_two_p
 return_after_gap 2. Start-year changes between consecutive seasons, BalletArtists: 15 at 1891-92, 0-13 at most steps, 22 at
 1905-06, 40 at 1908-09, 15 at 1909-10; ProductionTeam 6 and 7 at 1908-09/1909-10 (0-2 elsewhere except 6 at 1897-98);
 Administrators 5 and 6 (0-4 elsewhere); Musicians 16 at 1891-92. 153 rows left for scan checks.
+
+## 2026-10-19 — M9 scan checks, case 1 of 38: Іогансонъ, Христіанъ Петровичъ (01d0a2, TheaterSchoolStaff)
+
+```sql
+SELECT sp.season, pe.page_id, pe.list_number, pe.heading_path, pe.family_name, pe.first_name, pe.subject_taught, pe.tenure_note_text,
+       <service periods from raw.person_entry_service>
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id)
+WHERE pl.person_id = '01d0a2...' ORDER BY 1;
+-- plus, for all 38 M9 notes left by the first pass: the heading the note is printed under vs the headings of the later rows
+```
+
+Result: Petersburg Theatre School, ballet department, «Танцы», 1890-91..1895-96; 1895-96 «Оставилъ преподаваніе 1 сентября 1896 г.»
+(parsed as end_type 'left service'); 1896-97..1904-05 under «Почетные члены конференціи» (honorary members of the school conference,
+no dates), 1903-04 and 1904-05 «† зимою 1904 г.». So he left TEACHING and stayed on as an honorary member until his death: one man,
+nothing wrong. Of the 38 notes, 13 have their later rows under a different heading (mostly promotions in Administrators /
+ProductionTeam), 25 under the same heading.
+Scans (full-resolution PDF images): 1895-96 p.466 «10. Іогансонъ, Христіанъ Петровичъ (съ 18 января 1860 г.). Танцы. Оставилъ
+преподаваніе 1 сентября 1896 г.» (zoomed; «1860» is printed -- every other season has 1869, an M8 odd date; Вазем, Карсавинъ and
+Облаковъ on the same page also «Оставилъ преподаваніе 1 сентября 1896 г.»); 1896-97 p.449 «2. Іогансонъ, Христіанъ Петровичъ» under
+«Почетные члены конференціи»; 1903-04 p.128 «3. Іогансонъ, Христіанъ Петровичъ. † зимою 1904 г.» (page size).
+
+## 2026-10-19 — M9 scan checks, case 2 of 38: Адамовъ, Михаилъ Прокофьевичъ (18e73f, Musicians)
+
+```sql
+SELECT sp.season, sp.city, pe.page_id, pe.list_number, pe.heading_path, pe.first_name, pe.patronymic, pe.instrument, pe.tenure_note_text,
+       <service periods> FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id)
+WHERE pl.person_id = '18e73f...' ORDER BY 1, 2;
+-- plus: the neighbouring rows of musicians_1905-06_MSK_p001; every Moscow Musicians note «1 августа 1906»
+```
+
+Result: one trumpeter/cornettist «съ 1 сентября 1898 г.»: SP 1898-99..1903-04 (Михайловскій orchestra, then the opera orchestra from
+1 Sept 1900, «Переведенъ съ 1 сентября 1903 г. къ Московскимъ театрамъ»), Moscow 1902-03..1910-11 (merged 2026-10-12). Moscow
+1905-06 alone prints «Оставилъ службу 1 августа 1906 г.»; 1906-07..1910-11 list him again, no. 1-2 of «Музыканты», same 1898 start,
+Корнетъ / Труба, no return or re-engagement note. Same date in the Moscow lists: Гуревичъ (гобой) and Подруцкій (вторая скрипка),
+«Оставилъ службу 1 августа 1906 г.» printed in 1906-07 and 1907-08 and not listed after -- a round of departures on that date.
+1910-11 prints the patronymic «Ерофѣевичъ» (every other season «Прокофьевичъ»).
+Scans (full-resolution PDF images): 1905-06 p.57 «2. Адамовъ, Михаилъ Прокофьевичъ (съ 1 сентября 1898 г.). Корнетъ. Оставилъ
+службу 1 августа 1906 г.» (zoomed: the note is under his entry, not his neighbours'); 1906-07 p.58 «2. Адамовъ, Михаилъ
+Прокофьевичъ (съ 1 сентября 1898 г.). Корнетъ.» (page size); 1910-11 p.134 «1. Адамовъ, Михаилъ Ерофѣевичъ (съ 1 сентября 1898 г.).
+Труба.» (zoomed).
+
+## 2026-10-19 — M9 scan checks, cases 3 + 37 of 38: the Адольфи violinists (7f0dd5 Іоганъ-Фридрихъ, 489836 Фердинандъ; Moscow Musicians)
+
+```sql
+SELECT sp.season, string_agg(pe.list_number || ' ' || pe.family_name || ', ' || pe.first_name || ' ' || coalesce(pe.patronymic,'') ||
+       ' [' || pe.instrument || '] ' || pl.person_id || <leaving/death note>, ' || ')
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id)
+WHERE pe.family_name SIMILAR TO 'А[дл]ольфи.*' GROUP BY 1 ORDER BY 1;
+```
+
+Result: three brothers, all violins «съ 19 сентября 1882 г.»: 1890-91..1893-94 «Адольфи 1-й, Іоганъ-Фридрихъ», «2-й, Карлъ-Самуилъ»,
+«3-й, Фердинандъ»; from 1894-95 two (Іоганъ-Фридрихъ 1-й, Фердинандъ 2-й). 1896-97: BOTH print «Оставилъ службу 1 января 1897 г.».
+Then a single Адольфи, no ordinal, «Первая скрипка», same 1882 start: «Іоганъ-Фридрихъ» 1897-98, 1898-99, 1899-00; «Фердинандъ»
+1900-01..1905-06 («Вильгельмовичъ» from 1901-02). No return or re-engagement note in any season. The data follows the print
+(7f0dd5 to 1899-00, 489836 resumes 1900-01). 1908-09 «Адольфи, С. К.» (ab035a) is someone else.
+Scans (full-resolution PDF images): 1896-97 p.100 «2. Адольфи 1-й, Іоганнъ-Фридрихъ (съ 19 сентября 1882 г.). Скрипка. Оставилъ службу
+1 января 1897 г.» and «3. Адольфи 2-й, Фердинандъ (съ 19 сентября 1882 г.). Скрипка. Оставилъ службу 1 января 1897 г.» (zoomed);
+1897-98 p.101 «2. Адольфи, Іоганъ-Фридрихъ ... Первая скрипка.»; 1899-00 p.119 «1. Адольфи, Іоганъ-Фридрихъ ... Первая скрипка.»;
+1900-01 p.120 «1. Адольфи, Фердинандъ ... Первая скрипка.» (page size).
+
+## 2026-10-19 — M9 scan checks, case 4 of 38: Баклановъ, Петръ Михайловичъ (4443cb, SP BalletArtists) -- STARTED, PAUSED
+
+```sql
+SELECT sp.season, pe.page_id, pe.list_number, pe.first_name, pe.patronymic, pe.tenure_note_text, pe.credit_summary_text, <service periods>
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id)
+WHERE pl.person_id = '4443cb...' ORDER BY 1;
+-- plus the raw JSON of balletartists_1907-08_SP_p006
+```
+
+Result so far: SP class of 1902 («2) Баклановъ, Петръ.»), SP ballet 1902-03..1910-11 «съ 1 іюня 1902 г.», nos. 5-7. 1907-08 entry 8
+(no. 7): the leaving date «1 августа 1908 г.» is in service_periods (end_type left service) but NOT in tenure_note_text or
+credit_summary_text. He is listed 1908-09 (no. 5), 1909-10, 1910-11 with the same start and a full credit line every year.
+Scan, page size only (full-resolution PDF image): 1907-08 p.21 «7. Баклановъ, Петръ Михайловичъ (съ 1 іюня 1902 г.) ... Оставилъ службу
+1 августа 1908 г.» -- the note IS printed (the note text was simply not carried into tenure_note_text). Still to do: zoom it, read
+1908-09 p004, look for a return note, then put the case to RG.

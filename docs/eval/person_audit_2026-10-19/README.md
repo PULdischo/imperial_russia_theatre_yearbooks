@@ -51,3 +51,11 @@ and Administrators in 1908-10; a smaller peak at 1890-91 -> 1891-92 (BalletArtis
 
 **Left for scan checks: 153** -- M8 clean_split 21 + scattered 94, M9 continuous_after 36 + return_after_gap 2. The other
 buckets are explained by the print's own habits; a sample of each should still be scan-checked before they are set aside.
+
+## Scan checks of the 38 M9 notes -- PAUSED 2026-10-19 (RG)
+Verdicts in `M9_scan_checks.csv`, evidence in docs/query_log.md (2026-10-19 "M9 scan checks"). Done: case 1 Іогансонъ (explained:
+left teaching, then honorary member), case 2 Адамовъ (unconfirmed printed leaving, no change), cases 3 + 37 the Адольфи brothers (both
+1897 notes unconfirmed, left as printed, uncertain list #38). **Resume at case 4, Баклановъ, Петръ Михайловичъ**: his 1907-08 «Оставилъ
+службу 1 августа 1908 г.» is printed (seen at page size) and he is listed 1908-09..1910-11; still to zoom, read 1908-09, look for a
+return note, and put it to RG. Cases 5-36 and 38 not started (working order = the list in M9_first_pass.csv, buckets
+continuous_after then return_after_gap). 13 of the 38 have their later rows under a different heading (mostly promotions).
