@@ -18601,3 +18601,69 @@ Baseline before (after the Поливановъ merge): receipts 3216919085, liv
 216 rows changed (no other columns); person_link 0, work ids 0, events 0 diffs; all baseline numbers unchanged; research.person 10
 rows (display_name + ordinal_suffix, one canonical_patronymic); person_appearance 163 rows (tenure_note_text only); shift count
 216 -> 0; alignment 0 shift blocks / 109. Dropped-ordinal leads: 21 rows (4 confirmed on today's scans, see known_issues #154).
+
+## 2026-10-18 — BalletArtists dropped ordinals (issue #154 follow-up): candidates, scan reconciliation, baseline, post-fix diff
+
+```sql
+-- candidates (raw JSON + duckdb, scratch script): bare BalletArtists surname whose surname recurs in the same season+city list,
+-- or whose person (entities.person_link) carries an ordinal in an adjacent season
+SELECT page_id, entry_id FROM raw.person_entry WHERE page_id LIKE 'balletartists%' ORDER BY page_id, entry_id;
+SELECT entry_id, cast(person_id AS varchar) FROM entities.person_link;
+SELECT split_part(page_id,'_',2), split_part(page_id,'_',3), count(*),
+       count(*) FILTER (WHERE regexp_matches(family_name,'[0-9]+\s?-?\s?[яй]$')) FROM raw.person_entry
+WHERE page_id LIKE 'balletartists%' GROUP BY ALL ORDER BY 1,2;
+-- letter-misread ordinals missed by the #154 regexes
+SELECT page_id, list_number, family_name, first_name, patronymic, left(tenure_note_text,40) FROM raw.person_entry
+WHERE page_id LIKE 'balletartists%' AND (regexp_matches(first_name,'^\S{1,2}\s?-\s?[яй]') OR regexp_matches(patronymic,'^\S{1,2}\s?-\s?[яй]')
+   OR regexp_matches(tenure_note_text,'^\S{1,2}\s?-\s?[яй]') OR first_name LIKE 'г-%');
+-- baseline before the write (and the same after)
+SELECT sum(receipts_total_kopecks) FROM research.event;
+SELECT count(*) FROM entities.person WHERE superseded_by_person_id IS NULL;
+SELECT count(*) FROM research.person WHERE wikidata_qid IS NOT NULL;   -- + research.person/work/event/person_appearance counts
+SELECT count(*) FROM raw.person_entry WHERE page_id LIKE 'balletartists%' AND regexp_matches(family_name,'[0-9]+\s?-?\s?[яй]$');
+-- post-fix diff against outputs/full_run_pre_promote_backup_2026-10-18_droppedordinals
+ATTACH '.../imperial_theaters.duckdb' AS b (READ_ONLY);
+SELECT * FROM b.research.person WHERE person_id NOT IN (SELECT person_id FROM research.person);   -- and the reverse
+SELECT * FROM entities.person_merge_log EXCEPT SELECT * FROM b.entities.person_merge_log;
+SELECT pl.entry_id, bl.person_id, pl.person_id FROM entities.person_link pl JOIN b.entities.person_link bl USING(entry_id) WHERE pl.person_id<>bl.person_id;
+SELECT count(*) FROM (SELECT * FROM raw.person_entry EXCEPT SELECT * FROM b.raw.person_entry);    -- + other-columns-only, analysis.person_entry
+SELECT work_id, canonical_title FROM research.work EXCEPT SELECT ... FROM b.research.work;          -- both directions; + research.event
+SELECT person_id, wikidata_qid FROM b.research.person WHERE wikidata_qid IS NOT NULL EXCEPT SELECT person_id, wikidata_qid FROM research.person;
+SELECT r.display_name, b.display_name FROM research.person r JOIN b.research.person b USING(person_id) WHERE r.display_name<>b.display_name;
+-- the superseded ids in other entities tables (review_person, production_credit_link, person_wikidata_link, creator_person)
+```
+
+Result: candidates 1,180 rows / 300 pages (21 old neighbour leads included); BalletArtists ordinals stored per list ranged 6 (1905-06
+SP) to 72 (1892-93 SP). Letter misreads: 3 («Э-й», «г-жа», «І-я»). Scan read of all 392 pages vs raw: 1,669 ordinals already right,
+761 missing (worklist docs/eval/dropped_ordinal_worklist_2026-10-18.tsv). Baseline: receipts 3216919085, live 2550, Wikidata 177,
+research.person 2648, works 2970, events 32808, appearances 23979, BalletArtists ordinals 1714, alignment 0 shift blocks / 109.
+After: raw and analysis person_entry 761 rows changed (name fields only); work ids 0, events 0 diffs; receipts, Wikidata (same
+177 pairs), works, events, appearances unchanged; ordinals 2475; shift count 0; alignment 0 / 109. Two Tier-1 merges
+(name_variant_shared_start): ffd2927c -> 6de49d (Грачевская 1-я, Марія Ивановна), 16521041 -> 0f7ceb41 (Ивановъ 3-й, Евгеній
+Михайловичъ); person_link 16 rows re-pointed; live 2548; research.person 2646; superseded ids referenced nowhere else; 88
+research.person display names gain the printed ordinal.
+
+## 2026-10-18 — BalletArtists scan-read follow-ups: spellings, person links, structural rows (decided, not yet applied)
+
+```sql
+SELECT family_name, count(*), string_agg(DISTINCT <season list>) FROM raw.person_entry WHERE family_name LIKE 'Оголе%' GROUP BY 1;
+-- same for Гейтен%, Дантес%, Смирнин%, Легат%, Ѳектист%, Бакин%, Рыхлян%, Пашенко%/Пащенко%, Трекова%, Симирн%, Леонт%, Тихомир%/Тихомір%
+SELECT page_id, list_number, family_name, first_name, patronymic, entry_id FROM raw.person_entry WHERE page_id LIKE 'balletartists%'
+  AND (<the 47 flagged surnames> OR (page_id, list_number) IN (<10 hyphen / print-oddity rows>));
+SELECT split_part(page_id,'_',1), page_id, count(*) FROM raw.person_entry WHERE first_name LIKE '% %' AND coalesce(patronymic,'')='' GROUP BY ALL;
+SELECT r.first_name, a.first_name_clean, a.patronymic_clean FROM raw.person_entry r JOIN analysis.person_entry a USING(entry_id) WHERE r.page_id='balletartists_1905-06_SP_p002';
+SELECT * FROM entities.person_link WHERE entry_id LIKE 'balletartists_1903-04_MSK_p005__e0%';
+SELECT p.display_name, ... FROM entities.person p JOIN entities.person_link l USING(person_id) JOIN raw.person_entry r USING(entry_id)
+ WHERE p.person_id IN (<e010's person>, <Бѣлоусовъ Геннадій>);
+-- per flagged entry: its current person, and other persons whose analysis name equals the printed spelling (merge preview)
+SELECT sum(receipts_total_kopecks) FROM research.event;  -- + live persons, Wikidata, research.person/work/event/appearance counts
+```
+
+Result: 57 entries zoomed (single-line crops, docs/eval/balletartists_spelling_crops_2026-10-18.html): 44 surname misreads + 1 print
+typo stored wrongly («Алексадрова»); «Легать», «Тимомировъ», «Трекова» match the print (print typos). All 45 flagged entries are
+already linked to the right person (links keyed by entry_id, not name text). Given-name+patronymic-in-first_name: 3 BalletArtists
+pages (27/25/27 rows) + Musicians pages; analysis already splits them. 1903-04 MSK p005: e010 (index 9) is linked to Лилія
+Ѳеоктистова 83685cf4 (seasons 1900-01..1908-09); Бѣлоусовъ 1-й Геннадій 49135ed2 attested 1890-91..1905-06 except 1903-04.
+Merge preview: Смирновъ Александръ Митрофановичъ (1907-08) and Леонтьева Марія Михайловна (1909-10) may reunite with an existing
+person. Baseline (unchanged since the dropped-ordinal fix): receipts 3216919085, live 2548, Wikidata 177, research.person 2646,
+works 2970, events 32808, appearances 23979; alignment 0 shift blocks / 109. Not yet written: paused at RG's request.

@@ -24,7 +24,7 @@ goal is catching and triaging them cheaply every run, not eliminating them.
 - **needs source check** — plausibly a real model error, but not confirmed
   against the scanned page yet
 
-## Status index (as of 2026-10-15)
+## Status index (as of 2026-10-18)
 
 The `Status:` lines on the early entries (roughly #1-#67) were written when
 each issue was found and were mostly not updated; the closures are recorded in
@@ -111,11 +111,17 @@ closes, and add new open items here as well as in their own entry.
 
 **Workable from the scans, not done**
 
-- #154 follow-up: BalletArtists ordinals dropped altogether (the printed «Бѣлоусовъ 1-й» stored as plain
-  «Бѣлоусовъ»). 21 leads: a bare surname directly next to the same surname with an ordinal on the same page
-  (query in `docs/query_log.md`, 2026-10-15). Four of them were seen on the scans during #154 with the ordinal printed:
-  1896-97 MSK no. 30 (Ивановъ 3-й), 1897-98 MSK no. 12 (Бѣлоусовъ 1-й), 1904-05 MSK no. 63 (Смирновъ 1-й),
-  1904-05 SP no. 3 (Алексѣевъ 1-й). The other 17 need the scan; some bare surnames may be printed bare.
+- #154 follow-ups from the 2026-10-18 scan read -- ALL DECIDED BY RG 2026-10-18, NOT YET APPLIED (paused for the night).
+  Script ready and dry-run clean: `docs/eval/raw_fix_balletartists_scanread_followups_2026-10-18.py` (S 45 surnames to the
+  printed spelling incl. «Алексадрова 2-я» as printed; H 5 hyphenless ordinals as printed; B 1903-04 MSK p005 Бѣлоусовъ 1-й
+  restored to slot 10 + Лилія Ѳеоктистова appended as no. 108 with person_link pre-seeded; M Михайлова 2-я 77 -> 78 and
+  Михайлова 1-я † 12 декабря 1893; P «Имя Отчество» split on 1893-94 SP p002, 1905-06 SP p002, 1908-09 MSK p003, 79 rows).
+  Evidence: docs/eval/balletartists_spelling_crops_2026-10-18.html. To resume: check no other writer, baseline (receipts
+  3216919085, live 2548, Wikidata 177, research.person 2646), back up duckdb + the 35 raw pages, run the script with --write,
+  rebuild_after_raw_edit.sh, alignment check, diff; check any Tier-1 merges (likely: Смирновъ Александръ Митрофановичъ 1907-08,
+  Леонтьева Марія Михайловна 1909-10). Print typos to add to genuine_print_typos.md once applied: «Легать 2-я» (1890-91 SP no. 64,
+  ь in print), «Тимомировъ 1-й» (1895-96 SP no. 67), «Трекова 2-я» (1902-03 MSK no. 26, Т under «Грекова 1-я»), «Алексадрова 2-я»,
+  the 5 hyphenless ordinals, comma before the ordinal («Голубева, 2-я», «Козловъ, 2-й», «Федоровъ,1-й»).
 - Genre carried in `performance_title` and not yet separated, after the two
   2026-10-12 passes (entry at the end of this file): about 76 Cyrillic titles
   with an empty genre field («весенняя сказка», «возможный случай», «принцѣ
@@ -23900,3 +23906,38 @@ person_appearance tenure_note_text values lose the stray patronymic/ordinal. per
 after (109 informational mismatches, unchanged). Shift count (ordinal in first_name, in patronymic, or opening tenure_note_text):
 216 -> 0. Open follow-up: ordinals dropped altogether (status index, "Workable from the scans").
 
+## Issue #154 follow-up: BalletArtists ordinals dropped altogether -- 761 rows FIXED, 2026-10-18 (RG: "apply all 761", surnames too)
+
+The 21 neighbour leads of 2026-10-15 undercounted badly: the first scan checked (1890-91 MSK p. 5) prints «Хомякова 1-я/2-я»,
+«Ячменева 2-я», «Ѳедорова 1-я/2-я», «Ѳеоктистова 1-я/2-я», all stored bare. Wider candidate set (a bare surname recurring in the
+same season+city list, or a person carrying an ordinal in an adjacent season): 1,180 rows on 300 pages. So all 392 BalletArtists
+pages were read on the full-resolution scans (pdf/Spiski_BalletArtists, extract_image; 15 parallel readers, coverage checked by
+page_id 392/392), recording every ordinal printed on each page and a zoomed verdict on each candidate (755 ordinal, 384 bare,
+0 unsure). Compared with raw: 1,669 ordinals already stored correctly; 761 printed ordinals missing from raw. My own zooms on 7
+pages (incl. the 6 lone siblings outside the candidate set, e.g. «Черепова 2-я» after 1-я left, «Егорова 2-я», «Чумаковъ 2-й»)
+all agreed with the readers; RG saw 13 crops covering 17 rows across the four groups (docs/eval/dropped_ordinal_samples_2026-10-18.html).
+
+Four groups (worklist `docs/eval/dropped_ordinal_worklist_2026-10-18.tsv`): 746 plain drops (ordinal appended exactly as printed;
+a comma printed before the ordinal is dropped as in the Шелепина fix; «Ѳедоровъ 1 й» keeps its missing hyphen); 3 placed by entry
+index (1906-07 SP prints two «15.» Воронковъ; 1904-05 SP «1.» stored as «I.»); 3 ordinals misread as letters and pushed into
+first_name, names moved back («Ивановъ, Э-й Евгеній Михайловичъ» -> «Ивановъ 3-й, Евгеній Михайловичъ»; «Грачевская, г-жа Марія»
+-> «Грачевская 1-я, Марія Ивановна»; «Рыхлякова, І-я Варвара» -> «Рыхлякова 1-я, Варвара Трофимовна»); 9 whose stored surname
+was also misread, corrected to the print after zooming each (Чередова -> Черепова, Бакинь -> Бакинъ x2, Климащевская ->
+Климашевская x2, Оголейть -> Оголейтъ, Тихомировъ -> Тихоміровъ x2, Кшесинскій -> Кщесинскій: 1901-02 SP no. 30 really prints
+щ under «Кшесинскій 1-й», added to genuine_print_typos.md). Printed bare and left bare: 1909-10 SP no. 70 «Улановъ» (no. 71
+«Улановъ 2-й»), 1899-00 MSK no. 65 «Некрасова» (no. 66 «Некрасова 2-я»), 1894-95 MSK no. 98 «Симонова» (no. 99 «Симонова 2-я»),
+1902-03 SP no. 37 «Легатъ, Николай», 1901-02 MSK no. 42 «Иванова.», the two Мосоловы 1905-06, staff heads (Петипа, Гельцеръ ...).
+
+Script `docs/eval/raw_fix_dropped_ordinals_balletartists_2026-10-18.py` (field edits only, no entries added or removed; asserts
+each old value); backup `outputs/full_run_pre_promote_backup_2026-10-18_droppedordinals/` (duckdb + the 110 raw pages). Baseline
+before: receipts 3,216,919,085, live persons 2,550, Wikidata 177, research.person 2,648, works 2,970, events 32,808, appearances
+23,979; alignment 0 shift blocks / 109 informational. Rebuilt with `rebuild_after_raw_edit.sh`. Diff: raw and analysis
+person_entry exactly 761 rows, no other column touched; work ids 0, events 0 diffs; receipts, Wikidata (same 177 person/QID
+pairs), works, events, appearances unchanged; BalletArtists surnames with an ordinal 1,714 -> 2,475; shift count 0; alignment
+0 shift blocks / 109 (unchanged). **Two automatic Tier-1 merges** (name_variant_shared_start, same printed start date), both
+caused by the repaired names now matching: ffd2927c «Грачевская 1-я, Марія Ивановна» (15 links, 1890-91..1905-06) -> 6de49d
+(the 1901-02 «г-жа» row; start 1 Sept 1886), and 16521041 (1896-97 «Э-й» row) -> 0f7ceb41 «Ивановъ 3-й, Евгеній Михайловичъ»
+(start 1 Sept 1892). person_link 16 rows re-pointed (those two persons only); live persons 2,550 -> 2,548, research.person
+2,648 -> 2,646; neither superseded id has a Wikidata link, review/credit/creator reference or a mention in docs/. 88
+research.person display names gain the printed ordinal. Not done here: sqlite/HF/Cloud Run republish (Andy). Follow-ups in the
+status index ("#154 follow-ups left by the 2026-10-18 dropped-ordinal fix").

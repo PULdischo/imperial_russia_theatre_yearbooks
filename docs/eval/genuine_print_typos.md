@@ -672,3 +672,8 @@ Each read twice on the scan (checking agent and a close zoom, 2026-09-28) and ke
 - 1909-10 Moscow p. 126 no. 76: «Шелепина**,** 1-я Вѣра Ивановна», comma before the ordinal (no. 77 prints «Шелепина 2-я,
   Александра Ивановна»); stored with the ordinal on the surname, «Шелепина 1-я», like every other entry.
 
+
+## BalletArtists surnames misprinted (added 2026-10-18, issue #154 follow-up; stored as printed, RG)
+
+- 1901-02 SP p. 79 no. 30: «К**щ**есинскій 2-й, Іосифъ Феликсовичъ», щ for ш, directly below no. 29 «Кшесинскій 1-й, Феликсъ
+  Ивановичъ»; zoomed. Stored «Кщесинскій 2-й» (raw had «Кшесинскій», which is not what the page prints).
