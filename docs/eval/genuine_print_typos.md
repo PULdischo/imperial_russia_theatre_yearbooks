@@ -697,3 +697,5 @@ Each read twice on the scan (checking agent and a close zoom, 2026-09-28) and ke
   ш for щ; zoomed. Stored as printed.
 - 1903-04 ProductionTeam p001 (p. 119) «1. **Каменскій**, Исаакъ Осиповичъ (съ 30 іюня 1881 г.) ... Переведенъ изъ Московскихъ къ
   Петербургскимъ театрамъ съ 20 іюля 1903 г.» for **Неменскій** (every other season); zoomed. Stored as printed; the row is linked to his record.
+- 1910-11 Moscow Musicians p002 (p. 136): «**44.** Решке, Богумилъ Вильгельмовичъ (съ 17 сентября 1903 г.). Труба.» between nos. 73 and 75,
+  for 74; zoomed. Stored as printed.

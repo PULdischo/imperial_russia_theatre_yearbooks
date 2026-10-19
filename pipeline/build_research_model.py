@@ -1713,13 +1713,13 @@ def build_person_tenure_notes(con: duckdb.DuckDBPyConnection) -> int:
         printed = con.execute("""
             SELECT count(*) FROM raw.person_entry_service s JOIN raw.person_entry pe USING (entry_id)
             JOIN raw.source_pages sp ON sp.page_id = pe.page_id JOIN entities.person_link pl USING (entry_id)
-            WHERE pl.person_id = ? AND sp.entity_type = ? AND sp.city = ? AND CAST(s.end_date_undate AS VARCHAR) = ?""",
+            WHERE pl.person_id = ? AND sp.entity_type = ? AND coalesce(sp.city, '') = ? AND CAST(s.end_date_undate AS VARCHAR) = ?""",
             [pid, lst, city, row["printed_leaving_date"]]).fetchone()[0]
         if not printed:
             raise SystemExit(f"person_tenure_discrepancies.csv: {row['display_name']} has no printed leaving "
                              f"{row['printed_leaving_date']} in {city}/{lst}")
         listed = {r[0] for r in con.execute(
-            "SELECT DISTINCT season FROM research.person_appearance WHERE person_id = ? AND entity_type = ? AND city = ?",
+            "SELECT DISTINCT season FROM research.person_appearance WHERE person_id = ? AND entity_type = ? AND coalesce(city, '') = ?",
             [pid, lst, city]).fetchall()}
         for period in row["service_periods"].split(";"):
             a, b = [x.strip() for x in period.split("..")]

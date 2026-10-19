@@ -18963,3 +18963,25 @@ leaving note is printed under its own person, and nothing bearing on leaving is 
   1910 г.» -- each volume prints its own year (a revised date or a misprint).
 Side slips (not acted on): Ширяевъ 1903-04 role «церемоніймейстеръ» stored «перемоніймейстеръ»; Свѣтинская 1898-99 credit line stored twice
 (note + credit fields); 1910-11 Moscow musicians: «44. Решке» printed for 74, «вктября» (Плаксинъ) -- print slips.
+
+## 2026-10-19 — Group 3 recorded in research.person_tenure_note; side slips fixed
+
+Applied (RG): 9 rows added to `pipeline/research_corrections/person_tenure_discrepancies.csv` -- Геншъ, Рашкевичъ "left staff; played per
+performance"; Дмитріева 1-я, Свѣтинская "continuing service"; Броневскій-Боянусъ, Гущинъ, Степановъ, Ширяевъ "open (one extra listing
+after the printed leaving)"; Потаповъ "date conflict (left 12 December 1909 or 1910)". build_research_model's check now treats a blank city
+as '' (TheaterSchoolStaff). `docs/eval/raw_fix_m9_group3_slips_2026-10-19.py`: Ширяевъ 1903-04 «перемоніймейстеръ» -> «церемоніймейстеръ»
+(x3; zoomed); Свѣтинская 1898-99 credit line removed from tenure_note_text (stored twice). Backup
+outputs/full_run_pre_promote_backup_2026-10-19_group3/; rebuild_after_raw_edit.sh.
+
+```sql
+SELECT research_reading, count(*) FROM research.person_tenure_note GROUP BY 1;
+SELECT count(*) FROM raw.person_entry_credit WHERE role_name LIKE '%перемоні%';
+SELECT count(*) FROM raw.person_entry WHERE credit_summary_text IS NOT NULL AND length(credit_summary_text) > 10
+   AND position(credit_summary_text IN tenure_note_text) > 0;
+```
+
+Result: tenure notes 8 -> 17 (continuing 7, open one-extra-listing 4, open Адольфи 2, per-performance 2, two periods 1, date conflict 1);
+«перемоні...» role names 12 -> 11 (10 other entries, 1891-92..1904-05, still to scan-check); credit line duplicated inside the tenure
+note: 913 rows remain (a corpus-wide extraction pattern; analysis.tenure_note_text_clean keeps it too). Receipts, live persons 2548,
+Wikidata 177, research.person 2646, service end types, person_link all unchanged; 0 shift blocks. «44. Решке» (for 74, 1910-11 p.136)
+was already stored as printed; added to genuine_print_typos.md.
