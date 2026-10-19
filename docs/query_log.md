@@ -18944,3 +18944,22 @@ scan p.67). No other Каффи anywhere in the corpus; the other Иванъ І�
 people. No merge or rejection on record for the pair. With the copied 1903 note gone, nothing in print says Иванъ left.
 
 **2026-10-19 — Каффи Иванъ / Дмитрій: KEPT APART (RG, "keep apart but note"; may revisit):** no merge; uncertain list #40.
+
+## 2026-10-19 — M9 group 3 scan-read (9 people, 18 entries: note season + following season, neighbours read too)
+
+Full-resolution PDF images, every entry and its neighbours zoomed (three read-only agents). No misattributed note in group 3: every
+leaving note is printed under its own person, and nothing bearing on leaving is missing from the extraction.
+- Геншъ, Германъ (SP, тромбонъ): 1893-94 p.72 «Оставилъ службу 20 ноября 1893 г.»; 1894-95 p.61 «Участвуетъ въ оркестрѣ на поспектакльной платѣ.»
+- Рашкевичъ, Карлъ (SP, первая скрипка): 1893-94 p.75 «Оставилъ службу 1 декабря 1893 г.»; 1894-95 p.64 (Оркестръ Михайловскаго театра)
+  «Участвуетъ въ оркестрѣ на поспектакльной платѣ.»
+- Дмитріева 1-я, Софія (Moscow ballet): 1897-98 p.93 «Оставила службу 7 декабря 1897 г.»; 1898-99 p.114 listed, «Въ 5 операхъ—18», no note.
+- Свѣтинская, Марія (Moscow ballet): 1897-98 p.95 «Оставила службу 4 мая 1898 г.»; 1898-99 p.117 listed, «Въ 1 балетѣ—1», no note.
+- Броневскій-Боянусъ, Семенъ and Гущинъ, Федоръ (SP drama courses, «Практика драматическаго искусства»): 1905-06 p.74, each «Оставилъ
+  службу 31 октября 1905 г.» (Гущинъ printed «Гушинъ»); 1906-07 p.75 both listed, same starts, no note.
+- Степановъ, Иванъ (Moscow, контръ-фаготъ): 1904-05 p.63 «Оставилъ службу 1 сентября 1904 г.»; 1905-06 p.59 listed, no note.
+- Ширяевъ, Сергѣй (Moscow ballet): 1903-04 p.112 «Оставилъ службу 6 октября 1904 г.» (also printed in 1904-05); 1905-06 p.56 listed, no
+  note and no performance line.
+- Потаповъ, Николай (Moscow, віолончель): 1909-10 p.133 «Оставилъ службу 12 декабря 1909 г.»; 1910-11 p.136 «Оставилъ службу 12 декабря
+  1910 г.» -- each volume prints its own year (a revised date or a misprint).
+Side slips (not acted on): Ширяевъ 1903-04 role «церемоніймейстеръ» stored «перемоніймейстеръ»; Свѣтинская 1898-99 credit line stored twice
+(note + credit fields); 1910-11 Moscow musicians: «44. Решке» printed for 74, «вктября» (Плаксинъ) -- print slips.
