@@ -18693,3 +18693,16 @@ person_link e010 re-pointed to 49135ed2, e022 new -> 83685cf4; no merges, no new
 pairs), research.person, works (0 id diffs), events (0 diffs) unchanged; appearances 23980; 5 display names changed; alignment 0/109.
 Смирновъ Александръ Митрофановичъ stays split (32d4e149 start 1891; 7cb6e597 1908-09 start 1897); Леонтьева Марія Михайловна stays
 split (d086582b 1 іюня 1907; 6ecdb213 31 марта 1905): both added to person_merge_candidates_batch.md.
+
+## 2026-10-19 — M8 / M9 person-audit worklists regenerated against current production
+
+```
+uv run python docs/eval/person_audit_2026-10-12/audit.py   # OUT redirected to a scratch folder; M8 and M9 kept
+-- (the script's SQL: every live person's raw.person_entry rows with season, city, entity_type, list, names, tenure note;
+--  start and end dates from the parsed service periods)
+```
+
+Result: live persons audited 2548. M8 (first start date varies within one list) 379 rows, was 380: 251 different years / 128
+same year. M9 (listed after a printed leaving or death) 197 rows, was 194: 179 left service / 18 died. Compared by surname +
+first name + list: gone from M8 Гердтъ, Павелъ and Чумакова, Ольга (Graduates); new in M9 Адольфи 1-й, Штейнсъ, Ѳедорова, Софія;
+the rest are the same people under new display names or spans. Files in docs/eval/person_audit_2026-10-19/.
