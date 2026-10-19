@@ -18706,3 +18706,17 @@ Result: live persons audited 2548. M8 (first start date varies within one list) 
 same year. M9 (listed after a printed leaving or death) 197 rows, was 194: 179 left service / 18 died. Compared by surname +
 first name + list: gone from M8 Гердтъ, Павелъ and Чумакова, Ольга (Graduates); new in M9 Адольфи 1-й, Штейнсъ, Ѳедорова, Софія;
 the rest are the same people under new display names or spans. Files in docs/eval/person_audit_2026-10-19/.
+
+## 2026-10-19 — M8 / M9 automatic first pass
+
+```
+uv run python docs/eval/person_audit_2026-10-19/first_pass.py
+-- per live person: raw.person_entry rows (season, city, entity_type, tenure note) + raw.person_entry_service start/end dates
+-- plus: per consecutive-season pair and list, count of people whose printed start YEAR changes
+```
+
+Result: M8 379 -> odd_single_date 140, clean_split_near 67, clean_split_1908_format 30, same_season_two 27, clean_split 21,
+scattered 94. M9 134 notes -> note_reprinted 59, reengaged 30, left_one_of_two_posts 5, note_printed_late 2, continuous_after 36,
+return_after_gap 2. Start-year changes between consecutive seasons, BalletArtists: 15 at 1891-92, 0-13 at most steps, 22 at
+1905-06, 40 at 1908-09, 15 at 1909-10; ProductionTeam 6 and 7 at 1908-09/1909-10 (0-2 elsewhere except 6 at 1897-98);
+Administrators 5 and 6 (0-4 elsewhere); Musicians 16 at 1891-92. 153 rows left for scan checks.

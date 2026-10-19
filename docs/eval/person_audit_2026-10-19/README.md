@@ -22,3 +22,32 @@ split 2026-10-12). Really new in M9: Адольфи 1-й, Іоганъ-Фрид�
 
 Not yet done: the automatic first pass (M8: one odd date inside a run vs a run that splits into two consistent dates;
 M9: a return after a gap vs continuous listing after the note), then scan checks, then cases to RG one at a time.
+
+## Automatic first pass (2026-10-19)
+`first_pass.py` -> `M8_first_pass.csv`, `M9_first_pass.csv` (bucket rules in the script's docstring). Read-only. M9 counts
+each leaving/death note once per person and list (134 notes = the 197 note-season rows of M9).
+
+| M8 bucket (379) | rows | reading |
+|---|---|---|
+| odd_single_date | 140 (100 differ only in the day or one year digit) | one season's date disagrees with all the rest: a slip in that season |
+| clean_split_near | 67 | two blocks, dates differ only in day/month or one digit: the print changed its date from that season on |
+| clean_split_1908_format | 30 | two blocks, the second starting 1908-09 or 1909-10 |
+| same_season_two | 27 | two dates in one season (two posts / two rows), otherwise consistent |
+| **clean_split** | **21** | two blocks with a real jump, not at 1908: post change, re-engagement, or two people |
+| **scattered** | **94** (70 different years, 24 same year) | no simple pattern |
+
+The 1908 re-basing is in the data: between consecutive seasons, the number of people (same list) whose printed start YEAR
+changes peaks at 1907-08 -> 1908-09 for BalletArtists (40, against 0-22 at every other step) and is raised for ProductionTeam
+and Administrators in 1908-10; a smaller peak at 1890-91 -> 1891-92 (BalletArtists 15, Musicians 16).
+
+| M9 bucket (134 notes) | notes | reading |
+|---|---|---|
+| note_reprinted | 59 (8 deaths) | every later listing repeats the note: the volume prints people who left during the season |
+| reengaged | 30 | a later listing prints a start date after the leaving date: returned to service |
+| left_one_of_two_posts | 5 | the note closes one of two posts in the same list (e.g. Каменевъ, Исторія церкви vs Законъ Божій) |
+| note_printed_late | 2 (both deaths) | listed one more season without the note, which appears a volume later (Байкова, Краюшкинъ) |
+| **continuous_after** | **36** | listed straight after with no note and no new start date |
+| **return_after_gap** | **2** | listed again after a missing season (Адольфи, Фердинандъ; Егорова 1-я) |
+
+**Left for scan checks: 153** -- M8 clean_split 21 + scattered 94, M9 continuous_after 36 + return_after_gap 2. The other
+buckets are explained by the print's own habits; a sample of each should still be scan-checked before they are set aside.
