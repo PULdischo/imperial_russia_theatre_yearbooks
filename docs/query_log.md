@@ -18922,3 +18922,23 @@ every one of those seasons); printed leaving 1 August 1906 (1905-06). Table 5 ->
 **2026-10-19 — the Адольфи brothers added to research.person_tenure_note (RG):** reading "open (which brother remained is unresolved,
 #38)"; Іоганъ-Фридрихъ 1890-91..1899-00 (listed every season), Фердинандъ 1890-91..1896-97; 1900-01..1905-06 (listed every season of
 both periods, absent 1897-98..1899-00). Table 6 -> 8 rows; receipts 3,216,919,085, research.person 2646 unchanged.
+
+## 2026-10-19 — Каффи 1902-03 note removed (applied); Каффи Иванъ / Дмитрій evidence
+
+`docs/eval/raw_fix_kaffi_misattributed_2026-10-19.py --write` (backup outputs/full_run_pre_promote_backup_2026-10-19_kaffi/), then
+`rebuild_after_raw_edit.sh`. Against the backup: one service row changed (productionteam_1902-03_p001__e020: left service 1 августа 1903
+-> no end); left service 953 -> 952; receipts 3,216,919,085, live persons 2548, Wikidata 177, research.person 2646, tenure notes 8,
+person_link 0 moved, 0 shift blocks.
+
+```sql
+SELECT sp.season, pe.list_number, pe.family_name, pe.first_name, pe.tenure_note_text FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id)
+WHERE pe.heading_path LIKE 'С.-ПЕТЕРБУРГЪ / Отдѣлъ гардеробный / Костюмеры%' AND sp.season BETWEEN '1901-02' AND '1905-06' ORDER BY 1, 2;
+-- plus every Каффи, and every Иванъ/Дмитрій Іосифовичъ in the corpus; the merge log for the pair
+```
+
+Result: the Petersburg «Костюмеры» are two posts: men's costumes of the opera and Russian drama troupes (Пипаръ, «съ 26 августа 1869
+г.», to 1902-03, left 1 Aug 1903 -> Неменскій, transferred from Moscow 20 July 1903, «Каменскій» in 1903-04, left 20 Feb 1906 -> Павловъ)
+and men's costumes of the ballet and French troupes, held «съ 1 сентября 1883 г.» by «Каффи, Иванъ Іосифовичъ» 1890-91..1902-03 (2c3118,
+13 seasons) and «Каффи, Дмитрій Іосифовичъ» 1903-04, 1904-05 (1adf00; «Оставилъ службу 1 апрѣля 1905 г.» in 1904-05, which IS his,
+scan p.67). No other Каффи anywhere in the corpus; the other Иванъ Іосифовичи (Колюмна-Гаттовскій, Костлянъ, Сапожниковъ) are other
+people. No merge or rejection on record for the pair. With the copied 1903 note gone, nothing in print says Иванъ left.
