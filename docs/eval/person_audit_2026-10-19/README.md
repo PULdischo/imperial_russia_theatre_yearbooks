@@ -89,3 +89,14 @@ uncertain list #39 summarises): group 2 (5), Адамовъ, the Адольфи 
 the way: 28 post-change end types, 3 misattributed leaving notes (Иванова, Неменскій, Каффи), several misreads. Каффи Иванъ/Дмитрій kept
 apart (#40). Left for later: M8 (115 rows to scan-check after the first pass); the 10 other «перемоніймейстеръ» entries; the 913 rows
 whose credit line is duplicated inside the tenure note; the new table in the Datasette export (Andy).
+
+## PAUSED 2026-10-19 (end of day) -- where to resume
+Done today: M8/M9 regenerated and auto-sorted; all 38 M9 notes decided (research.person_tenure_note, 19 people); 28 post-change end
+types; 3 misattributed leaving notes (Иванова, Неменскій, Каффи Иванъ); Каффи Иванъ/Дмитрій kept apart (#40); 913 duplicated ballet
+tallies removed from tenure notes; «церемоніймейстеръ» on 10 entries; 39 tally misreads on 7 entries (Щелкунчикъ, Коппелія, Конекъ-Горбунокъ ...).
+**Resume options, in RG's order of interest:**
+1. M8: 115 rows left after the first pass (`M8_first_pass.csv`: clean_split 21, scattered 94) -- group by pattern first, as for M9.
+2. ~52 other misspelled credit titles corpus-wide (raw.person_entry_credit.label: «Копекъ-…» 39, «Копелія» 8, «Копеллія» 3, «Копелкъ-горбунокъ»
+   2) -- scan-check each; «Копелія» may be a genuine print variant.
+3. Proposed separate task: review mentions linked across different ordinals (e.g. «Смирнова 2-я» -> Смирнова 4-я) -- read-only check.
+4. For Andy: research.person_tenure_note is not yet in build_datasette.py; research_dataset.sqlite last built 2026-10-15.
