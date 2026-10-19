@@ -82,3 +82,10 @@ service, Егорова 1-я -> two periods (possibly never left), all in `resea
 one more season only), then group 4 (Баклановъ, Ѳедорова 2-я Лидія x2). Open side items: Адамовъ and the Адольфи brothers could join the
 tenure table (RG to say); productionteam_1902-03_p001 «1. Каффи ... Оставилъ службу 1 августа 1903 г.» unchecked; the new table is not
 yet in the Datasette export.
+
+### M9 scan checks DONE 2026-10-19
+All 38 notes decided. research.person_tenure_note now holds 19 people (source pipeline/research_corrections/person_tenure_discrepancies.csv;
+uncertain list #39 summarises): group 2 (5), Адамовъ, the Адольфи brothers, group 3 (9), group 4 (Баклановъ, Лидія Ѳедорова). Raw fixes on
+the way: 28 post-change end types, 3 misattributed leaving notes (Иванова, Неменскій, Каффи), several misreads. Каффи Иванъ/Дмитрій kept
+apart (#40). Left for later: M8 (115 rows to scan-check after the first pass); the 10 other «перемоніймейстеръ» entries; the 913 rows
+whose credit line is duplicated inside the tenure note; the new table in the Datasette export (Andy).

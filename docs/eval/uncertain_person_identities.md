@@ -340,6 +340,7 @@ To add an entry: copy the template at the bottom.
 - **Odd details:** Софія's start is reprinted «съ 1 сентября 1900 г.» (1899 before) after the note; Тарновскій's case would be explained by playing «на поспектакльной платѣ» (as Геншъ, Рашкевичъ), but nothing of the kind is printed.
 - **Where to look:** query log 2026-10-19 ("M9 groups 1 + 2 scan-read", "discuss group 2"); docs/eval/person_audit_2026-10-19/.
 - **Would resolve it:** RGIA f. 497 personnel дела; staff orders for the departure dates (1 Nov 1890, 1 May 1898, 1 June 1905, 1 June 1908, 15 Aug 1909); for Егорова, any 1898-99 programme or review naming her.
+- **Also in the table (RG, 2026-10-19):** M9 group 3 (Геншъ, Рашкевичъ per-performance; Дмитріева 1-я, Свѣтинская continuing; Броневскій-Боянусъ, Гущинъ, Степановъ, Ширяевъ open one-extra-listing; Потаповъ date conflict 1909/1910) and group 4 (Баклановъ continuing; Ѳедорова 2-я, Лидія two periods with a 1901/1902 leaving-date conflict, possibly never left). 19 rows in all.
 - **Added 2026-10-19 (RG):** Адамовъ, Михаилъ (1906; earlier ruled an unconfirmed printed leaving) -- continuing service 1902-03..1910-11 (Moscow). The Адольфи brothers (#38) -- see that entry.
 
 ## 40. Каффи, Иванъ / Дмитрій Іосифовичъ (SP ProductionTeam, костюмеръ, men's costumes of the ballet and French troupes) -- «Иванъ» to 1902-03, «Дмитрій» from 1903-04

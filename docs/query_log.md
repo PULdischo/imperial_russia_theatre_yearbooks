@@ -19003,3 +19003,7 @@ Result:
   114 Федорова 1-я Марія, 115 «Федорова 2-я, Александра Александровна (съ 1 іюня 1902 г.)», 116 Фонарева: the 2-я ordinal has passed to
   Александра), back 1905-06..1907-08 (17, 57, 54 performances), same 1885 start. Review mentions of «Федорова 2-я» in 1903-04/1904-05 are
   ambiguous between Лидія and Александра.
+
+**2026-10-19 — Group 4 recorded (RG):** Баклановъ continuing service 1902-03..1910-11; Ѳедорова 2-я, Лидія two periods 1890-91..1903-04;
+1905-06..1907-08 with the 1901/1902 leaving-date conflict. research.person_tenure_note 17 -> 19; receipts, research.person 2646, Wikidata
+177 unchanged. The 38 M9 notes are all decided.
