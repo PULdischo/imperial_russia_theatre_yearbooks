@@ -18818,3 +18818,52 @@ Scans (full-resolution PDF images, page size): administration_1904-05_p001 p.72 
 «Назначенъ ...»); balletartists_1907-08_SP_p009 p.24 «62. Потанинъ ... Оставилъ службу 1 іюня 1908 г.» and 1908-09 p.95 «57. Потанинъ»;
 musicians_1894-95_SP_p001 p.61 «24. Геншъ ... Участвуетъ въ оркестрѣ на поспектакльной платѣ.» (with Грибенъ 2-й, Грюнертъ, Куннели
 «Оставилъ службу 1 октября 1894 г., но продолжаетъ участвовать въ оркестрѣ на поспектакльной платѣ»). Groups in M9_groups.csv.
+
+## 2026-10-19 — M9 group 1: service periods closed by an appointment/transfer, DRY RUN; group 2 evidence
+
+```sql
+SELECT pe.entry_id, pe.page_id, s.period_order, s.end_date_text FROM raw.person_entry_service s JOIN raw.person_entry pe USING (entry_id)
+WHERE s.end_type = 'left service'
+  AND lower(tenure_note_text || ' ' || credit_summary_text) SIMILAR TO '.*(назначен|освобожден|переведен|утвержден|произведен).*'
+  AND lower(...) NOT SIMILAR TO '.*(оставил|остав\.|уволен|вышел|выбыл|отчислен|умер|скончал|†|по \d).*';
+```
+
+Result: 28 service periods on 22 pages (the earlier "18" was case-sensitive and missed «Съ ... назначенъ»): Administrators 11
+(Нелидовъ, Брилліантовъ, Старженецкій-Лаппа x2, Погожевъ, Поспѣевъ, Кусовъ, Шишко, Рождественскій, Бестужевъ-Рюминъ x2),
+BalletArtists 13 (Рыжевъ, Бакеркина, Гельцертъ, Жвирблицъ, Козловъ, Ширяевъ x3, Молодова, Балдина, Чернявская, Аслинъ, Ѳеоктистовъ),
+ProductionTeam 4 (Неменскій, Павловъ, Бекетовъ, Медеръ). `docs/eval/raw_fix_post_change_end_type_2026-10-19.py` dry run: all 28
+left service -> other, nothing written. Соколовъ and Славинскій print «Оставилъ службу» and are NOT included (left, then another post).
+Group 2 (7 notes, Балдина moved to group 1): Иванова, Евдокія Трофимовна (костюмерша; «Оставила службу 1 августа 1902 г.» in
+1902-03, listed no. 1 to 1910-11); Неменскій (1904-05 «Оставилъ службу 1 апрѣля 1905 г.», 1905-06 «... 20 февраля 1906 г.»);
+Потанинъ (left 1 June 1908, listed with credits to 1910-11); Тарновскій (left 1 Nov 1890, second violin to 1896-97); Ѳедорова 1-я,
+Марія Дмитріевна; Ѳедорова 2-я, Софія (left 15 Aug 1909, listed 1909-10/1910-11 with 60 and 52 performances, start reprinted «съ 1
+сентября 1900» instead of 1899); Егорова 1-я (left 1 May 1898, not in 1898-99, back 1899-00 with 62 performances, same 1878 start).
+
+## 2026-10-19 — M9 groups 1 + 2 scan-read before any fix (37 entries, 33 pages)
+
+Read on the full-resolution images embedded in the PDFs, every entry zoomed to letter level and transcribed from the name to
+the next entry (three read-only agents; both misattributions below re-read and confirmed by me). Task list from the group 1 rule
+(24 rows not yet seen; the 4 on administration_1904-05_p001 seen earlier) and group 2 (note season + first later listing for
+Иванова, Неменскій, Тарновскій, Ѳедорова 1-я, Ѳедорова 2-я Софія (+1909-10), Егорова 1-я).
+
+**Group 1, 24 rows:** every appointment / transfer / release note is printed under the right person and NO entry has a further
+leaving or death line the extraction lacks. Ширяевъ 1905: «Освобожденъ отъ обязанностей балетмейстера 1 марта 1905 г., съ
+оставленіемъ артистомъ» (stays). So all 28 rows of the rule are post changes. Side findings (spelling, not acted on):
+balletartists_1902-03_MSK_p002 no. 39 printed «Жвирблисъ» (stored Жвирблицъ); balletartists_1902-03_SP_p003 no. 60 printed «Мололова»
+(stored Молодова) and «1 декабря» (stored «І»), «Московскимъ» (stored «Московскімъ», also on Балдина 1903-04); Старженецкій-Лаппа 1896-97
+«помощникомъ» (stored «помошникомъ»); Гельцеръ 1897-98 printed «Гельцеръ» and role «О-Іоши» (stored «Гельцертъ», «0-Юши»). On
+balletartists_1903-04_MSK_p000 a faint mirrored «Оставилъ службу 1 сентября 190[4] г.» below Балдина is bleed-through from the reverse.
+
+**Group 2:**
+- Иванова, Евдокія Трофимовна: 1902-03 p.120 prints NO note under her; «Оставила службу 1 августа 1902 г.» is printed under no. 2
+  Офицерова, Екатерина Максимовна (zoomed). Extraction error: the note was copied onto Иванова (Офицерова's row also has it). She never left.
+- Неменскій, Исаакъ: 1904-05 p.67 prints NO note under him; «Оставилъ службу 1 апрѣля 1905 г.» is printed under no. 2 Каффи, Дмитрій
+  (zoomed). Extraction error, same kind (Каффи's row also has it). 1905-06 p.63 really prints «Оставилъ службу 20 февраля 1906 г.»
+  under him; the next entry is «2. Павловъ, Александръ Павловичъ (назначенъ съ 20 февраля 1906 г.)», his successor.
+- Тарновскій, Николай: 1890-91 p.81 «Оставилъ службу 1 ноября 1890 г.» printed under him; 1891-92 p.66 listed, «Вторая скрипка», no note.
+- Ѳедорова 1-я, Марія Дмитріевна: 1904-05 p.21 «Оставила службу 1 іюня 1905 г.» printed under her (missing from the stored note
+  text; the end date IS stored); 1905-06 p.20 listed, 2 performances, no note.
+- Ѳедорова 2-я, Софія: 1908-09 p.119 «Оставила службу 15 августа 1909 г.» printed under her; 1909-10 p.127 and 1910-11 p.130 listed
+  with 60 and 52 performances, start «съ 1 сентября 1900 г.», no return note.
+- Егорова 1-я, Марія: 1897-98 p.59 «Оставила службу 1 мая 1898 г.» printed under her; 1899-00 p.75 listed with 62 performances, same
+  1878 start, no return note.
