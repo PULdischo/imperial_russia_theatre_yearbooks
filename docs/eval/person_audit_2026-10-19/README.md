@@ -59,3 +59,18 @@ left teaching, then honorary member), case 2 Адамовъ (unconfirmed printed
 службу 1 августа 1908 г.» is printed (seen at page size) and he is listed 1908-09..1910-11; still to zoom, read 1908-09, look for a
 return note, and put it to RG. Cases 5-36 and 38 not started (working order = the list in M9_first_pass.csv, buckets
 continuous_after then return_after_gap). 13 of the 38 have their later rows under a different heading (mostly promotions).
+
+### 2026-10-19 (later): groups, scan reads, fixes applied
+The 34 notes left were grouped (`M9_groups.csv`). All of group 1 and group 2 were read on the scans, zoomed, before any change
+(query log 2026-10-19). Applied with RG's approval, one rebuild (`rebuild_after_raw_edit.sh`), backup
+`outputs/full_run_pre_promote_backup_2026-10-19_post_change_end_type/`:
+- `docs/eval/raw_fix_post_change_end_type_2026-10-19.py`: 28 service periods closed by «назначенъ / переведенъ / освобожденъ»
+  re-marked left service -> other.
+- `docs/eval/raw_fix_m9_misattributed_and_spellings_2026-10-19.py`: Иванова 1902-03 and Неменскій 1904-05 lose a leaving note that is
+  printed under their neighbour (Офицерова, Каффи); misreads to the print: «Жвирблисъ», «Мололова» (print slip for Мосолова), «1 декабря»,
+  «Московскимъ» x2, «Гельцеръ», «О-Іоши».
+Result: left service 983 -> 953, other 127 -> 155; receipts, live persons 2548, Wikidata 177, research.person 2646, works and every
+person_link unchanged; 0 shift blocks.
+**Still open:** group 2's remaining notes (Потанинъ, Тарновскій, Ѳедорова 1-я, Ѳедорова 2-я Софія, Егорова 1-я) await RG's verdict
+(printed and confirmed; unconfirmed leaving or return); group 3 (9) and group 4 (Баклановъ, Ѳедорова 2-я Лидія x2). Seen, not checked:
+productionteam_1902-03_p001 entry 20, «1. Каффи ... Оставилъ службу 1 августа 1903 г.» (same page as Иванова, under «Костюмеры»).

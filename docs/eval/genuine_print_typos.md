@@ -688,3 +688,10 @@ Each read twice on the scan (checking agent and a close zoom, 2026-09-28) and ke
   1904-05 SP no. 8 «Бакеркина 2 я»; 1906-07 SP no. 24 «Ивановъ 2 й» (gap very narrow); 1903-04 SP no. 90 «Ѳедоровъ 1 й». All zoomed.
 - Comma before the ordinal (stored without the comma, like «Шелепина 1-я»): 1903-04 SP no. 20 «Голубева, 2-я, Антонина» (damaged Г);
   1905-06 MSK no. 31 «Козловъ, 2-й Алексѣй»; 1908-09 SP no. 71 «Федоровъ,1-й Владиміръ». All zoomed.
+
+## M9 scan checks, 2026-10-19 -- print slips stored as printed
+
+- 1902-03 SP BalletArtists p003 no. 60 «Мол**о**лова, Вѣра Владиміровна (съ 1 сентября 1893 г.)» for **Мосолова**: the entry is
+  Мосолова, Вѣра Владиміровна (linked to her record 1773bf); zoomed. Stored as printed (raw had the misread «Молодова»).
+- 1896-97 Administrators p001 «Съ 17 мая 1897 г. назначенъ помо**ш**-никомъ управляющаго Московскою Конторою» (Старженецкій-Лаппа):
+  ш for щ; zoomed. Stored as printed.

@@ -18867,3 +18867,17 @@ balletartists_1903-04_MSK_p000 a faint mirrored «Оставилъ службу 
   with 60 and 52 performances, start «съ 1 сентября 1900 г.», no return note.
 - Егорова 1-я, Марія: 1897-98 p.59 «Оставила службу 1 мая 1898 г.» printed under her; 1899-00 p.75 listed with 62 performances, same
   1878 start, no return note.
+
+## 2026-10-19 — Applied: 28 post-change end types + 2 misattributed notes + misreads; verified against the backup
+
+```sql
+SELECT end_type, count(*) FROM raw.person_entry_service GROUP BY 1;            -- before / after
+SELECT count(*) FROM entities.person_link n JOIN b.entities.person_link o USING (entry_id) WHERE n.person_id <> o.person_id;
+-- plus receipts sum, live persons, Wikidata-linked persons, research.person / research.work / raw.person_entry counts
+```
+
+Result: left service 983 -> 953, other 127 -> 155, no end 22307 -> 22309, died 211; 30 service rows changed; receipts 3,216,919,085,
+live persons 2548, Wikidata 177, research.person 2646, research.work ids, raw.person_entry 23980 all unchanged; 0 person_link rows
+moved, 0 shift blocks. Re-read myself before writing: «39. Жвирблисъ», «60. Мололова ... 1 декабря 1902 г. переведена къ Московскимъ
+театрамъ», Балдина «Московскимъ», «20. Гельцеръ ... (О-Іоши — 2)»; and «помош-никомъ» (Старженецкій-Лаппа 1896-97) IS printed, so that
+agent reading was wrong and nothing was changed there.
