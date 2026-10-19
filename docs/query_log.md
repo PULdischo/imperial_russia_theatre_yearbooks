@@ -18918,3 +18918,7 @@ Scans (full-resolution PDF images, zoomed): productionteam_1902-03_p001 p.120 «
 
 **2026-10-19 — Адамовъ added to research.person_tenure_note (RG):** continuing service, Moscow Musicians 1902-03..1910-11 (listed in
 every one of those seasons); printed leaving 1 August 1906 (1905-06). Table 5 -> 6 rows; receipts, research.person 2646 unchanged.
+
+**2026-10-19 — the Адольфи brothers added to research.person_tenure_note (RG):** reading "open (which brother remained is unresolved,
+#38)"; Іоганъ-Фридрихъ 1890-91..1899-00 (listed every season), Фердинандъ 1890-91..1896-97; 1900-01..1905-06 (listed every season of
+both periods, absent 1897-98..1899-00). Table 6 -> 8 rows; receipts 3,216,919,085, research.person 2646 unchanged.
