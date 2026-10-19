@@ -18915,3 +18915,6 @@ Result: «Каффи, Иванъ Іосифовичъ (съ 1 сентября 1
 misprinted surname (row already linked to his record 1efe21).
 Scans (full-resolution PDF images, zoomed): productionteam_1902-03_p001 p.120 «1. Каффи, Иванъ Іосифовичъ ...» / «2. Пипаръ ... Оставилъ
 службу 1 августа 1903 г.»; productionteam_1903-04_p001 p.119 «1. Каменскій ...» / «2. Каффи, Дмитрій Іосифовичъ (съ 1 ...».
+
+**2026-10-19 — Адамовъ added to research.person_tenure_note (RG):** continuing service, Moscow Musicians 1902-03..1910-11 (listed in
+every one of those seasons); printed leaving 1 August 1906 (1905-06). Table 5 -> 6 rows; receipts, research.person 2646 unchanged.

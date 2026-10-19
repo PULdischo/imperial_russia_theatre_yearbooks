@@ -340,7 +340,7 @@ To add an entry: copy the template at the bottom.
 - **Odd details:** Софія's start is reprinted «съ 1 сентября 1900 г.» (1899 before) after the note; Тарновскій's case would be explained by playing «на поспектакльной платѣ» (as Геншъ, Рашкевичъ), but nothing of the kind is printed.
 - **Where to look:** query log 2026-10-19 ("M9 groups 1 + 2 scan-read", "discuss group 2"); docs/eval/person_audit_2026-10-19/.
 - **Would resolve it:** RGIA f. 497 personnel дела; staff orders for the departure dates (1 Nov 1890, 1 May 1898, 1 June 1905, 1 June 1908, 15 Aug 1909); for Егорова, any 1898-99 programme or review naming her.
-- **Related, same kind but decided earlier:** Адамовъ, Михаилъ (1906, "unconfirmed printed leaving, he stays in the later lists") and the Адольфи brothers (#38, left as printed) -- not in the table yet.
+- **Added 2026-10-19 (RG):** Адамовъ, Михаилъ (1906; earlier ruled an unconfirmed printed leaving) -- continuing service 1902-03..1910-11 (Moscow). The Адольфи brothers (#38) -- see that entry.
 
 ## Related, decided (not uncertain), for reference
 
