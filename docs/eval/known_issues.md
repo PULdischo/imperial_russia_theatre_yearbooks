@@ -111,17 +111,6 @@ closes, and add new open items here as well as in their own entry.
 
 **Workable from the scans, not done**
 
-- #154 follow-ups from the 2026-10-18 scan read -- ALL DECIDED BY RG 2026-10-18, NOT YET APPLIED (paused for the night).
-  Script ready and dry-run clean: `docs/eval/raw_fix_balletartists_scanread_followups_2026-10-18.py` (S 45 surnames to the
-  printed spelling incl. «Алексадрова 2-я» as printed; H 5 hyphenless ordinals as printed; B 1903-04 MSK p005 Бѣлоусовъ 1-й
-  restored to slot 10 + Лилія Ѳеоктистова appended as no. 108 with person_link pre-seeded; M Михайлова 2-я 77 -> 78 and
-  Михайлова 1-я † 12 декабря 1893; P «Имя Отчество» split on 1893-94 SP p002, 1905-06 SP p002, 1908-09 MSK p003, 79 rows).
-  Evidence: docs/eval/balletartists_spelling_crops_2026-10-18.html. To resume: check no other writer, baseline (receipts
-  3216919085, live 2548, Wikidata 177, research.person 2646), back up duckdb + the 35 raw pages, run the script with --write,
-  rebuild_after_raw_edit.sh, alignment check, diff; check any Tier-1 merges (likely: Смирновъ Александръ Митрофановичъ 1907-08,
-  Леонтьева Марія Михайловна 1909-10). Print typos to add to genuine_print_typos.md once applied: «Легать 2-я» (1890-91 SP no. 64,
-  ь in print), «Тимомировъ 1-й» (1895-96 SP no. 67), «Трекова 2-я» (1902-03 MSK no. 26, Т under «Грекова 1-я»), «Алексадрова 2-я»,
-  the 5 hyphenless ordinals, comma before the ordinal («Голубева, 2-я», «Козловъ, 2-й», «Федоровъ,1-й»).
 - Genre carried in `performance_title` and not yet separated, after the two
   2026-10-12 passes (entry at the end of this file): about 76 Cyrillic titles
   with an empty genre field («весенняя сказка», «возможный случай», «принцѣ
@@ -23941,3 +23930,32 @@ caused by the repaired names now matching: ffd2927c «Грачевская 1-я,
 2,648 -> 2,646; neither superseded id has a Wikidata link, review/credit/creator reference or a mention in docs/. 88
 research.person display names gain the printed ordinal. Not done here: sqlite/HF/Cloud Run republish (Andy). Follow-ups in the
 status index ("#154 follow-ups left by the 2026-10-18 dropped-ordinal fix").
+
+## Issue #154 scan-read follow-ups -- APPLIED 2026-10-19 (all five groups decided by RG 2026-10-18)
+
+The leftovers of the 392-page BalletArtists scan read (entry above), each entry zoomed on a single-line crop of the full-resolution
+scan (docs/eval/balletartists_spelling_crops_2026-10-18.html; 57 crops, every one checked by me after the helpers made them).
+Script `docs/eval/raw_fix_balletartists_scanread_followups_2026-10-18.py`; backup `outputs/full_run_pre_promote_backup_2026-10-19_scanreadfollowups/`
+(duckdb + the 32 raw pages, which are exactly the pages written).
+- **S, 45 surnames to the printed spelling:** Оголейть/Оголѣйть -> Оголейтъ (12, 1890-91..1895-96 SP), Гейтень -> Гейтенъ (7), Дантесь ->
+  Дантесъ (4), Федорова -> Ѳедорова (4, 1895-96 SP), Тихомировъ -> Тихоміровъ (4, 1904-05 and 1907-08 SP), Ѳектистова -> Ѳеоктистова,
+  Бакинь -> Бакинъ, Рыхлянова -> Рыхлякова, Пашенко -> Пащенко, Симирновъ -> Смирновъ, Леонтъева -> Леонтьева (2 each), Смирнина ->
+  Смирнова 3-я, and «Алексадрова 2-я» stored as printed (print typo). Rows not zoomed keep whatever spelling they have.
+- **H, 5 hyphenless ordinals stored as printed** («Смирновъ 2 й», «Ильина 1 я», «Ячменева 2 я», «Бакеркина 2 я», «Ивановъ 2 й»).
+- **B, 1903-04 MSK p005 (printed p. 109):** extraction had dropped «10. Бѣлоусовъ 1-й, Геннадій Ивановичъ (съ 23 августа 1884 г.)» and
+  put «108. Ѳеоктистова, Лилія Васильевна» (last of the women's list, top of the page) in his slot as Артисты no. 10. Slot 10 now holds
+  Бѣлоусовъ's printed entry; Лилія appended at the END of the page as Артистки no. 108 (e022), so no other entry_id moved (issue #131).
+  person_link pre-seeded before the rebuild: e010 -> Бѣлоусовъ 49135ed2 (now attested every season 1890-91..1905-06), e022 -> Лилія's
+  person 83685cf4 (kept; her name stays «Лилія» as printed this year, «Лидія» elsewhere).
+- **M, 1893-94 SP p003:** «Михайлова 2-я» list number 77 -> printed 78; «Михайлова 1-я» † 12 декабря 1893 г. recorded in her service period
+  (end_type 'died').
+- **P, «Имя Отчество» split into first_name / patronymic** on 1893-94 SP p002, 1905-06 SP p002, 1908-09 MSK p003 (79 rows; «Леньяни,
+  Пьерина» prints no patronymic and is left). analysis already split these, so research names are unchanged by this group.
+Diff against the backup: raw.person_entry 23,979 -> 23,980 (+1, Лилія); 131 existing rows changed (45+5+1+1+79), none outside the name
+/list-number/heading/credit fields of the B slot; service periods +3/-2 and credits +7/-4 exactly as expected for B and M; person_link
+1 re-pointed (e010) + 1 new (e022); NO merges, no new or tombstoned persons; receipts 3,216,919,085, live persons 2,548, Wikidata 177
+(same pairs), research.person 2,646, works 2,970 (0 work-id diffs), events 32,808 (0 diffs) unchanged; person_appearance 23,979 -> 23,980;
+5 research.person display names change (Оголейтъ x3, Леонтьева x2); alignment 0 shift blocks / 109 informational before and after.
+Print oddities added to genuine_print_typos.md. Two split-person candidates added to person_merge_candidates_batch.md for RG's batch
+(Смирновъ Александръ Митрофановичъ 32d4e149/7cb6e597; Леонтьева Марія Михайловна d086582b/6ecdb213; different printed start dates, so
+the Tier-1 rule did not merge them). Not done: sqlite/HF/Cloud Run republish (Andy).

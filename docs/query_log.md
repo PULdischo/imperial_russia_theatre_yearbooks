@@ -18667,3 +18667,29 @@ pages (27/25/27 rows) + Musicians pages; analysis already splits them. 1903-04 M
 Merge preview: Смирновъ Александръ Митрофановичъ (1907-08) and Леонтьева Марія Михайловна (1909-10) may reunite with an existing
 person. Baseline (unchanged since the dropped-ordinal fix): receipts 3216919085, live 2548, Wikidata 177, research.person 2646,
 works 2970, events 32808, appearances 23979; alignment 0 shift blocks / 109. Not yet written: paused at RG's request.
+
+## 2026-10-19 — BalletArtists scan-read follow-ups applied: baseline and diff against outputs/full_run_pre_promote_backup_2026-10-19_scanreadfollowups
+
+```sql
+SELECT sum(receipts_total_kopecks) FROM research.event;   -- + live persons, Wikidata, research.person/work/event/appearance, raw.person_entry counts
+ATTACH '.../imperial_theaters.duckdb' AS b (READ_ONLY);
+SELECT * FROM entities.person_merge_log EXCEPT SELECT * FROM b.entities.person_merge_log;
+SELECT person_id, display_name FROM entities.person WHERE person_id NOT IN (SELECT person_id FROM b.entities.person);
+SELECT p.person_id, p.display_name FROM entities.person p JOIN b.entities.person bp USING(person_id) WHERE p.superseded_by_person_id IS NOT NULL AND bp.superseded_by_person_id IS NULL;
+SELECT pl.entry_id, bl.person_id, pl.person_id FROM entities.person_link pl JOIN b.entities.person_link bl USING(entry_id) WHERE pl.person_id<>bl.person_id;
+SELECT count(*) FROM (SELECT * FROM raw.person_entry WHERE entry_id IN (SELECT entry_id FROM b.raw.person_entry) EXCEPT SELECT * FROM b.raw.person_entry);
+-- + same restricted to columns outside the name/number fields; raw.person_entry_service and _credit EXCEPT both directions
+SELECT work_id, canonical_title FROM research.work EXCEPT ... ; SELECT * FROM research.event EXCEPT ... ;   -- both directions
+SELECT person_id, wikidata_qid FROM b.research.person WHERE wikidata_qid IS NOT NULL EXCEPT SELECT person_id, wikidata_qid FROM research.person;
+SELECT r.display_name, b.display_name FROM research.person r JOIN b.research.person b USING(person_id) WHERE r.display_name<>b.display_name;
+SELECT p.person_id, p.display_name, string_agg(<season, list no., family_name, start date>) FROM research.person p JOIN entities.person_link l USING(person_id)
+ JOIN raw.person_entry r USING(entry_id) LEFT JOIN raw.person_entry_service s ON s.entry_id=r.entry_id AND s.period_order=1
+ WHERE p.display_name LIKE 'Смирновъ%Александръ Митрофан%' OR LIKE 'Леонтьева%Марія Михайл%' OR LIKE 'Бѣлоусовъ 1-й, Геннад%' OR LIKE 'Ѳеоктистова, Лидія%' GROUP BY ALL;
+```
+
+Result: baseline receipts 3216919085, live 2548, Wikidata 177, research.person 2646, works 2970, events 32808, appearances 23979, person_entry
+23979, alignment 0/109. After: person_entry 23980; 131 existing rows changed, none beyond the intended fields; service +3/-2, credits +7/-4;
+person_link e010 re-pointed to 49135ed2, e022 new -> 83685cf4; no merges, no new or tombstoned persons; receipts, live, Wikidata (same
+pairs), research.person, works (0 id diffs), events (0 diffs) unchanged; appearances 23980; 5 display names changed; alignment 0/109.
+Смирновъ Александръ Митрофановичъ stays split (32d4e149 start 1891; 7cb6e597 1908-09 start 1897); Леонтьева Марія Михайловна stays
+split (d086582b 1 іюня 1907; 6ecdb213 31 марта 1905): both added to person_merge_candidates_batch.md.

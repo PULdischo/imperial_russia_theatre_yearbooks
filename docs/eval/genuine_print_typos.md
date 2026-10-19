@@ -677,3 +677,14 @@ Each read twice on the scan (checking agent and a close zoom, 2026-09-28) and ke
 
 - 1901-02 SP p. 79 no. 30: «К**щ**есинскій 2-й, Іосифъ Феликсовичъ», щ for ш, directly below no. 29 «Кшесинскій 1-й, Феликсъ
   Ивановичъ»; zoomed. Stored «Кщесинскій 2-й» (raw had «Кшесинскій», which is not what the page prints).
+- 1890-91 SP p003 no. 64: «Легат**ь** 2-я, Вѣра Густавовна», soft sign where nos. 63 and 65 print «Легатъ»; zoomed, stored as printed.
+- 1895-96 SP p008 no. 67: «Ти**м**омировъ 1-й, Владиміръ», for Тихомировъ (no. 68 prints «Тихомировъ 2-й»); zoomed, stored as printed.
+- 1902-03 MSK p001 no. 26: «**Т**рекова 2-я, Елена Александровна», directly under no. 25 «Грекова 1-я»; zoomed, stored as printed.
+- 1901-02 SP p000 no. 2: «Алекса**д**рова 2-я, Антонина Николаевна», н missing; zoomed, stored as printed (RG 2026-10-18; raw had «Александрова»).
+
+## BalletArtists ordinals printed oddly, continued (added 2026-10-19, scan-read follow-ups; stored as printed, RG)
+
+- No hyphen: 1892-93 MSK no. 58 «Смирновъ 2 й»; 1902-03 SP no. 30 «Ильина 1 я»; 1903-04 MSK no. 103 «Ячменева 2 я»;
+  1904-05 SP no. 8 «Бакеркина 2 я»; 1906-07 SP no. 24 «Ивановъ 2 й» (gap very narrow); 1903-04 SP no. 90 «Ѳедоровъ 1 й». All zoomed.
+- Comma before the ordinal (stored without the comma, like «Шелепина 1-я»): 1903-04 SP no. 20 «Голубева, 2-я, Антонина» (damaged Г);
+  1905-06 MSK no. 31 «Козловъ, 2-й Алексѣй»; 1908-09 SP no. 71 «Федоровъ,1-й Владиміръ». All zoomed.
