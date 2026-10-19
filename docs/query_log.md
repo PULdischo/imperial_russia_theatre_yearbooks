@@ -19007,3 +19007,20 @@ Result:
 **2026-10-19 — Group 4 recorded (RG):** Баклановъ continuing service 1902-03..1910-11; Ѳедорова 2-я, Лидія two periods 1890-91..1903-04;
 1905-06..1907-08 with the 1901/1902 leaving-date conflict. research.person_tenure_note 17 -> 19; receipts, research.person 2646, Wikidata
 177 unchanged. The 38 M9 notes are all decided.
+
+## 2026-10-19 — BalletArtists performance tally stored twice: fixed (913 rows)
+
+```sql
+SELECT count(*) FROM raw.person_entry WHERE credit_summary_text IS NOT NULL AND length(credit_summary_text) > 10
+   AND position(credit_summary_text IN tenure_note_text) > 0;               -- before 913, after 0
+-- plus profile by list / season / position of the tally inside the note, and before/after diffs against the backup
+```
+
+Result: all 913 were BalletArtists (of 8005 rows with a tally), on 44 pages across 26 season/city lists (1890-91..1910-11). 863 had the
+tally at the end of the note, 45 with a further note after it (kept: «съ 11 декабря 1871 г.). Оставила службу 1 мая 1892 г.»), 5 had
+nothing but the tally (1901-02 MSK bare-surname rows Ленская, Николаева 3-я, Павлова, Рѣпина, Соколова -> no tenure note, as printed:
+p.114 «75. Павлова.» + tally, no date). Scans: Гулинъ 1-й 1897-98 MSK p.97 and 1901-02 MSK p.114 (page size), plus the earlier zoomed
+Свѣтинская 1898-99 and Ширяевъ 1903-04 -- the tally is printed once. Applied `docs/eval/raw_fix_duplicated_credit_in_tenure_2026-10-19.py`
+(backup outputs/full_run_pre_promote_backup_2026-10-19_dup_credit/), rebuild_after_raw_edit.sh. Against the backup: 913 tenure notes changed
+(raw and research.person_appearance), no other field; tenure null 380 -> 385; credits 35834, service end types, receipts, live persons 2548,
+Wikidata 177, research.person 2646, tenure notes 19 all unchanged; 0 person_link moved, 0 shift blocks.
