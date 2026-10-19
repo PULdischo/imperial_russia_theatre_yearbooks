@@ -1101,7 +1101,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # same two-step pattern build_entities.py already uses.
     for t in ["season_stat_check", "season_stat_line", "season_stat_footnote",
               "production_credit", "production_work", "production",
-              "performance", "event", "person_appearance", "person", "work", "theater"]:
+              "performance", "event", "person_tenure_note", "person_appearance", "person", "work", "theater"]:
         con.execute(f"DROP TABLE IF EXISTS research.{t}")
 
     con.execute("""
@@ -1640,6 +1640,9 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         WHERE pl.person_id NOT IN ({non_person_list})
     """)
 
+    n_tenure = build_person_tenure_notes(con)
+    print(f"  person tenure discrepancies noted: {n_tenure}")
+
     if has_creators:
         build_productions(con)
 
@@ -1669,6 +1672,67 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     perf_cols = {c[0] for c in con.execute("DESCRIBE research.performance").fetchall()}
     assert not any("receipt" in c for c in perf_cols), \
         "receipts leaked onto research.performance -- multi-work events would double-count"
+
+
+#: People whose printed leaving is contradicted by the later lists (RG, 2026-10-19, M9 scan checks,
+#: docs/eval/person_audit_2026-10-19/): the research layer reads their service as CONTINUING to the
+#: last listing -- research.person.last_attested_season already does -- and keeps the printed
+#: statement here, with the discrepancy and what would corroborate it. Raw keeps the printed note
+#: and its parsed end date untouched. `service_periods` is the research reading in seasons, ';' between
+#: periods (Егорова 1-я: two). The build fails unless the person exists, prints that leaving date in
+#: that list, and is listed in every season the periods name.
+PERSON_TENURE_DISCREPANCIES_CSV = Path(__file__).parent / "research_corrections" / "person_tenure_discrepancies.csv"
+
+
+def build_person_tenure_notes(con: duckdb.DuckDBPyConnection) -> int:
+    con.execute("""
+        CREATE TABLE research.person_tenure_note (
+            person_id UUID REFERENCES research.person(person_id),
+            list VARCHAR,
+            city VARCHAR,
+            printed_leaving VARCHAR,
+            printed_leaving_date DATE,
+            printed_in_seasons VARCHAR,
+            research_reading VARCHAR,
+            service_periods VARCHAR,
+            discrepancy VARCHAR,
+            corroboration_found VARCHAR,
+            corroboration_wanted VARCHAR,
+            decided VARCHAR
+        )
+    """)
+    if not PERSON_TENURE_DISCREPANCIES_CSV.exists():
+        return 0
+    seasons = [r[0] for r in con.execute(
+        "SELECT DISTINCT season FROM raw.source_pages WHERE season IS NOT NULL ORDER BY 1").fetchall()]
+    n = 0
+    for row in csv.DictReader(open(PERSON_TENURE_DISCREPANCIES_CSV, encoding="utf-8")):
+        pid, lst, city = row["person_id"], row["list"], row["city"]
+        if not con.execute("SELECT count(*) FROM research.person WHERE person_id = ?", [pid]).fetchone()[0]:
+            raise SystemExit(f"person_tenure_discrepancies.csv: {row['display_name']} {pid} is not in research.person")
+        printed = con.execute("""
+            SELECT count(*) FROM raw.person_entry_service s JOIN raw.person_entry pe USING (entry_id)
+            JOIN raw.source_pages sp ON sp.page_id = pe.page_id JOIN entities.person_link pl USING (entry_id)
+            WHERE pl.person_id = ? AND sp.entity_type = ? AND sp.city = ? AND CAST(s.end_date_undate AS VARCHAR) = ?""",
+            [pid, lst, city, row["printed_leaving_date"]]).fetchone()[0]
+        if not printed:
+            raise SystemExit(f"person_tenure_discrepancies.csv: {row['display_name']} has no printed leaving "
+                             f"{row['printed_leaving_date']} in {city}/{lst}")
+        listed = {r[0] for r in con.execute(
+            "SELECT DISTINCT season FROM research.person_appearance WHERE person_id = ? AND entity_type = ? AND city = ?",
+            [pid, lst, city]).fetchall()}
+        for period in row["service_periods"].split(";"):
+            a, b = [x.strip() for x in period.split("..")]
+            missing = [s for s in seasons[seasons.index(a):seasons.index(b) + 1] if s not in listed]
+            if missing:
+                raise SystemExit(f"person_tenure_discrepancies.csv: {row['display_name']} period {a}..{b} "
+                                 f"includes unlisted season(s) {missing}")
+        con.execute("INSERT INTO research.person_tenure_note VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+                    [pid, lst, city, row["printed_leaving"], row["printed_leaving_date"], row["printed_in_seasons"],
+                     row["research_reading"], row["service_periods"], row["discrepancy"],
+                     row["corroboration_found"], row["corroboration_wanted"], row["decided"]])
+        n += 1
+    return n
 
 
 def main():

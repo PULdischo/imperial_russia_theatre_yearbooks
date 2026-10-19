@@ -18881,3 +18881,19 @@ live persons 2548, Wikidata 177, research.person 2646, research.work ids, raw.pe
 moved, 0 shift blocks. Re-read myself before writing: «39. Жвирблисъ», «60. Мололова ... 1 декабря 1902 г. переведена къ Московскимъ
 театрамъ», Балдина «Московскимъ», «20. Гельцеръ ... (О-Іоши — 2)»; and «помош-никомъ» (Старженецкій-Лаппа 1896-97) IS printed, so that
 agent reading was wrong and nothing was changed there.
+
+## 2026-10-19 — Group 2: corroboration in the season reviews; research.person_tenure_note built
+
+```sql
+SELECT season, count(*) FROM entities.review_mention WHERE entity_id = ? GROUP BY 1;          -- each of the 5 (+ Адамовъ, Адольфи x2)
+SELECT season, count(*) FROM research.review_assertion WHERE performer_person_id = ? GROUP BY 1;
+-- plus the mention text (raw.review_block) for Софія 1910-11 and Егорова 1-я 1899-00 / 1901-02; review seasons available
+SELECT p.display_name, t.research_reading, t.service_periods, p.last_attested_season
+FROM research.person_tenure_note t JOIN research.person p USING (person_id);
+```
+
+Result: review volumes exist for every season 1890-91..1910-11 except 1898-99 and 1909-10 (and 1912-13 extra). After their printed
+leavings: Софія Ѳедорова 5 mentions in 1910-11 (all hers, read in context); Егорова 1-я 2 in 1899-00 (cast lists) and 1 in 1901-02
+(a cast list, after her last company listing -- unresolved whose); Потанинъ, Тарновскій, Ѳедорова 1-я, Адамовъ, Адольфи: none.
+research.person_tenure_note: 5 rows (4 continuing service, Егорова 1-я two periods); last_attested_season already ran to the last
+listing for all five (1910-11, 1896-97, 1907-08, 1910-11, 1900-01). Receipts 3,216,919,085, research.person 2646, Wikidata 177 unchanged.

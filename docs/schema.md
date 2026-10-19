@@ -385,3 +385,24 @@ the record. Verified before declaring the FKs: **zero dangling references** to
 **Do not join this to `research.performance` as if it were the same fact.** A
 review asserts a casting; the Repertoire records a performance. They agree often
 and disagree sometimes, and the disagreement is research material.
+
+## Printed leavings contradicted by later lists — `research.person_tenure_note` (added 2026-10-19)
+
+One row per person whose printed «Оставилъ/Оставила службу ...» is contradicted by the later lists (RG, 2026-10-19, M9 scan
+checks, `docs/eval/person_audit_2026-10-19/`). The research layer reads their service as continuing to the last listing
+(`research.person.last_attested_season` already does) and keeps the printed statement here. Raw keeps the note and its parsed
+end date untouched. Source: `pipeline/research_corrections/person_tenure_discrepancies.csv`; the build fails unless the person
+exists, prints that leaving date in that list, and is listed in every season `service_periods` names.
+
+| column | meaning |
+|---|---|
+| `person_id` | FK to `research.person` |
+| `list`, `city` | the list (entity_type) and city the leaving is printed in |
+| `printed_leaving`, `printed_leaving_date`, `printed_in_seasons` | the note as printed, its date, the volume(s) printing it |
+| `research_reading` | `continuing service`, or `two periods (possibly continuous)` (Егорова 1-я) |
+| `service_periods` | the research reading in seasons; `;` separates periods |
+| `discrepancy` | what the print says vs what the lists show, with the same-date colleagues who really left |
+| `corroboration_found`, `corroboration_wanted` | evidence from the season reviews so far; what would settle it (reviews, RGIA дела) |
+| `decided` | who decided and when |
+
+Not yet in the Datasette export (`build_datasette.py` TABLES/SCHEMAS) -- add it there before the next publication.

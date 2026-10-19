@@ -74,3 +74,11 @@ person_link unchanged; 0 shift blocks.
 **Still open:** group 2's remaining notes (Потанинъ, Тарновскій, Ѳедорова 1-я, Ѳедорова 2-я Софія, Егорова 1-я) await RG's verdict
 (printed and confirmed; unconfirmed leaving or return); group 3 (9) and group 4 (Баклановъ, Ѳедорова 2-я Лидія x2). Seen, not checked:
 productionteam_1902-03_p001 entry 20, «1. Каффи ... Оставилъ службу 1 августа 1903 г.» (same page as Иванова, under «Костюмеры»).
+
+### PAUSED 2026-10-19 (RG: "come to a pause point")
+Group 2 done: Иванова and Неменскій fixed (misattributed notes); Потанинъ, Тарновскій, Ѳедорова 1-я, Софія Ѳедорова -> continuing
+service, Егорова 1-я -> two periods (possibly never left), all in `research.person_tenure_note` (new research table; source
+`pipeline/research_corrections/person_tenure_discrepancies.csv`; uncertain list #39). **Resume with group 3** (9 notes, M9_groups.csv:
+one more season only), then group 4 (Баклановъ, Ѳедорова 2-я Лидія x2). Open side items: Адамовъ and the Адольфи brothers could join the
+tenure table (RG to say); productionteam_1902-03_p001 «1. Каффи ... Оставилъ службу 1 августа 1903 г.» unchecked; the new table is not
+yet in the Datasette export.
