@@ -18795,3 +18795,26 @@ credit_summary_text. He is listed 1908-09 (no. 5), 1909-10, 1910-11 with the sam
 Scan, page size only (full-resolution PDF image): 1907-08 p.21 «7. Баклановъ, Петръ Михайловичъ (съ 1 іюня 1902 г.) ... Оставилъ службу
 1 августа 1908 г.» -- the note IS printed (the note text was simply not carried into tenure_note_text). Still to do: zoom it, read
 1908-09 p004, look for a return note, then put the case to RG.
+
+## 2026-10-19 — M9 scan checks: the 34 remaining notes grouped (RG: "let's try this")
+
+```sql
+-- per note: heading of the note row vs headings of the later rows; every other person in the same list/city with the same
+-- leaving date, and whether they are listed afterwards; the later rows' tenure/credit text
+-- plus, corpus-wide: service periods with end_type 'left service' whose only note is «Назначенъ/Переведенъ/Освобожденъ/...»
+```
+
+Result: G1 post change, 14 (12 under a new heading + Славинскій, moved to the Малый theatre orchestra, + Чернявская, whose
+«Переведена на службу къ московскимъ театрамъ» in the MOSCOW list is her arrival from Petersburg). The notes are appointments,
+not departures, e.g. «Назначенъ бухгалтеромъ 1 сентября 1904 г.» (Поспѣевъ), «Назначенъ помощникомъ завѣдывающаго постановками
+27 ноября 1904 г.» (Рождественскій, Шишко); the parse stores them as end_type 'left service'. Corpus-wide 18 such service rows
+(Administrators Назначенъ 5 / Переведенъ 2; ProductionTeam Назначенъ 2 / Переведенъ 2; BalletArtists Переведена/ъ 5, Освобожденъ 2).
+G2 same-date departures, 8: colleagues with the same date leave (Потанинъ 1 June 1908: 12 others; Ѳедорова 1-я 1 June 1905: 4),
+this person stays listed. G3 one more season only, 9: Геншъ and Рашкевичъ («Участвуетъ въ оркестрѣ на поспектакльной платѣ»),
+Дмитріева 1-я and Свѣтинская (a further season with performance credits), Броневскій-Боянусъ and Гущинъ (same date, school staff),
+Степановъ, Ширяевъ, Потаповъ (the 1910-11 volume reprints his note as «12 декабря 1910 г.», 1909-10 has 1909). G4 individual, 3
+notes: Баклановъ; Ѳедорова 2-я, Лидія (two notes, 1901 and 1902).
+Scans (full-resolution PDF images, page size): administration_1904-05_p001 p.72 (Поспѣевъ, Кусовъ, Шишко, Рождественскій
+«Назначенъ ...»); balletartists_1907-08_SP_p009 p.24 «62. Потанинъ ... Оставилъ службу 1 іюня 1908 г.» and 1908-09 p.95 «57. Потанинъ»;
+musicians_1894-95_SP_p001 p.61 «24. Геншъ ... Участвуетъ въ оркестрѣ на поспектакльной платѣ.» (with Грибенъ 2-й, Грюнертъ, Куннели
+«Оставилъ службу 1 октября 1894 г., но продолжаетъ участвовать въ оркестрѣ на поспектакльной платѣ»). Groups in M9_groups.csv.
