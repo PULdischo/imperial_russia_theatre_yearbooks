@@ -8,6 +8,11 @@ editors' voice («редакція», «Отъ редакціи», «Прим. �
 quoted verbatim; summaries are in English. "PDF p." = page within the
 named PDF.
 
+Full Russian text with English translation, side by side, for every note
+below (A–D, plus the 1909 Вып. III re-print of the XVIII announcement):
+`docs/editorial_notes_bilingual.md`. It is built from
+`docs/editorial_notes/text.json` by `pipeline/build_editorial_notes_bilingual.py`.
+
 Scope limit: this covers **only what has been scanned**. Unscanned front/end
 matter (and most «Объявленія» sections) may hold more notes — see the last
 section.
