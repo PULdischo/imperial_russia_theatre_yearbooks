@@ -52,3 +52,21 @@ A step added to the intake routine (`docs/rgia/README.md`) after the page summar
    contradiction, or anything touching an RG ruling, is proposed to RG one question
    at a time, with evidence, and changes only on her yes.
 4. End the intake with a short list for RG: new acts to read, with page links.
+
+## Parked questions for RG
+RG, 2026-10-21: hold these until more дела arrive, since new дела may bring
+corroborating evidence and further questions. At each intake, check whether new
+acts bear on any of them, add new questions here, and bring them to RG one at a
+time, with evidence, only when she asks.
+
+1. **Dating undated issue lists** (A001, A002, A004 Молчановъ; A010 Петровъ).
+   Options: leave undated; date by the season in the heading; or date "about" the
+   issue's distribution, from dated registers (2nd issue first sent to Moscow
+   12 Mar 1893, д. 162 л. 4 об.; 4th issue handed out from Dec 1894, д. 159;
+   5th issue acknowledged by Moscow 10 May 1896, д. 159 л. 17; all summary only).
+   Claude's suggestion: distribution dates, each scan-checked first.
+2. **Dating undated 1904 orders** (A037 editor; A034, A035 «П. Барт[…]»), filed
+   among dated May-Oct 1904 orders in д. 163 лл. 29-37.
+3. **Acts in no span**: the editor's endorsements of Oct-Dec 1900 (A022-A024,
+   д. 165 лл. 36, 38, 41; summaries say Дягилевъ, not scan-checked), and П. Шенкъ
+   as Завѣдывающій Центральною Библіотекою, 3 Oct 1901 (A026).
