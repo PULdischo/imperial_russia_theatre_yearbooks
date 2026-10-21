@@ -19125,3 +19125,15 @@ select p.display_name, p.person_source, count(*) from entities.review_mention m 
 ```
 
 Result: 73 instances before, in 63 blocks (all scan-checked: 67 Ѳ, 6 genuine О); after, 6 left, exactly the genuine ones. review_mention 27,323 -> 27,324; 4 new rows (Лебедевъ П. Ѳ., Гельцеръ А. Ѳ., Гельцеръ В. Ѳ., Вальцъ К. Ѳ.) replacing 3 unlinked rows; review_block 4,697, review_assertion 1,952, person 2,646, work 2,970, event 32,808, review_person 11: all unchanged. Вальц surface mentions -> 'Вальцъ, Карлъ Ѳедоровичъ' (roster) x82.
+
+## 2026-10-21 — Asterism fix (Шалости сверчка, 1897-98 MSK review p019) and a count of «музыкой» vs «музыкою» in the review text
+
+```sql
+select mention_type, surface, entity_id::varchar, link_method, block_id from entities.review_mention
+except all select ... from old.entities.review_mention;   -- both directions, vs backup pre_ast
+-- counts of entities.review_mention, research.review_assertion, raw.review_block, new vs old
+select text from raw.review_block where block_id='review_1897-98_MSK_ballet_p019__b011';
+-- Python over merged_full/review_block.csv: occurrences of 'музыкой' and 'музыкою' per season
+```
+
+Result: no mention rows added or removed; review_mention 27,324, review_assertion 1,952, review_block 4,697 (unchanged). The block now reads «ца, съ музыкою ⁂; 2) въ первый разъ—«Фантазія»». Review text overall: «музыкой» 33 (14 seasons), «музыкою» 1 (the one just fixed).
