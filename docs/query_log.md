@@ -19154,3 +19154,18 @@ where m.entity_id::varchar='05aaa26a-efde-47ef-82a0-d4349296306b';
 ```
 
 Result: scan-checked 33: 17 музыкою (fixed), 16 музыкой (left). review_mention 27,324 -> 27,325: «Ц. Пуни» (1891-92 SP p001) moved from Пуни, Николай Цезаревичъ to Пуни, Ц. (Cesare Pugni); the new «Пуни» (1904-05 SP p015) links to Пуни, Леонтина-Констанція (wrong). Пуни surface mentions: Ц. 65, Леонтина-Констанція 48 (20 of them have «музык» within 25 chars before, i.e. probably the composer), Николай Цезаревичъ 8. review_assertion 1,952, person 2,646, work 2,970, review_block 4,697: unchanged.
+
+## 2026-10-21 — Пуни review mentions: who each is, before/after the role-aware rule and scan-verified links
+
+```sql
+select person_id, display_name, person_source, first_attested_season, last_attested_season, wikidata_qid from research.person where canonical_family_name like 'Пуни%';
+select p.display_name, a.season, a.city, a.entity_type, a.heading_path from research.person_appearance a join research.person p using(person_id) where p.canonical_family_name like 'Пуни%';
+select pe.page_id, pe.family_name, pe.first_name, pe.patronymic from raw.person_entry pe where pe.family_name ilike '%Пуни%';
+select m.mention_id, m.season, m.city, m.block_id, m.surface, m.entity_id::varchar, m.link_method, m.candidates_n, substr(b.text, greatest(1,m.char_start-40), 60)
+from entities.review_mention m join raw.review_block b using(block_id) where m.surface like 'Пуни%';
+select role_category, count(*) from analysis.production_entry_credit group by 1;
+-- after: Пуни mentions vs scan verdicts; all person-mention (block, surface, entity) multisets new vs backup pre_puni; counts of review_mention, review_assertion, review_block, person, work, event
+select r.season, r.role_surface, r.performer_surface, po.display_name, pn.display_name, r.block_id from research.review_assertion r join old.research.review_assertion o using(assertion_id) ... where performer changed;
+```
+
+Result: 5 Пуни persons (Ц. production_list Q934369; Николай Цезаревичъ SP ballet 1890-96; Леонтина graduate 1902-03; Леонтина-Констанція SP ballet 1903-11 excl. 1908-09; Леонтина-Кинтанція 1908-09). 128 Пуни mentions; scan verdicts 99 Ц. / 15 Леонтина-Констанція / 4 Николай / 3 pupil Леонтина / 7 unidentified pupil. Correct before 82, after rule 112, after 4 text fixes + 14 scan-verified links 128. Other link changes: 11 (8 new: Золотаренко П. П. ×2, Конюсъ, Гельцеръ В. Ѳ. ×2, Глазуновъ, Шмидтъ, Шуманъ; 3 Арендсъ Генрихъ -> Андрей Федоровичъ). Counts unchanged (27,325 mentions, 1,952 assertions, 4,697 blocks, 2,646 persons, 2,970 works, 32,808 events). 1 assertion changed performer: 1899-00 «клеркъ — в-ца Пуни», Пуни, Ц. -> Пуни, Леонтина.

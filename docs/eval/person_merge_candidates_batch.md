@@ -125,3 +125,10 @@ Beside them, also pending with RG: DONE 2026-10-12: «Фонъ-Боолъ» corr
 |---|---|---|---|
 | Смирновъ, Александръ Митрофановичъ (Moscow ballet) | 32d4e149 (1891-92..1907-08, «съ 1 сентября 1891 г.» every season; 1904-08 printed «Смирновъ 1-й») + 7cb6e597 (1908-09 MSK no. 50 only, «Смирновъ 1-й», «съ 1 сентября 1897 г.») | identical name, patronymic and ordinal, consecutive seasons; only the printed start year differs (1891 vs 1897) | zoom both start dates first; likely one man with a misprinted year |
 | Леонтьева, Марія Михайловна (SP ballet) | d086582b (1906-07 graduate, 1907-08 SP no. 51 bare, «съ 1 іюня 1907 г.») + 6ecdb213 (1908-09..1910-11 SP, «Леонтьева 2-я» then «1-я», «съ 31 марта 1905 г.») | identical name and patronymic, consecutive seasons; start dates differ (graduation 1907 vs 31 March 1905); a sister Валентина Михайловна appears as 2-я from 1909-10 | zoom the dates; check whether 31 марта 1905 is an engagement before graduation |
+
+## 2026-10-21 -- Пуни, Леонтина: three records (surfaced by the Пуни review-link check; not merged)
+
+| Candidate | person_ids (prefix) | Evidence so far | Recommendation |
+|---|---|---|---|
+| Пуни, Леонтина (SP graduate 1902-03) / Пуни, Леонтина-Констанція (SP BalletArtists 1903-04..1907-08, 1909-10..1910-11) / Пуни, Леонтина-Кинтанція (SP 1908-09 only) | 08c70ed8 + 05aaa26a + 670cb4f3 | graduate of 1902-03 joins the company in 1903-04 under the same first name; «Кинтанція» is a single season's spelling between unbroken «Констанція» years (print or transcription, not zoomed yet) | zoom the 1908-09 entry; likely one woman. The 1899-1903 review mentions of the pupil «в-ца Пуни» are linked to 08c70ed8 for now. |
+

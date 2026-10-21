@@ -411,6 +411,18 @@ def build_lexicon(db: Path) -> Lexicon:
                                 "sections": sections.get(str(pid), set())}
         lex.add(lex.person, surname_forms(fam), pid)
 
+    # Who the ballet production lists credit with MUSIC. A bare `Пуни` after
+    # `музыка` is the composer, but on season, gender and the ballet-roster
+    # tie-break the dancer Леонтина-Констанція Пуни won every such mention in
+    # 1903-05 (RG, 2026-10-21: teach the matcher the role around the name).
+    # See music_cue_before and rank_candidates.
+    for (pid,) in con.execute("""
+        select distinct person_id from research.production_credit
+        where role_category in ('music', 'instrumentation')
+          and person_id is not null""").fetchall():
+        if str(pid) in lex.person_meta:
+            lex.person_meta[str(pid)]["composer"] = True
+
     # Every spelling the ROSTERS recorded for a person, not only the canonical
     # one. Entity resolution merges variants correctly -- `Балашева` and
     # `Балашова` are both Александра Балашова, printed both ways across the
@@ -600,7 +612,8 @@ def season_covers(first: str | None, last: str | None, season: str) -> bool | No
 
 def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
                     lex: "Lexicon", initials: str = "",
-                    genre: str = "", city: str = "") -> tuple[str, int, str]:
+                    genre: str = "", city: str = "",
+                    music_cue: bool = False) -> tuple[str, int, str]:
     """Best candidate, its margin, and why. NEVER gates: a zero-scoring
     candidate set still returns the full list to the caller untouched.
 
@@ -700,13 +713,24 @@ def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
         # The print's own disambiguator, like the ordinal: when it names
         # initials, they are there to tell same-surname people apart.
         if initials:
-            mine = initials_of(meta.get("display") or "")
+            # Ѳ and Ф spell the same sound and the lists use both: the roster
+            # has Арендсъ, Андрей Федоровичъ, the review prints `А. Ѳ. Арендсъ`.
+            initials = initials.replace("Ѳ", "Ф")
+            mine = initials_of(meta.get("display") or "").replace("Ѳ", "Ф")
             if mine:
                 if mine.startswith(initials) or initials.startswith(mine):
                     score += 7
                     why.append("initials")
                 else:
                     score -= 4
+        # The print's role: after `музыка`, the person credited with music in
+        # the production lists. Worth more than season (+5) so that a dancer
+        # on this season's roster cannot outrank the composer; initials still
+        # speak (+7 / -4), so `музыка Ц. Пуни` stays with Cesare and not his
+        # son Николай Цезаревичъ.
+        if music_cue and meta.get("composer"):
+            score += 8
+            why.append("music-credit")
         cov = season_covers(meta.get("first_season"), meta.get("last_season"), season)
         if cov is True:
             score += 5
@@ -806,6 +830,66 @@ def initials_before(text: str, a: int) -> str:
     return re.sub(r"[^А-ЯЀ-ЏІѲѴ]", "", m.group(1)) if m else ""
 
 
+# A music credit printed in front of the name: `музыка Пуни`, `съ музыкою
+# Ц. Пуни`, `музыка соч. Адама и Пуни`, `Музыка г. Пуни`. Only names,
+# initials, `соч.`, `г.`/`гг.` and `и`/commas may stand between the cue and
+# the surname -- a clause break or a quotation ends the credit, so
+# `вдохновившись музыкой «Карнавала» Шумана` does not reach past the title.
+# The noun itself only -- not `музыкальный`, which names the critic's journal.
+MUSIC_CUE = re.compile(r"(?:музык(?:а|и|у|ой|ою|ѣ)(?![а-яѣ])|муз\.|композитор[а-яѣ]*|инструментов[а-яѣ]*)", re.I)
+CREDIT_GAP = re.compile(
+    r"^(?:\s|,|и\b|соч\.|г\.|гг\.|(?:[А-ЯЀ-ЏІѲѴ]\.)|[А-ЯЀ-ЏІѲѴ][\w'’-]*\.?)*$")
+
+
+def music_cue_before(text: str, a: int) -> bool:
+    """Whether the surname at `a` is credited with music by the words before it."""
+    window = text[max(0, a - 90):a]
+    cues = list(MUSIC_CUE.finditer(window))
+    if not cues:
+        return False
+    return bool(CREDIT_GAP.match(window[cues[-1].end():]))
+
+
+# Person links read off the scan, one mention at a time, for what no rule can
+# safely decide: a credit worded too loosely for MUSIC_CUE (`музыка балета соч.
+# Цезаря Пуни`), or a pupil in a `в-цы` list who is in no roster. Keyed by
+# block, surface and the surface's occurrence in that block, so a correction
+# that shifts character offsets elsewhere in the block cannot misdirect it.
+# An empty person_id means "leave unlinked". Every row must find its mention:
+# a row that matches nothing means the text moved, and is an error.
+MENTION_LINKS = Path("docs/eval/review_mention_links.csv")
+
+
+def apply_mention_links(rows: list[dict], path: Path = MENTION_LINKS) -> None:
+    if not path.exists():
+        return
+    with open(path, encoding="utf-8") as f:
+        links = list(csv.DictReader(f))
+    seen: collections.Counter = collections.Counter()
+    index: dict[tuple[str, str, int], dict] = {}
+    for m in rows:
+        if m.get("mention_type") != "person":
+            continue
+        k = (m["block_id"], m["surface"])
+        index[(k[0], k[1], seen[k])] = m
+        seen[k] += 1
+    missing = []
+    for ln in links:
+        key = (ln["block_id"], ln["surface"], int(ln["occurrence"]))
+        m = index.get(key)
+        if m is None:
+            missing.append(key)
+            continue
+        m["entity_id"] = ln["person_id"]
+        m["link_method"] = "scan-verified"
+        m["link_confidence"] = "high" if ln["person_id"] else "unlinked"
+        m["rank_reason"] = "docs/eval/review_mention_links.csv"
+    if missing:
+        raise SystemExit(f"{path}: {len(missing)} row(s) match no mention -- "
+                         f"re-check the scan: {missing[:5]}")
+    print(f"  + {len(links)} scan-verified mention links ({path})")
+
+
 def initials_of(display: str) -> str:
     """Initials of a person's given names, from `Family, Имя Отчество`."""
     _, _, given = (display or "").partition(",")
@@ -846,7 +930,7 @@ def scan_block(text: str, block_type: str, lex: Lexicon,
         if kind == "person" and len(ids) > 1:
             pick, margin, why = rank_candidates(ids, text[a:b], evidence, season,
                                                 lex, initials_before(text, a), genre,
-                                                city)
+                                                city, music_cue_before(text, a))
             # a decisive margin resolves; a tie leaves the candidate list standing
             if margin >= 4:
                 eid, method = pick, method + "+ranked"
@@ -1097,6 +1181,8 @@ def main() -> None:
                          season=page["season"], city=page["city"],
                          ballet_context=ballet_ctx)
                 unknowns.append(u)
+
+    apply_mention_links(rows)
 
     a.out_dir.mkdir(parents=True, exist_ok=True)
     mcols = ["mention_type", "season", "city", "page_id", "block_id",

@@ -1004,3 +1004,11 @@ and it is now available. Ranked by mentions, the unlinked list reads:
 signal clearly separates. Proposed: add "appears N+ times in the reviews" as a
 second eligibility rule beside the rank keywords, then re-run. The Wikidata
 read API is public and unbilled; the only cost is time.
+
+---
+
+## 2026-10-21 — role-aware person ranking and scan-verified mention links (`match_review_mentions.py`)
+
+- **Music credit:** a surname after «музыка» / «съ музыкою» / «муз.» / «композитор…» / «инструмент…» (with only names, initials, «соч.», «г.», «и» between) ranks up (+8) a person the production lists credit with music. Built for «Пуни» (composer vs. the dancer and the son); see known_issues.md, 2026-10-21.
+- **Initials:** Ѳ and Ф compare equal («А. Ѳ. Арендсъ» = Арендсъ, Андрей Федоровичъ).
+- **`docs/eval/review_mention_links.csv`:** person links read off the scan, one mention at a time, for what no rule can safely decide. Keyed by `block_id`, `surface` and `occurrence` (the surface's index among that block's person mentions), so a text correction that shifts offsets cannot misdirect a row. An empty `person_id` leaves the mention unlinked. Applied last; a row that matches no mention stops the run. Re-check the scan before editing a row.

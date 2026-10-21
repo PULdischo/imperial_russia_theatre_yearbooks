@@ -353,6 +353,14 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** productionteam_1902-03_p001 (p. 120) and productionteam_1903-04_p001 (p. 119), zoomed; 1904-05 p. 67. Query log 2026-10-19.
 - **Would resolve it:** RGIA f. 497 personnel дело(а) for Каффи; the 1903 wardrobe staff papers.
 
+## 41. Пуни, a pupil (SP Season Reviews 1903-04..1905-06) -- who is the «в-ца Пуни» after Леонтина Пуни joined the company?
+
+- **Status:** OPEN (found 2026-10-21 during the Пуни link check). Her 7 review mentions are left UNLINKED (`docs/eval/review_mention_links.csv`).
+- **What is printed:** Petersburg ballet reviews list «в-цы … Пуни» (pupils of the Theatre School) in 1903-04 (pp. 119, 121), 1904-05 (p. 121, «Народъ—в-цы Барановичъ 1-я, Пуни, Декомбъ») and 1905-06 (pp. 136, 137 ×3).
+- **Why she is not Леонтина:** Леонтина Пуни is in the Graduates list of 1902-03 and on the Petersburg BalletArtists roster from 1903-04, where the same reviews call her «г-жа Пуни» in the artists' lists. A «в-ца» in 1903-06 is therefore a second girl, perhaps a younger sister (a granddaughter of Cesare, like Леонтина?).
+- **Not in any list:** no other Пуни appears in raw.person_entry (Graduates, BalletArtists, TheaterSchoolStaff) in any season.
+- **Would resolve it:** the Graduates list of the year she left the school (1906-07 or later; check the 1906-07..1910-11 lists for a Пуни under another first name); the school's pupil lists, if any survive (RGIA).
+
 ## Related, decided (not uncertain), for reference
 
 Грибенъ, Августъ Ѳедоровичъ vs Ѳедоръ Ѳедоровичъ (SP percussionists; SPLIT 2026-10-15, the 1890-93 ballet-orchestra cross-references «Грибенъ (см. оперный оркестръ)» assigned to Ѳедоръ, the only Грибенъ in the opera orchestra then; scans 1890-91 pp. 75/78/80); Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
