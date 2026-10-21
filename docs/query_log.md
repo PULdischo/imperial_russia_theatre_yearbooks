@@ -19169,3 +19169,14 @@ select r.season, r.role_surface, r.performer_surface, po.display_name, pn.displa
 ```
 
 Result: 5 Пуни persons (Ц. production_list Q934369; Николай Цезаревичъ SP ballet 1890-96; Леонтина graduate 1902-03; Леонтина-Констанція SP ballet 1903-11 excl. 1908-09; Леонтина-Кинтанція 1908-09). 128 Пуни mentions; scan verdicts 99 Ц. / 15 Леонтина-Констанція / 4 Николай / 3 pupil Леонтина / 7 unidentified pupil. Correct before 82, after rule 112, after 4 text fixes + 14 scan-verified links 128. Other link changes: 11 (8 new: Золотаренко П. П. ×2, Конюсъ, Гельцеръ В. Ѳ. ×2, Глазуновъ, Шмидтъ, Шуманъ; 3 Арендсъ Генрихъ -> Андрей Федоровичъ). Counts unchanged (27,325 mentions, 1,952 assertions, 4,697 blocks, 2,646 persons, 2,970 works, 32,808 events). 1 assertion changed performer: 1899-00 «клеркъ — в-ца Пуни», Пуни, Ц. -> Пуни, Леонтина.
+
+## 2026-10-21 — Пуни, Леонтина: the 1903-11 roster entries and the 1902-03 graduate entry (zoom of 1908-09 «Кинтанція»)
+
+```sql
+select pe.page_id, pe.entry_id, pe.family_name, pe.first_name, pe.patronymic, sp.source_file, sp.source_page_index
+from raw.person_entry pe join raw.source_pages sp using(page_id) where pe.family_name like 'Пуни%' and sp.season in ('1907-08','1908-09','1909-10');
+select pe.page_id, pe.list_number, pe.first_name, pe.tenure_note_text, pl.person_id::varchar
+from raw.person_entry pe left join entities.person_link pl using(entry_id) where pe.family_name like 'Пуни%' and pe.page_id not like '%189%';
+```
+
+Result: 9 entries. SP BalletArtists 1903-04..1910-11, every one «(съ 1 іюня 1903 г.)»; first name «Леонтина-Констанція» (or «Леонтина», or «ЛеонтинаКонстанція» 1903-04) on 05aaa26a, except 1908-09 no. 75 «Леонтина-Кинтанція» on 670cb4f3; graduates_1902-03 no. 4 «Леонтина», «1 іюня 1903 г.», on 08c70ed8. Scan zoom: 1908-09 print reads «Кинтанція».

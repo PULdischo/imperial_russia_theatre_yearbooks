@@ -699,3 +699,9 @@ Each read twice on the scan (checking agent and a close zoom, 2026-09-28) and ke
   Петербургскимъ театрамъ съ 20 іюля 1903 г.» for **Неменскій** (every other season); zoomed. Stored as printed; the row is linked to his record.
 - 1910-11 Moscow Musicians p002 (p. 136): «**44.** Решке, Богумилъ Вильгельмовичъ (съ 17 сентября 1903 г.). Труба.» between nos. 73 and 75,
   for 74; zoomed. Stored as printed.
+
+## Пуни scan check, 2026-10-21 -- print slip stored as printed
+
+- 1908-09 SP BalletArtists p003 (page index 3) no. 75 «Пуни, Леонтина-**Кин**танція (съ 1 іюня 1903 г.)» for **Констанція**
+  (every other season, 1903-04..1910-11, with the same start date); zoomed next to 1907-08 and 1909-10. Stored as printed.
+
