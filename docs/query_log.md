@@ -19092,3 +19092,19 @@ select creator_key, wikidata_qid, left(note,60) from entities.creator_wikidata_l
 ```
 
 Result: 1 row, 'Трубецкой, князь И. Ю.' (person_source production_list, attested 1890-91..1897-98) -> Q107119063 'Ivan Yuryevich Trubetskoy' (1841-1915), wikidata_source rg_review. research.person 2646 rows both before and after; with a QID 177 -> 178. work 2970, event 32808, performance 30805, production_credit 1587, person_appearance 23980: unchanged. entities.creator_wikidata_link now 94 rows; the PROVISIONAL note is stored.
+
+## 2026-10-21 — Scan-check inputs for #18 (Моренго/Маренго) and #24 (К. О./К. Ѳ. Вальцъ): printed rows, review blocks, and scope of «X. О.» initials in reviews
+
+```sql
+select page_id, title, description_text from raw.production_entry
+where description_text ilike '%оренго%' or description_text ilike '%аренго%' or title ilike '%Флик%';
+select page_id, title, description_text from raw.production_entry where description_text ilike '%Вальц%';
+select block_id, text from raw.review_block
+where text ilike '%аренго%' or text ilike '%оренго%' or (text ilike '%Вальц%' and page_id like 'review_1897-98_MSK%');
+select * from raw.review_page where page_id in ('review_1890-91_MSK_ballet_p002','review_1897-98_MSK_ballet_p019');
+select block_id, text from raw.review_block where text ilike '%Вальц%';   -- tallied initials before Вальц in Python
+select block_id, coalesce(text,'')||' '||coalesce(caption_text,'') from raw.review_block;
+-- Python regex for "<initial>. О|Ѳ. <Surname>"
+```
+
+Result: Флик и Флок lists 1890-91..1893-94 MSK all «Моренго» (4); 1890-91 review b001 «Маренго». Вальцъ in lists: always «К. Ѳ.» or «К.». 1897-98 MSK review: «К. О.» in p001 b004, p003 b003, p004 b007, p018 b003 (x3), p019 b011; «К. Ѳ.» in p013 b004. Review pages p002 = folio 239, p019 = folio 391. Corpus-wide in review blocks: 73 «X. О. Surname» in 63 blocks (12 seasons, most 1894-95 21 / 1897-98 16 / 1895-96 11) vs 66 «X. Ѳ.»; «К. О. Вальц-» 49 of the 73. Some «О.» are likely genuine (e.g. О. О. Палечекъ, Е. О. Ваземъ), so not a blanket replace. Scan check: all 9 1897-98 instances (8 Вальцъ + И. Ѳ. Савицкій) print Ѳ.
