@@ -19180,3 +19180,15 @@ from raw.person_entry pe left join entities.person_link pl using(entry_id) where
 ```
 
 Result: 9 entries. SP BalletArtists 1903-04..1910-11, every one «(съ 1 іюня 1903 г.)»; first name «Леонтина-Констанція» (or «Леонтина», or «ЛеонтинаКонстанція» 1903-04) on 05aaa26a, except 1908-09 no. 75 «Леонтина-Кинтанція» on 670cb4f3; graduates_1902-03 no. 4 «Леонтина», «1 іюня 1903 г.», on 08c70ed8. Scan zoom: 1908-09 print reads «Кинтанція».
+
+## 2026-10-21 — Пуни, Леонтина merge (05aaa26a <- 08c70ed8, 670cb4f3): verification against the pre-merge backup
+
+```sql
+select person_id::varchar, display_name, first_attested_season, last_attested_season from research.person where canonical_family_name like 'Пуни%';
+select season, entity_type, heading_path from research.person_appearance where person_id='05aaa26a-efde-47ef-82a0-d4349296306b';
+-- counts new vs old: research.person, person_appearance, event, performance, work, production_credit, entities.review_mention, research.review_assertion
+select o.person_id, n.person_id, count(*) from research.person_appearance n join old.research.person_appearance o using(appearance_id) where n.person_id<>o.person_id group by all;
+-- person-mention (block, surface, entity) multisets new vs old; mentions/assertions still on the two merged-away ids
+```
+
+Result: 3 Пуни persons left (Николай Цезаревичъ, Леонтина-Констанція 1902-03..1910-11 with 9 appearances: Graduates 1902-03 + SP BalletArtists 1903-11, Ц.). research.person 2,646 -> 2,644; every other count unchanged. Exactly 2 appearances changed person (the two merged records -> 05aaa26a). Exactly 3 review mentions changed (the pupil mentions, 08c70ed8 -> 05aaa26a). 0 mentions or assertions left on the merged-away ids.
