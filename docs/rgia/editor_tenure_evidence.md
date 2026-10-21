@@ -139,7 +139,9 @@ On the scans so far it was a split by volume, not a joint editorship:
     the line near the end, and a long underline. It is not К. Петровъ's hand
     (compare д. 162 л. 6). Its shape fits «Л. Гельмерсенъ» (Г with a long bar; the
     tall stroke where «р» falls, as in the «Гельмерсену» of the 1903 resolution),
-    but no autograph of Гельмерсенъ has turned up to compare. **Unconfirmed.**
+    but no autograph of Гельмерсенъ has turned up to compare. **Unconfirmed**
+    (RG, 2026-10-21: keep as unconfirmed until an autograph or an appointment
+    paper turns up, e.g. in д. 1167 or д. 189/190).
   - The deputy signs «П. Барт[…]» (perhaps «Бартневскій» or «Бартновскій»; letters
     after «Барт» not secure). The same hand signs the Контора's payment stamp as
     «Дѣлопроизводитель» on 7 June 1900 (д. 165 л. 29, PDF p. 59), so the deputy was
