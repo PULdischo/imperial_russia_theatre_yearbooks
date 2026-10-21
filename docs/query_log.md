@@ -19108,3 +19108,20 @@ select block_id, coalesce(text,'')||' '||coalesce(caption_text,'') from raw.revi
 ```
 
 Result: Флик и Флок lists 1890-91..1893-94 MSK all «Моренго» (4); 1890-91 review b001 «Маренго». Вальцъ in lists: always «К. Ѳ.» or «К.». 1897-98 MSK review: «К. О.» in p001 b004, p003 b003, p004 b007, p018 b003 (x3), p019 b011; «К. Ѳ.» in p013 b004. Review pages p002 = folio 239, p019 = folio 391. Corpus-wide in review blocks: 73 «X. О. Surname» in 63 blocks (12 seasons, most 1894-95 21 / 1897-98 16 / 1895-96 11) vs 66 «X. Ѳ.»; «К. О. Вальц-» 49 of the 73. Some «О.» are likely genuine (e.g. О. О. Палечекъ, Е. О. Ваземъ), so not a blanket replace. Scan check: all 9 1897-98 instances (8 Вальцъ + И. Ѳ. Савицкій) print Ѳ.
+
+## 2026-10-21 — Ѳ/О initials sweep in Season Reviews: before/after checks on the review text and the review tables
+
+```sql
+-- Instance list (Python over outputs/reviews/merged_full/review_block.csv, text + caption_text):
+-- regex (?<![А-Яа-яѢѣІіѲѳ])([А-ЯѲІ])\.\s?(О)\.\s?([А-ЯѲІ][а-яѣіѳъь-]+)
+-- after correction, same regex re-run on the corrected CSV
+-- then, against outputs/full_run vs the pre-change backup (attached as old):
+select (select count(*) from entities.review_mention), (select count(*) from old.entities.review_mention);
+-- same for raw.review_block, research.review_assertion, research.person, research.work, research.event, entities.review_person
+select mention_type, surface, entity_id::varchar, link_method, block_id from entities.review_mention
+except all select mention_type, surface, entity_id::varchar, link_method, block_id from old.entities.review_mention;   -- and the reverse
+select display_name, first_attested_season, last_attested_season from research.person where person_id in (<the 4 newly linked ids>);
+select p.display_name, p.person_source, count(*) from entities.review_mention m join research.person p on p.person_id::varchar=m.entity_id::varchar where m.surface ilike '%Вальц%' group by all;
+```
+
+Result: 73 instances before, in 63 blocks (all scan-checked: 67 Ѳ, 6 genuine О); after, 6 left, exactly the genuine ones. review_mention 27,323 -> 27,324; 4 new rows (Лебедевъ П. Ѳ., Гельцеръ А. Ѳ., Гельцеръ В. Ѳ., Вальцъ К. Ѳ.) replacing 3 unlinked rows; review_block 4,697, review_assertion 1,952, person 2,646, work 2,970, event 32,808, review_person 11: all unchanged. Вальц surface mentions -> 'Вальцъ, Карлъ Ѳедоровичъ' (roster) x82.

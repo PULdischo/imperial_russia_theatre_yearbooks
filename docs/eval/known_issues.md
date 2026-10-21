@@ -37,6 +37,7 @@ closes, and add new open items here as well as in their own entry.
 
 **Waiting on RG's decision**
 
+- Season Reviews, 1897-98 MSK ballet p019 (folio 391): how to transcribe the composer mark of Шалости сверчка, three asterisks printed two over one (now «* *», one star dropped). From the 2026-10-21 Ѳ/О sweep entry.
 - #141: the 7 annotations that name works. Deferred by RG (2026-10-09) to the
   research-layer stage, to decide with all excerpt/gala/mixed-event questions.
 - #114/#146 comedy-ballets: **DECIDED 2026-10-12** (entry at the end of this
@@ -23959,3 +23960,18 @@ Diff against the backup: raw.person_entry 23,979 -> 23,980 (+1, Лилія); 131
 Print oddities added to genuine_print_typos.md. Two split-person candidates added to person_merge_candidates_batch.md for RG's batch
 (Смирновъ Александръ Митрофановичъ 32d4e149/7cb6e597; Леонтьева Марія Михайловна d086582b/6ecdb213; different printed start dates, so
 the Tier-1 rule did not merge them). Not done: sqlite/HF/Cloud Run republish (Andy).
+
+## Season Reviews: Ѳ transcribed as О in initials -- 69 corrections APPLIED, 2026-10-21 (RG: "do all 73, scan-checking each one")
+
+- **Found:** checking uncertain_person_identities #24 (К. Ѳ. Вальцъ). The 1897-98 Moscow ballet review text had «К. О. Вальца» where the print has «К. Ѳ.». A corpus scan of the review text (`raw.review_block`, text + caption_text) found 73 initials of the form «X. О. Surname» in 63 blocks, 12 seasons; 49 were «К. О. Вальц-».
+- **Cause:** a model misread. In these faces Ѳ is an O with a thin crossbar, and the model often dropped the bar. Not a rule: some «О.» initials are real, so each was checked on its scan (full-resolution page from the review PDF, crop located with tesseract, every crop read by eye).
+- **Result:** 67 of the 73 print **Ѳ** and were corrected. 6 print a genuine **О** and are unchanged: Е. О. Ваземъ (1895-96 SP), О. О. Палечекъ (1902-03 SP ×2, 1910-11 SP), О. О. Преображенская (1910-11 SP), and «Н. О. Соловьева» (1902-03 SP opera p021, folio checked): there the print itself has a plain О, although the 1893-94 SP opera review prints «Н. Ѳ. Соловьевымъ» for the same composer. That is left as printed (pre-reform orthography is unstable; not called an error).
+- **Corrected people:** К. Ѳ. Вальцъ (most), И. Ѳ. Савицкій, А. Ѳ. Гельцеръ, В. Ѳ. Гельцеръ, П. Ѳ. Лебедевъ, А. Ѳ. Писемскій, Г. Ѳ. Шпекинъ, Н. Ѳ. Жоховъ, Н. Ѳ. Соловьевъ, Ю. Ѳ. Платонова, И. Ѳ. Горбуновъ, Н. Ѳ. Арбенинъ.
+- **Other misreads found on the same scans, also fixed:**
+  - 1891-92 MSK ballet p006: «Вальпемъ», where the print has «К. Ѳ. Вальцемъ».
+  - 1894-95 MSK ballet p007: the text repeated «Петра»)—К.» twice («…Петра»)—К. Петра»)—К. Петра»)—К. О.»). The print has it once: «Св. Петра») — К. Ѳ. / Вальцемъ».
+  - 1902-03 SP opera p031: «Палечка», where the print has «Палечека» (the initials О. О. are genuine).
+  - 1894-95 MSK ballet p002, caption: «Рисунокъ художника О. С. Козачинскаго», where the print has «Ѳ. С.». The sweep's pattern missed it because the Ѳ is the first initial.
+- **Fix:** 59 rows added to `docs/eval/review_text_corrections.csv` (each scoped to one page, with a count and scan evidence), applied with `apply_review_text_corrections.py`. Then `match_review_mentions.py`, `build_reviews_duckdb.py` and `build_review_assertions.py` were re-run against `outputs/full_run`. A diff of `merged_full/review_block.csv` showed 58 fields changed: 67 single О→Ѳ substitutions plus the 3 fixes above, nothing else. Afterwards, the only «X. О.» initials left in the review text are the 6 genuine ones.
+- **Downstream:** `entities.review_mention` went from 27,323 to 27,324. Four person mentions are newly linked, all checked to be the right people: П. Ѳ. Лебедевъ (1893-94 p007), А. Ѳ. Гельцеръ (1893-94 p004), В. Ѳ. Гельцеръ (1904-05 p006), and К. Ѳ. Вальцъ (the «Вальпемъ» fix). `research.review_assertion` (1,952), `research.person`, `research.work` and `research.event` are unchanged in count. Backup: session scratchpad `imperial_theaters.pre_fita.duckdb`.
+- **Not changed, open:** the composer of Шалости сверчка (1897-98 MSK p019) is printed as three asterisks, two above one, but transcribed «* *». How to transcribe that mark is RG's call. The bilingual reading files (`outputs/reviews/bilingual`, built 2026-10-09 from the parsed layer) do not include these or the earlier corrections; rebuilding them is a separate step.
