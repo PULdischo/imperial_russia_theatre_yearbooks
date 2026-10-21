@@ -19065,3 +19065,30 @@ raw changes (restored ordinals), none involves the 7 corrected people.
 Still in the corpus, not checked: «Копекъ-горбунокъ/-Горбунокъ/-Горбуночь» ~38 credit titles elsewhere, «Копелія» 8, «Копелкъ-горбунокъ» 2.
 Tangent, NOT checked: several of the 16 new links pair different ordinals (review «Смирнова 2-я» -> Смирнова 4-я; «Воронковъ 2-й» ->
 Воронковъ 3-й; «Иванова 3-я» -> Иванова 2-я; «Новикова 2-я» -> Новикова) -- may be right (ordinals shift by season) or wrong; worth a look.
+
+## 2026-10-21 — Ballet lists + reviews: how is the creator of Кипрская статуя (Pygmalion) printed? (uncertain_person_identities #16, crosscheck against Meisner)
+
+```sql
+select page_id, title, description_text from raw.production_entry
+where description_text ilike '%Трубецк%' or title ilike '%Кипрск%' or title ilike '%Пигмал%' order by page_id;
+-- (first attempt used column title_text, which does not exist: binder error)
+
+select w.work_id, w.canonical_title, w.canonical_genre, e.city, count(*) n, min(e.date), max(e.date)
+from research.work w join research.performance p using(work_id) join research.event e using(event_id)
+where w.canonical_title ilike '%Кипрск%' or w.canonical_title ilike '%Пигмал%' or w.canonical_title ilike '%Мелузин%' group by all;
+
+select block_id, text from raw.review_block where text ilike '%Трубецк%';
+```
+
+Result: 8 ballet-list rows, all Moscow, 1890-91..1897-98, all "Балетъ въ 4 д. и 6 карт., сюжетъ и музыка князя И. Ю. Трубецкаго/-ого"; no title Пигмаліонъ anywhere. Repertoire: Кипрская статуя 27 Moscow performances 1891-01-20..1897-12-03 (+1 excerpt 1895-04-17); Мелузина 8 Moscow performances 1895-01-10..1897-10-26; no Petersburg performances. Reviews: 5 blocks, initials "И. Ю." in 4 (1890-91, 1891-92, 1894-95 ×2), surname only in 1892-93; no first name printed anywhere.
+
+## 2026-10-21 — Verify the provisional Trubetskoy Wikidata link (#16) after link_production_creators + build_research_model
+
+```sql
+select * from research.person where wikidata_qid='Q107119063';
+select count(*), count(wikidata_qid) from research.person;          -- and the same on the pre-change backup
+-- row counts of research.work/event/performance/production_credit/person_appearance, new vs backup
+select creator_key, wikidata_qid, left(note,60) from entities.creator_wikidata_link where creator_key='trubetskoy';
+```
+
+Result: 1 row, 'Трубецкой, князь И. Ю.' (person_source production_list, attested 1890-91..1897-98) -> Q107119063 'Ivan Yuryevich Trubetskoy' (1841-1915), wikidata_source rg_review. research.person 2646 rows both before and after; with a QID 177 -> 178. work 2970, event 32808, performance 30805, production_credit 1587, person_appearance 23980: unchanged. entities.creator_wikidata_link now 94 rows; the PROVISIONAL note is stored.
