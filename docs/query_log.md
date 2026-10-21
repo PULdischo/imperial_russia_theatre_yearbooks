@@ -19137,3 +19137,20 @@ select text from raw.review_block where block_id='review_1897-98_MSK_ballet_p019
 ```
 
 Result: no mention rows added or removed; review_mention 27,324, review_assertion 1,952, review_block 4,697 (unchanged). The block now reads «ца, съ музыкою ⁂; 2) въ первый разъ—«Фантазія»». Review text overall: «музыкой» 33 (14 seasons), «музыкою» 1 (the one just fixed).
+
+## 2026-10-21 — «музыкой»/«музыкою» sweep in Season Reviews: scope, before/after, mention links
+
+```sql
+-- Python over merged_full/review_block.csv: tokens ending -ою (511, 159 forms) and -ею (255); 'музыкой' 33 / 'музыкою' 1 before
+-- after the corrections: 'музыкой' 16 / 'музыкою' 18
+select mention_type, surface, entity_id::varchar, link_method, block_id from entities.review_mention
+except all select ... from old.entities.review_mention;   -- both directions, vs backup pre_oyu
+select display_name, person_source, first_attested_season, last_attested_season, wikidata_label from research.person
+where person_id in ('cad8abf6-...','05aaa26a-...','96250151-...');
+select p.display_name, count(*) from entities.review_mention m join research.person p on p.person_id::varchar=m.entity_id::varchar
+where m.surface like 'Пуни%' group by 1;
+select m.season, m.surface, substr(b.text, greatest(1,m.char_start-25), 40) from entities.review_mention m join raw.review_block b using(block_id)
+where m.entity_id::varchar='05aaa26a-efde-47ef-82a0-d4349296306b';
+```
+
+Result: scan-checked 33: 17 музыкою (fixed), 16 музыкой (left). review_mention 27,324 -> 27,325: «Ц. Пуни» (1891-92 SP p001) moved from Пуни, Николай Цезаревичъ to Пуни, Ц. (Cesare Pugni); the new «Пуни» (1904-05 SP p015) links to Пуни, Леонтина-Констанція (wrong). Пуни surface mentions: Ц. 65, Леонтина-Констанція 48 (20 of them have «музык» within 25 chars before, i.e. probably the composer), Николай Цезаревичъ 8. review_assertion 1,952, person 2,646, work 2,970, review_block 4,697: unchanged.
