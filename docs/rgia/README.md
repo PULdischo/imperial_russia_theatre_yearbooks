@@ -14,6 +14,8 @@ page by page, and added to the **RGIA Reading Room** artifact
 | Page images, enhanced copies, thumbnails | `outputs/rgia_dela/<delo>/` | no, rebuilt from the PDF |
 | Reading Room page + seed data + thumbnail sheets | `outputs/rgia_reading_room/` | no, rebuilt from the two tracked files |
 | RG's own marks (read / key / skip) and notes | the Reading Room's `marks` collection, one doc per дело (`d159`, …) | no: pull with ArtifactData `list marks` |
+| Editorial timeline: dated acts and the spans built on them | `docs/rgia/editorial_acts.csv`, `docs/rgia/editorial_spans.csv` (design: `editorial_timeline_design.md`) | yes |
+| RG's own readings of timeline acts (date + note) | the Reading Room's `rg_reads` collection, one doc per act (`A001`, …) | no: pull with ArtifactData `list rg_reads` |
 | The PDFs themselves | wherever RG saves them (path in the log's `notes`) | no, too large |
 
 ## When a new дело arrives
@@ -47,6 +49,40 @@ new `sprites/<delo>.jpg` added to `files`, then write
 artifact's `dela` and `pages` collections with ArtifactData. Changes to the request
 log (new batches, received dates) need the `dela` docs rewritten too. Never write
 to `marks`: that is RG's.
+
+### Editorial timeline step (after the page summaries)
+
+Every new дело adds to the record of who was doing what in the редакція
+(`editorial_timeline_design.md`). Scope: editors, assistant editors, anyone
+signing «за редактора», paid editorial staff.
+
+1. Search the new дело's summaries for editorial people and roles (the
+   `ed_editors` tag, «редакт», and the names already in `editorial_acts.csv`).
+2. Read each candidate on a zoomed crop of the original scan. Add one row per
+   dated act to `editorial_acts.csv` with the next `act_id`: person and role
+   verbatim, date verbatim and normalised (`YYYY`, `YYYY-MM` or `YYYY-MM-DD`;
+   blank if the page gives none), д./л./PDF p., source, and
+   `claude_reading` = "checked by Claude" (or "uncertain", with what is
+   uncertain in `uncertainty_note`). Leave `rg_read_date`/`rg_note` empty.
+   Inferences never go in acts. To an act already in a span, add its id to that
+   span's `act_ids` only if it is plainly the same person in the same role.
+3. Recompute the spans' arithmetic and list what needs RG:
+   ```
+   uv run python pipeline/rgia_editorial_timeline.py
+   ```
+   It updates only earliest/latest act and date. Everything it prints under
+   "For RG" (undated acts, acts in no span, brackets the acts contradict, new
+   role readings, anything touching an RG ruling) goes to RG one question at a
+   time, with evidence, and changes only on her yes.
+4. Refresh the Reading Room's Timeline: write
+   `outputs/rgia_reading_room/seed/timeline/acts.json` and `spans.json` (the
+   script writes them) into the artifact's `timeline` collection (docs `acts`,
+   `spans`) with ArtifactData. Before any edit, pull RG's readings with
+   ArtifactData `list rg_reads` with an `out_dir` and run the script with
+   `--rg-reads <out_dir>` to copy them verbatim into the CSVs. Never write to
+   `rg_reads` (or `marks`): they are RG's.
+5. End the intake with a short list for RG: the new acts to read, each with its
+   дело, л., PDF p. and Reading Room link (`#timeline`).
 
 ## Things to know
 
