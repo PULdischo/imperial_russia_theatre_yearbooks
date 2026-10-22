@@ -86,11 +86,18 @@ Found while linking (2026-10-22, from the database and the catalogue; no scans r
   - Дровинъ, Антонъ Фердинандовичъ (1891-92–1892-93) and Дровинъ, Карлъ Фердинандовичъ (1890-91 only). The
     obituary names him «Антонъ-Карлъ».
   - Золотаренко, Петръ Петровичъ (Musicians) and the production-list credit Золотаренко, П. П.
-- **Roster names that differ from the obituary:** Корсакъ, Вѣра Александровна (obituary Алексѣевна); Бекке,
-  Евгеній Андреевичъ (obituary Генриховичъ); Бенда, Маттіанъ (obituary Маттіасъ). CHECKED 2026-10-22 by
-  another session: all 16 roster rows were scan-read by Claude and match the print (Бенда is printed Маттіанъ
-  1890-91..1893-94 and Маттіасъ in 1894-95). So these are conflicts in the print, with nothing to fix
-  (`docs/query_log.md`, same date).
+- **Roster names that differ from the obituary: print conflicts, nothing to fix.** Checked by Claude in the
+  main session on 2026-10-22, on the full-resolution page images in the roster PDFs. Every stored row matches
+  the print. Each person is a single `research.person` record (Бенда's two spellings are not split), and
+  nothing in the data was changed. RG has not read these herself yet.
+  - Корсакъ: all 5 SP ballet rosters, 1890-91 to 1894-95, print «Вѣра Александровна» (list nos. 47, 49,
+    51, 50, 49). The 1895-96 obituary prints «Вѣра Алексѣевна» (née Рейхель). A print conflict.
+  - Бекке: all 6 SP orchestra rosters, 1890-91 to 1895-96, print «Евгеній Андреевичъ». The 1895-96 obituary
+    gives both forms, «Евгеній Генриховичъ (Андреевичъ)». A print conflict that the obituary itself explains.
+  - Бенда: the Moscow orchestra rosters print «Маттіанъ» in 1890-91, 1891-92, 1892-93 and 1893-94, and
+    «Маттіасъ» in 1894-95 (the roster with «† 7 марта 1895 г.»). The obituary prints «Маттіасъ Іосифовичъ».
+    The roster's spelling changes in the print itself.
+  - Queries: `docs/query_log.md`, 2026-10-22, «Roster rows for Корсакъ, Бекке, Бенда».
 
 ## Scanning
 
