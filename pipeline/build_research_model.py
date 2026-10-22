@@ -190,7 +190,7 @@ ART_FORMS = ["ballet", "opera", "Russian drama", "French drama", "visiting troup
 #: The output's genre_family is the internal item_kind (ITEM_KINDS below).
 DIRECTORATE_DISCIPLINES = ["ballet", "opera", "Russian drama", "French drama"]
 DISCIPLINES = DIRECTORATE_DISCIPLINES + ["German drama", "Italian drama", "Japanese drama",
-                                         "Italian opera", "German opera", "German operetta"]
+                                         "Italian opera", "German opera", "German operetta", "Siamese dance"]
 CITY_NAMES = {"SP": "St. Petersburg", "Moscow": "Moscow"}
 #: troupe named by VISITING_ANNOTATION_RULES -> discipline (None = not decided yet)
 VISITING_TROUPE_DISCIPLINE = {
@@ -207,7 +207,7 @@ VISITING_TROUPE_DISCIPLINE = {
     "Italian opera under Угетти": "Italian opera",
     "opera troupe under Н. В. Любимовъ": "opera",  # Russian-language troupe
     "Vienna operetta troupe": "German operetta",
-    "Siamese court troupe": None,  # no performance in the data so far; not decided
+    "Siamese court troupe": "Siamese dance",  # RG, 2026-10-22; no performance in the data so far
 }
 
 #: A second axis, the KIND OF ITEM: what was happening on the stage, whoever
@@ -1236,6 +1236,19 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
             is_benefit = is_benefit OR coalesce(
                 (SELECT title_benefit FROM event_art x WHERE x.event_id = research.event.event_id), false)
     """)
+    # A visiting troupe's event the Repertoire gives as an annotation only, with no
+    # titled work (the Siamese court troupe, 28-29 Oct 1900): the troupe's discipline
+    # and company go on the event, as a concert heading's genre family does above.
+    n_annot = 0
+    for rx, name in VISITING_ANNOTATION_RULES:
+        disc = VISITING_TROUPE_DISCIPLINE.get(name)
+        if disc is None:
+            continue
+        n_annot += con.execute("""
+            UPDATE research.event SET disciplines = ?, companies = ?
+            WHERE event_status = 'performed' AND coalesce(n_works, 0) = 0 AND disciplines IS NULL
+              AND regexp_matches(lower(coalesce(annotation, '')), ?)""", [disc, name, rx]).fetchone()[0]
+    print(f"  events with no titled work given a visiting troupe's discipline from the annotation: {n_annot}")
     print("  disciplines (performances):")
     for af, n in con.execute("SELECT discipline, count(*) FROM perf_art GROUP BY 1 ORDER BY 2 DESC").fetchall():
         print(f"    {af or '(none)'}: {n}")

@@ -42,7 +42,9 @@ instead of the catch-all `visiting troupe`: `German drama`, `Italian drama`, `Fr
 (Réjane, Bernhardt), `Russian drama` (Moscow Art Theatre), `Japanese drama`, `Italian opera`
 (Moscow 1893-94, 1896-97; Угетти 1899-1902), `German opera` (SP 1897-98), `opera` (Любимовъ's
 Russian-language troupe), `German operetta` (the Vienna operetta troupe, SP 1900-02, and
-the German-language «Die Fledermaus», Михайловскій 1909-10). A new `company` column =
+the German-language «Die Fledermaus», Михайловскій 1909-10), `Siamese dance` (the Siamese
+court troupe, RG; 28 and 29 Oct 1900, where the Repertoire prints only the annotation, so it
+appears in `research.event.disciplines` / `companies` and on no performance). A new `company` column =
 city + discipline for the Directorate's seven companies ("St. Petersburg ballet", "Moscow Russian
 drama", "St. Petersburg French drama" …), RG: troupe and company "are both defined by city + the type of art", the
 exceptions being visiting troupes, which get their own name (from the annotation) or a
