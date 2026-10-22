@@ -19457,3 +19457,26 @@ where p.art_form='visiting troupe' and p.item_kind in ('opera','operetta') group
 ```
 
 Result: Moscow Большой 1893-94 (26) and 1896-97 (25), «op.», Italian titles (Otello, Pagliacci, Rigoletto, Gli Ugonotti, Falstaff, Andrea Chénier …). SP Маріинскій 1897-98, «Oper.», 30, German titles (Meistersinger, Holländer, Tristan, Siegfried, Walküre, Lohengrin …). SP Маріинскій 1899-02 Russian titles «оп.» (Фаворитка, Аида, Тоска … = Угетти Italian opera) and operettas (Wiener Blut, Летучая мышь, Гейша … = Vienna troupe); SP Александринскій 1901-02 «оп.» 3 (Травіатта, Фаустъ, Миньона = Любимовъ troupe); SP Михайловскій 1909-10 Die Fledermaus «Operette» 1.
+
+## 2026-10-22 — discipline / company / genre_family build (branch claude/discipline-company): test copy vs production
+
+```sql
+-- research.performance, columns other than the renamed ones, both builds: 0 differences
+select o.art_form, n.discipline, count(*) from research.performance n join b.research.performance o using(performance_id) group by all order by 1, 3 desc;
+select o.item_kind, n.genre_family, n.verbatim_title, count(*) from research.performance n join b.research.performance o using(performance_id) where o.item_kind is distinct from n.genre_family group by all;
+select o.art_forms, n.disciplines, n.companies, count(*) from research.event n join b.research.event o using(event_id) where coalesce(o.art_forms,'') like '%visiting%' group by all order by 4 desc limit 12;
+select company, count(*) from research.performance group by 1 order by 2 desc;
+select companies, count(*) from research.event group by 1 order by 2 desc limit 12;
+```
+
+Result: every table other than research.performance/research.event identical; in those two only the renamed columns differ. Discipline = old art_form for all 29,530 Directorate performances; the 940 visiting: German drama 824, Italian opera 59, German opera 30, German operetta 9, Italian drama 5, Russian drama 5 (MAT), French drama 4, Japanese drama 2, opera 2 (Любимовъ). genre_family = item_kind except 2 (Gli Ugonotti act play->opera, Цыганскій баронъ act play->operetta). Companies: SP Russian drama 8,015, Moscow Russian drama 7,624, SP French drama 4,878, Moscow opera 3,192, SP opera 3,125, SP ballet 1,490, Moscow ballet 1,206, visiting German drama troupe SP 811, none 335, then the visiting troupes.
+
+## 2026-10-22 — discipline / company build promoted to production: check
+
+```sql
+-- every research table, production vs the tested copy (dc.duckdb); every other table vs outputs/backups/discipline_company_2026-10-22
+select discipline, count(*) from research.performance group by 1 order by 2 desc;
+select n.event_id, n.date, n.disciplines, n.companies from research.event n where coalesce(n.n_works,0)=0 and n.disciplines is not null;
+```
+
+Result: 0 differences in every research table vs the tested copy; 0 in every non-research table vs the backup. Disciplines: Russian drama 15,644, opera 6,319, French drama 4,882, ballet 2,696, German drama 824, none 335, Italian opera 59, German opera 30, German operetta 9, Italian drama 5, Japanese drama 2. Annotation-only events: Siamese court troupe 28 and 29 Oct 1900 (Siamese dance), Adolf Sonnenthal 28 Oct 1900 (German drama). sqlite export has discipline / company / genre_family.
