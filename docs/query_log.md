@@ -19066,6 +19066,98 @@ Still in the corpus, not checked: «Копекъ-горбунокъ/-Горбу�
 Tangent, NOT checked: several of the 16 new links pair different ordinals (review «Смирнова 2-я» -> Смирнова 4-я; «Воронковъ 2-й» ->
 Воронковъ 3-й; «Иванова 3-я» -> Иванова 2-я; «Новикова 2-я» -> Новикова) -- may be right (ordinals shift by season) or wrong; worth a look.
 
+## 2026-10-21 — Average number of entries per list type (entity_type) per city
+
+```sql
+-- sanity check: research vs raw counts by list and city
+select entity_type, city, count(*) n, count(distinct season) s from research.person_appearance group by all order by 1,2;
+select sp.entity_type, sp.city, count(*) n, count(distinct sp.season) s
+from raw.person_entry p join raw.source_pages sp using(page_id) group by all order by 1,2;
+
+-- per-season averages
+with s as (select entity_type, city, season, count(*) n from research.person_appearance group by all)
+select entity_type, coalesce(city,'(none)') city, count(*) seasons, round(avg(n),1) avg_per_season,
+       min(n) mn, max(n) mx, min(season) s_first, max(season) s_last
+from s group by all order by 1,2;
+
+-- institutions on the lists with no city
+select entity_type, institution, count(*) n from research.person_appearance where city is null group by all order by 1,3 desc;
+```
+
+Result: research and raw agree exactly. Only BalletArtists and Musicians carry a city. Average entries per season (21 seasons, 1890-91–1910-11):
+BalletArtists SP 221.9 (191–238), Moscow 195.3 (157–215); Musicians SP 215.9 (134–267), Moscow 160.1 (119–191);
+Administrators 90.6, ProductionTeam 100.0, TheaterSchoolStaff 136.0 (all no city; their institution is one combined list),
+Graduates 23.3 (20 seasons). Graduates' institution names the school, so it can be split by city.
+
+## 2026-10-21 — Graduates split by city via institution
+
+```sql
+with g as (select season, case when institution ilike '%Петербург%' then 'SP' when institution ilike '%Москов%' then 'Moscow' else 'unsplit' end city
+           from research.person_appearance where entity_type='Graduates'),
+s as (select city, season, count(*) n from g group by all)
+select city, count(*) seasons, round(avg(n),1) avg_per_season, min(n) mn, max(n) mx, sum(n) total from s group by all order by 1;
+select season, count(*) from research.person_appearance where entity_type='Graduates' and institution like 'Императорскія%' group by all;
+```
+
+Result: SP 13.2/season over 19 seasons (6–18, 250 total); Moscow 12.1/season over 17 seasons (3–20, 205 total);
+11 unsplit entries, all in 1910-11 (combined "Императорскія Театральныя Училища." heading).
+
+## 2026-10-21 — Average Repertoire cells and events per season
+
+```sql
+select event_status, count(*), count(distinct season) from raw.event_entry group by all;
+select event_status, count(*), count(distinct season) from research.event group by all;
+
+with s as (select season, count(*) cells, count(*) filter (where event_status='performed') ev from raw.event_entry group by all)
+select count(*) seasons, sum(cells) cells, round(avg(cells),1) avg_cells, min(cells), max(cells),
+       sum(ev) events, round(avg(ev),1) avg_events, min(ev), max(ev) from s;
+
+with s as (select season, city, count(*) cells, count(*) filter (where event_status='performed') ev from raw.event_entry group by all)
+select city, count(*) seasons, round(avg(cells),1) avg_cells, round(avg(ev),1) avg_events, min(ev), max(ev) from s group by all;
+
+with s as (select season, count(*) filter (where event_status='performed') ev from research.event group by all)
+select count(*), sum(ev), round(avg(ev),1) from s;
+
+select season, count(*) from raw.event_entry group by all order by 2 limit 4;
+```
+
+Result: raw.event_entry = 29,957 printed cells over 21 seasons (1890-91–1910-11): 22,164 performed + 7,793 no_performance.
+Avg 1426.5 cells/season (839–1734); avg 1055.4 performed events/season (603–1228). research.event agrees on performed (22,164);
+it has 7,763 no_performance (30 fewer than raw) + 2,881 synthesized not_captured placeholders.
+By city: SP 761.5 cells / 603.0 events per season; Moscow 665.0 cells / 452.4 events. Smallest season 1894-95 (839 cells),
+which has the Oct 19 1894–Jan 1 1895 mourning closure.
+
+## 2026-10-21 — Number of performances (works on the bill) per season
+
+```sql
+select split_part(performance_source,':',1) src, item_kind, count(*) from research.performance group by all order by 3 desc;
+
+with s as (select e.season, count(*) n,
+   count(*) filter (where p.performance_source='repertoire' or p.performance_source like 'repertoire;%') rep,
+   count(*) filter (where (p.performance_source='repertoire' or p.performance_source like 'repertoire;%') and coalesce(p.item_kind,'') <> 'anthem') rep_noanthem
+ from research.performance p join research.event e using(event_id) group by all)
+select count(*) seasons, sum(n), round(avg(n),1), sum(rep), round(avg(rep),1), min(rep), max(rep), sum(rep_noanthem), round(avg(rep_noanthem),1) from s;
+
+select count(*) from raw.event_entry_performance;
+
+select e.city, round(count(*)/count(distinct e.season),1) from research.performance p join research.event e using(event_id)
+where p.performance_source like 'repertoire%' group by all;
+
+with s as (select e.season, count(distinct p.work_id) w from research.performance p join research.event e using(event_id)
+ where p.performance_source like 'repertoire%' and p.item_kind is distinct from 'anthem' group by all)
+select round(avg(w),1), min(w), max(w) from s;
+
+select count(distinct work_id), count(*) filter (where work_id is null) from research.performance
+where performance_source like 'repertoire%' and item_kind is distinct from 'anthem';
+
+select round(avg(n_works),2), max(n_works), count(*) filter (where n_works>1) from research.event where event_status='performed';
+```
+
+Result: research.performance = 30,805 rows (30,804 printed in the Repertoire + 1 supplied); raw.event_entry_performance also 30,805.
+Avg 1466.9 performances/season (Repertoire-printed: 1030–1805). 195 are the anthem; without it 30,609 (1457.6/season).
+By city (Repertoire-printed): SP 885.8/season, Moscow 581.0. Performed events average 1.38 works (max 7); 7,237 events have >1.
+Distinct works per season (excl. anthem) avg 298.8 (213–363); 2,953 distinct works over the corpus.
+
 ## 2026-10-21 — Ballet lists + reviews: how is the creator of Кипрская статуя (Pygmalion) printed? (uncertain_person_identities #16, crosscheck against Meisner)
 
 ```sql
@@ -19374,6 +19466,25 @@ select o.art_forms, n.art_forms, o.item_kinds, n.item_kinds, count(*) from resea
 
 Result: before, 21 of 25 rulings already agreed; disagreeing: Донъ-Кихотъ героич./гороич. ком. 12 (Russian drama/play), Злая сила оп. 1 and Соломенная шляпка оп.-вод. 1 (item_kind opera), Корневильскіе колокола комич. оп. 1 (item_kind opera). After: exactly those 15 performances and 15 events changed (12 events Russian drama -> opera), nothing else; production = tested copy.
 
+## 2026-10-22 — Jubilee/obituary hand-offs (FOR_MAIN_THREAD.md): which are fixed in production
+
+```sql
+select column_name from information_schema.columns where table_schema='raw' and table_name='review_block';
+-- for each of 7 hand-off blocks: stored vs printed string, searched in Python
+select block_index, text from raw.review_block where page_id=? and block_index in (?, ?-1, ?+1);
+select column_name from information_schema.columns where table_schema='raw' and table_name='person_entry';
+select page_id,family_name,first_name,patronymic from raw.person_entry where page_id like 'balletartists_1894-95%' and family_name like 'Дор%';
+select page_id,family_name,first_name from raw.person_entry where page_id like 'balletartists_1890-91_SP%' and family_name like 'Ахмак%';
+select page_id,family_name,first_name from raw.person_entry where (page_id like 'balletartists_1900-01_MSK_p00%' and family_name in ('Ячменева','Брыкинъ')) or (page_id like 'balletartists_1904-05_SP_p006' and family_name='Александровъ');
+select page_id,family_name,first_name,list_number from raw.person_entry where page_id in ('balletartists_1900-01_MSK_p005','balletartists_1900-01_MSK_p006','balletartists_1904-05_SP_p006') and (family_name like 'Ячмен%' or family_name like 'Брыкин%' or family_name like 'Александров%');
+select table_name from information_schema.tables where table_name like 'season_stat%';
+select table_schema,table_name from information_schema.tables where table_name ilike '%jubil%' or table_name ilike '%obit%';
+select column_name from information_schema.columns where table_schema='raw' and table_name='season_stat_dated_note';
+select season,note_no,text_verbatim,note from raw.season_stat_dated_note where text_verbatim like '%Кюи%';
+```
+
+Result: review blocks — only Пуни fixed («Н. Ц. Пуни» now stored, 1895-96 SP ballet p027 #7); still as stored: «¼ года» (1900-01 MSK opera p007 #3), «25-го января» (p019 #2), «14 февраля 1910» (1910-11 SP opera p009 #3), «М. Петина» (1902-03 SP ballet p019 #3), «успѣшаго» (1893-94 SP opera p039 #4), «2-го января 1903» (1901-02 SP ballet p023 #2). Rosters — «Доровеевъ» (1894-95 SP p006) and Ахмакова «Калерія» (1890-91 SP p000) unchanged; first ordinal-less query returned 0 rows because the ordinals are now in family_name: «Ячменева 1-я», «Брыкинъ 1-й», «Александровъ 2-й» all present (fixed). Кюи note 4 (1909-10) stored as printed with a note flagging the year as possibly 1909→1910, not assumed. No jubilee/obituary table in any schema.
+
 ## 2026-10-22 — research.event rows by status and time of day (what "evening" meant in the status update)
 
 ```sql
@@ -19400,6 +19511,72 @@ select count(*) from (select * from research.season_stat_check except all select
 
 Result: columns now repertoire_events, repertoire_events_with_receipts, repertoire_charity_text_events, events_minus_printed (repertoire_days, days_minus_printed unchanged); 0 value differences in season_stat_check, no other table changed; sqlite export has the new names.
 
+## 2026-10-22 — Jubilee/obituary catalogue: link each person entry to research.person
+
+```sql
+-- schema look-ups
+select column_name from information_schema.columns where table_schema='research' and table_name in ('person','person_appearance');
+select table_schema, table_name from information_schema.tables where table_schema in ('entities','analysis');
+select person_source, entity_type, count(*) from research.person p join research.person_appearance a using(person_id) group by all;
+select city, count(*) from research.person_appearance group by 1;
+select typeof(person_id) from research.person limit 1;   -- UUID: ids cast to varchar in the script
+-- docs/jubilees_obituaries/build/link_persons.py (read-only connection):
+select person_id::varchar, display_name, canonical_family_name, canonical_first_name, canonical_patronymic, ordinal_suffix,
+       first_attested_season, last_attested_season, person_source from research.person;
+select person_id::varchar, superseded_by_person_id::varchar from entities.person where superseded_by_person_id is not null;
+select pl.person_id::varchar, pe.family_name_clean, pe.first_name_clean, pe.patronymic_clean from entities.person_link pl join analysis.person_entry pe using(entry_id);
+select person_id::varchar, printed_form from entities.review_person;
+select person_id::varchar, city, entity_type from research.person_appearance;
+select pe.entry_id, pe.page_id, pe.family_name, pe.first_name, pe.patronymic, pl.person_id::varchar from raw.person_entry pe left join entities.person_link pl using(entry_id);
+select block_id, surface, entity_id from entities.review_mention where mention_type='person' and entity_id is not null;
+-- spot checks while reading the uncertain cases
+select block_id, page_id, surface, entity_id, link_method from entities.review_mention where page_id='review_1890-91_SP_all_p075' and mention_type='person';
+select text from raw.review_block where block_id in ('review_1891-92_SP_ballet_p011__b007','review_1892-93_MSK_ballet_p008__b002','review_1891-92_SP_ballet_p017__b002','review_1903-04_MSK_ballet_p019__b003','review_1905-06_SP_ballet_p007__b002');
+select pe.page_id, pe.family_name, pe.first_name, pe.patronymic, pl.person_id from raw.person_entry pe left join entities.person_link pl using(entry_id) where pe.family_name like 'Яковлев%' and pe.page_id like 'balletartists_189%';
+select a.season, a.city, a.entity_type, a.heading_path from research.person_appearance a join research.person p using(person_id) where p.display_name like 'Васильева, Надежда Сергѣевна%';
+select display_name, first_attested_season, last_attested_season, person_source from research.person where canonical_family_name like 'Фрол%';
+select page_id, family_name, first_name, patronymic from raw.person_entry where family_name like 'Борхард%';
+select p.person_source, a.season, a.city, a.entity_type, a.heading_path from research.person p left join research.person_appearance a using(person_id)
+ where p.display_name like any ('Богдановъ, А. Н.%','Власовъ, Александръ Васильевичъ%','Варламовъ, Илья%','Давыдовъ, А. А.%');
+select display_name, creator_key, proposed_roster_person_id, evidence from entities.creator_person where display_name like 'Богданов%';
+```
+
+Result: 655 person entries -> 315 linked (273 distinct people), 339 no record, 1 question for RG (А. А. Богдановъ vs production-list «Богдановъ, А. Н.»). Core+mentions: 218/266 linked. Review blocks show «г. Іогансона» (50-year benefit, a man) is mention-linked to Анна Христіановна, and «Яковлевъ 2-й († 9 августа 1892 г.)» to Николай Николаевичъ (listed to 1901-02) — both wrong. The Яковлевъ 2-й of 1892 is on no roster. Горохова «танцовщица, 20 years» 1893 = Марія Николаевна (Анна left the ballet in 1883). Васильева Н. С. = drama-course teacher record 1890-92. No Фроловъ А. П. and no Борхардтъ М. Ф. in research.person. Богдановъ А. Н. is a production-list credit only (1890-91 Moscow «Хрустальный башмачекъ»).
+
+## 2026-10-22 — Triage of review cast statements that disagree with the BalletArtists spiski (#159)
+
+```sql
+-- rebuilt the buckets: uv run python -I docs/eval/assertion_spiski_crosscheck_2026-10-22.py outputs/reviews/assertion_spiski_crosscheck.csv
+-- features per assertion (scratch script, read-only):
+select pl.person_id, s.season, s.city, pc.label, pc.role_name, pe.entry_id from raw.person_entry_credit pc
+  join raw.person_entry pe using(entry_id) join raw.source_pages s on s.page_id=pe.page_id
+  join entities.person_link pl on pl.entry_id=pe.entry_id
+  where pc.credit_type='named_work' and pc.role_name is not null;
+select pl.person_id, s.season, s.city, pe.family_name from raw.person_entry pe join raw.source_pages s on s.page_id=pe.page_id
+  join entities.person_link pl on pl.entry_id=pe.entry_id where pe.page_id like 'balletartists%';   -- spiski presence + the ordinal printed that season
+select pl.person_id, s.season, pc.label, pc.category_credit_count from raw.person_entry_credit pc join raw.person_entry pe using(entry_id)
+  join raw.source_pages s on s.page_id=pe.page_id join entities.person_link pl on pl.entry_id=pe.entry_id
+  where pc.credit_type='category_totals' and pe.page_id like 'balletartists%';
+select person_id, display_name, canonical_family_name, ordinal_suffix, person_source from research.person;
+select assertion_id, season, city, role_surface, performer_surface, performer_person_id, performer_candidates_n, performer_candidate_ids,
+  link_method, grammar, work_surface, w.canonical_title, a.block_id, a.date_undate, a.printed_folio
+  from research.review_assertion a left join research.work w using(work_id);
+select block_id, text, caption_text from raw.review_block;          -- context around each role
+select block_id, surface, entity_id, link_method, link_confidence, rank_reason, candidates_n, candidate_ids
+  from entities.review_mention where mention_type='person';
+select link_method, link_confidence, count(*) from entities.review_mention where mention_type='person' group by all;
+-- spot checks
+select s.season, pe.family_name, pe.first_name, pl.person_id from raw.person_entry pe join raw.source_pages s using(page_id)
+  left join entities.person_link pl on pl.entry_id=pe.entry_id
+  where pe.page_id like 'balletartists%' and pe.family_name like 'Трефилов%' and s.season between '1899-00' and '1903-04';
+select person_id, display_name, first_attested_season, last_attested_season, person_source from research.person
+  where person_id in ('b9c01061-0be8-4fe6-afb5-65e7245b5803','3b1c8067-d977-43ba-a991-c6cd9961192c');
+select assertion_id, role_surface, performer_surface, performer_person_id from research.review_assertion
+  where block_id='review_1905-06_MSK_ballet_p004__b001';
+```
+
+Result: buckets unchanged from the earlier run (0: 205, A 697, B 119, C 663, D 153, F 115). The 1,050 B/C/D/F rows by cause (rules plus a row-by-row read of everything outside the dance group, checked by Claude, no scans): not a role 56; dance/number/ensemble 591; spelling or declension 55; role in another season's spiski 102; suspected wrong person 35 (13 high, 8 medium, 14 low); genuine, spiski lack it 141 (39 of them pupils / school performances); same work, part named differently 60; historical cast quoted under a later season 10. Bucket A: 3 of 697 rest on a stem collision («Колосъ»~«Коломбина», «старики»~«старуха» ×2); 108 A rows carry a work_id that is not the spiski's work (e.g. «Золушка» for Спящая красавица fairies, «Апоѳеозъ», «Зигфридъ»). Ordinal "mismatches" against research.person.display_name were almost all false: the person carried the review's ordinal in that season's spiski. Трефилова 1901-02's spiski entry is linked to a separate person «Трефилова, Вѣра Александровна» (1901-02 only). The 1905-06 Moscow «Дочь фараона» block lists the 1891-92 cast. Files: docs/eval/review_assertion_wrong_person_suspects_2026-10-22.csv, outputs/reviews/assertion_spiski_triage_2026-10-22.csv.
+
 ## 2026-10-22 — Theater x art_form, and item_kind x art_form (to separate "company", "art form", "venue")
 
 ```sql
@@ -19408,6 +19585,10 @@ select item_kind, art_form, count(*) from research.performance where item_kind i
 ```
 
 Result: performances by venue: Маріинскій opera 3,028 / ballet 1,459 / visiting 48 / Russian drama 46; Михайловскій French drama 4,858 / Russian drama 1,922 / visiting 153 / opera 90; Александринскій Russian drama 6,047 / visiting 685; Большой opera 2,822 / ballet 1,157 / visiting 52 / Russian drama 51; Малый Russian drama 5,856; Новый Russian drama 1,717 / opera 350 / ballet 47. Item kinds vs art_form: operetta = Russian drama 85, French drama 23, opera 22, visiting 7; divertissement = ballet 66, none 41; comedy-ballet = Russian drama 12; concert = none 49, opera 2; pantomime = French drama 11.
+
+## 2026-10-22 — #159 correction to the entry above
+
+Same queries, no new SQL. After a last read the 1905-06 Moscow «Дочь фараона» block was recognised as the 1891-92 cast: assertions 1553 and 1554 moved from cause 4/7 to cause 8, and 1551 (Гейтенъ) moved from low to medium in the wrong-person list. Final: cause 4 = 102, 7 = 60, 8 = 10; wrong-person suspects 35 = 13 high, 9 medium, 13 low. Of 24 rows whose review ordinal differs from the person's display name, 12 match the ordinal printed in that season's spiski, 10 have no ordinal in the spiski that season, 2 are the Легатъ suspects.
 
 ## 2026-10-22 — Visiting-troupe performances by the rule that assigned them
 
@@ -19480,3 +19661,83 @@ select n.event_id, n.date, n.disciplines, n.companies from research.event n wher
 ```
 
 Result: 0 differences in every research table vs the tested copy; 0 in every non-research table vs the backup. Disciplines: Russian drama 15,644, opera 6,319, French drama 4,882, ballet 2,696, German drama 824, none 335, Italian opera 59, German opera 30, German operetta 9, Italian drama 5, Japanese drama 2. Annotation-only events: Siamese court troupe 28 and 29 Oct 1900 (Siamese dance), Adolf Sonnenthal 28 Oct 1900 (German drama). sqlite export has discipline / company / genre_family.
+
+## 2026-10-22 — Jubilee/obituary loader: test on a scratch copy of production (production not written)
+
+```sql
+-- conventions read from pipeline/load_season_stats.py and build_research_model.py (no query)
+-- copy: cp outputs/full_run/imperial_theaters.duckdb <scratchpad>/test_jo.duckdb (md5 of production identical before/after)
+-- docs/jubilees_obituaries/build/load_jubilees_obituaries.py --db <copy>  (twice), then pipeline/build_research_model.py --db <copy>
+select count(*), count(person_id), count(*) filter (where person_id is not null and person_id not in (select person_id from research.person)) from research.jubilee_obituary;
+select kind, count(*), count(person_id) from research.jubilee_obituary where relevance='core' group by 1 order by 2 desc;
+select p.display_name, p.last_attested_season, j.season, j.kind, j.source_type from research.jubilee_obituary j join research.person p using(person_id)
+ where j.relevance='core' and j.kind in ('obituary','death_mark','death_notice') order by j.season limit 8;
+select p.display_name, count(*), string_agg(j.season||' '||j.kind, '; ' order by j.season) from research.jubilee_obituary j join research.person p using(person_id) group by 1 having count(*)>=3 order by 2 desc limit 8;
+```
+
+Result (on the copy): 702 rows, 655 person entries, 316 with person_id, 274 distinct people, 0 dangling ids, also after the research-layer rebuild. Core by kind (rows, linked): obituary 67/45, death_mark 52/52, jubilee 50/47, farewell 23/21, biographical_feature 8/6, death_notice 7/6, departure 3/3, memorial_feature 2/2. Most notices: Чайковскій П. И. 6, Кшесинская 2-я 5, Іогансонъ Христіанъ 4.
+
+## 2026-10-22 — Roster rows for Корсакъ, Бекке, Бенда (obituary name conflicts, scan check)
+
+```sql
+select pe.entry_id, s.season, s.city, pe.entity_type, pe.family_name, pe.first_name, pe.patronymic, pe.list_number, s.source_file, s.source_page_index, s.printed_page_number, pe.tenure_note_text
+from raw.person_entry pe join raw.source_pages s using(page_id) where pe.family_name in ('Корсакъ','Бекке','Бенда') order by pe.family_name, s.season;
+select pe.family_name, pe.first_name, pe.patronymic, string_agg(s.season, ',' order by s.season), pl.person_id, p.display_name
+from raw.person_entry pe join raw.source_pages s using(page_id) join entities.person_link pl using(entry_id) left join research.person p on p.person_id=pl.person_id
+where pe.family_name in ('Корсакъ','Бекке','Бенда') group by all;
+```
+
+Result: Корсакъ, Вѣра Александровна, BalletArtists SP 1890-91..1894-95 (5 rows); Бекке, Евгеній Андреевичъ, Musicians SP 1890-91..1895-96 (6); Бенда, Маттіанъ 1890-91..1893-94 + Маттіасъ 1894-95, Musicians Moscow (5). All 16 scan-read by Claude: every row matches the print.
+
+## 2026-10-22 — Instrument solos into research.review_solo (#159, RG: "keep the instrument solos as their own kind of statement")
+
+```sql
+select assertion_id, season, city, role_surface, performer_surface, performer_person_id is not null, link_method
+  from research.review_assertion where regexp_matches(role_surface, '^на\s') order by 1;
+select char_start, char_end, surface, entity_id is not null, candidates_n, link_method
+  from entities.review_mention where block_id = ? and mention_type = 'person' order by char_start;   -- 3 solo blocks
+select count(*) filter (where performer_surface like 'г. %' or performer_surface like 'гг. %'),
+       count(*) filter (where performer_surface like 'г-нъ%'), count(*) filter (where performer_surface like 'г-ж%'), count(*)
+  from research.review_assertion;
+-- after build_review_assertions.py on a copy (t) / on production, against production before (p) and the backup (b):
+select * from p.research.review_assertion except select * from research.review_assertion;   -- and the reverse
+select * from b.<schema>.<table> except all select * from <schema>.<table>;                   -- all 48 other tables, both ways
+select count(*) filter (where performer_person_id not in (select cast(person_id as varchar) from research.person)),
+       count(*) filter (where work_id not in (select cast(work_id as varchar) from research.work)) from research.review_solo;
+select <instrument stem>, count(*) from research.review_solo group by 1;  select city, count(*), count(distinct season) from research.review_solo group by 1;
+select count(*), count(performer_person_id), count(distinct performer_person_id), count(date_undate), count(work_id) from research.review_solo;
+```
+
+Result: before, 13 solos sat in review_assertion as roles, all with a «г-нъ»/«г-жа» performer. In the review text the dash form names about 90 players; the rest use «г.», and 0 of 1,952 assertions have a «г. …» performer (141 «г-нъ», 1,509 «г-жа»): the pair pattern stops at the period of «г.». After: research.review_solo 92 rows, 1893-94 to 1906-07, SP 49 (6 seasons) and Moscow 43 (7); 61 have a person (23 people; Крейнъ 9, Аспергеръ 8, Омэ 5, Логановскій 5, Крюгеръ 5, Ауэръ 4), 32 a work, 4 a date. review_assertion 1,952 -> 1,939, exactly the 13 solo rows (ids 1318, 1354, 1498, 1499, 1520, 1521, 1549, 1608, 1657, 1669, 1698, 1740, 1741); no other row or id changed. Other 48 tables identical to the backup. No dangling references. Production = tested copy. sqlite: only review_assertion and review_solo changed. (The summary counts were read from the tested copy; it equals production.)
+
+## 2026-10-22 — «г.» gap fixed in the review cast reader (#159, RG: "yes, fix the «г.» gap")
+
+```sql
+-- on a copy (t) and then production, against production before (p) / the backup (b):
+select o.* from p.research.review_assertion o where o.assertion_id not in (select assertion_id from research.review_assertion);  -- gone rows
+select count(*) from research.review_assertion n join p.research.review_assertion o using(assertion_id) where n.<col> is distinct from o.<col>;  -- per column
+select * from b.<schema>.<table> except all select * from <schema>.<table>;     -- 48 other tables, both ways
+select count(*) filter (where performer_person_id not in (select cast(person_id as varchar) from research.person)), ... from research.review_assertion;
+select count(*) from read_csv('docs/eval/review_assertion_wrong_person_suspects_2026-10-22.csv') s join research.review_assertion a on a.assertion_id=s.assertion_id and a.role_surface=s.role_surface;
+select a.assertion_id, a.role_surface, a.performer_surface, p.display_name from research.review_assertion a left join research.person p ... where assertion_id > 1952;  -- quality read + gender check
+select block_id, instrument_surface, performer_surface from research.review_solo except ... ;   -- solos both ways
+select link_method, count(*) from research.review_assertion group by 1;
+-- then: uv run python -I docs/eval/assertion_spiski_crosscheck_2026-10-22.py outputs/reviews/assertion_spiski_crosscheck.csv
+```
+
+Result: review_assertion 1,939 -> 3,157 (1,927 ids kept, 1,230 new from 1,953, 12 misreadings gone: 65, 80, 81, 902, 1151, 1228, 1512, 1522, 1607, 1610, 1893, 1903). On kept ids only performer_surface changed (116) and one link (682, a junk row). 1,086 rows now have a «г.»/«гг.» performer (0 before). The 35 suspect ids are all present with the same role. review_solo 92 -> 96. Other 48 tables identical to the backup; 0 dangling. New rows: 22 of 1,230 are junk shapes; 13 have a link of the other gender (added to the suspects CSV, now 48 rows). link_method: already-linked 2,654, unresolved 327, spiski-credit-role-season 86, spiski-credit-work 53, spiski-credit-role 37. Cross-check: 0 327, A 1,317, B 239, C 891, D 215, F 168; already-linked rows in A 1,190 of 2,654 (was 621 of 1,652). (Summary counts read from the tested copy, which equals production.)
+
+## 2026-10-22 — Легатъ review cast statements 1898-99..1902-03 vs the BalletArtists spiski (wrong-person group 1)
+
+```sql
+select a.assertion_id, a.season, a.page_id, a.printed_folio, a.block_id, a.role_surface, a.performer_surface, p.display_name, a.link_method, a.work_surface
+from research.review_assertion a left join research.person p on p.person_id=a.performer_person_id
+where a.performer_surface ilike '%Легат%' and a.season between '1898-99' and '1902-03' order by a.season, a.page_id;
+select s.season, pe.entry_id, pe.list_number, pe.family_name, pe.first_name, pe.patronymic, p.display_name,
+ (select string_agg(pc.label||': '||pc.role_name, '; ') from raw.person_entry_credit pc where pc.entry_id=pe.entry_id and pc.role_name is not null) roles
+from raw.person_entry pe join raw.source_pages s using(page_id) join entities.person_link pl using(entry_id) left join research.person p on p.person_id=pl.person_id
+where pe.family_name like 'Легат%' and pe.entity_type='BalletArtists' and s.season between '1898-99' and '1902-03' order by s.season, pe.family_name;
+select text from raw.review_block where block_id in ('review_1899-00_SP_ballet_p007__b004','review_1899-00_SP_ballet_p038__b009','review_1899-00_SP_ballet_p043__b002');
+```
+
+Result: 38 Легатъ assertions in those seasons. Spiski print «Легатъ 3-й, Сергѣй Густавовичъ» every season 1898-99..1902-03 (Николай = 1-й, Иванъ = 2-й through 1899-00, Евгенія no ordinal) and credit Сергѣй with Іоритомо, Дженаріелло, Вестрисъ, Артуръ, принцъ Шери, Коленъ (1900-01), Де-Бріенъ; Николай with Мутча 1900-01. 8 «Легатъ 3-й» assertions (2291, 2328, 2339, 710, 2366, 2409, 2441, 2454) are linked to Евгенія; 761 «Легатъ 1-й» Мутчи is linked to Сергѣй. All 9 passages read on the review scans by Claude (embedded full-resolution images): every one prints exactly as stored.

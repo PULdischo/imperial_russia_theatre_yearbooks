@@ -45,7 +45,7 @@ def _stringify_uuids(df):
 TABLES = ["theater", "work", "person", "event", "performance", "person_appearance",
           "production", "production_work", "production_credit",
           "season_stat_check", "season_stat_line", "season_stat_footnote",
-          "review_assertion"]
+          "review_assertion", "review_solo"]
 
 # Explicit CREATE TABLE per table, PRIMARY KEY + FOREIGN KEY declared --
 # pandas' to_sql(if_exists="replace") would otherwise create schema-less
@@ -163,6 +163,21 @@ SCHEMAS = {
             performer_person_id TEXT REFERENCES person(person_id),
             performer_candidates_n INTEGER, performer_candidate_ids TEXT,
             link_method TEXT, grammar TEXT,
+            work_surface TEXT, work_id TEXT REFERENCES work(work_id),
+            work_source TEXT
+        )""",
+    # Instrument solos named in the reviews (`на арфѣ — г. Омъ`), RG
+    # 2026-10-22: their own kind of statement, not a cast role. Same shape
+    # and nullable FKs as review_assertion; one row per player.
+    "review_solo": """
+        CREATE TABLE review_solo (
+            solo_id INTEGER PRIMARY KEY,
+            page_id TEXT, block_id TEXT, season TEXT, city TEXT,
+            printed_folio TEXT, date_undate TEXT,
+            instrument_surface TEXT, performer_surface TEXT, printed_text TEXT,
+            performer_person_id TEXT REFERENCES person(person_id),
+            performer_candidates_n INTEGER, performer_candidate_ids TEXT,
+            link_method TEXT,
             work_surface TEXT, work_id TEXT REFERENCES work(work_id),
             work_source TEXT
         )""",

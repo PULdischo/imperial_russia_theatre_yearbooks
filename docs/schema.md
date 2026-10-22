@@ -396,7 +396,25 @@ The genre- and theater-level comparison (families, ballet counted three ways) st
 
 One row per **assertion a season review makes**: this performer danced this role,
 in this work, on this date. Built by `pipeline/build_review_assertions.py` from
-`entities.review_mention`; 1,952 rows over 19 seasons.
+`entities.review_mention`; 3,157 rows over 19 seasons (2,830 with a performer,
+2,033 with a work, 718 dated; `link_method` already-linked 2,654, unresolved 327,
+spiski-credit-role-season 86, spiski-credit-work 53, spiski-credit-role 37).
+
+Two changes on 2026-10-22 (#159):
+
+- **Instrument solos moved out.** 13 solos (`на арфѣ`—`г-жа Эрдели`) had been
+  filed as roles. They now live in `research.review_solo` (below).
+- **`г.` performers read.** Until then the pair pattern stopped at the period
+  of `г.`, so no assertion had a `г. Фамилія` performer: most men were missing.
+  The fix added 1,230 assertions (1,086 rows now carry `г.`/`гг.`), dropped 12
+  misreadings, and completed 116 performer surfaces (`Гердтъ` -> `г. Гердтъ`).
+
+**`assertion_id` is stable across rebuilds.** A row that is already in the
+table (same block, role, grammar and performer surname) keeps its id. New rows
+are numbered after the highest id used so far, so ids 1-1952 are the rows of
+before 2026-10-22, with gaps where a row left, and 1953 onward came later.
+Worklists cite these ids (`docs/eval/review_assertion_wrong_person_suspects_2026-10-22.csv`).
+The per-column counts in the table below are from before these changes.
 
 **Published.** RG, 2026-10-12: include it in the Datasette/HF dataset. It is in
 `build_datasette.py`'s `TABLES`, so it exports to `research_dataset.sqlite` with
@@ -423,6 +441,34 @@ the record. Verified before declaring the FKs: **zero dangling references** to
 **Do not join this to `research.performance` as if it were the same fact.** A
 review asserts a casting; the Repertoire records a performance. They agree often
 and disagree sometimes, and the disagreement is research material.
+
+## Instrument solos named in the reviews — `research.review_solo` (added 2026-10-22)
+
+One row per **player of an instrument solo** a ballet review names: `Исполняли
+соло: на скрипкѣ — г. Крейнъ; на віолончели — г. Аспергеръ; на арфѣ — г. Омъ`.
+RG, 2026-10-22: "keep the instrument solos as their own kind of statement."
+Built by `pipeline/build_review_assertions.py` (the `SOLO` reader) in the same
+run as `review_assertion`. 96 rows, 1893-94 to 1906-07 (SP 53 in 6 seasons,
+Moscow 43 in 7); violin 24, harp 20, cello 16, flute 9 (+1 piccolo), clarinet 6,
+cornet 8, oboe 3, celesta 4, horn 2, viola 1, mandolin 1, piano 1. Published like
+`review_assertion` (`build_datasette.py` `TABLES`). Pairs the cast reader
+happens to read as roles (`Соло на челесто`, `; віолончели—`, `cornet-à-piston`)
+are kept out of `review_assertion`, and every one of them is also read here.
+
+| column | notes |
+|---|---|
+| `solo_id` | PK |
+| `page_id`, `block_id`, `season`, `city`, `printed_folio`, `date_undate` | as in `review_assertion` |
+| `instrument_surface` | verbatim, with `на` where printed (`на флейтахъ (piccolo)`; `кларнетѣ` where a list leaves `на` out) |
+| `performer_surface` | the name as matched (`Крейнъ`), or the printed text where no name was matched (`г. Омъ`) |
+| `printed_text` | the whole clause, e.g. `на корнетѣ-à-пистонѣ — гг. Гордонъ и Беме`; two players there give two rows |
+| `performer_person_id` → `research.person` | **nullable**: 65 of 96 resolved (24 people), from the review-name matcher only; the spiski give musicians no solo credits to resolve against |
+| `performer_candidates_n`, `performer_candidate_ids`, `link_method` | as in `review_assertion` (`already-linked` / `unresolved`) |
+| `work_surface`, `work_id` → `research.work`, `work_source` | the governing work, by the same rule as `review_assertion`, so the same caution applies: some resolve to a scene title such as «Апоѳеозъ» (#159) |
+
+Only the dash form is read. A solo told in prose («соло на скрипкѣ исполнялъ …»)
+is not captured. Checked by Claude against the review text, 2026-10-22; RG has
+not read these rows.
 
 ## Printed leavings contradicted by later lists — `research.person_tenure_note` (added 2026-10-19)
 

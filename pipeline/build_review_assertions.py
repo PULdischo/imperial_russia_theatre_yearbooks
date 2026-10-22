@@ -88,8 +88,93 @@ ROLE_FRAGMENT = re.compile(r"^(и|а|но|же|съ|также)\s|^\d+\s*$|^и\s
 # варьяціи соч. …` is a credit, not a cast entry
 ROLE_ATTRIBUTION = re.compile(r"\b(муз\.|музыка|соч\.|сочин\w*|балетмейстер\w*|"
                               r"декорац\w*|костюм\w*|дириж\w*)", re.I)
+# Instrument solos, RG 2026-10-22: "keep the instrument solos as their own kind
+# of statement. that's neat data!" Reviews print who played the solos in a
+# ballet: `Исполняли соло: на скрипкѣ — г. Крейнъ; на віолончели — г.
+# Аспергеръ; на арфѣ — г. Омъ`. The cast-pair grammar caught only the 13 of
+# these whose honorific has no period (`г-нъ`, `г-жа`) -- PAIR stops at the
+# period of `г.` -- and filed them as roles. They now go to their own table,
+# research.review_solo, read by SOLO below, which allows `г.`, titles
+# (`солистъ Его Величества г. Ауэръ`) and two players (`гг. Гордонъ и Беме`).
+INSTRUMENT = (r"(?:скрипк|альт|віолончел|виолончел|контрабас|арф|флейт|гобо|"
+              r"кларнет|фагот|валторн|вальторн|волторн|корнет|труб|тромбон|литавр|"
+              r"селест|челест|роял|фортепіан|фортепиан|фисгармоні|органѣ|цитр|"
+              r"гитар|мандолин|балалайк|колокольчик|ксилофон|piccolo|picollo|cornet)")
+# `на` may be left out after a comma inside a list: `на скрипкѣ—г. Крюгеръ,
+# кларнетѣ—г. …`
+SOLO = re.compile(r"(?:\bна\s+|(?<=, )|(?<=,)|(?<=; )|(?<=;))(" + INSTRUMENT + r"[\w\-à]*(?:\s+à\s+\w+)?(?:\s*\([^)]{1,20}\))?)"
+                  r"\s*[—–]\s*", re.I)
+# a solo the PAIR grammar reads as a role: `на арфѣ`, `Соло на челесто`, or a
+# lone instrument in the case `на` governs (`віолончели`, `мандолинѣ`), or
+# Latin `cornet-à-piston`. NOT a bare noun: `уланскій корнетъ`, `корнета`,
+# `Селестина`, `трубадуръ` are roles.
+SOLO_ROLE = re.compile(r"^(?:соло\s+)?на\s+" + INSTRUMENT + r"|^" + INSTRUMENT +
+                       r"[\w\-à]*(?:ѣ|и|ахъ)$|^cornet", re.I)
+# where the player half of a solo clause stops: `;`, `, на <next instrument>`,
+# or a sentence-ending period -- not the period of `г.` / `гг.` or an initial
+SOLO_STOP = re.compile(r";|,\s*(?=на\s|" + INSTRUMENT + r")|\.(?=\s+[А-ЯЀ-ЏІѲѴA-Z][а-яѣіѳa-z])|\.$|\n")
+SOLO_NOT_END = re.compile(r"(?:^|\s)(?:гг?|г-нъ|г-жа|[А-ЯЀ-ЏІѲѴA-Z])$")
+
+
+def solo_span_end(body: str, start: int) -> int:
+    """End of the player half of a solo clause that starts at `start`."""
+    pos = start
+    limit = min(len(body), start + 90)
+    while pos < limit:
+        m = SOLO_STOP.search(body, pos, limit)
+        if not m:
+            return limit
+        if m.group(0) == "." and SOLO_NOT_END.search(body[start:m.start()]):
+            pos = m.end()          # `г. Крейнъ`, `А. Ѳ. Арендсъ`: keep going
+            continue
+        return m.start()
+    return limit
+
+
 HON_ONLY = re.compile(r"^\s*(г-жа|г-жи|г-жъ|гг?\.|г-да|г-нъ|в-къ|в-ца|восп-ца|"
                       r"восп-цы|уч-ца|уч-къ|арт\.)\s*", re.I)
+# PAIR keeps periods out of both halves so a span cannot cross a sentence --
+# but the commonest masculine honorific is `г.`, and until 2026-10-22 that
+# rule silently dropped every pair printed `Мутчи—г. Легатъ 1-й`: not one
+# assertion had a `г. …` performer (141 had `г-нъ`, 1,509 `г-жа`). These
+# periods are not sentence ends, so they are hidden from PAIR -- swapped for a
+# same-length placeholder, so every offset still points into the real text.
+# Covered: `г.` / `гг.` before a name, and a single-capital initial before
+# another capital (`г. Н. Легатъ`, `С. Легатъ`).
+NON_SENTENCE_PERIOD = re.compile(
+    r"(?:(?<=\bг)|(?<=\bгг)|(?<=\bГ)|(?<=\bГг)|(?<=\b[А-ЯЀ-ЏІѲѴ]))\.(?=\s*[А-ЯЀ-ЏІѲѴ])")
+MASK = "\u2024"   # one dot leader: not `.`, so PAIR's classes let it through
+
+
+def mask_periods(body: str) -> str:
+    return NON_SENTENCE_PERIOD.sub(MASK, body)
+
+
+# With those periods hidden, a performer half can run back over a title or the
+# previous clause: `г. Сампелевъ исполнилъ роль короля, г. Хлюстинъ — принца
+# Маріо`, `заслуженная артистка М. Кшесинская—Аспичія`. Before, the period of
+# `г.` / `М.` cut it short by accident. So when a half is not a performer as a
+# whole, its TAIL is tried -- but only a tail that opens with an honorific or an
+# initial, or follows a comma, so plain prose does not start yielding names.
+PERFORMER_TAIL = re.compile(
+    r"(?:^|(?<=[\s,]))((?:гг?\u2024|Гг?\u2024|г-нъ|г-жа|г-жи|г-да|в-къ|в-ца|в-цы|"
+    r"восп-ц\w*|восп-къ|воспитанниц\w*|воспитанник\w*|[А-ЯЀ-ЏІѲѴ]\u2024)\s*"
+    r"(?:[А-ЯЀ-ЏІѲѴ]\u2024\s*)*[А-ЯЀ-ЏІѲѴ][^\s,]*(?:\s+\d+(?:-[йяе]\S*)?)?)\s*$")
+COMMA_TAIL = re.compile(r",\s*([^,]+?)\s*$")
+
+
+def performer_tail(masked_side: str, side: str, known: set[str]) -> tuple[str | None, int]:
+    """(surname, offset of the performer within the side) for a side that is
+    only a performer at its end; (None, 0) otherwise."""
+    for pat in (PERFORMER_TAIL, COMMA_TAIL):
+        m = pat.search(masked_side)
+        if m and m.start(1) > 0:
+            p = performer_name(side[m.start(1):], known)
+            if p:
+                return p, m.start(1)
+    return None, 0
+
+
 ORD_TAIL = re.compile(r"\s*\d+-[яйе][яй]?\s*$")
 
 
@@ -128,8 +213,13 @@ def trim_leading_performers(role: str, known: set[str]) -> str:
     """
     segs = [x.strip() for x in role.split(",")]
     while len(segs) > 1:
-        words = [w for w in re.split(r"\s+|\bи\b", segs[0]) if w
-                 and not re.fullmatch(r"\d+-[яй]", w)]
+        # `и г. Тихомировъ` -- the previous pair's second performer, honorific
+        # and all -- counts too (2026-10-22, once `г.` stopped cutting it off)
+        seg0 = re.sub(r"^(?:[иа]\s+)?", "", segs[0])
+        seg0 = HON_ONLY.sub("", seg0)
+        words = [w for w in re.split(r"\s+|\bи\b", seg0) if w
+                 and not re.fullmatch(r"\d+-[яй]", w)
+                 and not re.fullmatch(r"[А-ЯЀ-ЏІѲѴ]\.", w)]
         if words and all(key_of(w.strip(".")) in known for w in words):
             segs.pop(0)
         else:
@@ -144,7 +234,11 @@ def plausible_role(role: str) -> bool:
     if ROLE_PROSE.match(r) or ROLE_FRAGMENT.match(r) or ROLE_ATTRIBUTION.search(r):
         return False
     # a bare honorific+surname on the left is a performer, not a role
-    return not HONORIFIC.match(r)
+    if HONORIFIC.match(r):
+        return False
+    # nor is a role with a performer inside it (`Дугминта, г. Гердтъ, солистъ
+    # Его Величества`): two pairs run together, the role cannot be trusted
+    return not re.search(r"(?:^|[\s,])(?:гг?\.|г-жа|г-жи|г-нъ|г-жей|г-жою)\s*[А-ЯЀ-ЏІѲѴ]", r)
 
 csv.field_size_limit(10_000_000)
 
@@ -311,6 +405,7 @@ def main() -> None:
         page_works[page_id].append((bidx, surface, str(eid)))
 
     out: list[dict] = []
+    solos: list[dict] = []
     n_pairs = resolved_by_credit = already = unresolved = 0
     # the first block index to trust on each review's opening page
     first_page: dict[tuple, str] = {}
@@ -345,19 +440,104 @@ def main() -> None:
         dates = [(m.start(), int(m.group(1)), month_of(m.group(2)))
                  for m in DATE_RE.finditer(body)]
 
-        for pm in PAIR.finditer(body):
-            left, right = pm.group(1), pm.group(2)
+        def work_and_date(at: int) -> tuple[str, str, str, str, bool]:
+            """Governing work and date for a statement at offset `at`.
+
+            The same rules as the cast pairs below: nearest work mention before
+            it in the block, else the one work the page has settled on so far;
+            nearest date before it in the block. The last value says whether
+            the work was inherited from an earlier block.
+            """
+            prior = [w for w in works_here if w[3] <= at]
+            wm = prior[-1] if prior else (works_here[0] if works_here else None)
+            w_surface = wm[4] if wm else ""
+            w_id = (wm[5] or "") if wm else ""
+            w_source = "block" if wm else ""
+            inh = False
+            if not w_id:
+                earlier = [w for w in page_works.get(page_id, []) if w[0] < _bidx]
+                distinct = {w[2] for w in earlier}
+                if len(distinct) == 1:
+                    w_id = earlier[-1][2]
+                    w_source = "page-earlier-block"
+                    if not w_surface:
+                        w_surface = earlier[-1][1]
+                    inh = True
+                elif len(distinct) > 1:
+                    w_source = w_source or "ambiguous-on-page"
+            pd = [d for d in dates if d[0] <= at] or dates
+            iso_d = (resolve_date(pd[-1][1], pd[-1][2], page["season"])
+                     if pd and pd[-1][1] and pd[-1][2] else None)
+            return w_surface, w_id, w_source, iso_d or "", inh
+
+        last_solo_end = -1
+        for sm in SOLO.finditer(body):
+            # the comma form (no `на`) only continues a list already started:
+            # it must follow a solo clause directly, or `, Колокольчикъ—г-жа
+            # Рославлева` -- a role in «Папоротникъ» -- reads as a bell solo
+            if not body[sm.start():sm.start(1)].strip():
+                if body[last_solo_end:sm.start()].strip(" ") not in (",", ";"):
+                    continue
+            p_a = sm.end()
+            p_b = solo_span_end(body, p_a)
+            last_solo_end = p_b
+            # one row per player: split `гг. Гордонъ и Беме` / `г. Кюне-Вальтеръ,
+            # Вагнеръ и г. Инспрукеръ` on `,` and `и`, and take the name
+            # mention inside each piece -- a piece with none (an unknown
+            # surname, `г. Омъ`) still makes a row, unresolved. A piece that is
+            # only a title (`солистъ Его Величества`) is not a player.
+            pieces, pos = [], p_a
+            for sep in list(re.finditer(r",\s*|\s+и\s+", body[p_a:p_b])) + [None]:
+                end = p_a + sep.start() if sep else p_b
+                if body[pos:end].strip(" ,.;"):
+                    pieces.append((pos, end))
+                pos = p_a + sep.end() if sep else p_b
+            w_surface, w_id, w_source, iso_d, _ = work_and_date(sm.start())
+            rows_here = []
+            for c_a, c_b in pieces:
+                hit = [m for m in ms if m[1] == "person" and c_a <= m[2] < c_b]
+                if hit:
+                    rows_here += [(m, "") for m in hit]
+                elif not re.match(r"\s*(солистъ|артистъ)\b", body[c_a:c_b]):
+                    rows_here.append((None, body[c_a:c_b].strip(" ,.;")))
+            for m, txt in rows_here:
+                solos.append({
+                    "page_id": page_id, "block_id": block_id,
+                    "season": page["season"], "city": page["city"],
+                    "printed_folio": page["folio"] or "",
+                    "date_undate": iso_d,
+                    # verbatim, `на` included only where printed
+                    "instrument_surface": body[sm.start():sm.end(1)].strip(),
+                    "performer_surface": m[4] if m else txt,
+                    "printed_text": body[sm.start():p_b].strip(" ,;"),
+                    "performer_person_id": (m[5] or "") if m else "",
+                    "performer_candidates_n": m[6] if m else "",
+                    "performer_candidate_ids": (m[7] or "") if m else "",
+                    "link_method": ("already-linked" if m and m[5]
+                                    else "unresolved"),
+                    "work_surface": w_surface, "work_id": w_id,
+                    "work_source": w_source,
+                })
+
+        for pm in PAIR.finditer(mask_periods(body)):
+            # spans come from the masked text, strings from the real one
+            left, right = body[pm.start(1):pm.end(1)], body[pm.start(2):pm.end(2)]
             left_p = performer_name(left, known_surnames)
             right_p = performer_name(right, known_surnames)
+            l_off = r_off = 0
+            if not left_p and not right_p:
+                left_p, l_off = performer_tail(pm.group(1), left, known_surnames)
+                if not left_p:
+                    right_p, r_off = performer_tail(pm.group(2), right, known_surnames)
             # exactly one side must be a performer, or we cannot tell which is
             # the role -- `Гельцеръ — Манохинъ` is skipped rather than guessed
             if bool(left_p) == bool(right_p):
                 continue
             if right_p:
-                role_raw, perf_a, perf_b = left, pm.start(2), pm.end(2)
+                role_raw, perf_a, perf_b = left, pm.start(2) + r_off, pm.end(2)
                 grammar = "role-performer"
             else:
-                role_raw, perf_a, perf_b = right, pm.start(1), pm.end(1)
+                role_raw, perf_a, perf_b = right, pm.start(1) + l_off, pm.end(1)
                 grammar = "performer-role"
             role_s = trim_leading_performers(
                 role_raw.strip(" .,;:«»„“"), known_surnames)
@@ -440,7 +620,10 @@ def main() -> None:
                 "printed_folio": page["folio"] or "",
                 "date_undate": iso or "",
                 "role_surface": role_s,
-                "performer_surface": body[perf_a:perf_b].strip(),
+                # the separator a list leaves in front (`, г. Гердтъ`, `и г. …`)
+                # is not part of the name
+                "performer_surface": re.sub(r"^(?:[,;]\s*)?(?:[иа]\s+)?", "",
+                                            body[perf_a:perf_b].strip()),
                 "performer_person_id": entity,
                 "performer_candidates_n": person[6],
                 "performer_candidate_ids": person[7] or "",
@@ -448,15 +631,65 @@ def main() -> None:
                 "grammar": grammar,
                 "work_surface": work_surface, "work_id": work_id,
                 "work_source": work_source,
+                # a solo the pair grammar happened to catch: numbered with the
+                # cast rows (so no other assertion_id moves) but left out of
+                # review_assertion -- SOLO reads it into review_solo instead
+                "statement_kind": ("instrument solo" if SOLO_ROLE.match(role_s)
+                                   else "cast"),
             })
 
     a.out.parent.mkdir(parents=True, exist_ok=True)
     cols = ["page_id", "block_id", "season", "city", "printed_folio", "date_undate",
             "role_surface", "performer_surface", "performer_person_id",
             "performer_candidates_n", "performer_candidate_ids", "link_method",
-            "grammar", "work_surface", "work_id", "work_source"]
+            "grammar", "work_surface", "work_id", "work_source", "statement_kind"]
+
+    # Ids are kept stable across rebuilds: a row that was already in the table
+    # (same block, role, performer, grammar) keeps its assertion_id, and new
+    # rows are numbered after the highest id ever used. Docs and worklists cite
+    # assertion_ids (#159), and the `г.` fix of 2026-10-22 added rows that a
+    # plain row_number() would have interleaved, renumbering everything after.
+    def perf_key(ps: str) -> str:
+        # the surname, so `Кузнецова` (cut short by the old `г.` bug) and
+        # `г. Кузнецова` are the same row
+        t = re.sub(r"^(?:[,;]\s*)?(?:[иа]\s+)?", "", ps or "").strip()
+        return performer_name(t, known_surnames) or key_of(t)
+
+    prev: dict[tuple, list[int]] = collections.defaultdict(list)
+    prev_max = 0
+    if con.execute("""SELECT 1 FROM information_schema.tables WHERE
+            table_schema = 'research' AND table_name = 'review_assertion'""").fetchone():
+        for aid, bid, rs, ps, gr in con.execute("""SELECT assertion_id, block_id,
+                role_surface, performer_surface, grammar
+                FROM research.review_assertion ORDER BY assertion_id""").fetchall():
+            prev[(bid, rs, perf_key(ps), gr)].append(int(aid))
+            prev_max = max(prev_max, int(aid))
+    # the 13 solo rows that left this table on 2026-10-22 held ids up to 1741;
+    # never hand those out again
+    prev_max = max(prev_max, 1952 if prev else 0)
+    order = sorted(range(len(out)), key=lambda i: (out[i]["page_id"],
+                   out[i]["block_id"], out[i]["role_surface"]))
+    fresh = prev_max
+    kept_ids = new_ids = 0
+    for i in order:
+        r = out[i]
+        if r["statement_kind"] != "cast":
+            r["assertion_id"] = ""
+            continue
+        k = (r["block_id"], r["role_surface"], perf_key(r["performer_surface"]),
+             r["grammar"])
+        if prev.get(k):
+            r["assertion_id"] = prev[k].pop(0)
+            kept_ids += 1
+        elif prev:
+            fresh += 1
+            r["assertion_id"] = fresh
+            new_ids += 1
+        else:
+            r["assertion_id"] = ""
+    dropped_ids = sorted(x for v in prev.values() for x in v)
     with open(a.out, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=cols)
+        w = csv.DictWriter(f, fieldnames=["assertion_id"] + cols)
         w.writeheader()
         w.writerows(out)
 
@@ -484,16 +717,68 @@ def main() -> None:
     """)
     con.execute(f"""
         INSERT INTO research.review_assertion
-        SELECT row_number() OVER (ORDER BY page_id, block_id, role_surface),
+        SELECT * EXCLUDE (statement_kind) FROM (
+          SELECT coalesce(CAST(nullif(assertion_id, '') AS BIGINT),
+                          row_number() OVER (ORDER BY page_id, block_id, role_surface)),
+                 page_id, block_id, season, city, nullif(printed_folio, ''),
+                 nullif(date_undate, ''), role_surface,
+                 performer_surface, nullif(performer_person_id, ''),
+                 CAST(performer_candidates_n AS INTEGER),
+                 nullif(performer_candidate_ids, ''), link_method, grammar,
+                 nullif(work_surface, ''), nullif(work_id, ''),
+                 nullif(work_source, ''), statement_kind
+          FROM read_csv('{a.out.as_posix()}', header=true, all_varchar=true))
+        WHERE statement_kind = 'cast'
+    """)
+
+    # --- instrument solos: their own table (RG 2026-10-22) ---
+    solo_csv = a.out.with_name("review_solo.csv")
+    solo_cols = ["page_id", "block_id", "season", "city", "printed_folio",
+                 "date_undate", "instrument_surface", "performer_surface",
+                 "printed_text", "performer_person_id", "performer_candidates_n",
+                 "performer_candidate_ids", "link_method", "work_surface",
+                 "work_id", "work_source"]
+    with open(solo_csv, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=solo_cols)
+        w.writeheader()
+        w.writerows(solos)
+    con.execute("DROP TABLE IF EXISTS research.review_solo")
+    con.execute("""
+        CREATE TABLE research.review_solo (
+            solo_id                 BIGINT PRIMARY KEY,
+            page_id                 VARCHAR NOT NULL,
+            block_id                VARCHAR NOT NULL,
+            season                  VARCHAR NOT NULL,
+            city                    VARCHAR NOT NULL,
+            printed_folio           VARCHAR,
+            date_undate             VARCHAR,
+            instrument_surface      VARCHAR NOT NULL,
+            performer_surface       VARCHAR NOT NULL,
+            printed_text            VARCHAR NOT NULL,
+            performer_person_id     VARCHAR,
+            performer_candidates_n  INTEGER,
+            performer_candidate_ids VARCHAR,
+            link_method             VARCHAR,
+            work_surface            VARCHAR,
+            work_id                 VARCHAR,
+            work_source             VARCHAR
+        )
+    """)
+    con.execute(f"""
+        INSERT INTO research.review_solo
+        SELECT row_number() OVER (ORDER BY page_id, block_id, printed_text,
+                                  performer_surface),
                page_id, block_id, season, city, nullif(printed_folio, ''),
-               nullif(date_undate, ''), role_surface,
-               performer_surface, nullif(performer_person_id, ''),
-               CAST(performer_candidates_n AS INTEGER),
-               nullif(performer_candidate_ids, ''), link_method, grammar,
+               nullif(date_undate, ''), instrument_surface, performer_surface,
+               printed_text, nullif(performer_person_id, ''),
+               CAST(nullif(performer_candidates_n, '') AS INTEGER),
+               nullif(performer_candidate_ids, ''), link_method,
                nullif(work_surface, ''), nullif(work_id, ''),
                nullif(work_source, '')
-        FROM read_csv('{a.out.as_posix()}', header=true, all_varchar=true)
+        FROM read_csv('{solo_csv.as_posix()}', header=true, all_varchar=true)
     """)
+    n_solo, n_solo_linked = con.execute("""SELECT count(*),
+        count(performer_person_id) FROM research.review_solo""").fetchone()
     dated = con.execute("""SELECT count(*) FROM research.review_assertion
                            WHERE date_undate IS NOT NULL""").fetchone()[0]
     linked = con.execute("""SELECT count(*) FROM research.review_assertion
@@ -502,7 +787,9 @@ def main() -> None:
                               WHERE work_id IS NOT NULL""").fetchone()[0]
 
     print(f"\n{skipped_foreign:,} block(s) skipped as the previous review's tail")
-    print(f"{n_pairs:,} role-performer pairs -> {len(out):,} assertions")
+    n_cast = sum(1 for r in out if r["statement_kind"] == "cast")
+    print(f"{n_pairs:,} role-performer pairs -> {n_cast:,} assertions "
+          f"(+{len(out) - n_cast:,} solo-shaped pairs left to review_solo)")
     print(f"  performer already linked by the matcher : {already:,}")
     print(f"  NEWLY resolved by the spiski credit     : {resolved_by_credit:,}")
     print(f"  still unresolved                        : {unresolved:,}")
@@ -510,6 +797,12 @@ def main() -> None:
     print(f"  with a work entity      : {withwork:,}"
           f"  (of which {inherited:,} inherited from earlier on the page)")
     print(f"  with a resolved DATE    : {dated:,}")
+    if prev or dropped_ids:
+        print(f"\nassertion ids: {kept_ids:,} kept, {new_ids:,} new (from "
+              f"{prev_max + 1:,}), {len(dropped_ids):,} earlier rows gone: "
+              f"{dropped_ids[:40]}")
+    print(f"\n{n_solo:,} instrument solos ({n_solo_linked:,} with a player "
+          f"entity) -> {solo_csv} and research.review_solo")
     print(f"\n-> {a.out} and research.review_assertion")
     con.close()
 
