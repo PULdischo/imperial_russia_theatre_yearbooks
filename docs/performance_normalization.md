@@ -114,8 +114,8 @@ directly, row by row, rather than trust either the database or a first
 low-resolution look at the page. **The printed source is internally
 perfectly consistent with the true Julian calendar** — every row's day
 number and weekday name agree with each other and with `convertdate`,
-including a legitimate 2-day gap (13th–14th) where the theaters were
-simply dark. This rules out a source-document error for this page: the
+including a legitimate 2-day gap (13th–14th) where the theaters
+simply had no-performance events. This rules out a source-document error for this page: the
 defect is in extraction, not the original printing.
 
 Mapping the actual stored values against the true calendar for this run
@@ -271,6 +271,8 @@ full corpus:
 | `intra_block_disagreement` | 72 | 0.3% |
 | `no_date` | 56 | 0.2% |
 | `invalid_date` (e.g. `1902-11-31` — November has 30 days) | 3 | 0.0% |
+
+(Counts above are from the first run. Since 2026-10-22, known_issues.md #155: a date printed with its month before the weekday is parsed, so `intra_block_disagreement` is 0 in production, and a block whose texts carry no weekday at all is labelled `no_weekday`.)
 
 7.6% of all rows got a real, run-corroborated correction — noticeably
 more than the 155 left `unresolved`, meaning most of the original 2,002

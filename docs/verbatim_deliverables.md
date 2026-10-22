@@ -143,7 +143,7 @@ printed_page_number:
 [[administration_1907-08_p001|Next page ->]]
 ```
 
-Repertoire pages get a sessions table instead (Date/Theater/Time of day/Status/
+Repertoire pages get an events table instead (Date/Theater/Time of day/Status/
 Works/Receipts/Annotation, works flattened to `Title (genre); Title2
 (genre2)`); seven entity-type index notes group pages by season, and a
 `Home.md` links to those.

@@ -117,7 +117,7 @@ VLM failure modes (see `docs/eval/known_issues.md`): a heading_path that
 re-includes the institution name, a rank-class token stranded outside
 `service_class`, credit totals that don't sum, duplicate `(date, theater,
 session)` keys, a receipts_text that failed to parse, a whole multi-week
-Repertoire page with zero dark cells (a strong signal the model dropped
+Repertoire page with zero no-performance events (a strong signal the model dropped
 blank cells this run), inconsistent theater-name spelling within one page.
 
 **Carry-forward checks for two-level roster lists** (added 2026-10-05, issue
@@ -192,7 +192,7 @@ python pipeline/eval_against_gold.py --parsed-dir outputs/pilot/parsed \
 
 Pilot result (12 pages, `qwen3-vl-plus`, 300dpi): roster 78.0%, repertoire
 95.6%, grand total 82.4%. See `docs/eval/known_issues.md` for what's driving
-the gap — mostly non-deterministic recall on dark cells and a handful of
+the gap — mostly non-deterministic recall on no-performance events and a handful of
 prompt-fixable field-boundary confusions, not wholesale extraction failure.
 
 ## Stage 5 — Build the DuckDB file
@@ -248,7 +248,7 @@ files rather than letting a finding live only in a chat transcript.
 
 ## Open questions
 
-1. Multi-sample consensus for the dark-cell recall problem (issue #1 in
+1. Multi-sample consensus for the no-performance-event recall problem (issue #1 in
    known_issues.md) isn't implemented yet — worth prototyping once a second
    pilot round is warranted.
 2. Where does the `.duckdb` file (and the image set) live long-term —

@@ -18,6 +18,39 @@ its partial/uncertain-precision model where the print is genuinely ambiguous.
 No Gregorian conversion — the source is Old Style (Julian) throughout, and we
 decided to keep it as printed.
 
+Vocabulary (RG, 2026-10-22): an **event** is one theater on one date in one
+session (morning, evening, or unspecified when the day had only one), a row of
+`event_entry` / `research.event`; it can contain more than one **performance**,
+one work on its bill (`event_entry_performance` / `research.performance`).
+Receipts belong to the event. Not "evening" or "night": events include
+matinees, and event counts include `no_performance` and `not_captured` rows
+unless said otherwise. A date when a theater gave nothing is a **no-performance
+event** (`event_status = no_performance`; a dash in the printed cell), not a
+"dark" night or day; "closed" only where the yearbook gives a reason (Lent, mourning). "Session" means only the slot (`time_of_day`) and the
+raw JSON's `"sessions"` key, which keeps its name (renaming it would mean
+re-extracting); the dated ledger in `docs/eval/known_issues.md` still says
+"session" for an event. (`season_stat_check`'s `repertoire_sessions`-style
+columns were renamed `repertoire_events` etc. the same day.)
+
+
+**Decided 2026-10-22, NOT YET BUILT — discipline and company (RG).** `art_form` is to become
+`discipline`: the kind of performing art, defined by its personnel (RG: Russian and French
+drama "don't feature the same actors (unlike opera singers)"). Values: `ballet`, `opera`,
+`Russian drama`, `French drama` for the Directorate's troupes ("opera", not "Russian opera":
+"they didn't call it 'Russian opera'"); visiting troupes take a discipline by the same rule
+instead of the catch-all `visiting troupe`: `German drama`, `Italian drama`, `French drama`
+(Réjane, Bernhardt), `Russian drama` (Moscow Art Theatre), `Japanese drama`, `Italian opera`
+(Moscow 1893-94, 1896-97; Угетти 1899-1902), `German opera` (SP 1897-98), `opera` (Любимовъ's
+Russian-language troupe), `German operetta` (the Vienna operetta troupe, SP 1900-02, and
+the German-language «Die Fledermaus», Михайловскій 1909-10). A new `company` column =
+city + discipline for the Directorate's seven companies ("SP ballet", "Moscow Russian drama",
+"SP French drama" …), RG: troupe and company "are both defined by city + the type of art", the
+exceptions being visiting troupes, which get their own name (from the annotation) or a
+placeholder for the unnamed German-language and Italian/German opera seasons. "Art form" is
+left free for what a work is. `item_kind` / `item_kind_basis` / `research.event.item_kinds` are to become
+`genre_family` / `genre_family_basis` / `genre_families` (RG: "a much better description"),
+values unchanged; the three genre levels are printed genre (`verbatim_genre`) → normalised
+genre (deferred) → genre family.
 ---
 
 ## Shared: `source_pages.csv`
@@ -127,7 +160,7 @@ receipts are actually printed at, even when multiple works share the bill.
 | `receipts_rubles` | int, nullable | parsed |
 | `receipts_kopecks` | int, nullable | parsed |
 | `annotation` | string, nullable | benefit-performance / anniversary / charity notes printed in the cell, verbatim. A genre-less occasion line printed as a heading at the top of a cell («Бенефисъ г. X.», «Спектакль въ пользу ...», «Концертъ въ пользу инвалидовъ.») belongs here and not in `works` (issue #151, follow-up 3: 83 such lines had been stored as work no. 1 in the 1890-98 spread seasons and were moved); a session with such a note and no work is an annotation-only special (issue #141). Genre-less lines set like work lines («Концертное отдѣленіе», «Дивертиссементъ», «Гимнъ», «Сцена г. ...») stay works |
-| `printed_page_number` | string, nullable | the page number actually printed on the physical page this session appeared on — for citation. Lives here, not just on `source_pages`, because a two-page-spread `page_id` (1890-91–1897-98) can combine content from more than one physical printed page; the session's own `date_undate` picks out which one. Backfilled from a scan-verified reference table (`pipeline/parse_and_validate.py --printed-page-numbers`), never derived from `page_id`/render-index — that inference has produced real bugs before (see `docs/eval/known_issues.md`'s printed_page_number build-out). |
+| `printed_page_number` | string, nullable | the page number actually printed on the physical page this event appeared on — for citation. Lives here, not just on `source_pages`, because a two-page-spread `page_id` (1890-91–1897-98) can combine content from more than one physical printed page; the session's own `date_undate` picks out which one. Backfilled from a scan-verified reference table (`pipeline/parse_and_validate.py --printed-page-numbers`), never derived from `page_id`/render-index — that inference has produced real bugs before (see `docs/eval/known_issues.md`'s printed_page_number build-out). |
 
 **`event_status` and the completeness problem it doesn't solve on its own.**
 `no_performance` (formerly named `is_dark` — renamed because "dark cell" is
@@ -171,10 +204,10 @@ than leaving implicit: (1) the source prints one row per calendar day with
 no skipped days within a page's date range, so a page's min/max captured
 date defines its full expected range; (2) the "expected" theater roster
 per page is inferred from which cities actually appear among that page's
-*captured* sessions (for post-1898-99 single-city-block pages) or assumed
+*captured* events (for post-1898-99 single-city-block pages) or assumed
 to be both cities (for pre-1898-99 combined pages, keyed on season) — see
 `docs/structural_survey.md` for the era boundary and the Новый театръ
-introduction date this depends on. If a page loses *every* session for an
+introduction date this depends on. If a page loses *every* event for an
 entire city block to a recall failure, this method can't detect that gap
 (there's no surviving evidence of which city was expected), which is a
 known limit, not a silent error.
@@ -210,13 +243,13 @@ Built by `build_research_model.py` (`build_art_forms`, `EVENT_FLAG_RES`); nothin
 | `has_anthem` | the bill includes the anthem |
 | `n_works` | performances on the bill, not counting the anthem and heading lines stored as titles |
 | `art_forms` | the distinct art forms (companies) on the bill, in the fixed order below, joined by `; ` (`ballet; opera`). NULL when no performance on the bill has one |
-| `item_kinds` | the distinct kinds of item on the bill (see `research.performance.item_kind`), in a fixed order, joined by `; ` (`ballet; opera; play; concert`). An evening the Repertoire prints as a concert heading with no titled work reads `concert`. NULL when nothing on the bill has a kind |
+| `item_kinds` | the distinct kinds of item on the bill (see `research.performance.item_kind`), in a fixed order, joined by `; ` (`ballet; opera; play; concert`). An event the Repertoire prints as a concert heading with no titled work reads `concert`. NULL when nothing on the bill has a kind |
 
 **`research.performance`**
 
 | Column | Meaning |
 |---|---|
-| `item_kind`, `item_kind_basis` | WHAT the item was, whoever gave it (RG, 2026-10-13): `ballet`, `opera`, `operetta`, `play`, `comedy-ballet`, `pantomime`, `divertissement`, `concert`, `recitation / reading`, `lecture`, `tableau / apotheosis`, `cinema`, `anthem`, or NULL (a handful of titles that cannot be placed). Derived from the printed label and title. `play` covers every spoken-drama label; the sub-type (comedy, drama, vaudeville, fairy tale …) is in `verbatim_genre` and is not normalised. An operetta is `operetta` whichever company gave it; a divertissement is `divertissement` whether or not it is known to have been danced (`art_form` says `ballet` where it is). Concert and cinema are kinds only and have no `art_form` |
+| `item_kind`, `item_kind_basis` | WHAT the item was, whoever gave it (RG, 2026-10-13): `ballet`, `opera`, `operetta`, `play`, `comedy-ballet`, `pantomime`, `divertissement`, `concert`, `recitation / reading`, `lecture`, `tableau / apotheosis`, `cinema`, `anthem`, or NULL (a handful of titles that cannot be placed). Derived from the printed label and title. `play` covers every spoken-drama label; the sub-type (comedy, drama, vaudeville, fairy tale …) is in `verbatim_genre` and is not normalised. A normalised genre between the two (comedy, drama, tragedy, vaudeville, шутка … across languages and spellings) was considered and deferred (RG, 2026-10-22): it would pay off mainly for drama; for ballet and opera nearly every performance prints «бал.» / «оп.», and the rarer labels («феерія», «фант. бал.», «опера-былина») each belong to one or two works. An operetta is `operetta` whichever company gave it; a divertissement is `divertissement` whether or not it is known to have been danced (`art_form` says `ballet` where it is). Concert and cinema are kinds only and have no `art_form` |
 | `art_form` | WHO gave it: `ballet`, `opera`, `Russian drama`, `French drama`, `visiting troupe`, or NULL. (Concert was a sixth value for one day and moved to `item_kind` on 2026-10-13.) For the five company values: By company, not by printed genre label (RG, 2026-10-12): a troupe is "visiting" when the yearbook prints no productions list for it, which covers the German-language performances of the whole period, the Italian and German opera seasons, and guests named in an annotation. Operettas go with the company that performs them (opera at the Маріинскій and Большой, Russian drama elsewhere). Comedy-ballets («ком.-бал.») are Russian drama. A work whose record has no genre takes, per performance, the genre printed on that performance, or else the genre printed for the same work in the same season (RG: "as long as they are in the same season"); the basis says so. NULL = deliberately unassigned: the anthem, a title with no genre printed that season, a divertissement outside ballet, a cantata |
 | `art_form_basis` | the rule that decided, in words. Read it before relying on an edge case; `docs/eval/art_form_review_2026-10-12.csv` lists the unassigned and doubtful ones |
 | `includes_dance`, `includes_dance_basis` | a performance that is not a ballet but belongs to a work known to contain dancers (RG, 2026-10-12): the comedy-ballets, and the operas listed in `pipeline/entity_curation/works_with_dancers.csv` from named roles in the ballet rosters and from the season reviews. A performance is marked only in a season and city for which there is evidence (RG: "we can assume that all the performances of a production in one season were similar, but not beyond that"). The basis starts `direct:` when the source names that very performance or the printed genre is «ком.-бал.», and `season:` when dancers are attested in the work in that season and city. Excerpt rows are not marked. **The value is yes or blank, never no** (RG): blank means "not known", because the rosters credit dancers with 10 to 25 operas a season but name only a handful of them |
@@ -335,21 +368,21 @@ date, from 1909-10). A number the print gets wrong stays as printed, with a `not
 `season_stat_check` columns: `printed_count` (every printed line with a number except the
 ruled subtotals, which repeat their venue/part lines); `printed_count_with_receipts`;
 `printed_receipts_kopecks` (sum of lines that print receipts; **NULL** in 1891-92 and
-1892-93, whose pages print no receipts); `repertoire_sessions` (performed events, a
+1892-93, whose pages print no receipts); `repertoire_events` (performed events, a
 morning and an evening row counted separately); `repertoire_days` (distinct theater and
-date); `repertoire_sessions_with_receipts`; `repertoire_receipts_kopecks` (sum of
-`research.event.receipts_total_kopecks`); `repertoire_charity_text_sessions` and
+date); `repertoire_events_with_receipts`; `repertoire_receipts_kopecks` (sum of
+`research.event.receipts_total_kopecks`); `repertoire_charity_text_events` and
 `..._receipts_kopecks` (events whose annotation says «въ пользу»: from 1898-99 the page's own
 footnote says its receipts EXCLUDE charity performances, so this is shown beside the
 receipts, not subtracted, because which events the yearbook treated as charity is not
-assumed); and the differences (Repertoire minus printed) `sessions_minus_printed`,
+assumed); and the differences (Repertoire minus printed) `events_minus_printed`,
 `days_minus_printed`, `receipts_minus_printed_kopecks`.
 
 **How to read it.** This is a checksum on the Repertoire, not a correction of it, and a
 difference is not an error in either source until a row is checked on the scans. Plain
-sessions is the closest match to the printed counts (it beat both "days" and "only
-receipted sessions" over the 34 seasons with a count-and-receipts page); the printed
-count is usually within a few of it in the 1890s and drifts higher in the Repertoire
+events (`repertoire_events`) are the closest match to the printed counts (they beat both "days" and "only
+receipted events" over the 34 seasons with a count-and-receipts page); the printed
+count is usually within a few of them in the 1890s and drifts higher in the Repertoire
 from 1901-02. 1907-08 and 1908-09 print category totals only, with no per-theater lines.
 The genre- and theater-level comparison (families, ballet counted three ways) stays in
 `pipeline/compare_season_stats.py`, because it needs judgment-based classification.

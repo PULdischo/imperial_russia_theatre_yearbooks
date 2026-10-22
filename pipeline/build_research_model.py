@@ -226,6 +226,9 @@ ART_FORM_BY_TITLE_CSV = Path(__file__).parent / "research_corrections" / "art_fo
 #: the concert step, so item_kind is untouched. The build fails if a row matches no
 #: performance or names an art form outside ART_FORMS.
 ART_FORM_BY_PERFORMANCE_CSV = Path(__file__).parent / "research_corrections" / "art_form_by_performance.csv"
+#: RG's art-form rulings for work identity (build_entities.py); also applied to the
+#: labels here, see apply_work_artform_overrides (known_issues.md #158).
+WORK_ARTFORM_OVERRIDES_CSV = Path(__file__).parent / "entity_curation" / "work_artform_overrides.csv"
 CONCERT_EVENT_RE = r"концерт|музыкально-литературн|литературно-музыкальн|вокально-инструментально"
 
 #: The anthem is "not a work, per se, but a ceremonial item" (RG, 2026-10-12):
@@ -623,7 +626,7 @@ def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
     Counting rules (both sides, stated so a difference is read correctly):
       printed_count      every printed line that carries a number EXCEPT the ruled subtotals
                          (subtotals repeat their venue/part lines);
-      repertoire_sessions  performed events (a morning and an evening row count twice);
+      repertoire_events    performed events (a morning and an evening row count twice);
       repertoire_days      distinct (theater, date) among performed events, to test how the
                          yearbook counted a day with two performances;
       receipts           printed: sum of the lines that print receipts; Repertoire: the sum of
@@ -665,10 +668,10 @@ def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
         CREATE TABLE research.season_stat_check (
             season VARCHAR, city VARCHAR, stats_format VARCHAR, stats_printed_page VARCHAR,
             printed_count INTEGER, printed_count_with_receipts INTEGER, printed_receipts_kopecks DECIMAL(18, 1),
-            repertoire_sessions INTEGER, repertoire_days INTEGER, repertoire_sessions_with_receipts INTEGER,
+            repertoire_events INTEGER, repertoire_days INTEGER, repertoire_events_with_receipts INTEGER,
             repertoire_receipts_kopecks BIGINT,
-            repertoire_charity_text_sessions INTEGER, repertoire_charity_text_receipts_kopecks BIGINT,
-            sessions_minus_printed INTEGER, days_minus_printed INTEGER,
+            repertoire_charity_text_events INTEGER, repertoire_charity_text_receipts_kopecks BIGINT,
+            events_minus_printed INTEGER, days_minus_printed INTEGER,
             receipts_minus_printed_kopecks DECIMAL(18, 1),
             PRIMARY KEY (season, city)
         )""")
@@ -680,9 +683,9 @@ def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
                    sum(receipts_kopecks) AS rec   -- NULL when the page prints no receipts (1891-93)
             FROM research.season_stat_line WHERE line_kind <> 'subtotal' GROUP BY season, city
         ), rep AS (
-            SELECT e.season, e.city, count(*) AS sessions,
+            SELECT e.season, e.city, count(*) AS events,
                    count(DISTINCT (e.theater_id, coalesce(e.date, e.event_id))) AS days,
-                   count(e.receipts_total_kopecks) AS sessions_rec,
+                   count(e.receipts_total_kopecks) AS events_rec,
                    coalesce(sum(e.receipts_total_kopecks), 0) AS rec,
                    count(*) FILTER (WHERE coalesce(regexp_matches(lower(a.annotation), 'въ пользу'), false)) AS ch_n,
                    coalesce(sum(e.receipts_total_kopecks) FILTER
@@ -692,9 +695,9 @@ def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
         )
         SELECT p.season, p.city, pg.format, pg.printed_page,
                p.n, p.n_rec, p.rec,
-               coalesce(r.sessions, 0), coalesce(r.days, 0), coalesce(r.sessions_rec, 0), coalesce(r.rec, 0),
+               coalesce(r.events, 0), coalesce(r.days, 0), coalesce(r.events_rec, 0), coalesce(r.rec, 0),
                coalesce(r.ch_n, 0), coalesce(r.ch_rec, 0),
-               coalesce(r.sessions, 0) - p.n, coalesce(r.days, 0) - p.n, coalesce(r.rec, 0) - p.rec  -- NULL with p.rec
+               coalesce(r.events, 0) - p.n, coalesce(r.days, 0) - p.n, coalesce(r.rec, 0) - p.rec  -- NULL with p.rec
         FROM printed p
         JOIN raw.season_stat_page pg USING (season)
         LEFT JOIN rep r ON r.season = p.season AND r.city = p.city
@@ -793,6 +796,55 @@ def load_performance_work_overrides(con: duckdb.DuckDBPyConnection) -> int:
                            + (SELECT count(*) FROM perf_rework r WHERE r.target_work_id = research.work.work_id)
                        WHERE work_id IN (SELECT base_work_id FROM perf_rework UNION SELECT target_work_id FROM perf_rework)""")
     return len(out)
+
+
+def apply_work_artform_overrides(con: duckdb.DuckDBPyConnection) -> int:
+    """RG's rulings in entity_curation/work_artform_overrides.csv (printed title +
+    printed genre -> the work's real art form) decide work IDENTITY in
+    build_entities.py. Until 2026-10-22 (known_issues.md #158) the labels here did
+    not read them, so Massenet's «Донъ-Кихотъ, героич. ком.» was one opera work but
+    its 12 performances were labelled Russian drama / play. Applied to perf_art after
+    every other rule, with the identity step's own title/genre key, and only where
+    the ruling changes art_form or item_kind; anthem, heading and visiting-troupe
+    rows are left alone. An operetta goes with the company of the house that gave it,
+    as the label rules above do. Returns the number of performances changed."""
+    if not WORK_ARTFORM_OVERRIDES_CSV.exists():
+        return 0
+    from build_entities import _fold_genre, _match_key, _strip_genre_suffix, _title_key
+
+    def key(title, genre):
+        return (_match_key(_title_key(_strip_genre_suffix(title or ""))), _fold_genre(genre))
+
+    rulings = {key(r["printed_title"], r["printed_genre"]): r
+               for r in csv.DictReader(open(WORK_ARTFORM_OVERRIDES_CSV, encoding="utf-8"))}
+    rows = con.execute("""
+        SELECT pa.performance_id, pb.title, nullif(eep.genre, ''), pb.theater, pa.art_form, pa.item_kind
+        FROM perf_art pa JOIN perf_base pb USING (performance_id)
+        JOIN raw.event_entry_performance eep USING (performance_id)
+        WHERE NOT coalesce(pa.is_ceremonial, false) AND NOT coalesce(pa.is_heading, false)
+          AND pa.art_form IS DISTINCT FROM 'visiting troupe'""").fetchall()
+    changed = 0
+    for pid, title, genre, theater, art, kind in rows:
+        r = rulings.get(key(title, genre))
+        if r is None:
+            continue
+        ruling = r["treat_as_art_form"]
+        if ruling == "operetta":
+            new_art, new_kind = ("opera" if theater in OPERA_HOUSES else "Russian drama"), "operetta"
+        elif ruling == "spoken":
+            new_art, new_kind = (art if art in ("Russian drama", "French drama") else "Russian drama"), "play"
+        elif ruling in ("ballet", "opera"):
+            new_art, new_kind = ruling, ruling
+        else:
+            raise SystemExit(f"work_artform_overrides.csv: unknown treat_as_art_form {ruling!r}")
+        if (new_art, new_kind) == (art, kind):
+            continue
+        why = f"work_artform_overrides.csv ({ruling}): {r['basis']}"
+        con.execute("""UPDATE perf_art SET art_form = ?, art_form_basis = ?, item_kind = ?, item_kind_basis = ?
+                       WHERE performance_id = ?""", [new_art, why, new_kind, why, pid])
+        changed += 1
+    print(f"  performances relabelled by work_artform_overrides.csv: {changed}")
+    return changed
 
 
 def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
@@ -1048,6 +1100,7 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                                  f"{row['performance_title']!r} matches {len(ids)} performances")
             con.execute("UPDATE perf_art SET art_form = ?, art_form_basis = ? WHERE performance_id = ?",
                         [row["art_form"], row["basis"], ids[0]])
+    apply_work_artform_overrides(con)
     order_case = "CASE art_form " + " ".join(f"WHEN {lit(a)} THEN {i}" for i, a in enumerate(ART_FORMS)) + " END"
     korder_case = "CASE item_kind " + " ".join(f"WHEN {lit(k)} THEN {i}" for i, k in enumerate(ITEM_KINDS)) + " END"
     con.execute(f"""

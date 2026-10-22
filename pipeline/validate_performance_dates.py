@@ -164,6 +164,11 @@ _MANUAL_DATE_OVERRIDES: dict[tuple[str, str], tuple[str, str]] = {
     ('repertoire_1899-00_p027', '26 Вторн'): (
         '1900-02-15', 'scan-verified: book prints day as "26" (should be "15"; page header ends 15 февраля, 14 Понед. precedes)',
     ),
+    # 2026-10-22: right date, misspelt weekday -- "4 Ворникъ." for Вторникъ (4 Nov 1903 was a Tuesday); listed in
+    # docs/eval/genuine_print_typos.md. Recorded so it no longer reads as a weekday-less date.
+    ('repertoire_1903-04_p010', '4 Ворникъ'): (
+        '1903-11-04', 'print typo: weekday printed "Ворникъ" for Вторникъ; 4 November 1903 was a Tuesday (genuine_print_typos.md)',
+    ),
     ('repertoire_1906-07_p041', '6 Понед'): (
         '1907-04-06', 'scan-verified: book prints weekday "Понед." for 6 April 1907, a Friday (5 Четвергъ precedes, 7 Суббота follows)',
     ),
@@ -219,11 +224,23 @@ def _parse_dow_word(word: str) -> int | None:
     return None
 
 
+# A month name printed between the day number and the weekday ("17 Ноября.
+# Воскрес.", mostly on the first day of a month or at the top of a page in the
+# two-page-spread seasons). Without skipping it, the weekday read as None and
+# the whole date block was labelled 'intra_block_disagreement' although every
+# text in it agreed (2026-10-22: 341 of the 363 such events; docs/query_log.md).
+_MONTH_WORD_RE = re.compile(
+    r'^(?:январ|феврал|март|апр[ѣе]л|ма[яй]|[іи]юн|[іи]юл|август|сентябр|октябр|ноябр|декабр)'
+    r'[а-яѣ]*\.?\s*',
+    re.IGNORECASE,
+)
+
+
 def _parse_dow(date_text: str) -> int | None:
     m = re.match(r'^\d+\s*(.*)$', date_text.strip())
     if not m:
         return None
-    return _parse_dow_word(m.group(1))
+    return _parse_dow_word(_MONTH_WORD_RE.sub('', m.group(1), count=1))
 
 
 def _true_weekday(y: int, m: int, d: int) -> int:
@@ -270,6 +287,16 @@ def validate_and_correct(con: duckdb.DuckDBPyConnection) -> dict:
             _, date_undate = key
             members = blocks[key]
             distinct_texts = {dt for _, dt in members if dt is not None}
+            # A row whose printed day number is a scan-verified misprint
+            # (_MANUAL_DATE_OVERRIDES, applied after this loop) shares its
+            # date_undate with the correctly printed day it duplicates, so
+            # its weekday made that real block look like a disagreement.
+            # Leave it out of the comparison when the block has other texts;
+            # the override still sets its own date below.
+            own_texts = {dt for dt in distinct_texts
+                         if (key[0], dt.rstrip('.')) not in _MANUAL_DATE_OVERRIDES}
+            if own_texts:
+                distinct_texts = own_texts
             # A block's date_text often comes from 3+ theater columns
             # sharing one printed date label, and different columns'
             # extractions routinely disagree on purely cosmetic details --
@@ -286,6 +313,13 @@ def validate_and_correct(con: duckdb.DuckDBPyConnection) -> dict:
             parsed_weekdays = {_parse_dow(t) for t in distinct_texts}
             y, m, d = map(int, date_undate.split('-'))
             info = {'key': key, 'y': y, 'm': m, 'd': d, 'members': members}
+            if distinct_texts and parsed_weekdays == {None}:
+                # No text in the block carries a readable weekday (e.g.
+                # "2 апрѣля." with the month in the weekday's place).
+                info['status'] = 'no_weekday'
+                info['texts'] = distinct_texts
+                block_infos.append(info)
+                continue
             if len(parsed_weekdays) != 1 or None in parsed_weekdays:
                 info['status'] = 'intra_block_disagreement' if distinct_texts else 'unparseable'
                 info['texts'] = distinct_texts
@@ -357,9 +391,9 @@ def validate_and_correct(con: duckdb.DuckDBPyConnection) -> dict:
                     results[event_id] = (
                         'corrected', f'{ny:04d}-{nm:02d}-{nd:02d}', bi['drift'], None,
                     )
-                elif bi['status'] == 'intra_block_disagreement':
+                elif bi['status'] in ('intra_block_disagreement', 'no_weekday'):
                     results[event_id] = (
-                        'intra_block_disagreement', None, None, ' | '.join(sorted(bi['texts'])),
+                        bi['status'], None, None, ' | '.join(sorted(bi['texts'])),
                     )
                 else:
                     results[event_id] = (bi['status'], None, None, None)

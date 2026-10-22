@@ -55,7 +55,7 @@ all. Real examples pulled from the data:
 
 **3. Genre/title field cross-contamination on multi-work bills.** A
 smaller, structurally different problem: on a bill with more than one
-piece that night (6,158 of 17,345 sessions list more than one work —
+piece at that event (6,158 of 17,345 events list more than one work —
 already documented in `docs/entity_centric_model.md`), the extraction
 sometimes puts a *different work's title* into the `genre` column of an
 adjacent row, rather than a real genre. Worst case found: `Гимнъ` (the
@@ -145,10 +145,10 @@ no separate fix to the column itself is needed once that happens, since the
 computation already does the right thing with whatever rows it's given.
 
 One more thing surfaced while checking this, worth a quick manual look
-rather than a pipeline fix: **6 sessions have an exact duplicate raw row**
-(same session, same work title, same genre, printed twice) — 4 of them
+rather than a pipeline fix: **6 events have an exact duplicate raw row**
+(same event, same work title, same genre, printed twice) — 4 of them
 `Гимнъ`. Could be genuine (the anthem performed at both the start and end
-of an evening is a plausible real practice) or an extraction duplicate.
+of an event is a plausible real practice) or an extraction duplicate.
 Six is few enough to check directly against the source page image rather
 than guess.
 
@@ -202,7 +202,7 @@ than guess.
    computation is already correct (zero mismatches against a fresh count).
    It will self-correct once Problems #1/#2/#4 are fixed, since it's a
    straight count over whatever rows `entities.work_link` resolves to.
-   Separately, manually check the 6 exact-duplicate-raw-row sessions
+   Separately, manually check the 6 exact-duplicate-raw-row events
    (`Гимнъ` ×4 and two others) against their source page images — cheap to
    verify, and not something a general rule should guess at.
 
@@ -317,11 +317,11 @@ against the full corpus:
   as one continuous entry, split by extraction into two separate `works`
   array items instead of one. `_EXCERPT_PREFIX_RE`'s corpus-wide
   title-matching mechanism can't resolve this (there's no title text to
-  match against), because the real fix is same-session adjacency ("this
+  match against), because the real fix is same-event adjacency ("this
   performance continues the immediately preceding work in this same
   billing"), a different mechanism than Problem #4 as designed. Not fixed
   this round — flagged here rather than force-linked, since it needs new
-  logic (session-scoped, not corpus-wide) that would need its own design
+  logic (event-scoped, not corpus-wide) that would need its own design
   pass.
 
 The motivating example now resolves cleanly: **1 main work (238
@@ -341,7 +341,7 @@ properly-linked excerpts**, down from 5 disconnected rows.
   building.
 - **Should `excerpt_of_work_id` count toward `appearance_count`?** If a
   researcher asks "how many times was Swan Lake performed," should that
-  include the excerpt-only nights? Probably yes for a combined count, but
+  include the excerpt-only events? Probably yes for a combined count, but
   the raw distinction (full vs. excerpt) needs to stay queryable
   separately — this needs the researcher's judgment on what "a
   performance" means for this kind of question before building the field.

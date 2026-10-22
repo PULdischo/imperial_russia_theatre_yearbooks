@@ -705,3 +705,6 @@ Each read twice on the scan (checking agent and a close zoom, 2026-09-28) and ke
 - 1908-09 SP BalletArtists p003 (page index 3) no. 75 «Пуни, Леонтина-**Кин**танція (съ 1 іюня 1903 г.)» for **Констанція**
   (every other season, 1903-04..1910-11, with the same start date); zoomed next to 1907-08 and 1909-10. Stored as printed.
 
+## Repertoire, wrong work printed (RG ruling 2026-10-22, issue #157)
+
+- **`repertoire_1907-08_p003` (printed p. 79), Большой matinee 16 Sep 1907: «Карменъ, бал.»** -- the Season Review (Moscow ballet, folio 154) gives «Жизель» that day, one of its four dates. RG ruled it a misprint. Stored as printed; the research layer shows Жизель.

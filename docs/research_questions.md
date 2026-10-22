@@ -27,7 +27,7 @@ printed page it came from — not as the main interface.
 - Box-office patterns: receipts by work/genre/theater, and whether later-era
   programming reads as more revenue-driven than the earlier imperial-patronage
   era.
-- Calendar patterns: dark days, holiday and benefit-performance programming,
+- Calendar patterns: no-performance events, holiday and benefit-performance programming,
   matinee/evening double-bill usage.
 
 **Institutional/organizational history** (Administrators, ProductionTeam,

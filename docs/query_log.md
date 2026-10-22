@@ -19192,3 +19192,268 @@ select o.person_id, n.person_id, count(*) from research.person_appearance n join
 ```
 
 Result: 3 Пуни persons left (Николай Цезаревичъ, Леонтина-Констанція 1902-03..1910-11 with 9 appearances: Graduates 1902-03 + SP BalletArtists 1903-11, Ц.). research.person 2,646 -> 2,644; every other count unchanged. Exactly 2 appearances changed person (the two merged records -> 05aaa26a). Exactly 3 review mentions changed (the pupil mentions, 08c70ed8 -> 05aaa26a). 0 mentions or assertions left on the merged-away ids.
+
+## 2026-10-22 — Status update: row counts for every table in outputs/full_run
+
+```sql
+-- for each (schema_name, table_name) in duckdb_tables(): select count(*) from "<schema>"."<table>"
+```
+
+Result: research.event 32808, research.performance 30805, research.work 2970, research.person 2644, research.person_appearance 23980, research.production 628, research.review_assertion 1952, entities.review_mention 27325, raw.review_page 1074, raw.review_block 4697, raw.source_pages 1654, research.season_stat_check 38, entities.person_candidate 11, entities.work_genre_candidate 72.
+
+## 2026-10-22 — Status update: coverage and breakdowns, Repertoire / spiski / reviews / productions
+
+```sql
+select entity_type, count(*), min(season), max(season), count(distinct season) from raw.source_pages group by 1 order by 1;
+select count(*), count(distinct season), min(season), max(season), sum(receipts_total_kopecks)/100.0, count(receipts_total_kopecks), count(date), count(printed_page_number) from research.event;
+select city, count(*) from research.event group by 1;
+select event_status, count(*) from research.event group by 1 order by 2 desc;
+select date_confidence, count(*) from research.event group by 1 order by 2 desc;
+select art_forms, count(*) from research.event group by 1 order by 2 desc limit 12;
+select item_kind, art_form, count(*) from research.performance group by 1,2 order by 3 desc limit 15;
+select canonical_genre, count(*) from research.work group by 1 order by 2 desc limit 10;
+select count(*), count(excerpt_of_work_id) from research.work;
+select entity_type, count(*), count(distinct person_id), count(distinct season) from research.person_appearance group by 1 order by 2 desc;
+select person_source, count(*), count(wikidata_qid) from research.person group by 1;
+select count(*), count(distinct season), count(distinct genre), sum(n_chars), sum(case when no_text then 1 else 0 end) from raw.review_page;
+select genre, count(*), count(distinct season), min(season), max(season) from raw.review_page group by 1 order by 2 desc;
+select city, count(*) from raw.review_page group by 1;
+select block_type, count(*) from raw.review_block group by 1 order by 2 desc;
+select mention_type, count(*), count(entity_id) from entities.review_mention group by 1 order by 2 desc;
+select count(*), count(performer_person_id), count(work_id) from research.review_assertion;
+select count(*), count(distinct season) from research.production;
+select string_agg(distinct season, ',' order by season) from research.production;
+select string_agg(distinct season, ',' order by season) from raw.review_page;
+```
+
+Result: source pages: Repertoire 688, BalletArtists 392, Musicians 224, TheaterSchoolStaff 104, ProductionTeam 100, Administrators 90, Graduates 56 (all 1890-91..1910-11, 21 seasons; Graduates 20). Events 32,808 over 21 seasons (SP 17,563 / Moscow 15,245); 22,164 performed, 7,763 no_performance, 2,881 not_captured; receipts on 19,295 events totalling 32,169,190.85 rub.; date 100% filled; date_confidence verified 29,491, synthesized_gap 2,881, intra_block_disagreement 363, corrected_manual 42, corrected 31; printed_page_number on 29,927. Performances: play/Russian drama 15,480, opera 6,281, French drama 4,844, ballet 2,630, visiting troupe 842+91, anthem 195. Works 2,970 (305 excerpts). Appearances: BalletArtists 8,760/973 people, Musicians 7,896/775, TheaterSchoolStaff 2,855/285, ProductionTeam 2,101/284, Administrators 1,902/244, Graduates 466/466. Persons: roster 2,546 (102 QIDs), production_list 87 (76 QIDs), review 11. Review pages 1,074 / 20 seasons / 1,484,738 chars; Ballet 702 (1890-91..1912-13), Opera 262 (6 seasons), All 110 (2 seasons); SP 698 / Moscow 376; blocks 4,697 (897 figures). Mentions: person 21,692 (17,313 linked), work 3,737 (2,916), role 1,127 (775), theater 632 (527), dance_number 137 (0). Assertions 1,952 (1,747 performer linked, 1,204 work linked). Productions 628 over 19 seasons (missing 1905-06, 1906-07). Review seasons lack 1898-99, 1909-10, 1911-12.
+
+## 2026-10-22 — Status update: printed season stats vs Repertoire
+
+```sql
+select count(*), count(distinct season), sum(case when sessions_minus_printed=0 then 1 else 0 end), sum(case when receipts_minus_printed_kopecks=0 then 1 else 0 end), sum(case when sessions_minus_printed is null then 1 else 0 end) from research.season_stat_check;
+select sum(case when abs(sessions_minus_printed)<=2 then 1 else 0 end), sum(case when abs(sessions_minus_printed)>10 then 1 else 0 end), median(abs(sessions_minus_printed)), sum(case when abs(receipts_minus_printed_kopecks)<=100000 then 1 else 0 end), count(receipts_minus_printed_kopecks) from research.season_stat_check;
+select count(*) from information_schema.tables where table_name ilike '%jubil%' or table_name ilike '%obit%' or table_name ilike '%editor%';
+```
+
+Result: 38 season×city rows, 19 seasons. Session count matches exactly on 2; within ±2 on 10; off by >10 on 12; median |diff| 5.5. Receipts: 0 exact, 11 of 34 within 1,000 rub. No jubilee/obituary/editorial table exists in the DB (that material lives in docs/ only).
+
+## 2026-10-22 — What are the 363 'intra_block_disagreement' events?
+
+```sql
+select r.event_id, r.page_id, r.date_text, r.date_undate, ev.event_status, ev.art_forms
+from analysis.event_entry_date_check d join raw.event_entry r using(event_id)
+join research.event ev on ev.event_id=d.event_id
+where d.date_confidence='intra_block_disagreement' order by r.page_id, r.event_id;
+-- grouped in Python by (page_id, date_undate); weekday re-parsed from every word of date_text
+-- (validate_performance_dates._parse_dow_word) and compared with _true_weekday(date_undate)
+select r.page_id, r.date_undate, string_agg(distinct d.date_confidence, ','), string_agg(distinct r.date_text, ' | ')
+from raw.event_entry r join analysis.event_entry_date_check d using(event_id)
+where (r.page_id, r.date_undate) in (select r2.page_id, r2.date_undate from raw.event_entry r2 join analysis.event_entry_date_check d2 using(event_id) where d2.date_confidence='intra_block_disagreement')
+group by 1,2 having count(distinct d.date_confidence)>1;
+select r.event_id, r.date_text, r.date_undate, ev.time_of_day, ev.event_status, ev.receipts_verbatim
+from raw.event_entry r join research.event ev using(event_id)
+where r.page_id='repertoire_1892-93_pair022' and r.date_undate between '1893-04-01' and '1893-04-12' order by r.date_undate, r.event_id;
+```
+
+Result: 363 rows in 70 date blocks, all in 1890-91..1897-98 except 16 rows (1903-04, 1904-05, 1905-06, 1908-09); 296 performed, 67 no_performance; 28 ballet rows. Cause: _parse_dow reads only the text right after the day number, so a date printed with its month ("17 Ноября. Воскрес.") parses as no weekday and the block is labelled a disagreement. Re-parsed: 67 blocks/350 rows give the correct weekday; 3 blocks/13 rows have no readable weekday ("2 апрѣля.", "11 апрѣля." 1893, pair022; "4 Ворникъ." 1903-04 p010, a listed print typo for Вторникъ, correct weekday). Of the 67: 4 blocks/13 rows are the correctly dated siblings of the 4 _MANUAL_DATE_OVERRIDES typo dates (1904-11-28, 1906-01-23, 1906-03-16, 1908-12-04); the rest are month-name days. No block has a printed weekday that contradicts its date.
+
+## 2026-10-22 — Weekday-label fix (#155): before/after check, test copy and production
+
+```sql
+-- on a test copy after validate_performance_dates.py, attached to production as prod:
+select o.date_confidence, n.date_confidence, count(*), count(*) filter (where o.corrected_date_undate is distinct from n.corrected_date_undate)
+from prod.analysis.event_entry_date_check o join analysis.event_entry_date_check n using(event_id)
+where o.date_confidence<>n.date_confidence or o.corrected_date_undate is distinct from n.corrected_date_undate group by 1,2;
+-- after build_research_model.py, for every research table t:
+select count(*) from (select * from research.t except all select * from prod.research.t);  -- and the reverse
+select o.date_confidence, n.date_confidence, count(*) from prod.research.event o join research.event n using(event_id) where o.date_confidence<>n.date_confidence group by 1,2;
+-- production after applying, and the rebuilt sqlite:
+select date_confidence, count(*) from research.event group by 1 order by 2 desc;
+```
+
+Result: only the 363 intra_block_disagreement rows changed: 350 -> verified, 10 -> no_weekday, 3 -> corrected_manual (corrected date = same date). All research tables identical except research.event (363 rows, date_confidence only; 0 diffs on other columns). Production and sqlite now: verified 29,841, synthesized_gap 2,881, corrected_manual 45, corrected 31, no_weekday 10.
+
+## 2026-10-22 — What are the 72 rows in entities.work_genre_candidate?
+
+```sql
+select count(distinct title_key), sum(case when likely_cross_language then 1 else 0 end) from entities.work_genre_candidate;
+select g.title_key, string_agg(g.canonical_title||' ['||coalesce(g.canonical_genre,'∅')||'] ×'||g.appearance_count||coalesce(' → '||w.art, ''), '  |  ' order by g.appearance_count desc)
+from entities.work_genre_candidate g left join (select work_id, string_agg(distinct art_form, '/') art from research.performance group by 1) w on w.work_id=g.work_id group by 1 order by 1;
+select g.title_key, ev.season, ev.date, t.* exclude(theater_id), p.verbatim_title, p.verbatim_genre, p.art_form, p.art_form_basis
+from entities.work_genre_candidate g join research.performance p on p.work_id=g.work_id join research.event ev using(event_id) join research.theater t on t.theater_id=ev.theater_id
+where (g.title_key='евгенийонегин' and g.canonical_genre like 'лир%') or (g.title_key in ('карнавал','шашки','очарованныйлес') and g.appearance_count<5) or (g.title_key='боярыняверашелога' and g.appearance_count<10) order by 1,3;
+select g.canonical_title, g.canonical_genre, string_agg(distinct p.art_form, '/'), string_agg(distinct p.verbatim_genre, ' / ') from entities.work_genre_candidate g join research.performance p on p.work_id=g.work_id where g.title_key='боярыняверашелога' group by 1,2;
+select w.canonical_title, w.excerpt_of_work_id is not null from research.work w where w.work_id in (select work_id from entities.work_genre_candidate where title_key='очарованныйлес');
+```
+
+Result: 72 rows = 36 titles, each split into exactly 2 works (2 flagged cross-language). 30 pairs span two art forms (kept apart under RG's 2026-10-05 policy), 6 share one art form: Faust (visiting troupe, op./Schausp.), Боярыня Вѣра Шелога (both opera: «прологъ»/«др.» ×22 and «…, прологъ» оп. ×6, Большой Moscow 1901-07), Карнавалъ (ballet: 1899-00 Moscow «дивертисментъ» ×1 vs 1910-11 Маріинскій «пантомима-бал.» ×3), Очарованный лѣсъ (бал. ×52 / изъ бал. ×1, linked excerpt), Передъ свадьбой (ком./оперетта, kept apart by RG 2026-10-05), Шашки (ш. ×114 / genre «…» ×1, Малый 30 Dec 1896). Odd one: Евгеній Онѣгинъ «лир. сцены.» ×1, Маріинскій 15 Apr 1911, classed Russian drama.
+
+## 2026-10-22 — Шашки «…» row, and the Карменъ «бал.» events
+
+```sql
+select genre, performance_title, count(*) from raw.event_entry_performance
+where genre is not null and trim(genre)<>'' and not regexp_matches(lower(genre), '[a-zа-яёіѣѳѵ]') group by all;
+select e.event_id, e.season, e.date, t.canonical_name, e.time_of_day, e.printed_page_number, e.receipts_verbatim, e.annotation, p.performance_order, p.verbatim_title, p.verbatim_genre
+from research.event e join research.theater t using(theater_id) join research.performance p using(event_id)
+where e.event_id in (select event_id from research.performance where work_id in (select work_id from entities.work_genre_candidate where title_key='кармен' and canonical_genre like 'бал%')) order by e.date, p.performance_order;
+```
+
+Result: the only letterless genre in raw is «…» on Шашки (repertoire_1896-97_pair014, Малый, 30 Dec 1896 morning). Карменъ «бал.»: two Moscow Большой matinees, both sole item on the bill: 28 Jan 1907 (1906-07, printed p. 113, 971 р. 01 к.) and 16 Sep 1907 (1907-08, printed p. 79, 736 р. 51 к.).
+
+## 2026-10-22 — Rebuild check after Шашки «ш.» raw fix + Онѣгинъ override (#156)
+
+```sql
+-- every table, current vs backup outputs/backups/shashki_onegin_2026-10-22/imperial_theaters.duckdb (attached as b):
+select count(*) from (select * from s.t except all select * from b.s.t);  -- and the reverse
+select * from research.work except all select * from b.research.work;  -- and the reverse
+select p.verbatim_title, p.verbatim_genre, p.work_id, p.art_form, p.art_form_basis, o.work_id, o.art_form from research.performance p join b.research.performance o using(performance_id) where p.work_id<>o.work_id or p.art_form is distinct from o.art_form or p.verbatim_genre is distinct from o.verbatim_genre;
+select n.event_id, o.art_forms, n.art_forms, o.item_kinds, n.item_kinds from research.event n join b.research.event o using(event_id) where n.art_forms is distinct from o.art_forms or n.item_kinds is distinct from o.item_kinds;
+select * from entities.work_id_crosswalk except all select * from b.entities.work_id_crosswalk;
+select count(*) from entities.review_mention where entity_id::varchar in (select old_work_id::varchar from entities.work_id_crosswalk where recorded_on=date '2026-10-22');
+select count(*) from research.review_assertion where work_id::varchar in (select old_work_id::varchar from entities.work_id_crosswalk where recorded_on=date '2026-10-22');
+select performance_title, count(*) from raw.event_entry_performance where performance_title like 'Поздняя люб%' group by 1;
+```
+
+Result: changed tables only entities.work (+2/-4), work_genre_candidate (-4), work_id_crosswalk (+2), work_link (2), raw.event_entry_performance (1), research.event (1: repertoire_1910-11_p049__s004 play->opera), research.performance (2), research.work (+2/-4). Шашки now 115 performances, Евгеній Онѣгинъ 468; retired 59876570… and bb92fec3…. 0 review mentions / 0 assertions on retired ids. Raw has «Поздняя любовь» ×52, no «любовъ».
+
+## 2026-10-22 — Карменъ «бал.» 16 Sep 1907: evidence and the Жизель override (#157)
+
+```sql
+select b.page_id, p.printed_folio, b.text from raw.review_block b join raw.review_page p using(page_id) where p.season='1907-08' and p.city='Moscow' and b.text like '%Жизел%';
+select e.title, e.total_text, string_agg(pp.date::varchar, ', ' order by pp.date_order) from raw.production_entry e join raw.production_entry_performance pp using(production_entry_id) where e.season='1907-08' and e.city='Moscow' and e.title like 'Жизел%' group by all;
+select e.date, t.canonical_name, e.time_of_day, p.verbatim_title from research.event e join research.theater t using(theater_id) join research.performance p using(event_id) where e.city='Moscow' and e.date between '1907-09-01' and '1907-10-05' and p.art_form='ballet' order by 1;
+select e.date, p.verbatim_title, p.verbatim_genre, w.canonical_title from research.performance p join research.event e using(event_id) join research.work w using(work_id) where w.canonical_title like 'Жизел%' and e.season='1907-08' order by 1;
+select e.season, e.city, p.verbatim_title from research.performance p join research.event e using(event_id) join research.work w using(work_id) where w.canonical_title='Жизель или Виллисы';
+-- after the override + build_research_model: every table vs pre_giselle backup; then
+select p.verbatim_title, p.verbatim_genre, w.canonical_title, p.art_form, p.performance_source from research.performance p join research.work w using(work_id) where p.event_id='repertoire_1907-08_p003__s007';
+select canonical_title, canonical_genre, appearance_count from research.work where canonical_title in ('Жизель','Карменъ');
+```
+
+Result: review folio 154 gives Жизель on 16 Sep, 30 Sep, 24 Oct 1907 and 6 Jan 1908; the Moscow list «Жизель или Виллисы» has 30 Sep, 24 Oct, 6 Jan («Всего—3 раза»). Repertoire's 1907-08 Жизель performances link to work «Жизель». After the override, only research.performance (1 row) and research.work (2 rows) differ from the backup; the matinee keeps verbatim «Карменъ»/«бал.» and links to Жизель (now 58), Карменъ бал. 1.
+
+## 2026-10-22 — Донъ-Кихотъ «героич. ком.» (Massenet): how the research layer labels it
+
+```sql
+select e.season, e.date, t.canonical_name, e.time_of_day, p.verbatim_title, p.verbatim_genre, w.canonical_title, w.canonical_genre, p.art_form, p.item_kind, e.receipts_verbatim
+from research.performance p join research.event e using(event_id) join research.theater t using(theater_id) join research.work w using(work_id)
+where p.verbatim_title like 'Донъ%Кихотъ%' and p.verbatim_genre not like 'бал%' order by e.date;
+select w.canonical_title, w.canonical_genre, w.appearance_count from research.work w where canonical_title like 'Донъ%Кихотъ%';
+```
+
+Result: 12 performances, all Moscow Большой, 12 Nov – 31 Dec 1910 (11 «героич. ком.», 1 «гороич. ком.», one titled «Донъ Кихотъ»), receipts 2,990–5,184 р.; all art_form 'Russian drama', item_kind 'play'. They form their own work «Донъ-Кихотъ» [героич. ком.] (12), separate from the ballet works (Донъ-Кихотъ бал. 39, Донъ-Кихотъ Ламанчскій 43, Донъ Кихотъ Ломанчскій 1).
+
+## 2026-10-22 — Review cast statements vs BalletArtists spiski role credits
+
+```sql
+select link_method, count(*) from research.review_assertion group by 1 order by 2 desc;
+select credit_type, count(*), count(role_name) from raw.person_entry_credit group by 1;
+-- spiski roles per person/season (script docs/eval/assertion_spiski_crosscheck_2026-10-22.py):
+select pl.person_id, s.season, s.city, pc.label, pc.role_name from raw.person_entry_credit pc
+join raw.person_entry pe using(entry_id) join raw.source_pages s on s.page_id=pe.page_id
+join entities.person_link pl on pl.entry_id=pe.entry_id
+where pc.credit_type='named_work' and pc.role_name is not null;
+select assertion_id, season, city, role_surface, performer_surface, performer_person_id, link_method, work_surface, w.canonical_title
+from research.review_assertion a left join research.work w using(work_id);
+-- role matched in Python on 4-letter word stems (ѣ/і/ѳ/ъ/ь/й folded), subset either way
+```
+
+Result: link_method already-linked 1,652, unresolved 205, spiski-credit-role-season 51, spiski-credit-work 24, spiski-credit-role 20 (95 resolved using the spiski themselves). named_work credits 10,965 (10,950 with a role), all 21 seasons. Of 1,952 assertions: no performer 205; role in that person's spiski same season 697; other season only 119; person has spiski roles that season but not this one 663; spiski roles but none that season 153; no spiski role credits at all 115. Among the 1,652 independently linked: 621 / 104 / 659 / 153 / 115. Bucket C samples are mostly dances (pas de six, Introduction, La Farandole, топазы); F samples include non-roles («5 раза», «москвичъ по»). Rows: outputs/reviews/assertion_spiski_crosscheck_2026-10-22.csv.
+
+## 2026-10-22 — work_artform_overrides.csv rulings vs research labels (#158)
+
+```sql
+select p.performance_id, p.verbatim_title, p.verbatim_genre, p.art_form, p.item_kind, p.art_form_basis, t.canonical_name
+from research.performance p join research.event e using(event_id) join research.theater t using(theater_id);
+-- matched in Python to each work_artform_overrides.csv row on build_entities' (_match_key(_title_key(_strip_genre_suffix(title))), _fold_genre(genre))
+-- after the fix, on a test copy vs production (b):
+select n.verbatim_title, n.verbatim_genre, o.art_form, o.item_kind, n.art_form, n.item_kind, count(*) from research.performance n join b.research.performance o using(performance_id)
+ where n.art_form is distinct from o.art_form or n.item_kind is distinct from o.item_kind or n.art_form_basis is distinct from o.art_form_basis group by all;
+select o.art_forms, n.art_forms, o.item_kinds, n.item_kinds, count(*) from research.event n join b.research.event o using(event_id) where n.art_forms is distinct from o.art_forms or n.item_kinds is distinct from o.item_kinds group by all;
+```
+
+Result: before, 21 of 25 rulings already agreed; disagreeing: Донъ-Кихотъ героич./гороич. ком. 12 (Russian drama/play), Злая сила оп. 1 and Соломенная шляпка оп.-вод. 1 (item_kind opera), Корневильскіе колокола комич. оп. 1 (item_kind opera). After: exactly those 15 performances and 15 events changed (12 events Russian drama -> opera), nothing else; production = tested copy.
+
+## 2026-10-22 — research.event rows by status and time of day (what "evening" meant in the status update)
+
+```sql
+select event_status, time_of_day, count(*) from research.event group by all order by 1,2;
+```
+
+Result: see the reply of the same date; research.event is one row per theatre, date and session (morning / evening / unspecified), including no_performance and not_captured rows.
+
+## 2026-10-22 — (numbers for the previous entry, same query)
+
+```sql
+select event_status, time_of_day, count(*) from research.event group by all order by 1,2;
+```
+
+Result: performed 22,164 = morning 2,317 + evening 2,258 + unspecified 17,589; no_performance 7,763 = morning 55 + evening 94 + unspecified 7,614; not_captured 2,881, all unspecified. Total 32,808.
+
+## 2026-10-22 — season_stat_check columns renamed sessions -> events (RG: "yes, rename"): check
+
+```sql
+describe research.season_stat_check;
+select count(*) from (select * from research.season_stat_check except all select * from b.research.season_stat_check);  -- b = outputs/backups/column_rename_2026-10-22
+-- every other table in both directions; sqlite: pragma table_info(season_stat_check)
+```
+
+Result: columns now repertoire_events, repertoire_events_with_receipts, repertoire_charity_text_events, events_minus_printed (repertoire_days, days_minus_printed unchanged); 0 value differences in season_stat_check, no other table changed; sqlite export has the new names.
+
+## 2026-10-22 — Theater x art_form, and item_kind x art_form (to separate "company", "art form", "venue")
+
+```sql
+select e.city, t.canonical_name, coalesce(p.art_form,'(none)') af, count(*) from research.performance p join research.event e using(event_id) join research.theater t using(theater_id) group by all order by 1,2,4 desc;
+select item_kind, art_form, count(*) from research.performance where item_kind in ('operetta','divertissement','comedy-ballet','concert','pantomime') group by all order by 1,3 desc;
+```
+
+Result: performances by venue: Маріинскій opera 3,028 / ballet 1,459 / visiting 48 / Russian drama 46; Михайловскій French drama 4,858 / Russian drama 1,922 / visiting 153 / opera 90; Александринскій Russian drama 6,047 / visiting 685; Большой opera 2,822 / ballet 1,157 / visiting 52 / Russian drama 51; Малый Russian drama 5,856; Новый Russian drama 1,717 / opera 350 / ballet 47. Item kinds vs art_form: operetta = Russian drama 85, French drama 23, opera 22, visiting 7; divertissement = ballet 66, none 41; comedy-ballet = Russian drama 12; concert = none 49, opera 2; pantomime = French drama 11.
+
+## 2026-10-22 — Visiting-troupe performances by the rule that assigned them
+
+```sql
+select regexp_replace(art_form_basis, ' \(printed genre.*', '') b, e.city, count(*), min(e.season), max(e.season)
+from research.performance p join research.event e using(event_id) where art_form='visiting troupe' group by all order by 3 desc;
+```
+
+Result: 933 visiting-troupe performances. Unnamed, by language/title: German-language SP 778 + 47 (German title) + 15 (Latin title on a German bill) + 2, 1890-91..1910-11; Latin-title opera Moscow 52 (Italian or German opera season, 1893-94..1896-97). Named by an annotation (39): Vienna operetta troupe 8, Italian opera under Угетти 7, German guest season 5, Moscow Art Theatre 5, Tina di Lorenzo 4, Berlin Lessing-Theater 4, Réjane 2, Japanese troupe (Tokyo) 2, Adele Sandrock 2 SP + 2 Moscow, Sarah Bernhardt 2, opera troupe under Н. В. Любимовъ 2, Eleonora Duse 1.
+
+## 2026-10-22 — item_kind vs printed genre
+
+```sql
+select item_kind, count(*), count(distinct verbatim_genre), count(*) filter (where verbatim_genre is null or verbatim_genre='') from research.performance group by 1 order by 2 desc;
+select verbatim_genre, count(*) from research.performance where item_kind='<k>' group by 1 order by 2 desc limit 10;  -- k in play, opera, ballet, operetta, divertissement, comedy-ballet, pantomime
+select count(distinct verbatim_genre) from research.performance;
+select item_kind_basis, count(*) from research.performance group by 1 order by 2 desc limit 12;
+```
+
+Result: 424 distinct printed genres. item_kind play 21,155 (350 distinct labels; ком. 6,908, com. 3,382, др. 2,392, сц. 928, пьеса 853, вод. 726, ш. 621, pièce 354, карт. 349, none 308); opera 6,384 (30; оп. 6,066); ballet 2,630 (29; бал. 2,352, фант. бал., феерія, сюита …); operetta 138 (16; опер., оперетта, opérette …); divertissement 107 (104 no label); comedy-ballet 12 (ком.-бал.); pantomime 11 (pantomime, mimodrame); anthem 195, recitation 79, concert 51, tableau 31, lecture 4, cinema 3 (all by title, no label). item_kind_basis: 21,153 "a spoken-drama item of that company", 6,372 "opera", 2,630 "ballet"; only 137+12+11 decided by a printed label.
+
+## 2026-10-22 — Printed genres within ballet and opera
+
+```sql
+select coalesce(verbatim_genre,'(none)'), count(*), count(distinct work_id) from research.performance where art_form='<ballet|opera>' group by 1 order by 2 desc;
+select item_kind, count(*) from research.performance where art_form='ballet' group by 1;
+```
+
+Result: ballet 2,696 performances, 33 labels: бал. 2,352 (140 works), none 243 (108 works), then 31 rare labels (фант. бал. 13/5 works, феерія 11+5/1 work, сюита 9+3/1, волш. бал. 8/1, бал.-феерія variants ~18/2, бал.-пантомима 4/1, оп. 5 slips …), nearly all one work each. Opera 6,343, 35 labels: оп. 6,056 (205 works), none 155, then rare work-specific subtitles (прологъ 18/1, героич. ком. 11/1, опера-былина 10/3, драм. легенда ~14/1, народная музык. драма 5/1, лирич. оп., романт. оп., лир. сцены …) and operettas given by the opera (оперетта/оперет./оперетка ~17). item_kind for ballet discipline: ballet 2,630, divertissement 66.
+
+## 2026-10-22 — Visiting-troupe performances by troupe and item_kind (for the discipline/company split)
+
+```sql
+select e.city, case when art_form_basis like 'annotation names%' then regexp_extract(art_form_basis, ': (.*)$', 1)
+       else 'unnamed ('||split_part(art_form_basis,' (',1)||')' end troupe, item_kind, count(*)
+from research.performance p join research.event e using(event_id) where art_form='visiting troupe' group by all order by 2,4 desc;
+```
+
+Result: named troupes: Sandrock 2 SP + 2 Moscow play; Lessing-Theater 4 play; Duse 1; German guest season 5 play; Угетти Italian opera 7 opera; Japanese troupe 2 play; Moscow Art Theatre 5 play; Réjane 2; Bernhardt 2; Tina di Lorenzo 4; Vienna operetta troupe 6 operetta + 1 play + 1 opera; Любимовъ opera troupe 2 opera. Unnamed: SP German-language 796 play + 30 opera + 1 operetta, + 15 play (Latin title on a German bill); Moscow Latin-title opera season 51 opera + 1 play.
+
+## 2026-10-22 — Visiting opera/operetta performances: titles by season and theater
+
+```sql
+select e.city, e.season, t.canonical_name, p.verbatim_genre, string_agg(distinct p.verbatim_title, ' | '), count(*)
+from research.performance p join research.event e using(event_id) join research.theater t using(theater_id)
+where p.art_form='visiting troupe' and p.item_kind in ('opera','operetta') group by all order by 1,2;
+```
+
+Result: Moscow Большой 1893-94 (26) and 1896-97 (25), «op.», Italian titles (Otello, Pagliacci, Rigoletto, Gli Ugonotti, Falstaff, Andrea Chénier …). SP Маріинскій 1897-98, «Oper.», 30, German titles (Meistersinger, Holländer, Tristan, Siegfried, Walküre, Lohengrin …). SP Маріинскій 1899-02 Russian titles «оп.» (Фаворитка, Аида, Тоска … = Угетти Italian opera) and operettas (Wiener Blut, Летучая мышь, Гейша … = Vienna troupe); SP Александринскій 1901-02 «оп.» 3 (Травіатта, Фаустъ, Миньона = Любимовъ troupe); SP Михайловскій 1909-10 Die Fledermaus «Operette» 1.

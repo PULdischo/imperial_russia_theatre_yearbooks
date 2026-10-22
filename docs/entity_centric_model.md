@@ -1,5 +1,12 @@
 # The entity-centric model (v2) — implemented
 
+> **Naming (2026-10-22):** this plan predates two renames. The table it calls
+> `session` (`entities.session`, `research.session`) is now `research.event`, and
+> RG's term for one is an **event**: one theater, date and session slot (morning,
+> evening or unspecified), holding one or more **performances**. "Session" now means
+> only that slot (`time_of_day`) and the raw JSON's `"sessions"` key. The text
+> below keeps the old names as a record of the design. See `docs/schema.md`, top.
+
 `docs/schema.md` (verbatim/`raw`) and `docs/research_dataset.md` (`entities`)
 describe the model as it existed before this plan. Prompted by looking at
 the schema diagram and noticing its hub was `source_pages` — correct for
@@ -61,7 +68,7 @@ These new tables are an additional layer built on top, the same way
 The obvious-looking simplification — one flat "Performance" row per (work,
 date, theater) — is a real trap, checked against the actual corpus before
 writing this plan: **6,158 of 17,345 sessions (35%) list more than one
-work** (a night with two one-act plays, a ballet plus a curtain-raiser,
+work** (an event with two one-act plays, a ballet plus a curtain-raiser,
 etc.), and receipts are recorded once **per session**, not once per work.
 Flattening to one row per (work, session) would silently duplicate the
 receipts value across every work on a multi-work bill — a `SUM(receipts)`

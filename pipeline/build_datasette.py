@@ -126,10 +126,10 @@ SCHEMAS = {
         CREATE TABLE season_stat_check (
             season TEXT, city TEXT, stats_format TEXT, stats_printed_page TEXT,
             printed_count INTEGER, printed_count_with_receipts INTEGER, printed_receipts_kopecks REAL,
-            repertoire_sessions INTEGER, repertoire_days INTEGER, repertoire_sessions_with_receipts INTEGER,
+            repertoire_events INTEGER, repertoire_days INTEGER, repertoire_events_with_receipts INTEGER,
             repertoire_receipts_kopecks INTEGER,
-            repertoire_charity_text_sessions INTEGER, repertoire_charity_text_receipts_kopecks INTEGER,
-            sessions_minus_printed INTEGER, days_minus_printed INTEGER,
+            repertoire_charity_text_events INTEGER, repertoire_charity_text_receipts_kopecks INTEGER,
+            events_minus_printed INTEGER, days_minus_printed INTEGER,
             receipts_minus_printed_kopecks REAL,
             PRIMARY KEY (season, city)
         )""",

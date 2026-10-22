@@ -1,7 +1,7 @@
 # Linking person_appearance to performance: what's possible, what isn't
 
 `research.person_appearance` (a season-level roster listing) and
-`research.performance` (a specific work performed in a specific session)
+`research.performance` (a specific work performed at a specific event)
 are currently disconnected — a person's employment record and the
 specific performances that season have no foreign key between them. This
 was a deliberate choice in `docs/entity_centric_model.md` (a roster
@@ -45,13 +45,13 @@ performed in that dancer's own city and season:
 | Ambiguous (title splits across >1 genre, e.g. a `work_genre_candidate`) | 1,702 (19%) |
 
 Of the 6,707 cleanly-matched credits with a parseable count, compared
-against the real session count for that (work, city, season):
+against the real event count for that (work, city, season):
 
 | Outcome | Count | Share | What it means |
 |---|---|---|---|
-| **Fully resolvable** — credit count equals total sessions performed | 2,431 | 36% | The dancer can be confidently linked to *every* `performance` row for that work that season — a real, non-fabricated connection |
-| **Partial** — credit count is less than total sessions | 1,525 | 23% | Danced *some but not all* performances of that work; narrows the candidate pool, can't pin exact dates |
-| **Contradiction** — credit count is *more* than sessions extracted | 1,666 | 25% | Almost certainly this project's own known completeness gap (`docs/schema.md`'s `not_captured` issue), not a printing error — see below |
+| **Fully resolvable** — credit count equals total events performed | 2,431 | 36% | The dancer can be confidently linked to *every* `performance` row for that work that season — a real, non-fabricated connection |
+| **Partial** — credit count is less than total events | 1,525 | 23% | Danced *some but not all* performances of that work; narrows the candidate pool, can't pin exact dates |
+| **Contradiction** — credit count is *more* than events extracted | 1,666 | 25% | Almost certainly this project's own known completeness gap (`docs/schema.md`'s `not_captured` issue), not a printing error — see below |
 | No performance data for that (work, city, season) at all | 1,085 | 16% | Extraction gap or a genuine mismatch not caught by title-key folding |
 
 Concrete examples: Бармина danced Эсмеральда exactly 9 times in 1890-91,
@@ -72,14 +72,14 @@ Worth checking directly whether the contradiction cases cluster on the
 same seasons/pages the `not_captured` gaps already cluster on — if they
 do, this becomes a second, corroborating measurement of the same known
 gap rather than a new problem; if they don't, it's a real new lead on
-where extraction is silently missing sessions.
+where extraction is silently missing events.
 
 ## Possible ways forward
 
 1. **Build a `person_performance_credit` (or similar) linking table**,
    scoped honestly to what the data supports — a `resolution` column per
    credit row: `fully_resolved` (linked directly to its N `performance`
-   rows), `candidate_pool` (linked to the *set* of possible sessions,
+   rows), `candidate_pool` (linked to the *set* of possible events,
    without claiming which specific ones), `unresolved` (no usable
    performance data), `no_title_match`. Never claim more precision than
    the source has — the "partial" 23% should never collapse into a false

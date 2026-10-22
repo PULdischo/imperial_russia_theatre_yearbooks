@@ -101,7 +101,7 @@ missing, it needs rebuilding per issue #83's writeup, not skipping.
 **Always pass `--page-headers` for Repertoire, both season formats.**
 Without it, `date_undate` for single-page seasons (1898-99-1907-08,
 column-wise extraction) is ~46% empty corpus-wide — not because the
-dates are unreadable, only because most sessions' own row never
+dates are unreadable, only because most events' own row never
 carries `month_text`/`year_text` (a known column-wise limitation,
 docs/eval/known_issues.md #69's "event-date field audit" addendum),
 and nothing backfills it without a page-level header. This isn't
@@ -119,7 +119,7 @@ which already exist and need no new extraction. 1898-99 and 1906-07
 don't need this (baseline single-call extraction already populates
 `month_text`/`year_text` reliably), so they're simply absent from the
 file — `load_page_headers` skips any page_id it has no row for and
-falls back to the session's own fields, same as before this flag
+falls back to the event's own fields, same as before this flag
 existed.
 
 **Repertoire pages specifically get two additional passes, routinely, on
@@ -231,7 +231,7 @@ paying for a full batch run.
   `docs/eval/run_history.csv`; append the new summary line there rather than
   letting a result live only in a chat transcript.
 - **`pipeline/quality_checks.py`** runs gold-free structural self-consistency
-  checks (credit sums, duplicate keys, suspiciously-zero dark-cell pages,
+  checks (credit sums, duplicate keys, pages with suspiciously zero no-performance events,
   etc.) on any parsed output — this is what scales past the 12 gold pages.
 - Findings from both go in `docs/eval/known_issues.md`, triaged by cause
   (genuine model error vs. inherent VLM non-determinism vs. gold-set
@@ -299,6 +299,11 @@ these the hard way:**
   once per event, not once per work. `research.performance` deliberately has
   no receipts column at all, specifically so summing it can never
   double-count; only sum `receipts_total_kopecks` on `research.event`.
+  RG's vocabulary matches the table names: an **event** (one theater, date
+  and session: morning, evening or unspecified) contains one or more
+  **performances** (works). Never call events "evenings" or "nights", and say
+  when an event count includes `no_performance` / `not_captured` rows
+  (`docs/schema.md`, top).
 - `outputs/` is gitignored and treated as disposable *except* the raw
   `*.raw.json` responses (re-parsing them is free) and the final `.duckdb`
   file (the actual deliverable) are worth keeping — everything else

@@ -109,8 +109,8 @@ complementary checks run:
 - **Gold-free structural self-consistency checks**, which scale past the
   12 pages an answer key exists for: does a heading recur where the schema
   says it shouldn't, do tallied credit counts sum correctly, does a
-  multi-week calendar page implausibly show zero closed dates (real
-  theaters had dark nights; a page with none is a completeness flag, not
+  multi-week calendar page implausibly show zero no-performance events (real
+  theaters had them; a page with none is a completeness flag, not
   a fact).
 
 Findings from both are kept in a running ledger
@@ -173,7 +173,7 @@ and people (most of the fuzzy-match pool auto-confirmed against
 independent corroborating evidence — shared tenure dates, shared Wikidata
 identity — per `docs/person_normalization.md`; a small remainder is still
 genuinely open and awaiting human review). All three feed the
-`research` schema — Person, Work, Theater, Session, Performance as
+`research` schema — Person, Work, Theater, Event, Performance as
 primary, directly-queryable entities — described in the Data model
 section above and `docs/entity_centric_model.md`.
 
@@ -256,7 +256,7 @@ is whichever entity the question is actually about. `event` and
 `performance` stay distinct on purpose: 35% of events list more than
 one work, and receipts are printed once per event, not once per work —
 flattening them into one row would silently double-count receipts on
-every multi-work night. `person` holds only currently-active (merged)
+every multi-work event. `person` holds only currently-active (merged)
 people; a Wikidata match, where confident, is inlined directly rather than
 kept in a separate link table (`docs/person_normalization.md`,
 `docs/work_normalization.md`, `docs/performance_normalization.md`).
@@ -369,7 +369,7 @@ pipeline/
   build_entities.py         stage 5d -- entity resolution (entities schema: theater/work/person, docs/research_dataset.md)
   link_wikidata.py          stage 5f -- links resolved people to Wikidata (docs/person_normalization.md)
   validate_performance_dates.py   stage 5g -- calendar cross-check + correction (docs/performance_normalization.md)
-  build_research_model.py   stage 6a -- final research schema: person/work/theater/session/performance/person_appearance
+  build_research_model.py   stage 6a -- final research schema: person/work/theater/event/performance/person_appearance
   build_datasette.py        stage 6 -- research schema as a browsable Datasette SQLite site
 outputs/            generated (gitignored) -- images, raw model output, parsed
                     CSVs, and the final .duckdb file, per run

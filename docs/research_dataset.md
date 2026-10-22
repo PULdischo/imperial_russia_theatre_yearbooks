@@ -175,7 +175,7 @@ new interface.** One note per `person_id`, containing a table of every
 appearance (season, role, theater, link back to that page's existing
 note) — the vault already exists and the researcher already likes it, so
 a person's whole career becomes one note away from any page they're
-reading. Same idea for Work (every `performed` session across every
+reading. Same idea for Work (every `performed` event across every
 season) and Theater. This is a genuinely small addition on top of
 `build_obsidian_vault.py`, not a new system.
 

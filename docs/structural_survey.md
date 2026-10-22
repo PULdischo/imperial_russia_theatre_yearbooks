@@ -34,7 +34,7 @@ important finding for schema design.
   cell instead of (or alongside) a title — e.g. "Въ пользу пострадавшихъ отъ
   недорода хлѣбовъ" (benefit for famine relief), "25-ти лѣтіе постановки" (25th
   anniversary of the production). These aren't a fixed enum; treat as free text.
-- **Blank cells**: a theater dark that day/session is a plain dash — encode as
+- **Blank cells**: a no-performance event (a theater giving nothing that day/session) is a plain dash — encode as
   "no performance," not a missing value.
 
 **Design implication**: don't model this as a fixed-width grid (one column per

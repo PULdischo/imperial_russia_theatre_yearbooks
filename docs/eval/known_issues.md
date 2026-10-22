@@ -37,6 +37,10 @@ closes, and add new open items here as well as in their own entry.
 
 **Waiting on RG's decision**
 
+- #157: Карменъ «бал.», Moscow Большой matinee 28 Jan 1907 (1906-07, printed p. 113,
+  sole item, 971 р. 01 к.). RG (2026-10-22): "I still don't know about" it. No
+  1906-07 ballet list to check; raw stays as printed either way. The 16 Sep 1907
+  matinee is decided (#157).
 - #141: the 7 annotations that name works. Deferred by RG (2026-10-09) to the
   research-layer stage, to decide with all excerpt/gala/mixed-event questions.
 - #114/#146 comedy-ballets: **DECIDED 2026-10-12** (entry at the end of this
@@ -192,6 +196,9 @@ closes, and add new open items here as well as in their own entry.
 - #4: verbatim punctuation convention between gold and model, never decided.
 - #21: `eval_against_gold.py` compares roster rows by position, not identity.
 - #53: `_refresh_canonical_fields()` majority-vote logic.
+- Normalised genre (level between `verbatim_genre` and `item_kind`): deferred by RG
+  2026-10-22 ("agree"); useful mainly for drama, little for ballet/opera (query
+  log, same date). Possible later addition: a reviewed mapping of the 424 printed labels.
 
 **Confirmed closed on 2026-10-12, although an earlier entry leaves them open**
 *(all checked)*: non-person rows and «см.»/«Оставилъ службу» stubs in the name
@@ -23997,3 +24004,44 @@ the Tier-1 rule did not merge them). Not done: sqlite/HF/Cloud Run republish (An
 - **Result:** 128 of 128 Пуни mentions are now correct. Mention and assertion counts are unchanged (27,325 / 1,952). One assertion moved: «клеркъ — в-ца Пуни» (1899-00), from Cesare to the pupil Леонтина.
 - **Side effects of the rule, all checked in context (text, not scan):** 8 other mentions newly linked, to Золотаренко, П. П. ×2 (the creator record; #22 is still open), Конюсъ, Г. Э., Гельцеръ, В. Ѳ. ×2, Глазуновъ, А. К., Шмидтъ and Шуманъ, Р. Three «А. Ѳ. Арендсъ» mentions moved from Арендсъ, Генрихъ to Андрей Федоровичъ (orchestrator and composer, 1903-06 Moscow). No other links changed. Backup in the session scratchpad (`imperial_theaters.pre_puni.duckdb`).
 - **Follow-up, same day:** the three records for Леонтина Пуни were MERGED on RG's decision (survivor 05aaa26a; 1908-09 «Кинтанція» zoomed, a print slip; same start date «1 іюня 1903 г.» in all 9 entries). See person_merge_candidates_batch.md. Still open: the 1903-06 pupil, uncertain_person_identities.md #41.
+
+## Issue #155: `intra_block_disagreement` was mostly a parser gap, not a disagreement -- FIXED 2026-10-22 (RG: "do this fix now")
+
+**Found:** RG asked about the 363 events in `research.event` labelled `intra_block_disagreement` (queries in `docs/query_log.md`, 2026-10-22). None of them was a printed weekday contradicting its date. `_parse_dow` read only the word right after the day number, so a date printed with its month («17 Ноября. Воскрес.», usual on the first day of a month or the top of a page in the spread seasons) gave no weekday, and `None` in a block's weekday set was labelled a disagreement even when every text agreed.
+
+| Cause | Blocks | Events | Now |
+|---|---|---|---|
+| Month name printed before the weekday; weekday correct | 63 | 337 | `verified` |
+| Correctly printed siblings of 4 `_MANUAL_DATE_OVERRIDES` day-number typos (28 Nov 1904, 23 Jan 1906, 16 Mar 1906, 4 Dec 1908): the typo row shares their `date_undate` | 4 | 13 | `verified` |
+| Month only, no weekday in `date_text` («2 апрѣля.», «11 апрѣля.», 1892-93 pair022) | 2 | 10 | new value `no_weekday` |
+| «4 Ворникъ.» (1903-04 p010), a listed genuine print typo for Вторникъ; date already right | 1 | 3 | `corrected_manual` (new override, same date) |
+
+**Fix (`validate_performance_dates.py`):** (1) `_parse_dow` skips a leading month word (`_MONTH_WORD_RE`); (2) a block's weekday comparison leaves out texts that are `_MANUAL_DATE_OVERRIDES` keys when the block has other texts (the override still sets their own date); (3) a block where no text yields a weekday gets `no_weekday` instead of `intra_block_disagreement`; (4) override entry for «4 Ворникъ», recorded the same way as the three earlier right-date/wrong-weekday overrides. Raw is untouched; `date_text` stays verbatim.
+
+**Result:** `research.event.date_confidence` verified 29,491 -> **29,841**, corrected_manual 42 -> 45, `no_weekday` 10, `intra_block_disagreement` 363 -> **0**. No `date` value changed. Tested on a copy first: every research table identical to production except `event.date_confidence` on exactly these 363 rows. Applied to `outputs/full_run` (validate_performance_dates + build_research_model) and `research_dataset.sqlite` rebuilt; backup `outputs/full_run_pre_dowfix_backup_2026-10-22.duckdb`. Not republished (Andy's job).
+
+**Not scan-checked by Claude:** whether the print really omits the weekday on 2 and 11 April 1893 (pair022 was hand-rebuilt in #70, 2026-09-18). 2 April 1893 was a Friday, 11 April a Sunday.
+
+## Issue #156: two titles split into two works by their printed genre -- Шашки «…» and Евгеній Онѣгинъ «лир. сцены.» -- FIXED 2026-10-22
+
+From the `entities.work_genre_candidate` list (36 titles / 72 rows, docs/query_log.md 2026-10-22).
+
+- **Шашки, Малый, 30 Dec 1896 morning (`repertoire_1896-97_pair014`, printed p. 15).** The genre was transcribed «…» because it is under a paper repair strip (#98, 2026-09-28). Claude zoomed it (PDF p. 7, embedded full-resolution image): only the foot of one letter and a period show, consistent with «ш.» but not legible to Claude. **RG read it on the scan: «Шашки, ш.»** Raw genre «…» -> «ш.» (`_fix_note` on the session). The row now joins Шашки (115 performances). It was the only letterless genre in raw.
+- **Евгеній Онѣгинъ «лир. сцены.», Маріинскій 15 Apr 1911 (1910-11 p049).** Tchaikovsky's opera printed with its own subtitle «лирическія сцены»; it had been a separate work classed Russian drama. **RG: "these are the same work described with different genres."** Row added to `pipeline/entity_curation/work_artform_overrides.csv` (opera). Printed genre stays verbatim. The work now has 468 performances; that event's art form is opera.
+- **Rebuild** (`docs/eval/rebuild_after_raw_edit.sh`, backup `outputs/backups/shashki_onegin_2026-10-22/`), diffed against the backup: only `raw.event_entry_performance` (1 genre), `entities.work` / `research.work` (2 works retired into their survivors, ids kept), `entities.work_link` (2), `entities.work_id_crosswalk` (+2), `research.performance` (2 rows), `research.event` (1 row: art_forms/item_kinds play -> opera) and `entities.work_genre_candidate` (36 -> 34 titles) changed. No review mention or assertion pointed at a retired id. sqlite export rebuilt; not republished.
+- **Noticed, not changed:** Донъ-Кихотъ «героич. ком.» (Massenet, Большой 1910-11) is opera in `work_artform_overrides.csv` (RG 2026-10-06), but `research.performance.art_form` labels its 12 performances Russian drama: the research layer's art-form rules do not read that file. Open, waiting on RG.
+
+## Issue #157: Карменъ «бал.», Moscow Большой matinee 16 Sep 1907 -- a misprint for Жизель (RG ruling, 2026-10-22)
+
+- **Printed:** the 1907-08 Repertoire (printed p. 79, `repertoire_1907-08_p003`) gives the Большой matinee of 16 Sep 1907 as «Карменъ, бал.», the sole item, receipts 736 р. 51 к. Scan-confirmed as printed (2026-10-05, #135 notes).
+- **Evidence for a misprint:** the 1907-08 Moscow ballet Season Review (folio 154, `review_1907-08_MSK_ballet_p001`, scan-checked) says «1907 г. сентября 16-го, 30-го, октября 24-го; 1908 г. января 6-го была дана «Жизель»». No Carmen ballet is otherwise known in Moscow in these years. The yearbook's own Moscow ballet list enters «Жизель или Виллисы» on 30 Sep, 24 Oct and 6 Jan only («Всего—3 раза»). It omits 16 Sep, so it neither confirms nor rules out the review. The Repertoire has the other three Жизель dates.
+- **Ruling (RG, 2026-10-22):** "I am ruling that this is a misprint ... replace with Жизель." Raw stays as printed (RG: "obviously the raw data stays as is").
+- **Applied in the research layer only:** one row in `pipeline/research_corrections/performance_work_overrides.csv`. `research.performance` for this matinee now points at «Жизель» (58 performances; Карменъ «бал.» is down to 1). `verbatim_title`/`verbatim_genre` keep «Карменъ», «бал.», and `performance_source` = «repertoire; work from Season Review». Rebuilt `build_research_model.py` and the sqlite. Diff against the backup (`outputs/backups/shashki_onegin_2026-10-22/imperial_theaters.pre_giselle.duckdb`): only research.performance (1 row) and research.work (2 appearance counts) changed. Added to `genuine_print_typos.md`. Not republished.
+- **Still open:** the other Карменъ «бал.» matinee, Большой 28 Jan 1907 (1906-07, printed p. 113, 971 р. 01 к.). RG: "this one I still don't know about." There is no 1906-07 ballet list, and no Season Review has been checked for that date. Raw stays as printed.
+
+## Issue #158: research labels ignored the art-form rulings in work_artform_overrides.csv -- FIXED 2026-10-22 (RG: "okay do this")
+
+- **Gap:** `pipeline/entity_curation/work_artform_overrides.csv` (RG's rulings: printed title + printed genre -> the work's real art form) was read only by `build_entities.py` to group works. `build_research_model.py` labelled each performance's `art_form` / `item_kind` from its own rules. Found via #156: Massenet's «Донъ-Кихотъ, героич. ком.» (Большой, 12 Nov-31 Dec 1910, opera by RG 2026-10-06) was one opera work, but its 12 performances were labelled Russian drama / play.
+- **Fix:** `apply_work_artform_overrides()` in `build_research_model.py`, run after every other art-form and kind rule. It matches with the identity step's own title/genre key and changes a row only where the ruling differs. It never touches anthem, heading or visiting-troupe rows. An «operetta» ruling keeps the company of the house (opera at the Маріинскій/Большой, else Russian drama), as the label rules already do. A «spoken» ruling gives item_kind play.
+- **Measured first (all 25 ruling rows against production):** 21 already agreed. Changed: 15 performances. These are Донъ-Кихотъ ×12 (Russian drama/play -> opera/opera), Злая сила «оп.» and Соломенная шляпка «оп.-вод.» (item_kind opera -> play, company unchanged), and Корневильскіе колокола «комич. оп.» (Маріинскій; item_kind opera -> operetta, company opera unchanged). `art_form_basis` / `item_kind_basis` name the file and RG's basis.
+- **Checked:** tested on a copy; only research.performance (15) and research.event (15: art_forms / item_kinds) differ, and production equals the tested copy. sqlite rebuilt. Backup `outputs/backups/shashki_onegin_2026-10-22/imperial_theaters.pre_artform_labels.duckdb`. Not republished. Moscow 1910-11 now has 12 more opera events in any art-form count.

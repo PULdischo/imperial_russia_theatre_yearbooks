@@ -449,7 +449,7 @@ could answer alone:
 
 **141 of 142 distinct extracted dates land on an actual `research.event` in the
 same city — 99.3%.** The works agree too: the review's 1890-11-21 Moscow
-«Эсмеральда» cast sits on a Repertoire night of `Эсмеральда / Воевода`, and the
+«Эсмеральда» cast sits on a Repertoire event of `Эсмеральда / Воевода`, and the
 1891-01-20 «Кипрская статуя» cast on `… / Бенефисъ г-жи Бессонэ / Кипрская
 статуя / …` — which is precisely the benefit the review is describing. The one
 unmatched date, `1896-08-01` SP, is an August roster-appointment date, not a
