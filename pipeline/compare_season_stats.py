@@ -194,7 +194,7 @@ def classify_event(fams):
 
 LEVEL2_SQL = """
 select e.event_id, e.season, e.city, t.canonical_name, e.receipts_total_kopecks,
-       p.verbatim_title, coalesce(w.canonical_genre, p.verbatim_genre), p.item_kind
+       p.verbatim_title, coalesce(w.canonical_genre, p.verbatim_genre), p.genre_family
 from research.event e join research.theater t using (theater_id)
 left join research.performance p using (event_id) left join research.work w using (work_id)
 where e.event_status = 'performed'
@@ -290,7 +290,7 @@ def ballet_counts(con, out_dir):
         FROM research.event e JOIN research.theater t USING (theater_id)
         JOIN analysis.event_entry a USING (event_id) JOIN research.performance p USING (event_id)
         JOIN research.work w USING (work_id)
-        WHERE e.event_status = 'performed' AND p.item_kind = 'ballet' GROUP BY ALL""").fetchall():
+        WHERE e.event_status = 'performed' AND p.genre_family = 'ballet' GROUP BY ALL""").fetchall():
         rep_by_date[(season, city, d)].append(f"{th} {tod}: {titles}")
     st = defaultdict(lambda: [0, 0, 0, 0])
     for r in csv.DictReader(open(STATS_DIR / "lines.csv", encoding="utf-8")):

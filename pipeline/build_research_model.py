@@ -176,9 +176,43 @@ PARENT_GENRE_BALLET_TITLES = {
 #: decided, so every value can be traced and challenged. Raw is untouched.
 ART_FORMS = ["ballet", "opera", "Russian drama", "French drama", "visiting troupe"]
 
+#: ---------------------------------------------------------------------------
+#: DISCIPLINE and COMPANY (RG, 2026-10-22; docs/schema.md, top). The output column
+#: research.performance.discipline replaces art_form: the kind of performing art,
+#: defined by its PERSONNEL (RG: Russian and French drama "don't feature the same
+#: actors (unlike opera singers)"). ART_FORMS above stays the internal working set
+#: of the rules below; its catch-all "visiting troupe" is resolved, per troupe, into
+#: a discipline by the same personnel rule (VISITING_TROUPE_DISCIPLINE) and never
+#: reaches the output. "opera", not "Russian opera" (RG: "they didn't call it
+#: 'Russian opera'"). company = city + discipline for the Directorate's own troupes
+#: (RG: troupe and company "are both defined by city + the type of art"); a visiting
+#: troupe is its own company, by the name an annotation gives or a placeholder.
+#: The output's genre_family is the internal item_kind (ITEM_KINDS below).
+DIRECTORATE_DISCIPLINES = ["ballet", "opera", "Russian drama", "French drama"]
+DISCIPLINES = DIRECTORATE_DISCIPLINES + ["German drama", "Italian drama", "Japanese drama",
+                                         "Italian opera", "German opera", "German operetta"]
+CITY_NAMES = {"SP": "St. Petersburg", "Moscow": "Moscow"}
+#: troupe named by VISITING_ANNOTATION_RULES -> discipline (None = not decided yet)
+VISITING_TROUPE_DISCIPLINE = {
+    "Adele Sandrock and her troupe": "German drama",
+    "Berlin Lessing-Theater": "German drama",
+    "German guest season": "German drama",
+    "Adolf Sonnenthal": "German drama",
+    "Réjane and her troupe": "French drama",
+    "Sarah Bernhardt": "French drama",
+    "Eleonora Duse": "Italian drama",
+    "Tina di Lorenzo": "Italian drama",
+    "Japanese troupe of the Imperial court theatre, Tokyo": "Japanese drama",
+    "Moscow Art Theatre": "Russian drama",
+    "Italian opera under Угетти": "Italian opera",
+    "opera troupe under Н. В. Любимовъ": "opera",  # Russian-language troupe
+    "Vienna operetta troupe": "German operetta",
+    "Siamese court troupe": None,  # no performance in the data so far; not decided
+}
+
 #: A second axis, the KIND OF ITEM: what was happening on the stage, whoever
-#: gave it (RG, 2026-10-13). research.performance.item_kind, summarised per
-#: evening in research.event.item_kinds, in this order. art_form says which
+#: gave it (RG, 2026-10-13). research.performance.genre_family, summarised per
+#: event in research.event.genre_families, in this order. discipline says which
 #: company; item_kind says what it was. An operetta is "operetta" here whether
 #: the opera or the drama company gave it; a divertissement is "divertissement"
 #: whether or not it is known to have been danced; a storyteller's number is
@@ -232,7 +266,7 @@ WORK_ARTFORM_OVERRIDES_CSV = Path(__file__).parent / "entity_curation" / "work_a
 CONCERT_EVENT_RE = r"концерт|музыкально-литературн|литературно-музыкальн|вокально-инструментально"
 
 #: The anthem is "not a work, per se, but a ceremonial item" (RG, 2026-10-12):
-#: it gets no art form and is left out of event.n_works / event.art_forms.
+#: it gets no art form and is left out of event.n_works / event.disciplines.
 CEREMONIAL_TITLE_RE = r"^(Гимнъ|Hymne)"
 
 #: A benefit or season heading that the print sets where a title would stand
@@ -847,6 +881,71 @@ def apply_work_artform_overrides(con: duckdb.DuckDBPyConnection) -> int:
     return changed
 
 
+def resolve_discipline_and_company(con: duckdb.DuckDBPyConnection) -> None:
+    """perf_art.discipline / discipline_basis / company from the internal art_form
+    (DISCIPLINE and COMPANY above). Runs after every art-form and kind rule. A
+    visiting troupe named by an annotation takes its troupe's discipline; an unnamed
+    German-language item takes German drama / opera / operetta by its kind; the
+    Moscow seasons of operas with Latin-script titles (1893-94, 1896-97, all Italian
+    titles) take Italian opera. A visiting item the kind rules could only call "play"
+    (they ran while it was the catch-all) takes the kind of its troupe's discipline when
+    that is opera or operetta: «4-o atto di op. Gli Ugonotti», «2-е д. оперет. Цыганскій
+    баронъ»."""
+    for name in {n for _, n in VISITING_ANNOTATION_RULES}:
+        if name not in VISITING_TROUPE_DISCIPLINE:
+            raise SystemExit(f"VISITING_TROUPE_DISCIPLINE: no discipline entry for troupe {name!r}")
+    for col in ("discipline", "discipline_basis", "company"):
+        con.execute(f"ALTER TABLE perf_art ADD COLUMN {col} VARCHAR")
+    con.execute("CREATE OR REPLACE TEMP TABLE troupe_discipline (troupe VARCHAR, discipline VARCHAR)")
+    con.executemany("INSERT INTO troupe_discipline VALUES (?, ?)", list(VISITING_TROUPE_DISCIPLINE.items()))
+    con.execute("CREATE OR REPLACE TEMP TABLE city_name (city VARCHAR, name VARCHAR)")
+    con.executemany("INSERT INTO city_name VALUES (?, ?)", list(CITY_NAMES.items()))
+    # the Directorate's own troupes: company = city + discipline
+    con.execute("""
+        UPDATE perf_art SET discipline = perf_art.art_form, discipline_basis = perf_art.art_form_basis,
+               company = cn.name || ' ' || perf_art.art_form
+        FROM perf_base pb JOIN city_name cn ON cn.city = pb.city
+        WHERE pb.performance_id = perf_art.performance_id AND perf_art.art_form IS NOT NULL
+          AND perf_art.art_form <> 'visiting troupe'""")
+    # visiting troupes
+    con.execute("""
+        CREATE OR REPLACE TEMP TABLE visiting_resolved AS
+        SELECT performance_id, discipline, art_form_basis || '; ' || why AS basis,
+               coalesce(visiting_troupe, 'visiting ' || discipline || ' troupe, ' || city_label) AS company
+        FROM (
+            SELECT pa.performance_id, pa.art_form_basis, pb.visiting_troupe, cn.name AS city_label,
+                   CASE WHEN pb.visiting_troupe IS NOT NULL THEN td.discipline
+                        WHEN pa.art_form_basis LIKE 'opera with a Latin-script title%' THEN 'Italian opera'
+                        WHEN pa.item_kind = 'opera' THEN 'German opera'
+                        WHEN pa.item_kind = 'operetta' THEN 'German operetta'
+                        ELSE 'German drama' END AS discipline,
+                   CASE WHEN pb.visiting_troupe IS NOT NULL
+                        THEN 'visiting troupe (' || pb.visiting_troupe || '): discipline by its personnel (RG, 2026-10-22)'
+                        WHEN pa.art_form_basis LIKE 'opera with a Latin-script title%'
+                        THEN 'unnamed visiting opera season, Italian titles: Italian opera (RG, 2026-10-22)'
+                        ELSE 'unnamed German-language visiting troupe: German drama, opera or operetta by the kind of item (RG, 2026-10-22)'
+                   END AS why
+            FROM perf_art pa JOIN perf_base pb USING (performance_id)
+            LEFT JOIN troupe_discipline td ON td.troupe = pb.visiting_troupe
+            LEFT JOIN city_name cn ON cn.city = pb.city
+            WHERE pa.art_form = 'visiting troupe'
+        )""")
+    con.execute("""
+        UPDATE perf_art SET discipline = v.discipline, discipline_basis = v.basis, company = v.company
+        FROM visiting_resolved v WHERE v.performance_id = perf_art.performance_id""")
+    con.execute("""
+        UPDATE perf_art SET
+            item_kind = CASE discipline WHEN 'German operetta' THEN 'operetta' ELSE 'opera' END,
+            item_kind_basis = 'the troupe''s discipline (' || discipline || '); the label rules alone gave play'
+        WHERE art_form = 'visiting troupe' AND item_kind = 'play'
+          AND discipline IN ('Italian opera', 'German opera', 'German operetta', 'opera')""")
+    bad = con.execute("SELECT count(*) FROM perf_art WHERE discipline IS NOT NULL AND discipline NOT IN ("
+                      + ", ".join("'" + d + "'" for d in DISCIPLINES) + ")").fetchone()[0]
+    assert bad == 0, "perf_art holds a discipline outside DISCIPLINES"
+    left = con.execute("SELECT count(*) FROM perf_art WHERE art_form IS NOT NULL AND discipline IS NULL").fetchone()[0]
+    print(f"  performances with an art form but no discipline (troupe not decided): {left}")
+
+
 def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
     """Temp table perf_art: one row per research performance with its art form
     (see ART_FORMS above), then the event-level summary columns. Must run after
@@ -1101,15 +1200,19 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
             con.execute("UPDATE perf_art SET art_form = ?, art_form_basis = ? WHERE performance_id = ?",
                         [row["art_form"], row["basis"], ids[0]])
     apply_work_artform_overrides(con)
-    order_case = "CASE art_form " + " ".join(f"WHEN {lit(a)} THEN {i}" for i, a in enumerate(ART_FORMS)) + " END"
+    resolve_discipline_and_company(con)
+    order_case = "CASE discipline " + " ".join(f"WHEN {lit(a)} THEN {i}" for i, a in enumerate(DISCIPLINES)) + " END"
     korder_case = "CASE item_kind " + " ".join(f"WHEN {lit(k)} THEN {i}" for i, k in enumerate(ITEM_KINDS)) + " END"
     con.execute(f"""
         CREATE OR REPLACE TEMP TABLE event_art AS
         SELECT event_id,
                count(*) FILTER (WHERE NOT is_ceremonial AND NOT is_heading) AS n_works,
                (SELECT string_agg(af, '; ' ORDER BY o) FROM (
-                    SELECT DISTINCT art_form AS af, {order_case} AS o FROM perf_art p2
-                    WHERE p2.event_id = p.event_id AND art_form IS NOT NULL)) AS art_forms,
+                    SELECT DISTINCT discipline AS af, {order_case} AS o FROM perf_art p2
+                    WHERE p2.event_id = p.event_id AND discipline IS NOT NULL)) AS disciplines,
+               (SELECT string_agg(co, '; ' ORDER BY o, co) FROM (
+                    SELECT DISTINCT company AS co, {order_case} AS o FROM perf_art p2
+                    WHERE p2.event_id = p.event_id AND company IS NOT NULL)) AS companies,
                (SELECT string_agg(ik, '; ' ORDER BY o) FROM (
                     SELECT DISTINCT item_kind AS ik, {korder_case} AS o FROM perf_art p2
                     WHERE p2.event_id = p.event_id AND item_kind IS NOT NULL)) AS item_kinds,
@@ -1120,8 +1223,9 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
     con.execute(f"""
         UPDATE research.event SET
             n_works = coalesce((SELECT n_works FROM event_art x WHERE x.event_id = research.event.event_id), 0),
-            art_forms = (SELECT art_forms FROM event_art x WHERE x.event_id = research.event.event_id),
-            item_kinds = coalesce(
+            disciplines = (SELECT disciplines FROM event_art x WHERE x.event_id = research.event.event_id),
+            companies = (SELECT companies FROM event_art x WHERE x.event_id = research.event.event_id),
+            genre_families = coalesce(
                 (SELECT item_kinds FROM event_art x WHERE x.event_id = research.event.event_id),
                 -- a concert evening the Repertoire gives as a heading only, with no titled work
                 CASE WHEN event_status = 'performed'
@@ -1132,10 +1236,13 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
             is_benefit = is_benefit OR coalesce(
                 (SELECT title_benefit FROM event_art x WHERE x.event_id = research.event.event_id), false)
     """)
-    print("  art forms (performances):")
-    for af, n in con.execute("SELECT art_form, count(*) FROM perf_art GROUP BY 1 ORDER BY 2 DESC").fetchall():
+    print("  disciplines (performances):")
+    for af, n in con.execute("SELECT discipline, count(*) FROM perf_art GROUP BY 1 ORDER BY 2 DESC").fetchall():
         print(f"    {af or '(none)'}: {n}")
-    print("  item kinds (performances):")
+    print("  companies (performances):")
+    for co, n in con.execute("SELECT company, count(*) FROM perf_art GROUP BY 1 ORDER BY 2 DESC").fetchall():
+        print(f"    {co or '(none)'}: {n}")
+    print("  genre families (performances):")
     for k, n in con.execute("SELECT item_kind, count(*) FROM perf_art GROUP BY 1 ORDER BY 2 DESC").fetchall():
         print(f"    {k or '(none)'}: {n}")
 
@@ -1424,8 +1531,9 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             is_reduced_price BOOLEAN,
             has_anthem BOOLEAN,
             n_works INTEGER,
-            art_forms VARCHAR,
-            item_kinds VARCHAR
+            disciplines VARCHAR,
+            companies VARCHAR,
+            genre_families VARCHAR
         )
     """)
     n_corr = load_receipts_corrections(con)
@@ -1498,8 +1606,9 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             regexp_matches(lower(coalesce(r.annotation, '')), '{is_reduced_price}') AS is_reduced_price,
             false AS has_anthem,
             NULL AS n_works,
-            NULL AS art_forms,
-            NULL AS item_kinds
+            NULL AS disciplines,
+            NULL AS companies,
+            NULL AS genre_families
         FROM resolved r
         LEFT JOIN entities.theater t ON t.canonical_name = r.theater_canonical
         LEFT JOIN receipts_correction rc
@@ -1614,15 +1723,16 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             performance_order VARCHAR,
             verbatim_title VARCHAR,
             verbatim_genre VARCHAR,
-            art_form VARCHAR,
-            art_form_basis VARCHAR,
+            discipline VARCHAR,
+            discipline_basis VARCHAR,
+            company VARCHAR,
             is_ceremonial BOOLEAN,
             includes_dance BOOLEAN,
             includes_dance_basis VARCHAR,
             performance_source VARCHAR,
             performance_source_note VARCHAR,
-            item_kind VARCHAR,
-            item_kind_basis VARCHAR
+            genre_family VARCHAR,
+            genre_family_basis VARCHAR
         )
     """)
     con.execute("""
@@ -1634,7 +1744,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             eep.performance_order,
             eep.performance_title AS verbatim_title,
             eep.genre AS verbatim_genre,
-            pa.art_form, pa.art_form_basis, coalesce(pa.is_ceremonial, false),
+            pa.discipline, pa.discipline_basis, pa.company, coalesce(pa.is_ceremonial, false),
             -- TRUE or NULL, never FALSE: blank means "not known" (RG, 2026-10-12: "the options are yes or blank")
             CASE WHEN pa.includes_dance THEN true END, pa.includes_dance_basis,
             CASE WHEN pr.performance_id IS NOT NULL THEN 'repertoire; work from ' || pr.source ELSE 'repertoire' END,
@@ -1654,7 +1764,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     con.execute("""
         INSERT INTO research.performance
         SELECT sp.performance_id, sp.event_id, sp.work_id, NULL, NULL, NULL,
-               pa.art_form, pa.art_form_basis, false, NULL, NULL,
+               pa.discipline, pa.discipline_basis, pa.company, false, NULL, NULL,
                'supplied: ' || sp.source, sp.basis,
                pa.item_kind, pa.item_kind_basis
         FROM supplied_perf sp LEFT JOIN perf_art pa ON pa.performance_id = sp.performance_id

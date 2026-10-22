@@ -237,9 +237,9 @@ def stated_tallies(rows: list[dict]) -> dict[tuple[str, str], str]:
 MIXED_SQL = """
 with pw as (
   select e.season, e.city, e.event_id,
-    (p.art_form = 'ballet'
+    (p.discipline = 'ballet'
        or regexp_matches(lower(coalesce(w.canonical_genre,'')), '^(бал|ballet)')) as is_bal,
-    (p.art_form is distinct from 'ballet'
+    (p.discipline is distinct from 'ballet'
        and regexp_matches(lower(coalesce(p.verbatim_genre, w.canonical_genre, '')),
                           '^(оп\\.|опера|опер|op\\.|opera|opéra|оп$)')) as is_op
   from research.event e

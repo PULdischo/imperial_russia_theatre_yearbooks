@@ -28,7 +28,7 @@ import compare_season_stats as cs  # noqa: E402
 EVENT_SQL = """
 select e.event_id, e.season, e.city, t.canonical_name, e.receipts_total_kopecks,
        a.page_id, a.date_text, a.time_of_day, a.receipts_text, a.printed_page_number,
-       p.verbatim_title, coalesce(w.canonical_genre, p.verbatim_genre), p.item_kind
+       p.verbatim_title, coalesce(w.canonical_genre, p.verbatim_genre), p.genre_family
 from research.event e join research.theater t using (theater_id)
 join analysis.event_entry a using (event_id)
 left join research.performance p using (event_id) left join research.work w using (work_id)

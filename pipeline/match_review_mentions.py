@@ -486,7 +486,7 @@ def build_lexicon(db: Path) -> Lexicon:
                -- research.work.parent_genre was dropped on 2026-10-13; a work is ballet
                -- here when any of its performances is of the ballet company
                case when exists (select 1 from research.performance p
-                                 where p.work_id = w.work_id and p.art_form = 'ballet') then 'ballet' end,
+                                 where p.work_id = w.work_id and p.discipline = 'ballet') then 'ballet' end,
                excerpt_of_work_id is not null
         from research.work w where canonical_title is not null""").fetchall():
         lex.work_meta[str(wid)] = {

@@ -83,17 +83,17 @@ SCHEMAS = {
             time_of_day TEXT, receipts_verbatim TEXT, annotation TEXT,
             is_benefit INTEGER, is_charity INTEGER, is_free INTEGER,
             is_student_performance INTEGER, is_reduced_price INTEGER,
-            has_anthem INTEGER, n_works INTEGER, art_forms TEXT, item_kinds TEXT
+            has_anthem INTEGER, n_works INTEGER, disciplines TEXT, companies TEXT, genre_families TEXT
         )""",
     "performance": """
         CREATE TABLE performance (
             performance_id TEXT PRIMARY KEY, event_id TEXT REFERENCES event(event_id),
             work_id TEXT REFERENCES work(work_id), performance_order TEXT,
             verbatim_title TEXT, verbatim_genre TEXT,
-            art_form TEXT, art_form_basis TEXT, is_ceremonial INTEGER, includes_dance INTEGER,
+            discipline TEXT, discipline_basis TEXT, company TEXT, is_ceremonial INTEGER, includes_dance INTEGER,
             includes_dance_basis TEXT,
             performance_source TEXT, performance_source_note TEXT,
-            item_kind TEXT, item_kind_basis TEXT
+            genre_family TEXT, genre_family_basis TEXT
         )""",
     "person_appearance": """
         CREATE TABLE person_appearance (

@@ -304,8 +304,9 @@ erDiagram
         bool is_free
         bool has_anthem
         int n_works
-        string art_forms
-        string item_kinds
+        string disciplines
+        string companies
+        string genre_families
     }
     performance {
         string performance_id PK
@@ -313,8 +314,9 @@ erDiagram
         uuid work_id FK
         string verbatim_title
         string verbatim_genre
-        string art_form
-        string item_kind
+        string discipline
+        string company
+        string genre_family
         bool includes_dance
         bool is_ceremonial
     }
