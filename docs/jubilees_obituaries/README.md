@@ -10,6 +10,7 @@ with the ballet-relevant ones pulled out.
 |---|---|
 | `jubilees_obituaries_all_entries.csv` | Every entry (702 rows, 655 of them person entries). `source_type` says where each comes from: `section` (357: the scanned sections, stand-alone articles and other files), `review` (87 + 7 work milestones), `roster` (101 death marks), `repertoire` (112 + 10 institutional or event anniversaries). Check columns: `date_check`, `tier_check`. |
 | `jubilees_obituaries_ballet_only.csv` | The subset with `relevance` = `core` or `mentions`. |
+| `jubilees_obituaries_person_links.csv` | Each of the 655 person entries linked to a `research.person` record, or marked as having none (2026-10-22; see "Links to the people in the database"). |
 | `unscanned_worth_getting.md` | Jubilee, obituary and memorial items the Yearbooks contain that are not in the scans, ranked. |
 | `AUDIT_2026-10-10.md` | What has been verified, how far, and the known gaps. |
 | `repertoire_date_check.csv`, `repertoire_annotations_matched.csv` | The Repertoire's annotations against the catalogue, both directions. |
@@ -218,6 +219,62 @@ the rest is regenerated, so do not edit it by hand. To rebuild (steps in the scr
 `--segment`, then the translator (it only translates new blocks), then `--build --vault <folder>`.
 If `--segment` changes how an entry is cut, its block numbers shift: delete that entry's rows from
 `outputs/jubilees_obituaries/translations.csv` before translating again.
+
+## Links to the people in the database (2026-10-22)
+
+`jubilees_obituaries_person_links.csv` gives every person entry a `research.person` record (`person_id`), or
+says there is none. It is keyed by `entry_id`, the same id the Obsidian notes carry. Made by
+`build/link_persons.py`, which reads the production database without changing it:
+
+- **Automatic** (274 links): a roster death mark goes to its own roster entry. A review notice goes to the
+  person the review-mention layer already links in that block, if the surname agrees. Any other entry is
+  linked only when exactly one record agrees on the surname and on every name or initial printed. Spellings
+  are compared with ѣ/і/ѳ/ъ folded, for matching only. The match is refused if a record still appears on
+  the rosters more than a season after the death, or if the ordinals disagree.
+- **Read by Claude** (106 cases in `build/person_link_decisions.csv`, each with its basis): every entry with
+  several candidates or a near-miss name. These were decided from the catalogue's role, city and dates against
+  each record's roster span; no scan was read for this step. 42 were linked and 64 have no record.
+- **No record** (339 of the 655): mostly drama and opera people, whom the rosters do not list, and people who
+  died or retired before 1890-91. Among the ballet-relevant entries, 47 of 266 have no record.
+- **А. А. Богдановъ** (obituary, 1907-08): linked by RG's decision (2026-10-22) to the production-list credit
+  «Богдановъ, А. Н.» (Moscow, 1890-91). The initials conflict on the scans, so the case is also entry 42 in
+  `docs/eval/uncertain_person_identities.md`.
+
+Coverage: 219 of the 266 core and mentions entries are linked (182 of 212 core). In all, 316 entries
+point to 274 people. As a check, no linked person has deaths in seasons more than two apart, or a jubilee or
+farewell after a death. Name variants were linked where the person is plainly the same one: Осипъ/Іосифъ,
+Левъ/Леопольдъ Ауэръ, German names against the rosters' Russian forms (Брауэръ, Рамзе, Шварцъ). A
+patronymic conflict is noted in `basis`: Смирнова (already above), Корсакъ, Бекке. Things this found that
+belong to other layers are in `FOR_MAIN_THREAD.md`.
+
+The links are decisions and can be revised: change a row in `build/person_link_decisions.csv` and re-run.
+`person_id`s follow production, and the script follows merges (`superseded_by_person_id`). If people are merged
+or split later, re-run it.
+
+## Loading into the database (2026-10-22, tested on a copy only)
+
+`build/load_jubilees_obituaries.py --db <file>` writes three tables:
+
+| Table | Rows | What |
+|---|---|---|
+| `raw.jubilee_obituary_entry` | 702 | The catalogue verbatim, plus `entry_id` and `catalogue_row`. |
+| `entities.jubilee_obituary_person_link` | 655 | The person links and their basis, from `jubilees_obituaries_person_links.csv`. |
+| `research.jubilee_obituary` | 702 | The queryable table. `person_id` points to `research.person` and follows later merges; `is_person` and `link_status` are included. |
+
+It has **not** been run on production. The script refuses any path under `outputs/full_run`, and the pipeline
+does not call it. It was tested on a copy of production on 2026-10-22, with these results:
+- All integrity checks pass, and 316 links point to 274 people.
+- A second run gives the same result.
+- `pipeline/build_research_model.py` rebuilds the research layer on the copy without error, and no link is left
+  pointing at a missing person afterwards.
+
+`person_id` is a plain column with no declared foreign key. `build_research_model.py` drops and recreates
+`research.person`, and a declared key would block that. The loader checks every id itself instead.
+
+What happens next is up to RG:
+- **Before running it on production**, re-run `build/link_persons.py`, after the main thread's person merges.
+- **Wiring it into the build** means calling it after `build_research_model.py`. Adding it to
+  `build_datasette.py`'s `TABLES` would also put it in the published sqlite, which Andy republishes.
 
 ## Not yet done
 

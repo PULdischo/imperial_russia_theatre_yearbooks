@@ -66,9 +66,31 @@ as ¼; other digits stored from those pages may deserve a look.
 
 ## Linking
 
-- No catalogue row is linked to a `research.person` record. The catalogue's own `see_also` column
-  matches people only by surname and initials.
-- The catalogue is a set of CSV files under `docs/jubilees_obituaries/`; it is not in the database.
+- 2026-10-22: every person entry is now linked to a `research.person` record or marked as having none
+  (`jubilees_obituaries_person_links.csv`; see the README). The catalogue is still a set of CSV files under
+  `docs/jubilees_obituaries/`; it is not in the database.
+
+Found while linking (2026-10-22, from the database and the catalogue; no scans read):
+
+- **Review-mention links (`entities.review_mention`) that are wrong:**
+  - `review_1891-92_SP_ballet_p011__b007`: «въ бенефисъ г. Іогансона, назначенный ему за 50-ти-лѣтнюю
+    артистическую дѣятельность». This is a man (г.), Христіанъ Петровичъ, but the mention is linked to
+    Іогансонъ, Анна Христіановна.
+  - `review_1891-92_SP_ballet_p017__b002`: «Яковлевъ 2-й († 9 августа 1892 г.)», a new graduate who died
+    before any roster listed him. The mention is linked to Яковлевъ, Николай Николаевичъ, who is listed
+    until 1901-02.
+- **Possible duplicate person records** (for the merge batch; not decided):
+  - Трефилова, Вѣра Ивановна (1893-94–1909-10) and Трефилова, Вѣра Александровна (1901-02 only).
+  - Петипа 1-я, Марія Маріусовна (1890-91–1908-09) and Петипа, Марія Маріусовна (1910-11 only).
+  - Боборыкинъ, Петръ Дмитріевичъ: two records with the same name (1890-91–1909-10; 1910-11).
+  - Дровинъ, Антонъ Фердинандовичъ (1891-92–1892-93) and Дровинъ, Карлъ Фердинандовичъ (1890-91 only). The
+    obituary names him «Антонъ-Карлъ».
+  - Золотаренко, Петръ Петровичъ (Musicians) and the production-list credit Золотаренко, П. П.
+- **Roster names that differ from the obituary:** Корсакъ, Вѣра Александровна (obituary Алексѣевна); Бекке,
+  Евгеній Андреевичъ (obituary Генриховичъ); Бенда, Маттіанъ (obituary Маттіасъ). CHECKED 2026-10-22 by
+  another session: all 16 roster rows were scan-read by Claude and match the print (Бенда is printed Маттіанъ
+  1890-91..1893-94 and Маттіасъ in 1894-95). So these are conflicts in the print, with nothing to fix
+  (`docs/query_log.md`, same date).
 
 ## Scanning
 

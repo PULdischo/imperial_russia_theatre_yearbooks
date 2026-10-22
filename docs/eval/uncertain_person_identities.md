@@ -361,6 +361,15 @@ To add an entry: copy the template at the bottom.
 - **Not in any list:** no other Пуни appears in raw.person_entry (Graduates, BalletArtists, TheaterSchoolStaff) in any season.
 - **Would resolve it:** the Graduates list of the year she left the school (1906-07 or later; check the 1906-07..1910-11 lists for a Пуни under another first name); the school's pupil lists, if any survive (RGIA).
 
+## 42. Богдановъ, А. А. (obituary 1907-08) and «А. Н. Богдановъ» (Moscow ballet list 1890-91) -- one ballet master or two?
+
+- **Status:** LINKED as one man (RG, 2026-10-22). The jubilee/obituary catalogue entry `e7b357d69f` points to the production-list person e92ee694..., «Богдановъ, А. Н.» (`docs/jubilees_obituaries/jubilees_obituaries_person_links.csv`). There is no roster record.
+- **What is uncertain:** the second initial. The obituary (1907-08, p. 294) prints «А. Богдановъ.» as its heading and «А. А. Богдановъ» and «А. А. былъ переведенъ въ Москву» in the text. The 1890-91 Moscow ballet list (p. 38, no. 8, «Хрустальный башмачекъ») prints «соч. К. В. и А. Н. Богданова». Both were zoomed on the full-resolution scans, checked by Claude.
+- **For one man:** the obituary's Богдановъ was moved to Moscow on 12 Sept 1882 as acting chief ballet master, régisseur and dance teacher. A Moscow ballet credited to a Богдановъ in 1890-91 fits him. No other Богдановъ appears on any roster or production list.
+- **For two men / against:** the initials differ in print (А. А. vs А. Н.), and this is the only production-list credit.
+- **Where to look:** `docs/jubilees_obituaries/` entry `e7b357d69f` (`1907-08_Obituary_Bogdanov.pdf`); `balletproductions_1890-91_MSK_p000__e008` (`pdf/Spiski_BalletProductions/ForUpload_1890-91_Spisok_BalletProductionsMoscow.pdf`).
+- **Would resolve it:** the playbill or libretto of «Хрустальный башмачекъ» (Moscow, Bolshoi); his RGIA personnel file; a ballet-history reference on the Moscow ballet masters of the 1880s.
+
 ## Related, decided (not uncertain), for reference
 
 Грибенъ, Августъ Ѳедоровичъ vs Ѳедоръ Ѳедоровичъ (SP percussionists; SPLIT 2026-10-15, the 1890-93 ballet-orchestra cross-references «Грибенъ (см. оперный оркестръ)» assigned to Ѳедоръ, the only Грибенъ in the opera orchestra then; scans 1890-91 pp. 75/78/80); Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
