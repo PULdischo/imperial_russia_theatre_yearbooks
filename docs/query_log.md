@@ -19741,3 +19741,68 @@ select text from raw.review_block where block_id in ('review_1899-00_SP_ballet_p
 ```
 
 Result: 38 Легатъ assertions in those seasons. Spiski print «Легатъ 3-й, Сергѣй Густавовичъ» every season 1898-99..1902-03 (Николай = 1-й, Иванъ = 2-й through 1899-00, Евгенія no ordinal) and credit Сергѣй with Іоритомо, Дженаріелло, Вестрисъ, Артуръ, принцъ Шери, Коленъ (1900-01), Де-Бріенъ; Николай with Мутча 1900-01. 8 «Легатъ 3-й» assertions (2291, 2328, 2339, 710, 2366, 2409, 2441, 2454) are linked to Евгенія; 761 «Легатъ 1-й» Мутчи is linked to Сергѣй. All 9 passages read on the review scans by Claude (embedded full-resolution images): every one prints exactly as stored.
+
+## 2026-10-23 — Легатъ repoint (#159): mentions behind the 9 assertions, and the before/after diff
+
+```sql
+select assertion_id, block_id, role_surface, performer_surface from research.review_assertion where assertion_id in (2291,2328,2339,710,2366,2409,2441,2454,761);
+select mention_id, char_start, surface, entity_id, link_method from entities.review_mention where block_id=? and mention_type='person' order by char_start;  -- per block
+select person_id, display_name from research.person where display_name like 'Легатъ%';
+-- after the rebuild on a test copy vs production (b), per table and per column:
+select count(*) from (select * from s.t except all select * from b.s.t);
+select n.assertion_id, n.role_surface, n.performer_surface, po.display_name, pn.display_name, o.link_method, n.link_method from research.review_assertion n join b.research.review_assertion o using(assertion_id) left join research.person pn on pn.person_id=n.performer_person_id left join research.person po on po.person_id=o.performer_person_id where n.performer_person_id is distinct from o.performer_person_id or n.link_method is distinct from o.link_method;
+select count(*), count(performer_person_id) from research.review_assertion;
+```
+
+Result: each of the 9 is occurrence 0 of its surface («Легатъ/Легать 3-й», «Легатъ 1-й») in its block. Сергѣй = 714fcaca-c345-4ccd-bab9-dfe514ef57d9, Николай = 10754c69-de80-4dcb-8deb-3c8565701910, Евгенія = 2a653139…. After: 8 assertions Евгенія -> Сергѣй, 761 Сергѣй -> Николай; only other differences are candidate-list order (152 mentions, 12 assertions, same sets) and 2 Онѣгинъ work mentions losing the retired work. Production = tested copy. 3,157 assertions, 2,830 with a performer.
+
+## 2026-10-23 — «г-жа Легатъ — жена его» (1904-05 SP, f. 106): evidence (#159)
+
+```sql
+select a.assertion_id, a.season, a.city, a.page_id, a.printed_folio, a.block_id, a.role_surface, a.performer_surface, p.display_name, a.link_method, a.work_surface, a.date_undate
+from research.review_assertion a left join research.person p on p.person_id=a.performer_person_id where a.performer_surface ilike '%Легат%' and a.season='1904-05';
+select text from raw.review_block where block_id='review_1904-05_SP_ballet_p001__b001';
+select block_id, text from raw.review_block where page_id='review_1904-05_SP_ballet_p000' order by block_index;
+-- spiski: BalletArtists Легатъ entries 1903-04..1905-06 with their named-work role credits
+```
+
+Result: assertion 2835 «жена его — г-жа Легатъ», linked to Николай (spiski-credit-work, work_surface «Золушка»). The previous page ends «принца Дезирэ — г-нъ Легатъ 1 … Синяя борода—» and f. 106 continues «г-нъ Берестовскій, жена его—г-жа Легатъ; Котъ въ сапогахъ…»: the fairy-tale procession in Спящая красавица. Only woman Легатъ in the 1903-04..1905-06 spiski is Евгенія Густавовна; the 1905-06 spiski credit her «Спящая красавица: жена Синей бороды». Passage read on the scan by Claude: printed as stored. Also seen: 1390 «Генія Земли — г-нъ Легать 2-й» (1904-05 f. 107) unresolved; spiski 1904-05 credit геній земли to Сергѣй (printed «Легатъ 2-й» that season).
+
+## 2026-10-23 — 2835 repoint check
+
+```sql
+select mention_id, char_start, surface, entity_id, link_method from entities.review_mention where block_id='review_1904-05_SP_ballet_p001__b001' and mention_type='person' order by char_start;
+-- test copy vs production, every table (candidate-list columns ignored); then production vs tested copy
+select p.display_name from research.review_assertion a join research.person p on p.person_id=a.performer_person_id where assertion_id=2835;
+```
+
+Result: mention 20288 «Легатъ» occurrence 0, unlinked by the matcher. After: only that mention and assertion 2835 changed (Николай/spiski-credit-work -> Евгенія/already-linked); production = tested copy; 2835 = «Легатъ, Евгенія Густавовна».
+
+## 2026-10-23 — 1904-05 SP f. 105/107 follow-ups: «Генія Земли — г-нъ Легатъ 2-й», «шестыхъ», and the Легатъ women
+
+```sql
+select p.display_name, p.first_attested_season, p.last_attested_season, string_agg(distinct pa.entity_type||' '||pa.season, ', ' order by pa.entity_type||' '||pa.season)
+from research.person p left join research.person_appearance pa using(person_id) where p.display_name like 'Легат%' group by all order by 1;
+```
+
+Result: Легатъ women: Марія Семеновна 1-я (1890-91 only), Вѣра Густавовна 1-я (1890-91..1895-96), Евгенія Густавовна (1890-91..1907-08), Александра Павловна 2-я (Graduates 1906-07, BalletArtists 1907-08), Антонина Савельевна (1909-10..1910-11). Иванъ 2-й last 1899-00; Сергѣй 1893-94..1905-06. Scan (Claude): f. 105 prints «Въ шествіи волшебныхъ сказокъ» (stored «шестыхъ»: misread); f. 107 prints «Генія Земли—г-нъ Легатъ 2-й» in Жемчужина (12 Sep 1904; assertion 1390 unresolved, work_surface «Золото») and «Scène dansante—г-жи Сѣдова и Легатъ 2-я».
+
+## 2026-10-23 — 1390 link check
+
+```sql
+select block_id from research.review_assertion where assertion_id=1390;
+select mention_id, char_start, surface, entity_id, link_method from entities.review_mention where block_id='review_1904-05_SP_ballet_p002__b004' and mention_type='person' order by char_start;
+-- test copy vs production, every table (candidate-list columns ignored); production vs tested copy after applying
+```
+
+Result: mention 20424 «Легать 2-й» occurrence 0 (unlinked); the same block's «Легать 2-я» (20445, Scène dansante) also unlinked, left as is. After: only mention 20424 and assertion 1390 changed (unresolved -> Сергѣй, already-linked); assertions with a performer 2,830 -> 2,831; production = tested copy.
+
+## 2026-10-23 — «шествіи» correction check (1904-05 SP f. 105)
+
+```sql
+-- test copy (corrections applied to a scratch copy of merged_full, review tables rebuilt) vs production, every table, candidate-list columns ignored
+select block_id from raw.review_block where text like '%шествіи волшебныхъ сказокъ участвовали%' and page_id='review_1904-05_SP_ballet_p000';
+-- then production vs tested copy after applying
+```
+
+Result: only raw.review_block changed (1 row, review_1904-05_SP_ballet_p000__b002); no mention or assertion change; production = tested copy.
