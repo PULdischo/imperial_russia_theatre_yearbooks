@@ -264,6 +264,14 @@ ART_FORM_BY_PERFORMANCE_CSV = Path(__file__).parent / "research_corrections" / "
 #: labels here, see apply_work_artform_overrides (known_issues.md #158).
 WORK_ARTFORM_OVERRIDES_CSV = Path(__file__).parent / "entity_curation" / "work_artform_overrides.csv"
 CONCERT_EVENT_RE = r"концерт|музыкально-литературн|литературно-музыкальн|вокально-инструментально"
+#: Discipline and company for ONE annotation-only evening (no titled work), where a
+#: source other than the annotation says who gave it -- e.g. the printed season
+#: statistics counting two German charity evenings of March 1898 as German opera
+#: (RG, 2026-10-23, known_issues.md #141). Keyed on season, city, date, theater and
+#: time_of_day; applied after the visiting-troupe annotation rule. The build fails
+#: if a row matches no evening or one that has titled works, or names a discipline
+#: outside DISCIPLINES.
+EVENT_LABELS_CSV = Path(__file__).parent / "research_corrections" / "event_labels.csv"
 
 #: The anthem is "not a work, per se, but a ceremonial item" (RG, 2026-10-12):
 #: it gets no art form and is left out of event.n_works / event.disciplines.
@@ -1249,6 +1257,25 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
             WHERE event_status = 'performed' AND coalesce(n_works, 0) = 0 AND disciplines IS NULL
               AND regexp_matches(lower(coalesce(annotation, '')), ?)""", [disc, name, rx]).fetchone()[0]
     print(f"  events with no titled work given a visiting troupe's discipline from the annotation: {n_annot}")
+    if EVENT_LABELS_CSV.exists():
+        n_lab = 0
+        for row in csv.DictReader(open(EVENT_LABELS_CSV, encoding="utf-8")):
+            if row["discipline"] not in DISCIPLINES:
+                raise SystemExit(f"event_labels.csv: {row['discipline']!r} is not in DISCIPLINES")
+            hits = con.execute("""
+                SELECT e.event_id, coalesce(e.n_works, 0) FROM research.event e
+                JOIN research.theater t USING (theater_id)
+                WHERE e.season = ? AND e.city = ? AND CAST(e.date AS VARCHAR) = ?
+                  AND t.canonical_name = ? AND e.time_of_day = ? AND e.event_status = 'performed'""",
+                [row["season"], row["city"], row["date"], row["theater"], row["time_of_day"]]).fetchall()
+            if len(hits) != 1 or hits[0][1] != 0:
+                raise SystemExit(f"event_labels.csv: {row['date']} {row['theater']} {row['time_of_day']} "
+                                 f"matches {len(hits)} performed evening(s)"
+                                 + (" with titled works" if hits and hits[0][1] else ""))
+            con.execute("UPDATE research.event SET disciplines = ?, companies = ? WHERE event_id = ?",
+                        [row["discipline"], row["company"], hits[0][0]])
+            n_lab += 1
+        print(f"  annotation-only evenings labelled from event_labels.csv: {n_lab}")
     print("  disciplines (performances):")
     for af, n in con.execute("SELECT discipline, count(*) FROM perf_art GROUP BY 1 ORDER BY 2 DESC").fetchall():
         print(f"    {af or '(none)'}: {n}")

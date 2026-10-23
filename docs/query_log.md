@@ -19871,3 +19871,83 @@ select r.genre, count(m.mention_id), count(nullif(m.entity_id,'')) from entities
 ```
 
 Result: 733 -> new id 3183 (role text changed), still Жозефина; 731 still unresolved: Сергѣй's 1900-01 ordinal read as 2 (TheaterSchoolStaff «Легатъ 2-й» overwrites BalletArtists «Легатъ 3-й»; also 1899-00, 1901-02). Mentions: person 21,692 (17,742 linked, 81.8%; 3,892 ties, 50 gender contradictions), work 3,737 (2,918, 78.1%), role 1,127 (775, 68.8%), theater 632 (527), dance_number 137 (0). All mentions are from Ballet pages; Opera 262 and «All» 110 pages have none. Assertions 3,157: performer 2,922, work 2,033, date 718; work_source block 1,720, none 696, page-earlier-block 547, ambiguous 194. review_solo 96. Unknown-name queue 734 forms; title-misread candidates 36; work-consolidation candidates 9.
+
+## 2026-10-23 — Status of the Repertoire data (RG asked)
+
+```sql
+select count(*), count(distinct season), min(season), max(season), sum(receipts_total_kopecks)/100.0, count(receipts_total_kopecks), count(printed_page_number) from research.event;
+select city, count(*), count(*) filter (where event_status='performed') from research.event group by 1;
+select event_status, count(*) from research.event group by 1;
+select date_confidence, count(*) from research.event group by 1;
+select receipts_source, count(*) from research.event group by 1;
+select count(*), count(distinct work_id) from research.performance;
+select discipline, count(*) from research.performance group by 1;
+select genre_family, count(*) from research.performance group by 1;
+select company, count(*) from research.performance group by 1 order by 2 desc limit 15;
+select count(*), count(excerpt_of_work_id) from research.work;
+select season, count(*) filter (where city='SP'), count(*) filter (where city='Moscow') from research.event group by 1 order by 1;
+select count(*), count(distinct season), sum(case when events_minus_printed=0 then 1 else 0 end), sum(case when abs(events_minus_printed)<=2 then 1 else 0 end), sum(case when abs(events_minus_printed)>10 then 1 else 0 end), median(abs(events_minus_printed)), sum(case when receipts_minus_printed_kopecks=0 then 1 else 0 end), sum(case when abs(receipts_minus_printed_kopecks)<=100000 then 1 else 0 end), count(receipts_minus_printed_kopecks) from research.season_stat_check;
+select season, city, printed_count, repertoire_events, events_minus_printed, round(receipts_minus_printed_kopecks/100.0,2) from research.season_stat_check order by abs(events_minus_printed) desc limit 8;
+select count(*) filter (where event_status='performed' and receipts_total_kopecks is null), count(*) filter (where event_status='performed' and receipts_total_kopecks is null and season in ('1890-91','1891-92')) from research.event;
+select count(*) filter (where event_status='performed' and n_works=0) from research.event;
+select count(*) filter (where discipline is null), count(*) filter (where discipline is null and not is_ceremonial) from research.performance;
+```
+
+Result: 32,808 events, 21 seasons 1890-91..1910-11 (SP 17,563 / Moscow 15,245; Moscow ~550-610 a season to 1897-98, ~800-860 from 1898-99); performed 22,164, no_performance 7,763, not_captured 2,881. Dates: verified 29,841, synthesized_gap 2,881, corrected_manual 45, corrected 31, no_weekday 10. Receipts on 19,295 events (59 corrected print typos), 32,169,190.85 rub.; 2,869 performed events without receipts, 1,904 of them in 1890-91/1891-92 (none printed). 30,805 performances of 2,955 works (research.work 2,968, 305 excerpts). Discipline: Russian drama 15,644, opera 6,319, French drama 4,882, ballet 2,696, German drama 824, none 335 (140 not ceremonial), Italian opera 59, German opera 30, other 18. Company «Moscow Art Theatre» 5 performances only. 122 performed events with n_works 0. Season stats: 38 rows/19 seasons; events match exactly 2, within ±2 10, off >10 12 (largest 1909-10 Moscow +107, 1907-08 SP +70, 1908-09 SP +55); receipts within 1,000 rub. 11 of 34, exact 0.
+
+## 2026-10-23 — The 122 performed events with no work (#141 revisited)
+
+```sql
+select e.event_id, e.season, e.city, t.canonical_name, e.date, e.time_of_day, e.receipts_verbatim, e.annotation, e.genre_families,
+ (select count(*) from research.performance p where p.event_id=e.event_id) np
+from research.event e join research.theater t using(theater_id) where e.event_status='performed' and e.n_works=0 order by e.season, e.date;
+-- same set in 11 backups (performed and no research.performance row), 2026-10-09 .. today
+select event_id, ... from research.event / raw.event_entry for repertoire_1902-03_p018__s026, repertoire_1903-04_p030__s012; the 2026-10-09 backup's pair022 Fidelio row
+select coalesce(disciplines,'∅'), coalesce(companies,'∅'), coalesce(genre_families,'∅'), is_charity, is_benefit, count(*) from research.event where event_status='performed' and n_works=0 group by all;
+```
+
+Result: all 122 have no performance row. Backups: 107 (10-09, 10-10) -> 120 (10-11 structure) -> 123 (10-12) -> 122 (10-13 on); 19 ids new / 4 gone vs 10-09, mostly session-id renumbering. 70 are invalids' concerts (incl. rehearsals/repeats). 6 annotations name works: 1897-98 pair022 s006 (Tannhäuser/Siegfried) and s019 (Fidelio/Parsifal/Lustige Weiber -- on 10-09 this annotation sat wrongly on the 21 Mar «Tristan» evening), 1898-99 p034 s022 (Pushkin evening), 1900-01 p008 s006 (Sonnenthal, Der Hüttenbesitzer), 1901-02 p025 s010 and 1903-04 p004 s005 (Pushkin monument galas). Two of the original #141 seven now have work rows (1902-03 p018 s026, 1903-04 p030 s012 Мѣсяцъ въ деревнѣ). 1 blank-title play (1905-06 p015 s021). Event-level labels: genre_families 'concert' 93; Siamese 2, Sonnenthal 1 have company; 26 have no discipline/company/genre family.
+
+## 2026-10-23 — German opera troupe season 1897-98 vs the two annotation-only charity evenings (#141)
+
+```sql
+select e.season, min(e.date), max(e.date), count(distinct e.event_id), string_agg(distinct t.canonical_name, ',') from research.performance p join research.event e using(event_id) join research.theater t using(theater_id) where p.company='visiting German opera troupe, St. Petersburg' group by 1;
+select e.date, t.canonical_name, string_agg(p.verbatim_title||' ['||coalesce(p.verbatim_genre,'')||']', ' | ') from research.performance p join research.event e using(event_id) join research.theater t using(theater_id) where e.season='1897-98' and e.date between '1898-03-10' and '1898-03-25' and t.canonical_name='Маріинскій' group by 1,2 order by 1;
+select event_id, disciplines, companies, genre_families from research.event where event_id in ('repertoire_1900-01_p008__s006','repertoire_1900-01_p008__s031');
+```
+
+Result: the visiting German opera troupe played the Маріинскій 22 Feb - 27 Mar 1898 (29 evenings; Tristan, Walküre, Siegfried, Meistersinger, Lohengrin, Heimchen am Herd …). The charity evenings of 15 and 22 Mar 1898 fall inside that run. Sonnenthal (German drama / Adolf Sonnenthal) and the Siamese morning (Siamese dance / Siamese court troupe) already carry evening-level labels with no work rows; genre_families blank for both.
+
+## 2026-10-23 — Do the works named in the 22 Mar 1898 / 15 Mar 1898 annotations exist in research.work? (#141 options)
+
+```sql
+select w.canonical_title, w.canonical_genre, w.appearance_count, (select string_agg(distinct p.company, ', ') from research.performance p where p.work_id=w.work_id) from research.work w where w.canonical_title ilike '%<title>%';
+-- titles tried: Fidelio, Parsifal, lustigen, Tannh, Siegfried, Фиделіо, Парсифаль, Виндзорск, Тангейзер
+select annotation, receipts_verbatim, time_of_day from research.event where event_id='repertoire_1897-98_pair022__s019';
+```
+
+Result: Fidelio, Parsifal, Die lustigen Weiber, Tannhäuser have no German-titled work; Siegfried exists (Oper., 3, German opera troupe). Russian-titled works exist: Фиделіо оп. (11, St. Petersburg opera), Тангейзеръ оп. (94, SP + Moscow opera), Виндзорскія кумушки оп. (9, SP opera; the comedy Виндзорскія проказницы is separate). No Парсифаль. The 22 Mar 1898 event: morning, no receipts printed, annotation as quoted.
+
+## 2026-10-23 — Were the 15 and 22 Mar 1898 charity evenings given by the German opera troupe? (#141)
+
+```sql
+select genre, city, count(*) from raw.review_page where season='1897-98' group by all;   -- + text search of 1897-98 review blocks
+select * from research.season_stat_footnote where season='1897-98';
+select * from research.season_stat_line where season='1897-98';
+select count(distinct e.event_id), count(distinct e.event_id) filter (where e.is_charity), count(distinct e.event_id) filter (where e.is_benefit) from research.performance p join research.event e using(event_id) where p.company='visiting German opera troupe, St. Petersburg';
+select ... from research.event e join research.theater t using(theater_id) where e.season='1897-98' and (e.annotation ilike '%атріот%' or e.annotation ilike '%Patriot%');
+select ... where e.season='1897-98' and t.canonical_name='Маріинскій' and e.is_charity;
+```
+
+Result: 1897-98 has ballet reviews only (SP 41, Moscow 24 pages), nothing on these evenings. Printed SP statistics: «Нѣмецкихъ оперныхъ» 31 performances, 152,203 р. 10 к., footnote 6 «Въ томъ числѣ 1 бенефисъ и 3 спектакля съ благотворительною цѣлью». Repertoire: the troupe has 29 evenings with work rows, 1 benefit (24 Mar, orchestra benefit) and 1 charity (14 Mar). 29 + the two annotation-only charity evenings (15 Mar, 22 Mar morning) = 31, charity 1 + 2 = 3, benefit 1: exact match. Footnote 3 (Russian opera, Маріинскій, «1 спектакль въ пользу школъ Императорскаго женскаго Патріотическаго Общества») is the 22 Jan 1898 «Донъ Жуанъ», not 15 March.
+
+## 2026-10-23 — event_labels.csv applied (1898 German charity evenings)
+
+```sql
+-- test copy after build_research_model.py vs production, every table:
+select n.event_id, n.date, n.time_of_day, o.disciplines, n.disciplines, o.companies, n.companies, n.genre_families
+from research.event n join b.research.event o using(event_id)
+where n.disciplines is distinct from o.disciplines or n.companies is distinct from o.companies;
+```
+
+Result: only research.event changed, 2 rows: repertoire_1897-98_pair022__s006 (15 Mar 1898) and __s019 (22 Mar 1898 morning), disciplines NULL -> German opera, companies NULL -> visiting German opera troupe, St. Petersburg; genre_families still NULL. Production = tested copy.
