@@ -19833,3 +19833,41 @@ select p.display_name, x.link_method from research.review_assertion x left join 
 ```
 
 Result: production = tested copy (17,742 person mentions linked; 2,922 assertions with a performer). Of the open suspects, 12 changed: Чекетти Королева -> Жозефина; Крюгеръ -> Елизавета Карловна; Гердтъ -> Елизавета Павловна; Пишо x2 -> Иванъ; Стуколкинъ Фрицъ -> Василій Николаевичъ; Эрлихъ, Мацкевичъ, Чумакова x2, Плессюкъ, «г. М. Петипа» -> unlinked; «г-нъ Чекетти» Пивія Жозефина -> Энрико. Unchanged include the spelled-out «воспитанница» rows and «г. Л. Ивановъ» -> Лариса.
+
+## 2026-10-23 — «Пивія — г-нъ Чекетти» (1900-01 SP f. 155, assertion 733): evidence (#159 fix-3 follow-up a)
+
+```sql
+select assertion_id, page_id, printed_folio, block_id, role_surface, performer_surface, work_surface from research.review_assertion where role_surface like 'Пиві%' and season='1900-01';
+select text from raw.review_block where block_id='review_1900-01_SP_ballet_p002__b003';
+select s.season, pe.family_name, pe.first_name, p.display_name, (select string_agg(pc.label||': '||pc.role_name, '; ') from raw.person_entry_credit pc where pc.entry_id=pe.entry_id and pc.role_name is not null)
+from raw.person_entry pe join raw.source_pages s using(page_id) join entities.person_link pl using(entry_id) left join research.person p on p.person_id=pl.person_id
+where pe.family_name like 'Чекетти%' and pe.entity_type='BalletArtists' order by s.season;
+```
+
+Result: assertion 733, Царь Кандавлъ revived 24 Sep 1900. Spiski credit the part to Жозефина in 1891-92 (Пиѳія), 1892-93, 1893-94, 1896-97 («сардійская пнвія») and 1900-01 («Сардійская пи-вія»); never to Энрико (his 1900-01 parts: кузнечикъ, Коппеліусъ, бургомистръ, Карабоссъ, Марцелина). Scan (Claude, f. 155): prints «Гизель—г-нъ Легатъ 3-й; Клитія—г-жа Мосолова; Пиѳія—г-нъ Чекетти» -- «г-нъ» is in the print; stored «Пивія» is a ѳ->в misread, stored «Легатъ 5-й» a misread of the flat-topped 3.
+
+## 2026-10-23 — 733 link check
+
+```sql
+select mention_id, char_start, surface, entity_id, link_method from entities.review_mention where block_id='review_1900-01_SP_ballet_p002__b003' and mention_type='person' order by char_start;
+select person_id from research.person where display_name='Чекетти, Жозефина Валентиновна';
+-- test copy vs production, every table; production vs tested copy after applying
+```
+
+Result: mention 12222 «Чекетти» occurrence 0 (was Энрико 09350cda…); Жозефина = c20370d7-6e65-45b7-96aa-3fbe36ccd5bc. After: only that mention and assertion 733 changed (Энрико -> Жозефина); production = tested copy.
+
+## 2026-10-23 — «Пиѳія»/«Легатъ 3-й» corrections applied; ordinal bug; season-review linking status for RG's summary
+
+```sql
+-- after the corrections: block review_1900-01_SP_ballet_p002__b003 assertions before/after; mention 12219 candidates;
+-- build_lexicon(): ordinal_by_season for the Легатъ candidates in 1900-01; raw person_entry rows for Сергѣй 1899-00..1901-02
+select mention_type, count(*), count(nullif(entity_id,'')), round(100.0*count(nullif(entity_id,''))/count(*),1) from entities.review_mention group by 1 order by 2 desc;
+select case when coalesce(entity_id,'')<>'' then 'linked' when rank_reason like 'tie%' then 'tie' when rank_reason='gender-contradiction' then 'gender contradiction' when candidates_n=0 then 'no candidate' else 'other' end k, count(*) from entities.review_mention where mention_type='person' group by 1;
+select count(*), count(performer_person_id), count(work_id), count(date_undate) from research.review_assertion;
+select work_source, count(*) from research.review_assertion group by 1;
+select count(*) from research.review_solo;
+select genre, count(distinct page_id) from raw.review_page group by 1;
+select r.genre, count(m.mention_id), count(nullif(m.entity_id,'')) from entities.review_mention m join raw.review_page r using(page_id) where m.mention_type='person' group by 1;
+```
+
+Result: 733 -> new id 3183 (role text changed), still Жозефина; 731 still unresolved: Сергѣй's 1900-01 ordinal read as 2 (TheaterSchoolStaff «Легатъ 2-й» overwrites BalletArtists «Легатъ 3-й»; also 1899-00, 1901-02). Mentions: person 21,692 (17,742 linked, 81.8%; 3,892 ties, 50 gender contradictions), work 3,737 (2,918, 78.1%), role 1,127 (775, 68.8%), theater 632 (527), dance_number 137 (0). All mentions are from Ballet pages; Opera 262 and «All» 110 pages have none. Assertions 3,157: performer 2,922, work 2,033, date 718; work_source block 1,720, none 696, page-earlier-block 547, ambiguous 194. review_solo 96. Unknown-name queue 734 forms; title-misread candidates 36; work-consolidation candidates 9.
