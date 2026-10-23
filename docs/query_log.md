@@ -19806,3 +19806,30 @@ select block_id from raw.review_block where text like '%шествіи волш�
 ```
 
 Result: only raw.review_block changed (1 row, review_1904-05_SP_ballet_p000__b002); no mention or assertion change; production = tested copy.
+
+## 2026-10-23 — Matcher gender + pupil rule (#159 fix 3): effect on a test copy, NOT applied
+
+```sql
+-- match_review_mentions.py with person_gender (patronymic -> printed ordinal -> first name -> surname),
+-- «г./гг. + N-я» read as feminine, and the pupil guard (pupil honorific never -> anyone in the
+-- BalletArtists lists this season or earlier); rebuilt mentions/review tables/assertions on a copy, then:
+select n.mention_id, n.page_id, n.surface, n.evidence, o.entity_id, n.entity_id, po.display_name, pn.display_name, n.rank_reason
+from entities.review_mention n join b.entities.review_mention o using(mention_id)
+left join research.person po on po.person_id::varchar=o.entity_id left join research.person pn on pn.person_id::varchar=n.entity_id
+where n.mention_type='person' and n.entity_id is distinct from o.entity_id;
+-- + the spiski cross-check script run on production (before) and the copy (after)
+```
+
+Result: person mentions resolved 17,314 -> 17,742; assertions with a performer 2,831 -> 2,922. Mention changes: 535 new links, 109 unlinked, 42 repointed (list: docs/eval/matcher_gender_pupil_rule_changes_2026-10-23.csv). Cross-check: unlinked 326 -> 235, A (role in spiski same season) 1,322 -> 1,360, B 240 -> 242, C 893 -> 936, D 208 -> 206, F 168 -> 178; newly linked rows went 39 to A, 45 to C, 15 to F, 6 to D, 2 to B; 1 row left A. Largest losses: «г-жи Левенсонъ» 19 (Евгенія Сергѣевна -> tie).
+
+## 2026-10-23 — Matcher gender + pupil rule APPLIED: production check and suspects-list effect
+
+```sql
+-- production vs the tested copy, every table (candidate-list columns ignored)
+-- for each open row of the suspects CSV:
+select p.display_name from b.research.review_assertion x left join research.person p on p.person_id=x.performer_person_id where assertion_id=?;   -- b = backup
+select p.display_name, x.link_method from research.review_assertion x left join research.person p on p.person_id=x.performer_person_id where assertion_id=?;
+-- + the spiski cross-check re-run on production -> outputs/reviews/assertion_spiski_crosscheck.csv
+```
+
+Result: production = tested copy (17,742 person mentions linked; 2,922 assertions with a performer). Of the open suspects, 12 changed: Чекетти Королева -> Жозефина; Крюгеръ -> Елизавета Карловна; Гердтъ -> Елизавета Павловна; Пишо x2 -> Иванъ; Стуколкинъ Фрицъ -> Василій Николаевичъ; Эрлихъ, Мацкевичъ, Чумакова x2, Плессюкъ, «г. М. Петипа» -> unlinked; «г-нъ Чекетти» Пивія Жозефина -> Энрико. Unchanged include the spelled-out «воспитанница» rows and «г. Л. Ивановъ» -> Лариса.

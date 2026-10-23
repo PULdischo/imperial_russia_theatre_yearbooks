@@ -392,6 +392,19 @@ def build_lexicon(db: Path) -> Lexicon:
         if m:
             ordinals[str(pid)].add(m.group(1))
             ord_by_season[(str(pid), season)] = m.group(1)
+    # Who stands in the BalletArtists list in each season: an adult member of
+    # the company. A pupil honorific (`в-ца`, `восп-къ`, `уч-ца`) can never be
+    # one of them -- `в-къ Стуколкинъ` as Фрицъ is not Тимофей Алексѣевичъ
+    # (known_issues.md #159). Pupils mostly have no record of their own.
+    lex.company_by_season = {(str(pid), season) for pid, season in con.execute("""
+        select distinct pl.person_id, sp.season
+        from raw.person_entry pe
+        join entities.person_link pl on pl.entry_id = pe.entry_id
+        join raw.source_pages sp on sp.page_id = pe.page_id
+        where pe.entity_type = 'BalletArtists'""").fetchall()}
+    lex.company_seasons = collections.defaultdict(set)
+    for pid, s2 in lex.company_by_season:
+        lex.company_seasons[pid].add(s2)
     lex.ordinal_by_season = ord_by_season
     lex.city_by_season = city_by_season
     lex.cities = cities
@@ -406,6 +419,7 @@ def build_lexicon(db: Path) -> Lexicon:
             if m:
                 own.add(m.group(0))
         lex.person_meta[str(pid)] = {"family": fam, "display": disp, "ordinal": ordn,
+                                "gender": person_gender(disp, fam),
                                 "ordinals": own,
                                 "first_season": first, "last_season": last,
                                 "sections": sections.get(str(pid), set())}
@@ -548,6 +562,8 @@ def build_lexicon(db: Path) -> Lexicon:
 FEM_HON = {"г-жа", "г-жи", "г-жъ", "г-жею", "г-же", "восп-ца", "восп-цы",
            "уч-ца", "уч-цы", "в-ца", "в-цы", "балерина", "танцовщица"}
 MASC_HON = {"г.", "гг.", "г-нъ", "г-да", "в-къ", "уч-къ", "восп-къ"}
+PUPIL_HON = {"восп-ца", "восп-цы", "восп-къ", "уч-ца", "уч-цы", "уч-къ",
+             "в-ца", "в-цы", "в-къ"}
 FEM_CANON = ("ова", "ева", "ина", "ына", "ская", "цкая", "ая", "а")
 MASC_CANON = ("овъ", "евъ", "инъ", "ынъ", "скій", "цкій", "ъ")
 FEM_SURFACE = ("ая", "ой", "ую", "ою", "ой", "ы")
@@ -583,6 +599,50 @@ def canon_gender(family: str) -> str | None:
     return None
 
 
+# Russian men's names that end like women's: never read these as feminine.
+MALE_A_NAMES = {"илья", "никита", "ѳома", "фома", "кузьма", "лука", "савва",
+                "иона", "сила", "ѳока", "фока", "ерема", "емеля", "миша", "саша",
+                "коля", "ваня", "петя", "гаврила", "данила", "лукья"}
+
+
+def person_gender(display: str, family: str) -> str | None:
+    """Gender of a research.person record, for checking against an honorific.
+
+    canon_gender reads only the surname, and only where Russian inflects it,
+    so for `Легатъ`, `Чекетти`, `Крюгеръ`, `Гердтъ` it says nothing -- and an
+    honorific could never veto the wrong sibling: `г. Легатъ 3-й` (Сергѣй)
+    went to Евгенія Густавовна, `г-жа Чекетти` to Энрико (known_issues.md
+    #159, 2026-10-23). The patronymic is the reliable marker (-овна/-евна/
+    -ична vs -овичъ/-евичъ/-ичъ); then the record's own printed ordinal
+    (`1-я` vs `1-й`); the surname last.
+    """
+    fam_part, _, given = (display or "").partition(",")
+    words = given.split()
+    if len(words) >= 2:
+        pat = words[-1].rstrip(".,")
+        if pat.endswith(("вна", "чна", "шна")):
+            return "f"
+        if pat.endswith(("вичъ", "ичъ", "вич", "ич")):
+            return "m"
+    m = re.search(r"\d+\s*-\s*([яй])\b", fam_part)
+    if m:
+        return "f" if m.group(1) == "я" else "m"
+    # A first name alone (guest artists often have no patronymic: `Джури,
+    # Адель`, `Мендесъ, Джульетта`, `Болъмъ, Адольфъ-Эмиль`). Without this
+    # they scored no gender while every same-surname rival with a patronymic
+    # did, and lost their own mentions on ties.
+    if words:
+        first = words[0].rstrip(".,").split("-")[0].lower()
+        if len(first) > 2 and not first.endswith("."):
+            if first in MALE_A_NAMES:
+                return "m"
+            if first.endswith(("ъ", "й")):
+                return "m"
+            if first.endswith(("а", "я", "ль")) or first == "любовь":
+                return "f"      # Адель, Рашель; other -ь names (Игорь) say nothing
+    return canon_gender(family or "")
+
+
 def surface_gender(surface: str, honorific: str) -> str | None:
     """Gender of the mention, from the honorific first and the ending second.
 
@@ -591,6 +651,12 @@ def surface_gender(surface: str, honorific: str) -> str | None:
     masculine genitive of `Павловъ`.
     """
     h = honorific.strip().lower()
+    # `г.` is sometimes a slip for `г-жа`, or an initial (RG, 2026-10-10: not a
+    # hard rule). A feminine nominative ordinal printed on the name itself
+    # (`г. Штихлингъ 2-я`) outweighs it. Only `-я`: `-й` is also the feminine
+    # oblique (`Павловой 2-й`), so it proves nothing.
+    if h in ("г.", "гг.") and re.search(r"\d+-я\b", surface):
+        return "f"
     if h in FEM_HON:
         return "f"
     if h in MASC_HON:
@@ -664,7 +730,7 @@ def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
         # And never across gender: `Никитина` is not Никитинъ, Алексѣй
         # Никитичъ. Same looser ending test as the ballet-roster tie-break.
         surf_g = canon_gender(SURFACE_ORDINAL.sub("", surface).strip())
-        g = canon_gender(meta.get("family") or "")
+        g = meta.get("gender")
         if surf_g and g and surf_g != g:
             return None
         return here[0]
@@ -679,7 +745,7 @@ def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
             if here:
                 exact, via_city = [here], " in this city"
         if len(exact) == 1:
-            g = canon_gender((lex.person_meta.get(exact[0], {}).get("family") or ""))
+            g = lex.person_meta.get(exact[0], {}).get("gender")
             if not (want_g and g and want_g != g):
                 return exact[0], 99, "ordinal is unique among candidates" + via_city
 
@@ -703,7 +769,7 @@ def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
             why.append("ordinal-absent")
         elif not want_ord and meta_ord:
             score -= 2            # the print gives an ordinal when one is needed
-        g = canon_gender(meta["family"] or "")
+        g = meta.get("gender")
         if want_g and g:
             if want_g == g:
                 score += 4
@@ -768,8 +834,8 @@ def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
         dancers = [
             pid for pid in tied
             if "BalletArtists" in (lex.person_meta.get(pid, {}).get("sections") or ())
-            and not (surf_g and (g2 := canon_gender(
-                (lex.person_meta.get(pid, {}).get("family") or ""))) and surf_g != g2)
+            and not (surf_g and (g2 := lex.person_meta.get(pid, {}).get("gender"))
+                     and surf_g != g2)
         ]
         if len(dancers) == 1:
             why = (best[2] + "+ballet-roster").lstrip("+")
@@ -927,6 +993,18 @@ def scan_block(text: str, block_type: str, lex: Lexicon,
                     eid, method, why = bal[0], method + "+ballet-genre", "ballet-genre"
                 else:
                     ids = parents
+        if kind == "person" and evidence.strip().lower() in PUPIL_HON and season:
+            # in the company this season or any earlier one: a pupil cannot
+            # have been a member already
+            adults = [i for i in ids
+                      if any(s2 <= season for s2 in
+                             getattr(lex, "company_seasons", {}).get(i, ()))]
+            if adults:
+                ids = [i for i in ids if i not in adults]
+                eid = ids[0] if len(ids) == 1 else ""
+                why = "pupil-guard"
+                if not ids:
+                    method, conf = method + "+pupil-guard", "unlinked"
         if kind == "person" and len(ids) > 1:
             pick, margin, why = rank_candidates(ids, text[a:b], evidence, season,
                                                 lex, initials_before(text, a), genre,
@@ -949,7 +1027,7 @@ def scan_block(text: str, block_type: str, lex: Lexicon,
             # the ranker then penalises them all equally and still picks one.
             want_g = surface_gender(text[a:b], evidence)
             meta = lex.person_meta.get(eid)
-            got_g = canon_gender((meta or {}).get("family") or "")
+            got_g = (meta or {}).get("gender")
             if want_g and got_g and want_g != got_g:
                 # Inside an honorific LIST, a contradiction means the list has
                 # moved on to the other gender, not that someone is missing:

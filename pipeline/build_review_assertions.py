@@ -51,7 +51,7 @@ from pathlib import Path
 import duckdb
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from match_review_mentions import (HONORIFIC, canon_gender, key_of, reflow,  # noqa: E402
+from match_review_mentions import (HONORIFIC, key_of, person_gender, reflow,  # noqa: E402
                                    surname_forms, surface_gender)
 
 # The cast-list grammar, `X—Y`, where ONE side is a role and the other a
@@ -367,8 +367,11 @@ def main() -> None:
     print(f"spiski credits indexed: {len(by_role):,} (person, role) pairs, "
           f"{len(by_work):,} (person, work) pairs")
 
-    person_family = {str(r[0]): (r[1] or "") for r in con.execute(
-        "SELECT person_id, canonical_family_name FROM research.person").fetchall()}
+    person_family, person_g = {}, {}
+    for pid, fam, disp in con.execute(
+            "SELECT person_id, canonical_family_name, display_name FROM research.person").fetchall():
+        person_family[str(pid)] = fam or ""
+        person_g[str(pid)] = person_gender(disp or "", fam or "")
     known_surnames: set[str] = set()
     for fam in set(person_family.values()):
         if fam:
@@ -583,7 +586,7 @@ def main() -> None:
             def gender_ok(pid: str) -> bool:
                 if not want_g:
                     return True
-                g = canon_gender(person_family.get(pid, ""))
+                g = person_g.get(pid)   # patronymic first (#159: 2835 Легатъ)
                 return (g is None) or (g == want_g)
 
             rk = key_of(role_s)

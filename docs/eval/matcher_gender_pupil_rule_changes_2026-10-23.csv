@@ -1,0 +1,687 @@
+change,mention_id,page_id,surface,honorific,old,new,rank_reason
+unlinked,356,review_1891-92_SP_ballet_p011,Іогансона,г.,"Іогансонъ, Анна Христіановна",,tie(margin=2)
+unlinked,588,review_1892-93_MSK_ballet_p006,Ѳедорова,г-жа,"Ѳедорова, Марія Логиновна",,tie(margin=0)
+unlinked,600,review_1892-93_MSK_ballet_p006,Тарасенковъ,,"Тарасенко, Валентина Викторовна",,tie(margin=0)
+unlinked,893,review_1892-93_SP_ballet_p004,Іогансономъ,г.,"Іогансонъ, Анна Христіановна",,tie(margin=2)
+unlinked,1683,review_1893-94_MSK_ballet_p011,Васильева,восп-цы,"Васильева, Анна Гордѣевна",,tie(margin=0)
+unlinked,1761,review_1893-94_MSK_ballet_p011,Васильева,восп-цы,"Васильева, Анна Гордѣевна",,tie(margin=0)
+unlinked,1764,review_1893-94_MSK_ballet_p011,Смирнова,восп-цы,"Смирнова, Евгенія Кирилловна",,tie(margin=2)
+unlinked,1765,review_1893-94_MSK_ballet_p011,Ѳедорова,восп-цы,"Ѳедорова, Марія Логиновна",,tie(margin=2)
+unlinked,3135,review_1894-95_MSK_ballet_p004,Ѳедорова,г-жи,"Ѳедорова, Марія Логиновна",,tie(margin=0)
+unlinked,3265,review_1894-95_MSK_ballet_p006,Ѳедорова,г-жи,"Ѳедорова, Марія Логиновна",,tie(margin=0)
+unlinked,3789,review_1894-95_SP_ballet_p010,Симонъ,г-жа,"Симонъ, Антонъ Юльевичъ",,gender-contradiction
+unlinked,4279,review_1895-96_MSK_ballet_p002,Ѳедорова,г-жа,"Ѳедорова, Марія Логиновна",,tie(margin=0)
+unlinked,4669,review_1895-96_MSK_ballet_p012,Ѳедорова,г-жи,"Ѳедорова, Марія Логиновна",,tie(margin=0)
+unlinked,4715,review_1895-96_MSK_ballet_p014,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,5109,review_1895-96_SP_ballet_p005,Іогансонъ,г.,"Іогансонъ, Анна Христіановна",,tie(margin=2)
+unlinked,5967,review_1896-97_MSK_ballet_p001,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,6200,review_1896-97_MSK_ballet_p004,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,6250,review_1896-97_MSK_ballet_p004,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,6303,review_1896-97_MSK_ballet_p005,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,6315,review_1896-97_MSK_ballet_p005,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,6544,review_1896-97_MSK_ballet_p008,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,6654,review_1896-97_MSK_ballet_p012,Левенсонъ,г-жа,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,6733,review_1896-97_MSK_ballet_p014,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,6902,review_1896-97_SP_ballet_p004,Крюгеръ 2-я,г-жи,"Крюгеръ, Эмануилъ Эдуардовичъ",,tie(margin=2)
+unlinked,7387,review_1896-97_SP_ballet_p014,Легатъ 3-й,г.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,7410,review_1896-97_SP_ballet_p016,Легатъ 3-й,г.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,7416,review_1896-97_SP_ballet_p016,Легатъ 3-й,г.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,7422,review_1896-97_SP_ballet_p016,Легатъ 3-й,г.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,7429,review_1896-97_SP_ballet_p017,Легатъ 3-й,гг.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,7673,review_1896-97_SP_ballet_p024,Легатъ 3-й,гг.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,7735,review_1896-97_SP_ballet_p025,Легатъ 3-й,гг.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,7951,review_1897-98_MSK_ballet_p002,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,8029,review_1897-98_MSK_ballet_p005,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,8061,review_1897-98_MSK_ballet_p007,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,8090,review_1897-98_MSK_ballet_p007,Левенсонъ,Г-жа,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,8114,review_1897-98_MSK_ballet_p009,Павлова,Восп-ца,"Павлова, Варвара Павловна",,tie(margin=0)
+unlinked,8117,review_1897-98_MSK_ballet_p009,Соколова,Восп-ца,"Соколова, Татьяна Александровна",,tie(margin=2)
+unlinked,8275,review_1897-98_MSK_ballet_p014,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,8300,review_1897-98_MSK_ballet_p015,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,8485,review_1897-98_MSK_ballet_p019,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,8555,review_1897-98_MSK_ballet_p020,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,8625,review_1897-98_MSK_ballet_p020,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,8670,review_1897-98_MSK_ballet_p021,Левенсонъ,г-жи,"Левенсонъ, Евгенія Сергѣевна",,tie(margin=2)
+unlinked,10680,review_1899-00_SP_ballet_p014,Петипа 5-я,г-жи,"Петипа, Маріусъ Ивановичъ",,tie(margin=0)
+unlinked,10836,review_1899-00_SP_ballet_p018,Легать 3-й,г.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,10895,review_1899-00_SP_ballet_p020,Легать 3-й,гг.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,10932,review_1899-00_SP_ballet_p024,Легать 3-й,гг.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,10975,review_1899-00_SP_ballet_p025,Легать 3-й,г.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,10984,review_1899-00_SP_ballet_p025,Легать 3-й,г.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,11279,review_1899-00_SP_ballet_p035,Петипа,г-жи,"Петипа, Маріусъ Ивановичъ",,tie(margin=0)
+unlinked,11396,review_1899-00_SP_ballet_p038,Петипа 5-я,г-жа,"Петипа, Маріусъ Ивановичъ",,tie(margin=0)
+unlinked,11493,review_1899-00_SP_ballet_p041,Легать 3-й,г.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,11506,review_1899-00_SP_ballet_p041,Легать 3-й,г.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,11530,review_1899-00_SP_ballet_p042,Петипа 5-й,г-жъ,"Петипа, Маріусъ Ивановичъ",,tie(margin=0)
+unlinked,12184,review_1900-01_SP_ballet_p002,Эрлихъ,г-жа,"Эрлихъ, Рудольфъ",,gender-contradiction
+unlinked,12270,review_1900-01_SP_ballet_p004,Кеммереръ 1-я,г-жа,"Кеммереръ, Владиміръ Николаевичъ",,gender-contradiction
+unlinked,12593,review_1900-01_SP_ballet_p022,Легатъ 3-й,г.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,12672,review_1900-01_SP_ballet_p029,Легатъ 3-й,г.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,12679,review_1900-01_SP_ballet_p029,Легатъ 3-й,гг.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,12688,review_1900-01_SP_ballet_p029,Легатъ 3-й,г.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,12887,review_1900-01_SP_ballet_p038,Легать 3-й,г.,"Легатъ, Евгенія Густавовна",,tie(margin=1)
+unlinked,13418,review_1901-02_MSK_ballet_p017,Борегарь,г-жи,"Борегарь, Александръ Павловичъ",,gender-contradiction
+unlinked,13439,review_1901-02_MSK_ballet_p022,Борегаръ,г-жи,"Борегарь, Александръ Павловичъ",,gender-contradiction
+unlinked,15017,review_1901-02_SP_ballet_p028,Чумакова,восп-ца,"Чумакова, Ольга Савельевна",,tie(margin=2)
+unlinked,17113,review_1902-03_SP_ballet_p018,Чекетти,г-жа,"Чекетти, Энрико Цезаревичъ",,tie(margin=2)
+unlinked,17155,review_1902-03_SP_ballet_p019,Крюгеръ,г-жа,"Крюгеръ, Эмануилъ Эдуардовичъ",,tie(margin=2)
+unlinked,17448,review_1903-04_MSK_ballet_p013,Царманъ 2-я,гг.,"Царманъ 2-й, Владиміръ Александровичъ",,tie(margin=2)
+unlinked,19221,review_1903-04_SP_ballet_p016,Чумакова,в-цы,"Чумакова, Ольга Савельевна",,tie(margin=2)
+unlinked,19265,review_1903-04_SP_ballet_p016,Мацкевичъ,в-цы,"Мацкевичъ, Владиславъ Ануфріевичъ",,tie(margin=2)
+unlinked,19280,review_1903-04_SP_ballet_p016,Лопухова,в-цы,"Лопухова, Евгенія Васильевна",,tie(margin=2)
+unlinked,19296,review_1903-04_SP_ballet_p016,Алексѣевъ,в-къ,"Алексѣевъ, Алексѣй Николаевичъ",,tie(margin=0)
+unlinked,19336,review_1903-04_SP_ballet_p017,Лопухова,в-цы,"Лопухова, Евгенія Васильевна",,tie(margin=2)
+unlinked,19344,review_1903-04_SP_ballet_p017,Чумакова,в-цы,"Чумакова, Ольга Савельевна",,tie(margin=2)
+unlinked,19351,review_1903-04_SP_ballet_p017,Эльманъ,в-ца,"Эльманъ, Александръ Федоровичъ",,tie(margin=2)
+unlinked,22581,review_1905-06_MSK_ballet_p018,Гербера,Г.,"Герберъ, Ю.",,tie(margin=0)
+unlinked,23340,review_1905-06_SP_ballet_p004,Плессюкъ,г-жа,"Плесюкъ, Александръ Ивановичъ",,gender-contradiction
+unlinked,23850,review_1905-06_SP_ballet_p010,Лопухова,в-ца,"Лопухова, Евгенія Васильевна",,tie(margin=2)
+unlinked,23854,review_1905-06_SP_ballet_p010,Чумакова,в-цы,"Чумакова, Ольга Савельевна",,tie(margin=2)
+unlinked,23883,review_1905-06_SP_ballet_p010,Чумакова,в-ца,"Чумакова, Ольга Савельевна",,tie(margin=2)
+unlinked,23886,review_1905-06_SP_ballet_p010,Чумакова,в-цы,"Чумакова, Ольга Савельевна",,tie(margin=2)
+unlinked,23893,review_1905-06_SP_ballet_p010,Лопухова,в-цы,"Лопухова, Евгенія Васильевна",,tie(margin=2)
+unlinked,23902,review_1905-06_SP_ballet_p010,Эльманъ,в-цы,"Эльманъ, Александръ Федоровичъ",,tie(margin=2)
+unlinked,25684,review_1907-08_MSK_ballet_p001,Каралли,гг.,"Каралли, Вѣра Алексѣевна",,gender-contradiction
+unlinked,26578,review_1907-08_SP_ballet_p014,Гердтъ,г-жа,"Гердтъ, Павелъ Андреевичъ",,tie(margin=2)
+new link,299,review_1891-92_SP_ballet_p005,Петипа,г-жа,,"Петипа 1-я, Марія Маріусовна",gender+season
+new link,307,review_1891-92_SP_ballet_p005,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,308,review_1891-92_SP_ballet_p005,Петипа,Г-жа,,"Петипа 1-я, Марія Маріусовна",gender+season
+new link,326,review_1891-92_SP_ballet_p010,Легатъ 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,338,review_1891-92_SP_ballet_p010,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,401,review_1891-92_SP_ballet_p014,Легатъ 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,955,review_1892-93_SP_ballet_p006,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,961,review_1892-93_SP_ballet_p006,Чекетти,г-жею,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,1046,review_1892-93_SP_ballet_p015,Легатъ,в-къ,,"Легатъ 2-й, Сергѣй Густавовичъ",gender
+new link,1162,review_1892-93_SP_ballet_p018,Пишо,г.,,"Пишо, Иванъ Александровичъ",gender+season
+new link,1195,review_1892-93_SP_ballet_p019,Левинсонъ,гг.,,"Левинсонъ, Василій Ѳедоровичъ",gender+season
+new link,1261,review_1893-94_MSK_ballet_p001,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,1265,review_1893-94_MSK_ballet_p001,Гельцеръ,Г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,1294,review_1893-94_MSK_ballet_p002,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,1356,review_1893-94_MSK_ballet_p004,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,1393,review_1893-94_MSK_ballet_p005,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,1436,review_1893-94_MSK_ballet_p006,Гельцеръ,Г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,1464,review_1893-94_MSK_ballet_p006,Гельцеръ,восп-цы,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,1465,review_1893-94_MSK_ballet_p006,Крылова,восп-цы,,"Крылова 3-я, Марія Ивановна",gender+ballet-roster
+new link,1466,review_1893-94_MSK_ballet_p006,Михайлова,восп-цы,,"Михайлова 1-я, Любовь Матвѣевна",gender+season
+new link,1495,review_1893-94_MSK_ballet_p007,Михайлова,восп-ца,,"Михайлова 1-я, Любовь Матвѣевна",gender+season
+new link,1503,review_1893-94_MSK_ballet_p007,Михайлова,восп-цы,,"Михайлова 1-я, Любовь Матвѣевна",gender+season
+new link,1504,review_1893-94_MSK_ballet_p007,Крылова,восп-цы,,"Крылова 3-я, Марія Ивановна",gender+ballet-roster
+new link,1506,review_1893-94_MSK_ballet_p007,Царманъ,гг.,,"Царманъ, Александръ Александровичъ",gender+season
+new link,1526,review_1893-94_MSK_ballet_p007,Гельцеръ,восп-ца,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,1635,review_1893-94_MSK_ballet_p010,Гельцеръ,Г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,1644,review_1893-94_MSK_ballet_p010,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,1680,review_1893-94_MSK_ballet_p011,Крылова,восп-цы,,"Крылова 3-я, Марія Ивановна",gender+ballet-roster
+new link,1704,review_1893-94_MSK_ballet_p011,Гельцеръ,восп-ца,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,1723,review_1893-94_MSK_ballet_p011,Крылова,восп-ца,,"Крылова 3-я, Марія Ивановна",gender+ballet-roster
+new link,1759,review_1893-94_MSK_ballet_p011,Крылова,восп-цы,,"Крылова 3-я, Марія Ивановна",gender+ballet-roster
+new link,1763,review_1893-94_MSK_ballet_p011,Михайлова,восп-цы,,"Михайлова 1-я, Любовь Матвѣевна",gender+season
+new link,1790,review_1893-94_MSK_ballet_p012,Гельцеръ,восп-ца,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,1835,review_1893-94_MSK_ballet_p012,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,1844,review_1893-94_MSK_ballet_p012,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,1907,review_1893-94_SP_ballet_p001,Легать 1-й,Г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,1948,review_1893-94_SP_ballet_p002,Легатъ 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,1995,review_1893-94_SP_ballet_p003,Легатъ 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,2024,review_1893-94_SP_ballet_p004,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,2122,review_1893-94_SP_ballet_p010,Легатъ 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,2182,review_1893-94_SP_ballet_p011,Чекетти,г-жи,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,2214,review_1893-94_SP_ballet_p012,Чекетти,г-жи,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,2239,review_1893-94_SP_ballet_p012,Пишо,гг.,,"Пишо, Иванъ Александровичъ",gender+season
+new link,2283,review_1893-94_SP_ballet_p013,Легатъ 2-я,г-жи,,"Легатъ, Евгенія Густавовна",ordinal+gender+season
+new link,2300,review_1893-94_SP_ballet_p013,Легать 2-я,г-жи,,"Легатъ, Евгенія Густавовна",ordinal+gender+season
+new link,2405,review_1893-94_SP_ballet_p014,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,2429,review_1893-94_SP_ballet_p016,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,2433,review_1893-94_SP_ballet_p016,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,2462,review_1893-94_SP_ballet_p016,Легатъ 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,2504,review_1893-94_SP_ballet_p016,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,2507,review_1893-94_SP_ballet_p016,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,2527,review_1893-94_SP_ballet_p016,Легатъ 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,2537,review_1893-94_SP_ballet_p017,Легатъ 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,2542,review_1893-94_SP_ballet_p017,Чекетти,г-жи,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,2547,review_1893-94_SP_ballet_p017,Чекетти,гг.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,2583,review_1893-94_SP_ballet_p018,Легатъ 2-я,г-жи,,"Легатъ, Евгенія Густавовна",ordinal+gender+season
+new link,2602,review_1893-94_SP_ballet_p018,Легатъ 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,2791,review_1893-94_SP_ballet_p021,Легатъ 2-я,г-жи,,"Легатъ, Евгенія Густавовна",ordinal+gender+season
+new link,2804,review_1893-94_SP_ballet_p021,Легатъ 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,2921,review_1893-94_SP_ballet_p024,Легатъ 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,3157,review_1894-95_MSK_ballet_p005,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,3203,review_1894-95_MSK_ballet_p005,Гельцеръ,г-жъ,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,3402,review_1894-95_SP_ballet_p003,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,3426,review_1894-95_SP_ballet_p003,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,3433,review_1894-95_SP_ballet_p003,Чекетти,гг.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,3441,review_1894-95_SP_ballet_p003,Легать 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,3508,review_1894-95_SP_ballet_p004,Чекетти,гг.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,3513,review_1894-95_SP_ballet_p004,Чекетти,гг.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,3518,review_1894-95_SP_ballet_p004,Легать 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,3523,review_1894-95_SP_ballet_p004,Легать 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,3563,review_1894-95_SP_ballet_p004,Легатъ 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,3652,review_1894-95_SP_ballet_p007,Легать 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,3687,review_1894-95_SP_ballet_p008,Легатъ 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,3705,review_1894-95_SP_ballet_p009,Левенсонъ,гг.,,"Левинсонъ, Василій Ѳедоровичъ",gender+season
+new link,3781,review_1894-95_SP_ballet_p010,Петипа,г.,,"Петипа, Маріусъ Ивановичъ",gender+season
+new link,3786,review_1894-95_SP_ballet_p010,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,3804,review_1894-95_SP_ballet_p010,Пономаревъ,восп-къ,,"Пономаревъ, Евгеній Петровичъ",gender+season
+new link,3824,review_1894-95_SP_ballet_p011,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,3851,review_1894-95_SP_ballet_p011,Левенсонъ,гг.,,"Левинсонъ, Василій Ѳедоровичъ",gender+season
+new link,3876,review_1894-95_SP_ballet_p011,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,3931,review_1894-95_SP_ballet_p012,Левенсонъ,гг.,,"Левинсонъ, Василій Ѳедоровичъ",gender+season
+new link,3970,review_1894-95_SP_ballet_p014,Легатъ 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,4114,review_1894-95_SP_ballet_p018,Легатъ 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,4210,review_1894-95_SP_ballet_p021,Легатъ 2-й,г.,,"Легатъ 2-й, Иванъ Густавовичъ",ordinal+gender+season
+new link,4257,review_1895-96_MSK_ballet_p001,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,4263,review_1895-96_MSK_ballet_p001,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,4276,review_1895-96_MSK_ballet_p002,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,4400,review_1895-96_MSK_ballet_p005,Гельцеръ,Г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,4445,review_1895-96_MSK_ballet_p009,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,4653,review_1895-96_MSK_ballet_p011,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,4730,review_1895-96_MSK_ballet_p014,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,4798,review_1895-96_SP_ballet_p001,Легатъ 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,4799,review_1895-96_SP_ballet_p001,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,4816,review_1895-96_SP_ballet_p002,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,4819,review_1895-96_SP_ballet_p002,Легатъ 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,4821,review_1895-96_SP_ballet_p002,Легатъ 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,4888,review_1895-96_SP_ballet_p003,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,4939,review_1895-96_SP_ballet_p003,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,4941,review_1895-96_SP_ballet_p003,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,4987,review_1895-96_SP_ballet_p003,Легатъ 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,5063,review_1895-96_SP_ballet_p004,Чекетти,гг.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,5075,review_1895-96_SP_ballet_p004,Левинсонъ,гг.,,"Левинсонъ, Василій Ѳедоровичъ",gender+season
+new link,5107,review_1895-96_SP_ballet_p005,Пишо,г.,,"Пишо, Иванъ Александровичъ",gender+season
+new link,5223,review_1895-96_SP_ballet_p011,Левинсонъ,гг.,,"Левинсонъ, Василій Ѳедоровичъ",gender+season
+new link,5373,review_1895-96_SP_ballet_p014,Легатъ 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,5433,review_1895-96_SP_ballet_p015,Легатъ 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,5649,review_1895-96_SP_ballet_p025,Легать 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,5685,review_1895-96_SP_ballet_p025,Легатъ 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,5714,review_1895-96_SP_ballet_p026,Левинсонъ,гг.,,"Левинсонъ, Василій Ѳедоровичъ",gender+season
+new link,5743,review_1895-96_SP_ballet_p026,Легатъ 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,5797,review_1895-96_SP_ballet_p026,Легатъ 1-я,г-жи,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,5825,review_1895-96_SP_ballet_p026,Левинсонъ,гг.,,"Левинсонъ, Василій Ѳедоровичъ",gender+season
+new link,5855,review_1895-96_SP_ballet_p027,Легатъ 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,5856,review_1895-96_SP_ballet_p027,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,5876,review_1895-96_SP_ballet_p027,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,5890,review_1895-96_SP_ballet_p027,Легатъ 1-я,г-жа,,"Легатъ 1-я, Вѣра Густавовна",ordinal+gender+season
+new link,6011,review_1896-97_MSK_ballet_p001,Царманъ,гг.,,"Царманъ, Александръ Александровичъ",gender+season
+new link,6110,review_1896-97_MSK_ballet_p002,Царманъ,гг.,,"Царманъ, Александръ Александровичъ",gender+season
+new link,6365,review_1896-97_MSK_ballet_p005,Гельцеръ,Г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,6457,review_1896-97_MSK_ballet_p007,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,6619,review_1896-97_MSK_ballet_p009,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,6893,review_1896-97_SP_ballet_p004,Пишо,г.,,"Пишо, Иванъ Александровичъ",gender+season
+new link,6956,review_1896-97_SP_ballet_p005,Гельцеръ,Г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,6979,review_1896-97_SP_ballet_p005,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,7044,review_1896-97_SP_ballet_p006,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,7091,review_1896-97_SP_ballet_p007,Легатъ,г-жи,,"Легатъ, Евгенія Густавовна",gender+season
+new link,7197,review_1896-97_SP_ballet_p007,Легать,г-жи,,"Легатъ, Евгенія Густавовна",gender+season
+new link,7244,review_1896-97_SP_ballet_p008,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,7378,review_1896-97_SP_ballet_p014,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,7706,review_1896-97_SP_ballet_p025,Легатъ 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,7813,review_1896-97_SP_ballet_p026,Легатъ 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,7920,review_1897-98_MSK_ballet_p001,Дьякъ,г-жа,,"Дьякъ, Марія Павловна",gender+season
+new link,7933,review_1897-98_MSK_ballet_p001,Дьякъ,г-жа,,"Дьякъ, Марія Павловна",gender+season
+new link,8013,review_1897-98_MSK_ballet_p004,Новикова,Восп-ца,,"Новикова, Екатерина Дмитріевна",gender
+new link,8115,review_1897-98_MSK_ballet_p009,Дьякъ,Г-жа,,"Дьякъ, Марія Павловна",gender+season
+new link,8116,review_1897-98_MSK_ballet_p009,Егорова,Восп-ца,,"Егорова 2-я, Любовь Александровна",gender+season
+new link,8131,review_1897-98_MSK_ballet_p009,Дьякъ,г-жа,,"Дьякъ, Марія Павловна",gender+season
+new link,8142,review_1897-98_MSK_ballet_p009,Ѳедорова,восп-ца,,"Ѳедорова 1-я, Екатерина Никифоровна",gender+season
+new link,8168,review_1897-98_MSK_ballet_p010,Никитинъ 2-й,уч-къ,,"Никитинъ 2-й, Анатолій Дмитріевичъ",ordinal is unique among candidates
+new link,8172,review_1897-98_MSK_ballet_p010,Михайловъ,уч-къ,,"Михайловъ, Константинъ Анемподистовичъ",gender+season
+new link,8246,review_1897-98_MSK_ballet_p013,Ѳедорова 4-я,Восп-ца,,"Ѳедорова 1-я, Екатерина Никифоровна",gender+season
+new link,8317,review_1897-98_MSK_ballet_p015,Дьякъ,г-жа,,"Дьякъ, Марія Павловна",gender+season
+new link,8364,review_1897-98_MSK_ballet_p016,Михайловъ,уч-къ,,"Михайловъ, Константинъ Анемподистовичъ",gender+season
+new link,8585,review_1897-98_MSK_ballet_p020,Дьякъ,г-жи,,"Дьякъ, Марія Павловна",gender+season
+new link,8604,review_1897-98_MSK_ballet_p020,Дьякъ,г-жи,,"Дьякъ, Марія Павловна",gender+season
+new link,8790,review_1897-98_MSK_ballet_p022,Дьякъ,гг.,,"Дьякъ, Иванъ Павловичъ",gender+season
+new link,8875,review_1897-98_SP_ballet_p001,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,8986,review_1897-98_SP_ballet_p004,Чекетти,гг.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,9016,review_1897-98_SP_ballet_p008,Легать 2-й,г.,,"Легатъ 2-й, Иванъ Густавовичъ",ordinal+gender+season
+new link,9052,review_1897-98_SP_ballet_p008,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,9105,review_1897-98_SP_ballet_p012,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,9138,review_1897-98_SP_ballet_p013,Гельцеръ,Г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,9185,review_1897-98_SP_ballet_p014,Легать 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,9196,review_1897-98_SP_ballet_p014,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,9200,review_1897-98_SP_ballet_p014,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,9234,review_1897-98_SP_ballet_p015,Легать 1-й,Г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,9260,review_1897-98_SP_ballet_p015,Легать 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,9359,review_1897-98_SP_ballet_p020,Легать 3-й,г.,,"Легатъ 2-й, Сергѣй Густавовичъ",ordinal+gender+season
+new link,9361,review_1897-98_SP_ballet_p020,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,9447,review_1897-98_SP_ballet_p022,Чекетти,г-жи,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,9451,review_1897-98_SP_ballet_p022,Легатъ 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,9465,review_1897-98_SP_ballet_p022,Легать 1-й,Г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,9675,review_1897-98_SP_ballet_p027,Чекетти,г-жи,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,9681,review_1897-98_SP_ballet_p027,Легатъ 3-й,гг.,,"Легатъ 2-й, Сергѣй Густавовичъ",ordinal+gender+season
+new link,9685,review_1897-98_SP_ballet_p027,Легать 3-й,Г.,,"Легатъ 2-й, Сергѣй Густавовичъ",ordinal+gender+season
+new link,9700,review_1897-98_SP_ballet_p029,Легатъ 3-й,г.,,"Легатъ 2-й, Сергѣй Густавовичъ",ordinal+gender+season
+new link,9745,review_1897-98_SP_ballet_p030,Легать 2-й,гг.,,"Легатъ 2-й, Иванъ Густавовичъ",ordinal+gender+season
+new link,9787,review_1897-98_SP_ballet_p030,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,9792,review_1897-98_SP_ballet_p030,Легать 3-й,гг.,,"Легатъ 2-й, Сергѣй Густавовичъ",ordinal+gender+season
+new link,9795,review_1897-98_SP_ballet_p030,Легать 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,9804,review_1897-98_SP_ballet_p031,Гельцеръ,Г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,9847,review_1897-98_SP_ballet_p031,Легать 3-й,гг.,,"Легатъ 2-й, Сергѣй Густавовичъ",ordinal+gender+season
+new link,9850,review_1897-98_SP_ballet_p031,Легать 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,9891,review_1897-98_SP_ballet_p031,Легатъ 3-й,г.,,"Легатъ 2-й, Сергѣй Густавовичъ",ordinal+gender+season
+new link,9910,review_1897-98_SP_ballet_p032,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,9919,review_1897-98_SP_ballet_p032,Легатъ 3-й,г.,,"Легатъ 2-й, Сергѣй Густавовичъ",ordinal+gender+season
+new link,9928,review_1897-98_SP_ballet_p032,Легатъ 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,9999,review_1897-98_SP_ballet_p035,Легатъ 3-й,г.,,"Легатъ 2-й, Сергѣй Густавовичъ",ordinal+gender+season
+new link,10008,review_1897-98_SP_ballet_p035,Легатъ 3-й,гг.,,"Легатъ 2-й, Сергѣй Густавовичъ",ordinal+gender+season
+new link,10078,review_1897-98_SP_ballet_p036,Легатъ 3-й,гг.,,"Легатъ 2-й, Сергѣй Густавовичъ",ordinal+gender+season
+new link,10152,review_1897-98_SP_ballet_p036,Легатъ 2-й,гг.,,"Легатъ 2-й, Иванъ Густавовичъ",ordinal+gender+season
+new link,10158,review_1897-98_SP_ballet_p036,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,10252,review_1897-98_SP_ballet_p038,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,10267,review_1897-98_SP_ballet_p038,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,10272,review_1897-98_SP_ballet_p038,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,10274,review_1897-98_SP_ballet_p038,Легать 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,10318,review_1897-98_SP_ballet_p039,Гельцеръ,г-жею,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,10371,review_1897-98_SP_ballet_p040,Гельцеръ,Г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,10404,review_1899-00_SP_ballet_p004,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,10422,review_1899-00_SP_ballet_p004,Легать 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,10439,review_1899-00_SP_ballet_p004,Легать 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,10519,review_1899-00_SP_ballet_p007,Легать 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,10528,review_1899-00_SP_ballet_p007,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,10589,review_1899-00_SP_ballet_p010,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,10666,review_1899-00_SP_ballet_p013,Левинсонъ,гг.,,"Левинсонъ, Василій Ѳедоровичъ",gender+season
+new link,10825,review_1899-00_SP_ballet_p018,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,10852,review_1899-00_SP_ballet_p020,Легатъ 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,10878,review_1899-00_SP_ballet_p020,Легатъ 1-й,г-жи,,"Легатъ, Евгенія Густавовна",ordinal+gender+season
+new link,10894,review_1899-00_SP_ballet_p020,Легать 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,10931,review_1899-00_SP_ballet_p024,Легать 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,10972,review_1899-00_SP_ballet_p025,Легать 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,11054,review_1899-00_SP_ballet_p027,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,11119,review_1899-00_SP_ballet_p029,Чекетти,г-жи,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,11161,review_1899-00_SP_ballet_p030,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,11180,review_1899-00_SP_ballet_p030,Чекетти,гг.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,11206,review_1899-00_SP_ballet_p030,Легатъ,г-жи,,"Легатъ, Евгенія Густавовна",gender+season
+new link,11240,review_1899-00_SP_ballet_p031,Легать 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,11328,review_1899-00_SP_ballet_p036,Легать 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,11357,review_1899-00_SP_ballet_p037,Легать,г-жи,,"Легатъ, Евгенія Густавовна",gender+season
+new link,11413,review_1899-00_SP_ballet_p038,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,11459,review_1899-00_SP_ballet_p040,Левинсонъ,гг.,,"Левинсонъ, Василій Ѳедоровичъ",gender+season
+new link,11463,review_1899-00_SP_ballet_p040,Чекетти,г-жи,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,11519,review_1899-00_SP_ballet_p042,Чекетти,г-жъ,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,11543,review_1899-00_SP_ballet_p042,Чекетти,гг.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,11555,review_1899-00_SP_ballet_p043,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,11645,review_1900-01_MSK_ballet_p001,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,11649,review_1900-01_MSK_ballet_p001,Гельцеръ,г-жею,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,11656,review_1900-01_MSK_ballet_p001,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,11661,review_1900-01_MSK_ballet_p002,Гельцеръ,г-жею,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,11673,review_1900-01_MSK_ballet_p002,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,11679,review_1900-01_MSK_ballet_p002,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,11700,review_1900-01_MSK_ballet_p003,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,11929,review_1900-01_MSK_ballet_p007,Гельцеръ,гг.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season+ballet-roster
+new link,12170,review_1900-01_SP_ballet_p001,Чекетти,г-нъ,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,12179,review_1900-01_SP_ballet_p002,Чекетти,г-нъ,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,12199,review_1900-01_SP_ballet_p002,Легатъ 1-й,г-нъ,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,12222,review_1900-01_SP_ballet_p002,Чекетти,г-нъ,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,12245,review_1900-01_SP_ballet_p003,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,12358,review_1900-01_SP_ballet_p006,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,12391,review_1900-01_SP_ballet_p007,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,12396,review_1900-01_SP_ballet_p007,Легатъ 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,12414,review_1900-01_SP_ballet_p008,Чекетти,г-нъ,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,12419,review_1900-01_SP_ballet_p008,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,12432,review_1900-01_SP_ballet_p008,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,12520,review_1900-01_SP_ballet_p020,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,12543,review_1900-01_SP_ballet_p021,Легатъ 1-й,г-нъ,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,12590,review_1900-01_SP_ballet_p022,Легатъ 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,12742,review_1900-01_SP_ballet_p030,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,12743,review_1900-01_SP_ballet_p030,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,12772,review_1900-01_SP_ballet_p031,Легатъ 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,12788,review_1900-01_SP_ballet_p032,Петипа,г.,,"Петипа, Маріусъ Ивановичъ",gender+season
+new link,12801,review_1900-01_SP_ballet_p032,Петипа,г.,,"Петипа, Маріусъ Ивановичъ",gender+season
+new link,12883,review_1900-01_SP_ballet_p038,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,12900,review_1900-01_SP_ballet_p038,Легать 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,12917,review_1900-01_SP_ballet_p038,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,12947,review_1901-02_MSK_ballet_p000,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,12951,review_1901-02_MSK_ballet_p000,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,13107,review_1901-02_MSK_ballet_p004,Адамовичъ,Г-жи,,"Адамовичъ, Екатерина Матвѣевна",gender+season
+new link,13178,review_1901-02_MSK_ballet_p005,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,13338,review_1901-02_MSK_ballet_p010,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,13444,review_1901-02_MSK_ballet_p022,Адамовичъ,Г-жа,,"Адамовичъ, Екатерина Матвѣевна",gender+season
+new link,13445,review_1901-02_MSK_ballet_p023,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,13473,review_1901-02_MSK_ballet_p024,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,13515,review_1901-02_MSK_ballet_p025,Адамовичъ,г-жи,,"Адамовичъ, Екатерина Матвѣевна",gender+season
+new link,13603,review_1901-02_MSK_ballet_p027,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,13686,review_1901-02_MSK_ballet_p028,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,13739,review_1901-02_MSK_ballet_p028,Адамовичъ,г-жи,,"Адамовичъ, Екатерина Матвѣевна",gender+season
+new link,13774,review_1901-02_MSK_ballet_p029,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,13788,review_1901-02_MSK_ballet_p029,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,13837,review_1901-02_SP_ballet_p000,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,13846,review_1901-02_SP_ballet_p001,Легатъ 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,13866,review_1901-02_SP_ballet_p001,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,13868,review_1901-02_SP_ballet_p001,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,13986,review_1901-02_SP_ballet_p003,Кякштъ,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,14007,review_1901-02_SP_ballet_p004,Кякштъ,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,14009,review_1901-02_SP_ballet_p004,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,14030,review_1901-02_SP_ballet_p004,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,14037,review_1901-02_SP_ballet_p004,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,14074,review_1901-02_SP_ballet_p005,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,14104,review_1901-02_SP_ballet_p005,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,14142,review_1901-02_SP_ballet_p006,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,14143,review_1901-02_SP_ballet_p006,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,14206,review_1901-02_SP_ballet_p008,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,14259,review_1901-02_SP_ballet_p008,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,14275,review_1901-02_SP_ballet_p009,Кякштъ,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,14282,review_1901-02_SP_ballet_p009,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,14316,review_1901-02_SP_ballet_p009,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,14703,review_1901-02_SP_ballet_p023,Кякштомъ,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,14809,review_1901-02_SP_ballet_p025,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,14867,review_1901-02_SP_ballet_p026,Кякштъ,Г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,14868,review_1901-02_SP_ballet_p026,Кякштъ,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,14902,review_1901-02_SP_ballet_p027,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,14973,review_1901-02_SP_ballet_p028,Полякова,восп-цы,,"Полякова, Елена Дмитріевна",gender+season
+new link,14974,review_1901-02_SP_ballet_p028,Федорова,восп-цы,,"Федорова 1-я, Александра Александровна",gender+season
+new link,14986,review_1901-02_SP_ballet_p028,Полякова,восп-цы,,"Полякова, Елена Дмитріевна",gender+season
+new link,14987,review_1901-02_SP_ballet_p028,Федорова,восп-цы,,"Федорова 1-я, Александра Александровна",gender+season
+new link,14998,review_1901-02_SP_ballet_p028,Чекетти,гг.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,15008,review_1901-02_SP_ballet_p028,Чекетти,гг.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,15090,review_1901-02_SP_ballet_p029,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,15094,review_1901-02_SP_ballet_p029,Кякштъ,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,15122,review_1901-02_SP_ballet_p029,Легатъ,г-жи,,"Легатъ, Евгенія Густавовна",gender+season
+new link,15156,review_1901-02_SP_ballet_p030,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,15178,review_1901-02_SP_ballet_p030,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,15200,review_1901-02_SP_ballet_p031,Чекетти,г.,,"Чекетти, Энрико Цезаревичъ",gender+season
+new link,15203,review_1901-02_SP_ballet_p031,Кякштъ,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,15271,review_1901-02_SP_ballet_p036,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,15289,review_1901-02_SP_ballet_p036,Чекетти,г-жа,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,15353,review_1901-02_SP_ballet_p037,Чекетти,г-жи,,"Чекетти, Жозефина Валентиновна",gender+season
+new link,15494,review_1901-02_SP_ballet_p038,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,15496,review_1901-02_SP_ballet_p038,Кякштъ,Г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,15513,review_1901-02_SP_ballet_p039,Чекрыгинъ,восп-къ,,"Чекрыгинъ 2-й, Александръ Ивановичъ",pupil-guard
+new link,15586,review_1902-03_MSK_ballet_p000,Гельцеръ,г-жею,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,15630,review_1902-03_MSK_ballet_p002,Гельцеръ,Г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,15649,review_1902-03_MSK_ballet_p003,Гельцеръ,Г-да,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,15717,review_1902-03_MSK_ballet_p011,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,15863,review_1902-03_MSK_ballet_p015,Дьякъ,г-жи,,"Дьякъ, Марія Павловна",gender+season
+new link,16152,review_1902-03_MSK_ballet_p021,Гельцеръ,г-жею,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,16378,review_1902-03_SP_ballet_p002,Кякштъ,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,16547,review_1902-03_SP_ballet_p009,Кякштъ,г-жи,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,16551,review_1902-03_SP_ballet_p009,Кякштъ,г-жи,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,16693,review_1902-03_SP_ballet_p009,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,16746,review_1902-03_SP_ballet_p011,Кякштъ,г-жи,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,16787,review_1902-03_SP_ballet_p011,Кякштъ,г-жи,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,17024,review_1902-03_SP_ballet_p016,Кякштъ,г-жи,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,17184,review_1902-03_SP_ballet_p019,Кякштъ,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,17284,review_1902-03_SP_ballet_p020,Петипа,восп-ца,,"Петипа 3-я, Вѣра Маріусовна",gender+season
+new link,17291,review_1902-03_SP_ballet_p020,Яковлева,восп-цы,,"Яковлева 3-я, Ольга Матвѣевна",gender+season
+new link,17292,review_1902-03_SP_ballet_p020,Макарова,восп-цы,,"Макарова 2-я, Марія Александровна",gender+season
+new link,17312,review_1903-04_MSK_ballet_p000,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,17319,review_1903-04_MSK_ballet_p000,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,17459,review_1903-04_MSK_ballet_p013,Конюса,гг.,,"Конюсъ, Юлій Эдуардовичъ",gender
+new link,17460,review_1903-04_MSK_ballet_p013,Конюса,гг.,,"Конюсъ, Юлій Эдуардовичъ",gender
+new link,17589,review_1903-04_MSK_ballet_p016,Дьякъ,гг.,,"Дьякъ, Иванъ Павловичъ",gender+season
+new link,17636,review_1903-04_MSK_ballet_p016,Адамовичъ,г-жи,,"Адамовичъ, Екатерина Матвѣевна",gender+season
+new link,17711,review_1903-04_MSK_ballet_p019,Кякштъ,г-жи,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,17712,review_1903-04_MSK_ballet_p019,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,17730,review_1903-04_MSK_ballet_p019,Гельцеръ,г-жъ,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,17772,review_1903-04_MSK_ballet_p020,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,17779,review_1903-04_MSK_ballet_p020,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,17815,review_1903-04_MSK_ballet_p020,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,17904,review_1903-04_MSK_ballet_p022,Царманъ,г-жи,,"Царманъ, Ольга Александровна",gender+season
+new link,17933,review_1903-04_MSK_ballet_p022,Дьякъ,гг.,,"Дьякъ, Иванъ Павловичъ",gender+season
+new link,17937,review_1903-04_MSK_ballet_p022,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,18048,review_1903-04_MSK_ballet_p023,Кякшть,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,18062,review_1903-04_MSK_ballet_p023,Кякштъ,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,18084,review_1903-04_MSK_ballet_p023,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,18092,review_1903-04_MSK_ballet_p024,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,18134,review_1903-04_SP_ballet_p001,Кякштъ,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,18153,review_1903-04_SP_ballet_p001,Легатъ 2-й,г.,,"Легатъ 2-й, Сергѣй Густавовичъ",ordinal+gender+season
+new link,18314,review_1903-04_SP_ballet_p004,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,18329,review_1903-04_SP_ballet_p004,Эрлеръ 1-я,г-жи,,"Эрлеръ 1-я, Анна Александровна",ordinal+gender+season
+new link,18514,review_1903-04_SP_ballet_p007,Петипа,гг.,,"Петипа, Маріусъ Ивановичъ",gender+season
+new link,18546,review_1903-04_SP_ballet_p009,Вагнеромъ,гг.,,"Вагнеръ, Конрадъ Робертовичъ",gender+season
+new link,18817,review_1903-04_SP_ballet_p011,Гельцеромъ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,19045,review_1903-04_SP_ballet_p013,Вагнеръ,г.,,"Вагнеръ, Конрадъ Робертовичъ",gender+season
+new link,19161,review_1903-04_SP_ballet_p015,Легатъ,г-жа,,"Легатъ, Евгенія Густавовна",gender+season
+new link,19216,review_1903-04_SP_ballet_p015,Константинова,в-цы,,"Константинова, Александра Петровна",gender
+new link,19217,review_1903-04_SP_ballet_p015,Смирнова,в-цы,,"Смирнова, Екатерина Павловна",gender+season
+new link,19238,review_1903-04_SP_ballet_p016,Смирнова,в-ца,,"Смирнова, Екатерина Павловна",gender+season
+new link,19251,review_1903-04_SP_ballet_p016,Александрова,в-ца,,"Александрова 3-я, Александра Матвѣевна",gender+season
+new link,19254,review_1903-04_SP_ballet_p016,Александрова,в-ца,,"Александрова 3-я, Александра Матвѣевна",gender+season
+new link,19256,review_1903-04_SP_ballet_p016,Александрова,в-цы,,"Александрова 3-я, Александра Матвѣевна",gender+season
+new link,19291,review_1903-04_SP_ballet_p016,Александрова,в-ца,,"Александрова 3-я, Александра Матвѣевна",gender+season
+new link,19295,review_1903-04_SP_ballet_p016,Облаковъ,уч-къ,,"Облаковъ, Николай Ильичъ",gender+season
+new link,19298,review_1903-04_SP_ballet_p016,Александрова,в-цы,,"Александрова 3-я, Александра Матвѣевна",gender+season
+new link,19309,review_1903-04_SP_ballet_p016,Александрова,в-ца,,"Александрова 3-я, Александра Матвѣевна",gender+season
+new link,19320,review_1903-04_SP_ballet_p016,Богдановъ,в-къ,,"Богдановъ, Георгій Поликарповичъ",gender+ballet-roster
+new link,19322,review_1903-04_SP_ballet_p016,Александрова,в-цы,,"Александрова 3-я, Александра Матвѣевна",gender+season
+new link,19328,review_1903-04_SP_ballet_p017,Смирнова,в-ца,,"Смирнова, Екатерина Павловна",gender+season
+new link,19422,review_1904-05_MSK_ballet_p000,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,19441,review_1904-05_MSK_ballet_p001,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,19448,review_1904-05_MSK_ballet_p001,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,19477,review_1904-05_MSK_ballet_p001,Гельцеръ,гг.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,19508,review_1904-05_MSK_ballet_p001,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,19537,review_1904-05_MSK_ballet_p002,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,19552,review_1904-05_MSK_ballet_p002,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,19600,review_1904-05_MSK_ballet_p005,Адамовичъ,г-жа,,"Адамовичъ, Екатерина Матвѣевна",gender+season
+new link,19615,review_1904-05_MSK_ballet_p005,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,19665,review_1904-05_MSK_ballet_p005,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,19693,review_1904-05_MSK_ballet_p006,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,19701,review_1904-05_MSK_ballet_p006,Гельцеръ,Г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,19713,review_1904-05_MSK_ballet_p007,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,19814,review_1904-05_MSK_ballet_p010,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,19851,review_1904-05_MSK_ballet_p014,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,19944,review_1904-05_MSK_ballet_p015,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,19955,review_1904-05_MSK_ballet_p015,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,19956,review_1904-05_MSK_ballet_p015,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,20000,review_1904-05_MSK_ballet_p015,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,20021,review_1904-05_MSK_ballet_p015,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,20052,review_1904-05_MSK_ballet_p015,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,20072,review_1904-05_MSK_ballet_p017,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,20134,review_1904-05_MSK_ballet_p020,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,20153,review_1904-05_MSK_ballet_p020,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,20157,review_1904-05_MSK_ballet_p021,Гельцеръ,г-жею,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,20183,review_1904-05_MSK_ballet_p021,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,20255,review_1904-05_SP_ballet_p000,Эрлеръ 1-я,г-жи,,"Эрлеръ 1-я, Анна Александровна",ordinal+gender+season
+new link,20445,review_1904-05_SP_ballet_p002,Легать 2-я,г-жи,,"Легатъ, Евгенія Густавовна",ordinal+gender+season
+new link,20454,review_1904-05_SP_ballet_p002,Эрлеръ,гг.,,"Эрлеръ, Александръ Александровичъ",gender+season
+new link,22617,review_1905-06_MSK_ballet_p019,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,22631,review_1905-06_MSK_ballet_p019,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,22682,review_1905-06_MSK_ballet_p020,Гельцеръ,гг.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,22772,review_1905-06_MSK_ballet_p023,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,22775,review_1905-06_MSK_ballet_p023,Адамовичъ,г-жи,,"Адамовичъ, Екатерина Матвѣевна",gender+season
+new link,22792,review_1905-06_MSK_ballet_p023,Дьякъ,гг.,,"Дьякъ, Иванъ Павловичъ",gender+season
+new link,22833,review_1905-06_MSK_ballet_p023,Царманъ,г-жи,,"Царманъ, Ольга Александровна",gender+season
+new link,22883,review_1905-06_MSK_ballet_p024,Гельцеръ,г-жъ,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,23306,review_1905-06_SP_ballet_p003,Легатъ,г-жа,,"Легатъ, Евгенія Густавовна",gender+season
+new link,23624,review_1905-06_SP_ballet_p007,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,23628,review_1905-06_SP_ballet_p007,Вагнеръ,г.,,"Вагнеръ, Конрадъ Робертовичъ",gender+season
+new link,23848,review_1905-06_SP_ballet_p010,Николаидисъ,в-ца,,"Николаидисъ, Ольга Константиновна",pupil-guard
+new link,23891,review_1905-06_SP_ballet_p010,Николаидисъ,в-цы,,"Николаидисъ, Ольга Константиновна",pupil-guard
+new link,23958,review_1905-06_SP_ballet_p013,Нестеровская,в-цы,,"Нестеровская 2-я, Антонина Рафаиловна",pupil-guard
+new link,23988,review_1905-06_SP_ballet_p013,Нестеровская,в-ца,,"Нестеровская 2-я, Антонина Рафаиловна",pupil-guard
+new link,24042,review_1905-06_SP_ballet_p013,Нестеровская,в-цы,,"Нестеровская 2-я, Антонина Рафаиловна",pupil-guard
+new link,24108,review_1906-07_MSK_ballet_p000,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24165,review_1906-07_MSK_ballet_p001,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24176,review_1906-07_MSK_ballet_p001,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24183,review_1906-07_MSK_ballet_p001,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24215,review_1906-07_MSK_ballet_p002,Адамовичъ,г-жи,,"Адамовичъ, Екатерина Матвѣевна",gender+season
+new link,24245,review_1906-07_MSK_ballet_p002,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24257,review_1906-07_MSK_ballet_p002,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24287,review_1906-07_MSK_ballet_p003,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24329,review_1906-07_MSK_ballet_p003,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24331,review_1906-07_MSK_ballet_p003,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24405,review_1906-07_MSK_ballet_p004,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24412,review_1906-07_MSK_ballet_p004,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24418,review_1906-07_MSK_ballet_p004,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24419,review_1906-07_MSK_ballet_p004,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24444,review_1906-07_MSK_ballet_p004,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24450,review_1906-07_MSK_ballet_p004,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24492,review_1906-07_MSK_ballet_p005,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24525,review_1906-07_MSK_ballet_p005,Адамовичъ,г-жи,,"Адамовичъ, Екатерина Матвѣевна",gender+season
+new link,24535,review_1906-07_MSK_ballet_p005,Царманъ,г-жи,,"Царманъ, Ольга Александровна",gender+season
+new link,24539,review_1906-07_MSK_ballet_p005,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24549,review_1906-07_MSK_ballet_p005,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24562,review_1906-07_MSK_ballet_p005,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24614,review_1906-07_MSK_ballet_p006,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24653,review_1906-07_MSK_ballet_p006,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24658,review_1906-07_MSK_ballet_p006,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24682,review_1906-07_MSK_ballet_p006,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,24705,review_1906-07_MSK_ballet_p007,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24724,review_1906-07_MSK_ballet_p007,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24738,review_1906-07_MSK_ballet_p008,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24772,review_1906-07_MSK_ballet_p009,Петипа,гг.,,"Петипа, Маріусъ Ивановичъ",gender+season
+new link,24835,review_1906-07_MSK_ballet_p013,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,24908,review_1906-07_SP_ballet_p000,Легатъ,г.,,"Легатъ 1-й, Николай Густавовичъ",gender+season
+new link,24937,review_1906-07_SP_ballet_p001,Кякштъ,г-жи,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,24968,review_1906-07_SP_ballet_p001,Легатомъ,г.,,"Легатъ 1-й, Николай Густавовичъ",gender+season
+new link,25058,review_1906-07_SP_ballet_p002,Легатъ,г.,,"Легатъ 1-й, Николай Густавовичъ",gender+season
+new link,25070,review_1906-07_SP_ballet_p003,Легатъ,г.,,"Легатъ 1-й, Николай Густавовичъ",gender+season
+new link,25076,review_1906-07_SP_ballet_p003,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,25106,review_1906-07_SP_ballet_p003,Кякштъ,г-жи,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,25113,review_1906-07_SP_ballet_p003,Легать,гг.,,"Легатъ 1-й, Николай Густавовичъ",gender+season
+new link,25126,review_1906-07_SP_ballet_p003,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,25127,review_1906-07_SP_ballet_p003,Легатъ,г.,,"Легатъ 1-й, Николай Густавовичъ",gender+season
+new link,25237,review_1906-07_SP_ballet_p006,Эрлеръ 1-я,г-жи,,"Эрлеръ 1-я, Анна Александровна",ordinal+gender+season
+new link,25257,review_1906-07_SP_ballet_p006,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,25271,review_1906-07_SP_ballet_p006,Эрлеръ 1-я,г-жи,,"Эрлеръ 1-я, Анна Александровна",ordinal+gender+season
+new link,25291,review_1906-07_SP_ballet_p006,Кякштъ,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,25342,review_1906-07_SP_ballet_p006,Легатъ,г.,,"Легатъ 1-й, Николай Густавовичъ",gender+season
+new link,25360,review_1906-07_SP_ballet_p007,Легата,г.,,"Легатъ 1-й, Николай Густавовичъ",gender+season
+new link,25528,review_1906-07_SP_ballet_p010,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,25537,review_1906-07_SP_ballet_p010,Легатъ 1-й,г.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,25601,review_1906-07_SP_ballet_p011,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,25639,review_1907-08_MSK_ballet_p000,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,25653,review_1907-08_MSK_ballet_p000,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,25668,review_1907-08_MSK_ballet_p001,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,25723,review_1907-08_MSK_ballet_p002,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,25731,review_1907-08_MSK_ballet_p002,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,25747,review_1907-08_MSK_ballet_p002,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,25770,review_1907-08_MSK_ballet_p003,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,25793,review_1907-08_MSK_ballet_p003,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,25859,review_1907-08_MSK_ballet_p003,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,25861,review_1907-08_MSK_ballet_p003,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,25866,review_1907-08_MSK_ballet_p003,Дьякъ,г-жи,,"Дьякъ, Марія Павловна",gender+season
+new link,25893,review_1907-08_MSK_ballet_p003,Царманъ,г-жи,,"Царманъ, Ольга Александровна",gender+season
+new link,26010,review_1907-08_MSK_ballet_p005,Дьякъ,гг.,,"Дьякъ, Иванъ Павловичъ",gender+season
+new link,26035,review_1907-08_MSK_ballet_p005,Царманъ,гг.,,"Царманъ, Александръ Александровичъ",gender+season
+new link,26081,review_1907-08_MSK_ballet_p005,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,26097,review_1907-08_MSK_ballet_p005,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,26124,review_1907-08_MSK_ballet_p006,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,26153,review_1907-08_MSK_ballet_p006,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,26229,review_1907-08_MSK_ballet_p006,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,26264,review_1907-08_MSK_ballet_p007,Гельцеръ,г-жи,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,26343,review_1907-08_SP_ballet_p002,Легатомъ,г.,,"Легатъ 1-й, Николай Густавовичъ",gender+season
+new link,26427,review_1907-08_SP_ballet_p009,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,26460,review_1907-08_SP_ballet_p010,Легатомъ,г.,,"Легатъ 1-й, Николай Густавовичъ",gender+season
+new link,26487,review_1907-08_SP_ballet_p010,Бенуа,Г.,,"Бенуа, Александръ",gender+season
+new link,26503,review_1907-08_SP_ballet_p011,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,26536,review_1907-08_SP_ballet_p013,Кякштъ,гг.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,26600,review_1907-08_SP_ballet_p015,Кякштъ,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,26892,review_1908-09_SP_ballet_p003,Гердта,г.,,"Гердтъ, Павелъ Андреевичъ",gender+season
+new link,27148,review_1910-11_SP_ballet_p004,Гердта,г.,,"Гердтъ, Павелъ Андреевичъ",gender+season
+new link,27149,review_1910-11_SP_ballet_p004,Легата,г.,,"Легатъ 1-й, Николай Густавовичъ",gender+season
+repointed,1037,review_1892-93_SP_ballet_p015,Стуколкинъ,в-къ,"Стуколкинъ, Тимофей Алексѣевичъ","Стуколкинъ, Василій Николаевичъ",pupil-guard
+repointed,8019,review_1897-98_MSK_ballet_p004,Токарева,Восп-ца,"Токарева, Анна Ивановна","Токарева 2-я, Фелисата Ивановна",gender
+repointed,8368,review_1897-98_MSK_ballet_p016,Токарева,Восп-ца,"Токарева, Анна Ивановна","Токарева 2-я, Фелисата Ивановна",gender
+repointed,12826,review_1900-01_SP_ballet_p036,Пишо,г.,"Пишо, Марія Александровна","Пишо, Иванъ Александровичъ",gender
+repointed,12841,review_1900-01_SP_ballet_p037,Пишо,гг.,"Пишо, Марія Александровна","Пишо, Иванъ Александровичъ",gender
+repointed,14054,review_1901-02_SP_ballet_p004,Нестеровская,восп-цы,"Нестеровская, Лидія Рафаиловна","Нестеровская 2-я, Антонина Рафаиловна",pupil-guard
+repointed,14782,review_1901-02_SP_ballet_p024,Пишо,г.,"Пишо, Марія Александровна","Пишо, Иванъ Александровичъ",gender
+repointed,15529,review_1901-02_SP_ballet_p039,Гердтъ,восп-цы,"Гердтъ, Павелъ Андреевичъ","Гердтъ, Елизавета Павловна",pupil-guard
+repointed,17354,review_1903-04_MSK_ballet_p003,Пишо,гг.,"Пишо, Марія Александровна","Пишо, Иванъ Александровичъ",gender
+repointed,19218,review_1903-04_SP_ballet_p015,Балдина,в-цы,"Балдина, Александра Васильевна","Балдина, Екатерина",pupil-guard
+repointed,19230,review_1903-04_SP_ballet_p016,Гердтъ,уч-ца,"Гердтъ, Павелъ Андреевичъ","Гердтъ, Елизавета Павловна",pupil-guard
+repointed,19267,review_1903-04_SP_ballet_p016,Нестеровская,в-цы,"Нестеровская, Лидія Рафаиловна","Нестеровская 2-я, Антонина Рафаиловна",pupil-guard
+repointed,19271,review_1903-04_SP_ballet_p016,Шолларь,в-цы,"Шолларъ, Францъ Францевичъ","Шолларъ, Людмила Францевна",gender+ballet-roster
+repointed,19284,review_1903-04_SP_ballet_p016,Георгіевская,в-цы,"Георгіевская, Зинаида Алексѣевна","Георгіевская 2-я, Евфросинія Алексѣевна",pupil-guard
+repointed,19312,review_1903-04_SP_ballet_p016,Шолларь,уч-ца,"Шолларъ, Францъ Францевичъ","Шолларъ, Людмила Францевна",gender+ballet-roster
+repointed,19345,review_1903-04_SP_ballet_p017,Георгіевская,в-цы,"Георгіевская, Зинаида Алексѣевна","Георгіевская 2-я, Евфросинія Алексѣевна",pupil-guard
+repointed,23894,review_1905-06_SP_ballet_p010,Гердтъ,в-цы,"Гердтъ, Павелъ Андреевичъ","Гердтъ, Елизавета Павловна",pupil-guard
+repointed,23903,review_1905-06_SP_ballet_p010,Гердтъ,в-цы,"Гердтъ, Павелъ Андреевичъ","Гердтъ, Елизавета Павловна",pupil-guard
+repointed,23925,review_1905-06_SP_ballet_p013,Гердтъ,в-ца,"Гердтъ, Павелъ Андреевичъ","Гердтъ, Елизавета Павловна",pupil-guard
+repointed,23943,review_1905-06_SP_ballet_p013,Соболева,в-цы,"Соболева, Надежда Родіоновна","Соболева, Лидія Родіоновна",gender
+repointed,23961,review_1905-06_SP_ballet_p013,Соболева,в-цы,"Соболева, Надежда Родіоновна","Соболева, Лидія Родіоновна",gender
+repointed,23963,review_1905-06_SP_ballet_p013,Георгіевская,в-цы,"Георгіевская, Зинаида Алексѣевна","Георгіевская 2-я, Евфросинія Алексѣевна",pupil-guard
+repointed,23991,review_1905-06_SP_ballet_p013,Соболева,в-цы,"Соболева, Надежда Родіоновна","Соболева, Лидія Родіоновна",gender
+repointed,24043,review_1905-06_SP_ballet_p013,Соболева,в-цы,"Соболева, Надежда Родіоновна","Соболева, Лидія Родіоновна",gender
+repointed,24062,review_1905-06_SP_ballet_p014,Георгіевская,в-цы,"Георгіевская, Зинаида Алексѣевна","Георгіевская 2-я, Евфросинія Алексѣевна",pupil-guard
+repointed,24065,review_1905-06_SP_ballet_p014,Соболева,в-цы,"Соболева, Надежда Родіоновна","Соболева, Лидія Родіоновна",gender
+repointed,26150,review_1907-08_MSK_ballet_p006,Мендесъ,г.,"Мендесъ, Джульетта","Мендесъ, Іосифъ",gender
+repointed,27200,review_1910-11_SP_ballet_p007,Гельцеръ,г-жа,Гельцеръ,"Гельцеръ, Екатерина Васильевна",gender+season
+repointed,27203,review_1910-11_SP_ballet_p007,Гельцеръ,г-жи,Гельцеръ,"Гельцеръ, Екатерина Васильевна",gender+season
+repointed,21363,review_1904-05_SP_ballet_p011,Пишо,гг.,"Пишо, Марія Александровна","Пишо, Иванъ Александровичъ",gender
+repointed,21371,review_1904-05_SP_ballet_p011,Пишо,гг.,"Пишо, Марія Александровна","Пишо, Иванъ Александровичъ",gender
+repointed,21712,review_1904-05_SP_ballet_p015,Соболева 1-я,в-ца,"Соболева, Надежда Родіоновна","Соболева, Лидія Родіоновна",ordinal-absent+gender
+repointed,21721,review_1904-05_SP_ballet_p015,Соболева 1-я,в-ца,"Соболева, Надежда Родіоновна","Соболева, Лидія Родіоновна",ordinal-absent+gender
+repointed,21731,review_1904-05_SP_ballet_p016,Соболева 1-я,в-ца,"Соболева, Надежда Родіоновна","Соболева, Лидія Родіоновна",ordinal-absent+gender
+repointed,21733,review_1904-05_SP_ballet_p016,Соболева 1-я,в-ца,"Соболева, Надежда Родіоновна","Соболева, Лидія Родіоновна",ordinal-absent+gender
+repointed,21740,review_1904-05_SP_ballet_p016,Георгіевская,в-цы,"Георгіевская, Зинаида Алексѣевна","Георгіевская 2-я, Евфросинія Алексѣевна",pupil-guard
+repointed,21759,review_1904-05_SP_ballet_p016,Соболева 1-я,в-ца,"Соболева, Надежда Родіоновна","Соболева, Лидія Родіоновна",ordinal-absent+gender
+repointed,21761,review_1904-05_SP_ballet_p016,Нестеровская,в-цы,"Нестеровская, Лидія Рафаиловна","Нестеровская 2-я, Антонина Рафаиловна",pupil-guard
+repointed,21770,review_1904-05_SP_ballet_p016,Георгіевская,в-цы,"Георгіевская, Зинаида Алексѣевна","Георгіевская 2-я, Евфросинія Алексѣевна",pupil-guard
+repointed,21883,review_1904-05_SP_ballet_p017,Богдановъ,в-къ,"Богдановъ, Георгій Поликарповичъ","Богдановъ, А. Н.",pupil-guard
+repointed,21901,review_1904-05_SP_ballet_p017,Соболева,в-ца,"Соболева, Надежда Родіоновна","Соболева, Лидія Родіоновна",gender
+repointed,21902,review_1904-05_SP_ballet_p017,Богдановъ,в-къ,"Богдановъ, Георгій Поликарповичъ","Богдановъ, А. Н.",pupil-guard
+new link,20488,review_1904-05_SP_ballet_p002,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,20489,review_1904-05_SP_ballet_p002,Легать 2-й,г-нъ,,"Легатъ 2-й, Сергѣй Густавовичъ",ordinal+gender+season
+new link,20538,review_1904-05_SP_ballet_p003,Эрлеръ,гг.,,"Эрлеръ, Александръ Александровичъ",gender+season
+new link,20564,review_1904-05_SP_ballet_p003,Кякштъ,г-жи,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,20587,review_1904-05_SP_ballet_p003,Эрлеръ 1-я,г-жи,,"Эрлеръ 1-я, Анна Александровна",ordinal+gender+season
+new link,20593,review_1904-05_SP_ballet_p003,Легатъ,г-жи,,"Легатъ, Евгенія Густавовна",gender+season
+new link,20611,review_1904-05_SP_ballet_p003,Кякштъ,Г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,20621,review_1904-05_SP_ballet_p004,Кякштъ,г-жи,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,20699,review_1904-05_SP_ballet_p004,Эрлеръ 1-я,г-жи,,"Эрлеръ 1-я, Анна Александровна",ordinal+gender+season
+new link,20723,review_1904-05_SP_ballet_p005,Кякштъ,г.,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,20768,review_1904-05_SP_ballet_p005,Эрлеръ 1-я,г-жи,,"Эрлеръ 1-я, Анна Александровна",ordinal+gender+season
+new link,20779,review_1904-05_SP_ballet_p005,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,20781,review_1904-05_SP_ballet_p005,Кякштъ,г-нъ,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,20829,review_1904-05_SP_ballet_p006,Эрлеръ 1-я,г-жи,,"Эрлеръ 1-я, Анна Александровна",ordinal+gender+season
+new link,20856,review_1904-05_SP_ballet_p006,Легать,г-жи,,"Легатъ, Евгенія Густавовна",gender+season
+new link,20930,review_1904-05_SP_ballet_p007,Эрлеръ,гг.,,"Эрлеръ, Александръ Александровичъ",gender+season
+new link,20974,review_1904-05_SP_ballet_p007,Легатъ,г-жи,,"Легатъ, Евгенія Густавовна",gender+season
+new link,20998,review_1904-05_SP_ballet_p007,Кякштъ,г-жи,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,21055,review_1904-05_SP_ballet_p008,Эрлеръ 1-я,г-жи,,"Эрлеръ 1-я, Анна Александровна",ordinal+gender+season
+new link,21073,review_1904-05_SP_ballet_p008,Эрлеръ,гг.,,"Эрлеръ, Александръ Александровичъ",gender+season
+new link,21087,review_1904-05_SP_ballet_p008,Кякштъ,г-жи,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,21138,review_1904-05_SP_ballet_p008,Кякштъ,г-жи,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,21168,review_1904-05_SP_ballet_p009,Эрлеръ 1-я,г-жи,,"Эрлеръ 1-я, Анна Александровна",ordinal+gender+season
+new link,21169,review_1904-05_SP_ballet_p009,Эрлеръ 1-я,г-жи,,"Эрлеръ 1-я, Анна Александровна",ordinal+gender+season
+new link,21231,review_1904-05_SP_ballet_p009,Кякштъ,г-жи,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,21249,review_1904-05_SP_ballet_p009,Кякштъ,г-жа,,"Кякштъ, Лидія Георгіевна",gender+season
+new link,21250,review_1904-05_SP_ballet_p009,Кякштъ,г-нъ,,"Кякштъ, Георгій Георгіевичъ",gender+season
+new link,21364,review_1904-05_SP_ballet_p011,Легатъ 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,21372,review_1904-05_SP_ballet_p011,Легатъ 1-й,гг.,,"Легатъ 1-й, Николай Густавовичъ",ordinal+gender+season
+new link,21469,review_1904-05_SP_ballet_p012,Эрлеръ 1-я,г-жи,,"Эрлеръ 1-я, Анна Александровна",ordinal+gender+season
+new link,21533,review_1904-05_SP_ballet_p012,Эрлеръ 1-я,г-жи,,"Эрлеръ 1-я, Анна Александровна",ordinal+gender+season
+new link,21552,review_1904-05_SP_ballet_p013,Петипа,г.,,"Петипа, Маріусъ Ивановичъ",gender+season
+new link,21553,review_1904-05_SP_ballet_p013,Петипа,Г.,,"Петипа, Маріусъ Ивановичъ",gender+season
+new link,21555,review_1904-05_SP_ballet_p013,Петипа,г-нъ,,"Петипа, Маріусъ Ивановичъ",gender+season
+new link,21560,review_1904-05_SP_ballet_p013,Петипа,г.,,"Петипа, Маріусъ Ивановичъ",gender+season
+new link,21564,review_1904-05_SP_ballet_p013,Петипа,г.,,"Петипа, Маріусъ Ивановичъ",gender+season
+new link,21572,review_1904-05_SP_ballet_p013,Петипа,гг.,,"Петипа, Маріусъ Ивановичъ",gender+season
+new link,21581,review_1904-05_SP_ballet_p014,Петипа,гг.,,"Петипа, Маріусъ Ивановичъ",gender+season
+new link,21709,review_1904-05_SP_ballet_p015,Петипа,Г.,,"Петипа, Маріусъ Ивановичъ",gender+season
+new link,21745,review_1904-05_SP_ballet_p016,Николаидисъ,в-цы,,"Николаидисъ, Ольга Константиновна",pupil-guard
+new link,21756,review_1904-05_SP_ballet_p016,Ѳедорова,в-ца,,"Федорова, Анна",gender+season
+new link,21775,review_1904-05_SP_ballet_p016,Николаидисъ,в-цы,,"Николаидисъ, Ольга Константиновна",pupil-guard
+new link,21810,review_1904-05_SP_ballet_p016,Смирнова,в-ца,,"Смирнова, Екатерина Павловна",gender+season
+new link,21880,review_1904-05_SP_ballet_p017,Ѳедорова,в-ца,,"Федорова, Анна",gender+season
+new link,21886,review_1904-05_SP_ballet_p017,Смирнова,в-цы,,"Смирнова, Екатерина Павловна",gender+season
+new link,21898,review_1904-05_SP_ballet_p017,Смирнова,в-ца,,"Смирнова, Екатерина Павловна",gender+season
+new link,21975,review_1905-06_MSK_ballet_p001,Гельцеръ,г-жа,,"Гельцеръ, Екатерина Васильевна",gender+season
+new link,21999,review_1905-06_MSK_ballet_p002,Петипа,г.,,"Петипа, Маріусъ Ивановичъ",gender+season
+new link,22020,review_1905-06_MSK_ballet_p003,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,22042,review_1905-06_MSK_ballet_p004,Гельцеръ,г.,,"Гельцеръ, Василій Ѳедоровичъ",gender+season
+new link,22226,review_1905-06_MSK_ballet_p011,Дьякъ,гг.,,"Дьякъ, Иванъ Павловичъ",gender+season
+unlinked,20878,review_1904-05_SP_ballet_p006,Пономаревъ 2-я,Гг.,"Пономаревъ 2-й, Сергѣй Ивановичъ",,gender-contradiction
+unlinked,21370,review_1904-05_SP_ballet_p011,Кеммереръ 2-я,г-жи,"Кеммереръ, Владиміръ Николаевичъ",,gender-contradiction
+unlinked,21571,review_1904-05_SP_ballet_p013,Крюгеръ,г-жа,"Крюгеръ, Эмануилъ Эдуардовичъ",,tie(margin=2)
+unlinked,21713,review_1904-05_SP_ballet_p015,Симонъ,в-ца,"Симонъ, Антонъ Юльевичъ",,gender-contradiction
+unlinked,21714,review_1904-05_SP_ballet_p015,Лопуховъ,в-къ,"Лопуховъ, Ѳедоръ Васильевичъ",,tie(margin=2)
+unlinked,21718,review_1904-05_SP_ballet_p015,Петровъ,в-къ,"Петровъ, Николай Ивановичъ",,tie(margin=0)
+unlinked,21722,review_1904-05_SP_ballet_p015,Лопуховъ,в-къ,"Лопуховъ, Ѳедоръ Васильевичъ",,tie(margin=2)
+unlinked,21725,review_1904-05_SP_ballet_p015,Гиммельманъ,в-ца,"Гиммельманъ, Анна Николаевна",,tie(margin=0)
+unlinked,21728,review_1904-05_SP_ballet_p016,Мацкевичъ,в-ца,"Мацкевичъ, Раиса Васильевна",,gender-contradiction
+unlinked,21744,review_1904-05_SP_ballet_p016,Эльманъ,в-цы,"Эльманъ, Александръ Федоровичъ",,tie(margin=2)
+unlinked,21760,review_1904-05_SP_ballet_p016,Лопуховъ,в-къ,"Лопуховъ, Ѳедоръ Васильевичъ",,tie(margin=2)
+unlinked,21774,review_1904-05_SP_ballet_p016,Эльманъ,в-цы,"Эльманъ, Александръ Федоровичъ",,tie(margin=2)
+unlinked,21805,review_1904-05_SP_ballet_p016,Облаковъ 1-й,в-къ,"Облаковъ, Александръ Александровичъ",,tie(margin=0)
+unlinked,21807,review_1904-05_SP_ballet_p016,Горшкова,в-ца,"Горшкова, Марія Николаевна",,gender-contradiction
+unlinked,21809,review_1904-05_SP_ballet_p016,Лопуховъ,в-къ,"Лопуховъ, Ѳедоръ Васильевичъ",,tie(margin=2)
+unlinked,21812,review_1904-05_SP_ballet_p016,Лопухова,в-ца,"Лопухова, Евгенія Васильевна",,tie(margin=2)
+unlinked,21824,review_1904-05_SP_ballet_p016,Облаковъ 1-й,в-къ,"Облаковъ, Александръ Александровичъ",,tie(margin=0)
+unlinked,21858,review_1904-05_SP_ballet_p016,Горшкова,в-ца,"Горшкова, Марія Николаевна",,gender-contradiction
+unlinked,21859,review_1904-05_SP_ballet_p016,Лопуховъ,в-къ,"Лопуховъ, Ѳедоръ Васильевичъ",,tie(margin=2)
+unlinked,21863,review_1904-05_SP_ballet_p016,Лопуховъ,в-къ,"Лопуховъ, Ѳедоръ Васильевичъ",,tie(margin=2)
+unlinked,21878,review_1904-05_SP_ballet_p017,Гиммельманъ,в-ца,"Гиммельманъ, Анна Николаевна",,tie(margin=0)
+unlinked,21879,review_1904-05_SP_ballet_p017,Петровъ,в-къ,"Петровъ, Николай Ивановичъ",,tie(margin=0)
+unlinked,21881,review_1904-05_SP_ballet_p017,Лопуховъ,в-къ,"Лопуховъ, Ѳедоръ Васильевичъ",,tie(margin=2)
+unlinked,21882,review_1904-05_SP_ballet_p017,Константинова,в-ца,"Константинова, Александра Петровна",,gender-contradiction
+unlinked,21885,review_1904-05_SP_ballet_p017,Горшкова,в-цы,"Горшкова, Марія Николаевна",,gender-contradiction
