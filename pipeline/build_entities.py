@@ -733,6 +733,10 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     # folds) were left unlinked purely because the only genre signal
     # available was on the row, not inline in the title text.
     excerpt_links: dict[str, tuple[str, str]] = {}  # work_uuid -> (parent_work_id, note)
+
+    def _alias_of(base: str) -> str:
+        t = base.strip()
+        return title_alias.get(t) or title_alias.get(t.strip(" .,„“«»")) or base
     n_excerpt_matched = n_excerpt_unmatched = 0
     n_excerpt_fallback = 0
     for work_uuid, canonical_title, canonical_genre, _, title_key in work_rows:
@@ -740,7 +744,9 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
         fb = None
         if m:
             base_text, note_text, genre_word = m.group("base"), m.group("note"), m.group("genre")
-            base_key = _match_key(_title_key(base_text))
+            # an excerpt of an aliased title belongs to the alias's work
+            # ("1-е д. Донъ-Кихотъ Ламанчскій" -> Донъ-Кихотъ, RG 2026-10-23)
+            base_key = _match_key(_title_key(_alias_of(base_text)))
             if not title_key_to_work_ids.get(base_key):
                 fb = _excerpt_fallback(canonical_title)  # main regex split the title in the wrong place
         else:
@@ -748,7 +754,7 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
             if not fb:
                 continue
         if fb:
-            fb_key = _match_key(_title_key(fb[0]))
+            fb_key = _match_key(_title_key(_alias_of(fb[0])))
             if title_key_to_work_ids.get(fb_key):
                 base_text, note_text, genre_word = fb
                 base_key = fb_key

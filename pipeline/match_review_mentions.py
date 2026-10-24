@@ -51,6 +51,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import itertools
 import collections
 import csv
 import re
@@ -268,6 +269,39 @@ def title_forms(title: str) -> set[str]:
     return {f for f in out | declined if len(f) >= 3}
 
 
+def title_forms_extra(title: str) -> set[str]:
+    """Declined forms title_forms() leaves out, for titles IN GUILLEMETS only
+    (2026-10-23): the instrumental of a feminine title («съ Раймондой»,
+    «Эсмеральдою») and every-word declension of a two- or three-word title
+    («Царя Кандавла», «Оживленнаго сада»). Kept out of the bare-text index on
+    purpose: unquoted, «Эсмеральдой» is as often the PART as the ballet."""
+    base = title_forms(title)
+    extra = set()
+    for f in base:
+        head, _, tail = f.rpartition(" ")
+        if len(tail) >= 4 and tail.endswith("а"):
+            extra.update((head + " " + tail[:-1] + e).strip() for e in ("ой", "ою"))
+    t = key_of(title).strip(" .,;:!?«»„“\"'")
+    words = t.split(" ")
+    if 2 <= len(words) <= 3 and all(len(w) >= 3 for w in words):
+        per = [sorted(surname_forms(w, both_genders=False) | {w}) for w in words]
+        if all(len(x) <= 12 for x in per):
+            extra.update(" ".join(c) for c in itertools.product(*per))
+    return {f for f in extra - base if len(f) >= 3}
+
+
+ALT_TITLE = re.compile(r",?\s+или\s+", re.I)
+
+
+def alt_title_parts(title: str) -> list[str]:
+    """The halves of an alternative title, «Катарина или Дочь разбойника» ->
+    [«Катарина», «Дочь разбойника»]. A work is the umbrella over its printed
+    titles (RG, 2026-10-23); the reviews and the Repertoire print either half
+    or both."""
+    parts = [x.strip(" .,;:«»„“\"'") for x in ALT_TITLE.split(title)]
+    return [x for x in parts if len(x) >= 3] if len(parts) > 1 else []
+
+
 # ------------------------------------------------------------------ scanning
 
 HONORIFIC = re.compile(
@@ -324,6 +358,9 @@ class Lexicon:
     def __init__(self) -> None:
         self.person: dict[str, list[str]] = collections.defaultdict(list)
         self.work: dict[str, list[str]] = collections.defaultdict(list)
+        # forms consulted only for a title in guillemets (title_forms_extra,
+        # «или» halves): never matched in bare text
+        self.work_quoted: dict[str, list[str]] = collections.defaultdict(list)
         self.role: dict[str, list[str]] = collections.defaultdict(list)
         self.theater: dict[str, list[str]] = collections.defaultdict(list)
         self.work_squashed: dict[str, list[str]] = collections.defaultdict(list)
@@ -367,7 +404,12 @@ def build_lexicon(db: Path) -> Lexicon:
     # it replaced -- it matches more candidates and discriminates less.
     # `Пономаревъ 2-й` in a 1908-09 review should match the man who was 2-й
     # IN 1908-09, and not the one who was 2-й a decade earlier.
-    ord_by_season: dict[tuple[str, str], str] = {}
+    # Within one season it is still a SET: two lists can print the same man
+    # differently in the same year. Сергѣй Густавовичъ Легатъ is `Легатъ 3-й`
+    # in BalletArtists 1898-99..1903-04 but `Легатъ 2-й` in TheaterSchoolStaff,
+    # and the reviews use both (known_issues.md #159, RG 2026-10-23). A
+    # scalar let whichever list came last overwrite the other.
+    ord_by_season: dict[tuple[str, str], set[str]] = collections.defaultdict(set)
     ordinals: dict[str, set[str]] = collections.defaultdict(set)
     # Which city's lists a person stands in, by season. The company lists are
     # printed per city, and a review is of one city's season: `г-жа Павлова`
@@ -391,7 +433,7 @@ def build_lexicon(db: Path) -> Lexicon:
         m = re.search(r"(\d+)\s*-\s*[ейя]", str(fam))
         if m:
             ordinals[str(pid)].add(m.group(1))
-            ord_by_season[(str(pid), season)] = m.group(1)
+            ord_by_season[(str(pid), season)].add(m.group(1))
     # Who stands in the BalletArtists list in each season: an adult member of
     # the company. A pupil honorific (`в-ца`, `восп-къ`, `уч-ца`) can never be
     # one of them -- `в-къ Стуколкинъ` as Фрицъ is not Тимофей Алексѣевичъ
@@ -405,7 +447,7 @@ def build_lexicon(db: Path) -> Lexicon:
     lex.company_seasons = collections.defaultdict(set)
     for pid, s2 in lex.company_by_season:
         lex.company_seasons[pid].add(s2)
-    lex.ordinal_by_season = ord_by_season
+    lex.ordinal_by_season = dict(ord_by_season)
     lex.city_by_season = city_by_season
     lex.cities = cities
 
@@ -495,6 +537,7 @@ def build_lexicon(db: Path) -> Lexicon:
 
 
 
+    quoted_titles: list[tuple] = []
     for wid, title, genre, parent, is_excerpt in con.execute("""
         select work_id, canonical_title, canonical_genre,
                -- research.work.parent_genre was dropped on 2026-10-13; a work is ballet
@@ -515,6 +558,8 @@ def build_lexicon(db: Path) -> Lexicon:
         # «Коппелія» came back with 5 candidates, 4 of them its own act records.
         forms = ({key_of(title).strip(" .,;:!?«»„“\"'")}
                  if lex.work_meta[str(wid)]["is_excerpt"] else title_forms(title))
+        if not lex.work_meta[str(wid)]["is_excerpt"]:
+            quoted_titles.append((wid, title))
         lex.add(lex.work, forms, wid)
         for f in forms:
             sq = squash(f)
@@ -523,6 +568,53 @@ def build_lexicon(db: Path) -> Lexicon:
             st = stem_key(f)
             if st and str(wid) not in lex.work_stemmed[st]:
                 lex.work_stemmed[st].append(str(wid))
+
+    # Every title the Repertoire PRINTED for a work, not only the canonical one.
+    # A work is the umbrella over its printed variants (RG, 2026-10-23): once
+    # «Жизель или Виллисы» or «Граціела» is folded into Жизель / Граціелла,
+    # research.work no longer carries that spelling, and a review printing it
+    # found nothing. The same reasoning as the person-variant index above.
+    # Excerpt-shaped printings are left out (they are their own rows).
+    # Snapshot of the CANONICAL-title index: a printed spelling is barred only
+    # when it is another work's canonical title. Checked against the live index
+    # it was first-come-first-served (the query is unordered), so «Донъ Кихотъ»,
+    # printed for the ballet and the comedy alike, went to either one.
+    canon_index = {k: list(v) for k, v in lex.work.items()}
+    for wid, printed in con.execute("""
+        select distinct p.work_id, p.verbatim_title
+        from research.performance p join research.work w on w.work_id = p.work_id
+        where w.excerpt_of_work_id is null and p.verbatim_title is not null
+          and p.verbatim_title <> w.canonical_title
+        order by 1, 2""").fetchall():
+        if str(wid) not in lex.work_meta or excerpt_shaped(printed):
+            continue
+        # never a spelling that already names ANOTHER work: «Карменъ» printed
+        # for one Жизель (RG's 16 Sep 1907 ruling) must not pull «Кармена»
+        # away from Bizet's opera
+        quoted_titles.append((wid, printed))
+        forms = {f for f in title_forms(printed)
+                 if not any(w != str(wid) for w in canon_index.get(f, ()))}
+        lex.add(lex.work, forms, wid)
+        for f in forms:
+            sq = squash(f)
+            if sq and str(wid) not in lex.work_squashed[sq]:
+                lex.work_squashed[sq].append(str(wid))
+            st = stem_key(f)
+            if st and str(wid) not in lex.work_stemmed[st]:
+                lex.work_stemmed[st].append(str(wid))
+
+    # The quoted-only index: extra declined forms of every title, and each half
+    # of an «или» title («Царь-дѣвица» -> Конекъ-горбунокъ, RG 2026-10-23).
+    # Never a form that already names another work.
+    for wid, t in sorted(quoted_titles, key=lambda x: (str(x[0]), x[1])):
+        cands = title_forms_extra(t)
+        for half in alt_title_parts(t):
+            cands |= title_forms(half) | title_forms_extra(half)
+        for f in cands:
+            if any(w != str(wid) for w in canon_index.get(f, ())):
+                continue
+            if str(wid) not in lex.work_quoted[f]:
+                lex.work_quoted[f].append(str(wid))
 
     for (role,) in con.execute("""
         select distinct role_name from raw.person_entry_credit
@@ -703,9 +795,9 @@ def rank_candidates(ids: list[str], surface: str, honorific: str, season: str,
     # longer-serving Павлова drew level on the season bonus. 79 of her own
     # mentions were unresolved for that reason.
     def ordinals_for(pid: str) -> set[str]:
-        """The ordinal this person carried in THIS season, else all of them."""
+        """The ordinals this person carried in THIS season, else all of them."""
         o = getattr(lex, "ordinal_by_season", {}).get((pid, season))
-        return {o} if o else (lex.person_meta.get(pid, {}).get("ordinals") or set())
+        return set(o) if o else (lex.person_meta.get(pid, {}).get("ordinals") or set())
 
     def cities_for(pid: str) -> set[str]:
         """The city lists this person stood in THIS season, else in any."""
@@ -924,9 +1016,13 @@ def music_cue_before(text: str, a: int) -> bool:
 # An empty person_id means "leave unlinked". Every row must find its mention:
 # a row that matches nothing means the text moved, and is an error.
 MENTION_LINKS = Path("docs/eval/review_mention_links.csv")
+# The same for WORK mentions, keyed by work_id (RG, 2026-10-23: the 1892-93
+# review's «Волшебная флейта или Танцовщики по неволѣ» -> Волшебная флейта).
+WORK_MENTION_LINKS = Path("docs/eval/review_work_mention_links.csv")
 
 
-def apply_mention_links(rows: list[dict], path: Path = MENTION_LINKS) -> None:
+def apply_mention_links(rows: list[dict], path: Path = MENTION_LINKS,
+                        mention_type: str = "person", id_col: str = "person_id") -> None:
     if not path.exists():
         return
     with open(path, encoding="utf-8") as f:
@@ -934,7 +1030,7 @@ def apply_mention_links(rows: list[dict], path: Path = MENTION_LINKS) -> None:
     seen: collections.Counter = collections.Counter()
     index: dict[tuple[str, str, int], dict] = {}
     for m in rows:
-        if m.get("mention_type") != "person":
+        if m.get("mention_type") != mention_type:
             continue
         k = (m["block_id"], m["surface"])
         index[(k[0], k[1], seen[k])] = m
@@ -946,10 +1042,10 @@ def apply_mention_links(rows: list[dict], path: Path = MENTION_LINKS) -> None:
         if m is None:
             missing.append(key)
             continue
-        m["entity_id"] = ln["person_id"]
+        m["entity_id"] = ln[id_col]
         m["link_method"] = "scan-verified"
-        m["link_confidence"] = "high" if ln["person_id"] else "unlinked"
-        m["rank_reason"] = "docs/eval/review_mention_links.csv"
+        m["link_confidence"] = "high" if ln[id_col] else "unlinked"
+        m["rank_reason"] = str(path)
     if missing:
         raise SystemExit(f"{path}: {len(missing)} row(s) match no mention -- "
                          f"re-check the scan: {missing[:5]}")
@@ -993,6 +1089,13 @@ def scan_block(text: str, block_type: str, lex: Lexicon,
                     eid, method, why = bal[0], method + "+ballet-genre", "ballet-genre"
                 else:
                     ids = parents
+        if (kind == "work" and method.startswith("bare") and genre == "Ballet"
+                and eid and not is_ballet_work(lex.work_meta.get(eid, {}))):
+            # An unquoted word in a ballet review that happens to be a play's or
+            # an opera's title is almost always a part or an ordinary word:
+            # «Король», «Зигфридъ», «Робертъ», «Зима», «Друзья» (#159 work
+            # linking, step 3, 2026-10-23). The candidates are kept; the link is not.
+            eid, why = "", "bare-not-ballet"
         if kind == "person" and evidence.strip().lower() in PUPIL_HON and season:
             # in the company this season or any earlier one: a pupil cannot
             # have been a member already
@@ -1074,6 +1177,29 @@ def scan_block(text: str, block_type: str, lex: Lexicon,
                     ids = lex.work[alt]
                     key = alt
                     break
+        alt_method = ""
+        if not ids and lex.work_quoted.get(key):
+            ids = lex.work_quoted[key]
+        if not ids:
+            # «Сатанилла или Любовь и адъ»: the works its halves name. A comma
+            # splits too («Катарина, дочь разбойника»), but only into a ballet:
+            # «Лѣсъ, покрытый снѣгомъ» is a scene, not the comedy «Лѣсъ».
+            halves = alt_title_parts(inner)
+            comma = not halves and inner.count(", ") == 1
+            if comma:
+                halves = inner.split(", ")[:1]
+            found: list[str] = []
+            for h in halves:
+                hk = key_of(h).strip(" .,;:!?")
+                hit = (lex.work.get(hk) or lex.work_quoted.get(hk)
+                       or next((lex.work[f] for f in title_forms(h) if f in lex.work), []))
+                for w in hit:
+                    if comma and not is_ballet_work(lex.work_meta.get(w, {})):
+                        continue
+                    if w not in found:
+                        found.append(w)
+            if found:
+                ids, alt_method = found, "quoted-alt-title"
         if not ids:
             sq = squash(inner)
             if sq and lex.work_squashed.get(sq):
@@ -1085,7 +1211,10 @@ def scan_block(text: str, block_type: str, lex: Lexicon,
                 emit("work", a, b, lex.work_stemmed[st], "quoted-stemmed",
                      "medium", "«…»")
                 continue
-        if ids:
+        if ids and alt_method:
+            emit("work", a, b, ids, alt_method if len(ids) == 1 else alt_method + "-ambiguous",
+                 "medium", "«…»")
+        elif ids:
             emit("work", a, b, ids, "quoted-exact" if len(ids) == 1 else "quoted-ambiguous",
                  "high", "«…»")
         elif DANCE_NUMBER.match(inner.strip()):
@@ -1261,6 +1390,7 @@ def main() -> None:
                 unknowns.append(u)
 
     apply_mention_links(rows)
+    apply_mention_links(rows, WORK_MENTION_LINKS, "work", "work_id")
 
     a.out_dir.mkdir(parents=True, exist_ok=True)
     mcols = ["mention_type", "season", "city", "page_id", "block_id",

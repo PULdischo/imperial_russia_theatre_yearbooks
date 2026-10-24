@@ -19895,6 +19895,29 @@ select count(*) filter (where discipline is null), count(*) filter (where discip
 
 Result: 32,808 events, 21 seasons 1890-91..1910-11 (SP 17,563 / Moscow 15,245; Moscow ~550-610 a season to 1897-98, ~800-860 from 1898-99); performed 22,164, no_performance 7,763, not_captured 2,881. Dates: verified 29,841, synthesized_gap 2,881, corrected_manual 45, corrected 31, no_weekday 10. Receipts on 19,295 events (59 corrected print typos), 32,169,190.85 rub.; 2,869 performed events without receipts, 1,904 of them in 1890-91/1891-92 (none printed). 30,805 performances of 2,955 works (research.work 2,968, 305 excerpts). Discipline: Russian drama 15,644, opera 6,319, French drama 4,882, ballet 2,696, German drama 824, none 335 (140 not ceremonial), Italian opera 59, German opera 30, other 18. Company «Moscow Art Theatre» 5 performances only. 122 performed events with n_works 0. Season stats: 38 rows/19 seasons; events match exactly 2, within ±2 10, off >10 12 (largest 1909-10 Moscow +107, 1907-08 SP +70, 1908-09 SP +55); receipts within 1,000 rub. 11 of 34, exact 0.
 
+## 2026-10-23 — Ordinal-by-season bug (#159): two fixes tested on copies, NOT applied
+
+```sql
+-- person-seasons whose raw entries print more than one ordinal (scratch ordconf.py):
+select pl.person_id, pe.family_name, sp.season, pe.entity_type
+from raw.person_entry pe join entities.person_link pl on pl.entry_id=pe.entry_id
+join raw.source_pages sp on sp.page_id=pe.page_id where pe.family_name is not null;   -- regex (\d+)\s*-\s*[ейя] in Python
+-- Легатъ entries 1898-99..1904-05 with their credits:
+select sp.season, pe.entity_type, pe.family_name, pe.first_name, pe.patronymic, p.display_name,
+  (select string_agg(pc.label||': '||pc.role_name, '; ') from raw.person_entry_credit pc where pc.entry_id=pe.entry_id and pc.role_name is not null)
+from raw.person_entry pe join raw.source_pages sp using(page_id) join entities.person_link pl using(entry_id) left join research.person p on p.person_id=pl.person_id
+where pe.family_name like 'Легат%' and sp.season between '1898-99' and '1904-05';
+-- after rebuilding mentions/review tables/assertions on three copies (C = unchanged code, A = set of all ordinals,
+-- B = company-list ordinals first, else all): every table diffed (candidate lists ignored), then
+select n.mention_id, n.season, s.printed_folio, n.surface, po.display_name, pn.display_name, o.rank_reason, n.rank_reason
+from v.entities.review_mention n join c.entities.review_mention o using(mention_id) ...
+where n.entity_id is distinct from o.entity_id or n.rank_reason is distinct from o.rank_reason;
+select ... from v.research.review_assertion n join c.research.review_assertion o using(assertion_id)
+where n.performer_person_id is distinct from o.performer_person_id or n.link_method is distinct from o.link_method;
+```
+
+Result: 2,911 person-seasons carry an ordinal; 8 carry two: Сергѣй Густавовичъ Легатъ 1898-99..1903-04 (BalletArtists 3, TheaterSchoolStaff 2), Дмитріева 2-я (Ѳедорова) 1890-91 (1 and 2, both BalletArtists), Пономаревъ 2-й 1909-10 (1 and 2, both BalletArtists). Control C = production on all 50 tables. A vs C: 2 tables differ: 13 person mentions newly linked to Сергѣй (all «Легатъ 3-й», 1899-00 ff. 102, 104, 105, 106 x2, 119 x2; 1900-01 ff. 155, 175, 185 x3, 193; all were tie(margin=1)), 1 rank_reason-only change (10879, still Евгенія), and assertion 731 «Гизель — г-нъ Легатъ 3-й» unresolved -> Сергѣй. B = A plus 1 loss: 18153 1903-04 f. 107 «г. Легатъ 2-й» (Жанъ де Бріенъ) Сергѣй -> tie, because B drops his school-list «2-й». All 14 passages scan-read by Claude on the full-resolution images: print as stored. Found in passing: 1899-00 f. 104 La Courante «г-жи … Павлова 1-я; Легатъ 1-й, Легатъ 3-й, Кшесинскій 2-й, …» (no «гг.» in the print) carries «г-жи» past the semicolon, so mentions 10878/10879 link to Евгенія and 10880 to Кшесинская 2-я. Not chased.
+
 ## 2026-10-23 — The 122 performed events with no work (#141 revisited)
 
 ```sql
@@ -19908,6 +19931,20 @@ select coalesce(disciplines,'∅'), coalesce(companies,'∅'), coalesce(genre_fa
 
 Result: all 122 have no performance row. Backups: 107 (10-09, 10-10) -> 120 (10-11 structure) -> 123 (10-12) -> 122 (10-13 on); 19 ids new / 4 gone vs 10-09, mostly session-id renumbering. 70 are invalids' concerts (incl. rehearsals/repeats). 6 annotations name works: 1897-98 pair022 s006 (Tannhäuser/Siegfried) and s019 (Fidelio/Parsifal/Lustige Weiber -- on 10-09 this annotation sat wrongly on the 21 Mar «Tristan» evening), 1898-99 p034 s022 (Pushkin evening), 1900-01 p008 s006 (Sonnenthal, Der Hüttenbesitzer), 1901-02 p025 s010 and 1903-04 p004 s005 (Pushkin monument galas). Two of the original #141 seven now have work rows (1902-03 p018 s026, 1903-04 p030 s012 Мѣсяцъ въ деревнѣ). 1 blank-title play (1905-06 p015 s021). Event-level labels: genre_families 'concert' 93; Siamese 2, Sonnenthal 1 have company; 26 have no discipline/company/genre family.
 
+## 2026-10-23 — Season Reviews: coverage of works, dance numbers and creator credits (RG's re-prioritisation)
+
+```sql
+select count(*), count(nullif(entity_id,'')), count(distinct nullif(entity_id,'')) from entities.review_mention where mention_type='work';
+select count(*), count(distinct normalised) from entities.review_mention where mention_type='dance_number';
+select surface from entities.review_mention where mention_type='dance_number' limit 12;
+select schema_name, table_name from duckdb_tables() where table_name like '%review%' or table_name like '%creator%' or table_name like '%credit%';
+select count(*), count(distinct page_id) from raw.review_block b join raw.review_page p using(page_id)
+ where p.genre='Ballet' and regexp_matches(b.text, '(музыка|муз\.|соч\.|балетмейстер|поставлен|декораці|костюм)');
+select count(*), count(person_id) from research.production_credit;
+```
+
+Result (on a copy equal to production): work mentions 3,737, 2,918 linked to 189 distinct works, 819 unlinked. Dance-number mentions 137 (87 distinct forms), none linked, no table; detection is only French «pas/grand pas/danse/scène» shapes. The #159 triage found 591 cast statements that are dances or numbers («Variation», «Мазурка», «Испанскій танецъ», numbers named by composer), so most dance numbers are now caught as roles, not as dance numbers. No review-side creator table: 574 ballet-review blocks on 335 pages carry creator cues (музыка/муз./соч./балетмейстер/поставлен/декорации/костюм), none extracted. research.production_credit (from the ballet production lists) has 1,587 credits, all person-linked, with role_category (author, music, …).
+
 ## 2026-10-23 — German opera troupe season 1897-98 vs the two annotation-only charity evenings (#141)
 
 ```sql
@@ -19917,6 +19954,16 @@ select event_id, disciplines, companies, genre_families from research.event wher
 ```
 
 Result: the visiting German opera troupe played the Маріинскій 22 Feb - 27 Mar 1898 (29 evenings; Tristan, Walküre, Siegfried, Meistersinger, Lohengrin, Heimchen am Herd …). The charity evenings of 15 and 22 Mar 1898 fall inside that run. Sonnenthal (German drama / Adolf Sonnenthal) and the Siamese morning (Siamese dance / Siamese court troupe) already carry evening-level labels with no work rows; genre_families blank for both.
+
+## 2026-10-23 — Ordinal set APPLIED (RG: "okay do this"): production check
+
+```sql
+-- production vs the tested copy A, every table (candidate lists ignored); then production vs the backup:
+select n.mention_id, ... from entities.review_mention n join b.entities.review_mention o using(mention_id) where n.entity_id is distinct from o.entity_id or n.rank_reason is distinct from o.rank_reason;
+select ... from research.review_assertion n join b.research.review_assertion o using(assertion_id) where n.performer_person_id is distinct from o.performer_person_id or n.link_method is distinct from o.link_method;
+```
+
+Result: production = tested copy on all 50 tables. Versus the backup: the 13 mentions -> Сергѣй, 10879 rank_reason only, assertion 731 -> Сергѣй; nothing else. Backup outputs/backups/ordinal_set_2026-10-23/.
 
 ## 2026-10-23 — Do the works named in the 22 Mar 1898 / 15 Mar 1898 annotations exist in research.work? (#141 options)
 
@@ -19941,6 +19988,56 @@ select ... where e.season='1897-98' and t.canonical_name='Маріинскій' 
 
 Result: 1897-98 has ballet reviews only (SP 41, Moscow 24 pages), nothing on these evenings. Printed SP statistics: «Нѣмецкихъ оперныхъ» 31 performances, 152,203 р. 10 к., footnote 6 «Въ томъ числѣ 1 бенефисъ и 3 спектакля съ благотворительною цѣлью». Repertoire: the troupe has 29 evenings with work rows, 1 benefit (24 Mar, orchestra benefit) and 1 charity (14 Mar). 29 + the two annotation-only charity evenings (15 Mar, 22 Mar morning) = 31, charity 1 + 2 = 3, benefit 1: exact match. Footnote 3 (Russian opera, Маріинскій, «1 спектакль въ пользу школъ Императорскаго женскаго Патріотическаго Общества») is the 22 Jan 1898 «Донъ Жуанъ», not 15 March.
 
+## 2026-10-23 — Work attachment of review cast statements: accuracy by source and rule variants (tested on copies, NOT applied)
+
+```sql
+-- spiski check (scratch workcheck.py): spiski credits (raw.person_entry_credit, named_work, role_name not null) per (person, season);
+-- each credit label resolved to a ballet work (research.work, canonical_genre бал., via title_forms/squash/stem_key, unique key only);
+-- an assertion is checkable when its performer has exactly one credit that season whose role shares a 4-letter stem with role_surface
+select assertion_id, season, page_id, printed_folio, role_surface, performer_surface, performer_person_id, work_surface, work_id, work_source from research.review_assertion;
+-- governing-work mention link methods; bare vs quoted accuracy
+select link_method, count(*), count(nullif(entity_id,'')) from entities.review_mention where mention_type='work' group by 1;
+select work_id, canonical_title, canonical_genre, appearance_count from research.work where canonical_title like 'Донъ%Кихот%' or canonical_title like 'На перепуть%';
+-- variant copies vs production: work_id gained / changed / lost by work_source transition
+```
+
+Result: production 786 agree / 215 disagree / 339 no work (of the checkable rows; 1,779 not checkable). Governing work from a quoted title 433/26 (94%), from an unquoted title 233/124 (65%); same-page inheritance 120/65. Unquoted titles that are really parts: Золушка (28, Спящая красавица), Король, Апоѳеозъ, Зигфридъ, Коломбина, Робертъ, Зима, Индія, Комета. Variants: D quoted-first 818/168/361; E quoted-only 759/91/492; F (unquoted title ignored when a dash or colon follows; inheritance from quoted titles only) 785/107/452; G1 = F + nearest earlier title when the page has several 851/160/345 (nearest-earlier alone 66/53, rejected); **G2 = F + carry the previous page's last quoted title when the page has none 1,043/182/138** (previous-page alone 258/75); G3 = G2 carrying the previous page's last cast work 1,000/234/123 (rejected). G2 vs production: statements with a work 2,033 -> 2,714 (764 gained, 342 changed, 83 lost); review_solo with a work 35 -> 74. Text sample of 14 previous-page gains: 11 right, 2 wrong (1903-04 Moscow f. 201 Баядерка dances -> Золотая рыбка; 1904-05 Moscow f. 198 Спящая красавица parts -> Волшебное зеркало), 1 unclear. Work-identity side findings: «На перепутьѣ» in ballet reviews resolves to the drama («пьеса», 11 performances), not the ballet «На перепутьи» (4); the ballet Донъ-Кихотъ is three work rows («Донъ-Кихотъ» бал. 39, «Донъ-Кихотъ Ламанчскій» бал. 43, «Донъ Кихотъ Ломанчскій» бал. 1).
+
+## 2026-10-23 — Work-attachment rule G2: regressions and unverifiable additions (for RG's "what are the cons")
+
+```sql
+-- per-assertion spiski verdict, production vs G2 (scratch workcheck.csv / workcheckG2.csv, built from research.review_assertion as in the entry above)
+```
+
+Result: verdict transitions prod -> G2: missing->agree 187, disagree->agree 89, spiski-ambiguous->agree 22, missing->disagree 40, agree->disagree 33, disagree->missing 18, agree->missing 8. Largest regression: 19 Донъ-Кихотъ statements (1901-02 SP f. 191) right before via an unquoted «Донъ-Кихота» on the page, now carried from the previous page's «Сильвія»; 8 Катарина -> Золушка (previous-page); 8 Брама -> no work (ambiguous-on-page). Statements with no spiski check that newly get a work: 523 (previous-page 473, page-earlier-block 43, block 7).
+
+## 2026-10-23 — Review work mentions: unlinked forms, loose matches, duplicate ballet works, non-ballet links (RG: "find every work named and link to their canonic work")
+
+```sql
+select surface, normalised, link_method, candidates_n, season, page_id from entities.review_mention where mention_type='work' and coalesce(entity_id,'')='';
+-- loose match (scratch loosework.py): each unlinked surface, and its «или»/comma parts, against research.work titles
+-- (non-excerpt; each word to 4 letters; squash key); ballet works preferred
+-- duplicate ballet works (scratch dupballet.py): research.work non-excerpt, genre like бал/ballet, key = main title before «или», words to 4 letters
+select case when w.canonical_genre ilike '%бал%' then 'ballet' when w.canonical_genre ilike 'оп%' then 'opera' else coalesce(w.canonical_genre,'?') end, count(*), count(distinct w.work_id)
+from entities.review_mention m join research.work w on w.work_id::varchar=m.entity_id where m.mention_type='work' group by 1;
+```
+
+Result: 819 unlinked work mentions (quoted-unresolved 760, quoted-ambiguous 49, bare 7, quoted-stemmed 3), 605 distinct forms. Loose match: 66 mentions to one work, 68 to several, 685 none. Clear misses: Привалъ кавалеріи x40 (blocked by the duplicate «Привалъ кавалерія» row), Царь-дѣвица forms x15 (-> «Конекъ-горбунокъ или Царь-дѣвица»), Конька-горбунка/Конькѣ-Горбункѣ, Оживленнаго сада, Катарина, дочь разбойника, Сатанилла или Любовь и адъ, Жертвы Амуру или Радости любви, Раймондой, Эсмеральдой, Шопеніаной, Царя Кандавла. The rest: scene titles (Подводное царство, Готическій залъ …), quoted dance numbers (Чардашъ, Латышскій танецъ, Panadéros, Танцы часовъ …), works outside the repertoire (Исламей, Papillons, Les préludes …), non-works (the Yearbook itself, quoted speech, parts). Duplicate ballet work groups: Балетный дивертиссементъ/дивертиссментъ, Волшебные/Волшебныя грезы, Граціелла/Граціела, Дивертиссементъ/Дивертиссментъ, Жизель/Жизель или Виллисы, Конекъ-горбунокъ/…или Царь-дѣвица, Маркобомба/Маркабомба, Привалъ кавалеріи/кавалерія, Фіаметта/Фіамметта, plus Донъ-Кихотъ x3 (Сильвія/Сильфида and Маркитантка are different works). Linked mentions 2,918: ballet 2,646 (91 works), the other ~272 to non-ballet works, many of them parts or common words: Зигфридъ -> opera 29, Коломбина -> арлекинада 20, Король -> пьеса 20, Робертъ -> opera 17, Зима, Лѣсъ, Друзья, Потомъ, Стѣны, Рабыня, Жена.
+
+## 2026-10-23 — Duplicate ballet work rows (step 1 of review work linking): performances behind each variant
+
+```sql
+select w.canonical_genre, e.city, min(e.season), max(e.season), count(*), string_agg(distinct p.verbatim_title||' ['||coalesce(p.verbatim_genre,'')||']', '; ')
+from research.work w join research.performance p using(work_id) join research.event e using(event_id)
+where w.canonical_title=? and w.canonical_genre ilike '%бал%' group by 1,2;      -- for each of the 21 variant titles
+select p.verbatim_title, e.city, e.season, e.date_undate, e.printed_page_number, ee.page_id, th.canonical_name ... -- the one-off spellings
+select e.season, count(*), count(distinct p.verbatim_title) from research.performance p join research.event e using(event_id)
+where p.verbatim_title ilike '% или %' and p.discipline='ballet' group by 1;
+select e.season, e.city, p.verbatim_title, count(*) ... where w.canonical_title like 'Донъ%Кихот%' (ballet) / like 'Конекъ%' group by 1,2,3;
+```
+
+Result: Донъ-Кихотъ: Moscow «Донъ-Кихотъ» 1890-91..1892-93 (5), then «Донъ-Кихотъ Ламанчскій» from 1900-01 (39, with «Донъ-Кихотъ» 1906-07 1, 1907-08 3); SP «Донъ-Кихотъ Ламанчскій» 1901-02 only (4), «Донъ-Кихотъ» 1902-03..1910-11 (28); «Донъ Кихотъ Ломанчскій» Moscow 21 Dec 1908 (1). Конекъ-горбунокъ: «… или Царь-дѣвица» only 1910-11 (Moscow 10, SP 2), when 11 of 12 printings carry the subtitle; ballet «или» titles otherwise 1898-99 1 (Жизель или Виллисы) and 1909-10 1. One-offs: Привалъ кавалерія Moscow 23 Apr 1900, Граціела SP 1 Dec 1904, Фіамметта SP 11 Feb 1901, Маркабомба SP 9 Feb 1900, Дивертиссментъ x3 (1908-09), Балетный дивертиссментъ x3 (1905-06, 1908-09, 1910-11); Волшебные грезы 3 / Волшебныя грезы 5 (Moscow 1899-00..1901-02); Жизель или Виллисы Moscow 15 Nov 1898 and 18 Oct 1909.
+
 ## 2026-10-23 — event_labels.csv applied (1898 German charity evenings)
 
 ```sql
@@ -19951,3 +20048,159 @@ where n.disciplines is distinct from o.disciplines or n.companies is distinct fr
 ```
 
 Result: only research.event changed, 2 rows: repertoire_1897-98_pair022__s006 (15 Mar 1898) and __s019 (22 Mar 1898 morning), disciplines NULL -> German opera, companies NULL -> visiting German opera troupe, St. Petersburg; genre_families still NULL. Production = tested copy.
+
+## 2026-10-23 — Ballet work merges (9 groups) tested on a copy, NOT applied
+
+Scan check (helper agent + Claude, full-resolution Repertoire images, PDF index = pNNN, printed page numbers matched): all 13 one-off spellings printed as transcribed: Донъ Кихотъ Ломанчскій (1908-09 p.25), Привалъ кавалерія (1899-00 p.39; «-іи» on p.21 the same season), Граціела (1904-05 p.106; confirmed by Claude), Фіамметта (1900-01 p.28, «2-е д. бал. Фіамметта.»), Маркабомба (1899-00 p.28), Волшебные грезы (1899-00 pp.19, 21) / Волшебныя (p.21, 28 Dec), Дивертиссментъ x3 and Балетный дивертиссментъ x3 (no е; the е-form also printed 1899-00 p.28, 1900-01 p.28).
+
+```sql
+-- distinct printed titles behind each variant work
+select w.canonical_title, w.canonical_genre, w.work_id, r.performance_title, r.genre, count(*)
+from entities.work w join entities.work_link l on l.work_id=w.work_id join raw.event_entry_performance r on r.performance_id=l.raw_performance_id
+where w.canonical_title in (...) group by all;
+-- copy: 12 rows added to entity_curation/work_title_aliases.csv; build_entities -> build_research_model -> review chain;
+-- control copy rebuilt with unchanged code = production on all 50 tables; then every table diffed (scratch mergediff.py)
+```
+
+Result: research.work 2,968 -> 2,959 (9 ids retired to entities.work_id_crosswalk; survivors keep their ids; Донъ-Кихотъ survives as 8c9a018e… with canonical title «Донъ-Кихотъ», 83 appearances). 61 performances re-pointed; 20 production-list entries re-pointed; 4 excerpts follow their umbrella work (2-е д. бал. Фіамметта -> Фіаметта, three Донъ-Кихотъ excerpts). Review work mentions linked 2,918 -> 2,965 (Привалъ кавалеріи 41, Ученики Дюпрэ/Дюпре/Les élèves de Dupré 6 -> Приказъ короля, Граціелы 1); assertions with a work 2,033 -> 2,069. No event changed; no dangling references. Code needed (scratch copy): build_entities excerpt matcher applies work_title_aliases to the parent title; match_review_mentions indexes every printed title of a work (not one that already names another work, so «Кармена» keeps Карменъ). Left out on purpose: the two divertissement groups (generic programme item, per-performance genre split, #114).
+
+## 2026-10-23 — 9 ballet work merges APPLIED (RG: "yes, apply the 9 merges"): production check
+
+```sql
+-- production vs the tested copy, every table (candidate lists ignored); production vs the backup outputs/backups/work_merges_2026-10-23/
+-- Донъ-Кихотъ under the merged work, for RG:
+select e.city, p.verbatim_title, min(e.season), max(e.season), count(*) from research.performance p join research.event e using(event_id) join research.work w using(work_id)
+where w.canonical_title='Донъ-Кихотъ' and w.canonical_genre='бал.' group by 1,2;
+select season, city, list_title, description_text from research.production where work_id=<Донъ-Кихотъ> order by city, season;
+```
+
+Result: production = tested copy on all 50 tables; vs backup 11 tables differ exactly as tested (entities.work/work_link/work_id_crosswalk/work_genre_candidate/review_mention; research.work/performance/production/production_work/review_assertion/review_solo); raw and analysis identical. Донъ-Кихотъ printed titles kept per performance: Moscow «Донъ-Кихотъ» 1890-91..1907-08 9, «Донъ Кихотъ» 1892-93 2, «Донъ-Кихотъ Ламанчскій» 1900-01..1909-10 29, «Донъ Кихотъ Ламанчскій» 9, «Донъ-Кихотъ-Ламанчскій» 1, «Донъ Кихотъ Ломанчскій» 1; SP «… Ламанчскій» 1901-02 4, «Донъ-Кихотъ» 1902-03..1910-11 28. List entries: Moscow 1890-93 «4 д. и 8 карт., соч. М. И. Петипа»; from 1900-01 «4 д. и 7 карт., съ прологомъ», «поставленъ А. А. Горскимъ» (Moscow 1901-02, SP 1901-02); «музыка Минкуса и другихъ композиторовъ/авторовъ» SP 1908-09.., Moscow 1909-10. SP lists say «Донъ-Кихотъ Ламанчскій» every season while the SP Repertoire prints «Донъ-Кихотъ» from 1902-03.
+
+## 2026-10-23 — Step 2 of review work linking: «или» halves + declension, tested on a copy, NOT applied
+
+```sql
+-- loose-match re-run on production after the merges (scratch loosework.py); then on a copy: match_review_mentions with
+-- title_forms_extra (instrumental of -а titles, every-word declension of 2-3 word titles) and «или» halves, both in a
+-- QUOTED-ONLY index (lex.work_quoted); comma split only into a ballet; printed-variant index checked against a snapshot of the
+-- canonical-title index and ordered (it was first-come on an unordered query). Mentions diffed by (block_id, char_start, char_end, mention_type):
+select o.surface, o.link_method, n.link_method, xo.canonical_title, xn.canonical_title, count(*) from k.entities.review_mention o
+join w.entities.review_mention n using(block_id, char_start, char_end, mention_type) ... where o.entity_id is distinct from n.entity_id or o.link_method<>n.link_method group by all;
+select o.work_surface, wo.canonical_title, wn.canonical_title, n.work_source, count(*) from k.research.review_assertion o join w.research.review_assertion n using(assertion_id) ... group by all;
+```
+
+Result: first version also indexed the new forms for bare text: +98 mentions, 85 of them unquoted «Царь-Дѣвицы/-у/-а» (the heroine's PART in Конекъ-горбунокъ) and «Эсмеральдой»/«Раймондой» parts; and the comma split linked the scene «Лѣсъ, покрытый снѣгомъ» to the comedy «Лѣсъ». Both fixed (quoted-only index; comma -> ballet only). Also found: the printed-variant index applied 2026-10-23 is order-dependent — «Донъ Кихотъ» (printed for both the ballet and the «героич. ком.») went to either work run to run; fixed with the canonical snapshot + ordering (two runs identical; ballet chosen by the existing ballet-genre preference). Final: same 26,706 mentions; work mentions linked 2,965 -> 3,009; assertions with a work 2,069 -> 2,074; 9 «Царь-дѣвицы» statements move from «Апоѳеозъ» to Конекъ-горбунокъ. New links: Царь-дѣвица forms 13 -> Конекъ-горбунокъ, Конекъ-горбунокъ или Царь(-)дѣвица forms 5, Оживленный садъ 6, Фея куколъ 4, Папоротникъ 4, Жертвы Амуру 3, Катарина 4, Сатанилла 2, Раймонда 2, Граціелла 1, Эсмеральда 1, Шопеніана 1, Царь Кандавлъ 1. Ambiguous (left for RG): «Робертъ и Бертрамъ, или два вора» x2 (works Робертъ и Бертрамъ бал. 11 / Два вора бал. 5), «Волшебная флейта или Танцовщики по неволѣ» x1 (Волшебная флейта бал. 40 / Танцовщики по неволѣ бал. 2).
+
+## 2026-10-23 — Step 2 APPLIED (RG: "yes, apply step 2"): production check
+
+Production vs the tested copy, every table: identical. Vs backup outputs/backups/work_alt_titles_2026-10-23/: entities.review_mention 75 rows, research.review_assertion 23 rows, as tested; nothing else.
+
+## 2026-10-23 — Робертъ и Бертрамъ / Два вора: evidence, merge test, applied (RG: "yes, merge Два вора into Робертъ и Бертрамъ")
+
+```sql
+select e.city, p.verbatim_title, p.verbatim_genre, min(e.season), max(e.season), count(*) from research.performance p join research.event e using(event_id) join research.work w using(work_id)
+where w.canonical_title=? and w.canonical_genre='бал.' group by 1,2,3;   -- Робертъ и Бертрамъ, Два вора, Волшебная флейта, Танцовщики по неволѣ
+select season, city, list_title, description_text from research.production where work_id in (...);
+select page_id, text from raw.review_block where text ilike '%или два вора%' or text ilike '%Танцовщики по нев%';
+-- copy with one alias row; every table diffed; production vs tested copy after applying
+```
+
+Result: Робертъ и Бертрамъ Moscow 1892-93..1893-94 11 (list: Оге / Острембингеръ); Два вора Moscow 1905-06..1907-08 5 (list 1907-08 «Два вора (Робертъ и Бертрамъ)… Сюжетъ г. Оге, соч. Шмидта»); review 1905-06 MSK pp. 19, 25 (revival, Горскій, Schmidt). Волшебная флейта: SP 1892-93..1903-04 35 + Moscow 1898-99 5 (list «Комическій балетъ въ 1 д., соч. Бернаделли [later Л. Иванова], музыка Р. Дриго»); Танцовщики по неволѣ Moscow 1899-00 2 («Балетъ въ 1 д.»); review 1892-93 SP p. 18: «Волшебная флейта или Танцовщики по неволѣ», 2 acts, Bernadelli, first given 12 June 1822. Merge test: 8 tables differ exactly as expected (1 work, 5 performances, 1 list entry, 6 mentions); production = tested copy.
+
+## 2026-10-23 — RG: "Tell me about the ballet Egyptian Night(s)" (Египетскія ночи)
+
+```sql
+select work_id, canonical_title, canonical_genre, appearance_count, excerpt_of_work_id from research.work
+where canonical_title ilike '%египет%' or canonical_title ilike '%nuit%egypt%' or canonical_title ilike '%ночи%';
+select e.city, th.canonical_name, p.verbatim_title, p.verbatim_genre, e.season, e.date_undate, e.time_of_day, e.n_works
+from research.performance p join research.event e using(event_id) left join research.theater th using(theater_id) where p.work_id = 'ce020412-c210-5124-9c3e-23a5fd78fb12';
+select season, city, list_title, description_text, n_dates from research.production where work_id = 'ce020412-…';
+select pc.production_id, pc.role_category, pc.role_text, pc.name_printed, p.display_name from research.production_credit pc left join research.person p using(person_id) where pc.production_id in (...);
+select e.date_undate, e.annotation, e.is_benefit, e.is_charity, e.receipts_total_kopecks/100.0, string_agg(p2.verbatim_title||' ['||coalesce(p2.verbatim_genre,'')||']', ' + ' order by p2.performance_order)
+from research.event e join research.performance p2 using(event_id) where e.event_id in (select event_id from research.performance where work_id='ce020412-…') group by all;
+select m.page_id, m.surface, m.link_method from entities.review_mention m where m.entity_id='ce020412-…';
+select season, role_surface, performer_surface, p.display_name from research.review_assertion a left join research.person p on p.person_id=a.performer_person_id where work_id='ce020412-…';
+select s.season, pc.role_name, pe.family_name, pe.first_name from raw.person_entry_credit pc join raw.person_entry pe using(entry_id) join raw.source_pages s on s.page_id=pe.page_id where pc.label ilike '%гипет%';
+select page_id, text from raw.review_block where block_id in (select distinct block_id from entities.review_mention where entity_id='ce020412-…');
+```
+
+Result: one work, «Египетскія ночи» бал., 11 performances, all Маріинскій: 8 Mar 1908 (charity, «Въ пользу школъ Императорскаго Женскаго Патріотическаго Общества», with «На бойкомъ мѣстѣ»), 6 in 1908-09 (19 Feb–1 Apr 1909, with Шопеніана + Павильонъ Армиды / Пробужденіе флоры / Евника; receipts 3,207.75–3,542.27 rub.), 2 in 1909-10 (18 Dec 1909 Imperial Russian Musical Society 50th-anniversary gala with opera acts; 13 Jan 1910 with Жизель), 2 in 1910-11 (24 Oct 1910 with Шопеніана + Эвника; 21 Nov 1910 with Жизель). No Moscow performances. Lists 1908-09, 1909-10 «Балетъ въ 1 д., музыка А. Аренскаго»; 1910-11 adds «Танцы, сцены и группы сочинены и поставлены М. Фокинымъ». No 1907-08 list entry. Spiski credits 1908-09..1910-11: Амунъ Фокинъ; Вереника Павлова (1908-10), Карсавина/Преображенская (1910-11); Арсиноя Преображенская, Карсавина, Полякова; Клеопатра Махотина (1909-11); Маркъ Антоній Булгаковъ (1908-09), Гердтъ (1909-11); рабъ Клеопатры Нижинскій (1908-10), Больмъ (1910-11); жрецъ Солянниковъ; служители храма Бочаровъ 2-й, Христапсонъ, Пащенко. Reviews: 7 mentions on 1908-09 SP ff. 119, 122; 1910-11 ff. 136, 137; 1912-13 f. 140. The 1908-09 review calls 19 Feb 1909 the first performance («поставленными въ этотъ вечеръ въ первый разъ»); Павлова «исполнявшая главную роль». No cast statements attached to the work.
+
+## 2026-10-23 — RG: "What about Lev Ivanov's Egyptian Night" — search all sources
+
+```sql
+select performance_title, genre, count(*) from raw.event_entry_performance
+where performance_title ilike '%египет%' or performance_title ilike '%egypt%' or performance_title ilike '%nuit%' or performance_title ilike '%ночь въ%' group by 1,2;
+select season, city, list_title, description_text from research.production where list_title ilike '%египет%' or list_title ilike '%ночь%' or description_text ilike '%Аренск%';
+select page_id, text from raw.review_block where text ilike '%египетск% ноч%' or text ilike '%nuit d%gypt%' or text ilike '%Аренск%';
+select s.season, pe.family_name, pc.label, pc.role_name from raw.person_entry_credit pc join raw.person_entry pe using(entry_id) join raw.source_pages s on s.page_id=pe.page_id
+where pc.label ilike '%ноч%' and (pc.label ilike '%египет%' or pc.label ilike '%egypt%') and s.season < '1908-09';
+```
+
+Result: no trace of an Ivanov «Египетская ночь» / «Une nuit d'Égypte». Repertoire: only «Египетскія ночи» бал. (11, 1908-11) plus unrelated French plays (La nuit d'octobre, La nuit de mai, Asile de nuit). Lists: Arensky only in the 1908-11 «Египетскія ночи» entries. Reviews (all genres): only the 1908-13 Фокинъ references, plus 1908-09 SP p. 120 [review_1908-09_SP_ballet_p004]: decor «г. Аллегри», costumes «по рисункамъ художника Зандина»; and an unrelated Egyptian scene in the 1892-93 «Млада» opera review. Spiski credits before 1908-09: none.
+
+## 2026-10-23 — Волшебная флейта review-mention link (RG: "link the review mention to Волшебная флейта"): test and apply
+
+```sql
+select mention_id, block_id, surface, mention_type, link_method, candidate_ids from entities.review_mention where surface like 'Волшебная флейта или%';
+select work_id, canonical_title, canonical_genre from research.work where canonical_title='Волшебная флейта';
+-- copy with docs/eval/review_work_mention_links.csv (1 row); every table diffed; production vs tested copy after applying
+```
+
+Result: mention 1158 (review_1892-93_SP_ballet_p018__b002, quoted-alt-title-ambiguous over Волшебная флейта бал. / оп. / Танцовщики по неволѣ) -> Волшебная флейта бал. 4bf88098…; the only change in any table; production = tested copy.
+
+## 2026-10-23 — Step 3 (false work links): non-ballet links by method; "bare-not-ballet" rule tested on a copy, NOT applied
+
+```sql
+select split_part(m.link_method,'+',1), count(*) from entities.review_mention m join research.work w on w.work_id::varchar=m.entity_id
+where m.mention_type='work' and not (coalesce(w.canonical_genre,'') ilike '%бал%') group by 1;
+select w.canonical_title, w.canonical_genre, split_part(m.link_method,'+',1), count(*), any_value(m.surface) from ... group by 1,2,3;
+-- copy: match_review_mentions emit(): a bare (unquoted) work match in a Ballet review keeps its candidates but no link unless the work is ballet
+-- mentions diffed by position; assertions diffed by assertion_id; spiski check (scratch workcheck.py) before/after;
+select a.page_id, a.printed_folio, a.work_source, string_agg(a.role_surface,'; ') from research.review_assertion a join research.work w using(work_id)
+where w.canonical_title in ('Эсмеральда','Спящая красавица','Голубая георгина') and a.work_surface in ('Зима','Ноктюрнъ','Гарольдъ','Гарольда') group by all;
+```
+
+Result: non-ballet work links 273: bare 175, quoted-exact 89, quoted-squashed 6, quoted-stemmed 3. The rule unlinks exactly the 175 bare ones (Зигфридъ->opera 29, Король->play 20, Коломбина->арлекинада 19, Апоѳеозъ 19, Робертъ->opera 17, Актея 8, Молодежь 5, Друзья/Потомъ/Жена/Зима 4 each, … 36 titles). Quoted non-ballet links (French plays, operas, Кольцо любви феерія, Шопеніана сюита, Своенравная жена) left alone. Statements: with a work 2,074 -> 1,902; spiski check agree 816 -> 834, disagree 180 -> 101, missing 312 -> 376; 172 statements lose a (mostly wrong) work, some re-inherit from the page: right e.g. Зигфридъ -> Лебединое озеро 6, Золото -> Жемчужина 2, «Гарольда» parts -> Голубая георгина 5 (1904-05 SP f. 118); wrong e.g. Moscow 1902-03 f. 239 «Зима, Лѣто, Колосья…» -> Эсмеральда 11, SP 1906-07 f. 154 «Вальсъ, Муза, Старикъ…» -> Спящая красавица 7 (page-inheritance weakness, statement-attachment step).
+
+## 2026-10-23 — Why the bare-not-ballet rule: bare work links by art form; contexts of possibly genuine bare opera mentions
+
+```sql
+select case when w.canonical_genre ilike '%бал%' then 'ballet' else 'other' end, count(*), count(distinct w.work_id)
+from entities.review_mention m join research.work w on w.work_id::varchar=m.entity_id where m.mention_type='work' and m.link_method like 'bare%' group by 1;
+select w.canonical_title, count(*) from ... where m.link_method like 'bare%' and w.canonical_genre ilike '%бал%' group by 1 order by 2 desc limit 15;
+select count(*) from research.work; select count(*) from research.work where canonical_title not like '% %';
+select m.page_id, substr(b.text, greatest(1,m.char_start-90), 170) from entities.review_mention m join raw.review_block b using(block_id) where m.surface=? and m.mention_type='work';  -- Лючіи, Марта, Трубадуры, Сарацинъ, Актеи, Рыбаки
+```
+
+Result: bare work links: ballet 503 (35 works; Эсмеральда 88, Раймонда 70, Сильвія 68, Донъ-Кихотъ 40, Жавотта 29 …), other 175 (36 works). research.work 2,958 rows, 734 of them one-word titles. Contexts printed below in the session.
+
+## 2026-10-23 — Step 3 bare-not-ballet rule APPLIED: production check
+
+Production vs tested copy, every table: identical (3 tables differ from backup outputs/backups/bare_not_ballet_2026-10-23/: review_mention 175, review_assertion 281, review_solo 13, as tested).
+
+## 2026-10-23 — 7 quoted work mentions: context, governing ballets, test and apply (RG: "yes, apply the 7 links")
+
+```sql
+select m.mention_id, m.page_id, p.printed_folio, m.block_id, m.surface, w.canonical_title, w.canonical_genre, substr(b.text, greatest(1,m.char_start-160), 300)
+from entities.review_mention m join research.work w on w.work_id::varchar=m.entity_id join raw.review_block b on b.block_id=m.block_id join raw.review_page p on p.page_id=m.page_id
+where m.mention_type='work' and m.link_method like 'quoted%' and w.canonical_title in ('На перепутьѣ','Лѣсъ','Зима','Апоѳеозъ');
+select w.canonical_title, w.canonical_genre, th.canonical_name, e.season, e.date_undate, p.verbatim_title from research.performance p ... where w.canonical_title like 'На перепуть%';
+-- earlier work mentions in each block; quoted work mentions on review_1891-92_MSK_ballet_p006, 1892-93_MSK p005/p006, 1903-04_SP p011-p013; page texts
+select work_id, canonical_title, canonical_genre, appearance_count from research.work where canonical_title in ('Кольцо любви','Волшебное зеркало','Времена года','Дочь фараона','На перепутьи');
+```
+
+Result: «На перепутьи» бал. = Маріинскій 1904-05 (4); «На перепутьѣ» пьеса = Александринскій 1908-09 (11). Scenes: апоѳеозъ = Дочь фараона revival decor list; Лѣсъ 1892-93 = Кольцо любви (феерія, b9d1fd27…); Лѣсь 1903-04 = Волшебное зеркало (Кшесинская benefit 4 Feb 1904, f. 116 cast); Лѣсъ 1904-05 Moscow = Волшебное зеркало; Зима 1906-07 = Времена года. Test: only those 7 mentions changed; 33 statements (21 На перепутьи, 9 Дочь фараона, 1 Волшебное зеркало, 2 Кольцо любви). Production = tested copy.
+
+## 2026-10-23 — Review work-linking progress check
+
+```sql
+select count(*), count(nullif(entity_id,'')), count(distinct nullif(entity_id,'')) from entities.review_mention where mention_type='work';
+select split_part(link_method,'+',1), count(*) from entities.review_mention where mention_type='work' and coalesce(entity_id,'')='' group by 1;
+select count(*), count(work_id) from research.review_assertion;
+```
+
+Result: see the session reply (numbers printed by this query).
+
+## 2026-10-23 — Review work-linking progress check: the numbers (the previous entry pointed to the session reply)
+
+Result of the queries in the previous entry: work mentions 3,737, linked 2,837 to 150 distinct works; unlinked by method: quoted-unresolved 707, bare 182, quoted-ambiguous 11; review_assertion 3,157, with a work 1,904.
