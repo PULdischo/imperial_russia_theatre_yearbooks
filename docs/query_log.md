@@ -20671,3 +20671,38 @@ select max(assertion_id) from research.review_assertion;
 ```
 
 Result: 9 replacements, all at their expected counts. Diff vs production: raw.review_block 7 rows, entities.review_mention -9/+10, research.review_credit 13 rows, research.review_assertion 1 row (75 -> 3184, work Щелкунчикъ); nothing else. New mention Никитина -> Никитина, Варвара Александровна (1890-91..1893-94). Max assertion_id 3184 (reused: 3184/3185 removed earlier today).
+
+## 2026-10-26 — Governing-work rule for statements and dances: V0-V4 on copies; V4 APPLIED (RG: "yes")
+
+```sql
+-- dances without a ballet: select source, count(*), count(date_undate) from research.review_dance where work_id is null group by 1;
+-- dated ones: ballets performed that night in that city (research.event/performance, discipline 'ballet', non-excerpt works)
+-- per variant (GOV_VARIANT on a copy of production): spiski check (scratch workcheck.py) on research.review_assertion; dances with a ballet;
+-- V4 changed rows in context: select n.page_id, n.printed_folio, n.role_surface, wn.canonical_title, (page text) from w.research.review_assertion n join k.research.review_assertion o using(assertion_id) … where o.work_id is distinct from n.work_id;
+-- clean V4 vs tested V4 (identical); production vs tested copy after applying
+```
+
+Result: 318 dances without a ballet (68 named, 250 cast list), only 4 dated (each matching one ballet that night); 423 of 428 unlinked dancers are ties; 115 music credits in dance blocks. Variants (agree / disagree / missing; statements with a work; dances with a ballet): V0 868/78/347, 1,741, 555; V1 832/56/404, 1,624, 544; V2 887/63/346, 1,799, 603; V3 929/92/279, 1,931, 607; V4 914/80/303, 1,879, 604. V4 vs V0: missing->agree 42, spiski-ambiguous->agree 4, missing->disagree 2, no agree lost. Applied: 138 statements, 49 dances, 3 solos changed; production = tested copy. Also: research.work «Ваядерка» (2 performances: SP 4 Sep 1905, Moscow 25 Jan 1904) logged as a probable misread of «Баядерка».
+
+## 2026-10-26 — Composers of dance numbers: evidence and test on a copy, NOT applied (RG: "let's work on this"; "yes, go ahead")
+
+```sql
+select role_category, count(*), count(part_surface), count(person_id) from research.review_credit group by 1;
+select season, city, printed_folio, part_surface, name_surface, printed_phrase from research.review_credit where role_category='music' and part_surface is not null;
+-- Python: dance spans located in reflowed block text; music/instrumentation credits classified by position relative to the nearest dance before them
+-- regex «name (муз. …)—dancer» over ballet review text: 49 matches; select count(*) from research.review_dance / review_assertion where dance_surface/role_surface ilike 'Танецъ Мерседесъ%' … ;
+-- composer plausibility: research.person + raw.person_entry entity_type + research.production_credit role_category for Дриго, Арендсъ, Направникъ, Симонъ, Глазуновъ, Лядовъ, Брамсъ, Куличевская, Фокинъ, Симонова …
+-- copy: build_review_assertions with the bracket pass + composer pass; every table diffed; dances compared by (block_id, dance_surface, printed_text, source)
+```
+
+Result: review_credit has 647 music credits (101 with part_surface, many prose); by position only 19 sit with a dance and 1 inside one; 49 «Name (муз. X)—dancers» numbers in the text, most never captured (the cast reader rejects a part containing a name). Plausible composers = a music/instrumentation production_credit or a Musicians entry (keeps Дриго, Арендсъ, Направникъ, Симонъ, Глазуновъ, Лядовъ, Брамсъ; drops Куличевская, Фокинъ, Антонина Симонова). Copy: dances 873 -> 914 (44 new bracket numbers, 3 named rows merged into them), dancers 2,808 -> 2,982 (2,529 linked); review_dance_composer 67 rows (music 62 / arrangement 5) on 62 dances, 34 linked, the rest printed names of composers not in the database (Понкіелли, Рубинштейнъ, Цибулька, Дворжакъ, Мендельсонъ, Глинка, Григъ, Сѣровъ, Лакомбъ, Блехманъ, Гольдштейнъ, Лазари, Бильзе, Штраусъ, Гиро, Верони-Весть); review_assertion unchanged. Known: 1908-09 Moscow f. 157 «Голубую птицу и принцессу Флорину» <- Чайковскій is the ballet's composer; dance_ids renumber (positional).
+
+## 2026-10-26 — Dance composers + id high-water mark APPLIED (RG: "yes, apply both")
+
+```sql
+select max(assertion_id), count(*) from research.review_assertion;   -- 3,183 / 2,658 (highest ever issued: 3,185)
+select * from entities.review_assertion_id_watermark;                -- copy: 3,185
+-- production vs tested copy, every table; sqlite: select count(*) from review_dance_composer / review_dance / review_dance_performer
+```
+
+Result: production = tested copy on 56 tables; sqlite review_dance_composer 67, review_dance 914, review_dance_performer 2,982; watermark 3,185 (next new id 3,186).

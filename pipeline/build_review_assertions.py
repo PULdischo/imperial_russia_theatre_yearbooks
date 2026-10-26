@@ -145,6 +145,49 @@ DANCE_STOP = re.compile(r";|\.(?=\s|$)|[—–]|\n\s*\n")
 DANCE_CREATOR_CUE = re.compile(r"(музык|муз\.|соч\.|сочин|балетм|постав)", re.I)
 
 
+# A number printed `Name (муз. X)—dancers`: the cast-pair grammar rejects a
+# part with a name inside it, so these were lost whole -- «Танецъ Мерседесъ
+# (муз. г. Симона)—г-жа Ѳедорова 2-я», «pas de deux (муз. Понкіелли)—г-жа
+# Кшесинская и г. Легатъ 1-й» (RG 2026-10-26: composers of numbers).
+DANCE_MUSIC_BRACKET = re.compile(
+    r"(?P<name>[^\n;.—–()]{2,70}?)\s*\((?P<mus>(?:муз|музык|оркестр|аранж)[^)]{0,100})\)"
+    r"\s*[:,]?\s*[—–]\s*")
+# the cue that opens a composer phrase, and its role
+MUSIC_CUE = re.compile(r"(?P<arr>аранжир\w*|оркестров\w*|инструм\w*\.?)|(?P<mus>муз\.|музык\w*)", re.I)
+# where a composer phrase stops: a bracket or dash, `;`, a later `, соч.`
+# (choreography: «муз. Штрауса, соч. М. М. Ѳокина»), an arranger cue, `для`
+# («музыка Сенъ-Санса для г-жи Павловой 2-й»)
+MUSIC_PHRASE_STOP = re.compile(r"[()—–;«]|,\s*(?:соч|инструм|оркестр|аранж)|\s+для\s|\s+въ\s+исполн")
+# a capitalised word in a composer phrase that is not a name
+MUSIC_NOT_NAME = {"Его", "Величества", "Императорскихъ", "Императорскаго", "Театровъ"}
+NAME_TOKEN = re.compile(r"[A-ZА-ЯЀ-ЏІѲѴ][\wЀ-ЏъѣіѳѵЪѢІѲѴ'’\-]+")
+NUMBER_LEAD = re.compile(r"^\s*(?:\d+\s*[).]|[а-яa-z]\s*\)|[IVX]+\.)\s*")
+
+
+def number_window_end(body: str, start: int, limit: int) -> int:
+    """End of the printed number that starts at `start`: the next `;`, a
+    sentence end, a new numbered item `N)`, or `limit`. Periods of `соч.`,
+    `муз.`, `г.` and initials, and anything inside brackets, do not end it."""
+    depth = 0
+    i = start
+    while i < limit:
+        ch = body[i]
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth = max(0, depth - 1)
+        elif depth == 0:
+            if ch == ";":
+                return i
+            if ch == "." and re.match(r"\.\s+[А-ЯЀ-ЏІѲѴA-Z]", body[i:i + 3]) \
+                    and not re.search(r"(?:\bсоч|\bмуз|\bаранж|\bг|\bгг|\b[А-ЯЀ-ЏІѲѴA-Z])$", body[max(0, i - 6):i]):
+                return i
+            if re.match(r"\s\d+\)\s|\s[а-я]\)\s", body[i:i + 4]):
+                return i
+        i += 1
+    return limit
+
+
 def is_dance_role(role: str) -> bool:
     return bool(DANCE_ROLE.search(role)) and not DANCE_NOT.search(role)
 
@@ -477,6 +520,10 @@ def main() -> None:
         if str(eid) in non_governing:
             continue
         page_works[page_id].append((bidx, surface, str(eid)))
+    # the previous page of the same review, for the carry-over in govern()
+    _pages_sorted = sorted({b[1] for b in blocks})
+    prev_page = {b: a for a, b in zip(_pages_sorted, _pages_sorted[1:])
+                 if a.rsplit("_p", 1)[0] == b.rsplit("_p", 1)[0]}
 
     # Quoted dance names from the 2026-10-26 worklist, with the ballet it found
     # for each (docs/eval/review_dance_named.csv): block, surface, occurrence.
@@ -487,6 +534,14 @@ def main() -> None:
             named_dance[(r["block_id"], r["surface"], int(r["occurrence"]))] = (
                 r["parent_work_id"], r["parent_title"])
     dances: list[dict] = []
+
+    # people the corpus knows as composers or musicians (see the composer pass)
+    composer_ok = {str(r[0]) for r in con.execute("""
+        SELECT person_id FROM research.production_credit
+        WHERE role_category IN ('music', 'instrumentation') AND person_id IS NOT NULL
+        UNION SELECT pl.person_id FROM raw.person_entry pe
+        JOIN entities.person_link pl USING (entry_id) WHERE pe.entity_type = 'Musicians'
+    """).fetchall()}
 
     out: list[dict] = []
     solos: list[dict] = []
@@ -520,17 +575,16 @@ def main() -> None:
             continue
         ms = mentions.get(block_id, [])
         works_here = [m for m in ms if m[1] == "work" and str(m[5] or "") not in non_governing]
-        # a date stated in this block governs the pairs that follow it
-        dates = dates_in(body, page["season"])
 
-        def work_and_date(at: int) -> tuple[str, str, str, str, bool]:
-            """Governing work and date for a statement at offset `at`.
-
-            The same rules as the cast pairs below: nearest work mention before
-            it in the block, else the one work the page has settled on so far;
-            nearest date before it in the block. The last value says whether
-            the work was inherited from an earlier block.
-            """
+        def govern(at: int) -> tuple[str, str, str, bool]:
+            """Governing work at offset `at`, one rule for cast statements,
+            solos and dance numbers: the nearest work named before it in the
+            block (else the block's first); else the one work the page has
+            named so far; else, when the page names NO work at all, the last
+            work of the previous page of the same review (`previous-page`,
+            RG 2026-10-26: cast and dance lists run over a page break with no
+            title on the continuation page -- 55 of 62 such carry-overs agree
+            with the spiski). Two or more works earlier on the page: none."""
             prior = [w for w in works_here if w[3] <= at]
             wm = prior[-1] if prior else (works_here[0] if works_here else None)
             w_surface = wm[4] if wm else ""
@@ -548,6 +602,25 @@ def main() -> None:
                     inh = True
                 elif len(distinct) > 1:
                     w_source = w_source or "ambiguous-on-page"
+                elif (not page_works.get(page_id)
+                      and page_works.get(prev_page.get(page_id, ""))):
+                    pw = page_works[prev_page[page_id]][-1]
+                    w_id, w_source, inh = pw[2], "previous-page", True
+                    if not w_surface:
+                        w_surface = pw[1]
+            return w_surface, w_id, w_source, inh
+        # a date stated in this block governs the pairs that follow it
+        dates = dates_in(body, page["season"])
+
+        def work_and_date(at: int) -> tuple[str, str, str, str, bool]:
+            """Governing work and date for a statement at offset `at`.
+
+            The same rules as the cast pairs below: nearest work mention before
+            it in the block, else the one work the page has settled on so far;
+            nearest date before it in the block. The last value says whether
+            the work was inherited from an earlier block.
+            """
+            w_surface, w_id, w_source, inh = govern(at)
             pd = [d for d in dates if d[0] <= at] or dates
             iso_d = pd[-1][3] if pd else None
             return w_surface, w_id, w_source, iso_d or "", inh
@@ -639,22 +712,9 @@ def main() -> None:
             method = "already-linked" if entity else ""
 
             # governing work: nearest work mention before this pair
-            prior = [w for w in works_here if w[3] <= perf_a]
-            work_m = prior[-1] if prior else (works_here[0] if works_here else None)
-            work_surface = work_m[4] if work_m else ""
-            work_id = (work_m[5] or "") if work_m else ""
-            work_source = "block" if work_m else ""
-            if not work_id:
-                earlier = [w for w in page_works.get(page_id, []) if w[0] < _bidx]
-                distinct = {w[2] for w in earlier}
-                if len(distinct) == 1:
-                    work_id = earlier[-1][2]
-                    work_source = "page-earlier-block"
-                    if not work_surface:
-                        work_surface = earlier[-1][1]
-                    inherited += 1
-                elif len(distinct) > 1:
-                    work_source = work_source or "ambiguous-on-page"
+            work_surface, work_id, work_source, _inh = govern(perf_a)
+            if _inh:
+                inherited += 1
 
             # --- the credit join ---
             # Gender still constrains it. Without this the join resolved
@@ -755,6 +815,42 @@ def main() -> None:
                     "work_source": work_source, "dancers": dancers,
                 })
 
+        # Numbers printed `Name (муз. X)—dancers` (see DANCE_MUSIC_BRACKET).
+        masked_b = mask_periods(body)
+        for bm in DANCE_MUSIC_BRACKET.finditer(masked_b):
+            if any(x["block_id"] == block_id and x["source"] == "cast list"
+                   and x["span"][0] <= bm.end() and bm.start("name") < x["span"][1]
+                   for x in dances):
+                continue
+            stop = DANCE_STOP.search(masked_b, bm.end())
+            end = stop.start() if stop else len(body)
+            dancers = []
+            for m in ms:
+                if m[1] != "person" or m[2] < bm.end() or m[3] > end:
+                    continue
+                if DANCE_CREATOR_CUE.search(body[max(bm.end(), m[2] - 30):m[2]]):
+                    continue
+                seg = body[bm.end():m[2]]
+                dancers.append({"surface": m[4], "entity": m[5] or "",
+                                "cand_n": m[6], "cand_ids": m[7] or "",
+                                "alternate": seg.rfind("(") > seg.rfind(")")})
+            if not dancers:
+                continue
+            name = NUMBER_LEAD.sub("", body[bm.start("name"):bm.end("name")]).strip(" ,«»„“\"")
+            if len(name) < 2:
+                continue
+            w_surface, w_id, w_source, iso_d, _ = work_and_date(bm.start("name"))
+            dances.append({
+                "page_id": page_id, "block_id": block_id,
+                "season": page["season"], "city": page["city"],
+                "printed_folio": page["folio"] or "", "date_undate": iso_d,
+                "dance_surface": name,
+                "printed_text": body[bm.start("name"):end].strip(" ,;."),
+                "source": "cast list", "span": (bm.start("name"), end),
+                "work_surface": w_surface, "work_id": w_id,
+                "work_source": w_source, "dancers": dancers,
+            })
+
         # Named dances in this block with no cast list of their own: the
         # `dance_number` mentions («Grand pas de crotalès») and the quoted
         # dance names of docs/eval/review_dance_named.csv. One inside a
@@ -792,6 +888,50 @@ def main() -> None:
                 "work_source": w_source, "dancers": [],
             })
 
+        # Composers of this block's numbers: a music cue inside the number's
+        # own window -- its text, a bracket after its dancers, or the same
+        # sentence (`«Les amours de Diane»—… —музыка варьяціи соч. Р. Дриго`)
+        # -- and the names after the cue up to `)`, `—` or `;`. A whole
+        # ballet's composer (`Балетъ … музыка Ц. Пуни`) is not a number's.
+        bd = sorted((x for x in dances if x["block_id"] == block_id),
+                    key=lambda x: x["span"][0])
+        for i_d, x in enumerate(bd):
+            nxt = bd[i_d + 1]["span"][0] if i_d + 1 < len(bd) else len(body)
+            w_end = number_window_end(body, x["span"][1], min(nxt, x["span"][1] + 220))
+            w_end = max(w_end, x["span"][1])
+            comps = []
+            for cue in MUSIC_CUE.finditer(body, x["span"][0], w_end):
+                role = "arrangement" if cue.group("arr") else "music"
+                stop = MUSIC_PHRASE_STOP.search(body, cue.end(), w_end)
+                c_end = stop.start() if stop else w_end
+                seg = body[cue.end():c_end]
+                phrase = body[cue.start():c_end].strip(" ,.(")
+                found = 0
+                for tk in NAME_TOKEN.finditer(seg):
+                    word = tk.group(0)
+                    a_ = cue.end() + tk.start()
+                    # initials (`Р.`, `А. Ѳ.`) and titles are not names
+                    if body[a_ + len(word):a_ + len(word) + 1] == "." and len(word) <= 2:
+                        continue
+                    if word in MUSIC_NOT_NAME or len(word) < 3:
+                        continue
+                    m = next((m for m in ms if m[1] == "person" and m[2] <= a_ < m[3]), None)
+                    ent = (m[5] or "") if m else ""
+                    # a composer links only to someone known as one: a music
+                    # credit in the productions lists, or a Musicians entry
+                    if ent and ent not in composer_ok:
+                        ent = ""
+                    comps.append({"role": role, "surface": m[4] if m else word,
+                                  "entity": ent, "cand_n": m[6] if m else 0,
+                                  "cand_ids": (m[7] or "") if m else "", "phrase": phrase})
+                    found += 1
+                if not found and phrase:
+                    comps.append({"role": role, "surface": "", "entity": "",
+                                  "cand_n": 0, "cand_ids": "", "phrase": phrase})
+            # dancers are never composers of the same number
+            dset = {dn["surface"] for dn in x["dancers"]}
+            x["composers"] = [c_ for c_ in comps if c_["surface"] not in dset]
+
     a.out.parent.mkdir(parents=True, exist_ok=True)
     cols = ["page_id", "block_id", "season", "city", "printed_folio", "date_undate",
             "role_surface", "performer_surface", "performer_person_id",
@@ -821,6 +961,16 @@ def main() -> None:
     # the 13 solo rows that left this table on 2026-10-22 held ids up to 1741;
     # never hand those out again
     prev_max = max(prev_max, 1952 if prev else 0)
+    # A stored high-water mark: the highest id EVER issued, so an id retired
+    # (the 481 dance rows of 2026-10-26, Головъ's craft rows 3184-3185) is
+    # never handed to a different statement later -- docs and worklists cite
+    # these ids. 3185 is the highest issued before the mark existed.
+    if con.execute("""SELECT 1 FROM information_schema.tables WHERE
+            table_schema = 'entities' AND table_name = 'review_assertion_id_watermark'""").fetchone():
+        prev_max = max(prev_max, con.execute(
+            "SELECT max(max_id) FROM entities.review_assertion_id_watermark").fetchone()[0] or 0)
+    if prev:
+        prev_max = max(prev_max, 3185)
     order = sorted(range(len(out)), key=lambda i: (out[i]["page_id"],
                    out[i]["block_id"], out[i]["role_surface"]))
     fresh = prev_max
@@ -842,6 +992,12 @@ def main() -> None:
         else:
             r["assertion_id"] = ""
     dropped_ids = sorted(x for v in prev.values() for x in v)
+    if prev:
+        con.execute("""CREATE OR REPLACE TABLE entities.review_assertion_id_watermark (
+            max_id BIGINT NOT NULL, note VARCHAR)""")
+        con.execute("INSERT INTO entities.review_assertion_id_watermark VALUES (?, ?)",
+                    [max(prev_max, fresh), "highest review_assertion.assertion_id ever issued; "
+                     "new rows are numbered above it (build_review_assertions.py)"])
     with open(a.out, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=["assertion_id"] + cols)
         w.writeheader()
@@ -981,6 +1137,31 @@ def main() -> None:
         con.executemany("INSERT INTO research.review_dance VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", drows)
     if prows:
         con.executemany("INSERT INTO research.review_dance_performer VALUES (?,?,?,?,?,?,?)", prows)
+    # composers (and arrangers) of the numbers, as the review prints them
+    con.execute("DROP TABLE IF EXISTS research.review_dance_composer")
+    con.execute("""
+        CREATE TABLE research.review_dance_composer (
+            dance_id                BIGINT NOT NULL,
+            position                INTEGER NOT NULL,
+            role                    VARCHAR NOT NULL,
+            name_surface            VARCHAR,
+            person_id               VARCHAR,
+            person_candidates_n     INTEGER,
+            person_candidate_ids    VARCHAR,
+            printed_phrase          VARCHAR NOT NULL,
+            PRIMARY KEY (dance_id, position)
+        )""")
+    crows = []
+    for i, x in enumerate(dances, 1):
+        for j, cp in enumerate(x.get("composers", []), 1):
+            crows.append((i, j, cp["role"], cp["surface"] or None, cp["entity"] or None,
+                          int(cp["cand_n"]) if str(cp["cand_n"] or "").isdigit() else None,
+                          cp["cand_ids"] or None, cp["phrase"]))
+    if crows:
+        con.executemany("INSERT INTO research.review_dance_composer VALUES (?,?,?,?,?,?,?,?)", crows)
+    print(f"{len(crows):,} composer/arranger rows -> research.review_dance_composer "
+          f"({sum(1 for r in crows if r[4]):,} linked, on "
+          f"{len({r[0] for r in crows}):,} dances)")
     print(f"\n{len(drows):,} dance occurrences -> research.review_dance "
           f"({sum(1 for x in dances if x['source'] == 'cast list'):,} from cast lists, "
           f"{sum(1 for x in dances if x['work_id']):,} with a ballet); "
