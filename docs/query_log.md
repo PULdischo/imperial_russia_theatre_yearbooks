@@ -20803,3 +20803,42 @@ select coalesce(link_method, '-'), count(*) from research.review_dance_performer
 ```
 
 Result (production): mention 2,529; tie: gender/number/initial 175; tie: company that season 176; tie: credited in this ballet 4; unlinked 98. Production identical to the tested copy on every table.
+
+## 2026-10-26 — Season Reviews linking: what is still outstanding (status counts, #159)
+
+```sql
+select mention_type, count(*), count(nullif(entity_id, '')) from entities.review_mention group by 1 order by 2 desc;
+select count(distinct surface) from entities.review_mention where mention_type = 'work' and coalesce(entity_id, '') = '';
+select count(*), count(performer_person_id), count(work_id) from research.review_assertion;
+select count(*), count(work_id) from research.review_dance;
+select count(*), count(performer_person_id) from research.review_dance_performer;
+select count(*), count(person_id) from research.review_dance_composer;
+select count(*), count(person_id), count(work_id) from research.review_credit;
+select count(*) from research.review_credit where role_category = 'ballet_by';
+```
+
+Result: mentions: person 21,702 (17,764 linked), work 3,737 (3,100; 422 distinct unlinked forms), role 1,127 (775), theater 632 (527), dance_number 137 (0, by design: they feed review_dance). Statements 2,658 (2,460 with a person, 1,879 with a work). Dances 914 (631 with a ballet); dancers 2,982 (2,884 linked); dance composers 67 (34 linked). review_credit 2,444 (2,243 person, 2,391 work); 94 «балетъ X» rows await RG's worksheet decisions.
+
+## 2026-10-26 — Unlinked review work mentions sorted: unlinked_reason counts; «Смерть Смерти» caption (#159)
+
+```sql
+select surface, page_id, link_method, rank_reason from entities.review_mention where mention_type = 'work' and coalesce(entity_id, '') = '';
+select coalesce(unlinked_reason, '(unsorted)'), count(*) from entities.review_mention
+ where mention_type = 'work' and coalesce(entity_id, '') = '' group by 1 order by 2 desc;
+select m.block_id, b.page_id, b.block_type, b.caption_text, p.copy_artifacts from entities.review_mention m
+ join raw.review_block b using (block_id) join raw.review_page p on p.page_id = b.page_id where m.surface = 'Смерть Смерти';
+```
+
+Result: 637 unlinked work mentions (454 quoted, 182 bare, 1 curated). Sorted: dance number 258; quoted words, not a title 185; unquoted word (role name or ordinary word) 177; literary or artistic source 11; divertissement (awaiting RG) 4; work named, not yet linked 1 (opera «Русалка»); misread caption 1. «Смерть Смерти» sits in a figure block on review_1902-03_MSK_ballet_p018 (copy_artifacts: "pencil annotation in left margin"); the scan (checked by Claude) shows a printed caption «„Эсмеральда“, балетъ.», so it is a misread.
+
+## 2026-10-26 — «Эсмеральда» caption fix + «Русалка» link: what changed (#159)
+
+```sql
+-- production vs pre-change copy, ignoring mention_id
+select block_id, mention_type, char_start, char_end, surface, entity_id, link_method, unlinked_reason from entities.review_mention
+ where block_id in ('review_1902-03_MSK_ballet_p018__b001', 'review_1905-06_SP_ballet_p014__b001');
+select dance_id, block_id, dance_surface, work_surface, work_id, work_source from research.review_dance where block_id = 'review_1905-06_SP_ballet_p014__b001';
+select coalesce(unlinked_reason, '(unsorted)'), count(*) from entities.review_mention where mention_type = 'work' and coalesce(entity_id, '') = '' group by 1;
+```
+
+Result: «Смерть Смерти» (unlinked) -> «Эсмеральда» linked to Эсмеральда (бал.), quoted-exact; «Ефимова» -> «Ефимовъ» (a male dancer); «Русалка» -> the opera Русалка (curated); dance 848 «Adagio» on that page now has the opera as its work. Unlinked work mentions 635, all with a reason (dance number 258, quoted words 185, unquoted word 177, literary/artistic source 11, divertissement 4). Other differences between runs: only the order of candidate ids for «Левенсонъ» (4 assertions, 14 dancers).

@@ -43,6 +43,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import csv
 from pathlib import Path
 
 import duckdb
@@ -104,9 +105,54 @@ CREATE TABLE entities.review_mention (
     link_method      VARCHAR,
     link_confidence  VARCHAR,
     evidence         VARCHAR,
-    rank_reason      VARCHAR
+    rank_reason      VARCHAR,
+    -- why a WORK mention is unlinked (RG 2026-10-26), so the open count
+    -- shows only what still needs a decision; NULL when linked or unsorted
+    unlinked_reason  VARCHAR
 )
 """
+
+# Reasons for unlinked work mentions sorted by hand (scan or text checked),
+# keyed like the link overrides: block_id + surface + occurrence among the
+# block's work mentions of that surface. Two rules cover the rest.
+UNLINKED_REASONS = Path("docs/eval/review_work_unlinked_reasons.csv")
+BARE_REASON = "unquoted word (role name or ordinary word)"
+DIVERT_REASON = "divertissement (awaiting RG)"
+
+
+
+def set_unlinked_reasons(con) -> None:
+    unlinked = "mention_type = 'work' AND coalesce(entity_id, '') = ''"
+    con.execute(f"""UPDATE entities.review_mention SET unlinked_reason = '{BARE_REASON}'
+                    WHERE {unlinked} AND rank_reason = 'bare-not-ballet'""")
+    con.execute(f"""UPDATE entities.review_mention SET unlinked_reason = '{DIVERT_REASON}'
+                    WHERE {unlinked} AND surface ILIKE 'Дивертис%'""")
+    if UNLINKED_REASONS.exists():
+        with open(UNLINKED_REASONS, encoding="utf-8") as f:
+            rows = [(r["block_id"], r["surface"], int(r["occurrence"]), r["reason"])
+                    for r in csv.DictReader(f)]
+        con.execute("CREATE TEMP TABLE _reason (block_id VARCHAR, surface VARCHAR, occ INTEGER, reason VARCHAR)")
+        con.executemany("INSERT INTO _reason VALUES (?, ?, ?, ?)", rows)
+        con.execute(f"""
+            CREATE TEMP TABLE _occ AS
+            SELECT mention_id, block_id, surface, entity_id,
+                   row_number() OVER (PARTITION BY block_id, surface ORDER BY char_start) - 1 AS occ
+            FROM entities.review_mention WHERE mention_type = 'work'""")
+        bad = con.execute("""
+            SELECT r.block_id, r.surface, r.occ FROM _reason r
+            LEFT JOIN _occ o USING (block_id, surface, occ)
+            WHERE o.mention_id IS NULL OR coalesce(o.entity_id, '') <> ''""").fetchall()
+        if bad:
+            raise SystemExit(f"{UNLINKED_REASONS}: {len(bad)} row(s) match no unlinked "
+                             f"work mention -- re-check: {bad[:5]}")
+        con.execute("""
+            UPDATE entities.review_mention m SET unlinked_reason = r.reason
+            FROM _occ o JOIN _reason r USING (block_id, surface, occ)
+            WHERE m.mention_id = o.mention_id""")
+    for reason, n in con.execute(f"""
+            SELECT coalesce(unlinked_reason, '(unsorted)'), count(*) FROM entities.review_mention
+            WHERE {unlinked} GROUP BY 1 ORDER BY 2 DESC""").fetchall():
+        print(f"  unlinked work mentions: {n:>5,}  {reason}")
 
 
 def main() -> None:
@@ -159,9 +205,10 @@ def main() -> None:
                surface, nullif(normalised, ''), nullif(entity_id, ''),
                CAST(candidates_n AS INTEGER), nullif(candidate_ids, ''),
                link_method, link_confidence, nullif(evidence, ''),
-               nullif(rank_reason, '')
+               nullif(rank_reason, ''), NULL
         FROM read_csv('{mention_csv}', header=true, all_varchar=true)
     """)
+    set_unlinked_reasons(con)
 
     for t in ("raw.review_page", "raw.review_block", "entities.review_mention"):
         n = con.execute(f"SELECT count(*) FROM {t}").fetchone()[0]
