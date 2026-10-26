@@ -20728,3 +20728,27 @@ select coalesce(context_flag, '-'), count(*) from research.review_credit group b
 ```
 
 Result: 2,444 credits, 20 seasons; 2,243 with a person (169 people), 2,391 with a work (98), 1,068 dated. Roles: author 949, music 647, scenery 231, staging 187, ballet_by 94, choreography 77, source 72, libretto 54, staging-revival 40, costume_design 29, machinery 16, costume_making 14, props 13, instrumentation 8, costumes 6, footwear 3, wigs 2, headwear 2; design/craft 316 rows, 77 people or printed names. Linked by list-credit 1,592, list-credit-other-work 246, department 172 (+34 other city), mention-link 129, list-credit-spelling 52, first-name 7, initials 1, role-from-list 10; printed-only 176, unresolved 21, anonymous 4. Flags: historical? 36, historical 5, foreign? 3, both 4.
+
+## 2026-10-26 — The 94 review_credit rows with role «ballet_by» (printed «балетъ X» the lists do not resolve)
+
+```sql
+select r.credit_id, r.season, r.city, r.printed_folio, r.block_type, r.name_surface, coalesce(p.display_name,'-'), coalesce(p.person_source,''),
+       coalesce(w.canonical_title,'-'), r.link_method, r.printed_phrase, r.work_id, r.person_id
+ from research.review_credit r left join research.person p on p.person_id::varchar = r.person_id
+ left join research.work w on w.work_id::varchar = r.work_id where r.role_category = 'ballet_by';
+select string_agg(distinct role_category, ',') from research.production_credit where person_id::varchar = ?;          -- per person
+select string_agg(distinct pe.display_name||':'||pc.role_category, '; ') from research.production_credit pc
+ join research.production_work pw using(production_id) join research.person pe using(person_id) where pw.work_id::varchar = ?;  -- per work
+```
+
+Result: 94 rows. Largest groups: Хлюстинъ on Звѣзды 14 («балетъ К. Ѳ. Вальца и И. Н. Хлюстина», 1897-98 Moscow), Л. И. Ивановъ on Дочь микадо 12 («балетъ В. И. Лангаммера и Л. И. Иванова») and on Донъ-Кихотъ 6 (1900-01 Moscow captions «бал. М. Петипа и Л. Иванова»), Петипа on Приказъ короля 5 («Ученики Дюпрэ», бал. М. Петипа). About 25 are not credits: «балетъ «Корсаръ», съ г-жею Л. Гейтенъ…» and similar (a dancer after the title), «балета А. Ф. Арендса, данный ему за двадцатипятилѣтнюю службу» (his benefit), «балета Брама» (a title), «балета «Дочь микадо» происходитъ въ Японіи». Some genuine credits sit on the wrong work («балета Сень-Леона и Минкуса Фіаметта» -> Тщетная предосторожность; «Балетъ Маркитантка Ж. Перро» -> Камарго; «балетъ Гг. Гуля и Бера» -> Голубая георгина) or person («балетъ «Раймонда» П. Паш-[ковой]» -> the dancer Пашъ, Леопольдъ); printed-only forms include «Дрію», «Дюберваля», «Герсако», «Оже и Шмидта».
+
+
+## 2026-10-26 — Caption corrections applied to production: retest and check
+
+```sql
+-- fresh copy of production + merged_full; apply_review_text_corrections.py; review chain; per-table content diff (candidate-id lists, mention_id, credit_id, page lists ignored)
+select assertion_id, role_surface, work_surface from research.review_assertion where page_id = 'review_1892-93_SP_ballet_p014';
+```
+
+Result: test vs production: entities.review_assertion_id_watermark 1, entities.review_mention -9/+10, raw.review_block 7, research.review_assertion 1, research.review_credit 13; dance tables unchanged. After applying: production = tested copy on every table; the Гердтъ row is 3186 «въ роляхъ феи Драже», work Щелкунчикъ.
