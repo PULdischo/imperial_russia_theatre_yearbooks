@@ -20575,3 +20575,44 @@ select block_id, char_start, season, date_undate from research.review_credit whe
 ```
 
 Result: Бочаровъ 1-й = 966f9b77…; the mention (6915) was 2f7128a3… (М. М.). After: mention scan-verified -> М. И.; the five credits 510-514 `historical`, date blank. Test vs production: review_mention 1 row, review_credit 5 rows, nothing else; production = tested copy afterwards. 25 credits corpus-wide dated from a historical printed year (1893-94 «15-го сентября 1844», «4-го февраля 1849»; 1896-97 «19-го января 1849», «2-го декабря 1879» …).
+
+## 2026-10-26 — Composers and creators: what the database holds, and creator wording in the ballet reviews
+
+```sql
+select role_category, count(*), count(distinct person_id) from research.production_credit group by 1;
+select identification_status, count(*) from research.production_credit group by 1;
+select city, min(season), max(season), count(*), count(distinct work_id) from research.production group by 1;
+select count(distinct p.work_id) from research.production p join research.production_credit pc using(production_id);
+select count(distinct work_id) from research.performance where discipline='ballet';
+select person_source, count(*), count(wikidata_qid) from research.person group by 1;
+select pe.display_name, count(distinct pr.work_id) from research.production_credit pc join research.person pe using(person_id) join research.production pr using(production_id) where pc.role_category='music' group by 1 order by 2 desc limit 12;
+-- Python regex over raw.review_block (genre Ballet, text + caption) for cue words: music (музыка/муз./музыкою), author/choreography
+-- (соч./сочиненіе/балетмейстер/поставлен/постановк), libretto/programme (либретто/программа/сюжетъ), design (декораці/костюм/рисунк/художник/машины);
+-- and person mentions whose preceding 35 characters contain a cue, by link status and person_source
+```
+
+Result: production_credit 1,587 (music 688 / 52 people; author 641 / 38; source 123 / 12; libretto 98 / 19; staging 31 / 7; instrumentation 6 / 2), 1,586 confirmed; lists Moscow 233 entries / 50 works, SP 395 / 67, 1890-91..1910-11; 90 works have list credits, of 233 works with ballet performances. research.person: roster 2,546 (102 QIDs), production_list 87 (76 QIDs), review 11. Top composers by works: Минкусъ 13, Пуни 11, Дриго 7, Делибъ 6, Чайковскій 4, Адамъ 4. Review cue words in 3,147 ballet blocks: author/choreography 843 (20 seasons), music 562 (20), design 454 (20), libretto/programme 104 (16). Person mentions right after a cue: music 334 linked to production-list creators, 259 to roster people, 65 unlinked; author/choreography 143 / 199 / 72; design 1 / 193 / 13; libretto 38 / 9 / 7. No review-side creator table exists; production_credit has no design category.
+
+## 2026-10-26 — Dance numbers baseline (RG: "occurrences only for now"): sources, test on a copy, NOT applied
+
+```sql
+select count(*), count(distinct surface), count(nullif(entity_id,'')) from entities.review_mention where mention_type='dance_number';
+select assertion_id, role_surface, performer_person_id, work_id, season from research.review_assertion;  -- dance vocabulary regex in Python: 330 distinct roles / 489 statements
+select a.block_id, a.role_surface, a.performer_surface, a.grammar, substr(b.text, …) from research.review_assertion a join raw.review_block b using(block_id) where a.role_surface in ('Pas de deux','Mazurka','Адажіо','Pas de trois');
+-- worklist DANCE_NUMBER rows re-keyed by page+surface -> docs/eval/review_dance_named.csv (256 rows, 242 with a parent ballet)
+-- copy: build_review_assertions.py with statement_kind 'dance', all dancers on the name side of the dash, named dances; build_datasette; every table diffed;
+select source, count(*), count(work_id), sum(n_performers) from research.review_dance group by 1;
+select count(*), count(performer_person_id), count(*) filter (where is_alternate) from research.review_dance_performer;
+```
+
+Result: before: 137 dance_number mentions (91 forms, none linked), 256 quoted dance names in the worklist, ~489 dance-shaped cast statements each keeping only the FIRST dancer. Copy: 873 dance occurrences (481 cast list, 392 named), 555 with a ballet; 2,808 dancers, 2,380 linked; review_assertion 3,139 -> 2,658 (481 removed, 0 kept rows changed, ids stable); only that table + the 2 new tables differ. Sample of 14 + the longest lists read: dancers right; fixes made (whole name side of the dash: «Рославлева или Джури»; names before the dash); limits: retrospective names not in the lexicon (Собещанская, Германь) unlinked; many numbers lack a ballet (same nearest-title rule as statements). 5 suspects-CSV assertions are now dances (268, 701, 254, 219, 1571).
+
+## 2026-10-26 — Dance numbers APPLIED (RG: "yes, apply it to production"): production checks
+
+```sql
+-- production vs the first test copy: 1 review_mention + 5 review_credit rows differed (creator session's change) -> re-test on a fresh copy of current production;
+-- every table diffed (test vs production before; production vs tested copy after);
+select count(*) from review_dance; select count(*) from review_dance_performer; select count(*) from review_assertion;   -- sqlite
+```
+
+Result: re-test identical for the dance tables; production = tested copy on all 54 tables; sqlite review_dance 873, review_dance_performer 2,808, review_assertion 2,658.

@@ -122,6 +122,32 @@ SOLO_ROLE = re.compile(r"^(?:соло\s+)?на\s+" + INSTRUMENT + r"|^" + INSTRU
 SOLO_STOP = re.compile(r";|,\s*(?=на\s|" + INSTRUMENT + r")|\.(?=\s+[А-ЯЀ-ЏІѲѴA-Z][а-яѣіѳa-z])|\.$|\n")
 SOLO_NOT_END = re.compile(r"(?:^|\s)(?:гг?|г-нъ|г-жа|[А-ЯЀ-ЏІѲѴA-Z])$")
 
+# A dance number the cast-pair grammar reads as a role (RG 2026-10-26: dances
+# are their own record, one row per printed occurrence; which occurrences are
+# the same number is decided later, with the production worksheets). Built
+# from the 330 role strings of review_assertion: pas / variation / adagio /
+# valse / mazurka / танецъ / пляска / named national dances / entrée / solo ...
+DANCE_ROLE = re.compile(
+    r"(\bpas\b|^pas|variation|варія|варьяц|adag|адаж|\bcoda\b|^кода|valse|вальс|"
+    r"mazur|мазурк|polka|польк|танецъ|танц[ыуа]\b|^танец|пляск|плясковиц|danse|"
+    r"галоп|galop|чардаш|csardas|тарантел|tarantel|болеро|bolero|сегидил|лезгин|"
+    r"трепак|polonais|полонез|gavotte|гавот|menuet|менуэт|jota|\bsolo\b|^соло(?:\s|$)|"
+    r"entrée|entrées|ensemble|ballabile|баллабиле|pizzicato|пиццикато|farandol|"
+    r"sarabande|courante|musette|passepied|gigue|жига|matelote|bourrée|contredanse|"
+    r"écossaise|кадриль|quadrille|казачок|гопак|краковяк|scène dansante|"
+    r"сцена съ танцами|сцена\s+съ\s+танцами|^final\b|finale)", re.I)
+# role strings the vocabulary catches that are not dances
+DANCE_NOT = re.compile(r"(^солор|соловей|апоѳеоз|постановк)", re.I)
+# where a dance's list of dancers ends, on the period-masked text
+DANCE_STOP = re.compile(r";|\.(?=\s|$)|[—–]|\n\s*\n")
+# a name inside the list that is the composer, not a dancer:
+# `Pas de trois—… (музыка соч. А. Гербера)`
+DANCE_CREATOR_CUE = re.compile(r"(музык|муз\.|соч\.|сочин|балетм|постав)", re.I)
+
+
+def is_dance_role(role: str) -> bool:
+    return bool(DANCE_ROLE.search(role)) and not DANCE_NOT.search(role)
+
 
 def solo_span_end(body: str, start: int) -> int:
     """End of the player half of a solo clause that starts at `start`."""
@@ -424,6 +450,16 @@ def main() -> None:
             continue
         page_works[page_id].append((bidx, surface, str(eid)))
 
+    # Quoted dance names from the 2026-10-26 worklist, with the ballet it found
+    # for each (docs/eval/review_dance_named.csv): block, surface, occurrence.
+    named_dance: dict[tuple[str, str, int], tuple[str, str]] = {}
+    nd_path = Path("docs/eval/review_dance_named.csv")
+    if nd_path.exists():
+        for r in csv.DictReader(open(nd_path, encoding="utf-8")):
+            named_dance[(r["block_id"], r["surface"], int(r["occurrence"]))] = (
+                r["parent_work_id"], r["parent_title"])
+    dances: list[dict] = []
+
     out: list[dict] = []
     solos: list[dict] = []
     n_pairs = resolved_by_credit = already = unresolved = 0
@@ -658,7 +694,79 @@ def main() -> None:
                 # cast rows (so no other assertion_id moves) but left out of
                 # review_assertion -- SOLO reads it into review_solo instead
                 "statement_kind": ("instrument solo" if SOLO_ROLE.match(role_s)
+                                   else "dance" if is_dance_role(role_s)
                                    else "cast"),
+            })
+            if out[-1]["statement_kind"] == "dance":
+                masked = mask_periods(body)
+                # the whole name side of the dash, not just the performer half
+                # the pair reader kept: `—г-жа Рославлева или г-жа Джури`,
+                # `Собещанская, Германь и г. Ермоловъ 4-й,—Pas de cinq`
+                if grammar == "role-performer":
+                    names_a = pm.start(2)
+                    stop = DANCE_STOP.search(masked, names_a)
+                    end = stop.start() if stop else len(body)
+                    role_a, names_b = pm.start(1), end
+                else:
+                    names_a, names_b = pm.start(1), pm.end(1)
+                    role_a, end = pm.start(1), pm.end(2)
+                dancers = []
+                for m in ms:
+                    if m[1] != "person" or m[2] < names_a or m[3] > names_b:
+                        continue
+                    if DANCE_CREATOR_CUE.search(body[max(names_a, m[2] - 30):m[2]]):
+                        continue
+                    seg = body[names_a:m[2]]
+                    alt = seg.rfind("(") > seg.rfind(")")
+                    dancers.append({"surface": m[4], "entity": m[5] or "",
+                                    "cand_n": m[6], "cand_ids": m[7] or "",
+                                    "alternate": alt})
+                dances.append({
+                    "page_id": page_id, "block_id": block_id,
+                    "season": page["season"], "city": page["city"],
+                    "printed_folio": page["folio"] or "", "date_undate": iso or "",
+                    "dance_surface": role_s,
+                    "printed_text": body[role_a:end].strip(" ,;."),
+                    "source": "cast list", "span": (role_a, end),
+                    "work_surface": work_surface, "work_id": work_id,
+                    "work_source": work_source, "dancers": dancers,
+                })
+
+        # Named dances in this block with no cast list of their own: the
+        # `dance_number` mentions («Grand pas de crotalès») and the quoted
+        # dance names of docs/eval/review_dance_named.csv. One inside a
+        # cast-list dance's span is that dance; its ballet from the list wins.
+        seen_wd: collections.Counter = collections.Counter()
+        for m in ms:
+            if m[1] not in ("dance_number", "work"):
+                continue
+            key = None
+            if m[1] == "work":
+                occ = seen_wd[m[4]]
+                seen_wd[m[4]] += 1
+                key = (block_id, m[4], occ)
+                if key not in named_dance:
+                    continue
+            parent = named_dance.get(key) if key else None
+            inside = next((x for x in dances if x["block_id"] == block_id
+                           and x["source"] == "cast list"
+                           and x["span"][0] <= m[2] < x["span"][1]), None)
+            if inside:
+                if parent and parent[0]:
+                    inside["work_id"], inside["work_surface"] = parent[0], parent[1]
+                    inside["work_source"] = "named-dance list"
+                continue
+            w_surface, w_id, w_source, iso_d, _ = work_and_date(m[2])
+            if parent and parent[0]:
+                w_surface, w_id, w_source = parent[1], parent[0], "named-dance list"
+            dances.append({
+                "page_id": page_id, "block_id": block_id,
+                "season": page["season"], "city": page["city"],
+                "printed_folio": page["folio"] or "", "date_undate": iso_d,
+                "dance_surface": m[4], "printed_text": m[4],
+                "source": "named", "span": (m[2], m[3]),
+                "work_surface": w_surface, "work_id": w_id,
+                "work_source": w_source, "dancers": [],
             })
 
     a.out.parent.mkdir(parents=True, exist_ok=True)
@@ -802,6 +910,59 @@ def main() -> None:
     """)
     n_solo, n_solo_linked = con.execute("""SELECT count(*),
         count(performer_person_id) FROM research.review_solo""").fetchone()
+
+    # --- dance numbers: one row per printed occurrence (RG 2026-10-26) ---
+    dances.sort(key=lambda x: (x["page_id"], x["block_id"], x["span"][0]))
+    con.execute("DROP TABLE IF EXISTS research.review_dance_performer")
+    con.execute("DROP TABLE IF EXISTS research.review_dance")
+    con.execute("""
+        CREATE TABLE research.review_dance (
+            dance_id        BIGINT PRIMARY KEY,
+            page_id         VARCHAR NOT NULL,
+            block_id        VARCHAR NOT NULL,
+            season          VARCHAR NOT NULL,
+            city            VARCHAR NOT NULL,
+            printed_folio   VARCHAR,
+            date_undate     VARCHAR,
+            dance_surface   VARCHAR NOT NULL,
+            printed_text    VARCHAR NOT NULL,
+            source          VARCHAR NOT NULL,
+            work_surface    VARCHAR,
+            work_id         VARCHAR,
+            work_source     VARCHAR,
+            n_performers    INTEGER
+        )""")
+    con.execute("""
+        CREATE TABLE research.review_dance_performer (
+            dance_id                BIGINT NOT NULL,
+            position                INTEGER NOT NULL,
+            performer_surface       VARCHAR NOT NULL,
+            performer_person_id     VARCHAR,
+            performer_candidates_n  INTEGER,
+            performer_candidate_ids VARCHAR,
+            is_alternate            BOOLEAN,
+            PRIMARY KEY (dance_id, position)
+        )""")
+    drows, prows = [], []
+    for i, x in enumerate(dances, 1):
+        drows.append((i, x["page_id"], x["block_id"], x["season"], x["city"],
+                      x["printed_folio"] or None, x["date_undate"] or None,
+                      x["dance_surface"], x["printed_text"] or x["dance_surface"],
+                      x["source"], x["work_surface"] or None, x["work_id"] or None,
+                      x["work_source"] or None, len(x["dancers"])))
+        for j, dn in enumerate(x["dancers"], 1):
+            prows.append((i, j, dn["surface"], dn["entity"] or None,
+                          int(dn["cand_n"]) if str(dn["cand_n"] or "").isdigit() else None,
+                          dn["cand_ids"] or None, dn["alternate"]))
+    if drows:
+        con.executemany("INSERT INTO research.review_dance VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", drows)
+    if prows:
+        con.executemany("INSERT INTO research.review_dance_performer VALUES (?,?,?,?,?,?,?)", prows)
+    print(f"\n{len(drows):,} dance occurrences -> research.review_dance "
+          f"({sum(1 for x in dances if x['source'] == 'cast list'):,} from cast lists, "
+          f"{sum(1 for x in dances if x['work_id']):,} with a ballet); "
+          f"{len(prows):,} dancers -> research.review_dance_performer "
+          f"({sum(1 for r in prows if r[3]):,} linked)")
     dated = con.execute("""SELECT count(*) FROM research.review_assertion
                            WHERE date_undate IS NOT NULL""").fetchone()[0]
     linked = con.execute("""SELECT count(*) FROM research.review_assertion
@@ -812,7 +973,9 @@ def main() -> None:
     print(f"\n{skipped_foreign:,} block(s) skipped as the previous review's tail")
     n_cast = sum(1 for r in out if r["statement_kind"] == "cast")
     print(f"{n_pairs:,} role-performer pairs -> {n_cast:,} assertions "
-          f"(+{len(out) - n_cast:,} solo-shaped pairs left to review_solo)")
+          f"(+{sum(1 for r in out if r['statement_kind'] == 'instrument solo'):,} solo-shaped "
+          f"pairs left to review_solo, {sum(1 for r in out if r['statement_kind'] == 'dance'):,} "
+          f"dance-shaped pairs to review_dance)")
     print(f"  performer already linked by the matcher : {already:,}")
     print(f"  NEWLY resolved by the spiski credit     : {resolved_by_credit:,}")
     print(f"  still unresolved                        : {unresolved:,}")

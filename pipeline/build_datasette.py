@@ -45,7 +45,8 @@ def _stringify_uuids(df):
 TABLES = ["theater", "work", "person", "event", "performance", "person_appearance",
           "production", "production_work", "production_credit",
           "season_stat_check", "season_stat_line", "season_stat_footnote",
-          "review_assertion", "review_solo", "review_credit"]
+          "review_assertion", "review_solo", "review_credit",
+          "review_dance", "review_dance_performer"]
 
 # Explicit CREATE TABLE per table, PRIMARY KEY + FOREIGN KEY declared --
 # pandas' to_sql(if_exists="replace") would otherwise create schema-less
@@ -170,6 +171,27 @@ SCHEMAS = {
     # Instrument solos named in the reviews (`на арфѣ — г. Омъ`), RG
     # 2026-10-22: their own kind of statement, not a cast role. Same shape
     # and nullable FKs as review_assertion; one row per player.
+    # Dance numbers in the ballet reviews, one row per printed occurrence (RG
+    # 2026-10-26); which occurrences are the same number is not decided here.
+    "review_dance": """
+        CREATE TABLE review_dance (
+            dance_id INTEGER PRIMARY KEY,
+            page_id TEXT, block_id TEXT, season TEXT, city TEXT,
+            printed_folio TEXT, date_undate TEXT,
+            dance_surface TEXT, printed_text TEXT, source TEXT,
+            work_surface TEXT, work_id TEXT REFERENCES work(work_id),
+            work_source TEXT, n_performers INTEGER
+        )""",
+    "review_dance_performer": """
+        CREATE TABLE review_dance_performer (
+            dance_id INTEGER REFERENCES review_dance(dance_id),
+            position INTEGER,
+            performer_surface TEXT,
+            performer_person_id TEXT REFERENCES person(person_id),
+            performer_candidates_n INTEGER, performer_candidate_ids TEXT,
+            is_alternate INTEGER,
+            PRIMARY KEY (dance_id, position)
+        )""",
     "review_solo": """
         CREATE TABLE review_solo (
             solo_id INTEGER PRIMARY KEY,
