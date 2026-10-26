@@ -20777,3 +20777,29 @@ select coalesce(link_method, '-'), count(*), count(performer_person_id) from res
 ```
 
 Result (production, after the rebuild): mention 2,529; tie: gender/ordinal 23; tie: company that season 168; tie: credited in this ballet 23; unlinked 239. 2,743 of 2,982 dancers linked. Same on the tested scratch copy, run twice; no other table differs from the control build.
+
+## 2026-10-26 — Tied review dancers, second pass: numbers printed after the name, initials, names already in the list (#159; scratch copy, NOT applied)
+
+```sql
+-- on a scratch copy rebuilt with the extended resolver, against a copy of production
+select coalesce(link_method, '-'), count(*) from research.review_dance_performer group by 1 order by 1;
+select o.performer_surface, d.season, d.city, po.display_name, o.link_method, pn.display_name, n.link_method
+ from k.research.review_dance_performer o join w.research.review_dance_performer n using (dance_id, position)
+ join w.research.review_dance d using (dance_id)
+ left join w.research.person po on po.person_id::varchar = o.performer_person_id
+ left join w.research.person pn on pn.person_id::varchar = n.performer_person_id
+ where o.performer_person_id is distinct from n.performer_person_id;
+-- how each changed person was printed in that season's lists
+select distinct pe.family_name, p.display_name, s.city, pe.entity_type from raw.person_entry pe join entities.person_link pl using (entry_id)
+ join research.person p on p.person_id = pl.person_id join raw.source_pages s on s.page_id = pe.page_id where s.season = ? and pe.family_name like ?;
+```
+
+Result: the name reader leaves a bare number after the surname outside the mention («Егорова 2», «Петипа 3», «Грекова 1»). Reading it (the person must be printed with that number that season), plus a printed first initial («М. Петипа»), and dropping candidates already named in the same list: 150 more dancers linked; 4 applied links corrected (all contradicted a number printed after the name: Грачевская 2 -> 2-я not 1-я; Ѳедорова 3 x2 -> 3-я not 2-я; Яковлева 2 -> 2-я not 1-я); 9 applied links withdrawn (number printed but no candidate printed with it that season: Оголейтъ 3-я x3 had gone to Оголейтъ 1-я; Ильина 5-я x2 had gone to a Moscow dancer in a Petersburg review; Легатъ 3-й 1896-97, Симоновъ 2-й 1897-98, one Ѳедорова 5; Никитина 1896-97 Moscow, because another Никитина in the same list is already linked to the only candidate). Totals: 2,884 of 2,982 linked (mention 2,529; gender/number/initial 175; company 176; credited 4); 98 unlinked. Only review_dance_performer differs from production.
+
+## 2026-10-26 — Tied dancers second pass APPLIED: production counts (#159)
+
+```sql
+select coalesce(link_method, '-'), count(*) from research.review_dance_performer group by 1 order by 1;
+```
+
+Result (production): mention 2,529; tie: gender/number/initial 175; tie: company that season 176; tie: credited in this ballet 4; unlinked 98. Production identical to the tested copy on every table.
