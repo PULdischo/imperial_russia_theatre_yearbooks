@@ -20643,3 +20643,31 @@ select count(*) from review_assertion where date_undate < '1890'; select count(*
 ```
 
 Result: only review_assertion (86 rows, date only) and review_credit (16 rows: date; 12 gained historical?) differ; review_solo unchanged. Biggest groups: 1906-07 SP f. 157 1907-02-14 -> 1900-02-14 (17), f. 153 1907-02-07 -> 1900-02-07 (13), 1900-01 SP f. 154 1900-12-08 -> 1896-12-08 (10), 1905-06 Moscow f. 213 1906-01-02 -> 1892-01-02 (9 + 6 credits). Assertion 2052 (1893-94 SP f. 248) -> 1889-05-02, a misread staging pair. Production = tested copy; CSVs identical; sqlite dates before 1890: 21 assertions, 7 credits.
+
+## 2026-10-26 — Caption corrections: the 1906-07 Moscow «Кабачекъ» plate and other «Горского» captions
+
+```sql
+select block_id, block_type, caption_text from raw.review_block where page_id = 'review_1906-07_MSK_ballet_p009';
+select mention_type, surface, entity_id, link_method from entities.review_mention where block_id = 'review_1906-07_MSK_ballet_p009__b001';
+select role_category, name_surface, person_id is not null, work_surface, part_surface from research.review_credit where block_id = 'review_1906-07_MSK_ballet_p009__b001';
+select p.season, p.city, b.block_type, count(*) from raw.review_block b join raw.review_page p using(page_id)
+ where coalesce(b.caption_text, b.text) like '%Горского%' group by all;   -- and '%Горскаго%'
+select m.mention_type, m.surface, m.entity_id, m.link_method from entities.review_mention m join raw.review_block b using(block_id)
+ where b.page_id = 'review_1892-93_SP_ballet_p014' and b.block_type = 'figure';
+select assertion_id, role_surface, performer_surface, work_surface from research.review_assertion where page_id = 'review_1892-93_SP_ballet_p014';
+select role_category, name_surface, work_surface from research.review_credit where page_id = 'review_1892-93_SP_ballet_p014';
+```
+
+Result: 1906-07 Moscow caption stored «… балетъ гг. Петипа и Горского. / Кавалерія—Декорація Голова по эскизу Коровина.» (feeds 4 credits: Петипа, Горскій author; Головъ, Коровинъ scenery; «Горского» links to Горскій, А. А.). «Горского» in 7 captions (1892-93 SP 1, 1905-06 Moscow 5, 1906-07 Moscow 1), never in body text; «Горскаго» in 35 blocks. Scan (Claude): 1906-07 plate prints «Горскаго» and «Кабачекъ»; 1905-06 Moscow p003 (f. 212) prints «бал. М. Петипа и А. Горскаго»; 1892-93 SP p014 (f. 234, upside-down plate) prints «Г-жа Никитина и г. Гердтъ—въ роляхъ феи Драже и принца Коклюша («Щелкунчикъ», балетъ М. И. Петипа)», stored «Г-жа Павлина … («Конёкъ-Горбунокъ», балетъ А. С. Горского)»; it feeds assertion 75 (Гердтъ, work Конёкъ-Горбунокъ) and an author credit for Горскій on Конёкъ-Горбунокъ.
+
+
+## 2026-10-26 — Caption corrections tested on a copy (not yet applied)
+
+```sql
+-- apply_review_text_corrections.py on a copy of merged_full; review chain on a copy of the db; per-table content diff vs production
+select display_name, first_attested_season, last_attested_season from research.person where person_id = 'f42933f8-372d-4da4-84a9-33106bac3dab';
+select assertion_id, role_surface, performer_surface, work_surface, work_id from research.review_assertion where page_id = 'review_1892-93_SP_ballet_p014';
+select max(assertion_id) from research.review_assertion;
+```
+
+Result: 9 replacements, all at their expected counts. Diff vs production: raw.review_block 7 rows, entities.review_mention -9/+10, research.review_credit 13 rows, research.review_assertion 1 row (75 -> 3184, work Щелкунчикъ); nothing else. New mention Никитина -> Никитина, Варвара Александровна (1890-91..1893-94). Max assertion_id 3184 (reused: 3184/3185 removed earlier today).
