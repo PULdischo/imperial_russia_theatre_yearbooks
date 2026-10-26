@@ -375,9 +375,12 @@ class Lexicon:
                 index[f].append(eid)
 
 
-def build_lexicon(db: Path) -> Lexicon:
+def build_lexicon(db: Path, con=None) -> Lexicon:
+    """`con`: an open connection to reuse (build_review_assertions.py holds the
+    database read-write, and DuckDB refuses a second read-only one to it)."""
     import duckdb
-    con = duckdb.connect(str(db), read_only=True)
+    if con is None:
+        con = duckdb.connect(str(db), read_only=True)
     lex = Lexicon()
 
     # Which roster sections a person is attested in. A ballet review names

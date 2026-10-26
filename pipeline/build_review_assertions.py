@@ -51,8 +51,9 @@ from pathlib import Path
 import duckdb
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from match_review_mentions import (HONORIFIC, key_of, person_gender, reflow,  # noqa: E402
-                                   surname_forms, surface_gender)
+from match_review_mentions import (HONORIFIC, build_lexicon,  # noqa: E402
+                                   canon_gender, key_of, person_gender, reflow, surname_forms,
+                                   surface_gender)
 
 # The cast-list grammar, `X—Y`, where ONE side is a role and the other a
 # performer. Which is which is decided by surname membership rather than by
@@ -456,6 +457,90 @@ def first_page_skip(blocks: list[tuple]) -> int:
         if (b[4] or "").strip().strip(".").strip().lower() in SECTION_HEADING:
             return int(b[2])
     return 0
+
+
+
+# --- dancers the mention matcher left tied (RG 2026-10-26) -------------------
+# The matcher ranks a surname's candidates on general evidence and leaves a
+# tie unlinked. For a dancer in a numbered dance three narrower facts settle
+# many of them, tried in this order and recorded in link_method:
+#   A  only one candidate fits the gender (surname ending, else the list's
+#      honorific) and the number printed on the name (2-я, 3-й) that season;
+#   B  only one of those stood in that city's BalletArtists list that season;
+#   C  only one of them (in the company, if any are) is credited in the
+#      dance's own ballet that season in the company lists.
+# Anything still tied stays unlinked with its candidates listed. Pupils
+# (воспитанницы) are not in the company lists, so B never picks for them.
+TIE_HON = re.compile(r"(г-жа|г-жи|г-нъ|гг\.|г\.|в-цы|в-ца|в-ки|в-къ|"
+                     r"воспитанниц\w*|воспитанник\w*)")
+
+
+def _k4(t: str) -> str:
+    return " ".join(w[:4] for w in re.findall(r"[а-яёѣіѳa-z]+", (t or "").lower()))
+
+
+def resolve_dancer_ties(con, dances: list[dict]) -> collections.Counter:
+    # the matcher's own lexicon, so the candidates are the ones it tied
+    # (its stored candidate_ids stop at 8)
+    lex = build_lexicon(Path(""), con)
+    index = lex.person
+    gender = {pid: meta.get("gender") for pid, meta in lex.person_meta.items()}
+    company: dict[tuple, set] = collections.defaultdict(set)
+    ords: dict[tuple, set] = collections.defaultdict(set)
+    for pid, season, city, fam in con.execute("""
+            SELECT pl.person_id::VARCHAR, s.season, s.city, pe.family_name
+            FROM raw.person_entry pe JOIN entities.person_link pl USING (entry_id)
+            JOIN raw.source_pages s ON s.page_id = pe.page_id
+            WHERE pe.entity_type = 'BalletArtists'""").fetchall():
+        company[(pid, season)].add(city)
+        for m in re.finditer(r"(\d+)\s*-\s*[ейяй]", fam or ""):
+            ords[(pid, season)].add(m.group(1))
+    credits: dict[tuple, set] = collections.defaultdict(set)
+    for pid, season, label in con.execute("""
+            SELECT pl.person_id::VARCHAR, s.season, pc.label
+            FROM raw.person_entry_credit pc JOIN raw.person_entry pe USING (entry_id)
+            JOIN entities.person_link pl USING (entry_id)
+            JOIN raw.source_pages s ON s.page_id = pe.page_id
+            WHERE pc.credit_type = 'named_work'""").fetchall():
+        credits[(pid, season)].add(_k4(label))
+    titles = {w: t for w, t in con.execute(
+        "SELECT work_id::VARCHAR, canonical_title FROM research.work").fetchall()}
+    stat: collections.Counter = collections.Counter()
+    for x in dances:
+        season, city, pt = x["season"], x["city"], x["printed_text"] or ""
+        wt = _k4(titles.get(x["work_id"] or "", ""))
+        for dn in x["dancers"]:
+            if dn["entity"]:
+                dn["method"] = "mention"
+                continue
+            dn["method"] = ""
+            surf = dn["surface"]
+            base = re.sub(r"\s*\d+\s*-?\s*[ейяй]?\b", "", surf).strip()
+            base = re.sub(r"^([А-ЯЁѲІ]\.\s*)+", "", base).strip()
+            cands = list(dict.fromkeys(index.get(key_of(base), [])
+                         or [c for c in (dn["cand_ids"] or "").split("|") if c]))
+            if len(cands) < 2:
+                continue
+            i = pt.find(surf)
+            hon = TIE_HON.findall(pt[:i] if i >= 0 else "")
+            g = canon_gender(base) or surface_gender(base, hon[-1] if hon else "")
+            if g:
+                cands = [c for c in cands if (gender.get(c) or g) == g]
+            m = re.search(r"(\d+)\s*-?\s*[ейяй]?\b", surf)
+            if m:
+                cands = [c for c in cands if m.group(1) in ords.get((c, season), {m.group(1)})]
+            inco = [c for c in cands if city in company.get((c, season), set())]
+            cred = [c for c in (inco or cands)
+                    if wt and any(wt in lab for lab in credits.get((c, season), ()))]
+            if len(cands) == 1:
+                dn["entity"], dn["method"] = cands[0], "tie: gender/ordinal"
+            elif len(inco) == 1:
+                dn["entity"], dn["method"] = inco[0], "tie: company that season"
+            elif len(cred) == 1:
+                dn["entity"], dn["method"] = cred[0], "tie: credited in this ballet"
+            if dn["method"]:
+                stat[dn["method"]] += 1
+    return stat
 
 
 def main() -> None:
@@ -1120,8 +1205,11 @@ def main() -> None:
             performer_candidates_n  INTEGER,
             performer_candidate_ids VARCHAR,
             is_alternate            BOOLEAN,
+            link_method             VARCHAR,
             PRIMARY KEY (dance_id, position)
         )""")
+    ties = resolve_dancer_ties(con, dances)
+    print("dancer ties settled: " + ", ".join(f"{k} {v}" for k, v in sorted(ties.items())))
     drows, prows = [], []
     for i, x in enumerate(dances, 1):
         drows.append((i, x["page_id"], x["block_id"], x["season"], x["city"],
@@ -1132,11 +1220,11 @@ def main() -> None:
         for j, dn in enumerate(x["dancers"], 1):
             prows.append((i, j, dn["surface"], dn["entity"] or None,
                           int(dn["cand_n"]) if str(dn["cand_n"] or "").isdigit() else None,
-                          dn["cand_ids"] or None, dn["alternate"]))
+                          dn["cand_ids"] or None, dn["alternate"], dn["method"] or None))
     if drows:
         con.executemany("INSERT INTO research.review_dance VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", drows)
     if prows:
-        con.executemany("INSERT INTO research.review_dance_performer VALUES (?,?,?,?,?,?,?)", prows)
+        con.executemany("INSERT INTO research.review_dance_performer VALUES (?,?,?,?,?,?,?,?)", prows)
     # composers (and arrangers) of the numbers, as the review prints them
     con.execute("DROP TABLE IF EXISTS research.review_dance_composer")
     con.execute("""

@@ -189,7 +189,7 @@ SCHEMAS = {
             performer_surface TEXT,
             performer_person_id TEXT REFERENCES person(person_id),
             performer_candidates_n INTEGER, performer_candidate_ids TEXT,
-            is_alternate INTEGER,
+            is_alternate INTEGER, link_method TEXT,
             PRIMARY KEY (dance_id, position)
         )""",
     "review_dance_composer": """
