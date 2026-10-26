@@ -183,6 +183,7 @@ YEAR = re.compile(r"(?<!\d)(1[5-9]\d\d)(?!\d)")
 FOREIGN = re.compile(r"за\s+границ\w*|въ\s+Париж\w*|въ\s+Лондон\w*|въ\s+Милан\w*|въ\s+Вѣн\w*|"
                      r"въ\s+Берлин\w*|Дягилев\w*|заграниц\w*", re.I)
 FLAGS = Path("docs/eval/review_credit_flags.csv")
+OVERRIDES = Path("docs/eval/review_credit_overrides.csv")
 PART_WORDS = re.compile(r"картин|дѣйств|актъ|акт\.|прологъ|пролог|апоѳеоз|сцена|«|„", re.I)
 # words that do not count towards the cue-to-name distance: titles and the
 # act/scene count of a title line (`въ 4-хъ дѣйствіяхъ и 7-ми картинахъ`)
@@ -773,13 +774,15 @@ def main() -> None:
                     emit(ns, [], {"scenery"}, ns[0][0], ns[0][0], m.end(), c0, c1,
                          body[m.start(1):m.end(1)], "")
 
-    # `ballet-by` is the print's `балетъ X` / `бал. X`: X may be the author or the
-    # composer (`«Арлекинада», бал. Р. Дриго`); the lists decide where they can.
+    # `ballet_by` is the print's `балетъ X` / `бал. X`, kept as printed (RG
+    # 2026-10-26: "a ballet was 'by' many people ... the same production could
+    # be Tchaikovsky's Swan Lake, or Petipa's Swan Lake"; and "by cross-
+    # referencing with the lists, we'll know more about the exact role, but
+    # that's technically separate from how we're treating these reviews"). The
+    # lists still pick the PERSON (resolve() above); they no longer set the role.
     for r in out:
         if r["role_category"] == "ballet-by":
-            roles = {rl for pid, rl in list_credit.get(r["work_id"], []) if pid == r["person_id"]}
-            r["role_category"] = ("music" if roles == {"music"} else
-                                  "author" if roles else "ballet_by")
+            r["role_category"] = "ballet_by"
     # `на сюжетъ романа Сервантеса, М. Петипа`: a name the lists credit as author
     # or librettist of this work is not its literary source
     for r in out:
@@ -827,13 +830,68 @@ def main() -> None:
                         r["date_undate"] = ""
         if missing:
             raise SystemExit(f"{FLAGS}: {len(missing)} row(s) match no credit: {missing[:5]}")
+    # Curated overrides (docs/eval/review_credit_overrides.csv), from RG's
+    # decisions on the 2026-10-26 «балетъ X» worksheet: drop a row that is not a
+    # credit, or set its person / work / role (`staging|choreography` gives one
+    # row per role) / flag / note. Same key as the flags; every row must match.
+    if OVERRIDES.exists():
+        starts = collections.defaultdict(list)
+        for r in out:
+            k = (r["block_id"], r["name_surface"])
+            if int(r["char_start"]) not in starts[k]:
+                starts[k].append(int(r["char_start"]))
+        for k in starts:
+            starts[k].sort()
+        missing, drop, extra = [], set(), []
+        for ov in csv.DictReader(open(OVERRIDES, encoding="utf-8")):
+            k = (ov["block_id"], ov["name_surface"])
+            occ = int(ov["occurrence"])
+            if occ >= len(starts.get(k, [])):
+                missing.append(k)
+                continue
+            at = starts[k][occ]
+            hits = [i for i, r in enumerate(out) if (r["block_id"], r["name_surface"]) == k
+                    and int(r["char_start"]) == at]
+            if ov["action"] == "drop":
+                drop.update(hits)
+                continue
+            for i in hits:
+                r = out[i]
+                if ov["person_id"]:
+                    r["person_id"], r["link_method"] = ov["person_id"], "curated"
+                    r["person_candidate_ids"] = ""
+                if ov["work_id"]:
+                    r["work_id"], r["work_source"] = ov["work_id"], "curated"
+                    r["work_surface"] = ov.get("work_surface") or r["work_surface"]
+                if ov["context_flag"]:
+                    r["context_flag"] = ov["context_flag"]
+                    if ov["context_flag"] == "historical":
+                        r["date_undate"] = ""
+                if ov["curator_note"]:
+                    r["curator_note"] = ov["curator_note"]
+                if ov["role_category"]:
+                    roles = ov["role_category"].split("|")
+                    r["role_category"] = roles[0]
+                    extra += [{**r, "role_category": rl} for rl in roles[1:]]
+        if missing:
+            raise SystemExit(f"{OVERRIDES}: {len(missing)} row(s) match no credit: {missing[:5]}")
+        out = [r for i, r in enumerate(out) if i not in drop] + extra
+        seen, uniq = set(), []
+        for r in out:
+            kk = (r["block_id"], r["char_start"], r["role_category"], r["work_id"])
+            if kk not in seen:
+                seen.add(kk)
+                uniq.append(r)
+        out = sorted(uniq, key=lambda r: (r["page_id"], r["block_id"], int(r["char_start"]),
+                                          r["role_category"], r["work_id"]))
     for i, r in enumerate(out, 1):
         r["credit_id"] = i
+        r.setdefault("curator_note", "")
     cols = ["credit_id", "page_id", "block_id", "block_type", "char_start", "season", "city",
             "printed_folio", "date_undate", "work_surface", "work_id", "work_source", "part_surface",
             "role_category", "role_text", "printed_phrase", "name_surface", "initials", "person_id",
             "person_candidates_n", "person_candidate_ids", "link_method", "mention_id",
-            "is_anonymous", "context_flag"]
+            "is_anonymous", "context_flag", "curator_note"]
     a.out.parent.mkdir(parents=True, exist_ok=True)
     with open(a.out, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols, extrasaction="ignore")
@@ -867,7 +925,8 @@ def main() -> None:
             link_method            VARCHAR,
             mention_id             BIGINT,
             is_anonymous           BOOLEAN,
-            context_flag           VARCHAR
+            context_flag           VARCHAR,
+            curator_note           VARCHAR
         )""")
     con.execute(f"""
         INSERT INTO research.review_credit
@@ -878,7 +937,7 @@ def main() -> None:
                nullif(initials, ''), nullif(person_id, ''), CAST(person_candidates_n AS INTEGER),
                nullif(person_candidate_ids, ''), link_method,
                CAST(nullif(mention_id, '') AS BIGINT), CAST(is_anonymous AS BOOLEAN),
-               nullif(context_flag, '')
+               nullif(context_flag, ''), nullif(curator_note, '')
         FROM read_csv('{a.out.as_posix()}', header=true, all_varchar=true)""")
     n, wp, ww = con.execute("""SELECT count(*), count(person_id), count(work_id)
                               FROM research.review_credit""").fetchone()

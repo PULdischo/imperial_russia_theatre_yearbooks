@@ -20842,3 +20842,64 @@ select coalesce(unlinked_reason, '(unsorted)'), count(*) from entities.review_me
 ```
 
 Result: «Смерть Смерти» (unlinked) -> «Эсмеральда» linked to Эсмеральда (бал.), quoted-exact; «Ефимова» -> «Ефимовъ» (a male dancer); «Русалка» -> the opera Русалка (curated); dance 848 «Adagio» on that page now has the opera as its work. Unlinked work mentions 635, all with a reason (dance number 258, quoted words 185, unquoted word 177, literary/artistic source 11, divertissement 4). Other differences between runs: only the order of candidate ids for «Левенсонъ» (4 assertions, 14 dancers).
+
+## 2026-10-26 — Was Л. И. Ивановъ credited in other «Донъ-Кихотъ» productions, esp. St Petersburg? (RG)
+
+```sql
+select pr.season, pr.city, pc.role_category, pe.display_name from research.production pr join research.production_work pw using(production_id)
+ join research.work w on w.work_id = pw.work_id join research.production_credit pc using(production_id) join research.person pe using(person_id)
+ where w.canonical_title = 'Донъ-Кихотъ';
+select r.season, r.city, r.printed_folio, r.role_category, r.printed_phrase from research.review_credit r join research.work w on w.work_id::varchar = r.work_id
+ where r.person_id = <Ивановъ, Левъ Ивановичъ> and w.canonical_title = 'Донъ-Кихотъ';
+select sp.season, pc.credit_type, pc.label, pc.role_name from raw.person_entry_credit pc join entities.person_link pl using(entry_id)
+ join raw.person_entry pe using(entry_id) join raw.source_pages sp on sp.page_id = pe.page_id where pl.person_id = <Ивановъ> and pc.label ilike '%Кихот%';
+select e.season, e.city, count(*) from research.performance p join research.event e using(event_id) join research.work w on w.work_id = p.work_id
+ where w.canonical_title = 'Донъ-Кихотъ' and w.canonical_genre ilike '%бал%' group by 1, 2;
+-- Python: SP ballet review text with «Донъ-Кихот» within 250/350 chars of «Иванов»
+```
+
+Result: lists — Moscow 1890-93 Петипа (author) + Минкусъ; Moscow 1900-10 Петипа (libretto), Минкусъ, Горскій (staging 1901-02); SP 1901-11 Минкусъ, Сервантесъ, Горскій (staging 1901-02); Ивановъ never. Review credits for Ивановъ on Донъ-Кихотъ: only the six 1900-01 Moscow captions. Roster credits: none. Repertoire: SP performances only from 1901-02 (Горскій's version). SP reviews: one passage, 1901-02 SP f. 190, the first Petersburg cast of 9 November 1871, «Базиля, цырюльника,— г. Л. Ивановъ (г. Гердтъ)» — Ивановъ as a dancer.
+
+
+## 2026-10-26 — review_credit: one person given several roles by one printed phrase (staging/choreography overlap, RG)
+
+```sql
+with x as (select block_id, char_start, coalesce(person_id, name_surface) who, string_agg(role_category, '+' order by role_category) roles, any_value(printed_phrase) ph
+ from research.review_credit group by 1, 2, 3 having count(*) > 1)
+select roles, count(*), any_value(ph) from x group by 1 order by 2 desc;
+select count(*) from research.review_credit where role_category in ('staging', 'staging-revival', 'choreography');
+```
+
+Result: see the session summary (counts of multi-role phrases by role combination; staging/choreography rows total).
+
+
+## 2026-10-26 — Result for the previous entry (multi-role phrases), stated in full
+
+```sql
+-- same two queries as the previous entry
+```
+
+Result: phrases that give one person several roles: choreography+staging 40 («Постановка и танцы сочинены солистомъ Его Величества М. Петипа»), author+staging 9 («сочинены и поставлены балетмейстеромъ А. А. Горскимъ»), author+music 4, choreography+libretto+staging 3, choreography+staging-revival 3, author+choreography+staging 3, costumes+scenery 2, and one each staging×3 (Фокинъ, three works), machinery+scenery, costume_design+scenery, libretto+music, costume_design+props+scenery, author+choreography. Staging / revival / choreography rows in all: 304.
+
+
+## 2026-10-26 — «балетъ X» worksheet applied on a test copy: effect
+
+```sql
+-- test copy outputs/reviews/worksheet_test (fresh production + merged_full; text corrections incl. 2 splices + 3 captions; review chain with the new ballet_by rule, review_credit_overrides.csv, curator_note)
+select role_category, count(*) from research.review_credit group by 1 order by 2 desc;            -- production vs test
+select count(*), count(person_id), count(work_id) from research.review_credit;
+select role_category, count(*) from research.review_credit where regexp_matches(role_text, '^(бал\.|балет[ъа]|балетъ-)', 'i') group by 1;
+select assertion_id, block_id, role_surface, performer_surface from research.review_assertion where page_id = 'review_1897-98_SP_ballet_p003' and performer_surface like '%Куличевск%';
+```
+
+Result: tables changed: raw.review_block 5, entities.review_mention -11/+6, research.review_assertion -1 (2234, the duplicate О-Юши from the spliced f. 239 paragraph; the caption's 2235 stays), research.review_credit (+ column curator_note). Credits 2,444 -> 2,416 (27 dropped + 4 from the two spliced paragraphs, +3 rows where one phrase gives staging and choreography); with a person 2,243 -> 2,231, with a work 2,391 -> 2,364. Roles: ballet_by 94 -> 809, author 949 -> 273, music 647 -> 573, staging 187 -> 191, choreography 77 -> 80. Rows whose cue starts «балет…» but are not ballet_by: 52, all with their own credit word («соч.», «музыка», «поставленъ»). curator_note on 11 rows.
+
+
+## 2026-10-26 — «балетъ X» worksheet applied to production: check
+
+```sql
+-- per-table content diff vs production for the tables my change does not touch (production unmoved since the test), then production vs tested copy after the apply
+select count(*), count(curator_note), sum(role_category = 'ballet_by') from review_credit;   -- sqlite
+```
+
+Result: before applying, every untouched table equalled the test copy and merged_full equalled the test's pre-correction copy. After: production = tested copy on every table; merged text and review_credit.csv byte-identical to the tested ones. sqlite review_credit 2,416 rows, 11 notes, 809 ballet_by.

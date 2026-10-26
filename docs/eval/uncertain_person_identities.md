@@ -370,6 +370,15 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** `docs/jubilees_obituaries/` entry `e7b357d69f` (`1907-08_Obituary_Bogdanov.pdf`); `balletproductions_1890-91_MSK_p000__e008` (`pdf/Spiski_BalletProductions/ForUpload_1890-91_Spisok_BalletProductionsMoscow.pdf`).
 - **Would resolve it:** the playbill or libretto of «Хрустальный башмачекъ» (Moscow, Bolshoi); his RGIA personnel file; a ballet-history reference on the Moscow ballet masters of the 1880s.
 
+## 43. Легатъ «Н. С.» (Season Review 1906-07 SP f. 152) -- Николай alone, or the brothers Николай and Сергѣй, as author of «Котъ въ сапогахъ»?
+
+- **Status:** DEFERRED (RG, 2026-10-26: "i'm honestly not sure. let's leave this one for later."). review_credit row 2182 left as it is (role ballet_by, no person).
+- **What is uncertain:** f. 152 prints «26-го декабря состоялось повтореніе балета Н. С. Легата «Котъ въ сапогахъ»». No Легатъ has the initials Н. С.: Николай Густавовичъ is Н. Г., Сергѣй Густавовичъ is С. Г.
+- **For Николай alone:** the première notice two pages earlier (f. 150, 10 December 1906) prints «Постановка и танцы балетмейстера Н. Г. Легатъ»; the singular «Легата»; the 1906-07 roster credits Николай with «маркизъ Карабасъ» in the ballet.
+- **For both brothers:** the brothers staged together elsewhere in the same years («поставленный братьями Н. и С. Легатами», «Фея куколъ»); «Н. С.» could be a run-together «Н. и С.».
+- **Where to look:** review_1906-07_SP_ballet_p005 (f. 152), review_1906-07_SP_ballet_p003 (f. 150); Repertoire 1906-12-10 and 1906-12-26, Маріинскій; docs/eval/review_credit_ballet_by_worksheet_2026-10-26.csv row 2182. Checked by Claude (finding aid).
+- **Would resolve it:** the playbill or programme of 10/26 December 1906; a contemporary press notice; the Legats' memoirs.
+
 ## Related, decided (not uncertain), for reference
 
 Грибенъ, Августъ Ѳедоровичъ vs Ѳедоръ Ѳедоровичъ (SP percussionists; SPLIT 2026-10-15, the 1890-93 ballet-orchestra cross-references «Грибенъ (см. оперный оркестръ)» assigned to Ѳедоръ, the only Грибенъ in the opera orchestra then; scans 1890-91 pp. 75/78/80); Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.

@@ -230,7 +230,7 @@ SCHEMAS = {
             person_id TEXT REFERENCES person(person_id),
             person_candidates_n INTEGER, person_candidate_ids TEXT,
             link_method TEXT, mention_id INTEGER, is_anonymous INTEGER,
-            context_flag TEXT
+            context_flag TEXT, curator_note TEXT
         )""",
 }
 
