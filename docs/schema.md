@@ -424,7 +424,7 @@ real foreign keys and Datasette renders the links.
 |---|---|
 | `assertion_id` | PK |
 | `page_id`, `block_id` | citation back into the **raw** layer, which is NOT published — plain columns, deliberately not FKs |
-| `season`, `city`, `printed_folio`, `date_undate` | where and when; `date_undate` is the review's own date, Julian as printed |
+| `season`, `city`, `printed_folio`, `date_undate` | where and when; `date_undate` is the review's own date, Julian as printed. A date printed with a year before the season keeps that year (`15-го сентября 1844` -> 1844-09-15: a first staging or first cast quoted in a later review; 2026-10-26) |
 | `role_surface`, `performer_surface`, `work_surface` | verbatim as printed, pre-reform orthography, inflected as the sentence has them |
 | `performer_person_id` → `research.person` | **nullable**: 302 of 1,952 are unresolved |
 | `performer_candidates_n`, `performer_candidate_ids` | the ambiguity itself, kept rather than hidden; ids are `|`-delimited, so this is not an FK |

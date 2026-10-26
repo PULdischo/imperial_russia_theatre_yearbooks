@@ -75,8 +75,8 @@ import duckdb
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from match_review_mentions import key_of, reflow, surname_forms  # noqa: E402
-from build_review_assertions import (DATE_RE, first_page_skip, mask_periods,  # noqa: E402
-                                     month_of, resolve_date, season_years)
+from build_review_assertions import (dates_in, first_page_skip, mask_periods,  # noqa: E402
+                                     season_years)
 
 UC = "А-ЯЀ-ЏІѲѴ"
 LC = "а-яѣіѳѵъьё"
@@ -425,7 +425,7 @@ def main() -> None:
         cues = find_cues(body)
         stops = [m.start() for m in STOP_RE.finditer(body)]
         quotes = [(m.start(), m.end()) for m in re.finditer(r"[«„\"][^»“\"]{0,200}[»“\"]", body)]
-        dates = [(m.start(), int(m.group(1)), month_of(m.group(2))) for m in DATE_RE.finditer(body)]
+        dates = dates_in(body, pg["season"])
         if is_fig and PLATE_ARTIST.search(body):
             stats["plate illustrator lines skipped"] += 1
         done_names: set[int] = set()
@@ -537,11 +537,12 @@ def main() -> None:
             elif not work_rows:
                 work_rows, wsrc = page_fallback()
             prior = [d for d in dates if d[0] <= start and d[2]]
-            date = resolve_date(prior[-1][1], prior[-1][2], pg["season"]) if prior else None
+            date = prior[-1][3] if prior else None
             sent = body[c0:c1]
             yy = season_years(pg["season"])
             flags = []
-            if yy and any(int(y) < yy[0] for y in YEAR.findall(sent)):
+            if yy and (any(int(y) < yy[0] for y in YEAR.findall(sent))
+                       or (date and int(date[:4]) < yy[0])):
                 flags.append("historical?")
             if FOREIGN.search(sent):
                 flags.append("foreign?")

@@ -20616,3 +20616,30 @@ select count(*) from review_dance; select count(*) from review_dance_performer; 
 ```
 
 Result: re-test identical for the dance tables; production = tested copy on all 54 tables; sqlite review_dance 873, review_dance_performer 2,808, review_assertion 2,658.
+
+## 2026-10-26 — Review dates built from a historical printed year (evidence for a date fix)
+
+```sql
+select credit_id, block_id, char_start, season, city, printed_folio, date_undate, name_surface, role_category from research.review_credit where date_undate is not null;
+select assertion_id, block_id, season, city, printed_folio, date_undate, performer_surface, role_surface from research.review_assertion where date_undate is not null;
+select solo_id, block_id, season, city, printed_folio, date_undate, performer_surface, instrument_surface from research.review_solo where date_undate is not null;
+-- Python: the governing DATE_RE match before each row, and a 4-digit year printed right after it
+select e.season, e.date_undate, t.canonical_name, p.verbatim_title from research.event e join research.performance p using(event_id)
+ join research.theater t on t.theater_id = e.theater_id
+ where p.verbatim_title ilike '%фараон%' and e.date_undate in ('1902-01-02','1903-01-02','1903-01-19','1902-01-19');
+```
+
+Result: of the dated rows' governing dates, 1,580 print no year, 56 print a year inside the season, and 105 print a year outside it: review_credit 20, review_assertion 85, review_solo 0. All but one source are older stagings (1844, 1848, 1849, 1850, 1861, 1866, 1871, 1887, 1892, 1893, 1896, 1898, 1900 premieres and casts) stored with the season's year. The exception, 1901-02 SP f. 189 «2-го января 1903 года … (202-е представленіе) … „Дочь Фараона“» (3 credits + 3 assertions): the Repertoire has Дочь Фараона at the Маріинскій on 1902-01-02 and not on 1903-01-02; scan (Claude): print reads «1903», with a reader's pencil «2» over the 3 — a print slip, so the season date is right. Years before the season: review_credit 17, review_assertion 82.
+
+
+## 2026-10-26 — Printed-year date rule: test diff and production check
+
+```sql
+select assertion_id, season, printed_folio, date_undate from research.review_assertion;        -- production vs copy
+select block_id, char_start, role_category, coalesce(work_id,''), season, printed_folio, date_undate, context_flag, name_surface from research.review_credit;
+select assertion_id, block_id, role_surface, performer_surface, date_undate from research.review_assertion
+ where season = '1893-94' and printed_folio = '248' and date_undate = '1889-05-02';
+select count(*) from review_assertion where date_undate < '1890'; select count(*) from review_credit where date_undate < '1890';  -- sqlite
+```
+
+Result: only review_assertion (86 rows, date only) and review_credit (16 rows: date; 12 gained historical?) differ; review_solo unchanged. Biggest groups: 1906-07 SP f. 157 1907-02-14 -> 1900-02-14 (17), f. 153 1907-02-07 -> 1900-02-07 (13), 1900-01 SP f. 154 1900-12-08 -> 1896-12-08 (10), 1905-06 Moscow f. 213 1906-01-02 -> 1892-01-02 (9 + 6 credits). Assertion 2052 (1893-94 SP f. 248) -> 1889-05-02, a misread staging pair. Production = tested copy; CSVs identical; sqlite dates before 1890: 21 assertions, 7 credits.

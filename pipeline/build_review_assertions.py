@@ -341,6 +341,34 @@ def resolve_date(day: int, month: int, season: str) -> str | None:
     return f"{year:04d}-{month:02d}-{day:02d}"
 
 
+# A date printed WITH a year before the season belongs to an older staging:
+# `Балетъ «Жизель» былъ въ Москвѣ исполненъ впервые 15-го сентября 1844 года`
+# in the 1893-94 review is 1844-09-15, not 1893-09-15 (RG 2026-10-26, option A:
+# "apply A to the 99 rows"). Only an EARLIER year counts: a later one is a
+# print slip (1901-02 SP f. 189 prints «2-го января 1903 года» for 1902; a
+# reader pencilled the 2 into the scanned copy), so the season rule stands.
+YEAR_AFTER = re.compile(r"\s*(1[5-9]\d\d)(?!\d)")
+
+
+def dates_in(body: str, season: str) -> list[tuple[int, int, int | None, str | None]]:
+    """(offset, day, month, ISO date or None) for each printed day-month date."""
+    yy = season_years(season)
+    out = []
+    for m in DATE_RE.finditer(body):
+        day, month = int(m.group(1)), month_of(m.group(2))
+        iso = None
+        if month:
+            y = YEAR_AFTER.match(body, m.end())
+            if y and yy and int(y.group(1)) < yy[0]:
+                year = int(y.group(1))
+                if 1 <= day <= julian_days_in_month(year, month):
+                    iso = f"{year:04d}-{month:02d}-{day:02d}"
+            else:
+                iso = resolve_date(day, month, season)
+        out.append((m.start(), day, month, iso))
+    return out
+
+
 def load_credits(con) -> tuple[dict, dict]:
     """(person_id, folded role) and (person_id, folded work) -> seasons credited."""
     rows = con.execute("""
@@ -493,8 +521,7 @@ def main() -> None:
         ms = mentions.get(block_id, [])
         works_here = [m for m in ms if m[1] == "work" and str(m[5] or "") not in non_governing]
         # a date stated in this block governs the pairs that follow it
-        dates = [(m.start(), int(m.group(1)), month_of(m.group(2)))
-                 for m in DATE_RE.finditer(body)]
+        dates = dates_in(body, page["season"])
 
         def work_and_date(at: int) -> tuple[str, str, str, str, bool]:
             """Governing work and date for a statement at offset `at`.
@@ -522,8 +549,7 @@ def main() -> None:
                 elif len(distinct) > 1:
                     w_source = w_source or "ambiguous-on-page"
             pd = [d for d in dates if d[0] <= at] or dates
-            iso_d = (resolve_date(pd[-1][1], pd[-1][2], page["season"])
-                     if pd and pd[-1][1] and pd[-1][2] else None)
+            iso_d = pd[-1][3] if pd else None
             return w_surface, w_id, w_source, iso_d or "", inh
 
         last_solo_end = -1
@@ -668,10 +694,7 @@ def main() -> None:
                 unresolved += 1
 
             prior_d = [d for d in dates if d[0] <= perf_a] or dates
-            day = month = None
-            if prior_d:
-                _, day, month = prior_d[-1]
-            iso = resolve_date(day, month, page["season"]) if day and month else None
+            iso = prior_d[-1][3] if prior_d else None
 
             out.append({
                 "page_id": page_id, "block_id": block_id,
