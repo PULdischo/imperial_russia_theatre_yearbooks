@@ -20706,3 +20706,25 @@ select * from entities.review_assertion_id_watermark;                -- copy: 3,
 ```
 
 Result: production = tested copy on 56 tables; sqlite review_dance_composer 67, review_dance 914, review_dance_performer 2,982; watermark 3,185 (next new id 3,186).
+
+## 2026-10-26 — Caption corrections retested against production after the parent's V4 rule
+
+```sql
+-- copy of current production + merged_full; apply_review_text_corrections.py; review chain with the working-copy build_review_assertions.py; per-table content diff vs production
+```
+
+Result: same footprint as the first test: raw.review_block 7, entities.review_mention -9/+10, research.review_assertion 1, research.review_credit 13; nothing else. Not applied: the parent session is editing build_review_assertions.py again (dance composers) and asked for no rebuild until it frees the file.
+
+
+## 2026-10-26 — Status of research.review_credit at pause
+
+```sql
+select count(*), count(person_id), count(work_id), count(distinct person_id), count(distinct work_id), count(date_undate), count(distinct season) from research.review_credit;
+select role_category, count(*) from research.review_credit group by 1 order by 2 desc;
+select count(*), count(distinct coalesce(person_id, name_surface)) from research.review_credit
+ where role_category in ('scenery','costume_design','costumes','costume_making','machinery','props','headwear','wigs','footwear','lighting');
+select link_method, count(*) from research.review_credit group by 1 order by 2 desc;
+select coalesce(context_flag, '-'), count(*) from research.review_credit group by 1;
+```
+
+Result: 2,444 credits, 20 seasons; 2,243 with a person (169 people), 2,391 with a work (98), 1,068 dated. Roles: author 949, music 647, scenery 231, staging 187, ballet_by 94, choreography 77, source 72, libretto 54, staging-revival 40, costume_design 29, machinery 16, costume_making 14, props 13, instrumentation 8, costumes 6, footwear 3, wigs 2, headwear 2; design/craft 316 rows, 77 people or printed names. Linked by list-credit 1,592, list-credit-other-work 246, department 172 (+34 other city), mention-link 129, list-credit-spelling 52, first-name 7, initials 1, role-from-list 10; printed-only 176, unresolved 21, anonymous 4. Flags: historical? 36, historical 5, foreign? 3, both 4.
