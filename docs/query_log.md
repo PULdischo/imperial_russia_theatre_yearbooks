@@ -20752,3 +20752,28 @@ select assertion_id, role_surface, work_surface from research.review_assertion w
 ```
 
 Result: test vs production: entities.review_assertion_id_watermark 1, entities.review_mention -9/+10, raw.review_block 7, research.review_assertion 1, research.review_credit 13; dance tables unchanged. After applying: production = tested copy on every table; the Гердтъ row is 3186 «въ роляхъ феи Драже», work Щелкунчикъ.
+
+## 2026-10-26 — Review dancers left with several candidates: what season, company, gender and credits settle (#159)
+
+```sql
+select dp.dance_id, dp.position, dp.performer_surface, dp.performer_candidates_n, dp.performer_candidate_ids,
+       d.season, d.city, w.canonical_title, d.printed_text
+ from research.review_dance_performer dp join research.review_dance d using(dance_id)
+ left join research.work w on w.work_id::varchar = d.work_id where dp.performer_person_id is null;
+-- company that season: BalletArtists entries by (person, season) -> city, plus printed ordinal
+select pl.person_id, s.season, s.city, pe.family_name from raw.person_entry pe join entities.person_link pl using(entry_id)
+ join raw.source_pages s on s.page_id = pe.page_id where pe.entity_type = 'BalletArtists';
+-- credits in the dance's ballet that season
+select pl.person_id, s.season, pc.label from raw.person_entry_credit pc join raw.person_entry pe using(entry_id)
+ join entities.person_link pl using(entry_id) join raw.source_pages s on s.page_id = pe.page_id where pc.credit_type = 'named_work';
+```
+
+Full candidate lists from the matcher's lexicon (the stored list stops at 8). Result: 453 unlinked dancers. One person left after the gender/ordinal check 23; only one candidate in that city's company that season 168; only one credited in the dance's ballet that season 23 (214 in all). Unresolved: 201 still tied inside the company (mostly the same surname twice or more with no ordinal printed: Петипа 16, Ѳедорова 14, Николаева 10, Павлова 10); 33 with no candidate in the company that season (mostly pupils, «воспитанницы»); 2 with no candidate of that gender; 3 with 0–1 candidates. BalletArtists coverage checked for 1894-95–1896-97 (205–236 entries per city), so the 33 are not a roster gap.
+
+## 2026-10-26 — Dancer tie rules A–C applied: link_method counts (#159)
+
+```sql
+select coalesce(link_method, '-'), count(*), count(performer_person_id) from research.review_dance_performer group by 1 order by 1;
+```
+
+Result (production, after the rebuild): mention 2,529; tie: gender/ordinal 23; tie: company that season 168; tie: credited in this ballet 23; unlinked 239. 2,743 of 2,982 dancers linked. Same on the tested scratch copy, run twice; no other table differs from the control build.
