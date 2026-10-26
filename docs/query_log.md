@@ -20455,3 +20455,28 @@ select count(distinct person_id) from research.person_appearance
 ```
 
 Result: reviews 184 cue words on 103 pages (Ballet 132, Opera 51, All 1); rosters 273 appearances, 78 people, under a heading naming капельмейстеры/дирижеры. Nothing built.
+
+## 2026-10-26 — Аниханова / Апиханова: the roster entries behind the review costume-making credit
+
+```sql
+select season, heading_path from research.person_appearance
+ where person_id = (select person_id from research.person where display_name like 'Апиханова%') order by season;
+select e.page_id, e.family_name, e.first_name, e.patronymic, sp.source_file, sp.source_page_index
+ from entities.person_link l join raw.person_entry e using(entry_id) left join raw.source_pages sp on sp.page_id = e.page_id
+ where l.person_id = (select person_id from research.person where display_name like 'Апиханова%') order by e.page_id;
+select family_name, count(*) from raw.person_entry where family_name like 'А_иханов%' group by 1;
+```
+
+Result: one research.person, «Апиханова, Елена Петровна», Moscow Отдѣлъ гардеробный (Помощница 1900-02, Костюмерша 1902-11), 11 roster entries stored as Апиханова 1900-01..1904-05 (5), Анихалова 1905-06..1907-08 (3), Аниханова 1908-09..1910-11 (3); all «съ 16 октября 1890 г.». Scan check (by Claude) of rosters 1900-01, 1903-04, 1905-06, 1907-08, 1908-09, 1910-11 and reviews 1905-06 Moscow f. 217, 1906-07 Moscow f. 235: every stored form is as printed.
+
+
+## 2026-10-26 — Аниханова display change: control rebuild, test diff, production check
+
+```sql
+select person_id, display_name, canonical_family_name, canonical_first_name, canonical_patronymic
+ from research.person where display_name like 'Апиханова%';
+-- every table, production vs copy: count(*), sum(hash(row)) over all columns except candidate-id lists; differing rows listed
+select display_name, canonical_family_name from person where person_id = '48434a09-2752-4884-bfd5-40a8244778b4';  -- sqlite
+```
+
+Result: before, «Апиханова, Елена Петровна» / Апиханова. Control rebuild (build_research_model.py, code unchanged) = production, 52 tables. After the override: only research.person differs, 1 row -> «Аниханова, Елена Петровна» / Аниханова; review_credit rebuilt on top unchanged (2,413). Production = tested copy; sqlite person row updated, person 2,644, review_credit 2,413.

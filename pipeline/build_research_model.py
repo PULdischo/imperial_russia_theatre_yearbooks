@@ -395,6 +395,14 @@ RESEARCH_PERSON_DISPLAY_OVERRIDES = {
         "Enrico Cecchetti: the company lists (BalletArtists, 19 entries) print the Russianized "
         "\"Генрихъ\", the school staff lists (8 entries) print \"Энрико\"; one man, merged 2026-10-05; "
         "RG chose the Italian form, the one used in Wikidata and the literature"),
+    "48434a09-2752-4884-bfd5-40a8244778b4": (
+        "Аниханова, Елена Петровна", "Елена",
+        "Moscow wardrobe костюмерша, one woman (same name, patronymic, department and «съ 16 "
+        "октября 1890 г.» throughout); her surname is printed three ways, each kept verbatim in "
+        "raw: Апиханова (rosters 1900-01..1904-05), Анихалова (rosters 1905-06..1907-08), "
+        "Аниханова (rosters 1908-09..1910-11 and the Season Reviews 1905-06 and 1906-07 Moscow, "
+        "«женскіе — работы г-жи Анихановой»); scan-read by Claude 2026-10-26; RG chose "
+        "Аниханова and asked to keep the variants 2026-10-26"),
 }
 
 
@@ -1584,8 +1592,11 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         n = con.execute("SELECT count(*) FROM research.person WHERE person_id = ?", [pid]).fetchone()[0]
         if n != 1:
             raise SystemExit(f"RESEARCH_PERSON_DISPLAY_OVERRIDES: {pid} is not a live research.person")
-        con.execute("UPDATE research.person SET display_name = ?, canonical_first_name = ? WHERE person_id = ?",
-                    [disp, first, pid])
+        # the family name follows the chosen display form (`Аниханова`, not the
+        # majority-vote `Апиханова`); unchanged where only the first name differs
+        con.execute("""UPDATE research.person SET display_name = ?, canonical_first_name = ?,
+                           canonical_family_name = trim(split_part(?, ',', 1)) WHERE person_id = ?""",
+                    [disp, first, disp, pid])
 
     con.execute("""
         CREATE TABLE research.event (
