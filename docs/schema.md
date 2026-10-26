@@ -531,6 +531,6 @@ One row per **person credited in one role** by a ballet Season Review: `соч. 
 | `is_anonymous` | `⁂`, `***`, `Г* *` |
 | `context_flag` | `historical?` (the sentence names a year before the season: an 1855 cast, an 1835 first staging), `foreign?` (abroad, Дягилевъ) — hints for whoever builds the production worksheets, never filters |
 
-Not read as credits: the plate's own `Рисунокъ художника X` (the Yearbook's illustrator), conductors, cast lists (`въ женскихъ костюмахъ — г-жи …`, `Костюмъ г. Іогансона въ этой роли`). Only `genre = 'Ballet'` review pages are read; the combined `All` pages (1890-91 SP, 1899-00 Moscow) are not yet.
+Inside a passage that already has a design credit, a painter's title alone is a cue (`Колонный залъ дворца—художника Г. И. Голова`, `исполненныя гг. Головымъ`; added 2026-10-26, +31 rows). Not read as credits: the plate's own `Рисунокъ художника X` (the Yearbook's illustrator), conductors, cast lists (`въ женскихъ костюмахъ — г-жи …`, `Костюмъ г. Іогансона въ этой роли`). Only `genre = 'Ballet'` review pages are read; the combined `All` pages (1890-91 SP, 1899-00 Moscow) are not yet.
 
 Measured 2026-10-26 (checked by Claude, RG has not read these): on 198 hand-read credits from 62 passages (known_issues.md #159), 194 found, all 194 with the right person, 192 with the right work (the other 2 correctly have none). Precision on random rows from unread passages: 82% and 85% on the first two draws (each followed by fixes), 59/60 on the last.

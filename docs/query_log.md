@@ -20523,3 +20523,27 @@ select block_id, season, city, printed_folio, performer_surface, work_surface fr
 ```
 
 Result: only research.review_assertion differs: -20 rows (the 19 listed 2026-10-26 + 2268, «— машиниста Н. А. Бергера», 1897-98 SP f. 269), +0. Production after apply = tested copy on all 52 tables; 3,159 -> 3,139. sqlite: review_assertion 3,139, review_solo 96, review_credit 2,414.
+
+## 2026-10-26 — Reader fix prototype (title words as credit cues inside design lists): effect on review_credit
+
+```sql
+-- prototype build_review_credits.py on a copy (outputs/reviews/reader_fix_test); per-row content diff vs production
+select r.block_id, r.char_start, r.role_category, coalesce(r.work_id,''), r.name_surface, r.season, r.city,
+       coalesce(p.display_name,''), r.link_method
+ from research.review_credit r left join research.person p on p.person_id::varchar = r.person_id;
+select min(season), max(season), string_agg(distinct cast(heading_path as varchar), ' | ')
+ from research.person p join research.person_appearance pa using(person_id)
+ where display_name in ('Бочаровъ 1-й, Михаилъ Ильичъ','Бочаровъ, Михаилъ Михайловичъ','Егоровъ, Ѳедоровичъ Егоровичъ','Лупановъ, Алексѣй Родіоновичъ');
+```
+
+Result: first draft +61 / -1, of which 30 were the plate's «Рисунокъ художника X» lines (then excluded). Final: +31 rows (scenery 30, costume_design 1; 22 with a person), -1 (1893-94 SP f. 232 «академикомъ М. И. Бочаровымъ написана новая декорація», which was a wrong ballet_by row), 0 existing rows changed person; hand sample still 194/198. Roster: Бочаровъ 1-й М. И. SP Декораторы 1890-91..1894-95; Бочаровъ М. М. SP Помощники декораторовъ 1890-91..1906-07; Егоровъ Ѳ. Е. Moscow Малый assistant 1890-91 only (so not the 1896-97 SP «Егоровымъ»: a ±3-season window now applies to other-city department matches).
+
+
+## 2026-10-26 — Reader fix applied to production: check
+
+```sql
+-- per-table content diff (candidate-id lists and page-list order ignored): production vs tested copy, production vs backup
+select count(*) from review_credit; select count(*) from review_assertion; select count(*) from person;  -- sqlite
+```
+
+Result: production = tested copy on all tables; only research.review_credit differs from the backup; review_credit CSV byte-identical to the tested one. sqlite: review_credit 2,444, review_assertion 3,139, person 2,645.

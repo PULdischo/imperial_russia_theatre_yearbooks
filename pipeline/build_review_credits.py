@@ -108,7 +108,12 @@ CUES = [
     (r"освѣщені\w*", "lighting"),
     (r"(?<![а-яѣ])парик\w*", "wigs"),
     (r"(?<![а-яѣ])обув\w*", "footwear"),
-    (r"(?<![а-яѣ])раб\.|(?<![а-яѣ])работы(?![а-яѣ])|(?<![а-яѣ])написан[аыо]?(?![а-яѣ])", "work-of"),
+    (r"(?<![а-яѣ])раб\.|(?<![а-яѣ])работ[ыѣ](?![а-яѣ])|(?<![а-яѣ])написан[аыо]?(?![а-яѣ])", "work-of"),
+    # inside a list of design credits the title alone carries the credit:
+    # `Колонный залъ дворца—художника Г. И. Голова`, `декораціи по эскизамъ …
+    # Коровина, исполненныя гг. Головымъ и барономъ Клодтомъ` (2026-10-26)
+    (r"(?<![а-яѣ])(?:художник(?:а|омъ|ами|овъ)|академик(?:а|омъ)|декоратор(?:а|омъ))(?![а-яѣ])|"
+     r"(?<![а-яѣ])исполненн(?:ыя|ые|ая|ый|ою|ымъ)(?=\s+(?:гг?\.|г-|г-ми))", "work-of"),
     (r"(?<![а-яѣ])балет(?:ъ|а)\s+" + QUOTED, "ballet-by"),
     (r"(?<![а-яѣ])балетъ-[а-яѣ]+(?-i:(?=\s+(?:(?:князя|графа|барона|г\.|гг\.)\s+)?(?:[" + UC + r"]\.\s*)*[" + UC + r"][" + LC + r"]{2,}))", "ballet-by"),
     (r"(?<![а-яѣ])бал\.|(?<![а-яѣ])балет(?:ъ|а)(?-i:(?=\s+(?:(?:князя|графа|барона|г\.|гг\.)\s+)?(?:[" + UC + r"]\.\s*)*[" + UC + r"][" + LC + r"]{2,}))",
@@ -181,7 +186,8 @@ PART_WORDS = re.compile(r"картин|дѣйств|актъ|акт\.|проло
 GAP_FREE = re.compile(r"хъ|ми|ти|мъ|съ|въ|изъ|дѣйстві\w*|картин\w*|акт\w*|прологом\w*|эпилогом\w*|"
                       r"апоѳеоз\w*|балетмейстер\w*|художник\w*|академик\w*|скульптор\w*|главн\w*|"
                       r"солист\w*|штатн\w*|декоратор\w*|профессор\w*|князя|графа|барона|мастер\w*")
-NAME_JOIN = re.compile(r"[\s,]*(?:и|гг?" + DOT + r"|г-жи|г-жа|г-нъ|г-ну|г-жей)?[\s,]*")
+NAME_JOIN = re.compile(r"[\s,]*(?:и|гг?" + DOT + r"|г-жи|г-жа|г-нъ|г-ну|г-жей)?[\s,]*"
+                       r"(?:(?:барон\w*|бар" + DOT + r"|князем\w*|граф\w*)\s+)?")
 
 
 def mask(body: str) -> str:
@@ -300,6 +306,8 @@ def main() -> None:
         WHERE pc.person_id IS NOT NULL""").fetchall():
         list_credit[str(wid)].append((str(pid), role))
         list_roles_of[str(pid)].add(role)
+    span = {str(r[0]): (r[1], r[2]) for r in con.execute(
+        "SELECT person_id, first_attested_season, last_attested_season FROM research.person").fetchall()}
     dept: dict[str, str] = collections.defaultdict(str)
     for pid, hp in con.execute("""
         SELECT person_id, string_agg(DISTINCT CAST(heading_path AS VARCHAR), ' || ')
@@ -319,7 +327,7 @@ def main() -> None:
     stats = collections.Counter()
 
     def resolve(name: str, initials: str, mention, role: str, work_id: str,
-                city: str = "") -> tuple[str, int, str, str]:
+                city: str = "", season: str = "") -> tuple[str, int, str, str]:
         """(person_id, candidates_n, candidate_ids, link_method)."""
         last = name.split()[-1]
         keys = {key_of(name), key_of(last), key_of(name.replace(" ", "-")), key_of(name).replace("-", "").replace(" ", "")}
@@ -356,6 +364,12 @@ def main() -> None:
                 if len(pick) == 1:
                     return pick[0], len(cands), cand_ids, how
         pool = by_initials(cands)
+
+        def near_season(p: str) -> bool:
+            sp = span.get(p)
+            yy, a0, a1 = season_years(season or ""), season_years(sp[0] or "") if sp else None, \
+                season_years(sp[1] or "") if sp else None
+            return bool(yy and a0 and a1 and a0[0] - 3 <= yy[0] <= a1[0] + 3)
         # a printed first name (`Маріусомъ Петипа`) chooses among the family
         toks = name.split()
         if len(toks) >= 2:
@@ -379,7 +393,9 @@ def main() -> None:
                 return staff[0], len(cands), cand_ids, "department"
             # 1903-04 Moscow «Баядерка» had «декораціи работы художниковъ … С.-Петербургскихъ
             # театровъ»: staff of the other city do work across, so they are kept, flagged
-            staff = sorted({p for p in pool if rx.search(dept.get(p, ""))})
+            # ... but only someone on the staff around that season: a Moscow
+            # assistant of 1890-91 is not `художниками … Егоровымъ` in 1896-97
+            staff = sorted({p for p in pool if rx.search(dept.get(p, "")) and near_season(p)})
             if len(staff) == 1:
                 return staff[0], len(cands), cand_ids, "department-other-city"
         # 4. the matcher's own link
@@ -535,7 +551,7 @@ def main() -> None:
             for role in sorted(rs):
                 for wsurf, wid in work_rows:
                     for n in names:
-                        pid, cn, cids, how = resolve(n[2], n[3], n[4], role, wid, pg["city"])
+                        pid, cn, cids, how = resolve(n[2], n[3], n[4], role, wid, pg["city"], pg["season"])
                         out.append({**base, "char_start": n[0], "work_surface": wsurf, "work_id": wid,
                                     "role_category": role, "name_surface": n[2], "initials": n[3],
                                     "person_id": pid, "person_candidates_n": cn,
@@ -558,6 +574,10 @@ def main() -> None:
             # `Костюмъ г. Іогансона въ этой роли`: the costume a dancer wore
             if cu[2] == "costumes" and re.fullmatch(r"костюм(?:ъ|а|ѣ|омъ)", body[cu[0]:cu[1]], re.I) \
                     and not re.match(r"\s+(?:работы|по\s+рисунк|по\s+эскиз)", body[cu[1]:cu[1] + 16], re.I):
+                continue
+            # the plate's own `Рисунокъ художника К. К. Первухина` / `Оригинальный
+            # рисунокъ художника П. Б. Ламбина`: the Yearbook's illustrator
+            if cu[2] == "work-of" and re.search(r"рисун(?:окъ|ки)\s+$", body[max(0, cu[0] - 12):cu[0]], re.I):
                 continue
             # dancers `въ женскихъ костюмахъ`
             if cu[2] == "costumes" and re.search(r"(?<![а-яѣ])въ\s+[" + LC + r"]+\s+$", body[:cu[0]]):
