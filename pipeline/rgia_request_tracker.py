@@ -15,6 +15,7 @@ Usage:
     python pipeline/rgia_request_tracker.py requested --batch 1 --date 2026-09-22
     python pipeline/rgia_request_tracker.py received --dela 616,1309 --date 2026-10-05
     python pipeline/rgia_request_tracker.py note --dela 616 --text "not held"
+    python pipeline/rgia_request_tracker.py note --dela 159 --replace --text "..."
 """
 from __future__ import annotations
 
@@ -84,6 +85,8 @@ def main():
     for name in ("assign", "requested", "received", "note"):
         s = sub.add_parser(name)
         s.add_argument("--batch"); s.add_argument("--dela"); s.add_argument("--date"); s.add_argument("--text")
+        s.add_argument("--replace", action="store_true",
+                       help="note: overwrite instead of appending")
     a = ap.parse_args()
     rows, cols = load()
 
@@ -102,8 +105,11 @@ def main():
         print(f"marked {len(sel)} дела received on {a.date}")
     elif a.cmd == "note":
         for r in pick(rows, a.dela):
-            r["notes"] = (r["notes"] + " | " + a.text).strip(" |")
-        print("note added")
+            if a.replace:                     # collapse a note that has accreted
+                r["notes"] = a.text
+            else:
+                r["notes"] = (r["notes"] + " | " + a.text).strip(" |")
+        print("note replaced" if a.replace else "note added")
     save(rows, cols); status(rows)
 
 
