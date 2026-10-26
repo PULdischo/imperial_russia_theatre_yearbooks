@@ -20547,3 +20547,31 @@ select count(*) from review_credit; select count(*) from review_assertion; selec
 ```
 
 Result: production = tested copy on all tables; only research.review_credit differs from the backup; review_credit CSV byte-identical to the tested one. sqlite: review_credit 2,444, review_assertion 3,139, person 2,645.
+
+## 2026-10-26 — «академикомъ Бочаровымъ», 1896-97 SP f. 234 (Млада): which Бочаровъ
+
+```sql
+select page_id, block_id, char_start, printed_phrase from research.review_credit
+ where season = '1896-97' and city = 'SP' and name_surface like 'Бочаров%';
+select season, cast(heading_path as varchar), rank, title, tenure_note_text
+ from research.person_appearance pa join research.person p using(person_id)
+ where p.display_name like 'Бочаровъ 1-й, Михаилъ%' or p.display_name = 'Бочаровъ, Михаилъ Михайловичъ' order by p.display_name, season;
+select season, city, printed_folio, name_surface, role_category, printed_phrase from research.review_credit where name_surface like 'Бочаров%' order by season;
+```
+
+Result: Бочаровъ 1-й, Михаилъ Ильичъ: SP Декораторы 1890-91..1894-95, rank «академикъ», «(съ 1 іюня 1864 г.). † 13 іюля 1895 г.»; Бочаровъ, Михаилъ Михайловичъ: SP Помощники декораторовъ 1890-91..1906-07, no rank. Review credits: 12 «академика/академикомъ М. И. Бочарова» 1891-92..1894-95, plus the 1896-97 row (linked to М. М.). Scan (Claude), f. 234: the sentence belongs to the FIRST production, «Первая постановка … 2-го декабря 1879 года … Декораціи были написаны: профессоромъ Шишковымъ, академикомъ Бочаровымъ и художниками Вагнеромъ, Егоровымъ и Лупановымъ»; the next paragraph says the 1896 revival painted no new decor and reused the 1892 opera «Млада» decor «кисти нынѣ уже умершихъ академика М. И. Бочарова …» (continues f. 235).
+
+
+## 2026-10-26 — Бочаровъ re-link and Млада 1879 flags: test, production check; historical dates read as season dates
+
+```sql
+select person_id from research.person where display_name = 'Бочаровъ 1-й, Михаилъ Ильичъ';
+select mention_id, char_start, surface, entity_id, link_method from entities.review_mention
+ where block_id = 'review_1896-97_SP_ballet_p004__b004' and mention_type = 'person' and char_start between 820 and 960;
+select r.name_surface, p.display_name, r.link_method, r.context_flag, r.date_undate from research.review_credit r
+ left join research.person p on p.person_id::varchar = r.person_id where block_id = 'review_1896-97_SP_ballet_p004__b004';
+-- Python: credits whose nearest prior «D-го месяца YYYY» in the block has a year outside the season
+select block_id, char_start, season, date_undate from research.review_credit where date_undate is not null;
+```
+
+Result: Бочаровъ 1-й = 966f9b77…; the mention (6915) was 2f7128a3… (М. М.). After: mention scan-verified -> М. И.; the five credits 510-514 `historical`, date blank. Test vs production: review_mention 1 row, review_credit 5 rows, nothing else; production = tested copy afterwards. 25 credits corpus-wide dated from a historical printed year (1893-94 «15-го сентября 1844», «4-го февраля 1849»; 1896-97 «19-го января 1849», «2-го декабря 1879» …).

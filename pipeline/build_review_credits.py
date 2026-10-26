@@ -53,7 +53,9 @@ performers.
 `context_flag` marks credits a reader must weigh before attaching them to the
 season's production: `historical?` (the sentence names a year before the
 season: an 1855 cast, a first staging in 1835) and `foreign?` (abroad, the
-Дягилевъ company). They are hints, never filters.
+Дягилевъ company). They are hints, never filters. `historical` without the
+question mark is a curated flag, read on the scan
+(docs/eval/review_credit_flags.csv).
 
 Usage:
     uv run python pipeline/build_review_credits.py \
@@ -180,6 +182,7 @@ CLAUSE_END = re.compile(r"[;\n]|\.(?=\s+[" + UC + r"0-9«„])|\.\s*$")
 YEAR = re.compile(r"(?<!\d)(1[5-9]\d\d)(?!\d)")
 FOREIGN = re.compile(r"за\s+границ\w*|въ\s+Париж\w*|въ\s+Лондон\w*|въ\s+Милан\w*|въ\s+Вѣн\w*|"
                      r"въ\s+Берлин\w*|Дягилев\w*|заграниц\w*", re.I)
+FLAGS = Path("docs/eval/review_credit_flags.csv")
 PART_WORDS = re.compile(r"картин|дѣйств|актъ|акт\.|прологъ|пролог|апоѳеоз|сцена|«|„", re.I)
 # words that do not count towards the cue-to-name distance: titles and the
 # act/scene count of a title line (`въ 4-хъ дѣйствіяхъ и 7-ми картинахъ`)
@@ -793,6 +796,36 @@ def main() -> None:
             uniq.append(r)
     out = sorted(uniq, key=lambda r: (r["page_id"], r["block_id"], int(r["char_start"]),
                                       r["role_category"], r["work_id"]))
+    # Curated context flags (docs/eval/review_credit_flags.csv): a credit read
+    # on the scan as belonging to an older or foreign staging, which the
+    # sentence-level `historical?` hint missed -- the year is in an earlier
+    # sentence (1896-97 SP f. 234: the 1879 «Млада» scenery). Keyed by block,
+    # name as printed and its occurrence there; every row must find its credit.
+    if FLAGS.exists():
+        starts: dict[tuple[str, str], list[int]] = collections.defaultdict(list)
+        for r in out:
+            k = (r["block_id"], r["name_surface"])
+            if int(r["char_start"]) not in starts[k]:
+                starts[k].append(int(r["char_start"]))
+        for k in starts:
+            starts[k].sort()
+        missing = []
+        for fl in csv.DictReader(open(FLAGS, encoding="utf-8")):
+            k = (fl["block_id"], fl["name_surface"])
+            occ = int(fl["occurrence"])
+            if occ >= len(starts.get(k, [])):
+                missing.append(k)
+                continue
+            at = starts[k][occ]
+            for r in out:
+                if (r["block_id"], r["name_surface"]) == k and int(r["char_start"]) == at:
+                    r["context_flag"] = fl["context_flag"]
+                    # an older staging's credit is not dated to this season (the
+                    # date reader gave the 1879 «Млада» premiere 1896-12-02)
+                    if fl["context_flag"] == "historical":
+                        r["date_undate"] = ""
+        if missing:
+            raise SystemExit(f"{FLAGS}: {len(missing)} row(s) match no credit: {missing[:5]}")
     for i, r in enumerate(out, 1):
         r["credit_id"] = i
     cols = ["credit_id", "page_id", "block_id", "block_type", "char_start", "season", "city",
