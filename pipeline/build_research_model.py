@@ -376,6 +376,11 @@ RESEARCH_TITLE_CORRECTIONS = {
     "Шоиеніана": ("Шопеніана",
                   "genuine print typo (и for п); Fokine's ballet \"Chopiniana\", "
                   "Mariinsky, premiered 1907 -- no ballet named \"Шоиеніана\" exists"),
+    "Ѳемида и Пелей": ("Ѳетида и Пелей",
+                       "genuine print slip (Ѳемида, Themis, for Ѳетида, Thetis), Маріинскій 8 Apr "
+                       "1909, repertoire_1908-09_p047 (printed p. 48), scan-read by Claude 2026-10-26; "
+                       "the 1908-09 productions list and Season Review both print «Ѳетида и Пелей» "
+                       "(Petipa, music Delibes and Minkus); RG ruled it a print slip 2026-10-26"),
 }
 
 
@@ -573,7 +578,12 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
     matched = collections.defaultdict(collections.Counter)
     for season, city, _d, title, _note, _eid, wid, parent in ballet_list_matches(con):
         w = str(parent or wid)
-        matched[(season, city, title)][excerpt_parent.get(w) or w] += 1
+        # An act excerpt counts toward its whole ballet's list entry, but an
+        # excerpt the list prints under its OWN title stays itself: «Оживленный
+        # садъ» is Корсаръ's Le Jardin animé given on its own, a separate
+        # version with its own list entries (RG, 2026-10-26).
+        up = excerpt_parent.get(w)
+        matched[(season, city, title)][w if up and norm(titles.get(w) or "") == norm(title) else (up or w)] += 1
     entries = con.execute("""SELECT production_entry_id, season, city, title FROM raw.production_entry""").fetchall()
     prod_work, best = [], {}
     for pid, season, city, title in entries:
@@ -1323,9 +1333,22 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             excerpt_of_work_id UUID,
             excerpt_note VARCHAR,
             genre_source VARCHAR,
-            genre_note VARCHAR
+            genre_note VARCHAR,
+            title_note VARCHAR,
+            work_source VARCHAR,
+            source_note VARCHAR
         )
     """)
+    # work_source (RG, 2026-10-26): 'repertoire' for every work the Repertoire
+    # prints; 'review' for a work only the Season Reviews name (Фокинъ's
+    # «Papillons» after 1910-11, Perrot's ballet «Фаустъ» ...), from
+    # entities.review_work (pipeline/build_review_works.py). Review works have
+    # appearance_count 0 and no performances. source_note: where the review names it.
+    # title_note (RG, 2026-10-26: "I want researchers to understand any decisions
+    # I made"): why the title shown differs from what the Repertoire printed --
+    # a RESEARCH_TITLE_CORRECTIONS reason, on the corrected work itself or, when
+    # the misprinted row was merged into an existing work (Шоиеніана ->
+    # Шопеніана), on the surviving work with the printed form named.
     # research.work had parent_genre / parent_genre_note until 2026-10-13, when RG
     # dropped them ("we don't seem to need it"): art_form and item_kind on
     # research.performance say the same and more. The rule behind it is kept, as
@@ -1410,12 +1433,30 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                w.excerpt_note,
                CASE WHEN g.genre IS NOT NULL THEN 'research_rule'
                     WHEN w.canonical_genre IS NOT NULL THEN 'printed' END AS genre_source,
-               g.note AS genre_note
+               g.note AS genre_note,
+               coalesce(
+                   CASE WHEN tc.note IS NOT NULL THEN
+                       'printed «' || w.canonical_title || '», shown as «' || tc.corrected_title || '»: ' || tc.note END,
+                   (SELECT string_agg('printed «' || mw.canonical_title || '» (merged here): ' || tcm.note, '; ')
+                    FROM work_merge m JOIN entities.work mw ON mw.work_id = m.from_id
+                    JOIN title_correction tcm ON tcm.verbatim_title = mw.canonical_title
+                    WHERE m.to_id = w.work_id)) AS title_note,
+               'repertoire' AS work_source, NULL AS source_note
         FROM entities.work w
         LEFT JOIN genre_rule g ON regexp_matches(w.canonical_title, g.pattern)
         LEFT JOIN title_correction tc ON tc.verbatim_title = w.canonical_title
         WHERE w.work_id NOT IN (SELECT from_id FROM work_merge)
     """)
+    has_review_works = con.execute("""SELECT count(*) FROM information_schema.tables
+        WHERE table_schema = 'entities' AND table_name = 'review_work'""").fetchone()[0] > 0
+    if has_review_works:
+        con.execute("""
+            INSERT INTO research.work
+            SELECT rw.work_id, rw.canonical_title, rw.canonical_genre, 0, NULL, NULL,
+                   'review', 'work kind: ' || rw.work_kind || ' (named in the Season Reviews, not in the Repertoire)',
+                   NULL, 'review', rw.evidence
+            FROM entities.review_work rw
+        """)
     con.execute("""
         CREATE OR REPLACE TEMP TABLE work_ballet AS
         SELECT pg.work_id, any_value(pg.note) AS note
@@ -1724,7 +1765,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                    CASE WHEN s.genre IS NOT NULL THEN 'research_rule' END,
                    CASE WHEN s.genre IS NOT NULL THEN
                        'genre assigned per performance (' || count(*) || ' of ' || w.appearance_count ||
-                       ' printings of this title): pipeline/entity_curation/research_performance_genre.csv' END
+                       ' printings of this title): pipeline/entity_curation/research_performance_genre.csv' END,
+                   any_value(w.title_note), 'repertoire', NULL
             FROM perf_split s JOIN research.work w ON w.work_id = s.base_work_id
             GROUP BY s.split_work_id, w.canonical_title, s.genre, s.parent_genre, w.appearance_count
         """)

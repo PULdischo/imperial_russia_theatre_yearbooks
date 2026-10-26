@@ -20204,3 +20204,187 @@ Result: see the session reply (numbers printed by this query).
 ## 2026-10-23 — Review work-linking progress check: the numbers (the previous entry pointed to the session reply)
 
 Result of the queries in the previous entry: work mentions 3,737, linked 2,837 to 150 distinct works; unlinked by method: quoted-unresolved 707, bare 182, quoted-ambiguous 11; review_assertion 3,157, with a work 1,904.
+
+## 2026-10-26 — Resume review work linking: production unchanged since 2026-10-23?
+
+```sql
+-- every table of production vs the last tested copy (scratch L/db.duckdb), candidate lists ignored
+select count(*), count(nullif(entity_id,'')), count(distinct nullif(entity_id,'')) from entities.review_mention where mention_type='work';
+select split_part(link_method,'+',1), count(*), count(distinct surface) from entities.review_mention where mention_type='work' and coalesce(entity_id,'')='' group by 1;
+```
+
+Result: production identical to the tested copy on all 50 tables. Work mentions 3,737, linked 2,837 to 150 works; unlinked: quoted-unresolved 707 (562 distinct forms), bare 182 (53 forms), quoted-ambiguous 11 (7 forms).
+
+## 2026-10-26 — Worklist of unlinked quoted review titles (RG: "yes, build the worklist"): export for classification
+
+```sql
+select m.mention_id, m.page_id, p.season, p.city, p.printed_folio, m.block_id, b.block_index, m.char_start, m.char_end, m.surface, m.link_method, b.text
+from entities.review_mention m join raw.review_block b using(block_id) join raw.review_page p on p.page_id=m.page_id
+where m.mention_type='work' and coalesce(m.entity_id,'')='' and m.link_method like 'quoted%';
+-- linked quoted works per page (context); research.work non-excerpt list with is_ballet = any performance with discipline 'ballet'
+```
+
+Result: 718 mentions (707 quoted-unresolved + 11 quoted-ambiguous), 569 forms; 2,653 non-excerpt works, 108 with ballet performances. Split page-aligned into 4 batches (181/178/181/178; 1890-91..1893-94, ..1896-97, 1897-98..1903-04, ..1912-13) for 4 helper agents (classification: EXISTING_WORK / SCENE / DANCE_NUMBER / WORK_NOT_IN_LIST / NON_WORK / UNCLEAR, with parent ballet). Scratch only; nothing applied.
+
+## 2026-10-26 — Worklist of unlinked quoted review titles: merged, checked, written
+
+```sql
+-- 4 helper-agent outputs merged on mention_id (all 718 covered, all work_ids valid); Claude's check: stratified random sample of 32
+-- (8 dance, 7 scene, 7 existing work, 6 non-work, 4 work-not-in-list) + every flagged item, each read in its block text/caption:
+select page_id, block_id, char_start from entities.review_mention where mention_id = ?;
+select text, caption_text from raw.review_block where block_id = ?;
+```
+
+Result: docs/eval/review_unlinked_titles_worklist_2026-10-26.csv (718 rows; columns incl. category, work_id / parent_work_id, confidence, note, claude_check, needs_scan_check). DANCE_NUMBER 256 (207 forms; 242 with a parent ballet), NON_WORK 186 (152), SCENE 147 (117; all with a parent ballet), EXISTING_WORK 87 (62), WORK_NOT_IN_LIST 41 (33), UNCLEAR 1. Confidence high 639 / medium 76 / low 3. Sample: all 32 read as classified. Flagged: 6 need a scan check (Волшебное озеро; Аргенида caption; Апись / Апсисъ и Галатея; Ѳетида/«Ѳемида» и Пелей x2); work-identity questions for RG: «Le Jardin animé» … изъ балета «Корсаръ» vs the work Оживленный садъ; «Дочь Гудулы» (Горскій 1902) under Эсмеральда; Milon's 1855 «Донъ-Кихотъ или Свадьба Гамаша»; duplicates Эвника/Евника and Ѳемида/Ѳетида и Пелей. Found: quoted «маркитантки» (a dance in Щелкунчикъ, 1894-95 SP f. 199) auto-linked to the ballet Маркитантка. Many empty-context rows are picture captions (raw.review_block.caption_text). 228 EXISTING_WORK + SCENE rows ready (no scan flag, not low confidence).
+
+## 2026-10-26 — 226 worklist links: test and apply (RG: "yes, go ahead and link the 228")
+
+```sql
+-- per picked worklist row: occurrence = count(*) from entities.review_mention where block_id=? and surface=? and mention_type='work' and char_start<?
+-- copy rebuilt; every table diffed; mentions by (block_id,char_start,char_end,mention_type): old vs new link_method/entity;
+select count(*), count(nullif(entity_id,'')), count(distinct nullif(entity_id,'')) from entities.review_mention where mention_type='work';
+select count(work_id) from research.review_assertion;
+-- spiski check (scratch workcheck.py) before/after; production vs tested copy after applying
+```
+
+Result: 226 rows appended; diff = 218 quoted-unresolved + 8 quoted-ambiguous -> curated (new links), 8 earlier overrides relabelled scan-verified -> curated; 124 assertions, 12 solos changed. Work mentions linked 2,837 -> 3,063 (155 works); statements with a work 1,904 -> 1,978; spiski agree 852 -> 875, disagree 84 -> 82, missing 376 -> 356. Production = tested copy.
+
+## 2026-10-26 — Оживленный садъ / Корсаръ: evidence, excerpt link test and apply (RG: "keep it a separate production … linked to Corsaire"; "yes, go ahead")
+
+```sql
+select e.city, th.canonical_name, e.season, e.date_undate, p.verbatim_title, p.verbatim_genre, e.annotation from research.performance p join research.event e using(event_id) join research.work w using(work_id) left join research.theater th using(theater_id) where w.canonical_title in ('Оживленный садъ','Корсаръ') and w.excerpt_of_work_id is null;
+select season, city, list_title, description_text from research.production where work_id in (...);
+select w.canonical_title, x.canonical_title from research.work w left join research.work x on x.work_id=w.excerpt_of_work_id where w.canonical_title ilike '%оживлен%' or w.canonical_title ilike '%jardin%';
+select m.page_id, substr(b.text, ...) from entities.review_mention m join raw.review_block b using(block_id) join research.work w on w.work_id::varchar=m.entity_id where w.canonical_title='Оживленный садъ';
+-- copy: excerpt row + 1 work-mention override; first run rolled the 3 «Оживленный садъ» list entries up to Корсаръ and unlinked 6 declined review mentions -> two code fixes; final diff vs production; production vs tested copy after applying
+```
+
+Result: Оживленный садъ 4 performances (Маріинскій 2 Dec 1901 «3-й актъ бал.», 24 Feb 1902, 9 Dec 1907, 16 Nov 1908), lists 1901-02/1907-08/1908-09 «Балетъ М. И. Петипа, музыка Лео Делиба»; Корсаръ 71 performances, Moscow lists «музыка «Оживленнаго сада» — Делиба»; existing excerpt row «Корсаръ (Le jardin animé)». Final diff: entities.work/research.work 1 row (excerpt_of -> Корсаръ), research.production_work 1 row (Корсаръ 1908-09 e006 3 -> 4), entities.review_mention 1 row (1147 -> Оживленный садъ). Production = tested copy.
+
+## 2026-10-26 — «Дочь Гудулы» / Эсмеральда: evidence and link (RG: "yes, link it and add the note")
+
+```sql
+select performance_title, genre, count(*) from raw.event_entry_performance where performance_title ilike '%гудул%' group by 1,2;
+select season, city, list_title, description_text from research.production where list_title ilike '%гудул%' or description_text ilike '%гудул%' or (list_title ilike 'Эсмеральд%' and city='Moscow');
+select e.season, e.city, p.verbatim_title, count(*) from research.performance p join research.event e using(event_id) join research.work w using(work_id) where w.canonical_title='Эсмеральда' group by all;
+select page_id, coalesce(text,caption_text) from raw.review_block where coalesce(text,'')||coalesce(caption_text,'') ilike '%гудул%';
+-- copy with 1 work-mention override; diff; production vs tested copy after applying
+```
+
+Result: no Repertoire title with «Гудул»; Moscow lists 1902-03..1904-05 «Эсмеральда (Дочь Гудулы). Мимодрама съ танцами въ 4 д. и 9 карт., либретто … Горскимъ, музыка А. Ю. Симона» (1890-98: «соч. Ж. Перро, музыка Ц. Пуни»); Эсмеральда performances Moscow 1902-03 7, 1903-04 1, 1904-05 1, 1905-06 4 printed «Эсмеральда»; reviews 1902-03..1905-06 «„Эсмеральда“ (Дочь Гудулы)», first given 24 Nov 1902. Diff = mention 22621 -> Эсмеральда (d2829c0f…); production = tested copy.
+
+## 2026-10-26 — Эвника / Евника and Ѳемида / Ѳетида и Пелей: evidence; 1906-07 Эвника review mentions
+
+```sql
+select work_id, canonical_genre, appearance_count, excerpt_of_work_id from research.work where canonical_title in ('Эвника','Евника','Ѳемида и Пелей','Ѳетида и Пелей','Приключенія Пелея');
+select e.city, th.canonical_name, e.season, e.date_undate, p.verbatim_title, p.verbatim_genre, ee.page_id, e.printed_page_number from research.performance p join research.event e using(event_id) ... where w.canonical_title=?;
+select season, city, list_title, description_text from research.production where list_title=?;
+select m.season, w.canonical_title, m.link_method, count(*), string_agg(distinct m.surface,' | ') from entities.review_mention m join research.work w on w.work_id::varchar=m.entity_id where w.canonical_title in ('Эвника','Евника') group by all;
+select a.season, w.canonical_title, count(*) from research.review_assertion a join research.work w using(work_id) where w.canonical_title in ('Эвника','Евника') group by all;
+select e.date_undate, th.canonical_name, p.verbatim_title from research.performance p join research.event e using(event_id) left join research.theater th using(theater_id) where e.season='1906-07' and p.verbatim_title ilike '%вник%';
+```
+
+Result: Эвника 8 (Маріинскій 1909-10 3, 1910-11 5; lists «Эвника»); Евника 5 (16 Feb 1908; 1908-09 4; list 1908-09 «Евника»); same description. Ѳемида и Пелей: 1 performance, Маріинскій 8 Apr 1909 (repertoire_1908-09_p047, printed p. 48); list 1908-09 «Ѳетида и Пелей. Миѳологическій балетъ въ 1 д., соч. М. Петипа, музыка Л. Делиба и Л. Минкуса»; no work «Ѳетида и Пелей». Review mentions: 1906-07 Эвника quoted 1 + bare 13, Евника bare 2; 1908-09 Евника 3; 1910-11 Эвника 3; 1912-13 Эвника 2; statements 1906-07 Эвника 5. No 1906-07 Repertoire performance titled …вник….
+
+## 2026-10-26 — RG: are Эвника / Евника spellings separated by season?
+
+```sql
+-- every «[ЕЭ]вник…» token in raw.review_block text+caption_text, by season and city (regex in Python), with the first context
+select e.season, p.verbatim_title, count(*) from research.performance p join research.event e using(event_id) where p.verbatim_title ilike '_вник%' group by 1,2;
+select s.season, pc.label, count(*) from raw.person_entry_credit pc join raw.person_entry pe using(entry_id) join raw.source_pages s on s.page_id=pe.page_id where pc.label ilike '_вник%' group by 1,2;
+```
+
+Result: Repertoire: Евника 1907-08 1, 1908-09 4; Эвника 1909-10 3, 1910-11 5. Spiski credit labels: Евника 1908-09 6; Эвника 1909-10 7, 1910-11 10. Productions lists: Евника 1908-09; Эвника 1909-10, 1910-11. Reviews (SP): 1906-07 Э 15 + Е 3 (both in the same review; contexts printed in the session), 1908-09 Е 4, 1910-11 Э 3, 1912-13 Э 2.
+
+## 2026-10-26 — Scan check: the three «Евника» forms in the 1906-07 SP review (RG: "check those three on the scan")
+
+No query; full-resolution images of pdf/Reviews_Season/1906-07_SeasonReview_BalletSP.pdf pages 7 (f. 154) and 9 (f. 156), cropped. Result: all three printed with Е as transcribed (f. 154 «Евника—г-жа Кшесинская»; f. 156 «убѣждаетъ Евнику», «Евника бросается»), beside «Эвника» in the same passages. f. 154 also shows the occasion: «Въ субботу, 10-го февраля, состоялся «спектакль» въ пользу … Общества защиты дѣтей отъ жестокаго обращенія».
+
+## 2026-10-26 — «Ѳемида и Пелей» scan check and research-layer correction (RG: "it's a print slip, make the correction in the research layer, but keep a note")
+
+Scan: pdf/RepertoireTables/ForUpload_1908-09_Repertoire.pdf page index 47 (printed p. 48), Маріинскій, 8 Среда: «Ѳемида и Пелей, бал.» (read by Claude at full resolution).
+
+```sql
+select work_id, canonical_title, canonical_genre, appearance_count from research.work where canonical_title like '_е_ида и Пелей';
+select p.verbatim_title from research.performance p join research.work w using(work_id) where w.canonical_title='Ѳетида и Пелей';
+select list_title, work_id from research.production where list_title like '%Пелей%';
+-- copy with the RESEARCH_TITLE_CORRECTIONS entry; every table diffed; production vs tested copy after applying
+```
+
+Result: research.work a502fe5e… «Ѳемида и Пелей» -> «Ѳетида и Пелей» (1 performance, verbatim_title stays «Ѳемида и Пелей»); list entry 1908-09 «Ѳетида и Пелей» already on that work; review mentions «Ѳетида и Пелей» and «Ѳетиды и Пелея» now linked; nothing else changed; production = tested copy.
+
+## 2026-10-26 — research.work.title_note added (RG: "let's add this"): test and apply
+
+```sql
+-- copy rebuilt with the new column; every table diffed; existing columns compared:
+select count(*) from (select work_id, canonical_title, canonical_genre, appearance_count, excerpt_of_work_id, excerpt_note, genre_source, genre_note from k.research.work
+  except select … from w.research.work);   -- both directions
+select count(*), count(title_note) from research.work;
+select canonical_title, title_note from work where title_note is not null;   -- sqlite
+```
+
+Result: existing columns identical (0/0 rows differ); 2,958 works, 2 with a title_note (Ѳетида и Пелей; Шопеніана); sqlite `work.title_note` present; production = tested copy.
+
+## 2026-10-26 — Worklist scan checks and three caption corrections (RG: "proceed with these"; "yes, make the three caption corrections")
+
+```sql
+select m.page_id, p.printed_folio, b.block_index, b.block_type, m.surface from entities.review_mention m join raw.review_page p using(page_id) join raw.review_block b using(block_id) where m.mention_id in (18806,10846,5530,5607);
+select block_id, coalesce(caption_text,text) from raw.review_block where page_id like ? and (coalesce(caption_text,'') like ? or coalesce(text,'') like ?);  -- Аргенида, Аккерта, Ушелье, Апись и Галатея, Апсисъ и Галатея
+-- copy of merged_full corrected; reviews rebuilt on a db copy; every table diffed; mentions diffed by position; production vs tested copy after applying
+```
+
+Result: scans (Claude): „Волшебное озеро“ in print (1903-04 SP f. 115); captions misread: «Аргенида», сц./дѣйствію/Аккерта (print «Арлекинада», бал./дѣйств./Аллегри), «Ушелье»/«Апись» (print «Ущелье»/«Ацисъ», 1895-96 f. 251), «Апсисъ» (print «Ацисъ», f. 253). After correction: raw.review_block 3 rows; mentions: Арлекинада +1, Ацисъ и Галатея +2 linked, Аллегри +1 (unlinked name); Аргенида/Апсисъ/Апись unresolved gone; assertions unchanged. Production = tested copy.
+
+## 2026-10-26 — «Волшебное озеро» (1903-04 SP f. 115): Кшесинская's credits, Волшебное зеркало performances
+
+```sql
+select s.season, pe.family_name, pe.first_name, pc.label, pc.role_name from raw.person_entry_credit pc join raw.person_entry pe using(entry_id) join raw.source_pages s on s.page_id=pe.page_id
+where pe.family_name like 'Кшесинская%' and pe.first_name like 'Матильд%' and s.season in ('1902-03','1903-04') and (pc.label ilike '%зеркал%' or pc.label ilike '%озер%');
+select e.date_undate, p.verbatim_title from research.performance p join research.event e using(event_id) join research.work w using(work_id) where w.canonical_title='Волшебное зеркало' and e.city='SP';
+select count(*) from raw.event_entry_performance where performance_title ilike '%олшебное озеро%';
+```
+
+Result: printed in the session reply.
+
+## 2026-10-26 — «Волшебное озеро» linked to Волшебное зеркало (RG: "yes, but I want it clear why I don't think it's Swan Lake")
+
+```sql
+select block_id, surface, char_start from entities.review_mention where page_id='review_1903-04_SP_ballet_p011' and surface='Волшебное озеро' and mention_type='work';
+select work_id from research.work where canonical_title='Волшебное зеркало' and canonical_genre ilike '%бал%' and excerpt_of_work_id is null;
+-- copy rebuilt with the override; every table diffed; production vs tested copy after applying
+```
+
+Result (with the earlier entry's queries): Кшесинская credited «Волшебное зеркало: принцесса» and «Лебединое озеро: Одетта/Одиллія» in 1902-03 and 1903-04; Волшебное зеркало at the Маріинскій 9 Feb 1903 and 28 Dec 1903; no Repertoire title «Волшебное озеро». Diff = that 1 mention -> Волшебное зеркало (4bba6fba…); production = tested copy.
+
+## 2026-10-26 — «Маркитантка» mentions checked; quoted «маркитантки» unlinked (RG: "yes, make that fix")
+
+```sql
+select m.page_id, p.printed_folio, m.surface, m.link_method, w.canonical_title, substr(coalesce(b.text,b.caption_text), greatest(1,m.char_start-160), 260)
+from entities.review_mention m join raw.review_block b using(block_id) join raw.review_page p on p.page_id=m.page_id left join research.work w on w.work_id::varchar=m.entity_id
+where m.mention_type='work' and lower(m.surface) like 'маркитант%';
+select e.season, e.city, count(*) from research.performance p join research.event e using(event_id) join research.work w using(work_id) where w.canonical_title='Маркитантка' group by 1,2;
+```
+
+Result: 11 mentions; 10 right (1900-01 f. 154 season list; ff. 186-191 the 4 Feb 1901 performance and the 1855/1861 history incl. the part Катти; 1901-02 f. 172); 1 wrong: 1894-95 SP f. 199 «маркитантки» = a dance in Щелкунчикъ. Маркитантка performances: SP 1900-01 1, 1901-02 1. After the override: only that mention changed; production = tested copy.
+
+## 2026-10-26 — Works not in the list (worklist step 4) and the «Ученики Допро» scan check
+
+```sql
+-- docs/eval/review_unlinked_titles_worklist_2026-10-26.csv, category WORK_NOT_IN_LIST, grouped by work_kind + surface
+select m.page_id, b.block_id, b.block_type, coalesce(b.caption_text,b.text) from entities.review_mention m join raw.review_block b using(block_id) where m.surface like 'Ученики Допро%';
+```
+
+Result: 41 mentions: ballet 21 (Papillons, Исламей x2 forms, Les préludes, Шехерезада x2 forms, Трильби, Роксана, Метеоръ, Фаустъ x2 forms, Мраморная красавица, Три пояса, Жавота или мексиканскіе разбойники, Les Caractères de la danse, Приключенія Пелея, Свадьба Гамаша, «Ученики Допро»); music 4; opera 2; other (literary/painting sources) 12. «Ученики Допро» = caption review_1899-00_SP_ballet_p018__b002 ««Ученики Допро», бал. М. Петипа. Camargo (1-жа Леньяни).»; scan (Claude, f. 102): «Ученики Дюпрэ», бал. М. Петипа. Camargo (г-жа Леньяни) -- transcription misread.
+
+## 2026-10-26 — Review-only works + «Ученики Дюпрэ» caption: test and apply (RG: "okay let's do this…"; "yes fix")
+
+```sql
+select canonical_title, canonical_genre from research.work where canonical_title in ('Моисей','Роксана','Трильби','Метеоръ','Исламей','Шехерезада','Papillons','Les préludes','Калифъ Багдадскій','Легенда','Три пояса','Приключенія Пелея','Мраморная красавица','Мессинская невѣста','Коронаціонная кантата','Свадьба Гамаша','Фаустъ','Карнавалъ');
+-- per worklist row: select block_id, surface, char_start from entities.review_mention where page_id=? and surface=? and mention_type='work' order by block_id, char_start
+-- copy: merged_full corrected, build_review_works -> build_research_model -> reviews -> datasette; every table diffed; old research.work columns compared;
+select work_source, count(*), sum(appearance_count) from research.work group by 1;
+select count(*) from research.performance p join research.work x using(work_id) where x.work_source='review';
+-- assertions old vs new work; production vs tested copy after applying
+```
+
+Result: existing collisions only Фаустъ (оп., драм. поэма) and Карнавалъ (дивертисментъ, пантомима-бал.). 29 mentions located uniquely and linked; research.work old columns identical, +20 rows work_source 'review', appearance_count 0, 0 performances; sqlite work_source repertoire 2,958 / review 20. Statements: 7 -> Фаустъ (5 right, 2 wrong: Казачій танецъ, Potpourri), 619 Маринета -> ambiguous-on-page; a caption carry-over rule tested (173 statements lost their work) and dropped. «Ученики Допро» caption -> «Ученики Дюпрэ», linked to Приказъ короля. Production = tested copy on all 51 tables.

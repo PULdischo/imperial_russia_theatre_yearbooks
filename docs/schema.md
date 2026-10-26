@@ -490,3 +490,20 @@ exists, prints that leaving date in that list, and is listed in every season `se
 | `decided` | who decided and when |
 
 Not yet in the Datasette export (`build_datasette.py` TABLES/SCHEMAS) -- add it there before the next publication.
+
+## `research.work.title_note` (added 2026-10-26)
+
+Why a work's title in the research layer differs from what the Repertoire printed. RG: "I want researchers to understand any decisions I made." Filled from `build_research_model.RESEARCH_TITLE_CORRECTIONS` (confirmed print slips corrected in the research layer only; raw and `research.performance.verbatim_title` keep the printed form):
+
+- on the corrected work itself: `printed «X», shown as «Y»: <reason>` (e.g. «Ѳемида и Пелей» -> «Ѳетида и Пелей»);
+- when the misprinted row was merged into an existing work: `printed «X» (merged here): <reason>` on the surviving work (e.g. «Шоиеніана» on Шопеніана).
+
+NULL for every other work. Published in `research_dataset.sqlite` (`work.title_note`). Spelling merges recorded as aliases (`pipeline/entity_curation/work_title_aliases.csv`) are not yet surfaced here; see known_issues.md #159.
+
+## Works known only from the Season Reviews — `research.work.work_source`, `source_note`, `entities.review_work` (added 2026-10-26)
+
+`research.work.work_source`: `repertoire` for every work the Repertoire prints; `review` for a ballet, opera or concert work that only the Season Reviews name (RG, 2026-10-26) — Фокинъ's «Papillons», «Исламей», «Les préludes», «Шехерезада» (after the Repertoire's last season), Perrot's ballet «Фаустъ», Milon's «Свадьба Гамаша», «Приключенія Пелея», «Трильби», «Роксана», Tchaikovsky's «Коронаціонная кантата», Schumann's «Карнавалъ» (the piano cycle), Rossini's «Моисей» … Review works have `appearance_count` 0 and no performances, so filter `work_source = 'repertoire'` when counting the repertoire. `source_note`: where the review names the work (season, city, folio, quoted words). `genre_source` is `review` and `genre_note` gives the kind (ballet / opera / music).
+
+Literary and artistic sources a review names («Quo vadis?», Andersen's «Свинопасъ», Léopold Robert's paintings) are NOT works here (RG: "leave the literary and artistic sources alone").
+
+Built by `pipeline/build_review_works.py` from the approved list `docs/eval/review_work_approved.csv` into `entities.review_work`; `build_research_model.py` adds them to `research.work`. Run order: `build_review_works.py` before `build_research_model.py`. Their review mentions link only through explicit rows in `docs/eval/review_work_mention_links.csv` (the matcher never matches them by title: a ballet «Фаустъ» must not capture Gounod's opera). A review-only work that is not a ballet never becomes the governing work of a cast statement (`build_review_assertions.py`).

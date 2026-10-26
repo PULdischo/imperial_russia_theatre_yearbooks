@@ -273,6 +273,8 @@ known_issues.md issue #119, not here.
 
 ## 1908-09 volume (Repertoire, added 2026-09-26, issue #93)
 
+- **Wrong word in a title, `repertoire_1908-09_p047` (p. 48), 8 Среда [April 1909], Маріинскій: "**Ѳемида** и Пелей, бал."** for "Ѳетида и Пелей" (added 2026-10-26). Ѳемида is Themis; the bride of Peleus is Ѳетида (Thetis). The same season's productions list prints "Ѳетида и Пелей. Миѳологическій балетъ въ 1 д., соч. М. Петипа, музыка Л. Делиба и Л. Минкуса", and the 1908-09 Season Review prints «Ѳетида и Пелей» twice. Scan-read by Claude on the full-resolution image; RG ruled it a print slip. Kept verbatim in raw and in `research.performance.verbatim_title`; the work is shown as "Ѳетида и Пелей" in the research layer only, via `build_research_model.RESEARCH_TITLE_CORRECTIONS` (as with Шоиеніана).
+
 Found during the new season's full scan-verification sweep. Items marked
 † were re-checked directly against the scan by the coordinating session,
 not only by the sweep agent; the rest were zoom-verified by the agent.
@@ -708,3 +710,7 @@ Each read twice on the scan (checking agent and a close zoom, 2026-09-28) and ke
 ## Repertoire, wrong work printed (RG ruling 2026-10-22, issue #157)
 
 - **`repertoire_1907-08_p003` (printed p. 79), Большой matinee 16 Sep 1907: «Карменъ, бал.»** -- the Season Review (Moscow ballet, folio 154) gives «Жизель» that day, one of its four dates. RG ruled it a misprint. Stored as printed; the research layer shows Жизель.
+
+## Season reviews, scan-confirmed 2026-10-26 -- probable slip in a title (stored as printed)
+
+- **1903-04 SP Season Review, f. 115 (Кшесинская's farewell benefit, her list of parts): „Волшебное озеро“** -- read by Claude on the full-resolution scan; RG ruled it a slip for «Волшебное зеркало», **not «Лебединое озеро» (Swan Lake)**: the same list already names „Лебединое озеро“ separately, two titles earlier, so this phrase is not a repeat of it. «Волшебное зеркало» is otherwise missing from her list, though the BalletArtists spiski credit her «Волшебное зеркало: принцесса» in 1902-03 and 1903-04 (Маріинскій 9 Feb and 28 Dec 1903); no work «Волшебное озеро» exists. Probably the compositor blended the two titles. Stored as printed; the review mention is linked to Волшебное зеркало via `docs/eval/review_work_mention_links.csv` with this reasoning.

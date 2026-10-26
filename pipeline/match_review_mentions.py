@@ -545,7 +545,9 @@ def build_lexicon(db: Path) -> Lexicon:
                case when exists (select 1 from research.performance p
                                  where p.work_id = w.work_id and p.discipline = 'ballet') then 'ballet' end,
                excerpt_of_work_id is not null
-        from research.work w where canonical_title is not null""").fetchall():
+        from research.work w where canonical_title is not null
+          -- review-only works link by explicit override rows, never by title
+          and coalesce(w.work_source, 'repertoire') <> 'review'""").fetchall():
         lex.work_meta[str(wid)] = {
             "title": title, "genre": genre, "parent": parent,
             # the stored flag OR the title's own shape
@@ -557,8 +559,9 @@ def build_lexicon(db: Path) -> Lexicon:
         # form made every bare title ambiguous against its own excerpts:
         # «Коппелія» came back with 5 candidates, 4 of them its own act records.
         forms = ({key_of(title).strip(" .,;:!?«»„“\"'")}
-                 if lex.work_meta[str(wid)]["is_excerpt"] else title_forms(title))
-        if not lex.work_meta[str(wid)]["is_excerpt"]:
+                 if lex.work_meta[str(wid)]["is_excerpt"] and excerpt_shaped(title)
+                 else title_forms(title))
+        if not lex.work_meta[str(wid)]["is_excerpt"] or not excerpt_shaped(title):
             quoted_titles.append((wid, title))
         lex.add(lex.work, forms, wid)
         for f in forms:
@@ -1022,7 +1025,8 @@ WORK_MENTION_LINKS = Path("docs/eval/review_work_mention_links.csv")
 
 
 def apply_mention_links(rows: list[dict], path: Path = MENTION_LINKS,
-                        mention_type: str = "person", id_col: str = "person_id") -> None:
+                        mention_type: str = "person", id_col: str = "person_id",
+                        method: str = "scan-verified") -> None:
     if not path.exists():
         return
     with open(path, encoding="utf-8") as f:
@@ -1043,13 +1047,13 @@ def apply_mention_links(rows: list[dict], path: Path = MENTION_LINKS,
             missing.append(key)
             continue
         m["entity_id"] = ln[id_col]
-        m["link_method"] = "scan-verified"
+        m["link_method"] = method
         m["link_confidence"] = "high" if ln[id_col] else "unlinked"
         m["rank_reason"] = str(path)
     if missing:
         raise SystemExit(f"{path}: {len(missing)} row(s) match no mention -- "
                          f"re-check the scan: {missing[:5]}")
-    print(f"  + {len(links)} scan-verified mention links ({path})")
+    print(f"  + {len(links)} {method} mention links ({path})")
 
 
 def initials_of(display: str) -> str:
@@ -1390,7 +1394,8 @@ def main() -> None:
                 unknowns.append(u)
 
     apply_mention_links(rows)
-    apply_mention_links(rows, WORK_MENTION_LINKS, "work", "work_id")
+    # RG's decisions and the checked worklist, not scan reads: labelled "curated"
+    apply_mention_links(rows, WORK_MENTION_LINKS, "work", "work_id", "curated")
 
     a.out_dir.mkdir(parents=True, exist_ok=True)
     mcols = ["mention_type", "season", "city", "page_id", "block_id",

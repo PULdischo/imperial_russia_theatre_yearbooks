@@ -398,6 +398,14 @@ def main() -> None:
     # so this recovers the first group and declines the rest rather than
     # attaching a cast to the wrong ballet. Provenance is recorded in
     # `work_source` either way.
+    # Works that never govern a cast statement (2026-10-26): a review-only work
+    # that is not a ballet -- Schumann's «Карнавалъ» named as the source of
+    # Фокинъ's ballet, Tchaikovsky's cantata -- since the cast on the stage
+    # belongs to a ballet, not to them.
+    non_governing = {str(w) for (w,) in con.execute("""
+        SELECT work_id FROM research.work
+        WHERE coalesce(work_source, 'repertoire') = 'review'
+          AND coalesce(canonical_genre, '') NOT ILIKE '%бал%'""").fetchall()}
     page_works: dict[str, list[tuple[int, str, str]]] = collections.defaultdict(list)
     for page_id, bidx, surface, eid in con.execute("""
             SELECT m.page_id, b.block_index, m.surface, m.entity_id
@@ -405,6 +413,8 @@ def main() -> None:
             JOIN raw.review_block b ON b.block_id = m.block_id
             WHERE m.mention_type = 'work' AND m.entity_id IS NOT NULL
             ORDER BY m.page_id, b.block_index, m.char_start""").fetchall():
+        if str(eid) in non_governing:
+            continue
         page_works[page_id].append((bidx, surface, str(eid)))
 
     out: list[dict] = []
@@ -438,7 +448,7 @@ def main() -> None:
         if not body:
             continue
         ms = mentions.get(block_id, [])
-        works_here = [m for m in ms if m[1] == "work"]
+        works_here = [m for m in ms if m[1] == "work" and str(m[5] or "") not in non_governing]
         # a date stated in this block governs the pairs that follow it
         dates = [(m.start(), int(m.group(1)), month_of(m.group(2)))
                  for m in DATE_RE.finditer(body)]
