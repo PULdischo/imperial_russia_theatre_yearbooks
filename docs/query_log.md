@@ -20903,3 +20903,176 @@ select count(*), count(curator_note), sum(role_category = 'ballet_by') from revi
 ```
 
 Result: before applying, every untouched table equalled the test copy and merged_full equalled the test's pre-correction copy. After: production = tested copy on every table; merged text and review_credit.csv byte-identical to the tested ones. sqlite review_credit 2,416 rows, 11 notes, 809 ballet_by.
+
+## 2026-10-26 — Roles of Кшесинская, Анна Павлова, Тамара Карсавина in «Волшебное зеркало»
+
+```sql
+select work_id, canonical_title, canonical_genre, appearance_count from research.work where canonical_title ilike '%зеркал%';
+```
+
+Result: 7 work rows; main one «Волшебное зеркало» (бал., 26 appearances) plus 6 excerpt titles.
+
+```sql
+select ra.season, ra.city, ra.printed_folio, ra.date_undate, ra.role_surface, ra.performer_surface, p.display_name, ra.link_method, ra.work_surface
+from research.review_assertion ra left join research.person p on p.person_id=ra.performer_person_id
+join research.work w on w.work_id=ra.work_id
+where w.canonical_title ilike '%зеркал%' order by ra.season, ra.date_undate, ra.role_surface;
+```
+
+Result: 10 rows (Гердтъ, Александрова, Головинъ, Moscow casts); none for Кшесинская/Павлова/Карсавина in this work.
+
+```sql
+select pr.season, pr.city, pr.list_title, pr.printed_page_number, pc.role_category, pc.role_text, pc.name_printed, pe.display_name
+from research.production pr join research.production_credit pc using(production_id)
+left join research.person pe on pe.person_id=pc.person_id
+join research.work w on w.work_id=pr.work_id
+where w.canonical_title ilike '%зеркал%' order by pr.season, pc.credit_order;
+```
+
+Result: 32 creator credits (Пушкинъ/Гриммъ source, Петипа + Всеволожской libretto, Корещенко music), 1902-03–1910-11; no performers.
+
+```sql
+select ra.season, ra.printed_folio, ra.date_undate, ra.role_surface, ra.performer_surface, ra.work_surface, ra.work_id is null as unlinked_work
+from research.review_assertion ra
+where (ra.work_surface ilike '%зеркал%' or ra.performer_surface ilike '%кшесинск%' or ra.performer_surface ilike '%павлов%' or ra.performer_surface ilike '%карсавин%')
+and ra.season in ('1902-03','1903-04','1904-05') order by 1,2;
+```
+
+Result: 63 rows; Зеркало casts found at 1902-03 f.155 and 1903-04 ff.116-117, but their work_surface is «Король»/«Сонъ принца»/NULL with work_id unlinked (work-linking gap).
+
+```sql
+-- raw review text, pages review_1902-03_SP_ballet_p012/p013/p017/p018, review_1903-04_SP_ballet_p010..p013
+select b.block_id, p.printed_folio, b.text from raw.review_block b join raw.review_page p using(page_id) where page_id = '<page>' order by block_index;
+```
+
+Result: 1902-03 f.154-155 (premiere 9 Feb 1903, Петипа benefit): Принцесса — М. Кшесинская; свита принцессы — Сѣдова, Павлова 2; Карсавина not named. 1903-04 ff.115-117 (revival 28 Dec 1903): Кшесинская — Princess + Pas d'action, Scène mimique, Scène du désespoir, Variation, Météore, Pas de deux, Final; Павлова 2-я — свита принцессы, Pas d'action, Pas de trois, Final; Карсавина — кружевницы, Point de Venise, Danse des dryades, Etoiles filantes.
+
+```sql
+select person_id, display_name, first_attested_season, last_attested_season, wikidata_qid, wikidata_label from research.person
+where canonical_family_name ilike 'Кшесинск%' or canonical_family_name ilike 'Павлов%' or canonical_family_name ilike 'Карсавин%';
+select ra.printed_folio, ra.role_surface, ra.performer_surface, p.display_name, p.wikidata_label, ra.performer_candidates_n, ra.link_method
+from research.review_assertion ra left join research.person p on p.person_id=ra.performer_person_id
+where ra.page_id in ('review_1902-03_SP_ballet_p013','review_1903-04_SP_ballet_p011','review_1903-04_SP_ballet_p012','review_1903-04_SP_ballet_p013')
+and (ra.performer_surface ilike '%кшесинск%' or ra.performer_surface ilike '%павлов%' or ra.performer_surface ilike '%карсавин%') order by 1;
+```
+
+Result: 15 person rows; Кшесинская 2-я Матильда (Q239246), Павлова 2-я Анна Матвѣевна (Q151874), Карсавина Тамара Платоновна (Q231316). 14 assertions on these pages, all linked to those three (+ Кшесинскій 2-й). Missing from assertions though present in text: 1902-03 Павлова 2 свита; 1903-04 Павлова 2 Pas d'action/Pas de trois/Final, Карсавина кружевницы/Etoiles filantes. f.115 «Большое па» Кшесинская belongs to the preceding ballet, not Зеркало.
+
+## 2026-10-26 — Which composers wrote both operas and ballets performed in the Yearbooks? (RG)
+
+Schema checks first (research.* column lists; role_category counts on research.production_credit: music 688, author 641, source 123, libretto 98, staging 31, instrumentation 6). Composer credits exist only in the ballet lists; the Repertoire prints no composers for operas.
+
+```sql
+select p.person_id, p.display_name, p.wikidata_qid, p.wikidata_label, count(distinct pr.work_id) n_ballets, string_agg(distinct w.canonical_title, ' | ') titles
+from research.production_credit pc join research.person p using(person_id)
+join research.production pr using(production_id) left join research.work w on w.work_id=pr.work_id
+where pc.role_category='music' group by all order by n_ballets desc
+```
+
+Result: 52 music-credited persons (Минкусъ 13 ballets, Пуни 11, Дриго 7, Делибъ 6, Адамъ 4, Чайковскій 4, Глазуновъ 3, … incl. Аренскій «Египетскія ночи», Сенъ-Сансъ «Жавотта», Ивановъ М. М. «Весталка», Корещенко «Волшебное зеркало»).
+
+```sql
+select w.canonical_title, count(*) n, min(e.season), max(e.season), string_agg(distinct t.city,',')
+from research.performance p join research.work w using(work_id) join research.event e using(event_id)
+left join research.theater t on t.theater_id=e.theater_id
+where p.discipline='opera' group by 1 order by 1
+```
+
+Result: full list of opera titles (~280 incl. excerpt variants), matched by hand against the ballet composers (opera attributions are general knowledge, not printed in the Yearbooks).
+
+```sql
+select w.canonical_title, count(*) n from research.performance p join research.work w using(work_id)
+where p.discipline='ballet' and w.work_id not in (select work_id from research.production where work_id is not null)
+group by 1 order by 2 desc;
+select p.verbatim_title,p.verbatim_genre,p.discipline,e.season,count(*) from research.performance p
+join research.work w using(work_id) join research.event e using(event_id)
+where w.canonical_title='Донъ-Кихотъ' group by all
+```
+
+Result: ballets outside the ballet lists include 1 performance of «2-я карт. 1-го д. бал. Виноградная лоза» (Rubinstein; no composer credit in the db). Work «Донъ-Кихотъ» mixes the ballet (бал.) with 12 opera rows in 1910-11 Moscow printed «героич. ком.» (Massenet's Don Quichotte) — one work_id across two art forms; logged as a tangent, not fixed.
+
+```sql
+with m(composer, pat) as (values
+ ('Tchaikovsky','%Онѣгин%'),('Tchaikovsky','%Пиковая дама%'),('Tchaikovsky','%оланта%'),('Tchaikovsky','%Мазепа%'),('Tchaikovsky','%Опричникъ%'),('Tchaikovsky','%Черевички%'),('Tchaikovsky','%Орлеанская дѣва%'),
+ ('Delibes','%Лакм%'),('Delibes','%Ламмэ%'),
+ ('Arensky','%Сонъ на Волгѣ%'),('Arensky','%Рафаэль%'),('Arensky','%Наль и Дамаянти%'),
+ ('Saint-Saëns','%Самсонъ и Дал%'),
+ ('M. M. Ivanov','%Забава Путятишна%'),
+ ('Koreshchenko','%Ледяной домъ%'),
+ ('Rubinstein','%Демонъ%'),('Rubinstein','%Неронъ%'),('Rubinstein','%Фераморсъ%'),('Rubinstein','%Маккавеи%'))
+select m.composer, count(distinct p.performance_id) n_perf, min(e.season) first_season, max(e.season) last_season,
+ string_agg(distinct m.pat, ' ') pats
+from m join research.work w on w.canonical_title like m.pat
+join research.performance p on p.work_id=w.work_id and p.discipline='opera'
+join research.event e on e.event_id=p.event_id
+group by 1 order by 2 desc;
+```
+
+Result (opera performances, incl. excerpts): Tchaikovsky 954 (1890-91–1910-11), Rubinstein 335, Delibes 132, Arensky 53, Saint-Saëns 43, Koreshchenko 9 (1900-01), M. M. Ivanov 8 (1898-99–1899-00).
+
+## 2026-10-26 — CORRECTION to the previous entry: «Донъ-Кихотъ» opera vs ballet are already separate works
+
+```sql
+select * from research.work where canonical_title ilike '%Кихот%';
+select p.performance_id, p.work_id, p.verbatim_genre, p.discipline_basis
+from research.performance p where p.discipline='opera' and p.verbatim_title ilike '%Кихот%'
+```
+
+Result: two distinct work_ids share canonical_title «Донъ-Кихотъ»: 8c9a018e… (бал., 83 appearances, Minkus) and 2bc2a7c9… (героич. ком., 12, Massenet; split per work_artform_overrides.csv, RG 2026-10-06). All 12 opera performances point at 2bc2a7c9…. The previous entry's "one work_id across two art forms" was wrong: that query grouped by canonical_title, not work_id. No data change needed.
+
+## 2026-10-26 — Arensky: opera dates vs ballet dates (RG)
+
+```sql
+select w.canonical_title, w.work_id, p.discipline, e.season, e.city, t.canonical_name theater,
+ count(*) n, min(e.date) first_date, max(e.date) last_date,
+ sum(case when w.excerpt_of_work_id is not null then 1 else 0 end) n_excerpt
+from research.performance p join research.work w using(work_id)
+join research.event e using(event_id) left join research.theater t on t.theater_id=e.theater_id
+where w.canonical_title similar to '.*(Сонъ на Волгѣ|Рафаэль|Наль и Дамаянти|Египетск).*'
+   or w.excerpt_of_work_id in (select work_id from research.work where canonical_title similar to '.*(Сонъ на Волгѣ|Рафаэль|Наль и Дамаянти|Египетск).*')
+group by all order by 1, first_date;
+```
+
+Result: opera only 1890-91 to 1908-09, ballet only 1907-08 to 1910-11; no excerpts. Сонъ на Волгѣ: Moscow Большой, 10 perfs, 1890-12-21 to 1891-10-27. Рафаэль: 27 perfs, SP (Маріинскій 11 + Михайловскій 4) 1895-12-13 to 1897-01-19, Moscow (Новый 10 + Большой 2) 1903-09-21 to 1905-01-16, SP Маріинскій 1 on 1905-04-06. Наль и Дамаянти: 16 perfs, Moscow Большой 1904-01-09 to 1905-12-29 (7), SP Маріинскій 1908-01-25 to 1908-09-28 (9). Египетскія ночи: 11 perfs, all SP Маріинскій, 1908-03-08 to 1910-11-21.
+
+```sql
+select pr.season, pr.city, pr.list_title, pr.is_premiere, pr.printed_total, pr.n_dates, pr.description_text
+from research.production pr join research.work w using(work_id) where w.canonical_title like '%Египетск%';
+select e.date, e.season, e.time_of_day, e.annotation, e.is_benefit, e.is_charity, e.printed_page_number,
+ string_agg(w.canonical_title || ' [' || coalesce(p.discipline,'?') || ']', ' + ' order by p.performance_order) bill
+from research.event e join research.performance p using(event_id) join research.work w using(work_id)
+where e.event_id in (select p2.event_id from research.performance p2 join research.work w2 using(work_id) where w2.canonical_title='Египетскія ночи')
+group by all order by e.date;
+select season, title, is_premiere from raw.production_entry where title ilike '%Египет%';
+select distinct season, city from raw.production_entry order by 1
+```
+
+Result: ballet lists have Египетскія ночи in 1908-09 (is_premiere, 6), 1909-10 (2), 1910-11 (2; Фокинъ credited only in 1910-11). The 1907-08 SP list exists but has no entry for it; the Repertoire's 1908-03-08 event (p. 112, charity «Въ пользу школъ Императорскаго Женскаго Патріотическаго Общества», with drama «На бойкомъ мѣстѣ») is outside the lists. Bills: with Шопеніана 7×, Евника/Эвника 5×, Жизель 2×, Павильонъ Армиды 1, Пробужденіе Флоры 1; 1909-12-18 RMO 50th-jubilee event shares the bill with opera excerpts (Снѣгурочка, Онѣгинъ, Демонъ), none by Arensky. No event has an Arensky opera and ballet together.
+
+## 2026-10-26 — Scan check (by Claude): Египетскія ночи 8 March 1908 vs the 1907-08 SP ballet list
+
+```sql
+select e.event_id, e.date_verbatim, e.printed_page_number from research.event e where e.date='1908-03-08' and e.city='SP';
+select distinct page_id, source_file, source_page_index, printed_page_number, section_heading
+from raw.production_entry where season='1907-08' and city='SP' order by 1;
+select list_number,title,description_text,performed_text,total_text
+from raw.production_entry where season='1907-08' and city='SP' order by entry_order
+```
+
+Result: event on Repertoire p. 112 (ForUpload_1907-08_Repertoire.pdf, page index 36); ballet list = ForUpload_1907-08_Spisok_BalletProductionsSP.pdf pp. 131-132, 23 entries transcribed, none Египетскія ночи.
+Scan (full-res embedded images): Repertoire p. 112, Маріинскій, «8 Суббота.»: «Въ пользу школъ Императорскаго Женскаго Патріотическаго Общества. / На бойкомъ мѣстѣ, ком. / Египетскія ночи, бал.», no receipts printed — matches the db. Ballet list pp. 131-132: section «Балетъ» runs 1-23 (Аленькій цвѣточекъ … Эсмеральда), then «Французская драма» begins; Египетскія ночи is absent from the print. The omission is the source's own, not a transcription gap. The 1908-09 list (where it's marked as a premiere) is therefore the first list appearance, but not the first performance.
+
+## 2026-10-26 — Review statements without a work: causes, and two governing-rule variants tested on copies (#159; NOT applied)
+
+```sql
+select count(*), count(work_id) from research.review_assertion;
+select coalesce(work_source, '-'), count(*) from research.review_assertion where work_id is null group by 1;
+-- per statement: linked work mentions in the same block / earlier / later on the page (block_index), unlinked_reason of the block's nearest title
+select block_id, page_id, entity_id, surface, unlinked_reason from entities.review_mention where mention_type = 'work';
+-- spiski check (scratch workcheck.py): same person, season and part stem -> the work the BalletArtists credits list
+select pl.person_id, s.season, pc.label, pc.role_name from raw.person_entry_credit pc join raw.person_entry pe using (entry_id)
+ join entities.person_link pl using (entry_id) join raw.source_pages s on s.page_id = pe.page_id
+ where pc.credit_type = 'named_work' and pc.role_name is not null;
+```
+
+Result (production): 779 of 2,658 statements have no work. Causes: 423 sit on a page whose only titles come LATER on the page (so neither the earlier-on-page rule nor the previous-page carry-over, which needs a page with no title at all, applies); 137 have 2+ works earlier on the page; 192 have a nearest "title" in their own block that is an unlinked non-title (role names/ordinary words 106 -- «Робертъ», «Король», «Коломбина»; dance names 42; quoted words 38; «Дивертиссементъ» 6), which blocks the page rules; 27 on pages naming no linked work. Variants on copies (spiski agree / disagree / missing over all statements): production 914 / 80 / 303, 1,879 with a work. X (an unlinked mention whose reason is role name/ordinary word, dance number or quoted words never governs) 957 / 88 / 256, 2,001. Y (carry the previous page's last work when nothing is named earlier on the page, same review only) 1,062 / 99 / 146, 2,272. X+Y 1,113 / 108 / 90, 2,430 with a work; dances with a ballet 632 -> 810. New links checkable by the spiski: 199 agree, 28 disagree. For the Y links, the next title later on the same page instead: right in 59 of 167 checkable vs the previous page's 147 (it never fixes a previous-page error). Left without a work under X+Y: 228 (mostly 2+ works earlier on the page).
