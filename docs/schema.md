@@ -507,3 +507,28 @@ NULL for every other work. Published in `research_dataset.sqlite` (`work.title_n
 Literary and artistic sources a review names («Quo vadis?», Andersen's «Свинопасъ», Léopold Robert's paintings) are NOT works here (RG: "leave the literary and artistic sources alone").
 
 Built by `pipeline/build_review_works.py` from the approved list `docs/eval/review_work_approved.csv` into `entities.review_work`; `build_research_model.py` adds them to `research.work`. Run order: `build_review_works.py` before `build_research_model.py`. Their review mentions link only through explicit rows in `docs/eval/review_work_mention_links.csv` (the matcher never matches them by title: a ballet «Фаустъ» must not capture Gounod's opera). A review-only work that is not a ballet never becomes the governing work of a cast statement (`build_review_assertions.py`).
+
+## Creator and craft credits named in the reviews — `research.review_credit` (added 2026-10-26)
+
+One row per **person credited in one role** by a ballet Season Review: `соч. Ж. Перро`, `музыка Ц. Пуни`, `поставленъ балетмейстеромъ … А. А. Горскимъ`, `Сюжетъ заимствованъ изъ сказки Э. Гофмана`, `Праздникъ огня, декорація А. Кваппа`, `Машины—К. Ѳ. Вальца`, `женскіе— Е. Офицеровой`, `обувь г-жи Левштедтъ`, `парики—г. Педдеръ`. RG, 2026-10-26: one table for music, authorship, libretto, source, staging and design, at the level of the scene where the print names one; "I want to give craftspeople and artisans the same attention as creators like set designers, choreographers, and costume designers." Built by `pipeline/build_review_credits.py` (rules, no model) from `raw.review_block` and `entities.review_mention`; run after `build_review_assertions.py`. Exported by `build_datasette.py` like `review_assertion`.
+
+| column | notes |
+|---|---|
+| `credit_id` | PK, renumbered on every build (not yet stable like `assertion_id`) |
+| `page_id`, `block_id`, `block_type`, `char_start` | citation into the raw layer: the name's offset in the reflowed block text; `block_type` `figure` = a plate caption |
+| `season`, `city`, `printed_folio`, `date_undate` | as in `review_assertion`; the date is the nearest one printed before the credit in the block |
+| `work_surface`, `work_id` → `research.work`, `work_source` | the governing work and how it was found: `cue` (inside the cue, `балета «Шехерезада» Бакста`), `after-names`, `clause`, `clause-after`, `block`, `caption-after` (a caption names its work after the credit), `page`, `page-earlier`, `previous-page`, `several works` (a credit for "the new ballets": no work) |
+| `part_surface` | the scene or dance number printed with the credit: `«Облака» (2-я картина 1-го дѣйствія)`, `Праздникъ огня`, `panaderos` |
+| `role_category` | `author` (соч., балетъ X when the lists confirm it), `music`, `instrumentation`, `libretto` (либретто, программа), `source` (literary source), `staging`, `staging-revival` (вновь поставленъ, возобновленъ), `choreography` (танцы поставлены), `ballet_by` (the print's `балетъ X` / `бал. X` where the productions lists do not say whether X wrote or composed it); design and crafts: `scenery`, `costume_design` (по рисункамъ), `costumes` (unspecified), `costume_making` (костюмерша, `женскіе — …`, `изготовлены мастерами`), `machinery`, `props` (аксессуарныя, бутафорскія вещи), `headwear`, `wigs`, `footwear`, `lighting` |
+| `role_text`, `printed_phrase` | the cue as printed and the whole credit phrase, verbatim |
+| `name_surface`, `initials` | the name as printed (`Шнейггеффера`, `Гершелемъ`, `СеньЛеона`), initials as bare letters |
+| `person_id` → `research.person` | **nullable**: a name with no person row (Массенэ, Шангинъ, Анисфельдъ, Левштедтъ) is kept as printed |
+| `person_candidates_n`, `person_candidate_ids` | the ambiguity kept, as in `review_assertion` |
+| `link_method` | `list-credit` (the productions lists credit that surname on this work), `list-credit-spelling` (same, a near-spelling: `Нюйтера`, `Дрио`), `list-credit-other-work` (the lists credit the candidate in this role elsewhere), `department` / `department-other-city` (the one candidate on the staff of the craft's department, `research.person_appearance.heading_path`; other-city = Petersburg painters on a Moscow production), `first-name` (`Маріусомъ Петипа`), `mention-link` (the review matcher's own link), `initials`, `unresolved`, `printed-only`, `anonymous` |
+| `mention_id` | the `entities.review_mention` row the name came from, if any |
+| `is_anonymous` | `⁂`, `***`, `Г* *` |
+| `context_flag` | `historical?` (the sentence names a year before the season: an 1855 cast, an 1835 first staging), `foreign?` (abroad, Дягилевъ) — hints for whoever builds the production worksheets, never filters |
+
+Not read as credits: the plate's own `Рисунокъ художника X` (the Yearbook's illustrator), conductors, cast lists (`въ женскихъ костюмахъ — г-жи …`, `Костюмъ г. Іогансона въ этой роли`). Only `genre = 'Ballet'` review pages are read; the combined `All` pages (1890-91 SP, 1899-00 Moscow) are not yet.
+
+Measured 2026-10-26 (checked by Claude, RG has not read these): on 198 hand-read credits from 62 passages (known_issues.md #159), 194 found, all 194 with the right person, 192 with the right work (the other 2 correctly have none). Precision on random rows from unread passages: 82% and 85% on the first two draws (each followed by fixes), 59/60 on the last.

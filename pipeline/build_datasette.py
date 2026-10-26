@@ -45,7 +45,7 @@ def _stringify_uuids(df):
 TABLES = ["theater", "work", "person", "event", "performance", "person_appearance",
           "production", "production_work", "production_credit",
           "season_stat_check", "season_stat_line", "season_stat_footnote",
-          "review_assertion", "review_solo"]
+          "review_assertion", "review_solo", "review_credit"]
 
 # Explicit CREATE TABLE per table, PRIMARY KEY + FOREIGN KEY declared --
 # pandas' to_sql(if_exists="replace") would otherwise create schema-less
@@ -181,6 +181,24 @@ SCHEMAS = {
             link_method TEXT,
             work_surface TEXT, work_id TEXT REFERENCES work(work_id),
             work_source TEXT
+        )""",
+    # Creator and craft credits read from the ballet reviews (RG 2026-10-26:
+    # one table for music, authorship, libretto, source, staging and design,
+    # craftspeople given the same attention as creators). Nullable FKs, as
+    # review_assertion: a printed name with no person row is still evidence.
+    "review_credit": """
+        CREATE TABLE review_credit (
+            credit_id INTEGER PRIMARY KEY,
+            page_id TEXT, block_id TEXT, block_type TEXT, char_start INTEGER,
+            season TEXT, city TEXT, printed_folio TEXT, date_undate TEXT,
+            work_surface TEXT, work_id TEXT REFERENCES work(work_id),
+            work_source TEXT, part_surface TEXT,
+            role_category TEXT, role_text TEXT, printed_phrase TEXT,
+            name_surface TEXT, initials TEXT,
+            person_id TEXT REFERENCES person(person_id),
+            person_candidates_n INTEGER, person_candidate_ids TEXT,
+            link_method TEXT, mention_id INTEGER, is_anonymous INTEGER,
+            context_flag TEXT
         )""",
 }
 

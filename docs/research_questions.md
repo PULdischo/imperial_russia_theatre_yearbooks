@@ -278,3 +278,26 @@ press reused, when it brought in new ones, and when designs changed.
   Леман, Осип Иванович; Schriftproben Lehmann Petersburg; subject heading
   "Type and type-founding -- Russia -- Specimens". The press may not have
   bought from Lehmann; check Revillon if a face isn't there.
+
+### 6. Conductors named in the Yearbooks
+
+RG, 2026-10-26: "later, i would like to gather the names and roles of
+conductors mentioned in the Yearbooks."
+
+- *Done so far:* nothing gathered. The review creator-credit reader
+  (`pipeline/build_review_credits.py`, `research.review_credit`) deliberately
+  skips conductors (`дирижировалъ г. Дриго`, `Капельмейстеръ г. Арендсъ`), so
+  they are not mixed in with creators.
+- *What is there (query log 2026-10-26):* the Season Reviews use
+  `дирижир-`/`дирижер-`/`капельмейстер-` 184 times on 103 pages (ballet 132,
+  opera 51, combined pages 1). The rosters carry 273 appearances of 78
+  people under a heading naming капельмейстеры or дирижеры
+  (`research.person_appearance.heading_path`), which give their titles and
+  tenure.
+- *Left:* decide what "role" means here (the roster post — главный /
+  второй капельмейстеръ, the orchestra or company — vs the review's "who
+  conducted this performance on this date"); read the review statements into
+  rows like `review_solo` (performer, work, date), linked to the roster
+  people; cover the opera reviews too, since conducting is not a cast part
+  (RG did not want opera casts, 2026-10-09 — ask whether conductors are the
+  exception).

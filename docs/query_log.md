@@ -20388,3 +20388,70 @@ select count(*) from research.performance p join research.work x using(work_id) 
 ```
 
 Result: existing collisions only Фаустъ (оп., драм. поэма) and Карнавалъ (дивертисментъ, пантомима-бал.). 29 mentions located uniquely and linked; research.work old columns identical, +20 rows work_source 'review', appearance_count 0, 0 performances; sqlite work_source repertoire 2,958 / review 20. Statements: 7 -> Фаустъ (5 right, 2 wrong: Казачій танецъ, Potpourri), 619 Маринета -> ambiguous-on-page; a caption carry-over rule tested (173 statements lost their work) and dropped. «Ученики Допро» caption -> «Ученики Дюпрэ», linked to Приказъ короля. Production = tested copy on all 51 tables.
+
+## 2026-10-26 — Review creator-credit reader: 62-passage sample of creator credits in the ballet reviews, scored against the existing person-mention links
+
+```sql
+-- cue finder (Python regex over reflow(coalesce(caption_text, text)) of raw.review_block where raw.review_page.genre='Ballet'):
+--   music: музык(а|и|у|ой|ою|ѣ)|муз\.|съ музыкою|композитор*|инструментов*
+--   choreo: соч\.|сочинені*|сочинен*|балетмейстер*|поставлен*|постановк*|возобновлен*|балетъ г\.|танцы
+--   libretto: либретто|программ*|сюжет*|заимствован*|по повѣсти|по сказк*|по роману
+--   design: декораці*|костюм*|рисунк*|художник*|машин*|бутафор*|аксессуар*|раб\.
+select m.block_id, m.mention_id, m.mention_type, m.char_start, m.char_end, m.surface, m.entity_id, m.candidates_n,
+       m.link_method, m.rank_reason, pe.display_name, pe.person_source, w.canonical_title
+from entities.review_mention m
+left join research.person pe on m.mention_type='person' and pe.person_id::varchar = m.entity_id
+left join research.work w on m.mention_type='work' and w.work_id::varchar = m.entity_id;
+-- sample: seed 20261026, stratified by season x city within kind, one passage per block, only cues followed by a name:
+--   choreography 18, music 16, libretto/source 8, design paragraphs 10, design captions (block_type 'figure') 10
+select surface, entity_id, candidate_ids, rank_reason from entities.review_mention where mention_id in (25243,12388,18491,27124,21023,977,17794);
+select display_name, person_source, first_attested_season, last_attested_season, wikidata_qid from research.person where person_id::varchar = ?;  -- each candidate
+select pe.display_name, pe.person_source, pc.role_category, count(*) from research.production_credit pc join research.person pe using(person_id)
+ where pe.canonical_family_name in ('Петипа','Пуни','Перро','Ивановъ','Горскій','Дриго','Фокинъ','Вальцъ','Чекетти','Мендесъ','Шенкъ','Симонъ','Ширяевъ','Легатъ') group by all;
+select display_name, person_source, wikidata_qid from research.person where display_name ilike '%<name>%';  -- ~95 creator surnames in the sample
+select pe.display_name, pe.wikidata_qid, w.canonical_title from research.production_credit pc join research.person pe using(person_id)
+ join research.production pr using(production_id) join research.work w on w.work_id=pr.work_id where pe.display_name like 'Тальони%' group by all;
+-- per hand-read credit: the person mention with that surface in the block nearest the cue, compared with the expected research.person
+select distinct pc.role_category from research.production_credit pc join research.person pe using(person_id)
+ join research.production pr using(production_id) join research.work w on w.work_id=pr.work_id
+ where pe.display_name=? and lower(w.canonical_title)=lower(?);  -- each of the 19 failing credits
+```
+
+Result: 2,611 cue hits in ballet review blocks (choreography words 1,331, music 592, design 497 of which 146 in captions, libretto/source 191); all 27,326 ballet-review mention offsets match the reflowed text. Sample 62 passages, 20 seasons, SP 33 / Moscow 29; 4 contain no credit; 58 give 198 credit rows (hand-read, Claude). Existing person links: right 142, wrong 3 (Сильфида «Тальони (отца)» and caption «балетъ Тальони» -> Paul Taglioni Q872165 instead of Filippo «Тальони (отецъ)» Q704671; «Ю. Перро» Эсмеральда -> Charles Perrault instead of Jules), unlinked 16 (Петипа 8 ties with Марія Маріусовна; Фокинъ 3; Перро 2 ties; Чекетти «Энрико» 1; «К. Иванова» decor x3), no mention 33 (29 names with no research.person row, e.g. Массенэ, Листъ, Венявскій, Шангинъ, Кукановъ, Гроппіусъ, Анисфельдъ, Бакстъ; 4 printed variants the matcher misses: Нюйтера, Сенъ Жоржа, Гершелемъ, Корешенко), anonymous 4 (⁂, ***, Г* *, «1001 ночи»). Captions 20/22 right. Of the 19 wrong/unlinked, 13 have the expected person credited on the same work in production_credit. Creators on the staff (Петипа, Ивановъ, Горскій, Дриго, Шенкъ, Симонъ, Вальцъ, scene painters) are roster people and production_credit uses their roster ids.
+
+
+## 2026-10-26 — Review creator-credit reader built on a test copy: counts, checks and precision samples
+
+```sql
+-- test copy: outputs/reviews/credit_test/imperial_theaters.duckdb (copy of production); built with pipeline/build_review_credits.py
+select count(*), count(person_id), count(work_id), count(distinct season), count(distinct person_id), count(distinct work_id),
+       count(date_undate), count(part_surface), sum(case when block_type='figure' then 1 else 0 end) from research.review_credit;
+select city, count(*) from research.review_credit group by 1;
+select role_category, count(*), count(person_id) from research.review_credit group by 1 order by 2 desc;
+select link_method, count(*) from research.review_credit group by 1 order by 2 desc;
+select context_flag, count(*) from research.review_credit where context_flag is not null group by 1;
+select count(distinct r.work_id) from research.review_credit r where r.work_id is not null and r.work_id not in
+  (select distinct pw.work_id::varchar from research.production_work pw join research.production_credit pc using(production_id));
+select count(*), count(distinct coalesce(person_id, name_surface)) from research.review_credit
+  where role_category in ('scenery','costume_design','costumes','costume_making','machinery','props','headwear','wigs','footwear','lighting');
+-- integrity: every table in information_schema.tables of production vs the test copy: count(*), sum(hash(t))
+-- dangling: person_id not in research.person; work_id not in research.work
+-- roster departments: select display_name, string_agg(distinct cast(heading_path as varchar)) from research.person p join research.person_appearance pa using(person_id) where display_name in (...)
+-- precision draws: 80 + 80 + 60 random rows outside the 62 sampled blocks (order by hash(...)), read against the block text
+-- craft-noun survey: Python regex over ballet review text (обувь, парики, головные уборы, аксессуар, бутафор, костюмер, машинн, скульптор …)
+```
+
+Result: 2,413 credits, 20 seasons (SP 1,523 / Moscow 890), 689 from captions; 2,218 with a person (167 people), 2,360 with a work (98; 17 without any productions-list credit), 1,069 dated, 241 with a part. Roles: author 949, music 647, scenery 200, staging 187, ballet_by 95, choreography 77, source 72, libretto 54, staging-revival 40, costume_design 28, machinery 16, costume_making 14, props 13, instrumentation 8, costumes 6, footwear 3, wigs 2, headwear 2 (design/craft 284 rows, 74 people or printed names). link_method: list-credit 1,592, list-credit-other-work 246, printed-only 172, department 155, mention-link 125, list-credit-spelling 52, department-other-city 30, unresolved 19, +role-from-list 10, first-name 7, anonymous 4, initials 1. Flags: historical? 24, foreign? 3, both 4. 51 existing tables identical to production; 0 dangling refs; rerun identical. Hand sample: 194/198 found, 194 right person, 192 right work. Precision draws: 65/80 and 68/80 (fixed after each), 59/60 on the last. Roster: Офицерова, Екатерина Максимовна = Отдѣлъ гардеробный / Костюмерши (SP); Аѳанасьевъ, Павелъ Ивановичъ = SP drama wigmaker (a Moscow wigs credit -> flagged other city); «Апиханова, Елена Петровна» = Moscow костюмерша (review prints «Аниханова»).
+
+
+## 2026-10-26 — Conductors: how often the reviews and rosters name them (for a future-directions entry)
+
+```sql
+-- Python regex дирижир\w*|дирижер\w*|дирижёр\w*|капельмейстер\w* over reflow(coalesce(caption_text, text)) of raw.review_block joined to raw.review_page (all genres)
+select count(*) from research.person_appearance
+ where cast(heading_path as varchar) ilike '%капельмейстер%' or cast(heading_path as varchar) ilike '%дирижер%';
+select count(distinct person_id) from research.person_appearance
+ where cast(heading_path as varchar) ilike '%капельмейстер%' or cast(heading_path as varchar) ilike '%дирижер%';
+```
+
+Result: reviews 184 cue words on 103 pages (Ballet 132, Opera 51, All 1); rosters 273 appearances, 78 people, under a heading naming капельмейстеры/дирижеры. Nothing built.
