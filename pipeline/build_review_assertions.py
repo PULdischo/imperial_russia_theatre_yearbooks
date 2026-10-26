@@ -465,7 +465,12 @@ def first_page_skip(blocks: list[tuple]) -> int:
 # tie unlinked. For a dancer in a numbered dance three narrower facts settle
 # many of them, tried in this order and recorded in link_method:
 #   A  only one candidate fits the gender (surname ending, else the list's
-#      honorific) and the number printed on the name (2-я, 3-й) that season;
+#      honorific), the number printed on or right after the name (`2-я`,
+#      `Егорова 2`, which the name reader leaves outside the surface) -- the
+#      person must be printed with that number that season, in any list --
+#      and a printed first initial (`М. Петипа`);
+#   A2 of those, only one is not already named elsewhere in the same list
+#      (`Новикова 2-я, … Новикова`: the bare one is the other Новикова);
 #   B  only one of those stood in that city's BalletArtists list that season;
 #   C  only one of them (in the company, if any are) is credited in the
 #      dance's own ballet that season in the company lists.
@@ -495,6 +500,10 @@ def resolve_dancer_ties(con, dances: list[dict]) -> collections.Counter:
         company[(pid, season)].add(city)
         for m in re.finditer(r"(\d+)\s*-\s*[ейяй]", fam or ""):
             ords[(pid, season)].add(m.group(1))
+    for key, nums in lex.ordinal_by_season.items():
+        ords[key] |= nums
+    first_initial = {pid: ((meta.get("display") or "").partition(",")[2].split() or [""])[0][:1]
+                     for pid, meta in lex.person_meta.items()}
     credits: dict[tuple, set] = collections.defaultdict(set)
     for pid, season, label in con.execute("""
             SELECT pl.person_id::VARCHAR, s.season, pc.label
@@ -509,6 +518,7 @@ def resolve_dancer_ties(con, dances: list[dict]) -> collections.Counter:
     for x in dances:
         season, city, pt = x["season"], x["city"], x["printed_text"] or ""
         wt = _k4(titles.get(x["work_id"] or "", ""))
+        named_here = {dn["entity"] for dn in x["dancers"] if dn["entity"]}
         for dn in x["dancers"]:
             if dn["entity"]:
                 dn["method"] = "mention"
@@ -521,25 +531,35 @@ def resolve_dancer_ties(con, dances: list[dict]) -> collections.Counter:
                          or [c for c in (dn["cand_ids"] or "").split("|") if c]))
             if len(cands) < 2:
                 continue
-            i = pt.find(surf)
-            hon = TIE_HON.findall(pt[:i] if i >= 0 else "")
+            lead, after = dn.get("lead", ""), dn.get("after", "")
+            hon = TIE_HON.findall(lead)
             g = canon_gender(base) or surface_gender(base, hon[-1] if hon else "")
             if g:
                 cands = [c for c in cands if (gender.get(c) or g) == g]
-            m = re.search(r"(\d+)\s*-?\s*[ейяй]?\b", surf)
+            m = (re.search(r"(\d+)\s*-?\s*[ейяй]?\b", surf)
+                 or re.match(r"\s*(\d)(?:\s*-?\s*[ейяй]+)?(?!\d)", after))
             if m:
-                cands = [c for c in cands if m.group(1) in ords.get((c, season), {m.group(1)})]
-            inco = [c for c in cands if city in company.get((c, season), set())]
-            cred = [c for c in (inco or cands)
+                cands = [c for c in cands if m.group(1) in ords.get((c, season), set())]
+            ini = re.search(r"((?:[А-ЯЁѲІ]\.\s*){1,2})$", lead[-10:])
+            if ini:
+                fit = [c for c in cands if first_initial.get(c) == ini.group(1)[0]]
+                if fit:
+                    cands = fit
+            excl = [c for c in cands if c not in named_here]
+            inco = [c for c in excl if city in company.get((c, season), set())]
+            cred = [c for c in (inco or excl)
                     if wt and any(wt in lab for lab in credits.get((c, season), ()))]
             if len(cands) == 1:
-                dn["entity"], dn["method"] = cands[0], "tie: gender/ordinal"
+                dn["entity"], dn["method"] = cands[0], "tie: gender/number/initial"
+            elif len(excl) == 1:
+                dn["entity"], dn["method"] = excl[0], "tie: other one already in this list"
             elif len(inco) == 1:
                 dn["entity"], dn["method"] = inco[0], "tie: company that season"
             elif len(cred) == 1:
                 dn["entity"], dn["method"] = cred[0], "tie: credited in this ballet"
             if dn["method"]:
                 stat[dn["method"]] += 1
+                named_here.add(dn["entity"])
     return stat
 
 
@@ -888,7 +908,9 @@ def main() -> None:
                     alt = seg.rfind("(") > seg.rfind(")")
                     dancers.append({"surface": m[4], "entity": m[5] or "",
                                     "cand_n": m[6], "cand_ids": m[7] or "",
-                                    "alternate": alt})
+                                    "alternate": alt,
+                                    "lead": body[role_a:m[2]],
+                                    "after": body[m[3]:m[3] + 8]})
                 dances.append({
                     "page_id": page_id, "block_id": block_id,
                     "season": page["season"], "city": page["city"],
@@ -918,7 +940,9 @@ def main() -> None:
                 seg = body[bm.end():m[2]]
                 dancers.append({"surface": m[4], "entity": m[5] or "",
                                 "cand_n": m[6], "cand_ids": m[7] or "",
-                                "alternate": seg.rfind("(") > seg.rfind(")")})
+                                "alternate": seg.rfind("(") > seg.rfind(")"),
+                                "lead": body[bm.start("name"):m[2]],
+                                "after": body[m[3]:m[3] + 8]})
             if not dancers:
                 continue
             name = NUMBER_LEAD.sub("", body[bm.start("name"):bm.end("name")]).strip(" ,«»„“\"")
