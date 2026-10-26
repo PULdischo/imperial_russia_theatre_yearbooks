@@ -88,6 +88,13 @@ ROLE_FRAGMENT = re.compile(r"^(и|а|но|же|съ|также)\s|^\d+\s*$|^и\s
 # варьяціи соч. …` is a credit, not a cast entry
 ROLE_ATTRIBUTION = re.compile(r"\b(муз\.|музыка|соч\.|сочин\w*|балетмейстер\w*|"
                               r"декорац\w*|костюм\w*|дириж\w*)", re.I)
+# A craft credit rides the dash too, with the craft word on the NAME side:
+# `Аксессуары — работы художника-скульптора П. П. Каменскаго`, `женскіе —
+# костюмершей Офицеровой`, `Колонный залъ дворца—художника Г. И. Голова`. Those
+# are credits (research.review_credit), not cast; RG 2026-10-26: "yes, remove
+# the 19 rows".
+CRAFT_SIDE = re.compile(r"художник\w*|(?<![а-яѣ])работ[ыѣ](?![а-яѣ])|декорац\w*|(?<![а-яѣ])кисти|"
+                        r"эскиз\w*|костюмер\w*|скульптор\w*|машинист\w*", re.I)
 # Instrument solos, RG 2026-10-22: "keep the instrument solos as their own kind
 # of statement. that's neat data!" Reviews print who played the solos in a
 # ballet: `Исполняли соло: на скрипкѣ — г. Крейнъ; на віолончели — г.
@@ -552,6 +559,9 @@ def main() -> None:
             else:
                 role_raw, perf_a, perf_b = right, pm.start(1) + l_off, pm.end(1)
                 grammar = "performer-role"
+            perf_side = right if right_p else left
+            if CRAFT_SIDE.search(perf_side) or CRAFT_SIDE.search(body[max(0, perf_a - 40):perf_a].split("—")[-1].split("–")[-1]):
+                continue
             role_s = trim_leading_performers(
                 role_raw.strip(" .,;:«»„“"), known_surnames)
             if not plausible_role(role_s):

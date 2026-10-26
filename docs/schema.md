@@ -438,6 +438,8 @@ that the review names someone in a role; dropping those rows would silently narr
 the record. Verified before declaring the FKs: **zero dangling references** to
 `person` or `work`.
 
+**Craft credits are not cast (2026-10-26).** A dash pair whose name side carries a craft word (`Аксессуары — работы художника-скульптора П. П. Каменскаго`, `женскіе — костюмершей Офицеровой`) is skipped here (`CRAFT_SIDE`); those statements live in `research.review_credit`. 20 rows left on 2026-10-26 (3,159 -> 3,139).
+
 **Do not join this to `research.performance` as if it were the same fact.** A
 review asserts a casting; the Repertoire records a performance. They agree often
 and disagree sometimes, and the disagreement is research material.

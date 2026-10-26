@@ -20480,3 +20480,46 @@ select display_name, canonical_family_name from person where person_id = '48434a
 ```
 
 Result: before, «Апиханова, Елена Петровна» / Апиханова. Control rebuild (build_research_model.py, code unchanged) = production, 52 tables. After the override: only research.person differs, 1 row -> «Аниханова, Елена Петровна» / Аниханова; review_credit rebuilt on top unchanged (2,413). Production = tested copy; sqlite person row updated, person 2,644, review_credit 2,413.
+
+## 2026-10-26 — «Г. И. Головъ», Moscow scene painter: review credits, roster search, what review_credit caught
+
+```sql
+select r.season, r.city, r.printed_folio, r.page_id, r.role_category, r.part_surface, w.canonical_title
+ from research.review_credit r left join research.work w on w.work_id::varchar = r.work_id
+ where name_surface like 'Голов%';
+-- Python regex Голов(?!ин|ан|к|н|ол)\w* over reflow(coalesce(caption_text, text)) of every raw.review_block
+select p.display_name, string_agg(distinct pa.season, ' '), string_agg(distinct cast(pa.heading_path as varchar), ' | ')
+ from research.person p join research.person_appearance pa using(person_id) where p.canonical_family_name like 'Голов%' group by 1;
+select p.display_name, min(pa.season), max(pa.season) from research.person p join research.person_appearance pa using(person_id)
+ where cast(pa.heading_path as varchar) ilike 'МОСКВА%декораці%' and p.canonical_first_name like 'Г%' group by 1;
+select role_category, name_surface, link_method, part_surface from research.review_credit
+ where block_id = ? and char_start between ? and ?;  -- each Головъ mention
+```
+
+Result: 7 printed credits, all Moscow ballet reviews: 1905-06 f. 216 Дочь фараона (3-е д. 4-я к. «Большія пилоны…», 5-я к. «Колонный залъ дворца», «художника Г. И. Голова»); 1906-07 f. 234 Донъ-Кихотъ (1-е д. 1-я к. площадь въ Барцелонѣ, 2-е д. 2-я к. Испанскій кабачекъ, 3-е д. 5-я к. Садъ Дульцинеи, «работы … Г. И. Голова»); 1906-07 plate caption «Кабачекъ.—Декорація Голова по эскизу Коровина»; 1908-09 f. 159 Раймонда «декораціи по эскизамъ … К. А. Коровина, исполненныя гг. Головымъ и барономъ Клодтомъ». No research.person Головъ (roster Голов-: Головкина, Головина ×2, Головинъ А. Я. (SP decorator, distinct: «А. Я. Головинъ» in the same reviews), Головацкій, Головань); no Moscow decoration staff with initial Г. review_credit holds 3 of the 7 (f. 234, printed-only). Scan check (Claude): all 7 printed as stored except the caption, stored «Кавалерія—Декорація Голова … Горского», print «Кабачекъ.—Декорація Голова … Горскаго».
+
+
+## 2026-10-26 — Головъ person: control chain run, test chain run, production check; craft credits inside review_assertion
+
+```sql
+-- full review chain on copies (control: unchanged; test: + Головъ); content diffs
+select block_id, char_start, mention_type, surface, coalesce(entity_id,''), link_method from entities.review_mention;
+select block_id, char_start, role_category, coalesce(work_id,''), coalesce(person_id,''), name_surface, link_method, coalesce(part_surface,'') from research.review_credit;
+select assertion_id, block_id, role_surface, performer_surface, coalesce(performer_person_id,''), coalesce(work_id,''), link_method from research.review_assertion;
+select person_id, display_name, canonical_family_name, person_source from research.person;
+-- review_assertion rows whose performer side carries a craft word (художник|работы|работѣ|декорац|кисти|эскиз|костюмер|скульптор), read against the block text
+```
+
+Result: control = production except candidate-id/page-list order and 3 «Анихановой» assertion surfaces. Test vs control: person +1 (Головъ, Г. И., review); mentions +8 (7 -> him, 1 unlinked override); credits 3 relinked + 1 new (caption); assertions +2 (3184, 3185). 17 older review_assertion rows are craft credits (2033, 2034, 2072, 2124, 2185, 2186, 2255, 545, 546, 2269, 2723, 1329, 1330, 2882, 3013, 3047, 3182). Production = test copy on all 52 tables; sqlite: person 2,645.
+
+
+## 2026-10-26 — Craft credits removed from review_assertion: test and production check
+
+```sql
+-- build_review_assertions.py with CRAFT_SIDE on a copy; per-table content diff vs production (candidate-id lists ignored)
+select assertion_id from research.review_assertion;   -- production vs copy, set difference
+select count(*) from research.review_assertion;
+select block_id, season, city, printed_folio, performer_surface, work_surface from research.review_assertion where assertion_id in (2268, 2186);
+```
+
+Result: only research.review_assertion differs: -20 rows (the 19 listed 2026-10-26 + 2268, «— машиниста Н. А. Бергера», 1897-98 SP f. 269), +0. Production after apply = tested copy on all 52 tables; 3,159 -> 3,139. sqlite: review_assertion 3,139, review_solo 96, review_credit 2,414.

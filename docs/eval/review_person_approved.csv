@@ -1,12 +1,13 @@
-printed_in_review,evidence
-Воскресенская,"SCAN-CONFIRMED. 7 mentions over 1893-94, 1896-97 and 1897-98 Moscow; db holds only Воскресенскій (m)."
-Барковская,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p019/p020, in г-жи corps lists; db holds only Барковскій (m)."
-Титова,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p020, in the г-жи list with Барковская and Терентьева; db holds only Титовъ (m)."
-Терентьева,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p020, г-жи list; db holds only Терентьевъ (m)."
-Галактіонова,"SCAN-CONFIRMED plate caption «Граціелла», бал. Сень-Леона, муз. Пуни. / Г-жа Галактіонова; db holds only Галактіоновъ (m)."
-Шеншина,"SCAN-CONFIRMED vertical caption «Эсмеральда» … Г-жа Шеншина, Ермолова, Пукарева …; db holds only Шеншинъ (m)."
-Ячменевъ,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p019, 'Карлъ, сынъ ихъ—г. Ячменевъ', a named role; db holds only Ячменева (f)."
-Громовъ 1-й,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p020, гг. list '…Окуловъ, Громовъ 1-й, Ермоловъ 2-й…'; db holds only Громова (f)."
-Пѣшковъ 2-й,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p019, '2-й жандармъ — г. Пѣшковъ 2-й', and p020 in a гг. list. Current season (the plain Пѣшковъ and Пѣшковъ 1-й are 1844/1849/1866 retrospectives and are NOT here)."
-Пѣшковъ 3-й,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p020, гг. list '…Федоровъ, Пѣшковъ 3-й, Окуловъ…'."
-Никифорова,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p020, г-жи list '…Н. Медвѣдева, Никифорова 3-я, восп. Бреусъ…'; db holds only Никифоровъ (m)."
+printed_in_review,evidence,text_pattern
+Воскресенская,"SCAN-CONFIRMED. 7 mentions over 1893-94, 1896-97 and 1897-98 Moscow; db holds only Воскресенскій (m).",
+Барковская,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p019/p020, in г-жи corps lists; db holds only Барковскій (m).",
+Титова,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p020, in the г-жи list with Барковская and Терентьева; db holds only Титовъ (m).",
+Терентьева,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p020, г-жи list; db holds only Терентьевъ (m).",
+Галактіонова,"SCAN-CONFIRMED plate caption «Граціелла», бал. Сень-Леона, муз. Пуни. / Г-жа Галактіонова; db holds only Галактіоновъ (m).",
+Шеншина,"SCAN-CONFIRMED vertical caption «Эсмеральда» … Г-жа Шеншина, Ермолова, Пукарева …; db holds only Шеншинъ (m).",
+Ячменевъ,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p019, 'Карлъ, сынъ ихъ—г. Ячменевъ', a named role; db holds only Ячменева (f).",
+Громовъ 1-й,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p020, гг. list '…Окуловъ, Громовъ 1-й, Ермоловъ 2-й…'; db holds only Громова (f).",
+Пѣшковъ 2-й,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p019, '2-й жандармъ — г. Пѣшковъ 2-й', and p020 in a гг. list. Current season (the plain Пѣшковъ and Пѣшковъ 1-й are 1844/1849/1866 retrospectives and are NOT here).",
+Пѣшковъ 3-й,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p020, гг. list '…Федоровъ, Пѣшковъ 3-й, Окуловъ…'.",
+Никифорова,"SCAN-CONFIRMED review_1905-06_MSK_ballet_p020, г-жи list '…Н. Медвѣдева, Никифорова 3-я, восп. Бреусъ…'; db holds only Никифоровъ (m).",
+"Головъ, Г. И.","SCAN-CONFIRMED by Claude 2026-10-26: Moscow scene painter, 7 credits, never in a people list (distinct from А. Я. Головинъ, named separately in the same reviews). 1905-06 f. 216 Дочь фараона «художника Г. И. Голова» x2; 1906-07 f. 234 Донъ-Кихотъ «работы художника Г. И. Голова» x3; 1906-07 plate caption «Кабачекъ.—Декорація Голова по эскизу Коровина»; 1908-09 f. 159 Раймонда «исполненныя гг. Головымъ и барономъ Клодтомъ». RG 2026-10-26: ""yes, create the person for Головъ"". Name from the printed initials; nominative reconstructed from the oblique forms.",(?<![А-Яа-яЁёѢѣІіѲѳ])Голов(?:а|ымъ|ъ)(?![А-Яа-яЁёѢѣІіѲѳ])

@@ -29,7 +29,15 @@ so minting entities straight off the worklist would have invented seven
 dancers who never existed.
 
 These records are thin on purpose: a surname and, where printed, an
-ordinal. No first name, no patronymic -- the reviews print none. They will
+ordinal. No first name, no patronymic -- the reviews print none.
+
+Craftspeople too (2026-10-26, RG: "yes, create the person for Головъ"): the
+Moscow scene painter «Г. И. Головъ», credited seven times in the ballet
+reviews and in no people list. The matcher never knew his name, so he has no
+mentions to count; an approved row may then give a `text_pattern` (a regex
+over the ballet review text) and the facts come from the text instead. The
+printed form may carry initials after a comma (`Головъ, Г. И.`): the family
+name is the part before it. They will
 not merge cleanly with a roster person later without new evidence, which
 is the honest state of the knowledge.
 
@@ -77,14 +85,14 @@ def main() -> int:
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
 
-    names = [(r["printed_in_review"], r["evidence"])
+    names = [(r["printed_in_review"], r["evidence"], (r.get("text_pattern") or "").strip())
              for r in csv.DictReader(open(a.approved, encoding="utf-8"))
              if r.get("printed_in_review")]
 
     con = duckdb.connect(a.db, read_only=a.dry_run)
     out = []
-    for printed, evidence in names:
-        fam, ordinal = split_name(printed)
+    for printed, evidence, pattern in names:
+        fam, ordinal = split_name(printed.split(",")[0])
         key = key_of(printed)
         pid = str(uuid.uuid5(NAMESPACE, f"review_person:{key}"))
         facts = con.execute("""
@@ -93,6 +101,18 @@ def main() -> int:
             FROM entities.review_mention
             WHERE mention_type = 'person' AND surface = ?
         """, [printed]).fetchone()
+        if (not facts or facts[3] == 0) and pattern:
+            from match_review_mentions import reflow
+            rx = re.compile(pattern)
+            hits = [(s, c, pid) for s, c, pid, tx in con.execute("""
+                SELECT p.season, p.city, b.page_id, coalesce(b.caption_text, b.text)
+                FROM raw.review_block b JOIN raw.review_page p USING (page_id)
+                WHERE p.genre = 'Ballet'""").fetchall()
+                    for _ in rx.finditer(reflow(tx or ""))]
+            if hits:
+                facts = (min(h[0] for h in hits), max(h[0] for h in hits),
+                         "|".join(sorted({h[1] for h in hits})), len(hits),
+                         "|".join(sorted({h[2] for h in hits})))
         if not facts or facts[3] == 0:
             raise SystemExit(f"{printed!r} has no mentions -- refusing to mint a "
                              f"person with no evidence in the corpus")
