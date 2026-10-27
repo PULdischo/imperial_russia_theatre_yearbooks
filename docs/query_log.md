@@ -21213,3 +21213,13 @@ select city,receipts_minus_printed_kopecks/100.0 from research.season_stat_check
 
 Result: Moscow −0.10 (was −60.10), SP −494.14. Fixed on the scan: Большой 5 Sept 1893 2618 -> 2648 р. 53 к.; Малый 15 Sept
 1893 818 -> 848 р. 16 к.
+
+## 2026-10-27 — 1893-94 SP after the scan read; scan-audit coverage
+
+```sql
+select city,receipts_minus_printed_kopecks/100.0 from research.season_stat_check where season='1893-94';
+select event_id, ... from raw.event_entry where season=? and theater like ? and event_status='performed';  -- audit scope per season/theater
+```
+
+Result: SP −163.77 (was −494.14), Moscow −0.10. compare_season_stats.py: SP French 0.00, opera −130.00, drama/German/mixed
+net −33.77. Audit ledger docs/eval/scan_audit/receipts_scan_reads_2026-10-27.csv: 2,254 events, 47 corrected.

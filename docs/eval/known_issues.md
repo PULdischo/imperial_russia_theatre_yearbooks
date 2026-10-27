@@ -24347,4 +24347,19 @@ rebuild -> build_datasette. Rebuild diff vs `outputs/backups/foldlog_1894-95_202
   were tens-digit misreads, found on the scan (checked by Claude) and fixed by `fix_1893_94_moscow_tens.py` (2 raw cells,
   rebuild diff clean): 5 Воскрес. (p. 3) Большой «Жизнь за Царя» 2618 -> 2648 р. 53 к.; 15 Среда (p. 4) Малый 818 -> 848 р.
   16 к. Moscow 1893-94 is now −0.10 against the printed totals (Italian opera + mixed −0.10).
+- **1893-94 SP, 2026-10-27 (RG: "check the 1893-94 SP gap on the scans").** Every Маріинскій, Александринскій and
+  Михайловскій cell read against the scan (checked by Claude). Fixed (`fix_1893_94_sp_scan.py`, 15 cells; rebuild diff:
+  15 event rows, 8 performance rows, no new works, works 2965 -> 2963):
+  - p. 11 Михайловскій 26-28 Nov 1893 one-row shift: 26 held a copy of 25; 27 held 26; 28 held 27 with the benefit heading.
+    Now 26 «У своихъ / Лѣтняя картинка» 1280 р. 95 к.; 27 «Bénéfice de M-lle Balletta.» Cendrillonnette / Les Projets de ma
+    Tante 2684 р. 50 к.; 28 same plays 1383 р. 50 к.
+  - p. 19, 15 Feb 1894 Маріинскій held a copy of 16 Feb («Пиковая дама» 2943 р. 20): scan «Демонъ, оп.» 2776 р. 70 к.
+  - 3 Oct 1893 Михайловскій 455 -> 458 р.; ten Маріинскій figures had lost their kopecks (pp. 12-13, 18-19).
+  - 13 Dec 1893 Маріинскій «1-е и 2-е д.» + «Русланъ и Людмила» merged into the printed excerpt «1-е и 2-е д. оп. Русланъ и
+    Людмила». Separately (`fix_1893_94_paiatsy_rigoletto.py`) 4 Feb 1894 Маріинскій gains its missing second work «3-е и 4-е
+    д. оп. Риголетто».
+  - SP 1893-94 now −163.77 (was −494.14): French exact; opera −130.00 (119 = 119, every Маріинскій figure matches the scan,
+    no single slip: the yearbook's own); drama/German/mixed net −33.77 as before.
+- Scan-read audit record started (RG: "Can we use these rereadings as a general audit, too?"): `docs/eval/scan_audit/`,
+  2,254 events read today, 47 corrected; covers receipts figures, not a word-by-word title audit.
 
