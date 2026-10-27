@@ -24286,3 +24286,17 @@ performance genre, 0 work_id/person changes.
   - Маріинскій opera +15,535.42 (123 = 123 events): no 1-4-event combination equals it, no misread; unexplained.
   - Not checked yet: Михайловскій opera on the scan; the Moscow side (Большой opera +900.00 exactly — round, so possibly
     one misread hundreds digit; Малый drama −2,136.27; concert −4,364.80).
+- **Moscow + Михайловскій follow-up, same day (RG: "do these").**
+  - Большой opera +900.00: `season_stats_receipt_candidates.py` gave 5 single-digit candidates (2117 р. 80, 1999 р. 59,
+    1996 р. 64, 1926 р. 58, 1911 р. 3); all 5 match the scan, and no 1-3-event combination equals 900.00. Then every
+    Большой and Малый figure of 1895-96 read on the scan (checked by Claude): all Большой figures match.
+  - Малый: 13 cells on pp. 4-7 had lost kopecks in extraction («1251 р.» for «1251 р. 1 к.», «981 р. 7» for «981 р. 73 к.»,
+    «782 р. 4 к.» for «782 р. 44 к.», ...); restored by `fix_1895_96_maly_kopecks.py` (rebuild diff: those 13 raw cells).
+    Малый drama −2,136.27 -> −2,130.38: the kopecks were only 5.89 of it; the rest is not a misread.
+  - Concert −4,364.80: the printed «Концертовъ 2 (9,297 р. 80 к.)» are the two benefit evenings «Въ пользу фонда на
+    учрежденіе въ Москвѣ убѣжища для престарѣлыхъ артистовъ. Музыкально-литературный вечеръ съ живыми картинами» (25 Feb,
+    4933 р.; 5 Mar, 4364 р. 80 к.; footnote 13 «Оба въ пользу ...»), sum exactly 9,297.80. The 5 Mar one has no work
+    stored, so the comparison script classes it unknown. Accounted for; nothing to fix in the figures.
+  - Михайловскій opera: all 20 figures match the scan. Its +2,134.20 is the 3 Sept event (see above).
+  - 1895-96 now: Moscow −1,230.50 (Малый drama −2,130.38, Большой opera +900.00 — both the yearbook vs itself), SP +19,440.08.
+  - 28 Воскресенье (Jan 1896, p. 17) Малый morning «867 р. 82 к.»: the last kopeck digit is damaged type (2 or 7); left as 82.

@@ -21179,3 +21179,17 @@ Result: the SP ballet review says «Сезонъ открылся 3-го сен�
 31 Aug-1 Sept were drama bills (with ballet items); 3 Sept «Севильскій цирюльникъ» is its first opera of the season (next
 10 Sept «Майская ночь»). So both missing figures are the opening performance of a company's season. No 1895-96 SP opera
 review is in the corpus. Nothing in the reviews or the stats footnotes explains why the takings are missing.
+
+## 2026-10-27 — 1895-96 Moscow residuals and Михайловскій opera vs the scan
+
+`season_stats_receipt_candidates.py` (Большой opera −900.00: 5 candidates, none confirmed on the scan); 1-3-event
+combinations of Большой opera receipts vs 90,000 kopecks (0); every Большой + Малый raw.event_entry figure 1895-96 (336) and
+the 20 Михайловскій opera figures read on the scan; Moscow concert/unknown events listed from compare_season_stats.py's
+classifier.
+
+```sql
+select city,receipts_minus_printed_kopecks/100.0 from research.season_stat_check where season='1895-96';
+```
+
+Result after restoring 13 Малый kopecks: Moscow −1,230.50, SP +19,440.08. Moscow concerts = the two benefit evenings
+(4933 р. + 4364 р. 80 к. = 9,297.80, the printed concert total).
