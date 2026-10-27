@@ -309,22 +309,27 @@ def ballet_counts(con, out_dir):
             st[k][3] += int(r["count"])
         elif r["category"] == "Феерій":
             st[k][2] += int(r["count"])
-    seasons = sorted({(k[0], k[1]) for k in list_perf} & set(st))
+    # Seasons with lists but no stats page (1890-91) still get the list-vs-Repertoire check; stats columns blank.
+    seasons = sorted({(k[0], k[1]) for k in list_perf})
     out, detail = [], []
     for season, city in seasons:
         L = sum(v for k, v in list_perf.items() if k[:2] == (season, city))
         R = sum(len(v) for k, v in rep_by_date.items() if k[:2] == (season, city))
-        S = sum(st[(season, city)][:3])
-        U = st[(season, city)][3]
+        has_stats = (season, city) in st
+        S = sum(st[(season, city)][:3]) if has_stats else None
+        U = st[(season, city)][3] if has_stats else 0
 
         def verdict_for(s):
+            if s is None:
+                return "no stats page; list = Repertoire" if L == R else "no stats page; list ≠ Repertoire"
             return ("all agree" if s == L == R else "stats = list" if s == L else "list = Repertoire" if L == R
                     else "stats = Repertoire" if s == R else "all differ")
         verdict = verdict_for(S)
-        out.append({"season": season, "city": city, "stats_ballet": st[(season, city)][0],
-                    "stats_mixed_with_ballet": st[(season, city)][1], "stats_feerie": st[(season, city)][2],
-                    "stats_total": S, "list_performances": L, "rep_sessions": R, "verdict": verdict,
-                    "stats_mixed_unqualified": U,
+        sv = st[(season, city)] if has_stats else ["", "", "", ""]
+        out.append({"season": season, "city": city, "stats_ballet": sv[0],
+                    "stats_mixed_with_ballet": sv[1], "stats_feerie": sv[2],
+                    "stats_total": "" if S is None else S, "list_performances": L, "rep_sessions": R,
+                    "verdict": verdict, "stats_mixed_unqualified": U if has_stats else "",
                     "verdict_with_unqualified": verdict_for(S + U) if U else ""})
         for k in sorted({k for k in list(list_perf) + list(rep_by_date) if k[:2] == (season, city)}):
             lp, rp = list_perf.get(k, 0), len(rep_by_date.get(k, []))

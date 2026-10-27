@@ -21268,3 +21268,19 @@ Result: cards saved for 1892-93 (13), 1893-94 (13: 7 recovered, 6 needs_second_l
 Of the 92 fold-hidden cells, 85 now carry a full figure; 7 still have unread digits: 5 Александринскій kopeck amounts
 in 1893-94 (plus 2 more 1893-94 Александринскій cells outside the list: 22 Пон. «614 р. ?0 к.», 24 Понед. «1585 р. ?0 к.»),
 and the two damaged-type figures 1901-02 Большой 30 Dec «1?31 р. 35 к.», 1906-07 Михайловскій 6 Feb «11?7 р. 08 к.».
+
+## 2026-10-27 — 1890-91 reconciliation: ballet lists vs Repertoire, and the not_captured dates
+
+Read: `compare_season_stats.py` (extended to seasons without a stats page) output `ballet_counts.csv` / `ballet_count_dates.csv`, and
+```sql
+select city, list_number, list_title, printed_total, n_dates from research.production where season='1890-91';
+select city, event_status, count(*) from research.event where season='1890-91' group by all;
+select e.date, string_agg(distinct e.city||':'||t.canonical_name, ', '), count(*) from research.event e join research.theater t using(theater_id)
+  where season='1890-91' and event_status='not_captured' group by e.date;
+select e.date, e.printed_page_number, a.page_id, e.date_verbatim from research.event e join analysis.event_entry a using(event_id)
+  where e.season='1890-91' and e.event_status<>'not_captured' and e.date between <each skip's neighbours>;
+```
+
+Result: ballet list performances = Repertoire events with ballet, Moscow 51 = 51, SP 45 = 45, 0 dates differ; all 22
+productions' printed totals = dated performances (Moscow 51, SP 61). 133 not_captured = 26 whole dates × 5 theaters
++ Александринскій 12-14 May 1891 (dark, #87). Each whole-date skip is mid-page with printed weekdays continuous across it.

@@ -104,4 +104,30 @@ Moscow residual after classification: −0.10. SP residual: opera −130.00 plus
    read; see `docs/eval/scan_audit/README.md` for coverage);
 3. start the outcome ledger with 1893-94's rows.
 
+## 1890-91 (2026-10-27): nothing to reconcile but the ballet lists, and they agree
+
+1890-91 has no season-totals page (the page type starts in 1891-92) and its Repertoire prints no receipts, so steps 1-3
+have nothing to compare. No opera or drama productions lists exist for the season either. That leaves step 4.
+
+**Step 4, lists:** `compare_season_stats.py` now also checks seasons that have lists but no stats page (stats columns
+blank, verdict "no stats page; list = / ≠ Repertoire"). 1890-91:
+
+| City | List performances (dated) | Repertoire events with ballet | Dates that differ |
+|---|---|---|---|
+| Moscow | 51 | 51 | 0 |
+| SP | 45 | 45 | 0 |
+
+All 22 productions' printed totals equal their dated performances (Moscow 9 productions, 51 = 51; SP 13 productions,
+61 = 61; SP's 61 list dates fall on 45 events because some events carried two ballets). No list date is marked
+"2 раза" or outside the total.
+
+**Completeness side check.** The season has 133 `not_captured` placeholders (Moscow 52, SP 81). They are 26 whole dates
+missing in all five theaters, plus Александринскій 12-14 May 1891, which #87 scan-verified as dark. Every one of the
+26 dates falls mid-page, and the printed weekday words run straight across each skip (e.g. «31 Воскр.» then «6 Субб.»
+over 1-5 April, the Lenten weekdays), so the yearbook did not print a row for those days: no content is missing.
+Five of them (28-29 Aug, 1 and 7 Sept 1890, 1 Mar 1891) were already confirmed on the scan in the 2026-09-22 gap
+recovery (#73 addendum). The rest are inferred from the weekday sequence and page position, not each read on the scan.
+
+**Outcome:** no gap rows for 1890-91. Nothing corrected, nothing open.
+
 Then the same steps season by season. Current gaps per season: the summary table artifact, or `city_totals.csv`.
