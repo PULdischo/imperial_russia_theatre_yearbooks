@@ -24322,3 +24322,19 @@ rebuild -> build_datasette. Rebuild diff vs `outputs/backups/foldlog_1894-95_202
   Михайловскій ballet 2 vs 3 printed (−1,474.00) with mixed +1,469.54 / 10 vs 8 — a bill the yearbook filed as ballet that
   the classifier calls mixed. Exact: Moscow ballet, Большой drama, mixed; SP opera (both theatres), Михайловскій drama.
   Not yet chased on the scans.
+- **Scan follow-up, same day (RG: "okay let's check these").** Read against the scan (checked by Claude): every Большой,
+  Малый, Маріинскій and Михайловскій figure of 1894-95.
+  - Figures: all match except two Малый cells on pp. 8-9, part of a wider mess there. Fixed by
+    `fix_1894_95_p8_9_moscow.py` (11 cells; rebuild diff: 3 event rows, 18 performance rows, all on that page; no person or
+    new-work changes; person_link alignment clean before): 17/18 Jan Малый held 18's and 19's content (scan: 17 «Лѣсъ /
+    Спириты» 1381 р. 39 к., 18 «Непогрѣшимый / На тотъ свѣтъ» 1373 р. 67 к.); garbled titles «Ворогъ къ дѣлу», «Вѣрь» (x2,
+    printed «Вѣеръ»), «Рись г. Максеева» (the annotation «Бенефисъ г. Макшеева.»), «Кая судьбина», «Вѣтріе»/«Вовѣтріе»,
+    «Коля мужей», «Подъ столомъ» corrected; 9 and 10 Jan Малый second plays restored; 12 Jan Большой «Куанъ» -> «Донъ Жуанъ».
+    11 one-off garbled works merged into existing ones (works 2976 -> 2965).
+  - Remaining 1894-95 gaps, none a misread: Moscow opera −1,000.00 (75 = 75), Малый drama +2,354.50 (127 = 127),
+    Маріинскій ballet −200.00 (17 = 17), French −1,392.50 (91 = 91), German −1.00; no 1-3-event combination equals any
+    (one coincidental 3-event match for Малый). The yearbook vs itself, like 1895-96 and 1897-98.
+  - Accounted for: Михайловскій ballet 2 vs 3 (−1,474.00) is 4 Sept 1894 «Волшебная флейта / Очарованный лѣсъ / Жертвы
+    Амуру / Grand pas изъ балета Корсаръ» 1474 р. — the comparison script reads the genre-less Latin «Grand pas» as French
+    and calls the bill mixed. Mixed 10 vs 8 and Александринскій drama 111 vs 112 net out (+4.36 / −4.46): one comedy-ballet
+    bill («Батюшкина дочка, ком.-бал.») the yearbook counts as drama.
