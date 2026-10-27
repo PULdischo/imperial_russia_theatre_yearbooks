@@ -272,9 +272,9 @@ re-read on p. 19, all as transcribed. What is left is the yearbook disagreeing w
 | Ledger | Line | Gap (Repertoire − printed) |
 |---|---|---|
 | 1894-95-01 | Moscow opera | −1,000.00; a second blind read of the Большой column agrees (all 110 legible figures; the 18 Apr fold cell shows three digit tops, so no hidden thousands digit) |
-| 1894-95-02 | Moscow Малый drama | +2,354.50 |
+| 1894-95-02 | Moscow Малый drama | +2,354.50; deferred (RG: one day, not needed for her research) |
 | 1894-95-03 | SP Маріинскій ballet | ~~−200.00~~ **corrected**: 29 Jan 1895 «Лебединое озеро» prints «3559 р.», stored 3359; found on a second blind read, the first had passed it. Now 0.00 |
-| 1894-95-04 | SP French | −1,392.50 |
+| 1894-95-04 | SP French | −1,392.50; deferred (RG: one day, not needed for her research) |
 | 1894-95-05 | SP German (Александринскій) | −1.00; two German cells are fold readings, a 1-rouble slip in either would close it (RG: not worth following) |
 | 1894-95-06 | SP Александринскій drama | −0.10 |
 
