@@ -21517,3 +21517,34 @@ lists = Repertoire 26 = the two drama + Дивертиссементъ bills (21
 scan (146 cells): 142 match, 4 in the fold equal RG's fold-log readings, 0 corrected. Stats p. 19 re-read: lines as
 transcribed. Receipts gaps unchanged: Moscow opera −1,000.00, Малый +2,354.50; SP Маріинскій ballet −200.00, French
 −1,392.50, German −1.00, Александринскій drama −0.10. Ledger 1894-95-01..10.
+
+## 2026-10-27 — 1894-95 season reviews vs the Repertoire
+
+Read: all `raw.review_block` text for 1894-95 (4 reviews, 94 pages); regex for «N(-го) [и N] <month>» with any following year
+→ 173 dated phrases, 114 in season; each paired with
+```sql
+select e.city, t.canonical_name, cast(e.date as varchar), e.time_of_day, string_agg(p.verbatim_title,' / ' order by p.performance_order),
+ e.annotation, e.event_id from research.event e join research.theater t using(theater_id) left join research.performance p using(event_id)
+ where e.season='1894-95' and e.event_status='performed' group by all;
+select coalesce(par.canonical_title,w.canonical_title), count(*) from research.performance p join research.event e using(event_id)
+ join research.work w using(work_id) left join research.work par on par.work_id=w.excerpt_of_work_id
+ where e.season='1894-95' and e.event_status='performed' and p.discipline in ('ballet','opera') group by all;   -- "most performed" lists
+```
+Result: about 58 dated performance statements, 57 agree; 6 Feb «Катарина» / Калмыкова benefit is 5 Feb in the Repertoire
+(both scans read; review's slip, ledger 1894-95-11). All printed "most performed" counts and the Moscow 27 + 3 ballet total agree.
+Note: review_1894-95_MSK_opera_p034 repeats the text of ballet p. 314.
+
+## 2026-10-27 — 1894-95 second blind reads: Маріинскій ballet and Большой
+
+```sql
+select event_id, cast(date as varchar), time_of_day, receipts_verbatim, receipts_total_kopecks from research.event e
+ join research.theater t using(theater_id) where season='1894-95' and event_status='performed'
+ and t.canonical_name='Маріинскій' and disciplines='ballet' order by date;                 -- 17
+select event_id, cast(date as varchar), time_of_day, receipts_verbatim, receipts_total_kopecks, disciplines from research.event e
+ join research.theater t using(theater_id) where season='1894-95' and event_status='performed' and t.canonical_name='Большой'
+ order by date, time_of_day;                                                                   -- 111
+```
+Read blind on the scans first, then compared. Маріинскій ballet: 16 match, 29 Jan 1895 stored 3359 р. vs print «3559 р.»
+(zoomed 5x); the scan figures sum to 44,984.11 = printed line. Fixed in raw (fix_1894_95_mariinsky_swan_lake.py). Большой:
+110 legible figures all match; 18 Apr «Русалка» in the fold, 3 digit tops, consistent with RG's 642 р. 31 к. Moscow opera
+−1,000.00 unchanged.

@@ -238,7 +238,7 @@ Rebuild diff: 23 performances, 23 events, 2 works (excerpt parents), nothing els
 
 Then the same steps season by season. Current gaps per season: the summary table artifact, or `city_totals.csv`.
 
-## 1894-95 (2026-10-27): every count explained; six small receipts gaps are the yearbook's own
+## 1894-95 (2026-10-27): every count explained; one receipts misread fixed, five small gaps are the yearbook's own
 
 The season runs 30 Aug 1894 - 7 May 1895 with the mourning closure for Alexander III (20 Oct - 31 Dec 1894) printed as a
 straight jump in the date column (#84). The stats page is p. 19, on the last spread of the Repertoire scan.
@@ -271,17 +271,34 @@ re-read on p. 19, all as transcribed. What is left is the yearbook disagreeing w
 
 | Ledger | Line | Gap (Repertoire − printed) |
 |---|---|---|
-| 1894-95-01 | Moscow opera | −1,000.00 |
+| 1894-95-01 | Moscow opera | −1,000.00; a second blind read of the Большой column agrees (all 110 legible figures; the 18 Apr fold cell shows three digit tops, so no hidden thousands digit) |
 | 1894-95-02 | Moscow Малый drama | +2,354.50 |
-| 1894-95-03 | SP Маріинскій ballet | −200.00 |
+| 1894-95-03 | SP Маріинскій ballet | ~~−200.00~~ **corrected**: 29 Jan 1895 «Лебединое озеро» prints «3559 р.», stored 3359; found on a second blind read, the first had passed it. Now 0.00 |
 | 1894-95-04 | SP French | −1,392.50 |
-| 1894-95-05 | SP German (Александринскій) | −1.00; two German cells are fold readings, a 1-rouble slip in either would close it |
+| 1894-95-05 | SP German (Александринскій) | −1.00; two German cells are fold readings, a 1-rouble slip in either would close it (RG: not worth following) |
 | 1894-95-06 | SP Александринскій drama | −0.10 |
 
 **Step 4, lists.** Moscow agrees three ways (30). SP: lists = Repertoire 26, stats 28; the two extra are the Александринскій
 drama + «Дивертиссементъ» bills of 21 and 29 Sept 1894, which the stats count as drama + ballet and the lists do not list
 (1894-95-09, `classification`; found 2026-09-30).
 
-**Outcome:** 10 ledger rows: 6 `yearbook_own` (provisional, until RG reads the source), 2 `excluded_by_yearbook`, 1
-`classification`, 1 `comparison_rule`. No dataset change. Nothing open except RG's own reading of the six gaps; the round
-figures (1,000.00, 200.00) look like the stats page's slips rather than the Repertoire's, but that is a guess.
+**Outcome:** 11 ledger rows: 1 `corrected` (29 Jan Маріинскій, `fix_1894_95_mariinsky_swan_lake.py`; shows in the
+database after the next rebuild), 6 `yearbook_own` (5 receipts gaps, provisional until RG reads the source, plus the review's
+6 Feb slip), 2 `excluded_by_yearbook`, 1 `classification`, 1 `comparison_rule`.
+
+**Lesson for the method:** a single read of a column can pass a misread; when a round gap survives one read, a second blind
+read of the column is cheap and found this one. The Маріинскій −200.00 looked like a stats-page slip and was not.
+
+**A third source: the season reviews (2026-10-27).** The four 1894-95 reviews (opera and ballet, both cities; 94 pages)
+give 173 dated phrases. Most are staff changes («съ 1-го марта 1895 г.»), deaths, closure-period or other-season dates
+(1850 «Катарина», 1859 «Парижскій рынокъ», 1882 «Севильскій цирюльникъ», the 1893-94 Чайковскій memorial). The rest,
+about 58 dated performance statements (each date counted once per statement), were matched to the Repertoire by date,
+city, theater and work: openings and closings, revivals, first nights, debuts, the Czech guest Флоріанскій's six
+nights, the April cast changes. 57 agree. One does not: the Moscow review (p. 315) dates Калмыкова's benefit with the
+«Катарина» revival to 6 Feb 1895; the Repertoire (p. 11) prints it in the 5 Feb evening row, read on both scans
+(ledger 1894-95-11, `yearbook_own`, the review's slip).
+
+The reviews' counts also agree with the Repertoire: Moscow 27 ballet events plus 3 mixed (2 with opera, 1 with drama); most
+performed, Moscow ballet «Конекъ-горбунокъ» 9, «Кипрская статуя» 6, «Катарина» 5; Moscow opera «Жизнь за Царя» and «Фаустъ»
+8 each, «Демонъ» 7, «Русалка» and «Донъ Жуанъ» 6 each; SP opera «Дубровскій» 10, «Евгеній Онѣгинъ» 9, «Майская ночь» 8. The
+SP opera review's note that operas played only at the Михайловскій until 4 Oct (Маріинскій under repair) matches too.

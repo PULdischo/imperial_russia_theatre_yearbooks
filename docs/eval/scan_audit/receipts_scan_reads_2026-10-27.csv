@@ -930,7 +930,7 @@ season,theater,printed_page,date_text,time_of_day,event_id,receipts_now,result,n
 1894-95,Большой,10,27 Пятница.,unspecified,repertoire_1894-95_pair010__s009,2655 р. 62 к.,matches scan,
 1894-95,Малый,10,27 Пятница.,unspecified,repertoire_1894-95_pair010__s010,1388 р. 36 к.,matches scan,
 1894-95,Михайловскій,10,28 Суббота.,unspecified,repertoire_1894-95_pair010__s013,2221 р. 50 к.,matches scan,
-1894-95,Маріинскій,10,29 Воскресенье.,unspecified,repertoire_1894-95_pair010__s016,3359 р.,matches scan,
+1894-95,Маріинскій,10,29 Воскресенье.,unspecified,repertoire_1894-95_pair010__s016,3559 р.,corrected,"first read passed it as 3359; second blind read 2026-10-27 at 5x: print «3559 р.» (lightly inked 5); fix_1894_95_mariinsky_swan_lake.py"
 1894-95,Михайловскій,10,29 Воскресенье.,unspecified,repertoire_1894-95_pair010__s019,2113 р.,matches scan,
 1894-95,Большой,10,29 Воскресенье.,unspecified,repertoire_1894-95_pair010__s020,3916 р. 20 к.,matches scan,
 1894-95,Малый,10,29 Воскресенье.,morning,repertoire_1894-95_pair010__s021,342 р. 10 к.,matches scan,
