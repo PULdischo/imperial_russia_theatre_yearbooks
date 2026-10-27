@@ -183,8 +183,8 @@ Repertoire misread; read both before treating either as wrong.
 **Benefit headings (2026-10-27).** Every benefit the reviews date (29) falls on a Repertoire event carrying that
 benefit's heading, and every printed «Бенефисъ / Bénéfice» heading on the 24 table pages (36) is in the database, page by
 page. One stored heading is not printed: 11 Dec 1890 Большой «Бенефисъ г. Р.», a truncated copy of the Малый's «Бенефисъ
-г. Рыбакова.» on the same row (`fix_1890_91_bolshoi_benefit_leak.py`, ledger 1890-91-09, `corrected`; shows in the database
-after the next rebuild).
+г. Рыбакова.» on the same row (`fix_1890_91_bolshoi_benefit_leak.py`, ledger 1890-91-09, `corrected`; in the database
+since the 2026-10-27 rebuild).
 
 **27 April 1891, time of day (RG: "note the discrepancy").** The review (p. 203) names two debuts that day, Медвѣдевъ and
 Карелинъ in «Отелло» and Владимірова in «На бойкомъ мѣстѣ», without a time. The table (p. 25) prints both in the «утро»
@@ -282,8 +282,8 @@ re-read on p. 19, all as transcribed. What is left is the yearbook disagreeing w
 drama + «Дивертиссементъ» bills of 21 and 29 Sept 1894, which the stats count as drama + ballet and the lists do not list
 (1894-95-09, `classification`; found 2026-09-30).
 
-**Outcome:** 11 ledger rows: 1 `corrected` (29 Jan Маріинскій, `fix_1894_95_mariinsky_swan_lake.py`; shows in the
-database after the next rebuild), 6 `yearbook_own` (5 receipts gaps, provisional until RG reads the source, plus the review's
+**Outcome:** 11 ledger rows: 1 `corrected` (29 Jan Маріинскій, `fix_1894_95_mariinsky_swan_lake.py`; database
+rebuilt 2026-10-27), 6 `yearbook_own` (5 receipts gaps, provisional until RG reads the source, plus the review's
 6 Feb slip), 2 `excluded_by_yearbook`, 1 `classification`, 1 `comparison_rule`.
 
 **Lesson for the method:** a single read of a column can pass a misread; when a round gap survives one read, a second blind

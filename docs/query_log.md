@@ -21548,3 +21548,19 @@ Read blind on the scans first, then compared. Маріинскій ballet: 16 ma
 (zoomed 5x); the scan figures sum to 44,984.11 = printed line. Fixed in raw (fix_1894_95_mariinsky_swan_lake.py). Большой:
 110 legible figures all match; 18 Apr «Русалка» in the fold, 3 digit tops, consistent with RG's 642 р. 31 к. Moscow opera
 −1,000.00 unchanged.
+
+## 2026-10-27 — Rebuild for the 29 Jan 1895 Маріинскій fix: diff on a copy, promoted
+
+Run: parse_and_validate (outputs/full_run/raw, --page-headers, --printed-page-numbers) to a scratch dir -> build_duckdb ->
+build_entities -> validate_performance_dates -> build_research_model on a copy of production; every table of both databases
+compared (EXCEPT ALL both ways, `duckdb_tables()`), then
+```sql
+select receipts_verbatim, receipts_total_kopecks from research.event where event_id='repertoire_1894-95_pair010__s016';
+select * from research.season_stat_check where season='1894-95' and city='SP';
+```
+Result: parsed CSVs differ in one row (event_entry pair010__s016, 3359 -> 3559 р.); databases differ in raw.event_entry,
+analysis.event_entry, research.event (−1 +1 each) and research.season_stat_check (SP 1894-95 receipts gap −1,593.60 ->
+−1,393.60); 52 other tables identical. check_person_link_alignment: 0 shift blocks. Production unchanged since the snapshot
+(cmp), backed up to outputs/backups/mariinsky_swan_lake_2026-10-27/ (db, parsed CSVs, sqlite), then promoted;
+research_dataset.sqlite rebuilt. compare_season_stats.py afterwards: only 1894-95 SP rows change (plus the known tie-order
+swap in 1900-01 SP mixed combos). The 1890-91 benefit-heading raw fix was already in production (parsed 14:47 today).
