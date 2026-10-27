@@ -165,7 +165,22 @@ over 1-5 April, the Lenten weekdays), so the yearbook did not print a row for th
 Five of them (28-29 Aug, 1 and 7 Sept 1890, 1 Mar 1891) were already confirmed on the scan in the 2026-09-22 gap
 recovery (#73 addendum). The rest are inferred from the weekday sequence and page position, not each read on the scan.
 
-**Outcome:** no gap rows for 1890-91. Nothing corrected, nothing open.
+**Completeness, read on the scan (2026-10-27):** all 26 dates were then read in the date column
+(`docs/eval/scan_audit/date_reads_2026-10-27.csv`); each is a skip in the print. So is 4-9 March 1891 (first week of
+Lent), which falls at the p. 21/22 break: p. 21's table closes after 3 March and p. 22 opens on 10 March.
+
+**A third source: the season reviews.** With no totals page, the review chapters (SP «All», Moscow ballet) are the only
+other dated count. 71 dated statements were matched to the Repertoire: 62 agree, 9 do not. All 9 were read on both
+scans; every Repertoire row matches its scan, and every disagreement is a slip in the review's own print, mostly the
+wrong month: «30 сентября» for 30 Aug, «11 февраля» for 11 Jan (twice), «7 и 9 марта» for 7 and 9 April («Гибель
+Фауста», which the Repertoire prints), plus «3 сентября» for 2 Sept, «12 октября» for 13 Oct, «21 октября» for a first
+night on 20 Oct, and «27 декабря» for 26 Dec. Ledger rows 1890-91-01..08, outcome `yearbook_own` (the review disagrees
+with the Repertoire; nothing in the dataset changes).
+
+**Lesson for the method:** a review date that disagrees with the Repertoire is more often the review's slip than a
+Repertoire misread; read both before treating either as wrong.
+
+**Outcome:** totals and lists: no gaps. Review dates: 8 `yearbook_own` rows. Nothing corrected, nothing open.
 
 ## Step-2 classifier now uses the research layer (2026-10-27)
 

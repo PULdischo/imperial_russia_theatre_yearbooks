@@ -1,0 +1,30 @@
+season,source,printed_page,what_was_read,reading,result,note
+1890-91,Repertoire,3,date column around 18 Aug 1890,«17 Пятница.» → «19 Воскр.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,3,date column around 25 Aug 1890,«24 Пятница.» → «26 Воскр.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,4,date column around 28-29 Aug 1890,«27 Понед.» → «30 Четвергъ.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,4,date column around 1 Sept 1890,«31 Пятница.» → «сент. 2 Воскр.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,4,date column around 7 Sept 1890,«6 Четвергъ.» → «8 Суббота.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,5,date column around 13-14 Sept 1890,«12 Среда.» → «15 Суббота.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,15,date column around 23-25 Dec 1890,«22 Суббота.» → «26 Среда.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,16,date column around 5 Jan 1891,«4 Пятница.» → «6 Воскр.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,16,date column around 12 Jan 1891,«11 Пятница» → «13 Воскр.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,21,date column around 1 Mar 1891,«28 Четвергъ.» → «мартъ 2 Суббота.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,24,date column around 1-5 Apr 1891,«31 Воскр.» → «апрѣль 6 Субб.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,25,date column around 26 Apr 1891,«25 Четвергъ» → «27 Суббота.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,25,date column around 1-2 May 1891,«30 Вторникъ.» → «май 3 Пятн.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,25,date column around 4 May 1891,«3 Пятн.» → «5 Воскр.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,26,date column around 8 May 1891,«7 Вторникъ.» → «9 Четвергъ.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,26,date column around 10-11 May 1891,«9 Четвергъ.» → «12 Воскр.»,no printed row (source skip),not_captured placeholders are the yearbook's own skip
+1890-91,Repertoire,21-22,4-9 Mar 1891 page break,"p. 21 table closes after «3 Воскресенье» (morning/evening); p. 22 first row «10 Воскр.», running head «10 марта»",no printed row (source skip),first week of Lent
+1890-91,Repertoire,4,2-3 Sept 1890 rows,"«2 Воскр.» Маріинскій «Талисманъ, бал.»; «3 Понед.» repeats «Карменъ» / «Въ деревнѣ … Тайна женщины» from 31 Aug",matches stored,
+1890-91,Repertoire,8 (RG photo),"12-13 and 20-21 Oct 1890, Михайловскій",12 «Перекати-поле … Картинка съ натуры»; 13 «Dora»; 20 and 21 «Ménages parisiens …»,matches stored,
+1890-91,Repertoire,15,"26-27 Dec 1890, Большой","26 вечер «Эсмеральда, бал.»; 27 утро «Конекъ-горбунокъ», вечер «Травіата»",matches stored,
+1890-91,Repertoire,16,11 Jan 1891 row,"Маріинскій «Ромео и Джульетта»; Михайловскій «Хрущевскіе помѣщики», «Бѣда отъ нѣжнаго сердца», «Она его ждетъ»",matches stored,
+1890-91,Repertoire,24,"7 and 9 Apr 1891, Маріинскій","«Гибель Фауста, драм. легенда.» both days",matches stored,
+1890-91,Season review SP,120,opening «Жизнь за Царя» date,"«шла 30-го сентября въ 617 разъ»; next paragraph «На слѣдующій день, 31-го августа»",print slip in the review,Repertoire 30 Aug
+1890-91,Season review SP,133,ballet opening date,«еще 3 сентября балетомъ «Талисманъ»»,print slip in the review,Repertoire + list 2 Sept
+1890-91,Season review SP,180,«Dora» date,«возобновленной 12 октября»,print slip in the review,Repertoire 13 Oct
+1890-91,Season review SP,180,«Ménages parisiens» date,«21 октября дана была новая комедія»,print slip in the review,Repertoire first 20 Oct
+1890-91,Season review SP,183,two dates,«11-го февраля» (Никулина) and «11-го февраля» (Ромео и Джульетта),print slip in the review,"Repertoire 11 Jan, both"
+1890-91,Season review SP,202,«Гибель Фауста» dates,«два раза (7 и 9 марта)»,print slip in the review,Repertoire 7 and 9 April
+1890-91,Season review Moscow ballet,237,Бессонэ debut date,«выступившая 27 декабря въ «Эсмеральдѣ»»,print slip in the review,Repertoire + list 26 Dec

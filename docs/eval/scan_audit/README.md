@@ -27,3 +27,11 @@ Coverage, 2026-10-27 (2,254 events, 47 corrected):
 
 Separate from this, the Binding Fold Log (RG's readings of the physical volumes) covers the gutter columns of 1892-93 to
 1897-98; see `docs/eval/fold_log/`.
+
+`date_reads_<date>.csv` — dates and date gaps read on the scans (one row per read): Repertoire date columns where the
+table skips days, rows checked against a dated statement elsewhere in the yearbook, and the season-review pages
+themselves. `result`: `no printed row (source skip)`, `matches stored`, or `print slip in the review`.
+
+- 2026-10-27, 1890-91: all 26 dates with no printed row (16 skips) read in the date column; the p. 21/22 break for
+  4-9 March; six Repertoire rows and seven season-review dates behind the review-vs-Repertoire check. Every Repertoire
+  row matched; all nine disagreements are slips in the review's own print (reconciliation ledger 1890-91-01..08).

@@ -718,3 +718,16 @@ Each read twice on the scan (checking agent and a close zoom, 2026-09-28) and ke
 ## Season Review year printed one too high (added 2026-10-26, #159)
 
 - **`review_1901-02_SP_ballet_p023` (folio 189): «2-го января 1903 года, на сценѣ Маріинскаго театра, былъ данъ въ первый разъ въ сезонѣ (202-е представленіе) балетъ Сенъ-Жоржа и М. Петипа „Дочь Фараона“»** — should be 1902. Scan-read by Claude: the print clearly has «1903», and an earlier reader has pencilled a «2» over the «3» in this copy. The Repertoire has «Дочь Фараона» at the Маріинскій on 2 January 1902 and not on 2 January 1903 (the 1902-03 review has the 203rd performance on 19 January 1903). Stored as printed; the review readers ignore a printed year AFTER the season, so the cast and credits keep the season date 1902-01-02.
+
+## 1890-91 season review: dates that disagree with the Repertoire (added 2026-10-27)
+
+Read on the review scans and checked against the Repertoire table, which matches its own scan in every case:
+
+- **p. 120:** opening «Жизнь за Царя» «шла 30-го сентября»; the next paragraph says «На слѣдующій день, 31-го августа».
+  Should be 30 августа.
+- **p. 133:** ballet season opened «3 сентября» with «Талисманъ»; Repertoire and ballet list: 2 Sept.
+- **p. 180:** «Dora» revived «12 октября»; Repertoire: 13 Oct (a Saturday, the French first-night day the same page names).
+  Same page: «Ménages parisiens» new «21 октября»; first printed 20 Oct.
+- **p. 183:** «11-го февраля» twice (Никулина's guest night; first Russian «Ромео и Джульетта»); both 11 January.
+- **p. 202:** «Гибель Фауста» «два раза (7 и 9 марта)»; Repertoire: 7 and 9 April.
+- **Moscow ballet p. 237:** Бессонэ's debut «27 декабря»; Repertoire and ballet list: 26 Dec.

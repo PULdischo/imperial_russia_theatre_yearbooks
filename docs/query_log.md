@@ -21388,3 +21388,38 @@ candidates), SP drama / Александринскій +33.32 (0), SP German +0.
 Claude at full resolution: Repertoire p. 20 (ForUpload_1893-94_Repertoire.pdf page 10) prints 2251 р. 38 к., as stored;
 stats p. 26 prints «188 (215,273 р. 34 к.)», «119 (345,169 р. 54 к.)», «34 (70,141 р. 75 к.)», all as transcribed in
 docs/season_stats/lines.csv. Outcome: the three yearbook_own rows stand (still provisional until RG reads the volume).
+
+## 2026-10-27 — 1890-91: notes-only events, and dated claims in the SP season review vs the Repertoire
+
+Read:
+```sql
+select e.city, t.canonical_name, e.date, e.annotation from research.event e join research.theater t using(theater_id)
+ where season='1890-91' and event_status='performed' and not exists (select 1 from research.performance p where p.event_id=e.event_id);
+select p.city, p.printed_folio, b.text from raw.review_block b join raw.review_page p using(page_id) where p.season='1890-91';
+  -- regex for «N разъ / представленій / спектакль» phrases (23 hits)
+select e.date, e.date_verbatim, e.event_status, string_agg(p.verbatim_title,' + ') from research.event e ... Маріинскій,
+ 1890-08-29..09-02 and 1891-03-01..03-23;
+select e.date, e.printed_page_number, a.page_id from research.event e join analysis.event_entry a using(event_id)
+ where season='1890-91' and date between '1891-03-02' and '1891-03-11';
+```
+
+Result: the 4 notes-only events are all the invalids' concert (SP Маріинскій 17 Mar rehearsal, 19 Mar, 21 Mar repeat;
+Moscow Большой 19 Mar). The SP review (p. 202) says «Гибель Фауста» was given at the Маріинскій on 7 and 9 March 1891; the
+Repertoire has no row at all for 4-9 March (first week of Lent), and the gap falls between p. 21 (ends 3 Mar) and p. 22
+(starts 10 Mar), so the weekday check could not cover it. The review (p. 120) dates the season's opening «Жизнь за Царя»
+to 30 September; the Repertoire has it at the Маріинскій on 30 August (season opener) and Весталка on 30 Sept.
+
+## 2026-10-27 — 1890-91 season reviews: every dated statement against the Repertoire
+
+Read: all `raw.review_block` text for season 1890-91 (SP «All» + Moscow ballet), regex for «N <month>» / «N и N <month>»
+→ 71 dated statements; each paired with
+```sql
+select e.city, t.canonical_name, e.date, e.time_of_day, e.event_status, string_agg(p.verbatim_title,' + '), e.annotation
+from research.event e join research.theater t using(theater_id) left join research.performance p using(event_id)
+where e.season='1890-91' group by all;
+```
+plus earliest-date checks for each first night the review names, and event_ids for the disagreeing rows.
+
+Result: 62 agree; 9 disagree, all slips in the review's print (Repertoire matches its scan each time): 30 Sept→30 Aug,
+3 Sept→2 Sept, 12 Oct→13 Oct, 21 Oct→20 Oct (first night), 27 Dec→26 Dec (Moscow), 11 Feb→11 Jan ×2, 7 and 9 Mar→7 and
+9 Apr («Гибель Фауста», in the Repertoire as p023__s046/s057). Ledger 1890-91-01..08.
