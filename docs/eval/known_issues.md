@@ -24427,3 +24427,23 @@ rebuild -> build_datasette. Rebuild diff vs `outputs/backups/foldlog_1894-95_202
   rebuilt; backup `outputs/backups/lida_aida_2026-10-27/`. «Лида» no longer occurs; «Аида» 182 performances.
   Summary artifact (claude.ai/artifact/ArLKsN6AHotfFGKQKcd634) notes updated the same day: 1893-94 fully read, the
   «Гибель Фауста» concert counting (1892-93, 1895-96, 1896-97), «Псковитянка» (1891-92), Moscow 1906-07 concerts open.
+
+## Issue #161: half-kopeck receipts lost all their kopecks -- FIXED 2026-10-27 (RG: "Whole kopecks")
+
+Found by the 1910-11 reconciliation's corpus check (stored value vs its own printed text; reconciliation ledger 1910-11-09).
+210 Repertoire receipts printed with a half-kopeck («1298 р. 82½ к.», «911 р. 22¹/₂ к.», «78⅞»), 1899-00 to 1909-10, almost all
+Михайловскій (French and German troupes) plus some Александринскій, were stored with NO kopecks: `build_duckdb.py` computes
+`TRY_CAST(receipts_rubles AS INTEGER)*100 + COALESCE(TRY_CAST(receipts_kopecks AS INTEGER), 0)`, and «82½» fails the cast. #109's
+note that the total "stores whole kopecks" was the intent; only the 8 odd-glyph cells it hand-corrected got it.
+
+RG (2026-10-27): store whole kopecks, drop the half, as #109 did. **Fix:** research layer only. `HALF_KOPECK_RE` in
+`build_research_model.py`: where `analysis.event_entry.receipts_kopecks` is 1-2 digits plus a fraction (½ ¹/₂ ¹⁄₂ ¹|₂ «¹ ₂» ⅞) and no
+`receipts_print_typos.csv` row applies, research.event adds the digits; `receipts_source` = `parsed_half_kopeck_dropped`,
+`receipts_correction_note` quotes the print. Raw and analysis unchanged.
+
+Rebuild on a copy of production (15:34 version): research.event 210 rows (209 values, +105.98 р.; «00¹/₂» changes only its label),
+research.season_stat_check 9 rows, nothing else. Promoted; backup `outputs/backups/half_kopecks_2026-10-27/`; sqlite rebuilt.
+Season-total gaps that close: 1899-00 SP French −12.48 → −0.14; 1903-04 SP German −2.63 → −0.04, French −0.31 → +0.98; 1904-05 SP
+French −0.64 → −0.12, German −1.67 → +0.48; 1906-07 SP German −5.68 → −0.06; 1908-09 SP German −5.43 → −0.06; 1902-03 SP French
+−20.21 → −10.08; 1900-01 SP French −2,521.01 → −2,491.69. The remaining few kopecks in the German lines are the halves the printed
+totals keep («51,839 р. 18½ к.»).

@@ -21564,3 +21564,63 @@ analysis.event_entry, research.event (−1 +1 each) and research.season_stat_che
 (cmp), backed up to outputs/backups/mariinsky_swan_lake_2026-10-27/ (db, parsed CSVs, sqlite), then promoted;
 research_dataset.sqlite rebuilt. compare_season_stats.py afterwards: only 1894-95 SP rows change (plus the known tie-order
 swap in 1900-01 SP mixed combos). The 1890-91 benefit-heading raw fix was already in production (parsed 14:47 today).
+
+## 2026-10-27 — 1910-11 reconciliation: Repertoire vs season totals vs ballet lists
+
+Read (production db, before and after the research rebuild below):
+```sql
+-- compare_season_stats.py / season_stats_receipt_candidates.py (city_totals, family_totals, ballet_counts, candidates)
+-- every 1910-11 event with its works, classified by compare_season_stats.classify_work / classify_event:
+select e.event_id, e.city, t.canonical_name, e.date, e.time_of_day, e.receipts_total_kopecks, e.event_status, e.annotation,
+       p.performance_order, p.verbatim_title, p.verbatim_genre, p.genre_family, p.discipline, p.is_ceremonial, p.company
+from research.event e join research.theater t using(theater_id) left join research.performance p using(event_id)
+where e.season='1910-11';
+select e.title, p.month_text, p.day_text, p.note, p.date from raw.production_entry_performance p
+ join raw.production_entry e using(production_entry_id)
+ where e.season='1910-11' and e.city='SP' and (e.title ilike 'Конекъ%' or e.title ilike 'Спящая%');
+select season, company, count(distinct event_id) from research.event join research.performance using(event_id)
+ where company in ('Moscow Art Theatre','Vienna operetta troupe','Berlin Lessing-Theater','Tina di Lorenzo','Réjane and her troupe') group by all;
+-- corpus check: every research.event.receipts_verbatim against receipts_total_kopecks (digits in the print vs stored value)
+select season, event_id, receipts_verbatim, receipts_total_kopecks from research.event where receipts_verbatim is not null;
+```
+
+Result (before): Moscow 471 printed / 474 Repertoire, +13,945.13 р.; SP 655 / 660, +19,412.17. Lines: Moscow drama 240 = 240,
++8,134.28 (no single-slip candidate); Moscow opera 180 / 178, −1.48; ballet 51 / 52, exact receipts; SP drama 272 / 315 and «Московскаго
+художественнаго театра» 45 / 1; SP opera 167 / 170, +14,500.51; ballet 49 / 50, +5,250.70; French −0.10. The Moscow Art Theatre run
+(Михайловскій 11 Apr - 15 May 1911) = 45 performed events, only the first carrying the troupe (heading printed once). Two Михайловскій
+drama-run cells genre «оп.» (21 Jan Анжело 410.40, 4 Feb Ромео и Джульетта 616.90). Lists: SP 52 dated vs 50 Repertoire ballet
+events; list dates 18 Feb (Конекъ-горбунокъ) and 19 Feb (Спящая красавица) have operas in the Repertoire. Corpus check: 17 figures
+whose kopecks were dropped by stray punctuation or a wrong marker letter (14 in 1910-11, 2 in 1909-10, 1907-08 «.575 р. 40 к.»
+stored 140 kopecks), plus 211 half-kopeck figures (1899-1910) stored with 0 kopecks (106.76 р. in all), not fixed.
+
+Blind scan reads of the Малый, Маріинскій and Александринскій columns (881 rows, 703 cells with works) compared with research.event:
+no figure differs except the kopeck losses above. No set of 1-3 Маріинскій opera / ballet events sums to those gaps.
+
+Change: 17 rows added to pipeline/research_corrections/receipts_print_typos.csv; build_research_model.py run on a copy: research.event
+17 values change, research.season_stat_check 4 rows, nothing else; promoted 15:29 (backup outputs/backups/receipts_typos_1910-11_2026-10-27/),
+research_dataset.sqlite rebuilt. After: Moscow +13,948.31 (drama +8,136.00, opera −0.02); SP +19,416.40 (opera +14,501.39, ballet
++5,250.70, drama −336.69, French +1.00); 1907-08 Moscow drama −564.00 → +10.00; 1909-10 SP drama +1,640.55 → +1,641.36.
+Ledger rows 1910-11-01..12; reconciliation README "1910-11".
+
+## 2026-10-27 — half-kopeck receipts: how many lost their kopecks, and the fix (issue #161)
+
+```sql
+select e.season, e.city, t.canonical_name, e.event_id, e.receipts_verbatim, e.receipts_total_kopecks, e.receipts_source,
+       a.receipts_rubles, a.receipts_kopecks
+from research.event e join research.theater t using(theater_id) join analysis.event_entry a using(event_id)
+where receipts_verbatim similar to '.*(½|¹/₂|¹|₂|¹ ₂|⅞|¼|¾).*';
+select season, city, category_verbatim, venue_verbatim, count, receipts_verbatim, receipts_kopecks
+from research.season_stat_line where receipts_verbatim similar to '.*(½|¹/₂|⅞|¼).*';
+select distinct receipts_kopecks from analysis.event_entry
+where receipts_kopecks is not null and receipts_kopecks <> '' and try_cast(receipts_kopecks as integer) is null;
+-- after build_research_model.py with HALF_KOPECK_RE, on a copy, vs the 15:34 production db:
+select t.receipts_source, count(*), sum(t.receipts_total_kopecks - p.receipts_total_kopecks)/100
+from test2.research.event t join p.research.event p using(event_id)
+where t.receipts_total_kopecks is distinct from p.receipts_total_kopecks group by 1;
+```
+
+Result: 218 Repertoire figures carry a fraction; 8 were already hand-corrected in receipts_print_typos.csv (#109, whole kopecks);
+the other 210 (1899-00 to 1909-10; 1900-01 Михайловскій 59, 1901-02 31, 1899-00 29 ...) were stored with 0 kopecks. Three
+season-stats lines print a half too (1903-04 SP German 51,839 р. 18½ к., 1904-05 SP French, 1907-08 SP French), stored as .5.
+RG chose whole kopecks. After the rule: 210 events relabelled parsed_half_kopeck_dropped, 209 values change, +105.98 р.;
+research.season_stat_check 9 rows; nothing else. Season-total gaps per known_issues.md #161 (e.g. 1899-00 SP French −12.48 → −0.14).

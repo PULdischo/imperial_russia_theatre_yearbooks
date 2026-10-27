@@ -170,9 +170,12 @@ marker ("876 к. 18 к.", "1225 q. 27 к.", "3049 р. 78 р."), the raw tier
 stays verbatim and unparsed (RG's rule), and `research.event` applies the
 intended value from the curated table
 `pipeline/research_corrections/receipts_print_typos.csv`.
-`research.event.receipts_source` = `parsed` | `corrected_print_typo` (NULL
-when there are no receipts), and `receipts_correction_note` quotes the
-printed text and says what was misprinted. Each correction row is keyed on
+`research.event.receipts_source` = `parsed` | `corrected_print_typo` |
+`parsed_half_kopeck_dropped` (NULL when there are no receipts), and
+`receipts_correction_note` quotes the printed text and says what was
+misprinted. `parsed_half_kopeck_dropped` (issue #161, RG 2026-10-27): a
+figure printed with a half-kopeck («82½ к.») keeps its whole kopecks and
+drops the half, by rule (`HALF_KOPECK_RE`), not by table row. Each correction row is keyed on
 the verbatim receipts text, and the build fails if a row stops matching
 exactly one entry. Only scan-confirmed typos (docs/eval/genuine_print_typos.md)
 are added.

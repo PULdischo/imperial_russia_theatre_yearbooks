@@ -539,6 +539,12 @@ def ballet_list_work_ids(con: duckdb.DuckDBPyConnection) -> dict:
 #: (docs/eval/genuine_print_typos.md). Issue #109.
 RECEIPTS_PRINT_TYPOS_CSV = Path(__file__).parent / "research_corrections" / "receipts_print_typos.csv"
 
+#: analysis.event_entry.receipts_kopecks printed with a half-kopeck: one or two
+#: kopeck digits, then the fraction as transcribed («82½», «22¹/₂», «84¹⁄₂»,
+#: «77¹|₂», «19¹ ₂», «78⅞»). research.event keeps the whole kopecks and drops the
+#: fraction (RG, 2026-10-27; the same as #109's hand corrections). Group 1 = the digits.
+HALF_KOPECK_RE = r"^\s*,?\s*(\d{1,2})\s*(½|¹/₂|¹⁄₂|¹\|₂|¹ ₂|⅞)\s*$"
+
 
 def load_receipts_corrections(con: duckdb.DuckDBPyConnection) -> int:
     import csv as _csv
@@ -1697,11 +1703,24 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             r.resolved_date AS date,
             r.resolved_confidence AS date_confidence,
             r.event_status,
-            coalesce(rc.corrected_total_kopecks, r.receipts_total_kopecks) AS receipts_total_kopecks,
+            -- A half-kopeck figure ("82½", "22¹/₂") fails the integer cast in build_duckdb.py,
+            -- so the parsed total lost ALL its kopecks. Store the whole kopecks and drop the
+            -- half (RG, 2026-10-27, as #109 did for the hand-corrected ones).
+            coalesce(rc.corrected_total_kopecks,
+                     r.receipts_total_kopecks
+                       + CASE WHEN regexp_matches(r.receipts_kopecks, '{HALF_KOPECK_RE}')
+                              THEN CAST(regexp_extract(r.receipts_kopecks, '{HALF_KOPECK_RE}', 1) AS INTEGER)
+                              ELSE 0 END) AS receipts_total_kopecks,
             CASE WHEN rc.page_id IS NOT NULL THEN 'corrected_print_typo'
+                 WHEN r.receipts_total_kopecks IS NOT NULL
+                      AND regexp_matches(r.receipts_kopecks, '{HALF_KOPECK_RE}') THEN 'parsed_half_kopeck_dropped'
                  WHEN r.receipts_total_kopecks IS NOT NULL THEN 'parsed' END AS receipts_source,
             CASE WHEN rc.page_id IS NOT NULL
-                 THEN 'printed "' || r.receipts_text || '": ' || rc.basis END AS receipts_correction_note,
+                 THEN 'printed "' || r.receipts_text || '": ' || rc.basis
+                 WHEN r.receipts_total_kopecks IS NOT NULL
+                      AND regexp_matches(r.receipts_kopecks, '{HALF_KOPECK_RE}')
+                 THEN 'printed "' || r.receipts_text || '": half-kopeck dropped, whole kopecks stored' END
+                 AS receipts_correction_note,
             r.printed_page_number,
             r.time_of_day,
             nullif(r.receipts_text, '') AS receipts_verbatim,
@@ -1736,6 +1755,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # f-string, because the SQL above contains regex braces of its own
     for flag, rx in EVENT_FLAG_RES.items():
         event_sql = event_sql.replace("{" + flag + "}", rx.replace("'", "''"))
+    event_sql = event_sql.replace("{HALF_KOPECK_RE}", HALF_KOPECK_RE)
     con.execute(event_sql)
 
     # A note printed once that covers a run of days (FREE_PERIOD_NOTES_CSV): the annotation
