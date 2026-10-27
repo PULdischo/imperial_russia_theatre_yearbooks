@@ -21436,3 +21436,16 @@ group by all order by 2, 3;
 ```
 Result: «Семейство Волгиныхъ» (SP Russian drama, 8 and 17 Apr 1898) and «При должности» (SP Russian drama, 8 Apr 1898
 only) -- one event, Александринскій 8 Apr 1898 (repertoire_1897-98_pair022__s056), both on the bill. Both readings fit the scan once known (checked by Claude). Neither is ballet.
+
+## 2026-10-27 — 1893-94 Moscow pp. 6-25 scan read; unread-kopeck fold cells
+
+```sql
+select e.event_id, a.page_id, t.canonical_name, e.receipts_verbatim, ... from research.event e ...
+where e.season='1893-94' and e.city='Moscow' and e.event_status='performed';            -- 393; pp. 2-5 already read (64)
+select e.event_id, t.canonical_name, e.date, e.receipts_verbatim, e.disciplines from research.event e ...
+where e.season='1893-94' and e.receipts_verbatim like '%?%';                               -- 7 cells, all Александринскій
+select verbatim_title, canonical_title, season, city, count(*) from research.performance ... where verbatim_title in ('Лида','Аида') or verbatim_title ilike 'Кручин%';
+```
+Result: 329 cells read (319 match the scan, 9 fold cells = RG's readings, 1 not visible: pair016__s046); no receipts
+corrections. Unread-kopeck cells: German 2 (8, 29 Mar 1894), Russian drama 5 (summed as 0 к.: 1.40-3.67 р.). «Лида» 4
+performances (1892-93 Moscow 2, 1893-94 Moscow 1, 1899-00 SP 1); «Кручинина» 1, «Кручиня» 1 vs «Кручина» 28.

@@ -24385,3 +24385,17 @@ rebuild -> build_datasette. Rebuild diff vs `outputs/backups/foldlog_1894-95_202
   `outputs/backups/faust_pskovityanka_2026-10-27/`. Season stats: 8 more category lines exact (100 -> 108). Open: Moscow
   1906-07 has no «Концертовъ» line, so its 3 Faust performances were counted elsewhere, probably as opera.
   Publishing (sqlite/HF/Cloud Run) is Andy's.
+- **1893-94 Moscow pp. 6-25 read on the scan, and the last ledger rows, 2026-10-27 (RG: "read the 25 Moscow
+  Italian-opera cells on the scan and close the last 1893-94 ledger row"; "let's do this [the Moscow scan coverage]
+  just in case").** 329 Большой and Малый cells (checked by Claude, five parallel readers; the 25 Italian cells read
+  twice): no receipts figure differs. 9 cells sit in the binding fold and equal RG's fold-log readings; 1 has no reading
+  yet: 24 Jan 1894 Большой «Жизнь за Царя», stored 2168 р. 23 к. (for RG's second look). Ledger: Moscow Italian opera
+  −0.10 -> `yearbook_own` (provisional); SP German −0.45 -> `open`: the kopecks of two German fold cells (8 and 29 Mar
+  1894, «2261 р. ? к.», «2309 р. ? к.», RG needs_second_look) are summed as 0 and should add up to exactly 45 к.; SP
+  drama: five more fold cells with hidden kopecks account for 1.40-3.67 р. of the −33.32.
+  **Works found in passing, not yet fixed (RG to decide):** (a) 17 Feb 1894 Большой, Чайковскій memorial: the scan prints
+  «Антрактъ къ 4-му д. оп. Мазепа» (missing) and the other three items as excerpts («2-е д. оп. Пиковая дама»,
+  «2-я карт. 1-го д. и арія 2-й карт. 2-го д. изъ оп. Евгеній Онѣгинъ», «1-я карт. 2-го д. оп. Черевички»), stored as
+  whole operas; (b) Малый 18 and 26 Jan 1894 «Кручинина» / «Кручиня» = print «Кручина» (two phantom works); (c) Большой 22
+  Oct 1893 «Лида» = print «Аида» (phantom work). Same «Лида» misread also in 1892-93 Moscow (2) and 1899-00 SP (1), not
+  checked. Minor, logged only: three Малый «Спорный вопросъ» rows carry a second genre the print doesn't have.
