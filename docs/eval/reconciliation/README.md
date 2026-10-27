@@ -327,27 +327,32 @@ loses when the print has a comma or a wrong letter next to the marker: «1542 р
 (14 in 1910-11, 2 in 1909-10, and 1907-08 4 Dec Малый «.575 р. 40 к.», stored as 1 р. 40 к.). All read on the scan and added to
 `pipeline/research_corrections/receipts_print_typos.csv` (raw verbatim, #109's rule); research layer rebuilt and promoted
 2026-10-27 (17 event values change, nothing else; backup `outputs/backups/receipts_typos_1910-11_2026-10-27/`). Ledger 1910-11-09.
+Later the same day the other two columns were read blind too (Михайловскій and Большой, every cell; 431 cells): every figure matches. **All six theater columns of the 1910-11 Repertoire have now been read on the scan** (Новый is dark all season).
 
 **Step 2, category lines:**
 
 | City | Line | Printed | Repertoire | Receipts gap | Reading |
 |---|---|---|---|---|---|
 | SP | Moscow Art Theatre | 45 | 45 | n/a | the troupe's run, 11 Apr-15 May 1911 at the Михайловскій, is exactly 45 events; the heading is printed once (11 Apr morning). RG 2026-10-27: label all 45 (VISITING_RUNS row); applied, now exact (1910-11-05, `classification`) |
-| SP | Russian drama | 272 | 273 | +690.61 | after the Art Theatre run and the two «оп.» cells below; Михайловскій drama not read in full; the extra event may be the 11 Feb charity «Поле брани» (no receipts) (1910-11-07, open) |
-| SP | opera | 167 | 168 | +13,474.09 | two Михайловскій cells print «оп.» inside the drama company's student run (21 Jan «Анжело», 4 Feb «Ромео и Джульетта»); the SP opera list has neither date. RG 2026-10-27: Russian drama (performance_work_overrides.csv), to re-check against the drama list once scanned (1910-11-06). Маріинскій alone: 168, every figure as printed (1910-11-03, `yearbook_own`) |
+| SP | Russian drama | 272 | 273 | +690.61 | after the Art Theatre run and the two «оп.» cells; both drama columns read in full, every figure as printed; the extra event may be the 11 Feb charity «Поле брани» (no receipts) (1910-11-07, `yearbook_own`, provisional) |
+| SP | opera | 167 | 168 | +13,474.09 | two Михайловскій cells print «оп.» inside the drama company's student run (21 Jan «Анжело», 4 Feb «Ромео и Джульетта»); the SP opera list has neither date. RG 2026-10-27: Russian drama (performance_work_overrides.csv); no drama-list check needed (RG) (1910-11-06). Маріинскій alone: 168, every figure as printed (1910-11-03, `yearbook_own`) |
 | SP | ballet | 49 | 50 | +5,250.70 | every figure as printed. The ballet line includes the free students' matinée (1908-10 footnotes say so), so one paying event is missing from the printed 49. Probably 9 Jan 1911 «Капризы бабочки» + «Щелкунчикъ» (5,321.75), which leaves −71.05; the next candidates leave 530-670 р. RG: "It's probably Jan 9, but we have no way of confirming this now." (1910-11-04, `yearbook_own`, provisional) |
-| SP | French | 99 | 99 | +1.00 | after two kopeck restorations; column not read (1910-11-08) |
+| SP | French | 99 | 99 | +1.00 | after two kopeck restorations; column read in full, every figure as printed (1910-11-08, `yearbook_own`) |
 | Moscow | Russian drama | 240 | 240 | +8,136.00 | every Малый figure as printed. 23 Jan 1911 matinée prints «5092 р. 56 к.»; the same play's matinées on 12 Dec and 9 Jan print 509 р. 56 к., so probably a print slip; with 509.56 the gap is +3,553.00 (1910-11-01, `yearbook_own`) |
-| Moscow | opera / ballet / mixed | 180 / 51 / 0 | 178 / 52 / 2 | −0.02 / 0.00 | printed ballet 51 = the 51 receipted ballet events to the kopeck; the 52nd is the 6 Dec free matinée. Repertoire mixed: 30 Dec «Риголетто» + «Балетный дивертиссментъ» (charity) and 19 Feb Малый emancipation-jubilee programme. 472 vs 471 events; no footnotes to say how they were counted (1910-11-11, `yearbook_own`). RG 2026-10-27: keep both bills mixed; nothing changed |
+| Moscow | opera / ballet / mixed | 180 / 51 / 0 | 178 / 52 / 2 | −0.02 / 0.00 | explained by the opera list (step 4): the opera line counts every event with an opera item, both mixed bills included (180 = 180); the ballet line is the 51 paying evenings; the free 6 Dec ballet matinée is the event left out of 471. RG: keep both bills mixed in the research layer (1910-11-11, `classification`) |
 
 **Step 4, lists.** Moscow: list = Repertoire 52, stats 51 (the free matinée). SP: list 52, Repertoire 50, stats 49. The lists print
 «Конекъ-горбунокъ» «февраля 18, 20» and «Спящая красавица» «февраля 17, 19» (totals 4 and 5 count them); the Repertoire prints
 18 Feb «Сказаніе о невидимомъ градѣ Китежѣ» and 19 Feb «Кантата. Жизнь за царя» at the Маріинскій. Both read on the scans
 (1910-11-12, `yearbook_own`).
 
-**Outcome:** 12 ledger rows: 2 `corrected` (17 kopeck restorations; Moscow opera now −0.02), 2 `classification` (the Art Theatre
-run and the two «оп.» cells, both applied 2026-10-27 on RG's rulings), 5 `yearbook_own` (provisional until RG reads the source), 1
-`excluded_by_yearbook`, 2 `open` (SP drama +1 / +690.61 and French +1.00, columns not read in full).
+**Opera lists (2026-10-27, transcribed blind from the scans).** Moscow (pp. 69-71, 25 entries, 174 dates): every date is a Repertoire opera item; the list prints «Валкирія» with no dates (the Repertoire has it 14, 24, 27 Jan, 8 Feb). Events with an opera item = 180 = the printed line (1910-11-11, -15). SP (pp. 62-64, 28 entries, 165 dates): every date matches; the list prints «Карменъ» with no dates (16, 25, 29 Nov in the Repertoire); list + «Карменъ» = 168 = the Repertoire, stats 167: one fewer, +13,474.09 р., no clean candidate (1910-11-14). List slips: «Демонъ» 7 dates vs «Всего—6 разъ», «Лакмэ» 10 vs 9, «1909 г.» for 1910 twice. The list has neither Михайловскій «оп.» cell (1910-11-06).
+
+**Moscow ballet review (2026-10-27).** Folios 95-98 agree with the Repertoire throughout: monthly counts (6, 7, 5, 11 with 5 matinées, 7, 8, 4, 4 = 52), all ten per-ballet totals, all 12 dated statements. Review = list = Repertoire 52; stats 51 leave out the free 6 Dec matinée (1910-11-13).
+
+**Outcome:** 15 ledger rows, nothing open: 2 `corrected` (17 kopeck restorations; Moscow opera now −0.02), 3 `classification` (the Art
+Theatre run and the two «оп.» cells, applied on RG's rulings; the Moscow mixed bills, counted as opera by the stats), 9 `yearbook_own`
+(provisional until RG reads the source), 1 `excluded_by_yearbook`. RG on SP ballet: probably 9 Jan 1911 (1910-11-04).
 
 **Lesson for the method:** before reading a large residual as a misread, check the stored value against its own printed text
 across the corpus. The parse can lose kopecks silently.

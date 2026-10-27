@@ -21796,3 +21796,56 @@ on 24 Sept, 26 Oct 1910, 20, 27 Jan, 17 Feb, 27 Apr 1911, not 4 Feb. After the r
 (44 Art Theatre + 2 relinked, all 1910-11), research.work 4 (appearance counts), nothing else; Moscow Art Theatre 1910-11 = 45 events.
 Promoted (backup outputs/backups/mxat_op_cells_1910-11_2026-10-27/), sqlite rebuilt. compare_season_stats.py: SP Art Theatre 45 = 45;
 drama 273 / 272, +690.61; opera 168 / 167, +13,474.09; ballet 50 / 49, +5,250.70; Moscow unchanged (mixed bills kept mixed, RG).
+
+## 2026-10-27 — 1910-11 Moscow ballet season review vs the Repertoire
+
+```sql
+select genre, count(*), min(printed_folio), max(printed_folio) from raw.review_page where season='1910-11' group by 1;
+select p.printed_folio, b.text from raw.review_block b join raw.review_page p using(page_id)
+where p.season='1910-11' and p.city='Moscow' order by p.page_id, b.rowid;
+select e.event_id, cast(e.date as varchar), e.time_of_day, e.receipts_total_kopecks, e.disciplines, e.annotation,
+       string_agg(p.verbatim_title || coalesce(' ['||p.verbatim_genre||']',''), ' + ' order by p.performance_order),
+       string_agg(case when p.discipline='ballet' then coalesce(w.canonical_title,p.verbatim_title) end, ' + ')
+from research.event e join research.theater t using(theater_id) join research.performance p using(event_id) left join research.work w using(work_id)
+where e.season='1910-11' and e.city='Moscow' and t.canonical_name='Большой' and e.event_status='performed' and e.disciplines like '%ballet%'
+group by all;
+select event_id from research.event e join research.theater t using(theater_id)
+where season='1910-11' and canonical_name='Большой' and cast(date as varchar)='1910-12-06' and time_of_day='morning';
+```
+
+Result: 53 Repertoire events with ballet = 52 ballet evenings + the 30 Dec «Риголетто» + divertissement bill. Review (folios 95-98): months
+6/7/5/11 (5 matinées)/7/8/4/4 = 52, all equal; per-ballet totals all equal (10 ballets); all 12 dated statements match. Stats 51 = the 51
+paying evenings (receipts exact); the free 6 Dec matinée (repertoire_1910-11_p022__s003) is left out. Ledger 1910-11-13.
+
+## 2026-10-27 — 1910-11 opera productions lists (SP, Moscow) vs the Repertoire
+
+Lists transcribed blind from the scans (SP pp. 62-64: 28 entries, 165 dates; Moscow pp. 69-71: 25 entries, 174 dates). Matched by date
+and title (normalised prefix) against:
+```sql
+select e.event_id, cast(e.date as varchar), e.time_of_day, t.canonical_name, e.receipts_total_kopecks, e.disciplines,
+       p.verbatim_title, coalesce(w.canonical_title,''), coalesce(pw.canonical_title,''), p.discipline
+from research.event e join research.theater t using(theater_id) join research.performance p using(event_id)
+left join research.work w using(work_id) left join research.work pw on pw.work_id=w.excerpt_of_work_id
+where e.season='1910-11' and e.city=? and e.event_status='performed';   -- SP, Moscow
+select e.event_id, cast(e.date as varchar), t.canonical_name from research.event e join research.theater t using(theater_id)
+where season='1910-11' and e.city='Moscow' and ((canonical_name='Большой' and cast(date as varchar) in ('1910-12-30','1910-12-06')
+  and time_of_day in ('evening','morning') and disciplines like '%ballet%') or (canonical_name='Малый' and cast(date as varchar)='1911-02-19' and time_of_day='evening'));
+```
+
+Result: Moscow: 174/174 list dates matched; Repertoire 180 events with an opera item; not in the list: 4 «Валкирія» (list prints no dates), 12 Apr
+charity «Риголетто», 19 Feb Малый «Воевода» scene. 180 = printed opera line, so both mixed bills count as opera and the free 6 Dec ballet matinée is the
+event left out of 471 (ledger 1910-11-11, -15). SP: 165/165 matched; Repertoire 168; not in the list: «Карменъ» 16, 25, 29 Nov (list prints no dates).
+Stats 167, one fewer, +13,474.09 р., no clean candidate (ledger 1910-11-14).
+
+## 2026-10-27 — 1910-11 Михайловскій and Большой columns read blind; ledger closed
+
+Blind reads (4 agents, scan only) of the Михайловскій column (pp. 2-56, 277 rows) and the Большой column (pp. 1-55, 292 rows), compared with
+```sql
+select e.event_id, t.canonical_name, e.printed_page_number, cast(e.date as varchar), e.time_of_day, e.receipts_total_kopecks, e.receipts_verbatim,
+       e.event_status, a.date_text, e.receipts_source
+from research.event e join research.theater t using(theater_id) join analysis.event_entry a using(event_id) where e.season='1910-11';
+```
+
+Result: 431 cells with works; every figure equals the stored value (the only flags were the comparison script's own handling of printed
+«и.», «с.» and commas, whose stored values are already corrected). All six 1910-11 theater columns are now read. Ledger 1910-11-02 (Moscow opera
+−0.02), -07 (SP drama +690.61, 273 / 272) and -08 (French +1.00) become yearbook_own; 15 rows, none open.
