@@ -45,6 +45,17 @@ CHUNK_BYTES = 200_000
 EDITORIAL_SUBTAGS = ("ed_contributors", "ed_illustrations", "ed_print_finance", "ed_editors")
 
 
+def pdf_path(notes):
+    """Where RG keeps the PDF: the last *.pdf path in the tracker's notes, made
+    absolute. Notes once said "file at ~/Downloads/..."; since the scans moved into
+    the project they name a repo-relative path (pdf/RGIA_F497_Op18/dela/...)."""
+    found = re.findall(r"(\S+\.pdf)\b", notes)
+    if not found:
+        return ""
+    path = Path(os.path.expanduser(found[-1]))
+    return str(path if path.is_absolute() else ROOT / path)
+
+
 def sprite(delo, n_pages):
     thumbs = DELA_IMG / str(delo) / "thumbs"
     if not thumbs.exists():
@@ -92,8 +103,7 @@ def main():
             "requested": row["date_requested"],
             "received": row["date_received"],
             "notes": row["notes"],
-            # where RG keeps the PDF, from the tracker's "file at <path>" notes (latest wins)
-            "pdf": os.path.expanduser((re.findall(r"file at (\S+\.pdf)", row["notes"]) or [""])[-1]),
+            "pdf": pdf_path(row["notes"]),
             "triaged": False,
         }
         tf = TRIAGE / f"{delo}.jsonl"
