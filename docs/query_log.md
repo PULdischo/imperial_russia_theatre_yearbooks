@@ -21714,3 +21714,15 @@ Result: 1909-10, 19 Apr - 14 May 1910, 35 events / 35 performances, Russian dram
 Russian drama); other seasons unchanged (1901-02 2, 1906-07 1, 1908-09 1, 1910-11 1). Rebuild diff: research.event 35,
 research.performance 35, nothing else. compare_season_stats.py 1909-10 SP: Art Theatre line 35 = 35; drama 269 (charity
 included) vs 258 printed.
+
+## 2026-10-27 — 1909-10 mixed bills (events with more than one art form)
+
+```sql
+select e.city, t.canonical_name, e.date, e.receipts_total_kopecks/100.0, e.disciplines, e.is_charity
+from research.event e join research.theater t using(theater_id)
+where e.season='1909-10' and e.event_status='performed' and e.disciplines like '%;%' order by e.date;
+```
+
+Result: 3. SP 18 Dec 1909 Маріинскій IRMO jubilee (ballet + opera, no receipts, not charity); SP 6 Feb 1910 Маріинскій
+French-flood charity (ballet, opera, Russian and French drama, no receipts); Moscow 10 Feb 1910 Большой French-flood charity
+(ballet, opera, Russian drama, 9,973.15 р.). The stats page has no mixed line this season.
