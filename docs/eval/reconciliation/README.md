@@ -98,8 +98,36 @@ Moscow residual after classification: −0.10. SP residual: opera −130.00 plus
 **Step 4, lists:** ballet agrees three ways (Moscow 50, SP 47, including mixed bills with ballet and féeries), and all
 26 productions' printed totals equal their dated performances.
 
+**Step 2 done, 2026-10-27: the mixed-bill events named.** The stats footnotes date the printed SP mixed bills
+(fn. 6-8), so the Repertoire's mixed events split into the yearbook's own mixed bills and the rest:
+
+| City | Date | Theater | Works | Receipts | Reading |
+|---|---|---|---|---|---|
+| Moscow | 18 Jan 1894 | Большой | Паяцы + Коппелія | 1,659.05 | printed mixed (опера и балетъ) |
+| Moscow | 25 Feb 1894 | Большой | Жизель + Паяцы, «Бенефисъ кордебалета» (fn. 13) | 4,367.50 | printed mixed |
+| Moscow | 6 Mar 1894 | Большой | Hymne + Otello | 5,152.70 | Italian opera |
+| Moscow | 25 Mar 1894 | Большой | Pagliacci + «4-o atto di op. Gli Ugonotti» | 4,699.20 | Italian opera |
+| SP | 17 Feb 1894 | Маріинскій | Чайковскій memorial (fn. 7) | 5,702.00 | printed mixed (опера и балетъ) |
+| SP | 22 Feb 1894 | Маріинскій | Чайковскій memorial (fn. 7) | 2,663.00 | printed mixed (опера и балетъ) |
+| SP | 20 Apr 1894 | Александринскій | Нищіе духомъ + Очарованный лѣсъ, бенефисъ вторыхъ артистовъ (fn. 6) | 4,173.60 | printed mixed (драма и балетъ) |
+| SP | 29 Apr 1894 | Михайловскій | Женя + Le petit Hôtel + concert + Коппелія acts 1-2, for Greece (fn. 8) | 2,886.90 | printed mixed (four art forms) |
+| SP | 27 Jan 1894 | Александринскій | Дворянское гнѣздо + «Батюшкина дочка, ком.-бал.», Савина benefit | 5,021.55 | Russian drama |
+| SP | 10 Feb 1894 | Александринскій | Угасшая искра + «Батюшкина дочка» + Не пойманъ—не воръ + Горбуновъ | 1,577.80 | Russian drama |
+| SP | 21 Feb 1894 (morning) | Александринскій | «Батюшкина дочка» + Ворона въ павлиныхъ перьяхъ | 395.70 | Russian drama |
+| SP | 6 Mar 1894 | Александринскій | Hymne + Sodom's Ende | 2,481.30 | German |
+
+The six printed mixed bills match the stats exactly (Moscow 6,026.55; SP 15,425.50). The other six are not the yearbook
+classing anything differently: `compare_season_stats.py`'s own regex classifier calls them mixed, because it reads «Hymne»
+as a French work, a genre-less Latin excerpt («4-o atto di op. …») as French, and «ком.-бал.» as ballet. RG's rulings
+(anthem is ceremonial; comedy-ballets are Russian drama with dancers; 2026-10-12) put all six in a single art form, and
+`research.performance.discipline` already does. So the yearbook's 1893-94 stats page agrees with those rulings. Moving them
+leaves the residuals: Moscow Italian opera −0.10; SP Russian drama −33.32, German −0.45 (−33.77 in all).
+
+**Lesson for the method:** before reading a cancelling step-2 offset as the yearbook's classification, check whether the
+comparison tool's classifier is out of step with `research.performance.discipline`.
+
 **Still to do for 1893-94:**
-1. name the 2 Moscow and 8 SP mixed-bill events behind the step-2 offsets and record them as `classification`;
+1. ~~name the mixed-bill events~~ (done above);
 2. decide whether the −0.10 (Moscow) and −33.77 (SP) are worth one more pass (Moscow pp. 6+ have not had a full scan
    read; see `docs/eval/scan_audit/README.md` for coverage);
 3. start the outcome ledger with 1893-94's rows.
@@ -129,5 +157,47 @@ Five of them (28-29 Aug, 1 and 7 Sept 1890, 1 Mar 1891) were already confirmed o
 recovery (#73 addendum). The rest are inferred from the weekday sequence and page position, not each read on the scan.
 
 **Outcome:** no gap rows for 1890-91. Nothing corrected, nothing open.
+
+## Step-2 classifier now uses the research layer (2026-10-27)
+
+RG: "make compare_season_stats.py use research.performance.discipline / is_ceremonial instead of its own regexes."
+Each work's family now comes from `discipline` (Russian drama, opera, French drama, ballet, German drama/operetta,
+Italian/German opera). The anthem (`is_ceremonial`) and items with no art form are neutral, so they don't make a bill
+mixed. Concert items stay concert, «Кольцо любви, феерія» stays féerie, and the guest companies the stats print on their
+own line (Режанъ, Тина ди Лоренцо, Лессингъ-театръ, Художественный театръ) count as "other". The old regex classifier is
+kept in the script as `classify_work_regex`, for reference. `season_stats_receipt_candidates.py` uses the new one.
+
+All seasons, category lines (venue rows apart):
+
+| | Regex classifier | Research layer |
+|---|---|---|
+| exact event counts | 73 of 259 | 100 of 257 |
+| total event-count gap | 1,069 | 793 |
+| total receipts gap | 727,484 р. | 261,075 р. |
+
+City totals and ballet counts don't depend on the classifier and are unchanged. A few lines got worse, and each one
+points to a question for the research layer, not a fault in the switch:
+
+- **«Гибель Фауста, драм. легенда» (Berlioz) is counted under concerts.** The research layer calls it opera, but the
+  stats page counts it on its «Концертовъ» line. SP 1895-96: 4 events, 8,474.80 р., exactly the printed concerts;
+  SP 1896-97: 3 events, 4,850.90 р., exact. SP 1892-93 «Концертовъ» 2 = the two «Симфоническій концертъ + Гибель Фауста»
+  bills (15 and 17 Feb 1893). It is also given in 1890-91 and 1906-07. **APPLIED 2026-10-27** (RG: "make «Гибель
+  Фауста» item_kind concert"): `CONCERT_KIND_TITLES` in `build_research_model.py`; item_kind concert, company still the
+  opera's (14 performances). Now exact: SP 1892-93, 1895-96 and 1896-97 concerts and opera counts. **Exception, Moscow
+  1906-07** (3 performances, 6, 9 and 12 Apr 1907): that stats page has no «Концертовъ» line, so the yearbook counted them
+  elsewhere, probably as opera (opera now −1 event, −1,308.65 р.; with them +2, +2,338.90). Open, `classification`
+  once the line is found.
+- **«1-е д. др. Псковитянка» (Александринскій, 30 Sept, 4, 7 and 11 Oct 1891) was labelled opera.** The print says «др.»
+  and the bill is a drama-company one (Не все коту масленица, Предложеніе…): Мей's play, not Rimsky-Korsakov's opera.
+  **APPLIED 2026-10-27** (RG: "fix … to Russian drama"; "fix both"), with 1890-91's «1-й актъ др. Псковитянка» (5
+  events): both linked to «Псковитянка» [др.] in `work_excerpt_links.csv`. 1891-92 SP drama and mixed are now exact.
+
+After both: category lines exact 100 → 108 of 258; summed event gap 793 → 769; summed receipts gap 261,075 → 233,433 р.
+Rebuild diff: 23 performances, 23 events, 2 works (excerpt parents), nothing else. Backup
+`outputs/backups/faust_pskovityanka_2026-10-27/`; production = tested copy; sqlite rebuilt.
+- **Guest companies with no line of their own** (Vienna operetta troupe 1900-02, the German guest seasons, Duse
+  1896-97, Sandrock 1901-02, Угетти's Italian opera 1899-02): the stats pages don't say where they counted them. With
+  `discipline` they land in German / foreign opera and push those lines over (1900-01 SP German +3, 1901-02 SP German +6).
+  Not yet worked out; take it season by season.
 
 Then the same steps season by season. Current gaps per season: the summary table artifact, or `city_totals.csv`.

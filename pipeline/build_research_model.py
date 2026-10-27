@@ -344,6 +344,14 @@ OPERA_TITLE_OVERRIDES = {
         "premiere season 1906-07, so classed by title (exception allowed by RG, 2026-10-12)",
 }
 
+#: Works given by a company (art form kept, e.g. OPERA_TITLE_OVERRIDES) whose item kind is
+#: concert: canonical_title -> why. The build fails if a title matches no work.
+CONCERT_KIND_TITLES = {
+    "Гибель Фауста": "Berlioz, La damnation de Faust, given in concert by the opera company: the yearbook's season "
+                     "statistics count it on their «Концертовъ» line (SP 1895-96 4 events, 8,474 р. 80 к.; 1896-97 "
+                     "3 events, 4,850 р. 90 к.; both exact). RG, 2026-10-27: item_kind concert",
+}
+
 #: Wording classes of the event annotation -> research.event flags. These
 #: record what the annotation SAYS; they are not a judgement about prices.
 EVENT_FLAG_RES = {
@@ -1166,10 +1174,16 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                       + ", ".join(lit(a) for a in _CLASS_FORMS) + ")").fetchone()[0]
     assert bad == 0, "perf_art holds an art form outside ART_FORMS + concert"
 
+    for t in CONCERT_KIND_TITLES:
+        if not con.execute("SELECT 1 FROM research.work WHERE canonical_title = ? LIMIT 1", [t]).fetchone():
+            raise SystemExit(f"CONCERT_KIND_TITLES: {t!r} matches no research.work")
+    concert_titles = ", ".join(lit(t) for t in CONCERT_KIND_TITLES)
     # The kind of item (ITEM_KINDS). First rule that applies decides.
     kind_rules = [
         ("pa.is_ceremonial", "anthem", "the anthem"),
         ("pa.is_heading", None, None),
+        (f"ct IN ({concert_titles or 'NULL'})", "concert",
+         "concert item given by a company, by title (CONCERT_KIND_TITLES; Гибель Фауста: RG, 2026-10-27)"),
         (f"regexp_matches(lt, {lit(CINEMA_TITLE_RE)})", "cinema", "printed title"),
         (f"regexp_matches(lt, {lit(LECTURE_TITLE_RE)})", "lecture", "printed title"),
         (f"regexp_matches(lt, {lit(RECITATION_TITLE_RE)})", "recitation / reading", "printed title"),
@@ -1194,7 +1208,8 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         SELECT pa.performance_id, {kind_case} AS item_kind, {kbasis_case} AS item_kind_basis,
                regexp_matches(lt, {lit(DANCE_TITLE_RE)}) AND pa.art_form IS DISTINCT FROM 'ballet' AS title_dance
         FROM perf_art pa
-        JOIN (SELECT performance_id, lower(coalesce(title, '')) AS lt, lower(coalesce(vg, g, '')) AS lab
+        JOIN (SELECT performance_id, lower(coalesce(title, '')) AS lt, lower(coalesce(vg, g, '')) AS lab,
+                     canonical_title AS ct
               FROM perf_base) pb USING (performance_id)
     """)
     con.execute("ALTER TABLE perf_art ADD COLUMN item_kind VARCHAR")

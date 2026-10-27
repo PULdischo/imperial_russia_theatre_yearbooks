@@ -28,10 +28,10 @@ import compare_season_stats as cs  # noqa: E402
 EVENT_SQL = """
 select e.event_id, e.season, e.city, t.canonical_name, e.receipts_total_kopecks,
        a.page_id, a.date_text, a.time_of_day, a.receipts_text, a.printed_page_number,
-       p.verbatim_title, coalesce(w.canonical_genre, p.verbatim_genre), p.genre_family
+       p.verbatim_title, p.genre_family, p.discipline, p.is_ceremonial, p.company, p.verbatim_genre
 from research.event e join research.theater t using (theater_id)
 join analysis.event_entry a using (event_id)
-left join research.performance p using (event_id) left join research.work w using (work_id)
+left join research.performance p using (event_id)
 where e.event_status = 'performed'
 order by e.event_id, p.performance_order
 """
@@ -57,11 +57,11 @@ def main():
     a = ap.parse_args()
     con = duckdb.connect(a.db, read_only=True)
     ev = {}
-    for eid, season, city, th, k, page, date, tod, rtext, pp, title, genre, kind in con.execute(EVENT_SQL).fetchall():
+    for eid, season, city, th, k, page, date, tod, rtext, pp, title, gf, disc, cer, comp, vg in con.execute(EVENT_SQL).fetchall():
         e = ev.setdefault(eid, dict(season=season, city=city, theater=th, k=k, page=page, date=date,
                                     tod=tod, rtext=rtext, pp=pp, fams=[], titles=[]))
         if title is not None:
-            e["fams"].append(cs.classify_work(title, genre, kind))
+            e["fams"].append(cs.classify_work(gf, disc, cer, comp, vg))
             e["titles"].append(title)
     for e in ev.values():
         c = cs.classify_event(e["fams"])

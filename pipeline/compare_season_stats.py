@@ -141,7 +141,35 @@ GERMAN_GENRE = re.compile(r"lustsp|schausp|schwank|comöd|komöd|posse|trauersp|
 GERMAN_WORD = re.compile(r"\b(der|die|das|und|ein|eine|im|vom|zum|zur|dem|den)\b|[äöüß]", re.I)
 
 
-def classify_work(title, genre, item_kind=None):
+# Research-layer art form -> stats-page family (2026-10-27, RG: "use research.performance.discipline / is_ceremonial
+# instead of its own regexes"). The regex classifier below (classify_work_regex) is kept for reference only: it read
+# «Hymne» and genre-less Latin excerpts as French and «ком.-бал.» as ballet, which made 6 single-art-form 1893-94
+# events "mixed" (docs/eval/reconciliation/README.md).
+DISCIPLINE_FAMILY = {
+    "Russian drama": "drama", "opera": "opera", "French drama": "french", "ballet": "ballet",
+    "German drama": "german", "German operetta": "german",
+    "Italian opera": "foreign_opera", "German opera": "foreign_opera",
+    "Italian drama": "other", "Japanese drama": "other",
+}
+# Guest companies the stats pages print on a line of their own (Режанъ, Тина ди Лоренцо, Лессингъ-театръ,
+# Московскій художественный театръ): "other", like those lines.
+OWN_LINE_COMPANIES = {"Réjane and her troupe", "Tina di Lorenzo", "Berlin Lessing-Theater", "Moscow Art Theatre"}
+
+
+def classify_work(genre_family, discipline, is_ceremonial, company, verbatim_genre):
+    if genre_family == "concert":
+        return "concert"
+    if is_ceremonial or discipline is None:
+        return "unmarked"   # the anthem, divertissement headings, tableaux: they don't decide the event's family
+    if company in OWN_LINE_COMPANIES:
+        return "other"
+    # «Кольцо любви, феерія» (Moscow 1892-94) is printed on its own «Феерій» line; «бал.-феерія» stays ballet
+    if (verbatim_genre or "").lower().startswith("феер"):
+        return "feerie"
+    return DISCIPLINE_FAMILY.get(discipline, "other")
+
+
+def classify_work_regex(title, genre, item_kind=None):
     title, g = title or "", (genre or "").lower().strip()
     # research.performance.item_kind 'concert' covers concert items the title doesn't name, e.g. a
     # ballet suite played in a symphony concert (RG, 2026-10-13: concert, linked to its parent work)
@@ -198,19 +226,19 @@ def classify_event(fams):
 
 LEVEL2_SQL = """
 select e.event_id, e.season, e.city, t.canonical_name, e.receipts_total_kopecks,
-       p.verbatim_title, coalesce(w.canonical_genre, p.verbatim_genre), p.genre_family
+       p.performance_id, p.genre_family, p.discipline, p.is_ceremonial, p.company, p.verbatim_genre
 from research.event e join research.theater t using (theater_id)
-left join research.performance p using (event_id) left join research.work w using (work_id)
+left join research.performance p using (event_id)
 where e.event_status = 'performed'
 """
 
 
 def level2(con, out_dir):
     ev = {}
-    for eid, season, city, th, k, title, genre, kind in con.execute(LEVEL2_SQL).fetchall():
+    for eid, season, city, th, k, pid, gf, disc, cer, comp, vg in con.execute(LEVEL2_SQL).fetchall():
         e = ev.setdefault(eid, {"season": season, "city": city, "theater": th, "k": k, "fams": []})
-        if title is not None:
-            e["fams"].append(classify_work(title, genre, kind))
+        if pid is not None:
+            e["fams"].append(classify_work(gf, disc, cer, comp, vg))
     rep = {}
     for e in ev.values():
         cls = classify_event(e["fams"])

@@ -24363,3 +24363,25 @@ rebuild -> build_datasette. Rebuild diff vs `outputs/backups/foldlog_1894-95_202
 - Scan-read audit record started (RG: "Can we use these rereadings as a general audit, too?"): `docs/eval/scan_audit/`,
   2,254 events read today, 47 corrected; covers receipts figures, not a word-by-word title audit.
 
+- **1893-94 mixed-bill offsets named, 2026-10-27 (RG: "name the 2 Moscow and 8 SP mixed-bill events behind the category
+  offsets").** The six printed mixed bills (stats fn. 6-8, 13) match the Repertoire exactly. The six extra "mixed" events
+  are an artefact of `compare_season_stats.py`'s own classifier: «Hymne» counted as a French work, the genre-less
+  «4-o atto di op. Gli Ugonotti» counted as French, «Батюшкина дочка, ком.-бал.» counted as ballet. RG's 2026-10-12
+  rulings and `research.performance.discipline` put each in one art form, and the stats page agrees. Nothing in raw is
+  wrong. Residuals: Moscow −0.10, SP drama −33.32, German −0.45. Table in `docs/eval/reconciliation/README.md`.
+  Follow-up: the comparison script should use `research.performance.discipline` / `is_ceremonial` rather than its regexes.
+- **Season-stats comparison switched to the research layer, 2026-10-27 (RG: "make compare_season_stats.py use
+  research.performance.discipline / is_ceremonial instead of its own regexes").** Category lines exact 73 -> 100,
+  receipts gap 727k -> 261k р. summed over lines; city totals and ballet counts unchanged. Found along the way, not
+  fixed: (1) «Гибель Фауста, драм. легенда» is `discipline` opera but the stats count it as concerts (SP 1895-96 and
+  1896-97 exact); question for RG: item_kind concert? (2) «1-е д. др. Псковитянка», Александринскій 1891-92 (4 events),
+  is labelled opera; the print and bill say Мей's play. (3) Guest companies without their own stats line are unplaced.
+  Details: `docs/eval/reconciliation/README.md`.
+- **«Гибель Фауста» item_kind concert; «Псковитянка» excerpts Russian drama — APPLIED 2026-10-27 (RG: "make «Гибель
+  Фауста» item_kind concert in the research layer, and fix «1-е д. др. Псковитянка» 1891-92 to Russian drama"; for
+  1890-91's «1-й актъ др. Псковитянка»: "fix both").** `CONCERT_KIND_TITLES` (build_research_model.py; company stays
+  the opera's) and two rows in `entity_curation/work_excerpt_links.csv` (parent «Псковитянка» [др.]). Tested on a copy:
+  23 performances, 23 events, 2 works changed, nothing else. Production = tested copy; sqlite rebuilt; backup
+  `outputs/backups/faust_pskovityanka_2026-10-27/`. Season stats: 8 more category lines exact (100 -> 108). Open: Moscow
+  1906-07 has no «Концертовъ» line, so its 3 Faust performances were counted elsewhere, probably as opera.
+  Publishing (sqlite/HF/Cloud Run) is Andy's.

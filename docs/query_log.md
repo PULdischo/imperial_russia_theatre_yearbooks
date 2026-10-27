@@ -21285,6 +21285,25 @@ Result: ballet list performances = Repertoire events with ballet, Moscow 51 = 51
 productions' printed totals = dated performances (Moscow 51, SP 61). 133 not_captured = 26 whole dates × 5 theaters
 + Александринскій 12-14 May 1891 (dark, #87). Each whole-date skip is mid-page with printed weekdays continuous across it.
 
+## 2026-10-27 — compare_season_stats.py switched to research.performance.discipline; all seasons re-run
+
+Run: `pipeline/compare_season_stats.py` before (regex classifier) and after (discipline / is_ceremonial / company /
+genre_family), out-dirs in session scratchpad; family_totals.csv diffed row by row; per-event old -> new family
+listing; then
+```sql
+select e.season, e.date, e.receipts_total_kopecks/100.0, p.verbatim_title, p.verbatim_genre, p.discipline
+from research.event e join research.performance p using(event_id)
+where e.event_id in (select event_id from research.performance where verbatim_title ilike '%Гибель Фауста%');
+select discipline, is_ceremonial, count(*) from research.performance group by all;
+```
+
+Result: category lines exact 73/259 -> 100/257; sum |event gap| 1,069 -> 793; sum |receipts gap| 727,484.22 -> 261,075.44.
+city_totals.csv and ballet_counts.csv byte-identical. 270 events changed family (largest: mixed->german 45, drama->opera
+38, unknown->drama 38). Worse lines traced: «Гибель Фауста» = the stats' «Концертовъ» (SP 1895-96 4 / 8,474.80, 1896-97
+3 / 4,850.90, both exact; 1892-93 2 = 2); «1-е д. др. Псковитянка», SP 1891-92 (4 events), labelled opera but a drama;
+guest companies without their own stats line (Vienna operetta, German guest seasons, Duse, Sandrock, Угетти) push
+German/foreign-opera lines over. season_stats_receipt_candidates.py: 67 leads, 24 with candidates, 3 with exactly one.
+
 ## 2026-10-27 — What the summary table's "no works stored" rows are
 
 Read:
@@ -21299,3 +21318,19 @@ Result: performed events with no work attached; 1-7 per city per season (1890-91
 annotation and nearly all have no receipts. Sample: «Концертъ въ пользу инвалидовъ» and its «Генеральная репетиція»,
 charity performances described only in a note («Спектакль Попечительства о бѣдныхъ…»), a repeat jubilee performance
 (Мочаловъ, 1900-01 SP, 274.34 р.), a music-and-literary evening for aged actors (1909-10 Moscow, 4,602.25 р.).
+
+## 2026-10-27 — «Гибель Фауста» -> concert, «Псковитянка» excerpts -> drama: rebuild check and stats re-run
+
+Run: build_entities.py + build_research_model.py on a copy; every raw/analysis/entities/research table diffed (EXCEPT ALL
+both ways) against production; then
+```sql
+select verbatim_title, genre_family, discipline, company, count(*) from research.performance
+where verbatim_title ilike '%Гибель Фауста%' or verbatim_title ilike '%др. Псковитянка%' group by all;
+```
+and compare_season_stats.py on the promoted db, family_totals.csv diffed against the previous run.
+
+Result: changed rows only entities.work 2, research.work 2, research.performance 23, research.event 23. Гибель Фауста
+14 performances concert (SP opera 11, Moscow opera 3); Псковитянка excerpts 9 performances Russian drama, parent
+Псковитянка [др.]. Stats: exact 100 -> 108 of 258; |events| 793 -> 769; |rub| 261,075.44 -> 233,432.91. Newly exact:
+1891-92 SP drama, mixed; 1892-93 SP concert, opera; 1895-96 SP concert (opera events); 1896-97 SP concert (opera events).
+Moscow 1906-07: concert 0 printed vs 3, opera +2 -> −1 (no concert line that season).
