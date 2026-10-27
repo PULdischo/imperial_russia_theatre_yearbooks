@@ -24283,7 +24283,14 @@ performance genre, 0 work_id/person changes.
   - Маріинскій ballet +1,770.45 and Михайловскій opera +2,134.20 each equal exactly one event, both on 3 Воскр. (3 Sept
     1895, p. 2): «Гарлемскій тюльпанъ» 1770 р. 45 к. and «Севильскій цирюльникъ» 2134 р. 20 к. Event counts match the
     printed counts (46, 20), so the yearbook counted those events but left their takings out of the money totals.
-  - Маріинскій opera +15,535.42 (123 = 123 events): no 1-4-event combination equals it, no misread; unexplained.
+    **RG's conclusion (2026-10-27, from a side session; evidence in docs/query_log.md, commit 2438ac9): these are the
+    season's opening-night takings, left out of the printed receipts totals, on purpose or by mistake.** The SP ballet
+    review: «Сезонъ открылся 3-го сентября; въ первый спектакль былъ данъ балетъ—«Гарлемскій тюльпанъ»»; 3 Sept is also
+    the Михайловскій's first opera of the season (its 31 Aug and 1 Sept bills were drama). Counts still match (46
+    Маріинскій + 1 Михайловскій ballet, 20 Михайловскій opera); only the takings are missing. Neither the stats-page
+    footnotes nor the reviews give a reason. Raw data stays as printed.
+  - Маріинскій opera +15,535.42 (123 = 123 events): no 1-4-event combination equals it, no misread; unexplained, and not
+    affected by the opening-night conclusion.
   - Not checked yet: Михайловскій opera on the scan; the Moscow side (Большой opera +900.00 exactly — round, so possibly
     one misread hundreds digit; Малый drama −2,136.27; concert −4,364.80).
 - **Moscow + Михайловскій follow-up, same day (RG: "do these").**
