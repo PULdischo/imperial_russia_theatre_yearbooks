@@ -21494,3 +21494,26 @@ select verbatim_title, count(*) from research.performance where verbatim_title i
 ```
 Rebuild on a copy (parse -> duckdb -> entities -> dates -> research), all tables diffed: raw.event_entry_performance −3 +3,
 entities.work_link −3 +3, research.performance −3 +3, research.work 2963 -> 2962 (−2 +1), work_id_crosswalk +1; nothing else.
+
+## 2026-10-27 — 1894-95 reconciliation (totals, footnotes, lists) and Александринскій scan read
+
+Run: `compare_season_stats.py` and `season_stats_receipt_candidates.py` (scratch out-dir), 1894-95 rows of city_totals,
+family_totals, ballet_counts. Then:
+```sql
+select e.event_id, t.canonical_name, e.date, e.receipts_verbatim, e.is_free, e.annotation from research.event e
+ join research.theater t using(theater_id) where season='1894-95' and event_status='performed'
+ and (receipts_total_kopecks is null or n_works=0);                                       -- 5 free matinées (9 Feb 1895) + 4 invalids' concert
+select e.city, t.canonical_name, e.disciplines, e.date, e.is_benefit, e.is_charity, e.is_free, e.annotation from research.event e
+ join research.theater t using(theater_id) where season='1894-95' and event_status='performed'
+ and (is_benefit or is_charity or is_free or annotation is not null);                    -- footnote check, all agree
+select t.canonical_name, e.disciplines, count(*), sum(receipts_total_kopecks)/100.0 from research.event e
+ join research.theater t using(theater_id) where season='1894-95' and event_status='performed' and city='SP' group by all;
+                                                                                         -- all 30 German events at the Александринскій
+select e.event_id, e.date, e.receipts_verbatim from research.event e join research.theater t using(theater_id)
+ where season='1894-95' and event_status='performed' and t.canonical_name='Александринскій' order by date, time_of_day;
+```
+Result: counts equal on every category line; event surplus = invalids' concert (Moscow 1, SP 3); SP ballet stats 28 vs
+lists = Repertoire 26 = the two drama + Дивертиссементъ bills (21, 29 Sept 1894). Александринскій column read blind on the
+scan (146 cells): 142 match, 4 in the fold equal RG's fold-log readings, 0 corrected. Stats p. 19 re-read: lines as
+transcribed. Receipts gaps unchanged: Moscow opera −1,000.00, Малый +2,354.50; SP Маріинскій ballet −200.00, French
+−1,392.50, German −1.00, Александринскій drama −0.10. Ledger 1894-95-01..10.

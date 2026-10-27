@@ -237,3 +237,51 @@ Rebuild diff: 23 performances, 23 events, 2 works (excerpt parents), nothing els
   Not yet worked out; take it season by season.
 
 Then the same steps season by season. Current gaps per season: the summary table artifact, or `city_totals.csv`.
+
+## 1894-95 (2026-10-27): every count explained; six small receipts gaps are the yearbook's own
+
+The season runs 30 Aug 1894 - 7 May 1895 with the mourning closure for Alexander III (20 Oct - 31 Dec 1894) printed as a
+straight jump in the date column (#84). The stats page is p. 19, on the last spread of the Repertoire scan.
+
+**Step 1, city totals** (Repertoire minus printed):
+
+| City | Events (Repertoire / printed) | Receipts |
+|---|---|---|
+| Moscow | 238 / 237 | +1,354.50 |
+| SP | 365 / 362 | −1,593.60 |
+
+The event surplus is the invalids' concert (Moscow 19 Mar 1895; SP rehearsal 17, concert 19, repeat 21 Mar): no works, no
+receipts, and the stats have no «Концертовъ» line (ledger 1894-95-07, -08, `excluded_by_yearbook`).
+
+**Step 2, category lines.** With the research-layer classifier every line has equal counts. Both mixed lines match to the
+kopeck: SP «опера и балетъ» 4 = 11,719.75, «русская драма и балетъ» 4 = 9,015.98; Moscow 1 = 578.05 and 2 = 3,061.33. The old
+regex classifier's offsets («Grand pas изъ балета Корсаръ» read as French, «Батюшкина дочка, ком.-бал.» as ballet) were the
+tool's, not the yearbook's (1894-95-10, `comparison_rule`).
+
+**Footnotes.** Every footnoted count is in the Repertoire: the five «1 безплатный спектакль» are the 9 Feb 1895 free student
+matinées (Большой opera, Малый, Маріинскій ballet, Александринскій, Михайловскій French), which print no receipts and are
+the season's only events with works but no receipts; 4 Александринскій, 5 Малый, 2 Маріинскій ballet, 2 Moscow ballet and 16
+French benefits; the Щепкинъ-fund performances (Большой drama 7 Jan, Александринскій 11 Apr), the Ostrovsky reading room
+(Малый 25 Apr), the Stukolkin widow (Маріинскій 5 Feb), the Чайковскій monument (Большой 7 Apr), the German charity
+performance (19 Feb) and the second artists' benefit (5 Apr, mixed).
+
+**Step 3, residual.** Every Repertoire figure of the season has now been read on the scan (Александринскій 146 cells added
+2026-10-27, none corrected; 4 in the binding fold rest on RG's Binding Fold Log), and the printed lines with gaps were
+re-read on p. 19, all as transcribed. What is left is the yearbook disagreeing with itself, provisionally:
+
+| Ledger | Line | Gap (Repertoire − printed) |
+|---|---|---|
+| 1894-95-01 | Moscow opera | −1,000.00 |
+| 1894-95-02 | Moscow Малый drama | +2,354.50 |
+| 1894-95-03 | SP Маріинскій ballet | −200.00 |
+| 1894-95-04 | SP French | −1,392.50 |
+| 1894-95-05 | SP German (Александринскій) | −1.00; two German cells are fold readings, a 1-rouble slip in either would close it |
+| 1894-95-06 | SP Александринскій drama | −0.10 |
+
+**Step 4, lists.** Moscow agrees three ways (30). SP: lists = Repertoire 26, stats 28; the two extra are the Александринскій
+drama + «Дивертиссементъ» bills of 21 and 29 Sept 1894, which the stats count as drama + ballet and the lists do not list
+(1894-95-09, `classification`; found 2026-09-30).
+
+**Outcome:** 10 ledger rows: 6 `yearbook_own` (provisional, until RG reads the source), 2 `excluded_by_yearbook`, 1
+`classification`, 1 `comparison_rule`. No dataset change. Nothing open except RG's own reading of the six gaps; the round
+figures (1,000.00, 200.00) look like the stats page's slips rather than the Repertoire's, but that is a guess.

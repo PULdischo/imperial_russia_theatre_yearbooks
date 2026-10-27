@@ -16,12 +16,12 @@ What a read covers, and what it doesn't:
   (a missing second work, a shifted or copied cell, garbled titles), small letter-level slips would not be. A title audit
   of the same columns is still to do.
 
-Coverage, 2026-10-27 (2,583 events, 47 corrected):
+Coverage, 2026-10-27 (2,729 events, 47 corrected):
 
 | Season  | Columns read in full                                                    |
 |---------|-------------------------------------------------------------------------|
 | 1893-94 | every column, both cities (Moscow pp. 6-25 added later the same day: 329 cells, none corrected) |
-| 1894-95 | Большой, Малый, Маріинскій, Михайловскій (not the Александринскій)      |
+| 1894-95 | every column (Александринскій added later the same day: 146 cells, none corrected, 4 in the fold) |
 | 1895-96 | Маріинскій, Большой, Малый; Михайловскій opera only                      |
 | 1897-98 | Большой, Малый, Александринскій                                         |
 
