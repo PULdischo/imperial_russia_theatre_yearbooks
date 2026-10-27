@@ -21076,3 +21076,16 @@ select pl.person_id, s.season, pc.label, pc.role_name from raw.person_entry_cred
 ```
 
 Result (production): 779 of 2,658 statements have no work. Causes: 423 sit on a page whose only titles come LATER on the page (so neither the earlier-on-page rule nor the previous-page carry-over, which needs a page with no title at all, applies); 137 have 2+ works earlier on the page; 192 have a nearest "title" in their own block that is an unlinked non-title (role names/ordinary words 106 -- «Робертъ», «Король», «Коломбина»; dance names 42; quoted words 38; «Дивертиссементъ» 6), which blocks the page rules; 27 on pages naming no linked work. Variants on copies (spiski agree / disagree / missing over all statements): production 914 / 80 / 303, 1,879 with a work. X (an unlinked mention whose reason is role name/ordinary word, dance number or quoted words never governs) 957 / 88 / 256, 2,001. Y (carry the previous page's last work when nothing is named earlier on the page, same review only) 1,062 / 99 / 146, 2,272. X+Y 1,113 / 108 / 90, 2,430 with a work; dances with a ballet 632 -> 810. New links checkable by the spiski: 199 agree, 28 disagree. For the Y links, the next title later on the same page instead: right in 59 of 167 checkable vs the previous page's 147 (it never fixes a previous-page error). Left without a work under X+Y: 228 (mostly 2+ works earlier on the page).
+
+## 2026-10-27 — 1897-98 after the fold-log apply: Repertoire receipts vs printed totals, overall and by category
+
+```sql
+select n.city,o.receipts_minus_printed_kopecks/100.0,n.receipts_minus_printed_kopecks/100.0,n.repertoire_events,n.printed_count
+from research.season_stat_check n join old.research.season_stat_check o using(season,city) where n.season='1897-98';
+-- old = outputs/backups/foldlog_1897-98_2026-10-27/imperial_theaters.duckdb
+```
+Plus `pipeline/compare_season_stats.py` on the current db and on the backup (family_totals.csv, 1897-98 rows).
+
+Result: SP −28,931.72 -> −617.97 (Александринскій drama −617.95; other SP families net ~0 once troupes/mixed bills are
+regrouped). Moscow −2,243.11 -> +3,590.13: Малый drama −3,560.99 -> −89.58; mixed −1,548.18 -> 0.00; Большой drama 0 -> 1
+event (1 printed); ballet +1,930.15 -> +2,743.80 (48 = 48 events); opera +935.91 unchanged (112 = 112).
