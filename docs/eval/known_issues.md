@@ -24343,3 +24343,8 @@ rebuild -> build_datasette. Rebuild diff vs `outputs/backups/foldlog_1894-95_202
   rule fired before the excerpt rule. Fixed 2026-10-27 (RG: "should we label this properly as a ballet?"): a genre-less title
   naming «бал.»/«балета» is ballet even when it starts in Latin. Raw stays as printed (no genre printed). Effect: 1894-95
   Михайловскій ballet now 3 = 3, exact; no other season's figures change.
+- **1893-94 Moscow, 2026-10-27 (RG: "check the 1893-94 Moscow Малый and opera candidates on the scans").** Both −30.00 leads
+  were tens-digit misreads, found on the scan (checked by Claude) and fixed by `fix_1893_94_moscow_tens.py` (2 raw cells,
+  rebuild diff clean): 5 Воскрес. (p. 3) Большой «Жизнь за Царя» 2618 -> 2648 р. 53 к.; 15 Среда (p. 4) Малый 818 -> 848 р.
+  16 к. Moscow 1893-94 is now −0.10 against the printed totals (Italian opera + mixed −0.10).
+

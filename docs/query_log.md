@@ -21204,3 +21204,12 @@ Result: 38 season-city rows (1891-92..1910-11, no 1905-06 stats page), 358 categ
 printed): exact nowhere at city level; under 100 р.: 1893-94 Moscow (−60.10), 1899-00 Moscow (−31.00); largest: 1909-10
 Moscow +31,747.61, 1895-96 SP +19,440.08, 1910-11 SP +19,412.17, 1904-05 SP +17,873.60. Shown to RG as the "Repertoire vs
 Season Totals" artifact.
+
+## 2026-10-27 — 1893-94 Moscow after fixing two tens digits
+
+```sql
+select city,receipts_minus_printed_kopecks/100.0 from research.season_stat_check where season='1893-94';
+```
+
+Result: Moscow −0.10 (was −60.10), SP −494.14. Fixed on the scan: Большой 5 Sept 1893 2618 -> 2648 р. 53 к.; Малый 15 Sept
+1893 818 -> 848 р. 16 к.
