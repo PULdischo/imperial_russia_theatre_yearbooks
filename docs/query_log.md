@@ -21423,3 +21423,16 @@ plus earliest-date checks for each first night the review names, and event_ids f
 Result: 62 agree; 9 disagree, all slips in the review's print (Repertoire matches its scan each time): 30 Sept→30 Aug,
 3 Sept→2 Sept, 12 Oct→13 Oct, 21 Oct→20 Oct (first night), 27 Dec→26 Dec (Moscow), 11 Feb→11 Jan ×2, 7 and 9 Mar→7 and
 9 Apr («Гибель Фауста», in the Repertoire as p023__s046/s057). Ledger 1890-91-01..08.
+
+## 2026-10-27 — RGIA Д. 189 no. 70: which plays were photographed (April 1898)
+
+Question: the register entry of 25 Apr 1898 (photo studio's report of 24 Apr, 42 prints «съ моментальныхъ снимковъ съ
+пьесъ» «Семейство В…линныхъ?» и «При д…лжности?») -- which Petersburg productions are these?
+```sql
+select p.verbatim_title, p.company, min(e.date), max(e.date), count(*)
+from research.performance p join research.event e using(event_id)
+where p.company ilike 'St. Petersburg%drama%' and e.date between '1898-03-01' and '1898-05-15'
+group by all order by 2, 3;
+```
+Result: «Семейство Волгиныхъ» (SP Russian drama, 8 and 17 Apr 1898) and «При должности» (SP Russian drama, 8 Apr 1898
+only) -- one event, Александринскій 8 Apr 1898 (repertoire_1897-98_pair022__s056), both on the bill. Both readings fit the scan once known (checked by Claude). Neither is ballet.
