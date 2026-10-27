@@ -21223,3 +21223,17 @@ select event_id, ... from raw.event_entry where season=? and theater like ? and 
 
 Result: SP −163.77 (was −494.14), Moscow −0.10. compare_season_stats.py: SP French 0.00, opera −130.00, drama/German/mixed
 net −33.77. Audit ledger docs/eval/scan_audit/receipts_scan_reads_2026-10-27.csv: 2,254 events, 47 corrected.
+
+## 2026-10-27 — 1893-94 three-way reconciliation (Repertoire vs stats page vs ballet lists), worked example for RG
+
+Run: `pipeline/compare_season_stats.py` (city_totals, family_totals, ballet_counts, ballet_count_dates) plus
+```sql
+select * from research.season_stat_check where season='1893-94';
+select city,list_title,printed_total,n_dates from research.production where season='1893-94';
+```
+
+Result: events Moscow 393 vs 392 printed, SP 600 vs 597 (Repertoire includes 1 and 3 events with no works).
+Receipts Moscow −0.10, SP −163.77. Category lines: Moscow Italian opera −2 events/−9,852.00 against mixed +2/+9,851.90
+(classification, residual −0.10); SP drama −3/−7,028.37 and German −1/−2,481.75 against mixed +4/+9,476.35 (residual
+−33.77); SP opera −130.00 with counts equal (119 = 119). Ballet: stats, lists and Repertoire agree (Moscow 50, SP 47);
+all 26 ballet-list productions' printed totals equal their dated performances.
