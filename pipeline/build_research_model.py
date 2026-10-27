@@ -303,6 +303,17 @@ VISITING_ANNOTATION_RULES = [
     (r"gastspiel", "German guest season"),
 ]
 
+#: A visiting troupe's run that the Repertoire prints with no heading naming it,
+#: identified from another part of the yearbook: (season, theater, first date,
+#: last date, troupe, evidence). Applies to every performance in the span that no
+#: annotation already gives a troupe. The build fails if a run matches no
+#: performance or its troupe has no VISITING_TROUPE_DISCIPLINE entry.
+VISITING_RUNS = [
+    ("1909-10", "Михайловскій", "1910-04-19", "1910-05-14", "Moscow Art Theatre",
+     "season totals p. 58 print «Московскаго художественнаго театра 35»: the 35 Михайловскій events "
+     "19 Apr - 14 May 1910, printed with no troupe heading (RG, 2026-10-27)"),
+]
+
 #: Comedy-ballets are dramas that contain dancers (RG, 2026-10-12: "classify them
 #: as dramas, but note that they contain dancers. This is similar to operas").
 #: Art form Russian drama; research.performance.includes_dance marks them.
@@ -1049,6 +1060,18 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         JOIN research.event e ON e.event_id = sp.event_id
         LEFT JOIN research.theater t ON t.theater_id = e.theater_id
     """)
+    # visiting runs printed with no heading (VISITING_RUNS)
+    con.execute("ALTER TABLE perf_base ADD COLUMN run_basis VARCHAR")
+    for season, theater, d0, d1, troupe, evidence in VISITING_RUNS:
+        if troupe not in VISITING_TROUPE_DISCIPLINE:
+            raise SystemExit(f"VISITING_RUNS: no VISITING_TROUPE_DISCIPLINE entry for {troupe!r}")
+        n = con.execute("""
+            UPDATE perf_base SET visiting_troupe = ?, run_basis = ?
+            WHERE visiting_troupe IS NULL AND season = ? AND theater = ? AND ev_date BETWEEN ? AND ?""",
+            [troupe, f"run of an outside troupe ({troupe}), no heading printed: {evidence}",
+             season, theater, d0, d1]).fetchone()[0]
+        if not n:
+            raise SystemExit(f"VISITING_RUNS: {season} {theater} {d0}..{d1} matches no performance")
     con.execute("CREATE OR REPLACE TEMP TABLE art_title (title VARCHAR, genre VARCHAR, art_form VARCHAR, basis VARCHAR)")
     if ART_FORM_BY_TITLE_CSV.exists():
         for row in csv.DictReader(open(ART_FORM_BY_TITLE_CSV, encoding="utf-8")):
@@ -1091,7 +1114,7 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         (f"regexp_matches(coalesce(title, ''), {lit(HEADING_TITLE_RE)})",
          "NULL", "'a benefit or season heading stored as a title: not a work'"),
         ("visiting_troupe IS NOT NULL",
-         "'visiting troupe'", "'annotation names an outside troupe: ' || visiting_troupe"),
+         "'visiting troupe'", "coalesce(run_basis, 'annotation names an outside troupe: ' || visiting_troupe)"),
         # a title curated as a concert item outranks the ballet rule: an orchestral suite from a
         # ballet stays linked to its parent work but is not a ballet performance (RG, 2026-10-13)
         ("title_form = 'concert'", "title_form", "title_basis"),

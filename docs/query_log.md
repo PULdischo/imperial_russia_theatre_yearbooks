@@ -21700,3 +21700,17 @@ from research.performance where verbatim_title like 'Миранда%';
 Result: 2 performances (23 and 26 Feb 1910, Маріинскій), now opera / St. Petersburg opera (were null). Rebuild diff:
 research.event 2 and research.performance 2 rows, nothing else. compare_season_stats.py, SP opera 1909-10: 159 events,
 546,229.67 р.; less the 3 charity operas, plus the 18 Dec jubilee bill = 157 printed, receipts +10,000.28 р.
+
+## 2026-10-27 — Moscow Art Theatre 1909-10 run given its troupe (VISITING_RUNS): company counts after the rebuild
+
+```sql
+select e.season, min(e.date), max(e.date), count(distinct e.event_id), count(*),
+       string_agg(distinct p.discipline,'; '), string_agg(distinct p.company,'; ')
+from research.performance p join research.event e using(event_id)
+where p.company='Moscow Art Theatre' group by 1;
+```
+
+Result: 1909-10, 19 Apr - 14 May 1910, 35 events / 35 performances, Russian drama, Moscow Art Theatre (were St. Petersburg
+Russian drama); other seasons unchanged (1901-02 2, 1906-07 1, 1908-09 1, 1910-11 1). Rebuild diff: research.event 35,
+research.performance 35, nothing else. compare_season_stats.py 1909-10 SP: Art Theatre line 35 = 35; drama 269 (charity
+included) vs 258 printed.

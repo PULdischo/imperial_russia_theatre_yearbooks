@@ -379,7 +379,7 @@ exact, which settles the rule for this page.
 | SP | drama | 258 | 268 | +712.11 | open (1909-10-09) |
 | SP | French | 100 | 101 | −69.90 | open (1909-10-10) |
 | SP | German | 25 | 25 | (none printed) | exact |
-| SP | Moscow Art Theatre | 35 | 35 | (none printed) | Михайловскій 19 Apr - 14 May 1910; research layer gives them the SP drama company (1909-10-06) |
+| SP | Moscow Art Theatre | 35 | 35 | (none printed) | exact: Михайловскій 19 Apr - 14 May 1910, printed with no troupe heading; given to the Art Theatre by `VISITING_RUNS` (1909-10-06) |
 
 **«Миранда (послѣдняя борьба)»** (Маріинскій, 23 and 26 Feb 1910, no genre printed) is still without an art form by RG's
 ruling of 2026-10-13. The stats page is new evidence: SP opera reaches the printed 157 only if both nights are opera, and
@@ -406,6 +406,6 @@ one date swapped: the stats count the 28 Feb ballet-excerpts evening and give th
 has 18 Dec and not 28 Feb (1909-10-14, `classification`).
 
 **Still to do:** column reads for the four open receipts gaps (Малый, Александринскій + Михайловскій drama, Михайловскій
-French, Большой opera; about 600 cells); RG on «Миранда» and on the Art Theatre's company. The season reviews were not
+French, Большой opera; about 600 cells); «Миранда» (classed as opera) and the Art Theatre run (`VISITING_RUNS`, research layer rebuilt and promoted, backup `outputs/backups/mat_run_1909-10_2026-10-27/`) are settled. The 19 Apr «Утро памяти А. П. Чехова» (no works) is left without a company. The season reviews were not
 checked (1909-10 has SP music reviews only).
 **Half-kopecks FIXED the same day** (RG: whole kopecks, as #109): research-layer rule, 210 events, +105.98 р.; known_issues.md #161.
