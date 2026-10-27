@@ -21726,3 +21726,52 @@ where e.season='1909-10' and e.event_status='performed' and e.disciplines like '
 Result: 3. SP 18 Dec 1909 Маріинскій IRMO jubilee (ballet + opera, no receipts, not charity); SP 6 Feb 1910 Маріинскій
 French-flood charity (ballet, opera, Russian and French drama, no receipts); Moscow 10 Feb 1910 Большой French-flood charity
 (ballet, opera, Russian drama, 9,973.15 р.). The stats page has no mixed line this season.
+
+## 2026-10-27 — 1910-11 SP ballet: what explains printed 49 / 177,956.16 against the Repertoire's 50 / 183,206.86?
+
+```sql
+-- every SP 1910-11 event with works and class (compare_season_stats classifier), production db after the #161 promotion
+select e.event_id, e.city, t.canonical_name, e.date, e.time_of_day, e.receipts_total_kopecks, e.event_status, e.annotation,
+       p.performance_order, p.verbatim_title, p.verbatim_genre, p.genre_family, p.discipline, p.is_ceremonial, p.company
+from research.event e join research.theater t using(theater_id) left join research.performance p using(event_id)
+where e.season='1910-11';
+-- SP ballet / opera lines, every season (compare_season_stats.py family_totals.csv)
+-- free ballet matinées and the printed ballet lines + footnotes, 1908-09 to 1910-11
+select e.season, e.city, t.canonical_name, e.date, e.time_of_day, e.receipts_total_kopecks, e.disciplines, e.is_free
+from research.event e join research.theater t using(theater_id)
+where e.season in ('1908-09','1909-10','1910-11') and e.is_free and e.event_status='performed' and e.disciplines ilike '%ballet%';
+select season, city, category_verbatim, count, receipts_verbatim, footnote_refs from research.season_stat_line
+where season in ('1908-09','1909-10') and category_verbatim ilike 'Балет%';
+select season, footnote_no, text_verbatim from research.season_stat_footnote
+where season in ('1908-09','1909-10') and text_verbatim ilike '%безплатн%';
+-- SP 1910-11 season review, ballet pages
+select p.city, p.printed_folio, b.text from raw.review_block b join raw.review_page p using(page_id)
+where p.season='1910-11' and p.city='SP' and p.printed_folio in ('138','139','140');
+```
+
+Result: SP ballet is exact in every season except 1895-96 (opening night left out), 1904-05 (+13,759.00, 1 extra event; the 28 Dec
+1904 morning ballet is stored at 15,291.95, a lead, not checked) and 1910-11 (+5,250.70). 1908-09 and 1909-10 footnotes say the
+ballet line includes the free students' matinées, so the 1910-11 free 6 Dec matinée is probably inside the printed 49 and one paying
+ballet event is missing from the line. No single paying event, no pair, and no ballet-for-other swap (X − Y, Y any SP event) equals
+5,250.70; X1+X2−Y gives 5 chance hits pairing ballet nights with unrelated Александринскій dramas (not evidence). Nearest single event:
+9 Jan 1911 «Капризы бабочки» + «Щелкунчикъ», 5,321.75 р.; leaving it out gives 49 events and −71.05 р. The review (pp. 138-140) confirms the
+Repertoire's dates (13 Feb jubilee bill repeated 20 Feb with the «Конекъ-горбунокъ» scene; 22, 27, 29, 31 Mar; 20, 24 Apr) and gives no receipts.
+
+## 2026-10-27 — 1910-11 SP ballet: other candidates for the paying event missing from the printed line
+
+Same event table as the previous entry (49 paying Маріинскій ballet events, research.event). For each event X: remainder = 5,250.70 − X;
+tested whether the remainder is a single printed digit (d × 10^p) and whether the printed 177,956.16 would then be one digit off.
+
+Result: no event gives a clean remainder. Nearest: 9 Jan 1911 5,321.75 (−71.05); then the raised-price nights 16 Feb 4,718.50 (+532.20),
+5 Mar 4,680.50 (+570.20), 24 Apr 4,664.50 (+586.20), 9 Mar 4,653.50 (+597.20), 31 Mar 4,611.70 (+639.00), 27 Mar 4,581.50 (+669.20);
+every ordinary night leaves 1,650 р. or more.
+
+## 2026-10-27 — 1910-11 SP ballet: RG's reading recorded
+
+```sql
+select event_id from research.event e join research.theater t using(theater_id)
+where season='1910-11' and canonical_name='Маріинскій' and cast(date as varchar)='1911-01-09' and time_of_day='evening';
+```
+
+Result: repertoire_1910-11_p027__s011. RG: "It's probably Jan 9, but we have no way of confirming this now." Ledger 1910-11-04 and the
+README row now name 9 Jan 1911 as the probable paying event missing from the printed ballet line (remainder −71.05), provisional.
