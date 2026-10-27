@@ -21775,3 +21775,24 @@ where season='1910-11' and canonical_name='Маріинскій' and cast(date a
 
 Result: repertoire_1910-11_p027__s011. RG: "It's probably Jan 9, but we have no way of confirming this now." Ledger 1910-11-04 and the
 README row now name 9 Jan 1911 as the probable paying event missing from the printed ballet line (remainder −71.05), provisional.
+
+## 2026-10-27 — 1910-11: RG's three rulings applied (Art Theatre run, two «оп.» cells, Moscow mixed bills)
+
+```sql
+select e.event_id, e.date, p.performance_id, p.verbatim_title, p.verbatim_genre, p.work_id, w.canonical_title, w.canonical_genre,
+       p.discipline, p.discipline_basis, p.company, p.genre_family, p.genre_family_basis
+from research.event e join research.theater t using(theater_id) join research.performance p using(event_id) left join research.work w using(work_id)
+where e.season='1910-11' and t.canonical_name='Михайловскій' and (p.verbatim_title like 'Анжело%' or p.verbatim_title like 'Ромео%');
+select work_id, canonical_title, canonical_genre, appearance_count from research.work where canonical_title in ('Анжело','Ромео и Джульетта');
+-- after build_research_model.py (VISITING_RUNS 1910-11 row; performance_work_overrides.csv 2 rows) on a copy, vs the 15:45 production db:
+-- every research table EXCEPT-diffed; then
+select count(distinct event_id) from research.performance p join research.event e using(event_id)
+where e.season='1910-11' and p.company='Moscow Art Theatre';
+```
+
+Result: the two «оп.» performances were linked to opera works («Анжело» [оп.], 1 appearance; Gounod's «Ромео и Джульетта» [оп.], 159);
+the plays are «Анжело» [др.] (8) and «Ромео и Джульетта» [траг.] (14). SP opera productions list (pp. 62-63, scan): no «Анжело»; Gounod
+on 24 Sept, 26 Oct 1910, 20, 27 Jan, 17 Feb, 27 Apr 1911, not 4 Feb. After the rebuild: research.event 46, research.performance 46
+(44 Art Theatre + 2 relinked, all 1910-11), research.work 4 (appearance counts), nothing else; Moscow Art Theatre 1910-11 = 45 events.
+Promoted (backup outputs/backups/mxat_op_cells_1910-11_2026-10-27/), sqlite rebuilt. compare_season_stats.py: SP Art Theatre 45 = 45;
+drama 273 / 272, +690.61; opera 168 / 167, +13,474.09; ballet 50 / 49, +5,250.70; Moscow unchanged (mixed bills kept mixed, RG).

@@ -312,6 +312,9 @@ VISITING_RUNS = [
     ("1909-10", "Михайловскій", "1910-04-19", "1910-05-14", "Moscow Art Theatre",
      "season totals p. 58 print «Московскаго художественнаго театра 35»: the 35 Михайловскій events "
      "19 Apr - 14 May 1910, printed with no troupe heading (RG, 2026-10-27)"),
+    ("1910-11", "Михайловскій", "1911-04-11", "1911-05-15", "Moscow Art Theatre",
+     "season totals p. 58 print «Московскаго художественнаго театра 45»: the 45 Михайловскій events "
+     "11 Apr - 15 May 1911; the troupe heading is printed once, over 11 Apr morning (RG, 2026-10-27)"),
 ]
 
 #: Comedy-ballets are dramas that contain dancers (RG, 2026-10-12: "classify them
@@ -841,7 +844,9 @@ def load_supplied_performances(con: duckdb.DuckDBPyConnection) -> int:
 #: research.work title it is shown under. Raw keeps the printed wording, and so
 #: does research.performance.verbatim_title; performance_source says the work
 #: was taken from elsewhere. The build fails unless a row matches exactly one
-#: performance and one work.
+#: performance and one work. Optional research_work_genre picks between works that
+#: share a title (the play «Анжело» [др.] vs the opera); a relinked performance takes
+#: its art form from that work, not from the printed genre (RG, 2026-10-27).
 PERFORMANCE_WORK_OVERRIDES_CSV = Path(__file__).parent / "research_corrections" / "performance_work_overrides.csv"
 
 
@@ -867,8 +872,13 @@ def load_performance_work_overrides(con: duckdb.DuckDBPyConnection) -> int:
               AND e.time_of_day = ? AND eep.performance_title = ?""",
             [row["season"], row["city"], row["date"], row["theater"], row["time_of_day"],
              row["verbatim_title"]]).fetchall()
-        target = con.execute("SELECT work_id FROM research.work WHERE canonical_title = ?",
-                             [row["research_work_title"]]).fetchall()
+        # optional research_work_genre picks between works sharing a title (the play vs the opera)
+        if row.get("research_work_genre"):
+            target = con.execute("SELECT work_id FROM research.work WHERE canonical_title = ? AND canonical_genre = ?",
+                                 [row["research_work_title"], row["research_work_genre"]]).fetchall()
+        else:
+            target = con.execute("SELECT work_id FROM research.work WHERE canonical_title = ?",
+                                 [row["research_work_title"]]).fetchall()
         if len(hits) != 1 or len(target) != 1:
             raise SystemExit(f"performance_work_overrides.csv: {row['date']} {row['theater']} "
                              f"{row['verbatim_title']!r} matches {len(hits)} performances, "
@@ -1021,7 +1031,11 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                w.canonical_title, coalesce(w.canonical_genre, par.canonical_genre) AS g,
                -- the label as printed on THIS performance: decides the language of a
                -- Latin-script item (a merged work's canonical genre can be the other language's)
-               coalesce(nullif(eep.genre, ''), w.canonical_genre, par.canonical_genre) AS vg,
+               -- ...except where performance_work_overrides.csv gives the performance another
+               -- work: then that work's genre stands (a printed «оп.» slip in a drama run)
+               CASE WHEN pr.performance_id IS NOT NULL
+                    THEN coalesce(w.canonical_genre, par.canonical_genre, nullif(eep.genre, ''))
+                    ELSE coalesce(nullif(eep.genre, ''), w.canonical_genre, par.canonical_genre) END AS vg,
                (w.work_id IN (SELECT work_id FROM work_ballet)
                 OR coalesce(par.work_id IN (SELECT work_id FROM work_ballet), false)) AS parent_ballet,
                coalesce(ot.why, pot.why) AS opera_override,
