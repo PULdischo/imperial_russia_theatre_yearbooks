@@ -21237,3 +21237,34 @@ Receipts Moscow −0.10, SP −163.77. Category lines: Moscow Italian opera −2
 (classification, residual −0.10); SP drama −3/−7,028.37 and German −1/−2,481.75 against mixed +4/+9,476.35 (residual
 −33.77); SP opera −130.00 with counts equal (119 = 119). Ballet: stats, lists and Repertoire agree (Moscow 50, SP 47);
 all 26 ballet-list productions' printed totals equal their dated performances.
+
+## 2026-10-27 — 1893-94 mixed-bill events behind the category offsets
+
+Run: scratch script calling `compare_season_stats.classify_work/classify_event` over `LEVEL2_SQL` for season 1893-94,
+listing every event classed mixed; then
+```sql
+select e.event_id, p.verbatim_title, p.genre_family, p.discipline, p.company
+from research.event e join research.performance p using(event_id) where e.event_id in (<the 6 non-printed mixed events>);
+select genre_family, count(*) from research.performance where verbatim_title in ('Hymne','Гимнъ') group by 1;
+```
+plus docs/season_stats/footnotes.csv (1893-94 fn. 6-8, 13).
+
+Result: 12 events classed mixed (Moscow 4, SP 8). 6 are the yearbook's printed mixed bills, dated by its footnotes
+(Moscow 18 Jan + 25 Feb = 6,026.55; SP 17 + 22 Feb, 20 Apr, 29 Apr = 15,425.50, both exact). The other 6 are mixed only to
+the comparison script: «Hymne» read as French (Moscow 6 Mar Otello, SP 6 Mar Sodom's Ende), «4-o atto di op. Gli Ugonotti»
+read as French (Moscow 25 Mar), «Батюшкина дочка, ком.-бал.» read as ballet (SP 27 Jan, 10 Feb, 21 Feb morning).
+research.performance.discipline gives each a single art form (anthem genre_family 'anthem', no discipline). Residuals after
+moving them: Moscow −0.10 (Italian opera); SP drama −33.32, German −0.45.
+
+## 2026-10-27 — Binding Fold Log status: saved readings and remaining hidden figures
+
+Read: Fold Log store (claude.ai/artifact/C5n3ckdTBn2JCn1AQCTN9Y, collection "reviews", 61 cards saved) and
+```sql
+select page_id,date_text,theater,receipts_text from raw.event_entry where receipts_text like '%?%';
+```
+plus the 92 rows of docs/eval/title_check_2026-10-10/rcpt_fold_obscured_cells.csv matched by page/date/theater.
+
+Result: cards saved for 1892-93 (13), 1893-94 (13: 7 recovered, 6 needs_second_look), 1894-95 (9), 1895-96 (13), 1897-98 (13).
+Of the 92 fold-hidden cells, 85 now carry a full figure; 7 still have unread digits: 5 Александринскій kopeck amounts
+in 1893-94 (plus 2 more 1893-94 Александринскій cells outside the list: 22 Пон. «614 р. ?0 к.», 24 Понед. «1585 р. ?0 к.»),
+and the two damaged-type figures 1901-02 Большой 30 Dec «1?31 р. 35 к.», 1906-07 Михайловскій 6 Feb «11?7 р. 08 к.».
