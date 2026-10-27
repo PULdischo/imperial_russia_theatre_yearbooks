@@ -21334,3 +21334,16 @@ Result: changed rows only entities.work 2, research.work 2, research.performance
 Псковитянка [др.]. Stats: exact 100 -> 108 of 258; |events| 793 -> 769; |rub| 261,075.44 -> 233,432.91. Newly exact:
 1891-92 SP drama, mixed; 1892-93 SP concert, opera; 1895-96 SP concert (opera events); 1896-97 SP concert (opera events).
 Moscow 1906-07: concert 0 printed vs 3, opera +2 -> −1 (no concert line that season).
+
+## 2026-10-27 — Repertoire vs Season Totals page rebuilt (claude.ai/artifact/ArLKsN6AHotfFGKQKcd634, version 4)
+
+Read: `compare_season_stats.py` re-run on outputs/full_run (working-tree version: research-layer classifier + list-only
+ballet check) → city_totals.csv, family_totals.csv, ballet_counts.csv; plus
+```sql
+select season, city, count(*) from research.event where event_status='performed' and season='1890-91' group by all;
+```
+
+Result: 1890-91 added (no totals page, no receipts; performed events Moscow 373, SP 592; ballet lists = Repertoire 51/45).
+Category lines now from the research-layer classifier: 108 of 258 family rows exact (was 73 of 259 with the regex). 1893-94
+event counts all match; residuals Moscow Italian opera −0.10, SP drama −33.32, German −0.45, opera −130.00. Each season's
+detail now shows the ballet line (totals / lists / Repertoire).
