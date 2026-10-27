@@ -21366,6 +21366,26 @@ other events, already counted (fn. 10 Moscow opera = Большой 21 Dec 1893 
 Паяцы / Евгеній Онѣгинъ, 17 Jan 1894 Фальстафъ) print no receipts in the Repertoire either, so they don't affect the
 −130.00 opera gap.
 
+## 2026-10-27 — 1890-91: notes-only events, and dated claims in the SP season review vs the Repertoire
+
+Read:
+```sql
+select e.city, t.canonical_name, e.date, e.annotation from research.event e join research.theater t using(theater_id)
+ where season='1890-91' and event_status='performed' and not exists (select 1 from research.performance p where p.event_id=e.event_id);
+select p.city, p.printed_folio, b.text from raw.review_block b join raw.review_page p using(page_id) where p.season='1890-91';
+  -- regex for «N разъ / представленій / спектакль» phrases (23 hits)
+select e.date, e.date_verbatim, e.event_status, string_agg(p.verbatim_title,' + ') from research.event e ... Маріинскій,
+ 1890-08-29..09-02 and 1891-03-01..03-23;
+select e.date, e.printed_page_number, a.page_id from research.event e join analysis.event_entry a using(event_id)
+ where season='1890-91' and date between '1891-03-02' and '1891-03-11';
+```
+
+Result: the 4 notes-only events are all the invalids' concert (SP Маріинскій 17 Mar rehearsal, 19 Mar, 21 Mar repeat;
+Moscow Большой 19 Mar). The SP review (p. 202) says «Гибель Фауста» was given at the Маріинскій on 7 and 9 March 1891; the
+Repertoire has no row at all for 4-9 March (first week of Lent), and the gap falls between p. 21 (ends 3 Mar) and p. 22
+(starts 10 Mar), so the weekday check could not cover it. The review (p. 120) dates the season's opening «Жизнь за Царя»
+to 30 September; the Repertoire has it at the Маріинскій on 30 August (season opener) and Весталка on 30 Sept.
+
 ## 2026-10-27 — 1893-94 outcome ledger built
 
 Sources: docs/eval/scan_audit/receipts_scan_reads_2026-10-27.csv (18 corrected 1893-94 cells), the three 1893-94 fix
@@ -21389,25 +21409,18 @@ Claude at full resolution: Repertoire p. 20 (ForUpload_1893-94_Repertoire.pdf pa
 stats p. 26 prints «188 (215,273 р. 34 к.)», «119 (345,169 р. 54 к.)», «34 (70,141 р. 75 к.)», all as transcribed in
 docs/season_stats/lines.csv. Outcome: the three yearbook_own rows stand (still provisional until RG reads the volume).
 
-## 2026-10-27 — 1890-91: notes-only events, and dated claims in the SP season review vs the Repertoire
+## 2026-10-27 — RGIA Д. 189 no. 70: which plays were photographed (April 1898)
 
-Read:
+Question: the register entry of 25 Apr 1898 (photo studio's report of 24 Apr, 42 prints «съ моментальныхъ снимковъ съ
+пьесъ» «Семейство В…линныхъ?» и «При д…лжности?») -- which Petersburg productions are these?
 ```sql
-select e.city, t.canonical_name, e.date, e.annotation from research.event e join research.theater t using(theater_id)
- where season='1890-91' and event_status='performed' and not exists (select 1 from research.performance p where p.event_id=e.event_id);
-select p.city, p.printed_folio, b.text from raw.review_block b join raw.review_page p using(page_id) where p.season='1890-91';
-  -- regex for «N разъ / представленій / спектакль» phrases (23 hits)
-select e.date, e.date_verbatim, e.event_status, string_agg(p.verbatim_title,' + ') from research.event e ... Маріинскій,
- 1890-08-29..09-02 and 1891-03-01..03-23;
-select e.date, e.printed_page_number, a.page_id from research.event e join analysis.event_entry a using(event_id)
- where season='1890-91' and date between '1891-03-02' and '1891-03-11';
+select p.verbatim_title, p.company, min(e.date), max(e.date), count(*)
+from research.performance p join research.event e using(event_id)
+where p.company ilike 'St. Petersburg%drama%' and e.date between '1898-03-01' and '1898-05-15'
+group by all order by 2, 3;
 ```
-
-Result: the 4 notes-only events are all the invalids' concert (SP Маріинскій 17 Mar rehearsal, 19 Mar, 21 Mar repeat;
-Moscow Большой 19 Mar). The SP review (p. 202) says «Гибель Фауста» was given at the Маріинскій on 7 and 9 March 1891; the
-Repertoire has no row at all for 4-9 March (first week of Lent), and the gap falls between p. 21 (ends 3 Mar) and p. 22
-(starts 10 Mar), so the weekday check could not cover it. The review (p. 120) dates the season's opening «Жизнь за Царя»
-to 30 September; the Repertoire has it at the Маріинскій on 30 August (season opener) and Весталка on 30 Sept.
+Result: «Семейство Волгиныхъ» (SP Russian drama, 8 and 17 Apr 1898) and «При должности» (SP Russian drama, 8 Apr 1898
+only) -- one event, Александринскій 8 Apr 1898 (repertoire_1897-98_pair022__s056), both on the bill. Both readings fit the scan once known (checked by Claude). Neither is ballet.
 
 ## 2026-10-27 — 1890-91 season reviews: every dated statement against the Repertoire
 
@@ -21423,19 +21436,6 @@ plus earliest-date checks for each first night the review names, and event_ids f
 Result: 62 agree; 9 disagree, all slips in the review's print (Repertoire matches its scan each time): 30 Sept→30 Aug,
 3 Sept→2 Sept, 12 Oct→13 Oct, 21 Oct→20 Oct (first night), 27 Dec→26 Dec (Moscow), 11 Feb→11 Jan ×2, 7 and 9 Mar→7 and
 9 Apr («Гибель Фауста», in the Repertoire as p023__s046/s057). Ledger 1890-91-01..08.
-
-## 2026-10-27 — RGIA Д. 189 no. 70: which plays were photographed (April 1898)
-
-Question: the register entry of 25 Apr 1898 (photo studio's report of 24 Apr, 42 prints «съ моментальныхъ снимковъ съ
-пьесъ» «Семейство В…линныхъ?» и «При д…лжности?») -- which Petersburg productions are these?
-```sql
-select p.verbatim_title, p.company, min(e.date), max(e.date), count(*)
-from research.performance p join research.event e using(event_id)
-where p.company ilike 'St. Petersburg%drama%' and e.date between '1898-03-01' and '1898-05-15'
-group by all order by 2, 3;
-```
-Result: «Семейство Волгиныхъ» (SP Russian drama, 8 and 17 Apr 1898) and «При должности» (SP Russian drama, 8 Apr 1898
-only) -- one event, Александринскій 8 Apr 1898 (repertoire_1897-98_pair022__s056), both on the bill. Both readings fit the scan once known (checked by Claude). Neither is ballet.
 
 ## 2026-10-27 — 1893-94 Moscow pp. 6-25 scan read; unread-kopeck fold cells
 
@@ -21602,29 +21602,6 @@ research_dataset.sqlite rebuilt. After: Moscow +13,948.31 (drama +8,136.00, oper
 +5,250.70, drama −336.69, French +1.00); 1907-08 Moscow drama −564.00 → +10.00; 1909-10 SP drama +1,640.55 → +1,641.36.
 Ledger rows 1910-11-01..12; reconciliation README "1910-11".
 
-## 2026-10-27 — half-kopeck receipts: how many lost their kopecks, and the fix (issue #161)
-
-```sql
-select e.season, e.city, t.canonical_name, e.event_id, e.receipts_verbatim, e.receipts_total_kopecks, e.receipts_source,
-       a.receipts_rubles, a.receipts_kopecks
-from research.event e join research.theater t using(theater_id) join analysis.event_entry a using(event_id)
-where receipts_verbatim similar to '.*(½|¹/₂|¹|₂|¹ ₂|⅞|¼|¾).*';
-select season, city, category_verbatim, venue_verbatim, count, receipts_verbatim, receipts_kopecks
-from research.season_stat_line where receipts_verbatim similar to '.*(½|¹/₂|⅞|¼).*';
-select distinct receipts_kopecks from analysis.event_entry
-where receipts_kopecks is not null and receipts_kopecks <> '' and try_cast(receipts_kopecks as integer) is null;
--- after build_research_model.py with HALF_KOPECK_RE, on a copy, vs the 15:34 production db:
-select t.receipts_source, count(*), sum(t.receipts_total_kopecks - p.receipts_total_kopecks)/100
-from test2.research.event t join p.research.event p using(event_id)
-where t.receipts_total_kopecks is distinct from p.receipts_total_kopecks group by 1;
-```
-
-Result: 218 Repertoire figures carry a fraction; 8 were already hand-corrected in receipts_print_typos.csv (#109, whole kopecks);
-the other 210 (1899-00 to 1909-10; 1900-01 Михайловскій 59, 1901-02 31, 1899-00 29 ...) were stored with 0 kopecks. Three
-season-stats lines print a half too (1903-04 SP German 51,839 р. 18½ к., 1904-05 SP French, 1907-08 SP French), stored as .5.
-RG chose whole kopecks. After the rule: 210 events relabelled parsed_half_kopeck_dropped, 209 values change, +105.98 р.;
-research.season_stat_check 9 rows; nothing else. Season-total gaps per known_issues.md #161 (e.g. 1899-00 SP French −12.48 → −0.14).
-
 ## 2026-10-27 — 1909-10 reconciliation: Repertoire vs season totals (p. 58) by theater, status and art form
 
 ```sql
@@ -21690,6 +21667,29 @@ where season='1909-10' and event_status='performed' and disciplines='Russian dra
 Result: Александринскій 230 before 19 Apr (205 other, 15 youth, 7 reduced, 3 free); Михайловскій 33 (22 youth, 8 reduced,
 1 free, 1 charity, 1 other). Alex 236 + Михайловскій youth 22 = 258 events, but receipts then fall 4,298 р. short: rejected.
 
+## 2026-10-27 — half-kopeck receipts: how many lost their kopecks, and the fix (issue #161)
+
+```sql
+select e.season, e.city, t.canonical_name, e.event_id, e.receipts_verbatim, e.receipts_total_kopecks, e.receipts_source,
+       a.receipts_rubles, a.receipts_kopecks
+from research.event e join research.theater t using(theater_id) join analysis.event_entry a using(event_id)
+where receipts_verbatim similar to '.*(½|¹/₂|¹|₂|¹ ₂|⅞|¼|¾).*';
+select season, city, category_verbatim, venue_verbatim, count, receipts_verbatim, receipts_kopecks
+from research.season_stat_line where receipts_verbatim similar to '.*(½|¹/₂|⅞|¼).*';
+select distinct receipts_kopecks from analysis.event_entry
+where receipts_kopecks is not null and receipts_kopecks <> '' and try_cast(receipts_kopecks as integer) is null;
+-- after build_research_model.py with HALF_KOPECK_RE, on a copy, vs the 15:34 production db:
+select t.receipts_source, count(*), sum(t.receipts_total_kopecks - p.receipts_total_kopecks)/100
+from test2.research.event t join p.research.event p using(event_id)
+where t.receipts_total_kopecks is distinct from p.receipts_total_kopecks group by 1;
+```
+
+Result: 218 Repertoire figures carry a fraction; 8 were already hand-corrected in receipts_print_typos.csv (#109, whole kopecks);
+the other 210 (1899-00 to 1909-10; 1900-01 Михайловскій 59, 1901-02 31, 1899-00 29 ...) were stored with 0 kopecks. Three
+season-stats lines print a half too (1903-04 SP German 51,839 р. 18½ к., 1904-05 SP French, 1907-08 SP French), stored as .5.
+RG chose whole kopecks. After the rule: 210 events relabelled parsed_half_kopeck_dropped, 209 values change, +105.98 р.;
+research.season_stat_check 9 rows; nothing else. Season-total gaps per known_issues.md #161 (e.g. 1899-00 SP French −12.48 → −0.14).
+
 ## 2026-10-27 — «Миранда (послѣдняя борьба)» classed as opera (RG): performances and SP opera line after the rebuild
 
 ```sql
@@ -21714,18 +21714,6 @@ Result: 1909-10, 19 Apr - 14 May 1910, 35 events / 35 performances, Russian dram
 Russian drama); other seasons unchanged (1901-02 2, 1906-07 1, 1908-09 1, 1910-11 1). Rebuild diff: research.event 35,
 research.performance 35, nothing else. compare_season_stats.py 1909-10 SP: Art Theatre line 35 = 35; drama 269 (charity
 included) vs 258 printed.
-
-## 2026-10-27 — 1909-10 mixed bills (events with more than one art form)
-
-```sql
-select e.city, t.canonical_name, e.date, e.receipts_total_kopecks/100.0, e.disciplines, e.is_charity
-from research.event e join research.theater t using(theater_id)
-where e.season='1909-10' and e.event_status='performed' and e.disciplines like '%;%' order by e.date;
-```
-
-Result: 3. SP 18 Dec 1909 Маріинскій IRMO jubilee (ballet + opera, no receipts, not charity); SP 6 Feb 1910 Маріинскій
-French-flood charity (ballet, opera, Russian and French drama, no receipts); Moscow 10 Feb 1910 Большой French-flood charity
-(ballet, opera, Russian drama, 9,973.15 р.). The stats page has no mixed line this season.
 
 ## 2026-10-27 — 1910-11 SP ballet: what explains printed 49 / 177,956.16 against the Repertoire's 50 / 183,206.86?
 
@@ -21765,6 +21753,18 @@ tested whether the remainder is a single printed digit (d × 10^p) and whether t
 Result: no event gives a clean remainder. Nearest: 9 Jan 1911 5,321.75 (−71.05); then the raised-price nights 16 Feb 4,718.50 (+532.20),
 5 Mar 4,680.50 (+570.20), 24 Apr 4,664.50 (+586.20), 9 Mar 4,653.50 (+597.20), 31 Mar 4,611.70 (+639.00), 27 Mar 4,581.50 (+669.20);
 every ordinary night leaves 1,650 р. or more.
+
+## 2026-10-27 — 1909-10 mixed bills (events with more than one art form)
+
+```sql
+select e.city, t.canonical_name, e.date, e.receipts_total_kopecks/100.0, e.disciplines, e.is_charity
+from research.event e join research.theater t using(theater_id)
+where e.season='1909-10' and e.event_status='performed' and e.disciplines like '%;%' order by e.date;
+```
+
+Result: 3. SP 18 Dec 1909 Маріинскій IRMO jubilee (ballet + opera, no receipts, not charity); SP 6 Feb 1910 Маріинскій
+French-flood charity (ballet, opera, Russian and French drama, no receipts); Moscow 10 Feb 1910 Большой French-flood charity
+(ballet, opera, Russian drama, 9,973.15 р.). The stats page has no mixed line this season.
 
 ## 2026-10-27 — 1910-11 SP ballet: RG's reading recorded
 
