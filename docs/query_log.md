@@ -21193,3 +21193,14 @@ select city,receipts_minus_printed_kopecks/100.0 from research.season_stat_check
 
 Result after restoring 13 Малый kopecks: Moscow −1,230.50, SP +19,440.08. Moscow concerts = the two benefit evenings
 (4933 р. + 4364 р. 80 к. = 9,297.80, the printed concert total).
+
+## 2026-10-27 — All seasons: Repertoire receipts vs printed season totals (summary page for RG)
+
+Run: `pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir <scratch>` (city_totals.csv,
+family_totals.csv; its SQL over research.event / research.performance / research.season_stat_line), after the fold-log
+applies for 1892-93..1897-98 and the 1894-95 classifier fix.
+
+Result: 38 season-city rows (1891-92..1910-11, no 1905-06 stats page), 358 category rows. Receipts gap (Repertoire minus
+printed): exact nowhere at city level; under 100 р.: 1893-94 Moscow (−60.10), 1899-00 Moscow (−31.00); largest: 1909-10
+Moscow +31,747.61, 1895-96 SP +19,440.08, 1910-11 SP +19,412.17, 1904-05 SP +17,873.60. Shown to RG as the "Repertoire vs
+Season Totals" artifact.
