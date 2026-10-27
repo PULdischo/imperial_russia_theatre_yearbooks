@@ -24307,3 +24307,18 @@ performance genre, 0 work_id/person changes.
   - Михайловскій opera: all 20 figures match the scan. Its +2,134.20 is the 3 Sept event (see above).
   - 1895-96 now: Moscow −1,230.50 (Малый drama −2,130.38, Большой opera +900.00 — both the yearbook vs itself), SP +19,440.08.
   - 28 Воскресенье (Jan 1896, p. 17) Малый morning «867 р. 82 к.»: the last kopeck digit is damaged type (2 or 7); left as 82.
+
+## Binding Fold Log, 1894-95 applied, 2026-10-27 (RG: "finished 1894-95. look through it.")
+
+RG read all 9 1894-95 cards in the Princeton volume. `readings_1894-95.csv` -> `apply_fold_log.py 1894-95 --write` ->
+rebuild -> build_datasette. Rebuild diff vs `outputs/backups/foldlog_1894-95_2026-10-27/`: 13 raw.event_entry rows, 1 title.
+- 11 blank figures filled; 2 corrected: 23 Пятн. (p. 4) Большой 1493 -> 1494 р. 5 к.; 15 Воскрес. (p. 8) Михайловскій
+  1599 -> 1893 р. 75 к.
+- 18 Апрѣля (p. 16) Малый: «Иронъ» -> «Ирэнъ, ком.» (RG; the form printed 20 times elsewhere). Its one-off work merged into
+  the existing «Ирэнъ» (works 2977 -> 2976).
+- Printed totals: Moscow −562.50 -> +1,348.50, SP −13,771.56 -> −1,593.60. By category (compare_season_stats.py):
+  Moscow opera −1,000.00 (75 = 75; 70 single-digit candidates), Малый drama +2,348.50 (127 = 127; no single-slip
+  candidate); SP Маріинскій ballet −200.00 (17 = 17; 14 candidates), French −1,392.50 (91 = 91; none), German −1.00;
+  Михайловскій ballet 2 vs 3 printed (−1,474.00) with mixed +1,469.54 / 10 vs 8 — a bill the yearbook filed as ballet that
+  the classifier calls mixed. Exact: Moscow ballet, Большой drama, mixed; SP opera (both theatres), Михайловскій drama.
+  Not yet chased on the scans.
