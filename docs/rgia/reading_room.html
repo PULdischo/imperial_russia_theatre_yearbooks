@@ -1,0 +1,446 @@
+<title>RGIA Reading Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=PT+Sans:wght@400;700&family=PT+Mono&display=swap">
+<style>
+/* Layout: an archivist's register. Home = one ruled row per дело (the опись); open a дело = one ruled row per photographed page, thumbnail left, summary right, your marks inline. */
+:root{
+  --paper:#f5f5f1; --card:#ffffff; --ink:#1f2326; --muted:#5b6266; --rule:#d8dad3;
+  --accent:#1f4f7a; --accent-ink:#ffffff;
+  --high:#a8321f; --high-bg:#f7e3de; --med:#8a5a00; --med-bg:#f6ecd4; --low:#5b6266; --low-bg:#ebecea;
+  --ballet:#8a2f6b; --key:#b07400; --ok:#2f6b3a;
+  --display:"PT Serif", Georgia, "Times New Roman", serif;
+  --body:"PT Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono:"PT Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#16191b; --card:#1e2225; --ink:#e7e8e3; --muted:#a2a8aa; --rule:#33383b; --accent:#8fb8de; --accent-ink:#10161b;
+  --high:#f0a08f; --high-bg:#3d2420; --med:#e3bf6f; --med-bg:#362d17; --low:#a2a8aa; --low-bg:#2a2e30;
+  --ballet:#e5a3d0; --key:#f0c060; --ok:#8fd19a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#16191b; --card:#1e2225; --ink:#e7e8e3; --muted:#a2a8aa; --rule:#33383b; --accent:#8fb8de; --accent-ink:#10161b;
+  --high:#f0a08f; --high-bg:#3d2420; --med:#e3bf6f; --med-bg:#362d17; --low:#a2a8aa; --low-bg:#2a2e30;
+  --ballet:#e5a3d0; --key:#f0c060; --ok:#8fd19a; color-scheme:dark}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:26px 60px}
+h1{font-family:var(--display);font-weight:700;font-size:1.9rem;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:700;font-size:1.45rem;margin:0;text-wrap:balance}
+.sig{font-family:var(--mono);color:var(--muted);font-size:.84rem;margin-top:4px}
+.lede{max-width:68ch;color:var(--muted);margin:10px 0 0}
+.stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-block:10px;margin-top:14px}
+.chipbtn,.btn{font:inherit;font-size:.85rem;border:1px solid var(--rule);background:var(--card);color:var(--ink);border-radius:999px;padding:4px 12px;cursor:pointer}
+.chipbtn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn{border-radius:6px}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input[type=search],select{font:inherit;font-size:.9rem;padding:5px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink);min-width:0}
+input[type=search]{flex:1 1 200px}
+.count{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin-left:auto}
+ol{list-style:none;margin:0;padding:0}
+a{color:var(--accent)}
+.pill{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:4px;padding:2px 7px;white-space:nowrap}
+.pill.high{color:var(--high);background:var(--high-bg)} .pill.medium{color:var(--med);background:var(--med-bg)} .pill.low{color:var(--low);background:var(--low-bg)}
+.pill.recv{color:var(--ok);border:1px solid currentColor} .pill.wait{color:var(--med);border:1px solid currentColor} .pill.none{color:var(--muted);border:1px solid currentColor}
+.tag{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:4px;padding:1px 6px;border:1px solid currentColor;white-space:nowrap}
+.tag.ballet{color:var(--ballet)} .tag.editorial{color:var(--accent)} .tag.key{color:var(--key)}
+.meta{font-size:.85rem;color:var(--muted)}
+/* дела register */
+li.delo{display:grid;grid-template-columns:5.2rem 1fr auto;gap:6px 16px;padding-block:12px;border-bottom:1px solid var(--rule);align-items:start}
+li.delo .no{font-family:var(--display);font-weight:700;font-size:1.1rem;font-variant-numeric:tabular-nums}
+li.delo .t{font-family:var(--display);min-width:0}
+li.delo .t button{all:unset;cursor:pointer;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+li.delo .t button:focus-visible{outline:2px solid var(--accent)}
+li.delo .r{display:flex;flex-direction:column;align-items:flex-end;gap:4px;text-align:right}
+.prog{font-family:var(--mono);font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
+/* дело view */
+.back{margin-bottom:14px}
+.why{font-size:.88rem;color:var(--muted);max-width:70ch;margin:6px 0 0}
+textarea{font:inherit;font-size:.9rem;width:100%;box-sizing:border-box;min-height:3.2em;padding:8px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink);resize:vertical}
+.notelabel{font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:block;margin:14px 0 4px}
+li.pg{display:grid;grid-template-columns:150px 1fr;gap:18px;padding-block:16px;border-bottom:1px solid var(--rule)}
+li.pg.s-read,li.pg.s-skip{opacity:.55}
+li.pg.s-key{box-shadow:inset 3px 0 0 var(--key);padding-left:10px}
+.thumb{width:150px;height:190px;max-width:100%;background-color:var(--low-bg);background-repeat:no-repeat;border:1px solid var(--rule);padding:0;display:block}
+button.thumb{cursor:pointer}
+button.thumb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#viewer{border:1px solid var(--rule);border-radius:8px;padding:20px;max-width:min(560px,calc(100vw - 32px));background:var(--card);color:var(--ink)}
+#viewer::backdrop{background:rgba(0,0,0,.45)}
+.vtitle{font-family:var(--display);font-weight:700;font-size:1.1rem;margin:0 0 10px}
+.vpath{font-family:var(--mono);font-size:.82rem;overflow-wrap:anywhere;padding:8px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--paper);user-select:all}
+.vhow{font-size:.85rem;color:var(--muted);margin:10px 0 14px}
+.vrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+.gl{font-family:var(--body);font-size:.8em;font-style:italic;color:var(--accent);margin-left:.2em;white-space:normal}
+.tools{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-top:12px;font-size:.88rem}
+.tools label{display:inline-flex;gap:6px;align-items:center;color:var(--muted)}
+#glossary{border:1px solid var(--rule);border-radius:8px;padding:0;width:min(720px,calc(100vw - 32px));max-height:min(80vh,820px);background:var(--card);color:var(--ink)}
+#glossary::backdrop{background:rgba(0,0,0,.45)}
+.ghead{position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--rule);padding:14px 18px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.ghead h2{font-size:1.2rem;margin:0;flex:1 1 auto}
+.gbody{padding:4px 18px 18px}
+.gbody h3{font-family:var(--body);font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:16px 0 4px}
+.gbody dl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 16px;margin:0}
+.gbody dt{font-weight:700}
+.gbody dd{margin:0;font-family:var(--display)}
+@media (max-width:560px){.gbody dl{grid-template-columns:1fr}.gbody dd{margin-bottom:6px}}
+.pbody{min-width:0}
+.head{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+.pno{font-family:var(--display);font-weight:700;font-size:1.1rem}
+.folio{font-family:var(--mono);font-size:.82rem;color:var(--muted)}
+.gist{margin:6px 0 4px;max-width:72ch}
+.names{font-family:var(--display);font-size:.92rem}
+.names b,.lbl{font-family:var(--body);font-weight:400;font-size:.76rem;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-right:6px}
+.rwhy{font-size:.83rem;color:var(--muted);font-style:italic}
+.marks{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.seg button{font:inherit;font-size:.8rem;border:0;border-right:1px solid var(--rule);background:var(--card);color:var(--ink);padding:3px 10px;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.pnote{flex:1 1 220px;min-width:0;font:inherit;font-size:.85rem;padding:4px 8px;border:1px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink)}
+.state{font-size:.85rem;color:var(--muted);padding-block:20px}
+.err{color:var(--high)}
+.hits li{padding-block:10px;border-bottom:1px solid var(--rule)}
+.saved{font-size:.75rem;color:var(--ok);min-width:3.5em}
+.tlspan{border:1px solid var(--rule);border-radius:8px;background:var(--card);padding:12px 14px;margin-bottom:10px}
+.tlspan .who{font-family:var(--display);font-weight:700;font-size:1.05rem}
+.tlspan .when{font-family:var(--mono);font-size:.85rem;font-variant-numeric:tabular-nums}
+.ruling{font-size:.88rem;border-left:3px solid var(--key);padding-left:8px;margin-top:6px}
+li.act{display:grid;grid-template-columns:90px 1fr;gap:14px;padding-block:14px;border-bottom:1px solid var(--rule)}
+li.act.rgread{box-shadow:inset 3px 0 0 var(--ok);padding-left:10px}
+.athumb{width:90px;height:114px;background-color:var(--low-bg);background-repeat:no-repeat;border:1px solid var(--rule);display:block}
+.adate{font-family:var(--mono);font-size:.9rem;font-weight:700;font-variant-numeric:tabular-nums}
+.tag.src{color:var(--muted)} .tag.ck{color:var(--accent)} .tag.so{color:var(--med)} .tag.un{color:var(--high)} .tag.rg{color:var(--ok)}
+.unc{font-size:.85rem;color:var(--muted);margin-top:4px}
+.rgrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.rgrow input[type=date]{font:inherit;font-size:.85rem;padding:3px 6px;border:1px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink)}
+.ground{font-size:.88rem;max-width:72ch;border:1px solid var(--rule);border-radius:8px;padding:10px 12px;background:var(--card);margin:10px 0 0}
+@media (max-width:620px){li.act{grid-template-columns:1fr}}
+@media (max-width:620px){li.delo{grid-template-columns:4rem 1fr}li.delo .r{grid-column:2;align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap}
+  li.pg{grid-template-columns:1fr} .thumb{margin:0}}
+@media (prefers-reduced-motion:no-preference){li.pg,li.delo{transition:opacity .15s}}
+</style>
+
+<div class="wrap" id="app">
+  <header id="top">
+    <h1>RGIA Reading Room</h1>
+    <div class="sig">РГИА · Ф. 497 «Дирекція Императорскихъ театровъ» · оп. 18</div>
+    <p class="lede">Every дело you have requested, and for each one that has arrived, a page-by-page guide: what the page is about, whether it touches ballet or the Yearbook's editorial history, and your own marks. The summaries come from a quick machine read of the photographs. They tell you where to look; names marked “?” are doubtful and every reading needs checking against the scan.</p>
+    <div class="stats" id="stats"></div>
+    <div class="tools"><label><input type="checkbox" id="glon"> Show English glosses after Russian terms</label><button class="btn" id="glbtn">Glossary</button><a class="btn" href="#timeline" style="text-decoration:none">Editorial timeline</a></div>
+  </header>
+  <main id="view"><p class="state">Loading the register…</p></main>
+</div>
+<dialog id="glossary" aria-labelledby="gtitle">
+  <div class="ghead"><h2 id="gtitle">Glossary</h2><input type="search" id="gq" placeholder="Search English or Russian…" aria-label="Search the glossary"><button class="btn" id="gclose">Close</button></div>
+  <div class="gbody" id="gbody"><p class="state">Loading…</p></div>
+</dialog>
+<dialog id="viewer" aria-labelledby="vtitle">
+  <p class="vtitle" id="vtitle"></p>
+  <div class="vpath" id="vpath"></div>
+  <p class="vhow" id="vhow"></p>
+  <div class="vrow"><button class="btn" id="vcopy">Copy file path</button><button class="btn" id="vclose">Close</button></div>
+</dialog>
+
+<script>
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $=s=>document.querySelector(s);
+const SUB=[['ed_contributors','Contributors'],['ed_illustrations','Illustrations'],['ed_print_finance','Print runs & finances'],['ed_editors','Editors & office']];
+let db=null, DELA=[], MARKS={}, PAGES={}, TL={acts:[],spans:[]}, RGR={}, ui={home:{f:'received',q:'',grp:''}, delo:{f:'all',q:''}, search:''};
+
+/* ---------- data ---------- */
+async function boot(){
+  db = await (window.claude?.use ? window.claude.use('db') : null);
+  if(!db){ $('#view').innerHTML='<p class="state err">The register could not be loaded in this view. Open the page signed in to claude.ai.</p>'; return; }
+  db.collection('dela').onSnapshot(s=>{ DELA=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.delo-b.delo); route(); },
+    e=>{ $('#view').innerHTML=`<p class="state err">Could not read the register (${esc(e.code)}). Reload the page to try again.</p>`; });
+  db.collection('marks').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); MARKS=m; if(current()) paintMarksOnly(); else if(!onTimeline()) route(); });
+  // timeline: Claude's acts/spans (read-only here) and RG's own readings (rg_reads, one doc per act)
+  db.collection('timeline').onSnapshot(s=>{ s.docs.forEach(d=>TL[d.id]=d.data().rows||[]); if(onTimeline()) paintTimelineSafe(); });
+  db.collection('rg_reads').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); RGR=m; if(onTimeline()) paintTimelineSafe(); });
+}
+function openViewer(d,page){
+  const r=(PAGES[d.id]||[]).find(x=>x.page===page)||{};
+  $('#vtitle').textContent=`Д. ${d.delo} · PDF p. ${page}${r.folio?' · л. '+r.folio:''}`;
+  $('#vpath').textContent=d.pdf||'File location not recorded for this дело.';
+  $('#vcopy').hidden=!d.pdf;
+  $('#vhow').textContent=`Paste the path into Acrobat's File → Open dialog (⇧⌘G in that dialog takes a typed path), then press ⇧⌘N and go to page ${page}.`;
+  const dlg=$('#viewer'); if(!dlg.open) dlg.showModal();
+}
+$('#vclose').onclick=()=>$('#viewer').close();
+$('#vcopy').onclick=async()=>{ const b=$('#vcopy');
+  try{ await navigator.clipboard.writeText($('#vpath').textContent); b.textContent='Copied'; }
+  catch(e){ const rg=document.createRange(); rg.selectNodeContents($('#vpath')); getSelection().removeAllRanges(); getSelection().addRange(rg); b.textContent='Selected — press ⌘C'; }
+  setTimeout(()=>b.textContent='Copy file path',1800); };
+/* ---------- glossary ---------- */
+const LET='А-Яа-яЁёѢѣІіѲѳѴѵA-Za-z';
+let GLOSS=[], GLRE=null, GLON=true;
+try{ GLON=localStorage.getItem('rr_gloss')!=='off'; }catch(e){}
+async function loadGlossary(){
+  try{ const g=await (await fetch('glossary.json')).json(); GLOSS=g.terms||[]; }catch(e){ GLOSS=[]; }
+  const alts=[];
+  GLOSS.forEach((t,i)=>{
+    (t.match||[]).forEach(m=>alts.push([m.split(' ').map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'['+LET+']*').join('\\s+'),i]));
+    (t.abbr||[]).forEach(a=>alts.push([a.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),i]));
+  });
+  alts.sort((a,b)=>b[0].length-a[0].length);
+  GLRE=alts.length?{re:new RegExp('(?<!['+LET+'])(?:'+alts.map(a=>'('+a[0]+')').join('|')+')','giu'),idx:alts.map(a=>a[1])}:null;
+  paintGlossary(); route();
+}
+function gloss(text,seen){
+  // escape the text; after the first occurrence (per summary) of each known term, add its English in small italics
+  text=String(text??''); if(!GLON||!GLRE) return esc(text);
+  let out='', last=0; GLRE.re.lastIndex=0; let m;
+  while((m=GLRE.re.exec(text))){
+    const k=m.slice(1).findIndex(x=>x!==undefined), t=GLOSS[GLRE.idx[k]];
+    out+=esc(text.slice(last,m.index))+esc(m[0]); last=m.index+m[0].length;
+    if(!seen.has(t)){ seen.add(t); out+=`<span class="gl">(${esc(t.en)})</span>`; }
+  }
+  return out+esc(text.slice(last));
+}
+function paintGlossary(){
+  const q=($('#gq')?.value||'').trim().toLowerCase(), groups={};
+  GLOSS.filter(t=>!q||(t.en+' '+t.ru).toLowerCase().includes(q)).forEach(t=>(groups[t.group]=groups[t.group]||[]).push(t));
+  const keys=Object.keys(groups);
+  $('#gbody').innerHTML=keys.length?keys.map(g=>`<h3>${esc(g)}</h3><dl>${groups[g].sort((a,b)=>a.en.localeCompare(b.en)).map(t=>`<dt>${esc(t.en)}</dt><dd>(${esc(t.ru)})</dd>`).join('')}</dl>`).join('')
+    :`<p class="state">${GLOSS.length?'No entry matches that.':'The glossary could not be loaded.'}</p>`;
+}
+$('#glon').checked=GLON;
+$('#glon').onchange=e=>{ GLON=e.target.checked; try{localStorage.setItem('rr_gloss',GLON?'on':'off')}catch(x){} delete $('#view').dataset.delo; route(); };
+$('#glbtn').onclick=()=>{ $('#glossary').showModal(); $('#gq').focus(); };
+$('#gclose').onclick=()=>$('#glossary').close();
+$('#gq').oninput=paintGlossary;
+async function loadPages(d){
+  if(PAGES[d.id]) return PAGES[d.id];
+  const parts=await Promise.all((d.page_docs||[]).map(id=>db.doc('pages/'+id).get()));
+  const rows=parts.flatMap(p=>p.exists?(p.data().rows||[]):[]).sort((a,b)=>a.page-b.page);
+  return PAGES[d.id]=rows;
+}
+const marksFor=id=>MARKS[id]||{pages:{},note:''};
+let writing=Promise.resolve();
+function saveMarks(id, patch){
+  // one write at a time per дело doc; merge locally, then write the whole marks doc
+  const cur=structuredClone(marksFor(id)); cur.pages=cur.pages||{};
+  if(patch.note!==undefined) cur.note=patch.note;
+  if(patch.page){ const k=String(patch.page); cur.pages[k]={...(cur.pages[k]||{}),...patch.val}; if(!cur.pages[k].s&&!cur.pages[k].n) delete cur.pages[k]; }
+  MARKS[id]=cur;
+  writing=writing.then(()=>db.doc('marks/'+id).set(cur)).then(()=>flash(),e=>{ flash('Not saved: '+(e.code||'error')); });
+}
+function flash(msg){ const el=$('#saved'); if(!el) return; el.textContent=msg||'Saved'; el.classList.toggle('err',!!msg); clearTimeout(flash.t); flash.t=setTimeout(()=>el.textContent='',1800); }
+
+/* ---------- routing ---------- */
+const current=()=>{ const h=location.hash.slice(1); return /^d\d+$/.test(h)?h:null; };
+window.addEventListener('hashchange',route);
+const onTimeline=()=>location.hash==='#timeline';
+function route(){ stats(); if(onTimeline()) return showTimeline(); const id=current(); if(id){ const d=DELA.find(x=>x.id===id); if(d) return showDelo(d); } showHome(); }
+
+function stats(){
+  const recv=DELA.filter(d=>d.received).length, req=DELA.filter(d=>d.requested).length;
+  const tri=DELA.filter(d=>d.triaged), b=tri.reduce((s,d)=>s+(d.n_ballet||0),0), e=tri.reduce((s,d)=>s+(d.n_editorial||0),0);
+  $('#stats').innerHTML=DELA.length?`<span class="pill recv">${recv} received</span><span class="pill wait">${req-recv} awaited</span><span class="pill none">${DELA.length-req} not yet requested</span><span class="tag ballet">${b} ballet pages</span><span class="tag editorial">${e} editorial pages</span>`:'';
+}
+
+/* ---------- home: the register of дела ---------- */
+function showHome(){
+  const groups=[...new Set(DELA.map(d=>d.group).filter(Boolean))].sort();
+  const h=ui.home;
+  $('#view').innerHTML=`
+  <div class="bar" role="toolbar" aria-label="Filter дела">
+    ${[['received','Received'],['awaited','Awaited'],['all','All requested & listed']].map(([k,l])=>`<button class="chipbtn" data-hf="${k}" aria-pressed="${h.f===k}">${l}</button>`).join('')}
+    <select id="grp" aria-label="Group"><option value="">All groups</option>${groups.map(g=>`<option ${g===h.grp?'selected':''}>${esc(g)}</option>`).join('')}</select>
+    <input type="search" id="hq" placeholder="Search titles…" value="${esc(h.q)}" aria-label="Search titles">
+    <span class="count" id="hcount"></span>
+  </div>
+  <ol id="dela"></ol>
+  <section style="margin-top:34px">
+    <h2>Search inside every received дело</h2>
+    <p class="meta">Looks through the page summaries and names, e.g. Дриго, Конекъ, фотограф, Молчановъ.</p>
+    <div class="bar" style="position:static"><input type="search" id="sq" placeholder="A name, a work, a word…" value="${esc(ui.search)}" aria-label="Search page summaries"><span class="count" id="scount"></span></div>
+    <ol class="hits" id="hits"></ol>
+  </section>`;
+  if(!DELA.length){ $('#dela').innerHTML='<li class="state">The register is empty. Claude fills it from your request log.</li>'; return; }
+  document.querySelectorAll('[data-hf]').forEach(b=>b.onclick=()=>{h.f=b.dataset.hf; showHome();});
+  $('#grp').onchange=e=>{h.grp=e.target.value; paintDela();};
+  $('#hq').oninput=e=>{h.q=e.target.value; paintDela();};
+  $('#sq').oninput=e=>{ui.search=e.target.value; clearTimeout(showHome.t); showHome.t=setTimeout(paintHits,250);};
+  paintDela(); if(ui.search) paintHits();
+}
+function paintDela(){
+  const h=ui.home, q=h.q.trim().toLowerCase();
+  const rows=DELA.filter(d=>{
+    if(h.f==='received'&&!d.received) return false;
+    if(h.f==='awaited'&&(d.received||!d.requested)) return false;
+    if(h.grp&&d.group!==h.grp) return false;
+    if(q&&!(`${d.delo} ${d.title} ${d.group}`.toLowerCase().includes(q))) return false;
+    return true;});
+  $('#hcount').textContent=`${rows.length} дела`;
+  $('#dela').innerHTML=rows.length?rows.map(d=>{
+    const m=marksFor(d.id).pages||{}, done=Object.values(m).filter(x=>x.s).length;
+    const st=d.received?`<span class="pill recv">Received ${esc(d.received)}</span>`:d.requested?`<span class="pill wait">Batch ${esc(d.batch)} · requested ${esc(d.requested)}</span>`:`<span class="pill none">Not requested</span>`;
+    const title=d.triaged?`<button data-open="${d.id}">${gloss(d.title,new Set())}</button>`:gloss(d.title,new Set());
+    const counts=d.triaged?`<span class="prog">${d.n_pages} pp · ${done}/${d.n_pages} marked</span><span>${d.n_ballet?`<span class="tag ballet">${d.n_ballet} ballet</span> `:''}${d.n_editorial?`<span class="tag editorial">${d.n_editorial} editorial</span>`:''}</span><span class="prog">${SUB.filter(([k])=>d['n_'+k]).map(([k,l])=>`${l} ${d['n_'+k]}`).join(' · ')}</span>`:(d.received?'<span class="prog">guide not built yet</span>':'');
+    return `<li class="delo"><span class="no">Д. ${d.delo}</span>
+      <div class="t">${title}<div class="meta">${esc(d.group)}${d.dates?' · '+esc(d.dates):''}</div></div>
+      <div class="r">${st}${counts}</div></li>`;}).join(''):'<li class="state">No дела match these filters.</li>';
+  document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{location.hash=b.dataset.open;});
+}
+async function paintHits(){
+  const q=ui.search.trim().toLowerCase(), out=$('#hits'); if(!out) return;
+  if(q.length<2){ out.innerHTML=''; $('#scount').textContent=''; return; }
+  out.innerHTML='<li class="state">Searching…</li>';
+  const tri=DELA.filter(d=>d.triaged); await Promise.all(tri.map(loadPages));
+  const hits=[]; tri.forEach(d=>PAGES[d.id].forEach(r=>{
+    const t=[r.gist,r.doc_type,r.date,r.from_to,(r.key_names||[]).join(' ')].join(' ').toLowerCase();
+    if(t.includes(q)) hits.push([d,r]);}));
+  $('#scount').textContent=`${hits.length} pages`;
+  out.innerHTML=hits.length?hits.slice(0,200).map(([d,r])=>`<li><a href="#${d.id}" data-jump="${r.page}">Д. ${d.delo}, PDF p. ${r.page}${r.folio?', л. '+esc(r.folio):''}</a> <span class="pill ${esc(r.relevance)}">${esc(r.relevance)}</span>${r.ballet?' <span class="tag ballet">Ballet</span>':''} ${editTags(r)}<div class="meta">${gloss(r.gist,new Set())}</div></li>`).join(''):'<li class="state">No page summaries mention that.</li>';
+  out.querySelectorAll('[data-jump]').forEach(a=>a.onclick=()=>{ jumpTo=+a.dataset.jump; });
+}
+let jumpTo=null;
+
+/* ---------- one дело ---------- */
+async function showDelo(d){
+  const rendered=$('#view').dataset.delo===d.id;
+  if(!rendered){
+    $('#view').dataset.delo=d.id;
+    $('#view').innerHTML=`<p class="back"><a href="#top" id="home">← All дела</a></p>
+      <h2>Д. ${d.delo}. ${gloss(d.title,new Set())}</h2>
+      <div class="sig">${esc(d.group)}${d.dates?' · '+esc(d.dates):''}${d.received?' · received '+esc(d.received):''}${d.link?` · <a href="${esc(d.link)}" target="_blank" rel="noopener">RGIA catalogue</a>`:''}</div>
+      ${d.why?`<p class="why">${esc(d.why)}</p>`:''}
+      ${d.notes?`<p class="why">${esc(d.notes)}</p>`:''}
+      <label class="notelabel" for="dnote">Your notes on this дело</label>
+      <textarea id="dnote" placeholder="What it turned out to contain, what to follow up…"></textarea>
+      <div class="bar" role="toolbar" aria-label="Filter pages">
+        ${[['all','All'],['ballet','Ballet'],['editorial','Editorial (any)'],...SUB,['high','High'],['medium','Medium'],['low','Low'],['unmarked','Unmarked'],['key','My key pages']].map(([k,l])=>`<button class="chipbtn" data-pf="${k}" aria-pressed="${ui.delo.f===k}">${l}</button>`).join('')}
+        <input type="search" id="pq" placeholder="Search this дело…" value="${esc(ui.delo.q)}" aria-label="Search this дело">
+        <span class="saved" id="saved" aria-live="polite"></span><span class="count" id="pcount"></span>
+      </div>
+      <ol id="pages"><li class="state">Loading pages…</li></ol>
+      <p class="meta" style="margin-top:20px">“PDF p.” is the page in the PDF you received (the enhanced copy has the same order). “л.” is the archive's leaf number where one shows in the photo. Your marks and notes are saved to this page for you and Claude to read back.</p>`;
+    $('#home').onclick=e=>{e.preventDefault(); delete $('#view').dataset.delo; history.pushState('',document.title,location.pathname); route(); scrollTo(0,0);};
+    document.querySelectorAll('[data-pf]').forEach(b=>b.onclick=()=>{ui.delo.f=b.dataset.pf; document.querySelectorAll('[data-pf]').forEach(x=>x.setAttribute('aria-pressed',x===b)); paintPages(d);});
+    $('#pq').oninput=e=>{ui.delo.q=e.target.value; paintPages(d);};
+    const dn=$('#dnote'); dn.value=marksFor(d.id).note||'';
+    dn.onchange=()=>saveMarks(d.id,{note:dn.value});
+    await loadPages(d);
+  }
+  paintPages(d);
+  if(jumpTo){ const el=document.getElementById('pg'+jumpTo); jumpTo=null; el?.scrollIntoView({block:'start'}); }
+}
+function paintPages(d){
+  const rows=PAGES[d.id]; if(!rows) return;
+  const m=marksFor(d.id).pages||{}, f=ui.delo.f, q=ui.delo.q.trim().toLowerCase(), g=d.sprite_geom||{w:150,h:190,cols:10};
+  const vis=rows.filter(r=>{
+    const mk=m[r.page]||{};
+    if(f==='ballet'&&!r.ballet) return false; if(f==='editorial'&&!r.editorial) return false; if(f.startsWith('ed_')&&!r[f]) return false;
+    if(['high','medium','low'].includes(f)&&r.relevance!==f) return false;
+    if(f==='unmarked'&&mk.s) return false; if(f==='key'&&mk.s!=='key') return false;
+    if(q){const t=[r.gist,r.doc_type,r.date,r.from_to,(r.key_names||[]).join(' '),r.why,mk.n].join(' ').toLowerCase(); if(!t.includes(q)) return false;}
+    return true;});
+  $('#pcount').textContent=`${vis.length} of ${rows.length} pages`;
+  $('#pages').innerHTML=vis.length?vis.map(r=>{
+    const mk=m[r.page]||{}, i=r.page-1, x=(i%g.cols)*g.w, y=Math.floor(i/g.cols)*g.h;
+    const thumb=d.sprite?`<button class="thumb" data-view="${r.page}" aria-label="Where to find PDF page ${r.page}" style="background-image:url('sprites/${esc(d.sprite)}');background-position:-${x}px -${y}px"></button>`:`<button class="thumb" data-view="${r.page}" aria-label="Where to find PDF page ${r.page}"></button>`;
+    const seen=new Set(), meta=[r.doc_type,r.script,r.date,r.from_to].filter(Boolean).map(x=>gloss(x,seen)).join(' · ');
+    return `<li class="pg s-${mk.s||'none'}" id="pg${r.page}">${thumb}
+      <div class="pbody">
+        <div class="head"><span class="pno">PDF p. ${r.page}</span>${r.folio?`<span class="folio">л. ${esc(r.folio)}</span>`:''}<span class="pill ${esc(r.relevance)}">${esc(r.relevance)}</span>${r.ballet?'<span class="tag ballet">Ballet</span>':''}${editTags(r)}${mk.s==='key'?'<span class="tag key">Key</span>':''}<span class="meta">legibility: ${esc(r.legibility)}</span></div>
+        <div class="meta">${meta}</div>
+        <p class="gist">${gloss(r.gist,seen)}</p>
+        ${(r.key_names||[]).length?`<div class="names"><b>Names</b>${r.key_names.map(esc).join(', ')}</div>`:''}
+        <div class="rwhy">${esc(r.why)}</div>
+        <div class="marks">
+          <span class="seg" role="group" aria-label="Mark PDF page ${r.page}">${[['','Unmarked'],['read','Read'],['key','Key'],['skip','Skip']].map(([k,l])=>`<button data-mk="${r.page}" data-v="${k}" aria-pressed="${(mk.s||'')===k}">${l}</button>`).join('')}</span>
+          <input class="pnote" data-pn="${r.page}" value="${esc(mk.n||'')}" placeholder="Note on this page" aria-label="Note on PDF page ${r.page}">
+        </div>
+      </div></li>`;}).join(''):'<li class="state">No pages match these filters.</li>';
+  document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>openViewer(d,+b.dataset.view));
+  document.querySelectorAll('[data-mk]').forEach(b=>b.onclick=()=>{ saveMarks(d.id,{page:b.dataset.mk,val:{s:b.dataset.v}}); paintPages(d); });
+  document.querySelectorAll('[data-pn]').forEach(inp=>inp.onchange=()=>saveMarks(d.id,{page:inp.dataset.pn,val:{n:inp.value}}));
+}
+function editTags(r){
+  const t=SUB.filter(([k])=>r[k]).map(([,l])=>`<span class="tag editorial">${l}</span>`).join('');
+  return t||(r.editorial?'<span class="tag editorial">Editorial</span>':'');
+}
+function paintMarksOnly(){
+  // another device changed marks: refresh the дело view without losing an input that has focus
+  const id=current(), d=DELA.find(x=>x.id===id); if(!d) return;
+  const a=document.activeElement; if(a&&(a.matches('.pnote')||a.id==='dnote'||a.id==='pq')) return;
+  const dn=$('#dnote'); if(dn) dn.value=marksFor(id).note||'';
+  paintPages(d);
+}
+/* ---------- editorial timeline ---------- */
+let tlf={who:'',f:'all'};
+const ymd=()=>{ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+const firstPage=s=>parseInt(String(s).match(/\d+/)?.[0]||'0',10);
+function showTimeline(){
+  delete $('#view').dataset.delo;
+  const people=[...new Set(TL.acts.map(a=>a.person))];
+  $('#view').innerHTML=`<p class="back"><a href="#top" id="home">← All дела</a></p>
+    <h2>Editorial timeline of the Ежегодникъ</h2>
+    <p class="ground">Who was doing what in the редакція, and when, from dated acts in the дела. Claude's readings are finding aids: “checked by Claude” means Claude looked at the scan and points you there, not that the reading is confirmed. Nothing is a finding until you have read the page yourself and recorded it below. Spans' first and last dates are arithmetic on the acts; brackets, readings of roles and anything touching your rulings change only on your yes.</p>
+    <h3 class="notelabel">Spans</h3><div id="spans"></div>
+    <div class="bar" role="toolbar" aria-label="Filter acts">
+      ${[['all','All acts'],['unread','Awaiting my reading'],['read','Read by me']].map(([k,l])=>`<button class="chipbtn" data-tf="${k}" aria-pressed="${tlf.f===k}">${l}</button>`).join('')}
+      <select id="tlwho" aria-label="Person"><option value="">Everyone</option>${people.map(p=>`<option ${p===tlf.who?'selected':''}>${esc(p)}</option>`).join('')}</select>
+      <span class="saved" id="saved" aria-live="polite"></span><span class="count" id="tlcount"></span>
+    </div>
+    <ol id="acts"></ol>
+    <p class="meta" style="margin-top:20px">Your reading date and note are saved to this page (your own record, which Claude copies into the repo but never edits). Clear the date to undo.</p>`;
+  $('#home').onclick=e=>{e.preventDefault(); history.pushState('',document.title,location.pathname); route(); scrollTo(0,0);};
+  document.querySelectorAll('[data-tf]').forEach(b=>b.onclick=()=>{tlf.f=b.dataset.tf; document.querySelectorAll('[data-tf]').forEach(x=>x.setAttribute('aria-pressed',x===b)); paintTimeline();});
+  $('#tlwho').onchange=e=>{tlf.who=e.target.value; paintTimeline();};
+  paintTimeline();
+}
+function paintTimelineSafe(){
+  const a=document.activeElement; if(a&&a.closest&&a.closest('#acts')&&a.matches('input')) return;
+  if(!$('#acts')) return showTimeline(); paintTimeline();
+}
+function actLink(id){ return `<a href="#act-${esc(id)}" data-act="${esc(id)}">${esc(id)}</a>`; }
+function paintTimeline(){
+  if(!$('#acts')) return;
+  const byId=Object.fromEntries(TL.acts.map(a=>[a.act_id,a]));
+  $('#spans').innerHTML=TL.spans.length?TL.spans.filter(s=>!tlf.who||s.person===tlf.who||(s.act_ids||'').split(';').some(i=>byId[i]?.person===tlf.who)).map(s=>{
+    const ids=(s.act_ids||'').split(';').filter(Boolean), nread=ids.filter(i=>RGR[i]?.date).length;
+    return `<div class="tlspan"><div class="head"><span class="who">${esc(s.person)}</span><span class="meta">${esc(s.role)}</span><span class="tag ${s.status==='established'?'rg':'src'}">${esc(s.status)}</span></div>
+      <div class="when">${s.earliest_date?`${esc(s.earliest_date)} (${actLink(s.earliest_act_id)}) – ${esc(s.latest_date)} (${actLink(s.latest_act_id)})`:'no dated act'}${s.not_before?` · not before ${esc(s.not_before)}`:''}${s.not_after?` · not after ${esc(s.not_after)}`:''}</div>
+      <p class="gist">${gloss(s.reasoning,new Set())}</p>
+      ${s.rg_ruling?`<div class="ruling"><b>Your ruling:</b> ${esc(s.rg_ruling)}</div>`:''}
+      <div class="meta">Acts: ${ids.map(actLink).join(', ')} · ${nread} of ${ids.length} read by you</div></div>`;}).join(''):'<p class="state">No spans yet.</p>';
+  const key=a=>a.date_normalised||'9999';
+  const rows=[...TL.acts].sort((a,b)=>key(a).localeCompare(key(b))||a.act_id.localeCompare(b.act_id)).filter(a=>{
+    if(tlf.who&&a.person!==tlf.who) return false;
+    const r=!!RGR[a.act_id]?.date; if(tlf.f==='unread'&&r) return false; if(tlf.f==='read'&&!r) return false; return true;});
+  $('#tlcount').textContent=`${rows.length} of ${TL.acts.length} acts`;
+  const RD={'checked by Claude':'ck','summary only':'so','uncertain':'un'};
+  $('#acts').innerHTML=rows.length?rows.map(a=>{
+    const d=DELA.find(x=>x.id==='d'+a.delo), pg=firstPage(a.pdf_page), rg=RGR[a.act_id]||{};
+    let thumb=`<span class="athumb"></span>`;
+    if(d&&d.sprite&&pg){ const g=d.sprite_geom||{w:150,h:190,cols:10}, k=90/g.w, i=pg-1;
+      thumb=`<a class="athumb" href="#d${esc(a.delo)}" data-goto="${esc(a.delo)}" data-pg="${pg}" aria-label="Open Д. ${esc(a.delo)}, PDF page ${pg}" style="background-image:url('sprites/${esc(d.sprite)}');background-size:${g.w*g.cols*k}px auto;background-position:-${(i%g.cols)*g.w*k}px -${Math.floor(i/g.cols)*g.h*k}px"></a>`; }
+    return `<li class="act ${rg.date?'rgread':''}" id="act-${esc(a.act_id)}">${thumb}<div class="pbody">
+      <div class="head"><span class="adate">${esc(a.date_normalised||'undated')}</span><span class="pno">${esc(a.person)}</span><span class="folio">${esc(a.act_id)}</span>
+        <span class="tag src">${esc(a.source)}</span><span class="tag ${RD[a.claude_reading]||'src'}">${esc(a.claude_reading)}</span>${rg.date?`<span class="tag rg">read by you ${esc(rg.date)}</span>`:''}</div>
+      <div class="meta">${gloss(a.role_as_written,new Set())} · ${esc(a.date_verbatim)}</div>
+      <p class="gist">${gloss(a.what_was_done,new Set())}</p>
+      <div class="meta"><a href="#d${esc(a.delo)}" data-goto="${esc(a.delo)}" data-pg="${pg}">Д. ${esc(a.delo)}${a.folio?', л. '+esc(a.folio):''}, PDF p. ${esc(a.pdf_page)}</a></div>
+      ${a.uncertainty_note?`<div class="unc">${gloss(a.uncertainty_note,new Set())}</div>`:''}
+      <div class="rgrow"><span class="lbl">My reading</span>
+        <input type="date" data-rgd="${esc(a.act_id)}" value="${esc(rg.date||'')}" aria-label="Date you read ${esc(a.act_id)}">
+        ${rg.date?'':`<button class="btn" data-rgtoday="${esc(a.act_id)}">Read today</button>`}
+        <input class="pnote" data-rgn="${esc(a.act_id)}" value="${esc(rg.note||'')}" placeholder="Your note on this act" aria-label="Your note on ${esc(a.act_id)}">
+      </div></div></li>`;}).join(''):'<li class="state">No acts match.</li>';
+  document.querySelectorAll('[data-goto]').forEach(x=>x.onclick=()=>{ ui.delo={f:'all',q:''}; jumpTo=+x.dataset.pg; });
+  document.querySelectorAll('[data-act]').forEach(x=>x.onclick=e=>{ e.preventDefault(); tlf.f='all'; tlf.who=''; paintTimeline(); document.querySelectorAll('[data-tf]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.tf==='all')); if($('#tlwho')) $('#tlwho').value=''; document.getElementById('act-'+x.dataset.act)?.scrollIntoView({block:'start'}); });
+  document.querySelectorAll('[data-rgtoday]').forEach(b=>b.onclick=()=>saveRead(b.dataset.rgtoday,{date:ymd()}));
+  document.querySelectorAll('[data-rgd]').forEach(i=>i.onchange=()=>saveRead(i.dataset.rgd,{date:i.value}));
+  document.querySelectorAll('[data-rgn]').forEach(i=>i.onchange=()=>saveRead(i.dataset.rgn,{note:i.value}));
+}
+let rgWriting=Promise.resolve();
+function saveRead(id,patch){
+  const cur={date:'',note:'',...(RGR[id]||{}),...patch};
+  RGR[id]=cur;
+  const write=(!cur.date&&!cur.note)?()=>db.doc('rg_reads/'+id).delete():()=>db.doc('rg_reads/'+id).set(cur);
+  rgWriting=rgWriting.then(write).then(()=>flash(),e=>flash('Not saved: '+(e.code||'error')));
+  if(patch.date!==undefined) paintTimeline();
+}
+boot(); loadGlossary();
+</script>

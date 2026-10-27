@@ -43,7 +43,8 @@ uv run python pipeline/rgia_apply_patch.py --dela 160
 uv run python pipeline/rgia_reading_room.py
 ```
 
-Publish `outputs/rgia_reading_room/index.html` to the same artifact URL with the
+Publish `outputs/rgia_reading_room/index.html` (copied from the tracked
+`docs/rgia/reading_room.html`) to the same artifact URL with the
 new `sprites/<delo>.jpg` added to `files`, then write
 `seed/dela/d<delo>.json` and every `seed/pages/d<delo>*.json` into the
 artifact's `dela` and `pages` collections with ArtifactData. Changes to the request
@@ -104,9 +105,12 @@ signing «за редактора», paid editorial staff.
 - Disk: an original runs ~110 MB and its enhanced copy ~150 MB. On 2026-10-09 the
   internal disk had 20 GB free, which is not enough for every дело twice over.
   Make enhanced PDFs only when needed, or keep PDFs on the backup drive.
-- **The live page is newer than `rgia_reading_room.py`'s template.** The published
-  page carries the Editorial Timeline view, and the script's `index.html` does not
-  (found 2026-10-27). Do not publish the script's `index.html`. Fetch the live page
-  with Artifact `read` + `path: "index.html"`, republish that file with the new
-  `sprites/<delo>.jpg` in `files`, and write the seed docs with ArtifactData as above.
-  Porting the Timeline into the script's template is an open fix.
+- **The page's source lives in git: `docs/rgia/reading_room.html`.** Until
+  2026-10-27 it existed only as an untracked file in `outputs/`, which fell behind
+  the live page (it lacked the Editorial Timeline). `rgia_reading_room.py` now
+  copies the tracked file to `outputs/rgia_reading_room/index.html` on every run.
+  Make page changes in `docs/rgia/reading_room.html` and commit them; an edit made
+  only on the live artifact is lost at the next publish. If the live page ever has
+  a change the file lacks, fetch it with Artifact `read` + `path: "index.html"`,
+  drop the publish wrapper (the first `<!doctype…><body>` line and the closing
+  `</body></html>`), and save it over the file before publishing.

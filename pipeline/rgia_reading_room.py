@@ -3,14 +3,19 @@ requested дело and, for each one received, a page-by-page reading guide).
 
     uv run python pipeline/rgia_reading_room.py
 
-Inputs (both tracked in git):
+Inputs (all tracked in git):
   docs/rgia_request_log.csv        what was requested / received (rgia_request_tracker.py)
   docs/rgia/dela/<delo>.jsonl      page triage for each received дело
+  docs/rgia/reading_room.html      the page itself (the one source of truth for it)
 
 Outputs, under outputs/rgia_reading_room/ (regenerable):
+  index.html                       a copy of docs/rgia/reading_room.html, ready to publish
   seed/dela/d<delo>.json           one document per дело for the artifact's `dela` collection
   seed/pages/d<delo>[_k].json      the triage rows, chunked to stay under the 256 KiB doc cap
   sprites/<delo>.jpg               every page of a дело tiled into one thumbnail sheet
+
+Edit the page in docs/rgia/reading_room.html, never in outputs/ and never only
+on the live artifact: otherwise the next publish overwrites the change.
 
 The seed files are written into the artifact's database with the ArtifactData
 tool (`file_path` per document). The reader's own marks (read / key / skip and
@@ -19,6 +24,7 @@ ArtifactData `list` on `marks` before relying on them anywhere else.
 """
 import csv
 import glob
+import shutil
 import json
 import os
 import re
@@ -32,6 +38,7 @@ LOG = ROOT / "docs" / "rgia_request_log.csv"
 TRIAGE = ROOT / "docs" / "rgia" / "dela"
 DELA_IMG = ROOT / "outputs" / "rgia_dela"
 OUT = ROOT / "outputs" / "rgia_reading_room"
+PAGE = ROOT / "docs" / "rgia" / "reading_room.html"
 
 CELL_W, CELL_H, COLS = 150, 190, 10   # sprite geometry; the page reads these from the дело doc
 CHUNK_BYTES = 200_000
@@ -65,6 +72,7 @@ def main():
         (OUT / d).mkdir(parents=True, exist_ok=True)
     for old in glob.glob(str(OUT / "seed" / "pages" / "*.json")):
         Path(old).unlink()
+    shutil.copyfile(PAGE, OUT / "index.html")
 
     with open(LOG, encoding="utf-8-sig") as fh:
         log = list(csv.DictReader(fh))
