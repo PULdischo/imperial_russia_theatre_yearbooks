@@ -24252,3 +24252,27 @@ transcription that isn't a figure, and treats «04»/«4» or a missing final pe
   - Александринскій count 189 vs 187 printed is explained: the drama-course students' performance (14 Воскресенье, p. 13)
     and Тина ди Лоренцо's «Фру-Фру» (20 Суббота, p. 14) have their own stats lines; neither prints a figure.
   - The Малый's 207th printed event is not found: every Малый cell on the scan is in the dataset. Open, with the rest.
+
+## Binding Fold Log, 1895-96 applied, 2026-10-27 (RG: "finished 1895-96. look through it.")
+
+RG read all 13 1895-96 cards in the Princeton volume. `readings_1895-96.csv` -> `apply_fold_log.py 1895-96 --write` ->
+rebuild -> build_datasette. Rebuild diff vs `outputs/backups/foldlog_1895-96_2026-10-27/`: 21 raw.event_entry rows + 1
+performance genre, 0 work_id/person changes.
+- 15 blank figures filled; 6 stored figures corrected: 3 Воскр. (p. 2) Александринскій 1835 -> 1535 р. 58 к.; 27 Среда
+  (p. 4) Малый «1074 р» -> 1074 р. 88 к.; 17 Вторн. (p. 6) Малый «1324 р.» -> 1324 р. 67 к.; 16 Пятница (p. 18)
+  Михайловскій 1120 р. 25 -> 1128 р. 55 к., Александринскій 1789 -> 1790 р. 17 к.; 8 Понед. (p. 22) Большой 830 -> 840 р. 76 к.
+- 28 Воскрес. (p. 24) Большой: «оп.» after the excerpt «...оп. Пиковая дама.» was not printed -> genre removed.
+- OPEN, with RG: 26 Воскресенье (p. 10) Александринскій evening (free performance for the St George cavaliers) has a 2nd
+  work below «Бояринъ Нечай-Ногаевъ, др.» lying in the fold; RG reads the genre as perhaps «вод.». Candidate list (the
+  company's 1895-96 vaudevilles) given to RG to match against the letter tops.
+- The p. 26 end-of-season notes («Всѣ послѣдующіе спектакли до конца сезона — безплатные», Малый from 15 May, Большой from
+  19 May 1896) were already applied: every later performed cell at those theaters has is_free; the 17 May Большой gala is
+  before the Большой note and correctly not free.
+- Printed totals: SP −19.56 -> +19,440.08, Moscow −8,606.66 -> −1,236.39. The old SP near-match was offsets cancelling. Now
+  exact: French, German, Михайловскій drama, Moscow ballet/mixed/Большой drama. Two SP excesses equal single cells of the
+  same date, 3 Воскр. 1895 (p. 2): Маріинскій ballet +1,770.45 = «Гарлемскій тюльпанъ» 1770 р. 45 к.; Михайловскій opera
+  +2,134.20 = «Севильскій цирюльникъ» 2134 р. 20 к. Lead (not chased): the printed totals may start after 3 Sept, or count
+  that date elsewhere. Маріинскій opera +15,535.42 is older (+12,641 before the apply). Moscow: concert −4,364.80 (one
+  printed concert's receipts on a works-less event), Малый drama −2,136.27, Большой opera +900.00.
+- Side note (not fixed): raw has «Утка и станканъ воды» (1 Apr / 10 Apr 1896) and «Бояринъ Нечай-Погаевъ» (10 Oct 1895);
+  probably misreads of «стаканъ» / «Ногаевъ» — need the scan before touching.

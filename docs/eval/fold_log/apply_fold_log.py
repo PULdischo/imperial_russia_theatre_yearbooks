@@ -14,7 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 RAW = ROOT / "outputs" / "full_run" / "raw"
 NOTE = {"1893-94": "RG, physical volume, Binding Fold Log 2026-10-14", "1892-93": "RG, physical volume, Binding Fold Log 2026-10-14",
-        "1897-98": "RG, physical volume, Binding Fold Log 2026-10-27"}
+        "1897-98": "RG, physical volume, Binding Fold Log 2026-10-27", "1895-96": "RG, physical volume, Binding Fold Log 2026-10-27"}
 # event_id -> (works [(title, genre)], receipts). Issue #153: 24 Понед. held a copy of 23 Воскрес.
 WORKS = {"repertoire_1893-94_pair016__s046": ([("Жизнь за Царя", "оп.")], "2168 р. 23 к.")}
 # event_id -> works to append. Lines hidden at the fold, read by RG in the volume.
@@ -27,7 +27,10 @@ ADD_WORKS = {"repertoire_1892-93_pair020__s055": [("Ma Femme est troublée", "co
 # (event_id, performance_order) -> (stored (title, genre), corrected (title, genre)). 1897-98, RG's notes:
 SET_WORK = {("repertoire_1897-98_pair008__s011", 2): (("2-е д. бал. Млада.", "бал."), ("2-е д. бал. Млада.", None)),  # no genre printed
             ("repertoire_1897-98_pair016__s045", 2): (("1-е д. бал. Коппелія", None), ("1-е д. бал. Коппелія.", None)),
-            ("repertoire_1897-98_p012__s036", 3): (("[?]-е д. бал. Пахита", None), ("3-е д. бал. Пахита", None))}
+            ("repertoire_1897-98_p012__s036", 3): (("[?]-е д. бал. Пахита", None), ("3-е д. бал. Пахита", None)),
+            # 1895-96, RG: the «оп.» after the excerpt is not printed (the excerpt names the genre itself)
+            ("repertoire_1895-96_pair024__s031", 1): (("1-я и 2-я карт. 1-го д. и 2-я карт. 3-го д. оп. Пиковая дама.", "оп."),
+                                                      ("1-я и 2-я карт. 1-го д. и 2-я карт. 3-го д. оп. Пиковая дама.", None))}
 FIGURE = re.compile(r"^[\d?]+ р\.(?: [\d?—–-]+ ?к\.?)?$")
 
 

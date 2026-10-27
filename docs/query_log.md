@@ -21143,3 +21143,13 @@ select city,receipts_minus_printed_kopecks/100.0 from research.season_stat_check
 Result: Moscow +3,590.91 (ballet +2,743.80, opera +936.51, Малый −89.40); SP −587.97 (Александринскій drama −587.95).
 Александринскій drama 189 events / 181 with a figure; the 8 without are 4 free, 2 charity, the drama-course students'
 performance and Тина ди Лоренцо's «Фру-Фру» (the last two printed on separate stats lines -> 187).
+
+## 2026-10-27 — 1895-96 Александринскій vaudevilles (candidates for the fold-hidden 2nd work, 26 Nov 1895 evening)
+
+```sql
+select p.performance_title, p.genre, count(*), min(e.date_undate), max(e.date_undate), list(...) filter (where date in Nov-Dec 1895)
+from raw.event_entry e join raw.event_entry_performance p using(event_id)
+where e.season='1895-96' and e.theater like 'Александр%' and p.genre like 'вод%' group by 1,2 order by 1;
+```
+
+Result: candidate list shown to RG (see session reply).
