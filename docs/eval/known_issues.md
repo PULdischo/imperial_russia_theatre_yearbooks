@@ -37,6 +37,12 @@ closes, and add new open items here as well as in their own entry.
 
 **Waiting on RG's decision**
 
+- 1897-98 Moscow ballet receipts vs the printed season total (added 2026-10-27; RG: "I'll want to follow up on
+  this, because that's quite a difference"). All 48 ballet events (all Большой) read on the scan and match; they sum to
+  67,138 р. 28 к., the stats page (p. 27) prints «48 (64,394 р. 48 к.)», re-read on the scan: 2,743 р. 80 к. apart. No
+  single slip, no single event/benefit, and no 2- or 3-event combination equals it. Next ideas: the 1897-98 ballet
+  production lists (research.production) for any Repertoire ballet date the lists don't have; other seasons' Moscow
+  ballet totals for the same pattern; RG's own reading of the stats page in the volume. See the Fold Log 1897-98 entry.
 - #159: review cast statements vs BalletArtists spiski, triaged 2026-10-22.
   35 suspected wrong-person links (13 high) in
   `docs/eval/review_assertion_wrong_person_suspects_2026-10-22.csv`, plus six

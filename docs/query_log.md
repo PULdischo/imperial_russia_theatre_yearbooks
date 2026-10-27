@@ -21109,3 +21109,10 @@ Result: no event equal to either amount; no duplicated Moscow figure. 14 annotat
 «Въ пользу инвалидовъ. Демонъ» 936 р. 51 к. (22 Понедѣльник) and 5 ballet benefits (18,741.80 together). After fixing the one
 scan misread (1880 р. 38 -> 98 к.): Moscow +3,590.73 (ballet +2,743.80, opera +936.51 = the charity event, Малый −89.58);
 SP −617.97. Moscow classifier: all 48 ballet events at the Большой, sum 67,138.28.
+
+## 2026-10-27 — 1897-98 Moscow ballet gap (2,743 р. 80 к.): does it equal 1-3 ballet events?
+
+Moscow ballet events by `compare_season_stats.py`'s classifier (LEVEL2_SQL, season 1897-98), every 1-, 2- and 3-event
+combination of receipts_total_kopecks tested against 274,380.
+
+Result: 0 combinations of 1, 2 or 3 events; no pair within 1 р.
