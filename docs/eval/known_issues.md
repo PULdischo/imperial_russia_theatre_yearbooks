@@ -43,7 +43,9 @@ closes, and add new open items here as well as in their own entry.
   single slip, no single event/benefit, and no 2- or 3-event combination equals it. The 1897-98 ballet lists agree
   with the Repertoire date for date (51 = 51: 48 ballet + 3 mixed; checked 2026-10-27), so no ballet event was counted
   elsewhere. Next ideas: other seasons' Moscow ballet totals for the same pattern; RG's own reading of the stats page in
-  the volume. See the Fold Log 1897-98 entry.
+  the volume.
+  Same season, also unexplained after every Большой/Малый/Александринскій figure was read on the scan (2026-10-27):
+  Малый drama −89.40 and 206 events vs 207 printed; Александринскій drama −587.95. See the Fold Log 1897-98 entry.
 - #159: review cast statements vs BalletArtists spiski, triaged 2026-10-22.
   35 suspected wrong-person links (13 high) in
   `docs/eval/review_assertion_wrong_person_suspects_2026-10-22.csv`, plus six
@@ -24240,3 +24242,13 @@ transcription that isn't a figure, and treats «04»/«4» or a missing final pe
   - Moscow is now +3,590.73 = ballet +2,743.80 + opera +936.51 − Малый drama 89.58.
   - The log's cards were refreshed the same day from the current dataset (works with genres, figures), so a card shows
     what is stored now (RG: so she doesn't "correct already-correct" data again).
+- **Drama follow-up, same day (RG: "can we follow up on these with the scans?").** Every Малый (206) and Александринскій
+  (228) figure of 1897-98 read against the scan (checked by Claude). Four misreads, fixed by `fix_1897_98_drama_digits.py`
+  (rebuild diff: those 4 raw cells only): Малый 9 Четверг 1391 р. 80 -> 86 к., 30 Четв. 1268 р. 00 -> 06 к., 31 Пятн.
+  1331 р. 20 -> 26 к. (three final 6s read as 0); Александринскій 26 Пятница 1617 -> 1647 р. 45 к.
+  - Now every Большой, Малый and Александринскій figure of 1897-98 matches the scan. What's left against the printed
+    totals is between the Repertoire's own figures and the stats page: Малый drama −89.40 (206 events vs 207 printed),
+    Александринскій drama −587.95, Moscow ballet +2,743.80, Moscow opera +936.51 (= the invalids' charity «Демонъ»).
+  - Александринскій count 189 vs 187 printed is explained: the drama-course students' performance (14 Воскресенье, p. 13)
+    and Тина ди Лоренцо's «Фру-Фру» (20 Суббота, p. 14) have their own stats lines; neither prints a figure.
+  - The Малый's 207th printed event is not found: every Малый cell on the scan is in the dataset. Open, with the rest.

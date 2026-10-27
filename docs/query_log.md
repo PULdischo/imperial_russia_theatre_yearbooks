@@ -21129,3 +21129,17 @@ where e.season='1897-98' and e.city='Moscow' and coalesce(p.outside_total,false)
 Result: 51 Repertoire ballet-family dates (48 ballet + 3 mixed) = 51 list dates (68 list entries; several bills list 2-3
 ballets). No date on one side only. The yearbook classed the same events as ballet in both places, so the 2,743 р. 80 к.
 is not a ballet event counted elsewhere.
+
+## 2026-10-27 — 1897-98 Малый and Александринскій figures vs the scan; totals after the fixes
+
+Read every stored Малый (206) and Александринскій (228) receipts figure against the scan (list from raw.event_entry where
+season='1897-98' and theater like 'Малый%' / 'Александр%' and event_status='performed'). 4 misreads, fixed.
+
+```sql
+select city,receipts_minus_printed_kopecks/100.0 from research.season_stat_check where season='1897-98';
+-- plus compare_season_stats.py classify over LEVEL2_SQL for SP Александринскій drama events without a figure
+```
+
+Result: Moscow +3,590.91 (ballet +2,743.80, opera +936.51, Малый −89.40); SP −587.97 (Александринскій drama −587.95).
+Александринскій drama 189 events / 181 with a figure; the 8 without are 4 free, 2 charity, the drama-course students'
+performance and Тина ди Лоренцо's «Фру-Фру» (the last two printed on separate stats lines -> 187).
