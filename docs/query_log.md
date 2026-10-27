@@ -21449,3 +21449,15 @@ select verbatim_title, canonical_title, season, city, count(*) from research.per
 Result: 329 cells read (319 match the scan, 9 fold cells = RG's readings, 1 not visible: pair016__s046); no receipts
 corrections. Unread-kopeck cells: German 2 (8, 29 Mar 1894), Russian drama 5 (summed as 0 к.: 1.40-3.67 р.). «Лида» 4
 performances (1892-93 Moscow 2, 1893-94 Moscow 1, 1899-00 SP 1); «Кручинина» 1, «Кручиня» 1 vs «Кручина» 28.
+
+## 2026-10-27 — 1890-91 benefit headings: reviews vs Repertoire vs scans
+
+Read:
+```sql
+select e.city, t.canonical_name, e.date, e.time_of_day, e.is_benefit, e.annotation from research.event e join research.theater t using(theater_id)
+ where e.season='1890-91' and (e.is_benefit or e.annotation ilike '%бенеф%' or e.annotation ilike '%bénéf%');
+select printed_page_number, count(*) from research.event where season='1890-91' and is_benefit group by 1;
+select b.text from raw.review_block b join raw.review_page p using(page_id) where p.season='1890-91' and b.text ilike '%бенефис%';
+```
+Result: 36 stored benefit events (1890-91), 29 dated benefits in the reviews, all matching. Scan headings per page equal
+stored counts except p. 14 (stored 3, printed 2): Большой 11 Dec «Бенефисъ г. Р.» is a leak from the Малый cell; raw fixed.

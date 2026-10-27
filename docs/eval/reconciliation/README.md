@@ -180,7 +180,13 @@ with the Repertoire; nothing in the dataset changes).
 **Lesson for the method:** a review date that disagrees with the Repertoire is more often the review's slip than a
 Repertoire misread; read both before treating either as wrong.
 
-**Outcome:** totals and lists: no gaps. Review dates: 8 `yearbook_own` rows. Nothing corrected, nothing open.
+**Benefit headings (2026-10-27).** Every benefit the reviews date (29) falls on a Repertoire event carrying that
+benefit's heading, and every printed «Бенефисъ / Bénéfice» heading on the 24 table pages (36) is in the database, page by
+page. One stored heading is not printed: 11 Dec 1890 Большой «Бенефисъ г. Р.», a truncated copy of the Малый's «Бенефисъ
+г. Рыбакова.» on the same row (`fix_1890_91_bolshoi_benefit_leak.py`, ledger 1890-91-09, `corrected`; shows in the database
+after the next rebuild).
+
+**Outcome:** totals and lists: no gaps. Review dates: 8 `yearbook_own` rows. Benefits: 1 `corrected`. Nothing open.
 
 ## Step-2 classifier now uses the research layer (2026-10-27)
 

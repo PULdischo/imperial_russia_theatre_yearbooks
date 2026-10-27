@@ -24399,3 +24399,9 @@ rebuild -> build_datasette. Rebuild diff vs `outputs/backups/foldlog_1894-95_202
   whole operas; (b) Малый 18 and 26 Jan 1894 «Кручинина» / «Кручиня» = print «Кручина» (two phantom works); (c) Большой 22
   Oct 1893 «Лида» = print «Аида» (phantom work). Same «Лида» misread also in 1892-93 Moscow (2) and 1899-00 SP (1), not
   checked. Minor, logged only: three Малый «Спорный вопросъ» rows carry a second genre the print doesn't have.
+
+- **1890-91 benefit-heading check, 2026-10-27 (RG: "do this").** Review benefits (29 dated) all match Repertoire headings;
+  all 36 printed headings are stored, page by page (scan, checked by Claude). One leak: 11 Dec 1890 Большой annotation
+  «Бенефисъ г. Р.» copied from the Малый cell; the Большой prints only «Фенелла, оп.». Raw fixed by
+  `docs/eval/reconciliation/fix_1890_91_bolshoi_benefit_leak.py` (pair014 session 2, `_fix_note`). **Not yet rebuilt:**
+  `research.event.is_benefit` for that event stays true until the next full_run rebuild.
