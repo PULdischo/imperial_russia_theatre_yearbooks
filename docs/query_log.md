@@ -21089,3 +21089,23 @@ Plus `pipeline/compare_season_stats.py` on the current db and on the backup (fam
 Result: SP −28,931.72 -> −617.97 (Александринскій drama −617.95; other SP families net ~0 once troupes/mixed bills are
 regrouped). Moscow −2,243.11 -> +3,590.13: Малый drama −3,560.99 -> −89.58; mixed −1,548.18 -> 0.00; Большой drama 0 -> 1
 event (1 printed); ballet +1,930.15 -> +2,743.80 (48 = 48 events); opera +935.91 unchanged (112 = 112).
+
+## 2026-10-27 — 1897-98 Moscow ballet/opera excess: candidates, Большой events, charity events
+
+`pipeline/season_stats_receipt_candidates.py` (family_totals from compare_season_stats.py): 0 candidates for Moscow ballet
+(−2,743.80) and opera (−935.91).
+
+```sql
+select e.event_id,e.date_verbatim,t.canonical_name,e.receipts_verbatim from research.event e join research.theater t using(theater_id)
+where e.season='1897-98' and e.city='Moscow' and e.event_status='performed' and e.receipts_total_kopecks in (274380,93591);
+select e.receipts_verbatim, list(...) ... group by 1 having count(*)>1;   -- duplicated figures, Moscow 1897-98
+select ... from research.event e join research.theater t using(theater_id) where e.season='1897-98' and t.canonical_name='Большой'
+  and e.event_status='performed' and (e.annotation is not null or e.is_charity or e.is_benefit or e.is_free) order by e.date;
+select ... from raw.event_entry where season='1897-98' and theater like 'Больш%' and event_status='performed';  -- 167 rows, read vs scan
+select city,receipts_minus_printed_kopecks/100.0 from research.season_stat_check where season='1897-98';
+```
+
+Result: no event equal to either amount; no duplicated Moscow figure. 14 annotated/flagged Большой events, incl. the charity
+«Въ пользу инвалидовъ. Демонъ» 936 р. 51 к. (22 Понедѣльник) and 5 ballet benefits (18,741.80 together). After fixing the one
+scan misread (1880 р. 38 -> 98 к.): Moscow +3,590.73 (ballet +2,743.80, opera +936.51 = the charity event, Малый −89.58);
+SP −617.97. Moscow classifier: all 48 ballet events at the Большой, sum 67,138.28.

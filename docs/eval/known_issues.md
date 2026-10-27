@@ -24219,3 +24219,17 @@ transcription that isn't a figure, and treats «04»/«4» or a missing final pe
   +3,590.13: Малый drama −3,560.99 -> −89.58 and mixed −1,548.18 -> exact, which uncovers two pre-existing OVER-counts with
   equal event counts: ballet +2,743.80 (was +1,930.15 before RG's 15 Среда reading) and opera +935.91. Open lead: Большой
   figures read too high somewhere in the season.
+- **Moscow follow-up, same day (RG: "check the Moscow ballet and opera candidates").** `season_stats_receipt_candidates.py`
+  found NO single-slip candidate for either excess, and no duplicated figure or event equal to either amount. So all 167
+  Большой events of 1897-98 were read against the scan (every spread of ForUpload_1897-98_Repertoire.pdf, checked by Claude).
+  One misread: 28 Пятница (p. 11) «Рогнѣда, оп.» prints 1880 р. 98 к., stored 38 к. (`fix_1897_98_bolshoi_digit.py`; one
+  raw cell, rebuild diff clean). Every other Большой figure matches. Findings:
+  - **Opera +936.51 = exactly the charity performance 22 Понедѣльник (p. 14) «Въ пользу инвалидовъ. Демонъ», 936 р. 51 к.**
+    The printed opera total leaves its takings out, although footnote 13 says the count 112 includes it.
+  - **Ballet +2,743.80 is the source's own discrepancy:** all 48 ballet events are at the Большой, every figure matches the
+    scan, and they sum to 67,138 р. 28 к.; the stats page (p. 27, re-read on the scan) prints «48 (64,394 р. 48 к.)». Not a
+    single benefit (the 5 benefits sum to 18,741.80) and no single slip. Left as printed; not added to genuine_print_typos.md
+    (that's RG's call).
+  - Moscow is now +3,590.73 = ballet +2,743.80 + opera +936.51 − Малый drama 89.58.
+  - The log's cards were refreshed the same day from the current dataset (works with genres, figures), so a card shows
+    what is stored now (RG: so she doesn't "correct already-correct" data again).
