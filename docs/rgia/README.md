@@ -104,3 +104,9 @@ signing «за редактора», paid editorial staff.
 - Disk: an original runs ~110 MB and its enhanced copy ~150 MB. On 2026-10-09 the
   internal disk had 20 GB free, which is not enough for every дело twice over.
   Make enhanced PDFs only when needed, or keep PDFs on the backup drive.
+- **The live page is newer than `rgia_reading_room.py`'s template.** The published
+  page carries the Editorial Timeline view, and the script's `index.html` does not
+  (found 2026-10-27). Do not publish the script's `index.html`. Fetch the live page
+  with Artifact `read` + `path: "index.html"`, republish that file with the new
+  `sprites/<delo>.jpg` in `files`, and write the seed docs with ArtifactData as above.
+  Porting the Timeline into the script's template is an open fix.
