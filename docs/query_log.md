@@ -21284,3 +21284,18 @@ select e.date, e.printed_page_number, a.page_id, e.date_verbatim from research.e
 Result: ballet list performances = Repertoire events with ballet, Moscow 51 = 51, SP 45 = 45, 0 dates differ; all 22
 productions' printed totals = dated performances (Moscow 51, SP 61). 133 not_captured = 26 whole dates × 5 theaters
 + Александринскій 12-14 May 1891 (dark, #87). Each whole-date skip is mid-page with printed weekdays continuous across it.
+
+## 2026-10-27 — What the summary table's "no works stored" rows are
+
+Read:
+```sql
+select e.season, e.city, count(*), count(*) filter (where receipts_total_kopecks>0), count(*) filter (where annotation is not null)
+from research.event e where event_status='performed'
+  and not exists (select 1 from research.performance p where p.event_id=e.event_id) group by all;
+-- plus a 14-row random sample with theater, date_verbatim, receipts, annotation
+```
+
+Result: performed events with no work attached; 1-7 per city per season (1890-91: Moscow 1, SP 3). Every one carries an
+annotation and nearly all have no receipts. Sample: «Концертъ въ пользу инвалидовъ» and its «Генеральная репетиція»,
+charity performances described only in a note («Спектакль Попечительства о бѣдныхъ…»), a repeat jubilee performance
+(Мочаловъ, 1900-01 SP, 274.34 р.), a music-and-literary evening for aged actors (1909-10 Moscow, 4,602.25 р.).
