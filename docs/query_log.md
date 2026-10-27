@@ -21483,3 +21483,14 @@ unchanged); work_id_crosswalk +2 (Кручинина, Кручиня -> Круч
 1890-91 pair014__s002 from the other session's raw fix). All five 17 Feb items: discipline opera, each excerpt linked to its
 opera. compare_season_stats.py: city_totals and ballet_counts byte-identical; family_totals differs only in the order of
 two tied combos (1900-01 SP mixed).
+
+## 2026-10-27 — «Лида» readings: located, scan-checked, fixed; rebuild diff
+
+```sql
+select p.performance_id, a.page_id, e.printed_page_number, e.date, t.canonical_name, p.verbatim_title, e.receipts_verbatim
+from research.performance p join research.event e using(event_id) join analysis.event_entry a using(event_id)
+join research.theater t using(theater_id) where p.verbatim_title='Лида';            -- 3: 1892-93 pair006 s035, pair022 s019; 1899-00 p024 s006
+select verbatim_title, count(*) from research.performance where verbatim_title in ('Лида','Аида') group by 1;   -- after: Аида 182
+```
+Rebuild on a copy (parse -> duckdb -> entities -> dates -> research), all tables diffed: raw.event_entry_performance −3 +3,
+entities.work_link −3 +3, research.performance −3 +3, research.work 2963 -> 2962 (−2 +1), work_id_crosswalk +1; nothing else.

@@ -24419,3 +24419,11 @@ rebuild -> build_datasette. Rebuild diff vs `outputs/backups/foldlog_1894-95_202
   tested copy; sqlite rebuilt; backup `outputs/backups/moscow_works_1893-94_2026-10-27/`.
   Correction to the entry above: 24 Jan 1894 Большой (2168 р. 23 к.) is covered by RG's fold-log note (issue #153), not
   unread; 1893-94 Moscow has no cell without a reading.
+- **«Лида» -> «Аида», the last three readings, APPLIED 2026-10-27 (RG: "check/fix the three remaining «Лида» readings on
+  the scans").** Each read on the scan (checked by Claude; the typeface's capital А has a pointed top and reads as Л):
+  1892-93 p. 6, 9 Oct 1892 Большой; 1892-93 p. 23, 12 Apr 1893 Большой; 1899-00 p. 26, 27 Jan 1900 Маріинскій, all
+  «Аида, оп.». `docs/eval/reconciliation/fix_lida_aida.py` (3 raw cells, receipts untouched). Rebuild on a copy: 3
+  performances relinked, work «Лида» retired into «Аида» (crosswalk +1), nothing else. Production = tested copy; sqlite
+  rebuilt; backup `outputs/backups/lida_aida_2026-10-27/`. «Лида» no longer occurs; «Аида» 182 performances.
+  Summary artifact (claude.ai/artifact/ArLKsN6AHotfFGKQKcd634) notes updated the same day: 1893-94 fully read, the
+  «Гибель Фауста» concert counting (1892-93, 1895-96, 1896-97), «Псковитянка» (1891-92), Moscow 1906-07 concerts open.
