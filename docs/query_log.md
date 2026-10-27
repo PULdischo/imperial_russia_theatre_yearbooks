@@ -21379,3 +21379,12 @@ and event_id not in (select event_id from research.performance) group by 1;
 ```
 Result: docs/eval/reconciliation/outcome_ledger.csv, 12 rows: corrected 4, excluded_by_yearbook 2, yearbook_own 3
 (provisional), open 1, comparison_rule 2. SP opera's corrected cells: kopecks +4.47, «Демонъ» copy −166.50 (+32.03 -> −130.00).
+
+## 2026-10-27 — 1893-94 provisional rows: slip finder re-run, one cell and three printed totals re-read
+
+Run: `pipeline/season_stats_receipt_candidates.py` on the current family_totals.csv. 1893-94 leads: SP opera +130.00 (0
+candidates), SP drama / Александринскій +33.32 (0), SP German +0.45 (1: 7 Mar 1894 Александринскій «Sodom's Ende» 2251 р.
+38 к. -> 83 к., digit swap), Moscow Italian opera +0.10 (21, every kopeck tens digit, uninformative). Scan, checked by
+Claude at full resolution: Repertoire p. 20 (ForUpload_1893-94_Repertoire.pdf page 10) prints 2251 р. 38 к., as stored;
+stats p. 26 prints «188 (215,273 р. 34 к.)», «119 (345,169 р. 54 к.)», «34 (70,141 р. 75 к.)», all as transcribed in
+docs/season_stats/lines.csv. Outcome: the three yearbook_own rows stand (still provisional until RG reads the volume).
