@@ -21347,3 +21347,35 @@ Result: 1890-91 added (no totals page, no receipts; performed events Moscow 373,
 Category lines now from the research-layer classifier: 108 of 258 family rows exact (was 73 of 259 with the regex). 1893-94
 event counts all match; residuals Moscow Italian opera −0.10, SP drama −33.32, German −0.45, opera −130.00. Each season's
 detail now shows the ballet line (totals / lists / Repertoire).
+
+## 2026-10-27 — 1893-94: events with no works, and the stats footnotes' charity performances
+
+```sql
+select e.city, t.canonical_name, e.date, e.receipts_total_kopecks/100.0, e.annotation, <works>
+from research.event e join research.theater t using(theater_id)
+where e.season='1893-94' and e.event_status='performed'
+  and (e.date in ('1893-11-23','1894-01-17') or e.event_id not in (select event_id from research.performance)
+       or lower(e.annotation) like '%инвалид%');
+```
+
+Result: the 4 events with no works (Moscow 1, SP 3) are the invalids' concerts (Moscow Большой 18 Mar; SP Маріинскій
+dress rehearsal 16 Mar, concert 18 Mar, repeat 23 Mar), no receipts printed. The 1893-94 stats have no «Концертовъ»
+line, so they explain the event surplus exactly (393 vs 392, 600 vs 597). The footnotes' invalids' performances are
+other events, already counted (fn. 10 Moscow opera = Большой 21 Dec 1893 Евгеній Онѣгинъ 1,007.80; fn. 2 SP drama =
+Михайловскій 22 Dec 1893, 219.25). Fn. 3's two charity operas left out of the opera receipts (Маріинскій 23 Nov 1893
+Паяцы / Евгеній Онѣгинъ, 17 Jan 1894 Фальстафъ) print no receipts in the Repertoire either, so they don't affect the
+−130.00 opera gap.
+
+## 2026-10-27 — 1893-94 outcome ledger built
+
+Sources: docs/eval/scan_audit/receipts_scan_reads_2026-10-27.csv (18 corrected 1893-94 cells), the three 1893-94 fix
+scripts, family_totals.csv (current run), and
+```sql
+select event_id, disciplines, receipts_total_kopecks/100.0 from research.event where event_id in (<16 SP corrected cells>);
+select t.canonical_name, count(*) from research.event e join research.theater t using(theater_id)
+where season='1893-94' and disciplines='German drama' group by 1;   -- Александринскій 34
+select city, string_agg(event_id, '; ') from research.event where season='1893-94' and event_status='performed'
+and event_id not in (select event_id from research.performance) group by 1;
+```
+Result: docs/eval/reconciliation/outcome_ledger.csv, 12 rows: corrected 4, excluded_by_yearbook 2, yearbook_own 3
+(provisional), open 1, comparison_rule 2. SP opera's corrected cells: kopecks +4.47, «Демонъ» copy −166.50 (+32.03 -> −130.00).

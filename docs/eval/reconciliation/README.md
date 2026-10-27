@@ -60,9 +60,13 @@ specific date (`ballet_count_dates.csv`), so it is the quickest gap to resolve.
 | `yearbook_own` | figures match the scan; the yearbook disagrees with itself |
 | `excluded_by_yearbook` | the stats page leaves out events the Repertoire prints (e.g. 1895-96 SP opening night, 3 Sept) |
 | `open` | waiting on RG or another copy |
+| `comparison_rule` | not a yearbook gap: the comparison tool classed events differently from the research layer (added 2026-10-27) |
 
-Outcomes go in a ledger, one row per gap (season, city, category, theater, events gap, receipts gap, outcome,
-event_ids, note). `docs/eval/known_issues.md` keeps the narrative; the summary table artifact
+Outcomes go in the ledger `docs/eval/reconciliation/outcome_ledger.csv`, one row per gap: `gap_id` (season-NN),
+season, city, category, theater, `events_gap`, `receipts_gap_before_rub` (Repertoire minus printed when the gap was
+found), `receipts_gap_now_rub`, outcome, `event_ids` (semicolon-separated), evidence (fix scripts, scan-audit file),
+note, checked_by, date. A `corrected` row keeps what is left after the fix; if anything is, that remainder gets its own
+row. `yearbook_own` stays provisional until RG reads the source. `docs/eval/known_issues.md` keeps the narrative; the summary table artifact
 (claude.ai/artifact/ArLKsN6AHotfFGKQKcd634) can colour by outcome as well as size.
 
 ## Worked example: 1893-94 (state 2026-10-27, after the fold-log apply and scan reads)
@@ -130,7 +134,12 @@ comparison tool's classifier is out of step with `research.performance.disciplin
 1. ~~name the mixed-bill events~~ (done above);
 2. decide whether the −0.10 (Moscow) and −33.77 (SP) are worth one more pass (Moscow pp. 6+ have not had a full scan
    read; see `docs/eval/scan_audit/README.md` for coverage);
-3. start the outcome ledger with 1893-94's rows.
+3. ~~start the outcome ledger~~: 12 rows, `outcome_ledger.csv` (2026-10-27). Corrected 4 (Moscow tens digits ×2, SP
+   Михайловскій shift, Маріинскій kopecks + copied cell); excluded_by_yearbook 2 (the 4 invalids' concert events,
+   no concert line that season); yearbook_own 3, provisional (SP opera −130.00, Александринскій drama −33.32, German
+   −0.45); open 1 (Moscow Italian opera −0.10, Большой pp. 6+ unread); comparison_rule 2 (the six regex-mixed bills).
+   Every event-count gap is explained. Footnote checks: fn. 2 and 10 invalids' performances are separate events already
+   counted; fn. 3's two charity operas print no receipts in the Repertoire either.
 
 ## 1890-91 (2026-10-27): nothing to reconcile but the ballet lists, and they agree
 
