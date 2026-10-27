@@ -21153,3 +21153,12 @@ where e.season='1895-96' and e.theater like 'Александр%' and p.genre li
 ```
 
 Result: candidate list shown to RG (see session reply).
+
+## 2026-10-27 — 1895-96 SP excess vs printed totals: Маріинскій figures vs scan, combinations
+
+compare_season_stats.py classifier over LEVEL2_SQL (1895-96, SP); prefix/suffix and 1-4-event combination tests of
+receipts_total_kopecks against each family excess; raw.event_entry Маріинскій 1895-96 performed (176 rows) read on the scan.
+
+Result: Маріинскій ballet +1,770.45 = 3 Sept 1895 «Гарлемскій тюльпанъ» alone (also the prefix up to that date);
+Михайловскій opera +2,134.20 = 3 Sept 1895 «Севильскій цирюльникъ» alone. Маріинскій opera +15,535.42: 0 combinations of
+1-4 events. All 176 Маріинскій figures match the scan; stats page p. 27 SP lines match the transcription.

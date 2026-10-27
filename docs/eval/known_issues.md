@@ -24277,3 +24277,12 @@ performance genre, 0 work_id/person changes.
   printed concert's receipts on a works-less event), Малый drama −2,136.27, Большой opera +900.00.
 - Side note (not fixed): raw has «Утка и станканъ воды» (1 Apr / 10 Apr 1896) and «Бояринъ Нечай-Погаевъ» (10 Oct 1895);
   probably misreads of «стаканъ» / «Ногаевъ» — need the scan before touching.
+- **SP +19,440 follow-up, same day (RG: "chase down using the scans").** All 176 Маріинскій cells of 1895-96 read against
+  the scan (checked by Claude): every stored figure matches; no misread. The stats page (p. 27) re-read on the scan: every SP
+  line is transcribed correctly. So the SP excess is the yearbook disagreeing with itself:
+  - Маріинскій ballet +1,770.45 and Михайловскій opera +2,134.20 each equal exactly one event, both on 3 Воскр. (3 Sept
+    1895, p. 2): «Гарлемскій тюльпанъ» 1770 р. 45 к. and «Севильскій цирюльникъ» 2134 р. 20 к. Event counts match the
+    printed counts (46, 20), so the yearbook counted those events but left their takings out of the money totals.
+  - Маріинскій opera +15,535.42 (123 = 123 events): no 1-4-event combination equals it, no misread; unexplained.
+  - Not checked yet: Михайловскій opera on the scan; the Moscow side (Большой opera +900.00 exactly — round, so possibly
+    one misread hundreds digit; Малый drama −2,136.27; concert −4,364.80).
