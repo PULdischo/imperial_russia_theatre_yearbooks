@@ -356,4 +356,56 @@ across the corpus. The parse can lose kopecks silently.
 are stored with no kopecks at all (TRY_CAST of «82½» fails, and the coalesce turns it into 0), up to 99 kopecks each. #109's note says
 the total "stores whole kopecks", which was the intent but is not what happens. Also unparsed: 1909-10 p037 «2841 р. 60 р.»
 (the 1909-10 session has it), 1902-03 p021 «218 р. 42 е.».
+
+## 1909-10 (2026-10-27): charity events are outside the printed lines; four kopeck losses fixed; three drama/French gaps open
+
+The stats page is p. 58 of the 1909-10 issue (`pdf/Spiski_ProductionStats/1909-10_ProductionStats.pdf`): no venue breakdown,
+footnotes per line, and a dated list of jubilees and benefits after each city. German and Art Theatre lines print no receipts.
+
+**Step 1, city totals** (before fixes): Moscow 458 / 351 (+31,747.61 р.), SP 644 / 626 (+16,582.78 р.). Most of both is
+**charity**: the twelve «въ пользу» events (Moscow 6, 30,464.75 р.; SP 6, 5,942.75 р.) are in no printed line, neither the
+counts nor the receipts (1909-10-05, `excluded_by_yearbook`). With them out Moscow opera is 168 = 168 and Moscow ballet
+exact, which settles the rule for this page.
+
+**Step 2, category lines** (charity out, after the fixes below):
+
+| City | Line | Printed | Repertoire | Receipts gap | Reading |
+|---|---|---|---|---|---|
+| Moscow | ballet | 49 | 49 | 0.00 | exact |
+| Moscow | opera | 168 | 168 | −6.00 | open (1909-10-11) |
+| Moscow | drama | **134** | 235 | +1,289.64 | printed count is a slip (clear «134» on the scan); receipts open (1909-10-08) |
+| SP | ballet | 51 | 51 | 0.00 | exact after 24 Feb fix |
+| SP | opera | 157 | 154 + «Миранда» 2 + 18 Dec jubilee bill | +10,000.28 | stats ten-thousands slip, provisional (1909-10-07) |
+| SP | drama | 258 | 268 | +712.11 | open (1909-10-09) |
+| SP | French | 100 | 101 | −69.90 | open (1909-10-10) |
+| SP | German | 25 | 25 | (none printed) | exact |
+| SP | Moscow Art Theatre | 35 | 35 | (none printed) | Михайловскій 19 Apr - 14 May 1910; research layer gives them the SP drama company (1909-10-06) |
+
+**«Миранда (послѣдняя борьба)»** (Маріинскій, 23 and 26 Feb 1910, no genre printed) is still without an art form by RG's
+ruling of 2026-10-13. The stats page is new evidence: SP opera reaches the printed 157 only if both nights are opera, and
+the receipts then differ from the print by 10,000.28 р., a single-digit slip in the printed «531,215 р. 89 к.»
+(541,215?). The other reading (charity left in, «Миранда» out) also gives 157, but leaves +8,548.78 р. with no pattern
+and contradicts the Moscow lines on the same page. RG, 2026-10-27, after weighing the evidence: classify «Миранда» as opera (`art_form_by_title.csv`; research layer rebuilt and promoted, backup `outputs/backups/miranda_opera_2026-10-27/`); the evidence is recorded in `docs/review_scan_priorities.md` §6, with RGIA Ф. 497 оп. 18 д. 168 л. 62 (10 Sept [1910]), the editor asking for photographs of the scenery of «оперы „Миранда“ Казанли» (the д. 168 summary misreads the name as «Казаченко»).
+
+**Fixes (2026-10-27).** Kopecks lost in four cells, all read on the scan: two extraction misreads in raw
+(`fix_1909_10_mariinsky_kopecks.py`: 23 Feb «Миранда» 3358 -> 3358 р. 50 к.; 24 Feb «Эсмеральда» 3479 -> 3479 р. 55 к.)
+and two print irregularities in `receipts_print_typos.csv` (12 Oct Большой «3049 р. 78⅞ к.», print damage per RG;
+20 Feb Михайловскій «2841 р. 60 р.»). The 1910-11 session's corpus check fixed two more 1909-10 cells the same day
+(19 Nov «840 р, 14 к.», 3 Jan «1867 р- 67 к.»). Rebuilt on a copy and diffed every table: only raw.event_entry 2,
+analysis.event_entry 2, research.event 4, season_stat_check 2 rows changed. Promoted with backup
+`outputs/backups/receipts_1909-10_2026-10-27/`; sqlite rebuilt.
+
+**Footnotes and dated notes.** Every free students' matinée (14 Nov, 6 Dec, 24 Feb) and every footnoted benefit is in the
+Repertoire except footnote 3 (SP ballet, 2 benefits) and 5 (Moscow drama, 1), which have no benefit heading there
+(1909-10-13, open). Three dated notes disagree with the Repertoire: the second artists' benefit is 19 Dec, not 18
+(Repertoire p. 24, scan); Cui's jubilee and the Moscow corps-de-ballet benefit say «января 1909 г.» for 1910
+(1909-10-12, `yearbook_own`).
+
+**Step 4, lists.** Moscow list = stats = 49 (the Repertoire's 50th is the 10 Feb charity bill). SP list = stats = 51 with
+one date swapped: the stats count the 28 Feb ballet-excerpts evening and give the 18 Dec jubilee bill to opera; the list
+has 18 Dec and not 28 Feb (1909-10-14, `classification`).
+
+**Still to do:** column reads for the four open receipts gaps (Малый, Александринскій + Михайловскій drama, Михайловскій
+French, Большой opera; about 600 cells); RG on «Миранда» and on the Art Theatre's company. The season reviews were not
+checked (1909-10 has SP music reviews only).
 **Half-kopecks FIXED the same day** (RG: whole kopecks, as #109): research-layer rule, 210 events, +105.98 р.; known_issues.md #161.

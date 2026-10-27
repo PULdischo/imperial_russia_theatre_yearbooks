@@ -21624,3 +21624,79 @@ the other 210 (1899-00 to 1909-10; 1900-01 Михайловскій 59, 1901-02 
 season-stats lines print a half too (1903-04 SP German 51,839 р. 18½ к., 1904-05 SP French, 1907-08 SP French), stored as .5.
 RG chose whole kopecks. After the rule: 210 events relabelled parsed_half_kopeck_dropped, 209 values change, +105.98 р.;
 research.season_stat_check 9 rows; nothing else. Season-total gaps per known_issues.md #161 (e.g. 1899-00 SP French −12.48 → −0.14).
+
+## 2026-10-27 — 1909-10 reconciliation: Repertoire vs season totals (p. 58) by theater, status and art form
+
+```sql
+select e.city, t.canonical_name, e.event_status, e.disciplines, count(*) n, sum(e.receipts_total_kopecks)/100.0 rub,
+       count(e.receipts_total_kopecks) n_rec
+from research.event e join research.theater t using(theater_id) where e.season='1909-10' group by all order by 1,2,3,4;
+```
+
+Result: performed events Большой 223 (opera 170, ballet 49, drama 1 charity «Холопы», mixed 1, no works 2), Малый 235,
+Маріинскій 213 (opera 157, ballet 51, «Миранда» 2 with no art form, mixed 2, concert 1), Александринскій 236,
+Михайловскій 195 (French 101, German 25, Russian drama 68 of which 35 are the Moscow Art Theatre tour 19 Apr–14 May 1910).
+compare_season_stats.py: Moscow 458 events vs 351 printed (+31,747.61 р.), SP 644 vs 626 (+16,582.78 р.).
+
+## 2026-10-27 — 1909-10 charity, free and receipt-less events (stats footnotes)
+
+```sql
+select e.event_id, e.city, t.canonical_name, e.date, e.time_of_day, e.receipts_total_kopecks/100.0, e.disciplines,
+       e.is_charity, e.is_free, e.is_benefit, left(e.annotation,110)
+from research.event e join research.theater t using(theater_id)
+where e.season='1909-10' and e.event_status='performed'
+  and (e.is_charity or e.is_free or lower(coalesce(e.annotation,'')) like '%пользу%' or e.receipts_total_kopecks is null)
+  and not (t.canonical_name='Михайловскій' and (e.disciplines like 'German%' or e.date>='1910-04-19'));
+```
+
+Result: 28 rows. Charity («въ пользу»): Moscow 6 (5 Dec, 12 Dec, 27 Jan, 10 Feb, 28 Mar, 20 Apr), SP 6 (15 Jan, 6 Feb,
+13 Feb, 22 Feb Михайловскій, 19 Mar, 6 Apr). Free students' matinées 14 Nov, 6 Dec, 24 Feb in every company, matching
+footnotes 1-7. Leaving the charity events out, Moscow opera = 168 printed (−6.78 р.), ballet 49 exact.
+
+## 2026-10-27 — 1909-10 raw receipts text that does not parse as «N р. N к.»
+
+```sql
+select event_id, theater, date_undate, time_of_day, receipts_text, receipts_rubles, receipts_kopecks
+from raw.event_entry where season='1909-10' and event_status='performed' and receipts_text is not null
+  and (receipts_kopecks is null or not regexp_matches(receipts_text, '^\d+ р\. \d+ к\.$'));
+```
+
+Result: 51 rows, mostly printed «— к.». Kopecks lost: p010 «3049 р. 78⅞ к.», p017 «840 р, 14 к.», p027 «1867 р- 67 к.»,
+p037 «2841 р. 60 р.»; two misreads found on the scan, p037 «3358 р.» (print 3358 р. 50 к.) and «3479 р.» (print 3479 р. 55 к.).
+
+## 2026-10-27 — 1909-10 events on the stats page's dated notes, and benefits
+
+```sql
+select e.city, t.canonical_name, e.date, e.time_of_day, e.receipts_total_kopecks/100.0, e.disciplines, e.is_benefit,
+       left(e.annotation,100), string_agg(p.verbatim_title, ' / ' order by p.performance_order)
+from research.event e join research.theater t using(theater_id) left join research.performance p using(event_id)
+where e.season='1909-10' and e.event_status='performed' and (e.is_benefit or <dated-note dates>) group by all;
+```
+
+Result: every dated note falls on a Repertoire event. Three disagree with the Repertoire's date: «18 декабря—бенефисъ
+вторыхъ артистовъ» is printed on 19 Dec in the Repertoire (p. 24, read on the scan); Cui jubilee and corps-de-ballet
+benefit printed «января 1909 г.», Repertoire 11 and 10 Jan 1910. Benefits: Moscow opera 3 and ballet 1, SP opera 2,
+Александринскій 1, French 8 match the footnotes; footnote 3 (SP ballet, 2 benefits) and 5 (Moscow drama, 1) have no
+benefit heading in the Repertoire.
+
+## 2026-10-27 — 1909-10 SP Russian drama by kind (testing whether the stats count leaves out youth or reduced-price performances)
+
+```sql
+select t.canonical_name, <youth|reduced|charity|free|other> kind, count(*), sum(receipts_total_kopecks)/100.0
+from research.event e join research.theater t using(theater_id)
+where season='1909-10' and event_status='performed' and disciplines='Russian drama' and t.city='SP' and date<'1910-04-19' group by all;
+```
+
+Result: Александринскій 230 before 19 Apr (205 other, 15 youth, 7 reduced, 3 free); Михайловскій 33 (22 youth, 8 reduced,
+1 free, 1 charity, 1 other). Alex 236 + Михайловскій youth 22 = 258 events, but receipts then fall 4,298 р. short: rejected.
+
+## 2026-10-27 — «Миранда (послѣдняя борьба)» classed as opera (RG): performances and SP opera line after the rebuild
+
+```sql
+select performance_id, discipline, discipline_basis, company, genre_family
+from research.performance where verbatim_title like 'Миранда%';
+```
+
+Result: 2 performances (23 and 26 Feb 1910, Маріинскій), now opera / St. Petersburg opera (were null). Rebuild diff:
+research.event 2 and research.performance 2 rows, nothing else. compare_season_stats.py, SP opera 1909-10: 159 events,
+546,229.67 р.; less the 3 charity operas, plus the 18 Dec jubilee bill = 157 printed, receipts +10,000.28 р.

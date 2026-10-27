@@ -3442,3 +3442,9 @@ season,theater,printed_page,date_text,time_of_day,event_id,receipts_now,result,n
 1909-10,Александринскій,28,3 Воскрес.,evening,repertoire_1909-10_p027__s016,1867 р. 67 к.,matches scan,read by Claude directly; print «1867 р- 67 к.»; kopecks restored via receipts_print_typos.csv
 1910-11,Михайловскій,32,21 Пятница.,unspecified,repertoire_1910-11_p031__s022,410 р. 40 к.,matches scan,"read by Claude directly; genre printed «Анжело, оп.» inside the Михайловскій drama run (ledger 1910-11-06)"
 1910-11,Михайловскій,34,4 Пятница.,unspecified,repertoire_1910-11_p033__s025,616 р. 90 к.,matches scan,"read by Claude directly; genre printed «Ромео и Джульетта, оп.» inside the Михайловскій drama run (ledger 1910-11-06)"
+1909-10,Маріинскій,38,23 Вторник.,unspecified,repertoire_1909-10_p037__s007,3358 р. 50 к.,corrected,read by Claude directly; was 3358 р.; fix_1909_10_mariinsky_kopecks.py
+1909-10,Маріинскій,38,24 Среда.,evening,repertoire_1909-10_p037__s009,3479 р. 55 к.,corrected,read by Claude directly; was 3479 р.; fix_1909_10_mariinsky_kopecks.py
+1909-10,Михайловскій,38,20 Суббота.,unspecified,repertoire_1909-10_p037__s021,2841 р. 60 к.,matches scan,read by Claude directly; print «2841 р. 60 р.»; kopecks restored via receipts_print_typos.csv
+1909-10,Большой,11,12 Понед.,unspecified,repertoire_1909-10_p010__s005,3049 р. 78 к.,matches scan,print «3049 р. 78⅞ к.» (mark = print damage, RG 2026-09-30); kopecks restored via receipts_print_typos.csv
+1909-10,Маріинскій,20,27 Пятница.,unspecified,repertoire_1909-10_p019__s001,11816 р.,matches scan,read by Claude directly; print «11816 р. — к.» (chorus benefit)
+1909-10,Александринскій,24,19 Суббота.,unspecified,repertoire_1909-10_p023__s015,4534 р. 10 к.,matches scan,date check: second artists' benefit printed on 19 Dec (stats note says 18)
