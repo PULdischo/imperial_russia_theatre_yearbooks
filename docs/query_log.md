@@ -21116,3 +21116,16 @@ Moscow ballet events by `compare_season_stats.py`'s classifier (LEVEL2_SQL, seas
 combination of receipts_total_kopecks tested against 274,380.
 
 Result: 0 combinations of 1, 2 or 3 events; no pair within 1 р.
+
+## 2026-10-27 — 1897-98 Moscow: Repertoire ballet dates vs the ballet production lists (RG: "let's do this")
+
+```sql
+-- Repertoire side: compare_season_stats.py classifier over LEVEL2_SQL, season 1897-98, Moscow; events whose family is
+-- ballet or a mixed family containing ballet, keyed by research.event.date
+select cast(p.date as varchar), e.title, e.total_count from raw.production_entry_performance p join raw.production_entry e using(production_entry_id)
+where e.season='1897-98' and e.city='Moscow' and coalesce(p.outside_total,false)=false;
+```
+
+Result: 51 Repertoire ballet-family dates (48 ballet + 3 mixed) = 51 list dates (68 list entries; several bills list 2-3
+ballets). No date on one side only. The yearbook classed the same events as ballet in both places, so the 2,743 р. 80 к.
+is not a ballet event counted elsewhere.
