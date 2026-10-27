@@ -21162,3 +21162,20 @@ receipts_total_kopecks against each family excess; raw.event_entry Маріин�
 Result: Маріинскій ballet +1,770.45 = 3 Sept 1895 «Гарлемскій тюльпанъ» alone (also the prefix up to that date);
 Михайловскій opera +2,134.20 = 3 Sept 1895 «Севильскій цирюльникъ» alone. Маріинскій opera +15,535.42: 0 combinations of
 1-4 events. All 176 Маріинскій figures match the scan; stats page p. 27 SP lines match the transcription.
+
+## 2026-10-27 — 1895-96: what else the volume says about 3 Sept 1895 (the SP excesses equal that date's Маріинскій ballet and Михайловскій opera figures)
+
+Searched outputs/reviews/merged_full/review_block.csv (1895-96 pages) for «3-го сентября», «Гарлемск», «Севильск»; read the
+opening of review_1895-96_SP_ballet_p000.
+
+```sql
+select e.date_undate,e.date_text,e.receipts_text,string_agg(p.performance_title||', '||coalesce(p.genre,''),' / ')
+from raw.event_entry e join raw.event_entry_performance p using(event_id)
+where e.season='1895-96' and e.theater like 'Михайл%' and e.date_undate<='1895-09-10' and e.event_status='performed' group by all order by 1;
+```
+
+Result: the SP ballet review says «Сезонъ открылся 3-го сентября; въ первый спектакль былъ данъ балетъ—«Гарлемскій
+тюльпанъ»» and counts 46 Маріинскій + 1 Михайловскій ballet performances plus 4 mixed (= the stats page). At the Михайловскій,
+31 Aug-1 Sept were drama bills (with ballet items); 3 Sept «Севильскій цирюльникъ» is its first opera of the season (next
+10 Sept «Майская ночь»). So both missing figures are the opening performance of a company's season. No 1895-96 SP opera
+review is in the corpus. Nothing in the reviews or the stats footnotes explains why the takings are missing.
