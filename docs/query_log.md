@@ -21461,3 +21461,9 @@ select b.text from raw.review_block b join raw.review_page p using(page_id) wher
 ```
 Result: 36 stored benefit events (1890-91), 29 dated benefits in the reviews, all matching. Scan headings per page equal
 stored counts except p. 14 (stored 3, printed 2): Большой 11 Dec «Бенефисъ г. Р.» is a leak from the Малый cell; raw fixed.
+
+## 2026-10-27 — 1890-91, 27 April 1891 time of day (review vs table)
+
+Read: `select event_id from research.event e join research.theater t using(theater_id) where season='1890-91' and date='1891-04-27'
+and canonical_name in ('Маріинскій','Александринскій') and event_status='performed'`, plus review p. 203 text and the p. 25 scan.
+Result: both stored as morning, as the divided row prints them; the review gives both as debut nights with no time. Ledger 1890-91-10.

@@ -186,7 +186,13 @@ page. One stored heading is not printed: 11 Dec 1890 Большой «Бенеф
 г. Рыбакова.» on the same row (`fix_1890_91_bolshoi_benefit_leak.py`, ledger 1890-91-09, `corrected`; shows in the database
 after the next rebuild).
 
-**Outcome:** totals and lists: no gaps. Review dates: 8 `yearbook_own` rows. Benefits: 1 `corrected`. Nothing open.
+**27 April 1891, time of day (RG: "note the discrepancy").** The review (p. 203) names two debuts that day, Медвѣдевъ and
+Карелинъ in «Отелло» and Владимірова in «На бойкомъ мѣстѣ», without a time. The table (p. 25) prints both in the «утро»
+half of a divided row (rule across the SP columns, «утро/веч.» labels beside the Большой only). Stored as printed, morning;
+ledger 1890-91-10, `yearbook_own`.
+
+**Outcome:** totals and lists: no gaps. Review dates: 8 `yearbook_own` rows. Benefits: 1 `corrected`. 27 April: 1
+`yearbook_own`. Nothing open.
 
 ## Step-2 classifier now uses the research layer (2026-10-27)
 
