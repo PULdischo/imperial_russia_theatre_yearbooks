@@ -24262,9 +24262,10 @@ performance genre, 0 work_id/person changes.
   (p. 4) Малый «1074 р» -> 1074 р. 88 к.; 17 Вторн. (p. 6) Малый «1324 р.» -> 1324 р. 67 к.; 16 Пятница (p. 18)
   Михайловскій 1120 р. 25 -> 1128 р. 55 к., Александринскій 1789 -> 1790 р. 17 к.; 8 Понед. (p. 22) Большой 830 -> 840 р. 76 к.
 - 28 Воскрес. (p. 24) Большой: «оп.» after the excerpt «...оп. Пиковая дама.» was not printed -> genre removed.
-- OPEN, with RG: 26 Воскресенье (p. 10) Александринскій evening (free performance for the St George cavaliers) has a 2nd
-  work below «Бояринъ Нечай-Ногаевъ, др.» lying in the fold; RG reads the genre as perhaps «вод.». Candidate list (the
-  company's 1895-96 vaudevilles) given to RG to match against the letter tops.
+- 26 Воскресенье (p. 10) Александринскій evening (free performance for the St George cavaliers): a 2nd work below
+  «Бояринъ Нечай-Ногаевъ, др.» lies in the fold. RG matched the letter tops (initial Д, three words, «вод.?») against the
+  company's 1895-96 vaudevilles: «Дочь русскаго актера, вод.» (paired with Нечай-Ногаевъ on 1 Oct 1895 too). Appended by
+  `fix_1895_96_alex_26nov_work.py`; links to the existing work; rebuild diff: 1 new performance only.
 - The p. 26 end-of-season notes («Всѣ послѣдующіе спектакли до конца сезона — безплатные», Малый from 15 May, Большой from
   19 May 1896) were already applied: every later performed cell at those theaters has is_free; the 17 May Большой gala is
   before the Большой note and correctly not free.
