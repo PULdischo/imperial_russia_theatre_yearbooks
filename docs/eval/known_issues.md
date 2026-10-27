@@ -24338,3 +24338,8 @@ rebuild -> build_datasette. Rebuild diff vs `outputs/backups/foldlog_1894-95_202
     Амуру / Grand pas изъ балета Корсаръ» 1474 р. — the comparison script reads the genre-less Latin «Grand pas» as French
     and calls the bill mixed. Mixed 10 vs 8 and Александринскій drama 111 vs 112 net out (+4.36 / −4.46): one comedy-ballet
     bill («Батюшкина дочка, ком.-бал.») the yearbook counts as drama.
+- «Grand pas изъ балета Корсаръ» (4 Sept 1894, Михайловскій): the research layer already had it right (discipline ballet,
+  St. Petersburg ballet company, linked to Корсаръ as an excerpt). Only `compare_season_stats.py` misread it: its Latin-title
+  rule fired before the excerpt rule. Fixed 2026-10-27 (RG: "should we label this properly as a ballet?"): a genre-less title
+  naming «бал.»/«балета» is ballet even when it starts in Latin. Raw stays as printed (no genre printed). Effect: 1894-95
+  Михайловскій ballet now 3 = 3, exact; no other season's figures change.

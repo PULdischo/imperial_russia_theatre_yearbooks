@@ -150,6 +150,10 @@ def classify_work(title, genre, item_kind=None):
     # A Cyrillic genre decides the family even for a Latin title ("Viola tricolor,
     # ком." at the Малый, "Virtus antiqua, сказка" at the Александринскій are
     # Russian productions); only a Latin or missing genre falls to the Latin rule.
+    # A Latin-led excerpt of a Russian ballet names its parent in Cyrillic ("Grand pas изъ балета
+    # Корсаръ", Михайловскій 4 Sept 1894): ballet, not French (RG, 2026-10-27).
+    if not g and re.search(r"\bбал(\.|ета)", title.lower()):
+        return "ballet"
     if LATIN.match(title) and not re.search(r"[а-яё]", g):
         if g in ("op.", "oper.", "op", "oper"):
             return "foreign_opera"
