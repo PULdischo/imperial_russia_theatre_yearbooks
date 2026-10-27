@@ -21467,3 +21467,19 @@ stored counts except p. 14 (stored 3, printed 2): Большой 11 Dec «Бен
 Read: `select event_id from research.event e join research.theater t using(theater_id) where season='1890-91' and date='1891-04-27'
 and canonical_name in ('Маріинскій','Александринскій') and event_status='performed'`, plus review p. 203 text and the p. 25 scan.
 Result: both stored as morning, as the divided row prints them; the review gives both as debut nights with no time. Ledger 1890-91-10.
+
+## 2026-10-27 — 1893-94 Moscow works fix: rebuild diff on a copy
+
+Run: fix_1893_94_moscow_works.py on a scratch copy of outputs/full_run/raw, then parse_and_validate (with --page-headers and
+--printed-page-numbers) -> build_duckdb -> build_entities -> validate_performance_dates -> build_research_model on a copy of
+the db; every raw/analysis/entities/research table diffed (EXCEPT ALL both ways), then
+```sql
+select p.performance_id, p.verbatim_title, w.canonical_title, par.canonical_title, p.discipline from research.performance p
+join research.work w using(work_id) left join research.work par on par.work_id=w.excerpt_of_work_id
+where p.event_id='repertoire_1893-94_pair018__s038';
+```
+Result: raw.event_entry_performance 30808 -> 30809 (−6 +7); research.performance same; research.work −10 +10 (count 2963
+unchanged); work_id_crosswalk +2 (Кручинина, Кручиня -> Кручина 30); research.event −2 +2 (17 Feb 1894 Большой n_works 4 -> 5;
+1890-91 pair014__s002 from the other session's raw fix). All five 17 Feb items: discipline opera, each excerpt linked to its
+opera. compare_season_stats.py: city_totals and ballet_counts byte-identical; family_totals differs only in the order of
+two tied combos (1900-01 SP mixed).

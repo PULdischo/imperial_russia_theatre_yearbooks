@@ -24405,3 +24405,17 @@ rebuild -> build_datasette. Rebuild diff vs `outputs/backups/foldlog_1894-95_202
   «Бенефисъ г. Р.» copied from the Малый cell; the Большой prints only «Фенелла, оп.». Raw fixed by
   `docs/eval/reconciliation/fix_1890_91_bolshoi_benefit_leak.py` (pair014 session 2, `_fix_note`). **Not yet rebuilt:**
   `research.event.is_benefit` for that event stays true until the next full_run rebuild.
+- **1893-94 Moscow works corrected, APPLIED 2026-10-27 (RG: "fix the 17 Feb 1894 Большой works (add the Мазепа entracte,
+  store the three excerpts as printed), «Кручина» ×2 and «Аида» (1893-94), test on a copy, promote, commit").**
+  `docs/eval/reconciliation/fix_1893_94_moscow_works.py` (4 raw cells; receipts untouched): 17 Feb 1894 Большой now
+  Іоланта + «2-е д. оп. Пиковая дама» + «2-я карт. 1-го д. и арія 2-й карт. 2-го д. изъ оп. Евгеній Онѣгинъ» + «1-я карт.
+  2-го д. оп. Черевички» + «Антрактъ къ 4-му д. оп. Мазепа» (printed first, appended last so no performance id shifts);
+  Малый 18 and 26 Jan «Кручина»; Большой 22 Oct 1893 «Аида». Two rows in `entity_curation/work_excerpt_links.csv` (the
+  Онѣгинъ excerpt and the Мазепа entr'acte to their operas). Rebuild on a copy (parse -> duckdb -> entities -> dates ->
+  research): changed rows only in those cells; research.performance +1 (the entracte); works «Кручинина», «Кручиня»
+  retired into «Кручина» (crosswalk +2); new excerpt works: the Онѣгинъ excerpt and the entracte, both opera; «Лида» 4 -> 3
+  (left: 1892-93 Moscow 2, 1899-00 SP 1, unchecked). The same rebuild also brought in the 1890-91 session's raw fix
+  (`fix_1890_91_bolshoi_benefit_leak.py`, already in raw, 1 event). Season-stats comparison unchanged. Production =
+  tested copy; sqlite rebuilt; backup `outputs/backups/moscow_works_1893-94_2026-10-27/`.
+  Correction to the entry above: 24 Jan 1894 Большой (2168 р. 23 к.) is covered by RG's fold-log note (issue #153), not
+  unread; 1893-94 Moscow has no cell without a reading.

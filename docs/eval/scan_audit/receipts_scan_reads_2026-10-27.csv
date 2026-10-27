@@ -2457,7 +2457,7 @@ season,theater,printed_page,date_text,time_of_day,event_id,receipts_now,result,n
 1893-94,Малый,16,21 Пятница.,unspecified,repertoire_1893-94_pair016__s034,1373 р. 96 к.,matches scan,
 1893-94,Большой,16,23 Воскрес.,unspecified,repertoire_1893-94_pair016__s041,2240 р. 4 к.,matches scan,
 1893-94,Малый,16,23 Воскрес.,unspecified,repertoire_1893-94_pair016__s042,1365 р. 38 к.,matches scan,
-1893-94,Большой,16,24 Понед.,unspecified,repertoire_1893-94_pair016__s046,2168 р. 23 к.,not visible,lower half cut by binding fold; visible digit tops are consistent with stored 2168 р. 23 к. but 6/5 and 3/8 cannot be told apart; no RG fold-log reading
+1893-94,Большой,16,24 Понед.,unspecified,repertoire_1893-94_pair016__s046,2168 р. 23 к.,fold: RG reading = stored,"lower half cut by the binding fold; value from RG's fold-log note (issue #153, apply_fold_log.py WORKS)"
 1893-94,Малый,16,24 Понед.,unspecified,repertoire_1893-94_pair016__s047,910 р.,matches scan,
 1893-94,Большой,17,25 Вторник.,unspecified,repertoire_1893-94_pair016__s050,2087 р. 60 к.,matches scan,
 1893-94,Малый,17,25 Вторник.,evening,repertoire_1893-94_pair016__s051,1372 р. 67 к.,matches scan,
