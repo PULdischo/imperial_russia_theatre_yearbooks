@@ -21901,3 +21901,21 @@ research.event (−1 +1 each) and research.performance (−2 +2: the two 1910-11
 by commit 8a55293 and not rebuilt until now); 52 other tables identical. check_person_link_alignment: 0 shift blocks. Production unchanged since
 the snapshot (cmp), backed up to outputs/backups/alex_20feb_session_2026-10-28/ (db, parsed CSVs, raw p037, sqlite), then promoted;
 research_dataset.sqlite rebuilt (event p037__s012: unspecified, 186953).
+
+## 2026-10-28 — 1909-10 Маріинскій column read blind (headings + receipts); raw search for ballet benefits
+
+Raw search: every field (bar `_fix_note`) of the odd (SP) `repertoire_1909-10_p0*.raw.json` files for бенеф|пользу|прощал|лѣті|юбил|чест.
+Blind read (1 agent, scan only, pp. 2-56, every heading word for word), compared with
+```sql
+select a.page_id, e.event_id, e.printed_page_number, a.date_text, e.time_of_day, e.event_status, e.receipts_total_kopecks, e.receipts_verbatim, e.annotation
+from research.event e join research.theater t using(theater_id) join analysis.event_entry a using(event_id)
+where e.season='1909-10' and t.canonical_name='Маріинскій';
+select p.event_id, p.verbatim_title, p.verbatim_genre, p.discipline from research.performance p join research.event e using(event_id)
+join research.theater t using(theater_id) where e.season='1909-10' and t.canonical_name='Маріинскій' and cast(e.date as varchar)='1909-09-12';
+```
+
+Result: 296 rows, all matching (figures and sessions); 213 performed events added to the scan-audit record (3 were there). Both sources agree:
+the column's only «Бенефисъ» headings are opera (30 Oct orchestra, 27 Nov chorus = footnote 2's two). Ballet cells with a heading: 2 Sep opening,
+18 Dec IRMO jubilee, 24 Jan Трефилова farewell, 6 Feb French-flood charity; the 28 Feb all-excerpts bill has none. Footnote 3's two ballet
+benefits: one candidate (Трефилова), the second untraced. 12 Sep «Раймонда, оп» is printed so; stored verbatim_genre «оп.», discipline ballet.
+Ledger 1909-10-13 (open).

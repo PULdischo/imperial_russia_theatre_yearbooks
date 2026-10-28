@@ -415,8 +415,9 @@ transcribed the scans (pp. 2-57, every row, dashes included) before anything was
 every receipts figure equals the stored value, including the misprints already handled («2466 о. 88 к.», «1425 к. 60 к.»,
 «727 р. 70 р.», «603 р· 89 к.»). Two low-confidence digits were checked at zoom and are as printed: 12 Mar Малый «563 р.
 72 к.» (stray mark above the 5, no room for a fourth digit) and 17 Mar Alex «1708 р. 88 к.» (broken 0, not 6). So the
-receipts gaps on the drama, French and Moscow opera lines are the stats page's own (1909-10-08, -09, -10, -11). Of the
-1909-10 columns, only the Маріинскій has not been read in full (its open line, opera, is the stats slip 1909-10-07). One extraction
+receipts gaps on the drama, French and Moscow opera lines are the stats page's own (1909-10-08, -09, -10, -11). The
+Маріинскій column was read blind the same day (296 rows, every heading word for word): every figure as stored, so **every
+1909-10 column has now been read on the scan**. One extraction
 error turned up that is not a figure: 20 Feb Alex «Передъ зарею» is one unsplit cell, stored as a morning
 (`fix_1909_10_alex_20feb_session.py`; now unspecified. Rebuilt on a copy, every table diffed, promoted 2026-10-28 with
 backup `outputs/backups/alex_20feb_session_2026-10-28/`; sqlite rebuilt). The German line checks out: the
@@ -428,6 +429,7 @@ and no set of 10 events fits +712.11 р. (the smallest SP drama figures are abou
 likeliest reading; RG to judge. SP French 101 vs 100: footnote 4 (8 benefits, 2 free) matches, «100» is clear.
 
 **Still to do:** the two count gaps above (RG); footnote 3's second SP ballet benefit (the 24 Jan Трефилова farewell is the
-only candidate for either; no SP ballet event has a «бенефисъ» heading, 1909-10-13); «Миранда» (classed as opera) and the Art Theatre run (`VISITING_RUNS`, research layer rebuilt and promoted, backup `outputs/backups/mat_run_1909-10_2026-10-27/`) are settled. The 19 Apr «Утро памяти А. П. Чехова» (no works) is left without a company. The season reviews were not
+only candidate for either; the blind Маріинскій read and a search of every raw field find no ballet cell headed «бенефисъ»,
+the column's only two are opera, 1909-10-13); «Миранда» (classed as opera) and the Art Theatre run (`VISITING_RUNS`, research layer rebuilt and promoted, backup `outputs/backups/mat_run_1909-10_2026-10-27/`) are settled. The 19 Apr «Утро памяти А. П. Чехова» (no works) is left without a company. The season reviews were not
 checked (1909-10 has SP music reviews only).
 **Half-kopecks FIXED the same day** (RG: whole kopecks, as #109): research-layer rule, 210 events, +105.98 р.; known_issues.md #161.
