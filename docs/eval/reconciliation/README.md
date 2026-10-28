@@ -362,7 +362,7 @@ are stored with no kopecks at all (TRY_CAST of «82½» fails, and the coalesce 
 the total "stores whole kopecks", which was the intent but is not what happens. Also unparsed: 1909-10 p037 «2841 р. 60 р.»
 (the 1909-10 session has it), 1902-03 p021 «218 р. 42 е.».
 
-## 1909-10 (2026-10-27): charity events are outside the printed lines; four kopeck losses fixed; three drama/French gaps open
+## 1909-10 (2026-10-27, columns read 2026-10-28): charity events are outside the printed lines; four kopeck losses fixed; every receipts gap explained, two count gaps open
 
 The stats page is p. 58 of the 1909-10 issue (`pdf/Spiski_ProductionStats/1909-10_ProductionStats.pdf`): no venue breakdown,
 footnotes per line, and a dated list of jubilees and benefits after each city. German and Art Theatre lines print no receipts.
@@ -377,12 +377,12 @@ exact, which settles the rule for this page.
 | City | Line | Printed | Repertoire | Receipts gap | Reading |
 |---|---|---|---|---|---|
 | Moscow | ballet | 49 | 49 | 0.00 | exact |
-| Moscow | opera | 168 | 168 | −6.00 | open (1909-10-11) |
-| Moscow | drama | **134** | 235 | +1,289.64 | printed count is a slip (clear «134» on the scan); receipts open (1909-10-08) |
+| Moscow | opera | 168 | 168 | −6.00 | every Большой figure as printed (column read 2026-10-28): the stats page's own (1909-10-11) |
+| Moscow | drama | **134** | 235 | +1,289.64 | printed count is a slip (clear «134» on the scan); every Малый figure as printed, so the receipts gap is the stats page's own (1909-10-08) |
 | SP | ballet | 51 | 51 | 0.00 | exact after 24 Feb fix |
 | SP | opera | 157 | 154 + «Миранда» 2 + 18 Dec jubilee bill | +10,000.28 | stats ten-thousands slip, provisional (1909-10-07) |
-| SP | drama | 258 | 268 | +712.11 | open (1909-10-09) |
-| SP | French | 100 | 101 | −69.90 | open (1909-10-10) |
+| SP | drama | 258 | 268 | +712.11 | every figure as printed (receipts: the stats page's own); the 10-event count gap is open (1909-10-09) |
+| SP | French | 100 | 101 | −69.90 | every figure as printed (receipts: the stats page's own); the 1-event count gap is open (1909-10-10) |
 | SP | German | 25 | 25 | (none printed) | exact |
 | SP | Moscow Art Theatre | 35 | 35 | (none printed) | exact: Михайловскій 19 Apr - 14 May 1910, printed with no troupe heading; given to the Art Theatre by `VISITING_RUNS` (1909-10-06) |
 
@@ -410,7 +410,24 @@ Repertoire except footnote 3 (SP ballet, 2 benefits) and 5 (Moscow drama, 1), wh
 one date swapped: the stats count the 28 Feb ballet-excerpts evening and give the 18 Dec jubilee bill to opera; the list
 has 18 Dec and not 28 Feb (1909-10-14, `classification`).
 
-**Still to do:** column reads for the four open receipts gaps (Малый, Александринскій + Михайловскій drama, Михайловскій
-French, Большой opera; about 600 cells); «Миранда» (classed as opera) and the Art Theatre run (`VISITING_RUNS`, research layer rebuilt and promoted, backup `outputs/backups/mat_run_1909-10_2026-10-27/`) are settled. The 19 Apr «Утро памяти А. П. Чехова» (no works) is left without a company. The season reviews were not
+**Column reads (2026-10-28).** The Малый, Большой, Александринскій and Михайловскій columns were read blind: four agents
+transcribed the scans (pp. 2-57, every row, dashes included) before anything was compared with the database. 884 events;
+every receipts figure equals the stored value, including the misprints already handled («2466 о. 88 к.», «1425 к. 60 к.»,
+«727 р. 70 р.», «603 р· 89 к.»). Two low-confidence digits were checked at zoom and are as printed: 12 Mar Малый «563 р.
+72 к.» (stray mark above the 5, no room for a fourth digit) and 17 Mar Alex «1708 р. 88 к.» (broken 0, not 6). So the
+receipts gaps on the drama, French and Moscow opera lines are the stats page's own (1909-10-08, -09, -10, -11). Of the
+1909-10 columns, only the Маріинскій has not been read in full (its open line, opera, is the stats slip 1909-10-07). One extraction
+error turned up that is not a figure: 20 Feb Alex «Передъ зарею» is one unsplit cell, stored as a morning
+(`fix_1909_10_alex_20feb_session.py`; now unspecified. Rebuilt on a copy, every table diffed, promoted 2026-10-28 with
+backup `outputs/backups/alex_20feb_session_2026-10-28/`; sqlite rebuilt). The German line checks out: the
+visiting German drama troupe 23 + operetta 1 + German guest 1 = 25.
+
+The two count gaps stay open. SP drama 268 vs 258: footnote 1 («1 бенефисъ и 4 безплатныхъ спектакля») matches the
+Repertoire (free 14 Nov, 6 Dec and 24 Feb at the Alex, 6 Dec «Не въ свои сани» at the Михайловскій), «258» is clear on p. 58,
+and no set of 10 events fits +712.11 р. (the smallest SP drama figures are about 660 р.), so a count slip for 268 is the
+likeliest reading; RG to judge. SP French 101 vs 100: footnote 4 (8 benefits, 2 free) matches, «100» is clear.
+
+**Still to do:** the two count gaps above (RG); footnote 3's second SP ballet benefit (the 24 Jan Трефилова farewell is the
+only candidate for either; no SP ballet event has a «бенефисъ» heading, 1909-10-13); «Миранда» (classed as opera) and the Art Theatre run (`VISITING_RUNS`, research layer rebuilt and promoted, backup `outputs/backups/mat_run_1909-10_2026-10-27/`) are settled. The 19 Apr «Утро памяти А. П. Чехова» (no works) is left without a company. The season reviews were not
 checked (1909-10 has SP music reviews only).
 **Half-kopecks FIXED the same day** (RG: whole kopecks, as #109): research-layer rule, 210 events, +105.98 р.; known_issues.md #161.

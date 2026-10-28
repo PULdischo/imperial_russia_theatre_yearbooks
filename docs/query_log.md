@@ -21849,3 +21849,55 @@ from research.event e join research.theater t using(theater_id) join analysis.ev
 Result: 431 cells with works; every figure equals the stored value (the only flags were the comparison script's own handling of printed
 «и.», «с.» and commas, whose stored values are already corrected). All six 1910-11 theater columns are now read. Ledger 1910-11-02 (Moscow opera
 −0.02), -07 (SP drama +690.61, 273 / 272) and -08 (French +1.00) become yearbook_own; 15 rows, none open.
+
+## 2026-10-28 — 1909-10 Малый, Большой, Александринскій and Михайловскій columns read blind; receipts gaps closed
+
+Blind reads (4 agents, scan only; ForUpload_1909-10_Repertoire.pdf pp. 2-57, every row incl. dashes), compared with
+```sql
+select a.page_id, e.event_id, t.canonical_name theater, e.printed_page_number, cast(e.date as varchar) date, e.time_of_day, a.date_text,
+       e.event_status, e.receipts_total_kopecks, e.receipts_verbatim, e.receipts_source
+from research.event e join research.theater t using(theater_id) join analysis.event_entry a using(event_id)
+where e.season='1909-10' and t.canonical_name in ('Малый','Большой','Александринскій','Михайловскій');
+-- residual check: any single event equal to a remaining gap (712.11, 1289.64, 69.90, 6.00 р., ±2 р.)
+select e.event_id, t.canonical_name, cast(e.date as varchar), e.time_of_day, e.receipts_total_kopecks/100.0
+from research.event e join research.theater t using(theater_id) where e.season='1909-10' and e.receipts_total_kopecks is not null
+  and (abs(e.receipts_total_kopecks-71211)<=200 or abs(e.receipts_total_kopecks-128964)<=200 or abs(e.receipts_total_kopecks-6990)<=200 or abs(e.receipts_total_kopecks-600)<=100);
+select company, count(*), sum(receipts_total_kopecks)/100.0 from research.event e join research.theater t using(theater_id)
+  left join (select distinct event_id, company from research.performance) p using(event_id)
+where e.season='1909-10' and t.canonical_name='Михайловскій' and e.event_status='performed' group by 1;
+```
+
+Result: 1,169 rows read; 884 performed events (Малый 235, Александринскій 233 new + 3 earlier, Большой 222, Михайловскій 194), every
+receipts figure equal to the stored value. One non-figure error: 20 Feb 1910 Alex (repertoire_1909-10_p037__s012) stored as morning, an unsplit
+cell on the scan (fix_1909_10_alex_20feb_session.py; promoted, see the rebuild entry below). No single event matches a residual gap (nearest: Малый 16 Mar 712.83, 30 Jan 1288.27,
+Михайловскій 21 Feb 1289.50, all other lines). Михайловскій companies: French 101 (107,173.20 р.), SP Russian drama 33, Art Theatre 35, German
+drama troupe 23 + operetta 1 + German guest 1 = 25 = printed German line. Ledger 1909-10-08, -11 -> yearbook_own; -09, -10 receipts settled, count gaps open.
+
+## 2026-10-28 — 1909-10 SP ballet footnote 3 («Въ томъ числѣ 2 бенефиса»): benefit candidates
+
+```sql
+select cast(e.date as varchar), e.time_of_day, e.receipts_total_kopecks/100.0, e.annotation, e.disciplines
+from research.event e join research.theater t using(theater_id)
+where e.season='1909-10' and e.city='SP' and e.disciplines like '%ballet%' and e.event_status='performed' and e.annotation is not null order by 1;
+select cast(e.date as varchar), e.receipts_total_kopecks/100.0 from research.event e join research.theater t using(theater_id)
+where e.season='1909-10' and t.canonical_name='Маріинскій' and e.disciplines='ballet' order by 2 desc limit 5;
+```
+
+Result: no SP ballet event has a «бенефисъ» heading. Annotated ballet events: 2 Sep opening; 18 Dec IRMO jubilee (no receipts; counted to
+opera by the stats); 24 Jan «Прощальный спектакль балерины В. Трефиловой» (3,592.50); 6 Feb French-flood charity (no receipts; charity is
+outside the lines); 21 Apr. Receipts don't single out a benefit: 3,592.50 is also printed on 29 Nov and 13 Dec (house-full figure). So one
+candidate (Trefilova farewell, also on the stats page's dated notes), the second benefit unidentified. Ledger 1909-10-13 unchanged (open).
+
+## 2026-10-28 — Rebuild for the 20 Feb 1910 Alex session fix: diff on a copy, promoted
+
+Run: fix_1909_10_alex_20feb_session.py on a scratch copy of outputs/full_run/raw, then parse_and_validate (--page-headers,
+--printed-page-numbers) -> build_duckdb -> build_entities -> validate_performance_dates -> build_research_model on a copy of production;
+every table of both databases compared (EXCEPT ALL both ways, `duckdb_tables()`), then
+```sql
+select event_id, time_of_day, receipts_total_kopecks from research.event where event_id='repertoire_1909-10_p037__s012';
+```
+Result: parsed CSVs differ in one row (event_entry p037__s012, morning -> unspecified); databases differ in raw.event_entry, analysis.event_entry,
+research.event (−1 +1 each) and research.performance (−2 +2: the two 1910-11 «оп.» cells' source notes, reworded in performance_work_overrides.csv
+by commit 8a55293 and not rebuilt until now); 52 other tables identical. check_person_link_alignment: 0 shift blocks. Production unchanged since
+the snapshot (cmp), backed up to outputs/backups/alex_20feb_session_2026-10-28/ (db, parsed CSVs, raw p037, sqlite), then promoted;
+research_dataset.sqlite rebuilt (event p037__s012: unspecified, 186953).

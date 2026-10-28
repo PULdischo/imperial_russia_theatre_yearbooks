@@ -24,6 +24,7 @@ Coverage, 2026-10-27 (2,729 events, 47 corrected):
 | 1894-95 | every column (Александринскій added later the same day: 146 cells, none corrected, 4 in the fold) |
 | 1895-96 | Маріинскій, Большой, Малый; Михайловскій opera only                      |
 | 1897-98 | Большой, Малый, Александринскій                                         |
+| 1909-10 | Малый, Большой, Александринскій, Михайловскій, blind (2026-10-28): 884 events, every figure as stored; Маріинскій: single cells only |
 | 1910-11 | every column, both cities, blind (agents read the scan before seeing the data): 1,134 cells with works, none misread; 14 kopeck losses in the parse restored via receipts_print_typos.csv |
 
 Separate from this, the Binding Fold Log (RG's readings of the physical volumes) covers the gutter columns of 1892-93 to
