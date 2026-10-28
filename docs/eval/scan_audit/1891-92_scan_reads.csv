@@ -2,10 +2,25 @@ season,source,printed_page,what_was_read,reading,result,note
 1891-92,ProductionStats,26,SP «Концертовъ» count (transcription note: digit slightly smudged),«3»,matches transcription,"zoomed 4x; the top bowl and lower curve are a 3, the smudge is a stain to the right. Checked by Claude"
 1891-92,ProductionStats,26,whole page: does it print receipts?,"counts only, 12 lines, no receipts column, no footnotes",matches transcription,Checked by Claude
 1891-92,Repertoire,18-21,table layout: is there a receipts column?,"spread columns are date + five theaters (Маріинскій, Александринскій, Михайловскій; Большой, Малый); no receipts printed in any cell",no receipts printed,"spreads 8 and 9 (pp. 18-21) viewed whole. Agrees with the database: 0 of 1,438 1891-92 events have receipts or receipts_verbatim. Checked by Claude"
-1891-92,Repertoire,19,"Маріинскій, 2 Mar 1892 (repertoire_1891-92_pair018__s093)",«Симфоническій концертъ. / Гимнъ. / Донъ-Жуанъ, музыка къ драм. поэмѣ. / Финалъ оп. Лорелей. / 3-е д. оп. Млада.»,matches stored,Checked by Claude
-1891-92,Repertoire,19,"Маріинскій, 4 Mar 1892 (repertoire_1891-92_pair018__s103)",«Симфоническій концертъ. / Донъ-Жуанъ, музыка къ драм. поэмѣ. / Финалъ оп. Лорелей. / 3-е д. оп. Млада.»,matches stored,Checked by Claude
-1891-92,Repertoire,19,"Маріинскій, 5 Mar 1892 (repertoire_1891-92_pair018__s108)",«Симфоническій концертъ. / Донъ-Жуанъ, музыка къ драм. поэмѣ. / Финалъ оп. Лорелей. / 3-е д. оп. Млада.»,matches stored,Checked by Claude
-1891-92,Repertoire,20,"Маріинскій, 17 Mar 1892 (repertoire_1891-92_pair020__s041)",«Генеральная репетиція концерта въ пользу инвалидовъ.»,matches stored,"no works in the cell. Checked by Claude"
-1891-92,Repertoire,21,"Маріинскій, 19 Mar 1892 (repertoire_1891-92_pair020__s051)",«Концертъ въ пользу инвалидовъ.»,matches stored,"no works in the cell. Checked by Claude"
-1891-92,Repertoire,21,"Большой, 19 Mar 1892 (repertoire_1891-92_pair020__s054)",«Концертъ въ пользу инвалидовъ.»,matches stored,"no works in the cell. Checked by Claude"
-1891-92,Repertoire,21,"Маріинскій, 22 Mar 1892 (repertoire_1891-92_pair020__s066)",«Повтореніе концерта въ пользу инвалидовъ.»,matches stored,"no works in the cell. Checked by Claude"
+1891-92,Repertoire,19,"Маріинскій, 2 Mar 1892 (repertoire_1891-92_pair018__s093)","«Симфоническій концертъ. / Гимнъ. / Донъ-Жуанъ, музыка къ драм. поэмѣ. / Финалъ оп. Лорелей. / 3-е д. оп. Млада.»",matches stored,Checked by Claude
+1891-92,Repertoire,19,"Маріинскій, 4 Mar 1892 (repertoire_1891-92_pair018__s103)","«Симфоническій концертъ. / Донъ-Жуанъ, музыка къ драм. поэмѣ. / Финалъ оп. Лорелей. / 3-е д. оп. Млада.»",matches stored,Checked by Claude
+1891-92,Repertoire,19,"Маріинскій, 5 Mar 1892 (repertoire_1891-92_pair018__s108)","«Симфоническій концертъ. / Донъ-Жуанъ, музыка къ драм. поэмѣ. / Финалъ оп. Лорелей. / 3-е д. оп. Млада.»",matches stored,Checked by Claude
+1891-92,Repertoire,20,"Маріинскій, 17 Mar 1892 (repertoire_1891-92_pair020__s041)",«Генеральная репетиція концерта въ пользу инвалидовъ.»,matches stored,no works in the cell. Checked by Claude
+1891-92,Repertoire,21,"Маріинскій, 19 Mar 1892 (repertoire_1891-92_pair020__s051)",«Концертъ въ пользу инвалидовъ.»,matches stored,no works in the cell. Checked by Claude
+1891-92,Repertoire,21,"Большой, 19 Mar 1892 (repertoire_1891-92_pair020__s054)",«Концертъ въ пользу инвалидовъ.»,matches stored,no works in the cell. Checked by Claude
+1891-92,Repertoire,21,"Маріинскій, 22 Mar 1892 (repertoire_1891-92_pair020__s066)",«Повтореніе концерта въ пользу инвалидовъ.»,matches stored,no works in the cell. Checked by Claude
+1891-92,Repertoire,2,date column around 17 Aug 1891,«16 Пятн.» → «18 Воскрес.»,no printed row (source skip),not_captured placeholders (5 theaters) are the yearbook's own skip. Checked by Claude
+1891-92,Repertoire,2,date column around 24 Aug 1891,«23 Пятница.» → «25 Воскрес.»,no printed row (source skip),Checked by Claude
+1891-92,Repertoire,2-3,date column around 28-29 Aug 1891 (page break),p. 2 closes «27 Вторн.»; p. 3 opens «30 Пятница.» (running heads «27 августа» / «30 августа»),no printed row (source skip),"falls at the p. 2/3 break, like 1890-91's 4-9 March. Checked by Claude"
+1891-92,Repertoire,3,date column around 7 Sept 1891,«6 Пятница» → «8 Воскрес.»,no printed row (source skip),Checked by Claude
+1891-92,Repertoire,4,date column around 12-18 Sept 1891,«11 Среда.» → «19 Четвергъ.» (adjacent cells; p. 4 opens with 11 Sept),no printed row (source skip),seven days. Checked by Claude
+1891-92,Repertoire,13,date column around 23-25 Dec 1891,«22 Воскресенье.» → «26 Четвергъ»,no printed row (source skip),Checked by Claude
+1891-92,Repertoire,14,date column around 5 Jan 1892,«4 Суббота.» → «6 Понед.»,no printed row (source skip),Checked by Claude
+1891-92,Repertoire,15,date column around 13 Jan 1892,«12 Воскрес.» → «14 Вторникъ.»,no printed row (source skip),Checked by Claude
+1891-92,Repertoire,15,date column around 18 Jan 1892,«17 Пятница.» → «19 Воскрес.»,no printed row (source skip),Checked by Claude
+1891-92,Repertoire,18,date column around 17-22 Feb 1892,«16 Воскрес.» → «23 Воскр.»,no printed row (source skip),six days. Checked by Claude
+1891-92,Repertoire,19,date column around 1 Mar 1892,«29 Суббота.» → «мартъ 2 Понед.»,no printed row (source skip),Checked by Claude
+1891-92,Repertoire,21,date column around 28 Mar - 5 Apr 1892,«27 Пятница.» → «апрѣль 6 Понед.»,no printed row (source skip),nine days. Checked by Claude
+1891-92,Repertoire,24,date column around 1-2 May 1892,«30 Четвергъ.» → «май 3 Воскрес.»,no printed row (source skip),Checked by Claude
+1891-92,Repertoire,25,date column around 8-9 May 1892,«7 Четвергъ.» → «10 Воскрес.»,no printed row (source skip),Checked by Claude
+1891-92,Repertoire,25,date column around 13-14 May 1892,«12 Вторникъ.» → «15 Пятница.» (15 May is the table's last row),no printed row (source skip),Checked by Claude
