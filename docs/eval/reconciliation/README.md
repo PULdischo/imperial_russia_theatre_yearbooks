@@ -491,6 +491,47 @@ cells lost in the binding fold equal RG's Fold Log readings. Every 1895-96 colum
 
 **Outcome:** 10 ledger rows; nothing misread, nothing corrected.
 
+## 1898-99 (2026-10-28): every column read blind; nine cells corrected; Moscow counts exact; French +6 open
+
+The stats page is p. 42 (`1898-99_ProductionStats.pdf`). From this season footnote 1 says the printed receipts EXCLUDE charity
+performances. SP opera is printed on two lines: «Русскихъ оперныхъ» 139 (453,383 р. 28 к.) and «Оперныхъ въ Великомъ посту»
+23 (68,905 р. — к.). No season reviews for this season are in the dataset. Productions lists: all 28 printed totals equal their
+dated performances (Moscow 11, 75 = 75; SP 17, 67 = 67); ballet stats = lists = Repertoire in Moscow (58); SP list = Repertoire 54.
+
+**Column reads (2026-10-28).** All six columns read blind (four agents, the scans first; 1,198 performed events added to
+`docs/eval/scan_audit/receipts_scan_reads_2026-10-27.csv`), every difference checked by Claude at full resolution. Fixed in raw by
+`fix_1898_99_scan_reads.py` (rebuilt on a copy twice, every table diffed, promoted; backups
+`outputs/backups/scan_reads_1898-99_2026-10-28/`, `outputs/backups/novyi_28dec_1898-99_2026-10-28/`):
+- Маріинскій 12 Nov and 7 Jan «3602 р. 50 к.» stored 3502.50 (a damaged 6); 15 Feb «3475 р. 30 к.» stored 2475.30.
+- Александринскій 16 Jan, Соловьевъ family charity: no figure printed; the stored 2778.50 was copied from the Михайловскій cell.
+- Михайловскій 29 Sep 1010.55 (stored .85), 4 Feb 723.80 (stored .60).
+- Новый 6 Dec «Трубадуръ» 1243.13 (stored 1743.13, a damaged 2), 27 Feb 668.31 (stored 663.31).
+- Новый 28 Dec morning: «Василиса Мелентьева, др.», stored as «Риголетто, оп.» (works shifted down a row); and «Вій» (stored «Вѣй»)
+  on 17, 28, 30 Dec. Found when the Новый drama line came out exactly 272.18 р. short.
+Left as stored: Новый 15 Oct «326 р. 24 к.» (second kopeck digit damaged, 1 or 4).
+
+**Lines after the fixes:**
+
+| City | Line | Printed | Repertoire | Receipts gap | Reading |
+|---|---|---|---|---|---|
+| Moscow | drama Большой / Малый / Новый | 5 / 176 / 134 | 5 / 176 / 134 | 0.00 / −902.78 / 0.00 | Малый: the yearbook's own (1898-99-10) |
+| Moscow | opera Большой / Новый | 107 / 52 | 107 / 52 | −30.00 / −794.42 | the yearbook's own (1898-99-09, -11); the Новый prints 2275.26 on both 25 Nov and 2 Dec |
+| Moscow | ballet | 58 | 58 | −0.10 | (1898-99-11) |
+| SP | drama Alex / Михайловскій | 196 / 70 | 196 / 70 | −27.00 / −146.00 | the yearbook's own (1898-99-03, -04) |
+| SP | opera, Lent | 23 | 23 | 0.00 | exact (1 Mar-17 Apr 1899) |
+| SP | opera, rest of season | 139 | 139 | −240.05 | the yearbook's own (1898-99-02) |
+| SP | ballet | 53 | 53 | 0.00 | exact |
+| SP | French | 141 | 147 | +0.45 | count open (1898-99-05) |
+| SP | German | 34 | 34 | +100.00 | the yearbook's own (1898-99-06) |
+| SP | mixed / concerts | 2 / 2 | (charity) | none printed | 23 Jan РТО bill + 3 Apr Литературный фондъ; the invalids' concert and dress rehearsal (1898-99-07) |
+
+**SP French, 147 events vs 141 printed:** their receipts equal the printed French total within 0.45 р., footnote 7's 20 benefits all
+match, there are no French matinées, no Lenten French line, and no other company at the Михайловскій. A count slip in the print
+(«141» for 147) is the likeliest reading; for RG (1898-99-05).
+
+**Outcome:** 11 ledger rows: 3 `corrected` (Маріинскій opera; Александринскій charity cell; Новый works and figures), 6
+`yearbook_own` (provisional), 1 `classification` (charity mixed and concert lines), 1 `open` (French count).
+
 ## 1910-11 (2026-10-27): every figure read, kopeck losses restored; the large gaps are the yearbook's own, the counts are classification
 
 The stats page (p. 58) has no footnotes and prints no receipts for the German (23) and Moscow Art Theatre (45) lines.

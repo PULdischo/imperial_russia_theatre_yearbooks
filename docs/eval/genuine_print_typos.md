@@ -754,3 +754,10 @@ Read on the review scans and checked against the Repertoire table, which matches
 - **Moscow ballet review (`review_1895-96_MSK_ballet_p013`):** «Пробужденіе Флоры» «(3-го и 23-го мая)». The Repertoire scan (p. 26)
   and the list both have 22 May; 23 May is «Пиковая дама» and «Лючія» excerpts + «Прелестная жемчужина». The review's «23» is a slip
   for 22. Checked by Claude, 1895-96 reconciliation (ledger 1895-96-09, -10).
+
+## 1898-99 reconciliation (added 2026-10-28)
+
+- **Repertoire p. 17 (`repertoire_1898-99_p015`), Большой 27 Nov 1898 «Карменъ»: «2923 р. 64 м.»** — a wrong sort («м»/«н») for «к.».
+  Read on the scan during the blind column read; stored as 2923 р. 64 к.
+- **Repertoire p. 21 (`repertoire_1898-99_p019`), Новый: «Вій, др. сказка»** — printed with і throughout the season; the extraction
+  had «Вѣй» on 17, 28 and 30 Dec (corrected; not a print typo, recorded here because the spelling was checked on every page).

@@ -22224,3 +22224,23 @@ where pe.season='1905-06' and pe.city='SP' and pp.date between '1906-01-24' and 
 Result: p028's 31 SP events all drift +1, p029's Moscow events none. Reviews: SP ballet folio 134 «29 января … прощальный бенефисъ … Бекеффи»
 (the database had it on 30 Jan); no SP ballet-list dates in the window. Overrides added; rebuild on a copy: event_entry_date_check and research.event
 −31 +31, 54 tables identical; promoted.
+
+## 2026-10-28 — 1898-99 reconciliation: blind column reads, fixes, lines
+
+```sql
+select a.page_id, e.event_id, t.canonical_name theater, e.printed_page_number, cast(e.date as varchar) date, e.time_of_day, a.date_text, e.event_status,
+       e.receipts_total_kopecks, e.receipts_verbatim from research.event e join research.theater t using(theater_id) join analysis.event_entry a using(event_id)
+where e.season='1898-99';                       -- compared with four blind reads (all six columns)
+select e.city, t.canonical_name, cast(e.date as varchar), e.time_of_day, e.receipts_total_kopecks/100.0, e.disciplines, left(e.annotation,80), e.n_works
+from research.event e join research.theater t using(theater_id) where e.season='1898-99' and e.event_status='performed' and (e.annotation is not null or e.n_works=0);
+select (cast(e.date as varchar) between '1899-03-01' and '1899-04-17') lent, count(*), sum(e.receipts_total_kopecks)/100.0 from research.event e
+join research.theater t using(theater_id) where e.season='1898-99' and e.city='SP' and e.event_status='performed' and e.disciplines='opera' group by 1;
+select cast(e.date as varchar), e.time_of_day, e.receipts_total_kopecks/100.0, e.disciplines from research.event e join research.theater t using(theater_id)
+where e.season='1898-99' and t.canonical_name='Новый' and e.event_status='performed' and e.receipts_total_kopecks is not null order by abs(e.receipts_total_kopecks-27218) limit 5;
+select count(*), sum(printed_total), sum(n_dates) from research.production where season='1898-99' group by city;
+```
+
+Result: 1,475 rows read; 11 differences, 8 receipts misreads + 1 copied charity figure confirmed on the scan; Новый 28 Dec morning (272.18 = the Новый drama
+gap exactly) is «Василиса Мелентьева», stored as «Риголетто». fix_1898_99_scan_reads.py; two rebuilds on copies (event_entry −8 +8, then performances −5 +4,
+work «Вѣй» folded into «Вій»), promoted. Lenten opera 23 / 68,905.00 exact. After: Moscow counts all exact, Новый drama exact; SP French 147 / 141 open.
+Ledger 1898-99-01..11.
