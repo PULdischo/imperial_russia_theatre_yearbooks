@@ -462,7 +462,7 @@ exact, which settles the rule for this page.
 | Moscow | drama | **134** | 235 | +1,289.64 | printed count is a slip (clear «134» on the scan); every Малый figure as printed, so the receipts gap is the stats page's own (1909-10-08) |
 | SP | ballet | 51 | 51 | 0.00 | exact after 24 Feb fix |
 | SP | opera | 157 | 154 + «Миранда» 2 + 18 Dec jubilee bill | +10,000.28 | stats ten-thousands slip, provisional (1909-10-07) |
-| SP | drama | 258 | 268 | +712.11 | every figure as printed (receipts: the stats page's own); the 10-event count gap is open (1909-10-09) |
+| SP | drama | 258 | 268 | +712.11 | every figure as printed (receipts: the stats page's own); the 10-event count gap: print slip, «258» for 268 (RG 2026-10-28, provisional) (1909-10-09, `yearbook_own`) |
 | SP | French | 100 | 101 | −69.90 | every figure as printed (receipts: the stats page's own); the 1-event count gap is open (1909-10-10) |
 | SP | German | 25 | 25 | (none printed) | exact |
 | SP | Moscow Art Theatre | 35 | 35 | (none printed) | exact: Михайловскій 19 Apr - 14 May 1910, printed with no troupe heading; given to the Art Theatre by `VISITING_RUNS` (1909-10-06) |
@@ -504,12 +504,13 @@ error turned up that is not a figure: 20 Feb Alex «Передъ зарею» is
 backup `outputs/backups/alex_20feb_session_2026-10-28/`; sqlite rebuilt). The German line checks out: the
 visiting German drama troupe 23 + operetta 1 + German guest 1 = 25.
 
-The two count gaps stay open. SP drama 268 vs 258: footnote 1 («1 бенефисъ и 4 безплатныхъ спектакля») matches the
+The two count gaps. SP drama 268 vs 258 (RG 2026-10-28: take it as a print slip in the count, provisional, to be
+reconsidered on new evidence): footnote 1 («1 бенефисъ и 4 безплатныхъ спектакля») matches the
 Repertoire (free 14 Nov, 6 Dec and 24 Feb at the Alex, 6 Dec «Не въ свои сани» at the Михайловскій), «258» is clear on p. 58,
 and no set of 10 events fits +712.11 р. (the smallest SP drama figures are about 660 р.), so a count slip for 268 is the
-likeliest reading; RG to judge. SP French 101 vs 100: footnote 4 (8 benefits, 2 free) matches, «100» is clear.
+likeliest reading. SP French 101 vs 100 (still open): footnote 4 (8 benefits, 2 free) matches, «100» is clear.
 
-**Still to do:** the two count gaps above (RG); footnote 3's second SP ballet benefit (the 24 Jan Трефилова farewell is the
+**Still to do:** the SP French count gap (RG); footnote 3's second SP ballet benefit (the 24 Jan Трефилова farewell is the
 only candidate for either; the blind Маріинскій read and a search of every raw field find no ballet cell headed «бенефисъ»,
 the column's only two are opera, 1909-10-13); «Миранда» (classed as opera) and the Art Theatre run (`VISITING_RUNS`, research layer rebuilt and promoted, backup `outputs/backups/mat_run_1909-10_2026-10-27/`) are settled. The 19 Apr «Утро памяти А. П. Чехова» (no works) is left without a company. The season reviews were not
 checked (1909-10 has SP music reviews only).
