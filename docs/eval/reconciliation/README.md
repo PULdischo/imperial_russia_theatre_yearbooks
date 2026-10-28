@@ -510,8 +510,15 @@ Repertoire (free 14 Nov, 6 Dec and 24 Feb at the Alex, 6 Dec «Не въ сво�
 and no set of 10 events fits +712.11 р. (the smallest SP drama figures are about 660 р.), so a count slip for 268 is the
 likeliest reading. SP French 101 vs 100 (still open): footnote 4 (8 benefits, 2 free) matches, «100» is clear.
 
-**Still to do:** the SP French count gap (RG); footnote 3's second SP ballet benefit (the 24 Jan Трефилова farewell is the
-only candidate for either; the blind Маріинскій read and a search of every raw field find no ballet cell headed «бенефисъ»,
-the column's only two are opera, 1909-10-13); «Миранда» (classed as opera) and the Art Theatre run (`VISITING_RUNS`, research layer rebuilt and promoted, backup `outputs/backups/mat_run_1909-10_2026-10-27/`) are settled. The 19 Apr «Утро памяти А. П. Чехова» (no works) is left without a company. The season reviews were not
+**SP ballet benefits (footnote 3, «Въ томъ числѣ 2 бенефиса»): both unaccounted for** (RG 2026-10-28). The blind
+Маріинскій read and a search of every raw field find no ballet cell headed «бенефисъ» (the column's only two are opera).
+The 24 Jan Трефилова farewell is probably not one: it is printed «Прощальный спектакль», where benefit farewells print
+«Прощальный бенефисъ» (Бекефи 1906, Петипа 1907, Гельцеръ 1907; Звягина on this same stats page), and it took 3,592.50 р.,
+the ordinary full-house figure, while every ballet benefit 1904-05 to 1910-11 took 3,800-13,600 р. Every other season
+1904-05 to 1910-11 has a Маріинскій corps-de-ballet benefit; 1909-10 has none in the Repertoire, a natural candidate for one
+of the two. **Follow-up for later:** a source outside the Repertoire (RGIA Ф. 497, newspapers; the yearbook has no SP ballet
+review this season) (1909-10-13, open).
+
+**Still to do:** the SP French count gap (RG); «Миранда» (classed as opera) and the Art Theatre run (`VISITING_RUNS`, research layer rebuilt and promoted, backup `outputs/backups/mat_run_1909-10_2026-10-27/`) are settled. The 19 Apr «Утро памяти А. П. Чехова» (no works) is left without a company. The season reviews were not
 checked (1909-10 has SP music reviews only).
 **Half-kopecks FIXED the same day** (RG: whole kopecks, as #109): research-layer rule, 210 events, +105.98 р.; known_issues.md #161.

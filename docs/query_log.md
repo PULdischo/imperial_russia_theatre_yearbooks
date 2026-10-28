@@ -22043,3 +22043,23 @@ Patch applied to `pipeline/build_research_model.py`; `build_research_model.py` r
 Result: research.performance −9 +9 and research.event −3 +3 (repertoire_1891-92_pair018__s093/s103/s108; genre_families «concert; anthem»,
 «concert», «concert»), 54 tables identical; family_totals 1891-92 SP opera 120 / 120, concert 3 / 3. Production unchanged since the
 snapshot (cmp), backed up to outputs/backups/symphony_concerts_1891-92_2026-10-28/ (db, sqlite), promoted; research_dataset.sqlite rebuilt.
+
+## 2026-10-28 — Ballet benefits vs ordinary nights, 1904-05 to 1910-11 (was the Трефилова farewell a benefit?)
+
+```sql
+with b as (select e.season, e.city, t.canonical_name th, cast(e.date as varchar) d, e.receipts_total_kopecks/100.0 rub, e.annotation
+ from research.event e join research.theater t using(theater_id)
+ where e.disciplines='ballet' and e.event_status='performed' and e.season>='1904-05'
+ and (e.annotation ilike '%бенеф%' or e.annotation ilike '%прощал%')),
+s as (select e.season, t.canonical_name th, median(e.receipts_total_kopecks)/100.0 med, max(e.receipts_total_kopecks)/100.0 mx
+ from research.event e join research.theater t using(theater_id) where e.disciplines='ballet' and e.event_status='performed' and (e.annotation is null) group by all)
+select b.season, b.th, b.d, b.rub, s.med, s.mx, b.annotation from b join s using(season, th) order by 1,3;
+```
+
+Result: 29 rows. Every ballet benefit with a figure takes 3,808-13,620 р., two to four times the season's median unannotated ballet night
+(Маріинскій 2,800-3,520; Большой 1,540-2,390) and above its highest one (except the 1904-05 Маріинскій max of 15,291.95, itself an
+outlier). Farewells are printed «Прощальный бенефисъ» (Бекефи 1906, 8,427.00; Гельцеръ 1907, 6,773.45; Петипа 1907, 8,499.63). The 24 Jan
+1910 «Прощальный спектакль балерины В. Трефиловой» takes 3,592.50, the ordinary full-house figure (also 29 Nov, 13 Dec 1909). Every season
+1904-05 to 1910-11 has a Маріинскій corps-de-ballet benefit (1905-06 headed, no figure) except 1909-10, which has none:
+`select e.season, e.date, e.disciplines, e.receipts_total_kopecks, e.annotation from research.event e join research.theater t using(theater_id)
+where t.canonical_name='Маріинскій' and e.season between '1904-05' and '1910-11' and e.annotation ilike '%кордебалет%'` -> 6 rows (Feb 1905, Dec 1905, 1906, 1907, 1908; Nov 1910).
