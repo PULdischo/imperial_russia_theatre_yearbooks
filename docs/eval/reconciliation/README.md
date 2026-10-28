@@ -278,6 +278,54 @@ identical), SP 1891-92 opera 120 = 120 and concerts 3 = 3 confirmed on the copy;
   «П. Пуни» for «Ц. Пуни», «большого» for «большаго», «Шнейггеффера» for «Шнейцгеффера», «Крузетъ» for «Круазетъ»,
   «крестьянкина» for «крестьянина», «колдуны» for «колдуньи». None touches a date or count.
 
+## 1892-93 (2026-10-28): every line exact; four dash cells restored; the lists and all three reviews agree
+
+The stats page (p. 26, `1892-93_ProductionStats.pdf`, left-hand page of the pp. 26-27 spread) prints counts only, 18 lines, no
+receipts and no footnotes. The Repertoire prints receipts (967 of 982 performed events), but with no printed totals there is
+nothing to compare them with, so the season reconciles on counts.
+
+**Step 1, city totals** (Repertoire / printed): Moscow 376 / 375, SP 606 / 603. The surplus is the invalids' concert, the only
+four events with no works: SP Маріинскій dress rehearsal 17 Mar, concert 19 Mar, repeat 30 Mar 1893; Moscow Большой 19 Mar
+1893. As in 1891-92, the stats leave it out of every line (ledger 1892-93-01 SP, -02 Moscow, `excluded_by_yearbook`).
+
+**Step 2, category lines:** all 17 exact, venue lines included (SP drama Александринскій 188, Михайловскій 67; opera 120;
+ballet 41; mixed opera-and-ballet 11; concerts 2, the two «Гибель Фауста» bills of 15 and 17 Feb; French 141; German 33.
+Moscow drama Малый 197, Большой 1; opera 121; ballet 41; mixed drama-and-ballet 1, opera-and-ballet 1; féeries 11; concerts 2,
+the two symphony concerts of 7 and 9 Mar).
+
+**Step 4, lists.** Ballet agrees three ways (Moscow stats 41 + 2 mixed + 11 féeries = 54 = lists = Repertoire; SP 41 + 11 mixed
+= 52 = lists = Repertoire). All 31 productions' printed totals equal their dated performances (Moscow 16 productions, 57 = 57;
+SP 15, 77 = 77).
+
+**Completeness.** 169 `not_captured` placeholders: 18 runs of whole dates missing in every theater (presumptively the print's
+own skips, as in 1890-91 and 1891-92; not read in the date column) and four single SP cells that turned out to be printed
+dashes, all Saturdays: Маріинскій 21 Nov 1892, Александринскій 19 Dec 1892, 9 and 16 Jan 1893 (read on the scan; the dark
+theater beside each is stored as a dash). Appended to raw by `fix_1892_93_dash_cells.py` (at the end of each page's array, no
+event_id shifts); rebuilt on a copy, every table diffed (raw/analysis event_entry and research.event: the four placeholders
+become no_performance rows; 52 tables identical; 0 person_link shift blocks), promoted 2026-10-28 with backup
+`outputs/backups/dash_cells_1892-93_2026-10-28/`; sqlite rebuilt. Ledger 1892-93-03, `corrected`. Also: 23 Oct 1892 (Friday) has no row and no placeholder in any theater;
+the scan shows the print skips it at the p. 7/8 break (p. 7 ends on 22 Oct, p. 8 opens on 24 Oct). The placeholder
+synthesis doesn't see a skipped date that falls exactly at a page break (noted, not chased).
+Scan reads: `docs/eval/scan_audit/1892-93_scan_reads.csv`.
+
+**A third source: the season reviews** (SP opera, 58 pp.; SP ballet, 20 pp.; Moscow ballet, 12 pp.), checked by two agents
+against the Repertoire, reading the review images wherever the transcription was unclear (checked by Claude):
+
+| Review | Dated statements | Counts | Disagreements |
+|---|---|---|---|
+| SP opera | 30 / 30 agree | 10 / 10 (120 opera events; 11 mixed; 2 «Гибель Фауста» concerts; 23 operas; «Русланъ» 15 and «Демонъ» 12 incl. excerpts; «Риголетто» 12, «Онѣгинъ» 11, «Іоланта» 11) | none |
+| SP ballet | 14 / 14 | 4 / 4 (41 ballet events, 11 mixed, 15 ballets, 1 new / 3 revived / 11 kept) | none |
+| Moscow ballet | 13 / 13 | 18 / 18 (54 events incl. «Кольцо любви»; all 16 per-ballet counts) | none |
+
+Tables: `1892-93_review_sp_opera.csv`, `1892-93_review_ballet.csv`. Print slips found on the way (in
+`docs/eval/genuine_print_typos.md`): the Repertoire's «Паяда и рыбакъ» (20 Sept, for «Наяда»), and the SP ballet review's
+«съ 1 ноября 1893 г.» for Дель-Эра's hiring (1892). The opera review's «Сезонъ закончился 30-го апрѣля» is the opera season (two
+Маріинскій ballet nights follow, 2 and 6 May), and its «возобновлена» for «Карменъ» on 9 Apr 1893 is the new production (six
+autumn performances precede it).
+
+**Outcome:** 3 ledger rows: 2 `excluded_by_yearbook` (the invalids' concert), 1 `corrected` (the four dash cells). Nothing
+misread; every line, list and review statement agrees.
+
 ## Step-2 classifier now uses the research layer (2026-10-27)
 
 RG: "make compare_season_stats.py use research.performance.discipline / is_ceremonial instead of its own regexes."
@@ -386,6 +434,50 @@ The reviews' counts also agree with the Repertoire: Moscow 27 ballet events plus
 performed, Moscow ballet «Конекъ-горбунокъ» 9, «Кипрская статуя» 6, «Катарина» 5; Moscow opera «Жизнь за Царя» and «Фаустъ»
 8 each, «Демонъ» 7, «Русалка» and «Донъ Жуанъ» 6 each; SP opera «Дубровскій» 10, «Евгеній Онѣгинъ» 9, «Майская ночь» 8. The
 SP opera review's note that operas played only at the Михайловскій until 4 Oct (Маріинскій under repair) matches too.
+
+## 1895-96 (2026-10-28): the opera and ballet company's first week is outside the printed receipts; Moscow re-read blind, no misreads
+
+The stats page is p. 27 (`1895-96_ProductionStats.pdf`): counts and receipts per line, venue lines for drama, opera and SP ballet,
+13 footnotes. Coronation season: Moscow's last fortnight (15-26 May 1896) is free performances and a gala.
+
+**Step 1, city totals** (Repertoire / printed): Moscow 336 / 335, −1,230.50 р.; SP 605 / 602, +19,440.08 р.
+
+**Step 2, counts: every line is explained.**
+- SP +3 = the invalids' concert (dress rehearsal 12 Mar, concert 14 Mar, repeat 15 Mar 1896, Маріинскій), no works, outside every
+  line (1895-96-04, `excluded_by_yearbook`), as in 1891-92 to 1894-95.
+- SP Александринскій drama 186 / 187 and mixed 5 / 4: the free pupils' matinée of 3 Jan 1896 at the Александринскій (drama and a
+  ballet) is on the drama line; footnote 2 counts four free pupils' performances there and with it the Repertoire has four
+  (14 Nov, 6 Dec, 3 Jan, 30 Jan). The four Михайловскій drama-with-ballet events are the mixed line exactly, 2,457.95 р.
+  (1895-96-03, `classification`).
+- Moscow +1 = the invalids' concert of 10 Mar 1896 (Большой), no works, outside every line (1895-96-06, `excluded_by_yearbook`);
+  the invalids' performance footnote 9 counts is the 21 Dec «Спектакль въ пользу инвалидовъ» (opera, 576.85 р.).
+- Moscow concerts 1 / 2: footnote 13 «Оба въ пользу фонда … престарѣлыхъ артистовъ» = 25 Feb (4,933.00) and 5 Mar (4,364.80),
+  9,297.80 р. = the printed line exactly. The 5 Mar «Музыкально-литературный вечеръ съ живыми картинами» has no works, so the
+  comparison tool puts it under no-works; the research layer already calls it a concert (1895-96-05, `comparison_rule`).
+
+**Step 3, receipts.**
+- **SP: the opera and ballet company's first week is outside the printed receipts** (1895-96-01, `excluded_by_yearbook`).
+  The Маріинскій opera line is +15,535.42 р.; the Маріинскій's six opera events of 31 Aug - 8 Sept 1895 sum to 15,535.32. The
+  Маріинскій ballet line is +1,770.45 = 3 Sept «Гарлемскій тюльпанъ» exactly; the Михайловскій opera line is +2,134.20 = 3 Sept
+  «Севильскій цирюльникъ» exactly. The stats count all eight events (every count is exact) but leave out their receipts.
+  The drama company's receipts for the same days are in (Александринскій +0.01; the Михайловскій drama and mixed lines exact).
+  From 10 Sept on, every opera and ballet figure is in. The page doesn't say why.
+- SP Маріинскій opera remainder +0.10 (1895-96-02, `yearbook_own`, provisional; the column was read on the scan 2026-10-27).
+- Moscow Большой opera +900.00 and Малый drama −2,130.50 (1895-96-07, -08, `yearbook_own`). Both columns were read again
+  **blind** (two agents, the scans first, 536 rows): every stored figure equals the blind read, or, for five cells lost in the
+  binding fold, RG's reading in the Binding Fold Log. The slip-candidate finder's five +900 candidates (9→0 or a digit swap)
+  all read as stored. Two damaged digits checked at 4x: 18 Dec Малый «969» (hooked 6, not 0), 28 Jan Малый kopecks «82»
+  (malformed 2). Cells: `docs/eval/scan_audit/1895-96_moscow_blind_reread.csv`.
+
+**Step 4, lists.** SP: list 52 = Repertoire 52, stats 51: the list includes the 3 Jan Александринскій matinée the stats count as
+drama (above). Moscow: stats 44 = Repertoire 44, list 43: the list prints «Пробужденіе Флоры» «мая 2, 22», the Repertoire has it
+on 3 and 22 May (2 May is «Паяцы» + «Даита», which the list also gives to 2 May; both cells read blind). A date slip in the list
+(1895-96-09, `yearbook_own`).
+
+**Not done:** the Александринскій and Михайловскій drama/French columns were not read (their lines are exact to the kopeck);
+season reviews not checked.
+
+**Outcome:** 9 ledger rows; nothing misread, nothing corrected.
 
 ## 1910-11 (2026-10-27): every figure read, kopeck losses restored; the large gaps are the yearbook's own, the counts are classification
 

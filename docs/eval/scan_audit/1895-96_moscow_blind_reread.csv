@@ -1,0 +1,8 @@
+season,theater,printed_page,date,event_id,stored,blind_read,result,note
+1895-96,Малый,10,26 Nov 1895 evening,repertoire_1895-96_pair010__s050,1359 р. 27 к.,«1??? р. ?7 к.» (fold),fold: RG reading = stored,"last row above the binding fold, only the digit tops survive; RG's Binding Fold Log reads 1359 р. 27 к."
+1895-96,Малый,13,18 Dec 1895,repertoire_1895-96_pair012__s063,969 р. 85 к.,«909 р. 85 к.» (low),matches scan,"middle digit a broken glyph; at 4x it has the hooked top of a 6, not the oval of a 0 (checked by Claude)"
+1895-96,Большой,16,26 Jan 1896,repertoire_1895-96_pair016__s014,2382 р. 31 к.,illegible (fold),fold: RG reading = stored,"figure lost in the binding fold; Binding Fold Log reads 2382 р. 31 к."
+1895-96,Малый,16,26 Jan 1896,repertoire_1895-96_pair016__s015,1360 р. 19 к.,illegible (fold),fold: RG reading = stored,"figure lost in the binding fold; Binding Fold Log reads 1360 р. 19 к."
+1895-96,Малый,17,28 Jan 1896 morning,repertoire_1895-96_pair016__s027,867 р. 82 к.,«867 р. 8? к.» (low),matches scan,"second kopeck digit malformed in the print (a «?»-like glyph, probably a damaged 2; checked by Claude at 4x)"
+1895-96,Малый,22,8 Apr 1896,repertoire_1895-96_pair022__s064,479 р. 30 к.,«479 р. 20 к.» (low; fold),fold: RG reading = stored,"figure cut by the binding fold; Binding Fold Log reads 479 р. 30 к."
+1895-96,Малый,24,28 Apr 1896 evening,repertoire_1895-96_pair024__s068,406 р. 14 к.,«4?? р. 1? к.» (fold),fold: RG reading = stored,"figure lost in the binding fold; Binding Fold Log reads 406 р. 14 к."

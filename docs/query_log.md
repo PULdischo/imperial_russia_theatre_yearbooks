@@ -22086,3 +22086,81 @@ from research.event where season='1891-92' and event_status<>'not_captured' and 
 Result: 15 runs, 40 dates: 17 Aug; 24 Aug; 28-29 Aug; 7 Sept; 12-18 Sept; 23-25 Dec 1891; 5 Jan; 13 Jan; 18 Jan; 17-22 Feb;
 1 Mar; 28 Mar - 5 Apr; 1-2 May; 8-9 May; 13-14 May 1892. Neighbours on pp. 2-25, spreads 0, 1, 5, 6, 8, 9, 11. Every stored
 neighbour's weekday word skips the gap; all 15 read on the scan as print skips (checked by Claude).
+
+## 2026-10-28 — 1892-93 reconciliation: lines, lists, no-works events, placeholders
+
+`compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb` (scratch out-dir; 1892-93 rows of city_totals, family_totals,
+ballet_counts), and
+```sql
+select e.event_id, e.city, t.canonical_name, cast(e.date as varchar), e.time_of_day, e.annotation, e.receipts_total_kopecks
+from research.event e join research.theater t using(theater_id) where season='1892-93' and event_status='performed' and n_works=0;
+select event_status, count(*), count(receipts_total_kopecks) from research.event where season='1892-93' group by 1;
+select city, count(*), sum(printed_total), sum(n_dates), count(*) filter (where printed_total<>n_dates) from research.production where season='1892-93' group by 1;
+select city, count(*), count(distinct date) from research.event where season='1892-93' and event_status='not_captured' group by 1;
+select cast(date as varchar), city, count(*) from research.event where season='1892-93' and event_status='not_captured' group by 1,2
+  having (city='SP' and count(*)<3) or (city='Moscow' and count(*)<2);
+with nc as (select distinct cast(date as date) d from research.event where season='1892-93' and event_status='not_captured'),
+r as (select d, d - cast(row_number() over (order by d) as int) g from nc) select min(d), max(d), count(*) from r group by g order by 1;
+select t.canonical_name, e.event_status, e.event_id from research.event e join research.theater t using(theater_id)
+where e.season='1892-93' and e.city='SP' and cast(e.date as varchar) in ('1892-11-21','1892-12-19','1893-01-09','1893-01-16');
+select cast(e.date as varchar), e.city, t.canonical_name, e.event_status from research.event e join research.theater t using(theater_id)
+where e.season='1892-93' and e.date between '1892-10-22' and '1892-10-24';
+```
+
+Result: city totals Moscow 376 / 375, SP 606 / 603; family lines 17 / 17 exact; no_works Moscow 1, SP 3 = the invalids' concert (17, 19, 30 Mar SP;
+19 Mar Moscow). Ballet counts all agree (Moscow 54, SP 52). Productions: Moscow 16, 57 = 57; SP 15, 77 = 77. Receipts on 967 of 982 performed events
+(no printed totals to compare). not_captured: Moscow 66 on 33 dates, SP 103 on 37; 18 whole-date runs; 4 single SP cells (21 Nov Маріинскій; 19 Dec,
+9 and 16 Jan Александринскій), all printed dashes on the scan. 23 Oct 1892: no row in any theater, print skip at the p. 7/8 break.
+
+## 2026-10-28 — 1892-93 season reviews vs the Repertoire (three reviews, two agents)
+
+Event dump for the agents:
+```sql
+copy (select e.event_id, e.city, t.canonical_name theater, cast(e.date as varchar) d, e.time_of_day, e.printed_page_number, e.event_status, e.annotation,
+  e.receipts_verbatim, string_agg(p.verbatim_title||coalesce(', '||p.verbatim_genre,''), ' ;; ' order by p.performance_order) works
+  from research.event e join research.theater t using(theater_id) left join research.performance p using(event_id)
+  where e.season='1892-93' group by all order by 2, 4, 3) to '<scratch>/events_1892-93.csv' (header);
+select genre, city, count(*), min(page_id), max(page_id) from raw.review_page where season='1892-93' group by all;
+```
+
+Result: SP opera 30/30 dated statements and 10/10 counts agree; SP ballet 14/14 and 4/4; Moscow ballet 13/13 and 18/18. No disagreements. Print slips:
+Repertoire «Паяда и рыбакъ» (20 Sept 1892, pair004), SP ballet review «1 ноября 1893» for Дель-Эра (1892). Tables in docs/eval/reconciliation/1892-93_review_*.csv.
+
+## 2026-10-28 — Rebuild for the 1892-93 dash cells: diff on a copy, promoted
+
+Run: fix_1892_93_dash_cells.py on a scratch copy of outputs/full_run/raw, then parse_and_validate (--page-headers, --printed-page-numbers) ->
+build_duckdb -> build_entities -> validate_performance_dates -> build_research_model on a copy of production; every table compared (EXCEPT ALL both ways).
+Result: parsed event_entry +4 rows (pair010__s108, pair012__s107, pair014__s125, s126, all no_performance); raw.event_entry +4,
+analysis.event_entry −4 +4 and research.event −4 +4 (placeholders -> no_performance), analysis.event_entry_date_check +4; 52 tables identical;
+0 person_link shift blocks. Production unchanged since the snapshot (cmp); backup outputs/backups/dash_cells_1892-93_2026-10-28/ (db, parsed, raw
+pair010/012/014, sqlite); promoted; research_dataset.sqlite rebuilt.
+
+## 2026-10-28 — 1895-96 reconciliation: lines, receipts, lists; Moscow columns re-read blind
+
+`compare_season_stats.py` and `season_stats_receipt_candidates.py` (scratch out-dir; 1895-96 rows), and
+```sql
+select e.event_id, e.city, t.canonical_name, cast(e.date as varchar), e.time_of_day, e.receipts_total_kopecks/100.0, e.disciplines, left(e.annotation,90)
+from research.event e join research.theater t using(theater_id) where e.season='1895-96' and e.event_status='performed'
+  and (e.n_works=0 or e.annotation is not null) order by 2,3,4;
+select cast(e.date as varchar), t.canonical_name, e.receipts_total_kopecks/100.0, e.disciplines from research.event e join research.theater t using(theater_id)
+where e.season='1895-96' and e.city='SP' and e.date<='1895-09-12' and e.event_status='performed' order by 1,2;
+-- cumulative Маріинскій opera receipts from 31 Aug, and contiguous runs equal to the +15,535.42 gap
+select cast(e.date as varchar), e.time_of_day, e.receipts_total_kopecks, e.disciplines from research.event e join research.theater t using(theater_id)
+where e.season='1895-96' and t.canonical_name='Маріинскій' and e.event_status='performed' order by e.date, e.time_of_day;
+select cast(e.date as varchar), e.time_of_day, e.receipts_verbatim, left(e.annotation,60), string_agg(p.verbatim_title,' + ') from research.event e
+join research.theater t using(theater_id) left join research.performance p using(event_id)
+where e.season='1895-96' and t.canonical_name='Малый' and e.event_status='performed' and e.receipts_total_kopecks is null group by all order by 1;
+select e.event_id, cast(e.date as varchar), e.annotation, e.n_works, e.genre_families from research.event e
+where e.event_id in ('repertoire_1895-96_pair020__s029','repertoire_1895-96_pair018__s097');
+select pe.title, pe.performed_text, pp.date from raw.production_entry pe join raw.production_entry_performance pp using(production_entry_id)
+where pe.season='1895-96' and pe.city='Moscow' and (pe.title ilike '%Флор%' or pe.title ilike 'Даита%');
+select a.page_id, e.event_id, t.canonical_name, e.printed_page_number, cast(e.date as varchar), e.time_of_day, a.date_text, e.event_status,
+       e.receipts_total_kopecks, e.receipts_verbatim from research.event e join research.theater t using(theater_id) join analysis.event_entry a using(event_id)
+where e.season='1895-96' and t.canonical_name in ('Большой','Малый');   -- compared with the two blind reads
+```
+
+Result: Moscow 336 / 335, SP 605 / 602; every count gap explained (invalids' concerts SP 3 and Moscow 1 outside the lines; 3 Jan Alex free matinée on
+the drama line; 5 Mar Moscow concert has no works, research genre_families concert). SP receipts: Маріинскій opera 31 Aug-8 Sept = 15,535.32 vs gap
+15,535.42; 3 Sept Маріинскій ballet 1,770.45 and Михайловскій opera 2,134.20 = their gaps exactly. Moscow blind reads: 536 rows, every stored figure
+equals the read or the Fold Log (5 fold cells); Большой +900.00 and Малый −2,130.50 the yearbook's own. Moscow ballet list «Пробужденіе Флоры» «мая 2»,
+Repertoire 3 May. Ledger 1895-96-01..09.

@@ -23,7 +23,7 @@ Coverage, 2026-10-27 (2,729 events, 47 corrected):
 | 1891-92 | no receipts printed; targeted reads in `1891-92_scan_reads.csv` (2026-10-28): stats page, the three symphony concerts, the four invalids' concert cells (10, all as stored), and all 15 runs of not_captured dates in the date column (every one a print skip) |
 | 1893-94 | every column, both cities (Moscow pp. 6-25 added later the same day: 329 cells, none corrected) |
 | 1894-95 | every column (Александринскій added later the same day: 146 cells, none corrected, 4 in the fold) |
-| 1895-96 | Маріинскій, Большой, Малый; Михайловскій opera only                      |
+| 1895-96 | Маріинскій, Большой, Малый; Михайловскій opera only. Большой and Малый re-read blind 2026-10-28 (2 agents, 536 rows): every stored figure equals the blind read or, for 5 fold cells, RG's Binding Fold Log; the 7 low-confidence cells in `1895-96_moscow_blind_reread.csv` |
 | 1897-98 | Большой, Малый, Александринскій                                         |
 | 1909-10 | every column, both cities, blind (2026-10-28): 1,097 events (Маріинскій 213 incl. every heading word for word), every figure as stored; one session label fixed (20 Feb Alex) |
 | 1910-11 | every column, both cities, blind (agents read the scan before seeing the data): 1,134 cells with works, none misread; 14 kopeck losses in the parse restored via receipts_print_typos.csv |

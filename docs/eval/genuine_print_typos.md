@@ -33,6 +33,9 @@ slip.
   а, not a worn и. The same play is printed correctly as "Севильскій
   обольститель" on two later 1890-91 pages (`pair010`, `pair014`), so it
   is one slip on this page, not the volume's spelling of the title.
+- **`repertoire_1892-93_pair004` (20 Sept 1892, Маріинскій): «Паяда и рыбакъ, бал.»** — should be «Наяда»; П set for Н.
+  Read on the scan by Claude (2026-10-28, 1892-93 reconciliation, while checking the SP ballet review, which prints
+  «Наяда и рыбакъ» for the same night). Stored verbatim.
 
 ## Wrong word / misheard-by-the-typesetter substitutions
 
@@ -731,3 +734,8 @@ Read on the review scans and checked against the Repertoire table, which matches
 - **p. 183:** «11-го февраля» twice (Никулина's guest night; first Russian «Ромео и Джульетта»); both 11 January.
 - **p. 202:** «Гибель Фауста» «два раза (7 и 9 марта)»; Repertoire: 7 and 9 April.
 - **Moscow ballet p. 237:** Бессонэ's debut «27 декабря»; Repertoire and ballet list: 26 Dec.
+
+## 1892-93 SP ballet season review (added 2026-10-28)
+
+- **`review_1892-93_SP_ballet_p019`:** Дель-Эра hired «съ 1 ноября 1893 г.»; she debuted 8 Nov 1892 and left 6 Feb 1893
+  (Repertoire and the same review), so 1892. Read on the review image by Claude during the 1892-93 reconciliation.
