@@ -474,10 +474,19 @@ drama (above). Moscow: stats 44 = Repertoire 44, list 43: the list prints «Пр
 on 3 and 22 May (2 May is «Паяцы» + «Даита», which the list also gives to 2 May; both cells read blind). A date slip in the list
 (1895-96-09, `yearbook_own`).
 
-**Not done:** the Александринскій and Михайловскій drama/French columns were not read (their lines are exact to the kopeck);
-season reviews not checked.
+**A third source: the season reviews** (SP ballet, 28 pp.; Moscow ballet, 15 pp.; the season has no opera reviews), checked by
+two agents against the Repertoire, reading the review images and Repertoire scan where needed (checked by Claude):
 
-**Outcome:** 9 ledger rows; nothing misread, nothing corrected.
+| Review | Dated statements | Counts | Disagreements |
+|---|---|---|---|
+| SP ballet | 9 / 9 agree (opening 3 Sept «Гарлемскій тюльпанъ»; Рославлева's debut 17 Sept; «Капризы бабочки» 27 Sept; «Талисманъ» 22 Oct; Леньяни's and Ефимовъ's benefits 6 and 10 Dec; Петипа 1-я's benefit 21 Jan; closing 14 Apr) | 7 / 9 (Маріинскій 46 + Михайловскій 1; 16 ballets; 2 new / 3 revived / 11 kept) | «4 смѣшанныхъ» and «51 спектакля»: the review leaves out the 3 Jan Александринскій matinée, as the stats do (1895-96-03); not a slip |
+| Moscow ballet | 13 / 15 | 9 / 9 (31 ballet + 13 mixed = 44; 14 ballets; 2 new) | «Пробужденіе Флоры» «3-го и 23-го мая»: 3 May agrees with the Repertoire (so the list's «2» is its slip, 1895-96-09); «23» is the review's slip for 22 (1895-96-10). The other «no» is loose wording («въ маѣ» for a ballet first given 26 Apr) |
+
+Tables: `1895-96_review_sp_ballet.csv`, `1895-96_review_msk_ballet.csv`.
+
+**Not done:** the Александринскій and Михайловскій drama/French columns were not read (their lines are exact to the kopeck).
+
+**Outcome:** 10 ledger rows; nothing misread, nothing corrected.
 
 ## 1910-11 (2026-10-27): every figure read, kopeck losses restored; the large gaps are the yearbook's own, the counts are classification
 
@@ -558,7 +567,7 @@ exact, which settles the rule for this page.
 | SP | ballet | 51 | 51 | 0.00 | exact after 24 Feb fix |
 | SP | opera | 157 | 154 + «Миранда» 2 + 18 Dec jubilee bill | +10,000.28 | stats ten-thousands slip, provisional (1909-10-07) |
 | SP | drama | 258 | 268 | +712.11 | every figure as printed (receipts: the stats page's own); the 10-event count gap: print slip, «258» for 268 (RG 2026-10-28, provisional) (1909-10-09, `yearbook_own`) |
-| SP | French | 100 | 101 | −69.90 | every figure as printed (receipts: the stats page's own); the 1-event count gap is open (1909-10-10) |
+| SP | French | 100 | 101 | −69.90 | every figure as printed (receipts: the stats page's own); the 1-event count gap: the yearbook's own (RG 2026-10-28, pending further information) (1909-10-10, `yearbook_own`) |
 | SP | German | 25 | 25 | (none printed) | exact |
 | SP | Moscow Art Theatre | 35 | 35 | (none printed) | exact: Михайловскій 19 Apr - 14 May 1910, printed with no troupe heading; given to the Art Theatre by `VISITING_RUNS` (1909-10-06) |
 
@@ -603,7 +612,7 @@ The two count gaps. SP drama 268 vs 258 (RG 2026-10-28: take it as a print slip 
 reconsidered on new evidence): footnote 1 («1 бенефисъ и 4 безплатныхъ спектакля») matches the
 Repertoire (free 14 Nov, 6 Dec and 24 Feb at the Alex, 6 Dec «Не въ свои сани» at the Михайловскій), «258» is clear on p. 58,
 and no set of 10 events fits +712.11 р. (the smallest SP drama figures are about 660 р.), so a count slip for 268 is the
-likeliest reading. SP French 101 vs 100 (still open): footnote 4 (8 benefits, 2 free) matches, «100» is clear.
+likeliest reading. SP French 101 vs 100 (RG 2026-10-28: the yearbook's own error, pending any further information): footnote 4 (8 benefits, 2 free) matches, «100» is clear.
 
 **SP ballet benefits (footnote 3, «Въ томъ числѣ 2 бенефиса»): both unaccounted for** (RG 2026-10-28). The blind
 Маріинскій read and a search of every raw field find no ballet cell headed «бенефисъ» (the column's only two are opera).
@@ -614,6 +623,6 @@ the ordinary full-house figure, while every ballet benefit 1904-05 to 1910-11 to
 of the two. **Follow-up for later:** a source outside the Repertoire (RGIA Ф. 497, newspapers; the yearbook has no SP ballet
 review this season) (1909-10-13, open).
 
-**Still to do:** the SP French count gap (RG); «Миранда» (classed as opera) and the Art Theatre run (`VISITING_RUNS`, research layer rebuilt and promoted, backup `outputs/backups/mat_run_1909-10_2026-10-27/`) are settled. The 19 Apr «Утро памяти А. П. Чехова» (no works) is left without a company. The season reviews were not
+**Still to do:** the two SP ballet benefits (above), outside the Repertoire. Settled: «Миранда» (classed as opera) and the Art Theatre run (`VISITING_RUNS`, research layer rebuilt and promoted, backup `outputs/backups/mat_run_1909-10_2026-10-27/`) are settled. The 19 Apr «Утро памяти А. П. Чехова» (no works) is left without a company. The season reviews were not
 checked (1909-10 has SP music reviews only).
 **Half-kopecks FIXED the same day** (RG: whole kopecks, as #109): research-layer rule, 210 events, +105.98 р.; known_issues.md #161.

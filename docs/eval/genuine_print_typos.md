@@ -739,3 +739,11 @@ Read on the review scans and checked against the Repertoire table, which matches
 
 - **`review_1892-93_SP_ballet_p019`:** Дель-Эра hired «съ 1 ноября 1893 г.»; she debuted 8 Nov 1892 and left 6 Feb 1893
   (Repertoire and the same review), so 1892. Read on the review image by Claude during the 1892-93 reconciliation.
+
+## 1895-96 Moscow ballet list and review: «Пробужденіе Флоры» dates (added 2026-10-28)
+
+- **Ballet productions list (`balletproductions_1895-96_MSK_p001`):** «Исполненъ: 1896 г.—мая 2, 22.» The Repertoire (read blind on
+  the scan) and the Moscow ballet review both have 3 May; 2 May is «Паяцы» + «Даита». The list's «2» is a slip for 3.
+- **Moscow ballet review (`review_1895-96_MSK_ballet_p013`):** «Пробужденіе Флоры» «(3-го и 23-го мая)». The Repertoire scan (p. 26)
+  and the list both have 22 May; 23 May is «Пиковая дама» and «Лючія» excerpts + «Прелестная жемчужина». The review's «23» is a slip
+  for 22. Checked by Claude, 1895-96 reconciliation (ledger 1895-96-09, -10).

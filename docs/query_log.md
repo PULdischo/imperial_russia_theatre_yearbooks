@@ -22164,3 +22164,18 @@ the drama line; 5 Mar Moscow concert has no works, research genre_families conce
 15,535.42; 3 Sept Маріинскій ballet 1,770.45 and Михайловскій opera 2,134.20 = their gaps exactly. Moscow blind reads: 536 rows, every stored figure
 equals the read or the Fold Log (5 fold cells); Большой +900.00 and Малый −2,130.50 the yearbook's own. Moscow ballet list «Пробужденіе Флоры» «мая 2»,
 Repertoire 3 May. Ledger 1895-96-01..09.
+
+## 2026-10-28 — 1895-96 season reviews vs the Repertoire (two agents)
+
+```sql
+select genre, city, count(*), min(page_id), max(page_id) from raw.review_page where season='1895-96' group by all;
+copy (select e.event_id, e.city, t.canonical_name theater, cast(e.date as varchar) d, e.time_of_day, e.printed_page_number, e.event_status, e.annotation,
+  e.receipts_verbatim, string_agg(p.verbatim_title||coalesce(', '||p.verbatim_genre,''), ' ;; ' order by p.performance_order) works
+  from research.event e join research.theater t using(theater_id) left join research.performance p using(event_id)
+  where e.season='1895-96' group by all order by 2, 4, 3) to '<scratch>/events_1895-96.csv' (header);
+```
+
+Result: reviews SP ballet (28 pp.) and Moscow ballet (15 pp.), no opera reviews. SP: 9/9 dated statements agree; counts 7/9, the two others («4 смѣшанныхъ»,
+«51 спектакля») leave out the 3 Jan 1896 Александринскій matinée as the stats do. Moscow: 13/15 dated (the «Флора» «23-го мая» slip for 22; loose
+«въ маѣ» wording), 9/9 counts (31 + 13 = 44; 14 ballets; 2 new). «Флора» on 3 May confirmed by the review: the ballet list's «мая 2» is its slip.
+Ledger 1895-96-03 and -09 notes extended; new row 1895-96-10.
