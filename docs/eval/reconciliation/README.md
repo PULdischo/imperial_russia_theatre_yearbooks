@@ -194,6 +194,87 @@ ledger 1890-91-10, `yearbook_own`.
 **Outcome:** totals and lists: no gaps. Review dates: 8 `yearbook_own` rows. Benefits: 1 `corrected`. 27 April: 1
 `yearbook_own`. Nothing open.
 
+## 1891-92 (2026-10-28): every count explained; no receipts anywhere; the lists and both reviews agree
+
+1891-92 is the first season with a totals page (p. 26, `1891-92_ProductionStats.pdf`): counts only, twelve lines, no
+receipts, no footnotes. The Repertoire prints no receipts either: the spreads have a date column and five theater
+columns and nothing else, and none of the season's 1,438 stored events has a receipts value or receipts text. So
+step 3 (receipts residuals) has nothing to compare, and the season reconciles on counts alone.
+
+**Step 1, city totals** (Repertoire / printed): Moscow 364 / 363, SP 575 / 572. The surplus is the four events with no
+works, all of them the invalids' concert: Moscow 19 Mar 1892 (Большой); SP dress rehearsal 17 Mar, concert 19 Mar,
+repeat 22 Mar (Маріинскій).
+
+**Step 2, category lines.** Every line is exact except one pair:
+
+| City | Line | Printed | Repertoire | Reading |
+|---|---|---|---|---|
+| SP | drama, Александринскій / Михайловскій | 169 / 64 | 169 / 64 | exact (after the «Псковитянка» ruling, 2026-10-27) |
+| SP | opera | 120 | 123 | +3: the three symphony concerts (below) |
+| SP | ballet / mixed (opera and ballet) | 41 / 4 | 41 / 4 | exact |
+| SP | concerts | 3 | 0 | −3: the three symphony concerts |
+| SP | French / German | 138 / 33 | 138 / 33 | exact |
+| Moscow | drama / opera / ballet | 191 / 124 / 48 | 191 / 124 / 48 | exact |
+
+The +3 / −3 is three Маріинскій bills headed «Симфоническій концертъ», on 2, 4 and 5 Mar 1892: «Донъ-Жуанъ, музыка къ
+драм. поэмѣ», «Финалъ оп. Лорелей», «3-е д. оп. Млада» (2 Mar also opens with «Гимнъ»). The yearbook counts them as its
+three concerts; with them moved, opera is 120 = 120. The tool counts them as opera because the research layer makes
+the two opera excerpts `item_kind` opera: the «Симфоническій концертъ» heading only decides an event that has no titled
+work (`CONCERT_EVENT_RE`), and «Донъ-Жуанъ» is a concert item that doesn't decide the event. All three cells read on
+the scan, as stored (ledger 1891-92-01, `classification`).
+
+**Why the symphony concerts and not the invalids' concert.** The SP invalids' events are also three, so they could fill
+the «Концертовъ» 3 instead. But then opera would still be +3 with nothing to explain it, and the next season settles the
+pattern: in 1892-93 both cities' «Концертовъ» lines (2 and 2) are the symphony concerts, and the invalids' concert (SP 17,
+19, 30 Mar 1893; Moscow 19 Mar 1893) is left out of every line. 1893-94 and 1894-95 also leave it out. So the four 1891-92
+invalids' events are outside the printed totals (ledger 1891-92-02 SP, 1891-92-03 Moscow, `excluded_by_yearbook`).
+Moscow has no «Концертовъ» line at all in 1891-92.
+
+**Stats transcription.** The «Концертовъ» digit noted as smudged reads «3» at 4× (the smudge is a stain beside it).
+
+**Step 4, lists.** Ballet agrees three ways: Moscow stats 48 = lists 48 = Repertoire 48; SP stats 41 + 4 mixed = lists 45
+= Repertoire 45. All 24 productions' printed totals equal their dated performances (Moscow 11 productions, 49 = 49, on 48
+events; SP 13, 55 = 55, on 45 events). No opera or drama lists exist for the season.
+
+**A third source: the ballet reviews** (Moscow folios 235-241, SP folios 163-179). Every dated performance statement
+matches the Repertoire by date, theater and work. (Checked by Claude, by two agents, against the review images; neither
+needed a Repertoire scan read, as nothing disagreed.)
+
+| Review | Dated statements | Agree | Counts checked |
+|---|---|---|---|
+| Moscow | 9 (opening 1 Sept «Кипрская статуя»; 24 Nov «Тщетная предосторожность» revival; Джури 1 and 4 Dec; Мендесъ benefit 29 Dec with «Послѣ свадьбы»; Шашкинъ 2 Jan; Гейтенъ 14 Feb «Дочь фараона»; corps de ballet 15 Feb; closing 29 Apr «Сатанилла») | 9 | 48 ballet events, 11 ballets, «Тщетная предосторожность» 9, «Индія» 8: all agree |
+| SP | 8 (opening 1 Sept «Приказъ короля»; Горшенкова 4 Sept; Бріанца 22 Sept; «Царь Кандавлъ» 24 Nov, 1 Dec (Бріанца benefit), 8 Dec (Іогансонъ benefit); «Сильфида» 19 Jan; closing 26 Apr) | 8 | 13 ballets, «Спящая красавица» 12, «Царь Кандавлъ» 10, «Сильфида» with «Поэтъ» 4: all agree; the ballerina split (Бріанца 6, Никитина 4…) can't be checked, the Repertoire prints no casts |
+
+Benefit headings named by the reviews (Мендесъ, Шашкинъ, Гейтенъ, corps de ballet, Бріанца, Іогансонъ) are all on the
+matching Repertoire events.
+
+**Outcome** (scan reads: `docs/eval/scan_audit/1891-92_scan_reads.csv`): 3 ledger rows, nothing misread, nothing corrected: 1 `classification` (the symphony concerts), 2
+`excluded_by_yearbook` (the invalids' concert, SP 3 and Moscow 1). Lists and reviews: no gaps.
+
+**Symphony concerts as concert items: APPLIED and promoted 2026-10-28** (RG, 2026-10-28: "make items played in
+an event headed «Симфоническій концертъ» concert items, like «Гибель Фауста»"; promotion: "merge, apply, commit and push").
+`pipeline/build_research_model.py` now has `SYMPHONY_CONCERT_EVENT_RE` and one item_kind rule, placed after the anthem and heading rules: every titled item of an
+event whose annotation contains «симфоническій концертъ» is item_kind concert; its art form (discipline, company) is kept,
+as with «Гибель Фауста». In the database only the three 1891-92 bills match.
+
+Test: `build_research_model.py` run on two copies of production, one with the patched script and one with the unpatched
+script (same research_corrections), and every research table diffed. Changes: research.performance 9 rows, research.event
+3 rows, nothing else. The six opera excerpts («Финалъ оп. Лорелей», «3-е д. оп. Млада» × 3) go genre_family opera → concert
+(discipline stays opera); the three «Донъ-Жуанъ» items were concert already, only their basis text now names the new rule;
+the three events' genre_families lose «opera». `compare_season_stats.py` on the test copy: SP opera 120 = 120, concerts
+3 = 3; category lines exact 109 → 111 of 257; city totals and ballet counts unchanged. Promotion: research layer rebuilt on a
+copy of production (after the 1909-10 20 Feb fix), every table diffed (research.performance 9, research.event 3, 54 tables
+identical), SP 1891-92 opera 120 = 120 and concerts 3 = 3 confirmed on the copy; backup
+`outputs/backups/symphony_concerts_1891-92_2026-10-28/`; sqlite rebuilt.
+
+**Found along the way (not chased):**
+- 200 `not_captured` placeholders on 40 whole dates (Moscow 80 = 2 × 40, SP 120 = 3 × 40: every date is missing in all
+  five theaters at once). Same pattern as 1890-91's print skips; with every count exact, they are presumptively the
+  yearbook's own skips. Not read in the date column (1890-91 had that done, `date_reads_2026-10-27.csv`).
+- `outputs/reviews/bilingual/1891-92_SP_Ballet.md` has transcription slips against the page images (checked by Claude):
+  «П. Пуни» for «Ц. Пуни», «большого» for «большаго», «Шнейггеффера» for «Шнейцгеффера», «Крузетъ» for «Круазетъ»,
+  «крестьянкина» for «крестьянина», «колдуны» for «колдуньи». None touches a date or count.
+
 ## Step-2 classifier now uses the research layer (2026-10-27)
 
 RG: "make compare_season_stats.py use research.performance.discipline / is_ceremonial instead of its own regexes."

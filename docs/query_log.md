@@ -21919,3 +21919,127 @@ the column's only «Бенефисъ» headings are opera (30 Oct orchestra, 27 
 18 Dec IRMO jubilee, 24 Jan Трефилова farewell, 6 Feb French-flood charity; the 28 Feb all-excerpts bill has none. Footnote 3's two ballet
 benefits: one candidate (Трефилова), the second untraced. 12 Sep «Раймонда, оп» is printed so; stored verbatim_genre «оп.», discipline ballet.
 Ledger 1909-10-13 (open).
+
+## 2026-10-28 — 1891-92 reconciliation: comparison tool run
+
+`uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir <scratch>/cmp`
+(read-only). `season_stats_receipt_candidates.py` not run usefully: needs `--db`, and 1891-92 has no receipts.
+
+Result: 1891-92 city totals Moscow 364 / 363, SP 575 / 572, 0 events with receipts. Family lines all exact except SP opera
+123 / 120 and concert 0 / 3; no_works Moscow 1, SP 3. Ballet counts: all agree (Moscow 48, SP 45).
+
+## 2026-10-28 — 1891-92: receipts present anywhere?
+
+```sql
+select event_status, count(*), count(receipts_total_kopecks) from research.event where season='1891-92' group by 1;
+select count(*) filter (where receipts_verbatim is not null and trim(receipts_verbatim)<>''), count(*)
+from research.event where season='1891-92';
+```
+
+Result: performed 939, no_performance 299, not_captured 200; 0 receipts values; 0 of 1,438 with receipts text.
+
+## 2026-10-28 — 1891-92: performed events with no works
+
+```sql
+select e.event_id, e.city, t.canonical_name, e.date, e.time_of_day, e.printed_page_number, e.annotation, e.n_works
+from research.event e join research.theater t using(theater_id)
+where season='1891-92' and event_status='performed' and n_works=0;
+```
+
+Result: 4 rows, all the invalids' concert: SP Маріинскій 17 Mar (dress rehearsal, s041), 19 Mar (s051), 22 Mar (repeat,
+s066); Moscow Большой 19 Mar (s054), pair020.
+
+## 2026-10-28 — 1891-92 SP opera-only events, by theater, and the unusual ones
+
+```sql
+with op as (select e.event_id from research.event e join research.performance p using(event_id)
+  where e.season='1891-92' and e.city='SP' and e.event_status='performed' group by 1
+  having bool_or(p.discipline='opera') and not bool_or(p.discipline in ('ballet','Russian drama','French drama','German drama')))
+select t.canonical_name, count(*) from op join research.event e using(event_id) join research.theater t using(theater_id) group by 1;
+-- then the same set filtered to non-Маріинскій, n_works>1, annotated, charity or free, with works listed
+```
+
+Result: 123, all Маріинскій. Unusual ones: 16 Feb 1892 (four opera acts), and 2, 4, 5 Mar 1892 annotated «Симфоническій
+концертъ» (s093, s103, s108).
+
+## 2026-10-28 — items of the three symphony concerts; events headed «Симфоническій концертъ» corpus-wide
+
+```sql
+select p.event_id, p.performance_order, p.verbatim_title, p.discipline, p.discipline_basis, p.genre_family,
+       p.genre_family_basis, p.is_ceremonial, p.work_id
+from research.performance p
+where event_id in ('repertoire_1891-92_pair018__s093','repertoire_1891-92_pair018__s103','repertoire_1891-92_pair018__s108');
+select e.season, e.city, e.date, e.annotation, string_agg(p.verbatim_title||'['||coalesce(p.genre_family,'')||'/'||coalesce(p.discipline,'')||']', ' ;; ')
+from research.event e join research.performance p using(event_id)
+where e.event_status='performed' and lower(coalesce(e.annotation,'')) like '%симфоническ%' group by all;
+```
+
+Result: «Гимнъ» anthem; «Донъ-Жуанъ, музыка къ драм. поэмѣ» concert (no discipline); «Финалъ оп. Лорелей» and «3-е д. оп.
+Млада» opera, basis «printed genre оп.». Corpus-wide only these three events carry the heading with titled works.
+
+## 2026-10-28 — invalids' concert and symphony concerts in neighbouring seasons
+
+`grep ^1892-93 family_totals.csv` (concert / no_works / opera lines), and
+
+```sql
+select e.season, e.city, e.date, t.canonical_name, e.annotation from research.event e join research.theater t using(theater_id)
+where e.event_status='performed' and e.n_works=0 and e.season in ('1892-93','1895-96','1896-97');
+```
+
+Result: 1892-93 concert lines Moscow 2 = 2, SP 2 = 2 (the symphony concerts); no_works Moscow 1, SP 3 = the invalids'
+concert (SP 17, 19, 30 Mar 1893; Moscow 19 Mar 1893), outside every line. Same four events in 1895-96 and 1896-97.
+
+## 2026-10-28 — 1891-92 productions lists and review assertions
+
+```sql
+select city, count(*), sum(printed_total), sum(n_dates), count(*) filter (where printed_total<>n_dates)
+from research.production where season='1891-92' group by 1;
+select season, city, count(*) from research.review_assertion where season='1891-92' group by all;
+```
+
+Result: Moscow 11 productions, 49 printed = 49 dated, 0 mismatches; SP 13, 55 = 55, 0. Review assertions: SP 13, Moscow 20.
+
+## 2026-10-28 — 1891-92 not_captured placeholders
+
+```sql
+select city, count(*), count(distinct date) from research.event where season='1891-92' and event_status='not_captured' group by 1;
+select count(distinct date) from research.event where season='1891-92' and event_status='not_captured';
+select date, count(*) from research.event where season='1891-92' and event_status='not_captured' group by 1 having count(*)<5;
+```
+
+Result: Moscow 80 on 40 dates, SP 120 on 40 dates, 40 dates overall; no date with fewer than five theaters missing.
+
+## 2026-10-28 — 1891-92 event dump for the review checks
+
+```sql
+copy (select e.event_id, e.city, t.canonical_name theater, e.date, e.date_verbatim, e.time_of_day, e.printed_page_number,
+  e.event_status, e.annotation, string_agg(p.verbatim_title||coalesce(', '||p.verbatim_genre,''), ' ;; ' order by p.performance_order) works
+  from research.event e join research.theater t using(theater_id) left join research.performance p using(event_id)
+  where e.season='1891-92' group by all order by e.city, e.date, t.canonical_name) to '<scratch>/events_1891-92.csv' (header);
+```
+
+Result: 1,438 rows (see the next entries for the symphony-concert test). Two agents matched the ballet reviews against it: Moscow 9 / 9 dated statements agree, 4 counts agree;
+SP 8 / 8 agree, 5 counts agree (ballerina split not checkable).
+
+## 2026-10-28 — symphony-concert rule: research-layer diff, patched vs unpatched build (copies of production)
+
+`build_research_model.py --db` run on two copies of `outputs/full_run/imperial_theaters.duckdb` in scratch, one with
+`1891-92_symphony_concert_rule.patch` (since applied and the file removed; see commit 2453048), one without; then, per research table:
+
+```sql
+select count(*) from (select * from test.research.<t> except all select * from b.research.<t>);
+select count(*) from (select * from b.research.<t> except all select * from test.research.<t>);
+```
+
+Result: 19 tables; only research.performance (9 rows each way) and research.event (3 each way) differ. Performances: six
+opera excerpts on repertoire_1891-92_pair018__s093/s103/s108 genre_family opera → concert, three «Донъ-Жуанъ» basis text
+only; events: genre_families «opera; concert(; anthem)» → «concert(; anthem)». `compare_season_stats.py` on both: SP opera
+123 → 120 (printed 120), concert 0 → 3 (printed 3); exact category lines 109 → 111; city_totals.csv and ballet_counts.csv identical.
+
+## 2026-10-28 — Symphony-concert rule applied and promoted
+
+Patch applied to `pipeline/build_research_model.py`; `build_research_model.py` run on a copy of production (already carrying the 1909-10
+20 Feb fix); every table of both databases compared (EXCEPT ALL both ways), then `compare_season_stats.py` on the copy.
+Result: research.performance −9 +9 and research.event −3 +3 (repertoire_1891-92_pair018__s093/s103/s108; genre_families «concert; anthem»,
+«concert», «concert»), 54 tables identical; family_totals 1891-92 SP opera 120 / 120, concert 3 / 3. Production unchanged since the
+snapshot (cmp), backed up to outputs/backups/symphony_concerts_1891-92_2026-10-28/ (db, sqlite), promoted; research_dataset.sqlite rebuilt.
