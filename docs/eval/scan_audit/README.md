@@ -23,7 +23,7 @@ Coverage, 2026-10-27 (2,729 events, 47 corrected):
 | 1891-92 | no receipts printed; targeted reads in `1891-92_scan_reads.csv` (2026-10-28): stats page, the three symphony concerts, the four invalids' concert cells (10, all as stored), and all 15 runs of not_captured dates in the date column (every one a print skip) |
 | 1893-94 | every column, both cities (Moscow pp. 6-25 added later the same day: 329 cells, none corrected) |
 | 1894-95 | every column (Александринскій added later the same day: 146 cells, none corrected, 4 in the fold) |
-| 1895-96 | Маріинскій, Большой, Малый; Михайловскій opera only. Большой and Малый re-read blind 2026-10-28 (2 agents, 536 rows): every stored figure equals the blind read or, for 5 fold cells, RG's Binding Fold Log; the 7 low-confidence cells in `1895-96_moscow_blind_reread.csv` |
+| 1895-96 | every column. Маріинскій, Большой, Малый and Михайловскій opera read 2026-10-27; Александринскій and Михайловскій read blind 2026-10-28 (409 events: every figure equals the read or, for 6 fold cells, RG's Fold Log); Большой and Малый re-read blind 2026-10-28 (2 agents, 536 rows): every stored figure equals the blind read or, for 5 fold cells, RG's Binding Fold Log; the 7 low-confidence cells in `1895-96_moscow_blind_reread.csv` |
 | 1897-98 | Большой, Малый, Александринскій                                         |
 | 1909-10 | every column, both cities, blind (2026-10-28): 1,097 events (Маріинскій 213 incl. every heading word for word), every figure as stored; one session label fixed (20 Feb Alex) |
 | 1910-11 | every column, both cities, blind (agents read the scan before seeing the data): 1,134 cells with works, none misread; 14 kopeck losses in the parse restored via receipts_print_typos.csv |
@@ -38,6 +38,10 @@ themselves. `result`: `no printed row (source skip)`, `matches stored`, or `prin
 - 2026-10-27, 1890-91: all 26 dates with no printed row (16 skips) read in the date column; the p. 21/22 break for
   4-9 March; six Repertoire rows and seven season-review dates behind the review-vs-Repertoire check. Every Repertoire
   row matched; all nine disagreements are slips in the review's own print (reconciliation ledger 1890-91-01..08).
+
+- 2026-10-28, page-break sweep (known_issues.md #162): `pagebreak_missing_dates_2026-10-28.csv` lists every city-date with no
+  row and no placeholder (107, all at page breaks); `pagebreak_date_reads_2026-10-28.csv` has the scan reads of the 12 runs not
+  read before: 11 print skips, and 1905-06 SP p. 112, whose weekday words (not its day numbers) are misprinted.
 
 `result` values added 2026-10-27 for cells in the binding fold: `fold: RG reading = stored` (the figure can't be read on
 the scan; RG's Binding Fold Log reading equals the stored value) and `not visible` (hidden in the fold, no fold-log reading

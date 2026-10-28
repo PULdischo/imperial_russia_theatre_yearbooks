@@ -24447,3 +24447,25 @@ Season-total gaps that close: 1899-00 SP French −12.48 → −0.14; 1903-04 SP
 French −0.64 → −0.12, German −1.67 → +0.48; 1906-07 SP German −5.68 → −0.06; 1908-09 SP German −5.43 → −0.06; 1902-03 SP French
 −20.21 → −10.08; 1900-01 SP French −2,521.01 → −2,491.69. The remaining few kopecks in the German lines are the halves the printed
 totals keep («51,839 р. 18½ к.»).
+
+## Issue #162: dates skipped at a page break get no not_captured placeholder; corpus sweep, and a misread weekday correction in 1905-06 -- FIXED 2026-10-28 (RG)
+
+**The blind spot.** `not_captured` placeholders are only synthesized for dates missing inside a page, so a date that is missing
+exactly where one page ends and the next begins leaves no trace at all (found on 23 Oct 1892, 1892-93 reconciliation). RG asked
+for a corpus sweep. Walking the Julian calendar season by season (`docs/eval/scan_audit/pagebreak_missing_dates_2026-10-28.csv`):
+107 city-dates with no row and no placeholder, every one at a page break, in 17 runs. Two had been read before (1890-91 4-9 Mar,
+1892-93 23 Oct); one agent read the other 12 on the scans (`docs/eval/scan_audit/pagebreak_date_reads_2026-10-28.csv`, checked by
+Claude). 11 are skips in the print (Holy Saturday/Easter weeks, Christmas, Epiphany eve, the first week of Lent, the Exaltation
+of the Cross, the beheading of John the Baptist, the May 1896 coronation days, 31 Aug 1891, 3 May 1897). The placeholder rule is
+left as it is (the skips are the yearbook's own); this sweep is the record.
+
+**The 12th was not a skip: 1905-06 SP p. 112 (`repertoire_1905-06_p028`), 25 Jan - 3 Feb 1906.** Every weekday word on the page
+is one day ahead of the calendar, and the run-based check in `validate_performance_dates.py` took the weekdays as right and moved
+all 31 SP events one day later, leaving 25 Jan empty. The day numbers are right: the running head «25 января … 3 февраля», the
+Moscow page beside it (p. 113, same dates, correct weekdays), the next SP page opening on 4 Feb, and the SP ballet review
+(folio 134: «29 января состоялся прощальный бенефисъ артиста А. Ф. Бекеффи»; p. 112 prints it on «29 Понед.»). This reverses the
+2026-09 reading in `genuine_print_typos.md` (the «p027/p028 cascade», which ran across the Moscow and SP pages). RG 2026-10-28:
+keep the printed numbers, after checking the season review. Fix: 10 entries in `_MANUAL_DATE_OVERRIDES` (one per printed date
+text on p028). Rebuilt on a copy (validate_performance_dates -> build_research_model): analysis.event_entry_date_check and
+research.event −31 +31, 54 tables identical; promoted, sqlite rebuilt; backup
+`outputs/backups/weekday_override_1905-06_p112_2026-10-28/`. Бекефи's farewell benefit is now 29 Jan 1906 (was 30 Jan).

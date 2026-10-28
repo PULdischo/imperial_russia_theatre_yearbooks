@@ -117,6 +117,18 @@ _MANUAL_DATE_OVERRIDES: dict[tuple[str, str], tuple[str, str]] = {
     ),
     # Book prints "16 Среда." then "16 Четв." with no "15" in between --
     # 14 Вторн -> [this row] -> 16 Четв. is only consistent as the 15th.
+    # Printed p. 112 (SP, running head «25 января … 3 февраля» 1906): every weekday word on the page is one day ahead of the
+    # calendar («25 Четвергъ.» for Wednesday 25 Jan ... «3 Суббота.» for Friday 3 Feb), so the run-based check shifted all 33
+    # SP events one day later. The day numbers are right: the running head, the Moscow page beside it (p. 113, same dates,
+    # correct weekdays), and the SP ballet review («29 января состоялся прощальный бенефисъ артиста А. Ф. Бекеффи», folio
+    # 134; the Repertoire prints it on «29 Понед.»). Scan-read 2026-10-28; RG: keep the printed numbers. Weekday words stay
+    # verbatim in raw.
+    **{('repertoire_1905-06_p028', dt): (iso, 'scan-verified: the page misprints every weekday word one day ahead; the day numbers are '
+                                              'right (running head, Moscow p. 113, SP ballet review); RG 2026-10-28')
+       for dt, iso in [('25 Четверг', '1906-01-25'), ('26 Пятница', '1906-01-26'), ('27 Суббота', '1906-01-27'),
+                       ('28 Воскрес', '1906-01-28'), ('29 Понед', '1906-01-29'), ('30 Вторн', '1906-01-30'),
+                       ('31 Среда', '1906-01-31'), ('1 Четв', '1906-02-01'), ('2 Пятница', '1906-02-02'),
+                       ('3 Суббота', '1906-02-03')]},
     ('repertoire_1905-06_p036', '16 Среда'): (
         '1906-03-15', 'scan-verified: book misprints day as "16" (should be "15"); known_issues.md #69',
     ),

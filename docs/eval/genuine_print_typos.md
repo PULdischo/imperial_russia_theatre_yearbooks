@@ -157,6 +157,13 @@ one:
   class automatically (a run of ≥2 consecutive pages/rows agreeing on
   one consistent day-shift) and corrects the derived calendar date
   without touching the verbatim `date_text`.
+  **REVISED 2026-10-28 (RG: keep the printed numbers):** the day NUMBERS on `p028` are right and its WEEKDAY WORDS are the
+  misprint. `p027` is the Moscow page (p. 111) and `p028` the SP page (p. 112), so there is no cascade from one to the other;
+  `p028`'s running head is «25 января … 3 февраля»; the Moscow page beside it (`p029`, p. 113) prints the same dates with
+  correct weekdays; the SP ballet review has Бекефи's farewell benefit «29 января», which `p028` prints on «29 Понед.»; and the
+  next SP page opens on 4 Feb. `p028`'s weekday words are one day ahead on all 10 rows. Fixed by 10 manual overrides in
+  `validate_performance_dates.py` (31 SP events back to their printed dates). Found by the page-break date sweep
+  (`docs/eval/scan_audit/pagebreak_date_reads_2026-10-28.csv`).
 - **1897-98 SP ballet productions list (pp. 32–33), #2 «Дочь микадо»:** «ноября 9, 24, 16, 19» and «декабря 14, 38». The Repertoire has the ballet on 14 Nov (morning) and 28 Dec (evening), and on no 24 Nov; «24» for 14 (which also restores the order) and «38» for 28. Raw keeps both as printed; the research layer reads them as 14 Nov and 28 Dec (`LIST_DATE_PRINT_TYPOS`, RG 2026-10-15).
 
 ## Wrong weekday word entirely (date_undate correct, printed word isn't)

@@ -297,8 +297,9 @@ the two symphony concerts of 7 and 9 Mar).
 = 52 = lists = Repertoire). All 31 productions' printed totals equal their dated performances (Moscow 16 productions, 57 = 57;
 SP 15, 77 = 77).
 
-**Completeness.** 169 `not_captured` placeholders: 18 runs of whole dates missing in every theater (presumptively the print's
-own skips, as in 1890-91 and 1891-92; not read in the date column) and four single SP cells that turned out to be printed
+**Completeness.** 169 `not_captured` placeholders: 15 runs of whole dates missing in every theater (read in the date column
+2026-10-28: every one a skip in the print, matching closures: the Воздвиженіе eve, Christmas, Крещенскій сочельникъ, the
+first week of Lent, 1 March, Holy Week to Easter, and single Saturdays or Mondays) and four single SP cells that turned out to be printed
 dashes, all Saturdays: Маріинскій 21 Nov 1892, Александринскій 19 Dec 1892, 9 and 16 Jan 1893 (read on the scan; the dark
 theater beside each is stored as a dash). Appended to raw by `fix_1892_93_dash_cells.py` (at the end of each page's array, no
 event_id shifts); rebuilt on a copy, every table diffed (raw/analysis event_entry and research.event: the four placeholders
@@ -484,7 +485,9 @@ two agents against the Repertoire, reading the review images and Repertoire scan
 
 Tables: `1895-96_review_sp_ballet.csv`, `1895-96_review_msk_ballet.csv`.
 
-**Not done:** the Александринскій and Михайловскій drama/French columns were not read (their lines are exact to the kopeck).
+**Drama and French columns** (RG asked for them as a general audit, though their lines are exact): the Александринскій and
+Михайловскій were read blind 2026-10-28 (two agents, 515 rows): every legible figure equals the stored value (412), and the 8
+cells lost in the binding fold equal RG's Fold Log readings. Every 1895-96 column has now been read.
 
 **Outcome:** 10 ledger rows; nothing misread, nothing corrected.
 

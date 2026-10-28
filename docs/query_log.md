@@ -22179,3 +22179,48 @@ Result: reviews SP ballet (28 pp.) and Moscow ballet (15 pp.), no opera reviews.
 «51 спектакля») leave out the 3 Jan 1896 Александринскій matinée as the stats do. Moscow: 13/15 dated (the «Флора» «23-го мая» slip for 22; loose
 «въ маѣ» wording), 9/9 counts (31 + 13 = 44; 14 ballets; 2 new). «Флора» on 3 May confirmed by the review: the ballet list's «мая 2» is its slip.
 Ledger 1895-96-03 and -09 notes extended; new row 1895-96-10.
+
+## 2026-10-28 — 1892-93 whole-date not_captured runs, read on the scans
+
+```sql
+with ev as (select cast(date as date) d, event_status, event_id, printed_page_number pg from research.event where season='1892-93'),
+nc as (select d from ev group by d having bool_and(event_status='not_captured')),
+r as (select d, d - cast(row_number() over (order by d) as int) g from nc),
+rr as (select min(d) s, max(d) e, count(*) n from r group by g)
+select s, e, n, <last printed date before, its page>, <first after, its page> from rr order by s;
+```
+
+Result: 15 runs (after the four dash cells were restored). One agent read the date column around each on the scans: all 15 are skips in the print
+(Воздвиженіе eve, Christmas, Крещенскій сочельникъ, first week of Lent, 1 March, Holy Week to Easter, single Saturdays/Mondays). Rows appended to
+docs/eval/scan_audit/1892-93_scan_reads.csv.
+
+## 2026-10-28 — 1895-96 Александринскій and Михайловскій columns read blind
+
+```sql
+select a.page_id, e.event_id, t.canonical_name theater, e.printed_page_number, cast(e.date as varchar) date, e.time_of_day, a.date_text, e.event_status,
+       e.receipts_total_kopecks, e.receipts_verbatim from research.event e join research.theater t using(theater_id) join analysis.event_entry a using(event_id)
+where e.season='1895-96' and t.canonical_name in ('Александринскій','Михайловскій');   -- compared with the two blind reads
+```
+Result: 515 rows read; 412 legible figures all equal the stored values; 8 fold cells equal RG's Fold Log readings
+(docs/eval/fold_log/readings_1895-96.csv). 409 events added to receipts_scan_reads_2026-10-27.csv.
+
+## 2026-10-28 — Dates with no row and no placeholder, corpus-wide (page-break sweep, known_issues #162)
+
+```sql
+select e.season, e.city, cast(e.date as varchar) d, a.page_id, e.event_status from research.event e join analysis.event_entry a using(event_id) where e.date is not null;
+-- then, in Python, every Julian calendar day between each season/city's first and last date with no row at all, with the neighbours' pages
+```
+Result: 107 city-dates, all at page breaks, 17 runs (pagebreak_missing_dates_2026-10-28.csv). Scan reads of 12 runs: 11 print skips; 1905-06 SP p. 112
+weekday words misprinted (day numbers right). Then:
+```sql
+select a.page_id, a.date_text, cast(a.date_undate as varchar), cast(d.corrected_date_undate as varchar), d.drift_days, a.theater
+from analysis.event_entry a join analysis.event_entry_date_check d using(event_id) where a.page_id in ('repertoire_1905-06_p028','repertoire_1905-06_p029') order by 1,3;
+select genre, city, count(*), min(printed_folio), max(printed_folio) from raw.review_page where season='1905-06' group by all;
+select p.page_id, p.genre, p.city, p.printed_folio, b.text from raw.review_block b join raw.review_page p using(page_id) where p.season='1905-06';
+  -- searched for 25-31 января / 1-3 февраля
+select pe.title, cast(pp.date as varchar) from raw.production_entry pe join raw.production_entry_performance pp using(production_entry_id)
+where pe.season='1905-06' and pe.city='SP' and pp.date between '1906-01-24' and '1906-02-04';
+```
+Result: p028's 31 SP events all drift +1, p029's Moscow events none. Reviews: SP ballet folio 134 «29 января … прощальный бенефисъ … Бекеффи»
+(the database had it on 30 Jan); no SP ballet-list dates in the window. Overrides added; rebuild on a copy: event_entry_date_check and research.event
+−31 +31, 54 tables identical; promoted.
