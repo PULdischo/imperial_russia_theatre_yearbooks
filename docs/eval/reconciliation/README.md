@@ -269,8 +269,11 @@ identical), SP 1891-92 opera 120 = 120 and concerts 3 = 3 confirmed on the copy;
 
 **Found along the way (not chased):**
 - 200 `not_captured` placeholders on 40 whole dates (Moscow 80 = 2 × 40, SP 120 = 3 × 40: every date is missing in all
-  five theaters at once). Same pattern as 1890-91's print skips; with every count exact, they are presumptively the
-  yearbook's own skips. Not read in the date column (1890-91 had that done, `date_reads_2026-10-27.csv`).
+  five theaters at once). **Read on the scan, 2026-10-28** (RG: "do this just in case"): all 15 runs checked in the date
+  column (`docs/eval/scan_audit/1891-92_scan_reads.csv`). Each is a skip in the print: the dates on either side sit in
+  adjacent cells (e.g. «11 Среда.» → «19 Четвергъ.» over 12-18 Sept 1891; «16 Воскрес.» → «23 Воскр.» over 17-22 Feb 1892;
+  «27 Пятница.» → «апрѣль 6 Понед.» over 28 Mar - 5 Apr 1892). 28-29 Aug 1891 fall at the p. 2/3 break (p. 2 closes on
+  27 Aug, p. 3 opens on 30 Aug). No content is missing.
 - `outputs/reviews/bilingual/1891-92_SP_Ballet.md` has transcription slips against the page images (checked by Claude):
   «П. Пуни» for «Ц. Пуни», «большого» for «большаго», «Шнейггеффера» for «Шнейцгеффера», «Крузетъ» for «Круазетъ»,
   «крестьянкина» for «крестьянина», «колдуны» for «колдуньи». None touches a date or count.
