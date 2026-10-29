@@ -67,6 +67,10 @@ closes, and add new open items here as well as in their own entry.
   German drama troupe's Александринскій run; the Latin title with «dr.» had fallen to French drama. Two rows in
   `pipeline/research_corrections/art_form_by_performance.csv` (research layer only). SP «Нѣмецкихъ драматическихъ» now exact
   (32, 58,892.95). Backup `outputs/backups/galeotto_1897-98_2026-10-29/`.
+- **1897-98 Réjane, 25 Oct + 26 Oct morning 1897, relabelled «Réjane and her troupe», APPLIED 2026-10-29 (RG: "Yes, relabel").**
+  The banner «Représentation de M-me Réjane.» had been run into the titles (`fix_1897_98_rejane_banner.py` moves it to the annotation);
+  `VISITING_ANNOTATION_RULES` gains the French wording. 1899-00's «Спектакль съ участіемъ г-жи Режанъ» (guest with the house troupe)
+  is untouched. SP «Французскихъ» now exact (146, 177,587.01). Backup `outputs/backups/rejane_1897-98_2026-10-29/`.
 - #159: review cast statements vs BalletArtists spiski, triaged 2026-10-22.
   35 suspected wrong-person links (13 high) in
   `docs/eval/review_assertion_wrong_person_suspects_2026-10-22.csv`, plus six

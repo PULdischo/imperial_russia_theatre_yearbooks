@@ -925,5 +925,5 @@ work through the id crosswalk), production = tested copy, sqlite rebuilt, not re
 | Moscow Малый | 206 / 207, −89.40 | yearbook_own (provisional): no missing session on the scan |
 | SP German opera | 31 = 31, 152,203.10 | corrected 2026-10-29 (RG: "Yes, both"): 23 Mar act stored as a work and read «4-ter»; «aus der Oper» titles are opera items (1897-98-01) |
 | SP German drama | 32 = 32, 58,892.95 | corrected 2026-10-29 (RG: "Yes, relabel"): «Galeotto» 25-26 Mar = German troupe, research layer (1897-98-02) |
-| SP French | 148 / 146, receipts exact | Réjane's 2 nights: label for RG (1897-98-03) |
+| SP French | 146 = 146, 177,587.01 | corrected 2026-10-29 (RG: "Yes, relabel"): Réjane's 25-26 Oct nights = her troupe, own stats line (1897-98-03) |
 | SP ballet list 25 Oct, 3 Nov | list 52 vs 50 | list's own; RG |

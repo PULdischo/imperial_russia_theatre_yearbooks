@@ -22758,3 +22758,12 @@ uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_th
 ```
 
 Result: copy vs pre-fix: research.event 2, research.performance 2 (pair022__s051/s052: French drama -> German drama, visiting German drama troupe); production = tested copy. 1897-98 SP German drama 32 / 58,892.95 = printed; French 148 / 146, 177,587.01 = printed (the 2 are Réjane's, no receipts).
+
+## 2026-10-29 — 1897-98 after the Réjane relabel (RG: "Yes, relabel"): whole season re-checked
+
+```
+uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir <scratch>
+-- plus the table-by-table EXCEPT ALL diff (copy vs pre-fix; production vs copy)
+```
+
+Result: copy vs pre-fix: raw.event_entry 2, raw.event_entry_performance 2, research.event 2, research.performance 2 (both Réjane's troupe), research.work 3/2 («Représentation de M-me Réjane. Sapho» -> «Sapho» via crosswalk, 16 -> 17); production = tested copy. 1897-98 SP: ballet, German opera, French, German drama, mixed, Михайловскій drama and opera all exact; Маріинскій opera 122 / 123 (receipts exact); Александринскій drama 188 / 187, −587.95 (the 188 includes the 14 Dec students' matinée, its own line); other 8 / 9 (same matinée). Moscow unchanged: ballet +2,743.80, opera +936.51, Малый 206 / 207 −89.40.

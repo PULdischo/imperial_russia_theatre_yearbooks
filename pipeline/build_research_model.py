@@ -298,6 +298,9 @@ VISITING_ANNOTATION_RULES = [
     (r"зандрокъ", "Adele Sandrock and her troupe"),
     (r"лессингъ-театра", "Berlin Lessing-Theater"),
     (r"режанъ съ ея трупп", "Réjane and her troupe"),
+    # 1897-98 prints the same troupe's two Александринскій nights (25 Oct, 26 Oct morning 1897) under a French banner;
+    # the season statistics give them their own line, «Спектаклей г-жи Режанъ 2» (RG, 2026-10-29)
+    (r"représentation de m-me réjane", "Réjane and her troupe"),
     (r"сарры бернаръ", "Sarah Bernhardt"),
     (r"сіамской придворной труппы", "Siamese court troupe"),
     (r"японской труппы", "Japanese troupe of the Imperial court theatre, Tokyo"),
