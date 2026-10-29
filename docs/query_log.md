@@ -23158,3 +23158,13 @@ where e.season='1907-08' and t.canonical_name='Большой' and not coalesce(
 ```
 Result: the first Moscow «Китежъ» in the Repertoire is 15 Feb 1908, the Салина farewell benefit (7,602.10 р.); then 18, 21 Feb, 16, 18 Apr
 1908 and 10 Oct 1908 on. 1907-08 Большой non-benefit events: median 2,151.82 р., highest 3,976.50 р.
+
+## 2026-10-29 — «Le Bésique chinois» / «Le Bésigue chinois» merged (RG: "Yes, merge")
+
+```sql
+select e.season, p.verbatim_title, p.verbatim_genre, count(*) from research.performance p join research.event e using(event_id)
+where p.verbatim_title ilike '%bési%' or p.verbatim_title ilike '%besi%' group by all order by 1,2;
+-- then alias row, rebuild on a copy, table-by-table EXCEPT ALL diff, promote
+```
+
+Result: before: 1897-98 Bésigue 12 / Bésique 8; 1898-99 Bésique 4; 1899-00 Besigue 5, Bésigue Chinois 1, Bésigue 4; works «Le Bésique chinois» 12, «Le Bésigue chinois» 22. After: one work «Le Bésigue chinois» 34 (crosswalk 9a6a4bee -> 6a4099a0); 12 performances changed work_id only (titles, disciplines unchanged); production = tested copy.

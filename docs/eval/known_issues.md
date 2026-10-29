@@ -93,8 +93,9 @@ closes, and add new open items here as well as in their own entry.
   printed: «Воробышекъ   ом.» (18 Nov), «Jm weissen Rössl Lustsp.» (27 Mar; alias in work_title_aliases.csv), «Le Bésigue chinois»
   (11 Feb). Four duplicate works merged via the crosswalk (Золотой теленокъ, Теша, Воробьишекъ, Villégiateure); no art form changed.
   Backup `outputs/backups/titles_1897-98_2026-10-29/`. 1897-98 is now title-audited (all five columns), like 1904-05.
-  Spelling splits left for RG: «Le Bésique chinois» (12, the print's spelling to 2 Jan 1898) v «Le Bésigue chinois» (22, from 31 Jan);
-  «Джентльманъ» (5, other seasons) v «Джентльмэнъ» (92).
+  «Le Bésique chinois» (12: 1897-98 to 2 Jan 1898, and 1898-99) MERGED into «Le Bésigue chinois» (now 34), RG 2026-10-29 "Yes, merge":
+  alias in work_title_aliases.csv, raw verbatim; only those 12 performances' work_id changed. Backup `outputs/backups/besigue_merge_2026-10-29/`.
+  Still left for RG: «Джентльманъ» (5, other seasons; scan-check first) v «Джентльмэнъ» (92).
 - #159: review cast statements vs BalletArtists spiski, triaged 2026-10-22.
   35 suspected wrong-person links (13 high) in
   `docs/eval/review_assertion_wrong_person_suspects_2026-10-22.csv`, plus six
