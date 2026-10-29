@@ -963,7 +963,8 @@ Moscow 30 Mar at the Большой and the Новый, 4 Feb evening at the Б�
 | Moscow | 34 + 1 / 36 / 37 | the Repertoire's extra over the list is the 30 Mar Иверская charity (1903-04-02); the list's extra over the stats is the 18 Oct benefit (1903-04-03); «Смѣшанныхъ» 1 = the 24 Oct Tchaikovsky memorial to the kopeck (1903-04-04). Ballet line exact, 78,160.80 (1903-04-05) |
 
 Title by title, list and Repertoire agree except 30 Nov SP: the list and the review give «Волшебная флейта», the Repertoire cell
-only «Фея куколъ» + Act 2 of «Фіаметта» (1903-04-14, yearbook_own). Moscow «Пригалъ кавалеріи» (14 Nov) and «Ваядерка» (25 Jan)
+only «Фея куколъ» + Act 2 of «Фіаметта» (1903-04-14). RG (2026-10-29): two sources agree, so «Волшебная флейта» [бал.] is now supplied
+in the research layer (`supplied_performances.csv`, which gained `adds_to_bill` and `work_genre`); raw keeps the printed cell. Moscow «Пригалъ кавалеріи» (14 Nov) and «Ваядерка» (25 Jan)
 are print slips, stored as printed, and now aliased to «Привалъ кавалеріи» and «Баядерка» (RG 2026-10-29; 1903-04-17). The alias also caught SP 4 Sep 1905 «Ваядерка», printed «Баядерка»: a misread, fixed in raw (`fix_1905_06_bayaderka_title.py`).
 
 **Opera** (stats / Repertoire, charity without receipts out):
@@ -977,7 +978,9 @@ are print slips, stored as printed, and now aliased to «Привалъ кава
 **Dancers in operas.** The research layer marks no 1903-04 opera as including dance (only SP 22 Feb «чтеніе, пляска»). The
 2026-10-09 opera-review checks (`docs/eval/review_check_1903-04_sp/`, `_moscow/`) name dancers in «Ромео и Джульетта», «Пиковая
 дама», «Фераморсъ», «Русалка» and others at the Маріинскій, and «Добрыня Никитичъ», «Наль и Дамаянти», «Искатели жемчуга» in
-Moscow. Not applied: dance markers follow RG's rules (`dance-marker-rules`), a decision for her.
+Moscow. Not applied: RG (2026-10-29) wants these from a high-quality scan of the Princeton hard copy, not the HathiTrust
+download; the pages to read are listed in `docs/yearbook_volume_requests.md` (1903-04, Vol. 14). The rosters only count operas
+(«въ 11 операхъ»), never name them, and the 1903-04 ballet reviews say nothing about operas.
 
 **The ballet season reviews** (two agents, the review images and the Repertoire scans for every disagreement;
 `1903-04_review_sp_ballet.csv`, `1903-04_review_msk_ballet.csv`, checked by Claude):
@@ -987,10 +990,20 @@ Moscow. Not applied: dance markers follow RG's rules (`dance-marker-rules`), a d
 | SP (ff. 107-121) | 64: 41 agree, 4 partial, 3 no, 16 n/a | season total «35 (одинъ изъ нихъ смѣшанный)» fits no count; «25-го ноября» for 23 Nov; «Волшебное зеркало» «три раза» (2); closing 2 May (6 May). All the review's (1903-04-15) |
 | Moscow (ff. 179-204) | 30: 24 agree, 2 partial, 4 no | «34 … изъ нихъ 1 смѣшанный» (stats 34 + 1); 21 Sep, 25 Sep, 14 Jan, 17 Jan misdated. All the review's (1903-04-16) |
 
-Review transcription slip noticed, not corrected: SP p000 «5-го сентября» is «3-го» on the image.
+Review transcription slip, CORRECTED 2026-10-29 (RG: "Yes, correct it"): SP f. 107 «5-го сентября» is «3-го» on the image
+(`docs/eval/review_text_corrections.csv`); its three cast assertions moved from 5 to 3 Sep. The review rebuild also re-linked
+414 `research.review_credit` rows that pointed at a mention in another block (production's credits were stale, off by one
+from mention 13425) and brought the 1907-08 «Аленькій цвѣточекъ» credits in line with the corrected text. Backup
+`outputs/backups/review_3sep_1903-04_2026-10-29/`.
 
 **Noticed, not chased** (drama): SP Александринскій +6 events / −10.40 р., Михайловскій +1 / +329.00; Moscow Малый +1 / −2.03,
 Новый drama +18.00. The Малый, Александринскій and Михайловскій columns were not read.
 
-**Outcome:** 17 ledger rows. Corrected 3, classification 1, comparison_rule 1 (the two aliases), excluded_by_yearbook 6, yearbook_own 5
-(provisional), open 1 (SP opera +1, held for the opera list).
+**Outcome:** 17 ledger rows. Corrected 3, classification 1, comparison_rule 1 (the two aliases), excluded_by_yearbook 6, yearbook_own 5,
+open 1 (SP opera +1, held for the opera list).
+
+**RG's reading, 2026-10-29** (one at a time, evidence first): 10 Большой opera «135 (341,255 р. 05 к.)» and 12 Новый opera «41 (41,889 р.
+32 к.)» / «Галька» «825 р. 81 к.» read as transcribed, closed as the stats page's own (crops `docs/eval/scan_audit/1903-04_rg_row10_moscow_opera.png`,
+`1903-04_rg_row12_novy_26oct.png`); 14 «Волшебная флейта» on 30 Nov supplied in the research layer (two sources agree; crops
+`1903-04_rg_row14_*.png`); 15, 16 the reviews' own slips, "they can be considered review slips", noted in `docs/eval/genuine_print_typos.md`.
+Nothing provisional is left; only 08 (SP opera +1) is open.

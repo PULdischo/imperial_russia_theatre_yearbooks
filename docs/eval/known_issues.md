@@ -23636,6 +23636,7 @@ that." Nothing is to be decided or marked before then. What exists to start from
   «Разрывъ-трава, фант. сказка» 31, «Синяя птица, сказка» 23, «Вій, др. сказка» 10, «Месть Амура, лир.
   сказка» 6, and the French and German ones (query log, 2026-10-13). «Снѣгурочка» is the one RG's
   question started from.
+- **«Калигула», Александринскій 1903-04** (Dumas père; 6 performances, 2 Feb-2 Apr 1904, printed «тр.»): the SP Drama review (f. 65, HathiTrust scan of Princeton's copy, read 2026-10-09) names the Act 5 «Вакхическій танецъ» by Кшесинская, Чумакова, Борхардтъ, Карсавина, Макарова, staged by Н. Легатъ. Not marked: waits for this investigation and for RG's scan of the Princeton volume (added 2026-10-29).
 - **Named roles of dancers in non-ballet titles** (roster credits): «Батюшкина дочка» (6 credits,
   1893-94) is the only drama found; «Моцартъ и Сальери» «слѣпой скрипачъ» (Moscow 1901-02) was taken
   as the opera and should be re-examined, since a play of that title was also given.

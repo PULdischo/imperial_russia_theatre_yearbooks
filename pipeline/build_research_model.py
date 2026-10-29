@@ -819,7 +819,11 @@ def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
 #: research row has no verbatim title and performance_source says where it
 #: comes from. The build fails if a row does not match exactly one event, if
 #: that event has a titled work in the Repertoire after all, or if the title
-#: does not match exactly one research.work.
+#: does not match exactly one research.work. Two optional columns (2026-10-29,
+#: RG, 30 Nov 1903 «Волшебная флейта»: the list and the review agree, the
+#: Repertoire cell omits it): `adds_to_bill` = yes lets the row add a work to a
+#: bill the Repertoire does print (the build then fails only if that work is
+#: already on it), and `work_genre` picks between works that share a title.
 SUPPLIED_PERFORMANCES_CSV = Path(__file__).parent / "research_corrections" / "supplied_performances.csv"
 FREE_PERIOD_NOTES_CSV = Path(__file__).parent / "research_corrections" / "free_period_notes.csv"
 
@@ -842,13 +846,22 @@ def load_supplied_performances(con: duckdb.DuckDBPyConnection) -> int:
         titled = con.execute("""SELECT count(*) FROM raw.event_entry_performance
                                 WHERE event_id = ? AND trim(coalesce(performance_title, '')) <> ''""",
                              [event_id]).fetchone()[0]
-        if titled:
+        adds = (row.get("adds_to_bill") or "").strip().lower() == "yes"
+        if titled and not adds:
             raise SystemExit(f"supplied_performances.csv: {event_id} now has {titled} titled work(s) in the "
                              f"Repertoire; drop the row or check it")
+        genre = (row.get("work_genre") or "").strip()
         w = con.execute("""SELECT work_id FROM research.work
-                           WHERE canonical_title = ? AND excerpt_of_work_id IS NULL""", [row["work_title"]]).fetchall()
+                           WHERE canonical_title = ? AND excerpt_of_work_id IS NULL
+                             AND (? = '' OR canonical_genre = ?)""", [row["work_title"], genre, genre]).fetchall()
         if len(w) != 1:
             raise SystemExit(f"supplied_performances.csv: {row['work_title']!r} matches {len(w)} works")
+        if adds:
+            on_bill = con.execute("""SELECT count(*) FROM raw.event_entry_performance eep
+                                     JOIN entities.work_link wl ON wl.raw_performance_id = eep.performance_id
+                                     WHERE eep.event_id = ? AND wl.work_id = ?""", [event_id, w[0][0]]).fetchone()[0]
+            if on_bill:
+                raise SystemExit(f"supplied_performances.csv: {row['work_title']!r} is already on {event_id}; drop the row")
         n = sum(1 for o in out if o[1] == event_id) + 1
         out.append((f"{event_id}__supplied{n}", event_id, w[0][0], row["source"], row["basis"]))
     if out:

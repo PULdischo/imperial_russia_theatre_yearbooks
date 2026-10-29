@@ -808,4 +808,16 @@ Read on the full-resolution scans by Claude during the blind column reads and th
   cell that night prints only «Фея куколъ, бал. / 2-е д. бал. Фіаметта.» Probably the Repertoire's omission (ledger 1903-04-14).
 - **Stats page p. 40:** Moscow «Русскихъ оперныхъ въ Большомъ театрѣ» «341,255 р. 05 к.» is 11,700 р. more than the 135
   events' printed receipts (kopecks agree); «въ Новомъ театрѣ» «41,889 р. 32 к.» is exactly one cell (26 Oct «Галька»,
-  825 р. 81 к.) short. Provisional, RG to read (ledger 1903-04-10, -12).
+  825 р. 81 к.) short. RG read both 2026-10-29, as transcribed: the stats page's own (ledger 1903-04-10, -12).
+- **1903-04 ballet season reviews: statements that disagree with the Repertoire and the ballet list** (read on the review images
+  by Claude; the list and the Repertoire agree with each other every time; RG 2026-10-29: "they can be considered review slips";
+  stored as printed; details `docs/eval/reconciliation/1903-04_review_{sp,msk}_ballet.csv`, ledger 1903-04-15, -16):
+  - **SP, f. 121:** «Балетныхъ спектаклей … было 35 (одинъ изъ нихъ смѣшанный)»; the stats and the list have 49, the Repertoire 54
+    with the charity bills, and the review's own per-ballet counts add to 50.
+  - **SP:** «25-го ноября» «Дочь Фараона» for 23 Nov (25 Nov was «Валкирія»); «Волшебное зеркало» «три раза» (2: 28 Dec, 14 Apr);
+    the season closed «для закрытія балетнаго сезона» on 2 May, but the last ballet was 6 May («Конекъ-Горбунокъ»).
+  - **Moscow, f. 203:** «34 балетныхъ спектакля, изъ нихъ 1 смѣшанный»: the stats print 34 + 1 mixed.
+  - **Moscow, f. 179:** 21 Sep «Лебединое озеро» for Рославлева's first appearance (21 Sep was «Донъ-Кихотъ»; first «Лебединое»
+    5 Oct); 25 Sep «Донъ-Кихотъ» with Гельцеръ (25 Sep was «Евгеній Онѣгинъ»; «Донъ-Кихотъ» 21 Sep).
+  - **Moscow, f. 199:** 14 Jan «Конекъ-Горбунокъ» for 11 Jan; 17 Jan «Донъ-Кихотъ» (dark; given 18 Jan).
+  - **Moscow, 7 Dec, Гримальди benefit:** the review gives Acts 1-2 of «Золотая рыбка», the Repertoire and the list Acts 2-3.

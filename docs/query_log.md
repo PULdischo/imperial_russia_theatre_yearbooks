@@ -23198,3 +23198,62 @@ where p.verbatim_title='Le Bésique chinois' and e.season='1898-99' order by 1
 ```
 
 Result: 4 cells, Михайловскій 16, 18, 19, 21 Jan 1899 (p. 24). On the scan all four print «Bésique» (q): the alias is right for them. 16 Jan prints «Bèsique» (grave accent), stored «Bésique»: an accent misread (docs/eval/scan_audit/spelling_reads_besique_alias_2026-10-29.csv). The 8 caught 1897-98 cells were read in the blind column read.
+
+## 2026-10-29 — 1903-04 SP ballet review, «5-го сентября» (p001 block b002): stored text, Repertoire 3 and 5 Sep, downstream review assertions
+
+```sql
+SELECT page_id, block_id, text FROM raw.review_block WHERE page_id LIKE 'review_1903-04_SP_ballet%' ORDER BY page_id, block_index;  -- regex [35]-го сентябр
+SELECT e.date, string_agg(p.verbatim_title||' '||coalesce(p.verbatim_genre,''),' / ') FROM research.event e JOIN research.theater t USING(theater_id)
+ JOIN research.performance p USING(event_id) WHERE e.season='1903-04' AND t.canonical_name='Маріинскій' AND e.date IN ('1903-09-03','1903-09-05') GROUP BY e.event_id, e.date;
+SELECT date_undate, performer_candidates_n, performer_candidate_ids FROM research.review_assertion WHERE block_id='review_1903-04_SP_ballet_p001__b002';
+```
+
+Result: block review_1903-04_SP_ballet_p001__b002 (f. 107) stores «5-го сентября … „Ручей“»; the image prints «3-го» (same glyph as the 3 of «1903» and «3-хъ» on the next lines). Repertoire: 3 Sep «Ручей бал.», 5 Sep «Пиковая дама оп.». research.review_assertion: 3 cast assertions from that block dated 1903-09-05.
+
+## 2026-10-29 — 1903-04 SP review «5-го»→«3-го сентября»: review rebuild on a copy of production (outputs/rebuild_review2_1903-04_2026-10-29) v. production
+
+```sql
+-- every base table, both directions, rebuilt copy v. pre_fix (= production at copy time)
+SELECT count(*) FROM (SELECT * FROM <schema>.<table> EXCEPT SELECT * FROM o.<schema>.<table>);
+-- review_credit content apart from mention_id/credit_id, by block
+SELECT block_id, count(*) FROM (SELECT <all cols except mention_id, credit_id> FROM o.research.review_credit EXCEPT SELECT ... FROM research.review_credit) GROUP BY 1;
+-- credits whose mention is in the same block
+SELECT count(*), count(*) FILTER (WHERE m.block_id = rc.block_id) FROM research.review_credit rc JOIN entities.review_mention m USING (mention_id);
+-- after promotion
+SELECT date_undate, role_surface, performer_surface FROM research.review_assertion WHERE block_id = 'review_1903-04_SP_ballet_p001__b002';
+```
+
+Result: content changes only in review_1903-04_SP_ballet_p001__b002 (3 assertions + 6 credits 1903-09-05 -> 1903-09-03) and review_1907-08_SP_ballet_p014__b007 (5 credits brought in line with the already-corrected text «Аленькій»); mentions, review_solo and review_dance_performer differ only in candidate-id order. Production credits linked to a mention in the same block: 1,755 of 2,169 before, 2,169 of 2,169 after (stale mention_id, off by one from 13425). Promoted; the three assertions read 1903-09-03.
+
+## 2026-10-29 — 1903-04 SP 30 Nov «Волшебная флейта» supplied: works sharing the title; rebuilt copy (outputs/rebuild_supplied_1903-04_2026-10-29) v. production
+
+```sql
+SELECT work_id, canonical_title, canonical_genre, excerpt_of_work_id IS NULL FROM research.work WHERE canonical_title LIKE 'Волшебная флейта%';
+-- every base table, both directions, rebuilt copy v. pre_fix
+SELECT performance_id, work_id, performance_order, discipline, performance_source FROM research.performance WHERE event_id = 'repertoire_1903-04_p014__s007';
+SELECT count(*) FROM research.events_with_dancers_performance WHERE event_id = 'repertoire_1903-04_p014__s007';
+```
+
+Result: two works «Волшебная флейта» (бал. 4bf88098…, оп. 8e59c173…). Rebuild: research.performance +1 (…__supplied1, the ballet, performance_source 'supplied: ballet productions list + season review'), research.event 1 row changed (n_works 2 -> 3); nothing else. events_with_dancers_performance shows 3 items for the event. Promoted.
+
+## 2026-10-29 — 1903-04 dancers in operas (evidence for dance markers) and the 30 Nov «Волшебная флейта» sources (logged late, same session)
+
+```sql
+-- ballet-roster credits naming operas, 1903-04
+SELECT s.season, s.city, c.credit_type, c.label, c.role_name, count(*), list(DISTINCT pe.family_name)[:6]
+FROM raw.person_entry_credit c JOIN raw.person_entry pe USING(entry_id) JOIN raw.source_pages s ON s.page_id = pe.page_id
+WHERE s.season = '1903-04' AND (c.label ILIKE '%оп.%' OR c.label ILIKE '%опер%' OR c.credit_type ILIKE '%opera%') GROUP BY ALL;
+SELECT s.city, c.credit_type, count(*) FROM raw.person_entry_credit c JOIN raw.person_entry pe USING(entry_id) JOIN raw.source_pages s ON s.page_id = pe.page_id
+WHERE s.season = '1903-04' AND pe.entity_type ILIKE '%ballet%' GROUP BY ALL;
+SELECT s.city, c.label, count(*), list(DISTINCT c.role_name)[:5] FROM raw.person_entry_credit c JOIN raw.person_entry pe USING(entry_id) JOIN raw.source_pages s ON s.page_id = pe.page_id
+WHERE s.season = '1903-04' AND c.credit_type = 'named_work' GROUP BY ALL;  -- compared with 1903-04 ballet and opera titles
+-- opera mentions in the 1903-04 ballet reviews (regex on reflowed text)
+SELECT b.page_id, p.printed_folio, b.text FROM raw.review_block b JOIN raw.review_page p USING(page_id) WHERE p.season = '1903-04';
+-- 30 Nov 1903: the Маріинскій cell and the review paragraph
+SELECT e.event_id, e.time_of_day, e.receipts_verbatim, string_agg(p.verbatim_title||' '||coalesce(p.verbatim_genre,''),' / '), e.printed_page_number
+FROM research.event e JOIN research.theater t USING(theater_id) JOIN research.performance p USING(event_id)
+WHERE e.season = '1903-04' AND t.canonical_name = 'Маріинскій' AND e.date = '1903-11-30' GROUP BY ALL;
+SELECT block_id, text FROM raw.review_block WHERE page_id IN ('review_1903-04_SP_ballet_p004','review_1903-04_SP_ballet_p005') ORDER BY page_id, block_index;
+```
+
+Result: rosters give only category counts for operas (SP 176 + 17 entries «въ … операхъ/оперѣ», Moscow 163 + 6 + 5 numbered), and no named opera role: every 1903-04 named_work credit is a ballet (with roster misspellings). The ballet reviews mention operas only once, as musical reminiscence (f. 113). 30 Nov: evening «Фея куколъ бал. / 2-е д. бал. Фіаметта», 2835 р. 20 к., p. 16; review_1903-04_SP_ballet_p005__b004 (f. 110) continues on f. 111 with «Волшебная флейта» opening the bill.
