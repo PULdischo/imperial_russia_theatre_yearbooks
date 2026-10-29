@@ -23276,3 +23276,14 @@ SELECT block_id, text FROM raw.review_block WHERE page_id IN ('review_1903-04_SP
 ```
 
 Result: rosters give only category counts for operas (SP 176 + 17 entries «въ … операхъ/оперѣ», Moscow 163 + 6 + 5 numbered), and no named opera role: every 1903-04 named_work credit is a ballet (with roster misspellings). The ballet reviews mention operas only once, as musical reminiscence (f. 113). 30 Nov: evening «Фея куколъ бал. / 2-е д. бал. Фіаметта», 2835 р. 20 к., p. 16; review_1903-04_SP_ballet_p005__b004 (f. 110) continues on f. 111 with «Волшебная флейта» opening the bill.
+
+## 2026-10-29 — Is the редакція's secretary М. И. Бутыльникова in the printed staff lists?
+
+Question: Дризенъ's report of Dec. 1909 (RGIA Д. 163, PDF p. 71) names «секретаря при редакціи М. И. Бутыльниковой».
+Does she appear in any Roster season?
+```sql
+select p.family_name, p.first_name, p.patronymic, p.institution, p.heading_path, s.season, p.page_id
+from raw.person_entry p join raw.source_pages s using(page_id)
+where p.family_name ilike '%утыльн%' or p.family_name ilike '%утылк%';
+```
+Result: 0 rows. Also no other mention in docs/rgia/ (only A051, Энгель's postcard «Г-ну М. Бутыльникову»).
