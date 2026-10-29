@@ -22667,6 +22667,25 @@ SELECT disciplines, count(*) FROM research.events_with_dancers WHERE disciplines
 
 Result (outputs/full_run, after build_research_model.py): 2,194 events — ballet on the bill 2,063; dancers known in a non-ballet item 129; both 2. 3,053 performance rows. 0 visiting-troupe events.
 
+## 2026-10-29 — Which seasons have the largest ballet-count discrepancies (stats page vs ballet lists vs Repertoire)?
+
+```
+uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir <scratch>
+-- read <scratch>/ballet_counts.csv (level 3: stats ballet+mixed-with-ballet+feerie, list performances, Repertoire ballet sessions)
+```
+
+Result: 38 season-cities: 16 all agree, 6 stats = list, 6 list = Repertoire, 3 stats = Repertoire, 5 all differ, 2 no stats page (1890-91, list = Repertoire). Widest spreads: 1903-04 SP 49/49/54, 1907-08 SP 52/52/56, 1903-04 Moscow 34/36/37, 1907-08 Moscow 48/47/50, 1904-05 SP 46/48/49, 1910-11 SP 49/52/50, 1901-02 Moscow 49/46/49. 1905-06 and 1906-07 absent (no ballet lists).
+
+## 2026-10-29 — Ballet lists and Repertoire ballet events for 1905-06 and 1906-07
+
+```sql
+select season, city, count(*) list_rows from raw.production_entry where season in ('1905-06','1906-07') group by all order by all;
+select e.season, e.city, count(distinct e.event_id) rep_ballet_events from research.event e join research.performance p using(event_id)
+where e.event_status='performed' and p.genre_family='ballet' and e.season in ('1905-06','1906-07') group by all order by all;
+```
+
+Result: no ballet-list rows for either season. Repertoire ballet events: 1905-06 Moscow 30, SP 42; 1906-07 Moscow 53, SP 55. (docs/season_stats/lines.csv: 1906-07 «Балетныхъ» SP 53, Moscow 49; 1905-06 has no stats page.) A first attempt at the third query errored (raw.season_stat_line has no `city` column).
+
 ## 2026-10-29 — 1897-98 reconciliation: Repertoire vs season totals, by city and category
 
 ```
