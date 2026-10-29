@@ -23188,3 +23188,13 @@ select e.season, count(*) from research.performance p join research.event e usin
 ```
 
 Result: raw.event_entry_performance 5, research.performance 5, research.work 2 -> 1 (crosswalk «Джентльманъ» -> «Джентльмэнъ»); «Джентльмэнъ» 92 -> 97; production = tested copy. «Джентльменъ» (not checked): 1899-00 4, 1900-01 1, 1901-02 1, 1902-03 1, 1907-08 13.
+
+## 2026-10-29 — Cells the «Le Bésique chinois» alias catches in 1898-99 (alias rule: scan every caught cell)
+
+```sql
+select e.date, e.time_of_day, e.event_id, e.printed_page_number, p.verbatim_title
+from research.performance p join research.event e using(event_id)
+where p.verbatim_title='Le Bésique chinois' and e.season='1898-99' order by 1
+```
+
+Result: 4 cells, Михайловскій 16, 18, 19, 21 Jan 1899 (p. 24). On the scan all four print «Bésique» (q): the alias is right for them. 16 Jan prints «Bèsique» (grave accent), stored «Bésique»: an accent misread (docs/eval/scan_audit/spelling_reads_besique_alias_2026-10-29.csv). The 8 caught 1897-98 cells were read in the blind column read.
