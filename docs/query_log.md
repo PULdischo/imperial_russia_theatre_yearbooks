@@ -23084,3 +23084,22 @@ uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_th
 ```
 
 Result: only research.production_work changed (balletproductions_1897-98_SP_p000__e006 n_matched_dates 2 -> 3); production = tested copy. Ballet counts 1897-98: Moscow 51 / 51 / 51; SP stats 50, list 51, Repertoire 50; one list-only date left, 25 Oct «Волшебная флейта».
+
+## 2026-10-29 — 1907-08 review-text slips (RG: "fix"): three corrections tested on copies and promoted
+
+`apply_review_text_corrections.py` on a copy of `outputs/reviews/merged_full`, then `match_review_mentions.py` -> `build_reviews_duckdb.py`
+-> `build_review_assertions.py` on a copy of production; every base table compared both ways (EXCEPT ALL), mentions also on content
+(block, offsets, surface, entity), since mention_ids renumber.
+```sql
+select block_id, mention_type, char_start, char_end, surface, entity_id, link_method, link_confidence from <A>.entities.review_mention
+except all select ... from <B>.entities.review_mention;   -- both directions
+select * from test.research.review_assertion except all select * from pre.research.review_assertion;
+select count(*) from raw.review_block where text like '%Аленкій%' or text like '%Заёль—г-жа Заёль%' or text like '%исполняла была%';
+```
+Result: 4 replacements at their expected counts («Аленкій»→«Аленькій» ×2 SP p014; doubled «Заёль—г-жа» SP p002; «исполняла»→«исполнена
+была» MSK p005). raw.review_block 4 rows; entities.review_mention: 28 SP 1907-08 mentions only shifted offsets (same entities), plus 4 bare
+«Потомъ» mentions in 1901-02 dropped (unlinked false positives on the adverb; the work «Потомъ» no longer exists after the 1904-05 title audit,
+so any rebuild drops them); research.review_assertion +1 (3187: «Заёль — г-жа Сѣдова», «Ручей», 30 Sep 1907, hidden by the doubling);
+watermark 3186 -> 3187; nothing else. 27,330 -> 27,326 mentions; 2,657 -> 2,658 assertions. Production unchanged since the snapshot; backup
+outputs/backups/review_text_1907-08_2026-10-29/ (db, sqlite, review_block, mentions); promoted; sqlite rebuilt. Left: «Аленкій» also in
+review_1908-09_SP_ballet_p001__b003 (not scan-checked, outside this fix).
