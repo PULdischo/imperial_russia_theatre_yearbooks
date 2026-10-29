@@ -22472,3 +22472,14 @@ where n.includes_dance is distinct from o.includes_dance;
 Result: 57 of 1,091 cells differed (first pass against research.performance gave 64, research-layer normalisation; against raw 58, one of them the German «Prolog.» already in the annotation). After the fix: corrected titles fold into their works; 7 excerpts linked to parents; includes_dance «3 и 4 д. оп. Юдифь» 11 Jan 1905 yes, «сц. 4 д. оп. Гамлетъ» 16 Feb blank; season_stat_check unchanged. Pre-existing splits found: Бѣшеныя/Бѣшеные деньги 41+39, Лакмэ/Лакме 109+19 (+Лакма 1, Лакмѣ 1); merged after RG's go-ahead: 80 and 129; only work_id of 59 performances changed.
 
 Dancer-inheritance sizing (rejected by RG): 7 excerpt performances in the corpus have a parent in works_with_dancers.csv for the same season and city.
+
+## 2026-10-29 — every stored «Бѣшеные деньги», «Лакме», «Лакма», «Лакмѣ» read on the scans; fix test
+
+```sql
+select e.season, e.page_id, e.event_id, e.date_text, e.theater, e.time_of_day, p.performance_title, p.genre, e.printed_page_number, re.date
+from raw.event_entry_performance p join raw.event_entry e using(event_id) left join research.event re using(event_id)
+where p.performance_title in ('Бѣшеные деньги','Лакме','Лакма','Лакмѣ') order by 1,2;
+select canonical_title, count(p.performance_id) from research.work w left join research.performance p using(work_id)
+where canonical_title ilike 'Лакм%' or canonical_title ilike 'Бѣшен%' group by all;
+```
+Result: 59 cells (39 Бѣшеные, 18 Лакме, 1 Лакма, 1 Лакмѣ). Scan reads: Бѣшеныя 39/39, Лакме 18/18 as printed, Лакма and Лакмѣ = Лакмэ. After the fix: only 41 verbatim_title values change; Бѣшеныя деньги 80, Лакмэ 129 (unchanged).

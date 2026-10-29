@@ -30,6 +30,8 @@ Coverage, 2026-10-27 (2,729 events, 47 corrected):
 | 1909-10 | every column, both cities, blind (2026-10-28): 1,097 events (Маріинскій 213 incl. every heading word for word), every figure as stored; one session label fixed (20 Feb Alex) |
 | 1910-11 | every column, both cities, blind (agents read the scan before seeing the data): 1,134 cells with works, none misread; 14 kopeck losses in the parse restored via receipts_print_typos.csv |
 
+`spelling_reads_beshenyya_lakme_2026-10-29.csv` -- every Repertoire cell stored «Бѣшеные деньги», «Лакме», «Лакма» or «Лакмѣ» (59, 1893-94..1907-08), read on the scans after the 1904-05 title audit found the first misreads: 41 misread (fixed), 18 «Лакме» as printed.
+
 Separate from this, the Binding Fold Log (RG's readings of the physical volumes) covers the gutter columns of 1892-93 to
 1897-98; see `docs/eval/fold_log/`.
 
