@@ -106,10 +106,6 @@ closes, and add new open items here as well as in their own entry.
   (`research.review_solo`, 96). The «г.» gap FIXED 2026-10-22 (assertions
   1,939 -> 3,157; ids stable). Suspects CSV now 48 rows. Open: fixes 1-5, the
   rest of 6, and triage of the new disagreeing rows (B+C+D+F 1,050 -> 1,513).
-- #157: Карменъ «бал.», Moscow Большой matinee 28 Jan 1907 (1906-07, printed p. 113,
-  sole item, 971 р. 01 к.). RG (2026-10-22): "I still don't know about" it. No
-  1906-07 ballet list to check; raw stays as printed either way. The 16 Sep 1907
-  matinee is decided (#157).
 - #141: the 7 annotations that name works. Deferred by RG (2026-10-09) to the
   research-layer stage, to decide with all excerpt/gala/mixed-event questions.
 - #114/#146 comedy-ballets: **DECIDED 2026-10-12** (entry at the end of this
@@ -24109,6 +24105,7 @@ From the `entities.work_genre_candidate` list (36 titles / 72 rows, docs/query_l
 - **Applied in the research layer only:** one row in `pipeline/research_corrections/performance_work_overrides.csv`. `research.performance` for this matinee now points at «Жизель» (58 performances; Карменъ «бал.» is down to 1). `verbatim_title`/`verbatim_genre` keep «Карменъ», «бал.», and `performance_source` = «repertoire; work from Season Review». Rebuilt `build_research_model.py` and the sqlite. Diff against the backup (`outputs/backups/shashki_onegin_2026-10-22/imperial_theaters.pre_giselle.duckdb`): only research.performance (1 row) and research.work (2 appearance counts) changed. Added to `genuine_print_typos.md`. Not republished.
 - **Still open:** the other Карменъ «бал.» matinee, Большой 28 Jan 1907 (1906-07, printed p. 113, 971 р. 01 к.). RG: "this one I still don't know about." There is no 1906-07 ballet list, and no Season Review has been checked for that date. Raw stays as printed.
 - **REVERSED 2026-10-28: the 16 Sep 1907 matinee is the opera «Карменъ».** New evidence from the 1907-08 reconciliation (`docs/eval/reconciliation/README.md`, 1907-08): the yearbook's «Списокъ пьесъ» (1907-08_ProductionStats.pdf p. 135, transcribed blind) lists the opera «Карменъ» on 16 Sep among its 12 dates and has no ballet that day; the season totals fit only with it as opera (Moscow ballet +786.51 -> +50.00 р., opera -700.51 -> +36.00 р.). RG: "Carmen the opera was performed, and бал. was the slip." `performance_work_overrides.csv` now points the matinee at «Карменъ» [оп.] (Жизель 60 -> 59, Карменъ оп. 241 -> 242). Rebuilt on a copy, promoted, backup `outputs/backups/carmen_opera_1907_2026-10-28/`; sqlite rebuilt. The review's «сентября 16-го» for Жизель is now read as the review's slip. Ledger 1907-08-01.
+- **28 Jan 1907 DECIDED 2026-10-29: the opera «Карменъ» too** (RG: "I think it's a genre misprint just like the other one"). The 1906-07 reconciliation (`docs/eval/reconciliation/README.md`, 1906-07; ledger 1906-07-01) found the season totals fit only with it as opera: Moscow ballet 50 -> 49 and opera 163 -> 164, both = printed. The blind column read confirms the print says «бал.». Second row in `performance_work_overrides.csv`; raw keeps «Карменъ, бал.». Rebuilt on a copy (1 event, 1 performance, 2 work counts; the «Карменъ» [бал.] work now has 0 appearances), promoted, backup `outputs/backups/scan_reads_1906-07_2026-10-29/`. #157 has nothing open.
 
 ## Issue #158: research labels ignored the art-form rulings in work_artform_overrides.csv -- FIXED 2026-10-22 (RG: "okay do this")
 

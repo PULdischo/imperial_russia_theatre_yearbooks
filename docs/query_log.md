@@ -23287,3 +23287,124 @@ from raw.person_entry p join raw.source_pages s using(page_id)
 where p.family_name ilike '%утыльн%' or p.family_name ilike '%утылк%';
 ```
 Result: 0 rows. Also no other mention in docs/rgia/ (only A051, Энгель's postcard «Г-ну М. Бутыльникову»).
+
+## 2026-10-29 — 1906-07 reconciliation, step 1-2: compare_season_stats.py run
+
+```sql
+-- pipeline/compare_season_stats.py (REP_SQL + LEVEL2_SQL) against outputs/full_run/imperial_theaters.duckdb
+```
+
+Result: 1906-07 Moscow 619 events / 610 printed, +7,872.31 р.; SP 609 / 575, +710.92 р. Lines: SP Михайловскій drama 49/25 (+24), SP ballet 55/53, SP Alex drama 198/197 (+1,706.48), SP opera 161/159 (+133.10), SP French 115/115 (−1,128.60), SP German 25/25 (−0.06); Moscow ballet 51/49 (+4,810.51), opera 163/164 (−1,308.65), concert 3/0, Малый 218/217 (+594.90), Новый 181/180 (+128.00). German −0.06 is the only line with single-slip candidates (12 half-kopeck cells).
+
+## 2026-10-29 — 1906-07 events without receipts, charity, free, multi-discipline, or Михайловскій Russian drama
+
+```sql
+select e.city, t.canonical_name as theater, e.date, e.time_of_day tod, e.receipts_total_kopecks/100.0 rub,
+  e.is_charity ch, e.is_free fr, e.is_student_performance st, e.is_benefit bn, e.disciplines,
+  e.printed_page_number pg, left(coalesce(e.annotation,''),70) ann,
+  (select string_agg(p.verbatim_title||coalesce(', '||p.verbatim_genre,''),' + ' order by performance_order) from research.performance p where p.event_id=e.event_id) works
+from research.event e join research.theater t using(theater_id)
+where e.season='1906-07' and e.event_status='performed'
+  and (e.receipts_total_kopecks is null or e.is_charity or e.is_free or e.n_works=0 or e.disciplines like '%;%'
+       or t.canonical_name like 'Михайлов%' and e.disciplines not like '%French%' and e.disciplines not like '%German%')
+order by e.city, t.canonical_name, e.date;
+```
+
+Result: 87 events. Михайловскій 23 Apr–17 May 1907: 24 Russian-drama events with no receipts, headed 23 Apr «Спектакли Московскаго Художественнаго Театра» (incl. 9 May matinée «На памятникъ А. П. Чехову»). Mikh 6 Feb French bill stored with no receipts (receipts_verbatim «11?7 р. 08 к.»). Moscow 24 Feb Большой benefit (Травіата + Жизель) has no receipts.
+
+## 2026-10-29 — 1906-07 events by city × theater × disciplines × kind (paying / free / charity / MXAT)
+
+```sql
+select e.city, t.canonical_name th, coalesce(e.disciplines,'(none)') disc, e.companies,
+  case when e.theater_id in (select theater_id from research.theater where canonical_name like 'Михайлов%') and e.date between '1907-04-23' and '1907-05-17' and e.disciplines='Russian drama' then 'MXAT'
+       when e.is_free then 'free' when e.is_charity and e.receipts_total_kopecks is null then 'charity_norec'
+       when e.is_charity then 'charity_rec' when e.receipts_total_kopecks is null then 'other_norec' else 'paying' end kind,
+  count(*) n, sum(e.receipts_total_kopecks)/100.0 rub
+from research.event e join research.theater t using(theater_id)
+where e.season='1906-07' and e.event_status='performed'
+group by all order by 1,2,3,5;
+```
+
+Result: e.g. Moscow Большой ballet 47 paying (105,250.52) + 3 free + 1 charity; opera 163 paying (373,969.24) + 3 charity; Малый 214 paying + 3 free + 1 charity; Новый 178 paying + 3 free; SP Mikh Russian drama 24 paying (10,353.15 = printed exactly) + 1 free + 1 charity + 24 MXAT (only 1 of 24 tagged company 'Moscow Art Theatre'); SP ballet 52 paying (168,182.50 = printed) + 2 free + 1 charity; SP opera 158 paying + 1 free + 2 charity; SP German 24 paying + 1 charity with receipts (2,809.80).
+
+## 2026-10-29 — 1906-07 hypothesis events (28 Jan Карменъ, 6 Feb Mikh, 24 Feb Большой, Новый at 128.00)
+
+```sql
+select e.event_id, t.canonical_name th, e.date, e.time_of_day, e.receipts_total_kopecks/100.0 rub, e.receipts_verbatim, e.printed_page_number pg, e.annotation,
+ (select string_agg(p.verbatim_title||coalesce(', '||p.verbatim_genre,''),' + ' order by performance_order) from research.performance p where p.event_id=e.event_id) works
+from research.event e join research.theater t using(theater_id)
+where e.season='1906-07' and (e.receipts_total_kopecks in (12800, 97101, 481051, 112860, 233890, 714941, 170648, 13310, 59490)
+  or (t.canonical_name like 'Михайлов%' and e.date='1907-02-06') or (t.canonical_name='Большой' and e.date in ('1907-01-28','1907-02-24')));
+```
+
+Result: 28 Jan 1907 Большой matinée «Карменъ, бал.» 971.01; Mikh 6 Feb receipts null, verbatim «11?7 р. 08 к.»; 24 Feb Большой benefit no receipts; no Новый event at exactly 128.00.
+
+## 2026-10-29 — 1906-07 half-kopeck cells
+
+```sql
+select disciplines, count(*) from research.event e where season='1906-07' and receipts_verbatim like '%½%' group by 1;
+```
+
+Result: German drama 12 (all Александринскій) = the German line's −0.06.
+
+## 2026-10-29 — 1906-07 events per Repertoire page (page → city, printed page, dates)
+
+```sql
+select split_part(event_id,'__',1) pg, min(printed_page_number), string_agg(distinct city,','), min(date), max(date), count(*) from research.event where season='1906-07' group by 1 order by 1;
+```
+
+Result: 50 pages p000-p049, printed pp. 84-133; even = SP, odd = Moscow, each pair covering the same ~10 days.
+
+## 2026-10-29 — 1906-07 blind column reads v. stored research.event (per theater)
+
+```sql
+select e.date::varchar, e.time_of_day, e.receipts_total_kopecks, e.receipts_verbatim, e.event_status, e.event_id, (select string_agg(p.verbatim_title,' + ' order by performance_order) from research.performance p where p.event_id=e.event_id) from research.event e join research.theater t using(theater_id) where e.season='1906-07' and t.canonical_name=?  -- ×6 theaters, compared in scratchpad cmp_reads.py
+```
+
+Result: Малый 278 rows, 0 diffs; Новый 1 (9 Feb damaged digit); Маріинскій 1 (4 Dec damaged digit); Большой 30 Dec session (Аида stored evening, printed утро), 28 Jan evening kopecks; Михайловскій 6 Feb (stored null), 4 Mar, 22 Mar damaged; Александринскій 19 Nov matinée 625.75 stored null, 2 Mar 180? damaged.
+
+## 2026-10-29 — 1906-07 Большой benefits and events near residual amounts
+
+```sql
+select e.date, e.time_of_day, e.receipts_total_kopecks/100.0 rub, e.disciplines, e.is_benefit, e.annotation,
+ (select string_agg(p.verbatim_title,' + ') from research.performance p where p.event_id=e.event_id) w
+from research.event e join research.theater t using(theater_id)
+where e.season='1906-07' and t.canonical_name in ('Большой','Малый','Новый','Александринскій','Маріинскій')
+ and (e.receipts_total_kopecks between 700000 and 730000 or e.receipts_total_kopecks in (481051,233890,383950,330991,59490,12800,170648,13310)
+      or e.receipts_total_kopecks between 470000 and 490000 and t.canonical_name='Большой' or e.is_benefit and t.canonical_name='Большой')
+order by e.date;
+```
+
+Result: 10 Большой benefits listed (Шаляпинъ 16 Jan 13,472.22 etc.); no event equals 7,149.41, 4,810.51, 2,338.90 or the Alex/Moscow drama residuals.
+
+## 2026-10-29 — 1906-07 Александринскій annotated events; 1-2 event subsets summing to the Alex gap
+
+```sql
+select e.date, e.time_of_day, e.receipts_total_kopecks/100.0, e.is_student_performance, e.is_free, e.is_charity, e.is_benefit, left(e.annotation,60) from research.event e join research.theater t using(theater_id) where e.season='1906-07' and t.canonical_name='Александринскій' and e.annotation is not null order by e.date;
+select e.date::varchar||' '||e.time_of_day, e.receipts_total_kopecks from research.event e join research.theater t using(theater_id) where e.season='1906-07' and t.canonical_name='Александринскій' and e.disciplines='Russian drama' and e.receipts_total_kopecks is not null;  -- then 1-2 subset search in Python
+```
+
+Result: 7 student matinées with receipts (4,933.45 р.; 5,559.20 with 19 Nov 625.75); one chance pair (1 Sep + 24 Jan) = 2,337.23, nothing meaningful.
+
+## 2026-10-29 — 1906-07 Alex 19 Nov stored works; event-id lists for the ledger (MXAT run, Moscow excluded, SP charity, SP free, Moscow «Гибель Фауста»)
+
+```sql
+select e.event_id, e.receipts_verbatim, e.receipts_source, p.performance_order, p.verbatim_title, p.verbatim_genre from research.event e join research.theater t using(theater_id) left join research.performance p using(event_id) where e.season='1906-07' and t.canonical_name='Александринскій' and e.date='1906-11-19';
+select e.event_id from research.event e join research.theater t using(theater_id) where e.season='1906-07' and e.event_status='performed' and <condition per list>;
+```
+
+Result: 19 Nov matinée has 4 works incl. «Карантинъ, опера-вод.», receipts null; MXAT 24, Moscow excluded 8, SP charity 9, SP free 10, Faust 3 ids (in outcome_ledger.csv 1906-07 rows).
+
+## 2026-10-29 — 1906-07 fixes (19 Nov receipts, 30 Dec session, 28 Jan «Карменъ» = opera): rebuilt copy (outputs/rebuild_1906-07_2026-10-29) v. production, then production after promotion
+
+```sql
+-- rebuilt db with pre_fix.duckdb attached as o; every BASE TABLE in both:
+SELECT count(*) FROM (SELECT * FROM <s>.<t> EXCEPT ALL SELECT * FROM o.<s>.<t>);  -- and the reverse
+SELECT event_id,date,time_of_day,event_status,receipts_total_kopecks,disciplines,companies,genre_families FROM research.event WHERE event_id IN (<changed>);
+SELECT performance_id,work_id,discipline,discipline_basis,company,genre_family FROM research.performance WHERE performance_id IN (<changed>);
+SELECT * FROM research.work WHERE work_id IN (<changed>);  SELECT * FROM research.season_stat_check WHERE season='1906-07';
+-- production after promotion
+SELECT event_id,date,time_of_day,receipts_total_kopecks,disciplines FROM research.event WHERE event_id IN ('repertoire_1906-07_p014__s021','repertoire_1906-07_p023__s019','repertoire_1906-07_p023__s020','repertoire_1906-07_p029__s004');
+```
+
+Result: only raw.event_entry 3, analysis.event_entry 3, research.event 4 (p014__s021 receipts null -> 62575; p023__s019 morning -> evening no_performance; p023__s020 evening -> morning 142028; p029__s004 ballet -> opera), research.performance 1 (p029__s004__w1 -> work a5733fc5 «Карменъ» оп., discipline opera), research.work 2 («Карменъ» оп. 242 -> 243, бал. 1 -> 0), research.season_stat_check 1 (SP receipts +710.92 -> +1,336.67). Validation errors same 265 pages; person_link 0 shift blocks. compare_season_stats on the copy: Moscow ballet 49/49 +3,839.50, opera 164/164 −337.64 (+3,647.55 Faust as concert), Alex 197/198 +2,332.23. Production after promotion shows the same four rows.

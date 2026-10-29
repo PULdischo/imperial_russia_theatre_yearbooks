@@ -1007,3 +1007,53 @@ open 1 (SP opera +1, held for the opera list).
 `1903-04_rg_row12_novy_26oct.png`); 14 «Волшебная флейта» on 30 Nov supplied in the research layer (two sources agree; crops
 `1903-04_rg_row14_*.png`); 15, 16 the reviews' own slips, "they can be considered review slips", noted in `docs/eval/genuine_print_typos.md`.
 Nothing provisional is left; only 08 (SP opera +1) is open.
+
+## 1906-07 (2026-10-29): every column read blind; the Михайловскій surplus is the Moscow Art Theatre; «Карменъ» is the opera (RG), Moscow counts exact; two misreads fixed
+
+The stats page (`1906-07_ProductionStats.pdf`, page number too faint) prints SP drama by venue, opera, ballet, French, German;
+Moscow drama by venue, opera, ballet. Counts and receipts, **no footnotes**, no concert or mixed line. Transcription checked
+against the scan (2026-10-29): all 13 lines as printed. The SP drama subtotal prints 81.00 р. more than its lines (1906-07-16).
+No ballet productions list for the season. Ballet reviews exist for both cities (not yet checked).
+
+**Step 1, city totals** (Repertoire / printed): Moscow 619 / 610, +7,872.31 р.; SP 609 / 575, +710.92 р.
+
+**What the stats leave out** (`excluded_by_yearbook`): the Moscow Art Theatre's visit to the Михайловскій, 23 Apr-17 May
+1907, 24 events with no receipts, headed «Спектакли Московскаго Художественнаго Театра» on its first day only (1906-07-09);
+every charity bill with no receipts (Moscow 7, SP 9) and the Moscow 24 Feb staff benefit, which prints none (-04, -10). The
+free school matinées (14 Nov, 6 Dec, 28 Feb) are counted in Moscow; in SP all but two fit (-13). The one charity bill with
+receipts, the German 10 Apr (2,809.80), is in the German line.
+
+**Step 2, category lines** (those events out):
+
+| City | Line | Printed | Repertoire | Receipts gap | Reading |
+|---|---|---|---|---|---|
+| Moscow | ballet | 49 | 49 (46 paying + 3 free) | +3,839.50 | after 28 Jan «Карменъ, бал.» = the opera (-01, RG) |
+| Moscow | opera | 164 | 164 | +3,309.91 | with «Карменъ»; includes the 3 «Гибель Фауста» concerts (no concert line, -03) |
+| Moscow | Большой together | 213 | 213 | +7,149.41 | every figure as printed; the stats page's own, provisional (-02) |
+| Moscow | Малый | 217 | 217 | +594.90 | every figure as printed (-05) |
+| Moscow | Новый | 180 | 181 | +128.00 | every figure as printed (-06) |
+| SP | Александринскій | 197 | 196 | +2,332.23 | after restoring 19 Nov 625.75, dropped in extraction (-11) |
+| SP | Михайловскій drama | 25 | 25 | 0.00 | exact once the MXAT run is out |
+| SP | Маріинскій drama | 1 | 1 | 0.00 | Стрѣльская benefit, 27 Jan |
+| SP | opera | 159 | 159 | +133.10 | (-12) |
+| SP | ballet | 53 | 54 | 0.00 | 52 paying exact; one of the two free matinées not counted (-13) |
+| SP | French | 115 | 115 | −1,128.60 | 6 Feb «11?7 р. 08 к.» stored with none; 1127.08 → −1.52 (-14, RG) |
+| SP | German | 25 | 25 | −0.06 | 12 half-kopecks (#161) (-15) |
+
+**Step 3, every column read blind (2026-10-29).** Six agents transcribed all six theater columns from the full-resolution
+images in the Repertoire PDF before anything was compared (`docs/eval/scan_audit/1906-07_scan_reads.csv`, 1,713 rows,
+every date × session incl. dashes). Малый (278) matches to the kopeck; Новый, Маріинскій, Большой, Михайловскій and
+Александринскій match except these, each read again by Claude on the scan:
+- Александринскій 19 Nov 1906 matinée «625 р. 75 к.» stored with no receipts: **extraction error, fixed**;
+- Большой 30 Dec 1906 «Аида» printed in the утро half (вечеръ is a dash), stored as evening: **extraction error, fixed**;
+- Большой 28 Jan 1907 evening «2321 р. 5? к.»: the 5 is the tens digit, stored 2321.05; RG reads «55» from the crop, to check on a HathiTrust copy before changing it (-08);
+- Михайловскій 6 Feb «11?7 р. 08 к.» (-14; RG: left unstored, to read on a HathiTrust copy with 28 Jan); damaged digits left as stored: Новый 9 Feb «36? р.», Маріинскій 4 Dec «35?5 р.»,
+  Александринскій 2 Mar «180? р.», Михайловскій 4 Mar «128? р.» and 22 Mar «2? к.». None of these closes a gap.
+
+**Applied 2026-10-29** (RG: "Yes, apply both"; «Карменъ»: "a genre misprint just like the other one"): `fix_1906_07_scan_reads.py` (raw: 19 Nov receipts; 30 Dec session labels swapped, ids unchanged) and a `performance_work_overrides.csv` row (28 Jan «Карменъ» -> the opera; raw keeps «бал.»). Rebuilt on a copy (`outputs/rebuild_1906-07_2026-10-29/`): raw/analysis event_entry 3 rows, research.event 4, performance 1, work 2 (the two «Карменъ» counts; the ballet one now 0), season_stat_check 1; nothing else; validation errors the same 265 pages; person_link 0 shift blocks. Promoted (DB, parsed, the two raw files), sqlite rebuilt, not republished; backup `outputs/backups/scan_reads_1906-07_2026-10-29/`. The scans p000, p002 and p004 have duplicated strips (a scanner artefact) on dark days in the
+Михайловскій; no content is affected. A stray copy `outputs/full_run/raw/repertoire_1906-07_p014.raw 2.json` sits beside the
+real raw file (a sync duplicate?), left untouched.
+
+**Outcome so far:** 16 ledger rows. corrected 1 (30 Dec; the 19 Nov fix is inside -11), excluded_by_yearbook 3, classification 2 («Карменъ», «Гибель Фауста»),
+comparison_rule 1, yearbook_own 6 (provisional), open 3 (6 Feb French figure, 28 Jan kopecks for HathiTrust, the SP free-matinée count). Not yet done: ballet reviews,
+the MXAT company label in the research layer, titles audit.
