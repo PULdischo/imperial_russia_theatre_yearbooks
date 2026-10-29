@@ -920,7 +920,7 @@ work through the id crosswalk), production = tested copy, sqlite rebuilt, not re
 
 | Line | Gap | Reading |
 |---|---|---|
-| Moscow ballet | 48 = 48, +2,743.80 | **open** (RG, since 2026-10-27): every cell read twice, lists and reviews agree |
+| Moscow ballet | 48 = 48, +2,743.80 | **open** (RG, since 2026-10-27): every cell read twice, lists and reviews agree; every yearbook-internal test exhausted 2026-10-29 (ledger 1897-98-09); next: the volume, RGIA |
 | SP Александринскій drama | 187 = 187, −587.95 | yearbook_own (provisional) |
 | SP Маріинскій opera | 122 / 123, receipts exact | yearbook_own (provisional): no missing session on the scan |
 | Moscow Малый | 206 / 207, −89.40 | yearbook_own (provisional): no missing session on the scan |

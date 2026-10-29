@@ -23103,3 +23103,17 @@ so any rebuild drops them); research.review_assertion +1 (3187: «Заёль —
 watermark 3186 -> 3187; nothing else. 27,330 -> 27,326 mentions; 2,657 -> 2,658 assertions. Production unchanged since the snapshot; backup
 outputs/backups/review_text_1907-08_2026-10-29/ (db, sqlite, review_block, mentions); promoted; sqlite rebuilt. Left: «Аленкій» also in
 review_1908-09_SP_ballet_p001__b003 (not scan-checked, outside this fix).
+
+## 2026-10-29 — 1897-98 Moscow ballet +2,743.80: has the yearbook been exhausted?
+
+```
+-- (1) Moscow ballet / mixed / opera gaps, every season: <scratch>/family_totals.csv from compare_season_stats.py
+-- (2) the 48 Moscow ballet-line events (compare_season_stats.LEVEL2_SQL + classify_event = 'ballet'), then in Python:
+select event_id, date, time_of_day, receipts_total_kopecks, annotation,
+  (select string_agg(verbatim_title,' + ') from research.performance p where p.event_id=e.event_id)
+from research.event e where event_id in (<the 48>) order by date, time_of_day
+-- contiguous date runs, all subsets of 1-5 events, month totals; copied-figure, digit-swap and double-entry tests against every 1897-98 event
+-- (3) raw.review_block 1897-98 ballet reviews searched for сборъ / рубл / «р.»; raw.season_stat_line 1897-98 «Балетныхъ»
+```
+
+Result: Moscow ballet matches the stats page exactly in 1893-94..1896-97, 1899-00, 1901-02, 1908-09, 1909-10, 1910-11 (small or count-linked gaps elsewhere); 1897-98 is the outlier, no recurring pattern. 48 events, 67,138.28, all with printed receipts. No contiguous run equals 2,743.80 (nearest 7-14 Jan 1898, 2,740.51); no subset of 1-5 events equals it; no ballet figure minus the gap equals any other 1897-98 event's figure; no digit-swap; no double entry. Months: Sep 4,959.35, Oct 8,440.83, Nov 6,986.49, Dec 7,039.69, Jan 12,621.24, Feb 24,298.72, Apr 2,791.96. Reviews quote no receipts. Stats line «48 (64,394 р. 48 к.)»; kopecks differ (.28 v .48), so not a roubles-only mis-addition.

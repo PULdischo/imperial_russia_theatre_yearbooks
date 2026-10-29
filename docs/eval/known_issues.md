@@ -49,6 +49,7 @@ closes, and add new open items here as well as in their own entry.
   2026-10-29: every 1897-98 column read again, blind (docs/eval/scan_audit/1897-98_scan_reads.csv): every Большой
   ballet figure as stored, no session missing anywhere; the Малый and Александринскій gaps stay (yearbook_own, provisional).
   Full season write-up: docs/eval/reconciliation/README.md, 1897-98; ledger 1897-98-01..13.
+  Moscow ballet +2,743.80: Yearbook checks exhausted 2026-10-29: no contiguous run of ballet nights equals the gap (nearest 7-14 Jan 1898, 2,740.51); no subset of 1-5 events; no figure copied from another 1897-98 cell, no digit swap, no double entry; kopecks differ (.28 v .48), so not a roubles-only mis-addition; Moscow ballet is exact in most other seasons (no pattern); reviews quote no takings; the stats page prints no Moscow total. Left: RG's reading of «64,394 р. 48 к.» in the volume; any unscanned yearbook section with takings; RGIA Fond 497 / Moscow office box-office records.
 - **1897-98 Repertoire: six cells fixed from the blind column read, APPLIED 2026-10-29 (reconciliation; RG: "5").**
   `docs/eval/reconciliation/fix_1897_98_scan_reads.py`: Маріинскій 10 Sep 1897 «2158 р. 43 к.» -> 45 (SP ballet now exact);
   16 Nov «Бенефисъ г-жи Куличевской.» heading restored (footnote 4's three ballet benefits); Михайловскій 13 Nov second work
