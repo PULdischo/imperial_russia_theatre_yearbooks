@@ -22571,3 +22571,98 @@ SELECT e.date, t.canonical_name, e.event_id, p.verbatim_title, p.discipline FROM
 ```
 
 Result: 53 ballet events (Маріинскій 50, Михайловскій 3); 14 productions, only «Синяя борода» is_premiere; 0 ballet outside 1 Sep - 4 May. 12 review statements, 12 agree. docs/eval/reconciliation/1896-97_review_sp_ballet.csv.
+
+## 2026-10-29 — scoping a ballet-and-opera subset of the Repertoire
+
+Question: how many events would a ballet/opera subset take in, and how many are mixed bills, drama-with-dance, or concerts with no ballet/opera?
+
+```sql
+WITH p AS (SELECT event_id,
+  max(CASE WHEN discipline IN ('ballet','opera') OR discipline LIKE '%opera%' THEN 1 ELSE 0 END) bo,
+  max(CASE WHEN includes_dance THEN 1 ELSE 0 END) dance,
+  max(CASE WHEN genre_family='concert' THEN 1 ELSE 0 END) conc,
+  max(CASE WHEN discipline NOT IN ('ballet') AND discipline NOT LIKE '%opera%' AND coalesce(includes_dance,false)=false THEN 1 ELSE 0 END) other
+ FROM research.performance GROUP BY 1)
+SELECT count(*), sum(bo), sum(CASE WHEN bo=1 AND other=1 THEN 1 ELSE 0 END),
+ sum(CASE WHEN bo=0 AND dance=1 THEN 1 ELSE 0 END), sum(CASE WHEN bo=0 AND dance=0 AND conc=1 THEN 1 ELSE 0 END) FROM p;
+SELECT genre_families, count(*) FROM research.event WHERE genre_families LIKE '%concert%'
+ AND coalesce(disciplines,'') NOT LIKE '%ballet%' AND coalesce(disciplines,'') NOT LIKE '%opera%' GROUP BY 1 ORDER BY 2 DESC;
+```
+
+Result: 22,044 events with a performance; 8,126 with a ballet or opera item; 50 of those also carry a drama item; 11 drama events with dancers (includes_dance) and no ballet/opera; 117 concert events with no ballet/opera (108 concert-only). Rough scoping only (concerts have no discipline, so the "other" flag skips them).
+
+## 2026-10-29 — concerts with no ballet or opera on the bill (ballet-and-opera subset scoping)
+
+```sql
+SELECT p.verbatim_title, count(DISTINCT e.event_id) FROM research.event e JOIN research.performance p USING(event_id)
+WHERE e.genre_families LIKE '%concert%' AND coalesce(e.disciplines,'') NOT LIKE '%ballet%' AND coalesce(e.disciplines,'') NOT LIKE '%opera%'
+ AND p.genre_family='concert' GROUP BY 1 ORDER BY 2 DESC;
+SELECT count(*) FROM research.event WHERE genre_families='concert'
+ AND NOT EXISTS (SELECT 1 FROM research.performance p WHERE p.event_id=research.event.event_id);
+SELECT count(*) FROM research.event WHERE genre_families LIKE '%concert%' AND coalesce(disciplines,'') NOT LIKE '%ballet%'
+ AND coalesce(disciplines,'') NOT LIKE '%opera%' AND (annotation ILIKE '%бал%' OR annotation ILIKE '%танц%');
+```
+
+Result: 23 distinct concert titles (~29 events); only «Сюита изъ бал. Щелкунчикъ» (2 events) names ballet music in its title. 93 concert events print a heading with no titled work. 1 concert event's annotation mentions бал./танц.
+
+## 2026-10-29 — events with no ballet/opera but a dance-like item (ballet-relevance subset scoping)
+
+```sql
+SELECT genre_families, count(*) FROM research.event
+WHERE coalesce(disciplines,'') NOT LIKE '%ballet%' AND coalesce(disciplines,'') NOT LIKE '%opera%'
+ AND (genre_families LIKE '%divertissement%' OR genre_families LIKE '%pantomime%' OR genre_families LIKE '%comedy-ballet%' OR genre_families LIKE '%tableau%')
+GROUP BY 1 ORDER BY 2 DESC;
+```
+
+Result: play+divertissement 23 (+1 with tableau, +1 with concert, +2 with operetta), play+pantomime 10, play+comedy-ballet 9 (+1), play+tableau 14 (+2 with lecture, +3 with concert). Composer data exists only in research.production_credit (productions lists) and review_dance_composer; concert items print no composer.
+
+## 2026-10-29 — opera events by troupe, Directorate vs visiting (ballet-relevance subset scoping)
+
+```sql
+SELECT p.discipline, count(DISTINCT e.event_id), min(e.season), max(e.season), count(DISTINCT e.season),
+ count(DISTINCT CASE WHEN p.includes_dance THEN e.event_id END)
+FROM research.event e JOIN research.performance p USING(event_id) WHERE p.discipline LIKE '%opera%' GROUP BY 1;
+SELECT p.discipline, e.season, e.city, t.canonical_name, count(DISTINCT e.event_id) FROM research.event e
+ JOIN research.performance p USING(event_id) JOIN research.theater t ON t.theater_id=e.theater_id
+WHERE p.discipline IN ('Italian opera','German opera') GROUP BY ALL;
+```
+
+Result: Directorate opera 6,052 events (21 seasons; 118 with includes_dance); Italian opera 57 events (4 seasons, 1893-94 to 1901-02); German opera 29 events (1897-98); none of the visiting opera events has includes_dance.
+
+## 2026-10-29 — opera events with/without ballet or dancer evidence (ballet-relevance subset, after RG dropped opera-only events)
+
+```sql
+WITH p AS (SELECT event_id, bool_or(discipline='ballet') bal, bool_or(discipline='opera') op, bool_or(includes_dance) dance,
+ string_agg(DISTINCT includes_dance_basis, ' | ') basis FROM research.performance GROUP BY 1)
+SELECT count(*) FILTER (WHERE op), count(*) FILTER (WHERE op AND bal), count(*) FILTER (WHERE op AND NOT bal),
+ count(*) FILTER (WHERE op AND NOT bal AND dance), count(*) FILTER (WHERE op AND NOT bal AND dance AND basis LIKE 'direct%'),
+ count(*) FILTER (WHERE op AND NOT bal AND dance AND basis NOT LIKE '%direct%') FROM p;
+SELECT count(DISTINCT work_id) FROM research.performance WHERE discipline='opera' AND includes_dance;
+WITH p AS (SELECT event_id, bool_or(discipline='ballet') bal, bool_or(includes_dance) dance FROM research.performance GROUP BY 1)
+SELECT count(*) FILTER (WHERE bal), count(*) FILTER (WHERE NOT bal AND dance), count(*) FILTER (WHERE bal OR dance) FROM p;
+```
+
+Result: 6,052 Directorate opera events; 77 share a bill with a ballet; 5,975 have no ballet; of those 118 have includes_dance (2 direct, 116 season-level), from 13 operas. Subset so far (ballet item or includes_dance): see next line.
+Subset so far: 2,065 events with a ballet item + 129 with includes_dance and no ballet = 2,194 events.
+
+## 2026-10-29 — Nutcracker suite and named concerts (ballet-relevance subset, concert question)
+
+```sql
+SELECT e.season, e.city, e.date, t.canonical_name, e.annotation, string_agg(p.verbatim_title,' + ')
+FROM research.event e JOIN research.theater t USING(theater_id) JOIN research.performance p USING(event_id)
+WHERE e.event_id IN (SELECT event_id FROM research.performance WHERE verbatim_title ILIKE '%Щелкунчик%' AND genre_family='concert'
+  OR verbatim_title ILIKE 'Донъ Жуанъ, музыка%' OR verbatim_title ILIKE '%концертъ%Зилоти%' OR verbatim_title ILIKE '%Колоннъ%')
+GROUP BY ALL ORDER BY 3;
+```
+
+Result: «Сюита изъ бал. Щелкунчикъ» = Большой, 7 and 9 Mar 1893, same bill as «Симфоническій концертъ» + «Донъ Жуанъ, музыка къ драм. поэмѣ». Colonne concerts 5 and 8 Mar 1900, Ziloti concerts 17 Nov 1907, 15 Dec 1907, 12 Jan 1908 (Маріинскій): no programme printed.
+
+## 2026-10-29 — Events with dancers views built (research.events_with_dancers)
+
+```sql
+SELECT dancer_reason, count(*) FROM research.events_with_dancers GROUP BY 1;
+SELECT count(*) FROM research.events_with_dancers_performance;
+SELECT disciplines, count(*) FROM research.events_with_dancers WHERE disciplines ILIKE '%italian%' OR disciplines ILIKE '%german%' GROUP BY 1;
+```
+
+Result (outputs/full_run, after build_research_model.py): 2,194 events — ballet on the bill 2,063; dancers known in a non-ballet item 129; both 2. 3,053 performance rows. 0 visiting-troupe events.

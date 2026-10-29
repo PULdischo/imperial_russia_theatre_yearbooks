@@ -2005,6 +2005,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                       WHERE table_schema = 'raw' AND table_name = 'season_stat_line'""").fetchone()[0]:
         build_season_stats(con)
 
+    build_dancer_views(con)
+
     counts = {
         t: con.execute(f"SELECT count(*) FROM research.{t}").fetchone()[0]
         for t in ["theater", "work", "person", "event", "performance", "person_appearance",
@@ -2087,6 +2089,46 @@ def build_person_tenure_notes(con: duckdb.DuckDBPyConnection) -> int:
                      row["corroboration_found"], row["corroboration_wanted"], row["decided"]])
         n += 1
     return n
+
+
+def build_dancer_views(con: duckdb.DuckDBPyConnection) -> None:
+    """The Repertoire with dancers in it (RG, 2026-10-29): a quick way to see the events she knows had
+    dancers. An event is in when any item on its bill is a ballet (discipline = 'ballet') or is known to
+    include dancers (includes_dance). The whole event is kept, every item on the bill, so receipts stay
+    matched to what was performed. Opera-only and drama-only events without known dancers are out, and so
+    are visiting troupes unless dancers are known. Views, not tables, so they always follow the rebuilt
+    research tables; new evidence in works_with_dancers.csv flows in on the next build."""
+    con.execute("""
+        CREATE OR REPLACE VIEW research.events_with_dancers AS
+        WITH bill AS (
+            SELECT event_id,
+                   bool_or(discipline = 'ballet') AS has_ballet,
+                   bool_or(coalesce(includes_dance, false)) AS has_known_dancers,
+                   string_agg(verbatim_title || coalesce(' [' || verbatim_genre || ']', ''), ' + '
+                              ORDER BY performance_order) AS bill,
+                   string_agg(DISTINCT includes_dance_basis, ' | ') AS dancers_basis
+            FROM research.performance GROUP BY event_id)
+        SELECT e.event_id, e.season, e.city, e.date, e.date_verbatim, e.time_of_day, t.canonical_name AS theater,
+               b.bill,
+               CASE WHEN b.has_ballet AND b.has_known_dancers THEN 'ballet on the bill; dancers known in another item'
+                    WHEN b.has_ballet THEN 'ballet on the bill'
+                    ELSE 'dancers known in a non-ballet item' END AS dancer_reason,
+               b.dancers_basis,
+               e.disciplines, e.genre_families, e.n_works, e.receipts_total_kopecks, e.annotation,
+               e.is_benefit, e.is_charity, e.printed_page_number, e.theater_id
+        FROM research.event e
+        JOIN bill b USING (event_id)
+        JOIN research.theater t ON t.theater_id = e.theater_id
+        WHERE b.has_ballet OR b.has_known_dancers
+    """)
+    con.execute("""
+        CREATE OR REPLACE VIEW research.events_with_dancers_performance AS
+        SELECT p.* FROM research.performance p
+        WHERE p.event_id IN (SELECT event_id FROM research.events_with_dancers)
+    """)
+    n_ev = con.execute("SELECT count(*) FROM research.events_with_dancers").fetchone()[0]
+    n_pf = con.execute("SELECT count(*) FROM research.events_with_dancers_performance").fetchone()[0]
+    print(f"  dancer views: research.events_with_dancers {n_ev} events, research.events_with_dancers_performance {n_pf} rows")
 
 
 def main():

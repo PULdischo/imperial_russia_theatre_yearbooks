@@ -392,6 +392,18 @@ from 1901-02. 1907-08 and 1908-09 print category totals only, with no per-theate
 The genre- and theater-level comparison (families, ballet counted three ways) stays in
 `pipeline/compare_season_stats.py`, because it needs judgment-based classification.
 
+## Events with dancers — `research.events_with_dancers`, `research.events_with_dancers_performance` (added 2026-10-29)
+
+A quick way to see the Repertoire events known to have had dancers in them (RG, 2026-10-29: "a way for me to view repertoire with dancers quickly and easily"). Both are **views** over `research.event` / `research.performance`, rebuilt at the end of `build_research_model.py`, so they always follow the main data: a new row in `pipeline/entity_curation/works_with_dancers.csv` brings its events in on the next build. `build_datasette.py` copies them into the sqlite export as plain tables (a snapshot as of that export).
+
+**Rule.** An event is in when any item on its bill is a ballet (`discipline = 'ballet'`) or is known to include dancers (`includes_dance`). RG's rulings, 2026-10-29: the **whole event** is kept, every item on the bill, so receipts stay matched to what was performed; **confirmed only** (a drama bill ending in a divertissement, pantomime or tableau is not in unless dancers are known); **no opera-only events** (an opera is in only with a ballet on the bill or known dancers); **visiting troupes out** unless dancers are known. Concerts that played ballet music but had no dancers are not in. Events with no performances (`no_performance`, `not_captured`) are never in.
+
+`events_with_dancers`: one row per event — `event_id`, `season`, `city`, `date`, `date_verbatim`, `time_of_day`, `theater` (canonical name), `bill` (every item in printed order, `title [printed genre]`, joined by ` + `), `dancer_reason` (`ballet on the bill`, `dancers known in a non-ballet item`, or both), `dancers_basis` (the `includes_dance_basis` of the items that have it), `disciplines`, `genre_families`, `n_works`, `receipts_total_kopecks` (sum on this view, never on the performance view), `annotation`, `is_benefit`, `is_charity`, `printed_page_number`, `theater_id`.
+
+`events_with_dancers_performance`: every `research.performance` row of those events, same columns — including the drama or opera items that share a bill with a ballet, so filter on `discipline` / `includes_dance` to see only the danced items.
+
+Counts at creation: 2,194 events (2,063 with a ballet, 129 with known dancers in a non-ballet item and no ballet, 2 both); 3,053 performances.
+
 ## Season review evidence — `research.review_assertion`
 
 One row per **assertion a season review makes**: this performer danced this role,

@@ -269,6 +269,17 @@ def main():
         df.to_sql(table, sqlite_con, index=False, if_exists="append")
         print(f"{table}: {len(df)} rows")
 
+    # The Repertoire-with-dancers views (build_research_model.build_dancer_views, RG 2026-10-29) are
+    # DuckDB views; sqlite gets a snapshot of them taken now, so it is as current as this export.
+    for view in ["events_with_dancers", "events_with_dancers_performance"]:
+        if not con.execute("SELECT 1 FROM information_schema.tables WHERE table_schema = 'research' AND table_name = ?",
+                           [view]).fetchone():
+            print(f"{view}: skipped (research.{view} doesn't exist yet; rerun build_research_model.py)")
+            continue
+        df = _stringify_uuids(con.execute(f"SELECT * FROM research.{view}").fetch_df())
+        df.to_sql(view, sqlite_con, index=False, if_exists="replace")
+        print(f"{view}: {len(df)} rows")
+
     sqlite_con.commit()
     sqlite_con.close()
     con.close()
