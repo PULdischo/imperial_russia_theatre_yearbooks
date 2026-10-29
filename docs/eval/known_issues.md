@@ -74,6 +74,7 @@ closes, and add new open items here as well as in their own entry.
 - **1897-98 SP ballet list «Коппелія … ноября 3» = slip for 2 Nov (RG 2026-10-29: "table is right, it's a slip in the list").**
   In `LIST_DATE_PRINT_TYPOS` (research layer; raw keeps the print). Only research.production_work changed (matched dates 2 -> 3).
   The SP list now differs from the Repertoire on 25 Oct «Волшебная флейта» only (ledger 1897-98-12).
+  RG 2026-10-29 on that date: "It's likely a list error"; left as printed (no nearby date to correct to).
 - #159: review cast statements vs BalletArtists spiski, triaged 2026-10-22.
   35 suspected wrong-person links (13 high) in
   `docs/eval/review_assertion_wrong_person_suspects_2026-10-22.csv`, plus six
