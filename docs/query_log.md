@@ -23049,3 +23049,13 @@ Result: 14 entries, all p. 136. Лебединое озеро 2, 23 Sep, 21 Oct,
 (no 9 Mar, no 15 Apr); Спящая красавица 26 Sep, 22 Feb, 9 Mar (+20 Apr 1st act); Золотая рыбка 19 Sep, 7 Nov, 28 Dec, 3, 13, 21 Feb;
 Волшебное зеркало 9, 20 Jan, 20 Feb, 5 Mar (+20 Apr 3rd act; no 13 Feb); Баядерка 2, 16 Dec, 13 Jan; Нуръ и Анитра 2, 9 Dec; Конекъ-горбунокъ
 16 Sep, 10 Oct, 4, 18 Nov, 6, 29 Dec, 10, 23 Feb. Every disputed date: the list agrees with the Repertoire against the review.
+
+## 2026-10-29 — Test of the documented "cells an alias would catch" query (docs/pipeline.md), for the two 1903-04 aliases
+
+```sql
+SELECT e.season, e.city, e.date, t.canonical_name, e.time_of_day, e.printed_page_number, p.verbatim_title, p.verbatim_genre, e.event_id
+FROM research.performance p JOIN research.event e USING (event_id) JOIN research.theater t USING (theater_id)
+WHERE trim(p.verbatim_title) = ? ORDER BY e.season, e.date;  -- 'Ваядерка', then 'Пригалъ кавалеріи'
+```
+
+Result: each returns one cell, the scan-checked 1903-04 print slip (Moscow Большой 25 Jan 1904, p. 27; 14 Nov 1903 morning, p. 15). The 1905-06 cell no longer appears (fixed in raw to «Баядерка»).
