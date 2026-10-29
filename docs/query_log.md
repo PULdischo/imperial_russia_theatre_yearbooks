@@ -23059,3 +23059,18 @@ WHERE trim(p.verbatim_title) = ? ORDER BY e.season, e.date;  -- 'Ваядерк�
 ```
 
 Result: each returns one cell, the scan-checked 1903-04 print slip (Moscow Большой 25 Jan 1904, p. 27; 14 Nov 1903 morning, p. 15). The 1905-06 cell no longer appears (fixed in raw to «Баядерка»).
+
+## 2026-10-29 — 1907-08 Moscow opera line (+36.00 р.): composition and single-slip candidates for RG's reading
+
+```sql
+with b as (select e.event_id, cast(e.date as varchar) d, e.time_of_day, e.receipts_total_kopecks k, e.is_benefit, e.is_free, e.is_charity, e.annotation
+ from research.event e join research.theater t using(theater_id) join research.performance p using(event_id)
+ where e.season='1907-08' and t.canonical_name='Большой' and e.event_status='performed' group by all
+ having bool_or(p.discipline='opera') and not bool_or(p.discipline in ('ballet','Russian drama')))
+select count(*) n, count(k) paying, sum(k)/100.0 rub, count(*) filter (where is_benefit and k is not null) ben_paid,
+       count(*) filter (where is_free) free, count(*) filter (where is_charity) charity from b;
+```
+Result: 168 events = 165 paying (365,040.33 р.; printed 365,004.33 for 167, +36.00) + 2 free matinées (14 Nov, 20 Feb) + the unreceipted
+22 Oct morning benefit of the second régisseurs, prompters and librarians (not in the play list either). Paying benefits 4 = fn. 6: chorus
+27 Nov 7,701.45; orchestra 14 Dec 5,231.00; chorus master Василевскій 27 Dec 7,754.85; Салина farewell 15 Feb 7,602.10. Single-digit or
+adjacent-swap slips giving exactly −36.00 р.: 31 of the 165 cells (many the 3,051.18 full house, «51»↔«15»), so no cell is singled out.
