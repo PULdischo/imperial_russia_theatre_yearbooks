@@ -1262,6 +1262,10 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         (f"regexp_matches(lab, {lit(OPERETTA_GENRE_RE_ANY)}) OR regexp_matches(lt, ', оперетта$')",
          "operetta", "printed label or title"),
         (f"pa.art_form = 'opera' OR regexp_matches(lab, {lit(OPERA_GENRE_RE_ANY)})", "opera", "opera"),
+        # A German title that names an opera act and prints no genre («4-ter Akt aus der Oper Die Hugenotten.», the
+        # visiting German opera troupe, 23 + 26 Mar 1898): an opera item, so the troupe's discipline is German opera.
+        # The season statistics count both bills under «Нѣмецкихъ оперныхъ» (exact, 31). RG, 2026-10-29.
+        ("regexp_matches(lt, 'aus der op(er\\b|\\.)')", "opera", "printed title names an opera act («aus der Oper»)"),
         (f"lab = {lit(COMEDY_BALLET_GENRE)}", "comedy-ballet", "printed label ком.-бал."),
         (f"regexp_matches(lab, {lit(PANTOMIME_GENRE_RE)})", "pantomime", "printed label"),
         ("pa.art_form IN ('Russian drama', 'French drama', 'visiting troupe')", "play",

@@ -22739,3 +22739,12 @@ uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_th
 ```
 
 Result: production = tested copy, every table. Against the backup: raw.event_entry 2, raw.event_entry_performance 5/+6, research.event 3, research.performance 6/+7 (one 1904-05 row: discipline_basis text only, duplicate art_form_by_title.csv row), research.work 7/6 (appearance counts; «Германи» merged into «Гернани» via entities.work_id_crosswalk), research.season_stat_check 1. 1897-98 SP ballet 48 / 120,913.66 = printed exactly; SP city 649 / 650, −587.95 (= Александринскій drama); Moscow unchanged (373 / 374, +3,590.91).
+
+## 2026-10-29 — 1897-98 after the «Die Hugenotten» act fix (RG: "Yes, both"): German opera re-checked
+
+```
+uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir <scratch>
+-- plus the table-by-table EXCEPT ALL diff: tested copy vs production (identical), copy vs pre-fix
+```
+
+Result: production = tested copy. Changed vs pre-fix: raw.event_entry 1, raw.event_entry_performance +1, research.event 2 (23 Mar: annotation cleared, n_works 1 -> 2; 26 Mar: disciplines «German drama; German opera» -> «German opera»), research.performance 1 changed + 1 new (both acts German opera, item_kind opera), research.work 1 (appearances 1 -> 2). 1897-98 SP German opera 31 / 152,203.10 = printed; mixed 2 = 2.

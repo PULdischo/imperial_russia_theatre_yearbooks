@@ -923,5 +923,6 @@ work through the id crosswalk), production = tested copy, sqlite rebuilt, not re
 | SP Александринскій drama | 187 = 187, −587.95 | yearbook_own (provisional) |
 | SP Маріинскій opera | 122 / 123, receipts exact | yearbook_own (provisional): no missing session on the scan |
 | Moscow Малый | 206 / 207, −89.40 | yearbook_own (provisional): no missing session on the scan |
-| SP German opera, French, German, Réjane | exact once relabelled | labels for RG (1897-98-01..03) |
+| SP German opera | 31 = 31, 152,203.10 | corrected 2026-10-29 (RG: "Yes, both"): 23 Mar act stored as a work and read «4-ter»; «aus der Oper» titles are opera items (1897-98-01) |
+| SP French, German, Réjane | exact once relabelled | labels for RG (1897-98-02..03) |
 | SP ballet list 25 Oct, 3 Nov | list 52 vs 50 | list's own; RG |

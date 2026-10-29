@@ -57,6 +57,12 @@ closes, and add new open items here as well as in their own entry.
   rebuilt, not republished. Backup `outputs/backups/scan_reads_1897-98_2026-10-29/`. Seen in passing, not changed:
   `pipeline/research_corrections/art_form_by_title.csv` has two rows for «Ночное, лѣтняя сцена» (lines 4 and 6, same art form,
   different basis notes), so a rebuild can swap the `discipline_basis` text of 1904-05 p003 s034 w2.
+- **1897-98 «Die Hugenotten» act 4, 23 + 26 Mar 1898, APPLIED 2026-10-29 (RG: "Yes, both").** The German opera troupe's bill
+  «A basso Porto» + «4-ter Akt aus der Oper Die Hugenotten.»: on 26 Mar the act (no printed genre) was German drama, making the bill
+  mixed; on 23 Mar it sat only in the annotation, read «1-ter» (damaged 4). `fix_1897_98_hugenotten_23mar.py` stores it as a work;
+  `build_research_model.py` kind rule: a title naming an opera act («aus der Oper/Op.») is an opera item. SP «Нѣмецкихъ оперныхъ»
+  now exact (31, 152,203.10). Backup `outputs/backups/hugenotten_1897-98_2026-10-29/`. Still in annotations only (not asked):
+  German opera acts of 12, 19, 20, 22 Mar evening 1898; the act is not linked as an excerpt of «Гугеноты».
 - #159: review cast statements vs BalletArtists spiski, triaged 2026-10-22.
   35 suspected wrong-person links (13 high) in
   `docs/eval/review_assertion_wrong_person_suspects_2026-10-22.csv`, plus six
