@@ -208,6 +208,9 @@ VISITING_TROUPE_DISCIPLINE = {
     "opera troupe under Н. В. Любимовъ": "opera",  # Russian-language troupe
     "Vienna operetta troupe": "German operetta",
     "Siamese court troupe": "Siamese dance",  # RG, 2026-10-22; no performance in the data so far
+    # a run no source names (RG, 2026-10-28: "We don't need to name the company"); same wording
+    # as the placeholder resolve_discipline_and_company gives other unnamed visiting troupes
+    "visiting Russian drama troupe, St. Petersburg": "Russian drama",
 }
 
 #: A second axis, the KIND OF ITEM: what was happening on the stage, whoever
@@ -314,6 +317,11 @@ VISITING_ANNOTATION_RULES = [
 #: annotation already gives a troupe. The build fails if a run matches no
 #: performance or its troupe has no VISITING_TROUPE_DISCIPLINE entry.
 VISITING_RUNS = [
+    ("1907-08", "Михайловскій", "1908-04-14", "1908-05-13", "visiting Russian drama troupe, St. Petersburg",
+     "the 38 Михайловскій events 14 Apr - 13 May 1908 (Росмерсхольмъ, Жизнь человѣка, Докторъ Штокманъ, Брандъ, "
+     "Вишневый садъ, Горе отъ ума): no troupe heading, no receipts, outside the season totals and the «Списокъ пьесъ»; "
+     "no 1907-08 source names the company (probably the Moscow Art Theatre). RG, 2026-10-28: label it a visiting "
+     "troupe, unnamed"),
     ("1909-10", "Михайловскій", "1910-04-19", "1910-05-14", "Moscow Art Theatre",
      "season totals p. 58 print «Московскаго художественнаго театра 35»: the 35 Михайловскій events "
      "19 Apr - 14 May 1910, printed with no troupe heading (RG, 2026-10-27)"),

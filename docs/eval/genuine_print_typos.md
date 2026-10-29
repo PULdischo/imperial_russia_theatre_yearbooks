@@ -720,6 +720,7 @@ Each read twice on the scan (checking agent and a close zoom, 2026-09-28) and ke
 ## Repertoire, wrong work printed (RG ruling 2026-10-22, issue #157)
 
 - **`repertoire_1907-08_p003` (printed p. 79), Большой matinee 16 Sep 1907: «Карменъ, бал.»** -- the Season Review (Moscow ballet, folio 154) gives «Жизель» that day, one of its four dates. RG ruled it a misprint. Stored as printed; the research layer shows Жизель.
+  **Revised 2026-10-28 (RG):** the yearbook's «Списокъ пьесъ» lists the opera «Карменъ» that day, and the season totals agree; RG: "Carmen the opera was performed, and бал. was the slip." The slip is the genre «бал.», not the title; the research layer shows «Карменъ» [оп.] (#157).
 
 ## Season reviews, scan-confirmed 2026-10-26 -- probable slip in a title (stored as printed)
 
@@ -747,6 +748,23 @@ Read on the review scans and checked against the Repertoire table, which matches
 - **`review_1892-93_SP_ballet_p019`:** Дель-Эра hired «съ 1 ноября 1893 г.»; she debuted 8 Nov 1892 and left 6 Feb 1893
   (Repertoire and the same review), so 1892. Read on the review image by Claude during the 1892-93 reconciliation.
 
+## 1907-08 reconciliation (added 2026-10-28)
+
+Read on the full-resolution scans by Claude during the blind column reads and the «Списокъ пьесъ» transcription; stored as printed.
+
+- **Repertoire p. 89 (`repertoire_1907-08_p013`), Малый 4 Nov 1907: «Каринѳское чудо, тр.»** for «Коринѳское» (the play list and
+  every other date print «Коринѳское»).
+- **Repertoire p. 104, Alex 27 Jan 1908 «1399 р. 74 к.» and p. 84, Alex 17 Oct 1907 «6?7 р. 06 к.»:** broken sorts; 17 Oct cannot be read
+  (stored 677).
+- **«Списокъ пьесъ» 1907-08 (ProductionStats pp. 127-136):** Moscow opera «Сказаніе о невидимомъ градѣ Китежѣ…» «февраля 5, 18, 18, 21»
+  with «Всего—5 разъ» (the Repertoire has 5, 15, 18, 21 Feb, 15 Feb the Салина farewell benefit); «Фра-Діаволо» «1908 г.—сентября 4…» for
+  1907; French no. 31 «On n'oublie pas» and no. 35 «La rivale» «1908 г.—ноября» for 1907, no. 39 «Les Transatlantiques» «1907 г.—января» for
+  1908; Moscow drama «Дѣльцы» dated 18 Jan 1908 (the Repertoire has «Ревизоръ» only) while «Молодежь» lacks 13 Jan; SP drama «Склепъ»
+  dated 18 Dec 1907 (the Repertoire has «Великая тайна» and «Доходы миссисъ Уорренъ»).
+- **Season totals p. 126, Moscow «Русскихъ драматическихъ … 181»:** the Repertoire and the play list have 213 Малый events, and the line's
+  own receipts (190,634 р. 82 к.) cover all 213. RG 2026-10-28: too large to be a print slip; the count disagrees with the page itself,
+  cause unknown (ledger 1907-08-04).
+
 ## 1895-96 Moscow ballet list and review: «Пробужденіе Флоры» dates (added 2026-10-28)
 
 - **Ballet productions list (`balletproductions_1895-96_MSK_p001`):** «Исполненъ: 1896 г.—мая 2, 22.» The Repertoire (read blind on
@@ -754,6 +772,11 @@ Read on the review scans and checked against the Repertoire table, which matches
 - **Moscow ballet review (`review_1895-96_MSK_ballet_p013`):** «Пробужденіе Флоры» «(3-го и 23-го мая)». The Repertoire scan (p. 26)
   and the list both have 22 May; 23 May is «Пиковая дама» and «Лючія» excerpts + «Прелестная жемчужина». The review's «23» is a slip
   for 22. Checked by Claude, 1895-96 reconciliation (ledger 1895-96-09, -10).
+- **1907-08 ballet season reviews** (read on the review images and the Repertoire scans; the play list agrees with the Repertoire):
+  SP f. 100 «Донъ Кихотъ» «въ утреннемъ спектаклѣ» 14 Nov 1907 (the evening). Moscow f. 153 «27-го сентября … «Лебединое озеро»» for
+  23 Sep and «9-го марта … «Дочь фараона»» (Спящая красавица given); f. 155-156 the corps-de-ballet benefit («Баядерка», «Нуръ и
+  Анитра») dated «1908 г. января 13-го» for 2 Dec 1907; f. 158 «ноября 7-го» «Спящая красавица» and «февраля 13-го» «Волшебное зеркало»
+  (Золотая рыбка given both days); f. 160 «6-го декабря 1908 г.» for 1907.
 
 ## 1898-99 reconciliation (added 2026-10-28)
 

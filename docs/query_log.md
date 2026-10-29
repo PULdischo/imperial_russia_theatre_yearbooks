@@ -22165,6 +22165,54 @@ the drama line; 5 Mar Moscow concert has no works, research genre_families conce
 equals the read or the Fold Log (5 fold cells); Большой +900.00 and Малый −2,130.50 the yearbook's own. Moscow ballet list «Пробужденіе Флоры» «мая 2»,
 Repertoire 3 May. Ledger 1895-96-01..09.
 
+## 2026-10-28 — 1907-08 reconciliation: city/category totals, per-event families, play-list matching, blind column reads
+
+`uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir <scratch>/cmp` (also after each
+fix), and a per-event dump with the tool's own classifier (`classify_work` / `classify_event`):
+```sql
+select e.event_id, e.city, t.canonical_name, e.date, e.time_of_day, e.receipts_total_kopecks, e.receipts_verbatim,
+       e.is_benefit, e.is_charity, e.is_free, e.is_student_performance, e.annotation, e.printed_page_number,
+       p.performance_id, p.genre_family, p.discipline, p.is_ceremonial, p.company, p.verbatim_genre, p.verbatim_title
+from research.event e join research.theater t using (theater_id)
+left join research.performance p using (event_id)
+where e.event_status='performed' and e.season='1907-08';
+```
+Result (before fixes): Moscow 434 events / printed 396, +96.00 р.; SP 624 / 554, −4,756.49 р. Lines: Moscow drama 213/181 (+10.00),
+opera 167/167 (−700.51), ballet 50/48 (+786.51); SP drama 265/217 (+1,575.72), opera 166/158 (−7,112.00), ballet 52/52 (0.00),
+French 103/103 (+779.78), German 24/24 (0.00). Every stored receipts figure parses to its own receipts_verbatim (967 checked).
+`season_stats_receipt_candidates.py`: no 1907-08 candidates. Alex 14 Nov 1907: one undivided cell, 726.04 р., no free matinée.
+
+The «Списокъ пьесъ» (ProductionStats pp. 127-136, blind transcription, `docs/eval/reconciliation/1907-08_play_list.csv`) matched to
+the events by city, company theater and date (and title for the Малый / Alex): distinct dates Moscow drama 193 (= 193 Малый days, all
+213 events on list dates), opera 166, ballet 48; SP drama 197, opera 158, ballet 52, French 102. Not on the list: every charity bill,
+the concerts / no-works rentals, the 15 Apr Маріинскій fund «Русланъ», the 22 Oct Moscow staff benefit, the 38-event Михайловскій
+spring run, and 16 Sep Большой «Карменъ, бал.» (listed under opera instead).
+
+```sql
+select event_id, time_of_day, receipts_verbatim from research.event
+where season='1907-08' and city='Moscow' and date in ('1907-09-16','1907-10-22','1908-01-13','1908-01-18','1908-02-18','1907-11-04');
+select e.season, e.city, e.date, p.verbatim_title, p.verbatim_genre, p.discipline from research.performance p join research.event e using(event_id)
+where p.verbatim_title like 'Карменъ%' and p.verbatim_genre not like 'оп%';
+select canonical_title, canonical_genre, appearance_count from research.work where canonical_title in ('Карменъ','Жизель');
+```
+Result: 16 Sep morning 736 р. 51 к. («Карменъ», «бал.», ballet; then pointed at Жизель by #157); other «Карменъ» non-«оп.» rows:
+1906-07 «бал.», 1908-09 «др.», 1910-11 «лирич. др.» / «лирич. оп.». After RG's ruling (opera) and rebuild: Карменъ оп. 242,
+Карменъ бал. 1, Жизель 59; Moscow ballet +50.00, opera +36.00.
+
+Blind column reads (`docs/eval/scan_audit/1907-08_scan_reads.csv`) compared with
+```sql
+select e.event_id, cast(e.date as varchar) date, e.time_of_day, e.receipts_total_kopecks/100.0 r
+from research.event e join research.theater t using(theater_id)
+where e.season='1907-08' and t.canonical_name=? and e.event_status='performed';
+```
+Result: Большой 221 = 221, sum 475,415.02 both, 0 diffs; Маріинскій 233, 704,464.94 both, 0 diffs; Малый 213, 190,644.82 both, only
+24 Feb morning/evening labels swapped; Alex 218, only 17 Oct «6?7» (stored 677.06, illegible); Михайловскій 173, 26 Jan 2237.50 vs
+print 2257.50 (fixed) and 12 Jan 1825/1826 (unclear, kept). Rebuild for the two raw fixes (parse_and_validate with --page-headers and
+--printed-page-numbers -> build_duckdb -> build_entities -> validate_performance_dates -> build_research_model on copies): parsed
+event_entry 3 rows, databases differ in raw.event_entry, analysis.event_entry, research.event (3 each) and research.season_stat_check (1);
+validation_errors identical; person_link 0 shift blocks. Production unchanged since the snapshot, backed up, promoted, sqlite rebuilt.
+After: Moscow 434/396 +96.00; SP 624/554 −4,736.49. Ledger 1907-08-01..14.
+
 ## 2026-10-28 — 1895-96 season reviews vs the Repertoire (two agents)
 
 ```sql
@@ -22180,6 +22228,25 @@ Result: reviews SP ballet (28 pp.) and Moscow ballet (15 pp.), no opera reviews.
 «въ маѣ» wording), 9/9 counts (31 + 13 = 44; 14 ballets; 2 new). «Флора» on 3 May confirmed by the review: the ballet list's «мая 2» is its slip.
 Ledger 1895-96-03 and -09 notes extended; new row 1895-96-10.
 
+## 2026-10-28 — 1907-08 Moscow drama: can any subset of the Малый's 213 events give the printed 181?
+
+Per-event dump as in the 1907-08 entry above (research.event × research.performance, season 1907-08), Малый only, grouped in pandas.
+Result: 213 events on 193 days, receipts 190,644.82 (printed 190,634.82 for 181). By time of day: unspecified 173 (158,839.31),
+evening 20 (25,019.91), morning 20 (6,785.60); by month Sep 23, Oct 30, Nov 30, Dec 34, Jan 33, Feb 31, Mar 22, Apr 10. The 181st
+event is 24 Feb 1908 morning, with cumulative receipts 164,711.12. 207 events have one work and 6 have two. Only 3 events have no receipts
+(the free matinées the footnote counts). No time-of-day, month-cut or day-count subset gives 181, and the printed receipts already cover
+all 213 events (10 р. off), so the 32 missing events are inside the printed money but outside the printed count.
+
+## 2026-10-28 — 1907-08 SP opera −7,112.00 р.: subset-sum and unreceipted-event checks
+
+Per-event dump as in the 1907-08 entry above; SP events of family opera with receipts (156), in pandas.
+Result: sum 531,752.07 (printed 538,864.07). No single event = 7,112.00; no triple; three pairs sum exactly: 7 Mar «Золото Рейна»
+3,547.50 + 3,564.50 (10 Mar «Валкірія», 12 Mar «Валкірія» or 31 Mar «Гибель боговъ»). Full-house figures cluster (3,600.30 ×18,
+3,598.50 ×16, 3,588.50 ×5, 3,564.50 ×3), so a pair near 7,100 is expected by chance. Nine figures are whole rubles. Unreceipted
+opera-company events: 2 free matinées, 8 charity bills (Маріинскій 7, Михайловскій 1), the 15 Apr busts-and-portraits fund «Русланъ»
+and the 21 Apr artists' fund (3rd act of «Аида» + «Карменъ»). Monthly opera receipts: Aug 4,142.30, Sep 87,277.46, Oct 76,967.32,
+Nov 82,785.52, Dec 81,131.04, Jan 80,980.89, Feb 58,288.96, Mar 44,049.33, Apr 16,129.25.
+
 ## 2026-10-28 — 1892-93 whole-date not_captured runs, read on the scans
 
 ```sql
@@ -22193,6 +22260,46 @@ select s, e, n, <last printed date before, its page>, <first after, its page> fr
 Result: 15 runs (after the four dash cells were restored). One agent read the date column around each on the scans: all 15 are skips in the print
 (Воздвиженіе eve, Christmas, Крещенскій сочельникъ, first week of Lent, 1 March, Holy Week to Easter, single Saturdays/Mondays). Rows appended to
 docs/eval/scan_audit/1892-93_scan_reads.csv.
+
+## 2026-10-28 — 1907-08 ballet season reviews vs the Repertoire (two agents, read-only snapshot of production)
+
+Agents' queries (verbatim in their reports, run on a read-only copy of outputs/full_run/imperial_theaters.duckdb):
+```sql
+select p.page_id, p.printed_folio, b.block_id, b.text from raw.review_block b join raw.review_page p using(page_id)
+where page_id like 'review_1907-08_SP_ballet%' order by page_id, b.block_id;   -- and 'review_1907-08_MSK_ballet%'
+select e.event_id, e.date, e.time_of_day, t.canonical_name, e.event_status, e.printed_page_number, e.is_benefit, e.is_charity, e.is_free,
+       e.annotation, string_agg(p.verbatim_title||'|'||coalesce(p.verbatim_genre,'')||'|'||coalesce(p.discipline,''), ' ;; ' order by p.performance_order)
+from research.event e join research.theater t using(theater_id) left join research.performance p using(event_id)
+where e.season='1907-08' and e.city='SP' group by all having bool_or(p.discipline='ballet' or p.verbatim_genre ilike '%бал%');  -- and city='Moscow'
+```
+plus per-ballet histories («Раймонда» to 11 Nov 1907: 38 full-ballet SP events since 7 Jan 1898; «Эсмеральда» since the 21 Nov 1899
+revival: 22, 20 without the two charity bills) and the free/benefit events. Main session re-ran the SP ballet query: 56 events (the agent
+had reported 55); 56 − 4 charity mixed bills = 52 = the review. Moscow: 51 events with a ballet item; without 16 Sep «Карменъ» and the 10 Nov
+and 15 Apr charity bills = 48, of which 47 print receipts.
+```sql
+select e.event_id, cast(e.date as varchar), e.time_of_day from research.event e join research.theater t using(theater_id)
+where e.season='1907-08' and t.canonical_name='Большой' and (...the seven disputed dates...);
+```
+Result: ids p003__s007, p005__s004, p013__s006, p017__s033, p019__s002, p031__s010, p037__s005 (ledger 1907-08-16). Result overall: SP 20/22
+dates, 8/9 counts; Moscow 42/51 dates, 3/3 counts; every disagreement the review's slip except one ambiguous free «Дочь Фараона».
+`docs/eval/reconciliation/1907-08_review_ballet.csv`.
+
+## 2026-10-28 — Павлова 2-я's 1907-08 roles; Moscow «Дочь фараона» dates (the review's «сверхъ того» Дочь Фараона)
+
+```sql
+select entry_id, page_id, family_name, first_name, patronymic, list_number, credit_summary_text from raw.person_entry
+where page_id like 'balletartists_1907-08_MSK%' and family_name like 'Павлова%';
+select credit_type, label, role_name, category_credit_count from raw.person_entry_credit where entry_id in (...those two...);
+select entry_id, credit_summary_text from raw.person_entry where family_name like 'Павлова%' and first_name='Анна' and page_id like 'balletartists_1907-08_SP%';
+select block_id, text from raw.review_block where page_id='review_1907-08_MSK_ballet_p007';
+select e.date, e.time_of_day, e.receipts_total_kopecks, e.annotation from research.event e join research.performance p using(event_id)
+where e.season='1907-08' and e.city='Moscow' and p.verbatim_title like 'Дочь фараона%';
+```
+Result: Moscow list no. 71 Павлова 2-я, Анна Матвѣевна: «Въ 1 балетѣ—1. Всего—1 разъ.» (ballet not named); no. 70 Павлова 1-я Евгенія Ивановна
+93 times. SP list: Анна Павлова 45 times, «Дочь фараона (Рамзея—2)» among her SP roles. Moscow «Дочь фараона»: 9 Sep (2,808.71), 14 Oct
+(2,655.16), 26 Dec 1907 (2,838.85), 15 Apr 1908 (no receipts, Иверская община charity). The review sentence lists the free 6 Dec «Конекъ-Горбунокъ»
+and «Дочь Фараона» with Павлова 2-я as Аспиччія as extras «сверхъ того» the 47; 15 Apr is the only «Дочь фараона» outside the 47. Recorded as probable.
+
 
 ## 2026-10-28 — 1895-96 Александринскій and Михайловскій columns read blind
 
@@ -22224,6 +22331,19 @@ where pe.season='1905-06' and pe.city='SP' and pp.date between '1906-01-24' and 
 Result: p028's 31 SP events all drift +1, p029's Moscow events none. Reviews: SP ballet folio 134 «29 января … прощальный бенефисъ … Бекеффи»
 (the database had it on 30 Jan); no SP ballet-list dates in the window. Overrides added; rebuild on a copy: event_entry_date_check and research.event
 −31 +31, 54 tables identical; promoted.
+
+## 2026-10-28 — 1907-08 Михайловскій spring run labelled a visiting troupe (unnamed), RG ruling
+
+```sql
+select cast(e.date as varchar), e.time_of_day, e.event_status, e.receipts_total_kopecks, e.annotation, e.companies
+from research.event e join research.theater t using(theater_id)
+where e.season='1907-08' and t.canonical_name='Михайловскій' and e.date between '1908-04-05' and '1908-05-19' and e.event_status='performed';
+```
+Result (before): 38 events, 14 Apr - 13 May 1908, all «St. Petersburg Russian drama», no receipts, no annotation; nothing else at the
+Михайловскій 5 Apr - 19 May. VISITING_RUNS row added (company «visiting Russian drama troupe, St. Petersburg», discipline Russian drama).
+Rebuilt on a copy: research.event and research.performance 38 rows each differ (companies / company, discipline_basis), every other table
+identical. Promoted (backup outputs/backups/mikh_run_1907-08_2026-10-28/), sqlite rebuilt; after:
+`select count(*) from research.event where companies='visiting Russian drama troupe, St. Petersburg'` = 38.
 
 ## 2026-10-28 — 1898-99 reconciliation: blind column reads, fixes, lines
 

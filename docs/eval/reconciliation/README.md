@@ -670,3 +670,82 @@ review this season) (1909-10-13, open).
 **Still to do:** the two SP ballet benefits (above), outside the Repertoire. Settled: «Миранда» (classed as opera) and the Art Theatre run (`VISITING_RUNS`, research layer rebuilt and promoted, backup `outputs/backups/mat_run_1909-10_2026-10-27/`) are settled. The 19 Apr «Утро памяти А. П. Чехова» (no works) is left without a company. The season reviews were not
 checked (1909-10 has SP music reviews only).
 **Half-kopecks FIXED the same day** (RG: whole kopecks, as #109): research-layer rule, 210 events, +105.98 р.; known_issues.md #161.
+
+## 1907-08 (2026-10-28): every count explained; the season's own play list confirms the Repertoire; two misreads fixed, «Карменъ» back to opera
+
+The stats page (p. 126 of `1907-08_ProductionStats.pdf`) prints eight category lines with receipts, no venue breakdown, and
+footnotes counting each line's benefits and free performances. Transcription checked against the scan: all eight lines as
+printed. **A new third source:** the same PDF's pp. 127-136 are the yearbook's «Списокъ пьесъ, исполненныхъ на сценахъ
+Императорскихъ театровъ въ сезонѣ 1907—1908 гг.»: every play, opera and ballet given, by city and company, with its dates
+and «Всего—N разъ». Four agents transcribed it blind (`1907-08_play_list.csv`, 210 entries; every entry's dates equal its
+printed total except one). It lets each printed line be checked date by date.
+
+**Step 1, city totals** (Repertoire / printed, after the fixes below): Moscow 434 / 396 events, +96.00 р.; SP 624 / 554,
+−4,736.49 р.
+
+**What the stats (and the play list) leave out.** The play list and the stats agree on what they don't count: every charity
+bill, the concerts and rentals at the Маріинскій (the Зилоти concerts, the invalids' concert), the 15 Apr fund performance
+for the opera's busts and portraits, the unreceipted 22 Oct Moscow staff benefit, and the spring run at the Михайловскій
+(38 events, 14 Apr-13 May 1908, no heading, no receipts: Росмерсхольмъ, Брандъ, Вишневый садъ…, probably the Moscow Art
+Theatre, not named). None of their dates is in the list. That is Moscow 6 events and SP 71 (ledger 1907-08-05, -07, -08,
+`excluded_by_yearbook`). The one charity bill with receipts (Alex 3 Jan, 1,595.75 р.) is out of the receipts too.
+
+**Step 2, category lines** (those events out):
+
+| City | Line | Printed | Repertoire | Receipts gap | Reading |
+|---|---|---|---|---|---|
+| Moscow | drama | **181** | 213 | +10.00 | «181» is clear on the scan, but the page's own receipts cover all 213 Малый events (10 р. off), fn. 5 matches the full season, and the play list has all 213 (193 days); no subset gives 181. Not a print slip (RG): the count disagrees with the page's own receipts and play list, cause unknown (1907-08-04) |
+| Moscow | opera | 167 | 167 | +36.00 | after 16 Sep «Карменъ» (below); 165 paying + 2 free (1907-08-03) |
+| Moscow | ballet | 48 | 48 | +50.00 | 47 paying + the free 6 Dec matinée (1907-08-02) |
+| SP | drama (Alex) | 217 | 216 | −20.03 | fn. 1 counts 3 free student performances; the Alex has 2. On 14 Nov the free banner spans the Alex column but its cell is undivided, three plays and 726.04 р.: perhaps a free matinée and an evening printed together; stays as printed (1907-08-09, -10) |
+| SP | opera | 158 | 158 | −7,112.00 | 156 paying + 2 free; every Маріинскій figure as printed (1907-08-11) |
+| SP | ballet / German | 52 / 24 | 52 / 24 | 0.00 / 0.00 | exact |
+| SP | French | 103 | 103 | +799.78 | includes 3 free matinées where fn. 4 says 2 (1907-08-12, -13) |
+
+**16 Sep 1907, Большой matinée: «Карменъ, бал.» is the opera (RG 2026-10-28).** #157 (2026-10-22) had followed the Moscow
+ballet review, which gives «Жизель» that day. The play list puts the opera «Карменъ» on 16 Sep and has no ballet that day,
+and the stats only fit with it as opera: ballet +786.51 → +50.00 р., opera −700.51 → +36.00 р. RG: "Carmen the opera was
+performed, and бал. was the slip." `performance_work_overrides.csv` now points the matinée at «Карменъ» [оп.]. Rebuilt on a
+copy (1 event, 1 performance, 2 work counts changed), promoted, backup `outputs/backups/carmen_opera_1907_2026-10-28/`
+(1907-08-01, `classification`).
+
+**Step 3, every column read blind (2026-10-28).** Five agents transcribed all five theater columns from the full-resolution
+scans before anything was compared (`docs/eval/scan_audit/1907-08_scan_reads.csv`, 1,443 rows; Новый is dark all season).
+Большой (221 events), Маріинскій (233) and Малый (213): every figure equals the stored value. Two extraction errors, both
+fixed in raw, rebuilt on a copy (only these 3 events changed; person_link 0 shift blocks), promoted, backup
+`outputs/backups/maly_mikh_1907-08_2026-10-28/`:
+- Малый 24 Feb 1908: утро/вечеръ labels swapped (`fix_1907_08_maly_24feb_sessions.py`, 1907-08-06);
+- Михайловскій 26 Jan 1908 Andrieu benefit: 2237.50 → «2257 р. 50 к.», a damaged 5 read as 3 (`fix_1907_08_mikh_26jan_receipts.py`, 1907-08-12).
+
+Two digits the scan can't settle, left as stored: Alex 17 Oct «6?7 р. 06 к.» (stored 677; 627 or 647 would widen the
+gap) and Михайловскій 12 Jan «1826/1825 р.» (stored 1825). So every receipts gap that remains is the stats page's own,
+provisional until RG reads the source.
+
+**Step 4, the lists.** The play list's ballet sections agree with the stats (Moscow 48 dates, SP 52) and with the
+Repertoire. The separate ballet productions lists (#145): SP 52 = stats 52 (the Repertoire's other 4 are charity bills);
+Moscow 47, which with the 20 Apr evening of single acts (2,469.30 р.; acts are outside the list's totals) is 48 = stats; the
+Repertoire's other two are the 10 Nov and 15 Apr charity bills. Its own slips (Repertoire read on the scan): «Китежъ» «февраля 5, 18, 18, 21» where the Repertoire has the
+Салина farewell benefit on 15 Feb; Moscow «Дѣльцы» on 18 Jan and «Молодежь» missing 13 Jan; SP «Склепъ» on 18 Dec; four
+wrong years (1907-08-14).
+
+**A fourth source: the ballet season reviews** (SP ff. 92-105, Moscow ff. 153-160), checked by two agents against the
+Repertoire, reading the review images and the Repertoire scans for every disagreement; the main session then re-checked each
+disagreement against the blind column read and the play list (`1907-08_review_ballet.csv`, checked by Claude):
+
+| Review | Dated statements | Counts | Disagreements |
+|---|---|---|---|
+| SP ballet | 20 / 22 agree (1 partial: 18 Nov, one scene of «Тщетная») | 8 / 9 (52 ballet events = stats = both lists; «Раймонда» 38th, «Эсмеральда» 20th since the revival, 3 new ballets, 2 benefits) | 14 Nov «Донъ Кихотъ» called a matinée (it was the evening); «22 балета» = 23 titles less one of two excerpts |
+| Moscow ballet | 42 / 51 (1 partial: «6-го декабря 1908 г.» for 1907) | 3 / 3 (47 paying «сверхъ того» the free matinée = 48 = stats; 14 ballets; 2 benefits) | 8 dates, all the review's slips: 27 Sep for 23 Sep; 9 Mar «Дочь фараона», 7 Nov «Спящая», 13 Feb «Волшебное зеркало» for what was given; the corps-de-ballet benefit dated 13 Jan for 2 Dec; 16 Sep «Жизель» (RG: «Карменъ»). Its «Дочь Фараона» with Павлова 2-я «сверхъ того» (f. 160) is probably the 15 Apr charity bill, the only «Дочь фараона» outside the 47; her Moscow roster line is «Въ 1 балетѣ—1» |
+
+Every disputed Repertoire cell matches the blind column read, and the play list agrees with the Repertoire each time.
+Noticed, not fixed: the review transcription reads «Аленкій» (SP f. 104, print «Аленькій»), «Заёль—г-жа Заёль» doubled (f. 94),
+«исполняла была» (Moscow p005, print «исполнена была»).
+
+**Outcome:** 16 ledger rows. Corrected 2 (24 Feb sessions, 26 Jan receipts), classification 1 («Карменъ», RG), excluded_by_yearbook
+3, yearbook_own 10 (provisional; 2 of them the reviews' slips). Nothing open. The Михайловскій spring run is now labelled a visiting troupe, unnamed (RG 2026-10-28: "We don't need to
+name the company"): a `VISITING_RUNS` row, company «visiting Russian drama troupe, St. Petersburg», discipline Russian drama;
+38 events, nothing else changed; promoted, backup `outputs/backups/mikh_run_1907-08_2026-10-28/` (ledger 1907-08-08).
+
+**Lesson for the method:** a season's «Списокъ пьесъ» is the best third source when one exists. It is dated, it covers
+every company, and it leaves out exactly what the stats leave out.
+
