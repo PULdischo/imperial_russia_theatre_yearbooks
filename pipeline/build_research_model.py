@@ -491,6 +491,10 @@ LIST_DATE_PRINT_TYPOS = {
     "balletproductions_1897-98_SP_p000__e002__d006": (
         "1897-12-28", "printed «декабря 38» (impossible day; scan-read twice, 2026-09-28); the Repertoire has "
         "«Дочь микадо» on 28 Dec 1897 (evening); one-digit slip (RG, 2026-10-15)"),
+    "balletproductions_1897-98_SP_p000__e006__d002": (
+        "1897-11-02", "printed «Коппелія … ноября 3» (scan-read 2026-10-29); the Repertoire has «Коппелія» with act 2 of "
+        "«Млада» on 2 Nov 1897 (Sunday; RG's Fold Log card) and «Опричникъ» on 3 Nov, and the list itself dates the «Млада» "
+        "act 2 Nov; one-digit slip in the list (RG, 2026-10-29: \"table is right, it's a slip in the list\")"),
 }
 
 

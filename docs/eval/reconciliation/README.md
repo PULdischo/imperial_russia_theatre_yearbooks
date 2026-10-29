@@ -926,7 +926,8 @@ work through the id crosswalk), production = tested copy, sqlite rebuilt, not re
 | SP German opera | 31 = 31, 152,203.10 | corrected 2026-10-29 (RG: "Yes, both"): 23 Mar act stored as a work and read «4-ter»; «aus der Oper» titles are opera items (1897-98-01) |
 | SP German drama | 32 = 32, 58,892.95 | corrected 2026-10-29 (RG: "Yes, relabel"): «Galeotto» 25-26 Mar = German troupe, research layer (1897-98-02) |
 | SP French | 146 = 146, 177,587.01 | corrected 2026-10-29 (RG: "Yes, relabel"): Réjane's 25-26 Oct nights = her troupe, own stats line (1897-98-03) |
-| SP ballet list 25 Oct, 3 Nov | list 52 vs 50 | list's own; RG |
+| SP ballet list 3 Nov «Коппелія» | | list slip for 2 Nov (RG 2026-10-29), in `LIST_DATE_PRINT_TYPOS` (1897-98-13) |
+| SP ballet list 25 Oct «Волшебная флейта» | list 51 vs 50 | list's own; RG (1897-98-12) |
 
 ## 1903-04 (2026-10-29): ballet explained in both cities; opera added (RG: dancers appear in operas too); three misreads fixed; two Moscow opera receipts gaps are the stats page's
 

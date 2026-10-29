@@ -23074,3 +23074,13 @@ Result: 168 events = 165 paying (365,040.33 р.; printed 365,004.33 for 167, +36
 22 Oct morning benefit of the second régisseurs, prompters and librarians (not in the play list either). Paying benefits 4 = fn. 6: chorus
 27 Nov 7,701.45; orchestra 14 Dec 5,231.00; chorus master Василевскій 27 Dec 7,754.85; Салина farewell 15 Feb 7,602.10. Single-digit or
 adjacent-swap slips giving exactly −36.00 р.: 31 of the 165 cells (many the 3,051.18 full house, «51»↔«15»), so no cell is singled out.
+
+## 2026-10-29 — 1897-98 SP ballet list after the «Коппелія» 3 Nov -> 2 Nov list-slip entry (RG)
+
+```
+uv run python pipeline/build_research_model.py --db <copy>; then production
+uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir <scratch>
+-- plus the table-by-table EXCEPT ALL diff
+```
+
+Result: only research.production_work changed (balletproductions_1897-98_SP_p000__e006 n_matched_dates 2 -> 3); production = tested copy. Ballet counts 1897-98: Moscow 51 / 51 / 51; SP stats 50, list 51, Repertoire 50; one list-only date left, 25 Oct «Волшебная флейта».
