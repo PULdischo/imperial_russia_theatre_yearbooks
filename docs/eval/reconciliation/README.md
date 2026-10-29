@@ -824,5 +824,13 @@ image first, six rows in `docs/eval/review_text_corrections.csv`: SP p011 «25-�
 «Горбункѣ“ 5 раза» -> 3, p017 «Гримальды» -> «Гримальди»; then (RG, same day) p021 «Конекъ-Горбункѣ» -> the printed
 «Конькѣ-Горбункѣ».
 
-**Outcome:** 19 ledger rows. Corrected 6 (counting the banner), excluded_by_yearbook 2, yearbook_own 11 (8 provisional;
-the «Корсаръ» cell closed by RG; the two reviews, 1904-05-18, -19). Nothing open.
+**Outcome:** 19 ledger rows. Corrected 6 (counting the banner), excluded_by_yearbook 2, yearbook_own 11 (the «Корсаръ» cell
+closed by RG; the two reviews, 1904-05-18, -19). Nothing open.
+
+**RG's reading of the provisional rows, 2026-10-29** (one at a time, evidence first): closed as the yearbook's own -- 05 Малый
+(1,252.54 = 651.56 for 1 Oct + 600.98; RG reads the damaged 5 Oct digit as 0), 08 Новый drama (−132.12), 10 Большой (+35 к.
+opera, +3 к. ballet), 15 SP opera (+1,357.41), 16 French −11 к. / German +50 к. (the earlier "half-kopeck rounding" note was wrong:
+the five «½» cells explain only ½ к. and 2 к.; corrected); 17 the SP ballet list's «декабря 17» is its slip for 27. **Held:** 09
+Новый opera (+1 event) and 14 Александринскій (−1 event, +2,709.50) wait for the season's drama and opera productions lists
+(«Списокъ пьесъ»), which are dated and would show the counted dates; only the ballet pages are scanned so far. Crops for RG:
+`docs/eval/scan_audit/1904-05_rg_row05_maly.png`, `1904-05_rg_row17_ballet_list.png`.

@@ -784,3 +784,10 @@ Read on the full-resolution scans by Claude during the blind column reads and th
   Read on the scan during the blind column read; stored as 2923 р. 64 к.
 - **Repertoire p. 21 (`repertoire_1898-99_p019`), Новый: «Вій, др. сказка»** — printed with і throughout the season; the extraction
   had «Вѣй» on 17, 28 and 30 Dec (corrected; not a print typo, recorded here because the spelling was checked on every page).
+
+## 1904-05 reconciliation (added 2026-10-29)
+
+- **SP ballet productions list, p. 139, «На перепутьи»:** «Исполненъ: 1904 г. — декабря 12, 17. 1905 г. — января 23; февраля 24.
+  Всего — 4 раза.» 17 Dec at the Маріинскій is «Валкірія»; the ballet was given at the 27 Dec matinée (with «Пробужденіе Флоры», whose
+  own entry has «декабря 27»). The list's own count of 4 and the SP review («23-го января дали въ 3-й разъ») agree with 27. RG
+  2026-10-29: the list's slip, 17 for 27 (ledger 1904-05-17).
