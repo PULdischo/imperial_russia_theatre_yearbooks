@@ -23024,3 +23024,28 @@ SELECT p.verbatim_title,w.canonical_title,count(*) FROM research.performance p J
 ```
 
 Result: first alias-only rebuild showed the alias also catching SP 4 Sep 1905 «Ваядерка бал.» (p. 84, 2857 р. 95 к.), printed «Баядерка» on the scan: fixed in raw. Final rebuild: work 2,958 -> 2,956 (the two typo works folded into «Баядерка» b612cbfc… and «Привалъ кавалеріи» 21781359…, ids kept), 3 performances relinked, 2 Moscow 1903-04 list productions now match 1 work (was 2); event, person, person_appearance unchanged. Production after promotion: «Пригалъ кавалеріи» -> «Привалъ кавалеріи» 1, «Ваядерка» -> «Баядерка» 1.
+
+## 2026-10-29 — 1907-08 Moscow ballet line (+50.00 р.): composition for RG's reading
+
+```sql
+with b as (select e.event_id, cast(e.date as varchar) d, e.time_of_day, e.receipts_total_kopecks k, e.is_benefit, e.is_free, e.is_charity, e.annotation
+ from research.event e join research.theater t using(theater_id) join research.performance p using(event_id)
+ where e.season='1907-08' and t.canonical_name='Большой' and e.event_status='performed' group by all having bool_or(p.discipline='ballet'))
+select count(*) n, count(k) paying, sum(k)/100.0 rub, count(*) filter (where is_benefit) ben, count(*) filter (where is_free) free,
+       count(*) filter (where is_charity) charity from b;
+```
+Result: 50 Большой events with a ballet item; 47 paying, 110,374.69 р. (printed 110,324.69 for 48, +50.00); benefits 2 (2 Dec corps de
+ballet 6,529.54; 22 Feb Гельцеръ 7,815.99); free 1 (6 Dec matinée); charity 2 (10 Nov, 15 Apr, no receipts). 47 paying + 1 free = 48.
+season_stats_receipt_candidates.py: no 1907-08 Moscow ballet lead (its family count includes the 15 Apr charity bill).
+
+## 2026-10-29 — 1907-08 Moscow ballet productions list dates vs the Moscow review's disputed dates (RG's question)
+
+```sql
+select e.title, e.total_text, string_agg(cast(p.date as varchar)||coalesce(' ['||p.note||']',''), ', ' order by p.date_order) dates, e.printed_page_number
+from raw.production_entry e left join raw.production_entry_performance p using(production_entry_id)
+where e.season='1907-08' and e.city='Moscow' group by all order by e.title;
+```
+Result: 14 entries, all p. 136. Лебединое озеро 2, 23 Sep, 21 Oct, 14 Nov, 27 Dec, 17 Feb (no 27 Sep); Дочь фараона 9 Sep, 14 Oct, 26 Dec
+(no 9 Mar, no 15 Apr); Спящая красавица 26 Sep, 22 Feb, 9 Mar (+20 Apr 1st act); Золотая рыбка 19 Sep, 7 Nov, 28 Dec, 3, 13, 21 Feb;
+Волшебное зеркало 9, 20 Jan, 20 Feb, 5 Mar (+20 Apr 3rd act; no 13 Feb); Баядерка 2, 16 Dec, 13 Jan; Нуръ и Анитра 2, 9 Dec; Конекъ-горбунокъ
+16 Sep, 10 Oct, 4, 18 Nov, 6, 29 Dec, 10, 23 Feb. Every disputed date: the list agrees with the Repertoire against the review.
