@@ -874,3 +874,54 @@ damaged 4); Большой 26 Nov «884 р. 46 к.» (the «опера и дра
 1896-97, none read in the volume (returned loan). The blind read agreed with every stored figure in those cells; two had part of the
 figure in the gutter: 29 Dec Большой evening «2628 р.» (kopecks not visible, stored without kopecks) and 18 Jan Михайловскій «2740 р.
 50 к.» (first digit cut). Two readings of the same scan are not a reading of the page.
+
+## 1897-98 (2026-10-29): every column read blind; ballet agrees four ways once one kopeck is fixed; four labels for RG
+
+The stats page is p. 27 (`1897-98_ProductionStats.pdf`; it shares the scan with Repertoire p. 26): venue lines for SP drama
+and opera, own lines for Réjane, Tina di Lorenzo, the Lessing-Theater and the drama-course students' performance, 16 footnotes.
+Productions list (ballet) for SP and Moscow; ballet reviews for both cities. The SP list page (pp. 32-33) also prints the opera
+and French drama lists, which are not transcribed: a possible third source for those lines.
+
+**Ballet.** Moscow 51 (48 + 3 opera-ballet bills): stats = list = Repertoire = review. SP 50 (48 Маріинскій + 2 mixed): stats =
+Repertoire = review (48 + 2, both mixed bills named); the list has 52 dates: two list dates have no ballet in the Repertoire (25 Oct
+«Волшебная флейта», the Маріинскій dark; 3 Nov «Коппелія», which the Repertoire has on 2 Nov), ledger 1897-98-12/13.
+`compare_season_stats.py` now applies `LIST_DATE_PRINT_TYPOS` (RG 2026-10-15, the two «Дочь микадо» slips), which it skipped
+before. The ballet lines are exact to the kopeck in both cities once 10 Sep 1897 is read «2158 р. 45 к.» (stored 43; SP −0.02),
+except Moscow ballet receipts (+2,743.80, already open). Review statements checked: SP opening 3 Sep, «Дочь микадо» first 9 Nov,
+Куличевская benefit 16 Nov, «Раймонда» 7 Jan, Кшесинскій benefit 8 Feb, «Капризы бабочки» 19 Apr, «Пахита» 26 Apr, closing 3 May,
+mixed 5 May; Moscow opening 3 Sep, «Катарина» 31 Dec, «Звѣзды» 25 Jan, benefits 12-15 Feb (13 Feb with act 2 of «Звѣзды»),
+closing 15 Apr: all agree.
+
+**Step 1, city totals** (Repertoire / printed, before the fixes below): Moscow 373 / 374, +3,590.91 р.; SP 649 / 650, −587.97 р.
+
+**Step 2, classification** (no misreads): SP German opera 31 = 28 + the two charity matinées of 15 and 22 Mar (RG #141, event
+labels; `compare_season_stats.py` now reads event-level labels for works-less events) + 26 Mar, whose «4-ter Akt aus der Oper Die
+Hugenotten» is tagged German drama in the research layer: with it German opera is exact, 152,203.10. French +4 / German −2 (±2,881.52):
+the two «Galeotto, dr.» nights (25-26 Mar, inside the German troupe's run) are tagged French, and Réjane's two nights (25 Oct, 26 Oct
+morning) sit under the house French company although the stats page gives them their own line. Moved, French (146 / 177,587.01) and
+German drama (32 / 58,892.95) are exact. 14 Dec morning (drama-course fund) is the students' line, so Александринскій drama is 187 = 187.
+Every no-receipts line is matched (ledger 1897-98-11). Moscow opera +936.51 is the 22 Dec invalids' «Демонъ», counted but its takings
+left out of the printed total (`excluded_by_yearbook`).
+
+**Step 3, every column read blind** (7 agents, scans first; `docs/eval/scan_audit/1897-98_scan_reads.csv`, 1,264 rows incl.
+dashes): every date and session agrees with the database; every legible receipts figure but one matches; the 18 gutter cells
+equal RG's Binding Fold Log readings. The works compared word for word (`docs/eval/scan_audit/1897-98_title_diffs.csv`, 61 rows):
+four extraction errors in the 2026-09 hand reconstructions (13 Nov Михайловскій second work dropped; 21 Nov «Германи» for «Гернани»;
+26 and 27 Jan Михайловскій bill copied from the days before, print «Margot / Une Innocente»), the 16 Nov «Бенефисъ г-жи
+Куличевской.» heading dropped (with it every benefit count matches its footnote: Михайловскій 20, Александринскій 9, Большой 5,
+Малый 4, Маріинскій 3 ballet + 1 German opera), five German opera acts held only in the annotation (12, 19, 20, 22, 23 Mar), and
+43 letter-level differences for a later title audit. Fixes in `fix_1897_98_scan_reads.py` (six cells); RG read the 10 Sep
+digit as 5 (2026-10-29). Applied: rebuilt on a copy (only those cells' rows changed; «Германи» folds into the existing «Гернани»
+work through the id crosswalk), production = tested copy, sqlite rebuilt, not republished; backup
+`outputs/backups/scan_reads_1897-98_2026-10-29/`. SP ballet is now 48 / 120,913.66 exact; SP city receipts −587.95 (all Александринскій).
+
+**What is left** (ledger 1897-98-01..13):
+
+| Line | Gap | Reading |
+|---|---|---|
+| Moscow ballet | 48 = 48, +2,743.80 | **open** (RG, since 2026-10-27): every cell read twice, lists and reviews agree |
+| SP Александринскій drama | 187 = 187, −587.95 | yearbook_own (provisional) |
+| SP Маріинскій opera | 122 / 123, receipts exact | yearbook_own (provisional): no missing session on the scan |
+| Moscow Малый | 206 / 207, −89.40 | yearbook_own (provisional): no missing session on the scan |
+| SP German opera, French, German, Réjane | exact once relabelled | labels for RG (1897-98-01..03) |
+| SP ballet list 25 Oct, 3 Nov | list 52 vs 50 | list's own; RG |

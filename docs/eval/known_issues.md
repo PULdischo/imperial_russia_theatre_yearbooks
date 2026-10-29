@@ -46,6 +46,17 @@ closes, and add new open items here as well as in their own entry.
   the volume.
   Same season, also unexplained after every Большой/Малый/Александринскій figure was read on the scan (2026-10-27):
   Малый drama −89.40 and 206 events vs 207 printed; Александринскій drama −587.95. See the Fold Log 1897-98 entry.
+  2026-10-29: every 1897-98 column read again, blind (docs/eval/scan_audit/1897-98_scan_reads.csv): every Большой
+  ballet figure as stored, no session missing anywhere; the Малый and Александринскій gaps stay (yearbook_own, provisional).
+  Full season write-up: docs/eval/reconciliation/README.md, 1897-98; ledger 1897-98-01..13.
+- **1897-98 Repertoire: six cells fixed from the blind column read, APPLIED 2026-10-29 (reconciliation; RG: "5").**
+  `docs/eval/reconciliation/fix_1897_98_scan_reads.py`: Маріинскій 10 Sep 1897 «2158 р. 43 к.» -> 45 (SP ballet now exact);
+  16 Nov «Бенефисъ г-жи Куличевской.» heading restored (footnote 4's three ballet benefits); Михайловскій 13 Nov second work
+  «Le Bésique chinois» added; Александринскій 21 Nov «Германи» -> «Гернани»; Михайловскій 26 + 27 Jan 1898 «Margot / Une
+  Innocente» (the 2026-09-25 reconstruction had copied the previous bill). Rebuilt on a copy, production = tested copy; sqlite
+  rebuilt, not republished. Backup `outputs/backups/scan_reads_1897-98_2026-10-29/`. Seen in passing, not changed:
+  `pipeline/research_corrections/art_form_by_title.csv` has two rows for «Ночное, лѣтняя сцена» (lines 4 and 6, same art form,
+  different basis notes), so a rebuild can swap the `discipline_basis` text of 1904-05 p003 s034 w2.
 - #159: review cast statements vs BalletArtists spiski, triaged 2026-10-22.
   35 suspected wrong-person links (13 high) in
   `docs/eval/review_assertion_wrong_person_suspects_2026-10-22.csv`, plus six

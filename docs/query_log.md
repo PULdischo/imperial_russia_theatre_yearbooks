@@ -22666,3 +22666,76 @@ SELECT disciplines, count(*) FROM research.events_with_dancers WHERE disciplines
 ```
 
 Result (outputs/full_run, after build_research_model.py): 2,194 events — ballet on the bill 2,063; dancers known in a non-ballet item 129; both 2. 3,053 performance rows. 0 visiting-troupe events.
+
+## 2026-10-29 — 1897-98 reconciliation: Repertoire vs season totals, by city and category
+
+```
+uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir <scratch>
+-- read city_totals.csv / family_totals.csv / ballet_counts.csv / ballet_count_dates.csv, rows for 1897-98
+```
+
+Result: Moscow 373 / 374 printed, +3,590.91 р.; SP 649 / 650, −587.97 р. Moscow: ballet 48 = 48 but +2,743.80; opera 112 = 112, +936.51; Малый 206 / 207, −89.40; no_works 3 (= concert 1 + music-literary evenings 2). SP: ballet 48 = 48, −0.02; Маріинскій opera 122 / 123, receipts exact; Александринскій drama 188 / 187, −587.95; French 150 / 146, +2,881.52; German drama 30 / 32, −2,881.52; German opera 28 / 31, −3,541.60; mixed 3 / 2; other 6 / 9; no_works 4. Ballet: Moscow 51 all agree; SP stats 50 = Repertoire 50, list 51; list-vs-Repertoire dates 25 Oct, 3 Nov, 24 Nov (list only), 14 Nov, 28 Dec (Repertoire only).
+
+## 2026-10-29 — 1897-98: every event with the comparison tool's category (scratch dump)
+
+```sql
+select e.event_id,e.city,t.canonical_name,e.date,e.date_verbatim,e.time_of_day,e.event_status,e.receipts_total_kopecks,e.receipts_verbatim,
+e.annotation,e.is_benefit,e.is_charity,e.is_free,e.printed_page_number,
+list(p.verbatim_title||' | '||coalesce(p.verbatim_genre,'')||' | '||coalesce(p.discipline,'')||' | '||coalesce(p.company,'') order by p.performance_order) works,
+list(struct_pack(gf:=p.genre_family,d:=p.discipline,c:=p.is_ceremonial,co:=p.company,vg:=p.verbatim_genre)) fams
+from research.event e join research.theater t using(theater_id) left join research.performance p using(event_id)
+where e.season='1897-98' group by all order by e.city,t.canonical_name,e.date,e.time_of_day
+-- each event then classed with compare_season_stats.classify_work / classify_event
+```
+
+Result: 1,424 rows (incl. no_performance / not_captured). Named: German opera = 28 + 26 Mar 1898 (Huguenots act 4 tagged German drama) + 15 Mar and 22 Mar morning (works only in the annotation) = 31, 152,203.10 exact; French/German offset = «Galeotto» 25 + 26 Mar 1898 Александринскій (1,689.32 + 1,192.20 = 2,881.52), tagged French; Réjane 25 Oct + 26 Oct morning tagged house French company; Lessing 22 Nov, 29 Nov, 6 Dec; Tina di Lorenzo 20 Dec, 27 Dec, 3 Jan; Александринскій 14 Dec morning = drama-course fund (stats «учениковъ» line); Moscow 22 Dec 1897 Большой «Демонъ» for the invalids 936.51 (= opera gap); Маріинскій 16 Nov «Дочь микадо» has no benefit heading; ballet benefits in the Repertoire 2 (7 Jan, 8 Feb) vs footnote 4's 3.
+
+## 2026-10-29 — 1897-98 SP ballet-list dates for «Волшебная флейта», «Коппелія», «Дочь микадо»
+
+```sql
+select e.title,e.total_text,e.total_count,e.performed_text,p.date_order,p.day_text,p.month_text,p.year_text,p.date,p.note,p.production_performance_id
+from raw.production_entry e join raw.production_entry_performance p using(production_entry_id)
+where e.season='1897-98' and e.city='SP' and e.title in ('Дочь микадо','Волшебная флейта','Коппелія') order by e.title,p.date_order
+```
+
+Result: «Волшебная флейта» 3 Sep, 5 Oct, 25 Oct (total 3); «Коппелія» 3 Sep, 3 Nov, 15 Apr (total 3); «Дочь микадо» 9, 24, 16, 19 Nov, 14 Dec, «38» Dec, 4 Jan, 19 + 22 Apr (total 9). Both «Дочь микадо» slips are already in LIST_DATE_PRINT_TYPOS (RG 2026-10-15), which compare_season_stats.ballet_counts does not apply. List scan read: «октября 5, 25» and «ноября 3» printed as stored.
+
+## 2026-10-29 — 1897-98 ballet season reviews: counts and dates
+
+```sql
+select page_id, block_index, text from raw.review_block
+where page_id like '%1897-98%' and lower(page_id) like '%ballet%' order by page_id, block_index
+-- filtered in Python for dated / count sentences
+```
+
+Result: SP: 48 Маріинскій ballet events + 2 mixed (Русское Театральное Общество; недородъ) = 50; 15 ballets; opening 3 Sep; «Дочь микадо» first 9 Nov; 16 Nov = Куличевская benefit; «Раймонда» 7 Jan; Kshesinsky benefit 8 Feb; «Капризы бабочки» 19 Apr; closing 3 May; mixed 5 May. Moscow: 48 + 3 mixed = 51; 16 ballets; opening 3 Sep; «Звѣзды» 25 Jan (Рославлева benefit); benefits 12, 13, 14, 15 Feb; last ballet 15 Apr.
+
+## 2026-10-29 — 1897-98 single-digit-slip candidates for the remaining receipts gaps
+
+```
+uv run python pipeline/season_stats_receipt_candidates.py --db outputs/full_run/imperial_theaters.duckdb --family-totals <scratch>/family_totals.csv --out <scratch>/candidates.csv
+```
+
+Result: SP ballet −0.02 has many kopeck candidates (one is 10 Sep 1897, 43 → 45, which the blind read confirmed); no candidates for Александринскій drama −587.95, Малый −89.40 or Moscow ballet +2,743.80.
+
+## 2026-10-29 — 1897-98 blind scan reads compared with the stored events
+
+```sql
+select e.event_id, t.canonical_name, coalesce(e.date, e.date_undate)::varchar, e.time_of_day, e.event_status,
+  e.receipts_verbatim, e.receipts_total_kopecks, e.annotation, e.printed_page_number,
+  (select string_agg(p.verbatim_title||coalesce(', '||p.verbatim_genre,''),' + ' order by p.performance_order)
+   from research.performance p where p.event_id=e.event_id)
+from research.event e join research.theater t using(theater_id) where e.season='1897-98'
+-- joined in Python to docs/eval/scan_audit/1897-98_scan_reads.csv on theater + date + session
+```
+
+Result: 1,264 read rows: 1,002 events match (receipts), 241 dashes match, 18 gutter cells unreadable (all equal RG's Binding Fold Log), 1 receipts difference (10 Sep 1897 Маріинскій, read 2158.45, stored 2158.43), 1 session-label difference (1 Feb 1898 Маріинскій gala read as a morning cell, stored unspecified); no stored event unread, no read event missing. Works text: 61 differences (docs/eval/scan_audit/1897-98_title_diffs.csv). Benefit headings: read Михайловскій 20, Александринскій 9, Большой 5, Малый 4, Маріинскій 4; stored the same except Маріинскій 3 (16 Nov Куличевская missing).
+
+## 2026-10-29 — 1897-98 after applying fix_1897_98_scan_reads.py (RG: "5"): season totals re-checked
+
+```
+uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir <scratch>
+-- plus a full table-by-table EXCEPT ALL diff: tested copy vs production (identical) and production vs backup
+```
+
+Result: production = tested copy, every table. Against the backup: raw.event_entry 2, raw.event_entry_performance 5/+6, research.event 3, research.performance 6/+7 (one 1904-05 row: discipline_basis text only, duplicate art_form_by_title.csv row), research.work 7/6 (appearance counts; «Германи» merged into «Гернани» via entities.work_id_crosswalk), research.season_stat_check 1. 1897-98 SP ballet 48 / 120,913.66 = printed exactly; SP city 649 / 650, −587.95 (= Александринскій drama); Moscow unchanged (373 / 374, +3,590.91).

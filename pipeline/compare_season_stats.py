@@ -225,7 +225,7 @@ def classify_event(fams):
 
 
 LEVEL2_SQL = """
-select e.event_id, e.season, e.city, t.canonical_name, e.receipts_total_kopecks,
+select e.event_id, e.season, e.city, t.canonical_name, e.receipts_total_kopecks, e.n_works, e.disciplines,
        p.performance_id, p.genre_family, p.discipline, p.is_ceremonial, p.company, p.verbatim_genre
 from research.event e join research.theater t using (theater_id)
 left join research.performance p using (event_id)
@@ -235,10 +235,14 @@ where e.event_status = 'performed'
 
 def level2(con, out_dir):
     ev = {}
-    for eid, season, city, th, k, pid, gf, disc, cer, comp, vg in con.execute(LEVEL2_SQL).fetchall():
+    for eid, season, city, th, k, n_works, ev_disc, pid, gf, disc, cer, comp, vg in con.execute(LEVEL2_SQL).fetchall():
         e = ev.setdefault(eid, {"season": season, "city": city, "theater": th, "k": k, "fams": []})
         if pid is not None:
             e["fams"].append(classify_work(gf, disc, cer, comp, vg))
+        elif n_works == 0 and ev_disc:
+            # An annotation-only event labelled by research_corrections/event_labels.csv (e.g. the two German
+            # charity matinées of March 1898, RG 2026-10-23, #141): use the event's own discipline.
+            e["fams"] += [DISCIPLINE_FAMILY.get(d, "other") for d in ev_disc.split("; ")]
     rep = {}
     for e in ev.values():
         cls = classify_event(e["fams"])
@@ -297,13 +301,17 @@ def level2(con, out_dir):
 
 
 def ballet_counts(con, out_dir):
-    from build_research_model import ballet_list_matches
+    from build_research_model import ballet_list_matches, LIST_DATE_PRINT_TYPOS
     from collections import defaultdict
     rows_by_date = defaultdict(list)
-    for season, city, d, title, note in con.execute("""
-        SELECT e.season, e.city, strftime(p.date, '%Y-%m-%d'), e.title, p.note
+    # RG's confirmed list-date print typos (LIST_DATE_PRINT_TYPOS) replace the printed date here too,
+    # as in ballet_list_matches; a misprint that does not parse («декабря 38») is added back.
+    for pid, season, city, d, title, note in con.execute("""
+        SELECT p.production_performance_id, e.season, e.city, strftime(p.date, '%Y-%m-%d'), e.title, p.note
         FROM raw.production_entry_performance p JOIN raw.production_entry e USING (production_entry_id)
-        WHERE p.date IS NOT NULL AND NOT p.outside_total""").fetchall():
+        WHERE (p.date IS NOT NULL OR p.production_performance_id IN (SELECT unnest(?)))
+          AND NOT p.outside_total""", [list(LIST_DATE_PRINT_TYPOS)]).fetchall():
+        d = LIST_DATE_PRINT_TYPOS[pid][0] if pid in LIST_DATE_PRINT_TYPOS else d
         rows_by_date[(season, city, d)].append((title, 2 if note and "2 раза" in note else 1))
     matched = defaultdict(set)
     for season, city, d, _title, _note, eid, _wid, _p in ballet_list_matches(con):
