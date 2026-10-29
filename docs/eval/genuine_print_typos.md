@@ -791,3 +791,9 @@ Read on the full-resolution scans by Claude during the blind column reads and th
   Всего — 4 раза.» 17 Dec at the Маріинскій is «Валкірія»; the ballet was given at the 27 Dec matinée (with «Пробужденіе Флоры», whose
   own entry has «декабря 27»). The list's own count of 4 and the SP review («23-го января дали въ 3-й разъ») agree with 27. RG
   2026-10-29: the list's slip, 17 for 27 (ledger 1904-05-17).
+- **Repertoire 1904-05, title audit (2026-10-29; `docs/eval/scan_audit/1904-05_title_reads.csv`), all read by Claude at zoom:**
+  Большой matinée 30 Dec 1904 (p. 111) **«Конскъ-Горбуновъ, бал.»** for «Конекъ-Горбунокъ»; Большой 25 Feb 1905, Гельцеръ
+  benefit (p. 123) **«11-я карт. бал. Коневъ-Горбунокъ,»**; Новый matinée 1 Jan 1905 (p. 111) **«Женитьба, соверш, невѣр.
+  событіе»** with a comma after «соверш»; Михайловскій 24 Feb 1905 (p. 122) **«Ou n'oublie pas, pièce nouv.»** for «On».
+  All stored as printed; the research layer matches them to the intended works (`work_title_aliases.csv`,
+  `work_excerpt_links.csv`). Worn type read as the letter present, not a typo: 7 Oct 1904 «Le nuage, c··m.», 7 Dec «Bellag·io».

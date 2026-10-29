@@ -22458,3 +22458,17 @@ left join research.work w on w.work_id = m.entity_id where m.mention_id = 20183;
 -- plus every base table, production vs tested copy vs backup, except all both ways (candidate lists sorted)
 ```
 Result: without a curated row the corrected surface fell to quoted-unresolved; with the review_work_mention_links row it links to «Конекъ-горбунокъ» (бал.) as before. Production vs backup: raw.review_block 1, entities.review_mention 1; production = tested copy.
+
+## 2026-10-29 — 1904-05 title audit: blind read v. stored works; rebuild checks
+
+```sql
+-- stored text per event: research.event joined to raw.event_entry_performance (performance_title || ', ' || genre, by performance_order)
+-- compared with docs/eval/scan_audit/1904-05_scan_reads.csv works_verbatim after stripping spaces/punctuation (orthography kept)
+select canonical_title, canonical_genre, count(p.performance_id) from research.work w left join research.performance p using(work_id)
+where canonical_title ilike ? group by all;   -- Бѣшен%, Лакм%, Мертв% души, Пото%, Женитьба%, %Гамлетъ, Макбетъ ...
+select n.event_id, n.verbatim_title, o.includes_dance, n.includes_dance from research.performance n join p.research.performance o using(performance_id)
+where n.includes_dance is distinct from o.includes_dance;
+```
+Result: 57 of 1,091 cells differed (first pass against research.performance gave 64, research-layer normalisation; against raw 58, one of them the German «Prolog.» already in the annotation). After the fix: corrected titles fold into their works; 7 excerpts linked to parents; includes_dance «3 и 4 д. оп. Юдифь» 11 Jan 1905 yes, «сц. 4 д. оп. Гамлетъ» 16 Feb blank; season_stat_check unchanged. Pre-existing splits found: Бѣшеныя/Бѣшеные деньги 41+39, Лакмэ/Лакме 109+19 (+Лакма 1, Лакмѣ 1); merged after RG's go-ahead: 80 and 129; only work_id of 59 performances changed.
+
+Dancer-inheritance sizing (rejected by RG): 7 excerpt performances in the corpus have a parent in works_with_dancers.csv for the same season and city.

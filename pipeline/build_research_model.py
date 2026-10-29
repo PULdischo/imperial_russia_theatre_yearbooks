@@ -1181,10 +1181,18 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
     if WORKS_WITH_DANCERS_CSV.exists():
         ev_rows = []
         for row in csv.DictReader(open(WORKS_WITH_DANCERS_CSV, encoding="utf-8")):
-            hit = con.execute("""SELECT work_id FROM research.work WHERE canonical_title = ? AND canonical_genre = ?
-                                 AND excerpt_of_work_id IS NULL
-                                 AND work_id NOT IN (SELECT work_id FROM work_ballet)""",
-                              [row["work_title"], row["work_genre"]]).fetchall()
+            if row["work_genre"]:
+                hit = con.execute("""SELECT work_id FROM research.work WHERE canonical_title = ? AND canonical_genre = ?
+                                     AND excerpt_of_work_id IS NULL
+                                     AND work_id NOT IN (SELECT work_id FROM work_ballet)""",
+                                  [row["work_title"], row["work_genre"]]).fetchall()
+            else:
+                # A blank genre names an EXCERPT by its printed title (RG, 2026-10-29): dancers are
+                # flagged only on excerpts known to contain the danced act, never inherited from
+                # the parent work, since an excerpt need not include the dancing.
+                hit = con.execute("""SELECT work_id FROM research.work WHERE canonical_title = ?
+                                     AND canonical_genre IS NULL AND excerpt_of_work_id IS NOT NULL""",
+                                  [row["work_title"]]).fetchall()
             if len(hit) != 1:
                 raise SystemExit(f"works_with_dancers.csv: {row['work_title']!r} [{row['work_genre']}] "
                                  f"matches {len(hit)} works")
