@@ -757,10 +757,10 @@ Read on the full-resolution scans by Claude during the blind column reads and th
 - **Repertoire p. 104, Alex 27 Jan 1908 «1399 р. 74 к.» and p. 84, Alex 17 Oct 1907 «6?7 р. 06 к.»:** broken sorts; 17 Oct cannot be read
   (stored 677).
 - **«Списокъ пьесъ» 1907-08 (ProductionStats pp. 127-136):** Moscow opera «Сказаніе о невидимомъ градѣ Китежѣ…» «февраля 5, 18, 18, 21»
-  with «Всего—5 разъ» (the Repertoire has 5, 15, 18, 21 Feb, 15 Feb the Салина farewell benefit); «Фра-Діаволо» «1908 г.—сентября 4…» for
+  with «Всего—5 разъ» (the Repertoire has 15, 18, 21 Feb and 16, 18 Apr, five in all; 5 Feb is «Вертеръ»; 15 Feb is the Салина farewell benefit); «Фра-Діаволо» «1908 г.—сентября 4…» for
   1907; French no. 31 «On n'oublie pas» and no. 35 «La rivale» «1908 г.—ноября» for 1907, no. 39 «Les Transatlantiques» «1907 г.—января» for
   1908; Moscow drama «Дѣльцы» dated 18 Jan 1908 (the Repertoire has «Ревизоръ» only) while «Молодежь» lacks 13 Jan; SP drama «Склепъ»
-  dated 18 Dec 1907 (the Repertoire has «Великая тайна» and «Доходы миссисъ Уорренъ»).
+  «декабря 12, 18» for 12 and 28 Dec (18 Dec is «Доходы миссисъ Уорренъ» + «Великая тайна»; 28 Dec evening «Склепъ» + «Въ штатскомъ», which the list dates 28 Dec). RG agreed all of these are the list's slips, 2026-10-29.
 - **Season totals p. 126, Moscow «Русскихъ драматическихъ … 181»:** the Repertoire and the play list have 213 Малый events, and the line's
   own receipts (190,634 р. 82 к.) cover all 213. RG 2026-10-28: too large to be a print slip; the count disagrees with the page itself,
   cause unknown (ledger 1907-08-04).

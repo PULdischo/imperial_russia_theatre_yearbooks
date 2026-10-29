@@ -23147,3 +23147,14 @@ research.work / research.performance compared before v after (work_id, disciplin
 ```
 
 Result: raw.event_entry_performance 45, research.performance 45, research.work 17 -> 13 (crosswalk +4: Золотой теленокъ, Теша, Воробьишекъ, Villégiateure merged); 8 performances moved work (to Джентльмэнъ, Теща, Золотой телецъ, Воробышекъ, Villégiature x3, Le Bésigue chinois); no discipline or item kind changed; «Воробышекъ ом.» and «Jm weissen Rössl» keep their works. Production = tested copy.
+
+## 2026-10-29 — Moscow «Китежъ» first performance; 1907-08 Большой non-benefit receipts (RG: why is «Китежъ» in the Салина benefit?)
+
+```sql
+select e.season, cast(e.date as varchar), e.time_of_day, e.receipts_total_kopecks/100.0, e.annotation from research.event e
+join research.performance p using(event_id) where e.city='Moscow' and p.verbatim_title like 'Сказаніе о невидимомъ%' order by e.date limit 8;
+select round(median(receipts_total_kopecks)/100.0,2), max(receipts_total_kopecks)/100.0 from research.event e join research.theater t using(theater_id)
+where e.season='1907-08' and t.canonical_name='Большой' and not coalesce(e.is_benefit,false);
+```
+Result: the first Moscow «Китежъ» in the Repertoire is 15 Feb 1908, the Салина farewell benefit (7,602.10 р.); then 18, 21 Feb, 16, 18 Apr
+1908 and 10 Oct 1908 on. 1907-08 Большой non-benefit events: median 2,151.82 р., highest 3,976.50 р.

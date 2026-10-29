@@ -725,8 +725,8 @@ provisional until RG reads the source.
 Repertoire. The separate ballet productions lists (#145): SP 52 = stats 52 (the Repertoire's other 4 are charity bills);
 Moscow 47, which with the 20 Apr evening of single acts (2,469.30 р.; acts are outside the list's totals) is 48 = stats; the
 Repertoire's other two are the 10 Nov and 15 Apr charity bills. Its own slips (Repertoire read on the scan): «Китежъ» «февраля 5, 18, 18, 21» where the Repertoire has the
-Салина farewell benefit on 15 Feb; Moscow «Дѣльцы» on 18 Jan and «Молодежь» missing 13 Jan; SP «Склепъ» on 18 Dec; four
-wrong years (1907-08-14).
+Салина farewell benefit on 15 Feb; Moscow «Дѣльцы» on 18 Jan and «Молодежь» missing 13 Jan; SP «Склепъ» «18» for 28 Dec; four
+wrong years (1907-08-14; RG 2026-10-29: all the list's slips).
 
 **A fourth source: the ballet season reviews** (SP ff. 92-105, Moscow ff. 153-160), checked by two agents against the
 Repertoire, reading the review images and the Repertoire scans for every disagreement; the main session then re-checked each
