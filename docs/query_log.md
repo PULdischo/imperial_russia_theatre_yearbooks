@@ -23129,3 +23129,12 @@ Result: the scan prints «12 октября дали «Аленькій цвѣт
 offset shifts on review_1908-09_SP_ballet_p001 (same entities); review_assertion 4 and review_dance_performer 14 rows differ only in the order of
 performer_candidate_ids (0 differences once sorted). No «Аленкій» left in the review text. Backup outputs/backups/review_text_1908-09_alenkiy_2026-10-29/;
 promoted; sqlite rebuilt.
+
+## 2026-10-29 — 1897-98 German opera acts moved to works + 1 Feb session (RG: "go ahead"): rebuild checked
+
+```
+full rebuild (docs/eval/rebuild_after_raw_edit.sh steps) on a copy, then production
+-- table-by-table EXCEPT ALL diff; compare_season_stats.py on the copy
+```
+
+Result: copy vs pre-fix: raw.event_entry 5, raw.event_entry_performance +4, research.event 5 (12, 19, 20, 22 Mar ev: annotation cleared, n_works 1 -> 2; 1 Feb: unspecified -> morning), research.performance +4 (German opera, item_kind opera), research.work +4 (excerpts of Der fliegende Holländer, Die Walküre x2, Die Meistersinger von Nürnberg); production = tested copy. 1897-98 SP German opera 31 / 152,203.10, mixed 2: unchanged, exact.

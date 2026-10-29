@@ -76,6 +76,14 @@ closes, and add new open items here as well as in their own entry.
   In `LIST_DATE_PRINT_TYPOS` (research layer; raw keeps the print). Only research.production_work changed (matched dates 2 -> 3).
   The SP list now differs from the Repertoire on 25 Oct «Волшебная флейта» only (ledger 1897-98-12).
   RG 2026-10-29 on that date: "It's likely a list error"; left as printed (no nearby date to correct to).
+- **1897-98 German opera acts + 1 Feb session, APPLIED 2026-10-29 (RG: "go ahead").** `fix_1897_98_german_acts_and_1feb.py`:
+  the visiting German opera troupe's acts on 12, 19, 20 and 22 Mar (evening) 1898, printed as the bill's second line but stored only
+  in the annotation, are now works (German opera), linked in `work_excerpt_links.csv` to the troupe's «Der fliegende Holländer»,
+  «Die Walküre» (x2) and «Die Meistersinger von Nürnberg»; the 1 Feb 1898 Маріинскій gala is now «morning» (cell labelled «утро»).
+  Season totals unchanged (German opera still exact). Backup `outputs/backups/german_acts_1feb_1897-98_2026-10-29/`.
+  Not changed: the 15 Mar and 22 Mar morning charity matinées (acts + «Concert-Abtheilung.» stay in the annotation; event_labels.csv,
+  #141); «4-ter Akt aus der Oper Die Hugenotten.» and «4-o atto di op. Gli Ugonotti» (1893-94) have no parent link (cross-language
+  work identity: RG's call).
 - #159: review cast statements vs BalletArtists spiski, triaged 2026-10-22.
   35 suspected wrong-person links (13 high) in
   `docs/eval/review_assertion_wrong_person_suspects_2026-10-22.csv`, plus six
