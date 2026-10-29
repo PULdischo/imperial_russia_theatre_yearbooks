@@ -23117,3 +23117,15 @@ from research.event e where event_id in (<the 48>) order by date, time_of_day
 ```
 
 Result: Moscow ballet matches the stats page exactly in 1893-94..1896-97, 1899-00, 1901-02, 1908-09, 1909-10, 1910-11 (small or count-linked gaps elsewhere); 1897-98 is the outlier, no recurring pattern. 48 events, 67,138.28, all with printed receipts. No contiguous run equals 2,743.80 (nearest 7-14 Jan 1898, 2,740.51); no subset of 1-5 events equals it; no ballet figure minus the gap equals any other 1897-98 event's figure; no digit-swap; no double entry. Months: Sep 4,959.35, Oct 8,440.83, Nov 6,986.49, Dec 7,039.69, Jan 12,621.24, Feb 24,298.72, Apr 2,791.96. Reviews quote no receipts. Stats line «48 (64,394 р. 48 к.)»; kopecks differ (.28 v .48), so not a roubles-only mis-addition.
+
+## 2026-10-29 — 1908-09 SP review «Аленкій» (f. 117): scan-checked, corrected, tested on copies and promoted
+
+Same chain as the 1907-08 review-text entry above; then
+```sql
+select * from A.t except all select * from B.t;   -- every base table, both ways; candidate_ids compared as sorted lists
+select count(*) from raw.review_block where text like '%Аленкій%';
+```
+Result: the scan prints «12 октября дали «Аленькій цвѣточекъ»» (f. 117). 1 replacement; raw.review_block 1 row; entities.review_mention 5
+offset shifts on review_1908-09_SP_ballet_p001 (same entities); review_assertion 4 and review_dance_performer 14 rows differ only in the order of
+performer_candidate_ids (0 differences once sorted). No «Аленкій» left in the review text. Backup outputs/backups/review_text_1908-09_alenkiy_2026-10-29/;
+promoted; sqlite rebuilt.
