@@ -738,8 +738,9 @@ disagreement against the blind column read and the play list (`1907-08_review_ba
 | Moscow ballet | 42 / 51 (1 partial: «6-го декабря 1908 г.» for 1907) | 3 / 3 (47 paying «сверхъ того» the free matinée = 48 = stats; 14 ballets; 2 benefits) | 8 dates, all the review's slips: 27 Sep for 23 Sep; 9 Mar «Дочь фараона», 7 Nov «Спящая», 13 Feb «Волшебное зеркало» for what was given; the corps-de-ballet benefit dated 13 Jan for 2 Dec; 16 Sep «Жизель» (RG: «Карменъ»). Its «Дочь Фараона» with Павлова 2-я «сверхъ того» (f. 160) is probably the 15 Apr charity bill, the only «Дочь фараона» outside the 47; her Moscow roster line is «Въ 1 балетѣ—1» |
 
 Every disputed Repertoire cell matches the blind column read, and the play list agrees with the Repertoire each time.
-Noticed, not fixed: the review transcription reads «Аленкій» (SP f. 104, print «Аленькій»), «Заёль—г-жа Заёль» doubled (f. 94),
-«исполняла была» (Moscow p005, print «исполнена была»).
+Three slips in the review transcription, «Аленкій» ×2 (SP f. 104, print «Аленькій»), «Заёль—г-жа Заёль» doubled (f. 94) and
+«исполняла была» (Moscow f. 158, print «исполнена была»), were FIXED 2026-10-29 (RG: "fix"; `docs/eval/review_text_corrections.csv`,
+commit 0ad4c98). The fix also yields one new review assertion, «Заёль — г-жа Сѣдова» in «Ручей» (30 Sep 1907).
 
 **Outcome:** 16 ledger rows. Corrected 2 (24 Feb sessions, 26 Jan receipts), classification 1 («Карменъ», RG), excluded_by_yearbook
 3, yearbook_own 10 (provisional; 2 of them the reviews' slips). Nothing open. The Михайловскій spring run is now labelled a visiting troupe, unnamed (RG 2026-10-28: "We don't need to
