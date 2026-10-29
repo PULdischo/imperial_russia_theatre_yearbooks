@@ -95,7 +95,10 @@ closes, and add new open items here as well as in their own entry.
   Backup `outputs/backups/titles_1897-98_2026-10-29/`. 1897-98 is now title-audited (all five columns), like 1904-05.
   «Le Bésique chinois» (12: 1897-98 to 2 Jan 1898, and 1898-99) MERGED into «Le Bésigue chinois» (now 34), RG 2026-10-29 "Yes, merge":
   alias in work_title_aliases.csv, raw verbatim; only those 12 performances' work_id changed. Backup `outputs/backups/besigue_merge_2026-10-29/`.
-  Still left for RG: «Джентльманъ» (5, other seasons; scan-check first) v «Джентльмэнъ» (92).
+  «Джентльманъ» (5: 1898-99, 1899-00 x2, 1902-03 x2) read on the scans: all print «Джентльмэнъ» (misreads; RG "Yes, fix them").
+  `docs/eval/reconciliation/fix_dzhentlmen_titles.py`, title only; the work folds into «Джентльмэнъ» (97). Production = tested copy;
+  backup `outputs/backups/dzhentlmen_2026-10-29/`; reads in `docs/eval/scan_audit/spelling_reads_dzhentlmen_2026-10-29.csv`.
+  Not checked: a third spelling «Джентльменъ» (20: 1899-00 4, 1900-01 1, 1901-02 1, 1902-03 1, 1907-08 13).
 - #159: review cast statements vs BalletArtists spiski, triaged 2026-10-22.
   35 suspected wrong-person links (13 high) in
   `docs/eval/review_assertion_wrong_person_suspects_2026-10-22.csv`, plus six

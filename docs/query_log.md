@@ -23168,3 +23168,23 @@ where p.verbatim_title ilike '%bési%' or p.verbatim_title ilike '%besi%' group 
 ```
 
 Result: before: 1897-98 Bésigue 12 / Bésique 8; 1898-99 Bésique 4; 1899-00 Besigue 5, Bésigue Chinois 1, Bésigue 4; works «Le Bésique chinois» 12, «Le Bésigue chinois» 22. After: one work «Le Bésigue chinois» 34 (crosswalk 9a6a4bee -> 6a4099a0); 12 performances changed work_id only (titles, disciplines unchanged); production = tested copy.
+
+## 2026-10-29 — Every Repertoire cell stored «Джентльманъ» (for a scan check)
+
+```sql
+select e.season, e.date, e.time_of_day, t.canonical_name, e.event_id, e.printed_page_number, p.verbatim_title, p.verbatim_genre, e.receipts_verbatim
+from research.performance p join research.event e using(event_id) join research.theater t using(theater_id)
+where p.verbatim_title like 'Джентльман%' order by 2
+```
+
+Result: 5 cells: 1898-99 31 Jan 1899 evening Александринскій (p. 26); 1899-00 17 Oct 1899 evening Александринскій (p. 8), 28 Dec 1899 Малый (p. 21); 1902-03 15 + 22 Nov 1902 Михайловскій (p. 14). All five print «Джентльмэнъ, ком.» on the scan (docs/eval/scan_audit/spelling_reads_dzhentlmen_2026-10-29.csv): misreads.
+
+## 2026-10-29 — «Джентльманъ» -> «Джентльмэнъ» (5 cells, RG): rebuild checked; the «Джентльменъ» spelling by season
+
+```sql
+-- after the rebuild on a copy and table-by-table EXCEPT ALL diff:
+select canonical_title, appearance_count from research.work where canonical_title like 'Джентльм%';
+select e.season, count(*) from research.performance p join research.event e using(event_id) where p.verbatim_title='Джентльменъ' group by 1 order by 1;
+```
+
+Result: raw.event_entry_performance 5, research.performance 5, research.work 2 -> 1 (crosswalk «Джентльманъ» -> «Джентльмэнъ»); «Джентльмэнъ» 92 -> 97; production = tested copy. «Джентльменъ» (not checked): 1899-00 4, 1900-01 1, 1901-02 1, 1902-03 1, 1907-08 13.
