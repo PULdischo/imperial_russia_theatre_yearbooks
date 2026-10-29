@@ -22748,3 +22748,13 @@ uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_th
 ```
 
 Result: production = tested copy. Changed vs pre-fix: raw.event_entry 1, raw.event_entry_performance +1, research.event 2 (23 Mar: annotation cleared, n_works 1 -> 2; 26 Mar: disciplines «German drama; German opera» -> «German opera»), research.performance 1 changed + 1 new (both acts German opera, item_kind opera), research.work 1 (appearances 1 -> 2). 1897-98 SP German opera 31 / 152,203.10 = printed; mixed 2 = 2.
+
+## 2026-10-29 — 1897-98 after relabelling «Galeotto» (RG: "Yes, relabel"): French and German drama re-checked
+
+```
+uv run python pipeline/build_research_model.py --db <copy>; then production
+uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir <scratch>
+-- plus the table-by-table EXCEPT ALL diff
+```
+
+Result: copy vs pre-fix: research.event 2, research.performance 2 (pair022__s051/s052: French drama -> German drama, visiting German drama troupe); production = tested copy. 1897-98 SP German drama 32 / 58,892.95 = printed; French 148 / 146, 177,587.01 = printed (the 2 are Réjane's, no receipts).

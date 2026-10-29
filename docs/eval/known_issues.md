@@ -63,6 +63,10 @@ closes, and add new open items here as well as in their own entry.
   `build_research_model.py` kind rule: a title naming an opera act («aus der Oper/Op.») is an opera item. SP «Нѣмецкихъ оперныхъ»
   now exact (31, 152,203.10). Backup `outputs/backups/hugenotten_1897-98_2026-10-29/`. Still in annotations only (not asked):
   German opera acts of 12, 19, 20, 22 Mar evening 1898; the act is not linked as an excerpt of «Гугеноты».
+- **1897-98 «Galeotto», 25 + 26 Mar 1898, relabelled German drama, APPLIED 2026-10-29 (RG: "Yes, relabel").** Inside the visiting
+  German drama troupe's Александринскій run; the Latin title with «dr.» had fallen to French drama. Two rows in
+  `pipeline/research_corrections/art_form_by_performance.csv` (research layer only). SP «Нѣмецкихъ драматическихъ» now exact
+  (32, 58,892.95). Backup `outputs/backups/galeotto_1897-98_2026-10-29/`.
 - #159: review cast statements vs BalletArtists spiski, triaged 2026-10-22.
   35 suspected wrong-person links (13 high) in
   `docs/eval/review_assertion_wrong_person_suspects_2026-10-22.csv`, plus six
