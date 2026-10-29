@@ -834,3 +834,43 @@ the five «½» cells explain only ½ к. and 2 к.; corrected); 17 the SP balle
 Новый opera (+1 event) and 14 Александринскій (−1 event, +2,709.50) wait for the season's drama and opera productions lists
 («Списокъ пьесъ»), which are dated and would show the counted dates; only the ballet pages are scanned so far. Crops for RG:
 `docs/eval/scan_audit/1904-05_rg_row05_maly.png`, `1904-05_rg_row17_ballet_list.png`.
+
+## 1896-97 (2026-10-29): ballet agrees four ways; every column read blind; one misread fixed; Михайловскій drama −19,709 is the stats page's
+
+The stats page is p. 27 (`1896-97_ProductionStats.pdf`): venue lines for SP drama, opera and ballet, 10 footnotes, receipts on every
+line. Productions lists (ballet) for both cities; ballet reviews for both cities; no opera or drama reviews.
+
+**Ballet: stats, lists, Repertoire and both reviews agree.** Moscow 57 (53 ballet + 4 «опера и балетъ», incl. the 14 Nov free
+matinée), SP 53 (Маріинскій 50, Михайловскій 3, incl. the 14 Nov and 6 Dec free matinées and the 16 Apr парадный спектакль). The
+ballet lines are exact to the kopeck in both cities (Moscow 60,908.90 and mixed 6,253.23; SP 116,504.29 + 2,255.95). All 29
+productions' printed totals equal their dated performances (Moscow 15, 77 dates; SP 14, 65 dates); no list date differs from the
+Repertoire. Reviews (`1896-97_review_sp_ballet.csv`, `1896-97_review_msk_ballet.csv`): SP 12 / 12 statements agree (opening 1 Sept,
+Михайловскій 4 Sept, «Млада» 25 Sept, Petipa's benefit and the first «Синяя борода» 8 Dec, Леньяни 15 Dec, «Царь Кандавлъ» 9 Feb,
+closing 4 May; 50 + 3 = 53, 14 ballets, 1 new, 1 revived); Moscow 15 / 15 (opening 4 Sept, first «Цыганка» 15 Dec, Мендесъ 9 Feb,
+Рославлева 16 Feb, Джури and the first «Фея куколъ» 20 Feb, corps de ballet 22 Feb, closing 30 Apr; 53 + 4 = 57, 15 ballets, 2 new,
+1 revived), 4 n/a (casts, history).
+
+**Step 1, city totals** (Repertoire / printed): Moscow 420 / 423, +469.80 р.; SP 630 / 621, −10,397.21 р. (after the fix below).
+SP +9 = 3 invalids' concert + 2 Barnay + 1 Duse (none on any line) + 3 Александринскій drama (open). Moscow −3 = −4 opera +1 invalids'
+concert.
+
+**Step 3, every column read blind** (10 agents, the scans first; `docs/eval/scan_audit/1896-97_scan_reads.csv`, 1,310 rows incl.
+dashes): every date and session agrees with the database; 4 figures differ, all damaged glyphs. One misread: 14 Dec 1896 Маріинскій
+Barnay «3741 р. — к.», stored 3711 (RG: "It's a 4"; `fix_1896_97_barnay_14dec.py`, rebuilt, diff: that event only, promoted, backup
+`outputs/backups/barnay_14dec_1896-97_2026-10-29/`). The other three stay as stored: Александринскій 26 Jan «646 р. 61 к.» (same
+damaged 4); Большой 26 Nov «884 р. 46 к.» (the «опера и драма» line is exact with it: 2,643.52 + 884.46 = 3,527.98); Малый 6 Oct
+«1238 р. 58 к.» (1208 would widen the Малый gap).
+
+**What is left** (ledger 1896-97-01..13):
+
+| Line | Gap | Reading |
+|---|---|---|
+| SP Михайловскій drama | 55 = 55, −19,709.00 | yearbook_own (provisional): every cell matches; the kopecks agree (.29), so the roubles of the printed «67,893» look mis-added |
+| SP Александринскій drama | +3, −847.15 | **open**: 17 Nov (school fund) and 19 Dec (Дом Милосердія) charity are not in footnote 2; that still leaves +1 |
+| Moscow opera | −4, +1,000.00 | yearbook_own (provisional): no missing session on the scan; 121 = 117 + the 4 opera-ballet bills the mixed line also counts |
+| Moscow Малый −1,130.00; Italian +599.80; SP French −120.00; Маріинскій opera −19.56; German +1.00 | | yearbook_own (provisional) |
+
+**Fold.** The Binding Fold Log has 13 Repertoire cards (60 cells, the gutter column of each left-hand page) and one review card for
+1896-97, none read in the volume (returned loan). The blind read agreed with every stored figure in those cells; two had part of the
+figure in the gutter: 29 Dec Большой evening «2628 р.» (kopecks not visible, stored without kopecks) and 18 Jan Михайловскій «2740 р.
+50 к.» (first digit cut). Two readings of the same scan are not a reading of the page.

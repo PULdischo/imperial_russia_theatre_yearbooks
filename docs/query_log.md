@@ -22483,3 +22483,91 @@ select canonical_title, count(p.performance_id) from research.work w left join r
 where canonical_title ilike 'Лакм%' or canonical_title ilike 'Бѣшен%' group by all;
 ```
 Result: 59 cells (39 Бѣшеные, 18 Лакме, 1 Лакма, 1 Лакмѣ). Scan reads: Бѣшеныя 39/39, Лакме 18/18 as printed, Лакма and Лакмѣ = Лакмэ. After the fix: only 41 verbatim_title values change; Бѣшеныя деньги 80, Лакмэ 129 (unchanged).
+
+## 2026-10-29 — 1896-97 reconciliation: events by theater and status
+
+```sql
+select e.city, t.canonical_name th, e.event_status, count(*) n, count(receipts_total_kopecks) n_rcpt, sum(receipts_total_kopecks)/100.0 rub
+from research.event e left join research.theater t using(theater_id) where season='1896-97' group by all order by 1,2,3
+```
+
+Result: 15 rows; first: ('Moscow', 'Большой', 'no_performance', 54, 0, None)
+
+## 2026-10-29 — 1896-97: not_captured placeholders by date and theater
+
+```sql
+select e.date, string_agg(t.canonical_name, ',' order by t.canonical_name) ths, count(*) n
+from research.event e join research.theater t using(theater_id) where season='1896-97' and event_status='not_captured' group by 1 order by 1
+```
+
+Result: 35 rows; first: ('1896-08-17', 'Александринскій,Большой,Малый,Маріинскій,Михайловскій', 5)
+
+## 2026-10-29 — 1896-97 reconciliation: per-event classification (compare_season_stats classifier), dumped to scratch
+
+```sql
+-- compare_season_stats.LEVEL2_SQL restricted to season='1896-97', plus:
+select e.event_id, e.date, e.time_of_day, e.is_charity, e.is_free, e.is_benefit, a.annotation,
+  (select string_agg(p.verbatim_title || coalesce(', '||p.verbatim_genre,''), ' + ' order by p.performance_id)
+   from research.performance p where p.event_id=e.event_id) works
+from research.event e left join analysis.event_entry a using(event_id)
+where e.season='1896-97' and e.event_status='performed'
+```
+
+Result: 1,050 performed events. Moscow Большой: opera 117, ballet 53, Italian 25, mixed 6 (ballet+opera 4, drama+opera 2), concert 1, no_works 1; Малый drama 217. SP Александринскій drama 193, German 35, mixed drama+French 2, other 1; Маріинскій opera 125, ballet 50, concert 3, German 1, no_works 3; Михайловскій French 145, drama 55, opera 14, ballet 3.
+
+## 2026-10-29 — 1896-97 ballet: each production's printed total vs its dated performances, both cities
+
+```sql
+select city, list_number, list_title, printed_total, n_dates, n_matched_works, printed_total = n_dates as agrees
+from research.production where season='1896-97' order by city, list_number
+```
+
+Result: Moscow and SP productions listed with printed_total vs n_dates; see agrees column
+
+## 2026-10-29 — 1896-97 reconciliation: blind column reads vs research.event (compare_reads.py, scratch)
+
+```sql
+select e.event_id, t.canonical_name, e.date, e.time_of_day, e.event_status, e.receipts_total_kopecks, e.receipts_verbatim,
+  e.annotation, (select string_agg(p.verbatim_title || coalesce(', '||p.verbatim_genre,''), ' + ' order by p.performance_id)
+                 from research.performance p where p.event_id=e.event_id) works
+from research.event e join research.theater t using(theater_id) where e.season='1896-97'
+```
+
+Result: matched against 1,310 blind-read rows (docs/eval/scan_audit/1896-97_scan_reads.csv), all five theaters, whole season. Event counts agree on every date and session. 4 receipts differ: Александринскій 26 Jan 1897 morning (stored 646.61, read 616.61), Большой 26 Nov 1896 (stored 884.46, read 894.46 medium), Малый 6 Oct 1896 evening (stored 1238.58, read 1208.58 medium), Маріинскій 14 Dec 1896 Barnay (stored 3711.00, read 3741.00). All four are damaged glyphs; none changed.
+
+## 2026-10-29 — 1896-97 Moscow ballet review vs Repertoire (agent, read-only; four queries)
+
+```sql
+SELECT e.event_id, e.date, e.time_of_day, e.event_status, t.canonical_name, e.receipts_total_kopecks, e.annotation,
+       string_agg(p.verbatim_title || ' [' || coalesce(p.verbatim_genre,'') || '|' || coalesce(p.discipline,'') || ']', ' + ' ORDER BY p.performance_order) AS works
+FROM research.event e JOIN research.theater t ON t.theater_id = e.theater_id
+LEFT JOIN research.performance p ON p.event_id = e.event_id
+WHERE e.season = '1896-97' AND e.city = 'Moscow'
+GROUP BY ALL HAVING bool_or(p.discipline = 'ballet') OR bool_or(p.verbatim_genre ILIKE '%бал%')
+ORDER BY e.date, e.time_of_day;
+-- plus: title history of the 15 ballets, Moscow, seasons <= 1896-97 (verbatim_title ILIKE per ballet, performed, grouped by title, season);
+SELECT list_title, printed_total, n_dates FROM research.production WHERE season = '1896-97' AND city = 'Moscow' ORDER BY list_title;
+SELECT e.event_id, e.date, e.time_of_day, e.annotation, p.verbatim_title FROM research.event e JOIN research.performance p ON p.event_id = e.event_id
+WHERE e.city = 'Moscow' AND e.season = '1895-96' AND p.verbatim_title ILIKE '%Брама%';
+```
+
+Result: 57 ballet events (53 + 4 mixed), 15 productions; 19 review statements: 15 agree, 0 disagree, 4 n/a. docs/eval/reconciliation/1896-97_review_msk_ballet.csv.
+
+## 2026-10-29 — 1896-97 SP ballet review vs Repertoire (agent, read-only; five queries)
+
+```sql
+SELECT e.event_id, e.date, e.time_of_day, e.event_status, t.canonical_name, e.receipts_total_kopecks, e.annotation,
+ string_agg(p.verbatim_title || ' [' || coalesce(p.verbatim_genre,'') || '/' || coalesce(p.discipline,'') || ']', ' + ') AS works
+FROM research.event e JOIN research.theater t ON e.theater_id=t.theater_id LEFT JOIN research.performance p ON p.event_id=e.event_id
+WHERE e.season='1896-97' AND e.city='SP' GROUP BY ALL HAVING bool_or(p.discipline='ballet') ORDER BY e.date, t.canonical_name;
+SELECT * FROM research.production WHERE season='1896-97' AND city='SP' ORDER BY 1;
+SELECT t.canonical_name, count(DISTINCT e.event_id) FROM research.event e JOIN research.theater t ON e.theater_id=t.theater_id
+ JOIN research.performance p ON p.event_id=e.event_id WHERE e.season='1896-97' AND e.city='SP' AND p.discipline='ballet' GROUP BY 1;
+SELECT p.work_id, any_value(p.verbatim_title), count(DISTINCT e.event_id) AS n_events, min(e.date), max(e.date) FROM research.event e
+ JOIN research.performance p ON p.event_id=e.event_id WHERE e.season='1896-97' AND e.city='SP' AND p.discipline='ballet' GROUP BY 1 ORDER BY 2;
+SELECT e.date, t.canonical_name, e.event_id, p.verbatim_title, p.discipline FROM research.event e JOIN research.theater t ON e.theater_id=t.theater_id
+ JOIN research.performance p ON p.event_id=e.event_id WHERE e.season='1896-97' AND e.city='SP' AND (e.date < '1896-09-01' OR e.date > '1897-05-04')
+ AND (p.verbatim_title ILIKE '%бал%' OR p.discipline='ballet') ORDER BY 1;
+```
+
+Result: 53 ballet events (Маріинскій 50, Михайловскій 3); 14 productions, only «Синяя борода» is_premiere; 0 ballet outside 1 Sep - 4 May. 12 review statements, 12 agree. docs/eval/reconciliation/1896-97_review_sp_ballet.csv.
