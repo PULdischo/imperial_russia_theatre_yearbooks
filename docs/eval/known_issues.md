@@ -24449,6 +24449,16 @@ French −0.64 → −0.12, German −1.67 → +0.48; 1906-07 SP German −5.68 
 −20.21 → −10.08; 1900-01 SP French −2,521.01 → −2,491.69. The remaining few kopecks in the German lines are the halves the printed
 totals keep («51,839 р. 18½ к.»).
 
+- **1904-05 Repertoire: five extraction errors fixed from the blind column read, APPLIED 2026-10-28 (reconciliation).**
+  All six columns read blind (`docs/eval/scan_audit/1904-05_scan_reads.csv`), every difference checked by Claude on the scan.
+  `docs/eval/reconciliation/fix_1904_05_scan_reads.py`: Малый 1 Oct 1904 dropped cell restored («Сенъ-Марсъ», 651.56; it had
+  been a «manual_uncertain_dark_placeholder»); Большой 2 Feb 1905 copied receipts removed (Шаляпинъ charity, none printed);
+  Новый 31 Oct and 7 Nov 1904 matinées moved off the dark day before; Новый 25-27 Feb 1905 evenings' copied «403 р. 01 к.»
+  replaced by 1183.94 / 1187.12 / 1041.57; Михайловскій 24 Apr 1905 480.50 → 430.50; the 19 Apr 1905 Иверская Община banner
+  attached to the Большой evening. Rebuilt on a copy (11 events changed, 2 dark rows appended, 1 performance added),
+  promoted; sqlite rebuilt; backup `outputs/backups/scan_reads_1904-05_2026-10-28/`. Ledger 1904-05-02..04, -06, -07, -12.
+  Open: 28 Dec 1904 Маріинскій «Корсаръ» printed «15291 р. 95 к.» (stats imply 1,532.95), for RG (1904-05-13).
+
 ## Issue #162: dates skipped at a page break get no not_captured placeholder; corpus sweep, and a misread weekday correction in 1905-06 -- FIXED 2026-10-28 (RG)
 
 **The blind spot.** `not_captured` placeholders are only synthesized for dates missing inside a page, so a date that is missing
@@ -24470,3 +24480,5 @@ keep the printed numbers, after checking the season review. Fix: 10 entries in `
 text on p028). Rebuilt on a copy (validate_performance_dates -> build_research_model): analysis.event_entry_date_check and
 research.event −31 +31, 54 tables identical; promoted, sqlite rebuilt; backup
 `outputs/backups/weekday_override_1905-06_p112_2026-10-28/`. Бекефи's farewell benefit is now 29 Jan 1906 (was 30 Jan).
+- **1904-05 ballet-review transcription slips CORRECTED 2026-10-28** (RG: "Fix the five review-text transcription slips (SP p011, p013, p017; Moscow p017, p021) via the review text corrections, after reading each on the image"). Found during the 1904-05 review date check; each read on outputs/reviews/images by Claude (zoomed). Six rows in `docs/eval/review_text_corrections.csv`: SP f. 116 «25-го января» -> «23-го»; f. 122 «3) 5-е дѣйствіе» -> «3) 3-е» (both flat-topped 3, which this face's model reading turns into 5); f. 118 «512-го января» -> «12-го» (the «5» is a risen, inked spacing slug between the comma and «12», not a digit); Moscow f. 213 «всего 5 представленія» -> 3 and «Горбункѣ“ 5 раза» -> 3 (Гельцеръ's tally then sums to the review's 18); f. 209 «Гримальды» -> «Гримальди». Tested on a copy (outputs/rebuild_review_slips_1904-05_2026-10-28/), then the builders re-run on production (corrections -> match_review_mentions -> build_reviews_duckdb -> build_review_assertions -> build_review_credits); production = tested copy, merged text byte-identical. Effect against the backup: raw.review_block 6 blocks; entities.review_mention 22 rows (21 char offsets on SP p013, «Гримальди» surface, same person); research.review_credit 2 («На перепутьѣ» credits 1717/1718 dated 1905-01-23, was -25); no link changed. The rebuild also reorders candidate_ids lists on ~350 rows across all seasons (same sets; the matcher's known order non-determinism). sqlite rebuilt; not republished. Backup `outputs/backups/review_slips_1904-05_2026-10-28/` (duckdb, sqlite, merged_full, mentions). Left as transcribed: Moscow f. 213 «Конекъ-Горбункѣ» (print «Конькѣ-Горбункѣ»).
+- **Follow-up, same day (RG: "Yes, correct «Конекъ-Горбункѣ» to «Конькѣ-Горбункѣ» on Moscow p021 the same way"):** f. 213 prints «въ „Конькѣ-Горбункѣ“ 3 раза» (zoomed, Claude). One more row in review_text_corrections.csv, plus one row in `docs/eval/review_work_mention_links.csv` (block p021__b005, occurrence 0 -> «Конекъ-горбунокъ»): the correct spelling stops matching by stemming, so without it the mention would have gone unlinked (the curated f. 214 rows do the same). Tested on a copy, builders re-run on production; production = tested copy. Effect: raw.review_block 1, entities.review_mention 1 (surface; same work, link_method quoted-stemmed -> curated). sqlite rebuilt; backup `outputs/backups/review_konkie_1904-05_2026-10-28/`.

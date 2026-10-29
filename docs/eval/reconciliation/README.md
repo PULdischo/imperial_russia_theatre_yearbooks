@@ -749,3 +749,80 @@ name the company"): a `VISITING_RUNS` row, company «visiting Russian drama trou
 **Lesson for the method:** a season's «Списокъ пьесъ» is the best third source when one exists. It is dated, it covers
 every company, and it leaves out exactly what the stats leave out.
 
+## 1904-05 (2026-10-28): charity outside the stats, free matinées inside; five misreads fixed; one five-digit «Корсаръ» cell for RG
+
+The stats page (`1904-05_ProductionStats.pdf`, p. 134) prints eight lines with receipts, venue lines for Russian drama
+(SP and Moscow) and Moscow opera, and **no footnotes**. The stats PDF has no play list, but the scanned ballet-list pages
+show the volume has one: p. 138 opens with the end of the SP opera list (nos. 13-24, dated) and p. 139 runs into
+«Французская драма». Only the ballet pages were scanned. The rest would be the best third source for this season, as
+it was for 1907-08.
+
+**Step 1, city totals** (Repertoire / printed, after the fixes below): Moscow 528 / 516 events, +1,120.80 р.; SP 565 / 550,
++17,826.28 р.
+
+**What the stats leave out, and what they keep.** Every charity bill is outside the stats: Moscow 10 events, SP 16, none
+with printed receipts (1904-05-01, -11). The free school matinées (14 Nov, 6 Dec, 24/23 Feb, every theater) and the free
+26 Nov performance for the Георгіевскіе кавалеры are counted. The Александринскій «Спектакль для учащейся молодежи»
+matinées print receipts and are counted.
+
+**Step 2, category lines** (charity out):
+
+| City | Line | Printed | Repertoire | Receipts gap | Reading |
+|---|---|---|---|---|---|
+| Moscow | drama, Малый | 159 | 160 | +1,252.54 | after restoring the dropped 1 Oct cell; unresolved (1904-05-05) |
+| Moscow | drama, Новый | 158 | 158 | −132.12 | after the 25-27 Feb fixes (1904-05-08) |
+| Moscow | opera, Большой | 123 | 123 | +0.35 | after the 19 Apr banner (1904-05-03, -10) |
+| Moscow | opera, Новый | 37 | 38 | 0.00 | one of the 3 free matinées not counted? (1904-05-09) |
+| Moscow | ballet | 39 | 39 | +0.03 | |
+| SP | drama, Александринскій | 175 | 174 | +2,709.50 | 1904-05-14 |
+| SP | drama, Михайловскій | 55 | 55 | 0.00 | after 24 Apr fix (1904-05-12) |
+| SP | opera | 134 | 134 | +1,357.41 | 1904-05-15 |
+| SP | ballet | 46 | 46 | +13,759.00 | the 28 Dec «Корсаръ» cell (1904-05-13, open) |
+| SP | French / German | 115 / 25 | 115 / 25 | −0.12 / +0.48 | half kopecks |
+
+No cancelling offsets: every count gap is charity, free performances or a single unexplained event.
+
+**Step 3, every column read blind (2026-10-28).** Six agents transcribed all six theater columns from the full-resolution
+scans before anything was compared (`docs/eval/scan_audit/1904-05_scan_reads.csv`, 1,558 rows). Маріинскій (270 rows) and
+Александринскій (264) match the dataset in every figure, Михайловскій (245) in all but one. Five extraction errors,
+all checked by Claude on the scan, fixed in raw (`fix_1904_05_scan_reads.py`), rebuilt on a copy (11 events changed, 2 dark
+rows added, 1 performance added, nothing else), promoted, backup `outputs/backups/scan_reads_1904-05_2026-10-28/`:
+- Малый 1 Oct 1904: «Сенъ-Марсъ, тр.» 651 р. 56 к. had been stored as a dark placeholder (1904-05-04);
+- Большой 2 Feb 1905: the Шаляпинъ charity cell prints no receipts; 3028 р. 21 к. was copied from 3 Feb (1904-05-02);
+- Новый 30/31 Oct and 6/7 Nov 1904: the 31 Oct and 7 Nov matinées were stored on the dark day before (1904-05-06);
+- Новый 25-27 Feb 1905: the three evenings carried the matinées' «403 р. 01 к.»; print 1183.94, 1187.12, 1041.57 (1904-05-07);
+- Михайловскій 24 Apr 1905: 480 р. 50 к. → 430 р. 50 к. (1904-05-12).
+Also the 19 Apr 1905 Иверская Община banner, which spans the Большой and Малый for the whole day, now covers the Большой
+evening «Травіата» (1904-05-03).
+
+**28 Dec 1904, Маріинскій matinée «Корсаръ»: «15291 р. 95 к.»** The print is clear (blind read and 3x zoom agree), but
+no other ballet matinée takes more than 2,725 р. With this cell at 1,532.95 р. the SP ballet line would be exact to
+the kopeck, but that is not a print slip (RG 2026-10-28): it is several digits away from «15291». No single-digit change
+to the printed figure closes the gap either (nearest: 1529.95, −3.00 р.), and the ballet count (46) includes the event.
+The +13,759.00 р. stays unexplained, the cell stays as printed. RG read the scan (2026-10-28) as
+«15291 р. 95 к.» too. Closed as the yearbook's own (RG 2026-10-28: another copy won't help) (1904-05-13).
+
+**Step 4, the lists.** Moscow: list 41 = Repertoire 41, which includes the 16 Feb and 19 Apr charity bills; the stats' 39
+leaves them out. SP: the list prints «На перепутьи» «декабря 12, 17», but 17 Dec is «Валкірія» and the ballet was at the
+27 Dec matinée (the list's own «Пробужденіе Флоры» entry says 27). That's a slip in the list (1904-05-17). The SP list
+also leaves out two charity bills, «Эсмеральда» (29 Mar) and «Сонъ въ лѣтнюю ночь» (23 Apr), but includes the 6 Apr
+one.
+
+**A third source: the ballet season reviews** (SP ff. 105-121, Moscow ff. 193-214), checked 2026-10-28 by two agents reading
+the review images and the Repertoire scans; every disagreement then re-read by Claude on both scans
+(`1904-05_review_ballet.csv`, 112 statements):
+
+| Review | Dated statements | Counts | Disagreements |
+|---|---|---|---|
+| SP ballet | 29 / 29 match date and ballet (3 partial: the review or the cell names more works) | 9 of 18 checkable agree | all counts: the review's own («Пахита» 23rd twice; «Конекъ» 55/56/57 skips two Repertoire dates; «Корсаръ» 13th/14th; «Фея куколъ» 3rd/5th) |
+| Moscow ballet | 34 / 36 | 15 of 19 checkable agree, incl. «41 балетное представленіе, изъ коихъ одинъ спектакль былъ смѣшанный» = the Repertoire with charity | «24-го апрѣля» Иверская «Волшебное Зеркало» was 19 Apr; «27-го апрѣля» closing «Тщетная» + «Привалъ» was 24 Apr (27 Apr: «Карменъ, оп.»). Both the review's slips; list and Repertoire agree. Counts: «Баядерка» «всего 3» (1 + 1), Гримальди «16» (its breakdown sums to 17), «Эсмеральда» «19-е» |
+
+Every disputed Repertoire cell matches the blind column read. Review transcription slips found here (the flat-topped 3 of
+this typeface read as 5) were CORRECTED 2026-10-28 (RG: "Fix the five review-text transcription slips"), each read on the
+image first, six rows in `docs/eval/review_text_corrections.csv`: SP p011 «25-го» -> «23-го января», p017 «3) 5-е» ->
+«3) 3-е дѣйствіе», p013 «512-го» -> «12-го» (the «5» was an inked spacing slug, not a digit); Moscow p021 «всего 5» and
+«Горбункѣ“ 5 раза» -> 3, p017 «Гримальды» -> «Гримальди»; then (RG, same day) p021 «Конекъ-Горбункѣ» -> the printed
+«Конькѣ-Горбункѣ».
+
+**Outcome:** 19 ledger rows. Corrected 6 (counting the banner), excluded_by_yearbook 2, yearbook_own 11 (8 provisional;
+the «Корсаръ» cell closed by RG; the two reviews, 1904-05-18, -19). Nothing open.

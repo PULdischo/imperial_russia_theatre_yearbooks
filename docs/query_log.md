@@ -22300,6 +22300,43 @@ Result: Moscow list no. 71 Павлова 2-я, Анна Матвѣевна: «�
 (2,655.16), 26 Dec 1907 (2,838.85), 15 Apr 1908 (no receipts, Иверская община charity). The review sentence lists the free 6 Dec «Конекъ-Горбунокъ»
 and «Дочь Фараона» with Павлова 2-я as Аспиччія as extras «сверхъ того» the 47; 15 Apr is the only «Дочь фараона» outside the 47. Recorded as probable.
 
+## 2026-10-28 — 1904-05 reconciliation: Repertoire v. season stats v. ballet lists (all queries of the session)
+
+Tools: `compare_season_stats.py` (production, then the rebuilt copy `outputs/rebuild_1904-05_2026-10-28/`),
+`season_stats_receipt_candidates.py`. Per-event dump (scratch `dump.py`: `compare_season_stats.LEVEL2_SQL` + the query below,
+classified with `classify_work`/`classify_event`):
+```sql
+select e.event_id,e.city,t.canonical_name,e.date,e.time_of_day,e.event_status,e.receipts_total_kopecks,e.receipts_verbatim,
+ e.is_benefit,e.is_charity,e.is_free,e.is_student_performance,e.annotation,e.printed_page_number,
+ string_agg(p.verbatim_title||coalesce(', '||p.verbatim_genre,''),' / ' order by p.performance_order)
+from research.event e join research.theater t using(theater_id) left join research.performance p using(event_id)
+where e.season='1904-05' group by all order by e.city,e.date,t.canonical_name
+```
+Result (before fixes): 1,598 rows; performed Moscow 527, SP 565. Charity: Moscow 10 events (one with 3,028.21 р., later shown a
+misread), SP 16 (no receipts). With charity out, 8 of 11 printed lines had exact counts.
+
+```sql
+select e.title,p.year_text,p.month_text,p.day_text,p.date,p.note from raw.production_entry_performance p
+join raw.production_entry e using(production_entry_id)
+where e.season='1904-05' and e.city='SP' and (e.title ilike '%перепут%' or e.title ilike '%Эсмер%') order by e.title,p.date_order
+```
+Result: «На перепутьи» 12 Dec, 17 Dec, 23 Jan, 24 Feb (17 Dec = list slip for 27 Dec); no «Эсмеральда» entry.
+
+```sql
+select event_id,date,time_of_day,receipts_total_kopecks,is_charity from research.event where event_id in
+('repertoire_1904-05_p042__s023','repertoire_1904-05_p041__s009','repertoire_1904-05_p005__s021','repertoire_1904-05_p029__s012')
+```
+Result after promotion: 24 Apr Михайловскій 43050; 19 Apr Большой evening charity, no receipts; 1 Oct Малый 65156; 2 Feb
+Большой no receipts, charity.
+
+Rebuild diff (copy v. production, `EXCEPT ALL` both ways over every raw/analysis/entities/research base table): only
+raw/analysis/research event (+13/−11), event_entry_performance/performance +1, entities.work ±1, work_link +1,
+analysis.event_entry_date_check +2, research.season_stat_check ±2.
+
+After fixes (`family_totals.csv`): Moscow drama Малый 159/161 +1,252.54, Новый 158/158 −132.12; opera Большой 123/126 +0.35,
+Новый 37/38 0.00; ballet 39/40 +0.03; SP Alex 175/179 +2,709.50, Михайловскій 55/55 0.00, opera 134/137 +1,357.41, ballet
+46/47 +13,759.00, French −0.12, German +0.48 (Repertoire counts include charity). Single-event search for the residuals
+(±1 р.): none. Ledger 1904-05-01..17.
 
 ## 2026-10-28 — 1895-96 Александринскій and Михайловскій columns read blind
 
@@ -22345,6 +22382,16 @@ Rebuilt on a copy: research.event and research.performance 38 rows each differ (
 identical. Promoted (backup outputs/backups/mikh_run_1907-08_2026-10-28/), sqlite rebuilt; after:
 `select count(*) from research.event where companies='visiting Russian drama troupe, St. Petersburg'` = 38.
 
+## 2026-10-28 — 1904-05: is the untitled 13 Feb 1905 Маріинскій corps-de-ballet benefit linked to a work?
+
+```sql
+select p.performance_id,p.work_id,w.canonical_title,p.performance_source,p.performance_source_note
+from research.event e join research.performance p using(event_id) left join research.work w using(work_id)
+where e.season='1904-05' and e.city='SP' and e.date='1905-02-13' and e.time_of_day='evening'
+```
+(A first attempt selecting `w.title` failed: the column is `canonical_title`.) Result: `repertoire_1904-05_p030__s002__supplied1` → «Дочь фараона»,
+supplied from the SP ballet list (февраля 13) and the season review (207th performance), RG 2026-10-12. Already done.
+
 ## 2026-10-28 — 1898-99 reconciliation: blind column reads, fixes, lines
 
 ```sql
@@ -22364,3 +22411,50 @@ Result: 1,475 rows read; 11 differences, 8 receipts misreads + 1 copied charity 
 gap exactly) is «Василиса Мелентьева», stored as «Риголетто». fix_1898_99_scan_reads.py; two rebuilds on copies (event_entry −8 +8, then performances −5 +4,
 work «Вѣй» folded into «Вій»), promoted. Lenten opera 23 / 68,905.00 exact. After: Moscow counts all exact, Новый drama exact; SP French 147 / 141 open.
 Ledger 1898-99-01..11.
+
+## 2026-10-28 — 1904-05 ballet season reviews (SP, Moscow) v. the Repertoire
+
+Agents' queries (verbatim in their reports, run read-only on outputs/full_run/imperial_theaters.duckdb):
+```sql
+select p.page_id, p.printed_folio, b.block_id, b.text from raw.review_page p join raw.review_block b using(page_id)
+where p.page_id like 'review_1904-05_SP_ballet%' order by p.page_id, b.block_id;   -- and 'review_1904-05_MSK_ballet%'
+select e.event_id, e.date, e.time_of_day, t.canonical_name, e.event_status, e.is_benefit, e.is_charity, e.is_free, e.annotation,
+       e.printed_page_number, string_agg(p.verbatim_title||' ['||coalesce(p.verbatim_genre,'')||'|'||coalesce(p.discipline,'')||']', ' + ' order by p.performance_order)
+from research.event e join research.theater t using(theater_id) left join research.performance p using(event_id)
+where e.season='1904-05' and e.city='SP' group by all having bool_or(p.discipline='ballet');   -- Moscow: t.canonical_name like '%Большой%'
+select pe.title, string_agg(coalesce(cast(pp.date as varchar),'?')||' ('||coalesce(pp.day_text,'')||' '||coalesce(pp.month_text,'')||')', '; ' order by pp.date), count(*)
+from raw.production_entry pe left join raw.production_entry_performance pp using(production_entry_id)
+where pe.season='1904-05' and pe.city in ('SP','Moscow') group by pe.title order by 1;
+```
+plus per-ballet histories across seasons (SP: Спящая, Раймонда, Корсаръ, Ручей, Пахита, Жизель, Арлекинада, Конекъ, Лебединое, Коппелія,
+Фея куколъ, На перепутьи, Дочь Фараона, Жемчужина, Путешествующая, Голубая георгина; Moscow: Эсмеральда, Спящая, Волшебное зеркало,
+Фіаметта, Гудула, 1901-02..1904-05), lists 1901-02..1903-04, and a SP 1904-05 ballet-event count by exclusion (49 / 45 / 41 / 34; none = 28).
+Result: Moscow ballet events with a ballet item = 41 (incl. 3 free matinées, 19 Apr charity matinée, 16 Feb charity mixed bill) =
+the review's «41 … одинъ смѣшанный». SP 29/29 dates, Moscow 34/36 (two review slips). One agent reported 13 Feb SP as having no
+performance row; main session's earlier query (above) shows the supplied «Дочь фараона» row — corrected in the CSV.
+
+```sql
+select e.event_id,e.date,e.time_of_day,t.canonical_name from research.event e join research.theater t using(theater_id)
+where e.season='1904-05' and ((t.canonical_name='Маріинскій' and e.date in ('1904-09-12','1904-12-12','1905-02-27') and e.event_status='performed')
+   or (t.canonical_name='Большой' and e.date in ('1905-04-19','1905-04-24'))) order by date,time_of_day
+```
+Result: ids for ledger 1904-05-18/-19 (p002__s026, p018__s002, p032__s035; p041__s008, p043__s003).
+
+## 2026-10-28 — 1904-05 review-text slip corrections: tested copy vs production vs backup
+
+```sql
+-- every base table, both catalogs: select * from A.t except all select * from B.t (both directions);
+-- candidate-id columns compared with list_sort(string_split(col,'|')) to separate order from content
+select strpos(text, '23-го января дали')>0 from raw.review_block where block_id='review_1904-05_SP_ballet_p011__b003';
+select credit_id, date_undate from research.review_credit where credit_id in (1717,1718);
+```
+Result: production = tested copy (candidate order aside). Against the backup: raw.review_block 6, entities.review_mention 22 (21 offsets on SP p013 + «Гримальди»), research.review_credit 2 (1717/1718 now 1905-01-23); all six corrected strings present; 27,330 mentions before and after.
+
+## 2026-10-28 — «Конькѣ-Горбункѣ» correction (1904-05 Moscow f. 213): link check and table diff
+
+```sql
+select m.entity_id, m.link_method, w.canonical_title from entities.review_mention m
+left join research.work w on w.work_id = m.entity_id where m.mention_id = 20183;
+-- plus every base table, production vs tested copy vs backup, except all both ways (candidate lists sorted)
+```
+Result: without a curated row the corrected surface fell to quoted-unresolved; with the review_work_mention_links row it links to «Конекъ-горбунокъ» (бал.) as before. Production vs backup: raw.review_block 1, entities.review_mention 1; production = tested copy.
