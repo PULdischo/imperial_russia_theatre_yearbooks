@@ -22767,3 +22767,260 @@ uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_th
 ```
 
 Result: copy vs pre-fix: raw.event_entry 2, raw.event_entry_performance 2, research.event 2, research.performance 2 (both Réjane's troupe), research.work 3/2 («Représentation de M-me Réjane. Sapho» -> «Sapho» via crosswalk, 16 -> 17); production = tested copy. 1897-98 SP: ballet, German opera, French, German drama, mixed, Михайловскій drama and opera all exact; Маріинскій opera 122 / 123 (receipts exact); Александринскій drama 188 / 187, −587.95 (the 188 includes the 14 Dec students' matinée, its own line); other 8 / 9 (same matinée). Moscow unchanged: ballet +2,743.80, opera +936.51, Малый 206 / 207 −89.40.
+
+## 2026-10-29 — 1903-04 reconciliation: events with ballet on the bill, both cities
+
+```sql
+SELECT e.city,e.date,t.canonical_name th,e.time_of_day,e.receipts_total_kopecks/100.0 rub,e.is_charity,e.is_free,e.is_benefit,e.genre_families,e.printed_page_number,
+ string_agg(p.verbatim_title||' ['||coalesce(p.verbatim_genre,'')||'|'||p.genre_family||']',' / ' ORDER BY p.performance_order) works, left(coalesce(e.annotation,''),90) ann, e.event_id
+FROM research.event e JOIN research.theater t USING(theater_id) JOIN research.performance p USING(event_id)
+WHERE e.season='1903-04' AND e.event_status='performed' AND e.event_id IN (SELECT event_id FROM research.performance WHERE genre_family='ballet')
+GROUP BY ALL ORDER BY 1,2,4
+```
+
+Result: SP 54 events (49 + 5 charity bills with no receipts: 24 Jan, 21 Feb, 3 Apr, 10 Apr, 24 Apr 1904); Moscow 37 (34 ballet-only incl. free matinées 14 Nov and 6 Dec, the 30 Mar Иверская charity, the 18 Oct benefit mixed bill 6,118.14 р., the 24 Oct Tchaikovsky memorial 3,312.73 р.).
+
+## 2026-10-29 — 1903-04 reconciliation: opera events that are mixed, charity, free or unreceipted; events with no works
+
+```sql
+SELECT e.city,t.canonical_name,e.date,e.time_of_day,e.receipts_total_kopecks/100.0,e.is_charity,e.is_free,e.is_benefit,e.genre_families,e.printed_page_number,
+ string_agg(p.verbatim_title||' ['||coalesce(p.verbatim_genre,'')||'|'||p.genre_family||'|d='||coalesce(p.includes_dance::varchar,'')||']',' / ' ORDER BY p.performance_order), left(coalesce(e.annotation,''),80), e.event_id
+FROM research.event e JOIN research.theater t USING(theater_id) LEFT JOIN research.performance p USING(event_id)
+WHERE e.season='1903-04' AND e.event_status='performed' AND e.event_id IN (SELECT event_id FROM research.performance WHERE genre_family='opera')
+ AND (e.is_charity OR e.is_free OR e.receipts_total_kopecks IS NULL OR e.genre_families<>'opera')
+GROUP BY ALL ORDER BY 1,2,3,4;
+SELECT e.city,t.canonical_name,e.date,e.time_of_day,e.event_status,e.receipts_total_kopecks/100.0,e.n_works,e.genre_families,left(coalesce(e.annotation,''),80),e.event_id
+FROM research.event e JOIN research.theater t USING(theater_id)
+WHERE e.season='1903-04' AND e.event_status='performed' AND coalesce(e.n_works,0)=0 ORDER BY 1,3;
+```
+
+Result: Moscow Большой: 30 Nov morning charity «Евгеній Онѣгинъ» 4,993.20 р.; 4 Feb evening charity and 4 Feb free matinée «Жизнь за Царя», no receipts. Новый: free matinées 14 Nov, 6 Dec; 30 Mar charity «Евгеній Онѣгинъ», no receipts. SP Маріинскій: 18 Nov charity «Мефистофель» 3,600.00 р.; 8 Mar charity «Каморро»; free matinées 6 Dec, 4 Feb; charity mixed bills 24 Jan, 21 Feb, 22 Feb, 17 Apr. No-works events: Moscow 3 (20 Dec, 18-19 Mar concerts), SP 6 (4 Oct, 10 Jan, 16 Feb, 17/19/29 Mar).
+
+## 2026-10-29 — 1903-04 reconciliation: Большой opera profile (top receipts, repeated figures, non-performed rows, by month)
+
+```sql
+-- base: FROM research.event e JOIN research.theater t USING(theater_id) WHERE e.season='1903-04' AND e.event_status='performed' AND e.city='Moscow' AND t.canonical_name='Большой' AND e.genre_families='opera'
+SELECT count(*), sum(receipts_total_kopecks)/100.0 <base>;
+SELECT date,time_of_day,receipts_total_kopecks/100.0,receipts_verbatim,is_benefit,annotation <base> ORDER BY receipts_total_kopecks DESC NULLS LAST LIMIT 12;
+SELECT receipts_total_kopecks/100.0, list(date ORDER BY date) <base> GROUP BY 1 HAVING count(*)>1;
+SELECT e.date,e.time_of_day,e.event_status,e.receipts_total_kopecks,e.annotation,e.event_id FROM research.event e JOIN research.theater t USING(theater_id)
+ WHERE e.season='1903-04' AND e.city='Moscow' AND t.canonical_name='Большой' AND e.event_status<>'performed' ORDER BY 1;
+SELECT substr(e.date::varchar,1,7),count(*),sum(receipts_total_kopecks)/100.0 <base> GROUP BY 1 ORDER BY 1;
+SELECT e.city,t.canonical_name,e.event_status,count(*) FROM research.event e JOIN research.theater t USING(theater_id) WHERE e.season='1903-04' GROUP BY ALL;
+```
+
+Result: 136 events, 329,555.05 р.; repeated subscription figures 3,028.21 (32 events), 3,954.93 (8), 3,037.21 (8), 9,352.24 (2 benefits); 49 no_performance + 37 not_captured rows (9-15 Feb is the first week of Lent, not printed); by month Feb 8, Mar 1 opera events.
+
+## 2026-10-29 — 1903-04 reconciliation: ballet productions list totals vs dated entries; list titles vs Repertoire by date
+
+```sql
+SELECT e.city,e.title,e.total_count, count(p.date) FILTER (WHERE NOT p.outside_total) n_dates, string_agg(strftime(p.date,'%d.%m'),' ' ORDER BY p.date)
+FROM raw.production_entry e LEFT JOIN raw.production_entry_performance p USING(production_entry_id) WHERE e.season='1903-04' GROUP BY ALL ORDER BY 1,2;
+SELECT e.city,e.title,p.date::varchar FROM raw.production_entry e JOIN raw.production_entry_performance p USING(production_entry_id) WHERE e.season='1903-04' AND NOT p.outside_total;
+SELECT e.city,e.date::varchar,p.verbatim_title FROM research.event e JOIN research.performance p USING(event_id) WHERE e.season='1903-04' AND e.event_status='performed' AND p.genre_family='ballet';
+SELECT city,title,performed_text,total_text,page_id,printed_page_number FROM raw.production_entry WHERE season='1903-04' AND (title ILIKE '%флейта%' OR title ILIKE '%Фея%');
+```
+
+Result: all 38 productions' totals equal their dates (Moscow 10, SP 28). Title-by-date differences: SP list «Волшебная флейта» «ноября 30» (Repertoire 30 Nov: «Фея куколъ» + 2-е д. «Фіаметта», scan agrees); Moscow 14 Nov «Пригалъ» and 25 Jan «Ваядерка» (print slips on the scan); the six charity dates.
+
+## 2026-10-29 — 1903-04 reconciliation: review pages in the dataset; events with dancers outside ballet
+
+```sql
+SELECT city,genre,count(*),min(printed_folio),max(printed_folio),sum(n_chars) FROM raw.review_page WHERE season='1903-04' GROUP BY ALL;
+SELECT city, count(*) FROM research.events_with_dancers WHERE season='1903-04' GROUP BY 1;
+SELECT e.city, p.includes_dance_basis, count(distinct e.event_id), list(distinct p.verbatim_title) FROM research.performance p JOIN research.event e USING(event_id)
+ WHERE e.season='1903-04' AND p.includes_dance AND p.genre_family<>'ballet' GROUP BY ALL;
+```
+
+Result: ballet reviews only (SP 18 pages ff. 107-121, Moscow 26 pages ff. 179-204); no opera/drama reviews in the dataset. events_with_dancers: Moscow 37, SP 56. Only one non-ballet item marked includes_dance (SP 22 Feb «чтеніе, пляска.»).
+
+## 2026-10-29 — 1903-04 reconciliation: Новый events near the gap sizes; the 26 Oct «Галька» row; SP opera events with unusual genre/annotation
+
+```sql
+SELECT e.date,e.time_of_day,e.receipts_total_kopecks/100.0,e.genre_families,string_agg(p.verbatim_title||' '||coalesce(p.verbatim_genre,''),' / ')
+FROM research.event e JOIN research.theater t USING(theater_id) JOIN research.performance p USING(event_id)
+WHERE season='1903-04' AND canonical_name='Новый' AND event_status='performed'
+ AND (abs(receipts_total_kopecks-82581)<200 OR abs(receipts_total_kopecks-84381)<200 OR abs(receipts_total_kopecks-1800)<100) GROUP BY ALL;
+SELECT e.event_id,e.date,e.time_of_day,e.annotation,e.is_charity,e.is_benefit,e.companies,e.receipts_verbatim FROM research.event e JOIN research.theater t USING(theater_id)
+ WHERE season='1903-04' AND canonical_name='Новый' AND date IN ('1903-10-25','1903-10-26','1903-10-27');
+SELECT p.verbatim_genre, count(*) FROM research.event e JOIN research.performance p USING(event_id) WHERE e.season='1903-04' AND e.city='SP' AND e.genre_families='opera' AND e.event_status='performed' GROUP BY 1;
+```
+
+Result: 26 Oct 1903 evening «Галька» 825.81 р. = the Новый opera gap exactly, no annotation; SP opera genres оп. 137, прологъ 7, опера 2; nothing else unusual beyond the known charity/free events.
+
+## 2026-10-29 — 1903-04 reconciliation: blind read v. stored receipts (Большой, Новый, Маріинскій), scratch cmp_reads.py
+
+```sql
+SELECT t.canonical_name,e.date::varchar,e.time_of_day,e.receipts_total_kopecks,e.receipts_verbatim,e.event_status,e.event_id
+FROM research.event e JOIN research.theater t USING(theater_id) WHERE e.season='1903-04' AND t.canonical_name IN ('Большой','Новый','Маріинскій');
+SELECT sum(receipts_total_kopecks)/100.0,count(*) FROM research.event e JOIN research.theater t USING(theater_id)
+ WHERE season='1903-04' AND event_status='performed' AND canonical_name=?;  -- per theater
+```
+
+Result: stored Большой 417,146.71 (176), Новый 116,799.43 (208), Маріинскій 547,262.76 (204). Differences from the read: Большой 5 Feb matinée 1705.55 (read .56), Маріинскій 19 Apr 1520.60 (read 1530.60), Новый 17/18 Jan matinée on the wrong date; 4 Маріинскій concert cells read with no works (no receipts either way).
+
+## 2026-10-29 — 1903-04 reconciliation: rebuilt copy v. production (outputs/rebuild_1903-04_2026-10-29), then production after promotion
+
+```sql
+-- rebuilt db with pre_fix.duckdb attached as o
+SELECT count(*) FROM (SELECT * FROM research.<t> EXCEPT SELECT * FROM o.research.<t>);  -- t in event, performance, person_appearance, work, person, both directions
+SELECT event_id,date,time_of_day,event_status,receipts_total_kopecks FROM (SELECT * FROM research.event EXCEPT SELECT * FROM o.research.event) ORDER BY 1;
+-- production after promotion
+SELECT event_id,date,time_of_day,receipts_total_kopecks FROM research.event WHERE event_id IN ('repertoire_1903-04_p023__s030','repertoire_1903-04_p023__s031','repertoire_1903-04_p023__s037','repertoire_1903-04_p027__s018','repertoire_1903-04_p034__s008');
+```
+
+Result: event 32,810 -> 32,811 (4 changed + 1 dark row added: p023__s030 18 Jan morning 40333, s031 18 Jan evening 120615, s037 17 Jan no_performance, p027__s018 170556, p034__s008 153060); performance, person_appearance, work, person unchanged. compare_season_stats on the copy: Moscow ballet 78,160.80 = printed, SP opera 423,262.72 = printed. Production after promotion shows the same five rows.
+
+## 2026-10-29 — 1903-04 reconciliation: how the print slips «Ваядерка» and «Пригалъ кавалеріи» are linked to works
+
+```sql
+SELECT p.verbatim_title,w.work_id,w.canonical_title FROM research.performance p JOIN research.work w USING(work_id) JOIN research.event e USING(event_id)
+WHERE e.season='1903-04' AND (p.verbatim_title IN ('Ваядерка','Баядерка') OR p.verbatim_title LIKE 'Пр_галъ%');
+```
+
+Result: «Ваядерка» and «Пригалъ кавалеріи» are each a separate work (not «Баядерка» b612cbfc…, «Привалъ кавалеріи»).
+
+<!-- review-check agents (1903-04 ballet reviews), queries as they logged them -->
+# Query log — 1903-04 SP ballet review vs Repertoire (checked by Claude)
+
+## 2026-10-29 — SP 1903-04 ballet review pages and folios
+```sql
+SELECT p.page_id, p.printed_folio FROM raw.review_page p
+WHERE page_id LIKE 'review_1903-04_SP_ballet_p%' ORDER BY 1;
+```
+Result: 18 pages p000–p017; folios 107–121 (p000, p003, p008 unfoliated: title/figure pages).
+
+## 2026-10-29 — SP 1903-04 ballet review text
+```sql
+SELECT page_id, block_index, block_type, coalesce(text, caption_text)
+FROM raw.review_block WHERE page_id LIKE 'review_1903-04_SP_ballet_p%' ORDER BY 1, 2;
+```
+Result: full review text; dated paragraphs 5(→3) Sep … 2 May, season summary on p017 (35 events, 28 ballets, per-ballet counts).
+
+## 2026-10-29 — SP 1903-04 Repertoire events with a ballet on the bill
+```sql
+SELECT e.event_id, e.date, e.time_of_day, t.canonical_name, e.receipts_total_kopecks,
+       e.is_benefit, e.is_charity, e.is_free, e.event_status, e.annotation,
+       string_agg(p.verbatim_title||' ['||coalesce(p.verbatim_genre,'')||'/'||coalesce(p.genre_family,'')||']', ' + ' ORDER BY p.performance_id) AS works
+FROM research.event e JOIN research.theater t USING (theater_id)
+LEFT JOIN research.performance p USING (event_id)
+WHERE e.season='1903-04' AND e.city='SP'
+GROUP BY ALL
+HAVING bool_or(p.genre_family ILIKE '%ballet%' OR p.verbatim_genre ILIKE '%бал%')
+ORDER BY e.date;
+```
+Result: 54 events, all Маріинскій, 3 Sep 1903 – 6 May 1904; 5 charity bills without receipts (24 Jan, 21 Feb, 3 Apr, 10 Apr, 24 Apr), 1 free morning (14 Nov); 30 Nov cell has Фея куколъ + Фіаметта act 2 only.
+
+## 2026-10-29 — SP 1903-04 ballet productions list
+```sql
+SELECT e.entry_order, e.list_number, e.title, e.total_text, e.total_count, e.n_dates, e.fragment,
+       string_agg(coalesce(p.day_text,'')||' '||coalesce(p.month_text,'')||coalesce(' ['||p.note||']','')||
+                  CASE WHEN p.outside_total THEN ' OUT' ELSE '' END, '; ' ORDER BY p.date_order)
+FROM raw.production_entry e LEFT JOIN raw.production_entry_performance p USING (production_entry_id)
+WHERE e.season='1903-04' AND e.city='SP' GROUP BY ALL ORDER BY e.entry_order;
+SELECT count(*), sum(total_count) FROM raw.production_entry WHERE season='1903-04' AND city='SP';
+```
+Result: 28 entries, 67 dated performances; Волшебная флейта includes 30 ноября; Волшебное зеркало 2; Пахита 4 (one = 3rd act); Конекъ-Горбунокъ 6 incl. 6 мая; Дочь Фараона 23 ноября.
+
+## 2026-10-29 — Фея куколъ / Коппелія / Волшебное зеркало in SP 1902-03 and 1903-04
+```sql
+SELECT e.season, e.date, e.time_of_day, p.verbatim_title, e.annotation
+FROM research.event e JOIN research.performance p USING (event_id)
+WHERE e.city='SP' AND e.season IN ('1902-03','1903-04')
+  AND (p.verbatim_title ILIKE '%Фея кукол%' OR p.verbatim_title ILIKE '%Коппелі%' OR p.verbatim_title ILIKE '%зеркал%')
+ORDER BY e.date;
+```
+Result: Фея куколъ 16 Feb 1903 then 30 Nov 1903 (= review's «2-е представленіе»), 10 Apr 1904 charity; Волшебное зеркало premiere 9 Feb 1903 (Petipa benefit), 28 Dec 1903, 14 Apr 1904; Коппелія 17 Sep, 8 Feb, 18 Apr in 1903-04.
+
+# Query log — 1903-04 Moscow ballet review check (checked by Claude)
+
+## 2026-10-29 — Moscow 1903-04 review pages and folios
+```sql
+SELECT page_id, printed_folio FROM raw.review_page
+WHERE page_id LIKE 'review_1903-04_MSK_ballet_p%' ORDER BY page_id;
+```
+Result: 26 pages p000–p025, folios 179–204 (p007–p009 folio null; plate/verse pages).
+
+## 2026-10-29 — Moscow 1903-04 review text blocks
+```sql
+SELECT b.page_id, p.printed_folio, block_index, block_type, text, caption_text
+FROM raw.review_block b JOIN raw.review_page p USING (page_id)
+WHERE b.page_id LIKE 'review_1903-04_MSK_ballet_p%' ORDER BY page_id, block_index;
+```
+Result: full review text; dated paragraphs on p000, p002, p019, p020, p023, p024; season totals on p024–p025; the rest is Золотая рыбка libretto/verse/cast and plate captions.
+
+## 2026-10-29 — Pages with figure-only blocks (gap check)
+```sql
+SELECT page_id, block_index, block_type, left(coalesce(text,''),300), caption_text
+FROM raw.review_block
+WHERE page_id SIMILAR TO 'review_1903-04_MSK_ballet_p0(09|10|14|17|18|21|24)'
+ORDER BY page_id, block_index;
+```
+Result: p009/p014/p017/p018/p021 are plates only; p024 has the 8 Feb tail, 30 Mar, 11 Apr, 25 Apr and the «34 балетныхъ спектакля» paragraph.
+
+## 2026-10-29 — Moscow 1903-04 Repertoire events with ballet on the bill
+```sql
+SELECT e.event_id, e.date, e.time_of_day, t.canonical_name, e.receipts_total_kopecks, e.is_benefit, e.is_charity, e.is_free, e.event_status, e.printed_page_number, e.annotation,
+  string_agg(p.verbatim_title || ' [' || coalesce(p.verbatim_genre,'') || '/' || coalesce(p.genre_family,'') || ']', ' + ' ORDER BY p.performance_order) AS bill
+FROM research.event e JOIN research.theater t ON t.theater_id=e.theater_id
+LEFT JOIN research.performance p ON p.event_id=e.event_id
+WHERE e.season='1903-04' AND e.city='Moscow'
+GROUP BY ALL
+HAVING bool_or(p.genre_family ILIKE '%ballet%' OR p.discipline ILIKE '%ballet%')
+ORDER BY e.date, e.time_of_day;
+```
+Result: 37 events, all Большой, 1 Sep 1903 – 25 Apr 1904; includes 18 Oct mixed benefit, 24 Oct Tchaikovsky memorial, 14 Nov / 6 Dec free matinées, 30 Mar Иверская charity (no receipts).
+
+## 2026-10-29 — Ballet productions list, Moscow 1903-04
+```sql
+SELECT e.entry_order, e.list_number, e.title, e.fragment, e.total_count, e.total_text, e.is_premiere,
+  string_agg(cast(p.date AS varchar) || coalesce(' ('||p.note||')',''), ', ' ORDER BY p.date_order)
+FROM raw.production_entry e LEFT JOIN raw.production_entry_performance p USING (production_entry_id)
+WHERE e.season='1903-04' AND e.city='Moscow'
+GROUP BY ALL ORDER BY e.entry_order;
+```
+Result: 10 entries; totals Баядерка 3, Донъ-Кихотъ 5, Жизель 3, Золотая рыбка 8, Конекъ-Горбунокъ 9, Корсаръ 3, Лебединое озеро 5, Привалъ 6, Тщетная 1, Эсмеральда 2; premieres = Баядерка, Золотая рыбка.
+
+## 2026-10-29 — Distinct dates in the productions list
+```sql
+SELECT count(DISTINCT p.date)
+FROM raw.production_entry e JOIN raw.production_entry_performance p USING (production_entry_id)
+WHERE e.season='1903-04' AND e.city='Moscow';
+```
+Result: 36.
+
+## 2026-10-29 — All Moscow events on the review's disputed dates
+```sql
+SELECT e.event_id, e.date, e.time_of_day, t.canonical_name,
+  string_agg(p.verbatim_title||' ['||coalesce(p.verbatim_genre,'')||']',' + ')
+FROM research.event e JOIN research.theater t USING (theater_id)
+LEFT JOIN research.performance p USING (event_id)
+WHERE e.season='1903-04' AND e.city='Moscow'
+  AND e.date IN ('1903-09-21','1903-09-25','1904-01-14','1904-01-17','1903-10-05')
+GROUP BY ALL ORDER BY 2;
+```
+Result: Большой 21 Sep = Донъ Кихотъ; 25 Sep = Евгеній Онѣгинъ; 5 Oct = Лебединое озеро; 14 Jan = Трубадуръ; 17 Jan = no work (s006).
+
+## 2026-10-29 — Status of Большой 17 Jan 1904
+```sql
+SELECT event_id, event_status, annotation, printed_page_number
+FROM research.event WHERE event_id='repertoire_1903-04_p023__s006';
+```
+Result: no_performance, no annotation, printed p.25.
+
+## 2026-10-29 — 1903-04 aliases «Ваядерка»/«Пригалъ кавалеріи»: rebuilt copy (outputs/rebuild_aliases_1903-04_2026-10-29) v. production; the 1905-06 cell the alias also caught
+
+```sql
+-- rebuilt db with pre_fix.duckdb attached as o; t in event, performance, work, person, person_appearance, production
+SELECT count(*) FROM (SELECT * FROM research.<t> EXCEPT SELECT * FROM o.research.<t>);  -- both directions
+SELECT performance_id,verbatim_title,work_id FROM (SELECT * FROM research.performance EXCEPT SELECT * FROM o.research.performance);
+SELECT work_id,canonical_title FROM (SELECT * FROM o.research.work EXCEPT SELECT * FROM research.work);
+SELECT * FROM (SELECT * FROM o.research.production EXCEPT SELECT * FROM research.production);
+SELECT e.date,t.canonical_name,e.time_of_day,e.printed_page_number,e.receipts_verbatim,string_agg(p.verbatim_title||' '||coalesce(p.verbatim_genre,''),' / ')
+ FROM research.event e JOIN research.theater t USING(theater_id) JOIN research.performance p USING(event_id) WHERE e.event_id='repertoire_1905-06_p000__s007' GROUP BY ALL;
+-- production after promotion
+SELECT p.verbatim_title,w.canonical_title,count(*) FROM research.performance p JOIN research.work w USING(work_id)
+ WHERE p.verbatim_title IN ('Ваядерка','Пригалъ кавалеріи') OR w.canonical_title IN ('Ваядерка','Пригалъ кавалеріи') GROUP BY ALL;
+```
+
+Result: first alias-only rebuild showed the alias also catching SP 4 Sep 1905 «Ваядерка бал.» (p. 84, 2857 р. 95 к.), printed «Баядерка» on the scan: fixed in raw. Final rebuild: work 2,958 -> 2,956 (the two typo works folded into «Баядерка» b612cbfc… and «Привалъ кавалеріи» 21781359…, ids kept), 3 performances relinked, 2 Moscow 1903-04 list productions now match 1 work (was 2); event, person, person_appearance unchanged. Production after promotion: «Пригалъ кавалеріи» -> «Привалъ кавалеріи» 1, «Ваядерка» -> «Баядерка» 1.

@@ -927,3 +927,68 @@ work through the id crosswalk), production = tested copy, sqlite rebuilt, not re
 | SP German drama | 32 = 32, 58,892.95 | corrected 2026-10-29 (RG: "Yes, relabel"): «Galeotto» 25-26 Mar = German troupe, research layer (1897-98-02) |
 | SP French | 146 = 146, 177,587.01 | corrected 2026-10-29 (RG: "Yes, relabel"): Réjane's 25-26 Oct nights = her troupe, own stats line (1897-98-03) |
 | SP ballet list 25 Oct, 3 Nov | list 52 vs 50 | list's own; RG |
+
+## 1903-04 (2026-10-29): ballet explained in both cities; opera added (RG: dancers appear in operas too); three misreads fixed; two Moscow opera receipts gaps are the stats page's
+
+The stats page is p. 40 (`1903-04_ProductionStats.pdf`): SP drama by venue, opera, ballet, French, German; Moscow drama and
+opera by venue, ballet, and an unqualified «Смѣшанныхъ» 1. **No footnotes.** Transcription checked against the scan, and the
+page's sums add up. Ballet productions lists for both cities (`raw.production_entry`: Moscow 10 productions, SP 28; every
+printed «Всего» equals its dated entries). Ballet reviews for both cities. RG (2026-10-29): every volume also has dated opera
+and drama productions lists; only the ballet ones are scanned.
+
+**Step 3 first: three columns read blind (2026-10-29).** Six agents transcribed the Большой, Новый and Маріинскій columns from
+the full-resolution scans before anything was compared (`docs/eval/scan_audit/1903-04_scan_reads.csv`, 730 rows). Sums read v.
+stored: Большой 417,146.72 v. 417,146.71; Новый 116,799.43 = 116,799.43; Маріинскій 547,272.76 v. 547,262.76. Three extraction
+errors, all checked by Claude on the scan, fixed in raw (`fix_1903_04_scan_reads.py`), rebuilt on a copy (4 events changed,
+1 dark row added, nothing else in event, performance, work, person or person_appearance), promoted, backup
+`outputs/backups/scan_reads_1903-04_2026-10-29/`:
+- Маріинскій 19 Apr 1904 «Садко»: 1520.60 -> «1530 р. 60 к.» (blotted 3) (1903-04-06);
+- Большой 5 Feb 1904 matinée «Золотая рыбка»: 1705.55 -> «1705 р. 56 к.» (damaged 6) (1903-04-05);
+- Новый 17/18 Jan 1904: the 18 Jan matinée «Дѣвичій переполохъ» had been stored on the blank 17 Jan (1903-04-13).
+The 32 Большой opera events at exactly 3,028.21 р. (and 3,954.93, 3,037.21) are printed so: subscription houses.
+
+**What the stats leave out, and what they keep.** Out: every charity bill without receipts (SP ballet 5, SP opera 8 Mar;
+Moscow 30 Mar at the Большой and the Новый, 4 Feb evening at the Большой), the concerts with no works, and the Moscow
+18 Oct benefit mixed bill (6,118.14 р., the only excluded event with receipts). In: the free school matinées (14 Nov, 6 Dec,
+4 Feb), and the charity events that print receipts (SP 18 Nov «Мефистофель» 3,600 р.; Moscow 30 Nov «Евгеній Онѣгинъ»
+4,993.20 р.).
+
+**Ballet** (stats / list / Repertoire, after the fixes):
+
+| City | Counts | Reading |
+|---|---|---|
+| SP | 49 / 49 / 54 | the 5 extra are the charity bills of 24 Jan, 21 Feb, 3 Apr, 10 Apr, 24 Apr (no receipts; the 2026-10-09 review check found ballet in each, and the 17 Apr «Балетный дивертиссементъ» was the 4th act of «Конекъ-Горбунокъ» with Гельцеръ). Ballet line exact to the kopeck, 124,010.04 (1903-04-01) |
+| Moscow | 34 + 1 / 36 / 37 | the Repertoire's extra over the list is the 30 Mar Иверская charity (1903-04-02); the list's extra over the stats is the 18 Oct benefit (1903-04-03); «Смѣшанныхъ» 1 = the 24 Oct Tchaikovsky memorial to the kopeck (1903-04-04). Ballet line exact, 78,160.80 (1903-04-05) |
+
+Title by title, list and Repertoire agree except 30 Nov SP: the list and the review give «Волшебная флейта», the Repertoire cell
+only «Фея куколъ» + Act 2 of «Фіаметта» (1903-04-14, yearbook_own). Moscow «Пригалъ кавалеріи» (14 Nov) and «Ваядерка» (25 Jan)
+are print slips, stored as printed, and now aliased to «Привалъ кавалеріи» and «Баядерка» (RG 2026-10-29; 1903-04-17). The alias also caught SP 4 Sep 1905 «Ваядерка», printed «Баядерка»: a misread, fixed in raw (`fix_1905_06_bayaderka_title.py`).
+
+**Opera** (stats / Repertoire, charity without receipts out):
+
+| City | Line | Counts | Receipts gap | Reading |
+|---|---|---|---|---|
+| SP | opera | 139 / 140 | 0.00 | after «Садко»; one event without receipts not counted: a free matinée (6 Dec, 4 Feb) or the 18 Nov charity. **Open, held for the SP opera productions list** (1903-04-07, -08) |
+| Moscow | Большой | 135 / 135 | −11,700.00 | every Большой figure as printed; kopecks agree; the stats page's own, provisional (1903-04-09, -10) |
+| Moscow | Новый | 41 / 41 | +825.81 | exactly 26 Oct «Галька, оп.» «825 р. 81 к.»: the printed total seems to leave out one cell, provisional (1903-04-11, -12) |
+
+**Dancers in operas.** The research layer marks no 1903-04 opera as including dance (only SP 22 Feb «чтеніе, пляска»). The
+2026-10-09 opera-review checks (`docs/eval/review_check_1903-04_sp/`, `_moscow/`) name dancers in «Ромео и Джульетта», «Пиковая
+дама», «Фераморсъ», «Русалка» and others at the Маріинскій, and «Добрыня Никитичъ», «Наль и Дамаянти», «Искатели жемчуга» in
+Moscow. Not applied: dance markers follow RG's rules (`dance-marker-rules`), a decision for her.
+
+**The ballet season reviews** (two agents, the review images and the Repertoire scans for every disagreement;
+`1903-04_review_sp_ballet.csv`, `1903-04_review_msk_ballet.csv`, checked by Claude):
+
+| Review | Statements | Disagreements |
+|---|---|---|
+| SP (ff. 107-121) | 64: 41 agree, 4 partial, 3 no, 16 n/a | season total «35 (одинъ изъ нихъ смѣшанный)» fits no count; «25-го ноября» for 23 Nov; «Волшебное зеркало» «три раза» (2); closing 2 May (6 May). All the review's (1903-04-15) |
+| Moscow (ff. 179-204) | 30: 24 agree, 2 partial, 4 no | «34 … изъ нихъ 1 смѣшанный» (stats 34 + 1); 21 Sep, 25 Sep, 14 Jan, 17 Jan misdated. All the review's (1903-04-16) |
+
+Review transcription slip noticed, not corrected: SP p000 «5-го сентября» is «3-го» on the image.
+
+**Noticed, not chased** (drama): SP Александринскій +6 events / −10.40 р., Михайловскій +1 / +329.00; Moscow Малый +1 / −2.03,
+Новый drama +18.00. The Малый, Александринскій and Михайловскій columns were not read.
+
+**Outcome:** 17 ledger rows. Corrected 3, classification 1, comparison_rule 1 (the two aliases), excluded_by_yearbook 6, yearbook_own 5
+(provisional), open 1 (SP opera +1, held for the opera list).

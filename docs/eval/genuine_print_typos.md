@@ -797,3 +797,15 @@ Read on the full-resolution scans by Claude during the blind column reads and th
   событіе»** with a comma after «соверш»; Михайловскій 24 Feb 1905 (p. 122) **«Ou n'oublie pas, pièce nouv.»** for «On».
   All stored as printed; the research layer matches them to the intended works (`work_title_aliases.csv`,
   `work_excerpt_links.csv`). Worn type read as the letter present, not a typo: 7 Oct 1904 «Le nuage, c··m.», 7 Dec «Bellag·io».
+
+## 1903-04 reconciliation (added 2026-10-29)
+- **Repertoire, Большой, read by Claude at 3x on `ForUpload_1903-04_Repertoire.pdf`:** 14 Nov 1903 free matinée (p. 15)
+  **«Пригалъ кавалеріи, бал.»** for «Привалъ» (the letter is a plain г, not a damaged в); 25 Jan 1904, Рославлева benefit
+  (p. 27) **«Ваядерка, бал.»** for «Баядерка» (its В differs from the Б of «Бенефисъ» just above). Both stored as printed;
+  the research layer aliases them to the intended works (`work_title_aliases.csv`, RG 2026-10-29). Not a typo: SP 4 Sep 1905
+  «Ваядерка» was a misread of a printed «Баядерка», fixed in raw.
+- **SP ballet productions list (p. 45) and the SP ballet review** both put «Волшебная флейта» on 30 Nov 1903; the Repertoire
+  cell that night prints only «Фея куколъ, бал. / 2-е д. бал. Фіаметта.» Probably the Repertoire's omission (ledger 1903-04-14).
+- **Stats page p. 40:** Moscow «Русскихъ оперныхъ въ Большомъ театрѣ» «341,255 р. 05 к.» is 11,700 р. more than the 135
+  events' printed receipts (kopecks agree); «въ Новомъ театрѣ» «41,889 р. 32 к.» is exactly one cell (26 Oct «Галька»,
+  825 р. 81 к.) short. Provisional, RG to read (ledger 1903-04-10, -12).
