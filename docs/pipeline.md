@@ -268,3 +268,31 @@ files rather than letting a finding live only in a chat transcript.
   `entities.person_link` for the shifted rows (delete the removed row's link, rename `e(N+1)->eN` ... in ascending order).
 - **An inserted row with no link** is given a brand-new person UUID by `build_entities.py`, and the Tier-1 merge may then tombstone the long-lived person in its favour. Pre-seed `entities.person_link` for it (manual_seed) pointing at the intended existing person.
 - After any such edit run `python pipeline/check_person_link_alignment.py --db <db>`: it exits 1 if any page has a shifted block. Run it before AND after a sweep.
+
+## Correcting a work in the research layer: title alias or per-performance override
+
+Raw keeps every title as printed. A print typo or a spelling variant of the same work is corrected in the research layer,
+and because that layer is rebuilt on every run, the correction must live in a file the build reads:
+
+- `pipeline/entity_curation/work_title_aliases.csv` (read by `build_entities.py`): "a performance printed *X* is the work
+  *Y*". It applies to **every** performance printed with exactly *X*, in any season, before works are formed, so *X*
+  never becomes a work of its own. Use it for misspellings and spelling variants of the same work
+  («Конскъ-Горбуновъ», «Ваядерка», the «Донъ-Кихотъ» forms).
+- `pipeline/research_corrections/performance_work_overrides.csv` (read by `build_research_model.py`): "this one
+  performance (season, city, date, theater, session, printed title) was the work *Y*". Use it when the question is which
+  work was given that night («Карменъ, бал.» on 16 Sep 1907 was the opera). The build stops if the row matches no
+  performance.
+
+**Before adding an alias, list every cell it will catch and read each one on the scan** (RG, 2026-10-29). An alias is
+silent and corpus-wide: it also covers cells nobody has looked at. Each caught cell is either the print slip the alias is
+for, or an extraction misread, which is fixed in raw instead (the 1903-04 «Ваядерка» alias caught SP 4 Sep 1905, printed
+«Баядерка»: `docs/eval/reconciliation/fix_1905_06_bayaderka_title.py`). The cells an alias would catch:
+
+```sql
+SELECT e.season, e.city, e.date, t.canonical_name, e.time_of_day, e.printed_page_number, p.verbatim_title, p.verbatim_genre, e.event_id
+FROM research.performance p JOIN research.event e USING (event_id) JOIN research.theater t USING (theater_id)
+WHERE trim(p.verbatim_title) = '<printed title>' ORDER BY e.season, e.date;
+```
+
+Then rebuild on a copy and diff `research.work` and `research.performance` against production: only the intended
+performances should move. Record the scan reading in the alias row's `basis`.

@@ -587,6 +587,8 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     # Curated title aliases (RG, 2026-10-05): a scan-confirmed print typo in a TITLE
     # ("Женихъ, соверш. невѣр. событіе" for Gogol's Женитьба) is matched as the
     # intended title. Matching only: the printed title stays verbatim everywhere.
+    # An alias catches every cell printed with that title, in any season: read each one on
+    # the scan before adding a row (RG, 2026-10-29; docs/pipeline.md, "Correcting a work").
     _alias_path = Path(__file__).parent / "entity_curation" / "work_title_aliases.csv"
     title_alias: dict[str, str] = {}
     alias_genre: dict[str, str] = {}  # identity genre for a blank printed genre (optional column)
