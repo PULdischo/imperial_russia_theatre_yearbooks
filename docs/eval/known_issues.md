@@ -84,6 +84,17 @@ closes, and add new open items here as well as in their own entry.
   Not changed: the 15 Mar and 22 Mar morning charity matinées (acts + «Concert-Abtheilung.» stay in the annotation; event_labels.csv,
   #141); «4-ter Akt aus der Oper Die Hugenotten.» and «4-o atto di op. Gli Ugonotti» (1893-94) have no parent link (cross-language
   work identity: RG's call).
+- **1897-98 title audit APPLIED 2026-10-29 (RG: "yes").** The 43 cells where the blind column read's works differed from the stored
+  ones, each re-read on the scan by three readers given both versions unlabelled (crops checked by Claude): in all 43 the print agrees
+  with the blind read (`docs/eval/scan_audit/1897-98_title_reads.csv`). `docs/eval/reconciliation/fix_1897_98_titles.py`: 45 works --
+  misread letters (Золотой телецъ, Консулъ Берникъ x5, Теща / За обѣдомъ, Villégiature x3, Воробышекъ, Джентльмэнъ, Кто любитъ x10,
+  Осенній, случившійся, этюдъ), wrong genres (21 Sep «др.», 9 Jan «Приличія, ш.», 16 Jan «др. очеркъ.»), genre run into the title or
+  added (Пашенька, Маруся, «Случайно случившійся случай», «2-е д. оп. Севильскій цирюльникъ.»), and three print oddities stored as
+  printed: «Воробышекъ   ом.» (18 Nov), «Jm weissen Rössl Lustsp.» (27 Mar; alias in work_title_aliases.csv), «Le Bésigue chinois»
+  (11 Feb). Four duplicate works merged via the crosswalk (Золотой теленокъ, Теша, Воробьишекъ, Villégiateure); no art form changed.
+  Backup `outputs/backups/titles_1897-98_2026-10-29/`. 1897-98 is now title-audited (all five columns), like 1904-05.
+  Spelling splits left for RG: «Le Bésique chinois» (12, the print's spelling to 2 Jan 1898) v «Le Bésigue chinois» (22, from 31 Jan);
+  «Джентльманъ» (5, other seasons) v «Джентльмэнъ» (92).
 - #159: review cast statements vs BalletArtists spiski, triaged 2026-10-22.
   35 suspected wrong-person links (13 high) in
   `docs/eval/review_assertion_wrong_person_suspects_2026-10-22.csv`, plus six

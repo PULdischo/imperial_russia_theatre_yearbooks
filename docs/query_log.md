@@ -23138,3 +23138,12 @@ full rebuild (docs/eval/rebuild_after_raw_edit.sh steps) on a copy, then product
 ```
 
 Result: copy vs pre-fix: raw.event_entry 5, raw.event_entry_performance +4, research.event 5 (12, 19, 20, 22 Mar ev: annotation cleared, n_works 1 -> 2; 1 Feb: unspecified -> morning), research.performance +4 (German opera, item_kind opera), research.work +4 (excerpts of Der fliegende Holländer, Die Walküre x2, Die Meistersinger von Nürnberg); production = tested copy. 1897-98 SP German opera 31 / 152,203.10, mixed 2: unchanged, exact.
+
+## 2026-10-29 — 1897-98 title audit (RG: "yes"): 45 works corrected, rebuild checked
+
+```
+full rebuild (rebuild_after_raw_edit.sh steps) on a copy, then production; table-by-table EXCEPT ALL diff;
+research.work / research.performance compared before v after (work_id, discipline, genre_family)
+```
+
+Result: raw.event_entry_performance 45, research.performance 45, research.work 17 -> 13 (crosswalk +4: Золотой теленокъ, Теша, Воробьишекъ, Villégiateure merged); 8 performances moved work (to Джентльмэнъ, Теща, Золотой телецъ, Воробышекъ, Villégiature x3, Le Bésigue chinois); no discipline or item kind changed; «Воробышекъ ом.» and «Jm weissen Rössl» keep their works. Production = tested copy.
