@@ -847,3 +847,28 @@ Read on the full-resolution scans by Claude during the blind column reads and th
   «Велшебное зеркало» (Большой 29 Apr), «Авдокатъ Стенсгоръ» (Новый 3 Feb), «Безплатные спетакли» (Moscow banner 14 Nov),
   «Безплатный спектанль» (Alex 26 Nov), «Das aite Heim» (Alex 9 Apr), «Gomödie» (Alex 17 Mar), «6 Понед.» for Friday 6 Apr
   1907 (Moscow date column), receipts «701 г. 06 к.», «190 р. 98 р.», «433 к. 45 к.», «1041 и. 53 к.», «3067 к. 08 к.».
+
+## 1901-02 reconciliation and title audit (added 2026-10-30)
+
+All read on the full-resolution Repertoire scans (ForUpload_1901-02_Repertoire.pdf) or the list scan, checked by Claude; stored as
+printed (`docs/eval/scan_audit/1901-02_title_reads.csv`).
+
+- **`repertoire_1901-02_p024`, Михайловскій 24 Jan 1902: «M'amonr, com.»** for «M'amour» (n for u). Stored as printed; the alias in
+  `work_title_aliases.csv` folds it into «M'amour» for matching (RG 2026-10-30).
+- **`repertoire_1901-02_p018`, Михайловскій 28 Dec 1901: «Pour étre aimée, com.»**, acute for circumflex («être»).
+- **`repertoire_1901-02_p025`, Новый 30 Jan 1902: «Дивертиссемемтъ»** (м for н) after «Коппелія». Stored as printed; aliased to
+  «Дивертиссементъ» for matching (RG 2026-10-30).
+- **`repertoire_1901-02_p008`, Михайловскій 25 Oct 1901: «Les jurons de CadiIlac»**, a capital I for the first l; the cell of 21 Oct
+  prints «Cadillac».
+- **`repertoire_1901-02_p006`, Маріинскій 15 Oct 1901: «Іоланта, оп. / Гензель и Грстель, оп.»** (р for е).
+- **`repertoire_1901-02_p026`, Маріинскій 13 Feb 1902: «Раймонда, оп.»**, the ballet labelled opera (sole item, 2557 р. 95 к.);
+  counted as ballet through `work_artform_overrides.csv`.
+- **`repertoire_1901-02_p010`, 4 Nov 1901: «4 Воскрес-»**, the weekday cut with a hyphen (11 Nov prints «Воскрес.»).
+- **Moscow ballet list, p. 54: «Лебединое озеро … 1901 г.—сентября 16, 21»**, «октября» dropped before 21; the Repertoire has the
+  ballet on 21 Oct and opera on 21 Sep (RG 2026-10-30; `LIST_DATE_PRINT_TYPOS`).
+- **The 1901-02 ballet reviews:** SP «2-го января 1903 года» for 1902 (a reader's pencil corrects the 3 on the copy); SP Сѣдова's
+  first Медора «18-го февраля» (23 Feb); SP 24 Feb «Очарованный Лѣсъ» for «Оживленный садъ»; SP «во второй разъ» for third
+  performances (4 and 11 Nov). Ledger 1901-02-17.
+
+Read as broken type, not misprints (RG 2026-10-30): Малый 18 Jan «Иринипская» (RG reads «рининс»), 20 Apr Большой «Балстный»
+(faint е), 9 Feb Маріинскій «Грсза» (faint е).

@@ -1154,13 +1154,16 @@ Sandrock in both cities, Угетти's Italian opera, the Vienna operetta and J
 | SP Михайловскій drama | 68 = 68 | +45.00 | yearbook_own, provisional (every figure as stored) |
 | SP French | 130 = 130 | −127.27 | yearbook_own, provisional (−127.42 less 30 half-kopecks) |
 | Moscow ballet | 49 = 49, list 46 | exact | list prints 12 + 19 Dec «Коппелія» and 21 Feb acts below «Всего» (1901-02-15) |
-| Moscow Большой opera | 132 / 133 | −8.01 | 30 Dec reading; one event short (2 Feb Pushkin charity opera acts?), open |
+| Moscow Большой opera | 133 = 133 | −8.01 | 30 Dec reading; the 133rd is probably the 2 Feb Pushkin charity, whose opera scenes are works since the title audit (1901-02-05) |
 | Moscow Малый | 171 = 171 | exact | with 24 Jan reading |
 | Moscow Новый drama | 147 = 147 | exact | 144 + the three drama/ballet bills (classification) + 6 Nov fix |
 | Moscow Новый opera, Большой drama, «Смѣшанныхъ» | exact | exact | «Смѣшанныхъ» = 20 Apr benefit |
 
 **Moscow ballet list, one date.** «Лебединое озеро … сентября 16, 21»: the Repertoire has «Русланъ и Людмила» on 21 Sep and
-the ballet on 21 Oct, and the list has no October date for it. Probably a list slip (1901-02-14, for RG). The list page (p. 54)
+the ballet on 21 Oct, and the list has no October date for it; the Repertoire's 8 performances equal the list's «Всего—8».
+**List slip** (RG 2026-10-30: "I think this is most likely"): `LIST_DATE_PRINT_TYPOS` dates it 21 Oct 1901, raw keeps the print
+(1901-02-14; image `docs/eval/scan_audit/1901-02_rg_lebedinoe_list_21sep.png`). The Moscow list now differs from the Repertoire only on
+the three partial-act dates below its «Всего». The list page (p. 54)
 also prints the end of the Moscow **opera** productions list («Фаустъ», «Фра-Діаволо»): the opera list exists.
 
 **The ballet season reviews** (RG: "then cross check with the season reviews"; two agents, the review images and the Repertoire scans
@@ -1174,5 +1177,24 @@ The review's own slips (1901-02-17): SP «во второй разъ» for third
 «18-го февраля» (23 Feb), 24 Feb «Очарованный Лѣсъ» for «Оживленный садъ»; Moscow 24 Feb «2 дѣйствія» v. «2-е д.» in the Repertoire and
 list. Neither review mentions «Лебединое озеро» on 21 Sep or 21 Oct.
 
-**Outcome:** 17 ledger rows. Corrected 3 (the fix script, the review transcription slips), open 6 (the four damaged digits in three rows, the
-list date, the two count gaps), classification 3, yearbook_own 3 (2 provisional), comparison_rule 1, excluded_by_yearbook 1. Not yet done: titles audit.
+**Titles audit (2026-10-30; RG: "do this").** The blind read's works were compared word by word with the stored ones: 76 cells
+differ, 11 only in punctuation. The other 65 were read on the scans (two agents, the uncertain ones by Claude, three by RG on crops);
+the blind read was right every time (`docs/eval/scan_audit/1901-02_title_reads.csv`). `fix_1901_02_titles.py` corrects 61 cells (67
+works): repeated misreads («Свѣтить, да не грѣть» ×8, «Въ отвѣтъ» ×7, «Флаксманъ» ×4, «Ирининская» garbled ×5, «Валкірія» ×3), genre
+misreads («вт.» for «эт.», «сп.» for «сц.»), genres the print does not give («Боярыня Вѣра Шелога, прологъ» stored with «оп.»/«др.»),
+excerpt wording lost (2 Dec Маріинскій «3-й актъ бал. Спящая красавица», stored as the whole ballet; the operetta acts of 15 Dec and
+12 Jan; the 20 Apr Большой benefit), junk French genres; misprints stored as printed (`genuine_print_typos.md`). RG's rulings: 2 Feb Большой
+Pushkin charity, five printed items moved from the annotation to works and the session to morning (printed УТРО); 16 Feb «Концертъ-
+спектакль» and 9 Mar «Intermède» stored as items, because they are printed in the item face as other generic items are («the strongest
+evidence»; the season's other Маріинскій concerts are wholly in the heading face). Also the 61 weekday words and 55 theater names the
+extraction had modernised («Четверг.», «Вторник.», «Мариинскій», «Новый театр.»). Curation: «Орфей въ аду» becomes an excerpt-only
+parent (its one "whole" appearance was the 12 Jan acts); aliases «Дивертиссемемтъ» and «M'amonr»; excerpt links «Каменнаго гостя» and
+«Русалки» (printed «оп.») and the «Борисъ Годуновъ» scene to the operas (RG: "Yes, the opera", as 2 Feb 1905). Rebuilt on a copy of
+production taken after the 1906-07 titles promotion: events and works changed only in 1901-02 (elsewhere 12 discipline_basis texts and
+one crosswalked work id, «Прекрасная Елена» 1905-06); promoted 2026-10-30, sqlite rebuilt, not republished; backup
+`outputs/backups/titles_1901-02_2026-10-30/`. Work-level before/after: `docs/eval/scan_audit/1901-02_title_work_changes.csv`. Counts and
+receipts unchanged except the Большой opera line, now 133 = 133.
+
+**Outcome:** 18 ledger rows. Corrected 4 (the fix script, the review transcription slips, the titles audit), open 4 (the four damaged
+digits in three rows, the Александринскій drama count), classification 4, yearbook_own 4 (2 provisional), comparison_rule 1,
+excluded_by_yearbook 1.

@@ -23528,3 +23528,36 @@ SELECT performance_id, verbatim_title, verbatim_genre FROM research.performance 
 ```
 
 Result: first build stopped in build_entities (work_excerpt_links row «2 послѣднія дѣйствія трагедіи Дмитрій Донской» matched 0 excerpts after the «Димитрій» fix); row updated, rebuilt cleanly. A build from HEAD alone also reverted research.production_work 1901-02 MSK e009 9 -> 8 (the 1901-02 session's promoted but uncommitted LIST_DATE_PRINT_TYPOS line); rerun with that line: no 1901-02 difference. Final diff: raw.event_entry 1, analysis.event_entry 1, raw.event_entry_performance +41 -40, entities.work +17 -20, work_link +16 -15, work_genre_candidate 2, work_id_crosswalk +3 (День денищика -> День денщика; 5-е д. тр. Дмитрій -> Димитрій Самозванецъ; Le cœur -> Le coeur d'Angélique), research.event 1 (4 Mar n_works 1 -> 2, annotation cleared), research.performance +44 -43, research.work +17 -20 — every changed performance 1906-07. Василиса Мелентьева 54 -> 58, Мелентьевна 5 -> 1 (other seasons); День денщика 19 -> 20; Le coeur d'Angélique 4 -> 6; Боярыня Вѣра Шелога [прологъ] 23 -> 26; Гугеноты 159 -> 158 (22 Dec now «1, 2, 3 и 4 д. оп. Гугеноты» excerpt, 13); «Велшебное» act -> parent «Волшебное зеркало»; «Пиковая дамя» -> work «Пиковая дама».
+
+## 2026-10-30 — 1901-02 Moscow list «Лебединое озеро … сентября 21» recorded as a slip for 21 Oct (RG): research rebuild checked
+
+```sql
+select * from raw.production_entry_performance where production_entry_id='balletproductions_1901-02_MSK_p000__e009';
+-- copy of production; build_research_model.py from a clean `git archive HEAD pipeline` + the LIST_DATE_PRINT_TYPOS entry
+-- (the working tree held another session's uncommitted supplied_performances.csv / work_excerpt_links.csv edits, which a plain
+-- rebuild picked up: +2 performances on 1906-07 10 Feb; that copy was discarded); every base table EXCEPT ALL both ways
+select production_id, n_matched_dates from research.production_work where production_id='balletproductions_1901-02_MSK_p000__e009';
+```
+Result: list date d002 = 1901-09-21 (Repertoire: Большой 21 Sep «Русланъ и Людмила», 21 Oct «Лебединое озеро»). Clean rebuild: only
+research.production_work 1 row (n_matched_dates 8 -> 9). Promoted; sqlite rebuilt. compare_season_stats: Moscow 1901-02 list/Repertoire
+differences now only 12 + 19 Dec and 21 Feb (partial acts below «Всего»).
+
+## 2026-10-30 — 1901-02 title audit: blind read v. stored works, rebuild on a copy of production, promotion
+
+```
+-- docs/eval/scan_audit/1901-02_scan_reads.csv works v. outputs/full_run/raw/repertoire_1901-02_*.raw.json (theater + day), normalised
+-- for whitespace/dashes/final stops only: 76 cells differ, 11 punctuation-only; stored date_text v. printed weekday (61 rows) and
+-- theater names (55 rows)
+select * from entities.work where canonical_title in ('Орфей въ аду','Птички пѣвчія','Прекрасная Елена','Оживленный садъ','Наяда и рыбакъ');
+select p.verbatim_title, p.verbatim_genre, p.discipline, w.canonical_title from research.performance p ... where p.verbatim_title ilike 'Intermède%';
+-- copy: fix_1901_02_titles.py on fresh raw, full rebuild (parse .. research, person_link check); every BASE TABLE EXCEPT ALL both ways
+-- v. pre-fix production; research.work / research.performance diffs listed
+```
+Result (final copy, production after the 1906-07 titles promotion): raw/analysis event_entry 94, event_entry_performance +7, research.event
+65 (all 1901-02: 61 date_verbatim, annotations, 2 Feb n_works 0 -> 5 opera morning, 16 Feb, 9 Mar), research.performance +7 / 85 changed
+(1901-02, plus discipline_basis text on 12 other-season performances and «Прекрасная Елена» 1905-06 work id, crosswalked), research.work 42/41,
+entities.work_id_crosswalk +11. Validation errors 266 -> 264; person_link 0 shift blocks. Production unchanged since the copy; promoted
+(DB, parsed, 33 raw pages), sqlite rebuilt. compare_season_stats afterwards: Moscow Большой opera 133 = 133 (2 Feb), every other 1901-02 line
+as before. Curation changes needed by the rebuild: curated_parent_works «Орфей въ аду»; work_excerpt_links (2 Орфей, Каменнаго гостя,
+Русалки, Борисъ Годуновъ); work_title_aliases («Дивертиссемемтъ», «M'amonr»); research_performance_genre 30 Jan retitled; art_form_by_title
+«Въ глупии, пьеса» row removed.
