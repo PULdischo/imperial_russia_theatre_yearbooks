@@ -24317,3 +24317,16 @@ Result: 3,053 runs. Runs with a date change, flagged/total: stretches tie, seaso
 stretches decide 29/40; unresolved (RG) 25/25; unresolved 2/8; overturn majority 4/4; ruled 1/1. Гоппъ (Musicians) 1883, change
 1899-00*, flagged; Дриго 1879, change 1898-99, not flagged; Петровъ 2-й (ProductionTeam) change 1903-04, not flagged (1903-04 is a
 Musicians refresh season, not a ProductionTeam one). Receipts 3,223,154,439; research.person 2,641.
+
+## 2026-10-30 — Гуняшевъ slip added, Мацкевичъ held unresolved (RG: "Yes, both"); rebuild checked
+
+```sql
+SELECT pa.season, pa.appearance_id, pe.list_number, pe.tenure_note_text FROM research.person_appearance pa
+JOIN raw.person_entry pe ON pe.entry_id = pa.appearance_id WHERE <person 631c21 or 6bb8c9> ORDER BY 2;
+SELECT p.display_name, t.list, t.tenure_start_date, t.basis, t.slips_left_out FROM research.person_tenure t ... ;
+SELECT basis, count(*) FROM research.person_tenure GROUP BY 1 ORDER BY 2 DESC;
+```
+
+Result: Мацкевичъ 1909-10 no. 57 «съ 7 іюня 1903 г.» zoomed (balletartists_1909-10_SP_p003); her printed dates: 1904-05 «1905»,
+1905-08 «1904», 1908-09 «1903» (slip), 1909-11 «7 іюня 1903»; Graduates 1904-05 «съ 1-го іюня 1905». Now unresolved (RG). Гуняшевъ
+ProductionTeam 1897-10-01 with «3 октября 1861» (1905-08) left out. unresolved (RG) 29; receipts 3,223,154,439.
