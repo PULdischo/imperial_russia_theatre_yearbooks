@@ -1072,13 +1072,21 @@ events (43 + 3 benefits) without the 28 Jan matinée (with it, 47); 46 + the 3 f
 ff. 152-153 print «г. Гердтъ») and 23 letter-level slips, each read on the image by Claude, are 24 rows in
 `docs/eval/review_text_corrections.csv`; the first «Гердъ» on f. 147 is printed so and stays. Review rebuild on a copy, then
 production: 17 blocks, 9 assertions (the Кшесинскій one gone), 7 credits, all 1906-07; backup
-`outputs/backups/review_text_1906-07_2026-10-30/` (1906-07-19). Found on the way, open for RG: 29 Apr «Очарованный лѣсъ, изъ бал. Корсаръ (Le jardin
-animé)» stored as two works (1906-07-20); 10 Feb charity has no works in the Repertoire, the review names «Шопеніана» and
-«Эвника» (1906-07-21).
+`outputs/backups/review_text_1906-07_2026-10-30/` (1906-07-19).
 
-**Outcome so far:** 21 ledger rows. corrected 2 (30 Dec; review transcription; the 19 Nov fix is inside -11), excluded_by_yearbook 3, classification 2
-(«Карменъ», «Гибель Фауста»), comparison_rule 1, yearbook_own 8 (provisional; 2 of them the reviews' slips), open 5 (6 Feb French figure, 28 Jan
-kopecks for HathiTrust, the SP free-matinée count, 29 Apr split item, 10 Feb works). Noticed, not chased: the Moscow review's 30 Aug 1906 assertion
+**Two more, applied 2026-10-30** (rebuilt on a copy of production, every table diffed, promoted; backup
+`outputs/backups/corsaire_10feb_1906-07_2026-10-30/`):
+- **29 Apr 1907, «Очарованный лѣсъ, изъ бал. Корсаръ (Le jardin animé).»** is printed as one item; the extraction had split it,
+  and the research layer counted «Очарованный лѣсъ» [изъ бал.] as a scene of the separate one-act ballet «Очарованный лѣсъ».
+  RG: "This is an excerpt of Corsaire". Raw is now one item (`fix_1906_07_corsaire_29apr.py`) and `work_excerpt_links.csv`
+  links it to «Корсаръ» [бал.] (1906-07-20). The automatic `entities.work_id_crosswalk` row for the retired «Корсаръ (Le jardin
+  animé)» id pointed at «Испытаніе Дамиса» (the bill's later items moved up a place); corrected by hand to the new excerpt work.
+- **10 Feb 1907 charity:** «Шопеніана» and «Эвника», from the SP review, attached in the research layer only
+  (`supplied_performances.csv`; RG: "attach the performances of these ballets to that event") (1906-07-21).
+
+**Outcome so far:** 21 ledger rows. corrected 4 (30 Dec; review transcription; 29 Apr excerpt; 10 Feb works; the 19 Nov fix is inside -11),
+excluded_by_yearbook 3, classification 2 («Карменъ», «Гибель Фауста»), comparison_rule 1, yearbook_own 8 (provisional; 2 of them the reviews'
+slips), open 3 (6 Feb French figure, 28 Jan kopecks for HathiTrust, the SP free-matinée count). Noticed, not chased: the Moscow review's 30 Aug 1906 assertion
 is dated 1907-08-30 in research.review_assertion. Not yet done: the MXAT company label in the research layer, titles audit.
 
 ## 1901-02 (2026-10-29): eight copied charity figures; every count explained once they go; four damaged digits for RG

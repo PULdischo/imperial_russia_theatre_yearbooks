@@ -23484,3 +23484,20 @@ SELECT dance_id, position, performer_person_id, link_method FROM research.review
 ```
 
 Result: copy v. pre_fix: raw.review_block 17 (all 1906-07), research.review_assertion 9 (1906-07; Кшесинскій «Дамисъ» assertion 1810 removed, new ids 3188-3194), research.review_credit 7 (1906-07, ignoring ids), entities.review_mention content only in 1906-07 (other seasons: candidate_ids order only). Production after the same chain v. copy: review_assertion 4 and review_dance_performer 14 rows differ only in candidate_ids order (person links identical keyed by dance_id, position). Noticed: MSK p000 b002 assertion dated 1907-08-30 (30 Aug 1906).
+
+## 2026-10-30 — 1906-07 29 Apr «Очарованный лѣсъ, изъ бал. Корсаръ» as one Корсаръ excerpt; 10 Feb «Шопеніана» + «Эвника» supplied: rebuilt copy (outputs/rebuild_corsaire2_1906-07_2026-10-30) v. production
+
+```sql
+SELECT w.work_id, w.canonical_title, w.canonical_genre, w.appearance_count, w.excerpt_of_work_id FROM research.work w
+ WHERE canonical_title LIKE 'Очарованный%' OR canonical_title LIKE 'Корсаръ%';
+SELECT p.performance_id, p.verbatim_title, p.verbatim_genre, p.work_id, p.discipline FROM research.performance p WHERE p.event_id = 'repertoire_1906-07_p044__s022';
+SELECT e.season, e.date, p.verbatim_title, p.verbatim_genre FROM research.performance p JOIN research.event e USING (event_id) WHERE p.verbatim_title LIKE 'Очарованный%' ORDER BY 2;
+SELECT verbatim_title, verbatim_genre, count(*) FROM research.performance WHERE verbatim_title LIKE '%изъ бал.%' OR verbatim_title LIKE '%изъ балета%' GROUP BY ALL;
+SELECT work_id, canonical_title, canonical_genre, appearance_count FROM research.work WHERE canonical_title LIKE 'Шопен%' OR canonical_title LIKE 'Эвник%';
+-- every base table, both directions, copy v. pre_fix (scratchpad dbdiff.py); changed rows of research.work/performance/event, production_work, work_id_crosswalk, work_genre_candidate
+UPDATE entities.work_id_crosswalk SET new_work_id = '24e416e1-a272-55b6-bd84-42aeb60b12b1'
+ WHERE old_work_id = '653ffe6f-02cf-5d72-af3f-d0c17eb1cb5a' AND new_work_id = '4a2d4472-9790-5013-a9ac-87072289d8b9';   -- on the copy, before promotion
+-- every table/column holding a work id, searched for the retired 653ffe6f…
+```
+
+Result: before: «Очарованный лѣсъ» бал. f6f5254b (52 performances, 1890-1906) and its 1907 excerpt «Очарованный лѣсъ» [изъ бал.] 24e416e1; «Корсаръ (Le jardin animé)» 653ffe6f -> «Корсаръ» 013fcc3d. After (copy = production): 24e416e1 «Очарованный лѣсъ, изъ бал. Корсаръ (Le jardin animé)» excerpt of «Корсаръ»; 653ffe6f gone (crosswalk only); the 29 Apr event 4 -> 3 performances; 10 Feb event 0 -> 2 (__supplied1 «Шопеніана» сюита f20f7607, __supplied2 «Эвника» бал. ebb88ad9). Diff: entities.work +1 -2, work_genre_candidate -2, work_link +2 -3, work_id_crosswalk +1, raw.event_entry_performance +3 -4, research.event 2, performance +5 -4, work +1 -2; nothing else (a first copy also showed research.production_work 1901-02 MSK e009 8 -> 9: the 1901-02 session's change, promoted by it before mine). The automatic crosswalk row sent 653ffe6f to «Испытаніе Дамиса» 4a2d4472 (slot shift); corrected to 24e416e1. Correction to the 2026-10-29 «1906-07 ballet season reviews» entry above: «Очарованный лѐсъ» there should read «Очарованный лѣсъ».

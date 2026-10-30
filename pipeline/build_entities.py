@@ -320,7 +320,9 @@ def _work_art_form(canon: str | None) -> str | None:
     # comédie-ballet is a play or a ballet is RG's open decision (research need:
     # drama with ballet/dancers), so they keep their previous classification.
     # Nor is "изъ бал." ("from the ballet"): an excerpt marker, curated as an
-    # excerpt of its parent in work_excerpt_links.csv (Очарованный лѣсъ, 1907).
+    # excerpt of its parent in work_excerpt_links.csv. (Its one 1907 printing
+    # turned out to be a split cell, now «Очарованный лѣсъ, изъ бал. Корсаръ
+    # (Le jardin animé)», 2026-10-30; the rule stays for any later «изъ бал.».)
     if re.search(r"(?<![а-яё])бал(?:\.|етъ|ет\b|\b)", canon) and not re.match(r"(ком\.?-бал|изъ\s)", canon):
         return "ballet"
     if re.match(r"(диверт|див\b|концерт)", canon):
