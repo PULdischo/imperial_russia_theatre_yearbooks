@@ -24175,3 +24175,32 @@ select count(*) filter (where superseded_by_person_id is null) live from old.ent
 ```
 
 Result: 53 of 57 tables identical; raw/analysis person_entry +7 -7, person_entry_credit +5 -5. Backup already had 2,543 live persons (the 2545 -> 2543 drop is ca77502's merge, not this fix).
+
+## 2026-10-30 — Sweep: every SP dancer whose printed start moves earlier from 1908-09 on (RG: "Yes, sweep")
+
+```sql
+SELECT pa.person_id, p.display_name, pa.season, min(pa.printed_start_date), min(pa.appearance_id)
+FROM research.person_appearance pa JOIN research.person p USING (person_id)
+WHERE pa.entity_type = 'BalletArtists' AND pa.city = 'SP' AND pa.printed_start_date IS NOT NULL GROUP BY ALL ORDER BY 1, 3;
+-- Python: consecutive listed seasons, later season >= 1908-09, date moves earlier, not a listed slip. PATTERN = new date has a precise
+-- day (not 1 June / 1 Sept), the previous date was 1 June / 1 Sept, 120-1200 days earlier. Script: scratchpad sweep.py.
+```
+
+Result: 37 moves. PATTERN 24: 17 already held unresolved + 7 new (Георгіевская 2-я, Гердтъ Елизавета, Ольхина, Чернышева, Нижинская:
+1 June 1908 -> a 1906/1905 day from 1909-10; Муромская 1906-06-01 -> 1904-04-02 and Фокина Вѣра 1904-06-01 -> 1902-07-21 from
+1908-09). Other 13: Добролюбова 1909-06-01 -> 1906-01-21 (1909-10; pattern-like, 3.4 years); reverts to the graduation date in 1908-09
+(Ивановъ 5-й 1904 -> 1899, Мартьяновъ 1904 -> 1893, Сергѣевъ 1903 -> 1894, Солянниковъ 2-й 1900 -> 1891, Трефилова 1895 -> 1894,
+Бастманъ 1899 -> 1893 in 1909-10, Печатниковъ Sept -> June 1897), Преображенская 1899 -> 1889, Мелковъ 1905 -> 1889, Исаевъ 1906 -> 1896
+(slip-like), Масловъ 9 -> 1 May 1896, Петипа 24 -> 14 May 1847. Пильцъ (first listed 1909-10 already backdated) is found only via Graduates.
+
+## 2026-10-30 — Sweep follow-up: 8 more backdated SP dancers scan-read and held unresolved
+
+Scan-read by a read-only agent (scratchpad/sw/), re-checked by Claude (Нижинская 1908-09 and 1909-10, Муромская 1907-08, Добролюбова
+1909-10, Фокина 1908-09): all stored dates match the print. Георгіевская 2-я 1908-06-01 -> 1906-09-25 (1909-10); Гердтъ Елизавета
+1908-06-01 -> 1906-05-17; Муромская 1906-06-01 -> 1904-04-02 (1908-09); Нижинская 1908-06-01 -> 1906-12-27 (1909-10); Ольхина 1908-06-01
+-> 1905-11-13; Фокина Вѣра 1904-06-01 -> 1902-07-21 (1908-09); Чернышева 1908-06-01 -> 1906-09-15; Добролюбова 1909-06-01 -> 1906-01-21.
+No heading or note on the 1908-09 / 1909-10 list pages explains how service is counted. Added 8 unresolved rulings; rebuild:
+unresolved (RG) 28, receipts 3,223,154,439, research.person 2,642.
+Found on the way (not acted on): 1908-09 SP p002 no. 63 prints «Ніясинская, Бронислава Фоминична» (zoomed) but raw stores «Нижинская»
+(the extraction normalised a print slip); 1907-08 SP p003 no. 63 prints «Муромская, Лидія Николаевна (съ 1 іюня 1906 г.)» (zoomed),
+stored as a separate one-season person ca689d4f beside Муромская, Марія Николаевна (351c7086).
