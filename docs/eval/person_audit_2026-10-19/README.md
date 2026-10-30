@@ -100,3 +100,9 @@ tallies removed from tenure notes; «церемоніймейстеръ» on 10 
    2) -- scan-check each; «Копелія» may be a genuine print variant.
 3. Proposed separate task: review mentions linked across different ordinals (e.g. «Смирнова 2-я» -> Смирнова 4-я) -- read-only check.
 4. For Andy: research.person_tenure_note is not yet in build_datasette.py; research_dataset.sqlite last built 2026-10-15.
+
+## M8 group 5: the 21 unexplained print variations (2026-10-30)
+
+RG 2026-10-30: "labels only". No per-person note: each of the 21 is recorded by its row in `research.person_tenure` (the chosen
+date, the `basis` label and every printed date with its seasons). Still to decide: which date wins when a run's date changed once
+(refresh-year flag), Гуняшевъ's neighbour slip, Мацкевичъ's 1909-10 «7 іюня 1903».
