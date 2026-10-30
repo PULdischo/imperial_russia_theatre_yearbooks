@@ -943,3 +943,12 @@ Both are in `credit_totals_scan_verified.csv`. Other slips the 2026-10-30 reader
   1894 года»); Сигуля, Александръ, Moscow BalletArtists, «съ 1 сентября 1891 г.» in 1900-01, 1901-02, 1903-04, 1905-06, 1906-07 for 1899
   (Graduates 1898-99); Романова, Ольга Кондратьевна, Moscow 1908-09 «и съ 1 марта 1899 г.» for 1889. Patronymic variants printed one
   season only: «Трефилова, Вѣра Александровна» (1901-02), «Сигуля, Александръ Макарычъ» (1908-09). Stored as printed.
+
+## BalletArtists tally lines, scan-confirmed 2026-10-30 (Claude; stored as printed)
+
+- **«въ» misprinted** (all zoomed): 1893-94 SP no. 45 Пащенко 1-й «съ 6 операхъ»; 1899-00 MSK no. 24 Грачевская 2-я «дъ 1
+  дивертиссементѣ»; 1909-10 SP no. 17 Гончаровъ 1-й «Съ 6 балетахъ»; 1910-11 MSK no. 33 Иванова 1-я «Вь 6 балетахъ»; 1910-11 SP
+  no. 55 Прохоровъ «Вд балетахъ».
+- **1910-11 MSK no. 54 Никитина 1-я: «Въ 1  балетахъ—34; въ 4 операхъ—26. Всего— разъ.»** A gap after the 1 (a dropped digit?)
+  and no total at all; 34+26=60.
+- **1910-11 SP no. 18 Гончарова: «Всего—4 | 66 разъ.»** A stray «4» at the line end before the total on the next line (39+27=66).

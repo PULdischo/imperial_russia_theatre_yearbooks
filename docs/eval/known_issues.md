@@ -24607,3 +24607,15 @@ Rebuild vs backup (`outputs/backups/copied_tallies_2026-10-30/`): person_entry 6
 -190 +18; person_entry_service 1 (Аистова); research.person_appearance 23 (tenure_note_text, 1900-01 SP p000); 51 of 57 tables
 identical; quality flags back to the one known (Исаева). **Not covered:** a copy whose text differs from its source (no identical
 pair to find it) — the full-page reads found none beyond the pairs on these 31 pages, but pages without an identical pair were not read.
+
+### Follow-up: the 15 unreadable or odd BalletArtists tally lines -- scan-read and FIXED 2026-10-30 (RG: "do the 15 scan reads first")
+
+From the corpus tally check: 10 «Всего» totals unreadable in the stored text and 5 lines with an odd word where «въ» belongs. All
+15 read by Claude on the scans. `docs/eval/raw_fix_unreadable_tallies_2026-10-30.py` fixes 7: two more people with NO tally in print
+who carried a stray «Всего—?» (Шейндель 1893-94 MSK no. 119; Головкина 1902-03 SP no. 20, who prints only her leaving note — the
+same pattern as the copied-tallies fix above); three misread totals (Поллини «as» and Оголейтъ 1-я «6.» for the italic «въ»;
+Куницкій «Всего 0—81» for the spaced «Всег о—81»); Грачевская 2-я «дивертиссементѣ»; Гончаровъ 1-й «герольдъ—5» (stored 3) and
+«Сарацинскій». The other 8 are faithful to the print: all 5 odd prepositions are genuine misprints (genuine_print_typos.md), three
+lines break at the foot of the page after the number, and two totals are defective in the print itself (Никитина 1-я, Гончарова).
+Rebuild vs backup (`outputs/backups/unreadable_tallies_2026-10-30/`): person_entry 7, person_entry_credit 5; 53 of 57 tables
+identical. (The live-person count 2545 -> 2543 in the rebuild log is a parallel session's merge, ca77502, already in the backup.)

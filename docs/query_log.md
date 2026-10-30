@@ -24163,3 +24163,15 @@ The backdated dates (e.g. 29 Mar 1902, 9/17 Dec 1902, 22 Feb 1904, 28 Feb 1905, 
 Pupils not backdated appear in the same casts (Мацкевичъ, Клечковская, Домерщикова, Георгіевская...). Also found: Нижинская,
 Бронислава (no Graduates entry in the database) prints 1 June 1908 in 1907-08, 1908-09 and 27 Dec 1906 from 1909-10 -- the same
 pattern, one year later; so the pattern reaches beyond the 18 held runs.
+
+## 2026-10-30 — The 15 unreadable or odd BalletArtists tally lines: list, and rebuild diff after the fix
+
+Listed from the raw JSON (the database was locked by another session): «Всего» blocks whose total does not parse, and parts opening with съ/дъ/Вь/Вд/as. 15 entries (10 totals, 5 prepositions); all scan-read by Claude.
+
+```sql
+-- per table, both directions, current vs outputs/backups/unreadable_tallies_2026-10-30/imperial_theaters.duckdb
+select count(*) from (select * from <schema>.<table> except all select * from old.<schema>.<table>);
+select count(*) filter (where superseded_by_person_id is null) live from old.entities.person;
+```
+
+Result: 53 of 57 tables identical; raw/analysis person_entry +7 -7, person_entry_credit +5 -5. Backup already had 2,543 live persons (the 2545 -> 2543 drop is ca77502's merge, not this fix).
