@@ -1269,3 +1269,73 @@ folded into their real works, and 3 performances in other seasons (1891-92 «Der
 same works. Two keys on the old weekday text updated (`_MANUAL_DATE_OVERRIDES`, `receipts_print_typos.csv`). Counts and receipts
 unchanged. Backup `outputs/backups/titles_1899-00_2026-10-30/`. Left as found: other seasons still print or store «Девятый вальс» (5),
 «Свѣтить, да не грѣть» (5), «Шато-Инемъ» (2), «Джентльменъ» (17), not read on the scans.
+
+## 1900-01 (2026-10-30): every column read blind; one misread fixed; the RTO gala's receipts exist only on the stats page
+
+The stats page is p. 40 (`1900-01_ProductionStats.pdf`): SP drama by venue, opera, ballet, French, German, concerts, «Смѣшанныхъ» 1;
+Moscow drama and opera by venue, ballet. Footnote 1: the italic bracketed figures leave out charity. Productions lists for both cities
+(SP pp. 46-47 also list opera and French drama); season reviews: SP ballet (40 pp., pp. 176-177 missing from the scan), Moscow ballet,
+Moscow opera.
+
+**Step 1, city totals** (after the fix below): SP 643 / 635 events, −7,948.46 р.; Moscow 524 / 523, +5,147.51 р. Both are explained to
+the kopeck by the rows below.
+
+**What the stats leave out (SP +8, Moscow +1).** Sonnenthal's guest performance (28 Oct, Маріинскій) and the Siamese court troupe
+(28 Oct Александринскій, 29 Oct Михайловскій); three Vienna operetta charity events at the Маріинскій (20 Jan, 22 Feb, 25 Feb; the
+printed German line, 24 / 49,188.00, is exactly the Deutsches Gesammt-Gastspiel at the Александринскій); the 3 Apr Red Cross cinema
+show; the 27 Jan Tolstoy memorial. In Moscow, the 7 Apr chorus evening at the Большой (5,347.30). None prints receipts except the last.
+
+**Classification.** «Концертовъ» 5 = two Verdi memorial concerts (2,709.00 exact) + the Invalids concert, its rehearsal and repeat
+(heading-only, so the tool files them under no_works). Mlle Barety's benefit (2 Mar; French plays + «Les élèves de Dupré, ballet») is
+counted French. The 5 Nov repeat of the Mochalov centenary (heading only, 274.34) is counted in the Александринскій 199.
+
+**The 30 Dec RTO gala** (Маріинскій: «Москаль-Чаривникъ», 4th act «Гугеноты», prologue «Псковитянка», 2nd act «Фіаметта»): the
+Repertoire prints no figure (the cell ends at the foot of p. 20; nothing on p. 22); the stats page's «Смѣшанныхъ» 1 is this event at
+5,043.90 р. (fn. 8). That figure exists only on the stats page. The SP ballet list gives «Фіаметта» 11 Feb only («Всего—1 разъ»).
+
+**Every column read blind** (6 agents, scans only; `docs/eval/scan_audit/1900-01_scan_reads.csv`, 1,407 rows). Every stored event
+matched. One misread: **Александринскій 10 Dec 1900 evening** stored 1337.37, the next row's figure; the print reads «1284 р. 34 к.»
+(crop `1900-01_rg_alex_10dec.png`). **Applied 2026-10-30** (RG: "Yes, correct it"): `fix_1900_01_scan_reads.py`, rebuilt on a copy
+(raw/analysis event_entry 1, research.event 1, season_stat_check 1, nothing else; 0 shift blocks), promoted; backup
+`outputs/backups/scan_reads_1900-01_2026-10-30/`. sqlite rebuilt later the same day (after the review corrections), once another session's
+`person_appearance.printed_start_date` change reached `build_datasette.py`. Two damaged digits kept as stored (Александринскій
+12 Sep «16?7», 19 Nov «458 р. 5? к.»); neither closes the line.
+
+| Line | Counts | Receipts | Reading |
+|---|---|---|---|
+| SP Александринскій drama | 199 = 198 + Mochalov | +46.87 after the fix | yearbook_own, provisional |
+| SP Михайловскій drama | 87 = 87 | −0.05 | half kopecks stored whole (#161) |
+| SP opera | 137 = 137 | **−3,050.20** | every figure as stored, no digit slip fits; yearbook_own, provisional; for RG (opera) |
+| SP ballet | 54 = 54 | +0.01 | lists 55 = 54 + «Ученики Дюпрэ» |
+| SP French | 128 = 127 + Barety | +98.81 | yearbook_own, provisional |
+| SP mixed | 1 = RTO gala | −5,043.90 | figure only on the stats page |
+| SP German / concerts | 24 / 5 | exact | |
+| Moscow ballet | 45 = 45 = list 45 | −9.00 | yearbook_own, provisional |
+| Moscow Малый / Новый opera / Большой opera | 174 / 36 / 125, = | −150.37 / −40.00 / −0.42 | yearbook_own, provisional; Большой drama 1 exact |
+
+**Lists.** Moscow: every list total = its dates = Repertoire. SP: the list prints «Маркитантка … февраля 4, 11. Всего—2 раза», but
+11 Feb was the corps de ballet benefit («4-я карт. бал. Камарго», «2-е д. бал. Фіамметта», «2-е д. бал. Щелкунчикъ»; both scans
+checked by Claude): a list slip. The list also leaves out the 30 Dec «Фіаметта» act.
+
+**Reviews** (three agents; `1900-01_review_{sp_ballet,msk_ballet,msk_opera}.csv`): no Repertoire error. The disagreements are the
+review's own slips (SP «58 балетныхъ спектаклей» is its per-title sum, the Repertoire and stats have 54; four per-title counts; Moscow
+«13-го декабря» for the 6 Dec «Донъ-Кихотъ» revival; opera 15 Dec for 17 Dec, 10 Apr for 13 Apr) or slips in the **stored review
+text**, a printed 3 read as 5 (Moscow ballet 3 Sep, «3 раза» ×2; opera «36»/«161», «31 опера», «Чайковскому—3», «возобновлены 3»,
+31 Aug, 3 Sep, 23 Jan, «3-мъ дѣйствіи», dancer ordinals, Кламротъ's «44 года» stored «¼»; SP «въ 3-хъ дѣйствіяхъ» ×2). **Corrected 2026-10-30** (RG: "Yes, correct them"): 17 rows in `docs/eval/review_text_corrections.csv`, each crop read by an agent and by Claude against the page's own «36» and «125» (`docs/eval/scan_audit/1900-01_review_slips_{1,2}.png`); «5-го апрѣля» and «5-го октября» are real 5s. Review chain rebuilt on a copy, then production: 11 blocks, 2 assertions, credits unchanged. The title fix below had cost the 1899-00 SP f. 120 mention «Les élèves de Dupré» its exact-title link (three credits went to «Арлекинада»); it is now pinned to «Приказъ короля» in `review_work_mention_links.csv`. Backup `outputs/backups/review_text_1900-01_2026-10-30/`. Open: opera «Снѣгурочка—6» v. 4
+Большой opera events. The opera review describes staged dances in «Принцесса Греза» (Новый, Манохинъ), «Ледяной домъ» and «Анжело»
+(Большой, Горскій). **Marked 2026-10-30** (RG: "Yes, add them"): three rows in `works_with_dancers.csv` (the Repertoire prints «Анджело», the review «Анжело»); 18 performances now `includes_dance` (direct on each premiere, season on the rest), nothing else changed; `events_with_dancers` 2,195 → 2,213. The sqlite has everything but these markers: `build_datasette.py` stops on another session's new `person_tenure` columns (commit 3fd56f4).
+
+**Titles audit (applied 2026-10-30; RG: "Yes, apply them").** Blind read v. stored works: 279 cells differ, 213 in punctuation only; of the other 66, 6 are
+pairing artefacts of unlabelled split cells; 60 read again blind, doubtful ones by Claude (`docs/eval/scan_audit/1900-01_title_reads.csv`).
+`fix_1900_01_titles.py`: letters («Лоэнгринъ», «Юдиѳь», «Свѣтитъ, да не грѣетъ», «Девятый валъ», «За обѣдомъ», «Бѣдность», «Сорренто»,
+genres «эт.», «этюдъ», «карт.», «ком.»), **ballet excerpt wording restored on 8 cells** (e.g. 4 Feb «2-е д. бал. Пахита», «1-е д. бал.
+Наяда и рыбакъ»; 11 Feb «4-я карт. бал. Камарго»; Moscow «2-е д. бал. Корсаръ», «1-е д. бал. Донъ-Кихотъ Ламанчскій», «Звѣзды» scenes),
+printed items missing from the works (6 Jan Малый «Концертное отдѣленіе» + «Балетный дивертиссементъ»; two operetta afterpieces;
+«Я играю большую роль!»; the Verdi concerts' «Концертное отдѣленіе»), Sonnenthal's play moved from the annotation, misprints stored as
+printed («Жизнь аз Царя», «Гамлстѣ», «Misantrope», «ponr», «éléves», «Zwillingschwester»; genres «весенная», «цьеса», «Schausptel»,
+«piecè»), 53 weekday words and 138 theater names the extraction modernised. Tested on a copy: only 1900-01 rows change,
+receipts and event count unchanged, performances +8, works 2,943 → 2,948, every new excerpt linked to its ballet, 0 shift blocks.
+Promoted by re-running the pipeline on production (it had moved under the copy) and diffing against the backup `outputs/backups/titles_1900-01_2026-10-30/`: the same rows as the copy. Four curation edits went in with it: `receipts_print_typos.csv` key «2 Четвергъ.», `art_form_by_title.csv` «Трагедія о Гамлетѣ, принцѣ Датскомъ.» (the canonical title flips on a 5/5 tie of the two printed forms), 6 aliases in `work_title_aliases.csv`, 1 excerpt link («2.го») in `work_excerpt_links.csv`. sqlite rebuilt after the review corrections. Two readers took the 30 Jan Малый genre «вартина» for «картина»/«еартина»; at full resolution it is в (straight stem, two bowls), as the 2026-09-28 zoom found, so it stays as stored (`genuine_print_typos.md`). Left for RG: print order «Школьные товарищи» / «Лучъ»
+(Новый 5, 6 Feb), stored the other way round.
+
+**Outcome:** 18 ledger rows (1900-01-01..18).

@@ -897,6 +897,33 @@ and Claude; stored as printed (`docs/eval/scan_audit/1899-00_title_reads.csv`), 
 - **The 1899-00 season reviews** (read on the images): SP p035 «Легатъ 5-й» read by RG as a 3 (corrected); SP p013 «Ивановъ 5-й»
   is a genuine 5 (the roster has Ивановъ 5-й, Иванъ Николаевичъ).
 
+## 1900-01 reconciliation and title audit (added 2026-10-30)
+
+All read on the full-resolution Repertoire scans (ForUpload_1900-01_Repertoire.pdf) by the blind column read, a second blind read
+and, where doubtful, Claude; stored as printed (`docs/eval/scan_audit/1900-01_title_reads.csv`); titles aliased for matching in
+`work_title_aliases.csv` (RG 2026-10-30: "Yes, apply them").
+
+- **`repertoire_1900-01_p017`, Большой 6 Dec 1900 (free student matinée): «Жизнь аз Царя, оп.»** (letters swapped).
+- **`repertoire_1900-01_p014`, Александринскій 30 Nov 1900 (Аполлонскій benefit): «Трагедія о Гамлстѣ, принцѣ Датскомъ.»** (с for е).
+- **`repertoire_1900-01_p014`, Михайловскій 26 Nov 1900 morning: «Le Misantrope, com.»** (no h).
+- **`repertoire_1900-01_p010`, Михайловскій 12 Nov 1900: «Trois femmes ponr un mari, com.»** (n for u).
+- **`repertoire_1900-01_p028`, Михайловскій 2 Mar 1901 (Barety benefit): «Rosalie com.»** (no comma) and **«Les éléves de Dupré, ballet.»**
+  (acute for grave).
+- **`repertoire_1900-01_p028`, Александринскій 11, 12 Mar 1901 (German troupe): «Die Zwillingschwester, Lustspiel.»** (one s; p. 32
+  prints «Zwillingsschwester»).
+- **Genres:** «Снѣгурочка, весенная сказка,» (Новый 10 Feb 1901, p027; trailing comma); «Буреломъ, цьеса.» (Михайловскій 27 Nov 1900,
+  p014); «Abschied vom Regiment, Schausptel.» (Александринскій 17 Mar 1901, p030); «Le député Leveau, piecè.» (Михайловскій 15 Apr 1901,
+  p034).
+- **`repertoire_1900-01_p035`, Большой 22 Apr 1901: «2-я карт. 2.го д. бал. Звѣзды.»** (a full stop for the hyphen; linked to
+  «Звѣзды» in `work_excerpt_links.csv`).
+- **«вартина» (Малый 30 Jan 1901, above) re-confirmed:** two blind readers took it for «картина»/«еартина»; at full resolution the letter
+  has a straight stem and two bowls, a в.
+- **The SP ballet list, p. 46: «Маркитантка … февраля 4, 11. Всего—2 раза»**: 11 Feb 1901 was the corps de ballet benefit (no
+  «Маркитантка»; Repertoire p. 28 and the review agree). A slip in the list's dates.
+- **The 1900-01 season reviews:** SP ballet «58 балетныхъ спектаклей» (its own per-title sum; 54 events); Moscow ballet «13-го декабря»
+  for the 6 Dec «Донъ-Кихотъ» revival (its own p. 263 gives 6 Dec); Moscow opera 15 Dec for 17 Dec (Майна, «Трубадуръ») and 10 Apr for
+  13 Apr (orchestra's «Борисъ Годуновъ»). Read on the scans by the review checkers.
+
 ## Person audit M8: probable start-date slip (added 2026-10-30)
 
 - **Логиновъ, Сергѣй Андреевичъ, SP Musicians 1904-05 (no. 72, p. 32) and 1905-06 (no. 69, p. 29): «(съ 1 сентября 1894 г.). Труба.»**

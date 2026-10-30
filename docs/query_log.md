@@ -24330,3 +24330,31 @@ SELECT basis, count(*) FROM research.person_tenure GROUP BY 1 ORDER BY 2 DESC;
 Result: Мацкевичъ 1909-10 no. 57 «съ 7 іюня 1903 г.» zoomed (balletartists_1909-10_SP_p003); her printed dates: 1904-05 «1905»,
 1905-08 «1904», 1908-09 «1903» (slip), 1909-11 «7 іюня 1903»; Graduates 1904-05 «съ 1-го іюня 1905». Now unresolved (RG). Гуняшевъ
 ProductionTeam 1897-10-01 with «3 октября 1861» (1905-08) left out. unresolved (RG) 29; receipts 3,223,154,439.
+
+## 2026-10-30 — 1900-01 reconciliation: printed season totals v. Repertoire, blind reads, titles, reviews, dance markers (ledger 1900-01-01..18)
+
+```
+uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir <scratch>
+uv run python pipeline/season_stats_receipt_candidates.py --db ... --family-totals <scratch>/family_totals.csv --out <scratch>/candidates.csv
+```
+```sql
+-- events behind the non-single-art-form families (classified with compare_season_stats.classify_work/classify_event)
+SELECT e.event_id, t.canonical_name, e.date_undate, e.time_of_day, e.receipts_total_kopecks, e.annotation, e.is_charity, e.is_free,
+       string_agg(p.verbatim_title || coalesce(', ' || p.verbatim_genre, ''), ' | ' ORDER BY p.performance_order)
+FROM research.event e JOIN research.theater t USING (theater_id) LEFT JOIN research.performance p USING (event_id)
+WHERE e.season = '1900-01' GROUP BY ALL;
+-- events without receipts, by family; list dates for «Фіаметта», «Ученики Дюпрэ»
+SELECT e.title, p.date FROM raw.production_entry_performance p JOIN raw.production_entry e USING (production_entry_id)
+WHERE e.season = '1900-01' AND e.city = 'SP';
+-- blind read v. stored: every 1900-01 research.event (receipts_verbatim, receipts_total_kopecks) and raw.event_entry_performance titles
+-- includes_dance check after the dance rows
+SELECT w.canonical_title, e.date_undate, p.includes_dance, p.includes_dance_basis FROM research.performance p
+JOIN research.event e USING (event_id) JOIN research.work w USING (work_id) WHERE p.includes_dance AND e.season = '1900-01';
+```
+
+Result (after the fixes): SP 643 / 635 events, −7,948.46 р.; Moscow 524 / 523, +5,147.51 р.; both explained to the kopeck
+(docs/eval/reconciliation/README.md «1900-01»). Blind read 1,407 rows, one misread (Александринскій 10 Dec 1900 1337.37 -> 1284.34,
+RG yes). Titles: 279 cells differ, 213 punctuation; 57 works changed or added, 53 weekday words, 138 theater names (RG yes);
+performances 30,825 -> 30,833, works 2,943 -> 2,948, receipts unchanged (3,223,154,439 kopecks). Reviews: no Repertoire error;
+17 stored-text corrections (RG yes). includes_dance: «Принцесса Греза» 5, «Ледяной домъ» 9, «Анджело» 4 (RG yes);
+events_with_dancers 2,195 -> 2,213. Open: SP opera −3,050.20 (yearbook_own, provisional).
