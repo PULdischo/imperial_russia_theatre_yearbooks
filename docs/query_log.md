@@ -24144,3 +24144,22 @@ person_tenure_start_rulings.csv as unresolved: Барашъ, Болдырева,
 Лукашевичъ, Лушкина, Нестеровская 2-я, Николаидисъ, Пюманъ, Смирнова (SP, Moscow), Соболева, Ширяева, Шолларъ, Пильцъ. Left out as
 known or likely slips: Гончаровъ 2-й (1900), Исаевъ (1896), Мацкевичъ (1903), Чумаковъ (Moscow). Rebuild: unresolved (RG) 20, ruled 26,
 receipts 3,223,154,439. Graduates runs keep their own date (e.g. Шолларъ Graduates 1906-06-01).
+
+## 2026-10-30 — Season reviews: are the 18 backdated graduates named as pupils, near their backdated dates? (RG: "check the season reviews")
+
+```sql
+SELECT p.season, p.city, b.page_id, b.block_id, b.text FROM raw.review_block b JOIN raw.review_page p USING (page_id)
+WHERE b.text IS NOT NULL AND p.genre ILIKE '%ballet%';
+-- Python: SP ballet reviews, seasons ending in the 4 years up to each dancer's graduation; surname stems (hyphen-break tolerant);
+-- flagged "pupil" when «в-ца / уч-ца / воспит / учениц» precedes within 60 characters. Then read the blocks around every pupil hit.
+```
+
+Result (stored review text, not scan-checked): every pupil mention of these dancers falls in 11 blocks describing the school's annual
+pupil performances on the Маріинскій stage: 24 April 1904 («полное повтореніе экзаменаціоннаго спектакля»: «Мнимыя Дріады», «Голубая
+Георгина» -- Лушкина, Горшкова, Константинова, Смирнова, Барашъ, Кандина, Пюманъ, Ширяева, Карпова, Болдырева, Шолларь, Соболева,
+Нестеровская, Власова, Николаидисъ, Лукашевичъ, Пильцъ...), 20 April 1905 («Парижскій рынокъ» etc.), 9 April 1906 («Сонъ въ лѣтнюю
+ночь», «Принцъ садовникъ»). No pupil mention of them in company performances, and none in 1902-03 (Иванова Ираида: none at all).
+The backdated dates (e.g. 29 Mar 1902, 9/17 Dec 1902, 22 Feb 1904, 28 Feb 1905, 11 Oct 1905) match none of these performances.
+Pupils not backdated appear in the same casts (Мацкевичъ, Клечковская, Домерщикова, Георгіевская...). Also found: Нижинская,
+Бронислава (no Graduates entry in the database) prints 1 June 1908 in 1907-08, 1908-09 and 27 Dec 1906 from 1909-10 -- the same
+pattern, one year later; so the pattern reaches beyond the 18 held runs.
