@@ -23623,3 +23623,76 @@ WHERE r.performance_title LIKE 'Le bonh%' AND e.season = '1906-07';
 ```
 
 Result: 39 cells differ (Михайловскій 12, Новый 11, Большой 6, Маріинскій 5, Александринскій 4, Малый 1) + 2 «Le bonheur» [mesdames.] cells found by grouping. Research effects of the misreads: «Василиса Мелентьевна» is a separate 5-performance work (1899-00..1906-07) beside «Василиса Мелентьева» (53); «Факель въ тайникѣ» (7, all 1906-07); «День денищика Душкина» (1) beside «День денщика Душкина» (19); «Le coeur d'Angélique com.» (1); «Боярыня Вѣра Шелога, прологъ» [оп.] (4+1) beside «Боярыня Вѣра Шелога» [прологъ] (19); «Валкірія» stored 11 times 1901-02..1909-10. Second read (agent, neither version shown) agrees with the blind read on 38/39; n12 «bonhomme» read by Claude = stored. Readings: docs/eval/scan_audit/1906-07_title_reads.csv.
+
+## 2026-10-30 — Person-entity audit: status check against work done since 19 Oct
+
+```sql
+SELECT count(*) FILTER (WHERE superseded_by_person_id IS NULL), count(*) FROM entities.person;
+SELECT status, count(*) FROM entities.person_candidate GROUP BY 1;
+-- research.person_tenure_note (19) x entities.review_mention / research.review_assertion seasons per person
+-- docs/jubilees_obituaries/jubilees_obituaries_person_links.csv x the tenure-table people and open uncertain cases #32-#40
+-- docs/rgia_request_log.csv: service-record дела (формулярные списки) and their status
+SELECT label, count(*) FROM raw.person_entry_credit WHERE label LIKE 'Копек%' OR label LIKE 'Копел%' GROUP BY 1;
+```
+
+Result: live persons 2546 (was 2548 on 19 Oct; the Пуни, Леонтина merge of 21 Oct), research.person 2645, Wikidata 178; candidate queue
+0 pending / 11 rejected. Uncertain list now runs to #43 (new since 19 Oct: #41 Пуни pupil, #42 Богдановъ, #43 Легатъ «Н. С.»).
+New evidence for the audit:
+- Ѳедорова 1-я, Марія Дмитріевна (tenure table, printed leaving 1 June 1905, read as continuing service): research.review_assertion now has
+  review_1906-07_SP_ballet_p007 f. 154, 11 Feb 1907 «Спящая красавица», «г-жи Ѳедоровой 1-й — Фея Кандидъ» (spiski-credit-role-season;
+  the 1906-07 SP list has one Федорова 1-я, Марія Дмитріевна). A second source for her continuing service; not scan-checked.
+- Грибенъ, Августъ Ѳедоровичъ: the 1895-96 obituary (pp. 495-496, «† 17-го марта 1896 г.», percussion, French theatre / Михайловскій
+  orchestra) is linked to his record 1ed184 -- agrees with the 2026-10-15 split from Ѳедоръ.
+- No jubilee/obituary entry links to any other tenure-table person or to cases #32-#40. No review mention after the printed leaving for
+  the others (Софія Ѳедорова's 1910-11 mentions were already recorded).
+- RGIA: the 22 service-record дела (Ф. 497 Оп. 18 Д. 206-229, «Выписки из формулярных списков» / «Копии формулярных списков», by letter)
+  and the staff lists Д. 516, 517, 522 are on the request log with no batch and no request date: not yet ordered. 15 of 171 дела received,
+  all editorial (Ежегодник).
+Still open from the audit: M8 115 rows (M8_first_pass.csv unchanged); misspelled credit titles «Копекъ…» 39, «Копелія» 8, «Копеллія» 3,
+«Копелкъ…» 2 (unchanged); the review-ordinal link check was proposed on 19 Oct and never run (no write-up exists).
+
+## 2026-10-30 — M8: first pass re-run on current data; the 115 left grouped
+
+```
+uv run python docs/eval/person_audit_2026-10-19/first_pass.py   # output to a scratch folder, compared with the 19 Oct file
+uv run python docs/eval/person_audit_2026-10-19/m8_groups.py    # -> M8_groups.csv
+-- per person x list: every entry's season, heading_path, tenure note, earliest parsed start date, analysis title_clean / rank_clean
+```
+
+Result: M8 unchanged since 2026-10-19 (379 rows, same buckets, nobody gone or new). The 115 rows (clean_split 21 + scattered 94) grouped,
+first match wins: G1 printed break («съ ... по ... и съ ...» printed in the entries) 15; G2 post change (the dates go with different
+headings / rank in the list) 18; G3 near variants (every date differs from the usual only in day/month or one year digit) 40;
+G4 isolated slips (the usual date everywhere but <=2 non-consecutive seasons) 4; G5 open 38.
+Scan checks (full-resolution PDF images, zoomed): G3 Анкудинова 1891-92 MSK p.78 «съ 1 сентября 18?7 г.» -- the second digit is a damaged
+8 printed like a 3 (stored «1837»; 1887 in 1890-91); G4 Силинъ 1890-91 Administrators p.117 «Силинъ, Сергѣй Михайловичъ, тит. сов. (съ 1
+февраля 1883 г.)» under «Помощникъ дѣлопроизводителя» -- printed 1883 (1867 in his other 19 seasons). Earlier the same day-session
+(2026-10-19): G1 Брыкинъ 2-й «(съ 1 сентября 1891 г. по 1 декабря 1893 г. и съ 1 сентября 1896 г.)», 1900-01 / 1901-02 MSK p.116; G2 Ивановъ,
+Левъ «(съ 19 ноября 1858 г.). Танцы.» in the ballet department, 1895-96 p.466.
+
+## 2026-10-30 — M8 group 5 (38 people) read on the scans
+
+135 entries on 109 pages -- every season where one of the 38 people's printed start date changes, plus its neighbour -- read on the
+full-resolution PDF images, zoomed (three read-only agents); flagged readings re-read by me (Петровъ 1895-96 p.466, Сизовъ 1904-05 p.79,
+Шредеръ 1907-08 SP p.32, Тихомировы 1896-97 SP p.64, Анкудинова, Силинъ).
+
+```sql
+SELECT sp.season, sp.city, sp.entity_type, pe.page_id, pe.list_number, pe.family_name, pe.first_name, pe.patronymic, pe.tenure_note_text,
+       pl.person_id FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id)
+WHERE pe.family_name LIKE 'Логинов%' OR pe.family_name LIKE 'Цыбин%' OR (pe.family_name LIKE 'Шредер%' AND pe.first_name LIKE 'Карл%')
+   OR (pe.family_name LIKE 'Тихом%' AND sp.city = 'SP' AND sp.entity_type = 'BalletArtists') ORDER BY 1, 2;
+-- plus Иванъ Ивановъ Григорьевичъ / Николаевичъ in the SP ballet list
+```
+
+Result (docs/eval/person_audit_2026-10-19/M8_G5_scan_results.csv): explained in print 13 (new post with its own date, transfer, return
+after leaving); transfer year with the person in both cities' lists 2 (Логиновъ 1905-06, Цыбинъ 1907-08); unexplained print variation of
+one person 21 (the dates really are printed differently -- e.g. Петипа «1 марта 1848», «4 іюня», «24 мая», «14 мая 1847»; Дриго 1886/1879;
+Гуняшевъ 1905-06 «3 октября 1861» copies Вальцъ's date on the line above); identity questions 2: Тихоміровъ, Владиміръ Михайловичъ (1-й
+1892-93..1896-97 with gaps, then 2-й «съ 1 сентября 1898 г.» while Сергѣй becomes 1-й; one record 5fd9cb) and Шредеръ, Карлъ (Августовичъ to
+1906-07, Ѳедоровичъ «съ 1 сентября 1902 г.» from 1907-08; one record cd67fa). The stored start matches the print everywhere except
+three extraction errors: Петровъ, Василій 1895-96 «1894» stored 1893; Сизовъ 1904-05 honorary-member row stored the death date (19 Oct 1904)
+as a start; Легатъ 1906-07 «17 іюня 1888» parsed as 1 June. Also seen (raw headings/ranks, no date effect): Александринскій stored as
+Михайловскій (productionteam_1896-97_p002 e003, 1897-98_p002 e005, 1905-06_p002 e006), Костюмерши for Костюмеры (1896-97_p001 e015,
+1897-98_p001 e018); rank/instrument from a neighbour (musicians_1890-91_SP_p005 e026 «Віолончель» for Флейта; 1906-07_SP_p003 e025
+«Вальдгорнъ»; 1907-08_SP_p003 e019 «Органъ»). Ивановъ 1-й 1908-09 «Григорьевичъ» is uncertain list #28 (decided 2026-10-12).
+Tangent, not pursued: Цыбинъ «Николай Михайловичъ» (1896-97..1899-00, 25b54e) and «Владиміръ Николаевичъ» (from 1900-01, 58db32) share the
+start «1 апрѣля 1897» and the flute -- possibly one man, held as two records.
