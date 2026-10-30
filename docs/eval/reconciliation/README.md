@@ -836,6 +836,11 @@ the five «½» cells explain only ½ к. and 2 к.; corrected); 17 the SP balle
 («Списокъ пьесъ»), which are dated and would show the counted dates; only the ballet pages are scanned so far. Crops for RG:
 `docs/eval/scan_audit/1904-05_rg_row05_maly.png`, `1904-05_rg_row17_ballet_list.png`.
 
+**Rows 09 and 14 closed (RG 2026-10-30).** The «Списокъ пьесъ» (pp. 135–146) was read blind from the HathiTrust copy
+(`docs/hathi/1904-05_play_list_check.md`). It lists all three free Новый matinées, so it cannot show which one the stats page
+left out (09), and it has every Александринскій Repertoire date except the 1 Jan 1905 charity «Крылья связаны» and none the
+Repertoire lacks, so no 175th event (14). Both stay the stats page's own. The season's ledger has no held rows left.
+
 ## 1896-97 (2026-10-29): ballet agrees four ways; every column read blind; one misread fixed; Михайловскій drama −19,709 is the stats page's
 
 The stats page is p. 27 (`1896-97_ProductionStats.pdf`): venue lines for SP drama, opera and ballet, 10 footnotes, receipts on every

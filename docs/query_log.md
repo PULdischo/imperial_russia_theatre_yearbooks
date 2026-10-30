@@ -24239,3 +24239,51 @@ JOIN research.person p ON p.person_id = pl.person_id WHERE pe.entry_id = 'ballet
 
 Result: «Ніясинская» -> Нижинская, Бронислава Фоминишна (still linked). Receipts 3,223,154,439 (unchanged); 0 person_link moved,
 0 shift blocks; 0 work ids changed; works 2,948 (unchanged against the backup); 1 raw row changed; Wikidata 178.
+
+## 2026-10-30 — Whole-database gap survey (coverage by section, season, theater)
+
+```sql
+select schema_name, table_name, estimated_size from duckdb_tables() where schema_name in ('raw','research') order by 1,2;
+pivot (select season, entity_type from raw.source_pages) on entity_type using count(*) group by season order by season;
+select event_status, count(*) from research.event group by 1;
+select season, count(*) performed, count(*) filter (where receipts_total_kopecks is null) null_rcpt, count(*) filter (where date is null) null_date from research.event where event_status='performed' group by 1 order by 1;
+pivot (select e.season, t.canonical_name from research.event e join research.theater t using(theater_id) where event_status='not_captured') on canonical_name using count(*) group by season order by season;
+select (season>='1905-06') late, is_free, is_charity, is_benefit, is_student_performance, count(*) from research.event where event_status='performed' and receipts_total_kopecks is null and season>='1892-93' group by all;
+pivot (select e.season, t.canonical_name from research.event e join research.theater t using(theater_id) where event_status='performed' and receipts_total_kopecks is null and not (is_free or is_charity or is_benefit) and season>='1892-93') on canonical_name using count(*) group by season order by season;
+select count(*) works, count(*) filter (where canonical_genre is null) no_genre, count(*) filter (where appearance_count=1) singletons from research.work;
+select person_source, count(*) n, count(wikidata_qid) qid from research.person group by 1;
+```
+
+Result: roster pages cover only Administrators/BalletArtists/Graduates/Musicians/ProductionTeam/TheaterSchoolStaff (no opera/drama company rosters); Graduates 0 pages in 1907-08. Events: 22,165 performed / 7,769 no_performance / 2,877 not_captured; no null dates. not_captured spread evenly across theaters (calendar-grid gaps; 1894-95 ~100 each = known closure). Unexplained null receipts (not free/charity/benefit) concentrate at Михайловскій 1906-07..1910-11: 24, 38, 48, 60, 67. Works 2,943, 351 with no genre, 616 singletons. Persons: roster 2,545 (102 QIDs), production_list 87 (76), review 12 (0). A query using alias `nulls` failed (reserved word) and was not re-run.
+
+## 2026-10-30 — Who are the Михайловскій performed events with no receipts (1906-07, 1908-09)?
+
+```sql
+select e.season, companies, min(date) first_d, max(date) last_d, count(*) n from research.event e join research.theater t using(theater_id) where t.canonical_name='Михайловскій' and event_status='performed' and receipts_total_kopecks is null and not (is_free or is_charity or is_benefit) and season in ('1906-07','1908-09') group by all order by 1,5 desc;
+```
+
+Result: 1906-07 = 23 Moscow Art Theatre (23 Apr–17 May 1907) + 1 French. 1908-09 = 45 SP Russian drama (31 Mar–3 May 1909) + 2 Sarah Bernhardt (Dec 1908) + 1 MXAT. With the ledger (1907-08-08: 38 Russian-drama events excluded_by_yearbook; 1909-10-06 / 1910-11-05: MXAT runs with no receipts printed), the rising trend is spring visiting/unreceipted runs, not extraction gaps. 1908-09's 45-event spring run is not yet in the ledger.
+
+## 2026-10-30 — 1904-05 page coverage, for the HathiTrust completeness check
+
+```sql
+select entity_type, city, count(*) n, min(printed_page_number) pmin, max(printed_page_number) pmax, list(distinct source_file) files from raw.source_pages where season='1904-05' group by all order by entity_type, city;
+select count(*), count(printed_page_number) from raw.source_pages where season='1904-05';
+select list(distinct e.printed_page_number order by e.printed_page_number) pages, count(distinct e.printed_page_number) n from raw.event_entry e join raw.source_pages s using(page_id) where s.season='1904-05';
+select city, section_heading, list(distinct printed_page_number) pages, count(*) n, min(source_file) f from raw.production_entry where season='1904-05' group by all;
+select * from raw.season_stat_page where season='1904-05';
+```
+
+Result: 94 source pages, none with source_pages.printed_page_number. Repertoire events cover printed pp. 90–133 (44 pages, contiguous). Ballet lists: SP pp. 138–139, Moscow p. 145 (+4 entries with null page). Stats page p. 134. (One query failed on an ambiguous column and was re-run qualified.) HathiTrust images 760–816 = pp. 90–146 continuous; see docs/hathi/1904-05_page_map.md.
+
+## 2026-10-30 — 1904-05 SP Russian-drama and Moscow opera performances, for comparison with the «Списокъ пьесъ» (ledger rows 1904-05-09, -14)
+
+```sql
+select companies, disciplines, count(*) from research.event where season='1904-05' and event_status='performed' group by all order by 3 desc;
+select e.event_id, e.city, t.canonical_name theater, e.date, e.time_of_day, e.is_charity, e.is_free, e.is_benefit, e.receipts_total_kopecks, p.company, p.discipline, p.verbatim_title, p.verbatim_genre, w.canonical_title
+from research.event e join research.theater t using(theater_id) join research.performance p using(event_id) left join research.work w using(work_id)
+where e.season='1904-05' and e.event_status='performed' and ((e.city='SP' and p.discipline='Russian drama') or (e.city='Moscow' and p.discipline='opera'))
+order by e.city, e.date;
+```
+
+Result: events by company — Moscow Russian drama 319, SP Russian drama 234, Moscow opera 164, SP opera 137, French 115, SP ballet 47, Moscow ballet 40, German 25, 9 with no company, 3 mixed. Performance rows: SP Russian drama 285 (Александринскій 209, Михайловскій 75, Маріинскій 1); Moscow opera 182 (Большой 134, Новый 48). Exported to scratchpad for the date-by-date comparison.

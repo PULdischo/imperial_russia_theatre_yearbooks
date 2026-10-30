@@ -13,6 +13,7 @@ only; nothing in this list has been read.
 
 | Season | Pages | What | Why | Held |
 |---|---|---|---|---|
+| 1904-05 Приложеніе | 289–322 (Кшесинскій p. 314) | Некрологи in the supplement to the XV issue: Ларошъ, Невскій, Муравьева и Рославлева, Фельдъ П. П., Игнатьевъ, Сосницкая, Коммиссаржевскій, **Кшесинскій Ф. И.**, Жулева, Васильева, Сизовъ, Кандратьевъ, Шуваловъ; also «Чествованіе Мартынова литераторами въ 1859 г.» p. 323 | Found 2026-10-30 on the supplement's contents page in the HathiTrust copy (mdp.39015069024142, image 345; see docs/hathi/1904-05_page_map.md). Кшесинскій 1-й (Феликсъ Ивановичъ) is a core ballet figure; Фельдъ is very probably Фельдтъ, Павелъ Павловичъ, Kapellmeister of the opera and ballet orchestra († 28 Aug 1904 in the roster). Ларошъ (critic) may touch ballet. Not read yet; supplement p. 314 ≈ HathiTrust image 326. | HathiTrust (UMich copy); physical copy not checked in the Inventory |
 | 1906-07 | 272–273 | Некрологи: Павелъ Яковлевичъ Рябовъ; О. Р. Фюреръ | Inventory note on Рябовъ: "An actor who also spent some time with the ballet troup?" The only obituary section of the single-volume years with a possible ballet entry and no scan at all. Two pages. | ILL (Yale), returned |
 | 1907-08 | 294 onward | «Памяти Михаила Валентиновича Лентовскаго» — continuation | The scan has only the heading and first seven lines (it shares p. 294 with Богдановъ). Content unknown. | ILL (Yale), returned |
 | 1907-08 | 286–291 | Некрологи between Аренскій and Арбенинъ: Бларамбергъ, Канаевъ, Семенова, Панчинъ (names from the contents page) | None looks like a ballet person from the name, but the section was never read; the Inventory marks it "Various obituaries here… fill in later?" | same volume |
@@ -77,4 +78,5 @@ Supplement 3 (scanned). So the ballet deaths the reviews report for 1896-97 and 
 the roster dagger are all the Yearbook prints. The supplements (приложенія) for these years have not been checked for obituaries and may hold
 some. That is deferred: RG, 2026-10-10 — supplements come after the repertoire-data layer.
 Planned first pass when it happens: read each supplement's contents page on HathiTrust, and request
-a physical copy only where something ballet-related shows up.
+a physical copy only where something ballet-related shows up. First one done 2026-10-30: the 1904-05
+supplement has a Некрологи section with Кшесинскій and Фельдтъ (section 1 above).
