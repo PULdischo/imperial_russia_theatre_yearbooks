@@ -23837,3 +23837,42 @@ Result: only one Цыбинъ in any list each season. «Николай Миха
 Коробковъ, Кречманъ, Фурманъ, Григорьевъ, Леоновъ, Ямикъ). The entry directly above him in 1898-99, 1899-00 and 1900-01 is
 «Ходаровскій, Владиміръ Николаевичъ (съ 1 октября 1898 г.). Вальдгорнъ» (nos. 104/100/99, zoomed 1899-00 and 1900-01): the new name
 is exactly the neighbour's. SP 1908-09..1910-11 also print «Владиміръ Николаевичъ». No review mentions.
+
+## 2026-10-30 — Rate of misprinted Repertoire date labels (printer's errors by type)
+
+```sql
+select date_confidence, count(*) n, count(corrected_date_undate) corrected
+from analysis.event_entry_date_check group by 1 order by 2 desc;
+
+with j as (select e.page_id, e.date_undate, e.city, d.date_confidence, d.note
+  from raw.event_entry e join analysis.event_entry_date_check d using(event_id))
+select count(distinct (page_id, date_undate, city)) labels,
+  count(distinct (page_id, date_undate, city)) filter (where date_confidence='corrected_manual') misprinted_labels,
+  count(distinct (page_id, date_undate, city)) filter (where date_confidence='corrected_manual' and note ilike '%weekday%') weekday_word,
+  count(distinct (page_id, date_undate, city)) filter (where date_confidence='corrected_manual' and note ilike '%day as%') day_digit
+from j;
+```
+
+Result: events 29,964 = 29,878 verified / 76 corrected_manual / 10 no_weekday. Printed date labels (page × date × city): 9,816, of which 25 misprinted (0.25%): 15 weekday word, 10 day number. Used alongside a hand classification of the 285 entries in docs/eval/genuine_print_typos.md (277 counted by type, 8 excluded as not-an-error/inferred).
+
+## 2026-10-30 — Do the printed BalletArtists credit tallies add up? (corpus-wide rate)
+
+```sql
+select e.entry_id, s.season, s.city, e.credit_summary_text
+from raw.person_entry e join raw.source_pages s using(page_id)
+where e.credit_summary_text ilike '%Всего%' and e.page_id like 'balletartists%';
+```
+
+Parsed in Python (each "Всего" block's parts vs its total; "Кромѣ того" blocks checked separately; cross-referenced with pipeline/entity_curation/credit_totals_scan_verified.csv). Two earlier parser passes over all roster types were discarded as parser artifacts («въ кантатѣ—живой картинѣ—1», missing dashes, 1908-09 «Всего—въ N балетахъ—X разъ» form).
+Result: 7,859 entries; 7,828 blocks checked, 7,769 add up, 59 don't (0.75%); 10 totals unreadable. Category tallies: 7,647 entries, 48 mismatches = 45 scan-confirmed print_not_additive + 2 damaged_digit + 1 unverified (balletartists_1901-02_MSK_p007__e009). Role-list tallies: 202 entries, 11 mismatches, none verified. By city (all blocks): Moscow 41/3,652, SP 18/4,176. Season peak 1902-03 (13/392). Of the 47 scan-read mismatches: 19 off by exactly 1, 18 off by 10 or more.
+
+## 2026-10-30 — Stored text and credit rows for Рябцовъ, BalletArtists 1901-02 Moscow no. 56 (scan check of the one unverified non-additive tally)
+
+```sql
+select entry_id, family_name, first_name, credit_summary_text from raw.person_entry
+where entry_id='balletartists_1901-02_MSK_p007__e009';
+select credit_type,label,role_name,category_production_count,category_credit_count,category_credit_count_clean
+from analysis.person_entry_credit where entry_id='balletartists_1901-02_MSK_p007__e009';
+```
+
+Result: stored «въ 20 операхъ—3», operas category_credit_count 3 (clean 3). Scan (ForUpload_1901-02_Spisok_BalletArtistsMoscow.pdf p.8, printed p.118, full-res crop) prints «въ 20 операхъ — 9»: 29+9+9=47, the print adds up; extraction misread. Also stored «Копекъ-горбунокъ» (print Конекъ-) and «дивертисементахъ» (print дивертиссементахъ). Not yet corrected.

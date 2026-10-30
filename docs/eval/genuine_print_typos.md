@@ -907,3 +907,11 @@ and Claude; stored as printed (`docs/eval/scan_audit/1899-00_title_reads.csv`), 
   PROBABLE copying slip from the line above: «Ходаровскій, Владиміръ Николаевичъ», horn, printed directly above him 1898-99..1900-01;
   repeated in every later list, Moscow and SP. Which name is right is open. Zoomed 2026-10-30; merged; `uncertain_person_identities.md` #47.
   RG 2026-10-30: slips like this come from how human cognition works when copying long lists by hand.
+
+## BalletArtists tally, probable slip (added 2026-10-30, corpus-wide tally check)
+
+- **Рябцовъ, Владиміръ Александровичъ, Moscow BalletArtists 1901-02 (no. 56, p. 118): «Въ 9 балетахъ — 29; въ 20 операхъ — 9;
+  въ дивертиссементахъ—9. Всего—47 разъ.»** The tally adds up (29+9+9=47), but nine performances cannot span twenty operas.
+  PROBABLE slip for «2 операхъ», NOT confirmed (RG 2026-10-30): the «20» is crisp on the full-resolution scan (zoomed by Claude).
+  Stored as printed. The stored opera count had been an extraction misread («—3»), fixed the same day
+  (`docs/eval/raw_fix_ryabtsov_tally_2026-10-30.py`).
