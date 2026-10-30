@@ -23788,3 +23788,19 @@ The Михайловскій orchestra itself shrinks (46 rows 1905-06, 34 in 19
 - research.event × research.theater, season 1899-00, Moscow, excluding no_performance/not_captured, grouped by venue × disciplines: Большой opera 104 events, 288,263.54 р., 0 without receipts; Новый drama 131, 55,768.65 р., 4 without receipts (free school matinées 14 Nov, 6 Dec, 16 Feb + Иверская 12 Apr = footnote 9 exactly).
 - Printed (docs/season_stats/lines.csv): Большой opera 103 / 288,263.54; Новый drama 132 / 55,768.65. Both receipts lines exact; no Большой opera event lacks receipts, so no zero-money event can have moved between lines.
 - No 1899-00 opera or drama production list scanned (only ballet, 39 entries); no third source for the count.
+
+## 2026-10-30 — Логиновъ, Сергѣй Андреевичъ (M8 transfer-year case): evidence
+
+```sql
+SELECT sp.season, pe.page_id, pe.list_number, pe.family_name, pe.first_name, pe.patronymic, pe.instrument, pe.tenure_note_text
+FROM entities.person_link pl JOIN raw.person_entry pe USING (entry_id) JOIN raw.source_pages sp USING (page_id)
+WHERE cast(pl.person_id AS varchar) LIKE '4240d1%' ORDER BY 1, 2;
+-- plus: every musicians entry with family_name LIKE 'Лог%'; SP musicians with «1894» and труб- in any season; the SP lists
+-- 1902-03, 1903-04, 1906-07 and the Moscow list 1904-05 between Ли- and Лук-
+```
+
+Result: one record 4240d1, 8 entries. SP lists only 1904-05 (no. 72, p. 32, zoomed: «Логиновъ, Сергѣй Андреевичъ (съ 1 сентября
+1894 г.). Труба.») and 1905-06 (no. 69, p. 29, same text, zoomed). Not in the SP lists 1890-91..1903-04 (1903-04 p. 84 read: 71
+Логановскій, 72 Лукасъ) or 1906-07; no other SP trumpeter dated 1894. Moscow lists 1905-06 (no. 59, p. 58, zoomed: «(съ 1 сентября
+1904 г.). Вторая труба.») to 1910-11, always «съ 1 сентября 1904 г.»; not in the Moscow 1904-05 list. No transfer note in either city.
+The only other Логин- in any list is Логинова, Прасковья Игнатьевна (ProductionTeam 1908-11).

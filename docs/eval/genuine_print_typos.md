@@ -896,3 +896,10 @@ and Claude; stored as printed (`docs/eval/scan_audit/1899-00_title_reads.csv`), 
   in `_MANUAL_DATE_OVERRIDES`; the p. 39 «Четвергь» variant there was the extraction's, removed).
 - **The 1899-00 season reviews** (read on the images): SP p035 «Легатъ 5-й» read by RG as a 3 (corrected); SP p013 «Ивановъ 5-й»
   is a genuine 5 (the roster has Ивановъ 5-й, Иванъ Николаевичъ).
+
+## Person audit M8: probable start-date slip (added 2026-10-30)
+
+- **Логиновъ, Сергѣй Андреевичъ, SP Musicians 1904-05 (no. 72, p. 32) and 1905-06 (no. 69, p. 29): «(съ 1 сентября 1894 г.). Труба.»**
+  PROBABLE slip for 1904, not certain (RG 2026-10-30: "a reasonable assumption"): he is in no SP list before 1904-05, and the Moscow
+  lists 1905-06..1910-11 print «съ 1 сентября 1904 г.». Zoomed 2026-10-30. Stored as printed; reading in `research.person_tenure_note`
+  and `uncertain_person_identities.md` #46.

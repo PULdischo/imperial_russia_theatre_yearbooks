@@ -395,6 +395,14 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** musicians_1905-06_SP_p006, musicians_1906-07_SP_p003 (p. 32), musicians_1907-08_SP_p003 (p. 32, zoomed); no review mentions, no obituary; query log 2026-10-30.
 - **Would resolve it:** his RGIA personnel дело (Ф. 497 Оп. 18, service-record extracts «Ш», not yet ordered); the staff lists on the request log (Д. 516/517/522).
 
+## 46. Логиновъ, Сергѣй Андреевичъ (Musicians, trumpet) -- St Petersburg 1904-05..1905-06 «съ 1 сентября 1894 г.», Moscow 1905-06..1910-11 «съ 1 сентября 1904 г.»
+- **Status:** ONE MAN, TRANSFERRED -- a reasonable assumption, PENDING further information (RG, 2026-10-30). One record (4240d1). `research.person_tenure_note`: two rows (SP 1904-05..1905-06, Moscow 1905-06..1910-11). Raw entries left as printed.
+- **What is uncertain:** (1) the St Petersburg start date «1894»: he is in no St Petersburg list 1890-91..1903-04, so it is read as a one-digit slip for 1904, the year he first appears and the year Moscow prints; (2) the transfer: 1905-06 lists him in both cities («Труба» in SP, «Вторая труба» in Moscow) and neither prints a transfer note, so 1905-06 is read as the year he moved.
+- **For this reading:** same full name and instrument; the SP entries stop the year after the Moscow ones start; Moscow's date (1 Sept 1904) matches his first SP listing; no other Логиновъ among the musicians (the only other Логин- is Логинова, Прасковья Игнатьевна, ProductionTeam 1908-11).
+- **Against / not ruled out:** that he really served from 1894 somewhere outside these lists (another theatre's orchestra, or a list that omitted him); that the two cities' trumpeters are two men of the same name.
+- **Where to look:** musicians_1903-04_SP_p002 (p. 84), musicians_1904-05_SP_p002 (p. 32), musicians_1905-06_SP_p002 (p. 29), musicians_1905-06_MSK_p002 (p. 58), all zoomed; no review mentions; query log 2026-10-30.
+- **Would resolve it:** his RGIA personnel дело (service-record extracts «Л», not yet ordered); a 1905 transfer order; the 1904 St Petersburg orchestra papers.
+
 ## Related, decided (not uncertain), for reference
 
 Грибенъ, Августъ Ѳедоровичъ vs Ѳедоръ Ѳедоровичъ (SP percussionists; SPLIT 2026-10-15, the 1890-93 ballet-orchestra cross-references «Грибенъ (см. оперный оркестръ)» assigned to Ѳедоръ, the only Грибенъ in the opera orchestra then; scans 1890-91 pp. 75/78/80); Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
