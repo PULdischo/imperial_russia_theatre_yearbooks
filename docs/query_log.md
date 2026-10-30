@@ -23696,3 +23696,18 @@ as a start; Легатъ 1906-07 «17 іюня 1888» parsed as 1 June. Also see
 «Вальдгорнъ»; 1907-08_SP_p003 e019 «Органъ»). Ивановъ 1-й 1908-09 «Григорьевичъ» is uncertain list #28 (decided 2026-10-12).
 Tangent, not pursued: Цыбинъ «Николай Михайловичъ» (1896-97..1899-00, 25b54e) and «Владиміръ Николаевичъ» (from 1900-01, 58db32) share the
 start «1 апрѣля 1897» and the flute -- possibly one man, held as two records.
+
+## 2026-10-30 — M8 group 5 extraction errors fixed (RG: "Fix them")
+
+Applied `docs/eval/raw_fix_m8_g5_extraction_2026-10-30.py` (backup outputs/full_run_pre_promote_backup_2026-10-30_m8_g5/), then
+rebuild_after_raw_edit.sh: Петровъ, Василій 1895-96 «съ 1 сентября 1894 г.» (was 1893); Сизовъ 1904-05 honorary-member row: start cleared,
+«† 19 октября 1904 г.» kept. Легатъ 1906-07 was already stored as 17 June (the agent's "stored" value was wrong) -- no change.
+
+```sql
+SELECT n.entry_id, o.start_date_text, n.start_date_text FROM raw.person_entry_service n
+JOIN b.raw.person_entry_service o USING (period_id) WHERE n.start_date_text IS DISTINCT FROM o.start_date_text ...;
+-- plus receipts, live persons, Wikidata, research.person / work / event / person_tenure_note counts, person_link moves
+```
+
+Result: exactly 2 service rows and 1 tenure note changed; receipts 3,223,159,742, live persons 2546, Wikidata 178, research.person 2645,
+works 2950, events 32811, tenure notes 19 unchanged; 0 person_link moved, 0 shift blocks.
