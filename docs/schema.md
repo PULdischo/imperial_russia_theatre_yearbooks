@@ -496,7 +496,7 @@ exists, prints that leaving date in that list, and is listed in every season `se
 |---|---|
 | `person_id` | FK to `research.person` |
 | `list`, `city` | the list (entity_type) and city the leaving is printed in |
-| `printed_leaving`, `printed_leaving_date`, `printed_in_seasons` | the note as printed, its date, the volume(s) printing it |
+| `printed_leaving`, `printed_leaving_date`, `printed_in_seasons` | the note as printed, its date, the volume(s) printing it ; blank when the break has no printed leaving (Тихоміровъ, absent one season) |
 | `research_reading` | `continuing service`, or `two periods (possibly continuous)` (Егорова 1-я) |
 | `service_periods` | the research reading in seasons; `;` separates periods |
 | `discrepancy` | what the print says vs what the lists show, with the same-date colleagues who really left |

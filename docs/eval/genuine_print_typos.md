@@ -872,3 +872,5 @@ printed (`docs/eval/scan_audit/1901-02_title_reads.csv`).
 
 Read as broken type, not misprints (RG 2026-10-30): Малый 18 Jan «Иринипская» (RG reads «рининс»), 20 Apr Большой «Балстный»
 (faint е), 9 Feb Маріинскій «Грсза» (faint е).
+- 1895-96 SP BalletArtists p008 (p. 68) no. 67 «**Тимомировъ** 1-й, Владиміръ Михайловичъ (съ 1 іюня 1892 г.)» for Тихомировъ (no. 68 below
+  prints «Тихомировъ 2-й, Сергѣй»); zoomed 2026-10-30. Stored as printed; the row is linked to his record.

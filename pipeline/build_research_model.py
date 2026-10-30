@@ -2070,7 +2070,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
 #: statement here, with the discrepancy and what would corroborate it. Raw keeps the printed note
 #: and its parsed end date untouched. `service_periods` is the research reading in seasons, ';' between
 #: periods (Егорова 1-я: two). The build fails unless the person exists, prints that leaving date in
-#: that list, and is listed in every season the periods name.
+#: that list (when one is given -- a break with no printed leaving leaves it blank), and is listed in every
+#: season the periods name.
 PERSON_TENURE_DISCREPANCIES_CSV = Path(__file__).parent / "research_corrections" / "person_tenure_discrepancies.csv"
 
 
@@ -2100,7 +2101,9 @@ def build_person_tenure_notes(con: duckdb.DuckDBPyConnection) -> int:
         pid, lst, city = row["person_id"], row["list"], row["city"]
         if not con.execute("SELECT count(*) FROM research.person WHERE person_id = ?", [pid]).fetchone()[0]:
             raise SystemExit(f"person_tenure_discrepancies.csv: {row['display_name']} {pid} is not in research.person")
-        printed = con.execute("""
+        # A row may record a printed break with NO printed leaving (RG 2026-10-30, Тихоміровъ: absent one season, back with a
+        # new start date): printed_leaving_date is then blank and only the listed seasons are checked.
+        printed = 1 if not row["printed_leaving_date"] else con.execute("""
             SELECT count(*) FROM raw.person_entry_service s JOIN raw.person_entry pe USING (entry_id)
             JOIN raw.source_pages sp ON sp.page_id = pe.page_id JOIN entities.person_link pl USING (entry_id)
             WHERE pl.person_id = ? AND sp.entity_type = ? AND coalesce(sp.city, '') = ? AND CAST(s.end_date_undate AS VARCHAR) = ?""",
@@ -2118,7 +2121,7 @@ def build_person_tenure_notes(con: duckdb.DuckDBPyConnection) -> int:
                 raise SystemExit(f"person_tenure_discrepancies.csv: {row['display_name']} period {a}..{b} "
                                  f"includes unlisted season(s) {missing}")
         con.execute("INSERT INTO research.person_tenure_note VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
-                    [pid, lst, city, row["printed_leaving"], row["printed_leaving_date"], row["printed_in_seasons"],
+                    [pid, lst, city, row["printed_leaving"] or None, row["printed_leaving_date"] or None, row["printed_in_seasons"] or None,
                      row["research_reading"], row["service_periods"], row["discrepancy"],
                      row["corroboration_found"], row["corroboration_wanted"], row["decided"]])
         n += 1

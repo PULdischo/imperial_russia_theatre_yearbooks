@@ -23711,3 +23711,23 @@ JOIN b.raw.person_entry_service o USING (period_id) WHERE n.start_date_text IS D
 
 Result: exactly 2 service rows and 1 tenure note changed; receipts 3,223,159,742, live persons 2546, Wikidata 178, research.person 2645,
 works 2950, events 32811, tenure notes 19 unchanged; 0 person_link moved, 0 shift blocks.
+## 2026-10-30 — Тихоміровъ, Владиміръ Михайловичъ (M8 group 5 identity question): evidence
+
+```sql
+SELECT sp.season, pe.page_id, pe.list_number, pe.family_name, pe.first_name, pe.tenure_note_text, pl.person_id FROM raw.person_entry pe
+JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id)
+WHERE pe.family_name LIKE 'Тихом%' AND sp.city = 'SP' AND sp.entity_type = 'BalletArtists' ORDER BY 1, 3;
+-- plus the 1891-92 graduates, the 1895-96 and 1897-98 SP lists around «Т», review mentions per season
+```
+
+Result: graduates 1891-92 «Тихомировъ, Владиміръ.» and «Тихомировъ, Сергѣй.», both posted 1 June 1892. Владиміръ (5fd9cb) «1-й, съ 1 іюня 1892 г.»
+1892-93..1896-97 every season -- 1895-96 is printed «67. Тимомировъ 1-й, Владиміръ Михайловичъ (съ 1 іюня 1892 г.)» (print slip, row correctly
+linked; the "absent 1895-96" in the agent report was this). 1897-98: not listed -- nos. 67-71 run Татариновъ, Терпиловскій, Титовъ, «70 Тихоміровъ,
+Сергѣй» (no ordinal), Трудовъ. 1898-99..1907-08: «2-й, съ 1 сентября 1898 г.» (1904-05 reprints 1 іюня 1892), Сергѣй (53d2c9) now «1-й».
+No leaving or return note in any season. Review mentions: both brothers named together 1891-92, 1893-94; Владиміръ's record has mentions in
+1895-96, 1901-02, 1903-04, 1904-05.
+
+**2026-10-30 — Тихоміровъ, Владиміръ recorded (RG: two periods, "pending any further information"):** research.person_tenure_note row
+with no printed leaving (build check now allows a blank printed_leaving_date); periods 1892-93..1896-97; 1898-99..1907-08 (listed every
+season of both). Table 19 -> 20; receipts 3,223,159,742, research.person 2645 unchanged. Uncertain list #44; «Тимомировъ» added to
+genuine_print_typos.md.

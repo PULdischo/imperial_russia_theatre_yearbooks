@@ -379,6 +379,14 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** review_1906-07_SP_ballet_p005 (f. 152), review_1906-07_SP_ballet_p003 (f. 150); Repertoire 1906-12-10 and 1906-12-26, Маріинскій; docs/eval/review_credit_ballet_by_worksheet_2026-10-26.csv row 2182. Checked by Claude (finding aid).
 - **Would resolve it:** the playbill or programme of 10/26 December 1906; a contemporary press notice; the Legats' memoirs.
 
+## 44. Тихоміровъ, Владиміръ Михайловичъ (SP BalletArtists, class of 1892) -- not listed in 1897-98, back «съ 1 сентября 1898 г.» as «2-й»
+- **Status:** ONE MAN, TWO PERIODS -- PENDING further information (RG, 2026-10-30). One record (5fd9cb). `research.person_tenure_note`: 1892-93..1896-97; 1898-99..1907-08, "return after one season, no note printed".
+- **What is uncertain:** whether the «Владиміръ Михайловичъ» listed from 1898-99 is the 1892 graduate returning, or a different man. «Тихомировъ 1-й, Владиміръ Михайловичъ (съ 1 іюня 1892 г.)» 1892-93..1896-97 (1895-96 «Тимомировъ», p. 68); absent 1897-98; «Тихоміровъ 2-й, Владиміръ Михайловичъ (съ 1 сентября 1898 г.)» 1898-99..1907-08, his brother Сергѣй (1892) now «1-й». No leaving or return note.
+- **For one man:** same name and patronymic, brother of the same Сергѣй; the new start is the opening of 1898-99, as returns are dated elsewhere (Теличкина, Штейнсъ); Сергѣй takes «1-й» on the longer unbroken service; 1904-05 reprints 1 іюня 1892, as Штейнсъ's entries revert to his first hire; reviews name him before and after.
+- **For two men / against:** nothing printed says he left or returned; no Владиміръ Тихомировъ among the graduates of 1898.
+- **Where to look:** balletartists_1896-97_SP_p007 (p. 64), 1897-98_SP_p008, 1898-99_SP_p008 (p. 83), 1904-05_SP_p009 (p. 25); query log 2026-10-30.
+- **Would resolve it:** his RGIA personnel дело (Ф. 497 Оп. 18, service-record extracts «Т», Д. 219, not yet ordered); 1897-98 programmes; an 1898 re-engagement order.
+
 ## Related, decided (not uncertain), for reference
 
 Грибенъ, Августъ Ѳедоровичъ vs Ѳедоръ Ѳедоровичъ (SP percussionists; SPLIT 2026-10-15, the 1890-93 ballet-orchestra cross-references «Грибенъ (см. оперный оркестръ)» assigned to Ѳедоръ, the only Грибенъ in the opera orchestra then; scans 1890-91 pp. 75/78/80); Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
