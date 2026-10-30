@@ -2150,6 +2150,10 @@ def build_person_tenure_notes(con: duckdb.DuckDBPyConnection) -> int:
 PERSON_START_DATE_SLIPS_CSV = Path(__file__).parent / "research_corrections" / "person_start_date_slips.csv"
 #: RG's rulings on a run's start date. A blank ruled_start_date means RG left it open (Логиновъ SP): no date is chosen.
 PERSON_TENURE_START_RULINGS_CSV = Path(__file__).parent / "research_corrections" / "person_tenure_start_rulings.csv"
+#: Seasons in which many printed start dates in a list change at once, read as years the list was refreshed from the files.
+#: INFERRED from the data (2026-10-30), a hypothesis for the RGIA editorial дела. Used only to FLAG a run's date change
+#: (research.person_tenure.change_in_refresh_year, RG 2026-10-30); it never decides a date.
+LIST_REFRESH_SEASONS_CSV = Path(__file__).parent / "research_corrections" / "list_refresh_seasons.csv"
 
 
 def _stretch_choice(seq):
@@ -2200,13 +2204,19 @@ def build_person_tenure(con: duckdb.DuckDBPyConnection) -> int:
             broken_service_printed BOOLEAN,
             later_period_start DATE,
             several_entries_in_a_season BOOLEAN,
-            ruling VARCHAR
+            ruling VARCHAR,
+            date_changes VARCHAR,
+            change_in_refresh_year BOOLEAN
         )
     """)
     slips = {}
     if PERSON_START_DATE_SLIPS_CSV.exists():
         for r in csv.DictReader(open(PERSON_START_DATE_SLIPS_CSV, encoding="utf-8")):
             slips.setdefault((r["person_id"], r["list"], r["city"]), set()).add(r["slip_date"])
+    refresh = set()
+    if LIST_REFRESH_SEASONS_CSV.exists():
+        for r in csv.DictReader(open(LIST_REFRESH_SEASONS_CSV, encoding="utf-8")):
+            refresh.add((r["list"], r["season"]))
     rulings = {}
     if PERSON_TENURE_START_RULINGS_CSV.exists():
         for r in csv.DictReader(open(PERSON_TENURE_START_RULINGS_CSV, encoding="utf-8")):
@@ -2230,6 +2240,10 @@ def build_person_tenure(con: duckdb.DuckDBPyConnection) -> int:
             if d and (season not in per_season or d < per_season[season]):
                 per_season[season] = d
         dated = [per_season[s] for s in sorted(per_season)]
+        ds = sorted(per_season)
+        changes = [ds[i] for i in range(1, len(ds)) if per_season[ds[i]] != per_season[ds[i - 1]]]
+        in_refresh = any((key[1], s) in refresh for s in changes)
+        changes_txt = ", ".join(s + ("*" if (key[1], s) in refresh else "") for s in changes) or None
         broken = any(e[2] > 1 for e in ents)
         later = max((e[3] for e in ents if e[2] > 1 and e[3]), default=None)
         several = len(ents) > len(seasons)
@@ -2264,7 +2278,7 @@ def build_person_tenure(con: duckdb.DuckDBPyConnection) -> int:
             year = int(date[:4])
         out.append([key[0], key[1], key[2] or None, seasons[0], seasons[-1], len(dated), date, year, precision, basis,
                     all_dates[0] if all_dates else None, all_dates[-1] if all_dates else None, printed or None,
-                    "; ".join(left_out) or None, broken, later, several, ruling])
+                    "; ".join(left_out) or None, broken, later, several, ruling, changes_txt, in_refresh])
     for key, ds in slips.items():
         for d in ds:
             if (key, d) not in used_slips:
@@ -2272,7 +2286,7 @@ def build_person_tenure(con: duckdb.DuckDBPyConnection) -> int:
     for key in rulings:
         if key not in used_rulings:
             raise SystemExit(f"person_tenure_start_rulings.csv: no run {key}")
-    con.executemany("INSERT INTO research.person_tenure VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", out)
+    con.executemany("INSERT INTO research.person_tenure VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", out)
     return len(out)
 
 

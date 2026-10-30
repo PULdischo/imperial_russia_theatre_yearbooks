@@ -24287,3 +24287,33 @@ order by e.city, e.date;
 ```
 
 Result: events by company — Moscow Russian drama 319, SP Russian drama 234, Moscow opera 164, SP opera 137, French 115, SP ballet 47, Moscow ballet 40, German 25, 9 with no company, 3 mixed. Performance rows: SP Russian drama 285 (Александринскій 209, Михайловскій 75, Маріинскій 1); Moscow opera 182 (Большой 134, Новый 48). Exported to scratchpad for the date-by-date comparison.
+
+## 2026-10-30 — M8 group 5's 21 "unexplained print variations": how research.person_tenure treats them; when printed dates change, by list
+
+```sql
+SELECT p.display_name, t.list, t.city, t.tenure_start_date, t.basis, t.printed_dates, t.slips_left_out
+FROM research.person_tenure t JOIN research.person p USING (person_id) WHERE <the 21 ids from M8_G5_scan_results.csv>;
+SELECT person_id, entity_type, coalesce(city,''), season, min(printed_start_date) FROM research.person_appearance
+WHERE printed_start_date IS NOT NULL GROUP BY ALL ORDER BY 1, 2, 3, 4;  -- Python: per list and season, runs whose date changes from the previous listing
+```
+
+Result: all 21 get a chosen date; 16 "stretches tie; seasons decide" (one switch), 4 "stretches decide" (Берръ 1881, Газенкампфъ
+1899-10-01, Исаевъ 1906 over «1896», Солянниковъ 2-й 1891 over «1900»), Мацкевичъ (slip left out). Notes: Гуняшевъ 1905-08 «3 октября 1861»
+is Вальцъ's date (neighbour slip, not yet in the slips list); Мацкевичъ 1909-10/1910-11 «7 іюня 1903» (graduated 1905) fits the 1908-09
+backdating pattern. Date changes per list and season (changed/compared): Musicians peaks 1891-92 16/358, 1899-00 16/370, 1903-04 11/362,
+1906-07 13/342, 1908-09 15/217; ProductionTeam 1897-98 12/91, 1908-09 9/46, 1909-10 13/93; BalletArtists 1891-92 30/372, 1904-05 23/387,
+1905-06 29/389, 1908-09 47/317, 1909-10 20/318; Administrators 1905-06 9/88. Other seasons mostly 0-8.
+
+## 2026-10-30 — research.person_tenure refresh-year flag added (RG: keep the rule, flag the refresh-year cases)
+
+```sql
+SELECT basis, count(*), sum(CASE WHEN change_in_refresh_year THEN 1 ELSE 0 END) FROM research.person_tenure
+WHERE date_changes IS NOT NULL GROUP BY 1 ORDER BY 2 DESC;
+SELECT p.display_name, t.list, t.tenure_start_date, t.date_changes, t.change_in_refresh_year FROM research.person_tenure t
+JOIN research.person p USING (person_id) WHERE p.display_name LIKE 'Гоппъ%' OR p.display_name LIKE 'Дриго%' OR p.display_name LIKE 'Петровъ 2-й, Анатолій%';
+```
+
+Result: 3,053 runs. Runs with a date change, flagged/total: stretches tie, seasons decide 78/132; consistent year, day varies 71/125;
+stretches decide 29/40; unresolved (RG) 25/25; unresolved 2/8; overturn majority 4/4; ruled 1/1. Гоппъ (Musicians) 1883, change
+1899-00*, flagged; Дриго 1879, change 1898-99, not flagged; Петровъ 2-й (ProductionTeam) change 1903-04, not flagged (1903-04 is a
+Musicians refresh season, not a ProductionTeam one). Receipts 3,223,154,439; research.person 2,641.

@@ -106,3 +106,6 @@ tallies removed from tenure notes; «церемоніймейстеръ» on 10 
 RG 2026-10-30: "labels only". No per-person note: each of the 21 is recorded by its row in `research.person_tenure` (the chosen
 date, the `basis` label and every printed date with its seasons). Still to decide: which date wins when a run's date changed once
 (refresh-year flag), Гуняшевъ's neighbour slip, Мацкевичъ's 1909-10 «7 іюня 1903».
+- 2026-10-30, RG: keep the current rule (more seasons wins after stretches) and FLAG a change that falls in an inferred refresh year
+  (`research.person_tenure.date_changes`, `change_in_refresh_year`). The refresh years are written up as a hypothesis based only on
+  our observations of the data: `docs/research_questions.md`, Future directions #7.

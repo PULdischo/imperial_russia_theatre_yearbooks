@@ -527,6 +527,8 @@ The build fails if a slip or ruling names a run or date that is not printed.
 | `broken_service_printed`, `later_period_start` | an entry prints more than one service period («съ ... по ... и съ ...»); the latest period's start |
 | `several_entries_in_a_season` | the person has two entries in one season of the run (two posts, e.g. ballet and drama courses) |
 | `ruling` | RG's reading, when a ruling applies |
+| `date_changes` | the seasons in which the counted date changes from the previous listing; `*` marks an inferred refresh season of that list |
+| `change_in_refresh_year` | a change falls in an inferred refresh season (`pipeline/research_corrections/list_refresh_seasons.csv`): the newer date may be a correction from the files. A flag only (RG 2026-10-30); the refresh seasons are a hypothesis from the data, `docs/research_questions.md` #7 |
 
 Counts 2026-10-30 (3,056 runs, 2,545 people): consistent 2,578; consistent year, day varies 125; stretches tie, seasons decide 154;
 stretches decide 39; stretches overturn majority (review) 5; unresolved 11; ruled 1; unresolved (RG) 1; no date printed 142.

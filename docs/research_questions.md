@@ -301,3 +301,19 @@ conductors mentioned in the Yearbooks."
   people; cover the opera reviews too, since conducting is not a cast part
   (RG did not want opera casts, 2026-10-09 — ask whether conductors are the
   exception).
+
+### 7. How the staff lists were compiled: copying forward and refresh years (hypothesis)
+
+RG (2026-10-30). **A hypothesis based only on our observations of the data**, not on any source about how the Yearbook was made.
+
+- **Observed:** a printed start-of-service date usually repeats unchanged from season to season, slips included (a neighbour's date
+  copied in one year often recurs the next: Захаровъ, Коровинъ, Леонтьевъ, Рахмановъ 1-й, Сигуля, Трефилова). In a few seasons many
+  dates in one list change at once, and the seasons differ by list: Musicians 1891-92, 1899-00, 1903-04, 1906-07, 1908-09;
+  ProductionTeam 1897-98, 1908-09, 1909-10; BalletArtists 1891-92, 1904-05, 1905-06, 1908-09, 1909-10; Administrators 1905-06
+  (`pipeline/research_corrections/list_refresh_seasons.csv`, counts there). In 1908-09 the SP ballet list both reset old slips to
+  graduation dates and backdated some recent graduates to a precise day before graduating.
+- **Hypothesis:** each list was usually prepared by copying the previous year's printed list, and was refreshed from the personnel
+  files in certain years, not the same years for every list.
+- **Where it is used:** only as a flag (`research.person_tenure.change_in_refresh_year`); it never decides a date.
+- **To test:** the RGIA editorial дела for the Ежегодникъ (Ф. 497 Оп. 18, Д. 159-203: who compiled which list, when, from what);
+  the dancers' own service files for the 1908-09 backdated dates.
