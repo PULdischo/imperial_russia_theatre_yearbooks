@@ -1054,9 +1054,32 @@ every date × session incl. dashes). Малый (278) matches to the kopeck; Н�
 Михайловскій; no content is affected. A stray copy `outputs/full_run/raw/repertoire_1906-07_p014.raw 2.json` sits beside the
 real raw file (a sync duplicate?), left untouched.
 
-**Outcome so far:** 16 ledger rows. corrected 1 (30 Dec; the 19 Nov fix is inside -11), excluded_by_yearbook 3, classification 2 («Карменъ», «Гибель Фауста»),
-comparison_rule 1, yearbook_own 6 (provisional), open 3 (6 Feb French figure, 28 Jan kopecks for HathiTrust, the SP free-matinée count). Not yet done: ballet reviews,
-the MXAT company label in the research layer, titles audit.
+**The ballet season reviews (2026-10-29)**, the only other dated source this season (no ballet list): two agents, reading the
+review images and checking every disagreement against the blind column read; the main session re-read the key ones
+(`1906-07_review_sp_ballet.csv`, `1906-07_review_msk_ballet.csv`, checked by Claude):
+
+| Review | Statements | Disagreements |
+|---|---|---|
+| SP (ff. 147-158) | 69: 57 agree, 4 partial, 4 no, 4 n/a | all the review's: «Баядерка» «5-го ноября» for 15 Nov; «Корсаръ» «120-е» for 20th; «Спящая» 30 Dec «3-й» for 111th; «Коппелія» «47» twice. It adds «Фея куколъ» on 4 Oct and act 2 of «Фіаметта» on 7 Jan, which the Repertoire cells do not print. No season total (1906-07-17) |
+| Moscow (ff. 232-245) | 32: 24 agree, 3 partial, 3 no, 2 n/a | all the review's: «8 го сентября» for 3 Sep; «28-го февраля» for 28 Jan evening; «11 балетовъ» where it names 12 (1906-07-18) |
+
+**The Moscow review's season total supports «Карменъ» as the opera.** F. 245 (image checked by Claude): «Всѣхъ балетныхъ
+спектаклей въ сезонѣ 1906—1907 г. было дано 46, изъ нихъ три бенефиса и три благотворительныхъ». 46 = the paying ballet
+events (43 + 3 benefits) without the 28 Jan matinée (with it, 47); 46 + the 3 free matinées = the stats' 49. Its «три
+благотворительныхъ» match no paying charity bill, so the fit is not proof. The review never mentions the 28 Jan matinée.
+
+**Review transcription fixed 2026-10-30** (RG: "Yes, fix it"): an invented attribution (SP p005 b4 «Дамисъ … г-нъ Кшесинскій»;
+ff. 152-153 print «г. Гердтъ») and 23 letter-level slips, each read on the image by Claude, are 24 rows in
+`docs/eval/review_text_corrections.csv`; the first «Гердъ» on f. 147 is printed so and stays. Review rebuild on a copy, then
+production: 17 blocks, 9 assertions (the Кшесинскій one gone), 7 credits, all 1906-07; backup
+`outputs/backups/review_text_1906-07_2026-10-30/` (1906-07-19). Found on the way, open for RG: 29 Apr «Очарованный лѣсъ, изъ бал. Корсаръ (Le jardin
+animé)» stored as two works (1906-07-20); 10 Feb charity has no works in the Repertoire, the review names «Шопеніана» and
+«Эвника» (1906-07-21).
+
+**Outcome so far:** 21 ledger rows. corrected 2 (30 Dec; review transcription; the 19 Nov fix is inside -11), excluded_by_yearbook 3, classification 2
+(«Карменъ», «Гибель Фауста»), comparison_rule 1, yearbook_own 8 (provisional; 2 of them the reviews' slips), open 5 (6 Feb French figure, 28 Jan
+kopecks for HathiTrust, the SP free-matinée count, 29 Apr split item, 10 Feb works). Noticed, not chased: the Moscow review's 30 Aug 1906 assertion
+is dated 1907-08-30 in research.review_assertion. Not yet done: the MXAT company label in the research layer, titles audit.
 
 ## 1901-02 (2026-10-29): eight copied charity figures; every count explained once they go; four damaged digits for RG
 

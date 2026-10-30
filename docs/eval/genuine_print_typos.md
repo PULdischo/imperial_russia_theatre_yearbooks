@@ -821,3 +821,24 @@ Read on the full-resolution scans by Claude during the blind column reads and th
     5 Oct); 25 Sep «Донъ-Кихотъ» with Гельцеръ (25 Sep was «Евгеній Онѣгинъ»; «Донъ-Кихотъ» 21 Sep).
   - **Moscow, f. 199:** 14 Jan «Конекъ-Горбунокъ» for 11 Jan; 17 Jan «Донъ-Кихотъ» (dark; given 18 Jan).
   - **Moscow, 7 Dec, Гримальди benefit:** the review gives Acts 1-2 of «Золотая рыбка», the Repertoire and the list Acts 2-3.
+
+## 1906-07 reconciliation (added 2026-10-30)
+
+- **SP ballet review, f. 147: «Соляра—г. Гердъ»** (3 Sep 1906, «Баядерка»). Read by Claude at 500 dpi: the print has «Гердъ»,
+  where the same page twice prints «Гердтъ» (those two were transcription slips, corrected in
+  `docs/eval/review_text_corrections.csv`). Stored as printed.
+- **1906-07 ballet season reviews: statements that disagree with the Repertoire** (read on the review images by Claude; the
+  Repertoire agrees with the blind column read every time; RG has not yet ruled them review slips; details
+  `docs/eval/reconciliation/1906-07_review_{sp,msk}_ballet.csv`, ledger 1906-07-17, -18):
+  - **SP:** «Баядерка» «5-го ноября» for 15 Nov; «Корсаръ» 24 Jan «120-е представленіе» for the 20th; «Спящая красавица»
+    30 Dec «въ 3-й разъ» for the 111th; «Коппелія» «47» on both 24 Sep and 22 Mar; «Ручей» 19 Nov «въ 11-й разъ … въ 10-й
+    разъ по возобновленіи».
+  - **Moscow, f. 232:** «8 го сентября дана была 1-я картина балета … «Конекъ Горбунокъ»» + «Два вора»: the Repertoire has
+    them on 3 Sep evening, as the «6-я карт.».
+  - **Moscow, f. 240:** «28-го февраля представленъ былъ во второй разъ … «Арлекинада»» for 28 Jan.
+  - **Moscow, f. 245:** «въ нихъ поставлено 11 балетовъ», where the review itself names 12.
+- **Repertoire cells noted by the 2026-10-29 blind column read** (verbatim, each in the read's note column of
+  `docs/eval/scan_audit/1906-07_scan_reads.csv`; not each re-read by the main session): «Пиковая дамя» (Маріинскій 26 Dec),
+  «Велшебное зеркало» (Большой 29 Apr), «Авдокатъ Стенсгоръ» (Новый 3 Feb), «Безплатные спетакли» (Moscow banner 14 Nov),
+  «Безплатный спектанль» (Alex 26 Nov), «Das aite Heim» (Alex 9 Apr), «Gomödie» (Alex 17 Mar), «6 Понед.» for Friday 6 Apr
+  1907 (Moscow date column), receipts «701 г. 06 к.», «190 р. 98 р.», «433 к. 45 к.», «1041 и. 53 к.», «3067 к. 08 к.».

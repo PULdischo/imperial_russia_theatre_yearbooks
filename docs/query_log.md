@@ -23459,3 +23459,28 @@ research.review_assertion 9 (SP p002 «Корсаръ» cast, date 1901-09-25 ->
 move); review_dance_performer / review_solo only candidate-list order. MSK p008 has no assertions. Production unchanged since the copy;
 backup outputs/backups/review_text_1901-02_2026-10-29/; promoted (db, merged_full/review_block.csv, mentions/*.csv); sqlite rebuilt.
 After: 0 old strings left; 9 assertions dated 1901-09-23.
+
+## 2026-10-29 — 1906-07 ballet season reviews (SP ff. 147-158, Moscow ff. 232-245) v. the Repertoire (two agents + main-session re-checks)
+
+```sql
+SELECT page_id, printed_folio FROM raw.review_page WHERE page_id LIKE 'review_1906-07_%' ORDER BY 1;
+SELECT page_id, block_index, text FROM raw.review_block WHERE page_id LIKE 'review_1906-07_%_ballet_p%' ORDER BY 1,2;
+-- per statement: research.event e JOIN research.theater t JOIN research.performance p, season='1906-07', city, date, theater Маріинскій / Большой
+SELECT e.event_id,p.performance_order,p.verbatim_title,p.verbatim_genre FROM research.event e JOIN research.theater t USING(theater_id) JOIN research.performance p USING(event_id) WHERE e.season='1906-07' AND t.canonical_name='Маріинскій' AND e.date='1907-04-29' ORDER BY 1,2;
+SELECT count(*) FROM research.review_assertion WHERE block_id='review_1906-07_SP_ballet_p005__b004';
+```
+
+Result: SP 69 statements (57 yes / 4 partial / 4 no / 4 n/a), Moscow 32 (24 / 3 / 3 / 2); every disagreement the review's own (blind column read agrees with the Repertoire each time). Moscow f. 245: «было дано 46, изъ нихъ три бенефиса и три благотворительныхъ; … 11 балетовъ» = 46 paying ballet events without 28 Jan «Карменъ». 29 Apr stored as 2 performances («Очарованный лѐсъ» [изъ бал.] + «Корсаръ (Le jardin animé)»), print one item. SP p005 b4 ends «…г-нъ Кшесинскій» (not printed; 4 assertions from that block). CSVs: docs/eval/reconciliation/1906-07_review_{sp,msk}_ballet.csv.
+
+## 2026-10-30 — 1906-07 review-text corrections (24 rows, RG: "Yes, fix it"): stored text located; review rebuild on a copy (outputs/rebuild_review_1906-07_2026-10-30) v. production, then production v. copy
+
+```sql
+-- merged_full/review_block.csv searched in Python for each slip (page, block, count) before writing rows
+-- every base table, both directions, copy v. pre_fix, then production v. copy (scratchpad dbdiff.py):
+SELECT count(*) FROM (SELECT * FROM <s>.<t> EXCEPT ALL SELECT * FROM o.<s>.<t>);
+SELECT split_part(<page_id|block_id>,'_',2), count(*) FROM (SELECT <cols minus ids> FROM <t> EXCEPT ALL SELECT ... FROM o.<t>) GROUP BY 1;  -- review_mention, review_credit, review_assertion, review_block
+SELECT assertion_id, block_id, date_undate, role_surface, performer_surface FROM research.review_assertion WHERE assertion_id IN (<changed>);
+SELECT dance_id, position, performer_person_id, link_method FROM research.review_dance_performer  -- prod v. copy v. pre_fix, keyed (dance_id, position)
+```
+
+Result: copy v. pre_fix: raw.review_block 17 (all 1906-07), research.review_assertion 9 (1906-07; Кшесинскій «Дамисъ» assertion 1810 removed, new ids 3188-3194), research.review_credit 7 (1906-07, ignoring ids), entities.review_mention content only in 1906-07 (other seasons: candidate_ids order only). Production after the same chain v. copy: review_assertion 4 and review_dance_performer 14 rows differ only in candidate_ids order (person links identical keyed by dance_id, position). Noticed: MSK p000 b002 assertion dated 1907-08-30 (30 Aug 1906).
