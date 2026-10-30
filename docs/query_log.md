@@ -23581,3 +23581,28 @@ SELECT season, count(*) FILTER (WHERE th LIKE 'Александр%' AND d='Russi
 ```
 
 Result: 1906-07 SP: Alex 192 paying + 4 free (14 Nov, 26 Nov eve, 6 Dec, 28 Feb) = 196 v. 197; ballet 52 paying (168,182.50 = printed) + 2 free (6 Dec, 28 Feb) = 54 v. 53; opera 158+1, French 113+1+6 Feb, Михайловскій drama 24+1, Маріинскій drama 1, German 25 all = printed; total 575 = 575 without the 28 Feb Михайловскій free mixed bill. Printed ballet = paying + free ballet matinées in 1898-99 (53), 1899-00 (55), 1900-01 (54), 1901-02 (51), 1902-03 (51), 1903-04 (49), 1904-05 (46), 1907-08 (52), 1908-09 (48), 1909-10 (51); not 1910-11 (49+1 v. 49) or 1906-07. Alex paying + free v. printed: 194/196, 193/195, 191/199, 192/193, 192/190, 189/189, 174/175, 196/197 (1898-99..1906-07): no rule.
+
+## 2026-10-30 — 1906-07 review assertions dated after the season
+
+```sql
+SELECT season, count(*) n, count(*) FILTER (WHERE date_undate IS NOT NULL) dated,
+  count(*) FILTER (WHERE date_undate > (split_part(season,'-',1)::int+1)::varchar || '-08-15') after_season
+FROM research.review_assertion WHERE season = '1906-07' GROUP BY 1;
+SELECT block_id, date_undate, role_surface FROM research.review_assertion WHERE season = '1906-07' AND date_undate > '1907-08-15';
+```
+
+Result: 254 assertions, 143 dated, 7 after the season: all review_1906-07_MSK_ballet_p000__b002, dated 1907-08-30 (the 30 Aug 1906 opening «Лебединое озеро»; the paragraph names «сезона 1906—1907 гг.»). Not chased; other seasons not checked.
+
+## 2026-10-30 — Review date year rule: season date ranges; August review dates; rebuild of review assertions/credits on a copy (outputs/rebuild_reviewdates_2026-10-30) v. production
+
+```sql
+SELECT season, min(date::varchar), max(date::varchar),
+  count(*) FILTER (WHERE substr(date::varchar,6,2) IN ('06','07','08') AND substr(date::varchar,1,4) = split_part(season,'-',1)) summer_first,
+  count(*) FILTER (WHERE substr(date::varchar,6,2) IN ('06','07','08') AND substr(date::varchar,1,4)::int = split_part(season,'-',1)::int + 1) summer_second
+FROM research.event WHERE date IS NOT NULL GROUP BY 1 ORDER BY 1;
+SELECT season, substr(date_undate,1,4), count(*) FROM research.review_assertion WHERE substr(date_undate,6,2) = '08' GROUP BY 1, 2;
+-- copy v. pre_fix: every base table (dbdiff.py); changed columns of research.review_assertion / research.review_credit
+SELECT count(*) FROM research.review_assertion WHERE date_undate > (split_part(season,'-',1)::int + 1)::varchar || '-06-30';   -- production after promotion
+```
+
+Result: every season 1890-91..1910-11 opens 16-31 Aug (first year) and ends by 26 May; no event in June-August of a second year. The only August review assertions were the 7 of review_1906-07_MSK_ballet_p000__b002, dated 1907. After `month >= 8` in resolve_date: research.review_assertion 7 and research.review_credit 7 rows changed, date_undate only (1907-08-30 -> 1906-08-30); nothing else. Production: 0 assertions dated after the season's June.

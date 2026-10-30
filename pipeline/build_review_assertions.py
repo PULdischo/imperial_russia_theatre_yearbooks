@@ -29,9 +29,9 @@ assertion keeps its full candidate list rather than guessing.
 
 Assertions land in `research.review_assertion` -- the research layer, because an
 assertion IS a research fact, unlike a mention (which is linkage state and lives
-in `entities`). Date handling follows the rest of the project: a theatrical
-season runs September to August, so months Sep-Dec take the season's first year
-and Jan-Aug its second.
+in `entities`). Date handling: a theatrical season opens in late August and
+ends by late May, so months Aug-Dec take the season's first year and Jan-Jul
+its second.
 
 Usage:
     uv run python pipeline/build_review_assertions.py \
@@ -369,7 +369,7 @@ def julian_days_in_month(year: int, month: int) -> int:
 
 
 def resolve_date(day: int, month: int, season: str) -> str | None:
-    """A theatrical season runs Sept-Aug, so the month picks the year.
+    """A theatrical season runs late Aug - May, so the month picks the year.
 
     Returns a plain string, never a `datetime.date`: `datetime` applies
     Gregorian rules and rejects 29 February 1900, a date this corpus genuinely
@@ -379,7 +379,12 @@ def resolve_date(day: int, month: int, season: str) -> str | None:
     yy = season_years(season)
     if not yy or not (1 <= month <= 12):
         return None
-    year = yy[0] if month >= 9 else yy[1]
+    # August belongs to the season's FIRST year: every season opens in late
+    # August (16-31 Aug in the Repertoire, 1890-91..1910-11) and ends by late May,
+    # so no performance falls in the second year's summer. With `>= 9` the
+    # 1906-07 Moscow review's «30-го августа» opening became 1907-08-30
+    # (2026-10-30, RG: "Yes, fix them").
+    year = yy[0] if month >= 8 else yy[1]
     if not (1 <= day <= julian_days_in_month(year, month)):
         return None
     return f"{year:04d}-{month:02d}-{day:02d}"

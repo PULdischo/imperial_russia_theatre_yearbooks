@@ -1095,7 +1095,7 @@ ballet). RG: "Yes, record it": `yearbook_own`, provisional (1906-07-13).
 **Outcome so far:** 22 ledger rows. corrected 5 (30 Dec; review transcription; 29 Apr excerpt; 10 Feb works; titles; the 19 Nov fix is inside -11),
 excluded_by_yearbook 3, classification 2 («Карменъ», «Гибель Фауста»), comparison_rule 1, yearbook_own 9 (provisional; 2 of them the reviews'
 slips), open 2 (6 Feb French figure and 28 Jan kopecks, both for a HathiTrust copy). Noticed, not chased: the Moscow review's 30 Aug 1906 assertion
-is dated 1907-08-30 in research.review_assertion.
+was dated 1907-08-30 in research.review_assertion; FIXED 2026-10-30 (RG: "Yes, fix them"): August now takes the season's first year in `build_review_assertions.py`, which moved only these 7 statements and their 7 credits, corpus-wide (1906-07-23).
 
 **Moscow Art Theatre run labelled 2026-10-30** (RG: "Yes, label them"): a `VISITING_RUNS` row (23 Apr - 17 May 1907, Михайловскій)
 gives all 24 events company «Moscow Art Theatre»; before, only 23 Apr (the night under the printed heading) had it and the other
