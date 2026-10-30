@@ -1305,7 +1305,7 @@ matched. One misread: **Александринскій 10 Dec 1900 evening** sto
 |---|---|---|---|
 | SP Александринскій drama | 199 = 198 + Mochalov | +46.87 after the fix | yearbook_own, provisional |
 | SP Михайловскій drama | 87 = 87 | −0.05 | half kopecks stored whole (#161) |
-| SP opera | 137 = 137 | **−3,050.20** | every figure as stored, no digit slip fits; yearbook_own, provisional; for RG (opera) |
+| SP opera | 137 = 137 | **−3,050.20** | every figure as stored, no digit slip fits; footnote 4's free and benefit events match; list entries 16-21 (p. 46) match 34 = 34, entries 1-15 (p. 45) not scanned; yearbook_own, provisional; for RG (opera) |
 | SP ballet | 54 = 54 | +0.01 | lists 55 = 54 + «Ученики Дюпрэ» |
 | SP French | 128 = 127 + Barety | +98.81 | yearbook_own, provisional |
 | SP mixed | 1 = RTO gala | −5,043.90 | figure only on the stats page |
