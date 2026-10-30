@@ -1437,7 +1437,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # same two-step pattern build_entities.py already uses.
     for t in ["season_stat_check", "season_stat_line", "season_stat_footnote",
               "production_credit", "production_work", "production",
-              "performance", "event", "person_tenure_note", "person_appearance", "person", "work", "theater"]:
+              "performance", "event", "person_tenure", "person_tenure_note", "person_appearance", "person", "work", "theater"]:
         con.execute(f"DROP TABLE IF EXISTS research.{t}")
 
     con.execute("""
@@ -2010,9 +2010,15 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             service_class VARCHAR,
             instrument VARCHAR,
             subject_taught VARCHAR,
-            tenure_note_text VARCHAR
+            tenure_note_text VARCHAR,
+            printed_start_date DATE,
+            printed_start_text VARCHAR,
+            printed_service_periods INTEGER
         )
     """)
+    # The start of service as printed in THIS season's entry (RG 2026-10-30): the earliest start among the entry's printed
+    # service periods (a broken service «съ ... по ... и съ ...» prints several). As printed, slips included; the chosen
+    # date for a whole run of seasons is research.person_tenure.
     con.execute(f"""
         INSERT INTO research.person_appearance
         SELECT
@@ -2021,15 +2027,25 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             sp.season, sp.city,
             r.entity_type, r.institution, r.heading_path,
             r.rank_clean, r.title_clean, r.service_class, r.instrument_clean,
-            r.subject_taught, r.tenure_note_text_clean
+            r.subject_taught, r.tenure_note_text_clean,
+            st.d, st.t, st.n
         FROM analysis.person_entry r
         JOIN entities.person_link pl ON pl.entry_id = r.entry_id
         JOIN raw.source_pages sp ON sp.page_id = r.page_id
+        LEFT JOIN (
+            SELECT entry_id,
+                   min(try_cast(CAST(start_date_undate AS VARCHAR) AS DATE)) AS d,
+                   arg_min(start_date_text, try_cast(CAST(start_date_undate AS VARCHAR) AS DATE)) AS t,
+                   count(*) AS n
+            FROM raw.person_entry_service GROUP BY entry_id
+        ) st ON st.entry_id = r.entry_id
         WHERE pl.person_id NOT IN ({non_person_list})
     """)
 
     n_tenure = build_person_tenure_notes(con)
     print(f"  person tenure discrepancies noted: {n_tenure}")
+    n_runs = build_person_tenure(con)
+    print(f"  research.person_tenure: {n_runs} runs (person x list x city)")
 
     if has_creators:
         build_productions(con)
@@ -2126,6 +2142,138 @@ def build_person_tenure_notes(con: duckdb.DuckDBPyConnection) -> int:
                      row["corroboration_found"], row["corroboration_wanted"], row["decided"]])
         n += 1
     return n
+
+
+#: Printed start dates that are confirmed slips (the yearbook printed the neighbouring entry's date; scan-read
+#: 2026-10-30, docs/eval/person_audit_2026-10-19/neighbour_date_scan_results.csv). Every season of that run printing
+#: that date is left out when research.person_tenure chooses the run's start date. Raw is untouched.
+PERSON_START_DATE_SLIPS_CSV = Path(__file__).parent / "research_corrections" / "person_start_date_slips.csv"
+#: RG's rulings on a run's start date. A blank ruled_start_date means RG left it open (Логиновъ SP): no date is chosen.
+PERSON_TENURE_START_RULINGS_CSV = Path(__file__).parent / "research_corrections" / "person_tenure_start_rulings.csv"
+
+
+def _stretch_choice(seq):
+    """seq: the run's values in season order. A stretch is an unbroken sequence of seasons printing the same value
+    (compilers often copied the previous year's list, so a stretch is closer to one act of evidence than each season
+    is: RG 2026-10-30). Returns (winner or None, label, season-majority winner or None)."""
+    seasons_n, stretches_n, prev = {}, {}, object()
+    for v in seq:
+        seasons_n[v] = seasons_n.get(v, 0) + 1
+        if v != prev:
+            stretches_n[v] = stretches_n.get(v, 0) + 1
+        prev = v
+    if len(seasons_n) == 1:
+        return seq[0], "consistent", seq[0]
+    by_season = sorted(seasons_n.items(), key=lambda kv: -kv[1])
+    majority = by_season[0][0] if by_season[0][1] > by_season[1][1] else None
+    ranked = sorted(seasons_n, key=lambda v: (-stretches_n[v], -seasons_n[v]))
+    a, b = ranked[0], ranked[1]
+    if stretches_n[a] > stretches_n[b]:
+        label = "stretches decide" if (majority is None or majority == a) else "stretches overturn majority (review)"
+        return a, label, majority
+    if seasons_n[a] > seasons_n[b]:
+        return a, "stretches tie; seasons decide", majority
+    return None, "unresolved", majority
+
+
+def build_person_tenure(con: duckdb.DuckDBPyConnection) -> int:
+    """One row per run (person x list x city): the start of service chosen from the dates the yearbook printed in
+    each season (research.person_appearance.printed_start_date), RG 2026-10-30. Order: RG's rulings; confirmed
+    slips left out; the year chosen first (stretches, then seasons), then the day within that year by the same rule.
+    Every row keeps the earliest-latest range and every printed date with its seasons."""
+    con.execute("""
+        CREATE TABLE research.person_tenure (
+            person_id UUID REFERENCES research.person(person_id),
+            list VARCHAR,
+            city VARCHAR,
+            first_season VARCHAR,
+            last_season VARCHAR,
+            seasons_dated INTEGER,
+            tenure_start_date DATE,
+            tenure_start_year INTEGER,
+            start_precision VARCHAR,
+            basis VARCHAR,
+            earliest_printed DATE,
+            latest_printed DATE,
+            printed_dates VARCHAR,
+            slips_left_out VARCHAR,
+            broken_service_printed BOOLEAN,
+            later_period_start DATE,
+            several_entries_in_a_season BOOLEAN,
+            ruling VARCHAR
+        )
+    """)
+    slips = {}
+    if PERSON_START_DATE_SLIPS_CSV.exists():
+        for r in csv.DictReader(open(PERSON_START_DATE_SLIPS_CSV, encoding="utf-8")):
+            slips.setdefault((r["person_id"], r["list"], r["city"]), set()).add(r["slip_date"])
+    rulings = {}
+    if PERSON_TENURE_START_RULINGS_CSV.exists():
+        for r in csv.DictReader(open(PERSON_TENURE_START_RULINGS_CSV, encoding="utf-8")):
+            rulings[(r["person_id"], r["list"], r["city"])] = r
+    rows = con.execute("""
+        SELECT CAST(pa.person_id AS VARCHAR), pa.entity_type, coalesce(pa.city, ''), pa.season,
+               CAST(pa.printed_start_date AS VARCHAR), pa.printed_service_periods,
+               (SELECT CAST(max(try_cast(CAST(s.start_date_undate AS VARCHAR) AS DATE)) AS VARCHAR)
+                  FROM raw.person_entry_service s WHERE s.entry_id = pa.appearance_id) AS last_start
+        FROM research.person_appearance pa ORDER BY 1, 2, 3, 4""").fetchall()
+    runs = {}
+    for pid, lst, city, season, d, nper, last_start in rows:
+        runs.setdefault((pid, lst, city), []).append((season, d, nper or 0, last_start))
+    used_slips, used_rulings, out = set(), set(), []
+    for key, ents in runs.items():
+        seasons = sorted({e[0] for e in ents})
+        per_season, left_out = {}, []
+        for season, d, nper, last_start in ents:
+            if d and d in slips.get(key, ()):
+                left_out.append(f"{d} {season}"); used_slips.add((key, d)); continue
+            if d and (season not in per_season or d < per_season[season]):
+                per_season[season] = d
+        dated = [per_season[s] for s in sorted(per_season)]
+        broken = any(e[2] > 1 for e in ents)
+        later = max((e[3] for e in ents if e[2] > 1 and e[3]), default=None)
+        several = len(ents) > len(seasons)
+        # every printed date (slips included) with its stretches of seasons
+        by_date = {}
+        for s in sorted({(e[0], e[1]) for e in ents if e[1]}):
+            by_date.setdefault(s[1], []).append(s[0])
+        printed = "; ".join(f"{d}: {', '.join(ss)}" for d, ss in sorted(by_date.items()))
+        all_dates = sorted(by_date)
+        date = year = precision = None
+        ruling = None
+        if key in rulings:
+            r = rulings[key]; used_rulings.add(key); ruling = r["reading"]
+            if r["ruled_start_date"]:
+                date, basis, precision = r["ruled_start_date"], "ruled by RG", "day"
+            else:
+                basis = "unresolved (RG)"
+        elif not dated:
+            basis = "no date printed"
+        else:
+            yr, basis, _ = _stretch_choice([d[:4] for d in dated])
+            if yr is not None:
+                in_year = [d for d in dated if d[:4] == yr]
+                day, day_label, _ = _stretch_choice(in_year)
+                if basis == "consistent" and day_label != "consistent":
+                    basis = "consistent year, day varies"
+                if day_label == "consistent":
+                    date, precision = in_year[0], "day"
+                else:
+                    date, precision = (day or min(in_year)), "year (day varies)"
+        if date:
+            year = int(date[:4])
+        out.append([key[0], key[1], key[2] or None, seasons[0], seasons[-1], len(dated), date, year, precision, basis,
+                    all_dates[0] if all_dates else None, all_dates[-1] if all_dates else None, printed or None,
+                    "; ".join(left_out) or None, broken, later, several, ruling])
+    for key, ds in slips.items():
+        for d in ds:
+            if (key, d) not in used_slips:
+                raise SystemExit(f"person_start_date_slips.csv: {key} {d} is not printed in that run")
+    for key in rulings:
+        if key not in used_rulings:
+            raise SystemExit(f"person_tenure_start_rulings.csv: no run {key}")
+    con.executemany("INSERT INTO research.person_tenure VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", out)
+    return len(out)
 
 
 def build_dancer_views(con: duckdb.DuckDBPyConnection) -> None:

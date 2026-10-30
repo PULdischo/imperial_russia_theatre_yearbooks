@@ -484,6 +484,54 @@ Only the dash form is read. A solo told in prose («соло на скрипкѣ
 is not captured. Checked by Claude against the review text, 2026-10-22; RG has
 not read these rows.
 
+## Start of service as printed — `research.person_appearance.printed_start_*` (added 2026-10-30)
+
+RG 2026-10-30: "We need a tenure start date in the research layer." Each appearance carries the start date its own entry prints,
+**as printed, slips included** (e.g. the neighbour-copied dates in `docs/eval/person_audit_2026-10-19/neighbour_date_scan_results.csv`).
+The chosen start date for a whole run of seasons is `research.person_tenure` (below).
+
+| column | meaning |
+|---|---|
+| `printed_start_date` | DATE: the earliest start among the entry's printed service periods (`raw.person_entry_service.start_date_undate`); null when none is printed or it does not parse (3 rows: a split «"съ 1 іюня / 1908 г."» and two «съ 0 ...» day-zero readings, 1910-11) |
+| `printed_start_text` | that period's `start_date_text`, verbatim |
+| `printed_service_periods` | how many service periods the entry prints (>1 for a broken service «съ ... по ... и съ ...»: 301 rows) |
+
+Coverage 2026-10-30: 23,151 of 23,980 appearances.
+
+## Chosen start of service per run — `research.person_tenure` (added 2026-10-30)
+
+One row per **run**: one person in one list (`entity_type`) in one city, across every season they appear. RG 2026-10-30.
+The start date is chosen from `research.person_appearance.printed_start_date`, in this order:
+
+1. **RG's rulings** (`pipeline/research_corrections/person_tenure_start_rulings.csv`). A blank ruled date leaves the run
+   unresolved on purpose (Логиновъ SP: RG not confident enough to adopt 1904 for the printed «1894»).
+2. **Confirmed print slips left out** (`pipeline/research_corrections/person_start_date_slips.csv`: the yearbook printed the
+   neighbouring entry's date; scan-read, `docs/eval/person_audit_2026-10-19/neighbour_date_scan_results.csv`).
+3. **The year first, then the day** within that year, each by the same rule: the value printed in more **stretches** wins (a
+   stretch = an unbroken sequence of seasons printing the same value; compilers often copied the previous year's list, so a
+   stretch is closer to one act of evidence than each season is); equal stretches -> more seasons wins; equal on both -> unresolved.
+   A season with several entries in the run (two posts) counts its earliest date.
+
+The build fails if a slip or ruling names a run or date that is not printed.
+
+| column | meaning |
+|---|---|
+| `person_id`, `list`, `city` | the run |
+| `first_season`, `last_season`, `seasons_dated` | seasons listed; seasons counted (slips left out) |
+| `tenure_start_date`, `tenure_start_year` | the chosen start; null when unresolved or none printed |
+| `start_precision` | `day`; `year (day varies)` when the year is settled but the printed day differs (the date given is the day-level choice, or the earliest that year) |
+| `basis` | `consistent`; `consistent year, day varies`; `stretches decide`; `stretches tie; seasons decide` (the date changed once: a correction and a carried-forward slip look alike -- lower confidence); `stretches overturn majority (review)` (the stretch winner is not the date printed in most seasons); `unresolved`; `ruled by RG`; `unresolved (RG)`; `no date printed` |
+| `earliest_printed`, `latest_printed` | the range of every printed start in the run, slips included |
+| `printed_dates` | every printed date with its seasons, `date: season, season; date: ...` |
+| `slips_left_out` | the slip dates and seasons not counted |
+| `broken_service_printed`, `later_period_start` | an entry prints more than one service period («съ ... по ... и съ ...»); the latest period's start |
+| `several_entries_in_a_season` | the person has two entries in one season of the run (two posts, e.g. ballet and drama courses) |
+| `ruling` | RG's reading, when a ruling applies |
+
+Counts 2026-10-30 (3,056 runs, 2,545 people): consistent 2,578; consistent year, day varies 125; stretches tie, seasons decide 154;
+stretches decide 39; stretches overturn majority (review) 5; unresolved 11; ruled 1; unresolved (RG) 1; no date printed 142.
+Not yet in the Datasette export (`build_datasette.py`) -- add it there before the next publication.
+
 ## Printed leavings contradicted by later lists — `research.person_tenure_note` (added 2026-10-19)
 
 One row per person whose printed «Оставилъ/Оставила службу ...» is contradicted by the later lists (RG, 2026-10-19, M9 scan

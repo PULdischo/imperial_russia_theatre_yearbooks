@@ -23957,3 +23957,106 @@ select label, role_name, category_production_count, category_credit_count_clean 
 ```
 
 Result: 51 of 56 tables identical; person_entry +23 -23 (22 on SP p006 + MSK p003 e015 Станиславская); person_entry_credit +12 -2 (Обуховъ's 10 new rows; Лопуховъ/Новиковъ category_production_count now 2/1); research.person_appearance: only tenure_note_text, 23 rows. Before the fix Лопуховъ and Новиковъ already had credit rows (text only missing); Обуховъ had none.
+
+## 2026-10-30 — Start-of-service dates: coverage and agreement (RG: "We need a tenure start date in the research layer")
+
+```sql
+-- entries; entries with a parsed start date (raw.person_entry_service.start_date_undate); entries with >1 service period;
+-- coverage by list; per person x list x city the number of distinct first start dates; per person across all lists; people with none
+SELECT nd, count(*) FROM (SELECT person_id, entity_type, city, count(DISTINCT d) nd FROM (
+  SELECT pa.person_id, pa.entity_type, coalesce(pa.city,'') city,
+         (SELECT min(CAST(start_date_undate AS VARCHAR)) FROM raw.person_entry_service s WHERE s.entry_id = pa.appearance_id) d
+  FROM research.person_appearance pa) WHERE d IS NOT NULL GROUP BY ALL) GROUP BY 1 ORDER BY 1;
+```
+
+Result: 23,980 appearances, 23,154 (96.6%) with a start date; 301 entries print more than one service period. Coverage: BalletArtists
+99.5%, ProductionTeam 99.5%, Administrators 98.7%, Musicians 97.0%, TheaterSchoolStaff 85.3%, Graduates 79.4%. Person x list x city
+groups: 2,544 one date, 333 two, 37 three, 2 four, 1 five. Per person across lists: 2,064 one, 359 two, 54 three, 10 four+.
+157 research.person rows have no start date (review/creator people and undated entries). Dates are day precision (23,460 of 23,461).
+
+## 2026-10-30 — research.person_appearance.printed_start_* built (RG: "both"): check
+
+```sql
+SELECT count(*), count(printed_start_date), count(printed_start_text), sum(CASE WHEN printed_service_periods > 1 THEN 1 ELSE 0 END)
+FROM research.person_appearance;
+SELECT entry_id, start_date_text, CAST(start_date_undate AS VARCHAR) FROM raw.person_entry_service
+WHERE start_date_undate IS NOT NULL AND try_cast(CAST(start_date_undate AS VARCHAR) AS DATE) IS NULL;
+```
+
+Result: 23,980 rows, 23,151 with a start date, 301 with more than one printed period. 3 stored dates do not parse:
+balletartists_1910-11_SP_p009__e019 (text split «"съ 1 іюня» / « 1908 г."»), theaterschoolstaff_1910-11_p000__e007 «съ 0 декабря 1886 г.»,
+theaterschoolstaff_1910-11_p001__e006 «съ 0 марта 1910 г.» (not scan-checked; logged). Receipts 3,223,159,742; research.person 2,644;
+0 shift blocks.
+
+## 2026-10-30 — How do printed start dates disagree within a run? (to draft the research.person_tenure rule)
+
+```sql
+SELECT person_id, entity_type, coalesce(city,''), season, printed_start_date, printed_service_periods
+FROM research.person_appearance WHERE printed_start_date IS NOT NULL ORDER BY 1, 2, 3, 4;
+-- grouped in Python per person x list x city: consistent / clear majority (top date >= 2x the next and >= 3 seasons) / weak majority / tie;
+-- flagged when the first season's date is not the top date, and when any entry prints a broken service
+```
+
+Result: 2,914 runs. 2,541 consistent. 373 disagree: clear majority 145 (+82 where the first season differs, +20 with a printed broken
+service), weak majority 48 (+51 first season differs, +4 broken), tie 23. Examples: Кускова 1 July 1887 (1890-1900) then 1 June 1887
+(1900-08); Пфейферъ 1 Sept then 1 Oct 1903 from 1908-09; Лушкина 1 June 1904 then 17 Dec 1902 from 1908-09; Нижинская 1 June 1908 /
+27 Dec 1906 (tie); Кучеровъ 6 Dec 1892 / 1 Sept 1890 (tie); Анкудинова 1887 / «1837» (tie, two seasons).
+
+## 2026-10-30 — Does the research layer carry start-of-service dates? (before recording the 14 neighbour-date print slips)
+
+```sql
+SELECT table_name, column_name FROM information_schema.columns WHERE table_schema = 'research'
+  AND (column_name LIKE '%start%' OR column_name LIKE '%service%' OR column_name LIKE '%since%');
+```
+
+Result: no start-date column in research (only person_appearance.service_class, person_tenure_note.service_periods,
+review_credit.char_start). Start dates live in raw.person_entry_service / analysis only.
+
+## 2026-10-30 — Start-date rule trial: count stretches of seasons first, seasons only to break ties (RG's option 1)
+
+```sql
+SELECT person_id, entity_type, coalesce(city,''), season, min(printed_start_date)
+FROM research.person_appearance WHERE printed_start_date IS NOT NULL GROUP BY ALL ORDER BY 1, 2, 3, 4;
+-- Python: per run, a stretch = consecutive listed seasons printing the same date; the date with more stretches wins; equal
+-- stretches -> more seasons wins; equal both -> unresolved. Compared with the plain season majority.
+```
+
+Result (one date per season): 2,914 runs; 2,569 consistent; stretches decide 85; stretches tie, seasons decide 241; unresolved 19.
+The stretch rule picks a different date from the season majority in 6 runs: Романова О. К. (1887 v. 1889), Трефилова (1894 v.
+1895), Рощинъ (16 v. 19 Feb 1884), Сигуля (1899 v. 1891), Шредеръ (1894 v. 1884), Брюховъ (1895 v. 1896). In all six the winner is the
+first listing's date, printed again later. (Corrected 2026-10-30: first written as Трефилова 1895 v. 1894 and "four of six".)
+
+## 2026-10-30 — research.person_tenure built (RG: "yes go ahead"): counts and spot checks
+
+```sql
+SELECT basis, count(*) FROM research.person_tenure GROUP BY 1 ORDER BY 2 DESC;
+SELECT start_precision, count(*) FROM research.person_tenure GROUP BY 1;
+SELECT count(*), count(DISTINCT person_id) FROM research.person_tenure;
+SELECT count(*) FROM research.person_tenure WHERE slips_left_out IS NOT NULL;
+SELECT p.display_name, t.list, t.city, t.tenure_start_date, t.basis, t.printed_dates FROM research.person_tenure t
+JOIN research.person p USING (person_id) WHERE t.basis LIKE 'stretches overturn%';
+```
+
+Result: 3,056 runs, 2,545 people. consistent 2,578; stretches tie, seasons decide 154; no date printed 142; consistent year, day
+varies 125; stretches decide 39; unresolved 11; stretches overturn majority (review) 5 (Романова О. К. 1887, Трефилова Вѣра Ивановна
+1894, Сигуля Макаровичъ 1899, Шредеръ Карлъ 1894, Брюховъ 1895; Рощинъ now "consistent year, day varies"); ruled 1 (Тихоміровъ 1892);
+unresolved (RG) 1 (Логиновъ SP). 14 runs have slips left out (all 14 used). Precision: day 2,762, year (day varies) 140, none 154.
+Spot: Дмитріева 2-я 1879-09-29 consistent (1890 slip left out); Никитина 1-я 1895 (1897 slips left out); Логиновъ Moscow 1904.
+Noticed: Graduates runs give a second witness (Сигуля Graduates 1899-09-01; Трефилова Вѣра Ивановна Graduates 1894-06-01);
+two records each for Трефилова (Вѣра Ивановна / Вѣра Александровна) and Сигуля (Макаровичъ / Макарычъ) -- sent to the scan check.
+Receipts 3,223,154,439 (−5,303 kopecks since the morning: a parallel session's uncommitted 1900-01 Repertoire raw edit, 16:42).
+
+## 2026-10-30 — The five "stretches overturn majority" runs read on the scans
+
+Read by a read-only agent (41 zooms, `scratchpad/ov_check/`); re-checked by Claude: Романова 1900-01 and 1908-09, Трефилова Graduates
+1893-94, 1901-02, 1904-05, Сигуля Graduates 1898-99 and 1908-09. Result: every stored date matches the print (38/38 run entries,
+2 Graduates entries); both dates are genuinely printed in all five runs.
+- Трефилова: Graduates «Окончили курсъ весною 1894 года ... 9) Трефилова, Вѣра ... определены на службу съ 1-го іюня 1894 года»;
+  classmates print 1894 -> 1894 right, «1895» a recurring print slip; the stretch rule is right, the season majority wrong.
+  «Вѣра Александровна» (b9c01061) is printed only in 1901-02, the one season with no «Ивановна», same date and slot: same woman.
+- Сигуля: Graduates «весной 1899 ... 5) Сигуля, Александръ ... съ 1 сентября 1899 года» -> 1899 right, «1891» a recurring slip;
+  stretch rule right. «Макарычъ» (bdf96341) is 1908-09 only, same date: same man.
+- Шредеръ: first listed 1894-95 (database: not in SP Musicians 1890-91..1893-94) -> 1894 likely; 1884 1896-97..1902-03.
+- Брюховъ: 1895 (1895-96, 1903-04 on) v. 1896 (1896-97..1902-03); leans 1895 (listed in the 1895-96 volume), not conclusive.
+- Романова: not rival dates but a broken service, printed in full from 1900-01: «съ 1 сентября по 1 декабря 1887 г. и съ 1 марта
+  1889 г.»; other seasons print one part only. 1908-09 prints «1 марта 1899 г.», a print slip for 1889.
