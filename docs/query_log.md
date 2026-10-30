@@ -24227,3 +24227,15 @@ WHERE CAST(person_id AS VARCHAR) LIKE '351c7086%';
 
 Result: ca689d4f -> 351c7086 (5 entries, 1906-07..1910-11). Live persons 2,542; research.person 2,641; 0 shift blocks; Wikidata 178;
 receipts 3,223,154,439. Tenure run 1906-07..1910-11 stays "unresolved (RG)" (1906-06-01 x2, 1904-04-02 x3).
+
+## 2026-10-30 — «Ніясинская» restored in raw (RG: "Yes, restore"); rebuild checked against the backup
+
+```sql
+SELECT pe.family_name, p.display_name FROM raw.person_entry pe JOIN entities.person_link pl USING (entry_id)
+JOIN research.person p ON p.person_id = pl.person_id WHERE pe.entry_id = 'balletartists_1908-09_SP_p002__e023';
+-- plus, against outputs/full_run_pre_promote_backup_2026-10-30_niyasinskaya: receipts, person_link moves, work id changes,
+-- research.work count, raw family_name rows changed, Wikidata links
+```
+
+Result: «Ніясинская» -> Нижинская, Бронислава Фоминишна (still linked). Receipts 3,223,154,439 (unchanged); 0 person_link moved,
+0 shift blocks; 0 work ids changed; works 2,948 (unchanged against the backup); 1 raw row changed; Wikidata 178.

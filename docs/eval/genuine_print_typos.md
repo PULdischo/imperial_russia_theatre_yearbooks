@@ -954,3 +954,5 @@ Both are in `credit_totals_scan_verified.csv`. Other slips the 2026-10-30 reader
 - **1910-11 SP no. 18 Гончарова: «Всего—4 | 66 разъ.»** A stray «4» at the line end before the total on the next line (39+27=66).
 - **Муромская, SP BalletArtists 1907-08 (no. 63, p003): «Лидія Николаевна» for «Марія Николаевна»** (every other season). Zoomed
   2026-10-30; merged. Possible copying sources: «Нестеровская 1-я, Лидія» two lines below; «Свирская, Лидія Николаевна» in the same list.
+- **Нижинская, SP BalletArtists 1908-09 (no. 63, p002, p. 91): «Ніясинская, Бронислава Фоминична»** (every other season «Нижинская»).
+  Zoomed 2026-10-30. The extraction had stored «Нижинская»; raw restored to the print (RG), still linked to her record.
