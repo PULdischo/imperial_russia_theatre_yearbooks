@@ -1240,7 +1240,7 @@ stored on the real dates. Every legible figure equals the stored one except **Н
 | SP concerts | 5 = 5 | exact | |
 | Moscow Малый / Большой drama | 169 / 3, = | exact | Большой's 3 = the «Орлеанская дѣва» events |
 | Moscow Новый drama | 131 / 132 | exact | with the 2 Dec fix |
-| Moscow Большой opera | 104 / 103 | exact | with Новый drama, the printed venue split (yearbook_own, provisional) |
+| Moscow Большой opera | 104 / 103 | exact | with Новый drama: a slip in the printed event count, money exact (yearbook_own; RG 2026-10-30) |
 | Moscow Новый opera | 55 = 55 | −30.00 | yearbook_own, provisional |
 | Moscow ballet + mixed | 62 + 2 = 64 = lists | exact | 6 Jan anniversary bill, 12 Apr Иверская община |
 

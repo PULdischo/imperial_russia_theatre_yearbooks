@@ -23783,3 +23783,8 @@ Result: one record cd67fa, ударные инструменты throughout, one
 Ударные инструменты.» (zoomed); the same through 1910-11. No Шредеръ in any other list 1902-07; no review mentions; no obituary. Of the
 Михайловскій players of 1905-06 still listed in 1907-08, Шредеръ is the only one whose start date or patronymic changes (others: spelling only).
 The Михайловскій orchestra itself shrinks (46 rows 1905-06, 34 in 1906-07, 19 in 1907-08, none after).
+
+## 2026-10-30 — 1899-00 Moscow venue split (Большой opera 104/103, Новый drama 131/132)
+- research.event × research.theater, season 1899-00, Moscow, excluding no_performance/not_captured, grouped by venue × disciplines: Большой opera 104 events, 288,263.54 р., 0 without receipts; Новый drama 131, 55,768.65 р., 4 without receipts (free school matinées 14 Nov, 6 Dec, 16 Feb + Иверская 12 Apr = footnote 9 exactly).
+- Printed (docs/season_stats/lines.csv): Большой opera 103 / 288,263.54; Новый drama 132 / 55,768.65. Both receipts lines exact; no Большой opera event lacks receipts, so no zero-money event can have moved between lines.
+- No 1899-00 opera or drama production list scanned (only ballet, 39 entries); no third source for the count.
