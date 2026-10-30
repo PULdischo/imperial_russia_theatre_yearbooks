@@ -23765,3 +23765,21 @@ Result: SP 1899-00 Легатъ 1-й Николай, 2-й Иванъ, 3-й Се�
 with no printed leaving (build check now allows a blank printed_leaving_date); periods 1892-93..1896-97; 1898-99..1907-08 (listed every
 season of both). Table 19 -> 20; receipts 3,223,159,742, research.person 2645 unchanged. Uncertain list #44; «Тимомировъ» added to
 genuine_print_typos.md.
+
+## 2026-10-30 — Шредеръ, Карлъ (M8 group 5 identity question): evidence
+
+```sql
+SELECT sp.season, pe.page_id, pe.list_number, pe.family_name, pe.first_name, pe.patronymic, pe.instrument, pe.tenure_note_text, pl.person_id
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id)
+WHERE pe.family_name LIKE 'Шредер%' OR pe.family_name LIKE 'Шрейдер%' ORDER BY 1;
+-- plus: the orchestra heading preceding each row; review mentions «Шредер%»; the Михайловскій players of 1905-06 who are in the 1907-08
+-- SP lists, compared for start date and patronymic
+```
+
+Result: one record cd67fa, ударные инструменты throughout, one Карлъ Шредеръ a season. Оркестръ Михайловскаго театра 1894-95..1905-06: «Карлъ»
+(no patronymic) to 1902-03, «Карлъ Августовичъ» 1903-04..1905-06; start printed «1 декабря 1894» (1894-95, 1895-96, 1903-04..) and «1 декабря
+1884» (1896-97..1902-03). 1906-07 opera-ballet orchestra p.32 «122. Шредеръ, Карлъ Августовичъ (съ 1 декабря 1894 г.). Ударные инструменты.
+Переведенъ изъ Михайловскаго театра съ 1 сентября 1906 г.» (page size). 1907-08 p.32 «117. Шредеръ, Карлъ Ѳедоровичъ (съ 1 сентября 1902 г.).
+Ударные инструменты.» (zoomed); the same through 1910-11. No Шредеръ in any other list 1902-07; no review mentions; no obituary. Of the
+Михайловскій players of 1905-06 still listed in 1907-08, Шредеръ is the only one whose start date or patronymic changes (others: spelling only).
+The Михайловскій orchestra itself shrinks (46 rows 1905-06, 34 in 1906-07, 19 in 1907-08, none after).
