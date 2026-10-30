@@ -1,0 +1,27 @@
+case,person,list,seasons,usual_start,printed_or_stored,neighbour,outcome,note
+1,"Василевскій, Николай Александровичъ",Administrators,1906-07; 1907-08,1903-01-01,1907-01-01 printed,Ганузинъ,explained by print,new post (дѣлопроизводитель) dated 1 Jan 1907; second entry on the page prints the same
+2,"Ганузинъ, Мефодій",Administrators,1906-07; 1907-08,1906-11-01,1907-01-01 printed,Василевскій,explained by print,later lists print «по найму съ 1 ноября 1906 г. по 1 января 1907 г., на службѣ съ 1 января 1907 г.»
+3,"Захаровъ, Николай Константиновичъ",Administrators,1905-06..1907-08,1887-09-01,1889-03-01 printed,"Крыловъ, Сергѣй (1 марта 1889, below)",print slip likely,every other season 1 сентября 1887; repeated 3 seasons
+4,"Коровинъ, Константинъ Алексѣевичъ",Administrators,1906-07; 1907-08,1903-01-01,1902-12-06 printed,"Дворецъ-Дворецкій (6 декабря 1902, below)",print slip likely,1902-06 and 1908- print 1 января 1903
+5,"Воронцовъ, Владиміръ Васильевичъ",BalletArtists Moscow,1902-03; 1903-04,1891-09-01,«съ 1 сентября 1901 г. по 1 ноября 1898 г. и съ 1 сентября 1901 г.» printed,"Валининъ (1901, above)",print slip likely,first date impossible (1901 before 1898); from the neighbour or the entry's own second date
+6,"Дмитріева 2-я, Пелагея Васильевна",BalletArtists Moscow,1890-91,1879-09-29,1890-09-01 printed,"Дмитріева 3-я (1890, below)",print slip likely,
+7,"Лукьяновъ, Николай Ефимовичъ",BalletArtists Moscow,1898-99,1898-09-01,print 1898; stored 1892,"Лѣсновскій (1892, below)",EXTRACTION ERROR -- FIXED 2026-10-30,the pipeline copied the neighbour's date; raw corrected to the print (RG)
+8,"Никитина 1-я, Анна Дмитріевна",BalletArtists Moscow,1908-09..1910-11,1895-09-01,1897-09-01 printed (1909-10 zoomed),"Никитина 2-я (1897, below)",print slip likely,repeats in later seasons (database)
+9,"Никольскій, Валентинъ Ивановичъ",BalletArtists Moscow,1905-06,1896-09-01,1898-09-01 printed,"Николаевъ (1898, above)",print slip likely,
+10,"Орловъ, Алексѣй Владиміровичъ",BalletArtists Moscow,1902-03,1901-09-01,print «190:» (last digit damaged); stored 1900,"Остроградскій (1900, below)",EXTRACTION ERROR (probable) -- left open,damaged digit fits a 1 better than a 0; not changed (RG 2026-10-30)
+11,"Сигуля, Александръ Макаровичъ",BalletArtists Moscow,1899-00..1908-09,1891 or 1899,1899 and 1891 both printed in different seasons,"Семеновъ (1899, above) / Сидоровъ (1891, below)",direction unclear,first listing 1899-00 prints 1899; the 1891 seasons may be the slip (Сидоровъ always below him)
+12,"Феоктистова, Лидія Васильевна",BalletArtists Moscow,1904-05,1901-09-01,1900-09-01 printed,"Федорова 3-я (1900, above)",print slip likely,
+13,"Ѳедорова 1-я, Екатерина Никифоровна",BalletArtists Moscow,1908-09..1910-11,1898-09-01,1899-09-01 printed (1908-09 zoomed),"Ѳедорова 2-я (1899, below)",print slip likely,repeats in later seasons (database)
+14,"Алексѣевъ 2-й, Александръ Алексѣевичъ",BalletArtists SP,1909-10,1905-06-01,print 1905; stored 1894,"Алексѣевъ 1-й (1894, above)",EXTRACTION ERROR -- FIXED 2026-10-30,the pipeline copied the neighbour's date; raw corrected to the print (RG)
+15,"Гончаровъ 2-й, Леонидъ Ивановичъ",BalletArtists SP,1910-11,1907-06-01,1900-06-01 printed,"Григорьевъ (1900, below)",print slip likely,1909-10 prints 1908: three dates in all
+16,"Леонтьевъ, Леонидъ Сергѣевичъ",BalletArtists SP,1905-06; 1907-08,1903-06-01,1894-06-01 printed,"Легатъ 2-й (1894, above)",print slip likely,repeated in 1907-08
+17,"Мацкевичъ, Раиса Васильевна",BalletArtists SP,1908-09,1904-06-01,1903-06-01 printed,"Макарова (1903, above, across the column break)",print slip likely,
+18,"Пороховникова, Марія Викторовна",BalletArtists SP,1907-08,1898-06-01,print 1898; stored 1890,"Постоленко (1890, below)",EXTRACTION ERROR -- FIXED 2026-10-30,the pipeline copied the neighbour's date; raw corrected to the print (RG)
+19,"Рахмановъ 1-й, Сергѣй Павловичъ",BalletArtists SP,1905-06; 1907-08,1890-06-01,1903-06-01 printed,"Рахмановъ 2-й (1903, below; his brother)",print slip likely,repeated in 1907-08
+21,"Ѳедоровъ, Леонидъ Ивановичъ",BalletArtists SP,1906-07,1889-06-01,1888-06-01 printed,"Ѳедуловъ (1888, below)",print slip likely,
+22,"Петровъ, Иванъ Афанасьевичъ",Musicians SP,1908-09,1895-09-01,1905-09-01 printed,"Порманинъ (1905, below)",print slip likely,every other season 1895
+23,"Гельцеръ, Василій Ѳедоровичъ",TheaterSchoolStaff,1898-99; 1899-00,1889-09-01,1898-09-01 printed,Домашевъ,explained by print,separate ballet-section post dated 1898; drama-course post 1889
+24,"Гердтъ, Павелъ Андреевичъ",TheaterSchoolStaff,1890-91..1892-93,1880-09-11,1888-09-01 printed,Васильева / Брагинъ,explained by print,drama-course post 1888 (most of that list prints 1888); ballet post 1880
+25,"Соколовъ, Николай Николаевичъ",TheaterSchoolStaff,1890-91; 1891-92,1882-11-01,1888-09-01 printed,Сазоновъ,explained by print,drama-course post 1888
+26,"Яковлевъ, Степанъ Ивановичъ",TheaterSchoolStaff,1893-94; 1894-95,1906-09-01,1893-09-01 printed,Ѳедотовъ,explained by print,two separate stints (1893-96; from 1906)
+27,"Ѳедоровъ, Александръ Ѳедоровичъ",TheaterSchoolStaff,1890-91; 1891-92,1873-01-12,1888-09-01 printed,Стороженко,explained by print,drama-course post 1888

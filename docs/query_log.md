@@ -23876,3 +23876,41 @@ from analysis.person_entry_credit where entry_id='balletartists_1901-02_MSK_p007
 ```
 
 Result: stored «въ 20 операхъ—3», operas category_credit_count 3 (clean 3). Scan (ForUpload_1901-02_Spisok_BalletArtistsMoscow.pdf p.8, printed p.118, full-res crop) prints «въ 20 операхъ — 9»: 29+9+9=47, the print adds up; extraction misread. Also stored «Копекъ-горбунокъ» (print Конекъ-) and «дивертисементахъ» (print дивертиссементахъ). Not yet corrected.
+
+## 2026-10-30 — Do odd start dates match the neighbouring entry? (RG's question, after Цыбинъ)
+
+```sql
+-- per (person, list, city): the usual start date (most common, at least 2 entries, at least 3 entries in all); every entry with a
+-- different date; does it equal the start date of the entry directly above or below on the same page (raw entry order)?
+-- baseline: the same test on 5,000 random entries (random.seed(1)). Script: scratchpad neigh.py (read-only).
+SELECT pe.entry_id, pe.page_id, sp.entity_type, sp.season, sp.city, pl.person_id, pe.family_name, pe.first_name,
+       (SELECT min(CAST(s.start_date_undate AS VARCHAR)) FROM raw.person_entry_service s WHERE s.entry_id = pe.entry_id) AS d
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) JOIN entities.person_link pl USING (entry_id);
+```
+
+Result: 1,055 odd start dates; 49 (5%) equal a neighbour's date, 46 with a different year from the person's usual one. Baseline: 10%
+of all entries share a neighbour's date (common dates such as 1 Sept and the 1 June graduation date). So neighbour copying does not
+explain odd dates in general, but some single cases look like it (e.g. Сигуля, Moscow BalletArtists 1899-00..1907-08, «1899» = the
+neighbour Семеновъ's, usual 1891). Not scan-checked; some hits may be extraction bleed rather than print.
+
+## 2026-10-30 — Neighbour-date matches scan-checked (26 cases, Тихомировъ left out as decided)
+
+Cases from the 2026-10-30 neighbour-date query, written to `docs/eval/person_audit_2026-10-19/neighbour_date_matches.csv`, read on the
+full-resolution scans by three read-only agents and re-checked by Claude on their zooms (all 7 SP ballet, 10 Moscow ballet, 4 of the
+others). Result in `neighbour_date_scan_results.csv`: print slip likely 14 (Захаровъ, Коровинъ, Воронцовъ, Дмитріева 2-я, Никитина 1-я,
+Никольскій, Феоктистова, Ѳедорова 1-я, Гончаровъ 2-й, Леонтьевъ, Мацкевичъ, Рахмановъ 1-й, Ѳедоровъ Леонидъ, Петровъ Иванъ); extraction
+error 4 (Лукьяновъ 1898-99 print 1898 stored 1892; Алексѣевъ 2-й 1909-10 print 1905 stored 1894; Пороховникова 1907-08 print 1898
+stored 1890; Орловъ 1902-03 print «190:» damaged, stored 1900, probably 1901); direction unclear 1 (Сигуля 1899/1891); explained by
+the print 7 (separate posts or sections: Василевскій, Ганузинъ, Гельцеръ, Гердтъ, Соколовъ, Яковлевъ, Ѳедоровъ Александръ).
+No data changed.
+
+## 2026-10-30 — Three neighbour-copied start dates fixed (RG: "Fix the three clear"); rebuild checked
+
+```sql
+SELECT pe.entry_id, pe.tenure_note_text, CAST(s.start_date_undate AS VARCHAR) FROM raw.person_entry pe JOIN raw.person_entry_service s USING (entry_id)
+WHERE pe.entry_id IN ('balletartists_1898-99_MSK_p007__e008','balletartists_1909-10_SP_p005__e020','balletartists_1907-08_SP_p004__e001');
+-- plus, against the pre-fix backup: receipts sum, person_link moves, work_link work_id changes, raw tenure_note_text rows changed
+```
+
+Result: Лукьяновъ 1898-09-01, Пороховникова 1898-06-01, Алексѣевъ 2-й 1905-06-01 (as printed). Receipts 3,223,159,742 (unchanged);
+0 person_link moved, 0 shift blocks; 0 work ids changed; 3 raw rows changed; Wikidata 178; tenure notes 24. Орловъ 1902-03 left open.
