@@ -24081,3 +24081,15 @@ select count(*) n, count(distinct split_part(entry_id,'__',1)) pages from (selec
 ```
 
 Result: 51 of 57 tables identical; raw/analysis person_entry +69 -69 (31 pages, all in the fix); person_entry_credit +18 -190; raw.person_entry_service +1 -1 (Аистова 1900-01); research.person_appearance +23 -23 (tenure_note_text on 1900-01 SP p000). Quality flags 3 -> 1 after adding Николаидисъ and Брыкинъ to credit_totals_scan_verified.csv. Earlier the same day: full-page readings of 30 pages compared with raw credit_summary_text (Python, from outputs/full_run/raw): 741 match, 18 none/none, 40 stored tally with nothing printed, 16 number differences (chain 1893-94, 2 silent corrections, 3 damaged print digits, 8 leaving notes stored inside the credit line, 2 lines missing «Всего»).
+
+## 2026-10-30 — Трефилова and Сигуля one-season duplicates merged (RG: "Yes, merge both"); rebuild checked
+
+```sql
+SELECT p.display_name, t.list, t.city, t.tenure_start_date, t.basis, t.seasons_dated FROM research.person_tenure t
+JOIN research.person p USING (person_id) WHERE p.display_name LIKE 'Трефилова%' OR p.display_name LIKE 'Сигуля%';
+SELECT basis, count(*) FROM research.person_tenure GROUP BY 1 ORDER BY 2 DESC;
+```
+
+Result: b9c01061 -> 3b1c8067 (Трефилова, 17 entries 1893-94..1909-10), bdf96341 -> cbfcc89c (Сигуля, 11 entries). Live persons 2,543;
+research.person 2,642; 0 shift blocks; Wikidata 178; receipts 3,223,154,439 (unchanged since the last check). Tenure: Трефилова SP
+1894-06-01 (stretches overturn majority, review), Сигуля Moscow 1899-09-01 (now stretches decide). person_tenure 3,054 runs.

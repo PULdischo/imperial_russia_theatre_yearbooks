@@ -938,3 +938,8 @@ The rest are the readers' readings, NOT yet re-read by Claude.
 Both are in `credit_totals_scan_verified.csv`. Other slips the 2026-10-30 readers noted, NOT re-read by Claude:
 1902-03 MSK p005 Бакинъ 3-й (parts 75, total 76) and Брыкинъ 2-й (72 / 73); 1903-04 SP Трефилова (roles 23, tally 25);
 1907-08 SP Трефилова «6ѣлая кошечка» (figure 6 for б); 1893-94 SP no. 97 surname printed «Петерсъ» (stored «Петеръ»).
+- **Recurring start-date slips, found by `research.person_tenure` (2026-10-30, scan-read):** Трефилова, Вѣра Ивановна, SP BalletArtists,
+  «съ 1 іюня 1895 г.» in 11 seasons (1895-96..1907-08 except 1904-05) for 1894 (Graduates 1893-94: class of spring 1894, «съ 1-го іюня
+  1894 года»); Сигуля, Александръ, Moscow BalletArtists, «съ 1 сентября 1891 г.» in 1900-01, 1901-02, 1903-04, 1905-06, 1906-07 for 1899
+  (Graduates 1898-99); Романова, Ольга Кондратьевна, Moscow 1908-09 «и съ 1 марта 1899 г.» for 1889. Patronymic variants printed one
+  season only: «Трефилова, Вѣра Александровна» (1901-02), «Сигуля, Александръ Макарычъ» (1908-09). Stored as printed.
