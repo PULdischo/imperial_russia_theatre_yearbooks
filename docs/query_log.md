@@ -24204,3 +24204,26 @@ unresolved (RG) 28, receipts 3,223,154,439, research.person 2,642.
 Found on the way (not acted on): 1908-09 SP p002 no. 63 prints «Ніясинская, Бронислава Фоминична» (zoomed) but raw stores «Нижинская»
 (the extraction normalised a print slip); 1907-08 SP p003 no. 63 prints «Муромская, Лидія Николаевна (съ 1 іюня 1906 г.)» (zoomed),
 stored as a separate one-season person ca689d4f beside Муромская, Марія Николаевна (351c7086).
+
+## 2026-10-30 — «Муромская, Лидія» (1907-08): any other candidate? (RG: "another other candidate?")
+
+```sql
+SELECT sp.season, pe.entity_type, sp.city, pe.list_number, pe.family_name, pe.first_name, pe.patronymic, pe.tenure_note_text
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) WHERE pe.family_name LIKE 'Муромск%' ORDER BY 1;
+-- plus: the neighbours of no. 63 on balletartists_1907-08_SP_p003; every SP BalletArtists «Лид-» 1906-07..1908-09; review text «Муромск»
+```
+
+Result: only one Муромская in any list, any season: «Марія Николаевна» 1906-07 (no. 64), 1908-09..1910-11; «Лидія Николаевна» 1907-08
+(no. 63) only, same date 1 іюня 1906. No Graduates entry; no review mention. Neighbours 1907-08: 62 Михайлова, Александра; 64
+Неслуховская, Анна; 65 Нестеровская 1-я, Лидія Рафаиловна (two lines below). The exact pair «Лидія Николаевна» belongs to Свирская (SP
+list 1906-07..1908-09, a different part of the list). 13 other SP dancers named Лидія 1906-09.
+
+## 2026-10-30 — Муромская «Лидія» merged into «Марія» (RG: "yes"); rebuild checked
+
+```sql
+SELECT first_season, last_season, seasons_dated, tenure_start_date, basis, printed_dates FROM research.person_tenure
+WHERE CAST(person_id AS VARCHAR) LIKE '351c7086%';
+```
+
+Result: ca689d4f -> 351c7086 (5 entries, 1906-07..1910-11). Live persons 2,542; research.person 2,641; 0 shift blocks; Wikidata 178;
+receipts 3,223,154,439. Tenure run 1906-07..1910-11 stays "unresolved (RG)" (1906-06-01 x2, 1904-04-02 x3).
