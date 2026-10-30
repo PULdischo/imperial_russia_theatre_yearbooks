@@ -1087,12 +1087,29 @@ production: 17 blocks, 9 assertions (the Кшесинскій one gone), 7 credi
 **Outcome so far:** 21 ledger rows. corrected 4 (30 Dec; review transcription; 29 Apr excerpt; 10 Feb works; the 19 Nov fix is inside -11),
 excluded_by_yearbook 3, classification 2 («Карменъ», «Гибель Фауста»), comparison_rule 1, yearbook_own 8 (provisional; 2 of them the reviews'
 slips), open 3 (6 Feb French figure, 28 Jan kopecks for HathiTrust, the SP free-matinée count). Noticed, not chased: the Moscow review's 30 Aug 1906 assertion
-is dated 1907-08-30 in research.review_assertion. Not yet done: titles audit.
+is dated 1907-08-30 in research.review_assertion.
 
 **Moscow Art Theatre run labelled 2026-10-30** (RG: "Yes, label them"): a `VISITING_RUNS` row (23 Apr - 17 May 1907, Михайловскій)
 gives all 24 events company «Moscow Art Theatre»; before, only 23 Apr (the night under the printed heading) had it and the other
 23 were attributed to the Александринскій company. Research layer only: 23 events and 23 performances changed, nothing else;
 promoted, backup `outputs/backups/mxat_1906-07_2026-10-30/` (1906-07-09).
+**Title audit, applied 2026-10-30** (RG: "Yes, apply"). The blind read's works were compared word by word with the stored
+ones (punctuation and spacing ignored): 39 cells differed, and grouping found 2 more of the same «Le bonheur, mesdames» split.
+A second reader read every one of them on the scan without seeing either version; it agreed with the blind read on 38 of 39,
+and on the 39th («Le bonhomme Jadis», 7 Nov) the print, read by Claude, agrees with the stored value
+(`docs/eval/scan_audit/1906-07_title_reads.csv`). 39 cells corrected in raw (`fix_1906_07_titles.py`): letters the extraction
+got wrong or modernised («Факелъ въ тайникѣ» ×7, «Василиса Мелентьева» ×4, «Валкирія» ×3, «Димитрій», «денщика», «declarer»,
+«piéce», «coeur»); titles split or run together («Le bonheur, mesdames» ×4, «Le coeur d'Angélique», «Боярыня Вѣра Шелога»
+[прологъ] ×3); genres the print does not give removed («Драма жизни» ×2, «Le cultivateur de Chicago», two «Конекъ-Горбунокъ»
+acts) or corrected («Miquette et sa mère» pièce, «Женитьба» «соверш. невѣроятн. событіе»); 22 Dec «1, 2, 3 и 4 д. оп.
+«Гугеноты»» (was the whole opera); 4 Mar «J'attends Ernest» moved from the annotation to the bill's first work. Two misprints
+are stored as printed and aliased (`work_title_aliases.csv`): «Пиковая дамя» (26 Dec) and «Велшебное зеркало» (29 Apr). One
+excerpt-link row follows the «Димитрій» spelling. Research layer: the misread works fold into the right ones («Василиса
+Мелентьева» 54 → 58, «День денщика Душкина» 19 → 20, «Le coeur d'Angélique» 4 → 6, «Боярыня Вѣра Шелога» [прологъ] 23 → 26;
+«Гугеноты» 159 → 158, the 22 Dec bill being acts 1-4). Built from `git archive HEAD pipeline` plus these changes (and the
+1901-02 session's already-promoted list-date line), so no other session's uncommitted work went in; every changed row is
+1906-07; promoted, backup `outputs/backups/titles_1906-07_2026-10-30/` (1906-07-22). Other seasons' «Мелентьевна» and
+«Валкірія» printings were not part of this audit.
 
 ## 1901-02 (2026-10-29): eight copied charity figures; every count explained once they go; four damaged digits for RG
 

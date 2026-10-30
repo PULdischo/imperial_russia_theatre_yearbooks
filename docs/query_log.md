@@ -23515,3 +23515,16 @@ SELECT e.companies, count(*) FROM research.event e JOIN research.theater t USING
 ```
 
 Result: before: 24 performed Russian-drama events in the window (1 'Moscow Art Theatre', 23 'St. Petersburg Russian drama') + 11 dark; the French season ends 12 Apr 1907. Copy v. pre_fix: research.event 23 rows (companies only), research.performance 23 rows (company, discipline_basis); nothing else. Production after promotion: 'Moscow Art Theatre' 24.
+
+## 2026-10-30 — 1906-07 title audit applied: rebuilt copy (outputs/rebuild_titles_1906-07_2026-10-30, pipeline from git archive HEAD + own changes + the 1901-02 promoted list-date hunk) v. production
+
+```sql
+-- every base table both directions (scratchpad dbdiff.py); changed rows of research.work, entities.work_id_crosswalk, research.production_work, research.event, entities.work_genre_candidate
+SELECT split_part(<performance_id|raw_performance_id>, '_', 2), count(*) FROM (SELECT * FROM <t> EXCEPT ALL SELECT * FROM o.<t>) GROUP BY 1;  -- research.performance, raw.event_entry_performance, entities.work_link
+SELECT w.canonical_title, p.canonical_title, p.canonical_genre FROM research.work w LEFT JOIN research.work p ON p.work_id = w.excerpt_of_work_id
+ WHERE w.canonical_title IN ('4-е д. бал. Велшебное зеркало', '4-е д. бал. Волшебное зеркало', 'Пиковая дамя');
+SELECT p.verbatim_title, w.canonical_title FROM research.performance p JOIN research.work w USING (work_id) WHERE p.verbatim_title = 'Пиковая дамя';
+SELECT performance_id, verbatim_title, verbatim_genre FROM research.performance WHERE event_id = 'repertoire_1906-07_p034__s024';
+```
+
+Result: first build stopped in build_entities (work_excerpt_links row «2 послѣднія дѣйствія трагедіи Дмитрій Донской» matched 0 excerpts after the «Димитрій» fix); row updated, rebuilt cleanly. A build from HEAD alone also reverted research.production_work 1901-02 MSK e009 9 -> 8 (the 1901-02 session's promoted but uncommitted LIST_DATE_PRINT_TYPOS line); rerun with that line: no 1901-02 difference. Final diff: raw.event_entry 1, analysis.event_entry 1, raw.event_entry_performance +41 -40, entities.work +17 -20, work_link +16 -15, work_genre_candidate 2, work_id_crosswalk +3 (День денищика -> День денщика; 5-е д. тр. Дмитрій -> Димитрій Самозванецъ; Le cœur -> Le coeur d'Angélique), research.event 1 (4 Mar n_works 1 -> 2, annotation cleared), research.performance +44 -43, research.work +17 -20 — every changed performance 1906-07. Василиса Мелентьева 54 -> 58, Мелентьевна 5 -> 1 (other seasons); День денщика 19 -> 20; Le coeur d'Angélique 4 -> 6; Боярыня Вѣра Шелога [прологъ] 23 -> 26; Гугеноты 159 -> 158 (22 Dec now «1, 2, 3 и 4 д. оп. Гугеноты» excerpt, 13); «Велшебное» act -> parent «Волшебное зеркало»; «Пиковая дамя» -> work «Пиковая дама».

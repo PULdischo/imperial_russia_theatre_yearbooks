@@ -837,6 +837,11 @@ Read on the full-resolution scans by Claude during the blind column reads and th
     them on 3 Sep evening, as the «6-я карт.».
   - **Moscow, f. 240:** «28-го февраля представленъ былъ во второй разъ … «Арлекинада»» for 28 Jan.
   - **Moscow, f. 245:** «въ нихъ поставлено 11 балетовъ», where the review itself names 12.
+- **Repertoire title misprints, stored as printed since the 2026-10-30 title audit** (both read twice on the scan; the
+  extraction had silently corrected them; aliased in `work_title_aliases.csv` so they count as the work): «Пиковая дамя»
+  (Маріинскій 26 Dec 1906 evening, p. 106) for «Пиковая дама»; «4-е д. бал. Велшебное зеркало» (Большой 29 Apr 1907
+  morning, p. 129) for «Волшебное». Also printed so and now stored so: «Le coeur d'Angélique com.» with no comma (23 Jan),
+  «Paraître, piéce» (6 Dec), «Vous n'avez rien à declarer» (24 Jan), «Василиса Мелентьева. др.» (16 Oct).
 - **Repertoire cells noted by the 2026-10-29 blind column read** (verbatim, each in the read's note column of
   `docs/eval/scan_audit/1906-07_scan_reads.csv`; not each re-read by the main session): «Пиковая дамя» (Маріинскій 26 Dec),
   «Велшебное зеркало» (Большой 29 Apr), «Авдокатъ Стенсгоръ» (Новый 3 Feb), «Безплатные спетакли» (Moscow banner 14 Nov),
