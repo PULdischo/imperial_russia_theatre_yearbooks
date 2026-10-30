@@ -23914,3 +23914,34 @@ WHERE pe.entry_id IN ('balletartists_1898-99_MSK_p007__e008','balletartists_1909
 
 Result: Лукьяновъ 1898-09-01, Пороховникова 1898-06-01, Алексѣевъ 2-й 1905-06-01 (as printed). Receipts 3,223,159,742 (unchanged);
 0 person_link moved, 0 shift blocks; 0 work ids changed; 3 raw rows changed; Wikidata 178; tenure notes 24. Орловъ 1902-03 left open.
+
+## 2026-10-30 — Odd wording in stored BalletArtists credit lines (extraction-garble candidates)
+
+```sql
+select e.entry_id, s.season, s.city, e.credit_summary_text from raw.person_entry e join raw.source_pages s using(page_id)
+where e.page_id like 'balletartists%' and e.credit_summary_text is not null;
+```
+
+Counted in Python by regex: «Всего—всѣ N», «Всего—вв N», «Всего—88 N», «Всего—N балетахъ» (no въ), and parts opening with съ/дъ/Вь/Вд/as instead of въ. Result in the reply of this date (see next entries if acted on).
+
+## 2026-10-30 — Odd credit-line wording, results (follow-up to the previous entry)
+
+```sql
+select e.entry_id, e.credit_summary_text from raw.person_entry e
+where e.page_id like 'balletartists%' and regexp_matches(e.credit_summary_text, 'Всего\s*[—–-]+\s*88\s+\d');
+select page_id, source_file, source_page_index from raw.source_pages
+where page_id in ('balletartists_1908-09_MSK_p001','balletartists_1908-09_SP_p000');
+```
+
+Result: «Всего—всѣ N» 68 entries, «Всего—вв N» 54, «Всего—88 N» 7 (the earlier «88» count of 64 wrongly included real totals of 88), all 1908-09; «Всего—N балетахъ» with no «въ» 19 (15 in 1908-09 Moscow); съ/дъ/Вь/Вд for «въ» 5. Scan (1908-09 Moscow p. 117, nos. 1 and 17): the print has italic «Всего—въ 1 балетъ—1 разъ», «Всего—въ 6 балетахъ—27 разъ» -- so «всѣ»/«вв»/«88» are extraction misreads of italic «въ». Not yet fixed.
+
+## 2026-10-30 — 1908-09 tally-sentence fix: rebuild diff against the backup
+
+```sql
+-- per table, both directions, current vs outputs/backups/tally_sentences_1908-09_2026-10-30/imperial_theaters.duckdb
+select count(*) from (select * from <schema>.<table> except all select * from old.<schema>.<table>);
+select count(*) from (select * from raw.person_entry except all select * from old.raw.person_entry) where entry_id not like 'balletartists_1908-09%';
+-- changed credit columns, joined on credit_id; changed clean counts vs the printed «— N разъ» in credit_summary_text
+```
+
+Result: 52 of 56 tables identical; raw/analysis person_entry +153 -153 (0 outside 1908-09 BalletArtists); person_entry_credit +141 -150 (9 rows removed from Тренинская 4, Рыхлякова 2-я 5). Changed columns: label 39, category_production_count 136 (null -> parsed), category_credit_count 1 (Григорьевъ), category_credit_count_clean 41, all 41 now equal to the printed count.

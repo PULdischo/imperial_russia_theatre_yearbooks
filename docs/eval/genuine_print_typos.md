@@ -915,3 +915,18 @@ and Claude; stored as printed (`docs/eval/scan_audit/1899-00_title_reads.csv`), 
   PROBABLE slip for «2 операхъ», NOT confirmed (RG 2026-10-30): the «20» is crisp on the full-resolution scan (zoomed by Claude).
   Stored as printed. The stored opera count had been an extraction misread («—3»), fixed the same day
   (`docs/eval/raw_fix_ryabtsov_tally_2026-10-30.py`).
+
+## 1908-09 BalletArtists tally sentences (added 2026-10-30; stored as printed)
+
+Found while all 16 pages' italic «Всего» lines were read on the scans (four reader agents; the two marked † re-read by Claude).
+The rest are the readers' readings, NOT yet re-read by Claude.
+
+- **SP p008 no. 73 Фокинъ: «въ 7 балетахь—17 разъ»**, soft sign ь, distinct from the ъ of «разъ» (zoomed by the reader). Stored «балетахь».
+- **MSK p004 no. 3 Барановъ: «въ 1 оперѣ—1 разъ»**, though his only role is in «Жизель» (крестьянинъ—1).
+- **Totals that disagree with the roles listed** (counts read as printed): MSK p002 no. 47 Мендесъ «въ 15 балетахъ—16 разъ», three
+  ballets listed (11 times); MSK p006 Чудиновъ 1-й «въ 11 балетахъ», six listed; SP p006 no. 36 Лопуховъ «въ 2 балетахъ—2 раза»,
+  one listed; SP p007 no. 48 «въ 7 операхъ—22 раза», ballet roles only.
+- **Bare tally without «въ»:** SP p005 no. 11 Бочаровъ 2-й «Всего—1 балетѣ—6 разъ»; MSK p002 no. 42 Ларіонова «Всего—1 балетѣ—2 раза».
+- **Names and headings:** SP p002 «Ніясинская» (for Нижинская); MSK p006 no. 46 Рябцевъ «съ 1 сентяяря 1898 г.» †;
+  MSK p004 no. 10 Гавриловъ «Алексанпръ»; SP p003 Пороховникова numbered «60.» where 70 belongs; MSK p004 no. 19 Ивановъ 2-й
+  «съ свитѣ хана»; MSK p005 Никольскій, a stray dot before «Всего».

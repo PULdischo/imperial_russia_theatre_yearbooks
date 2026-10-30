@@ -24548,3 +24548,29 @@ Same entry: «Копекъ-горбунокъ» -> «Конекъ-горбуно
 (`docs/eval/raw_fix_ryabtsov_tally_2026-10-30.py`); backup of the page in `outputs/backups/ryabtsov_tally_2026-10-30/ (with the pre-fix duckdb)`.
 The printed «20 операхъ» (nine performances) is logged in `genuine_print_typos.md` as a probable, unconfirmed slip.
 Result: every stored non-additive category tally is now a scan-confirmed print slip or damaged digit (45 + 2 of 7,647).
+
+## 1908-09 BalletArtists italic «Всего» sentence: «въ» misread, singular «балетѣ», a count, three copied tallies -- FIXED 2026-10-30 (RG: "yes go ahead")
+
+The 1908-09 lists print the tally in italic («Всего—въ 6 балетахъ—19 разъ.»), and italic ъ looks like «в». Extraction stored the
+preposition as «всѣ» (68), «вв» (54, plus 5 in hyphenated «Все-то»/«Все-ю»), «88» (7), or dropped it (MSK p006, 14). Every
+tally sentence of all 16 pages (MSK p001-p007, SP p000-p008; 163 lines) was read on the scans by four parallel reader agents;
+Claude re-read the data-changing findings (the three copied tallies, Григорьевъ's count) and one line per kind. After the fix
+all 163 stored sentences equal the readings. `docs/eval/raw_fix_1908-09_tally_sentences_2026-10-30.py`, field edits only:
+- 145 prepositions set to «въ»; 5 «Все-то»/«Все-ю» -> «Все-го» (hyphenated at a line break in print); Бочаровъ 2-й and
+  Ларіонова print no «въ» and stay without it.
+- 45 singulars «1 балетъ»/«1 балетахъ» -> «1 балетѣ» and one «1 оперъ» -> «1 оперѣ» (italic ѣ looks like «ть»), text and label.
+- Григорьевъ (SP p005 no. 17): «—27 разъ» -> «—21 разъ» (the ten roles sum to 21), text and count.
+- Three people with NO printed credit line carried a copy of a neighbour's tally: Тренинская (MSK p003 no. 73) and Рыхлякова 2-я
+  (SP p003 no. 81) the carry-over tail at the top of a column, which belongs to the entry above (nos. 72, 80, which already hold it
+  in full); Александрова (SP p000 Артистки no. 1) a copy of no. 4 Бакеркина's. Their credit line and 9 credit rows removed.
+- Фокинъ's printed «балетахь» kept as printed (genuine_print_typos.md, with other slips the readers saw).
+Rebuild vs backup (`outputs/backups/tally_sentences_1908-09_2026-10-30/`): raw/analysis person_entry 153 rows (all 1908-09
+BalletArtists), person_entry_credit 141 changed, 9 removed; 52 of 56 tables identical, research layer unchanged. Side effect, a
+gain: with «въ» restored, `category_production_count` is now parsed for 136 credit rows (was null) and
+`category_credit_count_clean` is corrected in 41 rows, where the number of ballets had stood in for the number of performances
+(«въ 5 балетахъ—15 разъ» counted 5, now 15); all 41 now equal the printed «— N разъ».
+
+**Found, not fixed (for RG):** (1) SP p006: the tally is ALSO copied into tenure_note_text on 14 entries (the 2026-10-19
+duplicate-removal fix missed them: the copies are not character-identical), and for Лопуховъ (no. 36) and Новиковъ (no. 45) the
+tally exists ONLY in tenure_note_text, so their credits are missing; MSK p003 no. 72 Станиславская's tenure note holds part of
+hers. (2) The column-top carry-over copied onto the next entry (two cases here) may occur in other seasons; not yet checked.
