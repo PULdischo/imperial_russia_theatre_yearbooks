@@ -42,7 +42,16 @@ def _stringify_uuids(df):
     return df
 
 
-TABLES = ["theater", "work", "person", "event", "performance", "person_appearance",
+def _dates_as_iso(df):
+    # DuckDB DATE columns (person_appearance.printed_start_date, person_tenure.*_date/_printed) come back as datetime64,
+    # which to_sql would write as '1889-04-20 00:00:00'; write 'YYYY-MM-DD' like event.date.
+    for col in df.columns:
+        if str(df[col].dtype).startswith("datetime64"):
+            df[col] = df[col].dt.strftime("%Y-%m-%d").where(df[col].notna(), None)
+    return df
+
+
+TABLES = ["theater", "work", "person", "event", "performance", "person_appearance", "person_tenure",
           "production", "production_work", "production_credit",
           "season_stat_check", "season_stat_line", "season_stat_footnote",
           "review_assertion", "review_solo", "review_credit",
@@ -102,7 +111,18 @@ SCHEMAS = {
             appearance_id TEXT PRIMARY KEY, person_id TEXT REFERENCES person(person_id),
             season TEXT, city TEXT, entity_type TEXT, institution TEXT,
             heading_path TEXT, "rank" TEXT, title TEXT, service_class TEXT,
-            instrument TEXT, subject_taught TEXT, tenure_note_text TEXT
+            instrument TEXT, subject_taught TEXT, tenure_note_text TEXT,
+            printed_start_date TEXT, printed_start_text TEXT, printed_service_periods INTEGER
+        )""",
+    # One row per run (person x list x city); city is null on 1,279 runs, so no composite key -- Datasette uses rowid.
+    "person_tenure": """
+        CREATE TABLE person_tenure (
+            person_id TEXT REFERENCES person(person_id), list TEXT, city TEXT,
+            first_season TEXT, last_season TEXT, seasons_dated INTEGER,
+            tenure_start_date TEXT, tenure_start_year INTEGER, start_precision TEXT, basis TEXT,
+            earliest_printed TEXT, latest_printed TEXT, printed_dates TEXT, slips_left_out TEXT,
+            broken_service_printed INTEGER, later_period_start TEXT, several_entries_in_a_season INTEGER,
+            ruling TEXT
         )""",
     "production": """
         CREATE TABLE production (
@@ -242,6 +262,26 @@ def main():
     args = ap.parse_args()
 
     con = duckdb.connect(str(args.db), read_only=True)
+
+    # The SCHEMAS above are written by hand, so a column added to research.* in build_research_model.py without one
+    # here used to fail mid-load -- after the old export had been deleted, leaving a half-built sqlite (2026-10-30:
+    # person_appearance.printed_start_*). Compare first, and stop before touching the existing file.
+    probe = sqlite3.connect(":memory:")
+    mismatches = []
+    for table in TABLES:
+        probe.execute(SCHEMAS[table])
+        export_cols = {r[1] for r in probe.execute(f"PRAGMA table_info({table})")}
+        source_cols = {r[0] for r in con.execute(
+            "SELECT column_name FROM information_schema.columns WHERE table_schema = 'research' AND table_name = ?",
+            [table]).fetchall()}
+        if source_cols and source_cols != export_cols:
+            mismatches.append(f"  {table}: in research.{table} but not exported: {sorted(source_cols - export_cols)}; "
+                              f"exported but not in research.{table}: {sorted(export_cols - source_cols)}")
+    probe.close()
+    if mismatches:
+        raise SystemExit("SCHEMAS out of step with the research layer -- add the columns to SCHEMAS in this script; "
+                         f"{args.out} left untouched:\n" + "\n".join(mismatches))
+
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.unlink(missing_ok=True)  # sqlite3 won't overwrite cleanly otherwise
     sqlite_con = sqlite3.connect(str(args.out))
@@ -265,7 +305,7 @@ def main():
             # above so the schema/relationships stay stable either way.
             print(f"{table}: 0 rows (research.{table} doesn't exist in the source db yet)")
             continue
-        df = _stringify_uuids(con.execute(f"SELECT * FROM research.{table}").fetch_df())
+        df = _dates_as_iso(_stringify_uuids(con.execute(f"SELECT * FROM research.{table}").fetch_df()))
         df.to_sql(table, sqlite_con, index=False, if_exists="append")
         print(f"{table}: {len(df)} rows")
 

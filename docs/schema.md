@@ -530,7 +530,7 @@ The build fails if a slip or ruling names a run or date that is not printed.
 
 Counts 2026-10-30 (3,056 runs, 2,545 people): consistent 2,578; consistent year, day varies 125; stretches tie, seasons decide 154;
 stretches decide 39; stretches overturn majority (review) 5; unresolved 11; ruled 1; unresolved (RG) 1; no date printed 142.
-Not yet in the Datasette export (`build_datasette.py`) -- add it there before the next publication.
+Exported to Datasette (`build_datasette.py`) since 2026-10-30; dates as `YYYY-MM-DD` text, booleans as 0/1.
 
 ## Printed leavings contradicted by later lists — `research.person_tenure_note` (added 2026-10-19)
 
