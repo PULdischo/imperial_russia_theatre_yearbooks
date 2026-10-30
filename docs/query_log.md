@@ -23501,3 +23501,17 @@ UPDATE entities.work_id_crosswalk SET new_work_id = '24e416e1-a272-55b6-bd84-42a
 ```
 
 Result: before: «Очарованный лѣсъ» бал. f6f5254b (52 performances, 1890-1906) and its 1907 excerpt «Очарованный лѣсъ» [изъ бал.] 24e416e1; «Корсаръ (Le jardin animé)» 653ffe6f -> «Корсаръ» 013fcc3d. After (copy = production): 24e416e1 «Очарованный лѣсъ, изъ бал. Корсаръ (Le jardin animé)» excerpt of «Корсаръ»; 653ffe6f gone (crosswalk only); the 29 Apr event 4 -> 3 performances; 10 Feb event 0 -> 2 (__supplied1 «Шопеніана» сюита f20f7607, __supplied2 «Эвника» бал. ebb88ad9). Diff: entities.work +1 -2, work_genre_candidate -2, work_link +2 -3, work_id_crosswalk +1, raw.event_entry_performance +3 -4, research.event 2, performance +5 -4, work +1 -2; nothing else (a first copy also showed research.production_work 1901-02 MSK e009 8 -> 9: the 1901-02 session's change, promoted by it before mine). The automatic crosswalk row sent 653ffe6f to «Испытаніе Дамиса» 4a2d4472 (slot shift); corrected to 24e416e1. Correction to the 2026-10-29 «1906-07 ballet season reviews» entry above: «Очарованный лѐсъ» there should read «Очарованный лѣсъ».
+
+## 2026-10-30 — 1906-07 Moscow Art Theatre run labelled (VISITING_RUNS): Михайловскій events around the run; research rebuild on a copy (outputs/rebuild_mxat_1906-07_2026-10-30) v. production
+
+```sql
+SELECT e.event_status, e.disciplines, e.companies, count(*) FROM research.event e JOIN research.theater t USING (theater_id)
+ WHERE e.season = '1906-07' AND t.canonical_name = 'Михайловскій' AND e.date BETWEEN '1907-04-20' AND '1907-05-23' GROUP BY ALL;
+SELECT min(date), max(date) FROM research.event e JOIN research.theater t USING (theater_id)
+ WHERE e.season = '1906-07' AND t.canonical_name = 'Михайловскій' AND e.event_status = 'performed' AND e.disciplines LIKE '%French%';
+-- every base table both directions (dbdiff.py); changed columns of research.event / research.performance
+SELECT e.companies, count(*) FROM research.event e JOIN research.theater t USING (theater_id)
+ WHERE e.season = '1906-07' AND t.canonical_name = 'Михайловскій' AND e.date BETWEEN '1907-04-23' AND '1907-05-17' AND e.event_status = 'performed' GROUP BY 1;  -- production after promotion
+```
+
+Result: before: 24 performed Russian-drama events in the window (1 'Moscow Art Theatre', 23 'St. Petersburg Russian drama') + 11 dark; the French season ends 12 Apr 1907. Copy v. pre_fix: research.event 23 rows (companies only), research.performance 23 rows (company, discipline_basis); nothing else. Production after promotion: 'Moscow Art Theatre' 24.

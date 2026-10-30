@@ -320,6 +320,11 @@ VISITING_ANNOTATION_RULES = [
 #: annotation already gives a troupe. The build fails if a run matches no
 #: performance or its troupe has no VISITING_TROUPE_DISCIPLINE entry.
 VISITING_RUNS = [
+    ("1906-07", "Михайловскій", "1907-04-23", "1907-05-17", "Moscow Art Theatre",
+     "the 24 Михайловскій events 23 Apr - 17 May 1907 (Горе отъ ума, Три сестры, Брандъ, Драма жизни, Дядя Ваня): the "
+     "heading «Спектакли Московскаго Художественнаго Театра» is printed once, over 23 Apr; no receipts, outside the "
+     "season totals (blind column read 2026-10-29; reconciliation ledger 1906-07-09). Includes the 9 May matinée «На "
+     "памятникъ А. П. Чехову» («Дядя Ваня»). RG, 2026-10-30: \"Yes, label them\""),
     ("1907-08", "Михайловскій", "1908-04-14", "1908-05-13", "visiting Russian drama troupe, St. Petersburg",
      "the 38 Михайловскій events 14 Apr - 13 May 1908 (Росмерсхольмъ, Жизнь человѣка, Докторъ Штокманъ, Брандъ, "
      "Вишневый садъ, Горе отъ ума): no troupe heading, no receipts, outside the season totals and the «Списокъ пьесъ»; "
