@@ -23561,3 +23561,23 @@ entities.work_id_crosswalk +11. Validation errors 266 -> 264; person_link 0 shif
 as before. Curation changes needed by the rebuild: curated_parent_works «Орфей въ аду»; work_excerpt_links (2 Орфей, Каменнаго гостя,
 Русалки, Борисъ Годуновъ); work_title_aliases («Дивертиссемемтъ», «M'amonr»); research_performance_genre 30 Jan retitled; art_form_by_title
 «Въ глупии, пьеса» row removed.
+
+## 2026-10-30 — 1906-07 SP count shift (Александринскій −1, ballet +1): SP events by line and kind; free matinées v. printed lines, 1898-99..1910-11
+
+```sql
+SELECT t.canonical_name th, e.disciplines, e.companies,
+  CASE WHEN e.companies='Moscow Art Theatre' THEN 'MXAT' WHEN e.is_free THEN 'free' WHEN e.is_charity AND e.receipts_total_kopecks IS NULL THEN 'charity_norec'
+       WHEN e.is_charity THEN 'charity_rec' WHEN e.receipts_total_kopecks IS NULL THEN 'other_norec' ELSE 'paying' END kind,
+  count(*) n, sum(e.receipts_total_kopecks)/100.0 rub, string_agg(<dates of free/student/no-receipt events>)
+FROM research.event e JOIN research.theater t USING (theater_id) WHERE e.season='1906-07' AND e.city='SP' AND e.event_status='performed' GROUP BY ALL;
+WITH ev AS (SELECT e.season, t.canonical_name th, e.date, e.receipts_total_kopecks k, e.is_free, e.disciplines d FROM research.event e JOIN research.theater t USING (theater_id)
+  WHERE e.city='SP' AND e.event_status='performed' AND e.season BETWEEN '1898-99' AND '1910-11')
+SELECT season, count(*) FILTER (WHERE th LIKE 'Александр%' AND d='Russian drama' AND k IS NOT NULL) alex_paying,
+  count(*) FILTER (WHERE th LIKE 'Александр%' AND d='Russian drama' AND is_free) alex_free,
+  count(*) FILTER (WHERE th LIKE 'Михайлов%' AND d LIKE '%Russian drama%' AND is_free) mikh_free_russian,
+  count(*) FILTER (WHERE th LIKE 'Маріин%' AND d LIKE '%ballet%' AND k IS NOT NULL) ballet_paying,
+  count(*) FILTER (WHERE th LIKE 'Маріин%' AND d LIKE '%ballet%' AND is_free) ballet_free FROM ev GROUP BY 1 ORDER BY 1;
+-- compared with docs/season_stats/lines.csv (SP «въ Александринскомъ театрѣ» and «Балетныхъ»)
+```
+
+Result: 1906-07 SP: Alex 192 paying + 4 free (14 Nov, 26 Nov eve, 6 Dec, 28 Feb) = 196 v. 197; ballet 52 paying (168,182.50 = printed) + 2 free (6 Dec, 28 Feb) = 54 v. 53; opera 158+1, French 113+1+6 Feb, Михайловскій drama 24+1, Маріинскій drama 1, German 25 all = printed; total 575 = 575 without the 28 Feb Михайловскій free mixed bill. Printed ballet = paying + free ballet matinées in 1898-99 (53), 1899-00 (55), 1900-01 (54), 1901-02 (51), 1902-03 (51), 1903-04 (49), 1904-05 (46), 1907-08 (52), 1908-09 (48), 1909-10 (51); not 1910-11 (49+1 v. 49) or 1906-07. Alex paying + free v. printed: 194/196, 193/195, 191/199, 192/193, 192/190, 189/189, 174/175, 196/197 (1898-99..1906-07): no rule.

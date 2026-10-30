@@ -1084,9 +1084,17 @@ production: 17 blocks, 9 assertions (the Кшесинскій one gone), 7 credi
 - **10 Feb 1907 charity:** «Шопеніана» and «Эвника», from the SP review, attached in the research layer only
   (`supplied_performances.csv`; RG: "attach the performances of these ballets to that event") (1906-07-21).
 
-**Outcome so far:** 21 ledger rows. corrected 4 (30 Dec; review transcription; 29 Apr excerpt; 10 Feb works; the 19 Nov fix is inside -11),
-excluded_by_yearbook 3, classification 2 («Карменъ», «Гибель Фауста»), comparison_rule 1, yearbook_own 8 (provisional; 2 of them the reviews'
-slips), open 3 (6 Feb French figure, 28 Jan kopecks for HathiTrust, the SP free-matinée count). Noticed, not chased: the Moscow review's 30 Aug 1906 assertion
+**The SP count, recounted 2026-10-30** (after the fixes): the SP total is exact, 575 = 575, once the 28 Feb Михайловскій free
+matinée is left out. What remains is a shift: the Александринскій has 196 (192 paying + 4 free) for the printed 197, ballet 54
+(52 paying + the free matinées of 6 Dec and 28 Feb) for 53, with the ballet receipts exact. Every free-matinée cell reads on the
+scan as stored. In 10 of the 11 other seasons with a ballet line (1898-99 to 1910-11) the printed ballet count is the paying
+ballet events plus every free ballet matinée; the Александринскій line follows no such rule. So the stats page most likely
+counted one free ballet matinée under the Александринскій; which one, this volume does not say (the SP review counts both as
+ballet). RG: "Yes, record it": `yearbook_own`, provisional (1906-07-13).
+
+**Outcome so far:** 22 ledger rows. corrected 5 (30 Dec; review transcription; 29 Apr excerpt; 10 Feb works; titles; the 19 Nov fix is inside -11),
+excluded_by_yearbook 3, classification 2 («Карменъ», «Гибель Фауста»), comparison_rule 1, yearbook_own 9 (provisional; 2 of them the reviews'
+slips), open 2 (6 Feb French figure and 28 Jan kopecks, both for a HathiTrust copy). Noticed, not chased: the Moscow review's 30 Aug 1906 assertion
 is dated 1907-08-30 in research.review_assertion.
 
 **Moscow Art Theatre run labelled 2026-10-30** (RG: "Yes, label them"): a `VISITING_RUNS` row (23 Apr - 17 May 1907, Михайловскій)
