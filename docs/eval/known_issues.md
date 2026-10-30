@@ -24574,3 +24574,16 @@ gain: with «въ» restored, `category_production_count` is now parsed for 136 
 duplicate-removal fix missed them: the copies are not character-identical), and for Лопуховъ (no. 36) and Новиковъ (no. 45) the
 tally exists ONLY in tenure_note_text, so their credits are missing; MSK p003 no. 72 Станиславская's tenure note holds part of
 hers. (2) The column-top carry-over copied onto the next entry (two cases here) may occur in other seasons; not yet checked.
+
+### Follow-up: 1908-09 SP p006 tenure notes and three missing credit lines -- FIXED 2026-10-30 (RG: "yes, go ahead with #1")
+
+Item (1) of "Found, not fixed" above. Read by Claude on the scan (SP pp. 94-95). `docs/eval/raw_fix_1908-09_SP_p006_tenure_2026-10-30.py`:
+all 22 tenure notes on the page set to the printed «(съ … г.).» (16 had carried the credit line, all had lost the parentheses);
+credit_summary_text restored for Лопуховъ (no. 36), Новиковъ (no. 45) and Обуховъ (no. 48). **Correction to the note above:**
+Лопуховъ's and Новиковъ's parsed credits were already stored and match the print; only their credit-line text was missing. Обуховъ
+had neither: his line runs from the foot of p. 94 to the top of p. 95, where nothing stored it; the whole printed line is now on
+his entry (joined at «Спя-|щая»), with 10 credit rows («Всего—въ 7 операхъ—22 раза», «операхъ» for ballets, kept as printed).
+MSK p003 no. 72 Станиславская's tenure note no longer holds half her credit line. Rebuild vs backup
+(`outputs/backups/sp_p006_tenure_1908-09_2026-10-30/`): person_entry 23 rows (those 23 entries only), person_entry_credit +12 -2
+(Обуховъ's 10; Лопуховъ's and Новиковъ's ballet count now parsed), research.person_appearance tenure_note_text 23; 51 of 56
+tables identical. Item (2), carry-over copies in other seasons, is still open.

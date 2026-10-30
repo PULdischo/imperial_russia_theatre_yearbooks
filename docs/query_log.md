@@ -23945,3 +23945,15 @@ select count(*) from (select * from raw.person_entry except all select * from ol
 ```
 
 Result: 52 of 56 tables identical; raw/analysis person_entry +153 -153 (0 outside 1908-09 BalletArtists); person_entry_credit +141 -150 (9 rows removed from Тренинская 4, Рыхлякова 2-я 5). Changed columns: label 39, category_production_count 136 (null -> parsed), category_credit_count 1 (Григорьевъ), category_credit_count_clean 41, all 41 now equal to the printed count.
+
+## 2026-10-30 — 1908-09 SP p006 tenure-note fix: rebuild diff against the backup
+
+```sql
+-- per table, both directions, current vs outputs/backups/sp_p006_tenure_1908-09_2026-10-30/imperial_theaters.duckdb
+select count(*) from (select * from <schema>.<table> except all select * from old.<schema>.<table>);
+select entry_id from (select * from raw.person_entry except all select * from old.raw.person_entry) where entry_id not like 'balletartists_1908-09_SP_p006%';
+select label, role_name, category_production_count, category_credit_count_clean from analysis.person_entry_credit where entry_id='balletartists_1908-09_SP_p006__e022';
+-- changed columns of research.person_appearance, joined on its key
+```
+
+Result: 51 of 56 tables identical; person_entry +23 -23 (22 on SP p006 + MSK p003 e015 Станиславская); person_entry_credit +12 -2 (Обуховъ's 10 new rows; Лопуховъ/Новиковъ category_production_count now 2/1); research.person_appearance: only tenure_note_text, 23 rows. Before the fix Лопуховъ and Новиковъ already had credit rows (text only missing); Обуховъ had none.
