@@ -23731,3 +23731,37 @@ No leaving or return note in any season. Review mentions: both brothers named to
 with no printed leaving (build check now allows a blank printed_leaving_date); periods 1892-93..1896-97; 1898-99..1907-08 (listed every
 season of both). Table 19 -> 20; receipts 3,223,159,742, research.person 2645 unchanged. Uncertain list #44; «Тимомировъ» added to
 genuine_print_typos.md.
+
+## 2026-10-30 — 1899-00 reconciliation: Repertoire v. season totals, lists, reviews
+
+```
+uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir <scratch>/cmp
+uv run python pipeline/season_stats_receipt_candidates.py --db outputs/full_run/imperial_theaters.duckdb --family-totals <scratch>/cmp/family_totals.csv --out <scratch>/cand.csv
+-- per event: compare_season_stats.classify_event over LEVEL2_SQL, season 1899-00, joined to research.event (date, time_of_day, annotation, flags) and research.performance
+-- research.production 1899-00: printed_total v. n_dates per list
+-- research.event / research.performance 1899-00 (performed + no_performance) v. the blind scan reads
+```
+
+Result: SP 651 / 639 events, +1,642.21 р.; Moscow 526 = 526, −31.00 р. (city_totals.csv). SP surplus = 6 French guest-star events at the
+Александринскій + 4 Ugetti Italian opera + 2 no-works events (Goethe memorial 18 Dec, Чернов matinée 19 Feb); concerts 5 = 5. Александринскій
++1,642.35 = Weinberg charity 11 Dec (1,669.35) → −27.00. Moscow: Большой opera 104 / 103, Новый drama 131 / 132 (−1.00), Новый opera −30.00.
+Ballet: SP 55 = list 55; Moscow 62 + 2 mixed = list 64; every list total = its dates. Single-digit candidates for Новый opera −30: 40.
+Blind read: 1,447 rows, one misread (Новый 2 Dec 332.36, printed 333.36). Only one ё title in the season («Звёзды», p001__s003).
+Ledger 1899-00-01..12; README "## 1899-00".
+
+## 2026-10-30 — 1899-00: how many Легатъ and Ивановъ in the ballet rosters (RG's review-ordinal question)
+
+```
+select page_id, heading_path, family_name, first_name, patronymic from raw.person_entry
+ where page_id like '%1899-00%' and family_name ilike 'Легат%';            -- also 1898-99, 1900-01
+select ... from raw.person_entry where page_id like 'balletartists_1899-00%' and family_name ilike 'Иванов%';
+```
+
+Result: SP 1899-00 Легатъ 1-й Николай, 2-й Иванъ, 3-й Сергѣй Густавовичи (+ Евгенія Густавовна); the same three in 1898-99 and
+1900-01; no Легатъ 5-й. (The Theatre School staff list prints Сергѣй as «Легатъ 2-й».) SP Ивановъ 1-й..5-й (5-й = Иванъ
+Николаевичъ, p. 7) plus Левъ Ивановичъ, second ballet master; Moscow Ивановъ 1-й..5-й and Иванова 1-я..4-я.
+
+**2026-10-30 — Тихоміровъ, Владиміръ recorded (RG: two periods, "pending any further information"):** research.person_tenure_note row
+with no printed leaving (build check now allows a blank printed_leaving_date); periods 1892-93..1896-97; 1898-99..1907-08 (listed every
+season of both). Table 19 -> 20; receipts 3,223,159,742, research.person 2645 unchanged. Uncertain list #44; «Тимомировъ» added to
+genuine_print_typos.md.

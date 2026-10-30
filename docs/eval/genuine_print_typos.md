@@ -874,3 +874,25 @@ Read as broken type, not misprints (RG 2026-10-30): Малый 18 Jan «Ирин
 (faint е), 9 Feb Маріинскій «Грсза» (faint е).
 - 1895-96 SP BalletArtists p008 (p. 68) no. 67 «**Тимомировъ** 1-й, Владиміръ Михайловичъ (съ 1 іюня 1892 г.)» for Тихомировъ (no. 68 below
   prints «Тихомировъ 2-й, Сергѣй»); zoomed 2026-10-30. Stored as printed; the row is linked to his record.
+
+## 1899-00 reconciliation and title audit (added 2026-10-30)
+
+All read on the full-resolution Repertoire scans (ForUpload_1899-00_Repertoire.pdf) by the blind column read, a second blind read
+and Claude; stored as printed (`docs/eval/scan_audit/1899-00_title_reads.csv`), each title aliased for matching in
+`work_title_aliases.csv` (RG 2026-10-30: "Yes, apply").
+
+- **`repertoire_1899-00_p002`, Михайловскій 22 Sep 1899: «Хоть тресни, а женнсь, ком.»** (н for и), after «Забава. др.» (a full
+  stop for the comma).
+- **`repertoire_1899-00_p005`, Малый 7 Oct 1899: «Джентльмэиъ, ком.»** (и for н; 28 Sep on the same page prints «Джентльмэнъ»).
+- **`repertoire_1899-00_p014`, Александринскій 4 Dec 1899 (Galipaux): «Agence dramatiqus, scène.»** (s for e).
+- **`repertoire_1899-00_p020`, Михайловскій 3 Jan 1900: «Colinete, pièce.»** (one t; «Colinette» on its other dates).
+- **`repertoire_1899-00_p021`, Малый 9 Jan 1900: «Не отъ міра сего, сп.»**, the genre misprinted (п for ц); 16 Jan prints «сц.».
+- **`repertoire_1899-00_p023`, Малый 18 Jan 1900: «Наванунѣ золотой свадьбы, шут.»** (в for к).
+- **`repertoire_1899-00_p024`, Маріинскій 23 Jan 1900 morning: «Книзь Игорь, оп.»** (и for я).
+- **`repertoire_1899-00_p028`, Александринскій 29 Feb 1900 (German troupe): «Weh dem der, Iügt, Lustspiel.»** (capital I for l).
+- **`repertoire_1899-00_p036`, Александринскій 25 Apr 1900: «Татьяна Рѣпипа, ком.»** (п for н).
+- **`repertoire_1899-00_p007`, Большой 10 Oct 1899: «Тщетная предосторожность, бал»**, no full stop after the genre.
+- **Printed day numbers:** Moscow p. 29 «25 Понед.», «26 Вторн.» for 14, 15 Feb 1900 and p. 39 «9 Четвергъ.» for 4 May (already
+  in `_MANUAL_DATE_OVERRIDES`; the p. 39 «Четвергь» variant there was the extraction's, removed).
+- **The 1899-00 season reviews** (read on the images): SP p035 «Легатъ 5-й» read by RG as a 3 (corrected); SP p013 «Ивановъ 5-й»
+  is a genuine 5 (the roster has Ивановъ 5-й, Иванъ Николаевичъ).

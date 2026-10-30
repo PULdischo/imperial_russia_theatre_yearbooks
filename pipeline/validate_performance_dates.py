@@ -151,11 +151,9 @@ _MANUAL_DATE_OVERRIDES: dict[tuple[str, str], tuple[str, str]] = {
         '1898-12-16', 'scan-verified: book prints day as "28" (should be "16"; page header ends 16 декабря, 16 Dec 1898 was a Wednesday)',
     ),
     # Printed p. 39 (1899-00), "9 Четвергъ" between "3 Среда." and "5 Пятница." -> the 4th (Moscow had placeholders on 4 May).
-    # Printed with both Ъ and Ь endings ("Четвергь." in the Малый column) -- both spellings listed.
+    # The "Четвергь." (Ь) variant was the extraction's: the shared date cell prints "9 Четвергъ." (checked at 3x 2026-10-30);
+    # the 1899-00 title audit (fix_1899_00_titles.py) restored it, so one key covers every column.
     ('repertoire_1899-00_p037', '9 Четвергъ'): (
-        '1900-05-04', 'scan-verified: book prints day as "9" (should be "4"; between 3 Среда and 5 Пятница)',
-    ),
-    ('repertoire_1899-00_p037', '9 Четвергь'): (
         '1900-05-04', 'scan-verified: book prints day as "9" (should be "4"; between 3 Среда and 5 Пятница)',
     ),
     # The three below have the right DATE and a wrong printed WEEKDAY (date_undate is already correct; recorded so the

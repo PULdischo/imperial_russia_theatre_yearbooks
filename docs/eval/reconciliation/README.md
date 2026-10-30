@@ -1206,3 +1206,61 @@ receipts unchanged except the Большой opera line, now 133 = 133.
 **Outcome:** 18 ledger rows. Corrected 4 (the fix script, the review transcription slips, the titles audit), open 4 (the four damaged
 digits in three rows, the Александринскій drama count), classification 4, yearbook_own 4 (2 provisional), comparison_rule 1,
 excluded_by_yearbook 1.
+
+## 1899-00 (2026-10-30): every column read blind; one misread for RG; guests outside the stats, charity outside the receipts
+
+The stats page is p. 40 (`1899-00_ProductionStats.pdf`): SP drama by venue (Маріинскій 1 = Савина's benefit), opera, ballet,
+French, German, concerts; Moscow drama and opera by venue, ballet, «Смѣшанныхъ» 2. Footnote 1: the printed (italic, bracketed)
+receipts leave out charity events. Productions lists for both cities; season reviews: SP ballet (45 pp.), Moscow all genres (25 pp.).
+
+**Step 1, city totals:** SP 651 / 639 events, +1,642.21 р.; Moscow 526 = 526, −31.00 р.
+
+**What the stats leave out (SP +12 events).** Six French guest-star events at the Александринскій, none with receipts (Réjane 2-3 Oct,
+Mounet-Sully 20-21 Nov, Galipaux 4-5 Dec); the Михайловскій French events are 153 = printed. The four Ugetti Italian opera events at
+the Маріинскій (no receipts, no line). The 18 Dec Goethe memorial (Александринскій, banner only) and the 19 Feb Чернов literary-musical
+matinée (Михайловскій). The concerts are all in: «Концертовъ» 5 = footnote 7 (two Colonne concerts with 4,259.00 exact, and the
+three Invalids events, heading-only in the Repertoire, which is why the comparison tool files them under no_works).
+
+**Charity receipts.** The Александринскій +1,642.35 is the 11 Dec Weinberg charity, 1,669.35 р.: counted (footnote 3), receipts left
+out (footnote 1). In Moscow the 22 Dec Invalids and 4 Feb chorus events at the Большой carry figures and the line is exact with them:
+footnote 10 calls them «1 спектакль въ пользу Инвалидовъ» and a benefit, so the Moscow figure seems to include that one charity cell.
+
+**Every column read blind** (6 agents, scans only; `docs/eval/scan_audit/1899-00_scan_reads.csv`, 1,447 rows incl. dashes). Every
+printed session matches a stored event; misprinted day numbers (Moscow p. 29 «25», «26» for 14, 15 Feb; p. 39 «9» for 4 May) are
+stored on the real dates. Every legible figure equals the stored one except **Новый 2 Dec 1899 «Другъ Фритцъ» «333 р. 36 к.»**, stored
+332.36 (a heavier 3; checked by Claude at 4x), which closes the Новый drama −1.00 exactly. **Applied 2026-10-30** (RG: "Yes, correct it"): `fix_1899_00_scan_reads.py`, rebuilt on a copy (`outputs/rebuild_1899-00_2026-10-30/`: raw/analysis event_entry 1, research.event 1, season_stat_check 1, nothing else in any table; person_link 0 shift blocks), promoted, sqlite rebuilt, not republished; backup `outputs/backups/scan_reads_1899-00_2026-10-30/`. Moscow city total now −30.00 р. (1899-00-08). Two damaged digits
+(Маріинскій 2 Feb «28?9», Большой 26 Dec «14?1») kept as stored: both ballet lines are exact with them.
+
+| Line | Counts | Receipts | Reading |
+|---|---|---|---|
+| SP Александринскій drama | 195 = 195 | −27.00 after the Weinberg charity | yearbook_own, provisional (also −27.00 in 1898-99) |
+| SP Михайловскій / Маріинскій drama | 62 = 62 / 1 = 1 | exact | |
+| SP opera / ballet / German | 135 / 55 / 33, all = | exact | ballet lists 55 = Repertoire 55 |
+| SP French | 153 = 153 (Михайловскій) | −0.14 | yearbook_own, provisional |
+| SP concerts | 5 = 5 | exact | |
+| Moscow Малый / Большой drama | 169 / 3, = | exact | Большой's 3 = the «Орлеанская дѣва» events |
+| Moscow Новый drama | 131 / 132 | exact | with the 2 Dec fix |
+| Moscow Большой opera | 104 / 103 | exact | with Новый drama, the printed venue split (yearbook_own, provisional) |
+| Moscow Новый opera | 55 = 55 | −30.00 | yearbook_own, provisional |
+| Moscow ballet + mixed | 62 + 2 = 64 = lists | exact | 6 Jan anniversary bill, 12 Apr Иверская община |
+
+**Reviews** (two agents, checked by Claude; `1899-00_review_sp_ballet.csv`, `1899-00_review_msk_ballet.csv`): no Repertoire error.
+Their disagreements are slips in the stored review text, not the print (old-style 3 transcribed as 5: «25-го января» for «23-го» in
+both, Moscow «50-го»/«30-го», «15 … 5» for «13 … 3», «152» for «132», «51-го августа», and «5-й/5-я» for «3-й/3-я» after dancers'
+names). **Corrected 2026-10-30** (RG: "Yes, apply them"): every stored token with a 5 (104) read on the images by two agents, every differing crop checked by Claude (contact sheets `docs/eval/scan_audit/1899-00_review_*_slips_*.png`); 55 rows in `docs/eval/review_text_corrections.csv` (49 printed 3s, three phrases the transcription tripled, «Пьерины», «Иниго», four «Легатъ»). Review chain rebuilt on a copy, then on production: the Legnani benefit's six credits move to 23 Jan; dance lists and two assertions corrected; nothing else outside 1899-00 but 35 «Очарованный лѣсъ» mentions relabelled after the 1906-07 work change (same work). Backup `outputs/backups/review_text_1899-00_2026-10-30/`. RG read the two left over: SP p035 «Легатъ 5-й» is a 3 ("looks like a 3 to me"; the 1899-00 SP roster has only Легатъ 1-й Николай, 2-й Иванъ, 3-й Сергѣй), corrected; SP p013 «Ивановъ 5-й» is a 5 ("A five"; the roster has Ивановъ 5-й, Иванъ Николаевичъ), kept. The Moscow review lists 1 Sep «Звѣзды», which the Repertoire stores modernised as «Звёзды».
+
+**Outcome:** 12 ledger rows (1899-00-01..12): excluded_by_yearbook 4, yearbook_own 5 (4 provisional + reviews), corrected 1, classification 1,
+comparison_rule 1; then 1899-00-13 for the titles.
+
+**Titles audit (2026-10-30; RG: "Yes, apply").** The blind read's works were compared word by word with the stored ones: 127 cells
+differ, 83 only in punctuation (no change). The other 44 were read again by a second agent that saw neither version, and the doubtful
+ones by Claude (`docs/eval/scan_audit/1899-00_title_reads.csv`): 33 stored wrong («Свѣтитъ, да не грѣетъ» ×5, «Девятый валъ» ×3,
+«Вѣеръ» ×3, «поставитъ» ×6, «Юдиѳь» ×2, «Звѣзды», «Cyrano de Bergerac», «Der Königslieutenant», genres the print does not give on
+excerpts, genres run into titles), 9 misprints stored as printed and aliased (`genuine_print_typos.md`), 2 already right («Ирэнъ»).
+`fix_1899_00_titles.py` also restores 58 weekday words and 107 theater names the extraction modernised. Production had changed under
+the rebuild copy (another session), and the copy's own run had skipped two steps after a stale-key stop, so the promotion re-ran the
+whole pipeline on production and was diffed against the pre-promotion backup: only 1899-00 events and performances changed, 7 works
+folded into their real works, and 3 performances in other seasons (1891-92 «Der Königslieutenant», 1894-95 «Вѣеръ» ×2) joined the
+same works. Two keys on the old weekday text updated (`_MANUAL_DATE_OVERRIDES`, `receipts_print_typos.csv`). Counts and receipts
+unchanged. Backup `outputs/backups/titles_1899-00_2026-10-30/`. Left as found: other seasons still print or store «Девятый вальс» (5),
+«Свѣтить, да не грѣть» (5), «Шато-Инемъ» (2), «Джентльменъ» (17), not read on the scans.
