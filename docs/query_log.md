@@ -24093,3 +24093,22 @@ SELECT basis, count(*) FROM research.person_tenure GROUP BY 1 ORDER BY 2 DESC;
 Result: b9c01061 -> 3b1c8067 (Трефилова, 17 entries 1893-94..1909-10), bdf96341 -> cbfcc89c (Сигуля, 11 entries). Live persons 2,543;
 research.person 2,642; 0 shift blocks; Wikidata 178; receipts 3,223,154,439 (unchanged since the last check). Tenure: Трефилова SP
 1894-06-01 (stretches overturn majority, review), Сигуля Moscow 1899-09-01 (now stretches decide). person_tenure 3,054 runs.
+
+## 2026-10-30 — Graduates as a second witness for tenure start dates (RG: "Graduates as witness")
+
+```sql
+SELECT p.display_name, g.tenure_start_date AS grad, t.list, t.city, t.tenure_start_date, t.basis, t.first_season, t.printed_dates
+FROM research.person_tenure g JOIN research.person_tenure t ON t.person_id = g.person_id AND t.list <> 'Graduates'
+JOIN research.person p ON p.person_id = g.person_id WHERE g.list = 'Graduates' AND g.tenure_start_date IS NOT NULL;
+-- plus: BalletArtists appearances printing a start more than 60 days before the person's Graduates date, by season and city
+```
+
+Result: 466 Graduates runs, 370 dated; 52 graduates appear in no other list. Against the BalletArtists run: agree 306; same year,
+day differs 28 (the SP classes of 1897 and 1898: Graduates «1 мая», company «1 іюня», RG's 2026-10-12 ruling, plus Ячменева 3-я,
+Печатниковъ, Сергѣева); later posts in other lists (TheaterSchoolStaff, ProductionTeam) 10, expected; different year 15. 78 BalletArtists
+appearances print a start well before graduation; 59 of them in the SP lists of 1908-09 (19), 1909-10 (20), 1910-11 (20): recent
+graduates (classes of 1906 and 1907: Шолларъ, Ширяева, Соболева, Пюманъ, Николаидисъ, Нестеровская 2-я, Лукашевичъ, Кандина, Власова,
+Смирнова...) print «съ 1 іюня 1906/1907 г.» in 1906-07/1907-08 and an earlier date with a precise day from 1908-09 (Шолларъ «съ 22
+февраля 1904 г.», 1908-09 p. 92 no. 105, zoomed). research.person_tenure picks the later-format date for them ("stretches tie; seasons
+decide"). Applied RG's 2026-10-12 May/June ruling: 25 Graduates runs (classes of 1897: 8; 1898: 17) ruled 1 June, working value;
+rebuild: ruled by RG 26, receipts 3,223,154,439, research.person 2,642.
