@@ -903,3 +903,7 @@ and Claude; stored as printed (`docs/eval/scan_audit/1899-00_title_reads.csv`), 
   PROBABLE slip for 1904, not certain (RG 2026-10-30: "a reasonable assumption"): he is in no SP list before 1904-05, and the Moscow
   lists 1905-06..1910-11 print «съ 1 сентября 1904 г.». Zoomed 2026-10-30. Stored as printed; reading in `research.person_tenure_note`
   and `uncertain_person_identities.md` #46.
+- **Цыбинъ, Moscow Musicians 1900-01 (no. 100, p. 122) onward: «Владиміръ Николаевичъ» for «Николай Михайловичъ» (1896-97..1899-00).**
+  PROBABLE copying slip from the line above: «Ходаровскій, Владиміръ Николаевичъ», horn, printed directly above him 1898-99..1900-01;
+  repeated in every later list, Moscow and SP. Which name is right is open. Zoomed 2026-10-30; merged; `uncertain_person_identities.md` #47.
+  RG 2026-10-30: slips like this come from how human cognition works when copying long lists by hand.

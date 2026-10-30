@@ -23804,3 +23804,36 @@ Result: one record 4240d1, 8 entries. SP lists only 1904-05 (no. 72, p. 32, zoom
 Логановскій, 72 Лукасъ) or 1906-07; no other SP trumpeter dated 1894. Moscow lists 1905-06 (no. 59, p. 58, zoomed: «(съ 1 сентября
 1904 г.). Вторая труба.») to 1910-11, always «съ 1 сентября 1904 г.»; not in the Moscow 1904-05 list. No transfer note in either city.
 The only other Логин- in any list is Логинова, Прасковья Игнатьевна (ProductionTeam 1908-11).
+
+## 2026-10-30 — Цыбинъ, Владиміръ Николаевичъ (M8 transfer-year case): evidence
+
+```sql
+SELECT sp.season, pe.page_id, pe.list_number, pe.family_name, pe.first_name, pe.patronymic, pe.instrument, pe.tenure_note_text
+FROM entities.person_link pl JOIN raw.person_entry pe USING (entry_id) JOIN raw.source_pages sp USING (page_id)
+WHERE cast(pl.person_id AS varchar) LIKE '58db32%' OR cast(pl.person_id AS varchar) LIKE '25b54e%' ORDER BY 1, 2;
+-- plus: all SP and Moscow flutes 1906-07..1908-09; the 1907-08 SP and Moscow pages around no. 108
+```
+
+Result: record 58db32, Moscow 1900-01..1907-08 «Владиміръ Николаевичъ (съ 1 апрѣля 1897 г.). Флейта.»; 1907-08 Moscow p. 58 no. 108
+(zoomed) same text, no note. SP 1907-08 p. 32 no. 108 (zoomed) «Цыбинъ, Владимиръ (съ 1 сентября 1907 г.). Флейта.», no patronymic, no
+note; SP 1908-09..1910-11 «Владиміръ Николаевичъ (съ 1 сентября 1907 г.)». Not in the SP lists before 1907-08 or the Moscow lists after.
+Elsewhere transfers in these lists carry a note (e.g. SP 1906-07 Бергманъ «Переведенъ въ Москву съ 1 октября 1907 г.»); Цыбинъ's do not.
+Record 25b54e: «Цыбинъ, Николай Михайловичъ (съ 1 апрѣля 1897 г.)», Moscow flute 1896-97..1899-00 (same start, same instrument; the
+open one-man-or-two question, not read on the scans yet). No review mentions.
+
+## 2026-10-30 — Цыбинъ: Николай Михайловичъ (25b54e, Moscow 1896-97..1899-00) v. Владиміръ Николаевичъ (58db32, from 1900-01)
+
+```sql
+SELECT sp.season, pe.page_id, pe.list_number, pe.family_name, pe.first_name, pe.patronymic, pe.tenure_note_text
+FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id) WHERE pe.family_name LIKE 'Цыб%' OR pe.family_name LIKE 'Циб%' ORDER BY 1;
+SELECT list_number, family_name, first_name, patronymic, tenure_note_text FROM raw.person_entry pe JOIN raw.source_pages sp USING (page_id)
+WHERE pe.page_id LIKE 'musicians%MSK%' AND sp.season IN ('1899-00','1900-01') AND lower(coalesce(instrument,'')) LIKE 'флейт%';
+SELECT count(*) FROM entities.review_mention WHERE surface LIKE '%Цыбин%' OR surface LIKE '%Цибин%';
+```
+
+Result: only one Цыбинъ in any list each season. «Николай Михайловичъ (съ 1 апрѣля 1897 г.). Флейта.» 1896-97 (no. 105, p. 102),
+1897-98 (no. 102, stored), 1898-99 (no. 105, p. 124), 1899-00 (no. 101, p. 122, zoomed); «Владиміръ Николаевичъ (съ 1 апрѣля 1897 г.).
+Флейта.» 1900-01 (no. 100, p. 122, zoomed) on. The Moscow flute section is otherwise identical in 1899-00 and 1900-01 (Бюхнеръ,
+Коробковъ, Кречманъ, Фурманъ, Григорьевъ, Леоновъ, Ямикъ). The entry directly above him in 1898-99, 1899-00 and 1900-01 is
+«Ходаровскій, Владиміръ Николаевичъ (съ 1 октября 1898 г.). Вальдгорнъ» (nos. 104/100/99, zoomed 1899-00 and 1900-01): the new name
+is exactly the neighbour's. SP 1908-09..1910-11 also print «Владиміръ Николаевичъ». No review mentions.
