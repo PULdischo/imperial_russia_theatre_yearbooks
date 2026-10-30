@@ -24112,3 +24112,35 @@ graduates (classes of 1906 and 1907: Шолларъ, Ширяева, Собол�
 февраля 1904 г.», 1908-09 p. 92 no. 105, zoomed). research.person_tenure picks the later-format date for them ("stretches tie; seasons
 decide"). Applied RG's 2026-10-12 May/June ruling: 25 Graduates runs (classes of 1897: 8; 1898: 17) ruled 1 June, working value;
 rebuild: ruled by RG 26, receipts 3,223,154,439, research.person 2,642.
+
+## 2026-10-30 — Does the 1908-09 backdating touch all dancers, or only recent graduates? (RG's pupil-record hypothesis)
+
+```sql
+-- per city, consecutive listed seasons: dancers in both, how many print a different start date, how many an earlier one
+WITH a AS (SELECT person_id, city, season, min(printed_start_date) d FROM research.person_appearance
+           WHERE entity_type = 'BalletArtists' AND printed_start_date IS NOT NULL GROUP BY ALL) ...;
+-- SP 1907-08 -> 1908-09 changes by graduation year; per SP graduating class 1900-1910: graduates, how many with a company start
+-- more than 60 days before graduation, and their earliest printed dates
+```
+
+Result: SP 1907-08 -> 1908-09: 34 of 168 dancers print a different start (27 earlier); other SP season pairs 1903-11: 3-18. Moscow
+shows no jump (10 of 141). The 1908-09 SP changes are concentrated in the classes of 1904 (4), 1905 (4), 1906 (6), 1907 (5), each moved
+back about 1.5-2 years to a precise day (e.g. 1906-06-01 > 1904-02-22). Only part of each class: graduates whose company start
+precedes graduation by >60 days -- 1904: 0 of 15 by the tenure choice but 4 earliest-printed, 1905: 1 of 11, 1906: 5 of 13, 1907: 5 of 13,
+1909: 1 of 6 (Пильцъ 1907-10-13), 1900-03 and 1910: none.
+
+## 2026-10-30 — 1908-09 backdated graduates held unresolved (RG: "stay unresolved since we're still waiting on a few more seasons")
+
+```sql
+-- BalletArtists runs whose printed start is >60 days before the person's Graduates date, first printed 1908-09 or later
+WITH g AS (SELECT person_id, tenure_start_date gd FROM research.person_tenure WHERE list = 'Graduates' AND tenure_start_date IS NOT NULL),
+ bd AS (SELECT pa.person_id, pa.city, pa.printed_start_date d, min(pa.season) s0 FROM research.person_appearance pa JOIN g USING (person_id)
+        WHERE pa.entity_type = 'BalletArtists' AND pa.printed_start_date < g.gd - INTERVAL 60 DAY GROUP BY ALL HAVING min(pa.season) >= '1908-09')
+SELECT ... FROM bd JOIN g USING (person_id) JOIN research.person_tenure t ...;
+```
+
+Result: 24 runs; 19 belong to the pattern (18 dancers; Смирнова, Елена also in Moscow 1910-11) and were added to
+person_tenure_start_rulings.csv as unresolved: Барашъ, Болдырева, Власова, Горшкова, Иванова Ираида, Кандина, Карпова, Константинова,
+Лукашевичъ, Лушкина, Нестеровская 2-я, Николаидисъ, Пюманъ, Смирнова (SP, Moscow), Соболева, Ширяева, Шолларъ, Пильцъ. Left out as
+known or likely slips: Гончаровъ 2-й (1900), Исаевъ (1896), Мацкевичъ (1903), Чумаковъ (Moscow). Rebuild: unresolved (RG) 20, ruled 26,
+receipts 3,223,154,439. Graduates runs keep their own date (e.g. Шолларъ Graduates 1906-06-01).
