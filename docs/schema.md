@@ -551,7 +551,7 @@ exists, prints that leaving date in that list, and is listed in every season `se
 | `corroboration_found`, `corroboration_wanted` | evidence from the season reviews so far; what would settle it (reviews, RGIA дела) |
 | `decided` | who decided and when |
 
-Not yet in the Datasette export (`build_datasette.py` TABLES/SCHEMAS) -- add it there before the next publication.
+Exported to Datasette (`build_datasette.py`) since 2026-10-30.
 
 ## `research.work.title_note` (added 2026-10-26)
 

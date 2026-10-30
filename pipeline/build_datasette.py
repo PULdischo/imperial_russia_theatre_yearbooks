@@ -51,7 +51,7 @@ def _dates_as_iso(df):
     return df
 
 
-TABLES = ["theater", "work", "person", "event", "performance", "person_appearance", "person_tenure",
+TABLES = ["theater", "work", "person", "event", "performance", "person_appearance", "person_tenure", "person_tenure_note",
           "production", "production_work", "production_credit",
           "season_stat_check", "season_stat_line", "season_stat_footnote",
           "review_assertion", "review_solo", "review_credit",
@@ -123,6 +123,14 @@ SCHEMAS = {
             earliest_printed TEXT, latest_printed TEXT, printed_dates TEXT, slips_left_out TEXT,
             broken_service_printed INTEGER, later_period_start TEXT, several_entries_in_a_season INTEGER,
             ruling TEXT
+        )""",
+    # Printed leavings contradicted by later lists (docs/schema.md); one row per run with a discrepancy, rowid as key.
+    "person_tenure_note": """
+        CREATE TABLE person_tenure_note (
+            person_id TEXT REFERENCES person(person_id), list TEXT, city TEXT,
+            printed_leaving TEXT, printed_leaving_date TEXT, printed_in_seasons TEXT,
+            research_reading TEXT, service_periods TEXT, discrepancy TEXT,
+            corroboration_found TEXT, corroboration_wanted TEXT, decided TEXT
         )""",
     "production": """
         CREATE TABLE production (
