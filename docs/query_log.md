@@ -23408,3 +23408,54 @@ SELECT event_id,date,time_of_day,receipts_total_kopecks,disciplines FROM researc
 ```
 
 Result: only raw.event_entry 3, analysis.event_entry 3, research.event 4 (p014__s021 receipts null -> 62575; p023__s019 morning -> evening no_performance; p023__s020 evening -> morning 142028; p029__s004 ballet -> opera), research.performance 1 (p029__s004__w1 -> work a5733fc5 «Карменъ» оп., discipline opera), research.work 2 («Карменъ» оп. 242 -> 243, бал. 1 -> 0), research.season_stat_check 1 (SP receipts +710.92 -> +1,336.67). Validation errors same 265 pages; person_link 0 shift blocks. compare_season_stats on the copy: Moscow ballet 49/49 +3,839.50, opera 164/164 −337.64 (+3,647.55 Faust as concert), Alex 197/198 +2,332.23. Production after promotion shows the same four rows.
+
+## 2026-10-29 — 1901-02 reconciliation: events by line, copied figures, blind read v. stored
+
+Tools: `compare_season_stats.py` (scratch out-dir), then every 1901-02 event classified with its `classify_work`/`classify_event`:
+```sql
+select e.event_id, e.city, t.canonical_name, e.date, e.time_of_day, e.event_status, e.receipts_total_kopecks,
+  e.is_benefit, e.is_charity, e.is_free, e.is_student_performance, e.n_works, e.disciplines, e.companies, e.annotation,
+  p.performance_id, p.genre_family, p.discipline, p.is_ceremonial, p.company, p.verbatim_genre, p.verbatim_title
+from research.event e join research.theater t using (theater_id) left join research.performance p using (event_id)
+where e.season='1901-02';
+-- same-city same-date identical receipts (copied figures); blind read (8 agents, 1,404 rows) joined on theater+date
+select t.canonical_name, cast(date as varchar), receipts_total_kopecks, receipts_verbatim, event_status
+from research.event e join research.theater t using(theater_id) where season='1901-02';
+select event_id, receipts_verbatim from research.event where receipts_verbatim like '(%';
+select list_number, title, performed_text, total_text, post_total_text from raw.production_entry where season='1901-02' and city='Moscow';
+```
+Result: city totals SP 638/604 +11,990.79, Moscow 539/534 −1,869.41. 8 charity cells hold the neighbour column's figure
+(Alex 26 Jan; Маріинскій 7-14 Mar 1902), 12,373.14 = SP charity-with-receipts total. Blind read: every session matches; figures
+differ only at the 8 copies, Новый 6 Nov (400.88 v. 400.83) and 4 damaged digits (Большой 30 Dec, Малый 24 Jan, Маріинскій
+14 Dec and 24 Jan). One parenthesised figure in the corpus (Малый 29 Sep 1901). Moscow list 46 + 3 partial-act dates = 49;
+list 21 Sep «Лебединое озеро» v. Repertoire 21 Oct. Lines: reconciliation README, 1901-02; ledger 1901-02-01..15.
+
+## 2026-10-29 — 1901-02 fix (8 copied charity figures, Новый 6 Nov): rebuilt copy (outputs/rebuild_1901-02_2026-10-29) v. pre_fix, then production
+
+```sql
+-- every BASE TABLE in both catalogs (56):
+SELECT count(*) FROM (SELECT * FROM <s>.<t> EXCEPT ALL SELECT * FROM o.<s>.<t>);  -- and the reverse
+SELECT n.event_id, n.date, p.receipts_total_kopecks, n.receipts_total_kopecks, n.receipts_verbatim FROM research.event n JOIN o.research.event p USING(event_id)
+ WHERE n.receipts_total_kopecks IS DISTINCT FROM p.receipts_total_kopecks OR n.receipts_verbatim IS DISTINCT FROM p.receipts_verbatim;
+SELECT * FROM research.season_stat_check WHERE season='1901-02';
+```
+Result: only raw.event_entry 9, analysis.event_entry 9, research.event 9 (p024__s028 and p030__s026,027,029-033 receipts -> null; p011__s030 40083 -> 40088), research.season_stat_check 2 (SP receipts −38,235 kop., charity receipts 0; Moscow −186,936). Validation errors identical (266 lines). Production after promotion and compare_season_stats: SP Alex drama 289,371.35 exact, German −0.02, opera −299.91; Moscow Новый drama + mixed exact, Малый −30.00, Большой opera −1,839.36. sqlite rebuilt.
+
+## 2026-10-29 — 1901-02 review-text slips (RG: "Yes, correct them"): three corrections tested on a copy and promoted
+
+`apply_review_text_corrections.py` on a copy of `outputs/reviews/merged_full` (3 replacements: SP p002 and MSK p008 «25-го сентября» ->
+«23-го»; MSK p029 «также балерина» -> «таже»), then `match_review_mentions.py` -> `build_reviews_duckdb.py` -> `build_review_assertions.py`
+-> `build_review_credits.py` on a copy of production (outputs/rebuild_review_1901-02_2026-10-29); every base table compared both ways
+(EXCEPT ALL), mentions on content (block, offsets, surface, entity), candidate-id lists sorted.
+```sql
+select block_id, mention_type, char_start, char_end, surface, entity_id, link_method, link_confidence from entities.review_mention
+except all select ... from o.entities.review_mention;   -- both directions
+select <cols, candidate_ids sorted, mention ids left out> from research.review_assertion except all select ... from o.research.review_assertion;
+-- same for review_credit, review_dance_performer, review_solo
+select count(*) from raw.review_block where page_id like 'review_1901-02%' and (text like '%25-го сентября%' or text like '%также балерина%');
+```
+Result: raw.review_block 3 rows; mentions: 2 work mentions in MSK p029 shifted −1 char (same entity), rest mention-id renumbering;
+research.review_assertion 9 (SP p002 «Корсаръ» cast, date 1901-09-25 -> 1901-09-23), research.review_credit 5 (same paragraph, same date
+move); review_dance_performer / review_solo only candidate-list order. MSK p008 has no assertions. Production unchanged since the copy;
+backup outputs/backups/review_text_1901-02_2026-10-29/; promoted (db, merged_full/review_block.csv, mentions/*.csv); sqlite rebuilt.
+After: 0 old strings left; 9 assertions dated 1901-09-23.

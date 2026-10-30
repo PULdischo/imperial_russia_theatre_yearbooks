@@ -1057,3 +1057,69 @@ real raw file (a sync duplicate?), left untouched.
 **Outcome so far:** 16 ledger rows. corrected 1 (30 Dec; the 19 Nov fix is inside -11), excluded_by_yearbook 3, classification 2 («Карменъ», «Гибель Фауста»),
 comparison_rule 1, yearbook_own 6 (provisional), open 3 (6 Feb French figure, 28 Jan kopecks for HathiTrust, the SP free-matinée count). Not yet done: ballet reviews,
 the MXAT company label in the research layer, titles audit.
+
+## 1901-02 (2026-10-29): eight copied charity figures; every count explained once they go; four damaged digits for RG
+
+The stats page is p. 40 (`1901-02_ProductionStats.pdf`): SP drama by venue, opera, ballet, French, German; Moscow drama, opera
+and ballet by venue, «Смѣшанныхъ» 1 (Большой). No footnotes. Ballet productions lists for both cities.
+
+**Step 1, city totals** (before any fix): SP 638 / 604, +11,990.79 р.; Moscow 539 / 534, −1,869.41 р.
+
+**Copied figures (the bulk of the SP gap).** Eight charity cells that print no receipts hold the figure of the neighbouring
+column on the same row: Александринскій 26 Jan 1902 has the Михайловскій's 2006 р. (Rousselle benefit), and the Маріинскій
+7, 8, 10, 11, 12, 13 and 14 Mar 1902 (Vienna operetta, Japanese troupe, Glinka concert, Любимовъ's opera) have the
+Александринскій German troupe's. 12,373.14 р.; it is exactly the SP total of "charity with receipts" in the data. Checked by
+Claude on the scan and by the blind read. **Applied 2026-10-29** (RG: "Yes, apply them"): `fix_1901_02_scan_reads.py` (receipts -> none; Новый 6 Nov below), rebuilt on a copy (`outputs/rebuild_1901-02_2026-10-29/`): raw/analysis event_entry 9, research.event 9, season_stat_check 2, nothing else in 56 tables; validation errors the same; person_link 0 shift blocks. Promoted (DB, parsed, the three raw pages), sqlite rebuilt, not republished; backup `outputs/backups/scan_reads_1901-02_2026-10-29/`. City totals now SP −382.35 р., Moscow −1,869.36 р. (ledger 1901-02-01).
+
+**Every column read blind** (8 agents, scans first; `docs/eval/scan_audit/1901-02_scan_reads.csv`, 1,404 rows incl. dashes).
+Every printed session matches a stored event. Every legible figure equals the stored one except the 8 copies and Новый 6 Nov
+«400 р. 88 к.» (stored 83; fixed by the same script). Four damaged digits, each of which closes a gap (crops `1901-02_rg_*.png`):
+
+| Cell | Print | Stored | Read | Closes |
+|---|---|---|---|---|
+| Большой 30 Dec matinée «Князь Игорь» | «1?31 р. 35 к.» | none | 1831.35 (low) | Большой opera −1,839.36 → −8.01 |
+| Малый 24 Jan «Волки и овцы» | «9?5 р. 81 к.» | 955.81 | 985.81 (low) | Малый −30.00 → 0 |
+| Маріинскій 14 Dec «Царская невѣста» | «3?33 р. 50 к.» | 3133.50 | 3433.50 (medium) | with the next, SP opera −299.91 → 0 |
+| Маріинскій 24 Jan «Евгеній Онѣгинъ» | «35?0 р. 5? к.» | 3590.59 | 3590.50 (medium) | |
+
+**What the stats count.** In: paying events and the free school matinées (14 Nov, 6 Dec, 20 Feb), and the 26 Nov free
+performance for the Георгиевские кавалеры. Out: charity without receipts (the Малый 29 Sep figure is printed in parentheses,
+«(3058 р. 08 к.)», and stored verbatim with no figure), and the guest companies, none of which print receipts here (Réjane,
+Sandrock in both cities, Угетти's Italian opera, the Vienna operetta and Japanese troupes, the Moscow Art Theatre).
+14 Nov at the Александринскій and Михайловскій (two works, one figure, no rule or labels) stays one event each (RG
+2026-10-12); the stats count each as a free matinée plus a paid evening, which makes the Михайловскій drama 68 and French
+130 lines match (1901-02-08).
+
+**Lines, with the fix script and the four readings above:**
+
+| Line | Counts | Receipts | Reading |
+|---|---|---|---|
+| SP ballet | 51 = 51 = list 51 | exact | |
+| SP opera | 138 = 138 | exact | with 14 Dec + 24 Jan readings (open, RG) |
+| SP German | 24 = 24 | exact | with the four ½-kopeck cells (#161 rule; 1901-02-12) |
+| SP Александринскій drama | 192 / 193 | exact | one charity event without receipts seems counted (open, 1901-02-09) |
+| SP Михайловскій drama | 68 = 68 | +45.00 | yearbook_own, provisional (every figure as stored) |
+| SP French | 130 = 130 | −127.27 | yearbook_own, provisional (−127.42 less 30 half-kopecks) |
+| Moscow ballet | 49 = 49, list 46 | exact | list prints 12 + 19 Dec «Коппелія» and 21 Feb acts below «Всего» (1901-02-15) |
+| Moscow Большой opera | 132 / 133 | −8.01 | 30 Dec reading; one event short (2 Feb Pushkin charity opera acts?), open |
+| Moscow Малый | 171 = 171 | exact | with 24 Jan reading |
+| Moscow Новый drama | 147 = 147 | exact | 144 + the three drama/ballet bills (classification) + 6 Nov fix |
+| Moscow Новый opera, Большой drama, «Смѣшанныхъ» | exact | exact | «Смѣшанныхъ» = 20 Apr benefit |
+
+**Moscow ballet list, one date.** «Лебединое озеро … сентября 16, 21»: the Repertoire has «Русланъ и Людмила» on 21 Sep and
+the ballet on 21 Oct, and the list has no October date for it. Probably a list slip (1901-02-14, for RG). The list page (p. 54)
+also prints the end of the Moscow **opera** productions list («Фаустъ», «Фра-Діаволо»): the opera list exists.
+
+**The ballet season reviews** (RG: "then cross check with the season reviews"; two agents, the review images and the Repertoire scans
+for every disagreement; `1901-02_review_sp_ballet.csv` (41 statements: 31 agree, 2 partial, 4 no, 4 n/a) and `1901-02_review_msk_ballet.csv`
+(27: 17, 2, 1, 7); checked by Claude). **No Repertoire error.** Three transcription slips in `raw.review_block`, read on the images:
+SP p002 and Moscow p008 «25-го сентября» are «23-го» (the old-style 3), Moscow p029 «также балерина» is «таже» (1901-02-16). **Corrected 2026-10-29** (RG: "Yes, correct them"):
+`docs/eval/review_text_corrections.csv`, review chain rebuilt on a copy (mentions, reviews, assertions, credits) and promoted: the SP
+23 Sep «Корсаръ» paragraph's 9 cast assertions and 5 credits moved from 25 to 23 Sep; two Moscow p029 work mentions shifted one character;
+nothing else apart from mention-id renumbering and candidate-list order. Backup `outputs/backups/review_text_1901-02_2026-10-29/`.
+The review's own slips (1901-02-17): SP «во второй разъ» for third performances (4 and 11 Nov), «2-го января 1903», Сѣдова's Медора
+«18-го февраля» (23 Feb), 24 Feb «Очарованный Лѣсъ» for «Оживленный садъ»; Moscow 24 Feb «2 дѣйствія» v. «2-е д.» in the Repertoire and
+list. Neither review mentions «Лебединое озеро» on 21 Sep or 21 Oct.
+
+**Outcome:** 17 ledger rows. Corrected 3 (the fix script, the review transcription slips), open 6 (the four damaged digits in three rows, the
+list date, the two count gaps), classification 3, yearbook_own 3 (2 provisional), comparison_rule 1, excluded_by_yearbook 1. Not yet done: titles audit.
