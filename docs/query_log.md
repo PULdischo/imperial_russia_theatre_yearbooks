@@ -23606,3 +23606,20 @@ SELECT count(*) FROM research.review_assertion WHERE date_undate > (split_part(s
 ```
 
 Result: every season 1890-91..1910-11 opens 16-31 Aug (first year) and ends by 26 May; no event in June-August of a second year. The only August review assertions were the 7 of review_1906-07_MSK_ballet_p000__b002, dated 1907. After `month >= 8` in resolve_date: research.review_assertion 7 and research.review_credit 7 rows changed, date_undate only (1907-08-30 -> 1906-08-30); nothing else. Production: 0 assertions dated after the season's June.
+
+## 2026-10-30 — 1906-07 title audit: stored raw works v. the blind column read; how the research layer groups the titles in question
+
+```sql
+SELECT e.event_id, t.canonical_name, e.date::varchar, e.time_of_day, e.printed_page_number,
+  (SELECT string_agg(coalesce(r.performance_title,'') || coalesce(', ' || r.genre, ''), ' + ' ORDER BY try_cast(r.performance_order AS int))
+     FROM raw.event_entry_performance r WHERE r.event_id = e.event_id) works, e.annotation
+FROM research.event e JOIN research.theater t USING (theater_id) WHERE e.season = '1906-07' AND e.event_status = 'performed';
+-- compared in Python with docs/eval/scan_audit/1906-07_scan_reads.csv, punctuation/spacing/case ignored
+SELECT p.verbatim_title, coalesce(p.verbatim_genre,'') g, w.canonical_title, count(*) n, min(e.season), max(e.season)
+FROM research.performance p JOIN research.event e USING (event_id) JOIN research.work w USING (work_id)
+WHERE p.verbatim_title SIMILAR TO '(Факел|Василиса Мелент|Валк|Пиковая д|Д.{0,1}митрій Самозв|Д.{0,1}митрій Донск|День ден|Драма жизни|Боярыня Вѣра|Le bonh|Paraître|Miquette|Le cultivateur|Le c.{1,2}ur d|Vous n).*' GROUP BY ALL;
+SELECT e.event_id, e.date, r.performance_order, r.performance_title, r.genre FROM raw.event_entry_performance r JOIN research.event e USING (event_id)
+WHERE r.performance_title LIKE 'Le bonh%' AND e.season = '1906-07';
+```
+
+Result: 39 cells differ (Михайловскій 12, Новый 11, Большой 6, Маріинскій 5, Александринскій 4, Малый 1) + 2 «Le bonheur» [mesdames.] cells found by grouping. Research effects of the misreads: «Василиса Мелентьевна» is a separate 5-performance work (1899-00..1906-07) beside «Василиса Мелентьева» (53); «Факель въ тайникѣ» (7, all 1906-07); «День денищика Душкина» (1) beside «День денщика Душкина» (19); «Le coeur d'Angélique com.» (1); «Боярыня Вѣра Шелога, прологъ» [оп.] (4+1) beside «Боярыня Вѣра Шелога» [прологъ] (19); «Валкірія» stored 11 times 1901-02..1909-10. Second read (agent, neither version shown) agrees with the blind read on 38/39; n12 «bonhomme» read by Claude = stored. Readings: docs/eval/scan_audit/1906-07_title_reads.csv.
