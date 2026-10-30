@@ -24587,3 +24587,23 @@ MSK p003 no. 72 Станиславская's tenure note no longer holds half he
 (`outputs/backups/sp_p006_tenure_1908-09_2026-10-30/`): person_entry 23 rows (those 23 entries only), person_entry_credit +12 -2
 (Обуховъ's 10; Лопуховъ's and Новиковъ's ballet count now parsed), research.person_appearance tenure_note_text 23; 51 of 56
 tables identical. Item (2), carry-over copies in other seasons, is still open.
+
+## BalletArtists tallies stored on the wrong person (copies and slipped runs) -- FIXED 2026-10-30 (RG: "yes, go ahead")
+
+Item (2) of the 1908-09 «Всего» entry above ("carry-over copies in other seasons"). Corpus search (`docs/query_log.md`): 76
+same-page pairs with identical stored credit lines. All read on the scans; every page with a confirmed copy then transcribed IN
+FULL by readers shown only the names (30 pages, 815 entries; 1900-01 SP p000 by Claude) and compared line by line with the store.
+Evidence: `docs/eval/copied_tallies_2026-10-30/`. **The defect:** where a person has NO tally in print, the extraction filled the
+gap with a neighbour's — the next or previous entry, or the one level with them in the next column. 51 people carried a tally that
+is not theirs, 1890-91 to 1907-08 (35 of the 76 pairs were genuine: identical lines really are printed). Two pages slipped whole
+runs: **1893-94 SP p003** (Никитина 82 has no tally; Николаева, Ниманъ, Носкова each held the next person's) and **1900-01 SP p000**
+(the 11 staff entries — Петипа, Ивановъ, Ширяевъ, Аистовъ, Ефимовъ, Камышевъ, Петровъ, Усачевъ, Ѳомичевъ, Мозеръ, and Артистки no. 1
+Аистова — held the dancers' tallies from the next column, row by row; no. 2 Александрова 1-я held no. 13's).
+`docs/eval/raw_fix_copied_tallies_2026-10-30.py`: 51 credit lines removed; the 1893-94 run moved back and Александрова 1-я given her
+printed «Въ 3 балетахъ—9»; Бакинъ 2-й (1905-06 MSK) «свѣтлой» -> «слѣпой»; two totals the extraction had silently corrected restored
+as printed (Николаидисъ 18, Брыкинъ 56; credit_totals_scan_verified.csv); 1900-01 SP p000 tenure notes given their parentheses and
+the four printed notes the page had lost (Петипа's and Ивановъ's titles, Петровъ's secondment, Аистова's leaving date + service end).
+Rebuild vs backup (`outputs/backups/copied_tallies_2026-10-30/`): person_entry 69 rows on those 31 pages only; person_entry_credit
+-190 +18; person_entry_service 1 (Аистова); research.person_appearance 23 (tenure_note_text, 1900-01 SP p000); 51 of 57 tables
+identical; quality flags back to the one known (Исаева). **Not covered:** a copy whose text differs from its source (no identical
+pair to find it) — the full-page reads found none beyond the pairs on these 31 pages, but pages without an identical pair were not read.

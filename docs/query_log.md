@@ -24060,3 +24060,24 @@ Read by a read-only agent (41 zooms, `scratchpad/ov_check/`); re-checked by Clau
 - Брюховъ: 1895 (1895-96, 1903-04 on) v. 1896 (1896-97..1902-03); leans 1895 (listed in the 1895-96 volume), not conclusive.
 - Романова: not rival dates but a broken service, printed in full from 1900-01: «съ 1 сентября по 1 декабря 1887 г. и съ 1 марта
   1889 г.»; other seasons print one part only. 1908-09 prints «1 марта 1899 г.», a print slip for 1889.
+
+## 2026-10-30 — Tallies copied onto a neighbour: corpus-wide candidates (carry-over check)
+
+```sql
+select e.page_id, e.entry_id, e.list_number, e.family_name, e.credit_summary_text
+from raw.person_entry e where e.credit_summary_text is not null and length(e.credit_summary_text) > 0 order by e.page_id, e.entry_id;
+-- then in Python, per page: (a) X's normalised text an exact tail of Y's; (b) X identical to Y;
+-- (c) BalletArtists «Всего» lines: X ~ tail of Y by difflib ratio >= 0.85 (ь=ъ, всѣ=въ)
+```
+
+Result: 8,007 entries with credit text on 385 pages. (a) 4 hits, all leaving notes («Оставила службу …»), no tally; (b) 76 identical pairs: 12 with named roles (5 adjacent), 64 category-only (29 adjacent, 35 apart); (c) 159 near-tails, nearly all short generic opera tallies. Sent for scan reading: the 12 role pairs, the 29 adjacent category-only pairs, and 1908-09 MSK p003 no. 65 Павлова vs no. 72 Станиславская (42 pairs, 81 entries, 33 pages).
+
+## 2026-10-30 — Copied-tallies fix: rebuild diff against the backup
+
+```sql
+-- per table, both directions, current vs outputs/backups/copied_tallies_2026-10-30/imperial_theaters.duckdb
+select count(*) from (select * from <schema>.<table> except all select * from old.<schema>.<table>);
+select count(*) n, count(distinct split_part(entry_id,'__',1)) pages from (select * from raw.person_entry except all select * from old.raw.person_entry);
+```
+
+Result: 51 of 57 tables identical; raw/analysis person_entry +69 -69 (31 pages, all in the fix); person_entry_credit +18 -190; raw.person_entry_service +1 -1 (Аистова 1900-01); research.person_appearance +23 -23 (tenure_note_text on 1900-01 SP p000). Quality flags 3 -> 1 after adding Николаидисъ and Брыкинъ to credit_totals_scan_verified.csv. Earlier the same day: full-page readings of 30 pages compared with raw credit_summary_text (Python, from outputs/full_run/raw): 741 match, 18 none/none, 40 stored tally with nothing printed, 16 number differences (chain 1893-94, 2 silent corrections, 3 damaged print digits, 8 leaving notes stored inside the credit line, 2 lines missing «Всего»).

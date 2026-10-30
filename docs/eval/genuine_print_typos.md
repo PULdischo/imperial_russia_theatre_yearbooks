@@ -930,3 +930,11 @@ The rest are the readers' readings, NOT yet re-read by Claude.
 - **Names and headings:** SP p002 «Ніясинская» (for Нижинская); MSK p006 no. 46 Рябцевъ «съ 1 сентяяря 1898 г.» †;
   MSK p004 no. 10 Гавриловъ «Алексанпръ»; SP p003 Пороховникова numbered «60.» where 70 belongs; MSK p004 no. 19 Ивановъ 2-й
   «съ свитѣ хана»; MSK p005 Никольскій, a stray dot before «Всего».
+
+## BalletArtists totals the extraction had silently corrected (added 2026-10-30; now stored as printed)
+
+- **1907-08 SP p003 no. 68 Николаидисъ: «Въ 6 балетахъ — 18; въ 3 операхъ — 6. Всего—18 разъ.»** (18+6=24). Read by Claude and a blind reader.
+- **1895-96 MSK p004 Артисты no. 7 Брыкинъ: «… въ 1 драмѣ—1. Всего—56 разъ.»** (34+31+1=66). Clear «56» at zoom (Claude).
+Both are in `credit_totals_scan_verified.csv`. Other slips the 2026-10-30 readers noted, NOT re-read by Claude:
+1902-03 MSK p005 Бакинъ 3-й (parts 75, total 76) and Брыкинъ 2-й (72 / 73); 1903-04 SP Трефилова (roles 23, tally 25);
+1907-08 SP Трефилова «6ѣлая кошечка» (figure 6 for б); 1893-94 SP no. 97 surname printed «Петерсъ» (stored «Петеръ»).
