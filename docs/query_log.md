@@ -24364,3 +24364,12 @@ events_with_dancers 2,195 -> 2,213. Open: SP opera −3,050.20 (yearbook_own, pr
 Read from the raw JSON (outputs/full_run/raw/balletartists_*.raw.json; credit_summary_text per entry), compared in Python with 43 readers' per-entry readings (docs/eval/copied_tallies_2026-10-30/sweep/sweep.py compare).
 
 Result: 7,550 entries on 344 pages; 7,415 agree; 135 disagree = 15 stored tally / nothing printed (13 bare «Всего—N разъ» fragments; Мыльникова 1907-08 MSK p003 holds a near-copy of Невельская's line, «13 балетахъ» for «12»; Турчанинова's service note), 2 printed tally not stored (Кольева, Евлановъ), 75 entries on 3 pages with no tallies stored (1891-92 MSK p005, 1895-96 SP p008, 1905-06 SP p006), 43 number disagreements (23 real, 20 cut/unclear/known slips).
+
+## 2026-10-31 — Removal of 14 BalletArtists tallies with nothing printed (sweep follow-up): rebuild diff
+
+Raw edit: docs/eval/raw_fix_sweep_removals_2026-10-31.py --write (14 entries, 9 pages), then docs/eval/rebuild_after_raw_edit.sh.
+Diff: every BASE TABLE of outputs/full_run/imperial_theaters.duckdb v. imperial_theaters.pre_sweep_removals_2026-10-31.duckdb,
+`SELECT * FROM t EXCEPT ALL SELECT * FROM b.t` both ways.
+
+Result: raw/analysis.person_entry +14 -14, person_entry_credit -17 (this fix); raw/analysis.event_entry +1 -1, research.event +2 -2,
+research.season_stat_check +2 -2 = the parallel 1902-03 session's raw edit (Alex 14 Dec 1902 receipts 659 -> null); all other tables identical.

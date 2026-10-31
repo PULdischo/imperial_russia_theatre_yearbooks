@@ -24619,3 +24619,20 @@ same pattern as the copied-tallies fix above); three misread totals (Полли�
 lines break at the foot of the page after the number, and two totals are defective in the print itself (Никитина 1-я, Гончарова).
 Rebuild vs backup (`outputs/backups/unreadable_tallies_2026-10-30/`): person_entry 7, person_entry_credit 5; 53 of 57 tables
 identical. (The live-person count 2545 -> 2543 in the rebuild log is a parallel session's merge, ca77502, already in the backup.)
+
+### Follow-up: sweep of the 344 unread BalletArtists pages -- 14 more tallies with nothing printed REMOVED 2026-10-31 (RG: "yes")
+
+The "Not covered" gap above, closed: every BalletArtists page not yet read in full (344 pages, 7,550 entries) was transcribed by
+readers shown only the names and compared with the store (`docs/eval/copied_tallies_2026-10-30/sweep/`, commit 4995af9); 7,415
+agree. Copies were rare: 14 people print nothing but held a stored tally, each confirmed by Claude on the scan.
+`docs/eval/raw_fix_sweep_removals_2026-10-31.py` sets them to null: 13 bare «Всего—N разъ» fragments (the previous entry's total;
+Степановъ 1891-92 and 1894-95 SP, Френева 1893-94 and 1894-95 MSK, Чумичева 1894-95 MSK, Мокшева 1894-95 SP, Кузнецова, Лузина 1-я
+and Марковская 1895-96 MSK, Центерова, Черепова 1-я and Ѳедорова 1-я 1898-99 MSK, Петрова 1-я 1899-00 MSK) and one near-copy that
+no identical-pair search could find: 1907-08 MSK no. 60 Мыльникова held no. 61 Невельская's line with «13 балетахъ» for «12» (she
+prints only «Оставила службу 24 февраля 1907 г.», already her tenure note). Rebuild vs backup
+(`outputs/full_run/imperial_theaters.pre_sweep_removals_2026-10-31.duckdb`): person_entry 14, person_entry_credit -17, nothing else
+from this fix. (The rebuild also picked up the parallel 1902-03 reconciliation's raw edit already on disk: Александринскій 14 Dec
+1902 receipts 659 -> null, 1 event row + 2 season_stat_check rows.)
+**Still open from the sweep (for RG):** 23 number disagreements to read on the scans; 2 printed tallies never stored (Кольева 1892-93
+MSK, Евлановъ 1906-07 MSK); 3 pages with no tallies stored at all (1891-92 MSK p005, 1895-96 SP p008, 1905-06 SP p006; 75 people);
+«Гій» stored as Кшесинскій 1-й's surname (1901-02 SP p007 e003).
