@@ -24651,6 +24651,10 @@ the stored reading fits; the rest of the 43 were cut lines or parsing artefacts.
 (`imperial_theaters.pre_sweep_digits_2026-10-31.duckdb`): person_entry 21, person_entry_credit +34 -28, on these entries only;
 quality flags back to the one known (Исаева). The same rebuild carried the parallel 1902-03 title audit's raw edits (event/work
 tables, 1902-03 Repertoire pages only).
-**Held for RG (group D):** italic 3/8 in Moscow 1902-04 totals (Шеншинъ stored 53, Бакинъ 2-й 78, Боткина 86; the parts favour 3 in
-all three) and Пантелеевъ 1892-93 SP «113» or a damaged «143». Logged, not chased: surnames printed «Плессюкъ» (stored Плесскій,
+**Group D, italic 3/8 -- RULED 2026-10-31 (RG: "keep 73/36 with both readings recorded"):** in Moscow 1902-04 totals the italic 3
+and 8 are indistinguishable. Бакинъ 2-й 1903-04 78 -> 73 and Боткина 1902-03 86 -> 36 (the parts decide;
+`raw_fix_italic_3_8_totals_2026-10-31.py`); Шеншинъ 1903-04 already 53. Both had been recorded as print slips by the issue #150 blind
+reader (86, 78); the sweep reader read 36, 73; Claude cannot tell. credit_totals_scan_verified.csv now says `ambiguous_digit` with both
+readings. Rebuild vs backup (`imperial_theaters.pre_italic38_2026-10-31.duckdb`): those 2 person_entry + 2 credit rows only (plus one
+1904-05 performance row from the parallel session's uncommitted curation). **Still open:** Пантелеевъ 1892-93 SP «113» or a damaged «143». Logged, not chased: surnames printed «Плессюкъ» (stored Плесскій,
 1900-01 SP) and «Лазуко» (stored Лазукко, 1904-05 SP).

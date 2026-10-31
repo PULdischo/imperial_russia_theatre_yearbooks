@@ -24402,3 +24402,11 @@ Diff: every BASE TABLE v. imperial_theaters.pre_sweep_digits_2026-10-31.duckdb, 
 
 Result: raw/analysis.person_entry 21 rows; person_entry_credit +34 -28 on 20 of them (Бессонэ text only); every event/performance/work
 change is on repertoire_1902-03 pages (the 1902-03 title audit's raw edits); quality flags 1 (Исаева).
+
+## 2026-10-31 — Italic 3/8 totals (Бакинъ 2-й, Боткина): rebuild diff
+
+Raw edit: docs/eval/raw_fix_italic_3_8_totals_2026-10-31.py --write, rebuild_after_raw_edit.sh; every BASE TABLE v.
+imperial_theaters.pre_italic38_2026-10-31.duckdb (EXCEPT ALL both ways); quality_checks.py rerun after updating credit_totals_scan_verified.csv.
+
+Result: raw/analysis.person_entry +2 -2, person_entry_credit +2 -2 (the two entries); research.performance +1 -1 =
+repertoire_1904-05_p003__s034__w2 (parallel session's uncommitted curation, not this fix); quality flags 1 (Исаева).
