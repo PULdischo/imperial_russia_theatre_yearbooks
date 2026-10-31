@@ -24358,3 +24358,9 @@ RG yes). Titles: 279 cells differ, 213 punctuation; 57 works changed or added, 5
 performances 30,825 -> 30,833, works 2,943 -> 2,948, receipts unchanged (3,223,154,439 kopecks). Reviews: no Repertoire error;
 17 stored-text corrections (RG yes). includes_dance: «Принцесса Греза» 5, «Ледяной домъ» 9, «Анджело» 4 (RG yes);
 events_with_dancers 2,195 -> 2,213. Open: SP opera −3,050.20 (yearbook_own, provisional).
+
+## 2026-10-31 — Copied-tally sweep of the 344 unread BalletArtists pages: comparison with the stored credit lines
+
+Read from the raw JSON (outputs/full_run/raw/balletartists_*.raw.json; credit_summary_text per entry), compared in Python with 43 readers' per-entry readings (docs/eval/copied_tallies_2026-10-30/sweep/sweep.py compare).
+
+Result: 7,550 entries on 344 pages; 7,415 agree; 135 disagree = 15 stored tally / nothing printed (13 bare «Всего—N разъ» fragments; Мыльникова 1907-08 MSK p003 holds a near-copy of Невельская's line, «13 балетахъ» for «12»; Турчанинова's service note), 2 printed tally not stored (Кольева, Евлановъ), 75 entries on 3 pages with no tallies stored (1891-92 MSK p005, 1895-96 SP p008, 1905-06 SP p006), 43 number disagreements (23 real, 20 cut/unclear/known slips).
