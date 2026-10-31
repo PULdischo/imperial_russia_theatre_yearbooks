@@ -1,0 +1,15 @@
+You are mapping part of a scanned 1904-05 Russian imperial theatres yearbook (HathiTrust/Google bitonal scan). Pre-1918 orthography (ъ, ѣ, і, ѳ) must be kept exactly as printed.
+
+Images: /Users/rachelglodo/Documents/Princeton 2022-present/Dissertation/imperial_russia_theatre_yearbooks-main/hathi/1904-05/NNNNNNNN.jpg (8-digit, zero-padded sequence numbers). Read ONLY the images in your range (given below). Do not open anything else in the repository, any database, or the web. These images are 2852x3539 px; if the text is too small, crop/zoom regions with Python+PIL (write any helper files only to /private/tmp/claude-502/-Users-rachelglodo-Documents-Princeton-2022-present-Dissertation-imperial-russia-theatre-yearbooks-main/416d80b2-9152-4c99-b1a9-1e2c9988f077/scratchpad/roster/work/), e.g. the top 25% and bottom 25% of the text block.
+
+This part of the volume holds staff lists («Списокъ лицъ, служащихъ…»): administration (Дирекція, Конторы), artists of the drama/opera/ballet companies, orchestras, production departments (декораціонный, гардеробный, машинный…), theatre schools (училища), etc., two columns per page, entries like «Петровъ, Константинъ Ивановичъ».
+
+For EACH image in your range, record:
+- seq (image number), printed_page (the printed page number, usually at the top or bottom corner; blank if none),
+- kind: list page / title or blank page / plate / other text,
+- headings: every heading or sub-heading printed on the page, in order, verbatim (city, institution, company, section like «Артистки:», «Музыканты:», «Отдѣлъ гардеробный»…), separated by " | ",
+- first_name_on_page: the first person entry on the page (surname + first name as printed, incl. ordinals like «2-я»), and
+- last_name_on_page: the last person entry on the page (bottom of the right column),
+- note: anything odd (torn, cut off, blank half, page numbers out of sequence, a page that seems to repeat or skip).
+
+Write a CSV with columns seq, printed_page, kind, headings, first_name_on_page, last_name_on_page, note to the output path given below, then reply with a short summary: printed-page range covered, any gaps or jumps in printed page numbers, and the sequence of major sections (with image ranges).

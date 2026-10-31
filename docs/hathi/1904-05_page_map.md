@@ -24,5 +24,31 @@ Rule for 760–816: **printed page = image − 670**, checked at images 760, 803
 
 Completeness check against our scans: Repertoire pp. 90–133 (44 pages) = our 44 Repertoire pages, no gap;
 p. 134 = our `1904-05_ProductionStats.pdf`; ballet lists pp. 138, 139, 145 (+146) = our ballet-list scans.
-No page in that run is missing from HathiTrust or from our scans. Not yet compared: the roster section
-(our roster pages carry no printed page numbers in `raw.source_pages`).
+No page in that run is missing from HathiTrust or from our scans. The roster section is compared below.
+
+## Roster comparison — DONE 2026-10-31 (checked by Claude)
+HathiTrust images 655–760 mapped by two agents (`1904-05_roster_hathi_map.csv`; rows 708–743 partly re-checked
+only); our 50 pages in `1904-05_roster_our_pages.csv`, matched by first/last names (4 pages confirmed by names
+at the page edges, query in docs/query_log.md 2026-10-31).
+
+Part I ends at image 668 (printed «230», a slip for 234). Image 669 = «Часть вторая» title; Part II restarts at p. 1
+(image 671); **printed page = image − 670 throughout Part II** (pp. 1–146, images 671–816).
+
+| Images (pp.) | Section | Ours |
+|---|---|---|
+| 671–685 (1–15) | SP Russian drama, Russian opera troupes | out of scope |
+| 686–696 (16–26) | SP ballet troupe (p. 26 also starts the French troupe) | BalletArtists SP p000–p010 |
+| 697–699 (27–29) | SP French drama troupe | out of scope |
+| 700–706 (30–36) | SP orchestras, music library | Musicians SP p000–p006 |
+| 706–721 (36–51) | Moscow Russian drama and opera troupes | out of scope |
+| 722–730 (52–60) | Moscow ballet troupe (starts lower p. 52) | BalletArtists MSK p000–p008 |
+| 731–735 (61–65) | Moscow orchestras (opera/ballet, Малый), music library | Musicians MSK p000–p004 |
+| 736–740 (66–70) | Production staff, SP and Moscow | ProductionTeam p000–p004 |
+| 741–745 (71–75) | Administration (Directorate, SP and Moscow Contora) | Administrators p000–p004 |
+| 746–751 (76–81) | Theatre schools' staff | TheaterSchoolStaff p000–p005 |
+| 752, 754 (82, 84) | School reports with 1905 ballet graduates, SP and Moscow | Graduates p000, p001 |
+| 753, 755 (83, 85) | Drama-course reports and graduates | out of scope |
+| 756–757 (86–87) | Театрально-Литературный Комитетъ | out of scope |
+
+**Result: every HathiTrust page in our sections is in our scans, one to one (50/50); no page is missing.**
+Noted in passing (not checked): Голяховскій's patronymic «Власьевичъ» p. 77 v. «Васильевичъ» p. 78 (school staff).

@@ -24373,3 +24373,23 @@ Diff: every BASE TABLE of outputs/full_run/imperial_theaters.duckdb v. imperial_
 
 Result: raw/analysis.person_entry +14 -14, person_entry_credit -17 (this fix); raw/analysis.event_entry +1 -1, research.event +2 -2,
 research.season_stat_check +2 -2 = the parallel 1902-03 session's raw edit (Alex 14 Dec 1902 receipts 659 -> null); all other tables identical.
+
+## 2026-10-30 — 1904-05 roster pages with first and last entries, for the HathiTrust roster-section comparison
+
+```sql
+with e as (select p.page_id, s.source_file, s.source_page_index, p.entry_id, p.family_name, p.first_name, p.heading_path from raw.person_entry p join raw.source_pages s using(page_id) where s.season='1904-05')
+select page_id, any_value(source_file) f, any_value(source_page_index) idx, count(*) n,
+ arg_min(family_name||' '||coalesce(first_name,''), entry_id) first_entry, arg_max(family_name||' '||coalesce(first_name,''), entry_id) last_entry,
+ arg_min(heading_path, entry_id) first_heading
+from e group by page_id order by f, idx;
+```
+
+Result: 50 roster pages with entries (Administrators 5, BalletArtists MSK 9 / SP 11, Musicians MSK 5 / SP 7, ProductionTeam 5, TheaterSchoolStaff 6, Graduates 2). First/last entries exported to scratchpad for matching against HathiTrust images.
+
+## 2026-10-31 — Are the HathiTrust edge names on the four 1904-05 roster pages that didn't match automatically?
+
+```sql
+select page_id, family_name, first_name from raw.person_entry where (page_id='musicians_1904-05_MSK_p003' and family_name in ('Стрекаловъ','Вейденбергъ')) or (page_id='administration_1904-05_p002' and family_name in ('Ружекъ','Силинъ')) or (page_id='theaterschoolstaff_1904-05_p001' and family_name in ('Орловъ','Сенкусъ')) or (page_id='balletartists_1904-05_MSK_p001' and family_name in ('Грекова 1-я','Васильевъ')) order by 1;
+```
+
+Result: all 8 names present (2 per page), so those four pages = HathiTrust images 734, 743, 747, 723. All 50 roster pages match one HathiTrust page each.
