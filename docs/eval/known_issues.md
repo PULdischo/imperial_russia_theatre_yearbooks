@@ -24656,5 +24656,5 @@ and 8 are indistinguishable. Бакинъ 2-й 1903-04 78 -> 73 and Боткин
 `raw_fix_italic_3_8_totals_2026-10-31.py`); Шеншинъ 1903-04 already 53. Both had been recorded as print slips by the issue #150 blind
 reader (86, 78); the sweep reader read 36, 73; Claude cannot tell. credit_totals_scan_verified.csv now says `ambiguous_digit` with both
 readings. Rebuild vs backup (`imperial_theaters.pre_italic38_2026-10-31.duckdb`): those 2 person_entry + 2 credit rows only (plus one
-1904-05 performance row from the parallel session's uncommitted curation). **Still open:** Пантелеевъ 1892-93 SP «113» or a damaged «143». Logged, not chased: surnames printed «Плессюкъ» (stored Плесскій,
+1904-05 performance row from the parallel session's uncommitted curation). Пантелеевъ 1892-93 SP «1?3»: RG 2026-10-31, "definitely a broken 4" -> stored 143 kept (damaged_digit; crop sweep/panteleev_1892-93_SP_total.png). Logged, not chased: surnames printed «Плессюкъ» (stored Плесскій,
 1900-01 SP) and «Лазуко» (stored Лазукко, 1904-05 SP).
