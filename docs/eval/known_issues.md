@@ -24658,3 +24658,16 @@ reader (86, 78); the sweep reader read 36, 73; Claude cannot tell. credit_totals
 readings. Rebuild vs backup (`imperial_theaters.pre_italic38_2026-10-31.duckdb`): those 2 person_entry + 2 credit rows only (plus one
 1904-05 performance row from the parallel session's uncommitted curation). Пантелеевъ 1892-93 SP «1?3»: RG 2026-10-31, "definitely a broken 4" -> stored 143 kept (damaged_digit; crop sweep/panteleev_1892-93_SP_total.png). Logged, not chased: surnames printed «Плессюкъ» (stored Плесскій,
 1900-01 SP) and «Лазуко» (stored Лазукко, 1904-05 SP).
+
+### Follow-up: tallies printed but never transcribed -- 77 entries TRANSCRIBED 2026-10-31 (RG: "yes, start the transcription")
+
+The sweep found three BalletArtists pages whose entries had no tally fields at all (1891-92 MSK p005, 1895-96 SP p008, 1905-06 SP
+p006; the extraction kept names and service dates only) and two single entries (1892-93 MSK no. 47 Кольева, printed «Копьева»;
+1906-07 MSK no. 20 Евлановъ). Two blind readers per page (`docs/eval/copied_tallies_2026-10-30/transcription/read_*.tsv`): 98 of
+100 readings agreed outright; the 2 letter differences read by Claude on the scan, both misprints stored as printed («Дочь
+фараопа», 1891-92 Манохинъ; «герцогь», 1905-06 Григорьевъ). Final text `transcription/final_tallies.tsv`; credit rows by
+`transcription/tally_parse.py`; `docs/eval/raw_fix_transcribe_missing_tallies_2026-10-31.py`. 77 tallies (3 people print none:
+Рыжевъ 1891-92, Пишо and Степановъ 1895-96), 146 role rows; every printed total equals its parts. Rebuild vs backup
+(`imperial_theaters.pre_transcribe_tallies_2026-10-31.duckdb`): person_entry 77, person_entry_credit +372, nothing else; quality
+flags 1 (Исаева). Logged, not chased: surnames «Копьева» (stored Кольева) and «Тимомировъ 1-й» (1895-96 SP p008, probably
+Тихомировъ) as stored.

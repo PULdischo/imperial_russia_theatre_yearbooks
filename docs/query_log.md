@@ -24410,3 +24410,11 @@ imperial_theaters.pre_italic38_2026-10-31.duckdb (EXCEPT ALL both ways); quality
 
 Result: raw/analysis.person_entry +2 -2, person_entry_credit +2 -2 (the two entries); research.performance +1 -1 =
 repertoire_1904-05_p003__s034__w2 (parallel session's uncommitted curation, not this fix); quality flags 1 (Исаева).
+
+## 2026-10-31 — Missing BalletArtists tallies transcribed (77 entries): rebuild diff
+
+Raw edit: docs/eval/raw_fix_transcribe_missing_tallies_2026-10-31.py --write (80 entries, 5 pages), then rebuild_after_raw_edit.sh.
+Diff: every BASE TABLE v. imperial_theaters.pre_transcribe_tallies_2026-10-31.duckdb, EXCEPT ALL both ways; changed page_ids listed.
+
+Result: raw/analysis.person_entry +77 -77 and person_entry_credit +372 -0, all on balletartists 1891-92_MSK_p005, 1895-96_SP_p008,
+1905-06_SP_p006, 1892-93_MSK_p002, 1906-07_MSK_p005; no other table changed; quality flags 1 (Исаева).

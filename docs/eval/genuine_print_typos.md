@@ -994,3 +994,10 @@ The extraction had "corrected" each of these to the sum of the parts; restored t
 - 1901-02 SP no. 82 Ѳедоровъ 2-й: «Всего— разъ», no number printed (60+11=71), like 1910-11 MSK Никитина 1-я.
 Surnames printed differently from the store (logged, not changed): 1900-01 SP no. 58 «Плессюкъ» (stored Плесскій); 1904-05 SP no. 39
 «Лазуко» (stored Лазукко).
+
+## BalletArtists tallies transcribed 2026-10-31 (two blind readers + Claude; stored as printed)
+
+- 1891-92 MSK no. 35 Манохинъ: «Дочь фараопа» (п for н). 1905-06 SP no. 22 Григорьевъ: «герцогь» (ь for ъ).
+- Missing dashes: 1895-96 SP no. 64 Татариновъ «Въ 10 балетахъ 37»; 1905-06 SP no. 23 Дмитріевъ «Всего 48 разъ».
+- Role spelled two ways on one page: 1905-06 SP «Топорагва» (no. 15) and «Толорагва» (no. 32), Баядерка.
+- 1891-92 MSK no. 58 Татариновъ: a comma, not a semicolon, after «Донъ-Кихотъ (Санхо-Панса—2)».
