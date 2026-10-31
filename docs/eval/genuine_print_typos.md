@@ -983,3 +983,14 @@ Both are in `credit_totals_scan_verified.csv`. Other slips the 2026-10-30 reader
   2026-10-30; merged. Possible copying sources: «Нестеровская 1-я, Лидія» two lines below; «Свирская, Лидія Николаевна» in the same list.
 - **Нижинская, SP BalletArtists 1908-09 (no. 63, p002, p. 91): «Ніясинская, Бронислава Фоминична»** (every other season «Нижинская»).
   Zoomed 2026-10-30. The extraction had stored «Нижинская»; raw restored to the print (RG), still linked to her record.
+
+## BalletArtists tally totals, copied-tally sweep digit reads (added 2026-10-31; Claude, stored as printed)
+
+The extraction had "corrected" each of these to the sum of the parts; restored to the print (`raw_fix_sweep_digit_reads_2026-10-31.py`):
+- 1898-99 MSK no. 52 Куршинская: «Всего—80 разъ» (58+27+1=86).
+- 1900-01 SP no. 40 Масловъ: «Всего—98 разъ» (61+30+5=96).
+- 1905-06 MSK no. 20 Домашевъ: «Всего — 22 раза» (19+4=23).
+- 1907-08 MSK no. 15 Голубинъ 1-й: «Всего—15 разъ» (14+8=22).
+- 1901-02 SP no. 82 Ѳедоровъ 2-й: «Всего— разъ», no number printed (60+11=71), like 1910-11 MSK Никитина 1-я.
+Surnames printed differently from the store (logged, not changed): 1900-01 SP no. 58 «Плессюкъ» (stored Плесскій); 1904-05 SP no. 39
+«Лазуко» (stored Лазукко).

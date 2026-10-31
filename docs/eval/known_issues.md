@@ -24636,3 +24636,21 @@ from this fix. (The rebuild also picked up the parallel 1902-03 reconciliation's
 **Still open from the sweep (for RG):** 23 number disagreements to read on the scans; 2 printed tallies never stored (Кольева 1892-93
 MSK, Евлановъ 1906-07 MSK); 3 pages with no tallies stored at all (1891-92 MSK p005, 1895-96 SP p008, 1905-06 SP p006; 75 people);
 «Гій» stored as Кшесинскій 1-й's surname (1901-02 SP p007 e003).
+
+### Follow-up: the sweep's number disputes -- read on the scans, 21 entries FIXED 2026-10-31 (RG: "yes, apply A, B and C")
+
+The 43 number disagreements from the sweep, read by Claude on the scans (`docs/eval/copied_tallies_2026-10-30/sweep/
+digit_reads_2026-10-31.csv`). `docs/eval/raw_fix_sweep_digit_reads_2026-10-31.py`: **A** 12 misreads (e.g. Петерсъ 1900-01 SP «30 …
+45» stored «80 … 95»; Панова 1-я 1900-01 MSK 52/99 stored 46/93; Соболева «14 балетахъ» stored «1½»); Фонарева 1901-02 SP and
+Масловъ 1903-04 SP run over the page break and the extraction guessed the end of the line («драмѣ» for «дивертиссементѣ», wrong
+totals); Парикова's credit rows held the work counts instead of the performance counts. **B** 4 role lists printed but not stored
+(Рябовъ 1-й, Ивановъ 2-й, Дьякъ, Барышистовъ; three of them at the top of the next page, a line the extraction dropped). **C** 5 print
+slips the extraction had silently corrected, restored as printed (Куршинская 80, Масловъ 1900-01 98, Домашевъ 22, Голубинъ 1-й 15,
+Ѳедоровъ 2-й no total printed; credit_totals_scan_verified.csv, genuine_print_typos.md). Group E (12): faint or damaged print where
+the stored reading fits; the rest of the 43 were cut lines or parsing artefacts. Rebuild vs backup
+(`imperial_theaters.pre_sweep_digits_2026-10-31.duckdb`): person_entry 21, person_entry_credit +34 -28, on these entries only;
+quality flags back to the one known (Исаева). The same rebuild carried the parallel 1902-03 title audit's raw edits (event/work
+tables, 1902-03 Repertoire pages only).
+**Held for RG (group D):** italic 3/8 in Moscow 1902-04 totals (Шеншинъ stored 53, Бакинъ 2-й 78, Боткина 86; the parts favour 3 in
+all three) and Пантелеевъ 1892-93 SP «113» or a damaged «143». Logged, not chased: surnames printed «Плессюкъ» (stored Плесскій,
+1900-01 SP) and «Лазуко» (stored Лазукко, 1904-05 SP).

@@ -24393,3 +24393,12 @@ select page_id, family_name, first_name from raw.person_entry where (page_id='mu
 ```
 
 Result: all 8 names present (2 per page), so those four pages = HathiTrust images 734, 743, 747, 723. All 50 roster pages match one HathiTrust page each.
+
+## 2026-10-31 — Sweep number disputes: 21 BalletArtists entries fixed, rebuild diff
+
+Raw edit: docs/eval/raw_fix_sweep_digit_reads_2026-10-31.py --write (21 entries, 21 pages), then docs/eval/rebuild_after_raw_edit.sh
+(first run stopped in build_entities on the parallel 1902-03 session's half-applied work_excerpt_links row; rerun once its raw edit landed).
+Diff: every BASE TABLE v. imperial_theaters.pre_sweep_digits_2026-10-31.duckdb, `EXCEPT ALL` both ways; changed entry_ids listed.
+
+Result: raw/analysis.person_entry 21 rows; person_entry_credit +34 -28 on 20 of them (Бессонэ text only); every event/performance/work
+change is on repertoire_1902-03 pages (the 1902-03 title audit's raw edits); quality flags 1 (Исаева).
