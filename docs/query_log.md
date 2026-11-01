@@ -24497,3 +24497,14 @@ SELECT * FROM research.person WHERE person_id = '714fcaca-c345-4ccd-bab9-dfe514e
 SELECT block_id FROM raw.review_block WHERE page_id LIKE 'review_1902-03%' AND text LIKE '%Петина 1%';  -- after
 ```
 Result: raw.review_block 6; entities.review_mention content diffs only in MSK ballet p022 b001 (offsets; «Корсарь» -> «Корсаръ», same work 013fcc3d) and SP ballet p001 b004 / p002 b005 (Легатъ unresolved -> 714fcaca Легатъ 2-й Сергѣй Густавовичъ Q1749277; one duplicate «Царь-Дѣвицы» role mention gone). research.review_assertion: 2622 performer «г. С. Легатъ» linked (already-linked), new 3199 Царь-Дѣвицы / г-жа М. Кшесинская 1902-10-27, 1366/1952/3072 candidate-list order only; review_credit 971 mention_id only; review_solo 4 candidate order only; 0 shift blocks. Production DB, review_block.csv and mentions unchanged since the copy; promoted. After: one old string left, «Петина 1» in SP ballet p019 b002 (folio 161), a different page; print reads «Петипа 1»; logged as a lead, not applied.
+
+## 2026-11-01 — Name leads (Кшесинскій 1-й 1901-02, Копьева, Плессюкъ, Лазуко): lookups and rebuild diff
+
+Read from outputs/full_run/imperial_theaters.duckdb: raw.person_entry joined to entities.person_link for each entry, and every
+appearance of the linked person (spellings by season); all «Кшесинск%» entries with person_id. Raw edit
+docs/eval/raw_fix_name_leads_2026-11-01.py --write, rebuild_after_raw_edit.sh; every BASE TABLE v.
+imperial_theaters.pre_name_leads_2026-11-01.duckdb (EXCEPT ALL both ways); the new person_merge_log row.
+
+Result: all four misspelt entries already linked to the right person. Кшесинскій 1-й 1901-02 had its own person (a6bf4293); after the
+fix the pipeline merged it into 8c5d9e7a (name_variant_shared_start, 15 января 1853). Diff: person_entry 6, person_entry_credit 4,
+entities.person/person_link 1, person_merge_log +1, research.person -1, person_appearance 1, person_tenure +1 -2; live persons 2542 -> 2541.

@@ -1015,3 +1015,11 @@ Surnames printed differently from the store (logged, not changed): 1900-01 SP no
 - Missing dashes: 1895-96 SP no. 64 Татариновъ «Въ 10 балетахъ 37»; 1905-06 SP no. 23 Дмитріевъ «Всего 48 разъ».
 - Role spelled two ways on one page: 1905-06 SP «Топорагва» (no. 15) and «Толорагва» (no. 32), Баядерка.
 - 1891-92 MSK no. 58 Татариновъ: a comma, not a semicolon, after «Донъ-Кихотъ (Санхо-Панса—2)».
+
+## BalletArtists name leads, scan-confirmed 2026-11-01 (Claude; stored as printed)
+
+- 1895-96 SP no. 67 «Тимомировъ 1-й, Владиміръ Михайловичъ» (every other season Тихомировъ).
+- 1901-02 SP no. 30 «Кщесинскій 2-й, Іосифъ Феликсовичъ» (щ; no. 29 above it prints «Кшесинскій 1-й»).
+- Probable compilers' slip, not confirmed: Moscow Артисты no. 1 Бакинъ 1-й and Гетцманъ print identical tallies in two seasons --
+  1897-98 «Въ 16 балетахъ—69; въ 22 операхъ—112; въ 1 драмѣ—1. Всего—182 раза» (pp. 96, 97); 1899-00 «Въ 13 балетахъ—81; въ 22
+  операхъ—101; въ 2 драмахъ—3; въ 1 дивертиссементѣ—1. Всего—186 разъ» (pp. 115, 116). Stored as printed for both.

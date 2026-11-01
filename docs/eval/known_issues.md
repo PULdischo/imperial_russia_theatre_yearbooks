@@ -24671,3 +24671,16 @@ p006; the extraction kept names and service dates only) and two single entries (
 (`imperial_theaters.pre_transcribe_tallies_2026-10-31.duckdb`): person_entry 77, person_entry_credit +372, nothing else; quality
 flags 1 (Исаева). Logged, not chased: surnames «Копьева» (stored Кольева) and «Тимомировъ 1-й» (1895-96 SP p008, probably
 Тихомировъ) as stored.
+
+### Follow-up: name leads from the sweep -- read on the scans, FIXED 2026-11-01 (RG: "yes, apply these")
+
+`docs/eval/raw_fix_name_leads_2026-11-01.py`. **1901-02 SP no. 29 Кшесинскій 1-й:** the extraction shifted the name fields by one
+(first_name «Гій», patronymic «Феликсъ», «Ивановичъ» at the head of the tenure note); restored to «Феликсъ Ивановичъ», which made
+the season its own person (a6bf4293). On the rebuild the pipeline's own rule joined it to Феликсъ Ивановичъ (8c5d9e7a):
+person_merge_log `name_variant_shared_start`, confirmed by the shared start date 15 января 1853 (live persons 2542 -> 2541). Role
+misreads fixed: «Клодъ Фроло» (no. 29); «Бирбанто», «Маркитантка», «Иниго» (no. 30). **Surnames misread:** 1892-93 MSK «Копьева»
+(stored Кольева), 1900-01 SP «Плессюкъ» (Плесскій), 1903-04 and 1904-05 SP «Лазуко» (Лазукко) -- each to its own page, since the
+yearbooks vary between seasons. **Print, unchanged:** 1895-96 SP «Тимомировъ 1-й»; 1901-02 SP «Кщесинскій 2-й»; Гетцманъ and
+Бакинъ 1-й print identical tallies in MSK 1897-98 (182) and 1899-00 (186) (genuine_print_typos.md). Rebuild vs backup
+(`imperial_theaters.pre_name_leads_2026-11-01.duckdb`): person_entry 6, person_entry_credit 4, the merge (person, person_link,
+merge_log, research.person -1, person_appearance 1, person_tenure +1 -2); nothing else; quality flags 1 (Исаева).
