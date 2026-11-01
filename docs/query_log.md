@@ -24647,3 +24647,61 @@ Result: 55 entries mark the part in brackets beside a date and count it in «В�
 SELECT text FROM raw.review_block WHERE block_id='review_1902-03_MSK_opera_p008__b005';
 ```
 Result: begins «11-го декабря въ Большомъ театрѣ…», as printed. The earlier finding came from an unanchored regex («1-го декабря» inside «11-го декабря»). The correction row drafted for it was removed before any rebuild (its find string would have produced «111-го»); nothing changed in the data.
+
+## 2026-11-01 — Person field audit: inventory of person tables and sources
+
+```sql
+select person_source, count(*) n from research.person group by 1 order by 2 desc;
+select entity_type, count(*) n, count(distinct person_id) persons, count(distinct season) seasons from research.person_appearance group by 1 order by 2 desc;
+select role_category, count(*) from research.production_credit group by 1 order by 2 desc;
+select link_method, count(*), count(person_id) from research.review_credit group by 1 order by 2 desc;
+```
+
+Result: research.person 2,640 (roster 2,541, production_list 87, review 12); appearances 23,980 (BalletArtists 8,760, Musicians 7,896, TheaterSchoolStaff 2,855, ProductionTeam 2,101, Administrators 1,902, Graduates 466); production credits 1,587 (1,586 confirmed, 1 proposed); review credits 2,416 (2,231 linked; 165 printed-only, 16 unresolved, 4 anonymous). Jubilee/obituary links (CSV, not in DB): 655 (316 linked, 339 no_record).
+
+## 2026-11-01 — Person field audit: automated checks (docs/eval/person_field_audit_2026-11-01/audit.py)
+
+```sql
+-- audit.py reads raw.person_entry + raw.source_pages + entities.person_link + entities.person,
+-- raw.person_entry_service, raw.person_entry_credit, research.person, research.person_appearance,
+-- research.production_credit (+ research.production), research.review_credit, and the jubilee CSVs;
+-- Wikidata P569/P570/P21 + labels fetched by SPARQL for all 178 QIDs (cached in wikidata_cache.json).
+```
+
+Result (after noise filters): R1 name-field shape 773, R2 gender conflict 24, R3 one-off spelling 250, R4 wrong/missing column 246, R5 tenure parse 246, R6 numbering 56, R7 credit summary 385, R8 unlinked rows 0, P1 person record 300, P2 duplicate records 8, P3 creator-vs-roster surname 62, C1 production credits 72, V1 review credits 52, V2 review-only vs roster 3, J1 jubilee links 39, W1 Wikidata 9. Scan worklist: 1,565 items on 649 pages (build_worklist.py). Systematic: 160 Moscow Musicians rows hold «Name Patronymic» in first_name; 79 Graduates rows hold «Surname, Name.» in family_name.
+
+## 2026-11-01 — Person field audit: suspect Wikidata links
+
+```sql
+select p.display_name, w.wikidata_qid, w.wikidata_label, w.wikidata_description, w.match_evidence
+from entities.person_wikidata_link w join entities.person p using(person_id)
+where w.wikidata_qid in ('Q4247336','Q4492843','Q434601','Q21094595');
+select p.display_name, a.season, a.city, a.heading_path, a.instrument, a.printed_start_text
+from research.person_appearance a join research.person p using(person_id)
+where p.wikidata_qid in ('Q4247336','Q4492843','Q434601','Q21094595') and a.season in ('1890-91','1895-96','1900-01','1905-06');
+```
+
+Result: Кунстъ Іоганнъ (Moscow trumpet, from 1883) -> Q4247336, actor 1700-1703 (exact-name auto match): wrong. Фричъ Георгъ (Moscow viola, from 1895) -> Q4492843, born 1963 (auto): wrong. Шмидтъ 1-й Францъ (Moscow bassoon, from 1880) -> Q434601 Franz Schmidt b. 1874 ("human decision from the review queue"): wrong by dates. Шмидтъ 2-й Фридрихъ (violin/viola from 1891) -> Q21094595 (1840-1923, no description): doubtful. Other 174 links read consistent (checked by Claude).
+
+## 2026-11-01 — Person field audit: last listings with no end date (dropped leaving notes?)
+
+```sql
+-- per person + city + list (Graduates excluded), the last season listed before 1910-11; does that entry have any service end_date_undate?
+with a as (select pl.person_id, sp.season, coalesce(sp.city,'') city, pe.entity_type et, pe.entry_id, pe.tenure_note_text n, pe.credit_summary_text c
+  from raw.person_entry pe join raw.source_pages sp using(page_id) join entities.person_link pl using(entry_id) where pe.entity_type<>'Graduates'),
+last as (select person_id, city, et, max(season) ls from a group by all), ...
+select et, count(*) leavers, count(*) filter (where ends>0) with_end, ... from x group by 1;
+```
+
+Result: last listings (to 1909-10): BalletArtists 650 (333 with end, 29 leaving text but no end, 288 neither), Musicians 531 (344/2/185), TheaterSchoolStaff 210 (102/6/102), ProductionTeam 186 (121/1/64), Administrators 178 (79/3/96). Scan reads had found dropped departure lines (e.g. Бачуринъ 1897-98 «Оставилъ службу 1 сентября 1898 г.», Громова 1890-91). R9 worklist: 776 entries (build_r9.py). D1: 1,565 entries with a stored end; D2: 106 pre-gap listings with no end (build_dates.py).
+
+## 2026-11-01 — Person field audit D3: catalogue deaths vs stored roster deaths (d3_deaths.py)
+
+```sql
+select cast(pl.person_id as varchar), cast(s.end_date_undate as varchar), s.end_date_text, pe.entry_id, sp.season
+from raw.person_entry_service s join raw.person_entry pe using(entry_id) join raw.source_pages sp using(page_id)
+join entities.person_link pl using(entry_id) where s.end_type='died';
+-- compared with docs/jubilees_obituaries/*_person_links.csv (kind obituary/death_mark/death_notice, linked) and the catalogue's dates field
+```
+
+Result: 166 agree; 3 same year, different day (Соловьевъ, Мейеръ, Всеволожскій — the known print conflicts); 8 catalogue date not parsed (all have a stored death); 37 catalogue deaths with no died end stored (most died after their last listing; some died in their last listed season, e.g. Алексѣева 2-я, Недремская, Доброва, Ортнеръ, Моцейкевичъ, Рамзе, Бочкина, Корсакъ, Никитинъ С. Г., Юмашевъ — roster «†» possibly dropped, covered by R9); 7 roster deaths not in the catalogue links. Золотаренко, Петръ Петровичъ † 17 Oct 1895 (listed 1890-94) fits the production-list composer «П. П. Золотаренко» (1892-94).

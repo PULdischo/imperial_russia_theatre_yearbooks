@@ -1,0 +1,204 @@
+item,check,signal,page_id,entry_id,list_no,stored,context
+1,R5,leaving in note but no end parsed,administration_1895-96_p001,administration_1895-96_p001__e009,,Захаровъ | Трифонъ | Петровичъ,(съ 19 сентября 1882 г.) Оставилъ службу 18 сентября 1896 г.
+2,R5,printed leaving/death date not among parsed end dates,administration_1895-96_p001,administration_1895-96_p001__e009,,Захаровъ | Трифонъ | Петровичъ,Оставилъ службу 18 сентября 1896 | parsed: ['None']
+3,R3,family_name (within person): «Балахинъ» vs usual «балахнин» x13,administration_1895-96_p003,administration_1895-96_p003__e001,1.,Балахинъ | Викторъ | Михайловичъ,"Балахнинъ, Викторъ Михайловичъ"
+4,R3,first_name: «Иваръ» vs usual «иван» x1130,administration_1897-98_p003,administration_1897-98_p003__e013,4.,де-Лазари | Иваръ | Константиновичъ,"Де-Лазари, Иванъ Константиновичъ"
+5,R3,first_name (within person): «Иваръ» vs usual «иван» x12,administration_1897-98_p003,administration_1897-98_p003__e013,4.,де-Лазари | Иваръ | Константиновичъ,"Де-Лазари, Иванъ Константиновичъ"
+6,R3,patronymic: «Александро-вичъ» vs usual «александрович» x1067,administration_1899-00_p001,administration_1899-00_p001__e005,2.,Шретеръ | Викторъ | Александро-вичъ,"Шретеръ, Викторъ Александровичъ"
+7,R5,"2 «съ» in note, 1 start dates parsed",administration_1900-01_p003,administration_1900-01_p003__e008,1.,Фонъ-Бооль | Николай | Константиновичъ,(съ 14 сентября 1898 г.) Назначенъ завѣдывающимъ монтировочной частью съ 1 іюня 1901 г.
+8,R4,date in rank_or_title,administration_1901-02_p001,administration_1901-02_p001__e004,,Кедринъ | Никаноръ | Никаноровичъ,съ 1 февраля 1897 г.
+9,R4,date in rank_or_title,administration_1901-02_p001,administration_1901-02_p001__e025,3.,Сукова | Надежда | Всеволодовна,съ 1 декабря 1897 г.
+10,R5,"2 «съ» in note, 1 start dates parsed",administration_1901-02_p002,administration_1901-02_p002__e002,,Аршеневскій | Василій | Николаевичъ,"съ 20 апрѣля 1889 г. Назначенъ чиновникомъ особыхъ порученій VI класса при Дирекціи Императорскихъ театровъ, съ 15 марта 1902 г."
+11,R1,first-name field holds two words,administration_1901-02_p003,administration_1901-02_p003__e010,,Афанасьевъ | Н. Н. | ,"Афанасьевъ, Н. Н."
+12,R1,no first name,administration_1902-03_p000,administration_1902-03_p000__e006,3.,Ливенъ |  | ,Ливенъ
+13,R5,"2 «съ» in note, 1 start dates parsed",administration_1902-03_p002,administration_1902-03_p002__e012,,Рождественскій | Петръ | Арсеньевичъ,съ 10 сентября 1887 г. Назначенъ дѣлопроизводителемъ монтировочнаго отдѣла съ 1 сентября 1902 г. и помощникомъ начальника монтировочной части VIII класса 6 декабря 1902 г.
+14,R1,no first name,administration_1903-04_p000,administration_1903-04_p000__e007,3.,Ливенъ |  | ,Ливенъ
+15,R4,subject_taught filled outside TheaterSchoolStaff,administration_1903-04_p000,administration_1903-04_p000__e013,2.,Шенкъ | Петръ | Петровичъ,Завѣдывающій центральною библіотекою
+16,R5,"2 «съ» in note, 1 start dates parsed",administration_1904-05_p000,administration_1904-05_p000__e006,2.,Крупенскій | Александръ | Дмитріевичъ,"(съ 21 февраля 1903 г.). Назначенъ помощникомъ Управляющаго Конторою, завѣдывающимъ постановками съ 27 Ноября 1904 г."
+17,R1,no first name,administration_1904-05_p000,administration_1904-05_p000__e007,3.,Ливенъ |  | ,Ливенъ
+18,R3,patronymic: «Алольфовичъ» vs usual «адолфович» x33,administration_1904-05_p003,administration_1904-05_p003__e023,4.,Борхманъ | Александръ | Алольфовичъ,"Борхманъ, Александръ Адольфовичъ"
+19,R1,no first name,administration_1905-06_p000,administration_1905-06_p000__e006,2.,Ливенъ |  | ,Ливенъ
+20,R5,"1 «съ» in note, 0 start dates parsed",administration_1905-06_p002,administration_1905-06_p002__e011,,Розенбергъ | Иванъ | Ивановичъ,съ 1 іюня 903 г.
+21,R5,note has «съ <date>» but no start date parsed,administration_1905-06_p002,administration_1905-06_p002__e011,,Розенбергъ | Иванъ | Ивановичъ,съ 1 іюня 903 г.
+22,R3,family_name (within person): «Какоринъ» vs usual «каковин» x15,administration_1905-06_p002,administration_1905-06_p002__e016,,Какоринъ | Михаилъ | Константиновичъ,"Каковинъ, Михаилъ Константиновичъ"
+23,R5,"2 «съ» in note, 1 start dates parsed",administration_1905-06_p003,administration_1905-06_p003__e012,,Дворецъ-Дворецкій | Федоръ | Федоровичъ,(съ 6 декабря 1895 г.). Въ должности регистратора съ 6 декабря 1902 г.
+24,R4,date in rank_or_title,administration_1906-07_p000,administration_1906-07_p000__e013,2.,Шенкъ | Петръ | Петровичъ,надв. сов. (съ 1 іюня 1888 г.). Завѣдывающій центральною библіотекою.
+25,R5,"2 «съ» in note, 1 start dates parsed",administration_1906-07_p001,administration_1906-07_p001__e007,1.,Бестужевъ-Рюминъ | Алексѣй | Ивановичъ,"съ 15 марта 1903 г., въ С.-Петербургѣ съ 29 ноября 1906 г."
+26,R5,"2 «съ» in note, 1 start dates parsed",administration_1907-08_p001,administration_1907-08_p001__e006,,Бестужевъ - Рюминъ | Алексѣй | Ивановичъ,съ 15 марта 1903 г.; въ С.-Петербургѣ съ 29 ноября 1906 г.
+27,R5,"2 «съ» in note, 1 start dates parsed",administration_1908-09_p001,administration_1908-09_p001__e004,,Бестужевъ-Рюминъ | Алексѣй | Ивановичъ,(съ 15 марта 1903 г.; въ С.-Петербургѣ съ 29 ноября 1906 г.)
+28,R3,first_name: «Константииъ» vs usual «константин» x398,administration_1908-09_p002,administration_1908-09_p002__e009,3.,Сухорученко | Константииъ | Васильевичъ,"Сухорученко, Константинъ Васильевичъ"
+29,R4,date in rank_or_title,administration_1909-10_p002,administration_1909-10_p002__e012,2.,Ганузинъ | Меѳодій | Сафоновичъ,"неимѣющій чина (по найму съ 1 ноября 1906 г. по 1 января 1907 г., на службѣ съ 1 января 1907 г.)"
+30,R4,date in rank_or_title,administration_1909-10_p002,administration_1909-10_p002__e013,3.,Михайловъ | Георгій | Ивановичъ,пот. поч. гражд. (по найму съ 7 января 1885 г.)
+31,R5,"2 «съ» in note, 1 start dates parsed",administration_1910-11_p002,administration_1910-11_p002__e003,,Нелидовъ | Владиміръ | Александровичъ,(съ 4 декабря 1892 г.). Оставилъ службу съ 16 августа 1911 г.
+32,R3,patronymic: «Сергіевичъ» vs usual «сергевич» x285,administration_1910-11_p002,administration_1910-11_p002__e006,,Архиповъ | Павелъ | Сергіевичъ,"Архиповъ, Павелъ Сергіевичъ"
+33,R5,"2 «съ» in note, 1 start dates parsed",administration_1910-11_p002,administration_1910-11_p002__e006,,Архиповъ | Павелъ | Сергіевичъ,"(съ 30 ноября 1910 г.), назначенъ завѣдывающимъ постановками съ 1 іюля 1911 г."
+34,R5,"2 «съ» in note, 1 start dates parsed",administration_1910-11_p002,administration_1910-11_p002__e012,3.,Граженскій | Николай | Николаевичъ,(съ 21 августа 1909 г.). Оставилъ службу съ 23 октября 1910 г.
+35,R5,leaving in note but no end parsed,balletartists_1890-91_MSK_p001,balletartists_1890-91_MSK_p001__e015,16.,Бѣлова | Александра | Васильевна,съ 14 апрѣля 1867 г.
+36,R3,patronymic: «Помпееевна» vs usual «помпевна» x13,balletartists_1890-91_MSK_p001,balletartists_1890-91_MSK_p001__e021,22.,Гаврилова 2-я | Евдокія | Помпееевна,"Гаврилова (Воскресенская), Евдокія Помпеевна"
+37,R3,patronymic (within person): «Помпееевна» vs usual «помпевна» x13,balletartists_1890-91_MSK_p001,balletartists_1890-91_MSK_p001__e021,22.,Гаврилова 2-я | Евдокія | Помпееевна,"Гаврилова (Воскресенская), Евдокія Помпеевна"
+38,R7,no credit summary on a page where others have one,balletartists_1890-91_MSK_p002,balletartists_1890-91_MSK_p002__e016,39.,Доброва | Любовь | Николаевна,24/25
+39,R7,no credit summary on a page where others have one,balletartists_1890-91_MSK_p003,balletartists_1890-91_MSK_p003__e012,60.,Марковская 1-я | Евгенія | Константиновна,21/24
+40,R7,no credit summary on a page where others have one,balletartists_1890-91_MSK_p003,balletartists_1890-91_MSK_p003__e020,68.,Нелидова | Лидія | Ричардовна,21/24
+41,R7,no credit summary on a page where others have one,balletartists_1890-91_MSK_p003,balletartists_1890-91_MSK_p003__e023,71.,Николаева | Марія | Алексѣевна,21/24
+42,R7,no credit summary on a page where others have one,balletartists_1890-91_MSK_p004,balletartists_1890-91_MSK_p004__e005,77.,Петрова 1-я | Лидія | Петровна,26/28
+43,R7,no credit summary on a page where others have one,balletartists_1890-91_MSK_p004,balletartists_1890-91_MSK_p004__e008,80.,Полякова 1-я | Анна | Тимоѳеевна,26/28
+44,R4,credit summary inside tenure note,balletartists_1890-91_MSK_p005,balletartists_1890-91_MSK_p005__e008,108.,Черепова 1-я | Елизавета | Витальевна,"(съ 14 августа 1877 г.). Въ балетахъ—35; въ операхъ—3. Всего—38 разъ. Въ томъ числѣ: Индія (Рале—11); Кипрская статуя (Рамизъ—5); Приключенія Флика и Флока (Королева минераловъ, Фортуна —7); Хрустальный башмачекъ (Лаура—1); Эсмеральда (Алоиза—9)."
+45,R7,no credit summary on a page where others have one,balletartists_1890-91_MSK_p005,balletartists_1890-91_MSK_p005__e015,115.,Ѳедорова 2-я | Марія | Логиновна,23/24
+46,R3,family_name (within person): «Лошилинъ» vs usual «лащилин» x6,balletartists_1890-91_MSK_p006,balletartists_1890-91_MSK_p006__e024,31.,Лошилинъ | Александръ | Ивановичъ,"Лащилинъ, Александръ Ивановичъ"
+47,R3,family_name (within person): «Күстереръ» vs usual «кустерер» x16,balletartists_1890-91_SP_p002,balletartists_1890-91_SP_p002__e019,56.,Күстереръ | Альбертина | Альбертовна,"Кустереръ, Альбертина Альбертовна"
+48,R7,no credit summary on a page where others have one,balletartists_1890-91_SP_p003,balletartists_1890-91_SP_p003__e006,64.,Легать 2-я | Вѣра | Густавовна,22/24
+49,R7,no credit summary on a page where others have one,balletartists_1890-91_SP_p003,balletartists_1890-91_SP_p003__e010,68.,Лицъ 1-я | Марія | Семеновна,22/24
+50,R7,no credit summary on a page where others have one,balletartists_1890-91_SP_p004,balletartists_1890-91_SP_p004__e014,96.,Пишо 2-я | Марія | Александровна,20/21
+51,R7,no credit summary on a page where others have one,balletartists_1890-91_SP_p006,balletartists_1890-91_SP_p006__e007,133.,Улина | Марія | Евграфовна,21/22
+52,R5,unknown month word after «съ»,balletartists_1890-91_SP_p008,balletartists_1890-91_SP_p008__e002,26.,Ивановъ | Иванъ | Григорьевичъ,юня | (съ 1 юня 1886 г.) Въ балетахъ—45; въ операхъ—30. Всего—75 разъ.
+53,R5,unknown month word after «съ»,balletartists_1890-91_SP_p008,balletartists_1890-91_SP_p008__e003,27.,Израилевъ | Ѳедоръ | Ивановичъ,юня | (съ 1 юня 1890 г.) Въ балетахъ—35; въ операхъ—18; въ драмѣ—4. Всего—57 разъ. Въ томъ числѣ
+54,R5,unknown month word after «съ»,balletartists_1890-91_SP_p008,balletartists_1890-91_SP_p008__e008,32.,Кшесинскій 2-й | Іосифъ | Феликсовичъ,юня | (съ 1 юня 1886 г.) Въ балетахъ—30; въ операхъ—4. Всего—34 раза. Въ томъ числѣ: Спящая крас
+55,R5,unknown month word after «съ»,balletartists_1890-91_SP_p008,balletartists_1890-91_SP_p008__e009,33.,Легатъ | Николай | Густавовичъ,юня | (съ 1 юня 1888 г.) Въ балетахъ—33; въ операхъ—9. Всего—42 раза. Въ томъ числѣ: Весталка (А
+56,R5,unknown month word after «съ»,balletartists_1890-91_SP_p008,balletartists_1890-91_SP_p008__e010,34.,Леоновъ | Петръ | Леонтьевичъ,юня | (съ 11 юня 1866 г.) Въ балетахъ—42; въ операхъ—16. Всего—58 разъ. Въ томъ числѣ: Весталка 
+57,R5,unknown month word after «съ»,balletartists_1890-91_SP_p008,balletartists_1890-91_SP_p008__e018,42.,Пантелеевъ | Анатолій | Ивановичъ,юня | (съ 1 юня 1889 г.) Въ балетахъ—44; въ операхъ—83; въ драмѣ—5. Всего—132 раза.
+58,R7,no credit summary on a page where others have one,balletartists_1891-92_MSK_p001,balletartists_1891-92_MSK_p001__e032,36.,Доброва | Любовь | Николаевна,34/35
+59,R7,no credit summary on a page where others have one,balletartists_1891-92_MSK_p002,balletartists_1891-92_MSK_p002__e007,46.,Калмыкова 1-я | Варвара | Николаевна,36/37
+60,R5,unknown month word after «съ»,balletartists_1891-92_MSK_p003,balletartists_1891-92_MSK_p003__e002,78.,Пукирева 1-я | Александра | Петровна,юня | (съ 7 юня 1881 г.). Въ балетахъ—46; въ операхъ—62. Всего—108 разъ.
+61,R4,credit summary inside tenure note,balletartists_1891-92_MSK_p003,balletartists_1891-92_MSK_p003__e011,87.,Симонова | Марія | Петровна,(съ 1 сентября 1887 г.). Въ балетахъ—58; въ операхъ—27. Всего—65 разъ.
+62,R7,no credit summary on a page where others have one,balletartists_1891-92_MSK_p003,balletartists_1891-92_MSK_p003__e020,96.,Токарева | Ольга | Ивановна,37/38
+63,R5,unknown month word after «съ»,balletartists_1891-92_MSK_p004,balletartists_1891-92_MSK_p004__e012,12.,Волковъ | Михаилъ | Ивановичъ,тября | съ 1 тября 1886 г.). Въ балетахъ—44; въ операхъ—26. Всего—70 разъ.
+64,R7,no credit summary on a page where others have one,balletartists_1891-92_MSK_p005,balletartists_1891-92_MSK_p005__e012,43.,Рыжевъ | Иванъ | Андреевичъ,30/31
+65,R7,no credit summary on a page where others have one,balletartists_1891-92_SP_p001,balletartists_1891-92_SP_p001__e009,20.,Воробьева | Александра | Александровна,35/36
+66,R7,no credit summary on a page where others have one,balletartists_1891-92_SP_p002,balletartists_1891-92_SP_p002__e002,49.,Корсакъ | Вѣра | Александровна,35/38
+67,R7,no credit summary on a page where others have one,balletartists_1891-92_SP_p002,balletartists_1891-92_SP_p002__e021,68.,Леонова | Елизавета | Львовна,35/38
+68,R7,no credit summary on a page where others have one,balletartists_1891-92_SP_p002,balletartists_1891-92_SP_p002__e031,78.,Мокшева | Софія | Васильевна,35/38
+69,R4,credit summary inside tenure note,balletartists_1891-92_SP_p003,balletartists_1891-92_SP_p003__e031,116.,Семенова 2-я | Александра | Илларіоновна,съ 1 іюня 1888 г.). Въ балетахъ—19; въ операхъ—45. Всего—82 раза.
+70,R7,no credit summary on a page where others have one,balletartists_1891-92_SP_p004,balletartists_1891-92_SP_p004__e015,136.,Цвѣткова | Надежда | Степановна,32/33
+71,R7,no credit summary on a page where others have one,balletartists_1891-92_SP_p006,balletartists_1891-92_SP_p006__e024,57.,Степановъ | Владиміръ | Ивановичъ,30/31
+72,R7,no credit summary on a page where others have one,balletartists_1892-93_MSK_p000,balletartists_1892-93_MSK_p000__e001,,Мендесъ | Іосифъ | ,14/17
+73,R7,no credit summary on a page where others have one,balletartists_1892-93_MSK_p000,balletartists_1892-93_MSK_p000__e002,,Щербаковъ | Константинъ | Александровичъ,14/17
+74,R7,no credit summary on a page where others have one,balletartists_1892-93_MSK_p000,balletartists_1892-93_MSK_p000__e003,,Горсткинъ | Левъ | Ивановичъ,14/17
+75,R1,digit in surname (not an ordinal),balletartists_1892-93_MSK_p001,balletartists_1892-93_MSK_p001__e019,33.,Дмитріева 2-я (Ѳедорова) | Пелагея | Васильевна,"Дмитріева 2-я (Ѳедорова), Пелагея Васильевна"
+76,R7,no credit summary on a page where others have one,balletartists_1892-93_MSK_p001,balletartists_1892-93_MSK_p001__e020,34.,Дмитріева 3-я | Евгенія | Александровна,29/30
+77,R3,family_name (within person): «Накорина» vs usual «какорина» x8,balletartists_1892-93_MSK_p001,balletartists_1892-93_MSK_p001__e029,43.,Накорина | Екатерина | Сергѣевна,"Какорина, Екатерина Сергѣевна"
+78,R7,no credit summary on a page where others have one,balletartists_1892-93_MSK_p002,balletartists_1892-93_MSK_p002__e001,45.,Калмыкова 1-я | Варвара | Николаевна,30/32
+79,R7,no credit summary on a page where others have one,balletartists_1892-93_MSK_p002,balletartists_1892-93_MSK_p002__e015,59.,Марковская | Надежда | Ивановна,30/32
+80,R7,credit summary text but no credit rows parsed,balletartists_1892-93_MSK_p003,balletartists_1892-93_MSK_p003__e023,99.,Токарева | Ольга | Ивановна,Съ 1 сентября 1893 г. переведена въ драматическую труппу.
+81,R7,no credit summary on a page where others have one,balletartists_1892-93_MSK_p004,balletartists_1892-93_MSK_p004__e004,112.,Шейндель | Антонина | Васильевна,31/32
+82,R3,family_name (within person): «Лсбовъ» vs usual «лобов» x3,balletartists_1892-93_MSK_p005,balletartists_1892-93_MSK_p005__e015,38.,Лсбовъ | Викторъ | Алексѣевичъ,"Лобовъ, Викторъ Алексѣевичъ"
+83,R1,digit in surname (not an ordinal),balletartists_1892-93_MSK_p006,balletartists_1892-93_MSK_p006__e008,58.,Смирновъ 2 й | Александръ | Митрофановичъ,"Смирновъ, Александръ Митрофановичъ"
+84,R1,surname field holds two words,balletartists_1892-93_MSK_p006,balletartists_1892-93_MSK_p006__e008,58.,Смирновъ 2 й | Александръ | Митрофановичъ,"Смирновъ, Александръ Митрофановичъ"
+85,R3,family_name (within person): «Смирновъ 2 й» vs usual «смирнов» x17,balletartists_1892-93_MSK_p006,balletartists_1892-93_MSK_p006__e008,58.,Смирновъ 2 й | Александръ | Митрофановичъ,"Смирновъ, Александръ Митрофановичъ"
+86,R7,no credit summary on a page where others have one,balletartists_1892-93_MSK_p006,balletartists_1892-93_MSK_p006__e011,61.,Степановъ | Александръ | Павловичъ,25/26
+87,R3,family_name (within person): «Ахманова» vs usual «ахмакова» x6,balletartists_1892-93_SP_p000,balletartists_1892-93_SP_p000__e019,12.,Ахманова | Клавдія | Александровна,"Ахмакова, Клавдія Александровна"
+88,R3,family_name (within person): «Вергинская» vs usual «вертинская» x17,balletartists_1892-93_SP_p001,balletartists_1892-93_SP_p001__e002,17.,Вергинская | Екатерина | Николаевна,"Вертинская, Екатерина Николаевна"
+89,R5,leaving in note but no end parsed,balletartists_1892-93_SP_p001,balletartists_1892-93_SP_p001__e012,27.,Горшенкова 1-я | Марія | Николаевна,(съ 2 февраля 1873 г.).
+90,R5,printed leaving/death date not among parsed end dates,balletartists_1892-93_SP_p001,balletartists_1892-93_SP_p001__e012,27.,Горшенкова 1-я | Марія | Николаевна,Оставила службу 1 марта 1893 | parsed: ['None']
+91,R5,leaving in note but no end parsed,balletartists_1892-93_SP_p001,balletartists_1892-93_SP_p001__e017,32.,Дель-Эра | Антоніетта | ,(съ 1 ноября 1892 г.).
+92,R5,printed leaving/death date not among parsed end dates,balletartists_1892-93_SP_p001,balletartists_1892-93_SP_p001__e017,32.,Дель-Эра | Антоніетта | ,Оставила службу 6 февраля 1893 | parsed: ['None']
+93,R5,leaving in note but no end parsed,balletartists_1892-93_SP_p001,balletartists_1892-93_SP_p001__e024,39.,Жихарева | Пелагея | Ивановна,(съ 27 апрѣля 1873 г.).
+94,R5,printed leaving/death date not among parsed end dates,balletartists_1892-93_SP_p001,balletartists_1892-93_SP_p001__e024,39.,Жихарева | Пелагея | Ивановна,Оставила службу 1 мая 1893 | parsed: ['None']
+95,R7,no credit summary on a page where others have one,balletartists_1892-93_SP_p002,balletartists_1892-93_SP_p002__e015,64.,Лабунская | Марія | Николаевна,33/35
+96,R7,no credit summary on a page where others have one,balletartists_1892-93_SP_p002,balletartists_1892-93_SP_p002__e022,71.,Леонова | Елизавета | Львовна,33/35
+97,R3,first_name: «Належда» vs usual «надежда» x295,balletartists_1892-93_SP_p002,balletartists_1892-93_SP_p002__e023,72.,Лицъ | Належда | Семеновна,"Лицъ, Надежда Семеновна"
+98,R7,no credit summary on a page where others have one,balletartists_1892-93_SP_p003,balletartists_1892-93_SP_p003__e009,93.,Ольгина | Елена | Михайловна,31/32
+99,R5,unknown month word after «съ»,balletartists_1892-93_SP_p006,balletartists_1892-93_SP_p006__e006,31.,Легатъ 1-й | Николай | Густавовичъ,юня | (съ 1 юня 1888 г.). Въ балетахъ—6; въ операхъ—10. Всего—16 разъ. Въ томъ числѣ: Спящая кра
+100,R7,no credit summary on a page where others have one,balletartists_1893-94_MSK_p000,balletartists_1893-94_MSK_p000__e001,,Мендесъ | Іосифъ | ,14/19
+101,R7,no credit summary on a page where others have one,balletartists_1893-94_MSK_p000,balletartists_1893-94_MSK_p000__e002,,Щербаковъ | Константинъ | Александровичъ,14/19
+102,R7,no credit summary on a page where others have one,balletartists_1893-94_MSK_p000,balletartists_1893-94_MSK_p000__e003,,Горсткинъ | Левъ | Ивановичъ,14/19
+103,R7,no credit summary on a page where others have one,balletartists_1893-94_MSK_p000,balletartists_1893-94_MSK_p000__e011,8.,Берсъ | Екатерина | Дмитріевна,14/19
+104,R7,no credit summary on a page where others have one,balletartists_1893-94_MSK_p000,balletartists_1893-94_MSK_p000__e012,9.,Божановская | Елена | Владиміровна,14/19
+105,R1,"patronymic missing here, printed in other seasons",balletartists_1893-94_MSK_p001,balletartists_1893-94_MSK_p001__e017,33.,Джури | Адель | ,"Джури, Адель"
+106,R1,digit in surname (not an ordinal),balletartists_1893-94_MSK_p001,balletartists_1893-94_MSK_p001__e019,35.,Дмитріева 2-я (Ѳедорова) | Пелагея | Васильевна,"Дмитріева 2-я (Ѳедорова), Пелагея Васильевна"
+107,R7,no credit summary on a page where others have one,balletartists_1893-94_MSK_p001,balletartists_1893-94_MSK_p001__e026,42.,Живокини | Надежда | Дмитріевна,29/30
+108,R7,no credit summary on a page where others have one,balletartists_1893-94_MSK_p002,balletartists_1893-94_MSK_p002__e006,52.,Кочетовская 2-я | Екатерина | Владиміровна,25/28
+109,R7,no credit summary on a page where others have one,balletartists_1893-94_MSK_p002,balletartists_1893-94_MSK_p002__e016,62.,Марковская | Надежда | Ивановна,25/28
+110,R7,no credit summary on a page where others have one,balletartists_1893-94_MSK_p002,balletartists_1893-94_MSK_p002__e023,69.,Мятижевская | Евгенія | Ивановна,25/28
+111,R7,no credit summary on a page where others have one,balletartists_1893-94_MSK_p004,balletartists_1893-94_MSK_p004__e005,109.,Френева | Ольга | Николаевна,28/30
+112,R7,no credit summary on a page where others have one,balletartists_1893-94_MSK_p004,balletartists_1893-94_MSK_p004__e015,119.,Шейндель | Антонина | Васильевна,28/30
+113,R7,no credit summary on a page where others have one,balletartists_1893-94_MSK_p005,balletartists_1893-94_MSK_p005__e007,17.,Гетцманъ | Яковъ | Васильевичъ,24/25
+114,R5,leaving in note but no end parsed,balletartists_1893-94_MSK_p006,balletartists_1893-94_MSK_p006__e004,39.,Лобовъ | Викторъ | Алексѣевичъ,съ 20 января 1868 г.
+115,R5,printed leaving/death date not among parsed end dates,balletartists_1893-94_MSK_p006,balletartists_1893-94_MSK_p006__e004,39.,Лобовъ | Викторъ | Алексѣевичъ,Оставилъ службу 14 мая 1894 | parsed: ['None']
+116,R3,family_name (within person): «Горшенинова» vs usual «горшенкова» x7,balletartists_1893-94_SP_p001,balletartists_1893-94_SP_p001__e013,28.,Горшенинова | Александра | Николаевна,"Горшенкова, Александра Николаевна"
+117,R3,family_name (within person): «Куснова» vs usual «кускова» x17,balletartists_1893-94_SP_p002,balletartists_1893-94_SP_p002__e013,57.,Куснова | Елизавета | Аполлоновна,"Кускова, Елизавета Аполлоновна"
+118,R7,no credit summary on a page where others have one,balletartists_1893-94_SP_p002,balletartists_1893-94_SP_p002__e017,61.,Лабунская | Марія | Николаевна,28/30
+119,R7,no credit summary on a page where others have one,balletartists_1893-94_SP_p002,balletartists_1893-94_SP_p002__e019,63.,Левенсонъ 1-я | Анна | Ѳедоровна,28/30
+120,R5,unknown month word after «съ»,balletartists_1893-94_SP_p002,balletartists_1893-94_SP_p002__e024,68.,Леньяни | Пьерина | ,дека | (съ 1 дека́бря 1893 г.). Золушка (Сандрільона—13); Катарина (Катарина—2); Коппелія (Сванил
+121,R7,no credit summary on a page where others have one,balletartists_1893-94_SP_p003,balletartists_1893-94_SP_p003__e008,82.,Никитина | Варвара | Александровна,29/30
+122,R5,leaving in note but no end parsed,balletartists_1893-94_SP_p003,balletartists_1893-94_SP_p003__e017,91.,Ольгина | Елена | Михайловна,(съ 28 января 1874 г.).
+123,R5,printed leaving/death date not among parsed end dates,balletartists_1893-94_SP_p003,balletartists_1893-94_SP_p003__e017,91.,Ольгина | Елена | Михайловна,Оставила службу 1 февраля 1894 | parsed: ['None']
+124,R3,family_name (within person): «Петеръ» vs usual «петерс» x11,balletartists_1893-94_SP_p003,balletartists_1893-94_SP_p003__e023,97.,Петеръ | Марія | Карловна,"Петерсъ, Марія Карловна"
+125,R7,no credit summary on a page where others have one,balletartists_1893-94_SP_p004,balletartists_1893-94_SP_p004__e014,118.,Садовская 1-я | Эмилія | Степановна,28/29
+126,R5,leaving in note but no end parsed,balletartists_1893-94_SP_p005,balletartists_1893-94_SP_p005__e002,135.,Тистрова | Марія | Ѳедоровна,(съ 10 декабря 1873 г.).
+127,R5,printed leaving/death date not among parsed end dates,balletartists_1893-94_SP_p005,balletartists_1893-94_SP_p005__e002,135.,Тистрова | Марія | Ѳедоровна,Оставила службу 1 января 1894 | parsed: ['None']
+128,R7,no credit summary on a page where others have one,balletartists_1893-94_SP_p006,balletartists_1893-94_SP_p006__e002,12.,Волковъ | Василій | Васильевичъ,24/25
+129,R3,patronymic (within person): «Фердинандовичъ» vs usual «федорович» x10,balletartists_1893-94_SP_p006,balletartists_1893-94_SP_p006__e021,31.,Левинсонъ | Василій | Фердинандовичъ,"Левинсонъ, Василій Ѳедоровичъ"
+130,R5,unknown month word after «съ»,balletartists_1893-94_SP_p007,balletartists_1893-94_SP_p007__e009,44.,Пантелеевъ | Анатолій | Ивановичъ,юня | (съ 1 юня 1889 г.) Въ 13 балетахъ—52; въ 11 операхъ—56; въ 2 драмахъ—6. Всего—114 разъ.
+131,R5,unknown month word after «съ»,balletartists_1893-94_SP_p007,balletartists_1893-94_SP_p007__e010,45.,Пащенко 1-й | Сергѣй | Назаровичъ,операхъ | (съ 1 іюня 1888 г.) Въ 12 балетахъ—51; съ 6 операхъ—23; въ 2 драмахъ—19. Всего—93 раза.
+132,R7,no credit summary on a page where others have one,balletartists_1893-94_SP_p007,balletartists_1893-94_SP_p007__e017,52.,Пучковъ | Сергѣй | Ивановичъ,26/28
+133,R7,no credit summary on a page where others have one,balletartists_1893-94_SP_p007,balletartists_1893-94_SP_p007__e025,60.,Степановъ | Владиміръ | Ивановичъ,26/28
+134,R7,no credit summary on a page where others have one,balletartists_1894-95_MSK_p001,balletartists_1894-95_MSK_p001__e008,8.,Берсъ | Екатерина | Дмитріевна,28/30
+135,R7,no credit summary on a page where others have one,balletartists_1894-95_MSK_p001,balletartists_1894-95_MSK_p001__e009,9.,Божановская | Елена | Владиміровна,28/30
+136,R1,"patronymic missing here, printed in other seasons",balletartists_1894-95_MSK_p002,balletartists_1894-95_MSK_p002__e004,34.,Джури | Адель | ,"Джури, Адель"
+137,R7,no credit summary on a page where others have one,balletartists_1894-95_MSK_p002,balletartists_1894-95_MSK_p002__e007,37.,Дмитріева 3-я | Евгенія | Александровна,28/30
+138,R5,leaving in note but no end parsed,balletartists_1894-95_MSK_p002,balletartists_1894-95_MSK_p002__e008,38.,Добровольская | Елена | Дмитріевна,съ 19 мая 1875 г.
+139,R5,printed leaving/death date not among parsed end dates,balletartists_1894-95_MSK_p002,balletartists_1894-95_MSK_p002__e008,38.,Добровольская | Елена | Дмитріевна,Оставила службу 19 августа 1895 | parsed: ['None']
+140,R7,no credit summary on a page where others have one,balletartists_1894-95_MSK_p002,balletartists_1894-95_MSK_p002__e013,43.,Живокини | Надежда | Дмитріевна,28/30
+141,R7,no credit summary on a page where others have one,balletartists_1894-95_MSK_p003,balletartists_1894-95_MSK_p003__e002,62.,Марковская | Надежда | Ивановна,30/32
+142,R7,no credit summary on a page where others have one,balletartists_1894-95_MSK_p003,balletartists_1894-95_MSK_p003__e023,83.,Петрова 2-я | Вѣра | Ивановна,30/32
+143,R3,family_name (within person): «Пышкова» vs usual «пешкова» x6,balletartists_1894-95_MSK_p003,balletartists_1894-95_MSK_p003__e030,90.,Пышкова | Надежда | Александровна,"Пѣшкова, Надежда Александровна"
+144,R7,no credit summary on a page where others have one,balletartists_1894-95_MSK_p004,balletartists_1894-95_MSK_p004__e021,113.,Френева | Ольга | Николаевна,30/32
+145,R7,no credit summary on a page where others have one,balletartists_1894-95_MSK_p004,balletartists_1894-95_MSK_p004__e030,122.,Чумичева | Наталья | Ивановна,30/32
+146,R7,no credit summary on a page where others have one,balletartists_1894-95_MSK_p005,balletartists_1894-95_MSK_p005__e002,126.,Ѳеоктистова 1-я | Анна | Никифоровна,27/28
+147,R5,leaving in note but no end parsed,balletartists_1894-95_MSK_p007,balletartists_1894-95_MSK_p007__e022,74.,Шехобаловъ | Николай | Ивановичъ,съ 18 мая 1873 г.
+148,R5,printed leaving/death date not among parsed end dates,balletartists_1894-95_MSK_p007,balletartists_1894-95_MSK_p007__e022,74.,Шехобаловъ | Николай | Ивановичъ,Оставилъ службу 1 сентября 1895 | parsed: ['None']
+149,R7,no credit summary on a page where others have one,balletartists_1894-95_SP_p002,balletartists_1894-95_SP_p002__e012,55.,Курочкина | Ольга | Александровна,28/31
+150,R5,printed leaving/death date not among parsed end dates,balletartists_1894-95_SP_p002,balletartists_1894-95_SP_p002__e017,60.,Лабунская | Марія | Николаевна,Оставила службу 1 декабря 1894 | parsed: ['None']
+151,R7,no credit summary on a page where others have one,balletartists_1894-95_SP_p002,balletartists_1894-95_SP_p002__e019,62.,Левенсонъ 1-я | Анна | Ѳедоровна,28/31
+152,R7,no credit summary on a page where others have one,balletartists_1894-95_SP_p002,balletartists_1894-95_SP_p002__e023,66.,Легатъ 2-я | Евгенія | Густавовна,28/31
+153,R7,no credit summary on a page where others have one,balletartists_1894-95_SP_p003,balletartists_1894-95_SP_p003__e003,77.,Мокшева | Софія | Васильевна,30/31
+154,R7,no credit summary on a page where others have one,balletartists_1894-95_SP_p005,balletartists_1894-95_SP_p005__e007,143.,Эрлеръ 2-я | Марія | Александровна,27/28
+155,R3,family_name (within person): «Доровеевъ» vs usual «дорофев» x4,balletartists_1894-95_SP_p006,balletartists_1894-95_SP_p006__e007,22.,Доровеевъ | Іосифъ | Александровичъ,"Дорофеевъ, Іосифъ Александровичъ"
+156,R7,no credit summary on a page where others have one,balletartists_1894-95_SP_p006,balletartists_1894-95_SP_p006__e007,22.,Доровеевъ | Іосифъ | Александровичъ,22/24
+157,R7,no credit summary on a page where others have one,balletartists_1894-95_SP_p006,balletartists_1894-95_SP_p006__e010,25.,Ивановъ | Левъ | Ивановичъ,22/24
+158,R3,family_name (within person): «Ложкинтъ» vs usual «ложкин» x5,balletartists_1894-95_SP_p006,balletartists_1894-95_SP_p006__e022,37.,Ложкинтъ | Николай | Николаевичъ,"Ложкинъ, Николай Николаевичъ"
+159,R7,no credit summary on a page where others have one,balletartists_1894-95_SP_p007,balletartists_1894-95_SP_p007__e023,62.,Степановъ | Владиміръ | Ивановичъ,28/29
+160,R7,no credit summary on a page where others have one,balletartists_1895-96_MSK_p000,balletartists_1895-96_MSK_p000__e001,,Мендесъ | Іосифъ | ,12/16
+161,R7,no credit summary on a page where others have one,balletartists_1895-96_MSK_p000,balletartists_1895-96_MSK_p000__e002,,Гельцеръ | Василій | Ѳедоровичъ,12/16
+162,R7,no credit summary on a page where others have one,balletartists_1895-96_MSK_p000,balletartists_1895-96_MSK_p000__e011,9.,Берсъ | Екатерина | Дмитріевна,12/16
+163,R7,no credit summary on a page where others have one,balletartists_1895-96_MSK_p000,balletartists_1895-96_MSK_p000__e012,10.,Божановская | Елена | Владиміровна,12/16
+164,R7,no credit summary on a page where others have one,balletartists_1895-96_MSK_p001,balletartists_1895-96_MSK_p001__e018,32.,Дантесъ 1-я | Марія | Алексѣевна,28/30
+165,R1,"patronymic missing here, printed in other seasons",balletartists_1895-96_MSK_p001,balletartists_1895-96_MSK_p001__e022,36.,Джури | Адель | ,"Джури, Адель"
+166,R1,digit in surname (not an ordinal),balletartists_1895-96_MSK_p001,balletartists_1895-96_MSK_p001__e024,38.,Дмитріева 2-я (Ѳедорова) | Пелагея | Васильевна,"Дмитріева 2-я (Ѳедорова), Пелагея Васильевна"
+167,R7,no credit summary on a page where others have one,balletartists_1895-96_MSK_p001,balletartists_1895-96_MSK_p001__e030,44.,Живокини | Надежда | Дмитріевна,28/30
+168,R7,no credit summary on a page where others have one,balletartists_1895-96_MSK_p002,balletartists_1895-96_MSK_p002__e016,60.,Кузнецова | Анна | Сильвестровна,27/30
+169,R7,no credit summary on a page where others have one,balletartists_1895-96_MSK_p002,balletartists_1895-96_MSK_p002__e017,61.,Лузина 1-я | Надежда | Павловна,27/30
+170,R7,no credit summary on a page where others have one,balletartists_1895-96_MSK_p002,balletartists_1895-96_MSK_p002__e020,64.,Марковская | Надежда | Ивановна,27/30
+171,R7,no credit summary on a page where others have one,balletartists_1895-96_MSK_p003,balletartists_1895-96_MSK_p003__e011,85.,Петрова 2-я | Вѣра | Ивановна,29/32
+172,R7,no credit summary on a page where others have one,balletartists_1895-96_MSK_p003,balletartists_1895-96_MSK_p003__e012,86.,Подруцкая | Вѣра | Павловна,29/32
+173,R7,no credit summary on a page where others have one,balletartists_1895-96_MSK_p003,balletartists_1895-96_MSK_p003__e018,92.,Пѣшкова | Надежда | Александровна,29/32
+174,R7,no credit summary on a page where others have one,balletartists_1895-96_MSK_p004,balletartists_1895-96_MSK_p004__e005,111.,Тихомирова | Марія | Ивановна,30/31
+175,R3,family_name (within person): «Лащининъ» vs usual «лащилин» x6,balletartists_1895-96_MSK_p005,balletartists_1895-96_MSK_p005__e026,33.,Лащининъ | Александръ | Ивановичъ,"Лащилинъ, Александръ Ивановичъ"
+176,R3,family_name (within person): «Льсновскій» vs usual «лесновски» x18,balletartists_1895-96_MSK_p006,balletartists_1895-96_MSK_p006__e002,36.,Льсновскій | Александръ | Ивановичъ,"Лѣсновскій, Александръ Ивановичъ"
+177,R3,first_name (within person): «Сергій» vs usual «сергеи» x16,balletartists_1895-96_MSK_p006,balletartists_1895-96_MSK_p006__e025,59.,Степановъ 2-й | Сергій | Яковлевичъ,"Степановъ, Сергѣй Яковлевичъ"
+178,R7,no credit summary on a page where others have one,balletartists_1895-96_SP_p001,balletartists_1895-96_SP_p001__e001,1.,Блау | Василій | Александровичъ,29/32
+179,R7,no credit summary on a page where others have one,balletartists_1895-96_SP_p001,balletartists_1895-96_SP_p001__e002,2.,Ефимовъ | Константинъ | Пантелеевичъ,29/32
+180,R7,no credit summary on a page where others have one,balletartists_1895-96_SP_p001,balletartists_1895-96_SP_p001__e003,3.,Камышевъ | Александръ | Михайловичъ,29/32
+181,R7,no credit summary on a page where others have one,balletartists_1895-96_SP_p002,balletartists_1895-96_SP_p002__e007,36.,Ермолаева | Марія | Ивановна,27/29
+182,R3,family_name (within person): «Корсанъ» vs usual «корсак» x5,balletartists_1895-96_SP_p002,balletartists_1895-96_SP_p002__e021,50.,Корсанъ | Вѣра | Александровна,"Корсакъ, Вѣра Александровна"
+183,R7,no credit summary on a page where others have one,balletartists_1895-96_SP_p002,balletartists_1895-96_SP_p002__e022,51.,Кузьмина 1-я | Анна | Николаевна,27/29
+184,R3,family_name (within person): «Обланова» vs usual «облакова» x11,balletartists_1895-96_SP_p003,balletartists_1895-96_SP_p003__e027,85.,Обланова | Екатерина | Александровна,"Облакова, Екатерина Александровна"
+185,R5,leaving in note but no end parsed,balletartists_1895-96_SP_p004,balletartists_1895-96_SP_p004__e003,91.,Онѣгина 2-я | Елизавета | Ѳедоровна,съ 1 іюня 1889 г.
+186,R5,printed leaving/death date not among parsed end dates,balletartists_1895-96_SP_p004,balletartists_1895-96_SP_p004__e003,91.,Онѣгина 2-я | Елизавета | Ѳедоровна,Оставила службу 1 декабря 1895 | parsed: ['None']
+187,R5,leaving in note but no end parsed,balletartists_1895-96_SP_p004,balletartists_1895-96_SP_p004__e006,94.,Парфентьева | Прасковья | Петровна,съ 1 іюня 1892 г.
+188,R5,printed leaving/death date not among parsed end dates,balletartists_1895-96_SP_p004,balletartists_1895-96_SP_p004__e006,94.,Парфентьева | Прасковья | Петровна,Оставила службу 10 ноября 1895 | parsed: ['None']
+189,R7,no credit summary on a page where others have one,balletartists_1895-96_SP_p005,balletartists_1895-96_SP_p005__e013,130.,Тимирева | Любовь | Сергѣевна,28/30
+190,R3,family_name (within person): «Франнъ» vs usual «франк» x16,balletartists_1895-96_SP_p005,balletartists_1895-96_SP_p005__e018,135.,Франнъ | Вѣра | Александровна,"Франкъ, Вѣра Александровна"
+191,R7,no credit summary on a page where others have one,balletartists_1895-96_SP_p005,balletartists_1895-96_SP_p005__e018,135.,Франнъ | Вѣра | Александровна,28/30
+192,R7,no credit summary on a page where others have one,balletartists_1895-96_SP_p007,balletartists_1895-96_SP_p007__e002,22.,Ивановъ 1-й | Левъ | Ивановичъ,26/29
+193,R7,no credit summary on a page where others have one,balletartists_1895-96_SP_p007,balletartists_1895-96_SP_p007__e020,40.,Михайловъ | Леонидъ | Леонидовичъ,26/29
+194,R7,no credit summary on a page where others have one,balletartists_1895-96_SP_p007,balletartists_1895-96_SP_p007__e029,49.,Петровъ | Николай | Ивановичъ,26/29
+195,R7,no credit summary on a page where others have one,balletartists_1895-96_SP_p008,balletartists_1895-96_SP_p008__e001,50.,Пишо | Иванъ | Александровичъ,27/29
+196,R7,no credit summary on a page where others have one,balletartists_1895-96_SP_p008,balletartists_1895-96_SP_p008__e014,63.,Степановъ | Владиміръ | Ивановичъ,27/29
+197,R3,family_name (within person): «Тимомировъ 1-й» vs usual «тихомиров» x14,balletartists_1895-96_SP_p008,balletartists_1895-96_SP_p008__e018,67.,Тимомировъ 1-й | Владиміръ | Михайловичъ,"Тихоміровъ 2-й, Владиміръ Михайловичъ"
+198,R7,no credit summary on a page where others have one,balletartists_1896-97_MSK_p000,balletartists_1896-97_MSK_p000__e001,,Мендесъ | Іосифъ | ,9/12
+199,R7,no credit summary on a page where others have one,balletartists_1896-97_MSK_p000,balletartists_1896-97_MSK_p000__e002,,Гельцеръ | Василій | Ѳедоровичъ,9/12
+200,R7,no credit summary on a page where others have one,balletartists_1896-97_MSK_p000,balletartists_1896-97_MSK_p000__e010,8.,Божановская | Елена | Владиміровна,9/12
+201,R7,no credit summary on a page where others have one,balletartists_1896-97_MSK_p001,balletartists_1896-97_MSK_p001__e017,27.,Давыдченко | Анастасія | Ѳоминишна,29/30
+202,R1,"patronymic missing here, printed in other seasons",balletartists_1896-97_MSK_p001,balletartists_1896-97_MSK_p001__e022,32.,Джури | Адель | ,"Джури, Адель"
+203,R1,digit in surname (not an ordinal),balletartists_1896-97_MSK_p001,balletartists_1896-97_MSK_p001__e024,34.,Дмитріева 2-я (Ѳедорова) | Пелагея | Васильевна,"Дмитріева 2-я (Ѳедорова), Пелагея Васильевна"

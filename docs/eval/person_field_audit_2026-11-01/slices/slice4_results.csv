@@ -1,0 +1,164 @@
+item,verdict,scan_reading,proposed_fix,confidence,note
+614,matches_print,"47. Крачевская, Владислава Романовна (съ 1 сентября 1900 г.). — no tally line printed",,high,zoomed col 2; ALSO: no. 52 prints «Мендесъ» (stored «Мендесь»); no. 53 prints «Милютина» (stored «Милотина») — both misreads
+615,matches_print,"59. Мыльникова, Марія Александровна (съ 1 августа 1905 г.). — no tally printed",,high,"zoomed; ALSO: col 2 no. 72 prints «Пожицкая» (letter-spaced, no р) for Поржицкая — print's own form"
+616,matches_print,"1. Бакинъ 1-й, Иванъ Павловичъ (съ 1 августа 1885 г.). — first entry under «Артисты:», no tally printed",,high,zoomed
+617,print_slip,"4. Барановъ, Костантинъ Николаевичъ (съ 1 сентября 1897 г.). — «Костантинъ» without н is printed so",,high,"zoomed; clean type, letter-spaced surname; data matches print"
+618,extra_in_data,"5. Бекъ, Константинъ Александровичъ (съ 1 сентября 1892 г.). Tally line «Въ 9 балетахъ — 38. Всего — 38 разъ. Въ томъ числѣ: …» printed in small type below",tenure_note_text=(съ 1 сентября 1892 г.).,high,zoomed; tally is correctly in credit_summary_text but duplicated into tenure_note_text (with trailing «:» instead of «.»)
+619,extra_in_data,"9. Бычковъ, Александръ Павловичъ (съ 1 сентября 1894 г.). Tally «Въ 9 балетахъ—48; въ 1 дивертиссментѣ—1; въ 6 операхъ—36. Всего—85 разъ. …» below",tenure_note_text=(съ 1 сентября 1894 г.).,high,tally already in credit_summary_text; duplicated into tenure_note_text
+620,matches_print,"20. Евлановъ, Николай Павловичъ (съ 23 августа 1884 г. по 3 декабря 1887 г. и съ 1 ноября 1890 г.). … Оставилъ службу съ 20 іюля 1907 г.",,high,zoomed; parse is right: 2 periods (1884-08-23–1887-12-03; 1890-11-01–1907-07-20 left service); third «съ» belongs to the print's «Оставилъ службу съ 20 іюля»
+621,matches_print,"36. Лукьяновъ, Николай Ефимовичъ (съ 1 сентября 1898 г.). — last entry of col. 1, no tally printed",,high,zoomed
+622,matches_print,"51. Рябовъ, Александръ Петровичъ (съ 1 февраля 1892 г.). † 2 ноября 1906 г. — no tally printed",,high,zoomed
+623,matches_print,"70. Чистяковъ, Андрей Ивановичъ (съ 1 сентября 1890 г.). — no tally printed",,high,"zoomed; ALSO: no. 69 Царманъ 2-й «Оставилъ службу 14 января 1907 г.» is stored in credit_summary_text, not tenure_note_text (service period itself parsed correctly)"
+624,matches_print,"80. Ѳеоктистовъ, Сергѣй Ивановичъ (съ 1 сентября 1900 г.). — last artist before «Оркестры», no tally printed",,high,zoomed
+625,matches_print,"Репетиторы: 2. Итцигсонъ, Мейеръ-Гиршъ (съ 1 августа 1882 г.) (назначенъ съ 1 октября 1904 г.).",,high,"zoomed; second «съ» is the date of appointment to the répétiteur post, not a new service period — one period from 1882-08-01 is right. Foreigner without patronymic, as printed. (Hyphen printed with spaces «Мейеръ - Гиршъ».)"
+626,matches_print,"29. Ильина 1-я, Ольга Николаевна (съ 1 іюня 1880 г.). — no tally printed",,high,zoomed
+627,matches_print,"30. Ильина 2-я, Елена Васильевна (съ 1 іюня 1892 г.). — no tally printed",,high,zoomed
+628,matches_print,"57. Макарова 1-я, Елена Александровна (съ 1 іюня 1899 г.). — no tally printed",,high,zoomed
+629,matches_print,"82. Пуни, Леонтина-Констанція (съ 1 іюня 1903 г.). — no patronymic printed",,high,zoomed; hyphen printed spaced «Леонтина - Констанція»; foreigner printed without patronymic
+630,misread,"2. Алексѣевъ 1-й, Алексѣй Николаевичъ (съ 1 іюня 1894 г.).",first_name=Алексѣй,high,"zoomed; print clearly «Алексѣй» with ѣ, stored «Алексій»"
+631,field_misplaced,"11. Больмъ, Адольфъ Эмиль (съ 1 іюня 1903 г.).",first_name=Адольфъ Эмиль; patronymic=,medium,"zoomed; «Эмиль» is a second given name (foreigner, no patronymic printed), not a patronymic; same pattern in 1907-08 and 1908-09 — RG's convention call on double given names"
+632,field_misplaced,"11. Больмъ, Адольфъ Эмиль",first_name=Адольфъ Эмиль; patronymic=,medium,duplicate flag of item 631 (same row)
+633,print_slip,"15. Воронковъ 1-й, Иванъ Ивановичъ … / 15. Воронковъ 2-й, Константинъ Ивановичъ (съ 1 іюня 1890 г.). — number 15 printed twice",,high,zoomed; print's own numbering slip; nothing dropped
+634,print_slip,"15. Воронковъ 2-й … followed directly by 17. Гавликовскій, Николай Людвиговичъ — no entry 16 printed",,high,zoomed; the gap is the print's doubled 15; no entry dropped from transcription
+635,print_slip,"24. Ивановъ 2 й, Александръ Николаевичъ (съ 1 мая 1896 г.). — ordinal printed «2 й» with the hyphen missing",,high,zoomed; hyphen absent in print (a space where «-» should be; not obviously broken type). Data matches print; a normaliser may want «2-й» in research layer
+636,print_slip,24. Ивановъ 2 й — surname + ordinal with missing hyphen,,high,same row as 635
+637,print_slip,24. Ивановъ 2 й,,high,"same row as 635; the surname itself is «Ивановъ», only the ordinal hyphen is missing in print"
+638,print_slip,"Режиссеръ балетной части Новаго театра: Монахинъ, Николай Ѳедоровичъ (съ 3 февраля 1871 г.). Оставилъ службу 1 сентября 1907 г.",,high,"zoomed; print has «Монахинъ» (letter-spaced, clean type) — metathesis of the usual «Манохинъ»; data matches print"
+639,matches_print,"17. Владимирова, Евдокія Петровна (съ 1 сентября 1892 г.). — no tally printed",,high,zoomed
+640,matches_print,"24. Гостемилова, Александра Николаевна (съ 1 сентября 1900 г.). — no tally printed",,high,zoomed/overview
+641,matches_print,"41. Иванова 4-я, Надежда Сергѣевна (съ 1 августа 1907 г.). — no tally printed",,high,overview at 1300px legible; no small-type line
+642,matches_print,"44. Козловская, Ольга Владимировна (съ 1 сентября 1900 г.). — no tally printed",,high,overview legible
+643,matches_print,"48. Крочевская, Владислава Романовна (съ 1 сентября 1900 г.). — no tally printed",,high,zoomed; print spells «Крочевская» this year (1906-07 «Крачевская»)
+644,matches_print,"60. Мыльникова, Марія Александровна (съ 1 августа 1905 г.). Оставила службу 24 февраля 1907 г. — no tally printed",,high,overview legible at 1300px; leaving date parsed correctly
+645,matches_print,"83. Тарасенко, Валентина Викторовна (съ 1 сентября 1900 г.). Оставила службу 8 декабря 1907 г. — no tally printed",,high,"overview; ALSO: on this page tenure_note_text for nos. 83, 84, 87 omits the «Оставила службу …» line though the end date IS parsed in person_entry_service"
+646,matches_print,"84. Токарева, Анна Ивановна (съ 1 сентября 1897 г.). Оставила службу 11 декабря 1907 г. — no tally printed",,high,zoomed
+647,print_slip,"85. Тренижская, Анна Ѳедоровна (съ 1 сентября 1893 г.).",,high,"zoomed; print clearly «Тренижская» (ж for н), letter-spaced, clean type; data matches print"
+648,matches_print,"87. Хомякова, Александра Петровна (съ 1 сентября 1902 г.). Оставила службу 24 августа 1908 г. — no tally printed",,high,overview
+649,matches_print,"95. Чумакова 2-я, Анна Дмитріевна (съ 1 сентября 1900 г.). — no tally printed",,high,overview
+650,matches_print,"3. Бакинъ 3-й, Александръ Всеволодовичъ (съ 1 сентября 1895 г.). — no tally printed",,high,overview legible
+651,matches_print,"12. Воронцовъ, Владимиръ Васильевичъ (съ 1 сентября 1891 г.). — no tally printed",,high,zoomed; «Владимиръ» with и as printed this year
+652,matches_print,"17. Гулинъ 1-й, Ѳедоръ Ѳедоровичъ (съ 1 сентября 1887 г.). — no tally printed",,high,overview legible
+653,matches_print,"19. Дьякъ, Иванъ Павловичъ (съ 1 сентября 1898 г.). — no tally printed",,high,overview legible
+654,matches_print,"20. Евлановъ, Николай Павловичъ (съ 23 августа 1884 г.). — no tally printed",,high,overview legible; print gives only the first start date this year (no «по … и съ …»)
+655,misread,"45. Новиковъ, Лаврентій Лаврентьевичъ (съ 1 августа 1906 г.). — surname letter-spaced «Н о в и ко в ъ»",family_name=Новиковъ,high,"zoomed; the space is uneven letter-spacing (tight «ко»), not a word break; one word"
+656,print_slip,"65. Фремонъ, Максимиліанъ Петровичъ (съ 1 августа 1907 г.).",,high,"zoomed; print clearly «Фремонъ» (letter-spaced, clean type) vs «Фроманъ» elsewhere; data matches print"
+657,matches_print,"69. Чистяковъ, Андрей Ивановичъ (съ 1 сентября 1890 г.). — no tally printed",,high,overview legible at 1300px
+658,field_misplaced,"80. Ѳеоктистовъ, Сергѣй Ивановичъ (съ 1 сентября 1900 г.). Переведенъ въ драматическую труппу 1 сентября 1907 г. — no tally printed",tenure_note_text=съ 1 сентября 1900 г. Переведенъ въ драматическую труппу 1 сентября 1907 г.; credit_summary_text=,high,"overview; the 'credit summary' is the transfer note, not a tally; service end 1907-09-01 (end_type other) already parsed correctly"
+659,misread,"4. Балдина, Александра Васильевна (съ 1 іюня 1903 г).",first_name=Александра,high,zoomed; a speck of dirt sits above the final «а» (and above «л» of the surname) — the transcription turned it into Latin «ă». Not a gender conflict; plain Cyrillic а
+660,matches_print,"37. Клечковская, Лидія Альбиновна (съ 1 іюня 1906 г.). — no tally printed",,high,overview legible at 1300px; no small-type line before no. 38
+661,matches_print,"67. Нижинская, Бронислава Ѳоминична (съ 1 іюня 1908 г.). — no tally printed",,high,zoomed; newly joined
+662,matches_print,"71. Ольхина, Екатерина (съ 1 іюня 1908 г.). — no patronymic printed",,high,zoomed; print omits the patronymic this year (new entrant); Сергѣевна appears in later seasons
+663,matches_print,"71. Ольхина, Екатерина (съ 1 іюня 1908 г.). — no tally printed",,high,zoomed
+664,matches_print,"84. Пуни, Леонтина-Констанція (съ 1 іюня 1903 г.). — no patronymic printed",,high,overview legible; foreigner printed without patronymic every year
+665,matches_print,"113. Чернышева, Любовь (съ 1 іюня 1908 г.). — no patronymic printed",,high,overview legible; new entrant printed without patronymic (Павловна appears later)
+666,matches_print,"113. Чернышева, Любовь (съ 1 іюня 1908 г.). — no tally printed",,high,overview; last entry of column 1
+667,matches_print,"115. Чумакова, Антонина (съ 1 іюня 1908 г.). — no patronymic printed",,high,overview legible; new entrant (1908-09 prints «Савеліевна»)
+668,misread,"3. Алексѣевъ 2-й, Александръ Але-|ксѣевичъ (съ 1 іюня 1905 г.). — line-break hyphen only",patronymic=Алексѣевичъ,high,"zoomed; the hyphen is the end-of-line word break («Але-» / «ксѣевичъ»), not part of the name"
+669,misread,"11. Больмъ, Адольфъ Эмиль (съ 1 іюня 1903 г.). — surname printed «Больмъ» with ь",family_name=Больмъ; first_name=Адольфъ Эмиль; patronymic=,high,"zoomed; stored «Болмъ» drops the ь; «Эмиль» is a second given name, no patronymic printed (convention call for RG on field placement)"
+670,field_misplaced,"11. Больмъ, Адольфъ Эмиль",first_name=Адольфъ Эмиль; patronymic=,medium,duplicate flag of item 669 (same row)
+671,misread,"32. Кристерсенъ, Христіанъ Христіановичъ (съ 1 мая 1896.). — print «Кристерсенъ» with hard sign",family_name=Кристерсенъ,high,"zoomed; stored final «ь» should be «ъ». The «-сенъ» vs usual «-сонъ» IS the print's own spelling this year (print_slip-level variant, keep). Also print omits «г.» after 1896"
+672,matches_print,"51. Облаковъ, Андрей Александровичъ (съ 1 іюня 1892 г.). Оставилъ службу 1 января 1908 г. — no tally printed",,high,overview legible at 1300px
+673,matches_print,"57. Печатниковъ, Николай Александровичъ (съ 1 сентября 1897 г.). Откомандированъ для исполненія обязанностей гардеробмейстера Маріинскаго театра съ 1 августа 1907 г.",,medium,"overview; one service period is right — second «съ» is the date of secondment, not a new period. Parsed end 1907-08-01 end_type=other is a convention question: he is only seconded and stays listed among the artists in 1909-10 and 1910-11, so RG may prefer no end date"
+674,matches_print,57. Печатниковъ … — no tally printed (only the secondment note),,high,overview
+675,matches_print,"58. Плессюкъ, Александръ Ивановичъ (съ 1 іюня 1887 г.). Оставилъ службу 1 іюня 1907 — no tally printed",,high,zoomed; print omits «г.» after 1907
+676,print_slip,"83. Христіансонъ, Андрей Алексѣевичъ (съ 1 іюня 1907 г.).",,high,"zoomed; print clearly «Христіансонъ» (letter-spaced, clean) vs «Христапсонъ» elsewhere; data matches print"
+677,print_slip,"p.24 ends with 77. Фокинъ, Михаилъ Михайловичъ (tally complete); p.25 begins 83. Христіансонъ — printed folios 24 and 25 are consecutive",,high,"overview of both pages; nothing missing between the folios, so the 78–82 skip is the print's own numbering. Nothing dropped"
+678,matches_print,"1. Адамовичъ 1-я, Екатерина Матвѣевна (съ 1 сент. 1900 г.). Баядерка (Айя—1). Всего—въ 1 балетѣ—1 разъ.",,high,overview legible; «сент.» is the print's abbreviation; start parsed correctly as 1900-09-01. Note: this 1908-09 MSK format prints a tally only for artists with named roles — many R7 flags in this season are expected
+679,extra_in_data,"30. Дума, Евгенія Доминиковна (съ 1 августа 1907 г., откоманд. въ Спб. съ 16 декабря 1908 г. по 1 мая 1909 г.).","service: start 1907-08-01, no end (the «съ 16 декабря 1908 г. по 1 мая 1909 г.» is a secondment to St Petersburg, not end of service); end_date_text/end_date_undate=",high,overview legible; parsed period wrongly took the secondment's «по 1 мая 1909 г.» as her service end
+680,print_slip,"37. Канишевская, Александра Ѳеодоровна (съ 1 ноября 1888 г., ост. службу 1 ноября 1908 г.).",,high,"zoomed; print clearly «Канишевская» (н for л), letter-spaced, clean type; data matches print"
+681,print_slip,37. … Александра Ѳео-|доровна — print has «Ѳеодоровна»,,high,zoomed; «Ѳео-» at line end + «доровна»: the extra о is printed; data matches print
+682,print_slip,"41. Куришенская, Александра Вильгельмовна (съ 1 сентября 1897 г.).",,high,zoomed; print clearly «Куришенская» (vs «Куршинская» elsewhere); data matches print
+683,print_slip,"41. Куришенская, Александра Вильгельмовна — patronymic printed «Виль-|гельмовна»",,high,zoomed; print gives «Вильгельмовна» (other seasons «Васильевна»). Data matches print; identity question (same person?) for RG — tenure date 1 сентября 1897 matches Куршинская
+684,print_slip,"64. Пажицкая, Бронислава Августовна (съ 1 сентября 1900 г.).",,high,"zoomed; print clearly «Пажицкая» (no р; 1906-07 also prints «Пожицкая»); data matches print. ALSO: no. 73 «Тренинская, Анна Федоровна» here"
+685,matches_print,"83. Ячменева, Софья Сергѣевна (съ 1 сентября 1890 г.).",,high,zoomed; print «Софья» this year (1907-08 «Софія»); data matches print
+686,missing_in_data,"2. Бакинъ 2-й, Александръ Всеволодовичъ (съ 1895 г.). Оставилъ службу 10 ноября 1908 г.",start_date_undate=1895 (year-only; e.g. 1895-XX-XX),high,zoomed; print gives only the year «съ 1895 г.» (1907-08 gives 1 сентября 1895). start_date_text present but undate null. ALSO: «Оставилъ службу 10 ноября 1908 г.» sits in credit_summary_text instead of tenure_note_text (end date itself parsed correctly)
+687,missing_in_data,2. Бакинъ 2-й … (съ 1895 г.).,start_date_undate=1895 (year-only),high,duplicate flag of item 686
+688,misread,"9. Волининъ, Александръ Емельяновичъ (съ 1 сентября 1901 г.).",family_name=Волининъ,high,"zoomed; print clearly «Волининъ» (letter-spaced); stored «Волинъ» drops «ин». ALSO this page: no. 10 print «Алексанпръ» (typo, broken/wrong sort for д) and no. 13 «23 сентабря 1897» (Голубинъ 1-й) — check stored forms"
+689,print_slip,"27. Костровскій 2-й, Дмитрій Романовичъ (съ 1 августа 1905 г.).",,high,"zoomed; print «Костровскій» this year (1907-08 «Костровской»); data matches print — orthographic variant, not a misread"
+690,print_slip,"31. Лащилинъ, Левъ Аоександро-|вичъ (съ 1 августа 1906 г.).",,high,"zoomed; print really has «Аоександровичъ» (о for л, clean type — wrong sort); data matches print. Collection candidate for genuine_print_typos"
+691,print_slip,"33. Лѣсновскій, Александръ Ивановичъ (съ 1 седтября 1892 г.).",start_date_undate=1892-09-01 (keep text as printed),high,"zoomed; «седтября» really printed (д for п, clean type). Text correct as printed, but start_date_undate is null — it should be 1892-09-01"
+692,print_slip,33. Лѣсновскій … (съ 1 седтября 1892 г.).,start_date_undate=1892-09-01,high,duplicate flag of item 691
+693,print_slip,33. Лѣсновскій … «седтября» — print's own typo,start_date_undate=1892-09-01,high,duplicate flag of item 691; month parser should accept this printed slip
+694,print_slip,"42. Поповъ, Александръ Викторовичъ (съ 1 октября 1895 г. по 6 нояаря 1898 г. и съ 1 сентября 1901 г.).",,high,"zoomed; print clearly «Поповъ» (letter-spaced) for the man printed «Пановъ» elsewhere (same name, patronymic, dates); data matches print. Also print typo «нояаря» — stored «ноября»? (end undate parsed 1898-11-06, fine)"
+695,missing_in_data,"46. Рябцевъ, Владиміръ Александровичъ (съ 1 сентяяря 1898 г.). [tally] Оставилъ службу 23 мая 1909 г.",service end_date_text=23 мая 1909 г.; end_date_undate=1909-05-23; end_type=left service; tenure_note_text=(съ 1 сентяяря 1898 г.). Оставилъ службу 23 мая 1909 г.; credit_summary_text= (drop the trailing «Оставилъ службу …» sentence),high,"zoomed; the leaving line is stored at the end of credit_summary_text so no end was parsed. Also print has typo «сентяяря» (stored normalised to «сентября» — print_slip, keep print form if diplomatic)"
+696,missing_in_data,46. Рябцевъ … Оставилъ службу 23 мая 1909 г.,end_date_undate=1909-05-23; end_type=left service,high,duplicate flag of item 695
+697,matches_print,"48. Сигуля, Александръ Макарычъ (съ 1 сентября 1899 г.).",,high,zoomed; print really has the colloquial patronymic form «Макарычъ» (other years «Макаровичъ»); data matches print
+698,matches_print,"50. Смирновъ 1-й, Александръ Митрофановичъ (съ 1 сентября 1897 г., ост. службу 1 сент. 1907 г.). — no tally printed",,high,overview legible; only role-holders get a tally in this volume
+699,matches_print,"51. Смирновъ 2-й, Викторъ Ивановичъ (съ 1 августа 1905 г., ост. службу 2 ноября 1908 г.). — no tally printed",,high,overview legible
+700,matches_print,"52. Савицкій, Михаилъ Ивановичъ. — no tally and no start date printed at all",,high,"zoomed; the print gives the name only (no «съ …»), so the null tenure is correct"
+701,matches_print,"54. Тарасовъ, Иванъ Васильевичъ (съ 1 сентября 1899). — no tally printed",,high,overview; print omits «г.»
+702,matches_print,"56. Тихоміровъ 2-й, Алексѣй Дмитріевичъ (съ 1 сентября 1899 г. по 13 сентября 1903 г. и съ 15 января 1904 г.). — no tally printed",,high,overview legible
+703,matches_print,"61. Царманъ, Александръ Александровичъ (съ 1 сентября 1890 г., ост. службу 1 октября 1909 г.). — no tally printed",,high,overview legible; ALSO: no. 59 prints «Фроманъ» this year
+704,print_slip,"66. Шокаровъ, Дмитрій Николаевичъ (съ 1 сентября 1892 г.).",,high,zoomed; print clearly «Шокаровъ» (vs usual «Шокоровъ»); data matches print
+705,misread,"67. Щегловъ, Василій Семеновичъ (съ 1 сентября 1896 г. по 1 ноября 1898 г.) и съ 16 ноября 1901 г. — Дочь фараона (обезьяна—1). Всего — въ 1 балетѣ—1 разъ.",credit_summary_text=Дочь фараона (обезьяна—1). Всего — въ 1 балетѣ—1 разъ.; add credit row: Дочь фараона / обезьяна / 1,high,"zoomed; stored «Дочь фарона» drops an «а». Tally is printed, so the missing credit row is a parser gap (this volume's «Всего—въ N балетѣ—M разъ» format)"
+706,missing_in_data,"69. Щипановъ, Михаилъ Михаиловичъ … Баядерка (браминъ—2); Спящая красавица (Каталабютъ — 6); Конекъ-Горбунокъ (ханъ — 7); Коппелія (герцогъ — 3); Жизель (Гансъ — 4); Тщетная предосторожность (Мишо—4); Фея куколъ (купецъ—4); Раймонда (Абдеррахманъ—9); Нуръ и Анитра (старецъ—1). Всего—въ 9 балетахъ—40 разъ.",credit rows for the 9 works as printed; credit_summary_text: «Фея куколь» -> «Фея куколъ»,high,overview + zoom; text otherwise matches print; credit rows not parsed (parser gap)
+707,misread,"71. Ѳедоровъ 2-й, Михаилъ Васильевичъ (съ 1 августа 1905 г.). Фея куколъ (приказчикъ—1). Всего—въ 1 балетѣ—1 разъ.",credit_summary_text=Фея куколъ (приказчикъ—1). Всего—въ 1 балетѣ—1 разъ.; add credit row: Фея куколъ / приказчикъ / 1,high,"zoomed; print «куколъ» (hard sign), stored «куколь»; credit row missing (parser gap)"
+708,missing_in_data,"4. Бакеркина, Марія Алексѣевна (съ 1 сентября 1901 г.). Испытаніе Дамиса (служанка графини—2). Всего—въ 1 балетѣ—2 раза.",add credit row: Испытаніе Дамиса / служанка графини / 2,high,"overview legible; text matches print, credit row not parsed (parser gap for «Всего—въ N балетѣ» format)"
+709,missing_in_data,"5. Барашъ, Людмила Павловна (съ 23 мая 1903 г.). Египетскія ночи (Клеопатра—6). Всего—въ 1 балетѣ—6 разъ.",add credit row: Египетскія ночи / Клеопатра / 6,high,overview legible; parser gap
+710,misread,"8. Бурмистрова, Екатерина Ѳедоровна (съ 1 іюня 1899 г.). Конекъ-Горбунокъ (жена купца—1). Всего — въ 1 балетѣ—1 разъ.",credit_summary_text=Конекъ-Горбунокъ (жена купца—1). Всего — въ 1 балетѣ—1 разъ.; add credit row: Конекъ-Горбунокъ / жена купца / 1,high,zoomed; stored «Горбуночь» is a misread of «Горбунокъ»; credit row missing (parser gap)
+711,missing_in_data,"9. Ваганова, Агрипина Яковлевна (съ 1 іюня 1897 г.). Спящая красавица (фея канареекъ — 5); Донъ-Кихотъ (повелительница дріадъ — 3); Времена года (роза—2). Всего—въ 3 балетахъ—10 разъ.",add 3 credit rows as printed,high,overview legible; parser gap
+712,missing_in_data,"10. Васильева, Анна Гордѣевна (съ 1 іюня 1893 г.). Испытаніе Дамиса (подруга Изабеллы—2) Всего—въ 1 балетѣ—2 раза.",add credit row: Испытаніе Дамиса / подруга Изабеллы / 2,high,overview legible; no full stop before «Всего» in print either; parser gap
+713,print_slip,"63. Ніясинская, Бронислава Фоминична (съ 1 іюня 1908 г.). Пробужденіе Флоры (Геба—1). Всего — въ 1 балетѣ—1 разъ.",,high,zoomed; print clearly «Ніясинская» (letter-spaced; a garbled «Нижинская»); data matches print. Patronymic printed «Фоминична» with Ф
+714,print_slip,"p.91 col 1: 69. Полякова … / 60. Пороховникова, Марія Викторовна (съ 1 іюня 1898 г.) / 71. Петипа … — «60» printed where 70 is meant",,high,zoomed; print's own numbering slip; no entry dropped
+715,print_slip,"60. Пороховникова (= 70) followed by 71. Петипа, Марія Маріусовна (съ 29 апрѣля 1875 г.).",,high,the apparent gap is the misprinted «60»; nothing dropped
+716,print_slip,"75. Пуни, Леонтина-Кинтанція (съ 1 іюня 1903 г.). — print really «Кинтанція»; no patronymic printed",,high,"zoomed; «Кинтанція» is a print typo (other years «Констанція»), clean type; no patronymic as usual for her. Data matches print"
+717,matches_print,"103. Чумакова 2-я, Антонина Савеліев-|на (съ 1 іюня 1908 г.).",,high,"zoomed; print «Савеліевна»; no. 102 Чумакова 1-я prints «Савельевна» — sisters, print's own variation"
+718,matches_print,"8. Богдановъ, Георгій Поликарповичъ (съ 1 іюня 1905 г.). — no tally printed",,high,overview legible; this volume prints tallies only for role-holders
+719,misread,"9. Больмъ, Адольфъ Эмиль (съ 1 іюня 1903 г.).",family_name=Больмъ; first_name=Адольфъ Эмиль; patronymic=,high,"zoomed; print «Больмъ»/«Эмиль» with soft sign ь — stored «Болъмъ»/«Эмилъ» have hard sign ъ (misread). «Эмиль» = second given name, not patronymic (field placement is RG's convention call)"
+720,field_misplaced,"9. Больмъ, Адольфъ Эмиль",first_name=Адольфъ Эмиль; patronymic=,medium,duplicate flag of item 719
+721,matches_print,"10. Бочаровъ 1-й, Александръ Ильичъ (съ 1 іюня 1904 г.). — no tally printed",,high,overview legible
+722,matches_print,"19. Гончаровъ 2-й, Леонидъ Ивановичъ (съ 1 іюня 1907 г.). — no tally printed",,high,overview legible
+723,matches_print,"23. Ивановъ 4-й, Александръ Гавриловичъ (съ 1 іюня 1906 г.). — no tally printed",,high,overview legible
+724,matches_print,"24. Исаевъ, Николай Александровичъ (съ 1 іюня 1896 г.). — no tally printed",,high,overview legible
+725,matches_print,"27. Кобелевъ, Константинъ Романовичъ (съ 1 іюня 1903 г.). — no tally printed",,high,overview legible
+726,matches_print,29. Кучинскій Анатолій Михайловичъ (съ 1 іюня 1906.). — no tally printed,,high,overview legible; print omits comma and «г.»
+727,matches_print,"37. Лукьяновъ, Илліодоръ Сергѣевичъ (съ 1 іюня 1905 г.). — no tally printed",,high,overview legible
+728,matches_print,"38. Масловъ, Александръ Николаевичъ (съ 9 мая 1896 г.). — no tally printed",,high,overview legible
+729,matches_print,"40. Михайловъ 1-й, Леонидъ Леонидовичъ (съ 1 мая 1896 г.). — no tally printed",,high,overview legible
+730,matches_print,"41. Михайловъ 2-й, Петръ Ефимовичъ (съ 1 іюня 1901 г.). — no tally printed",,high,overview legible
+731,print_slip,"62. Романовъ, Викторъ Павловичъ (съ 1 іюня 1903 г.).",,high,"zoomed/overview; print clearly «Романовъ» for the man printed «Рахмановъ 2-й» elsewhere (same name, patronymic, start date); data matches print — identity link for RG"
+732,matches_print,"79. Эрлеръ 1-й, Александръ Александровичъ (съ 1 іюня 1903 г.). — no tally printed",,high,overview legible
+733,matches_print,"80. Эрлеръ 2-й, Алексѣй Александровичъ (съ 1 іюня 1907 г.). — no tally printed",,high,overview legible; ALSO: no. 76 prints «Христапсонъ» this year
+734,print_slip,"9. Бурина 1 я, Клавдія Александровна (съ 1 сентября 1899 г.). — ordinal printed «1 я» without the hyphen",,high,zoomed; hyphen missing in print (no broken-type trace visible). Data matches print. ALSO: tenure_note_text is null for this row though «(съ 1 сентября 1899 г.)» is printed (service period itself was parsed)
+735,print_slip,9. Бурина 1 я — surname + ordinal with missing hyphen,,high,same row as 734
+736,print_slip,9. Бурина 1 я,,high,same row as 734; surname itself is «Бурина»
+737,misread,"59. Пожицкая, Бронислава Августовна (съ 1 сентября 1900 г.). … Оставила службу 16 августа 1910 г. — surname letter-spaced «П о ж и ц к а я», no р",family_name=Пожицкая,high,"zoomed; stored «По жицкая» splits one word at a letter-space; print has no «р» (print's own form, as 1906-07)"
+738,print_slip,"41. Осроградскій, Ѳедоръ Дмитріевичъ (съ 1 сентября 1900 г.).",,high,"zoomed; print «Осроградскій» (letter-spaced, no т after с), clean type; data matches print"
+739,matches_print,"29. Иконникова, Ксенія Александровна (съ 1 іюня 1910 г.). — no tally printed",,high,overview legible; new entrant
+740,matches_print,"33. Карлова, Софья Федоровна (съ 1 іюня 1910 г.). — no tally printed",,high,overview legible
+741,matches_print,"35. Карпова, Лидія Владиміровна (съ 9 декабря 1902 г.). — no tally printed",,high,overview legible
+742,matches_print,"37. Клемецкая, Евгенія Вацлавовна (съ 1 іюня 1910 г.). — no tally printed",,high,overview legible
+743,matches_print,"43. Легатъ, Антонина Савельевна (съ 25 апрѣля 1906 г.). — no tally printed",,high,overview legible
+744,matches_print,"48. Лобанова, Лидія Дмитріевна (съ 1 іюня 1891 г.). Оставила службу 10 сентября 1909 г. — no tally printed",,high,overview legible
+745,matches_print,"66. Ольхина, Екатерина Сергѣевна (съ 13 ноября 1905 г.). — no tally printed",,high,"overview legible; note start date printed 13 ноября 1905 here vs «1 іюня 1908» in 1907-08/1908-09 — print's own discrepancy, flag for RG"
+746,matches_print,"76. Пуни, Леонтина-Констанція (съ 1 іюня 1903 г.). — no patronymic printed",,high,"overview legible; foreigner, no patronymic in any year"
+747,matches_print,"95. Федорова 3-я, Ольга Васильевна (съ 1 сентября 1903 г.). — no tally printed",,high,overview legible
+748,matches_print,Section «Танцовала на Петербургской сценѣ Императорскаго театра:» — Гельцеръ. Донъ-Кихотъ (Китри—1). Всего—въ 1 балетѣ—1 разъ.,,high,zoomed; guest artist printed as bare surname (Moscow ballerina Екатерина Васильевна Гельцеръ; link to her Moscow person record is for RG). No first name printed
+749,extra_in_data,Гельцеръ. [no tenure printed] Донъ-Кихотъ (Китри—1). Всего—въ 1 балетѣ—1 разъ.,tenure_note_text=; credit_summary_text=Донъ-Кихотъ (Китри—1). Всего—въ 1 балетѣ—1 разъ.,high,zoomed; tenure_note_text «Всего—68 1 балетъ—1 раза.» is a garbled duplicate of the tally — nothing like it is printed; also stored «балетъ» for printed «балетѣ»
+750,matches_print,"8. Богдановъ, Георгій Поликарповичъ (съ 1 іюня 1905 г.). Съ 1 января 1909 г. отбываетъ воинскую повинность. — no tally printed",,high,"overview legible; absent on military service, so no tally"
+751,matches_print,"20. Гуммертъ, Александръ Александровичъ (съ 1 іюня 1910 г.). — no tally printed",,high,overview legible
+752,matches_print,"33. Кякштъ, Георгій Георгіевичъ (съ 1 іюня 1891 г.). — no tally printed",,high,overview legible
+753,matches_print,"52. Печатниковъ, Николай Александровичъ (съ 1 іюня 1897 г.). — no tally printed",,high,overview legible; print gives 1 іюня 1897 here (1907-08 «1 сентября 1897»)
+754,matches_print,"55. Пономаревъ 2-й, Владиміръ Ивановичъ (съ 1 іюня 1910 г.). — no tally printed",,high,overview legible
+755,matches_print,"57. Прохоровъ, Александръ Георгіевичъ (съ 1 іюня 1910 г.). — no tally printed",,high,overview legible
+756,matches_print,"66. Спѣсивцевъ, Анатолій Александровичъ (съ 1 іюня 1910 г.). — no tally printed",,high,overview legible
+757,matches_print,"72. Усачевъ, Алексѣй Александровичъ (съ 1 іюня 1910 г.). — no tally printed",,high,overview legible
+758,print_slip,"74. Чичилева, Елизавета Васильевна (съ 1 сентября 1899 г.).",,high,zoomed; print clearly «Чичилева» (letter-spaced) vs «Чичелева» in 1909-10; data matches print
+759,matches_print,"8. Воронцовъ, Владиміръ (съ 1 сентября 1891 г.). — no patronymic printed",,high,overview legible; the print drops his patronymic this year (and the earlier «по 1 ноября 1898 г. и съ 1 сентября 1901 г.» clause)
+760,matches_print,"8. Воронцовъ, Владиміръ (съ 1 сентября 1891 г.). — no tally printed",,high,overview legible
+761,matches_print,"30. Кузнецовъ 2-й. — bare surname, no first name, patronymic or start date printed; tally «Въ 10 балетахъ—42; въ 14 операхъ—81; въ 2 драмахъ—9; въ кантатѣ—живой картинѣ—1. Всего—133 раза.»",,high,overview legible; print habit (bare surname); identity link to a Кузнецовъ 2-й from neighbouring seasons is for RG
+762,matches_print,"31. Кулыгинъ, Георгій Сергѣевичъ (съ 1 сентября 1892 г.). — no tally printed",,high,overview legible; last entry on p.131
+763,matches_print,"57. Чистяковъ, Андрей Ивановичъ (съ 1 сентября 1890 г.). — no tally printed",,high,overview legible
+764,matches_print,"64. Щипановъ, Михаилъ Михайловичъ (съ 1 сентября 1897 г. по 1 января 1901 г. и съ 8 сентября 1903 г.). Уволенъ со службы 23 октября 1910 г. — no tally printed",,high,"overview legible; end correctly parsed (note: «Уволенъ» = dismissed, stored as 'left service')"
+766,matches_print,"82. Федорова 1-я, Александра Александровна (съ 1 іюня 1902 г.). — no tally printed",,high,overview legible
+765,field_misplaced,"68. Пуни, Леонтина Констанція (съ 1 іюня 1903 г.). — the double first name is printed without the hyphen this year",first_name=Леонтина Констанція; patronymic=,high,"zoomed; «Констанція» is the second half of her given name (other years «Леонтина-Констанція»), not a patronymic"
+767,matches_print,Section «Танцовали на Петербургской сценѣ Императорскаго театра:» 1. Гельцеръ. Въ балетахъ — 4. Всего — 4 раза. Въ томъ числѣ: Баядерка (Никія—2); Донъ-Кихотъ Ламанчскій (Китри—2).,,high,overview legible; guest (Moscow ballerina) printed as bare surname; link to her Moscow record for RG
+768,matches_print,2. Балашова. Въ балетахъ — 2. Всего — 2 раза. Въ томъ числѣ: Тщетная предосторожность (Лиза—2).,,high,"overview legible; guest printed as bare surname (Moscow Александра Михайловна Балашова presumably — RG link). ALSO: guest no. 3 «Петипа, Марія Маріусовна. Въ 1 балетахъ—1. Всего 1 разъ.» — check it is in the data"
+769,matches_print,"30. Кякштъ, Георгій Георгіевичъ (съ 1 іюня 1891 г.). — no tally printed",,high,overview legible
+770,matches_print,"32. Леоновъ, Сергѣй Михайловичъ (съ 1 сентября 1910 г.). — no tally printed",,high,overview legible
+771,matches_print,"35. Лопуховъ, Федоръ Васильевичъ (съ 1 іюня 1905 г.). — no tally printed",,high,overview legible; last entry on p.97
+772,matches_print,"36. Мартьяновъ, Александръ Александровичъ (съ 1 іюня 1893 г.). — no tally printed",,high,overview legible
+773,matches_print,"40. Мержинскій, Францъ Антоновичъ (съ 1 сентября 1899 г.). — no tally printed",,high,overview legible (he is also a répétiteur)
+774,matches_print,"51. Печатниковъ, Николай Александровичъ (съ 1 сентября 1897 г.). — no tally printed",,high,overview legible
+775,matches_print,"59. Сергѣевъ 1-й, Николай Георгіевичъ (съ 1 іюня 1894 г.). — no tally printed",,high,overview legible
+776,misread,"73. Храписъ, Георгій Михайловичъ (съ 1 іюня, 1908 г.).",service: start_date_text=съ 1 іюня 1908 г. (one field); end_date_text= (empty),high,"overview legible; the print's stray comma «іюня, 1908» split the date: start_date_text=«""съ 1 іюня», and «1908 г.""» landed in end_date_text, so the start year was read as before 1820. start_date_undate shown 1908-06-01 in the end_date_undate column — the row is shifted. Correct: start 1908-06-01, no end"

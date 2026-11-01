@@ -1,0 +1,147 @@
+item,verdict,scan_reading,proposed_fix,confidence,note
+883,matches_print,3. Аспернеръ (см. оперный оркестръ). Віолончель.,,high,"Zoomed; print itself spells «Аспернеръ» (н, not г) — cross-reference entry; other seasons «Аспергеръ». Print's own spelling (possibly typo) — data matches print."
+884,misread,"27. Критсель, Вильгельмъ (съ 19 сентября 1882 г.). Фаготъ.",family_name=Критсель,high,"Zoomed; print ends in soft sign ь, data has hard sign ъ. Letter order «Критсель» (т-с) is the print's own (vs Кристель elsewhere)."
+885,matches_print,"47. Туровичъ фонъ Охота, (см. оперный оркестръ). Скрипка.",,high,Zoomed; no hyphen between фонъ and Охота in this print; data matches.
+886,matches_print,"51. Чіарлоне 1-я, Виргинія (съ 1 апрѣля 1886 г.). Арфа.",,high,Zoomed; no patronymic printed this season.
+887,matches_print,"21. Спевакъ, Лазарь (съ 8 марта 1873 г). Скрипка.",,high,Zoomed; no patronymic printed this season.
+888,matches_print,"22. Столяровъ, Семенъ (съ 16 августа 1891 г.). Скрипка.",,high,Zoomed; no patronymic printed this season.
+889,matches_print,"Богуславъ, Флорентій Вечеславовичъ (съ 11 октября 1868 г.).",,high,"Zoomed; print has «Вечеславовичъ» (е, not я). Print's own spelling."
+890,matches_print,"93. Шнирманъ, Лейбъ Александровичъ (съ 15 февраля 1881 г.). Вторая скрипка.",,high,Zoomed; print has «Лейбъ» (other seasons «Лейба»). Print's own form.
+891,matches_print,"22. Затуенгоферъ, Юлій Іосифовичъ (съ 24 сентября 1875 г.). Фаготъ.",,high,"Zoomed; print clearly «Затуенгоферъ» (у, not ц) — likely a print slip for Затценгоферъ but data matches print."
+892,matches_print,"8. Вергеліюшъ, Марцелій Людвиговичъ (съ 1 сентября 1879 г.). Фаготъ.",,high,Zoomed; print «Вергеліюшъ» (е). Print's own spelling.
+893,matches_print,"30. Поповъ 1-й, Владиміръ Захарьевичъ (съ 1 сентября 1888 г.). Первая скрипка.",,high,Zoomed; print «Захарье-вичъ» (hyphenated at line break).
+894,field_misplaced,"33. Смирновъ, Павелъ Петровичъ (съ 1 сентября 1873 г.). Пьянистъ при драматическихъ спектакляхъ.",instrument=Пьянистъ при драматическихъ спектакляхъ; rank_or_title=,medium,Zoomed; the instrument slot (where others print Флейта etc.) holds «Пьянистъ при драматическихъ спектакляхъ». Data put it in rank_or_title and spelled «Пьянисть» (ь) — print has «Пьянистъ» (ъ). Whether a role phrase belongs in instrument is RG's convention call.
+895,matches_print,"20. Кнохъ, Бернардъ Германовичъ (съ 1 сентября 1881 г.). Флейта.",,high,Zoomed; print «Бернардъ» (no г). Print's own form.
+896,matches_print,"4. Адольфи 3-й, Фердинандъ (съ 19 сентября 1882 г.). Скрипка.",,high,"Zoomed; no patronymic printed. ALSO: tenure_note_text lacks the opening «(» on this page's entries (stored «съ 19 сентября 1882 г.). Скрипка.»), cosmetic."
+897,matches_print,"20. Гедике, Фридрихъ (съ 19 сентября 1882 г.). Піанистъ.",,high,No patronymic printed (read at page view + partial zoom).
+898,matches_print,"30. Гробе, Альбертъ (съ 16 сентября 1891 г.). Скрипка.",,high,Zoomed; no patronymic printed.
+899,matches_print,"43. Кламротъ, Карлъ (съ 16 октября 1856 г.). Скрипка.",,high,Zoomed; no patronymic printed.
+900,matches_print,"64. Пекарскій, Давидъ (съ 1 августа 1889 г.). Скрипка.",,high,Zoomed; no patronymic printed.
+901,matches_print,"69. Рессеръ, Мардохей (съ 30 іюля 1876 г.). Скрипка.",,high,Zoomed; no patronymic printed.
+902,matches_print,"73. Свобода, Венцель (съ 22 ноября 1882 г.) Контрабасъ.",,high,Zoomed; no patronymic printed.
+903,field_misplaced,"91. Шпеккинъ, Эрнестъ-Густавъ (съ 1 февраля 1861 г.). Кснтрабасъ.",instrument=Кснтрабасъ; rank_or_title=,high,"Zoomed; the instrument word sits in rank_or_title instead of instrument. Print itself reads «Кснтрабасъ» (с for о) — a print slip, kept as printed (normalised instrument would be Контрабасъ)."
+904,field_misplaced,"Композиторъ балетной музыки. / Кленовскій, Николай Семеновичъ (съ 1 сентября 1883 г.).",first_name=Николай; patronymic=Семеновичъ,high,"Zoomed; no instrument is printed (composer under his own heading, so missing instrument is correct). But first_name holds «Николай Семеновичъ» and patronymic is empty — split needed."
+905,field_misplaced,47. Туровичъ фонъ-Охота (см. оперный оркестръ). Скрипка.,family_name=Туровичъ фонъ-Охота; first_name=,high,Zoomed; the whole «Туровичъ фонъ-Охота» is bold (surname); no first name printed in this cross-reference entry. Data split «фонъ-Охота» into first_name.
+906,matches_print,"51. Чіарлоне 1-я, Виргинія (съ 1 апрѣля 1886 г.). Арфа.",,high,Zoomed; no patronymic printed.
+907,matches_print,"32. Казаковъ, Сергѣй Аѳанасіевичъ (съ 1 декабря 1875 г.). Первая скрипка.",,high,Zoomed; print «Аѳанасіевичъ» (with і). Print's own form.
+908,print_slip,"42. Кункели, Оскаръ Альбертсвичъ (съ 16 августа 1873 г.). Вторая скрипка.",,high,"Zoomed; print really reads «Альбертсвичъ» (с for о) — type error in the print, data matches print; keep as printed."
+909,matches_print,"91. Шнирманъ, Лейбъ Александровичъ (съ 15 февраля 1881 г.). Вторая скрипка.",,high,Zoomed; print «Лейбъ».
+910,matches_print,"31. Поповъ 1-й, Владиміръ Захарьевичъ (съ 1 сентября 1888 г.). Первая скрипка. Оставилъ службу 1 мая 1892 г.",,high,Zoomed; print «Захарьевичъ».
+911,misread,"2. Армсгеймеръ, Иванъ Ивановичъ (съ 1 сентября 1883 г.). Труба.",family_name=Армсгеймеръ,high,Zoomed; print clearly has «с» — «Армсгеймеръ»; data dropped it.
+912,matches_print,"4. Адольфи 3-й, Фердинандъ (съ 19 сентября 1882 г.). Скрипка.",,high,Zoomed; no patronymic printed.
+913,matches_print,"20. Гедике, Фридрихъ (съ 19 сентября 1882 г.). Піанистъ.",,high,Zoomed; no patronymic printed.
+914,matches_print,"30. Гробе, Альбертъ (съ 16 сентября 1891 г.). Скрипка.",,high,Zoomed; no patronymic printed.
+915,matches_print,"62. Пекарскій, Давидъ (съ 1 августа 1889 г.). Скрипка.",,high,Zoomed; no patronymic printed.
+916,matches_print,"67. Рессеръ, Мардохей (съ 30 іюля 1876 г.). Скрипка.",,high,Zoomed; no patronymic printed.
+917,matches_print,"71. Свобода, Венцель (съ 22 ноября 1882 г.). Контрабасъ.",,high,Zoomed; no patronymic printed.
+918,field_misplaced,"Композиторъ балетной музыки. / Кленовскій, Николай Семеновичъ (съ 1 сентября 1883 г.). Оставилъ службу 4 іюня 1893 г.",first_name=Николай; patronymic=Семеновичъ,high,Zoomed; no instrument printed (composer heading — missing instrument correct; tenure/end date correct). Same first_name/patronymic merge as 1891-92 (item 904).
+919,matches_print,2. Альбрехтъ (см оперный оркестръ). Корнетъ.,,high,Zoomed; surname-only cross-reference; first name not printed here.
+920,matches_print,50. Царскій (см оперный оркестръ). Скрипка.,,high,Zoomed; surname-only cross-reference.
+921,matches_print,"51. Чіарлоне 1-я, Виргинія (съ 1 апрѣля 1886 г.). Арфа.",,high,Zoomed; no patronymic printed.
+922,matches_print,"p.73: left column = Оркестръ Александринскаго театра continued, nos. 8–33 (+ right column top 34–37); right column then «Оркестръ Михайловскаго театра», Рамзе, Музыканты 1–18. No entries dropped.",,high,"Print numbering is continuous per orchestra; the 18 -> 8 jump is a transcription ORDER artefact: data puts the right-column Mikhailovsky block (e001-e019) before the left-column Alexandrinsky block (e020-e049). institution is correct on every row, so only entry order is off. Nothing missing."
+923,matches_print,"p.74 opens with 19. Кулле 1-й, Ѳедоръ Андреевичъ (съ 1 декабря 1879 г.). Тромбонъ. — continuation of the Mikhailovsky list (p.73 ends with 18. Кречмаръ).",,high,Backwards jump 37 -> 19 is the same column-order artefact as item 922 (previous entry in data is Alexandrinsky 37). institution Михайловскаго is correct. Nothing missing.
+924,print_slip,"40. Шпоръ, Эдуаръ Ѳедоровичъ (съ 1 октября 1872 г.). Вальдгорнъ. Оставилъ службу 1 ноября 1892 г.",,high,"Zoomed; print really reads «Эдуаръ» (д dropped) — print slip, data matches print."
+925,matches_print,"4. Адольфи 3-й, Фердинандъ (съ 19 сентября 1882 г.). Скрипка.",,high,Zoomed; no patronymic printed.
+926,matches_print,"22. Гедике, Фридрихъ (съ 19 сентября 1882 г.). Фортепіано.",,high,Zoomed; no patronymic printed.
+927,matches_print,"31. Гробе, Альбертъ (съ 16 сентября 1891 г.). Скрипка.",,high,Page view (sharp) + neighbour zoom; no patronymic printed.
+928,matches_print,"76. Пекарскій, Давидъ (съ 1 августа 1889 г.). Скрипка.",,high,Page view (sharp); no patronymic printed.
+929,matches_print,"84. Рессеръ, Мардохей (съ 30 іюля 1876 г.). Скрипка.",,high,Zoomed; no patronymic printed.
+930,matches_print,"90. Свобода, Венцель (съ 22 ноября 1882 г.). Контрабасъ.",,high,Page view (sharp); no patronymic printed.
+931,matches_print,"102. Чіарлоне 1-я, Виргинія (съ 1 апрѣля 1886 г.). Арфа.",,high,Page view + partial zoom; no patronymic printed.
+932,matches_print,"6. Воронцовъ, Иннокентій (съ 1 октября 1893 г.). Скрипка.",,high,Page view (sharp); no patronymic printed.
+933,matches_print,"64. Лудольфи, Валентинъ (съ 1 сентября 1893 г.). Контрабасъ.",,high,Zoomed; no patronymic printed; spelled «Лудольфи» (у) here.
+934,matches_print,"101. Френкель, Василій (съ 1 сентября 1893 г.). Скрипка.",,high,Zoomed; no patronymic printed.
+935,matches_print,"3. Адольфи 2-й, Фердинандъ (съ 19 сентября 1882 г.). Скрипка.",,high,Zoomed; no patronymic printed (note: he is «2-й» this season).
+936,matches_print,"19. Гедике, Фридрихъ (съ 19 сентября 1882 г.). Фортепіано.",,high,Page view (sharp); no patronymic printed.
+937,matches_print,"23. Гольдшмитъ, Іосифъ Януарьевичъ (съ 1 декабря 1894 г.). Скрипка.",,high,Zoomed; print «Януарьевичъ». Print's own spelling.
+938,matches_print,"23. Гольдшмитъ, Іосифъ Януарьевичъ (съ 1 декабря 1894 г.). Скрипка.",,high,Same row as item 937 (duplicate flag); print «Януарьевичъ».
+939,matches_print,"27. Гробе, Альбертъ (съ 16 сентября 1891 г.). Скрипка.",,high,Page view (sharp); no patronymic printed.
+940,matches_print,"74. Пекарскій, Давидъ (съ 1 августа 1889 г.). Скрипка.",,high,Page view (sharp); no patronymic printed.
+941,print_slip,"79. Порубинозскій, Иванъ Романовичъ (съ 5 февраля 1879 г.). Фаготъ.",,high,"Zoomed; print really has «з» for «в» («Порубинозскій») — print slip, data matches print."
+942,matches_print,"83. Рессеръ, Мардохей (съ 30 іюля 1876 г.). Скрипка.",,high,"Page view (sharp); no patronymic printed. ALSO: on this page the Малый-theatre entries (Арендсъ e047, nos. 1–5 e048–e052) carry institution «Императорское С.-Петербургское Театральное Училище» — wrong; print heading is «Оркестръ Малаго театра.» (p003 entries correctly have it). Opera/ballet entries carry institution «Оркестры.» (heading_path has the real orchestra)."
+943,matches_print,"91. Свобода, Венцель (съ 22 ноября 1882 г.). Контрабасъ.",,high,Page view (sharp); no patronymic printed.
+944,matches_print,"103. Чіарлоне 1-я, Виргинія (съ 1 апрѣля 1886 г.). Арфа.",,high,Page view (sharp); no patronymic printed.
+945,matches_print,"6. Воронцовъ, Иннокентій (съ 1 октября 1893 г.). Скрипка.",,high,Page view (sharp); no patronymic printed.
+946,matches_print,p.90 begins «6. Воронцовъ» — continuation of the Малый theatre list whose nos. 1–5 end p.89.,,high,122 -> 6 is a new sub-list (Opera/ballet orchestra ends at 122; Малый list 1–5 on p.89). Nothing dropped. But see item 942: the Малый 1–5 rows on p002 have the wrong institution.
+947,matches_print,"64. Лудольфи, Валентинъ (съ 1 сентября 1893 г.). Контрабасъ.",,high,Zoomed; no patronymic printed.
+948,matches_print,"101. Френкель, Василій (съ 1 сентября 1893 г.). Альтъ.",,high,Zoomed; no patronymic printed.
+949,matches_print,"117. Штейнсъ, Іосифъ (съ 1 августа 1895 г.). Вальдгорнъ.",,high,Zoomed; no patronymic printed.
+950,matches_print,"41. Шредеръ, Карлъ (съ 1 декабря 1894 г.). Ударные инструменты.",,high,Zoomed; no patronymic printed.
+951,matches_print,"3. Адольфи 2-й, Фердинандъ (съ 19 сентября 1882 г.). Скрипка.",,high,Page view (clear); no patronymic printed.
+952,matches_print,"18. Гедике, Фридрихъ (съ 19 сентября 1882 г.). Фортепіано.",,high,Page view (clear); no patronymic printed.
+953,matches_print,"25. Гробе, Альбертъ (съ 16 сентября 1891 г.). Скрипка.",,high,Page view (clear); no patronymic printed.
+954,print_slip,"40. Ивановъ, Иванъ Ѳедоровичъ ... Скрипка. / 42. Канисъ, Эрнестъ (съ 16 сентября 1888 г.). Тромбонъ.",,high,"Zoomed; the print itself jumps 40 -> 42; nothing printed between them (no entry dropped). Print numbering slip (41 = likely Кажданъ, who left 20 June 1895, removed without renumbering). ALSO: right column prints «34. Крутоголововъ» where 54 is meant (zoomed); data has list_number «54.» — data silently corrected the print's misnumber."
+955,matches_print,"72. Пекарскій, Давидъ (съ 1 августа 1889 г.). Скрипка.",,high,Page view (clear); no patronymic printed.
+956,matches_print,"81. Рессеръ, Мардохей (съ 30 іюля 1876 г.). Скрипка.",,high,"Page view (clear); no patronymic printed. ALSO: list_number on this page stored without the trailing dot («81»), unlike other pages — cosmetic."
+957,matches_print,"89. Свобода, Венцель (съ 22 ноября 1882 г.). Контрабасъ.",,high,Page view (clear); no patronymic printed.
+958,matches_print,"101. Фриче, Георгъ (съ 1 декабря 1895 г.). Альтъ.",,high,Zoomed; no patronymic; surname printed «Фриче» here (other season «Фричъ»).
+959,matches_print,"104. Чіарлоне 1-я, Виргинія (съ 1 апрѣля 1886 г.). Арфа. Съ 1 іюня 1896 года переведена въ С.-Петербургскій оркестръ оперы и балета.",,high,Page view (clear); no patronymic printed. Transfer end correctly captured.
+960,matches_print,"120. Эккертъ, Фердинандъ Фердинандовичъ (съ 1 декабря 1895 г.).",,high,Zoomed; no instrument printed in this entry — data correct to leave instrument empty.
+961,matches_print,"5. Воронцовъ, Иннокентій (съ 1 октября 1893 г.). Скрипка.",,high,Page view (clear); no patronymic printed.
+962,field_misplaced,"5. Бергхольцъ, Викторъ-Рудольфовичъ (съ 1 сентября 1891 г.). Первая скрипка.",first_name=Викторъ; patronymic=Рудольфовичъ,medium,"Zoomed; print does show a hyphen-like dash between «Викторъ» and «Рудольфовичъ» (probably a stray/print slip; a patronymic, not a double first name). Data copied it into first_name. RG call whether to keep the print's hyphen; the parts belong in first_name/patronymic."
+963,misread,"49. Керкешко, Ѳедоръ Игнатьевичъ (съ 1 сентября 1882 г.). Контрабасъ.",family_name=Керкешко,high,"Zoomed; print clearly «Керкешко» (к), data «Керкешно»."
+964,matches_print,"59. Лудольфи, Валентинъ (съ 1 сентября 1893 г.). Контрабасъ.",,high,Page view (clear); no patronymic printed.
+965,matches_print,"113. Штейнсъ, Іосифъ (съ 1 августа 1895 г.). Вальдгорнъ.",,high,Page view (clear); no patronymic printed.
+966,print_slip,"8. Бровникъ, Михаилъ Павловичъ (съ 15 января 1891 г.). Гобой.",,high,"Zoomed; print really reads «Бровникъ» (н-и-к transposed vs Бровкинъ) — print slip, data matches print."
+967,matches_print,"40. Шредеръ, Карлъ (съ 1 декабря 1894 г.). Ударные инструменты.",,high,Page view (clear); no patronymic printed.
+968,matches_print,"3. Адольфи 2-й, Фердинандъ (съ 19 сентября 1882 г.). Скрипка. Оставилъ службу 1 января 1897 г.",,high,Page view (clear); no patronymic printed; tenure/end correct.
+969,matches_print,"17. Гедике, Фридрихъ (съ 19 сентября 1882 г.). Фортепіано.",,high,Page view (clear); no patronymic printed.
+970,matches_print,"24. Гробе, Альбертъ (съ 16 сентября 1891 г.). Скрипка.",,high,Page view (clear); no patronymic printed.
+971,extra_in_data,"31. Еременко, Александръ Матвѣевичъ (съ 3 сентября 1890 г.). Ударные инструменты.",subject_taught=,high,Page view (clear); «Ударные инструменты» is the instrument (already in instrument); subject_taught duplicate should be cleared. Only 2 Musicians rows corpus-wide have subject_taught (this and item 972).
+972,extra_in_data,"38. Зюсъ, Францъ (съ 11 сентября 1875 г.). Ударные инструменты.",subject_taught=,high,"Page view (clear); same as item 971 — instrument correct, subject_taught is a stray duplicate."
+973,matches_print,"70. Пекарскій, Давидъ (съ 1 августа 1889 г.). Скрипка.",,high,Page view (clear); no patronymic printed.
+974,matches_print,"79. Рессеръ, Мардохей (съ 30 іюля 1876 г.). Скрипка.",,high,Page view (clear); no patronymic printed. ALSO: heading_path on this page is «Оркестръ оперы и балета. Завѣдывающій дѣлами оркестровъ и капельмейстеръ оперы. Музыканты:» — the Altani sub-heading leaked into musicians' heading_path.
+975,matches_print,"88. Свобода, Венцель (съ 22 ноября 1882 г.). Контрабасъ.",,high,Page view (clear); no patronymic printed.
+976,matches_print,"102. Фриче, Георгъ (съ 1 декабря 1895 г.). Альтъ.",,high,Page view (clear); no patronymic printed.
+977,matches_print,"5. Воронцовъ, Иннокентій (съ 1 октября 1893 г.). Скрипка.",,high,Page view (clear); no patronymic printed.
+978,matches_print,"Завѣдывающій оркестрами. / Кучера, Карлъ Антоновичъ (съ 1 октября 1879 г.).",,high,"Page view (clear); administrative post, no instrument printed — correct to leave instrument empty (role is in heading_path)."
+979,matches_print,"59. Лудольфи, Валентинъ (съ 1 сентября 1893 г.). Контрабасъ.",,high,Zoomed (half-page crop); no patronymic printed.
+980,matches_print,"115. Штейнсъ, Іосифъ (съ 1 августа 1895 г.). Вальдгорнъ. Оставилъ службу 1 сентября 1896 г.",,high,Zoomed (half-page crop); no patronymic printed; tenure correct (tenure_note_text lacks the parentheses and «Вальдгорнъ.» — cosmetic).
+981,matches_print,"41. Шредеръ, Карлъ (съ 1 декабря 1884 г.). Ударные инструменты.",,high,"Zoomed (half-page crop); no patronymic printed. ALSO: this season prints start year «1884» (1894-95/1895-96 print 1 декабря 1894) — data matches print; probably a print slip in the year, flag for RG."
+982,matches_print,"17. Гедике, Фридрихъ (съ 19 сентября 1882 г.). Фортепіано.",,high,Page view (clear); no patronymic printed.
+983,matches_print,"24. Гробе, Альбертъ (съ 16 сентября 1891 г.). Первая скрипка.",,high,Page view (clear); no patronymic printed.
+984,print_slip,"36. Зюсъ, Фрацъ (съ 11 сентября 1875 г.). Ударные инструменты.",,high,"Zoomed; print really reads «Фрацъ» (н dropped) — print slip, data matches print."
+985,matches_print,"66. Пекарскій, Давидъ (съ 1 августа 1889 г.). Первая скрипка.",,high,Page view (clear); no patronymic printed.
+986,matches_print,"75. Рессеръ, Мардохей (съ 30 іюля 1876 г.). Первая скрипка.",,high,Page view (clear); no patronymic printed.
+987,matches_print,"84. Свобода, Венцель (съ 22 ноября 1882 г.). Контрабасъ.",,high,Page view (clear); no patronymic printed.
+988,matches_print,"99. Фричъ, Георгъ (съ 1 декабря 1895 г.). Альтъ.",,high,Page view (clear); no patronymic printed.
+989,misread,"117. Эйхенвальдъ 2-я, Надежла Александровна (съ 16 октября 1897 г.). Арфа.",first_name=Надежла,medium,"Zoomed at high magnification: print reads «Надежла» (д in 3rd place, л before final а) — itself a print slip for Надежда. Data «Належда» swapped the letters the other way. Keep as printed («Надежла») per print-slip rule, or RG may accept normalising; either way «Належда» is not what is printed. ALSO: same page prints «121. Яницкій ... Тромбомъ» (м for н, print slip) — check stored instrument."
+990,matches_print,"4. Воронцовъ, Иннокентій (съ 1 октября 1893 г.). Вторая скрипка.",,high,Page view (clear); no patronymic printed.
+991,matches_print,"Завѣдывающій оркестрами. / Кучера, Карлъ Антоновичъ (съ 1 октября 1879 г.).",,high,"Page view (clear); administrative post, no instrument printed — correct."
+992,matches_print,"58. Лудольфи, Валентинъ (съ 1 сентября 1893 г.). Контрабасъ.",,high,Zoomed (column crop); no patronymic printed.
+993,misread,"103. Хаакъ, Яковъ Эдуардовичъ (съ 15 октября 1879 г.). Фортепіано.",family_name=Хаакъ,high,"Zoomed; print clearly «Хаакъ» (к), data «Хаанъ»."
+994,print_slip,"24. Мельковъ 2-й, Евгеній Александровичъ (съ 15 января 1885 г.). Вторая скрипка.",,high,"Zoomed; print really reads «Мельковъ 2-й» (е) while no. 23 above is «Мальковъ 1-й» — print slip, data matches print."
+995,matches_print,"41. Шредеръ, Карлъ (съ 1 декабря 1884 г.). Ударные инструменты.",,high,"Zoomed (column crop); no patronymic printed; start year printed 1884 (cf. 1894 in 1894-95/1895-96), data matches print."
+996,misread,"Старшій библіотекарь Центральной Музыкальной Библіотеки. / Новоселовъ, Александръ Ильичъ (съ 1 августа 1882 г.).",patronymic=Ильичъ,high,Zoomed; print «Ильичъ» with soft sign; data «Илычъ» dropped the ь.
+997,misread,"Новоселовъ, Александръ Ильичъ (съ 1 августа 1882 г.).",patronymic=Ильичъ,high,Same row as item 996 (duplicate flag); print «Ильичъ».
+998,matches_print,"Завѣдывающій дѣлами оркестровъ. / Симонъ, Антонъ Юльевичъ (съ 1 сентября 1898 г.).",,high,"Page view (clear); administrative post, no instrument printed — correct."
+999,matches_print,"4. Андреевъ, Сергѣй (съ 23 сентября 1898 г.). Ударные инструменты.",,high,Page view (clear); no patronymic printed.
+1000,matches_print,"18. Гедике, Фридрихъ (съ 19 сентября 1882 г.). Фортепіано.",,high,Page view (clear); no patronymic printed.
+1001,matches_print,"24. Гробе, Альбертъ (съ 16 сентября 1891 г.). Первая скрипка.",,high,Page view (clear); no patronymic printed.
+1002,print_slip,"51. Кудряшовъ, Николай Васильеничъ (съ 1 апрѣля 1897 г.). Вальдгорнъ.",,high,"Zoomed; print really reads «Васильеничъ» (н for в) — print slip, data matches print."
+1003,field_misplaced,"53. Лидтке, Готгильдъ Францъ (съ 23 сентября 1898 г.). Литавры.",first_name=Готгильдъ Францъ; patronymic=,medium,"Zoomed; «Францъ» is a second given name (German double name, no patronymic; later seasons print «Готлибъ-Францъ-Густавъ»), not a patronymic. Same stored split recurs 1900-01–1905-06 (Готгильдъ | Францъ); 1899-00 has it in first_name. RG's call on the convention."
+1004,field_misplaced,"53. Лидтке, Готгильдъ Францъ (съ 23 сентября 1898 г.). Литавры.",first_name=Готгильдъ Францъ; patronymic=,medium,Same row as item 1003 (duplicate flag).
+1005,matches_print,"67. Пекарскій, Давидъ (съ 1 августа 1889 г.). Первая скрипка.",,high,Page view (clear); no patronymic printed.
+1006,matches_print,"76. Рессеръ, Мардохей (съ 30 іюля 1876 г.). Первая скрипка.",,high,Page view (clear); no patronymic printed.
+1007,matches_print,"85. Свобода, Венцель (съ 22 ноября 1882 г.). Контрабасъ.",,high,Page view (clear); no patronymic printed.
+1008,matches_print,"101. Фричъ, Георгъ (съ 1 декабря 1895 г.). Альтъ.",,high,Page view (clear); no patronymic printed.
+1009,misread,"117. Штадлеръ, Іосифъ (съ 1 сентября 1888 г.). Віолончель.",family_name=Штадлеръ,high,"Zoomed; print clearly «Штадлеръ» (д), data «Шталлеръ»."
+1010,matches_print,"3. Воронцовъ, Иннокентій (съ 1 октября 1893 г.). Вторая скрипка.",,high,Page view (clear); no patronymic printed.
+1011,matches_print,"Завѣдывающій оркестрами. / Кучера, Карлъ Антоновичъ (съ 1 октября 1879 г.).",,high,"Page view (clear); admin post, no instrument printed — correct. ALSO: same page prints Дриго «(съ 19 сентября 1879 г.)» (other seasons 1 сентября 1886) — print's own, worth a check of stored value."
+1012,matches_print,"67. Лудольфи, Валентинъ (съ 1 сентября 1893 г.). Контрабасъ.",,high,Page view (clear); no patronymic printed.
+1013,matches_print,"p.93 right column top: 42. Ѳедоровъ, Василій Николаевичъ (съ 1 сентября 1889 г.). Литавры. (left column = Alexandrinsky 23–41)",,high,"No entries dropped: Alexandrinsky 23–41 are present (e018–e036). The 22 -> 42 jump is a column-order artefact — data transcribed the right column (42, then Mikhailovsky header, Келеръ, 1–15) before the left column (23–41). Institutions are correct. Same artefact on p004 (Галкинъ capellmeister stored after no. 22)."
+1014,matches_print,"Капельмейстеръ. Келеръ, Морицъ Федоровичъ (съ 1 сентября 1881 г.). Назначенъ капельмейстеромъ съ 1 декабря 1898 г.",,high,"Zoomed; one service start (1 Sept 1881) correctly parsed; second «съ» is the date of appointment as capellmeister (role change, not a new service period, no end). Nothing wrong; RG may want the 1 Dec 1898 appointment captured as a role date. Patronymic printed «Федоровичъ» (Ф) here; on p.90 the same man is printed «Ѳедоровичъ» as no. 50 in the opera orchestra with «Переведенъ на мѣсто капельмейстера Михайловскаго театра 1 декабря 1898 г.»."
+1015,matches_print,"p.93 left column: 23. Мальковъ 1-й, Алексѣй Александровичъ (съ 15 января 1881 г.). Первая скрипка. Оставилъ службу 1 ноября 1898 г.",,high,Gap 15 -> 23 is the column-order artefact (previous data row is Mikhailovsky no. 15 from the right column). Alexandrinsky 1–22 are on p004. Nothing dropped.
+1016,matches_print,"p.94 left column opens 16. Зауеръ, Юлій Кондратьевичъ (съ 15 сентября 1878 г.). Контрабасъ. Оставилъ службу 15 сентября 1898 г.",,high,Continuation of Mikhailovsky list (1–15 on p.93). 41 -> 16 backwards jump is the same column-order artefact. Nothing dropped.
+1017,matches_print,"43. Шредеръ, Карлъ (съ 1 декабря 1884 г.). Ударные инструменты.",,high,Page view (clear); no patronymic printed.
+1018,matches_print,"Завѣдывающій дѣлами оркестровъ. / Симонъ, Антонъ Юльевичъ (съ 1 сентября 1898 г.).",,high,"Page view (clear); admin post, no instrument printed — correct."
+1019,matches_print,"2. Андреевъ, Сергѣй (съ 23 сентября 1898 г.). Ударные инструменты.",,high,Page view (clear); no patronymic printed.
+1020,matches_print,"16. Гедике, Фридрихъ (съ 19 сентября 1882 г.). Фортепіано.",,high,Page view (clear); no patronymic printed.
+1021,matches_print,"22. Гробе, Альбертъ (съ 16 сентября 1891 г.). Первая скрипка.",,high,Page view (clear); no patronymic printed.
+1022,print_slip,"50. Лидтке, Готчильдъ Францъ (съ 23 сентября 1898 г.). Литавры.",,medium,"Zoomed; print really reads «Готчильдъ» (ч for г) — print slip, data matches print. Both names in first_name is consistent with item 1003's proposed convention (second given name, no patronymic); other seasons store «Францъ» as patronymic — inconsistent across seasons."
+1023,matches_print,"64. Пекарскій, Давидъ (съ 1 августа 1889 г.). Первая скрипка.",,high,Page view (clear); no patronymic printed.
+1024,matches_print,"73. Рессеръ, Мардохей (съ 30 іюля 1876 г.). Первая скрипка.",,high,Page view (clear); no patronymic printed.
+1025,matches_print,"82. Свобода, Венцель (съ 22 ноября 1882 г.). Контрабасъ.",,high,Page view (clear); no patronymic printed.
+1026,matches_print,"97. Фричъ, Георгъ (съ 1 декабря 1895 г.). Альтъ.",,high,Page view (clear); no patronymic printed.
+1027,matches_print,"3. Воронцовъ, Инокентій (съ 1 октября 1893 г.). Вторая скрипка.",,high,"Page view (clear); no patronymic; print spells «Инокентій» (one н) here, data matches. ALSO: Малый rows on this page (Арендсъ e034, nos. 1–4 e035–e038) carry institution «Императорское С.-Петербургское Театральное Училище» — wrong, should be «Оркестръ Малаго театра.» (same bug as 1894-95 MSK p002). ALSO: Арендсъ's note «1 августа 1900 г. назначенъ капельмейстеромъ балета» — check it is captured."
+1028,matches_print,"p.123 opens with 5. Денте, Викторъ (съ 19 сентября 1882 г.). Гобой. — continuation of Малый list 1–4 on p.122.",,high,123 -> 5 is a sub-list boundary (opera/ballet list ends at 123; Малый 1–4 on p.122). Nothing dropped.

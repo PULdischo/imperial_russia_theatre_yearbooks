@@ -1,0 +1,9 @@
+signal,qid,id,display_name,source,other_id/first,other_name/last
+production_list record shares surname with a production_list record,Q2306644,bb7fa160,"Чайковскій, Мод. И.",production_list,0ca9d989,"Чайковскій, П. И."
+production_list record shares surname with a production_list record,Q1450915,c44a1703,Бенуа,production_list,2ddff804,"Бенуа, Александръ"
+production_list record shares surname with a production_list record,Q128460,aa1f2681,Перро,production_list,22b1a69c,"Перро, Ж."
+production_list record shares surname with a production_list record,Q319861,2ddff804,"Бенуа, Александръ",production_list,c44a1703,Бенуа
+production_list record shares surname with a production_list record,Q554284,22b1a69c,"Перро, Ж.",production_list,aa1f2681,Перро
+production_list record shares surname with a production_list record,Q7315,0ca9d989,"Чайковскій, П. И.",production_list,bb7fa160,"Чайковскій, Мод. И."
+review record shares surname with a review record,,08b84e67,Пѣшковъ 2-й,review,5bda4fed,Пѣшковъ 3-й
+review record shares surname with a review record,,5bda4fed,Пѣшковъ 3-й,review,08b84e67,Пѣшковъ 2-й

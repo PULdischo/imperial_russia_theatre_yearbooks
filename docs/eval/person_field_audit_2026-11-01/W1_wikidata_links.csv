@@ -1,0 +1,10 @@
+signal,qid,id,display_name,wd_label_ru,wd_label_en,birth,death,attested,source
+Russian label first name differs,Q4247336,46e8853e,"Кунстъ, Іоганнъ",Яган Куншт,,1700,1703,1890-91..1905-06,roster
+Russian label first name differs,Q16675848,9c254014,"Мендесъ, Іосифъ",Хосе Мендес,Jose Mendez,1843,1905,1890-91..1897-98,roster
+Russian label shares no surname with the record,Q16552227,8f109ebf,"Даль-Аржине, К.",Костантино Даль’Арджине,Costantino Dall'Argine,1842,1877,1895-96..1904-05,production_list
+Russian label shares no surname with the record,Q4310066,30bfa6fe,"Мюльендорферъ, Г.",Вильгельм Карл Мюльдорфер,Wilhelm Carl Mühldorfer,1837,1919,1890-91..1902-03,production_list
+Russian label shares no surname with the record,Q2086196,d36584bc,"Шель, Б.",Борис Александрович Фитингоф-Шель,Boris von Vietinghoff-Scheel,1829,1901,1890-91..1903-04,production_list
+Russian label shares no surname with the record,Q943189,1a906456,Шнейцгефферъ,Жан-Мадлен Шнейцхоффер,Jean Schneitzhoeffer,1785,1852,1891-92..1892-93,production_list
+listed 1890-91 but born 1700,Q4247336,46e8853e,"Кунстъ, Іоганнъ",Яган Куншт,,1700,1703,1890-91..1905-06,roster
+listed 1895-96 but born 1963,Q4492843,132ddc88,"Фричъ, Георгъ",Георг Фрич,Georg Fritzsch,1963,,1895-96..1910-11,roster
+listed to 1905-06 but died 1703,Q4247336,46e8853e,"Кунстъ, Іоганнъ",Яган Куншт,,1700,1703,1890-91..1905-06,roster

@@ -1,0 +1,2328 @@
+{
+ "Q2793": {
+  "birth": [],
+  "death": [],
+  "gender": [],
+  "ru": "братья Гримм",
+  "en": "Brothers Grimm"
+ },
+ "Q1268": {
+  "birth": [
+   "1810-03-01T00:00:00Z"
+  ],
+  "death": [
+   "1849-10-17T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Фредерик Шопен",
+  "en": "Frédéric Chopin"
+ },
+ "Q131861": {
+  "birth": [
+   "1873-04-01T00:00:00Z"
+  ],
+  "death": [
+   "1943-03-28T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Сергей Васильевич Рахманинов",
+  "en": "Sergei Rachmaninoff"
+ },
+ "Q128460": {
+  "birth": [
+   "1628-01-12T00:00:00Z"
+  ],
+  "death": [
+   "1703-05-16T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Шарль Перро",
+  "en": "Charles Perrault"
+ },
+ "Q25872": {
+  "birth": [
+   "1865-08-10T00:00:00Z"
+  ],
+  "death": [
+   "1936-03-21T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Александр Константинович Глазунов",
+  "en": "Alexander Glazounov"
+ },
+ "Q150445": {
+  "birth": [
+   "1835-10-09T00:00:00Z"
+  ],
+  "death": [
+   "1921-12-16T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Камиль Сен-Санс",
+  "en": "Camille Saint-Saëns"
+ },
+ "Q150471": {
+  "birth": [
+   "1776-01-24T00:00:00Z"
+  ],
+  "death": [
+   "1822-01-01T00:00:00Z",
+   "1822-06-25T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Эрнст Теодор Амадей Гофман",
+  "en": "E. T. A. Hoffmann"
+ },
+ "Q151874": {
+  "birth": [
+   "1882-02-12T00:00:00Z"
+  ],
+  "death": [
+   "1931-01-23T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Анна Павловна Павлова",
+  "en": "Anna Pavlova"
+ },
+ "Q183713": {
+  "birth": [
+   "1811-08-30T00:00:00Z"
+  ],
+  "death": [
+   "1872-10-23T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Теофиль Готье",
+  "en": "Théophile Gautier"
+ },
+ "Q189544": {
+  "birth": [
+   "1803-07-24T00:00:00Z"
+  ],
+  "death": [
+   "1856-05-03T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Адольф Адан",
+  "en": "Adolphe Adam"
+ },
+ "Q194363": {
+  "birth": [
+   "1889-03-12T00:00:00Z",
+   "1889-12-17T00:00:00Z",
+   "1890-03-12T00:00:00Z"
+  ],
+  "death": [
+   "1950-04-08T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Нижинский, Вацлав Фомич",
+  "en": "Vaslav Nijinsky"
+ },
+ "Q207951": {
+  "birth": [
+   "1836-02-21T00:00:00Z"
+  ],
+  "death": [
+   "1891-01-16T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Лео Делиб",
+  "en": "Léo Delibes"
+ },
+ "Q211513": {
+  "birth": [
+   "1872-03-31T00:00:00Z"
+  ],
+  "death": [
+   "1929-08-19T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Сергей Павлович Дягилев",
+  "en": "Sergei Diaghilev"
+ },
+ "Q213729": {
+  "birth": [
+   "1827-02-18T00:00:00Z"
+  ],
+  "death": [
+   "1894-09-09T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Генрих Карл Бругш",
+  "en": "Heinrich Karl Brugsch"
+ },
+ "Q231316": {
+  "birth": [
+   "1885-03-09T00:00:00Z",
+   "1885-03-10T00:00:00Z"
+  ],
+  "death": [
+   "1978-05-26T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Карсавина, Тамара Платоновна",
+  "en": "Tamara Karsavina"
+ },
+ "Q236413": {
+  "birth": [
+   "1879-06-06T00:00:00Z"
+  ],
+  "death": [
+   "1951-11-05T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Агриппина Ваганова",
+  "en": "Agrippina Vaganova"
+ },
+ "Q239246": {
+  "birth": [
+   "1872-08-31T00:00:00Z"
+  ],
+  "death": [
+   "1971-12-06T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Матильда Феликсовна Кшесинская",
+  "en": "Mathilde Kschessinska"
+ },
+ "Q270265": {
+  "birth": [
+   "1871-02-02T00:00:00Z"
+  ],
+  "death": [
+   "1962-12-27T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Преображенская, Ольга Иосифовна",
+  "en": "Olga Preobrajenska"
+ },
+ "Q313970": {
+  "birth": [
+   "1861-07-24T00:00:00Z"
+  ],
+  "death": [
+   "1906-03-10T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Антон Степанович Аренский",
+  "en": "Anton Arensky"
+ },
+ "Q314312": {
+  "birth": [
+   "1880-04-23T00:00:00Z",
+   "1880-05-05T00:00:00Z"
+  ],
+  "death": [
+   "1942-08-22T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Фокин, Михаил Михайлович",
+  "en": "Michel Fokine"
+ },
+ "Q270741": {
+  "birth": [
+   "1863-09-30T00:00:00Z"
+  ],
+  "death": [
+   "1930-11-15T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Пьерина Леньяни",
+  "en": "Pierina Legnani"
+ },
+ "Q282950": {
+  "birth": [
+   "1834-03-02T00:00:00Z"
+  ],
+  "death": [
+   "1901-12-11T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Иванов, Лев Иванович",
+  "en": "Lev Ivanov"
+ },
+ "Q312320": {
+  "birth": [
+   "1818-03-11T00:00:00Z"
+  ],
+  "death": [
+   "1910-07-14T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Мариус Иванович Петипа",
+  "en": "Marius Petipa"
+ },
+ "Q1071719": {
+  "birth": [
+   "1880-12-21T00:00:00Z"
+  ],
+  "death": [
+   "1944-07-05T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Мордкин, Михаил Михайлович",
+  "en": "Mikhail Mordkin"
+ },
+ "Q1289468": {
+  "birth": [
+   "1839-08-24T00:00:00Z"
+  ],
+  "death": [
+   "1916-11-23T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Эдуард Францевич Направник",
+  "en": "Eduard Nápravník"
+ },
+ "Q1349550": {
+  "birth": [
+   "1863-04-19T00:00:00Z"
+  ],
+  "death": [
+   "1931-01-21T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Феликс Михайлович Блуменфельд",
+  "en": "Felix Mikhailovich Blumenfeld"
+ },
+ "Q1382528": {
+  "birth": [
+   "1885-09-21T00:00:00Z"
+  ],
+  "death": [
+   "1956-03-28T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Фома Александрович Гартман",
+  "en": "Thomas de Hartmann"
+ },
+ "Q1612622": {
+  "birth": [
+   "1810-03-05T00:00:00Z"
+  ],
+  "death": [
+   "1845-10-19T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Герман Шмидт",
+  "en": "Hermann Schmidt"
+ },
+ "Q1685475": {
+  "birth": [
+   "1742-08-19T00:00:00Z"
+  ],
+  "death": [
+   "1806-02-14T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Жан Доберваль",
+  "en": "Jean Dauberval"
+ },
+ "Q1707191": {
+  "birth": [
+   "1845-12-30T00:00:00Z"
+  ],
+  "death": [
+   "1940-02-08T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Йозеф Хасрейтер",
+  "en": "Joseph Haßreiter"
+ },
+ "Q1711788": {
+  "birth": [
+   "1869-02-01T00:00:00Z"
+  ],
+  "death": [
+   "1942-01-03T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Юлий Эдуардович Конюс",
+  "en": "Julius Conus"
+ },
+ "Q1397000": {
+  "birth": [
+   "1815-03-06T00:00:00Z"
+  ],
+  "death": [
+   "1869-08-30T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Ершов, Пётр Павлович",
+  "en": "Pyotr Yershov"
+ },
+ "Q1405161": {
+  "birth": [
+   "1823-12-13T00:00:00Z"
+  ],
+  "death": [
+   "1906-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Фердинанд Бюхнер",
+  "en": "Ferdinand Büchner"
+ },
+ "Q1450915": {
+  "birth": [
+   "1794-09-10T00:00:00Z"
+  ],
+  "death": [
+   "1878-05-06T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Франсуа Бенуа",
+  "en": "François Benoist"
+ },
+ "Q1451130": {
+  "birth": [
+   "1793-06-17T00:00:00Z"
+  ],
+  "death": [
+   "1871-04-05T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Мишель Франсуа Оге",
+  "en": "Michel François Hoguet"
+ },
+ "Q1749273": {
+  "birth": [
+   "1857-10-29T00:00:00Z"
+  ],
+  "death": [
+   "1930-01-16T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Мария Мариусовна Петипа",
+  "en": "Marie Petipa"
+ },
+ "Q1749277": {
+  "birth": [
+   "1875-09-27T00:00:00Z"
+  ],
+  "death": [
+   "1905-11-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Сергей Густавович Легат",
+  "en": "Sergei Legat"
+ },
+ "Q1959615": {
+  "birth": [
+   "1859-01-24T00:00:00Z"
+  ],
+  "death": [
+   "1920-02-23T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Александр Ильинский",
+  "en": "Alexander Ilyinsky"
+ },
+ "Q1969066": {
+  "birth": [
+   "1846-05-27T00:00:00Z"
+  ],
+  "death": [
+   "1919-02-17T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Ипполит Карлович Альтани",
+  "en": "Ippolit Al'tani"
+ },
+ "Q1974463": {
+  "birth": [
+   "1889-08-08T00:00:00Z"
+  ],
+  "death": [
+   "1972-11-16T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Каралли, Вера Алексеевна",
+  "en": "Vera Karalli"
+ },
+ "Q2074555": {
+  "birth": [
+   "1835-04-03T00:00:00Z"
+  ],
+  "death": [
+   "1909-11-23T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Иван Александрович Всеволожский",
+  "en": "Ivan Vsevolozhsky"
+ },
+ "Q2077278": {
+  "birth": [
+   "1828-02-14T00:00:00Z",
+   "1828-04-14T00:00:00Z"
+  ],
+  "death": [
+   "1893-01-12T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Вацлав Рейзингер",
+  "en": "Julius Reisinger"
+ },
+ "Q2086196": {
+  "birth": [
+   "1829-08-26T00:00:00Z"
+  ],
+  "death": [
+   "1901-09-26T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Борис Александрович Фитингоф-Шель",
+  "en": "Boris von Vietinghoff-Scheel"
+ },
+ "Q2260721": {
+  "birth": [
+   "1797-01-01T00:00:00Z",
+   "1801-03-13T00:00:00Z"
+  ],
+  "death": [
+   "1868-05-19T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Жозеф Мазилье",
+  "en": "Joseph Mazilier"
+ },
+ "Q2306644": {
+  "birth": [
+   "1850-05-13T00:00:00Z"
+  ],
+  "death": [
+   "1916-01-16T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Модест Ильич Чайковский",
+  "en": "Modest Tchaikovsky"
+ },
+ "Q2404120": {
+  "birth": [
+   "1869-12-27T00:00:00Z"
+  ],
+  "death": [
+   "1937-01-24T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Николай Густавович Легат",
+  "en": "Nikolai Legat"
+ },
+ "Q2662897": {
+  "birth": [
+   "1844-12-04T00:00:00Z"
+  ],
+  "death": [
+   "1917-08-12T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Павел Андреевич Гердт",
+  "en": "Pavel Gerdt"
+ },
+ "Q2834128": {
+  "birth": [
+   "1882-09-17T00:00:00Z"
+  ],
+  "death": [
+   "1955-07-03T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Александр Емельянович Волинин",
+  "en": "Alexandre Volinine"
+ },
+ "Q2856740": {
+  "birth": [
+   "1850-01-01T00:00:00Z",
+   "1850-07-25T00:00:00Z",
+   "1850-08-05T00:00:00Z"
+  ],
+  "death": [
+   "1916-02-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Антон Юльевич Симон",
+  "en": "Antoine Simon"
+ },
+ "Q2885528": {
+  "birth": [
+   "1828-07-23T00:00:00Z"
+  ],
+  "death": [
+   "1887-07-17T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Луи-Александр Мерант",
+  "en": "Louis Mérante"
+ },
+ "Q3050723": {
+  "birth": [
+   "1888-03-25T00:00:00Z",
+   "1888-05-18T00:00:00Z"
+  ],
+  "death": [
+   "1934-01-15T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Смирнова, Елена Александровна",
+  "en": "Elena Smirnova"
+ },
+ "Q3136095": {
+  "birth": [
+   "1821-01-01T00:00:00Z",
+   "1821-09-01T00:00:00Z"
+  ],
+  "death": [
+   "1877-06-10T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "",
+  "en": "Hippolyte Monplaisir"
+ },
+ "Q12021136": {
+  "birth": [
+   "1825-12-04T00:00:00Z"
+  ],
+  "death": [
+   "1916-02-09T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Игнатий Каспарович Воячек",
+  "en": "Hynek Vojáček"
+ },
+ "Q12042674": {
+  "birth": [
+   "1859-02-18T00:00:00Z"
+  ],
+  "death": [
+   "1928-02-06T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Кадлец, Андрей Вячеславович",
+  "en": "Ondřej Kadlec"
+ },
+ "Q15061014": {
+  "birth": [
+   "1888-03-15T00:00:00Z"
+  ],
+  "death": [
+   "1978-07-10T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Шоллар, Людмила Францевна",
+  "en": "Ludmilla Schollar"
+ },
+ "Q15065590": {
+  "birth": [
+   "1883-10-17T00:00:00Z"
+  ],
+  "death": [
+   "1968-06-28T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Григорьев, Сергей Леонидович",
+  "en": "Sergey Grigoryev"
+ },
+ "Q15210443": {
+  "birth": [
+   "1880-04-02T00:00:00Z"
+  ],
+  "death": [
+   "1969-11-23T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Седова, Юлия Николаевна",
+  "en": "Julia Sedova"
+ },
+ "Q16170452": {
+  "birth": [
+   "1860-03-07T00:00:00Z"
+  ],
+  "death": [
+   "1933-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Иван Иванович Армсгеймер",
+  "en": "Ivan Ivanovich Armsheimer"
+ },
+ "Q16552227": {
+  "birth": [
+   "1842-05-12T00:00:00Z"
+  ],
+  "death": [
+   "1877-03-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Костантино Даль’Арджине",
+  "en": "Costantino Dall'Argine"
+ },
+ "Q16675848": {
+  "birth": [
+   "1843-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1905-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Хосе Мендес",
+  "en": "Jose Mendez"
+ },
+ "Q18044289": {
+  "birth": [
+   "1846-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1929-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Карл Фёдорович Вальц",
+  "en": "Karl Waltz"
+ },
+ "Q20085221": {
+  "birth": [
+   "1863-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1929-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Лидия Ричардовна Нелидова",
+  "en": "Lidia Nelidova"
+ },
+ "Q21094595": {
+  "birth": [
+   "1840-03-05T00:00:00Z"
+  ],
+  "death": [
+   "1923-04-27T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Фридрих Шмидт",
+  "en": "Friedrich Schmidt"
+ },
+ "Q21104474": {
+  "birth": [
+   "1884-12-07T00:00:00Z"
+  ],
+  "death": [
+   "1943-08-21T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Лопухова, Евгения Васильевна",
+  "en": "Evgeniya Lopukhova"
+ },
+ "Q30103001": {
+  "birth": [
+   "1856-12-18T00:00:00Z"
+  ],
+  "death": [
+   "1906-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Николай Владимирович Галкин",
+  "en": "Nikolaĭ Vladimirovich Galkin"
+ },
+ "Q105530534": {
+  "birth": [
+   "1866-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1969-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Юлия Феликсовна Кшесинская",
+  "en": "Yuliya Feliksovna Kshesinskaya"
+ },
+ "Q106251159": {
+  "birth": [
+   "1884-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1972-07-25T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Елена Дмитриевна Полякова",
+  "en": "Elena Poliakova"
+ },
+ "Q107119063": {
+  "birth": [
+   "1841-12-29T00:00:00Z"
+  ],
+  "death": [
+   "1915-06-09T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Иван Юрьевич Трубецкой",
+  "en": "Ivan Trubetskoy"
+ },
+ "Q107274775": {
+  "birth": [
+   "1848-01-30T00:00:00Z"
+  ],
+  "death": [
+   "1910-10-18T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Лангаммер, Владимир Иванович",
+  "en": "Vladimir Langammer"
+ },
+ "Q108756256": {
+  "birth": [
+   "1865-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1955-09-05T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "",
+  "en": "Jean Louis Croze"
+ },
+ "Q111078844": {
+  "birth": [
+   "1850-01-01T00:00:00Z"
+  ],
+  "death": [],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Лидия Александровна Пашкова",
+  "en": "Lydia Pashkova"
+ },
+ "Q112443351": {
+  "birth": [
+   "1871-03-28T00:00:00Z"
+  ],
+  "death": [
+   "1943-02-04T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Алексей Яньшинов",
+  "en": "Aleksey Yanshinov"
+ },
+ "Q120691087": {
+  "birth": [
+   "1874-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1945-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Надежда Мариусовна Петипа",
+  "en": "Nadezhda Petipa"
+ },
+ "Q137599731": {
+  "birth": [
+   "1881-01-01T00:00:00Z",
+   "1882-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1938-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Павел Петров",
+  "en": "Pavel Petrov"
+ },
+ "Q1762062": {
+  "birth": [
+   "1876-09-15T00:00:00Z",
+   "1876-09-27T00:00:00Z"
+  ],
+  "death": [
+   "1951-05-23T00:00:00Z",
+   "1951-06-23T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Сергеев, Николай Григорьевич",
+  "en": ""
+ },
+ "Q18634922": {
+  "birth": [
+   "1887-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1917-08-27T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Розай, Георгий Альфредович",
+  "en": ""
+ },
+ "Q19911293": {
+  "birth": [
+   "1873-10-18T00:00:00Z"
+  ],
+  "death": [
+   "1958-06-16T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Солянников, Николай Александрович",
+  "en": ""
+ },
+ "Q21857212": {
+  "birth": [
+   "1830-11-30T00:00:00Z"
+  ],
+  "death": [
+   "1893-08-14T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Сергей Петрович Соколов",
+  "en": ""
+ },
+ "Q26243621": {
+  "birth": [
+   "1855-02-15T00:00:00Z"
+  ],
+  "death": [
+   "1915-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Николай Фёдорович Манохин",
+  "en": ""
+ },
+ "Q140643126": {
+  "birth": [],
+  "death": [],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Богданов, Алексей Николаевич",
+  "en": ""
+ },
+ "Q5679": {
+  "birth": [
+   "1788-01-22T00:00:00Z"
+  ],
+  "death": [
+   "1824-04-19T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Джордж Гордон Байрон",
+  "en": "Lord Byron"
+ },
+ "Q5682": {
+  "birth": [
+   "1547-10-09T00:00:00Z"
+  ],
+  "death": [
+   "1616-04-22T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Мигель де Сервантес",
+  "en": "Miguel de Cervantes"
+ },
+ "Q7200": {
+  "birth": [
+   "1799-06-06T00:00:00Z"
+  ],
+  "death": [
+   "1837-02-10T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Александр Сергеевич Пушкин",
+  "en": "Alexander Pushkin"
+ },
+ "Q43444": {
+  "birth": [
+   "1821-12-12T00:00:00Z"
+  ],
+  "death": [
+   "1880-05-08T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Гюстав Флобер",
+  "en": "Gustave Flaubert"
+ },
+ "Q315188": {
+  "birth": [
+   "1791-10-01T00:00:00Z"
+  ],
+  "death": [
+   "1859-05-12T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Сергей Тимофеевич Аксаков",
+  "en": "Sergey Aksakov"
+ },
+ "Q62075": {
+  "birth": [
+   "1806-12-04T00:00:00Z"
+  ],
+  "death": [
+   "1874-02-13T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Фридрих Бургмюллеp",
+  "en": "Friedrich Burgmüller"
+ },
+ "Q319861": {
+  "birth": [
+   "1870-05-03T00:00:00Z"
+  ],
+  "death": [
+   "1960-02-09T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Александр Николаевич Бенуа",
+  "en": "Alexandre Benois"
+ },
+ "Q320718": {
+  "birth": [
+   "1866-06-29T00:00:00Z"
+  ],
+  "death": [
+   "1896-01-28T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Степанов, Владимир Иванович",
+  "en": "Vladimir Stepanov"
+ },
+ "Q363740": {
+  "birth": [
+   "1860-05-16T00:00:00Z"
+  ],
+  "death": [
+   "1937-10-25T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Сергей Михайлович Волконский",
+  "en": "Serge Wolkonsky"
+ },
+ "Q368583": {
+  "birth": [
+   "1845-06-07T00:00:00Z"
+  ],
+  "death": [
+   "1930-07-15T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Леопольд Семёнович Ауэр",
+  "en": "Leopold Auer"
+ },
+ "Q434601": {
+  "birth": [
+   "1874-12-22T00:00:00Z"
+  ],
+  "death": [
+   "1939-02-11T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Франц Шмидт",
+  "en": "Franz Schmidt"
+ },
+ "Q434821": {
+  "birth": [
+   "1826-03-23T00:00:00Z"
+  ],
+  "death": [
+   "1917-12-07T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Людвиг Минкус",
+  "en": "Ludwig Minkus"
+ },
+ "Q437792": {
+  "birth": [
+   "1861-12-05T00:00:00Z"
+  ],
+  "death": [
+   "1939-09-11T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Константин Алексеевич Коровин",
+  "en": "Konstantin Korovin"
+ },
+ "Q545830": {
+  "birth": [
+   "1846-06-30T00:00:00Z"
+  ],
+  "death": [
+   "1930-10-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Рикардо Дриго",
+  "en": "Riccardo Drigo"
+ },
+ "Q450228": {
+  "birth": [
+   "1861-11-16T00:00:00Z"
+  ],
+  "death": [
+   "1933-01-12T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Вячеслав Иванович Сук",
+  "en": "Václav Suk"
+ },
+ "Q456917": {
+  "birth": [
+   "1870-12-08T00:00:00Z",
+   "1870-12-18T00:00:00Z"
+  ],
+  "death": [
+   "1921-01-03T00:00:00Z",
+   "1922-10-10T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Арсений Николаевич Корещенко",
+  "en": "Arseny Koreshchenko"
+ },
+ "Q516596": {
+  "birth": [
+   "1849-12-04T00:00:00Z"
+  ],
+  "death": [
+   "1907-03-17T00:00:00Z",
+   "1907-05-17T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Эрнест Иосифович Кёлер",
+  "en": "Ernesto Köhler"
+ },
+ "Q518945": {
+  "birth": [
+   "1850-06-21T00:00:00Z"
+  ],
+  "death": [
+   "1928-11-12T00:00:00Z",
+   "1928-11-13T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Энрико Чеккетти",
+  "en": "Enrico Cecchetti"
+ },
+ "Q548181": {
+  "birth": [
+   "1822-03-08T00:00:00Z",
+   "1825-03-08T00:00:00Z"
+  ],
+  "death": [
+   "1901-01-16T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Жюль Барбье",
+  "en": "Jules Barbier"
+ },
+ "Q554284": {
+  "birth": [
+   "1810-08-18T00:00:00Z"
+  ],
+  "death": [
+   "1892-08-19T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Жюль Перро",
+  "en": "Jules Perrot"
+ },
+ "Q668930": {
+  "birth": [
+   "1852-03-06T00:00:00Z"
+  ],
+  "death": [
+   "1913-03-12T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Йозеф Байер",
+  "en": "Josef Bayer"
+ },
+ "Q669874": {
+  "birth": [
+   "1854-11-29T00:00:00Z"
+  ],
+  "death": [
+   "1922-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Карсавин, Платон Константинович",
+  "en": "Platon Karsavin"
+ },
+ "Q704671": {
+  "birth": [
+   "1777-11-05T00:00:00Z",
+   "1778-11-05T00:00:00Z"
+  ],
+  "death": [
+   "1871-02-11T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Филиппо Тальони",
+  "en": "Filippo Taglioni"
+ },
+ "Q716305": {
+  "birth": [
+   "1883-05-04T00:00:00Z"
+  ],
+  "death": [
+   "1961-06-23T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Малько, Николай Андреевич",
+  "en": "Nikolai Malko"
+ },
+ "Q717913": {
+  "birth": [
+   "1779-01-15T00:00:00Z"
+  ],
+  "death": [
+   "1854-05-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Жан Коралли",
+  "en": "Jean Coralli"
+ },
+ "Q719997": {
+  "birth": [
+   "1828-03-07T00:00:00Z"
+  ],
+  "death": [
+   "1888-11-19T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Эдмон Гондине",
+  "en": "Edmond Gondinet"
+ },
+ "Q706465": {
+  "birth": [
+   "1862-09-30T00:00:00Z"
+  ],
+  "death": [
+   "1933-08-28T00:00:00Z",
+   "1933-08-29T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Георгий Эдуардович Конюс",
+  "en": "Georgi Conus"
+ },
+ "Q711323": {
+  "birth": [
+   "1821-09-07T00:00:00Z"
+  ],
+  "death": [
+   "1870-09-02T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Артур Сен-Леон",
+  "en": "Arthur Saint-Léon"
+ },
+ "Q3371230": {
+  "birth": [
+   "1810-04-22T00:00:00Z"
+  ],
+  "death": [
+   "1875-01-24T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Поль Фуше",
+  "en": "Paul Foucher"
+ },
+ "Q3479737": {
+  "birth": [
+   "1837-12-10T00:00:00Z"
+  ],
+  "death": [
+   "1928-02-20T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Худеков, Сергей Николаевич",
+  "en": "Sergueï Khoudekov"
+ },
+ "Q3479766": {
+  "birth": [
+   "1870-07-05T00:00:00Z"
+  ],
+  "death": [
+   "1937-08-31T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Розанов, Сергей Васильевич",
+  "en": "Sergei Rozanov"
+ },
+ "Q3561874": {
+  "birth": [
+   "1860-01-26T00:00:00Z"
+  ],
+  "death": [
+   "1924-10-28T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Теляковский, Владимир Аркадьевич",
+  "en": "Vladimir Teliakovski"
+ },
+ "Q3655425": {
+  "birth": [
+   "1847-10-13T00:00:00Z"
+  ],
+  "death": [
+   "1908-10-25T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Александр Павлович Ленский",
+  "en": "Aleksandr Pavlovich Lensky"
+ },
+ "Q4069020": {
+  "birth": [
+   "1855-03-02T00:00:00Z",
+   "1855-04-14T00:00:00Z"
+  ],
+  "death": [
+   "1924-04-27T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Андрей Фёдорович Арендс",
+  "en": "Andrei Arends"
+ },
+ "Q4081341": {
+  "birth": [
+   "1843-12-29T00:00:00Z"
+  ],
+  "death": [
+   "1925-08-08T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Бекефи, Альфред Фёдорович",
+  "en": "Alfred Bekefi"
+ },
+ "Q4126198": {
+  "birth": [
+   "1865-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1915-12-15T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Воскресенский, Аполлинарий Константинович",
+  "en": "Apollinary Voskresensky"
+ },
+ "Q4126978": {
+  "birth": [
+   "1862-06-25T00:00:00Z"
+  ],
+  "death": [
+   "1901-03-10T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Василий Георгиевич Врангель",
+  "en": "Vasilij Wrangell"
+ },
+ "Q4153603": {
+  "birth": [
+   "1867-09-04T00:00:00Z"
+  ],
+  "death": [
+   "1940-03-06T00:00:00Z",
+   "1967-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Алексей Августович Давидов",
+  "en": "Alexei Davidov"
+ },
+ "Q4196226": {
+  "birth": [
+   "1849-09-23T00:00:00Z"
+  ],
+  "death": [
+   "1927-10-20T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Михаил Михайлович Иванов",
+  "en": "Mikhail Ivanov"
+ },
+ "Q4222890": {
+  "birth": [
+   "1828-01-01T00:00:00Z",
+   "1829-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1912-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Карл Антонович Кламрот",
+  "en": "Karl Klamroth"
+ },
+ "Q4223338": {
+  "birth": [
+   "1857-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1915-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Николай Семёнович Кленовский",
+  "en": "Nikolai Klenovski"
+ },
+ "Q4240016": {
+  "birth": [
+   "1869-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1926-08-26T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Крейн, Давид Сергеевич",
+  "en": "David Krein"
+ },
+ "Q4242609": {
+  "birth": [
+   "1851-10-22T00:00:00Z",
+   "1857-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1916-03-16T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Эдуард Андреевич Крушевский",
+  "en": "Eduard Andreevitch Krushevsky"
+ },
+ "Q4242758": {
+  "birth": [
+   "1838-02-10T00:00:00Z"
+  ],
+  "death": [
+   "1908-03-26T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Виктор Александрович Крылов",
+  "en": "Viktor Krylov"
+ },
+ "Q3163722": {
+  "birth": [
+   "1787-02-16T00:00:00Z"
+  ],
+  "death": [
+   "1855-07-28T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Жан-Антуан Петипа",
+  "en": "Jean-Antoine Petipa"
+ },
+ "Q4249943": {
+  "birth": [
+   "1847-10-09T00:00:00Z"
+  ],
+  "death": [
+   "1915-04-27T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Карл Антонович Кучера",
+  "en": "Karel Kučera"
+ },
+ "Q4251324": {
+  "birth": [
+   "1873-02-07T00:00:00Z"
+  ],
+  "death": [
+   "1936-03-22T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Георгий Георгиевич Кякшт",
+  "en": "Georgii Kyasht"
+ },
+ "Q4253521": {
+  "birth": [
+   "1862-05-15T00:00:00Z"
+  ],
+  "death": [
+   "1923-01-11T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Ламбин, Пётр Борисович",
+  "en": "Pjotr Borissowitsch Lambin"
+ },
+ "Q4272524": {
+  "birth": [
+   "1820-05-06T00:00:00Z"
+  ],
+  "death": [
+   "1871-12-19T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Константин Николаевич Лядов",
+  "en": "Konstantin Lyadov"
+ },
+ "Q4310066": {
+  "birth": [
+   "1837-03-06T00:00:00Z"
+  ],
+  "death": [
+   "1919-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Вильгельм Карл Мюльдорфер",
+  "en": "Wilhelm Carl Mühldorfer"
+ },
+ "Q4371962": {
+  "birth": [
+   "1852-02-04T00:00:00Z"
+  ],
+  "death": [
+   "1906-02-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Пономарёв, Евгений Петрович",
+  "en": "Evgenij Petrovich Ponomarev"
+ },
+ "Q4397230": {
+  "birth": [
+   "1886-01-10T00:00:00Z"
+  ],
+  "death": [
+   "1954-12-26T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Мария Фёдоровна Романова",
+  "en": "Maria Feodorovna Romanova"
+ },
+ "Q4397803": {
+  "birth": [
+   "1874-07-07T00:00:00Z"
+  ],
+  "death": [
+   "1904-11-22T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Рославлева, Любовь Андреевна",
+  "en": "Lubov Roslavleva"
+ },
+ "Q4427747": {
+  "birth": [
+   "1848-02-09T00:00:00Z"
+  ],
+  "death": [
+   "1890-10-29T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Фёдор Львович Соллогуб",
+  "en": "Fyodor Sollogub"
+ },
+ "Q4444642": {
+  "birth": [
+   "1829-05-06T00:00:00Z"
+  ],
+  "death": [
+   "1894-09-30T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Стуколкин, Тимофей Алексеевич",
+  "en": "Timofei Stukolkin"
+ },
+ "Q4458555": {
+  "birth": [
+   "1876-03-26T00:00:00Z",
+   "1876-03-29T00:00:00Z"
+  ],
+  "death": [
+   "1956-06-20T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Тихомиров, Василий Дмитриевич",
+  "en": "Vasily Tikhomirov"
+ },
+ "Q4492736": {
+  "birth": [
+   "1866-05-31T00:00:00Z"
+  ],
+  "death": [
+   "1909-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Александр Александрович Фридман",
+  "en": "Alexander Friedmann"
+ },
+ "Q4492843": {
+  "birth": [
+   "1963-01-01T00:00:00Z"
+  ],
+  "death": [],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Георг Фрич",
+  "en": "Georg Fritzsch"
+ },
+ "Q4498325": {
+  "birth": [
+   "1862-08-10T00:00:00Z"
+  ],
+  "death": [
+   "1941-11-21T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Хлюстин, Иван Николаевич",
+  "en": "Ivan Clustine"
+ },
+ "Q4514376": {
+  "birth": [
+   "1890-09-29T00:00:00Z"
+  ],
+  "death": [
+   "1976-03-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Чернышёва, Любовь Павловна",
+  "en": "Lubov Tchernicheva"
+ },
+ "Q4522882": {
+  "birth": [
+   "1870-02-23T00:00:00Z"
+  ],
+  "death": [
+   "1915-07-18T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Пётр Петрович Шенк",
+  "en": "Peter Petrovich Schenck"
+ },
+ "Q4524496": {
+  "birth": [
+   "1867-09-10T00:00:00Z"
+  ],
+  "death": [
+   "1941-04-25T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Александр Викторович Ширяев",
+  "en": "Aleksandr Shiryaev"
+ },
+ "Q4529926": {
+  "birth": [
+   "1882-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1960-12-10T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Эдуардова, Евгения Платоновна",
+  "en": "Eugenia Eduardova"
+ },
+ "Q4530238": {
+  "birth": [
+   "1865-03-01T00:00:00Z"
+  ],
+  "death": [
+   "1941-08-17T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Эккерт, Фердинанд Фердинандович",
+  "en": "Ferdinand Eckert"
+ },
+ "Q4532373": {
+  "birth": [
+   "1878-03-04T00:00:00Z"
+  ],
+  "death": [
+   "1971-05-27T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Эрдели, Ксения Александровна",
+  "en": "Xenia Erdeli"
+ },
+ "Q4532523": {
+  "birth": [
+   "1866-01-17T00:00:00Z"
+  ],
+  "death": [
+   "1924-09-14T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Рудольф Иванович Эрлих",
+  "en": "Rudolf Ehrlich"
+ },
+ "Q4711396": {
+  "birth": [
+   "1841-11-09T00:00:00Z"
+  ],
+  "death": [
+   "1906-10-21T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Луи Альбер Вицентини",
+  "en": "Albert Vizentini"
+ },
+ "Q38245209": {
+  "birth": [
+   "1826-07-24T00:00:00Z"
+  ],
+  "death": [
+   "1892-08-10T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Константин Августинович Тарновский",
+  "en": "Konstantin Tarnovsky"
+ },
+ "Q50307954": {
+  "birth": [
+   "1837-07-29T00:00:00Z"
+  ],
+  "death": [
+   "1906-07-03T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Франц Гауль",
+  "en": "Franz Gaul"
+ },
+ "Q4058508": {
+  "birth": [
+   "1853-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1916-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Аистов, Николай Сергеевич",
+  "en": ""
+ },
+ "Q4136970": {
+  "birth": [
+   "1831-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1883-12-02T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Юлий Густавович Гербер",
+  "en": ""
+ },
+ "Q4247336": {
+  "birth": [
+   "1700-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1703-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Яган Куншт",
+  "en": ""
+ },
+ "Q4330059": {
+  "birth": [
+   "1879-01-25T00:00:00Z"
+  ],
+  "death": [
+   "1914-03-25T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Обухов, Михаил Константинович",
+  "en": ""
+ },
+ "Q4330067": {
+  "birth": [
+   "1855-01-08T00:00:00Z"
+  ],
+  "death": [
+   "1928-06-06T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Обухов, Сергей Трофимович",
+  "en": ""
+ },
+ "Q4402422": {
+  "birth": [
+   "1831-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1919-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Рябов, Степан Яковлевич",
+  "en": ""
+ },
+ "Q4508332": {
+  "birth": [
+   "1880-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1942-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Чекрыгин, Иван Иванович",
+  "en": ""
+ },
+ "Q4528907": {
+  "birth": [
+   "1869-01-30T00:00:00Z"
+  ],
+  "death": [
+   "1916-02-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Андрей Владимирович Щербачёв",
+  "en": ""
+ },
+ "Q37877779": {
+  "birth": [
+   "1868-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1922-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Гавликовский, Николай Людвигович",
+  "en": ""
+ },
+ "Q54999937": {
+  "birth": [
+   "1849-01-01T00:00:00Z"
+  ],
+  "death": [
+   "1900-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Николай Сергеевич Кротков",
+  "en": ""
+ },
+ "Q535": {
+  "birth": [
+   "1802-02-26T00:00:00Z"
+  ],
+  "death": [
+   "1885-05-22T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Виктор Гюго",
+  "en": ""
+ },
+ "Q7294": {
+  "birth": [
+   "1833-05-07T00:00:00Z"
+  ],
+  "death": [
+   "1897-04-03T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Иоганнес Брамс",
+  "en": "Johannes Brahms"
+ },
+ "Q7315": {
+  "birth": [
+   "1840-05-07T00:00:00Z"
+  ],
+  "death": [
+   "1893-11-06T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Пётр Ильич Чайковский",
+  "en": "Pyotr Ilyich Tchaikovsky"
+ },
+ "Q7351": {
+  "birth": [
+   "1810-06-08T00:00:00Z"
+  ],
+  "death": [
+   "1856-07-29T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Роберт Шуман",
+  "en": "Robert Schumann"
+ },
+ "Q872165": {
+  "birth": [
+   "1808-01-12T00:00:00Z"
+  ],
+  "death": [
+   "1884-01-06T00:00:00Z",
+   "1884-01-07T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Поль Тальони",
+  "en": "Paul Taglioni"
+ },
+ "Q878400": {
+  "birth": [
+   "1817-04-21T00:00:00Z"
+  ],
+  "death": [
+   "1899-06-13T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Петер Людвиг Гертель",
+  "en": "Peter Ludwig Hertel"
+ },
+ "Q918647": {
+  "birth": [
+   "1873-05-03T00:00:00Z",
+   "1873-05-15T00:00:00Z"
+  ],
+  "death": [
+   "1945-04-26T00:00:00Z",
+   "1945-06-26T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Николай Николаевич Черепнин",
+  "en": "Nikolai Tcherepnin"
+ },
+ "Q934369": {
+  "birth": [
+   "1802-05-31T00:00:00Z"
+  ],
+  "death": [
+   "1870-01-26T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Цезарь Пуни",
+  "en": "Cesare Pugni"
+ },
+ "Q936364": {
+  "birth": [
+   "1817-05-31T00:00:00Z"
+  ],
+  "death": [
+   "1897-11-06T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Эдуар Мари Эрнест Дельдеве",
+  "en": "Édouard Deldevez"
+ },
+ "Q943189": {
+  "birth": [
+   "1785-10-13T00:00:00Z"
+  ],
+  "death": [
+   "1852-10-04T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Жан-Мадлен Шнейцхоффер",
+  "en": "Jean Schneitzhoeffer"
+ },
+ "Q945505": {
+  "birth": [
+   "1863-03-01T00:00:00Z"
+  ],
+  "death": [
+   "1930-04-17T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Головин, Александр Яковлевич",
+  "en": "Aleksandr Golovin"
+ },
+ "Q980208": {
+  "birth": [
+   "1871-08-06T00:00:00Z"
+  ],
+  "death": [
+   "1924-10-20T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Горский, Александр Алексеевич",
+  "en": "Alexander Alexeyevich Gorsky"
+ },
+ "Q8862575": {
+  "birth": [
+   "1823-02-17T00:00:00Z"
+  ],
+  "death": [
+   "1905-07-16T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Феликс Иванович Кшесинский",
+  "en": "Feliks Kschessinsky"
+ },
+ "Q89798139": {
+  "birth": [
+   "1874-04-22T00:00:00Z"
+  ],
+  "death": [
+   "1948-03-28T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Обухова, Евгения Константиновна",
+  "en": "Yevgeniya Obukhova"
+ },
+ "Q95259758": {
+  "birth": [],
+  "death": [
+   "1920-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "",
+  "en": "Emil Graeb"
+ },
+ "Q95333541": {
+  "birth": [],
+  "death": [
+   "1830-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "",
+  "en": "Fortunato Bernardelli"
+ },
+ "Q947276": {
+  "birth": [
+   "1828-04-24T00:00:00Z"
+  ],
+  "death": [
+   "1899-02-23T00:00:00Z",
+   "1899-02-24T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Шарль Луи Нюитер",
+  "en": "Charles Nuitter"
+ },
+ "Q967704": {
+  "birth": [
+   "1799-11-07T00:00:00Z"
+  ],
+  "death": [
+   "1875-12-23T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581097"
+  ],
+  "ru": "Жюль-Анри Сен-Жорж",
+  "en": "Jules-Henri Vernoy de Saint-Georges"
+ },
+ "Q89665973": {
+  "birth": [
+   "1861-11-06T00:00:00Z"
+  ],
+  "death": [
+   "1923-01-01T00:00:00Z"
+  ],
+  "gender": [
+   "http://www.wikidata.org/entity/Q6581072"
+  ],
+  "ru": "Куличевская, Клавдия Михайловна",
+  "en": ""
+ }
+}

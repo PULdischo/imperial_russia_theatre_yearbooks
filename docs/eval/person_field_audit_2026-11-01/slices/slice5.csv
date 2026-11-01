@@ -1,0 +1,207 @@
+item,check,signal,page_id,entry_id,list_no,stored,context
+883,R3,family_name (within person): «Аспернеръ» vs usual «аспергер» x20,musicians_1890-91_MSK_p003,musicians_1890-91_MSK_p003__e001,3.,Аспернеръ |  | ,"Аспергеръ, Оскаръ"
+884,R3,family_name (within person): «Критселъ» vs usual «кристел» x13,musicians_1890-91_MSK_p003,musicians_1890-91_MSK_p003__e025,27.,Критселъ | Вильгельмъ | ,"Кристель, Вильгельмъ"
+885,R3,family_name (within person): «Туровичъ фонъ Охота» vs usual «туровичфон-охота» x8,musicians_1890-91_MSK_p003,musicians_1890-91_MSK_p003__e045,47.,Туровичъ фонъ Охота |  | ,"Туровичъ фонъ-Охота, Францъ-Феликсъ"
+886,R1,"patronymic missing here, printed in other seasons",musicians_1890-91_MSK_p004,musicians_1890-91_MSK_p004__e004,51.,Чіарлоне 1-я | Виргинія | ,"Чіарлоне, Виргинія Михайловна"
+887,R1,"patronymic missing here, printed in other seasons",musicians_1890-91_MSK_p004,musicians_1890-91_MSK_p004__e030,21.,Спевакъ | Лазарь | ,"Спевакъ, Лазарь Александровичъ"
+888,R1,"patronymic missing here, printed in other seasons",musicians_1890-91_MSK_p004,musicians_1890-91_MSK_p004__e031,22.,Столяровъ | Семенъ | ,"Столяровъ, Семенъ Ивановичъ"
+889,R3,patronymic: «Вечеславовичъ» vs usual «вячеславович» x37,musicians_1890-91_MSK_p004,musicians_1890-91_MSK_p004__e036,,Богуславъ | Флорентій | Вечеславовичъ,"Богуславъ, Флорентій Вечеславовичъ"
+890,R3,first_name: «Лейбъ» vs usual «леиба» x11,musicians_1890-91_SP_p002,musicians_1890-91_SP_p002__e019,93.,Шнирманъ | Лейбъ | Александровичъ,"Шнирманъ, Лейба Александровичъ"
+891,R3,family_name (within person): «Затуенгоферъ» vs usual «затценгофер» x8,musicians_1890-91_SP_p003,musicians_1890-91_SP_p003__e016,22.,Затуенгоферъ | Юлій | Іосифовичъ,"Затценгоферъ, Юлій Іосифовичъ"
+892,R3,family_name (within person): «Вергеліюшъ» vs usual «виргелиюш» x17,musicians_1890-91_SP_p004,musicians_1890-91_SP_p004__e024,8.,Вергеліюшъ | Марцелій | Людвиговичъ,"Виргеліюшъ, Марцелій Людвиговичъ"
+893,R3,patronymic: «Захарьевичъ» vs usual «захарович» x15,musicians_1890-91_SP_p005,musicians_1890-91_SP_p005__e006,30.,Поповъ 1-й | Владиміръ | Захарьевичъ,"Поповъ 1-й, Владиміръ Захарьевичъ"
+894,R4,Musicians row with no instrument,musicians_1890-91_SP_p005,musicians_1890-91_SP_p005__e009,33.,Смирновъ | Павелъ | Петровичъ,Музыканты
+895,R3,first_name: «Бернардъ» vs usual «бернгард» x10,musicians_1890-91_SP_p006,musicians_1890-91_SP_p006__e001,20.,Кнохъ | Бернардъ | Германовичъ,"Кнохъ, Бернгардъ Германовичъ"
+896,R1,"patronymic missing here, printed in other seasons",musicians_1891-92_MSK_p000,musicians_1891-92_MSK_p000__e006,4.,Адольфи 3-й | Фердинандъ | ,"Адольфи, Фердинандъ"
+897,R1,"patronymic missing here, printed in other seasons",musicians_1891-92_MSK_p000,musicians_1891-92_MSK_p000__e022,20.,Гедике | Фридрихъ | ,"Гедике, Фридрихъ"
+898,R1,"patronymic missing here, printed in other seasons",musicians_1891-92_MSK_p000,musicians_1891-92_MSK_p000__e032,30.,Гробе | Альбертъ | ,"Гробе, Альбертъ"
+899,R1,"patronymic missing here, printed in other seasons",musicians_1891-92_MSK_p001,musicians_1891-92_MSK_p001__e010,43.,Кламротъ | Карлъ | ,"Кламротъ, Карлъ Антоновичъ"
+900,R1,"patronymic missing here, printed in other seasons",musicians_1891-92_MSK_p001,musicians_1891-92_MSK_p001__e031,64.,Пекарскій | Давидъ | ,"Пекарскій, Давидъ Исаевичъ"
+901,R1,"patronymic missing here, printed in other seasons",musicians_1891-92_MSK_p001,musicians_1891-92_MSK_p001__e036,69.,Рессеръ | Мардохей | ,"Рессеръ, Мардохей"
+902,R1,"patronymic missing here, printed in other seasons",musicians_1891-92_MSK_p001,musicians_1891-92_MSK_p001__e040,73.,Свобода | Венцель | ,"Свобода, Венцель"
+903,R4,Musicians row with no instrument,musicians_1891-92_MSK_p002,musicians_1891-92_MSK_p002__e004,91.,Шпеккинъ | Эрнестъ-Густавъ | ,Оперный оркестръ. / Музыканты
+904,R4,Musicians row with no instrument,musicians_1891-92_MSK_p002,musicians_1891-92_MSK_p002__e015,,Кленовскій | Николай Семеновичъ | ,Балетный оркестръ / Композиторъ балетной музыки
+905,R1,first name starts lower-case,musicians_1891-92_MSK_p003,musicians_1891-92_MSK_p003__e009,47.,Туровичъ | фонъ-Охота | ,"Туровичъ, фонъ-Охота"
+906,R1,"patronymic missing here, printed in other seasons",musicians_1891-92_MSK_p003,musicians_1891-92_MSK_p003__e013,51.,Чіарлоне 1-я | Виргинія | ,"Чіарлоне, Виргинія Михайловна"
+907,R3,patronymic: «Аѳанасіевичъ» vs usual «афанасевич» x72,musicians_1891-92_SP_p001,musicians_1891-92_SP_p001__e024,32.,Казаковъ | Сергѣй | Аѳанасіевичъ,"Казаковъ, Сергѣй Аѳанасьевичъ"
+908,R3,patronymic: «Альбертсвичъ» vs usual «албертович» x27,musicians_1891-92_SP_p001,musicians_1891-92_SP_p001__e034,42.,Кункели | Оскаръ | Альбертсвичъ,"Кункели, Оскаръ Альбертовичъ"
+909,R3,first_name: «Лейбъ» vs usual «леиба» x11,musicians_1891-92_SP_p002,musicians_1891-92_SP_p002__e028,91.,Шнирманъ | Лейбъ | Александровичъ,"Шнирманъ, Лейба Александровичъ"
+910,R3,patronymic: «Захарьевичъ» vs usual «захарович» x15,musicians_1891-92_SP_p004,musicians_1891-92_SP_p004__e032,31.,Поповъ 1-й | Владиміръ | Захарьевичъ,"Поповъ 1-й, Владиміръ Захарьевичъ"
+911,R3,family_name (within person): «Армгеймеръ» vs usual «армсгеимер» x15,musicians_1891-92_SP_p004,musicians_1891-92_SP_p004__e047,2.,Армгеймеръ | Иванъ | Ивановичъ,"Армсгеймеръ, Иванъ Ивановичъ"
+912,R1,"patronymic missing here, printed in other seasons",musicians_1892-93_MSK_p000,musicians_1892-93_MSK_p000__e006,4.,Адольфи 3-й | Фердинандъ | ,"Адольфи, Фердинандъ"
+913,R1,"patronymic missing here, printed in other seasons",musicians_1892-93_MSK_p000,musicians_1892-93_MSK_p000__e022,20.,Гедике | Фридрихъ | ,"Гедике, Фридрихъ"
+914,R1,"patronymic missing here, printed in other seasons",musicians_1892-93_MSK_p000,musicians_1892-93_MSK_p000__e032,30.,Гробе | Альбертъ | ,"Гробе, Альбертъ"
+915,R1,"patronymic missing here, printed in other seasons",musicians_1892-93_MSK_p001,musicians_1892-93_MSK_p001__e029,62.,Пекарскій | Давидъ | ,"Пекарскій, Давидъ Исаевичъ"
+916,R1,"patronymic missing here, printed in other seasons",musicians_1892-93_MSK_p001,musicians_1892-93_MSK_p001__e034,67.,Рессеръ | Мардохей | ,"Рессеръ, Мардохей"
+917,R1,"patronymic missing here, printed in other seasons",musicians_1892-93_MSK_p001,musicians_1892-93_MSK_p001__e038,71.,Свобода | Венцель | ,"Свобода, Венцель"
+918,R4,Musicians row with no instrument,musicians_1892-93_MSK_p002,musicians_1892-93_MSK_p002__e015,,Кленовскій | Николай Семеновичъ | ,Балетный оркестръ / Композиторъ балетной музыки
+919,R1,"no first name, printed in other seasons",musicians_1892-93_MSK_p002,musicians_1892-93_MSK_p002__e017,2.,Альбрехтъ |  | ,"Альбрехтъ, Эдуардъ"
+920,R1,"no first name, printed in other seasons",musicians_1892-93_MSK_p003,musicians_1892-93_MSK_p003__e020,50.,Царскій |  | ,"Царскій, Владиміръ Александровичъ"
+921,R1,"patronymic missing here, printed in other seasons",musicians_1892-93_MSK_p003,musicians_1892-93_MSK_p003__e021,51.,Чіарлоне 1-я | Виргинія | ,"Чіарлоне, Виргинія Михайловна"
+922,R6,numbering goes backwards: 18 -> 8,musicians_1892-93_SP_p004,musicians_1892-93_SP_p004__e020,8.,Веребрюсовъ | Валеріанъ | Степановичъ,previous entry musicians_1892-93_SP_p004__e019
+923,R6,numbering goes backwards: 37 -> 19,musicians_1892-93_SP_p005,musicians_1892-93_SP_p005__e001,19.,Кулле 1-й | Ѳедоръ | Андреевичъ,previous entry musicians_1892-93_SP_p004__e049
+924,R3,first_name: «Эдуаръ» vs usual «эдуард» x145,musicians_1892-93_SP_p005,musicians_1892-93_SP_p005__e022,40.,Шпоръ | Эдуаръ | Ѳедоровичъ,"Шпоръ, Эдуардъ Ѳедоровичъ"
+925,R1,"patronymic missing here, printed in other seasons",musicians_1893-94_MSK_p000,musicians_1893-94_MSK_p000__e009,4.,Адольфи 3-й | Фердинандъ | ,"Адольфи, Фердинандъ"
+926,R1,"patronymic missing here, printed in other seasons",musicians_1893-94_MSK_p001,musicians_1893-94_MSK_p001__e005,22.,Гедике | Фридрихъ | ,"Гедике, Фридрихъ"
+927,R1,"patronymic missing here, printed in other seasons",musicians_1893-94_MSK_p001,musicians_1893-94_MSK_p001__e014,31.,Гробе | Альбертъ | ,"Гробе, Альбертъ"
+928,R1,"patronymic missing here, printed in other seasons",musicians_1893-94_MSK_p002,musicians_1893-94_MSK_p002__e008,76.,Пекарскій | Давидъ | ,"Пекарскій, Давидъ Исаевичъ"
+929,R1,"patronymic missing here, printed in other seasons",musicians_1893-94_MSK_p002,musicians_1893-94_MSK_p002__e016,84.,Рессеръ | Мардохей | ,"Рессеръ, Мардохей"
+930,R1,"patronymic missing here, printed in other seasons",musicians_1893-94_MSK_p002,musicians_1893-94_MSK_p002__e022,90.,Свобода | Венцель | ,"Свобода, Венцель"
+931,R1,"patronymic missing here, printed in other seasons",musicians_1893-94_MSK_p002,musicians_1893-94_MSK_p002__e034,102.,Чіарлоне 1-я | Виргинія | ,"Чіарлоне, Виргинія Михайловна"
+932,R1,"patronymic missing here, printed in other seasons",musicians_1893-94_MSK_p003,musicians_1893-94_MSK_p003__e006,6.,Воронцовъ | Иннокентій | ,"Воронцовъ, Иннокентій"
+933,R1,"patronymic missing here, printed in other seasons",musicians_1893-94_SP_p001,musicians_1893-94_SP_p001__e050,64.,Лудольфи | Валентинъ | ,"Людольфи, Валентинъ Ивановичъ"
+934,R1,"patronymic missing here, printed in other seasons",musicians_1893-94_SP_p002,musicians_1893-94_SP_p002__e036,101.,Френкель | Василій | ,"Френкель, Василій Ивановичъ"
+935,R1,"patronymic missing here, printed in other seasons",musicians_1894-95_MSK_p000,musicians_1894-95_MSK_p000__e007,3.,Адольфи 2-й | Фердинандъ | ,"Адольфи, Фердинандъ"
+936,R1,"patronymic missing here, printed in other seasons",musicians_1894-95_MSK_p000,musicians_1894-95_MSK_p000__e023,19.,Гедике | Фридрихъ | ,"Гедике, Фридрихъ"
+937,R3,patronymic: «Януарьевичъ» vs usual «януариевич» x11,musicians_1894-95_MSK_p000,musicians_1894-95_MSK_p000__e027,23.,Гольдшмитъ | Іосифъ | Януарьевичъ,"Гольдшмитъ, Іосифъ Януаріевичъ"
+938,R3,patronymic (within person): «Януарьевичъ» vs usual «януариевич» x11,musicians_1894-95_MSK_p000,musicians_1894-95_MSK_p000__e027,23.,Гольдшмитъ | Іосифъ | Януарьевичъ,"Гольдшмитъ, Іосифъ Януаріевичъ"
+939,R1,"patronymic missing here, printed in other seasons",musicians_1894-95_MSK_p001,musicians_1894-95_MSK_p001__e003,27.,Гробе | Альбертъ | ,"Гробе, Альбертъ"
+940,R1,"patronymic missing here, printed in other seasons",musicians_1894-95_MSK_p001,musicians_1894-95_MSK_p001__e050,74.,Пекарскій | Давидъ | ,"Пекарскій, Давидъ Исаевичъ"
+941,R3,family_name (within person): «Порубинозскій» vs usual «порубиновски» x12,musicians_1894-95_MSK_p002,musicians_1894-95_MSK_p002__e003,79.,Порубинозскій | Иванъ | Романовичъ,"Порубиновскій, Иванъ Романовичъ"
+942,R1,"patronymic missing here, printed in other seasons",musicians_1894-95_MSK_p002,musicians_1894-95_MSK_p002__e007,83.,Рессеръ | Мардохей | ,"Рессеръ, Мардохей"
+943,R1,"patronymic missing here, printed in other seasons",musicians_1894-95_MSK_p002,musicians_1894-95_MSK_p002__e015,91.,Свобода | Венцель | ,"Свобода, Венцель"
+944,R1,"patronymic missing here, printed in other seasons",musicians_1894-95_MSK_p002,musicians_1894-95_MSK_p002__e027,103.,Чіарлоне 1-я | Виргинія | ,"Чіарлоне, Виргинія Михайловна"
+945,R1,"patronymic missing here, printed in other seasons",musicians_1894-95_MSK_p003,musicians_1894-95_MSK_p003__e001,6.,Воронцовъ | Иннокентій | ,"Воронцовъ, Иннокентій"
+946,R6,numbering goes backwards: 122 -> 6,musicians_1894-95_MSK_p003,musicians_1894-95_MSK_p003__e001,6.,Воронцовъ | Иннокентій | ,previous entry musicians_1894-95_MSK_p002__e046
+947,R1,"patronymic missing here, printed in other seasons",musicians_1894-95_SP_p001,musicians_1894-95_SP_p001__e046,64.,Лудольфи | Валентинъ | ,"Людольфи, Валентинъ Ивановичъ"
+948,R1,"patronymic missing here, printed in other seasons",musicians_1894-95_SP_p002,musicians_1894-95_SP_p002__e036,101.,Френкель | Василій | ,"Френкель, Василій Ивановичъ"
+949,R1,"patronymic missing here, printed in other seasons",musicians_1894-95_SP_p002,musicians_1894-95_SP_p002__e052,117.,Штейнсъ | Іосифъ | ,"Штейнсъ, Іосифъ Францевичъ"
+950,R1,"patronymic missing here, printed in other seasons",musicians_1894-95_SP_p004,musicians_1894-95_SP_p004__e042,41.,Шредеръ | Карлъ | ,"Шредеръ, Карлъ"
+951,R1,"patronymic missing here, printed in other seasons",musicians_1895-96_MSK_p000,musicians_1895-96_MSK_p000__e007,3.,Адольфи 2-й | Фердинандъ | ,"Адольфи, Фердинандъ"
+952,R1,"patronymic missing here, printed in other seasons",musicians_1895-96_MSK_p000,musicians_1895-96_MSK_p000__e022,18.,Гедике | Фридрихъ | ,"Гедике, Фридрихъ"
+953,R1,"patronymic missing here, printed in other seasons",musicians_1895-96_MSK_p001,musicians_1895-96_MSK_p001__e004,25.,Гробе | Альбертъ | ,"Гробе, Альбертъ"
+954,R6,gap in numbering: 40 -> 42 (missing 1),musicians_1895-96_MSK_p001,musicians_1895-96_MSK_p001__e020,42.,Канисъ | Эрнестъ | ,previous entry musicians_1895-96_MSK_p001__e019
+955,R1,"patronymic missing here, printed in other seasons",musicians_1895-96_MSK_p001,musicians_1895-96_MSK_p001__e050,72.,Пекарскій | Давидъ | ,"Пекарскій, Давидъ Исаевичъ"
+956,R1,"patronymic missing here, printed in other seasons",musicians_1895-96_MSK_p002,musicians_1895-96_MSK_p002__e008,81,Рессеръ | Мардохей | ,"Рессеръ, Мардохей"
+957,R1,"patronymic missing here, printed in other seasons",musicians_1895-96_MSK_p002,musicians_1895-96_MSK_p002__e016,89,Свобода | Венцель | ,"Свобода, Венцель"
+958,R1,"patronymic missing here, printed in other seasons",musicians_1895-96_MSK_p002,musicians_1895-96_MSK_p002__e028,101,Фриче | Георгъ | ,"Фричъ, Георгъ"
+959,R1,"patronymic missing here, printed in other seasons",musicians_1895-96_MSK_p002,musicians_1895-96_MSK_p002__e031,104,Чіарлоне 1-я | Виргинія | ,"Чіарлоне, Виргинія Михайловна"
+960,R4,Musicians row with no instrument,musicians_1895-96_MSK_p002,musicians_1895-96_MSK_p002__e047,120,Эккертъ | Фердинандъ | Фердинандовичъ,Оркестръ оперы и балета. Музыканты:
+961,R1,"patronymic missing here, printed in other seasons",musicians_1895-96_MSK_p003,musicians_1895-96_MSK_p003__e004,5.,Воронцовъ | Иннокентій | ,"Воронцовъ, Иннокентій"
+962,R1,first-name field looks like a patronymic,musicians_1895-96_SP_p000,musicians_1895-96_SP_p000__e014,5.,Бергхольцъ | Викторъ-Рудольфовичъ | ,"Бергхольцъ, Викторъ-Рудольфовичъ"
+963,R3,family_name (within person): «Керкешно» vs usual «керкешко» x18,musicians_1895-96_SP_p001,musicians_1895-96_SP_p001__e032,49.,Керкешно | Ѳедоръ | Игнатьевичъ,"Керкешко, Ѳедоръ Игнатьевичъ"
+964,R1,"patronymic missing here, printed in other seasons",musicians_1895-96_SP_p001,musicians_1895-96_SP_p001__e042,59.,Лудольфи | Валентинъ | ,"Людольфи, Валентинъ Ивановичъ"
+965,R1,"patronymic missing here, printed in other seasons",musicians_1895-96_SP_p002,musicians_1895-96_SP_p002__e045,113.,Штейнсъ | Іосифъ | ,"Штейнсъ, Іосифъ Францевичъ"
+966,R3,family_name (within person): «Бровникъ» vs usual «бровкин» x15,musicians_1895-96_SP_p004,musicians_1895-96_SP_p004__e005,8.,Бровникъ | Михаилъ | Павловичъ,"Бровкинъ, Михаилъ Павловичъ"
+967,R1,"patronymic missing here, printed in other seasons",musicians_1895-96_SP_p004,musicians_1895-96_SP_p004__e037,40.,Шредеръ | Карлъ | ,"Шредеръ, Карлъ"
+968,R1,"patronymic missing here, printed in other seasons",musicians_1896-97_MSK_p000,musicians_1896-97_MSK_p000__e007,3.,Адольфи 2-й | Фердинандъ | ,"Адольфи, Фердинандъ"
+969,R1,"patronymic missing here, printed in other seasons",musicians_1896-97_MSK_p000,musicians_1896-97_MSK_p000__e021,17.,Гедике | Фридрихъ | ,"Гедике, Фридрихъ"
+970,R1,"patronymic missing here, printed in other seasons",musicians_1896-97_MSK_p000,musicians_1896-97_MSK_p000__e028,24.,Гробе | Альбертъ | ,"Гробе, Альбертъ"
+971,R4,subject_taught filled outside TheaterSchoolStaff,musicians_1896-97_MSK_p001,musicians_1896-97_MSK_p001__e007,31.,Еременко | Александръ | Матвѣевичъ,Ударные инструменты
+972,R4,subject_taught filled outside TheaterSchoolStaff,musicians_1896-97_MSK_p001,musicians_1896-97_MSK_p001__e014,38.,Зюсъ | Францъ | ,Ударные инструменты
+973,R1,"patronymic missing here, printed in other seasons",musicians_1896-97_MSK_p001,musicians_1896-97_MSK_p001__e046,70.,Пекарскій | Давидъ | ,"Пекарскій, Давидъ Исаевичъ"
+974,R1,"patronymic missing here, printed in other seasons",musicians_1896-97_MSK_p002,musicians_1896-97_MSK_p002__e003,79.,Рессеръ | Мардохей | ,"Рессеръ, Мардохей"
+975,R1,"patronymic missing here, printed in other seasons",musicians_1896-97_MSK_p002,musicians_1896-97_MSK_p002__e012,88.,Свобода | Венцель | ,"Свобода, Венцель"
+976,R1,"patronymic missing here, printed in other seasons",musicians_1896-97_MSK_p002,musicians_1896-97_MSK_p002__e026,102.,Фриче | Георгъ | ,"Фричъ, Георгъ"
+977,R1,"patronymic missing here, printed in other seasons",musicians_1896-97_MSK_p003,musicians_1896-97_MSK_p003__e003,5.,Воронцовъ | Иннокентій | ,"Воронцовъ, Иннокентій"
+978,R4,Musicians row with no instrument,musicians_1896-97_SP_p000,musicians_1896-97_SP_p000__e001,,Кучера | Карлъ | Антоновичъ,Завѣдывающій оркестрами
+979,R1,"patronymic missing here, printed in other seasons",musicians_1896-97_SP_p001,musicians_1896-97_SP_p001__e044,59.,Лудольфи | Валентинъ | ,"Людольфи, Валентинъ Ивановичъ"
+980,R1,"patronymic missing here, printed in other seasons",musicians_1896-97_SP_p002,musicians_1896-97_SP_p002__e046,115.,Штейнсъ | Іосифъ | ,"Штейнсъ, Іосифъ Францевичъ"
+981,R1,"patronymic missing here, printed in other seasons",musicians_1896-97_SP_p004,musicians_1896-97_SP_p004__e038,41.,Шредеръ | Карлъ | ,"Шредеръ, Карлъ"
+982,R1,"patronymic missing here, printed in other seasons",musicians_1897-98_MSK_p000,musicians_1897-98_MSK_p000__e021,17.,Гедике | Фридрихъ | ,"Гедике, Фридрихъ"
+983,R1,"patronymic missing here, printed in other seasons",musicians_1897-98_MSK_p001,musicians_1897-98_MSK_p001__e004,24.,Гробе | Альбертъ | ,"Гробе, Альбертъ"
+984,R3,first_name: «Фрацъ» vs usual «франц» x217,musicians_1897-98_MSK_p001,musicians_1897-98_MSK_p001__e016,36.,Зюсъ | Фрацъ | ,"Зюсъ, Францъ"
+985,R1,"patronymic missing here, printed in other seasons",musicians_1897-98_MSK_p001,musicians_1897-98_MSK_p001__e046,66.,Пекарскій | Давидъ | ,"Пекарскій, Давидъ Исаевичъ"
+986,R1,"patronymic missing here, printed in other seasons",musicians_1897-98_MSK_p002,musicians_1897-98_MSK_p002__e004,75.,Рессеръ | Мардохей | ,"Рессеръ, Мардохей"
+987,R1,"patronymic missing here, printed in other seasons",musicians_1897-98_MSK_p002,musicians_1897-98_MSK_p002__e013,84.,Свобода | Венцель | ,"Свобода, Венцель"
+988,R1,"patronymic missing here, printed in other seasons",musicians_1897-98_MSK_p002,musicians_1897-98_MSK_p002__e028,99.,Фричъ | Георгъ | ,"Фричъ, Георгъ"
+989,R3,first_name: «Належда» vs usual «надежда» x295,musicians_1897-98_MSK_p002,musicians_1897-98_MSK_p002__e046,117.,Эйхенвальдъ 2-я | Належда | Александровна,"Эйхенвальдъ 2-я, Надежда Александровна"
+990,R1,"patronymic missing here, printed in other seasons",musicians_1897-98_MSK_p003,musicians_1897-98_MSK_p003__e004,4.,Воронцовъ | Иннокентій | ,"Воронцовъ, Иннокентій"
+991,R4,Musicians row with no instrument,musicians_1897-98_SP_p000,musicians_1897-98_SP_p000__e001,,Кучера | Карлъ | Антоновичъ,Завѣдывающій оркестрами
+992,R1,"patronymic missing here, printed in other seasons",musicians_1897-98_SP_p001,musicians_1897-98_SP_p001__e038,58.,Лудольфи | Валентинъ | ,"Людольфи, Валентинъ Ивановичъ"
+993,R3,family_name (within person): «Хаанъ» vs usual «хак» x9,musicians_1897-98_SP_p002,musicians_1897-98_SP_p002__e029,103.,Хаанъ | Яковъ | Эдуардовичъ,"Хаакъ, Яковъ Эдуардовичъ"
+994,R3,family_name (within person): «Мельковъ 2-й» vs usual «малков» x10,musicians_1897-98_SP_p003,musicians_1897-98_SP_p003__e024,24.,Мельковъ 2-й | Евгеній | Александровичъ,"Мальковъ 2-й, Евгеній Александровичъ"
+995,R1,"patronymic missing here, printed in other seasons",musicians_1897-98_SP_p004,musicians_1897-98_SP_p004__e033,41.,Шредеръ | Карлъ | ,"Шредеръ, Карлъ"
+996,R1,patronymic field does not look like a patronymic,musicians_1897-98_SP_p004,musicians_1897-98_SP_p004__e035,,Новоселовъ | Александръ | Илычъ,"Новоселовъ, Александръ Ильичъ"
+997,R3,patronymic: «Илычъ» vs usual «илич» x165,musicians_1897-98_SP_p004,musicians_1897-98_SP_p004__e035,,Новоселовъ | Александръ | Илычъ,"Новоселовъ, Александръ Ильичъ"
+998,R4,Musicians row with no instrument,musicians_1898-99_MSK_p000,musicians_1898-99_MSK_p000__e001,,Симонъ | Антонъ | Юльевичъ,Завѣдывающій дѣлами оркестровъ
+999,R1,"patronymic missing here, printed in other seasons",musicians_1898-99_MSK_p000,musicians_1898-99_MSK_p000__e010,4.,Андреевъ | Сергѣй | ,"Андреевъ, Сергѣй"
+1000,R1,"patronymic missing here, printed in other seasons",musicians_1898-99_MSK_p000,musicians_1898-99_MSK_p000__e024,18.,Гедике | Фридрихъ | ,"Гедике, Фридрихъ"
+1001,R1,"patronymic missing here, printed in other seasons",musicians_1898-99_MSK_p000,musicians_1898-99_MSK_p000__e030,24.,Гробе | Альбертъ | ,"Гробе, Альбертъ"
+1002,R3,patronymic: «Васильеничъ» vs usual «василевич» x864,musicians_1898-99_MSK_p001,musicians_1898-99_MSK_p001__e023,51.,Кудряшовъ | Николай | Васильеничъ,"Кудряшовъ, Николай Васильевичъ"
+1003,R1,patronymic field does not look like a patronymic,musicians_1898-99_MSK_p001,musicians_1898-99_MSK_p001__e025,53.,Лидтке | Готгильдъ | Францъ,"Лидтке, Готгильдъ Францъ"
+1004,R1,patronymic field holds a first name,musicians_1898-99_MSK_p001,musicians_1898-99_MSK_p001__e025,53.,Лидтке | Готгильдъ | Францъ,"Лидтке, Готгильдъ Францъ"
+1005,R1,"patronymic missing here, printed in other seasons",musicians_1898-99_MSK_p001,musicians_1898-99_MSK_p001__e039,67.,Пекарскій | Давидъ | ,"Пекарскій, Давидъ Исаевичъ"
+1006,R1,"patronymic missing here, printed in other seasons",musicians_1898-99_MSK_p002,musicians_1898-99_MSK_p002__e009,76.,Рессеръ | Мардохей | ,"Рессеръ, Мардохей"
+1007,R1,"patronymic missing here, printed in other seasons",musicians_1898-99_MSK_p002,musicians_1898-99_MSK_p002__e018,85.,Свобода | Венцель | ,"Свобода, Венцель"
+1008,R1,"patronymic missing here, printed in other seasons",musicians_1898-99_MSK_p002,musicians_1898-99_MSK_p002__e034,101.,Фричъ | Георгъ | ,"Фричъ, Георгъ"
+1009,R3,family_name (within person): «Шталлеръ» vs usual «штадлер» x20,musicians_1898-99_MSK_p003,musicians_1898-99_MSK_p003__e010,117.,Шталлеръ | Іосифъ | ,"Штадлеръ, Іосифъ"
+1010,R1,"patronymic missing here, printed in other seasons",musicians_1898-99_MSK_p003,musicians_1898-99_MSK_p003__e022,3.,Воронцовъ | Иннокентій | ,"Воронцовъ, Иннокентій"
+1011,R4,Musicians row with no instrument,musicians_1898-99_SP_p000,musicians_1898-99_SP_p000__e001,,Кучера | Карлъ | Антоновичъ,Завѣдывающій оркестрами
+1012,R1,"patronymic missing here, printed in other seasons",musicians_1898-99_SP_p002,musicians_1898-99_SP_p002__e025,67.,Лудольфи | Валентинъ | ,"Людольфи, Валентинъ Ивановичъ"
+1013,R6,gap in numbering: 22 -> 42 (missing 19),musicians_1898-99_SP_p005,musicians_1898-99_SP_p005__e001,42.,Ѳедоровъ | Василій | Николаевичъ,previous entry musicians_1898-99_SP_p004__e036
+1014,R5,"2 «съ» in note, 1 start dates parsed",musicians_1898-99_SP_p005,musicians_1898-99_SP_p005__e002,,Келеръ | Морицъ | Федоровичъ,(съ 1 сентября 1881 г.). Назначенъ капельмейстеромъ съ 1 декабря 1898 г.
+1015,R6,gap in numbering: 15 -> 23 (missing 7),musicians_1898-99_SP_p005,musicians_1898-99_SP_p005__e018,23.,Мальковъ 1-й | Алексѣй | Александровичъ,previous entry musicians_1898-99_SP_p005__e017
+1016,R6,numbering goes backwards: 41 -> 16,musicians_1898-99_SP_p006,musicians_1898-99_SP_p006__e001,16.,Зауеръ | Юлій | Кондратьевичъ,previous entry musicians_1898-99_SP_p005__e036
+1017,R1,"patronymic missing here, printed in other seasons",musicians_1898-99_SP_p006,musicians_1898-99_SP_p006__e028,43.,Шредеръ | Карлъ | ,"Шредеръ, Карлъ"
+1018,R4,Musicians row with no instrument,musicians_1899-00_MSK_p000,musicians_1899-00_MSK_p000__e001,,Симонъ | Антонъ | Юльевичъ,Завѣдывающій дѣлами оркестровъ
+1019,R1,"patronymic missing here, printed in other seasons",musicians_1899-00_MSK_p000,musicians_1899-00_MSK_p000__e008,2.,Андреевъ | Сергѣй | ,"Андреевъ, Сергѣй"
+1020,R1,"patronymic missing here, printed in other seasons",musicians_1899-00_MSK_p001,musicians_1899-00_MSK_p001__e004,16.,Гедике | Фридрихъ | ,"Гедике, Фридрихъ"
+1021,R1,"patronymic missing here, printed in other seasons",musicians_1899-00_MSK_p001,musicians_1899-00_MSK_p001__e010,22.,Гробе | Альбертъ | ,"Гробе, Альбертъ"
+1022,R1,first-name field holds two words,musicians_1899-00_MSK_p001,musicians_1899-00_MSK_p001__e038,50.,Лидтке | Готчильдъ Францъ | ,"Лидтке, Готгильдъ Францъ"
+1023,R1,"patronymic missing here, printed in other seasons",musicians_1899-00_MSK_p002,musicians_1899-00_MSK_p002__e012,64.,Пекарскій | Давидъ | ,"Пекарскій, Давидъ Исаевичъ"
+1024,R1,"patronymic missing here, printed in other seasons",musicians_1899-00_MSK_p002,musicians_1899-00_MSK_p002__e021,73.,Рессеръ | Мардохей | ,"Рессеръ, Мардохей"
+1025,R1,"patronymic missing here, printed in other seasons",musicians_1899-00_MSK_p002,musicians_1899-00_MSK_p002__e030,82.,Свобода | Венцель | ,"Свобода, Венцель"
+1026,R1,"patronymic missing here, printed in other seasons",musicians_1899-00_MSK_p003,musicians_1899-00_MSK_p003__e007,97.,Фричъ | Георгъ | ,"Фричъ, Георгъ"
+1027,R1,"patronymic missing here, printed in other seasons",musicians_1899-00_MSK_p003,musicians_1899-00_MSK_p003__e037,3.,Воронцовъ | Инокентій | ,"Воронцовъ, Иннокентій"
+1028,R6,numbering goes backwards: 123 -> 5,musicians_1899-00_MSK_p004,musicians_1899-00_MSK_p004__e001,5.,Денте | Викторъ | ,previous entry musicians_1899-00_MSK_p003__e033
+1029,R4,Musicians row with no instrument,musicians_1899-00_SP_p000,musicians_1899-00_SP_p000__e001,,Кучера | Карлъ | Антоновичъ,Завѣдывающій оркестрами
+1030,R6,gap in numbering: 19 -> 21 (missing 1),musicians_1899-00_SP_p001,musicians_1899-00_SP_p001__e010,21.,Гарпфъ | Александръ | Лукичъ,previous entry musicians_1899-00_SP_p001__e008
+1031,R1,"patronymic missing here, printed in other seasons",musicians_1899-00_SP_p002,musicians_1899-00_SP_p002__e012,63.,Лудольфи | Валентинъ | ,"Людольфи, Валентинъ Ивановичъ"
+1032,R6,gap in numbering: 20 -> 63 (missing 42),musicians_1899-00_SP_p002,musicians_1899-00_SP_p002__e012,63.,Лудольфи | Валентинъ | ,previous entry musicians_1899-00_SP_p001__e009
+1033,R6,gap in numbering: 62 -> 64 (missing 1),musicians_1899-00_SP_p002,musicians_1899-00_SP_p002__e013,64.,Манкопъ | Ѳедоръ | Ѳедоровичъ,previous entry musicians_1899-00_SP_p002__e011
+1034,R4,Musicians row with no instrument,musicians_1899-00_SP_p004,musicians_1899-00_SP_p004__e027,26.,Михайловскій | Иванъ | Дмитріевичъ,Музыканты
+1035,R5,end before start,musicians_1899-00_SP_p005,musicians_1899-00_SP_p005__e007,43.,Ѳедоровъ | Василій | Николаевичъ,1889-09-01 .. 1889-06-01
+1036,R6,numbering goes backwards: 43 -> 10,musicians_1899-00_SP_p005,musicians_1899-00_SP_p005__e008,10.,Вилькенъ | Алексѣй | Карловичъ,previous entry musicians_1899-00_SP_p005__e007
+1037,R3,family_name (within person): «Беттенштелтъ» vs usual «бетенштедт» x11,musicians_1899-00_SP_p005,musicians_1899-00_SP_p005__e031,4.,Беттенштелтъ | Ѳедоръ | Васильевичъ,"Беттенштедтъ, Ѳедоръ Васильевичъ"
+1038,R5,"2 «съ» in note, 1 start dates parsed",musicians_1899-00_SP_p005,musicians_1899-00_SP_p005__e037,,Келеръ | Морицъ | Федоровичъ,(съ 1 сентября 1881 г.). Назначенъ капельмейстеромъ съ 1 декабря 1898 г
+1039,R6,gap in numbering: 9 -> 30 (missing 20),musicians_1899-00_SP_p006,musicians_1899-00_SP_p006__e001,30.,Петровъ | Иванъ | Аѳанасьевичъ,previous entry musicians_1899-00_SP_p005__e036
+1040,R1,"patronymic missing here, printed in other seasons",musicians_1899-00_SP_p006,musicians_1899-00_SP_p006__e012,41.,Шредеръ | Карлъ | ,"Шредеръ, Карлъ"
+1041,R4,Musicians row with no instrument,musicians_1900-01_MSK_p000,musicians_1900-01_MSK_p000__e001,,Симонъ | Антонъ | Юльевичъ,Завѣдывающій дѣлами оркестровъ
+1042,R1,"patronymic missing here, printed in other seasons",musicians_1900-01_MSK_p001,musicians_1900-01_MSK_p001__e004,1.,Адольфи | Фердинандъ | ,"Адольфи, Фердинандъ"
+1043,R1,"patronymic missing here, printed in other seasons",musicians_1900-01_MSK_p001,musicians_1900-01_MSK_p001__e005,2.,Андреевъ | Сергѣй | ,"Андреевъ, Сергѣй"
+1044,R1,"patronymic missing here, printed in other seasons",musicians_1900-01_MSK_p001,musicians_1900-01_MSK_p001__e025,22.,Гробе | Альбертъ | ,"Гробе, Альбертъ"
+1045,R1,patronymic field does not look like a patronymic,musicians_1900-01_MSK_p002,musicians_1900-01_MSK_p002__e014,51.,Лидтке | Готгильдъ | Францъ,"Лидтке, Готгильдъ Францъ"
+1046,R1,patronymic field holds a first name,musicians_1900-01_MSK_p002,musicians_1900-01_MSK_p002__e014,51.,Лидтке | Готгильдъ | Францъ,"Лидтке, Готгильдъ Францъ"
+1047,R1,"patronymic missing here, printed in other seasons",musicians_1900-01_MSK_p002,musicians_1900-01_MSK_p002__e034,71.,Рессеръ | Мардохей | ,"Рессеръ, Мардохей"
+1048,R1,"patronymic missing here, printed in other seasons",musicians_1900-01_MSK_p003,musicians_1900-01_MSK_p003__e006,81.,Свобода | Венцель | ,"Свобода, Венцель"
+1049,R1,"patronymic missing here, printed in other seasons",musicians_1900-01_MSK_p003,musicians_1900-01_MSK_p003__e021,96.,Фричъ | Георгъ | ,"Фричъ, Георгъ"
+1050,R3,first_name (within person): «Сергѣй Александровичъ» vs usual «сергеи» x17,musicians_1900-01_MSK_p004,musicians_1900-01_MSK_p004__e008,2.,Бруцинъ | Сергѣй Александровичъ | ,"Бруцинъ, Сергѣй Александровичъ"
+1051,R1,"patronymic missing here, printed in other seasons",musicians_1900-01_MSK_p004,musicians_1900-01_MSK_p004__e010,4.,Воронцовъ | Инокентій | ,"Воронцовъ, Иннокентій"
+1052,R4,Musicians row with no instrument,musicians_1900-01_SP_p000,musicians_1900-01_SP_p000__e001,,Кучера | Карлъ | Антоновичъ,Завѣдывающій оркестрами
+1053,R4,Musicians row with no instrument,musicians_1900-01_SP_p001,musicians_1900-01_SP_p001__e017,27.,Газенкампфъ | Рудольфъ | Владиміровичъ,Музыканты
+1054,R1,"patronymic missing here, printed in other seasons",musicians_1900-01_SP_p002,musicians_1900-01_SP_p002__e026,73.,Людольфи | Валентинъ | ,"Людольфи, Валентинъ Ивановичъ"
+1055,R5,"2 «съ» in note, 1 start dates parsed",musicians_1900-01_SP_p003,musicians_1900-01_SP_p003__e032,118.,Франке | Ѳедоръ | Юліевичъ,(съ 1 ноября 1868 г.). Кларнетъ. Переведенъ съ 1 сентября 1900 г. въ оркестръ Михайловскаго театра.
+1056,R5,"2 «съ» in note, 1 start dates parsed",musicians_1900-01_SP_p004,musicians_1900-01_SP_p004__e006,131.,Шолларъ | Францъ | Францевичъ,(съ 1 сентября 1889 г.). Переведенъ на арфу съ 1 октября 1900 г.
+1057,R3,first_name: «Меодій» vs usual «мефоди» x13,musicians_1900-01_SP_p004,musicians_1900-01_SP_p004__e030,13.,Зедникъ | Меодій | Іосифовичъ,"Зедникъ, Меѳодій Іосифовичъ"
+1058,R5,"2 «съ» in note, 1 start dates parsed",musicians_1900-01_SP_p005,musicians_1900-01_SP_p005__e034,13.,Волковъ | Петръ | Наумовичъ,съ 1 декабря 1899 г.). Переведенъ въ оркестръ Маріинскаго театра съ 1 сентября 1900 г.
+1059,R5,"2 «съ» in note, 1 start dates parsed",musicians_1900-01_SP_p006,musicians_1900-01_SP_p006__e007,21.,Куденгольдтъ | Вильгельмъ | Генриховичъ,(съ 1 сентября 1898 г.). Переведенъ въ оперный оркестръ съ 1 сентября 1900 г.
+1060,R5,"2 «съ» in note, 1 start dates parsed",musicians_1900-01_SP_p006,musicians_1900-01_SP_p006__e010,24.,Лачиновъ | Владиміръ | Петровичъ,(съ 1 сентября 1897 г.). Вторая скрипка. Переведенъ на первую скрипку съ 1 сентября 1900 г.
+1061,R5,"2 «съ» in note, 1 start dates parsed",musicians_1900-01_SP_p006,musicians_1900-01_SP_p006__e029,43.,Франке | Федоръ | Юльевичъ,(съ 1 ноября 1868 г.). Кларнетъ. Переведенъ изъ опернаго оркестра съ 1 сентября 1900 г.
+1062,R1,"patronymic missing here, printed in other seasons",musicians_1900-01_SP_p006,musicians_1900-01_SP_p006__e033,47.,Шредеръ | Карлъ | ,"Шредеръ, Карлъ"
+1063,R4,Musicians row with no instrument,musicians_1901-02_MSK_p000,musicians_1901-02_MSK_p000__e001,,Симонъ | Антонъ | Юльевичъ,Завѣдывающій дѣлами оркестровъ
+1064,R1,"patronymic missing here, printed in other seasons",musicians_1901-02_MSK_p001,musicians_1901-02_MSK_p001__e007,3.,Андреевъ | Сергѣй | ,"Андреевъ, Сергѣй"
+1065,R1,"patronymic missing here, printed in other seasons",musicians_1901-02_MSK_p001,musicians_1901-02_MSK_p001__e027,23.,Гробе | Альбертъ | ,"Гробе, Альбертъ"
+1066,R1,patronymic field does not look like a patronymic,musicians_1901-02_MSK_p002,musicians_1901-02_MSK_p002__e019,53.,Лидтке | Готгильдъ | Францъ,"Лидтке, Готгильдъ Францъ"
+1067,R1,patronymic field holds a first name,musicians_1901-02_MSK_p002,musicians_1901-02_MSK_p002__e019,53.,Лидтке | Готгильдъ | Францъ,"Лидтке, Готгильдъ Францъ"
+1068,R1,"patronymic missing here, printed in other seasons",musicians_1901-02_MSK_p002,musicians_1901-02_MSK_p002__e038,72.,Рессеръ | Мардохей | ,"Рессеръ, Мардохей"
+1069,R6,gap in numbering: 34 -> 74 (missing 39),musicians_1901-02_MSK_p003,musicians_1901-02_MSK_p003__e001,74.,Розановъ | Сергѣй | Васильевичъ,previous entry musicians_1901-02_MSK_p001__e038
+1070,R1,"patronymic missing here, printed in other seasons",musicians_1901-02_MSK_p003,musicians_1901-02_MSK_p003__e009,82.,Свобода | Венцель | ,"Свобода, Венцель"
+1071,R1,"patronymic missing here, printed in other seasons",musicians_1901-02_MSK_p003,musicians_1901-02_MSK_p003__e023,96.,Фидельманъ | Романъ | ,"Фидельманъ, Романъ Васильевичъ"
+1072,R1,"patronymic missing here, printed in other seasons",musicians_1901-02_MSK_p003,musicians_1901-02_MSK_p003__e025,98.,Фричъ | Георгъ | ,"Фричъ, Георгъ"
+1073,R1,"patronymic missing here, printed in other seasons",musicians_1901-02_MSK_p004,musicians_1901-02_MSK_p004__e012,4.,Воронцовъ | Инокентій | ,"Воронцовъ, Иннокентій"
+1074,R4,Musicians row with no instrument,musicians_1901-02_SP_p000,musicians_1901-02_SP_p000__e001,,Кучера | Карлъ | Антоновичъ,Завѣдывающій оркестрами
+1075,R3,family_name (within person): «Крушевекій» vs usual «крушевски» x17,musicians_1901-02_SP_p000,musicians_1901-02_SP_p000__e003,,Крушевекій | Эдуардъ | Андреевичъ,"Крушевскій, Эдуардъ Андреевичъ"
+1076,R3,first_name: «Лоопольдъ» vs usual «леополд» x39,musicians_1901-02_SP_p000,musicians_1901-02_SP_p000__e014,6.,Ауэръ | Лоопольдъ | Семеновичъ,"Ауэръ, Леопольдъ Семеновичъ"
+1077,R4,Musicians row with no instrument,musicians_1901-02_SP_p001,musicians_1901-02_SP_p001__e019,27.,Газенкампфъ | Рудольфъ | Владиміровичъ,Музыканты
+1078,R5,"2 «съ» in note, 1 start dates parsed",musicians_1901-02_SP_p003,musicians_1901-02_SP_p003__e018,106.,Фогтъ | Павелъ | Генриховичъ,съ 1 сентября 1900 г. Переведенъ изъ оркестра Михайловскаго театра съ 1 сентября 1901 г.
+1079,R3,first_name: «Меодій» vs usual «мефоди» x13,musicians_1901-02_SP_p004,musicians_1901-02_SP_p004__e017,13.,Зедникъ | Меодій | Іосифовичъ,"Зедникъ, Меѳодій Іосифовичъ"
+1080,R3,first_name: «Бернгардтъ» vs usual «бернгард» x10,musicians_1901-02_SP_p005,musicians_1901-02_SP_p005__e023,16.,Кнохъ | Бернгардтъ | Германовичъ,"Кнохъ, Бернгардъ Германовичъ"
+1081,R1,"patronymic missing here, printed in other seasons",musicians_1901-02_SP_p006,musicians_1901-02_SP_p006__e014,43.,Шредеръ | Карлъ | ,"Шредеръ, Карлъ"
+1082,R4,Musicians row with no instrument,musicians_1902-03_MSK_p000,musicians_1902-03_MSK_p000__e001,,Симонъ | Антонъ | Юльевичъ,Завѣдывающій дѣлами оркестровъ
+1083,R3,first_name: «Тенрихъ» vs usual «генрих» x87,musicians_1902-03_MSK_p000,musicians_1902-03_MSK_p000__e005,,Арендсъ | Тенрихъ | ,"Арендсъ, Генрихъ"
+1084,R3,first_name (within person): «Тенрихъ» vs usual «генрих» x16,musicians_1902-03_MSK_p000,musicians_1902-03_MSK_p000__e005,,Арендсъ | Тенрихъ | ,"Арендсъ, Генрихъ"
+1085,R1,"patronymic missing here, printed in other seasons",musicians_1902-03_MSK_p000,musicians_1902-03_MSK_p000__e013,2.,Адамовъ | Михаилъ | ,"Адамовъ, Михаилъ Прокофьевичъ"
+1086,R4,Musicians row with no instrument,musicians_1902-03_MSK_p000,musicians_1902-03_MSK_p000__e013,2.,Адамовъ | Михаилъ | ,Музыканты
+1087,R5,"2 «съ» in note, 1 start dates parsed",musicians_1902-03_MSK_p000,musicians_1902-03_MSK_p000__e013,2.,Адамовъ | Михаилъ | ,(съ 1 сентября 1898 г.). Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г.
+1088,R1,"patronymic missing here, printed in other seasons",musicians_1902-03_MSK_p000,musicians_1902-03_MSK_p000__e015,4.,Андреевъ | Сергѣй | ,"Андреевъ, Сергѣй"

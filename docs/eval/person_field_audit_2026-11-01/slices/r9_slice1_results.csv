@@ -1,0 +1,20 @@
+item,verdict,printed_line,end_date_text,end_type,note
+1,none_printed,,,,full page 1600px; nothing after tally. ALSO: e014 16. Бѣлова «Оставила службу 25 іюня 1891 г.» is stored in credit text (check end parsed).
+2,none_printed,,,,"full page; entry ends left column, nothing after tally. ALSO: stored family_name 'Бочкينا' contains Arabic letters (ي ن) — print reads «Бочкина»."
+3,dropped,Оставила службу 16 іюня 1891 г.,16 іюня 1891 г.,left service,"zoom 2400 band .53-.59; line printed under tally, absent from stored credit text"
+4,none_printed,,,,"full page; last entry of left column p.101, name + start date only, no tally, no leaving line"
+5,none_printed,,,,"full page p.102; name + start date only, no tally, no leaving line. (Neighbour 77 Петрова 1-я's line is stored in tenure note.)"
+6,none_printed,,,,full page p.103; nothing after tally
+7,none_printed,,,,full page p.104; nothing after tally
+8,dropped,† 25 мая 1891 г.,25 мая 1891 г.,died,"zoom 2400 band .79-.83; † line printed centred under tally, absent from stored text"
+9,none_printed,,,,full page p.58; nothing after tally
+10,none_printed,,,,full page p.59; nothing after tally (Жукова 1-я's «Оставила службу 1 марта 1891 года» on same page is stored)
+11,none_printed,,,,full page p.67; nothing after tally
+12,none_printed,,,,full page p.78; nothing after tally (start date «1837» appears so in print — likely print slip for 1887; not checked closely)
+13,none_printed,,,,"full page p.79; name + start date only, nothing after"
+14,none_printed,,,,full page p.80; nothing after tally
+15,none_printed,,,,"full page p.50; помощник режиссера, name + start date only"
+16,none_printed,,,,full page p.51; nothing after tally
+17,none_printed,,,,full page p.51; nothing after tally
+18,dropped,Оставила службу 1 августа 1892 г.,1 августа 1892 г.,left service,"zoom 2400; line under tally, absent from stored text"
+19,dropped,Оставила службу 15 апрѣля 1892 г.,15 апрѣля 1892 г.,left service,"zoom 2400; line under tally, absent from stored text"

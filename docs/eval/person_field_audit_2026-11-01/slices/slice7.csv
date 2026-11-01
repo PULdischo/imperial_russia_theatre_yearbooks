@@ -1,0 +1,197 @@
+item,check,signal,page_id,entry_id,list_no,stored,context
+1294,R1,"patronymic missing here, printed in other seasons",musicians_1907-08_MSK_p003,musicians_1907-08_MSK_p003__e009,116.,Шретеръ | Христіанъ | ,"Шретеръ, Христіанъ Мартыновичъ"
+1295,R1,"patronymic missing here, printed in other seasons",musicians_1907-08_MSK_p003,musicians_1907-08_MSK_p003__e012,119.,Эккертъ | Фердинандъ | ,"Эккертъ, Фердинандъ Фердинандовичъ"
+1296,R4,Musicians row with no instrument,musicians_1907-08_MSK_p003,musicians_1907-08_MSK_p003__e018,125.,Яньшиновъ | Алексѣй | Ивановичъ,Музыканты
+1297,R3,family_name (within person): «Криживицкій» vs usual «крживицки» x17,musicians_1907-08_MSK_p003,musicians_1907-08_MSK_p003__e021,2.,Криживицкій | Петръ | Михайловичъ,"Крживицкій, Петръ Михайловичъ"
+1298,R1,"patronymic missing here, printed in other seasons",musicians_1907-08_MSK_p003,musicians_1907-08_MSK_p003__e026,7.,Славинскій | Болеславъ | ,"Славинскій, Болеславъ Феликсовичъ"
+1299,R1,"patronymic missing here, printed in other seasons",musicians_1907-08_MSK_p003,musicians_1907-08_MSK_p003__e029,10.,Станекъ | Вацлавъ | ,"Станекъ, Вацлавъ"
+1300,R4,Musicians row with no instrument,musicians_1907-08_MSK_p003,musicians_1907-08_MSK_p003__e031,12.,Шульцевъ | Николай | Константиновичъ,Оркестръ Малаго театра. / Музыканты
+1301,R4,Musicians row with no instrument,musicians_1907-08_SP_p000,musicians_1907-08_SP_p000__e001,,Кучера | Карлъ | Антоновичъ,Завѣдывающій оркестрами
+1302,R3,family_name (within person): «Бѳльмъ» vs usual «болм» x10,musicians_1907-08_SP_p000,musicians_1907-08_SP_p000__e019,10.,Бѳльмъ | Отто | Рудольфовичъ,"Больмъ, Отто Рудольфовичъ"
+1303,R4,Musicians row with no instrument,musicians_1907-08_SP_p000,musicians_1907-08_SP_p000__e020,11.,Брекеръ | Вильгельмъ | Фридриховичъ,Оркестръ оперы и балета / Музыканты
+1304,R1,"patronymic missing here, printed in other seasons",musicians_1907-08_SP_p000,musicians_1907-08_SP_p000__e025,16.,Васильевъ | Евтихій | ,"Васильевъ, Евтихій Михайловичъ"
+1305,R5,"2 «съ» in note, 1 start dates parsed",musicians_1907-08_SP_p002,musicians_1907-08_SP_p002__e010,68.,Мнацагановъ | Христофоръ | Сергѣевичъ,(съ 1 сентября 1902 г.). Переведенъ изъ оркестра Михайловскаго театра съ 1 ноября 1905 г.
+1306,R1,"patronymic missing here, printed in other seasons",musicians_1907-08_SP_p002,musicians_1907-08_SP_p002__e011,69.,Мѣщанчукъ | Иванъ | ,"Мѣщанчукъ, Иванъ"
+1307,R1,"patronymic missing here, printed in other seasons",musicians_1907-08_SP_p002,musicians_1907-08_SP_p002__e015,73.,Парманинъ | Тихонъ | ,"Парманинъ, Тихонъ"
+1308,R3,patronymic: «Афонасьевичъ» vs usual «афанасевич» x72,musicians_1907-08_SP_p002,musicians_1907-08_SP_p002__e016,74.,Петровъ | Иванъ | Афонасьевичъ,"Петровъ, Иванъ Аѳанасьевичъ"
+1309,R1,"patronymic missing here, printed in other seasons",musicians_1907-08_SP_p002,musicians_1907-08_SP_p002__e034,92.,Стеличекъ | Мирославъ | ,"Стеличекъ, Мирославъ"
+1310,R1,"patronymic missing here, printed in other seasons",musicians_1907-08_SP_p002,musicians_1907-08_SP_p002__e037,95.,Таротинъ | Михаилъ | ,"Таротинъ, Михаилъ"
+1311,R1,"patronymic missing here, printed in other seasons",musicians_1907-08_SP_p003,musicians_1907-08_SP_p003__e008,106.,Халипъ | Владимиръ | ,"Халипъ, Владиміръ Яковлевичъ"
+1312,R1,"patronymic missing here, printed in other seasons",musicians_1907-08_SP_p003,musicians_1907-08_SP_p003__e010,108.,Цыбинъ | Владимиръ | ,"Цыбинъ, Владиміръ Николаевичъ"
+1313,R1,"patronymic missing here, printed in other seasons",musicians_1907-08_SP_p003,musicians_1907-08_SP_p003__e011,109.,Цыбульскій | Иванъ | ,"Цыбульскій, Иванъ Станиславовичъ"
+1314,R3,first_name: «Морисъ» vs usual «борис» x82,musicians_1907-08_SP_p003,musicians_1907-08_SP_p003__e038,,Келеръ | Морисъ | Ѳедоровичъ,"Келеръ, Морицъ Ѳедоровичъ"
+1315,R3,family_name (within person): «Лудицкій» vs usual «лупицки» x4,musicians_1907-08_SP_p004,musicians_1907-08_SP_p004__e026,10.,Лудицкій | Михаилъ | Ивановичъ,"Лупицкій, Михаилъ Ивановичъ"
+1316,R1,patronymic field does not look like a patronymic,musicians_1908-09_MSK_p000,musicians_1908-09_MSK_p000__e017,17.,Ваксманъ | Альфредъ | Луи,"Ваксманъ, Альфредъ Луи"
+1317,R3,family_name (within person): «Золоторенко 1-й» vs usual «золотаренко» x21,musicians_1908-09_MSK_p001,musicians_1908-09_MSK_p001__e018,37.,Золоторенко 1-й | Павелъ | Петровичъ,"Золотаренко 2-й, Павелъ Петровичъ"
+1318,R3,family_name (within person): «Золоторенко 2-й» vs usual «золотаренко» x16,musicians_1908-09_MSK_p001,musicians_1908-09_MSK_p001__e019,38.,Золоторенко 2-й | Василій | Петровичъ,"Золотаренко 3-й, Василій Петровичъ"
+1319,R4,Musicians row with no instrument,musicians_1908-09_MSK_p003,musicians_1908-09_MSK_p003__e009,95.,Солодуевъ | Василій | Никаноровичъ,Музыканты
+1320,R1,"patronymic missing here, printed in other seasons",musicians_1908-09_MSK_p003,musicians_1908-09_MSK_p003__e010,96.,Станекъ | Вацлавъ | ,"Станекъ, Вацлавъ"
+1321,R3,first_name: «Пьеръ-Іоганнъ» vs usual «петр-иоган» x16,musicians_1908-09_MSK_p003,musicians_1908-09_MSK_p003__e016,102.,Ферстратенъ | Пьеръ-Іоганнъ | ,"Ферстратенъ, Пьеръ-Іоганнъ"
+1322,R1,"patronymic missing here, printed in other seasons",musicians_1908-09_MSK_p003,musicians_1908-09_MSK_p003__e019,105.,Фричъ | Георгъ | ,"Фричъ, Георгъ"
+1323,R1,"patronymic missing here, printed in other seasons",musicians_1908-09_MSK_p003,musicians_1908-09_MSK_p003__e027,113.,Шретеръ | Христіанъ | ,"Шретеръ, Христіанъ Мартыновичъ"
+1324,R4,Musicians row with no instrument,musicians_1908-09_SP_p000,musicians_1908-09_SP_p000__e001,"Кучера, Карлъ Антоновичъ",Кучера | Карлъ | Антоновичъ,Завѣдывающій оркестрами
+1325,R4,date in rank_or_title,musicians_1908-09_SP_p001,musicians_1908-09_SP_p001__e005,11.,Будаевъ | Александръ | Дмитріевичъ,(Переведенъ изъ Михайловскаго театра съ 1 октября 1904 г.).
+1326,R5,"2 «съ» in note, 1 start dates parsed",musicians_1908-09_SP_p001,musicians_1908-09_SP_p001__e005,11.,Будаевъ | Александръ | Дмитріевичъ,(съ 1 сентября 1898 г.). Первая скрипка. (Переведенъ изъ Михайловскаго театра съ 1 октября 1904 г.)
+1327,R1,patronymic field does not look like a patronymic,musicians_1908-09_SP_p002,musicians_1908-09_SP_p002__e010,51.,Котте | Фридрихъ | Эрнестъ,"Котте, Фридрихъ Эрнестъ"
+1328,R1,patronymic field holds a first name,musicians_1908-09_SP_p002,musicians_1908-09_SP_p002__e010,51.,Котте | Фридрихъ | Эрнестъ,"Котте, Фридрихъ Эрнестъ"
+1329,R5,"2 «съ» in note, 1 start dates parsed",musicians_1908-09_SP_p002,musicians_1908-09_SP_p002__e029,70.,Мнацагановъ | Христофоръ | Сергѣевичъ,съ 1 сентября 1902 г. Переведенъ изъ оркестра Михайловскаго театра съ 1 ноября 1905 г.
+1330,R1,"patronymic missing here, printed in other seasons",musicians_1908-09_SP_p002,musicians_1908-09_SP_p002__e030,71.,Мѣщанчукъ | Иванъ | ,"Мѣщанчукъ, Иванъ"
+1331,R1,"patronymic missing here, printed in other seasons",musicians_1908-09_SP_p003,musicians_1908-09_SP_p003__e003,78.,Порманинъ | Тихонъ | ,"Парманинъ, Тихонъ"
+1332,R3,family_name (within person): «Путарскій» vs usual «путырски» x8,musicians_1908-09_SP_p003,musicians_1908-09_SP_p003__e010,85.,Путарскій | Михаилъ | Станиславовичъ,"Путырскій, Михаилъ Станиславовичъ"
+1333,R1,"patronymic missing here, printed in other seasons",musicians_1908-09_SP_p003,musicians_1908-09_SP_p003__e021,96.,Стеличевъ | Мирославъ | ,"Стеличекъ, Мирославъ"
+1334,R5,"2 «съ» in note, 1 start dates parsed",musicians_1908-09_SP_p003,musicians_1908-09_SP_p003__e032,107.,Фишеръ | Ѳедоръ | Андреевичъ,съ 1 сентября 1899 г.). Переведенъ изъ оркестра Александринскаго театра съ 1 сентября 1906 г.
+1335,R3,family_name (within person): «Халинъ» vs usual «халип» x3,musicians_1908-09_SP_p003,musicians_1908-09_SP_p003__e034,109.,Халинъ | Владиміръ | Яковлевичъ,"Халипъ, Владиміръ Яковлевичъ"
+1336,R1,patronymic field does not look like a patronymic,musicians_1909-10_MSK_p000,musicians_1909-10_MSK_p000__e016,16.,Ваксманъ | Альфредъ | Луи,"Ваксманъ, Альфредъ Луи"
+1337,R1,"patronymic missing here, printed in other seasons",musicians_1909-10_MSK_p002,musicians_1909-10_MSK_p002__e033,93.,Станекъ | Вацлавъ | ,"Станекъ, Вацлавъ"
+1338,R1,"patronymic missing here, printed in other seasons",musicians_1909-10_MSK_p003,musicians_1909-10_MSK_p003__e008,101.,Фричъ | Георгъ | ,"Фричъ, Георгъ"
+1339,R1,"patronymic missing here, printed in other seasons",musicians_1909-10_MSK_p003,musicians_1909-10_MSK_p003__e016,109.,Шретеръ | Христіанъ | ,"Шретеръ, Христіанъ Мартыновичъ"
+1340,R4,Musicians row with no instrument,musicians_1909-10_SP_p000,musicians_1909-10_SP_p000__e001,,Кучера | Карлъ | Антоновичъ,Завѣдывающій оркестрами
+1341,R4,Musicians row with no instrument,musicians_1909-10_SP_p000,musicians_1909-10_SP_p000__e011,1.,Александеръ | Михаилъ | Николаевичъ,Музыканты:
+1342,R1,patronymic field does not look like a patronymic,musicians_1909-10_SP_p002,musicians_1909-10_SP_p002__e016,52.,Котте | Фридрихъ | Эрнестъ,"Котте, Фридрихъ Эрнестъ"
+1343,R1,patronymic field holds a first name,musicians_1909-10_SP_p002,musicians_1909-10_SP_p002__e016,52.,Котте | Фридрихъ | Эрнестъ,"Котте, Фридрихъ Эрнестъ"
+1344,R4,Musicians row with no instrument,musicians_1909-10_SP_p003,musicians_1909-10_SP_p003__e010,80.,Плотниковъ | Михаилъ | Александровичъ,Музыканты:
+1345,R3,patronymic: «Аленсандровичъ» vs usual «александрович» x1067,musicians_1909-10_SP_p003,musicians_1909-10_SP_p003__e012,82.,Помазанскій | Иванъ | Аленсандровичъ,"Помазанскій, Иванъ Александровичъ"
+1346,R1,"patronymic missing here, printed in other seasons",musicians_1909-10_SP_p003,musicians_1909-10_SP_p003__e028,98.,Стеличекъ | Мирославъ | ,"Стеличекъ, Мирославъ"
+1347,R3,family_name (within person): «Алексадровъ» vs usual «александров» x9,musicians_1910-11_MSK_p000,musicians_1910-11_MSK_p000__e002,2.,Алексадровъ | Александръ | Петровичъ,"Александровъ, Александръ Петровичъ"
+1348,R1,patronymic field does not look like a patronymic,musicians_1910-11_MSK_p000,musicians_1910-11_MSK_p000__e016,16.,Васкманъ | Альфредъ | Луи,"Ваксманъ, Альфредъ Луи"
+1349,R3,family_name (within person): «Васкманъ» vs usual «ваксман» x4,musicians_1910-11_MSK_p000,musicians_1910-11_MSK_p000__e016,16.,Васкманъ | Альфредъ | Луи,"Ваксманъ, Альфредъ Луи"
+1350,R3,first_name: «Азексѣй» vs usual «алексеи» x477,musicians_1910-11_MSK_p001,musicians_1910-11_MSK_p001__e020,45.,Крулевъ | Азексѣй | Михайловичъ,"Крулевъ, Алексѣй Михайловичъ"
+1351,R3,family_name (within person): «Миллсръ» vs usual «милер» x17,musicians_1910-11_MSK_p001,musicians_1910-11_MSK_p001__e032,57.,Миллсръ | Романъ | Ѳедоровичъ,"Миллеръ, Романъ Ѳедоровичъ"
+1352,R5,"1 «съ» in note, 0 start dates parsed",musicians_1910-11_MSK_p002,musicians_1910-11_MSK_p002__e012,72.,Плаксинъ | Александръ | Леонтьёвичъ,(съ 1 вктября 1894 г.). Оставилъ службу 10 февраля 1910 г.
+1353,R5,note has «съ <date>» but no start date parsed,musicians_1910-11_MSK_p002,musicians_1910-11_MSK_p002__e012,72.,Плаксинъ | Александръ | Леонтьёвичъ,(съ 1 вктября 1894 г.). Оставилъ службу 10 февраля 1910 г.
+1354,R5,unknown month word after «съ»,musicians_1910-11_MSK_p002,musicians_1910-11_MSK_p002__e012,72.,Плаксинъ | Александръ | Леонтьёвичъ,вктября | (съ 1 вктября 1894 г.). Оставилъ службу 10 февраля 1910 г. 
+1355,R6,numbering goes backwards: 73 -> 44,musicians_1910-11_MSK_p002,musicians_1910-11_MSK_p002__e014,44.,Решке | Богумилъ | Вильгельмовичъ,previous entry musicians_1910-11_MSK_p002__e013
+1356,R6,gap in numbering: 44 -> 75 (missing 30),musicians_1910-11_MSK_p002,musicians_1910-11_MSK_p002__e015,75.,Розановъ | Сергѣй | Васильевичъ,previous entry musicians_1910-11_MSK_p002__e014
+1357,R5,"1 «съ» in note, 0 start dates parsed",musicians_1910-11_MSK_p002,musicians_1910-11_MSK_p002__e022,82.,Садовскій | Николай | Петровичъ,(съ 1 декября 1894 г.)
+1358,R5,note has «съ <date>» but no start date parsed,musicians_1910-11_MSK_p002,musicians_1910-11_MSK_p002__e022,82.,Садовскій | Николай | Петровичъ,(съ 1 декября 1894 г.)
+1359,R5,unknown month word after «съ»,musicians_1910-11_MSK_p002,musicians_1910-11_MSK_p002__e022,82.,Садовскій | Николай | Петровичъ,декября | (съ 1 декября 1894 г.) 
+1360,R1,"patronymic missing here, printed in other seasons",musicians_1910-11_MSK_p002,musicians_1910-11_MSK_p002__e033,93.,Станекъ | Вацлавъ | ,"Станекъ, Вацлавъ"
+1361,R3,family_name (within person): «Тезаровскій» vs usual «тезавровски» x14,musicians_1910-11_MSK_p003,musicians_1910-11_MSK_p003__e002,97.,Тезаровскій | Иванъ | Сергѣевичъ,"Тезавровскій, Иванъ Сергѣевичъ"
+1362,R5,leaving note printed twice in one entry,musicians_1910-11_MSK_p003,musicians_1910-11_MSK_p003__e005,100.,Фридрихъ | Іосифъ | ,(съ 22 ноября 1882 г.). Оставилъ службу 1 августа 1910 г. Оставилъ службу 1 августа 1910 г. 
+1363,R1,"patronymic missing here, printed in other seasons",musicians_1910-11_MSK_p003,musicians_1910-11_MSK_p003__e006,101.,Фричъ | Георгъ | ,"Фричъ, Георгъ"
+1364,R5,"1 «съ» in note, 0 start dates parsed",musicians_1910-11_MSK_p003,musicians_1910-11_MSK_p003__e008,103.,Цозель | Павелъ | ,(съ 1 севтября 1883 г.). Оставилъ службу 1 августа 1910 г. Оставилъ службу 1 августа 1910 г.
+1365,R5,leaving note printed twice in one entry,musicians_1910-11_MSK_p003,musicians_1910-11_MSK_p003__e008,103.,Цозель | Павелъ | ,(съ 1 севтября 1883 г.). Оставилъ службу 1 августа 1910 г. Оставилъ службу 1 августа 1910 г. 
+1366,R5,note has «съ <date>» but no start date parsed,musicians_1910-11_MSK_p003,musicians_1910-11_MSK_p003__e008,103.,Цозель | Павелъ | ,(съ 1 севтября 1883 г.). Оставилъ службу 1 августа 1910 г. Оставилъ службу 1 августа 1910 г.
+1367,R5,unknown month word after «съ»,musicians_1910-11_MSK_p003,musicians_1910-11_MSK_p003__e008,103.,Цозель | Павелъ | ,севтября | (съ 1 севтября 1883 г.). Оставилъ службу 1 августа 1910 г. Оставилъ службу 1 августа 1910 
+1368,R1,"patronymic missing here, printed in other seasons",musicians_1910-11_MSK_p003,musicians_1910-11_MSK_p003__e014,109.,Шретеръ | Христіанъ | ,"Шретеръ, Христіанъ Мартыновичъ"
+1369,R3,first_name: «Степѣнъ» vs usual «степан» x33,musicians_1910-11_MSK_p003,musicians_1910-11_MSK_p003__e016,111.,Щуко | Степѣнъ | Станиславовичъ,"Щуко, Степѣнъ Станиславовичъ"
+1370,R5,leaving note printed twice in one entry,musicians_1910-11_MSK_p003,musicians_1910-11_MSK_p003__e020,115.,Юмрихъ | Августъ | ,(съ 1 сентября 1886 г.). Оставилъ службу 1 августа 1909 г. Оставилъ службу 1 августа 1909 г. 
+1371,R4,Musicians row with no instrument,musicians_1910-11_SP_p000,musicians_1910-11_SP_p000__e001,1.,Кучера | Карлъ | Антоновичъ,Завѣдывающій оркестрами
+1372,R4,Musicians row with no instrument,musicians_1910-11_SP_p000,musicians_1910-11_SP_p000__e002,2.,Крушевскій | Эдуардъ | Андреевичъ,Завѣдывающій оркестрами
+1373,R4,Musicians row with no instrument,musicians_1910-11_SP_p000,musicians_1910-11_SP_p000__e008,,Пахитоновъ | Даніилъ | Ильичъ,Оркестръ оперы и балета / Аккомпаніаторъ
+1374,R4,Musicians row with no instrument,musicians_1910-11_SP_p000,musicians_1910-11_SP_p000__e012,1.,Александеръ | Михаилъ | Николаевичъ,Оркестръ оперы и балета / Музыканты:
+1375,R3,patronymic: «Альфредоричъ» vs usual «алфредович» x15,musicians_1910-11_SP_p001,musicians_1910-11_SP_p001__e018,38.,Грюнертъ | Альфредъ | Альфредоричъ,"Грюнертъ, Альфредъ Альфредовичъ"
+1376,R4,Musicians row with no instrument,musicians_1910-11_SP_p001,musicians_1910-11_SP_p001__e018,38.,Грюнертъ | Альфредъ | Альфредоричъ,Оркестръ оперы и балета / Музыканты:
+1377,R3,first_name: «Миханлъ» vs usual «михаил» x796,musicians_1910-11_SP_p001,musicians_1910-11_SP_p001__e019,39.,Губко | Миханлъ | Ивановичъ,"Губко, Михаилъ Ивановичъ"
+1378,R4,Musicians row with no instrument,musicians_1910-11_SP_p001,musicians_1910-11_SP_p001__e022,42.,Дмитріевъ | Михаилъ | Михайловичъ,Оркестръ оперы и балета / Музыканты:
+1379,R5,start date after the season,musicians_1910-11_SP_p001,musicians_1910-11_SP_p001__e031,51.,Корниловъ | Сергѣй | Васильевичъ,съ 1 сентября 1998 г. -> 1998-09-01
+1380,R1,patronymic field does not look like a patronymic,musicians_1910-11_SP_p001,musicians_1910-11_SP_p001__e032,52.,Котте | Фридрихъ | Эрнестъ,"Котте, Фридрихъ Эрнестъ"
+1381,R1,patronymic field holds a first name,musicians_1910-11_SP_p001,musicians_1910-11_SP_p001__e032,52.,Котте | Фридрихъ | Эрнестъ,"Котте, Фридрихъ Эрнестъ"
+1382,R5,"1 «съ» in note, 0 start dates parsed",musicians_1910-11_SP_p001,musicians_1910-11_SP_p001__e034,54.,Крюгеръ | Эмануилъ | Эдуардовичъ,(съ 15 сентяббя 1895 г.).
+1383,R5,note has «съ <date>» but no start date parsed,musicians_1910-11_SP_p001,musicians_1910-11_SP_p001__e034,54.,Крюгеръ | Эмануилъ | Эдуардовичъ,(съ 15 сентяббя 1895 г.).
+1384,R5,unknown month word after «съ»,musicians_1910-11_SP_p001,musicians_1910-11_SP_p001__e034,54.,Крюгеръ | Эмануилъ | Эдуардовичъ,сентяббя | (съ 15 сентяббя 1895 г.). 
+1385,R3,first_name: «Валертинъ» vs usual «валентин» x84,musicians_1910-11_SP_p002,musicians_1910-11_SP_p002__e011,65.,Людольфи | Валертинъ | Ивановичъ,"Людольфи, Валентинъ Ивановичъ"
+1386,R3,first_name (within person): «Валертинъ» vs usual «валентин» x17,musicians_1910-11_SP_p002,musicians_1910-11_SP_p002__e011,65.,Людольфи | Валертинъ | Ивановичъ,"Людольфи, Валентинъ Ивановичъ"
+1387,R3,first_name: «Птвель» vs usual «павел» x462,musicians_1910-11_SP_p002,musicians_1910-11_SP_p002__e020,74.,Напихъ | Птвель | Николаевичъ,"Напихъ, Павелъ Николаевичъ"
+1388,R3,patronymic: «Лавовичъ» vs usual «лвович» x87,musicians_1910-11_SP_p002,musicians_1910-11_SP_p002__e021,75.,Нейманъ | Савва | Лавовичъ,"Нейманъ, Савва Львовичъ"
+1389,R3,family_name (within person): «Орлово» vs usual «орлов» x7,musicians_1910-11_SP_p002,musicians_1910-11_SP_p002__e022,76.,Орлово | Николай | Николаевичъ,"Орловъ, Николай Николаевичъ"
+1390,R3,patronymic: «Васельевичъ» vs usual «василевич» x864,musicians_1910-11_SP_p002,musicians_1910-11_SP_p002__e024,78.,Передерій | Иванъ | Васельевичъ,"Передерій, Иванъ Васильевичъ"
+1391,R4,Musicians row with no instrument,musicians_1910-11_SP_p002,musicians_1910-11_SP_p002__e026,80.,Плотниковъ | Михаилъ | Александровичъ,Оркестръ оперы и балета / Музыканты:
+1392,R5,"1 «съ» in note, 0 start dates parsed",musicians_1910-11_SP_p002,musicians_1910-11_SP_p002__e031,85.,Продановъ | Михаилъ | Мелетевичъ,(съ 1 сертября 1901 г.). Альтъ.
+1393,R5,note has «съ <date>» but no start date parsed,musicians_1910-11_SP_p002,musicians_1910-11_SP_p002__e031,85.,Продановъ | Михаилъ | Мелетевичъ,(съ 1 сертября 1901 г.). Альтъ.
+1394,R5,unknown month word after «съ»,musicians_1910-11_SP_p002,musicians_1910-11_SP_p002__e031,85.,Продановъ | Михаилъ | Мелетевичъ,сертября | (съ 1 сертября 1901 г.). Альтъ. 
+1395,R1,"patronymic missing here, printed in other seasons",musicians_1910-11_SP_p003,musicians_1910-11_SP_p003__e009,98.,Стеличекъ | Мирославъ | ,"Стеличекъ, Мирославъ"
+1396,R1,patronymic field does not look like a patronymic,musicians_1910-11_SP_p003,musicians_1910-11_SP_p003__e011,100.,Таротинъ | Михаилъ | Васильевмчъ,"Таротинъ, Михаилъ"
+1397,R3,patronymic: «Васильевмчъ» vs usual «василевич» x864,musicians_1910-11_SP_p003,musicians_1910-11_SP_p003__e011,100.,Таротинъ | Михаилъ | Васильевмчъ,"Таротинъ, Михаилъ"
+1398,R5,"1 «съ» in note, 0 start dates parsed",musicians_1910-11_SP_p003,musicians_1910-11_SP_p003__e012,101.,Тецъ | Владиміръ | Карловичъ,(съ 1 сеитября 1902 г.).
+1399,R5,note has «съ <date>» but no start date parsed,musicians_1910-11_SP_p003,musicians_1910-11_SP_p003__e012,101.,Тецъ | Владиміръ | Карловичъ,(съ 1 сеитября 1902 г.).
+1400,R5,unknown month word after «съ»,musicians_1910-11_SP_p003,musicians_1910-11_SP_p003__e012,101.,Тецъ | Владиміръ | Карловичъ,сеитября | (съ 1 сеитября 1902 г.). 
+1401,R3,patronymic: «Аьтоновичъ» vs usual «антонович» x205,musicians_1910-11_SP_p003,musicians_1910-11_SP_p003__e014,103.,Тракалъ | Антонъ | Аьтоновичъ,"Тракалъ, Антонъ Антоновичъ"
+1402,R3,patronymic (within person): «Аьтоновичъ» vs usual «антонович» x8,musicians_1910-11_SP_p003,musicians_1910-11_SP_p003__e014,103.,Тракалъ | Антонъ | Аьтоновичъ,"Тракалъ, Антонъ Антоновичъ"
+1403,R4,subject_taught filled outside TheaterSchoolStaff,productionteam_1890-91_p003,productionteam_1890-91_p003__e017,,Неменскій | Исаакъ | Іосифовичъ,Мужскіе костюмы всѣхъ труппъ
+1404,R4,subject_taught filled outside TheaterSchoolStaff,productionteam_1890-91_p003,productionteam_1890-91_p003__e018,,Вороненко | Татьяна | Петровна,Женскіе костюмы всѣхъ труппъ
+1405,R4,subject_taught filled outside TheaterSchoolStaff,productionteam_1890-91_p003,productionteam_1890-91_p003__e019,,Бьенвеню | Сильвантъ | ,Парики для всѣхъ труппъ
+1406,R5,leaving in note but no end parsed,productionteam_1892-93_p003,productionteam_1892-93_p003__e011,2.,Борегарь | Александръ | Павловичъ,(съ 19 сентября 1882 г.)
+1407,R5,printed leaving/death date not among parsed end dates,productionteam_1892-93_p003,productionteam_1892-93_p003__e011,2.,Борегарь | Александръ | Павловичъ,Оставилъ службу 19 октября 1892 | parsed: ['None']
+1408,R6,gap in numbering: 6 -> 8 (missing 1),productionteam_1896-97_p000,productionteam_1896-97_p000__e014,8.,Козеровскій | Ромуальдъ | Александровичъ,previous entry productionteam_1896-97_p000__e013
+1409,R1,"patronymic missing here, printed in other seasons",productionteam_1896-97_p000,productionteam_1896-97_p000__e019,5.,Экъ | Рудольфъ | ,"Экъ, Рудольфъ Ѳедоровичъ"
+1410,R6,gap in numbering: 12 -> 14 (missing 1),productionteam_1900-01_p000,productionteam_1900-01_p000__e021,14.,Яковлевъ | Григорій | Артемьевичъ,previous entry productionteam_1900-01_p000__e020
+1411,R5,"2 «съ» in note, 1 start dates parsed",productionteam_1901-02_p004,productionteam_1901-02_p004__e002,,Иващенко | Александра | Ѳедоровна,съ 1 мая 1898 г.). Переведена къ С.-Петербургскимъ театрамъ съ 1 августа 1902 г.
+1412,R1,"patronymic missing here, printed in other seasons",productionteam_1902-03_p001,productionteam_1902-03_p001__e012,,Щеголевъ | Василій | ,"Щеголевъ, Василій Дмитріевичъ"
+1413,R4,subject_taught filled outside TheaterSchoolStaff,productionteam_1902-03_p001,productionteam_1902-03_p001__e020,1.,Каффи | Иванъ | Іосифовичъ,Мужскіе костюмы балетной и французской труппъ
+1414,R4,subject_taught filled outside TheaterSchoolStaff,productionteam_1902-03_p001,productionteam_1902-03_p001__e021,2.,Пипаръ | Христіанъ | Петровичъ,Мужскіе костюмы оперной и русской драматической труппъ
+1415,R4,subject_taught filled outside TheaterSchoolStaff,productionteam_1902-03_p001,productionteam_1902-03_p001__e022,1.,Иванова | Евдокія | Трофимовна,Женскіе костюмы оперной и русской драматической труппъ
+1416,R4,subject_taught filled outside TheaterSchoolStaff,productionteam_1902-03_p001,productionteam_1902-03_p001__e023,2.,Офицерова | Екатерина | Максимовна,Женскіе костюмы балетной труппы
+1417,R5,"2 «съ» in note, 1 start dates parsed",productionteam_1902-03_p003,productionteam_1902-03_p003__e013,,Неменскій | Исаакъ | Іосифовичъ,(съ 30 іюня 1881 г.). Мужскіе костюмы всѣхъ труппъ. Переведенъ къ С.-Петербургскимъ театрамъ съ 20 іюля 1903 г.
+1418,R5,"2 «съ» in note, 1 start dates parsed",productionteam_1902-03_p003,productionteam_1902-03_p003__e016,2.,Павловъ | Александръ | Павловичъ,(съ 1 сентября 1888 г.). Переведенъ къ С.-Петербургскимъ театрамъ съ 10 августа 1903 г.
+1419,R3,family_name (within person): «Раздобурлинъ» vs usual «раздобурдин» x8,productionteam_1903-04_p000,productionteam_1903-04_p000__e011,6.,Раздобурлинъ | Дмитрій | Ивановичъ,"Раздобурдинъ, Дмитрій Ивановичъ"
+1420,R1,"patronymic missing here, printed in other seasons",productionteam_1903-04_p001,productionteam_1903-04_p001__e011,,Щеголевъ | Василій | ,"Щеголевъ, Василій Дмитріевичъ"
+1421,R3,family_name (within person): «Каменскій» vs usual «неменски» x15,productionteam_1903-04_p001,productionteam_1903-04_p001__e019,1.,Каменскій | Исаакъ | Осиповичъ,"Неменскій, Исаакъ Іосифовичъ"
+1422,R5,"2 «съ» in note, 1 start dates parsed",productionteam_1903-04_p001,productionteam_1903-04_p001__e019,1.,Каменскій | Исаакъ | Осиповичъ,съ 30 іюня 1881 г. Мужскіе костюмы оперной и русской драматической труппъ. Переведенъ изъ Московскихъ къ Петербургскимъ театрамъ съ 20 іюля 1903 г.
+1423,R5,"2 «съ» in note, 1 start dates parsed",productionteam_1903-04_p001,productionteam_1903-04_p001__e022,2.,Иващенко | Александра | Федоровна,съ 1 мая 1898 г. Женскіе костюмы балетной и французской драматической труппъ. Переведена изъ Московскихъ къ С.-Петербургскимъ театрамъ съ 1 августа 1902 г.
+1424,R5,"2 «съ» in note, 1 start dates parsed",productionteam_1904-05_p000,productionteam_1904-05_p000__e015,7.,Сальниковъ | Александръ | Борисовичъ,съ 1 апрѣля 1902 г.). Назначенъ завѣдывающимъ красильной мастерской съ 1 августа 1905 г.
+1425,R5,"2 «съ» in note, 1 start dates parsed",productionteam_1904-05_p001,productionteam_1904-05_p001__e002,,Лапшинъ | Василій | Кирилловичъ,съ 1 января 1901 г.). Назначенъ помощникомъ декоратора съ 1 августа 1905 г.
+1426,R5,"2 «съ» in note, 1 start dates parsed",productionteam_1904-05_p001,productionteam_1904-05_p001__e012,,Щеголевъ | Василій | Дмитріевичъ,(съ 1 ноября 1902 г.). Назначенъ завѣдывающимъ освѣщеніемъ Александринскаго театра съ 1 мая 1905 г.
+1427,R5,"2 «съ» in note, 1 start dates parsed",productionteam_1904-05_p002,productionteam_1904-05_p002__e002,2.,Иващенко | Александра | Федоровна,(съ 1 мая 1898 г.). Женскіе костюмы балетной и французской драматической труппъ. Переведена изъ Московскихъ къ С.-Петербургскимъ театрамъ съ 1 августа 1902 г.
+1428,R3,patronymic: «Павлсвичъ» vs usual «павлович» x371,productionteam_1905-06_p001,productionteam_1905-06_p001__e018,2.,Павловъ | Александръ | Павлсвичъ,"Павловъ, Александръ Павловичъ"
+1429,R1,"patronymic missing here, printed in other seasons",productionteam_1906-07_p001,productionteam_1906-07_p001__e004,1.,Наумовъ | Павелъ | ,"Наумовъ, Павелъ"
+1430,R6,numbering goes backwards: 5 -> 4,productionteam_1907-08_p000,productionteam_1907-08_p000__e014,4.,Максимовъ | Николай | Алексѣевичъ,previous entry productionteam_1907-08_p000__e006
+1431,R1,"patronymic missing here, printed in other seasons",productionteam_1907-08_p001,productionteam_1907-08_p001__e002,1.,Наумовъ | Павелъ | ,"Наумовъ, Павелъ"
+1432,R1,"patronymic missing here, printed in other seasons",productionteam_1907-08_p001,productionteam_1907-08_p001__e005,,Ивановъ | Семенъ | ,"Ивановъ, Семенъ Васильевичъ"
+1433,R3,family_name (within person): «Кондауровъ» vs usual «кандауров» x18,productionteam_1908-09_p003,productionteam_1908-09_p003__e009,,Кондауровъ | Константинъ | Васильевичъ,"Кандауровъ, Константинъ Васильевичъ"
+1434,R1,"patronymic missing here, printed in other seasons",productionteam_1908-09_p003,productionteam_1908-09_p003__e015,3.,Савурскій | Павлинъ | ,"Савурскій, Павлинъ Николаевичъ"
+1435,R3,family_name (within person): «Націокайтисъ» vs usual «науиокаитис» x8,productionteam_1908-09_p003,productionteam_1908-09_p003__e016,,Націокайтисъ | Іосифъ | Павловичъ,"Науіокайтисъ, Іосифъ Павловичъ"
+1436,R5,"1 «съ» in note, 0 start dates parsed",productionteam_1909-10_p000,productionteam_1909-10_p000__e007,,Наумовъ | Павелъ | Наумовичъ,(съ 1882 г.)
+1437,R5,note has «съ <date>» but no start date parsed,productionteam_1909-10_p000,productionteam_1909-10_p000__e007,,Наумовъ | Павелъ | Наумовичъ,(съ 1882 г.)
+1438,R5,"2 «съ» in note, 1 start dates parsed",productionteam_1909-10_p003,productionteam_1909-10_p003__e002,1.,Гейкблюмъ | Борисъ | Іосифовичъ,съ 1 іюня 1898 г. съ 1 мая 1909 г. назначенъ главнымъ декораторомъ)
+1439,R6,duplicate number: 1 twice,productionteam_1909-10_p003,productionteam_1909-10_p003__e002,1.,Гейкблюмъ | Борисъ | Іосифовичъ,previous entry productionteam_1909-10_p003__e001
+1440,R5,"1 «съ» in note, 0 start dates parsed",productionteam_1910-11_p000,productionteam_1910-11_p000__e014,,Наумовъ | Павелъ | Наумовичъ,(съ 1882 г.)
+1441,R5,note has «съ <date>» but no start date parsed,productionteam_1910-11_p000,productionteam_1910-11_p000__e014,,Наумовъ | Павелъ | Наумовичъ,(съ 1882 г.)
+1442,R5,"2 «съ» in note, 1 start dates parsed",productionteam_1910-11_p003,productionteam_1910-11_p003__e002,2.,Гейкблюмъ | Борисъ | Іосифовичъ,(съ 1 іюня 1898 г. съ 1 мая 1909 г. назначенъ главнымъ декораторомъ)
+1443,R1,first name starts lower-case,productionteam_1910-11_p003,productionteam_1910-11_p003__e012,,Улановъ | ергѣй | Ивановичъ,"Улановъ, Сергѣй Ивановичъ"
+1444,R3,first_name: «ергѣй» vs usual «сергеи» x706,productionteam_1910-11_p003,productionteam_1910-11_p003__e012,,Улановъ | ергѣй | Ивановичъ,"Улановъ, Сергѣй Ивановичъ"
+1445,R1,patronymic field does not look like a patronymic,productionteam_1910-11_p004,productionteam_1910-11_p004__e005,2.,Исаевъ | Иванъ | етрови чъ,"Исаевъ, Иванъ Петровичъ"
+1446,R3,patronymic: «етрови чъ» vs usual «петрович» x629,productionteam_1910-11_p004,productionteam_1910-11_p004__e005,2.,Исаевъ | Иванъ | етрови чъ,"Исаевъ, Иванъ Петровичъ"
+1499,R1,no first name,theaterschoolstaff_1890-91_p001,theaterschoolstaff_1890-91_p001__e018,4.,Габріель |  | ,Габріель
+1500,R1,no first name,theaterschoolstaff_1890-91_p002,theaterschoolstaff_1890-91_p002__e009,20.,Піотровичъ |  | ,Піотровичъ
+1501,R5,leaving/death month word not recognised,theaterschoolstaff_1890-91_p002,theaterschoolstaff_1890-91_p002__e024,3.,Коноплевъ | Василій | Степановичъ,Оставилъ службу 1 Іюля 1891
+1502,R2,gender conflict: patronymic=f / first name=f / surname=m,theaterschoolstaff_1890-91_p004,theaterschoolstaff_1890-91_p004__e023,15.,Менжинъ | Екатерина | Ивановна,"Менжинъ, Екатерина Ивановна"
+1503,R1,no first name,theaterschoolstaff_1891-92_p001,theaterschoolstaff_1891-92_p001__e017,4.,Габріель |  | ,Габріель
+1504,R1,no first name,theaterschoolstaff_1891-92_p002,theaterschoolstaff_1891-92_p002__e001,20.,Піотровичъ |  | ,Піотровичъ
+1505,R3,family_name (within person): «Потѣхннъ» vs usual «потехин» x17,theaterschoolstaff_1892-93_p000,theaterschoolstaff_1892-93_p000__e006,5.,Потѣхннъ | Алексѣй | Антиповичъ,"Потѣхинъ, Алексѣй Антиповичъ"
+1506,R1,no first name,theaterschoolstaff_1892-93_p001,theaterschoolstaff_1892-93_p001__e032,21.,Піотровичъ |  | ,Піотровичъ
+1507,R1,no first name,theaterschoolstaff_1893-94_p001,theaterschoolstaff_1893-94_p001__e020,19.,Піотровичъ |  | ,Піотровичъ
+1508,R5,start date after the season,theaterschoolstaff_1894-95_p000,theaterschoolstaff_1894-95_p000__e018,2.,Лаубергъ | Петръ | Андреевичъ,съ 26 января 1896 г. -> 1896-01-26
+1509,R1,no first name,theaterschoolstaff_1894-95_p001,theaterschoolstaff_1894-95_p001__e008,4.,Гавронскій |  | ,Гавронскій
+1510,R1,no first name,theaterschoolstaff_1895-96_p001,theaterschoolstaff_1895-96_p001__e009,4.,Гавронскій |  | ,Гавронскій
+1511,R3,first_name: «Фелицата» vs usual «фелисата» x12,theaterschoolstaff_1895-96_p002,theaterschoolstaff_1895-96_p002__e018,1.,фонъ-Бранденбургъ | Фелицата | Сергѣевна,"фонъ-Бранденбургъ, Фелисата Сергѣевна"
+1512,R1,no first name,theaterschoolstaff_1896-97_p001,theaterschoolstaff_1896-97_p001__e009,4.,Гавронскій |  | ,Гавронскій
+1513,R3,first_name: «Фелицата» vs usual «фелисата» x12,theaterschoolstaff_1896-97_p002,theaterschoolstaff_1896-97_p002__e017,1.,фонъ-Бранденбургъ | Фелицата | Сергѣевна,"фонъ-Бранденбургъ, Фелисата Сергѣевна"
+1514,R1,no first name,theaterschoolstaff_1897-98_p001,theaterschoolstaff_1897-98_p001__e009,4.,Гавронскій |  | ,Гавронскій
+1515,R1,no first name,theaterschoolstaff_1898-99_p001,theaterschoolstaff_1898-99_p001__e009,2.,Гавронскій |  | ,Гавронскій
+1516,R1,no first name,theaterschoolstaff_1899-00_p001,theaterschoolstaff_1899-00_p001__e015,4.,Гавронскій |  | ,Гавронскій
+1517,R1,no first name,theaterschoolstaff_1900-01_p001,theaterschoolstaff_1900-01_p001__e012,5.,Гавронскій |  | ,Гавронскій
+1518,R1,no first name,theaterschoolstaff_1901-02_p001,theaterschoolstaff_1901-02_p001__e012,5.,Гавронскій |  | ,Гавронскій
+1519,R1,no first name,theaterschoolstaff_1902-03_p001,theaterschoolstaff_1902-03_p001__e015,5.,Гавронскій |  | ,Гавронскій
+1520,R1,no first name,theaterschoolstaff_1902-03_p001,theaterschoolstaff_1902-03_p001__e016,6.,Стобницкій |  | ,Стобницкій
+1521,R1,no first name,theaterschoolstaff_1903-04_p001,theaterschoolstaff_1903-04_p001__e030,23.,Сенкусъ |  | ,Сенкусъ
+1522,R1,no first name,theaterschoolstaff_1903-04_p001,theaterschoolstaff_1903-04_p001__e033,26.,Стобницкій |  | ,Стобницкій
+1523,R1,no first name,theaterschoolstaff_1904-05_p001,theaterschoolstaff_1904-05_p001__e031,24.,Сенкусъ |  | ,Сенкусъ
+1524,R5,start date after the season,theaterschoolstaff_1904-05_p003,theaterschoolstaff_1904-05_p003__e007,6.,Стороженко | Николай | Ильичъ,12 января 1906 г. -> 1906-01-12
+1525,R5,"2 «съ» in note, 1 start dates parsed",theaterschoolstaff_1904-05_p003,theaterschoolstaff_1904-05_p003__e015,1.,Безсонова | Марія | Николаевна,(съ 7 сентября 1902 г.). Оставила службу съ 1 марта 1904 г.
+1526,R3,family_name (within person): «Терсецкая» vs usual «терлецкая» x3,theaterschoolstaff_1904-05_p003,theaterschoolstaff_1904-05_p003__e017,3.,Терсецкая | Марія | Александровна,"Терлецкая, Марія Александровна"
+1527,R3,family_name (within person): «Корнхо» vs usual «корню» x3,theaterschoolstaff_1905-06_p001,theaterschoolstaff_1905-06_p001__e017,10.,Корнхо | Луи | Юльевичъ,"Корню, Луи Юльевичъ"
+1528,R1,no first name,theaterschoolstaff_1905-06_p001,theaterschoolstaff_1905-06_p001__e028,21.,Сенкусъ |  | ,Сенкусъ
+1529,R3,first_name: «Махаилъ» vs usual «михаил» x796,theaterschoolstaff_1905-06_p002,theaterschoolstaff_1905-06_p002__e017,8.,Дарскій | Махаилъ | Егоровичъ,"Дарскій, Махаилъ Егоровичъ"
+1530,R1,no first name,theaterschoolstaff_1906-07_p001,theaterschoolstaff_1906-07_p001__e028,21.,Сенкусъ |  | ,Сенкусъ
+1531,R1,no first name,theaterschoolstaff_1907-08_p001,theaterschoolstaff_1907-08_p001__e028,21.,Сенкусъ |  | ,Сенкусъ
+1532,R1,no first name,theaterschoolstaff_1908-09_p001,theaterschoolstaff_1908-09_p001__e024,19.,Сенкусъ |  | ,Сенкусъ
+1533,R3,family_name (within person): «Всеволожскій» vs usual «всеволожскои» x28,theaterschoolstaff_1908-09_p003,theaterschoolstaff_1908-09_p003__e002,1.,Всеволожскій | Иванъ | Александровичъ,"Всеволожской, Иванъ Александровичъ"
+1534,R1,two words glued together,theaterschoolstaff_1908-09_p004,theaterschoolstaff_1908-09_p004__e005,5.,Михайловскій | ВладимІръ | Александровичъ,"Михайловскій, Владиміръ Александровичъ"
+1535,R1,no first name,theaterschoolstaff_1909-10_p001,theaterschoolstaff_1909-10_p001__e026,20.,Сенкусъ |  | ,Сенкусъ
+1536,R5,"1 «съ» in note, 0 start dates parsed",theaterschoolstaff_1909-10_p004,theaterschoolstaff_1909-10_p004__e004,4.,Михайловскій | Владиміръ | Александровичъ,съ 1888—1898 г. и съ февраля 1909 г.).
+1537,R5,note has «съ <date>» but no start date parsed,theaterschoolstaff_1909-10_p004,theaterschoolstaff_1909-10_p004__e004,4.,Михайловскій | Владиміръ | Александровичъ,съ 1888—1898 г. и съ февраля 1909 г.).
+1538,R1,no first name,theaterschoolstaff_1910-11_p001,theaterschoolstaff_1910-11_p001__e026,20.,Сенкусъ |  | ,Сенкусъ
+1539,R6,duplicate number: 1 twice,theaterschoolstaff_1910-11_p003,theaterschoolstaff_1910-11_p003__e015,1.,Шаломытовъ | Евгеній | Васильевичъ,previous entry theaterschoolstaff_1910-11_p003__e014
+1540,R5,"1 «съ» in note, 0 start dates parsed",theaterschoolstaff_1910-11_p004,theaterschoolstaff_1910-11_p004__e004,4.,Михайловскій | Владиміръ | Александровичъ,(съ 1888—1898 г. и съ февраля 1909 г.). Исторія.
+1541,R5,note has «съ <date>» but no start date parsed,theaterschoolstaff_1910-11_p004,theaterschoolstaff_1910-11_p004__e004,4.,Михайловскій | Владиміръ | Александровичъ,(съ 1888—1898 г. и съ февраля 1909 г.). Исторія.
