@@ -1337,3 +1337,80 @@ receipts and event count unchanged, performances +8, works 2,943 → 2,948, ever
 Promoted by re-running the pipeline on production (it had moved under the copy) and diffing against the backup `outputs/backups/titles_1900-01_2026-10-30/`: the same rows as the copy. Four curation edits went in with it: `receipts_print_typos.csv` key «2 Четвергъ.», `art_form_by_title.csv` «Трагедія о Гамлетѣ, принцѣ Датскомъ.» (the canonical title flips on a 5/5 tie of the two printed forms), 6 aliases in `work_title_aliases.csv`, 1 excerpt link («2.го») in `work_excerpt_links.csv`. sqlite rebuilt after the review corrections. Two readers took the 30 Jan Малый genre «вартина» for «картина»/«еартина»; at full resolution it is в (straight stem, two bowls), as the 2026-09-28 zoom found, so it stays as stored (`genuine_print_typos.md`). Left for RG: print order «Школьные товарищи» / «Лучъ» (Новый 5, 6 Feb), stored the other way round (print order confirmed by Claude on p. 29, 5 Feb; both blind readers for 6 Feb).
 
 **Outcome:** 18 ledger rows (1900-01-01..18).
+
+## 1902-03 (2026-10-31): every column read blind; charity outside the stats; one digit dropped in the print closes the Михайловскій
+
+The stats page is p. 40 (`1902-03_ProductionStats.pdf`): SP drama by venue, opera, ballet, French, German; Moscow drama, opera and
+ballet by venue. No footnotes, no concerts or «Смѣшанныхъ» line. Productions lists: ballet, both cities. Reviews: ballet and opera,
+both cities.
+
+**Step 1, city totals:** SP 612 / 591 events, −399.08 р.; Moscow 539 / 529, +569.82 р.
+
+**What the stats leave out.** Every charity event (Moscow 10, SP 20; ledger 1902-03-01, -05) and the 14 Dec Пажескій корпус
+centenary (1st act «Жизнь за Царя», 1st act «Дочь Микадо»; -06). Free student matinées (14 Nov, 6 Dec, 12 Feb) are counted. With
+these out every Moscow count is exact, and in SP ballet 51, opera 137 and German 23 are exact to the kopeck.
+
+**Every column read blind** (6 agents, scans only; `docs/eval/scan_audit/1902-03_scan_reads.csv`, 1,392 rows incl. dashes). Every
+stored event matched a read; every figure as stored but two extraction errors. **Both applied 2026-10-31** (RG: "Yes, fix both"):
+- **Александринскій 14 Dec 1902** (charity, «Волки и овцы»): the cell prints no receipts; the stored 659.00 is the 15 Dec matinée's
+  figure directly below (crop `1902-03_rg_alex_14dec.png`).
+- **Новый 10 Jan 1903** «218 р. 42 е.» stored 218.00 (е. for к.); with the kopecks the Новый drama line is exact.
+
+`fix_1902_03_scan_reads.py` removes the 14 Dec figure from the raw; the 10 Jan kopecks are a `receipts_print_typos.csv` row (21842). Rebuilt on a copy (`outputs/rebuild_1902-03_2026-10-31/`): raw/analysis event_entry 1, research.event 2, season_stat_check 2, nothing else in any of 57 tables; 0 person_link shift blocks. A parallel session's full production rebuild (15:00, for its own roster edits) ran after the fix was on disk and carried both in: production's event, performance, work and season_stat_check tables equal the tested copy. Backup `outputs/backups/scan_reads_1902-03_2026-10-31/`. sqlite NOT rebuilt: `build_datasette.py` stops on two new person_tenure columns (`change_in_refresh_year`, `date_changes`) from the tenure thread. City totals now SP −1,058.08 (Михайловскій −948.00, Александринскій −100.00, French −10.08) and Moscow +570.24 (charity 576.26, Малый +0.28, Большой ballet −6.30).
+
+**The Михайловскій −948.00 is a dropped digit in the print.** 7 Oct 1902 «Да здравствуетъ жизнь» prints «105 р. 25 к.» with an empty
+slot before «р.» (crops `1902-03_rg_mikh_7oct.png`, `1902-03_rg_mikh_7oct_wide.png`): the units digit did not print (RG 2026-10-31: definitely a dropped digit). The 3 is inferred, not read: 945 + d = 948 gives d = 3, and 1053 р. 25 к. closes the line exactly. Stored as printed (yearbook_own); in `genuine_print_typos.md`. Revisable if the volume or the HathiTrust scan shows the digit.
+
+| Line | Counts | Receipts | Reading |
+|---|---|---|---|
+| Moscow Большой / Новый opera | 134 / 35 | exact | |
+| Moscow ballet | 37 + 5 = 42 = list = review | −6.30 (Большой) | yearbook_own, provisional; 8 Dec «1450 р. 70 к.» as printed |
+| Moscow Малый drama | 170 | +0.28 | yearbook_own, provisional |
+| Moscow Новый drama | 148 | −0.42 → exact | 10 Jan kopecks restored (applied) |
+| SP ballet / opera / German | 51 / 137 / 23 | exact | |
+| SP Михайловскій drama | 57 | −948.00 | print dropped a digit, 7 Oct (RG agrees; 3 inferred) |
+| SP Александринскій drama | **192 v. 190** | **−100.00** | open |
+| SP French | **131 v. 133** | **−10.08** | open |
+
+The Александринскій +2 and French −2 look like two events counted under French, but nothing in the Александринскій column is French;
+candidates are listed in ledger -09/-10. Not ballet.
+
+**Lists.** Every printed total = its dates; SP 51 and Moscow 42 = stats = reviews. The lists leave out three excerpts on mixed bills:
+Moscow 27 Apr «2-е д. Корсаръ» and «1-е д. Конекъ-Горбунокъ» (the bill is entered only under «Дочь Фараона» and «Эсмеральда»), SP
+4 May «2-е д. Коппелія».
+
+**Reviews** (4 agents, `1902-03_review_{sp_ballet,msk_ballet,sp_opera,msk_opera}.csv`, 219 statements): no Repertoire error. The
+disagreements are the review's own (SP ballet ordinals; «51 балетъ» where there are 31 titles; Moscow «13-го апрѣля» as the first ballet
+after Lent, though 10 Apr «Эсмеральда» came first; opera counts) or slips in the stored review text (a count paragraph repeated three
+times in the Moscow ballet review, «дама»—13 ×3 in SP opera, «О. И. Шаляпина», «Петина», «г. Легатъ» for «г. С. Легатъ»). Two
+unclear: an RTO charity at the Маріинскій on 1 Dec that the Repertoire does not print; the 12 Apr Gogol-school charity (review:
+Маріинскій; Repertoire: Александринскій column). Dances in operas: the SP opera review names dances in «Сервилія» (Коппини; 17 dancers
+in act 1, М. Петипа and 14 in act 2) and the «Мазепа» revival (Гопакъ by А. Ширяевъ, 12 men). **Marked 2026-10-31** (RG: "Yes,
+mark both"): two `works_with_dancers.csv` rows, SP 1902-03 only; `includes_dance` on 9 performances (Сервилія 7, Мазепа 2: 15, 24 Apr),
+nothing else changed; research.events_with_dancers 2,213 -> 2,222. Promoted; backup `outputs/backups/dance_1902-03_2026-10-31/`. The Moscow opera review describes the 12 Apr ballet divertissement in full (8 numbers, Горскій and Петипа, ~40 dancers).
+
+**Review-text slips corrected 2026-10-31** (RG: "Yes, correct them"): 12 rows in `docs/eval/review_text_corrections.csv`, each 1/1: Moscow ballet p022 (four counts stored three times each, «Корсарь» -> «Корсаръ», «поставленные» -> «поставленые» as printed; read by Claude), SP opera p034 «дама»—13 ×3 -> once, Moscow opera p004 «О. И.» -> «Ѳ. И.» Шаляпина, SP opera p030 «Петина 1» -> «Петипа 1», SP ballet p001 «г. Легатъ» -> «г. С. Легатъ» (folio 143; read by Claude), SP ballet p002 «Царь-Дѣвицы—г-жа» and «Хана—заслуженный» ×3 -> once (folio 144; read by Claude). Review chain on a copy (`outputs/rebuild_reviewtext_1902-03_2026-10-31/`): raw.review_block 6; mentions only in the two edited ballet blocks (offsets; «Корсаръ» same work; one duplicate role mention gone; «г. С. Легатъ» now linked to Легатъ 2-й, Сергѣй Густавовичъ, Q1749277, was unresolved); review_assertion: 2622 linked to him, new 3199 «Царь-Дѣвицы» — М. Кшесинская (27 Oct), three Больмъ rows candidate order only; review_credit only mention_id renumbering; review_solo candidate order only; 0 shift blocks. Promoted (db, merged_full/review_block.csv, mentions/*.csv); backup `outputs/backups/review_text_1902-03_2026-10-31/`. **Lead, not applied:** SP ballet p019 (folio 161, the 1890 «Спящая красавица» cast) stores «Золушка — г-жа Петина 1»; the print reads «Петипа 1» (checked by Claude).
+
+**Titles** (`docs/eval/scan_audit/1902-03_title_reads.csv`): 194 cells differ, 154 in punctuation only; 40 read again by a second
+reader who saw neither version: 34 to correct, 4 stored right, «Ловнгринъ» (2 Jan) unreadable and kept, «Джентльмэнъ»
+(2 Dec Михайловскій, э or е) for RG.
+
+**34 applied 2026-10-31** (RG: "Yes, apply all 34"): `fix_1902_03_titles.py` (42 works, 4 annotations, «Разводъ» appended on 15 Nov
+Малый). Applying #7 showed the next three Малый dates of «Да здравствуетъ жизнь!» (18, 22, 25 Nov) stored the same way, «др.» in the
+title and no genre; split the same way (text unchanged), or those performances lose their discipline. Curation: 5 rows in
+`work_title_aliases.csv` («Мнссъ», «Сильные п слабыс», «пе порокъ», «Скпталецъ», «d'Antriche»), 1 in `work_excerpt_links.csv`
+(«1-е д. бал. Конекъ-Горбунокч» -> «Конекъ-горбунокъ»), the 23 Oct genre ruling in `research_performance_genre.csv` retitled
+«Дивертиссемемтъ». Copy (`outputs/rebuild_titles_1902-03_2026-10-31/`) v. pre-fix: only 1902-03 rows (research.event 5, performance
++1 / 45, work 6 new excerpt works linked to their parents, 5 gone: «Лишеннный», «Le bougeois», «Le bourgeois», «1-е и 2-е д. Коппелія»,
+«Да здравствуетъ жизнь! др.»); no discipline lost; season_stat_check unchanged; 0 person_link shift blocks. Production was rebuilt by a
+parallel session (BalletArtists edits) after the raw fix was on disk; its 1902-03 rows and research.work equal the tested copy. Backup
+`outputs/backups/titles_1902-03_2026-10-31/` (DB, parsed, the 19 raw pages). Left as they fall: «Le dépit amoureux» now displays as
+«Le depit amoureux» (printed «depit» twice, «dépit» twice; the canonical title is the most common printed form and the tie goes to the
+earlier season); «Воспитатель Флахсманъ» (Moscow print, 27) and «Флаксманъ» (SP, 30) are still two works, as since the 1901-02 audit.
+
+**2 Dec «Джентльмэнъ»** (RG 2026-10-31: э): `fix_1902_03_dzhentlmen_2dec.py`; copy v. pre-fix: one performance moved from the
+«Джентльменъ» work (16 -> 15) to «Джентльмэнъ» (101 -> 102), nothing else of this fix (the copy also refreshed one 1904-05
+discipline_basis text from the current pipeline). Promoted; backup `outputs/backups/dzhentlmen_1902-03_2026-10-31/`. The other «Джентльменъ»
+cells (1899-00 ×2, 1907-08 ×13) are the open check from 1897-98, not read here.
+
+**Outcome:** 13 ledger rows (1902-03-01..13).

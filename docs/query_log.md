@@ -24418,3 +24418,82 @@ Diff: every BASE TABLE v. imperial_theaters.pre_transcribe_tallies_2026-10-31.du
 
 Result: raw/analysis.person_entry +77 -77 and person_entry_credit +372 -0, all on balletartists 1891-92_MSK_p005, 1895-96_SP_p008,
 1905-06_SP_p006, 1892-93_MSK_p002, 1906-07_MSK_p005; no other table changed; quality flags 1 (Исаева).
+
+## 2026-10-31 — 1902-03 reconciliation: Repertoire v. season totals, ballet lists and the four reviews
+
+Read-only on outputs/full_run/imperial_theaters.duckdb.
+
+```
+uv run python pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir <scratch>
+uv run python pipeline/season_stats_receipt_candidates.py --db outputs/full_run/imperial_theaters.duckdb --family-totals <scratch>/family_totals.csv --out <scratch>/candidates.csv
+-- every performed 1902-03 event with its family (compare_season_stats.classify_event), date, session, receipts, charity/benefit/free flags, annotation, works
+SELECT e.event_id, e.date, e.time_of_day, e.is_charity, e.is_benefit, e.is_free, e.printed_page_number, e.annotation,
+       (SELECT string_agg(p.verbatim_title || ' ' || coalesce(p.verbatim_genre,''), ' | ' ORDER BY p.performance_order)
+        FROM research.performance p WHERE p.event_id = e.event_id)
+FROM research.event e WHERE season = '1902-03' AND event_status = 'performed';
+-- list totals and dates v. Repertoire
+SELECT city, list_number, list_title, printed_total, n_dates, n_matched_works FROM research.production WHERE season = '1902-03';
+SELECT city, title, performed_text, total_text FROM raw.production_entry WHERE season = '1902-03';
+-- blind read v. stored: every 1902-03 research.event (receipts_verbatim, receipts_total_kopecks, works) matched by theater/date/session
+```
+
+Result: SP 612 / 591 events, −399.08 р.; Moscow 539 / 529, +569.82 р. Excluding charity (Moscow 10, SP 20) and the 14 Dec
+Pages' Corps jubilee, Moscow counts are exact and SP ballet/opera/German exact to the kopeck. Blind read 1,392 rows: two extraction errors
+(Alex 14 Dec copied 659.00; Новый 10 Jan kopecks), Михайловскій −948.00 = digit dropped in the print on 7 Oct. Open: Alex 192/190 −100.00,
+French 131/133 −10.08, Малый +0.28, Большой ballet −6.30. Lists = stats in both cities. Reviews (4 agents): no Repertoire error.
+(docs/eval/reconciliation/README.md «1902-03», ledger 1902-03-01..13.)
+
+## 2026-10-31 — 1902-03 two extraction fixes (RG: "Yes, fix both"): copy rebuilt v. pre_fix; production carried in by a parallel rebuild
+
+```sql
+-- every BASE TABLE in both catalogs (57), copy v. pre_fix, then production v. copy:
+SELECT count(*) FROM (SELECT * FROM <s>.<t> EXCEPT ALL SELECT * FROM o.<s>.<t>);  -- and the reverse
+SELECT n.event_id, p.receipts_total_kopecks, n.receipts_total_kopecks, n.receipts_verbatim FROM research.event n JOIN o.research.event p USING(event_id)
+ WHERE n.receipts_total_kopecks IS DISTINCT FROM p.receipts_total_kopecks OR n.receipts_verbatim IS DISTINCT FROM p.receipts_verbatim;
+SELECT * FROM research.season_stat_check WHERE season='1902-03';
+```
+Result: copy v. pre_fix: only raw.event_entry 1, analysis.event_entry 1, research.event 2 (p016__s034 65900 -> null; p021__s032 21800 -> 21842), research.season_stat_check 2 (SP receipts −399.08 -> −1,058.08, charity receipts 0; Moscow +569.82 -> +570.24). Production rebuild hit a lock held by a parallel session's build_entities; that session's full rebuild (15:00) ran after the raw fix and the typo row were on disk. Production v. tested copy: research.event, performance, work, season_stat_check, entities.work, raw.event_entry 0 differences; production v. backup also shows that session's raw/analysis person_entry 14 and person_entry_credit −17 (its own). sqlite not rebuilt (person_tenure SCHEMAS mismatch, tenure thread).
+
+## 2026-10-31 — 1902-03 title audit (RG: "Yes, apply all 34"): copy v. pre-fix; production rebuilt by a parallel session, checked against the copy
+
+```
+-- docs/eval/scan_audit/1902-03_title_reads.csv (to-correct rows) v. outputs/full_run/raw/repertoire_1902-03_*.raw.json (event_id sNNN = session index + 1)
+-- copy: fix_1902_03_titles.py on fresh raw, full rebuild (parse .. research, person_link check); every BASE TABLE EXCEPT ALL both ways v. pre-fix
+SELECT canonical_title, excerpt_of_work_id IS NOT NULL FROM research.work WHERE work_id NOT IN (SELECT work_id FROM o.research.work);
+SELECT p.event_id, p.verbatim_title, o.discipline, p.discipline FROM research.performance p LEFT JOIN o.research.performance o USING(performance_id) WHERE p.discipline IS DISTINCT FROM o.discipline;
+SELECT e.season, e.date, p.verbatim_title FROM research.performance p JOIN research.event e USING(event_id) WHERE p.work_id='58d93dd4-91fc-5bdc-aeeb-cab8f96e86c4';
+-- production after the parallel rebuild (15:33) v. tested copy, 1902-03 slice: raw.event_entry(_performance), research.event, research.performance, research.season_stat_check; research.work whole
+```
+Result: first copy stopped on research_performance_genre.csv (23 Oct «Дивертиссементъ» matches 0; retitled). Second: 11 new works incl. 5 misprint titles, «1-е д. бал. Конекъ-Горбунокч» discipline ballet -> null, three 18/22/25 Nov Малый «Да здравствуетъ жизнь! др.» performances Russian drama -> null (shared work's genre came from #7 alone). Added 5 aliases, 1 excerpt link, split the three titles. Final copy v. pre-fix: raw/analysis event_entry 4, event_entry_performance +1/45, research.event 5, research.performance +1/45, research.work 29/28 (6 new excerpt works, 5 gone), entities.work_id_crosswalk +5, work_genre_candidate 1 (Карменъ count), nothing outside 1902-03; only discipline change «Разводъ» null -> Russian drama; season_stat_check unchanged; 0 shift blocks. «Le dépit amoureux» work: «depit» 1902-03 + 1911-02-16, «dépit» 1910-11 x2 -> canonical «Le depit amoureux» (tie). Promotion guard stopped the DB copy (production changed by a parallel BalletArtists rebuild) after the raw fix was written; that session's 15:33 rebuild carried it in: every 1902-03 slice and research.work equal the tested copy (0/0). sqlite not rebuilt (person_tenure SCHEMAS).
+
+## 2026-10-31 — 1902-03 2 Dec Михайловскій «Джентльмэнъ» (RG: э): copy v. pre-fix, promoted
+
+```sql
+SELECT work_id, canonical_title, appearance_count FROM research.work WHERE canonical_title ILIKE 'Джентльм%';
+-- every BASE TABLE EXCEPT ALL both ways, outputs/rebuild_dzh2_1902-03_2026-10-31 v. its pre_fix (production at 15:49)
+```
+Result: before «Джентльмэнъ» 101 / «Джентльменъ» 16; after 102 / 15. Diff: raw.event_entry_performance 1, research.performance 2 (p014__s032__w1 work_id ac917638 -> 3cd9e35c; repertoire_1904-05_p003__s034__w2 discipline_basis text only, from the current pipeline), research.work 2, entities.work 2, work_link 1. Production unchanged since the copy; promoted. (First attempt stopped: another session's rebuild ran at 15:49.)
+
+## 2026-10-31 — 1902-03 dance markers «Сервилія», «Мазепа» (RG: "Yes, mark both"): research layer rebuilt on a copy, promoted
+
+```sql
+SELECT block_id, text FROM raw.review_block WHERE page_id LIKE 'review_1902-03_SP_opera%' AND (text LIKE '%Коппини%' OR text LIKE '%Ширяевымъ%');
+SELECT p.verbatim_title, e.date, e.season, p.includes_dance, p.includes_dance_basis FROM research.performance p JOIN research.event e USING(event_id)
+ WHERE p.verbatim_title ILIKE '%Сервилі%' OR p.verbatim_title ILIKE 'Мазеп%' ORDER BY e.date;
+SELECT count(*) FROM research.events_with_dancers;  -- and in the pre-fix copy
+-- every BASE TABLE EXCEPT ALL both ways, outputs/rebuild_dance_1902-03_2026-10-31 v. pre_fix
+```
+Result: blocks p011__b003 (Коппини, two dances, dancers named) and p033__b001 (Ширяевъ, Гопакъ, 12 named). After build_research_model on the copy: research.performance 9/9 only (Сервилія 7 from 1 Oct 1902, Мазепа 15 and 24 Apr 1903, all includes_dance true; 1 direct + rest season each); Мазепа in 1890-91, 1891-92, 1899-00, 1903-04, 1906-07, 1910-11 still blank. events_with_dancers 2,213 -> 2,222. Production unchanged since the copy; promoted.
+
+## 2026-10-31 — 1902-03 review-text slips (RG: "Yes, correct them"): 12 corrections, review chain on a copy, promoted
+
+```sql
+SELECT block_id, text FROM raw.review_block WHERE page_id LIKE 'review_1902-03%' AND text LIKE '%<find string>%';  -- per slip, before
+-- apply_review_text_corrections.py (dry run 12/12, then applied) on a copy of outputs/reviews/merged_full; match_review_mentions ->
+-- build_reviews_duckdb -> build_review_assertions -> build_review_credits -> check_person_link_alignment on a copy of production
+-- every BASE TABLE EXCEPT ALL both ways; mentions on content (block_id, type, offsets, surface, entity_id, link_method, confidence);
+-- research.review_assertion / review_credit / review_solo column by column on their ids
+SELECT * FROM research.person WHERE person_id = '714fcaca-c345-4ccd-bab9-dfe514ef57d9';
+SELECT block_id FROM raw.review_block WHERE page_id LIKE 'review_1902-03%' AND text LIKE '%Петина 1%';  -- after
+```
+Result: raw.review_block 6; entities.review_mention content diffs only in MSK ballet p022 b001 (offsets; «Корсарь» -> «Корсаръ», same work 013fcc3d) and SP ballet p001 b004 / p002 b005 (Легатъ unresolved -> 714fcaca Легатъ 2-й Сергѣй Густавовичъ Q1749277; one duplicate «Царь-Дѣвицы» role mention gone). research.review_assertion: 2622 performer «г. С. Легатъ» linked (already-linked), new 3199 Царь-Дѣвицы / г-жа М. Кшесинская 1902-10-27, 1366/1952/3072 candidate-list order only; review_credit 971 mention_id only; review_solo 4 candidate order only; 0 shift blocks. Production DB, review_block.csv and mentions unchanged since the copy; promoted. After: one old string left, «Петина 1» in SP ballet p019 b002 (folio 161), a different page; print reads «Петипа 1»; logged as a lead, not applied.

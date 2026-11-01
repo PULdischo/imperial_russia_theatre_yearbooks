@@ -984,6 +984,20 @@ Both are in `credit_totals_scan_verified.csv`. Other slips the 2026-10-30 reader
 - **Нижинская, SP BalletArtists 1908-09 (no. 63, p002, p. 91): «Ніясинская, Бронислава Фоминична»** (every other season «Нижинская»).
   Zoomed 2026-10-30. The extraction had stored «Нижинская»; raw restored to the print (RG), still linked to her record.
 
+## 1902-03 reconciliation (added 2026-10-31)
+
+- **Михайловскій 7 Oct 1902, «Да здравствуетъ жизнь»: «105 р. 25 к.»**, an empty slot one digit wide before «р.» (p. 6 of the
+  Repertoire, `repertoire_1902-03_p004`; crops `scan_audit/1902-03_rg_mikh_7oct.png`, `…_wide.png`). The units digit did not
+  print (RG 2026-10-31: definitely a dropped digit). It is inferred as **3** from the stats page: the Михайловскій line is
+  948.00 р. above the Repertoire, with counts and kopecks agreeing, and 105X − 105 = 945 + X. Stored as printed (105.25). Revisable
+  if RG's look at the volume or the HathiTrust scan shows the digit (reconciliation ledger 1902-03-08).
+- **1902-03 title audit (2026-10-31; `scan_audit/1902-03_title_reads.csv`, two readers, the second blind; stored as printed, RG "Yes, apply
+  all 34"):** Малый 24 Oct «Женская логика (Мнссъ Гоббсъ)»; Малый 25 Oct «Сильные п слабыс»; Новый 2 Jan matinée «Бѣдность пе порокъ»;
+  Большой 11 Apr «Морякъ Скпталецъ»; Большой 27 Apr «1-е д. бал. Конекъ-Горбунокч»; Новый 23 Oct «Дивертиссемемтъ» (as in 1901-02);
+  Новый 23 Oct «Клоринда. бал.» (stop for comma); Александринскій 31 Dec «Воспитателъ Флаксманъ» (ъ for ь); Михайловскій 14 Nov
+  «De 1 h., à 3 h., ccm.»; 29 Dec «Don Juan d'Antriche»; 19 Jan «Les deux écolés»; 26 Jan matinée «Le depit amoureux» and «Les
+  précieuses riducules». The Moscow columns print «Воспитатель Флахсманъ» throughout, the SP columns «Флаксманъ».
+
 ## BalletArtists tally totals, copied-tally sweep digit reads (added 2026-10-31; Claude, stored as printed)
 
 The extraction had "corrected" each of these to the sum of the parts; restored to the print (`raw_fix_sweep_digit_reads_2026-10-31.py`):
