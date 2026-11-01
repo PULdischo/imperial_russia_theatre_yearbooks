@@ -24705,3 +24705,14 @@ join entities.person_link pl using(entry_id) where s.end_type='died';
 ```
 
 Result: 166 agree; 3 same year, different day (Соловьевъ, Мейеръ, Всеволожскій — the known print conflicts); 8 catalogue date not parsed (all have a stored death); 37 catalogue deaths with no died end stored (most died after their last listing; some died in their last listed season, e.g. Алексѣева 2-я, Недремская, Доброва, Ортнеръ, Моцейкевичъ, Рамзе, Бочкина, Корсакъ, Никитинъ С. Г., Юмашевъ — roster «†» possibly dropped, covered by R9); 7 roster deaths not in the catalogue links. Золотаренко, Петръ Петровичъ † 17 Oct 1895 (listed 1890-94) fits the production-list composer «П. П. Золотаренко» (1892-94).
+
+## 2026-11-01 — 1900-01 Новый 5-6 Feb reorder applied (RG: "Yes, reorder"): rebuild checked
+
+```sql
+-- every table, production after v. backup and v. the tested copy (EXCEPT ALL both ways)
+SELECT performance_order, verbatim_title FROM research.performance
+WHERE event_id IN ('repertoire_1900-01_p027__s029', 'repertoire_1900-01_p027__s030') ORDER BY event_id, performance_order;
+```
+
+Result: only raw.event_entry_performance 4, research.performance 4, entities.work_link 4 changed; production = tested copy; 0 shift
+blocks. Both events now «Школьные товарищи» (1), «Лучъ» (2). sqlite rebuilt: 18 1900-01 performances with includes_dance.
