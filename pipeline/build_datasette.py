@@ -122,7 +122,7 @@ SCHEMAS = {
             tenure_start_date TEXT, tenure_start_year INTEGER, start_precision TEXT, basis TEXT,
             earliest_printed TEXT, latest_printed TEXT, printed_dates TEXT, slips_left_out TEXT,
             broken_service_printed INTEGER, later_period_start TEXT, several_entries_in_a_season INTEGER,
-            ruling TEXT
+            ruling TEXT, date_changes TEXT, change_in_refresh_year INTEGER
         )""",
     # Printed leavings contradicted by later lists (docs/schema.md); one row per run with a discrepancy, rowid as key.
     "person_tenure_note": """

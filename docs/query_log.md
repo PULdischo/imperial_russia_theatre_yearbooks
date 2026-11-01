@@ -24573,3 +24573,31 @@ Result: raw.review_block 1; mention changes: p019 b002 «Петипа» (honorif
 SELECT block_id FROM raw.review_block WHERE text LIKE '%Петина%';  -- after
 ```
 Result: raw.review_block 1; one new mention «Петипа» (p019 b003, bare, unlinked); review_assertion 4 / review_dance_performer 14 candidate-list order only; review_credit 899 mention_id only; 0 shift blocks. Production unchanged since the copy; promoted. «Петина» left in 3 blocks, all other seasons: 1903-04 SP ballet p004 b002 (f. 109), 1904-05 MSK ballet p002 b002 (f. 195), p010 b003 (f. 202) — leads, not read.
+
+## 2026-11-01 — research_dataset.sqlite rebuilt (person_tenure export columns added); checked against the research layer
+
+```sql
+SELECT column_name, data_type FROM information_schema.columns WHERE table_schema='research' AND table_name='person_tenure';
+SELECT change_in_refresh_year, count(*) FROM research.person_tenure GROUP BY 1;
+-- sqlite: every table count v. research.<table>; PRAGMA foreign_key_check;
+SELECT change_in_refresh_year, count(*) FROM person_tenure GROUP BY 1;
+SELECT count(*) FROM performance WHERE includes_dance=1 AND verbatim_title IN ('Сервилія','Мазепа');
+```
+Result: build_datasette.py had stopped since 3fd56f4 on two person_tenure columns not in its SCHEMAS (date_changes VARCHAR, change_in_refresh_year BOOLEAN); added (TEXT, INTEGER). Rebuilt: every table count equals the research layer, foreign_key_check empty; change_in_refresh_year 2,842 false / 210 true (= DuckDB); events_with_dancers 2,222; 1902-03 checks present (9 dance performances, 2 Dec «Джентльмэнъ», 14 Dec receipts null, 10 Jan 21842). Previous sqlite (30 Oct) kept in outputs/backups/research_dataset_2026-10-30.sqlite. Not republished (Andy).
+
+## 2026-11-01 — «Петина» left in the review text after the 1902-03 corrections: three blocks read on the scans
+
+```sql
+SELECT b.block_id, p.printed_folio, b.text FROM raw.review_block b JOIN raw.review_page p USING(page_id) WHERE b.text LIKE '%Петина%';
+```
+Result: 3 blocks. 1903-04 SP ballet p004 b002 (f. 109) and 1904-05 MSK ballet p002 b002 (f. 195): the print has «Петина» (н, mid crossbar; a clear «Петипа» on the same page for comparison) -> print typos, stored right, logged in genuine_print_typos.md. 1904-05 MSK ballet p010 b003 (f. 202): print «М. И. Петипа и Г***» -> transcription slip, for RG.
+
+## 2026-11-01 — 1904-05 Moscow ballet review folio 202 «Петина» -> «Петипа» (RG: "Yes, correct it"): review chain on a copy, promoted; sqlite rebuilt
+
+```sql
+-- apply_review_text_corrections.py dry run 1/1 (find «Петина и Г* * *»: the stored text breaks the line after «М. И.»); review chain on copies;
+-- every BASE TABLE EXCEPT ALL both ways; mentions on content; review_assertion / review_credit column by column
+SELECT display_name, wikidata_qid FROM research.person WHERE person_id='e0434497-c14f-49dd-a670-bcbbe102a127';
+-- sqlite: every table count v. research.<table>; PRAGMA foreign_key_check; SELECT name_surface, person_id FROM review_credit WHERE credit_id=1586;
+```
+Result: raw.review_block 1; one new mention «Петипа» (p010 b003) -> e0434497 Петипа, Маріусъ Ивановичъ (Q312320); review_credit 1586/1587 printed_phrase «Петипа», 1586 name_surface Петина -> Петипа, same person e0434497, link_method list-credit-spelling -> list-credit, candidates 0 -> 7; other changes candidate-list order or mention_id only; 0 shift blocks. Promoted (backup outputs/backups/review_text_1904-05_f202_2026-11-01/). sqlite rebuilt: counts equal, foreign_key_check empty. Not republished (Andy).

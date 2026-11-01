@@ -1023,3 +1023,15 @@ Surnames printed differently from the store (logged, not changed): 1900-01 SP no
 - Probable compilers' slip, not confirmed: Moscow Артисты no. 1 Бакинъ 1-й and Гетцманъ print identical tallies in two seasons --
   1897-98 «Въ 16 балетахъ—69; въ 22 операхъ—112; въ 1 драмѣ—1. Всего—182 раза» (pp. 96, 97); 1899-00 «Въ 13 балетахъ—81; въ 22
   операхъ—101; въ 2 драмахъ—3; въ 1 дивертиссементѣ—1. Всего—186 разъ» (pp. 115, 116). Stored as printed for both.
+
+## «Петина» for «Петипа» in the season reviews (added 2026-11-01; checked by Claude on the scans; stored as printed)
+
+- **1903-04 SP ballet review, folio 109** («Привалъ кавалеріи», Danse des husards): «г-жа М. Петина, Бекефи». The fourth letter
+  has a mid crossbar (н); four lines above, «Маріи—г-жа М. Петипа» has a clear п. Crops
+  `scan_audit/1903-04_rg_review_sp_ballet_f109_petina.png`, `…_petipa_above.png`.
+- **1904-05 Moscow ballet review, folio 195** (28 Nov «Донъ-Кихотъ»): «…въ 7-ми картинахъ М. И. Петина, музыка Минкуса». Mid
+  crossbar (н); lower on the page «театровъ М. И. Петипа» has п. Crops `scan_audit/1904-05_rg_review_msk_ballet_f195_petina.png`,
+  `…_petipa_below.png`.
+(The 1902-03 folio 161 «Петина» ×2 and 1902-03 SP opera folio 137 were transcription slips, the print has «Петипа»: corrected.
+1904-05 Moscow folio 202 «М. И. Петина» was also a transcription slip: the print reads «Петипа», crop
+`scan_audit/1904-05_rg_review_msk_ballet_f202_petipa.png`; corrected 2026-11-01, RG.)
