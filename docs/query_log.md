@@ -24601,3 +24601,49 @@ SELECT display_name, wikidata_qid FROM research.person WHERE person_id='e0434497
 -- sqlite: every table count v. research.<table>; PRAGMA foreign_key_check; SELECT name_surface, person_id FROM review_credit WHERE credit_id=1586;
 ```
 Result: raw.review_block 1; one new mention «Петипа» (p010 b003) -> e0434497 Петипа, Маріусъ Ивановичъ (Q312320); review_credit 1586/1587 printed_phrase «Петипа», 1586 name_surface Петина -> Петипа, same person e0434497, link_method list-credit-spelling -> list-credit, candidates 0 -> 7; other changes candidate-list order or mention_id only; 0 shift blocks. Promoted (backup outputs/backups/review_text_1904-05_f202_2026-11-01/). sqlite rebuilt: counts equal, foreign_key_check empty. Not republished (Andy).
+
+## 2026-11-01 — 1902-03: the two unclear review statements (1 Dec RTO charity; 12 Apr Gogol-school charity) checked on the scans
+
+```sql
+SELECT e.event_id, t.canonical_name, e.time_of_day, e.event_status, e.receipts_verbatim, e.annotation, e.n_works FROM research.event e JOIN research.theater t USING(theater_id)
+ WHERE e.date IN ('1902-12-01','1903-04-12') AND e.city='SP';  -- + performances
+SELECT ... FROM research.performance p JOIN research.event e USING(event_id) WHERE e.season='1902-03' AND (p.verbatim_title ILIKE '%Добрый баринъ%' OR ILIKE '%Стюарт%' OR ILIKE '%Паяцы%');
+SELECT event_id, date, annotation FROM research.event WHERE season='1902-03' AND annotation ILIKE '%Театральн%';
+-- review dates per page (SP opera p017-p022); Moscow events 30 Nov - 2 Dec; Moscow opera review «1-го/2-го/3-го декабря», «30-го ноября»; Мефистофель dates
+SELECT * FROM raw.production_entry WHERE season='1902-03' AND city='SP' AND (title ILIKE '%Фея кукол%' OR title ILIKE '%Тщетная%');
+SELECT count(*), count(DISTINCT page_id) FROM raw.review_block WHERE text LIKE '%участием%';  -- and '%участіем%'
+```
+Result: 1 Dec: review print «1-го декабря» (f. 127, read), in date order; Repertoire Маріинскій 1 Dec = Пиковая дама matinée 1638.65 + Конекъ-Горбунокъ evening 2895.45 (p. 16, read); no RTO benefit near; Маріинскій dark 30 Nov and 7 Dec; Moscow all dark 30 Nov; 18 Jan RTO = masquerade «Сонъ Услады» (review agrees). Unresolved. 12 Apr: Repertoire p. 34 (read) heading only in the Александринскій column, Маріинскій dash; review f. 137 Маріинскій with Карменъ act 2, Фея Куколъ, Тщетная tableau 1; list Фея куколъ 16 Feb only; Тщетная «1904 г.—апрѣля 27» already ruled (ballet_productions_review.md row 5). Moscow opera f. 213 «11-го декабря» stored right (withdrawn 2026-11-01: the search pattern «1-го декабря» matched inside «11-го»). «участием» 54 blocks / 43 pages, «участіем» 48 / 36 — lead only.
+
+## 2026-11-01 — How excerpts are held now (for RG's walkthrough of the excerpt question)
+
+```sql
+SELECT count(*), sum(appearance_count) FROM research.work WHERE excerpt_of_work_id IS NOT NULL;
+SELECT p.discipline, count(*) FROM research.performance p JOIN research.work w USING(work_id) WHERE w.excerpt_of_work_id IS NOT NULL GROUP BY 1;
+SELECT count(DISTINCT p.event_id) FROM research.performance p JOIN research.work w USING(work_id) WHERE w.excerpt_of_work_id IS NOT NULL;
+SELECT count(*) FROM (SELECT event_id, bool_and(w.excerpt_of_work_id IS NOT NULL) a FROM research.performance p JOIN research.work w USING(work_id) GROUP BY 1) WHERE a;
+SELECT canonical_title, appearance_count FROM research.work WHERE excerpt_of_work_id IS NULL AND appearance_count>0 AND regexp_matches(canonical_title,'^(\d|Сцен|Прол|Отрыв|Картин|Акт|Fragment|Scène|Acte|\d+-[яей])');
+SELECT pw.canonical_title, count(*) FROM research.performance p JOIN research.work w USING(work_id) JOIN research.work pw ON pw.work_id=w.excerpt_of_work_id GROUP BY 1 ORDER BY 2 DESC LIMIT 8;
+SELECT count(*), count(*) FILTER (WHERE p.includes_dance) FROM research.performance p JOIN research.work w USING(work_id) WHERE w.excerpt_of_work_id IS NOT NULL;
+SELECT work_source, count(*), count(excerpt_of_work_id) FROM research.work GROUP BY 1;
+```
+Result: 338 excerpt works, 551 performances (ballet 233, opera 188, Russian drama 124, German opera 4, none 2) of 30,834; on 371 events, 78 of them all-excerpt; 24 excerpt-shaped titles with no parent (several are not excerpts: «Сцена г. Горбунова» 48, «Сцена г. Вейнберга» 25, «Отрывокъ» 23); most-excerpted parents Гугеноты 40, Пахита 24, Фіаметта 24, Конекъ-горбунокъ 20, Корсаръ 19; 1 excerpt performance marked includes_dance; works: repertoire 2,929 (338 excerpts), review 20 (0 excerpts). Curation: work_excerpt_links.csv 73 rows, curated_parent_works.csv 15.
+
+## 2026-11-01 — How the ballet productions lists count excerpts (all 628 entries)
+
+```sql
+SELECT season, city, title, performed_text, description_text, total_text, total_count, n_dates, post_total_text FROM raw.production_entry;
+-- classified in Python: part in brackets beside a date / part after the total / entry that is itself an excerpt (description «2-е д. …»)
+-- Repertoire ballet excerpt performances (list seasons) v. dates under the parent's (or excerpt's) list entry:
+--   research.performance x research.work (excerpt_of_work_id) x research.production / production_work x raw.production_entry_performance (date, outside_total)
+SELECT ... FROM raw.production_entry pe JOIN raw.production_entry_performance d USING(production_entry_id)
+ WHERE pe.season='1902-03' AND ((pe.city='Moscow' AND d.date='1903-04-27') OR (pe.city='SP' AND d.date='1903-05-04'));
+```
+Result: 55 entries mark the part in brackets beside a date and count it in «Всего» (total = number of dates in all 55); 25 print it after the total, outside it («2-е дѣйствіе исполнено …»); 36 entries are themselves excerpts (Фіаметта 2-е д., Пахита 3-е д., …). Practices mix within one list (1902-03 SP: Жавотта inside, Коппелія after). Of 201 Repertoire ballet excerpt performances in list seasons: 163 under the parent's entry inside the total, 24 outside, 1 both, 13 with no date under the parent's entry. 1902-03 27 Apr / 4 May excerpts are printed after the totals (outside) — README and ledger 1902-03-11 corrected (had said "left out").
+
+## 2026-11-01 — Moscow opera review f. 213: «1-го декабря» slip withdrawn (stored text is right)
+
+```sql
+SELECT text FROM raw.review_block WHERE block_id='review_1902-03_MSK_opera_p008__b005';
+```
+Result: begins «11-го декабря въ Большомъ театрѣ…», as printed. The earlier finding came from an unanchored regex («1-го декабря» inside «11-го декабря»). The correction row drafted for it was removed before any rebuild (its find string would have produced «111-го»); nothing changed in the data.
