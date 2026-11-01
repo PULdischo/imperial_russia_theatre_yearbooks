@@ -24553,3 +24553,23 @@ Result: already fixed 2026-10-13 (known_issues «Ballet excerpt cells and links�
 2 «1, 3 д. и 2-я карт. 4 д. балета. Волшебное зеркало» бал.; 2784 р. 31 к. Research: the second performance is the
 excerpt work (excerpt_note «1, 3 д. и 2-я карт. 4 д.»). Scan re-read (printed p. 92): «Жемчужина, бал.» /
 «1, 3 д. и 2-я карт. 4 д. балета.» / «Волшебное зеркало, бал.» / 2784 р. 31 к. -- matches.
+
+## 2026-11-01 — 1902-03 SP ballet review folio 161 «Петина 1» -> «Петипа 1» (RG: "Yes, correct it"): review chain on a copy, promoted
+
+```sql
+-- apply_review_text_corrections.py dry run 1/1; review chain (match_review_mentions .. build_review_credits, person_link check) on copies
+-- every BASE TABLE EXCEPT ALL both ways; mentions on content; review_assertion / review_credit column by column
+SELECT display_name FROM research.person WHERE person_id IN ('a6bf4293-…','8c5d9e7a-…'); SELECT superseded_by_person_id FROM entities.person WHERE person_id='a6bf4293-…';
+SELECT count(*), string_agg(DISTINCT role_name, ' | ') FROM raw.person_entry_credit JOIN raw.person_entry USING(entry_id)
+ WHERE page_id LIKE 'balletartists_<season>%' AND lower(role_name) LIKE '%<role>%';  -- кузнеч/паук 1902-03, бремон/жанневил 1891-92, инито 1900-01; now v. backup
+SELECT b.block_id, p.printed_folio, b.text FROM raw.review_block b JOIN raw.review_page p USING(page_id) WHERE b.text LIKE '%Петина%';  -- after
+```
+Result: raw.review_block 1; mention changes: p019 b002 «Петипа» (honorific-list, unresolved); and from other sessions' roster work since the 2026-10-31 review build: Кшесинскій 1-й ×3 a6bf4293 (superseded by 8c5d9e7a) -> 8c5d9e7a; roles Бремонъ, Жанневиль added (1891-92 roster credits 0 -> 1, 1 -> 2); Кузнечика, Паука entity -> blank (ambiguous: role lexicon now lists two spellings), Инито removed. review_assertion 105 (2505 Кшесинскій linked; 97/104 candidate count/list one shorter), review_credit mention_id renumbering + 1 candidate list, review_dance_performer 54 / dance_composer 3 / solo 2 same causes; 0 shift blocks. Production unchanged since the copy; promoted. After: «Петина» left in 4 blocks: 1902-03 SP ballet p019 b003 (f. 161 «М. Петина», print «М. Петипа»), 1903-04 SP ballet f. 109, 1904-05 MSK ballet f. 195, f. 202 — leads, not applied.
+
+## 2026-11-01 — 1902-03 SP ballet review folio 161 «М. Петина» -> «М. Петипа» (RG: "Yes, correct it"): review chain on a copy, promoted
+
+```sql
+-- apply_review_text_corrections.py dry run 1/1; review chain on copies; every BASE TABLE EXCEPT ALL both ways; mentions on content
+SELECT block_id FROM raw.review_block WHERE text LIKE '%Петина%';  -- after
+```
+Result: raw.review_block 1; one new mention «Петипа» (p019 b003, bare, unlinked); review_assertion 4 / review_dance_performer 14 candidate-list order only; review_credit 899 mention_id only; 0 shift blocks. Production unchanged since the copy; promoted. «Петина» left in 3 blocks, all other seasons: 1903-04 SP ballet p004 b002 (f. 109), 1904-05 MSK ballet p002 b002 (f. 195), p010 b003 (f. 202) — leads, not read.
