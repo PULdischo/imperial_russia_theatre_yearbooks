@@ -18,3 +18,33 @@ item,verdict,printed_line,end_date_text,end_type,note
 17,none_printed,,,,full page p.51; nothing after tally
 18,dropped,Оставила службу 1 августа 1892 г.,1 августа 1892 г.,left service,"zoom 2400; line under tally, absent from stored text"
 19,dropped,Оставила службу 15 апрѣля 1892 г.,15 апрѣля 1892 г.,left service,"zoom 2400; line under tally, absent from stored text"
+20,stored_no_end,Съ 1 сентября 1892 г. переведенъ въ русскую драматическую труппу.,1 сентября 1892 г.,other,full page p.55; line is in stored credit_summary_text but no end date parsed; transfer to Russian drama troupe
+21,none_printed,,,,full page p.92; nothing after tally
+22,stored_no_end,Съ 1 сентября 1893 г. переведена въ драматическую труппу.,1 сентября 1893 г.,other,"full page p.92; line printed instead of a tally; stored in credit_summary_text, no end date parsed"
+23,stored_no_end,Съ 1 сентября 1893 г. переведена въ С.-Петербургскую балетную труппу.,1 сентября 1893 г.,other,full page p.92; line stored in credit_summary_text (flag column said no) but no end date parsed; transfer Moscow->SP ballet troupe
+24,dropped,Оставила службу 1 декабря 1892 г.,1 декабря 1892 г.,left service,"zoom 2400; line under tally, absent from stored text"
+25,dropped,Оставила службу 1 сентября 1893 г.,1 сентября 1893 г.,left service,"zoom 2400; line under tally, absent from stored text"
+26,stored_no_end,Оставила службу 1 марта 1893 г.,1 марта 1893 г.,left service,"full page p.57; line stored in credit_summary_text, no end date parsed"
+27,stored_no_end,Оставила службу 6 февраля 1893 г.,6 февраля 1893 г.,left service,"full page p.57; line stored in credit_summary_text, no end date parsed"
+28,stored_no_end,Оставила службу 1 мая 1893 г.,1 мая 1893 г.,left service,"full page p.57; line stored in credit_summary_text, no end date parsed"
+29,none_printed,,,,"full page p.59; nothing after tally. ALSO: 94. Ольшевская Ольга Владиславовна — «Оставила службу 1 января 1893 г.» printed under tally, absent from stored text (dropped; not in my slice)"
+30,none_printed,,,,"full page p.95; last entry of left column, name + start date only, no tally or leaving line"
+31,stored_no_end,Оставилъ службу 14 мая 1894 г.,14 мая 1894 г.,left service,"full page p.97; line stored in credit_summary_text, no end date parsed. ALSO (MSK 1893-94 p.95, prev page): 7. Брыкинъ 2-й Дмитрій Константиновичъ — «Оставилъ службу 1 декабря 1893 г.» printed under tally, absent from stored text"
+32,none_printed,,,,full page p.57; nothing after tally
+33,dropped,Оставила службу 1 августа 1894 г.,1 августа 1894 г.,left service,"zoom 2400; line at foot of left column p.58 under tally, absent from stored text"
+34,dropped,Оставила службу 1 мая 1894 г.,1 мая 1894 г.,left service,"zoom 2400; line under tally, absent from stored text"
+35,dropped,Оставила службу 1 іюня 1894 г.,1 іюня 1894 г.,left service,"zoom 2400; line under tally, absent from stored text"
+36,stored_no_end,Оставила службу 1 февраля 1894 г.,1 февраля 1894 г.,left service,"full page p.60; line printed with no tally; stored in credit_summary_text, no end date parsed. ALSO: 77. Михайлова 1-я Александра Михайловна — «† 12 декабря 1893 г.» printed under tally, absent from stored text (dropped)"
+37,stored_no_end,Оставила службу 1 января 1894 г.,1 января 1894 г.,left service,"full page p.62; line stored in credit_summary_text, no end date parsed"
+38,none_printed,,,,full page p.65; nothing after tally
+39,stored_no_end,Оставила службу 19 августа 1895 г.,19 августа 1895 г.,left service,"full page p.81; line printed with no tally; stored in credit_summary_text, no end date parsed"
+40,dropped,Оставила службу 9 мая 1895 г.,9 мая 1895 г.,left service,"zoom 2400; line under tally, absent from stored text"
+41,none_printed,,,,"full page p.83; name + start date only, no tally, no leaving line"
+42,stored_no_end,Съ 1 сентября 1895 г. переведенъ въ С.-Петербургскую балетную труппу.,1 сентября 1895 г.,other,"full page p.86; line stored in credit_summary_text, no end date parsed; transfer Moscow->SP ballet"
+43,stored_no_end,Оставилъ службу 1 сентября 1895 г.,1 сентября 1895 г.,left service,"full page p.86; line stored in credit_summary_text, no end date parsed"
+44,dropped,Оставила службу 1 сентября 1895 г.,1 сентября 1895 г.,left service,"zoom 2400; line under tally, absent from stored text"
+45,stored_no_end,Оставила службу 1 декабря 1894 г.,1 декабря 1894 г.,left service,"full page p.49; line printed with no tally; stored in credit_summary_text, no end date parsed"
+46,dropped,Оставила службу 1 сентября 1895 г.,1 сентября 1895 г.,left service,"zoom 2400; line under tally, absent from stored text"
+47,dropped,Оставила службу 1 іюня 1895 г.,1 іюня 1895 г.,left service,"zoom 2400; line under tally, absent from stored text"
+48,none_printed,,,,"full page p.95; name + start date only, nothing after"
+49,none_printed,,,,full page p.95 (last entry right column) + top of next page p001 checked; nothing after tally

@@ -188,3 +188,19 @@ item,verdict,scan_reading,proposed_fix,confidence,note
 1275,matches_print,"Оркестръ Михайловскаго театра. Капельмейстеръ. Келеръ, Морисъ Ѳедоровичъ (съ 1 сентября 1881 г.).",,high,"Zoomed: print reads «Морисъ» (с, not ц); data matches print. The checker's comparison to «борис» is spurious; usual form «Морицъ». Note: Келеръ is printed twice in this volume — here as Mikhailovsky капельмейстеръ (no transfer) and on p003 under the Alexandrinsky heading «Переведенъ въ Александринскій театръ съ 1 сентября 1906 г.»."
 1276,matches_print,"22. Петровъ, Иванъ Аѳанасьевичъ (съ 1 сентября 1895 г.). Флейта. Переведенъ въ Маріинскій театръ съ 1 сентября 1907 г.",,high,"transfer out stored as end 1907-09-01/other, correct."
 1277,matches_print,"25. Пфейферъ, Владиміръ Федоровичъ (съ 1 сентября 1903 г.). Віолончель. Переведенъ въ Маріинскій театръ съ 15 сентября 1907 г.",,high,"transfer out stored as end 1907-09-15/other, correct. ALSO: 39. Штехертъ printed «(съ 1 сентября 1905 г.)» here vs 1875 in earlier lists (print's own)."
+1278,matches_print,"27. Смирновъ, Алексѣй Ивановичъ (съ 15 сентября 1898 г.). Контрабасъ. Оставилъ службу 1 сентября 1907 г.",,high,Mikhailovsky list continues from 26. Сивовъ at the foot of p005 to 27 here. Nothing dropped; the checker compared against p003 (Mariinsky 127) instead of p005.
+1279,missing_in_data,"Старшій библіотекарь Центральной Музыкальной Библіотеки. Новоселовъ, Александръ Ильичъ (съ 1 августа 1882 г.). †",end_type=died (date not printed),high,Print gives a bare «†» with no date. A died-period with null end date would record the death; currently the period is open. RG to decide whether an undated † gets end_type=died.
+1280,matches_print,"Завѣдывающій оркестромъ. Симонъ, Антонъ Юльевичъ (съ 1 сентября 1898 г.).",,high,administrator; no instrument printed.
+1281,field_misplaced,"20. Ваксманъ, Альфредъ Луи (съ 16 августа 1905 г.). Віолончель.",first_name=Альфредъ Луи; patronymic=,medium,"«Луи» is a second given name, not a patronymic (see 1197)."
+1282,matches_print,"21. Воронцовъ, Иннокентій (съ 1 октября 1893 г.). Вторая скрипка.",,high,no patronymic printed.
+1283,matches_print,"33. Домащунасъ, Мечеславъ (съ 2 сентября 1906 г.). Контрабасъ.",,high,print reads «Мечеславъ»; data matches print.
+1284,matches_print,"37. Зингеръ, Викторъ Викторовичъ (съ 1 сентября 1891 г.). Вторая скрипка. Переведенъ съ 20 августа 1906 г. въ Малый театръ.",,high,transfer stored as end 1906-08-20/other; dates match print.
+1285,matches_print,"54. Конюсъ, Юлій (съ 14 сентября 1906 г.). Альтъ.",,high,no patronymic printed.
+1286,matches_print,p001 (printed page 56) carries 32. Дудычъ ... 69. Николаевъ; p002 opens 70. Оммэ.,,high,Nothing dropped: 32-69 are on musicians_1907-08_MSK_p001. The checker compared p000 (ends 31) with p002.
+1287,matches_print,"79. Рессеръ, Мордохей (съ 30 іюля 1876 г.). Первая скрипка. Оставилъ службу 1 августа 1908 г.",,high,no patronymic printed.
+1288,matches_print,"79. Рессеръ, Мордохей",,high,print reads «Мордохей»; data matches print.
+1289,matches_print,"81. Ривкиндъ, Цалька (съ 1 сентября 1870 г.). Первая скрипка. Оставилъ службу 1 сентября 1906 г.",,high,no patronymic printed.
+1290,matches_print,"89. Свобода, Венцель (съ 22 ноября 1882 г.). Контрабасъ.",,high,no patronymic printed.
+1291,matches_print,"96. Семашко, Маріанъ (съ 15 сентября 1892 г.). Віолончель.",,high,no patronymic printed.
+1292,matches_print,"104. Фидельманъ, Романъ (съ 3 ноября 1901 г.). Первая скрипка.",,high,no patronymic printed.
+1293,print_slip,"107. Хадаровскій, Владимиръ Николаевичъ (съ 1 октября 1898 г.). Валторна.",,high,print reads «Хадаровскій» (а; usual «Ходаровскій») and «Владимиръ» (и not і); data matches print. ALSO: 103. Томсонъ «† 3 іюня 1908 г.».

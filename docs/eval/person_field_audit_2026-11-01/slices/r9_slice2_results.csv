@@ -25,3 +25,24 @@ item,verdict,printed_line,end_date_text,end_type,note
 183,none_printed,,,,whole page 2000px; tally ends «Корсаръ (Бирбанто—1).» then #34
 184,none_printed,,,,whole page; tally «Въ 2 балетахъ—3. Всего—3 раза.» then #36
 185,none_printed,,,,whole page; tally ends «Раймонда (Жанъ де Бріенъ—1).» then #38
+186,none_printed,,,,whole page 2000px; tally ends «Испытаніе Дамиса (негръ—1).» then #72
+187,none_printed,,,,whole page; tally ends «Спящая красавица (звѣрь—3).» then #76
+188,none_printed,,,,whole page 2000px; after «Заслуженная артистка Императорскихъ театровъ.» only tally «Въ 1 балетѣ—1. Всего—1 разъ. Въ томъ числѣ Тщетная предосторожность (Лиза—1).» then #51
+189,none_printed,,,,"whole page 2000px; tally «...Всего—68 разъ.» then #70. ALSO (not a leaving line): stored tallies on this page often end «раза» where print has «разъ» (e.g. #69 «68 разъ», #64 «14 разъ», #70 «15 разъ», #75 «9 разъ») — the whole page looks normalised to «раза»"
+190,none_printed,,,,whole page; tally «...Всего—33 раза.» then #79
+191,none_printed,,,,"whole page 2000px; «(съ 1 іюня 1898 г.). (См. Спб. балетъ).» + tally only, then #65 (cross-reference to SP list, not a leaving line)"
+192,none_printed,,,,"whole page 2000px; helper to the régisseur, nothing after «(съ 1 іюня 1886 г.).», end of left column (next col starts #3)"
+193,none_printed,,,,"whole page; print «(съ 1 августа 1882 г.) (назначенъ съ 1 октября 1904 г.).» — the «назначенъ» is his appointment as репетиторъ (already stored), not a departure; nothing further printed. Neighbour #1 Константиновъ's «† 25 декабря 1906 г.» is stored"
+194,none_printed,,,,whole page 2000px; tally «Въ 14 балетахъ 45; въ 6 операхъ — 36. Всего—81 разъ.» then #5
+195,none_printed,,,,whole page; tally «...Всего—19 разъ.» then #19
+196,none_printed,,,,"whole page 2000px; nothing after «(съ 1 іюня 1880 г.).», then #30"
+197,none_printed,,,,"whole page; nothing after «(съ 1 іюня 1892 г.).», then #31"
+198,none_printed,,,,whole page; tally «Въ 1 балетѣ—5. Всего—5 разъ.» then #46
+199,none_printed,,,,"whole page 2000px; nothing after «(съ 1 іюня 1899 г.).», then #58"
+200,none_printed,,,,whole page 2000px; tally «Въ 1 оперѣ—1. Всего—1 разъ.» then #74
+201,none_printed,,,,whole page; tally «...Всего—6 разъ.» then #79
+202,none_printed,,,,"whole page p005 + p006 top 2000px; tally runs over to p006 and ends «Эсмеральда (Алоиза—1).», then #120 — no leaving line. NB numbering: p005 lists women as #97-119 although stored list_no for p006 continuation is fine"
+203,none_printed,,,,whole page p006; tally ends «Баядерка (кшатрій — 4).» then next entry (print numbers Воронковъ 2-й also «15.» — print's duplicate number)
+204,none_printed,,,,whole page p006; tally ends «Испытаніе Дамиса (Фронтенъ—2).» then #18
+205,none_printed,,,,whole page 2000px; tally ends «Фея куколъ (русскій купецъ—2).» then #41
+206,none_printed,,,,"whole page 2000px; nothing after «(съ 16 августа 1898 г.).»; neighbours' leaving lines (Де-Лазари, Монахинъ, Гвоздковъ) are stored"

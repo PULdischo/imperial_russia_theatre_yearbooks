@@ -1,0 +1,6 @@
+item,verdict,printed_line,end_date_text,end_type,proposed_fix,note
+263,correct,Оставила службу 1 декабря 1897 г.,1 декабря 1897 г.,left service,,full page 1600w; line under entry 7 (no tally)
+264,correct,† 16 августа 1897 г.,16 августа 1897 г.,died,,full page 1600w; line under entry 9
+265,wrong_date,Оставила службу 1 іюня 1898 г.,1 іюня 1898 г.,left service,end_date_text=1 іюня 1898 г.,"zoom 0.32-0.35 native: print clearly «іюня»; stored text «юня» drops the і (undate 1898-06-01 already right). ALSO: no. 5 Андреева, Серафима Эдуардовна — printed «Оставила службу 1 сентября 1898 г.» after tally; DB has no end stored and the line is absent from tenure/credit text (dropped)"
+266,correct,Съ 1 сентября 1898 г. переведена въ Московскую балетную труппу.,1 сентября 1898 г.,other (transfer),,full page
+267,correct,Оставила службу 1 мая 1898 г.,1 мая 1898 г.,left service,,full page

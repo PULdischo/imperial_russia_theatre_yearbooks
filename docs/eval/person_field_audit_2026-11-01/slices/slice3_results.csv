@@ -110,3 +110,42 @@ item,verdict,scan_reading,proposed_fix,confidence,note
 516,misread,"7. Балашевъ, Николай Николаевичъ (съ 1 іюня 1890 г.).",family_name=Балашевъ,high,"zoom 1600: ш (no descender), not щ."
 517,misread,"22. Іосафовъ, Николай Александро-|вичъ (съ 1 іюня 1902 г.).",patronymic=Александровичъ,high,"zoom 1600: line-break hyphen, «Александро-вичъ» = Александровичъ; «-тович-» is a transcription garble."
 518,matches_print,"25. Ивановъ 3-й, Николай Константиновичъ (съ 1 іюня 1898 г.). — no tally printed (last entry on page)",,high,"page at 1400px. ALSO: no. 11 on this page prints «Больмъ, Адольфъ-Эмиль» (ь, not ъ)."
+519,matches_print,"71. Сергѣевъ, Николай Григорьевичъ (съ 1 іюня 1894 г.). — no tally printed",,high,zoom 1400
+520,misread,"81. Трудовъ, Дмитрій Михайловичъ (съ 1 іюня 1890 г.).",family_name=Трудовъ,high,"zoom 1400: д (with descender feet), not л."
+521,misread,"85. Чекрыгинъ 1-й, Иванъ Ивановичъ (съ 1 іюня 1897 г.).",first_name=Иванъ,high,"zoom 1400: «Иванъ», no т. ALSO: no. 89 Эрлеръ printed «Александро-виич» (print slip; stored Александровичъ)."
+522,misread,"85. Чекрыгинъ 1-й, Иванъ Ивановичъ",first_name=Иванъ,high,duplicate of 521
+523,print_slip,"90. Ѳедоровъ 1 й, Михаилъ Михайловичъ (съ 12 мая 1885 г.).",family_name=Ѳедоровъ 1-й (only if RG wants ordinals normalized),high,zoom 1400: hyphen genuinely absent in print («1 й»). Same entry as 524/525.
+524,print_slip,90. Ѳедоровъ 1 й — hyphen absent in print,,high,duplicate of 523
+525,print_slip,90. Ѳедоровъ 1 й — hyphen absent in print; surname correct,,high,duplicate of 523
+526,matches_print,"7. Борисова, Марія Александровна (съ 1 августа 1885 г.). — no tally printed",,high,"page view 1400px, legible"
+527,misread,"14. Гаврилова (Воскресенская), Евдо-|кія Помпеевна (съ 23 августа 1884 г.). / Оставила службу 23 августа 1904 г.",first_name=Евдокія; family_name=Гаврилова (Воскресенская) [or keep bracket name in its own field]; tenure_note_text=(съ 23 августа 1884 г.). Оставила службу 23 августа 1904 г.,high,zoom 1600: «Евдо-кія» across a line break; «Евлогія» is a garble. The bracketed married/stage name «(Воскресенская)» was put at the start of tenure_note_text — wrong field.
+528,matches_print,14. Гаврилова (Воскресенская) — no tally printed; only «Оставила службу 23 августа 1904 г.»,,high,zoom 1600; service parsed correctly
+529,matches_print,"Репетиторъ-піанистъ. Васильевъ, Викторъ Васильевичъ (съ 12 октября 1904 г.). / Оставилъ службу 28 февраля 1905 г. — no tally",,high,"page view; staff entry, no tally expected"
+530,misread,"42. Копьева, Евдокія Петровна (съ 1 сентября 1892 г.).",first_name=Евдокія,medium,"zoom 1400 on the word: the third letter has the flat-topped д shape (blurry photo scan, feet faint). No «Евлокія» is plausible as a name; probable misread of д as л."
+531,matches_print,"45. Крачевская, Владислава Романовна (съ 1 сентября 1900 г.). — no tally printed",,high,zoom 1600
+532,matches_print,"52. Мендесъ, Джульетта (съ 1 октября 1896 г.). — no patronymic printed",first_name=Джульетта,high,"zoom 1600: foreigner, no patronymic (print habit). Stored first_name «Джулъетта» has ъ; print has ь."
+533,matches_print,"70. Поржицкая, Бронислава Августовна (съ 1 сентября 1900 г.). — no tally printed",,high,"page view 1400px. ALSO: no. 72 «Пукирева, Евдокія» — calibrated: this typeface's д looks like a flat-topped л (supports reading «Евдокія» in item 530)."
+534,matches_print,"75. Рославлева, Любовь Андреевна (съ 1 сентября 1892 г.). / † 9 ноября 1904 г. — no tally printed",,high,page view; service parsed correctly
+535,matches_print,"77. Сапожникова, Анна Іосифовна (съ 1 августа 1884 г.). / Оставила службу 1 августа 1905 г. — no tally printed",,high,page view; service parsed correctly
+536,field_misplaced,"87. Сѣдова, Юлія Николаевна (см. СПБ. балетъ). Въ 3 балетахъ—5. Всего—5 разъ. Въ томъ числѣ: Спящая красавица (королева Аврора—2); Конекъ-Горбунокъ (царь-дѣвица—2); Лебединое озеро (Одетта—1).",rank_or_title=(blank); tenure_note_text=(см. СПБ. балетъ).; family_name=Сѣдова,high,"zoom 1600: «(см. СПБ. балетъ)» is a cross-reference (guest from SPb list), not a rank — tenure/note field. ALSO (important): family_name stored «Сѣлова» but print is «Сѣдова» (Юлія Сѣдова, SPb ballerina) — misread д→л. Stored credit «Коппель-Горбунокъ» — print «Конекъ-Горбунокъ»."
+537,matches_print,"88. Тарасенкова, Валентина Викторовна (съ 1 сентября 1900 г.).",,high,zoom 1600: print reads «Тарасенкова» here (other seasons «Тарасенко») — print's own variant.
+538,matches_print,"101. Черепанова, Анна (съ 1 августа 1905 г.). — no patronymic printed",,high,zoom 1600
+539,matches_print,"101. Черепанова, Анна (съ 1 августа 1905 г.). — no tally printed",,high,zoom 1600 (joined after the season)
+540,matches_print,"107. Шелепина, Вѣра (съ 1 августа 1905 г.). — no patronymic printed",,high,zoom 1600. ALSO (relevant to items 473/502): no. 13 Воронцовъ on this page prints «съ 1 сентября 1891 г. по 1 ноября 1898 г. и съ 1 сентября 1901 г.» — the 1904-05 volume corrects the first start year to 1891; 1902-03 and 1903-04 printed 1901 in error.
+541,matches_print,"107. Шелепина, Вѣра (съ 1 августа 1905 г.). — no tally printed",,high,zoom 1600
+542,matches_print,"3. Бакинъ 3-й, Александръ Всеволодовичъ (съ 1 сентября 1895 г.). — no tally printed",,high,zoom 1600. ALSO: no. 12 here prints «Волининъ» (not Валининъ as 1901-03).
+543,matches_print,"34. Костровской 2-й, Дмитрій Романовичъ (съ 1 августа 1905 г.). — no tally printed",,high,"page view 1400px, legible"
+544,field_misplaced,"38. Легатъ, Николай Густавовичъ (см. СПБ. балетъ). Въ 2 балетахъ—2. Всего—2 раза. Въ томъ числѣ: Фіаметта (Стерегольдтъ—1).",rank_or_title=(blank); tenure_note_text=(см. СПБ. балетъ),high,"zoom 1600: cross-reference to the SPb list (guest), not a rank. Same pattern as item 536 (Сѣдова). Stored role «Стеригольдтъ» — print appears «Стерегольдтъ»/«Стернгольдтъ» (small type, unclear)."
+545,matches_print,"41. Лѣсновскій, Александръ Ивановичъ (съ 1 сентября 1892 г.). — no tally printed",,high,page view 1400px
+546,matches_print,"44. Морозовъ, Сергѣй Егоровичъ (съ 1 сентября 1899 г.). / Уволенъ для отбыванія воинской повинности съ 12 ноября 1903 г.",,high,"zoom 1600: the second «съ» is the discharge date, correctly parsed as the end (1903-11-12). end_type «left service» is a simplification — print says discharged for military service (RG may want a distinct end type). No missing start."
+547,matches_print,44. Морозовъ — no tally printed (only the discharge line),,high,zoom 1600
+548,matches_print,"64. Смирновъ 2-й, Викторъ (съ 1 августа 1905 г.). — no patronymic printed",,high,"page view 1400px, legible"
+549,matches_print,"64. Смирновъ 2-й, Викторъ (съ 1 августа 1905 г.). — no tally printed",,high,page view
+550,matches_print,"71. Федоровъ 2-й, Михаилъ (съ 1 августа 1905 г.). — no patronymic printed; initial is Ф (not Ѳ) in this print",,high,zoom 1600
+551,matches_print,71. Федоровъ 2-й — no tally printed,,high,zoom 1600
+552,matches_print,"78. Чистяковъ, Андрей Ивановичъ (съ 1 сентября 1890 г.). — no tally printed",,high,page view 1400px
+553,matches_print,"86. Ширяевъ, Сергѣй Яковлевичъ (съ 28 мая 1878 г.). / Оставилъ службу 6 октября 1904 г. — no tally printed",,high,page view; service parsed correctly. ALSO: no. 69 Тройниковъ on this page has «† 16 марта 1905 г.» (check service end).
+554,print_slip,"8. Бакеркина 2 я, Марія Алексѣевна (съ 1 сентября 1901 г.).",family_name=Бакеркина 2-я (only if RG wants ordinals normalized),high,"zoom 1600: hyphen genuinely absent in print. Same entry as 555/556. ALSO: management entry Ширяевъ on this page — «Освобожденъ отъ обязанностей балетмейстера 1 марта 1905 г., съ оставленіемъ артистомъ»."
+555,print_slip,8. Бакеркина 2 я — hyphen absent in print,,high,duplicate of 554
+556,print_slip,8. Бакеркина 2 я — hyphen absent in print; surname correct,,high,duplicate of 554
+557,misread,"62. Лушкина, Евгенія Михайловна (съ 1 іюня 1904 г.).",family_name=Лушкина,high,"zoom 1600: «Лушкина», к clearly present. ALSO: nos. 53/54 on this page print «Левинсонъ 1-я, Анна Фердинандовна» / «2-я, Ольга Фердинандовна» — a different patronymic from 1903-04 («Ѳеодоровна»); print's own."

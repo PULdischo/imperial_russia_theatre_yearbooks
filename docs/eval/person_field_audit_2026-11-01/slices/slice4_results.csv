@@ -161,4 +161,38 @@ item,verdict,scan_reading,proposed_fix,confidence,note
 773,matches_print,"40. Мержинскій, Францъ Антоновичъ (съ 1 сентября 1899 г.). — no tally printed",,high,overview legible (he is also a répétiteur)
 774,matches_print,"51. Печатниковъ, Николай Александровичъ (съ 1 сентября 1897 г.). — no tally printed",,high,overview legible
 775,matches_print,"59. Сергѣевъ 1-й, Николай Георгіевичъ (съ 1 іюня 1894 г.). — no tally printed",,high,overview legible
-776,misread,"73. Храписъ, Георгій Михайловичъ (съ 1 іюня, 1908 г.).",service: start_date_text=съ 1 іюня 1908 г. (one field); end_date_text= (empty),high,"overview legible; the print's stray comma «іюня, 1908» split the date: start_date_text=«""съ 1 іюня», and «1908 г.""» landed in end_date_text, so the start year was read as before 1820. start_date_undate shown 1908-06-01 in the end_date_undate column — the row is shifted. Correct: start 1908-06-01, no end"
+776,misread,"73. Храписъ, Георгій Михайловичъ (съ 1 іюня, 1908 г.).","start_date_text=съ 1 іюня, 1908 г.; start_date_undate=1908-06-01; end_date_text=; end_date_undate=",high,"overview legible; the print has a stray comma «іюня, 1908» and the service row is column-shifted (a CSV quoting split): start_date_text=«""съ 1 іюня», start_date_undate=« 1908 г.""» (text, hence the <1820 flag), end_date_text=«1908-06-01». Correct: start 1908-06-01, no end"
+849,field_misplaced,"1) Александрова, Антонина.",family_name=Александрова; first_name=Антонина,high,"overview legible; Graduates «Surname, Name.» print habit — whole printed string stored in family_name. ALL 18 graduates on this page (11 girls, 7 boys) have the same problem, not only the 6 flagged"
+850,field_misplaced,"2) Васильева, Анна.",family_name=Васильева; first_name=Анна,high,as 849
+851,field_misplaced,"3) Ермолаева, Марія.",family_name=Ермолаева; first_name=Марія,high,as 849
+852,field_misplaced,"4) Иванова, Вѣра.",family_name=Иванова; first_name=Вѣра,high,as 849
+853,field_misplaced,"5) Ильина, Елена.",family_name=Ильина; first_name=Елена,high,as 849
+854,field_misplaced,"6) Лаврентьева, Ольга.",family_name=Лаврентьева; first_name=Ольга,high,"as 849; ALSO same fix needed for e007–e018 on this page (Ниманъ, Обухова, Парфентьева, Рыхлякова, Цалиссонъ, Бекъ, Никитинъ, Облаковъ, Пащенко, Тихомировъ Владиміръ, Тихомировъ Сергѣй, Яковлевъ Владиміръ)"
+855,print_slip,"2) Горячова, Елена. (Graduates 1893-94; all определены съ 1-го іюня 1894 года въ С.-Петербургскую балетную труппу)",,high,zoomed; print clearly «Горячова» (later «Горячева»); data matches print
+856,print_slip,"5) Раманова, Марія. (Graduates 1902-03)",,high,"zoomed; print clearly «Раманова» (letter-spaced, clean) — later «Романова»; data matches print. ALSO this page: boys no. 1 printed «Бальму, Адольфъ» (= Больмъ) — stored as printed"
+857,print_slip,"5) Хрисхайсонъ, Андрей. (Graduates 1906-07)",,high,"zoomed; print clearly «Хрисхайсонъ» (letter-spaced, clean); garbled «Христапсонъ»; data matches print. ALSO: no. 3 «Наусинскій, Вацлавъ» = Нижинскій, also printed so (stored as printed)"
+858,print_slip,"5. Усачевъ, Алексѣ. (Graduates 1909-10) — print omits the final «й»",,high,"zoomed; print clearly ends «Алексѣ.» (clean type, dropped sort); data matches print. Roster gives «Алексѣй Александровичъ»"
+859,matches_print,"Безкоровайная, Елизавета. — «Всѣ окончившіе курсъ … опредѣлены съ 1 іюня 1911 г. на службу въ Императорскую С.-Петербургскую балетную труппу, за исключеніемъ больной г-жи Безкоровайной.»",,high,"overview legible; she was the one graduate NOT appointed (ill), so no service period is correct (the other 10 have 1911-06-01). The shared tenure note copied onto her row is misleading but contains the exception clause"
+860,matches_print,Безкоровайная — not appointed (ill),,high,duplicate flag of item 859; no period should be parsed
+861,matches_print,Безкоровайная — not appointed (ill),,high,duplicate flag of item 859
+862,matches_print,"Подлевская, Янина. (Moscow graduates 1910-11)",,high,"overview legible; «Янина» (Polish Janina) is the printed name, not a misread of «Нина»"
+863,matches_print,"4. Адольфи 3-й, Фердинандъ (съ 19 сентября 1882 г.). Скрипка. — no patronymic printed",,high,overview legible; foreigner printed without patronymic
+864,matches_print,"19. Гедике, Фридрихъ (съ 19 сентября 1882 г.). Піанистъ. — no patronymic printed",,high,overview legible; foreigner printed without patronymic
+865,field_misplaced,"25. Голласъ, Антонъ Францевичъ (съ 29 октября 1875 г.). Скрипка.",first_name=Антонъ; patronymic=Францевичъ,high,"zoomed. SYSTEMATIC: on musicians_1890-91_MSK_p001 every printed patronymic is merged into first_name (e010–e043: Голласъ through Паули — 20+ rows, not only the 8 flagged); p000 and p002 split correctly"
+866,field_misplaced,"26. Гордонъ, Александръ Бернгардовичъ (съ 3 сентября 1890 г.). Труба.",first_name=Александръ; patronymic=Бернгардовичъ,high,overview legible; print «Бернгардо-|вичъ» (with г) — matches stored spelling
+867,field_misplaced,"27. Горшковъ, Викторъ Адріановичъ (съ 19 сентября 1882 г.). Ударные инструменты. † 12 августа 1891 г.",first_name=Викторъ; patronymic=Адріановичъ,high,overview legible; death date parsed correctly
+868,field_misplaced,"29. Грецкій, Аполлонъ Адальберто-|вичъ (съ 19 сентября 1882 г.). Віолончель.",first_name=Аполлонъ; patronymic=Адальбертовичъ,high,zoomed; print has soft sign «Адальбертовичъ» — stored «Адалъбертовичъ» (ъ) is also a misread
+869,field_misplaced,"30. Григорьевъ, Дмитрій Григорье-|вичъ (съ 19 апрѣля 1885 г.). Скрипка.",first_name=Дмитрій; patronymic=Григорьевичъ,high,overview legible
+870,field_misplaced,"31. Данильченко, Петръ Антоновичъ (съ 1 ноября 1890 г.). Віолончель.",first_name=Петръ; patronymic=Антоновичъ,high,overview legible
+871,field_misplaced,"32. Дмитріева, Елизавета Васильевна (съ 29 сентября 1881 г.). Арфа.",first_name=Елизавета; patronymic=Васильевна,high,overview legible
+872,field_misplaced,"33. Домбре, Георгій Николаевичъ (съ 19 сентября 1882 г.). Скрипка.",first_name=Георгій; patronymic=Николаевичъ,high,"overview legible; ALSO same merge on e019 Еременко, e020 Ефимовъ, e022 Золотаренко, e023 Кажданъ, e027 Конскій, e028 Коробковъ, e033 Лебедевъ, e035 Лихтенъ, e036 Лойко, e040 фонъ-Нольте, e041 Павловъ, e042 Палице, e043 Паули"
+873,matches_print,"41. Кламротъ, Карлъ (съ 16 октября 1856 г.). Скрипка. — no patronymic printed",,high,overview legible
+874,matches_print,"45. Кратина, Вячеславъ (съ 22 ноября 1882 г.). Скрипка.",,high,overview legible; Czech surname ending in -а on a man (Kratina) — not a gender conflict
+875,matches_print,"60. Пекарскій, Давидъ (съ 1 августа 1889 г.). Скрипка. — no patronymic printed",,high,overview legible; «Исаевичъ» only in other seasons
+876,matches_print,"64. Рессеръ, Мардохей (съ 30 іюля 1876 г.). Скрипка. — no patronymic printed",,high,overview legible
+877,matches_print,"65. Ривкиндъ, Цалька (съ 1 сентября 1870 г.). Скрипка. — no patronymic printed",,high,overview legible
+878,matches_print,"68. Свобода, Венцель (съ 22 ноября 1882 г.). Контрабасъ. — no patronymic printed",,high,overview legible
+879,matches_print,"81. Шиманъ, Михаилъ (съ 10 марта 1882 г.). Скрипка. — no patronymic printed",,high,overview legible
+880,matches_print,"88. Штернбергъ, Василій (съ 1 сентября 1883 г.). Віолончель. — no patronymic printed",,high,overview legible
+881,matches_print,"89. Шульцъ, Карлъ (съ 17 августа 1871 г.). Віолончель. — no patronymic printed",,high,overview legible
+882,matches_print,"Балетный оркестръ — «Композиторъ балетной музыки.» Кленовскій, Николай Семеновичъ (съ 1 сентября 1883 г.). — no instrument printed",,high,"overview legible; he is the ballet composer (post given by the sub-heading, already in heading_path), so a null instrument is correct"

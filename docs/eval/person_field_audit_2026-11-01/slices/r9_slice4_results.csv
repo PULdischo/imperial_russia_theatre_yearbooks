@@ -1,0 +1,73 @@
+item,verdict,printed_line,end_date_text,end_type,note
+471,none_printed,,,,"full page 1600px, entry 3. right col.; only (съ 1 октября 1900 г.). Вальдгорнъ."
+472,none_printed,,,,"full page 1600px; 16. right col., ends «(съ 16 августа 1905 г.). Віолончель.»"
+473,none_printed,,,,"full page 1600px; 92. right col., name + (съ 8 декабря 1903 г.) only"
+474,none_printed,,,,"full page 1600px; 97. left col., name + (съ 16 августа 1905 г.) only"
+475,stored_no_end,Оставилъ службу : февраля 1905 г.,? февраля 1905 г.,left service,"crop zoom ~8x: the day numeral is printed as a broken/damaged glyph resembling «:» (likely a broken «1» or other digit) — day genuinely unreadable in print; stored text has the line, service row end_date_text 'февраля 1905 г.' end_type left service but end_date_undate null (day missing). Could be given month precision 1905-02."
+476,stored_no_end,Оставилъ службу въ декабрѣ 1905 г.,въ декабрѣ 1905 г.,left service,"full page 1600px; line printed under entry, already in stored tenure text; month-only date so no end date parsed (could be month precision 1905-12)"
+477,none_printed,,,,"full page 1600px; 2. Федоровъ right col., (съ 1 августа 1889 г.) only"
+478,none_printed,,,,"full page 1600px; Аренсъ last on page, (съ 25 сентября 1883 г.) only; next page starts with Герберъ heading, nothing carried over"
+479,none_printed,,,,full page 1600px; Репетиторы 1.
+480,none_printed,,,,"full page 1600px; Репетиторы 2., 'репетиторъ Театральнаго училища (съ 1 сентября 1903 г.)'"
+481,none_printed,,,,full page 1600px; Аккомпаніаторы 1.
+482,none_printed,,,,"full page 1600px; Аккомпаніаторы 2., 'піанистъ (съ 16 августа 1906 г.)'"
+483,none_printed,,,,full page 1600px; Капельмейстеръ военной музыки
+484,none_printed,,,,full page 1600px; Настройщикъ
+485,none_printed,,,,"full page 1600px; Музыканты 1., 'Первая скрипка.'"
+486,none_printed,,,,"full page 1600px; 12. right col., 'Тромбонъ.'"
+487,none_printed,,,,"full page 1600px; 23. right col., 'Альтъ.'"
+488,none_printed,,,,"full page 1600px; 28. right col., 'Первая скрипка.'"
+489,none_printed,,,,full page 1600px; top of left col. (И. об. 2-го капельмейстера балета)
+490,none_printed,,,,"full page 1600px; 49. last of left col., 'Флейта.' only"
+491,none_printed,,,,"full page 1600px; 56. right col., 'Вальдгорнъ.'"
+492,none_printed,,,,"full page 1600px; 58. right col., 'Труба.'"
+493,none_printed,,,,"full page 1600px; 61. right col., 'Литавры.'"
+494,none_printed,,,,"full page 1600px; 82. left col., 'Ударные инструменты.'"
+495,none_printed,,,,"full page 1600px; 93. right col., 'Альтъ.'"
+496,none_printed,,,,"full page 1600px; 96. right col., 'Контръ-фаготъ.' (his «Оставилъ службу 1 сентября 1904 г.» was printed in 1904-05, not here)"
+497,none_printed,,,,"full page 1600px; 107. right col., 'Труба.' (his «Оставилъ службу 5 іюля 1905 г.» was printed in 1904-05 list, stored there)"
+498,none_printed,,,,"full page 1600px; Музыкальная библіотека, Библіотекарь 2., (съ 16 декабря 1905 г.) only"
+499,none_printed,,,,"full page 1600px; 34. last of right col., 'Труба.' only"
+500,none_printed,,,,"full page 1600px; 53. left col., 'Контрабасъ.'"
+501,none_printed,,,,"full page 1600px; 69. right col., 'Труба.'"
+502,none_printed,,,,"full page 1600px; Михайловскій 4., 'Гобой.'"
+503,none_printed,,,,"full page 1600px; 30. left col., 'Вальдгорнъ.'"
+504,none_printed,,,,"full page 1600px; 34. left col., 'Тромбонъ.'"
+505,none_printed,,,,"full page 1600px; Михайловскій 35., 'Первая скрипка.'"
+506,none_printed,,,,"full page 1600px; 120. right col., 'Арфа.' only"
+507,none_printed,,,,"full page 1600px; 92. right col., 'Литавры.' only (neighbours 91, 95 do have Оставилъ службу lines, all stored)"
+508,none_printed,,,,"full page 1600px; 33. right col., 'Первая скрипка.' only"
+509,none_printed,,,,"full page 1600px; Завѣдывающій оркестромъ, (съ 1 сентября 1898 г.) only"
+510,none_printed,,,,full page 1600px; Капельмейстеры оперы 1.
+511,none_printed,,,,full page 1600px; Капельмейстеры оперы 2.
+512,none_printed,,,,full page 1600px; Капельмейстеры балета 1.
+513,none_printed,,,,full page 1600px; Капельмейстеры балета 2.
+514,none_printed,,,,"full page 1600px; Музыканты 1., 'Альтъ.'"
+515,none_printed,,,,"full page 1600px; 9., 'Флейта.'"
+516,none_printed,,,,"full page 1600px; 13. right col., 'Корнетъ.'"
+517,none_printed,,,,"full page 1600px; 28. right col., 'Віолончель.'"
+518,none_printed,,,,"full page 1600px; 33., 'Контрабасъ.'"
+519,none_printed,,,,"full page 1600px; 39., 'Тромбонъ.'"
+520,none_printed,,,,"full page 1600px; 44., 'Тромбонъ.'"
+521,none_printed,,,,"full page 1600px; 50. right col., 'Валторнъ.'"
+522,none_printed,,,,"full page 1600px; 59., 'Литавры.'"
+523,none_printed,,,,"full page 1600px; 64., 'Органъ.'"
+524,none_printed,,,,"full page 1600px; 68., 'Кларнетъ.'"
+525,none_printed,,,,"full page 1600px; 71. left col., 'Альтъ.'"
+526,none_printed,,,,full page 1600px; 108. nothing after instrument
+527,none_printed,,,,full page 1600px; 111. nothing after instrument
+528,none_printed,,,,full page 1600px; 113. nothing after instrument
+529,none_printed,,,,full page 1600px; 114. nothing after instrument
+530,none_printed,,,,full page 1600px; 118. nothing after instrument
+531,none_printed,,,,full page 1600px; 122. nothing after instrument
+532,none_printed,,,,"full page 1600px; 125., (съ 1 сентября 1891 г.) only nothing after instrument"
+533,none_printed,,,,full page 1600px; 126. top right col. nothing after instrument
+534,none_printed,,,,"full page 1600px; Малый театръ 2., nothing after start date/instrument"
+535,none_printed,,,,"full page 1600px; Малый театръ 3., nothing after start date/instrument"
+536,none_printed,,,,"full page 1600px; Малый театръ 7., nothing after start date/instrument"
+537,none_printed,,,,"full page 1600px; Малый театръ 8., nothing after start date/instrument"
+538,none_printed,,,,"full page 1600px; Малый театръ 9., nothing after start date/instrument"
+539,none_printed,,,,"full page 1600px; Малый театръ 11., nothing after start date/instrument"
+540,none_printed,,,,"full page 1600px; Музыкальная библіотека, Библіотекарь, nothing after start date/instrument"
+541,none_printed,,,,"full page 1600px; Помощникъ библіотекаря, nothing after start date/instrument"
+542,none_printed,,,,"full page 1600px; Малый театръ, Дирижеръ, nothing after start date/instrument"
