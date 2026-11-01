@@ -24508,3 +24508,48 @@ imperial_theaters.pre_name_leads_2026-11-01.duckdb (EXCEPT ALL both ways); the n
 Result: all four misspelt entries already linked to the right person. Кшесинскій 1-й 1901-02 had its own person (a6bf4293); after the
 fix the pipeline merged it into 8c5d9e7a (name_variant_shared_start, 15 января 1853). Diff: person_entry 6, person_entry_credit 4,
 entities.person/person_link 1, person_merge_log +1, research.person -1, person_appearance 1, person_tenure +1 -2; live persons 2542 -> 2541.
+
+## 2026-10-29 — What research.events_with_dancers excludes
+
+```sql
+WITH p AS (SELECT event_id, true has_perf,
+  bool_or(coalesce(discipline='opera',false)) op,
+  bool_or(coalesce(discipline IN ('Russian drama','French drama'),false)) dr,
+  bool_or(coalesce(discipline NOT IN ('ballet','opera','Russian drama','French drama'),false)) vis,
+  bool_or(coalesce(genre_family IN ('divertissement','pantomime','tableau / apotheosis'),false)) dancelike,
+  bool_or(coalesce(genre_family='concert',false)) conc
+ FROM research.performance GROUP BY 1),
+x AS (SELECT e.event_id, e.event_status, e.genre_families, p.* FROM research.event e LEFT JOIN p USING(event_id)
+      WHERE e.event_id NOT IN (SELECT event_id FROM research.events_with_dancers))
+SELECT CASE
+  WHEN has_perf IS NULL AND genre_families LIKE '%concert%' THEN 'concert heading, no work named'
+  WHEN has_perf IS NULL THEN 'no performance printed: '||event_status
+  WHEN vis THEN 'visiting troupe'
+  WHEN dancelike THEN 'divertissement / pantomime / tableau, dancers not known'
+  WHEN conc AND NOT op AND NOT dr THEN 'concert only'
+  WHEN op AND dr THEN 'opera + drama'
+  WHEN op THEN 'opera (no ballet, no known dancers)'
+  WHEN dr THEN 'drama (no known dancers)'
+  ELSE 'other: '||coalesce(genre_families,'(none)') END AS kind, count(*) n
+FROM x GROUP BY 1 ORDER BY 2 DESC;
+```
+
+Result: of 32,810 research.event rows, 30,616 are outside the view: drama with no known dancers 13,223; no_performance 7,768; opera with no ballet and no known dancers 5,836; not_captured 2,877; visiting troupe (any genre) 695; concert heading with no work named 93; divertissement/pantomime/tableau with dancers not known 74; performed but no work row 28; concert only 15 (incl. the two 1893 «Сюита изъ бал. Щелкунчикъ» bills); opera + drama 4; cinema 2; unclassified 1.
+
+## 2026-10-30 — 12 Sep 1904 Маріинскій: is the act list stored with «Волшебное зеркало»? (re-check of the 2026-10-13 fix)
+
+```sql
+select e.event_id,e.page_id,e.printed_page_number,e.date_text,e.theater,e.receipts_text,e.annotation,
+       p.performance_order,p.performance_title,p.genre
+from raw.event_entry e join raw.event_entry_performance p using(event_id)
+where e.date_undate='1904-09-12' and e.city<>'Moscow' order by e.theater,p.performance_order;
+
+select p.performance_order,p.verbatim_title,w.canonical_title,w.excerpt_note
+from research.performance p join research.event e using(event_id) left join research.work w using(work_id)
+where e.date='1904-09-12' and e.city='SP';
+```
+
+Result: already fixed 2026-10-13 (known_issues «Ballet excerpt cells and links»). Raw: 1 «Жемчужина» бал.;
+2 «1, 3 д. и 2-я карт. 4 д. балета. Волшебное зеркало» бал.; 2784 р. 31 к. Research: the second performance is the
+excerpt work (excerpt_note «1, 3 д. и 2-я карт. 4 д.»). Scan re-read (printed p. 92): «Жемчужина, бал.» /
+«1, 3 д. и 2-я карт. 4 д. балета.» / «Волшебное зеркало, бал.» / 2784 р. 31 к. -- matches.
