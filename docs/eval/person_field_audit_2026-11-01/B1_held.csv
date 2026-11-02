@@ -1,0 +1,47 @@
+entry_id,printed_line,end_type,source,note
+administration_1907-08_p001__e006,"Бестужевъ - Рюминъ, Алексѣй Ивановичъ … (съ 15 марта 1903 г.; въ С.-Петербургѣ съ 29 ноября 1906 г.)",not_an_end,flag#26,service: end_date_text=; end_date_undate=; family_name=Бестужевъ-Рюминъ
+balletartists_1903-04_MSK_p000__e010,"5. Балдина, Александра Васильевна (съ 1 іюня 1903 г.). / Переведена къ Московскимъ театрамъ изъ С.-Петербурга съ 1 сентября 1905 г. (no tally)",not_an_end,flag#494,"service: keep start 1903-06-01 with no end (or end 1905-09-01 end_type=transferred), and add second service row start_date_text=съ 1 сентября 1905 г.; start_date_undate=1905-09-01 (Moscow spell)"
+balletartists_1904-05_SP_p006__e005,(съ 1 іюня 1895 г.). (Онъ же и репетиторъ балета съ 12 декабря 1903 г.).,not_an_end,flag#561,"service: end_date=null, end_type=null (stored end 2 декабря 1903 / other is wrong); tenure_note_text second date 12 декабря not 2"
+balletartists_1910-11_SP_p009__e019,"73. Храписъ, Георгій Михайловичъ (съ 1 іюня, 1908 г.).",not_an_end,flag#776,"start_date_text=съ 1 іюня, 1908 г.; start_date_undate=1908-06-01; end_date_text=; end_date_undate="
+balletartists_1899-00_SP_p004__e014,Прикомандирована къ русской драматической труппѣ 1 августа 1900 г.,assignment,also:d1_slice2 item 322,
+balletartists_1899-00_SP_p009__e025,Прикомандированъ къ режиссерскому управленію.,assignment,also:d1_slice2 item 332,undated
+balletartists_1900-01_SP_p000__e007,Прикомандированъ къ монтировочной части …,assignment,also:d1_slice2 item 367,full stored wording: «Прикомандированъ къ монтировочной части для исполненія обязанностей помощника машиниста Маріинскаго театра.»; undated
+musicians_1904-05_SP_p000__e021,Переведенъ съ 1 октября 1904 г. изъ оркестра Михайловскаго театра,not_an_end,also:d1_slice5 item 1061,
+musicians_1904-05_SP_p003__e015,Переведенъ съ 15 октября 1904 г. изъ оркестра Михайловскаго театра,not_an_end,also:d1_slice5 item 1070,
+musicians_1904-05_SP_p003__e018,Съ 1 октября 1904 г. переведенъ на первую скрипку,not_an_end,also:d1_slice5 item 1070,
+musicians_1904-05_SP_p005__e003,Переведенъ съ 1 сентября 1904 г. изъ оркестра Маріинскаго театра,not_an_end,also:d1_slice5 item 1071,
+musicians_1906-07_SP_p000__e020,Переведенъ изъ оркестра Михайловскаго театра съ 1 октября 1904 г.,not_an_end,also:d1_slice5 item 1113; d2_slice2 item 83,
+musicians_1906-07_SP_p002__e010,Переведенъ изъ оркестра Михайловскаго театра съ 1 ноября 1905 г.,not_an_end,also:d1_slice5 item 1128; d2_slice2 item 84,
+musicians_1906-07_SP_p003__e014,Переведенъ изъ оркестра Александринскаго театра (съ 1 сентября 1906 г.),not_an_end,also:d1_slice5 item 1136,
+musicians_1906-07_SP_p003__e025,Переведенъ изъ Михайловскаго театра съ 1 сентября 1906 г.,not_an_end,also:d1_slice5 item 1136,
+musicians_1906-07_SP_p004__e012,Переведенъ изъ оркестра Михайловскаго театра,not_an_end,also:d1_slice5 item 1144; slice6 item 1274,undated incoming transfer
+musicians_1906-07_SP_p004__e029,Переведенъ изъ оркестра Михайловскаго театра съ 1 октября 1906 г.,not_an_end,also:d1_slice5 item 1144,
+musicians_1906-07_SP_p004__e023,Переведенъ съ 1 ноября 1903 г. на первую скрипку,not_an_end,also:d1_slice5 item 1144,
+balletartists_1905-06_MSK_p000__e015,Переведена къ Московскимъ театрамъ изъ С.-Петербурга съ 1 сентября 1905 г.,not_an_end,also:r9_slice2 item 162,"transfer INTO Moscow (arrival in the listed troupe), not an end; line absent from stored text"
+balletartists_1894-95_SP_p002__e017,Оставила службу 1 декабря 1894 г.,left service,r9#45,"already has end ('декабря 1894 г.', 'left service')"
+administration_1907-08_p001__e023,† 1907 г.,died,r9#368,"already has end ('1907 г.', 'died')"
+musicians_1904-05_SP_p005__e035,Оставилъ службу : февраля 1905 г.,left service,r9#475,"already has end ('февраля 1905 г.', 'left service')"
+musicians_1905-06_MSK_p000__e004,Оставилъ службу въ декабрѣ 1905 г.,left service,r9#476,"already has end ('декабрѣ 1905 г.', 'left service')"
+theaterschoolstaff_1901-02_p003__e008,Оставилъ службу въ мартѣ 1902 г.,left service,r9#714,"already has end ('мартъ 1902 г.', 'left service')"
+theaterschoolstaff_1903-04_p000__e014,Оставилъ службу въ августѣ 1903 г.,left service,r9#718,"already has end ('августѣ 1903 г.', 'left service')"
+theaterschoolstaff_1904-05_p000__e003,† зимою 1904 г.,died,r9#722,"already has end ('зимою 1904 г.', 'died')"
+theaterschoolstaff_1907-08_p000__e012,† 1907 г.,died,r9#731,"already has end ('1907 г.', 'died')"
+balletartists_1890-91_MSK_p001__e015,"16. Бѣлова, Александра Васильевна (съ 14 апрѣля 1867 г.). Въ балетахъ—24; въ операхъ—4. Всего—28 разъ. / Оставила службу 25 іюня 1891 г.",left service,flag#35,"already has end ('25 іюня 1891 г.', 'died')"
+balletartists_1890-91_SP_p008__e010,"34. Леоновъ, Петръ Леонтьевичъ (съ 11 іюня 1866 г.). … Оставилъ службу 1 мая 1891 г.",left service,flag#56,"already has end ('1 мая 1891 г.', 'left service')"
+balletartists_1894-95_SP_p006__e007,"22. Дороѳеевъ, Іосифъ Александровичъ (съ 31 марта 1880 г.). † 28 ноября 1894 г.",died,flag#155,"already has end ('28 ноября 1894 г.', 'died')"
+balletartists_1897-98_MSK_p007__e006,"64. Смоликовъ, Иванъ Алексѣевичъ (съ 14 іюня 1875 г.). Оставилъ службу 1 февраля 1898 г.",left service,flag#250,"already has end ('1 февраля 1898 г.', 'left service')"
+balletartists_1897-98_SP_p001__e022,"19. Галкина, Юлія Владиміровна (съ 18 мая 1878 г.). … Оставила службу 1 іюня 1898 г.",left service,flag#266,"already has end ('1 юня 1898 г.', 'left service')"
+balletartists_1899-00_MSK_p001__e024,"28. Дмитріева (Федорова), Пелагея Васильевна (съ 29 сентября 1879 г.). Оставила службу 17 октября 1899 г.",left service,flag#312,"already has end ('17 октября 1899 г.', 'left service')"
+balletartists_1899-00_SP_p005__e023,"129. Цѣлихова, Марія Васильевна (съ 26 іюня 1880 г.). … Оставила службу 26 іюня 1900 г.",left service,flag#330,"already has end ('26 іюня 1900 г.', 'left service')"
+balletartists_1900-01_MSK_p006__e020,"25. Емельяновъ, Александръ Петровичъ (съ 10 іюня 1878 г.). … Оставилъ службу 10 іюля 1901 г.",left service,flag#361,"already has end ('10 іюля 1901 г.', 'left service')"
+balletartists_1901-02_SP_p002__e020,"59. Маслова, Марія Николаевна (съ 1 іюня 1891 г.). / † 9 апрѣля 1902 г. — no tally printed",died,flag#437,"already has end ('9 апрѣля 1902 г.', 'died')"
+balletartists_1902-03_MSK_p003__e003,"62. Нарышкина, Александра Нико-|норовна (съ 1 сентября 1894 г.). Въ 2 операхъ—3. Всего—3 раза. / † 4 января 1903 г.",died,flag#468,"already has end ('4 января 1903 г.', 'died')"
+balletartists_1904-05_MSK_p001__e014,"14. Гаврилова (Воскресенская), Евдо-|кія Помпеевна (съ 23 августа 1884 г.). / Оставила службу 23 августа 1904 г.",left service,flag#527,"already has end ('23 августа 1904 г.', 'left service')"
+balletartists_1908-09_MSK_p004__e004,"2. Бакинъ 2-й, Александръ Всеволодовичъ (съ 1895 г.). Оставилъ службу 10 ноября 1908 г.",left service,flag#686,"already has end ('10 ноября 1908 г.', 'left service')"
+balletartists_1909-10_MSK_p004__e003,"59. Пожицкая, Бронислава Августовна (съ 1 сентября 1900 г.). … Оставила службу 16 августа 1910 г. — surname letter-spaced «П о ж и ц к а я», no р",left service,flag#737,"already has end ('16 августа 1910 г.', 'left service')"
+musicians_1890-91_MSK_p001__e012,"27. Горшковъ, Викторъ Адріановичъ (съ 19 сентября 1882 г.). Ударные инструменты. † 12 августа 1891 г.",died,flag#867,"already has end ('12 августа 1891 г.', 'died')"
+musicians_1892-93_MSK_p002__e015,"Композиторъ балетной музыки. / Кленовскій, Николай Семеновичъ (съ 1 сентября 1883 г.). Оставилъ службу 4 іюня 1893 г.",left service,flag#918,"already has end ('4 іюня 1893 г.', 'left service')"
+musicians_1904-05_MSK_p002__e009,"65. Фонъ-Нольте, Іоганъ - Константинъ (съ 20 ноября 1889 г.). Вторая скрипка. Оставилъ службу 15 октября 1905 г.",left service,flag#1163,"already has end ('15 октября 1905 г.', 'left service')"
+productionteam_1902-03_p001__e021,"2. Пипаръ, Христіанъ Петровичъ (съ 26 августа 1869 г.). Мужскіе костюмы оперной и русской драматической труппъ. Оставилъ службу 1 августа 1903 г.",left service,flag#1414,"already has end ('1 августа 1903 г.', 'left service')"
+productionteam_1902-03_p001__e023,"2. Офицерова, Екатерина Максимовна (съ 1 мая 1863 г.). Женскіе костюмы балетной труппы. Оставила службу 1 августа 1902 г.",left service,flag#1416,"already has end ('1 августа 1902 г.', 'left service')"
+theaterschoolstaff_1904-05_p003__e007,"Почетные члены конференціи: 6. Стороженко, Николай Ильичъ. † 12 января 1906 г.",died,flag#1524,"already has end ('12 января 1906 г.', 'died')"

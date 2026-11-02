@@ -24684,3 +24684,14 @@ yearbooks vary between seasons. **Print, unchanged:** 1895-96 SP «Тимоми�
 Бакинъ 1-й print identical tallies in MSK 1897-98 (182) and 1899-00 (186) (genuine_print_typos.md). Rebuild vs backup
 (`imperial_theaters.pre_name_leads_2026-11-01.duckdb`): person_entry 6, person_entry_credit 4, the merge (person, person_link,
 merge_log, research.person -1, person_appearance 1, person_tenure +1 -2); nothing else; quality flags 1 (Исаева).
+
+## Person field audit B1: dropped leaving / death / transfer-out lines restored -- APPLIED 2026-11-02 (RG: "Apply all but no-date ones")
+
+The person field audit (docs/eval/person_field_audit_2026-11-01/, README + DECISIONS.md) found that BalletArtists leaving lines printed
+after the tally (1890-91..1904-05) were often dropped by the transcription or stored in credit_summary_text with no end, and that
+«Назначенъ / Переведенъ въ …» lines in Musicians, ProductionTeam and Administrators were stored without an end. Scan-read by Claude.
+`raw_fix_b1_ends.py` applied 129 rows from `B1_final.csv` (64 lines added verbatim to tenure_note_text, 65 stored lines parsed, 30 of
+them moved out of credit_summary_text); rulings A2 (moving out = other; arrivals and secondments never ends) applied. 9 rows with no
+printed date held (undated transfers, bare «†»), as are arrivals, secondments, 2 «Освобожденъ отъ обязанностей» rows and 25 rows whose
+existing end needs a type/date correction (B1_held.csv). Backup: outputs/full_run/imperial_theaters.pre_b1_ends_2026-11-02.duckdb and
+outputs/full_run/raw_backup_b1_2026-11-02/. Result in query_log 2026-11-02 "B1 applied". research_dataset.sqlite not rebuilt (Andy).

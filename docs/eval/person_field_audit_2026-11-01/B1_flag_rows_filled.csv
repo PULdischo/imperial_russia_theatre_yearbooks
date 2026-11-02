@@ -1,0 +1,27 @@
+entry_id,end_date_text,end_date_iso,end_type,confidence,note
+administration_1901-02_p002__e002,15 марта 1902 г.,1902-03-15,other,high,
+administration_1907-08_p001__e006,,,not_an_end,medium,"«въ С.-Петербургѣ съ 29 ноября 1906 г.» is his arrival in the SPb post (a start), wrongly parsed as an end"
+balletartists_1890-91_MSK_p001__e015,25 іюня 1891 г.,1891-06-25,left service,high,
+balletartists_1890-91_SP_p008__e010,1 мая 1891 г.,1891-05-01,left service,high,
+balletartists_1894-95_SP_p006__e007,28 ноября 1894 г.,1894-11-28,died,high,
+balletartists_1897-98_MSK_p007__e006,1 февраля 1898 г.,1898-02-01,left service,high,
+balletartists_1897-98_SP_p001__e022,1 іюня 1898 г.,1898-06-01,left service,high,
+balletartists_1899-00_MSK_p001__e024,17 октября 1899 г.,1899-10-17,left service,high,
+balletartists_1899-00_SP_p005__e023,26 іюня 1900 г.,1900-06-26,left service,high,
+balletartists_1900-01_MSK_p006__e020,10 іюля 1901 г.,1901-07-10,left service,high,
+balletartists_1901-02_SP_p002__e020,9 апрѣля 1902 г.,1902-04-09,died,high,
+balletartists_1902-03_MSK_p003__e003,4 января 1903 г.,1903-01-04,died,high,
+balletartists_1903-04_MSK_p000__e010,,,not_an_end,medium,"«Переведена къ Московскимъ театрамъ изъ С.-Петербурга съ 1 сентября 1905 г.» = arrival in Moscow, a start not an end (note 1905 date in a 1903-04 entry)"
+balletartists_1904-05_MSK_p001__e014,23 августа 1904 г.,1904-08-23,left service,high,
+balletartists_1904-05_SP_p006__e005,,,not_an_end,high,"«Онъ же и репетиторъ балета съ 12 декабря 1903 г.» is an added duty, not an end; stored end is a misparse"
+balletartists_1908-09_MSK_p004__e004,10 ноября 1908 г.,1908-11-10,left service,high,
+balletartists_1908-09_MSK_p006__e002,23 мая 1909 г.,1909-05-23,left service,high,
+balletartists_1909-10_MSK_p004__e003,16 августа 1910 г.,1910-08-16,left service,high,
+balletartists_1910-11_SP_p009__e019,,,not_an_end,high,no end printed; stored end is a misparse of the start
+musicians_1890-91_MSK_p001__e012,12 августа 1891 г.,1891-08-12,died,high,
+musicians_1892-93_MSK_p002__e015,4 іюня 1893 г.,1893-06-04,left service,high,
+musicians_1904-05_MSK_p002__e009,15 октября 1905 г.,1905-10-15,left service,high,
+musicians_1906-07_SP_p006__e008,,,died,medium,"bare «†», no date printed; 1907-08 gives † 5 мая 1908 г."
+productionteam_1902-03_p001__e021,1 августа 1903 г.,1903-08-01,left service,high,
+productionteam_1902-03_p001__e023,1 августа 1902 г.,1902-08-01,left service,high,
+theaterschoolstaff_1904-05_p003__e007,12 января 1906 г.,1906-01-12,died,high,

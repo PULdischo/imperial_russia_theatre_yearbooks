@@ -24799,3 +24799,14 @@ Result: see session report (A7).
 ## 2026-11-02 — (result of the previous entry, A7)
 
 Result: subject_taught outside TheaterSchoolStaff = 10 rows: ProductionTeam 7 (costume/wig duties, all 1890-91..1902-03 costumers: «Мужскіе костюмы всѣхъ труппъ», «Женскіе костюмы балетной труппы», «Парики для всѣхъ труппъ» …), Musicians 2 («Ударные инструменты», belongs in instrument), Administrators 1 («Завѣдывающій центральною библіотекою»). Another 84 ProductionTeam rows hold a costume phrase inside tenure_note_text.
+
+## 2026-11-02 — Person field audit B1 applied: before/after check
+
+```sql
+select coalesce(end_type,'(none)'), count(*) from raw.person_entry_service group by 1 order by 1;
+select count(*) from raw.person_entry_service where end_date_undate is not null;
+-- plus research.person, entities.person live, entities.person_link (count + hash), research.work (count + id hash), sum(receipts_total_kopecks), wikidata count
+-- and, per B1_final.csv row: last service period's end_date_text / end_date_undate / end_type
+```
+
+Result: before -> after: (none) 22,309 -> 22,181; died 211 -> 216; left service 953 -> 1,027; other 155 -> 204; ends with a date 1,567 -> 1,695. Unchanged: research.person 2,640, live persons 2,541, person_link 23,980 (same hash, 0 shift blocks), works 2,949 (same id hash), receipts 3,223,088,581, Wikidata 178. 129/129 rows landed; 1 (Шемаевъ «† 1902 г.», year only) has no undate pending ruling A3's partial-date build.
