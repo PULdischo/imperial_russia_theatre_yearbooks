@@ -24904,3 +24904,22 @@ select block_id, char_start, name_surface, role_category, cast(person_id as varc
 ```
 
 Result: research.review_credit 2,416 -> 2,410 (2,227 with a person). Removed as not credits: Надежды Богдановой (1900-01, debut), Петипа costumes + scenery (1902-03 reminiscence), Кшесинскаго (1903-04, performer), Николаева (1906-07, pupil), Павловой (1906-07, the dancer; designer Бакстъ has no person record). Вагнера (1893-94, Koni on 1849) unlinked, context_flag historical (new override value person_id=none). Credit ids after the dropped rows renumber (the overrides key on block/name/occurrence). Core metrics unchanged. 9 unresolved credits (А. Герберъ x3, Пономаревъ, М. Петипа x3, Н. Г. Легатъ x2) left unlinked by RG's choice.
+
+## 2026-11-02 — Merge batch case 7b: every Ромашковъ entry 1907-08..1910-11 (did another join in 1910-11?)
+
+```sql
+select sp.season, pe.entity_type, sp.city, pe.list_number, pe.family_name, pe.first_name, pe.patronymic, pe.instrument, pe.tenure_note_text
+from raw.person_entry pe join raw.source_pages sp using(page_id) where pe.family_name like 'Ромашков%' and sp.season >= '1907-08' order by 1,4;
+```
+
+Result: see session report (case 7b).
+Result: 1907-08..1910-11 only two Ромашковы each season (Павелъ drums, Григорій viola), both Moscow orchestra; 1910-11 nos. 76/77 and ordinals identical to 1909-10; only no. 77 start changes 10 -> 1 октября. RG: merge.
+
+## 2026-11-02 — Reader commentary leaked into a raw value (B6): find and fix
+
+```sql
+select entry_id, family_name, first_name, patronymic from raw.person_entry
+where family_name like '%[%' or first_name like '%[%' or patronymic like '%[%' or family_name like '% or %' or tenure_note_text like '%[or %';
+```
+
+Result: 1 row (balletartists_1904-05_MSK_p001__e014, from B6). Present in pre_b5 backup, absent in pre_b6 backup -> introduced by B6. Fixed; re-query returns only the corrected row; metrics identical.
