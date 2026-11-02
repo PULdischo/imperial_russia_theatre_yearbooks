@@ -64,3 +64,14 @@ Order: conventions first (each settles many rows), then mechanical fixes, then i
 Константиновъ † 25 vs 27 Dec 1906; Тройниковъ, Цалисонъ gap ends; Ѳедорова 2-я left 1901 vs 1902 (and listed 1903-04); Кувакина;
 Потаповъ 1909 vs 1910; Иванова 2-я († Feb 1907, listed 1907-08); Левинсонъ 1-я; Мыльникова; Голубинъ 1-й drift; Романова 1889/1899;
 Егорова Марія Николаевна (left 1902, listed 1903-04); Дмитріева 1-я (left 1897, listed 1898-99); Броневскій-Боянусъ, Гущинъ.
+
+## Applied to production (2026-11-02)
+- B1 restored ends: 129 (2fe5d52). B3/B4/A5 name fields: 262 (4e608fe). B6/B7 name misreads + stray characters: 95 high (4071d3f;
+  Бочкина 1890-91 rejoined her record). B5 wrong-field contents: 67 high (911c09f). B8 end kinds/dates by A1/A2/A8 + readings: 202 (e63cad6).
+## Still open
+- Build: A2b assignments table (~5-9 secondments incl. Усачевъ, Рихартова, Дума, Шидловская, Рѣпина, Андреевъ, Петровъ); A7 duties field
+  (~91 costume/wig phrases); A3 partial dates; A6 research-layer date corrections; A4 O.S. in research.
+- Pipeline bugs: flatten doubles «Оставилъ службу» (1910-11 MSK p003); comma in «съ 1 іюня, 1908 г.» shifts start into end (Храписъ).
+- Held for RG: 7 medium misreads (B6), 10 medium wrong-field rows (B5), 9 undated ends (B1), «Освобожденъ отъ обязанностей» (Аслинъ, Ширяевъ),
+  Будаевъ rank+instrument, 1908-09 BalletArtists tallies unparsed (B9).
+- C identity/links and D print conflicts: not started.
