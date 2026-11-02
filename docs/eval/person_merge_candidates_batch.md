@@ -132,3 +132,11 @@ Beside them, also pending with RG: DONE 2026-10-12: «Фонъ-Боолъ» corr
 |---|---|---|---|
 | Пуни, Леонтина (SP graduate 1902-03) / Пуни, Леонтина-Констанція (SP BalletArtists 1903-04..1907-08, 1909-10..1910-11) / Пуни, Леонтина-Кинтанція (SP 1908-09 only) | 08c70ed8 + 05aaa26a + 670cb4f3 | graduate of 1902-03 joins the company in 1903-04 under the same first name; «Кинтанція» is a single season's spelling between unbroken «Констанція» years. **Zoomed 2026-10-21: the print itself has «Кинтанція»** (a print slip, genuine_print_typos.md), and the entry prints «(съ 1 іюня 1903 г.)», the start date of every season 1903-04..1910-11 and the graduation date in Graduates 1902-03 («1 іюня 1903 г.») | **MERGED** (RG, 2026-10-21: "yes, merge all three"), survivor 05aaa26a, `docs/eval/person_merge_manual.py`. 9 entries, 1902-03..1910-11. research.person 2646 -> 2644. The 3 pupil review mentions (1899-1903) in review_mention_links.csv were repointed to 05aaa26a. Backup `outputs/full_run/imperial_theaters.pre_merge_05aaa26a_2026-10-21.duckdb`. |
 
+
+## 2026-11-02 -- from the person field audit (A2 side session; not merged)
+
+| Candidate | person_ids (prefix) | Evidence so far | Recommendation |
+|---|---|---|---|
+| Шидловская, Вѣра (Moscow ballet «Артистки») | 475ff223 (1907-08 no. 99 «Вѣра Ивановна») + 2308d316 (1908-09..1910-11 «Вѣра Николаевна») | print 1907-08 clearly «Ивановна» (checked by Claude, page width); same start «съ 1 августа 1907 г.» every year, never both in one season, no ordinal, same list | likely one person, print's patronymic slip; RG to rule at the end |
+
+Other identity candidates from the same audit are listed in docs/eval/person_field_audit_2026-11-01/DECISIONS.md section C3.

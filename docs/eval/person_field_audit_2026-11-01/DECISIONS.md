@@ -7,18 +7,35 @@ type, 10 wrong structure, 7 wrong date); pre-gap 106 (6 dropped, 6 stored-not-pa
 Order: conventions first (each settles many rows), then mechanical fixes, then identity/links, then print conflicts.
 
 ## A. Conventions (RG rules once; many rows follow)
-- A1 **Break inside a tenure** («съ X по Y и съ Z»): print never says why. Stored as blank / other / left service inconsistently (~60 rows).
-- A2 **Appointments, promotions, transfers out, secondments, military service** («Назначенъ», «Переведенъ въ», «Прикомандированъ»,
+- A1 **RULED 2026-11-02 (RG): blank unless printed** — a break gets a type only where some volume prints the reason with that same date (e.g. Волковъ «Оставилъ службу 1 января 1893 г.»); otherwise blank.
+  Was: **Break inside a tenure** («съ X по Y и съ Z»): print never says why. Stored as blank / other / left service inconsistently (~60 rows).
+- A2 **RULED 2026-11-02 (RG, in the forked side session «btw: explain the pros/cons of this»: "okay, let's do option 3")**:
+  moving OUT of a post (appointment elsewhere, permanent «Переведенъ въ…», «Назначенъ…» to another post) ends the period, end_type `other`;
+  ARRIVING in the listed post («Переведенъ изъ…»; Келеръ 1906-07, Иващенко, Гейкблюмъ, Бестужевъ-Рюминъ, Адамовъ) is never an end;
+  a TEMPORARY ASSIGNMENT («откомандирована», «командирована», «прикомандированъ») never ends or splits the tenure — recorded as its own
+  dated assignment beside the unbroken tenure. Why: Шидловская «Откомандирована въ С.-Петербургъ съ 1 сентября 1908 г. по 1 мая 1909 г.»,
+  yet 1910-11 prints her tenure as «(съ 1 августа 1907 г.)» — the Directorate counted it unbroken. Cases: Шидловская, Дума (NB not listed
+  after 1908-09), Рѣпина 1901-02, Андреевъ 1899-00, Петровъ 1898-99.
+  A2b **RULED 2026-11-02 (RG, same side session: "okay i agree, go ahead")**: temporary assignments go in a SEPARATE table, not a new
+  period type in person_entry_service (keeps tenure/left-service logic untouched). Rough shape: person_id, entry_id, start/end text+undate,
+  destination, kind (seconded / attached), printed_line verbatim. ~5 rows; their stored secondment ends are removed from service.
+  Was: **Appointments, promotions, transfers out, secondments, military service** («Назначенъ», «Переведенъ въ», «Прикомандированъ»,
   «командирована», «отбываетъ воинскую повинность») -> end_type `other`? Arrivals («Переведенъ изъ», «въ С.-Петербургѣ съ») never an end?
   (~50 rows typed blank/left service; Келеръ, Иващенко, Гейкблюмъ, Бестужевъ-Рюминъ, Адамовъ arrivals stored as ends.)
-- A3 **Partial dates** (year only «† 1907 г.», month only «въ мартѣ 1902», season «зимою 1904») -> store partial undate? (~15 rows)
-- A4 **Old/New Style double dates** («1/14 марта 1903») -> Old Style like the rest of the corpus? (Бейдлеръ, 3 rows)
-- A5 **Double given names** (Лидтке «Готгильдъ Францъ», Больмъ «Адольфъ Эмиль», Ваксманъ «Альфредъ Луи», Пуни «Леонтина-Констанція»):
+- A3 **RULED 2026-11-02 (RG): store with precision** — year / month / season as printed, with a precision marker; printed text verbatim; nothing invented.
+  Was: **Partial dates** (year only «† 1907 г.», month only «въ мартѣ 1902», season «зимою 1904») -> store partial undate? (~15 rows)
+- A4 **RULED 2026-11-02 (RG): "Keep as is in the raw layer, convert to O.S in the research layer."** Raw keeps the stored New-Style dates; research layer uses Old Style.
+  Was: **Old/New Style double dates** («1/14 марта 1903») -> Old Style like the rest of the corpus? (Бейдлеръ, 3 rows)
+- A5 **RULED 2026-11-02 (RG): both in first name** — second given name joins first_name (hyphen kept where printed), patronymic empty.
+  Was: **Double given names** (Лидтке «Готгильдъ Францъ», Больмъ «Адольфъ Эмиль», Ваксманъ «Альфредъ Луи», Пуни «Леонтина-Констанція»):
   all in first_name, patronymic empty?
-- A6 **Print-slip years** (Корниловъ «1998», Степановъ «1802», Ѳедоровъ «по 1 іюня 1889», Михайловъ К. А. «1889»): raw stays verbatim;
+- A6 **RULED 2026-11-02 (RG): raw as printed, research layer corrected** — editorial correction marked with its evidence; misspelled months («вктября», «севтября», «юня») get their obvious date in the research layer.
+  Was: **Print-slip years** (Корниловъ «1998», Степановъ «1802», Ѳедоровъ «по 1 іюня 1889», Михайловъ К. А. «1889»): raw stays verbatim;
   research-layer corrected date?
-- A7 **ProductionTeam duty phrases** («Мужскіе костюмы всѣхъ труппъ») stored in subject_taught: which field?
-- A8 **Graduates 1896-97** (12 rows) stored «left service» with no date: graduation + appointment -> no end?
+- A7 **RULED 2026-11-02 (RG): own 'duties' field** — all ~91 printed responsibility phrases (7 in subject_taught, 84 in tenure notes) move verbatim to a new duties field; tenure note keeps dates. Musicians «Ударные инструменты» x2 -> instrument (fix list).
+  Was: **ProductionTeam duty phrases** («Мужскіе костюмы всѣхъ труппъ») stored in subject_taught: which field?
+- A8 **SETTLED by A2 (2026-11-02):** note reads «съ 1-го сентября 1897 года, въ Московскую балетную труппу.» = arrival in the troupe, never an end -> drop the 12 dateless 'left service' ends.
+  Was: **Graduates 1896-97** (12 rows) stored «left service» with no date: graduation + appointment -> no end?
 
 ## B. Mechanical fixes (raw rows, then rebuild; each list approved by RG)
 - B1 Restore dropped leaving/death/transfer lines: ballet 1890-1905 (~56 in slice + ~40 seen on the same pages), Борегаръ (PT 1892-93).

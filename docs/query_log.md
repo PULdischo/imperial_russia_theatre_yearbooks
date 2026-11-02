@@ -24740,3 +24740,62 @@ select entry_id, family_name, first_name, patronymic from raw.person_entry;
 ```
 
 Result: 11 rows. Combining acute x4 (Оттоно́вичъ admin 1905-06 e021; Помпее́вна 1893-94 and 1895-96 MSK, +1); «қ» x2 (Булгақовъ 1898-99 SP p005 e020, Кувақина 1900-01 MSK p002 e024); Arabic letters (Бочкينا 1890-91 MSK p001 e012); «ү» (Күстереръ 1890-91 SP p002 e019); «ї» (Троїниковъ 1903-04 MSK p008 e001); Latin «ă» (Александрă 1907-08 SP p000 e014); «ў» (Валеніўсъ 1904-05 MSK p000 e029). No Latin letters mixed into Cyrillic names. All are mechanical fixes (replace with the plain Cyrillic letter / drop the accent).
+
+## 2026-11-02 — Person field audit A1: end_type of breaks inside a tenure (a period followed by a later period in the same entry)
+
+```sql
+with gaps as (select s.entry_id, s.end_type from raw.person_entry_service s
+  where s.end_date_undate is not null and exists (select 1 from raw.person_entry_service s2 where s2.entry_id=s.entry_id and s2.period_order>s.period_order))
+select coalesce(end_type,'(blank)') end_type, count(*) n from gaps group by 1 order by 2 desc;
+```
+
+Result: see next entry.
+
+## 2026-11-02 — (result of the previous entry, A1)
+
+Result: 300 in-tenure breaks: 237 blank, 32 other, 31 left service. Readers found the print gives no kind for these; the same person's break is typed differently across seasons (e.g. Гиллертъ blank x3 / left service x1; Молчановъ other / blank; Тройниковъ left service / blank). For several people (Перешивкинъ, Пановъ, Щегловъ, Воронцовъ, Ѳомичевъ, Дьякъ, Ивановъ 3-й, Щипановъ, Ѳедоровъ, Волковъ) the volume of the leaving season prints «Оставилъ службу» with the same date.
+
+## 2026-11-02 — Person field audit A2: secondment examples (Дума, Шидловская) — listings and stored service periods
+
+```sql
+select sp.season, pe.entry_id, pe.family_name, pe.first_name, pe.patronymic, pe.tenure_note_text
+from raw.person_entry pe join raw.source_pages sp using(page_id)
+where (pe.first_name='Евгенія' and pe.patronymic like 'Доминик%') or pe.family_name like 'Дум%' or pe.family_name like 'Шидловск%' order by 1;
+select sp.season, s.period_order, s.start_date_undate, s.end_date_text, s.end_date_undate, s.end_type
+from raw.person_entry pe join raw.source_pages sp using(page_id) left join raw.person_entry_service s using(entry_id)
+where pe.family_name like 'Шидловск%' order by 1,2;
+```
+
+Result: Дума, Евгенія Доминиковна listed 1907-08 and 1908-09 only (1908-09 note «откоманд. въ Спб. съ 16 декабря 1908 г. по 1 мая 1909 г.»; stored one period 1907-08-01..1909-05-01, end_type blank); NOT listed in 1909-10 or 1910-11, so the reader's "back in the Moscow list" does not hold for her. Шидловская, Вѣра listed 1907-08..1910-11 (patronymic Ивановна 1907-08, Николаевна after); secondment «съ 1 сентября 1908 г. по 1 мая 1909 г.» printed 1908-09 and 1909-10; stored periods differ between those two seasons (1908-09: end 1908-09-01 + new period from 1909-05-01; 1909-10: end 1908-09-01 «съ…» + period 1908-09-01..1909-05-01); 1910-11 one open period from 1907-08-01.
+
+## 2026-11-02 — Шидловская, Вѣра: one person or two? (person links per season)
+
+```sql
+select sp.season, pe.list_number, pe.heading_path, cast(pl.person_id as varchar) pid, pe.credit_summary_text
+from raw.person_entry pe join raw.source_pages sp using(page_id) join entities.person_link pl using(entry_id)
+where pe.family_name like 'Шидловск%' order by 1;
+```
+
+Result: held as TWO person records: 1907-08 no. 99 «Вѣра Ивановна» -> 475ff223; 1908-09 no. 82, 1909-10 no. 78, 1910-11 no. 79 «Вѣра Николаевна» -> 2308d316. All Moscow «Артистки», all «съ 1 августа 1907 г.». Scan of 1907-08 MSK p005 (checked by Claude, page width): print clearly reads «Шидловская, Вѣра Ивановна (съ 1 августа 1907 г.)», so «Ивановна» is the print's, not a misread.
+
+## 2026-11-02 — Person field audit A3: service dates stored as text with no parsed date
+
+```sql
+select 'start' side, count(*) n from raw.person_entry_service where start_date_text is not null and start_date_undate is null
+union all select 'end', count(*) from raw.person_entry_service where (end_date_text is not null or end_type is not null) and end_date_undate is null;
+```
+
+Result: 36 starts, 33 ends with text (or an end type) but no parsed date. Mix of partial dates (year only «1882 г.», month only «въ мартѣ 1902 г.», season «зимою 1904 г.», ranges «1888—1898 г.») and print-typo months («вктября», «севтября», «юня») that a full date could be read from.
+
+## 2026-11-02 — Person field audit A7: subject_taught outside TheaterSchoolStaff
+
+```sql
+select entity_type, subject_taught, count(*) n from raw.person_entry where entity_type<>'TheaterSchoolStaff' and subject_taught is not null group by all order by 1,3 desc;
+select count(*) from raw.person_entry where entity_type='ProductionTeam' and regexp_matches(coalesce(tenure_note_text,''),'костюм');
+```
+
+Result: see session report (A7).
+
+## 2026-11-02 — (result of the previous entry, A7)
+
+Result: subject_taught outside TheaterSchoolStaff = 10 rows: ProductionTeam 7 (costume/wig duties, all 1890-91..1902-03 costumers: «Мужскіе костюмы всѣхъ труппъ», «Женскіе костюмы балетной труппы», «Парики для всѣхъ труппъ» …), Musicians 2 («Ударные инструменты», belongs in instrument), Administrators 1 («Завѣдывающій центральною библіотекою»). Another 84 ProductionTeam rows hold a costume phrase inside tenure_note_text.
