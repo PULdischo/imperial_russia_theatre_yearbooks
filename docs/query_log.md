@@ -25166,3 +25166,19 @@ Result: Марія Николаевна 1890-91..1901-02 (ends 7 June 1902, left
 An ordinal-shift candidate re-proposing the pair appeared (pending) and survived a manual reject -- builder bug, fixed; 0 pending after.
 research.person 2,626; receipts 3,223,088,581; Wikidata 174; 0 shifts; 0 orphans.
 
+## 2026-11-02 — Held medium rows (person field audit): current raw values, post-apply checks
+
+```sql
+-- raw JSON read for the 12 held entry_ids (outputs/full_run/raw); after apply + rebuild:
+select p.display_name, string_agg(distinct a.season, ' ') from entities.person_link l join research.person p using(person_id)
+ join research.person_appearance a on a.person_id = p.person_id where l.entry_id = ? group by 1;   -- per edited entry
+select p.display_name, min(a.season), max(a.season) from research.person p join research.person_appearance a using(person_id)
+ where p.display_name like 'Больмъ, Адольф%' or p.display_name like 'Афанасьевъ, %' or p.display_name like 'Мендесъ, Джульетта%' group by all;
+select season, city, performer_surface, performer_person_id, performer_candidates_n, link_method from research.review_assertion
+ where performer_surface similar to '.*(Киль|Мендес|Больм|Лицъ|Копьев|Усачев|Рихартов|Смирнов|Бергхольц).*';
+```
+
+Result: all 10 edited people complete; research.person 2,625 (one split reunited); split pairs found: Больмъ (3a1cd225/15833101),
+Афанасьевъ (5789b206/74d2fbeb), Мендесъ Джульетта (723f64f2/ca42f234). 1900-01 Moscow «г-жа Мендесъ» (Жуанитта) now unresolved
+between the two Джульетта records. Receipts 3,223,088,581; Wikidata 174; 0 shifts; 0 pending.
+
