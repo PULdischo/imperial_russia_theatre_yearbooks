@@ -24954,3 +24954,12 @@ from research.service_period sp join research.person p using(person_id) where sp
 ```
 
 Result: 73 person-periods with differing ends, 14 after narrowing; 5 same-event conflicts (Ѳедорова 2-я, Гиллертъ, Тройниковъ, Потаповъ, Кувакина) + reader-found Цалисонъ, Голубинъ 1-й, Константиновъ (cross-list). RG ruled "contemporaneous wins": 21 corrections applied in the research layer (19 service_period rows carry date_correction).
+
+## 2026-11-02 — Потаповъ: does the 1910-11 Moscow orchestra list reprint 1909-10 leavers?
+
+```sql
+select p.display_name, sp.season, sp.end_text, sp.end_type from research.service_period sp join research.person p using(person_id)
+where sp.list='Musicians' and sp.city='Moscow' and sp.season in ('1909-10','1910-11') and p.display_name similar to '(Потаповъ|Перкаусъ|Плаксинъ|Руссъ|Фридрихъ|Цозель|Юмрихъ).*';
+```
+
+Result: Перкаусъ, Плаксинъ (10 Feb 1910), Руссъ (1 Aug 1909), Фридрихъ (1 Aug 1910) printed identically in both volumes; 10 of 12 leavings in the 1910-11 list predate the season; only Потаповъ changes (1909 -> 1910). Contemporaneous rule -> 12 Dec 1909 in the research layer.
