@@ -52,6 +52,7 @@ def _dates_as_iso(df):
 
 
 TABLES = ["theater", "work", "person", "event", "performance", "person_appearance", "person_tenure", "person_tenure_note",
+          "service_period", "person_assignment",
           "production", "production_work", "production_credit",
           "season_stat_check", "season_stat_line", "season_stat_footnote",
           "review_assertion", "review_solo", "review_credit",
@@ -131,6 +132,23 @@ SCHEMAS = {
             printed_leaving TEXT, printed_leaving_date TEXT, printed_in_seasons TEXT,
             research_reading TEXT, service_periods TEXT, discrepancy TEXT,
             corroboration_found TEXT, corroboration_wanted TEXT, decided TEXT
+        )""",
+    # One row per printed service period (person field audit rulings A3/A4/A6, docs/schema.md); rowid as key.
+    "service_period": """
+        CREATE TABLE service_period (
+            appearance_id TEXT REFERENCES person_appearance(appearance_id), person_id TEXT REFERENCES person(person_id),
+            season TEXT, list TEXT, city TEXT, period_order INTEGER,
+            start_text TEXT, start_date TEXT, start_year INTEGER, start_month INTEGER, start_precision TEXT,
+            end_text TEXT, end_date TEXT, end_year INTEGER, end_month INTEGER, end_precision TEXT,
+            end_type TEXT, date_correction TEXT
+        )""",
+    # Temporary assignments printed in an entry (ruling A2b): never ends or splits the tenure; rowid as key.
+    "person_assignment": """
+        CREATE TABLE person_assignment (
+            appearance_id TEXT REFERENCES person_appearance(appearance_id), person_id TEXT REFERENCES person(person_id),
+            season TEXT, list TEXT, city TEXT, kind TEXT, destination TEXT,
+            start_text TEXT, start_date TEXT, start_precision TEXT, end_text TEXT, end_date TEXT, end_precision TEXT,
+            printed_line TEXT
         )""",
     "production": """
         CREATE TABLE production (

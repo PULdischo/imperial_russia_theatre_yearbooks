@@ -24846,3 +24846,15 @@ select count(*) from raw.person_entry_service where end_date_undate is not null;
 ```
 
 Result: (none) 22,181 -> 22,110; died 216 -> 217; left service 1,027 -> 1,095; other 204 -> 205; dated ends 1,695 -> 1,682 (arrivals, secondments, 1896-97 graduates' joining date no longer counted as ends). People 2,639, links (0 shift blocks), works, receipts, Wikidata unchanged. classify_ends.py on the rebuilt DB proposes 3 residual changes (rows where a scan reading overrode the rule). research.person_tenure 3,051 rows.
+
+## 2026-11-02 — Person field audit: new research structures built (service_period, person_assignment, title for costumers)
+
+```sql
+select coalesce(start_precision,'(none)'), count(*) from research.service_period group by 1;
+select coalesce(end_precision,'(none)'), count(*), count(end_type) from research.service_period where end_text is not null or end_type is not null group by 1;
+select appearance_id, period_order, start_text, start_date, end_text, end_date, date_correction from research.service_period where date_correction is not null;
+select season, kind, destination, start_text, end_text, printed_line from research.person_assignment order by season;
+select count(*) from research.person_appearance where entity_type='ProductionTeam' and regexp_matches(coalesce(title,''),'(костюм|Парик|парик)');
+```
+
+Result: research.service_period 23,627 periods; starts: day 23,464, month 22, year 8, none 133 (no printed start); ends: day 1,682, month 4, year 6, season 5, none 6. 10 rows carry date_correction (7 Бейдлеръ double dates -> Old Style; 3 A6 corrections: Корниловъ 1998->1898, Степановъ 1802->1892, Михайловъ 1889->1899). 2 starts unparsed (print «903 г.»; Храписъ comma pipeline bug). research.person_assignment 16 rows (Петровъ x3, Усачевъ x2, Рихартова x3, Андреевъ, Мосолова, Рѣпина, Печатниковъ x2, Дума, Шидловская x2). A planned `duties` column was found to duplicate person_appearance.title (85/87 identical; title already holds 250 ProductionTeam specialties, issue #132) and was dropped; title now fills the 2 rows raw had in subject_taught (252). Core metrics (people, links, works, receipts, end types) identical; sqlite export tested on a scratch copy.

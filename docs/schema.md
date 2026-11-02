@@ -555,6 +555,37 @@ exists, prints that leaving date in that list, and is listed in every season `se
 
 Exported to Datasette (`build_datasette.py`) since 2026-10-30.
 
+## Service periods, ends and partial dates — `research.service_period` (added 2026-11-02)
+
+One row per printed service period of every `research.person_appearance` (person field audit,
+`docs/eval/person_field_audit_2026-11-01/`, RG's rulings A1-A8 in its `DECISIONS.md`). Built in the research layer
+only; `raw.person_entry_service` stays as printed.
+
+| column | meaning |
+|---|---|
+| `appearance_id`, `person_id`, `season`, `list`, `city`, `period_order` | the listing and which printed period («съ X по Y и съ Z» prints several) |
+| `start_text` / `end_text` | the date as printed (raw) |
+| `start_date` / `end_date` | the date, only when the print gives the day |
+| `start_year`, `start_month`, `end_year`, `end_month` | as far as the print goes |
+| `start_precision` / `end_precision` | `day`, `month` («въ декабрѣ 1905 г.»), `season` («† зимою 1904 г.», year kept), `year` («† 1902 г.»; «съ 1888—1898 г.» takes the first) — ruling A3 |
+| `end_type` | `left service`, `died`, `other` (moved to another post, troupe or theatre; a hired post becoming staff service), or blank: a break inside a tenure is typed only where some volume prints the reason with that date (A1); arrivals in the listed post and temporary assignments are never ends (A2) |
+| `date_correction` | set when the research date differs from the printed one: a date printed in both calendars («1/14 марта 1903 г.») uses the first, Old Style, half (A4); a date the print got wrong is corrected from `pipeline/research_corrections/service_period_date_corrections.csv`, with its evidence (A6) |
+
+Misspelled month words in the print («вктября», «севтября», «декября», «юня») are read as the month they plainly mean.
+
+## Temporary assignments — `research.person_assignment` (added 2026-11-02)
+
+A secondment or attachment printed in an entry («Прикомандированъ къ режиссерскому управленію», «командирована къ
+московскимъ театрамъ», «Откомандирована въ С.-Петербургъ съ 1 сентября 1908 г. по 1 мая 1909 г.»). RG's ruling A2b:
+it never ends or splits the tenure, so it is kept here beside the unbroken service. Columns: the listing
+(`appearance_id`, `person_id`, `season`, `list`, `city`), `kind` (`attached` = прикомандированъ, `seconded` =
+(от)командированъ), `destination` as printed, `start_text`/`start_date`/`start_precision`, `end_text`/`end_date`/
+`end_precision`, `printed_line` verbatim. Built from the printed text each time the research layer is built.
+
+A costumer's or wig maker's printed area of work («Женскіе костюмы балетной труппы», «Парики для всѣхъ труппъ») is in
+`research.person_appearance.title` for ProductionTeam (issue #132; ruling A7, 2026-11-02, also fills the 2 rows raw had
+in `subject_taught`). `subject_taught` is now only for the Theatre School staff.
+
 ## `research.work.title_note` (added 2026-10-26)
 
 Why a work's title in the research layer differs from what the Repertoire printed. RG: "I want researchers to understand any decisions I made." Filled from `build_research_model.RESEARCH_TITLE_CORRECTIONS` (confirmed print slips corrected in the research layer only; raw and `research.performance.verbatim_title` keep the printed form):

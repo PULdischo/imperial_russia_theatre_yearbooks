@@ -60,7 +60,9 @@ from __future__ import annotations
 
 import argparse
 import csv
+import re
 import uuid
+from datetime import date
 from pathlib import Path
 
 import duckdb
@@ -1437,7 +1439,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # same two-step pattern build_entities.py already uses.
     for t in ["season_stat_check", "season_stat_line", "season_stat_footnote",
               "production_credit", "production_work", "production",
-              "performance", "event", "person_tenure", "person_tenure_note", "person_appearance", "person", "work", "theater"]:
+              "performance", "event", "person_tenure", "person_tenure_note", "service_period", "person_assignment",
+              "person_appearance", "person", "work", "theater"]:
         con.execute(f"DROP TABLE IF EXISTS research.{t}")
 
     con.execute("""
@@ -2026,8 +2029,14 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             pl.person_id,
             sp.season, sp.city,
             r.entity_type, r.institution, r.heading_path,
-            r.rank_clean, r.title_clean, r.service_class, r.instrument_clean,
-            r.subject_taught, r.tenure_note_text_clean,
+            r.rank_clean,
+            -- ruling A7 (RG 2026-11-02): a costumer's / wig maker's printed area of work is its own field. For ProductionTeam
+            -- that field is `title` (issue #132); the 2 rows raw stored in subject_taught are filled into title from it.
+            CASE WHEN r.entity_type = 'ProductionTeam' AND nullif(r.title_clean, '') IS NULL
+                 THEN nullif(rtrim(r.subject_taught, '.'), '') ELSE r.title_clean END,
+            r.service_class, r.instrument_clean,
+            CASE WHEN r.entity_type = 'ProductionTeam' THEN NULL ELSE r.subject_taught END,
+            r.tenure_note_text_clean,
             st.d, st.t, st.n
         FROM analysis.person_entry r
         JOIN entities.person_link pl ON pl.entry_id = r.entry_id
@@ -2046,6 +2055,10 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     print(f"  person tenure discrepancies noted: {n_tenure}")
     n_runs = build_person_tenure(con)
     print(f"  research.person_tenure: {n_runs} runs (person x list x city)")
+    n_sp = build_service_periods(con)
+    print(f"  research.service_period: {n_sp} printed service periods")
+    n_as = build_person_assignments(con)
+    print(f"  research.person_assignment: {n_as} temporary assignments")
 
     if has_creators:
         build_productions(con)
@@ -2060,6 +2073,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     counts = {
         t: con.execute(f"SELECT count(*) FROM research.{t}").fetchone()[0]
         for t in ["theater", "work", "person", "event", "performance", "person_appearance",
+                  "service_period", "person_assignment",
                   "production", "production_work", "production_credit",
                   "season_stat_check", "season_stat_line", "season_stat_footnote"]
         if con.execute("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'research' AND table_name = ?",
@@ -2328,6 +2342,171 @@ def build_dancer_views(con: duckdb.DuckDBPyConnection) -> None:
     n_ev = con.execute("SELECT count(*) FROM research.events_with_dancers").fetchone()[0]
     n_pf = con.execute("SELECT count(*) FROM research.events_with_dancers_performance").fetchone()[0]
     print(f"  dancer views: research.events_with_dancers {n_ev} events, research.events_with_dancers_performance {n_pf} rows")
+
+
+#: Research-layer date corrections for service periods (RG 2026-11-02, ruling A6): a date the print itself got wrong
+#: (one-digit year slips, evidence in the row). Raw keeps the printed text and its parsed date untouched.
+SERVICE_PERIOD_DATE_CORRECTIONS_CSV = Path(__file__).parent / "research_corrections" / "service_period_date_corrections.csv"
+
+_MONTH_STEMS = [("январ", 1), ("феврал", 2), ("февр", 2), ("март", 3), ("апрѣл", 4), ("апрел", 4), ("мая", 5), ("маѣ", 5),
+                ("май", 5), ("іюн", 6), ("июн", 6), ("іюл", 7), ("июл", 7), ("август", 8), ("сентяб", 9), ("октяб", 10),
+                ("ноябр", 11), ("декаб", 12)]
+_SEASON_WORDS = ("зим", "весн", "лѣт", "осен")
+
+
+def _month_of(word: str):
+    """Month number from a printed month word, tolerating the print's own misspellings («вктября», «севтября»,
+    «декября», «юня») and the locative/nominative forms of month-only dates («въ мартѣ», «мартъ»)."""
+    w = (word or "").lower().strip(".")
+    for stem, m in _MONTH_STEMS:
+        if w.startswith(stem):
+            return m
+    for test, m in (("ктяб", 10), ("сен", 9), ("сев", 9), ("сеи", 9), ("сер", 9), ("сед", 9), ("дек", 12), ("нояб", 11),
+                    ("юн", 6), ("юл", 7), ("авг", 8), ("янв", 1), ("фев", 2), ("мар", 3), ("апр", 4)):
+        if w.startswith(test) or (test == "ктяб" and test in w):
+            return m
+    return None
+
+
+def parse_printed_date(text):
+    """(date ISO | None, precision, year, month) for a printed service date, research layer only (RG 2026-11-02):
+    A3 -- a partial date keeps its precision: 'day', 'month' («въ декабрѣ 1905 г.»), 'season' («зимою 1904 г.», year kept),
+    'year' («† 1902 г.», «съ 1888—1898 г.» takes the first year); A4 -- a date printed in both calendars
+    («1/14 марта 1903 г.», «16 февр./1 марта 1905 г.») takes the first, Old Style, half."""
+    t = re.sub(r"^(съ|по)\s+", "", (text or "").strip().lower())
+    t = t.replace(",", " ")
+    m = re.search(r"(\d{1,2})(?:-го)?(?:\s*/\s*\d{1,2})?\s*([а-яѣіё]+)\.?(?:\s*/\s*\d{1,2}\s*[а-яѣіё]+\.?)?\s+(\d{4})", t)
+    if m:
+        mo = _month_of(m.group(2))
+        y, d = int(m.group(3)), int(m.group(1))
+        if mo and 1 <= d <= 31:
+            try:
+                return date(y, mo, d).isoformat(), "day", y, mo
+            except ValueError:
+                pass
+    m = re.search(r"([а-яѣіё]+)\s+(\d{4})", t)
+    if m:
+        if m.group(1).startswith(_SEASON_WORDS):
+            return None, "season", int(m.group(2)), None
+        mo = _month_of(m.group(1))
+        if mo:
+            return None, "month", int(m.group(2)), mo
+    m = re.search(r"(1[789]\d\d|19[01]\d)", t)
+    if m:
+        return None, "year", int(m.group(1)), None
+    return None, None, None, None
+
+
+def build_service_periods(con: duckdb.DuckDBPyConnection) -> int:
+    """research.service_period (RG 2026-11-02, person field audit rulings A3/A4/A6): one row per printed service period of
+    every research.person_appearance, start and end with their precision and the end's kind. Raw's parsed date is used
+    when it exists and the text is not double-dated; otherwise the printed text is parsed here. Corrections from
+    SERVICE_PERIOD_DATE_CORRECTIONS_CSV replace a date the print got wrong and say so in date_correction."""
+    con.execute("""
+        CREATE TABLE research.service_period (
+            appearance_id VARCHAR REFERENCES research.person_appearance(appearance_id),
+            person_id UUID REFERENCES research.person(person_id),
+            season VARCHAR, list VARCHAR, city VARCHAR,
+            period_order INTEGER,
+            start_text VARCHAR, start_date DATE, start_year INTEGER, start_month INTEGER, start_precision VARCHAR,
+            end_text VARCHAR, end_date DATE, end_year INTEGER, end_month INTEGER, end_precision VARCHAR,
+            end_type VARCHAR,
+            date_correction VARCHAR
+        )""")
+    corr = {}
+    if SERVICE_PERIOD_DATE_CORRECTIONS_CSV.exists():
+        for r in csv.DictReader(open(SERVICE_PERIOD_DATE_CORRECTIONS_CSV, encoding="utf-8")):
+            corr[(r["entry_id"], int(r["period_order"]), r["field"])] = r
+    rows = con.execute("""
+        SELECT pa.appearance_id, CAST(pa.person_id AS VARCHAR), pa.season, pa.entity_type, pa.city, s.period_order,
+               s.start_date_text, CAST(s.start_date_undate AS VARCHAR), s.end_date_text, CAST(s.end_date_undate AS VARCHAR),
+               s.end_type
+        FROM research.person_appearance pa JOIN raw.person_entry_service s ON s.entry_id = pa.appearance_id
+        ORDER BY 1, 6""").fetchall()
+    out, used = [], set()
+
+    def one(text, undate):
+        if undate and "/" not in (text or ""):
+            m = re.fullmatch(r"(\d{4})-(\d\d)-(\d\d)", undate)
+            if m and m.group(2) == "00":
+                return None, "year", int(m.group(1)), None
+            if m and m.group(3) == "00":
+                return None, "month", int(m.group(1)), int(m.group(2))
+            if m:
+                return undate, "day", int(m.group(1)), int(m.group(2))
+        if not text:
+            return None, None, None, None
+        return parse_printed_date(text)
+
+    for aid, pid, season, lst, city, po, st, sd, et_, ed, etype in rows:
+        s = list(one(st, sd)); e = list(one(et_, ed)); note = []
+        for field, vals, txt in (("start", s, st), ("end", e, et_)):
+            c = corr.get((aid, int(po), field))
+            if c:
+                if (c["printed_text"] or "").strip() != (txt or "").strip():
+                    raise SystemExit(f"service_period_date_corrections.csv: {aid} {po} {field}: printed text "
+                                     f"{txt!r} is not {c['printed_text']!r}")
+                vals[:] = [c["corrected_date"], "day", int(c["corrected_date"][:4]), int(c["corrected_date"][5:7])]
+                note.append(f"{field} printed «{txt}», corrected to {c['corrected_date']}: {c['evidence']} ({c['decided']})")
+                used.add((aid, int(po), field))
+            elif txt and "/" in txt and vals[0]:
+                note.append(f"{field} printed in both calendars «{txt}»: Old Style half used (ruling A4)")
+        out.append((aid, pid, season, lst, city, int(po), st, s[0], s[2], s[3], s[1], et_, e[0], e[2], e[3], e[1], etype,
+                    "; ".join(note) or None))
+    missing = set(corr) - used
+    if missing:
+        raise SystemExit(f"service_period_date_corrections.csv: rows match no service period: {sorted(missing)}")
+    con.executemany("INSERT INTO research.service_period VALUES (" + ",".join(["?"] * 18) + ")", out)
+    return len(out)
+
+
+_ASSIGN_RE = re.compile(r"(прикомандир\w*|откомандир\w*|откоманд\.|командир\w*)", re.I)
+
+
+def build_person_assignments(con: duckdb.DuckDBPyConnection) -> int:
+    """research.person_assignment (RG 2026-11-02, ruling A2b): a temporary assignment printed in a person's entry
+    («Прикомандированъ къ …», «командирована къ …», «Откомандирована въ С.-Петербургъ съ … по …»). It never ends or splits
+    the tenure; it is recorded here beside the unbroken service, one row per printed line per listing."""
+    con.execute("""
+        CREATE TABLE research.person_assignment (
+            appearance_id VARCHAR REFERENCES research.person_appearance(appearance_id),
+            person_id UUID REFERENCES research.person(person_id),
+            season VARCHAR, list VARCHAR, city VARCHAR,
+            kind VARCHAR,
+            destination VARCHAR,
+            start_text VARCHAR, start_date DATE, start_precision VARCHAR,
+            end_text VARCHAR, end_date DATE, end_precision VARCHAR,
+            printed_line VARCHAR
+        )""")
+    rows = con.execute("""
+        SELECT pa.appearance_id, CAST(pa.person_id AS VARCHAR), pa.season, pa.entity_type, pa.city,
+               coalesce(pe.tenure_note_text, '') || ' ' || coalesce(pe.credit_summary_text, '')
+        FROM research.person_appearance pa JOIN raw.person_entry pe ON pe.entry_id = pa.appearance_id""").fetchall()
+    out = []
+    for aid, pid, season, lst, city, text in rows:
+        text = re.sub(r"(?<=[а-яѣі])-\s+(?=[а-яѣі])", "", text)    # line-break hyphens «режиссер-скому»
+        # sentences end at «.» before a capital or bracket; «С.-Петербургъ» and «г.» inside a sentence do not end it
+        for line in re.split(r"(?<=\.)\s+(?=[А-ЯЁѢІѲ(†])(?<!С\.\s)", text):
+            line = line.strip(" ()")
+            if not _ASSIGN_RE.search(line):
+                continue
+            kind = "attached" if line.lower().startswith("прикомандир") or "прикомандир" in line.lower() else "seconded"
+            _d = r"\d{1,2}\s+[а-яѣіё]+\.?\s+\d{4}\s*г\."
+            dm = re.search(rf"(?:командир\w*|откоманд\w*\.?)[^.]*?съ\s+({_d})\s+по\s+({_d})", line, re.I) \
+                or re.search(rf"съ\s+({_d})\s+по\s+({_d})", line)
+            if dm:
+                st, en = dm.group(1), dm.group(2)
+            else:
+                d1 = re.search(r"(\d{1,2}\s+[а-яѣі]+\s+\d{4}\s*г\.)", line)
+                st, en = (d1.group(1) if d1 else None), None
+            dest = re.search(_ASSIGN_RE.pattern + r"\s+(.*?)(?:\s+(?:съ\s+)?\d|\.?$)", line, re.I)
+            sd = parse_printed_date(st) if st else (None, None, None, None)
+            ed = parse_printed_date(en) if en else (None, None, None, None)
+            out.append((aid, pid, season, lst, city, kind, dest.group(2).strip(" .,") if dest else None,
+                        st, sd[0], sd[1], en, ed[0], ed[1], line))
+            break
+    con.executemany("INSERT INTO research.person_assignment VALUES (" + ",".join(["?"] * 14) + ")", out)
+    return len(out)
 
 
 def main():
