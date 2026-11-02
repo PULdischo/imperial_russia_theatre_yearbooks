@@ -25043,3 +25043,35 @@ where sp.season='1904-05' and sp.city='SP' and pe.entity_type='BalletArtists' an
 ```
 
 Result: Лидія on the roster in 17 of 18 volumes (1890-91..1907-08), absent only 1904-05, where the list runs 114 Федорова 1-я Марія, 115 Федорова 2-я Александра, 116 Фонарева (no gap). «Ѳедорова 2-я» = Лидія in 1902-04 and 1905-08; = Александра in 1904-05. 8 SP review mentions of «Ѳедорова 2-я» in 1903-04, 1905-06, 1906-07, all unlinked. RG kept the 19 Oct reading; corroboration added to the tenure note.
+
+## 2026-11-02 — Print conflicts: Иванова 2-я Наталья Евдокимовна (Moscow ballet), listed with a tally after her death
+
+```sql
+select p.page_id, p.list_number, p.family_name, p.first_name, p.patronymic, p.tenure_note_text, p.credit_summary_text
+from raw.person_entry p
+where (p.page_id like 'balletartists_1906-07_MSK%' or p.page_id like 'balletartists_1907-08_MSK%' or p.page_id like 'balletartists_1908-09_MSK%')
+  and p.family_name like 'Иванов%' order by 1,2;
+select m.season, m.surface, p.display_name, m.link_method, count(*) from entities.review_mention m
+ left join research.person p on p.person_id=m.entity_id
+ where m.city='Moscow' and m.season in ('1906-07','1907-08','1908-09') and m.surface like 'Иванова%' group by all order by 1,2;
+-- plus block text around each 1907-08 «Иванова 2-я»/«Иванова 3-я» mention (entities.review_mention join raw.review_block)
+```
+
+Result: 1906-07 no.40 Наталья Евдокимовна, 6 performances, «† 6 февраля 1907 г.»; 1907-08 no.39 prints her again with
+121 performances AND «† 6 февраля 1907 г.» (scan p.48 read by Claude; raw JSON already has end_type died); no.40 Надежда
+Михайловна 53 (she had 122 in 1906-07); no.41 Надежда Сергеевна (new, 1 Aug 1907) no tally. 1908-09 renumbers: Надежда
+Михайловна 2-я, Надежда Сергеевна 3-я. 1907-08 Moscow reviews: «Иванова 2-я» 3 mentions linked to Наталья, «Иванова 3-я» 2
+linked to Надежда Михайловна; the «Тѣни» cast (Баядерка, p003) lists 2-я and 3-я side by side, so both were living dancers.
+
+## 2026-11-02 — Verify Иванова 1907-08 relinks after rebuild
+
+```sql
+select m.surface, p.display_name, m.link_method, count(*) from entities.review_mention m
+ left join research.person p on p.person_id=m.entity_id
+ where m.city='Moscow' and m.season='1907-08' and m.surface like 'Иванова%' group by all;
+select count(*) from research.person_tenure_note where person_id='599e507f-7bbd-49a2-94ee-225ab97968d6';
+select name_surface, person_id, count(*) from research.review_credit where season='1907-08' and city='Moscow' and name_surface like 'Иванова%' group by all;
+```
+
+Result: «Иванова 2-я» 3 -> Надежда Михайловна, «Иванова 3-я» 2 -> Надежда Сергѣевна (scan-verified); tenure note 1 row;
+no review_credit or review_assertion rows for these. Metrics unchanged: person 2627, receipts 3223088581, Wikidata 174, 0 shifts.
