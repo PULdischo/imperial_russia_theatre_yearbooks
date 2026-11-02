@@ -24895,3 +24895,12 @@ select display_name, wikidata_qid from research.person where person_id in (<the 
 ```
 
 Result: Кунстъ -> Q4247336 (actor 1700-1703), Фричъ -> Q4492843 (b. 1963, Meißen), Шмидтъ 1-й -> Q434601 (b. 1874, Pressburg), Шмидтъ 2-й -> Q21094595 (German composer, organist, Domkapitular, 1840-1923). All four unlinked and recorded 'No' in entities.wikidata_decision (docs/eval/apply_wikidata_rejections_2026-11-02.py). research.person with a QID 178 -> 174; nothing else changed.
+
+## 2026-11-02 — Person field audit C2: review-credit corrections, groups 1-2 (RG: "Groups 1 and 2 only")
+
+```sql
+select block_id, char_start, name_surface, role_category, cast(person_id as varchar), link_method, context_flag from research.review_credit;
+-- set difference before vs after pipeline/build_review_credits.py with 6 new rows in docs/eval/review_credit_overrides.csv
+```
+
+Result: research.review_credit 2,416 -> 2,410 (2,227 with a person). Removed as not credits: Надежды Богдановой (1900-01, debut), Петипа costumes + scenery (1902-03 reminiscence), Кшесинскаго (1903-04, performer), Николаева (1906-07, pupil), Павловой (1906-07, the dancer; designer Бакстъ has no person record). Вагнера (1893-94, Koni on 1849) unlinked, context_flag historical (new override value person_id=none). Credit ids after the dropped rows renumber (the overrides key on block/name/occurrence). Core metrics unchanged. 9 unresolved credits (А. Герберъ x3, Пономаревъ, М. Петипа x3, Н. Г. Легатъ x2) left unlinked by RG's choice.

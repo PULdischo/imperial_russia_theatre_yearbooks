@@ -857,7 +857,11 @@ def main() -> None:
                 continue
             for i in hits:
                 r = out[i]
-                if ov["person_id"]:
+                if ov["person_id"] == "none":
+                    # curated UNLINK: the matcher's person is the wrong one and no right one is on record
+                    r["person_id"], r["link_method"] = "", "curated"
+                    r["person_candidate_ids"] = ""
+                elif ov["person_id"]:
                     r["person_id"], r["link_method"] = ov["person_id"], "curated"
                     r["person_candidate_ids"] = ""
                 if ov["work_id"]:
