@@ -24836,3 +24836,13 @@ Result: research.person 2,640 -> 2,639, live 2,541 -> 2,540: Бочкина, О�
 ```
 
 Result: all metrics identical (people 2,639, live 2,540, link hash unchanged, 0 shift blocks, works, receipts, Wikidata, end types). 67/67 edits landed. One display name changed: «Туровичъ, фонъ-Охота» -> «Туровичъ фонъ-Охота». Raw-vs-DB check found the 1910-11 Moscow «Оставилъ службу» doubling is created by the pipeline flatten, not stored in raw (held as a pipeline fix).
+
+## 2026-11-02 — Person field audit B8 applied (end kinds/dates per rulings A1/A2/A8 + scan-read corrections): before/after check
+
+```sql
+select coalesce(end_type,'(none)'), count(*) from raw.person_entry_service group by 1 order by 1;
+select count(*) from raw.person_entry_service where end_date_undate is not null;
+-- + person/link/work/receipt metrics; classify_ends.py re-run on the rebuilt DB; spot checks of Недремская, Константиновъ, Лабунская, Дума
+```
+
+Result: (none) 22,181 -> 22,110; died 216 -> 217; left service 1,027 -> 1,095; other 204 -> 205; dated ends 1,695 -> 1,682 (arrivals, secondments, 1896-97 graduates' joining date no longer counted as ends). People 2,639, links (0 shift blocks), works, receipts, Wikidata unchanged. classify_ends.py on the rebuilt DB proposes 3 residual changes (rows where a scan reading overrode the rule). research.person_tenure 3,051 rows.
