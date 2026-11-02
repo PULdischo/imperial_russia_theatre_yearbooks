@@ -1,0 +1,21 @@
+entry_id,proposed_fix,reason
+administration_1909-10_p002__e013,rank_or_title=пот. поч. гражд.; tenure_note_text=(по найму съ 7 января 1885 г.); service: start_date_text=7 января 1885 ,ambiguous or date edit -> later list
+balletartists_1892-93_MSK_p003__e023,credit_summary_text=; tenure_note_text=(съ 1 сентября 1888 г.). Съ 1 сентября 1893 г. переведена въ драматическую труппу,ambiguous or date edit -> later list
+balletartists_1904-05_SP_p006__e005,"rank_or_title=(blank, or 'репетиторъ балета' per convention); tenure_note_text=(съ 1 іюня 1895 г.). (Онъ же и репетиторъ",ambiguous or date edit -> later list
+balletartists_1904-05_SP_p007__e014,credit_summary_text=drop the «Переведенъ…» sentence; tenure_note_text+=' Переведенъ въ драматическую труппу съ 1 сентябр,ambiguous or date edit -> later list
+balletartists_1905-06_SP_p005__e020,family_name=Больмъ; first_name=Адольфъ Эмиль (or Адольфъ-Эмиль per convention); patronymic=(null),ambiguous or date edit -> later list
+balletartists_1908-09_MSK_p002__e002,"service: start 1907-08-01, no end (the «съ 16 декабря 1908 г. по 1 мая 1909 г.» is a secondment to St Petersburg, not en",ambiguous or date edit -> later list
+musicians_1903-04_MSK_p000__e011,end_date_undate=; end_type=,ambiguous or date edit -> later list
+musicians_1904-05_MSK_p000__e014,end_date_undate=; end_type=,ambiguous or date edit -> later list
+musicians_1906-07_SP_p003__e032,end_date_undate=; end_type=,ambiguous or date edit -> later list
+productionteam_1890-91_p003__e017,subject_taught=,costume duty -> duties field (A7)
+productionteam_1890-91_p003__e018,subject_taught=; tenure_note_text=(съ 1 сентября 1874 г.). Женскіе костюмы всѣхъ труппъ.,costume duty -> duties field (A7)
+productionteam_1902-03_p001__e020,subject_taught=,costume duty -> duties field (A7)
+productionteam_1902-03_p001__e021,subject_taught=,costume duty -> duties field (A7)
+productionteam_1902-03_p001__e022,subject_taught=,costume duty -> duties field (A7)
+productionteam_1902-03_p001__e023,subject_taught=,costume duty -> duties field (A7)
+theaterschoolstaff_1904-05_p003__e007,start_date_text=; start_date_undate=,ambiguous or date edit -> later list
+musicians_1908-09_SP_p001__e005,rank_or_title holds instrument + arrival note,raw field also feeds instrument at flatten; needs a combined edit
+musicians_1910-11_MSK_p003__e005,leaving note doubled in tenure_note_text,raw JSON has it once: doubling happens in the pipeline flatten (pipeline fix)
+musicians_1910-11_MSK_p003__e008,leaving note doubled in tenure_note_text,raw JSON has it once: doubling happens in the pipeline flatten (pipeline fix)
+musicians_1910-11_MSK_p003__e020,leaving note doubled in tenure_note_text,raw JSON has it once: doubling happens in the pipeline flatten (pipeline fix)

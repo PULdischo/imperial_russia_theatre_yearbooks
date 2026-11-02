@@ -24703,3 +24703,7 @@ outputs/full_run/raw_backup_b1_2026-11-02/. Result in query_log 2026-11-02 "B1 a
 ## Person field audit B6/B7: 95 name misreads and stray non-Russian characters corrected -- APPLIED 2026-11-02 (RG: "High confidence only (95)")
 
 raw_fix_b6_name_misreads.py from B6_name_misreads.csv (high only; 7 medium rows held for RG). One effect: Бочкина, Ольга Григорьевна (1890-91, Arabic letters in the surname) rejoined her 1891-96 record (f7e3beaf -> 6121c08c, superseded automatically); jubilee/obituary links re-run. Backup outputs/full_run/imperial_theaters.pre_b6_misreads_2026-11-02.duckdb + raw_backup_b6_2026-11-02/.
+
+## Person field audit B5: 67 wrong-field contents moved -- APPLIED 2026-11-02 (RG: "High confidence only (67)")
+
+Tallies duplicated into tenure notes (15 entries), dates/notes in rank_or_title, bracketed maiden names that shifted name parts (Гаврилова, Горская, Дмитріева), leaving/transfer/death lines out of credit_summary_text, instruments out of rank, invented note (Гельцеръ 1909-10) removed; raw_fix_field_edits.py + B5_wrong_field.csv. Held (B5_held.csv + 10 medium rows): costume duties -> duties field (A7), date edits -> wrong-ends list, Усачевъ/Рихартова secondments -> assignments table (A2b), Аслинъ, Будаевъ, and a PIPELINE bug: flatten doubles «Оставилъ службу» in tenure_note_text for 1910-11 MSK p003 (raw JSON has it once). Backup outputs/full_run/imperial_theaters.pre_b5_fields_2026-11-02.duckdb + raw_backup_b5_2026-11-02/.

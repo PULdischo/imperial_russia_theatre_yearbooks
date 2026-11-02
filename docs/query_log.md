@@ -24828,3 +24828,11 @@ select cast(person_id as varchar), superseded_by_person_id from entities.person 
 ```
 
 Result: research.person 2,640 -> 2,639, live 2,541 -> 2,540: Бочкина, Ольга Григорьевна f7e3beaf (1890-91 only, surname stored with Arabic letters «Бочкينا») now superseded by 6121c08c (1891-92..1895-96, obituary † 11 Feb 1896) — the fixed spelling rejoined one person held as two. Link hash changed only through that merge; 0 shift blocks. Works, receipts, Wikidata unchanged. 3 display names changed. Jubilee/obituary links re-run (build/link_persons.py): 2 rows changed (Бочкина repointed to 6121c08c; Дороѳеевъ display spelling).
+
+## 2026-11-02 — Person field audit B5 applied (67 high-confidence wrong-field moves): before/after check
+
+```sql
+-- same metrics as B1; research.person display_name diff vs backup; per B5 row: select <field> from raw.person_entry where entry_id=?
+```
+
+Result: all metrics identical (people 2,639, live 2,540, link hash unchanged, 0 shift blocks, works, receipts, Wikidata, end types). 67/67 edits landed. One display name changed: «Туровичъ, фонъ-Охота» -> «Туровичъ фонъ-Охота». Raw-vs-DB check found the 1910-11 Moscow «Оставилъ службу» doubling is created by the pipeline flatten, not stored in raw (held as a pipeline fix).
