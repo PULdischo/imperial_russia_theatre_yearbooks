@@ -69,8 +69,9 @@ Order: conventions first (each settles many rows), then mechanical fixes, then i
 - B1 restored ends: 129 (2fe5d52). B3/B4/A5 name fields: 262 (4e608fe). B6/B7 name misreads + stray characters: 95 high (4071d3f;
   Бочкина 1890-91 rejoined her record). B5 wrong-field contents: 67 high (911c09f). B8 end kinds/dates by A1/A2/A8 + readings: 202 (e63cad6).
 ## Still open
-- Build: A2b assignments table (~5-9 secondments incl. Усачевъ, Рихартова, Дума, Шидловская, Рѣпина, Андреевъ, Петровъ); A7 duties field
-  (~91 costume/wig phrases); A3 partial dates; A6 research-layer date corrections; A4 O.S. in research.
+- BUILT 2026-11-02 (6648807): research.service_period (A3 partial dates, A4 O.S., A6 corrections CSV), research.person_assignment (A2b, 16),
+  costumers' area of work = person_appearance.title (A7; a separate duties column would have duplicated title, dropped). Open: Ѳедоровъ
+  «по 1 іюня 1889» (1899-00 musicians) — RG to rule before adding to the A6 corrections.
 - Pipeline bugs: flatten doubles «Оставилъ службу» (1910-11 MSK p003); comma in «съ 1 іюня, 1908 г.» shifts start into end (Храписъ).
 - Held for RG: 7 medium misreads (B6), 10 medium wrong-field rows (B5), 9 undated ends (B1), «Освобожденъ отъ обязанностей» (Аслинъ, Ширяевъ),
   Будаевъ rank+instrument, 1908-09 BalletArtists tallies unparsed (B9).
