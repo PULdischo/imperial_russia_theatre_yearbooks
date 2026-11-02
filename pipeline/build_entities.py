@@ -1583,8 +1583,17 @@ def build_ordinal_shift_candidates(con: duckdb.DuckDBPyConnection,
     ambiguous = {pid for pid, pats in partner_pats.items() if len(pats) > 1}
 
     prior_status = prior_status or {}
+    # Like the shared-start builder: never re-propose a pair a human split or rejected. (Before 2026-11-02 this builder
+    # skipped neither, and looked prior decisions up by candidate_id while the snapshot is keyed by the id pair, so a
+    # rejection came back as pending on the next run -- found with the Егорова Марія/Любовь split.)
+    decided = {frozenset((str(a), str(b))) for a, b in con.execute(
+        "SELECT person_id_1, person_id_2 FROM entities.person_merge_log "
+        "WHERE status = 'rejected'").fetchall()} if _table_exists(con, "entities", "person_merge_log") else set()
+    apart = _keep_apart_pairs(con)
     out, n_corroborated = [], 0
     for a, b, date in raw_pairs:
+        if frozenset((a, b)) in decided or frozenset((a, b)) in apart:
+            continue
         ea, eb = info[a], info[b]
         disjoint = not (ea["seasons"] & eb["seasons"])
         pat_agree = bool(ea["pat"] and eb["pat"] and ea["pat"] == eb["pat"])
@@ -1594,7 +1603,7 @@ def build_ordinal_shift_candidates(con: duckdb.DuckDBPyConnection,
         n_corroborated += corroborated
         key = (a, b) if a < b else (b, a)
         cid = uuid.uuid5(NAMESPACE, f"ordinal_shift:{key[0]}|{key[1]}")
-        status = prior_status.get(str(cid), "pending")
+        status = prior_status.get((key[0], key[1]), prior_status.get(str(cid), "pending"))
         out.append((str(cid), key[0], key[1], info[key[0]]["disp"], info[key[1]]["disp"],
                     1.0, "ordinal_shift", status,
                     "shared_start_date" if corroborated else "shared_start_date_ordinal_only",

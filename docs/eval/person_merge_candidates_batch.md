@@ -160,3 +160,10 @@ Other identity candidates from the same audit are listed in docs/eval/person_fie
 | 12 | Кузнецовъ 2-й (Moscow 1910-11, bare) = ? | 964eb728; candidates 411443df Владиміръ Николаевичъ (Moscow ballet 1897-98..1910-11), 9c1b8df2 Николай (graduate 1909-10) | ambiguous: ordinal 2-й in 1910-11 Moscow | needs the 1910-11 page; RG |
 
 **Batch 2 outcome (RG, 2026-11-02; applied the same day, docs/eval/person_field_audit_2026-11-01/merge_rulings.csv):** MERGED 2 Золотаренко (creator -> Петръ Петровичъ, production_creators.csv rg_identified), 3 Арендсъ (display «Андрей Федоровичъ», RG), 4 Петипа Марія (1910-11 guest row), 5 Гебгардъ (display «Эдуардъ Карловичъ», RG), 7a Ромашковъ Павелъ/Петръ (uncertain, #48), 7b Ромашковъ Григорій (1910-11 start slip in person_start_date_slips.csv), 8 Мыльникова = Снѣжинская (1905-06 surname field now «Мыльникова (Снѣжинская)»), 9 Шидловская, 10 Гельцеръ guest (uncertain, #49), 11 Балашова guest (uncertain, #50), 12 Кузнецовъ 2-й = Николай (uncertain, #51). ON HOLD: 1 Шиманъ (#52), 6 Каффи (#53). research.person 2,639 -> 2,627; live 2,540 -> 2,529; 0 link shifts, 0 orphans. Jubilee links re-run (Арендсъ relinked; Гебгардтъ obituary linked by decision).
+
+## 2026-11-02 -- found during the print-conflicts pass (not merged)
+
+| # | Candidate | person_ids (prefix) | Evidence | Recommendation |
+|---|---|---|---|---|
+| 13 | Левинсонъ 1-я, Анна Фердинандовна (1904-05) = Левинсонъ 1-я, Анна Ѳедоровна | f06a362c + 14c9b51e (SP ballet 1890-91..1907-08 except 1904-05) | 1904-05 prints «Фердинандовна» for both sisters; same ordinal, start «съ 1 іюня 1887 г.», fills the one-season gap; Василій is printed «Фердинандовичъ» in 1893-94, so Ферд-/Ѳед- may be the same name | same; RG |
+| 14 | Левинсонъ 2-я, Ольга Фердинандовна (1904-05) = Левинсонъ 2-я, Ольга Ѳедоровна | f4862663 + 9ba202df (SP ballet 1890-91..1907-08 except 1904-05) | as no. 13; start «съ 1 іюня 1889 г.» | same; RG |

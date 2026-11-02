@@ -439,6 +439,11 @@ RESEARCH_TITLE_CORRECTIONS = {
 #: person_id -> (display_name, canonical_first_name, reason). The build fails if the
 #: id is not a live person, so a later merge/split cannot silently orphan an entry.
 RESEARCH_PERSON_DISPLAY_OVERRIDES = {
+    "0eea687d-5b21-4227-adf0-62de54c8a479": (
+        "Егорова, Любовь Александровна", "Любовь",
+        "SP ballet «съ 1 іюня 1898 г.»; the 1903-04 and 1905-10 lists print her as «Марія Николаевна» (the name of the "
+        "Егорова who left 7 іюня 1902), her roles continuous; those six entries joined to her 2026-11-02 (RG, "
+        "\"1903-04 to 1909-10\"), so the majority vote would show the wrong name"),
     "bedb704a-eaa4-4c7f-b6e8-61f1f0f7e36a": (
         "Арендсъ, Андрей Федоровичъ", "Андрей",
         "Moscow violinist, then капельмейстеръ and главный капельмейстеръ балета, «съ 25 сентября 1883 г.» every season; printed "

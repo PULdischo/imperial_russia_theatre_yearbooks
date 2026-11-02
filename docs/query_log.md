@@ -25105,3 +25105,64 @@ where e.season = '1908-09' and t.canonical_name = 'Михайловскій' and
 
 Result: only research.event (45, `companies`) and research.performance (45, `company`, `discipline_basis`) differ; all 46 events
 now Moscow Art Theatre. After promotion production = tested copy in all 24 research tables; sqlite: 46 events Moscow Art Theatre.
+
+## 2026-11-02 — Print conflicts: Левинсонъ 1-я Анна (SP ballet), «Оставила службу 1 іюня 1907» yet 53 performances in 1907-08
+
+```sql
+select p.entry_id, p.list_number, p.family_name, p.first_name, p.patronymic, p.tenure_note_text, p.credit_summary_text
+from raw.person_entry p where p.page_id like 'balletartists_%SP%' and p.family_name like 'Левинсон%' order by 1;
+select cast(s.end_date_undate as varchar), count(*) from raw.person_entry_service s join raw.person_entry pe using(entry_id)
+ where pe.page_id like 'balletartists_1907-08_SP%' and s.end_date_undate is not null group by 1 order by 2 desc;
+select pe.entry_id, pe.family_name, pe.first_name, pe.tenure_note_text, pe.credit_summary_text
+ from raw.person_entry_service s join raw.person_entry pe using(entry_id)
+ where pe.page_id like 'balletartists_%SP%' and cast(s.end_date_undate as varchar)='1907-06-01';
+-- plus review mentions «Левинсон%» SP 1906-08 (none) and research.person_tenure_note for Левинсонъ (none)
+```
+
+Result: Анна listed 1898-99..1907-08 (start 1 June 1887), absent 1908-09; 1907-08 prints 53 performances and «Оставила службу
+1 іюня 1907 г.» (scan p.17 read by Claude: clean «1907»). Sister Ольга same page «1 іюня 1908». 1907-08 SP ends: 13 on 1 June 1908,
+3 on 1 June 1907 (Анна; Плессюкъ, start 1 June 1887, no tally; Черниковъ, 1 performance). No review mentions, no existing note.
+
+## 2026-11-02 — Print conflicts: Егорова 2-я Марія Николаевна (SP ballet), «Оставила службу 7 іюня 1902» yet listed 1903-04..1909-10
+
+```sql
+select p.entry_id, p.list_number, p.family_name, p.first_name, p.patronymic, p.tenure_note_text, p.credit_summary_text
+from raw.person_entry p where p.page_id like 'balletartists_%SP%' and p.family_name like 'Егорова%' and p.page_id >= 'balletartists_1898' order by 1;
+select p.display_name, a.entity_type, a.city, string_agg(a.season, ' ' order by a.season) from research.person_appearance a join research.person p using(person_id)
+ where p.person_id::varchar in ('0eea687d-5b21-4227-adf0-62de54c8a479','a3dee646-0b80-43b8-9b5d-22bd1cabd9fb','d45195ed-286f-4161-acef-5d9a36c68951') group by all;
+-- plus neighbouring list numbers 1898-99..1903-04 (Артистки), review mentions «Егоров%» SP 1898-99..1910-11, and the roles («Въ томъ числѣ») per entry
+```
+
+Result: Марія Николаевна (start 7 June 1882) prints «Оставила службу 7 іюня 1902» in 1901-02, beside Любовь Александровна (start 1 June 1898).
+After that the SP list has ONE Егорова a season: «Любовь» 1902-03, 1904-05, 1910-11; «Марія Николаевна» 1903-04, 1905-08 (start 1882) and
+1908-09, 1909-10 (start «1 іюня 1898», Любовь's). The roles run on unbroken across the names: Мирта, Клемансъ, повелительница нереидъ,
+Голубая георгина (1903-11), Цикалія (1905-10), Гамзатти (1909-10 «Марія», 1910-11 «Любовь"). Research layer today: Марія Н. a3dee646 holds
+1903-04 and 1905-08, a separate «Егорова, Марія Николаевна» d45195ed holds 1908-10, Любовь 0eea687d holds 1898-99, 1901-03, 1904-05, 1910-11.
+Also: the 1899-00/1900-01 «Марія Николаевна 2-я» roles (Монна, Илька, Клемансъ) are Любовь's 1901-02 roles, and Любовь is not printed by name
+those two seasons (list numbers continuous). Reviews: the post-1902 SP «Егорова» mentions are all unlinked (bare surname).
+
+## 2026-11-02 — Егорова (SP ballet): review contexts 1899-00..1902-03, to test whether «Марія Николаевна 2-я» 1899-01 is Любовь
+
+```sql
+select m.season, m.page_id, m.surface, m.char_start, m.char_end, b.text from entities.review_mention m join raw.review_block b using(block_id)
+ where m.city='SP' and m.season in ('1899-00','1900-01','1901-02','1902-03') and m.surface like 'Егоров%' order by 1,2,4;
+```
+
+Result: «Егорова 2-я» is a soloist every season: 1899-00 Монна (Жизель), Маргарита (Маркобомба), pas with Сѣдова/Преображенская/Кшесинская;
+1900-01 Флеръ-де-Фаринъ, ледъ (Времена года), Илька; 1901-02 Клемансъ, Монна, Илька, Цикалія; 1902-03 La gracieuse, Флеръ-де-Фаринъ, Лиза
+(Волшебная флейта, «Егоровой»). «Егорова 1-я» is only in corps lists (1899-00 Золото, a crowd list, a replacement for Астафьева; 1901-02 Краковякъ).
+The 1899-00 roster's «Марія Николаевна 2-я» credits Монна—5 and Маргарита—9, the same parts the reviews give «Егорова 2-я».
+
+## 2026-11-02 — Verify Егорова re-split (Марія Николаевна / Любовь) after rebuild
+
+```sql
+select p.display_name, string_agg(a.season||'/'||a.entity_type, ' ' order by a.season) from research.person p
+ join research.person_appearance a using(person_id)
+ where p.display_name like 'Егорова%' and (p.display_name like '%Любовь%' or p.display_name like '%Николаевна%') group by all;
+select * from entities.person_candidate where status='pending';
+```
+
+Result: Марія Николаевна 1890-91..1901-02 (ends 7 June 1902, left service); Любовь Александровна 1897-98 (Graduates), 1898-99, 1901-02..1910-11.
+An ordinal-shift candidate re-proposing the pair appeared (pending) and survived a manual reject -- builder bug, fixed; 0 pending after.
+research.person 2,626; receipts 3,223,088,581; Wikidata 174; 0 shifts; 0 orphans.
+
