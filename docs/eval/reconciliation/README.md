@@ -1419,3 +1419,72 @@ discipline_basis text from the current pipeline). Promoted; backup `outputs/back
 cells (1899-00 ×2, 1907-08 ×13) are the open check from 1897-98, not read here.
 
 **Outcome:** 13 ledger rows (1902-03-01..13).
+
+## 1908-09 (2026-11-02): ballet and opera exact to the kopeck in both cities; every footnote matches; the Moscow Art Theatre run is outside the stats
+
+The stats page is p. 56 (`1908-09_ProductionStats.pdf`, issue-era volume): category totals only, no venue lines, eight footnotes
+(free matinées and benefits per line; fn. 8 = Moscow «Смѣшанныхъ» 1, the Gogol centenary). Productions lists: ballet, both cities
+(the Moscow «Списокъ пьесъ», pp. 70-71, also lists the opera with dates). Reviews: ballet, both cities.
+
+**Step 1, city totals:** Moscow 445 / 439 events, +10,775.35 р.; SP 608 / 553, +8,321.01 р.
+
+**What the stats leave out.** Every charity event (Moscow 6, 10,775.55 р.; SP 7, 8,638.50 р.; ledger 1908-09-01, -04), the Moscow
+Art Theatre's 46 Михайловскій events 30 Mar - 3 May 1909 (no receipts; -05) and Sarah Bernhardt's two guest nights, 8 and 12 Dec
+(no receipts; -06). Free student matinées are counted. Unlike 1909-10 and 1910-11, the page prints no Moscow Art Theatre line.
+
+**Step 2, lines.** Once those are out:
+
+| Line | Counts | Receipts | Reading |
+|---|---|---|---|
+| Moscow ballet | 49 = 49 = list | exact | |
+| Moscow opera | 165 = 165 | exact | |
+| Moscow «Смѣшанныхъ» | 1 = 1 | exact | 20 Mar Малый Gogol centenary (reading from «Мертвыя души», act 1 of «Женитьба», opera), fn. 8 |
+| Moscow Малый drama | 224 = 224 | −0.20 | yearbook_own, provisional (-02) |
+| SP ballet | 48 = 48 = list | exact | |
+| SP opera | 154 = 154 | exact | |
+| SP French | 103 = 103 | exact | without the Bernhardt nights |
+| SP German | 25 = 25 | −0.06 | half kopecks (#161), closed (-07) |
+| SP Александринскій drama | 223 = 223 | **−317.43** | open (-08) |
+
+**Footnotes.** Every free matinée and benefit the footnotes count is in the Repertoire's annotations: SP drama 1 benefit (4 Nov) and
+4 free (14 Nov, 6 Dec, 4 Feb, 20 Mar Gogol); SP opera 2 + 1; SP ballet 1 (14 Dec, corps de ballet) + 2 (14 Nov «Аленькій
+цвѣточекъ», 4 Feb «Царь Кандавлъ»); Moscow drama 1 + 3; Moscow opera 3 + 2; Moscow ballet 2 (30 Nov Арендсъ, 7 Dec corps de
+ballet) + 1 (14 Nov «Лебединое озеро»). Only French differs: fn. 4 counts 15 benefits, the Repertoire annotates 14 (free 3 = 3).
+Not chased (French).
+
+**Step 3, residual.** No single-digit-slip candidate for the Александринскій −317.43. Every stored receipts figure of the season
+equals its own printed text; no column has been read blind (the season was scan-swept 54/54 at extraction, issue #93). The stats
+total bears on #93's open physical-check cell, 11 Oct Александринскій «15?2 р. 34 к.» (stored 152.34, crop
+`scan_audit/1908-09_rg_alex_11oct.png`): any four-digit reading (1502-1592) would put the line over by 1,032-1,122 р., so the
+total supports 152 р. 34 к. as stored.
+
+**Lists.** Every printed total = its dates; SP 48 and Moscow 49 = stats = Repertoire. One date differs: Moscow «Спящая красавица»,
+list «октября 18», Repertoire 8 Oct (1040 р. 89 к.; the Большой is dark on 18 Oct). The list's slip (-03; crops
+`scan_audit/1908-09_rg_bolshoi_8oct.png`, `_18oct.png`, `_msk_list_spyashchaya.png`).
+
+**Research layer.** The Moscow Art Theatre heading is printed once, over 30 Mar, so only that event carries the troupe; the other 45
+read as the St. Petersburg drama company (`research.performance.company`). 1906-07 had the same pattern and was fixed with a
+`VISITING_RUNS` row (RG 2026-10-30). **Applied 2026-11-02** (RG: "Yes, label them"): a `VISITING_RUNS` row for the Михайловскій
+30 Mar - 3 May 1909. Rebuild on a copy (`outputs/rebuild_mxat_1908-09_2026-11-02/`) v. production: research.event 45 rows
+(`companies`), research.performance 45 (`company`, `discipline_basis`), nothing else in 24 tables; discipline stays Russian drama.
+Promoted (production = tested copy), sqlite rebuilt, not republished; backup `outputs/backups/mxat_1908-09_2026-11-02/`.
+
+**A third source: the ballet reviews** (SP 7 pp., f. 116-122; Moscow 5 pp., f. 157-161), one agent,
+`1908-09_review_ballet.csv`, 88 statements: 79 agree, 6 no, 3 unclear. Moscow agrees throughout (dates, titles, monthly and
+per-title counts, total 49); only its own breakdown adds to 39 for 49. SP (-09): f. 117 puts «Лебединое озеро» (Трефилова) on
+30 Nov with «Павильонъ Армиды»; the Repertoire and the list give 30 Nov «Павильонъ Армиды» + «Пахита» and 7 Dec «Лебединое
+озеро» + Армида, so the review merged two bills, and its f. 122 per-title counts carry the slip.
+
+**6 Feb 1909, for RG (-10).** The SP review (f. 121) says two of the three Shrovetide matinées were cancelled on the death of
+Вел. Кн. Владиміръ Александровичъ: 6 Feb «Спящая красавица» and 7 Feb «Конекъ-Горбунокъ»; its season total is 47. The
+Repertoire (p. 36) prints 6 Feb утро «Спящая красавица, бал.» 3028 р. 85 к., with receipts in all three SP theaters that day
+(5 Feb and 7-14 Feb dark); the list counts 6 Feb and the stats' 48 includes it. Crops `scan_audit/1908-09_rg_review_sp_f121_6feb.png`,
+`1908-09_rg_mariinsky_6feb.png`. Stored as printed; needs an outside source.
+
+**Stored review-text slips** seen on the way (not corrected; for RG): SP p000 «Мерседесь», missing drop-cap Б («АЛЕТНЫЕ»); p001
+«проведенныемъ», «ансамблѣ» (print «ансамблэ»); p002 «стиЛЬности»; p003 «опрошенные» (print «опрощенные»); p004 «мѵзыка», «покрываль»,
+«танцоваль», «Мариинскаго»; p005 «Аленыкій»; Moscow p001 «выпускающуюся» (print «выпускавшуюся»), «Остальныя» (print «Остальные»); p002
+«партиру»; p003 «Лебединая озера»; p004 line-break hyphens «Рай-монда», «бенефис-ныхъ». Also: the 8 Apr Repertoire prints «Ѳемида и
+Пелей», review and list «Ѳетида» (variation, left).
+
+**Outcome:** 10 ledger rows (1908-09-01..10). Open: Александринскій −317.43 (-08), 6 Feb (-10). The Moscow Art Theatre label (-05) applied 2026-11-02.

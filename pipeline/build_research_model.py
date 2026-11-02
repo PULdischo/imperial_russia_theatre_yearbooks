@@ -332,6 +332,10 @@ VISITING_RUNS = [
      "Вишневый садъ, Горе отъ ума): no troupe heading, no receipts, outside the season totals and the «Списокъ пьесъ»; "
      "no 1907-08 source names the company (probably the Moscow Art Theatre). RG, 2026-10-28: label it a visiting "
      "troupe, unnamed"),
+    ("1908-09", "Михайловскій", "1909-03-30", "1909-05-03", "Moscow Art Theatre",
+     "the 46 Михайловскій events 30 Mar - 3 May 1909 (Синяя птица, Три сестры, Ревизоръ, У царскихъ вратъ): the "
+     "heading «Спектакли Московскаго Художественнаго театра» is printed once, over 30 Mar (p. 46); no receipts, "
+     "no line on the season totals (reconciliation ledger 1908-09-05). RG, 2026-11-02: \"Yes, label them\""),
     ("1909-10", "Михайловскій", "1910-04-19", "1910-05-14", "Moscow Art Theatre",
      "season totals p. 58 print «Московскаго художественнаго театра 35»: the 35 Михайловскій events "
      "19 Apr - 14 May 1910, printed with no troupe heading (RG, 2026-10-27)"),

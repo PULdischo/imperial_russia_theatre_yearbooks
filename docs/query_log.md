@@ -25063,6 +25063,23 @@ Result: 1906-07 no.40 Наталья Евдокимовна, 6 performances, «�
 Михайловна 2-я, Надежда Сергеевна 3-я. 1907-08 Moscow reviews: «Иванова 2-я» 3 mentions linked to Наталья, «Иванова 3-я» 2
 linked to Надежда Михайловна; the «Тѣни» cast (Баядерка, p003) lists 2-я and 3-я side by side, so both were living dancers.
 
+## 2026-11-02 — 1908-09 ballet reviews v. Repertoire (one agent, read-only)
+
+```sql
+SELECT page_id, block_index, block_type, text FROM raw.review_block WHERE page_id LIKE 'review_1908-09_%ballet%' ORDER BY page_id, block_index;
+SELECT e.event_id, t.canonical_name, e.date, e.time_of_day, e.event_status, e.receipts_verbatim, e.annotation,
+       string_agg(p.verbatim_title||' | '||coalesce(p.verbatim_genre,''), ' ;; ' ORDER BY p.performance_order)
+FROM research.event e JOIN research.theater t USING(theater_id) LEFT JOIN research.performance p USING(event_id)
+WHERE e.season='1908-09' AND e.city='SP' AND e.date BETWEEN '1909-02-03' AND '1909-02-09' GROUP BY ALL ORDER BY e.date, t.canonical_name;
+SELECT pe.title, pe.performed_text, pe.total_text FROM raw.production_entry pe
+WHERE pe.season='1908-09' AND pe.city='SP' AND (pe.title ILIKE '%Спящая%' OR pe.title ILIKE '%Пахита%' OR pe.title ILIKE '%Лебедин%' OR pe.title ILIKE '%Армид%' OR pe.title ILIKE '%Конекъ%');
+-- plus: all 1908-09 events with a ballet performance; research.production 1908-09; Большой top receipts; schema lookups
+```
+
+Result: review blocks SP 7 pages / 47 blocks, Moscow 5 / 25. 88 statements, 79 agree. SP 6 Feb Маріинскій утро «Спящая
+красавица» 3028.85 printed (review: cancelled); 5 and 7-14 Feb dark. SP ballet events 49 incl. the 17 Jan charity bill. One
+query failed (Binder Error, no entry_id column) and was replaced.
+
 ## 2026-11-02 — Verify Иванова 1907-08 relinks after rebuild
 
 ```sql
@@ -25075,3 +25092,16 @@ select name_surface, person_id, count(*) from research.review_credit where seaso
 
 Result: «Иванова 2-я» 3 -> Надежда Михайловна, «Иванова 3-я» 2 -> Надежда Сергѣевна (scan-verified); tenure note 1 row;
 no review_credit or review_assertion rows for these. Metrics unchanged: person 2627, receipts 3223088581, Wikidata 174, 0 shifts.
+
+## 2026-11-02 — 1908-09 Moscow Art Theatre VISITING_RUNS row: copy v. production diff
+
+```sql
+-- per research table/view t, both directions:
+select count(*) from (select * from copy.research.t except all select * from prod.research.t);
+-- then per column of research.event / research.performance: rows where p.col is distinct from n.col
+select p.company, count(*) from research.performance p join research.event e using (event_id) join research.theater t using (theater_id)
+where e.season = '1908-09' and t.canonical_name = 'Михайловскій' and e.date between '1909-03-30' and '1909-05-03' group by 1
+```
+
+Result: only research.event (45, `companies`) and research.performance (45, `company`, `discipline_basis`) differ; all 46 events
+now Moscow Art Theatre. After promotion production = tested copy in all 24 research tables; sqlite: 46 events Moscow Art Theatre.
