@@ -24884,3 +24884,14 @@ Result: see session report. Scan (checked by Claude, page width): 1899-00 SP p.9
 Result (cont.): 1899-00 volume leaving/death dates: 56 within Sep 1899-Aug 1900, 4 later (Sep 1900), 9 before Sep 1899 (listed below in the session). No other 1 June leaving in 1899 or 1900.
 
 Ruling: RG 2026-11-02 "1 June 1899" — added to pipeline/research_corrections/service_period_date_corrections.csv; research.service_period end_date 1899-06-01 with date_correction; raw keeps «1889».
+
+## 2026-11-02 — Person field audit C1: four wrong Wikidata matches removed (RG: "Remove all four")
+
+```sql
+select cast(p.person_id as varchar), p.display_name, p.first_attested_season, p.last_attested_season, w.wikidata_qid, w.wikidata_label, w.wikidata_description, w.match_evidence
+from entities.person_wikidata_link w join research.person p using(person_id) where w.wikidata_qid in ('Q4247336','Q4492843','Q434601','Q21094595');
+-- Wikidata SPARQL: P569, P570, P106, P19, P20 and descriptions for the four QIDs
+select display_name, wikidata_qid from research.person where person_id in (<the four>);
+```
+
+Result: Кунстъ -> Q4247336 (actor 1700-1703), Фричъ -> Q4492843 (b. 1963, Meißen), Шмидтъ 1-й -> Q434601 (b. 1874, Pressburg), Шмидтъ 2-й -> Q21094595 (German composer, organist, Domkapitular, 1840-1923). All four unlinked and recorded 'No' in entities.wikidata_decision (docs/eval/apply_wikidata_rejections_2026-11-02.py). research.person with a QID 178 -> 174; nothing else changed.
