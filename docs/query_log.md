@@ -24810,3 +24810,12 @@ select count(*) from raw.person_entry_service where end_date_undate is not null;
 ```
 
 Result: before -> after: (none) 22,309 -> 22,181; died 211 -> 216; left service 953 -> 1,027; other 155 -> 204; ends with a date 1,567 -> 1,695. Unchanged: research.person 2,640, live persons 2,541, person_link 23,980 (same hash, 0 shift blocks), works 2,949 (same id hash), receipts 3,223,088,581, Wikidata 178. 129/129 rows landed; 1 (Шемаевъ «† 1902 г.», year only) has no undate pending ruling A3's partial-date build.
+
+## 2026-11-02 — Person field audit name-field moves (B3/B4/A5) applied: before/after check
+
+```sql
+-- same metrics as B1 (person counts, person_link hash, work id hash, receipts, Wikidata, end types) + display_name diff
+select count(*) from raw.person_entry where entity_type='Graduates' and family_name like '%,%';
+```
+
+Result: 262 entries moved (B3 160, B4 79, A5 23). All metrics identical (people 2,640, live 2,541, links same hash, 0 shift blocks; name-mismatch flags 108 -> 52). Display names changed: 1 (Фонъ-Нольте «Іоганъ-Константинъ»). Graduates with a comma in the surname: 0; first name + patronymic in first_name: 0.

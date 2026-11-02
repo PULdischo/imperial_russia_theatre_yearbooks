@@ -24695,3 +24695,7 @@ them moved out of credit_summary_text); rulings A2 (moving out = other; arrivals
 printed date held (undated transfers, bare «†»), as are arrivals, secondments, 2 «Освобожденъ отъ обязанностей» rows and 25 rows whose
 existing end needs a type/date correction (B1_held.csv). Backup: outputs/full_run/imperial_theaters.pre_b1_ends_2026-11-02.duckdb and
 outputs/full_run/raw_backup_b1_2026-11-02/. Result in query_log 2026-11-02 "B1 applied". research_dataset.sqlite not rebuilt (Andy).
+
+## Person field audit B3/B4/A5: name parts moved to the right fields -- APPLIED 2026-11-02 (RG: "Apply all three")
+
+262 raw entries (Moscow Musicians/Admin first+patronymic split 160; Graduates «Surname, Name.» 79; double given names 23) via docs/eval/person_field_audit_2026-11-01/raw_fix_name_fields.py; rebuild; people, links, works, receipts unchanged. Backup outputs/full_run/imperial_theaters.pre_name_fields_2026-11-02.duckdb + raw_backup_name_fields_2026-11-02/.
