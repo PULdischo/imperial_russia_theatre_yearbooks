@@ -24699,3 +24699,7 @@ outputs/full_run/raw_backup_b1_2026-11-02/. Result in query_log 2026-11-02 "B1 a
 ## Person field audit B3/B4/A5: name parts moved to the right fields -- APPLIED 2026-11-02 (RG: "Apply all three")
 
 262 raw entries (Moscow Musicians/Admin first+patronymic split 160; Graduates «Surname, Name.» 79; double given names 23) via docs/eval/person_field_audit_2026-11-01/raw_fix_name_fields.py; rebuild; people, links, works, receipts unchanged. Backup outputs/full_run/imperial_theaters.pre_name_fields_2026-11-02.duckdb + raw_backup_name_fields_2026-11-02/.
+
+## Person field audit B6/B7: 95 name misreads and stray non-Russian characters corrected -- APPLIED 2026-11-02 (RG: "High confidence only (95)")
+
+raw_fix_b6_name_misreads.py from B6_name_misreads.csv (high only; 7 medium rows held for RG). One effect: Бочкина, Ольга Григорьевна (1890-91, Arabic letters in the surname) rejoined her 1891-96 record (f7e3beaf -> 6121c08c, superseded automatically); jubilee/obituary links re-run. Backup outputs/full_run/imperial_theaters.pre_b6_misreads_2026-11-02.duckdb + raw_backup_b6_2026-11-02/.

@@ -24819,3 +24819,12 @@ select count(*) from raw.person_entry where entity_type='Graduates' and family_n
 ```
 
 Result: 262 entries moved (B3 160, B4 79, A5 23). All metrics identical (people 2,640, live 2,541, links same hash, 0 shift blocks; name-mismatch flags 108 -> 52). Display names changed: 1 (Фонъ-Нольте «Іоганъ-Константинъ»). Graduates with a comma in the surname: 0; first name + patronymic in first_name: 0.
+
+## 2026-11-02 — Person field audit B6/B7 applied (95 high-confidence name misreads + stray characters): before/after check
+
+```sql
+-- same metrics as B1; plus research.person display_name diff against the backup, and the fate of any person_id that disappeared:
+select cast(person_id as varchar), superseded_by_person_id from entities.person where cast(person_id as varchar) like 'f7e3beaf%';
+```
+
+Result: research.person 2,640 -> 2,639, live 2,541 -> 2,540: Бочкина, Ольга Григорьевна f7e3beaf (1890-91 only, surname stored with Arabic letters «Бочкينا») now superseded by 6121c08c (1891-92..1895-96, obituary † 11 Feb 1896) — the fixed spelling rejoined one person held as two. Link hash changed only through that merge; 0 shift blocks. Works, receipts, Wikidata unchanged. 3 display names changed. Jubilee/obituary links re-run (build/link_persons.py): 2 rows changed (Бочкина repointed to 6121c08c; Дороѳеевъ display spelling).
