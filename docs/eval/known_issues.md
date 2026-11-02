@@ -24715,3 +24715,7 @@ classify_ends.py classified all 1,728 stored ends; raw_fix_b8_ends.py applied 20
 ## Person field audit B6 correction: reader commentary written into a surname -- FIXED 2026-11-02
 
 B6 (4071d3f) took one reader proposed_fix verbatim including its comment: balletartists_1904-05_MSK_p001__e014 family_name became «Гаврилова (Воскресенская) [or keep bracket name in its own field]». Corrected to «Гаврилова (Воскресенская)» (print 1904-05 no. 14: «Гаврилова (Воскресенская), Евдокія Помпеевна»), and the stray «(Воскресенская),» removed from the tenure note (B6_fix_gavrilova_2026-11-02.csv). A scan of every applied B5/B6 value for commentary markers found no other case. Metrics unchanged. Lesson: sanity-scan new values from reader-proposed fixes for comments before applying.
+
+## Person merge batch 2 (person field audit) -- APPLIED 2026-11-02 (RG, case by case)
+
+10 merges applied with docs/eval/person_merge_manual.py + link_production_creators.py (Золотаренко) and rebuild_after_person_merge.sh; display overrides for Арендсъ (Андрей Федоровичъ) and Гебгардъ (Эдуардъ Карловичъ); Шиманъ and Каффи on hold (uncertain_person_identities.md #52, #53); uncertain merges #48-51. Backups: outputs/full_run/imperial_theaters.pre_merge_batch2_2026-11-02.duckdb (plus one pre_merge_<id> copy per merge).

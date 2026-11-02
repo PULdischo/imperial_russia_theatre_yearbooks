@@ -435,6 +435,15 @@ RESEARCH_TITLE_CORRECTIONS = {
 #: person_id -> (display_name, canonical_first_name, reason). The build fails if the
 #: id is not a live person, so a later merge/split cannot silently orphan an entry.
 RESEARCH_PERSON_DISPLAY_OVERRIDES = {
+    "bedb704a-eaa4-4c7f-b6e8-61f1f0f7e36a": (
+        "Арендсъ, Андрей Федоровичъ", "Андрей",
+        "Moscow violinist, then капельмейстеръ and главный капельмейстеръ балета, «съ 25 сентября 1883 г.» every season; printed "
+        "«Генрихъ» 1890-91..1905-06 and «Андрей Федоровичъ» 1906-08 (and in the 1908-09 jubilee, the «Саламбо» credits, Wikidata "
+        "Q4069020); merged 2026-11-02; RG chose «Андрей Федоровичъ» (person field audit merge batch)"),
+    "da97e9e8-7e92-4b0f-acac-ae26c4442d6c": (
+        "Гебгардъ, Эдуардъ Карловичъ", "Эдуардъ",
+        "SP bassoonist «съ 1 сентября 1885 г.», printed «Іосифъ» 1890-94 and «Эдуардъ» 1894-96; the 1895-96 obituary gives "
+        "«(Joseph-Eduard Gebhardt), Эдуардъ Карловичъ»; merged 2026-11-02; RG chose «Эдуардъ»"),
     "09350cda-ddf5-44b3-8b3e-d0db2e5e1259": (
         "Чекетти, Энрико Цезаревичъ", "Энрико",
         "Enrico Cecchetti: the company lists (BalletArtists, 19 entries) print the Russianized "

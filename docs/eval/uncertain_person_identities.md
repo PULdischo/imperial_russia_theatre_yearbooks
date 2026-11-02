@@ -412,6 +412,46 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** musicians_1896-97_MSK_p002, 1898-99_MSK_p002, 1899-00_MSK_p003, 1900-01_MSK_p003; no review mentions; query log 2026-10-30.
 - **Would resolve it:** his RGIA personnel дело (service-record extracts «Ц», not yet ordered); a Moscow orchestra pay list of 1897-1900; the 1907 SP engagement papers.
 
+## 48. Ромашковъ, Павелъ / Петръ Ѳедоровичъ (Moscow orchestra, drums) -- one drummer whose first name the print varies?
+- **Status:** MERGED (RG 2026-11-02, "Merge, note uncertainty"; survivor 2081a1f5, absorbed bdf426e9)
+- **What is uncertain:** the print gives «Петръ» in 1902-03, 1903-04 and 1905-06 and «Павелъ» in every other season 1893-94..1910-11.
+- **For one man:** one entry per season, never two; drums; «съ 1 октября 1893 г.» every season; list nos. 79-84 in sequence.
+- **For two men / against:** three separate seasons print «Петръ»; the ordinal also flips (2-й / 1-й).
+- **Where to look:** musicians_1902-03_MSK_p002__e024, musicians_1903-04_MSK_p002__e021, musicians_1905-06_MSK_p003__e013.
+- **Would resolve it:** the Moscow orchestra personnel file (RGIA f. 497).
+
+## 49. «Гельцеръ», Petersburg guest 1909-10 and 1910-11 -- Екатерина Васильевна?
+- **Status:** MERGED (RG 2026-11-02, "merge but note uncertainty"; survivor 50a66f3e, absorbed faf53810, 677ad398)
+- **What is uncertain:** the guest heading «Танцовала/и на Петербургской сценѣ Императорскаго театра» prints the surname only.
+- **For:** Китри (1909-10) and Никія (1910-11) are ballerina roles; Екатерина Васильевна was the Moscow ballerina in those seasons; the other Гельцеры (Василій † 1908, Анатолій, painter) cannot be meant; the Русский балет encyclopedia (secondary) has her dancing in SP-era repertoire.
+- **Against:** no first name in the guest entry.
+- **Would resolve it:** the SP repertoire/review for the dates of those performances.
+
+## 50. «Балашова», Petersburg guest 1910-11 -- Александра Михайловна?
+- **Status:** MERGED (RG 2026-11-02, "Merge, note uncertainty"; survivor 3c411109, absorbed 70082472)
+- **What is uncertain:** surname only, under the same guest heading.
+- **For:** Лиза («Тщетная предосторожность») x2; the only Балашова in any list is Александра Михайловна, Moscow company 1905-11 (no. 5-6).
+- **Would resolve it:** the SP repertoire/review entries for those two performances.
+
+## 51. «Кузнецовъ 2-й», Moscow ballet 1910-11 -- Кузнецовъ, Николай (Moscow school, class of 1909-10)?
+- **Status:** MERGED (RG 2026-11-02, "Merge, note uncertainty"; survivor 9c1b8df2, absorbed 964eb728)
+- **What is uncertain:** the print (1910-11 p. 131 no. 30) gives «Кузнецовъ 2-й.» with no name or date.
+- **For:** of the four boys graduating from the Moscow school in 1909-10 (Грековъ, Кузнецовъ Николай, Смольцовъ, Язвинскій), the other three join «съ 1 августа 1910 г.» by name; the senior Владиміръ Николаевичъ is printed «1-й» the same season.
+- **Against:** identification by elimination only.
+- **Would resolve it:** the 1911-12 volume, or the school's placement record.
+
+## 52. Шиманъ (production-list composer) -- Шиманъ, Михаилъ Викторовичъ?
+- **Status:** OPEN, ON HOLD (RG 2026-11-02, after first saying "Merge, note uncertainty"); creator 67307816 stays a creator_person with proposed roster match 6dbf9fdb (see also #21).
+- **What is uncertain:** whether the composer of added music in «Хрустальный башмачекъ» (Moscow 1889 revival; lists 1890-97 «Г. Шимана») is the orchestra violinist (Moscow, from 1882, † 7 Dec 1900); and whether the 1900-01 «Волшебный башмачекъ» 4th-act credit «Щимана» is him or «А. Симонъ» (1900-01 review prints «Мюльдорфера и А. Симона»).
+- **For:** surname, city, orchestra milieu; «Г.» is the honorific (also «Г. Оге», «Г. Мюльендорфера»); credits stop around his death. Русский балет encyclopedia (1997): 1889 revival «с добавлением музыки Шимана» (no first name).
+- **Would resolve it:** the 1889 score or poster; RGIA.
+
+## 53. Каффи, Иванъ / Дмитрій Іосифовичъ (SP costumer) -- one man or two?
+- **Status:** OPEN, ON HOLD (RG 2026-11-02; first "Keep separate", then held on revisit). Records 2c311877 (Иванъ 1890-1903) and 1adf0084 (Дмитрій 1903-05) stay separate.
+- **For one man:** same patronymic, start «съ 1 сентября 1883 г.», same workshop and duty (men's costumes, ballet and French troupes), no gap; the 1902-03 «Оставилъ службу 1 августа 1903 г.» on that page is printed under Пипаръ, not Каффи.
+- **For two men:** the change to «Дмитрій» is printed two years running (1903-04 p.119, 1904-05) and a 1903-04 Moscow review gives «Д. Каффи»; a successor would not normally inherit the 1883 start date, but could have.
+- **Would resolve it:** the wardrobe personnel files (RGIA f. 497).
+
 ## Related, decided (not uncertain), for reference
 
 Муромская, Марія Николаевна + «Лидія Николаевна» (SP BalletArtists, 1907-08 only, no. 63, same date 1 іюня 1906; the only Муромская in any list): MERGED 2026-10-30 (RG); one-season first-name variant, possibly from Нестеровская 1-я, Лидія two lines below or Свирская, Лидія Николаевна. Трефилова, Вѣра Ивановна + «Вѣра Александровна» (SP BalletArtists, 1901-02 only, no. 109, same date and place, the one season without «Ивановна») and Сигуля, Александръ Макаровичъ + «Макарычъ» (Moscow BalletArtists, 1908-09 only, no. 48, same date): MERGED 2026-10-30 (RG), one-season patronymic variants, scan-read. Грибенъ, Августъ Ѳедоровичъ vs Ѳедоръ Ѳедоровичъ (SP percussionists; SPLIT 2026-10-15, the 1890-93 ballet-orchestra cross-references «Грибенъ (см. оперный оркестръ)» assigned to Ѳедоръ, the only Грибенъ in the opera orchestra then; scans 1890-91 pp. 75/78/80); Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.

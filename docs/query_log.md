@@ -24923,3 +24923,24 @@ where family_name like '%[%' or first_name like '%[%' or patronymic like '%[%' o
 ```
 
 Result: 1 row (balletartists_1904-05_MSK_p001__e014, from B6). Present in pre_b5 backup, absent in pre_b6 backup -> introduced by B6. Fixed; re-query returns only the corrected row; metrics identical.
+
+## 2026-11-02 — Merge case 1 (Шиманъ): every production-list and review credit for «Хрустальный / Волшебный башмачекъ»
+
+```sql
+select pr.season, pr.city, pr.list_title, pc.credit_order, pc.role_text, pc.name_printed, pc.qualifier_printed, p.display_name
+from research.production pr join research.production_credit pc using(production_id) left join research.person p using(person_id)
+where pr.list_title in ('Хрустальный башмачекъ','Волшебный башмачекъ') order by pr.season, pr.city, pc.credit_order;
+select season, city, role_category, printed_phrase, link_method from research.review_credit
+where work_surface ilike '%башмачек%' or printed_phrase ilike '%башмачек%' order by season;
+```
+
+Result: see session report (table for RG).
+
+## 2026-11-02 — Merge batch 2 applied: before/after check
+
+```sql
+-- metrics.py (research.person, live entities.person, person_link count+hash, works, receipts, Wikidata, end types) before/after;
+-- check_person_link_alignment.py; select display_name, tenure_start_date, slips_left_out from research.person_tenure where person_id like '03d0366a%';
+```
+
+Result: research.person 2,639 -> 2,627 (11 roster records absorbed incl. 2 Гельцеръ guest rows, + Золотаренко creator joined Петръ); live 2,540 -> 2,529; 0 shift blocks, 0 orphans, 0 pending; works, receipts (3,223,088,581), Wikidata (174), end types unchanged. Ромашковъ Григорій tenure start 1893-10-10, slip 1893-10-01 left out.
