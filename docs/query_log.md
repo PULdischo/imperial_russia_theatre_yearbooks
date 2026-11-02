@@ -25182,3 +25182,60 @@ Result: all 10 edited people complete; research.person 2,625 (one split reunited
 Афанасьевъ (5789b206/74d2fbeb), Мендесъ Джульетта (723f64f2/ca42f234). 1900-01 Moscow «г-жа Мендесъ» (Жуанитта) now unresolved
 between the two Джульетта records. Receipts 3,223,088,581; Wikidata 174; 0 shifts; 0 pending.
 
+## 2026-11-02 — Merge batch nos. 13-14: Левинсонъ «Фердинандовна» (SP ballet 1904-05)
+
+```sql
+select page_id, family_name, first_name, patronymic from raw.person_entry where family_name like 'Левинсон%' and page_id like '%1904-05%';
+select p.page_id, p.family_name, p.patronymic from raw.person_entry p where p.page_id like 'balletartists_%SP%' and p.patronymic like 'Фердинанд%';
+```
+
+Result: 1904-05 nos. 53-54 print «Анна Фердинан-/довна» and «Ольга Фердинан-/довна» (scan p.18, Claude); every other volume 1898-99..1907-08
+prints Федоровна/Ѳеодоровна/Ѳедоровна. Василій Левинсонъ prints «Фердинандовичъ» in 1893-94 only, Федоровичъ/Ѳедоровичъ later. No other
+Левинсонъ women in any SP list.
+
+## 2026-11-02 — Merge batch no. 15: Больмъ, Адольфъ-Эмиль / Адольфъ Эмиль (SP ballet)
+
+```sql
+select pe.entry_id, pe.family_name, pe.first_name, pe.patronymic, pe.tenure_note_text, l.person_id from raw.person_entry pe
+ join entities.person_link l using(entry_id) where l.person_id::varchar like '3a1cd225%' or l.person_id::varchar like '15833101%' order by 1;
+select count(*), string_agg(distinct season,' ') from entities.review_mention where surface like 'Больм%' and city='SP';
+```
+
+Result: 8 entries 1903-04..1910-11, all «съ 1 іюня 1903 г.», no patronymic. Hyphenated «Адольфъ-Эмиль» 1903-05, 1909-11 (3a1cd225);
+«Адольфъ Эмиль» 1905-09 (15833101). Surname stored «Болъмъ» 1903-04 and 1905-06, «Болмъ» 1909-10; 1905-06 first name «Адолльфъ», 1909-10
+«Эмилъ» (unchecked). 18 SP review mentions 1902-03..1910-11. No Wikidata QID on either.
+
+## 2026-11-02 — Merge batch no. 16: Афанасьевъ Н. Н. / Николай Николаевичъ (Moscow Контора, doctors)
+
+```sql
+select pe.page_id, pe.heading_path, pe.list_number, pe.family_name, pe.first_name, pe.patronymic, pe.rank_or_title, pe.tenure_note_text
+from raw.person_entry pe where pe.family_name like 'Афанасьев%' and pe.page_id like 'administration%' order by 1;
+```
+
+Result: 8 entries, all Moscow Контора, Врачебная часть: 1900-01 «Врачи ассистенты» no.1 and 1901-02 «Дежурные врачи», «Н. Н.», колл. сов.,
+«съ 8 іюля 1901 г.»; 1902-03..1907-08 «Дежурные врачи» no.1, Николай Николаевичъ, ст. сов., «съ 8 іюля 1891 г.». No other Афанасьевъ in
+Administrators. No Wikidata.
+
+## 2026-11-02 — Merge batch no. 17: Мендесъ, Джульетта / Джульетта Іосифовна (Moscow ballet)
+
+```sql
+select pe.page_id, pe.list_number, pe.family_name, pe.first_name, pe.patronymic, pe.tenure_note_text, l.person_id
+from raw.person_entry pe join entities.person_link l using(entry_id) where pe.family_name like 'Мендес%' and pe.page_id like 'balletartists%' order by 1;
+select count(*) from raw.person_entry where page_id like 'balletartists_1905-06_MSK%';  -- and Ме-/Ми- surnames that season
+```
+
+Result: Джульетта 2-я 1896-97..1900-01 beside Анжелика 1-я (both «съ 1 октября 1896», Анжелика left 20 Oct 1900); Джульетта alone
+1901-02..1907-08 (no 1905-06 entry), «Іосифовна» from 1906-07, all «съ 1 октября 1896» (723f64f2); 1908-09, 1909-10 «Джульетта Іосифовна,
+съ 10 октября 1896» (ca42f234). Іосифъ Мендесъ (ballet + school staff 1890-91..1897-98, left 10 May 1898) is the father implied by «Іосифовна».
+
+## 2026-11-02 — After merge batch 13-17: rebuild checks and the 1900-01 «г-жа Мендесъ» assertion
+
+```sql
+select role_surface, work_surface, performer_person_id, performer_candidates_n, performer_candidate_ids, link_method
+from research.review_assertion where season='1900-01' and city='Moscow' and performer_surface='г-жа Мендесъ';
+select mention_id, surface, char_start, entity_id from entities.review_mention where block_id='review_1900-01_MSK_ballet_p005__b001' and surface like 'Мендес%';
+```
+
+Result: unresolved among Анжелика/Джульетта/Іосифъ (block opens «анитта», role key fails); one mention, occurrence 0. After the hand
+link: performer 723f64f2 (Джульетта); performer links 2,468. research.person 2,620; receipts 3,223,088,581; Wikidata 174; 0 shifts.
+

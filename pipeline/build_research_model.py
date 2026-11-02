@@ -439,6 +439,10 @@ RESEARCH_TITLE_CORRECTIONS = {
 #: person_id -> (display_name, canonical_first_name, reason). The build fails if the
 #: id is not a live person, so a later merge/split cannot silently orphan an entry.
 RESEARCH_PERSON_DISPLAY_OVERRIDES = {
+    "3a1cd225-9398-4057-9aea-6f5dc06d87db": (
+        "Больмъ, Адольфъ-Эмиль", "Адольфъ-Эмиль",
+        "SP ballet «съ 1 іюня 1903 г.» (Adolph Bolm); printed «Адольфъ-Эмиль» 1903-05 and 1909-11, «Адольфъ Эмиль» 1905-09 "
+        "(4 seasons each, so the majority vote ties); merged 2026-11-02; RG chose «Адольфъ-Эмиль»"),
     "0eea687d-5b21-4227-adf0-62de54c8a479": (
         "Егорова, Любовь Александровна", "Любовь",
         "SP ballet «съ 1 іюня 1898 г.»; the 1903-04 and 1905-10 lists print her as «Марія Николаевна» (the name of the "
