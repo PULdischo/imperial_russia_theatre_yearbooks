@@ -81,6 +81,9 @@ Order: conventions first (each settles many rows), then mechanical fixes, then i
 When later volumes reprint a past date differently, the research layer uses the printing from the time of the event; raw stays as
 printed (21 corrections in pipeline/research_corrections/service_period_date_corrections.csv: Цалисонъ 1900, Голубинъ 1-й 1894 /
 16 Sept 1897, Тройниковъ 1 Dec 1896 / 16 Feb 1897, Гиллертъ іюля 1875/1879; Гиллертъ's start slip also in person_start_date_slips.csv).
-Still to put to RG one by one: Потаповъ (1909 vs 1910), Кувакина (23 Aug vs 1 Sept 1904), Константиновъ († 25 vs 27 Dec 1906, same
-volume), Ѳедорова 2-я (1902 vs 1901, relisted 1903-04); and the listed-after-leaving cases (Иванова 2-я, Левинсонъ 1-я, Егорова М. Н.,
+Then RG 2026-11-02: Потаповъ -> 12 Dec 1909 (rule applies: 1910-11 reprints 1909-10 leavers unchanged, only his date changed);
+Кувакина (23 Aug vs 1 Sept 1904) and Константиновъ († 25 vs 27 Dec 1906, same volume) -> leave both printings, conflict noted here;
+Ѳедорова 2-я Лидія -> KEEP the 19 Oct reading «two periods (possibly continuous)» (on the roster 17 of 18 volumes, absent 1904-05;
+8 SP review mentions of «Ѳедорова 2-я» 1903-07 added as corroboration; those mentions are still unlinked in the review layer).
+Still to put to RG: and the listed-after-leaving cases (Иванова 2-я, Левинсонъ 1-я, Егорова М. Н.,
 Дмитріева 1-я, Броневскій-Боянусъ, Гущинъ, Смирнова).

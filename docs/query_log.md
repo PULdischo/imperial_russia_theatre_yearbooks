@@ -24963,3 +24963,83 @@ where sp.list='Musicians' and sp.city='Moscow' and sp.season in ('1909-10','1910
 ```
 
 Result: Перкаусъ, Плаксинъ (10 Feb 1910), Руссъ (1 Aug 1909), Фридрихъ (1 Aug 1910) printed identically in both volumes; 10 of 12 leavings in the 1910-11 list predate the season; only Потаповъ changes (1909 -> 1910). Contemporaneous rule -> 12 Dec 1909 in the research layer.
+
+## 2026-11-02 — Ѳедорова 2-я, Лидія: Season Review mentions of «Ѳедорова» in Petersburg (linked or not)
+
+```sql
+select m.season, m.city, m.surface, m.link_method, m.candidates_n, coalesce(p.display_name,'(unlinked)'), count(*)
+from entities.review_mention m left join research.person p on cast(p.person_id as varchar)=m.entity_id
+where m.city='SP' and (m.surface like 'Ѳедоров%' or m.surface like 'Федоров%') group by all order by 1,3;
+```
+
+Result: see session report. (Also: an existing RG ruling of 2026-10-19 for her — "two periods (possibly continuous); leaving date conflict 1901/1902" — is in person_tenure_discrepancies.csv; a duplicate row added today was removed before it reached the database.)
+
+## 2026-11-02 — 1908-09 reconciliation: Repertoire v. season totals (p. 56), every event classed
+
+`compare_season_stats.py` + `season_stats_receipt_candidates.py --db` on outputs/full_run, then this per-event listing (scratch
+script, family = `compare_season_stats.classify_event`):
+
+```sql
+select e.event_id, e.season, e.city, t.canonical_name, e.date, e.time_of_day, e.receipts_total_kopecks, e.n_works, e.disciplines,
+       a.annotation, a.receipts_text,
+       p.performance_id, p.genre_family, p.discipline, p.is_ceremonial, p.company, p.verbatim_genre, p.verbatim_title
+from research.event e join research.theater t using (theater_id)
+left join analysis.event_entry a using (event_id)
+left join research.performance p using (event_id)
+where e.event_status='performed' and e.season='1908-09'
+order by e.city, t.canonical_name, e.date, e.event_id
+```
+
+Result: Moscow 445 events v. 439 printed, +10,775.35 р.; SP 608 v. 553, +8,321.01 р. Charity (annotation «въ пользу»): Moscow 6
+(10,775.55 р.), SP 7 (8,638.50 р.). With charity out: Moscow opera 165 / ballet 49 exact to the kopeck, Малый 224 (−0.20 р.);
+SP opera 154 / ballet 48 exact, Александринскій 223 (−317.43 р.), French 105 v. 103 (Sarah Bernhardt 8, 12 Dec, no receipts;
+receipts exact), German 25 (−0.06, half kopecks), Михайловскій 46 Moscow Art Theatre events 30 Mar - 3 May 1909 (no receipts, no line).
+Free matinées and benefits (annotations «Безплатн», «Бенефисъ», «bénéfice») match all 8 footnotes except French benefits 14 v. 15.
+Single-slip candidates: German only (half-kopeck cells); none for Александринскій.
+
+## 2026-11-02 — 1908-09: stored receipts v. their own printed text; p. 9 Александринскій cells
+
+```sql
+select a.event_id, a.theater_canonical, a.date_text, a.receipts_text, e.receipts_total_kopecks, e.receipts_source
+from analysis.event_entry a join research.event e using (event_id) where a.season = '1908-09'
+```
+
+Result: 1,668 rows; every stored value equals its printed text (3 flagged by my regex were «р,» for «р.», already corrected_print_typo).
+p. 9 Александринскій 11 Oct stores 152.34 («15?2 р. 34 к.», #93).
+
+## 2026-11-02 — 1908-09 Moscow «Спящая красавица»: list v. Repertoire dates
+
+```sql
+select e.event_id, e.date, e.time_of_day, p.verbatim_title, a.date_text, a.printed_page_number
+from research.event e join research.performance p using (event_id) join analysis.event_entry a using (event_id)
+where e.season = '1908-09' and e.city = 'Moscow' and p.verbatim_title ilike '%Спящая%';
+select production_id, list_title, printed_total, n_dates, printed_page_number, source_file from research.production
+where season = '1908-09' and city = 'Moscow' and list_title ilike '%Спящ%';
+-- and every Moscow event on 1908-10-08 and 1908-10-18
+```
+
+Result: Repertoire 7 events (17 Sep, 8 Oct, 9 Nov, 3 Dec, 29 Dec, 28 Jan, 15 Mar); list total 7, prints «октября 18». Большой
+dark on 18 Oct. Scans: the list's slip.
+
+## 2026-11-02 — 1908-09 Михайловскій company labels, Moscow Art Theatre span and Bernhardt nights
+
+```sql
+select p.company, p.discipline, count(*) from research.event e join research.performance p using (event_id)
+join research.theater t using (theater_id)
+where e.season = '1908-09' and t.canonical_name = 'Михайловскій'
+  and (e.date between '1909-03-30' and '1909-05-03' or e.date in ('1908-12-08', '1908-12-12'))
+group by all
+```
+
+Result: Moscow Art Theatre 1, St. Petersburg Russian drama 45, Sarah Bernhardt 2.
+
+## 2026-11-02 — Ѳедорова 2-я, Лидія: roster presence by season and Ѳедорова ordinals 1902-08
+
+```sql
+select pa.season, pe.family_name, pe.first_name, pe.patronymic, pe.list_number from research.person_appearance pa join raw.person_entry pe on pe.entry_id=pa.appearance_id
+where pa.city='SP' and pa.entity_type='BalletArtists' and (pe.family_name like 'Ѳедорова%' or pe.family_name like 'Федорова%') and pa.season between '1902-03' and '1907-08';
+select pe.list_number, pe.family_name, pe.first_name from raw.person_entry pe join raw.source_pages sp using(page_id)
+where sp.season='1904-05' and sp.city='SP' and pe.entity_type='BalletArtists' and pe.heading_path like 'Артистки%' and list_number >= 110;
+```
+
+Result: Лидія on the roster in 17 of 18 volumes (1890-91..1907-08), absent only 1904-05, where the list runs 114 Федорова 1-я Марія, 115 Федорова 2-я Александра, 116 Фонарева (no gap). «Ѳедорова 2-я» = Лидія in 1902-04 and 1905-08; = Александра in 1904-05. 8 SP review mentions of «Ѳедорова 2-я» in 1903-04, 1905-06, 1906-07, all unlinked. RG kept the 19 Oct reading; corroboration added to the tenure note.
