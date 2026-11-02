@@ -1,0 +1,8 @@
+item,check,signal,page_id,entry_id,list_no,stored,context
+1082,R4,Musicians row with no instrument,musicians_1902-03_MSK_p000,musicians_1902-03_MSK_p000__e001,,Симонъ | Антонъ | Юльевичъ,Завѣдывающій дѣлами оркестровъ
+1083,R3,first_name: «Тенрихъ» vs usual «генрих» x87,musicians_1902-03_MSK_p000,musicians_1902-03_MSK_p000__e005,,Арендсъ | Тенрихъ | ,"Арендсъ, Генрихъ"
+1084,R3,first_name (within person): «Тенрихъ» vs usual «генрих» x16,musicians_1902-03_MSK_p000,musicians_1902-03_MSK_p000__e005,,Арендсъ | Тенрихъ | ,"Арендсъ, Генрихъ"
+1085,R1,"patronymic missing here, printed in other seasons",musicians_1902-03_MSK_p000,musicians_1902-03_MSK_p000__e013,2.,Адамовъ | Михаилъ | ,"Адамовъ, Михаилъ Прокофьевичъ"
+1086,R4,Musicians row with no instrument,musicians_1902-03_MSK_p000,musicians_1902-03_MSK_p000__e013,2.,Адамовъ | Михаилъ | ,Музыканты
+1087,R5,"2 «съ» in note, 1 start dates parsed",musicians_1902-03_MSK_p000,musicians_1902-03_MSK_p000__e013,2.,Адамовъ | Михаилъ | ,(съ 1 сентября 1898 г.). Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г.
+1088,R1,"patronymic missing here, printed in other seasons",musicians_1902-03_MSK_p000,musicians_1902-03_MSK_p000__e015,4.,Андреевъ | Сергѣй | ,"Андреевъ, Сергѣй"

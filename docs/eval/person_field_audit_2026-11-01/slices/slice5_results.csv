@@ -198,3 +198,10 @@ item,verdict,scan_reading,proposed_fix,confidence,note
 1079,matches_print,"13. Зедникъ, Меодій Іосифовичъ (съ 1 октября 1900 г.). Вторая скрипка.",,high,"Page view; print again «Меодій» (as 1900-01, item 1057) — print's own form."
 1080,matches_print,"16. Кнохъ, Бернгардтъ Германовичъ (съ 1 сентября 1883 г.). Флейта. Оставилъ службу 1 сентября 1901 г.",,high,"Zoomed; print reads «Бернгардтъ» (with т) — print's own spelling, data matches."
 1081,matches_print,"43. Шредеръ, Карлъ (съ 1 декабря 1884 г.). Ударные инструменты.",,high,Page view (clear); no patronymic printed.
+1082,matches_print,"Завѣдывающій дѣлами оркестровъ. / Симонъ, Антонъ Юльевичъ (съ 1 сентября 1898 г.).",,high,"Page view; administrator heading, no instrument printed — none expected."
+1083,misread,"Арендсъ, Генрихъ (съ 25 сентября 1883 г.). [under «Главный капельмейстеръ балета»]",first_name=Генрихъ,high,"Zoom 2400: initial letter clearly Г, not Т."
+1084,misread,"Арендсъ, Генрихъ (съ 25 сентября 1883 г.).",first_name=Генрихъ,high,Duplicate of 1083.
+1085,matches_print,"2. Адамовъ, Михаилъ (съ 1 сентября 1898 г.). Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г.",,high,Page view: no patronymic printed in this volume.
+1086,matches_print,"2. Адамовъ, Михаилъ (съ 1 сентября 1898 г.). Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г.",,high,No instrument printed for this entry (all neighbours have one); print's own omission.
+1087,matches_print,(съ 1 сентября 1898 г.). Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г.,,high,"Service parsed 1898-09-01..1903-09-01 correctly; second «съ» is the transfer date, not a new start. end_type stored 'other' — arguably a transfer («Переведенъ»); RG's convention call. Note: printed in the Moscow orchestra list yet says «Переведенъ къ Московскимъ театрамъ» — as printed."
+1088,matches_print,"4. Андреевъ, Сергѣй (съ 23 сентября 1898 г.). Ударные инструменты.",,high,Page view; no patronymic printed. ALSO: no. 8 «Бесслеръ» printed without period after the number (data '8' matches).

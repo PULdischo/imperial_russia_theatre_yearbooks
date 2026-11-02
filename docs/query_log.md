@@ -24716,3 +24716,27 @@ WHERE event_id IN ('repertoire_1900-01_p027__s029', 'repertoire_1900-01_p027__s0
 
 Result: only raw.event_entry_performance 4, research.performance 4, entities.work_link 4 changed; production = tested copy; 0 shift
 blocks. Both events now «Школьные товарищи» (1), «Лучъ» (2). sqlite rebuilt: 18 1900-01 performances with includes_dance.
+
+## 2026-11-02 — Person field audit: «Назначенъ/Переведенъ … <year>» lines with no end date parsed
+
+```sql
+select pe.entity_type, count(*) n from raw.person_entry pe
+where regexp_matches(coalesce(pe.tenure_note_text,'')||' '||coalesce(pe.credit_summary_text,''), '(Назначен|назначен|Переведен|переведен)[^.]*\d{4}')
+  and not exists (select 1 from raw.person_entry_service s where s.entry_id=pe.entry_id and s.end_date_undate is not null)
+group by 1 order by 2 desc;
+```
+
+Result: see the session report (counts by list). Includes arrivals («Переведенъ изъ…») and desk changes, which correctly have no end; the count is an upper bound to be split by reading.
+
+## 2026-11-02 — (result of the previous entry) «Назначенъ/Переведенъ … <year>» with no end date
+
+Result: 88 entries — Musicians 39, Administrators 37, ProductionTeam 10, BalletArtists 2. Upper bound: some are arrivals or desk changes that rightly have no end; slice readers confirmed Галкинъ 1894-95, Шульцъ 1899-00, Лапшинъ and Щеголевъ 1904-05 as unparsed ends.
+
+## 2026-11-02 — Person field audit: non-Cyrillic / combining characters in roster name fields
+
+```sql
+select entry_id, family_name, first_name, patronymic from raw.person_entry;
+-- scanned in Python for letters outside Russian Cyrillic + ѢѣІіѲѳѴѵ + Latin, and for combining marks (Unicode category Mn)
+```
+
+Result: 11 rows. Combining acute x4 (Оттоно́вичъ admin 1905-06 e021; Помпее́вна 1893-94 and 1895-96 MSK, +1); «қ» x2 (Булгақовъ 1898-99 SP p005 e020, Кувақина 1900-01 MSK p002 e024); Arabic letters (Бочкينا 1890-91 MSK p001 e012); «ү» (Күстереръ 1890-91 SP p002 e019); «ї» (Троїниковъ 1903-04 MSK p008 e001); Latin «ă» (Александрă 1907-08 SP p000 e014); «ў» (Валеніўсъ 1904-05 MSK p000 e029). No Latin letters mixed into Cyrillic names. All are mechanical fixes (replace with the plain Cyrillic letter / drop the accent).

@@ -4,3 +4,258 @@ item,verdict,printed_line,end_date_text,end_type,proposed_fix,note
 265,wrong_date,Оставила службу 1 іюня 1898 г.,1 іюня 1898 г.,left service,end_date_text=1 іюня 1898 г.,"zoom 0.32-0.35 native: print clearly «іюня»; stored text «юня» drops the і (undate 1898-06-01 already right). ALSO: no. 5 Андреева, Серафима Эдуардовна — printed «Оставила службу 1 сентября 1898 г.» after tally; DB has no end stored and the line is absent from tenure/credit text (dropped)"
 266,correct,Съ 1 сентября 1898 г. переведена въ Московскую балетную труппу.,1 сентября 1898 г.,other (transfer),,full page
 267,correct,Оставила службу 1 мая 1898 г.,1 мая 1898 г.,left service,,full page
+268,correct,Оставила службу 1 мая 1898 г.,1 мая 1898 г.,left service,,full page 1600w; line after tally
+269,correct,Оставила службу 1 іюля 1898 г.,1 іюля 1898 г.,left service,,full page 1600w; line after tally
+270,correct,(съ 1 іюня 1890 г.). Оставила службу 1 декабря 1897 г.,1 декабря 1897 г.,left service,,full page 1600w; line under entry 74 (no tally)
+271,correct,Оставила службу 1 іюля 1898 г.,1 іюля 1898 г.,left service,,full page 1600w; line after tally of no. 91
+272,correct,(съ 1 іюня 1890 г. по 1 января 1895 г. и съ 1 января 1898 г.).,1 января 1895 г.,(service gap; no kind printed),,"full page 1600w; break in service «по … и съ …», print states no reason; stored [other] — same kind of gap is stored [no type] elsewhere (e.g. Гиллертъ, Легатъ 2-й), so end_type is inconsistent, not wrong per print"
+273,correct,(съ 15 іюля 1875 г. по 15 іюля 1879 г. и съ 15 октября 1889 г.).,15 іюля 1879 г.,(service gap; no kind printed),,full page 1600w; date digits match
+274,correct,† 28 марта 1898 г.,28 марта 1898 г.,died,,full page 1600w; line under tally of no. 22
+275,correct,(съ (съ 1 октября 1891 г. по 1 января 1895 г. и съ 1 сентября 1897 г.).,1 января 1895 г.,(service gap; no kind printed),,full page 1600w; print slip: «съ» printed twice at line break
+276,correct,(съ 2 іюля 1881 г.). † 17 марта 1898 г.,17 марта 1898 г.,died,,full page 1600w; line under no. 37 (no tally)
+277,correct,Оставила службу 19 февраля 1899 г.,19 февраля 1899 г.,left service,,full page 1600w; line after tally of no. 24
+278,correct,Оставила службу 1 мая 1899 г.,1 мая 1899 г.,left service,,full page 1600w; line after tally of no. 32
+279,correct,Оставила службу 1 мая 1899 г.,1 мая 1899 г.,left service,,full page 1600w; line after tally of no. 73
+280,correct,Оставила службу 1 марта 1899 г.,1 марта 1899 г.,left service,,full page 1600w; line directly under no. 77 (no tally printed)
+281,correct,Оставила службу 1 мая 1899 г.,1 мая 1899 г.,left service,,full page 1600w; line after tally of no. 98
+282,correct,Оставила службу 4 марта 1899 г.,4 марта 1899 г.,left service,,full page 1600w; line under no. 106 (no tally)
+283,correct,Оставила службу 1 октября 1898 г.,1 октября 1898 г.,left service,,full page 1600w; line under no. 113 (no tally)
+284,correct,Оставила службу 25 августа 1899 г.,25 августа 1899 г.,left service,,full page 1600w; line after tally of no. 117
+285,correct,Оставила службу 11 апрѣля 1899 г.,11 апрѣля 1899 г.,left service,,full page 1600w; line under no. 123 (no tally)
+286,correct,Оставила службу 1 мая 1899 г.,1 мая 1899 г.,left service,,"full page 1600w; line after tally of no. 125; ALSO (not a date): print reads patronymic «Никифоровна», stored «Никіфоровна»"
+287,correct,Оставилъ службу 1 ноября 1898 г.,1 ноября 1898 г.,left service,,full page 1600w; line after tally of no. 13
+288,correct,Оставилъ службу 13 іюня 1899 г.).,13 іюня 1899 г.,left service,,full page 1600w; line after tally of no. 24; print slip: stray «).» after «г.»
+289,correct,Оставилъ службу 18 февраля 1899 г.,18 февраля 1899 г.,left service,,full page 1600w; line under no. 49 (no tally)
+290,correct,Оставилъ службу 6 ноября 1898 г.,6 ноября 1898 г.,left service,,full page 1600w; line after tally of no. 50
+291,correct,Оставилъ службу 1 декабря 1898 г.,1 декабря 1898 г.,left service,,full page 1600w; line after tally of no. 51
+292,correct,(съ 1 сентября 1894 г. по 1 декабря 1896 г. и съ 1 февраля 1897 г.).,1 декабря 1896 г.,(service gap; no kind printed),,full page 1600w; NB later seasons print this gap differently (1899-00 «съ 16 февраля 1897»; 1900-01/1901-02 stored «по 1 января 1896») — see those items
+293,correct,Оставилъ службу 1 ноября 1898 г.,1 ноября 1898 г.,left service,,full page 1600w; line after tally of no. 77
+294,correct,(съ 11 ноября 1866 г.). Оставилъ службу 1 февраля 1899 г.,1 февраля 1899 г.,left service,,full page 1600w; Режиссеръ Лангаммеръ (unnumbered); line under entry
+295,wrong_type,(съ 16 сентября 1881 г.). Прикомандированъ къ Монтировочной части для исполненія обязанностей помощника машиниста Маріинскаго театра 1 февраля 1899 г.).,1 февраля 1899 г.,other (seconded to another post),end_type=other,"full page 1600w; date right, but stored [no type]: a secondment/move of post = other"
+296,correct,Оставила службу 1 марта 1899 г.,1 марта 1899 г.,left service,,full page 1600w; line after tally of no. 36
+297,correct,Оставила службу 1 іюля 1899 г.,1 іюля 1899 г.,left service,,full page 1600w; line after tally of no. 83
+298,correct,(съ 1 іюня 1890 г. по 1 января 1895 г. и съ 1 января 1898 г.).,1 января 1895 г.,(service gap; no kind printed),,"full page 1600w; ALSO (name): print clearly «Бершадскій», stored family_name «Бермадскій» = misread. ALSO: Артисты no. 1 Аистовъ printed «Съ 1 февраля 1899 г. назначенъ режиссеромъ.» after tally — check it is stored"
+299,correct,Оставилъ службу 1 іюля 1899 г.,1 іюля 1899 г.,left service,,full page 1600w; line after tally of no. 11
+300,correct,(съ 15 іюля 1875 г. по 15 іюля 1879 г. и съ 15 октября 1889 г.).,15 іюля 1879 г.,(service gap; no kind printed),,full page 1600w; stored [other] whereas same gap in other seasons stored [no type]
+301,correct,(съ 1 октября 1891 г. по 1 января 1895 г. и съ 1 сентября 1897 г.).,1 января 1895 г.,(service gap; no kind printed),,full page 1600w; stored [other] — inconsistent with [no type] elsewhere
+302,correct,Оставилъ службу 1 іюля 1899 г.,1 іюля 1899 г.,left service,,full page 1600w; line after tally of no. 85
+303,correct,(съ 9 октября 1879 г.). Оставила службу 9 октября 1899 г.,9 октября 1899 г.,left service,,full page 1600w; line under no. 10 (no tally)
+304,correct,(съ 29 сентября 1879 г.). Оставила службу 17 октября 1899 г.,17 октября 1899 г.,left service,,"full page 1600w; line under no. 28. ALSO (name fields): print «Дмитріева (Федорова), Пелагея Васильевна» — stored first_name «(Федорова)», patronymic «Пелагея Васильевна» (bracketed name shifted every field). ALSO: no. 22 Граціенко, Софья Ивановна printed «Оставила службу 7 апрѣля 1900 г.» after tally (not in slice; check stored)"
+305,correct,Переведена въ драматическую труппу 1 октября 1899 г.,1 октября 1899 г.,other (transfer),,full page 1600w; line after tally of no. 29
+306,correct,Оставила службу 8 февраля 1900 г.,8 февраля 1900 г.,left service,,full page 1600w; line after tally of no. 34
+307,correct,Оставила службу 13 іюля 1900 г.,13 іюля 1900 г.,left service,,full page 1600w; line after tally of no. 98
+308,correct,Оставила службу 27 февраля 1900 г.,27 февраля 1900 г.,left service,,full page 1600w; line after tally of no. 106 (stored end right although line absent from stored tenure/credit text)
+309,correct,Оставила службу 1 сентября 1900 г.,1 сентября 1900 г.,left service,,full page 1600w; line under no. 109 (no tally printed)
+310,correct,Оставилъ службу 9 ноября 1899 г.,9 ноября 1899 г.,left service,,full page 1600w; line after tally of no. 28
+311,correct,Оставилъ службу 20 іюня 1900 г.,20 іюня 1900 г.,left service,,full page 1600w; line after tally of no. 36
+312,correct,(съ 1 сентября 1892 г. по 1 декабря 1898 г. и съ 1 сентября 1899 г.).,1 декабря 1898 г.,(service gap; this season prints no kind),,"full page 1600w; date right; stored [left service] is supported by the 1898-99 print «Оставилъ службу 1 декабря 1898 г.» (item 291), though this page states no kind"
+313,correct,"(съ 1 сентября 1894 г. по 1 декабря 1896 г., съ 16 февраля 1897 г.).",1 декабря 1896 г.,(service gap; no kind printed),,full page 1600w; re-entry printed «16 февраля 1897» here vs «1 февраля 1897» in 1898-99. ALSO: no. 55 Свѣтинскій printed «Оставилъ службу 28 іюля 1900 г.» (not in slice; check stored)
+314,correct,(съ 27 декабря 1853 г.). † 19 ноября 1899 г.,19 ноября 1899 г.,died,,full page 1600w; помощникъ режиссера no. 1
+315,correct,(съ 14 іюня 1879 г. по 1 іюля 1899 г. и съ 1 декабря 1899 г.).,1 іюля 1899 г.,(service gap; this page prints no kind),,full page 1600w; И. об. помощника режиссера no. 2; consistent with 1898-99 «Оставилъ службу 1 іюля 1899 г.» (item 302) — stored [no type] could be left service
+316,correct,Оставила службу 11 іюля 1900 г.,11 іюля 1900 г.,left service,,full page 1600w; line after tally of no. 14
+317,correct,(съ 1 сентября по 15 октября 1899 г.).,15 октября 1899 г.,(engagement end; no kind printed),,full page 1600w; guest engagement
+318,correct,Оставила службу 15 апрѣля 1900 г.,15 апрѣля 1900 г.,left service,,full page 1600w; line after tally of no. 30
+319,correct,Оставила службу 3 мая 1900 г.,3 мая 1900 г.,left service,,full page 1600w; line after tally of no. 43
+320,correct,(съ 1 мая 1896 г.). Оставила службу 1 сентября 1899 г.,1 сентября 1899 г.,left service,,full page 1600w; line under no. 74 (no tally)
+321,correct,(съ 1 іюня 1886 г.). Оставила службу 19 августа 1899 г.,19 августа 1899 г.,left service,,full page 1600w; line under no. 79. ALSO: no. 65 Матвѣева 1-я printed «Оставила службу 10 іюня 1900 г.» after tally (not in slice; check stored)
+322,correct,Оставила службу 20 февраля 1900 г.,20 февраля 1900 г.,left service,,full page 1600w; line after tally of no. 103. ALSO: no. 96 Рихартова printed «Прикомандирована къ русской драматической труппѣ 1 августа 1900 г.» (not in slice; check stored)
+323,correct,Оставила службу 2 сентября 1900 г.,2 сентября 1900 г.,left service,,full page 1600w; line after tally of no. 104 (number printed «10;» broken type)
+324,correct,(съ 12 мая 1885 г.). Оставила службу 1 іюля 1900 г.,1 іюля 1900 г.,left service,,full page 1600w; line directly under no. 116 (no tally printed)
+325,correct,Оставила службу 1 января 1900 г.,1 января 1900 г.,left service,,full page 1600w; line after tally of no. 128. ALSO: no. 115 Старостина printed «Оставила службу 1 января 1900 г.» (not in slice; check stored)
+326,correct,Оставила службу 26 іюня 1900 г.,26 іюня 1900 г.,left service,,"full page 1600w; line after tally of no. 129. ALSO (name): print «Цѣлихова», stored family_name «Щѣлихова» = misread (Ц read as Щ)"
+327,correct,Оставилъ службу 1 января 1900 г.,1 января 1900 г.,left service,,"full page 1600w; line after tally of no. 7. ALSO: no. 4 Андреевъ, Николай Николаевичъ printed «Прикомандированъ къ русской драматической труппѣ 1 сентября 1900 г.» after tally (not in slice; check stored)"
+328,correct,(съ 1 іюня 1890 г. по съ 1 января 1895 г. и съ 1 января 1898 г.).,1 января 1895 г.,(service gap; no kind printed),,full page 1600w; print slip «по съ» reproduced faithfully in stored text
+329,correct,(съ 15 іюля 1875 г. по 15 іюля 1879 г. и съ 15 октября 1889 г.).,15 іюля 1879 г.,(service gap; no kind printed),,full page 1600w
+330,correct,(съ 1 октября 1891 г. по 1 января 1895 г. и съ 1 сентября 1897 г.). Оставилъ службу 1 декабря 1899 г.,1 января 1895 г. ; 1 декабря 1899 г.,"(gap, no kind) ; left service",,full page 1600w; both periods right; leaving line after tally of no. 36
+331,correct,Оставилъ службу 17 февраля 1900 г.,17 февраля 1900 г.,left service,,full page 1600w; line after tally of no. 40
+332,correct,Оставилъ службу 4 мая 1900 г.,4 мая 1900 г.,left service,,full page 1600w; line after tally of no. 71. ALSO: no. 78 Усачевъ printed «Прикомандированъ къ режиссерскому управленію.» (no date; check stored)
+333,correct,(съ 6 августа 1878 г.). Оставилъ должность балетмейстера.,(no date printed),left service (left the post of ballet-master),,"full page 1600w; Балетмейстеръ, unnumbered; print gives no date, stored ? is faithful. NB «оставилъ должность» = left that post, not necessarily the service — RG may prefer other"
+334,wrong_type,(съ 11 апрѣля 1856 г.). Оставилъ должность режиссера.,(no date printed),other (left the post of режиссеръ; stays as artist),end_type=other,"full page 1600w; Режиссеры, unnumbered; no date printed (stored ? faithful). He stays in the troupe as artist (Артисты no. 15 same season, item 356), so this is a change of post, not leaving service"
+335,correct,Оставила службу 1 сентября 1901 г.,1 сентября 1901 г.,left service,,full page 1600w; line after tally of no. 4
+336,correct,Оставила службу 17 марта 1901 г.,17 марта 1901 г.,left service,,full page 1600w; line after tally of no. 10
+337,correct,(съ 1 августа 1885 г.). Оставила службу 1 января 1901 г.,1 января 1901 г.,left service,,full page 1600w; line under no. 45 (no tally)
+338,correct,(съ 1 сентября 1895 г.). Оставила службу 1 января 1901 г.,1 января 1901 г.,left service,,full page 1600w; line under no. 50 (no tally)
+339,correct,Оставила службу 24 января 1901 г.,24 января 1901 г.,left service,,"full page 1600w; line after tally of no. 52. ALSO: same page no. 34 Иванова 1-я, Марія Федоровна «Оставила службу 1 іюня 1901 г.»; no. 39 Какорина «Оставила службу 22 ноября 1900 г.»; no. 49 Крылова 2-я «Оставила службу 1 сентября 1901 г.» (not in slice; check stored)"
+340,correct,(съ 1 сентября 1896 г.). Оставила службу 1 января 1901 г.,1 января 1901 г.,left service,,full page 1600w; line under no. 55
+341,correct,Оставила службу 20 октября 1900 г.,20 октября 1900 г.,left service,,full page 1600w; line after tally of no. 57
+342,correct,(съ 1 сентября 1886 г.). † 13 сентября 1900 г.,13 сентября 1900 г.,died,,full page 1600w; line under no. 63
+343,correct,(съ 1 іюля 1875 г.). Оставила службу 5 іюня 1899 г.,5 іюня 1899 г.,left service,,"full page 1600w; line under no. 79; print clearly «1899» although this is the 1900-01 list (an end before the season) — data faithful; possibly a print slip, RG to judge"
+344,correct,(съ 1 сентября 1894 г.). Оставила службу 1 сентября 1900 г.,1 сентября 1900 г.,left service,,full page 1600w; line under no. 80
+345,correct,(съ 1 сентября 1896 г.). Оставила службу 16 декабря 1900 г.,16 декабря 1900 г.,left service,,full page 1600w; line under no. 83
+346,correct,Оставила службу 7 іюня 1901 г.,7 іюня 1901 г.,left service,,full page 1600w; line after tally of no. 86
+347,correct,(съ 1 сентября по 1 декабря 1887 г. и съ 1 марта 1889 г.).,1 декабря 1887 г.,(service gap; no kind printed),,full page 1600w
+348,correct,(съ 14 ноября 1880 г.). Оставила службу 14 ноября 1900 г.,14 ноября 1900 г.,left service,,full page 1600w; line under no. 98
+349,correct,(съ 2 сентября 1881 г.). Оставила службу 2 сентября 1901 г.,2 сентября 1901 г.,left service,,full page 1600w; line under no. 99
+350,correct,(съ 1 сентября 1895 г.). Оставила службу 1 сентября 1900 г.,1 сентября 1900 г.,left service,,full page 1600w; line under no. 108
+351,correct,(съ 5 ноября 1880 г.). Оставила службу 5 ноября 1900 г.,5 ноября 1900 г.,left service,,full page 1600w; line under no. 114
+352,correct,† 2 іюня 1901 г.,2 іюня 1901 г.,died,,full page 1600w; line after tally of no. 120
+353,correct,† 15 мая 1901 г.,15 мая 1901 г.,died,,full page 1600w; line after tally of no. 8
+354,correct,(съ 1 сентября 1891 г. по 1 декабря 1893 г. и съ 1 сентября 1896 г.).,1 декабря 1893 г.,(service gap; no kind printed),,"full page 1600w; stored [other] vs [no type] for the same gap in 1901-02 (item 382) — inconsistent typing, dates right"
+355,correct,(съ 1 сентября 1891 г. по 1 декабря 1894 г. и съ 16 сентября 1897 г.).,1 декабря 1894 г.,(service gap; no kind printed),,full page 1600w; stored [other]; same gap stored [no type] in 1901-02 (item 383)
+356,correct,(съ 11 апрѣля 1856 г. по 1 ноября 1886 г. и съ 1 августа 1887 г.).,1 ноября 1886 г.,(service gap; no kind printed),,full page 1600w; date right. ALSO structure: stored tenure_note_text swallows the whole tally («Въ 7 балетахъ—33 …») — tally belongs in credit_summary
+357,correct,(съ 1 сентября 1890 г. по 1 декабря 1894 г. и съ 16 сентября 1897 г.).,1 декабря 1894 г.,(service gap; no kind printed),,full page 1600w; stored [other]
+358,correct,Оставилъ службу 1 декабря 1900 г.,1 декабря 1900 г.,left service,,full page 1600w; line after tally of no. 23
+359,correct,(съ 23 августа 1884 г. по 3 декабря 1887 г. и съ 1 ноября 1890 г.).,3 декабря 1887 г.,(service gap; no kind printed),,full page 1600w; stored [other]
+360,correct,Оставилъ службу 10 іюля 1901 г.,10 іюля 1901 г.,left service,,"full page 1600w; line after tally of no. 25 (start «съ 10 іюня 1878», end «10 іюля 1901» — both as printed). ALSO (name): print «Емельяновъ», stored «Емелѣяновъ» = misread"
+361,correct,Оставилъ службу 1 декабря 1900 г.,1 декабря 1900 г.,left service,,"full page 1600w; line after tally of no. 31. ALSO: no. 34 Козловъ, Федоръ Михайловичъ printed «Переведенъ къ С.-Петербургскимъ театрамъ 1 сентября 1901 г.» (not in slice; check stored)"
+362,correct,(съ 1 сентября 1892 г. по 1 декабря 1898 г. и съ 1 сентября 1899 г.).,1 декабря 1898 г.,(service gap; this page prints no kind),,full page 1600w; [left service] supported by 1898-99 print (item 291)
+363,correct,(съ 1 сентября 1894 г. по 1 января 1896 г. и съ 16 февраля 1897 г.).,1 января 1896 г.,(service gap; no kind printed),,"full page 1600w; data faithful to THIS print, but the print is inconsistent across seasons: 1898-99 «по 1 декабря 1896 г. и съ 1 февраля 1897», 1899-00 «по 1 декабря 1896 г., съ 16 февраля 1897», here «по 1 января 1896 г.» — RG to judge which is the slip; stored [left service] not stated on this page"
+364,correct,Оставилъ службу 1 января 1901 г.,1 января 1901 г.,left service,,full page 1600w; line after tally of no. 81
+365,correct,Оставилъ службу 1 декабря 1900 г.,1 декабря 1900 г.,left service,,full page 1600w; line after tally of no. 82
+366,correct,(съ 14 іюня 1879 г. по 1 іюля 1899 г. и съ 1 декабря 1899 г.).,1 іюля 1899 г.,(service gap; this page prints no kind),,full page 1600w; И. об. помощника режиссера no. 2
+367,correct,(съ 25 января 1881 г.). Оставила службу 24 февраля 1901 г.,24 февраля 1901 г.,left service,,"full page 1600w; line under Артистки no. 1 (no tally). ALSO: Петровъ, Николай Ивановичъ (помощникъ режиссера no. 2) printed «Прикомандированъ къ монтировочной части …» with no date here"
+368,correct,(съ 20 декабря 1880 г.). Оставила службу 20 декабря 1900 г.,20 декабря 1900 г.,left service,,full page 1600w; line under no. 19
+369,correct,Оставила службу 1 сентября 1901 г.,1 сентября 1901 г.,left service,,full page 1600w; line after tally of no. 31 (printed number 31; slice list_no 31)
+370,correct,Оставила службу 1 мая 1901 г.,1 мая 1901 г.,left service,,full page 1600w; line after tally of no. 45
+371,correct,Оставила службу 1 февраля 1901 г.,1 февраля 1901 г.,left service,,full page 1600w; line after tally of no. 53
+372,correct,(съ 3 октября 1880 г.). Оставила службу 3 октября 1900 г.,3 октября 1900 г.,left service,,full page 1600w; line under no. 72. ALSO: no. 67 Медвѣдева «Оставила службу 24 февраля 1901 г.»; no. 83 Петипа 3-я «Оставила службу 4 сентября 1900 г.» (not in slice; check stored)
+373,correct,Оставила службу 9 октября 1901 г.,9 октября 1901 г.,left service,,full page 1600w; line after tally of no. 103
+374,correct,(съ 1 іюня 1890 г.). † 15 января 1901 г.,15 января 1901 г.,died,,full page 1600w; line under no. 107
+375,correct,(съ 12 мая 1885 г.). † 3 декабря 1900 г.,3 декабря 1900 г.,died,,full page 1600w; line under no. 127 (no tally)
+376,correct,(съ 15 іюля 1875 г. по 15 іюля 1879 г. и съ 15 октября 1889 г.).,15 іюля 1879 г.,(service gap; no kind printed),,full page 1600w. ALSO same page (not in slice; check stored): no. 8 Бершадскій «† 11 ноября 1900 г.»; no. 11 Воронинъ «Оставилъ службу 1 іюня 1901 г.»; no. 14 Воскресенскій «Оставилъ службу 10 іюля 1901 г.»; no. 18 Горскій «1 января 1901 г. переведенъ на службу къ Императорскимъ Московскимъ театрамъ.»
+377,correct,(съ 1 февраля 1881 г.). Оставилъ службу 1 іюня 1901 г.,1 іюня 1901 г.,left service,,"full page 1600w; line under no. 43. ALSO: printed numbering on this page skips 46 (45 Новиковъ → 47 Облаковъ) — print's own numbering, nothing missing between them on the scan"
+378,correct,(съ 1 сентября 1894 г.). Оставила службу 9 апрѣля 1902 г.,9 апрѣля 1902 г.,left service,,full page 1600w; line under no. 59
+379,correct,(съ 1 сентября 1887 г.). Оставила службу 6 апрѣля 1902 г.,6 апрѣля 1902 г.,left service,,full page 1600w; line under no. 72
+380,correct,(съ 1 сентября 1893 г.). Оставила службу 1 мая 1902 г.,1 мая 1902 г.,left service,,full page 1600w; line under no. 78; end right. ALSO: stored tenure_note_text lacks the printed start «съ 1 сентября 1893 г.» (only the leaving line stored) — check start_date
+381,correct,(съ 1 сентября по 1 декабря 1887 г. и съ 1 марта 1889 г.).,1 декабря 1887 г.,(service gap; no kind printed),,full page 1600w
+382,correct,(съ 1 сентября 1891 г. по 1 декабря 1893 г. и съ 1 сентября 1896 г.).,1 декабря 1893 г.,(service gap; no kind printed),,full page 1600w
+383,correct,(съ 1 сентября 1891 г. по 1 декабря 1894 г. и съ 16 сентября 1897 г.).,1 декабря 1894 г.,(service gap; no kind printed),,full page 1600w
+384,correct,(съ 11 апрѣля 1856 г. по 1 ноября 1886 г. и съ 1 августа 1887 г.).,1 ноября 1886 г.,(service gap; no kind printed),,full page 1600w
+385,correct,(съ 1 сентября 1890 г. и по 1 декабря 1894 г. и съ 16 сентября 1897 г.).,1 декабря 1894 г.,(service gap; no kind printed),,full page 1600w; print slip: extra «и» before «по» reproduced faithfully
+386,correct,(съ 23 августа 1884 г. по 3 декабря 1887 г. и съ 1 ноября 1890 г.).,3 декабря 1887 г.,(service gap; no kind printed),,full page 1600w
+387,correct,(съ 1 сентября 1892 г. по 1 декабря 1898 г. и съ 1 сентября 1899 г.).,1 декабря 1898 г.,(service gap; this page prints no kind),,full page 1600w; [left service] supported by 1898-99 print (item 291)
+388,correct,(съ 1 сентября 1894 г. по 1 января 1896 г. и съ 16 февраля 1897 г.).,1 января 1896 г.,(service gap; no kind printed),,"full page 1600w; data faithful to this print; cross-season conflict with 1898-99/1899-00 «по 1 декабря 1896 г.» (see items 292, 313, 363)"
+389,correct,(съ 18 февраля 1850 г.). Заслуженный артистъ Императорскихъ театровъ. † 11 декабря 1901 г.,11 декабря 1901 г.,died,,full page 1600w; Второй балетмейстеръ (Л. И. Ивановъ)
+390,correct,(съ 16 сентября 1881 г.). Оставилъ службу 16 сентября 1901 г.,16 сентября 1901 г.,left service,,full page 1600w; Помощники режиссера no. 2
+391,correct,(съ 14 іюня 1879 по 1 іюля 1899 и съ 1 декабря 1899 г.).,1 іюля 1899,(service gap; this page prints no kind),,full page 1600w; print omits «г.» after 1879/1899 — stored faithful. Print spells «Фомичевъ» here (Ф not Ѳ) — data faithful
+392,correct,Оставила службу 1 мая 1902 г.,1 мая 1902 г.,left service,,full page 1600w; line after tally of no. 5
+393,correct,(съ 7 октября 1881 г.). Оставила службу 7 октября 1901 г.,7 октября 1901 г.,left service,,full page 1600w; line under no. 6
+394,correct,(съ 20 сентября 1881 г.). Оставила службу 20 сентября 1901 г.,20 сентября 1901 г.,left service,,full page 1600w; line under no. 29. ALSO: no. 31 Егорова 1-я «Оставила службу 7 іюня 1902 г.»; no. 37 Исаева 1-я «Оставила службу 3 апрѣля 1902 г.» (not in slice; check stored)
+395,correct,(съ 1 октября по 1 декабря 1901 г.).,1 декабря 1901 г.,(engagement end; no kind printed),,"full page 1600w; guest, unnumbered between 33 and 34"
+396,correct,(съ 1 іюня 1891 г.). † 9 апрѣля 1902 г.,9 апрѣля 1902 г.,died,,full page 1600w; line under no. 59 (no tally). ALSO: no. 48 Кшесинская 1-я «Оставила службу 22 апрѣля 1902 г.» (not in slice; check stored)
+397,correct,Съ 1 декабря 1901 г. командирована къ Московскимъ театрамъ.,1 декабря 1901 г.,other (seconded to Moscow),,"full page 1600w; line after tally of no. 64; stored text has «Московскімъ», print reads «Московскимъ» (minor transcription slip, date/type right)"
+398,correct,(съ 8 ноября 1881 г.). Оставила службу 8 ноября 1901 г.,8 ноября 1901 г.,left service,,full page 1600w; line under no. 68
+399,correct,Оставила службу 1 мая 1902 г.,1 мая 1902 г.,left service,,full page 1600w; line after tally of no. 74
+400,correct,(съ 1 іюня 1894 г.). Прикомандирована къ русской драматической труппѣ. Оставила службу 1 сентября 1902 г.,1 сентября 1902 г.,left service,,full page 1600w; line under no. 85; the secondment line has no date (it was dated 1 августа 1900 in 1899-00 list)
+401,correct,Оставила службу 1 мая 1902 г.,1 мая 1902 г.,left service,,full page 1600w; line after tally of no. 107. ALSO: no. 91 Рѣпина «Съ 1 октября 1901 г. командирована къ московскимъ театрамъ.»; no. 101 Солянникова «Оставила службу 8 января 1902 г.» (not in slice; check stored)
+402,correct,(съ 12 мая 1885 г.). Оставила службу 1 января 1902 г.,1 января 1902 г.,left service,,"full page 1600w; line under no. 127. ALSO (name): print «Ѳедорова 2-я, Лидія Федоровна» — stored patronymic «Федоровна» matches; fine"
+403,correct,(съ 15 іюля 1875 г. по 15 іюля 1879 г. и съ 15 октября 1889 г.).,15 іюля 1879 г.,(service gap; no kind printed),,full page 1600w
+404,correct,Оставилъ службу 1 мая 1902 г.,1 мая 1902 г.,left service,,full page 1600w; line after tally of no. 80
+405,correct,(съ 27 ноября 1872 г.). Оставилъ службу 1 сентября 1903 г.,1 сентября 1903 г.,left service,,"full page 1600w; Помощникъ режиссера, unnumbered"
+406,correct,Оставила службу 1 сентября 1903 г.,1 сентября 1903 г.,left service,,full page 1600w; line after tally of no. 12
+407,correct,(съ 1 января 1894 г.). Оставила службу 1 іюля 1903 г.,1 іюля 1903 г.,left service,,full page 1600w; line under no. 30 (no tally printed)
+408,correct,Переведена въ драматическую труппу съ 1 января 1903 г.,1 января 1903 г.,other (transfer),,full page 1600w; line under no. 39 (no tally). ALSO: no. 38 Ермолова «Оставила службу 1 сентября 1903 г.»; no. 55 Ленская «Оставила службу 1 сентября 1903 г.» (not in slice; check stored)
+409,correct,† 4 января 1903 г.,4 января 1903 г.,died,,"full page 1600w; line after tally of no. 62. ALSO: no. 69 Николаева 3-я, Зинаида Николаевна «† 1 декабря 1902 г.» after tally (not in slice; check stored)"
+410,correct,Оставила службу 1 сентября 1903 г.,1 сентября 1903 г.,left service,,full page 1600w; line after tally of no. 76
+411,correct,Оставила службу 1 сентября 1903 г.,1 сентября 1903 г.,left service,,full page 1600w; line after tally of no. 80
+412,correct,(съ 1 сентября по 1 декабря 1887 г. и съ 1 марта 1889 г.).,1 декабря 1887 г.,(service gap; no kind printed),,full page 1600w; date right; stored [left service] is NOT stated in print (other seasons store [no type])
+413,correct,Переведена въ оперную труппу съ 1 мая 1903 г.,1 мая 1903 г.,other (transfer),,full page 1600w; line under no. 101
+414,correct,Переведена въ драматическую труппу съ 1 сентября 1903 г.,1 сентября 1903 г.,other (transfer),,full page 1600w; line after tally of no. 103
+415,correct,(съ 1 сентября 1891 г. по 1 декабря 1893 г. и съ 1 сентября 1896 г.).,1 декабря 1893 г.,(service gap; no kind printed),,full page 1600w; date right; stored [left service] not stated in print (same gap stored [no type]/[other] in other seasons)
+416,correct,(съ 1 сентября 1891 г. по 1 декабря 1894 г. и съ 16 сентября 1897 г.).,1 декабря 1894 г.,(service gap; no kind printed),,full page 1600w; date right; stored [left service] not stated in print
+417,correct,(съ 1 сентября 1901 г. по 1 ноября 1898 г. и съ 1 сентября 1901 г.).,1 ноября 1898 г.,(service gap; this page prints no kind),,"full page 1600w; end date right. Print slip: first start printed «1901» (should be 1891 per 1898-99 list «съ 1 сентября 1891 г.») — stored text faithful; check start_date_undate isn't 1901. Kind: 1898-99 print says «Оставилъ службу 1 ноября 1898 г.» (item 287), so [left service] would fit better than stored [other]"
+418,correct,(съ 1 сентября 1896 г.). Оставила службу 8 августа 1903 г.,8 августа 1903 г.,left service,,full page 1600w; line under no. 111
+419,correct,(съ 11 апрѣля 1856 г. по 1 ноября 1886 г. и съ 1 августа 1887 г.).,1 ноября 1886 г.,(service gap; no kind printed),,full page 1600w; date right; stored [left service] not stated in print
+420,correct,(съ 1 сентября 1890 г. по 1 декабря 1894 г. и съ 16 сентября 1897 г.).,1 декабря 1894 г.,(service gap; no kind printed),,full page 1600w; date right; stored [left service] not stated in print
+421,correct,(съ 23 августа 1884 г. по 3 декабря 1887 г. и съ 1 ноября 1890 г.).,3 декабря 1887 г.,(service gap; no kind printed),,full page 1600w; date right; stored [left service] not stated in print
+422,correct,(съ 1 сентября 1900 г.). Переведенъ въ С.-Петербургъ.,(no date printed),other (transfer),,full page 1600w; no date on this page; the 1900-01 Moscow list prints «Переведенъ къ С.-Петербургскимъ театрамъ 1 сентября 1901 г.» — undate could be filled from there if RG wants
+423,correct,(съ 1 сентября 1898 г. по 1 декабря 1901 г. и съ 16 марта 1902 г.).,1 декабря 1901 г.,(service gap; no kind printed),,full page 1600w
+424,correct,(съ 1 сентября 1895 г. по 6 ноября 1898 г. и съ 1 октября 1901 г.).,6 ноября 1898 г.,(service gap; this page prints no kind),,full page 1600w; 1898-99 print «Оставилъ службу 6 ноября 1898 г.» (item 290) supports left service
+425,correct,(съ 1 сентября 1892 г. по 1 декабря 1898 г. и съ 1 сентября 1899 г.).,1 декабря 1898 г.,(service gap; this page prints no kind),,full page 1600w
+426,correct,(съ 1 сентября 1894 г. по 1 января 1896 г. и съ 16 февраля 1897 г.).,1 января 1896 г.,(service gap; no kind printed),,full page 1600w; data faithful; cross-season conflict «по 1 декабря 1896» in 1898-99/1899-00
+427,correct,(съ 6 августа 1878 г.). Оставилъ службу 1 сентября 1903 г.,1 сентября 1903 г.,left service,,full page 1600w; line under no. 69
+428,correct,(съ 1 сентября 1896 г. по 1 ноября 1898 г. и съ 16 ноября 1901 г.).,1 ноября 1898 г.,(service gap; this page prints no kind),,"full page 1600w; [left service] supported by 1898-99 print (item 293). ALSO same page (Оркестръ, not in slice): Репетиторъ no. 3 Козловъ, Михаилъ Ѳедоровичъ «† 5 ноября 1902 г.»; Музыканты no. 2 Адамовъ «Переведенъ къ Московскимъ театрамъ съ 1 сентября 1903 г.»; no. 15 Вильшау «Оставилъ службу 1 мая 1903 г.»"
+429,correct,(съ 1 августа 1902 г. по 1 марта 1903 г.).,1 марта 1903 г.,(engagement end; no kind printed),,full page 1600w; Второй балетмейстеръ; date right; stored [left service] is an inference — print gives only «по»
+430,correct,(съ 12 мая 1885 г.). 1 сентября 1903 г. назначенъ вторымъ балетмейстеромъ.,1 сентября 1903 г.,other (appointed to new post),,full page 1600w; Помощникъ балетмейстера
+431,correct,(съ 25 апрѣля 1845 г.). Оставилъ службу 1 сентября 1903 г.,1 сентября 1903 г.,left service,,"full page 1600w; Режиссеръ. ALSO same page (Оркестръ list, not in slice): no. 48 Смирновъ, Семенъ Семеновичъ «Оставилъ службу 1 августа 1903 г.»"
+432,correct,(съ 14 іюня 1879 по 1 іюля 1899 съ и 1 декабря 1899 г.).,1 іюля 1899 г.,(service gap; this page prints no kind),,full page 1600w; print slip «съ и» (inverted) reproduced faithfully; [left service] supported by 1898-99 (item 302)
+433,correct,(съ 1 іюня 1890 г.). Оставила службу 1 ноября 1902 г.,1 ноября 1902 г.,left service,,full page 1600w; line under no. 20
+434,correct,Оставила службу 1 февраля 1903 г.,1 февраля 1903 г.,left service,,full page 1600w; line after tally of no. 21
+435,correct,(съ 25 ноября 1882 г.). Оставила службу 25 ноября 1902 г.,25 ноября 1902 г.,left service,,full page 1600w; line under no. 38 (no tally printed)
+436,correct,(съ 1 сентября 1893 г.). 1 декабря 1902 г. переведена къ Московскимъ театрамъ.,1 декабря 1902 г.,other (transfer),,"full page 1600w; line under no. 60; print really spells «Мололова» here (print slip for Мосолова; data faithful). NB 1901-02 list printed «Съ 1 декабря 1901 г. командирована къ Московскимъ театрамъ» (item 397) — two different events/years, both as printed"
+437,correct,† 30 апрѣля 1903 г.,30 апрѣля 1903 г.,died,,full page 1600w; line after tally of no. 91
+438,correct,(съ 1 іюня 1892 г. по 1 января 1902 г. и съ 1 сентября 1902 г.).,1 января 1902 г.,(service gap; this page prints no kind),,full page 1600w; [left service] supported by 1899-00 print «Оставила службу 1 января 1900 г.»? — NO: that was 1900 (item 325); this gap ends 1902. Print here gives no kind; RG to check the 1901-02 list
+439,correct,(съ 12 мая 1885 г.). Оставила службу 1 января 1901 г.,1 января 1901 г.,left service,,"full page 1600w; line under no. 120; print here clearly «1901», but the 1901-02 list printed «Оставила службу 1 января 1902 г.» (item 402) — data faithful, print slip in one of the two lists (likely this one, since she is still listed in 1901-02)"
+440,correct,(съ 15 іюля 1875 г. по 15 іюля 1879 г. и съ 15 октября 1889 г.).,15 іюля 1879 г.,(service gap; no kind printed),,full page 1600w; stored [other] vs [no type] in other seasons
+441,correct,(съ 1 іюня 1893 г.). Оставилъ службу 1 ноября 1902 г.,1 ноября 1902 г.,left service,,full page 1600w; line under no. 65
+442,correct,Оставилъ слажбу 1 ноября 1902 г.,1 ноября 1902 г.,left service,,full page 1600w; line after tally of no. 81; print slip «слажбу» (broken/wrong letter) for «службу»
+443,correct,(съ 27 ноября 1872 г.). Оставилъ службу 1 сентября 1903 г.,1 сентября 1903 г.,left service,,"full page 1500w; Помощникъ режиссера; same line repeated from 1902-03 list. ALSO same page (chorus list above, not in slice): no. 40 Тилесъ «Оставилъ службу 1 сентября 1904 г.»"
+444,correct,(съ 1 іюня 1903 г.). Переведена къ Московскимъ театрамъ изъ С.-Петербурга съ 1 сентября 1905 г.,1 сентября 1905 г.,other (transfer),,full page 1500w; print clearly «1905» in the 1903-04 volume — data faithful; looks like a print slip (1903?) — RG to judge
+445,correct,Оставила службу 23 августа 1904 г.,23 августа 1904 г.,left service,,full page 1500w; line after tally of no. 15
+446,correct,Оставила службу 23 августа 1904 г.,23 августа 1904 г.,left service,,full page 1500w; line after tally of no. 49
+447,correct,(съ 1 сентября по 1 декабря 1887 г. и съ 1 марта 1889 г.).,1 декабря 1887 г.,(service gap; no kind printed),,full page 1500w; stored text keeps «по» in end_date_text («по 1 декабря 1887 г.») — cosmetic
+448,correct,Оставила службу 18 сентября 1904 г.,18 сентября 1904 г.,left service,,full page 1500w; line after tally of no. 77
+449,correct,Оставила службу 23 сентября 1904 г.,23 сентября 1904 г.,left service,,full page 1500w; line after tally of no. 86 (start was «23 августа 1884»; end «23 сентября» as printed)
+450,correct,(съ 1 сентября 1899 г.). Оставила службу 1 сентября 1904 г.,1 сентября 1904 г.,left service,,full page 1500w; line under no. 91 (no tally)
+451,correct,Оставила службу 22 апрѣля 1904 г.,22 апрѣля 1904 г.,left service,,full page 1500w; line after tally of no. 102
+452,correct,(съ 1 октября 1895 г.). Оставила службу 1 октября 1903 г.,1 октября 1903 г.,left service,,full page 1500w; line under no. 104 (no tally)
+453,correct,"(съ 1 сентября 1891 г., по 1 декабря 1893 г. и съ 1 сентября 1896 г.).",1 декабря 1893 г.,(service gap; no kind printed),,"full page 1500w; print drops «2-й» this season («Брыкинъ, Дмитрій Константиновичъ») — data faithful"
+454,correct,(съ 1 сентября 1891 г. по 1 декабря 1894 г. и съ 16 сентября 1897 г.).,1 декабря 1894 г.,(service gap; no kind printed),,full page 1500w
+455,correct,(съ 1 сентября 1901 г. по 1 ноября 1898 г. и съ 1 сентября 1901 г.).,1 ноября 1898 г.,(service gap; this page prints no kind),,full page 1500w; print slip repeated from 1902-03: first start «1901» (should be 1891); check start_date_undate
+456,correct,(съ 11 апрѣля 1856 г. по 1 ноября 1886 г. и съ 1 августа 1887 г.).,1 ноября 1886 г.,(service gap; no kind printed),,full page 1500w
+457,correct,(съ 1 сентября 1890 г. по 1 декабря 1894 г. и съ 16 сентября 1897 г.).,1 декабря 1894 г.,(service gap; no kind printed),,full page 1500w
+458,correct,(съ 1 сентября 1898 г. по 1 декабря 1900 г. и съ 23 сентября 1903 г.).,1 декабря 1900 г.,(service gap; this page prints no kind),,full page 1500w; 1900-01 print «Оставилъ службу 1 декабря 1900 г.» (item 358) gives the kind = left service
+459,correct,(съ 23 августа 1884 г. по 3 декабря 1887 г. и съ 1 ноября 1890 г.).,3 декабря 1887 г.,(service gap; no kind printed),,full page 1500w; stored [other] — inconsistent typing across seasons
+460,correct,(съ 1 сентября 1896 г. по 1 декабря 1900 г. и съ 9 сентября 1903 г.).,1 декабря 1900 г.,(service gap; this page prints no kind),,"full page 1500w; stored [other], but 1900-01 print «Оставилъ службу 1 декабря 1900 г.» (item 361) = left service"
+461,correct,(съ 1 октября 1895 г. по 6 ноября 1898 г. и съ 1 сентября 1901 г.).,6 ноября 1898 г.,(service gap; this page prints no kind),,"full page 1500w; start printed «1 октября 1895» here vs «1 сентября 1895» in 1902-03 (and re-entry «1 сентября 1901» vs «1 октября 1901») — print inconsistent across seasons, data faithful"
+462,correct,(съ 1 сентября 1892 г. по 1 декабря 1898 г. и съ 1 сентября 1899 г.).,1 декабря 1898 г.,(service gap; this page prints no kind),,full page 1500w
+463,correct,(съ 1 сентября 1899 г. по 13 сентября 1903 г. и съ 15 января 1904 г.).,13 сентября 1903 г.,(service gap; no kind printed),,full page 1500w
+464,correct,(съ 1 сентября 1894 г. по 1 января 1896 г. и съ 16 февраля 1897 г.).,1 января 1896 г.,(service gap; no kind printed),,full page 1500w; print clearly «Тройниковъ» — stored family_name «Троїниковъ» (ї for й) is a transcription error (not date)
+465,correct,Оставилъ службу 6 октября 1904 г.,6 октября 1904 г.,left service,,full page 1500w; line after tally of no. 80
+466,correct,(съ 1 сентября 1896 г. по 1 ноября 1898 г. и съ 16 ноября 1901 г.).,1 ноября 1898 г.,(service gap; this page prints no kind),,full page 1500w
+467,correct,(съ 1 сентября 1897 г. по 1 января 1901 г. и съ 8 сентября 1903 г.).,1 января 1901 г.,(service gap; this page prints no kind),,full page 1500w; 1900-01 print «Оставилъ службу 1 января 1901 г.» (item 364)
+468,correct,(съ 1 сентября 1897 г. по 1 декабря 1900 г. и съ 9 сентября 1903 г.).,1 декабря 1900 г.,(service gap; this page prints no kind),,full page 1500w; 1900-01 print «Оставилъ службу 1 декабря 1900 г.» (item 365)
+469,correct,(съ 1 августа 1902 г. по 1 марта 1903 г.).,1 марта 1903 г.,(engagement end; no kind printed),,full page 1500w; Второй балетмейстеръ; stored [left service] is an inference
+470,correct,(съ 12 мая 1885 г.). 1 сентября 1903 г. назначенъ вторымъ балетмейстеромъ.,1 сентября 1903 г.,other (appointed to new post),,full page 1500w; repeated from 1902-03 list
+471,correct,(съ 25 апрѣля 1845 г.). Оставилъ службу 1 сентября 1903 г.,1 сентября 1903 г.,left service,,"full page 1500w; Режиссеръ. ALSO same page (orchestra, not in slice): no. 50 Улизько «Оставилъ службу 15 ноября 1903 г.»"
+472,correct,(съ 14 іюня 1879 г. по 1 іюля 1899 г. и съ 1 декабря 1899 г.).,1 іюля 1899 г.,(service gap; this page prints no kind),,full page 1500w
+473,correct,(съ 1 іюня 1892 г. по 1 января 1902 г. и съ 1 сентября 1902 г.).,1 января 1902 г.,(service gap; no kind printed),,full page 1500w
+474,correct,(съ 15 іюля 1875 г. по 15 іюля 1879 г. и съ 15 октября 1889 г.).,15 іюля 1879 г.,(service gap; no kind printed),,full page 1500w; stored [left service] here vs [no type]/[other] other seasons — typing inconsistent
+475,correct,Оставила службу 1 августа 1905 г.,1 августа 1905 г.,left service,,full page 1500w; line after tally of no. 3
+476,correct,(съ 23 августа 1884 г.). Оставила службу 23 августа 1904 г.,23 августа 1904 г.,left service,,"full page 1500w; line under no. 14 (repeats 1903-04 line). ALSO: stored tenure_note_text starts «(Воскресенская), …» — bracketed maiden name pushed into tenure field"
+477,correct,(съ 12 октября 1904 г.). Оставилъ службу 28 февраля 1905 г.,28 февраля 1905 г.,left service,,"full page 1500w; Репетиторъ-піанистъ Васильевъ, Викторъ Васильевичъ"
+478,correct,Оставила службу 1 сентября 1905 г.,1 сентября 1905 г.,left service,,full page 1500w; line after tally of no. 47
+479,correct,(съ 23 августа 1884 г.). Оставила службу 1 сентября 1904 г.,1 сентября 1904 г.,left service,,"full page 1500w; line under no. 48; data faithful, but 1903-04 list printed «Оставила службу 23 августа 1904 г.» (item 446) — the two volumes disagree, RG to judge"
+480,correct,(съ 1 сентября по 1 декабря 1887 г. и съ 1 марта 1889 г.).,1 декабря 1887 г.,(service gap; no kind printed),,full page 1500w
+481,correct,(съ 1 сентября 1892 г.). † 9 ноября 1904 г.,9 ноября 1904 г.,died,,full page 1500w; line under no. 75
+482,correct,Оставила службу 18 сентября 1904 г.,18 сентября 1904 г.,left service,,full page 1500w; line after tally of no. 76
+483,correct,(съ 1 августа 1884 г.). Оставила службу 1 августа 1905 г.,1 августа 1905 г.,left service,,"full page 1500w; line under no. 77; NB start printed «1884» here, «1885» in 1902-03/1903-04 lists — data faithful"
+484,correct,Оставила службу 1 августа 1905 г.,1 августа 1905 г.,left service,,full page 1500w; line after tally of no. 78
+485,correct,(съ 23 августа 1884 г.). Оставила службу 23 сентября 1904 г.,23 сентября 1904 г.,left service,,full page 1500w; line under no. 85
+486,correct,(съ 1 сентября 1899 г.). Оставила службу 1 сентября 1904 г.,1 сентября 1904 г.,left service,,full page 1500w; line under no. 91
+487,correct,Переведена на службу къ московскимъ театрамъ съ 25 октября 1903 г.,25 октября 1903 г.,other (transfer),,full page 1500w; line after tally of no. 102
+488,correct,(съ 1 сентября 1891 г. по 1 декабря 1893 г. и съ 1 сентября 1896 г.).,1 декабря 1893 г.,(service gap; no kind printed),,full page 1500w
+489,correct,(съ 1 сентября 1891 г. по 1 декабря 1894 г. и съ 16 сентября 1897 г.).,1 декабря 1894 г.,(service gap; no kind printed),,full page 1500w
+490,correct,(съ 1 сентября 1891 г. по 1 ноября 1898 г. и съ 1 сентября 1901 г.).,1 ноября 1898 г.,(service gap; this page prints no kind),,full page 1500w; here the first start is correctly «1891» (cf. «1901» slip in 1902-03/1903-04)
+491,correct,(съ 11 апрѣля 1856 г. по 1 ноября 1886 г. и съ 1 августа 1887 г.). Заслуженный артистъ.,1 ноября 1886 г.,(service gap; no kind printed),,full page 1500w
+492,correct,(съ 1 сентября 1890 г. по 1 декабря 1894 г. и съ 16 сентября 1897 г.).,1 декабря 1894 г.,(service gap; no kind printed),,full page 1500w
+493,correct,(съ 1 сентября 1898 г. по 1 декабря 1900 г. и съ 23 сентября 1903 г.).,1 декабря 1900 г.,(service gap; this page prints no kind),,full page 1500w
+494,correct,(съ 23 августа 1884 г. по 3 декабря 1887 г. и съ 1 ноября 1890 г.).,3 декабря 1887 г.,(service gap; no kind printed),,full page 1500w
+495,correct,Оставилъ службу 1 сентября 1905 г.,1 сентября 1905 г.,left service,,full page 1500w; line after tally of no. 25
+496,correct,(съ 1 сентября 1896 г. по 1 декабря 1900 г. и съ 9 сентября 1903 г.).,1 декабря 1900 г.,(service gap; this page prints no kind),,full page 1500w
+497,correct,Уволенъ для отбыванія воинской повинности съ 12 ноября 1903 г.,12 ноября 1903 г.,left service (discharged for military service),,full page 1500w; line under no. 44. 1903-04 list printed «Оставилъ службу для отбыванія воинской повинности 12 ноября 1903 г.» — consistent
+498,correct,(съ 1 сентября 1898 г. по 1 декабря 1901 г. и съ 16 марта 1902 г.).,1 декабря 1901 г.,(service gap; no kind printed),,full page 1500w
+499,correct,(съ 1 сентября 1895 г. по 6 ноября 1898 г. и съ 1 сентября 1901 г.).,6 ноября 1898 г.,(service gap; this page prints no kind),,full page 1500w
+500,correct,(съ 1 сентября 1892 г. по 1 декабря 1898 г. и съ 1 сентября 1899 г.).,1 декабря 1898 г.,(service gap; this page prints no kind),,full page 1500w
+501,correct,(съ 1 сентября 1899 г. по 13 сентября 1903 г. и съ 15 января 1904 г.).,13 сентября 1903 г.,(service gap; no kind printed),,full page 1500w
+502,correct,(съ 1 сентября 1894 г. по 1 января 1896 г. и съ 16 февраля 1897 г.). † 16 марта 1905 г.,1 января 1896 г. ; 16 марта 1905 г.,"(gap, no kind) ; died",,full page 1500w; † line after tally of no. 69
+503,correct,(съ 1 сентября 1897 г. по 1 декабря 1900 г. и съ 9 сентября 1903 г.).,1 декабря 1900 г.,(service gap; this page prints no kind),,"full page 1500w; NB print here «Федоровъ 1-й, Михаилъ Викторовичъ» whereas 1900-01/1903-04 print «Ѳедоровъ, Павелъ Викторовичъ» with the same tenure — first name differs between volumes (print's own), worth RG's look for person linking"
+504,correct,Оставилъ службу 1 августа 1905 г.,1 августа 1905 г.,left service,,full page 1500w; line after tally of no. 82
+505,correct,(съ 1 сентября 1896 г. по 1 ноября 1898 г. и съ 16 ноября 1901 г.).,1 ноября 1898 г.,(service gap; this page prints no kind),,full page 1500w
+506,correct,(съ 1 сентября 1897 г. по 1 января 1901 г. и съ 8 сентября 1903 г.).,1 января 1901 г.,(service gap; this page prints no kind),,full page 1500w
+507,correct,(съ 28 мая 1878 г.). Оставилъ службу 6 октября 1904 г.,6 октября 1904 г.,left service,,full page 1500w; line under no. 86 (repeats 1903-04 line)
+508,correct,"(съ 1 сентября 1903 г.). Освобожденъ отъ обязанностей балетмейстера 1 марта 1905 г., съ оставленіемъ артистомъ.",1 марта 1905 г.,"other (released from post, stays as artist)",,full page 1500w; Второй балетмейстеръ
+509,correct,Оставила службу 1 іюня 1905 г.,1 іюня 1905 г.,left service,,full page 1500w; line after tally of no. 15
+510,correct,(съ 1 іюня 1899 г.). Оставила службу 1 марта 1905 г.,1 марта 1905 г.,left service,,full page 1500w; line under no. 16
+511,correct,(съ 1 іюня 1890 г.). Оставила службу 29 августа 1905 г.,29 августа 1905 г.,left service,,full page 1500w; line under no. 31 (no tally)
+512,correct,Оставила службу 1 іюня 1905 г.,1 іюня 1905 г.,left service,,full page 1500w; line after tally of no. 33. ALSO: stored credit_summary has a literal newline before «Оставила» (formatting only)
+513,correct,Оставила службу 15 марта 1905 г.,15 марта 1905 г.,left service,,full page 1500w; line after tally of no. 59
+514,correct,(съ 1 іюня 1885 г.). Оставила службу 1 іюня 1905 г.,1 іюня 1905 г.,left service,,full page 1500w; line after tally of no. 114; start printed «1 іюня 1885» here vs «12 мая 1885» in earlier lists (data faithful)
+515,correct,(съ 1 іюня 1892 г. по 1 января 1900 г. и съ 1 сентября 1902 г.).,1 января 1900 г.,(service gap; no kind printed),,"full page 1500w; date faithful to this print («1900»), but 1902-03/1903-04 print «по 1 января 1902 г.» (items 438, 473); 1899-00 has «Оставила службу 1 января 1900 г.» (item 325) — the print disagrees with itself; stored [left service] here vs [no type] elsewhere"
+516,correct,Оставила службу 1 іюня 1905 г.,1 іюня 1905 г.,left service,,full page 1500w; line after tally of no. 125 (stored end right although line not in stored tenure/credit text)
+517,correct,† 4 августа 1905 г.,4 августа 1905 г.,died,,full page 1500w; line after tally of no. 2
+518,wrong_structure,(съ 1 іюня 1895 г.). (Онъ же и репетиторъ балета съ 12 декабря 1903 г.).,(none — no end printed),,"end: none; the «съ 12 декабря 1903 г.» is the START of a concurrent post (репетиторъ балета), not an end; if kept, start_date for the extra post = 1903-12-12","full page 1500w; stored end «2 декабря 1903 г. [other]» is wrong twice: it is not an end, and the day is 12 (print «:2» with a broken 1, confirmed by the page-16 header «Репетиторъ балета. Аслинъ … (съ 12 декабря 1903 г.)»)"
+519,correct,Оставилъ службу 1 сентября 1905 г.,1 сентября 1905 г.,left service,,full page 1500w; line after tally of no. 9; start printed «16 февраля 1876» here vs «31 мая 1883» in 1902-03/1903-04 lists — data faithful
+520,correct,† 3 іюля 1905 г.,3 іюля 1905 г.,died,,"full page 1500w; line after tally of no. 36. ALSO same page (not in slice; check stored): no. 31 Козловъ, Федоръ Михайловичъ «Переведенъ на службу къ Московскимъ театрамъ съ 15 октября 1904 г.»; no. 34 Кузнецовъ, Михаилъ Алексѣевичъ «Переведенъ въ драматическую труппу съ 1 сентября 1905 г.»"
+521,correct,Оставилъ службу 1 іюня 1905 г.,1 іюня 1905 г.,left service,,full page 1500w; line after tally of no. 84
+522,correct,"(съ 12 мая 1885 г.). (Онъ же второй балетмейстеръ, съ 1 сентября 1903 г. по 1 марта 1905 г.). Оставилъ службу 12 мая 1905 г.",12 мая 1905 г.,left service,,full page 1500w; line after tally of no. 92. Stored tenure_note_text is truncated at the start («5 г.). …» — loses «(съ 12 мая 188»); the concurrent post's end «по 1 марта 1905» is not stored as its own period (matches item 508's [other])

@@ -1,0 +1,261 @@
+item,verdict,printed_line,end_date_text,end_type,proposed_fix,note
+1306,correct,Оставилъ службу 7 октября 1901 г.,7 октября 1901 г.,left service,,full page 1500
+1307,correct,Назначенъ помощникомъ декоратора 1 ноября 1901 г.,1 ноября 1901 г.,other,,
+1308,correct,Назначенъ живописцемъ по тканямъ 1 февраля 1902 г.,1 февраля 1902 г.,other,,
+1309,correct,Назначенъ помощникомъ декоратора 1 ноября 1901 г.,1 ноября 1901 г.,other,,
+1310,correct,Оставилъ службу 9 октября 1901 г.,9 октября 1901 г.,left service,,
+1311,correct,Назначенъ завѣдывающимъ бутафорской мастерской 1 октября 1901 г.,1 октября 1901 г.,other,,
+1312,wrong_type,Назначенъ декораторомъ 5 февраля 1902 г.,5 февраля 1902 г.,other,end_type=other,date correct; end_type missing (stored no type) though printed «Назначенъ» — same line stored [other] in 1902-03 (item 1331)
+1313,correct,Оставилъ службу 25 февраля 1902 г.,25 февраля 1902 г.,left service,,
+1314,correct,(съ 11 марта 1872 г. по 12 сентября 1880 г. и съ 19 сентября 1882 г.). † 11 октября 1901 г.,12 сентября 1880 г.; 11 октября 1901 г.,"(interval end, no kind printed); died",,two periods split correctly; first period's end has no printed kind so blank type is consistent
+1315,correct,Оставилъ службу 15 мая 1902 г.,15 мая 1902 г.,left service,,
+1316,correct,Оставилъ службу 1 октября 1901 г.,1 октября 1901 г.,left service,,
+1317,correct,Оставилъ службу 1 декабря 1901 г.,1 декабря 1901 г.,left service,,
+1318,correct,Оставилъ службу 1 октября 1901 г.,1 октября 1901 г.,left service,,
+1319,correct,Оставилъ службу 1 октября 1901 г.,1 октября 1901 г.,left service,,
+1320,correct,Оставилъ службу 1 октября 1901 г.,1 октября 1901 г.,left service,,
+1321,correct,Оставилъ службу 1 октября 1901 г.,1 октября 1901 г.,left service,,
+1322,correct,† 22 февраля 1902 г.,22 февраля 1902 г.,died,,
+1323,wrong_type,Переведена къ С.-Петербургскимъ театрамъ съ 1 августа 1902 г.,1 августа 1902 г.,other,end_type=other,date correct; «Переведена» stored with no type
+1324,correct,"(съ 19 сентября 1862 г. по 1 сентября 1893 г., съ 1 августа 1895 г. по 1 мая 1897 г. и съ сентября 1897 г.). † 29 мая 1903 г.",1 сентября 1893 г.; 1 мая 1897 г.; 29 мая 1903 г.,interval ends; died,,three periods split correctly; third start printed «съ сентября 1897 г.» with no day (as printed)
+1325,correct,(съ 14 мая 1879 г. по 15 декабря 1884 г. и съ 15 февраля 1890 г.),15 декабря 1884 г.,interval end,,
+1326,wrong_type,Переведенъ въ помощники декоратора 1 іюля 1903 г.,1 іюля 1903 г.,other,end_type=other,date correct; «Переведенъ» stored with no type (internal move to помощники декоратора)
+1327,wrong_type,Назначенъ помощникомъ декоратора 1 ноября 1901 г.,1 ноября 1901 г.,other,end_type=other,date correct; same line stored [other] in 1901-02 (item 1309); here no type. Note: 1901 date repeated in 1902-03 volume as printed
+1328,correct,Оставилъ службу 1 августа 1903 г.,1 августа 1903 г.,left service,,
+1329,correct,Оставила службу 1 августа 1902 г.,1 августа 1902 г.,left service,,
+1330,correct,Оставила службу 1 сентября 1902 г.,1 сентября 1902 г.,left service,,
+1331,correct,Назначенъ декораторомъ 5 февраля 1902 г.,5 февраля 1902 г.,other,,
+1332,correct,Оставилъ службу 1 октября 1903 г.,1 октября 1903 г.,left service,,
+1333,correct,† 4 сентября 1902 г.,4 сентября 1902 г.,died,,
+1334,correct,Переведенъ къ С.-Петербургскимъ театрамъ съ 20 іюля 1903 г.,20 іюля 1903 г.,other,,
+1335,correct,Переведенъ къ С.-Петербургскимъ театрамъ съ 10 августа 1903 г.,10 августа 1903 г.,other,,
+1336,correct,Оставила службу 1 іюня 1903 г.,1 іюня 1903 г.,left service,,
+1337,correct,Оставилъ службу 1 декабря 1902 г.,1 декабря 1902 г.,left service,,
+1338,correct,(съ 14 мая 1879 г. по 15 декабря 1884 г. и съ 15 февраля 1890 г.),15 декабря 1884 г.,interval end,end_date_text=15 декабря 1884 г.,date+undate correct; cosmetic only: stored end_date_text carries the preposition «по» («по 15 декабря 1884 г.») unlike other seasons
+1339,correct,(съ 1 января 1895 г.). Оставилъ службу 1 октября 1903 г.,1 октября 1903 г.,left service,,
+1340,correct,Оставилъ службу 1 сентября 1904 г.,1 сентября 1904 г.,left service,,
+1341,correct,Оставилъ службу 1 марта 1904 г.,1 марта 1904 г.,left service,,
+1342,correct,† 19 октября 1904 г.,19 октября 1904 г.,died,,
+1343,correct,(съ 14 мая 1879 г. по 15 декабря 1884 г. и съ 15 февраля 1890 г.),15 декабря 1884 г.,interval end,,"ALSO: same page no. 7 Сальниковъ, Александръ Борисовичъ — printed «Назначенъ завѣдывающимъ красильной мастерской съ 1 августа 1905 г.»; tenure note has it but NO service end stored (e015) — proposed end 1905-08-01 [other]"
+1344,correct,Оставилъ службу 1 мая 1905 г.,1 мая 1905 г.,left service,,
+1345,correct,(съ 16 февраля 1884 г.). Оставилъ службу 1 октября 1904 г.,1 октября 1904 г.,left service,,
+1346,correct,Оставилъ службу 1 апрѣля 1905 г.,1 апрѣля 1905 г.,left service,,ALSO: same page Лапшинъ (e002) «Назначенъ помощникомъ декоратора съ 1 августа 1905 г.» and Щеголевъ Василій (e012) «Назначенъ завѣдывающимъ освѣщеніемъ Александринскаго театра съ 1 мая 1905 г.» — both in tenure note but NO service end stored (pattern: «Назначенъ … съ DATE» not parsed)
+1347,correct,Оставилъ службу 1 іюня 1905 г.,1 іюня 1905 г.,left service,,
+1348,correct,Оставилъ службу 1 сентября 1904 г.,1 сентября 1904 г.,left service,,line repeated from 1903-04 volume as printed
+1349,correct,Оставилъ службу 1 марта 1904 г.,1 марта 1904 г.,left service,,repeated from 1903-04 volume as printed
+1350,correct,† 19 октября 1904 г.,19 октября 1904 г.,died,,
+1351,correct,Оставилъ службу 1 октября 1905 г.,1 октября 1905 г.,left service,,
+1352,correct,(съ 14 мая 1879 г. по 15 декабря 1884 г. и съ 15 февраля 1890 г.),15 декабря 1884 г.,interval end,,
+1353,correct,Оставилъ службу 20 февраля 1906 г.,20 февраля 1906 г.,left service,,
+1354,correct,Оставилъ службу 1 августа 1906 г.,1 августа 1906 г.,left service,,
+1355,correct,Оставилъ службу 1 января 1906 г.,1 января 1906 г.,left service,,
+1356,correct,Оставила службу 1 октября 1905 г.,1 октября 1905 г.,left service,,
+1357,correct,Оставилъ службу 1 сентября 1907 г.,1 сентября 1907 г.,left service,,
+1358,correct,Оставилъ службу 1 сентября 1907 г.,1 сентября 1907 г.,left service,,
+1359,correct,Оставилъ службу 1 августа 1907 г.,1 августа 1907 г.,left service,,
+1360,correct,Оставилъ службу 1 сентября 1907 г.,1 сентября 1907 г.,left service,,
+1361,correct,(съ 14 мая 1879 г. по 15 декабря 1884 г. и съ 15 февраля 1890 г.). Оставилъ службу 1 августа 1907 г.,15 декабря 1884 г.; 1 августа 1907 г.,interval end; left service,,
+1362,correct,Оставилъ службу 1 августа 1907 г.,1 августа 1907 г.,left service,,zoom
+1363,correct,Оставилъ службу 1 іюля 1907 г.,1 іюля 1907 г.,left service,,zoom
+1364,correct,Назначенъ машинистомъ Александринскаго театра 1 сентября 1906 г.,1 сентября 1906 г.,other,,zoom
+1365,correct,Оставилъ службу 1 февраля 1907 г.,1 февраля 1907 г.,left service,,zoom
+1366,correct,Оставилъ службу 1 сентября 1906 г.,1 сентября 1906 г.,left service,,zoom
+1367,correct,Оставилъ службу 1 сентября 1907 г.,1 сентября 1907 г.,left service,,zoom
+1368,wrong_type,Назначенъ машинистомъ Маріинскаго театра 1 іюня 1907 г. Оставилъ службу 1 ноября 1907 г.,1 іюня 1907 г.; 1 ноября 1907 г.,other; left service,period 1 end_type=other,"dates correct; the first end (appointment to Маріинскій, 1 іюня 1907) is stored as [left service] — should be other; second end left service is right"
+1369,correct,Назначенъ завѣдывающимъ освѣщеніемъ Михайловскаго театра 1 сентября 1906 г.,1 сентября 1906 г.,other,,zoom
+1370,correct,Оставилъ службу 1 сентября 1906 г.,1 сентября 1906 г.,left service,,zoom
+1371,correct,Оставилъ службу 1 сентября 1907 г.,1 сентября 1907 г.,left service,,zoom
+1372,correct,Оставила службу 1 января 1907 г.,1 января 1907 г.,left service,,
+1373,correct,Оставила службу 1 сентября 1907 г.,1 сентября 1907 г.,left service,,
+1374,correct,Оставилъ службу 1 августа 1907 г.,1 августа 1907 г.,left service,,
+1375,correct,Оставилъ службу 1 сентября 1908 г.,1 сентября 1908 г.,left service,,
+1376,correct,Оставилъ службу 1 сентября 1908 г.,1 сентября 1908 г.,left service,,
+1377,correct,Оставилъ службу 4 декабря 1907 г.,4 декабря 1907 г.,left service,,
+1378,correct,Оставилъ службу 1 марта 1908 г.,1 марта 1908 г.,left service,,
+1379,correct,Оставилъ службу 1 августа 1907 г.,1 августа 1907 г.,left service,,
+1380,correct,Оставилъ службу 1 октября 1907 г.,1 октября 1907 г.,left service,,
+1381,correct,Оставилъ службу 1 декабря 1907 г.,1 декабря 1907 г.,left service,,
+1382,correct,"1. Астукевичъ, Іосифъ. Оставилъ службу 20 января 1908 г.",20 января 1908 г.,left service,,
+1383,correct,Оставилъ службу 1 января 1908 г.,1 января 1908 г.,left service,,
+1384,wrong_structure,(съ 1 мая 1898 г.). Женскіе костюмы балетной и французской драматической труппъ. Переведена изъ Московскихъ къ С-Петербургскимъ театрамъ съ 1 августа 1902 г.,1 августа 1902 г.,other (transfer IN),remove service end (or store as transfer-in note / SPb start 1902-08-01),"She is listed in the С.-Петербургъ wardrobe section of 1907-08 and still serving; the printed line records her 1902 arrival from Moscow, not an end of this service. Stored as an end [no type] in 1907-08 (1902-03 Moscow listing, item 1323, is the real transfer-out). Same line also printed in 1904-05 p002 — check whether an end is stored there too"
+1385,wrong_structure,"1. Гейкблюмъ, Борисъ Іосифовичъ (съ 1 іюня 1898 г. съ 1 мая 1909 г. назначенъ главнымъ декораторомъ).",съ 1 мая 1909 г.,"other (promotion, still serving)",if kept: end_date_text=1 мая 1909 г.; end_type=other — better: no service end (role change; he is listed under Главные декораторы),"He is printed under «Главные декораторы» and continues; the 1909 appointment is the start of his current post, not a service end. Stored end has no type and end_date_text keeps «съ»"
+1386,correct,(съ 1 сентября 1889 г. по 20 апрѣля 1893 г. и вторично съ 20 августа 1900 г.),20 апрѣля 1893 г.,interval end,,print has «апрѣля»; thumb over left margin but text clear
+1387,correct,Оставила службу 3 сентября 1909 г.,3 сентября 1909 г.,left service,,
+1388,wrong_structure,"2. Гейкблюмъ, Борисъ Іосифовичъ (съ 1 іюня 1898 г. съ 1 мая 1909 г. назначенъ главнымъ декораторомъ).",съ 1 мая 1909 г.,"other (promotion, still serving)","as item 1385: no service end (role change), or end_date_text=1 мая 1909 г.; end_type=other","same as 1909-10 (item 1385); listed under Главные декораторы, still serving"
+1389,correct,(съ 1 сентября 1889 г. по 20 апрѣля 1893 г. и вторично съ 20 августа 1900 г.),20 апрѣля 1893 г.,interval end,,
+1390,correct,Оставила службу 3 сентября 1909 г.,3 сентября 1909 г.,left service,,repeated from 1909-10 volume as printed
+1391,correct,Оставилъ службу 1 Іюля 1891 г.,1 Іюля 1891 г.,left service,,capital «Іюля» as printed
+1392,correct,Оставилъ службу 1 сентября 1891 г.,1 сентября 1891 г.,left service,,
+1393,correct,Оставилъ службу 1 іюля 1891 г.,1 іюля 1891 г.,left service,,
+1394,correct,† 22 іюня 1892 г.,22 іюня 1892 г.,died,,
+1395,correct,† 14 сентября 1891 г.,14 сентября 1891 г.,died,,
+1396,correct,Оставила службу 1 сентября 1892 г.,1 сентября 1892 г.,left service,,
+1397,correct,Оставилъ службу 15 ноября 1891 г.,15 ноября 1891 г.,left service,,
+1398,correct,"7. Ѳедоровъ, Александръ Ѳедоровичъ. † 5 іюня 1892 г.",5 іюня 1892 г.,died,,
+1399,correct,† 5 іюня 1892 г.,5 іюня 1892 г.,died,,
+1400,correct,† 5 іюня 1892 г.,5 іюня 1892 г.,died,,
+1401,correct,† 8 марта 1893 г.,8 марта 1893 г.,died,,
+1402,correct,† 8 марта 1894 г.,8 марта 1894 г.,died,,
+1403,correct,Оставилъ службу 1 октября 1894 г.,1 октября 1894 г.,left service,,
+1404,correct,Съ 8 марта 1894 г. назначена инспектрисой Училища.,8 марта 1894 г.,other,,promotion to replace Бостремъ (†8 марта 1894); ending her классная дама post — other is fine
+1405,correct,Оставилъ преподаваніе 1 сентября 1894 г.,1 сентября 1894 г.,left service,,«Оставилъ преподаваніе» = left teaching
+1406,correct,Оставилъ преподаваніе 1 сентября 1894 г.,1 сентября 1894 г.,left service,,
+1407,correct,Оставила службу 1 января 1894 г.,1 января 1894 г.,left service,,
+1408,correct,† 8 іюня 1894 г.,8 іюня 1894 г.,died,,
+1409,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,two periods split correctly
+1410,correct,Оставилъ преподаваніе 1 сентября 1894 г.,1 сентября 1894 г.,left service,,
+1411,correct,Оставилъ преподаваніе 1 сентября 1894 г.,1 сентября 1894 г.,left service,,
+1412,correct,(съ 15 сентября 1889 г. по 1 сентября 1893 г. и съ 15 апрѣля 1893 г.),1 сентября 1893 г.,interval end,,print slip likely: second start (15 апрѣля 1893) precedes the first end (1 сентября 1893) — print reads exactly so; data faithful
+1413,correct,"3. Маннъ, Ипполитъ Александровичъ. † 10 декабря 1894 г.",10 декабря 1894 г.,died,,
+1414,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1415,correct,† 11 февраля 1895 г.,11 февраля 1895 г.,died,,
+1416,correct,Оставилъ преподаваніе 1 сентября 1895 г.,1 сентября 1895 г.,left service,,
+1417,correct,Оставила преподаваніе 1 сентября 1895 г.,1 сентября 1895 г.,left service,,
+1418,correct,Оставила преподаваніе 1 сентября 1895 г.,1 сентября 1895 г.,left service,,
+1419,correct,Оставилъ преподаваніе 1 октября 1895 г.,1 октября 1895 г.,left service,,
+1420,correct,Оставила преподаваніе 1 сентября 1896 г.,1 сентября 1896 г.,left service,,
+1421,correct,Оставилъ преподаваніе 1 сентября 1896 г.,1 сентября 1896 г.,left service,,
+1422,correct,Оставилъ преподаваніе 1 сентября 1896 г.,1 сентября 1896 г.,left service,,
+1423,correct,Оставилъ преподаваніе 1 сентября 1896 г.,1 сентября 1896 г.,left service,,
+1424,correct,† 16 января 1896 г.,16 января 1896 г.,died,,
+1425,correct,† 9 сентября 1896 г.,9 сентября 1896 г.,died,,
+1426,correct,† 4 января 1896 г.,4 января 1896 г.,died,,successor Карасева printed «съ 4 января 1896 г.» right below — consistent
+1427,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,print omits «г.» after 1893 in this volume; data adds it (harmless)
+1428,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,entry runs across columns
+1429,correct,(священникъ церкви Училища). Законъ Божій. † 9 сентября 1896 г.,9 сентября 1896 г.,died,,
+1430,correct,Оставилъ преподаваніе 1 января 1896 г.,1 января 1896 г.,left service,,
+1431,correct,Оставилъ преподаваніе 1 сентября 1896 г.,1 сентября 1896 г.,left service,,
+1432,correct,Оставилъ преподаваніе 1 сентября 1896 г.,1 сентября 1896 г.,left service,,
+1433,correct,Оставилъ преподаваніе 1 сентября 1896 г.,1 сентября 1896 г.,left service,,
+1434,correct,Оставилъ службу 1 февраля 1897 г.,1 февраля 1897 г.,left service,,successor Сперанскій printed «съ 1 февраля 1897 г.» at head of next column — consistent
+1435,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1436,correct,Оставила службу 1 октября 1897 г.,1 октября 1897 г.,left service,,
+1437,correct,† 28-го марта 1897 г.,28-го марта 1897 г.,died,,
+1438,correct,† 8-го апрѣля 1897 г.,8-го апрѣля 1897 г.,died,,
+1439,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1440,correct,Оставилъ преподаваніе 1-го января 1897 г.,1-го января 1897 г.,left service,end_date_text=1-го января 1897 г.,date correct; cosmetic: print has «1-го» but stored end_date_text normalises to «1 января» (tenure note keeps «1-го»)
+1441,correct,Оставилъ преподаваніе 1 января 1897 г.,1 января 1897 г.,left service,,
+1442,correct,† 26-го февраля 1898 г.,26-го февраля 1898 г.,died,,
+1443,correct,Оставилъ службу 1 сентября 1898 г.,1 сентября 1898 г.,left service,,ballet section
+1444,correct,Оставилъ службу 1 сентября 1898 г.,1 сентября 1898 г.,left service,,"ballet section; note his drama-course entry (б, no. 3) on same page prints no leaving line"
+1445,correct,Оставилъ службу 1 ноября 1898 г.,1 ноября 1898 г.,left service,,
+1446,correct,Оставилъ службу 1 сентября 1898 г.,1 сентября 1898 г.,left service,,drama-course entry
+1447,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1448,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1449,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1450,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1451,correct,† 16 іюля 1899 г.,16 іюля 1899 г.,died,,
+1452,correct,† 16 іюля 1899 г.,16 іюля 1899 г.,died,,
+1453,correct,† 2 сентября 1899 г.,2 сентября 1899 г.,died,,
+1454,correct,"3. Григоровичъ, Дмитрій Васильевичъ. † 22 декабря 1899 г.",22 декабря 1899 г.,died,,
+1455,correct,† 27 октября 1899 г.,27 октября 1899 г.,died,,
+1456,correct,Оставила службу 1 сентября 1899 г.,1 сентября 1899 г.,left service,,
+1457,correct,Оставилъ службу 1 сентября 1899 г.,1 сентября 1899 г.,left service,,ballet section no. 28
+1458,correct,Оставилъ службу 1 сентября 1899 г.,1 сентября 1899 г.,left service,,
+1459,correct,Оставилъ службу 1 мая 1899 г,1 мая 1899 г.,left service,,"zoom; «мая» clear; final «г» has a raised point instead of full stop (print). Note: an end before the 1899-00 season, while 1897-98 printed 1 сентября 1898 for his ballet-section post — different posts, both as printed"
+1460,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1461,correct,Оставилъ службу 1 сентября 1899 г.,1 сентября 1899 г.,left service,,
+1462,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1463,correct,Оставилъ службу 1 сентября 1899 г.,1 сентября 1899 г.,left service,,drama-course no. 14
+1464,correct,"4. Рюминъ, Иванъ Ивановичъ. † 2 сентября 1899 г.",2 сентября 1899 г.,died,,Moscow school honorary-member list
+1465,correct,Оставилъ службу 1 сентября 1889 г.,1 сентября 1889 г.,left service,,"zoom; PRINT SLIP: the print really reads «1889» (clear type, not broken) — he was still listed 1890-91…1898-99, so the intended year is almost certainly 1899. Data faithful to print; undate 1889-09-01 precedes his own start (1 февраля 1889) by months-later logic and will look like an anomaly — RG to decide whether research layer should read 1899-09-01"
+1466,correct,Оставилъ службу 1 сентября 1901 г.,1 сентября 1901 г.,left service,,
+1467,correct,Оставилъ службу 1 января 1901 г.,1 января 1901 г.,left service,,
+1468,correct,Оставилъ службу 1 сентября 1900 г.,1 сентября 1900 г.,left service,,
+1469,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1470,correct,Оставилъ службу 1 сентября 1900 г.,1 сентября 1900 г.,left service,,
+1471,correct,Оставилъ службу 1 сентября 1900 г.,1 сентября 1900 г.,left service,,
+1472,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1473,correct,Оставилъ службу 1 октября 1899 г.,1 октября 1899 г.,left service,,"zoom; print reads 1899 clearly in the 1900-01 volume, though he was listed in 1899-00 with no leaving line — possible print slip for 1900 (same for Хлѣбородовъ, item 1474); data faithful"
+1474,correct,Оставилъ службу 1 октября 1899 г.,1 октября 1899 г.,left service,,print reads 1899 in the 1900-01 volume; he was listed in 1899-00 (no. 27) without a leaving line — possible print slip for 1900; data faithful
+1475,correct,Оставилъ службу 1 апрѣля 1901 г.,1 апрѣля 1901 г.,left service,,zoom
+1476,correct,"8. Флеровъ, Сергѣй Васильевичъ. † 5 апрѣля 1901 г.",5 апрѣля 1901 г.,died,,
+1477,correct,† 9 іюня 1901 г.,9 іюня 1901 г.,died,,
+1478,correct,Оставила службу 1 августа 1900 г.,1 августа 1900 г.,left service,,"ALSO: same page, Почетные члены no. 1 Боборыкинъ, Петръ Дмитріевичъ — «Переведенъ тѣмъ же званіемъ въ С.-Петербургское училище.» (undated transfer); service period exists but has no end_type=other — undated transfer not captured"
+1479,correct,† 5 октября 1900 г.,5 октября 1900 г.,died,,ballet section no. 20
+1480,correct,† 5 октября 1900 г.,5 октября 1900 г.,died,,drama courses no. 9
+1481,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1482,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1483,correct,"8. Острогорскій, Викторъ Петровичъ. † 1 апрѣля 1902 г. Русская и иностранная литература.",1 апрѣля 1902 г.,died,,"† line printed inline before the subject. ALSO: Moscow Почетные члены no. 1 Боборыкинъ «Переведенъ тѣмъ же званіемъ въ С.-Петербургское училище.» (undated, repeated from 1900-01)"
+1484,correct,Оставилъ службу въ мартѣ 1902 г.,въ мартѣ 1902 г.,left service,end_date_undate=1902-03 (month precision),kind correct; undate is null («?») though the print gives month+year — month-precision 1902-03 is recoverable; end_date_text stored as «мартъ 1902 г.» (normalised; print «въ мартѣ»)
+1485,correct,Оставилъ службу 1 сентября 1901 г.,1 сентября 1901 г.,left service,,
+1486,correct,Оставилъ службу 1 сентября 1901 г.,1 сентября 1901 г.,left service,,"teaching post (no. 3); his надзиратель post on same page left «въ мартѣ 1902» (item 1484) — two posts, both as printed"
+1487,correct,Оставилъ службу 1 сентября 1901 г.,1 сентября 1901 г.,left service,,
+1488,correct,Оставила службу 1 октября 1901 г.,1 октября 1901 г.,left service,,
+1489,correct,Оставилъ службу 6 декабря 1902 г.,6 декабря 1902 г.,left service,,
+1490,correct,† 21 ноября 1902 г.,21 ноября 1902 г.,died,,print has a stray «)» after г.
+1491,correct,"5. Гавронскій, (съ 1 февраля 1895 г.). … Оставилъ службу 1 сентября 1902 г.",1 сентября 1902 г.,left service,,successor Стобницкій «съ 1 сентября 1902 г.» right below — consistent
+1492,correct,† 1 марта 1903 г.,1 марта 1903 г.,died,,successor Воскресенскій «съ 1 марта 1903 г.» below — consistent
+1493,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1494,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1495,correct,† 1902 г.,1902 г.,died,end_date_text=1902 г.; end_date_undate=1902 (year precision),kind correct; print gives year only («† 1902 г.»); stored end_date_text and undate are both null («? -> ?») — year 1902 recoverable
+1496,correct,Оставилъ службу 1 сентября 1901 г. и вновь поступилъ 1 ноября 1902 г.,1 сентября 1901 г.,left service (then re-entered),,end date and kind correct; re-entry 1 ноября 1902 stored as open period 2 (checked raw.person_entry_service)
+1497,correct,"3. Іогансонъ, Христіанъ Петровичъ. † зимою 1904 г.",зимою 1904 г.,died,end_date_undate=1904 (year precision),kind and text correct; undate null — year 1904 recoverable (season-word «зимою»)
+1498,correct,Оставилъ службу въ августѣ 1903 г.,въ августѣ 1903 г.,left service,end_date_undate=1903-08 (month precision),kind correct; undate null though month+year printed; end_date_text stored «августѣ 1903 г.» (drops «въ»)
+1499,correct,Оставилъ службу 1 сентября 1903 г.,1 сентября 1903 г.,left service,,
+1500,correct,26. Стобницкій (съ 1 сентября 1902 г.). … Оставилъ службу 1 сентября 1903 г.,1 сентября 1903 г.,left service,,successor Сенкусъ «съ 1 сентября 1903 г.» just above — consistent
+1501,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1502,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1503,correct,† зимою 1904 г.,зимою 1904 г.,died,end_date_undate=1904 (year precision),"as item 1497; undate null, year recoverable"
+1504,correct,Оставилъ службу 1 сентября 1904 г.,1 сентября 1904 г.,left service,,successor Мысовскій «съ 1 сентября 1904 г.» directly above — consistent
+1505,correct,Оставилъ службу 1 сентября 1904 г.,1 сентября 1904 г.,left service,,
+1506,correct,Оставилъ службу 1 сентября 1904 г.,1 сентября 1904 г.,left service,,
+1507,correct,Оставилъ службу 1 сентября 1904 г.,1 сентября 1904 г.,left service,,
+1508,correct,Оставилъ службу 1 сентября 1904 г.,1 сентября 1904 г.,left service,,воспитатель no. 3
+1509,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1510,correct,Оставилъ службу 1 сентября 1904 г.,1 сентября 1904 г.,left service,,successor Воскресенскій (Рисованіе и гримъ) «съ 1 сентября 1904 г.» — consistent
+1511,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,"print «:889» broken first digit of 1889 (start, not end)"
+1512,correct,"5. Сизовъ, Владиміръ Ильичъ. † 19 октября 1904 г.",19 октября 1904 г.,died,,zoom
+1513,correct,"6. Стороженко, Николай Ильичъ. † 12 января 1906 г.",12 января 1906 г.,died,,"zoom; print clearly «12 января 1906» (1904-05 volume appeared late). Outside reference works usually give 4 января 1906 (O.S.) for N. I. Storozhenko's death — possible print error, for RG to check; data faithful to print"
+1514,correct,Оставила службу съ 1 марта 1904 г.,съ 1 марта 1904 г.,left service,,successor Терсецкая «съ 1 марта 1904 г.» — consistent
+1515,correct,† 29 сентября 1904 г.,29 сентября 1904 г.,died,,
+1516,correct,Оставила службу 1 сентября 1905 г.,1 сентября 1905 г.,left service,,
+1517,correct,† 10 августа 1904 г.,10 августа 1904 г.,died,,
+1518,correct,† 19 октября 1904 г.,19 октября 1904 г.,died,,
+1519,correct,"16. Стороженко, Николай Ильичъ (съ 1 ноября 1904 г.). Исторія драмы и театра. Оставилъ чтеніе лекцій.",(undated),left service,,"print gives no date — undated end is faithful. Note: stored tenure starts «съ 1 ноября 1901 г.»; print shows «1904» with a damaged final digit (reads «190[4]») — start-date question, not an end"
+1520,correct,(съ 11 сентября 1880 г. по 1 сентября 1904 г.). Танцы и мимика (съ 1 ноября 1905 г.). Мимика.,1 сентября 1904 г.,"interval end (left 1904, returned 1 ноября 1905)",,"date correct; open period 2 from 1 ноября 1905 stored. Optional: end_type could be left service (1904-05 printed «Оставилъ службу 1 сентября 1904 г.», item 1505); stored start_date_text keeps «съ»"
+1521,correct,† 18 октября 1905 г.,18 октября 1905 г.,died,,
+1522,correct,Оставилъ службу 31 октября 1905 г.,31 октября 1905 г.,left service,,
+1523,correct,Оставилъ службу 31 октября 1905 г.,31 октября 1905 г.,left service,,
+1524,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1525,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1526,correct,† 28 іюня 1906 г.,28 іюня 1906 г.,died,,
+1527,correct,"7. Каменевъ, Александръ Петровичъ (съ 1 ноября 1888 г.). Исторія церкви. Оставилъ службу 1 января 1906 г.",1 января 1906 г.,left service,,stored tenure start «съ 1 ноября 1888» matches print; drama-course post only (his Законъ Божій post no. 15 continues)
+1528,correct,Оставилъ службу 30 августа 1906 г.,30 августа 1906 г.,left service,,
+1529,correct,Оставилъ службу 1 сентября 1906 г.,1 сентября 1906 г.,left service,,successor Корню «съ 1 сентября 1906» — consistent
+1530,correct,Оставилъ службу 1 января 1907 г.,1 января 1907 г.,left service,,
+1531,correct,Оставилъ службу 1 сентября 1906 г.,1 сентября 1906 г.,left service,,
+1532,correct,Оставилъ службу 1 сентября 1906 г.,1 сентября 1906 г.,left service,,
+1533,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1534,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1535,correct,Оставилъ службу 1 сентября 1906 г.,1 сентября 1906 г.,left service,,successor Голованъ «съ 1 сентября 1906» (Бытовая исторія) — consistent
+1536,correct,† 28 іюня 1906 г.,28 іюня 1906 г.,died,,repeated from 1905-06 as printed
+1537,correct,Оставилъ службу 1 января 1906 г.,1 января 1906 г.,left service,,repeated from 1905-06 as printed
+1538,correct,"1. Генъ, Анатолій Александровичъ, д. ст. сов. (съ 6 декабря 1902 г.; † 1907 г.).",1907 г.,died,end_date_undate=1907 (year precision),kind and text correct; undate null though year printed — 1907 recoverable
+1539,correct,Оставилъ службу 30 августа 1906 г.,30 августа 1906 г.,left service,,repeated from 1906-07 as printed
+1540,correct,Оставилъ службу 1 сентября 1906 г.,1 сентября 1906 г.,left service,,"1907-08 volume reprints the 1906-07 page verbatim (same lines, same numbering)"
+1541,correct,Оставилъ службу 1 января 1907 г.,1 января 1907 г.,left service,,reprinted from 1906-07
+1542,correct,Оставилъ службу 1 сентября 1906 г.,1 сентября 1906 г.,left service,,reprinted from 1906-07
+1543,correct,Оставилъ службу 1 сентября 1906 г.,1 сентября 1906 г.,left service,,reprinted from 1906-07
+1544,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1545,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1546,correct,Оставилъ службу 1 сентября 1906 г.,1 сентября 1906 г.,left service,,reprinted from 1906-07
+1547,correct,† 28 іюня 1906 г.,28 іюня 1906 г.,died,,reprinted
+1548,correct,Оставилъ службу 1 января 1906 г.,1 января 1906 г.,left service,,reprinted from 1905-06/1906-07
+1549,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1550,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1551,wrong_type,"1. Ѳедотовъ, Александръ Александровичъ (съ 21 августа 1904 г. по 8 февраля 1909 г.).",8 февраля 1909 г.,none printed (interval end),end_type=blank (or RG decision),"date correct; print gives only «по 8 февраля 1909 г.» with no kind word, so [left service] is an inference. Outside knowledge (unverified here): actor A. A. Ѳедотовъ died in Feb 1909 — the end may really be a death; RG to check"
+1552,correct,"2. Всеволожской, Иванъ Александровичъ. † 28 октября 1909 г.",28 октября 1909 г.,died,,
+1553,wrong_type,"2. Каттани, Софія Францевна (съ 1 октября 1889 г. по 1 октября 1909 г.).",1 октября 1909 г.,none printed (interval end),end_type=blank (or RG decision),"date correct; print gives only «по 1 октября 1909 г.» — [left service] is inferred, no kind word printed (same pattern as Ѳедотовъ, item 1551; contrast Давыдовъ/Морозовъ interval ends stored blank)"
+1554,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1555,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1556,correct,"(съ 1 сентября 1899 г. по 1 сентября 1903 г., съ 1 сентября 1905 г. по 1 сентября 1908 г. и съ 1 сентября 1909 г.)",1 сентября 1903 г.; 1 сентября 1908 г.,interval ends,,three periods split correctly
+1557,correct,"13. Яковлевъ, Степанъ Ивановичъ (съ 1 сентября 1906 г. по 1 сентября 1909 г.).",1 сентября 1909 г.,interval end (no kind printed),,date and blank type consistent with print
+1558,correct,"4. Михайловскій, Владиміръ Александровичъ (съ 1888—1898 г. и съ февраля 1909 г.). Исторія.",1898 г.,interval end (year only),end_date_undate=1898 (year precision),period split correct; undate null though year printed — 1898 recoverable (start «съ 1888» also year-only; second start «съ февраля 1909» month-precision)
+1559,wrong_type,"2. Каттани, Софія Францевна (съ 1 октября 1889 г. по 1 октября 1909 г.).",1 октября 1909 г.,none printed (interval end),end_type=blank (or RG decision),"as item 1553 (reprinted 1910-11); date correct, [left service] inferred"
+1560,correct,(съ 1 сентября 1889 г. по 1 сентября 1893 г. и съ 16 февраля 1895 г.),1 сентября 1893 г.,interval end,,
+1561,correct,(съ 1 сентября 1889 г. по 1 сентября 1892 г. и съ 1 сентября 1893 г.),1 сентября 1892 г.,interval end,,
+1562,correct,"(съ 1 сентября 1899 г. по 1 сентября 1903 г., съ 1 сентября 1905 г. по 1 сентября 1908 г. и съ 1 сентября 1909 г.)",1 сентября 1903 г.; 1 сентября 1908 г.,interval ends,,
+1563,correct,(съ 1 сентября 1906 г. по 1 сентября 1909 г.),1 сентября 1909 г.,interval end,,reprinted from 1909-10
+1564,correct,"Фонъ Бооль, Николай Константиновичъ (Управляющій Московской Конторой Императорскихъ театровъ), ст. сов. Оставилъ службу 1 февраля 1910 г.",1 февраля 1910 г.,left service,,successor Обуховъ «съ 1 декабря 1910 г.»
+1565,correct,"4. Михайловскій, Владиміръ Александровичъ (съ 1888—1898 г. и съ февраля 1909 г.). Исторія.",1898 г.,interval end (year only),end_date_undate=1898 (year precision),"as item 1558; undate null, year recoverable"

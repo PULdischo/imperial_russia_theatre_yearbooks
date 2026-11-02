@@ -13,10 +13,17 @@ jubilee links, Wikidata. **Nothing in the database has been changed.** All scan 
 - Reader briefs: `READER_BRIEF.md`, `READER_BRIEF_R9.md`, `READER_BRIEF_DATES.md`; `render.py` (uses `page_map.csv`, no DB needed)
 - Readings: `slices/<slice>_results.csv`; `own_checks.md` (main-session checks)
 
-## Progress when paused (rows read / total)
-Flags: slice1 203/203, slice2 117/204, slice3 150/206, slice4 197/197, slice5 199/206, slice6 205/205, slice7 196/196, slice8 148/148
--> 1,415/1,565. R9: 49/159, 47/158, 102/153, 72/159, 57/147 -> 327/776. D1: 14/262, 5/260, 0 x4 -> 19/1,565. D2: 0/106.
-**Resume:** for each slice, re-launch a reader with the same brief, telling it to skip items already in its results CSV.
+## Progress (updated 2026-11-02)
+Flags: **1,565/1,565 read** — matches_print 981, print_slip 200, misread 155, field_misplaced 101, missing_in_data 61,
+link_ok 44, extra_in_data 20, wrong_link 3.
+R9 last-listing sweep: **776/776 read** — BalletArtists 50 dropped + 26 stored_no_end of 317 (concentrated 1892-93..1900-01);
+Musicians 2, TSS 6, Admin 3, ProdTeam 1 stored_no_end, **0 dropped** outside ballet. TSS gaps are month-only / year-only /
+season dates («въ мартѣ», «† 1902 г.», «зимою») = convention Q (partial dates).
+D1 stored ends: **1,565/1,565 read** — 1,469 correct, 79 wrong_type, 10 wrong_structure, 7 wrong_date. D2 pre-gap: **106/106** — 94 none printed, 6 dropped, 6 stored-not-parsed.
+**All reading done.** Decision list: `DECISIONS.md`.
+Corpus checks 2026-11-02: 88 «Назначенъ/Переведенъ … <year>» entries with no end (upper bound); 11 names with non-Russian
+letters or combining accents (query_log 2026-11-02).
+Resume: re-launch a reader per `slices/*_rest.csv` (rebuild with the snippet in this session: rows not yet in the results CSV).
 
 ## Main findings so far (checked by Claude; for RG's rulings, one at a time)
 1. **Dropped leaving/transfer/death lines** — biggest. BalletArtists print them after the tally; often dropped entirely or stored in
