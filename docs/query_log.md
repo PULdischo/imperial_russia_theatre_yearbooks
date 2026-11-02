@@ -24858,3 +24858,29 @@ select count(*) from research.person_appearance where entity_type='ProductionTea
 ```
 
 Result: research.service_period 23,627 periods; starts: day 23,464, month 22, year 8, none 133 (no printed start); ends: day 1,682, month 4, year 6, season 5, none 6. 10 rows carry date_correction (7 Бейдлеръ double dates -> Old Style; 3 A6 corrections: Корниловъ 1998->1898, Степановъ 1802->1892, Михайловъ 1889->1899). 2 starts unparsed (print «903 г.»; Храписъ comma pipeline bug). research.person_assignment 16 rows (Петровъ x3, Усачевъ x2, Рихартова x3, Андреевъ, Мосолова, Рѣпина, Печатниковъ x2, Дума, Шидловская x2). A planned `duties` column was found to duplicate person_appearance.title (85/87 identical; title already holds 250 ProductionTeam specialties, issue #132) and was dropped; title now fills the 2 rows raw had in subject_taught (252). Core metrics (people, links, works, receipts, end types) identical; sqlite export tested on a scratch copy.
+
+## 2026-11-02 — Ѳедоровъ, Василій Николаевичъ (Musicians SP): his listings and printed leaving date
+
+```sql
+select pa.season, pa.city, pa.heading_path, pa.instrument, pa.tenure_note_text, sp.end_text, sp.end_type
+from research.person_appearance pa left join research.service_period sp using(appearance_id)
+where cast(pa.person_id as varchar)='ca427806-f49b-41af-91fc-1188219fade7' order by 1;
+```
+
+Result: see session report (Ѳедоровъ evidence for RG).
+
+## 2026-11-02 — Ѳедоровъ evidence: leaving dates printed in the 1899-00 volume (all lists)
+
+```sql
+select case when end_date < date '1899-09-01' then 'before 1 Sep 1899' when end_date < date '1900-09-01' then 'Sep 1899 - Aug 1900' else 'after' end span,
+       count(*) n, min(end_date), max(end_date)
+from research.service_period where season='1899-00' and end_type in ('left service','died') and end_date is not null
+  and appearance_id <> 'musicians_1899-00_SP_p005__e007' group by 1;
+select end_date, count(*) from research.service_period where season='1899-00' and end_type='left service'
+  and end_date between date '1899-05-01' and date '1900-07-31' and extract(day from end_date)=1 and extract(month from end_date)=6 group by 1;
+```
+
+Result: see session report. Scan (checked by Claude, page width): 1899-00 SP p.91 no. 43 clearly prints «Оставилъ службу 1 іюня 1889 г.»; same page Кулле 1-й «Оставилъ службу 1 декабря 1899 г.». Ѳедоровъ listed 1890-91..1899-00 (Литавры, «съ 1 сентября 1889 г.» every year), absent 1900-01; no new timpanist in 1900-01, Блауэртъ from 1 Sept 1901.
+Result (cont.): 1899-00 volume leaving/death dates: 56 within Sep 1899-Aug 1900, 4 later (Sep 1900), 9 before Sep 1899 (listed below in the session). No other 1 June leaving in 1899 or 1900.
+
+Ruling: RG 2026-11-02 "1 June 1899" — added to pipeline/research_corrections/service_period_date_corrections.csv; research.service_period end_date 1899-06-01 with date_correction; raw keeps «1889».
