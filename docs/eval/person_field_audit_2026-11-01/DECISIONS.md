@@ -76,3 +76,11 @@ Order: conventions first (each settles many rows), then mechanical fixes, then i
 - Held for RG: 7 medium misreads (B6), 10 medium wrong-field rows (B5), 9 undated ends (B1), «Освобожденъ отъ обязанностей» (Аслинъ, Ширяевъ),
   Будаевъ rank+instrument, 1908-09 BalletArtists tallies unparsed (B9).
 - C identity/links and D print conflicts: not started.
+
+## D. Print conflicts -- RULED 2026-11-02 (RG): "contemporaneous wins"
+When later volumes reprint a past date differently, the research layer uses the printing from the time of the event; raw stays as
+printed (21 corrections in pipeline/research_corrections/service_period_date_corrections.csv: Цалисонъ 1900, Голубинъ 1-й 1894 /
+16 Sept 1897, Тройниковъ 1 Dec 1896 / 16 Feb 1897, Гиллертъ іюля 1875/1879; Гиллертъ's start slip also in person_start_date_slips.csv).
+Still to put to RG one by one: Потаповъ (1909 vs 1910), Кувакина (23 Aug vs 1 Sept 1904), Константиновъ († 25 vs 27 Dec 1906, same
+volume), Ѳедорова 2-я (1902 vs 1901, relisted 1903-04); and the listed-after-leaving cases (Иванова 2-я, Левинсонъ 1-я, Егорова М. Н.,
+Дмитріева 1-я, Броневскій-Боянусъ, Гущинъ, Смирнова).

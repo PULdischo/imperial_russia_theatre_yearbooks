@@ -24944,3 +24944,13 @@ Result: see session report (table for RG).
 ```
 
 Result: research.person 2,639 -> 2,627 (11 roster records absorbed incl. 2 Гельцеръ guest rows, + Золотаренко creator joined Петръ); live 2,540 -> 2,529; 0 shift blocks, 0 orphans, 0 pending; works, receipts (3,223,088,581), Wikidata (174), end types unchanged. Ромашковъ Григорій tenure start 1893-10-10, slip 1893-10-01 left out.
+
+## 2026-11-02 — Print conflicts: past end dates printed differently across volumes
+
+```sql
+select cast(sp.person_id as varchar), p.display_name, sp.list, sp.city, sp.season, sp.period_order, sp.end_text, cast(sp.end_date as varchar), sp.end_year, sp.end_type
+from research.service_period sp join research.person p using(person_id) where sp.end_text is not null order by 1,3,4,6,5;
+-- grouped by person/list/city/period; consecutive printings with the same end type differing by <=400 days or one digit
+```
+
+Result: 73 person-periods with differing ends, 14 after narrowing; 5 same-event conflicts (Ѳедорова 2-я, Гиллертъ, Тройниковъ, Потаповъ, Кувакина) + reader-found Цалисонъ, Голубинъ 1-й, Константиновъ (cross-list). RG ruled "contemporaneous wins": 21 corrections applied in the research layer (19 service_period rows carry date_correction).
