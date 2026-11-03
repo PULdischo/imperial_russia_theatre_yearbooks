@@ -25992,3 +25992,8 @@ now merged into a twin removed («Ночное…» x3, «Шашки шут»). 
 performance: only work_id, plus 2 «M-r Choufleuri … opérette» rows play -> operetta (print says opérette); no row points at a removed work.
 Works: drama 2,251 / opera 323 / ballet 260 / operetta 38 / concert 4 / ceremonial 4 / NULL 63. Check unchanged (52 / 6 pairs).
 Left for RG: La Mascotte (1-r acte), Le petit Duc (2-me acte), Britannicus (3-ème acte …) — parents never printed, no genre anywhere.
+
+## 2026-11-03 — La Mascotte / Le petit Duc / Britannicus excerpts: blank with a lead (RG "agree")
+
+Result: the 3 works keep art_form NULL, basis «not printed: … probably <parent> (lead from outside the yearbook, not linked)»;
+only those 3 work rows changed.
