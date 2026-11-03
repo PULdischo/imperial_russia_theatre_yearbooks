@@ -586,6 +586,27 @@ A costumer's or wig maker's printed area of work («Женскіе костюм�
 `research.person_appearance.title` for ProductionTeam (issue #132; ruling A7, 2026-11-02, also fills the 2 rows raw had
 in `subject_taught`). `subject_taught` is now only for the Theatre School staff.
 
+## Printed performance tallies — `research.person_performance_tally` (added 2026-11-03)
+
+RG 2026-11-03 (research-layer review, `docs/research_layer_review_2026-11-03.md`): the tally line printed under a dancer's
+entry («Въ 7 балетахъ—9. Всего—9 разъ. Въ томъ числѣ: Лебединое озеро (Одетта—1); ...») is carried into the research
+layer, one row per printed item. Until then it stopped at `analysis.person_entry_credit`. The verbatim line itself is
+`research.person_appearance.credit_summary_text` (added the same day).
+
+| column | meaning |
+|---|---|
+| `tally_id` | `analysis.person_entry_credit.credit_id` |
+| `appearance_id`, `person_id`, `season`, `list`, `city` | the listing the line is printed in |
+| `tally_order` | position of the item in the printed line |
+| `tally_kind` | `category` («Въ 7 балетахъ—9»: one art form), `total` («Всего—9 разъ»), `role` (a named work and part, «Лебединое озеро (Одетта—1)») |
+| `label` | as printed: the category word (`балетахъ`, `операхъ`, `дивертиссементѣ` and its many spellings) or the work title. Not linked to `research.work` and not normalised |
+| `role_name` | the part, as printed (`role` rows only) |
+| `production_count` | `category` rows: the number of productions («Въ **7** балетахъ»), when printed |
+| `times_text`, `times` | the count, as `category_credit_count_clean` has it (the analysis repair of the «N балетахъ—X» swap), and as a number; half credits (0.5) exist. Null on 11 items where no count was parsed |
+
+A two-city entry («Кромѣ того, въ С.-Петербургѣ: ...», 10 entries) repeats its categories; `city` is the listing's
+city, not the block's. Exported to Datasette (`build_datasette.py`).
+
 ## `research.work.title_note` (added 2026-10-26)
 
 Why a work's title in the research layer differs from what the Repertoire printed. RG: "I want researchers to understand any decisions I made." Filled from `build_research_model.RESEARCH_TITLE_CORRECTIONS` (confirmed print slips corrected in the research layer only; raw and `research.performance.verbatim_title` keep the printed form):

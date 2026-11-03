@@ -25376,25 +25376,6 @@ SELECT count(*) FROM research.service_period WHERE end_type = 'other';
 
 Result: end_type other, no date. Receipts 3,223,088,581; Wikidata 174; assertion links 2,468; pending 0; other-ends 210 -> 211; research.person 2,620; alignment 0 shifts.
 
-## 2026-11-03 — 1905-06 12 Feb Gerber benefit: supply «Золотая рыбка» (ledger 1905-06-07), copy v. production diff
-
-```sql
-select e.event_id, e.city, e.time_of_day, t.canonical_name, e.event_status from research.event e join research.theater t using (theater_id)
- where e.season = '1905-06' and cast(e.date as varchar) = '1906-02-12' and t.canonical_name like 'Больш%';
-select work_id, canonical_title, canonical_genre, excerpt_of_work_id from research.work where canonical_title = 'Золотая рыбка';
--- every base table, both directions:
-select count(*) from (select * from copy.s.t except all select * from pre.s.t);
-select count(*) from research.events_with_dancers w join research.event e on e.event_id = w.event_id join research.theater t on t.theater_id = e.theater_id
- where e.season = '1905-06' and t.canonical_name = 'Большой';
-select count(distinct p.event_id) from research.performance p join research.work w using (work_id) join research.event e on e.event_id = p.event_id
- where e.season = '1905-06' and e.city = 'Moscow' and w.canonical_title = 'Золотая рыбка';
-```
-
-Result: evening event repertoire_1905-06_p033__s026 (Moscow, Большой, performed); one work «Золотая рыбка» бал. (a6c73d55…). After adding the
-supplied_performances.csv row: only research.event (1 row: n_works 0->1, disciplines/companies/genre_families -> ballet) and research.performance
-(+1, `__supplied1`, performance_source «supplied: Moscow ballet season review») differ in 59 tables. Большой events with dancers 28 -> 29;
-Moscow «Золотая рыбка» events 3 -> 4 (= the review's tally). Promoted after cmp; sqlite has 1 performance on the event.
-
 ## 2026-11-03 — Будаевъ Александръ Дмитріевичъ: raw rank/instrument/tenure per season
 
 ```sql
@@ -25415,6 +25396,25 @@ WHERE e.family_name = 'Михайловъ' AND e.entry_id LIKE 'administration_1
 ```
 
 Result: 2 rows -- Будаевъ 1908-09 and Михайловъ Георгій administration_1909-10_p002__e013 «пот. поч. гражд. (по найму съ 7 января 1885 г.)» with no tenure note and no service period (other years 1902-11 store the parenthesis in tenure_note, start 7 Jan 1885). Scan 1909-10 p.143 no.3 (Claude) confirms the print.
+
+## 2026-11-03 — 1905-06 12 Feb Gerber benefit: supply «Золотая рыбка» (ledger 1905-06-07), copy v. production diff
+
+```sql
+select e.event_id, e.city, e.time_of_day, t.canonical_name, e.event_status from research.event e join research.theater t using (theater_id)
+ where e.season = '1905-06' and cast(e.date as varchar) = '1906-02-12' and t.canonical_name like 'Больш%';
+select work_id, canonical_title, canonical_genre, excerpt_of_work_id from research.work where canonical_title = 'Золотая рыбка';
+-- every base table, both directions:
+select count(*) from (select * from copy.s.t except all select * from pre.s.t);
+select count(*) from research.events_with_dancers w join research.event e on e.event_id = w.event_id join research.theater t on t.theater_id = e.theater_id
+ where e.season = '1905-06' and t.canonical_name = 'Большой';
+select count(distinct p.event_id) from research.performance p join research.work w using (work_id) join research.event e on e.event_id = p.event_id
+ where e.season = '1905-06' and e.city = 'Moscow' and w.canonical_title = 'Золотая рыбка';
+```
+
+Result: evening event repertoire_1905-06_p033__s026 (Moscow, Большой, performed); one work «Золотая рыбка» бал. (a6c73d55…). After adding the
+supplied_performances.csv row: only research.event (1 row: n_works 0->1, disciplines/companies/genre_families -> ballet) and research.performance
+(+1, `__supplied1`, performance_source «supplied: Moscow ballet season review») differ in 59 tables. Большой events with dancers 28 -> 29;
+Moscow «Золотая рыбка» events 3 -> 4 (= the review's tally). Promoted after cmp; sqlite has 1 performance on the event.
 
 ## 2026-11-03 — B10 applied (Будаевъ 1908-09, Михайловъ 1909-10): verify rebuilt rows and metrics
 
@@ -25462,26 +25462,6 @@ SELECT entry_id, person_id, match_method FROM [old.]entities.person_link WHERE e
 
 Result: raw person_entry 3/3 rows changed (the 3 notes, now single), person_entry_service 1/1 (Храписъ 1910-11 start «съ 1 іюня, 1908 г.» 1908-06-01, no end), other raw tables 0. research.person gone: eb5c1063 Храписъ (1908-10), now superseded by 4143fc41, which holds all 3 seasons; person_tenure 1908-09..1910-11, start 1908-06-01, consistent. Receipts 3,223,088,581, Wikidata 174, assertion links 2,468, pending 0 unchanged; live 2,522 -> 2,521; research.person 2,620 -> 2,619; alignment 0 shifts. No file in docs/ or pipeline/ references eb5c1063.
 
-## 2026-11-03 — 1905-06 review-text slips (RG: "Yes, correct all 14"): 17 corrections, review chain on a copy, promoted
-
-`apply_review_text_corrections.py` (dry run: 17 rows 1/1, 18 replacements) on a copy of `outputs/reviews/merged_full`, then
-`match_review_mentions.py` -> `build_reviews_duckdb.py` -> `build_review_assertions.py` -> `build_review_credits.py` -> `check_person_link_alignment.py`
-on a copy of production (outputs/rebuild_reviewtext_1905-06_2026-11-03); every base table compared both ways (EXCEPT ALL), mentions on content.
-```sql
-select count(*) from (select * from copy.s.t except all select * from pre.s.t);   -- all 59 tables, both directions
-select block_id, mention_type, char_start, char_end, surface, entity_id, link_method, link_confidence from <A>.entities.review_mention
-except all select ... from <B>.entities.review_mention;
-select count(*), count(performer_person_id) from research.review_assertion where season = '1905-06';
-select count(*), count(person_id) from research.review_credit where season = '1905-06';
-select count(*), count(entity_id) from entities.review_mention where block_id like 'review_1905-06%';
-```
-
-Result: raw.review_block 12; entities.review_mention content 33 new / 32 gone (1905-06) + 1904-05 «Храписъ» now linked; research.review_assertion
-26/26 (18 are 1905-06: 13 Nov «Гарлемскій тюльпанъ» ×9, 23 Apr «Два вора» ×7, Людоѣдъ/Людоѣдка; 8 elsewhere differ only in candidate-id order);
-review_credit 320/320 (outside 1905-06 only mention_id and candidate lists); review_solo 5, review_dance_performer 17, review_dance 1; watermark
-3199 -> 3202. 1905-06: assertions 252 (236 linked) both; credits 238 (204) both; mentions 2,181 (1,639) -> 2,182 (1,641). Totals: 2,657 assertions,
-27,326 -> 27,327 mentions. 0 person_link shift blocks. Production unchanged since the snapshot; promoted; corrections dry run on production 0.
-
 ## 2026-11-03 — 1908-09 BalletArtists tallies: entries with tally text and no credit rows
 
 ```sql
@@ -25506,6 +25486,26 @@ SELECT table_schema, table_name FROM information_schema.tables WHERE table_name 
 
 Result: person_entry_credit exists only in raw and analysis (analysis adds category_credit_count_clean). research.production_credit = ballet-list creators, research.review_credit = reviews; neither uses roster tallies. build_research_model reads credit_summary_text only in build_person_assignments (searching the text for «Прикомандир…» lines); build_datasette has no reference. Claim holds.
 
+## 2026-11-03 — 1905-06 review-text slips (RG: "Yes, correct all 14"): 17 corrections, review chain on a copy, promoted
+
+`apply_review_text_corrections.py` (dry run: 17 rows 1/1, 18 replacements) on a copy of `outputs/reviews/merged_full`, then
+`match_review_mentions.py` -> `build_reviews_duckdb.py` -> `build_review_assertions.py` -> `build_review_credits.py` -> `check_person_link_alignment.py`
+on a copy of production (outputs/rebuild_reviewtext_1905-06_2026-11-03); every base table compared both ways (EXCEPT ALL), mentions on content.
+```sql
+select count(*) from (select * from copy.s.t except all select * from pre.s.t);   -- all 59 tables, both directions
+select block_id, mention_type, char_start, char_end, surface, entity_id, link_method, link_confidence from <A>.entities.review_mention
+except all select ... from <B>.entities.review_mention;
+select count(*), count(performer_person_id) from research.review_assertion where season = '1905-06';
+select count(*), count(person_id) from research.review_credit where season = '1905-06';
+select count(*), count(entity_id) from entities.review_mention where block_id like 'review_1905-06%';
+```
+
+Result: raw.review_block 12; entities.review_mention content 33 new / 32 gone (1905-06) + 1904-05 «Храписъ» now linked; research.review_assertion
+26/26 (18 are 1905-06: 13 Nov «Гарлемскій тюльпанъ» ×9, 23 Apr «Два вора» ×7, Людоѣдъ/Людоѣдка; 8 elsewhere differ only in candidate-id order);
+review_credit 320/320 (outside 1905-06 only mention_id and candidate lists); review_solo 5, review_dance_performer 17, review_dance 1; watermark
+3199 -> 3202. 1905-06: assertions 252 (236 linked) both; credits 238 (204) both; mentions 2,181 (1,639) -> 2,182 (1,641). Totals: 2,657 assertions,
+27,326 -> 27,327 mentions. 0 person_link shift blocks. Production unchanged since the snapshot; promoted; corrections dry run on production 0.
+
 ## 2026-11-03 — 1908-09 missing credits applied: diff all tables v. backup
 
 ```sql
@@ -25515,6 +25515,80 @@ SELECT count(*) FROM analysis.person_entry_credit WHERE entry_id IN (<8 entries>
 ```
 
 Result: 59 tables; changed only raw.person_entry_credit (+26, -0) and analysis.person_entry_credit (+26, -0). research.person 2,619, live 2,521, alignment 0 shifts.
+
+## 2026-11-03 — Research-layer review (RG): inventory of research.* and profile of the people tables
+
+```sql
+SELECT table_name, table_type FROM information_schema.tables WHERE table_schema='research';
+SELECT count(*) FROM research.<each table>;   -- plus, per column: count(col), count(DISTINCT col)
+SELECT person_source, count(*) FROM research.person GROUP BY 1;
+SELECT wikidata_source, count(*) FROM research.person GROUP BY 1;
+SELECT entity_type, count(*), count(DISTINCT person_id) FROM research.person_appearance GROUP BY 1;
+SELECT entity_type, city IS NULL, count(*) FROM research.person_appearance GROUP BY 1,2;
+SELECT person_source, count(*) FROM research.person p WHERE NOT EXISTS (SELECT 1 FROM research.person_appearance a WHERE a.person_id=p.person_id) GROUP BY 1;
+SELECT end_type, count(*) FROM research.service_period GROUP BY 1;
+SELECT basis, count(*) FROM research.person_tenure GROUP BY 1;
+SELECT * FROM research.person WHERE display_name ILIKE 'Кшесинская%' OR display_name ILIKE 'Петипа, Маріусъ%';
+SELECT season, heading_path, rank, tenure_note_text, printed_start_text FROM research.person_appearance WHERE person_id='4168294b-ff7a-4216-9dd6-0163b503a0aa';
+SELECT * FROM research.person_tenure WHERE person_id='4168294b-ff7a-4216-9dd6-0163b503a0aa';
+SELECT season, city, count(*) FROM research.person_appearance WHERE entity_type='BalletArtists' AND season IN ('1904-05','1905-06','1906-07') GROUP BY 1,2;
+SELECT * FROM raw.person_entry WHERE family_name ILIKE 'Кшесинск%' AND page_id LIKE '%1905-06%';
+SELECT season, count(*) FILTER (WHERE rank ILIKE '%Заслуж%'), count(*) FILTER (WHERE tenure_note_text ILIKE '%Заслуж%') FROM research.person_appearance WHERE entity_type='BalletArtists' GROUP BY 1;
+SELECT p.entity_type, count(DISTINCT cr.entry_id), count(*) FROM analysis.person_entry_credit cr JOIN raw.person_entry p USING(entry_id) GROUP BY 1;
+SELECT count(*), count(credit_summary_text), count(list_number) FROM raw.person_entry WHERE entity_type='BalletArtists';
+SELECT heading_path, count(*) FROM research.person_appearance WHERE entity_type='BalletArtists' GROUP BY 1 ORDER BY 2 DESC;
+```
+
+Result: research has 22 tables + 2 views (person 2,619; person_appearance 23,980; person_tenure 3,034; service_period 23,629;
+person_assignment 16; person_tenure_note 27; work 2,952; event 32,813; performance 30,835; theater 6; production 628;
+production_credit 1,587; production_work 628; review_assertion 2,657; review_credit 2,410; review_dance 914;
+review_dance_performer 2,982; review_dance_composer 67; review_solo 96; season_stat_line 303; season_stat_check 38;
+season_stat_footnote 125; views events_with_dancers 2,222, events_with_dancers_performance 3,085).
+person_source: roster 2,521 / production_list 86 / review 12; QIDs 174 (link_wikidata 88, rg_review 86); 98 people
+(all production_list + review) have no appearance. city is null for every Administrators, Graduates, ProductionTeam and
+TheaterSchoolStaff appearance (7,324). Кшесинская 2-я: SP 1890-91..1910-11 with no 1905-06 entry (raw has none either: only
+Кшесинскій Іосифъ on that page set), plus a Moscow 1906-07 entry. «Заслуженная артистка» sits in rank only 1908-09 on, earlier in
+tenure_note_text. Role tallies: analysis.person_entry_credit 36,037 rows for 7,955 BalletArtists entries; no research table reads
+them. list_number 8,596/8,760 BalletArtists entries, not in research. BalletArtists headings are only Артистки/Артисты + staff posts.
+
+## 2026-11-03 — Ruling P1 (RG "Yes, add them"): research.person_performance_tally built, checked, promoted
+
+```sql
+SELECT credit_type, count(*), count(role_name), count(category_production_count), count(category_credit_count_clean) FROM analysis.person_entry_credit GROUP BY 1;
+SELECT count(*), count(a.appearance_id) FROM analysis.person_entry_credit c LEFT JOIN research.person_appearance a ON a.appearance_id = c.entry_id;
+SELECT category_credit_count_clean FROM analysis.person_entry_credit WHERE try_cast(rtrim(trim(category_credit_count_clean),'.') AS DECIMAL(9,2)) IS NULL AND category_credit_count_clean IS NOT NULL;
+SELECT entity_type, count(*) FROM raw.person_entry pe WHERE credit_summary_text IS NOT NULL AND NOT EXISTS (SELECT 1 FROM analysis.person_entry_credit c WHERE c.entry_id = pe.entry_id) GROUP BY 1;
+-- after build_research_model.py on a copy (outputs/rebuild_tally_2026-11-03), every table v. the pre-build copy, both directions:
+SELECT count(*) FROM (SELECT * FROM <t> EXCEPT ALL SELECT * FROM old.<t>);   -- person_appearance on the old columns
+SELECT tally_kind, count(*), sum(times) FROM research.person_performance_tally GROUP BY 1;
+SELECT ... FROM research.person_performance_tally WHERE times IS NULL;
+-- production sha1 = pre-copy sha1 before promoting; after: every base table v. the tested copy
+```
+
+Result: 36,050 credit rows, all attached to a research appearance; every count parses (one 0.5). 42 entries print a
+tally line with no parsed items (BalletArtists 36, ProductionTeam 6). Copy: only research.person_performance_tally new,
+61 shared tables identical. Tally kinds: category 17,146 (sum 490,539), total 7,781 (sum 486,563), role 11,123 (sum
+37,050.5); 11 items with null count. credit_summary_text 7,991/8,760 BalletArtists appearances. Production after
+promotion: 60 base tables, 0 differences v. the tested copy; check_person_link_alignment 0 shift blocks. Sqlite export
+tested into scratch only (guard passed).
+
+## 2026-11-03 — P1 follow-up: the 11 count-less tally items and 42 entries with a tally line and no items
+
+```sql
+-- entries with a null count, and entries with credit_summary_text but no credit rows, with page metadata
+SELECT x.why, pe.entry_id, pe.list_number, pe.family_name, pe.credit_summary_text, sp.source_file, sp.source_page_index
+FROM (SELECT DISTINCT entry_id, 'null count' why FROM analysis.person_entry_credit WHERE category_credit_count_clean IS NULL
+      UNION ALL SELECT entry_id, 'no items' FROM raw.person_entry pe WHERE credit_summary_text IS NOT NULL
+      AND NOT EXISTS (SELECT 1 FROM analysis.person_entry_credit c WHERE c.entry_id = pe.entry_id)) x
+JOIN raw.person_entry pe USING (entry_id) JOIN raw.source_pages sp USING (page_id);
+SELECT label, count(*) FROM raw.person_entry_credit WHERE credit_type='named_work' AND regexp_matches(label,'^(оп|ком|др|бал)\.') GROUP BY 1;
+SELECT credit_summary_text FROM raw.person_entry WHERE credit_summary_text ILIKE '%—въ бал.%' OR credit_summary_text ILIKE '%— въ бал.%';
+```
+
+Result: 51 rows (8 entries with null counts, 43 with no items incl. Бакинъ 2-й). The 36 BalletArtists "no items" lines are
+leaving/death/transfer notes, not tallies; 6 are the 1892-93 decorators («Всего—N декорацій», set lists dropped). Label
+convention: «ком. Батюшкина дочка—въ бал. Своенравная жена» on 4 parsed rows; 7 texts print «Своеправная», 3 of them
+scan-checked (all read н). Scan readings in docs/research_layer_review_2026-11-03.md (P1 follow-up).
 
 ## 2026-11-03 — Scan-check batch: Больмъ spellings, 1908-09 surname slips, Егорова 1899-01, Ѳедорова review mentions
 
@@ -25541,6 +25615,45 @@ unlinked (roster 2-я = Лидія 36348a72), «Ѳедорова 1-я» x1 unlin
 passage, 9 linked to later people, incl. «Готье» (a role) -> Готье Теофиль, «Л. Ивановъ» -> Иванова Лариса, «Ѳедорова 1-я» ->
 Марія Дмитріевна (joined 1885).
 
+## 2026-11-03 — Tally fixes (RG: group A "yes to these", ruling B, "chase these"): copy rebuild checked; PROMOTION CLASHED
+
+Run: docs/eval/tally_fixes_2026-11-03/raw_fix_tallies.py (22 entries, 16 pages) on a copy of outputs/full_run/raw, then
+parse_and_validate (--page-headers, --printed-page-numbers) -> build_duckdb -> build_entities -> validate_performance_dates ->
+build_research_model on a copy of production (outputs/rebuild_tally_2026-11-03); every base table v. the pre-fix copy, EXCEPT ALL both ways.
+```sql
+SELECT count(*) FROM (SELECT <shared cols> FROM <t> EXCEPT ALL SELECT <shared cols> FROM old.<t>);   -- 60 tables, both directions
+SELECT appearance_id, tally_order, tally_kind, label, role_name, production_count, times, count_shared_with FROM research.person_performance_tally
+ WHERE appearance_id IN ('balletartists_1898-99_MSK_p006__e025','balletartists_1893-94_SP_p007__e002','balletartists_1893-94_MSK_p007__e001');
+SELECT count(*) FROM research.person_performance_tally WHERE times IS NULL;
+SELECT label, count(*) FROM research.person_performance_tally WHERE label ILIKE '%атюшкина%' GROUP BY 1;
+```
+
+Result (copy): changed only raw/analysis person_entry (20 v. 20), raw/analysis person_entry_credit (+27/-31), research.person_appearance
+(20/20), research.person_performance_tally (+30/-34; new column count_shared_with); 36,050 -> 36,046 items; 1 null count left (Макарова
+«Франческа», a printed blank); validation_errors.csv identical to production's (262 lines); person_link 0 shift blocks.
+Promotion at 10:58 collided with a parallel session's production rebuild (python PID 68208 had the DB open; production hash had changed
+since the snapshot and balletartists_1905-06_SP_p005 had a Больмъ edit). The tested DB was copied over the open file: production
+imperial_theaters.duckdb now fails to open ("Failed to deserialize"). Raw JSON in outputs/full_run/raw holds both sessions' edits.
+parsed/person_entry*.csv overwritten with the copy's (lack the Больмъ edits). Backups: imperial_theaters.pre_tally_fixes_2026-11-03.duckdb
+(10:58:04, opens, research.person 2,619, Больм* rows 29, may be mid-chain), outputs/rebuild_tally_2026-11-03/pre.duckdb (clean, pre both).
+Not yet repaired: waiting on the other session before one full rebuild from outputs/full_run/raw.
+
+## 2026-11-03 — Repair after the 10:58 clash: combined rebuild (tally fixes + Больмъ edits) on a clean copy, checked
+
+Run: base = outputs/rebuild_tally_2026-11-03/pre.duckdb (production before either session's rebuild); parse_and_validate from
+outputs/full_run/raw (both sessions' edits; --page-headers, --printed-page-numbers) -> quality_checks -> build_duckdb -> build_entities ->
+validate_performance_dates -> build_research_model, in outputs/rebuild_combined_2026-11-03; person_link alignment 0 shift blocks before and after.
+```sql
+-- every base table, EXCEPT ALL both ways, against three references
+SELECT count(*) FROM (SELECT <shared cols> FROM <t> EXCEPT ALL SELECT <shared cols> FROM <ref>.<t>);
+SELECT entry_id, family_name, first_name, patronymic FROM (SELECT * FROM raw.person_entry EXCEPT ALL SELECT * FROM tested.raw.person_entry);
+```
+
+Result: v. clean pre: raw/analysis person_entry 23/23, person_entry_credit +27/-31, research.person_appearance 20/20,
+person_performance_tally +30/-34, nothing else. v. my tested copy: only raw/analysis person_entry 3 rows (Больмъ 1903-04 SP p006 e003,
+1905-06 SP p005 e020, 1909-10 SP p006 e006). v. the 10:58:04 backup: only my tally changes (so the other session's rebuild had completed).
+quality_flags 1 (as production). Production not yet replaced: waiting for RG.
+
 ## 2026-11-03 — Check of the combined rebuild copy (research-layer session) before it replaces production
 
 ```sql
@@ -25552,6 +25665,18 @@ WHERE e.family_name LIKE 'Бол%мъ%' AND e.entry_id LIKE 'balletartists%';
 ```
 
 Result: see the session report of 2026-11-03 (Больмъ rows and metrics).
+
+## 2026-11-03 — Repair promoted (RG "Yes, put it in"): combined rebuild replaces the damaged production DB
+
+```sql
+SELECT sum(receipts_total_kopecks) FROM research.event;
+SELECT count(*), count(wikidata_qid) FROM research.person;
+SELECT count(*), count(count_shared_with) FROM research.person_performance_tally;
+```
+
+Result: production sha1 = the checked combined rebuild (8dea0c08...); receipts 3,223,088,581; research.person 2,619 / 174 QIDs;
+tally 36,046 items, 3 with a shared count; check_person_link_alignment 0 shift blocks. parsed/*.csv and quality_flags.csv replaced from the
+same rebuild. Damaged file kept as outputs/full_run/imperial_theaters.corrupted_clash_2026-11-03.duckdb. Sqlite export not rebuilt.
 
 ## 2026-11-03 — Results of the combined-rebuild copy check, and of restored production (person audit side)
 
@@ -25568,6 +25693,23 @@ Result: copy -- all 8 Больмъ entries «Больмъ», first «Адоль�
 BalletArtists credit rows 866 (= 840 + 26); Фридрихъ 1910-11 note single «Оставилъ службу»; Храписъ start «съ 1 іюня, 1908 г.».
 Production after swap: 0 misspelled Больмъ rows, 2,619, 3,223,088,581, 2,468; person_link 0 shift blocks.
 
+## 2026-11-03 — «ком. Батюшкина дочка—въ бал. Своенравная жена»: how the 28 entries store it
+
+```sql
+SELECT pe.entry_id, pe.list_number, pe.family_name,
+       regexp_extract(pe.credit_summary_text, '(ком\.[^;]*?Своенравная жена \([^)]*\))') AS printed,
+       string_agg(label || ' <' || role_name || '> ' || category_credit_count, ' + ' ORDER BY credit_id) AS stored_items
+FROM raw.person_entry pe JOIN raw.person_entry_credit cr USING (entry_id)
+WHERE pe.credit_summary_text ILIKE '%Батюшкина дочка%' AND (cr.label ILIKE '%дочка%' OR cr.label ILIKE '%Своенравн%')
+GROUP BY 1,2,3,4;
+SELECT count(*) FROM raw.person_entry WHERE credit_summary_text ILIKE '%Батюшкина дочка%';
+```
+
+Result: 28 entries, all BalletArtists SP, 1893-94 (14) and 1894-95 (14); every tally text prints the same line. Stored item label:
+full phrase 9; «Своенравная жена» only 13; «Батюшкина дочка» only 5 (all 1893-94 p006); 1 with the ballet in the role
+(1894-95 p002 e009 Куличевская: label «ком. Батюшкина дочка», role «Своенравная жена (графиня)»). Counts and parts all present.
+Possible slips seen, not scan-checked: roles «коранщикъ» (Кшесинскій 2-й 1894-95), «поварь» (Сергѣевъ 1894-95); text «въ бал:» (Ширяевъ 1893-94).
+
 ## 2026-11-03 — 1875 «Голубая Георгина» cast (1904-05 SP review pp.118-119) unlinked: diff v. backup db_backup_1875_unlink_2026-11-03
 
 ```sql
@@ -25580,6 +25722,26 @@ SELECT position, performer_surface, performer_person_id, link_method FROM resear
 ```
 
 Result: 25 person mentions in the passage, 12 linked before; after (second run, «Петипа» occurrence order taken from match_review_mentions.py: char 51 = occurrence 5) only char 51 «для дебюта М. М. Петипа» -> Петипа 1-я Марія Маріусовна remains linked. No mention entity change outside the two blocks; other diffs are candidate-list ordering. review_assertion links 2,468 -> 2,466 (2858 «Г. Стуколкинъ 1-й», 2860 «г. Петипа»); review_dance_performer dance 801 pos 5 Соколова unlinked. research.person 2,619, receipts 3,223,088,581, 0 shifts. NOT changed (no override exists): dance 801 «Grands pas des fleurs» dated 1905-01-12 (the 1875 date with the review's year) and still linking Ѳедорова 2-я -> Александра (e63497bc), Ѳедорова 1-я -> Марія Дмитріевна, Крюгеръ (7c76ea80), Петипа -> Маріусъ, Стуколкинъ (411c9210) by "tie: company that season".
+
+## 2026-11-03 — «Батюшкина дочка» labels (RG "Yes, full label"; Ширяевъ «бал.» read by RG): copy rebuild, then production rebuilt from raw
+
+Run: raw_fix_batyushkina_labels.py on a copy of outputs/full_run/raw, then parse_and_validate (both flags) -> quality_checks -> build_duckdb ->
+build_entities -> validate_performance_dates -> build_research_model on a copy of production (outputs/rebuild_batyushkina_2026-11-03); then,
+after a hash check (production = snapshot), lsof and ps checks, the same steps on outputs/full_run itself (no file copied over the DB).
+```sql
+SELECT count(*) FROM (SELECT * FROM <t> EXCEPT ALL SELECT * FROM old.<t>);   -- copy v. snapshot, 60 base tables, both directions
+SELECT label, count(*) FROM research.person_performance_tally WHERE label ILIKE '%атюшкина%' OR label ILIKE 'Своенравн%' GROUP BY 1;
+SELECT t.season, t.appearance_id, t.role_name, t.times FROM research.person_performance_tally t WHERE t.label = 'Своенравная жена';
+SELECT count(*) FROM (SELECT * FROM <t> EXCEPT ALL SELECT * FROM tested.<t>);  -- production v. tested copy, both directions
+SELECT sum(receipts_total_kopecks) FROM research.event; SELECT count(*), count(wikidata_qid) FROM research.person;
+SELECT count(performer_person_id) FROM research.review_assertion;
+```
+
+Result: copy v. snapshot: raw/analysis person_entry 3/3, person_entry_credit 20/20, research.person_appearance 3/3,
+research.person_performance_tally 20/20; nothing else; validation_errors identical. Label now on all 28 entries; 12 items still «Своенравная
+жена», all 1895-96, which print the ballet alone (as printed). Production v. tested copy: 0 differences in 60 tables; person_link 0 shifts;
+receipts 3,223,088,581; research.person 2,619 / 174 QIDs; assertion links 2,466 (the other session's 1875 unlink). Backup:
+outputs/full_run/imperial_theaters.pre_batyushkina_2026-11-03.duckdb.
 
 ## 2026-11-03 — Historical passages in the review dance/assertion builder (1875 «Голубая Георгина» cast): diff v. db_backup_historical_passages_2026-11-03
 
@@ -25604,3 +25766,18 @@ JOIN old.entities.review_mention o USING (block_id, char_start, mention_type) WH
 ```
 
 Result: exactly 5 mention links set: p006__b001 char 160, p006__b002 char 1420, p007__b003 chars 1143 and 1550 «Ѳедорова 2-я» -> Лидія 36348a72; p006__b002 char 1090 «Ѳедорова 1-я» -> Марія Дмитріевна 2475a6b3. No assertion, dance or solo change; other tables unchanged. Mentions resolved to one entity 22,227; person mentions joining research.person 17,828; assertion links 2,466; research.person 2,619; 0 shifts.
+
+## 2026-11-03 — Яковлева 1-я 1904-05 tally, 7 misreads (RG "Yes, correct all 7"): copy rebuild, then production rebuilt from raw
+
+Run: raw_fix_yakovleva_1904-05.py on a copy of outputs/full_run/raw; parse_and_validate (both flags) -> quality_checks -> build_duckdb ->
+build_entities -> validate_performance_dates -> build_research_model on a copy of production (snapshot retaken after the other session's
+Ѳедорова review write at 11:13; the first attempt stopped on the hash check, nothing written); then the same on outputs/full_run.
+```sql
+SELECT count(*) FROM (SELECT * FROM <t> EXCEPT ALL SELECT * FROM o.<t>);   -- 60 base tables, both directions
+SELECT sum(receipts_total_kopecks) FROM research.event; SELECT count(*), count(wikidata_qid) FROM research.person;
+SELECT count(performer_person_id) FROM research.review_assertion;
+```
+
+Result: copy v. snapshot: raw/analysis person_entry 1/1, person_entry_credit 6/6, research.person_appearance 1/1,
+research.person_performance_tally 6/6; review_* and all else unchanged. Production v. tested copy: no differences in 60 tables; person_link
+0 shifts; receipts 3,223,088,581; research.person 2,619 / 174 QIDs; assertion links 2,466. Backup imperial_theaters.pre_yakovleva_2026-11-03.duckdb.

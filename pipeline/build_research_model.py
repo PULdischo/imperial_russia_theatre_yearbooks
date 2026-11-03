@@ -1462,7 +1462,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     for t in ["season_stat_check", "season_stat_line", "season_stat_footnote",
               "production_credit", "production_work", "production",
               "performance", "event", "person_tenure", "person_tenure_note", "service_period", "person_assignment",
-              "person_appearance", "person", "work", "theater"]:
+              "person_performance_tally", "person_appearance", "person", "work", "theater"]:
         con.execute(f"DROP TABLE IF EXISTS research.{t}")
 
     con.execute("""
@@ -2038,7 +2038,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             tenure_note_text VARCHAR,
             printed_start_date DATE,
             printed_start_text VARCHAR,
-            printed_service_periods INTEGER
+            printed_service_periods INTEGER,
+            credit_summary_text VARCHAR
         )
     """)
     # The start of service as printed in THIS season's entry (RG 2026-10-30): the earliest start among the entry's printed
@@ -2059,7 +2060,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             r.service_class, r.instrument_clean,
             CASE WHEN r.entity_type = 'ProductionTeam' THEN NULL ELSE r.subject_taught END,
             r.tenure_note_text_clean,
-            st.d, st.t, st.n
+            st.d, st.t, st.n,
+            r.credit_summary_text
         FROM analysis.person_entry r
         JOIN entities.person_link pl ON pl.entry_id = r.entry_id
         JOIN raw.source_pages sp ON sp.page_id = r.page_id
@@ -2081,6 +2083,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     print(f"  research.service_period: {n_sp} printed service periods")
     n_as = build_person_assignments(con)
     print(f"  research.person_assignment: {n_as} temporary assignments")
+    n_tl = build_person_performance_tallies(con)
+    print(f"  research.person_performance_tally: {n_tl} printed tally items")
 
     if has_creators:
         build_productions(con)
@@ -2095,7 +2099,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     counts = {
         t: con.execute(f"SELECT count(*) FROM research.{t}").fetchone()[0]
         for t in ["theater", "work", "person", "event", "performance", "person_appearance",
-                  "service_period", "person_assignment",
+                  "service_period", "person_assignment", "person_performance_tally",
                   "production", "production_work", "production_credit",
                   "season_stat_check", "season_stat_line", "season_stat_footnote"]
         if con.execute("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'research' AND table_name = ?",
@@ -2532,6 +2536,63 @@ def build_person_assignments(con: duckdb.DuckDBPyConnection) -> int:
             break
     con.executemany("INSERT INTO research.person_assignment VALUES (" + ",".join(["?"] * 14) + ")", out)
     return len(out)
+
+
+def build_person_performance_tallies(con: duckdb.DuckDBPyConnection) -> int:
+    """research.person_performance_tally (RG 2026-11-03, research-layer review): the tally line printed under a dancer's
+    entry («Въ 7 балетахъ—9; ... Всего—9 разъ. Въ томъ числѣ: Лебединое озеро (Одетта—1); ...»), one row per item, in
+    printed order. Until now these stopped at analysis.person_entry_credit. Labels, titles and role names are kept as
+    printed (no work link, no normalised category); the count is the analysis layer's repaired one
+    (category_credit_count_clean: the «N балетахъ—X» swap fixed), as printed text and as a number (half credits exist)."""
+    con.execute("""
+        CREATE TABLE research.person_performance_tally (
+            tally_id VARCHAR PRIMARY KEY,
+            appearance_id VARCHAR REFERENCES research.person_appearance(appearance_id),
+            person_id UUID REFERENCES research.person(person_id),
+            season VARCHAR, list VARCHAR, city VARCHAR,
+            tally_order INTEGER,
+            tally_kind VARCHAR,
+            label VARCHAR,
+            role_name VARCHAR,
+            production_count INTEGER,
+            times_text VARCHAR,
+            times DECIMAL(9, 2),
+            count_shared_with VARCHAR
+        )""")
+    con.execute(r"""
+        INSERT INTO research.person_performance_tally
+        SELECT c.credit_id, pa.appearance_id, pa.person_id, pa.season, pa.entity_type, pa.city,
+               CAST(regexp_extract(c.credit_id, '__cr(\d+)$', 1) AS INTEGER),
+               CASE WHEN c.credit_type = 'named_work' THEN 'role'
+                    WHEN c.label = 'Всего' THEN 'total'
+                    ELSE 'category' END,
+               c.label, c.role_name,
+               TRY_CAST(c.category_production_count AS INTEGER),
+               c.category_credit_count_clean,
+               CAST(rtrim(trim(c.category_credit_count_clean), '.') AS DECIMAL(9, 2)),
+               NULL
+        FROM analysis.person_entry_credit c
+        JOIN research.person_appearance pa ON pa.appearance_id = c.entry_id
+    """)
+    # RG 2026-11-03: a part printed with a blank count before a second part of the same work («Лебединое озеро (Одетта— ,
+    # Одиллія—4)») was danced in the same performances as that part: it takes the next part's count, and
+    # count_shared_with names that part, so a sum of role counts skips it (sum WHERE count_shared_with IS NULL).
+    # times_text stays NULL, as printed. A lone blank («Граціелла (Франческа —  )») stays NULL.
+    con.execute("""
+        UPDATE research.person_performance_tally t
+        SET times = n.times, count_shared_with = n.role_name
+        FROM research.person_performance_tally n
+        WHERE t.tally_kind = 'role' AND t.times IS NULL
+          AND n.appearance_id = t.appearance_id AND n.tally_order = t.tally_order + 1
+          AND n.tally_kind = 'role' AND n.label = t.label AND n.times IS NOT NULL
+    """)
+    # every tally row of a listed person must be carried; a row whose entry is not a research appearance is reported
+    n_all = con.execute("""SELECT count(*) FROM analysis.person_entry_credit c
+        JOIN entities.person_link pl ON pl.entry_id = c.entry_id""").fetchone()[0]
+    n = con.execute("SELECT count(*) FROM research.person_performance_tally").fetchone()[0]
+    if n != n_all:
+        print(f"  NOTE: {n_all - n} tally rows belong to entries that are not research appearances (non-person rows)")
+    return n
 
 
 def main():

@@ -52,7 +52,7 @@ def _dates_as_iso(df):
 
 
 TABLES = ["theater", "work", "person", "event", "performance", "person_appearance", "person_tenure", "person_tenure_note",
-          "service_period", "person_assignment",
+          "service_period", "person_assignment", "person_performance_tally",
           "production", "production_work", "production_credit",
           "season_stat_check", "season_stat_line", "season_stat_footnote",
           "review_assertion", "review_solo", "review_credit",
@@ -113,7 +113,8 @@ SCHEMAS = {
             season TEXT, city TEXT, entity_type TEXT, institution TEXT,
             heading_path TEXT, "rank" TEXT, title TEXT, service_class TEXT,
             instrument TEXT, subject_taught TEXT, tenure_note_text TEXT,
-            printed_start_date TEXT, printed_start_text TEXT, printed_service_periods INTEGER
+            printed_start_date TEXT, printed_start_text TEXT, printed_service_periods INTEGER,
+            credit_summary_text TEXT
         )""",
     # One row per run (person x list x city); city is null on 1,279 runs, so no composite key -- Datasette uses rowid.
     "person_tenure": """
@@ -149,6 +150,14 @@ SCHEMAS = {
             season TEXT, list TEXT, city TEXT, kind TEXT, destination TEXT,
             start_text TEXT, start_date TEXT, start_precision TEXT, end_text TEXT, end_date TEXT, end_precision TEXT,
             printed_line TEXT
+        )""",
+    # The tally line under a dancer's entry, one row per printed item (RG 2026-11-03, docs/schema.md).
+    "person_performance_tally": """
+        CREATE TABLE person_performance_tally (
+            tally_id TEXT PRIMARY KEY,
+            appearance_id TEXT REFERENCES person_appearance(appearance_id), person_id TEXT REFERENCES person(person_id),
+            season TEXT, list TEXT, city TEXT, tally_order INTEGER, tally_kind TEXT,
+            label TEXT, role_name TEXT, production_count INTEGER, times_text TEXT, times REAL, count_shared_with TEXT
         )""",
     "production": """
         CREATE TABLE production (
