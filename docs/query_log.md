@@ -25272,3 +25272,58 @@ where a.season = '1905-06' and a.theater_canonical in ('Маріинскій', '
 Result: Moscow dark 14-26 Oct and 7-25 Dec 1905. Blind read 544 rows v. 508 stored dates: 45 differences (31 titles, mostly
 genre placement; 9 headings; 4 event counts = the two SP matinée shifts; 1 receipts punctuation only). After the fix only Repertoire
 tables change; Большой ballet events 29 -> 28 (26 Nov), Маріинскій 43. Review agents' own SQL is in their reports (read-only).
+
+## 2026-11-02 — Undated ends (B1 held, 9) and «Освобожденъ отъ обязанностей» (Аслинъ, Ширяевъ): current state and cross-references
+
+```sql
+-- per entry: raw.person_entry (name, tenure_note_text), research.service_period (start/end text, end_type), research.person_appearance seasons,
+-- research.person_assignment; then:
+select entry_id, family_name, first_name, tenure_note_text from raw.person_entry where family_name like 'Новоселов%' order by 1;
+select season, city, count(*) from entities.review_mention where surface like 'Кякшт%' group by all;
+select entry_id, family_name, first_name, tenure_note_text from raw.person_entry where (family_name like 'Ветцел%' or family_name like 'Липинъ%') and page_id like 'musicians_190%';
+select entry_id, family_name, first_name, patronymic, tenure_note_text from raw.person_entry where family_name like 'Козловъ%' and first_name in ('Федоръ','Ѳедоръ');
+select entry_id, heading_path, family_name, first_name, tenure_note_text from raw.person_entry where family_name like 'Боборыкин%' and page_id between 'theaterschoolstaff_1899' and 'theaterschoolstaff_1903';
+```
+
+Result: undated transfers -- Козловъ (Moscow 1902-03 «Переведенъ въ С.-Петербургъ», a reprint; Moscow 1900-01 prints «1 сентября 1901 г.»),
+Ветцель (1902-03 «Переведенъ въ оркестръ Маріинскаго театра»; the receiving list prints «1 сентября 1902 г.»), Липинъ (same, «1 сентября 1903 г.»),
+Боборыкинъ (honorary member, Moscow -> SP school 1900-01, 1901-02 reprint; no date anywhere), Кякштъ Лидія (1903-04 SP «Переведена въ Москву»,
+scan p.70 confirmed; in no Moscow list, but 6 Moscow review mentions 1903-04; back in SP lists 1904-09 with the same start). Others: Хмелевскій
+«Назначенъ и. д. машиниста-механика Новаго театра» (listed on to 1907-08), Стороженко «Оставилъ чтеніе лекцій» (stored left service, undated),
+Новоселовъ bare «†» in 1906-07 (scan p.35) then «† 5 мая 1908 г.» in 1907-08. Аслинъ / Ширяевъ: «Освобожденъ отъ обязанностей
+репетитора / балетмейстера» stored as service ends (other, 1 Nov 1905 / 1 Mar 1905) though both are listed afterwards; no person_assignment row.
+
+## 2026-11-02 — Undated transfers (B9): current service periods of Козловъ Ѳ., Ветцель, Липинъ И., Боборыкинъ, Кякштъ Лидія
+
+```sql
+SELECT sp.appearance_id, p.display_name, sp.season, sp.list, sp.city, sp.period_order, sp.start_text, sp.end_text, sp.end_date, sp.end_type
+FROM research.service_period sp JOIN research.person p USING(person_id)
+WHERE p.display_name ILIKE 'Козловъ, Ѳ%' OR p.display_name ILIKE 'Ветцель%' OR p.display_name ILIKE 'Липинъ, Иван%'
+   OR p.display_name ILIKE 'Боборыкин%' OR p.display_name ILIKE 'Кякштъ, Лид%' ORDER BY 2,3;
+```
+
+Result: Козловъ MSK 1902-03 already end_type other, no date (1900-01 MSK prints 1 Sept 1901); Ветцель p004 1902-03, Липинъ p004 1903-04, Кякштъ 1903-04, Боборыкинъ 1900-01 end_type null. Raw receiving entries: Ветцель p001__e008 «Переведенъ изъ Александринскаго театра 1 сентября 1902 г.», Липинъ p002__e005 «…съ 1 сентября 1903 г.». Боборыкинъ 1901-02 p002__e002 (Moscow reprint) has no service period; all 12 Боборыкинъ entries link to c58d2480.
+
+## 2026-11-02 — Кякштъ in the 1903-04 Moscow reviews
+
+```sql
+SELECT season, city, surface, count(*) FROM entities.review_mention WHERE surface LIKE 'Кякшт%' GROUP BY ALL ORDER BY 1,2;
+SELECT block_id, CAST(entity_id AS VARCHAR), link_method FROM entities.review_mention
+WHERE season='1903-04' AND city='Moscow' AND surface LIKE 'Кякш%';
+-- context from raw.review_block text around char_start
+```
+
+Result: 6 Moscow 1903-04 mentions (all other seasons SP only). Context: p.19 «Дебютъ артистовъ Императорскихъ С.-Петербургскихъ театровъ г-на и г-жи Кякштъ. Роль Терезы исполняла г-жа Кякштъ»; p.20 Тереза again; p.22 «Танецъ Ману—г-жа Кякштъ» (4 linked to Лидія 1152045f); p.23 two «г. Кякштъ» (linked to Георгій 6d3dac32). Георгій's SP entries 1902-03..1905-06 print no transfer.
+
+## 2026-11-02 — B9 applied: verify rebuilt service periods and metrics
+
+```sql
+SELECT appearance_id, end_text, end_date, end_type, date_correction FROM research.service_period WHERE appearance_id IN (<6 B9 entries>);
+SELECT count(*) FROM research.person_tenure_note;  -- and Кякштъ's row
+SELECT sum(receipts_total_kopecks) FROM research.event;
+SELECT count(*) FROM research.person WHERE wikidata_qid IS NOT NULL;
+SELECT count(*) FROM research.review_assertion WHERE performer_person_id IS NOT NULL;
+SELECT count(*) FROM entities.person_candidate WHERE status='pending';
+```
+
+Result: all 6 end_type other; Козловъ 1901-09-01, Ветцель 1902-09-01, Липинъ 1903-09-01 with "not dated in this entry, taken as …" notes; Кякштъ/Боборыкинъ undated. person_tenure_note 27 (Кякштъ 1). research.person 2,620, live 2,522; receipts 3,223,088,581; Wikidata 174; assertion links 2,468; pending 0; alignment 0 shifts.

@@ -4,13 +4,16 @@ Input B8_final.csv (entry_id, period_order, action, value, now, basis, source). 
   remove_end     end_date_text = end_type = null (arrivals, secondments, concurrent posts, graduates' arrival)
   set_date_text  end_date_text = value (scan-read correction; the parser re-derives the date)
   merge_periods  join this period with the next: keep this start, take the next period's end; drop the next period
+  add_period     entry has no service period: add one with no dates and end_type = value (only when period_order is 1)
+Pass another CSV of the same shape as the first argument (e.g. B9_undated_transfers.csv, 2026-11-02).
 Field edits on service periods only: no entries added/removed/reordered (person_link unaffected).
 usage: uv run python docs/eval/person_field_audit_2026-11-01/raw_fix_b8_ends.py [--write]; then docs/eval/rebuild_after_raw_edit.sh"""
 import csv, json, sys, collections
 from pathlib import Path
 
 RAW = Path('outputs/full_run/raw'); D = Path(__file__).parent
-rows = list(csv.DictReader(open(D / 'B8_final.csv', encoding='utf-8')))
+src = next((a for a in sys.argv[1:] if a.endswith('.csv')), 'B8_final.csv')
+rows = list(csv.DictReader(open(D / src, encoding='utf-8')))
 by_page = collections.defaultdict(list)
 for r in rows:
     page, idx = r['entry_id'].rsplit('__e', 1)
@@ -24,6 +27,11 @@ for page, items in sorted(by_page.items()):
         e = d['entries'][idx - 1]
         sp = e.get('service_periods') or []
         po = int(r['period_order']) - 1
+        if r['action'] == 'add_period':
+            if sp or po != 0:
+                problems.append((r['entry_id'], r['period_order'], 'entry already has a period')); continue
+            e['service_periods'] = [{'start_date_text': None, 'end_date_text': None, 'end_type': r['value']}]
+            n['add_period'] += 1; continue
         if po >= len(sp):
             problems.append((r['entry_id'], r['period_order'], 'no such period')); continue
         p = sp[po]

@@ -2469,7 +2469,10 @@ def build_service_periods(con: duckdb.DuckDBPyConnection) -> int:
                     raise SystemExit(f"service_period_date_corrections.csv: {aid} {po} {field}: printed text "
                                      f"{txt!r} is not {c['printed_text']!r}")
                 vals[:] = [c["corrected_date"], "day", int(c["corrected_date"][:4]), int(c["corrected_date"][5:7])]
-                note.append(f"{field} printed «{txt}», corrected to {c['corrected_date']}: {c['evidence']} ({c['decided']})")
+                if txt:
+                    note.append(f"{field} printed «{txt}», corrected to {c['corrected_date']}: {c['evidence']} ({c['decided']})")
+                else:  # no date printed here; taken from another printing of the same event (RG 2026-11-02)
+                    note.append(f"{field} not dated in this entry, taken as {c['corrected_date']}: {c['evidence']} ({c['decided']})")
                 used.add((aid, int(po), field))
             elif txt and "/" in txt and vals[0]:
                 note.append(f"{field} printed in both calendars «{txt}»: Old Style half used (ruling A4)")

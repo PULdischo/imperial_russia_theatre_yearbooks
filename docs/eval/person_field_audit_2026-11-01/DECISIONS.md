@@ -74,6 +74,12 @@ Order: conventions first (each settles many rows), then mechanical fixes, then i
   (1899-00 musicians) RULED 2026-11-02 (RG): 1 June 1899, added to the A6 corrections.
 - Pipeline bugs: flatten doubles «Оставилъ службу» (1910-11 MSK p003); comma in «съ 1 іюня, 1908 г.» shifts start into end (Храписъ).
 - Held medium rows DONE 2026-11-02 (RG "Apply all 10"): 15 field edits on 10 entries, B5_B6_held_applied_2026-11-02.csv; Борхманъ «Алольфовичъ» already ruled a print typo (genuine_print_typos.md, 2026-10-07); Эйхенвальдъ «Надежла» stored «Надежда» (RG: worn д; fix_eichenwald_1897-98.csv).
+- Undated transfers DONE 2026-11-02 (RG "Yes, borrow dates"): B9_undated_transfers.csv sets end_type other on Ветцель 1902-03,
+  Липинъ 1903-04, Кякштъ 1903-04, Боборыкинъ 1900-01, and adds an undated period (other) to Боборыкинъ's 1901-02 Moscow reprint.
+  Research layer takes the date another printing gives: Козловъ MSK 1902-03 -> 1 Sept 1901 (1900-01 MSK), Ветцель -> 1 Sept 1902,
+  Липинъ -> 1 Sept 1903 (receiving list, same volume); Боборыкинъ, Кякштъ stay undated. Кякштъ tenure note: one Moscow season
+  1903-04 (Moscow review: debut «г-на и г-жи Кякштъ»), back in the SP lists 1904-09 with the same start.
+  Still to rule: Хмелевскій «Назначенъ и. д. машиниста-механика» (not an end?), Аслинъ/Ширяевъ «Освобожденъ отъ обязанностей».
 - Held for RG (was): 7 medium misreads (B6), 10 medium wrong-field rows (B5), 9 undated ends (B1), «Освобожденъ отъ обязанностей» (Аслинъ, Ширяевъ),
   Будаевъ rank+instrument, 1908-09 BalletArtists tallies unparsed (B9).
 - C identity/links and D print conflicts: not started.
