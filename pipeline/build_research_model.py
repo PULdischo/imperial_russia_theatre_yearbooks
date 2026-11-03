@@ -1184,10 +1184,14 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
     con.execute("""
         CREATE OR REPLACE TEMP TABLE season_genre AS
         SELECT work_id, season, mode(vg) AS g FROM perf_base WHERE vg IS NOT NULL GROUP BY 1, 2""")
-    con.execute("""
+    con.execute(f"""
         UPDATE perf_base SET g = sg.g, vg = sg.g, g_from_season = true
         FROM season_genre sg
-        WHERE perf_base.g IS NULL AND sg.work_id = perf_base.work_id AND sg.season = perf_base.season""")
+        WHERE perf_base.g IS NULL AND sg.work_id = perf_base.work_id AND sg.season = perf_base.season
+          -- a generic programme item («Апоѳеозъ», «Живая картина») is not one work in a run:
+          -- another house's printing says nothing about this one (2026-11-03: the Александринскій
+          -- «Апоѳеозъ, Кантата.» of 19 Feb 1911 had made the Малый «Апоѳеозъ.» a concert item)
+          AND NOT regexp_matches(lower(coalesce(perf_base.title, '')), {lit(TABLEAU_TITLE_RE)})""")
 
     # One ordered list of rules; the first that applies decides. Each yields
     # (art_form, basis); art_form NULL = deliberately unassigned.

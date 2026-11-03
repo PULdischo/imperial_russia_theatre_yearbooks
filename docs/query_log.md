@@ -26102,3 +26102,13 @@ Pushkin centenary 1899 (16, all four houses), Mochalov 1900, Gogol 1902 (Мал�
 Живая картина 6 / Живыя картины 3: Catherine II 1896 (x2), Maikov 1897, Mochalov 1900, Pushkin-monument fund 1902, charity 1903, Skobelev
 committee 1908 (between «Сельская честь» and «Лебединое озеро»), Emancipation 1911 (x2). Kind recorded: tableau / apotheosis, except 2 of the
 1911 Апоѳеозъ recorded as concert. Noticed in passing (not investigated): Александринскій 3 Nov 1900 (Mochalov) appears as two identical events.
+
+## 2026-11-03 — 1911 «Апоѳеозъ» kinds and the "duplicate" Mochalov event (RG "fix these")
+
+Mochalov 3 Nov 1900: research.event has one Александринскій event (repertoire_1900-01_p010__s013); my earlier listing printed it twice
+because its bill holds both «Живая картина» and «Апоѳеозъ» (one row per item). Not a data error.
+1911: raw has «Апоѳеозъ» [Кантата.] (Александринскій 19 Feb, p.38); the scan (1910-11 p.38, read by Claude) prints «Апоѳеозъ, Кантата.» on one
+line (that day the Большой prints «Кантата.» as its own item). Cause of the Малый «Апоѳеозъ.» being concert: the season-genre fallback
+(mode of a work's printed genres in a season) gave it the Александринскій «Кантата.». Fix: tableau/apotheosis titles no longer take a season
+genre. Diff: 1 performance (Малый 19 Feb 1911 «Апоѳеозъ.» concert -> tableau / apotheosis) and its event's genre_families. Open for RG: is the
+Александринскій line one item (an apotheosis with a cantata) or two («Апоѳеозъ» + «Кантата.»)?
