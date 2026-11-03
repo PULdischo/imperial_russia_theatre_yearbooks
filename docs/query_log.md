@@ -25567,3 +25567,16 @@ Result: copy -- all 8 Больмъ entries «Больмъ», first «Адоль�
 «Больмъ, Адольфъ-Эмиль»); research.person 2,619; live 2,521; receipts 3,223,088,581; Wikidata 174; assertion links 2,468; 1908-09
 BalletArtists credit rows 866 (= 840 + 26); Фридрихъ 1910-11 note single «Оставилъ службу»; Храписъ start «съ 1 іюня, 1908 г.».
 Production after swap: 0 misspelled Больмъ rows, 2,619, 3,223,088,581, 2,468; person_link 0 shift blocks.
+
+## 2026-11-03 — 1875 «Голубая Георгина» cast (1904-05 SP review pp.118-119) unlinked: diff v. backup db_backup_1875_unlink_2026-11-03
+
+```sql
+SELECT m.block_id, m.char_start, m.surface, p.display_name FROM entities.review_mention m LEFT JOIN research.person p ON p.person_id = m.entity_id
+WHERE m.block_id IN ('review_1904-05_SP_ballet_p013__b003','review_1904-05_SP_ballet_p014__b001') AND m.mention_type = 'person';
+-- every base table EXCEPT ALL both ways v. backup; per-column review_mention diffs joined on (block_id, char_start, mention_type);
+-- review_assertion / review_dance_performer / review_solo performer_person_id changes; research.person, receipts
+SELECT * FROM research.review_dance WHERE dance_id = 801;
+SELECT position, performer_surface, performer_person_id, link_method FROM research.review_dance_performer WHERE dance_id = 801;
+```
+
+Result: 25 person mentions in the passage, 12 linked before; after (second run, «Петипа» occurrence order taken from match_review_mentions.py: char 51 = occurrence 5) only char 51 «для дебюта М. М. Петипа» -> Петипа 1-я Марія Маріусовна remains linked. No mention entity change outside the two blocks; other diffs are candidate-list ordering. review_assertion links 2,468 -> 2,466 (2858 «Г. Стуколкинъ 1-й», 2860 «г. Петипа»); review_dance_performer dance 801 pos 5 Соколова unlinked. research.person 2,619, receipts 3,223,088,581, 0 shifts. NOT changed (no override exists): dance 801 «Grands pas des fleurs» dated 1905-01-12 (the 1875 date with the review's year) and still linking Ѳедорова 2-я -> Александра (e63497bc), Ѳедорова 1-я -> Марія Дмитріевна, Крюгеръ (7c76ea80), Петипа -> Маріусъ, Стуколкинъ (411c9210) by "tie: company that season".
