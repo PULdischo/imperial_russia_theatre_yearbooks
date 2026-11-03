@@ -37,6 +37,7 @@ closes, and add new open items here as well as in their own entry.
 
 **Waiting on RG's decision**
 
+- «Апоѳеозъ, Кантата.» (Александринскій 19 Feb 1911, 1910-11 p. 38; added 2026-11-03; RG: "honestly i don't know"): one item (an apotheosis with a cantata) or two (an apotheosis, then a cantata)? Left AS PRINTED: one raw row, title «Апоѳеозъ», genre «Кантата.», so the item counts as a concert. For two items: the Большой prints «Кантата.» as its own item the same evening (same jubilee); against: the line has the print's usual «title, genre.» shape. If ruled two, split the raw row at promotion (append the cantata as the bill's last item). See the 2026-11-03 entry below and docs/query_log.md.
 - 1897-98 Moscow ballet receipts vs the printed season total (added 2026-10-27; RG: "I'll want to follow up on
   this, because that's quite a difference"). All 48 ballet events (all Большой) read on the scan and match; they sum to
   67,138 р. 28 к., the stats page (p. 27) prints «48 (64,394 р. 48 к.)», re-read on the scan: 2,743 р. 80 к. apart. No
@@ -24739,3 +24740,7 @@ B6 (4071d3f) took one reader proposed_fix verbatim including its comment: ballet
 ## Person merge batch nos. 13-17 (person field audit) -- APPLIED 2026-11-02 (RG, one at a time)
 
 Левинсонъ Анна + Ольга (1904-05 «Фердинандовна»), Больмъ (hyphen split; display pinned «Адольфъ-Эмиль»), Афанасьевъ Н. Н. = Николай Николаевичъ (start 1901 vs 1891 open, uncertain #55), Мендесъ Джульетта (+ «Іосифовна, съ 10 октября»). research.person 2,625 -> 2,620; receipts 3,223,088,581; Wikidata 174; 0 shifts; 0 orphans; 0 pending. Side notes, not acted on: Больмъ's stored spellings «Болъмъ» (1903-04, 1905-06), «Болмъ» (1909-10), «Адолльфъ» (1905-06), «Эмилъ» (1909-10) unchecked on the scans; no Мендесъ entry in the 1905-06 Moscow list.
+
+## «Апоѳеозъ, Кантата.» 19 Feb 1911: one item or two -- OPEN (RG undecided, 2026-11-03)
+
+Found while giving research.work an art form (branch claude/work-art-form-7f2943). The scan (1910-11 p. 38, read by Claude) prints «Апоѳеозъ, Кантата.» on one line in the Александринскій cell of the Emancipation-jubilee evening; raw stores title «Апоѳеозъ», genre «Кантата.». The same evening the Большой prints «Живая картина.; Кантата.; Жизнь за царя» with the cantata as its own item. RG could not say which reading is right, so the row stays as printed. Side effect found and fixed the same day: the season-genre fallback had copied «Кантата.» onto the Малый «Апоѳеозъ.» of the same evening (now tableau / apotheosis); tableau/apotheosis titles no longer take a season genre.
