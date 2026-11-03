@@ -607,6 +607,24 @@ layer, one row per printed item. Until then it stopped at `analysis.person_entry
 A two-city entry («Кромѣ того, въ С.-Петербургѣ: ...», 10 entries) repeats its categories; `city` is the listing's
 city, not the block's. Exported to Datasette (`build_datasette.py`).
 
+## Set designs — `research.set_design` (added 2026-11-03)
+
+RG 2026-11-03 (research-layer review, item C): new sets credited to a named decorator, one row per set. Source so far: the
+1892-93 staff list, which prints under each decorator «перечень новыхъ декорацій, написанныхъ имъ къ сезону 1892—1893 гг.»
+(SP p.100, Moscow p.103; 61 sets, 11 decorators). Transcribed from the scans into `docs/season_sets/1892-93_new_sets.csv`; the
+verbatim line is `person_appearance.credit_summary_text`. The build checks each set name against that line and each
+decorator's rows against his printed «Всего—N декорацій». The 1891-92 and 1893-94 lists print no such lists.
+
+| column | meaning |
+|---|---|
+| `set_id` | `<entry_id>__setNN` |
+| `source` | where the row comes from (`staff list 1892-93`); room for other sources, e.g. the Season Reviews' `scenery` credits in `research.review_credit` |
+| `appearance_id`, `person_id`, `season`, `city`, `theater_printed`, `printed_page` | the decorator's listing; theater as printed (Moscow only) |
+| `work_printed`, `genre_printed` | as printed («Щелкунчикъ», «бал.»); not linked to `research.work` |
+| `sets_for_work_printed` | the printed count for that work («Млада, оп.—**5**») |
+| `act_scene_printed`, `set_name_printed` | as printed («2-я к. 1-го д.», «Лѣсъ зимой»); one set may serve several scenes («2-я к. 1-го д., 1-я к. 2-го д. и 4-е д.») |
+| `painted_jointly_with` | «вмѣстѣ съ …»: the other painter, as printed (the set appears under both men) |
+
 ## `research.work.title_note` (added 2026-10-26)
 
 Why a work's title in the research layer differs from what the Repertoire printed. RG: "I want researchers to understand any decisions I made." Filled from `build_research_model.RESEARCH_TITLE_CORRECTIONS` (confirmed print slips corrected in the research layer only; raw and `research.performance.verbatim_title` keep the printed form):

@@ -52,7 +52,7 @@ def _dates_as_iso(df):
 
 
 TABLES = ["theater", "work", "person", "event", "performance", "person_appearance", "person_tenure", "person_tenure_note",
-          "service_period", "person_assignment", "person_performance_tally",
+          "service_period", "person_assignment", "person_performance_tally", "set_design",
           "production", "production_work", "production_credit",
           "season_stat_check", "season_stat_line", "season_stat_footnote",
           "review_assertion", "review_solo", "review_credit",
@@ -158,6 +158,15 @@ SCHEMAS = {
             appearance_id TEXT REFERENCES person_appearance(appearance_id), person_id TEXT REFERENCES person(person_id),
             season TEXT, list TEXT, city TEXT, tally_order INTEGER, tally_kind TEXT,
             label TEXT, role_name TEXT, production_count INTEGER, times_text TEXT, times REAL, count_shared_with TEXT
+        )""",
+    # New sets credited to a decorator, one row per set (RG 2026-11-03, docs/schema.md).
+    "set_design": """
+        CREATE TABLE set_design (
+            set_id TEXT PRIMARY KEY, source TEXT,
+            appearance_id TEXT REFERENCES person_appearance(appearance_id), person_id TEXT REFERENCES person(person_id),
+            season TEXT, city TEXT, theater_printed TEXT, printed_page TEXT,
+            work_printed TEXT, genre_printed TEXT, sets_for_work_printed INTEGER,
+            act_scene_printed TEXT, set_name_printed TEXT, painted_jointly_with TEXT
         )""",
     "production": """
         CREATE TABLE production (

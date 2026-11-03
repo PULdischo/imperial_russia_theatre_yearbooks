@@ -59,6 +59,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import collections
 import csv
 import re
 import uuid
@@ -1462,7 +1463,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     for t in ["season_stat_check", "season_stat_line", "season_stat_footnote",
               "production_credit", "production_work", "production",
               "performance", "event", "person_tenure", "person_tenure_note", "service_period", "person_assignment",
-              "person_performance_tally", "person_appearance", "person", "work", "theater"]:
+              "set_design", "person_performance_tally", "person_appearance", "person", "work", "theater"]:
         con.execute(f"DROP TABLE IF EXISTS research.{t}")
 
     con.execute("""
@@ -2085,6 +2086,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     print(f"  research.person_assignment: {n_as} temporary assignments")
     n_tl = build_person_performance_tallies(con)
     print(f"  research.person_performance_tally: {n_tl} printed tally items")
+    n_sd = build_set_designs(con)
+    print(f"  research.set_design: {n_sd} sets credited to a decorator")
 
     if has_creators:
         build_productions(con)
@@ -2099,7 +2102,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     counts = {
         t: con.execute(f"SELECT count(*) FROM research.{t}").fetchone()[0]
         for t in ["theater", "work", "person", "event", "performance", "person_appearance",
-                  "service_period", "person_assignment", "person_performance_tally",
+                  "service_period", "person_assignment", "person_performance_tally", "set_design",
                   "production", "production_work", "production_credit",
                   "season_stat_check", "season_stat_line", "season_stat_footnote"]
         if con.execute("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'research' AND table_name = ?",
@@ -2593,6 +2596,53 @@ def build_person_performance_tallies(con: duckdb.DuckDBPyConnection) -> int:
     if n != n_all:
         print(f"  NOTE: {n_all - n} tally rows belong to entries that are not research appearances (non-person rows)")
     return n
+
+
+SEASON_SETS_DIR = Path(__file__).parent.parent / "docs" / "season_sets"
+
+
+def build_set_designs(con: duckdb.DuckDBPyConnection) -> int:
+    """research.set_design (RG 2026-11-03, research-layer review item C): new sets credited to a named decorator, one row per
+    set. Source so far: the 1892-93 staff list, which prints under each decorator the new sets he painted for the season
+    («Щелкунчикъ, бал.—1 (2-я к. 1-го д.—Лѣсъ зимой)»), transcribed from the scans into docs/season_sets/*.csv. The verbatim
+    line stays in person_appearance.credit_summary_text. `source` names where a row came from, so set credits from other
+    sources (e.g. the Season Reviews' «scenery» credits) can be added later. Checks: every row's entry is a research
+    appearance; every set name occurs in that entry's printed line; each entry's rows equal its printed «Всего—N»."""
+    con.execute("""
+        CREATE TABLE research.set_design (
+            set_id VARCHAR PRIMARY KEY,
+            source VARCHAR,
+            appearance_id VARCHAR REFERENCES research.person_appearance(appearance_id),
+            person_id UUID REFERENCES research.person(person_id),
+            season VARCHAR, city VARCHAR, theater_printed VARCHAR, printed_page VARCHAR,
+            work_printed VARCHAR, genre_printed VARCHAR, sets_for_work_printed INTEGER,
+            act_scene_printed VARCHAR, set_name_printed VARCHAR, painted_jointly_with VARCHAR
+        )""")
+    rows, n_by_entry = [], collections.Counter()
+    for f in sorted(SEASON_SETS_DIR.glob("*_new_sets.csv")) if SEASON_SETS_DIR.exists() else []:
+        season = f.name.split("_", 1)[0]
+        for r in csv.DictReader(open(f, encoding="utf-8")):
+            eid = r["entry_id"]
+            hit = con.execute("""SELECT pa.person_id, pe.credit_summary_text FROM research.person_appearance pa
+                JOIN raw.person_entry pe ON pe.entry_id = pa.appearance_id WHERE pa.appearance_id = ?""", [eid]).fetchone()
+            if not hit:
+                raise SystemExit(f"{f.name}: {eid} is not a research appearance")
+            pid, line = hit
+            if r["set_name_printed"] not in (line or ""):
+                raise SystemExit(f"{f.name}: {eid}: «{r['set_name_printed']}» is not in the printed line")
+            n_by_entry[eid] += 1
+            rows.append((f"{eid}__set{n_by_entry[eid]:02d}", f"staff list {season}", eid, pid, season, r["city"],
+                         r["theater"] or None, r["printed_page"], r["work_printed"], r["genre_printed"] or None,
+                         int(r["sets_for_work_printed"]), r["act_scene_printed"] or None, r["set_name_printed"],
+                         r["painted_jointly_with"] or None))
+    for eid, n in n_by_entry.items():
+        line = con.execute("SELECT credit_summary_text FROM raw.person_entry WHERE entry_id = ?", [eid]).fetchone()[0]
+        m = re.search(r"Всего\s*—\s*(\d+)\s+декорац", line or "")
+        if not m or int(m.group(1)) != n:
+            raise SystemExit(f"set_design: {eid} has {n} rows, printed total {m.group(1) if m else 'missing'}")
+    if rows:
+        con.executemany("INSERT INTO research.set_design VALUES (" + ",".join(["?"] * 14) + ")", rows)
+    return len(rows)
 
 
 def main():

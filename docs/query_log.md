@@ -25781,3 +25781,38 @@ SELECT count(performer_person_id) FROM research.review_assertion;
 Result: copy v. snapshot: raw/analysis person_entry 1/1, person_entry_credit 6/6, research.person_appearance 1/1,
 research.person_performance_tally 6/6; review_* and all else unchanged. Production v. tested copy: no differences in 60 tables; person_link
 0 shifts; receipts 3,223,088,581; research.person 2,619 / 174 QIDs; assertion links 2,466. Backup imperial_theaters.pre_yakovleva_2026-11-03.duckdb.
+
+## 2026-11-03 — 1892-93 decorators' new-set lists (research-layer review item C): what raw stores
+
+```python
+# outputs/full_run/raw/productionteam_1892-93_*.raw.json: entries whose heading_path or credit_summary_text mentions декор…
+```
+
+Result: SP p000 (printed p.100): 6 decorators (Андреевъ, Бочаровъ 1-й, Ивановъ, Левотъ, Шишковъ, Яновъ) store only «Всего—N декорацій»;
+the lists were dropped. Moscow p003 (p.103): Вальцъ, Лебедевъ, Савицкій, Смирновъ, Гельцеръ store the full lists as credit_summary_text
+with no credit rows; misreads «Сиѣгурочка» x3, «Лакма», «поднямъ». Transcribed from the scans by Claude into
+docs/season_sets/1892-93_new_sets.csv: 61 sets (28 SP, 33 Moscow); every decorator total and per-work count equals the print.
+
+## 2026-11-03 — Do the season reviews hold set-design credits? (RG, for the new set table)
+
+```sql
+SELECT role_category, count(*), count(person_id) FROM research.review_credit GROUP BY 1 ORDER BY 2 DESC;
+SELECT season, city, part_surface, name_surface, work_surface FROM research.review_credit WHERE role_category ILIKE '%design%' OR ... LIMIT 5;
+```
+
+Result: review_credit has scenery 230 (185 linked to a person), costume_design 28, machinery 15, costume_making 14, props 13, costumes 5,
+footwear 3, headwear 2, wigs 2 (plus ballet_by 809, music 573, author 273, staging 190 …). E.g. 1891-92 SP Пономаревъ «Терраса во дворцѣ царя Кандавла».
+
+## 2026-11-03 — research.set_design built (1892-93 set lists): diff v. raw_backup_b12_sets_2026-11-03
+
+```sql
+-- every base table EXCEPT ALL both ways v. backup
+SELECT city, count(*), count(DISTINCT person_id), count(painted_jointly_with) FROM research.set_design GROUP BY 1;
+SELECT p.display_name, s.work_printed, s.act_scene_printed, s.set_name_printed FROM research.set_design s JOIN research.person p USING (person_id)
+WHERE s.work_printed = 'Щелкунчикъ';
+```
+
+Result: new research.set_design 61 rows (SP 28 / 6 decorators; Moscow 33 / 5 decorators, 4 joint); changed only raw/analysis person_entry 9
+and research.person_appearance 9 (the edited lines). Щелкунчикъ: Бочаровъ 1-й «Лѣсъ зимой»; Ивановъ «Залъ въ домѣ президента
+Зильбергауса», «Конфектное царство». Receipts 3,223,088,581; assertion links 2,466; research.person 2,619; 0 shifts. A first rebuild
+attempt stopped at build_duckdb on a lock held by a short-lived process (PID 73329, gone on check); nothing written by that attempt.

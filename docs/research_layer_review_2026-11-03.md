@@ -150,3 +150,14 @@ Earlier note (superseded): 4 more entries print «Своеправная» (ст
 Нахита -> Пахита, Корсарь -> Корсаръ, перпитянка -> негритянка, Фея куколь -> Фея куколъ, Граніелла -> Граціелла, Голубая георгиня ->
 Голубая георгина; counts all as printed. Script `docs/eval/tally_fixes_2026-11-03/raw_fix_yakovleva_1904-05.py`; applied by a rebuild from
 raw, production equal to the tested copy.
+
+**C — ruled and applied (RG 2026-11-03, "Yes, transcribe", then "Yes, store them").** Both pages read on the scans by Claude
+(crops `docs/eval/scan_audit/1892-93_productionteam_*`). 61 sets, 11 decorators (SP 28: Андреевъ 8, Бочаровъ 1-й 9, Ивановъ 4,
+Левотъ 2, Шишковъ 1, Яновъ 4; Moscow 33: Вальцъ 21, Лебедевъ 1, Савицкій 2, Смирновъ 1, Гельцеръ 8); every printed total and
+per-work count matches. Raw: the 6 SP lines now carry the full printed list (they held only «Всего—N»); Moscow misreads fixed
+(«Сиѣгурочка» x3 -> «Снѣгурочка», «Лакма» -> «Лакмэ», «поднямъ» -> «поляны»), `B12_1892-93_set_lists_2026-11-03.csv`. Research: new
+`research.set_design` from `docs/season_sets/1892-93_new_sets.csv` (checked against the printed lines and totals at build time;
+`source` column leaves room for the reviews' 230 «scenery» credits, RG asked about these for later). Includes the first
+«Щелкунчикъ» (Dec. 1892): Бочаровъ 1-й «Лѣсъ зимой», Ивановъ the President's hall and «Конфектное царство».
+
+Next in the walkthrough: Works.
