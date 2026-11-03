@@ -1507,6 +1507,16 @@ CONCERT_SECTION_TITLES = {
     "2-й концертъ подъ управленіемъ Э. Колоннъ", "4-й концертъ А. Зилоти", "6-й концертъ А. Зилоти",
     "7-й концертъ А. Зилоти",
 }
+#: One-off items with no genre (RG, 2026-11-03: "5, leave 2 unknown"). research.work title -> basis.
+ONE_OFF_ITEMS = {
+    "Monologues": "programme item: monologues recited by the French troupe's actors, not a work (RG, 2026-11-03)",
+    "Scènes et monologues": "programme item: scenes and monologues (with Galipaux), not a work (RG, 2026-11-03)",
+    "Prolog": "programme item: an occasional prologue opening a German charity bill, not a work (RG, 2026-11-03)",
+    "Концертъ-спектакль": "programme item: a concert evening, not a work (RG, 2026-11-03)",
+    "Обозрѣніе": "programme item: a revue making up the whole bill, not a work (RG, 2026-11-03)",
+    "«Слава»!": "unidentified: no genre and no troupe printed (Griboedov memorial, Малый 4 Jan 1895) (RG, 2026-11-03)",
+    "Балетоманъ": "unidentified: no genre and no troupe printed (Маріинскій charity, 23 Apr 1905, next to a ballet) (RG, 2026-11-03)",
+}
 #: entities.review_work.work_kind -> WORK_ART_FORMS (RG, 2026-11-03)
 REVIEW_KIND_TO_WORK_ART_FORM = {"ballet": "ballet", "opera": "opera", "music": "concert"}
 #: performance.discipline -> the work art form it agrees with
@@ -1586,7 +1596,7 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                       WHERE table_schema = 'entities' AND table_name = 'review_work'""").fetchone()[0]:
         review_kind = {str(w): k for w, k in con.execute("SELECT work_id, work_kind FROM entities.review_work").fetchall()}
     titles_now = {r[1] for r in rows}
-    for t in (CONCERT_WORK_TITLES | CONCERT_SECTION_TITLES) - titles_now:
+    for t in (CONCERT_WORK_TITLES | CONCERT_SECTION_TITLES | set(ONE_OFF_ITEMS)) - titles_now:
         raise SystemExit(f"CONCERT_WORK_TITLES / CONCERT_SECTION_TITLES: «{t}» matches no research.work")
     out = []
     for wid, title, ent_title, genre, gsrc, excerpt_of, wsrc, ballet_note in rows:
@@ -1608,6 +1618,8 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         elif canon is None and work_kinds.get(str(wid)) and work_kinds[str(wid)] <= {"recitation / reading", "lecture", "cinema"}:
             kinds = ", ".join(sorted(work_kinds[str(wid)]))
             form, basis = None, f"programme item: {kinds}, not a work (RG, 2026-11-03)"
+        elif title in ONE_OFF_ITEMS:
+            form, basis = None, ONE_OFF_ITEMS[title]
         elif ballet_note is not None:
             form, basis = "ballet", f"ballet productions list: {ballet_note}"
         elif wsrc == "review":

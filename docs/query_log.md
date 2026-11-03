@@ -26150,3 +26150,9 @@ Result: Monologues (Михайловскій 3 Apr 1905, French matinée, among 
 kind "play"; «Слава»! (Малый 4 Jan 1895, Griboedov memorial, before «Горе отъ ума»), Балетоманъ (Маріинскій 23 Apr 1905, Гребловская школа
 charity, between «Письмо Татьяны» and «Сонъ въ лѣтнюю ночь» [бал.]), Концертъ-спектакль (Маріинскій 16 Feb 1902, charity, the whole bill),
 Обозрѣніе (Маріинскій 11 Jan 1903, charity, the whole bill) -- no troupe, no kind.
+
+## 2026-11-03 — Last 7 one-off items ruled (RG "5, leave 2 unknown"); no work left pending
+
+Result: programme items: Monologues, Scènes et monologues, Prolog, Концертъ-спектакль, Обозрѣніе; unidentified (NULL): «Слава»!, Балетоманъ.
+Works: drama 2,259 / opera 323 / ballet 253 / operetta 39 / concert 11 / ceremonial 4 / NULL 52 (programme items 47, not-printed leads 3,
+unidentified 2); none «pending RG». Check unchanged: 52 performances on 6 work/discipline pairs disagree (report only).
