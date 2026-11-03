@@ -306,3 +306,27 @@ reconciliation ledger under its date:
 | 1910-11 | SP | Конекъ-горбунокъ или Царь-дѣвица | 1911-02-18 | none |
 | 1910-11 | SP | Спящая красавица | 1911-02-19 | none |
 | 1910-11 | SP | Шопеніана | 1911-03-09 | Маріинскій: Эвника + Карнавалъ |
+
+**W8 follow-up — the 11 unmatched list dates (RG 2026-11-03, "Look at the 11").** Ten were already worked out in the
+season reconciliations; one («Шопеніана» 9 Mar 1911) was new and was read on both scans by Claude today (crops
+`docs/eval/scan_audit/1910-11_list_SP_p65_Chopiniana.png`, `1910-11_repertoire_1911-03-07_09_Mariinsky.png`).
+
+A. A slip in the list, intended date known (could go in `LIST_DATE_PRINT_TYPOS` so `production_date` links them):
+- «Пробужденіе Флоры», Moscow, «мая 2» -> 3 May 1896 (ledger 1895-96-09; the Repertoire and the Moscow review have 3 May).
+- «На перепутьи», SP, «декабря 17» -> 27 Dec 1904 (RG 2026-10-29, ledger 1904-05-17; the list's own «Пробужденіе Флоры»
+  entry has 27 Dec).
+- «Спящая красавица», Moscow, «октября 18» -> 8 Oct 1908 (ledger 1908-09-03, scan read by Claude 2026-11-02; the Большой
+  is dark on 18 Oct; count 7 = 7).
+B. A slip in the list, no date to correct to: «Волшебная флейта» 25 Oct 1897 (Маріинскій dark; RG 2026-10-29 "It's likely
+  a list error", ledger 1897-98-12); «Маркитантка» 11 Feb 1901 (corps-de-ballet benefit, no «Маркитантка»; list,
+  Repertoire and review read).
+C. The yearbook disagrees with itself (both transcriptions match their scans; open):
+- «Катарина», Moscow, 17 Jan 1896 (the Repertoire has «Эсмеральда»).
+- «Очарованный лѣсъ», SP, 21 Sep 1898 (the Repertoire has «Фераморсъ» only).
+- «Волшебная флейта», SP, 19 Dec 1901 (the Repertoire has «Сильвія»; the list implies a double bill).
+- «Конекъ-горбунокъ» 18 Feb and «Спящая красавица» 19 Feb 1911, SP (the Repertoire: «Китежъ»; «Кантата. Жизнь за
+  царя»; ledger 1910-11-12). Moscow gave «Спящая красавица» at the 19 Feb matinée.
+- «Шопеніана», SP, 9 Mar 1911: the list prints «1911 г.—марта 7, 9. Всего—4 раза», and its «Эвника» and «Карнавалъ»
+  entries agree on 9 Mar; the Repertoire's 9 Mar bill is «Эвника, бал.» / «Карнавалъ, пантомима-бал.», 4653 р. 50 к.
+  (7 Mar adds «Шопеніана, сюита»). The SP review says «Карнавалъ» was repeated «7-го и 9-го марта» and does not name
+  «Шопеніана» for either.

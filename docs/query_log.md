@@ -26101,3 +26101,20 @@ FROM research.production_date d JOIN research.production pr USING(production_id)
 Result: 2,374 dates: matched 2,357; one event / two performances 5; two events 1; unmatched 11 (table in
 docs/research_layer_review_2026-11-03.md). ballet_list_matches: 2,370 pairs before and after, identical. Every other
 table equal to production. outside_total 30, year mismatch 5, misprint corrections 5.
+
+## 2026-11-03 — Research-layer review W8 follow-up: the 11 unmatched ballet-list dates
+
+```sql
+-- per unmatched production_date: the list entry's dates, the same work within 10 days (any city), the city's events that day
+SELECT ... FROM research.production_date d JOIN research.production pr USING(production_id) WHERE d.match_note LIKE 'no Repertoire%';
+SELECT e.city, e.date_undate, t.canonical_name, p.verbatim_title FROM research.performance p JOIN research.event e USING(event_id)
+ JOIN research.theater t USING(theater_id) WHERE p.work_id = <entry work> AND e.date_undate BETWEEN <date - 10> AND <date + 10>;
+-- 1910-11 SP list entries «Эвника», «Карнавалъ», «Шопеніана» with their dates and match_note; review_1910-11_SP_ballet text search
+```
+
+Result: same work nearby: Пробужденіе Флоры 3 May 1896 (list 2), Волшебная флейта 15 Oct 1897 (list 25; earlier ruled a
+list error, no date), Очарованный лѣсъ 27 Sep 1898 (also on the list), Маркитантка 4 Feb 1901 (also on the list), Волшебная
+флейта 28 Dec 1901 (also on the list), На перепутьи 27 Dec 1904 (list 17), Спящая красавица Moscow 8 Oct 1908 (list 18),
+Конекъ-горбунокъ Moscow 13 + 17 Feb 1911, Спящая красавица SP 17 Feb + Moscow 19 Feb 1911, Шопеніана 7 Mar 1911 (also on the
+list). 1910-11 list: Эвника and Карнавалъ both include 9 Mar (matched); Шопеніана «марта 7, 9», 4 dates. Review: «Карнавалъ»
+«7-го и 9-го марта», no Шопеніана.
