@@ -164,3 +164,11 @@ Still to put to RG: and the listed-after-leaving cases (Иванова 2-я, Л�
   block's 1905-01-08 date (mixed block); wrong links outside casts: Коралли->Каралли Вѣра (1906-07 MSK p008 b003), Вальцъ Ѳедоръ (father)
   ->Карлъ, Іогансонъ (teacher)->Анна, «М. М. Петипа» stager (1900-01 SP p001 b002), assertion 2052 misparsed Перро; Гердтъ jubilee
   assertion 2998 role «31 января 1871 г».
+- Old-cast sweep follow-ups DONE 2026-11-03 (RG "okay go ahead"): new docs/eval/review_assertion_overrides.csv (set_date / exclude, read by
+  build_review_assertions.py): Синяя борода 1900-01 cast 1896-12-08 -> 1900-09-03 (Repertoire); Парижскій рынокъ block split, 1859 première
+  cast 1859-04-25, 1905 pupils' cast 1905-04-20 (both were 1905-01-08); assertions 2052 (Перро «самимъ авторомъ его») and 2998 (Гердтъ
+  «31 января 1871 г») dropped. Mention links: Коралли x2 -> creator Коралли; Іогансонъ (teacher) -> Христіанъ Петровичъ; «М. М. Петипа»
+  stager -> Маріусъ (print slip, genuine_print_typos.md); Вальцъ Ѳедоръ (father) unlinked; Леньяни in the earlier Эсмеральда revival
+  unlinked (Repertoire: revived 1899-00 after 1891-92). Спящая красавица 1902-03 première cast already handled by the sweep. LEFT LINKED,
+  ambiguous: 1900-01 SP p004 b003 Конекъ-горбунокъ «последнее возобновленіе» cast (Гиллертъ, Лукьяновъ, Медалинскій): last revival
+  6 Dec 1895 (Леньяни benefit) but Медалинскій joins only 1897-98, so the cast may be the current one; right people either way.

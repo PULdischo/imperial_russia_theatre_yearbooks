@@ -1,0 +1,14 @@
+block_id,role_surface,performer_surface,action,value,decided_by,evidence
+review_1900-01_SP_ballet_p001__b002,*,*,set_date,1900-09-03,"RG 2026-11-03: ""okay go ahead"" (old-cast sweep follow-ups)","p.154: «Балетныя представленія сезона 1900—1901 года, начались 3-го сентября. Въ этотъ вечеръ былъ данъ … „Синяя борода“»; the cast that follows is that evening's (Сѣдова 2-я joined 1898; Петипа 3-я first listed 1898-99). Repertoire: Синяя борода 1900-09-03. Was dated 1896-12-08, the première mentioned in passing."
+review_1904-05_SP_ballet_p015__b003,"маркизъ, Мергеле",г-нъ Стуколкинъ 1-й,set_date,1859-04-25,"RG 2026-11-03: ""okay go ahead""","«При первой постановкѣ балета» (Парижскій рынокъ, Большой театръ, 25 апрѣля 1859, бенефисъ М. С. Петипа). Was dated 1905-01-08 (Андерсенъ's farewell of 8 Jan 1895 in the succession list, misdated)."
+review_1904-05_SP_ballet_p015__b003,"Лизетта, штопальщица",г-жа М. Петипа,set_date,1859-04-25,"RG 2026-11-03: ""okay go ahead""",same 1859 première cast
+review_1904-05_SP_ballet_p015__b003,продавецъ фруктовъ на рынкѣ,Г. Петипа,set_date,1859-04-25,"RG 2026-11-03: ""okay go ahead""",same 1859 première cast
+review_1904-05_SP_ballet_p015__b003,Жакъ,в-къ Петровъ,set_date,1905-04-20,"RG 2026-11-03: ""okay go ahead""","«При настоящей постановкѣ»: pupils' performance, Маріинскій, 20 April (1905). Was 1905-01-08."
+review_1904-05_SP_ballet_p015__b003,"Жоржетта, кузина Лизетты",г-жа Чупятова,set_date,1905-04-20,"RG 2026-11-03: ""okay go ahead""",same 1905 pupils' performance
+review_1904-05_SP_ballet_p015__b003,Лизетта,в-ца Соболева 1-я,set_date,1905-04-20,"RG 2026-11-03: ""okay go ahead""",same 1905 pupils' performance
+review_1904-05_SP_ballet_p015__b003,Пьеретта,в-ца Гиммельманъ,set_date,1905-04-20,"RG 2026-11-03: ""okay go ahead""",same 1905 pupils' performance
+review_1904-05_SP_ballet_p015__b003,карликъ,в-къ Герасимовъ,set_date,1905-04-20,"RG 2026-11-03: ""okay go ahead""",same 1905 pupils' performance
+review_1904-05_SP_ballet_p015__b003,маркизъ Мегреле,в-къ Алексѣевъ,set_date,1905-04-20,"RG 2026-11-03: ""okay go ahead""",same 1905 pupils' performance
+review_1904-05_SP_ballet_p015__b003,"пажъ, маркиза",в-къ Ивановъ,set_date,1905-04-20,"RG 2026-11-03: ""okay go ahead""",same 1905 pupils' performance
+review_1893-94_SP_ballet_p018__b002,на сценѣ Петербургскаго Большаго театра самимъ авторомъ его,балетмейстеромъ Ж. Перро,exclude,,"RG 2026-11-03: ""okay go ahead""","not a role: «впервые поставленъ на сценѣ … самимъ авторомъ его—балетмейстеромъ Ж. Перро» (staging credit, kept in review_credit)"
+review_1905-06_SP_ballet_p009__b002,31 января 1871 г,полученный Гердтомъ,exclude,,"RG 2026-11-03: ""okay go ahead""","not a role: a date in Гердтъ's jubilee biography («…31 января 1871 г., полученный Гердтомъ …»)"

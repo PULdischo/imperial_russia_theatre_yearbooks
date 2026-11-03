@@ -26187,3 +26187,19 @@ Result: 109 mention links removed, exactly the listed ones; 32 assertions change
 Жизель, 1892 Moscow Дочь фараона, 1867 Золотая рыбка; 1902-03 Спящая красавица première cast loses its wrong 1893-01-17 date); 1 review_credit
 (misparsed «послѣ г-жи Ваземъ» staging-revival) unlinked; dance/solo 0; all research entity tables identical. Assertion links 2,458 -> 2,428;
 mentions resolved to one entity 22,104; 0 person_link shifts.
+
+## 2026-11-03 — Old-cast sweep follow-ups: Repertoire dates, then review chain on a copy and on production
+
+```sql
+SELECT e.season, count(*), min(e.date), max(e.date) FROM research.performance p JOIN research.event e USING (event_id) JOIN research.work w USING (work_id)
+WHERE w.canonical_title IN ('Конекъ-горбунокъ','Эсмеральда','Синяя борода') AND e.city = 'SP' GROUP BY 1;
+SELECT e.date, e.annotation FROM research.event e WHERE e.city = 'SP' AND e.annotation ILIKE '%Леньяни%';
+SELECT person_id, display_name, person_source FROM research.person WHERE display_name LIKE ANY ('Коралли%','Вальцъ%','Іогансонъ%','Петипа%','Перро%');
+-- then the four review steps on a copy and on production; mention / assertion / credit / dance / solo differences v. backup and v. tested copy
+```
+
+Result: Синяя борода SP 1900-09-03 (first of 3 in 1900-01); Эсмеральда SP 1890-91, 1891-92, then 1899-00 from 1899-11-21 (no Леньяни benefit
+of it); Конекъ-горбунокъ every season 1895-96..1901-02 from 1895-12-06 (Леньяни benefit); Медалинскій first in BalletArtists 1897-98.
+Коралли exists as a production-list creator (63f4db8b); no record for Вальцъ Ѳедоръ. Copy and production: 6 mention links changed (as listed),
+20 assertion dates set, 2 assertions dropped; credits (already right), dances, solos unchanged; production equal to the tested copy in all five
+review tables; assertion links 2,426; 0 shifts.
