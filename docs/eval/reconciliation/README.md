@@ -1479,12 +1479,68 @@ per-title counts, total 49); only its own breakdown adds to 39 for 49. SP (-09):
 Вел. Кн. Владиміръ Александровичъ: 6 Feb «Спящая красавица» and 7 Feb «Конекъ-Горбунокъ»; its season total is 47. The
 Repertoire (p. 36) prints 6 Feb утро «Спящая красавица, бал.» 3028 р. 85 к., with receipts in all three SP theaters that day
 (5 Feb and 7-14 Feb dark); the list counts 6 Feb and the stats' 48 includes it. Crops `scan_audit/1908-09_rg_review_sp_f121_6feb.png`,
-`1908-09_rg_mariinsky_6feb.png`. Stored as printed; needs an outside source.
+`1908-09_rg_mariinsky_6feb.png`. Stored as printed; needs an outside source. RG 2026-11-02: leave open for further research.
 
-**Stored review-text slips** seen on the way (not corrected; for RG): SP p000 «Мерседесь», missing drop-cap Б («АЛЕТНЫЕ»); p001
-«проведенныемъ», «ансамблѣ» (print «ансамблэ»); p002 «стиЛЬности»; p003 «опрошенные» (print «опрощенные»); p004 «мѵзыка», «покрываль»,
-«танцоваль», «Мариинскаго»; p005 «Аленыкій»; Moscow p001 «выпускающуюся» (print «выпускавшуюся»), «Остальныя» (print «Остальные»); p002
-«партиру»; p003 «Лебединая озера»; p004 line-break hyphens «Рай-монда», «бенефис-ныхъ». Also: the 8 Apr Repertoire prints «Ѳемида и
-Пелей», review and list «Ѳетида» (variation, left).
+**Stored review-text slips corrected 2026-11-02** (RG: "yes"): 17 rows in `docs/eval/review_text_corrections.csv`, each 1/1 and
+read by Claude on the zoomed scans: SP f. 116 «Мерседесь» -> «Мерседесъ»; f. 117 «проведенныемъ» -> «проведеннымъ», «ансамблѣ» ->
+«ансамблэ» (as printed); f. 118 «стиЛЬности»; f. 119 «опрошенные» -> «опрощенные»; f. 120 «мѵзыка» -> «музыка» (у damaged in the print),
+«покрываль», «танцоваль» -> ъ, «Мариинскаго» -> «Маріинскаго»; f. 121 «Аленыкій» -> «Аленькій», first line «утреннихъ» -> «утречнихъ»
+(the print's slip; the page's other two print «утреннихъ»); Moscow f. 158 «выпускающуюся» -> «выпускавшуюся», «Остальныя» -> «Остальные»;
+f. 159 «партиру» -> «партитуру»; f. 160 «Лебединая» -> «Лебединаго озера»; f. 161 «Рай-монда», «бенефис-ныхъ» -> «Рай- монда»,
+«бенефис- ныхъ» (line-break hyphens, stored with the space as elsewhere). Not applied: the missing ornamental drop-cap Б of
+«БАЛЕТНЫЕ» (f. 116): a find/replace row would re-apply on every rerun (АЛЕТНЫЕ stays inside БАЛЕТНЫЕ); lead only, other reviews may
+lose their drop-caps too. Review chain on a copy (`outputs/rebuild_reviewtext_1908-09_2026-11-02/`, the 1902-03 recipe): raw.review_block
+13 blocks; 1908-09 mentions only where the text changed («Раймонда», «Аленькій цвѣточекъ» now exact matches; same works); two credit
+phrases show the corrected words (the Стенбокъ-Ферморъ libretto phrase now stops before «музыка»; no credit gained or lost: Щербачевъ's
+music credit is the names-before-cue gap); 0 person_link shift blocks. The rebuild also caught up with other sessions' committed person
+work since the last review build: candidate lists in 16 seasons (order or membership), four Золотаренко credits (1892-94) moved from a
+person id no longer in entities.person to «Золотаренко, Петръ Петровичъ»; nothing else. Production was byte-identical to the copy's
+start; promoted (db, `merged_full/review_block.csv`, `mentions/*.csv`), sqlite rebuilt, not republished; backup
+`outputs/backups/review_text_1908-09_2026-11-02/`. Also seen: the 8 Apr Repertoire prints «Ѳемида и Пелей», review and list «Ѳетида»
+(variation, left).
 
 **Outcome:** 10 ledger rows (1908-09-01..10). Open: Александринскій −317.43 (-08), 6 Feb (-10). The Moscow Art Theatre label (-05) applied 2026-11-02.
+
+## 1905-06 (2026-11-02): no totals page and no lists; the two ballet reviews and a blind read of both ballet columns; 17 cells fixed
+
+No season-totals page has been found for 1905-06 (it needs the physical volume), and the volume prints no productions lists. So,
+as for 1890-91, the outside source is the season reviews: SP ballet (15 pp., f. 126-138) and Moscow ballet (26 pp., f. 209-234),
+one agent each (`1905-06_review_sp_ballet.csv`, `1905-06_review_msk_ballet.csv`). Every date is printed in both cities; Moscow is
+dark citywide 14-26 Oct 1905 (the general strike) and 7-25 Dec 1905 (the uprising); SP shows no such closure.
+
+**Reviews.** SP 41 statements, 29 agree; Moscow 36, 29 agree. The disagreements are the reviews' own (ledger 1905-06-08): SP «634-й»
+«Раймонда» for the 34th, «Баядерка (7)» (2 complete performances); Moscow's title list slips months («октября 11, 25», «ноября 18» for
+September; «октября 3» for 30 Oct), leaves 27 Nov out of «Дочь Фараона», counts 2 «Конекъ-горбунокъ» excerpts for 3, and calls the 30
+Apr act «2-е» where the Repertoire prints «3 д.». Counts: the SP review's 36 = the Маріинскій's all-ballet events without the six
+charity bills and the 9 Apr school performance (-01); the Moscow review's 30 = 28 Большой ballet events (after -04) + Герберъ's 12 Feb
+benefit (no work printed; the review says «Золотая рыбка», -07, for RG) + the Новый 4 Apr Иверская charity (-02).
+
+**But the review check found Repertoire errors**, so both ballet columns were read blind (Маріинскій and Большой, four agents, scans
+only; `docs/eval/scan_audit/1905-06_scan_reads.csv`, 544 rows, 30 Aug 1905 - 10 May 1906; differences in `1905-06_scan_read_diffs.csv`).
+Every receipts figure matches. Every difference was checked by Claude on the scan. **Applied 2026-11-02** (RG: "Yes, apply all 15";
+`fix_1905_06_scan_reads.py`, 17 cells on 12 raw pages):
+- **Маріинскій 5/6 and 12/13 Nov 1905** (-03): the opera matinées «Демонъ» and «Евгеній Онѣгинъ» sat on the dark Saturdays; now Sunday
+  утро, the ballet bills вечеръ, two dark rows appended (no row shift).
+- **Большой 26 Nov 1905** (-04): «Дочь фараона» removed from the charity concert, whose cell prints no work.
+- **Acts and excerpts** (-05): 12 Feb Гердтъ benefit «3 и 5 карт. Баядерка» (was inside the heading; now a work, linked to «Баядерка»);
+  «1 д. Донъ-Кихотъ» (3 Apr), «1-е и 2-е д, Тщетная предосторожность» (15 Apr; one `work_excerpt_links.csv` row because the print has
+  «д,»), Большой «3 д. Эсмеральда» (30 Apr); opera «1, 2, 3 и 4 д. Гугеноты» ×3 and «4-е д. Отелло».
+- **Titles and headings** (-06): «Самсонъ и Далила» ×3 (stored «Далида», «Даліла»); «сестрахъ», «gala» (Latin in the print), «попеченія».
+
+Not changed (-09): 26 Feb «Сельская честь, бал.» (print label on an opera; for RG), «Фаустъ, оц.» ×2 (print slip, stored «оп.» so the
+performances keep their art form), «Франческа да Рамини» (as printed), 9 Oct «Аида»/«Анда» (unreadable at letter level).
+
+Rebuilt on a copy of production (`outputs/rebuild_scanreads_1905-06_2026-11-02/`, the repo pipeline, which was clean): raw/analysis
+event_entry 13 changed + 2 dark rows, event_entry_performance 12, research.event 14 + 2, research.performance 12, research.work
+(+13/-10: the excerpt works, «Далида» folded into «Далила»), entities work tables accordingly; nothing else in 59 tables; 0 person_link
+shift blocks. (A first copy built from a clean `git archive` of `pipeline/` alone also changed 135 graduate rows: `parse_and_validate.py`
+reads `docs/ballet_graduates_tenure.csv` relative to the pipeline folder, so a pipeline-only archive silently drops it. Build from a
+full checkout, or archive `docs/` too.) Production had been rebuilt by a parallel session in between; the copy was redone from the new
+production and promoted only after a byte-compare showed production unchanged since. Backup `outputs/backups/scan_reads_1905-06_2026-11-02/`
+(DB, the 12 raw pages, parsed, sqlite). sqlite rebuilt, not republished.
+
+**Leads, not done:** both reviews' stored text has slips (SP f. 132 «15-го ноября» for the printed 13th, «Людофдъ», «Бекеффи», doubled
+words; Moscow «50 балетныхъ представленій» for 30, «25-го апрѣля» for 23, and a pattern of old-style 3 read as 5); listed in the two
+review CSVs' notes and the agents' reports, not corrected.
+
+**Outcome:** 9 ledger rows (1905-06-01..09). Open: -07 (12 Feb «Золотая рыбка»), -09 («Сельская честь» label).

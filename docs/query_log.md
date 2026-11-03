@@ -25239,3 +25239,36 @@ select mention_id, surface, char_start, entity_id from entities.review_mention w
 Result: unresolved among Анжелика/Джульетта/Іосифъ (block opens «анитта», role key fails); one mention, occurrence 0. After the hand
 link: performer 723f64f2 (Джульетта); performer links 2,468. research.person 2,620; receipts 3,223,088,581; Wikidata 174; 0 shifts.
 
+## 2026-11-02 — 1908-09 review-text corrections: copy v. production diff (all 59 tables)
+
+```sql
+-- per table, both directions:
+select count(*) from (select * from copy."s"."t" except all select * from pre."s"."t");
+-- then column-level on entities.review_mention (key block_id, char_start, mention_type) and research.review_credit
+-- (key block_id, char_start, role_category, name_surface), grouped by season; 1908-09 mentions/credits except all;
+-- entities.person rows for Левинсонъ/Левенсонъ in both; review_dance_performer dance 350 position 5 in both
+```
+
+Result: raw.review_block 13, entities.review_mention 251, research.review_credit 2,071 (429 without ids), review_assertion 4,
+review_dance_performer 14. 1908-09: 4 mentions (corrected surfaces), 2 credit phrases. Elsewhere: candidate lists only, plus 4
+Золотаренко credits relinked from a missing person id; 1910-11 p003 a join artifact (multiset identical). entities.person identical.
+
+## 2026-11-02 — 1905-06 reconciliation: ballet reviews, blind column reads, scan-read fixes
+
+```sql
+-- season shape
+select e.city, t.canonical_name, e.event_status, count(*), min(e.date), max(e.date)
+from research.event e join research.theater t using (theater_id) where season = '1905-06' group by all;
+-- citywide dark runs: per city, dates where no theater has event_status = 'performed'
+-- stored cells for the blind-read comparison
+select a.event_id, a.theater_canonical, e.date, a.time_of_day, a.event_status, a.receipts_text, a.annotation,
+       (select string_agg(p.verbatim_title || coalesce(', ' || p.verbatim_genre, ''), ' / ' order by p.performance_order)
+        from research.performance p where p.event_id = a.event_id)
+from analysis.event_entry a join research.event e using (event_id)
+where a.season = '1905-06' and a.theater_canonical in ('Маріинскій', 'Большой');
+-- after the fix: copy v. production, every table both ways (except all); Большой ballet events before/after
+```
+
+Result: Moscow dark 14-26 Oct and 7-25 Dec 1905. Blind read 544 rows v. 508 stored dates: 45 differences (31 titles, mostly
+genre placement; 9 headings; 4 event counts = the two SP matinée shifts; 1 receipts punctuation only). After the fix only Repertoire
+tables change; Большой ballet events 29 -> 28 (26 Nov), Маріинскій 43. Review agents' own SQL is in their reports (read-only).
