@@ -26161,3 +26161,29 @@ SELECT d.production_date_id, pr.list_title, d.date, d.day_printed, d.month_print
 Result: ids balletproductions_1895-96_MSK_p001__e006__d001, _1904-05_SP_p001__e006__d002, _1908-09_MSK_p001__e005__d002.
 After: all three matched (repertoire_1895-96_pair024__s038, repertoire_1904-05_p020__s032 matinée, repertoire_1908-09_p010__s001);
 matched 2,360, unmatched 8; production_work 3 rows +1; every other table identical.
+
+## 2026-11-03 — Sweep of the Season Reviews for quoted earlier casts (RG "just go ahead and do the full old-cast sweep"): candidates
+
+```python
+# raw.review_block text; a year «18NN г./году» earlier than (season start - 1); cast signals (г-жа, г-нъ, гг., исполнял, роль, танцовал);
+# linked person mentions in entities.review_mention; blocks already in docs/eval/review_historical_passages.csv excluded
+```
+
+Result: 169 of 4,697 review blocks mention an earlier year; 45 also have cast signals and at least one linked person mention
+(1891-92 2, 1892-93 3, 1893-94 5, 1894-95 2, 1895-96 2, 1896-97 1, 1900-01 12, 1901-02 5, 1902-03 1, 1903-04 1, 1904-05 2, 1905-06 2,
+1906-07 5, 1907-08 1, 1908-09 1). Classification (performers of a quoted earlier cast -> unlink, per RG's 1875 ruling; creators and the
+current season's cast kept) handed to a subagent, to be checked before applying.
+
+## 2026-11-03 — Old-cast sweep applied (review chain on production): diff v. db_backup_oldcast_sweep_2026-11-03
+
+```sql
+SELECT n.block_id, n.char_start, n.surface, o.entity_id, n.entity_id FROM entities.review_mention n JOIN old.entities.review_mention o
+USING (block_id, char_start, mention_type) WHERE n.entity_id IS DISTINCT FROM o.entity_id;
+SELECT ... FROM research.review_assertion n FULL JOIN old.research.review_assertion o USING (assertion_id) WHERE performer or date differs;
+-- review_credit / review_dance_performer / review_solo person changes; EXCEPT ALL on person, event, work, person_appearance, person_death, production_date
+```
+
+Result: 109 mention links removed, exactly the listed ones; 32 assertions changed (all in quoted casts; e.g. 1871 Донъ-Кихотъ, 1844 Moscow
+Жизель, 1892 Moscow Дочь фараона, 1867 Золотая рыбка; 1902-03 Спящая красавица première cast loses its wrong 1893-01-17 date); 1 review_credit
+(misparsed «послѣ г-жи Ваземъ» staging-revival) unlinked; dance/solo 0; all research entity tables identical. Assertion links 2,458 -> 2,428;
+mentions resolved to one entity 22,104; 0 person_link shifts.

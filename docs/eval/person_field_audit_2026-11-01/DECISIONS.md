@@ -154,3 +154,13 @@ Still to put to RG: and the listed-after-leaving cases (Иванова 2-я, Л�
 - Folios DONE 2026-11-03 (RG "go ahead", "Yes, run Qwen"): docs/folios/staff_list_folios.csv, all 966 staff-list pages; research.person_appearance
   gets source_file / scan_page / printed_folio. Local OCR (tesseract) tried first and rejected (7 of 26 known folios wrong). Qwen run: 559k
   input tokens; 16 signature-mark misreads corrected by Claude on the scans; 6 last pages from the sequence. Supersedes the DEFERRED folio note.
+- Quoted-old-casts sweep DONE 2026-11-03 (RG "just go ahead and do the full old-cast sweep"; rule = RG's 1875 "Unlink all"): 169 review blocks
+  mention an earlier year, 45 with cast signals and links; a Claude helper classified them, Claude checked (docs/eval/oldcast_sweep_2026-11-03/).
+  109 performer mentions in quoted earlier casts unlinked (review_mention_links.csv, empty person_id); creators and current-season casts kept.
+  20 wholly historical blocks on review_historical_passages.csv: 7 dated (single dated performance), 13 multi-date successions left undated.
+  Assertion links 2,458 -> 2,428 (32 rows changed, all in the quoted casts). OPEN for RG: undated revivals (1900-01 SP p004 b003 Конекъ-
+  Горбунокъ cast; p007 b002 Леньяни «послѣ десятилѣтняго перерыва»; 1902-03 SP p018 b002 Спящая красавица première, 1890 not printed);
+  1900-01 SP p001 b002 Синяя борода assertions 709-718 probably 1900 not 1896-12-08; 1904-05 SP p015 b003 (1859 cast) assertions keep the
+  block's 1905-01-08 date (mixed block); wrong links outside casts: Коралли->Каралли Вѣра (1906-07 MSK p008 b003), Вальцъ Ѳедоръ (father)
+  ->Карлъ, Іогансонъ (teacher)->Анна, «М. М. Петипа» stager (1900-01 SP p001 b002), assertion 2052 misparsed Перро; Гердтъ jubilee
+  assertion 2998 role «31 января 1871 г».
