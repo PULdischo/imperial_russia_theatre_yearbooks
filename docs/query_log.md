@@ -26029,3 +26029,9 @@ Held for later: «Гамлетъ» 11 Nov 1901 at the Малый on Адель �
 Scan reads (scratchpad scan_results_C.csv, 17 printings): no genre word was missed; every title reads as stored. «Обозрѣніе» is a
 one-word entry (the genre word is the title). Fix: the blank-genre rule now applies work_artform_overrides.csv per printing, so
 «Званый вечеръ съ итальянцами» (printed «оперетка», «оперетта», «опер.» = operetta by RG's override) -> operetta. Works: NULL 62.
+
+## 2026-11-03 — Titled works with no genre take the troupe's art form (RG "Follow the troupe")
+
+Result: drama: Драма жизни, Intermède, Die Wappenhänse, Démocrite, Un Crâne sous une Tempête, Le festival des noces, Театральный разъѣздъ…,
+and the two unlinked Русалка acts (Russian drama troupe); opera: Миранда (послѣдняя борьба). Blank (no troupe recorded): Балетоманъ,
+«Слава»!, Обозрѣніе. Programme items kept out (Divertissement, Monologues, Scènes et monologues, Prolog). NULL works 52. Only work rows changed.
