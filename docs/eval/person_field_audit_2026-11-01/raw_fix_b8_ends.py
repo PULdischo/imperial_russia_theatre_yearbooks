@@ -5,6 +5,7 @@ Input B8_final.csv (entry_id, period_order, action, value, now, basis, source). 
   set_date_text  end_date_text = value (scan-read correction; the parser re-derives the date)
   merge_periods  join this period with the next: keep this start, take the next period's end; drop the next period
   add_period     entry has no service period: add one with no dates and end_type = value (only when period_order is 1)
+  add_start_period  entry has no service period: add one with start_date_text = value, no end (2026-11-03)
 Pass another CSV of the same shape as the first argument (e.g. B9_undated_transfers.csv, 2026-11-02).
 Field edits on service periods only: no entries added/removed/reordered (person_link unaffected).
 usage: uv run python docs/eval/person_field_audit_2026-11-01/raw_fix_b8_ends.py [--write]; then docs/eval/rebuild_after_raw_edit.sh"""
@@ -27,11 +28,12 @@ for page, items in sorted(by_page.items()):
         e = d['entries'][idx - 1]
         sp = e.get('service_periods') or []
         po = int(r['period_order']) - 1
-        if r['action'] == 'add_period':
+        if r['action'] in ('add_period', 'add_start_period'):
             if sp or po != 0:
                 problems.append((r['entry_id'], r['period_order'], 'entry already has a period')); continue
-            e['service_periods'] = [{'start_date_text': None, 'end_date_text': None, 'end_type': r['value']}]
-            n['add_period'] += 1; continue
+            e['service_periods'] = ([{'start_date_text': None, 'end_date_text': None, 'end_type': r['value']}] if r['action'] == 'add_period'
+                                    else [{'start_date_text': r['value'], 'end_date_text': None, 'end_type': None}])
+            n[r['action']] += 1; continue
         if po >= len(sp):
             problems.append((r['entry_id'], r['period_order'], 'no such period')); continue
         p = sp[po]

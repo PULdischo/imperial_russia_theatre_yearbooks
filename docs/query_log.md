@@ -25394,3 +25394,35 @@ Result: evening event repertoire_1905-06_p033__s026 (Moscow, Большой, per
 supplied_performances.csv row: only research.event (1 row: n_works 0->1, disciplines/companies/genre_families -> ballet) and research.performance
 (+1, `__supplied1`, performance_source «supplied: Moscow ballet season review») differ in 59 tables. Большой events with dancers 28 -> 29;
 Moscow «Золотая рыбка» events 3 -> 4 (= the review's tally). Promoted after cmp; sqlite has 1 performance on the event.
+
+## 2026-11-03 — Будаевъ Александръ Дмитріевичъ: raw rank/instrument/tenure per season
+
+```sql
+SELECT entry_id, heading_path, list_number, rank_or_title, instrument, tenure_note_text FROM raw.person_entry WHERE family_name LIKE 'Будаев%' ORDER BY entry_id;
+SELECT appearance_id, rank, title, instrument FROM research.person_appearance pa JOIN research.person p USING(person_id) WHERE p.display_name LIKE 'Будаев%';
+```
+
+Result: 14 entries 1898-99..1910-11 (two in 1904-05: Михайловскій p005 «Первая скрипка», Маріинскій p000 «Вторая скрипка»). rank_or_title null except 1908-09 p001__e005 «Первая скрипка. (Переведенъ изъ Михайловскаго театра съ 1 октября 1904 г.).», already in instrument + tenure_note (research.title shows the parenthesis). Instrument: Вторая 1898-1902, Первая 1903-04, Вторая 1904-05 (Mar.), 1905-06, 1907-08; Первая 1906-07, 1908-11. Scans (Claude): 1904-05 p.30 no.13, 1905-06 p.28 no.13, 1907-08 p.29 no.12 all print «Вторая скрипка» -- as stored; 1908-09 p.101 no.11 «Первая скрипка. (Переведенъ …)».
+
+## 2026-11-03 — Rank fields holding dates, transfer/leaving notes or instruments (corpus)
+
+```sql
+SELECT entry_id, family_name, rank_or_title, instrument FROM raw.person_entry WHERE rank_or_title IS NOT NULL AND (
+  regexp_matches(rank_or_title, '1[89]\d\d') OR rank_or_title ILIKE '%переведен%' OR rank_or_title ILIKE '%оставил%' OR rank_or_title LIKE '%†%'
+  OR regexp_matches(lower(rank_or_title), '(скрипка|віолончель|альтъ|флейта|кларнетъ|гобой|фаготъ|труба|тромбонъ|валторна|вальдгорнъ|арфа|контрабасъ|литавры|корнетъ)'));
+SELECT e.entry_id, e.rank_or_title, e.tenure_note_text, s.start_date_text FROM raw.person_entry e LEFT JOIN raw.person_entry_service s USING(entry_id)
+WHERE e.family_name = 'Михайловъ' AND e.entry_id LIKE 'administration_19%';
+```
+
+Result: 2 rows -- Будаевъ 1908-09 and Михайловъ Георгій administration_1909-10_p002__e013 «пот. поч. гражд. (по найму съ 7 января 1885 г.)» with no tenure note and no service period (other years 1902-11 store the parenthesis in tenure_note, start 7 Jan 1885). Scan 1909-10 p.143 no.3 (Claude) confirms the print.
+
+## 2026-11-03 — B10 applied (Будаевъ 1908-09, Михайловъ 1909-10): verify rebuilt rows and metrics
+
+```sql
+SELECT appearance_id, rank, title, instrument, tenure_note_text, printed_start_date FROM research.person_appearance
+WHERE appearance_id IN ('musicians_1908-09_SP_p001__e005', 'administration_1909-10_p002__e013');
+SELECT appearance_id, start_text, start_date FROM research.service_period WHERE appearance_id = 'administration_1909-10_p002__e013';
+-- plus receipts, Wikidata, assertion links, pending candidates, service_period count
+```
+
+Result: Будаевъ rank/title null, instrument Первая скрипка, note intact. Михайловъ rank «пот. поч. гражд.», note «(по найму съ 7 января 1885 г.)», start 1885-01-07 (new service_period row; 23,629 rows). Receipts 3,223,088,581; Wikidata 174; links 2,468; pending 0; research.person 2,620; alignment 0 shifts.

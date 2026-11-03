@@ -88,7 +88,12 @@ Order: conventions first (each settles many rows), then mechanical fixes, then i
   docs/eval/scan_audit/1900-01_productionteam_p128_khmelevsky_new_theatre.png). Logged, not acted on: his new-post entry the same
   page prints «съ 29 марта 1879 г.» (clear 29; all other volumes 27).
 - Held for RG (was): 7 medium misreads (B6), 10 medium wrong-field rows (B5), 9 undated ends (B1), «Освобожденъ отъ обязанностей» (Аслинъ, Ширяевъ),
-  Будаевъ rank+instrument, 1908-09 BalletArtists tallies unparsed (B9).
+  1908-09 BalletArtists tallies unparsed (B9).
+- Будаевъ DONE 2026-11-03 (RG "Fix both"; B10_rank_field_fixes_2026-11-03.csv + B10_service_period_add.csv): 1908-09 rank_or_title
+  held «Первая скрипка. (Переведенъ …)», already in instrument + tenure note -> emptied. Corpus search for rank fields with dates/notes/
+  instruments found one more: Михайловъ Георгій, Administration 1909-10 p.143 no.3, rank -> «пот. поч. гражд.», tenure note
+  «(по найму съ 7 января 1885 г.)», service start 7 Jan 1885 added (that season had none). Будаевъ's violin part alternates
+  Первая/Вторая in print after his 1902 promotion (1904-05 Mar., 1905-06, 1907-08 «Вторая», scan-read by Claude): left as printed.
 - C identity/links and D print conflicts: not started.
 
 ## D. Print conflicts -- RULED 2026-11-02 (RG): "contemporaneous wins"
