@@ -905,10 +905,31 @@ def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
         raise SystemExit(f"research.season_stat_line: {bad} lines with a city that is not С.-Петербургъ / Москва")
     con.execute("""
         CREATE TABLE research.season_stat_footnote (
-            season VARCHAR, footnote_no INTEGER, text_verbatim VARCHAR, note VARCHAR,
+            season VARCHAR, footnote_no INTEGER, city VARCHAR, text_verbatim VARCHAR, note VARCHAR,
             PRIMARY KEY (season, footnote_no)
         )""")
-    con.execute("INSERT INTO research.season_stat_footnote SELECT season, footnote_no, text_verbatim, note FROM raw.season_stat_footnote")
+    # city (RG 2026-11-03, research-layer review: "Yes, add it"): a page numbers its footnotes in one run for both
+    # cities; each mark sits on the lines it explains, so the city is that of the lines carrying it, or 'page' for the
+    # heading's own note. The build stops if a footnote is carried by both cities or by nothing.
+    con.execute("""
+        INSERT INTO research.season_stat_footnote
+        WITH refs AS (
+            SELECT season, city, trim(unnest(string_split(footnote_refs, ','))) AS r
+            FROM research.season_stat_line WHERE footnote_refs IS NOT NULL
+        ), fc AS (
+            SELECT season, r, string_agg(DISTINCT city, '+' ORDER BY city) AS cities FROM refs GROUP BY season, r
+        )
+        SELECT f.season, f.footnote_no,
+               CASE WHEN fc.cities IS NOT NULL THEN fc.cities
+                    WHEN pg.heading_footnote = f.footnote_no::VARCHAR THEN 'page' END,
+               f.text_verbatim, f.note
+        FROM raw.season_stat_footnote f
+        LEFT JOIN fc ON fc.season = f.season AND fc.r = f.footnote_no::VARCHAR
+        LEFT JOIN raw.season_stat_page pg ON pg.season = f.season""")
+    odd = con.execute("""SELECT season, footnote_no, city FROM research.season_stat_footnote
+                         WHERE city IS NULL OR city NOT IN ('SP', 'Moscow', 'page')""").fetchall()
+    if odd:
+        raise SystemExit(f"research.season_stat_footnote: footnotes with no single city: {odd[:10]}")
     # The page itself and the dated notes printed after each city's totals (1909-10), verbatim (RG 2026-11-03,
     # research-layer review: "Yes, add them").
     con.execute("""

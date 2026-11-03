@@ -224,7 +224,7 @@ SCHEMAS = {
         )""",
     "season_stat_footnote": """
         CREATE TABLE season_stat_footnote (
-            season TEXT, footnote_no INTEGER, text_verbatim TEXT, note TEXT,
+            season TEXT, footnote_no INTEGER, city TEXT, text_verbatim TEXT, note TEXT,
             PRIMARY KEY (season, footnote_no)
         )""",
     "season_stat_gap": """

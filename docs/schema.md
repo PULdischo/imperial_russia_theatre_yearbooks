@@ -415,6 +415,10 @@ from 1901-02. 1907-08 and 1908-09 print category totals only, with no per-theate
 The genre- and theater-level comparison (families, ballet counted three ways) stays in
 `pipeline/compare_season_stats.py`, because it needs judgment-based classification.
 
+`research.season_stat_footnote.city` (added 2026-11-03, RG): SP or Moscow, from the lines that carry the footnote's
+mark (a page numbers its footnotes in one run for both cities), or `page` for the heading's own note; the build stops if
+a footnote is carried by both cities or by nothing.
+
 `repertoire_receipts_kopecks` (and the charity-worded receipts and the receipts difference) are NULL, not 0, when no
 performed event of that season and city prints receipts: the 1891-92 Repertoire prints none (RG, 2026-11-03).
 

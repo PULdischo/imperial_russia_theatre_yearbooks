@@ -26273,3 +26273,28 @@ SELECT count(*), count(heading_footnote) FROM research.season_stat_page;
 
 Result: dated notes all 1909-10 (10; SP 6, Moscow 4), cities С.-Петербургъ / Москва only; pages 19, 8 with a heading
 footnote mark. Every other table identical to production.
+
+## 2026-11-03 — Research-layer review, Season stats: which city each footnote belongs to
+
+```sql
+SELECT season, count(*), min(footnote_no), max(footnote_no) FROM research.season_stat_footnote GROUP BY 1;
+WITH refs AS (SELECT l.season, l.city, trim(unnest(string_split(l.footnote_refs, ','))) AS r
+              FROM research.season_stat_line l WHERE l.footnote_refs IS NOT NULL)
+SELECT f.season, f.footnote_no, string_agg(DISTINCT r.city, '+'), left(f.text_verbatim, 70)
+FROM research.season_stat_footnote f LEFT JOIN refs r ON r.season = f.season AND r.r = f.footnote_no::VARCHAR GROUP BY ALL;
+SELECT season, heading_footnote FROM research.season_stat_page WHERE heading_footnote IS NOT NULL;
+```
+
+Result: one sequence per page across both cities (1893-94 1-13, 1897-98 1-16 ...). Every footnote is referenced by lines of
+exactly one city, except fn. 1 in 1893-94 – 1900-01 (8 seasons), which is the page heading's note on the italic receipts
+(referenced from the heading, not a line). No footnote is shared by both cities.
+
+## 2026-11-03 — Research-layer review S4: season_stat_footnote.city (test on a copy, then production)
+
+```sql
+SELECT city, count(*) FROM research.season_stat_footnote GROUP BY 1;
+-- footnote rows before vs after, ignoring city (EXCEPT ALL both ways); every other table diffed
+```
+
+Result: SP 63, Moscow 54, page 8; 0 other differences in the footnote table; every other table identical; 0 person_link
+shifts.

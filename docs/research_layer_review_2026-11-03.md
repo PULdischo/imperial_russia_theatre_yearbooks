@@ -444,3 +444,8 @@ both cities). No other row changed.
 file, printed page, heading and its footnote mark verbatim, format, note) and `research.season_stat_dated_note` (10, all
 1909-10: SP 6, Moscow 4; city as SP/Moscow beside the printed form). Built from the raw tables in
 `build_season_stats`; export schema in `build_datasette.py`; `docs/schema.md`. Every other table unchanged.
+
+**S4 — footnote city (RG 2026-11-03, "Yes, add it").** `season_stat_footnote.city`: SP 63, Moscow 54, page 8 (the
+heading's note on the italic receipts, 1893-94 – 1900-01). Taken from the lines that carry each mark; the build stops if a
+footnote is carried by both cities or by nothing. Every other column and table unchanged; export schema in
+`build_datasette.py`; `docs/schema.md`.
