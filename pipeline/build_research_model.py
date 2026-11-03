@@ -1471,6 +1471,12 @@ UNPRINTED_PARENT_LEADS = {
     "Le petit Duc (2-me acte)": "act 2 of a work never printed whole; probably Lecocq's opérette «Le petit Duc» (lead from outside the yearbook, not linked)",
     "Britannicus (3-ème acte, scènes 6, 7, 8)": "scenes of act 3 of a work never printed whole; probably Racine's tragedy «Britannicus» (lead from outside the yearbook, not linked)",
 }
+#: Same rule where the art form IS printed but the work's identity is not: the
+#: lead is added to the basis, nothing is linked. research.work title -> lead.
+WORK_IDENTITY_LEADS = {
+    "Женитьба (1-е дѣйствіе)": "probably act 1 of Mussorgsky's opera «Женитьба» (lead from outside the yearbook, not linked; "
+                               "not Gogol's comedy, which the print's «оп.» rules out)",
+}
 #: entities.review_work.work_kind -> WORK_ART_FORMS (RG, 2026-11-03)
 REVIEW_KIND_TO_WORK_ART_FORM = {"ballet": "ballet", "opera": "opera", "music": "concert"}
 #: performance.discipline -> the work art form it agrees with
@@ -1587,6 +1593,8 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                 form, basis = "concert", f"{src} «{genre}» (work-identity rule)"
             else:
                 form, basis = None, f"pending RG: genre «{genre}» has no art form in the identity rule"
+        if title in WORK_IDENTITY_LEADS and basis:
+            basis += f"; {WORK_IDENTITY_LEADS[title]}"
         out.append((form, basis, wid))
     con.executemany("UPDATE research.work SET art_form = ?, art_form_basis = ? WHERE work_id = ?", out)
     # An excerpt is part of its parent work, so it takes the parent's art form

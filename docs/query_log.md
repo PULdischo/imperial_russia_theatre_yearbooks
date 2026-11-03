@@ -25997,3 +25997,9 @@ Left for RG: La Mascotte (1-r acte), Le petit Duc (2-me acte), Britannicus (3-è
 
 Result: the 3 works keep art_form NULL, basis «not printed: … probably <parent> (lead from outside the yearbook, not linked)»;
 only those 3 work rows changed.
+
+## 2026-11-03 — «Женитьба (1-е дѣйствіе)»: same rule (RG "use the same rule")
+
+Result: curated parent «Женитьба» [оп.] removed; the excerpt stays unlinked (blank-parent row), art_form opera from its own printed
+«оп.», basis adds «probably act 1 of Mussorgsky's opera … (lead from outside the yearbook, not linked)». Only that work row changed
+(one work gone: the 0-performance curated parent).
