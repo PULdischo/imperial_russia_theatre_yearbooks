@@ -1463,7 +1463,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     for t in ["season_stat_check", "season_stat_line", "season_stat_footnote",
               "production_credit", "production_work", "production",
               "performance", "event", "person_tenure", "person_tenure_note", "service_period", "person_assignment",
-              "set_design", "person_performance_tally", "person_appearance", "person", "work", "theater"]:
+              "person_death", "set_design", "person_performance_tally", "person_appearance", "person", "work", "theater"]:
         con.execute(f"DROP TABLE IF EXISTS research.{t}")
 
     con.execute("""
@@ -2086,7 +2086,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             -- institution or heading (С.-Петербургская Контора, МОСКВА, Императорское Московское Театральное Училище ...).
             -- Directorate staff printed above the city split (the Director, officials attached to him) served both: 'both'.
             coalesce(sp.city,
-                CASE WHEN regexp_matches(lower(coalesce(r.institution, '') || ' / ' || coalesce(r.heading_path, '')), 'петербург|с\.-п')
+                CASE WHEN regexp_matches(lower(coalesce(r.institution, '') || ' / ' || coalesce(r.heading_path, '')), 'петербург|с[.]-п')
                      THEN 'SP'
                      WHEN regexp_matches(lower(coalesce(r.institution, '') || ' / ' || coalesce(r.heading_path, '')), 'москв|московск')
                      THEN 'Moscow'
@@ -2127,6 +2127,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     print(f"  research.person_performance_tally: {n_tl} printed tally items")
     n_sd = build_set_designs(con)
     print(f"  research.set_design: {n_sd} sets credited to a decorator")
+    n_pd = build_person_deaths(con)
+    print(f"  research.person_death: {n_pd} printed deaths (roster and obituaries)")
 
     if has_creators:
         build_productions(con)
@@ -2141,7 +2143,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     counts = {
         t: con.execute(f"SELECT count(*) FROM research.{t}").fetchone()[0]
         for t in ["theater", "work", "person", "event", "performance", "person_appearance",
-                  "service_period", "person_assignment", "person_performance_tally", "set_design",
+                  "service_period", "person_assignment", "person_performance_tally", "set_design", "person_death",
                   "production", "production_work", "production_credit",
                   "season_stat_check", "season_stat_line", "season_stat_footnote"]
         if con.execute("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'research' AND table_name = ?",
@@ -2638,6 +2640,88 @@ def build_person_performance_tallies(con: duckdb.DuckDBPyConnection) -> int:
 
 
 SEASON_SETS_DIR = Path(__file__).parent.parent / "docs" / "season_sets"
+JUBILEES_DIR = Path(__file__).parent.parent / "docs" / "jubilees_obituaries"
+_EN_MONTHS = dict(jan=1, feb=2, mar=3, apr=4, may=5, jun=6, jul=7, aug=8, sep=9, oct=10, nov=11, dec=12)
+
+
+def _catalogue_entry_id(d: dict) -> str:
+    """The jubilee/obituary catalogue's entry_id (same rule as docs/jubilees_obituaries/build/load_jubilees_obituaries.py)."""
+    import hashlib
+    if d["source_type"] == "section" and d["name_verbatim"]:
+        s = f"{d['season']}|{d['source_file']}|{d['name_verbatim']}"
+    else:
+        s = f"{d['season']}|{d['source_file']}|{d['pdf_page']}|{d['kind']}|{d['name_verbatim']}"
+    return hashlib.sha1(s.encode()).hexdigest()[:10]
+
+
+def _catalogue_death(dates: str):
+    """(printed text, ISO date | None, precision, year) of the death in a catalogue `dates` field: the Russian «† 11-го
+    февраля 1896 г.» as transcribed, else the English summary «d. 4 Feb 1891»."""
+    m = re.search(r"†\s*([^;()]+)", dates or "")
+    if m:
+        txt = m.group(1).strip().rstrip(".,")
+        d, prec, y, _mo = parse_printed_date(txt.replace("-го", ""))
+        if prec:
+            return "† " + txt, d, prec, y
+    # «d. 4 Feb 1891», a bare «19 Dec 1896» (death notices), «d. night of 5/6 Jan 1894» (the first night, as ruling A4)
+    m = (re.search(r"(?:d\.|died)\s*(?:night of\s*)?(\d{1,2})(?:/\d{1,2})?\s+([A-Za-z]{3})\w*\.?\s+(\d{4})", dates or "")
+         or re.fullmatch(r"\s*(\d{1,2})\s+([A-Za-z]{3})\w*\.?\s+(\d{4})\s*", dates or ""))
+    if m and m.group(2).lower() in _EN_MONTHS:
+        y = int(m.group(3))
+        try:
+            return m.group(0), date(y, _EN_MONTHS[m.group(2).lower()], int(m.group(1))).isoformat(), "day", y
+        except ValueError:
+            pass
+    m = re.search(r"(?:d\.|died|†)\D{0,12}(1[89]\d\d)", dates or "")
+    if m:
+        return m.group(0), None, "year", int(m.group(1))
+    return (dates or "").strip() or None, None, None, None   # no date printed: keep the catalogue's wording
+
+
+def build_person_deaths(con: duckdb.DuckDBPyConnection) -> int:
+    """research.person_death (RG 2026-11-03, person field audit C4: "Yes, add them"): every printed death of a research person,
+    one row per source. `roster`: the «†» line in the staff lists (research.service_period end_type 'died'), first printing of
+    each date only (contemporaneous printing wins). `obituary` / `death notice`: the Yearbook's own obituary section and the
+    Season Reviews' death notices, from the jubilee/obituary catalogue (docs/jubilees_obituaries/, linked to a person by
+    build/link_persons.py). An obituary can be the only record of a death (Бочкина 1896, Юмашевъ 1908: no «†» on the roster).
+    Sources that disagree are both kept. raw is untouched."""
+    con.execute("""
+        CREATE TABLE research.person_death (
+            person_id UUID REFERENCES research.person(person_id),
+            source VARCHAR, season VARCHAR, printed_page VARCHAR, source_ref VARCHAR,
+            printed_text VARCHAR, death_date DATE, death_year INTEGER, death_precision VARCHAR
+        )""")
+    con.execute("""
+        INSERT INTO research.person_death
+        SELECT person_id, 'roster', season, NULL, appearance_id, end_text, end_date, end_year, end_precision
+        FROM (SELECT *, row_number() OVER (PARTITION BY person_id, coalesce(CAST(end_date AS VARCHAR), CAST(end_year AS VARCHAR))
+                                           ORDER BY season, appearance_id) AS k
+              FROM research.service_period WHERE end_type = 'died') WHERE k = 1""")
+    n_obit = 0
+    cat_path, link_path = JUBILEES_DIR / "jubilees_obituaries_all_entries.csv", JUBILEES_DIR / "jubilees_obituaries_person_links.csv"
+    if cat_path.exists() and link_path.exists():
+        cat = {_catalogue_entry_id(d): d for d in csv.DictReader(open(cat_path, encoding="utf-8"))}
+        live = {r[0]: r[1] for r in con.execute("""SELECT CAST(person_id AS VARCHAR), CAST(superseded_by_person_id AS VARCHAR)
+                                                     FROM entities.person""").fetchall()}
+        research_ids = {r[0] for r in con.execute("SELECT CAST(person_id AS VARCHAR) FROM research.person").fetchall()}
+        rows = []
+        for ln in csv.DictReader(open(link_path, encoding="utf-8")):
+            if ln["kind"] not in ("obituary", "death_notice") or ln["link_status"] != "linked" or not ln["person_id"]:
+                continue
+            d = cat.get(ln["entry_id"])
+            if d is None:
+                raise SystemExit(f"person_death: catalogue link {ln['entry_id']} matches no catalogue row")
+            pid, seen = ln["person_id"], set()
+            while live.get(pid) and pid not in seen:      # follow merges
+                seen.add(pid); pid = live[pid]
+            if pid not in research_ids:
+                continue
+            txt, iso, prec, y = _catalogue_death(d["dates"])
+            rows.append((pid, "obituary" if ln["kind"] == "obituary" else "death notice", d["season"],
+                         d["printed_page"] or None, ln["entry_id"], txt, iso, y, prec))
+        con.executemany("INSERT INTO research.person_death VALUES (?,?,?,?,?,?,?,?,?)", rows)
+        n_obit = len(rows)
+    return con.execute("SELECT count(*) FROM research.person_death").fetchone()[0]
 
 
 def build_set_designs(con: duckdb.DuckDBPyConnection) -> int:

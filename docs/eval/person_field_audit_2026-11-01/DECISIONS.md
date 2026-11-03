@@ -143,3 +143,11 @@ Still to put to RG: and the listed-after-leaving cases (Иванова 2-я, Л�
   divider, scan-read by Claude and fixed (B13_admin_heading_fixes_2026-11-03.csv): 1903-04 p.125 Мамошинъ, Разумовскій, Робинзонъ,
   Розенбергъ, Самсоновъ are SP Контора clerks (stored under Moscow); Фонъ-Бооль 1902-03 p.126 and 1903-04 is the Moscow Контора's
   manager. 30 correction-CSV rows given their city. person_tenure 3,034 -> 3,062 (people split by city: real moves/concurrent posts).
+- DEFERRED (RG 2026-11-03: "we'll do the sweep later"): sweep the Season Reviews for other quoted earlier casts (like the 1875
+  «Голубая Георгина»), which link to people from the review's season. The Works session handled a quoted 1865 cast separately.
+- C4 catalogue deaths DONE 2026-11-03 (RG "Yes, add them"): d3_deaths.py rerun (agree 170, no died end stored 32); scans read by Claude
+  found no dropped «†». New research.person_death: every printed death, one row per source (roster 194, obituary 108, death notice 6);
+  29 people have an obituary/notice death only (e.g. Бочкина † 11 Feb 1896, Юмашевъ † 5 Oct 1908). Tenure notes for Константиновъ Н. И.
+  and Тепферъ (listed 1896-97 after their 1896 deaths). OPEN, not checked: roster «†» earlier than later listings -- Николаева 3-я
+  Зинаида († 1 Dec 1902, listed to 1910-11), Козловъ Михаилъ Ѳедоровичъ († 1902, to 1904-05), Краюшкинъ († 1898, to 1900-01):
+  stale reprint or a merge of two people.

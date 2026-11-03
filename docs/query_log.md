@@ -25967,3 +25967,35 @@ SELECT count(*) FROM b.research.work w WHERE coalesce(work_source,'repertoire')=
 Result: 0 mismatches after the rebuild. Only Коппелія (105->107) and Лебединое озеро (125->127) changed; Эвника,
 Шопеніана, Волшебная флейта, Дочь фараона, Золотая рыбка keep their counts (one supplied performance each, not counted
 by design). Production equals the tested copy in every review person/date/work field; 0 dangling work_ids; 0 shift blocks.
+
+## 2026-11-03 — Catalogue deaths v. stored deaths (C4), rerun of d3_deaths.py on current production
+
+```python
+# docs/eval/person_field_audit_2026-11-01/d3_deaths.py (read-only): jubilee/obituary catalogue deaths linked to a person v. raw service ends of type died
+# then per person: last two research.person_appearance rows with service_period end_text/end_type
+```
+
+Result: agree 170 (was 166 on 2026-11-01), no died end stored 32 (was 37), catalogue date not parsed 9, roster death not in catalogue links 7,
+same year/different day 4 (Соловьевъ 9 v 4 Oct 1890, Мейеръ 25 v 28 Mar 1893, Никитинъ 23 v 24 Jul 1896, Всеволожской 29 v 28 Oct 1909).
+Of the 32: 3 already have a year-only death stored (Шемаевъ, Генъ, Іогансонъ; script counts them as missing); Ортнеръ, Моцейкевичъ, Рамзе
+left service months before dying; Соколовъ С. П. is a production-list person (correctly linked); ~6 died before the next volume (Доброва,
+Киселевъ, Акимовъ, Андреевъ 1-й, Гельцеръ В. Ѳ., Ленскій, Потѣхинъ) and ~13 years after leaving. Scans read by Claude: Бочкина 1895-96 MSK
+p.95 no.13 and Юмашевъ 1908-09 Administration p.135 print no «†» (died 11 Feb 1896 / 5 Oct 1908 per the same volumes' obituaries);
+Константиновъ Н. И. (p.101 no.45) and Тепферъ (p.102 no.98) are listed in 1896-97 Moscow musicians with no «†» though the 1895-96
+volume's obituaries give 7 Aug / 24 May 1896 (the same 1896-97 pages do print Линднеръ † 13 Oct 1896 and Шпарманъ † 11 Dec 1896).
+No dropped «†» found: every roster entry is stored as printed.
+
+## 2026-11-03 — research.person_death built (C4): copy test, then production; diff v. db_backup_person_death_2026-11-03
+
+```sql
+SELECT source, count(*), count(death_date), count(death_year) FROM research.person_death GROUP BY 1;
+-- obituary-only people; rows with no year; roster v. catalogue dates that differ; deaths before first / long before last listing
+-- every base table EXCEPT ALL both ways v. backup; research.work count, Коппелія / Лебединое озеро appearance_count (Works session's check)
+```
+
+Result: 308 rows (roster 194, obituary 108, death notice 6); 29 people with a catalogue death only; 3 rows with no date printed (Гиллертъ
+season 1907-08, Станкевичъ «въ сезонѣ 1895—1896», Шенекерль «9-го декабря» no year). Roster v. catalogue differences 1-5 days only
+(Всеволожской 28/29 Oct 1909, Гоппе 6/5 Jan 1894, Мейеръ 28/25 Mar 1893, Михайлова 1-я 12/11 Dec 1893, Никитинъ 24/23 Jul 1896,
+Соловьевъ 4/9 Oct 1890, Троицкая 25/26 Sep 1896). Roster deaths before later listings: Николаева 3-я (1902; to 1910-11), Козловъ М. Ѳ.
+(1902; to 1904-05), Краюшкинъ (1898; to 1900-01). Production diff: NEW research.person_death 308, person_tenure_note +2 (Константиновъ,
+Тепферъ); nothing else. research.work 2,950, Коппелія 107, Лебединое озеро 127; receipts 3,223,088,581; research.person 2,619; 0 shifts.

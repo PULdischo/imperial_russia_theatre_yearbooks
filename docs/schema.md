@@ -616,6 +616,21 @@ and the officials attached to him or to the Directorate; 132 rows, 25 people) se
 city (NULL for these lists). Consequence: `research.person_tenure` runs are per person × list × city for these lists too, so a move
 between cities (Коровинъ SP 1901 -> Moscow 1903; Горскій's school posts) or a concurrent post in both shows as separate runs.
 
+## Deaths — `research.person_death` (added 2026-11-03)
+
+RG 2026-11-03 (person field audit C4, "Yes, add them"): every printed death of a research person, one row per source, so that a
+death the Yearbook prints only in its obituaries is not lost (e.g. Бочкина † 11 Feb 1896, Юмашевъ † 5 Oct 1908: no «†» on the roster).
+Sources that disagree are both kept (Соловьевъ: roster 4 Oct, obituary 9 Oct 1890).
+
+| column | meaning |
+|---|---|
+| `person_id` | the person (catalogue links follow merges) |
+| `source` | `roster` (the «†» line, `research.service_period` end_type `died`; first printing of each date only), `obituary` (the Yearbook's obituary section) or `death notice` (Season Reviews), both from the jubilee/obituary catalogue `docs/jubilees_obituaries/` |
+| `season`, `printed_page` | the volume, and the page (catalogue rows) |
+| `source_ref` | `appearance_id` (roster) or the catalogue `entry_id` |
+| `printed_text` | roster: the printed date; catalogue rows: the death as the catalogue transcribes it, or its whole dates field when no date is printed (3 rows) |
+| `death_date`, `death_year`, `death_precision` | parsed; «night of 5/6 Jan» takes the first date |
+
 ## Set designs — `research.set_design` (added 2026-11-03)
 
 RG 2026-11-03 (research-layer review, item C): new sets credited to a named decorator, one row per set. Source so far: the

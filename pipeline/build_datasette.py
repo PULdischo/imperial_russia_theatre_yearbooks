@@ -52,7 +52,7 @@ def _dates_as_iso(df):
 
 
 TABLES = ["theater", "work", "person", "event", "performance", "person_appearance", "person_tenure", "person_tenure_note",
-          "service_period", "person_assignment", "person_performance_tally", "set_design",
+          "service_period", "person_assignment", "person_performance_tally", "set_design", "person_death",
           "production", "production_work", "production_credit",
           "season_stat_check", "season_stat_line", "season_stat_footnote",
           "review_assertion", "review_solo", "review_credit",
@@ -158,6 +158,12 @@ SCHEMAS = {
             appearance_id TEXT REFERENCES person_appearance(appearance_id), person_id TEXT REFERENCES person(person_id),
             season TEXT, list TEXT, city TEXT, tally_order INTEGER, tally_kind TEXT,
             label TEXT, role_name TEXT, production_count INTEGER, times_text TEXT, times REAL, count_shared_with TEXT
+        )""",
+    # Every printed death of a person, one row per source: roster «†», obituary, review death notice (RG 2026-11-03).
+    "person_death": """
+        CREATE TABLE person_death (
+            person_id TEXT REFERENCES person(person_id), source TEXT, season TEXT, printed_page TEXT, source_ref TEXT,
+            printed_text TEXT, death_date TEXT, death_year INTEGER, death_precision TEXT
         )""",
     # New sets credited to a decorator, one row per set (RG 2026-11-03, docs/schema.md).
     "set_design": """
