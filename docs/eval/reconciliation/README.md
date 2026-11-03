@@ -1527,7 +1527,7 @@ Every receipts figure matches. Every difference was checked by Claude on the sca
   «д,»), Большой «3 д. Эсмеральда» (30 Apr); opera «1, 2, 3 и 4 д. Гугеноты» ×3 and «4-е д. Отелло».
 - **Titles and headings** (-06): «Самсонъ и Далила» ×3 (stored «Далида», «Даліла»); «сестрахъ», «gala» (Latin in the print), «попеченія».
 
-Not changed (-09): 26 Feb «Сельская честь, бал.» (print label on an opera; for RG), «Фаустъ, оц.» ×2 (print slip, stored «оп.» so the
+Not changed (-09): 26 Feb «Сельская честь, бал.» (print label on an opera; already ruled 2026-10-05: `work_artform_overrides.csv` files it under opera), «Фаустъ, оц.» ×2 (print slip, stored «оп.» so the
 performances keep their art form), «Франческа да Рамини» (as printed), 9 Oct «Аида»/«Анда» (unreadable at letter level).
 
 Rebuilt on a copy of production (`outputs/rebuild_scanreads_1905-06_2026-11-02/`, the repo pipeline, which was clean): raw/analysis
@@ -1549,4 +1549,4 @@ tally «февраля 12-го»). Raw stays as printed. Rebuilt on a copy: rese
 genre_families), research.performance +1 (`__supplied1`); nothing else in 59 tables. 1905-06 Большой events with dancers 28 -> 29;
 «Золотая рыбка» Moscow 3 -> 4, as the review. Backup `outputs/backups/gerber_1905-06_2026-11-03/`; sqlite rebuilt, not republished.
 
-**Outcome:** 9 ledger rows (1905-06-01..09). Open: -09 («Сельская честь» label).
+**Outcome:** 9 ledger rows (1905-06-01..09), none open. (-09's «Сельская честь» was listed as open on 2026-11-02 in error: RG ruled it on 2026-10-05.)

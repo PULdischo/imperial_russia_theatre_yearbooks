@@ -25426,3 +25426,14 @@ SELECT appearance_id, start_text, start_date FROM research.service_period WHERE 
 ```
 
 Result: Будаевъ rank/title null, instrument Первая скрипка, note intact. Михайловъ rank «пот. поч. гражд.», note «(по найму съ 7 января 1885 г.)», start 1885-01-07 (new service_period row; 23,629 rows). Receipts 3,223,088,581; Wikidata 174; links 2,468; pending 0; research.person 2,620; alignment 0 shifts.
+
+## 2026-11-03 — 1905-06 26 Feb «Сельская честь, бал.»: how the research layer stores it (ledger 1905-06-09)
+
+```sql
+select * from research.performance where event_id = 'repertoire_1905-06_p034__s004' and verbatim_title = 'Сельская честь';
+select disciplines, genre_families, companies from research.event where event_id = 'repertoire_1905-06_p034__s004';
+select count(*) from research.events_with_dancers where event_id = 'repertoire_1905-06_p034__s004';
+```
+
+Result: verbatim_genre «бал.», discipline opera (work 605012ca… «Сельская честь» оп.), company St. Petersburg opera; event disciplines opera,
+genre_families opera; operetta; not in events_with_dancers (0). Already handled by work_artform_overrides.csv (RG agreed 2026-10-05, 615410f).
