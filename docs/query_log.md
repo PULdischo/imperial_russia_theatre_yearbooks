@@ -25906,3 +25906,8 @@ art-form check unchanged (52 / 6 pairs); every other research table identical to
 ## 2026-11-03 — Comedy-ballets ruled drama (RG): scratch rebuild
 
 Result: Батюшкина дочка, Мѣщанинъ во дворянствѣ -> drama; art-form check unchanged; every other research table identical.
+
+## 2026-11-03 — Titled divertissements ruled ballet (RG): scratch rebuild
+
+Result: Маскарадъ [диверт.], Карнавалъ [дивертисментъ] -> ballet; works ballet 260 / NULL 91 (all "no printed genre", all repertoire works;
+the 20 review-only works all have an art form); art-form check unchanged; every other research table identical.

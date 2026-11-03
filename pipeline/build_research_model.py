@@ -1469,7 +1469,10 @@ DISCIPLINE_TO_WORK_ART_FORM = {
 }
 #: Printed genres the identity rule classes but whose art form waits for RG's
 #: ruling (comedy-ballet, pantomime, generic divertissement): art_form NULL.
-_PENDING_GENRE_RE = re.compile(r"^(диверт|див\b)")
+#: A titled divertissement (printed genre диверт. / дивертисментъ): ballet (RG,
+#: 2026-11-03: both danced by the ballet company on ballet bills). The untitled
+#: «Дивертиссементъ» on other bills is decided per performance (2026-10-12).
+_DIVERTISSEMENT_GENRE_RE = re.compile(r"^(диверт|див\b)")
 #: Comedy-ballet: drama (RG, 2026-11-03: plays with dance numbers, staged by the
 #: Russian drama troupe; the dance is recorded on performance.includes_dance).
 _COMEDY_BALLET_GENRE_RE = re.compile(r"^ком\.?-бал")
@@ -1484,8 +1487,7 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
     work identity (build_entities._work_art_form on the work's genre, with
     entity_curation/work_artform_overrides.csv), the ballet productions lists
     (work_ballet) and the anthem rule. No new inference: a work those rules do
-    not settle, or whose case waits for RG (divertissement,
-    review-only works, no genre), gets NULL and a basis that says why. An excerpt
+    not settle, or whose case waits for RG (review-only works, no genre), gets NULL and a basis that says why. An excerpt
     takes its parent's art form; the build stops if the two ever differ.
     Runs before research.performance exists (research.work is UPDATEd)."""
     from build_entities import (_canon_genre, _fold_genre, _match_key, _strip_genre_suffix,
@@ -1517,8 +1519,8 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
             form, basis = "drama", f"printed genre «{genre}»: pantomime is drama (RG, 2026-11-03)"
         elif _COMEDY_BALLET_GENRE_RE.match(canon):
             form, basis = "drama", f"printed genre «{genre}»: comedy-ballet is drama (RG, 2026-11-03)"
-        elif _PENDING_GENRE_RE.match(canon):
-            form, basis = None, f"pending RG: mixed or generic genre «{genre}»"
+        elif _DIVERTISSEMENT_GENRE_RE.match(canon):
+            form, basis = "ballet", f"printed genre «{genre}»: a titled divertissement is ballet (RG, 2026-11-03)"
         else:
             ident = _work_art_form(canon)
             ovr = overrides.get((_match_key(_title_key(_strip_genre_suffix(ent_title))), fold))
