@@ -161,3 +161,58 @@ per-work count matches. Raw: the 6 SP lines now carry the full printed list (the
 «Щелкунчикъ» (Dec. 1892): Бочаровъ 1-й «Лѣсъ зимой», Ивановъ the President's hall and «Конфектное царство».
 
 Next in the walkthrough: Works.
+
+## 2. Works
+
+(Resumed in a new session, 2026-11-03 afternoon. Queries logged in `docs/query_log.md`, "Research-layer review: Works".)
+
+### What one record holds
+
+- **`work`** — 2,952 rows: `canonical_title`, `canonical_genre` (the printed genre word, as printed, in the language of
+  the print: «ком.» 424, «com.» 568, «Lustsp.» 67 ...), `appearance_count`, `excerpt_of_work_id` + `excerpt_note`
+  (342 excerpts), `genre_source` (`printed` 2,560, none 365, `review` 20, `research_rule` 7), `genre_note`,
+  `title_note`, `work_source` (`repertoire` 2,932, `review` 20: works named only in the Season Reviews) and
+  `source_note`.
+- The art form is **not on the work**. It sits on each `performance` (`discipline`, `company`, `genre_family`,
+  `includes_dance`). 2,915 works have performances.
+- Other tables that point at a work: `production` (ballet productions lists, 627 of 628 linked), `review_assertion`
+  (1,879 of 2,657), `review_credit` (2,358 of 2,410), `review_dance` (632 of 914), `review_solo` (37 of 96).
+  The dancers' tally titles (`person_performance_tally`, ruling P1) are not linked to works yet.
+
+### Things noticed (for RG)
+
+1. **Three review cast lines linked to the wrong work.** 1904-05 SP review p.115 (4 Nov 1904), the cast of
+   «Путешествующая танцовщица»: Альма is linked to that ballet, but Діасъ (Кшесинскій), «Кармена, подруга Альмы»
+   (Радина) and слуга Альмы (Стуколкинъ) are linked to a ballet «Карменъ», because the role name «Кармена» was read as
+   the title. Mechanical fix: point all four at «Путешествующая танцовщица».
+2. **17 works with no performances.** 15 are parent works whose excerpts alone were played (Дмитрій Донской 5
+   excerpts, Борисъ Годуновъ трагедія 4, ...): by design. The other two are leftovers of genre-slip rulings:
+   «Карменъ, бал.» (its two 1906-07 / 1907-08 performances now count as the opera) and «Анжело, оп.» (its one
+   1910-11 performance now counts as the drama). They hold nothing except the three slips in item 1.
+3. **`appearance_count` is stale for 7 ballets**, short by 1-2 against the performances now linked (Коппелія 105 vs
+   107, Лебединое озеро 125 vs 127, Эвника 8 vs 9, Шопеніана, Волшебная флейта, Дочь фараона, Золотая рыбка).
+   Counting from `performance` is right; the column needs recomputing in the build.
+4. **The same play in two languages is two works**: Гамлетъ (Russian drama 66) vs Hamlet (German/French 4), Тартюфъ
+   25 vs Tartuffe 4, Фаустъ драм. поэма 14 vs Faust Schausp. 2, Фаустъ оп. 289 vs Faust op. 5. This follows the
+   2026-10-05 rule (identity = title + art form + script). Noted in case RG wants them connected without merging.
+5. **«Дивертиссементъ» is five works**: «Дивертиссементъ» with «бал.» (44 performances), with no genre (37, not
+   counted as ballet; 2 more counted as ballet), «Дивертиссментъ» (as stored; 3 ballet + 2 not), and «Дивертиссементъ
+   (Etudes)». These are programme labels, not titled works.
+6. 338 performances have no `discipline`: «Гимнъ» 195, concerts 52, divertissements 41, tableaux 32, readings,
+   lectures, cinema. By design (art forms = five companies + concert; anthem is ceremonial). Four performances have no
+   `genre_family` either: «Концертъ-спектакль» 1901-02, «Обозрѣніе» 1902-03, «Балетоманъ» 1904-05, «Слава»! 1894-95.
+7. 12 works span more than one `discipline`, mostly the opera repertory sung by both the Russian and the Italian
+   company (Фаустъ, Травіата, Аида, Балъ-маскарадъ). Odd ones: «Гейша» (opera, Russian drama, German operetta) and
+   «Званый вечеръ съ итальянцами» (opera, Russian drama).
+
+### RG's questions and rulings
+
+**W1 — the three «Кармена» cast lines (RG 2026-11-03, "Yes, relink them").** One row in
+`docs/eval/review_work_mention_links.csv` links the «Кармена» mention in `review_1904-05_SP_ballet_p010__b004` to
+«Путешествующая танцовщица»; assertions 1482, 2848, 2849 follow it. Tested on a copy first: 1 mention and 3 assertions
+change; the other differences are candidate lists in a different order. «Карменъ, бал.» now holds nothing.
+
+Found while checking W1 (for RG): this cast is not the 1904-05 revival. The review quotes the **1865 première** («Балетъ
+этотъ былъ поставленъ въ первый разъ на сценѣ Большого театра въ бенефисъ М. С. Петипа 1865 г., 4-го ноября, при
+слѣдующемъ распредѣленіи въ немъ ролей: ...»), which is the same case as the quoted 1875 «Голубая Георгина» cast. The
+assertions are dated 1904-11-04 and their dancers (Радина, Стуколкинъ, Берра ...) are linked as if in 1904-05.

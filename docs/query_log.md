@@ -25816,3 +25816,55 @@ Result: new research.set_design 61 rows (SP 28 / 6 decorators; Moscow 33 / 5 dec
 and research.person_appearance 9 (the edited lines). Щелкунчикъ: Бочаровъ 1-й «Лѣсъ зимой»; Ивановъ «Залъ въ домѣ президента
 Зильбергауса», «Конфектное царство». Receipts 3,223,088,581; assertion links 2,466; research.person 2,619; 0 shifts. A first rebuild
 attempt stopped at build_duckdb on a lock held by a short-lived process (PID 73329, gone on check); nothing written by that attempt.
+
+## 2026-11-03 — Research-layer review: Works (profile of research.work)
+
+```sql
+DESCRIBE research.work; SELECT count(*) FROM research.work;
+SELECT work_source, count(*) FROM research.work GROUP BY 1;
+SELECT genre_source, count(*) FROM research.work GROUP BY 1;
+SELECT canonical_genre, count(*) FROM research.work GROUP BY 1 ORDER BY 2 DESC LIMIT 30;
+SELECT count(*) FILTER (WHERE excerpt_of_work_id IS NOT NULL), count(*) FILTER (WHERE canonical_genre IS NULL) FROM research.work;
+SELECT count(*) FROM research.work w WHERE NOT EXISTS (SELECT 1 FROM research.performance p WHERE p.work_id=w.work_id);
+SELECT discipline, count(DISTINCT work_id), count(*) FROM research.performance GROUP BY 1;
+SELECT genre_family, count(DISTINCT work_id) FROM research.performance GROUP BY 1;
+-- link coverage: count(*), count(work_id) on production, review_assertion, review_credit, review_dance, review_solo
+```
+
+Result: 2,952 works (repertoire 2,932, review 20); genre printed 2,560 / none 365 (269 of them excerpts) / review 20 /
+research_rule 7; 342 excerpts; 37 works with no performance (20 review-only, 17 repertoire); disciplines Russian drama
+1,131 works, French drama 870, opera 295, German drama 288, ballet 241; null discipline 338 performances / 49 works.
+Links: production 627/628, review_assertion 1,879/2,657, review_credit 2,358/2,410, review_dance 632/914, review_solo 37/96.
+
+## 2026-11-03 — Research-layer review: Works (oddities)
+
+```sql
+-- 17 repertoire works without performances: same-title works, production/review links, excerpt children
+-- appearance_count vs count(performance): mismatches
+SELECT ... FROM research.work w WHERE appearance_count <> (SELECT count(*) FROM research.performance p WHERE p.work_id=w.work_id);
+-- works with >1 discipline; null-discipline performances by genre_family; titles shared by >1 non-excerpt work
+-- entities.work_link rows for Анжело оп. / Карменъ бал. and where research.performance puts them
+-- review_assertion rows on Карменъ бал.; whole block review_1904-05_SP_ballet_p010__b004
+-- Дивертиссементъ / Карнавалъ works by discipline and season
+```
+
+Result: 15 of the 17 empty works are excerpt parents; Карменъ бал. (2 links -> research puts them on Карменъ оп.) and
+Анжело оп. (1 link -> Анжело др.) are empty leftovers. 7 ballets have appearance_count 1-2 below their performance
+count (Коппелія 105/107, Лебединое озеро 125/127, Эвника 8/9, Шопеніана 12/13, Волшебная флейта 40/41, Дочь фараона
+71/72, Золотая рыбка 30/31). 12 works span disciplines. 35 titles are shared by >1 non-excerpt work. Block
+review_1904-05_SP_ballet_p010__b004 (4 Nov 1904): Альма -> Путешествующая танцовщица; Діасъ, Кармена, слуга Альмы ->
+Карменъ бал. (work_surface «Кармена»). Дивертиссементъ spread over 5 works.
+
+## 2026-11-03 — Research-layer review W1: «Кармена» relink, check of the review-chain rebuild
+
+```sql
+-- before.duckdb = production copied just before the write; after = production after the review chain
+SELECT assertion_id, role_surface, work_id FROM research.review_assertion WHERE block_id='review_1904-05_SP_ballet_p010__b004';
+SELECT count(*) FROM a.research.review_dance_performer x JOIN b.research.review_dance_performer y USING(dance_id, position)
+ WHERE x.performer_person_id IS DISTINCT FROM y.performer_person_id OR x.link_method IS DISTINCT FROM y.link_method;
+-- same for review_assertion (USING assertion_id); entity_id changes on entities.review_mention (USING block_id, char_start, surface)
+```
+
+Result: all 4 cast lines of the block (Альма, Діасъ, Кармена, слуга Альмы) on «Путешествующая танцовщица»
+(1e78c367...). 0 person or link-method changes in review_dance_performer and review_assertion; 1 mention entity change
+(«Кармена»). The remaining row differences are candidate lists in a different order (0 once sorted).
