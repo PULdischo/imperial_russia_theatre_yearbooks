@@ -25949,3 +25949,10 @@ SELECT count(*) FROM research.<table> WHERE work_id = <each review-only ballet w
 Result: Исламей review_credit 7, Les préludes 5, Papillons 4, Приключенія Пелея 3, Шехерезада 2, Три пояса 1; Фаустъ review_dance 1 +
 review_assertion 6. Nothing points at Les Caractères de la danse, Жавота, Метеоръ, Мраморная красавица, Роксана, Свадьба Гамаша, Трильби
 (the Метеоръ and Жавота numbers are not linked to these works).
+
+## 2026-11-03 — Review-only works marked "mention only" (RG "Keep, mark as mentions"): scratch rebuild
+
+Result: 13 review works carry «mention only» in source_note: the 7 ballets (Les Caractères de la danse, Жавота, Метеоръ, Мраморная красавица,
+Роксана, Свадьба Гамаша, Трильби) + Калифъ Багдадскій, Моисей, Карнавалъ [фортеп. соч.], Коронаціонная кантата, Легенда, Мессинская невѣста.
+No other column or table changed. Where performed (source_note): Шехерезада = Diaghilev's company; Papillons, Исламей, Les préludes =
+SP repertoire from 30 Sep 1912 (after the Repertoire's last season).

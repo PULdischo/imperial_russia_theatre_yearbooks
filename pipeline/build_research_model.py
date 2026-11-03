@@ -1749,11 +1749,25 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     has_review_works = con.execute("""SELECT count(*) FROM information_schema.tables
         WHERE table_schema = 'entities' AND table_name = 'review_work'""").fetchone()[0] > 0
     if has_review_works:
-        con.execute("""
+        # A review work nothing in the review tables points at (no credit, dance,
+        # solo or cast statement) is a mention only, marked in source_note (RG,
+        # 2026-11-03: "Keep, mark as mentions"). The review tables are built by the
+        # review scripts after this one, so this reads the ones already in the DB;
+        # on a first build (none yet) nothing is marked.
+        used = [f"SELECT CAST(work_id AS VARCHAR) AS work_id FROM research.{t}" for t in
+                ("review_credit", "review_dance", "review_solo", "review_assertion")
+                if con.execute("""SELECT count(*) FROM information_schema.columns WHERE table_schema = 'research'
+                                  AND table_name = ? AND column_name = 'work_id'""", [t]).fetchone()[0]]
+        used_sql = " UNION ".join(used) if used else "SELECT NULL::VARCHAR AS work_id WHERE false"
+        con.execute(f"""
             INSERT INTO research.work
             SELECT rw.work_id, rw.canonical_title, rw.canonical_genre, 0, NULL, NULL,
                    'review', 'work kind: ' || rw.work_kind || ' (named in the Season Reviews, not in the Repertoire)',
-                   NULL, 'review', rw.evidence, NULL, NULL
+                   NULL, 'review',
+                   CASE WHEN {'true' if used else 'false'} AND CAST(rw.work_id AS VARCHAR) NOT IN (SELECT work_id FROM ({used_sql}) u WHERE work_id IS NOT NULL)
+                        THEN 'mention only (no review credit, dance or cast statement points here): ' || rw.evidence
+                        ELSE rw.evidence END,
+                   NULL, NULL
             FROM entities.review_work rw
         """)
     con.execute("""
