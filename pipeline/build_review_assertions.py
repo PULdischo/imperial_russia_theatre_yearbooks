@@ -648,6 +648,12 @@ def main() -> None:
             named_dance[(r["block_id"], r["surface"], int(r["occurrence"]))] = (
                 r["parent_work_id"], r["parent_title"])
     dances: list[dict] = []
+    # Blocks quoting an earlier year's cast (docs/eval/review_historical_passages.csv, read again below for the
+    # dates): their performers are not resolved through the spiski credits, which are the review season's (RG
+    # 2026-11-03: the 1865 «Путешествующая танцовщица» cast had linked «г-жа М. С. Петипа» to Петипа 1-я that way).
+    _hp = Path("docs/eval/review_historical_passages.csv")
+    historical_blocks = ({r["block_id"] for r in csv.DictReader(open(_hp, encoding="utf-8"))}
+                         if _hp.exists() else set())
 
     # people the corpus knows as composers or musicians (see the composer pass)
     composer_ok = {str(r[0]) for r in con.execute("""
@@ -846,7 +852,7 @@ def main() -> None:
                 return (g is None) or (g == want_g)
 
             rk = key_of(role_s)
-            if not entity and cands:
+            if not entity and cands and block_id not in historical_blocks:
                 cands = [c for c in cands if gender_ok(c)]
                 hits = [c for c in cands if (c, rk) in by_role]
                 exact = [c for c in hits if page["season"] in by_role[(c, rk)]]

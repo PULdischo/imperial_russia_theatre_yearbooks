@@ -216,3 +216,24 @@ Found while checking W1 (for RG): this cast is not the 1904-05 revival. The revi
 этотъ былъ поставленъ въ первый разъ на сценѣ Большого театра въ бенефисъ М. С. Петипа 1865 г., 4-го ноября, при
 слѣдующемъ распредѣленіи въ немъ ролей: ...»), which is the same case as the quoted 1875 «Голубая Георгина» cast. The
 assertions are dated 1904-11-04 and their dancers (Радина, Стуколкинъ, Берра ...) are linked as if in 1904-05.
+
+**W1b — the quoted 1865 cast (RG 2026-11-03, "Yes, same treatment").** Scan read by Claude (crops
+`docs/eval/scan_audit/1904-05_review_SP_ballet_p115_1865_traveling_dancer_cast.png`, `..._p116_...png`). p.115 block
+`review_1904-05_SP_ballet_p010__b004` is on `docs/eval/review_historical_passages.csv` dated 1865-11-04. The cast
+runs on into p.116 (`..._p011__b001`) up to «При настоящемъ возобновленіи балета роли въ немъ распредѣлены такъ», where
+the 1905 cast begins in the same block, so that block is not listed; its 1865 names are unlinked one by one instead.
+27 rows in `docs/eval/review_mention_links.csv` (empty person_id). Code: `build_review_assertions.py` no longer
+resolves a performer in a listed block through the spiski credits, which are the review season's: that is how «г-жа
+М. С. Петипа» (Альма, 1865) had been linked to Петипа 1-я. Result: all 15 1865 cast lines are now unlinked (8 had a person
+link: Альма, Кармена, слуга Альмы; Ole, La charrada, La Iota, El Cabarde, почтальонъ), the four on p.115 dated 1865-11-04
+(the p.116 ones carry no date); the 1905 cast keeps its links. «Берра» in «Берра, слуга
+Альмы» is the role's name and had been linked to a dancer; now unlinked with the rest.
+Not fixed (small, noted): p.116 prints «Гердтъ, Легатъ 1-й и Волковъ» in La charrada, stored «Гердъ».
+
+**W2, W3 (RG 2026-11-03, "fix these").** `build_research_model.py` now stages the performance rows, sets every
+repertoire work's `appearance_count` to its performances as built, and drops a repertoire work left with none unless it
+is an excerpt parent or in a ballet productions list. Dropped: «Анжело», оп. and «Карменъ», бал. (2,952 -> 2,950 works).
+Recounted: Коппелія 105 -> 107, Лебединое озеро 125 -> 127. Correction to item 3 above: the other five (Эвника,
+Шопеніана, Волшебная флейта, Дочь фараона, Золотая рыбка) were right. Each has one performance supplied from a review
+or productions list, which `appearance_count` leaves out by design (docs/schema.md), so their counts stay. Applied to
+production after a test on a copy, then the review chain; 0 person_link shifts, 0 work_ids left pointing at a dropped work.

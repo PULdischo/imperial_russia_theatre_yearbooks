@@ -25936,3 +25936,34 @@ Result: changed raw/analysis person_entry 7 (headings), research.person_appearan
 3,034 -> 3,062, person_tenure_note 2, person_assignment 1, person_performance_tally 13; all else identical. No NULL city in any list;
 Administrators SP 988 / Moscow 782 / both 132. Fixed islands now SP (1903-04 clerks) and Moscow (Фонъ-Бооль 1902-03). W1 intact (4 x
 1e78c367…, work exists). Receipts 3,223,088,581; assertion links 2,466; set_design 61; 0 shifts.
+
+## 2026-11-03 — Research-layer review W1b/W2/W3: test build on a copy of production (after 2a667ce)
+
+```sql
+-- before = production copy; test = same copy after build_research_model + review chain with the new code and lists
+SELECT x.canonical_title, x.canonical_genre, x.appearance_count, y.appearance_count
+  FROM a.research.work x LEFT JOIN b.research.work y USING(work_id) WHERE x.appearance_count IS DISTINCT FROM y.appearance_count;
+SELECT ... FROM a.research.review_assertion x JOIN b.research.review_assertion y USING(assertion_id)
+ WHERE x.performer_person_id IS DISTINCT FROM y.performer_person_id OR x.date_undate IS DISTINCT FROM y.date_undate OR x.work_id IS DISTINCT FROM y.work_id;
+-- EXCEPT ALL both ways on every table; review_dance_performer / solo / composer without candidate lists;
+-- entity_id changes on entities.review_mention; review_* / production / performance work_ids missing from research.work
+```
+
+Result: work 2,952 -> 2,950 (Анжело оп., Карменъ бал. dropped); 7 counts raised by 1-2 (Коппелія 105->107 ...). 9
+assertions changed: 4 on p.115 dated 1904-11-04 -> 1865-11-04 (3 of them unlinked: Радина, М. С. Петипа ex 611f258f,
+Стуколкинъ), 5 on p.116 unlinked (Стуколкинъ 1-й, Радина 1-я, Радина 2-я, Радина, Чистяковъ); 14 mention entities
+emptied. 1905 cast unchanged. review_dance_performer, solo, composer: no change. Dangling work_ids: 0 in all 6 tables.
+
+## 2026-11-03 — Research-layer review W2/W3: counts with supplied rows left out; production check after the write
+
+```sql
+SELECT count(*) FROM b.research.work w WHERE coalesce(work_source,'repertoire')='repertoire'
+   AND appearance_count <> (SELECT count(*) FROM b.research.performance p WHERE p.work_id=w.work_id
+                            AND p.performance_source NOT LIKE 'supplied:%');
+-- production vs the tested copy: appearance_count, assertion / dance / solo person + link_method, mention entity_id,
+-- work_ids missing from research.work in 6 tables; check_person_link_alignment.py
+```
+
+Result: 0 mismatches after the rebuild. Only Коппелія (105->107) and Лебединое озеро (125->127) changed; Эвника,
+Шопеніана, Волшебная флейта, Дочь фараона, Золотая рыбка keep their counts (one supplied performance each, not counted
+by design). Production equals the tested copy in every review person/date/work field; 0 dangling work_ids; 0 shift blocks.

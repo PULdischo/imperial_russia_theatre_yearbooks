@@ -1966,11 +1966,9 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     n_supplied = load_supplied_performances(con)
     build_art_forms(con)
 
-    con.execute("""
-        CREATE TABLE research.performance (
-            performance_id VARCHAR PRIMARY KEY,
-            event_id VARCHAR REFERENCES research.event(event_id),
-            work_id UUID REFERENCES research.work(work_id),
+    # The performance rows are staged first, so research.work can still be corrected from them: DuckDB rejects an UPDATE
+    # or DELETE on research.work once research.performance holds a foreign key to it.
+    perf_columns = """
             performance_order VARCHAR,
             verbatim_title VARCHAR,
             verbatim_genre VARCHAR,
@@ -1983,11 +1981,16 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             performance_source VARCHAR,
             performance_source_note VARCHAR,
             genre_family VARCHAR,
-            genre_family_basis VARCHAR
+            genre_family_basis VARCHAR"""
+    con.execute(f"""
+        CREATE TEMP TABLE perf_rows (
+            performance_id VARCHAR,
+            event_id VARCHAR,
+            work_id UUID,{perf_columns}
         )
     """)
     con.execute("""
-        INSERT INTO research.performance
+        INSERT INTO perf_rows
         SELECT
             eep.performance_id,
             eep.event_id,
@@ -2013,13 +2016,40 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # Performances supplied from another part of the yearbook (SUPPLIED_PERFORMANCES_CSV):
     # no verbatim title or genre, ordered after the cell's own lines.
     con.execute("""
-        INSERT INTO research.performance
+        INSERT INTO perf_rows
         SELECT sp.performance_id, sp.event_id, sp.work_id, NULL, NULL, NULL,
                pa.discipline, pa.discipline_basis, pa.company, false, NULL, NULL,
                'supplied: ' || sp.source, sp.basis,
                pa.item_kind, pa.item_kind_basis
         FROM supplied_perf sp LEFT JOIN perf_art pa ON pa.performance_id = sp.performance_id
     """)
+    # appearance_count = the work's printed Repertoire performances as built here, supplied rows not counted
+    # (docs/schema.md) (RG 2026-11-03, research-layer review: the running adjustments above left Коппелія, Лебединое
+    # озеро ... 1-2 short). Then a repertoire work left with no performance row at all is dropped -- a genre-slip ruling
+    # moved all its printings to another work (Карменъ бал., Анжело оп.) -- unless it is an excerpt parent (played
+    # only in excerpts) or a ballet productions list names it.
+    con.execute("""
+        UPDATE research.work SET appearance_count =
+            (SELECT count(*) FROM perf_rows p WHERE p.work_id = research.work.work_id
+               AND p.performance_source NOT LIKE 'supplied:%')
+        WHERE coalesce(work_source, 'repertoire') = 'repertoire'
+    """)
+    empty_where = """
+        coalesce(work_source, 'repertoire') = 'repertoire'
+          AND work_id NOT IN (SELECT work_id FROM perf_rows WHERE work_id IS NOT NULL)
+          AND work_id NOT IN (SELECT excerpt_of_work_id FROM research.work WHERE excerpt_of_work_id IS NOT NULL)
+          AND work_id NOT IN (SELECT work_id FROM work_ballet)"""
+    for t, g in con.execute(f"SELECT canonical_title, canonical_genre FROM research.work WHERE {empty_where} ORDER BY 1").fetchall():
+        print(f"  work with no performance left, dropped: «{t}», {g}")
+    con.execute(f"DELETE FROM research.work WHERE {empty_where}")
+    con.execute(f"""
+        CREATE TABLE research.performance (
+            performance_id VARCHAR PRIMARY KEY,
+            event_id VARCHAR REFERENCES research.event(event_id),
+            work_id UUID REFERENCES research.work(work_id),{perf_columns}
+        )
+    """)
+    con.execute("INSERT INTO research.performance SELECT * FROM perf_rows")
     print(f"  performances supplied from other parts of the yearbook: {n_supplied}")
 
     con.execute("""
