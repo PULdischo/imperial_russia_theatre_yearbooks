@@ -1448,6 +1448,106 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         print(f"    {k or '(none)'}: {n}")
 
 
+#: research.work.art_form (RG, 2026-11-03; FRBR/LRM: a property of the abstract
+#: work, not of one night). The closed list. drama = every spoken play in any
+#: language (company and language stay on research.performance). ceremonial =
+#: the anthem, which is not a work for counting (RG, 2026-10-12).
+WORK_ART_FORMS = ["ballet", "opera", "operetta", "drama", "concert", "ceremonial"]
+#: build_entities._work_art_form's identity classes -> WORK_ART_FORMS
+_IDENTITY_TO_WORK_ART_FORM = {"ballet": "ballet", "opera": "opera", "operetta": "operetta", "spoken": "drama"}
+#: performance.discipline -> the work art form it agrees with
+DISCIPLINE_TO_WORK_ART_FORM = {
+    "ballet": "ballet", "opera": "opera", "Italian opera": "opera", "German opera": "opera",
+    "German operetta": "operetta", "Russian drama": "drama", "French drama": "drama",
+    "German drama": "drama", "Italian drama": "drama", "Japanese drama": "drama",
+}
+#: Printed genres the identity rule classes but whose art form waits for RG's
+#: ruling (comedy-ballet, pantomime, generic divertissement): art_form NULL.
+_PENDING_GENRE_RE = re.compile(r"^(ком\.?-бал|pantom|mimodrame|spiel ohne wort|диверт|див\b)")
+
+
+def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
+    """research.work.art_form + art_form_basis, from the rule that already decides
+    work identity (build_entities._work_art_form on the work's genre, with
+    entity_curation/work_artform_overrides.csv), the ballet productions lists
+    (work_ballet) and the anthem rule. No new inference: a work those rules do
+    not settle, or whose case waits for RG (excerpts, comedy-ballet, pantomime,
+    divertissement, review-only works, no genre), gets NULL and a basis that says why.
+    Runs before research.performance exists (research.work is UPDATEd)."""
+    from build_entities import (_canon_genre, _fold_genre, _match_key, _strip_genre_suffix,
+                                _title_key, _work_art_form)
+    overrides = {}
+    for r in csv.DictReader(open(WORK_ARTFORM_OVERRIDES_CSV, encoding="utf-8")):
+        overrides[(_match_key(_title_key(_strip_genre_suffix(r["printed_title"]))),
+                   _fold_genre(r["printed_genre"]))] = r["treat_as_art_form"]
+    rows = con.execute("""
+        SELECT w.work_id, w.canonical_title, coalesce(ew.canonical_title, w.canonical_title),
+               w.canonical_genre, w.genre_source, w.excerpt_of_work_id, w.work_source, wb.note
+        FROM research.work w
+        LEFT JOIN entities.work ew ON ew.work_id = w.work_id
+        LEFT JOIN work_ballet wb ON wb.work_id = w.work_id""").fetchall()
+    out = []
+    for wid, title, ent_title, genre, gsrc, excerpt_of, wsrc, ballet_note in rows:
+        fold = _fold_genre(genre)
+        canon = _canon_genre(fold)
+        if re.match(CEREMONIAL_TITLE_RE, title or ""):
+            form, basis = "ceremonial", "anthem: a ceremonial item, not a work (RG, 2026-10-12)"
+        elif excerpt_of is not None:
+            form, basis = None, "pending RG: excerpt (parent's art form or the staging's?)"
+        elif ballet_note is not None:
+            form, basis = "ballet", f"ballet productions list: {ballet_note}"
+        elif canon is None:
+            form, basis = None, ("pending RG: review-only work" if wsrc == "review"
+                                 else "pending RG: no printed genre")
+        elif _PENDING_GENRE_RE.match(canon):
+            form, basis = None, f"pending RG: mixed or generic genre «{genre}»"
+        else:
+            ident = _work_art_form(canon)
+            ovr = overrides.get((_match_key(_title_key(_strip_genre_suffix(ent_title))), fold))
+            src = "research genre rule" if gsrc == "research_rule" else "printed genre"
+            if ovr:
+                form = _IDENTITY_TO_WORK_ART_FORM[ovr]
+                basis = f"work_artform_overrides.csv ({src} «{genre}» ruled {ovr})"
+            elif ident in _IDENTITY_TO_WORK_ART_FORM:
+                form = _IDENTITY_TO_WORK_ART_FORM[ident]
+                basis = f"{src} «{genre}» (work-identity rule)"
+            elif re.match(r"концерт", canon):
+                form, basis = "concert", f"{src} «{genre}» (work-identity rule)"
+            else:
+                form, basis = None, f"pending RG: genre «{genre}» has no art form in the identity rule"
+        out.append((form, basis, wid))
+    con.executemany("UPDATE research.work SET art_form = ?, art_form_basis = ? WHERE work_id = ?", out)
+    bad = con.execute("SELECT count(*) FROM research.work WHERE art_form IS NOT NULL AND art_form NOT IN ("
+                      + ", ".join(f"'{a}'" for a in WORK_ART_FORMS) + ")").fetchone()[0]
+    assert bad == 0, "research.work holds an art_form outside WORK_ART_FORMS"
+    assert con.execute("SELECT count(*) FROM research.work WHERE art_form_basis IS NULL").fetchone()[0] == 0
+    for form, n in con.execute("SELECT art_form, count(*) FROM research.work GROUP BY 1 ORDER BY 2 DESC").fetchall():
+        print(f"  work art_form {form}: {n}")
+
+
+def check_work_art_form_agreement(con: duckdb.DuckDBPyConnection) -> int:
+    """Report (never fix) performances whose discipline disagrees with their
+    work's art_form: candidate misattributions or works that need splitting.
+    Opera troupes count as opera, drama troupes in any language as drama; an
+    operetta agrees with a drama or opera troupe (the Directorate had none of its own)."""
+    con.execute("CREATE OR REPLACE TEMP TABLE discipline_form (discipline VARCHAR, art_form VARCHAR)")
+    con.executemany("INSERT INTO discipline_form VALUES (?, ?)", list(DISCIPLINE_TO_WORK_ART_FORM.items()))
+    rows = con.execute("""
+        SELECT w.canonical_title, w.canonical_genre, w.art_form, p.discipline, count(*)
+        FROM research.performance p JOIN research.work w USING (work_id)
+        LEFT JOIN discipline_form d ON d.discipline = p.discipline
+        WHERE w.art_form IS NOT NULL AND p.discipline IS NOT NULL
+          AND d.art_form IS DISTINCT FROM w.art_form
+          -- the Directorate had no operetta company: its drama and opera troupes staged operettas
+          AND NOT (w.art_form = 'operetta' AND d.art_form IN ('drama', 'opera'))
+        GROUP BY ALL ORDER BY 5 DESC, 1""").fetchall()
+    n = sum(r[4] for r in rows)
+    print(f"  art_form check: {n} performances on {len(rows)} work/discipline pairs disagree (not fixed)")
+    for t, g, f, d, k in rows:
+        print(f"    «{t}» [{g}] work={f} discipline={d}: {k}")
+    return n
+
+
 def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     con.execute("CREATE SCHEMA IF NOT EXISTS research")
 
@@ -1488,7 +1588,9 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             genre_note VARCHAR,
             title_note VARCHAR,
             work_source VARCHAR,
-            source_note VARCHAR
+            source_note VARCHAR,
+            art_form VARCHAR,
+            art_form_basis VARCHAR
         )
     """)
     # work_source (RG, 2026-10-26): 'repertoire' for every work the Repertoire
@@ -1593,7 +1695,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                     FROM work_merge m JOIN entities.work mw ON mw.work_id = m.from_id
                     JOIN title_correction tcm ON tcm.verbatim_title = mw.canonical_title
                     WHERE m.to_id = w.work_id)) AS title_note,
-               'repertoire' AS work_source, NULL AS source_note
+               'repertoire' AS work_source, NULL AS source_note, NULL, NULL
         FROM entities.work w
         LEFT JOIN genre_rule g ON regexp_matches(w.canonical_title, g.pattern)
         LEFT JOIN title_correction tc ON tc.verbatim_title = w.canonical_title
@@ -1606,7 +1708,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             INSERT INTO research.work
             SELECT rw.work_id, rw.canonical_title, rw.canonical_genre, 0, NULL, NULL,
                    'review', 'work kind: ' || rw.work_kind || ' (named in the Season Reviews, not in the Repertoire)',
-                   NULL, 'review', rw.evidence
+                   NULL, 'review', rw.evidence, NULL, NULL
             FROM entities.review_work rw
         """)
     con.execute("""
@@ -1935,7 +2037,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                    CASE WHEN s.genre IS NOT NULL THEN
                        'genre assigned per performance (' || count(*) || ' of ' || w.appearance_count ||
                        ' printings of this title): pipeline/entity_curation/research_performance_genre.csv' END,
-                   any_value(w.title_note), 'repertoire', NULL
+                   any_value(w.title_note), 'repertoire', NULL, NULL, NULL
             FROM perf_split s JOIN research.work w ON w.work_id = s.base_work_id
             GROUP BY s.split_work_id, w.canonical_title, s.genre, s.parent_genre, w.appearance_count
         """)
@@ -1965,6 +2067,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     print(f"  performances shown under a work taken from another part of the yearbook: {n_reworked}")
     n_supplied = load_supplied_performances(con)
     build_art_forms(con)
+    assign_work_art_forms(con)
 
     con.execute("""
         CREATE TABLE research.performance (
@@ -2108,6 +2211,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         if con.execute("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'research' AND table_name = ?",
                        [t]).fetchone()[0]
     }
+    check_work_art_form_agreement(con)
     print("research schema built:")
     for t, n in counts.items():
         print(f"  research.{t}: {n} rows")

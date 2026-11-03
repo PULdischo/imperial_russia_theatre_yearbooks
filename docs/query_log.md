@@ -25816,3 +25816,21 @@ Result: new research.set_design 61 rows (SP 28 / 6 decorators; Moscow 33 / 5 dec
 and research.person_appearance 9 (the edited lines). Щелкунчикъ: Бочаровъ 1-й «Лѣсъ зимой»; Ивановъ «Залъ въ домѣ президента
 Зильбергауса», «Конфектное царство». Receipts 3,223,088,581; assertion links 2,466; research.person 2,619; 0 shifts. A first rebuild
 attempt stopped at build_duckdb on a lock held by a short-lived process (PID 73329, gone on check); nothing written by that attempt.
+
+## 2026-11-03 — research.work.art_form (scratch build, not promoted): counts, agreement check, excerpt evidence
+
+```sql
+-- scratch copy of full_run, research layer rebuilt with assign_work_art_forms + check_work_art_form_agreement
+SELECT art_form, count(*) FROM research.work GROUP BY 1;
+SELECT art_form_basis, count(*) FROM research.work WHERE art_form IS NULL GROUP BY 1;
+-- every other research table: EXCEPT ALL both ways v. the production copy
+SELECT p.art_form AS parent_form, <excerpt's distinct disciplines>, count(*) works, count(perfs)
+FROM research.work w JOIN research.work p ON p.work_id = w.excerpt_of_work_id LEFT JOIN research.performance ... GROUP BY 1, 2;
+```
+
+Result: drama 2,160 / opera 199 / ballet 120 / operetta 29 / ceremonial 4 / NULL 440 (excerpts 342, no printed genre 89,
+mixed or generic genre 9). All other research tables identical; existing work columns identical. Check: 52 performances on 6
+work/discipline pairs disagree (Боярыня Вѣра Шелога [прологъ] drama v. opera 28; Гибель Фауста [драм. лег.] drama v. opera 14;
+La chanson de Fortunio, Le beau Dunois opera v. French drama 3+3; Дядя Беккеръ подшутилъ [опер.] v. Russian drama 3; Бокаччіо [оп.]
+v. German operetta 1). Excerpts: 336 of 342 staged by the parent's own kind of troupe (ballet 137, opera 118, drama 76, operetta-by-opera 6);
+exceptions: Женитьба (1-е дѣйствіе) parent comedy, opera troupe; Прологъ и 1-е д. оп. Палцы, drama troupe; 2 Русалка acts, parent genre «1-я сцена».
