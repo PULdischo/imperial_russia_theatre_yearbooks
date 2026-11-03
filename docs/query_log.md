@@ -25461,3 +25461,23 @@ SELECT entry_id, person_id, match_method FROM [old.]entities.person_link WHERE e
 ```
 
 Result: raw person_entry 3/3 rows changed (the 3 notes, now single), person_entry_service 1/1 (Храписъ 1910-11 start «съ 1 іюня, 1908 г.» 1908-06-01, no end), other raw tables 0. research.person gone: eb5c1063 Храписъ (1908-10), now superseded by 4143fc41, which holds all 3 seasons; person_tenure 1908-09..1910-11, start 1908-06-01, consistent. Receipts 3,223,088,581, Wikidata 174, assertion links 2,468, pending 0 unchanged; live 2,522 -> 2,521; research.person 2,620 -> 2,619; alignment 0 shifts. No file in docs/ or pipeline/ references eb5c1063.
+
+## 2026-11-03 — 1905-06 review-text slips (RG: "Yes, correct all 14"): 17 corrections, review chain on a copy, promoted
+
+`apply_review_text_corrections.py` (dry run: 17 rows 1/1, 18 replacements) on a copy of `outputs/reviews/merged_full`, then
+`match_review_mentions.py` -> `build_reviews_duckdb.py` -> `build_review_assertions.py` -> `build_review_credits.py` -> `check_person_link_alignment.py`
+on a copy of production (outputs/rebuild_reviewtext_1905-06_2026-11-03); every base table compared both ways (EXCEPT ALL), mentions on content.
+```sql
+select count(*) from (select * from copy.s.t except all select * from pre.s.t);   -- all 59 tables, both directions
+select block_id, mention_type, char_start, char_end, surface, entity_id, link_method, link_confidence from <A>.entities.review_mention
+except all select ... from <B>.entities.review_mention;
+select count(*), count(performer_person_id) from research.review_assertion where season = '1905-06';
+select count(*), count(person_id) from research.review_credit where season = '1905-06';
+select count(*), count(entity_id) from entities.review_mention where block_id like 'review_1905-06%';
+```
+
+Result: raw.review_block 12; entities.review_mention content 33 new / 32 gone (1905-06) + 1904-05 «Храписъ» now linked; research.review_assertion
+26/26 (18 are 1905-06: 13 Nov «Гарлемскій тюльпанъ» ×9, 23 Apr «Два вора» ×7, Людоѣдъ/Людоѣдка; 8 elsewhere differ only in candidate-id order);
+review_credit 320/320 (outside 1905-06 only mention_id and candidate lists); review_solo 5, review_dance_performer 17, review_dance 1; watermark
+3199 -> 3202. 1905-06: assertions 252 (236 linked) both; credits 238 (204) both; mentions 2,181 (1,639) -> 2,182 (1,641). Totals: 2,657 assertions,
+27,326 -> 27,327 mentions. 0 person_link shift blocks. Production unchanged since the snapshot; promoted; corrections dry run on production 0.

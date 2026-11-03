@@ -1539,9 +1539,19 @@ full checkout, or archive `docs/` too.) Production had been rebuilt by a paralle
 production and promoted only after a byte-compare showed production unchanged since. Backup `outputs/backups/scan_reads_1905-06_2026-11-02/`
 (DB, the 12 raw pages, parsed, sqlite). sqlite rebuilt, not republished.
 
-**Leads, not done:** both reviews' stored text has slips (SP f. 132 «15-го ноября» for the printed 13th, «Людофдъ», «Бекеффи», doubled
-words; Moscow «50 балетныхъ представленій» for 30, «25-го апрѣля» for 23, and a pattern of old-style 3 read as 5); listed in the two
-review CSVs' notes and the agents' reports, not corrected.
+**Stored review-text slips corrected 2026-11-03** (RG: "Yes, correct all 14"): 17 rows in `docs/eval/review_text_corrections.csv`
+(18 replacements, each at its expected count), every one read by Claude on the zoomed scans: SP f. 130 «Людофдъ», «Людофдка», «людофдъ» ->
+«Людоѣдъ», «Людоѣдка», «людоѣдъ» (ѣ read as ф); f. 132 «15-го ноября» -> «13-го», «Для начала» -> «Для начало» (the print's own slip);
+f. 134 «Бекеффи» ×2 -> «Бекефи»; Moscow f. 209 and f. 219 «Гримальды» -> «Гримальди»; f. 210 and f. 227 «въ 5-хъ дѣйствіяхъ» -> «3-хъ»;
+f. 227 «сапельмейстера» -> «капельмейстера»; f. 228 «25-го апрѣля» -> «23-го»; f. 233 «дано 50» -> «30» and three words doubled at line
+joins («заключали», «балетовъ», «балетмейстеромъ») once each; f. 234 «октября 5» -> «октября 3». Review chain on a copy
+(`outputs/rebuild_reviewtext_1905-06_2026-11-03/`, the 1908-09 recipe): raw.review_block 12 blocks; 1905-06 review assertions keep
+their count (252, 236 linked) but 9 «Гарлемскій тюльпанъ» cast rows move from 15 to 13 Nov and 7 «Два вора» rows from 25 to 23 Apr;
+the Людоѣдъ rows read correctly; 1905-06 mentions 2,181 -> 2,182 (1,639 -> 1,641 linked). Outside 1905-06 only candidate-list order and
+renumbered mention ids changed (the parallel person merges catching up), plus one 1904-05 «Храписъ» mention now linked; no person link
+gained or lost elsewhere; 0 person_link shift blocks. Production unchanged since the snapshot; backup
+`outputs/backups/review_text_1905-06_2026-11-03/` (db, sqlite, review_block, mentions); promoted; sqlite rebuilt, not republished.
+Lead, not done: on f. 130 the «Спящая красавица» roles (Людоѣдъ, Людоѣдка) carry work «Золушка», the last pas title before them.
 
 **12 Feb «Золотая рыбка» supplied (2026-11-03,** RG: "Yes, supply it"; -07). One `supplied_performances.csv` row: the Большой
 evening of Герберъ's farewell benefit gets «Золотая рыбка» in the research layer, from the Moscow ballet review (f. 227 narrative, f. 234
