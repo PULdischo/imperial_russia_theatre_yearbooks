@@ -26035,3 +26035,15 @@ one-word entry (the genre word is the title). Fix: the blank-genre rule now appl
 Result: drama: Драма жизни, Intermède, Die Wappenhänse, Démocrite, Un Crâne sous une Tempête, Le festival des noces, Театральный разъѣздъ…,
 and the two unlinked Русалка acts (Russian drama troupe); opera: Миранда (послѣдняя борьба). Blank (no troupe recorded): Балетоманъ,
 «Слава»!, Обозрѣніе. Programme items kept out (Divertissement, Monologues, Scènes et monologues, Prolog). NULL works 52. Only work rows changed.
+
+## 2026-11-03 — The 49 blank works that are not unprinted-parent leads: by item kind
+
+```sql
+SELECT string_agg(DISTINCT p.genre_family, '/'), w.canonical_title, count(p.performance_id), string_agg(DISTINCT p.discipline, '/'), min(season)||'–'||max(season)
+FROM research.work w LEFT JOIN research.performance p USING (work_id) LEFT JOIN research.event e USING (event_id)
+WHERE w.art_form IS NULL AND w.art_form_basis NOT LIKE 'not printed%' GROUP BY w.work_id, 2;
+```
+
+Result (works / performances): concert 20 / 50; divertissement 3 / 41; tableau / apotheosis 3 / 34 (Апоѳеозъ 25); recitation / reading 8 / 79
+(Сцена г. Горбунова 48, Сцена г. Вейнберга 25); lecture 4 / 4; cinema 3 / 3; generic items filed as play 4 / 4 (Divertissement, Monologues,
+Scènes et monologues, Prolog); no kind, no troupe 4 / 4 (Обозрѣніе, Концертъ-спектакль, «Слава»!, Балетоманъ).
