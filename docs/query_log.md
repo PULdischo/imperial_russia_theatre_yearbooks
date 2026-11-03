@@ -25868,3 +25868,71 @@ SELECT count(*) FROM a.research.review_dance_performer x JOIN b.research.review_
 Result: all 4 cast lines of the block (Альма, Діасъ, Кармена, слуга Альмы) on «Путешествующая танцовщица»
 (1e78c367...). 0 person or link-method changes in review_dance_performer and review_assertion; 1 mention entity change
 («Кармена»). The remaining row differences are candidate lists in a different order (0 once sorted).
+
+## 2026-11-03 — City for Administrators / Graduates / ProductionTeam / TheaterSchoolStaff appearances, from headings
+
+```sql
+SELECT entity_type, institution, heading_path, count(*) FROM research.person_appearance
+WHERE entity_type IN ('Administrators','Graduates','ProductionTeam','TheaterSchoolStaff') GROUP BY ALL;   -- classified in Python by петербург|с.-п / москв
+SELECT entity_type, institution, split_part(heading_path,' / ',1), count(*) ... GROUP BY ALL;
+SELECT pa.season, p.display_name, pa.heading_path, pa.title FROM research.person_appearance pa JOIN research.person p USING (person_id)
+WHERE pa.entity_type = 'Administrators' AND split_part(pa.heading_path,' / ',1) LIKE 'Дирекція%';
+```
+
+Result: of 7,324 rows (all city NULL), 7,192 name a city in institution or top heading (Administrators SP 984 / Moscow 786; Graduates 261/205;
+ProductionTeam 1,304/797; TheaterSchoolStaff 1,606/1,249); no heading names both. 138 rows under «Дирекція Императорскихъ театровъ»: 6 name
+SP lower down (Свенторжецкій 1903-04..1908-09 «Техникъ при С.-Петербургской Конторѣ»); 132 name no city -- 25 people (directors
+Всеволожской, Волконскій, Теляковскій; officials on special assignment to the Director, e.g. Дягилевъ 1899-1901, Петровъ, Кусовъ).
+
+## 2026-11-03 — Do research appearances carry source volume and folio? (RG on list_number)
+
+```sql
+DESCRIBE research.person_appearance;  DESCRIBE raw.source_pages;  DESCRIBE raw.person_entry;
+SELECT entity_type, count(*), count(printed_page_number) FROM raw.source_pages WHERE entity_type <> 'Repertoire' GROUP BY 1;
+```
+
+Result: research.person_appearance has season (= the volume) but no page or folio column. raw.person_entry has page_id; raw.source_pages
+has source_file, source_page_index, printed_page_number. Fill of printed_page_number for the staff lists: see the session report 2026-11-03.
+
+## 2026-11-03 — How many appearances have no city? (RG)
+
+```sql
+SELECT entity_type, count(*), count(*) FILTER (WHERE city IS NULL), count(*) FILTER (WHERE city='SP'), count(*) FILTER (WHERE city='Moscow')
+FROM research.person_appearance GROUP BY 1;
+```
+
+Result: see the session report 2026-11-03 (BalletArtists/Musicians all placed; the four other lists all NULL before the city rule).
+
+## 2026-11-03 — City rule on a scratch copy: effects, and single-season "city islands"
+
+```sql
+-- copy of production + build_research_model.py with the city rule; every base table EXCEPT ALL v. the copy
+SELECT entity_type, city, count(*) FROM research.person_appearance WHERE entity_type NOT IN ('BalletArtists','Musicians') GROUP BY 1,2;
+SELECT t.list, p.display_name, string_agg(t.city || ' ' || t.first_season || '..' || t.last_season, ' ; ') FROM research.person_tenure t
+JOIN research.person p USING (person_id) WHERE t.list IN (<4 lists>) GROUP BY ... HAVING count(*) > 1;
+-- islands: an appearance whose city differs from the same person's previous and next listed season in that list (Python)
+```
+
+Result: research.person_appearance 7,324 rows get a city (Administrators SP 984 / Moscow 786 / both 132; Graduates 261/205; ProductionTeam
+1,304/797; TheaterSchoolStaff 1,606/1,249), 0 left NULL; service_period 6,961, person_tenure 3,034 -> 3,068 (32 people split by city,
+mostly real moves or concurrent posts), person_tenure_note 2, person_assignment 1, person_performance_tally 13 rows change (city column).
+30 correction rows keyed on city '' given the new city (Коровинъ's slip -> Moscow, his 1906-08 run). 14 islands; scan-checked (Claude):
+1903-04 p.125 Мамошинъ, Разумовскій, Робинзонъ, Розенбергъ, Самсоновъ printed ABOVE the Moscow divider (SP Контора) but stored under
+«Московская Контора / Хозяйственное отдѣленіе»; Фонъ-Бооль's heading wrong on the same page; 1902-03 p.126 Фонъ-Бооль printed as the
+Moscow Контора's «Управляющій Конторою и Императорскимъ Театральнымъ училищемъ», stored as an SP clerk. The other islands are
+first/last seasons and genuine (Коровинъ, Петровъ, Молчановъ И. Н., Аршеневскій).
+
+## 2026-11-03 — City rule + 7 heading fixes applied to production: diff v. raw_backup_b13_city_2026-11-03
+
+```sql
+-- every base table EXCEPT ALL both ways v. backup
+SELECT entity_type, coalesce(city,'NULL'), count(*) FROM research.person_appearance GROUP BY 1,2;
+SELECT count(*) FROM research.person_tenure;
+SELECT appearance_id, city FROM research.person_appearance WHERE appearance_id IN ('administration_1903-04_p002__e005','..._e009','administration_1902-03_p002__e017');
+SELECT assertion_id, work_id FROM research.review_assertion WHERE assertion_id IN (1482,2847,2848,2849);   -- Works session's W1 fix
+```
+
+Result: changed raw/analysis person_entry 7 (headings), research.person_appearance 7,324 (city), service_period 6,961, person_tenure
+3,034 -> 3,062, person_tenure_note 2, person_assignment 1, person_performance_tally 13; all else identical. No NULL city in any list;
+Administrators SP 988 / Moscow 782 / both 132. Fixed islands now SP (1903-04 clerks) and Moscow (Фонъ-Бооль 1902-03). W1 intact (4 x
+1e78c367…, work exists). Receipts 3,223,088,581; assertion links 2,466; set_design 61; 0 shifts.

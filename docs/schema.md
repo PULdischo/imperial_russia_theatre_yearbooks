@@ -607,6 +607,15 @@ layer, one row per printed item. Until then it stopped at `analysis.person_entry
 A two-city entry («Кромѣ того, въ С.-Петербургѣ: ...», 10 entries) repeats its categories; `city` is the listing's
 city, not the block's. Exported to Datasette (`build_datasette.py`).
 
+## `research.person_appearance.city` for the staff lists (filled 2026-11-03)
+
+RG 2026-11-03: BalletArtists and Musicians pages carry their city (`SP`/`Moscow`). For Administrators, Graduates, ProductionTeam and
+TheaterSchoolStaff the research layer takes it from the printed institution or heading («С.-Петербургская Контора …», «МОСКВА»,
+«Императорское Московское Театральное Училище»). Staff printed under «Дирекція Императорскихъ театровъ» with no city (the Director
+and the officials attached to him or to the Directorate; 132 rows, 25 people) served both cities: `city = 'both'`. raw keeps the page's
+city (NULL for these lists). Consequence: `research.person_tenure` runs are per person × list × city for these lists too, so a move
+between cities (Коровинъ SP 1901 -> Moscow 1903; Горскій's school posts) or a concurrent post in both shows as separate runs.
+
 ## Set designs — `research.set_design` (added 2026-11-03)
 
 RG 2026-11-03 (research-layer review, item C): new sets credited to a named decorator, one row per set. Source so far: the

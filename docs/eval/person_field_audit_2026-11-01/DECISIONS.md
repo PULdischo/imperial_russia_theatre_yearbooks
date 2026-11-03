@@ -134,3 +134,12 @@ Still to put to RG: and the listed-after-leaving cases (Иванова 2-я, Л�
 - 1906-07 Ѳедорова review mentions LINKED 2026-11-03 (RG "Link all five"; docs/eval/review_mention_links.csv): «Ѳедорова 2-я» x4 -> Лидія
   Ѳедоровна, «Ѳедорова 1-я» x1 -> Марія Дмитріевна (the 1906-07 list prints «Федорова» 1-я/2-я, no. 102/103). «г-жа Ѳедорова» (Tyrolean
   dance, no ordinal) left unlinked.
+- DEFERRED (RG 2026-11-03: "I will want to do this, but not yet"): source volume + folio for every person appearance. Folio
+  (raw.source_pages.printed_page_number) is empty for all 966 staff-list pages; research.person_appearance has no page column.
+  RG: printed list numbers are not needed once volume and folio are there. Do after the city rule.
+- City for the four staff lists DONE 2026-11-03 (RG: "Most of these people will be linked to a city, but not all ... folks who oversaw
+  activities in BOTH cities"; "Yes, «both»"; "Yes, apply both"): research layer takes SP/Moscow from institution/heading, 'both' for
+  Directorate staff with no city (132 rows). 0 appearances without a city. Islands check found 7 raw heading errors across the SP/Moscow
+  divider, scan-read by Claude and fixed (B13_admin_heading_fixes_2026-11-03.csv): 1903-04 p.125 Мамошинъ, Разумовскій, Робинзонъ,
+  Розенбергъ, Самсоновъ are SP Контора clerks (stored under Moscow); Фонъ-Бооль 1902-03 p.126 and 1903-04 is the Moscow Контора's
+  manager. 30 correction-CSV rows given their city. person_tenure 3,034 -> 3,062 (people split by city: real moves/concurrent posts).

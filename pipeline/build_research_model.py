@@ -2051,7 +2051,16 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         SELECT
             r.entry_id AS appearance_id,
             pl.person_id,
-            sp.season, sp.city,
+            sp.season,
+            -- city (RG 2026-11-03): BalletArtists and Musicians pages carry it; the other four lists name the city in the
+            -- institution or heading (С.-Петербургская Контора, МОСКВА, Императорское Московское Театральное Училище ...).
+            -- Directorate staff printed above the city split (the Director, officials attached to him) served both: 'both'.
+            coalesce(sp.city,
+                CASE WHEN regexp_matches(lower(coalesce(r.institution, '') || ' / ' || coalesce(r.heading_path, '')), 'петербург|с\.-п')
+                     THEN 'SP'
+                     WHEN regexp_matches(lower(coalesce(r.institution, '') || ' / ' || coalesce(r.heading_path, '')), 'москв|московск')
+                     THEN 'Moscow'
+                     WHEN r.heading_path LIKE 'Дирекція Императорскихъ театровъ%' THEN 'both' END),
             r.entity_type, r.institution, r.heading_path,
             r.rank_clean,
             -- ruling A7 (RG 2026-11-02): a costumer's / wig maker's printed area of work is its own field. For ProductionTeam
@@ -2164,8 +2173,8 @@ def build_person_tenure_notes(con: duckdb.DuckDBPyConnection) -> int:
         # new start date): printed_leaving_date is then blank and only the listed seasons are checked.
         printed = 1 if not row["printed_leaving_date"] else con.execute("""
             SELECT count(*) FROM raw.person_entry_service s JOIN raw.person_entry pe USING (entry_id)
-            JOIN raw.source_pages sp ON sp.page_id = pe.page_id JOIN entities.person_link pl USING (entry_id)
-            WHERE pl.person_id = ? AND sp.entity_type = ? AND coalesce(sp.city, '') = ? AND CAST(s.end_date_undate AS VARCHAR) = ?""",
+            JOIN research.person_appearance pa ON pa.appearance_id = pe.entry_id JOIN entities.person_link pl USING (entry_id)
+            WHERE pl.person_id = ? AND pa.entity_type = ? AND coalesce(pa.city, '') = ? AND CAST(s.end_date_undate AS VARCHAR) = ?""",
             [pid, lst, city, row["printed_leaving_date"]]).fetchone()[0]
         if not printed:
             raise SystemExit(f"person_tenure_discrepancies.csv: {row['display_name']} has no printed leaving "
