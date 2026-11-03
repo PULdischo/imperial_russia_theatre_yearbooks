@@ -25375,3 +25375,22 @@ SELECT count(*) FROM research.service_period WHERE end_type = 'other';
 ```
 
 Result: end_type other, no date. Receipts 3,223,088,581; Wikidata 174; assertion links 2,468; pending 0; other-ends 210 -> 211; research.person 2,620; alignment 0 shifts.
+
+## 2026-11-03 — 1905-06 12 Feb Gerber benefit: supply «Золотая рыбка» (ledger 1905-06-07), copy v. production diff
+
+```sql
+select e.event_id, e.city, e.time_of_day, t.canonical_name, e.event_status from research.event e join research.theater t using (theater_id)
+ where e.season = '1905-06' and cast(e.date as varchar) = '1906-02-12' and t.canonical_name like 'Больш%';
+select work_id, canonical_title, canonical_genre, excerpt_of_work_id from research.work where canonical_title = 'Золотая рыбка';
+-- every base table, both directions:
+select count(*) from (select * from copy.s.t except all select * from pre.s.t);
+select count(*) from research.events_with_dancers w join research.event e on e.event_id = w.event_id join research.theater t on t.theater_id = e.theater_id
+ where e.season = '1905-06' and t.canonical_name = 'Большой';
+select count(distinct p.event_id) from research.performance p join research.work w using (work_id) join research.event e on e.event_id = p.event_id
+ where e.season = '1905-06' and e.city = 'Moscow' and w.canonical_title = 'Золотая рыбка';
+```
+
+Result: evening event repertoire_1905-06_p033__s026 (Moscow, Большой, performed); one work «Золотая рыбка» бал. (a6c73d55…). After adding the
+supplied_performances.csv row: only research.event (1 row: n_works 0->1, disciplines/companies/genre_families -> ballet) and research.performance
+(+1, `__supplied1`, performance_source «supplied: Moscow ballet season review») differ in 59 tables. Большой events with dancers 28 -> 29;
+Moscow «Золотая рыбка» events 3 -> 4 (= the review's tally). Promoted after cmp; sqlite has 1 performance on the event.

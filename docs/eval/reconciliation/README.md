@@ -1513,7 +1513,7 @@ dark citywide 14-26 Oct 1905 (the general strike) and 7-25 Dec 1905 (the uprisin
 September; «октября 3» for 30 Oct), leaves 27 Nov out of «Дочь Фараона», counts 2 «Конекъ-горбунокъ» excerpts for 3, and calls the 30
 Apr act «2-е» where the Repertoire prints «3 д.». Counts: the SP review's 36 = the Маріинскій's all-ballet events without the six
 charity bills and the 9 Apr school performance (-01); the Moscow review's 30 = 28 Большой ballet events (after -04) + Герберъ's 12 Feb
-benefit (no work printed; the review says «Золотая рыбка», -07, for RG) + the Новый 4 Apr Иверская charity (-02).
+benefit (no work printed; the review says «Золотая рыбка», -07, supplied in the research layer 2026-11-03) + the Новый 4 Apr Иверская charity (-02).
 
 **But the review check found Repertoire errors**, so both ballet columns were read blind (Маріинскій and Большой, four agents, scans
 only; `docs/eval/scan_audit/1905-06_scan_reads.csv`, 544 rows, 30 Aug 1905 - 10 May 1906; differences in `1905-06_scan_read_diffs.csv`).
@@ -1543,4 +1543,10 @@ production and promoted only after a byte-compare showed production unchanged si
 words; Moscow «50 балетныхъ представленій» for 30, «25-го апрѣля» for 23, and a pattern of old-style 3 read as 5); listed in the two
 review CSVs' notes and the agents' reports, not corrected.
 
-**Outcome:** 9 ledger rows (1905-06-01..09). Open: -07 (12 Feb «Золотая рыбка»), -09 («Сельская честь» label).
+**12 Feb «Золотая рыбка» supplied (2026-11-03,** RG: "Yes, supply it"; -07). One `supplied_performances.csv` row: the Большой
+evening of Герберъ's farewell benefit gets «Золотая рыбка» in the research layer, from the Moscow ballet review (f. 227 narrative, f. 234
+tally «февраля 12-го»). Raw stays as printed. Rebuilt on a copy: research.event 1 row changed (n_works, disciplines, companies,
+genre_families), research.performance +1 (`__supplied1`); nothing else in 59 tables. 1905-06 Большой events with dancers 28 -> 29;
+«Золотая рыбка» Moscow 3 -> 4, as the review. Backup `outputs/backups/gerber_1905-06_2026-11-03/`; sqlite rebuilt, not republished.
+
+**Outcome:** 9 ledger rows (1905-06-01..09). Open: -09 («Сельская честь» label).
