@@ -25881,3 +25881,19 @@ SELECT art_form_basis, count(*) FROM research.work WHERE art_form IS NULL GROUP 
 Result: 340 excerpts: ballet 138, opera 120, drama 76, operetta 6; none differ from the parent (build check passes). Works:
 drama 2,236 / opera 319 / ballet 258 / operetta 35 / ceremonial 4 / NULL 100 (no printed genre 91; pantomime 2 + pantom. 1 +
 mimodrame 1 + Spiel ohne Wort 1; ком.-бал. 2; диверт. 1 + дивертисментъ 1). Everything else identical.
+
+## 2026-11-03 — The 9 mixed/generic-genre works pending RG: performances, bills, scan check (checked by Claude)
+
+```sql
+SELECT w.canonical_title, w.canonical_genre, e.season, e.date, t.canonical_name, p.discipline, p.genre_family, p.includes_dance, <bill>
+FROM research.work w JOIN research.performance p USING (work_id) JOIN research.event e USING (event_id) JOIN research.theater t USING (theater_id)
+WHERE w.art_form_basis LIKE 'pending RG: mixed%' ORDER BY 1, e.date;
+```
+
+Result: 9 works / 28 performances. Pantomime 5 works / 15: De la lune au Japon [pantomime] 6 (Михайловскій 1900, French troupe), La main
+[mimodrame] 4 (Михайловскій 1902, French), Die Hand [Spiel ohne Wort] 3 (Александринскій 1901, visiting German troupe), L'Enfant prodigue
+[pantom.] 1 (Михайловскій 1891, French), Le cœur de la marquise [pantomime] 1 (Маріинскій 12 Mar 1902 charity, French). Comedy-ballet 2 / 12:
+Батюшкина дочка 7 (Александринскій 1894-96), Мѣщанинъ во дворянствѣ 5 (Moscow 1900, Большой + Новый), all Russian drama, includes_dance.
+Divertissement 2 / 2: Маскарадъ [диверт.] (Маріинскій 9 Jan 1905, Преображенская benefit, ballet bill), Карнавалъ [дивертисментъ]
+(Большой 21 Nov 1899, Рябовъ benefit, with «Наяда и рыбакъ»), both ballet company. Scans (1901-02 p.32, 1904-05 p.112, 1899-00 p.15,
+1890-91 p.21): all one-night genre readings match the print. build_entities._work_art_form already classes pantom./mimodrame/Spiel ohne Wort as ballet.
