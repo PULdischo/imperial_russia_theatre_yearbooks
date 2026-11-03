@@ -269,6 +269,7 @@ ART_FORM_BY_PERFORMANCE_CSV = Path(__file__).parent / "research_corrections" / "
 #: RG's art-form rulings for work identity (build_entities.py); also applied to the
 #: labels here, see apply_work_artform_overrides (known_issues.md #158).
 WORK_ARTFORM_OVERRIDES_CSV = Path(__file__).parent / "entity_curation" / "work_artform_overrides.csv"
+WORK_TITLE_ALIASES_CSV = Path(__file__).parent / "entity_curation" / "work_title_aliases.csv"
 CONCERT_EVENT_RE = r"концерт|музыкально-литературн|литературно-музыкальн|вокально-инструментально"
 #: An event headed «Симфоническій концертъ» is a concert as a whole: every titled item on it
 #: (an opera finale, an opera act) is item_kind concert, art form kept, as CONCERT_KIND_TITLES
@@ -1504,6 +1505,19 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         FROM research.work w
         LEFT JOIN entities.work ew ON ew.work_id = w.work_id
         LEFT JOIN work_ballet wb ON wb.work_id = w.work_id""").fetchall()
+    alias_genre = {r["printed_title"]: r["as_genre_if_blank"]
+                   for r in csv.DictReader(open(WORK_TITLE_ALIASES_CSV, encoding="utf-8")) if r.get("as_genre_if_blank")}
+    # identity art forms of the genres printed on each work's own printings
+    member_forms: dict[str, dict] = {}
+    for wid_, g_, n_ in con.execute("""
+            SELECT CAST(wl.work_id AS VARCHAR), eep.genre, count(*) FROM entities.work_link wl
+            JOIN raw.event_entry_performance eep ON eep.performance_id = wl.raw_performance_id
+            WHERE nullif(trim(eep.genre), '') IS NOT NULL GROUP BY 1, 2""").fetchall():
+        ident_ = _work_art_form(_canon_genre(_fold_genre(g_)))
+        if ident_ == "spoken" and re.search(r"кантат|увертюр|симф|фортеп|концерт|cantat", g_.lower()):
+            ident_ = "music"  # a musical genre word the identity rule's spoken catch-all would take as a play
+        n0, gs0 = member_forms.setdefault(wid_, {}).get(ident_, (0, ""))
+        member_forms[wid_][ident_] = (n0 + n_, (gs0 + ", " if gs0 else "") + f"«{g_}»")
     review_kind = {}
     if con.execute("""SELECT count(*) FROM information_schema.tables
                       WHERE table_schema = 'entities' AND table_name = 'review_work'""").fetchone()[0]:
@@ -1526,9 +1540,21 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
             form = REVIEW_KIND_TO_WORK_ART_FORM.get(kind)
             basis = (f"kind given by the Season Reviews: {kind} (RG, 2026-11-03)" if form
                      else f"pending RG: review-only work of kind {kind!r}")
+        elif canon is None and alias_genre.get(ent_title):
+            # the genre printed inside the title (work_title_aliases.csv as_genre_if_blank)
+            ag = alias_genre[ent_title]
+            ident = _work_art_form(_canon_genre(_fold_genre(ag)))
+            form = _IDENTITY_TO_WORK_ART_FORM.get(ident)
+            basis = (f"genre printed inside the title «{ag}» (work_title_aliases.csv; work-identity rule)" if form
+                     else f"pending RG: genre «{ag}» printed inside the title has no art form in the identity rule")
+        elif canon is None and len(member_forms.get(str(wid), {})) == 1:
+            # the work's own printings that carry a genre all give one art form («Китежъ»: 11 «оп.», 22 blank)
+            (ident, (n_g, gs)), = member_forms[str(wid)].items()
+            form = _IDENTITY_TO_WORK_ART_FORM.get(ident)
+            basis = (f"printed genre {gs} on {n_g} of its printings, the rest blank (work-identity rule)" if form
+                     else "pending RG: no printed genre")
         elif canon is None:
-            form, basis = None, ("pending RG: review-only work" if wsrc == "review"
-                                 else "pending RG: no printed genre")
+            form, basis = None, "pending RG: no printed genre"
         elif _PANTOMIME_GENRE_RE.match(canon):
             form, basis = "drama", f"printed genre «{genre}»: pantomime is drama (RG, 2026-11-03)"
         elif _COMEDY_BALLET_GENRE_RE.match(canon):

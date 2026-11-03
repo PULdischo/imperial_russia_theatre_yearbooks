@@ -25977,3 +25977,18 @@ Result (works / performances): twin of an existing work, genre left in the title
 2-me acte, Britannicus, Die Hugenotten 4-ter Akt, Gli Ugonotti 4-o atto, 2-е д. оперет. Цыганскій баронъ); RG-unlinked Русалка acts 2 / 2;
 genre on some printings only 1 / 33 (Китежъ: 11 printings «оп.», 22 none); titled works with no genre printed 16 / 37; generic programme
 items 46 / 216 (concerts, divertissements, tableaux, readings, lectures, cinema).
+
+## 2026-11-03 — No-genre works: errors fixed (RG "Yes, fix errors first"), scratch rebuild through entities + research
+
+Scan reads (2 parallel readers, every cell zoomed on the PDF-embedded image; scratchpad scan_results_A/B.csv): 26 of 27 printings
+confirm the genre/subtitle printed inside the title or an act of another work; «Трагедія о Гамлетѣ, принцѣ Датскомъ.» is one title,
+no genre (one printing split at the comma). Reading slips: «Chéri!» lost its «!» (2 printings); «Glassettenmärchen» lost an s;
+«Шашки шуг.» (print slip for шут.) read as «Шашки шут»; print oddities kept: «Basazzade» 1904-05 v. «Bajazzade» 1909-10, «Гамлстѣ» 30 Nov 1900.
+
+Applied: 26 work_title_aliases.csv rows, 2 curated parents (Die Hugenotten [Oper], Цыганскій баронъ [оперет.]), 3 excerpt links;
+a blank-genre work whose printings carry one art form takes it (Китежъ: «оп.» on 11 of 33); art_form_by_title.csv rows for the 4 titles
+now merged into a twin removed («Ночное…» x3, «Шашки шут»). Diff v. previous scratch build: twins merged (Вожди 32->39, Холопы 73->77,
+Ночное 58->61, Шашки 115->116, Наканунѣ 6+20->26, Chéri! 2+4->6, M-r Choufleuri 4+2->6, Colombine 4+3->7, Трагедія о Гамлетѣ 10+1->11);
+performance: only work_id, plus 2 «M-r Choufleuri … opérette» rows play -> operetta (print says opérette); no row points at a removed work.
+Works: drama 2,251 / opera 323 / ballet 260 / operetta 38 / concert 4 / ceremonial 4 / NULL 63. Check unchanged (52 / 6 pairs).
+Left for RG: La Mascotte (1-r acte), Le petit Duc (2-me acte), Britannicus (3-ème acte …) — parents never printed, no genre anywhere.
