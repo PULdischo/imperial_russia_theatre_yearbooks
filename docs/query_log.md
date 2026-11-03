@@ -25925,3 +25925,16 @@ Result: 175 genres; play genres apart from: 4 review-only music works filed as d
 all 20 review-only works set back to pending RG (14 ballet, 2 opera, 4 music by entities.review_work.work_kind). To look at later:
 La Demoiselle du Téléphone [com.-opér.] (6, French troupe), Коломбина [арлекинада] (1). Possible parent of the 1899 Карнавалъ
 divertissement: «Карнавалъ» [пантомима-бал.] (3 performances) -- a lead only, not linked.
+
+## 2026-11-03 — The 14 review-only ballet works: what the reviews say (RG asked whether they are excerpts)
+
+```sql
+SELECT canonical_title, source_note FROM research.work WHERE work_source = 'review' AND canonical_genre = 'бал.' ORDER BY 1;
+```
+
+Result: three groups. (a) New one-act ballets staged after the Repertoire's last season, 1912-13 SP: Papillons, Исламей, Les préludes,
+plus Шехерезада (named as Бакстъ and Фокинъ's ballet, Diaghilev's company). (b) Named only through a number taken from them: Метеоръ
+(«Pas de corbeille (изъ бал. „Метеоръ“)», 1904-05), Жавота («pas de six старого балета», 1902-03), Фаустъ («Grand pas d'action изъ
+балета», 1895-96), Приключенія Пелея (Ѳетида и Пелей «собственно одинъ актъ изъ стараго балета», 1908-09; also a 1903-04 Петергофъ court
+performance). (c) Historical mentions: Les Caractères de la danse (Camargo, 1726), Три пояса (Глушковскій), Свадьба Гамаша (Milon,
+Большой 1855), Роксана and Трильби (Горшенкова's past parts), Мраморная красавица (with Пери, Фаустъ, 1901-02 Moscow).
