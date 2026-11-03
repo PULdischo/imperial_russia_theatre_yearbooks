@@ -1477,8 +1477,9 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
     work identity (build_entities._work_art_form on the work's genre, with
     entity_curation/work_artform_overrides.csv), the ballet productions lists
     (work_ballet) and the anthem rule. No new inference: a work those rules do
-    not settle, or whose case waits for RG (excerpts, comedy-ballet, pantomime,
-    divertissement, review-only works, no genre), gets NULL and a basis that says why.
+    not settle, or whose case waits for RG (comedy-ballet, pantomime, divertissement,
+    review-only works, no genre), gets NULL and a basis that says why. An excerpt
+    takes its parent's art form; the build stops if the two ever differ.
     Runs before research.performance exists (research.work is UPDATEd)."""
     from build_entities import (_canon_genre, _fold_genre, _match_key, _strip_genre_suffix,
                                 _title_key, _work_art_form)
@@ -1499,7 +1500,7 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         if re.match(CEREMONIAL_TITLE_RE, title or ""):
             form, basis = "ceremonial", "anthem: a ceremonial item, not a work (RG, 2026-10-12)"
         elif excerpt_of is not None:
-            form, basis = None, "pending RG: excerpt (parent's art form or the staging's?)"
+            form, basis = None, None  # copied from the parent below
         elif ballet_note is not None:
             form, basis = "ballet", f"ballet productions list: {ballet_note}"
         elif canon is None:
@@ -1523,6 +1524,26 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                 form, basis = None, f"pending RG: genre «{genre}» has no art form in the identity rule"
         out.append((form, basis, wid))
     con.executemany("UPDATE research.work SET art_form = ?, art_form_basis = ? WHERE work_id = ?", out)
+    # An excerpt is part of its parent work, so it takes the parent's art form
+    # (RG, 2026-11-03): decided once, on the parent; copied here so a filter on
+    # work.art_form does not miss excerpts. Repeated for an excerpt of an excerpt.
+    for _ in range(5):
+        n = con.execute("""
+            UPDATE research.work SET art_form = p.art_form,
+                   art_form_basis = 'parent work «' || p.canonical_title || '»' ||
+                       coalesce(' [' || p.canonical_genre || ']', '') ||
+                       CASE WHEN p.art_form IS NULL THEN ': parent has no art form yet' ELSE '' END
+            FROM research.work p
+            WHERE p.work_id = research.work.excerpt_of_work_id AND p.art_form_basis IS NOT NULL
+              AND research.work.art_form_basis IS NULL""").fetchone()[0]
+        if not n:
+            break
+    clash = con.execute("""
+        SELECT e.canonical_title, e.art_form, p.canonical_title, p.art_form FROM research.work e
+        JOIN research.work p ON p.work_id = e.excerpt_of_work_id
+        WHERE e.art_form IS DISTINCT FROM p.art_form""").fetchall()
+    if clash:
+        raise SystemExit(f"research.work: excerpt art_form differs from its parent's (check the excerpt link): {clash}")
     bad = con.execute("SELECT count(*) FROM research.work WHERE art_form IS NOT NULL AND art_form NOT IN ("
                       + ", ".join(f"'{a}'" for a in WORK_ART_FORMS) + ")").fetchone()[0]
     assert bad == 0, "research.work holds an art_form outside WORK_ART_FORMS"

@@ -25869,3 +25869,15 @@ title; the 1899 excerpt Russian drama/play -> opera/opera; the two Русалк�
 art_form_by_performance.csv). Every other research table identical, event included. Excerpts: 340 (was 342: the two Русалка acts
 unlinked); every one sits with its parent's kind of troupe (ballet 137, opera 116 + German opera 4, drama 76, operetta-by-opera 6),
 1 ballet excerpt has no troupe. Art-form check unchanged: 52 performances / 6 pairs.
+
+## 2026-11-03 — Excerpts take the parent's art form (RG "go for it"): rebuild of the scratch copy
+
+```sql
+SELECT art_form, count(*) FROM research.work WHERE excerpt_of_work_id IS NOT NULL GROUP BY 1;
+SELECT art_form_basis, count(*) FROM research.work WHERE art_form IS NULL GROUP BY 1;
+-- every other research table and the other work columns: EXCEPT ALL both ways v. the previous scratch build
+```
+
+Result: 340 excerpts: ballet 138, opera 120, drama 76, operetta 6; none differ from the parent (build check passes). Works:
+drama 2,236 / opera 319 / ballet 258 / operetta 35 / ceremonial 4 / NULL 100 (no printed genre 91; pantomime 2 + pantom. 1 +
+mimodrame 1 + Spiel ohne Wort 1; ком.-бал. 2; диверт. 1 + дивертисментъ 1). Everything else identical.
