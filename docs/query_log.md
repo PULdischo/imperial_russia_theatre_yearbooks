@@ -25902,3 +25902,7 @@ Divertissement 2 / 2: Маскарадъ [диверт.] (Маріинскій 9
 
 Result: De la lune au Japon, La main, Le cœur de la marquise, Die Hand, L'Enfant prodigue -> drama; works drama 2,241 / NULL 95;
 art-form check unchanged (52 / 6 pairs); every other research table identical to the previous scratch build.
+
+## 2026-11-03 — Comedy-ballets ruled drama (RG): scratch rebuild
+
+Result: Батюшкина дочка, Мѣщанинъ во дворянствѣ -> drama; art-form check unchanged; every other research table identical.

@@ -1469,7 +1469,10 @@ DISCIPLINE_TO_WORK_ART_FORM = {
 }
 #: Printed genres the identity rule classes but whose art form waits for RG's
 #: ruling (comedy-ballet, pantomime, generic divertissement): art_form NULL.
-_PENDING_GENRE_RE = re.compile(r"^(ком\.?-бал|диверт|див\b)")
+_PENDING_GENRE_RE = re.compile(r"^(диверт|див\b)")
+#: Comedy-ballet: drama (RG, 2026-11-03: plays with dance numbers, staged by the
+#: Russian drama troupe; the dance is recorded on performance.includes_dance).
+_COMEDY_BALLET_GENRE_RE = re.compile(r"^ком\.?-бал")
 #: Pantomime / mimodrame / Spiel ohne Wort: drama (RG, 2026-11-03: wordless plays,
 #: every one acted by a drama troupe on a bill of plays). The work-identity rule
 #: classes them with ballet; that only groups printings and is left as it is.
@@ -1481,7 +1484,7 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
     work identity (build_entities._work_art_form on the work's genre, with
     entity_curation/work_artform_overrides.csv), the ballet productions lists
     (work_ballet) and the anthem rule. No new inference: a work those rules do
-    not settle, or whose case waits for RG (comedy-ballet, divertissement,
+    not settle, or whose case waits for RG (divertissement,
     review-only works, no genre), gets NULL and a basis that says why. An excerpt
     takes its parent's art form; the build stops if the two ever differ.
     Runs before research.performance exists (research.work is UPDATEd)."""
@@ -1512,6 +1515,8 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                                  else "pending RG: no printed genre")
         elif _PANTOMIME_GENRE_RE.match(canon):
             form, basis = "drama", f"printed genre «{genre}»: pantomime is drama (RG, 2026-11-03)"
+        elif _COMEDY_BALLET_GENRE_RE.match(canon):
+            form, basis = "drama", f"printed genre «{genre}»: comedy-ballet is drama (RG, 2026-11-03)"
         elif _PENDING_GENRE_RE.match(canon):
             form, basis = None, f"pending RG: mixed or generic genre «{genre}»"
         else:
