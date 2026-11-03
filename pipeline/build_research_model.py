@@ -1567,6 +1567,7 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         member_forms[wid_][ident_] = (n0 + n_, gs1)
     # each work's performances by troupe (same work_id rule as the research.performance INSERT)
     troupe_forms: dict[str, dict] = {}
+    work_kinds: dict[str, set] = {}
     for wid_, d_, k_ in con.execute("""
             SELECT DISTINCT CAST(coalesce(pr.target_work_id, ps.split_work_id, m.to_id, wl.work_id) AS VARCHAR), pa.discipline, pa.item_kind
             FROM perf_art pa JOIN entities.work_link wl ON wl.raw_performance_id = pa.performance_id
@@ -1578,6 +1579,7 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
             f_ = None  # a programme item (concert, divertissement, tableau, reading ...): not ruled yet
         key_ = f_ or f"none:{d_}:{k_}"  # no troupe, a troupe outside the map, or a programme item blocks the rule
         troupe_forms.setdefault(wid_, {}).setdefault(key_, set()).add(d_ or "no troupe")
+        work_kinds.setdefault(wid_, set()).add(k_)
     troupe_forms = {w: {k: ", ".join(sorted(v)) for k, v in fs.items()} for w, fs in troupe_forms.items()}
     review_kind = {}
     if con.execute("""SELECT count(*) FROM information_schema.tables
@@ -1603,6 +1605,9 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         elif re.match(TABLEAU_TITLE_RE, (title or "").lower()):
             form, basis = None, ("programme item: an apotheosis or tableau vivant, not a work (RG, 2026-11-03); "
                                  "the occasion is on research.event.annotation, the kind on performance.genre_family")
+        elif canon is None and work_kinds.get(str(wid)) and work_kinds[str(wid)] <= {"recitation / reading", "lecture", "cinema"}:
+            kinds = ", ".join(sorted(work_kinds[str(wid)]))
+            form, basis = None, f"programme item: {kinds}, not a work (RG, 2026-11-03)"
         elif ballet_note is not None:
             form, basis = "ballet", f"ballet productions list: {ballet_note}"
         elif wsrc == "review":

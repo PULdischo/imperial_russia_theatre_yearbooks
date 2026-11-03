@@ -26131,3 +26131,8 @@ Result: Сцена г. Горбунова 48 (Александринскій/М�
 (Александринскій/Михайловскій, Sep 1890 - Feb 1891), both Russian drama company; 6 other readings, one each (Krylov fables 1895, Литературное
 отдѣленіе 1907, чтеніе, пляска. 1904, Чтеніе положенія. + Отдѣленіе литературное / поэзіи 1911 Emancipation); lectures 4 (Шляпкинъ x3, 1896
 memorials; Рефератъ, Mochalov 1900); cinema 3 (Маріинскій charity 1901, 1905 x2). All but the Горбунов/Вейнберг scenes have no troupe.
+
+## 2026-11-03 — Readings, lectures, cinema = programme items (RG "Yes, all programme items")
+
+Result: 15 works (8 readings incl. Сцена г. Горбунова / Вейнберга, 4 lectures, 3 cinema) -> NULL «programme item: <kind>, not a work».
+Only those work rows changed. Pending: 7 (Monologues, Scènes et monologues, Prolog, Обозрѣніе, Концертъ-спектакль, «Слава»!, Балетоманъ).
