@@ -1488,6 +1488,21 @@ WORK_TITLE_NOTES = {
 #: «Divertissement», «Monologues», a German «Prolog»): kept out of the troupe rule,
 #: like the other programme items, until RG rules on them.
 PROGRAMME_ITEM_TITLE_RE = r"^(Divertissement|Monologues|Scènes et monologues|Prolog)\.?$"
+#: Concert items with no printed genre (RG, 2026-11-03, "middle path"): a named musical
+#: work is a concert work; a concert section or whole evening (its pieces unlisted) is a
+#: programme item, not a work, and stays NULL. Exact research.work titles; the build
+#: fails if one matches no work. Move a title between the two sets to change it.
+CONCERT_WORK_TITLES = {
+    "Реквіемъ", "Месса Реквіемъ", "Кантата.", "Донъ-Жуанъ, музыка къ драм. поэмѣ",
+    "Цыганскія пѣсни", "Цыганскія пѣсни въ лицахъ", "Цыганскіе романсы",
+}
+CONCERT_SECTION_TITLES = {
+    "Концертное отдѣленіе", "Музыкальное отдѣленіе", "Музыкальное и декламаціонное отдѣленіе",
+    "Симфоническій концертъ", "Концертъ", "Концертъ русской оперы", "Музыкально-литературный вечеръ",
+    "Музыкально-литературный вечеръ съ живыми картинами.", "1-й концертъ подъ управленіемъ Э. Колоннъ",
+    "2-й концертъ подъ управленіемъ Э. Колоннъ", "4-й концертъ А. Зилоти", "6-й концертъ А. Зилоти",
+    "7-й концертъ А. Зилоти",
+}
 #: entities.review_work.work_kind -> WORK_ART_FORMS (RG, 2026-11-03)
 REVIEW_KIND_TO_WORK_ART_FORM = {"ballet": "ballet", "opera": "opera", "music": "concert"}
 #: performance.discipline -> the work art form it agrees with
@@ -1538,7 +1553,7 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
     for wid_, t_, g_, n_ in con.execute("""
             SELECT CAST(wl.work_id AS VARCHAR), eep.performance_title, eep.genre, count(*) FROM entities.work_link wl
             JOIN raw.event_entry_performance eep ON eep.performance_id = wl.raw_performance_id
-            WHERE nullif(trim(eep.genre), '') IS NOT NULL GROUP BY 1, 2, 3""").fetchall():
+            WHERE nullif(trim(eep.genre), '') IS NOT NULL GROUP BY 1, 2, 3 ORDER BY 1, 3, 2""").fetchall():
         ident_ = overrides.get((_match_key(_title_key(_strip_genre_suffix(t_))), _fold_genre(g_))) \
             or _work_art_form(_canon_genre(_fold_genre(g_)))
         if ident_ == "spoken" and re.search(r"кантат|увертюр|симф|фортеп|концерт|cantat", g_.lower()):
@@ -1564,6 +1579,9 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
     if con.execute("""SELECT count(*) FROM information_schema.tables
                       WHERE table_schema = 'entities' AND table_name = 'review_work'""").fetchone()[0]:
         review_kind = {str(w): k for w, k in con.execute("SELECT work_id, work_kind FROM entities.review_work").fetchall()}
+    titles_now = {r[1] for r in rows}
+    for t in (CONCERT_WORK_TITLES | CONCERT_SECTION_TITLES) - titles_now:
+        raise SystemExit(f"CONCERT_WORK_TITLES / CONCERT_SECTION_TITLES: «{t}» matches no research.work")
     out = []
     for wid, title, ent_title, genre, gsrc, excerpt_of, wsrc, ballet_note in rows:
         fold = _fold_genre(genre)
@@ -1595,6 +1613,10 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
             form = _IDENTITY_TO_WORK_ART_FORM.get(ident)
             basis = (f"printed genre {gs} on {n_g} of its printings, the rest blank (work-identity rule)" if form
                      else "pending RG: no printed genre")
+        elif title in CONCERT_WORK_TITLES:
+            form, basis = "concert", "a named musical work printed as a programme item, no genre (RG, 2026-11-03)"
+        elif title in CONCERT_SECTION_TITLES:
+            form, basis = None, "programme item: a concert section or evening, not a work (RG, 2026-11-03)"
         elif title in UNPRINTED_PARENT_LEADS:
             form, basis = None, f"not printed: {UNPRINTED_PARENT_LEADS[title]}"
         elif canon is None and len(troupe_forms.get(str(wid), {})) == 1 \

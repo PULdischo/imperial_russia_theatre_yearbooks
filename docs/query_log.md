@@ -26047,3 +26047,10 @@ WHERE w.art_form IS NULL AND w.art_form_basis NOT LIKE 'not printed%' GROUP BY w
 Result (works / performances): concert 20 / 50; divertissement 3 / 41; tableau / apotheosis 3 / 34 (Апоѳеозъ 25); recitation / reading 8 / 79
 (Сцена г. Горбунова 48, Сцена г. Вейнберга 25); lecture 4 / 4; cinema 3 / 3; generic items filed as play 4 / 4 (Divertissement, Monologues,
 Scènes et monologues, Prolog); no kind, no troupe 4 / 4 (Обозрѣніе, Концертъ-спектакль, «Слава»!, Балетоманъ).
+
+## 2026-11-03 — Concert items split (RG "middle path")
+
+Result: concert (named musical works, 7): Реквіемъ, Месса Реквіемъ, Кантата., Донъ-Жуанъ, музыка къ драм. поэмѣ, Цыганскія пѣсни,
+Цыганскія пѣсни въ лицахъ, Цыганскіе романсы. NULL «programme item: a concert section or evening, not a work» (13). Works: drama 2,259 /
+opera 323 / ballet 260 / operetta 39 / concert 11 / ceremonial 4 / NULL 45. Only work rows changed. (Correction: the previous step's
+drama total was 2,259, not 2,260 as reported in chat.) Basis genre lists now in a fixed order.
