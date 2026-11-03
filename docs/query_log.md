@@ -25515,3 +25515,55 @@ SELECT count(*) FROM analysis.person_entry_credit WHERE entry_id IN (<8 entries>
 ```
 
 Result: 59 tables; changed only raw.person_entry_credit (+26, -0) and analysis.person_entry_credit (+26, -0). research.person 2,619, live 2,521, alignment 0 shifts.
+
+## 2026-11-03 — Scan-check batch: Больмъ spellings, 1908-09 surname slips, Егорова 1899-01, Ѳедорова review mentions
+
+```sql
+SELECT e.entry_id, e.list_number, e.family_name, e.first_name, l.person_id FROM raw.person_entry e LEFT JOIN entities.person_link l USING(entry_id)
+WHERE e.family_name SIMILAR TO 'Бол.?.?мъ.*' AND e.entry_id LIKE 'balletartists%';
+SELECT ... FROM raw.person_entry WHERE family_name LIKE ANY ('Кур%шин%','Куриш%','Пановъ%','Поповъ%','Рахмановъ%','Романовъ%') AND entry_id LIKE 'balletartists_190%';
+SELECT ... FROM raw.person_entry WHERE family_name LIKE 'Егорова%' AND entry_id LIKE 'balletartists_18(98|99)/1900/1901_SP%';
+SELECT mention_id, season, block_id, char_start, surface, entity_id, link_method FROM entities.review_mention
+WHERE surface LIKE 'Ѳедорова%' AND city='SP' AND season BETWEEN '1902-03' AND '1907-08';
+SELECT pa.season, e.family_name, e.first_name FROM research.person_appearance pa JOIN raw.person_entry e ON e.entry_id = pa.appearance_id
+WHERE pa.entity_type='BalletArtists' AND pa.city='SP' AND e.family_name LIKE ANY ('Ѳедорова%','Федорова%');
+SELECT m.mention_id, m.char_start, m.surface, p.display_name FROM entities.review_mention m LEFT JOIN research.person p ON p.person_id = m.entity_id
+WHERE m.block_id = 'review_1904-05_SP_ballet_p013__b003' AND m.char_start >= 61;
+```
+
+Result (scans read by Claude): Больмъ prints «Больмъ, Адольфъ(-)Эмиль» in 1903-04 p.74, 1905-06 p.20, 1909-10 p.96 -- stored «Болъмъ» x2,
+«Болмъ», «Адолльфъ», «Эмилъ» are misreads (5 field edits). Куришенская Вильгельмовна / Поповъ / Романовъ 1908-09 printed as stored
+(print slips; linked to the right people). Егорова 1899-00 no.34 and 1900-01 p.73 no.33 print «Егорова 2-я, Марія Николаевна (съ 7
+іюня 1882)» as stored; 1898-99 prints Марія Николаевна 1-я + Любовь 2-я. Ѳедорова: 10 SP mentions 1904-07; roster 2-я = Александра
+Александровна in 1904-05 (Лидія absent), Лидія in 1906-07; 1904-05 and 1906-07 lists spell «Федорова». 1906-07 «Ѳедорова 2-я» x4
+unlinked (roster 2-я = Лидія 36348a72), «Ѳедорова 1-я» x1 unlinked (Марія Дмитріевна 2475a6b3), «г-жа Ѳедорова» x1 no ordinal.
+1904-05 «Ѳедорова 2-я/1-я» (mentions 21556/21557) are in a quoted 1875 cast of «Голубая Георгина» (review p.118); 21 mentions in that
+passage, 9 linked to later people, incl. «Готье» (a role) -> Готье Теофиль, «Л. Ивановъ» -> Иванова Лариса, «Ѳедорова 1-я» ->
+Марія Дмитріевна (joined 1885).
+
+## 2026-11-03 — Check of the combined rebuild copy (research-layer session) before it replaces production
+
+```sql
+-- on outputs/rebuild_combined_2026-11-03/imperial_theaters.duckdb, read-only
+SELECT e.entry_id, e.family_name, e.first_name, e.patronymic, l.person_id FROM raw.person_entry e JOIN entities.person_link l USING(entry_id)
+WHERE e.family_name LIKE 'Бол%мъ%' AND e.entry_id LIKE 'balletartists%';
+-- research.person count, live entities.person, receipts, Wikidata, assertion links, Больмъ display name,
+-- 1908-09 BalletArtists credit rows, Фридрихъ 1910-11 note, Храписъ 1910-11 start (earlier fixes still present)
+```
+
+Result: see the session report of 2026-11-03 (Больмъ rows and metrics).
+
+## 2026-11-03 — Results of the combined-rebuild copy check, and of restored production (person audit side)
+
+```sql
+-- copy outputs/rebuild_combined_2026-11-03/imperial_theaters.duckdb, then production after the swap, read-only:
+SELECT entry_id, family_name, first_name, patronymic, person_id FROM raw.person_entry JOIN entities.person_link USING(entry_id)
+WHERE family_name LIKE 'Бол%мъ%' AND entry_id LIKE 'balletartists%';
+SELECT count(*) FROM raw.person_entry WHERE family_name LIKE 'Бол%мъ%' AND family_name <> 'Больмъ' AND entry_id LIKE 'balletartists%';
+-- research.person, live entities.person, receipts, Wikidata, assertion links, 1908-09 credit rows, Фридрихъ note, Храписъ start
+```
+
+Result: copy -- all 8 Больмъ entries «Больмъ», first «Адольфъ-Эмиль»/«Адольфъ Эмиль», patronymic null, all -> 3a1cd225 (display
+«Больмъ, Адольфъ-Эмиль»); research.person 2,619; live 2,521; receipts 3,223,088,581; Wikidata 174; assertion links 2,468; 1908-09
+BalletArtists credit rows 866 (= 840 + 26); Фридрихъ 1910-11 note single «Оставилъ службу»; Храписъ start «съ 1 іюня, 1908 г.».
+Production after swap: 0 misspelled Больмъ rows, 2,619, 3,223,088,581, 2,468; person_link 0 shift blocks.

@@ -1036,3 +1036,14 @@ Surnames printed differently from the store (logged, not changed): 1900-01 SP no
 (The 1902-03 folio 161 «Петина» ×2 and 1902-03 SP opera folio 137 were transcription slips, the print has «Петипа»: corrected.
 1904-05 Moscow folio 202 «М. И. Петина» was also a transcription slip: the print reads «Петипа», crop
 `scan_audit/1904-05_rg_review_msk_ballet_f202_petipa.png`; corrected 2026-11-01, RG.)
+
+## Three surname/patronymic slips in the 1908-09 ballet lists (added 2026-11-03; checked by Claude on the scans; stored as printed)
+
+Each is the same person as in the other volumes (same number position, start date and service history) and is linked to that
+person; raw keeps the print.
+- **Moscow p.118 no. 41:** «Куришенская, Александра Вильгельмовна (съ 1 сентября 1897 г.)» -- every other volume 1900-01..1909-10
+  prints «Куршинская, Александра Васильевна», same start. Crop `scan_audit/1908-09_balletartists_MSK_p118_no41_kurishenskaya.png`.
+- **Moscow p.121 no. 42:** «Поповъ, Александръ Викторовичъ (съ 1 октября 1895 г. по 6 ноября 1898 г. и съ 1 сентября 1901 г.)» --
+  «Пановъ» in 1901-02..1909-10 with the same broken service. Crop `scan_audit/1908-09_balletartists_MSK_p121_no42_popov.png`.
+- **Petersburg p.95 no. 62:** «Романовъ, Викторъ Павловичъ (съ 1 іюня 1903 г.)» -- «Рахмановъ 2-й, Викторъ Павловичъ» 1903-04..1906-07,
+  same start (Рахмановъ 1-й, Сергѣй Павловичъ, left 1 Feb 1908). Crop `scan_audit/1908-09_balletartists_SP_p95_no62_romanov.png`.

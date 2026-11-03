@@ -116,3 +116,14 @@ Then RG 2026-11-02: Потаповъ -> 12 Dec 1909 (rule applies: 1910-11 repri
 8 SP review mentions of «Ѳедорова 2-я» 1903-07 added as corroboration; those mentions are still unlinked in the review layer).
 Still to put to RG: and the listed-after-leaving cases (Иванова 2-я, Левинсонъ 1-я, Егорова М. Н.,
 Дмитріева 1-я, Броневскій-Боянусъ, Гущинъ, Смирнова).
+
+- Scan-check batch 2026-11-03 (RG "do the ones that require a scan check"; scans read by Claude, crops in docs/eval/scan_audit/):
+  Больмъ FIXED (RG "Fix Больмъ"; B11_bolm_spellings_2026-11-03.csv): print reads «Больмъ, Адольфъ(-)Эмиль» in 1903-04 p.74, 1905-06 p.20,
+  1909-10 p.96; stored «Болъмъ» x2, «Болмъ», «Адолльфъ», «Эмилъ» (1909-10 split as first «Адольфъ» + patronymic «-Эмилъ») were misreads;
+  6 field edits. Production rebuilt once by the research-layer session from raw after a write collision (2026-11-03 10:58; damaged file
+  kept as outputs/full_run/imperial_theaters.corrupted_clash_2026-11-03.duckdb); checked: 8 entries -> 3a1cd225, metrics unchanged.
+  1908-09 Куришенская Вильгельмовна / Поповъ / Романовъ: printed as stored, print slips, linked to the right people (genuine_print_typos.md).
+  Егорова 1899-00 no.34 / 1900-01 p.73 no.33: print «Егорова 2-я, Марія Николаевна (съ 7 іюня 1882)» as stored; #54 stays RG's call.
+  Ѳедорова: 1906-07 «Ѳедорова 2-я» x4 (roster 2-я = Лидія) and «Ѳедорова 1-я» x1 unlinked; lists 1904-05/1906-07 spell «Федорова».
+  1904-05 review p.118 «Ѳедорова 2-я, 1-я» are in a quoted 1875 cast of «Голубая Георгина»: 9 of 21 mentions in that passage linked to
+  later people (e.g. «Готье» role -> Готье Теофиль, «Л. Ивановъ» -> Иванова Лариса, «Ѳедорова 1-я» -> Марія Дмитріевна). For RG next.
