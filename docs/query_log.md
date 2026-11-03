@@ -26203,3 +26203,26 @@ of it); Конекъ-горбунокъ every season 1895-96..1901-02 from 1895-
 Коралли exists as a production-list creator (63f4db8b); no record for Вальцъ Ѳедоръ. Copy and production: 6 mention links changed (as listed),
 20 assertion dates set, 2 assertions dropped; credits (already right), dances, solos unchanged; production equal to the tested copy in all five
 review tables; assertion links 2,426; 0 shifts.
+
+## 2026-11-03 — Research-layer review: Theaters
+
+```sql
+SELECT * FROM research.theater;
+SELECT t.canonical_name, t.city, count(*), count(*) FILTER (WHERE e.event_status='performed'), min(e.season), max(e.season),
+       sum(e.receipts_total_kopecks)/100 FROM research.event e JOIN research.theater t USING(theater_id) GROUP BY ALL;
+SELECT event_status, count(*) FROM research.event GROUP BY 1;
+SELECT theater, theater_canonical, count(*) FROM analysis.event_entry GROUP BY ALL;
+SELECT page_id, count(*) FROM analysis.event_entry WHERE event_id NOT IN (SELECT event_id FROM research.event) GROUP BY 1;
+-- «Новый» by season: performed / no_performance / not_captured; last performed date
+SELECT theater_printed, count(*) FROM research.set_design GROUP BY 1;
+SELECT entity_id, count(*), string_agg(DISTINCT surface, ', ') FROM entities.review_mention WHERE mention_type='theater' GROUP BY 1;
+-- context of the «Новый» theater links (random sample of 8) and count of surfaces Новыя / Новая / Новыхъ
+```
+
+Result: 6 theaters, every event has one. Events / performed: Маріинскій 5,953/4,040, Александринскій 6,024/4,598,
+Михайловскій 5,588/4,025, Большой 5,844/3,808, Малый 5,821/4,009, Новый 3,583/1,685. Status: performed 22,165,
+no_performance 7,771, not_captured 2,877. 16 raw spellings, all mapped. 30 events excluded (repertoire_1910-11_p056).
+Новый: last performance 1907-04-29; 1907-08..1910-11 0 performed, 1,037 no_performance (printed dashes, 1908-09 p. 3
+scan). set_design theater_printed: Большой 25, Малый 8, blank 28. Review theater mentions 632: INST:imperial 208,
+INST:moscow 140, INST:petersburg 118, unlinked 105 (SP theater names), Новый 45 (32 are «Новыя/Новая/Новыхъ»), Большой 9,
+Малый 3, Эрмитажный 3, Красносельскій 1.

@@ -335,3 +335,55 @@ C. The yearbook disagrees with itself (both transcriptions match their scans; op
 `LIST_DATE_PRINT_TYPOS`: «Пробужденіе Флоры» -> 3 May 1896, «На перепутьи» -> 27 Dec 1904 (matinée), Moscow «Спящая
 красавица» -> 8 Oct 1908. `production_date` keeps the printed day and says why in `date_correction_note`; matched 2,357 ->
 2,360, unmatched 11 -> 8; `production_work.n_matched_dates` +1 for the three entries. Nothing else changed.
+
+## 3. Theaters
+
+(Queries logged in `docs/query_log.md`, "Research-layer review: Theaters".)
+
+### What one record holds
+
+- **`theater`** — 6 rows: `theater_id`, `canonical_name`, `city`, `active_from_season` (set only for «Новый», 1898-99).
+  No end season, address, English name or Wikidata link. Same as `entities.theater`.
+- Pointed at by `event.theater_id` (every one of 32,813 events has one) and the dancer views. `set_design` keeps the
+  theater only as printed (`theater_printed`: Большой театръ 25, Малый театръ 8, blank 28), not as an id. No review
+  table carries a theater.
+
+| theater | city | events | performed | seasons | receipts (р.) |
+|---|---|---|---|---|---|
+| Маріинскій | SP | 5,953 | 4,040 | 1890-91 – 1910-11 | 10,974,212.58 |
+| Александринскій | SP | 6,024 | 4,598 | 1890-91 – 1910-11 | 5,555,054.14 |
+| Михайловскій | SP | 5,588 | 4,025 | 1890-91 – 1910-11 | 3,494,747.45 |
+| Большой | Moscow | 5,844 | 3,808 | 1890-91 – 1910-11 | 7,597,011.23 |
+| Малый | Moscow | 5,821 | 4,009 | 1890-91 – 1910-11 | 3,723,520.56 |
+| Новый | Moscow | 3,583 | 1,685 | 1898-99 – 1910-11 | 886,339.85 |
+
+Event counts include `no_performance` and `not_captured` rows (all theaters: performed 22,165, no_performance 7,771,
+not_captured 2,877).
+
+### Held earlier but not carried into research
+
+- Raw prints 16 spellings of the six names («Большой театръ», «Большой», «Большой театр», «Большой театръ,» ...); every one
+  maps to one of the six (`analysis.event_entry.theater_canonical`). Nothing unmapped.
+- 30 events on `repertoire_1910-11_p056` are left out on purpose (`RESEARCH_EXCLUDED_PAGES`: Moscow's blank 10-19 May
+  1911 page printed from the SP form; RG 2026-10-06).
+- The Season Reviews' theater mentions (632 in `entities.review_mention`) reach no research table. Two venues outside the
+  six occur there only: the Эрмитажный (3) and the Красносельскій (1).
+
+### Things noticed (for RG)
+
+1. **«Новый» after it stopped playing.** Its last performance is 29 Apr 1907. From 1907-08 to 1910-11 the Repertoire still
+   prints a «Новый театръ» column of dashes (checked on the 1908-09 p. 3 scan), so research holds 1,037 `no_performance`
+   events there (264, 255, 264, 254 a season). As printed; they swell Moscow's count of days without a performance.
+2. **Review theater mentions are linked unevenly.** Moscow names link to a theater id (Новый 45, Большой 9, Малый 3), but 32
+   of the 45 «Новый» links are the adjective («Новыя декораціи», «Новыхъ балетовъ»). Petersburg names («Маріинскомъ» 57,
+   «Маріинскаго» 20, «Михайловскомъ» 11 ...; 105 in all) are not linked. The rest are institution tags (INST:imperial 208,
+   INST:moscow 140, INST:petersburg 118, Эрмитажный, Красносельскій). Belongs with the reviews section; nothing uses it yet.
+3. `active_from_season` exists only for «Новый»; there is no closing season for it.
+
+### RG's questions and rulings
+
+**T1 — «Новый» after 1906-07 (RG 2026-11-03, "keep as is").** The 1,037 dash-only rows of 1907-08 – 1910-11 stay
+`no_performance` as printed; no closing season is added to `research.theater`.
+
+**T2 — review theater mentions (RG 2026-11-03, "Leave for Reviews").** The 32 adjective links to «Новый» and the 105
+unlinked Petersburg theater names wait for the Season Reviews section.
