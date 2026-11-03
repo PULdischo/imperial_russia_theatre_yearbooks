@@ -330,3 +330,8 @@ C. The yearbook disagrees with itself (both transcriptions match their scans; op
   entries agree on 9 Mar; the Repertoire's 9 Mar bill is «Эвника, бал.» / «Карнавалъ, пантомима-бал.», 4653 р. 50 к.
   (7 Mar adds «Шопеніана, сюита»). The SP review says «Карнавалъ» was repeated «7-го и 9-го марта» and does not name
   «Шопеніана» for either.
+
+**W8 follow-up A applied (RG 2026-11-03, "Yes, add the three").** The three list slips with a known date are in
+`LIST_DATE_PRINT_TYPOS`: «Пробужденіе Флоры» -> 3 May 1896, «На перепутьи» -> 27 Dec 1904 (matinée), Moscow «Спящая
+красавица» -> 8 Oct 1908. `production_date` keeps the printed day and says why in `date_correction_note`; matched 2,357 ->
+2,360, unmatched 11 -> 8; `production_work.n_matched_dates` +1 for the three entries. Nothing else changed.

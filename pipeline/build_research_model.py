@@ -530,6 +530,16 @@ LIST_DATE_PRINT_TYPOS = {
         "2026-10-29); the Repertoire has «Русланъ и Людмила, оп.» at the Большой on 21 Sep 1901 (Friday) and «Лебединое "
         "озеро, бал.» on 21 Oct (Sunday), read blind; the list gives no October date and the Repertoire's 8 performances "
         "equal its «Всего—8»; «октября» dropped in the list (RG, 2026-10-30: \"I think this is most likely\"; ledger 1901-02-14)"),
+    # RG 2026-11-03 (research-layer review, "Yes, add the three"): list slips already found in the reconciliations
+    "balletproductions_1895-96_MSK_p001__e006__d001": (
+        "1896-05-03", "printed «Пробужденіе Флоры … мая 2, 22» (Moscow list p. 41); the Repertoire (read blind) and the "
+        "Moscow ballet review have it on 3 May, and 2 May is «Паяцы» + «Даита»; one-digit slip in the list (ledger 1895-96-09)"),
+    "balletproductions_1904-05_SP_p001__e006__d002": (
+        "1904-12-27", "printed «На перепутьи … декабря 12, 17» (SP list p. 139); 17 Dec is «Валкірія», the ballet was at the "
+        "27 Dec matinée, as the list's own «Пробужденіе Флоры» entry has it; the list's slip (RG, 2026-10-29; ledger 1904-05-17)"),
+    "balletproductions_1908-09_MSK_p001__e005__d002": (
+        "1908-10-08", "printed «Спящая красавица … октября 18» (Moscow list p. 71); the Repertoire has it at the Большой on "
+        "8 Oct (Среда, 1040 р. 89 к.) and a dash on 18 Oct; count 7 = 7; the list's slip (ledger 1908-09-03)"),
 }
 
 

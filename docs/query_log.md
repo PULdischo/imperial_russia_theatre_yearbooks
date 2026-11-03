@@ -26147,3 +26147,17 @@ p006 «81», 1905-06 SP musicians p006 «33», 1905-06 ProductionTeam p002 «64�
 real skips in the selectively scanned Theatre School reports. All PDFs strictly increasing after correction. Production: person_appearance
 gains 3 columns, all 23,980 rows filled, no existing value changed; every other table identical; production_date 2,374 / 2,357 matched;
 receipts 3,223,088,581; research.person 2,619; person_death 308; 0 shifts. sqlite export tested on a copy: builds.
+
+## 2026-11-03 — Research-layer review W8 follow-up A: three list slips added to LIST_DATE_PRINT_TYPOS (test on a copy after 77e8d3f)
+
+```sql
+SELECT d.production_date_id, pr.list_title, d.date, d.day_printed, d.month_printed FROM research.production_date d
+ JOIN research.production pr USING(production_id)
+ WHERE (pr.list_title='Пробужденіе Флоры' AND d.date='1896-05-02') OR (pr.list_title='На перепутьи' AND d.date='1904-12-17')
+    OR (pr.list_title='Спящая красавица' AND pr.city='Moscow' AND d.date='1908-10-18');
+-- the intended days' events at the Большой / Маріинскій; before/after diff of every table
+```
+
+Result: ids balletproductions_1895-96_MSK_p001__e006__d001, _1904-05_SP_p001__e006__d002, _1908-09_MSK_p001__e005__d002.
+After: all three matched (repertoire_1895-96_pair024__s038, repertoire_1904-05_p020__s032 matinée, repertoire_1908-09_p010__s001);
+matched 2,360, unmatched 8; production_work 3 rows +1; every other table identical.
