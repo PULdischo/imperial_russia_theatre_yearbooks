@@ -72,7 +72,13 @@ Order: conventions first (each settles many rows), then mechanical fixes, then i
 - BUILT 2026-11-02 (6648807): research.service_period (A3 partial dates, A4 O.S., A6 corrections CSV), research.person_assignment (A2b, 16),
   costumers' area of work = person_appearance.title (A7; a separate duties column would have duplicated title, dropped). Ѳедоровъ «1 іюня 1889»
   (1899-00 musicians) RULED 2026-11-02 (RG): 1 June 1899, added to the A6 corrections.
-- Pipeline bugs: flatten doubles «Оставилъ службу» (1910-11 MSK p003); comma in «съ 1 іюня, 1908 г.» shifts start into end (Храписъ).
+- Pipeline bugs FIXED 2026-11-03 (RG "Yes, parser bugs"): (1) parse_and_validate._repair_musicians_rank_or_title appended a
+  service line from rank_or_title to a note that already held it -- 3 notes doubled (1910-11 MSK musicians Фридрихъ, Цозель, Юмрихъ);
+  now skips a part the note already contains. (2) build_duckdb read the parsed CSVs with a sniffed format; person_entry_service.csv
+  has one quoted value (Храписъ 1910-11 «съ 1 іюня, 1908 г.»), so the sniffer chose no quoting and shifted that row one column.
+  Quote/escape now stated; checked all 5 tables, no other row read differently. Raw diff v. backup: exactly 3 notes + 1 service row.
+  Side effect: the shifted row had split Храписъ Георгій into two people; now one (4143fc41, 1908-09..1910-11, start 1 June 1908),
+  eb5c1063 superseded by the builder; no file referenced it. research.person 2,620 -> 2,619, live 2,522 -> 2,521.
 - Held medium rows DONE 2026-11-02 (RG "Apply all 10"): 15 field edits on 10 entries, B5_B6_held_applied_2026-11-02.csv; Борхманъ «Алольфовичъ» already ruled a print typo (genuine_print_typos.md, 2026-10-07); Эйхенвальдъ «Надежла» stored «Надежда» (RG: worn д; fix_eichenwald_1897-98.csv).
 - Undated transfers DONE 2026-11-02 (RG "Yes, borrow dates"): B9_undated_transfers.csv sets end_type other on Ветцель 1902-03,
   Липинъ 1903-04, Кякштъ 1903-04, Боборыкинъ 1900-01, and adds an undated period (other) to Боборыкинъ's 1901-02 Moscow reprint.

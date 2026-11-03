@@ -39,9 +39,11 @@ def load_raw_schema(con: duckdb.DuckDBPyConnection, parsed_dir: Path, manifest: 
         if not csv_path.exists():
             print(f"skip (no data yet): {table}")
             continue
+        # quote/escape stated, not sniffed (2026-11-03): person_entry_service.csv had one quoted value (Храписъ 1910-11
+        # «съ 1 іюня, 1908 г.»), so the sniffer chose no quoting and split it at the comma, shifting the row one column.
         con.execute(f"""
             CREATE OR REPLACE TABLE raw.{table} AS
-            SELECT * FROM read_csv_auto('{csv_path.as_posix()}', header=true, all_varchar=true)
+            SELECT * FROM read_csv_auto('{csv_path.as_posix()}', header=true, all_varchar=true, quote='"', escape='"')
         """)
         n = con.execute(f"SELECT count(*) FROM raw.{table}").fetchone()[0]
         print(f"raw.{table}: {n} rows")

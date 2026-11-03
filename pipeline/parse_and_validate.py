@@ -2089,6 +2089,11 @@ def _repair_musicians_rank_or_title(parsed: dict) -> tuple[int, int]:
 
         if note_parts:
             existing = (e.get("tenure_note_text") or "").strip()
+            # skip a part the note already holds (2026-11-03: three 1910-11 Moscow musicians printed «Оставилъ службу …»
+            # in rank and note alike, and it was doubled in the note)
+            norm = lambda x: " ".join(x.split()).rstrip(".")
+            note_parts = [x for x in note_parts if norm(x) not in norm(existing)]
+        if note_parts:
             addition = " ".join(note_parts)
             e["tenure_note_text"] = f"{existing} {addition}".strip() if existing else addition
             n_note += 1

@@ -25437,3 +25437,27 @@ select count(*) from research.events_with_dancers where event_id = 'repertoire_1
 
 Result: verbatim_genre «бал.», discipline opera (work 605012ca… «Сельская честь» оп.), company St. Petersburg opera; event disciplines opera,
 genre_families opera; operetta; not in events_with_dancers (0). Already handled by work_artform_overrides.csv (RG agreed 2026-10-05, 615410f).
+
+## 2026-11-03 — Parser bugs: doubled service lines in tenure notes; CSV quoting of person_entry_service
+
+```sql
+-- raw JSON v. raw.person_entry for musicians_1910-11_MSK_p003 e005/e008/e020 and balletartists_1910-11_MSK_p003 e005/e008/e020
+SELECT tenure_note_text, credit_summary_text FROM raw.person_entry WHERE entry_id = ?;
+-- corpus: tenure notes with a repeated «Переведен…/Оставил…/†/(см.» sentence (Python split over raw.person_entry.tenure_note_text)
+SELECT period_order, start_date_text, start_date_undate, end_date_text, end_date_undate, end_type FROM raw.person_entry_service
+WHERE entry_id IN (Храписъ 1908-09, 1909-10, 1910-11);
+-- per parsed table: SELECT Quote FROM sniff_csv(f); count(*) of (explicit quote/escape read EXCEPT ALL sniffed read)
+```
+
+Result: 3 doubled notes, all 1910-11 MSK musicians (raw rank «Кларнетъ./Тромбонъ./Ударные инструменты. Оставилъ службу …»), raw JSON single. Храписъ 1910-11 service row stored as start_text '"съ 1 іюня', start_undate ' 1908 г."', end_text '1908-06-01'; parsed CSV correctly quoted. Sniffer: person_entry_service Quote '(empty)', other 4 tables '"'; explicit quoting changes 1 row (person_entry_service), 0 in the others.
+
+## 2026-11-03 — After parser fixes: diff v. backup db_backup_parser_bugs_2026-11-03
+
+```sql
+SELECT person_id, display_name FROM old.research.person EXCEPT SELECT person_id, display_name FROM research.person;   -- and reverse
+SELECT count(*) FROM (SELECT * FROM raw.<t> EXCEPT ALL SELECT * FROM old.raw.<t>);   -- both directions, 5 raw tables
+SELECT entry_id, person_id, match_method FROM [old.]entities.person_link WHERE entry_id IN (Храписъ entries);
+-- receipts, Wikidata, assertion links, pending, live people old v. new; research.person_tenure for 4143fc41
+```
+
+Result: raw person_entry 3/3 rows changed (the 3 notes, now single), person_entry_service 1/1 (Храписъ 1910-11 start «съ 1 іюня, 1908 г.» 1908-06-01, no end), other raw tables 0. research.person gone: eb5c1063 Храписъ (1908-10), now superseded by 4143fc41, which holds all 3 seasons; person_tenure 1908-09..1910-11, start 1908-06-01, consistent. Receipts 3,223,088,581, Wikidata 174, assertion links 2,468, pending 0 unchanged; live 2,522 -> 2,521; research.person 2,620 -> 2,619; alignment 0 shifts. No file in docs/ or pipeline/ references eb5c1063.
