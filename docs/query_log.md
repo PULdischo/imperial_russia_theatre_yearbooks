@@ -25961,3 +25961,19 @@ SP repertoire from 30 Sep 1912 (after the Repertoire's last season).
 
 Result: 20 review works: ballet 14, opera 2, concert 4 (music). Works: drama 2,239 / opera 319 / ballet 260 / operetta 35 / concert 4 /
 ceremonial 4 / NULL 91 (all "no printed genre"). Check unchanged; no other column or table changed.
+
+## 2026-11-03 — The 91 works with no art form (no printed genre): profile
+
+```sql
+SELECT w.canonical_title, w.appearance_count, string_agg(DISTINCT p.discipline, '/'), string_agg(DISTINCT p.genre_family, '/'), min(season), max(season)
+FROM research.work w LEFT JOIN research.performance p USING (work_id) LEFT JOIN research.event e USING (event_id) WHERE w.art_form IS NULL GROUP BY ...;
+SELECT performance_title, genre, count(*) FROM raw.event_entry_performance WHERE performance_title ILIKE '%Китеж%' GROUP BY 1, 2;
+SELECT canonical_title, canonical_genre, appearance_count FROM research.work WHERE canonical_title ILIKE '%<twin>%';
+```
+
+Result (works / performances): twin of an existing work, genre left in the title 11 / 57 (e.g. «Наканунѣ, возможный случай» 20 v.
+«Наканунѣ» [возм. случай.] 6; «Вожди, пять эпизодовъ…» 5 + «Вожди, эпизоды…» 2 v. «Вожди» [эп.] 32; «Трагедія о Гамлетѣ, принцѣ Датскомъ.» 10;
+«Chéri vaud.» 4 v. «Chéri!» [vaud.] 2); genre in title, no twin 9 / 18; excerpts the matcher missed 6 / 7 (La Mascotte 1-r acte, Le petit Duc
+2-me acte, Britannicus, Die Hugenotten 4-ter Akt, Gli Ugonotti 4-o atto, 2-е д. оперет. Цыганскій баронъ); RG-unlinked Русалка acts 2 / 2;
+genre on some printings only 1 / 33 (Китежъ: 11 printings «оп.», 22 none); titled works with no genre printed 16 / 37; generic programme
+items 46 / 216 (concerts, divertissements, tableaux, readings, lectures, cinema).
