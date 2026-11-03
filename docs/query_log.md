@@ -26003,3 +26003,16 @@ only those 3 work rows changed.
 Result: curated parent «Женитьба» [оп.] removed; the excerpt stays unlinked (blank-parent row), art_form opera from its own printed
 «оп.», basis adds «probably act 1 of Mussorgsky's opera … (lead from outside the yearbook, not linked)». Only that work row changed
 (one work gone: the 0-performance curated parent).
+
+## 2026-11-03 — «Гамлетъ» [тр.] v. «Трагедія о Гамлетѣ, принцѣ Датскомъ.»: seasons, theatres, printings
+
+```sql
+SELECT w.canonical_title, e.season, t.canonical_name, count(*), min(e.date), max(e.date), string_agg(DISTINCT p.verbatim_title, ' | '), string_agg(DISTINCT e.annotation, ' | ')
+FROM research.work w JOIN research.performance p USING (work_id) JOIN research.event e USING (event_id) JOIN research.theater t USING (theater_id)
+WHERE (w.canonical_title = 'Гамлетъ' AND w.canonical_genre = 'тр.') OR w.canonical_title LIKE 'Трагедія о Гамлет%' GROUP BY ALL ORDER BY 2;
+```
+
+Result: «Гамлетъ» [тр. 41 / траг. 25] 66: Александринскій and Малый 1891-92 to 1897-98 (+ Михайловскій 2, Feb 1892), then once at the
+Малый 11 Nov 1901 on Адель Зандрокъ's German guest season. «Трагедія о Гамлетѣ, принцѣ Датскомъ.» 11: Александринскій only, 1900-01 (6,
+from 30 Nov 1900, incl. Аполлонскій's benefit) and 1910-11 (5). The two titles never share a season. No review credit or cast statement
+points at either.
