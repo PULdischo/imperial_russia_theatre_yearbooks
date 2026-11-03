@@ -639,6 +639,16 @@ and the officials attached to him or to the Directorate; 132 rows, 25 people) se
 city (NULL for these lists). Consequence: `research.person_tenure` runs are per person × list × city for these lists too, so a move
 between cities (Коровинъ SP 1901 -> Moscow 1903; Горскій's school posts) or a concurrent post in both shows as separate runs.
 
+## Where each staff-list entry is printed — `research.person_appearance.source_file`, `scan_page`, `printed_folio` (added 2026-11-03)
+
+RG 2026-11-03: every person appearance carries the scan PDF (`source_file`), the page within it (`scan_page`, 1-based) and the
+printed page number (`printed_folio`), so an entry can be cited as volume + page. Source: `docs/folios/staff_list_folios.csv`
+(966 pages, 167 PDFs; `basis` per page). Read by Qwen (qwen3-vl-plus, the page head and foot only; `docs/folios/read_folios_qwen.py`;
+26 of 26 folios Claude had read agreed), then checked: within each PDF the folios must strictly increase. 16 pages where Qwen took a
+printer's signature mark («6», «8», «9*») were read on the scan by Claude; 6 last pages print no number and take it from the sequence.
+Printed pages are skipped only in the Theatre School reports (Graduates), which were scanned selectively. The build stops if a
+staff-list page has no row. The printed list numbers are not carried (RG: not needed once volume and folio are there).
+
 ## Deaths — `research.person_death` (added 2026-11-03)
 
 RG 2026-11-03 (person field audit C4, "Yes, add them"): every printed death of a research person, one row per source, so that a

@@ -114,7 +114,7 @@ SCHEMAS = {
             heading_path TEXT, "rank" TEXT, title TEXT, service_class TEXT,
             instrument TEXT, subject_taught TEXT, tenure_note_text TEXT,
             printed_start_date TEXT, printed_start_text TEXT, printed_service_periods INTEGER,
-            credit_summary_text TEXT
+            credit_summary_text TEXT, source_file TEXT, scan_page INTEGER, printed_folio INTEGER
         )""",
     # One row per run (person x list x city); city is null on 1,279 runs, so no composite key -- Datasette uses rowid.
     "person_tenure": """

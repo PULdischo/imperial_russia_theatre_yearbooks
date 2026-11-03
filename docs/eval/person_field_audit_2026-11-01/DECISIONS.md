@@ -151,3 +151,6 @@ Still to put to RG: and the listed-after-leaving cases (Иванова 2-я, Л�
   and Тепферъ (listed 1896-97 after their 1896 deaths). OPEN, not checked: roster «†» earlier than later listings -- Николаева 3-я
   Зинаида († 1 Dec 1902, listed to 1910-11), Козловъ Михаилъ Ѳедоровичъ († 1902, to 1904-05), Краюшкинъ († 1898, to 1900-01):
   stale reprint or a merge of two people.
+- Folios DONE 2026-11-03 (RG "go ahead", "Yes, run Qwen"): docs/folios/staff_list_folios.csv, all 966 staff-list pages; research.person_appearance
+  gets source_file / scan_page / printed_folio. Local OCR (tesseract) tried first and rejected (7 of 26 known folios wrong). Qwen run: 559k
+  input tokens; 16 signature-mark misreads corrected by Claude on the scans; 6 last pages from the sequence. Supersedes the DEFERRED folio note.

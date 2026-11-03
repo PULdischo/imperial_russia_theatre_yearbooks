@@ -26118,3 +26118,32 @@ list error, no date), Очарованный лѣсъ 27 Sep 1898 (also on the l
 Конекъ-горбунокъ Moscow 13 + 17 Feb 1911, Спящая красавица SP 17 Feb + Moscow 19 Feb 1911, Шопеніана 7 Mar 1911 (also on the
 list). 1910-11 list: Эвника and Карнавалъ both include 9 Mar (matched); Шопеніана «марта 7, 9», 4 dates. Review: «Карнавалъ»
 «7-го и 9-го марта», no Шопеніана.
+
+## 2026-11-03 — Staff-list folios: inventory and a local-OCR trial (RG "go ahead" on the sequence approach)
+
+```sql
+SELECT source_file, entity_type, count(*), min(source_page_index), max(source_page_index), count(DISTINCT source_page_index)
+FROM raw.source_pages WHERE entity_type <> 'Repertoire' GROUP BY 1,2;
+SELECT entity_type, count(*), count(printed_page_number) FROM raw.source_pages WHERE entity_type <> 'Repertoire' GROUP BY 1;
+-- then tesseract (rus+eng, psm 11) on the head 20% and foot 40% of each of the 966 pages; per-PDF offset fit (folio = scan index + k)
+```
+
+Result: 167 PDFs, 966 pages, no gaps in the scan numbering; printed_page_number empty on all of them. Strip composites fail on the
+1890-91 photographs (book edge and background in the strip). Tesseract + sequence fit: 41 of 167 PDFs fully consistent, but 7 of 26
+folios read by Claude earlier today disagree with the fit (old-style figures «IIO» misread; list numbers taken for folios). Not reliable
+enough; Qwen (DashScope) proposed as the reader, cost to RG first.
+
+## 2026-11-03 — Staff-list folios: Qwen reading, sequence check, applied to production (diff v. db_backup_folios_2026-11-03)
+
+```sql
+-- Qwen (docs/folios/read_folios_qwen.py) on 966 pages; per PDF: folios strictly increasing, jumps > 3 flagged; suspects read on the scans
+SELECT count(*), count(printed_folio) FROM research.person_appearance;
+-- every base table EXCEPT ALL v. backup; old person_appearance columns compared row by row; research.production_date (Works session's check)
+```
+
+Result: Qwen 26/26 on folios read earlier by Claude; full run 559,325 input / 3,299 output tokens. 133 of 167 PDFs consistent as read;
+39 pages flagged: 16 were printer's signature marks taken for the folio (read on the scans: e.g. 1893-94 SP ballet p002 «— 59 —», 1898-99 SP
+p006 «81», 1905-06 SP musicians p006 «33», 1905-06 ProductionTeam p002 «64»), 6 last pages print no folio (from the sequence), the rest are
+real skips in the selectively scanned Theatre School reports. All PDFs strictly increasing after correction. Production: person_appearance
+gains 3 columns, all 23,980 rows filled, no existing value changed; every other table identical; production_date 2,374 / 2,357 matched;
+receipts 3,223,088,581; research.person 2,619; person_death 308; 0 shifts. sqlite export tested on a copy: builds.

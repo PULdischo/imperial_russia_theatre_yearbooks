@@ -2161,9 +2161,22 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             printed_start_date DATE,
             printed_start_text VARCHAR,
             printed_service_periods INTEGER,
-            credit_summary_text VARCHAR
+            credit_summary_text VARCHAR,
+            source_file VARCHAR,
+            scan_page INTEGER,
+            printed_folio INTEGER
         )
     """)
+    # Where the entry is printed (RG 2026-11-03): the scan PDF, its page (1-based) and the printed page number, from
+    # docs/folios/staff_list_folios.csv (read by Qwen and checked against each PDF's page sequence; 16 read by Claude, 6 last
+    # pages without a printed number taken from the sequence; `basis` says which). A page missing from that file stops the build.
+    con.execute(f"""CREATE OR REPLACE TEMP TABLE _staff_folios AS
+        SELECT page_id, CAST(scan_page AS INTEGER) AS scan_page, CAST(printed_folio AS INTEGER) AS printed_folio
+        FROM read_csv('{STAFF_FOLIOS_CSV.as_posix()}', header = true, all_varchar = true, quote = '"', escape = '"')""")
+    missing = con.execute("""SELECT count(*) FROM raw.source_pages sp WHERE sp.entity_type <> 'Repertoire'
+        AND sp.page_id NOT IN (SELECT page_id FROM _staff_folios)""").fetchone()[0]
+    if missing:
+        raise SystemExit(f"docs/folios/staff_list_folios.csv: {missing} staff-list pages have no folio row")
     # The start of service as printed in THIS season's entry (RG 2026-10-30): the earliest start among the entry's printed
     # service periods (a broken service «съ ... по ... и съ ...» prints several). As printed, slips included; the chosen
     # date for a whole run of seasons is research.person_tenure.
@@ -2192,10 +2205,12 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             CASE WHEN r.entity_type = 'ProductionTeam' THEN NULL ELSE r.subject_taught END,
             r.tenure_note_text_clean,
             st.d, st.t, st.n,
-            r.credit_summary_text
+            r.credit_summary_text,
+            sp.source_file, f.scan_page, f.printed_folio
         FROM analysis.person_entry r
         JOIN entities.person_link pl ON pl.entry_id = r.entry_id
         JOIN raw.source_pages sp ON sp.page_id = r.page_id
+        LEFT JOIN _staff_folios f ON f.page_id = r.page_id
         LEFT JOIN (
             SELECT entry_id,
                    min(try_cast(CAST(start_date_undate AS VARCHAR) AS DATE)) AS d,
@@ -2731,6 +2746,7 @@ def build_person_performance_tallies(con: duckdb.DuckDBPyConnection) -> int:
 
 
 SEASON_SETS_DIR = Path(__file__).parent.parent / "docs" / "season_sets"
+STAFF_FOLIOS_CSV = Path(__file__).parent.parent / "docs" / "folios" / "staff_list_folios.csv"
 JUBILEES_DIR = Path(__file__).parent.parent / "docs" / "jubilees_obituaries"
 _EN_MONTHS = dict(jan=1, feb=2, mar=3, apr=4, may=5, jun=6, jul=7, aug=8, sep=9, oct=10, nov=11, dec=12)
 
