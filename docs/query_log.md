@@ -26023,3 +26023,9 @@ Result: «Гамлетъ» [тр.] 66 + «Трагедія о Гамлетѣ, п
 title removed: the merged work is drama by its printed «тр.»). title_note: new production at the Александринскій from 30 Nov 1900 under the
 long title; K.R.'s translation named as a lead only. Diff: only those 11 performances' work_id; no row points at a removed work.
 Held for later: «Гамлетъ» 11 Nov 1901 at the Малый on Адель Зандрокъ's German guest season sits under the Russian work.
+
+## 2026-11-03 — 12 titled works still without art form: scan check (checked by Claude); «Званый вечеръ съ итальянцами» fixed
+
+Scan reads (scratchpad scan_results_C.csv, 17 printings): no genre word was missed; every title reads as stored. «Обозрѣніе» is a
+one-word entry (the genre word is the title). Fix: the blank-genre rule now applies work_artform_overrides.csv per printing, so
+«Званый вечеръ съ итальянцами» (printed «оперетка», «оперетта», «опер.» = operetta by RG's override) -> operetta. Works: NULL 61.

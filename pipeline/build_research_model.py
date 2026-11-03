@@ -1531,15 +1531,17 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                    for r in csv.DictReader(open(WORK_TITLE_ALIASES_CSV, encoding="utf-8")) if r.get("as_genre_if_blank")}
     # identity art forms of the genres printed on each work's own printings
     member_forms: dict[str, dict] = {}
-    for wid_, g_, n_ in con.execute("""
-            SELECT CAST(wl.work_id AS VARCHAR), eep.genre, count(*) FROM entities.work_link wl
+    for wid_, t_, g_, n_ in con.execute("""
+            SELECT CAST(wl.work_id AS VARCHAR), eep.performance_title, eep.genre, count(*) FROM entities.work_link wl
             JOIN raw.event_entry_performance eep ON eep.performance_id = wl.raw_performance_id
-            WHERE nullif(trim(eep.genre), '') IS NOT NULL GROUP BY 1, 2""").fetchall():
-        ident_ = _work_art_form(_canon_genre(_fold_genre(g_)))
+            WHERE nullif(trim(eep.genre), '') IS NOT NULL GROUP BY 1, 2, 3""").fetchall():
+        ident_ = overrides.get((_match_key(_title_key(_strip_genre_suffix(t_))), _fold_genre(g_))) \
+            or _work_art_form(_canon_genre(_fold_genre(g_)))
         if ident_ == "spoken" and re.search(r"кантат|увертюр|симф|фортеп|концерт|cantat", g_.lower()):
             ident_ = "music"  # a musical genre word the identity rule's spoken catch-all would take as a play
         n0, gs0 = member_forms.setdefault(wid_, {}).get(ident_, (0, ""))
-        member_forms[wid_][ident_] = (n0 + n_, (gs0 + ", " if gs0 else "") + f"«{g_}»")
+        gs1 = gs0 if f"«{g_}»" in gs0.split(", ") else (gs0 + ", " if gs0 else "") + f"«{g_}»"
+        member_forms[wid_][ident_] = (n0 + n_, gs1)
     review_kind = {}
     if con.execute("""SELECT count(*) FROM information_schema.tables
                       WHERE table_schema = 'entities' AND table_name = 'review_work'""").fetchone()[0]:
