@@ -54,7 +54,7 @@ def _dates_as_iso(df):
 TABLES = ["theater", "work", "person", "event", "performance", "person_appearance", "person_tenure", "person_tenure_note",
           "service_period", "person_assignment", "person_performance_tally", "set_design", "person_death",
           "production", "production_work", "production_credit", "production_date",
-          "season_stat_check", "season_stat_line", "season_stat_footnote",
+          "season_stat_check", "season_stat_line", "season_stat_footnote", "season_stat_gap", "season_stat_gap_event",
           "review_assertion", "review_solo", "review_credit",
           "review_dance", "review_dance_performer", "review_dance_composer"]
 
@@ -225,6 +225,18 @@ SCHEMAS = {
         CREATE TABLE season_stat_footnote (
             season TEXT, footnote_no INTEGER, text_verbatim TEXT, note TEXT,
             PRIMARY KEY (season, footnote_no)
+        )""",
+    "season_stat_gap": """
+        CREATE TABLE season_stat_gap (
+            gap_id TEXT PRIMARY KEY, season TEXT, city TEXT, category TEXT, theater TEXT,
+            events_gap_text TEXT, events_gap INTEGER, receipts_gap_before_rub REAL, receipts_gap_now_rub REAL,
+            outcome TEXT, event_ids_text TEXT, evidence TEXT, note TEXT, checked_by TEXT, checked_date TEXT,
+            n_events_linked INTEGER
+        )""",
+    "season_stat_gap_event": """
+        CREATE TABLE season_stat_gap_event (
+            gap_id TEXT REFERENCES season_stat_gap(gap_id), event_id TEXT REFERENCES event(event_id),
+            PRIMARY KEY (gap_id, event_id)
         )""",
     # What a season review ASSERTS: this performer danced this role, in
     # this work, on this date. RG 2026-10-12: include it in the published

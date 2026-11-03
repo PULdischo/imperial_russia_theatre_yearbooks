@@ -387,3 +387,55 @@ not_captured 2,877).
 
 **T2 — review theater mentions (RG 2026-11-03, "Leave for Reviews").** The 32 adjective links to «Новый» and the 105
 unlinked Petersburg theater names wait for the Season Reviews section.
+
+## 7. Season stats
+
+(Taken before 4-6 at RG's request. Queries logged in `docs/query_log.md`, "Research-layer review: Season stats".)
+
+### What one record holds
+
+- **`season_stat_line`** — 303 rows, one per printed line with a number, from the season totals page («Всего въ
+  теченіе сезона … было спектаклей»): `category_verbatim` / `category` (ditto resolved), `venue_verbatim`,
+  `qualifier_verbatim` («(опера и балетъ)»), `count`, `receipts_verbatim` / `receipts_kopecks`, `footnote_refs`,
+  `line_kind` (category 147, venue 99, subtotal 48, part 9). Categories: Русскихъ драматическихъ 99, Балетныхъ 50,
+  Русскихъ оперныхъ 38, Смѣшанныхъ 29, Оперныхъ 24, Французскихъ 19, Нѣмецкихъ 18, Концертовъ 12, and one-offs for
+  visiting troupes (Режанъ, Лессингъ-театръ, Тина ди Лоренцо, Московскій художественный театръ ...).
+- **`season_stat_check`** — 38 rows (season × city): the page's totals beside the Repertoire's (performed events,
+  distinct theater-days, receipts, charity-worded events) and the differences.
+- **`season_stat_footnote`** — 125 footnotes, verbatim, 11 seasons (benefits, free student performances, charity
+  exclusions).
+- Seasons: 19 pages, 1891-92 to 1910-11. 1890-91 has no such page; 1905-06's has not been found (needs the volume).
+
+### Held earlier but not carried into research
+
+- **The reconciliation outcomes.** `docs/eval/reconciliation/outcome_ledger.csv`, 271 rows covering every season
+  1890-91 – 1910-11, explains the differences between the stats, the Repertoire, the ballet lists and the reviews, one gap
+  at a time, with the events involved and the evidence. Outcomes: yearbook_own 120, corrected 53, excluded_by_yearbook 48,
+  classification 23, open 16, comparison_rule 11. Not in the database, so `season_stat_check` shows each difference
+  (e.g. Moscow 1909-10 +107 events / +31,748 р., SP 1907-08 +70) without its explanation.
+- `raw.season_stat_page` (19): the page heading verbatim, its footnote mark and the source file. Research keeps only the
+  format and printed page (in `season_stat_check`).
+- `raw.season_stat_dated_note` (10): the jubilees and farewell performances printed after each city's totals in 1909-10
+  and 1910-11 («24 января—прощальный спектакль балерины Трефиловой.», «24 февраля—35-ти лѣтіе службы М. Г. Савиной.» ...).
+
+### Things noticed (for RG)
+
+1. 1891-92 `repertoire_receipts_kopecks` is 0 for both cities: the Repertoire prints no receipts that season, so this
+   should read "none", not 0 р.
+2. `season_stat_footnote` has no city column (raw has none either); a footnote's city is only implied by its number.
+3. A stats line does not link to the events it counts; that link exists only in the ledger's `event_ids`.
+
+### RG's questions and rulings
+
+**S1 — the reconciliation ledger in research (RG 2026-11-03, "Yes, load it").** New `research.season_stat_gap` (271
+rows) and `season_stat_gap_event` (569 links to `research.event`), loaded from
+`docs/eval/reconciliation/outcome_ledger.csv` by `build_research_model.build_season_stat_gaps`; export schema in
+`build_datasette.py`; `docs/schema.md`. Links by outcome: excluded_by_yearbook 314, corrected 96, yearbook_own 74,
+classification 46, comparison_rule 23, open 16. Seven gaps name their events in words or by page (1892-93-03, 1896-97-01,
+-02, -05, -08, 1903-04-10, 1910-11-09) and have no links. Six ledger lines had unescaped quotes inside their note, which
+split them into extra columns (1894-95-05, 1899-00-08, -12, 1903-04-14, 1904-05-15, 1909-10-06): quoting repaired, text
+unchanged (1894-95-05 keeps its printed «30 (53","181 р. 53 к.)» as written).
+
+**S2 — 1891-92 receipts (RG 2026-11-03, "agreed").** `season_stat_check.repertoire_receipts_kopecks`, the charity-worded
+receipts and the receipts difference are NULL, not 0, when no event of the season and city prints receipts (1891-92,
+both cities). No other row changed.

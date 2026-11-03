@@ -26226,3 +26226,39 @@ no_performance 7,771, not_captured 2,877. 16 raw spellings, all mapped. 30 event
 scan). set_design theater_printed: Большой 25, Малый 8, blank 28. Review theater mentions 632: INST:imperial 208,
 INST:moscow 140, INST:petersburg 118, unlinked 105 (SP theater names), Новый 45 (32 are «Новыя/Новая/Новыхъ»), Большой 9,
 Малый 3, Эрмитажный 3, Красносельскій 1.
+
+## 2026-11-03 — Research-layer review: Season stats
+
+```sql
+DESCRIBE research.season_stat_line; DESCRIBE research.season_stat_check; DESCRIBE research.season_stat_footnote;
+SELECT season, city, count(*) FROM research.season_stat_line GROUP BY ALL;
+SELECT line_kind, count(*) FROM research.season_stat_line GROUP BY 1;
+SELECT category, count(*) FROM research.season_stat_line GROUP BY 1 ORDER BY 2 DESC;
+SELECT count(*) FROM raw.season_stat_page; SELECT count(*) FROM raw.season_stat_dated_note;
+SELECT season, city, stats_format, printed_count, repertoire_events, repertoire_days, events_minus_printed, days_minus_printed,
+       printed_receipts_kopecks, repertoire_receipts_kopecks, receipts_minus_printed_kopecks, repertoire_charity_text_events
+FROM research.season_stat_check ORDER BY 1,2;
+-- docs/eval/reconciliation/outcome_ledger.csv (file, not the db): rows by season and by outcome
+```
+
+Result: lines 303 (category 147, venue 99, subtotal 48, part 9), 19 seasons 1891-92..1910-11 (no 1890-91, 1905-06);
+check 38; footnotes 125 over 11 seasons; raw pages 19, dated notes 10 (not in research). Largest differences: Moscow
+1909-10 +107 events / +31,748.39 р.; SP 1907-08 +70; SP 1908-09 +55. 1891-92 repertoire receipts 0 (none printed).
+Ledger: 271 rows, every season; yearbook_own 120, corrected 53, excluded_by_yearbook 48, classification 23, open 16,
+comparison_rule 11.
+
+## 2026-11-03 — Research-layer review S1/S2: reconciliation ledger loaded; 1891-92 receipts NULL (test, then production)
+
+```sql
+SELECT outcome, count(*), sum(n_events_linked) FROM research.season_stat_gap GROUP BY 1 ORDER BY 2 DESC;
+SELECT count(*) FILTER (WHERE events_gap IS NULL AND events_gap_text IS NOT NULL), count(*) FILTER (WHERE checked_date IS NULL),
+       count(*) FILTER (WHERE event_ids_text IS NOT NULL AND n_events_linked = 0) FROM research.season_stat_gap;
+SELECT x.season, x.city, x.repertoire_receipts_kopecks, y.repertoire_receipts_kopecks
+FROM a.research.season_stat_check x JOIN b.research.season_stat_check y USING (season, city)
+WHERE x.repertoire_receipts_kopecks IS DISTINCT FROM y.repertoire_receipts_kopecks;
+```
+
+Result: 271 gaps, 569 event links (excluded_by_yearbook 48 gaps / 314 links, corrected 53/96, yearbook_own 120/74,
+classification 23/46, comparison_rule 11/23, open 16/16). 8 non-integer event gaps kept as text; all dates parse; 7 gaps
+with event text but no event id. season_stat_check: only 1891-92 Moscow and SP change (0 -> NULL). Every other table
+identical; production equal to the tested copy; 0 person_link shifts.

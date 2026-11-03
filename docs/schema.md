@@ -415,6 +415,29 @@ from 1901-02. 1907-08 and 1908-09 print category totals only, with no per-theate
 The genre- and theater-level comparison (families, ballet counted three ways) stays in
 `pipeline/compare_season_stats.py`, because it needs judgment-based classification.
 
+`repertoire_receipts_kopecks` (and the charity-worded receipts and the receipts difference) are NULL, not 0, when no
+performed event of that season and city prints receipts: the 1891-92 Repertoire prints none (RG, 2026-11-03).
+
+### `research.season_stat_gap`, `research.season_stat_gap_event` — the reconciliation ledger (added 2026-11-03)
+
+`docs/eval/reconciliation/outcome_ledger.csv` loaded as it stands (RG, 2026-11-03, research-layer review: "Yes, load
+it"): one row per difference the season reconciliations explained between the stats page, the Repertoire, the ballet
+lists and the reviews (method: `docs/eval/reconciliation/README.md`). The CSV stays the source; a rebuild picks up new
+rows, and the build stops if a line does not have the header's 14 fields.
+
+| column | meaning |
+|---|---|
+| `gap_id` | the ledger's id, `<season>-NN` |
+| `season`, `city`, `category`, `theater` | as written in the ledger (city may be «SP; Moscow»; category is the ledger's own word) |
+| `events_gap_text`, `events_gap` | the event difference as written («±2», «+1 / −1» ...) and, when it is a plain integer, as a number |
+| `receipts_gap_before_rub`, `receipts_gap_now_rub` | the receipts difference before and after the season's fixes, in rubles |
+| `outcome` | `yearbook_own` (the yearbook disagrees with itself), `corrected`, `excluded_by_yearbook`, `classification`, `comparison_rule`, `open` |
+| `event_ids_text`, `evidence`, `note`, `checked_by`, `checked_date` | verbatim |
+| `n_events_linked` | how many of the gap's events are in `season_stat_gap_event` |
+
+`season_stat_gap_event` (gap_id, event_id): the tokens of `event_ids_text` that are `research.event` ids. A ledger row
+that names its events in words or by page («19 Mar 1897 Большой», «… (whole column)») has none; its text keeps them.
+
 ## Events with dancers — `research.events_with_dancers`, `research.events_with_dancers_performance` (added 2026-10-29)
 
 A quick way to see the Repertoire events known to have had dancers in them (RG, 2026-10-29: "a way for me to view repertoire with dancers quickly and easily"). Both are **views** over `research.event` / `research.performance`, rebuilt at the end of `build_research_model.py`, so they always follow the main data: a new row in `pipeline/entity_curation/works_with_dancers.csv` brings its events in on the next build. `build_datasette.py` copies them into the sqlite export as plain tables (a snapshot as of that export).

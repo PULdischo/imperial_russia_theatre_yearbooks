@@ -882,7 +882,7 @@ def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
     The genre/theater-level comparison (families, ballet three ways) stays in
     pipeline/compare_season_stats.py, because it needs judgment-based classification.
     """
-    for t in ("season_stat_check", "season_stat_line", "season_stat_footnote"):
+    for t in ("season_stat_gap_event", "season_stat_gap", "season_stat_check", "season_stat_line", "season_stat_footnote"):
         con.execute(f"DROP TABLE IF EXISTS research.{t}")
     con.execute("""
         CREATE TABLE research.season_stat_line (
@@ -939,13 +939,74 @@ def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
         )
         SELECT p.season, p.city, pg.format, pg.printed_page,
                p.n, p.n_rec, p.rec,
-               coalesce(r.events, 0), coalesce(r.days, 0), coalesce(r.events_rec, 0), coalesce(r.rec, 0),
-               coalesce(r.ch_n, 0), coalesce(r.ch_rec, 0),
-               coalesce(r.events, 0) - p.n, coalesce(r.days, 0) - p.n, coalesce(r.rec, 0) - p.rec  -- NULL with p.rec
+               coalesce(r.events, 0), coalesce(r.days, 0), coalesce(r.events_rec, 0),
+               -- no event printing receipts (the 1891-92 Repertoire prints none): NULL, not 0 р. (RG 2026-11-03)
+               CASE WHEN coalesce(r.events_rec, 0) > 0 THEN r.rec END,
+               coalesce(r.ch_n, 0), CASE WHEN coalesce(r.events_rec, 0) > 0 THEN r.ch_rec END,
+               coalesce(r.events, 0) - p.n, coalesce(r.days, 0) - p.n,
+               CASE WHEN coalesce(r.events_rec, 0) > 0 THEN r.rec END - p.rec  -- NULL with p.rec
         FROM printed p
         JOIN raw.season_stat_page pg USING (season)
         LEFT JOIN rep r ON r.season = p.season AND r.city = p.city
         ORDER BY p.season, p.city""")
+    build_season_stat_gaps(con)
+
+
+#: The season reconciliations' ledger (docs/eval/reconciliation/README.md): one row per explained
+#: difference between the stats page, the Repertoire, the ballet lists and the reviews.
+RECONCILIATION_LEDGER_CSV = Path(__file__).parent.parent / "docs" / "eval" / "reconciliation" / "outcome_ledger.csv"
+
+
+def build_season_stat_gaps(con: duckdb.DuckDBPyConnection) -> None:
+    """research.season_stat_gap (RG 2026-11-03, research-layer review: "Yes, load it"): the reconciliation ledger,
+    verbatim, with the money columns parsed; research.season_stat_gap_event: each gap -> the research.event rows its
+    event_ids name (tokens that are not event ids -- page ids, prose -- stay in event_ids_text only)."""
+    import csv as _csv
+    import re as _re
+    if not RECONCILIATION_LEDGER_CSV.exists():
+        print(f"  WARNING: {RECONCILIATION_LEDGER_CSV} not found; research.season_stat_gap not built")
+        return
+    with open(RECONCILIATION_LEDGER_CSV, encoding="utf-8", newline="") as f:
+        reader = _csv.reader(f)
+        header = next(reader)
+        rows = list(reader)
+    bad = [i + 2 for i, r in enumerate(rows) if len(r) != len(header)]
+    if bad:
+        raise SystemExit(f"{RECONCILIATION_LEDGER_CSV.name}: lines {bad[:10]} do not have {len(header)} fields")
+    recs = [dict(zip(header, r)) for r in rows]
+    con.execute("""
+        CREATE TABLE research.season_stat_gap (
+            gap_id VARCHAR PRIMARY KEY,
+            season VARCHAR, city VARCHAR, category VARCHAR, theater VARCHAR,
+            events_gap_text VARCHAR, events_gap INTEGER,
+            receipts_gap_before_rub DECIMAL(18, 2), receipts_gap_now_rub DECIMAL(18, 2),
+            outcome VARCHAR, event_ids_text VARCHAR, evidence VARCHAR, note VARCHAR,
+            checked_by VARCHAR, checked_date DATE, n_events_linked INTEGER
+        )""")
+    known = {r[0] for r in con.execute("SELECT event_id FROM research.event").fetchall()}
+    links = []
+    for r in recs:
+        for tok in dict.fromkeys(t for t in _re.split(r"[;,\s]+", r["event_ids"] or "") if t in known):
+            links.append((r["gap_id"], tok))
+    n_by_gap = {}
+    for g, _e in links:
+        n_by_gap[g] = n_by_gap.get(g, 0) + 1
+    con.executemany("""INSERT INTO research.season_stat_gap VALUES
+        (?, ?, ?, ?, ?, ?, try_cast(? AS INTEGER), try_cast(? AS DECIMAL(18, 2)), try_cast(? AS DECIMAL(18, 2)),
+         ?, ?, ?, ?, ?, try_cast(? AS DATE), ?)""",
+        [(r["gap_id"], r["season"], r["city"], r["category"], r["theater"] or None,
+          r["events_gap"] or None, r["events_gap"] or None,
+          r["receipts_gap_before_rub"] or None, r["receipts_gap_now_rub"] or None,
+          r["outcome"], r["event_ids"] or None, r["evidence"] or None, r["note"] or None,
+          r["checked_by"] or None, r["date"] or None, n_by_gap.get(r["gap_id"], 0)) for r in recs])
+    con.execute("""
+        CREATE TABLE research.season_stat_gap_event (
+            gap_id VARCHAR REFERENCES research.season_stat_gap(gap_id),
+            event_id VARCHAR REFERENCES research.event(event_id),
+            PRIMARY KEY (gap_id, event_id)
+        )""")
+    con.executemany("INSERT INTO research.season_stat_gap_event VALUES (?, ?)", links)
+    print(f"  research.season_stat_gap: {len(recs)} ledger rows, {len(links)} event links")
 
 
 #: Performances the Repertoire cell does not name but another part of the same
@@ -1561,7 +1622,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # declared inline on CREATE TABLE, so each table is CREATEd with its
     # full schema first and populated via a separate INSERT INTO ... SELECT,
     # same two-step pattern build_entities.py already uses.
-    for t in ["season_stat_check", "season_stat_line", "season_stat_footnote",
+    for t in ["season_stat_gap_event", "season_stat_gap", "season_stat_check", "season_stat_line", "season_stat_footnote",
               "production_date", "production_credit", "production_work", "production",
               "performance", "event", "person_tenure", "person_tenure_note", "service_period", "person_assignment",
               "person_death", "set_design", "person_performance_tally", "person_appearance", "person", "work", "theater"]:
@@ -2261,7 +2322,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         for t in ["theater", "work", "person", "event", "performance", "person_appearance",
                   "service_period", "person_assignment", "person_performance_tally", "set_design", "person_death",
                   "production", "production_work", "production_credit", "production_date",
-                  "season_stat_check", "season_stat_line", "season_stat_footnote"]
+                  "season_stat_check", "season_stat_line", "season_stat_footnote", "season_stat_gap", "season_stat_gap_event"]
         if con.execute("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'research' AND table_name = ?",
                        [t]).fetchone()[0]
     }
