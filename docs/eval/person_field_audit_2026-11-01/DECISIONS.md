@@ -131,3 +131,6 @@ Still to put to RG: and the listed-after-leaving cases (Иванова 2-я, Л�
   mentions unlinked in docs/eval/review_mention_links.csv (1ef000c; «для дебюта М. М. Петипа» kept -> Марія Маріусовна, correct);
   new docs/eval/review_historical_passages.csv read by build_review_assertions.py: dance 801 and assertions 1510, 2858-2860 dated
   1875-01-12, dance-801 dancers left unlinked ('historical passage'). Add any other quoted earlier cast to that list.
+- 1906-07 Ѳедорова review mentions LINKED 2026-11-03 (RG "Link all five"; docs/eval/review_mention_links.csv): «Ѳедорова 2-я» x4 -> Лидія
+  Ѳедоровна, «Ѳедорова 1-я» x1 -> Марія Дмитріевна (the 1906-07 list prints «Федорова» 1-я/2-я, no. 102/103). «г-жа Ѳедорова» (Tyrolean
+  dance, no ordinal) left unlinked.

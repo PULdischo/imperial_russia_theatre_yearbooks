@@ -25592,3 +25592,15 @@ SELECT assertion_id, date_undate, performer_person_id FROM research.review_asser
 ```
 
 Result: changed only research.review_dance 1 (dance 801 date 1905-01-12 -> 1875-01-12), review_dance_performer 8 (all dance-801 dancers unlinked, link_method 'historical passage'; before: Ѳедорова 2-я -> Александра, Ѳедорова 1-я -> Марія Дмитріевна, Крюгеръ, Петипа -> Маріусъ, Стуколкинъ), review_assertion 4 (1510, 2858, 2859, 2860 dated 1875-01-12; performers already unlinked). 0 changes elsewhere; assertion links 2,466; research.person 2,619; 0 shifts.
+
+## 2026-11-03 — 1906-07 SP review «Ѳедорова» links applied: diff v. db_backup_fedorova_links_2026-11-03
+
+```sql
+-- occurrence order read from outputs/reviews/mentions/review_mention.csv (pipeline order) before writing the 5 rows
+SELECT n.block_id, n.char_start, n.surface, o.entity_id, n.entity_id FROM entities.review_mention n
+JOIN old.entities.review_mention o USING (block_id, char_start, mention_type) WHERE n.entity_id IS DISTINCT FROM o.entity_id;
+-- review_assertion / review_dance_performer / review_solo performer changes; EXCEPT ALL for raw.person_entry, research.person,
+-- research.event, research.person_performance_tally, entities.person_link
+```
+
+Result: exactly 5 mention links set: p006__b001 char 160, p006__b002 char 1420, p007__b003 chars 1143 and 1550 «Ѳедорова 2-я» -> Лидія 36348a72; p006__b002 char 1090 «Ѳедорова 1-я» -> Марія Дмитріевна 2475a6b3. No assertion, dance or solo change; other tables unchanged. Mentions resolved to one entity 22,227; person mentions joining research.person 17,828; assertion links 2,466; research.person 2,619; 0 shifts.
