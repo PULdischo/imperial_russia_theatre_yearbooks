@@ -25897,3 +25897,8 @@ Result: 9 works / 28 performances. Pantomime 5 works / 15: De la lune au Japon [
 Divertissement 2 / 2: Маскарадъ [диверт.] (Маріинскій 9 Jan 1905, Преображенская benefit, ballet bill), Карнавалъ [дивертисментъ]
 (Большой 21 Nov 1899, Рябовъ benefit, with «Наяда и рыбакъ»), both ballet company. Scans (1901-02 p.32, 1904-05 p.112, 1899-00 p.15,
 1890-91 p.21): all one-night genre readings match the print. build_entities._work_art_form already classes pantom./mimodrame/Spiel ohne Wort as ballet.
+
+## 2026-11-03 — Pantomimes ruled drama (RG): scratch rebuild
+
+Result: De la lune au Japon, La main, Le cœur de la marquise, Die Hand, L'Enfant prodigue -> drama; works drama 2,241 / NULL 95;
+art-form check unchanged (52 / 6 pairs); every other research table identical to the previous scratch build.
