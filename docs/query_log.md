@@ -26118,3 +26118,16 @@ genre. Diff: 1 performance (Малый 19 Feb 1911 «Апоѳеозъ.» concert
 Result: Апоѳеозъ 25, Живая картина 6, Живыя картины 3 -> NULL «programme item: an apotheosis or tableau vivant, not a work»; ceremonial stays
 the anthem only (4 works). Only those 3 work rows changed. NULL works 52, of which 23 still pending (readings 8, lectures 4, cinema 3,
 Monologues / Scènes et monologues / Prolog, Обозрѐніе, Концертъ-спектакль, «Слава»!, Балетоманъ).
+
+## 2026-11-03 — Readings, lectures, cinema (pending art form): bills and occasions
+
+```sql
+SELECT p.genre_family, w.canonical_title, count(*), string_agg(DISTINCT p.discipline, '/'), min(e.date), max(e.date), string_agg(DISTINCT t.canonical_name, '/'), string_agg(DISTINCT e.annotation, ' | ')
+FROM research.work w JOIN research.performance p USING (work_id) JOIN research.event e USING (event_id) JOIN research.theater t USING (theater_id)
+WHERE w.art_form_basis LIKE 'pending RG%' AND p.genre_family IN ('recitation / reading', 'lecture', 'cinema') GROUP BY ALL;
+```
+
+Result: Сцена г. Горбунова 48 (Александринскій/Михайловскій/Малый, Sep 1890 - Feb 1895, after a play, many benefits) and Сцена г. Вейнберга 25
+(Александринскій/Михайловскій, Sep 1890 - Feb 1891), both Russian drama company; 6 other readings, one each (Krylov fables 1895, Литературное
+отдѣленіе 1907, чтеніе, пляска. 1904, Чтеніе положенія. + Отдѣленіе литературное / поэзіи 1911 Emancipation); lectures 4 (Шляпкинъ x3, 1896
+memorials; Рефератъ, Mochalov 1900); cinema 3 (Маріинскій charity 1901, 1905 x2). All but the Горбунов/Вейнберг scenes have no troupe.
