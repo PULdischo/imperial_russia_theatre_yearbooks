@@ -625,6 +625,14 @@ decorator's rows against his printed «Всего—N декорацій». The 
 | `act_scene_printed`, `set_name_printed` | as printed («2-я к. 1-го д.», «Лѣсъ зимой»); one set may serve several scenes («2-я к. 1-го д., 1-я к. 2-го д. и 4-е д.») |
 | `painted_jointly_with` | «вмѣстѣ съ …»: the other painter, as printed (the set appears under both men) |
 
+## `research.work.art_form`, `art_form_basis` (added 2026-11-03)
+
+The art form of the abstract work (RG, 2026-11-03; FRBR/LRM: what belongs to the work goes on the work, what belongs to one night -- company, language, dancers -- stays on `research.performance`). One of `ballet`, `opera`, `operetta`, `drama` (any spoken play, any language), `concert`, `ceremonial` (the anthem «Гимнъ», not a work for counting; RG 2026-10-12), or NULL while RG's ruling is pending. No new inference: it comes from the rule that already decides work identity (`build_entities._work_art_form` on the work's genre, with `pipeline/entity_curation/work_artform_overrides.csv`), the ballet productions lists, and the anthem rule. `canonical_genre` stays the printed genre.
+
+`art_form_basis` says which rule decided it: `printed genre «…» (work-identity rule)`, `research genre rule «…» (…)`, `work_artform_overrides.csv (…)`, `ballet productions list: …`, `anthem: …`, or `pending RG: …` (excerpt; no printed genre; mixed or generic genre such as comedy-ballet, pantomime, divertissement).
+
+The build checks every `research.performance.discipline` against its work's `art_form` and prints the disagreements without changing anything (Italian/German opera count as opera; Russian/French/German/Italian/Japanese drama as drama; an operetta agrees with a drama or opera troupe, since the Directorate had no operetta company). These are candidate misattributions or works that need splitting.
+
 ## `research.work.title_note` (added 2026-10-26)
 
 Why a work's title in the research layer differs from what the Repertoire printed. RG: "I want researchers to understand any decisions I made." Filled from `build_research_model.RESEARCH_TITLE_CORRECTIONS` (confirmed print slips corrected in the research layer only; raw and `research.performance.verbatim_title` keep the printed form):

@@ -75,7 +75,7 @@ SCHEMAS = {
             work_id TEXT PRIMARY KEY, canonical_title TEXT, canonical_genre TEXT,
             appearance_count INTEGER, excerpt_of_work_id TEXT REFERENCES work(work_id),
             excerpt_note TEXT, genre_source TEXT, genre_note TEXT, title_note TEXT,
-            work_source TEXT, source_note TEXT
+            work_source TEXT, source_note TEXT, art_form TEXT, art_form_basis TEXT
         )""",
     "person": """
         CREATE TABLE person (
