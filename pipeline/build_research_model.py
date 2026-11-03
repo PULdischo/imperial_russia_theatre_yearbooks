@@ -1368,6 +1368,12 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                                  f"{row['performance_title']!r} matches {len(ids)} performances")
             con.execute("UPDATE perf_art SET art_form = ?, art_form_basis = ? WHERE performance_id = ?",
                         [row["art_form"], row["basis"], ids[0]])
+            # the kind rules above ran before this art form existed: a drama-company
+            # item they left without a kind is a play (the unlinked «Русалка» acts, 2026-11-03)
+            con.execute("""UPDATE perf_art SET item_kind = 'play',
+                               item_kind_basis = 'drama company (art_form_by_performance.csv), no other kind'
+                           WHERE performance_id = ? AND item_kind IS NULL
+                             AND art_form IN ('Russian drama', 'French drama')""", [ids[0]])
     apply_work_artform_overrides(con)
     resolve_discipline_and_company(con)
     order_case = "CASE discipline " + " ".join(f"WHEN {lit(a)} THEN {i}" for i, a in enumerate(DISCIPLINES)) + " END"

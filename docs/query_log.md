@@ -25853,3 +25853,19 @@ Result (scans from pdf/RepertoireTables, embedded full-res images):
 - 1890-91 p.18, Михайловскій 28 Jan 1891 «1-й актъ драмы Русалка.» and 1893-94 p.3, Михайловскій 30 Aug 1893 «1-е д. др. Русалка.»: read
   correctly. Both are linked to «Русалка» [1-я сцена] (itself the 1899 Малый gala scene, an excerpt of «Русалка» [др.]), although
   curated_parent_works.csv records RG's 2026-09-26 ruling that these two "stay unlinked".
+
+## 2026-11-03 — Excerpt corrections applied on a scratch copy (RG "Yes, apply them"): diff v. the art_form-only build
+
+```sql
+-- scratch: raw.event_entry_performance patched (Палцы -> Паяцы x2, «др.» cleared on the 1899 excerpt), then build_entities,
+-- validate_performance_dates, build_research_model; EXCEPT ALL both ways on every research table
+SELECT p.art_form, <excerpt disciplines>, count(*) FROM research.work w JOIN research.work p ON p.work_id = w.excerpt_of_work_id ... GROUP BY 1, 2;
+```
+
+Result: 2nd «Палцы» found and scan-checked: 1896-97 p.16, Маріинскій 9 Jan 1897 «Рафаэль, оп. / Паяцы, оп.» (same misreading).
+research.work: −«Палцы» [оп.], −«Прологъ и 1-е д. оп. Палцы» [др.]; +«Женитьба» [оп.] (Mussorgsky, curated parent, 0 performances),
++«Прологъ и 1-е д. оп. Паяцы» (excerpt of «Паяцы»); «Паяцы» 67 -> 68. research.performance: 4 rows changed (the two Паяцы rows:
+title; the 1899 excerpt Russian drama/play -> opera/opera; the two Русалка acts: unlinked, still Russian drama/play, basis now
+art_form_by_performance.csv). Every other research table identical, event included. Excerpts: 340 (was 342: the two Русалка acts
+unlinked); every one sits with its parent's kind of troupe (ballet 137, opera 116 + German opera 4, drama 76, operetta-by-opera 6),
+1 ballet excerpt has no troupe. Art-form check unchanged: 52 performances / 6 pairs.

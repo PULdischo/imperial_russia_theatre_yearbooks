@@ -828,6 +828,16 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
                       if _identity_genre(_fold_genre(next(g for w, _, g, _, _ in work_rows if w == u))) == key]
             else:
                 ex = by_title_only.get(row["excerpt_title"], [])
+            if not row["parent_title"]:
+                # blank parent = RG ruled this excerpt stays UNLINKED; overrides the
+                # automatic matcher (2026-11-03: the 1891/1893 Михайловскій «драмы
+                # Русалка» acts had been re-linked against her 2026-09-26 ruling)
+                if len(ex) != 1:
+                    raise SystemExit(f"work_excerpt_links.csv: unlink row {row['excerpt_title']!r} "
+                                     f"matches {len(ex)} excerpt works")
+                if excerpt_links.pop(ex[0], None):
+                    n_excerpt_matched -= 1
+                continue
             par = by_title_genre.get((row["parent_title"], row["parent_genre"] or None), [])
             if len(ex) != 1 or len(par) != 1:
                 raise SystemExit(f"work_excerpt_links.csv: {row['excerpt_title']!r} -> {row['parent_title']!r} "
