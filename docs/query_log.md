@@ -25938,3 +25938,14 @@ plus Шехерезада (named as Бакстъ and Фокинъ's ballet, Diag
 балета», 1895-96), Приключенія Пелея (Ѳетида и Пелей «собственно одинъ актъ изъ стараго балета», 1908-09; also a 1903-04 Петергофъ court
 performance). (c) Historical mentions: Les Caractères de la danse (Camargo, 1726), Три пояса (Глушковскій), Свадьба Гамаша (Milon,
 Большой 1855), Роксана and Трильби (Горшенкова's past parts), Мраморная красавица (with Пери, Фаустъ, 1901-02 Moscow).
+
+## 2026-11-03 — What points at the 14 review-only ballet works?
+
+```sql
+-- every research table with a work_id column (review_dance, review_credit, review_solo, review_assertion, production, production_work, ...)
+SELECT count(*) FROM research.<table> WHERE work_id = <each review-only ballet work>;
+```
+
+Result: Исламей review_credit 7, Les préludes 5, Papillons 4, Приключенія Пелея 3, Шехерезада 2, Три пояса 1; Фаустъ review_dance 1 +
+review_assertion 6. Nothing points at Les Caractères de la danse, Жавота, Метеоръ, Мраморная красавица, Роксана, Свадьба Гамаша, Трильби
+(the Метеоръ and Жавота numbers are not linked to these works).
