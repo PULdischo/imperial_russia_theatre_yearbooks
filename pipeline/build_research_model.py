@@ -1477,6 +1477,13 @@ WORK_IDENTITY_LEADS = {
     "Женитьба (1-е дѣйствіе)": "probably act 1 of Mussorgsky's opera «Женитьба» (lead from outside the yearbook, not linked; "
                                "not Gogol's comedy, which the print's «оп.» rules out)",
 }
+#: A title change inside one work, for research.work.title_note: (title, genre) -> note.
+WORK_TITLE_NOTES = {
+    ("Гамлетъ", "тр."): "new production at the Александринскій from 30 Nov 1900, printed under the long title "
+                        "«Трагедія о Гамлетѣ, принцѣ Датскомъ» with no genre (1900-01: 6, 1910-11: 5); the same play, "
+                        "merged here (RG, 2026-11-03). Probably K.R.'s translation, whose title this is (lead from "
+                        "outside the yearbook; the print names no translator)",
+}
 #: entities.review_work.work_kind -> WORK_ART_FORMS (RG, 2026-11-03)
 REVIEW_KIND_TO_WORK_ART_FORM = {"ballet": "ballet", "opera": "opera", "music": "concert"}
 #: performance.discipline -> the work art form it agrees with
@@ -1621,6 +1628,12 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                       + ", ".join(f"'{a}'" for a in WORK_ART_FORMS) + ")").fetchone()[0]
     assert bad == 0, "research.work holds an art_form outside WORK_ART_FORMS"
     assert con.execute("SELECT count(*) FROM research.work WHERE art_form_basis IS NULL").fetchone()[0] == 0
+    # Title changes inside one merged work (RG decisions): appended to title_note.
+    for (t, g), note in WORK_TITLE_NOTES.items():
+        n = con.execute("""UPDATE research.work SET title_note = coalesce(title_note || '; ', '') || ?
+                           WHERE canonical_title = ? AND canonical_genre = ?""", [note, t, g]).fetchone()[0]
+        if n != 1:
+            raise SystemExit(f"WORK_TITLE_NOTES: «{t}» [{g}] matches {n} research.work rows")
     for form, n in con.execute("SELECT art_form, count(*) FROM research.work GROUP BY 1 ORDER BY 2 DESC").fetchall():
         print(f"  work art_form {form}: {n}")
 

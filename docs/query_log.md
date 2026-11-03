@@ -26016,3 +26016,10 @@ Result: «Гамлетъ» [тр. 41 / траг. 25] 66: Александрин�
 Малый 11 Nov 1901 on Адель Зандрокъ's German guest season. «Трагедія о Гамлетѣ, принцѣ Датскомъ.» 11: Александринскій only, 1900-01 (6,
 from 30 Nov 1900, incl. Аполлонскій's benefit) and 1910-11 (5). The two titles never share a season. No review credit or cast statement
 points at either.
+
+## 2026-11-03 — Hamlet titles merged (RG "Merge as one work", "note the new production info")
+
+Result: «Гамлетъ» [тр.] 66 + «Трагедія о Гамлетѣ, принцѣ Датскомъ.» 11 -> 77 (4 alias rows; the art_form_by_title row for the long
+title removed: the merged work is drama by its printed «тр.»). title_note: new production at the Александринскій from 30 Nov 1900 under the
+long title; K.R.'s translation named as a lead only. Diff: only those 11 performances' work_id; no row points at a removed work.
+Held for later: «Гамлетъ» 11 Nov 1901 at the Малый on Адель Зандрокъ's German guest season sits under the Russian work.
