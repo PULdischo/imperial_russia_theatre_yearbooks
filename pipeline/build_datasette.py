@@ -53,7 +53,7 @@ def _dates_as_iso(df):
 
 TABLES = ["theater", "work", "person", "event", "performance", "person_appearance", "person_tenure", "person_tenure_note",
           "service_period", "person_assignment", "person_performance_tally", "set_design", "person_death",
-          "production", "production_work", "production_credit",
+          "production", "production_work", "production_credit", "production_date",
           "season_stat_check", "season_stat_line", "season_stat_footnote",
           "review_assertion", "review_solo", "review_credit",
           "review_dance", "review_dance_performer", "review_dance_composer"]
@@ -193,6 +193,14 @@ SCHEMAS = {
             person_id TEXT REFERENCES person(person_id), credit_order INTEGER,
             role_category TEXT, role_text TEXT, name_printed TEXT, honorific_printed TEXT,
             qualifier_printed TEXT, is_pseudonym INTEGER, identification_status TEXT
+        )""",
+    "production_date": """
+        CREATE TABLE production_date (
+            production_date_id TEXT PRIMARY KEY, production_id TEXT REFERENCES production(production_id),
+            date_order INTEGER, date TEXT, day_printed TEXT, month_printed TEXT, year_printed TEXT, note TEXT,
+            outside_total INTEGER, year_printed_matches_season INTEGER, date_correction_note TEXT,
+            event_id TEXT REFERENCES event(event_id), performance_id TEXT REFERENCES performance(performance_id),
+            n_matched_events INTEGER, match_note TEXT
         )""",
     "season_stat_check": """
         CREATE TABLE season_stat_check (

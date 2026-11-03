@@ -261,3 +261,48 @@ scans by Claude today, crops in `docs/eval/scan_audit/`: each is printed as stor
 1902; «Спектакль въ пользу Общества Покровительства животнымъ. Обозрѣніе.», Маріинскій 11 Jan 1903; «Балетоманъ»,
 Маріинскій 23 Apr 1905, item 3 of 6 lines under «Спектакль въ пользу Общества попеченія о Гребловской школѣ имени Н. В.
 Гоголя.»). The season totals carry no concert or revue line; no review mentions them. Nothing new: they stay blank.
+
+### Held earlier but not carried into research (Works) — checked 2026-11-03 at RG's request
+
+Columns: every work-level field the transcription captures (title, genre) reaches `research.performance`
+(`verbatim_title`, `verbatim_genre`); every `entities.work` column is in `research.work`. Rows:
+- **Ballet productions lists' printed dates**: `raw.production_entry_performance`, 2,374 dates (110 with a note such as
+  «3-е дѣйствіе», «1-е и 2-е д.», «прологъ», «танцы изъ 2-го д. балета»; 30 marked outside the printed total; 5 whose
+  printed year does not match the season). Research keeps only `production.n_dates` (sum 2,344) and
+  `production_work.n_matched_dates`; the dates, their notes and which `research.event` each one is are not queryable.
+- **One Repertoire line**, Малый 24 Nov 1905 («, ком.», 1218 р. 36 к.): the print omits the title (scan-confirmed
+  2026-10-09, `docs/eval/genuine_print_typos.md`). Raw keeps it; research has the event (performed, receipts) with no
+  performance. Already known.
+- **Retired work ids**: `entities.work_id_crosswalk`, 836 old -> new ids from merges. Not published; matters only to
+  someone holding an id from an earlier export.
+- Pipeline-internal, by design: `entities.work_genre_candidate` (62, review queue), `entities.work_link` (the
+  crosswalk the research FKs replace). `entities.review_work` (20) is carried as `work_source = 'review'`.
+- `entities.work` rows not in research (4): «Карменъ» бал. and «Анжело» оп. (W2), «Шоиеніана» (title correction merged
+  into «Шопеніана»), «Дивертиссементъ (Etudes)» (its research row is the research-rule split).
+
+**W8 — ballet-list dates carried into research (RG 2026-11-03, "Yes, add them").** New `research.production_date`,
+2,374 rows (one per printed date): printed day/month/year, note, `outside_total`, `year_printed_matches_season`, the
+misprint correction where there is one, and the Repertoire `event_id` / `performance_id` it names. 2,357 match one
+performance; 5 match two performances of one event (event set: Коппелія and Лебединое озеро 1895-96 with «2-я и 3-я
+карт. бал.» on the same bill, Корсаръ 16 Nov 1908 «2-е дѣйствіе балета» beside «Оживленный садъ»); 1 matches two events
+(«Золотая рыбка» 14 Nov 1904, «2 раза: утромъ и вечеромъ»); 11 match nothing. The list's «утро» / «вечеръ» note now
+separates a day's two events (4 dates); a second pass on research's titles recovered «Шопеніана» 8 Apr 1910 (printed
+«Шоиеніана»), «Волшебная флейта» 30 Nov 1903 and «Дочь Фараона» 13 Feb 1905 (performances supplied from the list).
+Code: `build_research_model._list_date_matches` (ballet_list_matches is now a view of it, output checked identical:
+2,370 pairs), `build_production_dates`; `build_datasette.py` schema; `docs/schema.md`.
+
+Left for RG (not chased): the 11 list dates with no Repertoire performance naming the ballet. None is in the
+reconciliation ledger under its date:
+| season | city | list title | date | ballet on the Repertoire that day |
+|---|---|---|---|---|
+| 1895-96 | Moscow | Катарина (Дочь разбойника) | 1896-01-17 | Большой: Эсмеральда |
+| 1895-96 | Moscow | Пробужденіе Флоры | 1896-05-02 | Большой: Паяцы + Даита |
+| 1897-98 | SP | Волшебная флейта | 1897-10-25 | none |
+| 1898-99 | SP | Очарованный лѣсъ | 1898-09-21 | none |
+| 1900-01 | SP | Маркитантка | 1901-02-11 | Маріинскій: excerpts of Камарго, Фіамметта, Щелкунчикъ |
+| 1901-02 | SP | Волшебная флейта | 1901-12-19 | Маріинскій: Сильвія |
+| 1904-05 | SP | На перепутьи | 1904-12-17 | none |
+| 1908-09 | Moscow | Спящая красавица | 1908-10-18 | none |
+| 1910-11 | SP | Конекъ-горбунокъ или Царь-дѣвица | 1911-02-18 | none |
+| 1910-11 | SP | Спящая красавица | 1911-02-19 | none |
+| 1910-11 | SP | Шопеніана | 1911-03-09 | Маріинскій: Эвника + Карнавалъ |

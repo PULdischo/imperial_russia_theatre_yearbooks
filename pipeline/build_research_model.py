@@ -533,37 +533,33 @@ LIST_DATE_PRINT_TYPOS = {
 }
 
 
-def ballet_list_matches(con: duckdb.DuckDBPyConnection) -> list:
-    """Every (list date, Repertoire performance) pair that names the same ballet.
+def _list_date_matches(con: duckdb.DuckDBPyConnection) -> list:
+    """Every (list date, Repertoire performance) pair that names the same ballet, keyed by the list date's own id.
 
-    Returns tuples (season, city, date 'YYYY-MM-DD', list_title, list_note, event_id,
-    work_id, parent_work_id_if_matched_via_parent). Matching: same city and date, and
-    the title equal after norm() (or a curated alias), or the work is an excerpt of
-    it. Shared by ballet_list_work_ids (parent genre) and
-    pipeline/compare_season_stats.py (ballet counts).
+    Returns tuples (production_performance_id, season, city, date 'YYYY-MM-DD', list_title, list_note, event_id,
+    work_id, parent_work_id_if_matched_via_parent, performance_id). Matching: same city and date, and the title equal
+    after norm() (or a curated alias), or the work is an excerpt of it. A list date whose print is a confirmed typo
+    (LIST_DATE_PRINT_TYPOS) is matched on the intended date.
     """
     from compare_productions_repertoire import norm, contains
-    lst = con.execute("""
-        SELECT e.season, e.city, e.title, strftime(p.date, '%Y-%m-%d'), p.note
+    lst = {r[0]: list(r[1:]) for r in con.execute("""
+        SELECT p.production_performance_id, e.season, e.city, e.title, strftime(p.date, '%Y-%m-%d'), p.note
         FROM raw.production_entry_performance p JOIN raw.production_entry e USING (production_entry_id)
         WHERE p.date IS NOT NULL
-    """).fetchall()
+    """).fetchall()}
     for perf_id, (iso, _why) in LIST_DATE_PRINT_TYPOS.items():
         row = con.execute("""
-            SELECT e.season, e.city, e.title, p.note, p.date
+            SELECT e.season, e.city, e.title, p.note
             FROM raw.production_entry_performance p JOIN raw.production_entry e USING (production_entry_id)
             WHERE p.production_performance_id = ?""", [perf_id]).fetchone()
         if row is None:
             print(f"  WARNING: LIST_DATE_PRINT_TYPOS: {perf_id} not found in raw.production_entry_performance")
         else:                         # unparsed in raw, or parsed from the misprint: use the intended date
-            if row[4] is not None:
-                printed = (row[0], row[1], row[2], row[4].strftime('%Y-%m-%d'), row[3])
-                if printed in lst:
-                    lst.remove(printed)
-            lst.append((row[0], row[1], row[2], iso, row[3]))
+            lst[perf_id] = [row[0], row[1], row[2], iso, row[3]]
     rep = con.execute("""
         SELECT ae.city, coalesce(dc.corrected_date_undate, ae.date_undate) AS d, eep.event_id,
-               wl.work_id, eep.performance_title, w.canonical_title, w.excerpt_of_work_id, pw.canonical_title
+               wl.work_id, eep.performance_title, w.canonical_title, w.excerpt_of_work_id, pw.canonical_title,
+               eep.performance_id
         FROM raw.event_entry_performance eep
         JOIN entities.work_link wl ON wl.raw_performance_id = eep.performance_id
         JOIN analysis.event_entry ae ON ae.event_id = eep.event_id
@@ -573,17 +569,28 @@ def ballet_list_matches(con: duckdb.DuckDBPyConnection) -> list:
         WHERE ae.event_status = 'performed'
     """).fetchall()
     by_day = {}
-    for city, d, eid, wid, vt, ct, parent_id, pt in rep:
-        by_day.setdefault((city, d), []).append((eid, wid, {norm(vt), norm(ct)} - {""}, norm(pt), parent_id))
+    for city, d, eid, wid, vt, ct, parent_id, pt, rpid in rep:
+        by_day.setdefault((city, d), []).append((eid, wid, {norm(vt), norm(ct)} - {""}, norm(pt), parent_id, rpid))
     aliases = {norm(k): {norm(v) for v in vs} for k, vs in BALLET_LIST_TITLE_ALIASES.items()}
     out = []
-    for season, city, title, d, note in lst:
+    for lpid, (season, city, title, d, note) in lst.items():
         lkeys = {norm(title)} | aliases.get(norm(title), set())
-        for eid, wid, keys, pkey, parent_id in by_day.get((city, d), []):
+        for eid, wid, keys, pkey, parent_id, rpid in by_day.get((city, d), []):
             if (lkeys & keys) or (pkey and pkey in lkeys) or any(contains(k, lk) for k in keys for lk in lkeys):
-                out.append((season, city, d, title, note, eid, wid,
-                            parent_id if (parent_id is not None and pkey in lkeys) else None))
+                out.append((lpid, season, city, d, title, note, eid, wid,
+                            parent_id if (parent_id is not None and pkey in lkeys) else None, rpid))
     return out
+
+
+def ballet_list_matches(con: duckdb.DuckDBPyConnection) -> list:
+    """Every (list date, Repertoire performance) pair that names the same ballet.
+
+    Returns tuples (season, city, date 'YYYY-MM-DD', list_title, list_note, event_id,
+    work_id, parent_work_id_if_matched_via_parent): _list_date_matches without the two ids.
+    Shared by ballet_list_work_ids (parent genre) and pipeline/compare_season_stats.py
+    (ballet counts).
+    """
+    return [m[1:9] for m in _list_date_matches(con)]
 
 
 def ballet_list_work_ids(con: duckdb.DuckDBPyConnection) -> dict:
@@ -752,6 +759,90 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
         LEFT JOIN research.person p USING (person_id) WHERE p.person_id IS NULL""").fetchone()[0]
     if orphans:
         raise SystemExit(f"research.production_credit: {orphans} credits point at no research.person")
+    build_production_dates(con)
+
+
+def build_production_dates(con: duckdb.DuckDBPyConnection) -> None:
+    """research.production_date: every date a ballet productions list prints (RG 2026-11-03, research-layer review:
+    "Yes, add them"), with its printed day/month/year, its note («3-е дѣйствіе», «прологъ» ...) and flags, and the
+    Repertoire event and performance it names (_list_date_matches). event_id / performance_id are set only when the
+    match is unique; n_matched_events and match_note say what happened otherwise."""
+    import collections
+    hits = collections.defaultdict(list)
+    for lpid, *_rest, eid, _wid, _parent, rpid in _list_date_matches(con):
+        hits[lpid].append((eid, rpid))
+    in_event = {r[0] for r in con.execute("SELECT event_id FROM research.event").fetchall()}
+    in_perf = {r[0] for r in con.execute("SELECT performance_id FROM research.performance").fetchall()}
+    tod = dict(con.execute("SELECT event_id, time_of_day FROM research.event").fetchall())
+    # Second pass for a date the Repertoire match leaves empty: the same city and date in research, by the research
+    # work's title (a corrected misprint such as «Шоиеніана») or a performance supplied from the list itself.
+    from compare_productions_repertoire import norm
+    research_day = collections.defaultdict(list)
+    for city, d, eid, rpid, t, pt in con.execute("""
+            SELECT e.city, e.date_undate, e.event_id, p.performance_id, w.canonical_title, pw.canonical_title
+            FROM research.performance p JOIN research.event e USING (event_id)
+            JOIN research.work w USING (work_id) LEFT JOIN research.work pw ON pw.work_id = w.excerpt_of_work_id""").fetchall():
+        research_day[(city, d)].append((eid, rpid, {norm(t), norm(pt or "")} - {""}))
+    aliases = {norm(k): {norm(v) for v in vs} for k, vs in BALLET_LIST_TITLE_ALIASES.items()}
+    rows = []
+    for lpid, has_date, city, title, iso, lnote in con.execute("""
+            SELECT p.production_performance_id, p.date IS NOT NULL, e.city, e.title, strftime(p.date, '%Y-%m-%d'),
+                   lower(coalesce(p.note, ''))
+            FROM raw.production_entry_performance p JOIN raw.production_entry e USING (production_entry_id)""").fetchall():
+        typo = LIST_DATE_PRINT_TYPOS.get(lpid)
+        h = [(e, p) for e, p in hits.get(lpid, []) if e in in_event]
+        if not h and (typo or iso):
+            lkeys = {norm(title)} | aliases.get(norm(title), set())
+            h = [(e, p) for e, p, keys in research_day.get((city, typo[0] if typo else iso), []) if keys & lkeys]
+        # the list's own note says which of a day's two events: «утро» / «вечеръ»
+        if len({e for e, _ in h}) > 1 and lnote in ("утро", "утромъ", "вечеръ", "вечеромъ"):
+            want = "morning" if lnote.startswith("утр") else "evening"
+            h = [(e, p) for e, p in h if tod.get(e) == want] or h
+        events = sorted({e for e, _ in h})
+        perfs = sorted({p for _, p in h if p in in_perf})
+        if h:
+            note = "matched" if len(events) == 1 and len(perfs) == 1 else (
+                f"matches {len(perfs)} performances of one event" if len(events) == 1
+                else f"matches {len(events)} events that day: " + ", ".join(events))
+        elif not has_date and not typo:
+            note = "no date parsed from the print"
+        else:
+            note = "no Repertoire performance that day names this ballet"
+        rows.append((lpid, typo[0] if typo else None, typo[1] if typo else None,
+                     events[0] if len(events) == 1 else None,
+                     perfs[0] if len(events) == 1 and len(perfs) == 1 else None, len(events), note))
+    con.execute("""CREATE OR REPLACE TEMP TABLE prod_date_match (production_performance_id VARCHAR, typo_date VARCHAR,
+                   typo_note VARCHAR, event_id VARCHAR, performance_id VARCHAR, n_events INTEGER, match_note VARCHAR)""")
+    con.executemany("INSERT INTO prod_date_match VALUES (?, ?, ?, ?, ?, ?, ?)", rows)
+    con.execute("""
+        CREATE TABLE research.production_date (
+            production_date_id VARCHAR PRIMARY KEY,
+            production_id VARCHAR REFERENCES research.production(production_id),
+            date_order INTEGER,
+            date DATE,
+            day_printed VARCHAR, month_printed VARCHAR, year_printed VARCHAR,
+            note VARCHAR,
+            outside_total BOOLEAN,
+            year_printed_matches_season BOOLEAN,
+            date_correction_note VARCHAR,
+            event_id VARCHAR REFERENCES research.event(event_id),
+            performance_id VARCHAR REFERENCES research.performance(performance_id),
+            n_matched_events INTEGER,
+            match_note VARCHAR
+        )""")
+    con.execute("""
+        INSERT INTO research.production_date
+        SELECT p.production_performance_id, p.production_entry_id, p.date_order,
+               coalesce(try_cast(m.typo_date AS DATE), p.date),
+               p.day_text, p.month_text, p.year_text, p.note, p.outside_total, p.year_printed_matches_season,
+               CASE WHEN m.typo_note IS NOT NULL THEN 'printed date is a misprint; matched on '
+                    || m.typo_date || ': ' || m.typo_note END,
+               m.event_id, m.performance_id, m.n_events, m.match_note
+        FROM raw.production_entry_performance p JOIN prod_date_match m USING (production_performance_id)
+    """)
+    for note, n in con.execute("""SELECT regexp_replace(match_note, ':.*', ''), count(*) FROM research.production_date
+                                  GROUP BY 1 ORDER BY 2 DESC""").fetchall():
+        print(f"  research.production_date: {n} {note}")
 
 
 def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
@@ -1461,7 +1552,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # full schema first and populated via a separate INSERT INTO ... SELECT,
     # same two-step pattern build_entities.py already uses.
     for t in ["season_stat_check", "season_stat_line", "season_stat_footnote",
-              "production_credit", "production_work", "production",
+              "production_date", "production_credit", "production_work", "production",
               "performance", "event", "person_tenure", "person_tenure_note", "service_period", "person_assignment",
               "person_death", "set_design", "person_performance_tally", "person_appearance", "person", "work", "theater"]:
         con.execute(f"DROP TABLE IF EXISTS research.{t}")
@@ -2144,7 +2235,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         t: con.execute(f"SELECT count(*) FROM research.{t}").fetchone()[0]
         for t in ["theater", "work", "person", "event", "performance", "person_appearance",
                   "service_period", "person_assignment", "person_performance_tally", "set_design", "person_death",
-                  "production", "production_work", "production_credit",
+                  "production", "production_work", "production_credit", "production_date",
                   "season_stat_check", "season_stat_line", "season_stat_footnote"]
         if con.execute("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'research' AND table_name = ?",
                        [t]).fetchone()[0]

@@ -343,6 +343,29 @@ The same printed surname can be different people, and `role_category`
 keeps them apart: "сказки **Перро**" (`source`, Charles Perrault) vs
 "соч. Ж. **Перро**" (`author`, Jules Perrot).
 
+### `research.production_date` — one row per printed list date (added 2026-11-03)
+
+Every date the ballet productions lists print (`raw.production_entry_performance`, 2,374 rows), carried into research
+(RG, 2026-11-03, research-layer review), with the Repertoire event and performance it names.
+
+| column | meaning |
+|---|---|
+| `production_date_id` | = `raw.production_entry_performance.production_performance_id` |
+| `production_id` | -> `research.production` (the list entry) |
+| `date_order` | position of the date in the entry |
+| `date` | the date as parsed; for a confirmed misprint (`LIST_DATE_PRINT_TYPOS`), the intended date |
+| `day_printed`, `month_printed`, `year_printed` | as printed |
+| `note` | the list's note on the date, verbatim («3-е дѣйствіе», «утро», «прологъ» ...) |
+| `outside_total`, `year_printed_matches_season` | flags from raw |
+| `date_correction_note` | why `date` differs from the print (misprints only) |
+| `event_id`, `performance_id` | the Repertoire event / performance it names, only when the match is unique |
+| `n_matched_events`, `match_note` | `matched`; `matches N performances of one event` (event set, performance not); `matches N events that day` (neither set; e.g. «2 раза: утромъ и вечеромъ»); `no Repertoire performance that day names this ballet` |
+
+Matching (`_list_date_matches`, shared with `ballet_list_matches`): same city and date, title equal after `norm()`, a
+curated alias, or the work is an excerpt of it. A date left empty is then tried against research's own titles on that
+day (a corrected misprint such as «Шоиеніана», or a performance supplied from the list itself). Where a day has a
+morning and an evening event, the list's «утро» / «вечеръ» note picks one.
+
 ---
 
 ## Season production stats — `season_stat_*` (raw) and `research.season_stat_*`

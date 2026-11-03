@@ -26067,3 +26067,37 @@ SELECT * FROM research.season_stat_line WHERE season IN ('1894-95','1901-02','19
 Result: each title occurs once in the Repertoire, never with a genre. Review mentions: «Балетоманъ» 1 (1910-11 SP,
 unrelated), «Обозрѣніе» 1 (1896-97 SP, the ordinary word); none of the others. Season-stat lines for those seasons and
 cities have no concert, revue or charity line (drama, opera, ballet, French, German, mixed only).
+
+## 2026-11-03 — Research-layer review: work and performance data held before research but not carried into it
+
+```sql
+DESCRIBE raw.event_entry_performance; DESCRIBE entities.work; DESCRIBE research.performance; DESCRIBE research.work;
+SELECT count(*) FROM raw.event_entry_performance;  -- vs research.performance (all / not supplied)
+SELECT count(*) FROM raw.event_entry_performance r LEFT JOIN entities.work_link wl ON wl.raw_performance_id=r.performance_id
+ WHERE r.performance_id NOT IN (SELECT performance_id FROM research.performance);
+SELECT canonical_title, canonical_genre FROM entities.work WHERE work_id NOT IN (SELECT work_id FROM research.work);
+SELECT count(*), count(note), count(*) FILTER (WHERE outside_total), count(*) FILTER (WHERE NOT year_printed_matches_season)
+ FROM raw.production_entry_performance;
+SELECT note, count(*) FROM raw.production_entry_performance WHERE note IS NOT NULL GROUP BY 1 ORDER BY 2 DESC;
+SELECT sum(n_dates) FROM research.production;
+SELECT count(*) FROM entities.work_id_crosswalk; SELECT count(*) FROM entities.work_genre_candidate;
+```
+
+Result: raw performances 30,831; research 30,835 (30,830 printed + 5 supplied); 1 raw line not carried
+(repertoire_1905-06_p015__s021__w1, no title, no work link). entities.work not in research: Карменъ бал., Анжело оп.,
+Шоиеніана, Дивертиссементъ (Etudes). Ballet-list dates: 2,374 (110 with notes, 30 outside total, 5 year mismatch);
+research.production n_dates sum 2,344; no research table holds the dates. Crosswalk 836; genre queue 62.
+
+## 2026-11-03 — Research-layer review W8: research.production_date test build (copy of production after de430fc)
+
+```sql
+SELECT regexp_replace(match_note, ':.*', ''), count(*) FROM research.production_date GROUP BY 1;
+SELECT pr.season, pr.city, pr.list_title, strftime(d.date,'%Y-%m-%d'), d.note, d.match_note, d.event_id, d.performance_id
+FROM research.production_date d JOIN research.production pr USING(production_id) WHERE d.match_note <> 'matched';
+-- ballet performances in research on the same city + date, for each unmatched list date
+-- ballet_list_matches before vs after the refactor (Counter of tuples), on production read-only
+```
+
+Result: 2,374 dates: matched 2,357; one event / two performances 5; two events 1; unmatched 11 (table in
+docs/research_layer_review_2026-11-03.md). ballet_list_matches: 2,370 pairs before and after, identical. Every other
+table equal to production. outside_total 30, year mismatch 5, misprint corrections 5.
