@@ -25327,3 +25327,38 @@ SELECT count(*) FROM entities.person_candidate WHERE status='pending';
 ```
 
 Result: all 6 end_type other; Козловъ 1901-09-01, Ветцель 1902-09-01, Липинъ 1903-09-01 with "not dated in this entry, taken as …" notes; Кякштъ/Боборыкинъ undated. person_tenure_note 27 (Кякштъ 1). research.person 2,620, live 2,522; receipts 3,223,088,581; Wikidata 174; assertion links 2,468; pending 0; alignment 0 shifts.
+
+## 2026-11-02 — «Освобожденъ отъ обязанностей»: Аслинъ and Ширяевъ appearances, service periods, assignments, tenure
+
+```sql
+SELECT pa.season, pa.city, pa.entity_type, pa.heading_path, pa.rank, pa.title, pa.tenure_note_text, sp.start_text, sp.end_text, sp.end_date, sp.end_type
+FROM research.person_appearance pa LEFT JOIN research.service_period sp USING(appearance_id) WHERE pa.person_id = ? ORDER BY 1;
+SELECT * FROM research.person_assignment WHERE person_id = ?;
+SELECT * FROM research.person_tenure WHERE person_id = ?;   -- Аслинъ 0ce8c9e7, Ширяевъ 6b54e5ce
+```
+
+Result: both «Освобожденъ» lines are in a separate entry for the post (Аслинъ 1905-06 under «Репетиторъ балета», period 12 Dec 1903 – 1 Nov 1905, other; Ширяевъ 1904-05 under «Второй балетмейстеръ», 1 Sept 1903 – 1 Mar 1905, other), alongside their «Артисты» entries, which carry no end (Аслинъ listed 1895-96..1910-11; Ширяевъ leaves 12 May 1905 «Оставилъ службу», then «Руководитель класса характерныхъ танцевъ» 1905-08). Same pattern already stored: Ширяевъ «Помощникъ балетмейстера» 1902-04 ends 1 Sept 1903 «назначенъ вторымъ балетмейстеромъ» (other). No person_assignment rows. person_tenure ignores ends: BalletArtists SP Аслинъ 1895-96..1910-11, Ширяевъ 1890-91..1907-08.
+
+## 2026-11-02 — Post ends («other») followed by later listings: Аслинъ, Ширяевъ, and corpus count
+
+```sql
+WITH ended AS (SELECT sp.person_id, p.display_name, sp.season, sp.list, sp.city, pa.heading_path AS post, sp.end_date
+  FROM research.service_period sp JOIN research.person_appearance pa ON pa.appearance_id = sp.appearance_id
+  JOIN research.person p ON p.person_id = sp.person_id WHERE sp.end_type = 'other')
+SELECT display_name, season, post, end_date, (SELECT max(pa2.season) FROM research.person_appearance pa2 WHERE pa2.person_id = e.person_id
+  AND pa2.entity_type = e.list AND coalesce(pa2.city,'') = coalesce(e.city,'') AND pa2.season > e.season) AS listed_until
+FROM ended e WHERE person_id IN (Аслинъ 0ce8c9e7, Ширяевъ 6b54e5ce);
+SELECT count(*), count(*) FILTER (WHERE EXISTS (later appearance, same list and city)) FROM research.service_period sp WHERE sp.end_type = 'other';
+```
+
+Result: Аслинъ «Репетиторъ балета» ends 1905-11-01, listed until 1910-11; Ширяевъ «Помощникъ балетмейстера» ends 1903-09-01 (1902-03, 1903-04) and «Второй балетмейстеръ» 1905-03-01, listed until 1907-08. Corpus: 210 other-ends, 171 followed by a later listing in the same list/city.
+
+## 2026-11-02 — Хмелевскій Владиміръ Сергѣевичъ: appearances and service periods
+
+```sql
+SELECT p.display_name, pa.appearance_id, pa.heading_path, pa.tenure_note_text, sp.start_text, sp.end_text, sp.end_type
+FROM research.person p JOIN research.person_appearance pa ON pa.person_id = p.person_id
+LEFT JOIN research.service_period sp ON sp.appearance_id = pa.appearance_id WHERE p.display_name LIKE 'Хмелевск%' ORDER BY pa.season;
+```
+
+Result: one person aa7ff632, Moscow ProductionTeam 1890-91..1907-08. Помощникъ машиниста Большой театръ 1890-91..1900-01; 1900-01 p003__e017 «Назначенъ и. д. машиниста-механика Новаго театра,» no end date/type; same page e021 Новый театръ «И. д. машиниста-механика» «съ 29 марта 1879 г.» (scan: clear 29; elsewhere 27); 1901-02 И. д.; 1902-08 Машинистъ-механикъ Новаго театра.

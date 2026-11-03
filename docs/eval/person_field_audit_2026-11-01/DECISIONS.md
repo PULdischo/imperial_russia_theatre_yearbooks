@@ -79,7 +79,14 @@ Order: conventions first (each settles many rows), then mechanical fixes, then i
   Research layer takes the date another printing gives: Козловъ MSK 1902-03 -> 1 Sept 1901 (1900-01 MSK), Ветцель -> 1 Sept 1902,
   Липинъ -> 1 Sept 1903 (receiving list, same volume); Боборыкинъ, Кякштъ stay undated. Кякштъ tenure note: one Moscow season
   1903-04 (Moscow review: debut «г-на и г-жи Кякштъ»), back in the SP lists 1904-09 with the same start.
-  Still to rule: Хмелевскій «Назначенъ и. д. машиниста-механика» (not an end?), Аслинъ/Ширяевъ «Освобожденъ отъ обязанностей».
+  «Освобожденъ отъ обязанностей» RULED 2026-11-02 (RG "Keep as post end", "as long as we can see that they left certain roles but
+  stayed on"): no change. Each line sits in the post's own entry (Аслинъ «Репетиторъ балета» ends 1 Nov 1905; Ширяевъ «Второй
+  балетмейстеръ» ends 1 Mar 1905), end_type other (A2); the man's «Артисты» entries carry on (Аслинъ listed to 1910-11, Ширяевъ to
+  1907-08). Visible by joining research.service_period (end_type other) to later research.person_appearance rows in the same list
+  and city: 171 of 210 other-ends are followed by a later listing. Not research.person_assignment (A2b is for temporary postings).
+  Still to rule: Хмелевскій «Назначенъ и. д. машиниста-механика Новаго театра,» (1900-01, no date in print; scan
+  docs/eval/scan_audit/1900-01_productionteam_p128_khmelevsky_new_theatre.png). Logged, not acted on: his new-post entry the same
+  page prints «съ 29 марта 1879 г.» (clear 29; all other volumes 27).
 - Held for RG (was): 7 medium misreads (B6), 10 medium wrong-field rows (B5), 9 undated ends (B1), «Освобожденъ отъ обязанностей» (Аслинъ, Ширяевъ),
   Будаевъ rank+instrument, 1908-09 BalletArtists tallies unparsed (B9).
 - C identity/links and D print conflicts: not started.
