@@ -26028,4 +26028,4 @@ Held for later: «Гамлетъ» 11 Nov 1901 at the Малый on Адель �
 
 Scan reads (scratchpad scan_results_C.csv, 17 printings): no genre word was missed; every title reads as stored. «Обозрѣніе» is a
 one-word entry (the genre word is the title). Fix: the blank-genre rule now applies work_artform_overrides.csv per printing, so
-«Званый вечеръ съ итальянцами» (printed «оперетка», «оперетта», «опер.» = operetta by RG's override) -> operetta. Works: NULL 61.
+«Званый вечеръ съ итальянцами» (printed «оперетка», «оперетта», «опер.» = operetta by RG's override) -> operetta. Works: NULL 62.
