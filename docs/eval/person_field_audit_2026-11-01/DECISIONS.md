@@ -127,3 +127,7 @@ Still to put to RG: and the listed-after-leaving cases (Иванова 2-я, Л�
   Ѳедорова: 1906-07 «Ѳедорова 2-я» x4 (roster 2-я = Лидія) and «Ѳедорова 1-я» x1 unlinked; lists 1904-05/1906-07 spell «Федорова».
   1904-05 review p.118 «Ѳедорова 2-я, 1-я» are in a quoted 1875 cast of «Голубая Георгина»: 9 of 21 mentions in that passage linked to
   later people (e.g. «Готье» role -> Готье Теофиль, «Л. Ивановъ» -> Иванова Лариса, «Ѳедорова 1-я» -> Марія Дмитріевна). For RG next.
+- 1875 «Голубая Георгина» cast (1904-05 SP review pp.118-119) DONE 2026-11-03 (RG "Unlink all", then "Yes, change it"): 24 person
+  mentions unlinked in docs/eval/review_mention_links.csv (1ef000c; «для дебюта М. М. Петипа» kept -> Марія Маріусовна, correct);
+  new docs/eval/review_historical_passages.csv read by build_review_assertions.py: dance 801 and assertions 1510, 2858-2860 dated
+  1875-01-12, dance-801 dancers left unlinked ('historical passage'). Add any other quoted earlier cast to that list.

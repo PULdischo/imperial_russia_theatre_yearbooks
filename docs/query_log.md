@@ -25580,3 +25580,15 @@ SELECT position, performer_surface, performer_person_id, link_method FROM resear
 ```
 
 Result: 25 person mentions in the passage, 12 linked before; after (second run, «Петипа» occurrence order taken from match_review_mentions.py: char 51 = occurrence 5) only char 51 «для дебюта М. М. Петипа» -> Петипа 1-я Марія Маріусовна remains linked. No mention entity change outside the two blocks; other diffs are candidate-list ordering. review_assertion links 2,468 -> 2,466 (2858 «Г. Стуколкинъ 1-й», 2860 «г. Петипа»); review_dance_performer dance 801 pos 5 Соколова unlinked. research.person 2,619, receipts 3,223,088,581, 0 shifts. NOT changed (no override exists): dance 801 «Grands pas des fleurs» dated 1905-01-12 (the 1875 date with the review's year) and still linking Ѳедорова 2-я -> Александра (e63497bc), Ѳедорова 1-я -> Марія Дмитріевна, Крюгеръ (7c76ea80), Петипа -> Маріусъ, Стуколкинъ (411c9210) by "tie: company that season".
+
+## 2026-11-03 — Historical passages in the review dance/assertion builder (1875 «Голубая Георгина» cast): diff v. db_backup_historical_passages_2026-11-03
+
+```sql
+-- every base table EXCEPT ALL both ways v. backup
+SELECT dance_id, date_undate FROM research.review_dance WHERE block_id IN ('review_1904-05_SP_ballet_p013__b003','review_1904-05_SP_ballet_p014__b001');
+SELECT position, performer_surface, performer_person_id, link_method FROM research.review_dance_performer WHERE dance_id = 801;
+SELECT assertion_id, date_undate, performer_person_id FROM research.review_assertion WHERE block_id IN (<same 2 blocks>);
+-- performer/date changes outside dance 801 and the 2 blocks; assertion links; research.person
+```
+
+Result: changed only research.review_dance 1 (dance 801 date 1905-01-12 -> 1875-01-12), review_dance_performer 8 (all dance-801 dancers unlinked, link_method 'historical passage'; before: Ѳедорова 2-я -> Александра, Ѳедорова 1-я -> Марія Дмитріевна, Крюгеръ, Петипа -> Маріусъ, Стуколкинъ), review_assertion 4 (1510, 2858, 2859, 2860 dated 1875-01-12; performers already unlinked). 0 changes elsewhere; assertion links 2,466; research.person 2,619; 0 shifts.

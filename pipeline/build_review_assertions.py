@@ -525,6 +525,10 @@ def resolve_dancer_ties(con, dances: list[dict]) -> collections.Counter:
         wt = _k4(titles.get(x["work_id"] or "", ""))
         named_here = {dn["entity"] for dn in x["dancers"] if dn["entity"]}
         for dn in x["dancers"]:
+            if x.get("historical"):
+                # a quoted cast from an earlier year: no tie is settled by the review's season
+                dn["entity"], dn["method"] = "", "historical passage"
+                continue
             if dn["entity"]:
                 dn["method"] = "mention"
                 continue
@@ -1045,6 +1049,21 @@ def main() -> None:
             # dancers are never composers of the same number
             dset = {dn["surface"] for dn in x["dancers"]}
             x["composers"] = [c_ for c_ in comps if c_["surface"] not in dset]
+
+    # Passages quoting an earlier year's cast (RG 2026-11-03, the 1875 «Голубая Георгина» cast in the 1904-05 review):
+    # their rows take the quoted date, and their dancers are left unlinked (person mentions there are unlinked in
+    # docs/eval/review_mention_links.csv). One row per block, in docs/eval/review_historical_passages.csv.
+    hist_path = Path("docs/eval/review_historical_passages.csv")
+    historical = ({r["block_id"]: r["event_date"] for r in csv.DictReader(open(hist_path, encoding="utf-8"))}
+                  if hist_path.exists() else {})
+    seen_hist = set()
+    for r in out:
+        if r["block_id"] in historical:
+            r["date_undate"] = historical[r["block_id"]]; seen_hist.add(r["block_id"])
+    for x in dances:
+        if x["block_id"] in historical:
+            x["date_undate"] = historical[x["block_id"]]; x["historical"] = True; seen_hist.add(x["block_id"])
+    print(f"historical passages: {len(historical)} listed, {len(seen_hist)} with rows here")
 
     a.out.parent.mkdir(parents=True, exist_ok=True)
     cols = ["page_id", "block_id", "season", "city", "printed_folio", "date_undate",
