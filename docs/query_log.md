@@ -26073,3 +26073,19 @@ art_form ballet: Дивертиссементъ [бал.] 46, Дивертисс
 Result: all 11 generic divertissement works (ballet-bill splits incl.) -> NULL «programme item: a divertissement … not a work»; titled ones
 (Маскарадъ, Карнавалъ, Балъ-маскарадъ въ Венеціи) unchanged. Works ballet 260 -> 253; NULL 52. No performance changed (discipline ballet kept,
 dance views unchanged). Check unchanged.
+
+## 2026-11-03 — Did the yearbook's printed season statistics count divertissements? (RG question)
+
+```sql
+SELECT category, count(*), count(DISTINCT season) FROM research.season_stat_line GROUP BY 1 ORDER BY 2 DESC;
+SELECT * FROM research.season_stat_line WHERE category_verbatim ILIKE '%диверт%' OR qualifier_verbatim ILIKE '%диверт%';   -- none
+SELECT season, footnote_no, text_verbatim FROM research.season_stat_footnote WHERE text_verbatim ILIKE '%диверт%';           -- none
+-- events whose bill is only divertissement (+ anthem): none
+SELECT coalesce(e.disciplines, '∅'), count(DISTINCT e.event_id) FROM research.event e JOIN research.performance p USING (event_id)
+WHERE p.genre_family = 'divertissement' GROUP BY 1;
+```
+
+Result: the stats count events (спектакли) by category (Русскихъ драматическихъ, Балетныхъ, Русскихъ оперныхъ, Смѣшанныхъ, Оперныхъ,
+Французскихъ, Нѣмецкихъ, Концертовъ, …); no category or footnote names divertissements. No event consists of a divertissement alone:
+all 108 events with one have other items (ballet bills 50, Russian drama 26, ballet+drama 11, opera 7, ballet+opera 6, ballet+opera+drama 6,
+opera+drama 1, no troupe 1), so each sits inside its event's category count.
