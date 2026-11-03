@@ -1600,6 +1600,9 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
             form, basis = None, ("programme item: a divertissement, a group of short selections from various works, not a work "
                                  "(RG, 2026-11-03); dancing, when known, is marked per performance (discipline ballet, "
                                  "or includes_dance via works_with_dancers.csv)")
+        elif re.match(TABLEAU_TITLE_RE, (title or "").lower()):
+            form, basis = None, ("programme item: an apotheosis or tableau vivant, not a work (RG, 2026-11-03); "
+                                 "the occasion is on research.event.annotation, the kind on performance.genre_family")
         elif ballet_note is not None:
             form, basis = "ballet", f"ballet productions list: {ballet_note}"
         elif wsrc == "review":

@@ -26112,3 +26112,9 @@ line (that day the Большой prints «Кантата.» as its own item). C
 (mode of a work's printed genres in a season) gave it the Александринскій «Кантата.». Fix: tableau/apotheosis titles no longer take a season
 genre. Diff: 1 performance (Малый 19 Feb 1911 «Апоѳеозъ.» concert -> tableau / apotheosis) and its event's genre_families. Open for RG: is the
 Александринскій line one item (an apotheosis with a cantata) or two («Апоѳеозъ» + «Кантата.»)?
+
+## 2026-11-03 — Apotheoses and tableaux vivants: programme items (RG "both as programme items")
+
+Result: Апоѳеозъ 25, Живая картина 6, Живыя картины 3 -> NULL «programme item: an apotheosis or tableau vivant, not a work»; ceremonial stays
+the anthem only (4 works). Only those 3 work rows changed. NULL works 52, of which 23 still pending (readings 8, lectures 4, cinema 3,
+Monologues / Scènes et monologues / Prolog, Обозрѐніе, Концертъ-спектакль, «Слава»!, Балетоманъ).
