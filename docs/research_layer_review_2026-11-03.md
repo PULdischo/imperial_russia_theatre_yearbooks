@@ -416,7 +416,7 @@ unlinked Petersburg theater names wait for the Season Reviews section.
 - `raw.season_stat_page` (19): the page heading verbatim, its footnote mark and the source file. Research keeps only the
   format and printed page (in `season_stat_check`).
 - `raw.season_stat_dated_note` (10): the jubilees and farewell performances printed after each city's totals in 1909-10
-  and 1910-11 («24 января—прощальный спектакль балерины Трефиловой.», «24 февраля—35-ти лѣтіе службы М. Г. Савиной.» ...).
+  (correction 2026-11-03: 1909-10 only, not 1910-11) («24 января—прощальный спектакль балерины Трефиловой.», «24 февраля—35-ти лѣтіе службы М. Г. Савиной.» ...).
 
 ### Things noticed (for RG)
 
@@ -439,3 +439,8 @@ unchanged (1894-95-05 keeps its printed «30 (53","181 р. 53 к.)» as written)
 **S2 — 1891-92 receipts (RG 2026-11-03, "agreed").** `season_stat_check.repertoire_receipts_kopecks`, the charity-worded
 receipts and the receipts difference are NULL, not 0, when no event of the season and city prints receipts (1891-92,
 both cities). No other row changed.
+
+**S3 — page headings and dated notes (RG 2026-11-03, "Yes, add them").** New `research.season_stat_page` (19: source
+file, printed page, heading and its footnote mark verbatim, format, note) and `research.season_stat_dated_note` (10, all
+1909-10: SP 6, Moscow 4; city as SP/Moscow beside the printed form). Built from the raw tables in
+`build_season_stats`; export schema in `build_datasette.py`; `docs/schema.md`. Every other table unchanged.

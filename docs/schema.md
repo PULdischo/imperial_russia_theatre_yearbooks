@@ -418,6 +418,13 @@ The genre- and theater-level comparison (families, ballet counted three ways) st
 `repertoire_receipts_kopecks` (and the charity-worded receipts and the receipts difference) are NULL, not 0, when no
 performed event of that season and city prints receipts: the 1891-92 Repertoire prints none (RG, 2026-11-03).
 
+### `research.season_stat_page`, `research.season_stat_dated_note` (added 2026-11-03)
+
+Copies of `raw.season_stat_page` (one row per totals page: `source_file`, `printed_page`, `heading_verbatim`,
+`heading_footnote`, `format`, `note`) and `raw.season_stat_dated_note` (the jubilees and farewell performances printed
+after each city's totals, 1909-10 only: `city` as SP/Moscow, `city_verbatim`, `note_no`, `text_verbatim`, `note`). RG,
+2026-11-03, research-layer review: "Yes, add them".
+
 ### `research.season_stat_gap`, `research.season_stat_gap_event` — the reconciliation ledger (added 2026-11-03)
 
 `docs/eval/reconciliation/outcome_ledger.csv` loaded as it stands (RG, 2026-11-03, research-layer review: "Yes, load

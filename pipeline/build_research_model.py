@@ -882,7 +882,8 @@ def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
     The genre/theater-level comparison (families, ballet three ways) stays in
     pipeline/compare_season_stats.py, because it needs judgment-based classification.
     """
-    for t in ("season_stat_gap_event", "season_stat_gap", "season_stat_check", "season_stat_line", "season_stat_footnote"):
+    for t in ("season_stat_gap_event", "season_stat_gap", "season_stat_check", "season_stat_line", "season_stat_footnote",
+              "season_stat_page", "season_stat_dated_note"):
         con.execute(f"DROP TABLE IF EXISTS research.{t}")
     con.execute("""
         CREATE TABLE research.season_stat_line (
@@ -908,6 +909,28 @@ def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
             PRIMARY KEY (season, footnote_no)
         )""")
     con.execute("INSERT INTO research.season_stat_footnote SELECT season, footnote_no, text_verbatim, note FROM raw.season_stat_footnote")
+    # The page itself and the dated notes printed after each city's totals (1909-10), verbatim (RG 2026-11-03,
+    # research-layer review: "Yes, add them").
+    con.execute("""
+        CREATE TABLE research.season_stat_page (
+            season VARCHAR PRIMARY KEY, source_file VARCHAR, printed_page VARCHAR, heading_verbatim VARCHAR,
+            heading_footnote VARCHAR, format VARCHAR, note VARCHAR
+        )""")
+    con.execute("""INSERT INTO research.season_stat_page
+                   SELECT season, source_file, printed_page, heading_verbatim, heading_footnote, format, note
+                   FROM raw.season_stat_page""")
+    con.execute("""
+        CREATE TABLE research.season_stat_dated_note (
+            season VARCHAR, city VARCHAR, city_verbatim VARCHAR, note_no INTEGER, text_verbatim VARCHAR, note VARCHAR,
+            PRIMARY KEY (season, city, note_no)
+        )""")
+    con.execute("""INSERT INTO research.season_stat_dated_note
+                   SELECT season, CASE city_verbatim WHEN 'С.-Петербургъ' THEN 'SP' WHEN 'Москва' THEN 'Moscow' END,
+                          city_verbatim, note_no, text_verbatim, note
+                   FROM raw.season_stat_dated_note""")
+    bad = con.execute("SELECT count(*) FROM research.season_stat_dated_note WHERE city IS NULL").fetchone()[0]
+    if bad:
+        raise SystemExit(f"research.season_stat_dated_note: {bad} notes with a city that is not С.-Петербургъ / Москва")
     con.execute("""
         CREATE TABLE research.season_stat_check (
             season VARCHAR, city VARCHAR, stats_format VARCHAR, stats_printed_page VARCHAR,
@@ -1623,6 +1646,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # full schema first and populated via a separate INSERT INTO ... SELECT,
     # same two-step pattern build_entities.py already uses.
     for t in ["season_stat_gap_event", "season_stat_gap", "season_stat_check", "season_stat_line", "season_stat_footnote",
+              "season_stat_page", "season_stat_dated_note",
               "production_date", "production_credit", "production_work", "production",
               "performance", "event", "person_tenure", "person_tenure_note", "service_period", "person_assignment",
               "person_death", "set_design", "person_performance_tally", "person_appearance", "person", "work", "theater"]:
@@ -2322,7 +2346,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         for t in ["theater", "work", "person", "event", "performance", "person_appearance",
                   "service_period", "person_assignment", "person_performance_tally", "set_design", "person_death",
                   "production", "production_work", "production_credit", "production_date",
-                  "season_stat_check", "season_stat_line", "season_stat_footnote", "season_stat_gap", "season_stat_gap_event"]
+                  "season_stat_check", "season_stat_line", "season_stat_footnote", "season_stat_gap", "season_stat_gap_event",
+                  "season_stat_page", "season_stat_dated_note"]
         if con.execute("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'research' AND table_name = ?",
                        [t]).fetchone()[0]
     }

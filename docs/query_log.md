@@ -26262,3 +26262,14 @@ Result: 271 gaps, 569 event links (excluded_by_yearbook 48 gaps / 314 links, cor
 classification 23/46, comparison_rule 11/23, open 16/16). 8 non-integer event gaps kept as text; all dates parse; 7 gaps
 with event text but no event id. season_stat_check: only 1891-92 Moscow and SP change (0 -> NULL). Every other table
 identical; production equal to the tested copy; 0 person_link shifts.
+
+## 2026-11-03 — Research-layer review S3: season_stat_page and season_stat_dated_note (test on a copy after 55551b0)
+
+```sql
+SELECT DISTINCT city_verbatim FROM raw.season_stat_dated_note; SELECT season, count(*) FROM raw.season_stat_dated_note GROUP BY 1;
+SELECT city, count(*) FROM research.season_stat_dated_note GROUP BY 1;
+SELECT count(*), count(heading_footnote) FROM research.season_stat_page;
+```
+
+Result: dated notes all 1909-10 (10; SP 6, Moscow 4), cities С.-Петербургъ / Москва only; pages 19, 8 with a heading
+footnote mark. Every other table identical to production.
