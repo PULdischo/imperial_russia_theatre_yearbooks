@@ -779,3 +779,10 @@ Internal (entities layer, not exported). RG, 2026-10-26: record why each unlinke
 One row per composer or arranger the review prints for a dance number (RG: composers of numbers). `role` music / arrangement (оркестровано, аранжировано, инструм.); `name_surface` as printed (oblique case: «Понкіелли», «Рубинштейна»); `person_id` only when the person is known as a composer or musician (a music/instrumentation credit in the productions lists, or a Musicians entry) -- otherwise NULL, the printed name kept; `printed_phrase`. Read from the number's own window: a bracket after its name («Танецъ Мерседесъ (муз. г. Симона)—…», which also brought 44 numbers that the cast reader had dropped whole into review_dance), a bracket after its dancers, or the same sentence. The phrase stops at «, соч.» (choreography), an arranger cue, «для», a bracket, dash or «;». A whole ballet's composer is not a number's (one known exception: 1908-09 Moscow «Голубую птицу и принцессу Флорину» <- Чайковскій).
 
 `entities.review_assertion_id_watermark`: the highest `review_assertion.assertion_id` ever issued (3,185 at creation); new statements are numbered above it, so retired ids (the 481 dance rows, Головъ's craft rows 3184-3185) are never reused.
+
+## `research.event.date_correction_note` (added 2026-11-03)
+
+Why `date` differs from the printed `date_undate`, or why the date is doubted: the note from
+`analysis.event_entry_date_check` («scan-verified: book prints day as "9" (should be "4"; …)», «the page misprints every
+weekday word one day ahead …»), or, for a page whose month and year come from `RESEARCH_PAGE_MONTH_OVERRIDES`, that reason.
+Set on every `corrected_manual` and `no_weekday` event (86), NULL otherwise. RG, 2026-11-03, research-layer review.

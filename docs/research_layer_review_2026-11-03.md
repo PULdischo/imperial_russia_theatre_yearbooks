@@ -449,3 +449,49 @@ file, printed page, heading and its footnote mark verbatim, format, note) and `r
 heading's note on the italic receipts, 1893-94 – 1900-01). Taken from the lines that carry each mark; the build stops if a
 footnote is carried by both cities or by nothing. Every other column and table unchanged; export schema in
 `build_datasette.py`; `docs/schema.md`.
+
+## 4. Events and performances
+
+(Queries logged in `docs/query_log.md`, "Research-layer review: Events". The performance → work side is in section 2.)
+
+### What one record holds
+
+- **`event`** — 32,813 rows, one per theater × date × session: `event_status` (performed 22,165, no_performance 7,771,
+  not_captured 2,877), `date_verbatim`, `date_undate` (as printed) and `date` (after the weekday check),
+  `date_confidence` (verified 29,850, synthesized_gap 2,877, corrected_manual 76, no_weekday 10), `time_of_day`
+  (unspecified 28,078, morning 2,378, evening 2,357), receipts (`receipts_verbatim`, `receipts_total_kopecks` on 19,329;
+  `receipts_source`: parsed 19,041, half-kopeck dropped 209, corrected print typo 79; `receipts_correction_note` on 288),
+  `printed_page_number` (29,936; the rest are the synthesized gaps), `annotation` (1,807), flags (`is_benefit` 729,
+  `is_charity` 378, `is_free` 328, `is_student_performance` 143, `is_reduced_price` 26, `has_anthem` 195), and the bill's
+  summary (`n_works`, `disciplines`, `companies`, `genre_families`).
+- **`performance`** — 30,835 rows (section 2), plus `company` (St. Petersburg Russian drama 7,845, Moscow Russian drama
+  7,629, St. Petersburg French drama 4,876, Moscow opera 3,198, St. Petersburg opera 3,116, St. Petersburg ballet 1,493,
+  Moscow ballet 1,205, visiting German drama 812, Moscow Art Theatre 152, and 15 smaller visiting troupes; none for the 338
+  anthems, concerts and the like), `includes_dance` (158, each with its basis), `is_ceremonial` (195).
+- **Views** `events_with_dancers` 2,222 events, `events_with_dancers_performance` 3,085 rows.
+
+### Held earlier but not carried into research
+
+- **Date-correction notes.** `analysis.event_entry_date_check.note` explains each of the 86 corrected or doubtful dates
+  («scan-verified: book prints day as "9" (should be "4"; between 3 Среда and 5 Пятница)», «the page misprints every
+  weekday word one day ahead …»). Research has the corrected `date` and `date_confidence`, not the reason (receipts have
+  `receipts_correction_note`; dates have nothing like it).
+- `month_text`, `year_text` (the printed month and year headings) are not in research; `date_verbatim` is the day cell only.
+
+### Things noticed (for RG)
+
+1. **Julian dates.** `event.date` is text, not a date type, because six events fall on 29 Feb 1900, a Julian leap day that
+   the Gregorian calendar (and DuckDB's DATE) does not have. There is no Gregorian date beside it, so a match with a
+   foreign newspaper or any Gregorian-dated source needs the +12 / +13 day shift done by hand.
+2. **117 performed events with no performance row**: concerts and similar evenings whose cell prints only a heading
+   («Концертъ въ пользу инвалидовъ.», «Генеральная репетиція концерта …», «Баль-маскарадъ», «3-й концертъ А. Зилоти.»),
+   no work line. They have `n_works` 0 and no art form, so a query by art form or kind of item never finds them.
+3. Receipts are missing for 2,836 performed events: 1890-91 (965) and 1891-92 (939) print none; the rest are free and
+   charity evenings.
+
+### RG's questions and rulings
+
+**E1 — date-correction notes (RG 2026-11-03, "Yes, add them").** New `research.event.date_correction_note`, from
+`analysis.event_entry_date_check.note` (or the page-month override's reason): all 86 corrected_manual / no_weekday dates
+have one; verified and synthesized dates have none. Every other column and table unchanged; export schema in
+`build_datasette.py`; `docs/schema.md`.

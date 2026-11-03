@@ -90,7 +90,7 @@ SCHEMAS = {
         CREATE TABLE event (
             event_id TEXT PRIMARY KEY, theater_id TEXT REFERENCES theater(theater_id),
             season TEXT, city TEXT, date_verbatim TEXT, date_undate TEXT,
-            date TEXT, date_confidence TEXT, event_status TEXT,
+            date TEXT, date_confidence TEXT, date_correction_note TEXT, event_status TEXT,
             receipts_total_kopecks INTEGER, receipts_source TEXT,
             receipts_correction_note TEXT, printed_page_number TEXT,
             time_of_day TEXT, receipts_verbatim TEXT, annotation TEXT,

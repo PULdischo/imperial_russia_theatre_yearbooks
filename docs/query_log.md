@@ -26298,3 +26298,34 @@ SELECT city, count(*) FROM research.season_stat_footnote GROUP BY 1;
 
 Result: SP 63, Moscow 54, page 8; 0 other differences in the footnote table; every other table identical; 0 person_link
 shifts.
+
+## 2026-11-03 — Research-layer review: Events and performances
+
+```sql
+SELECT count(*), count(date), count(receipts_total_kopecks), count(annotation), count(printed_page_number),
+       sum(is_benefit::int), sum(is_charity::int), sum(is_free::int), sum(is_student_performance::int), sum(is_reduced_price::int),
+       sum(has_anthem::int) FROM research.event;
+SELECT date_confidence, count(*) FROM research.event GROUP BY 1;  -- also receipts_source, time_of_day, event_status x n_works
+SELECT date, date_undate, count(*) FROM research.event WHERE try_cast(date AS DATE) IS NULL GROUP BY ALL;
+SELECT season, count(*) FROM research.event WHERE event_status='performed' AND n_works=0 GROUP BY 1;   -- + sample with annotation
+SELECT season, count(*) FROM research.event WHERE event_status='performed' AND receipts_total_kopecks IS NULL GROUP BY 1;
+SELECT company, count(*) FROM research.performance GROUP BY 1;  -- includes_dance, is_ceremonial; the two views
+SELECT date_confidence, count(*), count(note) FROM analysis.event_entry_date_check GROUP BY 1;
+```
+
+Result: 32,813 events; verified 29,850, synthesized_gap 2,877, corrected_manual 76, no_weekday 10; receipts 19,329
+(parsed 19,041, half-kopeck 209, print typo 79), correction notes 288; flags benefit 729, charity 378, free 328, student
+143, reduced 26, anthem 195. date not castable: 1900-02-29 x 6 (Julian leap day). Performed with no works 117 (concert /
+heading-only cells, every season). Performed without receipts 2,836 (1890-91 965, 1891-92 939). Companies: SP Russian
+drama 7,845 ... none 338; includes_dance 158; ceremonial 195; views 2,222 / 3,085. Date-check notes: 86 (corrected_manual
+76, no_weekday 10), none carried into research.
+
+## 2026-11-03 — Research-layer review E1: research.event.date_correction_note (test on a copy, then production)
+
+```sql
+SELECT date_confidence, count(*), count(date_correction_note) FROM research.event GROUP BY 1;
+-- research.event before vs after on the old columns (EXCEPT ALL); every other table diffed
+```
+
+Result: corrected_manual 76/76, no_weekday 10/10, verified 0, synthesized_gap 0; 0 other differences in event; every
+other table identical; 0 person_link shifts.

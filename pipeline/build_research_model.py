@@ -1959,6 +1959,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             date_undate VARCHAR,
             date VARCHAR,
             date_confidence VARCHAR,
+            date_correction_note VARCHAR,
             event_status VARCHAR,
             receipts_total_kopecks INTEGER,
             receipts_source VARCHAR,
@@ -2019,7 +2020,13 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                          dc.date_confidence,
                          CASE WHEN ae.event_status = 'not_captured' THEN 'synthesized_gap'
                               ELSE 'unparseable' END)
-                END AS resolved_confidence
+                END AS resolved_confidence,
+                -- why the date was corrected or doubted (RG 2026-11-03, research-layer review: "Yes, add them")
+                CASE WHEN dc.note IS NOT NULL THEN dc.note
+                     WHEN dc.corrected_date_undate IS NULL AND ae.date_undate IS NULL
+                          AND pmo.page_id IS NOT NULL AND ae.event_status <> 'not_captured'
+                     THEN 'month and year taken from the page (RESEARCH_PAGE_MONTH_OVERRIDES): the cell prints the day only'
+                END AS resolved_date_note
             FROM analysis.event_entry ae
             LEFT JOIN analysis.event_entry_date_check dc ON dc.event_id = ae.event_id
             LEFT JOIN page_month_override pmo ON pmo.page_id = ae.page_id
@@ -2032,6 +2039,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             r.date_undate,
             r.resolved_date AS date,
             r.resolved_confidence AS date_confidence,
+            r.resolved_date_note AS date_correction_note,
             r.event_status,
             -- A half-kopeck figure ("82½", "22¹/₂") fails the integer cast in build_duckdb.py,
             -- so the parsed total lost ALL its kopecks. Store the whole kopecks and drop the
