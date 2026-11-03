@@ -84,7 +84,7 @@ Order: conventions first (each settles many rows), then mechanical fixes, then i
   балетмейстеръ» ends 1 Mar 1905), end_type other (A2); the man's «Артисты» entries carry on (Аслинъ listed to 1910-11, Ширяевъ to
   1907-08). Visible by joining research.service_period (end_type other) to later research.person_appearance rows in the same list
   and city: 171 of 210 other-ends are followed by a later listing. Not research.person_assignment (A2b is for temporary postings).
-  Still to rule: Хмелевскій «Назначенъ и. д. машиниста-механика Новаго театра,» (1900-01, no date in print; scan
+  Хмелевскій RULED 2026-11-02 (RG "Yes, other, undated"; row 6 of B9_undated_transfers.csv): «Назначенъ и. д. машиниста-механика Новаго театра,» (1900-01, no date in print; scan
   docs/eval/scan_audit/1900-01_productionteam_p128_khmelevsky_new_theatre.png). Logged, not acted on: his new-post entry the same
   page prints «съ 29 марта 1879 г.» (clear 29; all other volumes 27).
 - Held for RG (was): 7 medium misreads (B6), 10 medium wrong-field rows (B5), 9 undated ends (B1), «Освобожденъ отъ обязанностей» (Аслинъ, Ширяевъ),

@@ -25362,3 +25362,16 @@ LEFT JOIN research.service_period sp ON sp.appearance_id = pa.appearance_id WHER
 ```
 
 Result: one person aa7ff632, Moscow ProductionTeam 1890-91..1907-08. Помощникъ машиниста Большой театръ 1890-91..1900-01; 1900-01 p003__e017 «Назначенъ и. д. машиниста-механика Новаго театра,» no end date/type; same page e021 Новый театръ «И. д. машиниста-механика» «съ 29 марта 1879 г.» (scan: clear 29; elsewhere 27); 1901-02 И. д.; 1902-08 Машинистъ-механикъ Новаго театра.
+
+## 2026-11-02 — Хмелевскій end type applied: verify rebuilt row and metrics
+
+```sql
+SELECT appearance_id, end_text, end_date, end_type FROM research.service_period WHERE appearance_id = 'productionteam_1900-01_p003__e017';
+SELECT sum(receipts_total_kopecks) FROM research.event;
+SELECT count(*) FROM research.person WHERE wikidata_qid IS NOT NULL;
+SELECT count(*) FROM research.review_assertion WHERE performer_person_id IS NOT NULL;
+SELECT count(*) FROM entities.person_candidate WHERE status = 'pending';
+SELECT count(*) FROM research.service_period WHERE end_type = 'other';
+```
+
+Result: end_type other, no date. Receipts 3,223,088,581; Wikidata 174; assertion links 2,468; pending 0; other-ends 210 -> 211; research.person 2,620; alignment 0 shifts.
