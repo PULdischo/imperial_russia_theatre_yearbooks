@@ -25956,3 +25956,8 @@ Result: 13 review works carry «mention only» in source_note: the 7 ballets (Le
 Роксана, Свадьба Гамаша, Трильби) + Калифъ Багдадскій, Моисей, Карнавалъ [фортеп. соч.], Коронаціонная кантата, Легенда, Мессинская невѣста.
 No other column or table changed. Where performed (source_note): Шехерезада = Diaghilev's company; Papillons, Исламей, Les préludes =
 SP repertoire from 30 Sep 1912 (after the Repertoire's last season).
+
+## 2026-11-03 — Review-only works take the review's kind (RG "yes"): scratch rebuild
+
+Result: 20 review works: ballet 14, opera 2, concert 4 (music). Works: drama 2,239 / opera 319 / ballet 260 / operetta 35 / concert 4 /
+ceremonial 4 / NULL 91 (all "no printed genre"). Check unchanged; no other column or table changed.

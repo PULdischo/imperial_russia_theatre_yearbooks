@@ -1461,6 +1461,8 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
 WORK_ART_FORMS = ["ballet", "opera", "operetta", "drama", "concert", "ceremonial"]
 #: build_entities._work_art_form's identity classes -> WORK_ART_FORMS
 _IDENTITY_TO_WORK_ART_FORM = {"ballet": "ballet", "opera": "opera", "operetta": "operetta", "spoken": "drama"}
+#: entities.review_work.work_kind -> WORK_ART_FORMS (RG, 2026-11-03)
+REVIEW_KIND_TO_WORK_ART_FORM = {"ballet": "ballet", "opera": "opera", "music": "concert"}
 #: performance.discipline -> the work art form it agrees with
 DISCIPLINE_TO_WORK_ART_FORM = {
     "ballet": "ballet", "opera": "opera", "Italian opera": "opera", "German opera": "opera",
@@ -1487,7 +1489,7 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
     work identity (build_entities._work_art_form on the work's genre, with
     entity_curation/work_artform_overrides.csv), the ballet productions lists
     (work_ballet) and the anthem rule. No new inference: a work those rules do
-    not settle, or whose case waits for RG (review-only works, no genre), gets NULL and a basis that says why. An excerpt
+    not settle, or whose case waits for RG (no genre), gets NULL and a basis that says why. An excerpt
     takes its parent's art form; the build stops if the two ever differ.
     Runs before research.performance exists (research.work is UPDATEd)."""
     from build_entities import (_canon_genre, _fold_genre, _match_key, _strip_genre_suffix,
@@ -1502,6 +1504,10 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         FROM research.work w
         LEFT JOIN entities.work ew ON ew.work_id = w.work_id
         LEFT JOIN work_ballet wb ON wb.work_id = w.work_id""").fetchall()
+    review_kind = {}
+    if con.execute("""SELECT count(*) FROM information_schema.tables
+                      WHERE table_schema = 'entities' AND table_name = 'review_work'""").fetchone()[0]:
+        review_kind = {str(w): k for w, k in con.execute("SELECT work_id, work_kind FROM entities.review_work").fetchall()}
     out = []
     for wid, title, ent_title, genre, gsrc, excerpt_of, wsrc, ballet_note in rows:
         fold = _fold_genre(genre)
@@ -1513,9 +1519,13 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         elif ballet_note is not None:
             form, basis = "ballet", f"ballet productions list: {ballet_note}"
         elif wsrc == "review":
-            # no performances, so the discipline check cannot catch a wrong value, and the
-            # identity rule files any genre it does not know (фортеп. соч., кантата ...) as spoken
-            form, basis = None, f"pending RG: review-only work (genre «{genre}»)" if genre else "pending RG: review-only work"
+            # The kind the Season Reviews give the work (RG, 2026-11-03), not its genre:
+            # it has no performances for the discipline check, and the identity rule
+            # files any genre it does not know (фортеп. соч., кантата ...) as spoken.
+            kind = review_kind.get(str(wid))
+            form = REVIEW_KIND_TO_WORK_ART_FORM.get(kind)
+            basis = (f"kind given by the Season Reviews: {kind} (RG, 2026-11-03)" if form
+                     else f"pending RG: review-only work of kind {kind!r}")
         elif canon is None:
             form, basis = None, ("pending RG: review-only work" if wsrc == "review"
                                  else "pending RG: no printed genre")
