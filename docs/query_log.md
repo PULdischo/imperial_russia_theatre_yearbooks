@@ -26136,3 +26136,17 @@ memorials; Рефератъ, Mochalov 1900); cinema 3 (Маріинскій char
 
 Result: 15 works (8 readings incl. Сцена г. Горбунова / Вейнберга, 4 lectures, 3 cinema) -> NULL «programme item: <kind>, not a work».
 Only those work rows changed. Pending: 7 (Monologues, Scènes et monologues, Prolog, Обозрѣніе, Концертъ-спектакль, «Слава»!, Балетоманъ).
+
+## 2026-11-03 — The last 7 pending items: bills and occasions
+
+```sql
+SELECT w.canonical_title, e.date, t.canonical_name, p.discipline, p.genre_family, e.annotation, <bill with printed genres>, e.receipts_verbatim
+FROM research.work w JOIN research.performance p USING (work_id) JOIN research.event e USING (event_id) JOIN research.theater t USING (theater_id)
+WHERE w.art_form_basis LIKE 'pending%';
+```
+
+Result: Monologues (Михайловскій 3 Apr 1905, French matinée, among three plays), Scènes et monologues (Александринскій 5 Dec 1899, «съ участіемъ
+г. Галипо», after «La Marraine de Charley»), Prolog (Александринскій 11 Mar 1904, German charity for the Far East, opens the bill) -- all three
+kind "play"; «Слава»! (Малый 4 Jan 1895, Griboedov memorial, before «Горе отъ ума»), Балетоманъ (Маріинскій 23 Apr 1905, Гребловская школа
+charity, between «Письмо Татьяны» and «Сонъ въ лѣтнюю ночь» [бал.]), Концертъ-спектакль (Маріинскій 16 Feb 1902, charity, the whole bill),
+Обозрѣніе (Маріинскій 11 Jan 1903, charity, the whole bill) -- no troupe, no kind.
