@@ -94,7 +94,11 @@ Order: conventions first (each settles many rows), then mechanical fixes, then i
   docs/eval/scan_audit/1900-01_productionteam_p128_khmelevsky_new_theatre.png). Logged, not acted on: his new-post entry the same
   page prints «съ 29 марта 1879 г.» (clear 29; all other volumes 27).
 - Held for RG (was): 7 medium misreads (B6), 10 medium wrong-field rows (B5), 9 undated ends (B1), «Освобожденъ отъ обязанностей» (Аслинъ, Ширяевъ),
-  1908-09 BalletArtists tallies unparsed (B9).
+  1908-09 BalletArtists tallies DONE 2026-11-03 (RG "Add them"): most were fixed 2026-10-30 (known_issues, italic «Всего» sentence);
+  two pages (SP p000, MSK p007) came back with no credits on any entry, 8 dancers with a printed tally. raw_fix_1908-09_missing_credits.py
+  built 26 rows from the 2026-10-30 scan-checked text (roles sum to the printed total for all 8). Diff v. backup: only raw/analysis
+  person_entry_credit +26, other 57 tables identical (credit rows feed no research table). Logged, not in scope: 6 1892-93 decorators
+  with «Всего—N декорацій» and no credit rows (productionteam_1892-93_p000).
 - Будаевъ DONE 2026-11-03 (RG "Fix both"; B10_rank_field_fixes_2026-11-03.csv + B10_service_period_add.csv): 1908-09 rank_or_title
   held «Первая скрипка. (Переведенъ …)», already in instrument + tenure note -> emptied. Corpus search for rank fields with dates/notes/
   instruments found one more: Михайловъ Георгій, Administration 1909-10 p.143 no.3, rank -> «пот. поч. гражд.», tenure note

@@ -25481,3 +25481,37 @@ Result: raw.review_block 12; entities.review_mention content 33 new / 32 gone (1
 review_credit 320/320 (outside 1905-06 only mention_id and candidate lists); review_solo 5, review_dance_performer 17, review_dance 1; watermark
 3199 -> 3202. 1905-06: assertions 252 (236 linked) both; credits 238 (204) both; mentions 2,181 (1,639) -> 2,182 (1,641). Totals: 2,657 assertions,
 27,326 -> 27,327 mentions. 0 person_link shift blocks. Production unchanged since the snapshot; promoted; corrections dry run on production 0.
+
+## 2026-11-03 — 1908-09 BalletArtists tallies: entries with tally text and no credit rows
+
+```sql
+SELECT substr(entry_id,15,7) season, count(*), count(*) FILTER (WHERE credit_summary_text IS NOT NULL),
+  count(*) FILTER (WHERE credit_summary_text IS NOT NULL AND NOT EXISTS (credit row)) FROM raw.person_entry WHERE entry_id LIKE 'balletartists_19%' GROUP BY 1;
+SELECT credit_type, count(*) FROM raw.person_entry_credit WHERE entry_id LIKE 'balletartists_1908-09%' GROUP BY 1;
+SELECT entry_id, family_name, credit_summary_text FROM raw.person_entry e WHERE credit_summary_text IS NOT NULL
+  AND regexp_matches(credit_summary_text, 'раз[ъа]|—\s*\d') AND NOT EXISTS (credit row);   -- whole corpus
+SELECT label, count(*) FROM raw.person_entry_credit WHERE label IN ('Конекъ-Горбуночь','Дочь фарона','Фея куколь', ...) GROUP BY 1;
+```
+
+Result: 1908-09 now has 609 named_work + 231 category_totals rows (fixed 2026-10-30); 9 entries with text and no credits, 8 real tallies (Бакинъ 2-й's text is a leaving line). Corpus: 14 -- the 8 (SP p000 nos. 4,5,8,9,10; MSK p007 nos. 67,69,71) + 6 productionteam_1892-93_p000 decorators «Всего—N декорацій» (logged, not in scope). Raw JSON: SP p000 (21 entries) and MSK p007 (7) have NO credits on any entry. Convention on other 1908-09 pages: «въ N балетахъ—M разъ» -> category_totals label балетахъ, count M. Dry-run builder: 26 credit rows, every entry's roles sum to the printed total. Labels: «Конекъ-Горбуночь» 1 existing row, «Дочь фарона» 0 (text = 2026-10-30 scan reading).
+
+## 2026-11-03 — Where do roster tally credit rows go? (check of known_issues claim "credit rows feed no research table")
+
+```sql
+SELECT table_schema, table_name, column_name FROM information_schema.columns
+WHERE table_schema IN ('research','analysis','entities') AND (column_name ILIKE '%credit%' OR column_name ILIKE '%tally%' OR column_name ILIKE '%performances%');
+SELECT table_schema, table_name FROM information_schema.tables WHERE table_name ILIKE '%credit%';
+-- plus grep of pipeline/build_research_model.py, build_datasette.py, build_entities.py, build_duckdb.py for person_entry_credit / credit_summary
+```
+
+Result: person_entry_credit exists only in raw and analysis (analysis adds category_credit_count_clean). research.production_credit = ballet-list creators, research.review_credit = reviews; neither uses roster tallies. build_research_model reads credit_summary_text only in build_person_assignments (searching the text for «Прикомандир…» lines); build_datasette has no reference. Claim holds.
+
+## 2026-11-03 — 1908-09 missing credits applied: diff all tables v. backup
+
+```sql
+-- every BASE TABLE in raw/analysis/entities/research, both directions:
+SELECT count(*) FROM (SELECT * FROM <t> EXCEPT ALL SELECT * FROM old.<t>);
+SELECT count(*) FROM analysis.person_entry_credit WHERE entry_id IN (<8 entries>);
+```
+
+Result: 59 tables; changed only raw.person_entry_credit (+26, -0) and analysis.person_entry_credit (+26, -0). research.person 2,619, live 2,521, alignment 0 shifts.
