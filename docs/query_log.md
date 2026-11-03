@@ -26067,3 +26067,9 @@ Result: 41 blank (drama-only bills 27, opera-only 7, mixed galas 7) + the French
 divertissement … not a work». None has includes_dance today. The ballet-bill divertissements (2026-10-12 split) stay separate works with
 art_form ballet: Дивертиссементъ [бал.] 46, Дивертиссментъ [бал.] 3, Дивертиссементъ (Etudes) 1, Концертный и балетный дивертиссемент 1 (+ Балетный
 дивертиссементъ 10 / дивертиссментъ 3). Only work rows changed.
+
+## 2026-11-03 — Ballet-bill divertissements: same treatment (RG "Yes, same treatment")
+
+Result: all 11 generic divertissement works (ballet-bill splits incl.) -> NULL «programme item: a divertissement … not a work»; titled ones
+(Маскарадъ, Карнавалъ, Балъ-маскарадъ въ Венеціи) unchanged. Works ballet 260 -> 253; NULL 52. No performance changed (discipline ballet kept,
+dance views unchanged). Check unchanged.

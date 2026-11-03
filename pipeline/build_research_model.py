@@ -1590,6 +1590,12 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
             form, basis = "ceremonial", "anthem: a ceremonial item, not a work (RG, 2026-10-12)"
         elif excerpt_of is not None:
             form, basis = None, None  # copied from the parent below
+        elif re.match(r"(?i)(большой |балетный |концертный и балетный )?(дивертис|дивертим|divertissement)", title or ""):
+            # a plain divertissement, on any bill: not a work (RG, 2026-11-03, both rulings);
+            # titled divertissements («Маскарадъ» [диверт.]) are works and do not match
+            form, basis = None, ("programme item: a divertissement, a group of short selections from various works, not a work "
+                                 "(RG, 2026-11-03); dancing, when known, is marked per performance (discipline ballet, "
+                                 "or includes_dance via works_with_dancers.csv)")
         elif ballet_note is not None:
             form, basis = "ballet", f"ballet productions list: {ballet_note}"
         elif wsrc == "review":
@@ -1615,9 +1621,6 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                      else "pending RG: no printed genre")
         elif title in CONCERT_WORK_TITLES:
             form, basis = "concert", "a named musical work printed as a programme item, no genre (RG, 2026-11-03)"
-        elif canon is None and re.search(r"(?i)дивертис|дивертим|^divertissement", title or ""):
-            form, basis = None, ("programme item: a divertissement, a group of short selections from various works, not a work "
-                                 "(RG, 2026-11-03); dancing, when known, is marked per performance (includes_dance, works_with_dancers.csv)")
         elif title in CONCERT_SECTION_TITLES:
             form, basis = None, "programme item: a concert section or evening, not a work (RG, 2026-11-03)"
         elif title in UNPRINTED_PARENT_LEADS:
