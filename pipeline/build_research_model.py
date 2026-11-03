@@ -1512,6 +1512,10 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
             form, basis = None, None  # copied from the parent below
         elif ballet_note is not None:
             form, basis = "ballet", f"ballet productions list: {ballet_note}"
+        elif wsrc == "review":
+            # no performances, so the discipline check cannot catch a wrong value, and the
+            # identity rule files any genre it does not know (фортеп. соч., кантата ...) as spoken
+            form, basis = None, f"pending RG: review-only work (genre «{genre}»)" if genre else "pending RG: review-only work"
         elif canon is None:
             form, basis = None, ("pending RG: review-only work" if wsrc == "review"
                                  else "pending RG: no printed genre")
@@ -1520,7 +1524,8 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         elif _COMEDY_BALLET_GENRE_RE.match(canon):
             form, basis = "drama", f"printed genre «{genre}»: comedy-ballet is drama (RG, 2026-11-03)"
         elif _DIVERTISSEMENT_GENRE_RE.match(canon):
-            form, basis = "ballet", f"printed genre «{genre}»: a titled divertissement is ballet (RG, 2026-11-03)"
+            form, basis = "ballet", (f"printed genre «{genre}»: a titled divertissement is ballet (RG, 2026-11-03); "
+                                     "it may be a scene from a parent ballet or opera, not identified")
         else:
             ident = _work_art_form(canon)
             ovr = overrides.get((_match_key(_title_key(_strip_genre_suffix(ent_title))), fold))

@@ -25911,3 +25911,17 @@ Result: Батюшкина дочка, Мѣщанинъ во дворянств�
 
 Result: Маскарадъ [диверт.], Карнавалъ [дивертисментъ] -> ballet; works ballet 260 / NULL 91 (all "no printed genre", all repertoire works;
 the 20 review-only works all have an art form); art-form check unchanged; every other research table identical.
+
+## 2026-11-03 — Catch-all check: which "drama" values came from the identity rule's spoken fallback?
+
+```sql
+SELECT canonical_genre, count(*), sum(appearance_count), string_agg(DISTINCT work_source, ','), min(canonical_title)
+FROM research.work WHERE art_form = 'drama' AND art_form_basis LIKE '%work-identity rule%' GROUP BY 1 ORDER BY 2 DESC;
+SELECT canonical_title, canonical_genre, art_form FROM research.work WHERE canonical_title ILIKE '%маскарад%' OR ... '%карнавал%';
+```
+
+Result: 175 genres; play genres apart from: 4 review-only music works filed as drama (Карнавалъ [фортеп. соч.], Легенда [симф. соч.],
+Коронаціонная кантата [кантата], Мессинская невѣста [увертюра]); review works have no performances, so the check cannot catch them ->
+all 20 review-only works set back to pending RG (14 ballet, 2 opera, 4 music by entities.review_work.work_kind). To look at later:
+La Demoiselle du Téléphone [com.-opér.] (6, French troupe), Коломбина [арлекинада] (1). Possible parent of the 1899 Карнавалъ
+divertissement: «Карнавалъ» [пантомима-бал.] (3 performances) -- a lead only, not linked.
