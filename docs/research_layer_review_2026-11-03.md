@@ -237,3 +237,27 @@ Recounted: Коппелія 105 -> 107, Лебединое озеро 125 -> 127
 Шопеніана, Волшебная флейта, Дочь фараона, Золотая рыбка) were right. Each has one performance supplied from a review
 or productions list, which `appearance_count` leaves out by design (docs/schema.md), so their counts stay. Applied to
 production after a test on a copy, then the review chain; 0 person_link shifts, 0 work_ids left pointing at a dropped work.
+
+**W4 — same piece in two scripts (RG 2026-11-03, "Link, don't merge. At least for now. I assume Hamlet could be performed
+both in English and in Russian, and I'm not really sure if they're the same parent work or not.").** Evidence: the
+split follows the printed script, not the company (Sandrock's German «Гамлетъ» 1901-02 sits with the Russian drama's;
+the German and French «Hamlet» are apart; Угетти's Italian «Фаустъ» 1901-02 with the Russian opera, the Moscow Italian
+and German «Faust» apart). Ruling: keep them as separate works and connect them; whether they share one parent work stays
+open. Nothing built yet: a link needs a work-to-work relation (the research layer's only one today is
+`excerpt_of_work_id`), the same need as RG's 2026-10-12 «Млада» / «Волшебное зеркало» case (connect without
+equating). Candidate pairs among the 1,192 Latin-script works need a hand-checked list (translation, not spelling).
+
+**W5 — «Дивертиссементъ» (RG 2026-11-03, "Keep as is. We don't know enough about them to categorize them as the 'same
+work'").** The six work rows stay apart (бал. 44; no genre 37; no genre / ballet 2; «Дивертиссментъ» бал. 3 and no genre
+2; «(Etudes)» 1).
+
+**W6/W7 (RG 2026-11-03, "Check the scans").** Item 7 needs no ruling: «Гейша» and «Званый вечеръ съ итальянцами»
+take their company by RG's rules (an operetta goes with the company that performs it; a visiting troupe by its
+personnel). Item 6: the four items with no kind were already walked through with RG on 2026-10-13 and left without
+one (`docs/eval/known_issues.md`, "The items with no kind"; «Балетоманъ» flagged to be looked for). Read again on the
+scans by Claude today, crops in `docs/eval/scan_audit/`: each is printed as stored, with no genre, inside a banner
+(«Спектакль въ память А. С. Грибоѣдова.» «Слава»! / Горе отъ ума, ком., Малый 4 Jan 1895, 1367 р. 37 к.;
+«Въ пользу благотворительнаго Общества при Городской Калинкинской больницѣ. Концертъ-спектакль.», Маріинскій 16 Feb
+1902; «Спектакль въ пользу Общества Покровительства животнымъ. Обозрѣніе.», Маріинскій 11 Jan 1903; «Балетоманъ»,
+Маріинскій 23 Apr 1905, item 3 of 6 lines under «Спектакль въ пользу Общества попеченія о Гребловской школѣ имени Н. В.
+Гоголя.»). The season totals carry no concert or revue line; no review mentions them. Nothing new: they stay blank.

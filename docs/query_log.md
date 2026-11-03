@@ -25999,3 +25999,71 @@ season 1907-08, Станкевичъ «въ сезонѣ 1895—1896», Шене
 Соловьевъ 4/9 Oct 1890, Троицкая 25/26 Sep 1896). Roster deaths before later listings: Николаева 3-я (1902; to 1910-11), Козловъ М. Ѳ.
 (1902; to 1904-05), Краюшкинъ (1898; to 1900-01). Production diff: NEW research.person_death 308, person_tenure_note +2 (Константиновъ,
 Тепферъ); nothing else. research.work 2,950, Коппелія 107, Лебединое озеро 127; receipts 3,223,088,581; research.person 2,619; 0 shifts.
+
+## 2026-11-03 — Research-layer review, Works item 4: same piece in two scripts, by company and season
+
+```sql
+SELECT w.canonical_title, w.canonical_genre, p.company, p.discipline, min(e.season), max(e.season), count(*),
+       string_agg(DISTINCT p.verbatim_title, ' | ')
+FROM research.performance p JOIN research.work w USING(work_id) JOIN research.event e USING(event_id)
+WHERE w.excerpt_of_work_id IS NULL AND w.canonical_title IN ('Hamlet','Гамлетъ','Faust','Фаустъ','Tartuffe','Тартюфъ','Margot','Madame Sans-Gêne')
+GROUP BY ALL ORDER BY 1,2,3;
+SELECT count(*) FROM research.work WHERE regexp_matches(canonical_title,'^[A-Za-zÀ-ÿ]') AND excerpt_of_work_id IS NULL;
+SELECT p.company, count(DISTINCT work_id) FROM research.performance p JOIN research.work w USING(work_id)
+ WHERE regexp_matches(w.canonical_title,'^[A-Za-zÀ-ÿ]') GROUP BY 1 ORDER BY 2 DESC;
+```
+
+Result: the split follows the printed script, not the company. Adele Sandrock's German «Гамлетъ» (1901-02) sits with the
+Russian Гамлетъ (65 perfs, SP + Moscow); the German guest «Hamlet» 1896-97 and French «Hamlet» 1890-91 are a separate
+work. Italian «Фаустъ» under Угетти 1901-02 sits with the Russian opera; Moscow Italian troupe «Faust» 1893-97 (4) and
+German opera «Faust» 1897-98 (1) are a separate work. Тартюфъ 25 (Russian) vs Tartuffe 4 (French 3, German 1); Margot
+and Madame Sans-Gêne already join French + German under one Latin title. 1,192 Latin-script non-excerpt works; companies:
+SP French drama 864 works, visiting German drama 277, Moscow Italian opera 16, German opera 11, others ≤5.
+
+## 2026-11-03 — Research-layer review, Works item 5: the «Дивертиссементъ» work rows
+
+```sql
+SELECT left(w.work_id::varchar,8), w.canonical_title, w.canonical_genre, p.discipline, p.genre_family, p.company, count(*),
+       min(e.season), max(e.season)
+FROM research.performance p JOIN research.work w USING(work_id) JOIN research.event e USING(event_id)
+WHERE w.canonical_title ILIKE 'Дивертис%' GROUP BY ALL;
+SELECT work_id, canonical_title, canonical_genre, genre_source, genre_note, appearance_count FROM research.work WHERE canonical_title ILIKE 'Дивертис%';
+-- per work: theaters, and whether another ballet is on the same bill
+```
+
+Result: 6 work rows (not 5). «Дивертиссементъ» бал. (research rule, per-performance list) 44: Новый 17, Маріинскій 14,
+Большой 13, all with a ballet on the bill. «Дивертиссементъ» no genre 37: Малый 11, Маріинскій 10 (5 with a ballet on
+the bill), Александринскій 8, Большой 5, Михайловскій 3; no discipline. «Дивертиссементъ» no genre, discipline ballet, 2
+(Александринскій 1894-95). «Дивертиссментъ» бал. 3 (1908-09 Большой 2, Маріинскій 1) and no genre 2 (Александринскій
+1905-01-08, Михайловскій 1908-12-17). «Дивертиссементъ (Etudes)» бал. 1 (Большой 1909-10-18).
+
+## 2026-11-03 — Research-layer review, Works items 6-7: performances with no genre_family; «Гейша», «Званый вечеръ съ итальянцами»
+
+```sql
+SELECT p.performance_id, e.date_undate, t.canonical_name, p.verbatim_title, p.verbatim_genre, p.discipline, p.company,
+       (SELECT string_agg(q.verbatim_title||' ['||coalesce(q.discipline,'-')||']', '; ') FROM research.performance q
+         WHERE q.event_id=p.event_id AND q.performance_id<>p.performance_id)
+FROM research.performance p JOIN research.event e USING(event_id) JOIN research.theater t USING(theater_id)
+WHERE p.genre_family IS NULL;
+-- same columns plus discipline_basis for works «Гейша», «Званый вечеръ съ итальянцами»
+```
+
+Result: 4 with no genre_family, none with a printed genre: «Слава»! (Малый 1895-01-04, after «Горе отъ ума»),
+«Обозрѣніе» (Маріинскій 1903-01-11, alone), «Балетоманъ» (Маріинскій 1905-04-23, mixed bill: «Письмо Татьяны»,
+«Сонъ въ лѣтнюю ночь», Дивертиссементъ, «Свадьба»), «Концертъ-спектакль» (Маріинскій 1902-02-16, alone). Гейша: Vienna
+operetta troupe 1902-03 (German operetta), Михайловскій 1907 (Russian drama), Маріинскій 1908 (opera). Званый вечеръ:
+Маріинскій 1904 + Большой 1908 x2 (opera), Александринскій 1904 (Russian drama). Every discipline follows the recorded
+basis: an operetta goes with the company that performs it; a visiting troupe by its personnel (RG 2026-10-22).
+
+## 2026-11-03 — Research-layer review, Works item 6: other evidence for the four kind-less items
+
+```sql
+SELECT p.verbatim_title, p.verbatim_genre, e.date_undate FROM research.performance p JOIN research.event e USING(event_id)
+ WHERE p.verbatim_title ILIKE ANY ('%алетоман%','%Слава%','%бозр%','%онцертъ-спект%');
+SELECT count(*), any_value(page_id) FROM entities.review_mention WHERE surface ILIKE <same patterns>;
+SELECT * FROM research.season_stat_line WHERE season IN ('1894-95','1901-02','1902-03','1904-05') AND city IN ('Moscow','SP');
+```
+
+Result: each title occurs once in the Repertoire, never with a genre. Review mentions: «Балетоманъ» 1 (1910-11 SP,
+unrelated), «Обозрѣніе» 1 (1896-97 SP, the ordinary word); none of the others. Season-stat lines for those seasons and
+cities have no concert, revue or charity line (drama, opera, ballet, French, German, mixed only).
