@@ -26054,3 +26054,16 @@ Result: concert (named musical works, 7): Реквіемъ, Месса Рекв�
 Цыганскія пѣсни въ лицахъ, Цыганскіе романсы. NULL «programme item: a concert section or evening, not a work» (13). Works: drama 2,259 /
 opera 323 / ballet 260 / operetta 39 / concert 11 / ceremonial 4 / NULL 45. Only work rows changed. (Correction: the previous step's
 drama total was 2,259, not 2,260 as reported in chat.) Basis genre lists now in a fixed order.
+
+## 2026-11-03 — Blank divertissements (RG: "not a single work … a group of short selections"; dance must stay trackable)
+
+```sql
+SELECT w.canonical_title, coalesce(e.disciplines, '∅'), count(*) FROM research.work w JOIN research.performance p USING (work_id) JOIN research.event e USING (event_id)
+WHERE w.art_form IS NULL AND w.canonical_title IN ('Дивертиссементъ', 'Большой дивертиссементъ', 'Дивертиссментъ') GROUP BY ALL;
+SELECT w.canonical_title, w.art_form, p.includes_dance, count(*) FROM research.work w JOIN research.performance p USING (work_id) WHERE w.canonical_title ILIKE '%ивертис%' GROUP BY ALL;
+```
+
+Result: 41 blank (drama-only bills 27, opera-only 7, mixed galas 7) + the French troupe's «Divertissement» 1 -> NULL, basis «programme item: a
+divertissement … not a work». None has includes_dance today. The ballet-bill divertissements (2026-10-12 split) stay separate works with
+art_form ballet: Дивертиссементъ [бал.] 46, Дивертиссментъ [бал.] 3, Дивертиссементъ (Etudes) 1, Концертный и балетный дивертиссемент 1 (+ Балетный
+дивертиссементъ 10 / дивертиссментъ 3). Only work rows changed.

@@ -1485,9 +1485,9 @@ WORK_TITLE_NOTES = {
                         "outside the yearbook; the print names no translator)",
 }
 #: Generic programme items that the item-kind rules file as "play" (a French troupe's
-#: «Divertissement», «Monologues», a German «Prolog»): kept out of the troupe rule,
+#: «Monologues», a German «Prolog»): kept out of the troupe rule,
 #: like the other programme items, until RG rules on them.
-PROGRAMME_ITEM_TITLE_RE = r"^(Divertissement|Monologues|Scènes et monologues|Prolog)\.?$"
+PROGRAMME_ITEM_TITLE_RE = r"^(Monologues|Scènes et monologues|Prolog)\.?$"
 #: Concert items with no printed genre (RG, 2026-11-03, "middle path"): a named musical
 #: work is a concert work; a concert section or whole evening (its pieces unlisted) is a
 #: programme item, not a work, and stays NULL. Exact research.work titles; the build
@@ -1615,6 +1615,9 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                      else "pending RG: no printed genre")
         elif title in CONCERT_WORK_TITLES:
             form, basis = "concert", "a named musical work printed as a programme item, no genre (RG, 2026-11-03)"
+        elif canon is None and re.search(r"(?i)дивертис|дивертим|^divertissement", title or ""):
+            form, basis = None, ("programme item: a divertissement, a group of short selections from various works, not a work "
+                                 "(RG, 2026-11-03); dancing, when known, is marked per performance (includes_dance, works_with_dancers.csv)")
         elif title in CONCERT_SECTION_TITLES:
             form, basis = None, "programme item: a concert section or evening, not a work (RG, 2026-11-03)"
         elif title in UNPRINTED_PARENT_LEADS:
