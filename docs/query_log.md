@@ -25834,3 +25834,22 @@ work/discipline pairs disagree (Боярыня Вѣра Шелога [проло
 La chanson de Fortunio, Le beau Dunois opera v. French drama 3+3; Дядя Беккеръ подшутилъ [опер.] v. Russian drama 3; Бокаччіо [оп.]
 v. German operetta 1). Excerpts: 336 of 342 staged by the parent's own kind of troupe (ballet 137, opera 118, drama 76, operetta-by-opera 6);
 exceptions: Женитьба (1-е дѣйствіе) parent comedy, opera troupe; Прологъ и 1-е д. оп. Палцы, drama troupe; 2 Русалка acts, parent genre «1-я сцена».
+
+## 2026-11-03 — The 4 excerpts whose troupe disagrees with the parent's art form: raw context + scans (checked by Claude)
+
+```sql
+SELECT e.*, p.performance_order, p.verbatim_title, p.discipline FROM research.performance p JOIN research.event e USING (event_id)
+WHERE p.work_id IN (SELECT work_id FROM research.work WHERE canonical_title IN
+  ('Женитьба (1-е дѣйствіе)','Прологъ и 1-е д. оп. Палцы','1-й актъ драмы Русалка.','1-е д. др. Русалка'));
+SELECT w.*, p.canonical_title, p.canonical_genre FROM research.work w LEFT JOIN research.work p ON p.work_id = w.excerpt_of_work_id
+WHERE w.canonical_title ILIKE '%Русалк%' OR w.canonical_title ILIKE '%Женитьба%' OR w.canonical_title ILIKE '%Палцы%';
+```
+
+Result (scans from pdf/RepertoireTables, embedded full-res images):
+- 1898-99 p.24, Маріинскій 23 Jan 1899 (charity, Русское Театральное Общество): print «Прологъ и 1-е д. оп. Паяцы.» with no genre.
+  Raw has «Палцы» + genre «др.»: a misreading. The one-off parent work «Палцы» [оп.] exists only because of it; «Паяцы» [оп.] has 67.
+- 1908-09 p.45, Малый 20 Mar 1909 (Gogol centenary literary-musical evening): print «Женитьба, оп. (1-е дѣйствіе).», read correctly.
+  Mussorgsky's opera; the excerpt is linked to Gogol's comedy «Женитьба» [ком.] (72).
+- 1890-91 p.18, Михайловскій 28 Jan 1891 «1-й актъ драмы Русалка.» and 1893-94 p.3, Михайловскій 30 Aug 1893 «1-е д. др. Русалка.»: read
+  correctly. Both are linked to «Русалка» [1-я сцена] (itself the 1899 Малый gala scene, an excerpt of «Русалка» [др.]), although
+  curated_parent_works.csv records RG's 2026-09-26 ruling that these two "stay unlinked".
