@@ -26089,3 +26089,16 @@ Result: the stats count events (спектакли) by category (Русских�
 Французскихъ, Нѣмецкихъ, Концертовъ, …); no category or footnote names divertissements. No event consists of a divertissement alone:
 all 108 events with one have other items (ballet bills 50, Russian drama 26, ballet+drama 11, opera 7, ballet+opera 6, ballet+opera+drama 6,
 opera+drama 1, no troupe 1), so each sits inside its event's category count.
+
+## 2026-11-03 — Tableaux and apotheoses: bills and occasions
+
+```sql
+SELECT e.date, t.canonical_name, e.annotation, <bill> FROM research.work w JOIN research.performance p USING (work_id) JOIN research.event e USING (event_id)
+JOIN research.theater t USING (theater_id) WHERE w.canonical_title IN ('Апоѳеозъ', 'Живая картина', 'Живыя картины') ORDER BY 1;
+```
+
+Result: Апоѳеозъ 25, always the last item, at commemorative evenings: Fonvizin 1892, Griboedov and Krylov 1895, Polevoy 1896, Catherine II 1896,
+Pushkin centenary 1899 (16, all four houses), Mochalov 1900, Gogol 1902 (Малый x3, one with no annotation), Emancipation jubilee 1911 (3).
+Живая картина 6 / Живыя картины 3: Catherine II 1896 (x2), Maikov 1897, Mochalov 1900, Pushkin-monument fund 1902, charity 1903, Skobelev
+committee 1908 (between «Сельская честь» and «Лебединое озеро»), Emancipation 1911 (x2). Kind recorded: tableau / apotheosis, except 2 of the
+1911 Апоѳеозъ recorded as concert. Noticed in passing (not investigated): Александринскій 3 Nov 1900 (Mochalov) appears as two identical events.
