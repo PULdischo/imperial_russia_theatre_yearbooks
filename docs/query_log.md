@@ -25093,19 +25093,6 @@ select name_surface, person_id, count(*) from research.review_credit where seaso
 Result: «Иванова 2-я» 3 -> Надежда Михайловна, «Иванова 3-я» 2 -> Надежда Сергѣевна (scan-verified); tenure note 1 row;
 no review_credit or review_assertion rows for these. Metrics unchanged: person 2627, receipts 3223088581, Wikidata 174, 0 shifts.
 
-## 2026-11-02 — 1908-09 Moscow Art Theatre VISITING_RUNS row: copy v. production diff
-
-```sql
--- per research table/view t, both directions:
-select count(*) from (select * from copy.research.t except all select * from prod.research.t);
--- then per column of research.event / research.performance: rows where p.col is distinct from n.col
-select p.company, count(*) from research.performance p join research.event e using (event_id) join research.theater t using (theater_id)
-where e.season = '1908-09' and t.canonical_name = 'Михайловскій' and e.date between '1909-03-30' and '1909-05-03' group by 1
-```
-
-Result: only research.event (45, `companies`) and research.performance (45, `company`, `discipline_basis`) differ; all 46 events
-now Moscow Art Theatre. After promotion production = tested copy in all 24 research tables; sqlite: 46 events Moscow Art Theatre.
-
 ## 2026-11-02 — Print conflicts: Левинсонъ 1-я Анна (SP ballet), «Оставила службу 1 іюня 1907» yet 53 performances in 1907-08
 
 ```sql
@@ -25122,6 +25109,19 @@ select pe.entry_id, pe.family_name, pe.first_name, pe.tenure_note_text, pe.credi
 Result: Анна listed 1898-99..1907-08 (start 1 June 1887), absent 1908-09; 1907-08 prints 53 performances and «Оставила службу
 1 іюня 1907 г.» (scan p.17 read by Claude: clean «1907»). Sister Ольга same page «1 іюня 1908». 1907-08 SP ends: 13 on 1 June 1908,
 3 on 1 June 1907 (Анна; Плессюкъ, start 1 June 1887, no tally; Черниковъ, 1 performance). No review mentions, no existing note.
+
+## 2026-11-02 — 1908-09 Moscow Art Theatre VISITING_RUNS row: copy v. production diff
+
+```sql
+-- per research table/view t, both directions:
+select count(*) from (select * from copy.research.t except all select * from prod.research.t);
+-- then per column of research.event / research.performance: rows where p.col is distinct from n.col
+select p.company, count(*) from research.performance p join research.event e using (event_id) join research.theater t using (theater_id)
+where e.season = '1908-09' and t.canonical_name = 'Михайловскій' and e.date between '1909-03-30' and '1909-05-03' group by 1
+```
+
+Result: only research.event (45, `companies`) and research.performance (45, `company`, `discipline_basis`) differ; all 46 events
+now Moscow Art Theatre. After promotion production = tested copy in all 24 research tables; sqlite: 46 events Moscow Art Theatre.
 
 ## 2026-11-02 — Print conflicts: Егорова 2-я Марія Николаевна (SP ballet), «Оставила службу 7 іюня 1902» yet listed 1903-04..1909-10
 
@@ -25165,6 +25165,20 @@ select * from entities.person_candidate where status='pending';
 Result: Марія Николаевна 1890-91..1901-02 (ends 7 June 1902, left service); Любовь Александровна 1897-98 (Graduates), 1898-99, 1901-02..1910-11.
 An ordinal-shift candidate re-proposing the pair appeared (pending) and survived a manual reject -- builder bug, fixed; 0 pending after.
 research.person 2,626; receipts 3,223,088,581; Wikidata 174; 0 shifts; 0 orphans.
+
+## 2026-11-02 — 1908-09 review-text corrections: copy v. production diff (all 59 tables)
+
+```sql
+-- per table, both directions:
+select count(*) from (select * from copy."s"."t" except all select * from pre."s"."t");
+-- then column-level on entities.review_mention (key block_id, char_start, mention_type) and research.review_credit
+-- (key block_id, char_start, role_category, name_surface), grouped by season; 1908-09 mentions/credits except all;
+-- entities.person rows for Левинсонъ/Левенсонъ in both; review_dance_performer dance 350 position 5 in both
+```
+
+Result: raw.review_block 13, entities.review_mention 251, research.review_credit 2,071 (429 without ids), review_assertion 4,
+review_dance_performer 14. 1908-09: 4 mentions (corrected surfaces), 2 credit phrases. Elsewhere: candidate lists only, plus 4
+Золотаренко credits relinked from a missing person id; 1910-11 p003 a join artifact (multiset identical). entities.person identical.
 
 ## 2026-11-02 — Held medium rows (person field audit): current raw values, post-apply checks
 
@@ -25239,19 +25253,25 @@ select mention_id, surface, char_start, entity_id from entities.review_mention w
 Result: unresolved among Анжелика/Джульетта/Іосифъ (block opens «анитта», role key fails); one mention, occurrence 0. After the hand
 link: performer 723f64f2 (Джульетта); performer links 2,468. research.person 2,620; receipts 3,223,088,581; Wikidata 174; 0 shifts.
 
-## 2026-11-02 — 1908-09 review-text corrections: copy v. production diff (all 59 tables)
+## 2026-11-02 — Undated ends (B1 held, 9) and «Освобожденъ отъ обязанностей» (Аслинъ, Ширяевъ): current state and cross-references
 
 ```sql
--- per table, both directions:
-select count(*) from (select * from copy."s"."t" except all select * from pre."s"."t");
--- then column-level on entities.review_mention (key block_id, char_start, mention_type) and research.review_credit
--- (key block_id, char_start, role_category, name_surface), grouped by season; 1908-09 mentions/credits except all;
--- entities.person rows for Левинсонъ/Левенсонъ in both; review_dance_performer dance 350 position 5 in both
+-- per entry: raw.person_entry (name, tenure_note_text), research.service_period (start/end text, end_type), research.person_appearance seasons,
+-- research.person_assignment; then:
+select entry_id, family_name, first_name, tenure_note_text from raw.person_entry where family_name like 'Новоселов%' order by 1;
+select season, city, count(*) from entities.review_mention where surface like 'Кякшт%' group by all;
+select entry_id, family_name, first_name, tenure_note_text from raw.person_entry where (family_name like 'Ветцел%' or family_name like 'Липинъ%') and page_id like 'musicians_190%';
+select entry_id, family_name, first_name, patronymic, tenure_note_text from raw.person_entry where family_name like 'Козловъ%' and first_name in ('Федоръ','Ѳедоръ');
+select entry_id, heading_path, family_name, first_name, tenure_note_text from raw.person_entry where family_name like 'Боборыкин%' and page_id between 'theaterschoolstaff_1899' and 'theaterschoolstaff_1903';
 ```
 
-Result: raw.review_block 13, entities.review_mention 251, research.review_credit 2,071 (429 without ids), review_assertion 4,
-review_dance_performer 14. 1908-09: 4 mentions (corrected surfaces), 2 credit phrases. Elsewhere: candidate lists only, plus 4
-Золотаренко credits relinked from a missing person id; 1910-11 p003 a join artifact (multiset identical). entities.person identical.
+Result: undated transfers -- Козловъ (Moscow 1902-03 «Переведенъ въ С.-Петербургъ», a reprint; Moscow 1900-01 prints «1 сентября 1901 г.»),
+Ветцель (1902-03 «Переведенъ въ оркестръ Маріинскаго театра»; the receiving list prints «1 сентября 1902 г.»), Липинъ (same, «1 сентября 1903 г.»),
+Боборыкинъ (honorary member, Moscow -> SP school 1900-01, 1901-02 reprint; no date anywhere), Кякштъ Лидія (1903-04 SP «Переведена въ Москву»,
+scan p.70 confirmed; in no Moscow list, but 6 Moscow review mentions 1903-04; back in SP lists 1904-09 with the same start). Others: Хмелевскій
+«Назначенъ и. д. машиниста-механика Новаго театра» (listed on to 1907-08), Стороженко «Оставилъ чтеніе лекцій» (stored left service, undated),
+Новоселовъ bare «†» in 1906-07 (scan p.35) then «† 5 мая 1908 г.» in 1907-08. Аслинъ / Ширяевъ: «Освобожденъ отъ обязанностей
+репетитора / балетмейстера» stored as service ends (other, 1 Nov 1905 / 1 Mar 1905) though both are listed afterwards; no person_assignment row.
 
 ## 2026-11-02 — 1905-06 reconciliation: ballet reviews, blind column reads, scan-read fixes
 
@@ -25272,26 +25292,6 @@ where a.season = '1905-06' and a.theater_canonical in ('Маріинскій', '
 Result: Moscow dark 14-26 Oct and 7-25 Dec 1905. Blind read 544 rows v. 508 stored dates: 45 differences (31 titles, mostly
 genre placement; 9 headings; 4 event counts = the two SP matinée shifts; 1 receipts punctuation only). After the fix only Repertoire
 tables change; Большой ballet events 29 -> 28 (26 Nov), Маріинскій 43. Review agents' own SQL is in their reports (read-only).
-
-## 2026-11-02 — Undated ends (B1 held, 9) and «Освобожденъ отъ обязанностей» (Аслинъ, Ширяевъ): current state and cross-references
-
-```sql
--- per entry: raw.person_entry (name, tenure_note_text), research.service_period (start/end text, end_type), research.person_appearance seasons,
--- research.person_assignment; then:
-select entry_id, family_name, first_name, tenure_note_text from raw.person_entry where family_name like 'Новоселов%' order by 1;
-select season, city, count(*) from entities.review_mention where surface like 'Кякшт%' group by all;
-select entry_id, family_name, first_name, tenure_note_text from raw.person_entry where (family_name like 'Ветцел%' or family_name like 'Липинъ%') and page_id like 'musicians_190%';
-select entry_id, family_name, first_name, patronymic, tenure_note_text from raw.person_entry where family_name like 'Козловъ%' and first_name in ('Федоръ','Ѳедоръ');
-select entry_id, heading_path, family_name, first_name, tenure_note_text from raw.person_entry where family_name like 'Боборыкин%' and page_id between 'theaterschoolstaff_1899' and 'theaterschoolstaff_1903';
-```
-
-Result: undated transfers -- Козловъ (Moscow 1902-03 «Переведенъ въ С.-Петербургъ», a reprint; Moscow 1900-01 prints «1 сентября 1901 г.»),
-Ветцель (1902-03 «Переведенъ въ оркестръ Маріинскаго театра»; the receiving list prints «1 сентября 1902 г.»), Липинъ (same, «1 сентября 1903 г.»),
-Боборыкинъ (honorary member, Moscow -> SP school 1900-01, 1901-02 reprint; no date anywhere), Кякштъ Лидія (1903-04 SP «Переведена въ Москву»,
-scan p.70 confirmed; in no Moscow list, but 6 Moscow review mentions 1903-04; back in SP lists 1904-09 with the same start). Others: Хмелевскій
-«Назначенъ и. д. машиниста-механика Новаго театра» (listed on to 1907-08), Стороженко «Оставилъ чтеніе лекцій» (stored left service, undated),
-Новоселовъ bare «†» in 1906-07 (scan p.35) then «† 5 мая 1908 г.» in 1907-08. Аслинъ / Ширяевъ: «Освобожденъ отъ обязанностей
-репетитора / балетмейстера» stored as service ends (other, 1 Nov 1905 / 1 Mar 1905) though both are listed afterwards; no person_assignment row.
 
 ## 2026-11-02 — Undated transfers (B9): current service periods of Козловъ Ѳ., Ветцель, Липинъ И., Боборыкинъ, Кякштъ Лидія
 
