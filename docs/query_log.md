@@ -26162,3 +26162,19 @@ unidentified 2); none «pending RG». Check unchanged: 52 performances on 6 work
 Result: entry_kind work 2,888 (drama 2,259 / opera 323 / ballet 253 / operetta 39 / concert 11 / art_form unknown 3), programme item 47,
 ceremonial 4 (the anthem; art_form now NULL, was 'ceremonial'), NULL (unknown) 2 («Слава»!, Балетоманъ). Only the 4 anthem rows' art_form changed;
 every other research table identical; research_dataset.sqlite (scratch) carries entry_kind. Check unchanged (52 / 6 pairs).
+
+## 2026-11-03 — The 6 discipline/art_form disagreements: printings and scan check (checked by Claude)
+
+```sql
+SELECT eep.genre, p.discipline, t.canonical_name, count(*), min(e.date), max(e.date) FROM research.work w JOIN research.performance p USING (work_id)
+JOIN raw.event_entry_performance eep ON eep.performance_id = p.performance_id JOIN research.event e ON e.event_id = p.event_id JOIN research.theater t USING (theater_id)
+WHERE (w.canonical_title, w.canonical_genre) IN (<the 6>) GROUP BY ALL;
+```
+
+Result: no reading errors; each is a classification gap. Боярыня Вѣра Шелога: «прологъ»/«прол.» on all 28, opera company (Большой 1901-06,
+Маріинскій 1903-04) -- the identity rule's spoken catch-all files «прологъ» as a play. Гибель Фауста: «драм. лег.»/«драм(ат). легенда» on all 14,
+opera company (Маріинскій 1891-97, Большой 1907) -- same catch-all; RG 2026-10-27 made its performances concert items (CONCERT_KIND_TITLES).
+La chanson de Fortunio «opéra-com.»/«opera-comique» 3 and Le beau Dunois «opéra-bouffe» 3, French troupe, Михайловскій 1901/1905 -- identity rule
+reads «opéra» as opera; the performance rules count opéra-bouffe as operetta. Дядя Беккеръ подшутилъ «опер.» x3, Александринскій drama troupe
+1893-94 -- «опер.» is the opera/operetta-ambiguous abbreviation (build_entities "group C", RG's call). Бокаччіо «оп.» x1, Vienna operetta company,
+Маріинскій 25 Feb 1901 (scan 1900-01 p.30: «Бокаччіо, оп.»); a separate work «Боккаччіо» [оперетта.] exists.
