@@ -26882,3 +26882,37 @@ Rebuilt from raw (rebuild_after_raw_edit.sh steps) with branch claude/work-art-f
 every table identical. research_dataset.sqlite rebuilt locally (not republished): work entry_kind/art_form — work: drama 2,257, opera 319, ballet 252,
 operetta 42, concert 11, unknown 4; programme item 47; ceremonial 4; unknown 2. Discipline/art_form check: 0. Other sessions (People entities audit,
 Research layer review) paused for the write and told "done".
+
+## 2026-11-04 — Research-layer review: Ballet productions lists
+
+```sql
+SELECT count(*) FROM research.production; -- also production_work, production_credit, production_date; DESCRIBE each
+SELECT season, city, count(*), sum(n_dates), count(work_id), sum(is_premiere::int) FROM research.production GROUP BY ALL;
+SELECT season, count(*) FROM raw.production_entry GROUP BY 1;
+SELECT production_id, list_title, n_dates FROM research.production WHERE work_id IS NULL;
+SELECT role_category, count(*), count(person_id) FROM research.production_credit GROUP BY 1;
+SELECT identification_status, count(*) FROM research.production_credit GROUP BY 1;
+SELECT p.person_source, count(DISTINCT c.person_id) FROM research.production_credit c JOIN research.person p USING(person_id) GROUP BY 1;
+SELECT n_matched_works, count(*) FROM research.production GROUP BY 1;  -- printed_total <> n_dates; designers in description_text
+SELECT count(*) FROM analysis.production_entry_credit WHERE credit_id NOT IN (SELECT credit_id FROM research.production_credit);
+SELECT season, city, title, post_total_text FROM raw.production_entry WHERE nullif(post_total_text,'') IS NOT NULL;
+```
+
+Result: 628 entries over 19 seasons (none 1905-06, 1906-07); 627 with a work (Дочь Фараона SP 1904-05 without); 51
+premieres. Credits 1,587, all linked, 110 people (production_list 86, roster 24); music 688, author 641, source 123,
+libretto 98, staging 31, instrumentation 6; proposed 1 (Щимана). n_matched_works 1 = 626, 0 = 1, 2 = 1 (Наяда / Паяда
+и рыбакъ). printed_total <> n_dates: 1 (Золотая рыбка MSK 1904-05, 7 v. 6, «2 раза» on 14 Nov). No designers in the
+descriptions. 5 group credits excluded. 25 entries with acts printed after «Всего».
+
+## 2026-11-04 — Research-layer review L1: «Паяда и рыбакъ» folded into «Наяда и рыбакъ» (test on a copy, then production)
+
+```sql
+SELECT work_id FROM research.work WHERE canonical_title = 'Паяда и рыбакъ';  -- then count rows pointing at it in review_*, production*, review_mention
+SELECT canonical_title, appearance_count, art_form FROM research.work WHERE canonical_title IN ('Паяда и рыбакъ','Наяда и рыбакъ');
+SELECT n_matched_works, work_id FROM research.production WHERE production_id = 'balletproductions_1892-93_SP_p000__e007';
+SELECT * FROM entities.work_id_crosswalk EXCEPT <before>;
+```
+
+Result: only production_work pointed at the Паяда work (no review rows or mentions). After: Наяда и рыбакъ 16 (ballet);
+the list entry matches 1 work; crosswalk 67e8f833… -> 9313e6f7… (1 performance). Changed tables: entities.work,
+work_link, work_id_crosswalk, research.work, performance, production, production_work, one row each. 0 person_link shifts.

@@ -514,3 +514,53 @@ slips and the 18 Dec second-artists' benefit are already in the 1909-10 reconcil
 (concert 93 under RG's 2026-10-13 rule; Siamese court troupe 2; German opera 2, #141); the other 20 keep their heading in
 `annotation`, and the 17 dress rehearsals are found by «Генеральная репетиція». The 1899 and 1903 Pushkin evenings print
 works inside their heading that were never made performance rows: noted, not chased.
+
+## 5. Ballet productions lists (2026-11-04)
+
+(Queries logged in `docs/query_log.md`, "Research-layer review: Ballet productions lists".)
+
+### What one record holds
+
+- **`production`** — 628 rows, one per printed list entry (a ballet as listed in one season and city; not RG's
+  multi-season production, which stays her call): `list_title`, `list_number`, `is_premiere` (51), `description_text`
+  (the printed description, verbatim), `printed_total` («Всего—N»), `n_dates`, `work_id` (the best single match, 627),
+  `n_matched_works`, `printed_page_number`, `source_file`. Seasons 1890-91 – 1904-05 and 1907-08 – 1910-11, SP and Moscow:
+  1905-06 and 1906-07 print no «Списокъ пьесъ» (both tables of contents checked, 2026-10-09).
+- **`production_work`** — 628: every work an entry's dates matched, with the count. 626 entries match one work.
+- **`production_credit`** — 1,587 printed creator credits, every one linked to a person (110 people: 86 known only from the
+  lists, 24 also in the staff lists): music 688, author 641, source 123, libretto 98, staging 31, instrumentation 6;
+  `name_printed`, `honorific_printed`, `qualifier_printed`, `is_pseudonym` (7), `identification_status` (confirmed 1,586,
+  proposed 1).
+- **`production_date`** — 2,374 printed dates (built 2026-11-03, W8).
+
+### Held earlier but not carried into research
+
+- The printed «Исполненъ: …» and «Всего—N» lines verbatim (`raw.production_entry.performed_text`, `total_text`) and the
+  `section_heading` («Балетъ» on 518). Their content is carried as `production_date` rows and `printed_total`.
+- 5 group credits («друг.», «др.», «разныхъ авторовъ» for the music) are left out on purpose: they name no person.
+- The acts given on their own and printed after «Всего» (25 entries, e.g. «3-е дѣйствіе исполнено: 1899 г.—января 23»)
+  ARE carried: the 30 `production_date` rows with `outside_total`, the act in `note`.
+- The lists print no set or costume designers; design credits come from the reviews (`review_credit`) and
+  `set_design` (1892-93).
+
+### Things noticed (for RG)
+
+1. **«Паяда и рыбакъ» is still its own work** (one performance, Маріинскій 20 Sep 1892), beside «Наяда и рыбакъ» (15).
+   The П is a scan-confirmed print typo (`genuine_print_typos.md`), and the 1892-93 list entry matches both works. The two
+   sister cases, «Ваядерка» and «Пригалъ кавалеріи», were folded into their works by `work_title_aliases.csv` (RG
+   2026-10-29, "Yes, alias them"); «Паяда» was never added there.
+2. **«Дочь Фараона», SP 1904-05, has no work** (`production.work_id` blank), although its one date (13 Feb 1905) now matches
+   a «Дочь фараона» performance supplied from the list and the review (`production_date`). The entry match runs only on the
+   Repertoire's printed titles and misses supplied performances.
+3. The one proposed credit is «Щимана» (music, «Волшебный башмачекъ», 1900-01): it waits on the Шиманъ identity held in
+   the person audit.
+4. «Золотая рыбка», Moscow 1904-05, prints «Всего—7» over 6 dates: «ноября 14 (2 раза: утромъ и вечеромъ)». As printed;
+   the Repertoire has all 7.
+
+### RG's questions and rulings
+
+**L1 — «Паяда и рыбакъ» folded (RG 2026-11-04, "Yes, fold it").** One row in `pipeline/entity_curation/work_title_aliases.csv`
+(matching only; the 20 Sep 1892 performance keeps «Паяда и рыбакъ» as its printed title). «Наяда и рыбакъ» 15 -> 16
+performances; the 1892-93 SP list entry now matches one work; the retired work id is in `entities.work_id_crosswalk`.
+Rebuilt `build_entities` -> `validate_performance_dates` -> `build_research_model` on a copy, then production: nothing else
+changed, 0 person_link shifts.
