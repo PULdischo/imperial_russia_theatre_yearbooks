@@ -27354,3 +27354,19 @@ and the parsed role_name); rebuild_after_raw_edit.sh; diff vs backup: exactly on
 person_entry_credit, research.person_appearance and person_performance_tally; person_link 0 shift blocks. The same «Пуспень» is stored
 for Сидоровъ in 1903-04 and 1905-06; the scans print «Пус-|пенъ» and «Пуспенъ» (docs/eval/scan_audit/Sidorov_Puspen_credits_evidence.png);
 not fixed, awaiting RG.
+
+## 2026-11-04 — Сидоровъ's 1903-04 and 1905-06 «Пуспень» credits fixed (RG "Yes, fix both")
+
+```sql
+-- every table, backup (pre-edit) vs rebuilt production (EXCEPT ALL, diff.py)
+SELECT page_id, regexp_extract(credit_summary_text, 'Пуспе.\S*') FROM raw.person_entry WHERE family_name='Сидоровъ' AND credit_summary_text LIKE '%Пуспе%';
+SELECT count(*) FROM raw.person_entry_credit WHERE role_name LIKE '%Пуспень%';
+-- review chain rerun on a copy of the rebuilt production, compared with production (6 review tables)
+```
+
+Result: raw edits in balletartists_1903-04_MSK_p007 and balletartists_1905-06_MSK_p007 (credit_summary_text + role_name each);
+rebuild_after_raw_edit.sh; diff vs backup: exactly two rows each in raw/analysis person_entry and person_entry_credit,
+research.person_appearance and person_performance_tally. All three seasons now read «Пуспенъ»; 0 credit roles left with «Пуспень».
+person_link 0 shift blocks. Review chain rerun: 0 differences in all six review tables, so production's review layer is unchanged.
+Aside: outputs/full_run/raw holds 1,552 «*.raw 2.json» copies (dated from 2026-10-01) beside 1,654 real pages; parse_and_validate
+reads pages by exact name, so they are ignored. Not touched.

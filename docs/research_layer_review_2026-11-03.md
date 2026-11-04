@@ -835,3 +835,6 @@ restored — a corpus check found no other block with this pattern; the block's 
 rebuild_after_raw_edit.sh, one row changed per table). Items 1-3 are rows in docs/eval/review_text_corrections.csv. The 1903-04 and
 1905-06 Сидоровъ credits carry the same misread (scans print «Пуспенъ»): evidence `docs/eval/scan_audit/Sidorov_Puspen_credits_evidence.png`,
 not yet fixed. Noticed: a stray `balletartists_1902-03_MSK_p007.raw 2.json` sits beside the raw page (sync copy?), left untouched.
+Follow-up (RG 2026-11-04, "Yes, fix both"): the same «Пуспень» → «Пуспенъ» fix applied to Сидоровъ's 1903-04 and 1905-06 Moscow credits
+(raw JSON, two fields each; rebuilt; two rows changed per table; review layer unchanged). Not chased: outputs/full_run/raw holds 1,552
+«*.raw 2.json» copies (from 2026-10-01 on), ignored by the pipeline.
