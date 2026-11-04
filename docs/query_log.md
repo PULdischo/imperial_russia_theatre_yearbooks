@@ -27090,3 +27090,67 @@ Result (first test): 54 new links, 4 in blocks with quoted old casts; 3 wrong (1
 1894-95 SP, earlier women linked to Владиміръ Кеммереръ), 1 right (Гиллердтъ in the 1905 cast). After dropping the Кемереръ variant
 and unlinking the 1865 Гердъ: mentions linked 17,802 -> 17,853, assertions 2,442 -> 2,452, dance performers 2,944 -> 2,965; 0
 links lost or changed; unknown surfaces 666 -> 634 (1,025 -> 980 occurrences). Production equal to the tested copy.
+
+## 2026-11-04 — R5 group B: «Беккъ»/«Бекль» candidates (staff lists and linked review mentions for Бекъ / Бекке)
+
+```sql
+SELECT DISTINCT family_name FROM raw.person_entry WHERE family_name LIKE 'Бек%';
+SELECT p.display_name, a.season, a.city, a.entity_type, a.source_file, a.scan_page, a.printed_folio
+FROM research.person_appearance a JOIN research.person p USING(person_id)
+WHERE p.canonical_family_name IN ('Бекъ','Бекке') ORDER BY 1,2,4;
+SELECT DISTINCT m.page_id, p.printed_folio, m.surface FROM research.review_mention m JOIN research.person pe USING(person_id)
+JOIN raw.review_page p USING(page_id) WHERE pe.canonical_family_name='Бекъ' AND m.season IN ('1905-06','1906-07','1907-08') ORDER BY 1 LIMIT 3;
+```
+
+Result: staff-list surnames starting Бек-: Бекетовъ, Бекке, Бекефи, Бекъ. Бекъ, Константинъ Александровичъ is in the Moscow ballet
+troupe every season 1892-93–1910-11 (and teaches dance at the Moscow school from 1904); Бекке, Евгеній Андреевичъ is St Petersburg
+orchestra 1890-91–1895-96 only. «Бекъ» is already linked in 1905-06 Moscow reviews (f. 210, 224, 225). Evidence sheet
+docs/eval/scan_audit/R5_groupB_Bekk_Bek_evidence.png.
+
+## 2026-11-04 — R5 group B: «Салинъ» (1905-06 Moscow f. 213) candidates
+
+```sql
+SELECT text FROM research.review_passage WHERE block_id='review_1905-06_MSK_ballet_p004__b001';
+SELECT p.display_name, a.season, a.city, a.entity_type, a.source_file, a.scan_page, a.printed_folio
+FROM research.person_appearance a JOIN research.person p USING(person_id)
+WHERE p.canonical_family_name IN ('Санинъ','Силинъ','Салинъ','Салина') ORDER BY 1,2;
+SELECT DISTINCT p.canonical_family_name, p.display_name, a.entity_type FROM research.person_appearance a JOIN research.person p USING(person_id)
+WHERE a.city='Moscow' AND a.season IN ('1904-05','1905-06','1906-07');  -- filtered in Python: edit distance <= 2 from «Салинъ»
+SELECT m.page_id, m.surface, m.role_name FROM research.review_mention m WHERE m.city='Moscow' AND m.role_name ILIKE 'Нил%';
+```
+
+Result: the passage is the «Дочь фараона» revival cast; stored text reads «Ниль—г. Салинъ и др.» (scan: «Нилъ—г. Салинъ и друг.»).
+Санинъ, Александръ Акимовичъ = SPb school staff 1902-04 only. Силинъ, Сергѣй Михайловичъ = Moscow administration every season
+1890-91–1910-11. Within edit distance 2 in Moscow 1904-07: Бакинъ 1-й/2-й/3-й and Гулинъ 1-й/2-й (ballet), Баулинъ (musician),
+Силинъ. No other Moscow review mention has a role «Нил-». Evidence docs/eval/scan_audit/R5_groupB_Salin_evidence.png.
+
+## 2026-11-04 — R5 group B: «Сировъ» (1902-03 Moscow f. 233, Робертъ Пуспенъ in «Эсмеральда») candidates
+
+```sql
+SELECT text FROM research.review_passage WHERE block_id='review_1902-03_MSK_ballet_p011__b003';
+SELECT DISTINCT p.canonical_family_name, p.display_name, a.entity_type, a.season FROM research.person_appearance a JOIN research.person p USING(person_id)
+WHERE a.city='Moscow' AND a.season IN ('1901-02','1902-03','1903-04');  -- filtered in Python: edit distance <= 2 from «Сировъ»
+SELECT page_id, institution, heading_path, subject_taught, tenure_note_text FROM raw.person_entry WHERE family_name='Сизовъ' AND page_id LIKE '%1902-03%';
+SELECT page_id, family_name, credit_summary_text FROM raw.person_entry
+WHERE credit_summary_text ILIKE '%Пуспен%' OR credit_summary_text ILIKE '%клеркъ%';
+SELECT m.season, m.page_id, m.surface FROM research.review_mention m JOIN research.person pe USING(person_id) WHERE pe.display_name LIKE 'Сидоровъ, Иванъ%';
+```
+
+Result: within edit distance 2 in Moscow 1901-04: Сизовъ, Владиміръ Ильичъ (wardrobe художникъ-консультантъ from 6 Dec 1902; teaches
+«Бытовая исторія» on the drama courses), Сидоровъ, Иванъ Емельяновичъ (ballet troupe 1891-92–1910-11), Смирновъ ×4, Симонъ, Титовъ.
+The staff-list credits name exactly one Пуспенъ: Сидоровъ — 1902-03 «Эсмеральда (Робертъ Пуспень—7)» (scan: «Пуспенъ»), also 1903-04
+(—1) and 1905-06 (—3). Сидоровъ already has 58 linked review mentions in Moscow (8 in 1902-03).
+
+## 2026-11-04 — R5 group B applied: review chain rebuilt (copy, then production)
+
+```sql
+-- test copy vs production, every review table, EXCEPT ALL both ways (mention_id/credit_id excluded: they renumber)
+SELECT block_id, char_start, surface, person_id FROM a.research.review_mention EXCEPT ALL SELECT ... FROM b.research.review_mention;
+SELECT count(*) FILTER (WHERE person_id IS NOT NULL), count(*) FROM research.review_mention WHERE mention_type='person';
+```
+
+Result: exactly 4 new person links and nothing lost or changed: «Клейнъ» → Крейнъ, Давидъ Сергѣевичъ (1901-02 MSK f. 290),
+«Сировъ» → Сидоровъ, Иванъ Емельяновичъ (1902-03 MSK f. 233), «Бекль» and «Беккъ» → Бекъ, Константинъ Александровичъ (1905-06 f. 231,
+1906-07 f. 232). Assertions +2 («Беккъ», «Сировъ»); review_credit, review_dance_performer, review_solo unchanged. Production
+after the rebuild equals the tested copy (0 differences in all five tables). Person mentions linked 17,857 of 21,863. Unknown
+surfaces 634 → 630 (976 occurrences). person_link alignment: 0 shift blocks.

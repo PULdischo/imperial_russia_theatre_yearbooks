@@ -480,3 +480,12 @@ To add an entry: copy the template at the bottom.
 - **Where to look:** entry ids, page ids, scan notes
 - **Would resolve it:** the kind of outside source
 ```
+
+## «Горина» (Petersburg ballet reviews 1900-01, 1903-04) — separate from Дорина, pending (RG 2026-11-04)
+
+The SP ballet reviews print «Горина» three times in corps lists (1900-01 f. 188 «…Костина, Го-|рина, Мишева…»; 1903-04 f. 112
+«…Радина 2-я, Горина, Костина…»; f. 113 «…Игнатьева, Горина, Вино-…»). No «Горина» in any staff list. The nearest person is
+Дорина, Антонина Тимоѳеевна (SP BalletArtists 1890-91 – 1904-05), whom the same 1903-04 review prints correctly on ff. 117-119,
+never in a passage with «Горина». RG: "keep separate pending further information" — unlinked; neither merged with Дорина nor made a
+person. Evidence sheet: docs/eval/scan_audit/R5_groupB_Gorina_Dorina_evidence.png (read by Claude). Aside noticed there: Дорина's
+printed start reads «съ 1 іюня 1890 г.» in 1900-01 (p. 73) and «съ 1 іюня 1900 г.» in 1903-04 (p. 69) — for the person audit.

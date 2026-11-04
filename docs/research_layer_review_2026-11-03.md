@@ -749,3 +749,32 @@ surname; the reviews print «Кемереръ 1-я / 2-я») and is dropped. Net
 linked 2,442 -> 2,452; dance performers linked 2,944 -> 2,965; no existing link lost or changed. Unmatched surfaces 666 -> 634.
 Open for RG: group B (5 doubtful: Горина/Дорина, Салинъ/Силинъ, Сировъ/Сизовъ, Клейнъ/Крейнъ, Беккъ-Бекль/Бекъ) and group C (9 with
 several candidates); groups D-E stay unlinked.
+
+**R5 group B — «Горина» (RG 2026-11-04, "keep separate pending further information").** Unlinked; recorded in
+`docs/eval/uncertain_person_identities.md` with the evidence sheet `docs/eval/scan_audit/R5_groupB_Gorina_Dorina_evidence.png`.
+Correction to an earlier remark: «Андреянова» also appears in a current 1903-04 corps list (f. 112), so not only in quoted old casts.
+
+**R5 group B — «Клейнъ» (RG 2026-11-04, "Yes, link to Крейнъ").** The 1901-02 Moscow review's «Соло на скрипкѣ исполнилъ г. Клейнъ»
+(f. 290) is Крейнъ, Давидъ Сергѣевичъ (first violin, Moscow orchestra 1897-; the same reviews print «на скрипкѣ—г. Крейнъ» in 1900-01
+f. 270, 1901-02 f. 313, 1902-03 f. 243). Evidence `docs/eval/scan_audit/R5_groupB_Klein_Krein_evidence.png`. To apply with the rest
+of group B.
+
+**R5 group B — «Беккъ», «Бекль» (RG 2026-11-04, "Yes, link both").** «Беккъ» (1906-07 Moscow f. 232) and «Бекль» (1905-06 Moscow
+f. 231) are Бекъ, Константинъ Александровичъ (Moscow ballet troupe 1892-93–1910-11; «Бекъ» already linked in 1905-06 f. 210, 224,
+225). Evidence `docs/eval/scan_audit/R5_groupB_Bekk_Bek_evidence.png`. Variant rows for «Клейнъ», «Беккъ», «Бекль» added to
+docs/eval/review_person_variants.csv; the rebuild follows the last group B ruling.
+
+**R5 group B — «Салинъ» (RG 2026-11-04, "Yes, leave unlinked").** 1905-06 Moscow f. 213, «Нилъ—г. Салинъ» in the «Дочь фараона»
+revival. No single fit: Силинъ is a Moscow administration clerk (since 1867), Санинъ is SPb school staff 1902-04, and the dancers two
+letters off are five people (Бакинъ 1-3, Гулинъ 1-2). Left unlinked. Evidence `docs/eval/scan_audit/R5_groupB_Salin_evidence.png`.
+Noted, not applied: the stored text on that line reads «Ниль … и др.» where the scan prints «Нилъ … и друг.».
+
+**R5 group B — «Сировъ» (RG 2026-11-04, "Yes, link to Сидоровъ").** 1902-03 Moscow f. 233, «Робертъ Пуспенъ, клеркъ,— г. Сировъ»:
+the 1902-03 Moscow ballet list credits Сидоровъ, Иванъ Емельяновичъ with «Эсмеральда (Робертъ Пуспенъ—7)», the only Пуспенъ credit
+in the lists. Linked. Evidence `docs/eval/scan_audit/R5_groupB_Sirov_evidence.png`. Noted, not applied: raw stores that credit as
+«Пуспень» (scan «Пуспенъ»).
+
+**R5 group B applied (2026-11-04).** Review chain rebuilt on a copy, then production. Exactly 4 new person links, none lost or
+changed: «Клейнъ», «Сировъ», «Бекль», «Беккъ». Assertions +2; credits, dance performers and solos unchanged. Person mentions
+linked 17,857 of 21,863; unknown surfaces 634 → 630. «Горина» and «Салинъ» stay unlinked. Next: group C (names with several
+candidates).
