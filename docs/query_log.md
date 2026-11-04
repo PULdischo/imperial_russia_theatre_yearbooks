@@ -26916,3 +26916,15 @@ SELECT * FROM entities.work_id_crosswalk EXCEPT <before>;
 Result: only production_work pointed at the Паяда work (no review rows or mentions). After: Наяда и рыбакъ 16 (ballet);
 the list entry matches 1 work; crosswalk 67e8f833… -> 9313e6f7… (1 performance). Changed tables: entities.work,
 work_link, work_id_crosswalk, research.work, performance, production, production_work, one row each. 0 person_link shifts.
+
+## 2026-11-04 — Research-layer review L2: list entries matched through supplied performances (test on a copy, then production)
+
+```sql
+SELECT y.production_id, y.list_title, x.work_id, w.canonical_title, y.n_matched_works
+FROM a.research.production x JOIN b.research.production y USING (production_id) LEFT JOIN b.research.work w ON w.work_id = y.work_id
+WHERE x.work_id IS DISTINCT FROM y.work_id OR x.n_matched_works <> y.n_matched_works;
+SELECT count(*) FROM research.production WHERE work_id IS NULL;
+```
+
+Result: one entry changed, balletproductions_1904-05_SP_p000__e007 «Дочь Фараона»: work NULL -> «Дочь фараона», 1 matched
+work (production_work +1 row). Entries without a work: 0. Every other table identical; 0 person_link shifts.

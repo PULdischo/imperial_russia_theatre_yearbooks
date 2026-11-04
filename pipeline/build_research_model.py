@@ -695,6 +695,34 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
         up = excerpt_parent.get(w)
         matched[(season, city, title)][w if up and norm(titles.get(w) or "") == norm(title) else (up or w)] += 1
     entries = con.execute("""SELECT production_entry_id, season, city, title FROM raw.production_entry""").fetchall()
+    # An entry whose dates name no work the Repertoire prints may still match a performance supplied from another part
+    # of the yearbook (supplied_performances.csv) on the same city and date, under the list's title or its parent's
+    # (RG 2026-11-04, research-layer review: «Дочь Фараона», SP 1904-05, 13 Feb 1905, the corps de ballet benefit).
+    aliases = {norm(k): {norm(v) for v in vs} for k, vs in BALLET_LIST_TITLE_ALIASES.items()}
+    supplied_day = collections.defaultdict(list)
+    for city, d, wid, t, pt, parent in con.execute("""
+            SELECT e.city, e.date_undate, p.work_id::VARCHAR, w.canonical_title, pw.canonical_title,
+                   w.excerpt_of_work_id::VARCHAR
+            FROM research.performance p JOIN research.event e USING (event_id) JOIN research.work w USING (work_id)
+            LEFT JOIN research.work pw ON pw.work_id = w.excerpt_of_work_id
+            WHERE p.performance_source LIKE 'supplied:%'""").fetchall():
+        supplied_day[(city, d)].append((wid, norm(t), norm(pt or ""), parent))
+    entry_dates = collections.defaultdict(list)
+    for pid, lpid, iso in con.execute("""SELECT production_entry_id, production_performance_id, strftime(date, '%Y-%m-%d')
+                                         FROM raw.production_entry_performance""").fetchall():
+        typo = LIST_DATE_PRINT_TYPOS.get(lpid)
+        if typo or iso:
+            entry_dates[pid].append(typo[0] if typo else iso)
+    for pid, season, city, title in entries:
+        if matched.get((season, city, title)):
+            continue
+        lkeys = {norm(title)} | aliases.get(norm(title), set())
+        for d in entry_dates.get(pid, []):
+            for wid, tk, pk, parent in supplied_day.get((city, d), []):
+                if tk in lkeys:
+                    matched[(season, city, title)][wid] += 1
+                elif pk and pk in lkeys:
+                    matched[(season, city, title)][parent] += 1
     prod_work, best = [], {}
     for pid, season, city, title in entries:
         cnt = matched.get((season, city, title))

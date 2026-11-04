@@ -564,3 +564,8 @@ works inside their heading that were never made performance rows: noted, not cha
 performances; the 1892-93 SP list entry now matches one work; the retired work id is in `entities.work_id_crosswalk`.
 Rebuilt `build_entities` -> `validate_performance_dates` -> `build_research_model` on a copy, then production: nothing else
 changed, 0 person_link shifts.
+
+**L2 — «Дочь Фараона», SP 1904-05 (RG 2026-11-04, "okay, go ahead").** `build_productions`: an entry whose dates match no
+work the Repertoire prints now falls back to performances supplied from another part of the yearbook, same city and date,
+under the list's title (or its parent's). The entry now has work «Дочь фараона» (from the 13 Feb 1905 corps de ballet
+benefit, supplied from the list and the review on RG's 2026-10-12 ruling); every list entry has a work. Nothing else changed.
