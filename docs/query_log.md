@@ -26413,3 +26413,15 @@ SELECT count(*) FROM research.person_death;
 
 Result: copy changes only research.service_period 1 row (end_date / end_type NULL, date_correction notes the print error), person_death
 308 -> 307 (her roster row gone), person_tenure_note +1. Production identical to the tested copy in every table; 0 person_link shifts.
+
+## 2026-11-03 — Краюшкинъ: 1899-00 scan and the 1900-01 page's other back-dated death
+
+```sql
+SELECT season, tenure_note_text, printed_folio FROM research.person_appearance WHERE person_id IN (Барановъ Абрамъ, Краюшкинъ) AND season >= '1897-98';
+SELECT p.display_name, d.printed_text, d.death_date FROM research.person_death d ... WHERE d.source = 'roster' AND d.season = '1900-01' AND entity_type = 'ProductionTeam';
+```
+
+Result: scan 1899-00 Moscow ProductionTeam p.127 (Claude): «1. Барановъ, Абрамъ Ефимовичъ (съ 19 октября 1892 г.)» and «2. Краюшкинъ ...
+(съ 3 ноября 1871 г.)», no «†». The 1900-01 page (p.128) prints both with deaths: Барановъ «† 30 сентября 1899 г.» (inside the 1899-00
+season, yet 1899-00 lists him alive) and Краюшкинъ «† 20 ноября 1898 г.». The 1900-01 volume back-fills deaths the 1898-1900 Moscow lists
+missed, so the 1899-00 «alive» listing is weak evidence against 1898.
