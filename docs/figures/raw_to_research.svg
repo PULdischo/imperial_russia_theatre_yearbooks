@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#8a929c"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="80" y="88" font-size="44" font-weight="700" fill="#1f2328">From the raw layer to the research layer</text>
+  <text x="80" y="128" font-size="22" fill="#5b6470">The raw layer keeps every printed entry; the research layer links them into the people, works and events they describe</text>
+
+  <!-- Raw layer -->
+  <rect x="80" y="170" width="440" height="380" rx="14" fill="#f4f1ea" stroke="#b9ae96" stroke-width="3"/>
+  <text x="108" y="218" font-size="34" font-weight="700" fill="#1f2328">Raw layer</text>
+  <text x="108" y="250" font-size="19" font-style="italic" fill="#6b5d3f">what the page prints</text>
+  <g font-size="19" fill="#1f2328">
+    <text x="108" y="290">• one row per printed entry, tied to its page</text>
+    <text x="108" y="320">• verbatim, original pre-reform spelling</text>
+    <text x="108" y="350">• corrected only to match the scan</text>
+  </g>
+  <text x="108" y="392" font-size="15" font-weight="700" letter-spacing="1.5" fill="#8a929c">HOW IT WAS MADE</text>
+  <g font-size="17" fill="#5b6470">
+    <text x="108" y="418">scans transcribed by the AI model <tspan font-weight="700" fill="#1f2328">Qwen3-VL</tspan>,</text>
+    <text x="108" y="442">then checked against the scans</text>
+  </g>
+  <text x="108" y="482" font-size="15" font-weight="700" letter-spacing="1.5" fill="#8a929c">FOR EXAMPLE</text>
+  <g font-size="17" fill="#5b6470">
+    <text x="108" y="508">staff-list · repertoire · production-list entries</text>
+    <text x="108" y="532">review passages · statistics lines</text>
+  </g>
+
+  <!-- Middle steps -->
+  <rect x="610" y="170" width="380" height="160" rx="12" fill="#f6f7f9" stroke="#c3c8cf" stroke-width="2"/>
+  <text x="634" y="210" font-size="26" font-weight="700" fill="#1f2328">Analysis</text>
+  <text x="634" y="240" font-size="18" font-style="italic" fill="#5b6470">clean and derive</text>
+  <text x="634" y="272" font-size="17" fill="#5b6470">standard theatre names, checked dates,</text>
+  <text x="634" y="296" font-size="17" fill="#5b6470">gaps marked; no new facts added</text>
+
+  <rect x="610" y="390" width="380" height="160" rx="12" fill="#f6f7f9" stroke="#c3c8cf" stroke-width="2"/>
+  <text x="634" y="430" font-size="26" font-weight="700" fill="#1f2328">Entities</text>
+  <text x="634" y="456" font-size="18" font-style="italic" fill="#5b6470">link</text>
+  <text x="634" y="486" font-size="17" fill="#5b6470">same person or work across printings;</text>
+  <text x="634" y="510" font-size="17" fill="#5b6470">doubtful matches held for review;</text>
+  <text x="634" y="534" font-size="17" fill="#5b6470">every merge recorded</text>
+
+  <!-- Arrows -->
+  <g stroke="#8a929c" stroke-width="3" fill="none" marker-end="url(#arr)">
+    <path d="M520 250 L 604 250"/>
+    <path d="M800 330 L 800 384"/>
+    <path d="M990 470 L 1074 470"/>
+  </g>
+
+  <!-- Research layer -->
+  <rect x="1080" y="170" width="440" height="380" rx="14" fill="#e9f0f9" stroke="#2f6db5" stroke-width="3"/>
+  <text x="1108" y="218" font-size="34" font-weight="700" fill="#1f4f8a">Research layer</text>
+  <text x="1108" y="250" font-size="19" font-style="italic" fill="#2f5d94">who and what it means</text>
+  <g font-size="19" fill="#1f2328">
+    <text x="1108" y="298">• one row per person, work,</text>
+    <text x="1128" y="324">theatre, event</text>
+    <text x="1108" y="358">• linked directly, ready to query</text>
+    <text x="1108" y="392">• the layer that is published</text>
+  </g>
+  <text x="1108" y="440" font-size="15" font-weight="700" letter-spacing="1.5" fill="#8a929c">FOR EXAMPLE</text>
+  <g font-size="17" fill="#5b6470">
+    <text x="1108" y="468">theatre · event · performance · work</text>
+    <text x="1108" y="494">person · person appearance · reviews</text>
+  </g>
+  <text x="1108" y="530" font-size="16" fill="#8a929c">each row points back to its raw rows</text>
+
+  <!-- Example strip: the Legat women -->
+  <rect x="80" y="584" width="1440" height="252" rx="14" fill="#faf8f4" stroke="#e2ddd1" stroke-width="2"/>
+  <text x="108" y="618" font-size="15" font-weight="700" letter-spacing="1.5" fill="#8a929c">THE LEGAT WOMEN · ST PETERSBURG BALLET LISTS · ORDINAL PRINTED AFTER «ЛЕГАТЪ»</text>
+  <text x="316.0" y="646" font-size="13" fill="#8a929c" text-anchor="middle">1890/91</text>
+  <line x1="316.0" y1="652" x2="316.0" y2="828" stroke="#e2ddd1" stroke-width="1"/>
+  <text x="476.0" y="646" font-size="13" fill="#8a929c" text-anchor="middle">1895/96</text>
+  <line x1="476.0" y1="652" x2="476.0" y2="828" stroke="#e2ddd1" stroke-width="1"/>
+  <text x="636.0" y="646" font-size="13" fill="#8a929c" text-anchor="middle">1900/01</text>
+  <line x1="636.0" y1="652" x2="636.0" y2="828" stroke="#e2ddd1" stroke-width="1"/>
+  <text x="796.0" y="646" font-size="13" fill="#8a929c" text-anchor="middle">1905/06</text>
+  <line x1="796.0" y1="652" x2="796.0" y2="828" stroke="#e2ddd1" stroke-width="1"/>
+  <text x="956.0" y="646" font-size="13" fill="#8a929c" text-anchor="middle">1910/11</text>
+  <line x1="956.0" y1="652" x2="956.0" y2="828" stroke="#e2ddd1" stroke-width="1"/>
+  <text x="108" y="677" font-size="16" font-weight="400" fill="#1f2328">Марія Семеновна</text>
+  <rect x="301" y="656" width="30" height="28" rx="5" fill="#f4f1ea" stroke="#b9ae96" stroke-width="1.5"/>
+  <text x="316.0" y="675" font-size="13" fill="#1f2328" text-anchor="middle">1-я</text>
+  <text x="108" y="711" font-size="16" font-weight="400" fill="#1f2328">Вѣра Густавовна</text>
+  <rect x="301" y="690" width="30" height="28" rx="5" fill="#f4f1ea" stroke="#b9ae96" stroke-width="1.5"/>
+  <text x="316.0" y="709" font-size="13" fill="#1f2328" text-anchor="middle">2-я</text>
+  <rect x="333" y="690" width="158" height="28" rx="5" fill="#f4f1ea" stroke="#b9ae96" stroke-width="1.5"/>
+  <text x="412.0" y="709" font-size="13" fill="#1f2328" text-anchor="middle">1-я</text>
+  <text x="108" y="745" font-size="16" font-weight="700" fill="#1f4f8a">Евгенія Густавовна</text>
+  <rect x="301" y="724" width="30" height="28" rx="5" fill="#e9f0f9" stroke="#2f6db5" stroke-width="1.5"/>
+  <text x="316.0" y="743" font-size="13" fill="#1f4f8a" text-anchor="middle">3-я</text>
+  <rect x="333" y="724" width="158" height="28" rx="5" fill="#e9f0f9" stroke="#2f6db5" stroke-width="1.5"/>
+  <text x="412.0" y="743" font-size="13" fill="#1f4f8a" text-anchor="middle">2-я</text>
+  <rect x="493" y="724" width="350" height="28" rx="5" fill="#e9f0f9" stroke="#2f6db5" stroke-width="1.5"/>
+  <text x="668.0" y="743" font-size="13" fill="#1f4f8a" text-anchor="middle">no ordinal</text>
+  <rect x="845" y="724" width="30" height="28" rx="5" fill="#e9f0f9" stroke="#2f6db5" stroke-width="1.5"/>
+  <text x="860.0" y="743" font-size="13" fill="#1f4f8a" text-anchor="middle">1-я</text>
+  <text x="108" y="779" font-size="16" font-weight="400" fill="#1f2328">Александра Павловна</text>
+  <rect x="845" y="758" width="30" height="28" rx="5" fill="#f4f1ea" stroke="#b9ae96" stroke-width="1.5"/>
+  <text x="860.0" y="777" font-size="13" fill="#1f2328" text-anchor="middle">2-я</text>
+  <text x="108" y="813" font-size="16" font-weight="400" fill="#1f2328">Антонина Савельевна</text>
+  <rect x="909" y="792" width="62" height="28" rx="5" fill="#f4f1ea" stroke="#b9ae96" stroke-width="1.5"/>
+  <text x="980" y="811" font-size="13" fill="#5b6470">no ordinal</text>
+  <path d="M884 738 L 1034 738" stroke="#8a929c" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+  <text x="959.0" y="728" font-size="16" font-style="italic" fill="#5b6470" text-anchor="middle">linked</text>
+  <rect x="1040" y="650" width="450" height="126" rx="12" fill="#e9f0f9" stroke="#2f6db5" stroke-width="2"/>
+  <text x="1064" y="682" font-size="16" font-weight="700" letter-spacing="1.5" fill="#2f5d94">1 PERSON</text>
+  <text x="1064" y="720" font-size="25" font-weight="700" fill="#1f4f8a">Легатъ, Евгенія Густавовна</text>
+  <text x="1064" y="748" font-size="16" fill="#5b6470">18 entries, four printed forms; her ordinal</text>
+  <text x="1064" y="768" font-size="16" fill="#5b6470">shifts as the others join and leave</text>
+
+  <text x="1064" y="811" font-size="15" font-style="italic" fill="#5b6470">1908/09: no Легатъ woman listed</text>
+
+  <!-- Footer: scale -->
+  <text x="80" y="874" font-size="18" fill="#1f2328"><tspan font-weight="700">23,980</tspan> staff-list entries → <tspan font-weight="700">2,521</tspan> people <tspan fill="#5b6470">(2,619 with the production lists and reviews)</tspan>   ·   <tspan font-weight="700">30,831</tspan> Repertoire work listings → <tspan font-weight="700">2,917</tspan> works</text>
+<g font-size="13" fill="#8a929c" text-anchor="end"><text x="1520" y="30">Graphic made with Claude Code (AI): drafting, layout, database queries, scan checks of the Legat entries.</text><text x="1520" y="47">Data model, final wording and editorial decisions by the author.</text></g>
+</svg>
