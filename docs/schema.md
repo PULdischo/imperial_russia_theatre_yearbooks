@@ -809,3 +809,11 @@ Set on every `corrected_manual` and `no_weekday` event (86), NULL otherwise. RG,
 figures). Built by `build_reviews_duckdb.py` from `raw.review_page` and `raw.review_block`; the text is the transcription
 after `docs/eval/review_text_corrections.csv`. Join any `review_*` row on `block_id` to read the passage it came from, and on
 `page_id` for the folio. RG, 2026-11-04, research-layer review ("Yes, add the text").
+
+## `research.review_assertion.event_id`, `event_match_note` (added 2026-11-04)
+
+The Repertoire event a cast statement describes. Set only when the statement has a date and a work, and exactly one
+performed `research.event` in that city on that date has that work (or an excerpt of it) on its bill; otherwise NULL.
+`event_match_note` says which case applies («linked: the only performed event …», «not linked: the statement carries no
+date», «… has no work», «… events that day, none with this work», «… no performed Repertoire event in this city that day»,
+«… N events that day with this work»). RG, 2026-11-04, research-layer review ("Yes, link them").

@@ -26971,3 +26971,19 @@ WHERE t.block_id = 'review_1904-05_SP_ballet_p012__b004';
 
 Result: review_page 1,074, review_passage 4,697; 0 assertions and 0 credits without a passage; the 13 Feb 1905 «Дочь
 Фараона» passage reads at f. 117. Every other table identical to production; 0 person_link shifts.
+
+## 2026-11-04 — Research-layer review R2: cast statements linked to Repertoire events (dry run, test on a copy, production)
+
+```sql
+-- dry run: per dated statement, performed events that day in its city, and those whose bill has its work or an excerpt
+SELECT ... FROM research.review_assertion a WHERE nullif(a.date_undate,'') IS NOT NULL;
+SELECT event_match_note, count(*) FROM research.review_assertion GROUP BY 1;
+SELECT a.role_surface, a.performer_surface, a.date_undate, t.canonical_name, e.receipts_verbatim
+FROM research.review_assertion a JOIN research.event e USING (event_id) JOIN research.theater t USING (theater_id)
+WHERE a.block_id = 'review_1904-05_SP_ballet_p012__b004';
+```
+
+Result: of 683 dated statements, 543 linked (one event with the work); 69 no work; 40 events that day without the work; 30
+no performed event that day (historical years 1844-1875 among them); 1 two events. 1,972 undated. Old columns unchanged;
+every other table identical; 0 person_link shifts. Example: the 13 Feb 1905 corps-de-ballet benefit cast -> Маріинскій,
+8750 р. 70 к.

@@ -1186,7 +1186,9 @@ def main() -> None:
             grammar                 VARCHAR,
             work_surface            VARCHAR,
             work_id                 VARCHAR,
-            work_source             VARCHAR
+            work_source             VARCHAR,
+            event_id                VARCHAR,
+            event_match_note        VARCHAR
         )
     """)
     con.execute(f"""
@@ -1200,10 +1202,42 @@ def main() -> None:
                  CAST(performer_candidates_n AS INTEGER),
                  nullif(performer_candidate_ids, ''), link_method, grammar,
                  nullif(work_surface, ''), nullif(work_id, ''),
-                 nullif(work_source, ''), statement_kind
+                 nullif(work_source, ''), NULL AS event_id, NULL AS event_match_note, statement_kind
           FROM read_csv('{a.out.as_posix()}', header=true, all_varchar=true))
         WHERE statement_kind = 'cast'
     """)
+    # The Repertoire event a dated cast statement describes (RG 2026-11-04, research-layer review: "Yes, link them"):
+    # linked only when the city and date name exactly one performed event whose bill carries the statement's work (or an
+    # excerpt of it). Otherwise event_id stays NULL and event_match_note says why.
+    con.execute("""
+        CREATE OR REPLACE TEMP TABLE assertion_event AS
+        WITH perf AS (
+            SELECT e.event_id, e.city, e.date_undate, CAST(p.work_id AS VARCHAR) AS wid,
+                   CAST(w.excerpt_of_work_id AS VARCHAR) AS parent
+            FROM research.performance p JOIN research.event e USING (event_id) JOIN research.work w USING (work_id)
+            WHERE e.event_status = 'performed')
+        SELECT a.assertion_id,
+               (SELECT count(*) FROM research.event e WHERE e.city = a.city AND e.date_undate = a.date_undate
+                  AND e.event_status = 'performed') AS n_day,
+               (SELECT count(DISTINCT p.event_id) FROM perf p WHERE p.city = a.city AND p.date_undate = a.date_undate
+                  AND (p.wid = a.work_id OR p.parent = a.work_id)) AS n_work,
+               (SELECT min(p.event_id) FROM perf p WHERE p.city = a.city AND p.date_undate = a.date_undate
+                  AND (p.wid = a.work_id OR p.parent = a.work_id)) AS ev
+        FROM research.review_assertion a WHERE a.date_undate IS NOT NULL""")
+    con.execute("""
+        UPDATE research.review_assertion SET
+            event_id = CASE WHEN x.n_work = 1 AND research.review_assertion.work_id IS NOT NULL THEN x.ev END,
+            event_match_note = CASE
+                WHEN research.review_assertion.work_id IS NULL THEN 'not linked: the statement has no work'
+                WHEN x.n_work = 1 THEN 'linked: the only performed event that day in this city with this work'
+                WHEN x.n_work > 1 THEN 'not linked: ' || x.n_work || ' events that day with this work'
+                WHEN x.n_day = 0 THEN 'not linked: no performed Repertoire event in this city that day'
+                ELSE 'not linked: events that day, none with this work' END
+        FROM assertion_event x WHERE x.assertion_id = research.review_assertion.assertion_id""")
+    con.execute("""UPDATE research.review_assertion SET event_match_note = 'not linked: the statement carries no date'
+                   WHERE date_undate IS NULL""")
+    n_ev = con.execute("SELECT count(event_id) FROM research.review_assertion").fetchone()[0]
+    print(f"  cast statements linked to a Repertoire event: {n_ev:,}")
 
     # --- instrument solos: their own table (RG 2026-10-22) ---
     solo_csv = a.out.with_name("review_solo.csv")

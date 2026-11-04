@@ -273,7 +273,7 @@ SCHEMAS = {
             performer_candidates_n INTEGER, performer_candidate_ids TEXT,
             link_method TEXT, grammar TEXT,
             work_surface TEXT, work_id TEXT REFERENCES work(work_id),
-            work_source TEXT
+            work_source TEXT, event_id TEXT REFERENCES event(event_id), event_match_note TEXT
         )""",
     # Instrument solos named in the reviews (`на арфѣ — г. Омъ`), RG
     # 2026-10-22: their own kind of statement, not a cast role. Same shape

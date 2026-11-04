@@ -637,3 +637,9 @@ passage, text, caption), built by `build_reviews_duckdb.py` from `raw.review_pag
 `review_text_corrections.csv`), so they refresh with every review-chain run. Every `review_assertion` and `review_credit`
 row's `block_id` resolves to a passage. Opera and «All» review pages are included (the text, not cast data). Export schema
 in `build_datasette.py`; `docs/schema.md`. Nothing else changed; 0 person_link shifts.
+
+**R2 — cast statements linked to Repertoire events (RG 2026-11-04, "Yes, link them").** `review_assertion.event_id` +
+`event_match_note`, set in `build_review_assertions.py`: a dated statement links only when its city and date name exactly one
+performed event whose bill carries the statement's work (or an excerpt of it). Linked 543. Not linked, each with its note:
+no date 1,972; no work on the statement 69; events that day, none with the work 40; no performed event that day 30 (mostly
+the quoted historical casts, 1844-1875); two events with the work 1. Export schema; `docs/schema.md`. Nothing else changed.
