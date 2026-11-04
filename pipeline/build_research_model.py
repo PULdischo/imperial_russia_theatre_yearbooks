@@ -1463,7 +1463,10 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
 #: work, not of one night). The closed list. drama = every spoken play in any
 #: language (company and language stay on research.performance). ceremonial =
 #: the anthem, which is not a work for counting (RG, 2026-10-12).
-WORK_ART_FORMS = ["ballet", "opera", "operetta", "drama", "concert", "ceremonial"]
+WORK_ART_FORMS = ["ballet", "opera", "operetta", "drama", "concert"]
+#: research.work.entry_kind (RG, 2026-11-03): whether the row is a work at all. NULL = unknown
+#: (an unidentified item); art_form is filled only for works (NULL there = unknown).
+ENTRY_KINDS = ["work", "programme item", "ceremonial"]
 #: build_entities._work_art_form's identity classes -> WORK_ART_FORMS
 _IDENTITY_TO_WORK_ART_FORM = {"ballet": "ballet", "opera": "opera", "operetta": "operetta", "spoken": "drama"}
 #: Excerpts whose parent work the yearbook never prints, so neither the parent nor
@@ -1603,7 +1606,7 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         fold = _fold_genre(genre)
         canon = _canon_genre(fold)
         if re.match(CEREMONIAL_TITLE_RE, title or ""):
-            form, basis = "ceremonial", "anthem: a ceremonial item, not a work (RG, 2026-10-12)"
+            form, basis = None, "anthem: a ceremonial item, not a work (RG, 2026-10-12)"
         elif excerpt_of is not None:
             form, basis = None, None  # copied from the parent below
         elif re.match(r"(?i)(большой |балетный |концертный и балетный )?(дивертис|дивертим|divertissement)", title or ""):
@@ -1681,8 +1684,16 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                 form, basis = None, f"pending RG: genre «{genre}» has no art form in the identity rule"
         if title in WORK_IDENTITY_LEADS and basis:
             basis += f"; {WORK_IDENTITY_LEADS[title]}"
-        out.append((form, basis, wid))
-    con.executemany("UPDATE research.work SET art_form = ?, art_form_basis = ? WHERE work_id = ?", out)
+        if re.match(CEREMONIAL_TITLE_RE, title or ""):
+            kind = "ceremonial"
+        elif basis and basis.startswith("programme item"):
+            kind = "programme item"
+        elif basis and basis.startswith("unidentified"):
+            kind = None  # not known to be a work (RG, 2026-11-03: blank means unknown)
+        else:
+            kind = "work"
+        out.append((kind, form, basis, wid))
+    con.executemany("UPDATE research.work SET entry_kind = ?, art_form = ?, art_form_basis = ? WHERE work_id = ?", out)
     # An excerpt is part of its parent work, so it takes the parent's art form
     # (RG, 2026-11-03): decided once, on the parent; copied here so a filter on
     # work.art_form does not miss excerpts. Repeated for an excerpt of an excerpt.
@@ -1706,6 +1717,13 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
     bad = con.execute("SELECT count(*) FROM research.work WHERE art_form IS NOT NULL AND art_form NOT IN ("
                       + ", ".join(f"'{a}'" for a in WORK_ART_FORMS) + ")").fetchone()[0]
     assert bad == 0, "research.work holds an art_form outside WORK_ART_FORMS"
+    bad = con.execute("SELECT count(*) FROM research.work WHERE entry_kind NOT IN ("
+                      + ", ".join(f"'{k}'" for k in ENTRY_KINDS) + ")").fetchone()[0]
+    assert bad == 0, "research.work holds an entry_kind outside ENTRY_KINDS"
+    assert con.execute("""SELECT count(*) FROM research.work WHERE art_form IS NOT NULL
+                          AND entry_kind IS DISTINCT FROM 'work'""").fetchone()[0] == 0, "art_form on a non-work"
+    assert con.execute("""SELECT count(*) FROM research.work WHERE excerpt_of_work_id IS NOT NULL
+                          AND entry_kind IS DISTINCT FROM 'work'""").fetchone()[0] == 0, "an excerpt that is not a work"
     assert con.execute("SELECT count(*) FROM research.work WHERE art_form_basis IS NULL").fetchone()[0] == 0
     # Title changes inside one merged work (RG decisions): appended to title_note.
     for (t, g), note in WORK_TITLE_NOTES.items():
@@ -1713,8 +1731,8 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                            WHERE canonical_title = ? AND canonical_genre = ?""", [note, t, g]).fetchone()[0]
         if n != 1:
             raise SystemExit(f"WORK_TITLE_NOTES: «{t}» [{g}] matches {n} research.work rows")
-    for form, n in con.execute("SELECT art_form, count(*) FROM research.work GROUP BY 1 ORDER BY 2 DESC").fetchall():
-        print(f"  work art_form {form}: {n}")
+    for kind, form, n in con.execute("SELECT entry_kind, art_form, count(*) FROM research.work GROUP BY 1, 2 ORDER BY 1, 3 DESC").fetchall():
+        print(f"  work entry_kind {kind} / art_form {form}: {n}")
 
 
 def check_work_art_form_agreement(con: duckdb.DuckDBPyConnection) -> int:
@@ -1781,6 +1799,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             title_note VARCHAR,
             work_source VARCHAR,
             source_note VARCHAR,
+            entry_kind VARCHAR,
             art_form VARCHAR,
             art_form_basis VARCHAR
         )
@@ -1887,7 +1906,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                     FROM work_merge m JOIN entities.work mw ON mw.work_id = m.from_id
                     JOIN title_correction tcm ON tcm.verbatim_title = mw.canonical_title
                     WHERE m.to_id = w.work_id)) AS title_note,
-               'repertoire' AS work_source, NULL AS source_note, NULL, NULL
+               'repertoire' AS work_source, NULL AS source_note, NULL, NULL, NULL
         FROM entities.work w
         LEFT JOIN genre_rule g ON regexp_matches(w.canonical_title, g.pattern)
         LEFT JOIN title_correction tc ON tc.verbatim_title = w.canonical_title
@@ -1914,7 +1933,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                    CASE WHEN {'true' if used else 'false'} AND CAST(rw.work_id AS VARCHAR) NOT IN (SELECT work_id FROM ({used_sql}) u WHERE work_id IS NOT NULL)
                         THEN 'mention only (no review credit, dance or cast statement points here): ' || rw.evidence
                         ELSE rw.evidence END,
-                   NULL, NULL
+                   NULL, NULL, NULL
             FROM entities.review_work rw
         """)
     con.execute("""
@@ -2243,7 +2262,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                    CASE WHEN s.genre IS NOT NULL THEN
                        'genre assigned per performance (' || count(*) || ' of ' || w.appearance_count ||
                        ' printings of this title): pipeline/entity_curation/research_performance_genre.csv' END,
-                   any_value(w.title_note), 'repertoire', NULL, NULL, NULL
+                   any_value(w.title_note), 'repertoire', NULL, NULL, NULL, NULL
             FROM perf_split s JOIN research.work w ON w.work_id = s.base_work_id
             GROUP BY s.split_work_id, w.canonical_title, s.genre, s.parent_genre, w.appearance_count
         """)

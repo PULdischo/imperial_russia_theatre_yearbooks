@@ -26156,3 +26156,9 @@ charity, between «Письмо Татьяны» and «Сонъ въ лѣтню�
 Result: programme items: Monologues, Scènes et monologues, Prolog, Концертъ-спектакль, Обозрѣніе; unidentified (NULL): «Слава»!, Балетоманъ.
 Works: drama 2,259 / opera 323 / ballet 253 / operetta 39 / concert 11 / ceremonial 4 / NULL 52 (programme items 47, not-printed leads 3,
 unidentified 2); none «pending RG». Check unchanged: 52 performances on 6 work/discipline pairs disagree (report only).
+
+## 2026-11-03 — research.work split into entry_kind + art_form (RG "yes!")
+
+Result: entry_kind work 2,888 (drama 2,259 / opera 323 / ballet 253 / operetta 39 / concert 11 / art_form unknown 3), programme item 47,
+ceremonial 4 (the anthem; art_form now NULL, was 'ceremonial'), NULL (unknown) 2 («Слава»!, Балетоманъ). Only the 4 anthem rows' art_form changed;
+every other research table identical; research_dataset.sqlite (scratch) carries entry_kind. Check unchanged (52 / 6 pairs).
