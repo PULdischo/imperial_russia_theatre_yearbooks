@@ -26203,3 +26203,8 @@ Result: art_form drama -> NULL (unknown), basis «open (RG, 2026-11-03) …»; l
 Result: 2 override rows; work opera -> operetta. First rebuild moved its 3 performances to Russian drama (apply_work_artform_overrides gave every
 operetta the house's company); fixed to keep French drama. Final diff: 1 performance (2 Apr 1901) play -> operetta, still French drama; its event's
 genre_families. Check: 7 performances / 3 pairs.
+
+## 2026-11-03 — «La chanson de Fortunio» [opéra-com.] ruled operetta (RG)
+
+Result: 3 override rows; work opera -> operetta; its 3 performances play -> operetta, still French drama (and their events' genre_families).
+Check: 4 performances / 2 pairs.

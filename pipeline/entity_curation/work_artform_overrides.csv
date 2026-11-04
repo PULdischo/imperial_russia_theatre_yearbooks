@@ -28,3 +28,6 @@ printed_title,printed_genre,treat_as_art_form,basis
 Боярыня Вѣра Шелога,прол.,opera,"Большой 3 Nov 1906, «прол.»: as the «прологъ» row. RG 2026-11-03."
 Le beau Dunois,opéra-bouffe,operetta,"Михайловскій 2-5 Apr 1901, French troupe; printed «opéra-bouffe» (performance rules already count it as operetta, OPERETTA_GENRE_RE_ANY). RG 2026-11-03: ""Operetta""."
 Le beau Dunois,"opéra, bouffe",operetta,"Михайловскій 2 Apr 1901: «opéra, bouffe» as printed; as the opéra-bouffe row. RG 2026-11-03."
+La chanson de Fortunio,opéra-com.,operetta,"Михайловскій 19-24 Feb 1905, French troupe; printed «opéra-com.» / «opéra-comique». RG 2026-11-03: ""Operetta""."
+La chanson de Fortunio,opéra-comique,operetta,"Михайловскій 24 Feb 1905: «opéra-comique»; as the opéra-com. row. RG 2026-11-03."
+La chanson de Fortunio,opera-comique,operetta,"Михайловскій 22 Feb 1905: «opera-comique» as stored; as the opéra-com. row. RG 2026-11-03."
