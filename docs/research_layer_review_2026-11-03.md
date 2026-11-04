@@ -707,3 +707,19 @@ so the operas); a set printed without a genre takes the genre printed for that t
 4. **README "Tracing a value to its source"**: where each table's page is, the note columns, and where the decisions are
    written up (including that transcription fixes live in the raw JSON, `docs/eval/` and git).
 Tested on a copy, then production: no existing column changed except the new title notes; 0 person_link shifts.
+
+**R5 in progress — the unmatched review names, scan check (2026-11-04, RG "Yes, check the 209").** The 727 unmatched surfaces
+were sorted by distance from a research surname: one letter 209 (318 occ.), two letters 218, none close 277, too short 23.
+The 209 gave 418 occurrences still unmatched on 241 pages; five helper agents read them on the review images (crops at 2-6×)
+and Claude checked every misread crop on contact sheets (agreeing on all but «Прѣспяковъ», which the print really has with
+п). Result, 404 distinct occurrences, in `docs/eval/review_name_scan_check_2026-11-04/results.csv` (checked by Claude; scan
+reads are finding aids, RG reads the source):
+- text correction 92 (+7 stray line-break hyphens kept in the stored text, «Чере-пова» …);
+- line-join rule 11: hyphenated names split across a line («Сенъ-|Леона», «Вальтеръ-|Кюне», «Дель-|Эра») lose the hyphen in
+  the matcher's reflow;
+- printed as stored 193: misprints of known people (~35: «Петина», «Гердъ», «Кемереръ», «Стуколькинъ», «Прѣспяковъ» …, need
+  RG's identity call), names that are probably other people (the other gender of a roster surname: «Ефремова», «Воронина» …),
+  names whose form matches research but the matcher's other rules declined;
+- not a person name 98 («Вальсъ», composers, role names); page-end fragments 8; unclear 2 («Шсбергъ/Шебергъ», «Ваильевъ»).
+Proposed order: (1) the mechanical text corrections and the line-join rule; (2) the misprint list with a person for each, for
+RG; (3) the rest stay unlinked.
