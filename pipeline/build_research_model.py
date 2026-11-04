@@ -542,6 +542,11 @@ LIST_DATE_PRINT_TYPOS = {
     "balletproductions_1908-09_MSK_p001__e005__d002": (
         "1908-10-08", "printed «Спящая красавица … октября 18» (Moscow list p. 71); the Repertoire has it at the Большой on "
         "8 Oct (Среда, 1040 р. 89 к.) and a dash on 18 Oct; count 7 = 7; the list's slip (ledger 1908-09-03)"),
+    # RG 2026-11-04 (research-layer review, W8 C, "Yes, link to 2 Sep")
+    "balletproductions_1898-99_SP_p001__e008__d001": (
+        "1898-09-02", "printed «Очарованный лѣсъ … 1898 г.—сентября 21, 27. 1899 г.—мая 2. Всего—3 раза» (SP list p. 49, "
+        "scan-read 2026-11-04); 21 Sep is «Фераморсъ, оп.» alone at the Маріинскій; the Repertoire has the ballet on 2 Sep "
+        "with «Капризы бабочки» and «Волшебная флейта», which the list itself dates 2 Sep; 3 = 3; «21» a slip for «2»"),
 }
 
 

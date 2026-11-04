@@ -864,3 +864,37 @@ third entry, Преображенская 1908-09, has the same misfiling and a 
 1904-05 and Кшесинская 1907-08 (it stays in `rank` and the note), and moved into `rank` and the note for Преображенская 1908-09 (SP p. 91,
 printed after her date). Rebuilt; exactly 3 rows changed per table. No entry now has the honour in its credits line or only in its note;
 `rank` carries it 30 times. Noted, not changed: Преображенская 1908-09 «Фея куколь» (scan «куколъ»).
+
+## W8 C — the four list dates where the yearbook disagrees with itself (2026-11-04, RG "go ahead")
+
+**«Катарина», Moscow, 17 Jan 1896 (RG 2026-11-04, "Yes, count Катарина").** The Repertoire prints «Эсмеральда, бал. 500 р. 50 к.»;
+the ballet list puts «Катарина» on 17 Jan (Всего 3) and leaves it out of «Эсмеральда» (Всего 5); the staff list's role counts agree with
+the list (16 dancers «Катарина» ×3; «Эсмеральда» principals ×5). One row in `pipeline/research_corrections/performance_work_overrides.csv`:
+the performance keeps «Эсмеральда» as its verbatim title and counts under «Катарина». To apply with the rest of this group. Evidence
+`docs/eval/scan_audit/1895-96_MSK_1896-01-17_Katarina_evidence.png`.
+
+**«Очарованный лѣсъ», SP, 21 Sep 1898 (RG 2026-11-04, "Yes, link to 2 Sep").** The list prints «сентября 21, 27 … мая 2. Всего—3 раза»;
+21 Sep is «Фераморсъ, оп.» alone; the Repertoire has the ballet on 2 Sep beside «Капризы бабочки» and «Волшебная флейта», which the list
+itself dates 2 Sep; three performances in both; staff credits 3. No 1898-99 review. Added to `LIST_DATE_PRINT_TYPOS` as 2 Sep 1898 (the
+printed «21» stays in `production_date`, with the reason in `date_correction_note`). Evidence
+`docs/eval/scan_audit/1898-99_SP_1898-09-21_Ocharovanny_les_evidence.png`.
+
+**«Волшебная флейта», SP, 19 Dec 1901 (RG 2026-11-04, "Yes, supply it").** The Repertoire prints «Сильвія, бал. 1743 р. 45 к.» alone; the list
+dates both «Волшебная флейта» (Всего 4) and «Сильвія» (Всего 5) to 19 Dec; the Repertoire has «Волшебная флейта» only 3 times; the staff
+list credits eight dancers with it 4 times. A row in `pipeline/research_corrections/supplied_performances.csv` (adds_to_bill = yes, as for
+30 Nov 1903) adds it to the 19 Dec bill; the Repertoire's cell stays as printed. Evidence
+`docs/eval/scan_audit/1901-02_SP_1901-12-19_Volshebnaya_fleyta_evidence.png`.
+
+**«Шопеніана», SP, 9 Mar 1911 (RG 2026-11-04, "Keep as printed").** The list prints «марта 7, 9. Всего—4 раза»; the Repertoire's 9 Mar bill
+is «Эвника» + «Карнавалъ» (3 «Шопеніана» in all); no staff-list role credits exist for it, and the review is silent for both March nights.
+Kept as printed; `production_date` keeps the unmatched list date. Evidence `docs/eval/scan_audit/1910-11_SP_1911-03-09_Chopiniana_evidence.png`.
+
+All four are in `docs/eval/reconciliation/outcome_ledger.csv` (1895-96-11, 1898-99-12, 1901-02-19, 1910-11-16), so they reach
+`research.season_stat_gap` with links to their events.
+
+**W8 C applied (2026-11-04).** `build_research_model` and the review chain rebuilt on a copy, then production. Changes: the 17 Jan 1896
+performance counts as «Катарина» (verbatim «Эсмеральда» kept); «Волшебная флейта» supplied on 19 Dec 1901; three list dates now match
+(Катарина 17 Jan, Волшебная флейта 19 Dec, Очарованный лѣсъ → 2 Sep); four ledger rows in `research.season_stat_gap`. One side effect found
+and fixed in `match_review_mentions.py`: the overridden performance's printed «Эсмеральда» had been indexed as a quoted title of «Катарина»,
+making a 1910-11 review's «Эсмеральдой» ambiguous; a printed title that is another work's canonical title is now skipped. After the fix no
+review link changed.

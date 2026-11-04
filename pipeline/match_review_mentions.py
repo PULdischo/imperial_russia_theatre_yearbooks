@@ -598,6 +598,13 @@ def build_lexicon(db: Path, con=None) -> Lexicon:
         order by 1, 2""").fetchall():
         if str(wid) not in lex.work_meta or excerpt_shaped(printed):
             continue
+        # a printed title that IS another work's canonical title is that work's
+        # name, not a variant of this one: the 17 Jan 1896 Большой performance,
+        # printed «Эсмеральда», counts as «Катарина» (RG, 2026-11-04), and must
+        # not make a review's «Эсмеральдой» ambiguous between the two
+        own = key_of(printed).strip(" .,;:!?«»„“\"'")
+        if any(w != str(wid) for w in canon_index.get(own, ())):
+            continue
         # never a spelling that already names ANOTHER work: «Карменъ» printed
         # for one Жизель (RG's 16 Sep 1907 ruling) must not pull «Кармена»
         # away from Bizet's opera

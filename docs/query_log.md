@@ -27588,3 +27588,94 @@ Result: raw edits — Гельцеръ 1904-05 MSK and Кшесинская 1907
 note as printed after her date. Diff vs backup: exactly 3 rows in raw.person_entry, analysis.person_entry, research.person_appearance.
 Honour in credits 0; note-only 0; rank 30. person_link 0 shift blocks. (Production includes the other session's «Сцепа» rebuild, done before.)
 Aside, not changed: Преображенская 1908-09 credits store «Фея куколь» where the scan prints «Фея куколъ».
+
+## 2026-11-04 — List-vs-Repertoire date 1: «Катарина», Moscow, 17 Jan 1896 (third-source check)
+
+```sql
+SELECT production_id, list_title, printed_total, n_dates FROM research.production WHERE season='1895-96' AND city='Moscow' AND (list_title ILIKE '%Катарин%' OR list_title ILIKE '%Эсмеральд%');
+SELECT date, day_printed, month_printed, match_note FROM research.production_date WHERE production_id IN (<the two entries>);
+SELECT e.date, string_agg(p.verbatim_title,' + '), e.receipts_total_kopecks FROM research.event e JOIN research.performance p USING(event_id)
+WHERE e.season='1895-96' AND e.city='Moscow' AND (p.verbatim_title ILIKE '%Катарин%' OR p.verbatim_title ILIKE '%Эсмеральд%') GROUP BY ALL;
+SELECT e.family_name, cr.label, cr.role_name, cr.category_credit_count FROM raw.person_entry_credit cr JOIN raw.person_entry e USING(entry_id)
+WHERE e.page_id LIKE 'balletartists_1895-96_MSK%' AND (cr.label ILIKE '%Катарин%' OR cr.label ILIKE '%Эсмеральд%');
+-- review passages 1895-96 Moscow mentioning Катарина / 17-го января / counts
+```
+
+Result: list «Катарина» 13 Dec, 17 Jan, 28 Jan, «Всего—3 раза»; list «Эсмеральда» 14, 24 Jan, 1, 3 Feb (3-е д.), 7 Apr, «Всего—5 разъ».
+Repertoire: «Катарина» 13 Dec and 28 Jan only; «Эсмеральда» on 14, 17 (500 р. 50 к.), 24 Jan, 1 Feb, 7 Apr + act 3 on 3 Feb. Staff-list
+role credits: 16 dancers credited «Катарина» ×3 (Калмыкова as Катарина 3, Домашевъ, Хлюстинъ, Сампелевъ …); «Эсмеральда» principals ×5
+(Джури as Эсмеральда 5, Калмыкова Флеръ-де-Лисъ 5, Манохинъ, Хлюстинъ). The review names no date or count for either. List + staff
+credits agree on «Катарина» for 17 Jan; only the Repertoire prints «Эсмеральда» (scan confirmed). Evidence
+docs/eval/scan_audit/1895-96_MSK_1896-01-17_Katarina_evidence.png.
+
+## 2026-11-04 — List-vs-Repertoire date 2: «Очарованный лѣсъ», SP, 21 Sep 1898
+
+```sql
+SELECT production_id, list_title, printed_total FROM research.production WHERE season='1898-99' AND city='SP' AND list_title ILIKE '%Очарован%';
+SELECT p.list_title, d.date, d.match_note FROM research.production_date d JOIN research.production p USING(production_id)
+WHERE p.season='1898-99' AND p.city='SP' AND d.date IN ('1898-09-02','1898-09-21');
+SELECT e.date, string_agg(p.verbatim_title,' + '), e.receipts_total_kopecks FROM research.event e JOIN research.performance p USING(event_id)
+WHERE e.season='1898-99' AND e.city='SP' AND (p.verbatim_title ILIKE '%Очарован%' OR p.verbatim_title ILIKE '%Фераморс%') GROUP BY ALL;
+SELECT e.family_name, cr.label, cr.role_name, cr.category_credit_count FROM raw.person_entry_credit cr JOIN raw.person_entry e USING(entry_id)
+WHERE e.page_id LIKE 'balletartists_1898-99_SP%' AND cr.label ILIKE '%Очарован%';
+SELECT season, city, genre, count(*) FROM research.review_page WHERE season IN ('1897-98','1898-99','1899-00') GROUP BY ALL;
+```
+
+Result: list prints «сентября 21, 27. 1899 г.—мая 2. Всего—3 раза» (scan p. 49). Repertoire has «Очарованный лѣсъ» on 2 Sep (with
+«Капризы бабочки», «Волшебная флейта»), 27 Sep, 2 May = 3; 21 Sep is «Фераморсъ, оп.» only, 3603 р. 10 к. (scan p. 4). The list gives 2 Sep
+to «Капризы бабочки» and «Волшебная флейта» (both matched). Staff credits: Куличевская (Илька) 3, Легатъ 1-й (геній лѣса) 3. No 1898-99
+review pages exist. Reading: a date slip in the list, «21» for «2». Evidence docs/eval/scan_audit/1898-99_SP_1898-09-21_Ocharovanny_les_evidence.png.
+
+## 2026-11-04 — List-vs-Repertoire date 3: «Волшебная флейта», SP, 19 Dec 1901
+
+```sql
+SELECT production_id, list_title, printed_total FROM research.production WHERE season='1901-02' AND city='SP' AND (list_title ILIKE '%Волшебная флейт%' OR list_title ILIKE '%Сильві%');
+SELECT date, match_note FROM research.production_date WHERE production_id IN (<the two entries>);
+SELECT e.date, string_agg(p.verbatim_title,' + '), e.receipts_total_kopecks FROM research.event e JOIN research.performance p USING(event_id)
+WHERE e.season='1901-02' AND e.city='SP' AND (p.verbatim_title ILIKE '%Волшебная флейт%' OR p.verbatim_title ILIKE '%Сильві%') GROUP BY ALL;
+SELECT e.family_name, cr.label, cr.role_name, cr.category_credit_count FROM raw.person_entry_credit cr JOIN raw.person_entry e USING(entry_id)
+WHERE e.page_id LIKE 'balletartists_1901-02_SP%' AND (cr.label ILIKE '%Волшебная флейт%' OR cr.label ILIKE '%Сильві%');
+-- review passages 1901-02 SP: флейт / 19-го декабря
+```
+
+Result: list «Волшебная флейта» 19, 28 Dec 1901, 17 Apr, 5 May 1902, «Всего—4 раза»; list «Сильвія» 2, 5, 19, 30 Dec, 3 Feb, «Всего—5 разъ».
+Repertoire: «Сильвія» on all five; «Волшебная флейта» only 28 Dec, 17 Apr, 5 May (3); 19 Dec prints «Сильвія, бал. 1743 р. 45 к.» alone (scan
+p. 20). Staff credits: «Волшебная флейта» ×4 for 8 dancers (Павлова 2-я Лиза, Кусовъ Оберонъ, Чекетти маркизъ, Булгаковъ, Воронковъ 1-й,
+Гавликовскій, Гиллертъ, Лукьяновъ); «Сильвія» ×5 (Преображенская, Гердтъ, Легатъ 3-й …). The review names neither 19 Dec nor the ballet.
+List + staff credits: 4 performances incl. 19 Dec; the Repertoire omits it from the 19 Dec bill. Evidence
+docs/eval/scan_audit/1901-02_SP_1901-12-19_Volshebnaya_fleyta_evidence.png.
+
+## 2026-11-04 — List-vs-Repertoire date 4: «Шопеніана», SP, 9 Mar 1911
+
+```sql
+SELECT production_id, list_title, printed_total FROM research.production WHERE season='1910-11' AND city='SP' AND (list_title ILIKE '%Шопеніан%' OR list_title ILIKE '%Эвник%' OR list_title ILIKE '%Карнавал%');
+SELECT e.date, string_agg(p.verbatim_title,' + '), e.receipts_total_kopecks FROM research.event e JOIN research.performance p USING(event_id)
+WHERE e.season='1910-11' AND e.city='SP' AND (p.verbatim_title ILIKE '%Шопеніан%' OR p.verbatim_title ILIKE '%Эвник%' OR p.verbatim_title ILIKE '%Карнавал%') GROUP BY ALL;
+SELECT cr.label, cr.role_name, cr.category_credit_count FROM raw.person_entry_credit cr JOIN raw.person_entry e USING(entry_id)
+WHERE e.page_id LIKE 'balletartists_1910-11_SP%' AND (cr.label ILIKE '%Шопен%' OR cr.label ILIKE '%Эвник%' OR cr.label ILIKE '%Карнавал%');
+SELECT family_name FROM raw.person_entry WHERE page_id LIKE 'balletartists_1910-11_SP%' AND credit_summary_text ILIKE '%Шопен%';
+-- review passages 1910-11 SP: Шопен / 9-го марта
+```
+
+Result: list «Шопеніана» 24 Oct, 10 Nov 1910, 7, 9 Mar 1911, «Всего—4 раза»; «Эвника» (5) and «Карнавалъ» (3) both match 9 Mar. Repertoire
+has «Шопеніана» 3 times (24 Oct, 10 Nov, 7 Mar); 9 Mar prints «Эвника, бал. / Карнавалъ, пантомима-бал. 4653 р. 50 к.» (scan read
+2026-11-03). No staff-list entry credits «Шопеніана» (0 rows), so no role counts. The review says «Карнавалъ» was repeated «7-го и 9-го
+марта» and names «Шопеніана» only for 24 Oct (it is silent on 7 Mar too, where the Repertoire has it). No third source decides.
+Evidence docs/eval/scan_audit/1910-11_SP_1911-03-09_Chopiniana_evidence.png.
+
+## 2026-11-04 — W8 C applied (four list-vs-Repertoire dates): research + review chain rebuilt (copy, then production)
+
+```sql
+-- every table, production before vs test copy (EXCEPT ALL, diff.py); review tables also with ids excluded and candidate lists sorted
+SELECT performance_id, work_id, verbatim_title, performance_source FROM research.performance WHERE event_id IN ('repertoire_1895-96_pair014__s111','repertoire_1901-02_p018__s005');
+SELECT production_date_id, date, event_id, match_note, date_correction_note FROM research.production_date WHERE production_date_id IN (<3 ids>);
+SELECT work_id, canonical_title, appearance_count FROM research.work WHERE canonical_title IN ('Катарина','Эсмеральда');
+```
+
+Result: 17 Jan 1896 performance keeps verbatim «Эсмеральда», work «Катарина» (Эсмеральда 75 → 74, Катарина 15 → 16); 19 Dec 1901 gains a
+supplied «Волшебная флейта» (n_works 1 → 2); production_date now matched for Катарина 17 Jan, Волшебная флейта 19 Dec and Очарованный лѣсъ
+(printed 21 Sep, matched on 2 Sep with date_correction_note; production_work n_matched_dates 2 → 3); season_stat_gap +4 rows, gap_event +5
+links. First test run: one review mention changed — a 1910-11 SP «Эсмеральдой» went from quoted-exact to ambiguous, because the overridden
+performance's printed title was indexed as a quoted title of «Катарина». Fixed in match_review_mentions.py (a printed title that is another
+work's canonical title is skipped); rerun: review tables identical to production. Production after the rebuild equals the tested copy;
+person_link 0 shift blocks.
