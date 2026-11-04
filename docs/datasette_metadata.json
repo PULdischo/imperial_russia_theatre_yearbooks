@@ -1,0 +1,118 @@
+{
+  "title": "Imperial Russian Theatre Yearbooks",
+  "description": "A research dataset built from the Ежегодникъ Императорскихъ театровъ, seasons 1890-91 to 1910-11: the daily Repertoire of the six Imperial theaters (events, works, receipts), the staff lists (dancers, musicians, administrators, production and school staff, graduates), the ballet productions lists, the printed season totals, and the season reviews. Pre-1918 spelling is kept as printed. Every row can be traced to the scanned page it came from: see source_page, and the note and basis columns for the decisions behind a value.",
+  "databases": {
+    "research_dataset": {
+      "tables": {
+        "source_page": {
+          "description": "One row per scanned page that any row in this dataset comes from: the source file, the page in it and the printed page or folio. Events join on page_id; other tables join on the part of their id before \"__\"."
+        },
+        "theater": {
+          "description": "The six Imperial theaters: Маріинскій, Александринскій and Михайловскій in St Petersburg; Большой, Малый and Новый in Moscow."
+        },
+        "work": {
+          "description": "One row per work (ballet, opera, play, concert item and so on), with one canonical title and genre. Printed variants of a title sit under one work; title_note records each variant and decision. A work known only from the reviews has work_source 'review'.",
+          "sort": "canonical_title"
+        },
+        "person": {
+          "description": "One row per identified person: dancers, musicians, administrators, production and school staff, graduates, and creators named in the ballet lists or reviews. One canonical name per person; the name as each year prints it is in person_appearance.",
+          "sort": "display_name"
+        },
+        "event": {
+          "description": "One row per printed Repertoire cell: one theater, date and session (morning, evening or unspecified). An event can list several works (see performance). Receipts are recorded here only, so summing receipts never double-counts. Counts of events include no_performance (a dash) and not_captured rows unless filtered on event_status.",
+          "sort_desc": "date"
+        },
+        "performance": {
+          "description": "One work performed within an event, in printed order. verbatim_title is the title as printed; work_id the work it counts as. Has no receipts column on purpose: see event. performance_source says when a row was supplied from another part of the yearbook."
+        },
+        "events_with_dancers": {
+          "description": "Events with dancers in them: any ballet on the bill, or an opera or play known to include dancers. The whole bill is kept, so receipts stay matched to what was performed."
+        },
+        "events_with_dancers_performance": {
+          "description": "Every performance of the events in events_with_dancers, including the non-ballet items on the same bill; filter on discipline or includes_dance for the danced items."
+        },
+        "person_appearance": {
+          "description": "One row per person per season's staff list: the name as printed that year, list, city, heading, rank, title, instrument or subject, the tenure note and the printed performance tally, with the scan page and printed page."
+        },
+        "person_tenure": {
+          "description": "One row per run (a person in one list and city across the seasons they appear): the chosen start of service and how it was chosen, beside every start date the lists printed."
+        },
+        "person_tenure_note": {
+          "description": "Printed «Оставилъ службу …» statements that later lists contradict (the person is listed again), kept beside the reading used."
+        },
+        "service_period": {
+          "description": "One row per printed service period of each staff-list entry: start and end as printed and as dates, with their precision, and how the period ended."
+        },
+        "person_assignment": {
+          "description": "Temporary secondments and attachments printed in an entry (прикомандированъ, командированъ): where to, and from when to when. They do not break the tenure."
+        },
+        "person_performance_tally": {
+          "description": "The performance tally printed under a dancer's (or musician's) entry, one row per item: the ballet or opera, the role, and how many times. The verbatim line is person_appearance.credit_summary_text."
+        },
+        "person_death": {
+          "description": "Every printed death of a person, one row per source (staff list «†», obituary, death notice). Sources that disagree are both kept."
+        },
+        "set_design": {
+          "description": "New sets credited to a named decorator, one row per set, from the 1892-93 staff list; work_id is the work the set was for."
+        },
+        "production": {
+          "description": "One row per entry in a ballet productions list (списокъ пьесъ), per season and city: the printed title and description, premiere mark, printed total, and the work it is; work_basis says how the work was chosen."
+        },
+        "production_work": {
+          "description": "The work of each productions-list entry, with how many of its printed dates match a Repertoire performance."
+        },
+        "production_credit": {
+          "description": "Creators named in a productions-list description (author, music, choreography, sets …), as printed, linked to a person where identified."
+        },
+        "production_date": {
+          "description": "One row per date a ballet productions list prints, with the Repertoire event and performance it names (match_note) and any correction to a misprinted date (date_correction_note)."
+        },
+        "season_stat_page": {
+          "description": "One row per printed season-totals page: its heading as printed, footnote mark, format and printed page."
+        },
+        "season_stat_line": {
+          "description": "One row per line of a printed season-totals page (venue, part, subtotal or category), with its count and receipts as printed. Season aggregates: they do not join to events."
+        },
+        "season_stat_footnote": {
+          "description": "The footnotes of the season-totals pages, verbatim, with the city each one belongs to."
+        },
+        "season_stat_check": {
+          "description": "For each season and city, the printed totals beside the same figures counted from the Repertoire events, with the differences. A checksum on the Repertoire, not a correction: see season_stat_gap for what explains each difference."
+        },
+        "season_stat_gap": {
+          "description": "The reconciliation ledger: one row per difference between the season totals, the Repertoire, the ballet lists and the reviews, with its outcome (the yearbook's own disagreement, a correction, a classification …), evidence and note."
+        },
+        "season_stat_gap_event": {
+          "description": "The events each reconciliation-ledger row names (gap_id to event_id)."
+        },
+        "review_page": {
+          "description": "One row per page of the season reviews (ballet, opera or general), with season, city and printed folio."
+        },
+        "review_passage": {
+          "description": "The text of the season reviews, one row per passage (paragraph, cast list, caption, footnote …), as transcribed and scan-corrected. Every review_* row cites a block_id here."
+        },
+        "review_mention": {
+          "description": "Every person, work, theater, role or dance name found in the review text, with its position in the passage and the person or work it is linked to. Names shared by several people are left unlinked, with their candidates."
+        },
+        "review_assertion": {
+          "description": "Cast statements in the reviews: this performer danced this role in this work, with the date where printed and the Repertoire event it matches (event_id, event_match_note)."
+        },
+        "review_credit": {
+          "description": "Creators and craftspeople the reviews credit (author, music, choreography, sets, costumes, machinery, wigs …), as printed, linked to a person and work where identified."
+        },
+        "review_dance": {
+          "description": "Dance numbers named in the ballet reviews, one row each time a review prints one, with the work it belongs to."
+        },
+        "review_dance_performer": {
+          "description": "The dancers of each review_dance number, in printed order, linked to a person where identified."
+        },
+        "review_dance_composer": {
+          "description": "Composers or arrangers the reviews name for a dance number."
+        },
+        "review_solo": {
+          "description": "Instrument solos the ballet reviews name: the instrument and the player."
+        }
+      }
+    }
+  }
+}

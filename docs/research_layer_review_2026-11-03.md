@@ -925,3 +925,12 @@ is the misprint, so it had taken «Сцепа изъ бал. Корсаръ» as
 «Сцена изъ бал. Корсаръ» (verbatim kept on the performance, reason in title_note). Not changed, for RG one at a time: the same applies to
 «Agence dramatiqus» and «Бокаччіо» (misprints, titled by them), and 11 works titled by a printing with its genre/subtitle attached. For Andy:
 the local research_dataset.sqlite (3 Nov) is stale — rebuild; the Cloud Run metadata describes 6 of 35 tables.
+
+## Site and table descriptions for the published dataset (2026-11-04, RG "okay go for it", "Commit as is")
+
+`docs/datasette_metadata.json` (tracked; no plugins block, so no password hash in git): the site title and description (now 1890-91 –
+1910-11, all five sources, traceability) and a description for each of the 35 exported tables. The old publish file
+(`outputs/full_run/datasette_metadata_cloudrun.json`, 2026-08-21) described 6 and sorted `event` by `event_date`, a column that does not
+exist; in Datasette 1.0a37 that makes the `event` table return an error (400). The draft sorts by `date`. Checked in Datasette 1.0a37:
+every table page opens and shows its description. `pipeline/merge_datasette_metadata.py` copies title, description and tables into the
+publish file and keeps its plugins block (tested on a copy; the real file untouched). For Andy at the next publish.
