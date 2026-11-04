@@ -26846,3 +26846,15 @@ Result: research.work 2,952 -> 2,941 rows (+ entry_kind, art_form, art_form_basi
 substance (two Паяцы; M-r Choufleuri x2, Le beau Dunois x1, La chanson de Fortunio x3 play -> operetta; Малый 19 Feb 1911 Апоѳеозъ. concert ->
 tableau); event 7 (genre_families / bill text of those); events_with_dancers 1 (1899-01-23 gala bill text «Палцы [др.]» -> «Паяцы»); receipts total
 unchanged; every other research table identical. Check: 0 disagreements.
+
+## 2026-11-03 — Pre-promotion test: rebuild from raw on a copy of current production (merged with main through 0a25d78)
+
+```sql
+-- every table in raw/analysis/entities/research, EXCEPT ALL both ways, scratch rebuild v. copy of outputs/full_run (19:14)
+```
+
+Result: raw.event_entry_performance 4 (Паяцы x2, Chéri! x2); research.performance 67 (55 work_id only; 12 in substance: Паяцы x2, French operettas
+x6 play -> operetta, Monologues + Scènes et monologues play -> recitation, Малый Апоѳеозъ. concert -> tableau, Chéri! title x2); event 9;
+events_with_dancers 1 (1899 gala bill); research.work 2,950 -> 2,938 (+ entry_kind/art_form/art_form_basis); entities.work / work_link /
+work_id_crosswalk (merges); research.person_tenure_note +3 (main 0a25d78, People session). Receipts total unchanged. Check: 0 disagreements.
+Found during the test: the «Бокаччіо» alias needs its override under the aliased title too (row added).
