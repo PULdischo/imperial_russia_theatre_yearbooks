@@ -569,3 +569,10 @@ changed, 0 person_link shifts.
 work the Repertoire prints now falls back to performances supplied from another part of the yearbook, same city and date,
 under the list's title (or its parent's). The entry now has work «Дочь фараона» (from the 13 Feb 1905 corps de ballet
 benefit, supplied from the list and the review on RG's 2026-10-12 ruling); every list entry has a work. Nothing else changed.
+
+**L3 — traceable to the printed page (RG 2026-11-04: "As long as someone looking at the data can trace its source. In the
+case of this Pharaoh's Daughter performance, I'd want to make sure it could be traced back to the page number of the season
+review.").** The supplied «Дочь фараона» row (13 Feb 1905) cited the list and the review only by internal id. Its
+`supplied_performances.csv` basis now gives the list's printed page (p. 138, ForUpload_1904-05_Spisok_BalletProductionsSP.pdf)
+and the review's folio (SP ballet review f. 117, with the sentence quoted), ids kept. The other four supplied performances
+already cite review folios. Rebuilt on a copy, then production: one `research.performance` note changed.

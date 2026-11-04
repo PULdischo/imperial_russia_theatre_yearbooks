@@ -26928,3 +26928,14 @@ SELECT count(*) FROM research.production WHERE work_id IS NULL;
 
 Result: one entry changed, balletproductions_1904-05_SP_p000__e007 «Дочь Фараона»: work NULL -> «Дочь фараона», 1 matched
 work (production_work +1 row). Entries without a work: 0. Every other table identical; 0 person_link shifts.
+
+## 2026-11-04 — Research-layer review L3: do the supplied performances cite printed pages?
+
+```sql
+SELECT performance_id, performance_source, performance_source_note FROM research.performance WHERE performance_source LIKE 'supplied:%';
+SELECT printed_folio FROM raw.review_page WHERE page_id = 'review_1904-05_SP_ballet_p012';
+SELECT printed_page_number, source_file FROM research.production WHERE production_id = 'balletproductions_1904-05_SP_p000__e007';
+```
+
+Result: 5 supplied performances; 4 cite review folios (ff. 110, 227/233/234, 154). The 1904-05 «Дочь фараона» row cited
+only ids; the review page is f. 117, the list entry p. 138. Note updated; after the rebuild only that performance row differs.
