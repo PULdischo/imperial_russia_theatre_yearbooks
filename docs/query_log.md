@@ -27555,3 +27555,36 @@ again after the link row. Diff: 1 performance (verbatim_title), 1 work (canonica
 «Корсаръ», art_form ballet unchanged); 0 work_id changes; all other research tables identical; receipts 3,223,088,581; 0 shift blocks.
 First pass (alias only) had dropped the excerpt link and art form -- caught in the diff and fixed with the link row.
 
+## 2026-11-04 — People item 3 (Кшесинская 2-я 1905-06 / Moscow 1906-07) + correction: the honour misfiled in credit_summary_text
+
+```sql
+-- on the pre-fix backup copy (production locked by another session's rebuild)
+SELECT a.season, a.city, a.heading_path, a.source_file, a.scan_page, a.printed_folio FROM research.person_appearance a JOIN research.person p USING(person_id)
+WHERE p.display_name LIKE 'Кшесинская 2-я%' AND a.season BETWEEN '1903-04' AND '1907-08';
+SELECT family_name FROM raw.person_entry WHERE page_id LIKE 'balletartists_1905-06_SP%' AND family_name LIKE 'К%';
+SELECT page_id, family_name, rank_or_title, left(credit_summary_text,70) FROM raw.person_entry
+WHERE credit_summary_text ILIKE '%аслужен%' OR credit_summary_text ILIKE '%Императорскихъ театровъ%';
+```
+
+Result: item 3 — both are the yearbook's own: the 1905-06 SP list runs 42. Кустереръ, 43. Кускова, 44. Кякштъ (scan p. 3), with no
+Кшесинская on any page; the 1906-07 Moscow list prints «50. Кшесинская, Матильда Феликсовна (съ 1 іюня 1890 г.). Заслуженная артистка
+Императорскихъ театровъ.» with «Тщетная предосторожность (Лиза—1)» (p. 52). Data matches print; no change.
+CORRECTION to the earlier item-2 entry: the two "missed" honours were not missing — the raw had them misfiled at the start of
+credit_summary_text (Гельцеръ 1904-05, Кшесинская 1907-08); the earlier query looked only at rank and tenure_note_text. After the 8-entry
+fix those two now carry it twice (note + credits). A third entry has the same misfiling: Преображенская 1908-09 (SP p. 91; the scan prints
+the honour after her date, «…(съ 1 іюня 1899 г.). Заслуженная артистка Императорскихъ театровъ.»), rank blank. Not yet changed.
+
+## 2026-11-04 — Misfiled honour moved out of credit_summary_text for 3 entries (RG "Yes, clean up the 3"): rebuild checked
+
+```sql
+-- every table, backup (pre-edit) vs rebuilt production (EXCEPT ALL, diff.py)
+SELECT count(*) FROM raw.person_entry WHERE credit_summary_text ILIKE '%аслужен%';
+SELECT count(*) FROM research.person_appearance WHERE tenure_note_text ILIKE '%аслужен%' AND coalesce(rank,'') NOT ILIKE '%аслужен%';
+SELECT count(*) FROM research.person_appearance WHERE rank ILIKE '%аслужен%';
+```
+
+Result: raw edits — Гельцеръ 1904-05 MSK and Кшесинская 1907-08 SP: the misfiled honour removed from the start of credit_summary_text
+(already in rank + note since the 8-entry fix); Преображенская 1908-09 SP: removed from the credits, added to rank_or_title and to the
+note as printed after her date. Diff vs backup: exactly 3 rows in raw.person_entry, analysis.person_entry, research.person_appearance.
+Honour in credits 0; note-only 0; rank 30. person_link 0 shift blocks. (Production includes the other session's «Сцепа» rebuild, done before.)
+Aside, not changed: Преображенская 1908-09 credits store «Фея куколь» where the scan prints «Фея куколъ».

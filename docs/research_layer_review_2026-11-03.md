@@ -851,3 +851,16 @@ only in the tenure note and 2 had it in print but nowhere in the data. Scan chec
 (`rank_or_title` on all 8; the printed sentence added to the note for Гельцеръ 1904-05 Moscow p. 57 and Кшесинская 1907-08 SP p. 17);
 rebuilt with rebuild_after_raw_edit.sh; exactly 8 rows changed per table. Evidence `docs/eval/scan_audit/Zasluzhennaya_honour_evidence.png`.
 Only these seven holders were checked; a corpus sweep for other missed honours was not done.
+
+**Item 3 — Кшесинская 2-я 1905-06 / Moscow 1906-07 (closed, no change).** Both are the yearbook's own: the 1905-06 Petersburg list has
+no entry for her (43. Кускова is followed by 44. Кякштъ; no Кшесинская on any page), and the 1906-07 Moscow list prints her as no. 50 with
+the honour and «Тщетная предосторожность (Лиза—1)» (p. 52). Read on the scans by Claude.
+
+**Correction to item 2 (2026-11-04).** The two entries reported as "missed" (Гельцеръ 1904-05, Кшесинская 1907-08) had the honour stored,
+misfiled at the start of `credit_summary_text`; I had looked only at `rank` and the note. Adding it to their notes left it there twice. A
+third entry, Преображенская 1908-09, has the same misfiling and a blank `rank`. Cleanup awaits RG.
+
+**Item 2 cleanup (RG 2026-11-04, "Yes, clean up the 3").** The misfiled honour was removed from `credit_summary_text` for Гельцеръ
+1904-05 and Кшесинская 1907-08 (it stays in `rank` and the note), and moved into `rank` and the note for Преображенская 1908-09 (SP p. 91,
+printed after her date). Rebuilt; exactly 3 rows changed per table. No entry now has the honour in its credits line or only in its note;
+`rank` carries it 30 times. Noted, not changed: Преображенская 1908-09 «Фея куколь» (scan «куколъ»).
