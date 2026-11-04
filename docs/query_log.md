@@ -26858,3 +26858,11 @@ x6 play -> operetta, Monologues + Scènes et monologues play -> recitation, Ма
 events_with_dancers 1 (1899 gala bill); research.work 2,950 -> 2,938 (+ entry_kind/art_form/art_form_basis); entities.work / work_link /
 work_id_crosswalk (merges); research.person_tenure_note +3 (main 0a25d78, People session). Receipts total unchanged. Check: 0 disagreements.
 Found during the test: the «Бокаччіо» alias needs its override under the aliased title too (row added).
+
+## 2026-11-03 — PROMOTED to outputs/full_run (RG "Yes, promote")
+
+Backup outputs/full_run/db_backup_artform_2026-11-03/ (DB, research_dataset.sqlite, the 3 raw pages). Raw fixes: docs/eval/artform_raw_fixes_2026-11-03.py.
+Rebuilt from raw (rebuild_after_raw_edit.sh steps) with branch claude/work-art-form-7f2943 merged with main through 0a25d78; production = tested copy,
+every table identical. research_dataset.sqlite rebuilt locally (not republished): work entry_kind/art_form — work: drama 2,257, opera 319, ballet 252,
+operetta 42, concert 11, unknown 4; programme item 47; ceremonial 4; unknown 2. Discipline/art_form check: 0. Other sessions (People entities audit,
+Research layer review) paused for the write and told "done".
