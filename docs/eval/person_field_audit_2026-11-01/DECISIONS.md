@@ -179,3 +179,10 @@ Still to put to RG: and the listed-after-leaving cases (Иванова 2-я, Л�
   the 1900-01 Moscow production list back-fills three deaths the 1898-1900 lists missed (Краюшкинъ 20 Nov 1898, Байкова 26 Mar 1899,
   Барановъ 30 Sep 1899); dates kept as printed, tenure notes for all three (person_tenure_discrepancies.csv).
   Side finding: merge candidates 18 (Иванова 1-я Александровна/Адріановна) and 19 (Джури Адель/Аделина Антоновна) logged.
+
+- Scan-check 2026-11-04 (raw-to-research slide; scans read by Claude, full-res PDF images): Бекефи and Легатъ FIXED (RG "Yes, fix them";
+  B14_bekefi_legat_spellings_2026-11-04.csv): print reads «Бекефи» in 1898-99 p.80, 1899-00 p.77, 1902-03 p.73, 1903-04 p.74, 1905-06 p.20
+  (stored «Бекеффи» x2, «Бекефъ», «Бекефь», «Бекефі» were misreads), and «Легатъ 2-я» (Вѣра) in 1890-91 p.61 (stored «Легать 2-я»).
+  6 field edits; rebuilt with rebuild_after_raw_edit.sh after the research-layer session confirmed it was clear. Diff vs backup
+  (outputs/full_run/db_backup_bekefi_legat_2026-11-04): only the 6 raw rows changed; person_link, research person/work/event/appearance
+  identical; 0 shift blocks. All 16 Бекефи entries -> 08677c43. Sqlite export not rebuilt. New identity question: uncertain_person_identities.md #56.

@@ -27063,6 +27063,35 @@ SELECT count(*), count(work_basis) FROM research.production; SELECT count(*) FRO
 Result: source_page 2,810; 0 events / appearances / list entries / review passages / review pages without a source page; all
 files present under pdf/. work_basis 628/628. Alias notes on 54 works (76). Old columns of event, production, work unchanged.
 
+## 2026-11-04 — Slide diagram check: which Yearbook sources link to which research tables
+
+```sql
+SELECT table_name FROM information_schema.tables WHERE table_schema='research';
+SELECT column_name FROM information_schema.columns WHERE table_schema='research' AND table_name IN ('production_date','season_stat_line','production','work','person_appearance');
+SELECT art_form, count(*) FROM research.work GROUP BY 1 ORDER BY 2 DESC;
+```
+
+Result: production_date carries event_id/performance_id (productions lists link to events); season_stat_line has no event
+key (sits beside events). research.work art_form: drama 2,257, opera 319, ballet 251, NULL 57, operetta 42, concert 11.
+
+## 2026-11-04 — Slide diagram (raw → research): counts and the Бекефи example
+
+```sql
+SELECT count(*) FROM raw.person_entry;                                      -- 23,980
+SELECT count(*), count(DISTINCT person_id) FROM entities.person_link;       -- 23,980 / 2,521
+SELECT person_source, count(*) FROM research.person GROUP BY 1;             -- roster 2,521, production_list 86, review 12
+SELECT count(*) FROM raw.event_entry_performance;                           -- 30,831
+SELECT count(*) FROM research.work WHERE work_source = 'repertoire';        -- 2,917
+-- ballet artists with most distinct transcribed surname spellings (person_link -> raw.person_entry)
+SELECT a.season, e.family_name, a.city FROM entities.person_link l JOIN raw.person_entry e USING (entry_id)
+  JOIN research.person_appearance a ON a.appearance_id = l.entry_id
+ WHERE l.person_id = '08677c43-460c-404d-bc2a-5bc01cff3b4c' AND e.entity_type = 'BalletArtists' ORDER BY 1;
+```
+
+Result: Бекефи, Альфредъ Ѳедоровичъ — 16 BalletArtists entries, SP, 1890-91 to 1905-06: Бекефи ×11, Бекеффи ×2
+(1898-99, 1902-03), Бекефъ (1899-00), Бекефь (1903-04), Бекефі (1905-06). Variant forms not scan-checked.
+(research.event 32,813 vs raw.event_entry 29,966 not used: research adds not_captured/no_performance rows.)
+
 ## 2026-11-04 — R5 step 1: review text corrections + line-join rule (test on copies, then production)
 
 ```sql
@@ -27077,6 +27106,26 @@ Result: person mentions 21,703 -> 21,805, linked 17,703 -> 17,802; work-linked 3
 2,226 -> 2,227. 0 changed / 0 lost person links; 10 assertions re-keyed (role text gained its hyphen). Unknown surfaces 727 -> 666
 (1,116 -> 1,025 occurrences). Production equal to the tested copy in every review table.
 
+Scan check (checked by Claude, 2026-11-04, full-res images embedded in pdf/Spiski_BalletArtists/ForUpload_<season>_Spisok_BalletArtistsSP.pdf):
+all five variant forms are transcription errors — the print reads «Бекефи» in 1898-99 (p. 80, no. 8; raw «Бекеффи»),
+1899-00 (p. 77, no. 9; raw «Бекефъ»), 1902-03 (p. 73, no. 9; raw «Бекеффи»), 1903-04 (p. 74, no. 9; raw «Бекефь»),
+1905-06 (p. 20, no. 8; raw «Бекефі»). Not fixed in raw; the slide example must not present them as printed spellings.
+
+## 2026-11-04 — Slide example replaced: Легатъ, Евгенія Густавовна
+
+```sql
+SELECT a.season, e.family_name, e.list_number, a.source_file, a.scan_page, a.printed_folio
+  FROM entities.person_link l JOIN raw.person_entry e USING (entry_id)
+  JOIN research.person_appearance a ON a.appearance_id = l.entry_id
+ WHERE l.person_id = '2a653139-31eb-48a7-becd-4eeaf88dec56' ORDER BY 1;   -- 18 rows, SP, 1890-91 to 1907-08
+```
+
+Result: Легатъ 3-я (1890-91), 2-я (1891-92–1895-96), plain (1896-97–1906-07), 1-я (1907-08). Scan check (checked by
+Claude) at each boundary — 1890-91 p. 61 no. 65 «3-я» (Марія 1-я left 1 May 1891, Вѣра 2-я); 1891-92 p. 52 no. 66 «2-я»
+(Вѣра 1-я); 1895-96 p. 63 no. 65 «2-я» (Вѣра 1-я left 1 Sep 1896); 1896-97 p. 59 no. 60 plain; 1906-07 p. 18 no. 50 plain;
+1907-08 p. 17 no. 47 «1-я» (Александра Павловна 2-я from 1 Jun 1907; Евгенія left 1 Jun 1908). All match raw.
+Interior seasons not scan-checked. (DB read from a copy: full_run .duckdb was locked by another process.)
+
 ## 2026-11-04 — R5 step 2 group A: review person variants (test, old-cast check, production)
 
 ```sql
@@ -27090,6 +27139,36 @@ Result (first test): 54 new links, 4 in blocks with quoted old casts; 3 wrong (1
 1894-95 SP, earlier women linked to Владиміръ Кеммереръ), 1 right (Гиллердтъ in the 1905 cast). After dropping the Кемереръ variant
 and unlinking the 1865 Гердъ: mentions linked 17,802 -> 17,853, assertions 2,442 -> 2,452, dance performers 2,944 -> 2,965; 0
 links lost or changed; unknown surfaces 666 -> 634 (1,025 -> 980 occurrences). Production equal to the tested copy.
+
+## 2026-11-04 — Slide: all Легатъ women in the SP ballet lists (copy of production; production locked by another session)
+
+```sql
+SELECT p.display_name, a.city, e.entity_type, string_agg(a.season||':'||e.family_name, ', ' ORDER BY a.season)
+  FROM research.person p JOIN entities.person_link l USING (person_id) JOIN raw.person_entry e USING (entry_id)
+  JOIN research.person_appearance a ON a.appearance_id = l.entry_id
+ WHERE p.canonical_family_name LIKE 'Легатъ%' AND p.canonical_first_name IN ('Марія','Вѣра','Евгенія','Александра','Антонина') GROUP BY ALL;
+SELECT ... FROM raw.person_entry WHERE family_name LIKE 'Лега%' AND entity_type = 'BalletArtists' AND season >= '1907-08';
+SELECT ... FROM raw.person_entry WHERE first_name LIKE 'Антонина%' AND patronymic LIKE 'Савел%';
+```
+
+Result: Марія Семеновна 1-я 1890-91; Вѣра Густавовна 2-я 1890-91 (raw «Легать», scan reads «Легатъ» — misread), 1-я 1891-96;
+Евгенія (as above); Александра Павловна 2-я 1907-08 (Graduates 1906-07); Антонина Савельевна plain 1909-10, 1910-11 «(съ 25 апрѣля 1906 г.)».
+Scan (checked by Claude): 1908-09 SP p. 90 has no Легатъ woman (no. 44 Клечковская -> no. 45 Леонова 1-я); 1909-10 p. 92 no. 43
+«Легатъ, Антонина Савельевна (съ 25 апрѣля 1906 г.)». Open identity question for RG: 1908-09 «Чумакова 2-я, Антонина Савеліевна
+(съ 1 іюня 1908 г.)» (person adc86981) — same woman before marriage? Start dates differ; not linked.
+
+## 2026-11-04 — Бекефи/Легатъ raw fix applied to production (B14) and checked
+
+```sql
+-- production vs outputs/full_run/db_backup_bekefi_legat_2026-11-04 (attached)
+SELECT * FROM raw.person_entry EXCEPT SELECT * FROM b.raw.person_entry;            -- the 6 intended rows only
+SELECT entry_id, person_id FROM entities.person_link EXCEPT SELECT ... FROM b.entities.person_link;   -- 0
+SELECT * FROM research.person EXCEPT SELECT * FROM b.research.person;             -- 0 (also work, person_appearance: 0)
+SELECT count(*), count(wikidata_qid) FROM research.person; SELECT sum(receipts_total_kopecks) FROM research.event;
+```
+
+Result: research.person 2,619 / 174 QIDs; receipts 3,223,088,581; work 2,937; performance 30,835; event 32,813; appearances 23,980 —
+all as before. Бекефи: 16 entries, all «Бекефи». check_person_link_alignment: 0 shift blocks.
 
 ## 2026-11-04 — R5 group B: «Беккъ»/«Бекль» candidates (staff lists and linked review mentions for Бекъ / Бекке)
 
@@ -27107,6 +27186,22 @@ troupe every season 1892-93–1910-11 (and teaches dance at the Moscow school fr
 orchestra 1890-91–1895-96 only. «Бекъ» is already linked in 1905-06 Moscow reviews (f. 210, 224, 225). Evidence sheet
 docs/eval/scan_audit/R5_groupB_Bekk_Bek_evidence.png.
 
+## 2026-11-04 — Candidate ballets for a "one work, many productions" slide
+
+```sql
+-- per ballet work (art_form='ballet', not an excerpt): performances, distinct printed titles, cities, season span,
+-- excerpt works (excerpt_of_work_id), production-list entries / premieres, review credits, review cast statements
+SELECT ... FROM research.work w LEFT JOIN research.performance/event, research.production, research.review_credit, research.review_assertion ...;
+-- detail for Донъ-Кихотъ, Лебединое озеро, Конекъ-горбунокъ, Спящая красавица: titles by city, premieres, excerpts, list seasons
+SELECT season, city, list_title, n_dates, printed_page_number, description_text FROM research.production WHERE work_id = <Донъ-Кихотъ>;
+```
+
+Result: Конекъ-горбунокъ 234 perf / 6 titles / 19 excerpts; Спящая красавица 205 / 7 exc, Moscow premiere 1898-99; Лебединое озеро 127 /
+8 exc, SP list «2-е д.» 1893-94 then full 1894-95; Донъ-Кихотъ 80 perf (Moscow 49 from 1890-91, SP 31 from 1901-02), 9 printed title
+forms, 6 excerpts, 108 review credits, 132 cast statements. Its lists: Moscow 1890-93 «Балетъ въ 4 д. и 8 карт., соч. М. И. Петипа»;
+1900-01 «Донъ-Кихотъ Ламанчскій», «Большой балетъ въ 4 д. и 7 карт., съ прологомъ, либретто М. И. Петипа»; 1901-02 Moscow and SP
+«поставленъ А. А. Горскимъ»; from 1908-09 «музыка Минкуса и другихъ авторовъ». Not scan-checked.
+
 ## 2026-11-04 — R5 group B: «Салинъ» (1905-06 Moscow f. 213) candidates
 
 ```sql
@@ -27123,6 +27218,27 @@ Result: the passage is the «Дочь фараона» revival cast; stored text
 Санинъ, Александръ Акимовичъ = SPb school staff 1902-04 only. Силинъ, Сергѣй Михайловичъ = Moscow administration every season
 1890-91–1910-11. Within edit distance 2 in Moscow 1904-07: Бакинъ 1-й/2-й/3-й and Гулинъ 1-й/2-й (ballet), Баулинъ (musician),
 Силинъ. No other Moscow review mention has a role «Нил-». Evidence docs/eval/scan_audit/R5_groupB_Salin_evidence.png.
+
+## 2026-11-04 — Two ballet slides (Спящая красавица, Донъ-Кихотъ): data + productions-list scan check
+
+```sql
+-- per work (canonical_title, art_form='ballet', not an excerpt):
+SELECT e.season, e.city, count(*) FROM research.performance p JOIN research.event e USING (event_id) WHERE p.work_id = ? GROUP BY ALL;
+SELECT verbatim_title, count(*) FROM research.performance WHERE work_id = ? GROUP BY 1;
+SELECT w.canonical_title, count(p.performance_id) FROM research.work w LEFT JOIN research.performance p ON p.work_id = w.work_id
+ WHERE w.excerpt_of_work_id = ? GROUP BY 1;
+SELECT season, city, list_title, n_dates, is_premiere, printed_page_number, description_text FROM research.production WHERE work_id = ?;
+SELECT count(*) FROM research.review_credit WHERE work_id = ?;  SELECT count(*) FROM research.review_assertion WHERE work_id = ?;
+SELECT season, count(*) FILTER (WHERE city='SP'), count(*) FILTER (WHERE city='Moscow') FROM research.production GROUP BY 1;
+```
+
+Result: Спящая красавица 205 performances (SP 121 from 1890-91, Moscow 84 from 1898-99), 2 title forms, 7 excerpt forms / 12 perf,
+29 list entries, 49 review credits, 74 cast statements. Донъ-Кихотъ 80 (Moscow 49: 1890-93 then 1900-10; SP 31 from 1901-02), none
+1893-94..1899-00, 6 title forms (not 9: the earlier figure counted forms per city), 6 excerpt forms / 7 perf, 17 list entries, 108
+credits, 132 cast statements. No productions list in the database for 1905-06 or 1906-07 (either city). Scan check of 8 list entries
+(Claude helper, full-res PDF images): all descriptions match raw letter for letter. Moscow 1898-99 SB entry marked only «*10.» (key not
+on the page); Moscow 1900-01 DQ names no stager; «поставленъ А. А. Горскимъ» first in 1901-02 (both cities), neither marked new;
+1901-02 Moscow DQ prints «сентябри» (genuine_print_typos.md). Slides drawn by docs/figures/make_ballet_slides.py (counts read live).
 
 ## 2026-11-04 — R5 group B: «Сировъ» (1902-03 Moscow f. 233, Робертъ Пуспенъ in «Эсмеральда») candidates
 
@@ -27324,6 +27440,23 @@ nothing else. Assertions +1 (Хита). review_dance_performer: Danse Espagnole 
 chased). review_passage: one text change («Па-щенко»). Production after the rebuild equals the tested copy (0 differences in all six
 tables). Person mentions linked 17,866 of 21,870; assertions 2,684; unknown surfaces 630 → 623 (969 occurrences). person_link: 0 shift blocks.
 
+## 2026-11-04 — Blind scan read of the rare title and excerpt cells on the two ballet slides
+
+```sql
+-- every performance of Донъ-Кихотъ / Спящая красавица whose verbatim_title is not one of the three standard forms,
+-- plus every performance of their excerpt works, with research.source_page for the scan (34 cells)
+SELECT p.performance_id, p.verbatim_title, e.season, e.city, e.date, e.time_of_day, e.printed_page_number, e.page_id, s.source_file, s.scan_page
+  FROM research.performance p JOIN research.event e USING (event_id) LEFT JOIN research.source_page s ON s.page_id = e.page_id WHERE ...;
+SELECT verbatim_title, verbatim_genre FROM research.performance WHERE performance_id IN (C12..C15);   -- read on the 11:50 backup (production locked)
+```
+
+Result (two Claude helpers, blind: given date/theatre/session, not the stored text; full-res PDF images): 34/34 titles agree with raw.
+Print forms confirmed: «Донъ Кихотъ» (1892-93 x2), «Донъ Кихотъ Ламанчскій» x10, «Донъ-Кихотъ-Ламанчскій» (1904-05), «Донъ Кихотъ
+Ломанчскій» (1908-09, print slip -> genuine_print_typos.md), «Спящая красавица, бал.-феерія» (1909-10). C12-C15 print «… бал. …» mid-title;
+raw keeps it in verbatim_genre (extraction convention), so the slide quotes only excerpt titles stored whole. Side findings, NOT chased
+(for RG): 1892-93 SP 7 Feb 1893 morning cell prints «Сцепа изъ бал. Корсаръ» (helper: medium; may be a broken н); 1904-05 Moscow p.101
+date column prints «23 Пятница» where 5 Nov should be.
+
 ## 2026-11-04 — How widespread are repeated names in stored review text (the f. 114 «Матвѣева,Рѣпина, Матвѣева,Рѣпина» slip)?
 
 ```sql
@@ -27404,3 +27537,21 @@ Result: raw rank_or_title set on 8 BalletArtists entries (Ивановъ Л. 190
 «Заслуженный артистъ.», Кшесинская 1907-08 «Заслуженная артистка Императорскихъ театровъ.»). Diff vs backup: exactly 8 rows in
 raw.person_entry, analysis.person_entry, research.person_appearance; nothing else. rank now carries the honour 29 times (1900-01 – 1910-11);
 0 appearances carry it only in the note. person_link 0 shift blocks. Review scripts do not read rank (grep), so not rerun.
+
+## 2026-11-04 — «Сцепа» restored in raw (RG "take care of these"); 1904-05 «23 Пятница» confirmed already handled
+
+```sql
+SELECT p.verbatim_title, p.verbatim_genre FROM research.performance p JOIN research.event e USING (event_id)
+ WHERE e.season='1892-93' AND e.city='SP' AND e.date='1893-02-07' AND e.time_of_day='morning';        -- stored «Сцена изъ бал. Корсаръ»
+SELECT event_id, date_text, date_undate FROM raw.event_entry WHERE page_id='repertoire_1904-05_p011';    -- s031-033 «23 Пятница.» 1904-11-23
+SELECT event_id, date_verbatim, date, date_confidence, date_correction_note FROM research.event WHERE event_id LIKE 'repertoire_1904-05_p011__s03%';
+-- after the fix: production vs outputs/full_run/db_backup_scepa_2026-11-04 (attached), EXCEPT on research work/performance/event/person/
+-- person_appearance/production/production_date; work 5080f6ba field diff; performance work_id changes; check_person_link_alignment
+```
+
+Result: 1904-05 events already dated 1904-11-05 (corrected_manual, #151): nothing to do. «Сцепа»: scan read by Claude (print «Сцепа»);
+raw edited (1 field), alias + excerpt-link rows added, rebuild_after_raw_edit.sh then build_entities/validate/build_research_model
+again after the link row. Diff: 1 performance (verbatim_title), 1 work (canonical_title now as printed + title_note; id, parent
+«Корсаръ», art_form ballet unchanged); 0 work_id changes; all other research tables identical; receipts 3,223,088,581; 0 shift blocks.
+First pass (alias only) had dropped the excerpt link and art form -- caught in the diff and fixed with the link row.
+

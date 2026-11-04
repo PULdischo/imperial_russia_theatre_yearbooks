@@ -1053,3 +1053,23 @@ person; raw keeps the print.
 - **1900-01 SP ballet review, p.154** («Синяя борода»): «постановка принадлежитъ балетмейстеру М. М. Петипа». The ballet master is Маріусъ
   Ивановичъ (М. И.); Марія Маріусовна was a dancer. Text kept as printed; the review mention is linked to Маріусъ
   (docs/eval/review_mention_links.csv). Crop `scan_audit/1900-01_review_SP_ballet_p154_MM_Petipa_stager.png`.
+
+## «сентябри» for «сентября» in a productions list (added 2026-11-04; checked by a Claude helper on the scan, zoomed)
+
+- **1901-02 Moscow ballet productions list, p.54 no. 3** («Донъ-Кихотъ Ламанчскій»): «Исполненъ: 1901 г. — сентябри 9; октября 7;
+  ноября 4, 14. Всего—4 раза.» Month genitive misprinted. Crop `scan_audit/1901-02_balletproductions_MSK_p54_no3_sentyabri.png`.
+
+## «Ломанчскій» for «Ламанчскій» in the Repertoire (added 2026-11-04; blind read by a Claude helper on the scan)
+
+- **1908-09 Moscow Repertoire, p.25, 21 Dec 1908 evening, Большой:** «Донъ Кихотъ Ломанчскій, бал.» -- the print has «о». Stored as
+  printed; the title is folded into «Донъ-Кихотъ» in the research layer. Crop in the 2026-11-04 title check (query_log.md).
+
+## «Сцепа» for «Сцена» in the Repertoire (added 2026-11-04; scan read by Claude; raw restored to the print)
+
+- **1892-93 SP Repertoire, p.18 (repertoire_1892-93_pair018), 7 Feb 1893 morning, Маріинскій:** «Сцепа изъ бал. Корсаръ.» -- п set for н,
+  like «Паяда» for «Наяда». Compared on the same page with the н of «Маріинскій», «Кандавлъ», «Русланъ», «Демонъ» (mid bar) and the п of
+  «оп.», «Коппелія» (top bar). The extraction had silently stored «Сцена»; raw now keeps «Сцепа» (docs/eval/title_fixes_2026-11-04/).
+  Matching: alias in work_title_aliases.csv (same excerpt work id) + hand link to «Корсаръ» in work_excerpt_links.csv. Crop
+  `scan_audit/1892-93_repertoire_SP_p18_1893-02-07_scepa.png`.
+- **1904-05 Moscow Repertoire, p.101:** «23 Пятница.» printed where 5 Nov 1904 belongs (already handled: research.event.date 1904-11-05,
+  `corrected_manual`, known_issues.md #151; raw keeps «23»). Re-seen 2026-11-04 during the ballet-slide title check; no change needed.

@@ -469,6 +469,14 @@ To add an entry: copy the template at the bottom.
 
 Муромская, Марія Николаевна + «Лидія Николаевна» (SP BalletArtists, 1907-08 only, no. 63, same date 1 іюня 1906; the only Муромская in any list): MERGED 2026-10-30 (RG); one-season first-name variant, possibly from Нестеровская 1-я, Лидія two lines below or Свирская, Лидія Николаевна. Трефилова, Вѣра Ивановна + «Вѣра Александровна» (SP BalletArtists, 1901-02 only, no. 109, same date and place, the one season without «Ивановна») and Сигуля, Александръ Макаровичъ + «Макарычъ» (Moscow BalletArtists, 1908-09 only, no. 48, same date): MERGED 2026-10-30 (RG), one-season patronymic variants, scan-read. Грибенъ, Августъ Ѳедоровичъ vs Ѳедоръ Ѳедоровичъ (SP percussionists; SPLIT 2026-10-15, the 1890-93 ballet-orchestra cross-references «Грибенъ (см. оперный оркестръ)» assigned to Ѳедоръ, the only Грибенъ in the opera orchestra then; scans 1890-91 pp. 75/78/80); Ивановъ Иванъ Ивановичъ (Moscow trombonist vs Maly Theatre assistant machinist: SPLIT, because the musician "left service" in 1898 while the machinist continues to 1901-02); Никитинъ Алексѣй Никитичъ, Морозовъ Сергѣй, Тарасовъ Николай Григорьевичъ, Лебедевъ 1dd355 (SPLIT); Петипа, Чекетти, Ширяевъ Александръ, Голяховскій Петръ (MERGED; print variants of the patronymic/surname noted in `genuine_print_typos.md`). The 94 unmerged duplicate pairs from the 2026-10-05 sweep are a separate pending batch: `docs/eval/homonym_sweep_2026-10-05/duplicate_person_pairs.md`.
 
+## 56. Легатъ, Антонина Савельевна / Чумакова 2-я, Антонина Савеліевна (SP ballet) -- one woman under her maiden and married name?
+- **Status:** OPEN (found by Claude 2026-11-04 while drawing the Legat-women slide; not linked; Легатъ 803d8943, Чумакова 2-я adc86981)
+- **What is uncertain:** «Легатъ, Антонина Савельевна» first appears in 1909-10 (p. 92 no. 43) dated «(съ 25 апрѣля 1906 г.)», yet no Легатъ Антонина is listed 1906-07 to 1908-09.
+- **For one woman:** same first name and patronymic; 1908-09 has «Чумакова 2-я, Антонина Савеліевна», and Чумакова disappears as Легатъ appears.
+- **Against:** the 1908-09 Чумакова 2-я is dated «(съ 1 іюня 1908 г.)», not 25 April 1906.
+- **Where to look:** balletartists_1908-09 Чумакова 2-я entry; balletartists_1909-10_SP_p002__e013, balletartists_1910-11_SP_p002__e016; 1906-07 and 1907-08 lists for an Антонина Савельевна under any surname (none found in raw).
+- **Would resolve it:** a marriage record, or a later list or obituary giving her maiden name.
+
 ## Template
 
 ```
