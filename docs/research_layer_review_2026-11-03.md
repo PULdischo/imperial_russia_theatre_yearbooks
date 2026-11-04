@@ -778,3 +778,51 @@ in the lists. Linked. Evidence `docs/eval/scan_audit/R5_groupB_Sirov_evidence.pn
 changed: «Клейнъ», «Сировъ», «Бекль», «Беккъ». Assertions +2; credits, dance performers and solos unchanged. Person mentions
 linked 17,857 of 21,863; unknown surfaces 634 → 630. «Горина» and «Салинъ» stay unlinked. Next: group C (names with several
 candidates).
+
+**R5 group C — «Гавлова 2-я» (RG 2026-11-04, "Yes, link to Anna").** 1904-05 SP f. 114, «Danse Espagnole—г-жа Гавлова 2-я»: the
+printed «2-я» selects Павлова 2-я, Анна Матвѣевна (list p. 19 no. 77). Variant row added; to apply with the rest of group C, checking
+in the test rebuild that the ordinal lands on Анна. Evidence `docs/eval/scan_audit/R5_groupC_Gavlova_Pavlova_evidence.png`. Logged,
+not chased: this block's stored text repeats some names («Матвѣева,Рѣпина, Матвѣева,Рѣпина»); the repeats predate R5.
+
+**R5 group C — «Пашенко 1-й» (RG 2026-11-04, "Yes, link to Сергѣй").** 1895-96 SP f. 246, «Па-|шенко 1-й» (ш, or a worn щ, at the
+available resolution): the «1-й» selects Пащенко 1-й, Сергѣй Назаровичъ (list p. 67 no. 47). Recorded as a printed variant with the
+uncertainty noted. Evidence `docs/eval/scan_audit/R5_groupC_Pashenko_Pashchenko_evidence.png`.
+Revised the same day: RG read the letter as щ ("I think it's a щ"), so this is a stored-text misread, not a printed variant. The
+variant row was replaced by a text correction in docs/eval/review_text_corrections.csv («шенко 1-й» → «щенко 1-й», scoped to
+review_1895-96_SP_ballet_p014).
+
+**R5 group C — «Чекети» (RG 2026-11-04, "Yes, link to Enrico").** 1900-01 SP f. 187, «гг. Бекефи, Чекети и Кшесинскій 2-й»: the
+men's «гг.» selects Чекетти, Энрико Цезаревичъ over Жозефина. Variant row added; the test rebuild must confirm the honorific
+resolves it (otherwise a curated mention link). Evidence `docs/eval/scan_audit/R5_groupC_Cheketi_Cecchetti_evidence.png`.
+
+**R5 group C — «Элеръ 1-я» (RG 2026-11-04, "Yes, link to Anna").** 1903-04 SP f. 109: the «1-я» selects Эрлеръ 1-я, Анна
+Александровна (list p. 73 no. 116). Evidence `docs/eval/scan_audit/R5_groupC_Eler_Erler_evidence.png`. Logged, not chased: p004
+prints «Эрлеръ 1-я» twice but only one mention is linked.
+
+**R5 group C — «Ѳеодорова 2-я» (RG 2026-11-04, "Yes, link to Sofia").** 1905-06 Moscow f. 217, Хита in «Дочь фараона»: the list
+credits Ѳедорова 2-я, Софія Васильевна with «Хита — 3». Printed variant (fuller spelling), not an error. Evidence
+`docs/eval/scan_audit/R5_groupC_Feodorova_Fedorova_evidence.png`.
+
+**R5 group C — «Гуля и Бера» (RG 2026-11-04, "Yes, link both").** 1906-07 SP f. 148, «балетъ Гг. Гуля и Бера «Фея Куколъ»»: the
+ballet's creators. Linked for this mention only (docs/eval/review_mention_links.csv): «Гуля» → Гауль, Ф. (Q50307954), «Бера» →
+Байеръ, Іосифъ (Q668930); no surname rule. Evidence `docs/eval/scan_audit/R5_groupC_Gul_Ber_Gaul_Bayer_evidence.png`. Logged, not
+chased: «Петипа», «Егорова» and the work «Голубая Георгина» are unlinked in the same block.
+
+**R5 group C — «Брантъ» (RG 2026-11-04, "Keep unlinked").** 1905-06 Moscow f. 225, cornet-à-pistons solo: Карлъ-Вильгельмъ (Труба)
+or Владиміръ (Валторнъ) Брандтъ, with two listed cornetists besides. Left unlinked; entry added to uncertain_person_identities.md.
+Evidence `docs/eval/scan_audit/R5_groupC_Brant_Brandt_evidence.png`.
+
+**R5 group C — «Кусковъ» (RG 2026-11-04, "Yes, link to Ivan").** 1901-02 SP f. 193: the same folio prints the same group with
+«Кусовъ». Linked to Кусовъ, Иванъ Николаевичъ for this mention only (review_mention_links.csv), since a surname rule would also catch
+«Кускова» (Елизавета). Evidence `docs/eval/scan_audit/R5_groupC_Kuskov_Kusov_evidence.png`. Logged: stored «Аслинь», scan «Аслинъ».
+
+**R5 group C — «Пономаревъ 2-я» (RG 2026-11-04, "Yes, link to Sergei").** 1904-05 SP f. 111: a print slip in the ordinal (feminine
+«2-я» on a man under «Гг.»). Linked for this mention to Пономаревъ 2-й, Сергѣй Ивановичъ (list p. 25 no. 66). Evidence
+`docs/eval/scan_audit/R5_groupC_Ponomarev2_evidence.png`.
+
+**R5 group C applied (2026-11-04).** Text correction («Па-шенко» → «Па-щенко», RG's reading), then the review chain on a copy and on
+production. 9 new person links, none lost or changed (the five ordinal/honorific cases each landed on the ruled person). «Гуля» and
+«Бера» needed two variant rows («Гуль» → Гауль, «Беръ» → Байеръ) to be seen as mentions at all; the test showed no other effect.
+Side effects: the Danse Espagnole (1904-05 SP f. 114) now has its two performers; one new assertion (Хита). Person mentions linked
+17,866 of 21,870; unknown surfaces 630 → 623. «Брантъ» stays unlinked. Logged, not chased: the «Гуля/Бера» credit rows carry the right
+work_id («Фея куколъ») but a stale work_surface «Голубая Георгина».

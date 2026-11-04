@@ -489,3 +489,11 @@ The SP ballet reviews print «Горина» three times in corps lists (1900-01
 never in a passage with «Горина». RG: "keep separate pending further information" — unlinked; neither merged with Дорина nor made a
 person. Evidence sheet: docs/eval/scan_audit/R5_groupB_Gorina_Dorina_evidence.png (read by Claude). Aside noticed there: Дорина's
 printed start reads «съ 1 іюня 1890 г.» in 1900-01 (p. 73) and «съ 1 іюня 1900 г.» in 1903-04 (p. 69) — for the person audit.
+
+## «Брантъ» (Moscow ballet review 1905-06, f. 225) — cornet-à-pistons solo, unlinked (RG 2026-11-04)
+
+«На карнетъ-а-пистонъ г. Брантъ.» Two Брандтъ in the 1905-06 Moscow orchestra (p. 57): Владиміръ Адольфовичъ, «Валторнъ» (from
+1903), and Карлъ-Вильгельмъ, «Труба» (from 1890). The cornet is trumpet-family, which favours Карлъ-Вильгельмъ, but the list names
+two «Корнетъ» players (Адамовъ, Михаилъ; Решке, Богумилъ), and listed instruments don't bound soloists (1901-02 cornet solo by
+Табаковъ, listed as Вальдгорнъ in 1905-06). RG: "Keep unlinked". Evidence: docs/eval/scan_audit/R5_groupC_Brant_Brandt_evidence.png
+(read by Claude). Would resolve it: a programme or press notice naming the soloist's first name.

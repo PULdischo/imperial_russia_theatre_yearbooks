@@ -27154,3 +27154,172 @@ Result: exactly 4 new person links and nothing lost or changed: «Клейнъ»
 1906-07 f. 232). Assertions +2 («Беккъ», «Сировъ»); review_credit, review_dance_performer, review_solo unchanged. Production
 after the rebuild equals the tested copy (0 differences in all five tables). Person mentions linked 17,857 of 21,863. Unknown
 surfaces 634 → 630 (976 occurrences). person_link alignment: 0 shift blocks.
+
+## 2026-11-04 — R5 group C: «Гавлова 2-я» (1904-05 SP f. 114) candidates
+
+```sql
+SELECT page_id FROM raw.review_page WHERE season='1904-05' AND city='SP' AND printed_folio='114';
+SELECT m.page_id, m.surface, pe.display_name, count(*) FROM research.review_mention m JOIN research.person pe USING(person_id)
+WHERE m.season='1904-05' AND m.city='SP' AND pe.canonical_family_name='Павлова' GROUP BY ALL;
+SELECT p.display_name, a.entity_type, a.source_file, a.scan_page, a.printed_folio FROM research.person_appearance a JOIN research.person p USING(person_id)
+WHERE a.season='1904-05' AND a.city='SP' AND p.canonical_family_name IN ('Павлова','Гавлова');
+SELECT family_name, credit_summary_text FROM raw.person_entry WHERE page_id LIKE 'balletartists_1904-05_SP%' AND family_name LIKE 'Павлова%';
+```
+
+Result: page review_1904-05_SP_ballet_p009; the scan prints «Danse Espagnole—г-жа Гавлова 2-я, г. Фокинъ» (unmatched, 1 occurrence).
+1904-05 SP has two Павловы: 1-я Варвара Павловна and 2-я Анна Матвѣевна (list p. 19, nos. 76-77). The 1904-05 SP reviews already
+link «Павлова 2-я»/«Павловой 2-й» 13 times to Анна Матвѣевна and «Павлова 1-я» 4 times to Варвара Павловна; the same passage prints
+«Павлова 2-я» correctly in item 7. No Гавлова in any list. Aside: this block's stored text repeats names («Матвѣева,Рѣпина,
+Матвѣева,Рѣпина», «Рутковская,Чумакова, Рутковская,Чумакова»); the repeats are already in outputs/reviews/merged_full/review_block.csv
+and its 2026-11-03 .bak, so not caused by R5 step 1. Not chased.
+
+## 2026-11-04 — R5 group C: «Пашенко 1-й» (1895-96 SP f. 246) candidates
+
+```sql
+SELECT page_id FROM raw.review_page WHERE season='1895-96' AND city='SP' AND printed_folio='246';
+SELECT m.season, m.page_id, m.surface, pe.display_name, count(*) FROM research.review_mention m JOIN research.person pe USING(person_id)
+WHERE m.season BETWEEN '1894-95' AND '1896-97' AND m.city='SP' AND pe.canonical_family_name='Пащенко' GROUP BY ALL;
+SELECT p.display_name, a.entity_type, a.source_file, a.scan_page, a.printed_folio FROM research.person_appearance a JOIN research.person p USING(person_id)
+WHERE a.season='1895-96' AND p.canonical_family_name IN ('Пащенко','Пашенко');
+SELECT DISTINCT family_name FROM raw.person_entry WHERE family_name LIKE 'Паш%' OR family_name LIKE 'Пащ%';
+```
+
+Result: page review_1895-96_SP_ballet_p014; the corps list breaks the name «Па-|шенко 1-й» across a line; at the scan's 2300 px the
+second half reads ш, possibly щ with a faint tail (the PDF holds the same image). Staff-list surnames: Пащенко 1-й, Сергѣй Назаровичъ
+and Пащенко 2-й, Евгеній Назаровичъ (1895-96 SP list p. 67, nos. 47-48); no Пашенко. The 1894-97 SP reviews link «Пащенко 1-й» 5
+times to Сергѣй and «Пащенко 2-й» 3 times to Евгеній; f. 258 (p026) prints both clearly.
+
+## 2026-11-04 — R5 group C: «Чекети» (1900-01 SP f. 187) candidates
+
+```sql
+SELECT page_id FROM raw.review_page WHERE season='1900-01' AND city='SP' AND printed_folio='187';
+SELECT p.display_name, a.season, a.city, a.entity_type, a.source_file, a.scan_page, a.printed_folio FROM research.person_appearance a
+JOIN research.person p USING(person_id) WHERE p.canonical_family_name='Чекетти' AND a.season BETWEEN '1899-00' AND '1901-02';
+SELECT m.season, m.page_id, m.surface, pe.display_name, count(*) FROM research.review_mention m JOIN research.person pe USING(person_id)
+WHERE m.season BETWEEN '1899-00' AND '1901-02' AND pe.canonical_family_name='Чекетти' GROUP BY ALL;
+```
+
+Result: review_1900-01_SP_ballet_p031 prints «…г-жа Петипа 1-я; гг. Бекефи, Чекети и Кшесинскій 2-й» (men's plural honorific).
+Two Чекетти in SP 1899-02: Жозефина Валентиновна (women's list, 1900-01 p. 77 no. 123) and Энрико Цезаревичъ (men's list, printed
+«Генрихъ Цезаревичъ» in 1900-01, p. 81 no. 78; also school staff). The 1899-02 SP reviews already link «Чекетти» 18 times to
+Энрико and 22 to Жозефина, told apart by г./г-нъ vs г-жа; f. 186 prints «бургомистръ — г. Чекетти; его жена — г-жа Чекетти».
+
+## 2026-11-04 — R5 group C: «Элеръ 1-я» (1903-04 SP f. 109) candidates
+
+```sql
+SELECT page_id FROM raw.review_page WHERE season='1903-04' AND city='SP' AND printed_folio='109';
+SELECT p.display_name, a.entity_type, a.source_file, a.scan_page, a.printed_folio FROM research.person_appearance a JOIN research.person p USING(person_id)
+WHERE a.season='1903-04' AND a.city='SP' AND p.canonical_family_name IN ('Эрлеръ','Элеръ');
+SELECT m.season, m.page_id, m.surface, pe.display_name, count(*) FROM research.review_mention m JOIN research.person pe USING(person_id)
+WHERE m.season BETWEEN '1902-03' AND '1904-05' AND m.city='SP' AND pe.canonical_family_name='Эрлеръ' GROUP BY ALL;
+```
+
+Result: review_1903-04_SP_ballet_p004 prints «…Горская, Элеръ 1-я, Пишо, Ильина 1-я…». 1903-04 SP has Эрлеръ 1-я, Анна Александровна and
+Эрлеръ 2-я, Марія Александровна (list p. 73, nos. 116-117) and Эрлеръ, Александръ (men's list p. 77). The same page prints «Эрлеръ 1-я»
+twice and «Эрлеръ 2-я» once correctly (the query shows one linked mention each on p004; not chased). 1903-05 SP reviews link
+«Эрлеръ 1-я» to Анна and «Эрлеръ 2-я» to Марія throughout.
+
+## 2026-11-04 — R5 group C: «Ѳеодорова 2-я» (1905-06 Moscow f. 217) candidates
+
+```sql
+SELECT page_id FROM raw.review_page WHERE season='1905-06' AND city='Moscow' AND printed_folio='217';
+SELECT p.display_name, a.source_file, a.scan_page, a.printed_folio FROM research.person_appearance a JOIN research.person p USING(person_id)
+WHERE a.season='1905-06' AND a.city='Moscow' AND p.canonical_family_name IN ('Ѳедорова','Федорова','Ѳеодорова');
+SELECT page_id, family_name, first_name, credit_summary_text FROM raw.person_entry
+WHERE page_id LIKE '%1905-06_MSK%' AND (credit_summary_text ILIKE '%Хит%' OR family_name LIKE 'Ѳедорова%');
+SELECT m.season, m.surface, pe.display_name, count(*) FROM research.review_mention m JOIN research.person pe USING(person_id)
+WHERE m.season BETWEEN '1904-05' AND '1906-07' AND m.city='Moscow' AND pe.canonical_family_name='Ѳедорова' GROUP BY ALL;
+SELECT count(*) FROM research.review_mention WHERE surface LIKE 'Ѳеодоров%';
+```
+
+Result: review_1905-06_MSK_ballet_p008 («Дочь фараона») prints «Хита, раба—наперсница Бинтъ-Анты — г-жа Ѳеодорова 2-я». Moscow 1905-06
+has Ѳедорова 1-я Екатерина, 2-я Софія, 3-я Ольга (list p. 52, nos. 103-105). The list credits Ѳедорова 2-я with «Дочь фараона (Хита — 3)»
+(and Кувакинъ with «негръ», matching the next role in the review). Moscow 1904-07 reviews link «Ѳедорова 2-я» to Софія 25 times. No other
+«Ѳеодоров-» surface in the reviews.
+
+## 2026-11-04 — R5 group C: «Гуля и Бера» (1906-07 SP f. 148) — creators of «Фея куколъ»
+
+```sql
+SELECT block_id, char_start, surface, mention_type, person_id FROM research.review_mention WHERE block_id='review_1906-07_SP_ballet_p001__b002' ORDER BY char_start;
+SELECT person_id, display_name, person_source, wikidata_qid FROM research.person WHERE display_name LIKE 'Байер%' OR display_name LIKE 'Гаул%';
+SELECT m.season, m.city, m.surface, pe.display_name, m.link_method, count(*) FROM research.review_mention m JOIN research.person pe USING(person_id)
+WHERE m.person_id IN ('e8b11550-a500-5a64-b716-ba11af08ddc0','144d17f6-8b12-58b0-8522-733bd08892e6') GROUP BY ALL;
+SELECT DISTINCT pc.name_printed, pc.role_text FROM research.production_credit pc
+WHERE pc.person_id IN ('e8b11550-a500-5a64-b716-ba11af08ddc0','144d17f6-8b12-58b0-8522-733bd08892e6');
+```
+
+Result: f. 148 prints «балетъ Гг. Гуля и Бера «Фея Куколъ»»; both surfaces unmatched (one occurrence each). Persons exist from the
+productions lists: Байеръ, Іосифъ (Q668930; printed «Іосифа Байеръ», «І. Байера», «І. Байеръ», музыка) and Гауль, Ф. (Q50307954;
+«Гауль», «Гауля», «Ф. Гауль», сюжетъ/соч.). Reviews link «Гауль/Гауля» 16 times and «Байеръ/Байера» 6 times, 1896-1908; the same
+season's f. 157 prints «сюжетъ г. Асрейтера и г. Гауль … музыка І. Байеръ». Aside, not chased: in the same f. 148 block «Петипа» and
+«Егорова» are person mentions with no link, and «Голубая Георгина» is an unlinked work mention.
+
+## 2026-11-04 — R5 group C: «Брантъ» (1905-06 Moscow f. 225, cornet-à-pistons solo) candidates
+
+```sql
+SELECT p.display_name, a.season, a.city, a.entity_type, a.source_file, a.scan_page, a.printed_folio FROM research.person_appearance a
+JOIN research.person p USING(person_id) WHERE p.canonical_family_name='Брандтъ' AND a.season BETWEEN '1904-05' AND '1906-07';
+SELECT family_name, first_name, patronymic, instrument, tenure_note_text FROM raw.person_entry WHERE family_name LIKE 'Брандт%' AND page_id LIKE '%1905-06%';
+SELECT family_name, first_name, instrument FROM raw.person_entry WHERE page_id LIKE 'musicians_1905-06_MSK%'
+  AND (instrument ILIKE '%корнет%' OR instrument ILIKE '%труб%' OR family_name LIKE 'Табаков%');
+SELECT r.season, p.block_id, p.text FROM research.review_passage p JOIN raw.review_page r USING(page_id)
+WHERE r.city='Moscow' AND (p.text ILIKE '%пистон%' OR p.text ILIKE '%трубѣ%' OR p.text ILIKE '%валторн%');
+```
+
+Result: review_1905-06_MSK_ballet_p016 prints «На карнетъ-а-пистонъ г. Брантъ». Moscow orchestra 1905-06 (p. 57): Брандтъ, Владиміръ
+Адольфовичъ, Валторнъ (from 1903); Брандтъ, Карлъ-Вильгельмъ, Труба (from 1890). Listed as Корнетъ: Адамовъ, Михаилъ Прокофьевичъ and
+Решке, Богумилъ Вильгельмовичъ. Other trumpets: Кунетъ, Логиновъ (2nd), Фроманъ, Рязанцевъ. The only other Moscow cornet solo in the
+reviews is 1901-02 «на корнетѣ-а-пистонѣ — г. Табаковъ» (Табаковъ is listed as Вальдгорнъ in 1905-06, so the list's instrument does not
+bound who played solos). No review mention is linked to any Брандтъ.
+
+## 2026-11-04 — R5 group C: «Кусковъ» (1901-02 SP f. 193) candidates
+
+```sql
+SELECT page_id FROM raw.review_page WHERE season='1901-02' AND city='SP' AND printed_folio='193';
+SELECT p.display_name, a.season, a.entity_type, a.printed_folio, a.scan_page FROM research.person_appearance a JOIN research.person p USING(person_id)
+WHERE a.season BETWEEN '1900-01' AND '1902-03' AND a.city='SP' AND p.canonical_family_name IN ('Кусовъ','Кусковъ','Кускова');
+SELECT m.season, m.surface, pe.display_name, count(*) FROM research.review_mention m JOIN research.person pe USING(person_id)
+WHERE m.season BETWEEN '1899-00' AND '1903-04' AND m.city='SP' AND pe.canonical_family_name IN ('Кусовъ','Кускова') GROUP BY ALL;
+```
+
+Result: review_1901-02_SP_ballet_p027 prints «гг. Кусковъ, Васильевъ, Аслинь, Петровъ…» (toreadors). SP 1900-03: Кускова, Елизавета
+Аполлоновна (ballet, woman), Кусовъ, Иванъ Николаевичъ (men's ballet list 1901-02 p. 79 no. 28), Кусовъ, Владиміръ Алексѣевичъ
+(administration). No Кусковъ in any list. Reviews link «Кусовъ» to Иванъ 31 times 1899-1904 (9 in 1901-02); the same folio prints
+«гг. Бекефи, Н. Легатъ, Кусовъ, Васильевъ, Аслинъ, Петровъ…», the same men in the same order. Aside: the stored text has «Аслинь» where
+the scan prints «Аслинъ» (both passages); not chased.
+
+## 2026-11-04 — R5 group C: «Пономаревъ 2-я» (1904-05 SP f. 111) candidates
+
+```sql
+SELECT block_id, char_start, surface, person_id, candidates_n FROM research.review_mention WHERE page_id='review_1904-05_SP_ballet_p006' AND surface LIKE 'Пономар%';
+SELECT p.display_name, a.entity_type, a.printed_folio, a.scan_page FROM research.person_appearance a JOIN research.person p USING(person_id)
+WHERE a.season='1904-05' AND a.city='SP' AND p.canonical_family_name IN ('Пономаревъ','Пономарева');
+SELECT e.page_id, e.entry_id, e.family_name, e.first_name, e.patronymic, e.heading_path, e.list_number FROM raw.person_entry e
+WHERE e.page_id LIKE 'balletartists_1904-05_SP%' AND e.family_name LIKE 'Пономар%';
+SELECT m.season, m.surface, pe.display_name, count(*) FROM research.review_mention m JOIN research.person pe USING(person_id)
+WHERE m.season BETWEEN '1903-04' AND '1905-06' AND m.city='SP' AND pe.canonical_family_name='Пономаревъ' GROUP BY ALL;
+```
+
+Result: «Гг. Кремневъ, Гольде, Пономаревъ 2-я, Лазуко…» (scan confirms the feminine «2-я»); the mention exists unlinked with 4
+candidates. 1904-05 SP: Пономаревъ 1-й, Иванъ Ивановичъ (no. 65) and Пономаревъ 2-й, Сергѣй Ивановичъ (no. 66; also помощникъ
+режиссера from 9 Oct 1904, hence a second entry on p000), plus Пономаревъ, Евгеній Петровичъ (administration). Reviews 1903-06 link
+«Пономаревъ 2-й» to Сергѣй 9 times and «1-й» to Иванъ 4 times.
+
+## 2026-11-04 — R5 group C applied: «Пащенко» text correction + review chain rebuilt (copy, then production)
+
+```sql
+-- test copy vs production, every review table, EXCEPT ALL both ways (mention_id/credit_id excluded: they renumber;
+-- candidate-id lists sorted before comparing)
+SELECT count(*) FILTER (WHERE person_id IS NOT NULL), count(*) FROM research.review_mention WHERE mention_type='person';
+SELECT count(*) FROM research.review_assertion;
+```
+
+Result: 9 new person links, none lost or changed: «Пащенко 1-й» (after the text correction) → Сергѣй; «Гавлова 2-я» → Анна Павлова;
+«Ѳеодорова 2-я» → Софія Ѳедорова; «Элеръ 1-я» → Анна Эрлеръ; «Чекети» → Энрико Чекетти (all via ordinal/honorific ranking, each landing
+on the ruled person); «Гуля» → Гауль, «Бера» → Байеръ, «Кусковъ» → Кусовъ Иванъ, «Пономаревъ 2-я» → Сергѣй (mention links).
+«Гуля»/«Бера» needed variant rows («Гуль» → Гауль, «Беръ» → Байеръ) so the matcher sees them as mentions; the diff shows they changed
+nothing else. Assertions +1 (Хита). review_dance_performer: Danse Espagnole (1904-05 SP f. 114) gains its two performers, Павлова 2-я and
+Фокинъ; other differences are only the order of Левенсонъ candidate ids. review_credit: the two «Гуля/Бера» credits gain their persons
+(work_id was already «Фея куколъ» by RG's 2026-10-26 override; their stored work_surface still reads «Голубая Георгина», cosmetic, not
+chased). review_passage: one text change («Па-щенко»). Production after the rebuild equals the tested copy (0 differences in all six
+tables). Person mentions linked 17,866 of 21,870; assertions 2,684; unknown surfaces 630 → 623 (969 occurrences). person_link: 0 shift blocks.
