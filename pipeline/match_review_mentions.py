@@ -642,17 +642,32 @@ def build_lexicon(db: Path, con=None) -> Lexicon:
     for tid, name in con.execute(
             "select theater_id, canonical_name from research.theater").fetchall():
         lex.add(lex.theater, surname_forms(name), tid)
-    # institution vocabulary: adjectival, inflected, and absent from research.theater
+    # Большой, Малый and Новый are also plain adjectives («Большой маршъ», «Новыя декораціи»): those theaters count
+    # only when «театръ» follows (theater_ok). RG 2026-11-04, research-layer review: "Yes, fix them".
+    lex.adjective_theaters = {str(tid) for tid, name in con.execute(
+        "select theater_id, canonical_name from research.theater").fetchall() if name in ("Большой", "Малый", "Новый")}
+    # institution vocabulary: adjectival, inflected, and absent from research.theater. The Маріинскій, Александринскій
+    # and Михайловскій are in research.theater above; an INST: tag for them as well made every such mention ambiguous
+    # (two candidates), so none linked (2026-11-04).
     for name, tid in [("Императорскій", "INST:imperial"),
-                      ("Маріинскій", "INST:mariinsky"),
-                      ("Александринскій", "INST:alexandrinsky"),
-                      ("Михайловскій", "INST:mikhailovsky"),
                       ("Эрмитажный", "INST:hermitage"),
                       ("Красносельскій", "INST:krasnoe_selo"),
                       ("Московскій", "INST:moscow"),
                       ("Петербургскій", "INST:petersburg")]:
         lex.add(lex.theater, surname_forms(name), tid)
     return lex
+
+
+THEATRE_NEXT = re.compile(r"[\s\-\u00ad]*т[\s\-\u00ad]*е[\s\-\u00ad]*а[\s\-\u00ad]*т[\s\-\u00ad]*р", re.I)
+
+
+def theater_ok(lex, ids, text: str, end: int) -> bool:
+    """A theater mention stands unless its only candidates are adjective-named theaters (Большой, Малый, Новый) and
+    «театръ» (hyphenated across a line or not) does not follow the word."""
+    adj = getattr(lex, "adjective_theaters", set())
+    if not ids or not all(str(i) in adj for i in ids):
+        return True
+    return bool(THEATRE_NEXT.match(text[end:end + 16]))
 
 
 # ------------------------------------------------------------------- ranking
@@ -1267,7 +1282,7 @@ def scan_block(text: str, block_type: str, lex: Lexicon,
             if ids:
                 emit("person", a, b, ids, "honorific-list", "high",
                      h.group(1).strip())
-            elif key in lex.theater:
+            elif key in lex.theater and theater_ok(lex, lex.theater[key], text, b):
                 # `артистовъ Императорскихъ Московскихъ театровъ` sits inside an
                 # honorific span but names an institution, not a person
                 emit("theater", a, b, lex.theater[key], "honorific-span-institution",
@@ -1296,7 +1311,7 @@ def scan_block(text: str, block_type: str, lex: Lexicon,
         if key in STOP_CAPS or len(key) < 3:
             continue
         initial_led = bool(INITIALS.search(text[max(0, a - 12):a]))
-        if key in lex.theater:
+        if key in lex.theater and theater_ok(lex, lex.theater[key], text, b):
             emit("theater", a, b, lex.theater[key], "bare", "medium", "")
         elif key in lex.person:
             if is_sentence_initial(text, a) and not initial_led:

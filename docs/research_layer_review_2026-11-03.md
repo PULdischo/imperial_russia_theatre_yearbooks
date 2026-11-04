@@ -643,3 +643,12 @@ in `build_datasette.py`; `docs/schema.md`. Nothing else changed; 0 person_link s
 performed event whose bill carries the statement's work (or an excerpt of it). Linked 543. Not linked, each with its note:
 no date 1,972; no work on the statement 69; events that day, none with the work 40; no performed event that day 30 (mostly
 the quoted historical casts, 1844-1875); two events with the work 1. Export schema; `docs/schema.md`. Nothing else changed.
+
+**R3 — review theater mentions (RG 2026-11-04, "Yes, fix them"; T2 from section 3).** Two faults in
+`match_review_mentions.py`: (1) the Маріинскій, Александринскій and Михайловскій were indexed twice, as the research
+theater and as an INST: tag, so every such mention had two candidates and stayed unlinked; the INST: tags for those three
+are dropped. (2) «Большой», «Малый», «Новый» are also plain adjectives («Большой маршъ», «Новыя декораціи»): those three
+theaters now link only when «театръ» follows (a line-break hyphen allowed). Theater mentions before -> after: unlinked 105
+-> 0 (Маріинскій 83, Михайловскій 20, Александринскій 2); «Новый» 45 -> 9; «Большой» 9 -> 0; «Малый» 3 kept; the 45
+adjective mentions dropped. No person or work link changed anywhere; `mention_id` renumbers after the dropped rows
+(`review_credit.mention_id` follows). «въ Большомъ и 5 въ Новомъ театрѣ» leaves the Большой unlinked, as before.

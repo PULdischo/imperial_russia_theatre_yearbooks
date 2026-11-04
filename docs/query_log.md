@@ -26987,3 +26987,17 @@ Result: of 683 dated statements, 543 linked (one event with the work); 69 no wor
 no performed event that day (historical years 1844-1875 among them); 1 two events. 1,972 undated. Old columns unchanged;
 every other table identical; 0 person_link shifts. Example: the 13 Feb 1905 corps-de-ballet benefit cast -> Маріинскій,
 8750 р. 70 к.
+
+## 2026-11-04 — Research-layer review R3: review theater mentions fixed (test on a copy, then production)
+
+```sql
+-- every theater mention: linked theater (or unlinked) x whether «театр…» follows, with three context samples each
+SELECT coalesce(entity_id, 'UNLINKED'), count(*) FROM entities.review_mention WHERE mention_type = 'theater' GROUP BY 1;
+-- person / work entity changes between before and after (joined on block_id, char_start, surface); mention rows only before
+-- assertion / dance performer / solo person and work ids, credit person and work ids before vs after
+```
+
+Result: before INST:imperial 208, INST:moscow 140, INST:petersburg 118, unlinked 105, Новый 45, Большой 9, Эрмитажный 3,
+Малый 3, Красносельскій 1. After: unlinked 0; Маріинскій 83, Михайловскій 20, Александринскій 2; Новый 9 (all «въ Новомъ
+театрѣ»); Большой 0; Малый 3. 45 mentions dropped, none added; person and work links unchanged; 0 changes in assertions,
+dance performers, solos and credits (person, work). Production equal to the tested copy; 0 person_link shifts.
