@@ -26178,3 +26178,18 @@ La chanson de Fortunio «opéra-com.»/«opera-comique» 3 and Le beau Dunois «
 reads «opéra» as opera; the performance rules count opéra-bouffe as operetta. Дядя Беккеръ подшутилъ «опер.» x3, Александринскій drama troupe
 1893-94 -- «опер.» is the opera/operetta-ambiguous abbreviation (build_entities "group C", RG's call). Бокаччіо «оп.» x1, Vienna operetta company,
 Маріинскій 25 Feb 1901 (scan 1900-01 p.30: «Бокаччіо, оп.»); a separate work «Боккаччіо» [оперетта.] exists.
+
+## 2026-11-03 — «Боярыня Вѣра Шелога»: seasons, theatres, bills (RG question, forked session)
+
+```sql
+SELECT e.season, t.canonical_name, count(*), min(e.date), max(e.date), <events whose bill also has «Псковитянка»>
+FROM research.work w JOIN research.performance p USING (work_id) JOIN research.event e USING (event_id) JOIN research.theater t USING (theater_id)
+WHERE w.canonical_title = 'Боярыня Вѣра Шелога' GROUP BY 1, 2;
+```
+
+Result: 28 performances, every one on a bill with «Псковитянка» (26 printed before it, 2 after): Большой 1901-02 12 (from 10 Oct 1901),
+1902-03 4, 1904-05 2, 1906-07 3; Маріинскій 1903-04 7 (28 Oct 1903 - 29 Jan 1904).
+
+## 2026-11-03 — «Боярыня Вѣра Шелога» [прологъ] ruled opera (RG)
+
+Result: 2 work_artform_overrides.csv rows (прологъ, прол.); work art_form drama -> opera; no performance changed; check 24 performances / 5 pairs.
