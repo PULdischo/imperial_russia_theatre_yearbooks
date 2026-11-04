@@ -27759,3 +27759,33 @@ Result: filled on 23,980 / 23,701 / 21,585 appearances (family / first / patrony
 2,873, surname spelling 647, first name only 537 (the earlier 4,061 counted raw before analysis's 5 transcription-slip fixes). Every other
 table identical; person_appearance's existing columns identical. Production equals the tested copy; person_link 0 shift blocks;
 build_datasette.py runs with the new SCHEMAS.
+
+## 2026-11-04 — Pre-publish check: fresh sqlite export, integrity, gold eval, site metadata
+
+```sql
+-- build_datasette.py -> scratchpad research_dataset.sqlite; PRAGMA foreign_key_check / integrity_check; per-table row counts vs research
+-- eval_against_gold.py on outputs/full_run/parsed
+-- outputs/full_run/datasette_metadata_cloudrun.json: tables described vs exported
+SELECT work_id, canonical_title, title_note FROM research.work WHERE canonical_title LIKE 'Сцеп%';
+```
+
+Result: export builds; 35 tables (views exported as tables), row counts equal research, 0 FK violations, integrity ok, printed-name columns
+present. Gold: roster 76.4%, repertoire 97.8%, total 83.5% (roster drop = gold predates later convention rulings; appended to
+run_history.csv). Site metadata (dated 2026-08-21) describes 6 of 35 tables. Work 5080f6ba's canonical_title is now the misprint «Сцепа изъ
+бал. Корсаръ» (its only printing), though its title_note says the alias was meant for matching only. outputs/full_run/research_dataset.sqlite
+is from 2026-11-03 19:41, older than today's changes.
+
+## 2026-11-04 — «Сцепа» work title restored to «Сцена изъ бал. Корсаръ» (RG "Yes, restore it")
+
+```sql
+SELECT work_id, canonical_title, title_note FROM research.work WHERE work_id='5080f6ba-cf2b-59b8-a8e9-c9881896ea73';
+SELECT verbatim_title FROM research.performance WHERE work_id='5080f6ba-cf2b-59b8-a8e9-c9881896ea73';
+-- every table, production before vs after (diff.py); review chain rerun on a copy (6 review tables)
+```
+
+Result: canonical_title «Сцена изъ бал. Корсаръ» (title_note adds why); the performance keeps verbatim «Сцепа изъ бал. Корсаръ». Exactly 1
+row in research.work changed; review tables identical with the matcher rerun; person_link 0 shift blocks; export rebuilt in the scratchpad
+with the restored title and 0 FK violations. A general rule (any alias whose work is titled by its printed form) would have renamed 13 more
+works — 2 misprints («Agence dramatiqus» → «Agence dramatique», «Бокаччіо» → «Боккаччіо») and 11 titles printed with their genre or subtitle
+(«Наканунѣ, возможный случай», «Ломоносовъ, истор.-быт. сцены» …) — so it is limited to an explicit list (WORK_TITLE_FROM_ALIAS) with
+«Сцепа» only.

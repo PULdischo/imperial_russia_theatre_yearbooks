@@ -271,6 +271,11 @@ ART_FORM_BY_PERFORMANCE_CSV = Path(__file__).parent / "research_corrections" / "
 #: labels here, see apply_work_artform_overrides (known_issues.md #158).
 WORK_ARTFORM_OVERRIDES_CSV = Path(__file__).parent / "entity_curation" / "work_artform_overrides.csv"
 WORK_TITLE_ALIASES_CSV = Path(__file__).parent / "entity_curation" / "work_title_aliases.csv"
+#: Aliased printed titles whose work takes the alias's match-as title as its canonical title, because the misprint is the
+#: work's only printing (otherwise the most common printing names the work). One by one, RG's ruling for each.
+WORK_TITLE_FROM_ALIAS = {
+    "Сцепа изъ бал. Корсаръ",  # RG 2026-11-04, "Yes, restore it": the one printing, 7 Feb 1893, misprints «Сцена»
+}
 CONCERT_EVENT_RE = r"концерт|музыкально-литературн|литературно-музыкальн|вокально-инструментально"
 #: An event headed «Симфоническій концертъ» is a concert as a whole: every titled item on it
 #: (an opera finale, an opera act) is item_kind concert, art form kept, as CONCERT_KIND_TITLES
@@ -2694,7 +2699,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     con.execute(f"DELETE FROM research.work WHERE {empty_where}")
     # A work that absorbed a printed variant through work_title_aliases.csv says so in title_note (RG 2026-11-04,
     # provenance pass: the reader must be able to trace "any attendant decisions").
-    n_alias_notes = 0
+    n_alias_notes = n_alias_titles = 0
     for r in csv.DictReader(open(WORK_TITLE_ALIASES_CSV, encoding="utf-8")):
         hits = con.execute("""SELECT work_id, count(*) FROM perf_rows WHERE verbatim_title = ? AND work_id IS NOT NULL
                               GROUP BY 1""", [r["printed_title"]]).fetchall()
@@ -2705,7 +2710,21 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                            WHERE work_id = ? AND (title_note IS NULL OR position(? IN title_note) = 0)""",
                         [note, wid, f"printed «{r['printed_title']}»"])
             n_alias_notes += 1
-    print(f"  works noted as absorbing a printed variant (work_title_aliases.csv): {n_alias_notes}")
+        # A work printed ONLY in the misprinted form would take the misprint as its title, since the canonical title is
+        # the most common printing (RG 2026-11-04, "Yes, restore it": «Сцепа изъ бал. Корсаръ», one printing, 7 Feb 1893).
+        # The alias's match-as title is the work's name; the printed form stays on the performance's verbatim_title.
+        target = (r.get("match_as_title") or "").strip()
+        if target and target != r["printed_title"] and r["printed_title"] in WORK_TITLE_FROM_ALIAS:
+            for (wid,) in con.execute("SELECT work_id FROM research.work WHERE canonical_title = ?",
+                                      [r["printed_title"]]).fetchall():
+                con.execute("""UPDATE research.work SET canonical_title = ?,
+                                   title_note = coalesce(title_note || '; ', '') || ?
+                               WHERE work_id = ?""",
+                            [target, f"title given as «{target}»: its only printing is the misprint «{r['printed_title']}»",
+                             wid])
+                n_alias_titles += 1
+    print(f"  works noted as absorbing a printed variant (work_title_aliases.csv): {n_alias_notes}; "
+          f"titled by the alias because their only printing is the misprint: {n_alias_titles}")
     con.execute(f"""
         CREATE TABLE research.performance (
             performance_id VARCHAR PRIMARY KEY,

@@ -916,3 +916,12 @@ page, 5 group music credits, 6 supplied performances). **Added (RG "Yes, add it"
 appearances: ordinal 2,873, spelling 647, first name 537). Still not carried: `list_number` (printed on 16,380 entries; not yet ruled),
 event month/year heading text, the lists' «Исполненъ»/«Всего» lines verbatim and section heading, review layout fields,
 `season_stat_line.city_verbatim`; pipeline-internal by design: merge history, Wikidata decisions, matcher evidence, retired ids.
+
+## Pre-publish check (2026-11-04)
+
+Fresh export from production builds cleanly (35 tables, row counts = research, 0 FK violations, integrity ok). Gold set: repertoire 97.8%,
+roster 76.4% (gold predates later convention rulings; `run_history.csv`). **«Сцепа» (RG "Yes, restore it"):** work 5080f6ba's only printing
+is the misprint, so it had taken «Сцепа изъ бал. Корсаръ» as its title; `WORK_TITLE_FROM_ALIAS` in build_research_model now titles it
+«Сцена изъ бал. Корсаръ» (verbatim kept on the performance, reason in title_note). Not changed, for RG one at a time: the same applies to
+«Agence dramatiqus» and «Бокаччіо» (misprints, titled by them), and 11 works titled by a printing with its genre/subtitle attached. For Andy:
+the local research_dataset.sqlite (3 Nov) is stale — rebuild; the Cloud Run metadata describes 6 of 35 tables.
