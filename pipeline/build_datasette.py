@@ -57,7 +57,8 @@ TABLES = ["theater", "work", "person", "event", "performance", "person_appearanc
           "season_stat_check", "season_stat_line", "season_stat_footnote", "season_stat_gap", "season_stat_gap_event",
           "season_stat_page",
           "review_assertion", "review_solo", "review_credit",
-          "review_dance", "review_dance_performer", "review_dance_composer"]
+          "review_dance", "review_dance_performer", "review_dance_composer",
+          "review_page", "review_passage"]
 
 # Explicit CREATE TABLE per table, PRIMARY KEY + FOREIGN KEY declared --
 # pandas' to_sql(if_exists="replace") would otherwise create schema-less
@@ -252,6 +253,16 @@ SCHEMAS = {
     # before declaring the FKs: zero of each.
     # page_id/block_id point into the raw layer, which is NOT published,
     # so they stay plain columns -- citations back to the scan, not links.
+    "review_page": """
+        CREATE TABLE review_page (
+            page_id TEXT PRIMARY KEY, season TEXT, city TEXT, genre TEXT, printed_folio TEXT,
+            reading_order_uncertain INTEGER, n_passages INTEGER
+        )""",
+    "review_passage": """
+        CREATE TABLE review_passage (
+            block_id TEXT PRIMARY KEY, page_id TEXT REFERENCES review_page(page_id),
+            block_index INTEGER, block_type TEXT, text TEXT, caption_text TEXT
+        )""",
     "review_assertion": """
         CREATE TABLE review_assertion (
             assertion_id INTEGER PRIMARY KEY,

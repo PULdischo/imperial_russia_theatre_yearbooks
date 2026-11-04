@@ -576,3 +576,64 @@ review.").** The supplied «Дочь фараона» row (13 Feb 1905) cited th
 `supplied_performances.csv` basis now gives the list's printed page (p. 138, ForUpload_1904-05_Spisok_BalletProductionsSP.pdf)
 and the review's folio (SP ballet review f. 117, with the sentence quoted), ids kept. The other four supplied performances
 already cite review folios. Rebuilt on a copy, then production: one `research.performance` note changed.
+
+**Provenance goal (RG 2026-11-04): "I want the researcher to be able to trace how something appeared in the research layer
+(its source) and any attendant decisions."** Checked every research table for a path to the printed page and a column for the
+decision. Planned as a provenance pass AFTER section 6 (RG "After reviews"): (1) one shared source-page table (page id, source
+file, scan page, printed page) that events, list entries and review pages join to; (2) a note on works that absorbed a printed
+variant through `work_title_aliases.csv` (Паяда, Ваядерка, Пригалъ …) and a basis for each list entry's chosen work;
+(3) say in the dataset README that transcription fixes are traced in git and `docs/eval/`; (4) a short "how to trace a value"
+guide in the published README / Datasette description (note columns; `known_issues.md`; this review doc).
+
+## 6. Season reviews (2026-11-04)
+
+(Queries logged in `docs/query_log.md`, "Research-layer review: Season reviews". Ballet reviews only: RG 2026-10-09, opera
+reviews carry no cast data she wants.)
+
+### What one record holds
+
+- **`review_assertion`** — 2,655 cast statements ("this performer danced this role"): `role_surface`, `performer_surface`
+  as printed, `performer_person_id` (2,426; `link_method` already-linked 2,317, spiski-credit 109, unresolved 229), `work_id`
+  (1,877; `work_source`: the block 1,523, an earlier block on the page 407, the previous page 138, ambiguous 138, none 449),
+  `date_undate` (683), `page_id`, `block_id`, `printed_folio`. 356 pages, 19 seasons.
+- **`review_credit`** — 2,410 creator and craft credits: ballet_by 809, music 573, author 273, scenery 230, staging 190,
+  choreography 80, source 72, libretto 54, staging-revival 39, costume_design 28, machinery 15, costume_making 14, props 13,
+  instrumentation 8, costumes 5, footwear 3, headwear 2, wigs 2; 2,226 linked to a person, 2,358 to a work; `printed_phrase`,
+  `context_flag`, `curator_note`.
+- **`review_dance`** — 914 dance numbers (`dance_surface`, `printed_text`, work 632, dated 56), with
+  **`review_dance_performer`** 2,982 (2,881 linked) and **`review_dance_composer`** 67 (34 linked).
+- **`review_solo`** — 96 instrument solos (69 players linked, 37 works).
+
+Cast statements by season: SP from 1891-92, Moscow from 1890-91, mostly 20-250 a season; then 1907-08 142, 1908-09 5,
+1909-10 none, 1910-11 2. Raw has review pages 1890-91 – 1910-11 (no 1898-99 review exists; no 1909-10 pages) plus 4 pages
+of 1912-13.
+
+### Held earlier but not carried into research
+
+- **The review text.** `raw.review_block`: 4,697 passages, 1.4 million characters, 1,074 pages (Ballet 702, Opera 262,
+  All 110). Research rows cite `page_id`, `block_id` and `printed_folio`, but the passage itself is not in research or the
+  sqlite export: a reader can find the folio but not read the sentence the row came from.
+- **Mentions in the prose.** `entities.review_mention`: 27,327 (22,102 linked to a person, work or institution). Research keeps
+  only the structured statements built from them, so "every passage that names Кшесинская" is not a research query.
+- `entities.review_person` / `review_work`: the review-only people and works, carried into `research.person` and
+  `research.work` (person_source / work_source = review).
+
+### Things noticed (for RG)
+
+1. **No link from a review statement to a Repertoire event or performance.** Only 683 of 2,655 cast statements carry a date,
+   and none carries an `event_id`. "Who danced this role on this night" needs a hand join on season, city, work and date.
+2. **The review text is not in research** (above): this is also the provenance goal's main review gap.
+3. **Theater mentions (held over from section 3, T2):** 32 adjective «Новыя / Новая / Новыхъ» linked to the «Новый» theater,
+   105 Petersburg theater names unlinked. No research table uses them.
+4. Coverage after 1907-08 is thin (1908-09 5 statements from 12 pages; 1909-10 no pages; 1910-11 2): the later reviews are
+   narrative, without cast lists. The 1912-13 pages are outside the Repertoire's seasons.
+5. Craft credits with no person: footwear 3, headwear 2 (of 5); costume_design 7 of 28; scenery 45 of 230.
+
+### RG's questions and rulings
+
+**R1 — the review text in research (RG 2026-11-04, "Yes, add the text").** New `research.review_page` (1,074: season, city,
+genre, printed folio, reading-order flag, number of passages) and `research.review_passage` (4,697: page, position, kind of
+passage, text, caption), built by `build_reviews_duckdb.py` from `raw.review_page` / `raw.review_block` (the text after
+`review_text_corrections.csv`), so they refresh with every review-chain run. Every `review_assertion` and `review_credit`
+row's `block_id` resolves to a passage. Opera and «All» review pages are included (the text, not cast data). Export schema
+in `build_datasette.py`; `docs/schema.md`. Nothing else changed; 0 person_link shifts.

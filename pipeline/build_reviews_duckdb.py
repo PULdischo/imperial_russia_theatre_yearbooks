@@ -210,7 +210,33 @@ def main() -> None:
     """)
     set_unlinked_reasons(con)
 
-    for t in ("raw.review_page", "raw.review_block", "entities.review_mention"):
+    # The review text in research (RG 2026-11-04, research-layer review: "Yes, add the text"), so a reader can read the
+    # passage every review_* row cites (page_id, block_id, printed_folio). The text is raw.review_block's, after
+    # docs/eval/review_text_corrections.csv. copy_artifacts is left out (unreliable; see known_issues.md).
+    con.execute("DROP TABLE IF EXISTS research.review_passage")
+    con.execute("DROP TABLE IF EXISTS research.review_page")
+    con.execute("CREATE SCHEMA IF NOT EXISTS research")
+    con.execute("""
+        CREATE TABLE research.review_page (
+            page_id VARCHAR PRIMARY KEY, season VARCHAR, city VARCHAR, genre VARCHAR, printed_folio VARCHAR,
+            reading_order_uncertain BOOLEAN, n_passages INTEGER
+        )""")
+    con.execute("""
+        INSERT INTO research.review_page
+        SELECT p.page_id, p.season, p.city, p.genre, p.printed_folio, p.reading_order_uncertain,
+               (SELECT count(*) FROM raw.review_block b WHERE b.page_id = p.page_id)
+        FROM raw.review_page p""")
+    con.execute("""
+        CREATE TABLE research.review_passage (
+            block_id VARCHAR PRIMARY KEY, page_id VARCHAR REFERENCES research.review_page(page_id),
+            block_index INTEGER, block_type VARCHAR, text VARCHAR, caption_text VARCHAR
+        )""")
+    con.execute("""
+        INSERT INTO research.review_passage
+        SELECT block_id, page_id, block_index, block_type, text, caption_text FROM raw.review_block""")
+
+    for t in ("raw.review_page", "raw.review_block", "entities.review_mention",
+              "research.review_page", "research.review_passage"):
         n = con.execute(f"SELECT count(*) FROM {t}").fetchone()[0]
         print(f"  {t:28s} {n:>8,} rows")
 

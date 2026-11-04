@@ -26939,3 +26939,35 @@ SELECT printed_page_number, source_file FROM research.production WHERE productio
 
 Result: 5 supplied performances; 4 cite review folios (ff. 110, 227/233/234, 154). The 1904-05 «Дочь фараона» row cited
 only ids; the review page is f. 117, the list entry p. 138. Note updated; after the rebuild only that performance row differs.
+
+## 2026-11-04 — Research-layer review: Season reviews
+
+```sql
+DESCRIBE research.review_assertion; -- and review_credit, review_dance, review_dance_performer, review_dance_composer, review_solo
+SELECT count(*), count(performer_person_id), count(work_id), count(nullif(date_undate,'')), count(DISTINCT page_id), count(DISTINCT season)
+FROM research.review_assertion;  -- same for review_solo, review_credit (person_id); review_dance; performer/composer tables
+SELECT link_method, count(*) FROM research.review_assertion GROUP BY 1;  SELECT work_source, count(*) FROM research.review_assertion GROUP BY 1;
+SELECT role_category, count(*), count(person_id) FROM research.review_credit GROUP BY 1;
+SELECT season, city, count(*) FROM research.review_assertion GROUP BY 1,2;
+SELECT season, count(*) FILTER (WHERE genre='Ballet'), count(*) FROM raw.review_page GROUP BY 1;
+SELECT count(*), sum(length(text)) FROM raw.review_block;  SELECT genre, count(*) FROM raw.review_page GROUP BY 1;
+SELECT count(*), count(entity_id) FROM entities.review_mention;
+```
+
+Result: assertions 2,655 (person 2,426, work 1,877, dated 683; 356 pages, 19 seasons); solos 96 (69/37/6); credits 2,410
+(person 2,226, work 2,358, dated 1,044; 530 pages, 20 seasons); dances 914 (work 632, dated 56), performers 2,982 (2,881),
+composers 67 (34). link_method: already-linked 2,317, unresolved 229, spiski-credit 109. work_source: block 1,523, none 449,
+page-earlier-block 407, previous-page 138, ambiguous 138. Raw: 4,697 blocks / 1,402,786 chars; pages Ballet 702, Opera 262,
+All 110; seasons 1890-91..1910-11 (no 1898-99, 1909-10) + 1912-13 (4). Mentions 27,327 (22,102 linked).
+
+## 2026-11-04 — Research-layer review R1: research.review_page + review_passage (test on a copy, then production)
+
+```sql
+SELECT count(*) FROM research.review_assertion a LEFT JOIN research.review_passage p USING (block_id) WHERE p.block_id IS NULL;
+SELECT count(*) FROM research.review_credit a LEFT JOIN research.review_passage p USING (block_id) WHERE p.block_id IS NULL;
+SELECT p.printed_folio, left(t.text, 160) FROM research.review_passage t JOIN research.review_page p USING (page_id)
+WHERE t.block_id = 'review_1904-05_SP_ballet_p012__b004';
+```
+
+Result: review_page 1,074, review_passage 4,697; 0 assertions and 0 credits without a passage; the 13 Feb 1905 «Дочь
+Фараона» passage reads at f. 117. Every other table identical to production; 0 person_link shifts.

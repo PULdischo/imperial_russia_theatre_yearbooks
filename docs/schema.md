@@ -800,3 +800,12 @@ Why `date` differs from the printed `date_undate`, or why the date is doubted: t
 `analysis.event_entry_date_check` («scan-verified: book prints day as "9" (should be "4"; …)», «the page misprints every
 weekday word one day ahead …»), or, for a page whose month and year come from `RESEARCH_PAGE_MONTH_OVERRIDES`, that reason.
 Set on every `corrected_manual` and `no_weekday` event (86), NULL otherwise. RG, 2026-11-03, research-layer review.
+
+## The review text — `research.review_page`, `research.review_passage` (added 2026-11-04)
+
+`review_page`: one row per review page (`page_id`, `season`, `city`, `genre` Ballet / Opera / All, `printed_folio`,
+`reading_order_uncertain`, `n_passages`). `review_passage`: one row per passage (`block_id`, `page_id`, `block_index`,
+`block_type` paragraph / enumerated_list / figure / heading / cast_list / verse / footnote …, `text`, `caption_text` for
+figures). Built by `build_reviews_duckdb.py` from `raw.review_page` and `raw.review_block`; the text is the transcription
+after `docs/eval/review_text_corrections.csv`. Join any `review_*` row on `block_id` to read the passage it came from, and on
+`page_id` for the folio. RG, 2026-11-04, research-layer review ("Yes, add the text").
