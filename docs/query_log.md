@@ -27370,3 +27370,37 @@ research.person_appearance and person_performance_tally. All three seasons now r
 person_link 0 shift blocks. Review chain rerun: 0 differences in all six review tables, so production's review layer is unchanged.
 Aside: outputs/full_run/raw holds 1,552 «*.raw 2.json» copies (dated from 2026-10-01) beside 1,654 real pages; parse_and_validate
 reads pages by exact name, so they are ignored. Not touched.
+
+## 2026-11-04 — People items 1-2: is person_appearance.city still blank? Where does «Заслуженн… артист…» sit?
+
+```sql
+SELECT entity_type, count(*), count(city) FROM research.person_appearance GROUP BY 1;
+SELECT entity_type, city, count(*) FROM research.person_appearance GROUP BY 1,2;
+SELECT a.season, p.display_name, a.heading_path FROM research.person_appearance a JOIN research.person p USING(person_id)
+WHERE a.entity_type='Administrators' AND a.heading_path LIKE 'Дирекція%' AND a.city='SP';
+SELECT season, count(*) FROM research.person_appearance WHERE rank ILIKE '%аслужен%' GROUP BY 1;
+SELECT season, count(*) FROM research.person_appearance WHERE tenure_note_text ILIKE '%аслужен%' AND coalesce(rank,'') NOT ILIKE '%аслужен%' GROUP BY 1;
+-- per holder (Гельцеръ В., Дриго, Ивановъ Л., Кшесинская 2-я, Направникъ, Петипа 1-я, Преображенская), 1898-99 on: rank / note-only / none
+```
+
+Result: item 1 is already resolved — city is filled on all 23,980 appearances (Administrators Moscow 782 / SP 988 / both 132 — the
+Directorate; the 6 Directorate-heading SP rows are Свенторжецкій, «Техникъ при С.-Петербургской Конторѣ», correctly SP). Item 2: rank
+carries the honour 21 times, 1900-01 – 1910-11 (forms «Заслуженный артистъ», «… Императорскихъ театровъ», with/without final stop);
+6 appearances carry it only in tenure_note_text (Ивановъ Л. 1901-02; Петипа 1-я 1902-03, 1904-05; Кшесинская 2-я 1904-05, 1906-07 ×2).
+Scan check by Claude of the gap seasons: the print omits it in Петипа 1-я 1903-04, 1905-06, 1907-08, 1908-09, 1910-11, Гельцеръ 1906-07,
+Кшесинская 1903-04 (stored correctly); it IS printed but stored nowhere in Гельцеръ 1904-05 (p. 57, «Заслуженный артистъ.») and
+Кшесинская 1907-08 (p. 17, «Заслуженная артистка Императорскихъ театровъ.»). Evidence docs/eval/scan_audit/Zasluzhennaya_honour_evidence.png.
+
+## 2026-11-04 — «Заслуженн… артист…» put in rank for 8 entries (RG "Yes, fix the 8"): rebuild checked
+
+```sql
+-- every table, backup (pre-edit) vs rebuilt production (EXCEPT ALL, diff.py)
+SELECT season, count(*) FROM research.person_appearance WHERE rank ILIKE '%аслужен%' GROUP BY 1;
+SELECT count(*) FROM research.person_appearance WHERE tenure_note_text ILIKE '%аслужен%' AND coalesce(rank,'') NOT ILIKE '%аслужен%';
+```
+
+Result: raw rank_or_title set on 8 BalletArtists entries (Ивановъ Л. 1901-02; Петипа 1-я 1902-03, 1904-05; Кшесинская 1904-05, 1906-07 SP,
+1906-07 MSK, 1907-08; Гельцеръ В. 1904-05), and the printed sentence added to tenure_note_text for the two missed entries (Гельцеръ 1904-05
+«Заслуженный артистъ.», Кшесинская 1907-08 «Заслуженная артистка Императорскихъ театровъ.»). Diff vs backup: exactly 8 rows in
+raw.person_entry, analysis.person_entry, research.person_appearance; nothing else. rank now carries the honour 29 times (1900-01 – 1910-11);
+0 appearances carry it only in the note. person_link 0 shift blocks. Review scripts do not read rank (grep), so not rerun.

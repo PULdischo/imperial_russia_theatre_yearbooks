@@ -838,3 +838,16 @@ not yet fixed. Noticed: a stray `balletartists_1902-03_MSK_p007.raw 2.json` sits
 Follow-up (RG 2026-11-04, "Yes, fix both"): the same «Пуспень» → «Пуспенъ» fix applied to Сидоровъ's 1903-04 and 1905-06 Moscow credits
 (raw JSON, two fields each; rebuilt; two rows changed per table; review layer unchanged). Not chased: outputs/full_run/raw holds 1,552
 «*.raw 2.json» copies (from 2026-10-01 on), ignored by the pipeline.
+
+## People items left from section 1 (2026-11-04)
+
+**Item 1 — blank `city` (closed, no change).** Already resolved by the other sessions' "staff-list city/folio" addition: `city` is filled
+on all 23,980 appearances from each list's printed heading (Directorate staff «both»; Свенторжецкій, «Техникъ при С.-Петербургской
+Конторѣ», SP).
+
+**Item 2 — «Заслуженн… артист…» (RG 2026-11-04, "Yes, fix the 8").** `rank` already carried the honour from 1900-01; 6 entries had it
+only in the tenure note and 2 had it in print but nowhere in the data. Scan check by Claude of the gap seasons: the print omits it for
+Петипа 1-я 1903-04, 1905-06, 1907-08, 1908-09, 1910-11, Гельцеръ 1906-07 and Кшесинская 1903-04 (left as stored). Fixed in raw
+(`rank_or_title` on all 8; the printed sentence added to the note for Гельцеръ 1904-05 Moscow p. 57 and Кшесинская 1907-08 SP p. 17);
+rebuilt with rebuild_after_raw_edit.sh; exactly 8 rows changed per table. Evidence `docs/eval/scan_audit/Zasluzhennaya_honour_evidence.png`.
+Only these seven holders were checked; a corpus sweep for other missed honours was not done.
