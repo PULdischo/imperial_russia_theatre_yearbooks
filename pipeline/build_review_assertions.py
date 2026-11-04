@@ -648,6 +648,12 @@ def main() -> None:
             named_dance[(r["block_id"], r["surface"], int(r["occurrence"]))] = (
                 r["parent_work_id"], r["parent_title"])
     dances: list[dict] = []
+    # Blocks quoting an earlier year's cast (docs/eval/review_historical_passages.csv, read again below for the
+    # dates): their performers are not resolved through the spiski credits, which are the review season's (RG
+    # 2026-11-03: the 1865 «Путешествующая танцовщица» cast had linked «г-жа М. С. Петипа» to Петипа 1-я that way).
+    _hp = Path("docs/eval/review_historical_passages.csv")
+    historical_blocks = ({r["block_id"] for r in csv.DictReader(open(_hp, encoding="utf-8"))}
+                         if _hp.exists() else set())
 
     # people the corpus knows as composers or musicians (see the composer pass)
     composer_ok = {str(r[0]) for r in con.execute("""
@@ -846,7 +852,7 @@ def main() -> None:
                 return (g is None) or (g == want_g)
 
             rk = key_of(role_s)
-            if not entity and cands:
+            if not entity and cands and block_id not in historical_blocks:
                 cands = [c for c in cands if gender_ok(c)]
                 hits = [c for c in cands if (c, rk) in by_role]
                 exact = [c for c in hits if page["season"] in by_role[(c, rk)]]
@@ -1064,6 +1070,31 @@ def main() -> None:
         if x["block_id"] in historical:
             x["date_undate"] = historical[x["block_id"]]; x["historical"] = True; seen_hist.add(x["block_id"])
     print(f"historical passages: {len(historical)} listed, {len(seen_hist)} with rows here")
+
+    # Row-level fixes (RG 2026-11-03, old-cast sweep follow-ups): docs/eval/review_assertion_overrides.csv, keyed by block,
+    # role_surface and performer_surface ('*' = any). action set_date: the row takes `value` as its date (a block holding two
+    # performances of different years, or a cast dated from a première mentioned in passing); action exclude: drop a row that
+    # is not a role assertion (a misparsed sentence). Every override must match at least one row.
+    ov_path = Path("docs/eval/review_assertion_overrides.csv")
+    if ov_path.exists():
+        ovs = list(csv.DictReader(open(ov_path, encoding="utf-8")))
+        hit = [0] * len(ovs); drop = set()
+        for k, o in enumerate(ovs):
+            for i, r in enumerate(out):
+                if (r["block_id"] == o["block_id"] and o["role_surface"] in ("*", r["role_surface"])
+                        and o["performer_surface"] in ("*", r["performer_surface"])):
+                    hit[k] += 1
+                    if o["action"] == "set_date":
+                        r["date_undate"] = o["value"]
+                    elif o["action"] == "exclude":
+                        drop.add(i)
+                    else:
+                        raise SystemExit(f"{ov_path}: unknown action {o['action']!r}")
+        missing = [(o["block_id"], o["role_surface"], o["performer_surface"]) for o, n in zip(ovs, hit) if not n]
+        if missing:
+            raise SystemExit(f"{ov_path}: {len(missing)} override(s) match no row: {missing[:5]}")
+        out = [r for i, r in enumerate(out) if i not in drop]
+        print(f"assertion overrides: {len(ovs)} rows, {sum(hit)} assertions touched, {len(drop)} dropped")
 
     a.out.parent.mkdir(parents=True, exist_ok=True)
     cols = ["page_id", "block_id", "season", "city", "printed_folio", "date_undate",

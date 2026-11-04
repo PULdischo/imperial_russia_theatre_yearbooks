@@ -134,3 +134,47 @@ Still to put to RG: and the listed-after-leaving cases (Иванова 2-я, Л�
 - 1906-07 Ѳедорова review mentions LINKED 2026-11-03 (RG "Link all five"; docs/eval/review_mention_links.csv): «Ѳедорова 2-я» x4 -> Лидія
   Ѳедоровна, «Ѳедорова 1-я» x1 -> Марія Дмитріевна (the 1906-07 list prints «Федорова» 1-я/2-я, no. 102/103). «г-жа Ѳедорова» (Tyrolean
   dance, no ordinal) left unlinked.
+- DEFERRED (RG 2026-11-03: "I will want to do this, but not yet"): source volume + folio for every person appearance. Folio
+  (raw.source_pages.printed_page_number) is empty for all 966 staff-list pages; research.person_appearance has no page column.
+  RG: printed list numbers are not needed once volume and folio are there. Do after the city rule.
+- City for the four staff lists DONE 2026-11-03 (RG: "Most of these people will be linked to a city, but not all ... folks who oversaw
+  activities in BOTH cities"; "Yes, «both»"; "Yes, apply both"): research layer takes SP/Moscow from institution/heading, 'both' for
+  Directorate staff with no city (132 rows). 0 appearances without a city. Islands check found 7 raw heading errors across the SP/Moscow
+  divider, scan-read by Claude and fixed (B13_admin_heading_fixes_2026-11-03.csv): 1903-04 p.125 Мамошинъ, Разумовскій, Робинзонъ,
+  Розенбергъ, Самсоновъ are SP Контора clerks (stored under Moscow); Фонъ-Бооль 1902-03 p.126 and 1903-04 is the Moscow Контора's
+  manager. 30 correction-CSV rows given their city. person_tenure 3,034 -> 3,062 (people split by city: real moves/concurrent posts).
+- DEFERRED (RG 2026-11-03: "we'll do the sweep later"): sweep the Season Reviews for other quoted earlier casts (like the 1875
+  «Голубая Георгина»), which link to people from the review's season. The Works session handled a quoted 1865 cast separately.
+- C4 catalogue deaths DONE 2026-11-03 (RG "Yes, add them"): d3_deaths.py rerun (agree 170, no died end stored 32); scans read by Claude
+  found no dropped «†». New research.person_death: every printed death, one row per source (roster 194, obituary 108, death notice 6);
+  29 people have an obituary/notice death only (e.g. Бочкина † 11 Feb 1896, Юмашевъ † 5 Oct 1908). Tenure notes for Константиновъ Н. И.
+  and Тепферъ (listed 1896-97 after their 1896 deaths). OPEN, not checked: roster «†» earlier than later listings -- Николаева 3-я
+  Зинаида († 1 Dec 1902, listed to 1910-11), Козловъ Михаилъ Ѳедоровичъ († 1902, to 1904-05), Краюшкинъ († 1898, to 1900-01):
+  stale reprint or a merge of two people.
+- Folios DONE 2026-11-03 (RG "go ahead", "Yes, run Qwen"): docs/folios/staff_list_folios.csv, all 966 staff-list pages; research.person_appearance
+  gets source_file / scan_page / printed_folio. Local OCR (tesseract) tried first and rejected (7 of 26 known folios wrong). Qwen run: 559k
+  input tokens; 16 signature-mark misreads corrected by Claude on the scans; 6 last pages from the sequence. Supersedes the DEFERRED folio note.
+- Quoted-old-casts sweep DONE 2026-11-03 (RG "just go ahead and do the full old-cast sweep"; rule = RG's 1875 "Unlink all"): 169 review blocks
+  mention an earlier year, 45 with cast signals and links; a Claude helper classified them, Claude checked (docs/eval/oldcast_sweep_2026-11-03/).
+  109 performer mentions in quoted earlier casts unlinked (review_mention_links.csv, empty person_id); creators and current-season casts kept.
+  20 wholly historical blocks on review_historical_passages.csv: 7 dated (single dated performance), 13 multi-date successions left undated.
+  Assertion links 2,458 -> 2,428 (32 rows changed, all in the quoted casts). OPEN for RG: undated revivals (1900-01 SP p004 b003 Конекъ-
+  Горбунокъ cast; p007 b002 Леньяни «послѣ десятилѣтняго перерыва»; 1902-03 SP p018 b002 Спящая красавица première, 1890 not printed);
+  1900-01 SP p001 b002 Синяя борода assertions 709-718 probably 1900 not 1896-12-08; 1904-05 SP p015 b003 (1859 cast) assertions keep the
+  block's 1905-01-08 date (mixed block); wrong links outside casts: Коралли->Каралли Вѣра (1906-07 MSK p008 b003), Вальцъ Ѳедоръ (father)
+  ->Карлъ, Іогансонъ (teacher)->Анна, «М. М. Петипа» stager (1900-01 SP p001 b002), assertion 2052 misparsed Перро; Гердтъ jubilee
+  assertion 2998 role «31 января 1871 г».
+- Old-cast sweep follow-ups DONE 2026-11-03 (RG "okay go ahead"): new docs/eval/review_assertion_overrides.csv (set_date / exclude, read by
+  build_review_assertions.py): Синяя борода 1900-01 cast 1896-12-08 -> 1900-09-03 (Repertoire); Парижскій рынокъ block split, 1859 première
+  cast 1859-04-25, 1905 pupils' cast 1905-04-20 (both were 1905-01-08); assertions 2052 (Перро «самимъ авторомъ его») and 2998 (Гердтъ
+  «31 января 1871 г») dropped. Mention links: Коралли x2 -> creator Коралли; Іогансонъ (teacher) -> Христіанъ Петровичъ; «М. М. Петипа»
+  stager -> Маріусъ (print slip, genuine_print_typos.md); Вальцъ Ѳедоръ (father) unlinked; Леньяни in the earlier Эсмеральда revival
+  unlinked (Repertoire: revived 1899-00 after 1891-92). Спящая красавица 1902-03 première cast already handled by the sweep. LEFT LINKED,
+  ambiguous: 1900-01 SP p004 b003 Конекъ-горбунокъ «последнее возобновленіе» cast (Гиллертъ, Лукьяновъ, Медалинскій): last revival
+  6 Dec 1895 (Леньяни benefit) but Медалинскій joins only 1897-98, so the cast may be the current one; right people either way.
+- People listed after their printed death, checked 2026-11-03: Козловъ М. Ѳ. -- 1904-05 only reprints «† 5 ноября 1902 г.», no issue.
+  Николаева 3-я Зинаида -- RG "Yes, print error": the 1902-03 «† 1 декабря 1902 г.» (p.108 no.69) is a print error (she dances to 1911; no
+  other death near that date in the data). Research: service_period end cleared (service_period_date_corrections.csv, blank corrected_date
+  = print error, new in build_service_periods), so research.person_death 308 -> 307; tenure note added. Raw as printed. OPEN: Краюшкинъ
+  («† 20 ноября 1898 г.» first printed 1900-01; listed alive 1898-99, 1899-00; 1900 is the only year consistent with all three volumes).
+  Side finding: merge candidates 18 (Иванова 1-я Александровна/Адріановна) and 19 (Джури Адель/Аделина Антоновна) logged.

@@ -1,6 +1,6 @@
 person_id,display_name,list,city,slip_date,seasons,neighbour,checked,decided
-2c0a430d-5155-4e9e-98fe-77bacddc7238,"Захаровъ, Николай Константиновичъ",Administrators,,1889-03-01,1905-06..1907-08,"Крыловъ, Сергѣй (1 марта 1889, the next entry)","scan 1905-06, 1906-07, 1907-08",RG 2026-10-30
-02ebe26f-8ec1-449b-9c6f-22eef9bcfea7,"Коровинъ, Константинъ Алексѣевичъ",Administrators,,1902-12-06,1906-07..1907-08,"Дворецъ-Дворецкій (6 декабря 1902, the next entry)","scan 1906-07, 1907-08",RG 2026-10-30
+2c0a430d-5155-4e9e-98fe-77bacddc7238,"Захаровъ, Николай Константиновичъ",Administrators,Moscow,1889-03-01,1905-06..1907-08,"Крыловъ, Сергѣй (1 марта 1889, the next entry)","scan 1905-06, 1906-07, 1907-08",RG 2026-10-30
+02ebe26f-8ec1-449b-9c6f-22eef9bcfea7,"Коровинъ, Константинъ Алексѣевичъ",Administrators,Moscow,1902-12-06,1906-07..1907-08,"Дворецъ-Дворецкій (6 декабря 1902, the next entry)","scan 1906-07, 1907-08",RG 2026-10-30
 4b9294aa-c74a-4137-8b2e-8b22deefe162,"Воронцовъ, Владиміръ Васильевичъ",BalletArtists,Moscow,1901-09-01,1902-03..1903-04,"Валининъ (1901, above); the entry prints «съ 1 сентября 1901 г. по 1 ноября 1898 г. и съ 1 сентября 1901 г.»","scan 1902-03, 1903-04",RG 2026-10-30
 03fcb5a5-e9d2-4bd4-876f-31b95ca9a6bf,"Дмитріева 2-я, Пелагея Васильевна",BalletArtists,Moscow,1890-09-01,1890-91,"Дмитріева 3-я (1890, below)",scan 1890-91,RG 2026-10-30
 30808127-1815-471d-a8ae-62b17dfd3485,"Никитина 1-я, Анна Дмитріевна",BalletArtists,Moscow,1897-09-01,1908-09..1910-11,"Никитина 2-я (1897, below)","scan 1909-10; 1908-09, 1910-11 database",RG 2026-10-30
@@ -13,6 +13,6 @@ person_id,display_name,list,city,slip_date,seasons,neighbour,checked,decided
 fc6e2fd1-375f-402b-9c94-3fb2a99ee65a,"Рахмановъ 1-й, Сергѣй Павловичъ",BalletArtists,SP,1903-06-01,1905-06; 1907-08,"Рахмановъ 2-й (1903, below; his brother)","scan 1905-06, 1907-08",RG 2026-10-30
 2f14dc2b-eba9-4033-b61a-19fd9a5ceaab,"Ѳедоровъ, Леонидъ Ивановичъ",BalletArtists,SP,1888-06-01,1906-07,"Ѳедуловъ (1888, below)",scan 1906-07,RG 2026-10-30
 1fa9ef03-0a26-4bec-ab66-a00cbeabcd6a,"Петровъ, Иванъ Афанасьевичъ",Musicians,SP,1905-09-01,1908-09,"Порманинъ (1905, below)",scan 1908-09,RG 2026-10-30
-6bb8c912-bef7-45cb-b5dd-e5886e34a400,"Гуняшевъ, Петръ Тарасовичъ",ProductionTeam,,1861-10-03,1905-06..1907-08,"Вальцъ (3 октября 1861, the line above)","scan 1905-06 (M8 group 5 read); 1906-07, 1907-08 database",RG 2026-10-30
+6bb8c912-bef7-45cb-b5dd-e5886e34a400,"Гуняшевъ, Петръ Тарасовичъ",ProductionTeam,Moscow,1861-10-03,1905-06..1907-08,"Вальцъ (3 октября 1861, the line above)","scan 1905-06 (M8 group 5 read); 1906-07, 1907-08 database",RG 2026-10-30
 03d0366a-e3eb-4135-8dc8-ba3ecdfd2485,"Ромашковъ 3-й, Григорій Ѳедоровичъ",Musicians,Moscow,1893-10-01,1910-11,"Ромашковъ 1-й, Павелъ (1 октября 1893, the line above, no. 76)","scan 1910-11 p.136 (person field audit 2026-11-02, read by Claude)",RG 2026-11-02
 524eb941-05d3-4352-a213-5c2bd875a17f,"Гиллертъ, Станиславъ Феликсовичъ",BalletArtists,SP,1875-06-15,1906-07..1907-08,"(none; 1893-94..1905-06 print «15 іюля 1875 г.»)","person field audit 2026-11-02 (D1 scan reads, Claude)","RG 2026-11-02: contemporaneous printing wins"

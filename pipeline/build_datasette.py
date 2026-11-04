@@ -52,9 +52,10 @@ def _dates_as_iso(df):
 
 
 TABLES = ["theater", "work", "person", "event", "performance", "person_appearance", "person_tenure", "person_tenure_note",
-          "service_period", "person_assignment", "person_performance_tally", "set_design",
-          "production", "production_work", "production_credit",
-          "season_stat_check", "season_stat_line", "season_stat_footnote",
+          "service_period", "person_assignment", "person_performance_tally", "set_design", "person_death",
+          "production", "production_work", "production_credit", "production_date",
+          "season_stat_check", "season_stat_line", "season_stat_footnote", "season_stat_gap", "season_stat_gap_event",
+          "season_stat_page",
           "review_assertion", "review_solo", "review_credit",
           "review_dance", "review_dance_performer", "review_dance_composer"]
 
@@ -89,7 +90,7 @@ SCHEMAS = {
         CREATE TABLE event (
             event_id TEXT PRIMARY KEY, theater_id TEXT REFERENCES theater(theater_id),
             season TEXT, city TEXT, date_verbatim TEXT, date_undate TEXT,
-            date TEXT, date_confidence TEXT, event_status TEXT,
+            date TEXT, date_confidence TEXT, date_correction_note TEXT, event_status TEXT,
             receipts_total_kopecks INTEGER, receipts_source TEXT,
             receipts_correction_note TEXT, printed_page_number TEXT,
             time_of_day TEXT, receipts_verbatim TEXT, annotation TEXT,
@@ -114,7 +115,7 @@ SCHEMAS = {
             heading_path TEXT, "rank" TEXT, title TEXT, service_class TEXT,
             instrument TEXT, subject_taught TEXT, tenure_note_text TEXT,
             printed_start_date TEXT, printed_start_text TEXT, printed_service_periods INTEGER,
-            credit_summary_text TEXT
+            credit_summary_text TEXT, source_file TEXT, scan_page INTEGER, printed_folio INTEGER
         )""",
     # One row per run (person x list x city); city is null on 1,279 runs, so no composite key -- Datasette uses rowid.
     "person_tenure": """
@@ -159,6 +160,12 @@ SCHEMAS = {
             season TEXT, list TEXT, city TEXT, tally_order INTEGER, tally_kind TEXT,
             label TEXT, role_name TEXT, production_count INTEGER, times_text TEXT, times REAL, count_shared_with TEXT
         )""",
+    # Every printed death of a person, one row per source: roster «†», obituary, review death notice (RG 2026-11-03).
+    "person_death": """
+        CREATE TABLE person_death (
+            person_id TEXT REFERENCES person(person_id), source TEXT, season TEXT, printed_page TEXT, source_ref TEXT,
+            printed_text TEXT, death_date TEXT, death_year INTEGER, death_precision TEXT
+        )""",
     # New sets credited to a decorator, one row per set (RG 2026-11-03, docs/schema.md).
     "set_design": """
         CREATE TABLE set_design (
@@ -188,6 +195,14 @@ SCHEMAS = {
             role_category TEXT, role_text TEXT, name_printed TEXT, honorific_printed TEXT,
             qualifier_printed TEXT, is_pseudonym INTEGER, identification_status TEXT
         )""",
+    "production_date": """
+        CREATE TABLE production_date (
+            production_date_id TEXT PRIMARY KEY, production_id TEXT REFERENCES production(production_id),
+            date_order INTEGER, date TEXT, day_printed TEXT, month_printed TEXT, year_printed TEXT, note TEXT,
+            outside_total INTEGER, year_printed_matches_season INTEGER, date_correction_note TEXT,
+            event_id TEXT REFERENCES event(event_id), performance_id TEXT REFERENCES performance(performance_id),
+            n_matched_events INTEGER, match_note TEXT
+        )""",
     "season_stat_check": """
         CREATE TABLE season_stat_check (
             season TEXT, city TEXT, stats_format TEXT, stats_printed_page TEXT,
@@ -209,8 +224,25 @@ SCHEMAS = {
         )""",
     "season_stat_footnote": """
         CREATE TABLE season_stat_footnote (
-            season TEXT, footnote_no INTEGER, text_verbatim TEXT, note TEXT,
+            season TEXT, footnote_no INTEGER, city TEXT, text_verbatim TEXT, note TEXT,
             PRIMARY KEY (season, footnote_no)
+        )""",
+    "season_stat_gap": """
+        CREATE TABLE season_stat_gap (
+            gap_id TEXT PRIMARY KEY, season TEXT, city TEXT, category TEXT, theater TEXT,
+            events_gap_text TEXT, events_gap INTEGER, receipts_gap_before_rub REAL, receipts_gap_now_rub REAL,
+            outcome TEXT, event_ids_text TEXT, evidence TEXT, note TEXT, checked_by TEXT, checked_date TEXT,
+            n_events_linked INTEGER
+        )""",
+    "season_stat_page": """
+        CREATE TABLE season_stat_page (
+            season TEXT PRIMARY KEY, source_file TEXT, printed_page TEXT, heading_verbatim TEXT,
+            heading_footnote TEXT, format TEXT, note TEXT
+        )""",
+    "season_stat_gap_event": """
+        CREATE TABLE season_stat_gap_event (
+            gap_id TEXT REFERENCES season_stat_gap(gap_id), event_id TEXT REFERENCES event(event_id),
+            PRIMARY KEY (gap_id, event_id)
         )""",
     # What a season review ASSERTS: this performer danced this role, in
     # this work, on this date. RG 2026-10-12: include it in the published

@@ -531,40 +531,46 @@ LIST_DATE_PRINT_TYPOS = {
         "2026-10-29); the Repertoire has «Русланъ и Людмила, оп.» at the Большой on 21 Sep 1901 (Friday) and «Лебединое "
         "озеро, бал.» on 21 Oct (Sunday), read blind; the list gives no October date and the Repertoire's 8 performances "
         "equal its «Всего—8»; «октября» dropped in the list (RG, 2026-10-30: \"I think this is most likely\"; ledger 1901-02-14)"),
+    # RG 2026-11-03 (research-layer review, "Yes, add the three"): list slips already found in the reconciliations
+    "balletproductions_1895-96_MSK_p001__e006__d001": (
+        "1896-05-03", "printed «Пробужденіе Флоры … мая 2, 22» (Moscow list p. 41); the Repertoire (read blind) and the "
+        "Moscow ballet review have it on 3 May, and 2 May is «Паяцы» + «Даита»; one-digit slip in the list (ledger 1895-96-09)"),
+    "balletproductions_1904-05_SP_p001__e006__d002": (
+        "1904-12-27", "printed «На перепутьи … декабря 12, 17» (SP list p. 139); 17 Dec is «Валкірія», the ballet was at the "
+        "27 Dec matinée, as the list's own «Пробужденіе Флоры» entry has it; the list's slip (RG, 2026-10-29; ledger 1904-05-17)"),
+    "balletproductions_1908-09_MSK_p001__e005__d002": (
+        "1908-10-08", "printed «Спящая красавица … октября 18» (Moscow list p. 71); the Repertoire has it at the Большой on "
+        "8 Oct (Среда, 1040 р. 89 к.) and a dash on 18 Oct; count 7 = 7; the list's slip (ledger 1908-09-03)"),
 }
 
 
-def ballet_list_matches(con: duckdb.DuckDBPyConnection) -> list:
-    """Every (list date, Repertoire performance) pair that names the same ballet.
+def _list_date_matches(con: duckdb.DuckDBPyConnection) -> list:
+    """Every (list date, Repertoire performance) pair that names the same ballet, keyed by the list date's own id.
 
-    Returns tuples (season, city, date 'YYYY-MM-DD', list_title, list_note, event_id,
-    work_id, parent_work_id_if_matched_via_parent). Matching: same city and date, and
-    the title equal after norm() (or a curated alias), or the work is an excerpt of
-    it. Shared by ballet_list_work_ids (parent genre) and
-    pipeline/compare_season_stats.py (ballet counts).
+    Returns tuples (production_performance_id, season, city, date 'YYYY-MM-DD', list_title, list_note, event_id,
+    work_id, parent_work_id_if_matched_via_parent, performance_id). Matching: same city and date, and the title equal
+    after norm() (or a curated alias), or the work is an excerpt of it. A list date whose print is a confirmed typo
+    (LIST_DATE_PRINT_TYPOS) is matched on the intended date.
     """
     from compare_productions_repertoire import norm, contains
-    lst = con.execute("""
-        SELECT e.season, e.city, e.title, strftime(p.date, '%Y-%m-%d'), p.note
+    lst = {r[0]: list(r[1:]) for r in con.execute("""
+        SELECT p.production_performance_id, e.season, e.city, e.title, strftime(p.date, '%Y-%m-%d'), p.note
         FROM raw.production_entry_performance p JOIN raw.production_entry e USING (production_entry_id)
         WHERE p.date IS NOT NULL
-    """).fetchall()
+    """).fetchall()}
     for perf_id, (iso, _why) in LIST_DATE_PRINT_TYPOS.items():
         row = con.execute("""
-            SELECT e.season, e.city, e.title, p.note, p.date
+            SELECT e.season, e.city, e.title, p.note
             FROM raw.production_entry_performance p JOIN raw.production_entry e USING (production_entry_id)
             WHERE p.production_performance_id = ?""", [perf_id]).fetchone()
         if row is None:
             print(f"  WARNING: LIST_DATE_PRINT_TYPOS: {perf_id} not found in raw.production_entry_performance")
         else:                         # unparsed in raw, or parsed from the misprint: use the intended date
-            if row[4] is not None:
-                printed = (row[0], row[1], row[2], row[4].strftime('%Y-%m-%d'), row[3])
-                if printed in lst:
-                    lst.remove(printed)
-            lst.append((row[0], row[1], row[2], iso, row[3]))
+            lst[perf_id] = [row[0], row[1], row[2], iso, row[3]]
     rep = con.execute("""
         SELECT ae.city, coalesce(dc.corrected_date_undate, ae.date_undate) AS d, eep.event_id,
-               wl.work_id, eep.performance_title, w.canonical_title, w.excerpt_of_work_id, pw.canonical_title
+               wl.work_id, eep.performance_title, w.canonical_title, w.excerpt_of_work_id, pw.canonical_title,
+               eep.performance_id
         FROM raw.event_entry_performance eep
         JOIN entities.work_link wl ON wl.raw_performance_id = eep.performance_id
         JOIN analysis.event_entry ae ON ae.event_id = eep.event_id
@@ -574,17 +580,28 @@ def ballet_list_matches(con: duckdb.DuckDBPyConnection) -> list:
         WHERE ae.event_status = 'performed'
     """).fetchall()
     by_day = {}
-    for city, d, eid, wid, vt, ct, parent_id, pt in rep:
-        by_day.setdefault((city, d), []).append((eid, wid, {norm(vt), norm(ct)} - {""}, norm(pt), parent_id))
+    for city, d, eid, wid, vt, ct, parent_id, pt, rpid in rep:
+        by_day.setdefault((city, d), []).append((eid, wid, {norm(vt), norm(ct)} - {""}, norm(pt), parent_id, rpid))
     aliases = {norm(k): {norm(v) for v in vs} for k, vs in BALLET_LIST_TITLE_ALIASES.items()}
     out = []
-    for season, city, title, d, note in lst:
+    for lpid, (season, city, title, d, note) in lst.items():
         lkeys = {norm(title)} | aliases.get(norm(title), set())
-        for eid, wid, keys, pkey, parent_id in by_day.get((city, d), []):
+        for eid, wid, keys, pkey, parent_id, rpid in by_day.get((city, d), []):
             if (lkeys & keys) or (pkey and pkey in lkeys) or any(contains(k, lk) for k in keys for lk in lkeys):
-                out.append((season, city, d, title, note, eid, wid,
-                            parent_id if (parent_id is not None and pkey in lkeys) else None))
+                out.append((lpid, season, city, d, title, note, eid, wid,
+                            parent_id if (parent_id is not None and pkey in lkeys) else None, rpid))
     return out
+
+
+def ballet_list_matches(con: duckdb.DuckDBPyConnection) -> list:
+    """Every (list date, Repertoire performance) pair that names the same ballet.
+
+    Returns tuples (season, city, date 'YYYY-MM-DD', list_title, list_note, event_id,
+    work_id, parent_work_id_if_matched_via_parent): _list_date_matches without the two ids.
+    Shared by ballet_list_work_ids (parent genre) and pipeline/compare_season_stats.py
+    (ballet counts).
+    """
+    return [m[1:9] for m in _list_date_matches(con)]
 
 
 def ballet_list_work_ids(con: duckdb.DuckDBPyConnection) -> dict:
@@ -753,6 +770,90 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
         LEFT JOIN research.person p USING (person_id) WHERE p.person_id IS NULL""").fetchone()[0]
     if orphans:
         raise SystemExit(f"research.production_credit: {orphans} credits point at no research.person")
+    build_production_dates(con)
+
+
+def build_production_dates(con: duckdb.DuckDBPyConnection) -> None:
+    """research.production_date: every date a ballet productions list prints (RG 2026-11-03, research-layer review:
+    "Yes, add them"), with its printed day/month/year, its note («3-е дѣйствіе», «прологъ» ...) and flags, and the
+    Repertoire event and performance it names (_list_date_matches). event_id / performance_id are set only when the
+    match is unique; n_matched_events and match_note say what happened otherwise."""
+    import collections
+    hits = collections.defaultdict(list)
+    for lpid, *_rest, eid, _wid, _parent, rpid in _list_date_matches(con):
+        hits[lpid].append((eid, rpid))
+    in_event = {r[0] for r in con.execute("SELECT event_id FROM research.event").fetchall()}
+    in_perf = {r[0] for r in con.execute("SELECT performance_id FROM research.performance").fetchall()}
+    tod = dict(con.execute("SELECT event_id, time_of_day FROM research.event").fetchall())
+    # Second pass for a date the Repertoire match leaves empty: the same city and date in research, by the research
+    # work's title (a corrected misprint such as «Шоиеніана») or a performance supplied from the list itself.
+    from compare_productions_repertoire import norm
+    research_day = collections.defaultdict(list)
+    for city, d, eid, rpid, t, pt in con.execute("""
+            SELECT e.city, e.date_undate, e.event_id, p.performance_id, w.canonical_title, pw.canonical_title
+            FROM research.performance p JOIN research.event e USING (event_id)
+            JOIN research.work w USING (work_id) LEFT JOIN research.work pw ON pw.work_id = w.excerpt_of_work_id""").fetchall():
+        research_day[(city, d)].append((eid, rpid, {norm(t), norm(pt or "")} - {""}))
+    aliases = {norm(k): {norm(v) for v in vs} for k, vs in BALLET_LIST_TITLE_ALIASES.items()}
+    rows = []
+    for lpid, has_date, city, title, iso, lnote in con.execute("""
+            SELECT p.production_performance_id, p.date IS NOT NULL, e.city, e.title, strftime(p.date, '%Y-%m-%d'),
+                   lower(coalesce(p.note, ''))
+            FROM raw.production_entry_performance p JOIN raw.production_entry e USING (production_entry_id)""").fetchall():
+        typo = LIST_DATE_PRINT_TYPOS.get(lpid)
+        h = [(e, p) for e, p in hits.get(lpid, []) if e in in_event]
+        if not h and (typo or iso):
+            lkeys = {norm(title)} | aliases.get(norm(title), set())
+            h = [(e, p) for e, p, keys in research_day.get((city, typo[0] if typo else iso), []) if keys & lkeys]
+        # the list's own note says which of a day's two events: «утро» / «вечеръ»
+        if len({e for e, _ in h}) > 1 and lnote in ("утро", "утромъ", "вечеръ", "вечеромъ"):
+            want = "morning" if lnote.startswith("утр") else "evening"
+            h = [(e, p) for e, p in h if tod.get(e) == want] or h
+        events = sorted({e for e, _ in h})
+        perfs = sorted({p for _, p in h if p in in_perf})
+        if h:
+            note = "matched" if len(events) == 1 and len(perfs) == 1 else (
+                f"matches {len(perfs)} performances of one event" if len(events) == 1
+                else f"matches {len(events)} events that day: " + ", ".join(events))
+        elif not has_date and not typo:
+            note = "no date parsed from the print"
+        else:
+            note = "no Repertoire performance that day names this ballet"
+        rows.append((lpid, typo[0] if typo else None, typo[1] if typo else None,
+                     events[0] if len(events) == 1 else None,
+                     perfs[0] if len(events) == 1 and len(perfs) == 1 else None, len(events), note))
+    con.execute("""CREATE OR REPLACE TEMP TABLE prod_date_match (production_performance_id VARCHAR, typo_date VARCHAR,
+                   typo_note VARCHAR, event_id VARCHAR, performance_id VARCHAR, n_events INTEGER, match_note VARCHAR)""")
+    con.executemany("INSERT INTO prod_date_match VALUES (?, ?, ?, ?, ?, ?, ?)", rows)
+    con.execute("""
+        CREATE TABLE research.production_date (
+            production_date_id VARCHAR PRIMARY KEY,
+            production_id VARCHAR REFERENCES research.production(production_id),
+            date_order INTEGER,
+            date DATE,
+            day_printed VARCHAR, month_printed VARCHAR, year_printed VARCHAR,
+            note VARCHAR,
+            outside_total BOOLEAN,
+            year_printed_matches_season BOOLEAN,
+            date_correction_note VARCHAR,
+            event_id VARCHAR REFERENCES research.event(event_id),
+            performance_id VARCHAR REFERENCES research.performance(performance_id),
+            n_matched_events INTEGER,
+            match_note VARCHAR
+        )""")
+    con.execute("""
+        INSERT INTO research.production_date
+        SELECT p.production_performance_id, p.production_entry_id, p.date_order,
+               coalesce(try_cast(m.typo_date AS DATE), p.date),
+               p.day_text, p.month_text, p.year_text, p.note, p.outside_total, p.year_printed_matches_season,
+               CASE WHEN m.typo_note IS NOT NULL THEN 'printed date is a misprint; matched on '
+                    || m.typo_date || ': ' || m.typo_note END,
+               m.event_id, m.performance_id, m.n_events, m.match_note
+        FROM raw.production_entry_performance p JOIN prod_date_match m USING (production_performance_id)
+    """)
+    for note, n in con.execute("""SELECT regexp_replace(match_note, ':.*', ''), count(*) FROM research.production_date
+                                  GROUP BY 1 ORDER BY 2 DESC""").fetchall():
+        print(f"  research.production_date: {n} {note}")
 
 
 def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
@@ -782,7 +883,8 @@ def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
     The genre/theater-level comparison (families, ballet three ways) stays in
     pipeline/compare_season_stats.py, because it needs judgment-based classification.
     """
-    for t in ("season_stat_check", "season_stat_line", "season_stat_footnote"):
+    for t in ("season_stat_gap_event", "season_stat_gap", "season_stat_check", "season_stat_line", "season_stat_footnote",
+              "season_stat_page", "season_stat_dated_note"):
         con.execute(f"DROP TABLE IF EXISTS research.{t}")
     con.execute("""
         CREATE TABLE research.season_stat_line (
@@ -804,10 +906,42 @@ def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
         raise SystemExit(f"research.season_stat_line: {bad} lines with a city that is not С.-Петербургъ / Москва")
     con.execute("""
         CREATE TABLE research.season_stat_footnote (
-            season VARCHAR, footnote_no INTEGER, text_verbatim VARCHAR, note VARCHAR,
+            season VARCHAR, footnote_no INTEGER, city VARCHAR, text_verbatim VARCHAR, note VARCHAR,
             PRIMARY KEY (season, footnote_no)
         )""")
-    con.execute("INSERT INTO research.season_stat_footnote SELECT season, footnote_no, text_verbatim, note FROM raw.season_stat_footnote")
+    # city (RG 2026-11-03, research-layer review: "Yes, add it"): a page numbers its footnotes in one run for both
+    # cities; each mark sits on the lines it explains, so the city is that of the lines carrying it, or 'page' for the
+    # heading's own note. The build stops if a footnote is carried by both cities or by nothing.
+    con.execute("""
+        INSERT INTO research.season_stat_footnote
+        WITH refs AS (
+            SELECT season, city, trim(unnest(string_split(footnote_refs, ','))) AS r
+            FROM research.season_stat_line WHERE footnote_refs IS NOT NULL
+        ), fc AS (
+            SELECT season, r, string_agg(DISTINCT city, '+' ORDER BY city) AS cities FROM refs GROUP BY season, r
+        )
+        SELECT f.season, f.footnote_no,
+               CASE WHEN fc.cities IS NOT NULL THEN fc.cities
+                    WHEN pg.heading_footnote = f.footnote_no::VARCHAR THEN 'page' END,
+               f.text_verbatim, f.note
+        FROM raw.season_stat_footnote f
+        LEFT JOIN fc ON fc.season = f.season AND fc.r = f.footnote_no::VARCHAR
+        LEFT JOIN raw.season_stat_page pg ON pg.season = f.season""")
+    odd = con.execute("""SELECT season, footnote_no, city FROM research.season_stat_footnote
+                         WHERE city IS NULL OR city NOT IN ('SP', 'Moscow', 'page')""").fetchall()
+    if odd:
+        raise SystemExit(f"research.season_stat_footnote: footnotes with no single city: {odd[:10]}")
+    # The page itself, verbatim (RG 2026-11-03, research-layer review: "Yes, add them"). The 1909-10 dated notes printed
+    # after each city's totals are NOT carried: every one repeats an event heading (research.event.annotation); RG
+    # 2026-11-03 "roll it back". raw.season_stat_dated_note keeps them.
+    con.execute("""
+        CREATE TABLE research.season_stat_page (
+            season VARCHAR PRIMARY KEY, source_file VARCHAR, printed_page VARCHAR, heading_verbatim VARCHAR,
+            heading_footnote VARCHAR, format VARCHAR, note VARCHAR
+        )""")
+    con.execute("""INSERT INTO research.season_stat_page
+                   SELECT season, source_file, printed_page, heading_verbatim, heading_footnote, format, note
+                   FROM raw.season_stat_page""")
     con.execute("""
         CREATE TABLE research.season_stat_check (
             season VARCHAR, city VARCHAR, stats_format VARCHAR, stats_printed_page VARCHAR,
@@ -839,13 +973,74 @@ def build_season_stats(con: duckdb.DuckDBPyConnection) -> None:
         )
         SELECT p.season, p.city, pg.format, pg.printed_page,
                p.n, p.n_rec, p.rec,
-               coalesce(r.events, 0), coalesce(r.days, 0), coalesce(r.events_rec, 0), coalesce(r.rec, 0),
-               coalesce(r.ch_n, 0), coalesce(r.ch_rec, 0),
-               coalesce(r.events, 0) - p.n, coalesce(r.days, 0) - p.n, coalesce(r.rec, 0) - p.rec  -- NULL with p.rec
+               coalesce(r.events, 0), coalesce(r.days, 0), coalesce(r.events_rec, 0),
+               -- no event printing receipts (the 1891-92 Repertoire prints none): NULL, not 0 р. (RG 2026-11-03)
+               CASE WHEN coalesce(r.events_rec, 0) > 0 THEN r.rec END,
+               coalesce(r.ch_n, 0), CASE WHEN coalesce(r.events_rec, 0) > 0 THEN r.ch_rec END,
+               coalesce(r.events, 0) - p.n, coalesce(r.days, 0) - p.n,
+               CASE WHEN coalesce(r.events_rec, 0) > 0 THEN r.rec END - p.rec  -- NULL with p.rec
         FROM printed p
         JOIN raw.season_stat_page pg USING (season)
         LEFT JOIN rep r ON r.season = p.season AND r.city = p.city
         ORDER BY p.season, p.city""")
+    build_season_stat_gaps(con)
+
+
+#: The season reconciliations' ledger (docs/eval/reconciliation/README.md): one row per explained
+#: difference between the stats page, the Repertoire, the ballet lists and the reviews.
+RECONCILIATION_LEDGER_CSV = Path(__file__).parent.parent / "docs" / "eval" / "reconciliation" / "outcome_ledger.csv"
+
+
+def build_season_stat_gaps(con: duckdb.DuckDBPyConnection) -> None:
+    """research.season_stat_gap (RG 2026-11-03, research-layer review: "Yes, load it"): the reconciliation ledger,
+    verbatim, with the money columns parsed; research.season_stat_gap_event: each gap -> the research.event rows its
+    event_ids name (tokens that are not event ids -- page ids, prose -- stay in event_ids_text only)."""
+    import csv as _csv
+    import re as _re
+    if not RECONCILIATION_LEDGER_CSV.exists():
+        print(f"  WARNING: {RECONCILIATION_LEDGER_CSV} not found; research.season_stat_gap not built")
+        return
+    with open(RECONCILIATION_LEDGER_CSV, encoding="utf-8", newline="") as f:
+        reader = _csv.reader(f)
+        header = next(reader)
+        rows = list(reader)
+    bad = [i + 2 for i, r in enumerate(rows) if len(r) != len(header)]
+    if bad:
+        raise SystemExit(f"{RECONCILIATION_LEDGER_CSV.name}: lines {bad[:10]} do not have {len(header)} fields")
+    recs = [dict(zip(header, r)) for r in rows]
+    con.execute("""
+        CREATE TABLE research.season_stat_gap (
+            gap_id VARCHAR PRIMARY KEY,
+            season VARCHAR, city VARCHAR, category VARCHAR, theater VARCHAR,
+            events_gap_text VARCHAR, events_gap INTEGER,
+            receipts_gap_before_rub DECIMAL(18, 2), receipts_gap_now_rub DECIMAL(18, 2),
+            outcome VARCHAR, event_ids_text VARCHAR, evidence VARCHAR, note VARCHAR,
+            checked_by VARCHAR, checked_date DATE, n_events_linked INTEGER
+        )""")
+    known = {r[0] for r in con.execute("SELECT event_id FROM research.event").fetchall()}
+    links = []
+    for r in recs:
+        for tok in dict.fromkeys(t for t in _re.split(r"[;,\s]+", r["event_ids"] or "") if t in known):
+            links.append((r["gap_id"], tok))
+    n_by_gap = {}
+    for g, _e in links:
+        n_by_gap[g] = n_by_gap.get(g, 0) + 1
+    con.executemany("""INSERT INTO research.season_stat_gap VALUES
+        (?, ?, ?, ?, ?, ?, try_cast(? AS INTEGER), try_cast(? AS DECIMAL(18, 2)), try_cast(? AS DECIMAL(18, 2)),
+         ?, ?, ?, ?, ?, try_cast(? AS DATE), ?)""",
+        [(r["gap_id"], r["season"], r["city"], r["category"], r["theater"] or None,
+          r["events_gap"] or None, r["events_gap"] or None,
+          r["receipts_gap_before_rub"] or None, r["receipts_gap_now_rub"] or None,
+          r["outcome"], r["event_ids"] or None, r["evidence"] or None, r["note"] or None,
+          r["checked_by"] or None, r["date"] or None, n_by_gap.get(r["gap_id"], 0)) for r in recs])
+    con.execute("""
+        CREATE TABLE research.season_stat_gap_event (
+            gap_id VARCHAR REFERENCES research.season_stat_gap(gap_id),
+            event_id VARCHAR REFERENCES research.event(event_id),
+            PRIMARY KEY (gap_id, event_id)
+        )""")
+    con.executemany("INSERT INTO research.season_stat_gap_event VALUES (?, ?)", links)
+    print(f"  research.season_stat_gap: {len(recs)} ledger rows, {len(links)} event links")
 
 
 #: Performances the Repertoire cell does not name but another part of the same
@@ -1780,10 +1975,11 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # declared inline on CREATE TABLE, so each table is CREATEd with its
     # full schema first and populated via a separate INSERT INTO ... SELECT,
     # same two-step pattern build_entities.py already uses.
-    for t in ["season_stat_check", "season_stat_line", "season_stat_footnote",
-              "production_credit", "production_work", "production",
+    for t in ["season_stat_gap_event", "season_stat_gap", "season_stat_check", "season_stat_line", "season_stat_footnote",
+              "season_stat_page", "season_stat_dated_note",
+              "production_date", "production_credit", "production_work", "production",
               "performance", "event", "person_tenure", "person_tenure_note", "service_period", "person_assignment",
-              "set_design", "person_performance_tally", "person_appearance", "person", "work", "theater"]:
+              "person_death", "set_design", "person_performance_tally", "person_appearance", "person", "work", "theater"]:
         con.execute(f"DROP TABLE IF EXISTS research.{t}")
 
     con.execute("""
@@ -2089,6 +2285,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             date_undate VARCHAR,
             date VARCHAR,
             date_confidence VARCHAR,
+            date_correction_note VARCHAR,
             event_status VARCHAR,
             receipts_total_kopecks INTEGER,
             receipts_source VARCHAR,
@@ -2149,7 +2346,13 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                          dc.date_confidence,
                          CASE WHEN ae.event_status = 'not_captured' THEN 'synthesized_gap'
                               ELSE 'unparseable' END)
-                END AS resolved_confidence
+                END AS resolved_confidence,
+                -- why the date was corrected or doubted (RG 2026-11-03, research-layer review: "Yes, add them")
+                CASE WHEN dc.note IS NOT NULL THEN dc.note
+                     WHEN dc.corrected_date_undate IS NULL AND ae.date_undate IS NULL
+                          AND pmo.page_id IS NOT NULL AND ae.event_status <> 'not_captured'
+                     THEN 'month and year taken from the page (RESEARCH_PAGE_MONTH_OVERRIDES): the cell prints the day only'
+                END AS resolved_date_note
             FROM analysis.event_entry ae
             LEFT JOIN analysis.event_entry_date_check dc ON dc.event_id = ae.event_id
             LEFT JOIN page_month_override pmo ON pmo.page_id = ae.page_id
@@ -2162,6 +2365,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             r.date_undate,
             r.resolved_date AS date,
             r.resolved_confidence AS date_confidence,
+            r.resolved_date_note AS date_correction_note,
             r.event_status,
             -- A half-kopeck figure ("82½", "22¹/₂") fails the integer cast in build_duckdb.py,
             -- so the parsed total lost ALL its kopecks. Store the whole kopecks and drop the
@@ -2304,11 +2508,9 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     build_art_forms(con)
     assign_work_art_forms(con)
 
-    con.execute("""
-        CREATE TABLE research.performance (
-            performance_id VARCHAR PRIMARY KEY,
-            event_id VARCHAR REFERENCES research.event(event_id),
-            work_id UUID REFERENCES research.work(work_id),
+    # The performance rows are staged first, so research.work can still be corrected from them: DuckDB rejects an UPDATE
+    # or DELETE on research.work once research.performance holds a foreign key to it.
+    perf_columns = """
             performance_order VARCHAR,
             verbatim_title VARCHAR,
             verbatim_genre VARCHAR,
@@ -2321,11 +2523,16 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             performance_source VARCHAR,
             performance_source_note VARCHAR,
             genre_family VARCHAR,
-            genre_family_basis VARCHAR
+            genre_family_basis VARCHAR"""
+    con.execute(f"""
+        CREATE TEMP TABLE perf_rows (
+            performance_id VARCHAR,
+            event_id VARCHAR,
+            work_id UUID,{perf_columns}
         )
     """)
     con.execute("""
-        INSERT INTO research.performance
+        INSERT INTO perf_rows
         SELECT
             eep.performance_id,
             eep.event_id,
@@ -2351,13 +2558,40 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # Performances supplied from another part of the yearbook (SUPPLIED_PERFORMANCES_CSV):
     # no verbatim title or genre, ordered after the cell's own lines.
     con.execute("""
-        INSERT INTO research.performance
+        INSERT INTO perf_rows
         SELECT sp.performance_id, sp.event_id, sp.work_id, NULL, NULL, NULL,
                pa.discipline, pa.discipline_basis, pa.company, false, NULL, NULL,
                'supplied: ' || sp.source, sp.basis,
                pa.item_kind, pa.item_kind_basis
         FROM supplied_perf sp LEFT JOIN perf_art pa ON pa.performance_id = sp.performance_id
     """)
+    # appearance_count = the work's printed Repertoire performances as built here, supplied rows not counted
+    # (docs/schema.md) (RG 2026-11-03, research-layer review: the running adjustments above left Коппелія, Лебединое
+    # озеро ... 1-2 short). Then a repertoire work left with no performance row at all is dropped -- a genre-slip ruling
+    # moved all its printings to another work (Карменъ бал., Анжело оп.) -- unless it is an excerpt parent (played
+    # only in excerpts) or a ballet productions list names it.
+    con.execute("""
+        UPDATE research.work SET appearance_count =
+            (SELECT count(*) FROM perf_rows p WHERE p.work_id = research.work.work_id
+               AND p.performance_source NOT LIKE 'supplied:%')
+        WHERE coalesce(work_source, 'repertoire') = 'repertoire'
+    """)
+    empty_where = """
+        coalesce(work_source, 'repertoire') = 'repertoire'
+          AND work_id NOT IN (SELECT work_id FROM perf_rows WHERE work_id IS NOT NULL)
+          AND work_id NOT IN (SELECT excerpt_of_work_id FROM research.work WHERE excerpt_of_work_id IS NOT NULL)
+          AND work_id NOT IN (SELECT work_id FROM work_ballet)"""
+    for t, g in con.execute(f"SELECT canonical_title, canonical_genre FROM research.work WHERE {empty_where} ORDER BY 1").fetchall():
+        print(f"  work with no performance left, dropped: «{t}», {g}")
+    con.execute(f"DELETE FROM research.work WHERE {empty_where}")
+    con.execute(f"""
+        CREATE TABLE research.performance (
+            performance_id VARCHAR PRIMARY KEY,
+            event_id VARCHAR REFERENCES research.event(event_id),
+            work_id UUID REFERENCES research.work(work_id),{perf_columns}
+        )
+    """)
+    con.execute("INSERT INTO research.performance SELECT * FROM perf_rows")
     print(f"  performances supplied from other parts of the yearbook: {n_supplied}")
 
     con.execute("""
@@ -2378,9 +2612,22 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             printed_start_date DATE,
             printed_start_text VARCHAR,
             printed_service_periods INTEGER,
-            credit_summary_text VARCHAR
+            credit_summary_text VARCHAR,
+            source_file VARCHAR,
+            scan_page INTEGER,
+            printed_folio INTEGER
         )
     """)
+    # Where the entry is printed (RG 2026-11-03): the scan PDF, its page (1-based) and the printed page number, from
+    # docs/folios/staff_list_folios.csv (read by Qwen and checked against each PDF's page sequence; 16 read by Claude, 6 last
+    # pages without a printed number taken from the sequence; `basis` says which). A page missing from that file stops the build.
+    con.execute(f"""CREATE OR REPLACE TEMP TABLE _staff_folios AS
+        SELECT page_id, CAST(scan_page AS INTEGER) AS scan_page, CAST(printed_folio AS INTEGER) AS printed_folio
+        FROM read_csv('{STAFF_FOLIOS_CSV.as_posix()}', header = true, all_varchar = true, quote = '"', escape = '"')""")
+    missing = con.execute("""SELECT count(*) FROM raw.source_pages sp WHERE sp.entity_type <> 'Repertoire'
+        AND sp.page_id NOT IN (SELECT page_id FROM _staff_folios)""").fetchone()[0]
+    if missing:
+        raise SystemExit(f"docs/folios/staff_list_folios.csv: {missing} staff-list pages have no folio row")
     # The start of service as printed in THIS season's entry (RG 2026-10-30): the earliest start among the entry's printed
     # service periods (a broken service «съ ... по ... и съ ...» prints several). As printed, slips included; the chosen
     # date for a whole run of seasons is research.person_tenure.
@@ -2389,7 +2636,16 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         SELECT
             r.entry_id AS appearance_id,
             pl.person_id,
-            sp.season, sp.city,
+            sp.season,
+            -- city (RG 2026-11-03): BalletArtists and Musicians pages carry it; the other four lists name the city in the
+            -- institution or heading (С.-Петербургская Контора, МОСКВА, Императорское Московское Театральное Училище ...).
+            -- Directorate staff printed above the city split (the Director, officials attached to him) served both: 'both'.
+            coalesce(sp.city,
+                CASE WHEN regexp_matches(lower(coalesce(r.institution, '') || ' / ' || coalesce(r.heading_path, '')), 'петербург|с[.]-п')
+                     THEN 'SP'
+                     WHEN regexp_matches(lower(coalesce(r.institution, '') || ' / ' || coalesce(r.heading_path, '')), 'москв|московск')
+                     THEN 'Moscow'
+                     WHEN r.heading_path LIKE 'Дирекція Императорскихъ театровъ%' THEN 'both' END),
             r.entity_type, r.institution, r.heading_path,
             r.rank_clean,
             -- ruling A7 (RG 2026-11-02): a costumer's / wig maker's printed area of work is its own field. For ProductionTeam
@@ -2400,10 +2656,12 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             CASE WHEN r.entity_type = 'ProductionTeam' THEN NULL ELSE r.subject_taught END,
             r.tenure_note_text_clean,
             st.d, st.t, st.n,
-            r.credit_summary_text
+            r.credit_summary_text,
+            sp.source_file, f.scan_page, f.printed_folio
         FROM analysis.person_entry r
         JOIN entities.person_link pl ON pl.entry_id = r.entry_id
         JOIN raw.source_pages sp ON sp.page_id = r.page_id
+        LEFT JOIN _staff_folios f ON f.page_id = r.page_id
         LEFT JOIN (
             SELECT entry_id,
                    min(try_cast(CAST(start_date_undate AS VARCHAR) AS DATE)) AS d,
@@ -2426,6 +2684,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     print(f"  research.person_performance_tally: {n_tl} printed tally items")
     n_sd = build_set_designs(con)
     print(f"  research.set_design: {n_sd} sets credited to a decorator")
+    n_pd = build_person_deaths(con)
+    print(f"  research.person_death: {n_pd} printed deaths (roster and obituaries)")
 
     if has_creators:
         build_productions(con)
@@ -2440,9 +2700,10 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     counts = {
         t: con.execute(f"SELECT count(*) FROM research.{t}").fetchone()[0]
         for t in ["theater", "work", "person", "event", "performance", "person_appearance",
-                  "service_period", "person_assignment", "person_performance_tally", "set_design",
-                  "production", "production_work", "production_credit",
-                  "season_stat_check", "season_stat_line", "season_stat_footnote"]
+                  "service_period", "person_assignment", "person_performance_tally", "set_design", "person_death",
+                  "production", "production_work", "production_credit", "production_date",
+                  "season_stat_check", "season_stat_line", "season_stat_footnote", "season_stat_gap", "season_stat_gap_event",
+                  "season_stat_page"]
         if con.execute("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'research' AND table_name = ?",
                        [t]).fetchone()[0]
     }
@@ -2503,8 +2764,8 @@ def build_person_tenure_notes(con: duckdb.DuckDBPyConnection) -> int:
         # new start date): printed_leaving_date is then blank and only the listed seasons are checked.
         printed = 1 if not row["printed_leaving_date"] else con.execute("""
             SELECT count(*) FROM raw.person_entry_service s JOIN raw.person_entry pe USING (entry_id)
-            JOIN raw.source_pages sp ON sp.page_id = pe.page_id JOIN entities.person_link pl USING (entry_id)
-            WHERE pl.person_id = ? AND sp.entity_type = ? AND coalesce(sp.city, '') = ? AND CAST(s.end_date_undate AS VARCHAR) = ?""",
+            JOIN research.person_appearance pa ON pa.appearance_id = pe.entry_id JOIN entities.person_link pl USING (entry_id)
+            WHERE pl.person_id = ? AND pa.entity_type = ? AND coalesce(pa.city, '') = ? AND CAST(s.end_date_undate AS VARCHAR) = ?""",
             [pid, lst, city, row["printed_leaving_date"]]).fetchone()[0]
         if not printed:
             raise SystemExit(f"person_tenure_discrepancies.csv: {row['display_name']} has no printed leaving "
@@ -2814,6 +3075,15 @@ def build_service_periods(con: duckdb.DuckDBPyConnection) -> int:
                 if (c["printed_text"] or "").strip() != (txt or "").strip():
                     raise SystemExit(f"service_period_date_corrections.csv: {aid} {po} {field}: printed text "
                                      f"{txt!r} is not {c['printed_text']!r}")
+                if not c["corrected_date"]:
+                    # the printed date is a print error and there is no event behind it (RG 2026-11-03, Николаева 3-я's «†
+                    # 1 декабря 1902 г.»: she danced on to 1911): no end, no end type in research; raw keeps the print
+                    vals[:] = [None, None, None, None]
+                    if field == "end":
+                        etype = None
+                    note.append(f"{field} printed «{txt}» is a print error, not used: {c['evidence']} ({c['decided']})")
+                    used.add((aid, int(po), field))
+                    continue
                 vals[:] = [c["corrected_date"], "day", int(c["corrected_date"][:4]), int(c["corrected_date"][5:7])]
                 if txt:
                     note.append(f"{field} printed «{txt}», corrected to {c['corrected_date']}: {c['evidence']} ({c['decided']})")
@@ -2938,6 +3208,89 @@ def build_person_performance_tallies(con: duckdb.DuckDBPyConnection) -> int:
 
 
 SEASON_SETS_DIR = Path(__file__).parent.parent / "docs" / "season_sets"
+STAFF_FOLIOS_CSV = Path(__file__).parent.parent / "docs" / "folios" / "staff_list_folios.csv"
+JUBILEES_DIR = Path(__file__).parent.parent / "docs" / "jubilees_obituaries"
+_EN_MONTHS = dict(jan=1, feb=2, mar=3, apr=4, may=5, jun=6, jul=7, aug=8, sep=9, oct=10, nov=11, dec=12)
+
+
+def _catalogue_entry_id(d: dict) -> str:
+    """The jubilee/obituary catalogue's entry_id (same rule as docs/jubilees_obituaries/build/load_jubilees_obituaries.py)."""
+    import hashlib
+    if d["source_type"] == "section" and d["name_verbatim"]:
+        s = f"{d['season']}|{d['source_file']}|{d['name_verbatim']}"
+    else:
+        s = f"{d['season']}|{d['source_file']}|{d['pdf_page']}|{d['kind']}|{d['name_verbatim']}"
+    return hashlib.sha1(s.encode()).hexdigest()[:10]
+
+
+def _catalogue_death(dates: str):
+    """(printed text, ISO date | None, precision, year) of the death in a catalogue `dates` field: the Russian «† 11-го
+    февраля 1896 г.» as transcribed, else the English summary «d. 4 Feb 1891»."""
+    m = re.search(r"†\s*([^;()]+)", dates or "")
+    if m:
+        txt = m.group(1).strip().rstrip(".,")
+        d, prec, y, _mo = parse_printed_date(txt.replace("-го", ""))
+        if prec:
+            return "† " + txt, d, prec, y
+    # «d. 4 Feb 1891», a bare «19 Dec 1896» (death notices), «d. night of 5/6 Jan 1894» (the first night, as ruling A4)
+    m = (re.search(r"(?:d\.|died)\s*(?:night of\s*)?(\d{1,2})(?:/\d{1,2})?\s+([A-Za-z]{3})\w*\.?\s+(\d{4})", dates or "")
+         or re.fullmatch(r"\s*(\d{1,2})\s+([A-Za-z]{3})\w*\.?\s+(\d{4})\s*", dates or ""))
+    if m and m.group(2).lower() in _EN_MONTHS:
+        y = int(m.group(3))
+        try:
+            return m.group(0), date(y, _EN_MONTHS[m.group(2).lower()], int(m.group(1))).isoformat(), "day", y
+        except ValueError:
+            pass
+    m = re.search(r"(?:d\.|died|†)\D{0,12}(1[89]\d\d)", dates or "")
+    if m:
+        return m.group(0), None, "year", int(m.group(1))
+    return (dates or "").strip() or None, None, None, None   # no date printed: keep the catalogue's wording
+
+
+def build_person_deaths(con: duckdb.DuckDBPyConnection) -> int:
+    """research.person_death (RG 2026-11-03, person field audit C4: "Yes, add them"): every printed death of a research person,
+    one row per source. `roster`: the «†» line in the staff lists (research.service_period end_type 'died'), first printing of
+    each date only (contemporaneous printing wins). `obituary` / `death notice`: the Yearbook's own obituary section and the
+    Season Reviews' death notices, from the jubilee/obituary catalogue (docs/jubilees_obituaries/, linked to a person by
+    build/link_persons.py). An obituary can be the only record of a death (Бочкина 1896, Юмашевъ 1908: no «†» on the roster).
+    Sources that disagree are both kept. raw is untouched."""
+    con.execute("""
+        CREATE TABLE research.person_death (
+            person_id UUID REFERENCES research.person(person_id),
+            source VARCHAR, season VARCHAR, printed_page VARCHAR, source_ref VARCHAR,
+            printed_text VARCHAR, death_date DATE, death_year INTEGER, death_precision VARCHAR
+        )""")
+    con.execute("""
+        INSERT INTO research.person_death
+        SELECT person_id, 'roster', season, NULL, appearance_id, end_text, end_date, end_year, end_precision
+        FROM (SELECT *, row_number() OVER (PARTITION BY person_id, coalesce(CAST(end_date AS VARCHAR), CAST(end_year AS VARCHAR))
+                                           ORDER BY season, appearance_id) AS k
+              FROM research.service_period WHERE end_type = 'died') WHERE k = 1""")
+    n_obit = 0
+    cat_path, link_path = JUBILEES_DIR / "jubilees_obituaries_all_entries.csv", JUBILEES_DIR / "jubilees_obituaries_person_links.csv"
+    if cat_path.exists() and link_path.exists():
+        cat = {_catalogue_entry_id(d): d for d in csv.DictReader(open(cat_path, encoding="utf-8"))}
+        live = {r[0]: r[1] for r in con.execute("""SELECT CAST(person_id AS VARCHAR), CAST(superseded_by_person_id AS VARCHAR)
+                                                     FROM entities.person""").fetchall()}
+        research_ids = {r[0] for r in con.execute("SELECT CAST(person_id AS VARCHAR) FROM research.person").fetchall()}
+        rows = []
+        for ln in csv.DictReader(open(link_path, encoding="utf-8")):
+            if ln["kind"] not in ("obituary", "death_notice") or ln["link_status"] != "linked" or not ln["person_id"]:
+                continue
+            d = cat.get(ln["entry_id"])
+            if d is None:
+                raise SystemExit(f"person_death: catalogue link {ln['entry_id']} matches no catalogue row")
+            pid, seen = ln["person_id"], set()
+            while live.get(pid) and pid not in seen:      # follow merges
+                seen.add(pid); pid = live[pid]
+            if pid not in research_ids:
+                continue
+            txt, iso, prec, y = _catalogue_death(d["dates"])
+            rows.append((pid, "obituary" if ln["kind"] == "obituary" else "death notice", d["season"],
+                         d["printed_page"] or None, ln["entry_id"], txt, iso, y, prec))
+        con.executemany("INSERT INTO research.person_death VALUES (?,?,?,?,?,?,?,?,?)", rows)
+        n_obit = len(rows)
+    return con.execute("SELECT count(*) FROM research.person_death").fetchone()[0]
 
 
 def build_set_designs(con: duckdb.DuckDBPyConnection) -> int:

@@ -1047,3 +1047,9 @@ person; raw keeps the print.
   «Пановъ» in 1901-02..1909-10 with the same broken service. Crop `scan_audit/1908-09_balletartists_MSK_p121_no42_popov.png`.
 - **Petersburg p.95 no. 62:** «Романовъ, Викторъ Павловичъ (съ 1 іюня 1903 г.)» -- «Рахмановъ 2-й, Викторъ Павловичъ» 1903-04..1906-07,
   same start (Рахмановъ 1-й, Сергѣй Павловичъ, left 1 Feb 1908). Crop `scan_audit/1908-09_balletartists_SP_p95_no62_romanov.png`.
+
+## «М. М. Петипа» for the ballet master (added 2026-11-03; checked by Claude on the scan; stored as printed)
+
+- **1900-01 SP ballet review, p.154** («Синяя борода»): «постановка принадлежитъ балетмейстеру М. М. Петипа». The ballet master is Маріусъ
+  Ивановичъ (М. И.); Марія Маріусовна was a dancer. Text kept as printed; the review mention is linked to Маріусъ
+  (docs/eval/review_mention_links.csv). Crop `scan_audit/1900-01_review_SP_ballet_p154_MM_Petipa_stager.png`.

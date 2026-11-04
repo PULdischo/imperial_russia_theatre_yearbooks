@@ -343,6 +343,29 @@ The same printed surname can be different people, and `role_category`
 keeps them apart: "сказки **Перро**" (`source`, Charles Perrault) vs
 "соч. Ж. **Перро**" (`author`, Jules Perrot).
 
+### `research.production_date` — one row per printed list date (added 2026-11-03)
+
+Every date the ballet productions lists print (`raw.production_entry_performance`, 2,374 rows), carried into research
+(RG, 2026-11-03, research-layer review), with the Repertoire event and performance it names.
+
+| column | meaning |
+|---|---|
+| `production_date_id` | = `raw.production_entry_performance.production_performance_id` |
+| `production_id` | -> `research.production` (the list entry) |
+| `date_order` | position of the date in the entry |
+| `date` | the date as parsed; for a confirmed misprint (`LIST_DATE_PRINT_TYPOS`), the intended date |
+| `day_printed`, `month_printed`, `year_printed` | as printed |
+| `note` | the list's note on the date, verbatim («3-е дѣйствіе», «утро», «прологъ» ...) |
+| `outside_total`, `year_printed_matches_season` | flags from raw |
+| `date_correction_note` | why `date` differs from the print (misprints only) |
+| `event_id`, `performance_id` | the Repertoire event / performance it names, only when the match is unique |
+| `n_matched_events`, `match_note` | `matched`; `matches N performances of one event` (event set, performance not); `matches N events that day` (neither set; e.g. «2 раза: утромъ и вечеромъ»); `no Repertoire performance that day names this ballet` |
+
+Matching (`_list_date_matches`, shared with `ballet_list_matches`): same city and date, title equal after `norm()`, a
+curated alias, or the work is an excerpt of it. A date left empty is then tried against research's own titles on that
+day (a corrected misprint such as «Шоиеніана», or a performance supplied from the list itself). Where a day has a
+morning and an evening event, the list's «утро» / «вечеръ» note picks one.
+
 ---
 
 ## Season production stats — `season_stat_*` (raw) and `research.season_stat_*`
@@ -391,6 +414,40 @@ count is usually within a few of them in the 1890s and drifts higher in the Repe
 from 1901-02. 1907-08 and 1908-09 print category totals only, with no per-theater lines.
 The genre- and theater-level comparison (families, ballet counted three ways) stays in
 `pipeline/compare_season_stats.py`, because it needs judgment-based classification.
+
+`research.season_stat_footnote.city` (added 2026-11-03, RG): SP or Moscow, from the lines that carry the footnote's
+mark (a page numbers its footnotes in one run for both cities), or `page` for the heading's own note; the build stops if
+a footnote is carried by both cities or by nothing.
+
+`repertoire_receipts_kopecks` (and the charity-worded receipts and the receipts difference) are NULL, not 0, when no
+performed event of that season and city prints receipts: the 1891-92 Repertoire prints none (RG, 2026-11-03).
+
+### `research.season_stat_page` (added 2026-11-03)
+
+A copy of `raw.season_stat_page`: one row per totals page (`source_file`, `printed_page`, `heading_verbatim`,
+`heading_footnote`, `format`, `note`). RG, 2026-11-03, research-layer review: "Yes, add them". The 1909-10 dated notes
+printed after each city's totals stay in `raw.season_stat_dated_note` only: every one repeats a Repertoire event heading
+(`research.event.annotation`), so a research copy was added and then rolled back the same day (RG: "roll it back").
+
+### `research.season_stat_gap`, `research.season_stat_gap_event` — the reconciliation ledger (added 2026-11-03)
+
+`docs/eval/reconciliation/outcome_ledger.csv` loaded as it stands (RG, 2026-11-03, research-layer review: "Yes, load
+it"): one row per difference the season reconciliations explained between the stats page, the Repertoire, the ballet
+lists and the reviews (method: `docs/eval/reconciliation/README.md`). The CSV stays the source; a rebuild picks up new
+rows, and the build stops if a line does not have the header's 14 fields.
+
+| column | meaning |
+|---|---|
+| `gap_id` | the ledger's id, `<season>-NN` |
+| `season`, `city`, `category`, `theater` | as written in the ledger (city may be «SP; Moscow»; category is the ledger's own word) |
+| `events_gap_text`, `events_gap` | the event difference as written («±2», «+1 / −1» ...) and, when it is a plain integer, as a number |
+| `receipts_gap_before_rub`, `receipts_gap_now_rub` | the receipts difference before and after the season's fixes, in rubles |
+| `outcome` | `yearbook_own` (the yearbook disagrees with itself), `corrected`, `excluded_by_yearbook`, `classification`, `comparison_rule`, `open` |
+| `event_ids_text`, `evidence`, `note`, `checked_by`, `checked_date` | verbatim |
+| `n_events_linked` | how many of the gap's events are in `season_stat_gap_event` |
+
+`season_stat_gap_event` (gap_id, event_id): the tokens of `event_ids_text` that are `research.event` ids. A ledger row
+that names its events in words or by page («19 Mar 1897 Большой», «… (whole column)») has none; its text keeps them.
 
 ## Events with dancers — `research.events_with_dancers`, `research.events_with_dancers_performance` (added 2026-10-29)
 
@@ -607,6 +664,40 @@ layer, one row per printed item. Until then it stopped at `analysis.person_entry
 A two-city entry («Кромѣ того, въ С.-Петербургѣ: ...», 10 entries) repeats its categories; `city` is the listing's
 city, not the block's. Exported to Datasette (`build_datasette.py`).
 
+## `research.person_appearance.city` for the staff lists (filled 2026-11-03)
+
+RG 2026-11-03: BalletArtists and Musicians pages carry their city (`SP`/`Moscow`). For Administrators, Graduates, ProductionTeam and
+TheaterSchoolStaff the research layer takes it from the printed institution or heading («С.-Петербургская Контора …», «МОСКВА»,
+«Императорское Московское Театральное Училище»). Staff printed under «Дирекція Императорскихъ театровъ» with no city (the Director
+and the officials attached to him or to the Directorate; 132 rows, 25 people) served both cities: `city = 'both'`. raw keeps the page's
+city (NULL for these lists). Consequence: `research.person_tenure` runs are per person × list × city for these lists too, so a move
+between cities (Коровинъ SP 1901 -> Moscow 1903; Горскій's school posts) or a concurrent post in both shows as separate runs.
+
+## Where each staff-list entry is printed — `research.person_appearance.source_file`, `scan_page`, `printed_folio` (added 2026-11-03)
+
+RG 2026-11-03: every person appearance carries the scan PDF (`source_file`), the page within it (`scan_page`, 1-based) and the
+printed page number (`printed_folio`), so an entry can be cited as volume + page. Source: `docs/folios/staff_list_folios.csv`
+(966 pages, 167 PDFs; `basis` per page). Read by Qwen (qwen3-vl-plus, the page head and foot only; `docs/folios/read_folios_qwen.py`;
+26 of 26 folios Claude had read agreed), then checked: within each PDF the folios must strictly increase. 16 pages where Qwen took a
+printer's signature mark («6», «8», «9*») were read on the scan by Claude; 6 last pages print no number and take it from the sequence.
+Printed pages are skipped only in the Theatre School reports (Graduates), which were scanned selectively. The build stops if a
+staff-list page has no row. The printed list numbers are not carried (RG: not needed once volume and folio are there).
+
+## Deaths — `research.person_death` (added 2026-11-03)
+
+RG 2026-11-03 (person field audit C4, "Yes, add them"): every printed death of a research person, one row per source, so that a
+death the Yearbook prints only in its obituaries is not lost (e.g. Бочкина † 11 Feb 1896, Юмашевъ † 5 Oct 1908: no «†» on the roster).
+Sources that disagree are both kept (Соловьевъ: roster 4 Oct, obituary 9 Oct 1890).
+
+| column | meaning |
+|---|---|
+| `person_id` | the person (catalogue links follow merges) |
+| `source` | `roster` (the «†» line, `research.service_period` end_type `died`; first printing of each date only), `obituary` (the Yearbook's obituary section) or `death notice` (Season Reviews), both from the jubilee/obituary catalogue `docs/jubilees_obituaries/` |
+| `season`, `printed_page` | the volume, and the page (catalogue rows) |
+| `source_ref` | `appearance_id` (roster) or the catalogue `entry_id` |
+| `printed_text` | roster: the printed date; catalogue rows: the death as the catalogue transcribes it, or its whole dates field when no date is printed (3 rows) |
+| `death_date`, `death_year`, `death_precision` | parsed; «night of 5/6 Jan» takes the first date |
+
 ## Set designs — `research.set_design` (added 2026-11-03)
 
 RG 2026-11-03 (research-layer review, item C): new sets credited to a named decorator, one row per set. Source so far: the
@@ -702,3 +793,10 @@ Internal (entities layer, not exported). RG, 2026-10-26: record why each unlinke
 One row per composer or arranger the review prints for a dance number (RG: composers of numbers). `role` music / arrangement (оркестровано, аранжировано, инструм.); `name_surface` as printed (oblique case: «Понкіелли», «Рубинштейна»); `person_id` only when the person is known as a composer or musician (a music/instrumentation credit in the productions lists, or a Musicians entry) -- otherwise NULL, the printed name kept; `printed_phrase`. Read from the number's own window: a bracket after its name («Танецъ Мерседесъ (муз. г. Симона)—…», which also brought 44 numbers that the cast reader had dropped whole into review_dance), a bracket after its dancers, or the same sentence. The phrase stops at «, соч.» (choreography), an arranger cue, «для», a bracket, dash or «;». A whole ballet's composer is not a number's (one known exception: 1908-09 Moscow «Голубую птицу и принцессу Флорину» <- Чайковскій).
 
 `entities.review_assertion_id_watermark`: the highest `review_assertion.assertion_id` ever issued (3,185 at creation); new statements are numbered above it, so retired ids (the 481 dance rows, Головъ's craft rows 3184-3185) are never reused.
+
+## `research.event.date_correction_note` (added 2026-11-03)
+
+Why `date` differs from the printed `date_undate`, or why the date is doubted: the note from
+`analysis.event_entry_date_check` («scan-verified: book prints day as "9" (should be "4"; …)», «the page misprints every
+weekday word one day ahead …»), or, for a page whose month and year come from `RESEARCH_PAGE_MONTH_OVERRIDES`, that reason.
+Set on every `corrected_manual` and `no_weekday` event (86), NULL otherwise. RG, 2026-11-03, research-layer review.

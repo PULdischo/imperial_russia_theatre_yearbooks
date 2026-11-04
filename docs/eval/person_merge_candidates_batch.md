@@ -172,3 +172,10 @@ Other identity candidates from the same audit are listed in docs/eval/person_fie
 | 17 | Мендесъ, Джульетта = Мендесъ, Джульетта Іосифовна (Moscow ballet) | 723f64f2 (1896-97..1907-08; patronymic first printed 1907-08) + ca42f234 (1908-09, 1909-10, «съ 10 октября 1896 г.») | same name; start 1 vs 10 Oct 1896; consecutive; daughter of Іосифъ Мендесъ (cf. record «Мендесъ, Іосифъ») | same; RG |
 
 **Nos. 13-17 outcome (RG, 2026-11-02; applied the same day with docs/eval/person_merge_manual.py):** MERGED 13 Левинсонъ Анна and 14 Левинсонъ Ольга (1904-05 «Фердинандовна», scan p.18), 15 Больмъ (display «Адольфъ-Эмиль», RG), 16 Афанасьевъ (uncertain, start 1901/1891, uncertain_person_identities #55), 17 Мендесъ Джульетта (1900-01 «г-жа Мендесъ» Жуанитта review link restored by hand, review_mention_links.csv). research.person 2,625 -> 2,620; 0 link shifts; 0 orphans; review performer links 2,468.
+
+## 2026-11-03 -- found while checking who else might have died on 1 Dec 1902 (not merged)
+
+| # | Candidate | person_ids (prefix) | Evidence | Recommendation |
+|---|---|---|---|---|
+| 18 | Иванова 1-я, Александра Александровна (1902-03) = Иванова 1-я, Александра Адріановна | 354186a0 (Moscow ballet 1902-03 only) + 2b63eb2c (1900-01, 1903-04..1908-09) | same «1-я», same start «съ 1 сентября 1891 г.», the 1902-03 entry fills the one-season gap in 2b63eb2c's run; 1908-09 prints «Андріановна», leaving 15 Aug 1909. Patronymic «Александровна» in 1902-03 only (print or reading, not scan-checked) | merge into 2b63eb2c; scan-check 1902-03 MSK p.107 first |
+| 19 | Джури, Адель = Джури, Аделина Антоновна | 10dbce09 (Moscow ballet 1893-94..1899-00) + 430919f3 (1900-01..1902-03) | Adelina Djuri, one Moscow ballerina: consecutive runs, same surname; the first name is printed short in 1893-1900 | merge; check the start dates printed in both runs first |

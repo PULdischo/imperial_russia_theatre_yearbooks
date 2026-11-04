@@ -161,3 +161,356 @@ per-work count matches. Raw: the 6 SP lines now carry the full printed list (the
 «Щелкунчикъ» (Dec. 1892): Бочаровъ 1-й «Лѣсъ зимой», Ивановъ the President's hall and «Конфектное царство».
 
 Next in the walkthrough: Works.
+
+## 2. Works
+
+(Resumed in a new session, 2026-11-03 afternoon. Queries logged in `docs/query_log.md`, "Research-layer review: Works".)
+
+### What one record holds
+
+- **`work`** — 2,952 rows: `canonical_title`, `canonical_genre` (the printed genre word, as printed, in the language of
+  the print: «ком.» 424, «com.» 568, «Lustsp.» 67 ...), `appearance_count`, `excerpt_of_work_id` + `excerpt_note`
+  (342 excerpts), `genre_source` (`printed` 2,560, none 365, `review` 20, `research_rule` 7), `genre_note`,
+  `title_note`, `work_source` (`repertoire` 2,932, `review` 20: works named only in the Season Reviews) and
+  `source_note`.
+- The art form is **not on the work**. It sits on each `performance` (`discipline`, `company`, `genre_family`,
+  `includes_dance`). 2,915 works have performances.
+- Other tables that point at a work: `production` (ballet productions lists, 627 of 628 linked), `review_assertion`
+  (1,879 of 2,657), `review_credit` (2,358 of 2,410), `review_dance` (632 of 914), `review_solo` (37 of 96).
+  The dancers' tally titles (`person_performance_tally`, ruling P1) are not linked to works yet.
+
+### Things noticed (for RG)
+
+1. **Three review cast lines linked to the wrong work.** 1904-05 SP review p.115 (4 Nov 1904), the cast of
+   «Путешествующая танцовщица»: Альма is linked to that ballet, but Діасъ (Кшесинскій), «Кармена, подруга Альмы»
+   (Радина) and слуга Альмы (Стуколкинъ) are linked to a ballet «Карменъ», because the role name «Кармена» was read as
+   the title. Mechanical fix: point all four at «Путешествующая танцовщица».
+2. **17 works with no performances.** 15 are parent works whose excerpts alone were played (Дмитрій Донской 5
+   excerpts, Борисъ Годуновъ трагедія 4, ...): by design. The other two are leftovers of genre-slip rulings:
+   «Карменъ, бал.» (its two 1906-07 / 1907-08 performances now count as the opera) and «Анжело, оп.» (its one
+   1910-11 performance now counts as the drama). They hold nothing except the three slips in item 1.
+3. **`appearance_count` is stale for 7 ballets**, short by 1-2 against the performances now linked (Коппелія 105 vs
+   107, Лебединое озеро 125 vs 127, Эвника 8 vs 9, Шопеніана, Волшебная флейта, Дочь фараона, Золотая рыбка).
+   Counting from `performance` is right; the column needs recomputing in the build.
+4. **The same play in two languages is two works**: Гамлетъ (Russian drama 66) vs Hamlet (German/French 4), Тартюфъ
+   25 vs Tartuffe 4, Фаустъ драм. поэма 14 vs Faust Schausp. 2, Фаустъ оп. 289 vs Faust op. 5. This follows the
+   2026-10-05 rule (identity = title + art form + script). Noted in case RG wants them connected without merging.
+5. **«Дивертиссементъ» is five works**: «Дивертиссементъ» with «бал.» (44 performances), with no genre (37, not
+   counted as ballet; 2 more counted as ballet), «Дивертиссментъ» (as stored; 3 ballet + 2 not), and «Дивертиссементъ
+   (Etudes)». These are programme labels, not titled works.
+6. 338 performances have no `discipline`: «Гимнъ» 195, concerts 52, divertissements 41, tableaux 32, readings,
+   lectures, cinema. By design (art forms = five companies + concert; anthem is ceremonial). Four performances have no
+   `genre_family` either: «Концертъ-спектакль» 1901-02, «Обозрѣніе» 1902-03, «Балетоманъ» 1904-05, «Слава»! 1894-95.
+7. 12 works span more than one `discipline`, mostly the opera repertory sung by both the Russian and the Italian
+   company (Фаустъ, Травіата, Аида, Балъ-маскарадъ). Odd ones: «Гейша» (opera, Russian drama, German operetta) and
+   «Званый вечеръ съ итальянцами» (opera, Russian drama).
+
+### RG's questions and rulings
+
+**W1 — the three «Кармена» cast lines (RG 2026-11-03, "Yes, relink them").** One row in
+`docs/eval/review_work_mention_links.csv` links the «Кармена» mention in `review_1904-05_SP_ballet_p010__b004` to
+«Путешествующая танцовщица»; assertions 1482, 2848, 2849 follow it. Tested on a copy first: 1 mention and 3 assertions
+change; the other differences are candidate lists in a different order. «Карменъ, бал.» now holds nothing.
+
+Found while checking W1 (for RG): this cast is not the 1904-05 revival. The review quotes the **1865 première** («Балетъ
+этотъ былъ поставленъ въ первый разъ на сценѣ Большого театра въ бенефисъ М. С. Петипа 1865 г., 4-го ноября, при
+слѣдующемъ распредѣленіи въ немъ ролей: ...»), which is the same case as the quoted 1875 «Голубая Георгина» cast. The
+assertions are dated 1904-11-04 and their dancers (Радина, Стуколкинъ, Берра ...) are linked as if in 1904-05.
+
+**W1b — the quoted 1865 cast (RG 2026-11-03, "Yes, same treatment").** Scan read by Claude (crops
+`docs/eval/scan_audit/1904-05_review_SP_ballet_p115_1865_traveling_dancer_cast.png`, `..._p116_...png`). p.115 block
+`review_1904-05_SP_ballet_p010__b004` is on `docs/eval/review_historical_passages.csv` dated 1865-11-04. The cast
+runs on into p.116 (`..._p011__b001`) up to «При настоящемъ возобновленіи балета роли въ немъ распредѣлены такъ», where
+the 1905 cast begins in the same block, so that block is not listed; its 1865 names are unlinked one by one instead.
+27 rows in `docs/eval/review_mention_links.csv` (empty person_id). Code: `build_review_assertions.py` no longer
+resolves a performer in a listed block through the spiski credits, which are the review season's: that is how «г-жа
+М. С. Петипа» (Альма, 1865) had been linked to Петипа 1-я. Result: all 15 1865 cast lines are now unlinked (8 had a person
+link: Альма, Кармена, слуга Альмы; Ole, La charrada, La Iota, El Cabarde, почтальонъ), the four on p.115 dated 1865-11-04
+(the p.116 ones carry no date); the 1905 cast keeps its links. «Берра» in «Берра, слуга
+Альмы» is the role's name and had been linked to a dancer; now unlinked with the rest.
+Not fixed (small, noted): p.116 prints «Гердтъ, Легатъ 1-й и Волковъ» in La charrada, stored «Гердъ».
+
+**W2, W3 (RG 2026-11-03, "fix these").** `build_research_model.py` now stages the performance rows, sets every
+repertoire work's `appearance_count` to its performances as built, and drops a repertoire work left with none unless it
+is an excerpt parent or in a ballet productions list. Dropped: «Анжело», оп. and «Карменъ», бал. (2,952 -> 2,950 works).
+Recounted: Коппелія 105 -> 107, Лебединое озеро 125 -> 127. Correction to item 3 above: the other five (Эвника,
+Шопеніана, Волшебная флейта, Дочь фараона, Золотая рыбка) were right. Each has one performance supplied from a review
+or productions list, which `appearance_count` leaves out by design (docs/schema.md), so their counts stay. Applied to
+production after a test on a copy, then the review chain; 0 person_link shifts, 0 work_ids left pointing at a dropped work.
+
+**W4 — same piece in two scripts (RG 2026-11-03, "Link, don't merge. At least for now. I assume Hamlet could be performed
+both in English and in Russian, and I'm not really sure if they're the same parent work or not.").** Evidence: the
+split follows the printed script, not the company (Sandrock's German «Гамлетъ» 1901-02 sits with the Russian drama's;
+the German and French «Hamlet» are apart; Угетти's Italian «Фаустъ» 1901-02 with the Russian opera, the Moscow Italian
+and German «Faust» apart). Ruling: keep them as separate works and connect them; whether they share one parent work stays
+open. Nothing built yet: a link needs a work-to-work relation (the research layer's only one today is
+`excerpt_of_work_id`), the same need as RG's 2026-10-12 «Млада» / «Волшебное зеркало» case (connect without
+equating). Candidate pairs among the 1,192 Latin-script works need a hand-checked list (translation, not spelling).
+
+**W5 — «Дивертиссементъ» (RG 2026-11-03, "Keep as is. We don't know enough about them to categorize them as the 'same
+work'").** The six work rows stay apart (бал. 44; no genre 37; no genre / ballet 2; «Дивертиссментъ» бал. 3 and no genre
+2; «(Etudes)» 1).
+
+**W6/W7 (RG 2026-11-03, "Check the scans").** Item 7 needs no ruling: «Гейша» and «Званый вечеръ съ итальянцами»
+take their company by RG's rules (an operetta goes with the company that performs it; a visiting troupe by its
+personnel). Item 6: the four items with no kind were already walked through with RG on 2026-10-13 and left without
+one (`docs/eval/known_issues.md`, "The items with no kind"; «Балетоманъ» flagged to be looked for). Read again on the
+scans by Claude today, crops in `docs/eval/scan_audit/`: each is printed as stored, with no genre, inside a banner
+(«Спектакль въ память А. С. Грибоѣдова.» «Слава»! / Горе отъ ума, ком., Малый 4 Jan 1895, 1367 р. 37 к.;
+«Въ пользу благотворительнаго Общества при Городской Калинкинской больницѣ. Концертъ-спектакль.», Маріинскій 16 Feb
+1902; «Спектакль въ пользу Общества Покровительства животнымъ. Обозрѣніе.», Маріинскій 11 Jan 1903; «Балетоманъ»,
+Маріинскій 23 Apr 1905, item 3 of 6 lines under «Спектакль въ пользу Общества попеченія о Гребловской школѣ имени Н. В.
+Гоголя.»). The season totals carry no concert or revue line; no review mentions them. Nothing new: they stay blank.
+
+### Held earlier but not carried into research (Works) — checked 2026-11-03 at RG's request
+
+Columns: every work-level field the transcription captures (title, genre) reaches `research.performance`
+(`verbatim_title`, `verbatim_genre`); every `entities.work` column is in `research.work`. Rows:
+- **Ballet productions lists' printed dates**: `raw.production_entry_performance`, 2,374 dates (110 with a note such as
+  «3-е дѣйствіе», «1-е и 2-е д.», «прологъ», «танцы изъ 2-го д. балета»; 30 marked outside the printed total; 5 whose
+  printed year does not match the season). Research keeps only `production.n_dates` (sum 2,344) and
+  `production_work.n_matched_dates`; the dates, their notes and which `research.event` each one is are not queryable.
+- **One Repertoire line**, Малый 24 Nov 1905 («, ком.», 1218 р. 36 к.): the print omits the title (scan-confirmed
+  2026-10-09, `docs/eval/genuine_print_typos.md`). Raw keeps it; research has the event (performed, receipts) with no
+  performance. Already known.
+- **Retired work ids**: `entities.work_id_crosswalk`, 836 old -> new ids from merges. Not published; matters only to
+  someone holding an id from an earlier export.
+- Pipeline-internal, by design: `entities.work_genre_candidate` (62, review queue), `entities.work_link` (the
+  crosswalk the research FKs replace). `entities.review_work` (20) is carried as `work_source = 'review'`.
+- `entities.work` rows not in research (4): «Карменъ» бал. and «Анжело» оп. (W2), «Шоиеніана» (title correction merged
+  into «Шопеніана»), «Дивертиссементъ (Etudes)» (its research row is the research-rule split).
+
+**W8 — ballet-list dates carried into research (RG 2026-11-03, "Yes, add them").** New `research.production_date`,
+2,374 rows (one per printed date): printed day/month/year, note, `outside_total`, `year_printed_matches_season`, the
+misprint correction where there is one, and the Repertoire `event_id` / `performance_id` it names. 2,357 match one
+performance; 5 match two performances of one event (event set: Коппелія and Лебединое озеро 1895-96 with «2-я и 3-я
+карт. бал.» on the same bill, Корсаръ 16 Nov 1908 «2-е дѣйствіе балета» beside «Оживленный садъ»); 1 matches two events
+(«Золотая рыбка» 14 Nov 1904, «2 раза: утромъ и вечеромъ»); 11 match nothing. The list's «утро» / «вечеръ» note now
+separates a day's two events (4 dates); a second pass on research's titles recovered «Шопеніана» 8 Apr 1910 (printed
+«Шоиеніана»), «Волшебная флейта» 30 Nov 1903 and «Дочь Фараона» 13 Feb 1905 (performances supplied from the list).
+Code: `build_research_model._list_date_matches` (ballet_list_matches is now a view of it, output checked identical:
+2,370 pairs), `build_production_dates`; `build_datasette.py` schema; `docs/schema.md`.
+
+Left for RG (not chased): the 11 list dates with no Repertoire performance naming the ballet. None is in the
+reconciliation ledger under its date:
+| season | city | list title | date | ballet on the Repertoire that day |
+|---|---|---|---|---|
+| 1895-96 | Moscow | Катарина (Дочь разбойника) | 1896-01-17 | Большой: Эсмеральда |
+| 1895-96 | Moscow | Пробужденіе Флоры | 1896-05-02 | Большой: Паяцы + Даита |
+| 1897-98 | SP | Волшебная флейта | 1897-10-25 | none |
+| 1898-99 | SP | Очарованный лѣсъ | 1898-09-21 | none |
+| 1900-01 | SP | Маркитантка | 1901-02-11 | Маріинскій: excerpts of Камарго, Фіамметта, Щелкунчикъ |
+| 1901-02 | SP | Волшебная флейта | 1901-12-19 | Маріинскій: Сильвія |
+| 1904-05 | SP | На перепутьи | 1904-12-17 | none |
+| 1908-09 | Moscow | Спящая красавица | 1908-10-18 | none |
+| 1910-11 | SP | Конекъ-горбунокъ или Царь-дѣвица | 1911-02-18 | none |
+| 1910-11 | SP | Спящая красавица | 1911-02-19 | none |
+| 1910-11 | SP | Шопеніана | 1911-03-09 | Маріинскій: Эвника + Карнавалъ |
+
+**W8 follow-up — the 11 unmatched list dates (RG 2026-11-03, "Look at the 11").** Ten were already worked out in the
+season reconciliations; one («Шопеніана» 9 Mar 1911) was new and was read on both scans by Claude today (crops
+`docs/eval/scan_audit/1910-11_list_SP_p65_Chopiniana.png`, `1910-11_repertoire_1911-03-07_09_Mariinsky.png`).
+
+A. A slip in the list, intended date known (could go in `LIST_DATE_PRINT_TYPOS` so `production_date` links them):
+- «Пробужденіе Флоры», Moscow, «мая 2» -> 3 May 1896 (ledger 1895-96-09; the Repertoire and the Moscow review have 3 May).
+- «На перепутьи», SP, «декабря 17» -> 27 Dec 1904 (RG 2026-10-29, ledger 1904-05-17; the list's own «Пробужденіе Флоры»
+  entry has 27 Dec).
+- «Спящая красавица», Moscow, «октября 18» -> 8 Oct 1908 (ledger 1908-09-03, scan read by Claude 2026-11-02; the Большой
+  is dark on 18 Oct; count 7 = 7).
+B. A slip in the list, no date to correct to: «Волшебная флейта» 25 Oct 1897 (Маріинскій dark; RG 2026-10-29 "It's likely
+  a list error", ledger 1897-98-12); «Маркитантка» 11 Feb 1901 (corps-de-ballet benefit, no «Маркитантка»; list,
+  Repertoire and review read).
+C. The yearbook disagrees with itself (both transcriptions match their scans; open):
+- «Катарина», Moscow, 17 Jan 1896 (the Repertoire has «Эсмеральда»).
+- «Очарованный лѣсъ», SP, 21 Sep 1898 (the Repertoire has «Фераморсъ» only).
+- «Волшебная флейта», SP, 19 Dec 1901 (the Repertoire has «Сильвія»; the list implies a double bill).
+- «Конекъ-горбунокъ» 18 Feb and «Спящая красавица» 19 Feb 1911, SP (the Repertoire: «Китежъ»; «Кантата. Жизнь за
+  царя»; ledger 1910-11-12). Moscow gave «Спящая красавица» at the 19 Feb matinée.
+- «Шопеніана», SP, 9 Mar 1911: the list prints «1911 г.—марта 7, 9. Всего—4 раза», and its «Эвника» and «Карнавалъ»
+  entries agree on 9 Mar; the Repertoire's 9 Mar bill is «Эвника, бал.» / «Карнавалъ, пантомима-бал.», 4653 р. 50 к.
+  (7 Mar adds «Шопеніана, сюита»). The SP review says «Карнавалъ» was repeated «7-го и 9-го марта» and does not name
+  «Шопеніана» for either.
+
+**W8 follow-up A applied (RG 2026-11-03, "Yes, add the three").** The three list slips with a known date are in
+`LIST_DATE_PRINT_TYPOS`: «Пробужденіе Флоры» -> 3 May 1896, «На перепутьи» -> 27 Dec 1904 (matinée), Moscow «Спящая
+красавица» -> 8 Oct 1908. `production_date` keeps the printed day and says why in `date_correction_note`; matched 2,357 ->
+2,360, unmatched 11 -> 8; `production_work.n_matched_dates` +1 for the three entries. Nothing else changed.
+
+## 3. Theaters
+
+(Queries logged in `docs/query_log.md`, "Research-layer review: Theaters".)
+
+### What one record holds
+
+- **`theater`** — 6 rows: `theater_id`, `canonical_name`, `city`, `active_from_season` (set only for «Новый», 1898-99).
+  No end season, address, English name or Wikidata link. Same as `entities.theater`.
+- Pointed at by `event.theater_id` (every one of 32,813 events has one) and the dancer views. `set_design` keeps the
+  theater only as printed (`theater_printed`: Большой театръ 25, Малый театръ 8, blank 28), not as an id. No review
+  table carries a theater.
+
+| theater | city | events | performed | seasons | receipts (р.) |
+|---|---|---|---|---|---|
+| Маріинскій | SP | 5,953 | 4,040 | 1890-91 – 1910-11 | 10,974,212.58 |
+| Александринскій | SP | 6,024 | 4,598 | 1890-91 – 1910-11 | 5,555,054.14 |
+| Михайловскій | SP | 5,588 | 4,025 | 1890-91 – 1910-11 | 3,494,747.45 |
+| Большой | Moscow | 5,844 | 3,808 | 1890-91 – 1910-11 | 7,597,011.23 |
+| Малый | Moscow | 5,821 | 4,009 | 1890-91 – 1910-11 | 3,723,520.56 |
+| Новый | Moscow | 3,583 | 1,685 | 1898-99 – 1910-11 | 886,339.85 |
+
+Event counts include `no_performance` and `not_captured` rows (all theaters: performed 22,165, no_performance 7,771,
+not_captured 2,877).
+
+### Held earlier but not carried into research
+
+- Raw prints 16 spellings of the six names («Большой театръ», «Большой», «Большой театр», «Большой театръ,» ...); every one
+  maps to one of the six (`analysis.event_entry.theater_canonical`). Nothing unmapped.
+- 30 events on `repertoire_1910-11_p056` are left out on purpose (`RESEARCH_EXCLUDED_PAGES`: Moscow's blank 10-19 May
+  1911 page printed from the SP form; RG 2026-10-06).
+- The Season Reviews' theater mentions (632 in `entities.review_mention`) reach no research table. Two venues outside the
+  six occur there only: the Эрмитажный (3) and the Красносельскій (1).
+
+### Things noticed (for RG)
+
+1. **«Новый» after it stopped playing.** Its last performance is 29 Apr 1907. From 1907-08 to 1910-11 the Repertoire still
+   prints a «Новый театръ» column of dashes (checked on the 1908-09 p. 3 scan), so research holds 1,037 `no_performance`
+   events there (264, 255, 264, 254 a season). As printed; they swell Moscow's count of days without a performance.
+2. **Review theater mentions are linked unevenly.** Moscow names link to a theater id (Новый 45, Большой 9, Малый 3), but 32
+   of the 45 «Новый» links are the adjective («Новыя декораціи», «Новыхъ балетовъ»). Petersburg names («Маріинскомъ» 57,
+   «Маріинскаго» 20, «Михайловскомъ» 11 ...; 105 in all) are not linked. The rest are institution tags (INST:imperial 208,
+   INST:moscow 140, INST:petersburg 118, Эрмитажный, Красносельскій). Belongs with the reviews section; nothing uses it yet.
+3. `active_from_season` exists only for «Новый»; there is no closing season for it.
+
+### RG's questions and rulings
+
+**T1 — «Новый» after 1906-07 (RG 2026-11-03, "keep as is").** The 1,037 dash-only rows of 1907-08 – 1910-11 stay
+`no_performance` as printed; no closing season is added to `research.theater`.
+
+**T2 — review theater mentions (RG 2026-11-03, "Leave for Reviews").** The 32 adjective links to «Новый» and the 105
+unlinked Petersburg theater names wait for the Season Reviews section.
+
+## 7. Season stats
+
+(Taken before 4-6 at RG's request. Queries logged in `docs/query_log.md`, "Research-layer review: Season stats".)
+
+### What one record holds
+
+- **`season_stat_line`** — 303 rows, one per printed line with a number, from the season totals page («Всего въ
+  теченіе сезона … было спектаклей»): `category_verbatim` / `category` (ditto resolved), `venue_verbatim`,
+  `qualifier_verbatim` («(опера и балетъ)»), `count`, `receipts_verbatim` / `receipts_kopecks`, `footnote_refs`,
+  `line_kind` (category 147, venue 99, subtotal 48, part 9). Categories: Русскихъ драматическихъ 99, Балетныхъ 50,
+  Русскихъ оперныхъ 38, Смѣшанныхъ 29, Оперныхъ 24, Французскихъ 19, Нѣмецкихъ 18, Концертовъ 12, and one-offs for
+  visiting troupes (Режанъ, Лессингъ-театръ, Тина ди Лоренцо, Московскій художественный театръ ...).
+- **`season_stat_check`** — 38 rows (season × city): the page's totals beside the Repertoire's (performed events,
+  distinct theater-days, receipts, charity-worded events) and the differences.
+- **`season_stat_footnote`** — 125 footnotes, verbatim, 11 seasons (benefits, free student performances, charity
+  exclusions).
+- Seasons: 19 pages, 1891-92 to 1910-11. 1890-91 has no such page; 1905-06's has not been found (needs the volume).
+
+### Held earlier but not carried into research
+
+- **The reconciliation outcomes.** `docs/eval/reconciliation/outcome_ledger.csv`, 271 rows covering every season
+  1890-91 – 1910-11, explains the differences between the stats, the Repertoire, the ballet lists and the reviews, one gap
+  at a time, with the events involved and the evidence. Outcomes: yearbook_own 120, corrected 53, excluded_by_yearbook 48,
+  classification 23, open 16, comparison_rule 11. Not in the database, so `season_stat_check` shows each difference
+  (e.g. Moscow 1909-10 +107 events / +31,748 р., SP 1907-08 +70) without its explanation.
+- `raw.season_stat_page` (19): the page heading verbatim, its footnote mark and the source file. Research keeps only the
+  format and printed page (in `season_stat_check`).
+- `raw.season_stat_dated_note` (10): the jubilees and farewell performances printed after each city's totals in 1909-10
+  (correction 2026-11-03: 1909-10 only, not 1910-11) («24 января—прощальный спектакль балерины Трефиловой.», «24 февраля—35-ти лѣтіе службы М. Г. Савиной.» ...).
+
+### Things noticed (for RG)
+
+1. 1891-92 `repertoire_receipts_kopecks` is 0 for both cities: the Repertoire prints no receipts that season, so this
+   should read "none", not 0 р.
+2. `season_stat_footnote` has no city column (raw has none either); a footnote's city is only implied by its number.
+3. A stats line does not link to the events it counts; that link exists only in the ledger's `event_ids`.
+
+### RG's questions and rulings
+
+**S1 — the reconciliation ledger in research (RG 2026-11-03, "Yes, load it").** New `research.season_stat_gap` (271
+rows) and `season_stat_gap_event` (569 links to `research.event`), loaded from
+`docs/eval/reconciliation/outcome_ledger.csv` by `build_research_model.build_season_stat_gaps`; export schema in
+`build_datasette.py`; `docs/schema.md`. Links by outcome: excluded_by_yearbook 314, corrected 96, yearbook_own 74,
+classification 46, comparison_rule 23, open 16. Seven gaps name their events in words or by page (1892-93-03, 1896-97-01,
+-02, -05, -08, 1903-04-10, 1910-11-09) and have no links. Six ledger lines had unescaped quotes inside their note, which
+split them into extra columns (1894-95-05, 1899-00-08, -12, 1903-04-14, 1904-05-15, 1909-10-06): quoting repaired, text
+unchanged (1894-95-05 keeps its printed «30 (53","181 р. 53 к.)» as written).
+
+**S2 — 1891-92 receipts (RG 2026-11-03, "agreed").** `season_stat_check.repertoire_receipts_kopecks`, the charity-worded
+receipts and the receipts difference are NULL, not 0, when no event of the season and city prints receipts (1891-92,
+both cities). No other row changed.
+
+**S3 — page headings and dated notes (RG 2026-11-03, "Yes, add them").** New `research.season_stat_page` (19: source
+file, printed page, heading and its footnote mark verbatim, format, note) and `research.season_stat_dated_note` (10, all
+1909-10: SP 6, Moscow 4; city as SP/Moscow beside the printed form). Built from the raw tables in
+`build_season_stats`; export schema in `build_datasette.py`; `docs/schema.md`. Every other table unchanged.
+
+**S4 — footnote city (RG 2026-11-03, "Yes, add it").** `season_stat_footnote.city`: SP 63, Moscow 54, page 8 (the
+heading's note on the italic receipts, 1893-94 – 1900-01). Taken from the lines that carry each mark; the build stops if a
+footnote is carried by both cities or by nothing. Every other column and table unchanged; export schema in
+`build_datasette.py`; `docs/schema.md`.
+
+## 4. Events and performances
+
+(Queries logged in `docs/query_log.md`, "Research-layer review: Events". The performance → work side is in section 2.)
+
+### What one record holds
+
+- **`event`** — 32,813 rows, one per theater × date × session: `event_status` (performed 22,165, no_performance 7,771,
+  not_captured 2,877), `date_verbatim`, `date_undate` (as printed) and `date` (after the weekday check),
+  `date_confidence` (verified 29,850, synthesized_gap 2,877, corrected_manual 76, no_weekday 10), `time_of_day`
+  (unspecified 28,078, morning 2,378, evening 2,357), receipts (`receipts_verbatim`, `receipts_total_kopecks` on 19,329;
+  `receipts_source`: parsed 19,041, half-kopeck dropped 209, corrected print typo 79; `receipts_correction_note` on 288),
+  `printed_page_number` (29,936; the rest are the synthesized gaps), `annotation` (1,807), flags (`is_benefit` 729,
+  `is_charity` 378, `is_free` 328, `is_student_performance` 143, `is_reduced_price` 26, `has_anthem` 195), and the bill's
+  summary (`n_works`, `disciplines`, `companies`, `genre_families`).
+- **`performance`** — 30,835 rows (section 2), plus `company` (St. Petersburg Russian drama 7,845, Moscow Russian drama
+  7,629, St. Petersburg French drama 4,876, Moscow opera 3,198, St. Petersburg opera 3,116, St. Petersburg ballet 1,493,
+  Moscow ballet 1,205, visiting German drama 812, Moscow Art Theatre 152, and 15 smaller visiting troupes; none for the 338
+  anthems, concerts and the like), `includes_dance` (158, each with its basis), `is_ceremonial` (195).
+- **Views** `events_with_dancers` 2,222 events, `events_with_dancers_performance` 3,085 rows.
+
+### Held earlier but not carried into research
+
+- **Date-correction notes.** `analysis.event_entry_date_check.note` explains each of the 86 corrected or doubtful dates
+  («scan-verified: book prints day as "9" (should be "4"; between 3 Среда and 5 Пятница)», «the page misprints every
+  weekday word one day ahead …»). Research has the corrected `date` and `date_confidence`, not the reason (receipts have
+  `receipts_correction_note`; dates have nothing like it).
+- `month_text`, `year_text` (the printed month and year headings) are not in research; `date_verbatim` is the day cell only.
+
+### Things noticed (for RG)
+
+1. **Julian dates.** `event.date` is text, not a date type, because six events fall on 29 Feb 1900, a Julian leap day that
+   the Gregorian calendar (and DuckDB's DATE) does not have. There is no Gregorian date beside it, so a match with a
+   foreign newspaper or any Gregorian-dated source needs the +12 / +13 day shift done by hand.
+2. **117 performed events with no performance row**: concerts and similar evenings whose cell prints only a heading
+   («Концертъ въ пользу инвалидовъ.», «Генеральная репетиція концерта …», «Баль-маскарадъ», «3-й концертъ А. Зилоти.»),
+   no work line. They have `n_works` 0 and no performance row. **Correction (2026-11-03, later):** most are already
+   labelled at event level: `event.genre_families` = concert on 93 (RG's 2026-10-13 rule, `CONCERT_EVENT_RE`, which
+   also covers «музыкально-литературный вечеръ» headings); the two Siamese court troupe evenings and the two German
+   charity bills of March 1898 (RG 2026-10-23, #141, `event_labels.csv`) carry a discipline and company. 20 have none.
+3. Receipts are missing for 2,836 performed events: 1890-91 (965) and 1891-92 (939) print none; the rest are free and
+   charity evenings.
+
+### RG's questions and rulings
+
+**E1 — date-correction notes (RG 2026-11-03, "Yes, add them").** New `research.event.date_correction_note`, from
+`analysis.event_entry_date_check.note` (or the page-month override's reason): all 86 corrected_manual / no_weekday dates
+have one; verified and synthesized dates have none. Every other column and table unchanged; export schema in
+`build_datasette.py`; `docs/schema.md`.
+
+**E2 — Gregorian date (RG 2026-11-03, "we can always add that later, so lets skip for now").** Not added; `date` stays
+Julian, as printed.
+
+**Step back (RG 2026-11-03): what belongs in research.** Test agreed: a table or column earns its place if it answers a
+research question, carries the evidence needed to trust or cite an answer, or saves a hard or error-prone lookup. Not if it
+restates another field, touches a handful of rows already findable by their text, records pipeline bookkeeping, or needs
+ongoing judgment calls for little gain. Kept on review: `season_stat_page` (source file + printed page = the citation for
+every stats figure), `season_stat_footnote.city`. Rolled back: `season_stat_dated_note` (11 of its 12 dated items are the
+event's own Repertoire heading, e.g. «Прощальный спектакль балерины В. Трефиловой.» 24 Jan 1910; its two «1909 г.» year
+slips and the 18 Dec second-artists' benefit are already in the 1909-10 reconciliation; raw keeps the notes).
+
+**E3 — heading-only evenings (RG 2026-11-03).** No `event_kind` column. 97 of the 117 already carry an event-level label
+(concert 93 under RG's 2026-10-13 rule; Siamese court troupe 2; German opera 2, #141); the other 20 keep their heading in
+`annotation`, and the 17 dress rehearsals are found by «Генеральная репетиція». The 1899 and 1903 Pushkin evenings print
+works inside their heading that were never made performance rows: noted, not chased.

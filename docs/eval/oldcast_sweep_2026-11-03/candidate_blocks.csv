@@ -1,0 +1,46 @@
+block_id,entirely_historical,event_date,summary,assertion_or_dance_rows_to_unlink
+review_1891-92_SP_ballet_p001__b004,no,,24 Nov 1891 revival of Царь Кандавлъ with Бріанца (current); history of Доръ/Вергина/Ваземъ before 1876,
+review_1891-92_SP_ballet_p011__b009,yes,1837,"Сильфида history: 1835 SPb première (Крузетъ), 1837 Тальони; dancer-linked date = 1837 (première 1835)",assertion 32 (Тальони)
+review_1892-93_SP_ballet_p000__b007,yes,1851-01-30,"1851 SPb première of Наяда и рыбакъ: Гризи, Андреянова, Перро as Матео, soloists",
+review_1892-93_SP_ballet_p003__b001,yes,1862,Дочь фараона 1862 première + succession of Аспиччіи,
+review_1892-93_SP_ballet_p018__b003,yes,1833,1833 revival in Лашукъ benefit with child pupils,
+review_1893-94_MSK_ballet_p003__b006,yes,1866-12-01,"Конекъ-горбунокъ Moscow première 1866-12-01 (Гранцева), 9 Dec 1866 Собещанская, later Царь-дѣвицы",
+review_1893-94_MSK_ballet_p010__b003,yes,1844-09-15,"Жизель Moscow première 1844-09-15, full cast","assertions 102 (Татаринова), 2029 (Богдановъ 1-й)"
+review_1893-94_SP_ballet_p018__b002,yes,1849-02-04,"Катарина: 1849-02-04 première; also 1888-09-25 Альджизи, 1889-05-02 Горшенкова 1-я (multi-date)",none for performers; NB assertion 2052 is a misparsed stager credit (Перро) dated 1889-05-02
+review_1893-94_SP_ballet_p019__b002,yes,1884-11-25,Коппелія SPb 1884-11-25 Никитина; 1888-01-17 Цукки (multi-date),
+review_1893-94_SP_ballet_p023__b004,no,,Лебединое озеро excerpt new in SPb (current); 1877 Moscow première with Карпакова (unlinked),
+review_1894-95_SP_ballet_p010__b002,no,,"Парижскій рынокъ revived 'для этого спектакля' (current, no cast); 1859 first cast",
+review_1894-95_SP_ballet_p011__b004,no,,Лебединое озеро full SPb first (current); only composer named,
+review_1895-96_SP_ballet_p001__b005,yes,1889-06-05,Капризы бабочки première 1889-06-05 cast,
+review_1895-96_SP_ballet_p002__b004,yes,1889-01-25,"Талисманъ SPb première 1889-01-25 (Корнальба), later Никитина",
+review_1896-97_SP_ballet_p004__b004,yes,1879-12-02,Млада première 1879-12-02 full cast + designers,
+review_1900-01_MSK_ballet_p003__b001,yes,1869-12-14,Донъ-Кихотъ Moscow première 1869-12-14 cast; 1887-02-15 revival for Гейтенъ (multi-date),
+review_1900-01_MSK_ballet_p004__b001,no,,"end of 1887 cast (Домашевъ), 1888 Горшенкова; 13 Dec 1900 revival by Горскій (current)","assertion 689 (Домашевъ; misdated 1900-12-13, belongs to 1887)"
+review_1900-01_SP_ballet_p001__b002,no,,3 Sep 1900 Синяя борода (current); only Леньяни tied to 1896-12-08 première. Cast list judged CURRENT (Сѣдова 2-я/Петипа 3-я not yet in troupe in 1896) — not unlinked,none to unlink; but assertions 709-718 are dated 1896-12-08 and should probably be 1900-09-03 (RG to confirm)
+review_1900-01_SP_ballet_p001__b004,no,,10 Sep 1900 Коппелія (current); Сванильда succession 1884-1894,
+review_1900-01_SP_ballet_p002__b001,no,,"Сванильда succession 1895-1899, then current 10 Sep 1900 cast + Пробужденіе Флоры (current)",
+review_1900-01_SP_ballet_p002__b004,yes,1868,"Царь Кандавлъ 1868 Доръ, Вергина, 1875 Симская/Ваземъ (succession)",
+review_1900-01_SP_ballet_p003__b001,yes,1891,Низія succession 1891/1893/1897 (multi-date),
+review_1900-01_SP_ballet_p004__b003,UNDECIDED,,"Царь-Дѣвица succession 1864-1895 (historical) + 'При послѣднемъ возобновленіи' cast (Гиллертъ, Лукьяновъ, Медалинскій) — revival year unstated, 1895 or current",assertions 747-749 UNDECIDED (same question)
+review_1900-01_SP_ballet_p006__b004,yes,1858,"Корсаръ 1858 SPb, Медора succession",
+review_1900-01_SP_ballet_p006__b005,no,,"5 Nov 1900 Эсмеральда current cast; 1848 history (Эльслеръ, Перро as Гренгуаръ - unlinked) + Эсмеральда succession",
+review_1900-01_SP_ballet_p007__b002,UNDECIDED,,Эсмеральда succession 1866-1899 (historical); final clause 'возобновили для бенефиса г-жи Леньяни' undated and internally inconsistent (Леньяни 423 left linked),
+review_1900-01_SP_ballet_p036__b003,yes,1861-09-24,Маркитантка revival 1861-09-24 cast,assertion 2399 (Пишо)
+review_1901-02_MSK_ballet_p005__b003,no,,12 Sep 1901 Пахита act 2 for Гримальди (current); 1848 Moscow première + Пахита succession,
+review_1901-02_MSK_ballet_p011__b003,no,,25 Nov 1901 Конекъ-Горбунокъ for Джури (current); Родиславскій quote on Сенъ-Леонъ (creator only),
+review_1901-02_MSK_ballet_p023__b003,no,,Царь-Дѣвица succession to 1899 (historical) + 25 Nov 1901 Горскій production for Джури (current),
+review_1901-02_SP_ballet_p006__b001,yes,1842-12-18,Жизель SPb première 1842-12-18 + Жизель succession,
+review_1901-02_SP_ballet_p024__b005,yes,1871-11-09,Донъ-Кихотъ SPb première 1871-11-09 cast,"assertions 2529 (Стуколкинъ), 2530 (Волковъ), 2532 (Пишо), 1026 (Троицкая)"
+review_1902-03_SP_ballet_p018__b002,yes,,Спящая красавица 'при первомъ и послѣдующихъ представленіяхъ' cast; première date (1890) NOT printed in block; substitutions 1892 and 1893-01-17,"assertions 1152 (Чекетти), 1153 (Бріанца), 2697 (Гиллертъ), 2698 (Карсавинъ), 2699 (Облаковъ), 2700 (Бекефи) — all misdated 1893-01-17"
+review_1903-04_MSK_ballet_p003__b002,no,,1867 SPb première cast of Золотая рыбка; Горскій's current reworking (as creator) — no current performers,"assertions 2715 (Чистяковъ), 1169 (Петрова), 2716 (Л. Ивановъ→Иванова Лариса), 1170 (Стуколкинъ), 1171 (Радина 1-я)"
+review_1904-05_SP_ballet_p013__b002,no,,20 Feb 1905 Голубая Георгина revival by Гердтъ (current); 1860-04-12 première chronicle quote,
+review_1904-05_SP_ballet_p015__b003,no,,20 Apr 1905 school performance (current cast); 1859 première cast + Лизетта succession,"assertions 1529 (Стуколкинъ 1-й), 2864 (Г. Петипа as Симонъ) — all assertions in block misdated 1905-01-08 (Андерсенъ's 1895 farewell date)"
+review_1905-06_MSK_ballet_p004__b001,yes,1892-01-02,end of Moscow première account (comparison with SPb Стуколкинъ) + 1892-01-02 revival cast for Гейтенъ,"assertions 1551, 2877, 2878, 1553, 2879, 2880, 1554, 2881 (1552 is Вальцъ as designer - keep)"
+review_1905-06_SP_ballet_p009__b002,UNDECIDED,,"12 Feb 1906 Гердтъ jubilee benefit (current); biography (1858 child appearance, 1871 first benefit). Mentions of Гердтъ himself left linked","assertion 2998 (role_surface '31 января 1871 г', Гердтъ) - bogus, RG to decide"
+review_1906-07_MSK_ballet_p006__b006,no,,"21 Jan 1907 Гельцеръ benefit, Тщетная предосторожность (current); 1845 Moscow history + Лиза succession",
+review_1906-07_MSK_ballet_p008__b003,no,,"18 Feb 1907 Жизель revival (current); 1843/1846 history, Родиславскій quote (performers unlinked)",
+review_1906-07_MSK_ballet_p010__b001,no,,"Родиславскій on Санковская 1846, Жизель succession 1848-1901; then current 1907 cast",
+review_1906-07_SP_ballet_p003__b004,no,,"current benefit: Путешествующая танцовщица (first given 1865, no historical cast) + Раймонда act 3",
+review_1906-07_SP_ballet_p006__b003,no,,"Раймонда act 3, current cast ('въ этотъ спектакль'); 1898 only a cross-reference","none to unlink; NB assertions 3085,1824,3086,1825,3192 dated 1898-01-07 but describe the current performance"
+review_1907-08_SP_ballet_p014__b006,no,,20 Apr 1908 Аленькій цвѣточекъ (current); Сѣдова's 1898 entry date only,
+review_1908-09_SP_ballet_p002__b003,no,,"14 Dec 1908 Царь Кандавлъ (current); 1891 revival mentioned, no performers",

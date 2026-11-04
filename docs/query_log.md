@@ -25817,6 +25817,614 @@ and research.person_appearance 9 (the edited lines). Щелкунчикъ: Бо�
 Зильбергауса», «Конфектное царство». Receipts 3,223,088,581; assertion links 2,466; research.person 2,619; 0 shifts. A first rebuild
 attempt stopped at build_duckdb on a lock held by a short-lived process (PID 73329, gone on check); nothing written by that attempt.
 
+## 2026-11-03 — Research-layer review: Works (profile of research.work)
+
+```sql
+DESCRIBE research.work; SELECT count(*) FROM research.work;
+SELECT work_source, count(*) FROM research.work GROUP BY 1;
+SELECT genre_source, count(*) FROM research.work GROUP BY 1;
+SELECT canonical_genre, count(*) FROM research.work GROUP BY 1 ORDER BY 2 DESC LIMIT 30;
+SELECT count(*) FILTER (WHERE excerpt_of_work_id IS NOT NULL), count(*) FILTER (WHERE canonical_genre IS NULL) FROM research.work;
+SELECT count(*) FROM research.work w WHERE NOT EXISTS (SELECT 1 FROM research.performance p WHERE p.work_id=w.work_id);
+SELECT discipline, count(DISTINCT work_id), count(*) FROM research.performance GROUP BY 1;
+SELECT genre_family, count(DISTINCT work_id) FROM research.performance GROUP BY 1;
+-- link coverage: count(*), count(work_id) on production, review_assertion, review_credit, review_dance, review_solo
+```
+
+Result: 2,952 works (repertoire 2,932, review 20); genre printed 2,560 / none 365 (269 of them excerpts) / review 20 /
+research_rule 7; 342 excerpts; 37 works with no performance (20 review-only, 17 repertoire); disciplines Russian drama
+1,131 works, French drama 870, opera 295, German drama 288, ballet 241; null discipline 338 performances / 49 works.
+Links: production 627/628, review_assertion 1,879/2,657, review_credit 2,358/2,410, review_dance 632/914, review_solo 37/96.
+
+## 2026-11-03 — Research-layer review: Works (oddities)
+
+```sql
+-- 17 repertoire works without performances: same-title works, production/review links, excerpt children
+-- appearance_count vs count(performance): mismatches
+SELECT ... FROM research.work w WHERE appearance_count <> (SELECT count(*) FROM research.performance p WHERE p.work_id=w.work_id);
+-- works with >1 discipline; null-discipline performances by genre_family; titles shared by >1 non-excerpt work
+-- entities.work_link rows for Анжело оп. / Карменъ бал. and where research.performance puts them
+-- review_assertion rows on Карменъ бал.; whole block review_1904-05_SP_ballet_p010__b004
+-- Дивертиссементъ / Карнавалъ works by discipline and season
+```
+
+Result: 15 of the 17 empty works are excerpt parents; Карменъ бал. (2 links -> research puts them on Карменъ оп.) and
+Анжело оп. (1 link -> Анжело др.) are empty leftovers. 7 ballets have appearance_count 1-2 below their performance
+count (Коппелія 105/107, Лебединое озеро 125/127, Эвника 8/9, Шопеніана 12/13, Волшебная флейта 40/41, Дочь фараона
+71/72, Золотая рыбка 30/31). 12 works span disciplines. 35 titles are shared by >1 non-excerpt work. Block
+review_1904-05_SP_ballet_p010__b004 (4 Nov 1904): Альма -> Путешествующая танцовщица; Діасъ, Кармена, слуга Альмы ->
+Карменъ бал. (work_surface «Кармена»). Дивертиссементъ spread over 5 works.
+
+## 2026-11-03 — Research-layer review W1: «Кармена» relink, check of the review-chain rebuild
+
+```sql
+-- before.duckdb = production copied just before the write; after = production after the review chain
+SELECT assertion_id, role_surface, work_id FROM research.review_assertion WHERE block_id='review_1904-05_SP_ballet_p010__b004';
+SELECT count(*) FROM a.research.review_dance_performer x JOIN b.research.review_dance_performer y USING(dance_id, position)
+ WHERE x.performer_person_id IS DISTINCT FROM y.performer_person_id OR x.link_method IS DISTINCT FROM y.link_method;
+-- same for review_assertion (USING assertion_id); entity_id changes on entities.review_mention (USING block_id, char_start, surface)
+```
+
+Result: all 4 cast lines of the block (Альма, Діасъ, Кармена, слуга Альмы) on «Путешествующая танцовщица»
+(1e78c367...). 0 person or link-method changes in review_dance_performer and review_assertion; 1 mention entity change
+(«Кармена»). The remaining row differences are candidate lists in a different order (0 once sorted).
+
+## 2026-11-03 — City for Administrators / Graduates / ProductionTeam / TheaterSchoolStaff appearances, from headings
+
+```sql
+SELECT entity_type, institution, heading_path, count(*) FROM research.person_appearance
+WHERE entity_type IN ('Administrators','Graduates','ProductionTeam','TheaterSchoolStaff') GROUP BY ALL;   -- classified in Python by петербург|с.-п / москв
+SELECT entity_type, institution, split_part(heading_path,' / ',1), count(*) ... GROUP BY ALL;
+SELECT pa.season, p.display_name, pa.heading_path, pa.title FROM research.person_appearance pa JOIN research.person p USING (person_id)
+WHERE pa.entity_type = 'Administrators' AND split_part(pa.heading_path,' / ',1) LIKE 'Дирекція%';
+```
+
+Result: of 7,324 rows (all city NULL), 7,192 name a city in institution or top heading (Administrators SP 984 / Moscow 786; Graduates 261/205;
+ProductionTeam 1,304/797; TheaterSchoolStaff 1,606/1,249); no heading names both. 138 rows under «Дирекція Императорскихъ театровъ»: 6 name
+SP lower down (Свенторжецкій 1903-04..1908-09 «Техникъ при С.-Петербургской Конторѣ»); 132 name no city -- 25 people (directors
+Всеволожской, Волконскій, Теляковскій; officials on special assignment to the Director, e.g. Дягилевъ 1899-1901, Петровъ, Кусовъ).
+
+## 2026-11-03 — Do research appearances carry source volume and folio? (RG on list_number)
+
+```sql
+DESCRIBE research.person_appearance;  DESCRIBE raw.source_pages;  DESCRIBE raw.person_entry;
+SELECT entity_type, count(*), count(printed_page_number) FROM raw.source_pages WHERE entity_type <> 'Repertoire' GROUP BY 1;
+```
+
+Result: research.person_appearance has season (= the volume) but no page or folio column. raw.person_entry has page_id; raw.source_pages
+has source_file, source_page_index, printed_page_number. Fill of printed_page_number for the staff lists: see the session report 2026-11-03.
+
+## 2026-11-03 — How many appearances have no city? (RG)
+
+```sql
+SELECT entity_type, count(*), count(*) FILTER (WHERE city IS NULL), count(*) FILTER (WHERE city='SP'), count(*) FILTER (WHERE city='Moscow')
+FROM research.person_appearance GROUP BY 1;
+```
+
+Result: see the session report 2026-11-03 (BalletArtists/Musicians all placed; the four other lists all NULL before the city rule).
+
+## 2026-11-03 — City rule on a scratch copy: effects, and single-season "city islands"
+
+```sql
+-- copy of production + build_research_model.py with the city rule; every base table EXCEPT ALL v. the copy
+SELECT entity_type, city, count(*) FROM research.person_appearance WHERE entity_type NOT IN ('BalletArtists','Musicians') GROUP BY 1,2;
+SELECT t.list, p.display_name, string_agg(t.city || ' ' || t.first_season || '..' || t.last_season, ' ; ') FROM research.person_tenure t
+JOIN research.person p USING (person_id) WHERE t.list IN (<4 lists>) GROUP BY ... HAVING count(*) > 1;
+-- islands: an appearance whose city differs from the same person's previous and next listed season in that list (Python)
+```
+
+Result: research.person_appearance 7,324 rows get a city (Administrators SP 984 / Moscow 786 / both 132; Graduates 261/205; ProductionTeam
+1,304/797; TheaterSchoolStaff 1,606/1,249), 0 left NULL; service_period 6,961, person_tenure 3,034 -> 3,068 (32 people split by city,
+mostly real moves or concurrent posts), person_tenure_note 2, person_assignment 1, person_performance_tally 13 rows change (city column).
+30 correction rows keyed on city '' given the new city (Коровинъ's slip -> Moscow, his 1906-08 run). 14 islands; scan-checked (Claude):
+1903-04 p.125 Мамошинъ, Разумовскій, Робинзонъ, Розенбергъ, Самсоновъ printed ABOVE the Moscow divider (SP Контора) but stored under
+«Московская Контора / Хозяйственное отдѣленіе»; Фонъ-Бооль's heading wrong on the same page; 1902-03 p.126 Фонъ-Бооль printed as the
+Moscow Контора's «Управляющій Конторою и Императорскимъ Театральнымъ училищемъ», stored as an SP clerk. The other islands are
+first/last seasons and genuine (Коровинъ, Петровъ, Молчановъ И. Н., Аршеневскій).
+
+## 2026-11-03 — City rule + 7 heading fixes applied to production: diff v. raw_backup_b13_city_2026-11-03
+
+```sql
+-- every base table EXCEPT ALL both ways v. backup
+SELECT entity_type, coalesce(city,'NULL'), count(*) FROM research.person_appearance GROUP BY 1,2;
+SELECT count(*) FROM research.person_tenure;
+SELECT appearance_id, city FROM research.person_appearance WHERE appearance_id IN ('administration_1903-04_p002__e005','..._e009','administration_1902-03_p002__e017');
+SELECT assertion_id, work_id FROM research.review_assertion WHERE assertion_id IN (1482,2847,2848,2849);   -- Works session's W1 fix
+```
+
+Result: changed raw/analysis person_entry 7 (headings), research.person_appearance 7,324 (city), service_period 6,961, person_tenure
+3,034 -> 3,062, person_tenure_note 2, person_assignment 1, person_performance_tally 13; all else identical. No NULL city in any list;
+Administrators SP 988 / Moscow 782 / both 132. Fixed islands now SP (1903-04 clerks) and Moscow (Фонъ-Бооль 1902-03). W1 intact (4 x
+1e78c367…, work exists). Receipts 3,223,088,581; assertion links 2,466; set_design 61; 0 shifts.
+
+## 2026-11-03 — Research-layer review W1b/W2/W3: test build on a copy of production (after 2a667ce)
+
+```sql
+-- before = production copy; test = same copy after build_research_model + review chain with the new code and lists
+SELECT x.canonical_title, x.canonical_genre, x.appearance_count, y.appearance_count
+  FROM a.research.work x LEFT JOIN b.research.work y USING(work_id) WHERE x.appearance_count IS DISTINCT FROM y.appearance_count;
+SELECT ... FROM a.research.review_assertion x JOIN b.research.review_assertion y USING(assertion_id)
+ WHERE x.performer_person_id IS DISTINCT FROM y.performer_person_id OR x.date_undate IS DISTINCT FROM y.date_undate OR x.work_id IS DISTINCT FROM y.work_id;
+-- EXCEPT ALL both ways on every table; review_dance_performer / solo / composer without candidate lists;
+-- entity_id changes on entities.review_mention; review_* / production / performance work_ids missing from research.work
+```
+
+Result: work 2,952 -> 2,950 (Анжело оп., Карменъ бал. dropped); 7 counts raised by 1-2 (Коппелія 105->107 ...). 9
+assertions changed: 4 on p.115 dated 1904-11-04 -> 1865-11-04 (3 of them unlinked: Радина, М. С. Петипа ex 611f258f,
+Стуколкинъ), 5 on p.116 unlinked (Стуколкинъ 1-й, Радина 1-я, Радина 2-я, Радина, Чистяковъ); 14 mention entities
+emptied. 1905 cast unchanged. review_dance_performer, solo, composer: no change. Dangling work_ids: 0 in all 6 tables.
+
+## 2026-11-03 — Research-layer review W2/W3: counts with supplied rows left out; production check after the write
+
+```sql
+SELECT count(*) FROM b.research.work w WHERE coalesce(work_source,'repertoire')='repertoire'
+   AND appearance_count <> (SELECT count(*) FROM b.research.performance p WHERE p.work_id=w.work_id
+                            AND p.performance_source NOT LIKE 'supplied:%');
+-- production vs the tested copy: appearance_count, assertion / dance / solo person + link_method, mention entity_id,
+-- work_ids missing from research.work in 6 tables; check_person_link_alignment.py
+```
+
+Result: 0 mismatches after the rebuild. Only Коппелія (105->107) and Лебединое озеро (125->127) changed; Эвника,
+Шопеніана, Волшебная флейта, Дочь фараона, Золотая рыбка keep their counts (one supplied performance each, not counted
+by design). Production equals the tested copy in every review person/date/work field; 0 dangling work_ids; 0 shift blocks.
+
+## 2026-11-03 — Catalogue deaths v. stored deaths (C4), rerun of d3_deaths.py on current production
+
+```python
+# docs/eval/person_field_audit_2026-11-01/d3_deaths.py (read-only): jubilee/obituary catalogue deaths linked to a person v. raw service ends of type died
+# then per person: last two research.person_appearance rows with service_period end_text/end_type
+```
+
+Result: agree 170 (was 166 on 2026-11-01), no died end stored 32 (was 37), catalogue date not parsed 9, roster death not in catalogue links 7,
+same year/different day 4 (Соловьевъ 9 v 4 Oct 1890, Мейеръ 25 v 28 Mar 1893, Никитинъ 23 v 24 Jul 1896, Всеволожской 29 v 28 Oct 1909).
+Of the 32: 3 already have a year-only death stored (Шемаевъ, Генъ, Іогансонъ; script counts them as missing); Ортнеръ, Моцейкевичъ, Рамзе
+left service months before dying; Соколовъ С. П. is a production-list person (correctly linked); ~6 died before the next volume (Доброва,
+Киселевъ, Акимовъ, Андреевъ 1-й, Гельцеръ В. Ѳ., Ленскій, Потѣхинъ) and ~13 years after leaving. Scans read by Claude: Бочкина 1895-96 MSK
+p.95 no.13 and Юмашевъ 1908-09 Administration p.135 print no «†» (died 11 Feb 1896 / 5 Oct 1908 per the same volumes' obituaries);
+Константиновъ Н. И. (p.101 no.45) and Тепферъ (p.102 no.98) are listed in 1896-97 Moscow musicians with no «†» though the 1895-96
+volume's obituaries give 7 Aug / 24 May 1896 (the same 1896-97 pages do print Линднеръ † 13 Oct 1896 and Шпарманъ † 11 Dec 1896).
+No dropped «†» found: every roster entry is stored as printed.
+
+## 2026-11-03 — research.person_death built (C4): copy test, then production; diff v. db_backup_person_death_2026-11-03
+
+```sql
+SELECT source, count(*), count(death_date), count(death_year) FROM research.person_death GROUP BY 1;
+-- obituary-only people; rows with no year; roster v. catalogue dates that differ; deaths before first / long before last listing
+-- every base table EXCEPT ALL both ways v. backup; research.work count, Коппелія / Лебединое озеро appearance_count (Works session's check)
+```
+
+Result: 308 rows (roster 194, obituary 108, death notice 6); 29 people with a catalogue death only; 3 rows with no date printed (Гиллертъ
+season 1907-08, Станкевичъ «въ сезонѣ 1895—1896», Шенекерль «9-го декабря» no year). Roster v. catalogue differences 1-5 days only
+(Всеволожской 28/29 Oct 1909, Гоппе 6/5 Jan 1894, Мейеръ 28/25 Mar 1893, Михайлова 1-я 12/11 Dec 1893, Никитинъ 24/23 Jul 1896,
+Соловьевъ 4/9 Oct 1890, Троицкая 25/26 Sep 1896). Roster deaths before later listings: Николаева 3-я (1902; to 1910-11), Козловъ М. Ѳ.
+(1902; to 1904-05), Краюшкинъ (1898; to 1900-01). Production diff: NEW research.person_death 308, person_tenure_note +2 (Константиновъ,
+Тепферъ); nothing else. research.work 2,950, Коппелія 107, Лебединое озеро 127; receipts 3,223,088,581; research.person 2,619; 0 shifts.
+
+## 2026-11-03 — Research-layer review, Works item 4: same piece in two scripts, by company and season
+
+```sql
+SELECT w.canonical_title, w.canonical_genre, p.company, p.discipline, min(e.season), max(e.season), count(*),
+       string_agg(DISTINCT p.verbatim_title, ' | ')
+FROM research.performance p JOIN research.work w USING(work_id) JOIN research.event e USING(event_id)
+WHERE w.excerpt_of_work_id IS NULL AND w.canonical_title IN ('Hamlet','Гамлетъ','Faust','Фаустъ','Tartuffe','Тартюфъ','Margot','Madame Sans-Gêne')
+GROUP BY ALL ORDER BY 1,2,3;
+SELECT count(*) FROM research.work WHERE regexp_matches(canonical_title,'^[A-Za-zÀ-ÿ]') AND excerpt_of_work_id IS NULL;
+SELECT p.company, count(DISTINCT work_id) FROM research.performance p JOIN research.work w USING(work_id)
+ WHERE regexp_matches(w.canonical_title,'^[A-Za-zÀ-ÿ]') GROUP BY 1 ORDER BY 2 DESC;
+```
+
+Result: the split follows the printed script, not the company. Adele Sandrock's German «Гамлетъ» (1901-02) sits with the
+Russian Гамлетъ (65 perfs, SP + Moscow); the German guest «Hamlet» 1896-97 and French «Hamlet» 1890-91 are a separate
+work. Italian «Фаустъ» under Угетти 1901-02 sits with the Russian opera; Moscow Italian troupe «Faust» 1893-97 (4) and
+German opera «Faust» 1897-98 (1) are a separate work. Тартюфъ 25 (Russian) vs Tartuffe 4 (French 3, German 1); Margot
+and Madame Sans-Gêne already join French + German under one Latin title. 1,192 Latin-script non-excerpt works; companies:
+SP French drama 864 works, visiting German drama 277, Moscow Italian opera 16, German opera 11, others ≤5.
+
+## 2026-11-03 — Research-layer review, Works item 5: the «Дивертиссементъ» work rows
+
+```sql
+SELECT left(w.work_id::varchar,8), w.canonical_title, w.canonical_genre, p.discipline, p.genre_family, p.company, count(*),
+       min(e.season), max(e.season)
+FROM research.performance p JOIN research.work w USING(work_id) JOIN research.event e USING(event_id)
+WHERE w.canonical_title ILIKE 'Дивертис%' GROUP BY ALL;
+SELECT work_id, canonical_title, canonical_genre, genre_source, genre_note, appearance_count FROM research.work WHERE canonical_title ILIKE 'Дивертис%';
+-- per work: theaters, and whether another ballet is on the same bill
+```
+
+Result: 6 work rows (not 5). «Дивертиссементъ» бал. (research rule, per-performance list) 44: Новый 17, Маріинскій 14,
+Большой 13, all with a ballet on the bill. «Дивертиссементъ» no genre 37: Малый 11, Маріинскій 10 (5 with a ballet on
+the bill), Александринскій 8, Большой 5, Михайловскій 3; no discipline. «Дивертиссементъ» no genre, discipline ballet, 2
+(Александринскій 1894-95). «Дивертиссментъ» бал. 3 (1908-09 Большой 2, Маріинскій 1) and no genre 2 (Александринскій
+1905-01-08, Михайловскій 1908-12-17). «Дивертиссементъ (Etudes)» бал. 1 (Большой 1909-10-18).
+
+## 2026-11-03 — Research-layer review, Works items 6-7: performances with no genre_family; «Гейша», «Званый вечеръ съ итальянцами»
+
+```sql
+SELECT p.performance_id, e.date_undate, t.canonical_name, p.verbatim_title, p.verbatim_genre, p.discipline, p.company,
+       (SELECT string_agg(q.verbatim_title||' ['||coalesce(q.discipline,'-')||']', '; ') FROM research.performance q
+         WHERE q.event_id=p.event_id AND q.performance_id<>p.performance_id)
+FROM research.performance p JOIN research.event e USING(event_id) JOIN research.theater t USING(theater_id)
+WHERE p.genre_family IS NULL;
+-- same columns plus discipline_basis for works «Гейша», «Званый вечеръ съ итальянцами»
+```
+
+Result: 4 with no genre_family, none with a printed genre: «Слава»! (Малый 1895-01-04, after «Горе отъ ума»),
+«Обозрѣніе» (Маріинскій 1903-01-11, alone), «Балетоманъ» (Маріинскій 1905-04-23, mixed bill: «Письмо Татьяны»,
+«Сонъ въ лѣтнюю ночь», Дивертиссементъ, «Свадьба»), «Концертъ-спектакль» (Маріинскій 1902-02-16, alone). Гейша: Vienna
+operetta troupe 1902-03 (German operetta), Михайловскій 1907 (Russian drama), Маріинскій 1908 (opera). Званый вечеръ:
+Маріинскій 1904 + Большой 1908 x2 (opera), Александринскій 1904 (Russian drama). Every discipline follows the recorded
+basis: an operetta goes with the company that performs it; a visiting troupe by its personnel (RG 2026-10-22).
+
+## 2026-11-03 — Research-layer review, Works item 6: other evidence for the four kind-less items
+
+```sql
+SELECT p.verbatim_title, p.verbatim_genre, e.date_undate FROM research.performance p JOIN research.event e USING(event_id)
+ WHERE p.verbatim_title ILIKE ANY ('%алетоман%','%Слава%','%бозр%','%онцертъ-спект%');
+SELECT count(*), any_value(page_id) FROM entities.review_mention WHERE surface ILIKE <same patterns>;
+SELECT * FROM research.season_stat_line WHERE season IN ('1894-95','1901-02','1902-03','1904-05') AND city IN ('Moscow','SP');
+```
+
+Result: each title occurs once in the Repertoire, never with a genre. Review mentions: «Балетоманъ» 1 (1910-11 SP,
+unrelated), «Обозрѣніе» 1 (1896-97 SP, the ordinary word); none of the others. Season-stat lines for those seasons and
+cities have no concert, revue or charity line (drama, opera, ballet, French, German, mixed only).
+
+## 2026-11-03 — Research-layer review: work and performance data held before research but not carried into it
+
+```sql
+DESCRIBE raw.event_entry_performance; DESCRIBE entities.work; DESCRIBE research.performance; DESCRIBE research.work;
+SELECT count(*) FROM raw.event_entry_performance;  -- vs research.performance (all / not supplied)
+SELECT count(*) FROM raw.event_entry_performance r LEFT JOIN entities.work_link wl ON wl.raw_performance_id=r.performance_id
+ WHERE r.performance_id NOT IN (SELECT performance_id FROM research.performance);
+SELECT canonical_title, canonical_genre FROM entities.work WHERE work_id NOT IN (SELECT work_id FROM research.work);
+SELECT count(*), count(note), count(*) FILTER (WHERE outside_total), count(*) FILTER (WHERE NOT year_printed_matches_season)
+ FROM raw.production_entry_performance;
+SELECT note, count(*) FROM raw.production_entry_performance WHERE note IS NOT NULL GROUP BY 1 ORDER BY 2 DESC;
+SELECT sum(n_dates) FROM research.production;
+SELECT count(*) FROM entities.work_id_crosswalk; SELECT count(*) FROM entities.work_genre_candidate;
+```
+
+Result: raw performances 30,831; research 30,835 (30,830 printed + 5 supplied); 1 raw line not carried
+(repertoire_1905-06_p015__s021__w1, no title, no work link). entities.work not in research: Карменъ бал., Анжело оп.,
+Шоиеніана, Дивертиссементъ (Etudes). Ballet-list dates: 2,374 (110 with notes, 30 outside total, 5 year mismatch);
+research.production n_dates sum 2,344; no research table holds the dates. Crosswalk 836; genre queue 62.
+
+## 2026-11-03 — Research-layer review W8: research.production_date test build (copy of production after de430fc)
+
+```sql
+SELECT regexp_replace(match_note, ':.*', ''), count(*) FROM research.production_date GROUP BY 1;
+SELECT pr.season, pr.city, pr.list_title, strftime(d.date,'%Y-%m-%d'), d.note, d.match_note, d.event_id, d.performance_id
+FROM research.production_date d JOIN research.production pr USING(production_id) WHERE d.match_note <> 'matched';
+-- ballet performances in research on the same city + date, for each unmatched list date
+-- ballet_list_matches before vs after the refactor (Counter of tuples), on production read-only
+```
+
+Result: 2,374 dates: matched 2,357; one event / two performances 5; two events 1; unmatched 11 (table in
+docs/research_layer_review_2026-11-03.md). ballet_list_matches: 2,370 pairs before and after, identical. Every other
+table equal to production. outside_total 30, year mismatch 5, misprint corrections 5.
+
+## 2026-11-03 — Research-layer review W8 follow-up: the 11 unmatched ballet-list dates
+
+```sql
+-- per unmatched production_date: the list entry's dates, the same work within 10 days (any city), the city's events that day
+SELECT ... FROM research.production_date d JOIN research.production pr USING(production_id) WHERE d.match_note LIKE 'no Repertoire%';
+SELECT e.city, e.date_undate, t.canonical_name, p.verbatim_title FROM research.performance p JOIN research.event e USING(event_id)
+ JOIN research.theater t USING(theater_id) WHERE p.work_id = <entry work> AND e.date_undate BETWEEN <date - 10> AND <date + 10>;
+-- 1910-11 SP list entries «Эвника», «Карнавалъ», «Шопеніана» with their dates and match_note; review_1910-11_SP_ballet text search
+```
+
+Result: same work nearby: Пробужденіе Флоры 3 May 1896 (list 2), Волшебная флейта 15 Oct 1897 (list 25; earlier ruled a
+list error, no date), Очарованный лѣсъ 27 Sep 1898 (also on the list), Маркитантка 4 Feb 1901 (also on the list), Волшебная
+флейта 28 Dec 1901 (also on the list), На перепутьи 27 Dec 1904 (list 17), Спящая красавица Moscow 8 Oct 1908 (list 18),
+Конекъ-горбунокъ Moscow 13 + 17 Feb 1911, Спящая красавица SP 17 Feb + Moscow 19 Feb 1911, Шопеніана 7 Mar 1911 (also on the
+list). 1910-11 list: Эвника and Карнавалъ both include 9 Mar (matched); Шопеніана «марта 7, 9», 4 dates. Review: «Карнавалъ»
+«7-го и 9-го марта», no Шопеніана.
+
+## 2026-11-03 — Staff-list folios: inventory and a local-OCR trial (RG "go ahead" on the sequence approach)
+
+```sql
+SELECT source_file, entity_type, count(*), min(source_page_index), max(source_page_index), count(DISTINCT source_page_index)
+FROM raw.source_pages WHERE entity_type <> 'Repertoire' GROUP BY 1,2;
+SELECT entity_type, count(*), count(printed_page_number) FROM raw.source_pages WHERE entity_type <> 'Repertoire' GROUP BY 1;
+-- then tesseract (rus+eng, psm 11) on the head 20% and foot 40% of each of the 966 pages; per-PDF offset fit (folio = scan index + k)
+```
+
+Result: 167 PDFs, 966 pages, no gaps in the scan numbering; printed_page_number empty on all of them. Strip composites fail on the
+1890-91 photographs (book edge and background in the strip). Tesseract + sequence fit: 41 of 167 PDFs fully consistent, but 7 of 26
+folios read by Claude earlier today disagree with the fit (old-style figures «IIO» misread; list numbers taken for folios). Not reliable
+enough; Qwen (DashScope) proposed as the reader, cost to RG first.
+
+## 2026-11-03 — Staff-list folios: Qwen reading, sequence check, applied to production (diff v. db_backup_folios_2026-11-03)
+
+```sql
+-- Qwen (docs/folios/read_folios_qwen.py) on 966 pages; per PDF: folios strictly increasing, jumps > 3 flagged; suspects read on the scans
+SELECT count(*), count(printed_folio) FROM research.person_appearance;
+-- every base table EXCEPT ALL v. backup; old person_appearance columns compared row by row; research.production_date (Works session's check)
+```
+
+Result: Qwen 26/26 on folios read earlier by Claude; full run 559,325 input / 3,299 output tokens. 133 of 167 PDFs consistent as read;
+39 pages flagged: 16 were printer's signature marks taken for the folio (read on the scans: e.g. 1893-94 SP ballet p002 «— 59 —», 1898-99 SP
+p006 «81», 1905-06 SP musicians p006 «33», 1905-06 ProductionTeam p002 «64»), 6 last pages print no folio (from the sequence), the rest are
+real skips in the selectively scanned Theatre School reports. All PDFs strictly increasing after correction. Production: person_appearance
+gains 3 columns, all 23,980 rows filled, no existing value changed; every other table identical; production_date 2,374 / 2,357 matched;
+receipts 3,223,088,581; research.person 2,619; person_death 308; 0 shifts. sqlite export tested on a copy: builds.
+
+## 2026-11-03 — Research-layer review W8 follow-up A: three list slips added to LIST_DATE_PRINT_TYPOS (test on a copy after 77e8d3f)
+
+```sql
+SELECT d.production_date_id, pr.list_title, d.date, d.day_printed, d.month_printed FROM research.production_date d
+ JOIN research.production pr USING(production_id)
+ WHERE (pr.list_title='Пробужденіе Флоры' AND d.date='1896-05-02') OR (pr.list_title='На перепутьи' AND d.date='1904-12-17')
+    OR (pr.list_title='Спящая красавица' AND pr.city='Moscow' AND d.date='1908-10-18');
+-- the intended days' events at the Большой / Маріинскій; before/after diff of every table
+```
+
+Result: ids balletproductions_1895-96_MSK_p001__e006__d001, _1904-05_SP_p001__e006__d002, _1908-09_MSK_p001__e005__d002.
+After: all three matched (repertoire_1895-96_pair024__s038, repertoire_1904-05_p020__s032 matinée, repertoire_1908-09_p010__s001);
+matched 2,360, unmatched 8; production_work 3 rows +1; every other table identical.
+
+## 2026-11-03 — Sweep of the Season Reviews for quoted earlier casts (RG "just go ahead and do the full old-cast sweep"): candidates
+
+```python
+# raw.review_block text; a year «18NN г./году» earlier than (season start - 1); cast signals (г-жа, г-нъ, гг., исполнял, роль, танцовал);
+# linked person mentions in entities.review_mention; blocks already in docs/eval/review_historical_passages.csv excluded
+```
+
+Result: 169 of 4,697 review blocks mention an earlier year; 45 also have cast signals and at least one linked person mention
+(1891-92 2, 1892-93 3, 1893-94 5, 1894-95 2, 1895-96 2, 1896-97 1, 1900-01 12, 1901-02 5, 1902-03 1, 1903-04 1, 1904-05 2, 1905-06 2,
+1906-07 5, 1907-08 1, 1908-09 1). Classification (performers of a quoted earlier cast -> unlink, per RG's 1875 ruling; creators and the
+current season's cast kept) handed to a subagent, to be checked before applying.
+
+## 2026-11-03 — Old-cast sweep applied (review chain on production): diff v. db_backup_oldcast_sweep_2026-11-03
+
+```sql
+SELECT n.block_id, n.char_start, n.surface, o.entity_id, n.entity_id FROM entities.review_mention n JOIN old.entities.review_mention o
+USING (block_id, char_start, mention_type) WHERE n.entity_id IS DISTINCT FROM o.entity_id;
+SELECT ... FROM research.review_assertion n FULL JOIN old.research.review_assertion o USING (assertion_id) WHERE performer or date differs;
+-- review_credit / review_dance_performer / review_solo person changes; EXCEPT ALL on person, event, work, person_appearance, person_death, production_date
+```
+
+Result: 109 mention links removed, exactly the listed ones; 32 assertions changed (all in quoted casts; e.g. 1871 Донъ-Кихотъ, 1844 Moscow
+Жизель, 1892 Moscow Дочь фараона, 1867 Золотая рыбка; 1902-03 Спящая красавица première cast loses its wrong 1893-01-17 date); 1 review_credit
+(misparsed «послѣ г-жи Ваземъ» staging-revival) unlinked; dance/solo 0; all research entity tables identical. Assertion links 2,458 -> 2,428;
+mentions resolved to one entity 22,104; 0 person_link shifts.
+
+## 2026-11-03 — Old-cast sweep follow-ups: Repertoire dates, then review chain on a copy and on production
+
+```sql
+SELECT e.season, count(*), min(e.date), max(e.date) FROM research.performance p JOIN research.event e USING (event_id) JOIN research.work w USING (work_id)
+WHERE w.canonical_title IN ('Конекъ-горбунокъ','Эсмеральда','Синяя борода') AND e.city = 'SP' GROUP BY 1;
+SELECT e.date, e.annotation FROM research.event e WHERE e.city = 'SP' AND e.annotation ILIKE '%Леньяни%';
+SELECT person_id, display_name, person_source FROM research.person WHERE display_name LIKE ANY ('Коралли%','Вальцъ%','Іогансонъ%','Петипа%','Перро%');
+-- then the four review steps on a copy and on production; mention / assertion / credit / dance / solo differences v. backup and v. tested copy
+```
+
+Result: Синяя борода SP 1900-09-03 (first of 3 in 1900-01); Эсмеральда SP 1890-91, 1891-92, then 1899-00 from 1899-11-21 (no Леньяни benefit
+of it); Конекъ-горбунокъ every season 1895-96..1901-02 from 1895-12-06 (Леньяни benefit); Медалинскій first in BalletArtists 1897-98.
+Коралли exists as a production-list creator (63f4db8b); no record for Вальцъ Ѳедоръ. Copy and production: 6 mention links changed (as listed),
+20 assertion dates set, 2 assertions dropped; credits (already right), dances, solos unchanged; production equal to the tested copy in all five
+review tables; assertion links 2,426; 0 shifts.
+
+## 2026-11-03 — Research-layer review: Theaters
+
+```sql
+SELECT * FROM research.theater;
+SELECT t.canonical_name, t.city, count(*), count(*) FILTER (WHERE e.event_status='performed'), min(e.season), max(e.season),
+       sum(e.receipts_total_kopecks)/100 FROM research.event e JOIN research.theater t USING(theater_id) GROUP BY ALL;
+SELECT event_status, count(*) FROM research.event GROUP BY 1;
+SELECT theater, theater_canonical, count(*) FROM analysis.event_entry GROUP BY ALL;
+SELECT page_id, count(*) FROM analysis.event_entry WHERE event_id NOT IN (SELECT event_id FROM research.event) GROUP BY 1;
+-- «Новый» by season: performed / no_performance / not_captured; last performed date
+SELECT theater_printed, count(*) FROM research.set_design GROUP BY 1;
+SELECT entity_id, count(*), string_agg(DISTINCT surface, ', ') FROM entities.review_mention WHERE mention_type='theater' GROUP BY 1;
+-- context of the «Новый» theater links (random sample of 8) and count of surfaces Новыя / Новая / Новыхъ
+```
+
+Result: 6 theaters, every event has one. Events / performed: Маріинскій 5,953/4,040, Александринскій 6,024/4,598,
+Михайловскій 5,588/4,025, Большой 5,844/3,808, Малый 5,821/4,009, Новый 3,583/1,685. Status: performed 22,165,
+no_performance 7,771, not_captured 2,877. 16 raw spellings, all mapped. 30 events excluded (repertoire_1910-11_p056).
+Новый: last performance 1907-04-29; 1907-08..1910-11 0 performed, 1,037 no_performance (printed dashes, 1908-09 p. 3
+scan). set_design theater_printed: Большой 25, Малый 8, blank 28. Review theater mentions 632: INST:imperial 208,
+INST:moscow 140, INST:petersburg 118, unlinked 105 (SP theater names), Новый 45 (32 are «Новыя/Новая/Новыхъ»), Большой 9,
+Малый 3, Эрмитажный 3, Красносельскій 1.
+
+## 2026-11-03 — Research-layer review: Season stats
+
+```sql
+DESCRIBE research.season_stat_line; DESCRIBE research.season_stat_check; DESCRIBE research.season_stat_footnote;
+SELECT season, city, count(*) FROM research.season_stat_line GROUP BY ALL;
+SELECT line_kind, count(*) FROM research.season_stat_line GROUP BY 1;
+SELECT category, count(*) FROM research.season_stat_line GROUP BY 1 ORDER BY 2 DESC;
+SELECT count(*) FROM raw.season_stat_page; SELECT count(*) FROM raw.season_stat_dated_note;
+SELECT season, city, stats_format, printed_count, repertoire_events, repertoire_days, events_minus_printed, days_minus_printed,
+       printed_receipts_kopecks, repertoire_receipts_kopecks, receipts_minus_printed_kopecks, repertoire_charity_text_events
+FROM research.season_stat_check ORDER BY 1,2;
+-- docs/eval/reconciliation/outcome_ledger.csv (file, not the db): rows by season and by outcome
+```
+
+Result: lines 303 (category 147, venue 99, subtotal 48, part 9), 19 seasons 1891-92..1910-11 (no 1890-91, 1905-06);
+check 38; footnotes 125 over 11 seasons; raw pages 19, dated notes 10 (not in research). Largest differences: Moscow
+1909-10 +107 events / +31,748.39 р.; SP 1907-08 +70; SP 1908-09 +55. 1891-92 repertoire receipts 0 (none printed).
+Ledger: 271 rows, every season; yearbook_own 120, corrected 53, excluded_by_yearbook 48, classification 23, open 16,
+comparison_rule 11.
+
+## 2026-11-03 — Research-layer review S1/S2: reconciliation ledger loaded; 1891-92 receipts NULL (test, then production)
+
+```sql
+SELECT outcome, count(*), sum(n_events_linked) FROM research.season_stat_gap GROUP BY 1 ORDER BY 2 DESC;
+SELECT count(*) FILTER (WHERE events_gap IS NULL AND events_gap_text IS NOT NULL), count(*) FILTER (WHERE checked_date IS NULL),
+       count(*) FILTER (WHERE event_ids_text IS NOT NULL AND n_events_linked = 0) FROM research.season_stat_gap;
+SELECT x.season, x.city, x.repertoire_receipts_kopecks, y.repertoire_receipts_kopecks
+FROM a.research.season_stat_check x JOIN b.research.season_stat_check y USING (season, city)
+WHERE x.repertoire_receipts_kopecks IS DISTINCT FROM y.repertoire_receipts_kopecks;
+```
+
+Result: 271 gaps, 569 event links (excluded_by_yearbook 48 gaps / 314 links, corrected 53/96, yearbook_own 120/74,
+classification 23/46, comparison_rule 11/23, open 16/16). 8 non-integer event gaps kept as text; all dates parse; 7 gaps
+with event text but no event id. season_stat_check: only 1891-92 Moscow and SP change (0 -> NULL). Every other table
+identical; production equal to the tested copy; 0 person_link shifts.
+
+## 2026-11-03 — Research-layer review S3: season_stat_page and season_stat_dated_note (test on a copy after 55551b0)
+
+```sql
+SELECT DISTINCT city_verbatim FROM raw.season_stat_dated_note; SELECT season, count(*) FROM raw.season_stat_dated_note GROUP BY 1;
+SELECT city, count(*) FROM research.season_stat_dated_note GROUP BY 1;
+SELECT count(*), count(heading_footnote) FROM research.season_stat_page;
+```
+
+Result: dated notes all 1909-10 (10; SP 6, Moscow 4), cities С.-Петербургъ / Москва only; pages 19, 8 with a heading
+footnote mark. Every other table identical to production.
+
+## 2026-11-03 — Research-layer review, Season stats: which city each footnote belongs to
+
+```sql
+SELECT season, count(*), min(footnote_no), max(footnote_no) FROM research.season_stat_footnote GROUP BY 1;
+WITH refs AS (SELECT l.season, l.city, trim(unnest(string_split(l.footnote_refs, ','))) AS r
+              FROM research.season_stat_line l WHERE l.footnote_refs IS NOT NULL)
+SELECT f.season, f.footnote_no, string_agg(DISTINCT r.city, '+'), left(f.text_verbatim, 70)
+FROM research.season_stat_footnote f LEFT JOIN refs r ON r.season = f.season AND r.r = f.footnote_no::VARCHAR GROUP BY ALL;
+SELECT season, heading_footnote FROM research.season_stat_page WHERE heading_footnote IS NOT NULL;
+```
+
+Result: one sequence per page across both cities (1893-94 1-13, 1897-98 1-16 ...). Every footnote is referenced by lines of
+exactly one city, except fn. 1 in 1893-94 – 1900-01 (8 seasons), which is the page heading's note on the italic receipts
+(referenced from the heading, not a line). No footnote is shared by both cities.
+
+## 2026-11-03 — Research-layer review S4: season_stat_footnote.city (test on a copy, then production)
+
+```sql
+SELECT city, count(*) FROM research.season_stat_footnote GROUP BY 1;
+-- footnote rows before vs after, ignoring city (EXCEPT ALL both ways); every other table diffed
+```
+
+Result: SP 63, Moscow 54, page 8; 0 other differences in the footnote table; every other table identical; 0 person_link
+shifts.
+
+## 2026-11-03 — Research-layer review: Events and performances
+
+```sql
+SELECT count(*), count(date), count(receipts_total_kopecks), count(annotation), count(printed_page_number),
+       sum(is_benefit::int), sum(is_charity::int), sum(is_free::int), sum(is_student_performance::int), sum(is_reduced_price::int),
+       sum(has_anthem::int) FROM research.event;
+SELECT date_confidence, count(*) FROM research.event GROUP BY 1;  -- also receipts_source, time_of_day, event_status x n_works
+SELECT date, date_undate, count(*) FROM research.event WHERE try_cast(date AS DATE) IS NULL GROUP BY ALL;
+SELECT season, count(*) FROM research.event WHERE event_status='performed' AND n_works=0 GROUP BY 1;   -- + sample with annotation
+SELECT season, count(*) FROM research.event WHERE event_status='performed' AND receipts_total_kopecks IS NULL GROUP BY 1;
+SELECT company, count(*) FROM research.performance GROUP BY 1;  -- includes_dance, is_ceremonial; the two views
+SELECT date_confidence, count(*), count(note) FROM analysis.event_entry_date_check GROUP BY 1;
+```
+
+Result: 32,813 events; verified 29,850, synthesized_gap 2,877, corrected_manual 76, no_weekday 10; receipts 19,329
+(parsed 19,041, half-kopeck 209, print typo 79), correction notes 288; flags benefit 729, charity 378, free 328, student
+143, reduced 26, anthem 195. date not castable: 1900-02-29 x 6 (Julian leap day). Performed with no works 117 (concert /
+heading-only cells, every season). Performed without receipts 2,836 (1890-91 965, 1891-92 939). Companies: SP Russian
+drama 7,845 ... none 338; includes_dance 158; ceremonial 195; views 2,222 / 3,085. Date-check notes: 86 (corrected_manual
+76, no_weekday 10), none carried into research.
+
+## 2026-11-03 — Research-layer review E1: research.event.date_correction_note (test on a copy, then production)
+
+```sql
+SELECT date_confidence, count(*), count(date_correction_note) FROM research.event GROUP BY 1;
+-- research.event before vs after on the old columns (EXCEPT ALL); every other table diffed
+```
+
+Result: corrected_manual 76/76, no_weekday 10/10, verified 0, synthesized_gap 0; 0 other differences in event; every
+other table identical; 0 person_link shifts.
+
+## 2026-11-03 — Research-layer review, Events: do the printed «Концертовъ» lines count the heading-only concert evenings?
+
+```sql
+-- per season x city with a «Концертовъ» line: printed count vs performed events with no works whose heading says концерт,
+-- events with a concert item, and other heading-only events; then heading-only concert evenings in seasons/cities with no such line
+SELECT season, city, sum(count) FROM research.season_stat_line WHERE category='Концертовъ' AND line_kind<>'subtotal' GROUP BY 1,2;
+SELECT season, city, count(*) FROM research.event WHERE event_status='performed' AND n_works=0
+   AND regexp_matches(lower(coalesce(annotation,'')),'концерт') GROUP BY 1,2;
+```
+
+Result: «Концертовъ» is printed in 12 season/city pages only (1891-92 SP to 1900-01 SP; never from 1901-02). Where printed,
+it is near but not equal to the heading-only concerts (e.g. 1899-00 SP 5 vs 3; 1900-01 SP 5 vs 3; 1892-93 SP 2 vs 3).
+26 season/city pairs have heading-only concert evenings and no «Концертовъ» line. Ledger rows 1891-92-02/-03,
+1893-94-05/-06, 1894-95-07/-08, 1910-11-10: these invalids' concerts are excluded_by_yearbook.
+
+## 2026-11-03 — Research-layer review, Events: what the 117 heading-only performed events already carry
+
+```sql
+SELECT genre_families, disciplines, companies, count(*) FROM research.event
+WHERE event_status='performed' AND n_works=0 GROUP BY ALL ORDER BY 4 DESC;
+```
+
+Result: genre_families concert 93 (CONCERT_EVENT_RE, RG 2026-10-13: концерт | музыкально-литературн |
+литературно-музыкальн | вокально-инструментально); Siamese dance / Siamese court troupe 2; German opera / visiting German
+opera troupe 2 (event_labels.csv, RG 2026-10-23 #141); nothing 20. Corrects the earlier note that they carry no kind.
+
+## 2026-11-03 — Research-layer review: are the 1909-10 dated notes already in research?
+
+```sql
+-- each research.season_stat_dated_note row: parse its date, then the performed events' annotation in that city on that day
+SELECT t.canonical_name, e.annotation FROM research.event e JOIN research.theater t USING(theater_id)
+WHERE e.city = ? AND e.date_undate = ? AND e.event_status = 'performed';
+-- also 1910-01-10 Moscow, 1910-01-11 SP (the notes print «1909 г.»), 1909-11-27 SP, 1909-12-18 SP
+SELECT count(*) FROM raw.review_block WHERE block_id LIKE 'review_1909-10_SP_ballet%' AND text ILIKE '%Трефилов%' AND text ILIKE '%прощальн%';
+```
+
+Result: 11 of 12 dated items are the event's own heading (Трефилова farewell 24 Jan 1910, Савина 24 Feb 1910, Тихоновъ 1 Oct
+1909, Кюи 11 Jan 1910 [note prints 1909], ИРМО 18 Dec 1909, corps de ballet benefit Moscow 10 Jan 1910 [note prints 1909],
+Звягина, choir and orchestra benefits); the 18 Dec second-artists' benefit has no heading that day (reconciliation: 19 Dec).
+The SP ballet review does not name the farewell (0). research.season_stat_dated_note then rolled back (raw kept).
+
+## 2026-11-03 — People listed after their printed death: Николаева 3-я, Козловъ М. Ѳ., Краюшкинъ
+
+```sql
+SELECT pa.season, pa.appearance_id, e.list_number, e.first_name, e.patronymic, pa.tenure_note_text, pa.printed_folio
+FROM research.person_appearance pa JOIN raw.person_entry e ON e.entry_id = pa.appearance_id WHERE pa.person_id = ?;
+SELECT season, credit_summary_text FROM research.person_appearance WHERE person_id = '312b5e17…';   -- Николаева 3-я tallies
+SELECT season, count(*) FROM entities.review_mention WHERE entity_id = '312b5e17…' GROUP BY 1;
+SELECT ... FROM research.person_death WHERE death_date near 1898-11-20, 1900-11-20, 1902-12-01;
+```
+
+Result: Козловъ М. Ѳ. -- 1904-05 reprints the same «† 5 ноября 1902 г.»: no issue. Краюшкинъ -- «† 20 ноября 1898 г.» first printed in 1900-01
+(p.128), yet listed without «†» in 1898-99 (p.129) and 1899-00 (p.127); already in genuine_print_typos.md as internally inconsistent; no
+other death of 20 Nov 1898/1900 in the data. Николаева 3-я Зинаида Николаевна -- 1902-03 Moscow p.108 no.69 prints «† 1 декабря 1902 г.»
+(scan read by Claude), but she is listed every season 1903-04..1910-11 (same start 1 Sept 1901; 2-я from 1909-10), with tallies 72 (1903-04)
+.. 87 (1910-11), 13 review mentions 1903-08 and a role assertion dated 1908-02-22; Николаева 1-я and 2-я also continue; no other Moscow death
+near 1 Dec 1902 (Миронниковъ 21 Nov 1902).
+
+## 2026-11-03 — Other candidates for the «† 1 декабря 1902 г.» printed under Николаева 3-я (RG)
+
+```sql
+SELECT entry_id, family_name, first_name, tenure_note_text FROM raw.person_entry WHERE tenure_note_text LIKE '%декабря 1902%' OR credit_summary_text LIKE '%декабря 1902%';
+SELECT ... FROM research.person_death WHERE death_date BETWEEN '1902-10-01' AND '1903-02-28';
+-- jubilee/obituary catalogue rows (obituary, death_notice, death_mark) with Nov/Dec 1902
+-- Moscow BalletArtists listed 1902-03 and not 1903-04; then Иванова 1-я and Джури records, review mentions and assertions
+```
+
+Result: no other death on or near 1 Dec 1902 anywhere (roster deaths that season: Козловъ М. Ѳ. 5 Nov 1902, Миронниковъ 21 Nov 1902,
+Нарышкина 4 Jan 1903; catalogue: only the first two). «1 декабря 1902» elsewhere only as start dates (Гроттке, Яницкій, Поліевктовъ) and
+Щеголевъ «Оставилъ службу 1 декабря 1902 г.» (ProductionTeam). Moscow ballet women gone after 1902-03 without a note: Иванова 1-я
+Александра «Александровна» (= Адріановна, listed 1903-09: split record) and Джури (no death printed; split into Адель / Аделина Антоновна).
+No candidate. Two merge candidates logged (person_merge_candidates_batch.md nos. 18-19).
+
+## 2026-11-03 — Николаева 3-я death line as a print error: copy test, then production (diff v. db_backup_nikolaeva_2026-11-03)
+
+```sql
+-- every base table EXCEPT ALL v. the copy before; production v. the tested copy
+SELECT end_text, end_date, end_type, date_correction FROM research.service_period WHERE appearance_id = 'balletartists_1902-03_MSK_p003__e010';
+SELECT count(*) FROM research.person_death;
+```
+
+Result: copy changes only research.service_period 1 row (end_date / end_type NULL, date_correction notes the print error), person_death
+308 -> 307 (her roster row gone), person_tenure_note +1. Production identical to the tested copy in every table; 0 person_link shifts.
+
+## 2026-11-03 — Краюшкинъ: 1899-00 scan and the 1900-01 page's other back-dated death
+
+```sql
+SELECT season, tenure_note_text, printed_folio FROM research.person_appearance WHERE person_id IN (Барановъ Абрамъ, Краюшкинъ) AND season >= '1897-98';
+SELECT p.display_name, d.printed_text, d.death_date FROM research.person_death d ... WHERE d.source = 'roster' AND d.season = '1900-01' AND entity_type = 'ProductionTeam';
+```
+
+Result: scan 1899-00 Moscow ProductionTeam p.127 (Claude): «1. Барановъ, Абрамъ Ефимовичъ (съ 19 октября 1892 г.)» and «2. Краюшкинъ ...
+(съ 3 ноября 1871 г.)», no «†». The 1900-01 page (p.128) prints both with deaths: Барановъ «† 30 сентября 1899 г.» (inside the 1899-00
+season, yet 1899-00 lists him alive) and Краюшкинъ «† 20 ноября 1898 г.». The 1900-01 volume back-fills deaths the 1898-1900 Moscow lists
+missed, so the 1899-00 «alive» listing is weak evidence against 1898.
 ## 2026-11-03 — research.work.art_form (scratch build, not promoted): counts, agreement check, excerpt evidence
 
 ```sql
