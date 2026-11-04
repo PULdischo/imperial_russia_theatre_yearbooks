@@ -26435,3 +26435,19 @@ SELECT person_id, display_name, season, entity_type, city, tenure_note_text, pri
 
 Result: person tenure discrepancies 33 (+3); research.person_tenure_note +3; no other research table changed. Not yet in production (waits for
 the art-form session's promotion to finish).
+
+## 2026-11-03 — After the art-form promotion: are the Николаева and Краюшкинъ/Байкова/Барановъ changes in production?
+
+```sql
+SELECT count(*) FROM research.person_tenure_note WHERE person_id IN (Краюшкинъ, Байкова, Барановъ, Николаева 3-я);
+SELECT count(*) FROM research.person_tenure_note;  SELECT count(*) FROM research.person_death;
+SELECT end_type FROM research.service_period WHERE appearance_id = 'balletartists_1902-03_MSK_p003__e010';
+```
+
+Result: see the session report 2026-11-03 (checked read-only; no rebuild from main, which lacks the unmerged art-form branch).
+
+## 2026-11-03 — Result of the post-promotion check above
+
+Result: the 4 tenure notes are present (Краюшкинъ, Байкова, Барановъ, Николаева 3-я); research.person_tenure_note 33; research.person_death 307;
+Николаева 3-я 1902-03 service_period end_type NULL; research.work has entry_kind and art_form (art-form branch, not yet merged to main).
+No rebuild by this session.
