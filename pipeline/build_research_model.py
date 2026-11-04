@@ -2720,6 +2720,9 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         CREATE TABLE research.person_appearance (
             appearance_id VARCHAR PRIMARY KEY,
             person_id UUID REFERENCES research.person(person_id),
+            printed_family_name VARCHAR,
+            printed_first_name VARCHAR,
+            printed_patronymic VARCHAR,
             season VARCHAR,
             city VARCHAR,
             entity_type VARCHAR,
@@ -2758,6 +2761,10 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         SELECT
             r.entry_id AS appearance_id,
             pl.person_id,
+            -- the name as this season's list prints it (RG 2026-11-04, "Yes, add it"): ordinal, spelling and first name vary
+            -- from year to year (Кшесинская / Кшесинская 2-я, Борхардъ / Борхардтъ, Генрихъ / Энрико); research.person keeps
+            -- one canonical form. analysis's *_clean forms: raw verbatim except 5 scan-checked transcription slips.
+            nullif(r.family_name_clean, ''), nullif(r.first_name_clean, ''), nullif(r.patronymic_clean, ''),
             sp.season,
             -- city (RG 2026-11-03): BalletArtists and Musicians pages carry it; the other four lists name the city in the
             -- institution or heading (С.-Петербургская Контора, МОСКВА, Императорское Московское Театральное Училище ...).

@@ -673,6 +673,15 @@ and the officials attached to him or to the Directorate; 132 rows, 25 people) se
 city (NULL for these lists). Consequence: `research.person_tenure` runs are per person × list × city for these lists too, so a move
 between cities (Коровинъ SP 1901 -> Moscow 1903; Горскій's school posts) or a concurrent post in both shows as separate runs.
 
+## The name as printed — `research.person_appearance.printed_family_name`, `printed_first_name`, `printed_patronymic` (added 2026-11-04)
+
+RG 2026-11-04 ("Yes, add it"): `research.person` keeps one canonical name per person; these three columns give the name as THIS
+season's list prints it, so a reader can see the yearbook's own form without going back to raw or the scan. They differ from the
+canonical name on 4,057 of 23,980 appearances: 2,873 only in the ordinal (the ordinal moves as sisters and brothers join and leave:
+«Кшесинская» / «Кшесинская 2-я»), 647 in the surname's spelling («Борхардъ» for Борхардтъ, «Матягина» for Матятина), 537 only in the
+first name («Генрихъ» for Энрико Чекетти). Taken from `analysis.person_entry.*_clean`, which is raw verbatim except 5 scan-checked transcription
+slips (`Мендесь` → `Мендесъ`, `Джулъетта` → `Джульетта`). Empty parts are NULL.
+
 ## Where each staff-list entry is printed — `research.person_appearance.source_file`, `scan_page`, `printed_folio` (added 2026-11-03)
 
 RG 2026-11-03: every person appearance carries the scan PDF (`source_file`), the page within it (`scan_page`, 1-based) and the

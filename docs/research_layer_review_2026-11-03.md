@@ -907,3 +907,12 @@ Scan-checked by Claude (`docs/eval/scan_audit/small_slips_2026-11-04_evidence.pn
 the ordinal had been lost); (D) the «Гуля/Бера» credits' label «Голубая Георгина» → «Фея Куколъ» (`review_credit_overrides.csv`, work_surface).
 Left as printed: «Воронковъ 1) Баклановъ» (the print's own «1)»), and the 3 Apr 1899 and 4 Oct 1903 Pushkin evenings (programme in the
 heading only; no ballet; inclusion test). Nothing else changed.
+
+## Raw-to-research check, second pass (2026-11-04)
+
+Every raw / analysis / entities table and column compared with research (query log). Row gaps all deliberate (the excluded 1910-11 p056
+page, 5 group music credits, 6 supplied performances). **Added (RG "Yes, add it"):** `person_appearance.printed_family_name`,
+`printed_first_name`, `printed_patronymic` — the name as each season's list prints it (differs from the canonical name on 4,057
+appearances: ordinal 2,873, spelling 647, first name 537). Still not carried: `list_number` (printed on 16,380 entries; not yet ruled),
+event month/year heading text, the lists' «Исполненъ»/«Всего» lines verbatim and section heading, review layout fields,
+`season_stat_line.city_verbatim`; pipeline-internal by design: merge history, Wikidata decisions, matcher evidence, retired ids.

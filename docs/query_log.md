@@ -27724,3 +27724,38 @@ person_entry and person_entry_credit, research.person_appearance and person_perf
 «Эрлеръ» (pos 734) now linked to Эрлеръ 1-я, Анна (scan-verified); nothing else changed. D — the two «Гуля/Бера» credits' work_surface
 «Голубая Георгина» → «Фея Куколъ» (work_id unchanged). Production equals the tested copy. «Воронковъ 1)» and the Pushkin evenings left as
 printed.
+
+## 2026-11-04 — What in raw / analysis / entities has not reached research (inventory)
+
+```sql
+SELECT table_schema, table_name, count(*) ... FROM information_schema.tables WHERE table_schema IN ('raw','analysis','entities','research');
+-- per pair (raw/analysis/entities table -> its research table): columns in the source not present in research
+SELECT count(*) FROM analysis.event_entry WHERE event_id NOT IN (SELECT event_id FROM research.event);
+SELECT section_heading, count(*) FROM raw.production_entry GROUP BY 1;
+SELECT entity_type, count(*), count(nullif(list_number,'')) FROM raw.person_entry GROUP BY 1;
+-- printed name vs canonical, per appearance: ordinal-only / spelling / first-name differences
+SELECT status, count(*) FROM entities.person_merge_log GROUP BY 1; SELECT decision, count(*) FROM entities.wikidata_decision GROUP BY 1;
+```
+
+Result: raw 14 tables, analysis 5, entities 18, research 35 (+2 views). Row gaps all explained: 30 analysis events = the excluded page
+repertoire_1910-11_p056 (RESEARCH_EXCLUDED_PAGES); 5 production credits = group credits («друг.», «др.», «разныхъ авторовъ»), left out
+on purpose; research.performance 30,836 = 30,830 work links + 6 supplied. Not carried: per-appearance PRINTED name (family/first/patronymic,
+4,061 of 23,980 differ from the canonical person: 2,873 ordinal only, 648 spelling, 539 first name); list_number (printed on 16,380
+entries); event month/year heading text; list «Исполненъ»/«Всего» lines verbatim and section_heading (only «Балетъ» or blank); review
+layout fields (enumerator, figure_subtype, caption_vertical, footnote_marker, tailpiece, copy_artifacts); season_stat_line.city_verbatim;
+merge history (entities.person_merge_log, superseded persons), Wikidata decisions, review-mention scoring evidence, retired work ids — all
+pipeline-internal by the four-layer design.
+
+## 2026-11-04 — person_appearance.printed_family_name / printed_first_name / printed_patronymic added (RG "Yes, add it")
+
+```sql
+SELECT count(*), count(printed_family_name), count(printed_first_name), count(printed_patronymic) FROM research.person_appearance;
+SELECT count(*) FILTER (<ordinal only>), count(*) FILTER (<spelling>), count(*) FILTER (<first name only>), count(*) FILTER (<any>)
+FROM research.person_appearance a JOIN research.person p USING(person_id);
+-- test copy vs production before: every table (diff.py); person_appearance on its existing columns only
+```
+
+Result: filled on 23,980 / 23,701 / 21,585 appearances (family / first / patronymic). Differ from the canonical name on 4,057: ordinal only
+2,873, surname spelling 647, first name only 537 (the earlier 4,061 counted raw before analysis's 5 transcription-slip fixes). Every other
+table identical; person_appearance's existing columns identical. Production equals the tested copy; person_link 0 shift blocks;
+build_datasette.py runs with the new SCHEMAS.
