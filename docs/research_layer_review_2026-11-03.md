@@ -668,3 +668,7 @@ surfaces (1,116 occurrences) match no person: mostly dancers outside the staff l
 Мадаева — the quoted old casts), and some spellings the fold cannot absorb («Ленъяни» medial ъ, «Гердъ» dropped т,
 «Леватъ» probable misread, «Іѳедорова» stray letter). Fixing those needs scan-checked rows in `review_person_variants.csv`
 (4 so far): next question for RG.
+
+**R5 — the 727 unmatched review names (RG 2026-11-04): "Not now since I'm up against usage limits, but i will want to do
+so."** Pending: scan-check `outputs/reviews/mentions/review_mention_unknown.csv` (727 surfaces, 1,116 occurrences) and add
+the genuine spelling variants to `docs/eval/review_person_variants.csv`; the dancers outside the staff lists stay unlinked.
