@@ -898,3 +898,12 @@ performance counts as «Катарина» (verbatim «Эсмеральда» ke
 and fixed in `match_review_mentions.py`: the overridden performance's printed «Эсмеральда» had been indexed as a quoted title of «Катарина»,
 making a 1910-11 review's «Эсмеральдой» ambiguous; a printed title that is another work's canonical title is now skipped. After the fix no
 review link changed.
+
+## Small slips (RG 2026-11-04, "Yes, apply them")
+
+Scan-checked by Claude (`docs/eval/scan_audit/small_slips_2026-11-04_evidence.png`). Fixed: (A) 1904-05 SP review f. 114 «артисты и артисты
+балетной трупьи» → «артистки и артисты балетной труппы» (`review_text_corrections.csv`); (B) Преображенская 1908-09 «Фея куколь» → «Фея
+куколъ» (raw, rebuilt, one row per table); (C) 1903-04 SP review p004 «…Пишо, Эрлеръ 1-я» linked to Эрлеръ 1-я, Анна (`review_mention_links.csv`;
+the ordinal had been lost); (D) the «Гуля/Бера» credits' label «Голубая Георгина» → «Фея Куколъ» (`review_credit_overrides.csv`, work_surface).
+Left as printed: «Воронковъ 1) Баклановъ» (the print's own «1)»), and the 3 Apr 1899 and 4 Oct 1903 Pushkin evenings (programme in the
+heading only; no ballet; inclusion test). Nothing else changed.

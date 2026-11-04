@@ -27679,3 +27679,48 @@ links. First test run: one review mention changed — a 1910-11 SP «Эсмер�
 performance's printed title was indexed as a quoted title of «Катарина». Fixed in match_review_mentions.py (a printed title that is another
 work's canonical title is skipped); rerun: review tables identical to production. Production after the rebuild equals the tested copy;
 person_link 0 shift blocks.
+
+## 2026-11-04 — What is still outstanding in the research layer: fresh counts
+
+```sql
+SELECT CASE WHEN candidates_n>1 THEN 'several' WHEN candidates_n=1 THEN 'one, not accepted' ELSE 'none' END, count(*)
+FROM research.review_mention WHERE mention_type='person' AND person_id IS NULL GROUP BY 1;
+SELECT surface, count(*) FROM research.review_mention WHERE mention_type='person' AND person_id IS NULL AND candidates_n>1 GROUP BY 1 ORDER BY 2 DESC LIMIT 8;
+SELECT count(*), count(event_id), count(*) FILTER (WHERE date_undate IS NULL) FROM research.review_assertion;
+SELECT role_category, count(*), count(person_id) FROM research.review_credit WHERE role_category IN ('scenery','costume_design','footwear','headwear') GROUP BY 1;
+```
+
+Result: unlinked person mentions — several candidates 3,909, one candidate not accepted 94, none 1. Top ambiguous surfaces: Петипа 377,
+Егорова 117, Павлова 109, Ширяевъ 92, Ѳедорова 86, Николаева 80, Ивановъ 68, Смирновъ 67. Cast statements 2,684: 551 linked to an event,
+1,992 with no date. Craft credits with a person: costume_design 21/28, scenery 185/230, footwear 0/3, headwear 0/2.
+
+## 2026-11-04 — Small slips: mention detail for «Эрлеръ 1-я» (1903-04 SP p004) and the Pushkin-evening events
+
+```sql
+SELECT block_id, char_start, surface, person_id IS NOT NULL, candidates_n, link_method FROM research.review_mention
+WHERE page_id='review_1903-04_SP_ballet_p004' AND surface LIKE 'Эрлер%';
+SELECT e.event_id, e.date, e.city, t.canonical_name, e.n_works, e.genre_families, e.annotation FROM research.event e JOIN research.theater t USING(theater_id)
+WHERE e.annotation ILIKE '%Пушкин%';
+```
+
+Result: p004__b002 has three Эрлеръ mentions: 519 «Эрлеръ 2-я» linked, 1170 «Эрлеръ 1-я» linked, 734 captured as bare «Эрлеръ» (text
+«…Пишо, Эрлеръ 1-я, Алексѣева»), 4 candidates, unlinked. Pushkin events with n_works 0 and the programme only in the annotation:
+repertoire_1898-99_p034__s022 (3 Apr 1899, Маріинскій) and repertoire_1903-04_p004__s005 (4 Oct 1903, Маріинскій); neither programme has
+ballet. Other Pushkin-memorial events already have performance rows.
+
+## 2026-11-04 — Four small slips applied (RG "Yes, apply them"): checks
+
+```sql
+-- B (raw): every table, backup vs rebuilt production (diff.py)
+-- A, C, D (review chain): test copy vs production, review tables with ids excluded and candidates sorted; the corrected block compared
+-- as a multiset of (block, type, surface, person, work, method) because its positions shift by one character
+SELECT block_id, mention_type, surface, person_id, work_id, link_method FROM research.review_mention
+WHERE block_id IN ('review_1904-05_SP_ballet_p009__b001','review_1903-04_SP_ballet_p004__b002');
+```
+
+Result: B — Преображенская 1908-09 «Фея куколь» → «Фея куколъ» (credit_summary_text, parsed label and role): exactly 1 row in raw/analysis
+person_entry and person_entry_credit, research.person_appearance and person_performance_tally; 0 shift blocks. A — f. 114 «артисты и артисты
+балетной трупьи» → «артистки и артисты балетной труппы»: mentions and credits of that block unchanged apart from positions (+1). C — p004
+«Эрлеръ» (pos 734) now linked to Эрлеръ 1-я, Анна (scan-verified); nothing else changed. D — the two «Гуля/Бера» credits' work_surface
+«Голубая Георгина» → «Фея Куколъ» (work_id unchanged). Production equals the tested copy. «Воронковъ 1)» and the Pushkin evenings left as
+printed.
