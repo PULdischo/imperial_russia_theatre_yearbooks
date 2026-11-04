@@ -690,3 +690,20 @@ the genuine spelling variants to `docs/eval/review_person_variants.csv`; the dan
 title; where two works share it, the one whose printed genre is the set's (Млада, Сельская честь, Снѣгурочка: all «оп.»,
 so the operas); a set printed without a genre takes the genre printed for that title on the same page (two Снѣгурочка, one
 Кольцо любви, assistants' credits at the Большой). All 61 linked. Export schema; nothing else changed; 0 person_link shifts.
+
+## Provenance pass (2026-11-04, RG: "let's take care of this")
+
+1. **`research.source_page`** (2,810 pages: Season Review 1,074, Repertoire 688, BalletArtists 392, Musicians 224,
+   TheaterSchoolStaff 104, ProductionTeam 100, Administrators 90, BalletProductions 63, Graduates 56, SeasonStats 19), with
+   source file, scan page (1-based) and printed page or folio; every file exists under `pdf/`. The 100 two-page spreads
+   (1890-91 – 1897-98) get the season's Repertoire PDF and the printed pages, no scan page: their jpg numbering does not
+   follow the page ids (49 of 100 differ), so none is guessed. Review file names are derived from the page id (checked
+   against the review manifest: 1,074 of 1,074). Every event, staff-list appearance, list entry, review passage and review
+   page finds its source page. `event.page_id` added.
+2. **`work.title_note`** records each printed variant a work absorbed through `work_title_aliases.csv` (54 works, 76 notes;
+   e.g. «Наяда и рыбакъ»: «printed «Паяда и рыбакъ» on 1 performance(s), read as this work …»).
+3. **`production.work_basis`** says how each list entry's work was chosen (628 of 628: list title = work title 609; most
+   matched dates, title differs 18; via a supplied performance 1).
+4. **README "Tracing a value to its source"**: where each table's page is, the note columns, and where the decisions are
+   written up (including that transcription fixes live in the raw JSON, `docs/eval/` and git).
+Tested on a copy, then production: no existing column changed except the new title notes; 0 person_link shifts.

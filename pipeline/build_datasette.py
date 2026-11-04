@@ -51,7 +51,7 @@ def _dates_as_iso(df):
     return df
 
 
-TABLES = ["theater", "work", "person", "event", "performance", "person_appearance", "person_tenure", "person_tenure_note",
+TABLES = ["source_page", "theater", "work", "person", "event", "performance", "person_appearance", "person_tenure", "person_tenure_note",
           "service_period", "person_assignment", "person_performance_tally", "set_design", "person_death",
           "production", "production_work", "production_credit", "production_date",
           "season_stat_check", "season_stat_line", "season_stat_footnote", "season_stat_gap", "season_stat_gap_event",
@@ -97,7 +97,8 @@ SCHEMAS = {
             time_of_day TEXT, receipts_verbatim TEXT, annotation TEXT,
             is_benefit INTEGER, is_charity INTEGER, is_free INTEGER,
             is_student_performance INTEGER, is_reduced_price INTEGER,
-            has_anthem INTEGER, n_works INTEGER, disciplines TEXT, companies TEXT, genre_families TEXT
+            has_anthem INTEGER, n_works INTEGER, disciplines TEXT, companies TEXT, genre_families TEXT,
+            page_id TEXT REFERENCES source_page(page_id)
         )""",
     "performance": """
         CREATE TABLE performance (
@@ -182,7 +183,7 @@ SCHEMAS = {
             production_id TEXT PRIMARY KEY, work_id TEXT REFERENCES work(work_id),
             season TEXT, city TEXT, list_title TEXT, list_number TEXT, is_premiere INTEGER,
             description_text TEXT, printed_total INTEGER, n_dates INTEGER,
-            n_matched_works INTEGER, printed_page_number TEXT, source_file TEXT
+            n_matched_works INTEGER, printed_page_number TEXT, source_file TEXT, work_basis TEXT
         )""",
     "production_work": """
         CREATE TABLE production_work (
@@ -196,6 +197,11 @@ SCHEMAS = {
             person_id TEXT REFERENCES person(person_id), credit_order INTEGER,
             role_category TEXT, role_text TEXT, name_printed TEXT, honorific_printed TEXT,
             qualifier_printed TEXT, is_pseudonym INTEGER, identification_status TEXT
+        )""",
+    "source_page": """
+        CREATE TABLE source_page (
+            page_id TEXT PRIMARY KEY, source_kind TEXT, season TEXT, city TEXT, source_file TEXT,
+            scan_page INTEGER, printed_page TEXT, note TEXT
         )""",
     "production_date": """
         CREATE TABLE production_date (

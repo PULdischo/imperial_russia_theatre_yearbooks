@@ -713,9 +713,11 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
         typo = LIST_DATE_PRINT_TYPOS.get(lpid)
         if typo or iso:
             entry_dates[pid].append(typo[0] if typo else iso)
+    via_supplied = set()
     for pid, season, city, title in entries:
         if matched.get((season, city, title)):
             continue
+        via_supplied.add((season, city, title))
         lkeys = {norm(title)} | aliases.get(norm(title), set())
         for d in entry_dates.get(pid, []):
             for wid, tk, pk, parent in supplied_day.get((city, d), []):
@@ -731,6 +733,22 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
         for w, n in cnt.items():
             prod_work.append((pid, w, n))
         best[pid] = max(cnt, key=lambda w: (norm(titles.get(w) or "") == norm(title), cnt[w]))
+    # how each entry's work was chosen (RG 2026-11-04, provenance pass)
+    n_dates_of = dict(con.execute("SELECT production_entry_id, n_dates FROM raw.production_entry").fetchall())
+    basis_of = {}
+    for pid, season, city, title in entries:
+        if pid not in best:
+            continue
+        cnt, w = matched[(season, city, title)], best[pid]
+        if (season, city, title) in via_supplied:
+            basis_of[pid] = ("the entry's dates match a performance supplied from another part of the yearbook "
+                             "(see that performance's performance_source_note)")
+        elif norm(titles.get(w) or "") == norm(title):
+            basis_of[pid] = (f"the work's title is the list title; {cnt[w]} of the entry's {n_dates_of.get(pid)} "
+                             f"dates match it in the Repertoire")
+        else:
+            basis_of[pid] = (f"the work most of the entry's dates match in the Repertoire ({cnt[w]} of "
+                             f"{n_dates_of.get(pid)}; an excerpt counts toward its whole work); the list title differs")
 
     con.execute("""
         CREATE TABLE research.production (
@@ -741,10 +759,10 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
             description_text VARCHAR,
             printed_total INTEGER, n_dates INTEGER,
             n_matched_works INTEGER,
-            printed_page_number VARCHAR, source_file VARCHAR
+            printed_page_number VARCHAR, source_file VARCHAR, work_basis VARCHAR
         )""")
-    con.execute("CREATE OR REPLACE TEMP TABLE prod_best (production_id VARCHAR, work_id UUID)")
-    con.executemany("INSERT INTO prod_best VALUES (?, ?)", list(best.items()))
+    con.execute("CREATE OR REPLACE TEMP TABLE prod_best (production_id VARCHAR, work_id UUID, basis VARCHAR)")
+    con.executemany("INSERT INTO prod_best VALUES (?, ?, ?)", [(k, v, basis_of.get(k)) for k, v in best.items()])
     con.execute("CREATE OR REPLACE TEMP TABLE prod_work (production_id VARCHAR, work_id UUID, n_matched_dates INTEGER)")
     con.executemany("INSERT INTO prod_work VALUES (?, ?, ?)", prod_work)
     con.execute("""
@@ -752,7 +770,7 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
         SELECT e.production_entry_id, coalesce(m.to_id, b.work_id), e.season, e.city, e.title, e.list_number, e.is_premiere,
                e.description_text, e.total_count, e.n_dates,
                (SELECT count(*) FROM prod_work pw WHERE pw.production_id = e.production_entry_id),
-               e.printed_page_number, e.source_file
+               e.printed_page_number, e.source_file, b.basis
         FROM raw.production_entry e
         LEFT JOIN prod_best b ON b.production_id = e.production_entry_id
         LEFT JOIN work_merge m ON m.from_id = b.work_id
@@ -800,6 +818,60 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
     if orphans:
         raise SystemExit(f"research.production_credit: {orphans} credits point at no research.person")
     build_production_dates(con)
+
+
+def build_source_pages(con: duckdb.DuckDBPyConnection) -> int:
+    """research.source_page (RG 2026-11-04, provenance pass): one row per scanned page any research row comes from --
+    Repertoire, the staff lists, the ballet productions lists, the Season Reviews, the season totals pages -- with the
+    scan's file, the page in it (1-based, as person_appearance.scan_page) and the printed page or folio. Join on page_id:
+    event.page_id; the part of production_id, appearance_id, block_id before '__'; review_page.page_id;
+    'seasonstats_' || season. The two-page spreads of 1890-91 – 1897-98 have no scan page recorded: find the printed page in
+    the season's Repertoire PDF."""
+    con.execute("DROP TABLE IF EXISTS research.source_page")
+    con.execute("""
+        CREATE TABLE research.source_page (
+            page_id VARCHAR PRIMARY KEY, source_kind VARCHAR, season VARCHAR, city VARCHAR, source_file VARCHAR,
+            scan_page INTEGER, printed_page VARCHAR, note VARCHAR
+        )""")
+    con.execute("""
+        INSERT INTO research.source_page
+        SELECT sp.page_id, sp.entity_type, sp.season, sp.city,
+               coalesce(sp.source_file, CASE WHEN sp.entity_type = 'Repertoire'
+                                             THEN 'ForUpload_' || sp.season || '_Repertoire.pdf' END),
+               CASE WHEN sp.source_file IS NOT NULL THEN sp.source_page_index + 1 END,
+               CASE WHEN sp.entity_type = 'Repertoire'
+                    THEN (SELECT string_agg(DISTINCT e.printed_page_number, ', ' ORDER BY e.printed_page_number)
+                          FROM research.event e WHERE e.page_id = sp.page_id)
+                    ELSE (SELECT string_agg(DISTINCT CAST(pa.printed_folio AS VARCHAR), ', ' ORDER BY CAST(pa.printed_folio AS VARCHAR))
+                          FROM research.person_appearance pa WHERE split_part(pa.appearance_id, '__', 1) = sp.page_id) END,
+               CASE WHEN sp.source_file IS NULL THEN 'two-page spread; scan page not recorded: find the printed page in this PDF'
+                    WHEN sp.page_id IN (SELECT page_id FROM excluded_page) THEN 'left out of research.event (RESEARCH_EXCLUDED_PAGES)'
+               END
+        FROM raw.source_pages sp""")
+    con.execute("""
+        INSERT INTO research.source_page
+        SELECT page_id, 'BalletProductions', any_value(season), any_value(city), any_value(source_file),
+               min(source_page_index) + 1, string_agg(DISTINCT printed_page_number, ', ' ORDER BY printed_page_number), NULL
+        FROM raw.production_entry GROUP BY page_id""")
+    if con.execute("""SELECT count(*) FROM information_schema.tables
+                      WHERE table_schema = 'raw' AND table_name = 'review_page'""").fetchone()[0]:
+        con.execute("""
+            INSERT INTO research.source_page
+            SELECT page_id, 'SeasonReview', season, city,
+                   season || '_SeasonReview_' || genre || CASE city WHEN 'Moscow' THEN 'Moscow' ELSE 'SP' END || '.pdf',
+                   CAST(regexp_extract(page_id, '_p(\d+)$', 1) AS INTEGER) + 1, printed_folio, NULL
+            FROM raw.review_page""")
+    if con.execute("""SELECT count(*) FROM information_schema.tables
+                      WHERE table_schema = 'research' AND table_name = 'season_stat_page'""").fetchone()[0]:
+        con.execute("""
+            INSERT INTO research.source_page
+            SELECT 'seasonstats_' || season, 'SeasonStats', season, NULL, source_file, NULL, printed_page, note
+            FROM research.season_stat_page""")
+    n = con.execute("SELECT count(*) FROM research.source_page").fetchone()[0]
+    for k, c, f in con.execute("""SELECT source_kind, count(*), count(source_file) FROM research.source_page
+                                  GROUP BY 1 ORDER BY 2 DESC""").fetchall():
+        print(f"  research.source_page {k}: {c} pages ({f} with a file)")
+    return n
 
 
 def build_production_dates(con: duckdb.DuckDBPyConnection) -> None:
@@ -2332,7 +2404,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             n_works INTEGER,
             disciplines VARCHAR,
             companies VARCHAR,
-            genre_families VARCHAR
+            genre_families VARCHAR,
+            page_id VARCHAR
         )
     """)
     n_corr = load_receipts_corrections(con)
@@ -2427,7 +2500,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
             NULL AS n_works,
             NULL AS disciplines,
             NULL AS companies,
-            NULL AS genre_families
+            NULL AS genre_families,
+            r.page_id
         FROM resolved r
         LEFT JOIN entities.theater t ON t.canonical_name = r.theater_canonical
         LEFT JOIN receipts_correction rc
@@ -2613,6 +2687,20 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     for t, g in con.execute(f"SELECT canonical_title, canonical_genre FROM research.work WHERE {empty_where} ORDER BY 1").fetchall():
         print(f"  work with no performance left, dropped: «{t}», {g}")
     con.execute(f"DELETE FROM research.work WHERE {empty_where}")
+    # A work that absorbed a printed variant through work_title_aliases.csv says so in title_note (RG 2026-11-04,
+    # provenance pass: the reader must be able to trace "any attendant decisions").
+    n_alias_notes = 0
+    for r in csv.DictReader(open(WORK_TITLE_ALIASES_CSV, encoding="utf-8")):
+        hits = con.execute("""SELECT work_id, count(*) FROM perf_rows WHERE verbatim_title = ? AND work_id IS NOT NULL
+                              GROUP BY 1""", [r["printed_title"]]).fetchall()
+        for wid, n in hits:
+            note = (f"printed «{r['printed_title']}» on {n} performance(s), read as this work "
+                    f"(work_title_aliases.csv: {r['basis']})")
+            con.execute("""UPDATE research.work SET title_note = coalesce(title_note || '; ', '') || ?
+                           WHERE work_id = ? AND (title_note IS NULL OR position(? IN title_note) = 0)""",
+                        [note, wid, f"printed «{r['printed_title']}»"])
+            n_alias_notes += 1
+    print(f"  works noted as absorbing a printed variant (work_title_aliases.csv): {n_alias_notes}")
     con.execute(f"""
         CREATE TABLE research.performance (
             performance_id VARCHAR PRIMARY KEY,
@@ -2724,6 +2812,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                       WHERE table_schema = 'raw' AND table_name = 'season_stat_line'""").fetchone()[0]:
         build_season_stats(con)
 
+    build_source_pages(con)
     build_dancer_views(con)
 
     counts = {
@@ -2732,7 +2821,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                   "service_period", "person_assignment", "person_performance_tally", "set_design", "person_death",
                   "production", "production_work", "production_credit", "production_date",
                   "season_stat_check", "season_stat_line", "season_stat_footnote", "season_stat_gap", "season_stat_gap_event",
-                  "season_stat_page"]
+                  "season_stat_page", "source_page"]
         if con.execute("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'research' AND table_name = ?",
                        [t]).fetchone()[0]
     }

@@ -827,3 +827,14 @@ without its scoring notes): `block_id` -> `review_passage`, `page_id`, `season`,
 the name is ambiguous), `link_method`, `link_confidence`, `unlinked_reason`. Built by `build_reviews_duckdb.py`. Matching
 folds pre-reform letters and generates declined forms for lookup only; names it cannot place are in
 `outputs/reviews/mentions/review_mention_unknown.csv`. RG, 2026-11-04, research-layer review ("Yes, add them").
+
+## Provenance: `research.source_page`, `event.page_id`, `production.work_basis` (added 2026-11-04)
+
+`source_page` (2,810): one row per scanned page any research row comes from — `page_id`, `source_kind` (Repertoire, the six
+staff lists, BalletProductions, SeasonReview, SeasonStats), `season`, `city`, `source_file`, `scan_page` (1-based, as
+`person_appearance.scan_page`; NULL for the 1890-91 – 1897-98 two-page spreads and the season totals pages),
+`printed_page` (the page or folio, or the pages on it, comma-separated), `note`. `event.page_id` joins events to it; other
+tables join on the part of their id before `__` (README, "Tracing a value to its source"). `production.work_basis`: how the
+entry's work was chosen (the list title is the work's title; the work most of its dates match; or a supplied performance).
+`work.title_note` now also records each printed variant a work absorbed through `pipeline/entity_curation/work_title_aliases.csv`
+(«printed «Паяда и рыбакъ» on 1 performance(s), read as this work (…basis…)»). RG, 2026-11-04, provenance pass.

@@ -335,6 +335,41 @@ erDiagram
     person ||--o{ person_appearance : "person appears as"
 ```
 
+### Tracing a value to its source
+
+Every research row can be followed back to the printed page it comes from, and every place where the research layer
+departs from the print says why.
+
+**Where is it printed?** `research.source_page` has one row per scanned page (Repertoire, staff lists, ballet productions
+lists, Season Reviews, season totals): `source_file` (the scan), `scan_page` (1-based page in that file) and
+`printed_page` (the yearbook's page or folio). Join on `page_id`:
+
+| row | page |
+|---|---|
+| `event`, and its `performance`s | `event.page_id` |
+| `person_appearance` (and tallies, service periods, deaths from the lists) | the part of `appearance_id` before `__`; the row also carries `source_file`, `scan_page`, `printed_folio` |
+| `production`, `production_credit`, `production_date` | the part of `production_id` before `__` |
+| `review_*`, `review_passage`, `review_mention` | `page_id` (and `review_passage` holds the text itself) |
+| `season_stat_*` | `'seasonstats_' || season` |
+
+The two-page spreads of 1890-91 to 1897-98 have no scan page recorded; find the printed page in the season's Repertoire PDF.
+
+**Why does it read this way?** A value that differs from the print, or that research supplied or inferred, carries a
+note beside it: `event.date_correction_note`, `event.receipts_correction_note`, `performance.performance_source` and
+`performance_source_note` (performances supplied from another part of the yearbook), `performance.discipline_basis` and
+`includes_dance_basis`, `work.title_note` (title corrections and printed variants a work absorbed), `work.art_form_basis`,
+`work.genre_note`, `production.work_basis`, `production_date.match_note`, `review_assertion.link_method` and
+`event_match_note`, `review_credit.curator_note`, `person_tenure.basis`, `season_stat_gap` (the reconciliations' outcome
+for each difference between the season totals and the Repertoire). The printed text itself is always kept verbatim
+(`verbatim_title`, `receipts_verbatim`, `date_verbatim`, `surface`, `printed_text` ...).
+
+**The decisions behind them** are written up in `docs/`: `docs/eval/known_issues.md` (every problem found and how it was
+resolved), `docs/research_layer_review_2026-11-03.md` (the research layer reviewed table by table, with each ruling),
+`docs/eval/reconciliation/` (season by season), `docs/schema.md` (every column) and the curation files in
+`pipeline/entity_curation/` and `pipeline/research_corrections/`, whose `basis` column gives the evidence for each row.
+Corrections to the transcription itself (a misread fixed after checking the scan) are made in the raw JSON; their scripts
+and scan crops are in `docs/eval/` and their history is in git.
+
 ## Repo layout
 
 ```

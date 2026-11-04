@@ -27048,3 +27048,17 @@ SELECT s.work_printed, s.genre_printed, w.canonical_title, w.canonical_genre, w.
 
 Result: 61 of 61 linked; Млада, Сельская честь, Снѣгурочка -> the оп. works; the 3 genre-less rows take the page's genre for
 the title. Every other table identical; 0 person_link shifts.
+
+## 2026-11-04 — Provenance pass: research.source_page, event.page_id, work alias notes, production.work_basis
+
+```sql
+SELECT entity_type, count(*), count(source_file), count(source_page_index) FROM raw.source_pages GROUP BY 1;
+-- spread pages: ForUpload_<season>_Repertoire_NNN.jpg exists for 51 of 100 pair ids (not used)
+-- review manifest: source_file derivable from page_id for 1,074 of 1,074; index = page suffix for all
+SELECT count(*) FROM research.event e LEFT JOIN research.source_page s USING (page_id) WHERE s.page_id IS NULL;  -- + appearances, list entries, review passages/pages
+SELECT count(*), count(work_basis) FROM research.production; SELECT count(*) FROM research.work WHERE title_note LIKE '%work_title_aliases.csv%';
+-- event, production, work (without title_note): EXCEPT ALL before vs after on the old columns
+```
+
+Result: source_page 2,810; 0 events / appearances / list entries / review passages / review pages without a source page; all
+files present under pdf/. work_basis 628/628. Alias notes on 54 works (76). Old columns of event, production, work unchanged.
