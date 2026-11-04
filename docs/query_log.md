@@ -26208,3 +26208,7 @@ genre_families. Check: 7 performances / 3 pairs.
 
 Result: 3 override rows; work opera -> operetta; its 3 performances play -> operetta, still French drama (and their events' genre_families).
 Check: 4 performances / 2 pairs.
+
+## 2026-11-03 — «Дядя Беккеръ подшутилъ» [опер.] ruled operetta (RG)
+
+Result: 1 override row; work opera -> operetta. Check: 1 performance / 1 pair (Бокаччіо).
