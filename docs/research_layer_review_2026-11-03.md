@@ -737,3 +737,15 @@ performers 2,982 -> 3,045 (all 63 new ones linked); no linked mention lost or ch
 assertion ids because their role text gained its hyphen («Флеръ-де-Лись», «Хейдеръ-Али»), same dancers. Unmatched name surfaces
 727 -> 666. Production equal to the tested copy; 0 person_link shifts.
 Next for RG (step 2): ~35 printed misprints of known people need a person each.
+
+**R5 step 2, group A applied (RG 2026-11-04, "Yes, link group A").** 33 rows in `docs/eval/review_person_variants.csv` (printed
+misprint -> the staff lists' family name, each the only person of that surname in the season's lists: «Гердъ» -> Гердтъ,
+«Гиллердтъ»/«Гиллеръ» -> Гиллертъ, «Лабойко» -> Лобойко, «Алекснэ» -> Алексне, «Давидова» -> Давыдова, «Прѣспяковъ» ->
+Прѣсняковъ …). RG asked how many fall in old cast lists outside the Yearbooks' seasons: 3 of the 54 new links, all wrong and
+undone before production — «Гердъ» in the quoted 1865 cast on 1904-05 p.116 (unlinked again by a curated row; the print has
+«Гердъ» there), and two «Кемереръ» in lists of earlier dancers (1906-07 Moscow «Лизы послѣдовательно …», 1894-95 SP «Кемереръ,
+Канцыревой, Цукки»), women linked to Владиміръ Кеммереръ. The «Кемереръ» variant was Claude's error (gender judged from the bare
+surname; the reviews print «Кемереръ 1-я / 2-я») and is dropped. Net: person mentions linked 17,802 -> 17,853; cast statements
+linked 2,442 -> 2,452; dance performers linked 2,944 -> 2,965; no existing link lost or changed. Unmatched surfaces 666 -> 634.
+Open for RG: group B (5 doubtful: Горина/Дорина, Салинъ/Силинъ, Сировъ/Сизовъ, Клейнъ/Крейнъ, Беккъ-Бекль/Бекъ) and group C (9 with
+several candidates); groups D-E stay unlinked.

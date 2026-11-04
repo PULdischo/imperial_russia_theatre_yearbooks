@@ -27076,3 +27076,17 @@ Result: person mentions 21,703 -> 21,805, linked 17,703 -> 17,802; work-linked 3
 2,426 -> 2,442, with event 543 -> 547; dances 914 -> 917; dance performers 2,982 -> 3,045, linked 2,881 -> 2,944; credits linked
 2,226 -> 2,227. 0 changed / 0 lost person links; 10 assertions re-keyed (role text gained its hyphen). Unknown surfaces 727 -> 666
 (1,116 -> 1,025 occurrences). Production equal to the tested copy in every review table.
+
+## 2026-11-04 — R5 step 2 group A: review person variants (test, old-cast check, production)
+
+```sql
+-- newly linked person mentions (linked after, not before, on block_id + char_start), and how many sit in a listed historical
+-- passage or in a block whose quoted old cast was unlinked; context of those 4; every «Кемереръ» link
+SELECT count(person_id) FROM research.review_mention; SELECT count(performer_person_id) FROM research.review_assertion;
+SELECT count(performer_person_id) FROM research.review_dance_performer;
+```
+
+Result (first test): 54 new links, 4 in blocks with quoted old casts; 3 wrong (1865 «Гердъ» p.116; «Кемереръ» 1906-07 MSK and
+1894-95 SP, earlier women linked to Владиміръ Кеммереръ), 1 right (Гиллердтъ in the 1905 cast). After dropping the Кемереръ variant
+and unlinking the 1865 Гердъ: mentions linked 17,802 -> 17,853, assertions 2,442 -> 2,452, dance performers 2,944 -> 2,965; 0
+links lost or changed; unknown surfaces 666 -> 634 (1,025 -> 980 occurrences). Production equal to the tested copy.
