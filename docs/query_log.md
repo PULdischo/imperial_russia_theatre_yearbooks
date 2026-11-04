@@ -26212,3 +26212,8 @@ Check: 4 performances / 2 pairs.
 ## 2026-11-03 — «Дядя Беккеръ подшутилъ» [опер.] ruled operetta (RG)
 
 Result: 1 override row; work opera -> operetta. Check: 1 performance / 1 pair (Бокаччіо).
+
+## 2026-11-03 — «Бокаччіо» [оп.] ruled operetta (RG); check clean
+
+Result: 1 override row; work opera -> operetta; the performance stays the Vienna operetta troupe (German operetta). Discipline/art_form check:
+0 disagreements. Open for later: merge «Бокаччіо» [оп.] with «Боккаччіо» [оперетта.] (spelling variants).
