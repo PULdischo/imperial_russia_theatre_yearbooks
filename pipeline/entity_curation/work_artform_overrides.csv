@@ -26,3 +26,5 @@ printed_title,printed_genre,treat_as_art_form,basis
 Евгеній Онѣгинъ,лир. сцены.,opera,"RG 2026-10-22: Маріинскій 15 Apr 1911, Tchaikovsky's opera printed with its own subtitle «лирическія сцены»; the same work as Евгеній Онѣгинъ, оп. (RG: ""these are the same work described with different genres"")."
 Боярыня Вѣра Шелога,прологъ,opera,"Printed «прологъ» on every printing (27); all performed by the opera company (Большой 1901-06, Маріинскій 1903-04). The identity rule files the unknown genre word as a play. RG 2026-11-03: ""Yes, opera"". (Rimsky-Korsakov's one-act prologue to «Псковитянка»: lead from outside the yearbook.)"
 Боярыня Вѣра Шелога,прол.,opera,"Большой 3 Nov 1906, «прол.»: as the «прологъ» row. RG 2026-11-03."
+Le beau Dunois,opéra-bouffe,operetta,"Михайловскій 2-5 Apr 1901, French troupe; printed «opéra-bouffe» (performance rules already count it as operetta, OPERETTA_GENRE_RE_ANY). RG 2026-11-03: ""Operetta""."
+Le beau Dunois,"opéra, bouffe",operetta,"Михайловскій 2 Apr 1901: «opéra, bouffe» as printed; as the opéra-bouffe row. RG 2026-11-03."

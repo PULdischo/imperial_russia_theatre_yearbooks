@@ -994,7 +994,9 @@ def apply_work_artform_overrides(con: duckdb.DuckDBPyConnection) -> int:
             continue
         ruling = r["treat_as_art_form"]
         if ruling == "operetta":
-            new_art, new_kind = ("opera" if theater in OPERA_HOUSES else "Russian drama"), "operetta"
+            # the French troupe keeps its operettas (2026-11-03: «Le beau Dunois» had moved to Russian drama)
+            new_art = "French drama" if art == "French drama" else ("opera" if theater in OPERA_HOUSES else "Russian drama")
+            new_kind = "operetta"
         elif ruling == "spoken":
             new_art, new_kind = (art if art in ("Russian drama", "French drama") else "Russian drama"), "play"
         elif ruling in ("ballet", "opera"):

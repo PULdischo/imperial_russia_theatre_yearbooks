@@ -26197,3 +26197,9 @@ Result: 2 work_artform_overrides.csv rows (прологъ, прол.); work art_
 ## 2026-11-03 — «Гибель Фауста» art form left open (RG)
 
 Result: art_form drama -> NULL (unknown), basis «open (RG, 2026-11-03) …»; listed in known_issues waiting list. Check: 10 performances / 4 pairs.
+
+## 2026-11-03 — «Le beau Dunois» [opéra-bouffe] ruled operetta (RG); override step keeps the French troupe's operettas
+
+Result: 2 override rows; work opera -> operetta. First rebuild moved its 3 performances to Russian drama (apply_work_artform_overrides gave every
+operetta the house's company); fixed to keep French drama. Final diff: 1 performance (2 Apr 1901) play -> operetta, still French drama; its event's
+genre_families. Check: 7 performances / 3 pairs.
