@@ -235,8 +235,36 @@ def main() -> None:
         INSERT INTO research.review_passage
         SELECT block_id, page_id, block_index, block_type, text, caption_text FROM raw.review_block""")
 
+    # Every person, work, theater and role the review prose names (RG 2026-11-04, research-layer review: "Yes, add them"),
+    # so "every passage that names X" is a research query. Typed link columns (person / work / theater / institution / role); the
+    # matcher's scoring notes (normalised, evidence, rank_reason) stay in entities.review_mention.
+    con.execute("DROP TABLE IF EXISTS research.review_mention")
+    con.execute("""
+        CREATE TABLE research.review_mention (
+            mention_id INTEGER PRIMARY KEY,
+            block_id VARCHAR REFERENCES research.review_passage(block_id),
+            page_id VARCHAR, season VARCHAR, city VARCHAR,
+            mention_type VARCHAR, char_start INTEGER, char_end INTEGER, surface VARCHAR,
+            -- no REFERENCES to person / work / theater: build_research_model.py drops and rebuilds those, and DuckDB
+            -- refuses to drop a table another table points at (the other review_* tables declare none either)
+            person_id UUID, work_id UUID, theater_id UUID,
+            institution VARCHAR, role_name VARCHAR,
+            candidates_n INTEGER, candidate_ids VARCHAR,
+            link_method VARCHAR, link_confidence VARCHAR, unlinked_reason VARCHAR
+        )""")
+    con.execute("""
+        INSERT INTO research.review_mention
+        SELECT m.mention_id, m.block_id, m.page_id, m.season, m.city, m.mention_type, m.char_start, m.char_end, m.surface,
+               CASE WHEN m.mention_type = 'person' THEN try_cast(m.entity_id AS UUID) END,
+               CASE WHEN m.mention_type = 'work' THEN try_cast(m.entity_id AS UUID) END,
+               CASE WHEN m.mention_type = 'theater' AND m.entity_id NOT LIKE 'INST:%' THEN try_cast(m.entity_id AS UUID) END,
+               CASE WHEN m.mention_type = 'theater' AND m.entity_id LIKE 'INST:%' THEN substr(m.entity_id, 6) END,
+               CASE WHEN m.mention_type = 'role' THEN m.entity_id END,
+               m.candidates_n, m.candidate_ids, m.link_method, m.link_confidence, m.unlinked_reason
+        FROM entities.review_mention m""")
+
     for t in ("raw.review_page", "raw.review_block", "entities.review_mention",
-              "research.review_page", "research.review_passage"):
+              "research.review_page", "research.review_passage", "research.review_mention"):
         n = con.execute(f"SELECT count(*) FROM {t}").fetchone()[0]
         print(f"  {t:28s} {n:>8,} rows")
 

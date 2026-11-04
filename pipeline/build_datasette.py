@@ -58,7 +58,7 @@ TABLES = ["theater", "work", "person", "event", "performance", "person_appearanc
           "season_stat_page",
           "review_assertion", "review_solo", "review_credit",
           "review_dance", "review_dance_performer", "review_dance_composer",
-          "review_page", "review_passage"]
+          "review_page", "review_passage", "review_mention"]
 
 # Explicit CREATE TABLE per table, PRIMARY KEY + FOREIGN KEY declared --
 # pandas' to_sql(if_exists="replace") would otherwise create schema-less
@@ -262,6 +262,14 @@ SCHEMAS = {
         CREATE TABLE review_passage (
             block_id TEXT PRIMARY KEY, page_id TEXT REFERENCES review_page(page_id),
             block_index INTEGER, block_type TEXT, text TEXT, caption_text TEXT
+        )""",
+    "review_mention": """
+        CREATE TABLE review_mention (
+            mention_id INTEGER PRIMARY KEY, block_id TEXT REFERENCES review_passage(block_id),
+            page_id TEXT, season TEXT, city TEXT, mention_type TEXT, char_start INTEGER, char_end INTEGER, surface TEXT,
+            person_id TEXT REFERENCES person(person_id), work_id TEXT REFERENCES work(work_id),
+            theater_id TEXT REFERENCES theater(theater_id), institution TEXT, role_name TEXT,
+            candidates_n INTEGER, candidate_ids TEXT, link_method TEXT, link_confidence TEXT, unlinked_reason TEXT
         )""",
     "review_assertion": """
         CREATE TABLE review_assertion (

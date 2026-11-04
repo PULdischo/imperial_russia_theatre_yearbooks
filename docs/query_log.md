@@ -27001,3 +27001,21 @@ Result: before INST:imperial 208, INST:moscow 140, INST:petersburg 118, unlinked
 Малый 3, Красносельскій 1. After: unlinked 0; Маріинскій 83, Михайловскій 20, Александринскій 2; Новый 9 (all «въ Новомъ
 театрѣ»); Большой 0; Малый 3. 45 mentions dropped, none added; person and work links unchanged; 0 changes in assertions,
 dance performers, solos and credits (person, work). Production equal to the tested copy; 0 person_link shifts.
+
+## 2026-11-04 — Research-layer review R4: research.review_mention; do declined forms and pre-reform spellings match?
+
+```sql
+SELECT mention_type, count(*), count(entity_id) FROM entities.review_mention GROUP BY 1;
+-- linked mentions per surface for Кшесинская, Преображенская, Гердтъ, Петипа, Легатъ (via research.person)
+SELECT CASE WHEN candidates_n > 1 THEN 'ambiguous' WHEN candidates_n = 1 THEN 'one candidate' ELSE 'none' END, count(*)
+FROM entities.review_mention WHERE mention_type = 'person' AND entity_id IS NULL GROUP BY 1;
+-- outputs/reviews/mentions/review_mention_unknown.csv: rows, occurrences, top surfaces
+SELECT mention_type, count(*), count(person_id), count(work_id), count(theater_id), count(institution), count(role_name)
+FROM research.review_mention GROUP BY 1;
+```
+
+Result: declined forms link (Кшесинской 38, Преображенской 55 / -скою 5 / -скую 1, Гердта 27 / Гердтомъ 23, Легата 11 /
+Легатомъ 8); «Легать» 84 links beside «Легатъ». Unlinked persons 4,000: ambiguous 3,906, one candidate 93, none 1. Unknown
+surfaces 727 / 1,116 occurrences (793 in ballet context). research.review_mention 27,282: person 21,703 (17,703 linked),
+work 3,729 (3,097), role 1,126 (775), theater 587 (117 theater + 470 institution), dance_number 137. Production equal to
+the tested copy; 0 person_link shifts.

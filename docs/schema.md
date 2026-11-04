@@ -817,3 +817,13 @@ performed `research.event` in that city on that date has that work (or an excerp
 `event_match_note` says which case applies («linked: the only performed event …», «not linked: the statement carries no
 date», «… has no work», «… events that day, none with this work», «… no performed Repertoire event in this city that day»,
 «… N events that day with this work»). RG, 2026-11-04, research-layer review ("Yes, link them").
+
+## The names in the review prose — `research.review_mention` (added 2026-11-04)
+
+One row per person, work, theater, role or dance name the matcher found in a review passage (`entities.review_mention`
+without its scoring notes): `block_id` -> `review_passage`, `page_id`, `season`, `city`, `mention_type`, `char_start` /
+`char_end` (offsets in the passage text after line-break reflow), `surface` as printed, `person_id` / `work_id` /
+`theater_id` / `institution` / `role_name` by type, `candidates_n` and `candidate_ids` (the possible people or works when
+the name is ambiguous), `link_method`, `link_confidence`, `unlinked_reason`. Built by `build_reviews_duckdb.py`. Matching
+folds pre-reform letters and generates declined forms for lookup only; names it cannot place are in
+`outputs/reviews/mentions/review_mention_unknown.csv`. RG, 2026-11-04, research-layer review ("Yes, add them").

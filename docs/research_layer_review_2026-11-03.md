@@ -652,3 +652,19 @@ theaters now link only when «театръ» follows (a line-break hyphen allowe
 -> 0 (Маріинскій 83, Михайловскій 20, Александринскій 2); «Новый» 45 -> 9; «Большой» 9 -> 0; «Малый» 3 kept; the 45
 adjective mentions dropped. No person or work link changed anywhere; `mention_id` renumbers after the dropped rows
 (`review_credit.mention_id` follows). «въ Большомъ и 5 въ Новомъ театрѣ» leaves the Большой unlinked, as before.
+
+**R4 — the review prose mentions in research (RG 2026-11-04, "Yes, add them").** New `research.review_mention` (27,282),
+built by `build_reviews_duckdb.py` from `entities.review_mention`: passage, page, season, city, type, position in the passage
+text, surface as printed, and typed links — `person_id` 17,703, `work_id` 3,097, `theater_id` 117, `institution` 470
+(imperial, moscow, petersburg, hermitage, krasnoe_selo), `role_name` 775 — with `candidates_n` / `candidate_ids`,
+`link_method`, `link_confidence`, `unlinked_reason`. The matcher's scoring notes stay in entities. No FK to person / work /
+theater (the research build drops and recreates them). Export schema; `docs/schema.md`. Nothing else changed.
+
+RG asked (2026-11-04) whether the matching catches declined forms and pre-reform spellings. Checked: declined forms yes
+(«Кшесинской», «Преображенскою», «Гердтомъ», «Легатомъ» all link); pre-reform letters folded for lookup (ъ, ѣ, і, ѳ, ѵ;
+a final ь set for ъ, «Легать» 84 links). Of 4,000 unlinked person mentions, 3,906 are ambiguous (several people share the
+surname: «Петипа» 377, «Егорова», «Павлова», «Ѳедорова»), 93 have one candidate not accepted, 1 none. But 727 name-like
+surfaces (1,116 occurrences) match no person: mostly dancers outside the staff lists (Андреянова, Санковская, Прихунова,
+Мадаева — the quoted old casts), and some spellings the fold cannot absorb («Ленъяни» medial ъ, «Гердъ» dropped т,
+«Леватъ» probable misread, «Іѳедорова» stray letter). Fixing those needs scan-checked rows in `review_person_variants.csv`
+(4 so far): next question for RG.
