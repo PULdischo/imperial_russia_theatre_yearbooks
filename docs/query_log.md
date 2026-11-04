@@ -27062,3 +27062,17 @@ SELECT count(*), count(work_basis) FROM research.production; SELECT count(*) FRO
 
 Result: source_page 2,810; 0 events / appearances / list entries / review passages / review pages without a source page; all
 files present under pdf/. work_basis 628/628. Alias notes on 54 works (76). Old columns of event, production, work unchanged.
+
+## 2026-11-04 — R5 step 1: review text corrections + line-join rule (test on copies, then production)
+
+```sql
+-- before vs after: person mentions, person-linked mentions, work-linked; assertions and person-linked; dances, dance performers
+-- and linked; credits and linked; assertions linked to an event
+-- assertions whose person changed / was lost / was gained (on assertion_id); assertions only before / only after
+-- review_mention person changed or lost (on block_id, char_start)
+```
+
+Result: person mentions 21,703 -> 21,805, linked 17,703 -> 17,802; work-linked 3,097 -> 3,098; assertions 2,655 -> 2,671, linked
+2,426 -> 2,442, with event 543 -> 547; dances 914 -> 917; dance performers 2,982 -> 3,045, linked 2,881 -> 2,944; credits linked
+2,226 -> 2,227. 0 changed / 0 lost person links; 10 assertions re-keyed (role text gained its hyphen). Unknown surfaces 727 -> 666
+(1,116 -> 1,025 occurrences). Production equal to the tested copy in every review table.

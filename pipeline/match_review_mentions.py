@@ -73,6 +73,10 @@ CAP = re.compile(r"^[А-ЯЀ-ЏЪѢІѲѴ]")
 # and was not one. Latin I V X L C D M never end a Russian word, so the
 # lookbehind is safe.
 HYPHEN_BREAK = re.compile(r"(?<![\dIVXLCDM])([^\s-])-\s+")
+# A hyphenated NAME split at the line end (`Сенъ-` / `Леона`, `Вальтеръ-` / `Кюне`, `Дель-` / `Эра`, `Макарова-` / `Юнева`)
+# keeps its hyphen: a lowercase letter ends the line and a capital starts the next, which a word broken mid-word never does
+# (RG 2026-11-04, R5 review-name check: 11 such names had been joined as «СенъЛеона»).
+COMPOUND_BREAK = re.compile(r"([а-яёѣіѳѵъь])-\s+(?=[А-ЯЁѢІѲѴ])")
 WS = re.compile(r"\s+")
 
 
@@ -103,7 +107,7 @@ def key_of(s: str) -> str:
 
 def reflow(text: str) -> str:
     """Rejoin words the printed line break split, then collapse whitespace."""
-    return WS.sub(" ", HYPHEN_BREAK.sub(r"\1", text)).strip()
+    return WS.sub(" ", HYPHEN_BREAK.sub(r"\1", COMPOUND_BREAK.sub(r"\1-", text))).strip()
 
 
 # --------------------------------------------------------- form generation

@@ -723,3 +723,17 @@ reads are finding aids, RG reads the source):
 - not a person name 98 («Вальсъ», composers, role names); page-end fragments 8; unclear 2 («Шсбергъ/Шебергъ», «Ваильевъ»).
 Proposed order: (1) the mechanical text corrections and the line-join rule; (2) the misprint list with a person for each, for
 RG; (3) the rest stay unlinked.
+
+**R5 step 1 applied (RG 2026-11-04, "Yes, apply them").** 96 scan-checked rows added to `docs/eval/review_text_corrections.csv`
+(92 misreads, 7 stray line-break hyphens, «Гердъ» on 1904-05 SP p011 split into three context-specific rows because the page
+prints one genuine «Гердъ»), each scoped to its page with its count; 103 replacements. Line-join rule in
+`match_review_mentions.reflow` (shared with `build_review_assertions`): a lowercase letter + hyphen + line break + capital keeps
+the hyphen (`COMPOUND_BREAK`), so «Сенъ-|Леона», «Вальтеръ-|Кюне», «Донъ-|Кихотъ», «Царь-|Дѣвица», «Римскаго-|Корсакова» are
+no longer joined (86 places; one doubtful, «гер-|Г.»). Follow-ups: four curated work links and one unlinked-reason row keyed on
+the old joined «ЦарьДѣвица/-ы» updated; «Роль «Царь-Дѣвицы»» kept unlinked by a curated row (RG's earlier role-name ruling);
+a drop-order bug from R4 fixed in `build_reviews_duckdb.py` (review_mention before review_passage).
+Effect: person mentions linked 17,703 -> 17,802; cast statements 2,655 -> 2,671 (2,442 linked, 547 linked to an event); dance
+performers 2,982 -> 3,045 (all 63 new ones linked); no linked mention lost or changed its person; 10 cast statements got new
+assertion ids because their role text gained its hyphen («Флеръ-де-Лись», «Хейдеръ-Али»), same dancers. Unmatched name surfaces
+727 -> 666. Production equal to the tested copy; 0 person_link shifts.
+Next for RG (step 2): ~35 printed misprints of known people need a person each.

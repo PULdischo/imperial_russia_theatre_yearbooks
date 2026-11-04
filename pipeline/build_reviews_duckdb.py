@@ -213,6 +213,8 @@ def main() -> None:
     # The review text in research (RG 2026-11-04, research-layer review: "Yes, add the text"), so a reader can read the
     # passage every review_* row cites (page_id, block_id, printed_folio). The text is raw.review_block's, after
     # docs/eval/review_text_corrections.csv. copy_artifacts is left out (unreliable; see known_issues.md).
+    # review_mention points at review_passage, which points at review_page: drop in that order
+    con.execute("DROP TABLE IF EXISTS research.review_mention")
     con.execute("DROP TABLE IF EXISTS research.review_passage")
     con.execute("DROP TABLE IF EXISTS research.review_page")
     con.execute("CREATE SCHEMA IF NOT EXISTS research")
