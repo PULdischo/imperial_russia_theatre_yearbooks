@@ -934,3 +934,28 @@ the local research_dataset.sqlite (3 Nov) is stale — rebuild; the Cloud Run me
 exist; in Datasette 1.0a37 that makes the `event` table return an error (400). The draft sorts by `date`. Checked in Datasette 1.0a37:
 every table page opens and shows its description. `pipeline/merge_datasette_metadata.py` copies title, description and tables into the
 publish file and keeps its plugins block (tested on a copy; the real file untouched). For Andy at the next publish.
+
+## OUTSTANDING — resume after Friday 2026-11-06 (noted 2026-11-04)
+
+Everything above is applied, committed and pushed (main at 2f60354). Still open, in the order to take them:
+
+1. **Ambiguous review names (the one large item).** 3,909 person mentions in `research.review_mention` have several candidates (Петипа
+   377, Егорова 117, Павлова 109, Ширяевъ 92, Ѳедорова 86, Николаева 80, Ивановъ 68, Смирновъ 67); 94 more have one candidate not accepted.
+   Approach: rule by rule (season, city, ordinal, honorific, that season's staff-list role credits), each rule brought to RG with evidence.
+2. **Titles printed with a misprint or with their genre/subtitle attached** (found 2026-11-04 while restoring «Сцепа»): works whose only
+   printing names them. Misprints: «Agence dramatiqus» (→ «Agence dramatique»), «Бокаччіо» (→ «Боккаччіо»). Genre/subtitle attached (11):
+   «... so ich dir! Schausp.», «Chéri! vaud.», «Colombine, Basazzade.», «Der Star, ein Wiener Stück», «Die Hochzeitsfackel, Spiel einer
+   Maiennacht», «Und Pippa tanzt! ein Glasettenmärchen», «Бабушка, отрывокъ изъ жизни», «Какъ они бросили курить, басня-шаржъ», «Лиса
+   Патрикѣевна, оперетта», «Ломоносовъ, истор.-быт. сцены», «Наканунѣ, возможный случай». One ruling each; a ruling adds the title to
+   `WORK_TITLE_FROM_ALIAS` in build_research_model.py.
+3. **`list_number`** (the printed number on the staff list, 16,380 entries) — not yet in `research.person_appearance` (RG "Not now").
+4. **Corpus sweep for missed «Заслуженн… артист…» honours** — only seven holders were checked 2026-11-04.
+5. **«Щимана»** music credit (1900-01, «Волшебный башмачекъ») — waits on the Шиманъ identity in the person audit.
+6. **Gold set out of step** — roster 76.4% because the gold predates later convention rulings (headings with Directorate/Contora prefix,
+   tenure notes with the printed brackets, service_class without its stop). Updating `docs/eval/gold/_build_roster.py` would restore it as a
+   regression check.
+
+Probably nothing to fix: 1,992 undated cast statements (as printed); craft credits with no person (scenery 45/230, costume 7/28, footwear 3,
+headwear 2 — names in no staff list). Parked by RG: Gregorian dates; «Горина», «Брантъ» (uncertain_person_identities.md); ~620 old-cast names.
+Housekeeping: 1,552 «*.raw 2.json» sync copies in outputs/full_run/raw (ignored by the pipeline). For Andy at the next publish: rebuild
+research_dataset.sqlite (local copy 3 Nov), run `pipeline/merge_datasette_metadata.py` (fixes the event table's broken sort), publish.
