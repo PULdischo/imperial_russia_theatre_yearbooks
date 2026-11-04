@@ -27323,3 +27323,34 @@ nothing else. Assertions +1 (Хита). review_dance_performer: Danse Espagnole 
 (work_id was already «Фея куколъ» by RG's 2026-10-26 override; their stored work_surface still reads «Голубая Георгина», cosmetic, not
 chased). review_passage: one text change («Па-щенко»). Production after the rebuild equals the tested copy (0 differences in all six
 tables). Person mentions linked 17,866 of 21,870; assertions 2,684; unknown surfaces 630 → 623 (969 occurrences). person_link: 0 shift blocks.
+
+## 2026-11-04 — How widespread are repeated names in stored review text (the f. 114 «Матвѣева,Рѣпина, Матвѣева,Рѣпина» slip)?
+
+```sql
+SELECT p.block_id, r.season, p.text FROM research.review_passage p JOIN raw.review_page r USING(page_id) WHERE p.text IS NOT NULL;
+-- filtered in Python: a "Name, Name," pair (optional ordinal) immediately repeated, or "N-я, Name." immediately repeated
+```
+
+Result: 4 repeats, all in one block (review_1904-05_SP_ballet_p009__b001, 1904-05 SP f. 114). This pattern finds no other block.
+Other kinds of duplication would need a different check.
+
+## 2026-11-04 — Four R5 slips fixed (RG "Yes, fix 1–4"): checks on a copy and on production
+
+```sql
+-- review chain: per-block multiset of (block, mention_type, surface, person_id), production before vs test copy,
+-- for the 4 corrected blocks; plus EXCEPT ALL on every mention outside them
+SELECT block_id, mention_type, surface, person_id FROM research.review_mention WHERE block_id IN (<4 blocks>);
+-- raw fix: every table, backup (pre-edit) vs rebuilt production (EXCEPT ALL, diff.py)
+SELECT credit_summary_text FROM raw.person_entry WHERE family_name='Сидоровъ' AND page_id='balletartists_1902-03_MSK_p007';
+SELECT count(*) FILTER (WHERE person_id IS NOT NULL), count(*) FROM research.review_mention WHERE mention_type='person';
+```
+
+Result: review text (9 replacements): «Ниль … и др.» → «Нилъ … и друг.» (1905-06 MSK f. 213); «Аслинь» → «Аслинъ» ×2 (1901-02 SP f. 193);
+six line-break repeats removed in 1904-05 SP f. 114 (and its lost «8)» restored). Only duplicate mentions disappeared (Матвѣева, Рѣпина,
+Полянскій, Кремневъ, Эрлеръ 1-я, Рутковская, Чумакова, Васильева ×1, Баклановъ ×2) and their duplicate dance performers; Аслинъ keeps
+the same person; 0 differences outside the 4 blocks. Production equals the tested copy in all six review tables. Person mentions linked
+17,856 of 21,860 (−10, all duplicates). Raw: balletartists_1902-03_MSK_p007 Сидоровъ credit «Пуспень» → «Пуспенъ» (credit_summary_text
+and the parsed role_name); rebuild_after_raw_edit.sh; diff vs backup: exactly one row each in raw/analysis person_entry and
+person_entry_credit, research.person_appearance and person_performance_tally; person_link 0 shift blocks. The same «Пуспень» is stored
+for Сидоровъ in 1903-04 and 1905-06; the scans print «Пус-|пенъ» and «Пуспенъ» (docs/eval/scan_audit/Sidorov_Puspen_credits_evidence.png);
+not fixed, awaiting RG.

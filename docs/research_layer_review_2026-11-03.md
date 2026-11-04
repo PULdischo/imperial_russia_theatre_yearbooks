@@ -826,3 +826,12 @@ production. 9 new person links, none lost or changed (the five ordinal/honorific
 Side effects: the Danse Espagnole (1904-05 SP f. 114) now has its two performers; one new assertion (Хита). Person mentions linked
 17,866 of 21,870; unknown surfaces 630 → 623. «Брантъ» stays unlinked. Logged, not chased: the «Гуля/Бера» credit rows carry the right
 work_id («Фея куколъ») but a stale work_surface «Голубая Георгина».
+
+**R5 follow-up — four noticed slips fixed (RG 2026-11-04, "Yes, fix 1–4").** (1) 1905-06 MSK f. 213 «Ниль … и др.» → «Нилъ … и друг.»;
+(2) 1901-02 SP f. 193 «Аслинь» → «Аслинъ» (both passages); (3) 1904-05 SP f. 114: six repeats at line breaks removed and the lost «8)»
+restored — a corpus check found no other block with this pattern; the block's other misreads («артисты и артисты … трупьи» for
+«артистки и артисты … труппы», «Воронковъ 1) Баклановъ») are left for a separate ruling; (4) raw: Сидоровъ's 1902-03 Moscow credit
+«Пуспень» → «Пуспенъ» (outputs/full_run/raw/balletartists_1902-03_MSK_p007.raw.json, two fields; rebuilt with
+rebuild_after_raw_edit.sh, one row changed per table). Items 1-3 are rows in docs/eval/review_text_corrections.csv. The 1903-04 and
+1905-06 Сидоровъ credits carry the same misread (scans print «Пуспенъ»): evidence `docs/eval/scan_audit/Sidorov_Puspen_credits_evidence.png`,
+not yet fixed. Noticed: a stray `balletartists_1902-03_MSK_p007.raw 2.json` sits beside the raw page (sync copy?), left untouched.
