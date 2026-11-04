@@ -230,7 +230,8 @@ ITEM_KINDS = ["ballet", "opera", "operetta", "play", "comedy-ballet", "pantomime
               "concert", "recitation / reading", "lecture", "tableau / apotheosis", "cinema", "anthem"]
 CINEMA_TITLE_RE = r"инематограф|^фотографія въ натуральн"
 LECTURE_TITLE_RE = r"лекція|^рефератъ"
-RECITATION_TITLE_RE = r"^сцена г\. |^чтеніе|отдѣленіе литературное|литературное отдѣленіе|отдѣленіе поэзіи"
+RECITATION_TITLE_RE = r"^сцена г\. |^чтеніе|отдѣленіе литературное|литературное отдѣленіе|отдѣленіе поэзіи|^monologues|^scènes et monologues"
+#: («Monologues», «Scènes et monologues»: the French troupe's recited monologues, RG 2026-11-03)
 TABLEAU_TITLE_RE = r"^апоѳеоз|^жив(ая|ыя) картин"
 DIVERTISSEMENT_TITLE_RE = r"дивертис|дивертим"
 DIVERTISSEMENT_GENRE_RE = r"^диверт|^див\."
