@@ -27019,3 +27019,32 @@ Result: declined forms link (Кшесинской 38, Преображенско
 surfaces 727 / 1,116 occurrences (793 in ballet context). research.review_mention 27,282: person 21,703 (17,703 linked),
 work 3,729 (3,097), role 1,126 (775), theater 587 (117 theater + 470 institution), dance_number 137. Production equal to
 the tested copy; 0 person_link shifts.
+
+## 2026-11-04 — Research-layer review: the other sessions' additions (art form, deaths, set designs, folios)
+
+```sql
+SELECT entry_kind, art_form, count(*) FROM research.work GROUP BY ALL;  SELECT left(art_form_basis,60), count(*) FROM research.work GROUP BY 1;
+-- works whose art_form differs from a performance's discipline (drama ~ any drama company)
+SELECT source, count(*), count(person_id), count(death_date), count(printed_page) FROM research.person_death GROUP BY 1;
+SELECT count(*) FROM research.person_death WHERE source='roster' AND source_ref IN (SELECT appearance_id FROM research.person_appearance);
+SELECT city, count(*), count(person_id), count(printed_page), count(appearance_id) FROM research.set_design GROUP BY 1;
+SELECT work_printed, (SELECT count(*) FROM research.work w WHERE w.canonical_title = regexp_replace(s.work_printed, ',.*', '')) FROM research.set_design s GROUP BY 1;
+SELECT entity_type, count(*), count(source_file), count(scan_page), count(printed_folio), count(city) FROM research.person_appearance GROUP BY 1;
+```
+
+Result: art_form drama 2,257 / opera 319 / ballet 251 / operetta 42 / concert 11 / none 57; 33 operetta-by-drama-company
+differences. Deaths 307 (roster 193, all via appearance; obituary 108 and notice 6 with page), all linked. Set designs 61,
+all linked and paged, no work id; titles match 1 work each except Млада, Сельская честь, Снѣгурочка (2). Folios and city
+on all 23,980 appearances.
+
+## 2026-11-04 — Research-layer review D1: set_design.work_id (test on a copy, then production)
+
+```sql
+SELECT DISTINCT work_printed, genre_printed FROM research.set_design;
+SELECT canonical_title, canonical_genre, art_form, appearance_count FROM research.work WHERE canonical_title IN ('Млада','Сельская честь','Снѣгурочка');
+SELECT count(*), count(work_id) FROM research.set_design;
+SELECT s.work_printed, s.genre_printed, w.canonical_title, w.canonical_genre, w.art_form, count(*) FROM research.set_design s JOIN research.work w USING (work_id) GROUP BY ALL;
+```
+
+Result: 61 of 61 linked; Млада, Сельская честь, Снѣгурочка -> the оп. works; the 3 genre-less rows take the page's genre for
+the title. Every other table identical; 0 person_link shifts.

@@ -672,3 +672,21 @@ surfaces (1,116 occurrences) match no person: mostly dancers outside the staff l
 **R5 — the 727 unmatched review names (RG 2026-11-04): "Not now since I'm up against usage limits, but i will want to do
 so."** Pending: scan-check `outputs/reviews/mentions/review_mention_unknown.csv` (727 surfaces, 1,116 occurrences) and add
 the genuine spelling variants to `docs/eval/review_person_variants.csv`; the dancers outside the staff lists stay unlinked.
+
+## Additions by the other sessions, checked 2026-11-04
+
+- **`work.entry_kind`, `art_form`, `art_form_basis`** (work-art-form session, merged 3276325): drama 2,257, opera 319,
+  ballet 251, operetta 42, concert 11; 57 without (programme items 47, ceremonial 4, others 6). Every value has its basis.
+  33 works' art form differs from a performing company's discipline: operettas played by the drama companies («Парики»,
+  «Не бывать-бы счастью», French «opérette»), as RG's rule intends.
+- **`person_death`** (307): roster «†» 193 (trace via `source_ref` = appearance -> folio), obituaries 108 and death notices 6
+  (printed page on the row); all linked to a person.
+- **`set_design`** (61, 1892-93 decorators' lists, SP 28 / Moscow 33): all linked to the decorator, printed page on every
+  row. No `work_id`: the work is text only (`work_printed`); every title matches a research.work, three match two
+  (Млада, Сельская честь, Снѣгурочка).
+- **`person_appearance` source_file / scan_page / printed_folio / city**: filled on all 23,980.
+
+**D1 — set designs linked to works (RG 2026-11-04, "Yes, link them").** `set_design.work_id`: the whole work with the printed
+title; where two works share it, the one whose printed genre is the set's (Млада, Сельская честь, Снѣгурочка: all «оп.»,
+so the operas); a set printed without a genre takes the genre printed for that title on the same page (two Снѣгурочка, one
+Кольцо любви, assistants' credits at the Большой). All 61 linked. Export schema; nothing else changed; 0 person_link shifts.

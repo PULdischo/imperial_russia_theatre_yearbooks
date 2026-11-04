@@ -174,7 +174,8 @@ SCHEMAS = {
             appearance_id TEXT REFERENCES person_appearance(appearance_id), person_id TEXT REFERENCES person(person_id),
             season TEXT, city TEXT, theater_printed TEXT, printed_page TEXT,
             work_printed TEXT, genre_printed TEXT, sets_for_work_printed INTEGER,
-            act_scene_printed TEXT, set_name_printed TEXT, painted_jointly_with TEXT
+            act_scene_printed TEXT, set_name_printed TEXT, painted_jointly_with TEXT,
+            work_id TEXT REFERENCES work(work_id)
         )""",
     "production": """
         CREATE TABLE production (

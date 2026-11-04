@@ -3337,7 +3337,8 @@ def build_set_designs(con: duckdb.DuckDBPyConnection) -> int:
             person_id UUID REFERENCES research.person(person_id),
             season VARCHAR, city VARCHAR, theater_printed VARCHAR, printed_page VARCHAR,
             work_printed VARCHAR, genre_printed VARCHAR, sets_for_work_printed INTEGER,
-            act_scene_printed VARCHAR, set_name_printed VARCHAR, painted_jointly_with VARCHAR
+            act_scene_printed VARCHAR, set_name_printed VARCHAR, painted_jointly_with VARCHAR,
+            work_id UUID REFERENCES research.work(work_id)
         )""")
     rows, n_by_entry = [], collections.Counter()
     for f in sorted(SEASON_SETS_DIR.glob("*_new_sets.csv")) if SEASON_SETS_DIR.exists() else []:
@@ -3362,7 +3363,28 @@ def build_set_designs(con: duckdb.DuckDBPyConnection) -> int:
         if not m or int(m.group(1)) != n:
             raise SystemExit(f"set_design: {eid} has {n} rows, printed total {m.group(1) if m else 'missing'}")
     if rows:
-        con.executemany("INSERT INTO research.set_design VALUES (" + ",".join(["?"] * 14) + ")", rows)
+        con.executemany("INSERT INTO research.set_design VALUES (" + ",".join(["?"] * 14) + ", NULL)", rows)
+    # work_id (RG 2026-11-04, research-layer review: "Yes, link them"): the whole work (not an excerpt) with the printed
+    # title; where two works share it (Млада, Сельская честь, Снѣгурочка: opera vs ballet / play) the one whose printed
+    # genre is the set's; a set printed without a genre takes the genre printed for that title on the same page.
+    con.execute("""
+        UPDATE research.set_design SET work_id = x.work_id FROM (
+            WITH g AS (
+                SELECT s.set_id, s.work_printed,
+                       coalesce(s.genre_printed, (SELECT any_value(s2.genre_printed) FROM research.set_design s2
+                                                  WHERE s2.season = s.season AND s2.printed_page = s.printed_page
+                                                    AND s2.work_printed = s.work_printed AND s2.genre_printed IS NOT NULL)) AS genre
+                FROM research.set_design s),
+            c AS (
+                SELECT g.set_id, w.work_id, count(*) OVER (PARTITION BY g.set_id) AS n_title,
+                       w.canonical_genre IS NOT DISTINCT FROM g.genre AS genre_ok
+                FROM g JOIN research.work w ON w.canonical_title = g.work_printed AND w.excerpt_of_work_id IS NULL)
+            SELECT set_id, any_value(work_id) AS work_id FROM c
+            WHERE n_title = 1 OR genre_ok GROUP BY set_id HAVING count(*) = 1
+        ) x WHERE x.set_id = research.set_design.set_id""")
+    unlinked = con.execute("SELECT count(*) FROM research.set_design WHERE work_id IS NULL").fetchone()[0]
+    if unlinked:
+        print(f"  WARNING: research.set_design: {unlinked} sets with no single matching work")
     return len(rows)
 
 
