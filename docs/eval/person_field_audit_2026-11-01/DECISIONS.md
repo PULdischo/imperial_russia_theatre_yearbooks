@@ -172,3 +172,9 @@ Still to put to RG: and the listed-after-leaving cases (Иванова 2-я, Л�
   unlinked (Repertoire: revived 1899-00 after 1891-92). Спящая красавица 1902-03 première cast already handled by the sweep. LEFT LINKED,
   ambiguous: 1900-01 SP p004 b003 Конекъ-горбунокъ «последнее возобновленіе» cast (Гиллертъ, Лукьяновъ, Медалинскій): last revival
   6 Dec 1895 (Леньяни benefit) but Медалинскій joins only 1897-98, so the cast may be the current one; right people either way.
+- People listed after their printed death, checked 2026-11-03: Козловъ М. Ѳ. -- 1904-05 only reprints «† 5 ноября 1902 г.», no issue.
+  Николаева 3-я Зинаида -- RG "Yes, print error": the 1902-03 «† 1 декабря 1902 г.» (p.108 no.69) is a print error (she dances to 1911; no
+  other death near that date in the data). Research: service_period end cleared (service_period_date_corrections.csv, blank corrected_date
+  = print error, new in build_service_periods), so research.person_death 308 -> 307; tenure note added. Raw as printed. OPEN: Краюшкинъ
+  («† 20 ноября 1898 г.» first printed 1900-01; listed alive 1898-99, 1899-00; 1900 is the only year consistent with all three volumes).
+  Side finding: merge candidates 18 (Иванова 1-я Александровна/Адріановна) and 19 (Джури Адель/Аделина Антоновна) logged.

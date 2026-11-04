@@ -26370,3 +26370,46 @@ Result: 11 of 12 dated items are the event's own heading (Трефилова far
 1909, Кюи 11 Jan 1910 [note prints 1909], ИРМО 18 Dec 1909, corps de ballet benefit Moscow 10 Jan 1910 [note prints 1909],
 Звягина, choir and orchestra benefits); the 18 Dec second-artists' benefit has no heading that day (reconciliation: 19 Dec).
 The SP ballet review does not name the farewell (0). research.season_stat_dated_note then rolled back (raw kept).
+
+## 2026-11-03 — People listed after their printed death: Николаева 3-я, Козловъ М. Ѳ., Краюшкинъ
+
+```sql
+SELECT pa.season, pa.appearance_id, e.list_number, e.first_name, e.patronymic, pa.tenure_note_text, pa.printed_folio
+FROM research.person_appearance pa JOIN raw.person_entry e ON e.entry_id = pa.appearance_id WHERE pa.person_id = ?;
+SELECT season, credit_summary_text FROM research.person_appearance WHERE person_id = '312b5e17…';   -- Николаева 3-я tallies
+SELECT season, count(*) FROM entities.review_mention WHERE entity_id = '312b5e17…' GROUP BY 1;
+SELECT ... FROM research.person_death WHERE death_date near 1898-11-20, 1900-11-20, 1902-12-01;
+```
+
+Result: Козловъ М. Ѳ. -- 1904-05 reprints the same «† 5 ноября 1902 г.»: no issue. Краюшкинъ -- «† 20 ноября 1898 г.» first printed in 1900-01
+(p.128), yet listed without «†» in 1898-99 (p.129) and 1899-00 (p.127); already in genuine_print_typos.md as internally inconsistent; no
+other death of 20 Nov 1898/1900 in the data. Николаева 3-я Зинаида Николаевна -- 1902-03 Moscow p.108 no.69 prints «† 1 декабря 1902 г.»
+(scan read by Claude), but she is listed every season 1903-04..1910-11 (same start 1 Sept 1901; 2-я from 1909-10), with tallies 72 (1903-04)
+.. 87 (1910-11), 13 review mentions 1903-08 and a role assertion dated 1908-02-22; Николаева 1-я and 2-я also continue; no other Moscow death
+near 1 Dec 1902 (Миронниковъ 21 Nov 1902).
+
+## 2026-11-03 — Other candidates for the «† 1 декабря 1902 г.» printed under Николаева 3-я (RG)
+
+```sql
+SELECT entry_id, family_name, first_name, tenure_note_text FROM raw.person_entry WHERE tenure_note_text LIKE '%декабря 1902%' OR credit_summary_text LIKE '%декабря 1902%';
+SELECT ... FROM research.person_death WHERE death_date BETWEEN '1902-10-01' AND '1903-02-28';
+-- jubilee/obituary catalogue rows (obituary, death_notice, death_mark) with Nov/Dec 1902
+-- Moscow BalletArtists listed 1902-03 and not 1903-04; then Иванова 1-я and Джури records, review mentions and assertions
+```
+
+Result: no other death on or near 1 Dec 1902 anywhere (roster deaths that season: Козловъ М. Ѳ. 5 Nov 1902, Миронниковъ 21 Nov 1902,
+Нарышкина 4 Jan 1903; catalogue: only the first two). «1 декабря 1902» elsewhere only as start dates (Гроттке, Яницкій, Поліевктовъ) and
+Щеголевъ «Оставилъ службу 1 декабря 1902 г.» (ProductionTeam). Moscow ballet women gone after 1902-03 without a note: Иванова 1-я
+Александра «Александровна» (= Адріановна, listed 1903-09: split record) and Джури (no death printed; split into Адель / Аделина Антоновна).
+No candidate. Two merge candidates logged (person_merge_candidates_batch.md nos. 18-19).
+
+## 2026-11-03 — Николаева 3-я death line as a print error: copy test, then production (diff v. db_backup_nikolaeva_2026-11-03)
+
+```sql
+-- every base table EXCEPT ALL v. the copy before; production v. the tested copy
+SELECT end_text, end_date, end_type, date_correction FROM research.service_period WHERE appearance_id = 'balletartists_1902-03_MSK_p003__e010';
+SELECT count(*) FROM research.person_death;
+```
+
+Result: copy changes only research.service_period 1 row (end_date / end_type NULL, date_correction notes the print error), person_death
+308 -> 307 (her roster row gone), person_tenure_note +1. Production identical to the tested copy in every table; 0 person_link shifts.

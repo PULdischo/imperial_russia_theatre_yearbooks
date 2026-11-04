@@ -2736,6 +2736,15 @@ def build_service_periods(con: duckdb.DuckDBPyConnection) -> int:
                 if (c["printed_text"] or "").strip() != (txt or "").strip():
                     raise SystemExit(f"service_period_date_corrections.csv: {aid} {po} {field}: printed text "
                                      f"{txt!r} is not {c['printed_text']!r}")
+                if not c["corrected_date"]:
+                    # the printed date is a print error and there is no event behind it (RG 2026-11-03, Николаева 3-я's «†
+                    # 1 декабря 1902 г.»: she danced on to 1911): no end, no end type in research; raw keeps the print
+                    vals[:] = [None, None, None, None]
+                    if field == "end":
+                        etype = None
+                    note.append(f"{field} printed «{txt}» is a print error, not used: {c['evidence']} ({c['decided']})")
+                    used.add((aid, int(po), field))
+                    continue
                 vals[:] = [c["corrected_date"], "day", int(c["corrected_date"][:4]), int(c["corrected_date"][5:7])]
                 if txt:
                     note.append(f"{field} printed «{txt}», corrected to {c['corrected_date']}: {c['evidence']} ({c['decided']})")
