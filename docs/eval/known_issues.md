@@ -37,6 +37,7 @@ closes, and add new open items here as well as in their own entry.
 
 **Waiting on RG's decision**
 
+- «Гибель Фауста» [драм. лег.] art form, opera or concert (added 2026-11-03; RG: "leave open. we might know from a season review later"): 14 performances, all by the opera company (Маріинскій 1891-97, Большой 1907); its performances are concert items since 2026-10-27. research.work.art_form is blank (unknown) until a review settles it; `OPEN_ART_FORMS` in build_research_model.py.
 - «Апоѳеозъ, Кантата.» (Александринскій 19 Feb 1911, 1910-11 p. 38; added 2026-11-03; RG: "honestly i don't know"): one item (an apotheosis with a cantata) or two (an apotheosis, then a cantata)? Left AS PRINTED: one raw row, title «Апоѳеозъ», genre «Кантата.», so the item counts as a concert. For two items: the Большой prints «Кантата.» as its own item the same evening (same jubilee); against: the line has the print's usual «title, genre.» shape. If ruled two, split the raw row at promotion (append the cantata as the bill's last item). See the 2026-11-03 entry below and docs/query_log.md.
 - 1897-98 Moscow ballet receipts vs the printed season total (added 2026-10-27; RG: "I'll want to follow up on
   this, because that's quite a difference"). All 48 ballet events (all Большой) read on the scan and match; they sum to

@@ -1510,6 +1510,12 @@ CONCERT_SECTION_TITLES = {
     "2-й концертъ подъ управленіемъ Э. Колоннъ", "4-й концертъ А. Зилоти", "6-й концертъ А. Зилоти",
     "7-й концертъ А. Зилоти",
 }
+#: Works whose art form RG has left open (blank = unknown): (title, genre) -> basis.
+OPEN_ART_FORMS = {
+    ("Гибель Фауста", "драм. лег."): "open (RG, 2026-11-03): printed «драм. лег.» / «драмат. легенда», given 14 times by the opera "
+                                     "company; opera or concert not decided -- a season review may settle it. Its performances are "
+                                     "concert items (CONCERT_KIND_TITLES, RG 2026-10-27)",
+}
 #: One-off items with no genre (RG, 2026-11-03: "5, leave 2 unknown"). research.work title -> basis.
 ONE_OFF_ITEMS = {
     "Monologues": "programme item: monologues recited by the French troupe's actors, not a work (RG, 2026-11-03)",
@@ -1599,7 +1605,7 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
                       WHERE table_schema = 'entities' AND table_name = 'review_work'""").fetchone()[0]:
         review_kind = {str(w): k for w, k in con.execute("SELECT work_id, work_kind FROM entities.review_work").fetchall()}
     titles_now = {r[1] for r in rows}
-    for t in (CONCERT_WORK_TITLES | CONCERT_SECTION_TITLES | set(ONE_OFF_ITEMS)) - titles_now:
+    for t in (CONCERT_WORK_TITLES | CONCERT_SECTION_TITLES | set(ONE_OFF_ITEMS) | {t for t, _ in OPEN_ART_FORMS}) - titles_now:
         raise SystemExit(f"CONCERT_WORK_TITLES / CONCERT_SECTION_TITLES: «{t}» matches no research.work")
     out = []
     for wid, title, ent_title, genre, gsrc, excerpt_of, wsrc, ballet_note in rows:
@@ -1621,6 +1627,8 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
         elif canon is None and work_kinds.get(str(wid)) and work_kinds[str(wid)] <= {"recitation / reading", "lecture", "cinema"}:
             kinds = ", ".join(sorted(work_kinds[str(wid)]))
             form, basis = None, f"programme item: {kinds}, not a work (RG, 2026-11-03)"
+        elif (title, genre) in OPEN_ART_FORMS:
+            form, basis = None, OPEN_ART_FORMS[(title, genre)]
         elif title in ONE_OFF_ITEMS:
             form, basis = None, ONE_OFF_ITEMS[title]
         elif ballet_note is not None:

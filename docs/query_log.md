@@ -26193,3 +26193,7 @@ Result: 28 performances, every one on a bill with «Псковитянка» (26
 ## 2026-11-03 — «Боярыня Вѣра Шелога» [прологъ] ruled opera (RG)
 
 Result: 2 work_artform_overrides.csv rows (прологъ, прол.); work art_form drama -> opera; no performance changed; check 24 performances / 5 pairs.
+
+## 2026-11-03 — «Гибель Фауста» art form left open (RG)
+
+Result: art_form drama -> NULL (unknown), basis «open (RG, 2026-11-03) …»; listed in known_issues waiting list. Check: 10 performances / 4 pairs.
