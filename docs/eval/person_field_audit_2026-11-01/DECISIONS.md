@@ -175,6 +175,7 @@ Still to put to RG: and the listed-after-leaving cases (Иванова 2-я, Л�
 - People listed after their printed death, checked 2026-11-03: Козловъ М. Ѳ. -- 1904-05 only reprints «† 5 ноября 1902 г.», no issue.
   Николаева 3-я Зинаида -- RG "Yes, print error": the 1902-03 «† 1 декабря 1902 г.» (p.108 no.69) is a print error (she dances to 1911; no
   other death near that date in the data). Research: service_period end cleared (service_period_date_corrections.csv, blank corrected_date
-  = print error, new in build_service_periods), so research.person_death 308 -> 307; tenure note added. Raw as printed. OPEN: Краюшкинъ
-  («† 20 ноября 1898 г.» first printed 1900-01; listed alive 1898-99, 1899-00; 1900 is the only year consistent with all three volumes).
+  = print error, new in build_service_periods), so research.person_death 308 -> 307; tenure note added. Raw as printed. Краюшкинъ RULED (RG "keeping 1898 with notes"):
+  the 1900-01 Moscow production list back-fills three deaths the 1898-1900 lists missed (Краюшкинъ 20 Nov 1898, Байкова 26 Mar 1899,
+  Барановъ 30 Sep 1899); dates kept as printed, tenure notes for all three (person_tenure_discrepancies.csv).
   Side finding: merge candidates 18 (Иванова 1-я Александровна/Адріановна) and 19 (Джури Адель/Аделина Антоновна) logged.

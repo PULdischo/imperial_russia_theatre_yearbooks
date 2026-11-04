@@ -26425,6 +26425,16 @@ Result: scan 1899-00 Moscow ProductionTeam p.127 (Claude): «1. Барановъ
 (съ 3 ноября 1871 г.)», no «†». The 1900-01 page (p.128) prints both with deaths: Барановъ «† 30 сентября 1899 г.» (inside the 1899-00
 season, yet 1899-00 lists him alive) and Краюшкинъ «† 20 ноября 1898 г.». The 1900-01 volume back-fills deaths the 1898-1900 Moscow lists
 missed, so the 1899-00 «alive» listing is weak evidence against 1898.
+
+## 2026-11-03 — Tenure notes for Краюшкинъ, Байкова, Барановъ (RG "keeping 1898 with notes"): validation build on a test copy
+
+```sql
+SELECT person_id, display_name, season, entity_type, city, tenure_note_text, printed_folio FROM research.person_appearance ... ;   -- the three
+-- build_research_model.py on a copy of the post-Николаева test copy (production not copied: the art-form session was promoting)
+```
+
+Result: person tenure discrepancies 33 (+3); research.person_tenure_note +3; no other research table changed. Not yet in production (waits for
+the art-form session's promotion to finish).
 ## 2026-11-03 — research.work.art_form (scratch build, not promoted): counts, agreement check, excerpt evidence
 
 ```sql
