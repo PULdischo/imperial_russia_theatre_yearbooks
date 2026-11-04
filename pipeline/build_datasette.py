@@ -55,7 +55,7 @@ TABLES = ["theater", "work", "person", "event", "performance", "person_appearanc
           "service_period", "person_assignment", "person_performance_tally", "set_design", "person_death",
           "production", "production_work", "production_credit", "production_date",
           "season_stat_check", "season_stat_line", "season_stat_footnote", "season_stat_gap", "season_stat_gap_event",
-          "season_stat_page", "season_stat_dated_note",
+          "season_stat_page",
           "review_assertion", "review_solo", "review_credit",
           "review_dance", "review_dance_performer", "review_dance_composer"]
 
@@ -238,11 +238,6 @@ SCHEMAS = {
         CREATE TABLE season_stat_page (
             season TEXT PRIMARY KEY, source_file TEXT, printed_page TEXT, heading_verbatim TEXT,
             heading_footnote TEXT, format TEXT, note TEXT
-        )""",
-    "season_stat_dated_note": """
-        CREATE TABLE season_stat_dated_note (
-            season TEXT, city TEXT, city_verbatim TEXT, note_no INTEGER, text_verbatim TEXT, note TEXT,
-            PRIMARY KEY (season, city, note_no)
         )""",
     "season_stat_gap_event": """
         CREATE TABLE season_stat_gap_event (

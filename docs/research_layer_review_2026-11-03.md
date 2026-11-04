@@ -485,7 +485,10 @@ footnote is carried by both cities or by nothing. Every other column and table u
    foreign newspaper or any Gregorian-dated source needs the +12 / +13 day shift done by hand.
 2. **117 performed events with no performance row**: concerts and similar evenings whose cell prints only a heading
    («Концертъ въ пользу инвалидовъ.», «Генеральная репетиція концерта …», «Баль-маскарадъ», «3-й концертъ А. Зилоти.»),
-   no work line. They have `n_works` 0 and no art form, so a query by art form or kind of item never finds them.
+   no work line. They have `n_works` 0 and no performance row. **Correction (2026-11-03, later):** most are already
+   labelled at event level: `event.genre_families` = concert on 93 (RG's 2026-10-13 rule, `CONCERT_EVENT_RE`, which
+   also covers «музыкально-литературный вечеръ» headings); the two Siamese court troupe evenings and the two German
+   charity bills of March 1898 (RG 2026-10-23, #141, `event_labels.csv`) carry a discipline and company. 20 have none.
 3. Receipts are missing for 2,836 performed events: 1890-91 (965) and 1891-92 (939) print none; the rest are free and
    charity evenings.
 
@@ -495,3 +498,19 @@ footnote is carried by both cities or by nothing. Every other column and table u
 `analysis.event_entry_date_check.note` (or the page-month override's reason): all 86 corrected_manual / no_weekday dates
 have one; verified and synthesized dates have none. Every other column and table unchanged; export schema in
 `build_datasette.py`; `docs/schema.md`.
+
+**E2 — Gregorian date (RG 2026-11-03, "we can always add that later, so lets skip for now").** Not added; `date` stays
+Julian, as printed.
+
+**Step back (RG 2026-11-03): what belongs in research.** Test agreed: a table or column earns its place if it answers a
+research question, carries the evidence needed to trust or cite an answer, or saves a hard or error-prone lookup. Not if it
+restates another field, touches a handful of rows already findable by their text, records pipeline bookkeeping, or needs
+ongoing judgment calls for little gain. Kept on review: `season_stat_page` (source file + printed page = the citation for
+every stats figure), `season_stat_footnote.city`. Rolled back: `season_stat_dated_note` (11 of its 12 dated items are the
+event's own Repertoire heading, e.g. «Прощальный спектакль балерины В. Трефиловой.» 24 Jan 1910; its two «1909 г.» year
+slips and the 18 Dec second-artists' benefit are already in the 1909-10 reconciliation; raw keeps the notes).
+
+**E3 — heading-only evenings (RG 2026-11-03).** No `event_kind` column. 97 of the 117 already carry an event-level label
+(concert 93 under RG's 2026-10-13 rule; Siamese court troupe 2; German opera 2, #141); the other 20 keep their heading in
+`annotation`, and the 17 dress rehearsals are found by «Генеральная репетиція». The 1899 and 1903 Pushkin evenings print
+works inside their heading that were never made performance rows: noted, not chased.

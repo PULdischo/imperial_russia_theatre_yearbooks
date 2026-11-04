@@ -422,12 +422,12 @@ a footnote is carried by both cities or by nothing.
 `repertoire_receipts_kopecks` (and the charity-worded receipts and the receipts difference) are NULL, not 0, when no
 performed event of that season and city prints receipts: the 1891-92 Repertoire prints none (RG, 2026-11-03).
 
-### `research.season_stat_page`, `research.season_stat_dated_note` (added 2026-11-03)
+### `research.season_stat_page` (added 2026-11-03)
 
-Copies of `raw.season_stat_page` (one row per totals page: `source_file`, `printed_page`, `heading_verbatim`,
-`heading_footnote`, `format`, `note`) and `raw.season_stat_dated_note` (the jubilees and farewell performances printed
-after each city's totals, 1909-10 only: `city` as SP/Moscow, `city_verbatim`, `note_no`, `text_verbatim`, `note`). RG,
-2026-11-03, research-layer review: "Yes, add them".
+A copy of `raw.season_stat_page`: one row per totals page (`source_file`, `printed_page`, `heading_verbatim`,
+`heading_footnote`, `format`, `note`). RG, 2026-11-03, research-layer review: "Yes, add them". The 1909-10 dated notes
+printed after each city's totals stay in `raw.season_stat_dated_note` only: every one repeats a Repertoire event heading
+(`research.event.annotation`), so a research copy was added and then rolled back the same day (RG: "roll it back").
 
 ### `research.season_stat_gap`, `research.season_stat_gap_event` — the reconciliation ledger (added 2026-11-03)
 

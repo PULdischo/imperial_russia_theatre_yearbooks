@@ -26329,3 +26329,44 @@ SELECT date_confidence, count(*), count(date_correction_note) FROM research.even
 
 Result: corrected_manual 76/76, no_weekday 10/10, verified 0, synthesized_gap 0; 0 other differences in event; every
 other table identical; 0 person_link shifts.
+
+## 2026-11-03 — Research-layer review, Events: do the printed «Концертовъ» lines count the heading-only concert evenings?
+
+```sql
+-- per season x city with a «Концертовъ» line: printed count vs performed events with no works whose heading says концерт,
+-- events with a concert item, and other heading-only events; then heading-only concert evenings in seasons/cities with no such line
+SELECT season, city, sum(count) FROM research.season_stat_line WHERE category='Концертовъ' AND line_kind<>'subtotal' GROUP BY 1,2;
+SELECT season, city, count(*) FROM research.event WHERE event_status='performed' AND n_works=0
+   AND regexp_matches(lower(coalesce(annotation,'')),'концерт') GROUP BY 1,2;
+```
+
+Result: «Концертовъ» is printed in 12 season/city pages only (1891-92 SP to 1900-01 SP; never from 1901-02). Where printed,
+it is near but not equal to the heading-only concerts (e.g. 1899-00 SP 5 vs 3; 1900-01 SP 5 vs 3; 1892-93 SP 2 vs 3).
+26 season/city pairs have heading-only concert evenings and no «Концертовъ» line. Ledger rows 1891-92-02/-03,
+1893-94-05/-06, 1894-95-07/-08, 1910-11-10: these invalids' concerts are excluded_by_yearbook.
+
+## 2026-11-03 — Research-layer review, Events: what the 117 heading-only performed events already carry
+
+```sql
+SELECT genre_families, disciplines, companies, count(*) FROM research.event
+WHERE event_status='performed' AND n_works=0 GROUP BY ALL ORDER BY 4 DESC;
+```
+
+Result: genre_families concert 93 (CONCERT_EVENT_RE, RG 2026-10-13: концерт | музыкально-литературн |
+литературно-музыкальн | вокально-инструментально); Siamese dance / Siamese court troupe 2; German opera / visiting German
+opera troupe 2 (event_labels.csv, RG 2026-10-23 #141); nothing 20. Corrects the earlier note that they carry no kind.
+
+## 2026-11-03 — Research-layer review: are the 1909-10 dated notes already in research?
+
+```sql
+-- each research.season_stat_dated_note row: parse its date, then the performed events' annotation in that city on that day
+SELECT t.canonical_name, e.annotation FROM research.event e JOIN research.theater t USING(theater_id)
+WHERE e.city = ? AND e.date_undate = ? AND e.event_status = 'performed';
+-- also 1910-01-10 Moscow, 1910-01-11 SP (the notes print «1909 г.»), 1909-11-27 SP, 1909-12-18 SP
+SELECT count(*) FROM raw.review_block WHERE block_id LIKE 'review_1909-10_SP_ballet%' AND text ILIKE '%Трефилов%' AND text ILIKE '%прощальн%';
+```
+
+Result: 11 of 12 dated items are the event's own heading (Трефилова farewell 24 Jan 1910, Савина 24 Feb 1910, Тихоновъ 1 Oct
+1909, Кюи 11 Jan 1910 [note prints 1909], ИРМО 18 Dec 1909, corps de ballet benefit Moscow 10 Jan 1910 [note prints 1909],
+Звягина, choir and orchestra benefits); the 18 Dec second-artists' benefit has no heading that day (reconciliation: 19 Dec).
+The SP ballet review does not name the farewell (0). research.season_stat_dated_note then rolled back (raw kept).
