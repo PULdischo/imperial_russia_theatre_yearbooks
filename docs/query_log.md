@@ -26217,3 +26217,14 @@ Result: 1 override row; work opera -> operetta. Check: 1 performance / 1 pair (�
 
 Result: 1 override row; work opera -> operetta; the performance stays the Vienna operetta troupe (German operetta). Discipline/art_form check:
 0 disagreements. Open for later: merge «Бокаччіо» [оп.] with «Боккаччіо» [оперетта.] (spelling variants).
+
+## 2026-11-03 — Scratch build v. the production snapshot taken this morning: total effect of the branch
+
+```sql
+-- every research table, EXCEPT ALL both ways, scratch v. snapshot of outputs/full_run (copied at session start)
+```
+
+Result: research.work 2,952 -> 2,941 rows (+ entry_kind, art_form, art_form_basis); performance 64 rows differ: 55 only work_id (merges), 9 in
+substance (two Паяцы; M-r Choufleuri x2, Le beau Dunois x1, La chanson de Fortunio x3 play -> operetta; Малый 19 Feb 1911 Апоѳеозъ. concert ->
+tableau); event 7 (genre_families / bill text of those); events_with_dancers 1 (1899-01-23 gala bill text «Палцы [др.]» -> «Паяцы»); receipts total
+unchanged; every other research table identical. Check: 0 disagreements.
